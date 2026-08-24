@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.DefinitionCapture;
 internal sealed class MeasureCaptureDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Additive weights make residual-intersection capture submodular.",
+        "Extended nonnegative masses make residual-intersection capture submodular.",
         H("Capture Weight Submodularity"),
         Blocks(
             Describe.Lean(
@@ -35,21 +35,24 @@ internal sealed class MeasureCaptureDocument : IScribeDocumentDefinition
                             + "that local definition. No displayed name introduces an extra "
                             + "predicate or hypothesis.")),
                     Paragraph(Text(
-                        "CaptureWeight extends the existing EscapeWeight with exactly one law: "
-                            + "mass_union_add_lower_le. It is the common consequence of finite "
-                            + "additivity and nonnegativity used by the proof: a lower set inside "
-                            + "the intersection may replace that intersection in the usual "
-                            + "union-plus-intersection inequality. The public theorem "
+                        "CaptureWeight has ENNReal-valued mass and exactly one law: "
+                            + "mass_union_add_lower_le. ENNReal retains infinite values, while "
+                            + "the law says that a lower set inside the intersection may replace "
+                            + "that intersection in the union-plus-intersection inequality. The "
+                            + "public theorem "
                             + "identifies capture of A union B with the union of the two capture "
                             + "sets and includes capture of A intersection B in their "
                             + "intersection, then applies that law once.")),
                     Paragraph(Text(
                         "The compiled constructors countingCaptureWeight, "
-                            + "nontrivialPointCaptureWeight, and measureCaptureWeight realize "
-                            + "the source parameter's count, nontrivial weight, and finite "
-                            + "measure branches. Their masses are respectively real-valued "
-                            + "Set.ncard, a positive point weight, and ENNReal.toReal of a "
-                            + "Mathlib measure."))),
+                            + "nonadditiveCoverageCaptureWeight, and measureCaptureWeight realize "
+                            + "the source parameter's count, weight, and measure branches. Their "
+                            + "masses are respectively unrestricted Set.encard embedded in "
+                            + "ENNReal, a nonadditive nonempty-set coverage weight, and the native "
+                            + "values of an arbitrary Mathlib measure. No Finite or "
+                            + "IsFiniteMeasure instance is required. The separate theorem "
+                            + "measure_capture_submodular states and proves the complete arbitrary-"
+                            + "measure specialization, including infinite values."))),
                 DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()

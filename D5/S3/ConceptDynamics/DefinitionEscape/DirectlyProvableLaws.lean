@@ -46,9 +46,9 @@ import Mathlib.Topology.MetricSpace.Lipschitz
      `LipschitzWith.dist_le_mul`; none packages this DECT conjunction.
    * Pinned-mathlib searches additionally found `Fintype.equivFin` and
      `Function.iterate_add_apply`. These are reused rather than reproved.
-   * Clause 6 uses `CaptureWeight`, whose count, nontrivial point-weight, and
-     finite-measure constructors are compiled in `MeasureCapture`; it does not
-     specialize the source parameter to a measurable-space measure. -/
+   * Clause 6 uses the `ENNReal`-valued `CaptureWeight`. Its unrestricted count,
+     nonadditive weight, and arbitrary-measure constructors are compiled in
+     `MeasureCapture`; infinite count and measure values are retained. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -189,7 +189,7 @@ theorem dependent_blind_kernel_obstruction
 intersection, sufficiency-factorization, redundant zero gain, blind-kernel
 obstruction, finite compactness, submodular capture, prepared one-step defect,
 semigroup defect, and approximate cascade. Clause 6 quantifies over the common
-capture-weight interface realized by weight, count, and measure. -/
+extended-nonnegative interface realized without finite-value restrictions. -/
 theorem directly_provable_laws :
     (forall {X C D Target : Type*} (q : Concept X C) (definition : Concept X D)
       (target : Concept X Target),
@@ -700,9 +700,9 @@ theorem false_neighbor_clause5 :
   exact finiteDefect
 
 /-- Strengthening clause 6's submodular inequality to modular equality is
-false when two definitions capture the same set of positive point weight. -/
+false when two definitions capture the same set of positive coverage weight. -/
 theorem false_neighbor_clause6 :
-    let nu : CaptureWeight Bool := nontrivialPointCaptureWeight
+    let nu : CaptureWeight Bool := nonadditiveCoverageCaptureWeight
     let residual : Set Bool := Set.univ
     let cut : Bool → Set Bool := fun _ => Set.univ
     let captured := fun S : Set Bool =>
@@ -711,7 +711,7 @@ theorem false_neighbor_clause6 :
         nu.mass (captured ({false} ∩ {true})) =
       nu.mass (captured {false}) + nu.mass (captured {true}) := by
   classical
-  norm_num [nontrivialPointCaptureWeight, Set.iUnion_const,
+  norm_num [nonadditiveCoverageCaptureWeight, Set.iUnion_const,
     Set.mem_inter_iff, Set.mem_iUnion]
 
 /-- Strengthening clause 7's identity to say the displayed defect vanishes is
