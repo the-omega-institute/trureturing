@@ -31,10 +31,9 @@ internal sealed class TransportCertificateValidityDocument : IScribeDocumentDefi
                             + "domain, version, error, and transported claim content address. "
                             + "The transport candidate returns a claim whose declared target "
                             + "scope is a type index, without carrying a ClaimOn proof. The "
-                            + "second clause consumes that same receipt match: only the matching "
-                            + "record, the given premises, and every declared preservation "
-                            + "obligation together imply that the same claim holds on the target "
-                            + "domain.")),
+                            + "second clause is conditional: the given premises together with "
+                            + "every declared preservation obligation imply that the same claim "
+                            + "holds on the target domain.")),
                     Paragraph(Text(
                         "Selection mechanisms, intervention consistency, covariate "
                             + "transformations, and loss stability each have an explicit "
@@ -89,7 +88,6 @@ internal sealed class TransportCertificateValidityDocument : IScribeDocumentDefi
             "ReceiptMatches", receipt, record, Predicate("ClaimAddress", claim), source, version);
         Formula conditionalTransport = Seq(
             Open,
-            receiptMatch, Sp, Land, Sp,
             Predicate("GivenPremises", Kappa), Sp, Land, Sp,
             Predicate("Holds", assumption),
             Close, Sp, Rightarrow, Sp,

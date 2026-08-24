@@ -207,9 +207,9 @@ def Refutes
   certificate.falsifiablePrediction.refutes z claim
 
 /-- A transport certificate is valid exactly when its receipt matches the actual
-source record and claim, that same match together with its explicit premises and
-assumptions conditionally transports the claim, its prediction covers the whole
-target difference, and one preregistered failure witness refutes that same claim. -/
+source record and claim, its explicit premises and assumptions conditionally
+transport the claim, its prediction covers the whole target difference, and one
+preregistered failure witness refutes that same claim. -/
 def ValidTransportCert
     {Point Payload Claim Address Version Error : Type*}
     {source target : Set Point}
@@ -220,9 +220,7 @@ def ValidTransportCert
     (claim : Claim) (version : Version) : Prop :=
   ReceiptMatches certificate.receipt record
       (ClaimAddress semantics claim) source version ∧
-    ((ReceiptMatches certificate.receipt record
-          (ClaimAddress semantics claim) source version ∧
-        GivenPremises certificate ∧ certificate.transportAssumption.Holds) →
+    ((GivenPremises certificate ∧ certificate.transportAssumption.Holds) →
       ClaimOn semantics claim target) ∧
     (∀ z ∈ target \ source, PredictionDefined certificate z) ∧
     ∃ z, z ∈ target \ source ∧
@@ -271,9 +269,7 @@ theorem valid_transport_cert_criterion
     ValidTransportCert semantics certificate record claim version ↔
       ReceiptMatches certificate.receipt record
           (ClaimAddress semantics claim) source version ∧
-      ((ReceiptMatches certificate.receipt record
-            (ClaimAddress semantics claim) source version ∧
-          GivenPremises certificate ∧ certificate.transportAssumption.Holds) →
+      ((GivenPremises certificate ∧ certificate.transportAssumption.Holds) →
         ClaimOn semantics claim target) ∧
       (∀ z ∈ target \ source, PredictionDefined certificate z) ∧
       ∃ z, z ∈ target \ source ∧
@@ -283,8 +279,8 @@ theorem valid_transport_cert_criterion
   Iff.rfl
 
 /-- A scope-transport candidate acquires target-domain validity only through the
-conditional clause of a valid certificate, after the receipt match, premises,
-and preservation obligations have been discharged for that record. -/
+conditional clause of a valid certificate, after its premises and preservation
+obligations have been discharged. -/
 theorem scope_transport_candidate_claim_on_of_valid_certificate
     {Point Payload Claim Address Version Error : Type*}
     {source target : Set Point} {error : Error}
@@ -304,7 +300,7 @@ theorem scope_transport_candidate_claim_on_of_valid_certificate
     (premises : GivenPremises certificate)
     (preservation : certificate.transportAssumption.Holds) :
     ClaimOn semantics (transport record).claim target :=
-  validity.2.1 ⟨validity.1, premises, preservation⟩
+  validity.2.1 ⟨premises, preservation⟩
 
 /-- Failure of any one of the four public conjuncts invalidates the certificate. -/
 theorem valid_transport_cert_fails_if_any_clause_fails
@@ -318,9 +314,7 @@ theorem valid_transport_cert_fails_if_any_clause_fails
     (failure :
       ¬ReceiptMatches certificate.receipt record
           (ClaimAddress semantics claim) source version ∨
-      ¬((ReceiptMatches certificate.receipt record
-            (ClaimAddress semantics claim) source version ∧
-          GivenPremises certificate ∧ certificate.transportAssumption.Holds) →
+      ¬((GivenPremises certificate ∧ certificate.transportAssumption.Holds) →
         ClaimOn semantics claim target) ∨
       ¬(∀ z ∈ target \ source, PredictionDefined certificate z) ∨
       ¬(∃ z, z ∈ target \ source ∧
