@@ -1,0 +1,87 @@
+## 55.1 最小共用定义
+
+固定第 \(n\) 轮 \(\operatorname{ProspectiveCommitment}\) \(K\)、有限记录集 \(Z\)、有限角色账本 \(\mathcal L\) 与证明
+\[
+v_K:\operatorname{ValidTrace}(\mathcal L,K.\operatorname{adjudication}).
+\]
+第 54.3 部的 \(\operatorname{AdjudicationSnapshot}\) 仍只指 \(K.\operatorname{adjudication}\)。本部唯一新增的派生名为
+\[
+\boxed{
+\begin{aligned}
+&\operatorname{AdjudicationSignature}(K,Z;\mathcal L,v_K)
+:=\Bigl(
+Z\cap K.\operatorname{adjudication}.\operatorname{filtration}.\operatorname{seen}
+  (K.\operatorname{adjudication}.\operatorname{freezeEvent}),\
+Z\cap K.\operatorname{adjudication}.\operatorname{filtration}.\operatorname{seen}
+  (K.\operatorname{adjudication}.\operatorname{decisionEvent}),\
+Z\cap K.\operatorname{adjudication}.\operatorname{evidenceDependencies},
+\\
+&\quad
+\{(e.\operatorname{evidence},e.\operatorname{round},e.\operatorname{role},
+\mathbf 1[e.\operatorname{dependencies}\cap
+K.\operatorname{adjudication}.\operatorname{dependencyClosure}\neq\varnothing]):
+\operatorname{InAdjudicationPrefix}
+(\mathcal L,K.\operatorname{adjudication},v_K,e),\
+e.\operatorname{evidence}\in Z,
+e.\operatorname{role}\in
+\{\mathsf{generate},\mathsf{tune},\mathsf{select},\mathsf{adjudicate}\}\}
+\Bigr).
+\end{aligned}
+}
+\]
+四分量依次为冻结点可见性、裁决点可见性、直接读取 \(\operatorname{evidenceDependencies}\) 的依赖污染，以及**角色存在签名投影**。第四分量只保留消费者所问的角色存在性与“依赖是否触及闭包”这一位；它折叠 \(\operatorname{EventId}\)、\(\operatorname{Time}\)、\(\operatorname{Protocol}\)、具体 \(\operatorname{Deps}\)、事件顺序和重复事件。故它不保存事件多重性，不承载第 48.2、52.5 部 \(\operatorname{ReuseDepth}\) 的复用计数语义，也不得供顺序或复用深度消费者使用。\(\mathsf{replicate}\) 不进入该投影，因为本批四谓词均不读取它。
+
+若 \(S=(S_{\mathrm f},S_{\mathrm d},S_{\mathrm p},S_{\mathrm a})\)，分量遗忘算子只是普通投影：
+\[
+\boxed{
+\pi_{-i}(S):=(S_j)_{j\neq i},
+\qquad
+i\in\{\mathrm f,\mathrm d,\mathrm p,\mathrm a\}.
+}
+\]
+它不补默认值，也不重建被删信息。
+
+第 54.3 部的四个接口都消费单个 \(\operatorname{Evidence}\)，不是记录集。本文统一采用逐点全称提升
+\[
+\boxed{
+\operatorname{Lift}_Z(P):=\forall z\in Z,\ P(z).
+}
+\]
+因此 \(\operatorname{AdmissibleJudge}\) 对每个 \(r\in Z\) 判定；\(\operatorname{NonAnticipating}\) 与 \(\operatorname{ScientificGain}\) 对每个 \(z\in Z\) 判定；\(\operatorname{TargetLaundering}\) 使用显式报告族 \(z\mapsto\operatorname{report}_z\) 后对每个 \(z\in Z\) 判定。以下单点陈述取逐点全称即得到记录集陈述，不把 \(Z\) 偷换成单个证据。
+
+为冻结全部非投影实参，按原接口定义四个 \(\operatorname{SameOut}\) 关系：
+
+- \(\operatorname{SameOut}_{\mathrm{NA}}\) 固定 \(n\)、类型与序结构、同一证据 \(z\)；谓词为 \(\operatorname{NonAnticipating}(K.\operatorname{adjudication},z)\)。
+- \(\operatorname{SameOut}_{\mathrm{AJ}}\) 另固定同一 \(r\)；两侧证明分别具有 \(\operatorname{ValidTrace}(\mathcal L,K.\operatorname{adjudication})\) 的真类型，不要求证明项字面相等；谓词为 \(\operatorname{AdmissibleJudge}(\mathcal L,K.\operatorname{adjudication},v_K,r)\)。
+- \(\operatorname{SameOut}_{\mathrm{TL}}\) 固定同一 \(\operatorname{evaluate}\)、同一 \(z\) 与同一 \(\operatorname{report}\) 对象；对 old/new commitments 分别逐字段固定 adjudication 之外的 \(\operatorname{targetChain}/\operatorname{domain}/\operatorname{epsilon}/\operatorname{conditions}/\operatorname{comparator}/\operatorname{testPlan}/\operatorname{baseline}/\operatorname{weightSpec}/\operatorname{decision}/\operatorname{committedArtifacts}/\operatorname{baselineArtifacts}\)，包含 \(\operatorname{protectedCoordinates}\) 的全部字段。包含律证明只须分别具有正确类型，不要求证明项字面相等。谓词为 \(\operatorname{TargetLaundering}(\operatorname{evaluate},\operatorname{oldK},\operatorname{newK},z,\operatorname{report})\)；report.original/revised/evidence/regradedVerdict/attributedTo/occurredAt 的身份检查仍由原谓词执行，不预先冻结其真值。
+- \(\operatorname{SameOut}_{\mathrm{SG}}\) 固定同一 \(\operatorname{evaluate}\)、行动身份 \(a,b\)，并逐字段固定 adjudication 之外的同一组 commitment 字段，特别是 \(K.\operatorname{committedArtifacts}\)、\(K.\operatorname{baselineArtifacts}\) 与 \(K.\operatorname{comparator}\)；谓词为 \(\operatorname{ScientificGain}(\operatorname{evaluate},K,z,a,b)\)。
+
+所有 \(\operatorname{SameOut}\) 还固定共同的 \(Z\) 和元素身份。允许变化的历史数据只在 adjudication 与账本内，并受相等的完整 \(\operatorname{AdjudicationSignature}\) 约束；若后续接口增加非历史实参，必须显式加入相应 \(\operatorname{SameOut}\)。
+
+再固定第 53.4 部的非空有限可行集 \(F\)、Action 载体上的完整外生规范 \(O_G\)，并要求
+\[
+\forall a\in F,\quad a\in\operatorname{AdmTarget}(O_G.\operatorname{goal})
+\ \wedge\ \operatorname{InScope}(O_G.\operatorname{scope},a).
+\]
+令 \(a\sim_Gb\Longleftrightarrow O_G.\operatorname{relation}(a,b)\wedge O_G.\operatorname{relation}(b,a)\)，在 \(F/{\sim_G}\) 上取延伸原商偏序的线性序 \(\leq_\lambda\)，并回拉到 Action：
+\[
+a\leq^F_\lambda b
+\Longleftrightarrow
+a\in F\wedge b\in F\wedge[a]\leq_\lambda[b].
+\]
+令派生范围为 \(\operatorname{scope}_F=(O_G.\operatorname{scope},F)\)，且 \(\operatorname{InScope}_F(\operatorname{scope}_F,a)\Longleftrightarrow\operatorname{InScope}(O_G.\operatorname{scope},a)\wedge a\in F\)。把回拉关系连同
+\[
+\operatorname{goal}=O_G.\operatorname{goal},\quad
+\operatorname{source}=O_G.\operatorname{source},\quad
+\operatorname{version}=O_G.\operatorname{version},\quad
+\operatorname{scope}=\operatorname{scope}_F
+\]
+及第 54.3 部要求的域、反身与传递见证打包为完整 \(\operatorname{OrientationSpec}\)，记作 \(O^F_\lambda\)。定义
+\[
+\boxed{
+\operatorname{LinExt}_F(O_G):=\{O^F_\lambda:\leq_\lambda
+\text{ 是 }F/{\sim_G}\text{ 上延伸原商偏序的线性序}\}.
+}
+\]
+其元素不是裸关系；来源、版本和原范围由 \(O_G\) 复制，有限范围收窄显式保存在 \(\operatorname{scope}_F\)，观察记录不生成任何定向。
+

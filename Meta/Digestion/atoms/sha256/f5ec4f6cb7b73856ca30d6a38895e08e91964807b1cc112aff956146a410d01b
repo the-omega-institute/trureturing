@@ -1,0 +1,20 @@
+### 55.2.3 开放问题 OP3：可判定两面
+
+令 \(N\) 为整个实例的总编码长度，计入图、闭包根、filtration 表、\(Z\)、角色日志、候选/可行/committed/baseline 集、两份承诺、报告、保护坐标、行动和全部字符串字段。模型为确定性 word-RAM，字长 \(\Theta(\log N)\)：对象用 \([0,N)\) 内编号，集合经一次 \(O(N)\) 预处理成为位表，成员查询为 \(O(1)\)；非编号字段采用规范编码，精确相等的总扫描成本计入 \(N\)。Prop 证明字段在运行时擦除，只验证其对应的有限关系，不把证明项相等当作查询。依赖图以邻接表和根集给出，闭包不作可信预计算，而由一次 BFS/DFS 生成；输入若另带闭包位表，须在线性扫描中与生成结果比较。\(\operatorname{ValidTrace}\) 证明不作为可信证书给定，而以全日志扫描和 filtration 成员查询验证。令 \(C_{\mathrm{eval}}\) 为所有实际 evaluator 调用的总成本。在此模型中，四个逐点提升谓词是否均可在
+\[
+\boxed{
+O(N+C_{\mathrm{eval}})
+}
+\]
+时间、\(O(N)\) 空间内判定？
+
+不可判侧固定 Mathlib 的程序编码 \(c:\operatorname{Nat.Partrec.Code}\) 与行为 \(\operatorname{eval}(c)\)，并定义外延语义依赖
+\[
+\operatorname{SemDep}(c,z_*):=B(\operatorname{eval}(c),z_*),
+\]
+其中 \(B\) 对相同行为同值，且有依赖/无依赖两枚 code 见证。对每个 \(c\) 取程序索引语义接口 \(K_c\)，固定 \(z_*\) 在其 decision filtration 可见、在 freeze filtration 不可见，并规定 \(z_*\in K_c.\operatorname{adjudication}.\operatorname{evidenceDependencies}\Longleftrightarrow\operatorname{SemDep}(c,z_*)\)。于是 \(\operatorname{NonAnticipating}(K_c.\operatorname{adjudication},z_*)\) 恰等于 \(\neg\operatorname{SemDep}(c,z_*)\)。已冻结真源 `D5/S0/Computability/ClosureUndecidable.closure_reading_unreachable` 正好排除任何非平凡、行为不变集合的可计算总判定器，故不可判结论应复用该节点，而不重证 Rice 定理。若结案工件要求字面给出多一归约 \(\mathsf{HALT}\leq_m\operatorname{NonAnticipating}\) 的编码函数与双向正确性，则该冻结定理只给非可计算性、不提供这条具体映射，仍需一个新的薄 HALT 桥 atom。
+
+真残差：第 54.3 部只给出 Prop 级接口；上述 RAM 表示下的统一判定器、复杂度证明，以及 \(\operatorname{SemDep}\) 对冻结 Rice 节点的精确实例化或所需 HALT 桥均未给出。
+
+结案判据：交付在上述编码上运行的判定器、\(O(N+C_{\mathrm{eval}})\) 证明与 ValidTrace/闭包核验测试，并交付 `closure_reading_unreachable` 的同层性和非平凡见证实例；若选择 literal-HALT 口径，再交付方向无误的桥。任一义务失败即 statement-revise 输入或归约模型。
+
