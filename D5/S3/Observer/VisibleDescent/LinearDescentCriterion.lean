@@ -1,6 +1,6 @@
-/- GID: D5/S3/Observer/HiddenFlow/LinearDescentCriterion
+/- GID: D5/S3/Observer/VisibleDescent/LinearDescentCriterion
    generality: G
-   mirror-B: D5/B/S3/Observer/HiddenFlow/LinearDescentCriterion
+   mirror-B: D5/B/S3/Observer/VisibleDescent/LinearDescentCriterion
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Orthogonal visible descent is equivalent to a zero hidden-to-visible block. -/
@@ -27,7 +27,7 @@ import Mathlib.Tactic.TFAE
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Observer.HiddenFlow.LinearDescentCriterion
+namespace D5.S3.Observer.VisibleDescent.LinearDescentCriterion
 
 /-- The source's canonical descent `PT|_V`: include a visible vector, apply the
 ambient bounded dynamics, and project orthogonally back to the visible subspace. -/
@@ -168,4 +168,4 @@ theorem linear_descent_criterion
 
 #print axioms linear_descent_criterion
 
-end D5.S3.Observer.HiddenFlow.LinearDescentCriterion
+end D5.S3.Observer.VisibleDescent.LinearDescentCriterion

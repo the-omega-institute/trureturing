@@ -2,13 +2,13 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.HiddenFlow;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.VisibleDescent;
 
 internal sealed class LinearDescentCriterionDocument
     : IScribeDocumentDefinition
 {
     private const string Declaration =
-        "D5/S3/Observer/HiddenFlow/LinearDescentCriterion.linear_descent_criterion";
+        "D5/S3/Observer/VisibleDescent/LinearDescentCriterion.linear_descent_criterion";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Bounded linear descent through an orthogonal visible projection is equivalent to "
