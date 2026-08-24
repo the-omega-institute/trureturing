@@ -123,6 +123,7 @@ public sealed class EnginePublicSurfaceTests
         "StrataLint.Engine.LeanDeclaration",
         "StrataLint.Engine.LeanFileReport",
         "StrataLint.Engine.LeanQualifiedName",
+        "StrataLint.Engine.LeanTruthStates",
         "StrataLint.Engine.LeanValidationOutcome",
         "StrataLint.Engine.LeanValidationOutcome+Accepted",
         "StrataLint.Engine.LeanValidationOutcome+InfrastructureFailure",

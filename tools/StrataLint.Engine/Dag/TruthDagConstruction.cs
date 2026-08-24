@@ -152,7 +152,7 @@ public sealed partial class AcyclicTruthDag
         return TruthNode.Create(path, gid, state, moduleName);
     }
 
-    private static TruthState DeriveState(
+    internal static TruthState DeriveState(
         RepositoryFile file,
         LeanAxiomReport report)
     {
