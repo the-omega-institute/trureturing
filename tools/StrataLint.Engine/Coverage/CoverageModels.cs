@@ -87,10 +87,12 @@ public sealed class CoverageLedgerIndex
 
     public static CoverageLedgerIndex FromDag(
         AcyclicTruthDag dag,
-        IEnumerable<RepoPath> frozenPaths)
+        IEnumerable<RepoPath> frozenPaths,
+        RepositorySnapshot snapshot)
     {
         ArgumentNullException.ThrowIfNull(dag);
         ArgumentNullException.ThrowIfNull(frozenPaths);
+        ArgumentNullException.ThrowIfNull(snapshot);
         var frozen = frozenPaths.ToHashSet();
         var dagPaths = dag.Nodes.Select(static node => node.RepoPath).ToHashSet();
         var absent = frozen.Where(path => !dagPaths.Contains(path))
@@ -120,12 +122,23 @@ public sealed class CoverageLedgerIndex
 
             var state = node.State switch
             {
-                TruthState.Open when node.ModuleName is not null => CoverageLedgerState.Open,
-                TruthState.Tail when node.ModuleName is not null => CoverageLedgerState.Tail,
-                TruthState.Semantic when node.Gid is not null => CoverageLedgerState.Semantic,
+                TruthState.Open => CoverageLedgerState.Open,
+                TruthState.Tail => CoverageLedgerState.Tail,
                 _ => (CoverageLedgerState?)null,
             };
             if (state is not null) builder.Add(node.RepoPath, state.Value);
+        }
+
+        // GID-addressed artifacts outside the managed Lean closure (Blueprint documents and the
+        // like) are not truth nodes, but coverage still accounts for them: their governance state
+        // is Semantic, derived from the snapshot rather than from the DAG.
+        foreach (var file in snapshot.Files.Keys)
+        {
+            if (!LeanClosureValidator.IsManagedLean(file.Value)
+                && RepositoryPathPolicy.TryResolve(file, out _))
+            {
+                builder.Add(file, CoverageLedgerState.Semantic);
+            }
         }
 
         return new CoverageLedgerIndex(builder.ToImmutable());

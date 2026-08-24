@@ -55,13 +55,11 @@ public sealed class CanonicalDagWriterTests
     }
 
     [Fact]
-    public void SemanticArtifactsAreCountedButKeptOutOfTheFlowchart()
+    public void NonLeanRepositoryFilesAreAbsentFromTheProjection()
     {
-        // The DAG spans every repository file, and in this repository ~95% of its nodes are
-        // semantic artifacts with no imports and no dependents. Drawing 2.5k isolated vertices
-        // makes the picture unreadable (and overruns mermaid), so the flowchart carries the
-        // proof topology only — while the census still states how many were left out, because
-        // a graph that silently drops most of its nodes is a lie about the repository.
+        // The DAG's domain is the managed Lean closure, so a repository file without a Lean
+        // module never reaches the writer at all; the census states zero semantic nodes
+        // instead of disclosing a truncation.
         var dag = Build(
             new Dictionary<string, string>(StringComparer.Ordinal)
             {
@@ -76,9 +74,9 @@ public sealed class CanonicalDagWriterTests
         var fence = Fence(text);
 
         Assert.Contains("D5/S0/Carrier/Delta.lean", fence, StringComparison.Ordinal);
-        Assert.DoesNotContain("Meta/notes.md", fence, StringComparison.Ordinal);
-        Assert.Contains("semantic 1", text, StringComparison.Ordinal);
-        Assert.Contains("not drawn", text, StringComparison.Ordinal);
+        Assert.DoesNotContain("Meta/notes.md", text, StringComparison.Ordinal);
+        Assert.Contains("semantic 0", text, StringComparison.Ordinal);
+        Assert.Contains("(0 carry no module and are not drawn)", text, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -167,7 +165,6 @@ public sealed class CanonicalDagWriterTests
                 ["D5/S0/Carrier/Closed.lean"] = "def closed : Nat := 0\n",
                 ["D5/X_Frontier/Openly.lean"] = "def openly : Nat := 0\n",
                 ["D5/X_Assumptions/Tailed.lean"] = "def tailed : Nat := 0\n",
-                ["Meta/notes.md"] = "semantic\n",
             },
             new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
             {
@@ -178,7 +175,7 @@ public sealed class CanonicalDagWriterTests
         var text = Render(dag);
 
         Assert.Equal(
-            [TruthState.Closed, TruthState.Open, TruthState.Tail, TruthState.Semantic],
+            [TruthState.Closed, TruthState.Open, TruthState.Tail],
             dag.Nodes.Select(static node => node.State).Distinct().Order().ToArray());
         foreach (var state in Enum.GetValues<TruthState>())
         {

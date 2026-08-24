@@ -27,7 +27,12 @@ public sealed partial class AcyclicTruthDag
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(lean);
 
+        // The DAG's domain is the managed Lean closure: only those files carry kernel states and
+        // import edges. Every other repository file is snapshot material, not a truth node —
+        // admitting them added tens of thousands of isolated vertices whose sole effect was
+        // coupling the graph identity to unrelated repository churn.
         var nodes = snapshot.Files.Keys
+            .Where(static path => LeanClosureValidator.IsManagedLean(path.Value))
             .OrderBy(static path => path.Value, StringComparer.Ordinal)
             .Select(path => CreateNode(snapshot.Files[path], lean.Report))
             .ToImmutableArray();
@@ -132,35 +137,25 @@ public sealed partial class AcyclicTruthDag
             blockers,
             ComputeRoot(nodes, edges, blockers),
             topological.MoveToImmutable(),
-            nodesByPath,
             mutableDepths.ToImmutableDictionary(),
-            dependencies,
-            dependents));
+            dependencies));
     }
 
     private static TruthNode CreateNode(RepositoryFile file, LeanAxiomReport report)
     {
         var path = file.Path;
-        var moduleName = LeanClosureValidator.IsManagedLean(path.Value)
-            ? path.Value == "Trureturing.lean"
-                ? "Trureturing"
-                : path.Value[..^5].Replace('/', '.')
-            : null;
+        var moduleName = path.Value == "Trureturing.lean"
+            ? "Trureturing"
+            : path.Value[..^5].Replace('/', '.');
         RepositoryPathPolicy.TryResolve(path, out var gid);
-        var state = DeriveState(file, moduleName, report);
+        var state = DeriveState(file, report);
         return TruthNode.Create(path, gid, state, moduleName);
     }
 
     private static TruthState DeriveState(
         RepositoryFile file,
-        string? moduleName,
         LeanAxiomReport report)
     {
-        if (moduleName is null)
-        {
-            return TruthState.Semantic;
-        }
-
         var leanFile = report.Files[file.Path];
         if (file.Path.Value.Contains("/X_Frontier/", StringComparison.Ordinal)
             || TaskTokenPattern.IsMatch(file.Text)
