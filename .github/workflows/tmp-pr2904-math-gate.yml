@@ -10,7 +10,6 @@ on:
 
 permissions:
   contents: read
-  issues: write
 
 concurrency:
   group: temporary-pr-2904-math-gate
@@ -43,68 +42,20 @@ jobs:
           set -euo pipefail
           make lean-cache-ensure
 
-      - name: Build scoped mathematical modules and record status
-        id: scoped
+      - name: Build scoped mathematical modules
         shell: bash
-        run: |
-          set +e
-          log="$RUNNER_TEMP/pr2904-scoped-build.log"
-          status=0
-          modules=(
-            D5.S3.ConceptDynamics.DefinitionEscape.DefinitionKernelGalois
-            D5.S3.ConceptDynamics.DefinitionEscape.MultiTargetBlindResidual
-            D5.S3.ConceptDynamics.DefinitionEscape.RelativeSemanticDiagonal
-            D5.S3.ConceptDynamics.DefinitionEscape.WeightedResidualCoverage
-            D5.S3.ConceptDynamics.DefinitionEscape.LatentAdequacyCriterion
-            D5.S3.ConceptDynamics.DefinitionEscape.QuestionAlgebraDuality
-            D5.S3.ConceptDynamics.DefinitionEscape.MinimalTargetDistillation
-            D5.S3.ConceptDynamics.DefinitionEscape.RefinementUltrametric
-            D5.S3.ConceptDynamics.DefinitionEscape.InverseLimitCompletion
-            D5.S3.ConceptDynamics.Coding.ProductiveDiagonalEscapeCriterion
-          )
-          for module in "${modules[@]}"; do
-            printf '\n===== %s =====\n' "$module" | tee -a "$log"
-            lake build "$module" >> "$log" 2>&1
-            rc=$?
-            printf 'EXIT=%s\n' "$rc" | tee -a "$log"
-            if [ "$rc" -ne 0 ]; then
-              status="$rc"
-              break
-            fi
-          done
-          cat "$log"
-          printf 'status=%s\n' "$status" >> "$GITHUB_OUTPUT"
-
-      - name: Report scoped failure to PR
-        if: always() && steps.scoped.outputs.status != '0'
-        shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
-          HEAD_SHA: ${{ github.sha }}
-          BUILD_STATUS: ${{ steps.scoped.outputs.status }}
         run: |
           set -euo pipefail
-          log="$RUNNER_TEMP/pr2904-scoped-build.log"
-          report="$RUNNER_TEMP/pr2904-scoped-report.md"
-          {
-            printf '%s\n' '## Temporary mathematical gate diagnostic'
-            printf '\n- Head: `%s`\n' "$HEAD_SHA"
-            printf -- '- Scoped build exit: `%s`\n\n' "$BUILD_STATUS"
-            printf '%s\n' '<details><summary>Scoped build log tail</summary>'
-            printf '\n```text\n'
-            tail -n 320 "$log" | sed 's/```/` ` `/g'
-            printf '```\n\n</details>\n'
-          } > "$report"
-          python3 - "$report" <<'PY' | gh api repos/the-omega-institute/trureturing/issues/2904/comments --method POST --input -
-          import json, sys
-          from pathlib import Path
-          print(json.dumps({'body': Path(sys.argv[1]).read_text(encoding='utf-8')}))
-          PY
-
-      - name: Fail when scoped build failed
-        if: steps.scoped.outputs.status != '0'
-        shell: bash
-        run: exit 1
+          lake build D5.S3.ConceptDynamics.DefinitionEscape.DefinitionKernelGalois
+          lake build D5.S3.ConceptDynamics.DefinitionEscape.MultiTargetBlindResidual
+          lake build D5.S3.ConceptDynamics.DefinitionEscape.RelativeSemanticDiagonal
+          lake build D5.S3.ConceptDynamics.DefinitionEscape.WeightedResidualCoverage
+          lake build D5.S3.ConceptDynamics.DefinitionEscape.LatentAdequacyCriterion
+          lake build D5.S3.ConceptDynamics.DefinitionEscape.QuestionAlgebraDuality
+          lake build D5.S3.ConceptDynamics.DefinitionEscape.MinimalTargetDistillation
+          lake build D5.S3.ConceptDynamics.DefinitionEscape.RefinementUltrametric
+          lake build D5.S3.ConceptDynamics.DefinitionEscape.InverseLimitCompletion
+          lake build D5.S3.ConceptDynamics.Coding.ProductiveDiagonalEscapeCriterion
 
       - name: Run canonical test gate
         shell: bash
