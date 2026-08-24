@@ -61,6 +61,17 @@ open D5.S3.ConceptDynamics.DefinitionEscape.BlindKernelObstruction
 open D5.S3.ConceptDynamics.DefinitionEscape.ResidualJoinLaw
 open D5.S0.Diagonal.Naturality.NaturalityDefectComposition
 
+/- TASK D5-T0049
+   Clause 6's unrestricted non-atomic measure reading remains open.  The source
+   does not specify a measurable domain for the residual or definition cuts,
+   so it does not supply the hypotheses needed for a faithful measure-theoretic
+   submodularity statement.  Close this case only after those domain conditions
+   are stated; the proved point-weight/counting reading below remains valid. -/
+
+/-- Machine-addressable record of the source-level clause 6 boundary.  This is
+governance data, not an additional mathematical claim. -/
+def clauses_not_done : Unit := ()
+
 /-- The dependent-family extension used by clauses 4 and 5.  The frozen
 `languageExtension` is its constant-codomain specialization. -/
 def dependentLanguageExtension {X C I : Type*} {D : I → Type*}
