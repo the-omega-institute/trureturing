@@ -410,6 +410,29 @@ public sealed partial class ProductionEnvironmentTests
     [InlineData("coverage-receipt-mismatch")]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
+    public void CoverAtomAllowsUnrelatedCoverWhenReceiptIntegrityBacklogExistsAtForkPoint(
+        string mismatchCode)
+    {
+        var materialized = CoverWorld.Materialize(new CoverSpec
+        {
+            OtherAtomBinding = ("receipt-gap-sibling", "D5/S0/Carrier/Probe.sibling"),
+            ReportDeclarations = ImmutableArray.Create("probe", "sibling"),
+        });
+        var inputs = DirectoryInputs(WithReceiptMismatchAtForkPoint(materialized, mismatchCode));
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
+
+        var result = environment.CoverAtom(CoverArgs(inputs));
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("coverage-receipt-mismatch")]
+    [InlineData("scribe-definition-mismatch")]
+    [InlineData("scribe-emission-mismatch")]
     public void AlignScribeReceiptRejectsReceiptIntegrityMismatchOnSiblingBeforeWritingLedger(
         string mismatchCode)
     {
@@ -429,6 +452,32 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
         Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
         Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+    }
+
+    [Theory]
+    [InlineData("coverage-receipt-mismatch")]
+    [InlineData("scribe-definition-mismatch")]
+    [InlineData("scribe-emission-mismatch")]
+    public void AlignScribeReceiptAllowsTargetRepairWhenReceiptIntegrityBacklogExistsAtForkPoint(
+        string mismatchCode)
+    {
+        var materialized = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec() with
+        {
+            OtherAtomBinding = ("receipt-gap-sibling", "D5/S0/Carrier/Probe.sibling"),
+            ReportDeclarations = ImmutableArray.Create("probe", "sibling"),
+        });
+        var inputs = DirectoryInputs(WithReceiptMismatchAtForkPoint(
+            materialized,
+            mismatchCode,
+            byteIdenticalBaseline: true));
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
+
+        var result = environment.AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -496,7 +545,10 @@ public sealed partial class ProductionEnvironmentTests
     private static CoverInputs WithSiblingReceiptMismatch(CoverInputs inputs, string mismatchCode)
     {
         const string siblingAtomId = "receipt-gap-sibling";
-        var documentGid = inputs.Gid[..inputs.Gid.LastIndexOf('.')];
+        var siblingGid = inputs.Document.RequireDigestionEntries()
+            .Single(entry => entry.AtomId == siblingAtomId)
+            .CoverageGids.Single();
+        var documentGid = ScribeEmissionAttestation.DocumentGid(siblingGid);
         Assert.True(inputs.VerifiedEmissions!.TryGet(documentGid, out var verified));
         var targetPath = documentGid + ".lean";
         var targetSha256 = DigestionFingerprint.Compute(
@@ -514,7 +566,7 @@ public sealed partial class ProductionEnvironmentTests
                                 Coverage =
                                 [
                                     new DigestionCoverageReceipt(
-                                        inputs.Gid,
+                                        siblingGid,
                                         entry.Fingerprints.RawSha256,
                                         mismatchCode == "coverage-receipt-mismatch"
                                             ? mismatchSha256
@@ -523,7 +575,7 @@ public sealed partial class ProductionEnvironmentTests
                                 Scribe =
                                 [
                                     new DigestionScribeReceipt(
-                                        inputs.Gid,
+                                        siblingGid,
                                         mismatchCode == "scribe-definition-mismatch"
                                             ? mismatchSha256
                                             : verified.DefinitionSha256,
@@ -539,6 +591,23 @@ public sealed partial class ProductionEnvironmentTests
         var files = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal);
         DirectoryLedgerTestSupport.ReplaceWithProjection(files, document);
         return inputs with { Files = files, Document = document };
+    }
+
+    private static CoverInputs WithReceiptMismatchAtForkPoint(
+        CoverInputs inputs,
+        string mismatchCode,
+        bool byteIdenticalBaseline = false)
+    {
+        var current = WithSiblingReceiptMismatch(inputs, mismatchCode);
+        var baseline = byteIdenticalBaseline
+            ? new Dictionary<string, string>(current.Files, StringComparer.Ordinal)
+            : new Dictionary<string, string>(current.Baseline, StringComparer.Ordinal);
+        if (!byteIdenticalBaseline)
+        {
+            DirectoryLedgerTestSupport.ReplaceWithProjection(baseline, current.Document);
+        }
+
+        return current with { Baseline = baseline };
     }
 
     private static CoverInputs WithSiblingDuplicateCoverageReceipt(CoverInputs inputs)

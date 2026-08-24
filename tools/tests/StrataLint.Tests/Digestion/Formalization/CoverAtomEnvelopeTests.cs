@@ -89,9 +89,6 @@ public sealed partial class CoverAtomTests
             Migration = "absorbed",
             Truth = "closed",
             SecondaryTarget = (secondaryModule, secondaryDeclaration),
-            EnvelopePrimaryGid = secondaryGid,
-            PrecommittedSignature = new DigestionFormalizationSignature(
-                secondaryDeclaration, "theorem", "True"),
         };
         var inputs = spec.Materialize();
 
@@ -265,7 +262,7 @@ public sealed partial class CoverAtomTests
     }
 
     [Fact]
-    public void CoverAddsB1ToALegacyPartialClosedReceiptHostWithoutClearingResiduals()
+    public void CoverRejectsPreplantedExistingPairWithoutBaseOwnedPrecommitment()
     {
         const string primaryModule = "D5/S3/Observer/WindowCharacter";
         const string primaryDeclaration = "window_algebra_has_no_character";
@@ -304,7 +301,10 @@ public sealed partial class CoverAtomTests
                 "--base", "baseline",
                 "--envelope", inputs.EnvelopePath]);
 
-        Assert.True(result.Success, result.Error);
+        Assert.False(result.Success);
+        Assert.Contains(existingCoverage[1], result.Error, StringComparison.Ordinal);
+        Assert.Contains("has no base-owned pre-committed signature", result.Error,
+            StringComparison.Ordinal);
         var beforeEntry = Assert.Single(
             before.RequireDigestionEntries(),
             candidate => candidate.AtomId == spec.AtomId);
@@ -312,15 +312,7 @@ public sealed partial class CoverAtomTests
         Assert.Empty(beforeEntry.Receipts.Coverage);
         Assert.Empty(beforeEntry.Receipts.Scribe);
         Assert.Equal([residue], beforeEntry.Receipts.UnresolvedSubitems.ToArray());
-        var entry = Assert.Single(
-            after.RequireDigestionEntries(),
-            candidate => candidate.AtomId == spec.AtomId);
-        Assert.Equal(existingCoverage.Add(secondaryGid).ToArray(), entry.CoverageGids.ToArray());
-        Assert.Equal([secondaryGid], entry.Receipts.Coverage.Select(static receipt => receipt.Gid).ToArray());
-        Assert.Equal([secondaryGid], entry.Receipts.Scribe.Select(static receipt => receipt.Gid).ToArray());
-        Assert.Equal([residue], entry.Receipts.UnresolvedSubitems.ToArray());
-        Assert.Equal(DigestionMigrationState.Partial, entry.ProjectedStatus.Migration);
-        Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);
+        Assert.Equal(DirectoryLedgerTestSupport.Image(before), DirectoryLedgerTestSupport.Image(after));
     }
 
     [Fact]
@@ -392,7 +384,7 @@ public sealed partial class CoverAtomTests
         var (result, after, before) = Execute(new CoverSpec { EnvelopeAtomId = "other-atom" });
 
         Assert.False(result.Success);
-        Assert.Contains("atom_id other-atom does not match --cover-atom", result.Error, StringComparison.Ordinal);
+        Assert.Contains("atom_id other-atom does not match atom cover-1", result.Error, StringComparison.Ordinal);
         Assert.Equal(before, after);
     }
 

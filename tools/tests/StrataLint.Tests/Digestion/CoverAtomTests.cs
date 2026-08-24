@@ -227,7 +227,8 @@ public sealed partial class CoverAtomTests
         });
 
         Assert.False(result.Success);
-        Assert.Contains("coverage-receipt-mismatch", result.Error, StringComparison.Ordinal);
+        Assert.Contains("resolves to 0 report declarations", result.Error, StringComparison.Ordinal);
+        Assert.DoesNotContain("coverage-receipt-mismatch", result.Error, StringComparison.Ordinal);
         Assert.DoesNotContain("target-declaration-missing", result.Error, StringComparison.Ordinal);
         Assert.Equal(before, after);
     }
@@ -586,7 +587,7 @@ internal static partial class CoverWorld
     };
 
     internal static string[] AlignArgs(CoverInputs inputs) =>
-        ["--atom-id", DefaultAtomId, "--gid", inputs.Gid];
+        ["--atom-id", DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline"];
 
     internal static ProductionCliEnvironment Environment(
         string repositoryRoot,
@@ -659,6 +660,7 @@ internal static partial class CoverWorld
         {
             files[envelopePath] = Encoding.UTF8.GetString(Envelope(spec, atom).AsSpan());
         }
+        MaterializeOtherAtomFormalizationReceipt(spec, atom, files);
         if (spec.IncludeCasBlob)
         {
             var (casPath, casBytes) = DigestionTestSupport.CasFile(atom);

@@ -5,6 +5,31 @@ namespace StrataLint.Tests;
 
 internal static partial class CoverWorld
 {
+    private static void MaterializeOtherAtomFormalizationReceipt(
+        CoverSpec spec,
+        DigestionAtom atom,
+        IDictionary<string, string> files)
+    {
+        if (spec.OtherAtomBinding is not { } other)
+        {
+            return;
+        }
+
+        var separator = other.Gid.LastIndexOf('.');
+        var receipt = new DigestionFormalizationReceipt(
+            other.AtomId,
+            other.Gid,
+            new DigestionFormalizationSignature(
+                other.Gid[(separator + 1)..],
+                spec.ReportKind,
+                spec.ReportType),
+            atom.Fingerprints.RawSha256,
+            atom.Fingerprints.RawSha256);
+        files[DigestionFormalizationReceipt.PathForAtom(other.AtomId)] =
+            System.Text.Encoding.UTF8.GetString(
+                DigestionFormalizationReceipt.Write(receipt).AsSpan());
+    }
+
     private static BackfillInventoryDocument BuildLedger(
         CoverSpec spec,
         DigestionAtom atom,
