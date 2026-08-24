@@ -1,0 +1,15 @@
+### 55.2.2 开放问题 OP2：逐分量必要性
+
+本题的显式前件是：所选 \(\Phi\) 的 OP1 atom 已获肯定答案，等价地存在函数 \(\bar\Phi\) 使 \(\Phi(C)=\bar\Phi(S(H(C)),\operatorname{Out}_\Phi(C))\)；对 TL，\(S(H(C))\) 是 old/new 两签名的有序对。只在此前件下，对每个 \(i\in\{\mathrm f,\mathrm d,\mathrm p,\mathrm a\}\)，是否存在一个 \(\Phi_i\) 与两上下文 \(C_i^+,C_i^-\)，满足
+\[
+\boxed{
+\operatorname{SameOut}_{\Phi_i}(C_i^+,C_i^-),\quad
+\pi_{-i}S(C_i^+)=\pi_{-i}S(C_i^-),\quad
+S_i(C_i^+)\neq S_i(C_i^-),\quad
+\Phi_i(C_i^+)\leftrightarrow\neg\Phi_i(C_i^-)?
+}
+\]
+被删坐标之外的共同 \(Z\)、证据、行动、evaluate、committed/baseline 集、comparator、protected coordinates 与 report 身份均须按 55.1 逐项相同。若 \(\Phi_i=\mathrm{TL}\)，还须指定被消融的是 old 或 new 签名；另一承诺的完整四坐标及被消融承诺的其余三坐标全部相同。本题只有四个坐标方向，不冒充四坐标乘四谓词的十六项矩阵。真残差：在完整签名确实充分的前件下，既有文本仍未证明四个坐标各有不可删除见证。
+
+结案判据：四个方向各交付满足因子化前件、删外全同且被删值确异的有限机器见证；或证明某分量可由其余分量与 SameOut 数据导出并修订最小签名。
+
