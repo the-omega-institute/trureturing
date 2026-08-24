@@ -665,15 +665,34 @@ public sealed partial class ProductionEnvironmentTests
     private static ProductionCliEnvironment BuildCoverEnvironment(
         string repositoryRoot,
         CoverInputs inputs,
-        IReadOnlyDictionary<string, string> currentFiles) =>
-        new(
+        IReadOnlyDictionary<string, string> currentFiles)
+    {
+        var canonicalInputScript = string.Join('\n',
+            "#!/usr/bin/env bash",
+            "set -euo pipefail",
+            "[[ \"${1:-}\" == \"scribe-producer-paths\" ]] || exit 2",
+            "printf '%s\\n' tools/scripts/report/lean-report-input.sh "
+                + CanonicalScribeInputPath,
+            string.Empty);
+        var current = new Dictionary<string, string>(currentFiles, StringComparer.Ordinal)
+        {
+            ["tools/scripts/report/lean-report-input.sh"] = canonicalInputScript,
+        };
+        current.TryAdd(CanonicalScribeInputPath, "canonical Scribe input\n");
+        var baseline = new Dictionary<string, string>(inputs.Baseline, StringComparer.Ordinal)
+        {
+            ["tools/scripts/report/lean-report-input.sh"] = canonicalInputScript,
+        };
+        baseline.TryAdd(CanonicalScribeInputPath, "canonical Scribe input\n");
+        return new ProductionCliEnvironment(
             repositoryRoot,
             new FakeRepositoryGateway(
                 RawChangeSet.Create(Array.Empty<string>()),
-                CoverWorld.Raw(currentFiles),
-                CoverWorld.Raw(inputs.Baseline)),
+                CoverWorld.Raw(current),
+                CoverWorld.Raw(baseline)),
             new FakeLeanReportSource(inputs.Report),
             new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
+    }
 
     private static void AssertProductionScribeVerifierMaterializesOnlyTheCapturedSnapshot()
     {

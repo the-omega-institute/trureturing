@@ -68,6 +68,7 @@ internal static partial class CoverAtomCommand
             var baselineRaw = repository.ReadRevision(options.BaselineRevision);
             var current = Decode(currentRaw);
             var baseline = Decode(baselineRaw);
+            var scribeProducerSurface = new CanonicalScribeProducerSurface();
             var document = LoadDocument(current);
             var baselineDocument = BackfillInventoryLoader.LoadBaseline(baseline);
 
@@ -108,7 +109,8 @@ internal static partial class CoverAtomCommand
                 beforeEvaluation,
                 baselineDocument,
                 baseline,
-                current);
+                current,
+                scribeProducerSurface);
 
             // Gate ②(b): anti-Goodhart — cover may only deposit a declaration that
             // the baseline ledger did not already bind.
@@ -171,7 +173,8 @@ internal static partial class CoverAtomCommand
                 derived,
                 baselineDocument,
                 baseline,
-                current);
+                current,
+                scribeProducerSurface);
 
             var statusByAtomId = derived.Entries.ToDictionary(
                 static item => item.Entry.AtomId,
@@ -208,7 +211,8 @@ internal static partial class CoverAtomCommand
                 evaluation,
                 baselineDocument,
                 baseline,
-                finalSnapshot);
+                finalSnapshot,
+                scribeProducerSurface);
             var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
                 finalDocument,
                 finalSnapshot,

@@ -25,6 +25,7 @@ internal static partial class IngestCommand
             var baselineRaw = repository.ReadRevision(baselineRevision);
             var current = Decode(currentRaw);
             var baseline = Decode(baselineRaw);
+            var scribeProducerSurface = new CanonicalScribeProducerSurface();
             var document = LoadDocument(current);
             var baselineDocument = BackfillInventoryLoader.LoadBaseline(baseline);
             var plan = DigestionIngestor.Plan(document, current, baselineDocument);
@@ -57,7 +58,8 @@ internal static partial class IngestCommand
                 derived,
                 baselineDocument,
                 baseline,
-                plannedSnapshot);
+                plannedSnapshot,
+                scribeProducerSurface);
 
             var statusByAtomId = derived.Entries.ToDictionary(
                 static item => item.Entry.AtomId,
@@ -92,7 +94,8 @@ internal static partial class IngestCommand
                 evaluation,
                 baselineDocument,
                 baseline,
-                finalSnapshot);
+                finalSnapshot,
+                scribeProducerSurface);
             var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
                 finalDocument,
                 finalSnapshot,

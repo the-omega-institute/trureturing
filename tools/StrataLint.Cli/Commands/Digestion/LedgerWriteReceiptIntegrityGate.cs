@@ -10,7 +10,8 @@ internal static class LedgerWriteReceiptIntegrityGate
         DigestionLedgerEvaluation evaluation,
         BackfillInventoryDocument baselineDocument,
         RepositorySnapshot baselineSnapshot,
-        RepositorySnapshot candidateSnapshot)
+        RepositorySnapshot candidateSnapshot,
+        CanonicalScribeProducerSurface scribeProducerSurface)
     {
         var baselineCoverageGaps = BaselineCoverageGapIdentities(
             baselineDocument,
@@ -29,7 +30,8 @@ internal static class LedgerWriteReceiptIntegrityGate
                 baselineEntries,
                 baselineCoverageGaps,
                 baselineSnapshot,
-                candidateSnapshot))
+                candidateSnapshot,
+                scribeProducerSurface))
             .ToArray();
         if (evaluation.Findings.Length > 0)
         {
@@ -56,7 +58,8 @@ internal static class LedgerWriteReceiptIntegrityGate
         IReadOnlyDictionary<string, DigestionLedgerEntry> baselineEntries,
         IReadOnlySet<GapIdentity> baselineCoverageGaps,
         RepositorySnapshot baselineSnapshot,
-        RepositorySnapshot candidateSnapshot)
+        RepositorySnapshot candidateSnapshot,
+        CanonicalScribeProducerSurface scribeProducerSurface)
     {
         var identity = new GapIdentity(entry.AtomId, gap.Detail);
         if (gap.Code == "coverage-receipt-mismatch")
@@ -89,7 +92,7 @@ internal static class LedgerWriteReceiptIntegrityGate
         }
 
         var documentGid = ScribeEmissionAttestation.DocumentGid(gap.Detail);
-        return ScribeSurfaceUntouched(baselineSnapshot, candidateSnapshot)
+        return scribeProducerSurface.HasIdenticalBytes(baselineSnapshot, candidateSnapshot)
             && FileBytesIdentical(
                 baselineSnapshot,
                 candidateSnapshot,
@@ -99,44 +102,6 @@ internal static class LedgerWriteReceiptIntegrityGate
                 candidateSnapshot,
                 ScribeEmissionAttestation.EmissionPath(documentGid))
             && FileBytesIdentical(baselineSnapshot, candidateSnapshot, gid.Path.Value);
-    }
-
-    private static bool ScribeSurfaceUntouched(
-        RepositorySnapshot baseline,
-        RepositorySnapshot candidate) =>
-        baseline.Files.Keys
-            .Concat(candidate.Files.Keys)
-            .Distinct()
-            .Where(static path => IsPotentialScribeInput(path.Value))
-            .All(path => FileBytesIdentical(baseline, candidate, path.Value));
-
-    private static bool IsPotentialScribeInput(string path)
-    {
-        if (path.StartsWith("Blueprint/", StringComparison.Ordinal)
-            && path.EndsWith(".scribe.cs", StringComparison.Ordinal)
-            || path.StartsWith("D5/", StringComparison.Ordinal)
-            && path.EndsWith(".lean", StringComparison.Ordinal)
-            || path.StartsWith("Library/", StringComparison.Ordinal)
-            || path.StartsWith("Problems/", StringComparison.Ordinal)
-            || path.StartsWith("Golden/Projection/", StringComparison.Ordinal)
-            || path.StartsWith("tools/StrataLint.Scribe/", StringComparison.Ordinal)
-            || path.StartsWith("tools/StrataLint.Engine/", StringComparison.Ordinal)
-            || path.StartsWith("tools/Trureturing.Truth/", StringComparison.Ordinal)
-            || path.StartsWith("tools/lean-inspector/", StringComparison.Ordinal)
-            || path == "tools/StrataLint.Cli/Runtime/ScribeEmissionVerifier.cs"
-            || path == "tools/scripts/report/lean-report-input.sh"
-            || path == "tools/scripts/workflow/scribe-content-checks.sh")
-        {
-            return true;
-        }
-
-        var fileName = path[(path.LastIndexOf('/') + 1)..];
-        return path == "Trureturing.lean"
-            || path is "lean-toolchain" or "lake-manifest.json" or "lakefile.toml" or "lakefile.lean"
-            || fileName == "global.json"
-            || fileName.StartsWith("Directory.Build.", StringComparison.Ordinal)
-            || fileName.StartsWith("Directory.Packages.", StringComparison.Ordinal)
-            || fileName.Equals("NuGet.Config", StringComparison.OrdinalIgnoreCase);
     }
 
     private static HashSet<GapIdentity> BaselineCoverageGapIdentities(

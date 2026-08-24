@@ -19,6 +19,7 @@ internal static partial class CoverAtomCommand
         var baselineRaw = repository.ReadRevision(options.BaselineRevision);
         var current = Decode(currentRaw);
         var baseline = Decode(baselineRaw);
+        var scribeProducerSurface = new CanonicalScribeProducerSurface();
         var document = LoadDocument(current);
         var baselineDocument = BackfillInventoryLoader.LoadBaseline(baseline);
         var matches = document.RequireDigestionEntries()
@@ -114,7 +115,8 @@ internal static partial class CoverAtomCommand
             finalEvaluation,
             baselineDocument,
             baseline,
-            finalSnapshot);
+            finalSnapshot,
+            scribeProducerSurface);
 
         var ledgerUpdates = IngestCommand.LedgerUpdates(currentRaw, finalRaw);
         var changed = ledgerUpdates.Length > 0;

@@ -52,40 +52,41 @@ internal sealed class ProductionScribeEmissionVerifier : IScribeEmissionVerifier
                 "Scribe emission verification failed: " + error.ToString().Trim());
     }
 
-    private sealed class MaterializedRepositorySnapshot : IDisposable
+}
+
+internal sealed class MaterializedRepositorySnapshot : IDisposable
+{
+    private MaterializedRepositorySnapshot(string root) => Root = root;
+
+    internal string Root { get; }
+
+    internal static MaterializedRepositorySnapshot Create(RepositorySnapshot snapshot)
     {
-        private MaterializedRepositorySnapshot(string root) => Root = root;
-
-        internal string Root { get; }
-
-        internal static MaterializedRepositorySnapshot Create(RepositorySnapshot snapshot)
+        var root = Path.Combine(
+            Path.GetTempPath(),
+            "stratalint-scribe-snapshot-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        try
         {
-            var root = Path.Combine(
-                Path.GetTempPath(),
-                "stratalint-scribe-snapshot-" + Guid.NewGuid().ToString("N"));
-            Directory.CreateDirectory(root);
-            try
+            foreach (var (path, file) in snapshot.Files
+                .OrderBy(static item => item.Key.Value, StringComparer.Ordinal))
             {
-                foreach (var (path, file) in snapshot.Files
-                    .OrderBy(static item => item.Key.Value, StringComparer.Ordinal))
-                {
-                    var destination = Path.Combine(
-                        root,
-                        path.Value.Replace('/', Path.DirectorySeparatorChar));
-                    Directory.CreateDirectory(Path.GetDirectoryName(destination)
-                        ?? throw new InvalidOperationException("snapshot path has no parent directory"));
-                    File.WriteAllBytes(destination, file.RawBytes.AsSpan());
-                }
+                var destination = Path.Combine(
+                    root,
+                    path.Value.Replace('/', Path.DirectorySeparatorChar));
+                Directory.CreateDirectory(Path.GetDirectoryName(destination)
+                    ?? throw new InvalidOperationException("snapshot path has no parent directory"));
+                File.WriteAllBytes(destination, file.RawBytes.AsSpan());
+            }
 
-                return new MaterializedRepositorySnapshot(root);
-            }
-            catch
-            {
-                Directory.Delete(root, recursive: true);
-                throw;
-            }
+            return new MaterializedRepositorySnapshot(root);
         }
-
-        public void Dispose() => Directory.Delete(Root, recursive: true);
+        catch
+        {
+            Directory.Delete(root, recursive: true);
+            throw;
+        }
     }
+
+    public void Dispose() => Directory.Delete(Root, recursive: true);
 }
