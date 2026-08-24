@@ -14,12 +14,12 @@ internal sealed class BellmanFixedPointIterationDocument : IScribeDocumentDefini
         Formula discount = GammaLower;
         Formula stop = F.Id("G");
         Formula continuation = F.Id("Q");
-        Formula bellman = F.Id("T");
+        Formula bellman = DefinitionDsl.Id("T");
         Formula value = F.Id("v");
         Formula valueStar = Seq(F.Id("v"), Underscore, Star);
         Formula initial = Seq(F.Id("v"), Underscore, D(0));
         Formula candidate = F.Id("w");
-        Formula iteration = F.Id("n");
+        Formula iteration = DefinitionDsl.Id("n");
         Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
         Formula type = Seq(Operatorname, Grp(F.Id("Type")));
@@ -39,7 +39,7 @@ internal sealed class BellmanFixedPointIterationDocument : IScribeDocumentDefini
         Formula iterated = Apply(
             new Formula.Power(bellman, iteration), initial);
         Formula geometric = Seq(
-            new Formula.Power(discount, iteration), Sp,
+            new Formula.Power(Seq(discount), Seq(iteration)), Sp,
             Call("dist", initial, valueStar));
         Formula statement = Disp(Seq(
             Begin, Grp(F.Id("gathered")),
