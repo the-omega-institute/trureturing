@@ -1,0 +1,17 @@
+ast_path: 定义/239.1
+fingerprints:
+  raw_sha256: sha256:f6812549ddadef78bf93b0e36979734c405b2e851c63993089cb3be25395d363
+  normalized_sha256: sha256:f6812549ddadef78bf93b0e36979734c405b2e851c63993089cb3be25395d363
+cas_ref: sha256:f6812549ddadef78bf93b0e36979734c405b2e851c63993089cb3be25395d363
+coverage_gids:
+  - D5/S3/ConceptDynamics/Coding/TargetRelevantOmission.omission_iff_witness_exists
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Coding/TargetRelevantOmission.omission_iff_witness_exists
+      source_sha256: sha256:f6812549ddadef78bf93b0e36979734c405b2e851c63993089cb3be25395d363
+      target_sha256: sha256:cea45ceeb64351a3ec50832cd18c9e4d70c7c481f87203c901aa93bb6015582c
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Coding/TargetRelevantOmission.omission_iff_witness_exists
+      definition_sha256: sha256:7e73a696af748b81c46a9246e8e541ea62612032178a270d950141e465a79e89
+      emission_sha256: sha256:158860dd896f05608335b479c56a05e8f80eb4906fca67e9a32f46660ebe265b
+  unresolved_subitems: []
