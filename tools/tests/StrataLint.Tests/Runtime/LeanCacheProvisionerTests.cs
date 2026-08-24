@@ -7,6 +7,59 @@ public sealed class LeanCacheProvisionerTests
 {
     private const string BudgetVariable = "STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS";
 
+    /// <summary>
+    /// #2535 的收口契约:三个消费点各有具名预算,且**当前同值**。
+    ///
+    /// 钉住「同值」不是为了固化它,恰恰相反 —— 是为了让**分开**成为一个显式动作。
+    /// 注释里写明:`DirectoryCopyBudget` 的继承依据是该路径实测零发生,
+    /// `DependencyFetchBudget` 的依据是它差两个数量级;两者一旦失去依据就须单独收口
+    /// **并带新案号**。若有人直接给某一个换上独立字面量而不走那一步,本测试变红,
+    /// 迫使他要么补案号、要么改这里的断言 —— 两条都是显式的。
+    ///
+    /// 反面即病:若不钉,三个访问器会悄悄分叉成三个无源裸数,
+    /// 即「量腹而食」第四形乘以三,比收口前更差。
+    /// </summary>
+    [Fact]
+    public void ThreeNamedBudgetsExistAndCurrentlyShareTheLoadBearingValue()
+    {
+        var lean = LeanCacheProvisioner.LeanCommandBudget;
+        var copy = LeanCacheProvisioner.DirectoryCopyBudget;
+        var fetch = LeanCacheProvisioner.DependencyFetchBudget;
+
+        // 承重点即声明值本身。
+        Assert.Equal(
+            TimeSpan.FromSeconds(LeanCacheProvisioner.DefaultProvisionBudgetSeconds),
+            lean);
+
+        // 另两者继承它。分叉须走注释所述的收口 + 新案号,不得静默发生。
+        Assert.Equal(lean, copy);
+        Assert.Equal(lean, fetch);
+    }
+
+    /// <summary>
+    /// 具名化不得破坏既有的环境旋钮:三个名字都经同一个 clamp 后的取值,
+    /// 故旋钮一动,三者须同时随动。若某个访问器被改成绕开 `ProvisionBudget`
+    /// 直接返回字面量,本测试变红。
+    /// </summary>
+    [Fact]
+    public void AllThreeNamedBudgetsFollowTheClampedEnvironmentOverride()
+    {
+        var previous = Environment.GetEnvironmentVariable(BudgetVariable);
+        try
+        {
+            // 300..7200 之外的值须被 clamp;取一个远超上界的数,三者都应落到 7200。
+            Environment.SetEnvironmentVariable(BudgetVariable, "99999");
+            var clamped = TimeSpan.FromSeconds(7200);
+            Assert.Equal(clamped, LeanCacheProvisioner.LeanCommandBudget);
+            Assert.Equal(clamped, LeanCacheProvisioner.DirectoryCopyBudget);
+            Assert.Equal(clamped, LeanCacheProvisioner.DependencyFetchBudget);
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable(BudgetVariable, previous);
+        }
+    }
+
     [Fact]
     public void DefaultBudgetIsTheDeclaredOneHourPolicyOverride()
     {

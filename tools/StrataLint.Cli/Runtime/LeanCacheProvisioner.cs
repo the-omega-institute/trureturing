@@ -79,7 +79,39 @@ internal static class LeanCacheProvisioner
         }
     }
 
-    internal static TimeSpan CommandBudget => ProvisionBudget;
+    // 以下三个名字**同值**,但继承是显式且带依据的 —— 这正是 #2535 所指「宽域」的收口:
+    // 病不在「四个点共用一个数」,而在「共用是隐式的、无人说得出为什么」。
+    //
+    // 三点的实际发生数(2026-08-23,本会话 47 条 ensure 收据):
+    //   cp -R 回退      0 次(clonefile_errno 全为 null)
+    //   lake cache get  3 次,离预算差两个数量级(ensure 端到端 13 秒)
+    //   任意 Lake 命令  常走,是唯一会接近该值的点
+    //
+    // 故按第 20″ 条「防的必须是发生过的事」,不为前两者各造一个独立裸数
+    // ——那会把一个无源常数变成三个,是「量腹而食」所禁的第四形乘以三。
+
+    /// <summary>
+    /// 承重点:`worktree with-cache-writer` 包裹的任意 Lake 命令。**该值就是为它定的**,
+    /// 须清过最贵的重建。实测有界工作量:全量内容层冷建 **3388s**(本机 28 核,含并发);
+    /// `S0/Tower` 全族 **6305s**(ubuntu-24.04-arm 跨机复测,run 32493250519)。
+    /// 分类与退出条件见 <see cref="LeanCacheBudgetPolicy"/> 的 policy-override 声明(案号 #2535)。
+    /// </summary>
+    internal static TimeSpan LeanCommandBudget => ProvisionBudget;
+
+    /// <summary>
+    /// `cp -R` 目录复制,即 clonefile 失败时的回退路径。**继承 <see cref="LeanCommandBudget"/>,
+    /// 不是独立取值**:该路径本机实测 **0 次发生**,为零发生路径派生一个末值会新增一个无源常数,
+    /// 违第 20″ 条。若日后收据中出现非 null 的 `clonefile_errno`,该继承即失去依据,
+    /// 须按「量腹而食」三型之一为其单独收口并带新案号。
+    /// </summary>
+    internal static TimeSpan DirectoryCopyBudget => LeanCommandBudget;
+
+    /// <summary>
+    /// `lake exe cache get`,依赖层公共供给。**继承 <see cref="LeanCommandBudget"/>,不是独立取值**:
+    /// 实测走到 3 次,耗时离该预算差两个数量级(ensure 端到端 13 秒),故它从不是该值的约束方。
+    /// 若某次该命令的耗时进入同一量级,该继承即失去依据,须单独收口并带新案号。
+    /// </summary>
+    internal static TimeSpan DependencyFetchBudget => LeanCommandBudget;
 
     internal static LeanCacheProvisionResult Provision(
         LeanCacheDonorSelection selection,
@@ -321,7 +353,7 @@ internal static class LeanCacheProvisioner
                 "cp",
                 ["-R", source, staged],
                 worktreeRoot,
-                ProvisionBudget);
+                DirectoryCopyBudget);
         }
         catch (Exception exception)
         {
@@ -512,7 +544,7 @@ internal static class LeanCacheProvisioner
                     lakeExecutable,
                     ["exe", "cache", "get"],
                     worktreeRoot,
-                    ProvisionBudget);
+                    DependencyFetchBudget);
             }
             catch (Exception exception)
             {
