@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Definition cuts cover residuals; two further CAS laws expose missing premises.
+Two residual-cover clauses are proved; two CAS laws remain open.
 
 **Theorem 1.1 (Cut coverage and finite extraction).**
 
@@ -20,7 +20,7 @@ finiteSelectionSufficientOnRange is the canonical Refines target relation agains
 
 **Definition 1.2 (CAS marginal-capture statement).**
 
-$$\left(\Gamma \subseteq \Delta \land \neg(d \in \Delta)\right) \Rightarrow \operatorname{mass}\left(nu, \operatorname{capturedPairs}\left(\operatorname{union}\left(\Gamma, \{d\}\right), d_{i}, q, T\right)\right) - \operatorname{mass}\left(nu, \operatorname{capturedPairs}\left(\Gamma, d_{i}, q, T\right)\right) \ge \operatorname{mass}\left(nu, \operatorname{capturedPairs}\left(\operatorname{union}\left(\Delta, \{d\}\right), d_{i}, q, T\right)\right) - \operatorname{mass}\left(nu, \operatorname{capturedPairs}\left(\Delta, d_{i}, q, T\right)\right).$$
+$$\left(\Gamma \subseteq \Delta \land \neg(d \in \Delta)\right) \Rightarrow \operatorname{capturedEscapeMass}\left(\operatorname{union}\left(\Gamma, \{d\}\right), d_{i}, q, T, nu\right) - \operatorname{capturedEscapeMass}\left(\Gamma, d_{i}, q, T, nu\right) \ge \operatorname{capturedEscapeMass}\left(\operatorname{union}\left(\Delta, \{d\}\right), d_{i}, q, T, nu\right) - \operatorname{capturedEscapeMass}\left(\Delta, d_{i}, q, T, nu\right).$$
 
 *Formalization.* `D5/S3/ConceptDynamics/DefinitionEscape/FiniteCoverCounting.marginalCaptureLaw` (`✓ std3`).
 
@@ -28,11 +28,11 @@ $$\left(\Gamma \subseteq \Delta \land \neg(d \in \Delta)\right) \Rightarrow \ope
 
 *Commentary.*
 
-This Prop records the exact DECT section 4.4 difference formula: F(S) is nu.mass of capturedPairs(S), Gamma is contained in Delta, and d is fresh for Delta. It is not claimed as a theorem. EscapeWeight has only zero-empty and nonnegative laws; a checked counterexample shows that these do not imply the displayed diminishing return.
+This Prop uses the two CAS definitions directly: residualEscapeMass(S) is M(S) = nu.mass(E(q join S; T)), and capturedEscapeMass(S) is F(S) = M(empty) - M(S). Gamma is contained in Delta and d is fresh for Delta. It is not a theorem: identifying this difference with a weighted union of cuts needs an additivity law, and proving diminishing returns needs an appropriate submodularity law absent from EscapeWeight.
 
 **Definition 1.3 (CAS counting escape-rate statement).**
 
-$$\left(0 < \operatorname{ncard}\left(\operatorname{defectRelation}\left(q, T\right)\right) \land b_{1} \le b_{2}\right) \Rightarrow \operatorname{budgetedEscapeRate}\left(b_{2}\right)_{count} \le \operatorname{budgetedEscapeRate}\left(b_{1}\right)_{count}.$$
+$$\left((\forall d \in I,\; d \in \Gamma \Rightarrow 0 \le \operatorname{c}\left(d\right)) \land \left(0 \le b_{1} \land \left(b_{1} \le b_{2} \land 0 < \operatorname{mass}\left(countingWeight, \operatorname{defectRelation}\left(q, T\right)\right)\right)\right)\right) \Rightarrow \operatorname{budgetedEscapeRate}\left(q, \operatorname{finiteSelectionSupplement}\left(\Gamma, d_{i}\right), T, \operatorname{finiteSelectionCost}\left(\Gamma, c\right), countingWeight, b_{2}\right) \le \operatorname{budgetedEscapeRate}\left(q, \operatorname{finiteSelectionSupplement}\left(\Gamma, d_{i}\right), T, \operatorname{finiteSelectionCost}\left(\Gamma, c\right), countingWeight, b_{1}\right).$$
 
 *Formalization.* `D5/S3/ConceptDynamics/DefinitionEscape/FiniteCoverCounting.countingEscapeAntitoneLaw` (`✓ std3`).
 
@@ -40,7 +40,7 @@ $$\left(0 < \operatorname{ncard}\left(\operatorname{defectRelation}\left(q, T\ri
 
 *Commentary.*
 
-This Prop keeps only the source premises: positive baseline counting mass and b1 <= b2. It is not claimed as a theorem. With no strategy feasible at b1, the current Real.sInf encoding gives rate(b1)=0, and a checked example falsifies the displayed direction.
+This Prop uses CAS strategies Finset Gamma, finiteSelectionSupplement, and finiteSelectionCost(S) = sum d in S, c(d). Candidate costs and b1 are nonnegative, so the empty selection has cost zero and is feasible; b1 <= b2 gives the displayed antitone direction. Every budgetedEscapeRate occurrence names q, the supplement, T, the summed cost, countingWeight, and its budget. This declaration is not a theorem and no counterexample to the CAS strategy model is claimed.
 
 ## References
 
@@ -49,5 +49,4 @@ This Prop keeps only the source premises: positive baseline counting mass and b1
 - Truth anchor: `D5/S3/ConceptDynamics/DefinitionEscape/FiniteCoverCounting.marginalCaptureLaw`
 - Dependency: [D5/S3/AnalyticClosure/Budget/BudgetedEscapeRateAntitone](../../AnalyticClosure/Budget/BudgetedEscapeRateAntitone.md)
 - Dependency: [D5/S3/ConceptDynamics/DefinitionEscape/BlindKernelObstruction](BlindKernelObstruction.md)
-- Dependency: [D5/S3/ConceptDynamics/DefinitionEscape/ResidualJoinLaw](ResidualJoinLaw.md)
 - Dependency: [D5/S3/ConceptDynamics/Refinement/InductiveSufficiency](../Refinement/InductiveSufficiency.md)

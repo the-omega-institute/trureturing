@@ -15,6 +15,8 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
         Formula target = F.Id("T");
         Formula definition = F.Id("d");
         Formula nu = F.Id("nu");
+        Formula candidateCost = F.Id("c");
+        Formula countingWeight = F.Id("countingWeight");
         Formula family = Seq(F.Id("d"), Underscore, Grp(F.Id("i")));
         Formula budgetOne = Seq(F.Id("b"), Underscore, Grp(D(1)));
         Formula budgetTwo = Seq(F.Id("b"), Underscore, Grp(D(2)));
@@ -48,7 +50,7 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
         Formula gammaWithDefinition = Call("union", gamma, singletonDefinition);
         Formula deltaWithDefinition = Call("union", delta, singletonDefinition);
         Formula Capture(Formula set) => Call(
-            "mass", nu, Call("capturedPairs", set, family, q, target));
+            "capturedEscapeMass", set, family, q, target, nu);
         Formula marginalPremises = new Formula.Logic(
             Seq(gamma, Sp, Subseteq, Sp, delta),
             FormulaLogicOperator.And,
@@ -63,14 +65,46 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
                 FormulaLogicOperator.Implies,
                 marginalConclusion), Dot));
 
-        Formula rateOne = Seq(
-            Call("budgetedEscapeRate", budgetOne), Underscore, Grp(F.Id("count")));
-        Formula rateTwo = Seq(
-            Call("budgetedEscapeRate", budgetTwo), Underscore, Grp(F.Id("count")));
+        Formula finiteSupplement = Call("finiteSelectionSupplement", gamma, family);
+        Formula selectionCost = Call("finiteSelectionCost", gamma, candidateCost);
+        Formula rateOne = Call(
+            "budgetedEscapeRate",
+            q,
+            finiteSupplement,
+            target,
+            selectionCost,
+            countingWeight,
+            budgetOne);
+        Formula rateTwo = Call(
+            "budgetedEscapeRate",
+            q,
+            finiteSupplement,
+            target,
+            selectionCost,
+            countingWeight,
+            budgetTwo);
         Formula positiveBaselineCount = new Formula.Relation(
             D(0),
             FormulaRelationOperator.LessThan,
-            Call("ncard", residual));
+            Call("mass", countingWeight, residual));
+        Formula candidateCostsNonnegative = new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [new Formula.BoundVariable(
+                FormulaIdentifier.Create("d"),
+                F.Id("I"))],
+            new Formula.Logic(
+                Seq(definition, Sp, InMacro, Sp, gamma),
+                FormulaLogicOperator.Implies,
+                new Formula.Relation(
+                    D(0),
+                    FormulaRelationOperator.LessThanOrEqual,
+                    Call("c", definition))));
+        Formula budgetOneNonnegative = new Formula.Relation(
+            D(0),
+            FormulaRelationOperator.LessThanOrEqual,
+            budgetOne);
+        Formula groupedCandidateCostsNonnegative = Seq(
+            Open, candidateCostsNonnegative, Close);
         Formula budgetOrdered = new Formula.Relation(
             budgetOne,
             FormulaRelationOperator.LessThanOrEqual,
@@ -80,9 +114,15 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
             FormulaRelationOperator.LessThanOrEqual,
             rateOne);
         Formula countingPremises = new Formula.Logic(
-            positiveBaselineCount,
+            groupedCandidateCostsNonnegative,
             FormulaLogicOperator.And,
-            budgetOrdered);
+            new Formula.Logic(
+                budgetOneNonnegative,
+                FormulaLogicOperator.And,
+                new Formula.Logic(
+                    budgetOrdered,
+                    FormulaLogicOperator.And,
+                    positiveBaselineCount)));
         Formula countingStatement = Disp(Seq(
             new Formula.Logic(
                 countingPremises,
@@ -90,7 +130,7 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
                 countingAntitone), Dot));
 
         return DocumentDefinition.Create(ScribeNode.Create(
-            "Definition cuts cover residuals; two further CAS laws expose missing premises.",
+            "Two residual-cover clauses are proved; two CAS laws remain open.",
             H("Finite Cover and Counting"),
             Blocks(
                 Describe.Lean(
@@ -121,11 +161,12 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
                     StatementSource.FromAuthor(marginalStatement),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
-                        "This Prop records the exact DECT section 4.4 difference formula: F(S) is "
-                            + "nu.mass of capturedPairs(S), Gamma is contained in Delta, and d is "
-                            + "fresh for Delta. It is not claimed as a theorem. EscapeWeight has "
-                            + "only zero-empty and nonnegative laws; a checked counterexample shows "
-                            + "that these do not imply the displayed diminishing return."))),
+                        "This Prop uses the two CAS definitions directly: residualEscapeMass(S) is "
+                            + "M(S) = nu.mass(E(q join S; T)), and capturedEscapeMass(S) is "
+                            + "F(S) = M(empty) - M(S). Gamma is contained in Delta and d is fresh "
+                            + "for Delta. It is not a theorem: identifying this difference with a "
+                            + "weighted union of cuts needs an additivity law, and proving diminishing "
+                            + "returns needs an appropriate submodularity law absent from EscapeWeight."))),
                     DescribeRole.Definition),
                 Describe.Lean(
                     DescribeId.Create("counting-escape-antitone-law"),
@@ -136,10 +177,13 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
                     StatementSource.FromAuthor(countingStatement),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
-                        "This Prop keeps only the source premises: positive baseline counting mass "
-                            + "and b1 <= b2. It is not claimed as a theorem. With no strategy "
-                            + "feasible at b1, the current Real.sInf encoding gives rate(b1)=0, "
-                            + "and a checked example falsifies the displayed direction."))),
+                        "This Prop uses CAS strategies Finset Gamma, finiteSelectionSupplement, and "
+                            + "finiteSelectionCost(S) = sum d in S, c(d). Candidate costs and b1 are "
+                            + "nonnegative, so the empty selection has cost zero and is feasible; "
+                            + "b1 <= b2 gives the displayed antitone direction. Every "
+                            + "budgetedEscapeRate occurrence names q, the supplement, T, the summed "
+                            + "cost, countingWeight, and its budget. This declaration is not a theorem "
+                            + "and no counterexample to the CAS strategy model is claimed."))),
                     DescribeRole.Definition))));
     }
 }

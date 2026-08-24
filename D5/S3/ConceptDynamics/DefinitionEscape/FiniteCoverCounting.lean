@@ -3,14 +3,26 @@
    mirror-B: D5/B/S3/ConceptDynamics/DefinitionEscape/FiniteCoverCounting
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Cover clauses hold; marginal capture and budget antitonicity expose source gaps. -/
+   digest: Two finite-cover clauses hold; marginal and counting clauses remain open. -/
 
 import D5.S3.AnalyticClosure.Budget.BudgetedEscapeRateAntitone
 import D5.S3.ConceptDynamics.DefinitionEscape.BlindKernelObstruction
-import D5.S3.ConceptDynamics.DefinitionEscape.ResidualJoinLaw
 import D5.S3.ConceptDynamics.Refinement.InductiveSufficiency
 import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Data.Set.Finite.Lattice
+
+/- Scope of this module: `finite_cover_counting` packages only the two clauses
+proved below. The marginal clause is retained only as a proposition over the
+CAS definitions
+
+  M(S) = nu.mass (defectRelation (conceptJoin q (jointReadout S)) target),
+  F(S) = M(empty) - M(S).
+
+`EscapeWeight` has no additivity or submodularity law from which its diminishing
+return could be proved. The counting clause is likewise only a proposition: it
+uses finite subsets of Gamma, summed nonnegative candidate costs, and the empty
+selection at a nonnegative budget. Neither open clause is part of the packaged
+theorem, and this module claims no counterexample to either CAS assertion. -/
 
 /- Library-search audit trail (2026-08-24):
    * Shape searches `rg -n 'Set \(X × X\)' D5/S3/ConceptDynamics` and
@@ -26,12 +38,13 @@ import Mathlib.Data.Set.Finite.Lattice
      `BudgetedEscapeRateAntitone.budgeted_escape_rate_bounds_and_antitone`.
      `coveredInputs` unions finite anchor suites of arbitrary inputs and has no
      target residual or definition kernel, so it does not state clause one.
-     The budget theorem's second conjunct proves clause four at a general
-     weight only after assuming a nonempty feasible-value set. The source's
-     marginal difference and unconditional budget-antitonicity formulas are
-     therefore stated below without being claimed: the source supplies neither
-     the mass laws needed for the former nor a nonempty feasible set needed by
-     the current real-infimum encoding for the latter.
+     The budget theorem ranges over an arbitrary `Strategy`; applying it to the
+     CAS model still requires a faithful finite-subset strategy encoding with
+     summed costs and its canonical empty selection. That encoding is stated
+     below, but no theorem about it is claimed here. The marginal formula is
+     also kept outside the packaged theorem: no equality between the CAS
+     difference `M(empty) - M(S)` and a weighted union of cuts is assumed,
+     because that step needs a mass additivity law absent from `EscapeWeight`.
    * The neighboring `Experiments.experimentGain` is defined through that
      module's separate `targetDefects`, whereas this theory fixes
      `defectRelation` as the target-residual source. It is therefore not used
@@ -62,7 +75,6 @@ open D5.S3.AnalyticClosure.Budget.BudgetedEscapeRateAntitone
 open D5.S3.ConceptDynamics.ConceptFiberDecomposition
 open D5.S3.ConceptDynamics.ConceptJoinUniversal
 open D5.S3.ConceptDynamics.DefinitionEscape.BlindKernelObstruction
-open D5.S3.ConceptDynamics.DefinitionEscape.ResidualJoinLaw
 open D5.S3.ConceptDynamics.Faithfulness.JointFaithfulnessLeibnizCriterion
 open D5.S3.ConceptDynamics.Refinement.InductiveSufficiency
 open D5.S3.ConceptDynamics.TargetRisk.RefinementRiskCostTradeoff
@@ -197,45 +209,75 @@ theorem finite_cover_counting
     exact ⟨n, selected,
       (inductive_sufficiency_criterion extended target).1.mp factors⟩
 
-/-- The pairs in the baseline target defect captured by a family of definition
-cuts. This is the set appearing inside `nu` in DECT section 4.4. -/
-def capturedPairs
+/-- CAS residual mass `M(S) = nu(E(q join S; T))`. -/
+def residualEscapeMass
     {I X C Target : Type*} {V : I → Type*}
     (S : Set I) (definitions : ∀ i, Concept X (V i))
-    (q : Concept X C) (target : Concept X Target) : Set (X × X) :=
-  ⋃ definition : S,
-    defectRelation q target ∩
-      (conceptKernel (fun item : S => definitions item.1) definition)ᶜ
+    (q : Concept X C) (target : Concept X Target)
+    (nu : EscapeWeight (X × X)) : Real :=
+  nu.mass (defectRelation
+    (conceptJoin q (jointReadout (fun item : S => definitions item.1))) target)
 
-/-- The exact diminishing-marginal-capture formula stated by DECT section 4.4.
-It is a proposition definition, not a theorem: `EscapeWeight` does not provide
-the finite additivity or submodularity needed to prove it. -/
+/-- CAS total capture `F(S) = M(empty) - M(S)`. No weighted-cover equality is
+built into this definition. -/
+def capturedEscapeMass
+    {I X C Target : Type*} {V : I → Type*}
+    (S : Set I) (definitions : ∀ i, Concept X (V i))
+    (q : Concept X C) (target : Concept X Target)
+    (nu : EscapeWeight (X × X)) : Real :=
+  residualEscapeMass (∅ : Set I) definitions q target nu -
+    residualEscapeMass S definitions q target nu
+
+/-- The diminishing-marginal-capture formula over the CAS two-step definition
+of `F`. This is a proposition, not a theorem: `EscapeWeight` supplies no
+additivity or submodularity law from which to prove it. -/
 def marginalCaptureLaw
     {I X C Target : Type*} {V : I → Type*}
     (Gamma Delta : Set I) (definitions : ∀ i, Concept X (V i))
     (q : Concept X C) (target : Concept X Target) (d : I)
     (nu : EscapeWeight (X × X)) : Prop :=
   Gamma ⊆ Delta ∧ d ∉ Delta →
-    nu.mass (capturedPairs (Gamma ∪ {d}) definitions q target) -
-        nu.mass (capturedPairs Gamma definitions q target) ≥
-      nu.mass (capturedPairs (Delta ∪ {d}) definitions q target) -
-        nu.mass (capturedPairs Delta definitions q target)
+    capturedEscapeMass (Gamma ∪ {d}) definitions q target nu -
+        capturedEscapeMass Gamma definitions q target nu ≥
+      capturedEscapeMass (Delta ∪ {d}) definitions q target nu -
+        capturedEscapeMass Delta definitions q target nu
 
-/-- The source's counting escape-rate direction with its positive baseline-mass
-and budget-order premises, but without the source-absent feasibility premise.
-This is registered as a proposition rather than claimed as a theorem. -/
+/-- A finite CAS selection reveals exactly the coordinates in the selected
+subset. Unselected coordinates carry `none` and add no distinction. -/
+def finiteSelectionSupplement
+    {I X : Type*} {V : I → Type*} [DecidableEq I]
+    (Gamma : Set I) (definitions : ∀ i, Concept X (V i)) :
+    Finset Gamma → Concept X (∀ item : Gamma, Option (V item.1)) :=
+  fun selection state item =>
+    if item ∈ selection then some (definitions item.1 state) else none
+
+/-- CAS selection cost `C(S) = sum d in S, c(d)`. -/
+def finiteSelectionCost
+    {I : Type*} [DecidableEq I]
+    (Gamma : Set I) (candidateCost : I → Real) (selection : Finset Gamma) : Real :=
+  ∑ item ∈ selection, candidateCost item.1
+
+/-- The CAS counting escape-rate direction on finite subsets of `Gamma`.
+Nonnegative candidate costs and a nonnegative smaller budget make the empty
+selection feasible. This is registered as a proposition, not as a theorem. -/
 def countingEscapeAntitoneLaw
-    {X C Target Strategy Added : Type*}
-    (q : Concept X C) (supplement : Strategy → Concept X Added)
-    (target : Concept X Target) (cost : Strategy → Real)
-    (budget1 budget2 : Real) : Prop :=
+    {I X C Target : Type*} {V : I → Type*} [Finite X] [DecidableEq I]
+    (Gamma : Set I) (definitions : ∀ i, Concept X (V i))
+    (q : Concept X C) (target : Concept X Target)
+    (candidateCost : I → Real) (budget1 budget2 : Real) : Prop :=
   let countingWeight : EscapeWeight (X × X) :=
     { mass := fun set => (set.ncard : Real)
       empty_mass := by simp
       mass_nonnegative := fun set => Nat.cast_nonneg set.ncard }
-  0 < countingWeight.mass (defectRelation q target) ∧ budget1 ≤ budget2 →
-    budgetedEscapeRate q supplement target cost countingWeight budget2 ≤
-      budgetedEscapeRate q supplement target cost countingWeight budget1
+  (∀ definition ∈ Gamma, 0 ≤ candidateCost definition) ∧
+      0 ≤ budget1 ∧ budget1 ≤ budget2 ∧
+      0 < countingWeight.mass (defectRelation q target) →
+    budgetedEscapeRate q
+        (finiteSelectionSupplement Gamma definitions) target
+        (finiteSelectionCost Gamma candidateCost) countingWeight budget2 ≤
+      budgetedEscapeRate q
+        (finiteSelectionSupplement Gamma definitions) target
+        (finiteSelectionCost Gamma candidateCost) countingWeight budget1
 
 /- The selected Boolean coordinate has codomain `Bool`, while the other
 candidate has codomain `Unit`; this witnesses the genuinely dependent family
@@ -350,157 +392,6 @@ example :
       (conceptJoin q (jointReadout
         (fun index => definitions (selected index).1))) target).1.mpr refinement
     exact Bool.false_ne_true (factors extensionEqual)
-
-/- `EscapeWeight` supplies zero empty mass and nonnegativity, but neither
-additivity nor submodularity. This concrete weight assigns mass one exactly
-when both displayed residual pairs have been captured. The larger family needs
-the fresh definition to capture the second pair, while the smaller family does
-not receive mass for capturing that pair alone, reversing the source law. -/
-example :
-    let definitions : ∀ _ : Bool, Concept (Bool × Bool) Bool :=
-      fun index => if index then Prod.snd else Prod.fst
-    let Gamma : Set Bool := ∅
-    let Delta : Set Bool := {false}
-    let q : Concept (Bool × Bool) Unit := fun _ => ()
-    let target : Concept (Bool × Bool) (Bool × Bool) := id
-    let firstPair : (Bool × Bool) × (Bool × Bool) :=
-      ((false, false), (true, false))
-    let secondPair : (Bool × Bool) × (Bool × Bool) :=
-      ((false, false), (false, true))
-    let nu : EscapeWeight ((Bool × Bool) × (Bool × Bool)) :=
-      { mass := fun set =>
-          @ite Real (firstPair ∈ set ∧ secondPair ∈ set)
-            (Classical.propDecidable _) 1 0
-        empty_mass := by simp
-        mass_nonnegative := by intro set; split_ifs <;> norm_num }
-    ¬marginalCaptureLaw Gamma Delta definitions q target true nu := by
-  dsimp only
-  let definitions : ∀ _ : Bool, Concept (Bool × Bool) Bool :=
-    fun index => if index then Prod.snd else Prod.fst
-  let Gamma : Set Bool := ∅
-  let Delta : Set Bool := {false}
-  let q : Concept (Bool × Bool) Unit := fun _ => ()
-  let target : Concept (Bool × Bool) (Bool × Bool) := id
-  let firstPair : (Bool × Bool) × (Bool × Bool) :=
-    ((false, false), (true, false))
-  let secondPair : (Bool × Bool) × (Bool × Bool) :=
-    ((false, false), (false, true))
-  let nu : EscapeWeight ((Bool × Bool) × (Bool × Bool)) :=
-    { mass := fun set =>
-        @ite Real (firstPair ∈ set ∧ secondPair ∈ set)
-          (Classical.propDecidable _) 1 0
-      empty_mass := by simp
-      mass_nonnegative := by intro set; split_ifs <;> norm_num }
-  intro law
-  have inequality := law ⟨Set.empty_subset _, by simp⟩
-  norm_num [nu, firstPair, secondPair, capturedPairs, Gamma, Delta,
-    definitions, q, target, defectRelation, conceptKernel] at inequality
-
-/- A zero-cost constant supplement leaves counting escape rate one, while the
-unit-cost identity supplement makes rate one attain zero. Thus the certified
-budget direction is strict here, and reversing it gives a false inequality. -/
-example :
-    let q : Concept Bool Unit := fun _ => ()
-    let target : Concept Bool Bool := id
-    let supplement : Bool → Concept Bool Bool := fun
-      | false => fun _ => false
-      | true => id
-    let cost : Bool → Real := fun
-      | false => 0
-      | true => 1
-    let weight : EscapeWeight (Bool × Bool) :=
-      { mass := fun set => (set.ncard : Real)
-        empty_mass := by simp
-        mass_nonnegative := fun set => Nat.cast_nonneg set.ncard }
-    let rate := budgetedEscapeRate q supplement target cost weight
-    (defectRelation q target).Nonempty ∧
-      rate 0 = 1 ∧ rate 1 = 0 ∧ rate 1 < rate 0 ∧ ¬rate 0 ≤ rate 1 := by
-  classical
-  let q : Concept Bool Unit := fun _ => ()
-  let target : Concept Bool Bool := id
-  let supplement : Bool → Concept Bool Bool := fun
-    | false => fun _ => false
-    | true => id
-  let cost : Bool → Real := fun
-    | false => 0
-    | true => 1
-  let weight : EscapeWeight (Bool × Bool) :=
-    { mass := fun set => (set.ncard : Real)
-      empty_mass := by simp
-      mass_nonnegative := fun set => Nat.cast_nonneg set.ncard }
-  let rate := budgetedEscapeRate q supplement target cost weight
-  change (defectRelation q target).Nonempty ∧
-    rate 0 = 1 ∧ rate 1 = 0 ∧ rate 1 < rate 0 ∧ ¬rate 0 ≤ rate 1
-  have baselineEq :
-      defectRelation q target = {(false, true), (true, false)} := by
-    ext pair
-    rcases pair with ⟨first, second⟩
-    cases first <;> cases second <;> simp [q, target, defectRelation]
-  have residualEq (strategy : Bool) :
-      defectRelation (conceptJoin q (supplement strategy)) target =
-        if strategy then ∅ else {(false, true), (true, false)} := by
-    ext pair
-    rcases pair with ⟨first, second⟩
-    cases strategy <;> cases first <;> cases second <;>
-      simp [q, target, supplement, defectRelation, conceptJoin]
-  have baselineNonempty : (defectRelation q target).Nonempty := by
-    rw [baselineEq]
-    simp
-  have valuesZero :
-      budgetedEscapeValues q supplement target cost weight 0 = {(1 : Real)} := by
-    ext value
-    simp [budgetedEscapeValues, cost, residualEq, baselineEq, weight,
-      eq_comm]
-  have valuesOne :
-      budgetedEscapeValues q supplement target cost weight 1 =
-        {(0 : Real), (1 : Real)} := by
-    ext value
-    simp [budgetedEscapeValues, cost, residualEq, baselineEq, weight,
-      eq_comm, or_comm]
-  refine ⟨baselineNonempty, ?_⟩
-  change
-    sInf (budgetedEscapeValues q supplement target cost weight 0) = 1 ∧
-      sInf (budgetedEscapeValues q supplement target cost weight 1) = 0 ∧
-      sInf (budgetedEscapeValues q supplement target cost weight 1) <
-        sInf (budgetedEscapeValues q supplement target cost weight 0) ∧
-      ¬sInf (budgetedEscapeValues q supplement target cost weight 0) ≤
-        sInf (budgetedEscapeValues q supplement target cost weight 1)
-  rw [valuesZero, valuesOne]
-  norm_num
-
-/- At budget -1 the feasible strategy set is empty and `Real.sInf ∅ = 0`; at
-budget 0 the sole constant strategy is feasible and has counting rate one.
-Thus positive baseline mass and ordered budgets do not suffice for the source's
-antitone conclusion under the current real-valued infimum encoding. -/
-example :
-    let q : Concept Bool Unit := fun _ => ()
-    let target : Concept Bool Bool := id
-    let supplement : Unit → Concept Bool Unit := fun _ _ => ()
-    let cost : Unit → Real := fun _ => 0
-    ¬countingEscapeAntitoneLaw q supplement target cost (-1) 0 := by
-  classical
-  dsimp
-  intro law
-  have baselineEq :
-      defectRelation (fun _ : Bool => ()) (id : Concept Bool Bool) =
-        {(false, true), (true, false)} := by
-    ext pair
-    rcases pair with ⟨first, second⟩
-    cases first <;> cases second <;> simp [defectRelation]
-  have joinedEq :
-      defectRelation
-          (conceptJoin (fun _ : Bool => ()) (fun _ : Bool => ()))
-          (id : Concept Bool Bool) =
-        {(false, true), (true, false)} := by
-    ext pair
-    rcases pair with ⟨first, second⟩
-    cases first <;> cases second <;> simp [defectRelation, conceptJoin]
-  have inequality := law ⟨by
-    change 0 < ((defectRelation (fun _ : Bool => ()) id).ncard : Real)
-    rw [baselineEq]
-    norm_num, by norm_num⟩
-  norm_num [countingEscapeAntitoneLaw, budgetedEscapeRate,
-    budgetedEscapeValues, baselineEq, joinedEq] at inequality
 
 #print axioms finite_cover_counting
 
