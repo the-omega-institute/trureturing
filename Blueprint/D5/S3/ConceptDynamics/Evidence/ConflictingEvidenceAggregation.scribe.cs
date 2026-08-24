@@ -38,17 +38,14 @@ internal sealed class ConflictingEvidenceAggregationDocument : IScribeDocumentDe
     private static Formula Sub(Formula value, Formula index) =>
         Seq(value, Underscore, Grp(index));
 
-    private static Formula Bold(string value) =>
-        Seq(Mathbf, Grp(F.Id(value)));
-
     private static Formula TheoremFormula()
     {
         Formula source = F.Id("e");
-        Formula trueOnly = Bold("T");
-        Formula both = Bold("B");
+        Formula trueOnly = Seq(Mathbf, Grp(F.Id("T")));
+        Formula both = Seq(Mathbf, Grp(F.Id("B")));
         Formula negativeBit = Sub(source, F.Id("neg"));
         Formula aggregated = Call("aggregateEvidence", trueOnly, source);
-        Formula sourceType = OperatornameCall("EvidenceValue");
+        Formula sourceType = Seq(Operatorname, Grp(F.Id("EvidenceValue")));
         Formula informationLeFirst = Call("InformationLe", trueOnly, aggregated);
         Formula informationLeSecond = Call("InformationLe", source, aggregated);
         Formula trueConsistent = Call("EvidenceConsistent", trueOnly);
@@ -68,6 +65,4 @@ internal sealed class ConflictingEvidenceAggregationDocument : IScribeDocumentDe
             F.Id("true"), Close, Dot));
     }
 
-    private static Formula OperatornameCall(string name) =>
-        Seq(Operatorname, Grp(F.Id(name)));
 }

@@ -33,7 +33,7 @@ internal sealed class TargetRelativeExperimentSuperiorityDocument : IScribeDocum
         Seq(domain, Sp, To, Sp, codomain);
 
     private static Formula Sub(Formula value, Formula index) =>
-        new Formula.Subscript(value, index);
+        Seq(value, Underscore, Grp(index));
 
     private static Formula Refines(Formula coarse, Formula fine) =>
         Call("Refines", coarse, fine);
@@ -45,8 +45,8 @@ internal sealed class TargetRelativeExperimentSuperiorityDocument : IScribeDocum
     private static Formula TheoremFormula()
     {
         Formula state = F.Id("X");
-        Formula one = new Formula.LatexDigits([1]);
-        Formula two = new Formula.LatexDigits([2]);
+        Formula one = D(1);
+        Formula two = D(2);
         Formula firstType = Sub(F.Id("E"), one);
         Formula secondType = Sub(F.Id("E"), two);
         Formula first = Sub(F.Id("q"), one);

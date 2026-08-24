@@ -68,7 +68,7 @@ internal sealed class InformationValueMonotonicityDocument : IScribeDocumentDefi
         Formula utility = F.Id("V");
         Formula expectation = Seq(Mathbb, Grp(F.Id("E")));
         Formula world = F.Id("T");
-        Formula identityWorld = OperatornameCall("idWorld");
+        Formula identityWorld = Seq(Operatorname, Grp(F.Id("idWorld")));
         Formula cost = F.Id("c");
         Formula coarseActions = Sub(action, coarse);
         Formula fineActions = Sub(action, fine);
@@ -115,6 +115,4 @@ internal sealed class InformationValueMonotonicityDocument : IScribeDocumentDefi
             Rightarrow, Sp, fineOptimal, Sp, Geq, Sp, coarseOptimal, Dot));
     }
 
-    private static Formula OperatornameCall(string name) =>
-        Seq(Operatorname, Grp(F.Id(name)));
 }
