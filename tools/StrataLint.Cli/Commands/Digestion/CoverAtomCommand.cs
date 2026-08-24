@@ -107,7 +107,8 @@ internal static partial class CoverAtomCommand
             LedgerWriteReceiptIntegrityGate.RequireNoNewFailures(
                 beforeEvaluation,
                 baselineDocument,
-                baseline);
+                baseline,
+                current);
 
             // Gate ②(b): anti-Goodhart — cover may only deposit a declaration that
             // the baseline ledger did not already bind.
@@ -169,7 +170,8 @@ internal static partial class CoverAtomCommand
             LedgerWriteReceiptIntegrityGate.RequireNoNewFailures(
                 derived,
                 baselineDocument,
-                baseline);
+                baseline,
+                current);
 
             var statusByAtomId = derived.Entries.ToDictionary(
                 static item => item.Entry.AtomId,
@@ -202,10 +204,11 @@ internal static partial class CoverAtomCommand
                 verifiedScribeEmissions,
                 baselineDocument,
                 baselineSnapshot: baseline);
-            LedgerWriteReceiptIntegrityGate.RequireNoNewFailures(
+            var ignoredReceiptIntegrityBacklog = LedgerWriteReceiptIntegrityGate.RequireNoNewFailures(
                 evaluation,
                 baselineDocument,
-                baseline);
+                baseline,
+                finalSnapshot);
             var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
                 finalDocument,
                 finalSnapshot,
@@ -287,6 +290,7 @@ internal static partial class CoverAtomCommand
                 true,
                 $"COVER atom_id={options.AtomId} gid={string.Join(',', options.Gids)} "
                 + $"ledger_changed={changed.ToString().ToLowerInvariant()}\n"
+                + $"receipt_integrity_backlog_ignored={ignoredReceiptIntegrityBacklog}\n"
                 + backfillObservations
                 + DigestStatusCommand.RenderText(evaluation),
                 string.Empty);

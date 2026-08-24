@@ -421,7 +421,10 @@ public sealed partial class ProductionEnvironmentTests
             OtherAtomBinding = ("receipt-gap-sibling", "D5/S0/Carrier/Probe.sibling"),
             ReportDeclarations = ImmutableArray.Create("probe", "sibling"),
         });
-        var inputs = DirectoryInputs(WithReceiptMismatchAtForkPoint(materialized, mismatchCode));
+        var inputs = DirectoryInputs(WithReceiptMismatchAtForkPoint(
+            materialized,
+            mismatchCode,
+            byteIdenticalBaseline: true));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
         var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
@@ -430,6 +433,7 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
+        Assert.Contains("receipt_integrity_backlog_ignored=1", result.Output, StringComparison.Ordinal);
     }
 
     [Theory]
@@ -481,6 +485,7 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
+        Assert.Contains("receipt_integrity_backlog_ignored=1", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]

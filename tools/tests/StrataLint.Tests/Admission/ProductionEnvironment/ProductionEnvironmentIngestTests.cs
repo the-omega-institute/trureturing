@@ -350,6 +350,7 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("ledger_changed=false", result.Output, StringComparison.Ordinal);
+        Assert.Contains("receipt_integrity_backlog_ignored=1", result.Output, StringComparison.Ordinal);
         Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
     }
 

@@ -56,7 +56,8 @@ internal static partial class IngestCommand
             LedgerWriteReceiptIntegrityGate.RequireNoNewFailures(
                 derived,
                 baselineDocument,
-                baseline);
+                baseline,
+                plannedSnapshot);
 
             var statusByAtomId = derived.Entries.ToDictionary(
                 static item => item.Entry.AtomId,
@@ -87,10 +88,11 @@ internal static partial class IngestCommand
                 verifiedScribeEmissions,
                 baselineDocument,
                 baselineSnapshot: baseline);
-            LedgerWriteReceiptIntegrityGate.RequireNoNewFailures(
+            var ignoredReceiptIntegrityBacklog = LedgerWriteReceiptIntegrityGate.RequireNoNewFailures(
                 evaluation,
                 baselineDocument,
-                baseline);
+                baseline,
+                finalSnapshot);
             var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
                 finalDocument,
                 finalSnapshot,
@@ -126,6 +128,7 @@ internal static partial class IngestCommand
                 + $"open_genres={openGenres.Length} "
                 + $"cas_objects_written={createdCasPaths.Length} "
                 + $"ledger_changed={changed.ToString().ToLowerInvariant()}\n"
+                + $"receipt_integrity_backlog_ignored={ignoredReceiptIntegrityBacklog}\n"
                 + string.Concat(openGenres.Select(static item =>
                     $"INGEST_OPEN_GENRE source={item.SourceId} "
                     + $"token={DigestStatusCommand.RenderDetail(item.Token)}\n"))
