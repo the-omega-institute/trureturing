@@ -123,15 +123,17 @@ public sealed record FrozenNodeMaterial(
 public sealed class FrozenMaterialCatalog
 {
     private FrozenMaterialCatalog(
-        AcyclicTruthDag dag,
         FrozenEnvironmentAttestation environment,
+        ImmutableDictionary<RepoPath, TruthState> states,
+        ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency,
         ImmutableArray<FrozenNodeMaterial> closedNodes,
         ImmutableDictionary<RepoPath, FrozenNodeMaterial> byPath,
         ImmutableDictionary<RepoPath, ImmutableArray<CaseId>> openCases,
         ImmutableDictionary<RepoPath, ImmutableArray<string>> tailRegistrations)
     {
-        Dag = dag;
         Environment = environment;
+        States = states;
+        Adjacency = adjacency;
         ClosedNodes = closedNodes;
         ByPath = byPath;
         OpenCases = openCases;
@@ -148,17 +150,21 @@ public sealed class FrozenMaterialCatalog
 
     internal ImmutableDictionary<RepoPath, FrozenNodeMaterial> ByPath { get; }
 
-    internal AcyclicTruthDag Dag { get; }
+    internal ImmutableDictionary<RepoPath, TruthState> States { get; }
+
+    internal ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>> Adjacency { get; }
 
     internal static FrozenMaterialCatalog Create(
-        AcyclicTruthDag dag,
         FrozenEnvironmentAttestation environment,
+        ImmutableDictionary<RepoPath, TruthState> states,
         ImmutableArray<FrozenNodeMaterial> closedNodes,
         ImmutableDictionary<RepoPath, ImmutableArray<CaseId>> openCases,
-        ImmutableDictionary<RepoPath, ImmutableArray<string>> tailRegistrations) =>
+        ImmutableDictionary<RepoPath, ImmutableArray<string>> tailRegistrations,
+        ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>>? adjacency = null) =>
         new(
-            dag,
             environment,
+            states,
+            adjacency ?? ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>>.Empty,
             closedNodes,
             closedNodes.ToImmutableDictionary(static node => node.RepoPath),
             openCases,

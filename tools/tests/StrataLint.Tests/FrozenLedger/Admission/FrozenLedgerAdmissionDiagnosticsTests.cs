@@ -131,10 +131,14 @@ public sealed class FrozenLedgerAdmissionDiagnosticsTests
             ImmutableHashSet<string>.Empty,
             TrustedFrozenGitReferences.CreateForTrustedAdapter([], []));
         var changes = RawChangeSet.CreateWithKinds([(ModulePath, RawChangeKind.Modified)]);
-        var scope = FrozenLedgerAdmissionScope.Create(changes, preparation, scenario.Catalog.Dag);
+        var scope = FrozenLedgerAdmissionScope.Create(
+            changes,
+            preparation,
+            scenario.Catalog.States,
+            scenario.Catalog.Adjacency);
         var expectedCatalog = FrozenMaterialCatalog.Create(
-            scenario.Catalog.Dag,
             scenario.Catalog.Environment,
+            scenario.Catalog.States,
             [scenario.ExpectedMaterial],
             scenario.Catalog.OpenCases,
             scenario.Catalog.TailRegistrations);

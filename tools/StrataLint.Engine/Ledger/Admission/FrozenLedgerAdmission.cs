@@ -41,11 +41,13 @@ internal sealed class FrozenLedgerAdmissionScope
     internal static FrozenLedgerAdmissionScope Create(
         RawChangeSet changes,
         FrozenLedgerAdmissionPreparation preparation,
-        AcyclicTruthDag currentDag)
+        IReadOnlyDictionary<RepoPath, TruthState> states,
+        IReadOnlyDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency)
     {
         ArgumentNullException.ThrowIfNull(changes);
         ArgumentNullException.ThrowIfNull(preparation);
-        ArgumentNullException.ThrowIfNull(currentDag);
+        ArgumentNullException.ThrowIfNull(states);
+        ArgumentNullException.ThrowIfNull(adjacency);
         var witnesses = new Dictionary<RepoPath, HashSet<RepoPath>>();
         var environmentChanges = changes.Entries
             .Where(static change => FrozenLedgerDeltaPredicate.IsEnvironmentInput(change.Path.Value))
@@ -58,9 +60,9 @@ internal sealed class FrozenLedgerAdmissionScope
                 || preparation.LeanReportProducerPaths.Contains(change.Path.Value))
             .Select(static change => change.Path)
             .ToImmutableHashSet();
-        var currentClosed = currentDag.Nodes
-            .Where(static node => node.State is TruthState.Closed && node.ModuleName is not null)
-            .Select(static node => node.RepoPath)
+        var currentClosed = states
+            .Where(static item => item.Value is TruthState.Closed)
+            .Select(static item => item.Key)
             .ToImmutableHashSet();
         if (!allChanges.IsEmpty)
         {
@@ -97,7 +99,7 @@ internal sealed class FrozenLedgerAdmissionScope
             }
         }
 
-        var currentDependents = ReverseDependencies(currentDag);
+        var currentDependents = ReverseDependencies(adjacency);
         var baseDependents = BaseReverseDependencies(preparation.BaseView);
         var queue = new Queue<RepoPath>(witnesses.Keys);
         while (queue.TryDequeue(out var changed))
@@ -139,12 +141,12 @@ internal sealed class FrozenLedgerAdmissionScope
     }
 
     private static ImmutableDictionary<RepoPath, ImmutableHashSet<RepoPath>> ReverseDependencies(
-        AcyclicTruthDag dag)
+        IReadOnlyDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency)
     {
         var result = new Dictionary<RepoPath, HashSet<RepoPath>>();
-        foreach (var node in dag.Nodes)
+        foreach (var (path, dependencies) in adjacency)
         {
-            foreach (var dependency in dag.DependenciesOf(node.RepoPath))
+            foreach (var dependency in dependencies)
             {
                 if (!result.TryGetValue(dependency, out var dependents))
                 {
@@ -152,7 +154,7 @@ internal sealed class FrozenLedgerAdmissionScope
                     result.Add(dependency, dependents);
                 }
 
-                dependents.Add(node.RepoPath);
+                dependents.Add(path);
             }
         }
 
@@ -289,12 +291,13 @@ public static partial class FrozenLedger
                             active,
                             trustedReferences,
                             catalog,
-                            LeanImportClosure.RepositoryClosureIsUnchanged(
-                                catalog.Dag,
-                                active[FrozenLedgerAttestationChain.RequiredString(
-                                    item.Payload,
-                                    "case_id")].Material.RepoPath,
-                                changes),
+                            report is null || snapshot is null
+                                || !LeanImportClosure.RepositoryPaths(
+                                    report,
+                                    active[FrozenLedgerAttestationChain.RequiredString(
+                                        item.Payload,
+                                        "case_id")].Material.RepoPath)
+                                    .Overlaps(changes.Paths),
                             report is null || snapshot is null
                                 || LeanImportClosure.ExternalImportsHaveNamedPinCoverage(
                                     report,

@@ -539,7 +539,6 @@ public sealed class LedgerReattestCommandTests
                 FrozenContentAddress.Build(
                     snapshot,
                     closure,
-                    dag,
                     environment,
                     report.Files.Keys.Select(path => new FrozenModuleAttestation(
                         path,

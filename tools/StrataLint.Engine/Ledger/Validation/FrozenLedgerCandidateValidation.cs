@@ -205,9 +205,9 @@ public static partial class FrozenLedger
                 previous = eventHash;
             }
 
-            var currentClosedPaths = catalog.Dag.Nodes
-                .Where(static node => node.State is TruthState.Closed && node.ModuleName is not null)
-                .Select(static node => node.RepoPath)
+            var currentClosedPaths = catalog.States
+                .Where(static item => item.Value is TruthState.Closed)
+                .Select(static item => item.Key)
                 .ToHashSet();
             var actual = active.Values.ToDictionary(static entry => entry.Material.RepoPath);
             var missing = currentClosedPaths.Except(actual.Keys)

@@ -24,12 +24,6 @@ internal sealed record DagLedgerCandidateMaterial(
     RawChangeSet Changes,
     RepositorySnapshot Snapshot);
 
-internal sealed record TruthContext(
-    RepositorySnapshot Snapshot,
-    AcceptedLeanClosure Lean,
-    LeanAxiomReport Report,
-    AcyclicTruthDag Dag);
-
 internal static class DagLedgerCommandPreparation
 {
     internal static DagLedgerCommandContext Prepare(
@@ -79,18 +73,16 @@ internal static class DagLedgerCommandPreparation
         var baselineFiles = ReadLedgerDirectoryFiles(ledgerPath);
         var baseView = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
             baselineFiles.ToImmutableDictionary(static file => file.Path)));
-        var truth = BuildTruth(repository, leanReportSource);
+        var truth = BuildLeanTruth(repository, leanReportSource);
         var snapshot = truth.Snapshot;
         var report = truth.Report;
         var lean = truth.Lean;
-        var dag = truth.Dag;
         var changes = changeBase is null
             ? Ask(repository.ReadCurrentChanges)
             : Ask(() => repository.ReadChanges(changeBase));
         var catalog = BuildWriterCatalog(
             snapshot,
             lean,
-            dag,
             baseView,
             changes,
             Ask(repository.ResolveCurrentRevision));
@@ -115,7 +107,6 @@ internal static class DagLedgerCommandPreparation
     internal static FrozenMaterialCatalog BuildWriterCatalog(
         RepositorySnapshot snapshot,
         AcceptedLeanClosure lean,
-        AcyclicTruthDag dag,
         FrozenLedgerBaseView baseView,
         RawChangeSet changes,
         FrozenRevisionIdentity currentIdentity)
@@ -134,31 +125,34 @@ internal static class DagLedgerCommandPreparation
         var algorithm = environment.OriginCommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
             ? HashAlgorithmName.SHA256
             : HashAlgorithmName.SHA1;
-        var closedNodes = dag.TopologicalOrder
-            .Where(static node => node.State is TruthState.Closed && node.ModuleName is not null)
+        var states = LeanTruthStates.Resolve(snapshot, lean);
+        var adjacency = LeanImportAdjacency.Build(snapshot, lean);
+        var closedPaths = states
+            .Where(static item => item.Value is TruthState.Closed)
+            .Select(static item => item.Key)
             .ToImmutableArray();
         var changedPaths = changes.Paths.ToImmutableHashSet();
-        var selectedPaths = closedNodes
-            .Where(node => !baseView.ActiveByPath.TryGetValue(node.RepoPath, out var entry)
+        var selectedPaths = closedPaths
+            .Where(path => !baseView.ActiveByPath.TryGetValue(path, out var entry)
                 || !entry.AxiomClosureKnown
-                || changedPaths.Contains(node.RepoPath)
+                || changedPaths.Contains(path)
                 || FrozenLedger.EnvironmentPinsChanged(environment, entry))
-            .Select(static node => node.RepoPath)
             .ToHashSet();
-        foreach (var node in closedNodes)
+        foreach (var path in LeanImportAdjacency.DependenciesFirst(closedPaths, adjacency)
+            .Where(path => states.TryGetValue(path, out var state) && state is TruthState.Closed))
         {
-            if (dag.DependenciesOf(node.RepoPath).Any(selectedPaths.Contains))
+            if (adjacency[path].Any(selectedPaths.Contains))
             {
-                selectedPaths.Add(node.RepoPath);
+                selectedPaths.Add(path);
             }
         }
 
-        var attestations = closedNodes
-            .Where(node => selectedPaths.Contains(node.RepoPath))
+        var attestations = closedPaths
+            .Where(selectedPaths.Contains)
             .Select(node => new FrozenModuleAttestation(
-                node.RepoPath,
+                node,
                 FrozenContentAddress.ComputeGitBlobOid(
-                    snapshot.Files[node.RepoPath].RawBytes.AsSpan(),
+                    snapshot.Files[node].RawBytes.AsSpan(),
                     algorithm))
             {
                 BaseCommitOid = currentIdentity.CommitOid,
@@ -168,7 +162,6 @@ internal static class DagLedgerCommandPreparation
         return FrozenContentAddress.BuildAdmissionCatalog(
             snapshot,
             lean,
-            dag,
             environment,
             attestations,
             selectedPaths,
@@ -180,7 +173,6 @@ internal static class DagLedgerCommandPreparation
     internal static FrozenMaterialCatalog BuildAdmissionCatalog(
         RepositorySnapshot snapshot,
         AcceptedLeanClosure lean,
-        AcyclicTruthDag dag,
         FrozenLedgerBaseView baseView,
         FrozenLedgerAdmissionScope scope,
         FrozenRevisionIdentity currentIdentity)
@@ -199,14 +191,14 @@ internal static class DagLedgerCommandPreparation
         var algorithm = environment.OriginCommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
             ? HashAlgorithmName.SHA256
             : HashAlgorithmName.SHA1;
-        var attestations = dag.Nodes
-            .Where(node => node.State is TruthState.Closed
-                && node.ModuleName is not null
-                && scope.Paths.Contains(node.RepoPath))
+        var states = LeanTruthStates.Resolve(snapshot, lean);
+        var attestations = states
+            .Where(item => item.Value is TruthState.Closed
+                && scope.Paths.Contains(item.Key))
             .Select(node => new FrozenModuleAttestation(
-                node.RepoPath,
+                node.Key,
                 FrozenContentAddress.ComputeGitBlobOid(
-                    snapshot.Files[node.RepoPath].RawBytes.AsSpan(),
+                    snapshot.Files[node.Key].RawBytes.AsSpan(),
                     algorithm))
             {
                 BaseCommitOid = currentIdentity.CommitOid,
@@ -216,7 +208,6 @@ internal static class DagLedgerCommandPreparation
         return FrozenContentAddress.BuildAdmissionCatalog(
             snapshot,
             lean,
-            dag,
             environment,
             attestations,
             scope.Paths,
@@ -231,7 +222,6 @@ internal static class DagLedgerCommandPreparation
     internal static FrozenMaterialCatalog BuildCompleteCatalog(
         RepositorySnapshot snapshot,
         AcceptedLeanClosure lean,
-        AcyclicTruthDag dag,
         FrozenLedgerBaseView baseView,
         FrozenRevisionIdentity currentIdentity)
     {
@@ -249,19 +239,20 @@ internal static class DagLedgerCommandPreparation
         var algorithm = environment.OriginCommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
             ? HashAlgorithmName.SHA256
             : HashAlgorithmName.SHA1;
-        var attestations = dag.TopologicalOrder
-            .Where(static node => node.State is TruthState.Closed && node.ModuleName is not null)
-            .Select(node => new FrozenModuleAttestation(
-                node.RepoPath,
+        var states = LeanTruthStates.Resolve(snapshot, lean);
+        var attestations = states
+            .Where(static item => item.Value is TruthState.Closed)
+            .Select(item => new FrozenModuleAttestation(
+                item.Key,
                 FrozenContentAddress.ComputeGitBlobOid(
-                    snapshot.Files[node.RepoPath].RawBytes.AsSpan(),
+                    snapshot.Files[item.Key].RawBytes.AsSpan(),
                     algorithm))
             {
                 BaseCommitOid = currentIdentity.CommitOid,
                 BaseTreeOid = currentIdentity.TreeOid,
             })
             .ToImmutableArray();
-        return FrozenContentAddress.Build(snapshot, lean, dag, environment, attestations) switch
+        return FrozenContentAddress.Build(snapshot, lean, environment, attestations) switch
         {
             FrozenMaterialOutcome.Accepted accepted => accepted.Capability,
             FrozenMaterialOutcome.Rejected rejected => throw new InvalidOperationException(
@@ -270,6 +261,15 @@ internal static class DagLedgerCommandPreparation
         };
     }
 
+    // Keep the truth-export call shape stable while the catalog itself no longer consumes a DAG.
+    internal static FrozenMaterialCatalog BuildCompleteCatalog<TUnusedGraph>(
+        RepositorySnapshot snapshot,
+        AcceptedLeanClosure lean,
+        TUnusedGraph _,
+        FrozenLedgerBaseView baseView,
+        FrozenRevisionIdentity currentIdentity)
+        => BuildCompleteCatalog(snapshot, lean, baseView, currentIdentity);
+
     internal static TruthContext BuildTruth(
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource)
@@ -277,6 +277,15 @@ internal static class DagLedgerCommandPreparation
         var snapshot = Decode(Ask(repository.ReadCurrent));
         var (report, lean) = LoadLean(snapshot, leanReportSource);
         return BuildTruth(snapshot, report, lean);
+    }
+
+    private static LeanTruthContext BuildLeanTruth(
+        IRepositoryGateway repository,
+        ILeanReportSource leanReportSource)
+    {
+        var snapshot = Decode(Ask(repository.ReadCurrent));
+        var (report, lean) = LoadLean(snapshot, leanReportSource);
+        return new LeanTruthContext(snapshot, lean, report);
     }
 
     internal static TruthContext BuildTruth(
@@ -292,17 +301,7 @@ internal static class DagLedgerCommandPreparation
         RepositorySnapshot snapshot,
         LeanAxiomReport report,
         AcceptedLeanClosure lean)
-    {
-        var dag = AcyclicTruthDag.Build(snapshot, lean) switch
-        {
-            DagBuildOutcome.Accepted accepted => accepted.Capability,
-            DagBuildOutcome.Rejected rejected => throw new InvalidOperationException(
-                "candidate truth DAG is cyclic: "
-                + string.Join(" -> ", rejected.Witness.Select(static path => path.Value))),
-            _ => throw new InvalidOperationException("unknown truth DAG outcome"),
-        };
-        return new TruthContext(snapshot, lean, report, dag);
-    }
+        => TruthContextBuilder.Build(snapshot, report, lean);
 
     private static (LeanAxiomReport Report, AcceptedLeanClosure Lean) LoadLean(
         RepositorySnapshot snapshot,
