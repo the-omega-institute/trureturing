@@ -58,9 +58,6 @@ internal sealed class FiniteWindowMinimalSufficiencyDocument
                             + "zero horizon n = 0."))),
                 DescribeRole.Theorem))));
 
-    private static Formula Apply(Formula function, params Formula[] arguments) =>
-        new Formula.Apply(function, [.. arguments]);
-
     private static Formula Arrow(Formula domain, Formula codomain) =>
         new Formula.TypeArrow(domain, codomain);
 
@@ -80,23 +77,13 @@ internal sealed class FiniteWindowMinimalSufficiencyDocument
         Formula targetUpdate = F.Id("Ftilde");
         Formula firstDescent = F.Id("q");
         Formula secondDescent = F.Id("r");
-        Formula stateValue = F.Id("x");
-        Formula intermediateValue = F.Id("b");
-        Formula firstIntertwining = Seq(
-            Forall, Sp, Typed(stateValue, state), Comma, Sp,
-            Equal(
-                Apply(firstDescent, Apply(update, stateValue)),
-                Apply(intermediateUpdate, Apply(firstDescent, stateValue))));
-        Formula secondIntertwining = Seq(
-            Forall, Sp, Typed(intermediateValue, intermediate), Comma, Sp,
-            Equal(
-                Apply(secondDescent, Apply(intermediateUpdate, intermediateValue)),
-                Apply(targetUpdate, Apply(secondDescent, intermediateValue))));
-        Formula compositeIntertwining = Seq(
-            Forall, Sp, Typed(stateValue, state), Comma, Sp,
-            Equal(
-                Apply(secondDescent, Apply(firstDescent, Apply(update, stateValue))),
-                Apply(targetUpdate, Apply(secondDescent, Apply(firstDescent, stateValue)))));
+        Formula firstSemiconjugacy =
+            Call("Semiconjugates", firstDescent, update, intermediateUpdate);
+        Formula secondSemiconjugacy =
+            Call("Semiconjugates", secondDescent, intermediateUpdate, targetUpdate);
+        Formula compositeDescent = Seq(secondDescent, Sp, Circ, Sp, firstDescent);
+        Formula compositeSemiconjugacy =
+            Call("Semiconjugates", compositeDescent, update, targetUpdate);
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
@@ -108,9 +95,9 @@ internal sealed class FiniteWindowMinimalSufficiencyDocument
             Typed(targetUpdate, Arrow(target, target)), Comma, RowBreak, Grp(),
             Typed(firstDescent, Arrow(state, intermediate)), Comma, Sp,
             Typed(secondDescent, Arrow(intermediate, target)), Comma, RowBreak, Grp(),
-            Open, firstIntertwining, Close, Sp, Land, Sp,
-            Open, secondIntertwining, Close, Sp, Rightarrow, RowBreak, Grp(),
-            compositeIntertwining, Dot,
+            firstSemiconjugacy, Sp, Rightarrow, Sp,
+            secondSemiconjugacy, Sp, Rightarrow, RowBreak, Grp(),
+            compositeSemiconjugacy, Dot,
             End, Grp(F.Id("gathered"))));
     }
 

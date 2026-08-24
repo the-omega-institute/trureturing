@@ -42,14 +42,16 @@ def finiteWindow {X O : Type _} (q : Concept X O) (F : X -> X) (n : Nat) :
     Concept X (Fin (n + 1) -> O) :=
   jointTarget (fun i : Fin (n + 1) => orbitTarget q F i.1)
 
+/-- `q` semiconjugates `F` to `Fbar`: one updated readout is determined by `Fbar`. -/
+def Semiconjugates {X B : Type _} (q : X -> B) (F : X -> X) (Fbar : B -> B) : Prop :=
+  forall x, q (F x) = Fbar (q x)
+
 /-- Semiconjugate descents compose without finiteness or nonemptiness assumptions. -/
 theorem descent_composes {X B C : Type _} (F : X -> X) (Fbar : B -> B)
     (Ftilde : C -> C) (q : X -> B) (r : B -> C)
-    (hq : forall x, q (F x) = Fbar (q x))
-    (hr : forall b, r (Fbar b) = Ftilde (r b)) :
-    forall x, r (q (F x)) = Ftilde (r (q x)) := by
-  intro x
-  exact (Function.Semiconj.trans hq hr) x
+    (hq : Semiconjugates q F Fbar) (hr : Semiconjugates r Fbar Ftilde) :
+    Semiconjugates (r ∘ q) F Ftilde := by
+  exact Function.Semiconj.trans hq hr
 
 /-- The orbit window is sufficient for every target through time `n`, and every
 simultaneously sufficient interface refines it. Thus it is coarsest in the convention
