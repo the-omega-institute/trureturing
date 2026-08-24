@@ -60,7 +60,7 @@ internal sealed class ExpressiveReportingCountermodelDocument : IScribeDocumentD
         Formula utility = F.Id("u");
         Formula trueType = F.Id("theta");
         Formula report = F.Id("r");
-        Formula boolType = OperatornameFormula("Bool");
+        Formula boolType = Seq(Operatorname, Grp(F.Id("Bool")));
         Formula realType = Seq(Mathbb, Grp(F.Id("R")));
         Formula profileType = Call("ReportProfile", boolType, boolType, boolType);
         Formula sent = Seq(profile, Dot, F.Id("sentReport"));
@@ -88,7 +88,4 @@ internal sealed class ExpressiveReportingCountermodelDocument : IScribeDocumentD
             Sp, Geq, Sp, Apply(utility, trueType, Apply(mechanism, report)), Dot,
             End, Grp(F.Id("gathered"))));
     }
-
-    private static Formula OperatornameFormula(string name) =>
-        Seq(Operatorname, Grp(F.Id(name)));
 }
