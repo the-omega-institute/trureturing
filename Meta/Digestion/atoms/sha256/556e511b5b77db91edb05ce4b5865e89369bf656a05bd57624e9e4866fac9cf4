@@ -1,0 +1,28 @@
+## 49.3 回顾拟合
+
+以下 \(\operatorname{Improves}\) 与 \(\operatorname{Loss}\) 中的行动、模型和预测均指 \(K_n\) 已冻结依赖中的版本；任何事后生成版本都必须使用新的承诺标识。
+
+定义回顾拟合标签
+
+\[
+\boxed{
+\operatorname{PostdictiveFit}(a,K_n,Z_n) \Longleftrightarrow \operatorname{Improves}(a;K_n,Z_n) \ \wedge\ \neg\operatorname{NonAnticipating}(K_n,Z_n).
+}
+\]
+
+它不是“无价值”或“错误”的同义词。回顾拟合可以产生候选、解释、压缩、机制猜想和下一轮承诺；它只是不具有本轮前瞻增益的记账资格。
+
+因此必须区分
+
+\[
+\begin{aligned}
+\mathsf{DiscoveryCredit}
+&=\text{从已见记录中形成有用结构};
+\\
+\mathsf{ProspectiveCredit}
+&=\text{在冻结承诺后的新裁决记录上改善}.
+\end{aligned}
+\]
+
+前者可以进入 \(K_{n+1}\)，不得改写为 \(K_n\) 的后验预言。
+

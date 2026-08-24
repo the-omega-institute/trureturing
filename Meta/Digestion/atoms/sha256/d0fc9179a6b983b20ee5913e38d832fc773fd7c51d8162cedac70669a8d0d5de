@@ -1,0 +1,26 @@
+## 51.1 范围化预测读数
+
+第 35 部把真理记录写成 \((J,\varepsilon,\mathcal C)\) 下的预测—观察交换。为研究扩域，设模型空间为 \(\Theta\)，对操作域 \(J\subseteq I\) 定义联合预测读数
+
+\[
+P_J:\Theta\to R^J, \qquad P_J(\theta):=(P(\theta,i))_{i\in J}.
+\]
+
+若 \(J\subseteq J'\)，存在限制映射
+
+\[
+\operatorname{res}_{J',J}:R^{J'}\to R^J
+\]
+
+满足
+
+\[
+P_J = \operatorname{res}_{J',J}\circ P_{J'}.
+\]
+
+因此
+
+\[
+\ker P_{J'} \subseteq \ker P_J.
+\]
+

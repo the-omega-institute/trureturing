@@ -1,0 +1,52 @@
+## 50.4 目标漂白
+
+定义受保护坐标
+
+\[
+\operatorname{Protected}(K_n) := (\operatorname{TargetChain}_n,J_n,\varepsilon_n,\mathcal C_n,\operatorname{Comparator}_n,\operatorname{Baseline}_n,\operatorname{WeightSpec}_n).
+\]
+
+定义裁决记录到达后的受保护坐标变更
+
+\[
+\operatorname{PostArrivalProtectedChange}(K_n,K'_n;Z_n) \Longleftrightarrow \operatorname{Arrival}(Z_n)<\operatorname{Time}(K'_n) \ \wedge\ \operatorname{Protected}(K'_n)\neq\operatorname{Protected}(K_n).
+\]
+
+定义冒充归因
+
+\[
+\operatorname{AttributesToOriginalCommitment}(K_n,K'_n;Z_n)
+\Longleftrightarrow
+\operatorname{ReportedAsSuccess}\bigl(\operatorname{Evaluate}(K'_n,Z_n),K_n\bigr).
+\]
+
+目标漂白当且仅当三项同时成立：裁决记录到达后修改至少一个受保护坐标；以新坐标重评旧轮；把该重评结果归因于原承诺 \(K_n\)：
+
+其中重评必须携带实际评价见证
+
+\[
+v'_n=\operatorname{Evaluate}(K'_n,Z_n),
+\]
+
+而不能用一个可任意置真的标签代替。
+
+\[
+\boxed{
+\begin{aligned}
+\operatorname{TargetLaundering}_n(K'_n;Z_n)
+\Longleftrightarrow{}
+&\operatorname{PostArrivalProtectedChange}(K_n,K'_n;Z_n)
+\\
+&\wedge\ \operatorname{RegradesOldRound}(K_n,K'_n;Z_n)
+\\
+&\wedge\ \operatorname{AttributesToOriginalCommitment}(K_n,K'_n;Z_n).
+\end{aligned}
+}
+\]
+
+该判据不要求新旧分数不同。即使篡改后数值恰好相同，只要仍以新坐标重评旧轮并冒充原承诺结算，目标漂白仍成立。
+
+合法目标学习不被禁止；它必须登记为 \(K_{n+1}\) 的来源，而不能消除 \(K_n\) 已经发生的失败。
+
+该定义细化第 38 部的表面消残：目标漂白是通过回写裁决坐标来消残的版本化特例。
+

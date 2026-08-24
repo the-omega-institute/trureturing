@@ -1,0 +1,20 @@
+## 51.2 扩域逃逸对
+
+定义从 \(J\) 扩张到 \(J'\) 的扩域逃逸关系
+
+\[
+\boxed{
+\mathcal E_{\mathrm{expand}}(P;J,J') := \ker P_J\setminus\ker P_{J'}.
+}
+\]
+
+其元素是旧域内预测完全相同、但在新域中分离的模型对。它精确记录旧证据管辖域没有裁决、扩域后重新出现的区分。
+
+核差恒等式直接给出
+
+\[
+\mathcal E_{\mathrm{expand}}(P;J,J')=\varnothing \Longleftrightarrow \ker P_J\subseteq\ker P_{J'}.
+\]
+
+结合反向包含，可得空逃逸等价于两域在模型区分能力上核相同。该结论只谈预测纤维，不自动给出现实记录上的误差界。
+
