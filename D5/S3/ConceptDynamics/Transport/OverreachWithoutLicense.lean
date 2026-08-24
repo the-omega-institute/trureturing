@@ -35,10 +35,10 @@ import Mathlib.Data.Set.Function
      are imported and reused. Scope restriction changes only its state type;
      this module introduces no second residual or closure predicate.
    * Pinned-Mathlib shape search
-     `rg -n 'def EqOn|theorem ssubset_iff_exists|ssubset_iff_exists'
+     `rg -n 'theorem ssubset_iff_exists|ssubset_iff_exists'
      .lake/packages/mathlib/Mathlib/Data/Set .lake/packages/mathlib/Mathlib`
-     found `Set.EqOn` and `Set.ssubset_iff_exists`; they are used directly for
-     tolerance agreement and for selecting an operation in the expanded domain. -/
+     found `Set.ssubset_iff_exists`; it is used directly for concrete strict
+     scope-expansion witnesses. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -90,55 +90,11 @@ def Overreach
     q.reportedScope = claimedScope ∧
     ¬LicensedReport semantics record q oldScope claimedScope
 
-/-- Two records agree within a supplied deviation threshold on every operation
-in a given scope. -/
-def WithinTolerance
-    {Operation Reading Delta : Type*} [LE Delta]
-    (deviation : Reading × Reading -> Delta) (epsilon : Delta)
-    (operationScope : Set Operation)
-    (observed expected : Concept Operation Reading) : Prop :=
-  ∀ operation ∈ operationScope,
-    deviation (observed operation, expected operation) ≤ epsilon
-
-/-- A new operation and an available above-threshold deviation give records
-that remain unchanged and within tolerance on the old scope but fail on the
-expanded scope. -/
-theorem domain_expansion_breaks_tolerance
-    {Operation Reading Delta : Type*} [Preorder Delta]
-    (deviation : Reading × Reading -> Delta) (epsilon : Delta)
-    {oldScope claimedScope : Set Operation}
-    (strictExpansion : oldScope ⊂ claimedScope)
-    (unchangedWithin : ∀ reading, deviation (reading, reading) ≤ epsilon)
-    (largeDeviation : ∃ ordinary exceptional : Reading,
-      epsilon < deviation (ordinary, exceptional)) :
-    ∃ observed expected : Concept Operation Reading,
-      Set.EqOn observed expected oldScope ∧
-        WithinTolerance deviation epsilon oldScope observed expected ∧
-        ¬WithinTolerance deviation epsilon claimedScope observed expected := by
-  classical
-  rcases Set.ssubset_iff_exists.mp strictExpansion with
-    ⟨_, operation, operationInClaimed, operationNotInOld⟩
-  rcases largeDeviation with ⟨ordinary, exceptional, aboveThreshold⟩
-  let observed : Concept Operation Reading := fun _ => ordinary
-  let expected : Concept Operation Reading := fun current =>
-    if current = operation then exceptional else ordinary
-  refine ⟨observed, expected, ?_, ?_, ?_⟩
-  · intro current currentInOld
-    have currentNeOperation : current ≠ operation := by
-      intro same
-      subst current
-      exact operationNotInOld currentInOld
-    simp [observed, expected, currentNeOperation]
-  · intro current currentInOld
-    have currentNeOperation : current ≠ operation := by
-      intro same
-      subst current
-      exact operationNotInOld currentInOld
-    simpa [observed, expected, currentNeOperation] using unchangedWithin ordinary
-  · intro withinClaimed
-    have atNewOperation := withinClaimed operation operationInClaimed
-    simp only [observed, expected, if_pos] at atNewOperation
-    exact (not_le_of_gt aboveThreshold) atNewOperation
+/- CAS tolerance gap: the comparison codomain is introduced only as `Delta`,
+while the later tolerance notation uses a supremum, `≤`, and above-threshold
+language without declaring their structure or laws. No abstract tolerance
+predicate or theorem is claimed here. The concrete Boolean false neighbor below
+checks the scope-expansion phenomenon without supplying structure to `Delta`. -/
 
 /-- Restricting the canonical escape residual to a concrete old and expanded
 scope witnesses `Closed_J(S,T)` without `Closed_J'(S,T)`. -/
@@ -168,9 +124,10 @@ theorem domain_expansion_reopens_completion :
     exact ⟨(⟨false, Set.mem_univ false⟩, ⟨true, Set.mem_univ true⟩),
       rfl, Bool.false_ne_true⟩
 
-/-- The source clauses in one public package: licensing, unconditionalization,
-condition retention, overreach, the expansion counterexample, reopening local
-completion, and the licensed route to an unconditional report. -/
+/-- The source-valid clauses in one public package: licensing,
+unconditionalization, condition retention, overreach, reopening local
+completion, and the licensed route to an unconditional report. The tolerance
+clause is excluded because its abstract comparison codomain is underspecified. -/
 theorem overreach_without_license
     {Operation State Coordinate Payload Address ClaimVersion Error : Type*}
     (scope : Concept State Coordinate -> Set Operation)
@@ -212,17 +169,6 @@ theorem overreach_without_license
         scope q.concept = oldScope ∧
         q.reportedScope = claimedScope ∧
         ¬LicensedReport semantics record q oldScope claimedScope) ∧
-    (∀ {Delta : Type} [Preorder Delta]
-        (deviation : Coordinate × Coordinate -> Delta) (epsilon : Delta)
-        {localScope expandedScope : Set Operation},
-      localScope ⊂ expandedScope ->
-      (∀ reading, deviation (reading, reading) ≤ epsilon) ->
-      (∃ ordinary exceptional : Coordinate,
-        epsilon < deviation (ordinary, exceptional)) ->
-      ∃ observed expected : Concept Operation Coordinate,
-        Set.EqOn observed expected localScope ∧
-          WithinTolerance deviation epsilon localScope observed expected ∧
-          ¬WithinTolerance deviation epsilon expandedScope observed expected) ∧
     (∃ localScope expandedScope : Set Bool,
       localScope ⊂ expandedScope ∧
         ∃ system target : Concept Bool Bool,
@@ -242,7 +188,7 @@ theorem overreach_without_license
       certificate.transportAssumption.Holds ->
       LicensedReport semantics record { q with condition := True }
         oldScope claimedScope) := by
-  refine ⟨Iff.rfl, ?_, ?_, Iff.rfl, ?_, ?_, ?_⟩
+  refine ⟨Iff.rfl, ?_, ?_, Iff.rfl, ?_, ?_⟩
   · rintro ⟨_, certificate, certificateValid, exactCondition⟩ conditionHolds
     exact ⟨certificate, certificateValid,
       (exactCondition.mp conditionHolds).1,
@@ -252,10 +198,6 @@ theorem overreach_without_license
     rintro (premisesMissing | assumptionMissing) conditionHolds
     · exact premisesMissing (exactCondition.mp conditionHolds).1
     · exact assumptionMissing (exactCondition.mp conditionHolds).2
-  · intro Delta _ deviation epsilon localScope expandedScope strictExpansion
-      unchangedWithin largeDeviation
-    exact domain_expansion_breaks_tolerance deviation epsilon strictExpansion
-      unchangedWithin largeDeviation
   · exact domain_expansion_reopens_completion
   · intro certificate reportedScopeMatches certificateValid
       premisesHold assumptionHolds
@@ -367,37 +309,21 @@ example :
     change False at claimOn
     exact claimOn
 
-/-- On the finite operation and reading type `Bool`, the records agree on the
-old singleton but both tolerance and canonical closure fail after expansion. -/
+/-- On the finite operation and reading type `Bool`, the canonical closure is
+empty on the old singleton and nonempty after expansion. -/
 example :
-    let deviation : Bool × Bool -> Nat := fun readings =>
-      if readings.1 = readings.2 then 0 else 1
     let oldScope : Set Bool := {false}
     let claimedScope : Set Bool := Set.univ
     let observed : Concept Bool Bool := fun _ => false
     let expected : Concept Bool Bool := id
-    Set.EqOn observed expected oldScope ∧
-      WithinTolerance deviation 0 oldScope observed expected ∧
-      ¬WithinTolerance deviation 0 claimedScope observed expected ∧
-      defectRelation
+    defectRelation
           (fun operation : ↑oldScope => observed operation)
           (fun operation : ↑oldScope => expected operation) = ∅ ∧
       defectRelation
           (fun operation : ↑claimedScope => observed operation)
           (fun operation : ↑claimedScope => expected operation) ≠ ∅ := by
-  dsimp only [WithinTolerance, Set.EqOn]
-  refine ⟨?_, ?_, ?_, ?_, ?_⟩
-  · intro operation operationInOld
-    simp only [Set.mem_singleton_iff] at operationInOld
-    subst operation
-    rfl
-  · intro operation operationInOld
-    simp only [Set.mem_singleton_iff] at operationInOld
-    subst operation
-    simp
-  · intro withinClaimed
-    have atTrue := withinClaimed true (Set.mem_univ true)
-    simp at atTrue
+  dsimp only
+  constructor
   · ext pair
     simp only [Set.mem_empty_iff_false, iff_false, defectRelation,
       Set.mem_setOf_eq]
@@ -608,20 +534,25 @@ theorem false_neighbor_scope_expansion_is_always_overreach :
   have overreach := weakOverreach ⟨strictExpansion, rfl, rfl⟩
   exact overreach.2.2.2 FalseNeighborWitness.licensed_unconditional_report
 
-/-- False neighbor for clause 5, using `Bool` rather than `Nat` as the distance
-codomain: tolerance on the old scope need not survive strict expansion. -/
+/-- False neighbor for the unresolved tolerance clause. With the concrete
+Boolean convention that deviation `false` is within tolerance, old-scope
+tolerance need not survive strict expansion. This supplies no abstract order on
+the source's comparison codomain. -/
 theorem false_neighbor_tolerance_survives_scope_expansion :
-    ¬(WithinTolerance FalseNeighborWitness.booleanDeviation false
-          FiniteWitness.source FalseNeighborWitness.observed
-          FalseNeighborWitness.expected →
-      WithinTolerance FalseNeighborWitness.booleanDeviation false
-        FiniteWitness.target FalseNeighborWitness.observed
-        FalseNeighborWitness.expected) := by
+    ¬((∀ operation ∈ FiniteWitness.source,
+          FalseNeighborWitness.booleanDeviation
+              (FalseNeighborWitness.observed operation,
+                FalseNeighborWitness.expected operation) = false) →
+      ∀ operation ∈ FiniteWitness.target,
+        FalseNeighborWitness.booleanDeviation
+            (FalseNeighborWitness.observed operation,
+              FalseNeighborWitness.expected operation) = false) := by
   intro weakTolerance
   have oldTolerance :
-      WithinTolerance FalseNeighborWitness.booleanDeviation false
-        FiniteWitness.source FalseNeighborWitness.observed
-        FalseNeighborWitness.expected := by
+      ∀ operation ∈ FiniteWitness.source,
+        FalseNeighborWitness.booleanDeviation
+            (FalseNeighborWitness.observed operation,
+              FalseNeighborWitness.expected operation) = false := by
     intro operation operationInOld
     have operationFalse : operation = false := by
       simpa [FiniteWitness.source] using operationInOld
@@ -630,8 +561,8 @@ theorem false_neighbor_tolerance_survives_scope_expansion :
       FalseNeighborWitness.expected]
   have expandedTolerance := weakTolerance oldTolerance
   have atTrue := expandedTolerance true (by simp [FiniteWitness.target])
-  have notAtTrue : ¬(true ≤ false) := by decide
-  exact notAtTrue atTrue
+  change true = false at atTrue
+  cases atTrue
 
 /-- False neighbor for clause 6: emptiness of the canonical defect relation on
 the old scope does not imply emptiness on the expanded scope. -/
