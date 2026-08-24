@@ -46,15 +46,14 @@ internal sealed class DirectlyProvableLawsDocument : IScribeDocumentDefinition
                             + "definition that separates it; enumeration of the finite subtype "
                             + "then gives a finite sufficient extension.")),
                     Paragraph(Text(
-                        "Capture uses an arbitrary nonnegative ENNReal point weight: mass is the "
-                            + "sum of that weight over the residual edges captured by a set of "
-                            + "definitions. Pointwise membership gives submodularity without "
-                            + "measurability assumptions. This covers the source's weight and "
-                            + "counting readings; it does not assert an unrestricted non-atomic "
-                            + "measure on potentially nonmeasurable cuts, for which the source "
-                            + "states no adequate domain conditions. That open boundary is "
-                            + "machine-addressed by D5-T0049 and the Lean clauses_not_done "
-                            + "declaration. The seventh conjunct is the "
+                        "CAS section 1.2 lets nu be a weight, count, or measure, and section 4.4 "
+                            + "asserts submodularity for the resulting capture function. The "
+                            + "sixth conjunct therefore quantifies over an arbitrary Mathlib "
+                            + "Measure on edges and arbitrary residual and cut sets. Its reusable "
+                            + "MeasureCapture proof replaces one set by a same-measure measurable "
+                            + "hull, applies measure_union_add_inter, and uses monotonicity for the "
+                            + "exact residual intersection. No measurability premise or open gap "
+                            + "remains. The seventh conjunct is the "
                             + "displayed "
                             + "composition identity, the eighth applies the general additive-time "
                             + "semigroup law, and the ninth instantiates the repository theorem "
@@ -62,7 +61,7 @@ internal sealed class DirectlyProvableLawsDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "Boolean examples witness a nonempty residual, redundant zero gain, a "
                             + "blind obstruction, and finite closure by one identity definition. "
-                            + "A finite point weight gives a strict capture inequality. Coordinate "
+                            + "Counting measure gives a strict capture inequality. Coordinate "
                             + "swap on real pairs gives nonzero prepared and semigroup defects, "
                             + "and the real identity map attains the cascade bound. Nine named "
                             + "false-neighbor declarations compile concrete counterexamples to "
@@ -112,12 +111,9 @@ internal sealed class DirectlyProvableLawsDocument : IScribeDocumentDefinition
         Formula m = F.Id("m");
         Formula residualSet = F.Id("residual");
         Formula cut = F.Id("cut");
-        Formula weight = F.Id("weight");
+        Formula nu = F.Id("nu");
         Formula subset = F.Id("S");
-        Formula edges = F.Id("U");
-        Formula edge = F.Id("edge");
         Formula captured = F.Id("captured");
-        Formula mass = F.Id("mass");
         Formula residual = Call("defectRelation", q, target);
         Formula joinedResidual = Call(
             "defectRelation", Call("conceptJoin", q, definition), target);
@@ -212,28 +208,26 @@ internal sealed class DirectlyProvableLawsDocument : IScribeDocumentDefinition
             Call("intersection", residualSet,
                 Call("iUnion", Seq(definition, Sp, InMacro, Sp, subset),
                     Call("apply", cut, definition))));
-        Formula massDefinition = Seq(
-            Call("apply", mass, edges), Sp, Eq, Sp,
-            Call("tsum", edge,
-                Call("indicator", edges, weight, edge)));
         Formula captureInequality = Seq(
-            Call("apply", mass,
+            Call("apply", nu,
                 Call("apply", captured, Call("union", a, b))), Sp, Plus, Sp,
-            Call("apply", mass,
+            Call("apply", nu,
                 Call("apply", captured, Call("intersection", a, b))), Sp,
             Leq, Sp,
-            Call("apply", mass, Call("apply", captured, a)), Sp, Plus, Sp,
-            Call("apply", mass, Call("apply", captured, b)));
+            Call("apply", nu, Call("apply", captured, a)), Sp, Plus, Sp,
+            Call("apply", nu, Call("apply", captured, b)));
         Formula clause6 = Seq(
             Forall, Sp, edgeType, Comma, Sp, definitionIndex, Colon, Sp,
             type, Comma, Esc,
-            weight, Colon, Sp, Arrow(edgeType, F.Id("ENNReal")), Comma, Sp,
+            OpenBracket, Call("MeasurableSpace", edgeType), CloseBracket,
+            Comma, Sp,
+            nu, Colon, Sp, Call("Measure", edgeType), Comma, Sp,
             residualSet, Colon, Sp, Call("Set", edgeType), Comma, Sp,
             cut, Colon, Sp, Arrow(definitionIndex, Call("Set", edgeType)), Comma, Sp,
             a, Comma, Sp, b, Colon, Sp, Call("Set", definitionIndex), Comma, Esc,
             captureInequality, Comma, Quad, Sp,
             F.Text, Grp(F.Id("where")), Sp,
-            capturedDefinition, Comma, Sp, massDefinition);
+            capturedDefinition);
 
         Formula projectedUpdatedPoint =
             Call("apply", projection, Call("apply", update, point));

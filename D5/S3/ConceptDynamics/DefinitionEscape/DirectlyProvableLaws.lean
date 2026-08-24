@@ -6,10 +6,10 @@
    digest: Nine direct DECT laws share one theorem without duplicating canonical primitives. -/
 
 import D5.S3.ConceptDynamics.DefinitionEscape.BlindKernelObstruction
+import D5.S3.ConceptDynamics.DefinitionEscape.MeasureCapture
 import D5.S3.ConceptDynamics.DefinitionEscape.ResidualJoinLaw
 import D5.S0.Diagonal.Naturality.NaturalityDefectComposition
 import Mathlib.Data.Fintype.EquivFin
-import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
 import Mathlib.Topology.MetricSpace.Lipschitz
 
 /- Library-search audit trail (2026-08-24):
@@ -36,16 +36,16 @@ import Mathlib.Topology.MetricSpace.Lipschitz
      `RedundantAppealDefectPersistence` proves persistence of nonemptiness, not
      the source's equality of residual sets. The remaining searched modules are
      adjacent specializations rather than exact packages for clauses 3, 5--8.
-   * Loogle queries for finite ranges, weighted sums, and Lipschitz distance
-     bounds found `Set.finite_range`, `ENNReal.tsum_add`, and
+   * Loogle queries for finite ranges, arbitrary-set measure identities, and
+     Lipschitz distance bounds found `Set.finite_range`,
+     `measure_union_add_inter`, `measure_union_toMeasurable`, and
      `LipschitzWith.dist_le_mul`.
    * LeanSearch natural-language queries for finite point separation, coverage
      submodularity, and Lipschitz error transport found `Set.SeparatesPoints`,
      finite-union cardinality lemmas, `measure_union_add_inter`, and
      `LipschitzWith.dist_le_mul`; none packages this DECT conjunction.
-   * Pinned-mathlib searches additionally found `Fintype.equivFin`,
-     `ENNReal.tsum_le_tsum`, and `Function.iterate_add_apply`. These are reused
-     rather than reproved. -/
+   * Pinned-mathlib searches additionally found `Fintype.equivFin` and
+     `Function.iterate_add_apply`. These are reused rather than reproved. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -57,12 +57,10 @@ open D5.S3.ConceptDynamics.TargetRisk.RefinementRiskCostTradeoff
 open D5.S3.ConceptDynamics.Restoration.TargetRecoveryCriterion
 open D5.S3.ConceptDynamics.Faithfulness.JointFaithfulnessLeibnizCriterion
 open D5.S3.ConceptDynamics.DefinitionEscape.BlindKernelObstruction
+open D5.S3.ConceptDynamics.DefinitionEscape.MeasureCapture
 open D5.S3.ConceptDynamics.DefinitionEscape.ResidualJoinLaw
 open D5.S0.Diagonal.Naturality.NaturalityDefectComposition
-
-/- TASK D5-T0049: Clause 6's unrestricted measure reading remains open until
-   measurable-domain conditions are stated. -/
-def clauses_not_done : Unit := ()
+open MeasureTheory
 /-- The dependent-family extension used by clauses 4 and 5.  The frozen
 `languageExtension` is its constant-codomain specialization. -/
 def dependentLanguageExtension {X C I : Type*} {D : I → Type*}
@@ -188,9 +186,8 @@ theorem dependent_blind_kernel_obstruction
 intersection, sufficiency-factorization, redundant zero gain, blind-kernel
 obstruction, finite compactness, submodular capture, prepared one-step defect,
 semigroup defect, and approximate cascade. Clause 6 realizes the source's
-weight/count reading through arbitrary nonnegative point weights; an unrestricted
-non-atomic measure reading would need measurable-domain conditions absent from
-the source statement. -/
+weight, count, or measure parameter as an arbitrary Mathlib measure, with no
+measurability premise on the residual or cuts. -/
 theorem directly_provable_laws :
     (forall {X C D Target : Type*} (q : Concept X C) (definition : Concept X D)
       (target : Concept X Target),
@@ -225,15 +222,13 @@ theorem directly_provable_laws :
           defectRelation
             (dependentLanguageExtension q
               (fun i => definitions (codes i))) target = ∅) ∧
-    (forall {Edge Definition : Type*} (weight : Edge → ENNReal)
+    (forall {Edge Definition : Type*} [MeasurableSpace Edge] (nu : Measure Edge)
       (residual : Set Edge) (cut : Definition → Set Edge)
       (A B : Set Definition),
       let captured := fun S : Set Definition =>
         residual ∩ ⋃ definition ∈ S, cut definition
-      let mass := fun edges : Set Edge =>
-        ∑' edge, edges.indicator weight edge
-      mass (captured (A ∪ B)) + mass (captured (A ∩ B)) ≤
-        mass (captured A) + mass (captured B)) ∧
+      nu (captured (A ∪ B)) + nu (captured (A ∩ B)) ≤
+        nu (captured A) + nu (captured B)) ∧
     (forall {X Z : Type*} [PseudoMetricSpace Z] (projection : X → Z)
       (update : X → X) (prepare : Z → X), Function.RightInverse prepare projection →
       forall x : X,
@@ -328,46 +323,8 @@ theorem directly_provable_laws :
       rw [enumerate.symm_apply_apply] at sameSelectedValues
       exact selectedSeparates sameSelectedValues
     · exact False.elim
-  · intro Edge Definition weight residual cut A B
-    classical
-    dsimp only
-    let captured := fun S : Set Definition =>
-      residual ∩ ⋃ definition ∈ S, cut definition
-    let mass := fun edges : Set Edge =>
-      ∑' edge, edges.indicator weight edge
-    change mass (captured (A ∪ B)) + mass (captured (A ∩ B)) ≤
-      mass (captured A) + mass (captured B)
-    have capturedUnion : captured (A ∪ B) = captured A ∪ captured B := by
-      ext edge
-      simp only [captured, Set.mem_inter_iff, Set.mem_iUnion,
-        Set.mem_union]
-      aesop
-    have capturedIntersectionSubset :
-        captured (A ∩ B) ⊆ captured A ∩ captured B := by
-      intro edge edgeCaptured
-      simp only [captured, Set.mem_inter_iff, Set.mem_iUnion] at edgeCaptured ⊢
-      aesop
-    rw [← ENNReal.tsum_add, ← ENNReal.tsum_add]
-    apply ENNReal.tsum_le_tsum
-    intro edge
-    have unionMembership :
-        edge ∈ captured (A ∪ B) ↔ edge ∈ captured A ∨ edge ∈ captured B := by
-      rw [capturedUnion]
-      exact Set.mem_union edge (captured A) (captured B)
-    by_cases inA : edge ∈ captured A
-    · by_cases inB : edge ∈ captured B
-      · by_cases inIntersection : edge ∈ captured (A ∩ B)
-        · simp [inA, inB, inIntersection, unionMembership]
-        · simp [inA, inB, inIntersection, unionMembership]
-      · have notInIntersection : edge ∉ captured (A ∩ B) := by
-          intro inIntersection
-          exact inB (capturedIntersectionSubset inIntersection).2
-        simp [inA, inB, notInIntersection, unionMembership]
-    · have notInIntersection : edge ∉ captured (A ∩ B) := by
-        intro inIntersection
-        exact inA (capturedIntersectionSubset inIntersection).1
-      by_cases inB : edge ∈ captured B <;>
-        simp [inA, inB, notInIntersection, unionMembership]
+  · intro Edge Definition measurableSpace nu residual cut A B
+    exact measure_capture_submodular nu residual cut A B
   · intro X Z pseudoMetric projection update prepare rightInverse x
     rfl
   · intro X Z Time pseudoMetric addTime projection evolution prepare rightInverse
@@ -516,20 +473,20 @@ example :
         using sameIdentity)
   · exact False.elim
 
-/-- Clause 6 is strict for two cuts that both cover a positive-weight residual. -/
+/-- Clause 6 is strict for two cuts that both cover a positive-count residual. -/
 example :
-    let weight : Bool → ENNReal := fun _ => 1
+    letI : MeasurableSpace Bool := ⊤
+    let nu : Measure Bool := Measure.count
     let residual : Set Bool := Set.univ
     let cut : Bool → Set Bool := fun _ => Set.univ
     let captured := fun S : Set Bool =>
       residual ∩ ⋃ definition ∈ S, cut definition
-    let mass := fun edges : Set Bool =>
-      ∑' edge, edges.indicator weight edge
-    mass (captured ({false} ∪ {true})) +
-      mass (captured ({false} ∩ {true})) <
-      mass (captured {false}) + mass (captured {true}) := by
+    nu (captured ({false} ∪ {true})) +
+      nu (captured ({false} ∩ {true})) <
+      nu (captured {false}) + nu (captured {true}) := by
   classical
-  norm_num [tsum_fintype, Set.indicator, Set.mem_inter_iff, Set.mem_iUnion]
+  norm_num [Measure.count_apply_finite, Set.iUnion_const,
+    Set.mem_inter_iff, Set.mem_iUnion]
 
 /-- Clause 7 has a nonzero one-step defect for coordinate preparation followed
 by a coordinate swap. -/
@@ -741,20 +698,20 @@ theorem false_neighbor_clause5 :
   exact finiteDefect
 
 /-- Strengthening clause 6's submodular inequality to modular equality is
-false when two different definitions capture the same positive-weight edge. -/
+false when two different definitions capture the same positive-measure set. -/
 theorem false_neighbor_clause6 :
-    let weight : Bool → ENNReal := fun _ => 1
+    letI : MeasurableSpace Bool := ⊤
+    let nu : Measure Bool := Measure.count
     let residual : Set Bool := Set.univ
     let cut : Bool → Set Bool := fun _ => Set.univ
     let captured := fun S : Set Bool =>
       residual ∩ ⋃ definition ∈ S, cut definition
-    let mass := fun edges : Set Bool =>
-      ∑' edge, edges.indicator weight edge
-    ¬mass (captured ({false} ∪ {true})) +
-        mass (captured ({false} ∩ {true})) =
-      mass (captured {false}) + mass (captured {true}) := by
+    ¬nu (captured ({false} ∪ {true})) +
+        nu (captured ({false} ∩ {true})) =
+      nu (captured {false}) + nu (captured {true}) := by
   classical
-  norm_num [tsum_fintype, Set.indicator, Set.mem_inter_iff, Set.mem_iUnion]
+  norm_num [Measure.count_apply_finite, Set.iUnion_const,
+    Set.mem_inter_iff, Set.mem_iUnion]
 
 /-- Strengthening clause 7's identity to say the displayed defect vanishes is
 false for coordinate preparation followed by a swap. -/
