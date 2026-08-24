@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - agent/theorist/finite-package-latent-escape
+  pull_request:
+    branches:
+      - dev
 
 permissions:
   contents: read
