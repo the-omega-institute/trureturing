@@ -1,0 +1,30 @@
+## 50.3 目标变更事件与旧轮守恒
+
+定义目标变更事件
+
+\[
+\operatorname{TargetChange}_n = ( T_n,T_{n+1}, \operatorname{Reason}, \operatorname{Author}, \operatorname{Time}, \operatorname{AffectedRounds} ).
+\]
+
+合法变更产生新版本边
+
+\[
+T_n\longrightarrow T_{n+1},
+\]
+
+而不是把 \(T_n\)、比较器或范围原地替换。定义第 \(n\) 轮结算
+
+\[
+\operatorname{Settle}_n := \operatorname{Evaluate}(K_n,Z_n).
+\]
+
+若账本追加、旧承诺不可变，且后续更新只产生 \(K_{n+1}\)，则对任意 \(m>n\) 有条件骨架
+
+\[
+\boxed{
+\operatorname{Settle}_n^{(m)} = \operatorname{Settle}_n^{(n)}.
+}
+\]
+
+该等式是版本寻址与纯评价的结果；若评价器调用可变外部状态，则必须把该状态版本也纳入 \(K_n\)。
+

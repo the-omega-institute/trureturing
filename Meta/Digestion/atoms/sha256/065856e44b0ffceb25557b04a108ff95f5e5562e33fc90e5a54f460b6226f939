@@ -1,0 +1,24 @@
+## 50.2 议程残差
+
+给定外生目的 \(G\)，令
+
+\[
+V_G:\operatorname{Agenda}\to Y_G
+\]
+
+表示在目的 \(G\) 下对议程后果的读数，令
+
+\[
+q_A:\operatorname{Agenda}\to Q_A
+\]
+
+表示当前议程语言。定义议程残差
+
+\[
+\boxed{
+\mathcal E_{\mathrm{agenda}}(q_A;G) = \ker(q_A)\setminus\ker(V_G).
+}
+\]
+
+它记录当前议程语言视为相同、但在给定目的 \(G\) 下后果不同的议程对。该残差只在 \(G\) 已给定时有意义；它不从事实记录中自动生成终极目的。
+

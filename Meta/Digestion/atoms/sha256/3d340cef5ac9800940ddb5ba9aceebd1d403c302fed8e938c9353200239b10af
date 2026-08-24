@@ -1,0 +1,45 @@
+## 54.4 裁决层的最终结算
+
+DECT v1.0 回答定义如何切开目标残差；v1.1 回答科学如何成为递归定义图。本增订回答递归系统何时有资格把一次改善记为科学进步。
+
+其最小承诺对象为
+
+\[
+\boxed{
+\mathsf{PROGRESS\ CLAIM}_n = ( K_n, \operatorname{CommittedArtifact}_n, Z_n, \operatorname{NonAnticipating}, \operatorname{OriginalCoordinateVerdict}, \mathbf G_n(\cdot\mid a_{\varnothing}), \mathbf G_n(\cdot\mid a_{\min}), \operatorname{ScopeReceipt} ).
+}
+\]
+
+因此：
+
+\[
+\boxed{
+\begin{aligned}
+\mathsf{ADAPTATION}
+&=\text{系统利用已见证据改变下一轮};
+\\
+\mathsf{POSTDICTION}
+&=\text{系统在已见证据上形成回顾改善};
+\\
+\mathsf{PROSPECTIVE\ PROGRESS}
+&=\text{冻结被承诺对象后在新裁决记录上按原坐标改善};
+\\
+\mathsf{LAUNDERING}
+&=\text{到达后改保护坐标、重评旧轮并冒充原承诺};
+\\
+\mathsf{TRANSPORT}
+&=\text{携带有效且可失败的证书把旧域主张送往新域}.
+\end{aligned}
+}
+\]
+
+最终判断是：
+
+\[
+\boxed{
+\text{科学进步不是分数变高； 而是一个来源可追、范围可审、目标不回写的承诺， 在其尚不可达的新记录上经受原坐标裁决后取得改善。}
+}
+\]
+
+---
+

@@ -1,0 +1,22 @@
+## 50.1 Target、Question 与 Agenda 的类型
+
+承接第 23 部的有类型定义图，定义目标节点
+
+\[
+\operatorname{Target} = ( \operatorname{Carrier}, \operatorname{Readout}, \operatorname{Success}, \operatorname{Scope}, \operatorname{Version}, \operatorname{Origin} ).
+\]
+
+定义问题节点
+
+\[
+\operatorname{Question} = ( \operatorname{TargetRef}, q, \mathcal E(q;T), \operatorname{ClosureRule} ).
+\]
+
+定义议程节点
+
+\[
+\operatorname{Agenda} = ( \operatorname{QuestionSet}, \operatorname{Eligibility}, \operatorname{OrderRule}, \operatorname{Version} ).
+\]
+
+三者不是同义词：目标规定何种结果算成功，问题记录当前表示相对该目标留下的残差，议程规定哪些问题当前可进入选择与排序。
+
