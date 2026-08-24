@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/Experiment/InfiniteIdentificationFiniteFailure
+/- GID: D5/S3/ConceptDynamics/Experiment/InfiniteIdentificationFiniteInexactness
    generality: I
-   mirror-B: D5/B/S3/ConceptDynamics/Experiment/InfiniteIdentificationFiniteFailure
+   mirror-B: D5/B/S3/ConceptDynamics/Experiment/InfiniteIdentificationFiniteInexactness
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Equivalent coordinates allow infinite separation without finite exact tomography. -/
@@ -21,13 +21,13 @@ import Mathlib.Probability.StrongLaw
      `varying_greenClass_measure_pos_iff` proves that the shared all-false
      finite cylinder has positive mass under both product laws.
    * Repository searches for almost-sure identification, finite exact
-     tomography, and this implication failure found no exact declaration.
+     tomography, and this inexact converse found no exact declaration.
      External `loogle` and `leansearch` executables are absent. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.Experiment.InfiniteIdentificationFiniteFailure
+namespace D5.S3.ConceptDynamics.Experiment.InfiniteIdentificationFiniteInexactness
 
 open MeasureTheory ProbabilityTheory Set Filter Finset
 open scoped Topology
@@ -263,7 +263,7 @@ private theorem no_finite_exact_decoder :
   let allFalse : Fin m -> Bool := fun _ => false
   have decodeFalse : decode allFalse = false := by
     by_contra hdecode
-    have hfailure : stateLaw false
+    have hnull : stateLaw false
         {transcript | decode (finiteTranscript m transcript) ≠ false} = 0 := by
       rw [← compl_mem_ae_iff]
       filter_upwards [falseExact] with transcript htranscript
@@ -275,10 +275,10 @@ private theorem no_finite_exact_decoder :
       rw [finiteTranscript_eq_allFalse htranscript]
       exact hdecode
     exact (lower_allFalseCylinder_pos m).ne'
-      (measure_mono_null hsubset hfailure)
+      (measure_mono_null hsubset hnull)
   have decodeTrue : decode allFalse = true := by
     by_contra hdecode
-    have hfailure : stateLaw true
+    have hnull : stateLaw true
         {transcript | decode (finiteTranscript m transcript) ≠ true} = 0 := by
       rw [← compl_mem_ae_iff]
       filter_upwards [trueExact] with transcript htranscript
@@ -290,7 +290,7 @@ private theorem no_finite_exact_decoder :
       rw [finiteTranscript_eq_allFalse htranscript]
       exact hdecode
     exact (upper_allFalseCylinder_pos m).ne'
-      (measure_mono_null hsubset hfailure)
+      (measure_mono_null hsubset hnull)
   rw [decodeFalse] at decodeTrue
   contradiction
 
@@ -319,4 +319,4 @@ theorem infinite_identification_not_finite_exact_tomography :
 
 end
 
-end D5.S3.ConceptDynamics.Experiment.InfiniteIdentificationFiniteFailure
+end D5.S3.ConceptDynamics.Experiment.InfiniteIdentificationFiniteInexactness

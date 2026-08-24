@@ -4,7 +4,7 @@ using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Experiment;
 
-internal sealed class InfiniteIdentificationFiniteFailureDocument
+internal sealed class InfiniteIdentificationFiniteInexactnessDocument
     : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -15,7 +15,7 @@ internal sealed class InfiniteIdentificationFiniteFailureDocument
             Describe.Lean(
                 DescribeId.Create("infinite-identification-not-finite-exact-tomography"),
                 DeclarationHandle.Create(
-                    "D5/S3/ConceptDynamics/Experiment/InfiniteIdentificationFiniteFailure."
+                    "D5/S3/ConceptDynamics/Experiment/InfiniteIdentificationFiniteInexactness."
                         + "infinite_identification_not_finite_exact_tomography"),
                 H("Almost-sure infinite identification has no finite exact converse"),
                 StatementSource.FromAuthor(SeparationFormula()),

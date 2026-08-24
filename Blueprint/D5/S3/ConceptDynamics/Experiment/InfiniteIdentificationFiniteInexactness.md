@@ -8,7 +8,7 @@ A countable transcript can identify two probability laws almost surely even thou
 
 $$\begin{aligned}\operatorname{AC}\left(\operatorname{marginal}\left(lowerBias\right), \operatorname{marginal}\left(upperBias\right)\right) \land\\\operatorname{AC}\left(\operatorname{marginal}\left(upperBias\right), \operatorname{marginal}\left(lowerBias\right)\right) \land\\\operatorname{Measurable}\left(distinguishingEvent\right) \land\\\operatorname{Pr}\left(\operatorname{stateLaw}\left(false\right), distinguishingEvent\right) = 0 \land\\\operatorname{Pr}\left(\operatorname{stateLaw}\left(true\right), distinguishingEvent\right) = 1 \land\\\neg \exists m: \operatorname{Nat}, d: (\operatorname{Fin}\left(m\right) \to \operatorname{Bool}) \to \operatorname{Bool}, \operatorname{AE}\left(\operatorname{stateLaw}\left(false\right), \lambda x \mapsto \operatorname{d}\left(\operatorname{finiteTranscript}\left(m, x\right)\right) = false\right) \land \operatorname{AE}\left(\operatorname{stateLaw}\left(true\right), \lambda x \mapsto \operatorname{d}\left(\operatorname{finiteTranscript}\left(m, x\right)\right) = true\right).\end{aligned}$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Experiment/InfiniteIdentificationFiniteFailure.infinite_identification_not_finite_exact_tomography` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Experiment/InfiniteIdentificationFiniteInexactness.infinite_identification_not_finite_exact_tomography` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -24,5 +24,5 @@ Pinned Mathlib supplies Bernoulli laws, product-coordinate independence, the str
 
 ## References
 
-- Truth anchor: `D5/S3/ConceptDynamics/Experiment/InfiniteIdentificationFiniteFailure.infinite_identification_not_finite_exact_tomography`
+- Truth anchor: `D5/S3/ConceptDynamics/Experiment/InfiniteIdentificationFiniteInexactness.infinite_identification_not_finite_exact_tomography`
 - Dependency: [D5/S0/Asymptotics/MetricGeometry/VaryingMarginalGreenClassMeasure](../../../S0/Asymptotics/MetricGeometry/VaryingMarginalGreenClassMeasure.md)
