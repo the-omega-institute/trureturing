@@ -57,6 +57,18 @@ import Mathlib.Probability.Process.HittingTime
      first k access events, and FirstSeen is its first hitting time (top when
      never hit). `AccessLedger`, `EvidenceFiltration.seen`, and `FirstSeen`
      below implement that definition chain.
+   * `rg -n 'Set EvidenceRole|generate.*tune.*select|role.*partition' \
+       D5/S3/ConceptDynamics --glob '*.lean'`
+     found the adaptive-role set only as three literals in this module and no
+     reusable named set. `adaptiveRoles` below replaces all three copies.
+   * `rg -n -i 'incoming|outgoing|predecessor|ancestor|dependency closure|'\
+       'reachable.*commitment|commitment.*reachable' D5 --glob '*.lean'`
+     found no existing incoming commitment closure. `Contam` and `seen` below
+     remain outgoing; only `AdjudicationSnapshot.dependencyClosure` traverses
+     from a record into a commitment root, as required by §48.3.
+   * `rg -n 'reflTransGen_swap|ReflTransGen.swap' \
+       .lake/packages/mathlib/Mathlib/Logic/Relation.lean`
+     found the pinned reversal lemmas; no second reversed relation is defined.
 -/
 
 set_option autoImplicit false
@@ -73,6 +85,9 @@ inductive EvidenceRole where
   | adjudicate
   | replicate
   deriving DecidableEq, Repr
+
+def adaptiveRoles : Set EvidenceRole :=
+  {.generate, .tune, .select}
 
 def Contam {Object : Type u}
     (dependsOn : Object → Object → Prop) (records : Set Object) : Set Object :=
@@ -200,7 +215,8 @@ structure AdjudicationSnapshot
 def AdjudicationSnapshot.dependencyClosure
     {Object Round Time : Type u} [Preorder Time] {round : Round}
     (snapshot : AdjudicationSnapshot Object Round Time round) : Set Object :=
-  Contam snapshot.filtration.dependsOn snapshot.commitmentRoots
+  {record | ∃ commitment ∈ snapshot.commitmentRoots,
+    Relation.ReflTransGen snapshot.filtration.dependsOn record commitment}
 
 def AppendOnlyExtension
     {Object Round Protocol Time : Type u} [Preorder Round] [Preorder Time]
@@ -246,7 +262,7 @@ def AdaptiveUseInClosure
     (validTrace : ValidTrace ledger snapshot) (evidence : Object) : Prop :=
   ∃ event, InAdjudicationPrefix ledger snapshot validTrace event ∧
     event.evidence = evidence ∧
-    (event.role = .generate ∨ event.role = .tune ∨ event.role = .select) ∧
+    event.role ∈ adaptiveRoles ∧
     Set.Nonempty (event.dependencies ∩ snapshot.dependencyClosure)
 
 def AdmissibleJudge
@@ -285,7 +301,7 @@ noncomputable def ReuseDepth
   exact (ledger.events.filter fun event ↦
     InAdjudicationPrefix ledger snapshot validTrace event ∧
       event.evidence = evidence ∧
-      (event.role = .generate ∨ event.role = .tune ∨ event.role = .select) ∧
+      event.role ∈ adaptiveRoles ∧
       Set.Nonempty (event.dependencies ∩ snapshot.dependencyClosure)).length
 
 theorem role_admission_contamination_spec
@@ -298,7 +314,7 @@ theorem role_admission_contamination_spec
       AdaptiveUseInClosure ledger snapshot validTrace evidence ↔
         ∃ event, InAdjudicationPrefix ledger snapshot validTrace event ∧
           event.evidence = evidence ∧
-          (event.role = .generate ∨ event.role = .tune ∨ event.role = .select) ∧
+          event.role ∈ adaptiveRoles ∧
           Set.Nonempty (event.dependencies ∩ snapshot.dependencyClosure)) ∧
     (∀ evidence,
       AdmissibleJudge ledger snapshot validTrace evidence ↔
@@ -321,11 +337,11 @@ theorem role_admission_contamination_spec
           ∀ judge ∈ judges,
             (snapshot.freezeEvent : WithTop Nat) <
               FirstSeen snapshot.filtration judge)) ∧
-    (EvidenceRole.generate ∈ ({.generate, .tune, .select} : Set EvidenceRole) ∧
-      EvidenceRole.tune ∈ ({.generate, .tune, .select} : Set EvidenceRole) ∧
-      EvidenceRole.select ∈ ({.generate, .tune, .select} : Set EvidenceRole) ∧
-      EvidenceRole.adjudicate ∉ ({.generate, .tune, .select} : Set EvidenceRole) ∧
-      EvidenceRole.replicate ∉ ({.generate, .tune, .select} : Set EvidenceRole)) ∧
+    (EvidenceRole.generate ∈ adaptiveRoles ∧
+      EvidenceRole.tune ∈ adaptiveRoles ∧
+      EvidenceRole.select ∈ adaptiveRoles ∧
+      EvidenceRole.adjudicate ∉ adaptiveRoles ∧
+      EvidenceRole.replicate ∉ adaptiveRoles) ∧
     (∀ evidence, evidence ∈ snapshot.dependencyClosure →
       ¬ AdmissibleJudge ledger snapshot validTrace evidence) := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
@@ -336,7 +352,7 @@ theorem role_admission_contamination_spec
   · intro evidence
     rfl
   · exact ⟨fun _ _ _ ↦ Iff.rfl, fun _ ↦ Iff.rfl⟩
-  · simp [Set.mem_insert_iff, Set.mem_singleton_iff]
+  · simp [adaptiveRoles, Set.mem_insert_iff, Set.mem_singleton_iff]
   · intro evidence contaminated admitted
     exact admitted.2.2.1 contaminated
 
@@ -506,7 +522,8 @@ theorem adaptive_use_present_witness :
     AdaptiveUseInClosure witnessLedger witnessSnapshot witnessValidTrace true := by
   apply (role_admission_contamination_spec
     witnessLedger witnessSnapshot witnessValidTrace).1 true |>.2
-  refine ⟨witnessGenerateEvent, ?_, rfl, Or.inl rfl, ?_⟩
+  refine ⟨witnessGenerateEvent, ?_, rfl,
+    by simp [adaptiveRoles, witnessGenerateEvent], ?_⟩
   · simp [InAdjudicationPrefix, RolePrefixAtEvent, RolePrefixAtRound,
       RolePrefixAtTime, witnessLedger, witnessSnapshot, witnessGenerateEvent]
   · refine ⟨true, by simp [witnessGenerateEvent], ?_⟩
@@ -546,7 +563,7 @@ theorem admissible_judge_present_witness :
         inPrefix.1.1
     rcases eventCases with rfl | rfl
     · simp [witnessGenerateEvent] at evidenceEq
-    · simp [witnessAdjudicateEvent] at adaptiveRole
+    · simp [adaptiveRoles, witnessAdjudicateEvent] at adaptiveRole
 
 theorem nonanticipating_boundary_witness :
     NonAnticipating witnessSnapshot false ∧
@@ -615,11 +632,11 @@ theorem contamination_clean_set_boundary_witness :
     exact this
 
 theorem role_partition_boundary_witness :
-    EvidenceRole.generate ∈ ({.generate, .tune, .select} : Set EvidenceRole) ∧
-      EvidenceRole.tune ∈ ({.generate, .tune, .select} : Set EvidenceRole) ∧
-      EvidenceRole.select ∈ ({.generate, .tune, .select} : Set EvidenceRole) ∧
-      EvidenceRole.adjudicate ∉ ({.generate, .tune, .select} : Set EvidenceRole) ∧
-      EvidenceRole.replicate ∉ ({.generate, .tune, .select} : Set EvidenceRole) :=
+    EvidenceRole.generate ∈ adaptiveRoles ∧
+      EvidenceRole.tune ∈ adaptiveRoles ∧
+      EvidenceRole.select ∈ adaptiveRoles ∧
+      EvidenceRole.adjudicate ∉ adaptiveRoles ∧
+      EvidenceRole.replicate ∉ adaptiveRoles :=
   (role_admission_contamination_spec
     witnessLedger witnessSnapshot witnessValidTrace).2.2.2.2.1
 
@@ -631,6 +648,115 @@ theorem dependency_rejection_witness :
   exact ⟨inClosure, (role_admission_contamination_spec
     witnessLedger witnessSnapshot witnessValidTrace).2.2.2.2.2 true inClosure⟩
 
+private def directionFiltration : EvidenceFiltration Bool Nat :=
+  { accessLedger := ⟨[.access true, .commitmentFreeze 7, .access false]⟩
+    dependsOn := fun source target ↦ source = false ∧ target = true }
+private theorem direction_from_true_eq {target : Bool}
+    (reachable : Relation.ReflTransGen directionFiltration.dependsOn true target) :
+    target = true := by
+  induction reachable with
+  | refl => rfl
+  | tail _ step _ => exact step.2
+private def directionAdjudicateEvent : UseEvent Bool Nat Unit Nat :=
+  { eventId := 3, evidence := false, round := 7, role := .adjudicate,
+    dependencies := ∅, protocol := (), usedAt := 2 }
+private def directionLedger : RoleLedger Bool Nat Unit Nat :=
+  { events := [directionAdjudicateEvent]
+    uniqueEventIds := by simp [directionAdjudicateEvent], strictEventOrder := by simp
+    indexRespectsRound := by
+      intro event later inEvents inLater _before
+      simp only [List.mem_singleton] at inEvents inLater
+      subst event; subst later; exact le_rfl
+    indexRespectsTime := by
+      intro event later inEvents inLater _before
+      simp only [List.mem_singleton] at inEvents inLater
+      subst event; subst later; exact le_rfl }
+private def directionSnapshot : AdjudicationSnapshot Bool Nat Nat 7 :=
+  { freezeEvent := 1, decisionEvent := 3, frozenAt := 1, decidedAt := 2
+    freezeBeforeDecision := by decide, timeBeforeDecision := by decide
+    filtration := directionFiltration
+    commitmentRoots := {true}
+    freezeRecorded := rfl
+    commitmentClosureVisibleAtFreeze := by
+      intro object contaminated
+      rcases contaminated with ⟨root, rootMem, reachable⟩
+      have rootEq : root = true := by simpa using rootMem
+      subst root
+      have objectEq : object = true := direction_from_true_eq reachable
+      subst object
+      exact ⟨0, true, by decide, rfl, Relation.ReflTransGen.refl⟩ }
+private theorem directionValidTrace : ValidTrace directionLedger directionSnapshot := by
+  intro event inLedger
+  simp only [directionLedger, List.mem_singleton] at inLedger
+  subst event
+  exact ⟨2, false, by decide, rfl, Relation.ReflTransGen.refl⟩
+private theorem direction_role_present : EvidenceRole.adjudicate ∈
+    RolesAt directionLedger directionSnapshot directionValidTrace false := by
+  refine ⟨directionAdjudicateEvent, ?_, rfl, rfl, rfl⟩
+  simp [InAdjudicationPrefix, RolePrefixAtEvent, RolePrefixAtRound,
+    RolePrefixAtTime, directionLedger, directionSnapshot, directionAdjudicateEvent]
+private theorem direction_freeze_before_false : (directionSnapshot.freezeEvent : WithTop Nat) <
+    FirstSeen directionSnapshot.filtration false := by
+  rw [freeze_lt_first_seen_iff]
+  intro index before seen
+  rcases seen with ⟨accessIndex, accessed, accessBefore, atIndex, reachable⟩
+  change index ≤ 1 at before
+  have accessIndexEq : accessIndex = 0 := by omega
+  have indexEq : index = 1 := by omega
+  subst accessIndex
+  subst index
+  have accessedEq : accessed = true := by
+    simpa [directionSnapshot, directionFiltration] using atIndex.symm
+  subst accessed
+  exact Bool.noConfusion (direction_from_true_eq reachable)
+
+private theorem direction_not_outbound :
+    false ∉ Contam directionFiltration.dependsOn ({true} : Set Bool) := by
+  rintro ⟨root, rootMem, reachable⟩
+  have rootEq : root = true := by simpa using rootMem
+  subst root
+  exact Bool.noConfusion (direction_from_true_eq reachable)
+
+private theorem direction_not_adaptive : ¬ AdaptiveUseInClosure
+    directionLedger directionSnapshot directionValidTrace false := by
+  rintro ⟨event, inPrefix, _evidenceEq, adaptiveRole, _touches⟩
+  have eventEq : event = directionAdjudicateEvent := by
+    simpa [directionLedger, directionAdjudicateEvent] using inPrefix.1.1
+  subst event
+  simp [adaptiveRoles, directionAdjudicateEvent] at adaptiveRole
+
+/-- The asymmetric edge `false → true` separates the §48.3 incoming closure from
+outgoing `Contam`. The last conjunct substitutes the old closure in the judge
+formula: it accepts `false`, while the incoming closure rejects it. -/
+theorem dependency_direction_witness :
+    directionSnapshot.dependencyClosure ≠
+        Contam directionFiltration.dependsOn directionSnapshot.commitmentRoots ∧
+      ¬ AdmissibleJudge
+        directionLedger directionSnapshot directionValidTrace false ∧
+      (EvidenceRole.adjudicate ∈
+          RolesAt directionLedger directionSnapshot directionValidTrace false ∧
+        (directionSnapshot.freezeEvent : WithTop Nat) <
+          FirstSeen directionSnapshot.filtration false ∧
+        false ∉ Contam directionFiltration.dependsOn
+          directionSnapshot.commitmentRoots ∧
+        ¬ AdaptiveUseInClosure
+          directionLedger directionSnapshot directionValidTrace false) := by
+  have incoming : false ∈ directionSnapshot.dependencyClosure := by
+    refine ⟨true, by simp [directionSnapshot], ?_⟩
+    exact Relation.ReflTransGen.single (by simp [directionSnapshot, directionFiltration])
+  have outbound : false ∉
+      Contam directionFiltration.dependsOn directionSnapshot.commitmentRoots := by
+    simpa [directionSnapshot] using direction_not_outbound
+  refine ⟨?_, ?_, direction_role_present, direction_freeze_before_false,
+    outbound, direction_not_adaptive⟩
+  · intro sameClosure
+    exact outbound (sameClosure ▸ incoming)
+  · intro admitted
+    exact admitted.2.2.1 incoming
+
+/-- Deleting or weakening any named leaf breaks this proof. This aggregate has no
+outer machine consumer; another Lean wrapper would only move that boundary. The
+natural outer consumer is the post-deposit frozen ledger, unavailable this round. -/
 theorem role_admission_nonvacuity :
     AdaptiveUseInClosure witnessLedger witnessSnapshot witnessValidTrace true ∧
     AdmissibleJudge witnessLedger witnessSnapshot witnessValidTrace false ∧
@@ -639,21 +765,35 @@ theorem role_admission_nonvacuity :
     (false ∈ Contam (fun source target : Bool ↦ source = target) {false} ∧
       AdjudicationSetClean witnessSnapshot ({false} : Set Bool) ∧
       ¬ AdjudicationSetClean witnessSnapshot ({true} : Set Bool)) ∧
-    (EvidenceRole.generate ∈ ({.generate, .tune, .select} : Set EvidenceRole) ∧
-      EvidenceRole.tune ∈ ({.generate, .tune, .select} : Set EvidenceRole) ∧
-      EvidenceRole.select ∈ ({.generate, .tune, .select} : Set EvidenceRole) ∧
-      EvidenceRole.adjudicate ∉ ({.generate, .tune, .select} : Set EvidenceRole) ∧
-      EvidenceRole.replicate ∉ ({.generate, .tune, .select} : Set EvidenceRole)) ∧
+    (EvidenceRole.generate ∈ adaptiveRoles ∧
+      EvidenceRole.tune ∈ adaptiveRoles ∧
+      EvidenceRole.select ∈ adaptiveRoles ∧
+      EvidenceRole.adjudicate ∉ adaptiveRoles ∧
+      EvidenceRole.replicate ∉ adaptiveRoles) ∧
     (true ∈ witnessSnapshot.dependencyClosure ∧
-      ¬ AdmissibleJudge witnessLedger witnessSnapshot witnessValidTrace true) := by
+      ¬ AdmissibleJudge witnessLedger witnessSnapshot witnessValidTrace true) ∧
+    (directionSnapshot.dependencyClosure ≠
+        Contam directionFiltration.dependsOn directionSnapshot.commitmentRoots ∧
+      ¬ AdmissibleJudge
+        directionLedger directionSnapshot directionValidTrace false ∧
+      (EvidenceRole.adjudicate ∈
+          RolesAt directionLedger directionSnapshot directionValidTrace false ∧
+        (directionSnapshot.freezeEvent : WithTop Nat) <
+          FirstSeen directionSnapshot.filtration false ∧
+        false ∉ Contam directionFiltration.dependsOn
+          directionSnapshot.commitmentRoots ∧
+        ¬ AdaptiveUseInClosure
+          directionLedger directionSnapshot directionValidTrace false)) := by
   exact ⟨adaptive_use_present_witness, admissible_judge_present_witness,
     nonanticipating_boundary_witness, contamination_clean_set_boundary_witness,
-    role_partition_boundary_witness, dependency_rejection_witness⟩
+    role_partition_boundary_witness, dependency_rejection_witness,
+    dependency_direction_witness⟩
 
 #print axioms first_seen_le_iff
 #print axioms first_seen_eq_top_iff
 #print axioms role_admission_contamination_spec
 #print axioms admissible_judge_append_invariant
+#print axioms dependency_direction_witness
 #print axioms role_admission_nonvacuity
 
 end D5.S3.ConceptDynamics.Provenance.RoleAdmissionContaminationClosure

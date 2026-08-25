@@ -31,8 +31,8 @@ internal sealed class RoleAdmissionContaminationClosureDocument : IScribeDocumen
                         "Both recorded roles and adaptive uses inspect only events in the "
                             + "validated event, round, and time prefix. The admission predicate "
                             + "requires adjudication role presence, first access strictly after "
-                            + "freeze, absence from the derived commitment closure, and absence "
-                            + "of adaptive use.")),
+                            + "freeze, absence from the incoming closure of records that reach a "
+                            + "commitment root, and absence of adaptive use.")),
                     Paragraph(Text(
                         "If every appended event is strictly later than the decision event, none "
                             + "enters the event prefix. With ValidTrace proofs on both ledgers, "

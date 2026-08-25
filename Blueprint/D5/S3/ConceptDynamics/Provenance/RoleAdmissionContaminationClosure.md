@@ -16,7 +16,7 @@ $$\forall L, Lprime, K_{n}, (v : ValidTrace(L, K_{n})), (vprime : ValidTrace(Lpr
 
 The frozen commitment carries its own round, freeze event, decision event, access-derived filtration, and commitment roots. Judge admission therefore has no independent caller-supplied cutoff or round.
 
-Both recorded roles and adaptive uses inspect only events in the validated event, round, and time prefix. The admission predicate requires adjudication role presence, first access strictly after freeze, absence from the derived commitment closure, and absence of adaptive use.
+Both recorded roles and adaptive uses inspect only events in the validated event, round, and time prefix. The admission predicate requires adjudication role presence, first access strictly after freeze, absence from the incoming closure of records that reach a commitment root, and absence of adaptive use.
 
 If every appended event is strictly later than the decision event, none enters the event prefix. With ValidTrace proofs on both ledgers, admission is therefore identical before and after the append.
 
