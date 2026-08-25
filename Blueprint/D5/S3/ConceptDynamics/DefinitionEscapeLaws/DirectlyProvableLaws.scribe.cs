@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.DefinitionEscape;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.DefinitionEscapeLaws;
 
 internal sealed class DirectlyProvableLawsDocument : IScribeDocumentDefinition
 {
@@ -13,7 +13,7 @@ internal sealed class DirectlyProvableLawsDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("directly-provable-dect-laws"),
                 DeclarationHandle.Create(
-                    "D5/S3/ConceptDynamics/DefinitionEscape/DirectlyProvableLaws."
+                    "D5/S3/ConceptDynamics/DefinitionEscapeLaws/DirectlyProvableLaws."
                         + "directly_provable_laws"),
                 H("Eight direct laws for definition escape and completion"),
                 StatementSource.FromAuthor(TheoremFormula()),

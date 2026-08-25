@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/DefinitionEscape/DirectlyProvableLaws
+/- GID: D5/S3/ConceptDynamics/DefinitionEscapeLaws/DirectlyProvableLaws
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/DefinitionEscape/DirectlyProvableLaws
+   mirror-B: D5/B/S3/ConceptDynamics/DefinitionEscapeLaws/DirectlyProvableLaws
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Eight direct DECT laws are proved; infinite-value capture remains open. -/
@@ -64,7 +64,7 @@ import Mathlib.Topology.MetricSpace.Lipschitz
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.DefinitionEscape.DirectlyProvableLaws
+namespace D5.S3.ConceptDynamics.DefinitionEscapeLaws.DirectlyProvableLaws
 
 open D5.S3.ConceptDynamics.ConceptFiberDecomposition
 open D5.S3.ConceptDynamics.ConceptJoinUniversal
@@ -783,4 +783,4 @@ theorem false_neighbor_clause9 :
   norm_num [Real.dist_eq] at impossible
 
 #print axioms directly_provable_laws
-end D5.S3.ConceptDynamics.DefinitionEscape.DirectlyProvableLaws
+end D5.S3.ConceptDynamics.DefinitionEscapeLaws.DirectlyProvableLaws
