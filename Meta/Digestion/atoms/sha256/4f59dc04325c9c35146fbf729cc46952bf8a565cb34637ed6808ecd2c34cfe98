@@ -1,0 +1,27 @@
+## 本地 SpectrumCommitment
+
+本卷独立定义七元记录，不借用母卷的持有链或结算章节：
+
+\[
+\boxed{
+\operatorname{SpectrumCommitment}=
+(\operatorname{atom\_family},\operatorname{scope},\operatorname{baseline},
+\operatorname{weight\_spec},\operatorname{comparator},
+\operatorname{test\_plan},\operatorname{falsifiable\_prediction}).
+}
+\]
+
+冻结
+
+\[A=\{a_1,\ldots,a_5\},\qquad a_i=\texttt{DESC-v1.0/T}i.\]
+
+且 \(a_i\) 分别只对应 T1--T5。各字段取值为：
+
+- `scope`：正文定理只收有限/可数 \(\Gamma\)；T4 边界检查可使用明示的更大构造。
+- `baseline`：DECT v1.0 的 §5.3、§6.1、§6.2、§16.2、§17.2，不预记任一 \(T_i\) 为真。
+- `weight_spec`：共同语义的有限非负实值 charge；T2/T5 的穷尽结论另需穷举残差链连续。
+- `test_plan`：核验公式类型与配对、前件闭包、T1/T2 推理、T3 紧致借用、T4 两子项及 T5 适用域。
+- `comparator` 与 `falsifiable_prediction`：由下述固定截止纯函数给出。
+
+基线内容地址固定为：在提交 `f2d87fdc0506c31e787eb7b771c240d54c705de9`，母卷文件 SHA-256 为 `ff23c648ecc88dc128b084e6b5bbd3d6e9510f7f634ab5ceca6cc88641f780b7`。本地记录已经写全，且不引用母卷其他章节。
+

@@ -17,16 +17,18 @@ internal sealed record DigestionFormalizationExtension(
     string Gid,
     DigestionFormalizationSignature Signature);
 
-// digestion-formalization-v1 receipt (spec §4a "pre-committed signature"). The
+// digestion-formalization-v1 receipt (spec §11.21 "pre-committed signature"). The
 // formalizer (workflow step 1, or a manual PR-1) produces this receipt at
-// delivery time — before/while proving — pinning atom_id -> primary declaration
-// GID -> declaration signature, and binding the atom's content (cas_ref /
-// raw_sha256). The digestion cover transaction (PR-2) then admits a declaration
+// delivery time — before/while proving — pinning atom_id to one or more declaration
+// GIDs and signatures, and binding the atom's content (cas_ref / raw_sha256).
+// primary_gid records the first registration; it is not an ownership or cover
+// privilege. The digestion cover transaction (PR-2) then admits a declaration
 // only when the deposited declaration's *current* signature equals the pinned
 // signature, which is base-agnostic (no file-byte newness) and therefore survives
 // the honest two-phase deposit while rejecting a post-proof statement swap.
 //
-// Deferred (§4b, recorded not silent): this receipt does NOT attest that the
+// Deferred (§11.21 hollow-fidelity open, recorded not silent): this receipt does
+// NOT attest that the
 // pre-committed signature itself is a faithful, non-hollow rendering of the
 // natural-language atom. A hollow pre-commitment (`theorem t : True`) that is then
 // deposited unchanged would pass signature-match. Guarding the pre-commitment's
@@ -45,6 +47,9 @@ internal sealed record DigestionFormalizationReceipt(
     internal const string RootPath = "Meta/Digestion/formalizations/";
 
     internal const string PathSuffix = ".v1.json";
+
+    internal ImmutableArray<string> RegisteredGids =>
+        [PrimaryGid, .. Extensions(this).Select(static extension => extension.Gid)];
 
     internal static string PathForAtom(string atomId) =>
         RootPath + atomId + PathSuffix;

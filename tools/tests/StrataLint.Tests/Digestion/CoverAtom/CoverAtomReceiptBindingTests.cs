@@ -8,6 +8,33 @@ namespace StrataLint.Tests;
 public sealed partial class CoverAtomTests
 {
     [Fact]
+    public void CoverAcceptsGidAlreadyBoundToAnotherAtomWithIndependentPairReceipts()
+    {
+        const string gid = "D5/S0/Carrier/Probe.probe";
+        var execution = Execute(new CoverSpec
+        {
+            OtherAtomBinding = ("sibling-atom", gid),
+            InitialDefinitionSha256 = DigestionFingerprint.Compute(
+                Encoding.UTF8.GetBytes("scribe definition\n")).RawSha256,
+            InitialEmissionSha256 = DigestionFingerprint.Compute(
+                Encoding.UTF8.GetBytes("# emitted narrative\n")).RawSha256,
+        });
+        var (result, after, before) = execution;
+
+        Assert.True(result.Success, result.Error);
+        Assert.NotEqual(before, after);
+        var entries = execution.AfterDocument.RequireDigestionEntries();
+        var target = Assert.Single(entries, candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
+        var sibling = Assert.Single(entries, candidate => candidate.AtomId == "sibling-atom");
+        Assert.Equal([gid], target.CoverageGids.ToArray());
+        Assert.Equal([gid], sibling.CoverageGids.ToArray());
+        Assert.Equal([gid], target.Receipts.Coverage.Select(static receipt => receipt.Gid).ToArray());
+        Assert.Equal([gid], sibling.Receipts.Coverage.Select(static receipt => receipt.Gid).ToArray());
+        Assert.Equal([gid], target.Receipts.Scribe.Select(static receipt => receipt.Gid).ToArray());
+        Assert.Equal([gid], sibling.Receipts.Scribe.Select(static receipt => receipt.Gid).ToArray());
+    }
+
+    [Fact]
     public void CoverReceiptUsesVerifiedProducerEmissionWhenTrackedProjectionDiffers()
     {
         var spec = new CoverSpec();

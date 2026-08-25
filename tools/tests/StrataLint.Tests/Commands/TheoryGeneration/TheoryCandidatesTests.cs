@@ -341,8 +341,11 @@ public sealed partial class TheoryCandidatesTests
 
         FrontierCandidateClassification Classify(string path) =>
             TheoryCandidatesCommand.ClassifyFrontier(
-                dag.Nodes.Single(node => node.RepoPath.Value == path),
+                ToFrontierNode(dag.Nodes.Single(node => node.RepoPath.Value == path)),
                 eligibility);
+
+        static FrontierStateNode ToFrontierNode(TruthProjectionNode node) =>
+            new(node.RepoPath, node.Gid, node.State);
     }
 
     [Fact]
@@ -357,7 +360,10 @@ public sealed partial class TheoryCandidatesTests
             StringComparer.Ordinal);
 
         var classification = TheoryCandidatesCommand.ClassifyFrontier(
-            dag.Nodes.Single(node => node.RepoPath.Value == MathematicalFrontierPath),
+            new FrontierStateNode(
+                dag.Nodes.Single(node => node.RepoPath.Value == MathematicalFrontierPath).RepoPath,
+                dag.Nodes.Single(node => node.RepoPath.Value == MathematicalFrontierPath).Gid,
+                dag.Nodes.Single(node => node.RepoPath.Value == MathematicalFrontierPath).State),
             eligibility);
 
         Assert.Equal(FrontierCandidateClassification.MathematicalNotYetStated, classification);
@@ -453,7 +459,7 @@ public sealed partial class TheoryCandidatesTests
         {
             Assert.True(Gid.TryParse(sourceRef, out var gid));
             return TheoryCandidatesCommand.ClassifyFrontier(
-                TruthNode.Create(gid.Path, gid, TruthState.Open, sourceRef.Replace('/', '.')),
+                new FrontierStateNode(gid.Path, gid, TruthState.Open),
                 eligibility);
         }
     }
@@ -607,6 +613,7 @@ public sealed partial class TheoryCandidatesTests
                 "sha256:" + new string('1', 64),
                 unsupported,
                 [],
+                [],
                 ownerOverride: null));
 
         Assert.Contains("bootstrap selection is unavailable", exception.Message, StringComparison.Ordinal);
@@ -670,7 +677,7 @@ public sealed partial class TheoryCandidatesTests
         return environment.TheoryCandidates(arguments ?? []);
     }
 
-    private static (RepositorySnapshot Snapshot, AcyclicTruthDag Dag) Truth(RuleFixture fixture)
+    private static (RepositorySnapshot Snapshot, TruthDagProjection Dag) Truth(RuleFixture fixture)
     {
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
             RawRepositorySnapshot.Create(fixture.Files.Select(static pair =>
@@ -678,7 +685,7 @@ public sealed partial class TheoryCandidatesTests
         var lean = Assert.IsType<LeanValidationOutcome.Accepted>(LeanClosureValidator.Validate(
             snapshot,
             LeanAxiomReport.Create(fixture.Reports))).Capability;
-        var dag = Assert.IsType<DagBuildOutcome.Accepted>(AcyclicTruthDag.Build(snapshot, lean)).Capability;
+        var dag = TruthDagProjectionAssembler.Build(snapshot, lean);
         return (snapshot, dag);
     }
 

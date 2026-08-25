@@ -6,7 +6,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed class FormalizeCandidatesTests
+public sealed partial class FormalizeCandidatesTests
 {
     // Byte-faithful canonical status-marker forms used by theory atoms.
     private const string PlainClosedMarker = "〔closed〕";
@@ -142,6 +142,18 @@ public sealed class FormalizeCandidatesTests
         Assert.Equal("uncovered", candidate.GetProperty("atom_id").GetString());
     }
 
+    [Fact]
+    public void FormalizeCandidatesRejectsDuplicateAtomIds()
+    {
+        var first = Entry("source-a", "duplicate-atom", "定理", "2.3");
+        var second = Entry("source-b", "duplicate-atom", "定理", "2.4");
+
+        var result = Run([first, second]);
+
+        Assert.False(result.Success);
+        Assert.Contains("duplicate atom_id: duplicate-atom", result.Error, StringComparison.Ordinal);
+    }
+
     [Theory]
     [InlineData(false, "CAS blob is missing")]
     [InlineData(true, "CAS blob hash mismatch")]
@@ -245,39 +257,6 @@ public sealed class FormalizeCandidatesTests
             Assert.Single(json.RootElement.GetProperty("candidates").EnumerateArray())
                 .GetProperty("atom_id")
                 .GetString());
-    }
-
-    [Fact]
-    public void FormalizeCandidatesReportsRecordedFormalizationWithEmptyCoverageSeparately()
-    {
-        var entry = Entry(
-            "pzg-v170",
-            "pzg-residual-c2b458c0ec6e7494ffe7b15cc71ca9aa7afd5559254301851904c9c91c88d13f",
-            "定理",
-            "19.5");
-
-        var result = Run([entry], formalizationReceipt: ValidReceipt(entry));
-
-        Assert.True(result.Success, result.Error);
-        using var json = JsonDocument.Parse(result.Output);
-        Assert.Equal("stratalint-formalize-candidates-v3", json.RootElement.GetProperty("schema").GetString());
-        Assert.Empty(json.RootElement.GetProperty("candidates").EnumerateArray());
-        Assert.Empty(json.RootElement.GetProperty("withheld").EnumerateArray());
-        var recorded = Assert.Single(
-            json.RootElement.GetProperty("recorded_formalizations").EnumerateArray());
-        Assert.Equal("pzg-v170", recorded.GetProperty("source_id").GetString());
-        Assert.Equal(entry.AtomId, recorded.GetProperty("atom_id").GetString());
-        Assert.Equal(
-            "current-formalization-receipt",
-            recorded.GetProperty("evidence_kind").GetString());
-        Assert.Equal(
-            "D5/S0/Synthetic/Receipt." + entry.AtomId.Replace('-', '_'),
-            recorded.GetProperty("primary_gid").GetString());
-        Assert.Equal(
-            DigestionFormalizationReceipt.RootPath
-                + entry.AtomId
-                + DigestionFormalizationReceipt.PathSuffix,
-            recorded.GetProperty("receipt_path").GetString());
     }
 
     [Fact]
@@ -557,7 +536,8 @@ public sealed class FormalizeCandidatesTests
         BackfillInventoryDocument? ledger = null,
         byte[]? formalizationReceipt = null,
         LeanAxiomReport? leanReport = null,
-        string atomizer = AtomizerRegistry.PzgId)
+        string atomizer = AtomizerRegistry.PzgId,
+        IReadOnlyList<string>? arguments = null)
     {
         var sources = entries
             .GroupBy(static entry => entry.SourceId, StringComparer.Ordinal)
@@ -621,8 +601,8 @@ public sealed class FormalizeCandidatesTests
                 RawRepositorySnapshot.Create(files),
                 null),
             new FakeLeanReportSource(leanReport ?? CurrentLeanReport(entries)),
-            new FakeScribeEmissionVerifier(null));
-        return environment.DigestStatus(["--formalize-candidates"]);
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+        return environment.DigestStatus(arguments ?? ["--formalize-candidates"]);
     }
 
     private static byte[] ValidReceipt(EntryFixture entry) =>
@@ -658,7 +638,8 @@ public sealed class FormalizeCandidatesTests
         string migration = "residual",
         string truth = "open",
         string status = "",
-        string atomizer = AtomizerRegistry.PzgId)
+        string atomizer = AtomizerRegistry.PzgId,
+        DigestionCoverDisposition? coverDisposition = null)
     {
         var source = Encoding.UTF8.GetBytes(
             status is UnterminatedPlainClosedMarker or UnterminatedClosedMarker
@@ -674,7 +655,8 @@ public sealed class FormalizeCandidatesTests
             atom,
             coverageGids ?? [],
             migration,
-            truth);
+            truth,
+            coverDisposition);
     }
 
     private static BackfillInventoryDocument Ledger(
@@ -699,7 +681,13 @@ public sealed class FormalizeCandidatesTests
                         null,
                         entry.Atom.Fingerprints,
                         ImmutableArray.CreateRange(entry.CoverageGids),
-                        new DigestionReceipts([], [], [], [], null),
+                        new DigestionReceipts(
+                            [],
+                            [],
+                            [],
+                            [],
+                            null,
+                            CoverDisposition: entry.CoverDisposition),
                         new DigestionStatus(
                             Migration(entry.Migration),
                             Truth(entry.Truth)),
@@ -753,7 +741,8 @@ public sealed class FormalizeCandidatesTests
         DigestionAtom Atom,
         string[] CoverageGids,
         string Migration,
-        string Truth);
+        string Truth,
+        DigestionCoverDisposition? CoverDisposition);
 
     private sealed record SourceFixture(
         string SourceId,

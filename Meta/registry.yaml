@@ -23,6 +23,9 @@ governance_documents:
   - "docs/GOVERNANCE.md"
   - "docs/MISSION.md"
   - "docs/develop/spec/golden-ledger-repo-spec.md"
+  - "docs/develop/theory/DEFINITION_ESCAPE_SPECTRUM_COMPLETION.md"
+  - "docs/develop/theory/PROOF_TOPOLOGY_DIAGONAL_ESCAPE_THEORY.md"
+  - "docs/develop/theory/RELATIVE_NEGATION_INVOLUTIVE_ESCAPE.md"
 agent_files:
   - "CONTEXT.md"
   - "adversary.md"

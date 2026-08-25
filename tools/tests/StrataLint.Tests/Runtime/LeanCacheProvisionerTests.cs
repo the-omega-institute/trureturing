@@ -7,16 +7,119 @@ public sealed class LeanCacheProvisionerTests
 {
     private const string BudgetVariable = "STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS";
 
+    /// <summary>
+    /// #2535 的收口契约:三个消费点各有具名预算,且**当前同值**。
+    ///
+    /// 钉住「同值」不是为了固化它,恰恰相反 —— 是为了让**分开**成为一个显式动作。
+    /// 注释里写明:`DirectoryCopyBudgetFor` 的继承依据是该路径实测零发生,
+    /// `DependencyFetchBudgetFor` 的依据是它差两个数量级;两者一旦失去依据就须单独收口
+    /// **并带新案号**。若有人直接给某一个换上独立字面量而不走那一步,本测试变红,
+    /// 迫使他要么补案号、要么改这里的断言 —— 两条都是显式的。
+    ///
+    /// 反面即病:若不钉,三个访问器会悄悄分叉成三个无源裸数,
+    /// 即「量腹而食」第四形乘以三,比收口前更差。
+    /// </summary>
     [Fact]
-    public void DefaultBudgetIsTheDeclaredOneHourPolicyOverride()
+    public void ThreeNamedBudgetsExistAndCurrentlyShareTheLoadBearingValue()
     {
-        // The expected value is written out rather than read from
-        // LeanCacheProvisioner.DefaultProvisionBudgetSeconds on purpose: referencing the
-        // constant would let a future change to the policy value pass silently, whereas a
-        // literal forces whoever changes it to come here and to the declaration beside
-        // that constant. The cost is that this literal and this test's name must be
-        // maintained together with the declaration; that is the intended trade.
-        AssertCacheGetBudget(null, 3600);
+        var lean = LeanCacheProvisioner.LeanCommandBudget;
+        var copy = LeanCacheProvisioner.DirectoryCopyBudget;
+        var fetch = LeanCacheProvisioner.DependencyFetchBudget;
+
+        // 承重点即活性上限本身。上一版这里断言的是「模块数算出来的派生值」,
+        // 而那个派生每次都被 clamp 压回上限 —— 断言恒真,「派生」二字不承重。
+        Assert.Equal(
+            TimeSpan.FromSeconds(LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds),
+            lean);
+
+        // 另两者继承它。分叉须走注释所述的收口 + 新案号,不得静默发生。
+        Assert.Equal(lean, copy);
+        Assert.Equal(lean, fetch);
+    }
+
+    /// <summary>
+    /// 具名化不得破坏既有的环境旋钮:三个名字都经同一个 clamp 后的取值,
+    /// 故旋钮一动,三者须同时随动。若某个访问器被改成绕开 `ProvisionBudget`
+    /// 直接返回字面量,本测试变红。
+    /// </summary>
+    [Fact]
+    public void AllThreeNamedBudgetsFollowTheClampedEnvironmentOverride()
+    {
+        var previous = Environment.GetEnvironmentVariable(BudgetVariable);
+        try
+        {
+            // 300..7200 之外的值须被 clamp;取一个远超上界的数,三者都应落到 7200。
+            Environment.SetEnvironmentVariable(BudgetVariable, "99999");
+            var clamped = TimeSpan.FromSeconds(7200);
+            Assert.Equal(clamped, LeanCacheProvisioner.LeanCommandBudget);
+            Assert.Equal(clamped, LeanCacheProvisioner.DirectoryCopyBudget);
+            Assert.Equal(clamped, LeanCacheProvisioner.DependencyFetchBudget);
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable(BudgetVariable, previous);
+        }
+    }
+
+    /// <summary>
+    /// 该值是 `policy-override`,其**取值依据**是覆盖全量冷建并留并发余量。
+    ///
+    /// 上一版把它判为「域外活性上限」,依据是「对正常路径 766s 有 9.4 倍」——
+    /// **那个 766s 是 CI 热态报告生产的耗时,而本值界的是本地 worktree 的 Lake 命令**,
+    /// 拿一个环境的读数当了另一个环境的判据。本地三级回退(clonefile → archive →
+    /// ReproduceExisting)全落空即全量冷建 **3388s**,比值只有 2.13。
+    ///
+    /// 故本测试钉的是**本地口径**的那个关系,不再是 CI 口径。
+    /// </summary>
+    [Fact]
+    public void BudgetClearsTheLocalFullColdBuildWithConcurrencyHeadroom()
+    {
+        // 本地全量冷建实测(2026-08-23,28 核,含并发,EXIT=0,1571 模块)。
+        const int LocalFullColdBuildSeconds = 3388;
+
+        // 负读数①:旧值 1800 对 1656 的 8% 余量被并发吃掉而失败。故须显著多于 1 倍。
+        Assert.True(
+            LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds
+                > LocalFullColdBuildSeconds * 2,
+            "预算未清过本地全量冷建的两倍,并发余量不足以避免重演 1800 的失败");
+
+        // 有限:预算必须封顶,否则挂死检测失效。
+        Assert.True(
+            LeanCacheBudgetPolicy.MinimumConfigurableBudgetSeconds
+                < LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds);
+    }
+
+    /// <summary>
+    /// `policy-override` 须**报全**:这不是派生值、日期、域、正反读数、永久案号、
+    /// owner、退出条件、非永久。报不全即规矩所指的「无源未报」(第四形)。
+    ///
+    /// 本测试读该常数的声明文本并逐项核对 —— 缺任一项即红,迫使改动者补齐而非静默删注。
+    /// </summary>
+    [Fact]
+    public void PolicyOverrideDeclarationReportsEveryRequiredItem()
+    {
+        var declaration = File.ReadAllText(Path.Combine(
+            TestRepositoryLayout.FindRoot(),
+            "tools", "StrataLint.Cli", "Runtime", "LeanCacheBudgetPolicy.cs"));
+
+        foreach (var required in new[]
+        {
+            "policy-override",       // 明报型别
+            "这不是派生值",           // 明报非派生
+            "2026-08-25",            // 日期
+            "**域**",                 // 域
+            "**正读数**",             // 正读数
+            "**负读数**",             // 负读数
+            "issues/2535",           // 永久案号
+            "**owner**",              // owner
+            "退出条件",               // 退出条件 / 复审触发
+            "**非永久**",             // 非永久
+        })
+        {
+            Assert.True(
+                declaration.Contains(required, StringComparison.Ordinal),
+                $"policy-override 声明缺项:{required}");
+        }
     }
 
     [Fact]
@@ -62,13 +165,29 @@ public sealed class LeanCacheProvisionerTests
         });
     }
 
+    /// <summary>
+    /// 旋钮的解析与 clamp。非法值那一档原本期望 3600(旧默认字面量),现改为期望
+    /// **该树的派生值** —— 非法输入应当落回默认路径,而默认路径现在是派生的。
+    /// </summary>
     [Theory]
-    [InlineData("invalid", 3600)]
     [InlineData("1", 300)]
     [InlineData("9000", 7200)]
     public void ConfiguredBudgetUsesInvariantParsingAndClamps(string raw, int expectedSeconds)
     {
         AssertCacheGetBudget(raw, expectedSeconds);
+    }
+
+    /// <summary>
+    /// 非法旋钮取值应回落到默认路径,而默认路径就是上限本身。
+    /// 上一版此处期望「该树的派生值」,现无派生可言。
+    /// </summary>
+    [Fact]
+    public void UnparseableBudgetFallsBackToTheCeiling()
+    {
+        WithBudget("invalid", () =>
+            Assert.Equal(
+                TimeSpan.FromSeconds(LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds),
+                LeanCacheProvisioner.LeanCommandBudget));
     }
 
     [Fact]

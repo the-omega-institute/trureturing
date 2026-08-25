@@ -12,8 +12,8 @@ receipts:
       target_sha256: sha256:eafed4784601bcc1d9358af0a441539fa1e63154aeeb3b92bc85f3b5e7a9b351
   scribe:
     - gid: D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec
-      definition_sha256: sha256:d0496d5397e50e63b8b77caa4a968c9f72103d74da4601e698b37c363e6bfe5c
-      emission_sha256: sha256:b5e58ba9631a89e30dfb7b804075a099ec37c410c28397c185299ec51d2a2e5a
+      definition_sha256: sha256:d2f6ea7406159693482ea89a16028a2550e11da5dc095a3d1d13e5aec363bccd
+      emission_sha256: sha256:dc480a5ec1f5c1c8e30ae2778408f8d45f0882c7d84f802c7023da3bd4bbf44f
   unresolved_subitems:
     - scaling-phenomena-assignment-to-expanding-axis
     - sign-reversal-phenomena-assignment-to-contracting-axis

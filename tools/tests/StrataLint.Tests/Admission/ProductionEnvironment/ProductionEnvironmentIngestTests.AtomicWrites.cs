@@ -220,4 +220,125 @@ public sealed partial class ProductionEnvironmentTests
         }
     }
 
+    [Theory]
+    [InlineData("coverage-receipt-mismatch")]
+    [InlineData("scribe-definition-mismatch")]
+    [InlineData("scribe-emission-mismatch")]
+    public void IngestRejectsEachNewReceiptIntegrityMismatchBeforeWritingLedger(string mismatchCode)
+    {
+        var materialized = CoverWorld.Materialize(new CoverSpec
+        {
+            OtherAtomBinding = ("receipt-gap-sibling", "D5/S0/Carrier/Probe.probe"),
+        });
+        var inputs = DirectoryInputs(WithSiblingReceiptMismatch(materialized, mismatchCode));
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+        var environment = BuildCoverEnvironment(
+            temporary.Path,
+            inputs,
+            inputs.Files,
+            RawChangeSet.Create(["D5/S0/Carrier/Probe.lean"]));
+
+        var result = environment.Ingest(["--base", "baseline"]);
+
+        Assert.False(result.Success);
+        Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
+        Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+    }
+
+    [Fact]
+    public void IngestAtomizesNewSourceWhileUnrelatedReceiptIntegrityBacklogExistsAtForkPoint()
+    {
+        const string newSourcePath = "docs/develop/theory/INGEST_SCOPE_NEW_SOURCE.md";
+        const string newSourceText = "# New source\n\n## Theorem 1.1\n\nClaim.\n";
+        const string siblingModuleGid = "D5/S0/Carrier/CoverSibling";
+        const string siblingGid = siblingModuleGid + ".sibling";
+        var materialized = CoverWorld.Materialize(new CoverSpec
+        {
+            SecondaryTarget = (siblingModuleGid, "sibling"),
+            UnrelatedSibling = new CoverUnrelatedSiblingSpec(
+                "receipt-gap-sibling",
+                [siblingGid],
+                [siblingGid],
+                []),
+        });
+        var inputs = DirectoryInputs(WithSiblingReceiptMismatch(
+            materialized,
+            "coverage-receipt-mismatch"));
+        var files = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal)
+        {
+            [newSourcePath] = newSourceText,
+        };
+        inputs = inputs with { Files = files };
+        var backlogAtom = Assert.Single(inputs.Files, pair => pair.Key.EndsWith(
+            "/receipt-gap-sibling.yaml",
+            StringComparison.Ordinal));
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var environment = BuildCoverEnvironment(
+            temporary.Path,
+            inputs,
+            inputs.Files,
+            RawChangeSet.Create([newSourcePath]));
+
+        var result = environment.Ingest(["--base", "baseline"]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain(
+            "receipt-gap-sibling:coverage-receipt-mismatch",
+            result.Output,
+            StringComparison.Ordinal);
+        var written = BackfillInventoryLoader.LoadRoot(temporary.Path);
+        var newSource = Assert.Single(
+            written.RequireDigestionSources(),
+            static source => source.SourceId == "ingest-scope-new-source");
+        Assert.Single(newSource.Entries);
+        Assert.Contains(
+            backlogAtom.Key
+            + "\0"
+            + Convert.ToBase64String(Encoding.UTF8.GetBytes(backlogAtom.Value))
+            + "\n",
+            DirectoryLedgerTestSupport.Image(temporary.Path),
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void IngestRejectsTouchedReceiptIntegrityGapWhoseForkPointIdentityIsUnchanged()
+    {
+        const string siblingModuleGid = "D5/S0/Carrier/CoverSibling";
+        const string siblingGid = siblingModuleGid + ".sibling";
+        var materialized = CoverWorld.Materialize(new CoverSpec
+        {
+            SecondaryTarget = (siblingModuleGid, "sibling"),
+            UnrelatedSibling = new CoverUnrelatedSiblingSpec(
+                "receipt-gap-sibling",
+                [siblingGid],
+                [siblingGid],
+                []),
+        });
+        var inputs = DirectoryInputs(WithSiblingReceiptMismatch(
+            materialized,
+            "coverage-receipt-mismatch"));
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+        var environment = BuildCoverEnvironment(
+            temporary.Path,
+            inputs,
+            inputs.Files,
+            RawChangeSet.Create([siblingModuleGid + ".lean"]));
+
+        var result = environment.Ingest(["--base", "baseline"]);
+
+        Assert.False(result.Success);
+        Assert.Contains(
+            $"receipt-gap-sibling:coverage-receipt-mismatch:{siblingGid}",
+            result.Error,
+            StringComparison.Ordinal);
+        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+    }
+
 }

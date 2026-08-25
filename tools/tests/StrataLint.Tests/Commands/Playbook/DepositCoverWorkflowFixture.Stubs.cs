@@ -93,53 +93,67 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 atom=''
                 gids=()
                 out=''
-                require_existing_coverage=false
                 for ((index=1; index<${#parts[@]}; index+=2)); do
                   case "${parts[index]}" in
                     --atom-id) atom=${parts[index+1]} ;;
                     --gid) gids+=("${parts[index+1]}") ;;
                     --out) out=${parts[index+1]} ;;
-                    --require-existing-coverage) require_existing_coverage=${parts[index+1]} ;;
                   esac
                 done
-                primary_gid=${gids[0]:-}
-                if [[ $require_existing_coverage == true \
-                    && $primary_gid != D5/S0/Carrier/Probe.probe ]]; then
-                  echo "FORMALIZATION_RECEIPT_INVALID receipt primary GID $primary_gid is not already bound to atom $atom" >&2
-                  exit 46
-                fi
+                requested_gid=${gids[0]:-}
+                primary_gid=$requested_gid
                 [[ -n $out ]] || out="Meta/Digestion/formalizations/${atom}.v1.json"
                 mkdir -p "$(dirname "$out")"
                 existing="Meta/Digestion/formalizations/${atom}.v1.json"
-                if [[ ${#gids[@]} -gt 1 && -f $existing ]]; then
+                if [[ -f $existing ]]; then
                   existing_atom=$(jq -r '.atom_id // ""' "$existing")
                   existing_primary=$(jq -r '.primary_gid // ""' "$existing")
-                  if [[ $existing_atom != "$atom" || $existing_primary != "$primary_gid" ]]; then
-                    echo "FORMALIZATION_RECEIPT_INVALID existing formalization receipt conflicts with atom/GID: $atom" >&2
+                  if [[ $existing_atom != "$atom" || -z $existing_primary ]]; then
+                    echo "FORMALIZATION_RECEIPT_INVALID existing formalization receipt conflicts with atom: $atom" >&2
                     exit 47
                   fi
+                  primary_gid=$existing_primary
                 fi
-                if [[ ${#gids[@]} -gt 1 ]]; then
-                  secondary_gid=${gids[1]}
-                  secondary_name=${secondary_gid##*.}
+                if [[ -f $existing && $requested_gid != "$primary_gid" ]]; then
+                  secondary_name=${requested_gid##*.}
                   printf '{"atom_id":"%s","hosted_extensions":[{"gid":"%s","precommitted_signature":{"kind":"theorem","name_key":"%s","type":"True"}}],"primary_gid":"%s"}\n' \
-                    "$atom" "$secondary_gid" "$secondary_name" "$primary_gid" > "$out"
+                    "$atom" "$requested_gid" "$secondary_name" "$primary_gid" > "$out"
+                elif [[ -f $existing ]]; then
+                  cp -- "$existing" "$out"
                 else
                   printf '{"atom_id":"%s","primary_gid":"%s"}\n' "$atom" "$primary_gid" > "$out"
                 fi
                 ;;
               cover-atom)
+                if [[ ${PLAYBOOK_COVER_DISPOSITION_FAILURE:-0} == 1 ]]; then
+                  printf 'atom_id: atom-1\ncoverage: false\naligned: false\ncover_disposition: synthetic\n' \
+                    > Meta/BACKFILL.yaml
+                  echo 'COVER_INVALID synthetic disposition' >&2
+                  exit 1
+                fi
                 if grep -q '^coverage: true$' Meta/BACKFILL.yaml; then
-                  [[ $command == *'--gid D5/S0/Carrier/Probe.probe --gid D5/S3/Observer/WindowRegisterCRT.window_register_crt_decomposition'* ]] || {
-                    echo 'COVER_INVALID hosted cover omitted the primary GID' >&2
+                  [[ $command == *'--gid D5/S3/Observer/WindowRegisterCRT.window_register_crt_decomposition'* ]] || {
+                    echo 'COVER_INVALID hosted cover omitted the selected secondary GID' >&2
                     exit 1
                   }
                 fi
                 printf 'atom_id: atom-1\ncoverage: true\naligned: false\n' > Meta/BACKFILL.yaml
                 ;;
               align-scribe-receipt)
-                [[ $(cat Blueprint/D5/S0/Carrier/Probe.md) == 'emission: covered' ]] || {
-                  echo 'ALIGN_SCRIBE_RECEIPT_INVALID emission is stale' >&2
+                gid=''
+                for ((index=1; index<${#parts[@]}; index+=2)); do
+                  case "${parts[index]}" in
+                    --gid) gid=${parts[index+1]} ;;
+                  esac
+                done
+                definition_path="Blueprint/${gid%.*}.scribe.cs"
+                verified_emission=''
+                if [[ -s $definition_path ]] \
+                    && grep -q '^coverage: true$' Meta/BACKFILL.yaml; then
+                  verified_emission='emission: covered'
+                fi
+                [[ $verified_emission == 'emission: covered' ]] || {
+                  echo 'ALIGN_SCRIBE_RECEIPT_INVALID no verified in-process Scribe emission' >&2
                   exit 1
                 }
                 if grep -q '^aligned: covered$' Meta/BACKFILL.yaml; then

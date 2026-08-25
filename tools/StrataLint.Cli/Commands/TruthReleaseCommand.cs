@@ -55,8 +55,9 @@ internal static class TruthReleaseCommand
                 frozen.Capability.ActiveFrozenNodes,
                 identity.Revision,
                 sourceTree));
-            var dagMarkdownBytes = CanonicalDagWriter.Write(truth.Dag);
-            var truthGraphBytes = AssembleTruthGraph(snapshot, truth, rawLeanReportBytes);
+            var projection = TruthDagProjectionAssembler.Build(truth.Snapshot, truth.Lean);
+            var dagMarkdownBytes = CanonicalDagWriter.Write(projection);
+            var truthGraphBytes = AssembleTruthGraph(snapshot, truth, projection, rawLeanReportBytes);
             var blueprintIndexBytes = BlueprintIndexAssembler.Assemble(snapshot);
             var frozenLedgerHeadBytes = FrozenLedgerHeadAssembler.Assemble(preparation.BaseView);
             var residualFrontierBytes = ResidualFrontierAssembler.Assemble(
@@ -119,6 +120,7 @@ internal static class TruthReleaseCommand
     private static ImmutableArray<byte> AssembleTruthGraph(
         RepositorySnapshot snapshot,
         TruthContext truth,
+        TruthDagProjection projection,
         ImmutableArray<byte> rawLeanReportBytes)
     {
         using var materialized = MaterializedSnapshot.Create(snapshot);
@@ -150,7 +152,7 @@ internal static class TruthReleaseCommand
         var graph = DocumentGraphAssembler.Assemble(
             documents,
             catalog);
-        var projection = DocumentGraphExportProjection.Create(
+        var documentProjection = DocumentGraphExportProjection.Create(
             definitions.Select(definition => new DocumentGraphDocument(
                 definition.RelativePath.Value,
                 definition.Document,
@@ -159,14 +161,17 @@ internal static class TruthReleaseCommand
                     : "receipt-bound")),
             graph,
             catalog,
-            truth.Dag.Nodes
+            projection.Nodes
                 .Select(static node => node.RepoPath.Value)
                 .ToHashSet(StringComparer.Ordinal));
         var provenance = new TruthGraphProvenance(
             SnapshotContentDigest.Compute(snapshot),
             RawLeanReportArtifact.ContentAddress(rawLeanReportBytes.AsSpan()));
         return TruthGraphJsonWriter.Write(
-            TruthGraphModelBuilder.Create(truth.Dag, provenance, projection));
+            TruthGraphModelBuilder.Create(
+                projection,
+                provenance,
+                documentProjection));
     }
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>

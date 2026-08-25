@@ -12,8 +12,8 @@ receipts:
       target_sha256: sha256:5bce9e185c5957fcab648acb7664c51f6c1b1230f9fccef479f560c57d8da7d7
   scribe:
     - gid: D5/S3/Zeros/ScalingRegisterRigidity.realized_same_germ_same_total_code_excludes_scaling_register
-      definition_sha256: sha256:b06d75fa4979884af2764e93f428a83958f9ec972ba03d94449081ce62bf7002
-      emission_sha256: sha256:4229d1f2c6ae9b9f5fd24027153ba754a7ce42eafa6b880bdc9ab005a0e61b87
+      definition_sha256: sha256:757fa4bcf85ed3ef267e3798a37206d1a6098d0e8473d16ae98902881a311e4e
+      emission_sha256: sha256:6aa5317dc496328ef86468c94f6212b5ef85c4515df9b6cf0e0a8975d0b82b50
   unresolved_subitems:
     - c3b-local-scaling-ledger-zero-qualification
     - c3b-positive-functional-o6-bridge

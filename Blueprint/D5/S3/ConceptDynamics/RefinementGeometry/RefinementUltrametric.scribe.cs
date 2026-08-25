@@ -1,0 +1,11 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.RefinementGeometry;
+internal sealed class RefinementUltrametricDocument : IScribeDocumentDefinition
+{
+ public DocumentDefinition Create()=>DocumentDefinition.Create(ScribeNode.Create("Agreement depth gives a pseudoultrametric; an ultrametric under separation.",H("Refinement Ultrametric"),Blocks(Describe.Lean(DescribeId.Create("refinement-distance-strong-triangle"),DeclarationHandle.Create("D5/S3/ConceptDynamics/RefinementGeometry/RefinementUltrametric.refinementDistance_ultrametric"),H("Refinement distance satisfies the strong triangle inequality"),StatementSource.FromAuthor(Ultra()),AssessedProvenance.FromRepo(),Blocks(Paragraph(Text("The distance uses common agreement depth and a finite horizon. The strong triangle inequality holds without state separation.")),Paragraph(Text("Agreement through the smaller common depth composes transitively and yields the maximum bound."))),DescribeRole.Theorem),Describe.Lean(DescribeId.Create("separation-gives-identity-of-indiscernibles"),DeclarationHandle.Create("D5/S3/ConceptDynamics/RefinementGeometry/RefinementUltrametric.refinementDistance_eq_zero_iff_eq"),H("Horizon separation turns the pseudodistance into a metric"),StatementSource.FromAuthor(Separation()),AssessedProvenance.FromRepo(),Blocks(Paragraph(Text("The explicit SeparatesByHorizon hypothesis supplies identity of indiscernibles.")),Paragraph(Text("The construction is unconditionally a pseudoultrametric and becomes an ultrametric only under horizon separation."))),DescribeRole.Theorem))));
+ private static Formula D(Formula a,Formula b)=>Call("refinementDistance",F.Id("Coordinate"),F.Id("readout"),F.Id("horizon"),a,b);
+ private static Formula Ultra()=>Disp(Seq(D(F.Id("x"),F.Id("z")),Sp,Leq,Sp,Call("max",D(F.Id("x"),F.Id("y")),D(F.Id("y"),F.Id("z"))),Dot));
+ private static Formula Separation()=>Disp(Seq(Call("SeparatesByHorizon",F.Id("Coordinate"),F.Id("readout"),F.Id("horizon")),Sp,Rightarrow,Sp,Open,D(F.Id("x"),F.Id("y")),Sp,Eq,Sp,F.Id("zero"),Sp,Iff,Sp,F.Id("x"),Sp,Eq,Sp,F.Id("y"),Close,Dot));
+}

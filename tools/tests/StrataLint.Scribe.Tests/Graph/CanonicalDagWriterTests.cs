@@ -55,14 +55,12 @@ public sealed class CanonicalDagWriterTests
     }
 
     [Fact]
-    public void SemanticArtifactsAreCountedButKeptOutOfTheFlowchart()
+    public void NonLeanRepositoryFilesAreAbsentFromTheProjection()
     {
-        // The DAG spans every repository file, and in this repository ~95% of its nodes are
-        // semantic artifacts with no imports and no dependents. Drawing 2.5k isolated vertices
-        // makes the picture unreadable (and overruns mermaid), so the flowchart carries the
-        // proof topology only — while the census still states how many were left out, because
-        // a graph that silently drops most of its nodes is a lie about the repository.
-        var dag = Build(
+        // The DAG's domain is the managed Lean closure, so a repository file without a Lean
+        // module never reaches the writer at all; the census states zero semantic nodes
+        // instead of disclosing a truncation.
+        var dag = BuildFrom(
             new Dictionary<string, string>(StringComparer.Ordinal)
             {
                 ["D5/S0/Carrier/Delta.lean"] = "def delta : Nat := 0\n",
@@ -76,9 +74,9 @@ public sealed class CanonicalDagWriterTests
         var fence = Fence(text);
 
         Assert.Contains("D5/S0/Carrier/Delta.lean", fence, StringComparison.Ordinal);
-        Assert.DoesNotContain("Meta/notes.md", fence, StringComparison.Ordinal);
-        Assert.Contains("semantic 1", text, StringComparison.Ordinal);
-        Assert.Contains("not drawn", text, StringComparison.Ordinal);
+        Assert.DoesNotContain("Meta/notes.md", text, StringComparison.Ordinal);
+        Assert.Contains("semantic 0", text, StringComparison.Ordinal);
+        Assert.Contains("(0 carry no module and are not drawn)", text, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -101,7 +99,7 @@ public sealed class CanonicalDagWriterTests
     {
         // "A/B.lean" and "A_B.lean" both become "A_B_lean" if the writer just replaces
         // separators; a collision would merge two truth nodes into one graph vertex.
-        var dag = Build(
+        var dag = BuildFrom(
             new Dictionary<string, string>(StringComparer.Ordinal)
             {
                 ["D5/S0/Carrier/A/B.lean"] = "def ab : Nat := 0\n",
@@ -161,13 +159,12 @@ public sealed class CanonicalDagWriterTests
     [Fact]
     public void EveryTruthStateIsRenderedDistinctly()
     {
-        var dag = Build(
+        var dag = BuildFrom(
             new Dictionary<string, string>(StringComparer.Ordinal)
             {
                 ["D5/S0/Carrier/Closed.lean"] = "def closed : Nat := 0\n",
                 ["D5/X_Frontier/Openly.lean"] = "def openly : Nat := 0\n",
                 ["D5/X_Assumptions/Tailed.lean"] = "def tailed : Nat := 0\n",
-                ["Meta/notes.md"] = "semantic\n",
             },
             new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
             {
@@ -178,7 +175,7 @@ public sealed class CanonicalDagWriterTests
         var text = Render(dag);
 
         Assert.Equal(
-            [TruthState.Closed, TruthState.Open, TruthState.Tail, TruthState.Semantic],
+            [TruthState.Closed, TruthState.Open, TruthState.Tail],
             dag.Nodes.Select(static node => node.State).Distinct().Order().ToArray());
         foreach (var state in Enum.GetValues<TruthState>())
         {
@@ -194,7 +191,7 @@ public sealed class CanonicalDagWriterTests
     {
         // An import of a managed module that is not in the snapshot is a real hole in the
         // graph. Rendering it silently as "no edge" would make the picture look complete.
-        var dag = Build(
+        var dag = BuildFrom(
             new Dictionary<string, string>(StringComparer.Ordinal)
             {
                 ["D5/S0/Carrier/Delta.lean"] = "def delta : Nat := 0\n",
@@ -226,7 +223,7 @@ public sealed class CanonicalDagWriterTests
                 .SequenceEqual(CanonicalDagWriter.Write(reversed).AsSpan()));
     }
 
-    private static string Render(AcyclicTruthDag dag) =>
+    private static string Render(TruthDagProjection dag) =>
         StrictUtf8.GetString(CanonicalDagWriter.Write(dag).AsSpan());
 
     private static string Fence(string text)
@@ -254,14 +251,14 @@ public sealed class CanonicalDagWriterTests
         return trimmed[..stop];
     }
 
-    private static RepoPath PathOf(AcyclicTruthDag dag, string module) =>
+    private static RepoPath PathOf(TruthDagProjection dag, string module) =>
         dag.Nodes.Single(node => node.RepoPath.Value.EndsWith(
             "/" + module + ".lean",
             StringComparison.Ordinal)).RepoPath;
 
     private static ModuleSpec Module(string name, params string[] imports) => new(name, imports);
 
-    private static AcyclicTruthDag Build(params ModuleSpec[] modules)
+    private static TruthDagProjection Build(params ModuleSpec[] modules)
     {
         var files = modules.ToDictionary(
             static module => "D5/S0/Carrier/" + module.Name + ".lean",
@@ -272,10 +269,10 @@ public sealed class CanonicalDagWriterTests
             static module => Report(
                 module.Imports.Select(static name => "D5.S0.Carrier." + name).ToArray()),
             StringComparer.Ordinal);
-        return Build(files, reports);
+        return BuildFrom(files, reports);
     }
 
-    private static AcyclicTruthDag Build(
+    private static TruthDagProjection BuildFrom(
         IReadOnlyDictionary<string, string> files,
         IReadOnlyDictionary<string, LeanFileReport> reports)
     {
@@ -284,8 +281,7 @@ public sealed class CanonicalDagWriterTests
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
         var closure = Assert.IsType<LeanValidationOutcome.Accepted>(
             LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
-        return Assert.IsType<DagBuildOutcome.Accepted>(
-            AcyclicTruthDag.Build(snapshot, closure)).Capability;
+        return TruthDagProjectionAssembler.Build(snapshot, closure);
     }
 
     private static LeanFileReport Report(params string[] imports) =>

@@ -19,6 +19,81 @@ public sealed class FrozenContentAddressTests
         Assert.Equal(firstNode.StatementId, secondNode.StatementId);
         Assert.NotEqual(firstNode.WitnessId, secondNode.WitnessId);
         Assert.NotEqual(firstNode.FrozenNodeId, secondNode.FrozenNodeId);
+
+        const string source = "theorem a : True := by trivial\n";
+        var raw = RawRepositorySnapshot.Create([
+            RawRepositoryEntry.FromText("lean-toolchain", "leanprover/lean4:v4.24.0\n"),
+            RawRepositoryEntry.FromText("lake-manifest.json", "{}\n"),
+            RawRepositoryEntry.FromText(PathFor("A"), source),
+        ]);
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(raw)).Snapshot;
+        var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
+        {
+            [PathFor("A")] = new(
+                ["D5.S0.Carrier.Missing"],
+                [new LeanDeclaration("a", "theorem", "True", []) { NameKey = "ns(n0,1:a)" }]),
+            [PathFor("Missing")] = new([], []),
+        });
+        var closure = Assert.IsType<LeanValidationOutcome.Accepted>(
+            LeanClosureValidator.Validate(snapshot, report)).Capability;
+        var environment = new FrozenEnvironmentAttestation(
+            GitOid('a'),
+            GitOid('b'),
+            GitBlobOid("leanprover/lean4:v4.24.0\n"),
+            GitBlobOid("{}\n"));
+
+        Assert.False(snapshot.Files.ContainsKey(RepoPathFor("Missing")));
+        var danglingImportCatalog = Assert.IsType<FrozenMaterialOutcome.Accepted>(
+            FrozenContentAddress.Build(
+                snapshot,
+                closure,
+                environment,
+                [new FrozenModuleAttestation(RepoPathFor("A"), GitBlobOid(source))])).Capability;
+        Assert.Empty(Assert.Single(danglingImportCatalog.ClosedNodes).PrerequisiteFrozenNodeIds);
+    }
+
+    [Fact]
+    public void ContentAddressBytesArePinnedOnAFixedFixture()
+    {
+        // #3030 phase 1 invariant: shrinking the truth-DAG node domain to managed Lean modules
+        // must not move a single frozen address byte. The fixture snapshot deliberately carries
+        // non-Lean files (lean-toolchain, lakefile.toml, lake-manifest.json), so these literals
+        // span the domain change: they were captured before the shrink and must hold after it.
+        var catalog = BuildCatalog(Module("A"), Module("B", imports: new[] { "A" }));
+
+        var nodes = catalog.ClosedNodes
+            .OrderBy(static node => node.RepoPath.Value, StringComparer.Ordinal)
+            .ToArray();
+        Assert.Equal(2, nodes.Length);
+        var a = nodes[0];
+        var b = nodes[1];
+        Assert.Equal("sha256:2737dabb279d14181efe09f7531e5c4664421bdbc19bbcf8b588f8d71123954c", a.StatementId.Value);
+        Assert.Equal("sha256:0d37e262a8c68df2ebd0e192b50b7167e5b697bb36d6f0c02649ede0e9844d9e", a.WitnessId.Value);
+        Assert.Equal("sha256:e6a10a73d813973ee49f0fa6bbb0ae9d2c3b2c7931a283509c1e3e97df05acde", a.FrozenNodeId.Value);
+        Assert.Equal("sha256:211af3769c4571cac3b50ccaad89160fef4f94e790bc01fdc890d927c6b63112", b.StatementId.Value);
+        Assert.Equal("sha256:6fbd91738bbd18aeb82433e85e57a82611c1bdf456463a51dbcaedfc483a838f", b.WitnessId.Value);
+        Assert.Equal("sha256:7c7584c4367278ce869226f688f6b67bfc072742811497c19f2d7fb197a8c15e", b.FrozenNodeId.Value);
+        var prerequisite = Assert.Single(b.PrerequisiteFrozenNodeIds);
+        Assert.Equal(a.FrozenNodeId.Value, prerequisite.Value);
+
+        var multiPrerequisiteCatalog = BuildCatalog(
+            Module("A"),
+            Module("B", imports: new[] { "A" }),
+            Module("C", imports: new[] { "A", "B" }));
+        var c = multiPrerequisiteCatalog.ClosedNodes
+            .OrderBy(static node => node.RepoPath.Value, StringComparer.Ordinal)
+            .ToArray()[2];
+        Assert.Equal("sha256:7fe10a833c778c19c4bf29a36f7a07486253042f63965d955ead898161fe7094", c.StatementId.Value);
+        Assert.Equal("sha256:bc2cc19c308ddbe355363aafa34dff87472b0f5cd4d35b5fb89f771b3d9c6a4b", c.WitnessId.Value);
+        Assert.Equal("sha256:65df0e281883e52131685be2fe5187a763c89314b8bc3f414e4f29c47cb57585", c.FrozenNodeId.Value);
+        Assert.Equal(
+            new[]
+            {
+                "sha256:7c7584c4367278ce869226f688f6b67bfc072742811497c19f2d7fb197a8c15e",
+                "sha256:e6a10a73d813973ee49f0fa6bbb0ae9d2c3b2c7931a283509c1e3e97df05acde",
+            },
+            c.PrerequisiteFrozenNodeIds.Select(static id => id.Value));
     }
 
     [Fact]
