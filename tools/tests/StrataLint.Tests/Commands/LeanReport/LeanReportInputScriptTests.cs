@@ -377,7 +377,7 @@ public sealed class LeanReportInputScriptTests
             "bash",
             [script, command, "--repository", repository, "--report", report],
             temporary.Path,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             1024 * 1024);
 
         private void Write(string relativePath, string contents)

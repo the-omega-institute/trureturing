@@ -6,6 +6,8 @@ internal sealed record ProcessOutput(int ExitCode, byte[] StandardOutput, byte[]
 
 internal static class BoundedProcessRunner
 {
+    internal static readonly TimeSpan HangDetectionBudget = TimeSpan.FromMinutes(5);
+
     internal static ProcessOutput Run(
         string fileName,
         IEnumerable<string> arguments,

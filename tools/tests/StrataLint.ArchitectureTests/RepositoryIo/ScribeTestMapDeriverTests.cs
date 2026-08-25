@@ -624,7 +624,7 @@ public sealed class ScribeTestMapDeriverTests
             "git",
             arguments,
             repositoryRoot,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             1024 * 1024);
 
     private sealed class TemporaryRepository : IDisposable
