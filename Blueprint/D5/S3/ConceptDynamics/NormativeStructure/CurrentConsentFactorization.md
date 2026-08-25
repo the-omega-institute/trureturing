@@ -6,7 +6,7 @@ Non-factorization of current consent rules out exact systems using only history.
 
 **Theorem 1.1 (Current consent cannot be recovered from history alone).**
 
-$$\forall X, H,\\{}Hnow: X \to H, Cnow: X \to Bool,\\{}\neg \operatorname{Refines}(Cnow, Hnow) \Rightarrow\\{}\neg \exists J, J: X \to Bool, \operatorname{Refines}(J, Hnow) \land J = Cnow.$$
+$$\forall X : Type, H : Type,\\{}Hnow: X \to H, Cnow: X \to Bool,\\{}\neg \operatorname{Refines}(Cnow, Hnow) \Rightarrow\\{}\neg \exists J, J: X \to Bool, \operatorname{Refines}(J, Hnow) \land J = Cnow.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/NormativeStructure/CurrentConsentFactorization.current_consent_not_history_only` (`✓ std3`). ∎
 
