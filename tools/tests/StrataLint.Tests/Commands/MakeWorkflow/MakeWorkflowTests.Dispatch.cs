@@ -7,7 +7,7 @@ namespace StrataLint.Tests;
 public sealed partial class MakeWorkflowTests
 {
     [Fact]
-    public void EngineeringCheckRunsTheCanonicalThreeStatePlannerTarget()
+    public void EngineeringCheckRunsTheCanonicalToolsTestTargetWithoutAFilter()
     {
         var root = TestRepositoryLayout.FindRoot();
         var makefile = File.ReadAllText(Path.Combine(root, ToolsMakefilePath));
