@@ -54,21 +54,81 @@ internal sealed class FinitePrimePowerQuotientCompletenessDocument
         return Seq([.. items]);
     }
 
+    private static Formula Apply(Formula function, params Formula[] arguments)
+    {
+        var items = new List<Formula> { function, Open };
+        for (var index = 0; index < arguments.Length; index++)
+        {
+            if (index > 0) items.AddRange([Comma, Sp]);
+            items.Add(arguments[index]);
+        }
+        items.Add(Close);
+        return Seq([.. items]);
+    }
+
+    private static Formula Typed(Formula value, Formula type) =>
+        Seq(value, Colon, Sp, type);
+
+    private static Formula Arrow(Formula domain, Formula codomain) =>
+        new Formula.TypeArrow(domain, codomain);
+
     private static Formula TheoremFormula()
     {
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula natural = Seq(Mathbb, Grp(F.Id("N")));
         Formula group = F.Id("G");
         Formula observer = Call("primePowerQuotientObserver", group);
         Formula residual = Call("primePowerResidual", group);
         Formula trivial = Call("trivialSubgroup", group);
-        Formula factors = Call("FinitePGroupFactors");
+        Formula indexType = Iota;
+        Formula factorFamily = F.Id("P");
+        Formula factorIndex = F.Id("i");
+        Formula prime = F.Id("prime");
+        Formula embedding = F.Id("embedding");
+        Formula factorAtIndex = Apply(factorFamily, factorIndex);
+        Formula product = Seq(
+            Prod, Underscore, Grp(Typed(factorIndex, indexType)), Sp, factorAtIndex);
+        Formula factorStructures = Seq(
+            Open, Forall, Sp, Typed(factorIndex, indexType), Comma, Sp,
+            Call("Group", factorAtIndex), Close, Sp, Land, Sp,
+            Open, Forall, Sp, Typed(factorIndex, indexType), Comma, Sp,
+            Call("Finite", factorAtIndex), Close);
+        Formula primeWitnesses = Seq(
+            Forall, Sp, Typed(factorIndex, indexType), Comma, Sp,
+            Call("Prime", Apply(prime, factorIndex)), Sp, Land, Sp,
+            Call("IsPGroup", Apply(prime, factorIndex), factorAtIndex));
+        Formula productClause = Seq(
+            Exists, Sp, Typed(indexType, type), Comma, Sp,
+            Typed(factorFamily, Arrow(indexType, type)), Comma, Sp,
+            Typed(prime, Arrow(indexType, natural)), Comma, RowBreak, Grp(),
+            Call("Finite", indexType), Sp, Land, Sp, factorStructures, Sp, Land,
+            RowBreak, Grp(), Open, primeWitnesses, Close, Sp, Land,
+            RowBreak, Grp(),
+            Exists, Sp, Typed(embedding, Call("MonoidHom", group, product)), Comma, Sp,
+            Call("Injective", embedding));
+
+        Formula primeIndex = F.Id("p");
+        Formula sylow = F.Id("S");
+        Formula primeFactors = Call("primeFactors", Call("NatCard", group));
+        Formula sylowProduct = Seq(
+            Prod, Underscore, Grp(Typed(primeIndex, primeFactors)), Sp,
+            Prod, Underscore,
+            Grp(Typed(sylow, Call("Sylow", primeIndex, group))), Sp,
+            Call("carrier", sylow));
+        Formula sylowClause = Call(
+            "Nonempty", Call("MonoidEquiv", sylowProduct, group));
 
         return Disp(Seq(
+            Begin, Grp(F.Id("gathered")),
+            Forall, Sp, Typed(group, type), Comma, RowBreak, Grp(),
+            Open, Call("Group", group), Sp, Land, Sp, Call("Finite", group), Close,
+            Sp, Rightarrow, RowBreak, Grp(),
             Operatorname, Grp(F.Id("TFAE")), Open,
             Call("Injective", observer), Comma, RowBreak, Grp(),
             Equal(residual, trivial), Comma, RowBreak, Grp(),
-            Call("Embeds", group, Call("FiniteProduct", factors)),
-            Comma, RowBreak, Grp(),
+            productClause, Comma, RowBreak, Grp(),
             Call("Nilpotent", group), Comma, RowBreak, Grp(),
-            Equal(group, Call("SylowProduct", group)), Close, Dot));
+            sylowClause, Close, Dot,
+            End, Grp(F.Id("gathered"))));
     }
 }
