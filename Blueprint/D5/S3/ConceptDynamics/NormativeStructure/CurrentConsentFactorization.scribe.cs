@@ -65,7 +65,8 @@ internal sealed class CurrentConsentFactorizationDocument : IScribeDocumentDefin
             Call("Refines", system, history), Sp, Land, Sp,
             system, Sp, Eq, Sp, current);
         return Disp(Seq(
-            Forall, Sp, state, Comma, Sp, historyType, Comma, RowBreak, Grp(),
+            Forall, Sp, state, Sp, Colon, Sp, F.Id("Type"), Comma, Sp,
+            historyType, Sp, Colon, Sp, F.Id("Type"), Comma, RowBreak, Grp(),
             history, Colon, Sp, historyReadout, Comma, Sp,
             current, Colon, Sp, readout, Comma, RowBreak, Grp(),
             nonFactor, Sp, Rightarrow, RowBreak, Grp(),

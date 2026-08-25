@@ -45,6 +45,7 @@ internal static class BackfillInventoryWriter
         AtomScribeReceipts(builder, entry.Receipts.Scribe);
         Strings(builder, "  unresolved_subitems", entry.Receipts.UnresolvedSubitems, 4);
         AtomQuarantine(builder, entry.Receipts.Quarantine);
+        CoverDisposition(builder, entry.Receipts.CoverDisposition, "  ");
         if (entry.Receipts.ChainAtoms.Length > 0)
         {
             Strings(builder, "  chain_atoms", entry.Receipts.ChainAtoms, 4);
@@ -134,6 +135,7 @@ internal static class BackfillInventoryWriter
         ScribeReceipts(builder, entry.Receipts.Scribe);
         Strings(builder, "          unresolved_subitems", entry.Receipts.UnresolvedSubitems, 12);
         Quarantine(builder, entry.Receipts.Quarantine);
+        CoverDisposition(builder, entry.Receipts.CoverDisposition, "          ");
         Strings(builder, "          chain_atoms", entry.Receipts.ChainAtoms, 12);
         if (entry.Receipts.TailAuthorization is { } tail)
         {
@@ -260,6 +262,47 @@ internal static class BackfillInventoryWriter
         if (quarantine.BlockerClass is { } nestedBlockerClass)
         {
             Line(builder, $"            blocker_class: {Scalar(nestedBlockerClass)}");
+        }
+    }
+
+    private static void CoverDisposition(
+        StringBuilder builder,
+        DigestionCoverDisposition? disposition,
+        string indent)
+    {
+        if (disposition is null)
+        {
+            return;
+        }
+
+        Line(builder, indent + "cover_disposition:");
+        Line(
+            builder,
+            indent + "  outcome: " + Scalar(
+                DigestionStatusNames.Migration(disposition.Outcome.Migration)
+                + "-"
+                + DigestionStatusNames.Truth(disposition.Outcome.Truth)));
+        Line(
+            builder,
+            indent + "  recorded_at_utc: "
+            + Scalar(disposition.RecordedAtUtc.ToString("O", CultureInfo.InvariantCulture)));
+        Line(builder, indent + "  gids:");
+        foreach (var gid in disposition.Gids)
+        {
+            Line(builder, indent + "    - " + Scalar(gid));
+        }
+
+        if (disposition.Gaps.IsEmpty)
+        {
+            Line(builder, indent + "  gaps: []");
+            return;
+        }
+
+        Line(builder, indent + "  gaps:");
+        foreach (var gap in disposition.Gaps)
+        {
+            Line(builder, indent + "    - code: " + Scalar(gap.Code));
+            Line(builder, indent + "      detail: " + Scalar(gap.Detail));
         }
     }
 

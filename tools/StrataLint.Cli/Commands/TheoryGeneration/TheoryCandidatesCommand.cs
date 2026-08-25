@@ -38,6 +38,12 @@ internal sealed record OwnerOverrideInput(
     string ProblemText,
     string ContentSha256);
 
+internal sealed record WithheldTheoryCandidate(
+    string CandidateId,
+    string SourceKind,
+    string SourceRef,
+    string WithholdReason);
+
 internal static class TheoryCandidatesCommand
 {
     private const string FrontierPrefix = "D5/X_Frontier/";
@@ -132,23 +138,42 @@ internal static class TheoryCandidatesCommand
                     + string.Join("; ", digestion.ReceiptIntegrityFailureReasons));
             }
 
-            var atomCandidates = digestion.Entries
+            var atomSelections = digestion.Entries
                 .Where(static entry =>
                     entry.DerivedStatus.Migration == DigestionMigrationState.Residual
                     && entry.DerivedStatus.Truth == DigestionTruthState.Open)
-                .Select(static entry => new TheoryCandidate(
-                    "atom/" + entry.Entry.AtomId,
+                .Select(static entry => new
+                {
+                    Evaluation = entry,
+                    Selection = DigestionCoverDispositionSelector.Classify(
+                        entry.Entry,
+                        retryDispositions: false),
+                })
+                .ToArray();
+            var atomCandidates = atomSelections
+                .Where(static item => item.Selection == DigestionCoverDispositionSelection.Available)
+                .Select(static item => new TheoryCandidate(
+                    "atom/" + item.Evaluation.Entry.AtomId,
                     "digestion_atom",
-                    entry.Entry.AtomId,
-                    entry.Entry.CasRef,
+                    item.Evaluation.Entry.AtomId,
+                    item.Evaluation.Entry.CasRef,
                     "codex-formalize",
                     null));
+            var withheldAtoms = atomSelections
+                .Where(static item => item.Selection == DigestionCoverDispositionSelection.Withheld)
+                .Select(static item => new WithheldTheoryCandidate(
+                    "atom/" + item.Evaluation.Entry.AtomId,
+                    "digestion_atom",
+                    item.Evaluation.Entry.AtomId,
+                    DigestionCoverDispositionSelector.WithholdReason))
+                .ToArray();
             var output = TheoryCandidateProjection.Render(
                 SnapshotContentDigest.Compute(truth.Snapshot),
                 RawLeanReportArtifact.ContentAddress(
                     RawLeanReportArtifact.Write(truth.Snapshot, truth.Report).AsSpan()),
                 mission,
                 frontierCandidates.Concat(atomCandidates).ToArray(),
+                withheldAtoms,
                 ownerOverride);
             return new CommandResult(true, output, string.Empty);
         }
@@ -369,12 +394,14 @@ internal static class TheoryCandidateProjection
         string leanReportSha256,
         MissionPolicy mission,
         IReadOnlyList<TheoryCandidate> repositoryCandidates,
+        IReadOnlyList<WithheldTheoryCandidate> withheldCandidates,
         OwnerOverrideInput? ownerOverride)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(inputSnapshotSha256);
         ArgumentException.ThrowIfNullOrWhiteSpace(leanReportSha256);
         ArgumentNullException.ThrowIfNull(mission);
         ArgumentNullException.ThrowIfNull(repositoryCandidates);
+        ArgumentNullException.ThrowIfNull(withheldCandidates);
         if (mission.Selection.OrderKind != WorthSelectionOrder.BootstrapEligibilityOrder)
         {
             throw new InvalidOperationException(
@@ -405,6 +432,9 @@ internal static class TheoryCandidateProjection
         }
 
         var candidateElement = JsonSerializer.SerializeToElement(ordered, JsonOptions);
+        var withheld = withheldCandidates
+            .OrderBy(static candidate => candidate.CandidateId, StringComparer.Ordinal)
+            .ToImmutableArray();
         var candidateSetSha256 = CandidateSetSha256(candidateElement);
         var selected = ownerCandidate?.CandidateId ?? ordered.FirstOrDefault()?.CandidateId;
         var material = new
@@ -421,6 +451,7 @@ internal static class TheoryCandidateProjection
                 selection_mode = ownerCandidate is null ? "bootstrap_order" : "owner_override",
                 selected_candidate_id = selected,
             },
+            withheld,
             candidates = ordered,
         };
         return StrictUtf8.GetString(

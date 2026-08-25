@@ -73,7 +73,8 @@ internal sealed class CommutingTargetExchangeDocument : IScribeDocumentDefinitio
         Formula readout = Seq(state, Sp, To, Sp, targetType);
         Formula defect = Call("commutationDefect", first, second, target);
         return Disp(Seq(
-            Forall, Sp, state, Comma, Sp, targetType, Comma, RowBreak, Grp(),
+            Forall, Sp, state, Sp, Colon, Sp, F.Id("Type"), Comma, Sp,
+            targetType, Sp, Colon, Sp, F.Id("Type"), Comma, RowBreak, Grp(),
             first, Comma, Sp, second, Colon, Sp, map, Comma, Sp,
             target, Colon, Sp, readout, Comma, RowBreak, Grp(),
             first, Sp, Circ, Sp, second, Sp, Eq, Sp,
