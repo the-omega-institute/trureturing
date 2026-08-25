@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/DefinitionEscape/DirectlyProvableLaws
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Nine direct DECT laws share one theorem without duplicating canonical primitives. -/
+   digest: Eight direct DECT laws are proved; infinite-value capture remains open. -/
 
 import D5.S3.ConceptDynamics.DefinitionEscape.BlindKernelObstruction
 import D5.S3.ConceptDynamics.DefinitionCapture.MeasureCapture
@@ -46,9 +46,11 @@ import Mathlib.Topology.MetricSpace.Lipschitz
      `LipschitzWith.dist_le_mul`; none packages this DECT conjunction.
    * Pinned-mathlib searches additionally found `Fintype.equivFin` and
      `Function.iterate_add_apply`. These are reused rather than reproved.
-   * Clause 6 uses the `ENNReal`-valued `CaptureWeight`. Its unrestricted count,
-     nonadditive weight, and arbitrary-measure constructors are compiled in
-     `MeasureCapture`; infinite count and measure values are retained. -/
+   * Clause 6 is not included in the theorem below. CAS defines
+     `F(S) = M(∅) - M(S)` and identifies it with captured mass, but
+     `MeasureCapture.infinite_counting_cas_bridge_fails` proves that this bridge
+     fails when both remaining masses are infinite. The adjacent captured-mass
+     submodularity theorem therefore cannot discharge the CAS clause. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -64,6 +66,19 @@ open D5.S3.ConceptDynamics.DefinitionCapture.MeasureCapture
 open D5.S3.ConceptDynamics.DefinitionEscape.ResidualJoinLaw
 open D5.S0.Diagonal.Naturality.NaturalityDefectComposition
 open MeasureTheory
+
+/- TASK D5-T0049
+   Source clause 6 remains open. CAS section 4.4 defines
+   `F(S) = M(∅) - M(S)` and also identifies `F` with captured mass. Those two
+   assertions are incompatible with unrestricted infinite values: counting an
+   infinite residual before and after one captured edge gives `⊤ - ⊤ = 0`,
+   while the captured singleton has mass one. A faithful positive theorem must
+   either impose finite remaining mass or revise the source definition. -/
+
+/-- Machine-addressable record of the source-level clause 6 boundary. This is
+governance data, not an additional mathematical claim. -/
+def clauses_not_done : Unit := ()
+
 /-- The dependent-family extension used by clauses 4 and 5.  The frozen
 `languageExtension` is its constant-codomain specialization. -/
 def dependentLanguageExtension {X C I : Type*} {D : I → Type*}
@@ -185,11 +200,9 @@ theorem dependent_blind_kernel_obstruction
   rintro ⟨n, codes, recover, recovery⟩
   exact finiteObstruction n codes ⟨recover, recovery⟩
 
-/-- The nine claims classified by DECT as already direct or one-line: residual
-intersection, sufficiency-factorization, redundant zero gain, blind-kernel
-obstruction, finite compactness, submodular capture, prepared one-step defect,
-semigroup defect, and approximate cascade. Clause 6 quantifies over the common
-extended-nonnegative interface realized without finite-value restrictions. -/
+/-- Eight of the nine claims classified by DECT as already direct or one-line:
+source clauses 1--5 and 7--9. Clause 6 is excluded because the source's
+`F(S) = M(∅) - M(S)` bridge to captured mass fails at infinite values. -/
 theorem directly_provable_laws :
     (forall {X C D Target : Type*} (q : Concept X C) (definition : Concept X D)
       (target : Concept X Target),
@@ -224,13 +237,6 @@ theorem directly_provable_laws :
           defectRelation
             (dependentLanguageExtension q
               (fun i => definitions (codes i))) target = ∅) ∧
-    (forall {Edge Definition : Type*} (nu : CaptureWeight Edge)
-      (residual : Set Edge) (cut : Definition → Set Edge)
-      (A B : Set Definition),
-      let captured := fun S : Set Definition =>
-        residual ∩ ⋃ definition ∈ S, cut definition
-      nu.mass (captured (A ∪ B)) + nu.mass (captured (A ∩ B)) ≤
-        nu.mass (captured A) + nu.mass (captured B)) ∧
     (forall {X Z : Type*} [PseudoMetricSpace Z] (projection : X → Z)
       (update : X → X) (prepare : Z → X), Function.RightInverse prepare projection →
       forall x : X,
@@ -254,7 +260,7 @@ theorem directly_provable_laws :
       (K : NNReal) (delta eta : Real), LipschitzWith K second →
       forall x y, dist (first x) y ≤ delta → dist (second y) (direct x) ≤ eta →
         dist (second (first x)) (direct x) ≤ K * delta + eta) := by
-  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro X C D Target q definition target
     exact residual_join_law q definition target
   · intro X C Target q target
@@ -325,8 +331,6 @@ theorem directly_provable_laws :
       rw [enumerate.symm_apply_apply] at sameSelectedValues
       exact selectedSeparates sameSelectedValues
     · exact False.elim
-  · intro Edge Definition nu residual cut A B
-    exact capture_weight_submodular nu residual cut A B
   · intro X Z pseudoMetric projection update prepare rightInverse x
     rfl
   · intro X Z Time pseudoMetric addTime projection evolution prepare rightInverse
@@ -548,9 +552,9 @@ example :
     norm_num [Real.dist_eq]
 
 /- The following nine declarations are elaborating falsification witnesses, one
-for each conjunct.  Each negates a nearby statement on values that remain in
-the law's intended domain; none relies on an ill-typed term or an out-of-package
-definition. -/
+for each source-list item. Items 1--5 and 7--9 negate nearby strengthened or
+premise-weakened statements. Item 6 proves why that source claim is excluded
+from the package. None relies on an ill-typed or out-of-package term. -/
 
 /-- Replacing the residual intersection in clause 1 by a union is false. -/
 theorem false_neighbor_clause1 :
@@ -699,20 +703,23 @@ theorem false_neighbor_clause5 :
   rw [emptyFiniteDefect] at finiteDefect
   exact finiteDefect
 
-/-- Strengthening clause 6's submodular inequality to modular equality is
-false when two definitions capture the same set of positive coverage weight. -/
+/-- Clause 6's CAS bridge is false for unrestricted infinite counting: both
+remaining masses are infinite, their `ENNReal` difference is zero, and the
+captured singleton has mass one. -/
 theorem false_neighbor_clause6 :
-    let nu : CaptureWeight Bool := nonadditiveCoverageCaptureWeight
-    let residual : Set Bool := Set.univ
-    let cut : Bool → Set Bool := fun _ => Set.univ
-    let captured := fun S : Set Bool =>
+    let weight := countingCaptureWeight Nat
+    let residual : Set Nat := Set.univ
+    let cut : Unit → Set Nat := fun _ => {0}
+    let remaining := fun S : Set Unit =>
+      residual \ ⋃ definition ∈ S, cut definition
+    let captured := fun S : Set Unit =>
       residual ∩ ⋃ definition ∈ S, cut definition
-    ¬nu.mass (captured ({false} ∪ {true})) +
-        nu.mass (captured ({false} ∩ {true})) =
-      nu.mass (captured {false}) + nu.mass (captured {true}) := by
-  classical
-  norm_num [nonadditiveCoverageCaptureWeight, Set.iUnion_const,
-    Set.mem_inter_iff, Set.mem_iUnion]
+    let remainingMass := fun S : Set Unit => weight.mass (remaining S)
+    let casF := fun S : Set Unit => remainingMass ∅ - remainingMass S
+    remainingMass ∅ = ⊤ ∧ remainingMass {()} = ⊤ ∧
+      casF {()} = 0 ∧ weight.mass (captured {()}) = 1 ∧
+      casF {()} ≠ weight.mass (captured {()}) :=
+  infinite_counting_cas_bridge_fails
 
 /-- Strengthening clause 7's identity to say the displayed defect vanishes is
 false for coordinate preparation followed by a swap. -/

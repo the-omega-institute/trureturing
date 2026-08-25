@@ -7,8 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.DefinitionCapture;
 internal sealed class MeasureCaptureDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Extended nonnegative masses make residual-intersection capture submodular.",
-        H("Capture Weight Submodularity"),
+        "Capture mass is submodular, but it is not the CAS difference at infinity.",
+        H("Capture Mass And The Infinite Bridge Failure"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("measure-capture-submodularity"),
@@ -21,7 +21,8 @@ internal sealed class MeasureCaptureDocument : IScribeDocumentDefinition
                 Blocks(
                     Paragraph(Text(
                         "The displayed formula is equal in strength to "
-                            + "capture_weight_submodular and to conjunct six of "
+                            + "capture_weight_submodular. It is an adjacent capture-mass lemma, "
+                            + "not source clause six and not a conjunct of "
                             + "directly_provable_laws. Edge and Definition are the two Lean "
                             + "types; CaptureWeight and Set are the corresponding type "
                             + "constructors; and nu, residual, cut, A, and B are "
@@ -46,13 +47,17 @@ internal sealed class MeasureCaptureDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "The compiled constructors countingCaptureWeight, "
                             + "nonadditiveCoverageCaptureWeight, and measureCaptureWeight realize "
-                            + "the source parameter's count, weight, and measure branches. Their "
+                            + "count, weight, and measure examples for this adjacent lemma. Their "
                             + "masses are respectively unrestricted Set.encard embedded in "
                             + "ENNReal, a nonadditive nonempty-set coverage weight, and the native "
                             + "values of an arbitrary Mathlib measure. No Finite or "
                             + "IsFiniteMeasure instance is required. The separate theorem "
                             + "measure_capture_submodular states and proves the complete arbitrary-"
-                            + "measure specialization, including infinite values."))),
+                            + "measure specialization, including infinite values. The theorem "
+                            + "infinite_counting_cas_bridge_fails separately proves that CAS's "
+                            + "F(S) = M(empty) - M(S) cannot equal captured mass in the infinite "
+                            + "counting example: the two remaining masses are infinity, F is zero, "
+                            + "and the captured singleton has mass one."))),
                 DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()

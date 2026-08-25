@@ -7,25 +7,25 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.DefinitionEscape;
 internal sealed class DirectlyProvableLawsDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Nine direct DECT laws are packaged in an append-only dependent-family module.",
-        H("Directly Provable DECT Laws"),
+        "Eight direct DECT laws are packaged; source clause six remains open.",
+        H("Directly Provable DECT Laws With One Open Clause"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("directly-provable-dect-laws"),
                 DeclarationHandle.Create(
                     "D5/S3/ConceptDynamics/DefinitionEscape/DirectlyProvableLaws."
                         + "directly_provable_laws"),
-                H("Nine direct laws for definition escape and completion"),
+                H("Eight direct laws for definition escape and completion"),
                 StatementSource.FromAuthor(TheoremFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "The nine conjuncts follow the source order exactly: residual "
-                            + "intersection; sufficiency-factorization; zero gain from a "
-                            + "redundant definition; blind-kernel impossibility; finite-object "
-                            + "compactness; submodular capture; the prepared one-step defect "
-                            + "identity; the semigroup defect identity; and the approximate "
-                            + "cascade triangle bound.")),
+                        "The theorem contains source clauses one through five and seven through "
+                            + "nine, in that order: residual intersection; sufficiency-"
+                            + "factorization; zero gain from a redundant definition; blind-kernel "
+                            + "impossibility; finite-object compactness; the prepared one-step "
+                            + "defect identity; the semigroup defect identity; and the approximate "
+                            + "cascade triangle bound. Source clause six is not a conjunct.")),
                     Paragraph(Text(
                         "The first conjunct applies residual_join_law. The second uses the same "
                             + "fiber-constancy equivalence packaged by target_recovery_criterion, "
@@ -46,28 +46,25 @@ internal sealed class DirectlyProvableLawsDocument : IScribeDocumentDefinition
                             + "definition that separates it; enumeration of the finite subtype "
                             + "then gives a finite sufficient extension.")),
                     Paragraph(Text(
-                        "CAS section 1.2 lets nu be a weight, count, or measure, and section 4.4 "
-                            + "asserts submodularity for the resulting capture function. The "
-                            + "sixth conjunct therefore quantifies over CaptureWeight, the "
-                            + "ENNReal-valued interface with the single union-and-lower-"
-                            + "intersection law used by the proof. Compiled constructors realize "
-                            + "unrestricted Set.encard, a nonadditive coverage weight, and every "
-                            + "Mathlib measure with native possibly-infinite values. The companion "
-                            + "measure_capture_submodular theorem gives the complete unrestricted "
-                            + "measure statement and proof. The "
-                            + "seventh conjunct is the "
-                            + "displayed "
-                            + "composition identity, the eighth applies the general additive-time "
-                            + "semigroup law, and the ninth instantiates the repository theorem "
-                            + "naturality_defect_comp_le.")),
+                        "CAS section 4.4 defines M(S) as remaining mass, defines F(S) as "
+                            + "M(empty) minus M(S), and then identifies F with captured mass. "
+                            + "Those statements are incompatible with unrestricted infinite "
+                            + "values. The compiled theorem infinite_counting_cas_bridge_fails "
+                            + "has M(empty) and M(singleton) both equal to infinity, so ENNReal "
+                            + "subtraction makes F(singleton) zero while captured mass is one. "
+                            + "Clause six is therefore registered by D5-T0049 and "
+                            + "clauses_not_done instead of being packaged. The sixth displayed "
+                            + "conjunct is source clause seven, the seventh is source clause eight, "
+                            + "and the eighth is source clause nine.")),
                     Paragraph(Text(
                         "Boolean examples witness a nonempty residual, redundant zero gain, a "
                             + "blind obstruction, and finite closure by one identity definition. "
-                            + "A nonadditive coverage weight gives a strict capture inequality. "
-                            + "Coordinate "
+                            + "The infinite counting model witnesses the false bridge for source "
+                            + "clause six. Coordinate "
                             + "swap on real pairs gives nonzero prepared and semigroup defects, "
                             + "and the real identity map attains the cascade bound. Nine named "
-                            + "false-neighbor declarations compile concrete counterexamples to "
+                            + "false-neighbor declarations follow the nine source-list positions; "
+                            + "the sixth records the bridge failure and the other eight negate "
                             + "nearby strengthened or premise-weakened statements."))),
                 DescribeRole.Theorem))));
 
@@ -80,17 +77,13 @@ internal sealed class DirectlyProvableLawsDocument : IScribeDocumentDefinition
         Formula metricType = F.Id("Z");
         Formula middleType = F.Id("Y");
         Formula timeType = F.Id("Time");
-        Formula edgeType = F.Id("Edge");
         Formula codeType = F.Id("Gamma");
-        Formula definitionIndex = F.Id("Definition");
         Formula type = F.Id("Type");
         Formula q = F.Id("q");
         Formula target = F.Id("T");
         Formula definition = F.Id("d");
         Formula definitions = F.Id("definitions");
         Formula codomain = F.Id("Dgamma");
-        Formula a = F.Id("A");
-        Formula b = F.Id("B");
         Formula y = F.Id("y");
         Formula point = F.Id("point");
         Formula code = F.Id("code");
@@ -112,11 +105,6 @@ internal sealed class DirectlyProvableLawsDocument : IScribeDocumentDefinition
         Formula t = F.Id("t");
         Formula s = F.Id("s");
         Formula m = F.Id("m");
-        Formula residualSet = F.Id("residual");
-        Formula cut = F.Id("cut");
-        Formula nu = F.Id("nu");
-        Formula subset = F.Id("S");
-        Formula captured = F.Id("captured");
         Formula residual = Call("defectRelation", q, target);
         Formula joinedResidual = Call(
             "defectRelation", Call("conceptJoin", q, definition), target);
@@ -205,30 +193,6 @@ internal sealed class DirectlyProvableLawsDocument : IScribeDocumentDefinition
             Call("defectRelation",
                 Call("dependentLanguageExtension", q, selectedDefinitions), target),
             Sp, Eq, Sp, Emptyset);
-
-        Formula capturedDefinition = Seq(
-            Call("apply", captured, subset), Sp, Eq, Sp,
-            Call("intersection", residualSet,
-                Call("iUnion", Seq(definition, Sp, InMacro, Sp, subset),
-                    Call("apply", cut, definition))));
-        Formula captureInequality = Seq(
-            Call("mass", nu,
-                Call("apply", captured, Call("union", a, b))), Sp, Plus, Sp,
-            Call("mass", nu,
-                Call("apply", captured, Call("intersection", a, b))), Sp,
-            Leq, Sp,
-            Call("mass", nu, Call("apply", captured, a)), Sp, Plus, Sp,
-            Call("mass", nu, Call("apply", captured, b)));
-        Formula clause6 = Seq(
-            Forall, Sp, edgeType, Comma, Sp, definitionIndex, Colon, Sp,
-            type, Comma, Esc,
-            nu, Colon, Sp, Call("CaptureWeight", edgeType), Comma, Sp,
-            residualSet, Colon, Sp, Call("Set", edgeType), Comma, Sp,
-            cut, Colon, Sp, Arrow(definitionIndex, Call("Set", edgeType)), Comma, Sp,
-            a, Comma, Sp, b, Colon, Sp, Call("Set", definitionIndex), Comma, Esc,
-            captureInequality, Comma, Quad, Sp,
-            F.Text, Grp(F.Id("where")), Sp,
-            capturedDefinition);
 
         Formula projectedUpdatedPoint =
             Call("apply", projection, Call("apply", update, point));
@@ -321,7 +285,6 @@ internal sealed class DirectlyProvableLawsDocument : IScribeDocumentDefinition
             Open, clause3, Close, Sp, Land, RowBreak,
             Open, clause4, Close, Sp, Land, RowBreak,
             Open, clause5, Close, Sp, Land, RowBreak,
-            Open, clause6, Close, Sp, Land, RowBreak,
             Open, clause7, Close, Sp, Land, RowBreak,
             Open, clause8, Close, Sp, Land, RowBreak,
             Open, clause9, Close, Dot,

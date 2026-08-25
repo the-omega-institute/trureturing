@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/DefinitionCapture/MeasureCapture
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Extended nonnegative masses make residual-intersection capture submodular. -/
+   digest: Capture mass is submodular, but the infinite CAS difference bridge fails. -/
 
 import Mathlib.Data.Real.ENatENNReal
 import Mathlib.MeasureTheory.Measure.Count
@@ -130,6 +130,26 @@ theorem infinite_counting_capture_weight_mass :
     (countingCaptureWeight Nat).mass Set.univ = ⊤ := by
   simp [countingCaptureWeight]
 
+/-- CAS section 4.4 defines `F(S) = M(∅) - M(S)` and separately identifies it
+with captured mass.  The identification fails for unrestricted infinite counting:
+removing one residual edge leaves both remaining masses infinite, so their
+`ENNReal` difference is zero while the captured singleton has mass one. -/
+theorem infinite_counting_cas_bridge_fails :
+    let weight := countingCaptureWeight Nat
+    let residual : Set Nat := Set.univ
+    let cut : Unit → Set Nat := fun _ => {0}
+    let remaining := fun S : Set Unit =>
+      residual \ ⋃ definition ∈ S, cut definition
+    let captured := fun S : Set Unit =>
+      residual ∩ ⋃ definition ∈ S, cut definition
+    let remainingMass := fun S : Set Unit => weight.mass (remaining S)
+    let casF := fun S : Set Unit => remainingMass ∅ - remainingMass S
+    remainingMass ∅ = ⊤ ∧ remainingMass {()} = ⊤ ∧
+      casF {()} = 0 ∧ weight.mass (captured {()}) = 1 ∧
+      casF {()} ≠ weight.mass (captured {()}) := by
+  classical
+  simp [countingCaptureWeight, Set.encard_sdiff_singleton_of_mem]
+
 /-- Every measure gives an explicit inhabitant without a finiteness premise. -/
 theorem measure_capture_weight_nonempty
     {Omega : Type*} [MeasurableSpace Omega] (nu : Measure Omega) :
@@ -188,4 +208,5 @@ theorem measure_capture_submodular
 
 #print axioms capture_weight_submodular
 #print axioms measure_capture_submodular
+#print axioms infinite_counting_cas_bridge_fails
 end D5.S3.ConceptDynamics.DefinitionCapture.MeasureCapture
