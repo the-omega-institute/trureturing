@@ -12,7 +12,6 @@ internal sealed record MsBuildCompileMap(
 
 internal static class MsBuildCompileOracle
 {
-    internal static readonly TimeSpan DefaultTimeout = TimeSpan.FromSeconds(30);
     private const int MaximumOutputBytes = 32 * 1024 * 1024;
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
@@ -33,7 +32,7 @@ internal static class MsBuildCompileOracle
                     dotnet,
                     QueryArguments(repositoryRoot, projectPath),
                     repositoryRoot,
-                    timeout ?? DefaultTimeout,
+                    timeout ?? BoundedProcessRunner.HangDetectionBudget,
                     MaximumOutputBytes);
                 if (output.ExitCode != 0)
                 {

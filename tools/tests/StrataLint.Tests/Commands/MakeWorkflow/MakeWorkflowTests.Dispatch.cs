@@ -497,20 +497,20 @@ public sealed partial class MakeWorkflowTests
             "make",
             ["help"],
             root,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
         var toolsResult = BoundedProcessRunner.Run(
             "make",
             ["-C", "tools", "help"],
             root,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
         var directToolsResult = BoundedProcessRunner.Run(
             "make",
             ["-f", "tools/Makefile", "help"],
             root,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
         Assert.Equal(0, rootResult.ExitCode);

@@ -147,7 +147,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         // This generous wall-clock budget is only a runaway guard; the verdict is
         // the deterministic cycle diagnostic and exit code below.
-        var result = fixture.Run("deposit", timeout: TimeSpan.FromSeconds(30));
+        var result = fixture.Run("deposit", timeout: BoundedProcessRunner.HangDetectionBudget);
 
         Assert.Equal(2, result.ExitCode);
         Assert.Contains(
@@ -649,7 +649,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     gid,
                 ],
                 Root,
-                timeout ?? TimeSpan.FromSeconds(30),
+                timeout ?? BoundedProcessRunner.HangDetectionBudget,
                 128 * 1024);
 
         internal int CommitCount() => int.Parse(Git("rev-list", "--count", "HEAD").Trim());

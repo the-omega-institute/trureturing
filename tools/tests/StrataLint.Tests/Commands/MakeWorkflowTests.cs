@@ -123,7 +123,7 @@ public sealed partial class MakeWorkflowTests
             "/bin/bash",
             ["-c", "PATH=\"$1:$PATH\" exec make --no-print-directory echo-residual-summary BASE=synthetic-base", "echo-make", binDirectory],
             fixture.Path,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
         Assert.Equal(0, result.ExitCode);
@@ -180,7 +180,7 @@ public sealed partial class MakeWorkflowTests
                 problemPath,
             ],
             fixture.Path,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
         Assert.Equal(0, result.ExitCode);

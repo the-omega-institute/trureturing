@@ -127,7 +127,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     atomsFile,
                 ],
                 Root,
-                TimeSpan.FromSeconds(30),
+                BoundedProcessRunner.HangDetectionBudget,
                 128 * 1024);
     }
 }
