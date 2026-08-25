@@ -1688,3 +1688,1588 @@ $$
 18. 本文不声称超限 closure 一定在可数阶段停止。
 19. 本文新增定理未经 Lean kernel 验证不得标记为 `Closed`。
 20. 本文没有证明 Riemann 假设或 negative-base-φ 主分类定理。
+
+---
+
+# 30. 增订：喉部运动、控制选择与自由策略
+
+**增订版本：v1.2，2026-08-25**
+
+本增订只追加在原文之后，不改写前二十九节。它把以下此前分散的问题合并为一条严格链：
+
+1. universal solenoid 的“喉部”中究竟允许什么连续运动；
+2. 同一可见相位下的端点变化何时只是整数绕行，何时是真正跨流线跳跃；
+3. cocycle、控制动作、选择策略与测量结果为何必须分层；
+4. 为什么“没有结构必然的唯一策略”可以为自由留下形式席位，却尚不足以构成自由意志定理；
+5. 如何把有限观察者、完整控制画像、预测充分性、信息逃逸与追加式账本组装为一个可形式化的行动语义。
+
+本增订继续沿用原文的真值纪律：仓库已有 Lean theorem 的部分标记为 **Lean 锚点**；由这些 theorem 直接推出但尚未以同名声明封装的部分标记为 **本文推论**；涉及路径分量商、跳跃策略或自由意志归属的部分标记为 **条件定义／研究命题**。
+
+---
+
+# 31. 喉部、可见相位与路径分量
+
+设 universal solenoid 具有正合列
+
+$$
+0
+\longrightarrow
+K_\infty
+\xrightarrow{\iota}
+\Sigma_\infty
+\xrightarrow{\pi}
+\mathbb T
+\longrightarrow
+0,
+$$
+
+其中
+
+$$
+K_\infty
+\cong
+\prod_{p\in\mathbb P}\mathbb Z_p.
+$$
+
+这里：
+
+- $\Sigma_\infty$ 是完整状态空间；
+- $\mathbb T$ 是公开可见的相位圆；
+- $K_\infty=\ker\pi$ 是隐藏素数地址空间；
+- $\pi^{-1}(\theta)$ 是公开相位 $\theta$ 上方的隐藏纤维，本文称为“喉部”。
+
+## 定理 31.1（归一化流线分解；Lean 锚点）
+
+对任意连续路径
+
+$$
+\gamma:\mathbb R\to\Sigma_\infty,
+$$
+
+固定基准时刻与可见相位的实代表后，存在唯一连续实提升 $r$ 与唯一时间无关的隐藏偏移 $k_0$，使
+
+$$
+\gamma(t)
+=
+\operatorname{realFlow}(r(t))
++
+\iota(k_0).
+$$
+
+对应仓库锚点：
+
+```text
+D5/S1/Solenoid/StreamlineDecomposition.
+  existsUnique_normalized_streamline
+```
+
+### 结论
+
+连续完整路径可以改变可见提升 $r(t)$，但不能连续改变隐藏流线标签 $k_0$。因此严格结论不是“完整 solenoid 中没有连续运动”，而是：
+
+$$
+\boxed{
+连续运动只能沿一条 real-flow 流线发生；
+纯隐藏偏移沿连续时间恒定。
+}
+$$
+
+## 定理 31.2（路径可达即 real-flow 同轨；Lean 锚点）
+
+对任意 $x,y\in\Sigma_\infty$：
+
+$$
+\operatorname{Joined}(x,y)
+\iff
+\exists t\in\mathbb R,
+\quad
+y=\operatorname{realFlow}(t)+x.
+$$
+
+对应仓库锚点：
+
+```text
+D5/S1/Solenoid/PathOrbitClassification.
+  path_joined_iff_real_flow_orbit
+```
+
+## 推论 31.1（同一可见纤维的整数绕行判据；本文推论）
+
+若
+
+$$
+\pi(x)=\pi(y),
+$$
+
+则
+
+$$
+\operatorname{Joined}(x,y)
+\iff
+\exists n\in\mathbb Z,
+\quad
+y=\operatorname{realFlow}(n)+x.
+$$
+
+### 证明
+
+由定理 31.2，路径相连等价于存在 $t\in\mathbb R$ 使
+
+$$
+y=\operatorname{realFlow}(t)+x.
+$$
+
+作用 $\pi$ 并利用 $\pi(x)=\pi(y)$，得到
+
+$$
+0
+=
+\pi(\operatorname{realFlow}(t))
+=
+t\pmod{\mathbb Z}.
+$$
+
+故 $t\in\mathbb Z$。反向由定理 31.2 立即成立。∎
+
+这一区分修正了“同一喉部中的任何端点变化都是不可连续跳跃”的过强说法。若差值是整数 real-flow 端点，它可由完整空间中的连续绕行实现；只有不属于该整数子群的横向位移才真正跨路径分量。
+
+---
+
+# 32. 路径分量商与三类隐藏变化
+
+在标准 solenoid 商表示中，可把状态写成
+
+$$
+[t,k],
+\qquad
+t\in\mathbb R,
+\quad
+k\in K_\infty,
+$$
+
+并按对角整数嵌入 $\Delta:\mathbb Z\to K_\infty$ 识别
+
+$$
+(t,k)
+\sim
+(t+n,k-\Delta(n)).
+$$
+
+符号正负依具体坐标约定而变，但商类不变。
+
+## 条件定义 32.1（流线分量坐标）
+
+定义候选分量映射
+
+$$
+\operatorname{Comp}:\Sigma_\infty
+\longrightarrow
+K_\infty/\Delta(\mathbb Z)
+$$
+
+为
+
+$$
+\operatorname{Comp}([t,k])=[k].
+$$
+
+标准商模型中它是良定义的，因为改变提升 $t\mapsto t+n$ 只会同时把 $k$ 改变一个对角整数。
+
+## 条件命题 32.1（分量分类）
+
+在上述商接口完成后，应有
+
+$$
+\operatorname{Joined}(x,y)
+\iff
+\operatorname{Comp}(x)=\operatorname{Comp}(y).
+$$
+
+这与定理 31.2 等价地表达“路径分量就是 real-flow 轨道”。当前仓库已经机器证明轨道分类，但尚未公开完成 $K_\infty/\mathbb Z$ 的 typed quotient/jump API；因此本命题在本文中只作标准模型的条件封装，不冒充已有 Lean 声明。
+
+## 定义 32.2（隐藏位移的分量荷）
+
+对 $\kappa\in K_\infty$，定义其分量荷
+
+$$
+[\kappa]
+\in
+K_\infty/\Delta(\mathbb Z).
+$$
+
+由此，隐藏变化分为三类。
+
+### 第一类：纯可见连续运动
+
+$$
+x(t)=\operatorname{realFlow}(r(t))+x_0,
+$$
+
+它留在同一分量中。
+
+### 第二类：整数绕行型隐藏端点变化
+
+$$
+y=x+\iota(\Delta(n)),
+\qquad n\in\mathbb Z.
+$$
+
+从固定可见截面看，隐藏端点改变；从完整 $\Sigma_\infty$ 看，它可由绕圆 $n$ 次的连续路径实现，且
+
+$$
+[\Delta(n)]=0.
+$$
+
+### 第三类：横向跨流线跳跃
+
+$$
+y=x+\iota(\kappa),
+$$
+
+其中
+
+$$
+[\kappa]\neq0.
+$$
+
+它不能由任何连续完整路径实现。
+
+## 命题 32.2（横向跳跃判据；条件于分量接口）
+
+若平移
+
+$$
+T_\kappa(x)=x+\iota(\kappa),
+$$
+
+则
+
+$$
+T_\kappa
+\text{ 改变路径分量}
+\iff
+[\kappa]\neq0.
+$$
+
+### 证明
+
+由分量加法性：
+
+$$
+\operatorname{Comp}(T_\kappa x)
+=
+\operatorname{Comp}(x)+[\kappa].
+$$
+
+所以分量保持当且仅当 $[\kappa]=0$。∎
+
+---
+
+# 33. 连续刚性、整数动作与当前桥缺口
+
+## 定理 33.1（纯隐藏连续实流为零；Lean 锚点）
+
+任意连续加法同态
+
+$$
+\Phi:\mathbb R\to K_\infty
+$$
+
+都满足
+
+$$
+\Phi=0.
+$$
+
+对应仓库锚点：
+
+```text
+D5/S3/Observer/HiddenFlow/ContinuousRigidity.
+  continuous_hidden_flow_eq_zero
+```
+
+这一定理只排除非平凡的连续实参数**纯隐藏流**。它没有证明所有非平凡隐藏动作都由整数参数化，也没有从拓扑中选出某一个物理动作。
+
+## 定理 33.2（非零整数隐藏动作无连续实扩张；Lean 锚点）
+
+若
+
+$$
+J:\mathbb Z\to K_\infty
+$$
+
+是非零加法同态，则不存在连续加法同态
+
+$$
+\Phi:\mathbb R\to K_\infty
+$$
+
+满足
+
+$$
+\Phi|_\mathbb Z=J.
+$$
+
+对应仓库锚点：
+
+```text
+D5/S3/Observer/HiddenFlow/DiscreteRigidity.
+  nonzero_integer_action_has_no_continuous_real_extension
+```
+
+仓库另给出显式非零见证
+
+$$
+J_{\mathrm{can}}(n)_p=n\in\mathbb Z_p.
+$$
+
+## 严格边界 33.1
+
+目前不能把以下两件事直接当作已机器证明的同一对象：
+
+1. `discreteHiddenJump n` 的逐 $p$-进坐标整数 cast；
+2. `realFlow n` 在 solenoid 核中的端点。
+
+在标准模型中二者自然对应对角整数方向，但当前公开 Lean 声明中尚缺一个逐坐标桥定理。因此本增订不把
+
+$$
+J_{\mathrm{can}}(n)=\operatorname{realFlow}(n)
+$$
+
+列为已闭合等式。
+
+## 结论 33.1
+
+“不能在 $K_\infty$ 内连续参数化”与“不能在完整 $\Sigma_\infty$ 中由连续路径连接”是不同命题。前者由定理 33.2成立；后者必须进一步检查位移在
+
+$$
+K_\infty/\Delta(\mathbb Z)
+$$
+
+中的商类。
+
+---
+
+# 34. cocycle 规定组合一致性，不规定选择理由
+
+令 $G$ 为允许控制动作的幺半群，并设其对完整状态的作用为
+
+$$
+T_g:\Sigma_\infty\to\Sigma_\infty.
+$$
+
+若隐藏位移依赖动作和当前状态，引入
+
+$$
+c:G\times\Sigma_\infty\to K_\infty.
+$$
+
+## 定义 34.1（隐藏地址 cocycle）
+
+对左作用，要求
+
+$$
+c(gh,x)
+=
+c(g,T_hx)+c(h,x).
+$$
+
+这保证“先做 $h$ 再做 $g$”与“直接做 $gh$”的隐藏地址总账一致。
+
+## 命题 34.1（cocycle 的职责）
+
+cocycle 回答的是：
+
+$$
+\boxed{
+已选动作怎样组合，
+以及总隐藏位移怎样入账。
+}
+$$
+
+它不回答：
+
+$$
+\boxed{
+当前为什么选择 g 而不是 h。
+}
+$$
+
+前者属于动力与账本一致性；后者属于 policy。把二者混同，会错误地从“动作有组合律”推出“动作选择被唯一决定”。
+
+## 定义 34.2（分量 cocycle）
+
+在分量商存在时，定义
+
+$$
+\bar c(g,x)
+=
+[c(g,x)]
+\in
+K_\infty/\Delta(\mathbb Z).
+$$
+
+则
+
+$$
+\bar c(g,x)=0
+$$
+
+表示该动作在路径分量层只是同流线／整数绕行型；
+
+$$
+\bar c(g,x)\neq0
+$$
+
+表示真正跨流线迁移。
+
+---
+
+# 35. 规律、控制语法、策略与结果的四层分离
+
+令完整状态为 $x\in X$，动作集合为 $A$。
+
+## 定义 35.1（合法动作关系）
+
+$$
+\operatorname{Legal}(x,a)
+$$
+
+表示动作 $a$ 在状态 $x$ 下可执行。定义
+
+$$
+\mathcal A(x)
+=
+\{a\in A:\operatorname{Legal}(x,a)\}.
+$$
+
+## 定义 35.2（后果核）
+
+$$
+P(x'\mid x,a)
+$$
+
+给出执行 $a$ 后完整状态的条件分布；确定性动力学是其 Dirac 特例。
+
+## 定义 35.3（策略）
+
+确定性策略是
+
+$$
+\pi:X\to A,
+\qquad
+\pi(x)\in\mathcal A(x).
+$$
+
+随机策略是
+
+$$
+\Pi:X\to\operatorname{Dist}(A),
+$$
+
+且支撑包含于 $\mathcal A(x)$。
+
+因此：
+
+$$
+\boxed{
+规律规定哪些动作合法以及各动作会造成什么；
+策略规定实际选择哪个动作。
+}
+$$
+
+前两项并不逻辑蕴含第三项。
+
+## 结论 35.1
+
+一个完整理论可以精确给出
+
+$$
+\mathcal A(x)
+$$
+
+和
+
+$$
+P(\cdot\mid x,a)
+$$
+
+而仍不提供唯一的
+
+$$
+\pi(x).
+$$
+
+这不是形式矛盾；它只说明动力学是一个受控关系，而不是已经替代理主体完成了控制选择的单值函数。
+
+---
+
+# 36. 有限观察者的策略可实现性
+
+观察者不能直接访问完整状态 $x$，只访问接口
+
+$$
+q:X\to O.
+$$
+
+## 定义 36.1（$q$-可实现策略）
+
+策略 $\Pi:X\to\operatorname{Dist}(A)$ 称为可由接口 $q$ 实现，若存在
+
+$$
+\bar\Pi:O\to\operatorname{Dist}(A)
+$$
+
+使
+
+$$
+\Pi=\bar\Pi\circ q.
+$$
+
+## 定理 36.1（策略因子化判据；本文定理）
+
+$$
+\Pi
+\text{ 可由 }q\text{ 实现}
+\iff
+q(x)=q(y)
+\Rightarrow
+\Pi(x)=\Pi(y).
+$$
+
+### 证明
+
+左向由函数合成立即得到。反向定义
+
+$$
+\bar\Pi(q(x)):=\Pi(x).
+$$
+
+纤维常值条件保证代表元无关；把 codomain 限制到 $q$ 的有效像即得唯一性。∎
+
+这给出一个严格禁令：若策略依赖同一观察纤维内被隐藏的真实喉部地址，则该策略不能被这个有限观察者执行。把隐藏状态偷偷输入 policy，会把外部全知控制器冒充成内部观察者。
+
+---
+
+# 37. 完整控制画像是策略的规范信息底座
+
+设幺半群 $G$ 作用于 $X$，公开读出为
+
+$$
+q:X\to O.
+$$
+
+定义完整控制画像
+
+$$
+\operatorname{Ctrl}_q(x)(g)
+=
+q(g\cdot x).
+$$
+
+定义控制等价
+
+$$
+x\sim_{\mathrm{ctl}}y
+\iff
+\forall g\in G,
+\quad
+q(g\cdot x)=q(g\cdot y).
+$$
+
+仓库已经证明，按完整控制画像取商得到的控制商：
+
+1. 恢复当前公开读出；
+2. 承载每个控制动作诱导的商上动作；
+3. 决定每个动作的公开后果；
+4. 是具有这些性质的最粗接口；
+5. 与有限干预词的动态闭包在 kernel 层相同。
+
+对应 Lean 锚点：
+
+```text
+D5/S3/ConceptDynamics/Control/ControlQuotientUniversalMinimality.
+  control_quotient_universal_minimality
+```
+
+## 原理 37.1（后果充分而非动作唯一）
+
+控制商告诉观察者：
+
+$$
+\boxed{
+每个允许动作会公开地产生什么后果。
+}
+$$
+
+它不自动告诉观察者：
+
+$$
+\boxed{
+这些动作中哪一个必须被选择。
+}
+$$
+
+因此“完整控制知识”与“唯一控制意志”不是同一结构。
+
+## 定义 37.1（观察者 policy 的规范类型）
+
+合理的策略接口应至少具有形状
+
+$$
+\bar\Pi_O:
+Q_{\mathrm{ctl}}
+\times
+\mathrm{Goal}
+\times
+\Lambda
+\longrightarrow
+\operatorname{Dist}(G),
+$$
+
+其中：
+
+- $Q_{\mathrm{ctl}}$ 是完整控制画像商；
+- $\mathrm{Goal}$ 表示目标、价值或损失；
+- $\Lambda$ 是此前追加式记录；
+- 输出只在允许动作上有支撑。
+
+目标与账本不是多余输入：相同控制画像在不同价值承诺下可以合理地产生不同选择。
+
+---
+
+# 38. 预测充分性只给出最优集合，不强制唯一元素
+
+设预测接口为
+
+$$
+K:X\to\operatorname{PMF}(Y),
+$$
+
+动作损失为
+
+$$
+\ell:A\times Y\to\mathbb R.
+$$
+
+定义期望损失
+
+$$
+R(x,a)
+=
+\int_Y\ell(a,y)\,dK(x)(y).
+$$
+
+以及最优动作集合
+
+$$
+A^*(x)
+=
+\operatorname*{arg\,min}_{a\in A}R(x,a).
+$$
+
+仓库已证明：若一个概念足以决定完整预测分布 $K(x)$，它也足以决定全部期望损失和最优动作集合。
+
+对应 Lean 锚点：
+
+```text
+D5/S3/ConceptDynamics/Decision/PredictionDecisionSufficiency.
+  prediction_sufficiency_implies_decision_sufficiency
+```
+
+## 推论 38.1
+
+即使
+
+$$
+A^*(x)
+$$
+
+被完全决定，也可能有
+
+$$
+|A^*(x)|>1.
+$$
+
+所以：
+
+$$
+\boxed{
+决策充分性
+\neq
+唯一策略充分性。
+}
+$$
+
+若人为加入固定全序并选取最小元素，确实可得到一个确定性 selector；但该 selector 的唯一性来自新增 tie-breaker，而不是来自原有物理、预测或价值结构。
+
+---
+
+# 39. 无典范选择定理
+
+没有唯一最优动作仍可能只是普通平局。更强的结构障碍来自对称性。
+
+设群 $\Gamma$ 同时作用于状态空间 $X$ 与动作空间 $A$，并保持全部已申报结构。一个“纯由结构给出”的确定性策略至少应满足等变性：
+
+$$
+\sigma(\gamma x)
+=
+\gamma\sigma(x).
+$$
+
+## 定理 39.1（无等变确定性 selector）
+
+若存在 $x\in X$ 与 $\gamma\in\Gamma$ 满足
+
+$$
+\gamma x=x,
+$$
+
+但 $\gamma$ 在合法动作集 $\mathcal A(x)$ 上没有固定点：
+
+$$
+\forall a\in\mathcal A(x),
+\quad
+\gamma a\neq a,
+$$
+
+则不存在等变确定性 selector
+
+$$
+\sigma(x)\in\mathcal A(x).
+$$
+
+### 证明
+
+假设存在。由 $\gamma x=x$ 和等变性：
+
+$$
+\sigma(x)
+=
+\sigma(\gamma x)
+=
+\gamma\sigma(x).
+$$
+
+所以 $\sigma(x)$ 是 $\gamma$ 的固定动作，与假设矛盾。∎
+
+## 推论 39.1
+
+当两个行动在此前全部结构中完全对称时，结构本身不可能在保持该对称性的同时无偏选出其中一个。
+
+实际打破对称性的来源只能新增于下列至少一类：
+
+1. 观察者自己的记忆、价值、承诺或身份；
+2. 外部环境或隐藏控制变量；
+3. 无主随机索引；
+4. 显式加入的非对称 tie-breaker。
+
+## 严格边界 39.1
+
+$$
+\neg\exists\text{ canonical selector}
+$$
+
+并不推出
+
+$$
+\neg\exists\text{ deterministic selector}.
+$$
+
+非典范性只说明结构没有自然指定哪一个；它没有排除某个更丰富完整状态上的确定性规律。
+
+---
+
+# 40. 没有必然策略是自由的席位，不是自由本身
+
+必须区分三层。
+
+## 定义 40.1（结构自由）
+
+不存在由当前已申报结构唯一、自然地给出的 selector：
+
+$$
+\text{No canonical policy}.
+$$
+
+这是本增订从对称性与控制商最稳健支持的层次。
+
+## 定义 40.2（自主自由）
+
+行动对观察者自己的理由、记忆、目标和承诺真实敏感，而不只是外部环境的直接函数。
+
+设
+
+$$
+e:X\to E
+$$
+
+为环境接口，
+
+$$
+o:X\to O
+$$
+
+为观察者内部接口，
+
+$$
+\chi:X\to A
+$$
+
+为实际行动。
+
+若存在
+
+$$
+f:E\to A
+$$
+
+使
+
+$$
+\chi=f\circ e,
+$$
+
+则行动完全由环境接口决定，观察者在该模型中只是传动部件。
+
+一个最低限度的内部敏感性见证是：
+
+$$
+\exists x,y,
+\quad
+e(x)=e(y),
+\quad
+o(x)\neq o(y),
+\quad
+\chi(x)\neq\chi(y).
+$$
+
+它说明在外部条件相同的比较中，观察者内部状态改变了行动。
+
+## 定义 40.3（本体自由）
+
+给定完整过去状态，仍有两个不同未来行动都是真实可达的：
+
+$$
+\exists x,a\neq b,
+\quad
+R(x,a,x_a)
+\land
+R(x,b,x_b).
+$$
+
+并且实际化哪一支既不由隐藏变量预先指定，也不只是无主噪声。
+
+## 结论 40.1
+
+当前仓库结构至多为第一层提供清晰形式席位，并可为第二层建立 factorization 与理由响应条件；它没有证明第三层。
+
+因此正确命题是：
+
+$$
+\boxed{
+没有必然策略是自由意志的必要开放空间之一；
+但随机性、欠建模或非典范性本身都不等于自由意志。
+}
+$$
+
+---
+
+# 41. 作者性：原因的归属而非原因的消失
+
+“自由”不应被定义为行动没有原因。无原因噪声不能自动成为主体行动。
+
+## 定义 41.1（作者性候选）
+
+令观察者状态由
+
+$$
+O_t=(m_t,v_t,g_t,s_t)
+$$
+
+组成，其中分别代表记忆、价值、目标与自我模型。行动规则若具有
+
+$$
+a_t
+\in
+\operatorname{Acceptable}(O_t,E_t,\Lambda_t),
+$$
+
+并且改变 $O_t$ 的理由结构会系统性改变可接受行动与实际行动，则行动可归属于该观察者的内部组织。
+
+## 原理 41.1（原因归属三分）
+
+- 外部状态绕过观察者内部结构直接决定行动：他律；
+- 无主随机数替代主体打破平局：偶然；
+- 观察者的记忆、价值、目标与承诺参与构成行动：主体性候选。
+
+因此自由意志最适合被问成：
+
+$$
+\boxed{
+打破未定性的原因属于谁？
+}
+$$
+
+而不是简单问：
+
+$$
+\boxed{
+行动有没有原因？
+}
+$$
+
+---
+
+# 42. 从单值策略改为可接受动作关系
+
+与其在理论底层强行规定
+
+$$
+\pi(x)=a,
+$$
+
+更自然的是先定义
+
+$$
+\operatorname{Acceptable}_O(z,\Lambda,a).
+$$
+
+## 定义 42.1（观察者可接受动作集）
+
+$$
+\mathcal A_O(z,\Lambda)
+=
+\left\{
+ a:
+ \begin{array}{l}
+ \operatorname{Legal}(z,a),\\
+ \operatorname{Affordable}(z,a),\\
+ \operatorname{GoalCoherent}_O(z,a),\\
+ \operatorname{LedgerConsistent}_O(\Lambda,a),\\
+ \operatorname{IdentityPreserving}_O(\Lambda,a)
+ \end{array}
+\right\}.
+$$
+
+规律层只要求
+
+$$
+a_t\in\mathcal A_O(z_t,\Lambda_t).
+$$
+
+它不必再给出唯一元素。
+
+## 定义 42.2（选择事件）
+
+$$
+\operatorname{Choose}_O(z_t,\Lambda_t,a_t)
+$$
+
+表示观察者使某个可接受行动成为实际执行的行动。
+
+该定义只为作者性保留槽位；它没有通过重命名解决自由意志。要把它提升为实质理论，仍须证明：
+
+1. 选择不依赖观察者不可访问的隐藏坐标；
+2. 选择对内部理由结构响应；
+3. 选择不是外部 controller 的伪装；
+4. 选择不是仅以随机种子替代主体；
+5. 选择被后续记录和承诺结构所承担。
+
+---
+
+# 43. 自由在选择后可以生成自我施加的必然
+
+追加式账本给自由一个重要的时间结构：选择发生前有分岔，选择发生后分岔被写入历史。
+
+设
+
+$$
+\Lambda_{t+1}
+=
+\Lambda_t\mathbin{\Vert}a_t.
+$$
+
+若后续合法动作必须与账本中的承诺一致，定义
+
+$$
+\mathcal A_{t+1}(x)
+=
+\{a:\operatorname{Consistent}(a,\Lambda_{t+1})\}.
+$$
+
+## 命题 43.1（自我约束单调性）
+
+若一致性谓词把新记录作为附加约束，则
+
+$$
+\mathcal A_{t+1}(x)
+\subseteq
+\mathcal A_t(x).
+$$
+
+### 证明
+
+任何满足新账本全部约束的动作，必满足旧账本中已有的全部约束；新账本还可能排除违反新承诺的动作。∎
+
+## 解释
+
+$$
+\boxed{
+自由不是永远保持全部可能性开放；
+自由也可以是主动关闭可能性，
+把一次选择固化为未来人格的约束。
+}
+$$
+
+因此确定性不总是自由的反面。若未来行动由观察者此前自由接受的承诺所约束，它可被理解为
+
+$$
+\text{Will}
+\longrightarrow
+\text{Commitment}
+\longrightarrow
+\text{Self-imposed necessity}.
+$$
+
+这一结构与“观察者是相容记录链”相容：身份不是一个无历史的瞬时 selector，而是其选择被不断追加后形成的约束系统。
+
+---
+
+# 44. 信息逃逸驱动的动作选择
+
+若目标不是一般效用，而是消除特定目标的不确定性，可把原文第 21 节的 target-kernel transversal 与受控动作结合。
+
+设当前接口为 $q$，目标为 $T$，目标残差关系为
+
+$$
+\mathcal E(q;T)
+=
+\{(x,y):q(x)=q(y),\ T(x)\neq T(y)\}.
+$$
+
+动作 $a$ 产生新读出 $d_a$。
+
+## 定义 44.1（动作的结构捕获量）
+
+$$
+\Delta_T(a\mid q)
+=
+\mu\left(
+\mathcal E(q;T)
+\cap
+(\ker d_a)^c
+\right).
+$$
+
+## 定义 44.2（动作的有效信息增益）
+
+令随机变量
+
+$$
+Q=q(X),
+\qquad
+D_a=d_a(X),
+\qquad
+Y=T(X).
+$$
+
+定义
+
+$$
+G_T(a\mid q)
+=
+I(Y;D_a\mid Q).
+$$
+
+结构捕获量与条件互信息不能混同：前者计目标残差对被切开的质量，后者计目标条件熵真正下降的 bit。
+
+## 定义 44.3（预算信息 policy）
+
+给定成本 $c(a)$ 与预算 $B$，可定义最优动作集合
+
+$$
+A^*_{\mathrm{info}}(q)
+=
+\operatorname*{arg\,max}_{c(a)\le B}
+\left[
+I(Y;D_a\mid Q)-\lambda c(a)
+\right].
+$$
+
+或者使用单位成本增益：
+
+$$
+\operatorname*{arg\,max}_{0<c(a)\le B}
+\frac{I(Y;D_a\mid Q)}{c(a)}.
+$$
+
+## 严格边界 44.1
+
+该原则给出一个可审计的**策略族**，不是宇宙必然采用的唯一策略。不同目标、成本、风险偏好和时间折扣会产生不同最优集合；同一最优集合仍可能存在对称平局。
+
+---
+
+# 45. 动作选择与量子结果选择必须分开
+
+观察者可以选择测量设置或上下文
+
+$$
+\mathcal C_a=\{E_j^{(a)}\}_j,
+$$
+
+但给定状态 $\rho$ 后，结果概率为
+
+$$
+p(j\mid a,\rho)
+=
+\operatorname{Tr}(\rho E_j^{(a)}).
+$$
+
+结果记录满足
+
+$$
+j\sim p(\cdot\mid a,\rho).
+$$
+
+若由 instrument $M_j^{(a)}$ 实现，则条件化状态为
+
+$$
+\rho'
+=
+\frac{
+M_j^{(a)}\rho M_j^{(a)\dagger}
+}{
+p(j\mid a,\rho)
+}.
+$$
+
+严格时序是：
+
+$$
+\boxed{
+选择设置 a
+\longrightarrow
+产生并登记结果 j
+\longrightarrow
+观察者对 j 条件化。
+}
+$$
+
+不是：
+
+$$
+\boxed{
+观察者先选择 j，
+世界再配合跳到 j。
+}
+$$
+
+因此自由的自然候选席位在设置格、控制格、记账格和承诺格，而不是在单次 Born 结果格。把结果偏置解释为意志，还必须同时面对非信号、上下文一致性与实验统计约束。
+
+---
+
+# 46. 本体跳跃、控制跳跃、认识跳跃与记录跳跃
+
+“跳跃”至少有四种不同含义。
+
+| 层 | 对象 | 数学形式 | 是否由观察者选择 |
+|---|---|---|---|
+| 本体跳跃 | 完整状态的路径分量 | $\operatorname{Comp}(x')\neq\operatorname{Comp}(x)$ | 只有在控制语法允许且被实际执行时才可能相关 |
+| 控制跳跃 | 离散动作 | $x' = T_a(x)$ | 设置／动作可由 policy 选择 |
+| 认识跳跃 | 信念或认识纤维收缩 | $F_{t+1}=F_t\cap d_a^{-1}(y)$ | 结果后由条件化规则确定 |
+| 记录跳跃 | 追加新账目 | $\Lambda_{t+1}=\Lambda_t\Vert(a,y)$ | 动作记录可选择，已发生结果不可改写为未发生 |
+
+## 定义 46.1（认识更新）
+
+若观察者对完整状态持有信念 $b_t$，则得到记录 $y_t$ 后：
+
+$$
+b_{t+1}(x)
+=
+\frac{
+P(y_t\mid x,a_t)b_t(x)
+}{
+\int P(y_t\mid x',a_t)b_t(x')\,dx'
+}.
+$$
+
+确定性读出时：
+
+$$
+b_{t+1}(x)
+\propto
+\mathbf 1_{\{d_{a_t}(x)=y_t\}}b_t(x).
+$$
+
+从完整系统看，可能只是一次控制、耦合与记录；从有限观察者看，大量此前仍可能的隐藏地址被瞬时排除，因此表现为认识跳跃。
+
+---
+
+# 47. 一步完整操作语义
+
+定义观察者—喉部系统
+
+$$
+\mathfrak M
+=
+(
+\Sigma_\infty,
+K_\infty,
+G,
+q,
+c,
+P,
+\ell,
+\mathrm{cost},
+\Lambda
+).
+$$
+
+第 $t$ 步可严格拆为：
+
+## 47.1 形成控制状态
+
+$$
+z_t
+=
+Q_{\mathrm{ctl}}(x_t)
+$$
+
+或维护后验信念 $b_t$。
+
+## 47.2 构造可行动作集
+
+$$
+\mathcal A_t
+=
+\left\{
+ a\in G:
+ \operatorname{Legal}(a,z_t,\Lambda_t),
+ \quad
+ \mathrm{cost}(a)\le B_t
+\right\}.
+$$
+
+## 47.3 计算动作后果
+
+$$
+P_a(y\mid z_t)
+$$
+
+以及期望损失、信息增益或其他已申报评价量。
+
+## 47.4 形成可接受集合并作选择
+
+$$
+A_t^*
+\subseteq
+\mathcal A_t,
+$$
+
+$$
+a_t\in A_t^*.
+$$
+
+理论可以决定 $A_t^*$；是否存在由结构唯一决定的 $a_t$ 是另一个问题。
+
+## 47.5 执行状态更新
+
+$$
+x_t^+
+=
+T_{a_t}(x_t).
+$$
+
+若分量 cocycle 已定义，则
+
+$$
+\operatorname{Comp}(x_t^+)
+=
+\operatorname{Comp}(x_t)
++
+\bar c(a_t,x_t).
+$$
+
+## 47.6 追加动作账
+
+$$
+\Lambda_t^+
+=
+\Lambda_t
+\mathbin{\Vert}
+(a_t,c(a_t,x_t),\mathrm{source},\mathrm{time},\mathrm{detector}).
+$$
+
+## 47.7 获得结果并条件化
+
+$$
+y_t
+\sim
+P_{a_t}(\cdot\mid x_t^+),
+$$
+
+$$
+\Lambda_{t+1}
+=
+\Lambda_t^+\mathbin{\Vert}y_t,
+$$
+
+$$
+b_{t+1}
+=
+P(x_{t+1}\mid\Lambda_{t+1}).
+$$
+
+其中真正作为“策略选择”的是 47.4；cocycle 负责 47.5 的地址组合一致性；结果分布负责 47.7；条件化负责观察者认识更新。
+
+---
+
+# 48. 新研究命题与证明状态
+
+## 命题 48.1（同纤维路径判据）
+
+$$
+\pi(x)=\pi(y)
+\Rightarrow
+\left[
+\operatorname{Joined}(x,y)
+\iff
+\exists n\in\mathbb Z,
+\ y=\operatorname{realFlow}(n)+x
+\right].
+$$
+
+**状态**：由现有路径轨道定理直接推出，适合独立 Lean 封装。
+
+## 命题 48.2（分量荷判据）
+
+$$
+T_\kappa
+\text{ 跨路径分量}
+\iff
+[\kappa]\neq0
+\text{ in }K_\infty/\Delta(\mathbb Z).
+$$
+
+**状态**：依赖尚未公开完成的路径分量 quotient API。
+
+## 命题 48.3（观察者策略因子化）
+
+$$
+\Pi
+\text{ 可由 }q\text{ 实现}
+\iff
+K_q\subseteq K_\Pi.
+$$
+
+**状态**：普通 kernel-factorization 定理的直接实例，适合 Lean 化。
+
+## 命题 48.4（无典范选择）
+
+固定状态具有无固定动作的对称稳定子时，不存在等变确定性 selector。
+
+**状态**：群作用上的短证明，可独立 Lean 化。
+
+## 命题 48.5（承诺导致可行动作集收缩）
+
+若账本一致性条件按追加记录单调加强，则
+
+$$
+\mathcal A_{t+1}\subseteq\mathcal A_t.
+$$
+
+**状态**：依赖具体 ledger-consistency carrier；一般关系版容易形式化。
+
+## 命题 48.6（非典范不等于主体自由）
+
+存在两个反例模型：
+
+1. 对称硬币随机打破平局：无典范确定性 selector，但无内部作者性；
+2. 内部理由状态确定性选择：策略确定，却可满足外部环境相同、内部理由不同导致行动不同。
+
+所以
+
+$$
+\text{noncanonical}
+\not\Rightarrow
+\text{agency},
+$$
+
+且
+
+$$
+\text{deterministic}
+\not\Rightarrow
+\text{nonfree}.
+$$
+
+**状态**：有限 Bool 反例可机器化。
+
+---
+
+# 49. 与当前仓库真值的追加锚定
+
+| 结论 | 当前锚点 | 状态 |
+|---|---|---|
+| 连续 solenoid 路径 = 实提升 + 恒定隐藏偏移 | `D5/S1/Solenoid/StreamlineDecomposition.existsUnique_normalized_streamline` | Lean closed |
+| 路径相连 iff 同一 real-flow 轨道 | `D5/S1/Solenoid/PathOrbitClassification.path_joined_iff_real_flow_orbit` | Lean closed |
+| 纯隐藏连续加法实流为零 | `D5/S3/Observer/HiddenFlow/ContinuousRigidity.continuous_hidden_flow_eq_zero` | Lean closed |
+| 非零整数隐藏动作无连续实扩张 | `D5/S3/Observer/HiddenFlow/DiscreteRigidity.nonzero_integer_action_has_no_continuous_real_extension` | Lean closed |
+| 读出与可逆更新的协变骨架 | `D5/S3/Quantum/ObserverAlgebra.observer_update_covariant_group_skeleton` | Lean closed |
+| 完整控制画像商的普适最小性 | `D5/S3/ConceptDynamics/Control/ControlQuotientUniversalMinimality.control_quotient_universal_minimality` | Lean closed |
+| 预测充分性推出决策充分性 | `D5/S3/ConceptDynamics/Decision/PredictionDecisionSufficiency.prediction_sufficiency_implies_decision_sufficiency` | Lean closed |
+| $K_\infty/\mathbb Z$ 路径分量接口与穷尽 jump 分类 | `docs/reports/diag-month-r2/diag-month-r5-b-hidden-motion-dichotomy-open.md` | residual open |
+| 唯一观察者 policy／自由意志作者性 | 无现成锚点 | 未形式化，且不应预设必有唯一 policy |
+
+---
+
+# 50. 建议追加 Lean 模块
+
+```text
+D5/S1/Solenoid/ComponentQuotient/
+  HiddenDiagonalEmbedding.lean
+  ComponentClass.lean
+  ComponentClassPathCriterion.lean
+  SameFiberIntegerOrbit.lean
+
+D5/S3/Observer/HiddenFlow/
+  HiddenJumpRelation.lean
+  ComponentJumpCriterion.lean
+  RealFlowIntegerBridge.lean
+  HiddenMotionDichotomy.lean
+
+D5/S3/Observer/Policy/
+  PolicyFactorization.lean
+  ControlQuotientPolicy.lean
+  EquivariantSelectorObstruction.lean
+  AcceptableActionRelation.lean
+  LedgerCommitmentMonotonicity.lean
+  AgencyCountermodels.lean
+
+D5/S3/Observer/Decision/
+  InformationGainPolicy.lean
+  TargetResidualPolicy.lean
+  PolicyTieBreaking.lean
+
+D5/S3/Observer/Semantics/
+  OnticControlEpistemicRecordJump.lean
+  ObserverStepSemantics.lean
+```
+
+建议优先闭合：
+
+```text
+same_visible_path_joined_iff_integer_realFlow
+policy_factors_iff_constant_on_readout_fibers
+no_equivariant_selector_of_fixed_state_no_fixed_action
+component_translation_changes_iff_nonzero_class
+ledger_append_shrinks_consistent_actions
+noncanonical_does_not_imply_agency
+prediction_sufficiency_determines_optimal_set_not_unique_choice
+```
+
+---
+
+# 51. 追加严格非主张
+
+1. 本增订不声称仓库已经构造 $K_\infty/\mathbb Z$ 的公共路径分量类型。
+2. 本增订不声称 `discreteHiddenJump n` 已被 Lean 证明等于 `realFlow n` 的核端点。
+3. 本增订不声称所有 $K_\infty$ 平移都是物理允许控制。
+4. 本增订不声称完全不连通自动推出参数群必须是 $\mathbb Z$。
+5. 本增订不声称动作有 cocycle 就存在唯一合理策略。
+6. 本增订不声称完整控制画像自动产生唯一动作。
+7. 本增订不声称最优动作集合必为单点。
+8. 本增订不声称人为 tie-breaker 是结构内生的自由意志。
+9. 本增订不声称无典范 selector 等价于本体非决定论。
+10. 本增订不声称量子随机性本身就是主体自由。
+11. 本增订不声称观察者可以选择单次 Born 结果。
+12. 本增订不声称内部状态敏感性单独足以证明作者性；它只是必要诊断之一。
+13. 本增订不声称确定性行为必然不自由；自我承诺可生成自我施加的确定性。
+14. 本增订不声称追加式账本自动等价于人格同一性。
+15. 本增订不声称信息增益最大化是宇宙唯一规范价值函数。
+16. 本增订不声称自由意志已经成为 Lean theorem。
+17. 本增订不修改原文关于 RH、negative-base-φ 或其他开放问题的边界。
+
+---
+
+# 52. 最终统一：规律给边界，意志给取舍，账本给承担
+
+本增订把喉部跳跃与自由问题压缩为七个不同对象：
+
+$$
+\begin{aligned}
+\text{Topology}
+&=
+\text{排除纯隐藏连续滑动},\\
+\text{Action grammar}
+&=
+\text{规定哪些离散控制可执行},\\
+\text{Cocycle}
+&=
+\text{规定已选控制怎样组合并改变地址},\\
+\text{Control quotient}
+&=
+\text{保存全部可行动后果的最小观察状态},\\
+\text{Policy}
+&=
+\text{从可接受动作中形成实际取舍},\\
+\text{Outcome}
+&=
+\text{动作后被产生和记录的结果},\\
+\text{Ledger}
+&=
+\text{把取舍与结果变成此后必须承担的历史}.
+\end{aligned}
+$$
+
+因此最严格的总判词是：
+
+$$
+\boxed{
+观察者不直接选择一个不可见喉部地址；
+它在自身可访问的控制商上选择一个允许动作。
+动作的 cocycle 决定隐藏位移，
+该位移在 K_\infty/\mathbb Z 中的类决定是否真正跨流线；
+测量结果随后被记录并用于条件化，而不是被意志预选。
+}
+$$
+
+关于自由意志，最稳健的形式结论是：
+
+$$
+\boxed{
+若规律只决定可行动作关系与后果核，
+而没有在保持全部结构对称性的条件下给出唯一典范 selector，
+则理论中存在一个真实的选择席位。
+}
+$$
+
+但完整自由意志还要求：
+
+$$
+\boxed{
+实际打破未定性的原因
+不是外部 controller，
+不是无主随机数，
+而与观察者自身的记忆、价值、理由和承诺形成不可替代的因果联系。
+}
+$$
+
+所以最终不是“自由 = 没有规律”，而是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Law}
+&=
+\text{规定边界},\\
+\text{Will}
+&=
+\text{在边界内作出归属于自身的取舍},\\
+\text{History}
+&=
+\text{把取舍写成未来的自己}.
+\end{aligned}
+}
+$$
