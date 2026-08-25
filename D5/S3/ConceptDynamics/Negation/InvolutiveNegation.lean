@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/Negation/InvolutiveNegation
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/Negation/InvolutiveNegation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Point negation selects from complements; involution adds reversible coherence. -/

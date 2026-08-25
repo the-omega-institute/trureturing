@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/Negation/InvolutiveBlindResidual
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/Negation/InvolutiveBlindResidual
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Hidden involutions generate blind residuals and primitive semantic escape. -/

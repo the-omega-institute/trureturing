@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/Negation/RelativeComplement
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/Negation/RelativeComplement
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Relative complement is universe-indexed; pullbacks preserve it, images may fail. -/
