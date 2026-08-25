@@ -13,6 +13,9 @@ import D5.S0.Diagonal.TypicalDensity
      `margin_failure_probability_tendsto_zero`, and
      `typical_density_failure_probability_tendsto_zero` prove the four public
      clauses and are applied directly.
+   * The public statement expands the two canonical finite uniform
+     probabilities into their `Nat.card` ratios over `hammingDistance`; the
+     proof recovers the frozen declarations by unfolding those definitions.
    * No frozen declaration packages all four clauses of the source theorem, so
      binding any one hit would under-cover the named conjunction.
    * Pinned Mathlib contains binomial distributions and generic moment-generating
@@ -28,7 +31,7 @@ universe u v
 
 namespace D5.S0.Diagonal.Probability.LinearMarginConcentration
 
-open MarginBound MarginVanishing TypicalDensity
+open DistanceProfile MarginBound MarginVanishing TypicalDensity
 
 /-- The corrected finite KL bound, its vanishing limit, asymptotically linear escape,
 and concentration of the minimum-distance density at the nonzero-choice density. -/
@@ -39,26 +42,42 @@ theorem linear_margin_concentration {Y : Type u} [Fintype Y] (f : Y → Y) (alph
         2 ≤ Fintype.card A →
         alpha * (Fintype.card A : ℝ) / ((Fintype.card A : ℝ) - 1) <
             ((Fintype.card Y : ℝ) - 1) / Fintype.card Y →
-        marginFailureProbability (A := A) f alpha ≤
+        (Nat.card {g : A → A → Y //
+            ∃ a, (hammingDistance f g a : ℝ) < alpha * Fintype.card A} : ℝ) /
+            Nat.card (A → A → Y) ≤
           linearMarginBound (Fintype.card Y) alpha (Fintype.card A)) ∧
       Tendsto (linearMarginBound (Fintype.card Y) alpha) atTop (nhds 0) ∧
-      Tendsto (fun a : ℕ => marginFailureProbability (A := Fin a) f alpha)
+      Tendsto
+        (fun a : ℕ =>
+          (Nat.card {g : Fin a → Fin a → Y //
+              ∃ x, (hammingDistance f g x : ℝ) <
+                alpha * Fintype.card (Fin a)} : ℝ) /
+            Nat.card (Fin a → Fin a → Y))
         atTop (nhds 0) ∧
       ∀ alphaHi : ℝ,
         ((Fintype.card Y : ℝ) - 1) / Fintype.card Y < alphaHi →
         alphaHi < 1 →
         Tendsto
           (fun a : ℕ =>
-            typicalDensityFailureProbability (A := Fin a) f alpha alphaHi)
+            (Nat.card {g : Fin a → Fin a → Y //
+                (∃ x, (hammingDistance f g x : ℝ) <
+                    alpha * Fintype.card (Fin a)) ∨
+                  ∀ x, Nat.floor (alphaHi * Fintype.card (Fin a)) + 1 ≤
+                    hammingDistance f g x} : ℝ) /
+              Nat.card (Fin a → Fin a → Y))
           atTop (nhds 0) := by
-  refine ⟨?_, linear_margin_bound_tendsto_zero (Fintype.card Y) alpha hY halpha halpha_lt,
-    margin_failure_probability_tendsto_zero f alpha hY halpha halpha_lt, ?_⟩
+  refine ⟨?_,
+    linear_margin_bound_tendsto_zero (Fintype.card Y) alpha hY halpha halpha_lt,
+    ?_, ?_⟩
   · intro A inst hA hqp
-    simpa only [linearMarginBound] using
+    simpa only [marginFailureProbability, linearMarginBound] using
       linear_margin_bound (A := A) f alpha hA hY halpha hqp
+  · simpa only [marginFailureProbability] using
+      margin_failure_probability_tendsto_zero f alpha hY halpha halpha_lt
   · intro alphaHi halphaHi_gt halphaHi_one
-    exact typical_density_failure_probability_tendsto_zero
-      f alpha alphaHi hY halpha halpha_lt halphaHi_gt halphaHi_one
+    simpa only [typicalDensityFailureProbability] using
+      typical_density_failure_probability_tendsto_zero
+        f alpha alphaHi hY halpha halpha_lt halphaHi_gt halphaHi_one
 
 /- The source restrictions are jointly satisfiable on a two-point value carrier. -/
 example :

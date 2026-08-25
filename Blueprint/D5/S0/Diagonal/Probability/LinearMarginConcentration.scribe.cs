@@ -33,7 +33,9 @@ internal sealed class LinearMarginConcentrationDocument : IScribeDocumentDefinit
                             + "density.")),
                     Paragraph(Text(
                         "The proof directly combines the four frozen diagonal-margin theorems. It "
-                            + "introduces no replacement probability, distance, divergence, or carrier."))),
+                            + "introduces no replacement probability, distance, divergence, or carrier. "
+                            + "The displayed probability names abbreviate the finite uniform cardinality "
+                            + "ratios written explicitly in the Lean statement."))),
                 DescribeRole.Theorem)),
         [
             DocumentEdge.Dependency.Create(GidRef.Create("D5/S0/Diagonal/TypicalDensity")),

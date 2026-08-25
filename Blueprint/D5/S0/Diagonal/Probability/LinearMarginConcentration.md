@@ -18,7 +18,7 @@ For a finite value type Y of cardinality at least two, a self-map f, and a lower
 
 The second conjunct states that the corrected bound tends to zero. The third states that the actual probability of any row missing the linear margin also tends to zero, which is the asymptotically almost-sure linear escape clause. The fourth quantifies over every upper density between the typical density and one and states two-sided concentration of the minimum-distance density.
 
-The proof directly combines the four frozen diagonal-margin theorems. It introduces no replacement probability, distance, divergence, or carrier.
+The proof directly combines the four frozen diagonal-margin theorems. It introduces no replacement probability, distance, divergence, or carrier. The displayed probability names abbreviate the finite uniform cardinality ratios written explicitly in the Lean statement.
 
 ## References
 
