@@ -18,10 +18,15 @@ internal static class BackfillInventoryRule
 
     private readonly record struct ReceiptIntegrityGapIdentity(
         string AtomId,
+        string Code,
         string Detail);
 
     internal static ImmutableArray<string> BaselineComparableReceiptIntegrityCodes { get; } =
-        ["coverage-receipt-mismatch"];
+    [
+        "coverage-receipt-mismatch",
+        "scribe-definition-mismatch",
+        "scribe-emission-mismatch",
+    ];
 
     private static readonly Regex SourceIdPattern = new(
         "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",
@@ -398,39 +403,25 @@ internal static class BackfillInventoryRule
             foreach (var (entry, gap) in receiptIntegrityGaps)
             {
                 var identity = GapIdentity(entry, gap);
-                if (gap.Code == "scribe-definition-mismatch")
-                {
-                    // open(issue-2919/scribe-definition-mismatch-baseline-membership): admission
-                    // cannot replay the baseline Scribe verifier. Keep this gap visible without
-                    // making a FullScan self-block; CoverAtom/Ingest still reject it before writes.
-                    findings.Add(new RuleFinding(
-                        BackfillPath,
-                        $"{identity.AtomId}:{gap.Code}:{identity.Detail}",
-                        AdmissionEffect.Observe));
-                    continue;
-                }
-
-                if (gap.Code == "scribe-emission-mismatch")
-                {
-                    // open(issue-2919/scribe-emission-mismatch-baseline-membership): admission
-                    // cannot replay the baseline Scribe verifier. Keep this gap visible without
-                    // making a FullScan self-block; CoverAtom/Ingest still reject it before writes.
-                    findings.Add(new RuleFinding(
-                        BackfillPath,
-                        $"{identity.AtomId}:{gap.Code}:{identity.Detail}",
-                        AdmissionEffect.Observe));
-                    continue;
-                }
-
                 if (BaselineComparableReceiptIntegrityCodes.Contains(
                         gap.Code,
-                        StringComparer.Ordinal)
-                    && baselineComparableReceiptIntegrityGaps.Contains(identity))
+                        StringComparer.Ordinal))
                 {
-                    findings.Add(new RuleFinding(
-                        BackfillPath,
-                        $"{identity.AtomId}:{gap.Code}:{identity.Detail}",
-                        AdmissionEffect.Observe));
+                    if (baselineComparableReceiptIntegrityGaps.Contains(identity))
+                    {
+                        findings.Add(new RuleFinding(
+                            BackfillPath,
+                            $"{identity.AtomId}:{gap.Code}:{identity.Detail}",
+                            AdmissionEffect.Observe));
+                    }
+                    else
+                    {
+                        findings.Add(new RuleFinding(
+                            BackfillPath,
+                            $"{identity.AtomId}:{gap.Code}:{identity.Detail}",
+                            AdmissionEffect.Block));
+                    }
+
                     continue;
                 }
 
@@ -456,15 +447,12 @@ internal static class BackfillInventoryRule
     private static ReceiptIntegrityGapIdentity GapIdentity(
         DigestionLedgerEntry entry,
         DigestionGap gap) =>
-        new(entry.AtomId, gap.Detail);
+        new(entry.AtomId, gap.Code, gap.Detail);
 
     private static HashSet<ReceiptIntegrityGapIdentity> BaselineComparableReceiptIntegrityGaps(
         BackfillInventoryDocument document,
         RepositorySnapshot snapshot)
     {
-        // Only coverage integrity is independently derivable from each side's snapshot bytes.
-        // The two Scribe codes are intentionally excluded here: their admission behavior is
-        // handled explicitly above, with named open markers and Observe-only effects.
         var gaps = new HashSet<ReceiptIntegrityGapIdentity>();
         foreach (var entry in document.RequireDigestionEntries())
         {
@@ -480,6 +468,41 @@ internal static class BackfillInventoryRule
                 {
                     gaps.Add(new ReceiptIntegrityGapIdentity(
                         entry.AtomId,
+                        "coverage-receipt-mismatch",
+                        gid));
+                }
+            }
+
+            var scribeReceipts = FirstReceiptByGid(
+                entry.Receipts.Scribe,
+                static receipt => receipt.Gid);
+            foreach (var gid in entry.CoverageGids.Distinct(StringComparer.Ordinal))
+            {
+                if (!scribeReceipts.TryGetValue(gid, out var scribe))
+                {
+                    continue;
+                }
+
+                var documentGid = ScribeEmissionAttestation.DocumentGid(gid);
+                var definitionPath = ScribeEmissionAttestation.DefinitionPath(documentGid);
+                if (snapshot.TryGetFile(definitionPath, out var definition)
+                    && scribe.DefinitionSha256
+                    != DigestionFingerprint.Compute(definition.RawBytes.AsSpan()).RawSha256)
+                {
+                    gaps.Add(new ReceiptIntegrityGapIdentity(
+                        entry.AtomId,
+                        "scribe-definition-mismatch",
+                        gid));
+                }
+
+                var emissionPath = ScribeEmissionAttestation.EmissionPath(documentGid);
+                if (snapshot.TryGetFile(emissionPath, out var emission)
+                    && scribe.EmissionSha256
+                    != DigestionFingerprint.Compute(emission.RawBytes.AsSpan()).RawSha256)
+                {
+                    gaps.Add(new ReceiptIntegrityGapIdentity(
+                        entry.AtomId,
+                        "scribe-emission-mismatch",
                         gid));
                 }
             }

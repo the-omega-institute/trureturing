@@ -3,7 +3,7 @@ using Trureturing.Truth;
 
 namespace StrataLint.Scribe;
 
-/// Projects the repository truth DAG to Generated/DAG.md.
+/// Projects the assembled truth graph to Generated/DAG.md.
 ///
 /// The DAG is supplied by the caller rather than built here: constructing it needs a
 /// RepositorySnapshot, which only the git gateway in StrataLint.Cli can produce. Enumerating the
@@ -16,7 +16,7 @@ public static class DagEmitter
 
     public static int Emit(
         string repositoryRoot,
-        AcyclicTruthDag dag,
+        TruthDagProjection dag,
         TruthGraphProvenance provenance,
         bool check,
         TextWriter output,

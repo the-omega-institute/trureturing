@@ -261,15 +261,6 @@ internal static class DagLedgerCommandPreparation
         };
     }
 
-    // Keep the truth-export call shape stable while the catalog itself no longer consumes a DAG.
-    internal static FrozenMaterialCatalog BuildCompleteCatalog<TUnusedGraph>(
-        RepositorySnapshot snapshot,
-        AcceptedLeanClosure lean,
-        TUnusedGraph _,
-        FrozenLedgerBaseView baseView,
-        FrozenRevisionIdentity currentIdentity)
-        => BuildCompleteCatalog(snapshot, lean, baseView, currentIdentity);
-
     internal static TruthContext BuildTruth(
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource)
@@ -279,13 +270,13 @@ internal static class DagLedgerCommandPreparation
         return BuildTruth(snapshot, report, lean);
     }
 
-    private static LeanTruthContext BuildLeanTruth(
+    private static TruthContext BuildLeanTruth(
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource)
     {
         var snapshot = Decode(Ask(repository.ReadCurrent));
         var (report, lean) = LoadLean(snapshot, leanReportSource);
-        return new LeanTruthContext(snapshot, lean, report);
+        return new TruthContext(snapshot, lean, report);
     }
 
     internal static TruthContext BuildTruth(
@@ -301,7 +292,7 @@ internal static class DagLedgerCommandPreparation
         RepositorySnapshot snapshot,
         LeanAxiomReport report,
         AcceptedLeanClosure lean)
-        => TruthContextBuilder.Build(snapshot, report, lean);
+        => new(snapshot, lean, report);
 
     private static (LeanAxiomReport Report, AcceptedLeanClosure Lean) LoadLean(
         RepositorySnapshot snapshot,

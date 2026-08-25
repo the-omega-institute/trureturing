@@ -7,7 +7,7 @@ namespace StrataLint.Tests;
 public sealed partial class DepositCoverWorkflowScriptTests
 {
     [Fact]
-    public void DepositCreatesTwoCommitsWithFreezeAndReceiptInTheSecondCommit()
+    public void DepositRunsPhaseAEmissionWithoutRecomputingAfterFreezeAndReceipt()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -27,8 +27,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "make:emit",
                 "dotnet:emit-formalization-receipt",
                 "dotnet:ledger-append",
-                "make:lean-report",
-                "make:emit",
             ],
             fixture.CallKinds());
 
@@ -44,26 +42,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
             phaseB,
             path => path.StartsWith(TransactionFixture.LedgerPath + "/", StringComparison.Ordinal));
         Assert.Contains(TransactionFixture.ReceiptRelativePath, phaseB);
-    }
-
-    [Fact]
-    public void DepositEmitsAfterInstallingReceipt()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.ChangeFormalization();
-
-        var result = fixture.Run("deposit");
-
-        Assert.True(result.ExitCode == 0, Diagnostics(result));
-        var stderr = Encoding.UTF8.GetString(result.StandardError);
-        var receipt = stderr.IndexOf(
-            $"PLAYBOOK_WRITE path={TransactionFixture.ReceiptRelativePath}",
-            StringComparison.Ordinal);
-        var emit = stderr.IndexOf("detail=emit-post-receipt", receipt, StringComparison.Ordinal);
-
-        Assert.True(receipt >= 0, Diagnostics(result));
-        Assert.True(emit > receipt, Diagnostics(result));
     }
 
     [Fact]
