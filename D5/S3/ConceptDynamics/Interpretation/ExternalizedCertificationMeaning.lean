@@ -121,7 +121,10 @@ theorem externalized_certification_meaning
   have independentMass :
       badGreenMass independentlySampled = ((1 - epsilon) / 2) ^ m := by
     simp [badGreenMass, independentlySampled, independentLaws, deployment,
-      PMF.bernoulli_apply, failureProbability, failureProbabilityAtMostOne]
+      failureProbability, failureProbabilityAtMostOne]
+    rw [PMF.bernoulli_apply failureProbabilityAtMostOne false]
+    rw [Bool.cond_false, ENNReal.coe_toReal,
+      NNReal.coe_sub failureProbabilityAtMostOne]
     change (1 - (1 + epsilon) / 2) ^ m = ((1 - epsilon) / 2) ^ m
     ring
   have halfFailureNonnegative : 0 <= (1 - epsilon) / 2 := by

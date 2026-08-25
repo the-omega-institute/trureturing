@@ -75,7 +75,7 @@ theorem finite_quotient_residual_hierarchy {G : Type u} [Group G] :
     change Finite (G ⧸ quotient.1) ∧ IsSolvable (G ⧸ quotient.1)
     refine ⟨nilpotentTarget.1, ?_⟩
     letI : Group.IsNilpotent (G ⧸ quotient.1) := nilpotentTarget.2
-    infer_instance
+    exact IsNilpotent.to_isSolvable
   have solvable_to_finite :
       solvableQuotientLanguage G ⊆ finiteQuotientLanguage G := by
     intro quotient _solvableTarget

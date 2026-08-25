@@ -42,10 +42,12 @@ theorem reach_monotone_in_permissions
     {P Q : Set Permission} {start : State} (hPermissions : P ⊆ Q) :
     Reach step P start ⊆ Reach step Q start := by
   intro target reachable
-  apply Relation.ReflTransGen.mono _ reachable
-  intro source target permittedStep
-  rcases permittedStep with ⟨permission, permissionAllowed, transition⟩
-  exact ⟨permission, hPermissions permissionAllowed, transition⟩
+  induction reachable with
+  | refl => exact Relation.ReflTransGen.refl
+  | tail path permittedStep ih =>
+      rcases permittedStep with ⟨permission, permissionAllowed, transition⟩
+      exact Relation.ReflTransGen.tail ih
+        ⟨permission, hPermissions permissionAllowed, transition⟩
 
 /-- Intersecting both attack surfaces with the bad states preserves the inclusion. -/
 theorem bad_state_reach_monotone

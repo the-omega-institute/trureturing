@@ -40,10 +40,9 @@ theorem mature_iff_all_questions_answerable
     rcases (concept_join_universal q_C (questions n)
       (conceptJoin q_C (questions n))).2.1 with ⟨project, hproject⟩
     refine ⟨project ∘ collapse, ?_⟩
-    calc
-      questions n = project ∘ conceptJoin q_C (questions n) := hproject
-      _ = project ∘ (collapse ∘ q_C) := by rw [hcollapse]
-      _ = (project ∘ collapse) ∘ q_C := by rfl
+    rw [hproject, hcollapse]
+    unfold Function.comp
+    rfl
   · intro answerable n
     exact (concept_join_universal q_C (questions n) q_C).2.2
       ⟨id, rfl⟩ (answerable n)

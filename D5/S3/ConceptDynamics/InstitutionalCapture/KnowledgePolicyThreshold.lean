@@ -81,21 +81,25 @@ theorem knowledge_policy_threshold_consistent
     constructor
     · rintro ⟨factor, hfactor⟩
       refine ⟨recoverViaPolicy secret policyMap hinjective ∘ factor, ?_⟩
+      funext x
+      have hpolicyPoint := congrFun hpolicy x
+      have hfactorPoint := congrFun hfactor x
+      unfold Function.comp at hpolicyPoint hfactorPoint ⊢
       calc
-        secret = recoverViaPolicy secret policyMap hinjective ∘ policy := by
-          funext x
-          simp only [Function.comp_apply, hpolicy]
-          exact (hrecover x).symm
-        _ = recoverViaPolicy secret policyMap hinjective ∘
-              (factor ∘ coalitionReadout share K) := by rw [hfactor]
-        _ = (recoverViaPolicy secret policyMap hinjective ∘ factor) ∘
-              coalitionReadout share K := by rfl
+        secret x = recoverViaPolicy secret policyMap hinjective
+            (policyMap (secret x)) := (hrecover x).symm
+        _ = recoverViaPolicy secret policyMap hinjective (policy x) :=
+          congrArg (recoverViaPolicy secret policyMap hinjective) hpolicyPoint.symm
+        _ = recoverViaPolicy secret policyMap hinjective
+            (factor (coalitionReadout share K x)) :=
+          congrArg (recoverViaPolicy secret policyMap hinjective) hfactorPoint
     · rintro ⟨factor, hfactor⟩
       refine ⟨policyMap ∘ factor, ?_⟩
-      calc
-        policy = policyMap ∘ secret := hpolicy
-        _ = policyMap ∘ (factor ∘ coalitionReadout share K) := by rw [hfactor]
-        _ = (policyMap ∘ factor) ∘ coalitionReadout share K := by rfl
+      funext x
+      have hpolicyPoint := congrFun hpolicy x
+      have hfactorPoint := congrFun hfactor x
+      unfold Function.comp at hpolicyPoint hfactorPoint ⊢
+      exact hpolicyPoint.trans (congrArg policyMap hfactorPoint)
   have hsize_sets :
       coalitionSizeSet (fun K => Refines policy (coalitionReadout share K)) =
         coalitionSizeSet (fun K => Refines secret (coalitionReadout share K)) := by

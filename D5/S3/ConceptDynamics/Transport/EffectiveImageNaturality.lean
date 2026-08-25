@@ -41,13 +41,21 @@ theorem effective_image_naturality
     ∀ y ∈ Set.range C, Ymap (f y) = fPrime (Bmap y) := by
   rintro y ⟨x, rfl⟩
   have h_factor_x : T x = f (C x) := by
-    simpa only [Function.comp_apply] using congrFun h_factor x
+    have hpoint := congrFun h_factor x
+    unfold Function.comp at hpoint
+    exact hpoint
   have h_transport_x : TPrime (Xmap x) = Ymap (T x) := by
-    simpa only [Function.comp_apply] using congrFun h_transport x
+    have hpoint := congrFun h_transport x
+    unfold Function.comp at hpoint
+    exact hpoint
   have h_factor_prime_x : TPrime (Xmap x) = fPrime (CPrime (Xmap x)) := by
-    simpa only [Function.comp_apply] using congrFun h_factorPrime (Xmap x)
+    have hpoint := congrFun h_factorPrime (Xmap x)
+    unfold Function.comp at hpoint
+    exact hpoint
   have h_readout_x : CPrime (Xmap x) = Bmap (C x) := by
-    simpa only [Function.comp_apply] using congrFun h_readout x
+    have hpoint := congrFun h_readout x
+    unfold Function.comp at hpoint
+    exact hpoint
   calc
     Ymap (f (C x)) = Ymap (T x) := by rw [h_factor_x]
     _ = TPrime (Xmap x) := h_transport_x.symm
@@ -70,7 +78,7 @@ example :
       (CPrime ∘ Xmap = Bmap ∘ C) ∧
       (T = f ∘ C) ∧
       (TPrime = fPrime ∘ CPrime) := by
-  simp
+  simp <;> rfl
 
 example : Concept Bool Bool := id
 

@@ -59,7 +59,7 @@ theorem bundled_finite_quotient_residual_hierarchy {G : Type u} [Group G] :
     change Group.IsNilpotent (G ⧸ H.toSubgroup) at nilpotentQuotient
     change IsSolvable (G ⧸ H.toSubgroup)
     letI : Group.IsNilpotent (G ⧸ H.toSubgroup) := nilpotentQuotient
-    infer_instance
+    exact IsNilpotent.to_isSolvable
   have finite_to_solvable_residual :
       finiteResidual G ≤ solvableFiniteResidual G := by
     refine le_iInf fun H => ?_

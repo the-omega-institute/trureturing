@@ -91,8 +91,9 @@ theorem finite_window_minimal_sufficiency {X O : Type _} [Nonempty X]
       rcases sufficient i with ⟨factor, hfactor⟩
       refine ⟨Subtype.val ∘ factor, ?_⟩
       funext x
-      simpa only [targets, Function.comp_apply, canonicalTargetReadout] using
-        congrArg Subtype.val (congrFun hfactor x)
+      have hpoint := congrArg Subtype.val (congrFun hfactor x)
+      unfold Function.comp at hpoint ⊢
+      simpa only [targets, canonicalTargetReadout] using hpoint
     simpa only [targets, finiteWindow] using
       (multi_target_minimal_sufficiency targets p).1.mp rawSufficient
 

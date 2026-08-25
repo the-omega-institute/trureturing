@@ -39,6 +39,8 @@ lemma range_card_strictly_increases
     (strict : StrictlyRefines coarse fine) :
     Nat.card (Set.range coarse) < Nat.card (Set.range fine) := by
   classical
+  letI : Finite (Set.range coarse) := Finite.Set.finite_range coarse
+  letI : Finite (Set.range fine) := Finite.Set.finite_range fine
   let descend : Set.range fine → Set.range coarse := fun coordinate =>
     ⟨coarse (Classical.choose coordinate.property),
       ⟨Classical.choose coordinate.property, rfl⟩⟩

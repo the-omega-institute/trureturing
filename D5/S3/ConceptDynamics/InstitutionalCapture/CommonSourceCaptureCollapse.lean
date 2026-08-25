@@ -111,7 +111,8 @@ example :
     captureNumber
       (fun source : Empty => (nomatch source : Concept Bool Unit))
       (fun _ : Unit => (id : Concept Bool Bool)) = 0 := by
-  rw [captureNumber, Nat.sInf_eq_zero]
+  unfold captureNumber
+  rw [Nat.sInf_eq_zero]
   right
   apply Set.eq_empty_iff_forall_notMem.mpr
   intro size

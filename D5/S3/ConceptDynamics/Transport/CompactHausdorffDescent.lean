@@ -36,7 +36,7 @@ theorem compact_hausdorff_automatic_quotient
       ∃! factor : C(B, Y), T = factor.comp q := by
   have closed : IsClosedMap q := q.continuous.isClosedMap
   have quotient : Topology.IsQuotientMap q :=
-    IsQuotientMap.of_surjective_continuous surjective q.continuous
+    closed.isQuotientMap q.continuous surjective
   exact ⟨closed, quotient, continuous_descent q T quotient fiber_constant⟩
 
 /- The identity map on a finite discrete space witnesses all public hypotheses. -/

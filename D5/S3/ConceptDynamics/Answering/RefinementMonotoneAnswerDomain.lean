@@ -46,9 +46,13 @@ theorem refinement_monotone_answer_domain
     (g := fun d => canonicalSafeAnswer A q_C T (factor d))
   · intro state hState target hPulledBackAnswer
     apply canonical_safe_answer_zero_error A q_C T state hState target
-    simpa only [hfactor, Function.comp_apply] using hPulledBackAnswer
+    rw [hfactor] at hPulledBackAnswer ⊢
+    unfold Function.comp at hPulledBackAnswer ⊢
+    exact hPulledBackAnswer
   · exact ⟨x, hx, rfl⟩
-  · simpa only [hfactor, Function.comp_apply] using hAnswer
+  · rw [hfactor] at hAnswer ⊢
+    unfold Function.comp at hAnswer ⊢
+    exact hAnswer
 
 /-- The admitted safe-answer domain of a coarse concept is contained in that of any
 refinement. -/

@@ -51,7 +51,9 @@ theorem judgment_relative_analogy_criterion
     refine ⟨fun coordinate => (factor coordinate).1, ?_⟩
     funext state
     have hpoint := congrArg Subtype.val (congrFun hfactor state)
-    simpa only [canonicalTargetReadout, Function.comp_apply] using hpoint
+    simp only [canonicalTargetReadout] at hpoint
+    unfold Function.comp at hpoint ⊢
+    exact hpoint
   constructor
   · intro hsufficient x y hsimilar
     by_contra hdifferent

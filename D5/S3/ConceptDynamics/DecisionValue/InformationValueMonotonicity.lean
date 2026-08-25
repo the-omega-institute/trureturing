@@ -81,7 +81,8 @@ theorem free_information_refinement_value_monotone
           informationCost ignoredFinePolicy = coarseOptimalValue := by
     rw [← bestCoarseValue]
     simp [informedExpectedValue, ignoredFinePolicy, informationFree,
-      informationDoesNotChangeWorld, coarseFactors]
+      informationDoesNotChangeWorld, coarseFactors] <;>
+      (try unfold Function.comp) <;> rfl
   apply fineOptimal.2
   rw [← ignoredFineValue]
   exact Set.mem_image_of_mem
