@@ -1,5 +1,17 @@
 # Diagnostic Month R4 Lane B: Interface Theorem 3.3 Open Report
 
+> **Historical erratum (P2):** This report is preserved as evidence for the
+> implementation inspected at its recorded baseline. The
+> `BaselineCoverageGids` rejection, baseline-occupied-GID rejection, and
+> hosted-extension cross-atom/AST-path guard described below **已于 P2 删除**.
+> They are not live cover behavior: coverage is now M:N, and reuse on another
+> atom is allowed when that independent `(atom_id, GID)` edge has its own
+> base-owned formalization precommitment plus valid coverage/Scribe receipts.
+> References below to the "live", "current", or "canonical" cover rejection
+> are historical statements at commit `470491ca088663eeebf36415db7f65af3dc415ec`,
+> not claims about the present architecture. The mathematical bridge gaps and
+> this lane's historical `open` outcome remain unchanged.
+
 Outcome: `open`, with no formalization deposit or cover. A frozen theorem proves
 the countable-family nullity mechanism, but it does not check two source-level
 bridges, and the canonical cover path also rejects reuse of its already-bound

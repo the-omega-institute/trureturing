@@ -53,19 +53,28 @@ internal sealed class FiberInteriorEquivalenceDocument : IScribeDocumentDefiniti
 
     private static Formula TheoremFormula()
     {
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula stateType = F.Id("X");
+        Formula coordinateType = F.Id("B");
         Formula state = F.Id("x");
         Formula other = F.Id("y");
         Formula readout = F.Id("C");
         Formula predicate = F.Id("P");
-        Formula partitionTopology = F.Id("tauC");
-        Formula interior = Apply(F.Id("Int"), partitionTopology, predicate);
+        Formula partitionTopology = Apply(F.Id("partitionTopology"), readout);
+        Formula interior = Apply(F.Id("interior"), partitionTopology, predicate);
 
         return Disp(Seq(
-            Forall, Sp, state, Comma, Sp,
+            Begin, Grp(F.Id("gathered")),
+            Forall, Sp, stateType, Comma, Sp, coordinateType, Colon, Sp, type, Comma,
+            RowBreak, Grp(),
+            readout, Colon, Sp, Apply(F.Id("Concept"), stateType, coordinateType), Comma, Sp,
+            predicate, Colon, Sp, Apply(F.Id("Set"), stateType), Comma, RowBreak, Grp(),
+            state, Colon, Sp, stateType, Comma, RowBreak, Grp(),
             state, Sp, InMacro, Sp, interior,
             Sp, Iff, Sp,
-            Forall, Sp, other, Comma, Sp,
+            Forall, Sp, other, Colon, Sp, stateType, Comma, Sp,
             Apply(readout, other), Sp, Eq, Sp, Apply(readout, state),
-            Sp, Rightarrow, Sp, Apply(predicate, other), Dot));
+            Sp, Rightarrow, Sp, other, Sp, InMacro, Sp, predicate, Dot,
+            End, Grp(F.Id("gathered"))));
     }
 }

@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: A refinement tower matches states to its threads iff separating and complete. -/

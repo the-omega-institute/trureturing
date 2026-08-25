@@ -29,7 +29,7 @@ public sealed class LeanCacheProvisionerTests
         // 承重点即活性上限本身。上一版这里断言的是「模块数算出来的派生值」,
         // 而那个派生每次都被 clamp 压回上限 —— 断言恒真,「派生」二字不承重。
         Assert.Equal(
-            TimeSpan.FromSeconds(LeanCacheBudgetPolicy.LivenessCeilingSeconds),
+            TimeSpan.FromSeconds(LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds),
             lean);
 
         // 另两者继承它。分叉须走注释所述的收口 + 新案号,不得静默发生。
@@ -62,46 +62,64 @@ public sealed class LeanCacheProvisionerTests
     }
 
     /// <summary>
-    /// 该值是**挂死检测上限**(域外),不是等待预算,也不是派生值。
+    /// 该值是 `policy-override`,其**取值依据**是覆盖全量冷建并留并发余量。
     ///
-    /// 上一版曾以 `模块数 × 3 × 1.5` 派生它,而 clamp 上界 7200 对应 1600 模块、
-    /// 落地当天 D5 已 1651 个 ⟹ **每次求值都被压回 7200**,「派生」二字不承重。
-    /// 根因是有界工作量项选错:拿全量重建当界,而 `ensure` 的意义正是让全量重建不发生。
+    /// 上一版把它判为「域外活性上限」,依据是「对正常路径 766s 有 9.4 倍」——
+    /// **那个 766s 是 CI 热态报告生产的耗时,而本值界的是本地 worktree 的 Lake 命令**,
+    /// 拿一个环境的读数当了另一个环境的判据。本地三级回退(clonefile → archive →
+    /// ReproduceExisting)全落空即全量冷建 **3388s**,比值只有 2.13。
     ///
-    /// 故本测试钉的是**域外分类的三项依据**,不是某个算式:
-    /// 上限有限、下限有限、且上限显著大于正常路径的观测耗时。
+    /// 故本测试钉的是**本地口径**的那个关系,不再是 CI 口径。
     /// </summary>
     [Fact]
-    public void BudgetIsABoundedLivenessCeilingNotAWaitBudget()
+    public void BudgetClearsTheLocalFullColdBuildWithConcurrencyHeadroom()
     {
-        Assert.Equal(7200, LeanCacheBudgetPolicy.LivenessCeilingSeconds);
-        Assert.Equal(300, LeanCacheBudgetPolicy.LivenessFloorSeconds);
+        // 本地全量冷建实测(2026-08-23,28 核,含并发,EXIT=0,1571 模块)。
+        const int LocalFullColdBuildSeconds = 3388;
 
-        // 上限须显著大于正常路径最大观测(766s = CI 热态报告生产)。比值 < 3 即
-        // 说明它已退化成等待预算,须重新按三型收口 —— 注释里的失效条件即此。
-        const int SlowestObservedNormalPathSeconds = 766;
+        // 负读数①:旧值 1800 对 1656 的 8% 余量被并发吃掉而失败。故须显著多于 1 倍。
         Assert.True(
-            LeanCacheBudgetPolicy.LivenessCeilingSeconds
-                >= SlowestObservedNormalPathSeconds * 3,
-            "上限已进入正常路径的量级,它不再是挂死检测器");
+            LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds
+                > LocalFullColdBuildSeconds * 2,
+            "预算未清过本地全量冷建的两倍,并发余量不足以避免重演 1800 的失败");
 
-        // 有限:挂死检测器必须封顶,否则它检测不到挂死。
-        Assert.True(LeanCacheBudgetPolicy.LivenessCeilingSeconds > 0);
+        // 有限:预算必须封顶,否则挂死检测失效。
         Assert.True(
-            LeanCacheBudgetPolicy.LivenessFloorSeconds
-                < LeanCacheBudgetPolicy.LivenessCeilingSeconds);
+            LeanCacheBudgetPolicy.MinimumConfigurableBudgetSeconds
+                < LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds);
     }
 
     /// <summary>
-    /// 默认路径直接取上限,不经任何按工作量的计算 —— 这正是与上一版派生式的差别。
+    /// `policy-override` 须**报全**:这不是派生值、日期、域、正反读数、永久案号、
+    /// owner、退出条件、非永久。报不全即规矩所指的「无源未报」(第四形)。
+    ///
+    /// 本测试读该常数的声明文本并逐项核对 —— 缺任一项即红,迫使改动者补齐而非静默删注。
     /// </summary>
     [Fact]
-    public void DefaultBudgetIsTheCeilingItself()
+    public void PolicyOverrideDeclarationReportsEveryRequiredItem()
     {
-        // 期望值**写死 7200**,不引用 LivenessCeilingSeconds —— 引用它就两侧一起变,
-        // 断言恒真。变异证明当场抓到:把上限改成 800 后本测试仍绿(第六项:
-        // 预期红 2 实得 4,而预期内的这一条**没**红,差额指向的就是这里)。
-        AssertCacheGetBudget(null, 7200);
+        var declaration = File.ReadAllText(Path.Combine(
+            TestRepositoryLayout.FindRoot(),
+            "tools", "StrataLint.Cli", "Runtime", "LeanCacheBudgetPolicy.cs"));
+
+        foreach (var required in new[]
+        {
+            "policy-override",       // 明报型别
+            "这不是派生值",           // 明报非派生
+            "2026-08-25",            // 日期
+            "**域**",                 // 域
+            "**正读数**",             // 正读数
+            "**负读数**",             // 负读数
+            "issues/2535",           // 永久案号
+            "**owner**",              // owner
+            "退出条件",               // 退出条件 / 复审触发
+            "**非永久**",             // 非永久
+        })
+        {
+            Assert.True(
+                declaration.Contains(required, StringComparison.Ordinal),
+                $"policy-override 声明缺项:{required}");
+        }
     }
 
     [Fact]
@@ -168,7 +186,7 @@ public sealed class LeanCacheProvisionerTests
     {
         WithBudget("invalid", () =>
             Assert.Equal(
-                TimeSpan.FromSeconds(LeanCacheBudgetPolicy.LivenessCeilingSeconds),
+                TimeSpan.FromSeconds(LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds),
                 LeanCacheProvisioner.LeanCommandBudget));
     }
 

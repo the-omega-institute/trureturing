@@ -126,6 +126,152 @@ public sealed class Sl016WakeupTests
     }
 
     [Fact]
+    public void CandidateBackfillPairWithoutBaselineFormalizationPrecommitIsBlocked()
+    {
+        const string atomPath =
+            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
+        const string gid = "D5/S0/Carrier/BackfillTarget.protectedTargetFixture";
+        var (fixture, verifiedScribeEmissions, receiptProjection) =
+            PreparedDeclarationPairFixture(gid);
+        fixture.Files[atomPath] = AddCoverageAndReceipts(
+            fixture.Files[atomPath],
+            gid,
+            receiptProjection);
+
+        var evaluation = EvaluateSl016(
+            fixture,
+            verifiedScribeEmissions,
+            [atomPath]);
+
+        Assert.Contains(evaluation.Diagnostics, finding =>
+            finding.AdmissionEffect == AdmissionEffect.Block
+            && finding.Message.Contains(gid, StringComparison.Ordinal)
+            && finding.Message.Contains(
+                "base-owned formalization precommitment",
+                StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void CandidateCannotReuseGidOnSecondAtomWithoutThatAtomsPrecommitment()
+    {
+        const string firstAtomPath =
+            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
+        const string secondAtomPath =
+            "Meta/Digestion/backfill/delta-v0.1/partial-closed/second-atom.yaml";
+        const string gid = "D5/S0/Carrier/BackfillTarget.protectedTargetFixture";
+        var (fixture, verifiedScribeEmissions, receiptProjection) =
+            PreparedDeclarationPairFixture(gid);
+        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        {
+            files[firstAtomPath] = AddCoverageAndReceipts(
+                files[firstAtomPath],
+                gid,
+                receiptProjection);
+        }
+
+        AddFormalizationPrecommitment(fixture, "delta-atom", gid);
+        fixture.Files[secondAtomPath] = fixture.Files[firstAtomPath].Replace(
+            "ast_path: manual/fixture",
+            "ast_path: manual/second-fixture",
+            StringComparison.Ordinal);
+
+        var evaluation = EvaluateSl016(
+            fixture,
+            verifiedScribeEmissions,
+            [secondAtomPath]);
+
+        Assert.Contains(evaluation.Diagnostics, finding =>
+            finding.AdmissionEffect == AdmissionEffect.Block
+            && finding.Message.Contains("second-atom", StringComparison.Ordinal)
+            && finding.Message.Contains(gid, StringComparison.Ordinal)
+            && finding.Message.Contains(
+                "base-owned formalization precommitment",
+                StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void ExistingCoveragePairReboundToNewRawFingerprintRequiresNewPrecommitment()
+    {
+        const string atomPath =
+            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
+        const string gid = "D5/S0/Carrier/BackfillTarget.protectedTargetFixture";
+        var (fixture, _, receiptProjection) = PreparedDeclarationPairFixture(gid);
+        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        {
+            files[atomPath] = AddCoverageAndReceipts(files[atomPath], gid, receiptProjection);
+        }
+        AddFormalizationPrecommitment(fixture, "delta-atom", gid);
+        var reboundFingerprint = "sha256:" + new string('9', 64);
+        fixture.Files[atomPath] = fixture.Files[atomPath].Replace(
+            RuleFixture.FixtureCasReference,
+            reboundFingerprint,
+            StringComparison.Ordinal);
+        var context = fixture.Build(RawChangeSet.Create([atomPath]));
+
+        var findings = DigestionFormalizationPrecommitmentValidator.ValidateNewEdges(
+            BackfillInventoryLoader.LoadBaseline(context.Baseline),
+            BackfillInventoryLoader.Load(context.Current),
+            context.Baseline,
+            context.Lean.Report);
+
+        Assert.Contains(findings, finding =>
+            finding.Contains(gid, StringComparison.Ordinal)
+            && finding.Contains("formalization receipt fingerprint does not match atom", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void ExistingCoveragePairReceiptRebindingCannotReuseEntryFingerprintExemption()
+    {
+        const string atomPath =
+            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
+        const string gid = "D5/S0/Carrier/BackfillTarget.protectedTargetFixture";
+        var (fixture, _, receiptProjection) = PreparedDeclarationPairFixture(gid);
+        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        {
+            files[atomPath] = AddCoverageAndReceipts(files[atomPath], gid, receiptProjection);
+        }
+
+        var reboundFingerprint = "sha256:" + new string('9', 64);
+        fixture.Files[atomPath] = fixture.Files[atomPath].Replace(
+            $"source_sha256: {RuleFixture.FixtureCasReference}",
+            $"source_sha256: {reboundFingerprint}",
+            StringComparison.Ordinal);
+        var context = fixture.Build(RawChangeSet.Create([atomPath]));
+
+        var findings = DigestionFormalizationPrecommitmentValidator.ValidateNewEdges(
+            BackfillInventoryLoader.LoadBaseline(context.Baseline),
+            BackfillInventoryLoader.Load(context.Current),
+            context.Baseline,
+            context.Lean.Report);
+
+        Assert.Contains(findings, finding =>
+            finding.Contains(gid, StringComparison.Ordinal)
+            && finding.Contains("base-owned formalization precommitment", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void ExistingCoveragePairWithSameRawFingerprintKeepsItsExemption()
+    {
+        const string atomPath =
+            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
+        const string gid = "D5/S0/Carrier/BackfillTarget.protectedTargetFixture";
+        var (fixture, _, receiptProjection) = PreparedDeclarationPairFixture(gid);
+        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        {
+            files[atomPath] = AddCoverageAndReceipts(files[atomPath], gid, receiptProjection);
+        }
+        var context = fixture.Build(RawChangeSet.Create([atomPath]));
+
+        var findings = DigestionFormalizationPrecommitmentValidator.ValidateNewEdges(
+            BackfillInventoryLoader.LoadBaseline(context.Baseline),
+            BackfillInventoryLoader.Load(context.Current),
+            context.Baseline,
+            context.Lean.Report);
+
+        Assert.Empty(findings);
+    }
+
+    [Fact]
     public void ExistingComparableReceiptIntegrityGapProducesNoBlockDuringSl016FullScan()
     {
         var (context, evaluation) = EvaluateReceiptIntegrityGap(
@@ -157,7 +303,7 @@ public sealed class Sl016WakeupTests
     }
 
     [Fact]
-    public void BaselineComparableReceiptIntegrityCodeSetIsExactlyCoverageReceiptMismatch()
+    public void BaselineComparableReceiptIntegrityCodeSetIncludesEveryFatalReceiptMismatch()
     {
         Assert.Equal(
             new[]
@@ -360,6 +506,88 @@ public sealed class Sl016WakeupTests
         "coverage: []\n  scribe: []",
         receiptProjection,
         StringComparison.Ordinal);
+
+    private static (
+        RuleFixture Fixture,
+        VerifiedScribeEmissions VerifiedScribeEmissions,
+        string ReceiptProjection) PreparedDeclarationPairFixture(string gid)
+    {
+        var fixture = PreparedCoverageFixture();
+        var separator = gid.LastIndexOf('.');
+        var targetPath = gid[..separator] + ".lean";
+        var declaration = gid[(separator + 1)..];
+        fixture.Reports[targetPath] = new LeanFileReport(
+            [],
+            [new LeanDeclaration(declaration, "def", "Unit", [])]);
+        var definition = "candidate pair Scribe definition\n";
+        var emission = "# Candidate pair Scribe emission\n";
+        var documentGid = ScribeEmissionAttestation.DocumentGid(gid);
+        var definitionPath = ScribeEmissionAttestation.DefinitionPath(documentGid);
+        var emissionPath = ScribeEmissionAttestation.EmissionPath(documentGid);
+        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        {
+            files[definitionPath] = definition;
+            files[emissionPath] = emission;
+        }
+
+        var definitionSha256 = Sha256(definition);
+        var emissionSha256 = Sha256(emission);
+        var targetSha256 = Sha256(fixture.Files[targetPath]);
+        var receipts = "coverage:\n"
+            + $"    - gid: {gid}\n"
+            + $"      source_sha256: {RuleFixture.FixtureCasReference}\n"
+            + $"      target_sha256: {targetSha256}\n"
+            + "  scribe:\n"
+            + $"    - gid: {gid}\n"
+            + $"      definition_sha256: {definitionSha256}\n"
+            + $"      emission_sha256: {emissionSha256}";
+        var verified = VerifiedScribeEmissions.Create(
+        [
+            new ScribeEmissionRecord(
+                documentGid,
+                definitionPath,
+                definitionSha256,
+                emissionPath,
+                emissionSha256),
+        ],
+        [gid]);
+        return (fixture, verified, receipts);
+    }
+
+    private static string AddCoverageAndReceipts(
+        string atom,
+        string gid,
+        string receiptProjection) => AddReceipts(
+            atom.Replace(
+                "  - D5/S0/Carrier/BackfillTarget",
+                $"  - D5/S0/Carrier/BackfillTarget\n  - {gid}",
+                StringComparison.Ordinal),
+            receiptProjection);
+
+    private static void AddFormalizationPrecommitment(
+        RuleFixture fixture,
+        string atomId,
+        string gid)
+    {
+        var separator = gid.LastIndexOf('.');
+        var signature = new DigestionFormalizationSignature(
+            gid[(separator + 1)..],
+            "def",
+            "Unit");
+        var receipt = new DigestionFormalizationReceipt(
+            atomId,
+            gid,
+            signature,
+            RuleFixture.FixtureCasReference,
+            RuleFixture.FixtureCasReference);
+        var receiptText = Encoding.UTF8.GetString(
+            DigestionFormalizationReceipt.Write(receipt).AsSpan());
+        var receiptPath = DigestionFormalizationReceipt.PathForAtom(atomId);
+        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        {
+            files[receiptPath] = receiptText;
+        }
+    }
 
     private static SingleRuleEvaluation EvaluateAtomIdentityCounterexample()
     {

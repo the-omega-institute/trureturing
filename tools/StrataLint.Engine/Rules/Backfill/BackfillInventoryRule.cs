@@ -375,6 +375,15 @@ internal static class BackfillInventoryRule
         try
         {
             var baselineDocument = LoadBaselineDocument(context.Baseline);
+            foreach (var finding in DigestionFormalizationPrecommitmentValidator.ValidateNewEdges(
+                         baselineDocument,
+                         document,
+                         context.Baseline,
+                         context.Lean.Report))
+            {
+                findings.Add(new RuleFinding(BackfillPath, finding, AdmissionEffect.Block));
+            }
+
             var evaluation = DigestionStatusEvaluator.Evaluate(
                 context.Changes is null
                     ? DigestionEvaluationScope.FullScan
@@ -395,8 +404,8 @@ internal static class BackfillInventoryRule
 
             var receiptIntegrityGaps = evaluation.ReceiptIntegrityGaps.ToArray();
             // A rule implementation change forces FullScan, which republishes stored gaps.
-            // As with the directory-capacity band, baseline membership makes those findings
-            // observable while reserving admission failure for identities absent at the base.
+            // Baseline membership keeps stored gaps observable while newly introduced
+            // receipt drift remains blocking.
             var baselineComparableReceiptIntegrityGaps = receiptIntegrityGaps.Length == 0
                 ? new HashSet<ReceiptIntegrityGapIdentity>()
                 : BaselineComparableReceiptIntegrityGaps(baselineDocument, context.Baseline);
