@@ -6,7 +6,7 @@ Direction witnesses distinguish outgoing contamination from incoming dependency 
 
 **Theorem 1.1 (The direction and append boundaries are non-vacuous).**
 
-$$roleAdmissionDirectionNonvacuity$$
+$$\left(true \in \operatorname{Contam}\left(directionRelation, \left\{false\right\}\right) \land \left(\neg false \in \operatorname{Contam}\left(directionRelation, \left\{true\right\}\right)\right)\right) \land \left(\left(false \in \operatorname{dependencyClosure}\left(directionSnapshot\right) \land \left(false \in \operatorname{evidenceDependencies}\left(directionSnapshot\right) \land \left(false \in \operatorname{seen}\left(\operatorname{filtration}\left(directionSnapshot\right)\right)\left(\operatorname{freezeEvent}\left(directionSnapshot\right)\right) \land \left(\neg false \in \operatorname{Contam}\left(directionRelation, \operatorname{commitmentRoots}\left(directionSnapshot\right)\right)\right)\right)\right)\right) \land \left(\left(false \in \operatorname{seen}\left(seenForward\right)\left(1\right) \land \left(\left(\neg false \in \operatorname{seen}\left(seenReverse\right)\left(1\right)\right) \land \left(\neg false \in \operatorname{seen}\left(seenForward\right)\left(0\right)\right)\right)\right) \land \left(\operatorname{AdmissibleJudge}\left(semanticOldLedger, semanticSnapshot, semanticOldValid, false\right) \land \left(\left(\neg \operatorname{AdmissibleJudge}\left(semanticExtendedLedger, semanticSnapshot, semanticExtendedValid, false\right)\right) \land \left(\operatorname{events}\left(semanticExtendedLedger\right) = \operatorname{append}\left(\operatorname{events}\left(semanticOldLedger\right), \operatorname{singletonList}\left(semanticAdaptiveEvent\right)\right) \land \left(\operatorname{eventId}\left(semanticAdaptiveEvent\right) \le \operatorname{decisionEvent}\left(semanticSnapshot\right) \land \operatorname{Nonempty}\left(\operatorname{intersection}\left(\operatorname{dependencies}\left(semanticAdaptiveEvent\right), \operatorname{dependencyClosure}\left(semanticSnapshot\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Provenance/SeenDirectionAndAppendCounterexample.role_admission_direction_nonvacuity` (`✓ std3`). ∎
 
@@ -14,7 +14,7 @@ $$roleAdmissionDirectionNonvacuity$$
 
 *Commentary.*
 
-The DECT access relation reads source objects upstream into accessed objects downstream. The concrete two-element edge false -> true therefore puts true in outgoing Contam of {false}, puts false in the incoming commitment closure of {true}, and puts false in the corrected seen filtration after true is accessed.
+The concrete two-element edge false -> true puts true in outgoing Contam of {false} and puts false in the incoming artifact dependency closure of {true}. Independently, the evidence filtration supplies a monotone seen set in which the required evidence dependency is visible at the freeze event.
 
 Reversing that edge removes false from the same one-step seen prefix, so the direction claim is not a naming convention or a constant set. The aggregate theorem consumes all three named direction witnesses.
 
