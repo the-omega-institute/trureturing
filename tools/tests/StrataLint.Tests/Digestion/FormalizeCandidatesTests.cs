@@ -536,7 +536,8 @@ public sealed partial class FormalizeCandidatesTests
         BackfillInventoryDocument? ledger = null,
         byte[]? formalizationReceipt = null,
         LeanAxiomReport? leanReport = null,
-        string atomizer = AtomizerRegistry.PzgId)
+        string atomizer = AtomizerRegistry.PzgId,
+        IReadOnlyList<string>? arguments = null)
     {
         var sources = entries
             .GroupBy(static entry => entry.SourceId, StringComparer.Ordinal)
@@ -600,8 +601,8 @@ public sealed partial class FormalizeCandidatesTests
                 RawRepositorySnapshot.Create(files),
                 null),
             new FakeLeanReportSource(leanReport ?? CurrentLeanReport(entries)),
-            new FakeScribeEmissionVerifier(null));
-        return environment.DigestStatus(["--formalize-candidates"]);
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+        return environment.DigestStatus(arguments ?? ["--formalize-candidates"]);
     }
 
     private static byte[] ValidReceipt(EntryFixture entry) =>
@@ -637,7 +638,8 @@ public sealed partial class FormalizeCandidatesTests
         string migration = "residual",
         string truth = "open",
         string status = "",
-        string atomizer = AtomizerRegistry.PzgId)
+        string atomizer = AtomizerRegistry.PzgId,
+        DigestionCoverDisposition? coverDisposition = null)
     {
         var source = Encoding.UTF8.GetBytes(
             status is UnterminatedPlainClosedMarker or UnterminatedClosedMarker
@@ -653,7 +655,8 @@ public sealed partial class FormalizeCandidatesTests
             atom,
             coverageGids ?? [],
             migration,
-            truth);
+            truth,
+            coverDisposition);
     }
 
     private static BackfillInventoryDocument Ledger(
@@ -678,7 +681,13 @@ public sealed partial class FormalizeCandidatesTests
                         null,
                         entry.Atom.Fingerprints,
                         ImmutableArray.CreateRange(entry.CoverageGids),
-                        new DigestionReceipts([], [], [], [], null),
+                        new DigestionReceipts(
+                            [],
+                            [],
+                            [],
+                            [],
+                            null,
+                            CoverDisposition: entry.CoverDisposition),
                         new DigestionStatus(
                             Migration(entry.Migration),
                             Truth(entry.Truth)),
@@ -732,7 +741,8 @@ public sealed partial class FormalizeCandidatesTests
         DigestionAtom Atom,
         string[] CoverageGids,
         string Migration,
-        string Truth);
+        string Truth,
+        DigestionCoverDisposition? CoverDisposition);
 
     private sealed record SourceFixture(
         string SourceId,

@@ -90,7 +90,8 @@ internal static class DigestStatusCommand
                         snapshot,
                         formalizeDocument,
                         formalizeLeanReport,
-                        options.FormalizeAtomId),
+                        options.FormalizeAtomId,
+                        options.RetryDispositions),
                     string.Empty);
             }
 
@@ -194,6 +195,7 @@ internal static class DigestStatusCommand
         var json = false;
         var residualSummary = false;
         var formalizeCandidates = false;
+        var retryDispositions = false;
         string? baselineRevision = null;
         string? formalizeAtomId = null;
         for (var index = 0; index < arguments.Count; index++)
@@ -209,6 +211,9 @@ internal static class DigestStatusCommand
                 case "--formalize-candidates" when !formalizeCandidates:
                     formalizeCandidates = true;
                     break;
+                case "--retry-dispositions" when !retryDispositions:
+                    retryDispositions = true;
+                    break;
                 case "--base" when baselineRevision is null && index + 1 < arguments.Count:
                     baselineRevision = arguments[++index];
                     if (string.IsNullOrWhiteSpace(baselineRevision)) throw Usage();
@@ -223,7 +228,8 @@ internal static class DigestStatusCommand
         }
 
         if ((json ? 1 : 0) + (residualSummary ? 1 : 0) + (formalizeCandidates ? 1 : 0) > 1
-            || (formalizeAtomId is not null && !formalizeCandidates))
+            || (formalizeAtomId is not null && !formalizeCandidates)
+            || (retryDispositions && !formalizeCandidates))
         {
             throw Usage();
         }
@@ -232,13 +238,14 @@ internal static class DigestStatusCommand
             json,
             residualSummary,
             formalizeCandidates,
+            retryDispositions,
             baselineRevision,
             formalizeAtomId);
     }
 
     private static InvalidOperationException Usage() => new(
         "USAGE: StrataLint digest-status [--json|--residual-summary|--formalize-candidates "
-        + "[--atom-id ATOM_ID]] [--base REV]");
+        + "[--atom-id ATOM_ID] [--retry-dispositions]] [--base REV]");
 
     internal static string RenderText(DigestionLedgerEvaluation evaluation)
     {
@@ -296,7 +303,8 @@ internal static class DigestStatusCommand
         RepositorySnapshot snapshot,
         BackfillInventoryDocument ledger,
         LeanAxiomReport leanReport,
-        string? selectedAtomId)
+        string? selectedAtomId,
+        bool retryDispositions)
     {
         var projections = evaluation.Entries
             .Where(item =>
@@ -306,7 +314,7 @@ internal static class DigestStatusCommand
                     : item.DerivedStatus.Migration == DigestionMigrationState.Residual
                         && item.DerivedStatus.Truth == DigestionTruthState.Open
                         && item.Entry.CoverageGids.Length == 0))
-            .Select(item => Projection(item, snapshot, leanReport))
+            .Select(item => Projection(item, snapshot, leanReport, retryDispositions))
             .Where(static item => item is not null)
             .OrderBy(static item => item!.SourceId, StringComparer.Ordinal)
             .ThenBy(static item => item!.AtomId, StringComparer.Ordinal)
@@ -332,9 +340,13 @@ internal static class DigestStatusCommand
     private static FormalizeProjection? Projection(
         DigestionEntryEvaluation evaluation,
         RepositorySnapshot snapshot,
-        LeanAxiomReport leanReport)
+        LeanAxiomReport leanReport,
+        bool retryDispositions)
     {
         var entry = evaluation.Entry;
+        var dispositionSelection = DigestionCoverDispositionSelector.Classify(
+            entry,
+            retryDispositions);
         var separator = entry.AstPath.IndexOf('/', StringComparison.Ordinal);
         if (separator <= 0)
         {
@@ -349,7 +361,22 @@ internal static class DigestStatusCommand
             return null;
         }
 
-        var recordedFormalization = CurrentFormalizationReceipt(entry, snapshot, leanReport);
+        if (dispositionSelection == DigestionCoverDispositionSelection.Withheld)
+        {
+            return new FormalizeProjection(
+                entry.SourceId,
+                entry.AtomId,
+                null,
+                null,
+                new WithheldFormalizeCandidate(
+                    entry.AtomId,
+                    DigestionCoverDispositionSelector.WithholdReason,
+                    null));
+        }
+
+        var recordedFormalization = dispositionSelection == DigestionCoverDispositionSelection.Retry
+            ? null
+            : CurrentFormalizationReceipt(entry, snapshot, leanReport);
         if (recordedFormalization is not null)
         {
             return new FormalizeProjection(
@@ -519,6 +546,7 @@ internal static class DigestStatusCommand
         bool Json,
         bool ResidualSummary,
         bool FormalizeCandidates,
+        bool RetryDispositions,
         string? BaselineRevision,
         string? FormalizeAtomId);
 
@@ -567,6 +595,7 @@ internal static class DigestResidualSummary
                      .OrderBy(static group => group.Key, StringComparer.Ordinal))
         {
             var atoms = source
+                .Where(static item => !DigestionCoverDispositionSelector.IsWithheld(item.Entry))
                 .Select(static item => new AtomResiduals(
                     item.Entry.AtomId,
                     item.Gaps
@@ -618,7 +647,9 @@ internal static class DigestResidualSummary
             .Select(static group => new SourceResiduals(
                 group.Key,
                 group
-                    .Where(static item => item.Entry.Receipts.Quarantine is null)
+                    .Where(static item =>
+                        item.Entry.Receipts.Quarantine is null
+                        && !DigestionCoverDispositionSelector.IsWithheld(item.Entry))
                     .Select(static item => new AtomResiduals(
                         item.Entry.AtomId,
                         item.Gaps
