@@ -6,7 +6,7 @@ A closure operator is extensive and monotone on source sets.
 
 **Theorem 1.1 (Closure is extensive and monotone).**
 
-$$\forall Carrier: \operatorname{Type}, cl: \operatorname{ClosureOperator}\left(\operatorname{Set}\left(Carrier\right)\right), S, T: \operatorname{Set}\left(Carrier\right),\\{}S \subseteq \operatorname{cl}\left(S\right) \land S \subseteq T \Rightarrow \operatorname{cl}\left(S\right) \subseteq \operatorname{cl}\left(T\right).$$
+$$\forall Carrier: \operatorname{Type}, cl: \operatorname{ClosureOperator}\left(\operatorname{Set}\left(Carrier\right)\right), S, T: \operatorname{Set}\left(Carrier\right),\\{}S \subseteq \operatorname{cl}\left(S\right) \land (S \subseteq T \Rightarrow \operatorname{cl}\left(S\right) \subseteq \operatorname{cl}\left(T\right)).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Closure/SourceClosureLaws.source_closure_extensive_and_monotone` (`✓ std3`). ∎
 

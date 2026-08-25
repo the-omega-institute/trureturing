@@ -47,6 +47,8 @@ internal sealed class DiscountedObservabilityGramianEquationDocument
         Formula evolution = F.Id("T");
         Formula readout = F.Id("C");
         Formula discount = Beta;
+        Formula evolutionType = Call("LinearMap", scalar, state, state);
+        Formula readoutType = Call("LinearMap", scalar, state, output);
         Formula gramian = Call("discountedObservabilityGramian", evolution, readout, discount);
         Formula evolutionAdjoint = Seq(evolution, Caret, Grp(Star));
         Formula readoutAdjoint = Seq(readout, Caret, Grp(Star));
@@ -61,10 +63,16 @@ internal sealed class DiscountedObservabilityGramianEquationDocument
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
             Forall, Sp, scalar, Comma, Sp, state, Comma, Sp, output, Comma, Sp,
-            evolution, Comma, Sp, readout, Comma, Sp, discount, Comma,
             RowBreak, Grp(),
+            evolution, Colon, Sp, evolutionType, Comma, Sp,
+            readout, Colon, Sp, readoutType, Comma, Sp,
+            discount, Comma, RowBreak, Grp(),
             Call("RCLike", scalar), Sp, Land, Sp,
+            Call("NormedAddCommGroup", state), Sp, Land, Sp,
+            Call("InnerProductSpace", scalar, state), Sp, Land, Sp,
             Call("FiniteDimensional", scalar, state), Sp, Land, Sp,
+            Call("NormedAddCommGroup", output), Sp, Land, Sp,
+            Call("InnerProductSpace", scalar, output), Sp, Land, Sp,
             Call("FiniteDimensional", scalar, output), Sp, Land,
             RowBreak, Grp(),
             convergence, Sp, Rightarrow,
