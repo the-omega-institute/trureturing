@@ -12,7 +12,7 @@ internal sealed class RoleAdmissionContaminationClosureDocument : IScribeDocumen
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Snapshot-bounded judge admission is unchanged by ledger events appended after "
-            + "the snapshot adjudication point.",
+            + "the snapshot adjudication point, when both traces are valid.",
         H("Role Admission and Contamination Closure"),
         Blocks(
             Describe.Lean(
@@ -23,20 +23,19 @@ internal sealed class RoleAdmissionContaminationClosureDocument : IScribeDocumen
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "The frozen commitment carries its own round, freeze point, and "
-                            + "adjudication point. Judge admission therefore has no independent "
-                            + "caller-supplied cutoff or round.")),
+                        "The frozen commitment carries its own round, freeze event, decision "
+                            + "event, filtration, dependency closure, and evidence-dependency "
+                            + "set. Judge admission therefore has no independent caller-supplied "
+                            + "cutoff or round.")),
                     Paragraph(Text(
-                        "Both recorded roles and adaptive uses inspect only role events whose "
-                            + "event number is at most the snapshot adjudication point. The "
-                            + "admission predicate also requires a post-freeze first-seen time, "
-                            + "exclusion from the reflexive-transitive dependency closure, and "
-                            + "absence of adaptive use.")),
+                        "Both recorded roles and adaptive uses inspect only events in the "
+                            + "validated event, round, and time prefix. The admission predicate "
+                            + "requires adjudication role presence, absence at freeze, absence "
+                            + "from the snapshot dependency set, and absence of adaptive use.")),
                     Paragraph(Text(
-                        "If every appended event is strictly later than that adjudication point, "
-                            + "none enters either cutoff-filtered ledger query. Admission is "
-                            + "therefore identical before and after the append; future Tune and "
-                            + "Adjudicate events are explicit instances.")),
+                        "If every appended event is strictly later than the decision event, none "
+                            + "enters the event prefix. With ValidTrace proofs on both ledgers, "
+                            + "admission is therefore identical before and after the append.")),
                     Paragraph(Text(
                         "The companion formal specification defines contamination as reachability "
                             + "from a record set. Thus derived functions, digests, labels, human "
@@ -64,32 +63,32 @@ internal sealed class RoleAdmissionContaminationClosureDocument : IScribeDocumen
     private static Formula TheoremFormula()
     {
         Formula ledger = F.Id("L");
-        Formula delta = Delta;
+        Formula extendedLedger = F.Id("Lprime");
         Formula snapshot = Seq(F.Id("K"), Underscore, Grp(F.Id("n")));
-        Formula roleEvent = F.Id("e");
+        Formula validLedger = F.Id("v");
+        Formula validExtended = F.Id("vprime");
+        Formula extension = F.Id("h");
         Formula evidence = F.Id("r");
-        Formula eventNumber = Apply(F.Id("eventNumber"), roleEvent);
-        Formula cutoff = Apply(F.Id("adjudicationPoint"), snapshot);
-        Formula late = Seq(
-            Forall, Sp, roleEvent, Comma, Sp,
-            Open,
-            new Formula.Relation(
-                roleEvent, FormulaRelationOperator.MemberOf, delta),
-            Sp, Rightarrow, Sp,
-            new Formula.Relation(
-                cutoff, FormulaRelationOperator.LessThan, eventNumber),
-            Close);
-        Formula extendedLedger = Seq(ledger, Sp, Plus, Plus, Sp, delta);
         Formula extendedAdmission = Apply(
-            F.Id("AdmissibleJudge"), extendedLedger, evidence, snapshot);
+            F.Id("AdmissibleJudge"), extendedLedger, snapshot, validExtended, evidence);
         Formula originalAdmission = Apply(
-            F.Id("AdmissibleJudge"), ledger, evidence, snapshot);
+            F.Id("AdmissibleJudge"), ledger, snapshot, validLedger, evidence);
+        Formula premise = Apply(
+            F.Id("AppendOnlyExtension"), ledger, extendedLedger, snapshot, extension);
+        Formula oldTrace = Apply(
+            F.Id("ValidTrace"), ledger, snapshot, validLedger);
+        Formula extendedTrace = Apply(
+            F.Id("ValidTrace"), extendedLedger, snapshot, validExtended);
+        Formula allPremises = Seq(
+            Open, oldTrace, Sp, Land, Sp, extendedTrace, Sp, Land, Sp,
+            premise, Close);
 
         return Disp(Seq(
-            Forall, Sp, ledger, Comma, Sp, delta, Comma, Sp, snapshot, Comma,
+            Forall, Sp, ledger, Comma, Sp, extendedLedger, Comma, Sp, snapshot,
+            Comma, Sp, validLedger, Comma, Sp, validExtended, Comma, Sp, extension,
+            Comma, Sp, evidence,
             RowBreak, Grp(),
-            Open, late, Close, Sp, Rightarrow, Sp,
-            Open, Forall, Sp, evidence, Comma, Sp,
-            extendedAdmission, Sp, Iff, Sp, originalAdmission, Close, Dot));
+            allPremises, Sp, Rightarrow, Sp,
+            Open, extendedAdmission, Sp, Iff, Sp, originalAdmission, Close, Dot));
     }
 }
