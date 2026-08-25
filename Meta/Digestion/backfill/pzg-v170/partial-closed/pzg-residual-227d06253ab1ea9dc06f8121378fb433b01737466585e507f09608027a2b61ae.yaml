@@ -13,8 +13,8 @@ receipts:
       target_sha256: sha256:cb940eeeffa60a0409c89b80b03f9ac2d9a48746d92cb4bf5a8176802309e75f
   scribe:
     - gid: D5/S1/Deficit/DeficitInteger.deficit_integer
-      definition_sha256: sha256:547c8b8ad6a9f151d929e4d2cdc601b1933dd9855faeb521787647eea7e71371
-      emission_sha256: sha256:bc3b855343a3a7f4a2fc53e6111b4816096588f675ec87df39ffc944e828cc7b
+      definition_sha256: sha256:97052fc405f600b8cc09509006996e7dd82a2279b7ebafa0fccb526f34ca00e6
+      emission_sha256: sha256:498e45b024b1afa335349569e009007bf71d209fb67fda4ce7974d2fa631494e
   unresolved_subitems:
     - triangular-window-45150-pair-scan-certificate
     - exact-deficit-value-distribution

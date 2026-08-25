@@ -36,7 +36,7 @@ emit:
 	@/bin/bash tools/scripts/scribe.sh emit
 
 ingest:
-	@/bin/bash tools/scripts/ingest.sh "$(BASE)"
+	@/bin/bash tools/scripts/ingest.sh ingest "$(BASE)"
 
 echo-residual-summary:
 	@/bin/bash tools/scripts/report/echo-residual-summary.sh "$(BASE)"

@@ -15,8 +15,8 @@ receipts:
       target_sha256: sha256:d321a4dbb32f7d67f235f44f2304a6d1703b07c3844f2b224f6a0b9a06fb925e
   scribe:
     - gid: D5/S3/Zeros/SpectralShift.labeled_zeta_vector_backward_shift_eigen
-      definition_sha256: sha256:9de200465b262bca9952f8df550a62f2ff3ca2e29ebabc5c9031c790412118ed
-      emission_sha256: sha256:0df12b95339c238ac883f6050ffb14cd2e5077d8b9820ba59c092d907d584ecf
+      definition_sha256: sha256:649f018fa7635908470d4164283dfa9397d15d32cfd02f18ac9c347b0bb12e4d
+      emission_sha256: sha256:f469f11ad7ecdcd7ba51c9d8bc2c544fb239dc83e38ac75bd68ec4f35c057dc8
   unresolved_subitems:
     - bloch-wave-and-brillouin-phase-interpretation
     - bost-connes-identification

@@ -6,7 +6,7 @@ Every controlled update descends uniquely through canonical behavior completion.
 
 **Theorem 1.1 (All controlled updates descend uniquely).**
 
-$$\forall Y, U, O,\ F: U \to Y \to Y, q: Y \to O,\ \forall u\in U, \exists! \overline{F}_{u}: \operatorname{ControlledCompletion}(F, q) \to \operatorname{ControlledCompletion}(F, q),\\{}\pi \circ F(u) = \overline{F}_{u} \circ \pi.$$
+$$\forall Y, U, O,\ F: U \to Y \to Y, q: Y \to O,\ \forall u\in U, \exists! \overline{F}_{u}: \operatorname{ControlledCompletion}(F, q) \to \operatorname{ControlledCompletion}(F, q),\\{}\operatorname{completionProjection}\left(F, q\right) \circ F(u) = \overline{F}_{u} \circ \operatorname{completionProjection}\left(F, q\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Dynamics/ControlledInterventionDescentUniqueness.all_interventions_unique_completion_descent` (`✓ std3`). ∎
 
