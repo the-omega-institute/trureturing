@@ -18,7 +18,7 @@ For two state maps and a target readout, the commutation defect is the set of st
 
 **Theorem 1.2 (Commuting maps have no target defect).**
 
-$$\forall X, Y,\\{}F, G: X \to X, T: X \to Y,\\{}F \circ G = G \circ F \Rightarrow\\{}\operatorname{commutationDefect}(F, G, T) = \emptyset.$$
+$$\forall X : Type, Y : Type,\\{}F, G: X \to X, T: X \to Y,\\{}F \circ G = G \circ F \Rightarrow\\{}\operatorname{commutationDefect}(F, G, T) = \emptyset.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InterventionsExchange/CommutingTargetExchange.commuting_target_defect_empty` (`✓ std3`). ∎
 
