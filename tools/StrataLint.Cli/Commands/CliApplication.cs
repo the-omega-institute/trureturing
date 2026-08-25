@@ -33,8 +33,6 @@ internal interface ICliEnvironment
 
     CommandResult AlignScribeReceipt(IReadOnlyList<string> arguments);
 
-    CommandResult RealignReceipts(IReadOnlyList<string> arguments);
-
     CommandResult EmitFormalizationReceipt(IReadOnlyList<string> arguments);
 
     CommandResult Route(IReadOnlyList<string> arguments);
@@ -131,8 +129,6 @@ internal static class CliApplication
                 RenderCommand(environment.PerfReport(tail), console),
             ["route"] = static (environment, tail, console) =>
                 RenderCommand(environment.Route(tail), console),
-            ["realign-receipts"] = static (environment, tail, console) =>
-                RenderCommand(environment.RealignReceipts(tail), console),
             ["selftest"] = static (environment, tail, console) =>
                 RenderCommand(environment.SelfTest(tail), console),
             ["show-atom"] = static (environment, tail, console) =>

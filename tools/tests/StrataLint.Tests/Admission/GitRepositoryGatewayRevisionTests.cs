@@ -112,56 +112,6 @@ public sealed class GitRepositoryGatewayRevisionTests
     }
 
     [Fact]
-    public void ResolveProtectedBaselineAcceptsOnlyExternallySuppliedFullCommitOid()
-    {
-        using var repository = new TemporaryDirectory();
-        ReviewRegressionTests.RunGit(repository.Path, "init");
-        ReviewRegressionTests.RunGit(
-            repository.Path,
-            "config",
-            "user.email",
-            "stratalint@example.invalid");
-        ReviewRegressionTests.RunGit(
-            repository.Path,
-            "config",
-            "user.name",
-            "StrataLint Tests");
-        var path = Path.Combine(repository.Path, "identity.txt");
-        File.WriteAllText(path, "ancestor\n", new UTF8Encoding(false));
-        ReviewRegressionTests.RunGit(repository.Path, "add", "identity.txt");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "ancestor");
-        var ancestor = ReviewRegressionTests.RunGit(repository.Path, "rev-parse", "HEAD").Trim();
-        File.WriteAllText(path, "protected baseline\n", new UTF8Encoding(false));
-        ReviewRegressionTests.RunGit(repository.Path, "add", "identity.txt");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "protected baseline");
-        var protectedBaseline = ReviewRegressionTests.RunGit(
-            repository.Path,
-            "rev-parse",
-            "HEAD").Trim();
-        File.WriteAllText(path, "candidate\n", new UTF8Encoding(false));
-        ReviewRegressionTests.RunGit(repository.Path, "add", "identity.txt");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "candidate");
-        var candidate = ReviewRegressionTests.RunGit(repository.Path, "rev-parse", "HEAD").Trim();
-        ReviewRegressionTests.RunGit(
-            repository.Path,
-            "branch",
-            "protected-baseline-name",
-            protectedBaseline);
-        var gateway = new GitRepositoryGateway(repository.Path);
-
-        Assert.Equal(protectedBaseline, gateway.ResolveProtectedBaseline(protectedBaseline));
-        Assert.Equal(candidate, gateway.ResolveProtectedBaseline(candidate));
-        Assert.Equal(ancestor, gateway.ResolveProtectedBaseline(ancestor));
-        var symbolicException = Assert.Throws<InvalidOperationException>(() =>
-            gateway.ResolveProtectedBaseline("HEAD^1"));
-        var namedException = Assert.Throws<InvalidOperationException>(() =>
-            gateway.ResolveProtectedBaseline("protected-baseline-name"));
-
-        Assert.Contains("full commit OID", symbolicException.Message, StringComparison.Ordinal);
-        Assert.Contains("full commit OID", namedException.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
     public void PreparePrefersModifiedOverCopySourceForTheSamePath()
     {
         using var repository = new TemporaryDirectory();

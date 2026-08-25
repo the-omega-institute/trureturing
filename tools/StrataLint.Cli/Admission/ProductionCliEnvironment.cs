@@ -20,10 +20,6 @@ internal interface IRepositoryGateway
 
     FrozenRevisionIdentity ResolveCurrentRevision();
 
-    /// The caller authenticates this exact OID as the protected baseline. The gateway only
-    /// validates object syntax and type; it must never infer trust from candidate-owned history.
-    string ResolveProtectedBaseline(string revision);
-
     RawRepositorySnapshot ReadCurrent();
 
     RawRepositorySnapshot ReadRevision(string revision);
@@ -389,19 +385,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 $"ALIGN_SCRIBE_RECEIPT_INVALID {exception.Message}\n");
         }
     }
-
-    public CommandResult RealignReceipts(IReadOnlyList<string> arguments) =>
-        scribeEmissionVerifier is null
-            ? new CommandResult(
-                false,
-                string.Empty,
-                "REALIGN_RECEIPTS_INVALID Scribe emission verifier is unavailable\n")
-            : IngestCommand.RealignReceipts(
-                repositoryRoot,
-                repository,
-                leanReportSource,
-                scribeEmissionVerifier,
-                arguments);
 
     public CommandResult EmitFormalizationReceipt(IReadOnlyList<string> arguments) =>
         EmitFormalizationReceiptCommand.Run(

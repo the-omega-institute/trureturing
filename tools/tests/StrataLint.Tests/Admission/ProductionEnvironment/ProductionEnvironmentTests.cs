@@ -573,8 +573,7 @@ internal sealed class FakeRepositoryGateway(
     RawRepositorySnapshot? baseline,
     Func<FrozenLedgerReferenceSet, TrustedFrozenGitReferences>? frozenReferenceValidator = null,
     Func<FrozenRevisionIdentity>? currentRevisionResolver = null,
-    Func<string, RawChangeSet>? changesForBase = null,
-    Func<string, string>? protectedBaselineResolver = null)
+    Func<string, RawChangeSet>? changesForBase = null)
     : IRepositoryGateway
 {
     internal int ReadCount { get; private set; }
@@ -610,22 +609,6 @@ internal sealed class FakeRepositoryGateway(
         CurrentRevisionResolutionCount++;
         return currentRevisionResolver?.Invoke()
             ?? ResolveFrozenRevision(new string('a', 40));
-    }
-
-    public string ResolveProtectedBaseline(string revision)
-    {
-        if (protectedBaselineResolver is not null)
-        {
-            return protectedBaselineResolver(revision);
-        }
-
-        if (!string.Equals(revision, "baseline", StringComparison.Ordinal))
-        {
-            throw new InvalidOperationException(
-                "realign-receipts protected baseline must be supplied by the base-side caller");
-        }
-
-        return revision;
     }
 
     public RawRepositorySnapshot ReadCurrent()
