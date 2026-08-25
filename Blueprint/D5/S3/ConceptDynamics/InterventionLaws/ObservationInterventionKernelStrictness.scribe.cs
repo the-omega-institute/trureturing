@@ -58,7 +58,7 @@ internal sealed class ObservationInterventionKernelStrictnessDocument
             profile, Sp, Colon, Sp, profileType, Comma, RowBreak, Grp(),
             profile, Open, model, Comma, Sp, action, Comma, Sp, unit, Close,
             Sp, Colon, Eq, Sp, profileConstruction, Comma, RowBreak, Grp(),
-            Call("ker", profile), Sp, Subset, Sp, Call("ker", F.Id("Obs")), Dot,
+            Call("StrictSubset", Call("ker", profile), Call("ker", F.Id("Obs"))), Dot,
             End, Grp(F.Id("gathered"))));
     }
 
