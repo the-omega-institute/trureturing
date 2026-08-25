@@ -70,7 +70,7 @@ internal static partial class IngestCommand
                 validateProjectedStatus: false,
                 baselineSnapshot: baseline,
                 changes: plannedChanges);
-            RequireNoReceiptIntegrityFailure(derived, baselineDocument, baseline);
+            RequireNoNewFailures(derived, baselineDocument, baseline);
 
             var statusByAtomId = derived.Entries.ToDictionary(
                 static item => item.Entry.AtomId,
@@ -111,7 +111,7 @@ internal static partial class IngestCommand
                 baselineDocument,
                 baselineSnapshot: baseline,
                 changes: finalChanges);
-            RequireNoReceiptIntegrityFailure(evaluation, baselineDocument, baseline);
+            RequireNoNewFailures(evaluation, baselineDocument, baseline);
             var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
                 finalDocument,
                 finalSnapshot,
@@ -711,7 +711,7 @@ internal static partial class IngestCommand
         }
     }
 
-    private static void RequireNoReceiptIntegrityFailure(
+    private static void RequireNoNewFailures(
         DigestionLedgerEvaluation evaluation,
         BackfillInventoryDocument baselineDocument,
         RepositorySnapshot baselineSnapshot)
