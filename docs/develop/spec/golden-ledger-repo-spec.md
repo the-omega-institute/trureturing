@@ -1,4 +1,4 @@
-# trureturing / D5 —— 仓库规范全卷 v7.16(定本:宪法·地层·编码·执法·八官·管线·治理·引导)
+# trureturing / D5 —— 仓库规范全卷 v7.17(定本:宪法·地层·编码·执法·八官·管线·治理·引导)
 
 > ⚑ **铭牌**。组织:**trureturing**(收据三张:27.99 真理为攀登而不可达之 ν、27.90 理论过自家分类器返回原点、仪文"账本的最后一行永远是下一轮的第一行")。仓库名:**trureturing**——**仓库即模空间,单库承全族**(v7.4 裁决,撤姊妹分库):`Metallic/`(G 层参数化机器)+ `D5/ D8/ …`(实例层,按需生长)+ `Moduli/`(跨理论比较定理之家);分库仅当已证实压力(治理/许可/规模),**裂由压力,不预裂**。
 > README 首行:*trureturing — the last line of the ledger is always the first line of the next round.*
@@ -556,6 +556,24 @@ Frontier 语义资格的唯一数据 owner 是 `docs/MISSION.md` 的可选 `fron
 
 **formalization receipt v1 是预承诺唯一真源。** `primary_gid` 仅记录首个登记的 GID,不享有 cover、追加或读侧特权;其余登记存于按 GID 序排列的 `hosted_extensions`,完整有序集合唯一派生为 `[primary_gid, ...hosted_extensions.gid]`。新 receipt 可在首次 cover 前一次预承诺多个 GID;已有 receipt 可在首条 coverage 尚未落账时追加独立 GID,且不得改写既有 signature。`digest-status --formalize-candidates` 默认仍只枚举 coverage 为空的 atom,以防重复劳动;`--atom-id <id>` 是已 coverage atom 的显式二次形式化入口。`formalize-candidates` 的 `recorded_formalizations.gids` 与 `show-atom` 的 self/parent pointer 均从同一 v1 receipt 派生完整有序集合,不得复制进 ledger 或另建第二真源。signature-match 只证明 deposited declaration 等于预承诺,尚不证明预承诺本身忠实且非空洞;后者保持具名 hollow-fidelity open,不得冒领为现役执法。
 
+**cover 终判词与选择重试(#2137)。** `cover-atom` 已通过预承诺、Lean/Scribe 与结构门、但结果仍非 deletable `closed` 时,命令虽保持失败退出,仍须把该次机器终判词原子写入同一 canonical atom 文件 `Meta/Digestion/backfill/<source>/<projected-state>/<atom_id>.yaml` 的 `receipts.cover_disposition`;不得另建 session 清单或第二套 governance store。此字段与人工语义隔离用的 `receipts.quarantine` 分工明确:前者是 cover 机器对一次精确 GID 集的失败结果,后者是带 justification/reentry condition 的人工治理判断;两者不得共存。精确账形为:
+
+```yaml
+receipts:
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-25T04:03:02.0000000+00:00
+    gids:
+      - D5/S0/Carrier/Probe.probe
+    gaps:
+      - code: unresolved-subitem
+        detail: remaining theorem clause
+```
+
+对象键集封闭为 `{outcome,recorded_at_utc,gids,gaps}`:`outcome` 是 canonical 双轴状态;时间必须是 offset zero 的 round-trip UTC 形;`gids` 非空、逐项为 canonical GID、ordinal 排序且无重复;`gaps` 每项键集封闭为 `{code,detail}` 并按 `(code,detail)` ordinal 排序。未知键、非 UTC 时间、非法/乱序/重复 GID 或乱序 gap 均 fail-closed。失败落账只写 selector 数据:原 entry 的 `coverage_gids`、coverage/Scribe receipts 与 projected `status` 保持不变,故 SL-016/admission 的派生状态、gaps 与 deletable 判词加字段前后逐字等价;`cover_disposition` 也不得与非空 `coverage_gids` 共存。下一次显式重试若仍失败,以该次精确结果替换当前终判词,历史由 git 保存;若成功,与 coverage receipts 同一原子写入中清掉旧终判词。
+
+`digest-status --formalize-candidates` 对未显式重试的 disposition atom 优先投影到 `withheld[]`,`withhold_reason="cover-disposition"`;即使旧 formalization receipt 仍 current,也不得把它投影到 `recorded_formalizations` 后交回批处理。`--retry-dispositions` 只在 `--formalize-candidates` 下合法,仅对带 disposition 的 atom 绕过该 withhold 与旧 formalization receipt,使其重新进入 `candidates`;无 disposition atom 的 receipt 语义不变。residual summary 与 echo shard 默认同样排除 disposition atom。由此,各机 `mk-coverable` / `known-fail` 第五层影子清单在消费者切到 canonical selector 后退役:先确认 selector 输出不再含对应 atom,再删除本机影子数据;不把影子数据回灌成另一真源,也不由本变更跨机修改脚本。
+
 **消化 = 语义权威迁移;删除只是收据齐备后的物理后果,禁以删代证。**理论原子可删除当且仅当以下合取全真:adapter 对该 unit 边界机器可重现;全部主张有逐 GID coverage receipt;目标 GID 存在;Lean 为 Closed,或已按上款获 absorbed-tail 授权;Scribe definition 被 `DocumentDefinitions` 发现且其 canonical Markdown 本轮现产成功,账本 Scribe receipt 的 `definition_sha256` 与当前 `.scribe.cs` 真源一致、保留的 `emission_sha256` 与本轮 producer 现产 `VerifiedScribeEmissions` 一致,且 declaration reference capability 逐 GID 对齐;tracked `.md` 与 run-local `tools/Generated/scribe-emissions.v1.json` 均为投影,不参与 `deletable` 判词,后者只作审计输出且不得自证执行成功;`unresolved_subitems` 为空;全部连锁迁移完成。缺一则 `deletable=false`,并由 `digest-status [--json]` 输出缺口。`Blueprint/**/*.scribe.cs` 虽由 FILEMAP 如实分类为程序集外 typed data,仍属既有 SL-022 保护面;已闭合的 `RESIDENCE-EPOCH` 只退休其五个精确 Golden 旧路径,不得借数据分类收缩 Blueprint predecessor contract。任一独立的 `ProtectedSurfaceVerificationRequired` 变更下,若基线 Scribe 因候选执行依赖演进而无法签发 capability,则以无 capability 继续 SL-016+SL-022:不得在同一基线下宣称相关原子 absorbed。无保护面变更的 producer-current 验证失败仍为 infrastructure 硬失败,不得借投影分类绕过发射验证。
 
 理论切分的现役 adapter 平台由 `generic-v1`、内建 `cone-v1`/`gict-v1`/`observer-v1`/`periodic-tree-v1`/`pzg-v1`/`wm-v1`,以及 `Meta/Digestion/atomizers.toml` 声明的 dialect 组成。带 genre registry 的 adapter 对每个可识别 claim 作**全函数**分类 `Known(kind) | Open(token)`:`Known` 以 canonical kind 定址;`Open` 必须定址于保留命名空间 `unregistered/<Uri.EscapeDataString(token)>` 之下并逐条入 `residual-open`,**不得**降级为整卷 `coarse/source`,亦**不得**静默丢弃(此前一个未登记词即可让整卷退化为一个粗原子而 `make ingest` 仍退出 0,pzg-v170 因此丢过全部 1354 个已定址 claim)。每个 source 的 `source.toml` 必填 `genre_registry_check ∈ {collected,no-registry}` 与 `unregistered_genres`(`collected` 时为排序去重的非空 token 列表,`no-registry` 时必为空);受保护 base 先于该字段存在,故 baseline 文档只携带`Unavailable` 投影,读其 genre 语义即显式失败,绝不合成空集冒充「已检查且干净」。admission 每次重算该分类并与账上 marker 逐字比对:伪空、漏报、多报与二态错各自 fail-closed。token 日后登记进 registry 后,ingest 在六个条件全真时原位改写 `ast_path`(旧地址属保留命名空间、`raw_sha256` 相同、token 在账上 collected、registry 将其解析为 canonical kind 且编号形态匹配、候选唯一、新地址在该 source 内未被占用),`atom_id`/`cas_ref`/收据一律不变;歧义与地址碰撞各自产出判词而非静默跳过,不得推广为通用 rename。所有 adapter 均以确定性 Markdown AST 产生 claim atom + heading context scaffold,分片可 byte-exact 重组;结构性歧义(重复 locator、字节缺口、缺 H1、revision 断裂、非法 UTF-8)仍直接失败。注册 adapter 替代基线 whole-source `coarse/source` 时,新细 claims 入 residual,粗项以 `acknowledged_stale` 退役但保留原 `cas_ref`;基线 `source_id` 与该粗项的 `atom_id`/`ast_path`/指纹/`cas_ref` identity 必须逐字留存,已结算 source 不得改回 `none`,变异、消失或任何 AST path/source 下的 coarse CAS clone 均拒,后续同 adapter 基线不得令其复活为 seen。摄入协议固定为 **extract → identify → subtract digested → admit residual**:registry 只在 raw 或受限 normalized 指纹唯一命中 ledger receipt 时自动判 seen 并 subtract;同一 incoming atom 多命中、一收据多命中、raw residual 指纹重复或 normalized residual 指纹重复均 fail-closed;语义改写即使沿用 AST path,只要指纹改变就以完整 raw SHA-256 签发新的唯一 `residual-open` atom ID。
@@ -889,6 +907,8 @@ Blueprint markdown 已证有仓内语义 consumer，移出 PR-A；只有独立 P
 ---
 
 # CHANGELOG(原位演进史;只追加)
+
+- **v7.17 R1**（2026-08-25，#2137）：`cover-atom` 将非 deletable Closed 的 per-atom 终判词落在 canonical directory Digestion ledger 的 `receipts.cover_disposition`，封闭携带 outcome、UTC time、排序 GID 与排序 gaps；失败写入不增加 coverage 或改 projected status，成功 retry 清除旧判词。`digest-status --formalize-candidates` 默认将其投影为 `withhold_reason=cover-disposition`，residual summary/shard 同样排除；显式 `--retry-dispositions` 仅为该 selector 合法，并对 disposition atom 绕过旧 formalization receipt 重新派发。字段与 coverage、quarantine 互斥，loader fail-closed，writer golden replay byte-stable；各机 `mk-coverable` / `known-fail` 影子层可在切换 canonical selector 后退役。
 
 - **v7.16 R23**（2026-08-23，#2612）：闭合 §11.20.4 R18 所记的 `SL-028` CLI 可见性 `open(案号待开)`。`Admitted` 路径的 `OBSERVED` 渲染自 `9e20d3680`（2026-08-19）起已经存在；本修订补齐 `ProtectedSurfaceChange` 的 observations 载体与渲染，按 `SL-022` → `DEFERRED` → `OBSERVED` 的完整顺序复用同一 observation renderer，且退出码保持 3。四条具名测试各自钉住 protected 放行侧、SL-028 载体、完整输出顺序、退出码一个契约；变异归因的完全对角化记为 `open`（#2612），本修订不为此硬拆测试；`Admitted` 路径实现不改。本次改动一并对齐了这 12 条 `spec-acceptance` 收据边界；该边界集在此之前即已陈旧，其规模与所属的未决问题记录在 #2907。
 - **v7.16 R22**（2026-08-23，#2803）：勘正 R21 的 statement-address affectedness 空门。场 9-14、16-17 的八次真实 Frontier blob 变化中，契约根 `exact_statement.statement_sha256` 始终为 `sha256:25ddd0972fd7b97c88f87ea47bb9843e5c014cdad5344c37451293f18cb4a0d9`，旧门因而 8/8 跳过 SL-027；现改为 existing V2 同路径模块 raw bytes 任一变化即须 revision，并把八组 commit/blob/statement 地址写成生产回放夹具。前驱改绑 `(predecessor_blob_oid, predecessor_statement_sha256)` 二元内容地址。四值 kind 增 `definition-refactor`：statement SHA 不变时只准该值；statement SHA 变化时禁止该值，`equivalent-restatement|strengthening|weakening` 因方向不可机器判而全部须 canonical `case_id`，其中 weakening 义务不变。新契约、bytes 未变的历史 V2、changed-path 假信号与无关 PR 继续零税；V2 epoch、退役 baseline revision 读取与 Frozen accepted 字节不变。
