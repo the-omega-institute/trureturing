@@ -3273,3 +3273,2308 @@ $$
 \end{aligned}
 }
 $$
+
+---
+
+# 53. 增订二：动作丛、策略充分自我与历时作者性
+
+**增订版本：v1.3，2026-08-25**
+
+本增订继续以追加方式承接第 30–52 节，不改写此前内容。第 30–52 节已经把拓扑、动作语法、cocycle、控制商、policy、结果与账本分开；本增订进一步回答三个未决问题：
+
+1. 当规律只给出一族合法动作时，策略在数学上究竟是什么；
+2. 如何区分无主随机、外部隐藏决定与观察者自身的作者性；
+3. 一个跨时间保持并改写自身策略的观察者，应由什么最小结构表示。
+
+本文仍坚持三项边界：
+
+- **无典范策略**不等于**无任何确定策略**；
+- **行为具有随机熵**不等于**行为属于主体**；
+- **内部变量与行动相关**不等于**内部变量对行动具有因果控制**。
+
+---
+
+# 54. 合法动作丛与策略截面
+
+令规范观察状态空间为
+
+$$
+Q,
+$$
+
+动作类型为
+
+$$
+A,
+$$
+
+合法关系为
+
+$$
+\operatorname{Legal}:Q\times A\to\operatorname{Prop}.
+$$
+
+对每个 $q\in Q$，定义合法动作纤维
+
+$$
+\mathcal A(q)
+=
+\{a\in A:\operatorname{Legal}(q,a)\}.
+$$
+
+## 定义 54.1（动作总空间）
+
+$$
+E_{\mathcal A}
+=
+\{(q,a):q\in Q,\ a\in\mathcal A(q)\}.
+$$
+
+定义投影
+
+$$
+p:E_{\mathcal A}\to Q,
+\qquad
+p(q,a)=q.
+$$
+
+称
+
+$$
+p:E_{\mathcal A}\to Q
+$$
+
+为合法动作丛；这里“丛”只表示带状态依赖纤维的投影结构，不预设局部平凡性、光滑性或向量丛结构。
+
+## 定义 54.2（确定性策略截面）
+
+确定性策略是一个截面
+
+$$
+s:Q\to E_{\mathcal A}
+$$
+
+满足
+
+$$
+p\circ s=\operatorname{id}_Q.
+$$
+
+等价地，写
+
+$$
+s(q)=(q,\sigma(q)),
+$$
+
+则
+
+$$
+\sigma(q)\in\mathcal A(q).
+$$
+
+## 定义 54.3（随机策略）
+
+随机策略是 Markov kernel
+
+$$
+\Pi:Q\to\operatorname{Dist}(A)
+$$
+
+满足
+
+$$
+\operatorname{supp}\Pi(q)
+\subseteq
+\mathcal A(q).
+$$
+
+## 结论 54.1
+
+规律给出的基本对象不是某个单值策略，而是
+
+$$
+\boxed{
+p:E_{\mathcal A}\to Q.
+}
+$$
+
+策略是在这个投影之上的额外截面：
+
+$$
+\boxed{
+\text{Law}=\text{fiber assignment},
+\qquad
+\text{Policy}=\text{section}.
+}
+$$
+
+所以“每个状态都有合法动作”只说明各纤维非空，并不自动选出某个全局截面。
+
+---
+
+# 55. 策略空间的组合规模
+
+假设 $Q$ 有限且每个动作纤维有限非空。
+
+## 定理 55.1（确定性策略计数）
+
+所有确定性策略构成直积
+
+$$
+\operatorname{Sec}(\mathcal A)
+\cong
+\prod_{q\in Q}\mathcal A(q),
+$$
+
+因此
+
+$$
+\boxed{
+|\operatorname{Sec}(\mathcal A)|
+=
+\prod_{q\in Q}|\mathcal A(q)|.
+}
+$$
+
+### 证明
+
+一个截面恰好为每个 $q$ 选择一个 $a_q\in\mathcal A(q)$；不同状态上的选择彼此独立地组成函数。∎
+
+## 推论 55.1
+
+若存在 $k$ 个状态满足
+
+$$
+|\mathcal A(q_i)|\ge2,
+$$
+
+则
+
+$$
+|\operatorname{Sec}(\mathcal A)|\ge2^k.
+$$
+
+所以即使每个局部纤维仅有二选一，全局策略空间仍可指数增长。
+
+## 解释
+
+动作空间的巨大并不证明自由意志，却证明：
+
+$$
+\boxed{
+从“合法性”到“实际历史”之间通常隔着一个不可忽略的策略空间。
+}
+$$
+
+若理论声称自己只规定动作关系，却在计算时悄悄使用某个唯一 policy，就等于把未申报的截面作为隐藏前件写入模型。
+
+---
+
+# 56. 无结构非空集合不存在自然确定性选择
+
+把非空有限集合与双射组成的群胚记为
+
+$$
+\mathbf{FinSet}_{\neq\varnothing}^{\simeq}.
+$$
+
+令忘却函子
+
+$$
+U:
+\mathbf{FinSet}_{\neq\varnothing}^{\simeq}
+\to
+\mathbf{Set}
+$$
+
+把有限集合送到其底层集合。
+
+所谓完全不依赖标签的自然选择，要求对每个非空有限集合 $S$ 给出
+
+$$
+c_S\in S,
+$$
+
+并对任意双射
+
+$$
+f:S\overset{\simeq}{\longrightarrow}T
+$$
+
+满足
+
+$$
+f(c_S)=c_T.
+$$
+
+## 定理 56.1（无自然有限选择元）
+
+不存在上述自然选择族。
+
+### 证明
+
+取
+
+$$
+S=\{0,1\}
+$$
+
+以及交换双射
+
+$$
+\tau(0)=1,
+\qquad
+\tau(1)=0.
+$$
+
+自然性要求
+
+$$
+\tau(c_S)=c_S.
+$$
+
+但 $\tau$ 无固定点，矛盾。∎
+
+## 推论 56.1
+
+任何确定性选择器若存在，必使用至少一种额外不对称结构，例如：
+
+- 标签或固定全序；
+- 价值函数；
+- 记忆与承诺；
+- 外部环境变量；
+- 隐藏动力变量；
+- 任意选择公理给出的非典范选择；
+- 先前历史形成的局部坐标。
+
+## 严格边界 56.1
+
+选择公理可以担保“存在某个截面”，但不能把它提升为“由原对象结构自然指定的截面”。因此必须区分：
+
+$$
+\boxed{
+\text{existence of a selector}
+\neq
+\text{canonicality of a selector}.
+}
+$$
+
+---
+
+# 57. 有效动作商：按钮数量不等于自由容量
+
+多个动作标签可能在全部可观察后果上完全相同。此时按标签计数会制造虚假自由。
+
+设从状态 $q$ 执行动作 $a$ 后，再允许任意未来控制词 $w\in W^*$；令
+
+$$
+\operatorname{Prof}(q,a)(w)
+$$
+
+表示该完整后续协议的公开结果分布或读出画像。
+
+## 定义 57.1（动作行为等价）
+
+在固定 $q$ 下定义
+
+$$
+a\sim_q b
+\iff
+\forall w\in W^*,
+\quad
+\operatorname{Prof}(q,a)(w)
+=
+\operatorname{Prof}(q,b)(w).
+$$
+
+## 定义 57.2（有效动作空间）
+
+$$
+\mathcal A_{\mathrm{eff}}(q)
+=
+\mathcal A(q)/{\sim_q}.
+$$
+
+## 定义 57.3（操作自由容量）
+
+有限情形定义
+
+$$
+\boxed{
+F_{\mathrm{op}}(q)
+=
+\log_2|\mathcal A_{\mathrm{eff}}(q)|.
+}
+$$
+
+## 命题 57.1（标签复制不增加操作自由）
+
+若向动作集加入任意多个与已有动作行为等价的新标签，则
+
+$$
+\mathcal A_{\mathrm{eff}}(q)
+$$
+
+不变，因此
+
+$$
+F_{\mathrm{op}}(q)
+$$
+
+不变。
+
+### 证明
+
+新标签只扩充既有等价类，不产生新的行为画像类。∎
+
+## 极端反例
+
+若
+
+$$
+|\mathcal A(q)|=1000
+$$
+
+但全部动作具有同一完整后果画像，则
+
+$$
+|\mathcal A_{\mathrm{eff}}(q)|=1,
+$$
+
+从而
+
+$$
+F_{\mathrm{op}}(q)=0.
+$$
+
+所以：
+
+$$
+\boxed{
+真正的选择必须按后果可区分的动作类计数，
+不能按按钮数、命令名或接口标签数计数。
+}
+$$
+
+---
+
+# 58. 有限观察下的安全动作交与认识论强制
+
+完整状态为 $x\in X$，观察接口为
+
+$$
+q:X\to Q.
+$$
+
+完整状态 $x$ 上的合法动作集记为
+
+$$
+\mathcal A_X(x).
+$$
+
+观察者只知道
+
+$$
+z=q(x),
+$$
+
+因此若要求动作对该观察纤维内每个仍可能状态都合法，真正可安全执行的动作集应定义为：
+
+## 定义 58.1（纤维安全动作集）
+
+$$
+\boxed{
+\mathcal A_q(z)
+=
+\bigcap_{x:q(x)=z}
+\mathcal A_X(x).
+}
+$$
+
+## 定理 58.1（确定性安全策略存在判据）
+
+在每个有效纤维上，一个只依赖 $q$ 的确定性安全策略存在，当且仅当
+
+$$
+\forall z\in\operatorname{range}(q),
+\qquad
+\mathcal A_q(z)\neq\varnothing.
+$$
+
+### 证明
+
+若存在安全策略 $s(z)$，则对每个 $x$ 满足 $q(x)=z$，均有
+
+$$
+s(z)\in\mathcal A_X(x),
+$$
+
+故
+
+$$
+s(z)\in\mathcal A_q(z).
+$$
+
+反向，若每个交集非空，对每个有效 $z$ 选择一个元素即可形成纤维常值安全策略。有限情形无需额外可测选择条件；无限可测情形还须申报 measurability。∎
+
+## 定理 58.2（信息精化扩大安全动作集）
+
+若接口 $r$ 精化 $q$，即存在 $f$ 使
+
+$$
+q=f\circ r,
+$$
+
+则对任意 $x$：
+
+$$
+\boxed{
+\mathcal A_q(q(x))
+\subseteq
+\mathcal A_r(r(x)).
+}
+$$
+
+### 证明
+
+精化意味着
+
+$$
+r^{-1}(r(x))
+\subseteq
+q^{-1}(q(x)).
+$$
+
+对更小状态集合取合法动作交集，只会减少交集约束，因此交集只会扩大。∎
+
+## 推论 58.1（无知不自动增加自由）
+
+无知可能迫使观察者采用对整个粗纤维都安全的保守动作，甚至可能出现：
+
+$$
+\forall x,
+\quad
+\mathcal A_X(x)\neq\varnothing,
+$$
+
+但对某个观察值 $z$：
+
+$$
+\mathcal A_q(z)=\varnothing.
+$$
+
+即每个真实状态分别都有可行动作，但观察者因不能区分它们，没有任何保证安全的单一动作。
+
+称这种现象为
+
+$$
+\boxed{
+\text{epistemic compulsion / 认识论强制}.
+}
+$$
+
+它不是本体上只有一个动作，而是有限观察把多个状态的约束叠加后压缩了可行动作集。
+
+---
+
+# 59. 完整预测不能单独推出规范行动
+
+设完整预测律为
+
+$$
+K:X\to\operatorname{PMF}(Y).
+$$
+
+仓库已证明：若接口足以决定 $K(x)$，那么在损失函数已固定时，它也足以决定全部期望损失与最优动作集合。该结果是 prediction-to-decision factorization，而不是事实自动生成价值。
+
+## 定理 59.1（同一预测律兼容相反最优动作）
+
+令
+
+$$
+A=\{L,R\}.
+$$
+
+对任意同一个预测律 $K$，定义第一组损失：
+
+$$
+\ell_1(L,y)=0,
+\qquad
+\ell_1(R,y)=1.
+$$
+
+则对所有 $x$：
+
+$$
+A^*_{\ell_1}(x)=\{L\}.
+$$
+
+再定义：
+
+$$
+\ell_2(L,y)=1,
+\qquad
+\ell_2(R,y)=0.
+$$
+
+则
+
+$$
+A^*_{\ell_2}(x)=\{R\}.
+$$
+
+### 证明
+
+两组期望损失与 $K$ 无关，分别严格偏好 $L$ 与 $R$。∎
+
+## 推论 59.1（事实—价值缺口的最小形式）
+
+$$
+\boxed{
+\text{complete prediction}
+\not\Rightarrow
+\text{unique normative action}.
+}
+$$
+
+完整预测只回答“各行动会导致什么分布”；要形成最优集合，还必须加入损失、效用、约束或承诺。
+
+## 命题 59.2（最优集合仍可能多值）
+
+即使损失固定，也可能有
+
+$$
+R(x,L)=R(x,R),
+$$
+
+从而
+
+$$
+A^*(x)=\{L,R\}.
+$$
+
+所以完整链条是：
+
+$$
+\boxed{
+\text{prediction}
++
+\text{value}
+\longrightarrow
+\text{optimal-action set},
+}
+$$
+
+而不是：
+
+$$
+\text{prediction}
+\longrightarrow
+\text{unique act}.
+$$
+
+唯一行动还需要严格偏好、额外 tie-breaker 或一个实际选择事件。
+
+---
+
+# 60. 对称性障碍与唯一不变随机策略
+
+设群 $\Gamma$ 作用于 $Q$ 与动作纤维。第 39 节已经证明：固定状态的稳定子若在合法动作上无固定点，则不存在等变确定性 selector。
+
+本节补充随机策略的精确对照。
+
+## 定理 60.1（传递有限作用下唯一不变分布）
+
+若有限群作用在有限动作集 $A_q$ 上传递，则唯一的 $\Gamma$-不变概率分布是均匀分布：
+
+$$
+\boxed{
+\mu(a)=\frac1{|A_q|}.
+}
+$$
+
+### 证明
+
+任取 $a,b\in A_q$。传递性给出 $\gamma$ 满足
+
+$$
+\gamma a=b.
+$$
+
+不变性给出
+
+$$
+\mu(b)=\mu(\gamma a)=\mu(a).
+$$
+
+所以所有点概率相同，由归一化得结论。∎
+
+## 结论 60.1
+
+$$
+\boxed{
+确定性选择必然打破无固定点对称性；
+概率分布可以保持该对称性。
+}
+$$
+
+但均匀随机只回答“怎样统计地不偏向任何动作”，没有回答实际样本为何属于某个主体。因此：
+
+$$
+\boxed{
+\text{symmetry-preserving randomness}
+\neq
+\text{authorship}.
+}
+$$
+
+---
+
+# 61. 随机性、确定性与作者性的正交反例
+
+设内部状态
+
+$$
+M\in\{0,1\},
+$$
+
+外部公平随机源
+
+$$
+U\in\{0,1\},
+$$
+
+且 $M$ 与 $U$ 独立、均匀。
+
+## 模型 61.A（随机但无作者性）
+
+$$
+A=U.
+$$
+
+于是
+
+$$
+H(A)=1\text{ bit},
+$$
+
+但
+
+$$
+I(M;A)=0.
+$$
+
+并且
+
+$$
+P(A\mid do(M=0))
+=
+P(A\mid do(M=1)).
+$$
+
+## 模型 61.B（确定但由内部状态控制）
+
+$$
+A=M.
+$$
+
+若 $M$ 均匀，同样有
+
+$$
+H(A)=1\text{ bit},
+$$
+
+但
+
+$$
+I(M;A)=1\text{ bit},
+$$
+
+且
+
+$$
+P(A\mid do(M=0))
+\neq
+P(A\mid do(M=1)).
+$$
+
+## 定理 61.1（边际行动熵不识别作者性）
+
+存在两个模型具有相同
+
+$$
+H(A)
+$$
+
+而内部状态对行动的因果作用完全不同。
+
+### 证明
+
+模型 61.A 与 61.B 即为见证。∎
+
+## 结论 61.1
+
+$$
+\boxed{
+H(A\mid Q)>0
+\not\Rightarrow
+\text{agency};
+}
+$$
+
+$$
+\boxed{
+H(A\mid Q,M)=0
+\not\Rightarrow
+\text{nonfree}.
+}
+$$
+
+随机熵度量行动不可预测性；作者性度量内部状态对行动的控制。二者是不同维度。
+
+---
+
+# 62. 因果作者性指标与观察性作者比例
+
+## 定义 62.1（局部因果作者性）
+
+固定环境值 $e$，定义
+
+$$
+\boxed{
+\alpha(e)
+=
+\sup_{m,m'}
+ d_{\mathrm{TV}}\!\left(
+ P(A\mid do(M=m),E=e),
+ P(A\mid do(M=m'),E=e)
+ \right).
+}
+$$
+
+满足
+
+$$
+0\le\alpha(e)\le1.
+$$
+
+若
+
+$$
+\alpha(e)=0,
+$$
+
+则固定环境后，改变内部状态不改变行动分布；若
+
+$$
+\alpha(e)>0,
+$$
+
+则内部状态对行动具有可干预的因果影响。
+
+## 定义 62.2（观察性作者比例）
+
+若
+
+$$
+H(A\mid Q)>0,
+$$
+
+定义
+
+$$
+\boxed{
+\omega
+=
+\frac{I(A;M\mid Q)}{H(A\mid Q)}.
+}
+$$
+
+由条件互信息上界：
+
+$$
+0\le\omega\le1.
+$$
+
+并且链式恒等式给出：
+
+$$
+H(A\mid Q)
+=
+I(A;M\mid Q)
++
+H(A\mid Q,M).
+$$
+
+## 两个极端
+
+若
+
+$$
+A\perp M\mid Q,
+$$
+
+则
+
+$$
+\omega=0.
+$$
+
+若
+
+$$
+H(A\mid Q,M)=0,
+$$
+
+则
+
+$$
+\omega=1.
+$$
+
+## 严格边界 62.1
+
+$\omega$ 是观察性分解，不是自动的因果证明。若 $M$ 与 $A$ 由共同隐藏变量驱动，互信息可能高而 $\alpha(e)$ 仍为零。因此作者性审计至少应同时报告：
+
+$$
+\boxed{
+\text{observational attribution }\omega
+\quad+
+\text{interventional control }\alpha.
+}
+$$
+
+---
+
+# 63. 一个决定变量何时真正属于观察者
+
+不能把任何隐藏决定变量重新命名为“自我”。设候选内部状态为 $M$。至少需要以下四项条件。
+
+## 条件 63.1（内部可访问性）
+
+观察者的自我接口可恢复 $M$ 的行动相关部分；即存在读出
+
+$$
+r:O\to M_{\mathrm{rel}}
+$$
+
+使行动所依赖的内部坐标通过当前观察者状态因子化。
+
+## 条件 63.2（历史可塑性）
+
+过去行动和记录能够影响未来内部状态：
+
+$$
+(A_t,Y_t)
+\longrightarrow
+M_{t+1}.
+$$
+
+如果 $M$ 永远由观察者外部固定且不受自身历史影响，它更像外置控制码而非历时自我。
+
+## 条件 63.3（行动相关性）
+
+$$
+\alpha(e)>0
+$$
+
+或存在其他干预见证证明改变 $M$ 会改变行动分布。
+
+## 条件 63.4（边界闭合性）
+
+$M$ 的更新应在给定输入接口后近似或精确下降到观察者边界内：
+
+$$
+M_{t+1}
+=
+U(M_t,I_t,A_t,Y_t)
+$$
+
+或具有可审计的近似闭合误差。若每一步都需要边界外不可读取变量才能更新，所谓“内部状态”没有形成自主系统。
+
+## 定义 63.1（作者状态候选）
+
+同时满足可访问性、可塑性、行动相关性与边界闭合性的状态，称为作者状态候选。
+
+## 严格边界 63.1
+
+这些条件仍未证明强本体自由；它们只排除“把外部隐藏控制器改名为自我”的空洞做法，并给兼容决定论的自主性一个可检验结构。
+
+---
+
+# 64. 自我作为策略充分历史商
+
+设全部有限历史构成类型
+
+$$
+\mathcal H.
+$$
+
+允许的未来环境／控制输入词构成
+
+$$
+W^*.
+$$
+
+对于每段历史 $h\in\mathcal H$，定义其完整未来策略画像
+
+$$
+\Pi_h:W^*\to\operatorname{Dist}(A),
+$$
+
+其中
+
+$$
+\Pi_h(w)
+=
+P(\text{next action}\mid h,w).
+$$
+
+## 定义 64.1（策略等价历史）
+
+$$
+\boxed{
+h\sim_{\mathrm{self}}h'
+\iff
+\forall w\in W^*,
+\quad
+\Pi_h(w)=\Pi_{h'}(w).
+}
+$$
+
+## 定义 64.2（策略充分自我）
+
+$$
+\boxed{
+M_{\mathrm{self}}
+=
+\mathcal H/{\sim_{\mathrm{self}}}.
+}
+$$
+
+## 定理 64.1（策略充分自我的普适最小性）
+
+$M_{\mathrm{self}}$ 是决定全部未来选择倾向的最粗历史接口。
+
+更具体地，若另一个历史接口
+
+$$
+r:\mathcal H\to R
+$$
+
+也决定完整未来策略画像，即存在
+
+$$
+F:R\to(W^*\to\operatorname{Dist}(A))
+$$
+
+满足
+
+$$
+\Pi_h=F(r(h)),
+$$
+
+则存在唯一映射
+
+$$
+\bar r:\operatorname{range}(r)\to M_{\mathrm{self}}
+$$
+
+使
+
+$$
+[h]_{\mathrm{self}}
+=
+\bar r(r(h)).
+$$
+
+### 证明
+
+若
+
+$$
+r(h)=r(h'),
+$$
+
+则
+
+$$
+\Pi_h
+=
+F(r(h))
+=
+F(r(h'))
+=
+\Pi_{h'}.
+$$
+
+故
+
+$$
+h\sim_{\mathrm{self}}h'.
+$$
+
+因此定义
+
+$$
+\bar r(r(h))=[h]_{\mathrm{self}}
+$$
+
+与代表元无关；在 $r$ 的有效像上由满射性给出唯一性。∎
+
+## 结论 64.1
+
+$$
+\boxed{
+自我不是全部过去的无差别存档，
+而是过去中仍会改变未来选择倾向的最小商。
+}
+$$
+
+一个经历若永远不再影响任何未来选择，它可以被策略商遗忘；一个极小经历若永久改变选择画像，它就在该自我商中占据真实坐标。
+
+---
+
+# 65. Agency completion：观察者完成在选择侧的对应物
+
+第 3–7 节的 observer completion 把当前读出补成未来动力学稳定接口。现在定义平行的 agency completion。
+
+设当前自我接口为
+
+$$
+m_0:\mathcal H\to M_0.
+$$
+
+定义完整策略画像接口
+
+$$
+P_\infty(h)
+=
+(\Pi_h(w))_{w\in W^*}.
+$$
+
+## 定义 65.1（策略完成接口）
+
+$$
+\boxed{
+C_{\mathrm{ag}}(m_0)(h)
+=
+(m_0(h),P_\infty(h)).
+}
+$$
+
+其有效像作为完成后的自我状态空间。
+
+## 定义 65.2（当前自我 kernel 与策略 kernel）
+
+$$
+K_{m_0}
+=
+\{(h,h'):m_0(h)=m_0(h')\},
+$$
+
+$$
+K_{\mathrm{ag}}
+=
+\{(h,h'):P_\infty(h)=P_\infty(h')\}.
+$$
+
+完成 kernel 为
+
+$$
+K_{C_{\mathrm{ag}}(m_0)}
+=
+K_{m_0}\cap K_{\mathrm{ag}}.
+$$
+
+## 定义 65.3（未吸收的选择决定差异）
+
+关系差
+
+$$
+\boxed{
+K_{m_0}\setminus K_{\mathrm{ag}}
+}
+$$
+
+由这样的历史对组成：观察者当前把它们表示成同一个“我”，但它们在某个未来输入下会产生不同选择倾向。
+
+## 三种情形
+
+### 完全策略自知
+
+$$
+K_{m_0}\subseteq K_{\mathrm{ag}}.
+$$
+
+当前自我接口相同足以推出完整未来策略画像相同；于是 $P_\infty$ 通过 $m_0$ 因子化。
+
+### 自我模型不完备
+
+$$
+K_{m_0}\not\subseteq K_{\mathrm{ag}}.
+$$
+
+观察者认为是同一个内部状态的两个历史，未来会作出不同选择。
+
+### 外部策略决定余量
+
+即使纳入全部观察者可访问历史，未来 policy 仍需边界外变量才能闭合。
+
+## 命题 65.1（最小策略充分完成）
+
+$C_{\mathrm{ag}}(m_0)$ 是同时精化 $m_0$ 并决定 $P_\infty$ 的最粗接口。
+
+### 证明
+
+任何候选接口 $r$ 若同时决定 $m_0$ 与 $P_\infty$，则
+
+$$
+r(h)=r(h')
+$$
+
+推出两个坐标均相同，因此推出
+
+$$
+C_{\mathrm{ag}}(m_0)(h)
+=
+C_{\mathrm{ag}}(m_0)(h').
+$$
+
+由 kernel factorization 即得。∎
+
+---
+
+# 66. 自主性相对于观察者边界
+
+设完整状态分解为
+
+$$
+X=(M,E),
+$$
+
+其中 $M$ 被纳入观察者自我边界，$E$ 记为环境。
+
+行动核为
+
+$$
+P(A\mid M,E).
+$$
+
+## 定义 66.1（环境充分／他律）
+
+若存在
+
+$$
+K_E:E\to\operatorname{Dist}(A)
+$$
+
+使
+
+$$
+P(A\mid M,E)=K_E(E),
+$$
+
+则环境接口足以决定行动；$M$ 在该模型中没有不可消去的行动作用。
+
+## 定义 66.2（内部不可消去贡献）
+
+若不存在上述因子化，且存在固定 $e$ 下不同 $m,m'$ 产生不同行动分布，则 $M$ 对行动具有内部不可消去贡献。
+
+## 命题 66.1（边界相对性）
+
+同一个决定变量，若位于闭合自我接口内并受过去选择更新，可作为内部理由；若位于边界外且不可由观察者访问，则表现为外部控制。
+
+## 严格边界 66.1
+
+自主性的边界相对性不意味着边界可任意画。任意把外部 controller 并入符号 $M$，若不满足第 63 节的可访问性、可塑性、行动相关性与闭合性，不能获得主体性结论。
+
+---
+
+# 67. 策略 holonomy：回到同一情境，不再是同一个选择者
+
+设公开状态沿路径
+
+$$
+\gamma:
+q_0\to q_1\to\cdots\to q_n
+$$
+
+演化，记忆运输为
+
+$$
+U_{q_i\to q_{i+1}}:
+M_{q_i}\to M_{q_{i+1}}.
+$$
+
+若
+
+$$
+q_n=q_0,
+$$
+
+定义回路 holonomy
+
+$$
+\operatorname{Hol}_\gamma
+=
+U_{q_{n-1}\to q_n}
+\circ\cdots\circ
+U_{q_0\to q_1}
+:
+M_{q_0}\to M_{q_0}.
+$$
+
+## 定义 67.1（非平凡策略 holonomy）
+
+若存在 $m$ 使
+
+$$
+\operatorname{Hol}_\gamma(m)\neq m,
+$$
+
+则该回路在记忆层具有非平凡 holonomy。
+
+若策略为
+
+$$
+s(q,m),
+$$
+
+可能出现
+
+$$
+s(q_0,m)
+\neq
+s(q_0,\operatorname{Hol}_\gamma(m)).
+$$
+
+即公开环境回到同一状态，但经历该回路后的观察者具有不同选择倾向。
+
+## 定理 67.1（行动回路排除无记忆策略）
+
+若存在两个时刻满足
+
+$$
+q_t=q_u
+$$
+
+但
+
+$$
+A_t\neq A_u,
+$$
+
+则不存在只依赖当前公开状态的确定性策略
+
+$$
+A=s(q).
+$$
+
+### 证明
+
+若存在，则
+
+$$
+A_t=s(q_t)=s(q_u)=A_u,
+$$
+
+矛盾。∎
+
+## 解释
+
+历史不是可选装饰；非平凡 holonomy 情形下，历史坐标是使策略成为函数所必需的状态变量。
+
+---
+
+# 68. 二重覆盖玩具模型：无全局状态式策略，却有历史式策略
+
+考虑圆周二重覆盖
+
+$$
+p:S^1\to S^1,
+\qquad
+p(z)=z^2.
+$$
+
+每个公开状态 $q\in S^1$ 上方有两个候选动作／内部分支：
+
+$$
+p^{-1}(q)=\{a_+,a_-\}.
+$$
+
+## 定理 68.1（无连续全局截面）
+
+不存在连续映射
+
+$$
+s:S^1\to S^1
+$$
+
+满足
+
+$$
+p\circ s=\operatorname{id}_{S^1}.
+$$
+
+### 证明
+
+若存在，作用基本群得到
+
+$$
+p_*\circ s_*
+=
+\operatorname{id}_{\mathbb Z}.
+$$
+
+但
+
+$$
+p_*:\mathbb Z\to\mathbb Z
+$$
+
+是乘以 $2$。不存在整数群同态 $s_*$ 满足
+
+$$
+2s_*(1)=1.
+$$
+
+矛盾。∎
+
+## 命题 68.1（历史提升）
+
+给定初始上方点与基空间路径，覆盖空间的路径提升唯一决定后续上方分支。
+
+所以：
+
+$$
+\boxed{
+没有连续、无记忆、全局一致的状态式 selector，
+却可以有依赖初值与历史路径的 selector。
+}
+$$
+
+走完基圆一圈后，上方分支可以交换；这正是 holonomy 的最小玩具。
+
+## 严格边界 68.1
+
+该例证明“记忆可以是绕过全局截面障碍所必需的变量”，不证明真实观察者的策略丛就是二重覆盖，也不把此例等同于 universal solenoid 的路径分量结构。
+
+---
+
+# 69. 选择信息、结果信息与作者信息的链式分解
+
+令
+
+- $Q$：当前公开状态与规律信息；
+- $M$：观察者内部策略状态；
+- $A$：选择的动作；
+- $Y$：动作后的结果记录。
+
+## 定理 69.1（选择—结果链式法则）
+
+$$
+\boxed{
+H(A,Y\mid Q)
+=
+H(A\mid Q)
++
+H(Y\mid Q,A).
+}
+$$
+
+第一项是公开结构尚未决定的动作信息，第二项是动作已经给定后仍存在的结果不确定性。
+
+## 定理 69.2（作者信息分解）
+
+$$
+\boxed{
+H(A\mid Q)
+=
+I(A;M\mid Q)
++
+H(A\mid Q,M).
+}
+$$
+
+因此：
+
+- $I(A;M\mid Q)$：内部状态解释的动作差异；
+- $H(A\mid Q,M)$：即使知道当前内部状态仍未解释的动作差异。
+
+## 结论 69.1
+
+$$
+\boxed{
+\text{choice information}
+\neq
+\text{outcome randomness}.
+}
+$$
+
+把 $H(Y\mid Q,A)$ 直接称为自由，会把测量结果的不确定性与设置／行动选择混为一谈。
+
+## 严格边界 69.1
+
+以上是 Shannon 记录层分解。若行动是确定而内部状态本身不随机，样本分布上的 $H(A\mid Q)$ 可以为零，但因果作者性仍需由干预比较而非单次熵判断。
+
+---
+
+# 70. 承诺是未来计划空间的收缩
+
+设当前历史为 $h$，与其相容的完整未来计划集合为
+
+$$
+\Omega_h.
+$$
+
+每个未来计划 $\omega\in\Omega_h$ 在当前时刻指定动作
+
+$$
+A_h(\omega)\in\mathcal A(h).
+$$
+
+对动作 $a$，定义计划柱集
+
+$$
+\Omega_{h,a}
+=
+\{\omega\in\Omega_h:A_h(\omega)=a\}.
+$$
+
+## 定义 70.1（承诺深度）
+
+有限非空情形定义
+
+$$
+\boxed{
+B(h,a)
+=
+\log_2|\Omega_h|
+-
+\log_2|\Omega_{h,a}|.
+}
+$$
+
+它度量把当前行动写定为 $a$ 后，未来计划空间被压缩了多少 bit。
+
+## 定理 70.1（承诺深度望远镜恒等式）
+
+沿实际历史
+
+$$
+h_0\to h_1\to\cdots\to h_n,
+$$
+
+若每一步 $h_{t+1}$ 恰对应选择 $a_t$ 后的计划柱集，则
+
+$$
+\boxed{
+\sum_{t=0}^{n-1}B(h_t,a_t)
+=
+\log_2|\Omega_{h_0}|
+-
+\log_2|\Omega_{h_n}|.
+}
+$$
+
+### 证明
+
+逐项为
+
+$$
+B(h_t,a_t)
+=
+\log_2|\Omega_{h_t}|
+-
+\log_2|\Omega_{h_{t+1}}|.
+$$
+
+求和后中间项两两抵消。∎
+
+## 概率版本
+
+若未来计划带概率分布，则链式法则给出
+
+$$
+\boxed{
+H(\Omega_h)
+=
+H(A_h)
++
+H(\Omega_h\mid A_h).
+}
+$$
+
+行动记录携带的
+
+$$
+H(A_h)
+$$
+
+正是当前计划分支被定位的平均信息。
+
+## 解释
+
+$$
+\boxed{
+选择把未来可能性体积转换成追加式历史信息。
+}
+$$
+
+因此自由的功能不是永远延迟实际化；真正的选择会关闭其它未来，并把这一关闭写入观察者的后续身份。
+
+---
+
+# 71. 历时作者性：当前承诺怎样控制未来自我
+
+设当前承诺或选择记录为
+
+$$
+C_t,
+$$
+
+未来一段行为为
+
+$$
+B_{t+1:T}
+=(A_{t+1},\ldots,A_T),
+$$
+
+环境历史为
+
+$$
+E.
+$$
+
+## 定义 71.1（历时作者性）
+
+$$
+\boxed{
+D_T
+=
+I(C_t;B_{t+1:T}\mid E).
+}
+$$
+
+它度量当前承诺中有多少信息真正传递到未来行为，而不是只停留在一条无效声明中。
+
+## 定理 71.1（承诺信道上界）
+
+$$
+\boxed{
+D_T
+\le
+H(C_t\mid E).
+}
+$$
+
+### 证明
+
+条件互信息满足
+
+$$
+I(C;B\mid E)
+\le
+H(C\mid E).
+$$
+
+∎
+
+## 推论 71.1（完整兑现）
+
+若未来行为与环境能完整恢复承诺：
+
+$$
+H(C_t\mid B_{t+1:T},E)=0,
+$$
+
+则
+
+$$
+D_T=H(C_t\mid E).
+$$
+
+## 定理 71.2（遗忘降低历时作者性）
+
+若未来行为记录再经遗忘／粗粒信道
+
+$$
+B_{t+1:T}\to B'_{t+1:T},
+$$
+
+则数据处理不等式给出
+
+$$
+\boxed{
+I(C_t;B'_{t+1:T}\mid E)
+\le
+I(C_t;B_{t+1:T}\mid E).
+}
+$$
+
+## 两种自由容量
+
+定义当前开放度
+
+$$
+F_{\mathrm{now}}
+=
+H(A_t\mid Q_t),
+$$
+
+以及历时控制度
+
+$$
+F_{\mathrm{dia}}
+=
+I(C_t;A_{t+1:T}\mid E).
+$$
+
+承诺可能使未来即时选项变少，即
+
+$$
+F_{\mathrm{now}}\downarrow,
+$$
+
+却使当前自我对未来行动的控制增强，即
+
+$$
+F_{\mathrm{dia}}\uparrow.
+$$
+
+因此：
+
+$$
+\boxed{
+减少未来选项不必减少自由；
+它可能把瞬时开放转换成历时作者性。
+}
+$$
+
+---
+
+# 72. 责任是作者关系的事后可审计面
+
+选择前，理论关心哪些动作真实开放；选择后，责任关心行动是否可归属于该观察者并由记录保存。
+
+## 定义 72.1（责任证书的四个分量）
+
+一次责任判断至少需要：
+
+1. **控制证书**：改变观察者相关内部状态会改变行动；
+2. **知情证书**：观察者拥有足以评价相关后果的预测／风险接口；
+3. **作者证书**：行动没有被外部强迫变量绕过内部策略直接指定；
+4. **追溯证书**：行动、上下文与理由链进入不可混淆的账本。
+
+## 反例 72.A（有记录，无控制）
+
+外部 controller 决定动作，账本准确记录“观察者执行了动作”。记录为真，但不能单独证明观察者控制了动作。
+
+## 反例 72.B（有控制，无知情）
+
+观察者能改变动作，却无法获得关键后果信息。作者性可能存在，但规范责任应相应减弱。
+
+## 反例 72.C（有理由，无追溯）
+
+内部状态确实形成动作，但理由与上下文完全遗失。主体关系可能存在，却无法被公共审计重建。
+
+## 结论 72.1
+
+$$
+\boxed{
+账本不创造责任；
+账本使已经存在的控制、知情与作者关系可审计。
+}
+$$
+
+反向，没有持久记忆与记录的选择难以形成跨时间责任主体，因为过去行动不能稳定进入未来自我。
+
+---
+
+# 73. 五层自由与逻辑非蕴含图
+
+本增订把“自由”分为五层。
+
+## 第一层：操作开放性
+
+$$
+\mathsf{Open}(q)
+:\iff
+|\mathcal A_{\mathrm{eff}}(q)|\ge2.
+$$
+
+存在两个完整后果画像不同的动作。
+
+## 第二层：结构非典范性
+
+$$
+\mathsf{NonCanonical}(q)
+$$
+
+表示不存在保持全部已申报对称性的唯一确定性 selector。
+
+## 第三层：自主作者性
+
+$$
+\mathsf{Authored}(q)
+$$
+
+表示内部作者状态对行动有不可消去的因果控制，并且该状态属于近似闭合的观察者边界。
+
+## 第四层：历时所有权
+
+$$
+\mathsf{Diachronic}(q)
+$$
+
+表示过去自身选择通过记忆与承诺影响当前及未来选择：
+
+$$
+A_{<t}\to M_t\to A_t.
+$$
+
+## 第五层：本体分岔
+
+$$
+\mathsf{OnticBranch}(x)
+$$
+
+表示即使给定完整宇宙过去状态，仍有两个不同动作后继真实可达，且无额外隐藏变量预选其中之一。
+
+## 非蕴含关系
+
+以下均不成立：
+
+$$
+\mathsf{Open}
+\not\Rightarrow
+\mathsf{NonCanonical};
+$$
+
+一个固定全序可在多动作集中给出典范最小元。
+
+$$
+\mathsf{NonCanonical}
+\not\Rightarrow
+\mathsf{Authored};
+$$
+
+公平硬币可无典范地破缺对称，却无内部作者性。
+
+$$
+\mathsf{Authored}
+\not\Rightarrow
+\mathsf{OnticBranch};
+$$
+
+兼容决定论的内部理由系统可完全决定行动。
+
+$$
+\mathsf{OnticBranch}
+\not\Rightarrow
+\mathsf{Authored};
+$$
+
+无主随机分岔可以真实但不属于观察者。
+
+$$
+\mathsf{Open}
+\not\Rightarrow
+\mathsf{Diachronic};
+$$
+
+每步重新掷骰子的系统有即时开放，却没有自我积累。
+
+## 定义 73.1（结构化自由席位）
+
+可以定义较强但仍兼容决定论的自由席位：
+
+$$
+\boxed{
+\mathsf{FreeSeat}(q)
+=
+\mathsf{Open}(q)
+\land
+\mathsf{NonCanonical}(q)
+\land
+\mathsf{Authored}(q)
+\land
+\mathsf{Diachronic}(q).
+}
+$$
+
+它不包含第五层，因此不是强 libertarian freedom 的证明；它刻画的是可操作、非典范、内部作者并跨历史保持的自主性结构。
+
+---
+
+# 74. 回到喉部：自由在动作截面，不在隐藏坐标
+
+设路径分量商在未来形式化为
+
+$$
+\mathcal K
+=
+K_\infty/\Delta(\mathbb Z).
+$$
+
+合法动作丛为
+
+$$
+p:E_{\mathcal A}\to Q.
+$$
+
+每个动作携带分量 cocycle 类
+
+$$
+\bar c:E_{\mathcal A}\to\mathcal K.
+$$
+
+策略充分自我状态为
+
+$$
+M_{\mathrm{self}}.
+$$
+
+观察者策略为
+
+$$
+s:Q\times M_{\mathrm{self}}
+\to
+E_{\mathcal A},
+$$
+
+满足
+
+$$
+p(s(q,m))=q.
+$$
+
+实际喉部位移为
+
+$$
+\boxed{
+\Delta\kappa_t
+=
+\bar c(s(q_t,m_t)).
+}
+$$
+
+并有
+
+$$
+\kappa_{t+1}
+=
+\kappa_t+
+\Delta\kappa_t.
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal K
+&=\text{动作后果的隐藏分量几何},\\
+E_{\mathcal A}
+&=\text{规律允许的动作空间},\\
+s
+&=\text{观察者形成的策略截面},\\
+\bar c\circ s
+&=\text{实际喉部迁移}.
+\end{aligned}
+}
+$$
+
+## 结论 74.1
+
+喉部坐标本身不能解释自由。一个外部隐藏 controller 同样可以选择某个 $\kappa$；那仍是隐藏他律。
+
+自由的候选位置不在
+
+$$
+\kappa\in\mathcal K
+$$
+
+本身，而在：
+
+$$
+\boxed{
+无典范动作丛上的截面，
+是否由观察者自身的策略充分历史商生成。
+}
+$$
+
+---
+
+# 75. 自我生成回路与固定点问题
+
+第 64 节把自我定义为保持未来策略画像的最小历史商。第 71 节说明选择通过承诺进入未来行为。二者组合为：
+
+$$
+M_t
+\longrightarrow
+A_t
+\longrightarrow
+\Lambda_{t+1}
+\longrightarrow
+M_{t+1}.
+$$
+
+## 定义 75.1（自我生成系统）
+
+一个自我生成系统由四个映射／kernel 组成：
+
+$$
+\begin{aligned}
+\text{policy}:&\quad
+S:M\times Q\to\operatorname{Dist}(A),\\
+\text{world/record}:&\quad
+R:Q\times A\to\operatorname{Dist}(Y\times Q'),\\
+\text{ledger append}:&\quad
+L:\Lambda\times A\times Y\to\Lambda',\\
+\text{self update}:&\quad
+U:M\times\Lambda'\to M'.
+\end{aligned}
+$$
+
+并要求 $M$ 对未来 policy 充分。
+
+## 定义 75.2（策略自洽）
+
+若由 $S,R,L,U$ 生成的历史策略画像，在取策略充分商后仍与 $M$ 的编码等价，则称该系统策略自洽。
+
+形式上可写为某个等价：
+
+$$
+M
+\simeq
+\operatorname{Im}(P_\infty^{S,R,L,U}),
+$$
+
+其中右侧是由该系统自身生成的完整未来策略画像有效像。
+
+## 研究命题 75.1（agency reflector 固定点）
+
+在适当的接口完备格与连续性条件下，策略完成算子
+
+$$
+C_{\mathrm{ag}}
+$$
+
+的固定点应刻画策略充分、历史闭合的自我接口：
+
+$$
+\boxed{
+C_{\mathrm{ag}}(m)\simeq m
+\iff
+m\text{ 已决定全部未来策略画像}.
+}
+$$
+
+## 严格边界 75.1
+
+即使策略固定点存在，它也不证明观察者是无因第一推动者。它只证明：在所选边界与输入接口下，未来行动所需的全部内部策略信息已在该自我接口中闭合。
+
+---
+
+# 76. 新研究命题、Lean 路线与证明状态
+
+## 命题 76.1（策略截面计数）
+
+有限非空动作纤维上：
+
+$$
+|\operatorname{Sec}(\mathcal A)|
+=
+\prod_q|\mathcal A(q)|.
+$$
+
+**状态**：有限函数计数，适合 Lean 闭合。
+
+## 命题 76.2（无自然有限选择）
+
+不存在对全部非空有限集合与双射自然的确定性选择元。
+
+**状态**：二元素交换反例，短证明。
+
+## 命题 76.3（行为等价动作复制不增自由）
+
+添加与已有动作完整行为画像相同的标签，不改变有效动作商基数。
+
+**状态**：quotient／setoid 基础定理。
+
+## 命题 76.4（精化扩大安全动作交）
+
+若 $r$ 精化 $q$，则
+
+$$
+\mathcal A_q(q(x))
+\subseteq
+\mathcal A_r(r(x)).
+$$
+
+**状态**：集合交与纤维包含的直接证明。
+
+## 命题 76.5（预测律不决定价值）
+
+同一 PMF 预测接口可在两组损失下产生相反唯一最优动作。
+
+**状态**：Bool／Fin 反例，可机器化。
+
+## 命题 76.6（唯一不变随机策略）
+
+有限传递群作用上的不变概率分布唯一且均匀。
+
+**状态**：有限群作用与概率质量函数定理。
+
+## 命题 76.7（边际熵不识别作者性）
+
+存在相同行动熵、不同内部因果控制的两个 Bool 模型。
+
+**状态**：有限概率反例。
+
+## 命题 76.8（策略充分自我普适最小性）
+
+历史按完整策略画像 kernel 取商，是所有策略充分历史接口中的最粗者。
+
+**状态**：`realized_image_unique_factorization_iff_reverse_kernel` 的自然新实例。
+
+## 命题 76.9（行动回路排除无记忆策略）
+
+相同当前公开状态对应不同行动时，不存在只依赖当前状态的确定性策略。
+
+**状态**：函数一致性的短反证。
+
+## 命题 76.10（二重覆盖无连续截面）
+
+$$
+z\mapsto z^2
+$$
+
+无连续全局截面。
+
+**状态**：可由 degree 或 fundamental group formalization 路线处理；Lean 成本高于有限反例。
+
+## 命题 76.11（承诺深度望远镜）
+
+$$
+\sum_t B(h_t,a_t)
+=
+\log|\Omega_{h_0}|-
+\log|\Omega_{h_n}|.
+$$
+
+**状态**：有限计划树上的实数对数望远镜求和。
+
+## 命题 76.12（遗忘降低历时作者性）
+
+$$
+I(C;B'\mid E)
+\le
+I(C;B\mid E)
+$$
+
+对 $B\to B'$ 的后处理成立。
+
+**状态**：条件数据处理不等式实例；需匹配仓库现有有限／测度接口。
+
+---
+
+# 77. 建议追加模块树
+
+```text
+D5/S3/Observer/Agency/
+  LegalActionBundle.lean
+  DeterministicPolicySection.lean
+  FinitePolicySectionCount.lean
+  NaturalChoiceObstruction.lean
+  EffectiveActionQuotient.lean
+  OperationalFreedomCapacity.lean
+
+D5/S3/Observer/Agency/Safety/
+  FiberSafeActions.lean
+  SafePolicyExistence.lean
+  SafeActionsRefinementMonotonicity.lean
+  EpistemicCompulsionCountermodel.lean
+
+D5/S3/Observer/Agency/Decision/
+  PredictionDoesNotFixValue.lean
+  OptimalSetNonuniqueness.lean
+  InvariantRandomPolicy.lean
+  ActionEntropyAgencyCountermodels.lean
+
+D5/S3/Observer/Agency/Self/
+  PolicyProfile.lean
+  PolicySufficientSelfQuotient.lean
+  AgencyCompletion.lean
+  AgencyCompletionFixedPoint.lean
+  ObserverBoundaryAuthorship.lean
+
+D5/S3/Observer/Agency/Holonomy/
+  MemoryTransport.lean
+  ActionLoopRequiresMemory.lean
+  DoubleCoverNoSection.lean
+
+D5/S3/Observer/Agency/Information/
+  ChoiceOutcomeEntropyChain.lean
+  ObservationalAuthorshipRatio.lean
+  CausalAuthorshipTV.lean
+  CommitmentPlanContraction.lean
+  DiachronicAuthorshipDPI.lean
+
+D5/S3/Observer/Agency/Responsibility/
+  ControlKnowledgeAuthorshipTraceability.lean
+  ResponsibilityCountermodels.lean
+
+D5/S3/Observer/Agency/Throat/
+  ActionComponentCocycle.lean
+  SelfPolicyThroatDisplacement.lean
+```
+
+建议优先闭合低依赖、高区分度命题：
+
+```text
+finite_policy_sections_card
+no_natural_choice_on_nonempty_finsets
+effective_action_duplicate_invariant
+safe_actions_mono_of_refines
+safe_policy_exists_iff_fiber_inter_nonempty
+same_prediction_opposite_losses
+transitive_invariant_pmf_eq_uniform
+action_entropy_does_not_determine_authorship
+policy_sufficient_self_universal
+same_public_state_different_action_requires_memory
+commitment_depth_telescope
+choice_outcome_entropy_chain
+```
+
+---
+
+# 78. 追加严格非主张
+
+1. 本增订不声称任意合法动作关系都形成局部平凡拓扑纤维丛。
+2. 本增订不声称非空动作纤维自动给出可测、连续或可计算截面。
+3. 本增订不声称策略数量大等于自由意志强。
+4. 本增订不声称动作标签数可替代行为等价类数。
+5. 本增订不声称粗观察一定扩大主观自由；粗观察可能产生认识论强制。
+6. 本增订不声称完整预测律决定损失函数、价值或承诺。
+7. 本增订不声称均匀随机分布拥有主体作者性。
+8. 本增订不声称高行动熵意味着高内部控制。
+9. 本增订不声称互信息作者比例自动消除共同原因混淆。
+10. 本增订不声称对内部状态的干预在所有物理系统中可实际执行。
+11. 本增订不声称任何被圈入观察者边界的变量都属于自我。
+12. 本增订不声称策略充分自我商等于全部人格、意识或道德主体。
+13. 本增订不声称被策略商遗忘的经历没有心理或伦理意义；它只对指定未来策略族无区分力。
+14. 本增订不声称 agency completion 已有 Lean kernel closure。
+15. 本增订不声称非平凡 holonomy 必然存在于现实观察者。
+16. 本增订不声称二重覆盖玩具模型就是 universal solenoid 的完整策略几何。
+17. 本增订不声称当前承诺减少未来选项就必然提高历时作者性；只有承诺真正影响未来行为时才提高。
+18. 本增订不声称账本记录单独足以建立责任。
+19. 本增订不声称结构化自由席位蕴含完整状态层面的本体分岔。
+20. 本增订不声称本体分岔若存在就自动属于观察者。
+21. 本增订不声称决定论自动排除自主性，也不声称自主性证明决定论为真。
+22. 本增订不修改此前关于单次 Born 结果不可由观察者策略预选的边界。
+23. 本增订不修改 $K_\infty/\Delta(\mathbb Z)$ 路径分量 API 仍待形式化的状态。
+24. 本增订不声称解决意识、第一人称样本索引或强 libertarian free will。
+25. 本增订不构成对 RH、negative-base-$\varphi$ 主分类或其他已登记开放问题的推进。
+
+---
+
+# 79. 最终统一：自由是无典范截面的动作丛，意志是历史生成的截面
+
+本增订把观察者行动结构压缩为以下对象：
+
+$$
+\begin{aligned}
+Q
+&=\text{规范控制状态},\\
+p:E_{\mathcal A}\to Q
+&=\text{合法动作丛},\\
+\mathcal A_{\mathrm{eff}}(q)
+&=\text{后果可区分的动作商},\\
+M_{\mathrm{self}}
+&=\text{保持全部未来策略画像的最小历史商},\\
+s:Q\times M_{\mathrm{self}}\to E_{\mathcal A}
+&=\text{观察者策略截面},\\
+\bar c:E_{\mathcal A}\to K_\infty/\Delta(\mathbb Z)
+&=\text{动作的喉部分量荷},\\
+\Lambda_{t+1}=\Lambda_t\Vert(A_t,Y_t)
+&=\text{选择与结果的追加记录}.
+\end{aligned}
+$$
+
+实际喉部迁移为
+
+$$
+\boxed{
+\Delta\kappa_t
+=
+\bar c(s(q_t,m_t)).
+}
+$$
+
+而自我历史更新为
+
+$$
+\boxed{
+M_t
+\longrightarrow
+A_t
+\longrightarrow
+\Lambda_{t+1}
+\longrightarrow
+M_{t+1}.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Law}
+&=\text{给出合法动作纤维与后果核},\\
+\text{Freedom seat}
+&=\text{这些纤维没有由裸结构指定的典范截面},\\
+\text{Self}
+&=\text{过去中仍会改变未来选择的最小商},\\
+\text{Will}
+&=\text{由该历史商生成的动作截面},\\
+\text{Choice}
+&=\text{该截面在当前状态上的实际取值},\\
+\text{Commitment}
+&=\text{把当前选择信息传给未来行动的信道},\\
+\text{Responsibility}
+&=\text{内部控制、知情、作者性与账本追溯的联合证书}.
+\end{aligned}
+}
+$$
+
+最深的结论不再是
+
+$$
+\text{“自由等于没有策略”},
+$$
+
+而是：
+
+$$
+\boxed{
+规律不必提供典范策略；
+历史形成观察者的策略充分自我；
+这个自我形成策略；
+策略产生选择；
+选择写入历史；
+新的历史再形成新的自我。
+}
+$$
+
+所以，兼容当前形式边界的最强收束是：
+
+$$
+\boxed{
+观察者是一个能让过去自己的选择，
+成为未来自己选择原因的闭合历史系统。
+}
+$$
