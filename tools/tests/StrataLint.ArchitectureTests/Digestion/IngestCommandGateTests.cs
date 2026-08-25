@@ -6,7 +6,7 @@ namespace StrataLint.ArchitectureTests;
 public sealed class IngestCommandGateTests
 {
     [Fact]
-    public void IngestRunRetainsPostWriteRequireNoNewFailuresGate()
+    public void IngestRunRetainsBothReceiptIntegrityFailureGates()
     {
         var source = File.ReadAllText(Path.Combine(
             RepositoryLayout.FindRoot(),
@@ -20,7 +20,8 @@ public sealed class IngestCommandGateTests
             static method => method.Identifier.ValueText == "Run");
         var gates = run.DescendantNodes()
             .OfType<InvocationExpressionSyntax>()
-            .Where(static invocation => InvocationName(invocation) == "RequireNoNewFailures")
+            .Where(static invocation =>
+                InvocationName(invocation) == "RequireNoReceiptIntegrityFailure")
             .ToArray();
 
         Assert.Equal(

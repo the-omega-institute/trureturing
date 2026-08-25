@@ -17,10 +17,10 @@ receipts:
       target_sha256: sha256:51e9ac062d8281e341170f2059134974fa4f755b4e88e8ff9bb56f7bc5b6d2cc
   scribe:
     - gid: D5/S3/Zeros/CompletedZeta.xi_reading_differentiable
-      definition_sha256: sha256:a7b8090bab17ff5f42ee308bcbb307d63744db0df18e3c991f141141d90dd671
-      emission_sha256: sha256:82c32c63eb78912d650ee4e7c1e0523ce8f39f9af7b1ade68ea0fd762fced39b
+      definition_sha256: sha256:7adc01d7166094417b25c9f92fa6ca76769854941c96daab523be09d629b3fa2
+      emission_sha256: sha256:fbf5a8bede17691bfd26b0095a98ae4353665ee67311ceb008e16ec2c410da09
     - gid: D5/S3/Zeros/CompletedZeta.xi_reading_reflection
-      definition_sha256: sha256:a7b8090bab17ff5f42ee308bcbb307d63744db0df18e3c991f141141d90dd671
-      emission_sha256: sha256:82c32c63eb78912d650ee4e7c1e0523ce8f39f9af7b1ade68ea0fd762fced39b
+      definition_sha256: sha256:7adc01d7166094417b25c9f92fa6ca76769854941c96daab523be09d629b3fa2
+      emission_sha256: sha256:fbf5a8bede17691bfd26b0095a98ae4353665ee67311ceb008e16ec2c410da09
   unresolved_subitems:
     - source-theorems-23-9-and-23-10-component-chain

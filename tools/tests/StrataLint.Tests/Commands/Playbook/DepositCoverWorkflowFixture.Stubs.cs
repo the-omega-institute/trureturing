@@ -125,6 +125,12 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 fi
                 ;;
               cover-atom)
+                if [[ ${PLAYBOOK_COVER_DISPOSITION_FAILURE:-0} == 1 ]]; then
+                  printf 'atom_id: atom-1\ncoverage: false\naligned: false\ncover_disposition: synthetic\n' \
+                    > Meta/BACKFILL.yaml
+                  echo 'COVER_INVALID synthetic disposition' >&2
+                  exit 1
+                fi
                 if grep -q '^coverage: true$' Meta/BACKFILL.yaml; then
                   [[ $command == *'--gid D5/S3/Observer/WindowRegisterCRT.window_register_crt_decomposition'* ]] || {
                     echo 'COVER_INVALID hosted cover omitted the selected secondary GID' >&2

@@ -1,11 +1,83 @@
 using System.Collections.Immutable;
 using System.Text;
+using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
 public sealed partial class DigestionAlignmentTests
 {
+    [Fact]
+    public void DispositionDoesNotChangeSourceRevisionAdmissionOrRetirement()
+    {
+        var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
+        var currentBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
+        var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes, DigestionTestSupport.Rules).Claims);
+        var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
+        var baseline = Ledger([], CasEntry("old-receipt", oldAtom, oldCapture.Reference));
+        var plan = DigestionIngestor.Plan(
+            baseline,
+            Snapshot(currentBytes, [oldCapture]),
+            baseline);
+        var source = Assert.Single(plan.Document.RequireDigestionSources());
+        var dispositioned = plan.Document.WithDigestionSources(
+        [
+            source with
+            {
+                Entries = source.Entries.Select(entry => entry.AtomId == "old-receipt"
+                    ? entry with
+                    {
+                        Receipts = entry.Receipts with
+                        {
+                            CoverDisposition = new DigestionCoverDisposition(
+                                new DigestionStatus(
+                                    DigestionMigrationState.Partial,
+                                    DigestionTruthState.Closed),
+                                ["D5/S0/Synthetic/Receipt.old_generation"],
+                                [new DigestionDispositionGap(
+                                    "unresolved-subitem",
+                                    "remaining theorem clause")],
+                                new DateTimeOffset(2026, 8, 25, 4, 3, 2, TimeSpan.Zero)),
+                        },
+                    }
+                    : entry).ToImmutableArray(),
+            },
+        ]);
+        var snapshot = Snapshot(
+            currentBytes,
+            plan.CasObjects.Prepend(oldCapture));
+        var baselineSnapshot = Snapshot(oldBytes, [oldCapture]);
+        var changes = RawChangeSet.Create(["docs/source.md"]);
+
+        var plain = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.ChangedSet,
+            plan.Document,
+            snapshot,
+            DigestionTestSupport.AcceptedLean(Array.Empty<string>()),
+            VerifiedScribeEmissions.Empty,
+            baseline,
+            baselineSnapshot: baselineSnapshot,
+            changes: changes);
+        var withDisposition = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.ChangedSet,
+            dispositioned,
+            snapshot,
+            DigestionTestSupport.AcceptedLean(Array.Empty<string>()),
+            VerifiedScribeEmissions.Empty,
+            baseline,
+            baselineSnapshot: baselineSnapshot,
+            changes: changes);
+
+        Assert.Equal(
+            DigestionReceiptAlignment.Stale,
+            Assert.Single(
+                withDisposition.Entries,
+                static entry => entry.Entry.AtomId == "old-receipt").Alignment);
+        Assert.Equal(
+            Encoding.UTF8.GetBytes(DigestStatusCommand.RenderText(plain)),
+            Encoding.UTF8.GetBytes(DigestStatusCommand.RenderText(withDisposition)));
+    }
+
     [Fact]
     public void FineGenerationRetirementPreservesEveryOwnershipForm()
     {

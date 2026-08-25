@@ -596,9 +596,16 @@ case "$COMMAND" in
     require_transaction_arguments
     cleanup_transaction_temporaries
     step lean-report make lean-report
-    step cover-atom cover_atom_or_resume
+    if step cover-atom cover_atom_or_resume; then
+      :
+    else
+      status=$?
+      commit_all_if_needed "formalize: record failed cover disposition for $ATOM_ID"
+      exit "$status"
+    fi
     step align-scribe-receipt run_cli \
-      align-scribe-receipt --atom-id "$ATOM_ID" --gid "$GID"
+      align-scribe-receipt --atom-id "$ATOM_ID" --gid "$GID" --base "$BASE"
+    step emit-post-alignment make emit
     commit_all_if_needed "formalize: cover $ATOM_ID with $GID"
     ;;
   *)

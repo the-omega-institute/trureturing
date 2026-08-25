@@ -323,7 +323,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
     }
 
     [Fact]
-    public void CoverAlignsFromVerifiedEmissionWithoutReemittingThenCommitsOnce()
+    public void CoverAlignsThenReemitsAndCommitsOnce()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -342,10 +342,31 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "make:lean-report",
                 "dotnet:cover-atom",
                 "dotnet:align-scribe-receipt",
+                "make:emit",
             ],
             fixture.CallKinds());
         Assert.Contains("aligned: covered", fixture.BackfillContents(), StringComparison.Ordinal);
-        Assert.Equal("emission: open\n", fixture.EmissionContents());
+        Assert.Equal("emission: covered\n", fixture.EmissionContents());
+        Assert.Empty(fixture.Status());
+    }
+
+    [Fact]
+    public void FailedCoverCommitsDispositionBeforeReturningFailure()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        var before = fixture.CommitCount();
+
+        var result = fixture.Run("cover", coverDispositionFailure: true);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Contains(
+            "COVER_INVALID synthetic disposition",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
+        Assert.Equal(before + 1, fixture.CommitCount());
+        Assert.Contains("cover_disposition:", fixture.BackfillContents(), StringComparison.Ordinal);
+        Assert.Equal(["make:lean-report", "dotnet:cover-atom"], fixture.CallKinds());
         Assert.Empty(fixture.Status());
     }
 
@@ -598,6 +619,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             string gid = Gid,
             bool staleReport = false,
             bool invalidReceipt = false,
+            bool coverDispositionFailure = false,
             string? mutateReceiptAfterPrepare = null,
             TimeSpan? timeout = null,
             string? baseRevision = null) =>
@@ -608,6 +630,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     $"PLAYBOOK_TEST_CALLS={callsPath}",
                     $"PLAYBOOK_STALE_REPORT={(staleReport ? "1" : "0")}",
                     $"PLAYBOOK_INVALID_RECEIPT={(invalidReceipt ? "1" : "0")}",
+                    $"PLAYBOOK_COVER_DISPOSITION_FAILURE={(coverDispositionFailure ? "1" : "0")}",
                     $"PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE={mutateReceiptAfterPrepare ?? string.Empty}",
                     $"PLAYBOOK_TARGET_MODULE={(gid == SecondaryGid ? SecondaryLeanPath : gid == NewGid ? NewLeanPath : LeanPath)}",
                     "/bin/bash",

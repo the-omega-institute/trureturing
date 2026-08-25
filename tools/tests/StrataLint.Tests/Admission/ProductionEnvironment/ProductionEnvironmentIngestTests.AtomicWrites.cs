@@ -306,7 +306,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void IngestObservesTouchedReceiptIntegrityGapWhoseForkPointIdentityIsUnchanged()
+    public void IngestRejectsTouchedReceiptIntegrityGapWhoseForkPointIdentityIsUnchanged()
     {
         const string siblingModuleGid = "D5/S0/Carrier/CoverSibling";
         const string siblingGid = siblingModuleGid + ".sibling";
@@ -333,11 +333,10 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.Ingest(["--base", "baseline"]);
 
-        Assert.True(result.Success, result.Error);
+        Assert.False(result.Success);
         Assert.Contains(
-            "OBSERVED SL-016 Meta/BACKFILL.yaml: "
-            + $"receipt-gap-sibling:coverage-receipt-mismatch:{siblingGid}",
-            result.Output,
+            $"receipt-gap-sibling:coverage-receipt-mismatch:{siblingGid}",
+            result.Error,
             StringComparison.Ordinal);
         Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
     }
