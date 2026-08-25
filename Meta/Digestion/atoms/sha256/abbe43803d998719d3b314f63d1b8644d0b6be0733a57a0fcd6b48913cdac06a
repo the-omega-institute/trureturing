@@ -1,0 +1,44 @@
+### T4(a) 删除可数性：单点切割
+
+取 \(X=[0,1]\times\{0,1\}\)、\(q(t,i)=t\)、\(T(t,i)=i\)，并令
+
+\[
+e_t^+:=((t,0),(t,1)),
+\qquad e_t^-:=((t,1),(t,0)),
+\qquad E=\{e_t^+,e_t^-:t\in[0,1]\}.
+\]
+
+对 \(C\subseteq E\)，写 \(C_\pm=\{t:e_t^\pm\in C\}\)，并取
+
+\[
+\mathfrak E:=\{C\subseteq E:C_+,C_-\text{ 均 Lebesgue 可测}\},
+\qquad
+\nu(C):=\tfrac12\lambda(C_+)+\tfrac12\lambda(C_-).
+\]
+
+则 \(\nu\) 是 \(\mathfrak E\) 上的有限 charge，\(M_0=1\)。对每个 \(t\in[0,1]\) 定义
+
+\[
+d_t(s,i):=
+\begin{cases}
+i,&s=t,\\
+0,&s\ne t.
+\end{cases}
+\]
+
+于是
+
+\[
+U_{d_t}=\{e_t^+,e_t^-\},
+\qquad B=E\setminus\bigcup_{t\in[0,1]}U_{d_t}=\varnothing,
+\qquad \nu(E_S)=1\quad(S\Subset\Gamma).
+\]
+
+令 \(c(d_t)=1\)。该不可数 \(\Gamma\) 明确位于正文有限/可数定理域之外；任一有限定义族只切掉有限多个零测点，故
+
+\[
+\rho_\Gamma(L)=1\quad(L<\infty),
+\qquad
+\lim_{L\to\infty}\rho_\Gamma(L)=1\ne0=\frac{\nu(B)}{M_0}.
+\]
+
