@@ -73,7 +73,7 @@ theorem causal_state_factorization
       _ = futureLaw past := by
         simpa only [Function.comp_apply] using (congrFun law_factors past).symm
       _ = predictor (interface past) := by
-        simpa only [Function.comp_apply] using congrFun sufficient past
+        exact congrFun sufficient past
       _ = predictor state.1 := congrArg predictor hpast
   constructor
   · refine ⟨factor, ⟨factor_factors, factor_matches⟩, ?_⟩

@@ -117,7 +117,9 @@ private theorem canonical_map_norm
     exact (S n).norm_starProjection_apply_le x
   · have hProjection : Tendsto (fun n => (S n).starProjection (x : H)) atTop (𝓝 (x : H)) := by
       have h := Submodule.starProjection_tendsto_closure_iSup S hS (x : H)
-      simpa [cumulativeSpace, Submodule.starProjection_eq_self_iff.mpr x.2] using h
+      have hx : (x : H) ∈ (⨆ n, S n).topologicalClosure := x.2
+      rw [Submodule.starProjection_eq_self_iff.mpr hx] at h
+      exact h
     have hNorm : Tendsto (fun n => ‖(S n).starProjection (x : H)‖) atTop (𝓝 ‖(x : H)‖) :=
       (continuous_norm.tendsto _).comp hProjection
     apply le_of_tendsto' hNorm

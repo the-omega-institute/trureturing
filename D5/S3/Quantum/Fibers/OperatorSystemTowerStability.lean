@@ -38,7 +38,18 @@ abbrev MatrixAlgebra (d : Type*) := CStarMatrix d d ℂ
 def heisenbergOnHermitian
     (heisenberg : MatrixAlgebra d →CP MatrixAlgebra d) :
     selfAdjoint (MatrixAlgebra d) →ₗ[ℝ] selfAdjoint (MatrixAlgebra d) where
-  toFun A := ⟨heisenberg A.1, A.2.map heisenberg⟩
+  toFun A := ⟨heisenberg A.1,
+    letI : ContinuousFunctionalCalculus ℝ (MatrixAlgebra d) IsSelfAdjoint :=
+      Matrix.IsHermitian.instContinuousFunctionalCalculus
+    letI : SelfAdjointDecompose (MatrixAlgebra d) :=
+      { exists_nonneg_sub_nonneg := by
+          intro a ha
+          refine ⟨a⁺, a⁻, ?_, ?_, ?_⟩
+          · cfc_tac
+          · cfc_tac
+          · exact (CFC.posPart_sub_negPart a ha).symm }
+    IsSelfAdjoint.map' (F := MatrixAlgebra d →CP MatrixAlgebra d)
+      (E := MatrixAlgebra d) (R := MatrixAlgebra d) A.2 heisenberg⟩
   map_add' A B := by
     apply Subtype.ext
     exact map_add heisenberg A.1 B.1

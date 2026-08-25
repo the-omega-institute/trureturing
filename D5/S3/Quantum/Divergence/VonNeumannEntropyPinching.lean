@@ -49,9 +49,21 @@ theorem quantum_relative_entropy_eq_neg_entropy_sub_cross
     {n : Type*} [Fintype n] [DecidableEq n] (rho sigma : DensityState n) :
     quantumRelativeEntropy rho sigma = -vonNeumannEntropy rho -
       (Matrix.trace (rho.1 * CFC.log sigma.1)).re := by
-  simp only [quantumRelativeEntropy, vonNeumannEntropy, Matrix.trace,
-    Matrix.diag_apply, CStarMatrix.mul_apply, CStarMatrix.sub_apply, mul_sub,
-    Finset.sum_sub_distrib, Complex.re_sum, Complex.sub_re, neg_neg]
+  simp only [quantumRelativeEntropy, vonNeumannEntropy, mul_sub]
+  change
+    (Matrix.trace
+        ((CStarMatrix.ofMatrix.symm rho.1) *
+            (CStarMatrix.ofMatrix.symm (CFC.log rho.1)) -
+          (CStarMatrix.ofMatrix.symm rho.1) *
+            (CStarMatrix.ofMatrix.symm (CFC.log sigma.1)))).re =
+      - -(Matrix.trace
+          ((CStarMatrix.ofMatrix.symm rho.1) *
+            (CStarMatrix.ofMatrix.symm (CFC.log rho.1)))).re -
+        (Matrix.trace
+          ((CStarMatrix.ofMatrix.symm rho.1) *
+            (CStarMatrix.ofMatrix.symm (CFC.log sigma.1)))).re
+  rw [Matrix.trace_sub]
+  simp only [Complex.sub_re, neg_neg]
 
 /-- If `sigma` is the existing basis measurement of `rho` and `log sigma` remains in the
 measured diagonal subspace, then pinching increases entropy by exactly the relative entropy
@@ -96,11 +108,23 @@ theorem von_neumann_entropy_pinching
   have hRhoStar : (rho.1 : Matrix (Fin d) (Fin d) ℂ)ᴴ = rho.1 := by
     have hSelfAdjoint := rhoHermitian.2
     change star rhoHermitian.1 = rhoHermitian.1 at hSelfAdjoint
-    simpa only [rhoHermitian, Matrix.star_eq_conjTranspose] using hSelfAdjoint
+    change star rho.1 = rho.1 at hSelfAdjoint
+    apply Matrix.ext
+    intro i j
+    have hentry := congrArg
+      (fun z : CStarMatrix (Fin d) (Fin d) ℂ => z i j) hSelfAdjoint
+    change star (rho.1 j i) = rho.1 i j
+    exact hentry
   have hSigmaStar : (sigma.1 : Matrix (Fin d) (Fin d) ℂ)ᴴ = sigma.1 := by
     have hSelfAdjoint := sigmaHermitian.2
     change star sigmaHermitian.1 = sigmaHermitian.1 at hSelfAdjoint
-    simpa only [sigmaHermitian, Matrix.star_eq_conjTranspose] using hSelfAdjoint
+    change star sigma.1 = sigma.1 at hSelfAdjoint
+    apply Matrix.ext
+    intro i j
+    have hentry := congrArg
+      (fun z : CStarMatrix (Fin d) (Fin d) ℂ => z i j) hSelfAdjoint
+    change star (sigma.1 j i) = sigma.1 i j
+    exact hentry
   have hTrace :
       Matrix.trace (CStarMatrix.ofMatrix.symm rho.1 * L.1) =
         Matrix.trace (CStarMatrix.ofMatrix.symm sigma.1 * L.1) := by
@@ -131,7 +155,7 @@ theorem von_neumann_entropy_pinching
 noncomputable def oneDimensionalState : DensityState Unit := by
   refine ⟨(1 : CStarMatrix Unit Unit ℂ), ?_, ?_⟩
   · exact zero_le_one
-  · simp [Matrix.trace]
+  · simp [Matrix.trace, Matrix.diag]
 
 example : quantumRelativeEntropy oneDimensionalState oneDimensionalState =
     -vonNeumannEntropy oneDimensionalState -
