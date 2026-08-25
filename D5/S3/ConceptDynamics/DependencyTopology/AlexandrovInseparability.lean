@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/DependencyTopology/AlexandrovInseparability
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DependencyTopology/AlexandrovInseparability
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Upper-Alexandrov inseparability is mutual reachability and antisymmetry. -/
@@ -22,10 +22,11 @@ theorem upper_inseparable_iff_mutual
     [Std.Refl relation] [IsTrans V relation] (x y : V) :
     @Inseparable V (upperSetTopology relation) x y ↔
       relation x y ∧ relation y x := by
+  letI : TopologicalSpace V := upperSetTopology relation
   constructor
   · intro inseparable
-    have xInUpsetX : x ∈ upset relation x := refl x
-    have yInUpsetY : y ∈ upset relation y := refl y
+    have xInUpsetX : x ∈ upset relation x := Std.Refl.refl x
+    have yInUpsetY : y ∈ upset relation y := Std.Refl.refl y
     have yInUpsetX : y ∈ upset relation x :=
       (inseparable.mem_open_iff (upset_isOpen relation x)).mp xInUpsetX
     have xInUpsetY : x ∈ upset relation y :=
@@ -45,7 +46,7 @@ inseparability collapses to equality. -/
 theorem antisymmetric_iff_inseparable_eq
     {V : Type*} (relation : V → V → Prop)
     [Std.Refl relation] [IsTrans V relation] :
-    Antisymmetric relation ↔
+    (∀ ⦃x y⦄, relation x y → relation y x → x = y) ↔
       ∀ x y, @Inseparable V (upperSetTopology relation) x y → x = y := by
   constructor
   · intro antisymmetric x y inseparable

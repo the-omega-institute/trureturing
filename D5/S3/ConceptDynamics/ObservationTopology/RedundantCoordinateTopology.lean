@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/ObservationTopology/RedundantCoordinateTopology
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/ObservationTopology/RedundantCoordinateTopology
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: A joined coordinate changes topology exactly when it is not recoverable. -/
@@ -57,7 +57,7 @@ theorem join_topology_eq_iff_coordinate_redundant
       (partition_inseparable_iff_kernel current x y).2 sameCurrent
     have joinInseparable :
         @Inseparable X (partitionTopology (conceptJoin current candidate)) x y := by
-      simpa only [topologyEqual] using currentInseparable
+      exact topologyEqual.symm ▸ currentInseparable
     have sameJoin :=
       (partition_inseparable_iff_kernel
         (conceptJoin current candidate) x y).1 joinInseparable
@@ -108,7 +108,7 @@ theorem coordinate_inadequate_iff_strict_join_refinement
     have topologyEqual := redundant_coordinate_topology_eq current candidate redundant
     rcases strict.2 with ⟨set, setOpenJoin, setNotOpenCurrent⟩
     apply setNotOpenCurrent
-    simpa only [topologyEqual] using setOpenJoin
+    exact topologyEqual ▸ setOpenJoin
 
 #print axioms join_topology_eq_iff_coordinate_redundant
 #print axioms coordinate_inadequate_iff_strict_join_refinement

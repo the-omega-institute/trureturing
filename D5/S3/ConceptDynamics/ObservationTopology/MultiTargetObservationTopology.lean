@@ -1,12 +1,13 @@
 /- GID: D5/S3/ConceptDynamics/ObservationTopology/MultiTargetObservationTopology
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/ObservationTopology/MultiTargetObservationTopology
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Joint-target continuity and separation deficits decompose into component targets. -/
 
 import D5.S3.ConceptDynamics.ObservationTopology.TargetContinuityFactorization
 import D5.S3.ConceptDynamics.ObservationTopology.ResidualSeparationTopology
+import D5.S3.ConceptDynamics.ObservationTopology.PartitionTopologyKernel
 import D5.S3.ConceptDynamics.Refinement.MultiTargetMinimalSufficiency
 
 set_option autoImplicit false
@@ -16,6 +17,7 @@ namespace D5.S3.ConceptDynamics.ObservationTopology.MultiTargetObservationTopolo
 
 open D5.S3.ConceptDynamics.ConceptFiberDecomposition
 open D5.S3.ConceptDynamics.Refinement.MultiTargetMinimalSufficiency
+open D5.S3.ConceptDynamics.Epistemic.PartitionKnowledgeNegativeIntrospection
 open D5.S3.ConceptDynamics.ObservationTopology.TargetContinuityFactorization
 open D5.S3.ConceptDynamics.ObservationTopology.ResidualSeparationTopology
 

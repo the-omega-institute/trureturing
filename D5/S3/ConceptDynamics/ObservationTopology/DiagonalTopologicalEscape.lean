@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/ObservationTopology/DiagonalTopologicalEscape
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/ObservationTopology/DiagonalTopologicalEscape
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Complete relative diagonals force discontinuity and strict refinement. -/

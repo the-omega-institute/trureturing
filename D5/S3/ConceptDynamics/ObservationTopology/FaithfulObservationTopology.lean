@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/ObservationTopology/FaithfulObservationTopology
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/ObservationTopology/FaithfulObservationTopology
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Injective observations induce discrete topology and preserve catalog escapes. -/
@@ -47,7 +47,7 @@ theorem partitionTopology_eq_discrete_iff_injective
       (partition_inseparable_iff_kernel observe x y).2 sameObserved
     have discreteInseparable :
         @Inseparable X (⊥ : TopologicalSpace X) x y := by
-      simpa only [topologyDiscrete] using observedInseparable
+      exact topologyDiscrete ▸ observedInseparable
     letI : TopologicalSpace X := ⊥
     letI : DiscreteTopology X := ⟨rfl⟩
     exact discreteInseparable.eq
@@ -56,7 +56,8 @@ theorem partitionTopology_eq_discrete_iff_injective
       partitionTopology observe = partitionTopology (id : Concept X X) := by
         apply partitionTopology_eq_of_kernel_iff
         intro x y
-        exact ⟨injective, congrArg observe⟩
+        exact ⟨fun sameObserved => injective sameObserved,
+          fun sameIdentity => congrArg observe sameIdentity⟩
       _ = (⊥ : TopologicalSpace X) := partitionTopology_id_eq_discrete
 
 /-- Topological faithfulness is exactly preservation of every one-row catalog

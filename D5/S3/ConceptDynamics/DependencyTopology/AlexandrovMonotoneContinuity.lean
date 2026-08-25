@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/DependencyTopology/AlexandrovMonotoneContinuity
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DependencyTopology/AlexandrovMonotoneContinuity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Maps between upper Alexandrov spaces are continuous exactly when they are monotone. -/

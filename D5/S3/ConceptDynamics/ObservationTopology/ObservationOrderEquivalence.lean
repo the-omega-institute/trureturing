@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/ObservationTopology/ObservationOrderEquivalence
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/ObservationTopology/ObservationOrderEquivalence
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Factorization equals partition-open inclusion; defects are antitone. -/
@@ -45,7 +45,7 @@ theorem refines_implies_partition_open_inclusion
     rw [continuous_def]
     intro set _setOpen
     exact isOpen_discrete _
-  simpa only [partitionTopology] using
+  simpa only [ObservationOpenInclusion, partitionTopology] using
     (continuous_refinement_observation_topology
       (coarse := coarse) (refined := fine) (projection := factor)
       factorization factorContinuous)
@@ -73,7 +73,8 @@ theorem partition_open_inclusion_implies_refines
     (partition_inseparable_iff_kernel fine x y).2 sameFine
   have xInFiber : x ∈ coarseFiber := by simp [coarseFiber]
   have yInFiber : y ∈ coarseFiber :=
-    (fineInseparable.mem_open_iff fineFiberOpen).mp xInFiber
+    ((@Inseparable.mem_open_iff X (partitionTopology fine)
+      x y coarseFiber fineInseparable fineFiberOpen).mp xInFiber)
   have sameCoarse : coarse y = coarse x := by
     simpa [coarseFiber] using yInFiber
   exact differentCoarse sameCoarse.symm
