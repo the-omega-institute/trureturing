@@ -68,17 +68,11 @@ internal sealed class ConceptKernelOrderDualityDocument : IScribeDocumentDefinit
             Call("Refines", coarseReadout, fineReadout), Sp, Iff, Sp,
             fineKernel, Sp, Subseteq, Sp, coarseKernel);
         Formula joinKernel = Seq(
-            Forall, Sp, coarse, Comma, Sp, fine, Colon, Sp,
-            Operatorname, Grp(F.Id("Type")), Comma, Sp,
-            coarseReadout, Colon, Sp, Call("Concept", state, coarse), Comma, Sp,
-            fineReadout, Colon, Sp, Call("Concept", state, fine), Comma, Sp,
+            Forall, Sp, coarseReadout, Comma, Sp, fineReadout, Comma, Sp,
             Call("ker", Call("conceptJoin", coarseReadout, fineReadout)),
             Sp, Eq, Sp, Call("intersection", coarseKernel, fineKernel));
         Formula coarseningKernel = Seq(
-            Forall, Sp, coarse, Comma, Sp, fine, Colon, Sp,
-            Operatorname, Grp(F.Id("Type")), Comma, Sp,
-            coarseReadout, Colon, Sp, Call("Concept", state, coarse), Comma, Sp,
-            fineReadout, Colon, Sp, Call("Concept", state, fine), Comma, Sp,
+            Forall, Sp, coarseReadout, Comma, Sp, fineReadout, Comma, Sp,
             Call("ker", Call("commonCoarsening", coarseReadout, fineReadout)),
             Sp, Eq, Sp,
             Call("EqvClosure", Call("union", coarseKernel, fineKernel)));
