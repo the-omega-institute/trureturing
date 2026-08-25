@@ -235,10 +235,10 @@ public sealed partial class CoverAtomTests
     [Fact]
     public void CoverRejectsAtomWhoseContentAddressedReceiptDrifted()
     {
-        // The atom's durable CAS blob is absent, so its content-addressed
-        // fingerprint can no longer be reproduced: cover fails closed rather than
-        // binding a declaration to an unverifiable source atom.
-        var (result, after, before, _) = Execute(new CoverSpec { IncludeCasBlob = false });
+        // The atom's durable CAS blob is absent, so its fingerprint cannot be reproduced:
+        // cover fails closed rather than binding a declaration to an unverifiable source atom.
+        var (result, after, before, _) = Execute(
+            new CoverSpec { IncludeCasBlob = false }, changes: RawChangeSet.Create(["README.md"]));
 
         Assert.False(result.Success);
         Assert.Contains("CAS blob is missing", result.Error, StringComparison.Ordinal);
@@ -365,9 +365,9 @@ public sealed partial class CoverAtomTests
         Assert.Contains("Scribe emission verifier is unavailable", result.Error, StringComparison.Ordinal);
     }
 
-    private static CoverExecution Execute(
-        CoverSpec spec,
-        IReadOnlyList<string>? args = null)
+    private static CoverExecution Execute(CoverSpec spec,
+        IReadOnlyList<string>? args = null,
+        RawChangeSet? changes = null)
     {
         var inputs = spec.Materialize();
         var currentFiles = DirectoryLedgerTestSupport.Project(inputs.Files);
@@ -379,7 +379,7 @@ public sealed partial class CoverAtomTests
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(
-                RawChangeSet.Create(Array.Empty<string>()),
+                changes ?? RawChangeSet.Create(Array.Empty<string>()),
                 CoverWorld.Raw(currentFiles),
                 CoverWorld.Raw(baselineFiles)),
             new FakeLeanReportSource(inputs.Report),

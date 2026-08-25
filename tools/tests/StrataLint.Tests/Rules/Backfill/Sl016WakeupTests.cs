@@ -160,8 +160,28 @@ public sealed class Sl016WakeupTests
     public void BaselineComparableReceiptIntegrityCodeSetIsExactlyCoverageReceiptMismatch()
     {
         Assert.Equal(
-            new[] { "coverage-receipt-mismatch" },
+            new[]
+            {
+                "coverage-receipt-mismatch",
+                "scribe-definition-mismatch",
+                "scribe-emission-mismatch",
+            },
             BackfillInventoryRule.BaselineComparableReceiptIntegrityCodes.ToArray());
+    }
+
+    [Fact]
+    public void ReceiptIntegrityGapIdentityIncludesCode()
+    {
+        var evaluation = EvaluateCodeIdentityCounterexample();
+
+        AssertGapEffect(
+            evaluation,
+            "delta-atom:coverage-receipt-mismatch:D5/S0/Carrier/BackfillTarget",
+            AdmissionEffect.Observe);
+        AssertGapEffect(
+            evaluation,
+            "delta-atom:scribe-emission-mismatch:D5/S0/Carrier/BackfillTarget",
+            AdmissionEffect.Block);
     }
 
     [Fact]
@@ -204,9 +224,7 @@ public sealed class Sl016WakeupTests
         var diagnostic = Assert.Single(evaluation.Diagnostics, item => item.Message.Contains(
             mismatchCode,
             StringComparison.Ordinal));
-        Assert.Equal(AdmissionEffect.Observe, diagnostic.AdmissionEffect);
-        Assert.DoesNotContain(evaluation.Diagnostics, item =>
-            item.AdmissionEffect == AdmissionEffect.Block);
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
     }
 
     [Fact]
@@ -226,11 +244,8 @@ public sealed class Sl016WakeupTests
             var diagnostic = Assert.Single(evaluation.Diagnostics, item => item.Message.Contains(
                 mismatchCode,
                 StringComparison.Ordinal));
-            Assert.Equal(AdmissionEffect.Observe, diagnostic.AdmissionEffect);
+            Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
         }
-
-        Assert.DoesNotContain(evaluation.Diagnostics, item =>
-            item.AdmissionEffect == AdmissionEffect.Block);
     }
 
     [Theory]
@@ -373,6 +388,49 @@ public sealed class Sl016WakeupTests
             fixture,
             VerifiedScribeEmissions.Empty,
             ["tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs", secondAtomPath]);
+    }
+
+    private static SingleRuleEvaluation EvaluateCodeIdentityCounterexample()
+    {
+        const string atomPath =
+            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
+        const string coverageGid = "D5/S0/Carrier/BackfillTarget";
+        var fixture = PreparedCoverageFixture();
+        var definitionPath = ScribeEmissionAttestation.DefinitionPath(coverageGid);
+        var emissionPath = ScribeEmissionAttestation.EmissionPath(coverageGid);
+        const string definition = "fixture Scribe definition\n";
+        const string emission = "# Fixture Scribe emission\n";
+        var definitionSha256 = Sha256(definition);
+        var emissionSha256 = Sha256(emission);
+        var receiptProjection = CoverageReceipt(coverageGid, MismatchSha256())
+            .Replace(
+                "  scribe: []",
+                "  scribe:\n"
+                + $"    - gid: {coverageGid}\n"
+                + $"      definition_sha256: {definitionSha256}\n"
+                + $"      emission_sha256: {emissionSha256}",
+                StringComparison.Ordinal);
+        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        {
+            files[atomPath] = AddReceipts(files[atomPath], receiptProjection);
+            files[definitionPath] = definition;
+            files[emissionPath] = emission;
+        }
+
+        var verified = VerifiedScribeEmissions.Create(
+        [
+            new ScribeEmissionRecord(
+                coverageGid,
+                definitionPath,
+                definitionSha256,
+                emissionPath,
+                MismatchSha256()),
+        ]);
+
+        return EvaluateSl016(
+            fixture,
+            verified,
+            ["tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs", emissionPath]);
     }
 
     private static SingleRuleEvaluation EvaluateDetailIdentityCounterexample()

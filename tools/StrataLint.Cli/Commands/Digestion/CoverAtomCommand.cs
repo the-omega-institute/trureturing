@@ -49,6 +49,9 @@ namespace StrataLint.Cli;
 //  - kind exclusion gate (spec §5): a producer responsibility, not cover's.
 internal static partial class CoverAtomCommand
 {
+    private const string ImplementationPath =
+        "tools/StrataLint.Cli/Commands/Digestion/CoverAtomCommand.cs";
+
     internal static CommandResult Run(
         string repositoryRoot,
         IRepositoryGateway repository,
@@ -93,17 +96,98 @@ internal static partial class CoverAtomCommand
             var target = LocateTarget(sources, options.AtomId, options.Gids);
             var existingGids = target.CoverageGids.ToImmutableHashSet(StringComparer.Ordinal);
             var addedGids = options.Gids.Where(gid => !existingGids.Contains(gid)).ToImmutableArray();
+            var repositoryChanges = repository.ReadChanges(options.BaselineRevision);
+            var inputPaths = new HashSet<string>(StringComparer.Ordinal)
+            {
+                options.EnvelopePath,
+            };
+            var entriesByAtomId = document.RequireDigestionEntries()
+                .GroupBy(static entry => entry.AtomId, StringComparer.Ordinal)
+                .Where(static group => group.Count() == 1)
+                .ToDictionary(static group => group.Key, static group => group.Single(), StringComparer.Ordinal);
+            var pendingAtomIds = new Stack<string>();
+            var scopedAtomIds = new HashSet<string>(StringComparer.Ordinal);
+            pendingAtomIds.Push(target.AtomId);
+            while (pendingAtomIds.TryPop(out var atomId))
+            {
+                if (!scopedAtomIds.Add(atomId)
+                    || !entriesByAtomId.TryGetValue(atomId, out var entry))
+                {
+                    continue;
+                }
+
+                var state = DigestionStatusNames.Migration(entry.ProjectedStatus.Migration)
+                    + "-"
+                    + DigestionStatusNames.Truth(entry.ProjectedStatus.Truth);
+                inputPaths.Add(
+                    $"{BackfillInventoryLoader.RootPath}{entry.SourceId}/{state}/{entry.AtomId}.yaml");
+                inputPaths.Add($"{BackfillInventoryLoader.RootPath}{entry.SourceId}/source.toml");
+                inputPaths.Add(entry.SourcePath);
+                if (DigestionFingerprint.IsCanonicalSha256(entry.CasRef))
+                {
+                    inputPaths.Add(DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..]);
+                }
+
+                if (entry.Receipts.TailAuthorization is { } tailAuthorization)
+                {
+                    inputPaths.Add(tailAuthorization.Path);
+                }
+
+                foreach (var chainedAtomId in entry.Receipts.ChainAtoms)
+                {
+                    pendingAtomIds.Push(chainedAtomId);
+                }
+
+                foreach (var gidText in entry.CoverageGids)
+                {
+                    AddGidInputs(gidText);
+                }
+            }
+
+            foreach (var gid in gids)
+            {
+                AddGidInputs(gid.Value);
+            }
+
+            void AddGidInputs(string gidText)
+            {
+                if (!Gid.TryParse(gidText, out var gid))
+                {
+                    return;
+                }
+
+                inputPaths.Add(gid.Path.Value);
+                var documentGid = ScribeEmissionAttestation.DocumentGid(gidText);
+                inputPaths.Add(ScribeEmissionAttestation.DefinitionPath(documentGid));
+                inputPaths.Add(ScribeEmissionAttestation.EmissionPath(documentGid));
+            }
+
+            var repositoryPaths = repositoryChanges.Entries
+                .Select(static entry => entry.Path.Value)
+                .ToHashSet(StringComparer.Ordinal);
+            var coverChanges = RawChangeSet.CreateWithKinds(
+                repositoryChanges.Entries
+                    .Select(static entry => (Path: entry.Path.Value, Kind: entry.Kind))
+                    .Concat(inputPaths
+                        .Where(path => RepoPath.TryCreate(path, out _)
+                            && !repositoryPaths.Contains(path))
+                        .Select(static path => (Path: path, Kind: RawChangeKind.Modified)))
+                    .OrderBy(static entry => entry.Path, StringComparer.Ordinal));
+            var evaluationScope = DigestionEvaluationScopes.ForChanges(
+                coverChanges,
+                ImplementationPath);
             var report = leanReportSource.Load(current);
             var lean = ValidateLean(current, report);
-            var verifiedScribeEmissions = scribeEmissionVerifier.Verify(current, report);
+            var verifiedScribeEmissions = scribeEmissionVerifier.Verify(current, report, coverChanges);
             var beforeEvaluation = DigestionStatusEvaluator.Evaluate(
-                DigestionEvaluationScope.FullScan,
+                evaluationScope,
                 document,
                 current,
                 lean,
                 verifiedScribeEmissions,
                 baselineDocument,
-                baselineSnapshot: baseline);
+                baselineSnapshot: baseline,
+                changes: coverChanges);
             RequireNoReceiptIntegrityFailure(beforeEvaluation);
 
             // Gate ②(b): anti-Goodhart — cover may only deposit a declaration that
@@ -155,14 +239,15 @@ internal static partial class CoverAtomCommand
             var plannedDocument = ReplaceEntry(document, options.AtomId, covered);
 
             var derived = DigestionStatusEvaluator.Evaluate(
-                DigestionEvaluationScope.FullScan,
+                evaluationScope,
                 plannedDocument,
                 current,
                 lean,
                 verifiedScribeEmissions,
                 baselineDocument,
                 validateProjectedStatus: false,
-                baselineSnapshot: baseline);
+                baselineSnapshot: baseline,
+                changes: coverChanges);
             RequireNoReceiptIntegrityFailure(derived);
 
             var statusByAtomId = derived.Entries.ToDictionary(
@@ -189,13 +274,14 @@ internal static partial class CoverAtomCommand
             var finalSnapshot = Decode(finalRaw);
             var finalDocument = LoadDocument(finalSnapshot);
             var evaluation = DigestionStatusEvaluator.Evaluate(
-                DigestionEvaluationScope.FullScan,
+                evaluationScope,
                 finalDocument,
                 finalSnapshot,
                 lean,
                 verifiedScribeEmissions,
                 baselineDocument,
-                baselineSnapshot: baseline);
+                baselineSnapshot: baseline,
+                changes: coverChanges);
             RequireNoReceiptIntegrityFailure(evaluation);
             var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
                 finalDocument,
@@ -203,7 +289,8 @@ internal static partial class CoverAtomCommand
                 baseline,
                 LoadPolicy(finalSnapshot),
                 lean,
-                verifiedScribeEmissions);
+                verifiedScribeEmissions,
+                DigestionEvaluationScopes.ResolveChanges(evaluationScope, coverChanges));
 
             var finalTarget = EvaluationFor(evaluation, options.AtomId);
             if (target.CoverageGids.Length == 0)
