@@ -53,17 +53,17 @@ internal sealed class DirectlyProvableLawWitnessesDocument : IScribeDocumentDefi
                 DescribeRole.Theorem))));
 
     private static Formula WitnessFormula() => Disp(Seq(
-        Present("W1"), Sp, Land, Sp,
-        Present("W2"), Sp, Land, Sp,
-        Present("W3a"), Sp, Land, Sp,
-        Present("W3b"), Sp, Land, Sp,
-        Present("W4"), Sp, Land, Sp,
-        Present("W5"), Sp, Land, Sp,
-        Present("W7"), Sp, Land, Sp,
-        Present("W8"), Sp, Land, Sp,
-        Present("W9"), Sp, Land, Sp,
-        Present("Wcapture")));
+        Present(F.Id("W1")), Sp, Land, Sp,
+        Present(F.Id("W2")), Sp, Land, Sp,
+        Present(F.Id("W3a")), Sp, Land, Sp,
+        Present(F.Id("W3b")), Sp, Land, Sp,
+        Present(F.Id("W4")), Sp, Land, Sp,
+        Present(F.Id("W5")), Sp, Land, Sp,
+        Present(F.Id("W7")), Sp, Land, Sp,
+        Present(F.Id("W8")), Sp, Land, Sp,
+        Present(F.Id("W9")), Sp, Land, Sp,
+        Present(F.Id("Wcapture"))));
 
-    private static Formula Present(string declaration) =>
-        Call("present", F.Id(declaration));
+    private static Formula Present(Formula declaration) =>
+        Call("present", declaration);
 }
