@@ -156,9 +156,9 @@ public static partial class FrozenLedgerGenerator
     {
         var activeByPath = baseline.ActiveEntries.Values.ToDictionary(
             static entry => entry.Material.RepoPath);
-        var currentClosedPaths = candidateCatalog.Dag.Nodes
-            .Where(static node => node.State is TruthState.Closed && node.ModuleName is not null)
-            .Select(static node => node.RepoPath)
+        var currentClosedPaths = candidateCatalog.States
+            .Where(static item => item.Value is TruthState.Closed)
+            .Select(static item => item.Key)
             .ToHashSet();
         var payloads = ImmutableArray.CreateBuilder<(string Type, JsonElement Payload)>();
         foreach (var (path, entry) in activeByPath.OrderBy(

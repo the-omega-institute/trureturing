@@ -33,7 +33,7 @@ internal static partial class DigestionStatusEvaluator
         findings.AddRange(alignment.Findings);
         var emptyLeanReport = LeanAxiomReport.Create(
             new Dictionary<string, LeanFileReport>(StringComparer.Ordinal));
-        var emptyTruthNodes = new Dictionary<RepoPath, TruthNode>();
+        var emptyTruthStates = new Dictionary<RepoPath, TruthState>();
         var genreChecks = document.RequireDigestionSources()
             .ToDictionary(
                 static source => source.SourceId,
@@ -48,7 +48,7 @@ internal static partial class DigestionStatusEvaluator
                 baselineMigration: null,
                 snapshot,
                 emptyLeanReport,
-                emptyTruthNodes,
+                emptyTruthStates,
                 verifiedScribeEmissions: null,
                 genreChecks[entry.SourceId],
                 changes,
@@ -118,13 +118,7 @@ internal static partial class DigestionStatusEvaluator
             .Where(static group => group.Count() == 1)
             .ToDictionary(static group => group.Key, static group => group.Single(), StringComparer.Ordinal);
 
-        var dag = AcyclicTruthDag.Build(snapshot, lean) switch
-        {
-            DagBuildOutcome.Accepted accepted => accepted.Capability,
-            DagBuildOutcome.Rejected rejected => throw new FormatException(
-                "truth DAG is cyclic: " + string.Join(" -> ", rejected.Witness.Select(static path => path.Value))),
-        };
-        var nodes = dag.Nodes.ToDictionary(static node => node.RepoPath);
+        var states = LeanTruthStates.Resolve(snapshot, lean);
         var genreChecks = document.RequireDigestionSources()
             .ToDictionary(
                 static source => source.SourceId,
@@ -142,7 +136,7 @@ internal static partial class DigestionStatusEvaluator
                 baselineMigration,
                 snapshot,
                 lean.Report,
-                nodes,
+                states,
                 verifiedScribeEmissions,
                 genreChecks[entry.SourceId],
                 changes,
@@ -262,7 +256,7 @@ internal static partial class DigestionStatusEvaluator
         DigestionMigrationState? baselineMigration,
         RepositorySnapshot snapshot,
         LeanAxiomReport leanReport,
-        IReadOnlyDictionary<RepoPath, TruthNode> nodes,
+        IReadOnlyDictionary<RepoPath, TruthState> states,
         VerifiedScribeEmissions? verifiedScribeEmissions,
         GenreRegistryCheck genreRegistryCheck,
         RawChangeSet? changes,
@@ -308,7 +302,7 @@ internal static partial class DigestionStatusEvaluator
             existingTargets.Add(gidText, target);
             targetStates.Add((
                 gidText,
-                nodes.TryGetValue(target.Path, out var node) ? node.State : TruthState.Semantic));
+                states.TryGetValue(target.Path, out var state) ? state : TruthState.Semantic));
         }
 
         if (entry.CoverageGids.Length == 0)

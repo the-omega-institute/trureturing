@@ -528,8 +528,7 @@ public sealed class LedgerReattestCommandTests
         {
             var closure = Assert.IsType<LeanValidationOutcome.Accepted>(
                 LeanClosureValidator.Validate(snapshot, report)).Capability;
-            var dag = Assert.IsType<DagBuildOutcome.Accepted>(
-                AcyclicTruthDag.Build(snapshot, closure)).Capability;
+            var dag = TruthDagProjectionAssembler.Build(snapshot, closure);
             var environment = new FrozenEnvironmentAttestation(
                 FrozenLedgerTestData.GitOid('a'),
                 FrozenLedgerTestData.GitOid('b'),
@@ -539,7 +538,6 @@ public sealed class LedgerReattestCommandTests
                 FrozenContentAddress.Build(
                     snapshot,
                     closure,
-                    dag,
                     environment,
                     report.Files.Keys.Select(path => new FrozenModuleAttestation(
                         path,

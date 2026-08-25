@@ -7,7 +7,7 @@ namespace StrataLint.Tests;
 public sealed partial class DepositCoverWorkflowScriptTests
 {
     [Fact]
-    public void DepositCreatesTwoCommitsWithFreezeAndReceiptInTheSecondCommit()
+    public void DepositRunsPhaseAEmissionWithoutRecomputingAfterFreezeAndReceipt()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -27,8 +27,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "make:emit",
                 "dotnet:emit-formalization-receipt",
                 "dotnet:ledger-append",
-                "make:lean-report",
-                "make:emit",
             ],
             fixture.CallKinds());
 
@@ -44,26 +42,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
             phaseB,
             path => path.StartsWith(TransactionFixture.LedgerPath + "/", StringComparison.Ordinal));
         Assert.Contains(TransactionFixture.ReceiptRelativePath, phaseB);
-    }
-
-    [Fact]
-    public void DepositEmitsAfterInstallingReceipt()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.ChangeFormalization();
-
-        var result = fixture.Run("deposit");
-
-        Assert.True(result.ExitCode == 0, Diagnostics(result));
-        var stderr = Encoding.UTF8.GetString(result.StandardError);
-        var receipt = stderr.IndexOf(
-            $"PLAYBOOK_WRITE path={TransactionFixture.ReceiptRelativePath}",
-            StringComparison.Ordinal);
-        var emit = stderr.IndexOf("detail=emit-post-receipt", receipt, StringComparison.Ordinal);
-
-        Assert.True(receipt >= 0, Diagnostics(result));
-        Assert.True(emit > receipt, Diagnostics(result));
     }
 
     [Fact]
@@ -251,30 +229,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
     }
 
     [Fact]
-    public void DepositRejectsAnUnboundButCanonicalHostPrimaryBeforeAppendingSecondaryFreeze()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.ChangeFormalization();
-        var primaryDeposit = fixture.Run("deposit");
-        Assert.True(primaryDeposit.ExitCode == 0, Diagnostics(primaryDeposit));
-        var primaryCover = fixture.Run("cover");
-        Assert.True(primaryCover.ExitCode == 0, Diagnostics(primaryCover));
-        fixture.WriteHostReceipt(primaryGid: "D5/S0/Carrier/Probe.unbound");
-        fixture.AddSecondaryFormalization();
-
-        var secondary = fixture.Run("deposit", TransactionFixture.SecondaryGid);
-
-        Assert.NotEqual(0, secondary.ExitCode);
-        Assert.Contains(
-            "is not already bound",
-            Encoding.UTF8.GetString(secondary.StandardError),
-            StringComparison.Ordinal);
-        Assert.Equal(1, fixture.FreezeCount(TransactionFixture.LeanPath));
-        Assert.Equal(0, fixture.FreezeCount(TransactionFixture.SecondaryLeanPath));
-    }
-
-    [Fact]
     public void DepositFreezesASecondModuleUnderTheExistingAtomReceiptHost()
     {
         if (OperatingSystem.IsWindows()) return;
@@ -284,10 +238,18 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.True(primary.ExitCode == 0, Diagnostics(primary));
         var receipt = File.ReadAllBytes(fixture.ReceiptPath);
         fixture.AddSecondaryFormalization();
+        fixture.ClearCalls();
 
         var secondary = fixture.Run("deposit", TransactionFixture.SecondaryGid);
 
         Assert.True(secondary.ExitCode == 0, Diagnostics(secondary));
+        Assert.Contains(fixture.Calls(), call => call.StartsWith(
+            "dotnet:emit-formalization-receipt"
+                + $" --atom-id {TransactionFixture.AtomId}"
+                + $" --gid {TransactionFixture.SecondaryGid}",
+            StringComparison.Ordinal));
+        Assert.DoesNotContain(fixture.Calls(), call =>
+            call.Contains("--require-existing-coverage", StringComparison.Ordinal));
         Assert.Equal(1, fixture.FreezeCount(TransactionFixture.LeanPath));
         Assert.Equal(1, fixture.FreezeCount(TransactionFixture.SecondaryLeanPath));
         Assert.NotEqual(receipt, File.ReadAllBytes(fixture.ReceiptPath));
@@ -353,7 +315,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.True(cover.ExitCode == 0, Diagnostics(cover));
         Assert.Contains(
             "dotnet:cover-atom --cover-atom atom-1"
-                + $" --gid {TransactionFixture.Gid}"
                 + $" --gid {TransactionFixture.SecondaryGid}"
                 + " --base synthetic-base"
                 + $" --envelope {TransactionFixture.ReceiptRelativePath}",
@@ -362,7 +323,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
     }
 
     [Fact]
-    public void CoverReemitsBeforeAndAfterReceiptAlignmentThenCommitsOnce()
+    public void CoverAlignsFromVerifiedEmissionWithoutReemittingThenCommitsOnce()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -380,13 +341,11 @@ public sealed partial class DepositCoverWorkflowScriptTests
             [
                 "make:lean-report",
                 "dotnet:cover-atom",
-                "make:emit",
                 "dotnet:align-scribe-receipt",
-                "make:emit",
             ],
             fixture.CallKinds());
-        Assert.Contains("aligned: covered", File.ReadAllText(
-            Path.Combine(fixture.Root, TransactionFixture.BackfillPath)), StringComparison.Ordinal);
+        Assert.Contains("aligned: covered", fixture.BackfillContents(), StringComparison.Ordinal);
+        Assert.Equal("emission: open\n", fixture.EmissionContents());
         Assert.Empty(fixture.Status());
     }
 
@@ -443,6 +402,10 @@ public sealed partial class DepositCoverWorkflowScriptTests
         internal string Root { get; }
 
         internal string ReceiptPath => Path.Combine(Root, ReceiptRelativePath);
+
+        internal string BackfillContents() => File.ReadAllText(Path.Combine(Root, BackfillPath));
+
+        internal string EmissionContents() => File.ReadAllText(Path.Combine(Root, EmissionPath));
 
         internal void ChangeFormalization()
         {

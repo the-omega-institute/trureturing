@@ -348,7 +348,7 @@ public sealed partial class ProductionEnvironmentTests
                 BaseTreeOid = FrozenLedgerTestData.GitOid('b'),
             });
         return Assert.IsType<FrozenMaterialOutcome.Accepted>(
-            FrozenContentAddress.Build(snapshot, lean, dag, FrozenEnvironment(files), attestations)).Capability;
+            FrozenContentAddress.Build(snapshot, lean, FrozenEnvironment(files), attestations)).Capability;
     }
 
     private static FrozenEnvironmentAttestation FrozenEnvironment(

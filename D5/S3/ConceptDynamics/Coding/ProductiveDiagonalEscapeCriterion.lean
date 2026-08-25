@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/Coding/ProductiveDiagonalEscapeCriterion
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/ProductiveDiagonalEscapeCriterion
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: A diagonal catalog escape is productive iff it creates a new question. -/

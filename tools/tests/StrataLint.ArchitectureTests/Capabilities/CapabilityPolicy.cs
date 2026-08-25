@@ -45,8 +45,7 @@ internal static class CapabilityPolicy
             || type.Name.EndsWith("Clear", StringComparison.Ordinal)
             || type.Name.StartsWith("Accepted", StringComparison.Ordinal)
             || type.Name.StartsWith("Validated", StringComparison.Ordinal)
-            || type.Name is "AcyclicTruthDag"
-                or "CanonicalFixedPoint"
+            || type.Name is "CanonicalFixedPoint"
                 or "CompletedRuleSet"
                 or "FrozenLedgerConsistent"
                 or "FrozenLedgerReferenceSet"

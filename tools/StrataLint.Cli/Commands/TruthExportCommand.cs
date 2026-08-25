@@ -81,7 +81,6 @@ internal static class TruthExportCommand
         var catalog = DagLedgerCommandPreparation.BuildCompleteCatalog(
             truth.Snapshot,
             truth.Lean,
-            truth.Dag,
             baseView,
             identity);
         var syntax = DagLedgerCommandPreparation.LoadLedgerFiles(
