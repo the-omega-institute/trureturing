@@ -178,6 +178,20 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
 
     public RawRepositorySnapshot ReadCurrent() => GitRepositorySnapshotReader.ReadCurrent(root);
 
+    public string ResolveProtectedBaseline(string revision)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(revision);
+        var resolved = GitText("rev-parse", "--verify", $"{revision}^{{commit}}").Trim();
+        var protectedBaseline = GitText("rev-parse", "--verify", "HEAD^1^{commit}").Trim();
+        if (!string.Equals(resolved, protectedBaseline, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                "realign-receipts protected baseline must resolve to the current HEAD first parent");
+        }
+
+        return protectedBaseline;
+    }
+
     public RawRepositorySnapshot ReadRevision(string revision)
     {
         var tree = ParseTree(GitBytes("ls-tree", "-r", "-l", "-z", revision)).ToArray();

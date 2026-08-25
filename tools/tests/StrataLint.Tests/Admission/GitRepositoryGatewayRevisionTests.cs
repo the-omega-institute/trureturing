@@ -112,6 +112,49 @@ public sealed class GitRepositoryGatewayRevisionTests
     }
 
     [Fact]
+    public void ResolveProtectedBaselineAcceptsOnlyCurrentHeadFirstParent()
+    {
+        using var repository = new TemporaryDirectory();
+        ReviewRegressionTests.RunGit(repository.Path, "init");
+        ReviewRegressionTests.RunGit(
+            repository.Path,
+            "config",
+            "user.email",
+            "stratalint@example.invalid");
+        ReviewRegressionTests.RunGit(
+            repository.Path,
+            "config",
+            "user.name",
+            "StrataLint Tests");
+        var path = Path.Combine(repository.Path, "identity.txt");
+        File.WriteAllText(path, "ancestor\n", new UTF8Encoding(false));
+        ReviewRegressionTests.RunGit(repository.Path, "add", "identity.txt");
+        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "ancestor");
+        var ancestor = ReviewRegressionTests.RunGit(repository.Path, "rev-parse", "HEAD").Trim();
+        File.WriteAllText(path, "protected baseline\n", new UTF8Encoding(false));
+        ReviewRegressionTests.RunGit(repository.Path, "add", "identity.txt");
+        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "protected baseline");
+        var protectedBaseline = ReviewRegressionTests.RunGit(
+            repository.Path,
+            "rev-parse",
+            "HEAD").Trim();
+        File.WriteAllText(path, "candidate\n", new UTF8Encoding(false));
+        ReviewRegressionTests.RunGit(repository.Path, "add", "identity.txt");
+        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "candidate");
+        var candidate = ReviewRegressionTests.RunGit(repository.Path, "rev-parse", "HEAD").Trim();
+        var gateway = new GitRepositoryGateway(repository.Path);
+
+        Assert.Equal(protectedBaseline, gateway.ResolveProtectedBaseline(protectedBaseline));
+        var candidateException = Assert.Throws<InvalidOperationException>(() =>
+            gateway.ResolveProtectedBaseline(candidate));
+        var ancestorException = Assert.Throws<InvalidOperationException>(() =>
+            gateway.ResolveProtectedBaseline(ancestor));
+
+        Assert.Contains("current HEAD first parent", candidateException.Message, StringComparison.Ordinal);
+        Assert.Contains("current HEAD first parent", ancestorException.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void PreparePrefersModifiedOverCopySourceForTheSamePath()
     {
         using var repository = new TemporaryDirectory();

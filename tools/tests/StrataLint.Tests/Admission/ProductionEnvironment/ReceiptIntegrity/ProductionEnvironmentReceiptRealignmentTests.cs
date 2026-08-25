@@ -103,6 +103,45 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void ReceiptRealignmentRejectsCandidateAtomIdentityReplacementWithoutWriting()
+    {
+        var inputs = WithCandidateAtomIdentityReplacement(MixedReceiptBacklogInputs());
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+
+        var result = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files)
+            .RealignReceipts(["--base", "baseline"]);
+
+        Assert.False(result.Success);
+        Assert.Contains("atom content identity changed", result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+    }
+
+    [Fact]
+    public void ReceiptRealignmentRejectsCandidateRevisionAsProtectedBaselineWithoutWriting()
+    {
+        var inputs = MixedReceiptBacklogInputs();
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                CoverWorld.Raw(inputs.Files),
+                CoverWorld.Raw(inputs.Files)),
+            new FakeLeanReportSource(inputs.Report),
+            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
+
+        var result = environment.RealignReceipts(["--base", "candidate"]);
+
+        Assert.False(result.Success);
+        Assert.Contains("protected baseline", result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+    }
+
+    [Fact]
     public void ReceiptRealignmentRejectsBaselineFormalizationReceiptForDifferentAtomWithoutWriting()
     {
         var inputs = WithBaselineFormalizationReceipt(
@@ -179,28 +218,27 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void ReceiptRealignmentFinalFullScanRejectsCorruptedSerializedLedger()
+    public void ReceiptRealignmentRejectsCorruptedSerializedLedgerBeforeWriting()
     {
         var inputs = MixedReceiptBacklogInputs();
-        var finalSnapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-            SnapshotDecoder.Decode(CoverWorld.Raw(inputs.Files))).Snapshot;
-        var baselineSnapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-            SnapshotDecoder.Decode(CoverWorld.Raw(inputs.Baseline))).Snapshot;
-        var finalDocument = BackfillInventoryLoader.Load(finalSnapshot);
-        var baselineDocument = BackfillInventoryLoader.LoadBaseline(baselineSnapshot);
-        var lean = Assert.IsType<LeanValidationOutcome.Accepted>(
-            LeanClosureValidator.Validate(finalSnapshot, inputs.Report)).Capability;
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
 
-        var exception = Assert.Throws<InvalidOperationException>(() =>
-            IngestCommand.RequireFinalReceiptRealignmentFullScan(
-                finalDocument,
-                finalSnapshot,
-                lean,
-                inputs.VerifiedEmissions!,
-                baselineDocument,
-                baselineSnapshot));
+        var result = IngestCommand.RealignReceipts(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                CoverWorld.Raw(inputs.Files),
+                CoverWorld.Raw(inputs.Baseline)),
+            new FakeLeanReportSource(inputs.Report),
+            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
+            ["--base", "baseline"],
+            CorruptSerializedCoverageReceipt);
 
-        Assert.Contains("coverage-receipt-mismatch", exception.Message, StringComparison.Ordinal);
+        Assert.False(result.Success);
+        Assert.Contains("coverage-receipt-mismatch", result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
     }
 
     private static CoverInputs MixedReceiptBacklogInputs()
@@ -290,6 +328,82 @@ public sealed partial class ProductionEnvironmentTests
         var files = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal);
         DirectoryLedgerTestSupport.ReplaceWithProjection(files, document);
         return inputs with { Files = files, Document = document };
+    }
+
+    private static CoverInputs WithCandidateAtomIdentityReplacement(CoverInputs inputs)
+    {
+        var replacementBytes = Encoding.UTF8.GetBytes(
+            "# Synthetic\n\n**定理 1.1(A)**。replacement atom body。\n");
+        var replacementAtom = Assert.Single(AtomizerRegistry.Atomize(
+            SyntheticNumberedAtomizer.Id,
+            replacementBytes,
+            DigestionTestSupport.Rules).Claims);
+        var document = inputs.Document.WithDigestionSources(
+            inputs.Document.RequireDigestionSources()
+                .Select(source => source.SourceId == "fixture-source"
+                    ? source with
+                    {
+                        Entries = source.Entries.Select(entry => entry with
+                        {
+                            Fingerprints = replacementAtom.Fingerprints,
+                            CasRef = replacementAtom.Fingerprints.RawSha256,
+                        }).ToImmutableArray(),
+                    }
+                    : source)
+                .ToImmutableArray());
+        var files = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal)
+        {
+            [RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(replacementBytes),
+        };
+        foreach (var oldCasRef in inputs.Document.RequireDigestionEntries()
+                     .Where(static entry => entry.SourceId == "fixture-source")
+                     .Select(static entry => entry.CasRef)
+                     .Distinct(StringComparer.Ordinal))
+        {
+            files.Remove(DigestionCasStore.RootPath + oldCasRef["sha256:".Length..]);
+        }
+        var (replacementCasPath, replacementCasBytes) = DigestionTestSupport.CasFile(replacementAtom);
+        files[replacementCasPath] = Encoding.UTF8.GetString(replacementCasBytes);
+        DirectoryLedgerTestSupport.ReplaceWithProjection(files, document);
+        return inputs with { Files = files, Document = document };
+    }
+
+    private static RawRepositorySnapshot CorruptSerializedCoverageReceipt(
+        RawRepositorySnapshot currentRaw,
+        BackfillInventoryDocument currentDocument,
+        BackfillInventoryDocument replacementDocument)
+    {
+        var serialized = IngestCommand.ReplaceLedger(
+            currentRaw,
+            currentDocument,
+            replacementDocument);
+        var serializedSnapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(serialized)).Snapshot;
+        var serializedDocument = BackfillInventoryLoader.Load(serializedSnapshot);
+        var corruptedDocument = serializedDocument.WithDigestionSources(
+            serializedDocument.RequireDigestionSources()
+                .Select(source => source with
+                {
+                    Entries = source.Entries.Select(entry => entry.AtomId == "receipt-gap-sibling"
+                        ? entry with
+                        {
+                            Receipts = entry.Receipts with
+                            {
+                                Coverage = entry.Receipts.Coverage
+                                    .Select(receipt => receipt with
+                                    {
+                                        SourceSha256 = "sha256:" + new string('f', 64),
+                                    })
+                                    .ToImmutableArray(),
+                            },
+                        }
+                        : entry).ToImmutableArray(),
+                })
+                .ToImmutableArray());
+        return IngestCommand.ReplaceLedger(
+            serialized,
+            serializedDocument,
+            corruptedDocument);
     }
 
     private static CoverInputs WithChangedDeclarationSignature(

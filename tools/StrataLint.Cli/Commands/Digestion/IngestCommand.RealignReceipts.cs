@@ -3,6 +3,11 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
+internal delegate RawRepositorySnapshot ReceiptRealignmentLedgerSerializer(
+    RawRepositorySnapshot currentRaw,
+    BackfillInventoryDocument currentDocument,
+    BackfillInventoryDocument replacementDocument);
+
 internal static partial class IngestCommand
 {
     internal static CommandResult RealignReceipts(
@@ -10,11 +15,13 @@ internal static partial class IngestCommand
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier scribeEmissionVerifier,
-        IReadOnlyList<string> arguments)
+        IReadOnlyList<string> arguments,
+        ReceiptRealignmentLedgerSerializer? serializeLedger = null)
     {
         try
         {
-            var baselineRevision = ParseRealignArguments(arguments);
+            var baselineRevision = repository.ResolveProtectedBaseline(
+                ParseRealignArguments(arguments));
             var currentRaw = repository.ReadCurrent();
             var baselineRaw = repository.ReadRevision(baselineRevision);
             var current = Decode(currentRaw);
@@ -22,6 +29,9 @@ internal static partial class IngestCommand
             var document = LoadDocument(current);
             var baselineDocument = BackfillInventoryLoader.LoadBaseline(baseline);
             RequireUnchangedCoverageClaims(document, baselineDocument);
+            var baselineFormalizationReceipts = RequireBaselineAtomIdentityBindings(
+                document,
+                baseline);
             var report = leanReportSource.Load(current);
             var lean = ValidateLean(current, report);
             var verified = scribeEmissionVerifier.Verify(current, report);
@@ -56,7 +66,7 @@ internal static partial class IngestCommand
             RequireNoReceiptIntegrityFailure(derived);
             RequireUnchangedAbsorbedDeclarationSignatures(
                 derived,
-                baseline,
+                baselineFormalizationReceipts,
                 report);
             var statusByAtomId = derived.Entries.ToDictionary(
                 static item => item.Entry.AtomId,
@@ -74,7 +84,9 @@ internal static partial class IngestCommand
                             .ToImmutableArray(),
                     })
                     .ToImmutableArray());
-            var finalRaw = ReplaceLedger(currentRaw, document, refreshed);
+            var finalRaw = serializeLedger is null
+                ? ReplaceLedger(currentRaw, document, refreshed)
+                : serializeLedger(currentRaw, document, refreshed);
             var finalSnapshot = Decode(finalRaw);
             var finalDocument = LoadDocument(finalSnapshot);
             RequireFinalReceiptRealignmentFullScan(
@@ -242,7 +254,7 @@ internal static partial class IngestCommand
 
     private static void RequireUnchangedAbsorbedDeclarationSignatures(
         DigestionLedgerEvaluation evaluation,
-        RepositorySnapshot baseline,
+        IReadOnlyDictionary<string, DigestionFormalizationReceipt> baselineReceipts,
         LeanAxiomReport currentReport)
     {
         foreach (var item in evaluation.Entries.Where(static item =>
@@ -250,17 +262,10 @@ internal static partial class IngestCommand
         {
             var entry = item.Entry;
             var receiptPath = DigestionFormalizationReceipt.PathForAtom(entry.AtomId);
-            if (!baseline.TryGetFile(receiptPath, out _))
+            if (!baselineReceipts.TryGetValue(entry.AtomId, out var receipt))
             {
                 throw new InvalidOperationException(
                     $"atom {entry.AtomId} has no baseline formalization receipt: {receiptPath}");
-            }
-
-            var receipt = DigestionFormalizationReceipt.LoadTrusted(baseline, receiptPath);
-            if (!string.Equals(receipt.AtomId, entry.AtomId, StringComparison.Ordinal))
-            {
-                throw new InvalidOperationException(
-                    $"atom {entry.AtomId} baseline formalization receipt has a different atom_id");
             }
 
             var signatures = receipt.HostedExtensions.ToDictionary(
@@ -290,6 +295,47 @@ internal static partial class IngestCommand
                 }
             }
         }
+    }
+
+    private static ImmutableDictionary<string, DigestionFormalizationReceipt>
+        RequireBaselineAtomIdentityBindings(
+            BackfillInventoryDocument current,
+            RepositorySnapshot baseline)
+    {
+        var receipts = ImmutableDictionary.CreateBuilder<string, DigestionFormalizationReceipt>(
+            StringComparer.Ordinal);
+        foreach (var entry in current.RequireDigestionEntries().Where(static entry =>
+                     !entry.CoverageGids.IsEmpty))
+        {
+            var receiptPath = DigestionFormalizationReceipt.PathForAtom(entry.AtomId);
+            if (!baseline.TryGetFile(receiptPath, out _))
+            {
+                throw new InvalidOperationException(
+                    $"atom {entry.AtomId} has no baseline formalization receipt: {receiptPath}");
+            }
+
+            var receipt = DigestionFormalizationReceipt.LoadTrusted(baseline, receiptPath);
+            if (!string.Equals(receipt.AtomId, entry.AtomId, StringComparison.Ordinal))
+            {
+                throw new InvalidOperationException(
+                    $"atom {entry.AtomId} baseline formalization receipt has a different atom_id");
+            }
+
+            if (!string.Equals(receipt.CasRef, entry.CasRef, StringComparison.Ordinal)
+                || !string.Equals(
+                    receipt.RawSha256,
+                    entry.Fingerprints.RawSha256,
+                    StringComparison.Ordinal))
+            {
+                throw new InvalidOperationException(
+                    $"atom {entry.AtomId} atom content identity changed relative to "
+                    + "the baseline formalization receipt");
+            }
+
+            receipts.Add(entry.AtomId, receipt);
+        }
+
+        return receipts.ToImmutable();
     }
 
     internal static void RequireFinalReceiptRealignmentFullScan(

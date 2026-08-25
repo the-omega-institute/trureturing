@@ -20,6 +20,8 @@ internal interface IRepositoryGateway
 
     FrozenRevisionIdentity ResolveCurrentRevision();
 
+    string ResolveProtectedBaseline(string revision);
+
     RawRepositorySnapshot ReadCurrent();
 
     RawRepositorySnapshot ReadRevision(string revision);
