@@ -20,19 +20,21 @@ public static class FrozenContentAddress
     public static FrozenMaterialOutcome Build(
         RepositorySnapshot snapshot,
         AcceptedLeanClosure lean,
+        ImmutableDictionary<RepoPath, TruthState> states,
+        ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency,
         FrozenEnvironmentAttestation environment,
         IEnumerable<FrozenModuleAttestation> moduleAttestations)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(lean);
+        ArgumentNullException.ThrowIfNull(states);
+        ArgumentNullException.ThrowIfNull(adjacency);
         ArgumentNullException.ThrowIfNull(environment);
         ArgumentNullException.ThrowIfNull(moduleAttestations);
 
         try
         {
             ValidateEnvironment(snapshot, environment);
-            var states = LeanTruthStates.Resolve(snapshot, lean);
-            var adjacency = LeanImportAdjacency.Build(snapshot, lean);
             var (openCases, tailRegistrations) = ValidateStateEvidence(snapshot, lean, states);
             var attestations = moduleAttestations.ToArray();
             var byPath = attestations.ToDictionary(static item => item.RepoPath);
@@ -97,6 +99,8 @@ public static class FrozenContentAddress
     internal static FrozenMaterialCatalog BuildAdmissionCatalog(
         RepositorySnapshot snapshot,
         AcceptedLeanClosure lean,
+        ImmutableDictionary<RepoPath, TruthState> states,
+        ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency,
         FrozenEnvironmentAttestation environment,
         IEnumerable<FrozenModuleAttestation> moduleAttestations,
         IReadOnlySet<RepoPath> selectedPaths,
@@ -104,13 +108,13 @@ public static class FrozenContentAddress
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(lean);
+        ArgumentNullException.ThrowIfNull(states);
+        ArgumentNullException.ThrowIfNull(adjacency);
         ArgumentNullException.ThrowIfNull(environment);
         ArgumentNullException.ThrowIfNull(moduleAttestations);
         ArgumentNullException.ThrowIfNull(selectedPaths);
         ArgumentNullException.ThrowIfNull(trustedBaseMaterials);
         ValidateEnvironment(snapshot, environment);
-        var states = LeanTruthStates.Resolve(snapshot, lean);
-        var adjacency = LeanImportAdjacency.Build(snapshot, lean);
         var attestations = moduleAttestations.ToDictionary(static item => item.RepoPath);
         var materialByPath = new Dictionary<RepoPath, FrozenNodeMaterial>();
         foreach (var path in LeanImportAdjacency.DependenciesFirst(selectedPaths, adjacency)
