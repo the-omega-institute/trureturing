@@ -134,19 +134,15 @@ theorem golden_period_eleven_orbits_eh_nr_disjoint : List.Disjoint
 theorem golden_period_eleven_orbits_im_nr_disjoint : List.Disjoint
       (goldenPeriodElevenOrbitsIM.flatMap goldenOrbitStates)
       (goldenPeriodElevenOrbitsNR.flatMap goldenOrbitStates) := by
-    simp only [goldenPeriodElevenOrbitsIM, goldenPeriodElevenOrbitsNR,
-      List.flatMap_cons, List.flatMap_nil, List.append_nil,
-      List.disjoint_append_left, List.disjoint_append_right]
-    repeat' apply And.intro
-    all_goals norm_num [goldenPeriodElevenOrbitsIM, goldenPeriodElevenOrbitsNR,
-      goldenPeriodElevenOrbitI, goldenPeriodElevenOrbitJ,
-      goldenPeriodElevenOrbitK, goldenPeriodElevenOrbitL,
-      goldenPeriodElevenOrbitM, goldenPeriodElevenOrbitN,
-      goldenPeriodElevenOrbitO, goldenPeriodElevenOrbitP,
-      goldenPeriodElevenOrbitQ, goldenPeriodElevenOrbitR, goldenOrbitStates,
-      goldenTraceCode, goldenApplyStepCode, goldenStepAffine,
-      goldenIdentityAffine, goldenStepTarget, goldenCodeAdd, goldenCodeMul,
-      goldenCodePhi, goldenCodeZero, goldenCodeOne, goldenCodeNeg, qphi]
+  norm_num [goldenPeriodElevenOrbitsIM, goldenPeriodElevenOrbitsNR,
+    goldenPeriodElevenOrbitI, goldenPeriodElevenOrbitJ,
+    goldenPeriodElevenOrbitK, goldenPeriodElevenOrbitL,
+    goldenPeriodElevenOrbitM, goldenPeriodElevenOrbitN,
+    goldenPeriodElevenOrbitO, goldenPeriodElevenOrbitP,
+    goldenPeriodElevenOrbitQ, goldenPeriodElevenOrbitR, goldenOrbitStates,
+    goldenTraceCode, goldenApplyStepCode, goldenStepAffine,
+    goldenIdentityAffine, goldenStepTarget, goldenCodeAdd, goldenCodeMul,
+    goldenCodePhi, goldenCodeZero, goldenCodeOne, goldenCodeNeg, qphi]
 theorem golden_new_periodic_orbit_state_codes_nodup_eleven :
     (goldenPeriodicOrbitRepresentativesExactlyEleven.flatMap
       goldenOrbitStates).Nodup := by

@@ -72,7 +72,8 @@ theorem latent_join_strict_iff_inadequate
     refine ⟨Prod.snd ∘ factor, ?_⟩
     funext state
     have componentEquality := congrArg Prod.snd (congrFun factors state)
-    simpa only [conceptJoin, Function.comp_apply] using componentEquality
+    change target state = (factor (latent state)).2
+    exact componentEquality
 
 example :
     (defectRelation (fun _ : Bool => ())

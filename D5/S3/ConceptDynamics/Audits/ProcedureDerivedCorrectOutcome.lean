@@ -88,7 +88,7 @@ theorem procedure_derived_correct_outcome_can_lack_auditability
         (recoverAuthorization (procedureCertificate state)).val =
             (authorization state).val := recoveredValue.symm
         _ = state := by rfl
-    simp only [oracle, Function.comp_apply]
+    change target ((recoverAuthorization (procedureCertificate state)).val) = target state
     rw [recoveredState]
   · rintro ⟨factorThroughLog, certificateFactors⟩
     have procedureFactors : procedureCertificate = factorThroughLog ∘ log := by

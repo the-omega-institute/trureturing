@@ -347,33 +347,63 @@ noncomputable def adjacentNameValueGaps (Q : Nat) : List ℝ :=
 
 @[simp] theorem indexedNameValue_level_one_zero :
     indexedNameValue 1 ⟨0, by decide⟩ = 0 := by
-  norm_num [indexedNameValue, tribonacciNameValue, tribonacciWordValue,
-    tribonacciIndexEquiv, tribonacci]
+  unfold indexedNameValue tribonacciNameValue
+  have hword : (tribonacciIndexEquiv 1 ⟨0, by decide⟩).1 =
+      Fin.cons false (fun i : Fin 0 => Fin.elim0 i) := by
+    funext i
+    fin_cases i <;> decide
+  rw [hword]
+  norm_num [tribonacciWordValue, tribonacci_zpow_mul]
 
 @[simp] theorem indexedNameValue_level_one_one :
     indexedNameValue 1 ⟨1, by decide⟩ = t ^ (-1 : ℤ) := by
-  norm_num [indexedNameValue, tribonacciNameValue, tribonacciWordValue,
-    tribonacciIndexEquiv, tribonacci]
+  unfold indexedNameValue tribonacciNameValue
+  have hword : (tribonacciIndexEquiv 1 ⟨1, by decide⟩).1 =
+      Fin.cons true (fun i : Fin 0 => Fin.elim0 i) := by
+    funext i
+    fin_cases i <;> decide
+  rw [hword]
+  norm_num [tribonacciWordValue, tribonacci_zpow_mul]
 
 @[simp] theorem indexedNameValue_level_two_zero :
     indexedNameValue 2 ⟨0, by decide⟩ = 0 := by
-  norm_num [indexedNameValue, tribonacciNameValue, tribonacciWordValue,
-    tribonacciIndexEquiv, tribonacci]
+  unfold indexedNameValue tribonacciNameValue
+  have hword : (tribonacciIndexEquiv 2 ⟨0, by decide⟩).1 =
+      Fin.cons false (Fin.cons false (fun i : Fin 0 => Fin.elim0 i)) := by
+    funext i
+    fin_cases i <;> decide
+  rw [hword]
+  norm_num [tribonacciWordValue, tribonacci_zpow_mul]
 
 @[simp] theorem indexedNameValue_level_two_one :
     indexedNameValue 2 ⟨1, by decide⟩ = t ^ (-2 : ℤ) := by
-  norm_num [indexedNameValue, tribonacciNameValue, tribonacciWordValue,
-    tribonacciIndexEquiv, tribonacci]
+  unfold indexedNameValue tribonacciNameValue
+  have hword : (tribonacciIndexEquiv 2 ⟨1, by decide⟩).1 =
+      Fin.cons false (Fin.cons true (fun i : Fin 0 => Fin.elim0 i)) := by
+    funext i
+    fin_cases i <;> decide
+  rw [hword]
+  norm_num [tribonacciWordValue, tribonacci_zpow_mul]
 
 @[simp] theorem indexedNameValue_level_two_two :
     indexedNameValue 2 ⟨2, by decide⟩ = t ^ (-1 : ℤ) := by
-  norm_num [indexedNameValue, tribonacciNameValue, tribonacciWordValue,
-    tribonacciIndexEquiv, tribonacci]
+  unfold indexedNameValue tribonacciNameValue
+  have hword : (tribonacciIndexEquiv 2 ⟨2, by decide⟩).1 =
+      Fin.cons true (Fin.cons false (fun i : Fin 0 => Fin.elim0 i)) := by
+    funext i
+    fin_cases i <;> decide
+  rw [hword]
+  norm_num [tribonacciWordValue, tribonacci_zpow_mul]
 
 @[simp] theorem indexedNameValue_level_two_three :
     indexedNameValue 2 ⟨3, by decide⟩ = t ^ (-1 : ℤ) + t ^ (-2 : ℤ) := by
-  norm_num [indexedNameValue, tribonacciNameValue, tribonacciWordValue,
-    tribonacciIndexEquiv, tribonacci]
+  unfold indexedNameValue tribonacciNameValue
+  have hword : (tribonacciIndexEquiv 2 ⟨3, by decide⟩).1 =
+      Fin.cons true (Fin.cons true (fun i : Fin 0 => Fin.elim0 i)) := by
+    funext i
+    fin_cases i <;> decide
+  rw [hword]
+  norm_num [tribonacciWordValue, tribonacci_zpow_mul]
 
 @[simp] theorem indexedNameValue_level_three_zero :
     indexedNameValue 3 ⟨0, by decide⟩ = 0 := by

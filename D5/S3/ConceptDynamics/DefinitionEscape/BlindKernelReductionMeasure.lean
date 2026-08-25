@@ -78,8 +78,8 @@ theorem blind_kernel_reduction_measure
     exact (lt_irrefl 0) positive_reduction
   rcases reduction_nonempty with ⟨pair, pair_in_reduction⟩
   refine ⟨pair, pair_in_reduction.1, ?_⟩
-  simpa only [Set.mem_compl_iff, Set.mem_setOf_eq, Setoid.ker_def] using
-    pair_in_reduction.2
+  change ¬Setoid.ker d pair.1 pair.2
+  exact pair_in_reduction.2
 
 /-- Finite counting weight satisfies both public weight premises. With an
 empty package and constant baseline, the identity definition separates the

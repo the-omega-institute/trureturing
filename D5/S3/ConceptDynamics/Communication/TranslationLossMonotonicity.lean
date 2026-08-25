@@ -152,9 +152,25 @@ private theorem xzProjection_translationExtension
   apply Finset.sum_congr rfl
   intro x _
   rw [Finset.sum_eq_single (fine x)]
-  · by_cases hpost : postprocess (fine x) = q.2 <;>
-      by_cases htarget : target x = q.1 <;>
-        simp [hpost, htarget, Prod.ext_iff, Function.comp_apply]
+  · unfold Function.comp
+    by_cases hpost : postprocess (fine x) = q.2
+    · by_cases htarget : target x = q.1
+      · have hleft : (fine x, target x) = (fine x, q.1) :=
+          Prod.ext rfl htarget
+        have hright : (postprocess (fine x), target x) = (q.2, q.1) :=
+          Prod.ext hpost htarget
+        rw [if_pos hleft, if_pos hright, if_pos hpost, mul_one]
+      · have hleft : (fine x, target x) ≠ (fine x, q.1) := by
+          intro hpair
+          exact htarget (congrArg Prod.snd hpair)
+        have hright : (postprocess (fine x), target x) ≠ (q.2, q.1) := by
+          intro hpair
+          exact htarget (congrArg Prod.snd hpair)
+        rw [if_neg hleft, if_neg hright, if_pos hpost, zero_mul]
+    · have hright : (postprocess (fine x), target x) ≠ (q.2, q.1) := by
+        intro hpair
+        exact hpost (congrArg Prod.fst hpair)
+      rw [if_neg hright, if_neg hpost, mul_zero]
   · intro fineValue _ different
     simp [Prod.ext_iff, Ne.symm different]
   · simp
