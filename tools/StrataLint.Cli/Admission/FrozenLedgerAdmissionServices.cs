@@ -308,6 +308,8 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
             catalog = DagLedgerCommandPreparation.BuildAdmissionCatalog(
                 current,
                 lean,
+                states,
+                adjacency,
                 preparation.BaseView,
                 scope,
                 currentIdentity);
