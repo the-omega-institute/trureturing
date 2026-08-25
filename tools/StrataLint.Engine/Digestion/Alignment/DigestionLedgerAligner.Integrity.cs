@@ -144,8 +144,14 @@ internal static partial class DigestionLedgerAligner
         && baselineSnapshot.TryGetFile(baselinePath, out var baseline)
         && candidate.RawBytes.AsSpan().SequenceEqual(baseline.RawBytes.AsSpan());
 
-    private static string CanonicalEntry(DigestionLedgerEntry entry) =>
-        Convert.ToBase64String(BackfillInventoryWriter.WriteEntry(entry).AsSpan());
+    private static string CanonicalEntry(DigestionLedgerEntry entry)
+    {
+        var admissionEntry = entry with
+        {
+            Receipts = entry.Receipts with { CoverDisposition = null },
+        };
+        return Convert.ToBase64String(BackfillInventoryWriter.WriteEntry(admissionEntry).AsSpan());
+    }
 
     private static string? AtomizerIntegrityFailure(
         AtomizedTheoryDocument document,

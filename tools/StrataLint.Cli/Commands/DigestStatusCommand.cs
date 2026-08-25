@@ -344,6 +344,9 @@ internal static class DigestStatusCommand
         bool retryDispositions)
     {
         var entry = evaluation.Entry;
+        var dispositionSelection = DigestionCoverDispositionSelector.Classify(
+            entry,
+            retryDispositions);
         var separator = entry.AstPath.IndexOf('/', StringComparison.Ordinal);
         if (separator <= 0)
         {
@@ -358,7 +361,7 @@ internal static class DigestStatusCommand
             return null;
         }
 
-        if (entry.Receipts.CoverDisposition is not null && !retryDispositions)
+        if (dispositionSelection == DigestionCoverDispositionSelection.Withheld)
         {
             return new FormalizeProjection(
                 entry.SourceId,
@@ -367,11 +370,11 @@ internal static class DigestStatusCommand
                 null,
                 new WithheldFormalizeCandidate(
                     entry.AtomId,
-                    "cover-disposition",
+                    DigestionCoverDispositionSelector.WithholdReason,
                     null));
         }
 
-        var recordedFormalization = entry.Receipts.CoverDisposition is not null
+        var recordedFormalization = dispositionSelection == DigestionCoverDispositionSelection.Retry
             ? null
             : CurrentFormalizationReceipt(entry, snapshot, leanReport);
         if (recordedFormalization is not null)
@@ -592,7 +595,7 @@ internal static class DigestResidualSummary
                      .OrderBy(static group => group.Key, StringComparer.Ordinal))
         {
             var atoms = source
-                .Where(static item => item.Entry.Receipts.CoverDisposition is null)
+                .Where(static item => !DigestionCoverDispositionSelector.IsWithheld(item.Entry))
                 .Select(static item => new AtomResiduals(
                     item.Entry.AtomId,
                     item.Gaps
@@ -646,7 +649,7 @@ internal static class DigestResidualSummary
                 group
                     .Where(static item =>
                         item.Entry.Receipts.Quarantine is null
-                        && item.Entry.Receipts.CoverDisposition is null)
+                        && !DigestionCoverDispositionSelector.IsWithheld(item.Entry))
                     .Select(static item => new AtomResiduals(
                         item.Entry.AtomId,
                         item.Gaps

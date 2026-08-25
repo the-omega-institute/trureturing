@@ -97,6 +97,5 @@ internal static partial class DigestionLedgerAligner
         && entry.Receipts.ChainAtoms.IsEmpty
         && entry.Receipts.TailAuthorization is null
         && entry.Receipts.Quarantine is null
-        && entry.Receipts.CoverDisposition is null
         && !ownedAtomIds.Contains(entry.AtomId);
 }
