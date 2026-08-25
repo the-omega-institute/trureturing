@@ -7,11 +7,14 @@ The earlier statement that this material had been synchronized to that PR was
 incorrect. The changed-path list for PR #2904 contains only the Lean modules and
 freeze records described in that PR.
 
-## Scope of this replay
+## Status and boundary
 
-The replay is supplementary counterexample search. It is not a substitute for
-Lean elaboration or kernel checking. Small finite models were exhaustively
-enumerated for the following statement families:
+This replay is supplementary counterexample search. It is not a substitute for
+Lean elaboration, kernel checking, axiom inspection, or repository admission.
+The enumerations below test finite instances of the same abstract statements
+formalized in the pull request.
+
+## Original replay
 
 | Statement family | Cases checked |
 |---|---:|
@@ -26,7 +29,26 @@ enumerated for the following statement families:
 | Residual separation | 644 |
 | Semantic-closure topology invariance | 52 |
 | Target factorization versus continuity | 84 |
-| **Total** | **8,800** |
+| **Original subtotal** | **8,800** |
+
+## Completion replay
+
+The completion pass exhaustively enumerated finite readouts, targets, preorders,
+maps, and the minimal complete Boolean decoder catalog needed by the new direct
+bridge theorems.
+
+| Statement family | Cases checked |
+|---|---:|
+| Factorization versus partition-open inclusion | 1,528 |
+| Residual antitonicity under readout refinement | 12,752 |
+| Redundant coordinate versus unchanged join topology | 1,528 |
+| Faithful observation versus discrete partition topology | 140 |
+| Multi-target separation-deficit union law | 668 |
+| Alexandrov continuity versus monotonicity | 24,872 |
+| Alexandrov inseparability versus mutual reachability | 278 |
+| Complete diagonal topological settlement | 2 |
+| **Completion subtotal** | **41,768** |
+| **Combined total** | **50,568** |
 
 Result:
 
@@ -34,6 +56,13 @@ Result:
 No counterexample found.
 ```
 
-The new relative-negation and involution modules also include explicit finite
-Boolean witnesses inside Lean. Their authoritative status is determined only by
-the repository's Lean and admission gates.
+The diagonal settlement checks use the minimal complete catalog with two
+addresses, a one-point coordinate type, Boolean output, and Boolean negation as
+the fixed-point-free twist. They verify simultaneously that the diagonal lies
+outside the listed decoded catalog, does not factor through the latent readout,
+has a nonempty target defect, and strictly refines the joined partition topology.
+
+The relative-negation and involution modules also include explicit finite
+Boolean witnesses inside Lean. Their authoritative status, like every other
+statement in this report, is determined only by the repository's Lean and
+admission gates.
