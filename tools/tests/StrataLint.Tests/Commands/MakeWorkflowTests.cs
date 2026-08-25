@@ -57,6 +57,7 @@ public sealed partial class MakeWorkflowTests
         "build",
         "emit",
         "ingest",
+        "realign-receipts",
         "echo-residual-summary",
         "show-atom",
         "theory-candidates",

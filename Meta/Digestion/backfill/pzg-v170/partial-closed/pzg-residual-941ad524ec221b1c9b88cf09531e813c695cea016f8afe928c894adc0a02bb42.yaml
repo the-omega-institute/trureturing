@@ -14,8 +14,8 @@ receipts:
       target_sha256: sha256:b93cbfd5915a7afb81096c609720e034fa22e7e5e7bbf23e6d9a51cb640fa4cf
   scribe:
     - gid: D5/S3/Zeros/EulerWindows.finite_euler_window_ne_zero
-      definition_sha256: sha256:72d7b5d8dbd26af1c3ef49969e3c9e2f870296684d178c2b76f93a102f658ade
-      emission_sha256: sha256:04f11a17f4ad46a59b40536368a46dc933995818155ee06b48e4a7d3d389afc2
+      definition_sha256: sha256:fb4a3fac0bdca0866a7f14deaf210045ce7935bba8fdf75aed36fb6a6bf120fa
+      emission_sha256: sha256:435aaae0fbd7884a8f0802eb7e68c7ae39aa4b4bd478eabb35f1548fe94eb6a9
   unresolved_subitems:
     - all-prime-axis-tail-participation
     - critical-strip-euler-product-divergence-and-nonapproximation

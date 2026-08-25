@@ -25,7 +25,6 @@ internal static partial class IngestCommand
             var baselineRaw = repository.ReadRevision(baselineRevision);
             var current = Decode(currentRaw);
             var baseline = Decode(baselineRaw);
-            var scribeProducerSurface = new CanonicalScribeProducerSurface();
             var document = LoadDocument(current);
             var baselineDocument = BackfillInventoryLoader.LoadBaseline(baseline);
             var plan = DigestionIngestor.Plan(document, current, baselineDocument);
@@ -54,12 +53,7 @@ internal static partial class IngestCommand
                 baselineDocument,
                 validateProjectedStatus: false,
                 baselineSnapshot: baseline);
-            LedgerWriteReceiptIntegrityGate.RequireNoNewFailures(
-                derived,
-                baselineDocument,
-                baseline,
-                plannedSnapshot,
-                scribeProducerSurface);
+            RequireNoReceiptIntegrityFailure(derived);
 
             var statusByAtomId = derived.Entries.ToDictionary(
                 static item => item.Entry.AtomId,
@@ -90,12 +84,7 @@ internal static partial class IngestCommand
                 verifiedScribeEmissions,
                 baselineDocument,
                 baselineSnapshot: baseline);
-            var ignoredReceiptIntegrityBacklog = LedgerWriteReceiptIntegrityGate.RequireNoNewFailures(
-                evaluation,
-                baselineDocument,
-                baseline,
-                finalSnapshot,
-                scribeProducerSurface);
+            RequireNoReceiptIntegrityFailure(evaluation);
             var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
                 finalDocument,
                 finalSnapshot,
@@ -131,7 +120,6 @@ internal static partial class IngestCommand
                 + $"open_genres={openGenres.Length} "
                 + $"cas_objects_written={createdCasPaths.Length} "
                 + $"ledger_changed={changed.ToString().ToLowerInvariant()}\n"
-                + $"receipt_integrity_backlog_ignored={ignoredReceiptIntegrityBacklog}\n"
                 + string.Concat(openGenres.Select(static item =>
                     $"INGEST_OPEN_GENRE source={item.SourceId} "
                     + $"token={DigestStatusCommand.RenderDetail(item.Token)}\n"))

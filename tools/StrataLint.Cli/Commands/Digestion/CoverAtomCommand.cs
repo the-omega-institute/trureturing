@@ -68,7 +68,6 @@ internal static partial class CoverAtomCommand
             var baselineRaw = repository.ReadRevision(options.BaselineRevision);
             var current = Decode(currentRaw);
             var baseline = Decode(baselineRaw);
-            var scribeProducerSurface = new CanonicalScribeProducerSurface();
             var document = LoadDocument(current);
             var baselineDocument = BackfillInventoryLoader.LoadBaseline(baseline);
 
@@ -105,12 +104,7 @@ internal static partial class CoverAtomCommand
                 verifiedScribeEmissions,
                 baselineDocument,
                 baselineSnapshot: baseline);
-            LedgerWriteReceiptIntegrityGate.RequireNoNewFailures(
-                beforeEvaluation,
-                baselineDocument,
-                baseline,
-                current,
-                scribeProducerSurface);
+            IngestCommand.RequireNoReceiptIntegrityFailure(beforeEvaluation);
 
             // Gate ②(b): anti-Goodhart — cover may only deposit a declaration that
             // the baseline ledger did not already bind.
@@ -169,12 +163,7 @@ internal static partial class CoverAtomCommand
                 baselineDocument,
                 validateProjectedStatus: false,
                 baselineSnapshot: baseline);
-            LedgerWriteReceiptIntegrityGate.RequireNoNewFailures(
-                derived,
-                baselineDocument,
-                baseline,
-                current,
-                scribeProducerSurface);
+            IngestCommand.RequireNoReceiptIntegrityFailure(derived);
 
             var statusByAtomId = derived.Entries.ToDictionary(
                 static item => item.Entry.AtomId,
@@ -207,12 +196,7 @@ internal static partial class CoverAtomCommand
                 verifiedScribeEmissions,
                 baselineDocument,
                 baselineSnapshot: baseline);
-            var ignoredReceiptIntegrityBacklog = LedgerWriteReceiptIntegrityGate.RequireNoNewFailures(
-                evaluation,
-                baselineDocument,
-                baseline,
-                finalSnapshot,
-                scribeProducerSurface);
+            IngestCommand.RequireNoReceiptIntegrityFailure(evaluation);
             var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
                 finalDocument,
                 finalSnapshot,
@@ -294,7 +278,6 @@ internal static partial class CoverAtomCommand
                 true,
                 $"COVER atom_id={options.AtomId} gid={string.Join(',', options.Gids)} "
                 + $"ledger_changed={changed.ToString().ToLowerInvariant()}\n"
-                + $"receipt_integrity_backlog_ignored={ignoredReceiptIntegrityBacklog}\n"
                 + backfillObservations
                 + DigestStatusCommand.RenderText(evaluation),
                 string.Empty);

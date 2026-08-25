@@ -413,7 +413,7 @@ public sealed partial class ProductionEnvironmentTests
     [InlineData("coverage-receipt-mismatch")]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
-    public void CoverAtomAllowsUnrelatedCoverWhenReceiptIntegrityBacklogExistsAtForkPoint(
+    public void CoverAtomRejectsUnrelatedCoverWhenReceiptIntegrityBacklogExistsAtForkPoint(
         string mismatchCode)
     {
         var materialized = CoverWorld.Materialize(new CoverSpec
@@ -427,13 +427,14 @@ public sealed partial class ProductionEnvironmentTests
             byteIdenticalBaseline: true));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
         var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
 
         var result = environment.CoverAtom(CoverArgs(inputs));
 
-        Assert.True(result.Success, result.Error);
-        Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
-        Assert.Contains("receipt_integrity_backlog_ignored=1", result.Output, StringComparison.Ordinal);
+        Assert.False(result.Success);
+        Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
     }
 
     [Theory]
@@ -465,7 +466,7 @@ public sealed partial class ProductionEnvironmentTests
     [InlineData("coverage-receipt-mismatch")]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
-    public void AlignScribeReceiptAllowsTargetRepairWhenReceiptIntegrityBacklogExistsAtForkPoint(
+    public void AlignScribeReceiptRejectsTargetRepairWhenUnrelatedBacklogExistsAtForkPoint(
         string mismatchCode)
     {
         var materialized = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec() with
@@ -479,13 +480,14 @@ public sealed partial class ProductionEnvironmentTests
             byteIdenticalBaseline: true));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
         var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
 
         var result = environment.AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
 
-        Assert.True(result.Success, result.Error);
-        Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
-        Assert.Contains("receipt_integrity_backlog_ignored=1", result.Output, StringComparison.Ordinal);
+        Assert.False(result.Success);
+        Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
     }
 
     [Fact]
@@ -667,29 +669,12 @@ public sealed partial class ProductionEnvironmentTests
         CoverInputs inputs,
         IReadOnlyDictionary<string, string> currentFiles)
     {
-        var canonicalInputScript = string.Join('\n',
-            "#!/usr/bin/env bash",
-            "set -euo pipefail",
-            "[[ \"${1:-}\" == \"scribe-producer-paths\" ]] || exit 2",
-            "printf '%s\\n' tools/scripts/report/lean-report-input.sh "
-                + CanonicalScribeInputPath,
-            string.Empty);
-        var current = new Dictionary<string, string>(currentFiles, StringComparer.Ordinal)
-        {
-            ["tools/scripts/report/lean-report-input.sh"] = canonicalInputScript,
-        };
-        current.TryAdd(CanonicalScribeInputPath, "canonical Scribe input\n");
-        var baseline = new Dictionary<string, string>(inputs.Baseline, StringComparer.Ordinal)
-        {
-            ["tools/scripts/report/lean-report-input.sh"] = canonicalInputScript,
-        };
-        baseline.TryAdd(CanonicalScribeInputPath, "canonical Scribe input\n");
         return new ProductionCliEnvironment(
             repositoryRoot,
             new FakeRepositoryGateway(
                 RawChangeSet.Create(Array.Empty<string>()),
-                CoverWorld.Raw(current),
-                CoverWorld.Raw(baseline)),
+                CoverWorld.Raw(currentFiles),
+                CoverWorld.Raw(inputs.Baseline)),
             new FakeLeanReportSource(inputs.Report),
             new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
     }

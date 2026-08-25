@@ -386,6 +386,19 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         }
     }
 
+    public CommandResult RealignReceipts(IReadOnlyList<string> arguments) =>
+        scribeEmissionVerifier is null
+            ? new CommandResult(
+                false,
+                string.Empty,
+                "REALIGN_RECEIPTS_INVALID Scribe emission verifier is unavailable\n")
+            : IngestCommand.RealignReceipts(
+                repositoryRoot,
+                repository,
+                leanReportSource,
+                scribeEmissionVerifier,
+                arguments);
+
     public CommandResult EmitFormalizationReceipt(IReadOnlyList<string> arguments) =>
         EmitFormalizationReceiptCommand.Run(
             repositoryRoot,

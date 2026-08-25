@@ -12,8 +12,8 @@ receipts:
       target_sha256: sha256:17c9cf3ca266daee964ca1511d0c12fb2c6889f4e6d57bebb38719cbecf0840a
   scribe:
     - gid: D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec
-      definition_sha256: sha256:d5343cb038f2f14682c5a9cd5188257fb10918c2553da3fb82cf255380337812
-      emission_sha256: sha256:d81b501cf524f6a084956ee5419ce0ab2a01b23ce4579a14bd82894d1dbb2fe1
+      definition_sha256: sha256:a7ace774c3d716d0dc13cf0d9ec25bef26c0ed49cb7e7df6bba141c24bf3d9b7
+      emission_sha256: sha256:e967d3670fee2460d089cdc6ab950fbe9273c96e4e5b6dcaae0c488b091de3f3
   unresolved_subitems:
     - value-layer-free-lattice-bloch-wave-and-brillouin-torus
     - value-layer-dense-zeta-line

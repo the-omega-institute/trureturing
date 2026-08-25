@@ -16,12 +16,9 @@ internal static partial class CoverAtomCommand
     {
         var options = ParseAlignArguments(arguments);
         var currentRaw = repository.ReadCurrent();
-        var baselineRaw = repository.ReadRevision(options.BaselineRevision);
         var current = Decode(currentRaw);
-        var baseline = Decode(baselineRaw);
-        var scribeProducerSurface = new CanonicalScribeProducerSurface();
+        _ = Decode(repository.ReadRevision(options.BaselineRevision));
         var document = LoadDocument(current);
-        var baselineDocument = BackfillInventoryLoader.LoadBaseline(baseline);
         var matches = document.RequireDigestionEntries()
             .Where(entry => string.Equals(entry.AtomId, options.AtomId, StringComparison.Ordinal))
             .ToArray();
@@ -111,12 +108,7 @@ internal static partial class CoverAtomCommand
             baselineDocument: null);
         RequireNoConflictMarkedSources(finalEvaluation);
         RequireAlignedScribeReceipt(EvaluationFor(finalEvaluation, options.AtomId), options.Gid);
-        var ignoredReceiptIntegrityBacklog = LedgerWriteReceiptIntegrityGate.RequireNoNewFailures(
-            finalEvaluation,
-            baselineDocument,
-            baseline,
-            finalSnapshot,
-            scribeProducerSurface);
+        IngestCommand.RequireNoReceiptIntegrityFailure(finalEvaluation);
 
         var ledgerUpdates = IngestCommand.LedgerUpdates(currentRaw, finalRaw);
         var changed = ledgerUpdates.Length > 0;
@@ -129,8 +121,7 @@ internal static partial class CoverAtomCommand
             + $"new_definition_sha256={newReceipt.DefinitionSha256} "
             + $"old_emission_sha256={oldReceipt.EmissionSha256} "
             + $"new_emission_sha256={newReceipt.EmissionSha256} "
-            + $"ledger_changed={changed.ToString().ToLowerInvariant()}\n"
-            + $"receipt_integrity_backlog_ignored={ignoredReceiptIntegrityBacklog}\n",
+            + $"ledger_changed={changed.ToString().ToLowerInvariant()}\n",
             string.Empty);
     }
 

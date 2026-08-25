@@ -1,0 +1,17 @@
+ast_path: theorem/4.5
+fingerprints:
+  raw_sha256: sha256:42540852e42f2501af823ecbb4c7a00deeb34cc31603f92d3caadd7a0f9acb13
+  normalized_sha256: sha256:42540852e42f2501af823ecbb4c7a00deeb34cc31603f92d3caadd7a0f9acb13
+cas_ref: sha256:42540852e42f2501af823ecbb4c7a00deeb34cc31603f92d3caadd7a0f9acb13
+coverage_gids:
+  - D5/S3/Axis/PrimeAxisEscape.prime_axis_escape
+receipts:
+  coverage:
+    - gid: D5/S3/Axis/PrimeAxisEscape.prime_axis_escape
+      source_sha256: sha256:42540852e42f2501af823ecbb4c7a00deeb34cc31603f92d3caadd7a0f9acb13
+      target_sha256: sha256:cb3b07a24ef87d995b19f760e3921c2b0454b982e27bba9a9efa65a797bbecdd
+  scribe:
+    - gid: D5/S3/Axis/PrimeAxisEscape.prime_axis_escape
+      definition_sha256: sha256:118a2538f1f29182429125126b0a9cb72408f0dd791f4a7a21b9894ace6ffb63
+      emission_sha256: sha256:6212e58be0b573da0a1761e890640fe207841d34b2eae31c0673f04bb82d5e16
+  unresolved_subitems: []

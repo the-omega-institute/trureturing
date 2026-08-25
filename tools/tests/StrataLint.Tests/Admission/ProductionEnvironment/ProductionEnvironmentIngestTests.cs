@@ -330,7 +330,7 @@ public sealed partial class ProductionEnvironmentTests
     [InlineData("coverage-receipt-mismatch")]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
-    public void IngestAllowsNoOpWhenReceiptIntegrityBacklogExistsAtForkPoint(string mismatchCode)
+    public void IngestRejectsNoOpWhenReceiptIntegrityBacklogExistsAtForkPoint(string mismatchCode)
     {
         var materialized = CoverWorld.Materialize(new CoverSpec
         {
@@ -348,9 +348,8 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.Ingest(["--base", "baseline"]);
 
-        Assert.True(result.Success, result.Error);
-        Assert.Contains("ledger_changed=false", result.Output, StringComparison.Ordinal);
-        Assert.Contains("receipt_integrity_backlog_ignored=1", result.Output, StringComparison.Ordinal);
+        Assert.False(result.Success);
+        Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
         Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
     }
 
