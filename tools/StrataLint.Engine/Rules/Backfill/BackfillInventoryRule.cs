@@ -10,12 +10,16 @@ internal sealed record BackfillInventoryValidationContext(
     AcceptedLeanClosure Lean,
     VerifiedScribeEmissions? VerifiedScribeEmissions,
     RawChangeSet? Changes = null,
-    Func<string, bool>? IsBaseFactAffected = null,
-    VerifiedScribeEmissions? ForkPointVerifiedScribeEmissions = null);
+    Func<string, bool>? IsBaseFactAffected = null);
 
 internal static class BackfillInventoryRule
 {
     private const string BackfillPath = BackfillInventoryLoader.RelativePath;
+
+    private readonly record struct ReceiptIntegrityGapIdentity(
+        string AtomId,
+        string Code,
+        string Detail);
 
     internal static ImmutableArray<string> BaselineComparableReceiptIntegrityCodes { get; } =
     [
@@ -96,8 +100,7 @@ internal static class BackfillInventoryRule
                 context.Lean,
                 context.VerifiedScribeEmissions,
                 changes,
-                changes is null ? null : context.IsBaseFactAffected,
-                context.ForkPointVerifiedScribeEmissions),
+                changes is null ? null : context.IsBaseFactAffected),
             document);
     }
 
@@ -399,29 +402,42 @@ internal static class BackfillInventoryRule
                 findings.Add(new RuleFinding(BackfillPath, finding));
             }
 
-            var receiptIntegrityIdentities = DigestionReceiptIntegrity.Identities(evaluation);
+            var receiptIntegrityGaps = evaluation.ReceiptIntegrityGaps.ToArray();
             // A rule implementation change forces FullScan, which republishes stored gaps.
-            // Evaluate the old side from its own ledger, bytes, and Scribe capability.
-            // Candidate-only files and emissions are deliberately unavailable here.
-            var forkPointReceiptIntegrityIdentities =
-                DigestionStatusEvaluator.EvaluateReceiptIntegrityIdentities(
-                    baselineDocument,
-                    context.Baseline,
-                    context.ForkPointVerifiedScribeEmissions,
-                    context.Changes);
-            var blockingReceiptIntegrityIdentities =
-                DigestionReceiptIntegrity.NewFailureIdentities(
-                        forkPointReceiptIntegrityIdentities,
-                        evaluation)
-                    .ToHashSet();
-            foreach (var identity in receiptIntegrityIdentities)
+            // Baseline membership keeps stored gaps observable while newly introduced
+            // receipt drift remains blocking.
+            var baselineComparableReceiptIntegrityGaps = receiptIntegrityGaps.Length == 0
+                ? new HashSet<ReceiptIntegrityGapIdentity>()
+                : BaselineComparableReceiptIntegrityGaps(baselineDocument, context.Baseline);
+            foreach (var (entry, gap) in receiptIntegrityGaps)
             {
+                var identity = GapIdentity(entry, gap);
+                if (BaselineComparableReceiptIntegrityCodes.Contains(
+                        gap.Code,
+                        StringComparer.Ordinal))
+                {
+                    if (baselineComparableReceiptIntegrityGaps.Contains(identity))
+                    {
+                        findings.Add(new RuleFinding(
+                            BackfillPath,
+                            $"{identity.AtomId}:{gap.Code}:{identity.Detail}",
+                            AdmissionEffect.Observe));
+                    }
+                    else
+                    {
+                        findings.Add(new RuleFinding(
+                            BackfillPath,
+                            $"{identity.AtomId}:{gap.Code}:{identity.Detail}",
+                            AdmissionEffect.Block));
+                    }
+
+                    continue;
+                }
+
                 findings.Add(new RuleFinding(
                     BackfillPath,
-                    DigestionReceiptIntegrity.Render(identity),
-                    blockingReceiptIntegrityIdentities.Contains(identity)
-                        ? AdmissionEffect.Block
-                        : AdmissionEffect.Observe));
+                    $"{identity.AtomId}:{gap.Code}:{identity.Detail}",
+                    AdmissionEffect.Block));
             }
 
             // 观察项不阻断准入。理论卷入库后尚未消化是账本四态里的 `open`,
@@ -436,6 +452,93 @@ internal static class BackfillInventoryRule
             findings.Add(new RuleFinding(BackfillPath, exception.Message));
         }
     }
+
+    private static ReceiptIntegrityGapIdentity GapIdentity(
+        DigestionLedgerEntry entry,
+        DigestionGap gap) =>
+        new(entry.AtomId, gap.Code, gap.Detail);
+
+    private static HashSet<ReceiptIntegrityGapIdentity> BaselineComparableReceiptIntegrityGaps(
+        BackfillInventoryDocument document,
+        RepositorySnapshot snapshot)
+    {
+        var gaps = new HashSet<ReceiptIntegrityGapIdentity>();
+        foreach (var entry in document.RequireDigestionEntries())
+        {
+            var coverageReceipts = FirstReceiptByGid(
+                entry.Receipts.Coverage,
+                static receipt => receipt.Gid);
+            foreach (var gid in entry.CoverageGids.Distinct(StringComparer.Ordinal))
+            {
+                if (coverageReceipts.TryGetValue(gid, out var coverage)
+                    && (coverage.SourceSha256 != entry.Fingerprints.RawSha256
+                        || !Gid.TryParse(gid, out var parsedGid)
+                        || !SnapshotFileMatches(snapshot, parsedGid.Path.Value, coverage.TargetSha256)))
+                {
+                    gaps.Add(new ReceiptIntegrityGapIdentity(
+                        entry.AtomId,
+                        "coverage-receipt-mismatch",
+                        gid));
+                }
+            }
+
+            var scribeReceipts = FirstReceiptByGid(
+                entry.Receipts.Scribe,
+                static receipt => receipt.Gid);
+            foreach (var gid in entry.CoverageGids.Distinct(StringComparer.Ordinal))
+            {
+                if (!scribeReceipts.TryGetValue(gid, out var scribe))
+                {
+                    continue;
+                }
+
+                var documentGid = ScribeEmissionAttestation.DocumentGid(gid);
+                var definitionPath = ScribeEmissionAttestation.DefinitionPath(documentGid);
+                if (snapshot.TryGetFile(definitionPath, out var definition)
+                    && scribe.DefinitionSha256
+                    != DigestionFingerprint.Compute(definition.RawBytes.AsSpan()).RawSha256)
+                {
+                    gaps.Add(new ReceiptIntegrityGapIdentity(
+                        entry.AtomId,
+                        "scribe-definition-mismatch",
+                        gid));
+                }
+
+                var emissionPath = ScribeEmissionAttestation.EmissionPath(documentGid);
+                if (snapshot.TryGetFile(emissionPath, out var emission)
+                    && scribe.EmissionSha256
+                    != DigestionFingerprint.Compute(emission.RawBytes.AsSpan()).RawSha256)
+                {
+                    gaps.Add(new ReceiptIntegrityGapIdentity(
+                        entry.AtomId,
+                        "scribe-emission-mismatch",
+                        gid));
+                }
+            }
+        }
+
+        return gaps;
+    }
+
+    private static Dictionary<string, T> FirstReceiptByGid<T>(
+        IEnumerable<T> receipts,
+        Func<T, string> gid)
+    {
+        var result = new Dictionary<string, T>(StringComparer.Ordinal);
+        foreach (var receipt in receipts)
+        {
+            result.TryAdd(gid(receipt), receipt);
+        }
+
+        return result;
+    }
+
+    private static bool SnapshotFileMatches(
+        RepositorySnapshot snapshot,
+        string path,
+        string expectedSha256) =>
+        snapshot.TryGetFile(path, out var file)
+        && DigestionFingerprint.Compute(file.RawBytes.AsSpan()).RawSha256 == expectedSha256;
 
     private static BackfillInventoryDocument LoadBaselineDocument(RepositorySnapshot baseline)
     {

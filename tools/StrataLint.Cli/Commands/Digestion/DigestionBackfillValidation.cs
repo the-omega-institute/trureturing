@@ -11,7 +11,7 @@ internal static class DigestionBackfillValidation
         ValidatedPolicy policy,
         AcceptedLeanClosure lean,
         VerifiedScribeEmissions verifiedScribeEmissions,
-        VerifiedScribeEmissions? forkPointVerifiedScribeEmissions = null)
+        RawChangeSet? changes = null)
     {
         var findings = BackfillInventoryRule.EvaluateDocument(
             new BackfillInventoryValidationContext(
@@ -20,7 +20,7 @@ internal static class DigestionBackfillValidation
                 policy,
                 lean,
                 verifiedScribeEmissions,
-                ForkPointVerifiedScribeEmissions: forkPointVerifiedScribeEmissions),
+                changes),
             document);
         return RenderOrThrow(findings);
     }

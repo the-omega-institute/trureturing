@@ -5,8 +5,7 @@ namespace StrataLint.Cli;
 
 internal sealed record SnapshotAdmissionEvaluation(
     AdmissionOutcome Outcome,
-    AcceptedLeanClosure? CurrentLean,
-    AcyclicTruthDag? CurrentDag);
+    AcceptedLeanClosure? CurrentLean);
 
 internal static class SnapshotAdmissionCore
 {
@@ -17,8 +16,7 @@ internal static class SnapshotAdmissionCore
         RawChangeSet changes,
         BootstrapOutcome bootstrap,
         VerifiedScribeEmissions? verifiedScribeEmissions,
-        RepositorySnapshot? forkPoint = null,
-        VerifiedScribeEmissions? forkPointVerifiedScribeEmissions = null)
+        RepositorySnapshot? forkPoint = null)
     {
         try
         {
@@ -46,14 +44,6 @@ internal static class SnapshotAdmissionCore
                     throw new InvalidOperationException(failure.Message),
             };
             var lean = ValidateLean(current, currentReport);
-            var dagOutcome = AcyclicTruthDag.Build(current, lean);
-            if (dagOutcome is DagBuildOutcome.Rejected rejectedDag)
-            {
-                return new SnapshotAdmissionEvaluation(
-                    RejectCycle(rejectedDag.Witness, sl022Diagnostics),
-                    lean,
-                    null);
-            }
 
             var admission = bootstrap switch
             {
@@ -65,8 +55,7 @@ internal static class SnapshotAdmissionCore
                     changes,
                     clear.Capability,
                     verifiedScribeEmissions,
-                    forkPoint,
-                    forkPointVerifiedScribeEmissions),
+                    forkPoint),
                 BootstrapOutcome.ProtectedSurfaceVerificationRequired protectedSurfaceVerification =>
                     AdmissionPipeline.EvaluateProtectedSurface(
                         current,
@@ -76,8 +65,7 @@ internal static class SnapshotAdmissionCore
                         changes,
                         protectedSurfaceVerification.ChangeSet,
                         verifiedScribeEmissions,
-                        forkPoint,
-                        forkPointVerifiedScribeEmissions),
+                        forkPoint),
                 _ => throw new InvalidOperationException("unknown bootstrap outcome"),
             };
             if (admission is not AdmissionOutcome.Admitted
@@ -88,8 +76,7 @@ internal static class SnapshotAdmissionCore
 
             return new SnapshotAdmissionEvaluation(
                 admission,
-                lean,
-                ((DagBuildOutcome.Accepted)dagOutcome).Capability);
+                lean);
         }
         catch (Exception exception)
         {
@@ -99,7 +86,6 @@ internal static class SnapshotAdmissionCore
 
     private static SnapshotAdmissionEvaluation Failure(string message) => new(
         new AdmissionOutcome.InfrastructureFailure(message),
-        null,
         null);
 
     private static AcceptedLeanClosure ValidateLean(
@@ -111,29 +97,6 @@ internal static class SnapshotAdmissionCore
             LeanValidationOutcome.InfrastructureFailure failure =>
                 throw new InvalidOperationException(failure.Message),
         };
-
-    private static AdmissionOutcome RejectCycle(
-        ImmutableArray<RepoPath> witness,
-        ImmutableArray<Diagnostic> sl022Diagnostics)
-    {
-        if (witness.Length < 2 || witness[0] != witness[^1])
-        {
-            throw new InvalidOperationException(
-                "Truth DAG cycle rejection did not carry a closed witness.");
-        }
-
-        var descriptor = RuleCatalog.Default.Descriptors[0];
-        var cycle = new Diagnostic(
-            descriptor.Id,
-            descriptor.Title,
-            descriptor.DisplaySeverity,
-            descriptor.AdmissionEffect,
-            witness[0].Value,
-            "managed import cycle: "
-            + string.Join(" -> ", witness.Select(static path => path.Value)));
-        return new AdmissionOutcome.RuleRejected(
-            ImmutableArray.Create(cycle).AddRange(sl022Diagnostics));
-    }
 
     internal static AdmissionOutcome PreserveSl022Diagnostics(
         AdmissionOutcome outcome,

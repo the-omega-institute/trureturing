@@ -154,10 +154,9 @@ internal static class DagLedgerSupersedeWriter
             FrozenLedger.ValidateSupersedeStrength(
                 payload,
                 entry,
-                LeanImportClosure.RepositoryClosureIsUnchanged(
-                    candidateCatalog.Dag,
-                    entry.Material.RepoPath,
-                    changes),
+                !LeanImportClosure.RepositoryPaths(
+                    report,
+                    entry.Material.RepoPath).Overlaps(changes.Paths),
                 LeanImportClosure.ExternalImportsHaveNamedPinCoverage(
                     report,
                     entry.Material.RepoPath,
@@ -213,10 +212,9 @@ internal static class DagLedgerSupersedeWriter
                 active,
                 trustedReferences,
                 candidateCatalog,
-                LeanImportClosure.RepositoryClosureIsUnchanged(
-                    candidateCatalog.Dag,
-                    active[item.Payload.CaseId].Material.RepoPath,
-                    changes),
+                !LeanImportClosure.RepositoryPaths(
+                    report,
+                    active[item.Payload.CaseId].Material.RepoPath).Overlaps(changes.Paths),
                     LeanImportClosure.ExternalImportsHaveNamedPinCoverage(
                         report,
                         active[item.Payload.CaseId].Material.RepoPath,

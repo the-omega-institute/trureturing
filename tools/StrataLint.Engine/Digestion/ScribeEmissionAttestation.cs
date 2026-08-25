@@ -28,13 +28,11 @@ internal sealed class VerifiedScribeEmissions
     private VerifiedScribeEmissions(
         ImmutableDictionary<string, ScribeEmissionRecord> records,
         ImmutableHashSet<string> declarationReferences,
-        ImmutableArray<ScribeDescribeLatexRecord> describeLatexRecords,
-        bool reportDerivedEmissionsComparable)
+        ImmutableArray<ScribeDescribeLatexRecord> describeLatexRecords)
     {
         this.records = records;
         this.declarationReferences = declarationReferences;
         this.describeLatexRecords = describeLatexRecords;
-        ReportDerivedEmissionsComparable = reportDerivedEmissionsComparable;
     }
 
     internal static VerifiedScribeEmissions Empty { get; } = Create([], [], []);
@@ -95,8 +93,7 @@ internal sealed class VerifiedScribeEmissions
         return new VerifiedScribeEmissions(
             records.ToImmutableDictionary(static item => item.Gid, StringComparer.Ordinal),
             references,
-            latexRecords,
-            reportDerivedEmissionsComparable: true);
+            latexRecords);
     }
 
     internal bool TryGet(string gid, out ScribeEmissionRecord record) =>
@@ -105,14 +102,6 @@ internal sealed class VerifiedScribeEmissions
     internal bool ReferencesDeclaration(string gid) => declarationReferences.Contains(gid);
 
     internal ImmutableArray<ScribeDescribeLatexRecord> DescribeLatexRecords => describeLatexRecords;
-
-    internal bool ReportDerivedEmissionsComparable { get; }
-
-    internal VerifiedScribeEmissions MarkReportDerivedEmissionsIncomparable() => new(
-        records,
-        declarationReferences,
-        describeLatexRecords,
-        reportDerivedEmissionsComparable: false);
 }
 
 internal static class ScribeEmissionAttestation

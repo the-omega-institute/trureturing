@@ -260,10 +260,10 @@ public sealed partial class CoverAtomTests
     [Fact]
     public void CoverRejectsAtomWhoseContentAddressedReceiptDrifted()
     {
-        // The atom's durable CAS blob is absent, so its content-addressed
-        // fingerprint can no longer be reproduced: cover fails closed rather than
-        // binding a declaration to an unverifiable source atom.
-        var (result, after, before, _) = Execute(new CoverSpec { IncludeCasBlob = false });
+        // The atom's durable CAS blob is absent, so its fingerprint cannot be reproduced:
+        // cover fails closed rather than binding a declaration to an unverifiable source atom.
+        var (result, after, before, _) = Execute(
+            new CoverSpec { IncludeCasBlob = false }, changes: RawChangeSet.Create(["README.md"]));
 
         Assert.False(result.Success);
         Assert.Contains("CAS blob is missing", result.Error, StringComparison.Ordinal);
@@ -409,9 +409,9 @@ public sealed partial class CoverAtomTests
         Assert.Contains("Scribe emission verifier is unavailable", result.Error, StringComparison.Ordinal);
     }
 
-    private static CoverExecution Execute(
-        CoverSpec spec,
-        IReadOnlyList<string>? args = null)
+    private static CoverExecution Execute(CoverSpec spec,
+        IReadOnlyList<string>? args = null,
+        RawChangeSet? changes = null)
     {
         var inputs = spec.Materialize();
         var currentFiles = DirectoryLedgerTestSupport.Project(inputs.Files);
@@ -423,7 +423,7 @@ public sealed partial class CoverAtomTests
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(
-                RawChangeSet.Create(Array.Empty<string>()),
+                changes ?? RawChangeSet.Create(Array.Empty<string>()),
                 CoverWorld.Raw(currentFiles),
                 CoverWorld.Raw(baselineFiles)),
             new FakeLeanReportSource(inputs.Report),
@@ -475,8 +475,13 @@ internal sealed record CoverInputs(
     string Gid,
     string EnvelopePath,
     string Ledger,
-    BackfillInventoryDocument Document,
-    VerifiedScribeEmissions? ForkPointVerifiedEmissions = null);
+    BackfillInventoryDocument Document);
+
+internal sealed record CoverUnrelatedSiblingSpec(
+    string AtomId,
+    ImmutableArray<string> CurrentCoverage,
+    ImmutableArray<string> BaselineCoverage,
+    ImmutableArray<string> UnresolvedSubitems);
 
 // Declarative fixture for the cover gate matrix. Defaults produce a clean happy
 // path (an open, CAS-backed residual atom whose target declaration is proven
@@ -569,6 +574,8 @@ internal sealed record CoverSpec
 
     internal ImmutableArray<DigestionFormalizationExtension> AdditionalHostedExtensions { get; init; } = [];
 
+    internal CoverUnrelatedSiblingSpec? UnrelatedSibling { get; init; }
+
     internal string Gid => Declaration is null ? ModuleGid : ModuleGid + "." + Declaration;
 
     internal CoverInputs Materialize() => CoverWorld.Materialize(this);
@@ -588,7 +595,7 @@ internal static partial class CoverWorld
     };
 
     internal static string[] AlignArgs(CoverInputs inputs) =>
-        ["--atom-id", DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline"];
+        ["--atom-id", DefaultAtomId, "--gid", inputs.Gid];
 
     internal static ProductionCliEnvironment Environment(
         string repositoryRoot,
@@ -612,6 +619,15 @@ internal static partial class CoverWorld
             "# Synthetic\n\n**定理 1.1(A)**。cover fixture atom body。\n");
         var atom = Assert.Single(
             AtomizerRegistry.Atomize(SyntheticNumberedAtomizer.Id, sourceBytes, DigestionTestSupport.Rules).Claims);
+        const string unrelatedSourcePath = "docs/CONTRIBUTING.md";
+        var unrelatedSourceBytes = Encoding.UTF8.GetBytes(
+            "# Synthetic\n\n**定理 1.1(A)**。unrelated sibling atom body。\n");
+        var unrelatedAtom = spec.UnrelatedSibling is null
+            ? null
+            : Assert.Single(AtomizerRegistry.Atomize(
+                SyntheticNumberedAtomizer.Id,
+                unrelatedSourceBytes,
+                DigestionTestSupport.Rules).Claims);
         var targetPath = spec.ModuleGid + ".lean";
         var targetBytes = Encoding.UTF8.GetBytes(DigestionTestSupport.Lean(spec.ModuleGid));
         var definition = Encoding.UTF8.GetBytes("scribe definition\n");
@@ -642,7 +658,10 @@ internal static partial class CoverWorld
             includeOtherAtom: true,
             tailAuthPath,
             tailAuthSha,
-            DigestionFingerprint.Compute(targetBytes).RawSha256);
+            DigestionFingerprint.Compute(targetBytes).RawSha256,
+            unrelatedAtom,
+            unrelatedSourcePath,
+            useUnrelatedBaselineCoverage: false);
         var ledger = DirectoryLedgerTestSupport.Image(document);
         var envelopePath = "Meta/Digestion/formalizations/" + spec.AtomId + ".v1.json";
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
@@ -656,6 +675,12 @@ internal static partial class CoverWorld
             [ScribeEmissionAttestation.RelativePath] = Encoding.UTF8.GetString(attestation.AsSpan()),
         };
         DirectoryLedgerTestSupport.ReplaceWithProjection(files, document);
+        if (unrelatedAtom is not null)
+        {
+            files[unrelatedSourcePath] = Encoding.UTF8.GetString(unrelatedSourceBytes);
+            var (unrelatedCasPath, unrelatedCasBytes) = DigestionTestSupport.CasFile(unrelatedAtom);
+            files[unrelatedCasPath] = Encoding.UTF8.GetString(unrelatedCasBytes);
+        }
         MaterializeSecondaryFiles(spec, files);
         if (spec.IncludeEnvelope)
         {
@@ -682,7 +707,10 @@ internal static partial class CoverWorld
             baselineCoverage,
             includeOtherAtom: false,
             null,
-            null);
+            null,
+            unrelatedAtom: unrelatedAtom,
+            unrelatedSourcePath: unrelatedSourcePath,
+            useUnrelatedBaselineCoverage: true);
         var baseline = new Dictionary<string, string>(files, StringComparer.Ordinal);
         DirectoryLedgerTestSupport.ReplaceWithProjection(baseline, baselineDocument);
 

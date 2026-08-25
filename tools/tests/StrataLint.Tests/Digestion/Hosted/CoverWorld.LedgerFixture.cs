@@ -37,7 +37,10 @@ internal static partial class CoverWorld
         bool includeOtherAtom,
         string? tailAuthPath,
         string? tailAuthSha,
-        string? targetSha256 = null)
+        string? targetSha256 = null,
+        DigestionAtom? unrelatedAtom = null,
+        string? unrelatedSourcePath = null,
+        bool useUnrelatedBaselineCoverage = false)
     {
         var sources = ImmutableArray.CreateBuilder<DigestionLedgerSource>();
         var entries = ImmutableArray.CreateBuilder<DigestionLedgerEntry>();
@@ -82,6 +85,38 @@ internal static partial class CoverWorld
             [],
             GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])),
             entries.ToImmutable()));
+
+        if (spec.UnrelatedSibling is { } sibling
+            && unrelatedAtom is not null
+            && unrelatedSourcePath is not null)
+        {
+            var siblingCoverage = useUnrelatedBaselineCoverage
+                ? sibling.BaselineCoverage
+                : sibling.CurrentCoverage;
+            sources.Add(new DigestionLedgerSource(
+                "fixture-unrelated-source",
+                unrelatedSourcePath,
+                SyntheticNumberedAtomizer.Id,
+                [],
+                GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])),
+                [
+                    Entry(
+                        "fixture-unrelated-source",
+                        unrelatedSourcePath,
+                        sibling.AtomId,
+                        unrelatedAtom.AstPath,
+                        unrelatedAtom.Fingerprints,
+                        siblingCoverage,
+                        "partial",
+                        "closed",
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        sibling.UnresolvedSubitems),
+                ]));
+        }
 
         return BackfillInventoryDocument.Create(sources.ToImmutable(), []);
     }

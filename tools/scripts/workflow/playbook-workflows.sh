@@ -590,8 +590,6 @@ case "$COMMAND" in
     prepare_formalization_receipt
     freeze_module_if_needed
     install_prepared_formalization_receipt
-    step lean-report-refresh make lean-report
-    step emit-post-receipt make emit
     commit_all_if_needed "formalize: record deposit receipt for $GID"
     ;;
   cover)
@@ -599,10 +597,8 @@ case "$COMMAND" in
     cleanup_transaction_temporaries
     step lean-report make lean-report
     step cover-atom cover_atom_or_resume
-    step emit-post-cover make emit
     step align-scribe-receipt run_cli \
-      align-scribe-receipt --atom-id "$ATOM_ID" --gid "$GID" --base "$BASE"
-    step emit-post-alignment make emit
+      align-scribe-receipt --atom-id "$ATOM_ID" --gid "$GID"
     commit_all_if_needed "formalize: cover $ATOM_ID with $GID"
     ;;
   *)

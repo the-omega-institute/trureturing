@@ -43,8 +43,6 @@ internal interface IFrozenLedgerAdmissionServices
 {
     IReadOnlySet<string> LeanReportProducerPaths { get; }
 
-    IReadOnlySet<string> ReadLeanReportProducerPaths(RepositorySnapshot snapshot);
-
     FrozenLedgerAdmissionPreparation Prepare(
         RepositorySnapshot current,
         RepositorySnapshot protectedBase,
@@ -56,7 +54,6 @@ internal interface IFrozenLedgerAdmissionServices
         RepositorySnapshot current,
         AcceptedLeanClosure lean,
         LeanAxiomReport report,
-        AcyclicTruthDag dag,
         RawChangeSet changes,
         FrozenRevisionIdentity currentIdentity);
 }
@@ -165,16 +162,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 current,
                 candidateLeanReport,
                 prepared.Changes);
-            var forkPointVerifiedScribeEmissions = VerifyScribeForAdmission(
-                scribeEmissionVerifier,
-                forkPoint,
-                candidateLeanReport);
-            if (forkPointVerifiedScribeEmissions is not null
-                && !HaveIdenticalLeanReportInputs(current, forkPoint, frozenLedgerAdmission))
-            {
-                forkPointVerifiedScribeEmissions =
-                    forkPointVerifiedScribeEmissions.MarkReportDerivedEmissionsIncomparable();
-            }
             var evaluation = SnapshotAdmissionCore.Evaluate(
                 current,
                 baseline,
@@ -182,8 +169,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 prepared.Changes,
                 bootstrap,
                 verifiedScribeEmissions,
-                forkPoint,
-                forkPointVerifiedScribeEmissions);
+                forkPoint);
             if (!hasFrozenLedgerDelta)
             {
                 return evaluation.Outcome;
@@ -195,10 +181,10 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 return evaluation.Outcome;
             }
 
-            if (evaluation.CurrentLean is null || evaluation.CurrentDag is null)
+            if (evaluation.CurrentLean is null)
             {
                 return new AdmissionOutcome.InfrastructureFailure(
-                    "frozen-ledger delta evaluation lacks its Lean closure or truth DAG");
+                    "frozen-ledger delta evaluation lacks its Lean closure");
             }
 
             FrozenLedgerAdmissionPreparation frozenLedgerPreparation;
@@ -233,7 +219,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 current,
                 evaluation.CurrentLean,
                 candidateLeanReport,
-                evaluation.CurrentDag,
                 prepared.Changes,
                 currentIdentity);
             if (serviceRejection is AdmissionOutcome.RuleRejected serviceRuleRejection)
@@ -541,42 +526,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         }
 
         return verifier.Verify(snapshot, report, changes);
-    }
-
-    private static bool HaveIdenticalLeanReportInputs(
-        RepositorySnapshot current,
-        RepositorySnapshot forkPoint,
-        IFrozenLedgerAdmissionServices frozenLedgerAdmission)
-    {
-        ArgumentNullException.ThrowIfNull(current);
-        ArgumentNullException.ThrowIfNull(forkPoint);
-        ArgumentNullException.ThrowIfNull(frozenLedgerAdmission);
-        var currentProducerPaths = frozenLedgerAdmission.ReadLeanReportProducerPaths(current);
-        var forkPointProducerPaths = frozenLedgerAdmission.ReadLeanReportProducerPaths(forkPoint);
-        if (!currentProducerPaths.SetEquals(forkPointProducerPaths))
-        {
-            return false;
-        }
-
-        var paths = current.Files.Keys
-            .Concat(forkPoint.Files.Keys)
-            .Select(static path => path.Value)
-            .Where(path => LeanClosureValidator.IsManagedLean(path)
-                || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path)
-                || currentProducerPaths.Contains(path)
-                || forkPointProducerPaths.Contains(path))
-            .Distinct(StringComparer.Ordinal);
-        foreach (var path in paths)
-        {
-            if (!current.TryGetFile(path, out var currentFile)
-                || !forkPoint.TryGetFile(path, out var forkPointFile)
-                || !currentFile.RawBytes.AsSpan().SequenceEqual(forkPointFile.RawBytes.AsSpan()))
-            {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     public CommandResult RenderDag(IReadOnlyList<string> arguments) =>

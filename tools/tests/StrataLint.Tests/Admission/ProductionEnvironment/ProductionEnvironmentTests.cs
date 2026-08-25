@@ -375,6 +375,7 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Baseline["Meta/registry.yaml"] = TestRegistry.Canonical;
         fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
         fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
+        AddFrozenLedger(fixture);
         fixture.Files[loopPath] = "def loop : Nat := 0\n";
         fixture.Reports[RuleFixture.RingPath] = new LeanFileReport(
             ImmutableArray.Create("D5.S0.Carrier.Loop"),
@@ -396,15 +397,13 @@ public sealed partial class ProductionEnvironmentTests
         var outcome = CheckWithReports(environment, fixture);
 
         var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
-        var cycle = Assert.Single(
-            rejected.Diagnostics.Where(item => item.RuleId == RuleId.CreateKnown(1)));
         var meta = Assert.Single(
             rejected.Diagnostics.Where(item => item.RuleId == RuleId.CreateKnown(22)));
-        Assert.Equal(RuleId.CreateKnown(1), cycle.RuleId);
-        Assert.Equal(loopPath, cycle.Path);
-        Assert.Equal(
-            $"managed import cycle: {loopPath} -> {RuleFixture.RingPath} -> {loopPath}",
-            cycle.Message);
+        Assert.DoesNotContain(
+            rejected.Diagnostics,
+            item => item.RuleId == RuleId.CreateKnown(1));
+        Assert.NotEmpty(
+            rejected.Diagnostics.Where(item => item.RuleId == RuleId.CreateKnown(8)));
         Assert.Equal(RuleFixture.SyntheticProtectedPath, meta.Path);
     }
 
@@ -478,7 +477,7 @@ public sealed partial class ProductionEnvironmentTests
         });
     }
 
-    private static (RepositorySnapshot Snapshot, AcceptedLeanClosure Lean, AcyclicTruthDag Dag) BuildState(
+    private static (RepositorySnapshot Snapshot, AcceptedLeanClosure Lean, TruthDagProjection Dag) BuildState(
         IReadOnlyDictionary<string, string> files,
         IReadOnlyDictionary<string, LeanFileReport> reports)
     {
@@ -486,8 +485,7 @@ public sealed partial class ProductionEnvironmentTests
             SnapshotDecoder.Decode(Snapshot(files))).Snapshot;
         var lean = Assert.IsType<LeanValidationOutcome.Accepted>(
             LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
-        var dag = Assert.IsType<DagBuildOutcome.Accepted>(
-            AcyclicTruthDag.Build(snapshot, lean)).Capability;
+        var dag = TruthDagProjectionAssembler.Build(snapshot, lean);
         return (snapshot, lean, dag);
     }
 
@@ -555,103 +553,17 @@ public sealed partial class ProductionEnvironmentTests
                 SnapshotDecoder.Decode(Snapshot(files))).Snapshot;
             var closure = Assert.IsType<LeanValidationOutcome.Accepted>(
                 LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
-            var dag = Assert.IsType<DagBuildOutcome.Accepted>(AcyclicTruthDag.Build(snapshot, closure)).Capability;
+            var dag = TruthDagProjectionAssembler.Build(snapshot, closure);
             var attestations = dag.Nodes
                 .Where(static node => node.State is TruthState.Closed && node.ModuleName is not null)
                 .Select(node => new FrozenModuleAttestation(
                     node.RepoPath,
                     FrozenLedgerTestData.GitBlobOid(files[node.RepoPath.Value])));
             return Assert.IsType<FrozenMaterialOutcome.Accepted>(
-                FrozenContentAddress.Build(snapshot, closure, dag, environment, attestations)).Capability;
+                FrozenContentAddress.Build(snapshot, closure, environment, attestations)).Capability;
         }
     }
 
-    [Fact]
-    public void CoverAtomRejectsCandidateEmissionMismatchAbsentFromForkPointCapability()
-    {
-        var materialized = CoverWorld.Materialize(new CoverSpec
-        {
-            OtherAtomBinding = ("receipt-gap-sibling", "D5/S0/Carrier/Probe.sibling"),
-            ReportDeclarations = ImmutableArray.Create("probe", "sibling"),
-        });
-        var inputs = DirectoryInputs(WithCandidateEmissionMismatchAndStaleForkPointProjection(
-            materialized));
-        using var temporary = new TemporaryDirectory();
-        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
-        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
-        var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
-
-        var result = environment.CoverAtom(CoverArgs(inputs));
-
-        Assert.False(result.Success);
-        Assert.Contains("scribe-emission-mismatch", result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
-    }
-
-    private static CoverInputs WithCandidateEmissionMismatchAndStaleForkPointProjection(
-        CoverInputs inputs)
-    {
-        var documentGid = ScribeEmissionAttestation.DocumentGid(inputs.Gid);
-        Assert.True(inputs.VerifiedEmissions!.TryGet(documentGid, out var forkPointRecord));
-        const string siblingAtomId = "receipt-gap-sibling";
-        var siblingGid = inputs.Document.RequireDigestionEntries()
-            .Single(entry => entry.AtomId == siblingAtomId)
-            .CoverageGids.Single();
-        var targetSha256 = DigestionFingerprint.Compute(
-            Encoding.UTF8.GetBytes(inputs.Files[documentGid + ".lean"])).RawSha256;
-        var document = inputs.Document.WithDigestionSources(
-            inputs.Document.RequireDigestionSources()
-                .Select(source => source with
-                {
-                    Entries = source.Entries.Select(entry => entry.AtomId == siblingAtomId
-                        ? entry with
-                        {
-                            Receipts = entry.Receipts with
-                            {
-                                Coverage =
-                                [
-                                    new DigestionCoverageReceipt(
-                                        siblingGid,
-                                        entry.Fingerprints.RawSha256,
-                                        targetSha256),
-                                ],
-                                Scribe =
-                                [
-                                    new DigestionScribeReceipt(
-                                        siblingGid,
-                                        forkPointRecord.DefinitionSha256,
-                                        forkPointRecord.EmissionSha256),
-                                ],
-                            },
-                        }
-                        : entry).ToImmutableArray(),
-                })
-                .ToImmutableArray());
-        var candidateEmission = "# Candidate-only Scribe emission\n";
-        var files = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal)
-        {
-            [forkPointRecord.EmissionPath] = candidateEmission,
-        };
-        DirectoryLedgerTestSupport.ReplaceWithProjection(files, document);
-        var baseline = new Dictionary<string, string>(inputs.Baseline, StringComparer.Ordinal);
-        DirectoryLedgerTestSupport.ReplaceWithProjection(baseline, document);
-        baseline[forkPointRecord.EmissionPath] = "# Stale fork-point projection\n";
-        var candidateRecord = forkPointRecord with
-        {
-            EmissionSha256 = DigestionFingerprint.Compute(
-                Encoding.UTF8.GetBytes(candidateEmission)).RawSha256,
-        };
-        return inputs with
-        {
-            Files = files,
-            Baseline = baseline,
-            Document = document,
-            VerifiedEmissions = VerifiedScribeEmissions.Create(
-                [candidateRecord],
-                [inputs.Gid]),
-            ForkPointVerifiedEmissions = inputs.VerifiedEmissions,
-        };
-    }
 }
 
 internal sealed class FakeRepositoryGateway(
@@ -760,34 +672,13 @@ internal sealed class FakeLeanReportSource(LeanAxiomReport? report) : ILeanRepor
     }
 }
 
-internal sealed class FakeScribeEmissionVerifier : IScribeEmissionVerifier
+internal sealed class FakeScribeEmissionVerifier(VerifiedScribeEmissions? verification)
+    : IScribeEmissionVerifier
 {
-    private readonly VerifiedScribeEmissions? verification;
-    private readonly VerifiedScribeEmissions? forkPointVerification;
-    private int callCount;
-
-    internal FakeScribeEmissionVerifier(VerifiedScribeEmissions? verification)
-        : this(verification, null)
-    {
-    }
-
-    internal FakeScribeEmissionVerifier(
-        VerifiedScribeEmissions? verification,
-        VerifiedScribeEmissions? forkPointVerification)
-    {
-        this.verification = verification;
-        this.forkPointVerification = forkPointVerification;
-    }
-
     public VerifiedScribeEmissions Verify(
         RepositorySnapshot snapshot,
         LeanAxiomReport report,
-        RawChangeSet? changes = null)
-    {
-        var result = callCount++ == 0 || forkPointVerification is null
-            ? verification
-            : forkPointVerification;
-        return result
-            ?? throw new InvalidOperationException("Scribe emission verification failed: synthetic");
-    }
+        RawChangeSet? changes = null) =>
+        verification
+        ?? throw new InvalidOperationException("Scribe emission verification failed: synthetic");
 }

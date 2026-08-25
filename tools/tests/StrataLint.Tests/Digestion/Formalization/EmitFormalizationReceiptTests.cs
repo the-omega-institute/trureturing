@@ -109,8 +109,7 @@ public sealed class EmitFormalizationReceiptTests
         var result = environment.EmitFormalizationReceipt(
             ["--atom-id", CoverWorld.DefaultAtomId,
                 "--gid", inputs.Gid,
-                "--gid", secondaryGid,
-                "--require-existing-coverage", "true"]);
+                "--gid", secondaryGid]);
 
         Assert.True(result.Success, result.Error);
         var relativeOut = "Meta/Digestion/formalizations/" + CoverWorld.DefaultAtomId + ".v1.json";
@@ -268,22 +267,6 @@ public sealed class EmitFormalizationReceiptTests
         Assert.False(result.Success);
         Assert.Contains("FORMALIZATION_RECEIPT_INVALID", result.Error, StringComparison.Ordinal);
         Assert.Contains("is absent from the ledger", result.Error, StringComparison.Ordinal);
-        Assert.False(Directory.Exists(Path.Combine(temporary.Path, "Meta/Digestion")));
-    }
-
-    [Fact]
-    public void EmitRejectsAReceiptPrimaryThatIsNotAlreadyBoundWhenCoverageIsRequired()
-    {
-        var inputs = CoverWorld.Materialize(new CoverSpec { IncludeEnvelope = false });
-        using var temporary = new TemporaryDirectory();
-        var environment = BuildEmitEnvironment(temporary.Path, inputs);
-
-        var result = environment.EmitFormalizationReceipt(
-            ["--atom-id", CoverWorld.DefaultAtomId, "--gid", inputs.Gid,
-                "--require-existing-coverage", "true"]);
-
-        Assert.False(result.Success);
-        Assert.Contains("is not already bound", result.Error, StringComparison.Ordinal);
         Assert.False(Directory.Exists(Path.Combine(temporary.Path, "Meta/Digestion")));
     }
 

@@ -80,13 +80,6 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
 
     public IReadOnlySet<string> LeanReportProducerPaths => producerPaths.Value;
 
-    public IReadOnlySet<string> ReadLeanReportProducerPaths(RepositorySnapshot snapshot)
-    {
-        ArgumentNullException.ThrowIfNull(snapshot);
-        using var materialized = MaterializedRepositorySnapshot.Create(snapshot);
-        return ReadProducerPaths(materialized.Root);
-    }
-
     public FrozenLedgerAdmissionPreparation Prepare(
         RepositorySnapshot current,
         RepositorySnapshot protectedBase,
@@ -302,11 +295,12 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
         RepositorySnapshot current,
         AcceptedLeanClosure lean,
         LeanAxiomReport report,
-        AcyclicTruthDag dag,
         RawChangeSet changes,
         FrozenRevisionIdentity currentIdentity)
     {
-        var scope = FrozenLedgerAdmissionScope.Create(changes, preparation, dag);
+        var states = LeanTruthStates.Resolve(current, lean);
+        var adjacency = LeanImportAdjacency.Build(current, lean);
+        var scope = FrozenLedgerAdmissionScope.Create(changes, preparation, states, adjacency);
         FrozenMaterialCatalog catalog;
         try
         {
@@ -314,7 +308,6 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
             catalog = DagLedgerCommandPreparation.BuildAdmissionCatalog(
                 current,
                 lean,
-                dag,
                 preparation.BaseView,
                 scope,
                 currentIdentity);

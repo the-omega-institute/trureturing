@@ -98,13 +98,6 @@ internal static class EmitFormalizationReceiptCommand
                 signature = DigestionFormalizationReceipt.ResolveSignature(primaryGid, report);
             }
 
-            if (options.RequireExistingCoverage
-                && !entry.CoverageGids.Contains(primaryGid.Value, StringComparer.Ordinal))
-            {
-                throw new InvalidOperationException(
-                    $"receipt primary GID {primaryGid.Value} is not already bound to atom {options.AtomId}");
-            }
-
             foreach (var secondaryGid in gids.Where(gid =>
                          !string.Equals(gid.Value, primaryGid.Value, StringComparison.Ordinal)))
             {
@@ -201,15 +194,13 @@ internal static class EmitFormalizationReceiptCommand
     private sealed record ReceiptArguments(
         string AtomId,
         ImmutableArray<string> Gids,
-        string? OutPath,
-        bool RequireExistingCoverage);
+        string? OutPath);
 
     private static ReceiptArguments ParseArguments(IReadOnlyList<string> arguments)
     {
         string? atomId = null;
         var gids = ImmutableArray.CreateBuilder<string>();
         string? outPath = null;
-        bool? requireExistingCoverage = null;
         for (var index = 0; index < arguments.Count; index += 2)
         {
             if (index + 1 >= arguments.Count)
@@ -228,10 +219,6 @@ internal static class EmitFormalizationReceiptCommand
                 case "--out" when outPath is null:
                     outPath = arguments[index + 1];
                     break;
-                case "--require-existing-coverage" when requireExistingCoverage is null
-                    && bool.TryParse(arguments[index + 1], out var required):
-                    requireExistingCoverage = required;
-                    break;
                 default:
                     throw Usage();
             }
@@ -248,14 +235,13 @@ internal static class EmitFormalizationReceiptCommand
         return new ReceiptArguments(
             atomId,
             gids.ToImmutable(),
-            string.IsNullOrWhiteSpace(outPath) ? null : outPath,
-            requireExistingCoverage ?? false);
+            string.IsNullOrWhiteSpace(outPath) ? null : outPath);
     }
 
     private static InvalidOperationException Usage() => new(
         "USAGE: StrataLint emit-formalization-receipt --atom-id ATOM_ID --gid PRIMARY_GID "
         + "[--gid SECONDARY_GID ...] "
-        + "[--out RECEIPT_PATH] [--require-existing-coverage true|false]");
+        + "[--out RECEIPT_PATH]");
 
     private static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot) =>
         BackfillInventoryLoader.Load(snapshot);

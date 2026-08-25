@@ -16,11 +16,8 @@ internal static partial class CoverAtomCommand
     {
         var options = ParseAlignArguments(arguments);
         var currentRaw = repository.ReadCurrent();
-        var baselineRaw = repository.ReadRevision(options.BaselineRevision);
         var current = Decode(currentRaw);
-        var baseline = Decode(baselineRaw);
         var document = LoadDocument(current);
-        var baselineDocument = BackfillInventoryLoader.LoadBaseline(baseline);
         var matches = document.RequireDigestionEntries()
             .Where(entry => string.Equals(entry.AtomId, options.AtomId, StringComparison.Ordinal))
             .ToArray();
@@ -59,13 +56,6 @@ internal static partial class CoverAtomCommand
         var report = leanReportSource.Load(current);
         var lean = ValidateLean(current, report);
         var verified = scribeEmissionVerifier.Verify(current, report);
-        var forkPointVerified = scribeEmissionVerifier.Verify(baseline, report);
-        var forkPointReceiptIntegrityIdentities =
-            DigestionStatusEvaluator.EvaluateReceiptIntegrityIdentities(
-                baselineDocument,
-                baseline,
-                forkPointVerified,
-                changes: null);
         var documentGid = ScribeEmissionAttestation.DocumentGid(options.Gid);
         if (!verified.TryGet(documentGid, out var verifiedRecord)
             || !verified.ReferencesDeclaration(options.Gid))
@@ -117,9 +107,7 @@ internal static partial class CoverAtomCommand
             baselineDocument: null);
         RequireNoConflictMarkedSources(finalEvaluation);
         RequireAlignedScribeReceipt(EvaluationFor(finalEvaluation, options.AtomId), options.Gid);
-        LedgerWriteReceiptIntegrityGate.RequireNoNewFailures(
-            finalEvaluation,
-            forkPointReceiptIntegrityIdentities);
+        RequireNoReceiptIntegrityFailure(finalEvaluation);
 
         var ledgerUpdates = IngestCommand.LedgerUpdates(currentRaw, finalRaw);
         var changed = ledgerUpdates.Length > 0;
@@ -155,14 +143,13 @@ internal static partial class CoverAtomCommand
 
     private static AlignArguments ParseAlignArguments(IReadOnlyList<string> arguments)
     {
-        if (arguments.Count != 6)
+        if (arguments.Count != 4)
         {
             throw AlignUsage();
         }
 
         string? atomId = null;
         string? gid = null;
-        string? baselineRevision = null;
         for (var index = 0; index < arguments.Count; index += 2)
         {
             if (index + 1 >= arguments.Count)
@@ -178,26 +165,21 @@ internal static partial class CoverAtomCommand
                 case "--gid" when gid is null:
                     gid = arguments[index + 1];
                     break;
-                case "--base" when baselineRevision is null:
-                    baselineRevision = arguments[index + 1];
-                    break;
                 default:
                     throw AlignUsage();
             }
         }
 
-        if (string.IsNullOrWhiteSpace(atomId)
-            || string.IsNullOrWhiteSpace(gid)
-            || string.IsNullOrWhiteSpace(baselineRevision))
+        if (string.IsNullOrWhiteSpace(atomId) || string.IsNullOrWhiteSpace(gid))
         {
             throw AlignUsage();
         }
 
-        return new AlignArguments(atomId, gid, baselineRevision);
+        return new AlignArguments(atomId, gid);
     }
 
     private static InvalidOperationException AlignUsage() => new(
-        "USAGE: StrataLint align-scribe-receipt --atom-id ATOM_ID --gid GID --base REV");
+        "USAGE: StrataLint align-scribe-receipt --atom-id ATOM_ID --gid GID");
 
     // align-scribe 只容忍非致命 gap;源文本冲突与其余 receipt-integrity failure
     // 均不得写账本。

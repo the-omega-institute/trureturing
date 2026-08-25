@@ -10,7 +10,7 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
-    public void CheckBlocksAxiomBadgeOnlyScribeMismatchWhenForkPointReportIsUnavailable()
+    public void CheckBlocksNewAxiomBadgeScribeMismatchAbsentFromBaselineBytes()
     {
         var (outcome, verifier) = CheckReportDerivedScribeStock(reportInputsChanged: true);
 
@@ -18,11 +18,11 @@ public sealed partial class ProductionEnvironmentTests
         var mismatch = Assert.Single(rejected.Diagnostics, static diagnostic =>
             diagnostic.Message.Contains("scribe-emission-mismatch", StringComparison.Ordinal));
         Assert.Equal(AdmissionEffect.Block, mismatch.AdmissionEffect);
-        Assert.Equal(["std3", "std3"], verifier.AxiomBadges);
+        Assert.Equal(["std3"], verifier.AxiomBadges);
     }
 
     [Fact]
-    public void CheckObservesTrueScribeStockWhenForkPointReportInputsAreIdentical()
+    public void CheckObservesScribeMismatchAlreadyPresentInBaselineBytes()
     {
         var (outcome, verifier) = CheckReportDerivedScribeStock(
             reportInputsChanged: false,
@@ -32,11 +32,11 @@ public sealed partial class ProductionEnvironmentTests
         var mismatch = Assert.Single(protectedChange.Observations, static diagnostic =>
             diagnostic.Message.Contains("scribe-emission-mismatch", StringComparison.Ordinal));
         Assert.Equal(AdmissionEffect.Observe, mismatch.AdmissionEffect);
-        Assert.Equal(["std3", "std3"], verifier.AxiomBadges);
+        Assert.Equal(["std3"], verifier.AxiomBadges);
     }
 
     [Fact]
-    public void CheckBlocksWhenForkPointHasAReportProducerInputMissingFromCurrent()
+    public void CheckBlocksForkOnlyProducerPathCounterexampleViaBaselineDriftComparison()
     {
         var (outcome, verifier) = CheckForkPointOnlyReportProducerInputStock(
             "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs");
@@ -45,11 +45,11 @@ public sealed partial class ProductionEnvironmentTests
         var mismatch = Assert.Single(rejected.Diagnostics, static diagnostic =>
             diagnostic.Message.Contains("scribe-emission-mismatch", StringComparison.Ordinal));
         Assert.Equal(AdmissionEffect.Block, mismatch.AdmissionEffect);
-        Assert.Equal(["std3", "std3"], verifier.AxiomBadges);
+        Assert.Equal(["std3"], verifier.AxiomBadges);
     }
 
     [Fact]
-    public void CheckBlocksWhenProducerPathSetsDifferDespiteMatchingInputBytes()
+    public void CheckBlocksProducerPathSetCounterexampleViaBaselineDriftComparison()
     {
         var (outcome, verifier) = CheckProducerPathSetsDifferStock(
             "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs");
@@ -58,7 +58,7 @@ public sealed partial class ProductionEnvironmentTests
         var mismatch = Assert.Single(rejected.Diagnostics, static diagnostic =>
             diagnostic.Message.Contains("scribe-emission-mismatch", StringComparison.Ordinal));
         Assert.Equal(AdmissionEffect.Block, mismatch.AdmissionEffect);
-        Assert.Equal(["std3", "std3"], verifier.AxiomBadges);
+        Assert.Equal(["std3"], verifier.AxiomBadges);
     }
 
     [Fact]
@@ -236,19 +236,25 @@ public sealed partial class ProductionEnvironmentTests
 
     private static (AdmissionOutcome Outcome, ReportDerivedScribeEmissionVerifier Verifier)
         CheckReportDerivedScribeStock(bool reportInputsChanged, params string[] additionalChanges) =>
-        CheckReportDerivedScribeStockCore(reportInputsChanged, false, false, additionalChanges);
+        CheckReportDerivedScribeStockCore(
+            reportInputsChanged,
+            baselineHasScribeGap: !reportInputsChanged,
+            false,
+            false,
+            additionalChanges);
 
     private static (AdmissionOutcome Outcome, ReportDerivedScribeEmissionVerifier Verifier)
         CheckForkPointOnlyReportProducerInputStock(params string[] additionalChanges) =>
-        CheckReportDerivedScribeStockCore(false, true, false, additionalChanges);
+        CheckReportDerivedScribeStockCore(false, false, true, false, additionalChanges);
 
     private static (AdmissionOutcome Outcome, ReportDerivedScribeEmissionVerifier Verifier)
         CheckProducerPathSetsDifferStock(params string[] additionalChanges) =>
-        CheckReportDerivedScribeStockCore(false, false, true, additionalChanges);
+        CheckReportDerivedScribeStockCore(false, false, false, true, additionalChanges);
 
     private static (AdmissionOutcome Outcome, ReportDerivedScribeEmissionVerifier Verifier)
         CheckReportDerivedScribeStockCore(
             bool reportInputsChanged,
+            bool baselineHasScribeGap,
             bool forkPointOnlyReportProducerInput,
             bool producerPathSetDiffers,
             params string[] additionalChanges)
@@ -313,7 +319,9 @@ public sealed partial class ProductionEnvironmentTests
 
         var definitionSha256 = DigestionFingerprint.Compute(
             Encoding.UTF8.GetBytes(baselineDefinition)).RawSha256;
-        var stockEmissionSha256 = ReportDerivedScribeEmissionVerifier.EmissionSha256For([]);
+        var stockEmissionSha256 = baselineHasScribeGap
+            ? ReportDerivedScribeEmissionVerifier.EmissionSha256For([])
+            : DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(baselineEmission)).RawSha256;
         InstallLedger(fixture.Files, fixture.Files[targetPath]);
         InstallLedger(fixture.Baseline, fixture.Baseline[targetPath]);
         InstallLedger(fixture.ForkPoint, fixture.ForkPoint[targetPath]);
@@ -345,17 +353,7 @@ public sealed partial class ProductionEnvironmentTests
                     : null),
             new FakeLeanReportSource(null),
             verifier,
-            new NoOpFrozenLedgerAdmissionServices(snapshot =>
-            {
-                if (forkPointOnlyReportProducerInput)
-                {
-                    return ImmutableHashSet.Create("tools/lean-inspector/fork-only-input.txt");
-                }
-
-                return snapshot.TryGetFile("notes/fork-producer-set-marker.txt", out _)
-                    ? ImmutableHashSet.Create("tools/lean-inspector/Inspector.lean")
-                    : ImmutableHashSet<string>.Empty;
-            }));
+            new NoOpFrozenLedgerAdmissionServices());
 
         return (
             environment.Check(["--candidate-lean-report", candidateReport]),
@@ -442,18 +440,8 @@ internal sealed class ReportDerivedScribeEmissionVerifier(
 
 internal sealed class NoOpFrozenLedgerAdmissionServices : IFrozenLedgerAdmissionServices
 {
-    private readonly Func<RepositorySnapshot, IReadOnlySet<string>> producerPathResolver;
-
-    internal NoOpFrozenLedgerAdmissionServices(
-        Func<RepositorySnapshot, IReadOnlySet<string>>? producerPathResolver = null) =>
-        this.producerPathResolver = producerPathResolver
-            ?? (static _ => ImmutableHashSet<string>.Empty);
-
     public IReadOnlySet<string> LeanReportProducerPaths { get; } =
         ImmutableHashSet<string>.Empty;
-
-    public IReadOnlySet<string> ReadLeanReportProducerPaths(RepositorySnapshot snapshot) =>
-        producerPathResolver(snapshot);
 
     public FrozenLedgerAdmissionPreparation Prepare(
         RepositorySnapshot current,
@@ -466,7 +454,6 @@ internal sealed class NoOpFrozenLedgerAdmissionServices : IFrozenLedgerAdmission
         RepositorySnapshot current,
         AcceptedLeanClosure lean,
         LeanAxiomReport report,
-        AcyclicTruthDag dag,
         RawChangeSet changes,
         FrozenRevisionIdentity currentIdentity) => null;
 }
