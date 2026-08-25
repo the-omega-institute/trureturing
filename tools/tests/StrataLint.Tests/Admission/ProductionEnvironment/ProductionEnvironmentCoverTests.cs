@@ -388,25 +388,36 @@ public sealed partial class ProductionEnvironmentTests
     [InlineData("coverage-receipt-mismatch")]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
-    public void CoverAtomRejectsReceiptIntegrityMismatchOnSiblingBeforeWritingLedger(string mismatchCode)
+    public void CoverAtomIgnoresUnrelatedReceiptIntegrityMismatchOutsideAtomDelta(string mismatchCode)
     {
+        const string siblingModuleGid = "D5/S0/Carrier/CoverSibling";
+        const string siblingGid = siblingModuleGid + ".sibling";
         var materialized = CoverWorld.Materialize(new CoverSpec
         {
-            OtherAtomBinding = ("receipt-gap-sibling", "D5/S0/Carrier/Probe.probe"),
+            SecondaryTarget = (siblingModuleGid, "sibling"),
+            UnrelatedSibling = new CoverUnrelatedSiblingSpec(
+                "receipt-gap-sibling",
+                [siblingGid],
+                [siblingGid],
+                ["historical-uncovered-clause"]),
         });
         var inputs = DirectoryInputs(WithSiblingReceiptMismatch(materialized, mismatchCode));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
         var before = DirectoryLedgerTestSupport.Image(temporary.Path);
-        var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
+        var environment = BuildCoverEnvironment(
+            temporary.Path,
+            inputs,
+            inputs.Files,
+            RawChangeSet.Create(["D5/S0/Carrier/Probe.lean"]));
 
         var result = environment.CoverAtom(CoverArgs(inputs));
 
-        Assert.False(result.Success);
-        Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
-        Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
-        Assert.DoesNotContain("coverage-gid-missing", result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+        Assert.True(
+            result.Success,
+            $"unrelated-receipt-drift-must-not-block-cover ({mismatchCode}): {result.Error}");
+        Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
+        Assert.NotEqual(before, DirectoryLedgerTestSupport.Image(temporary.Path));
     }
 
     [Theory]
@@ -555,17 +566,18 @@ public sealed partial class ProductionEnvironmentTests
     private static CoverInputs WithSiblingReceiptMismatch(CoverInputs inputs, string mismatchCode)
     {
         const string siblingAtomId = "receipt-gap-sibling";
-        var siblingGid = inputs.Document.RequireDigestionEntries()
-            .Single(entry => entry.AtomId == siblingAtomId)
-            .CoverageGids.Single();
+        var siblingEntry = Assert.Single(
+            inputs.Document.RequireDigestionEntries(),
+            entry => entry.AtomId == siblingAtomId);
+        var siblingGid = Assert.Single(siblingEntry.CoverageGids);
         var documentGid = ScribeEmissionAttestation.DocumentGid(siblingGid);
         Assert.True(inputs.VerifiedEmissions!.TryGet(documentGid, out var verified));
         var targetPath = documentGid + ".lean";
         var targetSha256 = DigestionFingerprint.Compute(
             Encoding.UTF8.GetBytes(inputs.Files[targetPath])).RawSha256;
         var mismatchSha256 = "sha256:" + new string('c', 64);
-        var document = inputs.Document.WithDigestionSources(
-            inputs.Document.RequireDigestionSources()
+        BackfillInventoryDocument WithMismatch(BackfillInventoryDocument document) =>
+            document.WithDigestionSources(document.RequireDigestionSources()
                 .Select(source => source with
                 {
                     Entries = source.Entries.Select(entry => entry.AtomId == siblingAtomId
@@ -598,9 +610,21 @@ public sealed partial class ProductionEnvironmentTests
                         : entry).ToImmutableArray(),
                 })
                 .ToImmutableArray());
+
+        var document = WithMismatch(inputs.Document);
+        var baselineSnapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(CoverWorld.Raw(inputs.Baseline))).Snapshot;
+        var baselineDocument = WithMismatch(BackfillInventoryLoader.Load(baselineSnapshot));
         var files = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal);
         DirectoryLedgerTestSupport.ReplaceWithProjection(files, document);
-        return inputs with { Files = files, Document = document };
+        var baseline = new Dictionary<string, string>(inputs.Baseline, StringComparer.Ordinal);
+        DirectoryLedgerTestSupport.ReplaceWithProjection(baseline, baselineDocument);
+        return inputs with
+        {
+            Files = files,
+            Baseline = baseline,
+            Document = document,
+        };
     }
 
     private static CoverInputs WithReceiptMismatchAtForkPoint(
@@ -667,12 +691,13 @@ public sealed partial class ProductionEnvironmentTests
     private static ProductionCliEnvironment BuildCoverEnvironment(
         string repositoryRoot,
         CoverInputs inputs,
-        IReadOnlyDictionary<string, string> currentFiles)
+        IReadOnlyDictionary<string, string> currentFiles,
+        RawChangeSet? changes = null)
     {
         return new ProductionCliEnvironment(
             repositoryRoot,
             new FakeRepositoryGateway(
-                RawChangeSet.Create(Array.Empty<string>()),
+                changes ?? RawChangeSet.Create(Array.Empty<string>()),
                 CoverWorld.Raw(currentFiles),
                 CoverWorld.Raw(inputs.Baseline)),
             new FakeLeanReportSource(inputs.Report),

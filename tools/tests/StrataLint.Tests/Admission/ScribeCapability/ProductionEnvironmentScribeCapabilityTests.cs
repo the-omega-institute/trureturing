@@ -10,6 +10,58 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
+    public void CheckBlocksNewAxiomBadgeScribeMismatchAbsentFromBaselineBytes()
+    {
+        var (outcome, verifier) = CheckReportDerivedScribeStock(reportInputsChanged: true);
+
+        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
+        var mismatch = Assert.Single(rejected.Diagnostics, static diagnostic =>
+            diagnostic.Message.Contains("scribe-emission-mismatch", StringComparison.Ordinal));
+        Assert.Equal(AdmissionEffect.Block, mismatch.AdmissionEffect);
+        Assert.Equal(["std3"], verifier.AxiomBadges);
+    }
+
+    [Fact]
+    public void CheckBlocksScribeMismatchAlreadyPresentInBaselineBytes()
+    {
+        var (outcome, verifier) = CheckReportDerivedScribeStock(
+            reportInputsChanged: false,
+            "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs");
+
+        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
+        var mismatch = Assert.Single(rejected.Diagnostics, static diagnostic =>
+            diagnostic.Message.Contains("scribe-emission-mismatch", StringComparison.Ordinal));
+        Assert.Equal(AdmissionEffect.Block, mismatch.AdmissionEffect);
+        Assert.Equal(["std3"], verifier.AxiomBadges);
+    }
+
+    [Fact]
+    public void CheckBlocksForkOnlyProducerPathCounterexampleViaBaselineDriftComparison()
+    {
+        var (outcome, verifier) = CheckForkPointOnlyReportProducerInputStock(
+            "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs");
+
+        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
+        var mismatch = Assert.Single(rejected.Diagnostics, static diagnostic =>
+            diagnostic.Message.Contains("scribe-emission-mismatch", StringComparison.Ordinal));
+        Assert.Equal(AdmissionEffect.Block, mismatch.AdmissionEffect);
+        Assert.Equal(["std3"], verifier.AxiomBadges);
+    }
+
+    [Fact]
+    public void CheckBlocksProducerPathSetCounterexampleViaBaselineDriftComparison()
+    {
+        var (outcome, verifier) = CheckProducerPathSetsDifferStock(
+            "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs");
+
+        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
+        var mismatch = Assert.Single(rejected.Diagnostics, static diagnostic =>
+            diagnostic.Message.Contains("scribe-emission-mismatch", StringComparison.Ordinal));
+        Assert.Equal(AdmissionEffect.Block, mismatch.AdmissionEffect);
+        Assert.Equal(["std3"], verifier.AxiomBadges);
+    }
+
+    [Fact]
     public void ProtectedSurfaceAdmissionCannotSkipProjectionReconciliationFailure()
     {
         var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>());
@@ -181,6 +233,161 @@ public sealed partial class ProductionEnvironmentTests
         Assert.False(changedStatus.Deletable);
         Assert.Contains(changedStatus.Gaps, gap => gap.Code == "scribe-emission-mismatch");
     }
+
+    private static (AdmissionOutcome Outcome, ReportDerivedScribeEmissionVerifier Verifier)
+        CheckReportDerivedScribeStock(bool reportInputsChanged, params string[] additionalChanges) =>
+        CheckReportDerivedScribeStockCore(
+            reportInputsChanged,
+            baselineHasScribeGap: !reportInputsChanged,
+            false,
+            false,
+            additionalChanges);
+
+    private static (AdmissionOutcome Outcome, ReportDerivedScribeEmissionVerifier Verifier)
+        CheckForkPointOnlyReportProducerInputStock(params string[] additionalChanges) =>
+        CheckReportDerivedScribeStockCore(false, false, true, false, additionalChanges);
+
+    private static (AdmissionOutcome Outcome, ReportDerivedScribeEmissionVerifier Verifier)
+        CheckProducerPathSetsDifferStock(params string[] additionalChanges) =>
+        CheckReportDerivedScribeStockCore(false, false, false, true, additionalChanges);
+
+    private static (AdmissionOutcome Outcome, ReportDerivedScribeEmissionVerifier Verifier)
+        CheckReportDerivedScribeStockCore(
+            bool reportInputsChanged,
+            bool baselineHasScribeGap,
+            bool forkPointOnlyReportProducerInput,
+            bool producerPathSetDiffers,
+            params string[] additionalChanges)
+    {
+        using var temporary = new TemporaryDirectory();
+        const string atomPath =
+            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
+        const string documentGid = "D5/S0/Carrier/BackfillTarget";
+        const string coverageGid = documentGid + ".protectedTargetFixture";
+        const string targetPath = documentGid + ".lean";
+        const string baselineDefinition = "fixture Scribe definition\n";
+        const string baselineEmission = "# Fixture Scribe emission\n";
+        var fixture = new RuleFixture();
+        fixture.UseValidDirectoryBackfill();
+        fixture.AddBackfillTargets();
+
+        var baselineTarget = fixture.Files[targetPath];
+        fixture.Baseline[targetPath] = baselineTarget;
+        fixture.ForkPoint[targetPath] = baselineTarget;
+        var baselineDeclaration = new LeanDeclaration(
+            "protectedTargetFixture",
+            "def",
+            "Unit",
+            []);
+        var reportAxioms = ImmutableArray.Create("Classical.choice", "Quot.sound", "propext");
+        fixture.Reports[targetPath] = new LeanFileReport(
+            [],
+            [baselineDeclaration with { Axioms = reportAxioms }]);
+        var candidateTarget = baselineTarget.Replace(
+            "def protectedTargetFixture : Unit := ()",
+            "noncomputable def protectedTargetFixture : Unit := "
+                + "Classical.choice (Nonempty.intro ())",
+            StringComparison.Ordinal);
+        Assert.NotEqual(baselineTarget, candidateTarget);
+        fixture.Files[targetPath] = candidateTarget;
+        if (!reportInputsChanged)
+        {
+            fixture.Baseline[targetPath] = candidateTarget;
+            fixture.ForkPoint[targetPath] = candidateTarget;
+        }
+        fixture.BaselineReports[targetPath] = new LeanFileReport(
+            [],
+            [baselineDeclaration with { Axioms = reportInputsChanged ? [] : reportAxioms }]);
+
+        var definitionPath = ScribeEmissionAttestation.DefinitionPath(documentGid);
+        var emissionPath = ScribeEmissionAttestation.EmissionPath(documentGid);
+        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        {
+            files[definitionPath] = baselineDefinition;
+            files[emissionPath] = baselineEmission;
+        }
+        if (forkPointOnlyReportProducerInput)
+        {
+            fixture.ForkPoint["tools/lean-inspector/fork-only-input.txt"] =
+                "fork-only producer input\n";
+        }
+        if (producerPathSetDiffers)
+        {
+            fixture.ForkPoint["notes/fork-producer-set-marker.txt"] =
+                "fork-only producer path-set marker\n";
+        }
+
+        var definitionSha256 = DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes(baselineDefinition)).RawSha256;
+        var stockEmissionSha256 = baselineHasScribeGap
+            ? ReportDerivedScribeEmissionVerifier.EmissionSha256For([])
+            : DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(baselineEmission)).RawSha256;
+        InstallLedger(fixture.Files, fixture.Files[targetPath]);
+        InstallLedger(fixture.Baseline, fixture.Baseline[targetPath]);
+        InstallLedger(fixture.ForkPoint, fixture.ForkPoint[targetPath]);
+
+        var verifier = new ReportDerivedScribeEmissionVerifier(
+            targetPath,
+            coverageGid,
+            documentGid,
+            definitionSha256);
+        var changes = (reportInputsChanged ? new[] { atomPath, targetPath } : [])
+            .Concat(additionalChanges)
+            .ToArray();
+        var currentRaw = Snapshot(fixture.Files);
+        var baselineRaw = Snapshot(fixture.Baseline);
+        var candidateReport = Path.Combine(temporary.Path, "candidate.json");
+        File.WriteAllBytes(
+            candidateReport,
+            RawLeanReportArtifact.Write(
+                Decode(currentRaw),
+                LeanAxiomReport.Create(fixture.Reports)).AsSpan());
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(changes),
+                currentRaw,
+                baselineRaw,
+                forkPoint: forkPointOnlyReportProducerInput || producerPathSetDiffers
+                    ? Snapshot(fixture.ForkPoint)
+                    : null),
+            new FakeLeanReportSource(null),
+            verifier,
+            new NoOpFrozenLedgerAdmissionServices());
+
+        return (
+            environment.Check(["--candidate-lean-report", candidateReport]),
+            verifier);
+
+        void InstallLedger(Dictionary<string, string> files, string target)
+        {
+            var document = BackfillInventoryLoader.Load(Decode(Snapshot(files)));
+            var targetSha256 = DigestionFingerprint.Compute(
+                Encoding.UTF8.GetBytes(target)).RawSha256;
+            document = MapOnlyEntry(document, entry => entry with
+            {
+                CoverageGids = [coverageGid],
+                Receipts = entry.Receipts with
+                {
+                    Coverage =
+                    [
+                        new DigestionCoverageReceipt(
+                            coverageGid,
+                            entry.Fingerprints.RawSha256,
+                            targetSha256),
+                    ],
+                    Scribe =
+                    [
+                        new DigestionScribeReceipt(
+                            coverageGid,
+                            definitionSha256,
+                            stockEmissionSha256),
+                    ],
+                },
+            });
+            DirectoryLedgerTestSupport.ReplaceWithProjection(files, document);
+        }
+    }
 }
 
 internal sealed class ProjectionReconciliationFailureVerifier : IScribeEmissionVerifier
@@ -190,4 +397,63 @@ internal sealed class ProjectionReconciliationFailureVerifier : IScribeEmissionV
         LeanAxiomReport report,
         RawChangeSet? changes = null) =>
         throw new InvalidDataException("projection fixture/live-report disagreement");
+}
+
+internal sealed class ReportDerivedScribeEmissionVerifier(
+    string targetPath,
+    string coverageGid,
+    string documentGid,
+    string definitionSha256) : IScribeEmissionVerifier
+{
+    internal List<string> AxiomBadges { get; } = [];
+
+    internal static string EmissionSha256For(IEnumerable<string> axioms)
+    {
+        var badge = AxiomBadge(axioms);
+        return DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes($"report-derived-axiom-badge:{badge}\n")).RawSha256;
+    }
+
+    public VerifiedScribeEmissions Verify(
+        RepositorySnapshot snapshot,
+        LeanAxiomReport report,
+        RawChangeSet? changes = null)
+    {
+        var declaration = Assert.Single(report.Files[RepoPath.CreateKnown(targetPath)].Declarations);
+        var badge = AxiomBadge(declaration.Axioms);
+        AxiomBadges.Add(badge);
+        return VerifiedScribeEmissions.Create(
+        [
+            new ScribeEmissionRecord(
+                documentGid,
+                ScribeEmissionAttestation.DefinitionPath(documentGid),
+                definitionSha256,
+                ScribeEmissionAttestation.EmissionPath(documentGid),
+                EmissionSha256For(declaration.Axioms)),
+        ],
+        [coverageGid]);
+    }
+
+    private static string AxiomBadge(IEnumerable<string> axioms) =>
+        axioms.Any() ? "std3" : "constructive";
+}
+
+internal sealed class NoOpFrozenLedgerAdmissionServices : IFrozenLedgerAdmissionServices
+{
+    public IReadOnlySet<string> LeanReportProducerPaths { get; } =
+        ImmutableHashSet<string>.Empty;
+
+    public FrozenLedgerAdmissionPreparation Prepare(
+        RepositorySnapshot current,
+        RepositorySnapshot protectedBase,
+        RawChangeSet changes,
+        Func<FrozenLedgerReferenceSet, TrustedFrozenGitReferences> validateReferences) => null!;
+
+    public AdmissionOutcome? Validate(
+        FrozenLedgerAdmissionPreparation preparation,
+        RepositorySnapshot current,
+        AcceptedLeanClosure lean,
+        LeanAxiomReport report,
+        RawChangeSet changes,
+        FrozenRevisionIdentity currentIdentity) => null;
 }

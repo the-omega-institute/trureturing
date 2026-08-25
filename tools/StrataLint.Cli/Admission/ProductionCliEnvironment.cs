@@ -54,7 +54,6 @@ internal interface IFrozenLedgerAdmissionServices
         RepositorySnapshot current,
         AcceptedLeanClosure lean,
         LeanAxiomReport report,
-        AcyclicTruthDag dag,
         RawChangeSet changes,
         FrozenRevisionIdentity currentIdentity);
 }
@@ -72,6 +71,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     private readonly ILeanReportSource leanReportSource;
     private readonly IScribeEmissionVerifier? scribeEmissionVerifier;
     private readonly IFrozenLedgerAdmissionServices frozenLedgerAdmission;
+    private readonly TimeProvider timeProvider;
 
     internal ProductionCliEnvironment(string repositoryRoot)
         : this(
@@ -119,13 +119,15 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier? scribeEmissionVerifier,
-        IFrozenLedgerAdmissionServices frozenLedgerAdmission)
+        IFrozenLedgerAdmissionServices frozenLedgerAdmission,
+        TimeProvider? timeProvider = null)
     {
         this.repositoryRoot = Path.GetFullPath(repositoryRoot);
         this.repository = repository;
         this.leanReportSource = leanReportSource;
         this.scribeEmissionVerifier = scribeEmissionVerifier;
         this.frozenLedgerAdmission = frozenLedgerAdmission;
+        this.timeProvider = timeProvider ?? TimeProvider.System;
     }
 
     public AdmissionOutcome Check(IReadOnlyList<string> arguments)
@@ -182,10 +184,10 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 return evaluation.Outcome;
             }
 
-            if (evaluation.CurrentLean is null || evaluation.CurrentDag is null)
+            if (evaluation.CurrentLean is null)
             {
                 return new AdmissionOutcome.InfrastructureFailure(
-                    "frozen-ledger delta evaluation lacks its Lean closure or truth DAG");
+                    "frozen-ledger delta evaluation lacks its Lean closure");
             }
 
             FrozenLedgerAdmissionPreparation frozenLedgerPreparation;
@@ -220,7 +222,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 current,
                 evaluation.CurrentLean,
                 candidateLeanReport,
-                evaluation.CurrentDag,
                 prepared.Changes,
                 currentIdentity);
             if (serviceRejection is AdmissionOutcome.RuleRejected serviceRuleRejection)
@@ -356,6 +357,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 repository,
                 leanReportSource,
                 scribeEmissionVerifier,
+                timeProvider.GetUtcNow(),
                 arguments);
 
     public CommandResult AlignScribeReceipt(IReadOnlyList<string> arguments)

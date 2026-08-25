@@ -10,6 +10,10 @@ public sealed partial class ProductionEnvironmentTests
     [Fact]
     public void IngestRejectsInputReceiptIntegrityFailureBeforeProjectingStatuses()
     {
+        AssertIngestReceiptIntegrityGate(
+            "derived",
+            "var derived = DigestionStatusEvaluator.Evaluate(",
+            "var statusByAtomId = derived.Entries.ToDictionary(");
         using var temporary = new TemporaryDirectory();
         var environment = ReceiptIntegrityStatusProjectionEnvironment(
             temporary.Path,
@@ -26,17 +30,15 @@ public sealed partial class ProductionEnvironmentTests
             "stable-generation:coverage-receipt-mismatch",
             result.Error,
             StringComparison.Ordinal);
-        // This absence binds the prewrite gate: deleting that call lets status projection
-        // create the stale finding before rejection. It does not bind later gates or a disk write.
-        Assert.DoesNotContain(
-            "stale receipts are not acknowledged: old-generation",
-            result.Error,
-            StringComparison.Ordinal);
     }
 
     [Fact]
     public void IngestRejectsReceiptIntegrityFailureCreatedByStatusProjection()
     {
+        AssertIngestReceiptIntegrityGate(
+            "evaluation",
+            "var evaluation = DigestionStatusEvaluator.Evaluate(",
+            "var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(");
         using var temporary = new TemporaryDirectory();
         var environment = ReceiptIntegrityStatusProjectionEnvironment(
             temporary.Path,
@@ -55,6 +57,29 @@ public sealed partial class ProductionEnvironmentTests
             "stale receipts are not acknowledged: old-generation",
             result.Error,
             StringComparison.Ordinal);
+    }
+
+    private static void AssertIngestReceiptIntegrityGate(
+        string evaluation,
+        string precedingAnchor,
+        string followingAnchor)
+    {
+        var source = File.ReadAllText(Path.Combine(
+            TestRepositoryLayout.FindRoot(),
+            "tools",
+            "StrataLint.Cli",
+            "Commands",
+            "Digestion",
+            "IngestCommand.cs"));
+        var preceding = source.IndexOf(precedingAnchor, StringComparison.Ordinal);
+        var gate = source.IndexOf(
+            $"RequireNoReceiptIntegrityFailure({evaluation});",
+            StringComparison.Ordinal);
+        var following = source.IndexOf(followingAnchor, StringComparison.Ordinal);
+
+        Assert.True(preceding >= 0, $"Missing ingest control-flow anchor: {precedingAnchor}");
+        Assert.True(gate > preceding, $"Missing receipt-integrity gate for {evaluation}");
+        Assert.True(following > gate, $"Receipt-integrity gate for {evaluation} moved past its write boundary");
     }
 
     private static ProductionCliEnvironment ReceiptIntegrityStatusProjectionEnvironment(

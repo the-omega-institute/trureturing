@@ -1,0 +1,5 @@
+source_id = "definition-escape-spectrum-completion"
+path = "docs/develop/theory/DEFINITION_ESCAPE_SPECTRUM_COMPLETION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

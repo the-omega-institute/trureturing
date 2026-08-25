@@ -375,6 +375,7 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Baseline["Meta/registry.yaml"] = TestRegistry.Canonical;
         fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
         fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
+        AddFrozenLedger(fixture);
         fixture.Files[loopPath] = "def loop : Nat := 0\n";
         fixture.Reports[RuleFixture.RingPath] = new LeanFileReport(
             ImmutableArray.Create("D5.S0.Carrier.Loop"),
@@ -396,15 +397,13 @@ public sealed partial class ProductionEnvironmentTests
         var outcome = CheckWithReports(environment, fixture);
 
         var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
-        var cycle = Assert.Single(
-            rejected.Diagnostics.Where(item => item.RuleId == RuleId.CreateKnown(1)));
         var meta = Assert.Single(
             rejected.Diagnostics.Where(item => item.RuleId == RuleId.CreateKnown(22)));
-        Assert.Equal(RuleId.CreateKnown(1), cycle.RuleId);
-        Assert.Equal(loopPath, cycle.Path);
-        Assert.Equal(
-            $"managed import cycle: {loopPath} -> {RuleFixture.RingPath} -> {loopPath}",
-            cycle.Message);
+        Assert.DoesNotContain(
+            rejected.Diagnostics,
+            item => item.RuleId == RuleId.CreateKnown(1));
+        Assert.NotEmpty(
+            rejected.Diagnostics.Where(item => item.RuleId == RuleId.CreateKnown(8)));
         Assert.Equal(RuleFixture.SyntheticProtectedPath, meta.Path);
     }
 
@@ -478,7 +477,7 @@ public sealed partial class ProductionEnvironmentTests
         });
     }
 
-    private static (RepositorySnapshot Snapshot, AcceptedLeanClosure Lean, AcyclicTruthDag Dag) BuildState(
+    private static (RepositorySnapshot Snapshot, AcceptedLeanClosure Lean, TruthDagProjection Dag) BuildState(
         IReadOnlyDictionary<string, string> files,
         IReadOnlyDictionary<string, LeanFileReport> reports)
     {
@@ -486,8 +485,7 @@ public sealed partial class ProductionEnvironmentTests
             SnapshotDecoder.Decode(Snapshot(files))).Snapshot;
         var lean = Assert.IsType<LeanValidationOutcome.Accepted>(
             LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
-        var dag = Assert.IsType<DagBuildOutcome.Accepted>(
-            AcyclicTruthDag.Build(snapshot, lean)).Capability;
+        var dag = TruthDagProjectionAssembler.Build(snapshot, lean);
         return (snapshot, lean, dag);
     }
 
@@ -555,16 +553,17 @@ public sealed partial class ProductionEnvironmentTests
                 SnapshotDecoder.Decode(Snapshot(files))).Snapshot;
             var closure = Assert.IsType<LeanValidationOutcome.Accepted>(
                 LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
-            var dag = Assert.IsType<DagBuildOutcome.Accepted>(AcyclicTruthDag.Build(snapshot, closure)).Capability;
+            var dag = TruthDagProjectionAssembler.Build(snapshot, closure);
             var attestations = dag.Nodes
                 .Where(static node => node.State is TruthState.Closed && node.ModuleName is not null)
                 .Select(node => new FrozenModuleAttestation(
                     node.RepoPath,
                     FrozenLedgerTestData.GitBlobOid(files[node.RepoPath.Value])));
             return Assert.IsType<FrozenMaterialOutcome.Accepted>(
-                FrozenContentAddress.Build(snapshot, closure, dag, environment, attestations)).Capability;
+                FrozenContentAddress.Build(snapshot, closure, environment, attestations)).Capability;
         }
     }
+
 }
 
 internal sealed class FakeRepositoryGateway(
@@ -573,7 +572,8 @@ internal sealed class FakeRepositoryGateway(
     RawRepositorySnapshot? baseline,
     Func<FrozenLedgerReferenceSet, TrustedFrozenGitReferences>? frozenReferenceValidator = null,
     Func<FrozenRevisionIdentity>? currentRevisionResolver = null,
-    Func<string, RawChangeSet>? changesForBase = null)
+    Func<string, RawChangeSet>? changesForBase = null,
+    RawRepositorySnapshot? forkPoint = null)
     : IRepositoryGateway
 {
     internal int ReadCount { get; private set; }
@@ -593,7 +593,10 @@ internal sealed class FakeRepositoryGateway(
     public AdmissionTopologyOutcome InspectAdmissionTopology() =>
         throw new InvalidOperationException("topology should not be inspected");
 
-    public PreparedRepository Prepare(string? protectedBase) => new("baseline", "baseline", changes);
+    public PreparedRepository Prepare(string? protectedBase) => new(
+        "baseline",
+        forkPoint is null ? "baseline" : "fork",
+        changes);
 
     public FrozenRevisionIdentity ResolveFrozenRevision(string revision)
     {
@@ -623,6 +626,12 @@ internal sealed class FakeRepositoryGateway(
     {
         ReadCount++;
         ReadRevisionCalls.Add(revision);
+        if (string.Equals(revision, "fork", StringComparison.Ordinal))
+        {
+            return WithAtomizerData(
+                forkPoint ?? throw new InvalidOperationException("fork snapshot should not be read"));
+        }
+
         return WithAtomizerData(
             baseline ?? throw new InvalidOperationException("baseline snapshot should not be read"));
     }
@@ -670,5 +679,6 @@ internal sealed class FakeScribeEmissionVerifier(VerifiedScribeEmissions? verifi
         RepositorySnapshot snapshot,
         LeanAxiomReport report,
         RawChangeSet? changes = null) =>
-        verification ?? throw new InvalidOperationException("Scribe emission verification failed: synthetic");
+        verification
+        ?? throw new InvalidOperationException("Scribe emission verification failed: synthetic");
 }

@@ -85,17 +85,16 @@ public sealed class CoverageLedgerIndex
         return new CoverageLedgerIndex(builder.ToImmutable());
     }
 
-    public static CoverageLedgerIndex FromDag(
-        AcyclicTruthDag dag,
+    public static CoverageLedgerIndex FromStates(
+        ImmutableDictionary<RepoPath, TruthState> states,
         IEnumerable<RepoPath> frozenPaths,
         RepositorySnapshot snapshot)
     {
-        ArgumentNullException.ThrowIfNull(dag);
+        ArgumentNullException.ThrowIfNull(states);
         ArgumentNullException.ThrowIfNull(frozenPaths);
         ArgumentNullException.ThrowIfNull(snapshot);
         var frozen = frozenPaths.ToHashSet();
-        var dagPaths = dag.Nodes.Select(static node => node.RepoPath).ToHashSet();
-        var absent = frozen.Where(path => !dagPaths.Contains(path))
+        var absent = frozen.Where(path => !states.ContainsKey(path))
             .OrderBy(static path => path.Value, StringComparer.Ordinal)
             .ToArray();
         if (absent.Length > 0)
@@ -106,27 +105,27 @@ public sealed class CoverageLedgerIndex
         }
 
         var builder = ImmutableDictionary.CreateBuilder<RepoPath, CoverageLedgerState>();
-        foreach (var node in dag.Nodes)
+        foreach (var (path, truthState) in states)
         {
-            if (frozen.Contains(node.RepoPath))
+            if (frozen.Contains(path))
             {
-                if (node.State is not TruthState.Closed)
+                if (truthState is not TruthState.Closed)
                 {
                     throw new InvalidOperationException(
-                        $"frozen ledger path is not Closed in TruthDAG: {node.RepoPath.Value}");
+                        $"frozen ledger path is not Closed in TruthDAG: {path.Value}");
                 }
 
-                builder.Add(node.RepoPath, CoverageLedgerState.Frozen);
+                builder.Add(path, CoverageLedgerState.Frozen);
                 continue;
             }
 
-            var state = node.State switch
+            var state = truthState switch
             {
                 TruthState.Open => CoverageLedgerState.Open,
                 TruthState.Tail => CoverageLedgerState.Tail,
                 _ => (CoverageLedgerState?)null,
             };
-            if (state is not null) builder.Add(node.RepoPath, state.Value);
+            if (state is not null) builder.Add(path, state.Value);
         }
 
         // GID-addressed artifacts outside the managed Lean closure (Blueprint documents and the

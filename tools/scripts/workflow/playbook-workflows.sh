@@ -453,12 +453,9 @@ prepare_formalization_receipt() {
   local receipt_arguments=(
     emit-formalization-receipt
     --atom-id "$ATOM_ID"
-    --gid "$receipt_gid"
+    --gid "$GID"
     --out "$temporary"
   )
-  if [[ "$GID" != "$receipt_gid" ]]; then
-    receipt_arguments+=(--gid "$GID" --require-existing-coverage true)
-  fi
 
   printf 'PLAYBOOK_STEP command=deposit detail=validate-formalization-receipt\n' >&2
   if run_cli "${receipt_arguments[@]}"; then
@@ -543,19 +540,8 @@ install_prepared_formalization_receipt() {
 }
 
 cover_atom_or_resume() {
-  local output primary_gid
-  if ! primary_gid="$(jq -er \
-      '.primary_gid | select(type == "string" and length > 0)' "$RECEIPT_PATH")"; then
-    echo "PLAYBOOK_INVALID formalization receipt has no primary_gid: $RECEIPT_PATH" >&2
-    return 2
-  fi
-
-  local gid_arguments=(--gid "$primary_gid")
-  if [[ "$GID" != "$primary_gid" ]]; then
-    gid_arguments+=(--gid "$GID")
-  fi
-
-  if output="$(run_cli cover-atom --cover-atom "$ATOM_ID" "${gid_arguments[@]}" \
+  local output
+  if output="$(run_cli cover-atom --cover-atom "$ATOM_ID" --gid "$GID" \
       --base "$BASE" --envelope "$RECEIPT_PATH" 2>&1)"; then
     [[ -z "$output" ]] || printf '%s\n' "$output"
     return
@@ -604,16 +590,19 @@ case "$COMMAND" in
     prepare_formalization_receipt
     freeze_module_if_needed
     install_prepared_formalization_receipt
-    step lean-report-refresh make lean-report
-    step emit-post-receipt make emit
     commit_all_if_needed "formalize: record deposit receipt for $GID"
     ;;
   cover)
     require_transaction_arguments
     cleanup_transaction_temporaries
     step lean-report make lean-report
-    step cover-atom cover_atom_or_resume
-    step emit-post-cover make emit
+    if step cover-atom cover_atom_or_resume; then
+      :
+    else
+      status=$?
+      commit_all_if_needed "formalize: record failed cover disposition for $ATOM_ID"
+      exit "$status"
+    fi
     step align-scribe-receipt run_cli \
       align-scribe-receipt --atom-id "$ATOM_ID" --gid "$GID" --base "$BASE"
     step emit-post-alignment make emit

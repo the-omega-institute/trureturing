@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/ResidualCoverage/GreedyResidualAllocation
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/ResidualCoverage/GreedyResidualAllocation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Greedy allocation maximizes one-step gain and positive witnesses force progress. -/

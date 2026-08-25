@@ -1,3 +1,4 @@
+using System.Runtime.ExceptionServices;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -635,9 +636,36 @@ public sealed partial class CleanLanesCommandTests
 
         public void Dispose()
         {
-            temp.Dispose();
-            worktrees.Dispose();
-            repository.Dispose();
+            var failures = new List<ExceptionDispatchInfo>();
+            CaptureCleanupFailure(disposeTemp, failures);
+            CaptureCleanupFailure(disposeWorktrees, failures);
+            CaptureCleanupFailure(disposeRepository, failures);
+
+            if (failures.Count == 1)
+            {
+                failures[0].Throw();
+            }
+
+            if (failures.Count > 1)
+            {
+                throw new AggregateException(
+                    "multiple owned directories could not be released",
+                    failures.Select(static failure => failure.SourceException));
+            }
+        }
+
+        private static void CaptureCleanupFailure(
+            Action cleanup,
+            ICollection<ExceptionDispatchInfo> failures)
+        {
+            try
+            {
+                cleanup();
+            }
+            catch (Exception exception)
+            {
+                failures.Add(ExceptionDispatchInfo.Capture(exception));
+            }
         }
 
         private string WorktreePath(string branch) =>

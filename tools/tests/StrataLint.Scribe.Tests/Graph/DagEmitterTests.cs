@@ -152,7 +152,7 @@ public sealed class DagEmitterTests
         }
     }
 
-    private static AcyclicTruthDag Build()
+    private static TruthDagProjection Build()
     {
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
@@ -173,7 +173,6 @@ public sealed class DagEmitterTests
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
         var closure = Assert.IsType<LeanValidationOutcome.Accepted>(
             LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
-        return Assert.IsType<DagBuildOutcome.Accepted>(
-            AcyclicTruthDag.Build(snapshot, closure)).Capability;
+        return TruthDagProjectionAssembler.Build(snapshot, closure);
     }
 }

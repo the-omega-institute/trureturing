@@ -1,0 +1,43 @@
+## 0. 共同语义
+
+令 \((X,\mathcal A)\) 为可测对象空间，\(q:X\to Q\) 为现行概念，\(T:X\to Y\) 为目标。正文定理域中的定义语言 \(\Gamma\) 有限或可数；本卷各定理默认 \(\Gamma\ne\varnothing\)，而 \(\Gamma=\varnothing\) 时 \(E_\varnothing=E\)，诸定理的退化情形均直接判定。成本与预算满足
+
+\[c:\Gamma\to\mathbb R_{>0},\qquad L\in\mathbb R_{\ge0}.\]
+
+定义目标残差、单定义分离集与语言盲核：
+
+\[
+\begin{aligned}
+E&:=\mathcal E(q;T)=\{(x,y):q(x)=q(y),\ T(x)\ne T(y)\},\\
+U_d&:=\{(x,y)\in E:d(x)\ne d(y)\},\\
+B&:=\mathcal B_\Gamma(q;T)=E\cap\bigcap_{d\in\Gamma}\ker d
+=E\setminus\bigcup_{d\in\Gamma}U_d.
+\end{aligned}
+\]
+
+令 \(\mathfrak E\subseteq\mathcal P(E)\) 为集合代数，含 \(\varnothing,E,B\) 与每个 \(U_d\)，因而含以下所有有限并、差集与 \(E_S\)。有限/可数 \(\Gamma\) 时可直接取由 \(E\) 与 \(\{U_d\}\) 生成的 \(\sigma\)-代数；边界反模型使用更大语言时须另行明载 \(B\in\mathfrak E\)。固定有限非负实值 charge
+
+\[\nu:\mathfrak E\to\mathbb R_{\ge0}\hookrightarrow\mathbb R.\]
+
+满足
+
+\[
+\nu(\varnothing)=0,
+\quad A\cap D=\varnothing\Longrightarrow\nu(A\cup D)=\nu(A)+\nu(D),
+\quad A\subseteq D\Longrightarrow\nu(A)\le\nu(D),
+\]
+
+并假设
+
+\[0<M_0:=\nu(E)<\infty.\]
+
+对有限族 \(S\Subset\Gamma\)，记
+
+\[E_S:=E\setminus\bigcup_{d\in S}U_d,\qquad C(S):=\sum_{d\in S}c(d),\qquad \mathscr F_L:=\{S\Subset\Gamma:C(S)\le L\}.\]
+
+于是 \(B\subseteq E_S\)，且有限可加性给出
+
+\[\nu(E_S)=\nu(B)+\nu(E_S\setminus B).\]
+
+这里“有限”始终指有限定义族；不把点态无限联合偷换成有限预算。
+

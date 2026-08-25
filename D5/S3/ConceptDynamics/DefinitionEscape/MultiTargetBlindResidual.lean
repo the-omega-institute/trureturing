@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/DefinitionEscape/MultiTargetBlindResidual
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DefinitionEscape/MultiTargetBlindResidual
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: A joint target's blind residual is the union of its components' residuals. -/

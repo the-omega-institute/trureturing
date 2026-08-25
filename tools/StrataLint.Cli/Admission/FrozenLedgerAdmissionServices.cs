@@ -12,6 +12,44 @@ internal sealed class FrozenLedgerAdmissionPreparationException(
     internal ImmutableArray<RepoPath> Paths { get; } = paths;
 }
 
+internal sealed class MaterializedRepositorySnapshot : IDisposable
+{
+    private MaterializedRepositorySnapshot(string root) => Root = root;
+
+    internal string Root { get; }
+
+    internal static MaterializedRepositorySnapshot Create(RepositorySnapshot snapshot)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        var root = Path.Combine(
+            Path.GetTempPath(),
+            "stratalint-snapshot-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        try
+        {
+            foreach (var (path, file) in snapshot.Files
+                .OrderBy(static item => item.Key.Value, StringComparer.Ordinal))
+            {
+                var destination = Path.Combine(
+                    root,
+                    path.Value.Replace('/', Path.DirectorySeparatorChar));
+                Directory.CreateDirectory(Path.GetDirectoryName(destination)
+                    ?? throw new InvalidOperationException("snapshot path has no parent directory"));
+                File.WriteAllBytes(destination, file.RawBytes.AsSpan());
+            }
+
+            return new MaterializedRepositorySnapshot(root);
+        }
+        catch
+        {
+            Directory.Delete(root, recursive: true);
+            throw;
+        }
+    }
+
+    public void Dispose() => Directory.Delete(Root, recursive: true);
+}
+
 internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdmissionServices
 {
     private static readonly TimeSpan ProducerPathResolutionTimeout = TimeSpan.FromMinutes(2);
@@ -257,11 +295,12 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
         RepositorySnapshot current,
         AcceptedLeanClosure lean,
         LeanAxiomReport report,
-        AcyclicTruthDag dag,
         RawChangeSet changes,
         FrozenRevisionIdentity currentIdentity)
     {
-        var scope = FrozenLedgerAdmissionScope.Create(changes, preparation, dag);
+        var states = LeanTruthStates.Resolve(current, lean);
+        var adjacency = LeanImportAdjacency.Build(current, lean);
+        var scope = FrozenLedgerAdmissionScope.Create(changes, preparation, states, adjacency);
         FrozenMaterialCatalog catalog;
         try
         {
@@ -269,7 +308,6 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
             catalog = DagLedgerCommandPreparation.BuildAdmissionCatalog(
                 current,
                 lean,
-                dag,
                 preparation.BaseView,
                 scope,
                 currentIdentity);
@@ -304,7 +342,9 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
             : RuleRejection(failure.AffectedPaths, failure.Message);
     }
 
-    private ImmutableHashSet<string> ReadProducerPaths()
+    private ImmutableHashSet<string> ReadProducerPaths() => ReadProducerPaths(repositoryRoot);
+
+    private static ImmutableHashSet<string> ReadProducerPaths(string repositoryRoot)
     {
         var script = Path.Combine(
             repositoryRoot,
