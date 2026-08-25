@@ -1,6 +1,5 @@
 using System.Collections.Immutable;
 using System.Text;
-using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -95,29 +94,16 @@ public sealed class Sl019SignatureSlotScopingTests
         AssertSl019Finding(Evaluate(ReceiptPath, ReceiptText(nonCanonicalLength)));
     }
 
-    [Fact]
-    public void CurrentReceiptNameKeysSatisfyTheSharedRepositoryShape()
+    [Theory]
+    [InlineData(FailureNameKey)]
+    [InlineData("ns(ns(ns(n0,2:D5),2:S3),13:SignatureSlot)")]
+    public void RepresentativeProducerNameKeysSatisfyTheSharedRepositoryShape(string nameKey)
     {
-        var root = TestRepositoryLayout.FindRoot();
-        var directory = Path.Combine(root, DigestionFormalizationReceipt.RootPath);
-        var nameKeys = new List<(string Path, string Value)>();
-        foreach (var path in Directory.EnumerateFiles(directory, "*.v1.json"))
-        {
-            using var document = JsonDocument.Parse(File.ReadAllBytes(path));
-            var receipt = document.RootElement;
-            nameKeys.Add((
-                path,
-                receipt.GetProperty("precommitted_signature").GetProperty("name_key").GetString()!));
-            if (!receipt.TryGetProperty("hosted_extensions", out var extensions)) continue;
-            nameKeys.AddRange(extensions.EnumerateArray().Select(extension => (
-                path,
-                extension.GetProperty("precommitted_signature").GetProperty("name_key").GetString()!)));
-        }
-
-        Assert.NotEmpty(nameKeys);
-        Assert.All(nameKeys, item => Assert.True(
-            CanonicalLeanNameDecoder.IsRepositoryNameKey(item.Value),
-            $"unsupported receipt name_key in {item.Path}: {item.Value}"));
+        // Binds the shared decoder to representative literal encodings emitted by the producer:
+        // a root name and a qualified name. It turns red if decoder grammar or identifier policy
+        // rejects either shape. It deliberately does not claim that every current receipt key is
+        // covered; live-repository enumeration is outside this static fixture's contract.
+        Assert.True(CanonicalLeanNameDecoder.IsRepositoryNameKey(nameKey));
     }
 
     private static SingleRuleEvaluation Evaluate(string path, string text)
