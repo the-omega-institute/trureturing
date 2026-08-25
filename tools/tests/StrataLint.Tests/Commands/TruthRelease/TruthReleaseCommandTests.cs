@@ -222,10 +222,14 @@ public sealed class TruthReleaseCommandTests
                 BaseTreeOid = "git-sha1:" + originTree,
             },
         };
+        var states = LeanTruthStates.Resolve(snapshotWithoutLedger, lean);
+        var adjacency = LeanImportAdjacency.Build(snapshotWithoutLedger, lean);
         var realCatalog = Assert.IsType<FrozenMaterialOutcome.Accepted>(
             FrozenContentAddress.Build(
                 snapshotWithoutLedger,
                 lean,
+                states,
+                adjacency,
                 realEnvironment,
                 realAttestations)).Capability;
         var ledgerBytes = FrozenLedgerGenerator.GenerateGenesis(
