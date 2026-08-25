@@ -12,7 +12,7 @@ import D5.S0.Diagonal.Naturality.NaturalityDefectComposition
 import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Topology.MetricSpace.Lipschitz
 
-/- Library-search audit trail (2026-08-24):
+/- Library-search audit trail (2026-08-25):
    * Shape searches `rg -n 'Set \\(X × X\\)' D5`, `rg -n '⋂ ' D5/S3/ConceptDynamics`,
      and `git grep -n -E '^(theorem|def|structure|abbrev) ' --
      D5/S3/ConceptDynamics/DefinitionEscape` found the canonical `defectRelation`,
@@ -46,6 +46,15 @@ import Mathlib.Topology.MetricSpace.Lipschitz
      `LipschitzWith.dist_le_mul`; none packages this DECT conjunction.
    * Pinned-mathlib searches additionally found `Fintype.equivFin` and
      `Function.iterate_add_apply`. These are reused rather than reproved.
+   * Clause 3 was re-audited with `rg -n 'Function\.FactorsThrough|FactorsThrough'
+     D5/S3/ConceptDynamics`, `rg -n 'Refines definition q|Refines .* q'
+     D5/S3/ConceptDynamics`, and the redundant/redundancy, fiber/fibre/constancy,
+     kernel, zero-gain/no-gain, function-of, and factors-through synonyms. The
+     first search found the exact fiber predicate already used by clause 2; the
+     second found `Refines definition q` only in the too-strong clause 3 premise.
+     Nearby semantic-closure and effective-readout theorems have different
+     packages or attained-codomain hypotheses, so they do not replace this law.
+     No new relation, refinement predicate, or residual is introduced.
    * Clause 6 is not included in the theorem below. CAS defines
      `F(S) = M(∅) - M(S)` and identifies it with captured mass, but
      `MeasureCapture.infinite_counting_cas_bridge_fails` proves that this bridge
@@ -213,7 +222,7 @@ theorem directly_provable_laws :
       defectRelation q target = ∅ ↔ Function.FactorsThrough target q) ∧
     (forall {X C D Target : Type*} (q : Concept X C) (definition : Concept X D)
       (target : Concept X Target),
-      Refines definition q →
+      Function.FactorsThrough definition q →
         defectRelation (conceptJoin q definition) target = defectRelation q target) ∧
     (forall {X C Target Gamma : Type*} {D : Gamma → Type*}
       (definitions : ∀ gamma, Concept X (D gamma))
@@ -273,14 +282,11 @@ theorem directly_provable_laws :
       · intro factorsThrough
         ext pair
         exact (inhabited ⟨pair.1⟩).elim
-  · intro X C D Target q definition target definitionRefines
+  · intro X C D Target q definition target definitionFactors
     rw [residual_join_law]
     apply Set.inter_eq_left.mpr
     rintro pair ⟨sameReadout, _⟩
-    rcases definitionRefines with ⟨factor, factorization⟩
-    change definition pair.1 = definition pair.2
-    rw [factorization]
-    exact congrArg factor sameReadout
+    exact definitionFactors sameReadout
   · intro X C Target Gamma D definitions q target nonemptyResidual
     rcases nonemptyResidual with ⟨pair, pairInResidual⟩
     letI : Nonempty X := ⟨pair.1⟩
@@ -388,7 +394,7 @@ example :
 
 /-- Clause 3 leaves a nonempty defect unchanged by a redundant readout. -/
 example :
-    Refines (fun _ : Bool => false) (fun _ : Bool => ()) ∧
+    Function.FactorsThrough (fun _ : Bool => false) (fun _ : Bool => ()) ∧
     defectRelation
         (conceptJoin (fun _ : Bool => ()) (fun _ : Bool => false))
         (id : Concept Bool Bool) =
@@ -396,8 +402,10 @@ example :
     (false, true) ∈ defectRelation
       (conceptJoin (fun _ : Bool => ()) (fun _ : Bool => false))
       (id : Concept Bool Bool) := by
-  have redundant : Refines (fun _ : Bool => false) (fun _ : Bool => ()) :=
-    ⟨fun _ => false, rfl⟩
+  have redundant :
+      Function.FactorsThrough (fun _ : Bool => false) (fun _ : Bool => ()) := by
+    intro left right sameReadout
+    rfl
   refine ⟨redundant, ?_, ?_⟩
   · rw [residual_join_law]
     apply Set.inter_eq_left.mpr
@@ -592,7 +600,7 @@ theorem false_neighbor_clause2 :
   rw [emptyDefect] at pairInDefect
   exact pairInDefect
 
-/-- Dropping the refinement premise from clause 3 is false. -/
+/-- Dropping the fiber-constancy premise from clause 3 is false. -/
 theorem false_neighbor_clause3 :
     ¬defectRelation
           (conceptJoin (fun _ : Bool => ()) (id : Concept Bool Bool))

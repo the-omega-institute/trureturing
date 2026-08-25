@@ -30,7 +30,9 @@ internal sealed class DirectlyProvableLawsDocument : IScribeDocumentDefinition
                         "The first conjunct applies residual_join_law. The second uses the same "
                             + "fiber-constancy equivalence packaged by target_recovery_criterion, "
                             + "including the empty-state case without adding an inhabitedness "
-                            + "premise. The fourth uses the new dependent-family obstruction; "
+                            + "premise. The third assumes fiber constancy directly, without "
+                            + "requiring a total factor outside the baseline readout's image. "
+                            + "The fourth uses the new dependent-family obstruction; "
                             + "its residual witness supplies the inhabited state needed by the "
                             + "canonical recovery criterion.")),
                     Paragraph(Text(
@@ -134,7 +136,7 @@ internal sealed class DirectlyProvableLawsDocument : IScribeDocumentDefinition
             q, Colon, Sp, Call("Concept", state, baselineType), Comma, Sp,
             definition, Colon, Sp, Call("Concept", state, definitionType), Comma, Sp,
             target, Colon, Sp, Call("Concept", state, targetType), Comma, Esc,
-            Call("Refines", definition, q), Sp, Rightarrow, Sp,
+            Call("FactorsThrough", definition, q), Sp, Rightarrow, Sp,
             joinedResidual, Sp, Eq, Sp, residual);
 
         Formula selectedDefinitions = Seq(
