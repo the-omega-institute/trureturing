@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Relative negation expands by the newly admitted region when its universe grows.
+For a proposition inside the old ambient, negation grows by the admitted region.
 
 **Theorem 1.1 (An enlarged relative complement splits into old and new parts).**
 

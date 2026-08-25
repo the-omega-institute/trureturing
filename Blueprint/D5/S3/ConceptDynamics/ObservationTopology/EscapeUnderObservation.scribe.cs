@@ -10,8 +10,8 @@ internal sealed class EscapeUnderObservationDocument : IScribeDocumentDefinition
         "D5/S3/ConceptDynamics/ObservationTopology/EscapeUnderObservation.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Injective observations preserve all catalog escapes, while every noninjective "
-            + "observation hides one.",
+        "Injective observation preserves escapes; noninjective hides one on inhabited "
+            + "input.",
         H("Escape Under Observation"),
         Blocks(
             Describe.Lean(

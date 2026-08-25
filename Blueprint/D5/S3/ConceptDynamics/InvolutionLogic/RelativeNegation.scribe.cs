@@ -10,7 +10,7 @@ internal sealed class RelativeNegationDocument : IScribeDocumentDefinition
         "D5/S3/ConceptDynamics/InvolutionLogic/RelativeNegation.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Relative negation expands by the newly admitted region when its universe grows.",
+        "For a proposition inside the old ambient, negation grows by the admitted region.",
         H("Relative Negation"),
         Blocks(
             Describe.Lean(

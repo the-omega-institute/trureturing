@@ -553,7 +553,10 @@ c^{-1}(\{c(x)\})
 \iff
 \tau_{J_\Gamma}
 \subsetneq
-\tau_{J_{\Gamma\cup\{c\}}}.
+\tau_{J_{\Gamma}\vee c},
+\qquad
+\text{其中 } J_{\Gamma}\vee c \text{ 指并置读数 } x\mapsto(J_{\Gamma}(x),\,c(x)).
+
 }
 \]
 
@@ -930,7 +933,7 @@ D5/S3/ConceptDynamics/ObservationTopology/PrimitiveEscapeStrictRefinement.lean
 
 \[
 \boxed{
-\text{定义创造是严格增加可分辨结构，}
+\text{逃逸语义闭包的定义创造才严格增加可分辨结构（闭包内定义保持拓扑不变），}
 \quad
 \text{对角化证明固定语言不封闭，}
 \quad

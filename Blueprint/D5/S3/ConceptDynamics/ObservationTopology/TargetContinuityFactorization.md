@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Recoverability is continuity from the readout partition topology into a discrete target.
+On an inhabited source, recoverability is continuity into the discrete target.
 
 **Theorem 1.1 (Target recovery is continuity from the partition topology).**
 

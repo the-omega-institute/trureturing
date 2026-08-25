@@ -10,7 +10,7 @@ internal sealed class AtomicNegationRigidityDocument : IScribeDocumentDefinition
         "D5/S3/ConceptDynamics/InvolutionLogic/AtomicNegationRigidity.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Point-valued complement exists exactly on a nonempty two-element universe.",
+        "A finite nonempty atomic-negation universe has exactly two elements.",
         H("Atomic Negation Rigidity"),
         Blocks(
             Describe.Lean(
@@ -65,8 +65,8 @@ internal sealed class AtomicNegationRigidityDocument : IScribeDocumentDefinition
         Formula carrier = F.Id("X");
         Formula negation = F.Id("negation");
         Formula instances = Seq(
-            Call("Fintype", carrier), Sp, Land, Sp,
-            Call("Nonempty", carrier));
+            OpenBracket, Call("Fintype", carrier), CloseBracket, Sp,
+            OpenBracket, Call("Nonempty", carrier), CloseBracket);
 
         return Disp(Seq(
             Forall, Sp, negation, Colon, Sp, Call("AtomicNegation", carrier),

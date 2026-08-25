@@ -8,7 +8,7 @@ internal sealed class TargetContinuityFactorizationDocument
     : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Recoverability is continuity from the readout partition topology into a discrete "
+        "On an inhabited source, recoverability is continuity into the discrete "
             + "target.",
         H("Target Continuity Factorization"),
         Blocks(Describe.Lean(

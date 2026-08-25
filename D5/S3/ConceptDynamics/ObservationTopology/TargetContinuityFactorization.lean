@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/ObservationTopology/TargetContinuityFactorization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Recoverability is continuity from the readout partition topology into a discrete target. -/
+   digest: On an inhabited source, recoverability is continuity into the discrete target. -/
 
 import D5.S3.ConceptDynamics.ObservationTopology.PartitionTopologyKernel
 import D5.S3.ConceptDynamics.Restoration.TargetRecoveryCriterion

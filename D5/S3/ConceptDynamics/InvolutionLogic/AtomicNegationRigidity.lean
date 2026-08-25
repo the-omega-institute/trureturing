@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/InvolutionLogic/AtomicNegationRigidity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Point-valued complement exists exactly on a nonempty two-element universe. -/
+   digest: A finite nonempty atomic-negation universe has exactly two elements. -/
 
 import Mathlib.Data.Fintype.Card
 import Mathlib.Tactic

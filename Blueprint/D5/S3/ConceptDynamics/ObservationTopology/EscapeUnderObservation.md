@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Injective observations preserve all catalog escapes, while every noninjective observation hides one.
+Injective observation preserves escapes; noninjective hides one on inhabited input.
 
 **Theorem 1.1 (Injective observation preserves every displayed catalog escape).**
 

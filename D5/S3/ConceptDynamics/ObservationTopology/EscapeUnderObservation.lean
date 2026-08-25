@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/ObservationTopology/EscapeUnderObservation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Injective observations preserve all catalog escapes, while every noninjective observation hides one. -/
+   digest: Injective observation preserves escapes; noninjective hides one on inhabited input. -/
 
 import D5.S0.Diagonal.Lawvere.QualitativeEscape
 import Mathlib.Tactic

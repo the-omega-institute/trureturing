@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/InvolutionLogic/RelativeNegation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Relative negation expands by the newly admitted region when its universe grows. -/
+   digest: For a proposition inside the old ambient, negation grows by the admitted region. -/
 
 import Mathlib.Data.Set.Lattice
 
