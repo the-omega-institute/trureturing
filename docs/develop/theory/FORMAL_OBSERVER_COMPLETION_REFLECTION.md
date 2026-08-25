@@ -1,7 +1,9 @@
 # 观察者完成反射与可观测 Gram 演算
 ## 稳定接口的普适闭包、状态—效应反对偶与定量可观测性
 
-**版本：v1.0，2026-08-22**
+**版本：v1.1，2026-08-25**
+
+**版本史**：v1.0 初稿 → **v1.1 勘误(issue #3118)：推论 25.3 补回 Heisenberg 导数的因子 i，并将生成元记为 i·ad_H**。
 
 ---
 
@@ -1441,10 +1443,10 @@ $$
 
 ## 推论 25.3（交换子是 completion 导数）
 
-Hamiltonian 情形中，[H,E] 是 effect orbit 的时间导数；嵌套交换子塔生成全部 effect reflector。因此
+Hamiltonian 情形中，i[H,E] 是 effect orbit 在 t=0 的时间导数；嵌套交换子塔生成全部 effect reflector。因此
 
 $$
-ad_H
+i·ad_H
 =
 observer-completion generator.
 $$

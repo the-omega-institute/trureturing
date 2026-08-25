@@ -613,6 +613,7 @@ public sealed partial class TheoryCandidatesTests
                 "sha256:" + new string('1', 64),
                 unsupported,
                 [],
+                [],
                 ownerOverride: null));
 
         Assert.Contains("bootstrap selection is unavailable", exception.Message, StringComparison.Ordinal);

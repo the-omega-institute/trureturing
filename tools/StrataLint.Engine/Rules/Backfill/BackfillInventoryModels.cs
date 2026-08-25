@@ -33,13 +33,22 @@ internal sealed record DigestionQuarantine(
         ["already-covered", "missing-prerequisite", "multi-clause-guard"];
 }
 
+internal sealed record DigestionDispositionGap(string Code, string Detail);
+
+internal sealed record DigestionCoverDisposition(
+    DigestionStatus Outcome,
+    ImmutableArray<string> Gids,
+    ImmutableArray<DigestionDispositionGap> Gaps,
+    DateTimeOffset RecordedAtUtc);
+
 internal sealed record DigestionReceipts(
     ImmutableArray<DigestionCoverageReceipt> Coverage,
     ImmutableArray<DigestionScribeReceipt> Scribe,
     ImmutableArray<string> UnresolvedSubitems,
     ImmutableArray<string> ChainAtoms,
     DigestionExternalReceipt? TailAuthorization,
-    DigestionQuarantine? Quarantine = null);
+    DigestionQuarantine? Quarantine = null,
+    DigestionCoverDisposition? CoverDisposition = null);
 
 internal enum DigestionMigrationState
 {
