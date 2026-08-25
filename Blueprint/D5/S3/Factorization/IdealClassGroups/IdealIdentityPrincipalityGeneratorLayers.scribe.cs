@@ -133,7 +133,7 @@ internal sealed class IdealIdentityPrincipalityGeneratorLayersDocument
                 DeclarationHandle.Create(
                     DeclarationPrefix + "singleton_ring_has_no_nonzero_generator"),
                 H("The singleton ring has no nonzero recovery base"),
-                StatementSource.FromAuthor(SingletonRingFormula()),
+                StatementSource.FromLean(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "ZMod one audits the one-element carrier: every possible base is zero, so "
@@ -261,14 +261,6 @@ internal sealed class IdealIdentityPrincipalityGeneratorLayersDocument
             Span(target), Sp, Eq, Sp, Span(basis), Sp, Land, Sp,
             Neg, Sp, Exists, Bang, Sp, coordinate, Colon, Sp, Call("Units", ring), Comma,
             Sp, UnitAction(basis, coordinate), Sp, Eq, Sp, target, Dot));
-    }
-
-    private static Formula SingletonRingFormula()
-    {
-        Formula basis = F.Id("a");
-        return Disp(Seq(
-            Neg, Sp, Exists, Sp, basis, Colon, Sp, Call("ZMod", D(1)), Comma,
-            Sp, basis, Sp, Neq, Sp, D(0), Dot));
     }
 
     private static Formula NonemptyCarrierFormula()
