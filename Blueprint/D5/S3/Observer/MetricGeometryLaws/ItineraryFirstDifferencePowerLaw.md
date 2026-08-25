@@ -6,7 +6,7 @@ Canonical complete itineraries determine the discounted discrete prediction dist
 
 **Theorem 1.1 (Itinerary first difference determines discounted distance).**
 
-$$\forall Y, O, [\operatorname{DecidableEq}\left(O\right)], tau: Y \to Y, q: Y \to O, gamma: \mathbb{R},\ (0 < gamma \leq 1)\Rightarrow\\{}\forall y, y'\in Y,\\{(\operatorname{FutureIndistinguishable}(tau, q, y, y')\Rightarrow \operatorname{discountedPredictionDistance}(tau, q, gamma, y, y') = 0)} \land\\{(\exists k\in \mathbb{N}, q(\operatorname{iterate}(tau, k, y)) \neq q(\operatorname{iterate}(tau, k, y'))\Rightarrow \operatorname{discountedPredictionDistance}(tau, q, gamma, y, y') = \operatorname{pow}(gamma, \operatorname{firstDifferenceIndex}(tau, q, y, y')))}.$$
+$$\forall Y, O, [\operatorname{DecidableEq}\left(O\right)], tau: Y \to Y, q: Y \to O, gamma: \mathbb{R},\ (0 < gamma \leq 1)\Rightarrow\\{}\forall y, y'\in Y,\\{(\operatorname{FutureIndistinguishable}(tau, q, y, y')\Rightarrow \operatorname{discountedPredictionDistance}(tau, q, discreteOutputDistance, gamma, y, y') = 0)} \land\\{(\exists k\in \mathbb{N}, q(\operatorname{iterate}(tau, k, y)) \neq q(\operatorname{iterate}(tau, k, y'))\Rightarrow \operatorname{discountedPredictionDistance}(tau, q, discreteOutputDistance, gamma, y, y') = gamma^{\min\{k\in \mathbb{N} \mid q(\operatorname{iterate}(tau, k, y)) \neq q(\operatorname{iterate}(tau, k, y'))\}})}.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/MetricGeometryLaws/ItineraryFirstDifferencePowerLaw.itinerary_first_difference_power_law` (`✓ std3`). ∎
 
