@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/Experiment/MinimumCompleteObserverSetCover
+/- GID: D5/S3/ConceptDynamics/ExperimentDesign/MinimumCompleteObserverSetCover
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/Experiment/MinimumCompleteObserverSetCover
+   mirror-B: D5/B/S3/ConceptDynamics/ExperimentDesign/MinimumCompleteObserverSetCover
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Minimum-cost complete finite observer families are exactly minimum-cost set covers. -/
@@ -26,7 +26,7 @@ set_option relaxedAutoImplicit false
 
 noncomputable section
 
-namespace D5.S3.ConceptDynamics.Experiment.MinimumCompleteObserverSetCover
+namespace D5.S3.ConceptDynamics.ExperimentDesign.MinimumCompleteObserverSetCover
 
 open D5.S3.ConceptDynamics.Experiment.FiniteExperimentCoverCriterion
 open D5.S3.ConceptDynamics.Faithfulness.JointFaithfulnessLeibnizCriterion
@@ -179,4 +179,4 @@ theorem minimum_complete_observer_is_set_cover
 
 #print axioms minimum_complete_observer_is_set_cover
 
-end D5.S3.ConceptDynamics.Experiment.MinimumCompleteObserverSetCover
+end D5.S3.ConceptDynamics.ExperimentDesign.MinimumCompleteObserverSetCover

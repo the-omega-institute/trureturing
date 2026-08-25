@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Experiment;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.ExperimentDesign;
 
 internal sealed class MinimumCompleteObserverSetCoverDocument
     : IScribeDocumentDefinition
@@ -14,7 +14,7 @@ internal sealed class MinimumCompleteObserverSetCoverDocument
             Describe.Lean(
                 DescribeId.Create("minimum-complete-observer-is-set-cover"),
                 DeclarationHandle.Create(
-                    "D5/S3/ConceptDynamics/Experiment/"
+                    "D5/S3/ConceptDynamics/ExperimentDesign/"
                         + "MinimumCompleteObserverSetCover."
                         + "minimum_complete_observer_is_set_cover"),
                 H("The minimum complete observer problem is weighted set cover"),

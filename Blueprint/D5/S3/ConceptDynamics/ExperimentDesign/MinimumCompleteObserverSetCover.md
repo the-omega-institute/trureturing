@@ -8,7 +8,7 @@ Minimum-cost complete finite observer families are exactly minimum-cost set cove
 
 $$\begin{aligned}\forall n: \mathbb{N}, I: \operatorname{Type}(), O: I \to \operatorname{Type}(),\\c: I \to \mathbb{R}, q: \forall i: I, \operatorname{Fin}(n) \to O(i),\\J: \operatorname{Finset}(I),\\X:= \operatorname{Fin}(n), U_{X}:= \{\{x, y\} \mid x, y \in \operatorname{Fin}(n), x \neq y\},\\\forall i \in I, D_{i}:= \{\{x, y\} \in U_{X} \mid q(i)(x) \neq q(i)(y)\}, \forall J \in \operatorname{Finset}(I), \operatorname{C}(J):= \sum_{i \in J} c(i),\\(\operatorname{Injective}(\operatorname{jointReadout}(\operatorname{restrict}(q, J))) \land (\forall K: \operatorname{Finset}(I), \operatorname{Injective}(\operatorname{jointReadout}(\operatorname{restrict}(q, K))) \Rightarrow \operatorname{C}(J) \leq \operatorname{C}(K))) \iff \\(U_{X} = \operatorname{Union}(i \in J, D_{i}) \land (\forall K: \operatorname{Finset}(I), U_{X} = \operatorname{Union}(i \in K, D_{i}) \Rightarrow \operatorname{C}(J) \leq \operatorname{C}(K))).\end{aligned}$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Experiment/MinimumCompleteObserverSetCover.minimum_complete_observer_is_set_cover` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ExperimentDesign/MinimumCompleteObserverSetCover.minimum_complete_observer_is_set_cover` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,5 +22,5 @@ The imported finite experiment cover criterion identifies joint-readout injectiv
 
 ## References
 
-- Truth anchor: `D5/S3/ConceptDynamics/Experiment/MinimumCompleteObserverSetCover.minimum_complete_observer_is_set_cover`
-- Dependency: [D5/S3/ConceptDynamics/Experiment/FiniteExperimentCoverCriterion](FiniteExperimentCoverCriterion.md)
+- Truth anchor: `D5/S3/ConceptDynamics/ExperimentDesign/MinimumCompleteObserverSetCover.minimum_complete_observer_is_set_cover`
+- Dependency: [D5/S3/ConceptDynamics/Experiment/FiniteExperimentCoverCriterion](../Experiment/FiniteExperimentCoverCriterion.md)
