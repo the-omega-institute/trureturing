@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/InvolutionLogic/BooleanInvolutionObservables
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/InvolutionLogic/BooleanInvolutionObservables
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Boolean observables split into flip and invariant parity sectors under an involution. -/
@@ -70,7 +70,8 @@ theorem xor_invariant_of_flips
   have hFirst := firstFlip x
   have hSecond := secondFlip x
   unfold xorObservable
-  tauto
+  rw [hFirst, hSecond]
+  exact xor_not_not
 
 /-- Equivalence of two flip observables is invariant. -/
 theorem iff_invariant_of_flips
@@ -94,7 +95,7 @@ theorem xor_flip_of_flip_invariant
   have hFirst := firstFlip x
   have hSecond := secondInvariant x
   unfold xorObservable
-  tauto
+  rw [hFirst, hSecond, xor_not_left, not_xor]
 
 #print axioms not_flip_and_invariant
 #print axioms xor_invariant_of_flips

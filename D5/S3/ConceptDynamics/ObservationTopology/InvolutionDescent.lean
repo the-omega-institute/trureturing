@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/ObservationTopology/InvolutionDescent
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/ObservationTopology/InvolutionDescent
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: A transformation descends through a surjective readout exactly when it preserves readout fibers. -/
@@ -38,15 +38,15 @@ theorem kernelStable_iff_exists_descended
   classical
   constructor
   · intro stable
-    let section : Coordinate → X := fun coordinate =>
+    let sect : Coordinate → X := fun coordinate =>
       Classical.choose (surjective coordinate)
-    have section_spec : ∀ coordinate, readout (section coordinate) = coordinate :=
+    have section_spec : ∀ coordinate, readout (sect coordinate) = coordinate :=
       fun coordinate => Classical.choose_spec (surjective coordinate)
     let descended : Coordinate → Coordinate := fun coordinate =>
-      readout (transform (section coordinate))
+      readout (transform (sect coordinate))
     refine ⟨descended, ?_⟩
     funext x
-    change readout (transform (section (readout x))) =
+    change readout (transform (sect (readout x))) =
       readout (transform x)
     exact stable (section_spec (readout x))
   · rintro ⟨descended, factorization⟩ x y sameReadout

@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/InvolutionLogic/RelativeNegation
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/InvolutionLogic/RelativeNegation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Relative negation expands by the newly admitted region when its universe grows. -/
@@ -20,8 +20,8 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.ConceptDynamics.InvolutionLogic.RelativeNegation
 
 /-- Negation of a proposition set relative to an explicitly named universe. -/
-def relativeNegation {X : Type*} (universe proposition : Set X) : Set X :=
-  universe \ proposition
+def relativeNegation {X : Type*} (ambient proposition : Set X) : Set X :=
+  ambient \ proposition
 
 /-- Enlarging the universe decomposes the new negation into the old negation
 and the newly admitted region. -/

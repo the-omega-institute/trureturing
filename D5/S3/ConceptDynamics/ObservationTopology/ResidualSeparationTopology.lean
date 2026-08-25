@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/ObservationTopology/ResidualSeparationTopology
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/ObservationTopology/ResidualSeparationTopology
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: A target defect is exactly a topological separation deficit. -/
@@ -57,7 +57,7 @@ theorem separationDeficit_join_law
     ← defectRelation_eq_separationDeficit current target, residual_join_law]
   ext pair
   simp only [Set.mem_inter_iff, Set.mem_setOf_eq]
-  rw [partition_inseparable_iff_kernel candidate]
+  rw [partition_inseparable_iff_kernel candidate, Setoid.ker_def]
 
 #print axioms defectRelation_eq_separationDeficit
 #print axioms separationDeficit_join_law

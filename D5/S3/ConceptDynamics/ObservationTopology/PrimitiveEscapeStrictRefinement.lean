@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/ObservationTopology/PrimitiveEscapeStrictRefinement
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/ObservationTopology/PrimitiveEscapeStrictRefinement
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Primitive escape is exactly strict refinement of family observation topology. -/
@@ -14,6 +14,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.ConceptDynamics.ObservationTopology.PrimitiveEscapeStrictRefinement
 open D5.S3.ConceptDynamics.ConceptFiberDecomposition
 open D5.S3.ConceptDynamics.ConceptJoinUniversal
+open D5.S3.ConceptDynamics.Faithfulness.JointFaithfulnessLeibnizCriterion
 open D5.S3.ConceptDynamics.DefinitionEscape.DefinitionKernelGalois
 open D5.S3.ConceptDynamics.Epistemic.PartitionKnowledgeNegativeIntrospection
 open D5.S3.ConceptDynamics.ObservationTopology.PartitionTopologyKernel
@@ -66,6 +67,7 @@ theorem primitiveEscape_iff_strict_topology_refinement
       ⟨x, y, oldDefinitionsAgree, candidateDifferent⟩
     have oldAgree : oldReadout x = oldReadout y := by
       funext definition
+      change definition.1 x = definition.1 y
       exact oldDefinitionsAgree definition
     let witnessOpen : Set X := {state | candidate state = candidate x}
     have witnessOpenFine : @IsOpen X (partitionTopology fineReadout) witnessOpen := by
@@ -81,7 +83,8 @@ theorem primitiveEscape_iff_strict_topology_refinement
         (partition_inseparable_iff_kernel oldReadout x y).2 oldAgree
       have xInWitness : x ∈ witnessOpen := rfl
       have yInWitness : y ∈ witnessOpen :=
-        (oldInseparable.mem_open_iff witnessOpenOld).mp xInWitness
+        ((@Inseparable.mem_open_iff X (partitionTopology oldReadout)
+          x y witnessOpen oldInseparable witnessOpenOld).mp xInWitness)
       exact candidateDifferent yInWitness.symm
     exact ⟨oldOpenInFine, witnessOpen, witnessOpenFine, witnessNotOpenOld⟩
   · intro strict primitiveFailure
@@ -97,10 +100,13 @@ theorem primitiveEscape_iff_strict_topology_refinement
         apply Prod.ext oldAgree
         apply candidateFiberConstant
         intro definition
+        change definition.1 x = definition.1 y
         exact congrFun oldAgree definition
     rcases strict.2 with ⟨set, setOpenFine, setNotOpenOld⟩
     apply setNotOpenOld
-    simpa only [sameTopology] using setOpenFine
+    change @IsOpen X (partitionTopology oldReadout) set
+    rw [← sameTopology]
+    exact setOpenFine
 
 theorem productiveSeparation_implies_strict_topology_refinement
     {X Current InputOutput Target Output : Type*} [Nonempty X]

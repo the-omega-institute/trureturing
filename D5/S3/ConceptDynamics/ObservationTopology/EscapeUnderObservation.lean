@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/ObservationTopology/EscapeUnderObservation
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/ObservationTopology/EscapeUnderObservation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Injective observations preserve all catalog escapes, while every noninjective observation hides one. -/
@@ -67,7 +67,7 @@ theorem noninjective_hides_some_catalog_escape
           Set.range (observedCatalog observe catalog) := by
   classical
   rw [Function.Injective] at notInjective
-  push_neg at notInjective
+  push Not at notInjective
   rcases notInjective with ⟨first, second, observedEqual, different⟩
   let catalog : Unit → Input → Output := fun _ _ => first
   let candidate : Input → Output := fun _ => second
@@ -95,7 +95,9 @@ theorem injective_iff_preserves_unit_catalog_escape
       observe injective catalog candidate escape
   · intro preserves
     by_contra notInjective
-    rcases noninjective_hides_some_catalog_escape observe notInjective with
+    rcases noninjective_hides_some_catalog_escape
+      (Input := Input) (Output := Output) (Observation := Observation)
+      observe notInjective with
       ⟨catalog, candidate, escape, hidden⟩
     exact (preserves catalog candidate escape) hidden
 

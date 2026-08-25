@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/InvolutionLogic/InvolutionTransversal
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/InvolutionLogic/InvolutionTransversal
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: A Boolean orientation of a fixed-point-free involution is an orbit transversal. -/

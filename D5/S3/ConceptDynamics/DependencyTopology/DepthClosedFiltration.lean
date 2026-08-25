@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/DependencyTopology/DepthClosedFiltration
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DependencyTopology/DepthClosedFiltration
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Strict edge depth yields a closed Alexandrov sublevel filtration. -/
@@ -54,6 +54,7 @@ theorem depthSublevel_isClosed
     {V : Type*} {edge : V -> V -> Prop} {depth : V -> Nat}
     (compatible : DepthCompatible edge depth) (level : Nat) :
     @IsClosed V (upperSetTopology (Reachable edge)) (depthSublevel depth level) := by
+  letI : TopologicalSpace V := upperSetTopology (Reachable edge)
   have superlevelOpen := depthSuperlevel_isOpen compatible level
   have complementClosed := superlevelOpen.isClosed_compl
   simpa only [depthSuperlevel, depthSublevel, Set.compl_setOf, not_lt] using

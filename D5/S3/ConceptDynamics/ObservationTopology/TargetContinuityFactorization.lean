@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/ObservationTopology/TargetContinuityFactorization
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/ObservationTopology/TargetContinuityFactorization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Recoverability is continuity from the readout partition topology into a discrete target. -/
@@ -29,26 +29,36 @@ theorem continuous_partition_iff_fiber_constant
   · intro targetContinuous x y sameReadout
     have sourceInseparable : @Inseparable X (partitionTopology readout) x y :=
       (partition_inseparable_iff_kernel readout x y).2 sameReadout
-    exact (sourceInseparable.map targetContinuous).eq
+    have preimageOpen :
+        @IsOpen X (partitionTopology readout) (target ⁻¹' {target x}) :=
+      (@continuous_def X Target (partitionTopology readout) ⊥ target).1
+        targetContinuous _ (isOpen_discrete _)
+    have xInPreimage : x ∈ target ⁻¹' {target x} := by simp
+    have yInPreimage : y ∈ target ⁻¹' {target x} :=
+      ((@Inseparable.mem_open_iff X (partitionTopology readout)
+        x y (target ⁻¹' {target x}) sourceInseparable preimageOpen).mp
+          xInPreimage)
+    have targetYX : target y = target x := by simpa using yInPreimage
+    exact targetYX.symm
   · intro fiberConstant
+    letI : TopologicalSpace Coordinate := ⊥
+    letI : DiscreteTopology Coordinate := ⟨rfl⟩
     rw [continuous_def]
     intro targetOpen _targetOpen
     rw [partitionTopology, isOpen_induced_iff]
     let coordinates : Set Coordinate :=
       {coordinate | exists x, readout x = coordinate ∧ target x ∈ targetOpen}
     refine ⟨coordinates, ?_, ?_⟩
-    · letI : TopologicalSpace Coordinate := ⊥
-      letI : DiscreteTopology Coordinate := ⟨rfl⟩
-      exact isOpen_discrete _
+    · exact isOpen_discrete _
     · ext x
-      change target x ∈ targetOpen <->
-        exists y, readout y = readout x ∧ target y ∈ targetOpen
+      change (exists y, readout y = readout x ∧ target y ∈ targetOpen) <->
+        target x ∈ targetOpen
       constructor
-      · intro hx; exact ⟨x, rfl, hx⟩
       · rintro ⟨y, sameCoordinate, hy⟩
         have sameTarget : target y = target x := fiberConstant sameCoordinate
         rw [sameTarget] at hy
         exact hy
+      · intro hx; exact ⟨x, rfl, hx⟩
 
 theorem target_factors_iff_continuous_partition
     {X Coordinate Target : Type*} [Nonempty X]

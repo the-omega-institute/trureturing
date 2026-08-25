@@ -1,11 +1,12 @@
 /- GID: D5/S3/ConceptDynamics/DependencyTopology/AxiomClosureMonotonicity
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DependencyTopology/AxiomClosureMonotonicity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Edge-local monotone labels remain monotone along dependency reachability. -/
 
 import D5.S3.ConceptDynamics.DependencyTopology.DependencyReachabilityOrder
+import Mathlib.Data.Set.Lattice
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -26,7 +27,8 @@ theorem label_mono_of_edge_mono
     {V Atom : Type*} {edge : V -> V -> Prop} {label : V -> Set Atom}
     (edgeMono : forall ⦃u v⦄, edge u v -> label u ⊆ label v)
     {u v : V} (reachable : Reachable edge u v) : label u ⊆ label v :=
-  value_mono_of_edge_mono edgeMono reachable
+  value_mono_of_edge_mono (Label := Set Atom) (value := label)
+    edgeMono reachable
 
 theorem label_mono_of_edge
     {V Atom : Type*} {edge : V -> V -> Prop} {label : V -> Set Atom}

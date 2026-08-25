@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/DependencyTopology/DependencyReachabilityOrder
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DependencyTopology/DependencyReachabilityOrder
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Acyclic dependency reachability is a partial order. -/
@@ -35,6 +35,12 @@ def AcyclicEdge {V : Type*} (edge : V -> V -> Prop) : Prop :=
     (huv : Reachable edge u v) (hvw : Reachable edge v w) : Reachable edge u w :=
   huv.trans hvw
 
+instance {V : Type*} (edge : V -> V -> Prop) : Std.Refl (Reachable edge) :=
+  ⟨reachable_refl edge⟩
+
+instance {V : Type*} (edge : V -> V -> Prop) : IsTrans V (Reachable edge) :=
+  ⟨fun _ _ _ huv hvw => reachable_trans huv hvw⟩
+
 theorem reachable_of_edge {V : Type*} {edge : V -> V -> Prop} {u v : V}
     (huv : edge u v) : Reachable edge u v := Relation.ReflTransGen.single huv
 
@@ -54,8 +60,10 @@ theorem reachable_antisymm_of_acyclic
 theorem reachable_partial_order
     {V : Type*} {edge : V -> V -> Prop} (acyclic : AcyclicEdge edge) :
     Reflexive (Reachable edge) ∧ Transitive (Reachable edge) ∧
-      Antisymmetric (Reachable edge) := by
-  refine ⟨reachable_refl edge, reachable_trans, ?_⟩
+      (∀ ⦃u v⦄, Reachable edge u v → Reachable edge v u → u = v) := by
+  refine ⟨reachable_refl edge, ?_, ?_⟩
+  · intro u v w huv hvw
+    exact reachable_trans huv hvw
   intro u v huv hvu
   exact reachable_antisymm_of_acyclic acyclic huv hvu
 

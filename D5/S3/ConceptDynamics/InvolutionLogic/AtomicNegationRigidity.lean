@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/InvolutionLogic/AtomicNegationRigidity
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/InvolutionLogic/AtomicNegationRigidity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Point-valued complement exists exactly on a nonempty two-element universe. -/
@@ -38,8 +38,8 @@ theorem neg_ne (negation : AtomicNegation X) (x : X) :
 theorem involutive (negation : AtomicNegation X) :
     Function.Involutive negation.neg := by
   intro x
-  exact (negation.other_iff (negation.neg x) x).1
-    (negation.neg_ne x).symm
+  exact ((negation.other_iff (negation.neg x) x).1
+    (negation.neg_ne x).symm).symm
 
 /-- The complement of a singleton is the singleton containing its atomic negation. -/
 theorem compl_singleton_eq_singleton
@@ -61,12 +61,12 @@ def transport (equiv : X ≃ Y) (negation : AtomicNegation Y) :
         exact different (equiv.injective imageEqual)
       apply equiv.injective
       simpa using (negation.other_iff (equiv x) (equiv y)).1 imageDifferent
-    · intro equality
-      intro same
-      subst y
+    · intro transportedEquality same
       have fixedImage : equiv x = negation.neg (equiv x) := by
-        have transported := congrArg equiv equality
-        simpa using transported
+        calc
+          equiv x = equiv y := congrArg equiv same.symm
+          _ = negation.neg (equiv x) := by
+            simpa using congrArg equiv transportedEquality
       exact negation.neg_ne (equiv x) fixedImage.symm
 
 /-- Boolean negation is the canonical atomic negation. -/
@@ -77,21 +77,23 @@ def bool : AtomicNegation Bool where
 
 /-- Choosing one point identifies every atomic-negation universe with Bool. -/
 noncomputable def equivBool (negation : AtomicNegation X) (anchor : X) :
-    X ≃ Bool where
-  toFun x := if x = anchor then false else true
-  invFun value := match value with
-    | false => anchor
-    | true => negation.neg anchor
-  left_inv x := by
-    classical
+    X ≃ Bool := by
+  classical
+  refine
+    { toFun := fun x => if x = anchor then false else true
+      invFun := fun value => match value with
+        | false => anchor
+        | true => negation.neg anchor
+      left_inv := ?_
+      right_inv := ?_ }
+  · intro x
     by_cases same : x = anchor
     · subst x
       simp
     · have other : x = negation.neg anchor :=
         (negation.other_iff anchor x).1 same
       simp [same, other, negation.neg_ne anchor]
-  right_inv value := by
-    classical
+  · intro value
     cases value <;> simp [negation.neg_ne anchor]
 
 /-- On a nonempty type, atomic negation exists exactly when the type is equivalent to Bool. -/

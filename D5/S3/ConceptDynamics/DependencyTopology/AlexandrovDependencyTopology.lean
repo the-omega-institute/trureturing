@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/DependencyTopology/AlexandrovDependencyTopology
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DependencyTopology/AlexandrovDependencyTopology
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Upper sets form the dependency Alexandrov topology with principal opens and downset closures. -/

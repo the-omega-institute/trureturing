@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/DependencyTopology/DominatorCut
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DependencyTopology/DominatorCut
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: A dominator is a vertex whose deletion cuts every rooted path to its target. -/
@@ -50,24 +50,26 @@ theorem mapped_deleted_path_avoids
     {V : Type u} {edge : V -> V -> Prop} {deleted first last : V}
     (lastDifferent : deleted ≠ last)
     (path : DirectedPath (deleteVertex edge deleted) first last) :
-    ¬ ((path.map fun step => step.1).Contains deleted) := by
+    ¬ ((path.map fun ⦃_ _⦄ step => step.1).Contains deleted) := by
   induction path with
   | nil endpoint =>
       intro contains
       exact lastDifferent contains
   | @step first second last head tail inductionHypothesis =>
       intro contains
-      change deleted = first ∨ ((tail.map fun step => step.1).Contains deleted) at contains
+      change deleted = first ∨
+        ((tail.map fun ⦃_ _⦄ step => step.1).Contains deleted) at contains
       rcases contains with atStart | inTail
       · exact head.2.1 atStart.symm
-      · exact inductionHypothesis inTail
+      · exact inductionHypothesis lastDifferent inTail
 
 theorem unreachable_after_delete_of_dominates
     {V : Type u} {root u v : V} {edge : V -> V -> Prop}
     (dominates : Dominates root edge u v) (proper : u ≠ v) :
     ¬ Nonempty (DirectedPath (deleteVertex edge u) root v) := by
   rintro ⟨deletedPath⟩
-  let originalPath : DirectedPath edge root v := deletedPath.map fun step => step.1
+  let originalPath : DirectedPath edge root v :=
+    deletedPath.map fun ⦃_ _⦄ step => step.1
   have contains : originalPath.Contains u := dominates originalPath
   exact mapped_deleted_path_avoids proper deletedPath contains
 
