@@ -103,6 +103,52 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void ReceiptRealignmentRejectsBaselineFormalizationReceiptForDifferentAtomWithoutWriting()
+    {
+        var inputs = WithBaselineFormalizationReceipt(
+            DirectoryInputs(CoverWorld.Materialize(CoverWorld.StaleReceiptSpec())),
+            receiptAtomId: "different-atom");
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+
+        var result = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files)
+            .RealignReceipts(["--base", "baseline"]);
+
+        Assert.False(result.Success);
+        Assert.Contains(
+            "baseline formalization receipt has a different atom_id",
+            result.Error,
+            StringComparison.Ordinal);
+        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+    }
+
+    [Fact]
+    public void ReceiptRealignmentRejectsCoverageGidMissingFromBaselineFormalizationReceiptWithoutWriting()
+    {
+        var materialized = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec() with
+        {
+            ReportDeclarations = ImmutableArray.Create("probe", "replacement"),
+        });
+        var inputs = WithBaselineFormalizationReceipt(
+            DirectoryInputs(materialized),
+            primaryGid: "D5/S0/Carrier/Probe.replacement");
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+
+        var result = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files)
+            .RealignReceipts(["--base", "baseline"]);
+
+        Assert.False(result.Success);
+        Assert.Contains(
+            "baseline formalization receipt does not pin D5/S0/Carrier/Probe.probe",
+            result.Error,
+            StringComparison.Ordinal);
+        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+    }
+
+    [Fact]
     public void ReceiptRealignmentRejectsRemainingFatalGapWithoutWriting()
     {
         var inputs = MixedReceiptBacklogInputs();
@@ -262,6 +308,27 @@ public sealed partial class ProductionEnvironmentTests
             },
             StringComparer.Ordinal);
         return inputs with { Report = LeanAxiomReport.Create(files) };
+    }
+
+    private static CoverInputs WithBaselineFormalizationReceipt(
+        CoverInputs inputs,
+        string? receiptAtomId = null,
+        string? primaryGid = null)
+    {
+        var entry = Assert.Single(inputs.Document.RequireDigestionEntries());
+        var pinnedGid = primaryGid ?? Assert.Single(entry.CoverageGids);
+        Assert.True(Gid.TryParse(pinnedGid, out var parsedGid));
+        var baseline = new Dictionary<string, string>(inputs.Baseline, StringComparer.Ordinal)
+        {
+            [DigestionFormalizationReceipt.PathForAtom(entry.AtomId)] = Encoding.UTF8.GetString(
+                DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
+                    receiptAtomId ?? entry.AtomId,
+                    pinnedGid,
+                    DigestionFormalizationReceipt.ResolveSignature(parsedGid, inputs.Report),
+                    entry.CasRef,
+                    entry.Fingerprints.RawSha256)).AsSpan()),
+        };
+        return inputs with { Baseline = baseline };
     }
 
     private static CoverInputs WithDuplicateScribeReceipt(CoverInputs inputs)
