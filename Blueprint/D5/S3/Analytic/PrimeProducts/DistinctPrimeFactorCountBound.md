@@ -6,7 +6,7 @@ A nonzero integer has at most its floor base-two logarithm many distinct prime f
 
 **Theorem 1.1 (Distinct prime factors obey a floor logarithmic bound).**
 
-$$2^{{\operatorname{omega}\left(\left|d\right|\right)}} \le \operatorname{distinctPrimeProduct}\left(\left|d\right|\right) \land \left(\operatorname{distinctPrimeProduct}\left(\left|d\right|\right) \le \left|d\right| \land \operatorname{omega}\left(\left|d\right|\right) \le \operatorname{floorLog2}\left(\left|d\right|\right)\right)$$
+$$d \ne 0 \Rightarrow \left(2^{{\operatorname{omega}\left(\left|d\right|\right)}} \le \operatorname{distinctPrimeProduct}\left(\left|d\right|\right) \land \left(\operatorname{distinctPrimeProduct}\left(\left|d\right|\right) \le \left|d\right| \land \operatorname{omega}\left(\left|d\right|\right) \le \operatorname{floorLog2}\left(\left|d\right|\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/PrimeProducts/DistinctPrimeFactorCountBound.distinct_prime_factor_count_bound` (`✓ std3`). ∎
 
