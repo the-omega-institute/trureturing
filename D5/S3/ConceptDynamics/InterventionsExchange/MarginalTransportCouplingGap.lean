@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/InterventionsExchange/MarginalTransportCouplingGap
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Equal single-world intervention marginals can transport while
-     cross-world agreement changes. -/
+   digest: Equal single-world intervention marginals can transport while cross-world agreement changes. -/
 
 import D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation
 import Mathlib.Data.Rat.Defs
