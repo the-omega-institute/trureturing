@@ -462,31 +462,15 @@ public sealed partial class ProductionEnvironmentTests
         var inputs = DirectoryInputs(WithSiblingReceiptMismatch(materialized, mismatchCode));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
-        var siblingPath = Assert.Single(inputs.Files.Keys, static path =>
-            path.EndsWith("/receipt-gap-sibling.yaml", StringComparison.Ordinal));
-        var siblingBefore = inputs.Files[siblingPath];
+        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
         var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
 
         var result = environment.AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
 
-        Assert.True(result.Success, result.Error);
-        var after = BackfillInventoryLoader.LoadRoot(temporary.Path);
-        var target = Assert.Single(
-            after.RequireDigestionEntries(),
-            static entry => entry.AtomId == CoverWorld.DefaultAtomId);
-        var targetReceipt = Assert.Single(target.Receipts.Scribe);
-        Assert.True(inputs.VerifiedEmissions!.TryGet(
-            inputs.Gid[..inputs.Gid.LastIndexOf('.')], out var verified));
-        Assert.Equal(verified.DefinitionSha256, targetReceipt.DefinitionSha256);
-        Assert.Equal(verified.EmissionSha256, targetReceipt.EmissionSha256);
-        var siblingImageRecord = siblingPath
-            + "\0"
-            + Convert.ToBase64String(Encoding.UTF8.GetBytes(siblingBefore))
-            + "\n";
-        Assert.Contains(
-            siblingImageRecord,
-            DirectoryLedgerTestSupport.Image(temporary.Path),
-            StringComparison.Ordinal);
+        Assert.False(result.Success);
+        Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
+        Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
     }
 
     [Theory]

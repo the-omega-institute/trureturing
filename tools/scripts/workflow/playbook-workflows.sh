@@ -612,7 +612,7 @@ cover_atom_or_resume() {
   fi
 }
 
-cover_one() {
+cover_row() {
   if step cover-atom cover_atom_or_resume; then
     :
   else
@@ -622,7 +622,6 @@ cover_one() {
   fi
   step align-scribe-receipt run_cli \
     align-scribe-receipt --atom-id "$ATOM_ID" --gid "$GID" --base "$BASE"
-  commit_all_if_needed "formalize: cover $ATOM_ID with $GID"
 }
 
 cd "$ROOT"
@@ -664,7 +663,9 @@ case "$COMMAND" in
     require_transaction_arguments
     cleanup_transaction_temporaries
     step lean-report make lean-report
-    cover_one
+    cover_row
+    step emit-post-alignment make emit
+    commit_all_if_needed "formalize: cover $ATOM_ID with $GID"
     ;;
   cover-batch)
     require_cover_batch_arguments
@@ -672,8 +673,11 @@ case "$COMMAND" in
     step lean-report make lean-report
     for index in "${!BATCH_ATOM_IDS[@]}"; do
       derive_cover_batch_row_state "$index"
-      cover_one
+      cover_row
+      commit_all_if_needed "formalize: cover $ATOM_ID with $GID"
     done
+    step emit-post-alignment make emit
+    commit_all_if_needed "formalize: emit projections after cover batch"
     ;;
   *)
     echo "usage: playbook-workflows.sh deliver-check|receipts-stage|deposit|cover|cover-batch [BASE] [ATOM_ID GID|ATOMS_FILE]" >&2

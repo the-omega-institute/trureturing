@@ -5,7 +5,7 @@ namespace StrataLint.Tests;
 public sealed partial class DepositCoverWorkflowScriptTests
 {
     [Fact]
-    public void CoverBatchRederivesEachDistinctAtomsEnvelopeAndCommitsWithoutEmission()
+    public void CoverBatchRederivesEachDistinctAtomsEnvelopeAndReemitsOnceAtEnd()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -27,7 +27,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var result = fixture.RunBatch(atoms);
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
-        Assert.Equal(before + 2, fixture.CommitCount());
+        Assert.Equal(before + 3, fixture.CommitCount());
         Assert.Equal(
             [
                 "make:lean-report",
@@ -35,9 +35,10 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "dotnet:align-scribe-receipt",
                 "dotnet:cover-atom",
                 "dotnet:align-scribe-receipt",
+                "make:emit",
             ],
             fixture.CallKinds());
-        Assert.DoesNotContain("make:emit", fixture.CallKinds());
+        Assert.Equal("emission: covered\n", fixture.EmissionContents());
         Assert.Contains(
             "dotnet:cover-atom"
                 + $" --cover-atom {TransactionFixture.AtomId}"
