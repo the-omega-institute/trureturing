@@ -20,28 +20,28 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "The first five conjuncts give exact stopping definitions. Target closure "
+                        "The stopping conjuncts give exact source definitions. Target closure "
                             + "uses the canonical `defectRelation`; approximate closure uses the "
-                            + "supplied comparison; and budget stopping uses a total pointwise "
-                            + "condition. For real ratios it agrees with the displayed `sSup` "
-                            + "formula when the feasible set is nonempty and the ratio set is "
-                            + "bounded above. Method stopping is the literal method value equation.")),
+                            + "supremum of metric target diameters over readout fibers. Empty fibers "
+                            + "contribute zero and unbounded diameters contribute top. Budget "
+                            + "stopping is the displayed real `sSup` formula itself; only its useful "
+                            + "pointwise characterization assumes a nonempty feasible set and a "
+                            + "bounded-above ratio set. Method stopping is the literal value equation.")),
                     Paragraph(Text(
-                        "Local completion fixes all four parameters `(X,T,I,epsilon)`. An open-world "
-                            + "sequence changes at least one of them at every adjacent stage. A "
-                            + "reopening requires both one of the five allowed changes, including "
-                            + "definition language, and a nonempty canonical defect on the next "
-                            + "object domain.")),
+                        "Local completion checks the supplied domain, target, and precision; the "
+                            + "source gives no operation-family action on that closure predicate. "
+                            + "An open-world sequence has one fixed field that changes at every "
+                            + "adjacent stage. A reopening requires one of the five allowed changes "
+                            + "and a canonical defect pair present after the change but absent before.")),
                     Paragraph(Text(
                         "The final conjunct exhibits natural-number stages with nonempty object "
-                            + "domains and a nonempty Boolean target type. Each fixed stage is "
+                            + "domains and real-valued targets. Each fixed stage is "
                             + "closed, while every transition changes the target and creates a "
                             + "nonempty defect. Hence reopening occurs frequently at `atTop`.")),
                     Paragraph(Text(
-                        "The comparison and division symbols denote only the supplied generic "
-                            + "operations. No finiteness, decidable equality, measurability, "
-                            + "nonempty-domain premise, monotonicity, or order laws are added to "
-                            + "the generic stopping definitions."))),
+                        "No finiteness, decidable equality, measurability, nonempty-domain premise, "
+                            + "monotonicity, or extra order law is added. The target metric is exactly "
+                            + "the structure requested by approximate closure."))),
                 DescribeRole.Theorem))));
 
     private static Formula Apply(Formula function, params Formula[] arguments) =>
@@ -62,9 +62,6 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
     private static Formula Or(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.Or, right);
 
-    private static Formula ImpliesFormula(Formula left, Formula right) =>
-        new Formula.Logic(left, FormulaLogicOperator.Implies, right);
-
     private static Formula IffFormula(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.Iff, right);
 
@@ -76,6 +73,15 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
 
     private static Formula Restrict(Formula concept, Formula domain) =>
         Call("restrict", concept, domain);
+
+    private static Formula DomainDefect(
+        Formula readout,
+        Formula target,
+        Formula domain) =>
+        Call("inter", Defect(readout, target), Call("square", domain));
+
+    private static Formula SetDifference(Formula left, Formula right) =>
+        Seq(Open, left, Close, Sp, Setminus, Sp, Open, right, Close);
 
     private static Formula Ratio(Formula gain, Formula cost, Formula decision) =>
         new Formula.Fraction(Apply(gain, decision), Apply(cost, decision));
@@ -100,9 +106,7 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
     {
         Formula q = F.Id("q");
         Formula target = F.Id("T");
-        Formula deviation = Delta;
         Formula epsilon = Varepsilon;
-        Formula decisionType = F.Id("Decision");
         Formula decision = F.Id("d");
         Formula cost = F.Id("c");
         Formula gain = F.Id("Gain");
@@ -112,8 +116,6 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
         Formula system = F.Id("S");
         Formula evidence = F.Id("E");
         Formula noProposal = F.Id("NoProposal");
-        Formula objectDomain = F.Id("X");
-        Formula operations = F.Id("I");
         Formula parameters = F.Id("P");
         Formula current = F.Id("P0");
         Formula next = F.Id("P1");
@@ -128,66 +130,55 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
             Equal(Defect(q, target), Emptyset));
 
         Formula clause2 = IffFormula(
-            Call("ApproximatelyClosed", deviation, q, target, epsilon),
-            LessOrEqual(Apply(deviation, q, target), epsilon));
+            Call("ApproximatelyClosed", q, target, epsilon),
+            LessOrEqual(Call("worstFiberDefect", q, target), epsilon));
 
         Formula feasibleDecision = LessOrEqual(Apply(cost, decision), budget);
-        Formula pointwiseStop = new Formula.Bind(
-            FormulaQuantifier.ForAll,
-            FormulaIdentifier.Create("d"),
-            decisionType,
-            ImpliesFormula(
-                feasibleDecision,
-                LessOrEqual(Ratio(gain, cost, decision), threshold)));
         Formula budgetStop = Call("BudgetStop", cost, gain, budget, threshold);
-        Formula clause3 = IffFormula(budgetStop, pointwiseStop);
-
-        Formula feasibleSet = SetSuchThat(decision, feasibleDecision);
         Formula ratioSet = SetSuchThat(Ratio(gain, cost, decision), feasibleDecision);
-        Formula supremumPremises = And(
-            Nonempty(feasibleSet),
-            Call("BddAbove", ratioSet));
-        Formula clause4 = ImpliesFormula(
-            supremumPremises,
-            IffFormula(
-                budgetStop,
-                LessOrEqual(Call("sSup", ratioSet), threshold)));
+        Formula clause3 = IffFormula(
+            budgetStop,
+            LessOrEqual(Call("sSup", ratioSet), threshold));
 
         Formula clause5 = IffFormula(
             Call("MethodStopped", method, system, evidence, noProposal),
             Equal(Apply(method, system, evidence), noProposal));
 
-        Formula fixedParameters = Call(
-            "LocalParameters",
-            objectDomain,
-            target,
-            operations,
-            epsilon);
         Formula clause6 = IffFormula(
-            Call("LocallyComplete", fixedParameters, q),
+            Call("LocallyComplete", parameters, q),
             Call(
-                "Closed",
-                Restrict(q, objectDomain),
-                Restrict(target, objectDomain)));
+                "ApproximatelyClosed",
+                Restrict(q, Call("objectDomain", parameters)),
+                Restrict(Call("target", parameters), Call("objectDomain", parameters)),
+                Call("precision", parameters)));
 
-        Formula adjacentParameterChange = Or(
+        Formula domainAlwaysChanges = EveryStage(
+            stage,
             NotEqual(
                 ParameterAt(parameters, stage, "objectDomain"),
-                ParameterAt(parameters, Next(stage), "objectDomain")),
-            Or(
-                NotEqual(
-                    ParameterAt(parameters, stage, "target"),
-                    ParameterAt(parameters, Next(stage), "target")),
-                Or(
-                    NotEqual(
-                        ParameterAt(parameters, stage, "operationFamily"),
-                        ParameterAt(parameters, Next(stage), "operationFamily")),
-                    NotEqual(
-                        ParameterAt(parameters, stage, "precision"),
-                        ParameterAt(parameters, Next(stage), "precision")))));
+                ParameterAt(parameters, Next(stage), "objectDomain")));
+        Formula targetAlwaysChanges = EveryStage(
+            stage,
+            NotEqual(
+                ParameterAt(parameters, stage, "target"),
+                ParameterAt(parameters, Next(stage), "target")));
+        Formula precisionAlwaysChanges = EveryStage(
+            stage,
+            NotEqual(
+                ParameterAt(parameters, stage, "precision"),
+                ParameterAt(parameters, Next(stage), "precision")));
+        Formula operationsAlwaysChange = EveryStage(
+            stage,
+            NotEqual(
+                ParameterAt(parameters, stage, "operationFamily"),
+                ParameterAt(parameters, Next(stage), "operationFamily")));
         Formula clause7 = IffFormula(
             Call("OpenWorldSequence", parameters),
-            EveryStage(stage, adjacentParameterChange));
+            Or(
+                domainAlwaysChanges,
+                Or(
+                    targetAlwaysChanges,
+                    Or(precisionAlwaysChanges, operationsAlwaysChange))));
 
         Formula reopeningChange = Or(
             NotEqual(Call("objectDomain", current), Call("objectDomain", next)),
@@ -200,13 +191,14 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
                             Call("operationFamily", current),
                             Call("operationFamily", next)),
                         NotEqual(currentLanguage, nextLanguage)))));
+        Formula currentDomain = Call("objectDomain", current);
         Formula nextDomain = Call("objectDomain", next);
-        Formula reopeningDefect = Nonempty(Defect(
-            Restrict(q, nextDomain),
-            Restrict(Call("target", next), nextDomain)));
+        Formula oldDefects = DomainDefect(q, Call("target", current), currentDomain);
+        Formula newDefects = DomainDefect(q, Call("target", next), nextDomain);
+        Formula newResidual = Nonempty(SetDifference(newDefects, oldDefects));
         Formula clause8 = IffFormula(
             Call("Reopens", current, next, currentLanguage, nextLanguage, q),
-            And(reopeningChange, reopeningDefect));
+            And(reopeningChange, newResidual));
 
         Formula stageDomainNonempty = EveryStage(
             stage,
@@ -226,12 +218,12 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
                     At(languages, Next(stage)),
                     At(systems, stage))));
         Formula witnessBody = And(
-            Nonempty(F.Id("Bool")),
+            stageDomainNonempty,
             And(
-                stageDomainNonempty,
+                Call("OpenWorldSequence", parameters),
                 And(
-                    Call("OpenWorldSequence", parameters),
-                    And(everyStageComplete, frequentReopening))));
+                    everyStageComplete,
+                    frequentReopening)));
         Formula clause9 = new Formula.BindMany(
             FormulaQuantifier.Exists,
             [
@@ -239,8 +231,8 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
                     FormulaIdentifier.Create("P"),
                     new Formula.TypeArrow(
                         F.Id("Nat"),
-                        Call("LocalParameters", F.Id("Nat"), F.Id("Bool"),
-                            F.Id("Unit"), F.Id("Nat")))),
+                        Call("LocalParameters", F.Id("Nat"), F.Id("Real"),
+                            F.Id("Unit")))),
                 new(
                     FormulaIdentifier.Create("D"),
                     new Formula.TypeArrow(
@@ -250,7 +242,7 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
                     FormulaIdentifier.Create("Q"),
                     new Formula.TypeArrow(
                         F.Id("Nat"),
-                        Call("Concept", F.Id("Nat"), F.Id("Bool")))),
+                        Call("Concept", F.Id("Nat"), F.Id("Real")))),
             ],
             witnessBody);
 
@@ -258,7 +250,6 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
             Conjunct(clause1),
             Conjunct(clause2),
             Conjunct(clause3),
-            Conjunct(clause4),
             Conjunct(clause5),
             Conjunct(clause6),
             Conjunct(clause7),
