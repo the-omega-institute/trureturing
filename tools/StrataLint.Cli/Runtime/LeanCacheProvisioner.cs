@@ -57,8 +57,7 @@ internal static class LeanCacheProvisioner
     /// 就按最保守值走」的兜底:取 clamp 上界,因为「数不出来」多半意味着树不完整,
     /// 此时误杀一个正常构建的代价高于多等一会儿。
     /// </summary>
-    internal const int FallbackProvisionBudgetSeconds = MaxProvisionBudgetSeconds;
-    internal const int MinProvisionBudgetSeconds = 300;
+    internal const int MinProvisionBudgetSeconds = LeanCacheBudgetPolicy.MinimumConfigurableBudgetSeconds;
 
     /// <summary>
     /// clamp 上界。派生式在仓库约 2225 个内容层模块时算到此值
@@ -66,7 +65,7 @@ internal static class LeanCacheProvisioner
     /// 要么承认单次构建不该由本预算兜底而交给 #2814 的 fail-closed 门。
     /// 现读 1651 模块 ⟹ 派生 7429,已略过此界,故当前实际取值即为本上界。
     /// </summary>
-    internal const int MaxProvisionBudgetSeconds = 7200;
+    internal const int MaxProvisionBudgetSeconds = LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds;
     private const int MissingOleanSampleLimit = 5;
     private static readonly TimeSpan[] CloneRetryBackoffs =
         [TimeSpan.FromMilliseconds(250), TimeSpan.FromMilliseconds(500),
@@ -82,13 +81,12 @@ internal static class LeanCacheProvisioner
     /// 按某棵工作树的内容层规模派生预算。**没有无参版本**:预算依赖那棵树有多少模块,
     /// 一个静态属性只能去猜仓库根,而猜出来的工作量会算出看似派生实则无源的值。
     /// </summary>
-    internal static TimeSpan ProvisionBudgetForTree(string worktreeRoot)
-        => ProvisionBudgetFor(CountContentModules(worktreeRoot));
+    internal static TimeSpan ProvisionBudgetForTree() => ProvisionBudgetFor();
 
     /// <summary>
     /// 按内容层规模派生本次预算。环境旋钮仍优先,且仍受同一 clamp。
     /// </summary>
-    internal static TimeSpan ProvisionBudgetFor(int contentModules)
+    internal static TimeSpan ProvisionBudgetFor()
     {
         var raw = Environment.GetEnvironmentVariable("STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS");
         if (int.TryParse(raw, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out var seconds))
@@ -97,34 +95,7 @@ internal static class LeanCacheProvisioner
                 Math.Clamp(seconds, MinProvisionBudgetSeconds, MaxProvisionBudgetSeconds));
         }
 
-        if (contentModules <= 0)
-        {
-            return TimeSpan.FromSeconds(FallbackProvisionBudgetSeconds);
-        }
-
-        return TimeSpan.FromSeconds(Math.Clamp(
-            LeanCacheBudgetPolicy.ProvisionBudgetSecondsFor(contentModules),
-            MinProvisionBudgetSeconds,
-            MaxProvisionBudgetSeconds));
-    }
-
-    /// <summary>
-    /// 有界工作量项:内容层的 Lean 模块数,从仓库现数。数不出来返回 0,由调用方走回退,
-    /// **绝不返回一个猜测值** —— 猜出来的工作量会算出一个看似派生实则无源的预算。
-    /// </summary>
-    internal static int CountContentModules(string worktreeRoot)
-    {
-        try
-        {
-            var d5 = Path.Combine(worktreeRoot, "D5");
-            return Directory.Exists(d5)
-                ? Directory.EnumerateFiles(d5, "*.lean", SearchOption.AllDirectories).Count()
-                : 0;
-        }
-        catch (Exception)
-        {
-            return 0;
-        }
+        return TimeSpan.FromSeconds(MaxProvisionBudgetSeconds);
     }
 
     // 以下三个名字**同值**,但继承是显式且带依据的 —— 这正是 #2535 所指「宽域」的收口:
@@ -144,8 +115,7 @@ internal static class LeanCacheProvisioner
     /// `S0/Tower` 全族 **6305s**(ubuntu-24.04-arm 跨机复测,run 32493250519)。
     /// 分类与退出条件见 <see cref="LeanCacheBudgetPolicy"/> 的 policy-override 声明(案号 #2535)。
     /// </summary>
-    internal static TimeSpan LeanCommandBudgetFor(string worktreeRoot)
-        => ProvisionBudgetForTree(worktreeRoot);
+    internal static TimeSpan LeanCommandBudget => ProvisionBudgetForTree();
 
     /// <summary>
     /// `cp -R` 目录复制,即 clonefile 失败时的回退路径。**继承 <see cref="LeanCommandBudget"/>,
@@ -153,16 +123,14 @@ internal static class LeanCacheProvisioner
     /// 违第 20″ 条。若日后收据中出现非 null 的 `clonefile_errno`,该继承即失去依据,
     /// 须按「量腹而食」三型之一为其单独收口并带新案号。
     /// </summary>
-    internal static TimeSpan DirectoryCopyBudgetFor(string worktreeRoot)
-        => LeanCommandBudgetFor(worktreeRoot);
+    internal static TimeSpan DirectoryCopyBudget => LeanCommandBudget;
 
     /// <summary>
     /// `lake exe cache get`,依赖层公共供给。**继承 <see cref="LeanCommandBudget"/>,不是独立取值**:
     /// 实测走到 3 次,耗时离该预算差两个数量级(ensure 端到端 13 秒),故它从不是该值的约束方。
     /// 若某次该命令的耗时进入同一量级,该继承即失去依据,须单独收口并带新案号。
     /// </summary>
-    internal static TimeSpan DependencyFetchBudgetFor(string worktreeRoot)
-        => LeanCommandBudgetFor(worktreeRoot);
+    internal static TimeSpan DependencyFetchBudget => LeanCommandBudget;
 
     internal static LeanCacheProvisionResult Provision(
         LeanCacheDonorSelection selection,
@@ -404,7 +372,7 @@ internal static class LeanCacheProvisioner
                 "cp",
                 ["-R", source, staged],
                 worktreeRoot,
-                DirectoryCopyBudgetFor(worktreeRoot));
+                DirectoryCopyBudget);
         }
         catch (Exception exception)
         {
@@ -595,7 +563,7 @@ internal static class LeanCacheProvisioner
                     lakeExecutable,
                     ["exe", "cache", "get"],
                     worktreeRoot,
-                    DependencyFetchBudgetFor(worktreeRoot));
+                    DependencyFetchBudget);
             }
             catch (Exception exception)
             {

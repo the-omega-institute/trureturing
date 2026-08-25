@@ -375,6 +375,15 @@ internal static class BackfillInventoryRule
         try
         {
             var baselineDocument = LoadBaselineDocument(context.Baseline);
+            foreach (var finding in DigestionFormalizationPrecommitmentValidator.ValidateNewEdges(
+                         baselineDocument,
+                         document,
+                         context.Baseline,
+                         context.Lean.Report))
+            {
+                findings.Add(new RuleFinding(BackfillPath, finding, AdmissionEffect.Block));
+            }
+
             var evaluation = DigestionStatusEvaluator.Evaluate(
                 context.Changes is null
                     ? DigestionEvaluationScope.FullScan
@@ -393,43 +402,10 @@ internal static class BackfillInventoryRule
                 findings.Add(new RuleFinding(BackfillPath, finding));
             }
 
-            var receiptIntegrityGaps = evaluation.ReceiptIntegrityGaps.ToArray();
-            // A rule implementation change forces FullScan, which republishes stored gaps.
-            // As with the directory-capacity band, baseline membership makes those findings
-            // observable while reserving admission failure for identities absent at the base.
-            var baselineComparableReceiptIntegrityGaps = receiptIntegrityGaps.Length == 0
-                ? new HashSet<ReceiptIntegrityGapIdentity>()
-                : BaselineComparableReceiptIntegrityGaps(baselineDocument, context.Baseline);
-            foreach (var (entry, gap) in receiptIntegrityGaps)
-            {
-                var identity = GapIdentity(entry, gap);
-                if (BaselineComparableReceiptIntegrityCodes.Contains(
-                        gap.Code,
-                        StringComparer.Ordinal))
-                {
-                    if (baselineComparableReceiptIntegrityGaps.Contains(identity))
-                    {
-                        findings.Add(new RuleFinding(
-                            BackfillPath,
-                            $"{identity.AtomId}:{gap.Code}:{identity.Detail}",
-                            AdmissionEffect.Observe));
-                    }
-                    else
-                    {
-                        findings.Add(new RuleFinding(
-                            BackfillPath,
-                            $"{identity.AtomId}:{gap.Code}:{identity.Detail}",
-                            AdmissionEffect.Block));
-                    }
-
-                    continue;
-                }
-
-                findings.Add(new RuleFinding(
-                    BackfillPath,
-                    $"{identity.AtomId}:{gap.Code}:{identity.Detail}",
-                    AdmissionEffect.Block));
-            }
+            findings.AddRange(ClassifyReceiptIntegrityGaps(
+                evaluation,
+                baselineDocument,
+                context.Baseline));
 
             // 观察项不阻断准入。理论卷入库后尚未消化是账本四态里的 `open`,
             // 由本地 `make ingest` 闭合;它不该挡住一个只改 markdown 的 PR。
@@ -442,6 +418,38 @@ internal static class BackfillInventoryRule
         {
             findings.Add(new RuleFinding(BackfillPath, exception.Message));
         }
+    }
+
+    internal static ImmutableArray<RuleFinding> ClassifyReceiptIntegrityGaps(
+        DigestionLedgerEvaluation evaluation,
+        BackfillInventoryDocument baselineDocument,
+        RepositorySnapshot baselineSnapshot)
+    {
+        ArgumentNullException.ThrowIfNull(evaluation);
+        ArgumentNullException.ThrowIfNull(baselineDocument);
+        ArgumentNullException.ThrowIfNull(baselineSnapshot);
+        var receiptIntegrityGaps = evaluation.ReceiptIntegrityGaps.ToArray();
+        // A rule implementation change forces FullScan, which republishes stored gaps.
+        // Baseline membership keeps stored gaps observable while newly introduced
+        // receipt drift remains blocking. Commands use this same classifier for their
+        // write gates so fork-point identity has one source of truth.
+        var baselineComparableReceiptIntegrityGaps = receiptIntegrityGaps.Length == 0
+            ? new HashSet<ReceiptIntegrityGapIdentity>()
+            : BaselineComparableReceiptIntegrityGaps(baselineDocument, baselineSnapshot);
+        return receiptIntegrityGaps.Select(item =>
+        {
+            var identity = GapIdentity(item.Entry, item.Gap);
+            var effect = BaselineComparableReceiptIntegrityCodes.Contains(
+                    item.Gap.Code,
+                    StringComparer.Ordinal)
+                && baselineComparableReceiptIntegrityGaps.Contains(identity)
+                    ? AdmissionEffect.Observe
+                    : AdmissionEffect.Block;
+            return new RuleFinding(
+                BackfillPath,
+                $"{identity.AtomId}:{item.Gap.Code}:{identity.Detail}",
+                effect);
+        }).ToImmutableArray();
     }
 
     private static ReceiptIntegrityGapIdentity GapIdentity(

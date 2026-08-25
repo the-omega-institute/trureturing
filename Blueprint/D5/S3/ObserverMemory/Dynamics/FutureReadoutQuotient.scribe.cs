@@ -64,6 +64,7 @@ internal sealed class FutureReadoutQuotientDocument : IScribeDocumentDefinition
 
     private static Formula QuotientFormula()
     {
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
         Formula scalar = F.Id("K");
         Formula state = F.Id("V");
         Formula output = F.Id("Y");
@@ -86,41 +87,62 @@ internal sealed class FutureReadoutQuotientDocument : IScribeDocumentDefinition
         Formula descendedAtIndex = new Formula.Subscript(descendedReadout, index);
         Formula preservesFuture = Seq(
             Exists, Sp,
-            Typed(descendedReadout, Arrow(F.Id("Nat"), Call("LinearMap", quotient, output))),
+            Typed(descendedReadout,
+                Arrow(F.Id("Nat"), Call("LinearMap", scalar, quotient, output))),
             Comma, RowBreak, Grp(),
-            Forall, Sp, index, Comma, Sp, x, Comma, Sp,
+            Forall, Sp, Typed(index, F.Id("Nat")), Comma, Sp,
+            Typed(x, state), Comma, Sp,
             Apply(descendedAtIndex, Apply(projection, x)), Sp, Eq, Sp, futureAtX);
 
         Formula summary = F.Id("q");
         Formula factor = F.Id("Phi");
         Formula determinesFuture = Seq(
-            Forall, Sp, x, Comma, Sp, y, Comma, Sp,
+            Forall, Sp, Typed(x, state), Comma, Sp, Typed(y, state), Comma, Sp,
             Apply(summary, x), Sp, Eq, Sp, Apply(summary, y), Sp, Rightarrow,
             RowBreak, Grp(),
-            Forall, Sp, index, Comma, Sp, futureAtX, Sp, Eq, Sp, futureAtY);
+            Forall, Sp, Typed(index, F.Id("Nat")), Comma, Sp,
+            futureAtX, Sp, Eq, Sp, futureAtY);
         Formula coarsest = Seq(
-            Forall, Sp, quotientType, Comma, Sp,
-            Typed(summary, Call("LinearMap", state, quotientType)), Comma,
+            Forall, Sp, Typed(quotientType, type), Comma, RowBreak, Grp(),
+            Open, Call("AddCommGroup", quotientType), Sp, Land, Sp,
+            Call("Module", scalar, quotientType), Close, Sp, Rightarrow,
+            RowBreak, Grp(),
+            Forall, Sp,
+            Typed(summary, Call("LinearMap", scalar, state, quotientType)), Comma,
             RowBreak, Grp(), Open, determinesFuture, Close, Sp, Rightarrow,
             RowBreak, Grp(),
             Exists, Bang, Sp,
-            Typed(factor, Call("LinearMap", Call("range", summary), quotient)),
+            Typed(factor,
+                Call("LinearMap", scalar, Call("range", summary), quotient)),
             Comma, Sp, projection, Sp, Eq, Sp, factor, Sp, Circ, Sp,
             Call("rangeRestrict", summary));
 
         Formula induced = F.Id("Tbar");
         Formula uniqueDynamics = Seq(
             Exists, Bang, Sp,
-            Typed(induced, Call("LinearMap", quotient, quotient)), Comma,
+            Typed(induced, Call("LinearMap", scalar, quotient, quotient)), Comma,
             RowBreak, Grp(),
-            Forall, Sp, x, Comma, Sp,
+            Forall, Sp, Typed(x, state), Comma, Sp,
             Apply(induced, Apply(projection, x)), Sp, Eq, Sp,
             Apply(projection, Apply(evolution, x)));
 
+        Formula carrierStructures = Seq(
+            Call("RCLike", scalar), Sp, Land, Sp,
+            Call("NormedAddCommGroup", state), Sp, Land, Sp,
+            Call("InnerProductSpace", scalar, state), Sp, Land, Sp,
+            Call("FiniteDimensional", scalar, state), Sp, Land,
+            RowBreak, Grp(),
+            Call("NormedAddCommGroup", output), Sp, Land, Sp,
+            Call("InnerProductSpace", scalar, output), Sp, Land, Sp,
+            Call("FiniteDimensional", scalar, output));
+
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, scalar, Comma, Sp, state, Comma, Sp, output, Comma, Sp,
-            evolution, Comma, Sp, readout, Comma,
+            Forall, Sp, Typed(scalar, type), Comma, Sp, Typed(state, type), Comma, Sp,
+            Typed(output, type), Comma, RowBreak, Grp(),
+            Typed(evolution, Call("LinearMap", scalar, state, state)), Comma, Sp,
+            Typed(readout, Call("LinearMap", scalar, state, output)), Comma,
+            RowBreak, Grp(), Open, carrierStructures, Close, Sp, Rightarrow,
             RowBreak, Grp(), hidden, Sp, Colon, Eq, Sp, construction, Semi,
             RowBreak, Grp(), Open, preservesFuture, Close, Sp, Land,
             RowBreak, Grp(), Open, coarsest, Close, Sp, Land,

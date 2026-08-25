@@ -224,3 +224,13 @@ def goldenUnitsPrincipalIdealDelivery : Unit := ()
     出自 orchestrator 的 GoalArtifact 措辞,已记于该单。
     关闭条件:若判定仍需物理去重,先在一个低风险单节点上验证 `ledger-revoke` 通道,再处置这 8 个;
     不得以这 8 个作首航。 -/
+
+/- TASK D5-T0049
+   Source clause 6 remains open. CAS section 4.4 defines
+   `F(S) = M(∅) - M(S)` and also identifies `F` with captured mass. Those two
+   assertions are incompatible with unrestricted infinite values: in the CAS
+   relation model, both the remaining relation and captured cut can be infinite,
+   giving `⊤ - ⊤ = 0` while the captured count is `⊤`. A positive theorem must
+   either impose finite remaining mass or revise the source definition.
+   See `D5.S3.ConceptDynamics.DefinitionCapture.MeasureCapture.infinite_counting_cas_bridge_fails`;
+   delivery branch `harness/dect-f5-w1`, PR #3160. -/

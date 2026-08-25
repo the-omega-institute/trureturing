@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/DefinitionEscape/MinimalTargetDistillation
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DefinitionEscape/MinimalTargetDistillation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Exact target distillation removes defects without over-separation. -/

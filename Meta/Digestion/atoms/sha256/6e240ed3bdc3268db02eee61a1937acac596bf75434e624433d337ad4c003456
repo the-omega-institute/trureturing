@@ -1,0 +1,5 @@
+## v1.0 — 2026-08-25
+
+当前唯一版本存入：有限 charge 共同语义、T1 预算包络、T2 真 iff、T3 紧致完备化、T4 两个完整边界 charge、采用母卷盲核定义且受链连续前件约束的 T5、固定截止的本地 `SpectrumCommitment`、已合并案号排除账与非穷尽检索收据。此前草稿字节与修复过程只由 git 保存。
+
+2026-08-24 联网检索：GitHub code 全局精确查 `"Definition-Escape Spectrum Completion"` 与 `"blind residual" "escape spectrum"`，均 0 命中；Crossref `/works` 查 `definition escape spectrum`，前五命中均词面无关；OpenAlex `/works` 查 `blind kernel budget residual measure`、`finitely additive measure continuity from above ultrafilter`、`compactness finite subcover residual set cover`，只命中一般/旁支材料（有限可加概率旁支含 DOI `10.1007/BF00531529`），未命中 T1–T5 的直接同题组合。该非穷尽检索不足以证明新颖性，故本卷状态为“已作上述检索，**不作新颖性声明**”；Szpilrajn 型延伸未被 T1–T5 消费，撤销其借用项。

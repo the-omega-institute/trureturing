@@ -229,30 +229,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
     }
 
     [Fact]
-    public void DepositRejectsAnUnboundButCanonicalHostPrimaryBeforeAppendingSecondaryFreeze()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.ChangeFormalization();
-        var primaryDeposit = fixture.Run("deposit");
-        Assert.True(primaryDeposit.ExitCode == 0, Diagnostics(primaryDeposit));
-        var primaryCover = fixture.Run("cover");
-        Assert.True(primaryCover.ExitCode == 0, Diagnostics(primaryCover));
-        fixture.WriteHostReceipt(primaryGid: "D5/S0/Carrier/Probe.unbound");
-        fixture.AddSecondaryFormalization();
-
-        var secondary = fixture.Run("deposit", TransactionFixture.SecondaryGid);
-
-        Assert.NotEqual(0, secondary.ExitCode);
-        Assert.Contains(
-            "is not already bound",
-            Encoding.UTF8.GetString(secondary.StandardError),
-            StringComparison.Ordinal);
-        Assert.Equal(1, fixture.FreezeCount(TransactionFixture.LeanPath));
-        Assert.Equal(0, fixture.FreezeCount(TransactionFixture.SecondaryLeanPath));
-    }
-
-    [Fact]
     public void DepositFreezesASecondModuleUnderTheExistingAtomReceiptHost()
     {
         if (OperatingSystem.IsWindows()) return;
@@ -262,10 +238,18 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.True(primary.ExitCode == 0, Diagnostics(primary));
         var receipt = File.ReadAllBytes(fixture.ReceiptPath);
         fixture.AddSecondaryFormalization();
+        fixture.ClearCalls();
 
         var secondary = fixture.Run("deposit", TransactionFixture.SecondaryGid);
 
         Assert.True(secondary.ExitCode == 0, Diagnostics(secondary));
+        Assert.Contains(fixture.Calls(), call => call.StartsWith(
+            "dotnet:emit-formalization-receipt"
+                + $" --atom-id {TransactionFixture.AtomId}"
+                + $" --gid {TransactionFixture.SecondaryGid}",
+            StringComparison.Ordinal));
+        Assert.DoesNotContain(fixture.Calls(), call =>
+            call.Contains("--require-existing-coverage", StringComparison.Ordinal));
         Assert.Equal(1, fixture.FreezeCount(TransactionFixture.LeanPath));
         Assert.Equal(1, fixture.FreezeCount(TransactionFixture.SecondaryLeanPath));
         Assert.NotEqual(receipt, File.ReadAllBytes(fixture.ReceiptPath));
@@ -331,7 +315,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.True(cover.ExitCode == 0, Diagnostics(cover));
         Assert.Contains(
             "dotnet:cover-atom --cover-atom atom-1"
-                + $" --gid {TransactionFixture.Gid}"
                 + $" --gid {TransactionFixture.SecondaryGid}"
                 + " --base synthetic-base"
                 + $" --envelope {TransactionFixture.ReceiptRelativePath}",
@@ -363,6 +346,26 @@ public sealed partial class DepositCoverWorkflowScriptTests
             fixture.CallKinds());
         Assert.Contains("aligned: covered", fixture.BackfillContents(), StringComparison.Ordinal);
         Assert.Equal("emission: open\n", fixture.EmissionContents());
+        Assert.Empty(fixture.Status());
+    }
+
+    [Fact]
+    public void FailedCoverCommitsDispositionBeforeReturningFailure()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        var before = fixture.CommitCount();
+
+        var result = fixture.Run("cover", coverDispositionFailure: true);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Contains(
+            "COVER_INVALID synthetic disposition",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
+        Assert.Equal(before + 1, fixture.CommitCount());
+        Assert.Contains("cover_disposition:", fixture.BackfillContents(), StringComparison.Ordinal);
+        Assert.Equal(["make:lean-report", "dotnet:cover-atom"], fixture.CallKinds());
         Assert.Empty(fixture.Status());
     }
 
@@ -615,6 +618,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             string gid = Gid,
             bool staleReport = false,
             bool invalidReceipt = false,
+            bool coverDispositionFailure = false,
             string? mutateReceiptAfterPrepare = null,
             TimeSpan? timeout = null,
             string? baseRevision = null) =>
@@ -625,6 +629,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     $"PLAYBOOK_TEST_CALLS={callsPath}",
                     $"PLAYBOOK_STALE_REPORT={(staleReport ? "1" : "0")}",
                     $"PLAYBOOK_INVALID_RECEIPT={(invalidReceipt ? "1" : "0")}",
+                    $"PLAYBOOK_COVER_DISPOSITION_FAILURE={(coverDispositionFailure ? "1" : "0")}",
                     $"PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE={mutateReceiptAfterPrepare ?? string.Empty}",
                     $"PLAYBOOK_TARGET_MODULE={(gid == SecondaryGid ? SecondaryLeanPath : gid == NewGid ? NewLeanPath : LeanPath)}",
                     "/bin/bash",

@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Engine;
 
@@ -21,11 +22,34 @@ public sealed partial class ShowAtomTests
         Assert.Contains("FORMALIZATION_POINTERS\n", output, StringComparison.Ordinal);
         Assert.Contains(
             $"SELF_FORMALIZATION_POINTER status=available primary_gid={PrimaryGid(SelfAtomId)} "
+                + $"gids={PrimaryGid(SelfAtomId)} "
                 + $"receipt_path={ReceiptPath(SelfAtomId)}",
             output,
             StringComparison.Ordinal);
         Assert.DoesNotContain("current", output, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("PARENT_FORMALIZATIONS status=no-parent\n", output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ShowAtomIncludesEveryOrderedGidFromTheBoundReceipt()
+    {
+        var secondaryGid = SecondaryGid(SelfAtomId);
+        var output = RunFormalizationPointers(
+            SelfAtomId,
+            receipts => receipts.Files[SelfAtomId] = ReceiptFile(
+                receipts.Entries[SelfAtomId],
+                hostedExtensions:
+                [
+                    new DigestionFormalizationExtension(
+                        secondaryGid,
+                        new DigestionFormalizationSignature("secondary", "theorem", "True")),
+                ]));
+
+        Assert.Contains(
+            $"primary_gid={PrimaryGid(SelfAtomId)} "
+                + $"gids={PrimaryGid(SelfAtomId)},{secondaryGid} ",
+            output,
+            StringComparison.Ordinal);
     }
 
     [Fact]
@@ -163,7 +187,9 @@ public sealed partial class ShowAtomTests
 
         Assert.Contains(
             $"PARENT_FORMALIZATION_POINTER parent_atom_id={DirectParentId} status=available "
-                + $"primary_gid={PrimaryGid(DirectParentId)} receipt_path={ReceiptPath(DirectParentId)}",
+                + $"primary_gid={PrimaryGid(DirectParentId)} "
+                + $"gids={PrimaryGid(DirectParentId)} "
+                + $"receipt_path={ReceiptPath(DirectParentId)}",
             output,
             StringComparison.Ordinal);
     }
@@ -373,17 +399,23 @@ public sealed partial class ShowAtomTests
         DigestionLedgerEntry entry,
         string? atomId = null,
         string? casRef = null,
-        string? rawSha256 = null) => new(
+        string? rawSha256 = null,
+        ImmutableArray<DigestionFormalizationExtension> hostedExtensions = default) => new(
             ReceiptPath(entry.AtomId),
             DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
                 atomId ?? entry.AtomId,
                 PrimaryGid(entry.AtomId),
                 new DigestionFormalizationSignature("Synthetic.receipt", "theorem", "True"),
                 casRef ?? entry.CasRef,
-                rawSha256 ?? entry.Fingerprints.RawSha256)));
+                rawSha256 ?? entry.Fingerprints.RawSha256,
+                hostedExtensions)));
 
     private static string PrimaryGid(string atomId) =>
         "D5/S0/Synthetic/Receipt."
+        + atomId.Replace("-", "_", StringComparison.Ordinal);
+
+    private static string SecondaryGid(string atomId) =>
+        "D5/S0/Synthetic/Receipt.secondary_"
         + atomId.Replace("-", "_", StringComparison.Ordinal);
 
     private static string ReceiptPath(string atomId) =>

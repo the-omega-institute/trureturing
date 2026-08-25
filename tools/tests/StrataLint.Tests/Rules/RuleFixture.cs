@@ -319,7 +319,10 @@ internal sealed partial class RuleFixture
     internal RuleEvaluationContext Build(
         ValidatedPolicy? suppliedPolicy = null,
         VerifiedScribeEmissions? verifiedScribeEmissions = null) =>
-        Build(RawChangeSet.Create(Changes), suppliedPolicy, verifiedScribeEmissions);
+        Build(
+            RawChangeSet.Create(Changes),
+            suppliedPolicy,
+            verifiedScribeEmissions);
 
     internal RuleEvaluationContext Build(
         RawChangeSet changes,
