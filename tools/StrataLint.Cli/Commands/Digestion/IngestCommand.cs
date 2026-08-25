@@ -70,7 +70,7 @@ internal static partial class IngestCommand
                 validateProjectedStatus: false,
                 baselineSnapshot: baseline,
                 changes: plannedChanges);
-            RequireNoNewFailures(derived, baselineDocument, baseline);
+            RequireNoReceiptIntegrityFailure(derived);
 
             var statusByAtomId = derived.Entries.ToDictionary(
                 static item => item.Entry.AtomId,
@@ -111,7 +111,7 @@ internal static partial class IngestCommand
                 baselineDocument,
                 baselineSnapshot: baseline,
                 changes: finalChanges);
-            RequireNoNewFailures(evaluation, baselineDocument, baseline);
+            RequireNoReceiptIntegrityFailure(evaluation);
             var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
                 finalDocument,
                 finalSnapshot,
@@ -711,27 +711,6 @@ internal static partial class IngestCommand
         }
     }
 
-    private static void RequireNoNewFailures(
-        DigestionLedgerEvaluation evaluation,
-        BackfillInventoryDocument baselineDocument,
-        RepositorySnapshot baselineSnapshot)
-    {
-        var blockingReasons = evaluation.Findings.Concat(
-            BackfillInventoryRule.ClassifyReceiptIntegrityGaps(
-                    evaluation,
-                    baselineDocument,
-                    baselineSnapshot)
-                .Where(static finding => finding.Effect is AdmissionEffect.Block)
-                .Select(static finding => finding.Message))
-            .ToArray();
-        if (blockingReasons.Length > 0)
-        {
-            throw new InvalidOperationException(
-                "digest status is invalid: "
-                + string.Join("; ", blockingReasons));
-        }
-    }
-
     private static ValidatedPolicy LoadPolicy(RepositorySnapshot snapshot)
     {
         if (!snapshot.TryGetFile("Meta/registry.yaml", out var registry)
@@ -766,4 +745,15 @@ internal static partial class IngestCommand
             LeanValidationOutcome.InfrastructureFailure failure =>
                 throw new InvalidOperationException(failure.Message),
         };
+
+    internal static void RequireNoReceiptIntegrityFailure(
+        DigestionLedgerEvaluation evaluation)
+    {
+        if (evaluation.HasReceiptIntegrityFailure)
+        {
+            throw new InvalidOperationException(
+                "digest status is invalid: "
+                + string.Join("; ", evaluation.ReceiptIntegrityFailureReasons));
+        }
+    }
 }

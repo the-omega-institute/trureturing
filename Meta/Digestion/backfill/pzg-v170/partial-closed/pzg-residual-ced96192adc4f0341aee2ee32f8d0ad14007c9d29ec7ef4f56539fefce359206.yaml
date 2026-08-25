@@ -13,8 +13,8 @@ receipts:
       target_sha256: sha256:7b72300093e9a801e544c48fb92c4c651a5eeacd3dab9b32fd28c8da28b76a34
   scribe:
     - gid: D5/S3/Weil/CriticalLine.unitarity_line_iff
-      definition_sha256: sha256:fe2a3a38af39fb6e6498a29f28d4602422aa2c8ae0b332747d831fc4398de0e4
-      emission_sha256: sha256:ebc04544e4e36b1093d9c151fcb9b778350cd9ce5842b81b0946ab91347d4bbd
+      definition_sha256: sha256:268a66fbf2c27762c3b2f461b61e5eed199b91174f0caa6af19e27380105ca3e
+      emission_sha256: sha256:4605fafacf96674d7085bcd33068eea6c707419a45a1d0549e920818620c522e
   unresolved_subitems:
     - every-zeta-value-as-compressed-history
     - zeros-as-global-cancellation-at-frequency-and-weight

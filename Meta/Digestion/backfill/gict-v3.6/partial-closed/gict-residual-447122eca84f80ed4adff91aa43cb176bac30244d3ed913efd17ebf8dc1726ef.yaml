@@ -28,20 +28,20 @@ receipts:
       target_sha256: sha256:96070d8daaad89aeab17050aeaf70fc1cc1954c2538f0a5ce1685cc157ea01e7
   scribe:
     - gid: D5/S1/Phase/ZeroOrbitCongruence.eisenstein_norm_mod_three
-      definition_sha256: sha256:88d4929db9871e903bcddd9290bd78a9a83722976ed2f4c4a52e44deeaa288b2
-      emission_sha256: sha256:46d6166e6fc75c556c15c009119ffa2f2a5fe7c4eed83e85923e30af154956ce
+      definition_sha256: sha256:9f86dea5bfcc72ffcf380ed16a5ee6f142da9ebc4add2bdb27b41e5dddffc9ba
+      emission_sha256: sha256:182e483f093b4e87b448df546aeea0c6f4b59983f4401281624d7fa066b60173
     - gid: D5/S1/Phase/ZeroOrbitCongruence.thirty_six_dvd_of_local_candidates_and_eisenstein_norm
-      definition_sha256: sha256:88d4929db9871e903bcddd9290bd78a9a83722976ed2f4c4a52e44deeaa288b2
-      emission_sha256: sha256:46d6166e6fc75c556c15c009119ffa2f2a5fe7c4eed83e85923e30af154956ce
+      definition_sha256: sha256:9f86dea5bfcc72ffcf380ed16a5ee6f142da9ebc4add2bdb27b41e5dddffc9ba
+      emission_sha256: sha256:182e483f093b4e87b448df546aeea0c6f4b59983f4401281624d7fa066b60173
     - gid: D5/S1/Phase/SeatTowerCombinatorics.reversal_swaps_parity
-      definition_sha256: sha256:ef5a049c29ad3d1f938c015fa50f7c4d2deef0f9d56b6e5bf4940e4608d064cd
-      emission_sha256: sha256:bfd787c2c4378c22e7c8d60a1a23fbf1cd2fb3a8c47df37851a828f78ff796ef
+      definition_sha256: sha256:466422dc735d4dc550e46a2cb24f7f1cacd0880c37ff6e8bf96af19a36db1939
+      emission_sha256: sha256:9a28c917c561da19f1a7d8b046c2201da93faf93d1133789e991d3b6efa0c4c2
     - gid: D5/S1/Phase/SeatTowerCombinatorics.matching_rotation_offset_is_odd
-      definition_sha256: sha256:ef5a049c29ad3d1f938c015fa50f7c4d2deef0f9d56b6e5bf4940e4608d064cd
-      emission_sha256: sha256:bfd787c2c4378c22e7c8d60a1a23fbf1cd2fb3a8c47df37851a828f78ff796ef
+      definition_sha256: sha256:466422dc735d4dc550e46a2cb24f7f1cacd0880c37ff6e8bf96af19a36db1939
+      emission_sha256: sha256:9a28c917c561da19f1a7d8b046c2201da93faf93d1133789e991d3b6efa0c4c2
     - gid: D5/S1/Phase/SeatTowerCombinatorics.even_offset_skeleton_count
-      definition_sha256: sha256:ef5a049c29ad3d1f938c015fa50f7c4d2deef0f9d56b6e5bf4940e4608d064cd
-      emission_sha256: sha256:bfd787c2c4378c22e7c8d60a1a23fbf1cd2fb3a8c47df37851a828f78ff796ef
+      definition_sha256: sha256:466422dc735d4dc550e46a2cb24f7f1cacd0880c37ff6e8bf96af19a36db1939
+      emission_sha256: sha256:9a28c917c561da19f1a7d8b046c2201da93faf93d1133789e991d3b6efa0c4c2
   unresolved_subitems:
     - local-432-norm-congruence-residue-enumeration
     - mirror-even-word-odd-offset-rotation

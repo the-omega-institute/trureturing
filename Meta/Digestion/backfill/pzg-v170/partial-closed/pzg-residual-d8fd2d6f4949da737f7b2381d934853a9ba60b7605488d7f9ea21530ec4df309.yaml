@@ -12,8 +12,8 @@ receipts:
       target_sha256: sha256:eadb8ba77aa7d9d1648ae398d680d11c525bca2e60ec090ae38e35d7f5e738e5
   scribe:
     - gid: D5/S3/Weil/ReflectionLedger.mirror_fixed_re_eq
-      definition_sha256: sha256:2227a3b6e764a7cc4f7ac9ec4a18c4f3e7a8b41605ae2b3cf0b42ce64214e66f
-      emission_sha256: sha256:b55ff89324eabc4d1d004776405cc56133f4f335342c40bc512c7b99695d7296
+      definition_sha256: sha256:67de1be388e78bdfa74ed54c5e67f94587de944e5a0dc2edc667911f47c96d94
+      emission_sha256: sha256:3e226d946a792b8440dec47bc411ad5ff7bd1eb381645798116b8be54993092f
   unresolved_subitems:
     - quasicrystal-midline-as-structural-zero-locus
     - quasicrystal-midline-as-critical-zero-transport-line

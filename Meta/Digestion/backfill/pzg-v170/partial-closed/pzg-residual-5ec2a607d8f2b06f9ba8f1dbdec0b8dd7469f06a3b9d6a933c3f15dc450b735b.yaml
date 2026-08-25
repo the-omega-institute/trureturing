@@ -39,8 +39,8 @@ receipts:
       target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
   scribe:
     - gid: D5/S1/Phase/SeatTowerCombinatorics.full_exponent_stationing_count
-      definition_sha256: sha256:ef5a049c29ad3d1f938c015fa50f7c4d2deef0f9d56b6e5bf4940e4608d064cd
-      emission_sha256: sha256:bfd787c2c4378c22e7c8d60a1a23fbf1cd2fb3a8c47df37851a828f78ff796ef
+      definition_sha256: sha256:466422dc735d4dc550e46a2cb24f7f1cacd0880c37ff6e8bf96af19a36db1939
+      emission_sha256: sha256:9a28c917c561da19f1a7d8b046c2201da93faf93d1133789e991d3b6efa0c4c2
   unresolved_subitems:
     - jacobi-selector-identification
     - mod-48-boundary-counterexample
