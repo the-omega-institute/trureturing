@@ -7,7 +7,6 @@ public sealed class CapabilityConstructionTests
     private static readonly string[] CapabilityTypes =
     [
         "StrataLint.Engine.AcceptedLeanClosure",
-        "StrataLint.Engine.AcyclicTruthDag",
         "StrataLint.Engine.AdmissionCertificate",
         "StrataLint.Engine.AdmissionOutcome+Admitted",
         "StrataLint.Engine.AdmissionOutcome+ProtectedSurfaceChange",
@@ -15,7 +14,6 @@ public sealed class CapabilityConstructionTests
         "StrataLint.Engine.CanonicalFixedPoint",
         "StrataLint.Engine.CanonicalizationOutcome+Accepted",
         "StrataLint.Engine.CompletedRuleSet",
-        "StrataLint.Engine.DagBuildOutcome+Accepted",
         "StrataLint.Engine.FrozenLedgerConsistent",
         "StrataLint.Engine.FrozenLedgerReferenceScanOutcome+Accepted",
         "StrataLint.Engine.FrozenLedgerReferenceSet",

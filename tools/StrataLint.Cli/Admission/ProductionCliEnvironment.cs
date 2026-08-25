@@ -54,7 +54,6 @@ internal interface IFrozenLedgerAdmissionServices
         RepositorySnapshot current,
         AcceptedLeanClosure lean,
         LeanAxiomReport report,
-        AcyclicTruthDag dag,
         RawChangeSet changes,
         FrozenRevisionIdentity currentIdentity);
 }
@@ -182,10 +181,10 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 return evaluation.Outcome;
             }
 
-            if (evaluation.CurrentLean is null || evaluation.CurrentDag is null)
+            if (evaluation.CurrentLean is null)
             {
                 return new AdmissionOutcome.InfrastructureFailure(
-                    "frozen-ledger delta evaluation lacks its Lean closure or truth DAG");
+                    "frozen-ledger delta evaluation lacks its Lean closure");
             }
 
             FrozenLedgerAdmissionPreparation frozenLedgerPreparation;
@@ -220,7 +219,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 current,
                 evaluation.CurrentLean,
                 candidateLeanReport,
-                evaluation.CurrentDag,
                 prepared.Changes,
                 currentIdentity);
             if (serviceRejection is AdmissionOutcome.RuleRejected serviceRuleRejection)

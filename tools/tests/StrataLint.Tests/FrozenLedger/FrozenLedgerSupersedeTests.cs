@@ -400,15 +400,16 @@ public sealed partial class FrozenLedgerTests
     [Fact]
     public void BranchBClosureIncludesTransitiveRepositoryImports()
     {
-        var catalog = BuildCatalog(
-            Module("A", imports: ["B"]),
-            Module("B", imports: ["C"]),
-            Module("C"));
+        var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
+        {
+            [PathFor("A")] = new LeanFileReport(["D5.S0.Carrier.B"], []),
+            [PathFor("B")] = new LeanFileReport(["D5.S0.Carrier.C"], []),
+            [PathFor("C")] = new LeanFileReport([], []),
+        });
 
-        Assert.False(LeanImportClosure.RepositoryClosureIsUnchanged(
-            catalog.Dag,
-            RepoPathFor("A"),
-            RawChangeSet.Create([PathFor("C")])));
+        Assert.True(
+            LeanImportClosure.RepositoryPaths(report, RepoPathFor("A"))
+                .Overlaps(RawChangeSet.Create([PathFor("C")]).Paths));
     }
 
     [Fact]

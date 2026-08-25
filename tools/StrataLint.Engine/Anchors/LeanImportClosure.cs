@@ -14,40 +14,6 @@ internal static class LeanImportClosure
             ["Mathlib"] = "mathlib",
         }.ToImmutableDictionary(StringComparer.Ordinal);
 
-    internal static bool RepositoryClosureIsUnchanged(
-        AcyclicTruthDag dag,
-        RepoPath startPath,
-        RawChangeSet changes)
-    {
-        ArgumentNullException.ThrowIfNull(dag);
-        ArgumentNullException.ThrowIfNull(changes);
-        return !RepositoryPaths(dag, startPath).Overlaps(changes.Paths);
-    }
-
-    internal static ImmutableHashSet<RepoPath> RepositoryPaths(
-        AcyclicTruthDag dag,
-        RepoPath startPath)
-    {
-        ArgumentNullException.ThrowIfNull(dag);
-        var paths = ImmutableHashSet.CreateBuilder<RepoPath>();
-        var pending = new Stack<RepoPath>();
-        pending.Push(startPath);
-        while (pending.TryPop(out var path))
-        {
-            if (!paths.Add(path))
-            {
-                continue;
-            }
-
-            foreach (var dependency in dag.DependenciesOf(path))
-            {
-                pending.Push(dependency);
-            }
-        }
-
-        return paths.ToImmutable();
-    }
-
     internal static ImmutableHashSet<RepoPath> RepositoryPaths(
         LeanAxiomReport report,
         RepoPath startPath)

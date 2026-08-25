@@ -71,8 +71,15 @@ internal static class TheoryCandidatesCommand
                 static entry => entry.SourceRef,
                 static entry => entry.Kind,
                 StringComparer.Ordinal);
-            var classifiedFrontier = truth.Dag.Nodes
-                .Select(node => (Node: node, Classification: ClassifyFrontier(node, eligibility)))
+            var states = LeanTruthStates.Resolve(truth.Snapshot, truth.Lean);
+            var classifiedFrontier = states
+                .OrderBy(static item => item.Key.Value, StringComparer.Ordinal)
+                .Select(item =>
+                {
+                    RepositoryPathPolicy.TryResolve(item.Key, out var gid);
+                    var node = new FrontierStateNode(item.Key, gid, item.Value);
+                    return (Node: node, Classification: ClassifyFrontier(node, eligibility));
+                })
                 .Where(static item => item.Classification is not (
                     FrontierCandidateClassification.OutsideFrontier
                     or FrontierCandidateClassification.NotOpen))
@@ -159,7 +166,7 @@ internal static class TheoryCandidatesCommand
     }
 
     internal static FrontierCandidateClassification ClassifyFrontier(
-        TruthNode node,
+        FrontierStateNode node,
         IReadOnlyDictionary<string, FrontierEligibilityKind> eligibility)
     {
         ArgumentNullException.ThrowIfNull(node);
@@ -199,7 +206,7 @@ internal static class TheoryCandidatesCommand
     }
 
     private static IReadOnlyList<TheoryCandidate> FrontierCandidates(
-        TruthNode node,
+        FrontierStateNode node,
         FrontierCandidateClassification classification,
         RepositorySnapshot snapshot,
         LeanAxiomReport report)
@@ -345,6 +352,8 @@ internal static class TheoryCandidatesCommand
             "USAGE: StrataLint theory-candidates [--owner-override-file PATH]");
     }
 }
+
+internal sealed record FrontierStateNode(RepoPath RepoPath, Gid? Gid, TruthState State);
 
 internal static class TheoryCandidateProjection
 {

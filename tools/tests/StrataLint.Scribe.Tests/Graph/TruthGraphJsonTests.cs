@@ -45,7 +45,7 @@ public sealed class TruthGraphJsonTests
     [Fact]
     public void WriteIsDeterministicCanonicalUtf8AndCarriesEveryTruthFact()
     {
-        var dag = Build(
+        var dag = BuildFromFiles(
             new Dictionary<string, string>(StringComparer.Ordinal)
             {
                 ["D5/S0/Carrier/Closed.lean"] = "def closed : Nat := 0\n",
@@ -117,7 +117,7 @@ public sealed class TruthGraphJsonTests
         {
             var random = new Random(seed);
             var shuffled = modules.OrderBy(_ => random.Next()).ToArray();
-            var dag = Build(shuffled, reports);
+            var dag = BuildFromEntries(shuffled, reports);
             outputs.Add(Convert.ToBase64String(TruthGraphJsonWriter.Write(TruthGraphModelBuilder.Create(dag, Provenance)).AsSpan()));
         }
 
@@ -153,7 +153,7 @@ public sealed class TruthGraphJsonTests
             graph,
             catalog,
             new HashSet<string>(["D5/S0/Carrier/Target.lean"], StringComparer.Ordinal));
-        var model = TruthGraphModelBuilder.Create(Build(
+        var model = TruthGraphModelBuilder.Create(BuildFromFiles(
             new Dictionary<string, string> { ["D5/S0/Carrier/Target.lean"] = "theorem anchor : True := True.intro\n" },
             reportFiles), Provenance, documents);
         var reorderedDocuments = DocumentGraphExportProjection.Create(
@@ -164,7 +164,7 @@ public sealed class TruthGraphJsonTests
             DocumentGraphAssembler.Assemble([source, target], catalog),
             catalog,
             new HashSet<string>(["D5/S0/Carrier/Target.lean"], StringComparer.Ordinal));
-        var reorderedModel = TruthGraphModelBuilder.Create(Build(
+        var reorderedModel = TruthGraphModelBuilder.Create(BuildFromFiles(
             new Dictionary<string, string> { ["D5/S0/Carrier/Target.lean"] = "theorem anchor : True := True.intro\n" },
             reportFiles), Provenance, reorderedDocuments);
         Assert.True(TruthGraphJsonWriter.Write(model).AsSpan()
@@ -206,7 +206,7 @@ public sealed class TruthGraphJsonTests
             DocumentGraphAssembler.Assemble([document], catalog),
             catalog,
             new HashSet<string>(["D5/S0/Carrier/Target.lean"], StringComparer.Ordinal));
-        var model = TruthGraphModelBuilder.Create(Build(
+        var model = TruthGraphModelBuilder.Create(BuildFromFiles(
             new Dictionary<string, string> { ["D5/S0/Carrier/Target.lean"] = "theorem anchor : True := True.intro\n" },
             reportFiles), Provenance, projection);
 
@@ -297,7 +297,7 @@ public sealed class TruthGraphJsonTests
     [Fact]
     public void StrictReaderRoundTripsEveryCapabilityField()
     {
-        var dag = Build(
+        var dag = BuildFromFiles(
             new Dictionary<string, string>(StringComparer.Ordinal)
             {
                 ["D5/S0/Carrier/Delta.lean"] = "def delta : Nat := 0\n",
@@ -325,10 +325,10 @@ public sealed class TruthGraphJsonTests
     [Fact]
     public void EmptyAndSingleNodeGraphsRoundTrip()
     {
-        var empty = Build(
+        var empty = BuildFromEntries(
             [new KeyValuePair<string, string>("Meta/only.txt", "one\n")],
             new Dictionary<string, LeanFileReport>(StringComparer.Ordinal));
-        var single = Build(
+        var single = BuildFromEntries(
             [new KeyValuePair<string, string>("D5/S0/Carrier/Only.lean", "def only : Nat := 0\n")],
             new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
             {
@@ -349,12 +349,12 @@ public sealed class TruthGraphJsonTests
     public void StrictReaderRejectsMalformedOrUnknownFields(string json) =>
         Assert.Throws<FormatException>(() => TruthGraphJsonReader.Read(Encoding.UTF8.GetBytes(json)));
 
-    private static AcyclicTruthDag Build(
+    private static TruthDagProjection BuildFromEntries(
         IEnumerable<KeyValuePair<string, string>> files,
         IReadOnlyDictionary<string, LeanFileReport> reports) =>
-        Build(files.ToDictionary(static pair => pair.Key, static pair => pair.Value, StringComparer.Ordinal), reports);
+        BuildFromFiles(files.ToDictionary(static pair => pair.Key, static pair => pair.Value, StringComparer.Ordinal), reports);
 
-    private static AcyclicTruthDag Build(
+    private static TruthDagProjection BuildFromFiles(
         IReadOnlyDictionary<string, string> files,
         IReadOnlyDictionary<string, LeanFileReport> reports)
     {
@@ -362,7 +362,7 @@ public sealed class TruthGraphJsonTests
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
         var closure = Assert.IsType<LeanValidationOutcome.Accepted>(
             LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
-        return Assert.IsType<DagBuildOutcome.Accepted>(AcyclicTruthDag.Build(snapshot, closure)).Capability;
+        return TruthDagProjectionAssembler.Build(snapshot, closure);
     }
 
     private static LeanFileReport Report(params string[] imports) =>

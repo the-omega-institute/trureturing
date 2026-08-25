@@ -7,7 +7,6 @@ public sealed class EnginePublicSurfaceTests
     private static readonly string[] ExpectedPublicTypes =
     [
         "StrataLint.Engine.AcceptedLeanClosure",
-        "StrataLint.Engine.AcyclicTruthDag",
         "StrataLint.Engine.AdmissionCertificate",
         "StrataLint.Engine.AdmissionEffect",
         "StrataLint.Engine.AdmissionOutcome",
@@ -49,10 +48,6 @@ public sealed class EnginePublicSurfaceTests
         "StrataLint.Engine.CoverageMatrixRow",
         "StrataLint.Engine.CoverageMechanisms",
         "StrataLint.Engine.CoverageReport",
-        "StrataLint.Engine.DagBuildOutcome",
-        "StrataLint.Engine.DagBuildOutcome+Accepted",
-        "StrataLint.Engine.DagBuildOutcome+Rejected",
-        "StrataLint.Engine.DagBuildOutcome0MatchExtensions",
         "StrataLint.Engine.DagLedgerFileEvent",
         "StrataLint.Engine.DagLedgerFilesLoadOutcome",
         "StrataLint.Engine.DagLedgerFilesLoadOutcome+Invalid",
@@ -214,9 +209,6 @@ public sealed class EnginePublicSurfaceTests
         "StrataLint.Engine.TowerValidationOutcome0MatchExtensions",
         "StrataLint.Engine.TrustedFrozenGitReferences",
         "StrataLint.Engine.TrustedRevocationReceiptStore",
-        "StrataLint.Engine.TruthDependencyBlocker",
-        "StrataLint.Engine.TruthEdge",
-        "StrataLint.Engine.TruthNode",
         "StrataLint.Engine.TruthState",
         "StrataLint.Engine.ValidatedManifest",
         "StrataLint.Engine.ValidatedPolicy",

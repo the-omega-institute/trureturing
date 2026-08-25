@@ -10,6 +10,7 @@ public sealed partial class CleanLanesCommandTests
             CleanLanesFixture.OwnedDirectory.Repository);
         var ownedDirectories = fixture.OwnedWorkingDirectories;
         Directory.Delete(repository, recursive: true);
+        Assert.False(Directory.Exists(repository));
 
         fixture.Dispose();
 
