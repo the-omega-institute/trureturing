@@ -290,42 +290,100 @@ theorem clause9_nonvacuity_witness :
       (fun _ : Real => 2) 1 1 1 LipschitzWith.id 0 1 firstError secondError, ?_⟩
   norm_num [Real.dist_eq]
 
-/-- Every named witness is a required dependency. Deleting any one leaves this
-consumer with an unresolved reference. The first eight source-law positions
-are represented in source order; the adjacent capture witness is last and is
-not promoted to source clause 6. -/
+/-- Every named witness is consumed at its full statement. Deleting a witness,
+or weakening any conjunct in its statement, makes this consumer fail to
+elaborate. The first eight source-law positions are represented in source
+order; the adjacent capture witness is last and is not promoted to source
+clause 6. -/
 theorem directly_provable_laws_witnesses_nonvacuous :
+    ((defectRelation
+        (conceptJoin (fun _ : Bool => ()) (fun _ : Bool => false))
+        (id : Concept Bool Bool) =
+      defectRelation (fun _ : Bool => ()) (id : Concept Bool Bool) ∩
+        {pair : Bool × Bool |
+          Setoid.ker (fun _ : Bool => false) pair.1 pair.2}) ∧
     (false, true) ∈ defectRelation
       (conceptJoin (fun _ : Bool => ()) (fun _ : Bool => false))
-      (id : Concept Bool Bool) ∧
-    Function.FactorsThrough (id : Concept Bool Bool) (id : Concept Bool Bool) ∧
-    (false, true) ∈ defectRelation
-      (conceptJoin (fun _ : Bool => ()) (fun _ : Bool => false))
-      (id : Concept Bool Bool) ∧
-    (¬Refines (fun state : Empty => (state.elim : Empty))
-      (fun state : Empty => (state.elim : Unit))) ∧
-    (dependentBlindResidual
-      (fun _ : Unit => fun _ : Bool => false)
-      (fun _ : Bool => ()) (id : Concept Bool Bool)).Nonempty ∧
-    (defectRelation (fun _ : Bool => ())
-      (id : Concept Bool Bool)).Nonempty ∧
+      (id : Concept Bool Bool)) ∧
+    (defectRelation (id : Concept Bool Bool) (id : Concept Bool Bool) = ∅ ∧
+      Function.FactorsThrough (id : Concept Bool Bool)
+        (id : Concept Bool Bool)) ∧
+    (Function.FactorsThrough (fun _ : Bool => false) (fun _ : Bool => ()) ∧
+      defectRelation
+          (conceptJoin (fun _ : Bool => ()) (fun _ : Bool => false))
+          (id : Concept Bool Bool) =
+        defectRelation (fun _ : Bool => ()) (id : Concept Bool Bool) ∧
+      (false, true) ∈ defectRelation
+        (conceptJoin (fun _ : Bool => ()) (fun _ : Bool => false))
+        (id : Concept Bool Bool)) ∧
+    (let q : Concept Empty Unit := fun state => state.elim
+     let definition : Concept Empty Empty := fun state => state.elim
+     let target : Concept Empty Unit := fun state => state.elim
+     Function.FactorsThrough definition q ∧
+       ¬Refines definition q ∧
+       defectRelation (conceptJoin q definition) target =
+         defectRelation q target) ∧
+    ((dependentBlindResidual
+        (fun _ : Unit => fun _ : Bool => false)
+        (fun _ : Bool => ()) (id : Concept Bool Bool)).Nonempty ∧
+      (∀ (n : Nat) (codes : Fin n → Unit),
+        ¬∃ recover : (Unit × (Fin n → Bool)) → Bool,
+          (id : Concept Bool Bool) = recover ∘
+            dependentLanguageExtension (fun _ : Bool => ())
+              (fun i => (fun _ : Unit => fun _ : Bool => false) (codes i))) ∧
+      (∀ Delta : Set Unit,
+        ¬∃ recover : (Unit × (Delta → Bool)) → Bool,
+          (id : Concept Bool Bool) = recover ∘
+            dependentLanguageExtension (fun _ : Bool => ())
+              (fun code : Delta =>
+                (fun _ : Unit => fun _ : Bool => false) code.1)) ∧
+      ¬dependentFiniteSelectionSufficient
+        (fun _ : Unit => fun _ : Bool => false)
+        (fun _ : Bool => ()) (id : Concept Bool Bool)) ∧
+    ((defectRelation (fun _ : Bool => ())
+        (id : Concept Bool Bool)).Nonempty ∧
+      dependentBlindResidual (fun _ : Unit => (id : Concept Bool Bool))
+          (fun _ : Bool => ()) (id : Concept Bool Bool) = ∅ ∧
+      ∃ (n : Nat) (codes : Fin n → Unit),
+        defectRelation
+          (dependentLanguageExtension (fun _ : Bool => ())
+            (fun i => (fun _ : Unit => (id : Concept Bool Bool)) (codes i)))
+          (id : Concept Bool Bool) = ∅) ∧
     (let projection : Real × Real → Real := Prod.fst
      let update : Real × Real → Real × Real := fun pair => (pair.2, pair.1)
      let prepare : Real → Real × Real := fun value => (value, 0)
-     dist (projection (update (0, 1)))
-       ((projection ∘ update ∘ prepare) (projection (0, 1))) = 1) ∧
+     Function.RightInverse prepare projection ∧
+       dist (projection (update (0, 1)))
+           ((projection ∘ update ∘ prepare) (projection (0, 1))) =
+         dist (projection (update (0, 1)))
+           (projection (update ((prepare ∘ projection) (0, 1)))) ∧
+       dist (projection (update (0, 1)))
+           ((projection ∘ update ∘ prepare) (projection (0, 1))) = 1) ∧
     (let swap : Real × Real → Real × Real := fun pair => (pair.2, pair.1)
      let projection : Real × Real → Real := Prod.fst
      let evolution : Nat → Real × Real → Real × Real := fun n => swap^[n]
      let prepare : Real → Real × Real := fun value => (value, 0)
-     dist (projection (evolution (1 + 1) (prepare 1)))
-       (projection (evolution 1
-         (prepare (projection (evolution 1 (prepare 1)))))) = 1) ∧
+     Function.RightInverse prepare projection ∧
+       (∀ t s x, evolution (t + s) x = evolution t (evolution s x)) ∧
+       dist (projection (evolution (1 + 1) (prepare 1)))
+           (projection (evolution 1
+             (prepare (projection (evolution 1 (prepare 1)))))) =
+         dist (projection (evolution 1 (evolution 1 (prepare 1))))
+           (projection (evolution 1
+             ((prepare ∘ projection) (evolution 1 (prepare 1))))) ∧
+       dist (projection (evolution (1 + 1) (prepare 1)))
+           (projection (evolution 1
+             (prepare (projection (evolution 1 (prepare 1)))))) = 1) ∧
     (let first : Real → Real := id
      let second : Real → Real := id
      let direct : Real → Real := fun _ => 2
-     dist (second (first 0)) (direct 0) =
-       (1 : NNReal) * (1 : Real) + 1) ∧
+     LipschitzWith (1 : NNReal) second ∧
+       dist (first 0) 1 ≤ 1 ∧
+       dist (second 1) (direct 0) ≤ 1 ∧
+       dist (second (first 0)) (direct 0) ≤
+         (1 : NNReal) * (1 : Real) + 1 ∧
+       dist (second (first 0)) (direct 0) =
+         (1 : NNReal) * (1 : Real) + 1) ∧
     (letI : MeasurableSpace Bool := ⊤
      let nu : Measure Bool := Measure.count
      let residual : Set Bool := Set.univ
@@ -335,15 +393,15 @@ theorem directly_provable_laws_witnesses_nonvacuous :
      nu (captured ({false} ∪ {true})) +
        nu (captured ({false} ∩ {true})) <
        nu (captured {false}) + nu (captured {true})) := by
-  exact ⟨clause1_nonvacuity_witness.2,
-    clause2_nonvacuity_witness.2,
-    clause3_nonvacuity_witness.2.2,
-    clause3_fiber_constancy_not_refines_witness.2.1,
-    clause4_nonvacuity_witness.1,
-    clause5_nonvacuity_witness.1,
-    clause7_nonvacuity_witness.2.2,
-    clause8_nonvacuity_witness.2.2.2,
-    clause9_nonvacuity_witness.2.2.2.2,
+  exact ⟨clause1_nonvacuity_witness,
+    clause2_nonvacuity_witness,
+    clause3_nonvacuity_witness,
+    clause3_fiber_constancy_not_refines_witness,
+    clause4_nonvacuity_witness,
+    clause5_nonvacuity_witness,
+    clause7_nonvacuity_witness,
+    clause8_nonvacuity_witness,
+    clause9_nonvacuity_witness,
     adjacent_capture_submodularity_strict_witness⟩
 
 #print axioms directly_provable_laws_witnesses_nonvacuous

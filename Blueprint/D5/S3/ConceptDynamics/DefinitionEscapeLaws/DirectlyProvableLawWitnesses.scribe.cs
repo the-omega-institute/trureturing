@@ -30,11 +30,13 @@ internal sealed class DirectlyProvableLawWitnessesDocument : IScribeDocumentDefi
                             + "defect for clause five, nonzero prepared and semigroup defects for "
                             + "clauses seven and eight, and a tight cascade bound for clause nine.")),
                     Paragraph(Text(
-                        "Each of those eight source-law positions consumes the matching projection "
-                            + "of directly_provable_laws. The final present label is an adjacent "
-                            + "strict captured-mass submodularity example. It is consumed by the "
-                            + "package but is not source clause six and does not close TASK "
-                            + "D5-T0049.")),
+                        "The Lean package consumes the complete statement of every named witness, "
+                            + "including all premises, equalities, memberships, nonemptiness claims, "
+                            + "factorizations, obstructions, and strict or tight inequalities. The "
+                            + "displayed present labels only record the weaker fact that all ten "
+                            + "complete witnesses occur together. The final label is an adjacent "
+                            + "strict captured-mass submodularity example; it is not source clause "
+                            + "six and does not close TASK D5-T0049.")),
                     Paragraph(Text(
                         "W1, W2, W3a, W3b, W4, W5, W7, W8, W9, and Wcapture map "
                             + "respectively to clause1_nonvacuity_witness, "
@@ -47,9 +49,9 @@ internal sealed class DirectlyProvableLawWitnessesDocument : IScribeDocumentDefi
                     Paragraph(Text(
                         "There are ten names because clause three has two independent checks and "
                             + "the adjacent capture boundary is retained separately. The package "
-                            + "references every name, so deleting any witness makes the package "
-                            + "fail to elaborate instead of silently removing an anonymous "
-                            + "example."))),
+                            + "requires each full witness type, so deleting any witness or weakening "
+                            + "any conjunct in one makes the package fail to elaborate instead of "
+                            + "silently accepting a decorative example."))),
                 DescribeRole.Theorem))));
 
     private static Formula WitnessFormula() => Disp(Seq(
