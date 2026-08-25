@@ -76,7 +76,7 @@ public sealed partial class CoverAtomTests
     }
 
     [Fact]
-    public void AlignScribeReceiptIgnoresSiblingStatusDriftAndUpdatesOnlyTargetReceipt()
+    public void AlignScribeReceiptRejectsSiblingStatusDriftBeforeWritingLedger()
     {
         var spec = CoverWorld.StaleReceiptSpec() with
         {
@@ -86,13 +86,13 @@ public sealed partial class CoverAtomTests
         var currentFiles = DirectoryLedgerTestSupport.Project(inputs.Files);
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, currentFiles);
+        var before = DirectoryLedgerTestSupport.Image(BackfillInventoryLoader.LoadRoot(temporary.Path));
         var result = CoverWorld.Environment(temporary.Path, inputs, currentFiles)
             .AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
-        Assert.True(result.Success, result.Error);
-        Assert.True(inputs.VerifiedEmissions!.TryGet(
-            inputs.Gid[..inputs.Gid.LastIndexOf('.')], out var verifiedRecord));
-        Assert.Equal(
-            ExpectedAlignedScribeImage(inputs, verifiedRecord),
+        Assert.False(result.Success);
+        Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
+        Assert.Contains("drifted-sibling", result.Error, StringComparison.Ordinal);
+        Assert.Equal(before,
             DirectoryLedgerTestSupport.Image(BackfillInventoryLoader.LoadRoot(temporary.Path)));
     }
 

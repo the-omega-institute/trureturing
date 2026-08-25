@@ -673,22 +673,4 @@ public sealed partial class ReviewRegressionTests
         Assert.DoesNotContain("Tail(", workflow + gate + producer, StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void AlignScribeReceiptEvaluatesTheFinalChangedSetExactlyOnce()
-    {
-        var source = File.ReadAllText(
-            Path.Combine(
-                TestRepositoryLayout.FindRoot(),
-                "tools",
-                "StrataLint.Cli",
-                "Commands",
-                "Digestion",
-                "CoverAtomCommand.AlignScribe.cs"),
-            Encoding.UTF8);
-
-        Assert.Equal(1, Count(source, "DigestionStatusEvaluator.Evaluate("));
-        Assert.DoesNotContain("DigestionEvaluationScope.FullScan", source, StringComparison.Ordinal);
-        Assert.Contains("DigestionEvaluationScope.ChangedSet", source, StringComparison.Ordinal);
-    }
-
 }
