@@ -1,0 +1,17 @@
+ast_path: corollary/3.3.1
+fingerprints:
+  raw_sha256: sha256:51fc797a08995981cd55c93a1b87c96aa5d79bc953ab471734c59a0ed6e8fa54
+  normalized_sha256: sha256:51fc797a08995981cd55c93a1b87c96aa5d79bc953ab471734c59a0ed6e8fa54
+cas_ref: sha256:51fc797a08995981cd55c93a1b87c96aa5d79bc953ab471734c59a0ed6e8fa54
+coverage_gids:
+  - D5/S0/Naming/Conservation/NamingTowerConservation.countable_tower_anonymous_full_measure
+receipts:
+  coverage:
+    - gid: D5/S0/Naming/Conservation/NamingTowerConservation.countable_tower_anonymous_full_measure
+      source_sha256: sha256:51fc797a08995981cd55c93a1b87c96aa5d79bc953ab471734c59a0ed6e8fa54
+      target_sha256: sha256:924b053e548916cd3b4d1bb3e86bf7afcf1522898a4a564a11d88369bebf9733
+  scribe:
+    - gid: D5/S0/Naming/Conservation/NamingTowerConservation.countable_tower_anonymous_full_measure
+      definition_sha256: sha256:dc0dbef74b4926571e327eb29dc89e179ee072e46b8716abc9e575153809a565
+      emission_sha256: sha256:dd5eae67e5d888aa051eef9da0193102c4a6ee4a600864525c47525f22b2878b
+  unresolved_subitems: []

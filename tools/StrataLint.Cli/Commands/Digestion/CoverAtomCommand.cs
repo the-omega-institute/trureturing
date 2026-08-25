@@ -189,7 +189,7 @@ internal static partial class CoverAtomCommand
                 baselineDocument,
                 baselineSnapshot: baseline,
                 changes: coverChanges);
-            RequireNoReceiptIntegrityFailure(beforeEvaluation);
+            IngestCommand.RequireNoReceiptIntegrityFailure(beforeEvaluation);
 
             var addedReceipts = gids
                 .Where(gid => !existingGids.Contains(gid.Value))
@@ -229,7 +229,7 @@ internal static partial class CoverAtomCommand
                 validateProjectedStatus: false,
                 baselineSnapshot: baseline,
                 changes: coverChanges);
-            RequireNoReceiptIntegrityFailure(derived);
+            IngestCommand.RequireNoReceiptIntegrityFailure(derived);
 
             var statusByAtomId = derived.Entries.ToDictionary(
                 static item => item.Entry.AtomId,
@@ -263,7 +263,7 @@ internal static partial class CoverAtomCommand
                 baselineDocument,
                 baselineSnapshot: baseline,
                 changes: coverChanges);
-            RequireNoReceiptIntegrityFailure(evaluation);
+            IngestCommand.RequireNoReceiptIntegrityFailure(evaluation);
             var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
                 finalDocument,
                 finalSnapshot,
@@ -503,7 +503,7 @@ internal static partial class CoverAtomCommand
         string BaselineRevision,
         string EnvelopePath);
 
-    private sealed record AlignArguments(string AtomId, string Gid);
+    private sealed record AlignArguments(string AtomId, string Gid, string BaselineRevision);
 
     private static CoverArguments ParseArguments(IReadOnlyList<string> arguments)
     {
@@ -556,16 +556,6 @@ internal static partial class CoverAtomCommand
 
     private static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot) =>
         BackfillInventoryLoader.Load(snapshot);
-
-    private static void RequireNoReceiptIntegrityFailure(DigestionLedgerEvaluation evaluation)
-    {
-        if (evaluation.HasReceiptIntegrityFailure)
-        {
-            throw new InvalidOperationException(
-                "digest status is invalid: "
-                + string.Join("; ", evaluation.ReceiptIntegrityFailureReasons));
-        }
-    }
 
     private static ValidatedPolicy LoadPolicy(RepositorySnapshot snapshot)
     {
