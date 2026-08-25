@@ -361,7 +361,7 @@ public sealed class Sl016WakeupTests
     [Theory]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
-    public void NewScribeReceiptIntegrityGapIsBlockingAtSl016Admission(string mismatchCode)
+    public void NewScribeReceiptIntegrityGapIsBlockedAtSl016Admission(string mismatchCode)
     {
         var (_, evaluation) = EvaluateReceiptIntegrityGap(
             mismatchCode,
@@ -374,7 +374,7 @@ public sealed class Sl016WakeupTests
     }
 
     [Fact]
-    public void CandidateScribeVerificationCannotCreateForkPointGapIdentity()
+    public void CandidateScribeVerificationBlocksNewGapAtSl016Admission()
     {
         var (_, evaluation) = EvaluateReceiptIntegrityGap(
             mismatchCode: null,
