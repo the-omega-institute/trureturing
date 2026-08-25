@@ -63,9 +63,10 @@ import Mathlib.Probability.Process.HittingTime
      reusable named set. `adaptiveRoles` below replaces all three copies.
    * `rg -n -i 'incoming|outgoing|predecessor|ancestor|dependency closure|'\
        'reachable.*commitment|commitment.*reachable' D5 --glob '*.lean'`
-     found no existing incoming commitment closure. `Contam` and `seen` below
-     remain outgoing; only `AdjudicationSnapshot.dependencyClosure` traverses
-     from a record into a commitment root, as required by §48.3.
+     found no existing incoming commitment closure. `Contam` remains outgoing,
+     while `EvidenceFiltration.seen` is the incoming dependency closure of each
+     accessed object, exactly as §48.1 requires; `AdjudicationSnapshot.dependencyClosure`
+     separately traverses from a record into a commitment root, as required by §48.3.
    * `rg -n 'reflTransGen_swap|ReflTransGen.swap' \
        .lake/packages/mathlib/Mathlib/Logic/Relation.lean`
      found the pinned reversal lemmas; no second reversed relation is defined.
@@ -110,7 +111,7 @@ def EvidenceFiltration.seen {Object Round : Type u}
   {object | ∃ index accessed,
     index < cutoff ∧
     filtration.accessLedger.events[index]? = some (.access accessed) ∧
-    Relation.ReflTransGen filtration.dependsOn accessed object}
+    Relation.ReflTransGen filtration.dependsOn object accessed}
 
 theorem EvidenceFiltration.seen_mono {Object Round : Type u}
     (filtration : EvidenceFiltration Object Round) {i j : Nat} (hij : i ≤ j) :
@@ -695,21 +696,6 @@ private theorem direction_role_present : EvidenceRole.adjudicate ∈
   refine ⟨directionAdjudicateEvent, ?_, rfl, rfl, rfl⟩
   simp [InAdjudicationPrefix, RolePrefixAtEvent, RolePrefixAtRound,
     RolePrefixAtTime, directionLedger, directionSnapshot, directionAdjudicateEvent]
-private theorem direction_freeze_before_false : (directionSnapshot.freezeEvent : WithTop Nat) <
-    FirstSeen directionSnapshot.filtration false := by
-  rw [freeze_lt_first_seen_iff]
-  intro index before seen
-  rcases seen with ⟨accessIndex, accessed, accessBefore, atIndex, reachable⟩
-  change index ≤ 1 at before
-  have accessIndexEq : accessIndex = 0 := by omega
-  have indexEq : index = 1 := by omega
-  subst accessIndex
-  subst index
-  have accessedEq : accessed = true := by
-    simpa [directionSnapshot, directionFiltration] using atIndex.symm
-  subst accessed
-  exact Bool.noConfusion (direction_from_true_eq reachable)
-
 private theorem direction_not_outbound :
     false ∉ Contam directionFiltration.dependsOn ({true} : Set Bool) := by
   rintro ⟨root, rootMem, reachable⟩
@@ -735,8 +721,6 @@ theorem dependency_direction_witness :
         directionLedger directionSnapshot directionValidTrace false ∧
       (EvidenceRole.adjudicate ∈
           RolesAt directionLedger directionSnapshot directionValidTrace false ∧
-        (directionSnapshot.freezeEvent : WithTop Nat) <
-          FirstSeen directionSnapshot.filtration false ∧
         false ∉ Contam directionFiltration.dependsOn
           directionSnapshot.commitmentRoots ∧
         ¬ AdaptiveUseInClosure
@@ -747,7 +731,7 @@ theorem dependency_direction_witness :
   have outbound : false ∉
       Contam directionFiltration.dependsOn directionSnapshot.commitmentRoots := by
     simpa [directionSnapshot] using direction_not_outbound
-  refine ⟨?_, ?_, direction_role_present, direction_freeze_before_false,
+  refine ⟨?_, ?_, direction_role_present,
     outbound, direction_not_adaptive⟩
   · intro sameClosure
     exact outbound (sameClosure ▸ incoming)
@@ -778,8 +762,6 @@ theorem role_admission_nonvacuity :
         directionLedger directionSnapshot directionValidTrace false ∧
       (EvidenceRole.adjudicate ∈
           RolesAt directionLedger directionSnapshot directionValidTrace false ∧
-        (directionSnapshot.freezeEvent : WithTop Nat) <
-          FirstSeen directionSnapshot.filtration false ∧
         false ∉ Contam directionFiltration.dependsOn
           directionSnapshot.commitmentRoots ∧
         ¬ AdaptiveUseInClosure
