@@ -6,7 +6,7 @@ Finite prime-power quotient completeness is equivalent to nilpotence.
 
 **Theorem 1.1 (Finite prime-power quotient completeness characterizes nilpotence).**
 
-$$\operatorname{TFAE}(\operatorname{Injective}(\operatorname{primePowerQuotientObserver}(G)),\\{}\operatorname{primePowerResidual}(G) = \operatorname{trivialSubgroup}(G),\\{}\operatorname{Embeds}(G, \operatorname{FiniteProduct}(\operatorname{FinitePGroupFactors}())),\\{}\operatorname{Nilpotent}(G),\\{}G = \operatorname{SylowProduct}(G)).$$
+$$\begin{gathered}\forall G: \operatorname{Type},\\{}(\operatorname{Group}(G) \land \operatorname{Finite}(G)) \Rightarrow\\{}\operatorname{TFAE}(\operatorname{Injective}(\operatorname{primePowerQuotientObserver}(G)),\\{}\operatorname{primePowerResidual}(G) = \operatorname{trivialSubgroup}(G),\\{}\exists \iota: \operatorname{Type}, P: \iota \to \operatorname{Type}, prime: \iota \to \mathbb{N},\\{}\operatorname{Finite}(\iota) \land (\forall i: \iota, \operatorname{Group}(P(i))) \land (\forall i: \iota, \operatorname{Finite}(P(i))) \land\\{}(\forall i: \iota, \operatorname{Prime}(prime(i)) \land \operatorname{IsPGroup}(prime(i), P(i))) \land\\{}\exists embedding: \operatorname{MonoidHom}(G, \prod_{i: \iota} P(i)), \operatorname{Injective}(embedding),\\{}\operatorname{Nilpotent}(G),\\{}\operatorname{Nonempty}(\operatorname{MonoidEquiv}(\prod_{p: \operatorname{primeFactors}(\operatorname{NatCard}(G))} \prod_{S: \operatorname{Sylow}(p, G)} \operatorname{carrier}(S), G))).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Factorization/PrimePowers/FinitePrimePowerQuotientCompleteness.finite_prime_power_quotient_completeness_tfae` (`✓ std3`). ∎
 

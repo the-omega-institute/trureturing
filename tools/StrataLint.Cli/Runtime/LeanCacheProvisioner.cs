@@ -57,7 +57,7 @@ internal static class LeanCacheProvisioner
     /// 就按最保守值走」的兜底:取 clamp 上界,因为「数不出来」多半意味着树不完整,
     /// 此时误杀一个正常构建的代价高于多等一会儿。
     /// </summary>
-    internal const int MinProvisionBudgetSeconds = LeanCacheBudgetPolicy.LivenessFloorSeconds;
+    internal const int MinProvisionBudgetSeconds = LeanCacheBudgetPolicy.MinimumConfigurableBudgetSeconds;
 
     /// <summary>
     /// clamp 上界。派生式在仓库约 2225 个内容层模块时算到此值
@@ -65,7 +65,7 @@ internal static class LeanCacheProvisioner
     /// 要么承认单次构建不该由本预算兜底而交给 #2814 的 fail-closed 门。
     /// 现读 1651 模块 ⟹ 派生 7429,已略过此界,故当前实际取值即为本上界。
     /// </summary>
-    internal const int MaxProvisionBudgetSeconds = LeanCacheBudgetPolicy.LivenessCeilingSeconds;
+    internal const int MaxProvisionBudgetSeconds = LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds;
     private const int MissingOleanSampleLimit = 5;
     private static readonly TimeSpan[] CloneRetryBackoffs =
         [TimeSpan.FromMilliseconds(250), TimeSpan.FromMilliseconds(500),

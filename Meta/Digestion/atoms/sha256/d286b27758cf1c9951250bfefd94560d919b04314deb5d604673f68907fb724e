@@ -1,0 +1,31 @@
+## T1. 预算包络恒等式
+
+定义未归一化预算包络与逃逸谱
+
+\[M_\Gamma(L):=\inf_{S\in\mathscr F_L}\nu(E_S),\qquad \rho_\Gamma(L):=\frac{M_\Gamma(L)}{M_0}.\]
+
+**定理 T1（下确界包络）**。\(L\mapsto M_\Gamma(L)\) 非增且取值于 \([0,M_0]\)，并且
+
+\[
+\boxed{
+\inf_{L\ge0}M_\Gamma(L)
+=\lim_{L\to\infty}M_\Gamma(L)
+=\inf_{S\Subset\Gamma}\nu(E_S)
+}
+\]
+
+以及
+
+\[
+\boxed{
+\inf_{L\ge0}\rho_\Gamma(L)
+=\lim_{L\to\infty}\rho_\Gamma(L)
+=\frac1{M_0}\inf_{S\Subset\Gamma}\nu(E_S).
+}
+\]
+
+证明：预算增大只会扩大 \(\mathscr F_L\)，故包络非增且有下界；每个有限 \(S\) 都落入预算 \(C(S)\)，而每个预算层只含有限族候选，故两重下确界相等。第二式由 \(M_0>0\) 归一化得到。
+
+**真残差**：无限预算读数是所有有限定义族残差质量的下确界，不是任意预算点。
+**结案判据**：核验单调性、上下界与两类候选的共尾关系；没有最优值取到的前件时，不要求给出取到下确界的有限族。
+

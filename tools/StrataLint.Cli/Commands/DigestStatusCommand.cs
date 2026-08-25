@@ -42,19 +42,43 @@ internal static class DigestStatusCommand
                 var formalizeLeanReport = leanReportSource.Load(snapshot);
                 var formalizeDocument = BackfillInventoryLoader.Load(snapshot, scope, changes);
                 BackfillInventoryDocument? formalizeBaselineDocument = null;
+                RepositorySnapshot? formalizeBaselineSnapshot = null;
                 if (options.BaselineRevision is not null)
                 {
+                    formalizeBaselineSnapshot = Decode(
+                        repository.ReadRevision(options.BaselineRevision));
                     formalizeBaselineDocument = BackfillInventoryLoader.LoadBaseline(
-                        Decode(repository.ReadRevision(options.BaselineRevision)));
+                        formalizeBaselineSnapshot);
                 }
 
-                var formalizeEvaluation = DigestionStatusEvaluator.EvaluateUncovered(
-                    scope,
-                    formalizeDocument,
-                    snapshot,
-                    formalizeBaselineDocument,
-                    changes: changes);
-                if (formalizeEvaluation.Findings.Length > 0)
+                if (options.FormalizeAtomId is not null
+                    && !formalizeDocument.RequireDigestionEntries().Any(entry =>
+                        string.Equals(entry.AtomId, options.FormalizeAtomId, StringComparison.Ordinal)))
+                {
+                    throw new InvalidOperationException(
+                        $"formalize atom {options.FormalizeAtomId} is absent from the ledger");
+                }
+
+                var formalizeEvaluation = options.FormalizeAtomId is null
+                    ? DigestionStatusEvaluator.EvaluateUncovered(
+                        scope,
+                        formalizeDocument,
+                        snapshot,
+                        formalizeBaselineDocument,
+                        changes: changes)
+                    : DigestionStatusEvaluator.Evaluate(
+                        scope,
+                        formalizeDocument,
+                        snapshot,
+                        ValidateLean(snapshot, formalizeLeanReport),
+                        scribeEmissionVerifier.Verify(snapshot, formalizeLeanReport, changes),
+                        formalizeBaselineDocument,
+                        baselineSnapshot: formalizeBaselineSnapshot,
+                        changes: changes,
+                        projectedStatusChanges: changes);
+                if (options.FormalizeAtomId is null
+                    ? formalizeEvaluation.Findings.Length > 0
+                    : formalizeEvaluation.HasReceiptIntegrityFailure)
                 {
                     return InvalidEvaluation(formalizeEvaluation);
                 }
@@ -65,7 +89,8 @@ internal static class DigestStatusCommand
                         formalizeEvaluation,
                         snapshot,
                         formalizeDocument,
-                        formalizeLeanReport),
+                        formalizeLeanReport,
+                        options.FormalizeAtomId),
                     string.Empty);
             }
 
@@ -170,6 +195,7 @@ internal static class DigestStatusCommand
         var residualSummary = false;
         var formalizeCandidates = false;
         string? baselineRevision = null;
+        string? formalizeAtomId = null;
         for (var index = 0; index < arguments.Count; index++)
         {
             switch (arguments[index])
@@ -187,21 +213,32 @@ internal static class DigestStatusCommand
                     baselineRevision = arguments[++index];
                     if (string.IsNullOrWhiteSpace(baselineRevision)) throw Usage();
                     break;
+                case "--atom-id" when formalizeAtomId is null && index + 1 < arguments.Count:
+                    formalizeAtomId = arguments[++index];
+                    if (string.IsNullOrWhiteSpace(formalizeAtomId)) throw Usage();
+                    break;
                 default:
                     throw Usage();
             }
         }
 
-        if ((json ? 1 : 0) + (residualSummary ? 1 : 0) + (formalizeCandidates ? 1 : 0) > 1)
+        if ((json ? 1 : 0) + (residualSummary ? 1 : 0) + (formalizeCandidates ? 1 : 0) > 1
+            || (formalizeAtomId is not null && !formalizeCandidates))
         {
             throw Usage();
         }
 
-        return new DigestStatusOptions(json, residualSummary, formalizeCandidates, baselineRevision);
+        return new DigestStatusOptions(
+            json,
+            residualSummary,
+            formalizeCandidates,
+            baselineRevision,
+            formalizeAtomId);
     }
 
     private static InvalidOperationException Usage() => new(
-        "USAGE: StrataLint digest-status [--json|--residual-summary|--formalize-candidates] [--base REV]");
+        "USAGE: StrataLint digest-status [--json|--residual-summary|--formalize-candidates "
+        + "[--atom-id ATOM_ID]] [--base REV]");
 
     internal static string RenderText(DigestionLedgerEvaluation evaluation)
     {
@@ -258,14 +295,17 @@ internal static class DigestStatusCommand
         DigestionLedgerEvaluation evaluation,
         RepositorySnapshot snapshot,
         BackfillInventoryDocument ledger,
-        LeanAxiomReport leanReport)
+        LeanAxiomReport leanReport,
+        string? selectedAtomId)
     {
         var projections = evaluation.Entries
-            .Where(static item =>
+            .Where(item =>
                 item.Alignment == DigestionReceiptAlignment.Seen
-                && item.DerivedStatus.Migration == DigestionMigrationState.Residual
-                && item.DerivedStatus.Truth == DigestionTruthState.Open
-                && item.Entry.CoverageGids.Length == 0)
+                && (selectedAtomId is not null
+                    ? string.Equals(item.Entry.AtomId, selectedAtomId, StringComparison.Ordinal)
+                    : item.DerivedStatus.Migration == DigestionMigrationState.Residual
+                        && item.DerivedStatus.Truth == DigestionTruthState.Open
+                        && item.Entry.CoverageGids.Length == 0))
             .Select(item => Projection(item, snapshot, leanReport))
             .Where(static item => item is not null)
             .OrderBy(static item => item!.SourceId, StringComparer.Ordinal)
@@ -437,6 +477,7 @@ internal static class DigestStatusCommand
                 entry.AtomId,
                 "current-formalization-receipt",
                 receipt.PrimaryGid,
+                receipt.RegisteredGids,
                 path);
         }
         catch (Exception exception) when (exception is FormatException or JsonException)
@@ -478,7 +519,8 @@ internal static class DigestStatusCommand
         bool Json,
         bool ResidualSummary,
         bool FormalizeCandidates,
-        string? BaselineRevision);
+        string? BaselineRevision,
+        string? FormalizeAtomId);
 
     private sealed record FormalizeCandidate(
         string SourceId,
@@ -506,6 +548,7 @@ internal static class DigestStatusCommand
         string AtomId,
         string EvidenceKind,
         string PrimaryGid,
+        ImmutableArray<string> Gids,
         string ReceiptPath);
 }
 

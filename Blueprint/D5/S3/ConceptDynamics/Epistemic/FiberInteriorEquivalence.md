@@ -6,7 +6,7 @@ Interior truth in a readout partition topology is exactly truth on the current r
 
 **Theorem 1.1 (Fiber knowledge equivalence).**
 
-$$\forall x, x \in Int(tauC, P) \iff \forall y, C(y) = C(x) \Rightarrow P(y).$$
+$$\begin{gathered}\forall X, B: \operatorname{Type},\\{}C: Concept(X, B), P: Set(X),\\{}x: X,\\{}x \in interior(partitionTopology(C), P) \iff \forall y: X, C(y) = C(x) \Rightarrow y \in P.\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Epistemic/FiberInteriorEquivalence.fiber_interior_equivalence` (`✓ std3`). ∎
 

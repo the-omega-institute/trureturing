@@ -125,6 +125,7 @@ internal static class ShowAtomCommand
             FormalizationReceiptPointer.Available available =>
                 "SELF_FORMALIZATION_POINTER status=available "
                 + $"primary_gid={available.PrimaryGid} "
+                + $"gids={string.Join(',', available.Gids)} "
                 + $"receipt_path={available.ReceiptPath}",
             FormalizationReceiptPointer.Unavailable unavailable => unavailable.Reason switch
             {
@@ -153,6 +154,7 @@ internal static class ShowAtomCommand
                     $"PARENT_FORMALIZATION_POINTER parent_atom_id={available.AtomId} "
                     + "status=available "
                     + $"primary_gid={available.PrimaryGid} "
+                    + $"gids={string.Join(',', available.Gids)} "
                     + $"receipt_path={available.ReceiptPath}",
                 FormalizationReceiptPointer.Unavailable unavailable => unavailable.Reason switch
                 {
@@ -206,6 +208,7 @@ internal static class ShowAtomCommand
             return new FormalizationReceiptPointer.Available(
                 entry.AtomId,
                 receipt.PrimaryGid,
+                receipt.RegisteredGids,
                 path);
         }
 
@@ -285,6 +288,7 @@ internal static class ShowAtomCommand
         internal sealed record Available(
             string AtomId,
             string PrimaryGid,
+            ImmutableArray<string> Gids,
             string ReceiptPath) : FormalizationReceiptPointer(AtomId, ReceiptPath);
 
         internal sealed record Unavailable(
