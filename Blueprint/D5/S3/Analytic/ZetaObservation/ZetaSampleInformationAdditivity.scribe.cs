@@ -52,9 +52,13 @@ internal sealed class ZetaSampleInformationAdditivityDocument
             FormulaRelationOperator.Equal,
             Call("Product", sampleCount, singleInformation));
 
-        return F.Disp(new Formula.Logic(
-            domain,
-            FormulaLogicOperator.Implies,
-            conclusion));
+        return F.Disp(F.Seq(
+            F.Forall, F.Sp, exponent, F.Colon, F.Sp, F.Mathbb, F.Grp(F.Id("R")),
+            F.Comma, F.Sp, sampleCount, F.Colon, F.Sp, F.Mathbb, F.Grp(F.Id("N")),
+            F.Comma, F.Esc,
+            new Formula.Logic(
+                domain,
+                FormulaLogicOperator.Implies,
+                conclusion)));
     }
 }

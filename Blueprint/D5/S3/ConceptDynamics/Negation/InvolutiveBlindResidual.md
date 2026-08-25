@@ -25,4 +25,5 @@ The conclusion packages exactly these three claims: nonempty blind residual, pro
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Negation/InvolutiveBlindResidual.structured_negation_escape_chain`
+- Dependency: [D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois](../DefinitionEscape/DefinitionKernelGalois.md)
 - Dependency: [D5/S3/ConceptDynamics/Negation/OrbitOrientation](OrbitOrientation.md)
