@@ -7,34 +7,35 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Termination;
 internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Stopping and continuation expose when parameter changes create new defects.",
-        H("Stopping, Continuation, and Reopening"),
+        "Exact and approximate closure support method stopping, local completion, and one-step reopening.",
+        H("Closure, Stopping, and One-Step Reopening"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("stopping-continuation-reopening"),
                 DeclarationHandle.Create(
                     "D5/S3/ConceptDynamics/Termination/StoppingContinuationReopening."
                         + "stopping_continuation_reopening"),
-                H("Stopping, continuation, and reopening"),
+                H("Closure, stopping, and one-step reopening"),
                 StatementSource.FromAuthor(TheoremFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "The package records five retained source assertions. Target closure uses "
+                        "The package records five formalized assertions. Target closure uses "
                             + "the canonical `defectRelation`; approximate closure uses the supremum "
-                            + "of metric target diameters over readout fibers. Empty fibers contribute "
-                            + "zero and unbounded diameters contribute top. Method stopping is the "
-                            + "literal distinguished-value equation.")),
+                            + "of metric target diameters over readout fibers against a finite "
+                            + "nonnegative tolerance. Empty fibers contribute zero and unbounded "
+                            + "diameters contribute top. Method stopping is the literal "
+                            + "distinguished-value equation.")),
                     Paragraph(Text(
-                        "Local completion checks the supplied domain, target, and precision; the "
-                            + "source gives no operation-family action on that closure predicate. "
-                            + "A reopening requires one of the allowed parameter or language changes "
+                        "Local completion checks the supplied domain, target, and finite precision. "
+                            + "A one-step reopening requires one of those three parameters to change "
                             + "and a canonical defect pair above the next precision that was absent "
                             + "above the current precision.")),
                     Paragraph(Text(
-                        "The source supplies no mechanism by which a definition-language change "
-                            + "alters the readout or residual family. The change remains an allowed "
-                            + "trigger, but this document does not invent a language action.")),
+                        "Unresolved source gaps: section 43 also names operation-family and "
+                            + "definition-language changes, but supplies no mechanism by which either "
+                            + "one alters the readout or residual. This formalization covers only the "
+                            + "object-domain, target, and precision triggers.")),
                     Paragraph(Text(
                         "No finiteness, decidable equality, measurability, nonempty-domain premise, "
                             + "monotonicity, or extra order law is added. The target metric is exactly "
@@ -85,7 +86,9 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
     {
         Formula q = F.Id("q");
         Formula target = F.Id("T");
-        Formula epsilon = Varepsilon;
+        Formula epsilon = Seq(
+            Open, Varepsilon, Colon, Sp, Operatorname, Grp(F.Id("NNReal")), Close);
+        Formula epsilonExtended = Call("coeENNReal", epsilon);
         Formula method = F.Id("M");
         Formula system = F.Id("S");
         Formula evidence = F.Id("E");
@@ -93,8 +96,6 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
         Formula parameters = F.Id("P");
         Formula current = F.Id("P0");
         Formula next = F.Id("P1");
-        Formula currentLanguage = F.Id("D0");
-        Formula nextLanguage = F.Id("D1");
 
         Formula clause1 = IffFormula(
             Call("Closed", q, target),
@@ -102,7 +103,7 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
 
         Formula clause2 = IffFormula(
             Call("ApproximatelyClosed", q, target, epsilon),
-            LessOrEqual(Call("worstFiberDefect", q, target), epsilon));
+            LessOrEqual(Call("worstFiberDefect", q, target), epsilonExtended));
 
         Formula clause3 = IffFormula(
             Call("MethodStopped", method, system, evidence, noProposal),
@@ -120,13 +121,7 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
             NotEqual(Call("objectDomain", current), Call("objectDomain", next)),
             Or(
                 NotEqual(Call("target", current), Call("target", next)),
-                Or(
-                    NotEqual(Call("precision", current), Call("precision", next)),
-                    Or(
-                        NotEqual(
-                            Call("operationFamily", current),
-                            Call("operationFamily", next)),
-                        NotEqual(currentLanguage, nextLanguage)))));
+                NotEqual(Call("precision", current), Call("precision", next))));
         Formula currentDomain = Call("objectDomain", current);
         Formula nextDomain = Call("objectDomain", next);
         Formula oldDefects = DomainDefect(
@@ -141,7 +136,7 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
             nextDomain);
         Formula newResidual = Nonempty(SetDifference(newDefects, oldDefects));
         Formula clause5 = IffFormula(
-            Call("Reopens", current, next, currentLanguage, nextLanguage, q),
+            Call("Reopens", current, next, q),
             And(reopeningChange, newResidual));
 
         return Disp(And(

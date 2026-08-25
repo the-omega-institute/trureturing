@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/Termination/StoppingContinuationReopening
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Fixed stages can close while changing targets repeatedly create new defects. -/
+   digest: Exact or approximate closure, method stop, local completion, and one-step reopening. -/
 
 import D5.S3.ConceptDynamics.TargetRisk.RefinementRiskCostTradeoff
 import Mathlib.Topology.EMetricSpace.Diam
@@ -22,12 +22,19 @@ import Mathlib.Tactic
      -g '*.lean'` found no DECT worst-fiber declaration. It found the exact
      pinned primitive `Metric.ediam`, including `ediam_empty`,
      `ediam_singleton`, and `ediam_le_iff`; `worstFiberDefect` reuses it.
+   * Domain search `rg -n 'NNReal|ℝ≥0|precision : ENNReal|coe_ne_top' D5/S3/
+     ConceptDynamics .lake/packages/mathlib/Mathlib -g '*.lean'` found existing
+     `NNReal` budget use and the exact boundary lemma `ENNReal.coe_ne_top`.
+     Thus tolerances use finite nonnegative reals while the supremum may remain
+     extended when a target fiber is unbounded.
    * Neighbor vocabulary `ls D5/S3/ConceptDynamics/Termination` and
      `git grep -n '^def \|^  def ' -- D5/S3/ConceptDynamics | head -80` found no
      reusable local-completion or genuine-reopening definition. Source search for
-     `操作族|operationFamily|NoProposal|E_S` found no rule connecting operation
-     family to closure and no signature for the method symbol beyond the
-     displayed equation in section 43. -/
+     `操作族|operationFamily|definition language|定义语言|NoProposal|E_S` found
+     no rule connecting operation family or definition language to the section-43
+     residual, and no signature for the method symbol beyond its displayed
+     equation. Those two unsupported reopening triggers are recorded below as
+     unresolved source gaps instead of decorative parameters. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -55,8 +62,8 @@ noncomputable def worstFiberDefect
 def ApproximatelyClosed
     {X Coordinate Target : Type*} [MetricSpace Target]
     (readout : Concept X Coordinate) (target : Concept X Target)
-    (precision : ENNReal) : Prop :=
-  worstFiberDefect readout target ≤ precision
+    (precision : NNReal) : Prop :=
+  worstFiberDefect readout target ≤ (precision : ENNReal)
 
 /-- Method stopping is the literal distinguished-value equation in section 43. -/
 def MethodStopped {System Evidence Proposal : Type*}
@@ -64,96 +71,94 @@ def MethodStopped {System Evidence Proposal : Type*}
     (system : System) (evidence : Evidence) (noProposal : Proposal) : Prop :=
   method system evidence = noProposal
 
-/-- The parameter record named by local completion and reopening. Precision is
-an extended nonnegative metric bound so empty and unbounded suprema stay total. -/
-structure LocalParameters (World Target Operation : Type*) where
+/-- The parameters whose effect on section-43 closure is defined. Precision is a
+finite nonnegative real tolerance, matching the ordinary metric-valued source. -/
+structure LocalParameters (World Target : Type*) where
   objectDomain : Set World
   target : Concept World Target
-  operationFamily : Set Operation
-  precision : ENNReal
+  precision : NNReal
 
 /-- Local completion checks approximate target closure on the supplied object
-domain at the supplied precision. Section 43 gives no operation-family action on
-closure, so that field is carried by the parameter record but is not invented
-as an additional premise. -/
+domain at the supplied finite precision. -/
 def LocallyComplete
-    {World Coordinate Target Operation : Type*} [MetricSpace Target]
-    (parameters : LocalParameters World Target Operation)
+    {World Coordinate Target : Type*} [MetricSpace Target]
+    (parameters : LocalParameters World Target)
     (readout : Concept World Coordinate) : Prop :=
   ApproximatelyClosed
     (fun object : ↑parameters.objectDomain => readout object.1)
     (fun object : ↑parameters.objectDomain => parameters.target object.1)
     parameters.precision
 
-/-- At least one member of the local-completion parameter quadruple changes. -/
+/-- At least one parameter with a defined residual effect changes. -/
 def LocalParametersChanged
-    {World Target Operation : Type*}
-    (current next : LocalParameters World Target Operation) : Prop :=
+    {World Target : Type*}
+    (current next : LocalParameters World Target) : Prop :=
   current.objectDomain ≠ next.objectDomain ∨
     current.target ≠ next.target ∨
-    current.precision ≠ next.precision ∨
-    current.operationFamily ≠ next.operationFamily
+    current.precision ≠ next.precision
 
-/-- Reopening requires an allowed parameter change and a genuinely new
+/-- Reopening requires a supported parameter change and a genuinely new
 precision-filtered canonical target defect: a pair present after the change but
 absent before it. Each stage uses its own precision. Both sets are expressed in
-the ambient world so domain changes compare. The source gives no action by which
-a language change alters the readout or residual, so no such action is invented. -/
+the ambient world so domain changes compare.
+
+Unresolved source gaps: DECT section 43 names operation-family and
+definition-language changes as possible triggers but supplies no map from either
+one to the readout or residual. They are therefore absent from this interface;
+this definition covers only object-domain, target, and precision triggers. -/
 def Reopens
-    {World Coordinate Target Operation Definition : Type*}
+    {World Coordinate Target : Type*}
     [MetricSpace Target]
-    (current next : LocalParameters World Target Operation)
-    (currentLanguage nextLanguage : Set Definition)
+    (current next : LocalParameters World Target)
     (readout : Concept World Coordinate) : Prop :=
-  (LocalParametersChanged current next ∨
-      currentLanguage ≠ nextLanguage) ∧
+  LocalParametersChanged current next ∧
     ((((defectRelation readout next.target) ∩
-            {pair | next.precision <
+            {pair | (next.precision : ENNReal) <
               edist (next.target pair.1) (next.target pair.2)}) ∩
           (next.objectDomain ×ˢ next.objectDomain)) \
       (((defectRelation readout current.target) ∩
-            {pair | current.precision <
+            {pair | (current.precision : ENNReal) <
               edist (current.target pair.1) (current.target pair.2)}) ∩
           (current.objectDomain ×ˢ current.objectDomain))).Nonempty
 
-/-- The five retained source assertions in one public package. Budget stopping and
-open-world sequence were removed after fidelity review; see issue #3157. -/
+/-- The five formalized assertions in one public package. The reopening clause
+covers the three source triggers with a defined residual effect; operation-family
+and definition-language triggers remain unresolved source gaps. Budget stopping
+and open-world sequence were removed after fidelity review; see issue #3157. -/
 theorem stopping_continuation_reopening :
     (∀ {X Coordinate Target : Type*}
       (readout : Concept X Coordinate) (target : Concept X Target),
       Closed readout target ↔ defectRelation readout target = ∅) ∧
     (∀ {X Coordinate Target : Type*} [MetricSpace Target]
       (readout : Concept X Coordinate) (target : Concept X Target)
-      (precision : ENNReal),
+      (precision : NNReal),
       ApproximatelyClosed readout target precision ↔
-        worstFiberDefect readout target ≤ precision) ∧
+        worstFiberDefect readout target ≤ (precision : ENNReal)) ∧
     (∀ {System Evidence Proposal : Type*}
       (method : System -> Evidence -> Proposal)
       (system : System) (evidence : Evidence) (noProposal : Proposal),
       MethodStopped method system evidence noProposal ↔
         method system evidence = noProposal) ∧
-    (∀ {World Coordinate Target Operation : Type*} [MetricSpace Target]
-      (parameters : LocalParameters World Target Operation)
+    (∀ {World Coordinate Target : Type*} [MetricSpace Target]
+      (parameters : LocalParameters World Target)
       (readout : Concept World Coordinate),
       LocallyComplete parameters readout ↔
         ApproximatelyClosed
           (fun object : ↑parameters.objectDomain => readout object.1)
           (fun object : ↑parameters.objectDomain => parameters.target object.1)
           parameters.precision) ∧
-    (∀ {World Coordinate Target Operation Definition : Type*}
+    (∀ {World Coordinate Target : Type*}
       [MetricSpace Target]
-      (current next : LocalParameters World Target Operation)
-      (currentLanguage nextLanguage : Set Definition)
+      (current next : LocalParameters World Target)
       (readout : Concept World Coordinate),
-      Reopens current next currentLanguage nextLanguage readout ↔
-        (LocalParametersChanged current next ∨
-            currentLanguage ≠ nextLanguage) ∧
+      Reopens current next readout ↔
+        LocalParametersChanged current next ∧
           ((((defectRelation readout next.target) ∩
-                  {pair | next.precision <
+                  {pair | (next.precision : ENNReal) <
                     edist (next.target pair.1) (next.target pair.2)}) ∩
                 (next.objectDomain ×ˢ next.objectDomain)) \
             (((defectRelation readout current.target) ∩
-                  {pair | current.precision <
+                  {pair | (current.precision : ENNReal) <
                     edist (current.target pair.1) (current.target pair.2)}) ∩
                 (current.objectDomain ×ˢ current.objectDomain))).Nonempty) := by
   refine ⟨?_, ?_, ?_, ?_, ?_⟩
@@ -167,48 +172,6 @@ theorem stopping_continuation_reopening :
     rfl
   · intros
     rfl
-
-/-- Exact-type presence consumer for the retained package. Removing or weakening
-the package declaration leaves this reference dangling. -/
-theorem stopping_continuation_reopening_signature_consumer :
-    (∀ {X Coordinate Target : Type*}
-      (readout : Concept X Coordinate) (target : Concept X Target),
-      Closed readout target ↔ defectRelation readout target = ∅) ∧
-    (∀ {X Coordinate Target : Type*} [MetricSpace Target]
-      (readout : Concept X Coordinate) (target : Concept X Target)
-      (precision : ENNReal),
-      ApproximatelyClosed readout target precision ↔
-        worstFiberDefect readout target ≤ precision) ∧
-    (∀ {System Evidence Proposal : Type*}
-      (method : System -> Evidence -> Proposal)
-      (system : System) (evidence : Evidence) (noProposal : Proposal),
-      MethodStopped method system evidence noProposal ↔
-        method system evidence = noProposal) ∧
-    (∀ {World Coordinate Target Operation : Type*} [MetricSpace Target]
-      (parameters : LocalParameters World Target Operation)
-      (readout : Concept World Coordinate),
-      LocallyComplete parameters readout ↔
-        ApproximatelyClosed
-          (fun object : ↑parameters.objectDomain => readout object.1)
-          (fun object : ↑parameters.objectDomain => parameters.target object.1)
-          parameters.precision) ∧
-    (∀ {World Coordinate Target Operation Definition : Type*}
-      [MetricSpace Target]
-      (current next : LocalParameters World Target Operation)
-      (currentLanguage nextLanguage : Set Definition)
-      (readout : Concept World Coordinate),
-      Reopens current next currentLanguage nextLanguage readout ↔
-        (LocalParametersChanged current next ∨
-            currentLanguage ≠ nextLanguage) ∧
-          ((((defectRelation readout next.target) ∩
-                  {pair | next.precision <
-                    edist (next.target pair.1) (next.target pair.2)}) ∩
-                (next.objectDomain ×ˢ next.objectDomain)) \
-            (((defectRelation readout current.target) ∩
-                  {pair | current.precision <
-                    edist (current.target pair.1) (current.target pair.2)}) ∩
-                (current.objectDomain ×ˢ current.objectDomain))).Nonempty) :=
-  stopping_continuation_reopening
 
 /-- Negative control for conjunct 1: a constant readout hides a Boolean target. -/
 theorem hidden_bool_target_is_not_closed :
@@ -249,20 +212,28 @@ theorem positive_fiber_diameter_is_not_approximately_closed :
   have : (1 : ENNReal) ≤ 0 := oneLeWorst.trans approximatelyClosed
   norm_num at this
 
-/-- Negative control for conjunct 5: returning a proposal is not method stop. -/
+/-- Boundary control for conjunct 2: every allowed finite tolerance excludes top,
+while the rejected extended tolerance domain contains top itself. -/
+theorem finite_precision_excludes_top :
+    (∀ precision : NNReal, (precision : ENNReal) ≠ ⊤) ∧
+      ¬(∀ precision : ENNReal, precision ≠ ⊤) := by
+  refine ⟨fun _ => ENNReal.coe_ne_top, ?_⟩
+  intro everyExtendedPrecisionIsFinite
+  exact everyExtendedPrecisionIsFinite ⊤ rfl
+
+/-- Negative control for conjunct 3: returning a proposal is not method stop. -/
 theorem proposal_return_is_not_method_stopped :
     ¬MethodStopped (fun _ : Unit => id) () true false := by
   simp [MethodStopped]
 
 private abbrev ZeroPrecisionNonconstantFiberControl : Prop :=
-    let parameters : LocalParameters Bool Real Unit :=
+    let parameters : LocalParameters Bool Real :=
       { objectDomain := Set.univ
         target := fun value => if value then 1 else 0
-        operationFamily := Set.univ
         precision := 0 }
     ¬LocallyComplete parameters (fun _ => ())
 
-/-- Negative control for conjunct 6: local completion reads the supplied zero
+/-- Negative control for conjunct 4: local completion reads the supplied zero
 precision and rejects a nonconstant target on one readout fiber. -/
 theorem zero_precision_nonconstant_fiber_is_not_locally_complete :
     ZeroPrecisionNonconstantFiberControl := by
@@ -296,19 +267,17 @@ theorem zero_precision_nonconstant_fiber_is_not_locally_complete :
   norm_num at this
 
 private abbrev ChangedTargetReopeningControl : Prop :=
-    let current : LocalParameters Bool Real Unit :=
+    let current : LocalParameters Bool Real :=
       { objectDomain := Set.univ
         target := fun _ => 0
-        operationFamily := Set.univ
         precision := 0 }
-    let next : LocalParameters Bool Real Unit :=
+    let next : LocalParameters Bool Real :=
       { objectDomain := Set.univ
         target := fun value => if value then 1 else 0
-        operationFamily := Set.univ
         precision := 0 }
     Closed (fun _object : ↑current.objectDomain => ())
         (fun object : ↑current.objectDomain => current.target object.1) ∧
-      Reopens current next (∅ : Set Unit) ∅ (fun _ => ())
+      Reopens current next (fun _ => ())
 
 /-- Positive finite control: the old fixed stage is closed, while a changed
 Boolean target creates a genuinely new canonical defect. -/
@@ -318,22 +287,20 @@ theorem changed_target_creates_genuine_reopening :
   · ext pair
     simp [defectRelation]
   · constructor
-    · refine Or.inl (Or.inr (Or.inl ?_))
+    · refine Or.inr (Or.inl ?_)
       intro equalTargets
       have := congrFun equalTargets true
       norm_num at this
     · exact ⟨(false, true), by simp [defectRelation]⟩
 
 private abbrev NonconstantReadoutFiberGuardControl : Prop :=
-    let current : LocalParameters Bool Real Unit :=
+    let current : LocalParameters Bool Real :=
       { objectDomain := Set.univ
         target := fun _ => 0
-        operationFamily := Set.univ
         precision := 0 }
-    let next : LocalParameters Bool Real Unit :=
+    let next : LocalParameters Bool Real :=
       { objectDomain := Set.univ
         target := fun value => if value then 1 else 0
-        operationFamily := Set.univ
         precision := 0 }
     let readout : Concept Bool Bool := id
     readout false ≠ readout true ∧
@@ -344,7 +311,7 @@ private abbrev NonconstantReadoutFiberGuardControl : Prop :=
           (({pair | current.precision <
             edist (current.target pair.1) (current.target pair.2)}) ∩
               (current.objectDomain ×ˢ current.objectDomain)))) ∧
-      ¬Reopens current next (∅ : Set Unit) ∅ readout
+      ¬Reopens current next readout
 
 /-- A nonconstant readout separates the two Boolean points. The same pair is
 present in a residual that only checks distance, but it is absent from the
@@ -360,63 +327,63 @@ theorem nonconstant_readout_blocks_cross_fiber_reopening :
 
 private abbrev PrecisionDecreaseReopeningControl : Prop :=
     let target : Concept Bool Real := fun value => if value then 1 else 0
-    let current : LocalParameters Bool Real Unit :=
+    let current : LocalParameters Bool Real :=
       { objectDomain := Set.univ
         target := target
-        operationFamily := Set.univ
         precision := 1 }
-    let next : LocalParameters Bool Real Unit :=
+    let next : LocalParameters Bool Real :=
       { objectDomain := Set.univ
         target := target
-        operationFamily := Set.univ
         precision := 0 }
     current.objectDomain = next.objectDomain ∧
       current.target = next.target ∧
-      current.operationFamily = next.operationFamily ∧
-      Reopens current next (∅ : Set Unit) ∅ (fun _ => ())
+      Reopens current next (fun _ => ())
 
 /-- Precision-only reopening control: lowering eta from one to zero exposes a
-pair at target distance one, with every other parameter and the language fixed. -/
+pair at target distance one, with every other formalized parameter fixed. -/
 theorem precision_decrease_creates_genuine_reopening :
     PrecisionDecreaseReopeningControl := by
-  refine ⟨rfl, rfl, rfl, ?_⟩
+  refine ⟨rfl, rfl, ?_⟩
   constructor
-  · exact Or.inl (Or.inr (Or.inr (Or.inl one_ne_zero)))
+  · exact Or.inr (Or.inr one_ne_zero)
   · exact ⟨(false, true), by simp [defectRelation]⟩
 
 private abbrev PrecisionIncreaseNoReopeningControl : Prop :=
     let target : Concept Bool Real := fun value => if value then 1 else 0
-    let current : LocalParameters Bool Real Unit :=
+    let current : LocalParameters Bool Real :=
       { objectDomain := Set.univ
         target := target
-        operationFamily := Set.univ
         precision := 0 }
-    let next : LocalParameters Bool Real Unit :=
+    let next : LocalParameters Bool Real :=
       { objectDomain := Set.univ
         target := target
-        operationFamily := Set.univ
         precision := 1 }
     let readout : Concept Bool Unit := fun _ => ()
     LocalParametersChanged current next ∧
       (defectRelation readout next.target).Nonempty ∧
-      ¬Reopens current next (∅ : Set Unit) ∅ readout
+      ¬Reopens current next readout
 
-/-- Named negative control for conjunct 7: increasing precision removes rather
+/-- Named negative control for conjunct 5: increasing precision removes rather
 than creates tolerated residuals, even though the exact defect stays nonempty. -/
 theorem precision_change_without_new_defect_does_not_reopen :
     PrecisionIncreaseNoReopeningControl := by
-  refine ⟨Or.inr (Or.inr (Or.inl zero_ne_one)), ?_, ?_⟩
+  refine ⟨Or.inr (Or.inr zero_ne_one), ?_, ?_⟩
   · exact ⟨(false, true), by simp [defectRelation]⟩
   · rintro ⟨_, ⟨⟨first, second⟩, newResidual, _⟩⟩
     fin_cases first <;> fin_cases second <;>
       norm_num [defectRelation] at newResidual
 
-/-- Presence consumer for every package clause and every named control in this
-module. Removing any constituent leaves a named dangling reference. -/
+/-- Presence consumer for every package clause witness and every named control in
+this module. Removing or trivializing any witness leaves this aggregate ill-typed.
+The aggregate itself deliberately has no artificial outer consumer before
+deposit; its first natural content-addressed consumer is the post-deposit
+Freeze/statement-id. -/
 theorem stopping_continuation_reopening_nonvacuity :
     (¬Closed (fun _ : Bool => ()) (id : Concept Bool Bool)) ∧
     (¬ApproximatelyClosed (fun _ : Bool => ())
       (fun value : Bool => if value then (1 : Real) else 0) 0) ∧
+    ((∀ precision : NNReal, (precision : ENNReal) ≠ ⊤) ∧
+      ¬(∀ precision : ENNReal, precision ≠ ⊤)) ∧
     (¬MethodStopped (fun _ : Unit => id) () true false) ∧
     ZeroPrecisionNonconstantFiberControl ∧
     ChangedTargetReopeningControl ∧
@@ -425,6 +392,7 @@ theorem stopping_continuation_reopening_nonvacuity :
     NonconstantReadoutFiberGuardControl := by
   exact ⟨hidden_bool_target_is_not_closed,
     positive_fiber_diameter_is_not_approximately_closed,
+    finite_precision_excludes_top,
     proposal_return_is_not_method_stopped,
     zero_precision_nonconstant_fiber_is_not_locally_complete,
     changed_target_creates_genuine_reopening,
@@ -433,7 +401,6 @@ theorem stopping_continuation_reopening_nonvacuity :
     nonconstant_readout_blocks_cross_fiber_reopening⟩
 
 #print axioms stopping_continuation_reopening
-#print axioms stopping_continuation_reopening_signature_consumer
 #print axioms stopping_continuation_reopening_nonvacuity
 
 end D5.S3.ConceptDynamics.Termination.StoppingContinuationReopening
