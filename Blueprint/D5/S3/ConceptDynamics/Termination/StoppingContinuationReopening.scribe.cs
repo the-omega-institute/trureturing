@@ -24,15 +24,22 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
                             + "uses the canonical `defectRelation`; approximate closure uses the "
                             + "supremum of metric target diameters over readout fibers. Empty fibers "
                             + "contribute zero and unbounded diameters contribute top. Budget "
-                            + "stopping is the displayed real `sSup` formula itself; only its useful "
-                            + "pointwise characterization assumes a nonempty feasible set and a "
-                            + "bounded-above ratio set. Method stopping is the literal value equation.")),
+                            + "stopping requires a feasible action and takes an extended nonnegative "
+                            + "supremum: positive gain at zero cost and unbounded ratios contribute "
+                            + "top. Method stopping is the literal value equation.")),
                     Paragraph(Text(
                         "Local completion checks the supplied domain, target, and precision; the "
                             + "source gives no operation-family action on that closure predicate. "
-                            + "An open-world sequence has one fixed field that changes at every "
-                            + "adjacent stage. A reopening requires one of the five allowed changes "
-                            + "and a canonical defect pair present after the change but absent before.")),
+                            + "The source does not state whether persistent parameter change occurs "
+                            + "at every adjacent stage or merely infinitely often. The theorem uses "
+                            + "their weakest common reading: one fixed field changes frequently. "
+                            + "A reopening requires one of the five allowed changes and a canonical "
+                            + "defect pair above the next precision that was absent above the current "
+                            + "precision.")),
+                    Paragraph(Text(
+                        "The source supplies no mechanism by which a definition-language change "
+                            + "alters the readout or residual family. The change remains an allowed "
+                            + "trigger, but this document does not invent a language action.")),
                     Paragraph(Text(
                         "The final conjunct exhibits natural-number stages with nonempty object "
                             + "domains and real-valued targets. Each fixed stage is "
@@ -77,8 +84,15 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
     private static Formula DomainDefect(
         Formula readout,
         Formula target,
+        Formula precision,
         Formula domain) =>
-        Call("inter", Defect(readout, target), Call("square", domain));
+        Call(
+            "inter",
+            Call(
+                "inter",
+                Defect(readout, target),
+                Call("distanceAbove", target, precision)),
+            Call("square", domain));
 
     private static Formula SetDifference(Formula left, Formula right) =>
         Seq(Open, left, Close, Sp, Setminus, Sp, Open, right, Close);
@@ -138,7 +152,9 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
         Formula ratioSet = SetSuchThat(Ratio(gain, cost, decision), feasibleDecision);
         Formula clause3 = IffFormula(
             budgetStop,
-            LessOrEqual(Call("sSup", ratioSet), threshold));
+            And(
+                Nonempty(SetSuchThat(decision, feasibleDecision)),
+                LessOrEqual(Call("iSup", ratioSet), threshold)));
 
         Formula clause5 = IffFormula(
             Call("MethodStopped", method, system, evidence, noProposal),
@@ -152,33 +168,41 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
                 Restrict(Call("target", parameters), Call("objectDomain", parameters)),
                 Call("precision", parameters)));
 
-        Formula domainAlwaysChanges = EveryStage(
-            stage,
-            NotEqual(
-                ParameterAt(parameters, stage, "objectDomain"),
-                ParameterAt(parameters, Next(stage), "objectDomain")));
-        Formula targetAlwaysChanges = EveryStage(
-            stage,
-            NotEqual(
-                ParameterAt(parameters, stage, "target"),
-                ParameterAt(parameters, Next(stage), "target")));
-        Formula precisionAlwaysChanges = EveryStage(
-            stage,
-            NotEqual(
-                ParameterAt(parameters, stage, "precision"),
-                ParameterAt(parameters, Next(stage), "precision")));
-        Formula operationsAlwaysChange = EveryStage(
-            stage,
-            NotEqual(
-                ParameterAt(parameters, stage, "operationFamily"),
-                ParameterAt(parameters, Next(stage), "operationFamily")));
+        Formula domainFrequentlyChanges = Call(
+            "FrequentlyAtTop",
+            SetSuchThat(
+                stage,
+                NotEqual(
+                    ParameterAt(parameters, stage, "objectDomain"),
+                    ParameterAt(parameters, Next(stage), "objectDomain"))));
+        Formula targetFrequentlyChanges = Call(
+            "FrequentlyAtTop",
+            SetSuchThat(
+                stage,
+                NotEqual(
+                    ParameterAt(parameters, stage, "target"),
+                    ParameterAt(parameters, Next(stage), "target"))));
+        Formula precisionFrequentlyChanges = Call(
+            "FrequentlyAtTop",
+            SetSuchThat(
+                stage,
+                NotEqual(
+                    ParameterAt(parameters, stage, "precision"),
+                    ParameterAt(parameters, Next(stage), "precision"))));
+        Formula operationsFrequentlyChange = Call(
+            "FrequentlyAtTop",
+            SetSuchThat(
+                stage,
+                NotEqual(
+                    ParameterAt(parameters, stage, "operationFamily"),
+                    ParameterAt(parameters, Next(stage), "operationFamily"))));
         Formula clause7 = IffFormula(
             Call("OpenWorldSequence", parameters),
             Or(
-                domainAlwaysChanges,
+                domainFrequentlyChanges,
                 Or(
-                    targetAlwaysChanges,
-                    Or(precisionAlwaysChanges, operationsAlwaysChange))));
+                    targetFrequentlyChanges,
+                    Or(precisionFrequentlyChanges, operationsFrequentlyChange))));
 
         Formula reopeningChange = Or(
             NotEqual(Call("objectDomain", current), Call("objectDomain", next)),
@@ -193,8 +217,16 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
                         NotEqual(currentLanguage, nextLanguage)))));
         Formula currentDomain = Call("objectDomain", current);
         Formula nextDomain = Call("objectDomain", next);
-        Formula oldDefects = DomainDefect(q, Call("target", current), currentDomain);
-        Formula newDefects = DomainDefect(q, Call("target", next), nextDomain);
+        Formula oldDefects = DomainDefect(
+            q,
+            Call("target", current),
+            Call("precision", current),
+            currentDomain);
+        Formula newDefects = DomainDefect(
+            q,
+            Call("target", next),
+            Call("precision", next),
+            nextDomain);
         Formula newResidual = Nonempty(SetDifference(newDefects, oldDefects));
         Formula clause8 = IffFormula(
             Call("Reopens", current, next, currentLanguage, nextLanguage, q),
