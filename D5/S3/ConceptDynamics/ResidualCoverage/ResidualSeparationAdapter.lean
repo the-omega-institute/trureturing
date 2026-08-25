@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/ResidualCoverage/ResidualSeparationAdapter
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/ResidualCoverage/ResidualSeparationAdapter
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Finite defect snapshots are covered exactly when no chosen-package pair stays blind. -/
