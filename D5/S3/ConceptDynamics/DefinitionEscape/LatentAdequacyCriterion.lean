@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/DefinitionEscape/LatentAdequacyCriterion
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DefinitionEscape/LatentAdequacyCriterion
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Target adequacy binds canonical recovery to join strictness. -/

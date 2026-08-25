@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/RefinementGeometry/RefinementUltrametric
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/RefinementGeometry/RefinementUltrametric
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Agreement depth gives a pseudoultrametric; an ultrametric under separation. -/

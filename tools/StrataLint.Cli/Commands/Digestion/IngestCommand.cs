@@ -6,6 +6,9 @@ namespace StrataLint.Cli;
 
 internal static partial class IngestCommand
 {
+    private const string ImplementationPath =
+        "tools/StrataLint.Cli/Commands/Digestion/IngestCommand.cs";
+
     internal static CommandResult Run(
         string repositoryRoot,
         IRepositoryGateway repository,
@@ -28,6 +31,7 @@ internal static partial class IngestCommand
             var document = LoadDocument(current);
             var baselineDocument = BackfillInventoryLoader.LoadBaseline(baseline);
             var plan = DigestionIngestor.Plan(document, current, baselineDocument);
+            var repositoryChanges = repository.ReadChanges(baselineRevision);
             var crossVolumeClearanceGaps = RenderCrossVolumeClearanceGaps(
                 plan.Document,
                 baselineDocument);
@@ -41,19 +45,32 @@ internal static partial class IngestCommand
                 plan.CasObjects);
             var plannedSnapshot = Decode(plannedRaw);
             var plannedDocument = LoadDocument(plannedSnapshot);
+            var plannedChanges = IngestChanges(
+                repositoryChanges,
+                currentRaw,
+                plannedRaw,
+                plannedDocument,
+                plan.CasObjects);
+            var plannedScope = DigestionEvaluationScopes.ForChanges(
+                plannedChanges,
+                ImplementationPath);
             var report = leanReportSource.Load(current);
             var lean = ValidateLean(plannedSnapshot, report);
-            var verifiedScribeEmissions = scribeEmissionVerifier.Verify(plannedSnapshot, report);
+            var verifiedScribeEmissions = scribeEmissionVerifier.Verify(
+                plannedSnapshot,
+                report,
+                plannedChanges);
             var derived = DigestionStatusEvaluator.Evaluate(
-                DigestionEvaluationScope.FullScan,
+                plannedScope,
                 plannedDocument,
                 plannedSnapshot,
                 lean,
                 verifiedScribeEmissions,
                 baselineDocument,
                 validateProjectedStatus: false,
-                baselineSnapshot: baseline);
-            RequireNoReceiptIntegrityFailure(derived);
+                baselineSnapshot: baseline,
+                changes: plannedChanges);
+            RequireNoNewFailures(derived, baselineDocument, baseline);
 
             var statusByAtomId = derived.Entries.ToDictionary(
                 static item => item.Entry.AtomId,
@@ -76,22 +93,33 @@ internal static partial class IngestCommand
                 plan.CasObjects);
             var finalSnapshot = Decode(finalRaw);
             var finalDocument = LoadDocument(finalSnapshot);
+            var finalChanges = IngestChanges(
+                repositoryChanges,
+                currentRaw,
+                finalRaw,
+                finalDocument,
+                plan.CasObjects);
+            var finalScope = DigestionEvaluationScopes.ForChanges(
+                finalChanges,
+                ImplementationPath);
             var evaluation = DigestionStatusEvaluator.Evaluate(
-                DigestionEvaluationScope.FullScan,
+                finalScope,
                 finalDocument,
                 finalSnapshot,
                 lean,
                 verifiedScribeEmissions,
                 baselineDocument,
-                baselineSnapshot: baseline);
-            RequireNoReceiptIntegrityFailure(evaluation);
+                baselineSnapshot: baseline,
+                changes: finalChanges);
+            RequireNoNewFailures(evaluation, baselineDocument, baseline);
             var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
                 finalDocument,
                 finalSnapshot,
                 baseline,
                 LoadPolicy(finalSnapshot),
                 lean,
-                verifiedScribeEmissions);
+                verifiedScribeEmissions,
+                DigestionEvaluationScopes.ResolveChanges(finalScope, finalChanges));
 
             var ledgerUpdates = LedgerUpdates(currentRaw, finalRaw);
             var changed = ledgerUpdates.Length > 0;
@@ -683,13 +711,24 @@ internal static partial class IngestCommand
         }
     }
 
-    private static void RequireNoReceiptIntegrityFailure(DigestionLedgerEvaluation evaluation)
+    private static void RequireNoNewFailures(
+        DigestionLedgerEvaluation evaluation,
+        BackfillInventoryDocument baselineDocument,
+        RepositorySnapshot baselineSnapshot)
     {
-        if (evaluation.HasReceiptIntegrityFailure)
+        var blockingReasons = evaluation.Findings.Concat(
+            BackfillInventoryRule.ClassifyReceiptIntegrityGaps(
+                    evaluation,
+                    baselineDocument,
+                    baselineSnapshot)
+                .Where(static finding => finding.Effect is AdmissionEffect.Block)
+                .Select(static finding => finding.Message))
+            .ToArray();
+        if (blockingReasons.Length > 0)
         {
             throw new InvalidOperationException(
                 "digest status is invalid: "
-                + string.Join("; ", evaluation.ReceiptIntegrityFailureReasons));
+                + string.Join("; ", blockingReasons));
         }
     }
 

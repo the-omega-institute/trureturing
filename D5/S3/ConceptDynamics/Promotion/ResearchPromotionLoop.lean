@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/Promotion/ResearchPromotionLoop
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/Promotion/ResearchPromotionLoop
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Ledgers prune; walls persist; release forces escape; promotion receipts are typed. -/
