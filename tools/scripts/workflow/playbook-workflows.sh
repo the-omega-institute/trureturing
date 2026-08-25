@@ -95,6 +95,21 @@ require_cover_batch_arguments() {
   fi
 }
 
+derive_cover_batch_row_state() {
+  local index="$1"
+  ATOM_ID="${BATCH_ATOM_IDS[index]}"
+  GID="${BATCH_GIDS[index]}"
+  require_transaction_arguments
+}
+
+cleanup_cover_batch_temporaries() {
+  local index
+  for index in "${!BATCH_ATOM_IDS[@]}"; do
+    derive_cover_batch_row_state "$index"
+    cleanup_transaction_temporaries
+  done
+}
+
 require_new_module_blueprint_mirror() {
   local mirror_path="Blueprint/${MODULE_PATH%.lean}.md"
 
@@ -653,11 +668,10 @@ case "$COMMAND" in
     ;;
   cover-batch)
     require_cover_batch_arguments
+    cleanup_cover_batch_temporaries
     step lean-report make lean-report
     for index in "${!BATCH_ATOM_IDS[@]}"; do
-      ATOM_ID="${BATCH_ATOM_IDS[index]}"
-      GID="${BATCH_GIDS[index]}"
-      cleanup_transaction_temporaries
+      derive_cover_batch_row_state "$index"
       cover_one
     done
     ;;

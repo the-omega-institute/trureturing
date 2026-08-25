@@ -5,7 +5,7 @@ namespace StrataLint.Tests;
 public sealed partial class DepositCoverWorkflowScriptTests
 {
     [Fact]
-    public void CoverBatchBuildsOneLeanReportAndCommitsEachPairWithoutEmission()
+    public void CoverBatchRederivesEachDistinctAtomsEnvelopeAndCommitsWithoutEmission()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -13,12 +13,15 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var primaryDeposit = fixture.Run("deposit");
         Assert.True(primaryDeposit.ExitCode == 0, Diagnostics(primaryDeposit));
         fixture.AddSecondaryFormalization();
-        var secondaryDeposit = fixture.Run("deposit", TransactionFixture.SecondaryGid);
+        var secondaryDeposit = fixture.Run(
+            "deposit",
+            TransactionFixture.SecondaryGid,
+            TransactionFixture.SecondaryAtomId);
         Assert.True(secondaryDeposit.ExitCode == 0, Diagnostics(secondaryDeposit));
         fixture.ClearCalls();
         var atoms = fixture.WriteBatchFile(
             $"{TransactionFixture.AtomId}\t{TransactionFixture.Gid}\n"
-            + $"{TransactionFixture.AtomId}\t{TransactionFixture.SecondaryGid}\n");
+            + $"{TransactionFixture.SecondaryAtomId}\t{TransactionFixture.SecondaryGid}\n");
         var before = fixture.CommitCount();
 
         var result = fixture.RunBatch(atoms);
@@ -35,6 +38,45 @@ public sealed partial class DepositCoverWorkflowScriptTests
             ],
             fixture.CallKinds());
         Assert.DoesNotContain("make:emit", fixture.CallKinds());
+        Assert.Contains(
+            "dotnet:cover-atom"
+                + $" --cover-atom {TransactionFixture.AtomId}"
+                + $" --gid {TransactionFixture.Gid}"
+                + " --base synthetic-base"
+                + $" --envelope {TransactionFixture.ReceiptRelativePath}",
+            fixture.Calls());
+        Assert.Contains(
+            "dotnet:cover-atom"
+                + $" --cover-atom {TransactionFixture.SecondaryAtomId}"
+                + $" --gid {TransactionFixture.SecondaryGid}"
+                + " --base synthetic-base"
+                + $" --envelope {TransactionFixture.SecondaryReceiptRelativePath}",
+            fixture.Calls());
+        Assert.Empty(fixture.Status());
+    }
+
+    [Fact]
+    public void CoverBatchCleansEachDistinctAtomsInterruptedReceiptBeforeSharedLeanReport()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        fixture.AddSecondaryFormalization();
+        fixture.LeaveInterruptedTemporaryFiles(TransactionFixture.ReceiptRelativePath);
+        fixture.LeaveInterruptedTemporaryFiles(TransactionFixture.SecondaryReceiptRelativePath);
+        var atoms = fixture.WriteBatchFile(
+            $"{TransactionFixture.AtomId}\t{TransactionFixture.Gid}\n"
+            + $"{TransactionFixture.SecondaryAtomId}\t{TransactionFixture.SecondaryGid}\n");
+
+        var result = fixture.RunBatch(atoms);
+
+        Assert.True(result.ExitCode == 0, Diagnostics(result));
+        Assert.Equal("make:lean-report", fixture.CallKinds()[0]);
+        Assert.False(File.Exists(Path.Combine(
+            fixture.Root,
+            TransactionFixture.ReceiptRelativePath + ".tmp.abandoned")));
+        Assert.False(File.Exists(Path.Combine(
+            fixture.Root,
+            TransactionFixture.SecondaryReceiptRelativePath + ".tmp.abandoned")));
         Assert.Empty(fixture.Status());
     }
 
