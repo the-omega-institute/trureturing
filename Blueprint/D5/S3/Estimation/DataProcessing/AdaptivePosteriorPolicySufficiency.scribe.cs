@@ -2,13 +2,13 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Estimation.DecisionRisk;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Estimation.DataProcessing;
 
 internal sealed class AdaptivePosteriorPolicySufficiencyDocument
     : IScribeDocumentDefinition
 {
     private const string Declaration =
-        "D5/S3/Estimation/DecisionRisk/AdaptivePosteriorPolicySufficiency."
+        "D5/S3/Estimation/DataProcessing/AdaptivePosteriorPolicySufficiency."
             + "posterior_adaptive_policy_universal_sufficiency";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(

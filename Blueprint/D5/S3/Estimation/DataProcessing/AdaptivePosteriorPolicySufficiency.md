@@ -8,7 +8,7 @@ Equal posteriors generate equal adaptive future laws and recursive Bayes values.
 
 $$\begin{gathered}\forall Theta, H, E, Y: \operatorname{Type},\\{}\operatorname{Fintype}(Theta),\\{}j: Theta \to H \to NNReal,\\{}extend: H \to E \to Y \to H,\\{}K: E \to Theta \to \operatorname{PMF}(Y),\\{}\forall h: H, e: E, y: Y,\\{}\operatorname{posterior}(j, extend(h, e, y)) = \operatorname{posteriorUpdate}((theta, o) \mapsto \operatorname{toNNReal}(K(e, theta, o)), \operatorname{posterior}(j, h), y),\\{}h, hPrime: H, \operatorname{posterior}(j, h) = \operatorname{posterior}(j, hPrime) \Rightarrow\\{}\forall policy: \mathbb{N} \to (Theta \to NNReal) \to E,\\{}A: \operatorname{Type}, ell: Theta \to A \to ENNReal, n: \mathbb{N},\\{}\operatorname{adaptiveFutureOutputLaw}(j, extend, K, policy, n, h) = \operatorname{adaptiveFutureOutputLaw}(j, extend, K, policy, n, hPrime) \land\\{}\operatorname{adaptiveContinuationValue}(j, extend, K, policy, ell, n, h) = \operatorname{adaptiveContinuationValue}(j, extend, K, policy, ell, n, hPrime).\end{gathered}$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Estimation/DecisionRisk/AdaptivePosteriorPolicySufficiency.posterior_adaptive_policy_universal_sufficiency` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Estimation/DataProcessing/AdaptivePosteriorPolicySufficiency.posterior_adaptive_policy_universal_sufficiency` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -24,5 +24,5 @@ At horizon zero the continuation value is the infimum of posterior expected loss
 
 ## References
 
-- Truth anchor: `D5/S3/Estimation/DecisionRisk/AdaptivePosteriorPolicySufficiency.posterior_adaptive_policy_universal_sufficiency`
-- Dependency: [D5/S3/Estimation/DecisionRisk/PosteriorUniversalSufficiency](PosteriorUniversalSufficiency.md)
+- Truth anchor: `D5/S3/Estimation/DataProcessing/AdaptivePosteriorPolicySufficiency.posterior_adaptive_policy_universal_sufficiency`
+- Dependency: [D5/S3/Estimation/DecisionRisk/PosteriorUniversalSufficiency](../DecisionRisk/PosteriorUniversalSufficiency.md)

@@ -1,6 +1,6 @@
-/- GID: D5/S3/Estimation/DecisionRisk/AdaptivePosteriorPolicySufficiency
+/- GID: D5/S3/Estimation/DataProcessing/AdaptivePosteriorPolicySufficiency
    generality: G
-   mirror-B: D5/B/S3/Estimation/DecisionRisk/AdaptivePosteriorPolicySufficiency
+   mirror-B: D5/B/S3/Estimation/DataProcessing/AdaptivePosteriorPolicySufficiency
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Equal posteriors preserve adaptive future-output laws and recursive Bayes values. -/
@@ -26,7 +26,7 @@ open scoped BigOperators ENNReal NNReal
 
 noncomputable section
 
-namespace D5.S3.Estimation.DecisionRisk.AdaptivePosteriorPolicySufficiency
+namespace D5.S3.Estimation.DataProcessing.AdaptivePosteriorPolicySufficiency
 
 open D5.S3.Estimation.DecisionRisk.PosteriorUniversalSufficiency
 
@@ -172,4 +172,4 @@ theorem posterior_adaptive_policy_universal_sufficiency
 
 #print axioms posterior_adaptive_policy_universal_sufficiency
 
-end D5.S3.Estimation.DecisionRisk.AdaptivePosteriorPolicySufficiency
+end D5.S3.Estimation.DataProcessing.AdaptivePosteriorPolicySufficiency
