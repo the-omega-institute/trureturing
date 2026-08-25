@@ -51,7 +51,8 @@ import Mathlib.Topology.MetricSpace.Lipschitz
      D5/S3/ConceptDynamics`, and the redundant/redundancy, fiber/fibre/constancy,
      kernel, zero-gain/no-gain, function-of, and factors-through synonyms. The
      first search found the exact fiber predicate already used by clause 2; the
-     second found `Refines definition q` only in the too-strong clause 3 premise.
+     second identified `Refines definition q` as the prior too-strong clause 3
+     premise. The negative Empty-state witness below now separates the two.
      Nearby semantic-closure and effective-readout theorems have different
      packages or attained-codomain hypotheses, so they do not replace this law.
      No new relation, refinement predicate, or residual is introduced.
@@ -79,14 +80,10 @@ open MeasureTheory
 /- TASK D5-T0049
    Source clause 6 remains open. CAS section 4.4 defines
    `F(S) = M(∅) - M(S)` and also identifies `F` with captured mass. Those two
-   assertions are incompatible with unrestricted infinite values: counting an
-   infinite residual before and after one captured edge gives `⊤ - ⊤ = 0`,
-   while the captured singleton has mass one. A faithful positive theorem must
+   assertions are incompatible with unrestricted infinite values: in the CAS
+   relation model, both the remaining relation and captured cut can be infinite,
+   giving `⊤ - ⊤ = 0` while the captured count is `⊤`. A positive theorem must
    either impose finite remaining mass or revise the source definition. -/
-
-/-- Machine-addressable record of the source-level clause 6 boundary. This is
-governance data, not an additional mathematical claim. -/
-def clauses_not_done : Unit := ()
 
 /-- The dependent-family extension used by clauses 4 and 5.  The frozen
 `languageExtension` is its constant-codomain specialization. -/
@@ -413,6 +410,36 @@ example :
     rfl
   · exact ⟨rfl, Bool.false_ne_true⟩
 
+/-- Clause 3 genuinely uses fiber constancy, which is weaker than a total
+factorization through the whole baseline codomain on an empty state space. -/
+example :
+    let q : Concept Empty Unit := fun state => state.elim
+    let definition : Concept Empty Empty := fun state => state.elim
+    let target : Concept Empty Unit := fun state => state.elim
+    Function.FactorsThrough definition q ∧
+      ¬Refines definition q ∧
+      defectRelation (conceptJoin q definition) target =
+        defectRelation q target := by
+  dsimp only
+  have fiberConstant :
+      Function.FactorsThrough
+        (fun state : Empty => (state.elim : Empty))
+        (fun state : Empty => (state.elim : Unit)) := by
+    intro left
+    exact left.elim
+  have noTotalFactor :
+      ¬Refines (fun state : Empty => (state.elim : Empty))
+        (fun state : Empty => (state.elim : Unit)) := by
+    rintro ⟨factor, _⟩
+    exact (factor ()).elim
+  refine ⟨fiberConstant, noTotalFactor, ?_⟩
+  have laws := directly_provable_laws.{0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+  exact laws.2.2.1
+    (fun state : Empty => (state.elim : Unit))
+    (fun state : Empty => (state.elim : Empty))
+    (fun state : Empty => (state.elim : Unit)) fiberConstant
+
 /-- Clause 4 obstructs finite and arbitrary subfamilies on a blind pair. -/
 example :
     (dependentBlindResidual
@@ -711,23 +738,9 @@ theorem false_neighbor_clause5 :
   rw [emptyFiniteDefect] at finiteDefect
   exact finiteDefect
 
-/-- Clause 6's CAS bridge is false for unrestricted infinite counting: both
-remaining masses are infinite, their `ENNReal` difference is zero, and the
-captured singleton has mass one. -/
-theorem false_neighbor_clause6 :
-    let weight := countingCaptureWeight Nat
-    let residual : Set Nat := Set.univ
-    let cut : Unit → Set Nat := fun _ => {0}
-    let remaining := fun S : Set Unit =>
-      residual \ ⋃ definition ∈ S, cut definition
-    let captured := fun S : Set Unit =>
-      residual ∩ ⋃ definition ∈ S, cut definition
-    let remainingMass := fun S : Set Unit => weight.mass (remaining S)
-    let casF := fun S : Set Unit => remainingMass ∅ - remainingMass S
-    remainingMass ∅ = ⊤ ∧ remainingMass {()} = ⊤ ∧
-      casF {()} = 0 ∧ weight.mass (captured {()}) = 1 ∧
-      casF {()} ≠ weight.mass (captured {()}) :=
-  infinite_counting_cas_bridge_fails
+/-- Clause 6's bridge failure is witnessed by the source's own symmetric,
+irreflexive target-residual relation and definition-kernel cut. -/
+alias false_neighbor_clause6 := infinite_counting_cas_bridge_fails
 
 /-- Strengthening clause 7's identity to say the displayed defect vanishes is
 false for coordinate preparation followed by a swap. -/

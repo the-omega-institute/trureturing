@@ -1,8 +1,8 @@
-# Capture Mass And The Infinite Bridge Failure
+# Capture Mass And The Infinite Relation Bridge Failure
 
 ## Abstract
 
-Capture mass is submodular, but it is not the CAS difference at infinity.
+Capture mass is submodular; the CAS bridge fails on infinite residual relations.
 
 **Theorem 1.1 (Residual-intersection capture is submodular for every capture weight).**
 
@@ -20,8 +20,9 @@ The displayed name captured is exactly the theorem-local function S => residual 
 
 CaptureWeight has ENNReal-valued mass and exactly one law: mass_union_add_lower_le. ENNReal retains infinite values, while the law says that a lower set inside the intersection may replace that intersection in the union-plus-intersection inequality. The public theorem identifies capture of A union B with the union of the two capture sets and includes capture of A intersection B in their intersection, then applies that law once.
 
-The compiled constructors countingCaptureWeight, nonadditiveCoverageCaptureWeight, and measureCaptureWeight realize count, weight, and measure examples for this adjacent lemma. Their masses are respectively unrestricted Set.encard embedded in ENNReal, a nonadditive nonempty-set coverage weight, and the native values of an arbitrary Mathlib measure. No Finite or IsFiniteMeasure instance is required. The separate theorem measure_capture_submodular states and proves the complete arbitrary-measure specialization, including infinite values. The theorem infinite_counting_cas_bridge_fails separately proves that CAS's F(S) = M(empty) - M(S) cannot equal captured mass in the infinite counting example: the two remaining masses are infinity, F is zero, and the captured singleton has mass one.
+The compiled constructors countingCaptureWeight, nonadditiveCoverageCaptureWeight, and measureCaptureWeight realize count, weight, and measure examples for this adjacent lemma. Their masses are respectively unrestricted Set.encard embedded in ENNReal, a nonadditive nonempty-set coverage weight, and the native values of an arbitrary Mathlib measure. No Finite or IsFiniteMeasure instance is required. The separate theorem measure_capture_submodular states and proves the complete arbitrary-measure specialization, including infinite values. The theorem infinite_counting_cas_bridge_fails separately proves that CAS's F(S) = M(empty) - M(S) cannot equal captured mass for unrestricted infinite counting. Its state space is Nat times Bool; its residual is the canonical defectRelation of a constant readout against the identity target; and its single cut is that residual intersected with the complement of the Prod.snd kernel. The residual, remaining relation, and captured cut are symmetric and diagonal-free where applicable. Both remaining masses are infinity, so F is zero, while the captured count is infinity.
 
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/DefinitionCapture/MeasureCapture.capture_weight_submodular`
+- Dependency: [D5/S3/ConceptDynamics/DefinitionEscape/ResidualJoinLaw](../DefinitionEscape/ResidualJoinLaw.md)

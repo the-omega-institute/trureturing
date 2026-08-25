@@ -7,8 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.DefinitionCapture;
 internal sealed class MeasureCaptureDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Capture mass is submodular, but it is not the CAS difference at infinity.",
-        H("Capture Mass And The Infinite Bridge Failure"),
+        "Capture mass is submodular; the CAS bridge fails on infinite residual relations.",
+        H("Capture Mass And The Infinite Relation Bridge Failure"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("measure-capture-submodularity"),
@@ -55,9 +55,14 @@ internal sealed class MeasureCaptureDocument : IScribeDocumentDefinition
                             + "measure_capture_submodular states and proves the complete arbitrary-"
                             + "measure specialization, including infinite values. The theorem "
                             + "infinite_counting_cas_bridge_fails separately proves that CAS's "
-                            + "F(S) = M(empty) - M(S) cannot equal captured mass in the infinite "
-                            + "counting example: the two remaining masses are infinity, F is zero, "
-                            + "and the captured singleton has mass one."))),
+                            + "F(S) = M(empty) - M(S) cannot equal captured mass for unrestricted "
+                            + "infinite counting. Its state space is Nat times Bool; its residual "
+                            + "is the canonical defectRelation of a constant readout against the "
+                            + "identity target; and its single cut is that residual intersected "
+                            + "with the complement of the Prod.snd kernel. The residual, remaining "
+                            + "relation, and captured cut are symmetric and diagonal-free where "
+                            + "applicable. Both remaining masses are infinity, so F is zero, while "
+                            + "the captured count is infinity."))),
                 DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()

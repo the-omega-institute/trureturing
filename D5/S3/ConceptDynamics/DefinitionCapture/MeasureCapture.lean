@@ -3,27 +3,46 @@
    mirror-B: D5/B/S3/ConceptDynamics/DefinitionCapture/MeasureCapture
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Capture mass is submodular, but the infinite CAS difference bridge fails. -/
+   digest: Capture mass is submodular; the infinite CAS bridge fails in its relation model. -/
 
+import D5.S3.ConceptDynamics.DefinitionEscape.ResidualJoinLaw
 import Mathlib.Data.Real.ENatENNReal
 import Mathlib.MeasureTheory.Measure.Count
 import Mathlib.MeasureTheory.Measure.Real
 
 /- Library-search audit trail (2026-08-25):
-   * Repository searches found the real-valued `EscapeWeight` interface, but its
-     codomain excludes infinite counts and nonfinite measures.  `CaptureWeight`
-     therefore uses `ENNReal` and only the law consumed by capture submodularity.
-   * Pinned Mathlib supplies `measure_union_add_inter` when one set is measurable,
-     plus `measure_union_toMeasurable`, `measure_toMeasurable`, and
-     `subset_toMeasurable`. It also supplies `Set.encard_union_add_encard_inter`
-     and `Set.encard_le_encard`. These prove the law below for arbitrary counting
-     and arbitrary Mathlib measures; a nonadditive coverage weight supplies a
-     genuinely non-measure instance. -/
+   * `rg -n 'Set \(X × X\)' D5` found the canonical `defectRelation` in
+     `TargetRisk/RefinementRiskCostTradeoff.lean`, plus adjacent kernel and
+     residual relations. The theorem below imports and uses that exact relation;
+     it introduces no second residual.
+   * Shape search `rg -n '⋃|iUnion' D5/S3/ConceptDynamics/DefinitionCapture
+     D5/S3/ConceptDynamics/DefinitionEscape` found the existing captured-set
+     formula here and the finite-cover family in `FiniteCoverCounting`. Synonym
+     searches for residual/escape/defect, cut/separator/kernel/complement, and
+     count/measure/weight/capture/coverage (including 残差/逃逸/缺陷, 切开/分离/核,
+     and 计数/测度/权重/捕获/覆盖) found `defectRelation`, `Setoid.ker`,
+     `EscapeWeight`, and `CaptureWeight`; none is replaced or renamed here.
+   * `ls D5/S3/ConceptDynamics/DefinitionCapture` and
+     `git grep -n '^def \|^  def \|^structure ' --
+     D5/S3/ConceptDynamics/DefinitionCapture | head -60` found only this module
+     and its `CaptureWeight` structure. Repository search for the theorem name
+     found only its existing consumers in `DirectlyProvableLaws` and Scribe.
+   * Pinned Mathlib supplies `measure_union_add_inter`,
+     `measure_union_toMeasurable`, `measure_toMeasurable`,
+     `subset_toMeasurable`, `Set.encard_union_add_encard_inter`,
+     `Set.encard_le_encard`, `Set.infinite_range_of_injective`, and
+     `Measure.count_apply_infinite`. The exact joined-residual identity is the
+     repository theorem `residual_join_law`, which is imported rather than
+     reproved. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S3.ConceptDynamics.DefinitionCapture.MeasureCapture
 
+open D5.S3.ConceptDynamics.ConceptFiberDecomposition
+open D5.S3.ConceptDynamics.ConceptJoinUniversal
+open D5.S3.ConceptDynamics.TargetRisk.RefinementRiskCostTradeoff
+open D5.S3.ConceptDynamics.DefinitionEscape.ResidualJoinLaw
 open MeasureTheory
 
 /-- Every Mathlib measure is submodular on arbitrary sets.  A measurable hull
@@ -130,25 +149,139 @@ theorem infinite_counting_capture_weight_mass :
     (countingCaptureWeight Nat).mass Set.univ = ⊤ := by
   simp [countingCaptureWeight]
 
-/-- CAS section 4.4 defines `F(S) = M(∅) - M(S)` and separately identifies it
-with captured mass.  The identification fails for unrestricted infinite counting:
-removing one residual edge leaves both remaining masses infinite, so their
-`ENNReal` difference is zero while the captured singleton has mass one. -/
+/-- CAS section 4.4's difference bridge fails inside its own relation model.
+For `X = Nat × Bool`, the baseline residual, the pairs left after adding
+`Prod.snd`, and the pairs captured by that definition are all infinite. Thus
+ordinary counting gives `⊤ - ⊤ = 0` for `F({d})`, while captured mass is `⊤`.
+The statement also verifies symmetry, absence of diagonal pairs, and the exact
+joined-residual identity, so the witness cannot be widened to arbitrary sets. -/
 theorem infinite_counting_cas_bridge_fails :
-    let weight := countingCaptureWeight Nat
-    let residual : Set Nat := Set.univ
-    let cut : Unit → Set Nat := fun _ => {0}
-    let remaining := fun S : Set Unit =>
-      residual \ ⋃ definition ∈ S, cut definition
-    let captured := fun S : Set Unit =>
-      residual ∩ ⋃ definition ∈ S, cut definition
-    let remainingMass := fun S : Set Unit => weight.mass (remaining S)
-    let casF := fun S : Set Unit => remainingMass ∅ - remainingMass S
-    remainingMass ∅ = ⊤ ∧ remainingMass {()} = ⊤ ∧
-      casF {()} = 0 ∧ weight.mass (captured {()}) = 1 ∧
-      casF {()} ≠ weight.mass (captured {()}) := by
+    let X := Nat × Bool
+    let q : Concept X Unit := fun _ => ()
+    let target : Concept X X := id
+    let definition : Concept X Bool := Prod.snd
+    let residual := defectRelation q target
+    let capturedCut := residual ∩
+      ({pair : X × X | Setoid.ker definition pair.1 pair.2} : Set (X × X))ᶜ
+    let remaining := residual \ capturedCut
+    let weight := countingCaptureWeight (X × X)
+    let baselineMass := weight.mass residual
+    let remainingMass := weight.mass remaining
+    let casF := baselineMass - remainingMass
+    (∀ x y, (x, y) ∈ residual ↔ (y, x) ∈ residual) ∧
+      (∀ x, (x, x) ∉ residual) ∧
+      (∀ x y, (x, y) ∈ capturedCut ↔ (y, x) ∈ capturedCut) ∧
+      (∀ x, (x, x) ∉ capturedCut) ∧
+      remaining = defectRelation (conceptJoin q definition) target ∧
+      baselineMass = ⊤ ∧ remainingMass = ⊤ ∧ casF = 0 ∧
+      weight.mass capturedCut = ⊤ ∧ casF ≠ weight.mass capturedCut := by
   classical
-  simp [countingCaptureWeight, Set.encard_sdiff_singleton_of_mem]
+  dsimp only
+  have residualInfinite :
+      (defectRelation (fun _ : Nat × Bool => ())
+        (id : Concept (Nat × Bool) (Nat × Bool))).Infinite := by
+    have rangeInjective : Function.Injective (fun n : Nat =>
+        ((n, false), (n, true))) := by
+      intro left right samePair
+      exact congrArg (fun pair => pair.1.1) samePair
+    exact (Set.infinite_range_of_injective rangeInjective).mono (by
+      rintro pair ⟨n, rfl⟩
+      exact ⟨rfl, by simp⟩)
+  have remainingInfinite :
+      (defectRelation
+        (conceptJoin (fun _ : Nat × Bool => ()) (Prod.snd : Nat × Bool → Bool))
+        (id : Concept (Nat × Bool) (Nat × Bool))).Infinite := by
+    have rangeInjective : Function.Injective (fun n : Nat =>
+        ((n, false), (n + 1, false))) := by
+      intro left right samePair
+      exact congrArg (fun pair => pair.1.1) samePair
+    exact (Set.infinite_range_of_injective rangeInjective).mono (by
+      rintro pair ⟨n, rfl⟩
+      exact ⟨rfl, by simp⟩)
+  have capturedInfinite :
+      (defectRelation (fun _ : Nat × Bool => ())
+          (id : Concept (Nat × Bool) (Nat × Bool)) ∩
+        ({pair : (Nat × Bool) × (Nat × Bool) |
+            Setoid.ker (Prod.snd : Nat × Bool → Bool) pair.1 pair.2} :
+          Set ((Nat × Bool) × (Nat × Bool)))ᶜ).Infinite := by
+    have rangeInjective : Function.Injective (fun n : Nat =>
+        ((n, false), (n, true))) := by
+      intro left right samePair
+      exact congrArg (fun pair => pair.1.1) samePair
+    exact (Set.infinite_range_of_injective rangeInjective).mono (by
+      rintro pair ⟨n, rfl⟩
+      exact ⟨⟨rfl, by simp⟩, by simp [Setoid.ker_def]⟩)
+  have remaining_eq_joined :
+      defectRelation (fun _ : Nat × Bool => ())
+          (id : Concept (Nat × Bool) (Nat × Bool)) \
+        (defectRelation (fun _ : Nat × Bool => ())
+            (id : Concept (Nat × Bool) (Nat × Bool)) ∩
+          ({pair : (Nat × Bool) × (Nat × Bool) |
+              Setoid.ker (Prod.snd : Nat × Bool → Bool) pair.1 pair.2} :
+            Set ((Nat × Bool) × (Nat × Bool)))ᶜ) =
+        defectRelation
+          (conceptJoin (fun _ : Nat × Bool => ())
+            (Prod.snd : Nat × Bool → Bool))
+          (id : Concept (Nat × Bool) (Nat × Bool)) := by
+    rw [residual_join_law]
+    ext pair
+    simp only [Set.mem_sdiff, Set.mem_inter_iff, Set.mem_compl_iff,
+      Set.mem_setOf_eq]
+    tauto
+  have residualMassTop :
+      (countingCaptureWeight ((Nat × Bool) × (Nat × Bool))).mass
+        (defectRelation (fun _ : Nat × Bool => ())
+          (id : Concept (Nat × Bool) (Nat × Bool))) = ⊤ := by
+    change ((defectRelation (fun _ : Nat × Bool => ())
+      (id : Concept (Nat × Bool) (Nat × Bool))).encard : ENNReal) = ⊤
+    rw [residualInfinite.encard_eq]
+    rfl
+  have remainingMassTop :
+      (countingCaptureWeight ((Nat × Bool) × (Nat × Bool))).mass
+        (defectRelation (fun _ : Nat × Bool => ())
+            (id : Concept (Nat × Bool) (Nat × Bool)) \
+          (defectRelation (fun _ : Nat × Bool => ())
+              (id : Concept (Nat × Bool) (Nat × Bool)) ∩
+            ({pair : (Nat × Bool) × (Nat × Bool) |
+                Setoid.ker (Prod.snd : Nat × Bool → Bool) pair.1 pair.2} :
+              Set ((Nat × Bool) × (Nat × Bool)))ᶜ)) = ⊤ := by
+    rw [remaining_eq_joined]
+    change ((defectRelation
+      (conceptJoin (fun _ : Nat × Bool => ())
+        (Prod.snd : Nat × Bool → Bool))
+      (id : Concept (Nat × Bool) (Nat × Bool))).encard : ENNReal) = ⊤
+    rw [remainingInfinite.encard_eq]
+    rfl
+  have capturedMassTop :
+      (countingCaptureWeight ((Nat × Bool) × (Nat × Bool))).mass
+        (defectRelation (fun _ : Nat × Bool => ())
+            (id : Concept (Nat × Bool) (Nat × Bool)) ∩
+          ({pair : (Nat × Bool) × (Nat × Bool) |
+              Setoid.ker (Prod.snd : Nat × Bool → Bool) pair.1 pair.2} :
+            Set ((Nat × Bool) × (Nat × Bool)))ᶜ) = ⊤ := by
+    change ((defectRelation (fun _ : Nat × Bool => ())
+        (id : Concept (Nat × Bool) (Nat × Bool)) ∩
+      ({pair : (Nat × Bool) × (Nat × Bool) |
+          Setoid.ker (Prod.snd : Nat × Bool → Bool) pair.1 pair.2} :
+        Set ((Nat × Bool) × (Nat × Bool)))ᶜ).encard : ENNReal) = ⊤
+    rw [capturedInfinite.encard_eq]
+    rfl
+  refine ⟨?_, ?_, ?_, ?_, remaining_eq_joined, ?_, ?_, ?_, ?_, ?_⟩
+  · intro x y
+    simp [defectRelation, eq_comm]
+  · intro x
+    simp [defectRelation]
+  · intro x y
+    simp [defectRelation, Setoid.ker_def, eq_comm]
+  · intro x
+    simp [defectRelation]
+  · exact residualMassTop
+  · exact remainingMassTop
+  · rw [residualMassTop, remainingMassTop]
+    rfl
+  · exact capturedMassTop
+  · rw [residualMassTop, remainingMassTop, capturedMassTop]
+    exact ENNReal.zero_ne_top
 
 /-- Every measure gives an explicit inhabitant without a finiteness premise. -/
 theorem measure_capture_weight_nonempty
