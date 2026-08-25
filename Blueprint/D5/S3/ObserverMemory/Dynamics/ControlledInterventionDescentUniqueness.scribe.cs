@@ -74,7 +74,7 @@ internal sealed class ControlledInterventionDescentUniquenessDocument
         Formula update = F.Id("F");
         Formula readout = F.Id("q");
         Formula control = F.Id("u");
-        Formula projection = Pi;
+        Formula projection = Call("completionProjection", update, readout);
         Formula descended = Seq(Overline, Grp(F.Id("F")), Underscore, Grp(control));
         Formula completion = Apply("ControlledCompletion", update, readout);
         Formula controlledUpdate = Apply(update, control);

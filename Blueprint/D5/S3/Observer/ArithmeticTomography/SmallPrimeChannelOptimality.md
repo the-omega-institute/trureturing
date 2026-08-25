@@ -6,7 +6,7 @@ The first m primes maximize information among m complete equal-cost channels.
 
 **Theorem 1.1 (The first m prime channels maximize total information).**
 
-$$\begin{gathered}\forall s \in \mathbb{R}, H: \operatorname{Ioi}(1) \to \operatorname{Primes} \to \mathbb{R},\\{}m \in \mathbb{N}, c: \operatorname{OrderEmbedding}(\operatorname{Fin}(m), \mathbb{N}),\\{}1 < s \land (\forall p, r \in \operatorname{Primes}, p < r \Rightarrow H(s, r) < H(s, p)) \land (\forall i \in \operatorname{Fin}(m), \operatorname{Prime}(c(i))) \Rightarrow\\{}\sum_{i\in \operatorname{Fin}(m)} H(s, c(i)) \leq \sum_{i\in \operatorname{Fin}(m)} H(s, \operatorname{prime}(i)).\end{gathered}$$
+$$\begin{gathered}\forall s \in (1, \infty), H: (1, \infty) \to \operatorname{Primes} \to \mathbb{R},\\{}m \in \mathbb{N}, c: \operatorname{OrderEmbedding}(\operatorname{Fin}(m), \mathbb{N}),\\{}(\forall p, r \in \operatorname{Primes}, p < r \Rightarrow H(s, r) < H(s, p)) \land (\forall i \in \operatorname{Fin}(m), \operatorname{Prime}(c(i))) \Rightarrow\\{}\sum_{i\in \operatorname{Fin}(m)} H(s, c(i)) \leq \sum_{i\in \operatorname{Fin}(m)} H(s, \operatorname{prime}(i)).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/ArithmeticTomography/SmallPrimeChannelOptimality.small_prime_channel_optimality` (`✓ std3`). ∎
 

@@ -71,13 +71,14 @@ internal sealed class ItineraryFirstDifferencePowerLawDocument : IScribeDocument
         Formula output = F.Id("O");
         Formula tau = F.Id("tau");
         Formula readout = F.Id("q");
+        Formula outputDistance = F.Id("discreteOutputDistance");
         Formula gamma = F.Id("gamma");
         Formula left = F.Id("y");
         Formula right = Seq(F.Id("y"), Apos);
         Formula time = F.Id("k");
         Formula relation = Apply("FutureIndistinguishable", tau, readout, left, right);
         Formula distance = Apply(
-            "discountedPredictionDistance", tau, readout, gamma, left, right);
+            "discountedPredictionDistance", tau, readout, outputDistance, gamma, left, right);
         Formula iterateLeft = Apply("iterate", tau, time, left);
         Formula iterateRight = Apply("iterate", tau, time, right);
         Formula readoutLeft = Apply(readout, iterateLeft);
@@ -85,9 +86,10 @@ internal sealed class ItineraryFirstDifferencePowerLawDocument : IScribeDocument
         Formula separating = Seq(
             Exists, Sp, time, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
             readoutLeft, Sp, Neq, Sp, readoutRight);
-        Formula firstDifference = Apply(
-            "firstDifferenceIndex", tau, readout, left, right);
-        Formula power = Apply("pow", gamma, firstDifference);
+        Formula firstDifference = Seq(
+            Min, OpenBrace, time, InMacro, Sp, Mathbb, Grp(F.Id("N")), Sp, Mid, Sp,
+            readoutLeft, Sp, Neq, Sp, readoutRight, CloseBrace);
+        Formula power = Seq(gamma, Caret, Grp(firstDifference));
 
         return Disp(Seq(
             Forall, Sp, state, Comma, Sp, output, Comma, Sp,
