@@ -29,6 +29,10 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.PrimeForms.Splitting.ThreeRingProfileFibers
 
+-- Lean 4.33's stricter type check breaks mathlib's `Fintype` deriving handler.
+section
+set_option backward.isDefEq.respectTransparency.types false
+
 /-- A non-ramified quadratic splitting reading. -/
 inductive SplitReading where
   | split
@@ -41,6 +45,8 @@ structure ThreeRingProfile where
   eisenstein : SplitReading
   golden : SplitReading
   deriving DecidableEq, Fintype, Repr
+
+end
 
 /-- The Gaussian reading is split exactly on the unit class `1 mod 4`. -/
 def gaussianReading (u : (ZMod 60)ˣ) : SplitReading :=

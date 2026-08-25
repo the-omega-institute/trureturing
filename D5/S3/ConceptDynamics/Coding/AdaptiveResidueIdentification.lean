@@ -37,12 +37,18 @@ open D5.S3.ConceptDynamics.Faithfulness.JointFaithfulnessLeibnizCriterion
 abbrev ResidueState :=
   {value : Nat // value ∈ ({0, 10, 15, 21} : Finset Nat)}
 
+-- Lean 4.33's stricter type check breaks mathlib's `Fintype` deriving handler.
+section
+set_option backward.isDefEq.respectTransparency.types false
+
 /-- The three available modular sensors. -/
 inductive ResidueSensor
   | two
   | three
   | five
   deriving DecidableEq, Fintype
+
+end
 
 /-- The modulus represented by a sensor. -/
 def sensorModulus : ResidueSensor -> Nat
