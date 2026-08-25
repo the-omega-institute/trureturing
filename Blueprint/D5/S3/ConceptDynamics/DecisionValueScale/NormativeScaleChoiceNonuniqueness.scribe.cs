@@ -57,6 +57,9 @@ internal sealed class NormativeScaleChoiceNonuniquenessDocument
         Formula betaFirst = F.Id("betaFirst");
         Formula alphaSecond = F.Id("alphaSecond");
         Formula betaSecond = F.Id("betaSecond");
+        Formula alpha = F.Id("alpha");
+        Formula beta = F.Id("beta");
+        Formula probability = F.Id("p");
         Formula utility = F.Id("u");
         Formula expected = F.Id("EU");
         Formula doctrine = F.Id("d");
@@ -67,6 +70,7 @@ internal sealed class NormativeScaleChoiceNonuniquenessDocument
         Formula firstDoctrine = F.Id("first");
         Formula secondDoctrine = F.Id("second");
         Formula reals = Seq(Mathbb, Grp(F.Id("R")));
+        Formula oneHalf = Seq(Frac, Grp(D(1)), Grp(D(2)));
 
         Formula positiveScales = Seq(
             D(0), Sp, Lt, Sp, alphaFirst, Sp, Land, Sp,
@@ -102,6 +106,31 @@ internal sealed class NormativeScaleChoiceNonuniquenessDocument
             Apply(expected, alphaSecond, betaSecond, actionB),
             Sp, Gt, Sp,
             Apply(expected, alphaSecond, betaSecond, actionA));
+        Formula probabilityDefinition = Seq(
+            Apply(probability, doctrine), Sp, Eq, Sp, oneHalf);
+        Formula utilityDefinition = Seq(
+            Apply(utility, alpha, beta, doctrine, leftAction), Sp, Eq, Sp,
+            Begin, Grp(F.Id("cases")),
+            alpha, Comma, Amp,
+            doctrine, Sp, Eq, Sp, firstDoctrine, Sp, Land, Sp,
+            leftAction, Sp, Eq, Sp, actionA, RowBreak, Grp(),
+            D(0), Comma, Amp,
+            doctrine, Sp, Eq, Sp, firstDoctrine, Sp, Land, Sp,
+            leftAction, Sp, Eq, Sp, actionB, RowBreak, Grp(),
+            D(0), Comma, Amp,
+            doctrine, Sp, Eq, Sp, secondDoctrine, Sp, Land, Sp,
+            leftAction, Sp, Eq, Sp, actionA, RowBreak, Grp(),
+            beta, Comma, Amp,
+            doctrine, Sp, Eq, Sp, secondDoctrine, Sp, Land, Sp,
+            leftAction, Sp, Eq, Sp, actionB,
+            End, Grp(F.Id("cases")));
+        Formula expectedDefinition = Seq(
+            Apply(expected, alpha, beta, leftAction), Sp, Eq, Sp,
+            Apply(probability, firstDoctrine), Sp, Cdot, Sp,
+            Apply(utility, alpha, beta, firstDoctrine, leftAction),
+            Sp, Plus, Sp,
+            Apply(probability, secondDoctrine), Sp, Cdot, Sp,
+            Apply(utility, alpha, beta, secondDoctrine, leftAction));
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
@@ -109,9 +138,13 @@ internal sealed class NormativeScaleChoiceNonuniquenessDocument
             alphaFirst, Comma, Sp, betaFirst, Comma, Sp,
             alphaSecond, Comma, Sp, betaSecond,
             Sp, InMacro, Sp, reals, Comma, RowBreak, Grp(),
-            positiveScales, Comma, RowBreak, Grp(),
-            firstRanking, Comma, RowBreak, Grp(),
-            invariantRanking, Comma, RowBreak, Grp(),
+            positiveScales, Sp, Land, RowBreak, Grp(),
+            Operatorname, Grp(F.Id("let")), Sp,
+            probabilityDefinition, Comma, RowBreak, Grp(),
+            utilityDefinition, Comma, RowBreak, Grp(),
+            expectedDefinition, SemiSpace, RowBreak, Grp(),
+            Open, firstRanking, Close, Sp, Land, RowBreak, Grp(),
+            Open, invariantRanking, Close, Sp, Land, RowBreak, Grp(),
             reversal, Dot,
             End, Grp(F.Id("gathered"))));
     }

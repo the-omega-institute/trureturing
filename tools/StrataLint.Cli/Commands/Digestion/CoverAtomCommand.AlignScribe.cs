@@ -17,6 +17,7 @@ internal static partial class CoverAtomCommand
         var options = ParseAlignArguments(arguments);
         var currentRaw = repository.ReadCurrent();
         var current = Decode(currentRaw);
+        _ = Decode(repository.ReadRevision(options.BaselineRevision));
         var document = LoadDocument(current);
         var matches = document.RequireDigestionEntries()
             .Where(entry => string.Equals(entry.AtomId, options.AtomId, StringComparison.Ordinal))
@@ -104,7 +105,7 @@ internal static partial class CoverAtomCommand
             changes: alignChanges);
         RequireNoConflictMarkedSources(finalEvaluation);
         RequireAlignedScribeReceipt(EvaluationFor(finalEvaluation, options.AtomId), options.Gid);
-        RequireNoReceiptIntegrityFailure(finalEvaluation);
+        IngestCommand.RequireNoReceiptIntegrityFailure(finalEvaluation);
 
         var ledgerUpdates = IngestCommand.LedgerUpdates(currentRaw, finalRaw);
         var changed = ledgerUpdates.Length > 0;
@@ -140,13 +141,14 @@ internal static partial class CoverAtomCommand
 
     private static AlignArguments ParseAlignArguments(IReadOnlyList<string> arguments)
     {
-        if (arguments.Count != 4)
+        if (arguments.Count != 6)
         {
             throw AlignUsage();
         }
 
         string? atomId = null;
         string? gid = null;
+        string? baselineRevision = null;
         for (var index = 0; index < arguments.Count; index += 2)
         {
             if (index + 1 >= arguments.Count)
@@ -162,21 +164,26 @@ internal static partial class CoverAtomCommand
                 case "--gid" when gid is null:
                     gid = arguments[index + 1];
                     break;
+                case "--base" when baselineRevision is null:
+                    baselineRevision = arguments[index + 1];
+                    break;
                 default:
                     throw AlignUsage();
             }
         }
 
-        if (string.IsNullOrWhiteSpace(atomId) || string.IsNullOrWhiteSpace(gid))
+        if (string.IsNullOrWhiteSpace(atomId)
+            || string.IsNullOrWhiteSpace(gid)
+            || string.IsNullOrWhiteSpace(baselineRevision))
         {
             throw AlignUsage();
         }
 
-        return new AlignArguments(atomId, gid);
+        return new AlignArguments(atomId, gid, baselineRevision);
     }
 
     private static InvalidOperationException AlignUsage() => new(
-        "USAGE: StrataLint align-scribe-receipt --atom-id ATOM_ID --gid GID");
+        "USAGE: StrataLint align-scribe-receipt --atom-id ATOM_ID --gid GID --base REV");
 
     // align-scribe 只容忍非致命 gap;源文本冲突与其余 receipt-integrity failure
     // 均不得写账本。

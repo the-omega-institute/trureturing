@@ -22,16 +22,16 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CheckObservesScribeMismatchAlreadyPresentInBaselineBytes()
+    public void CheckBlocksScribeMismatchAlreadyPresentInBaselineBytes()
     {
         var (outcome, verifier) = CheckReportDerivedScribeStock(
             reportInputsChanged: false,
             "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs");
 
-        var protectedChange = Assert.IsType<AdmissionOutcome.ProtectedSurfaceChange>(outcome);
-        var mismatch = Assert.Single(protectedChange.Observations, static diagnostic =>
+        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
+        var mismatch = Assert.Single(rejected.Diagnostics, static diagnostic =>
             diagnostic.Message.Contains("scribe-emission-mismatch", StringComparison.Ordinal));
-        Assert.Equal(AdmissionEffect.Observe, mismatch.AdmissionEffect);
+        Assert.Equal(AdmissionEffect.Block, mismatch.AdmissionEffect);
         Assert.Equal(["std3"], verifier.AxiomBadges);
     }
 

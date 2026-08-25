@@ -569,7 +569,7 @@ internal static partial class CoverWorld
     };
 
     internal static string[] AlignArgs(CoverInputs inputs) =>
-        ["--atom-id", DefaultAtomId, "--gid", inputs.Gid];
+        ["--atom-id", DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline"];
 
     internal static ProductionCliEnvironment Environment(
         string repositoryRoot,

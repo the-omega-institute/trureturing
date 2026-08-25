@@ -74,7 +74,9 @@ internal sealed class IntertwiningDefectBoundsDocument : IScribeDocumentDefiniti
             Multiply(Multiply(n, Power(l, Seq(n, Minus, D(1)))), NormOf(defect)));
 
         return Disp(Seq(
-            Forall, Sp, scalar, Comma, Sp, source, Comma, Sp, target, Comma, Sp,
+            Forall, Sp, scalar, Sp, Colon, Sp, F.Id("Type"), Comma, Sp,
+            source, Sp, Colon, Sp, F.Id("Type"), Comma, Sp,
+            target, Sp, Colon, Sp, F.Id("Type"), Comma, Sp,
             a, Comma, Sp, c, Comma, Sp, t, Comma, Sp, l, Comma, Sp, n, Comma,
             RowBreak, Grp(),
             carrierPremises, Sp, Rightarrow,
