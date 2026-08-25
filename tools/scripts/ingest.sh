@@ -16,8 +16,9 @@ case "$VERB" in
       dotnet run --project "$PROJECT" --configuration Release -- ingest --base "$BASE"
     ;;
   realign-receipts)
-    exec "$CONSUMER" --role receipt-realignment-consumer --report "$REPORT" -- \
-      dotnet run --project "$PROJECT" --configuration Release -- realign-receipts --base "$BASE"
+    echo "realign-receipts: a local caller cannot authenticate a protected baseline; " \
+      "the base-owned caller must supply an exact OID directly to --protected-base-oid" >&2
+    exit 2
     ;;
   *)
     echo "USAGE: ingest.sh ingest|realign-receipts BASE" >&2

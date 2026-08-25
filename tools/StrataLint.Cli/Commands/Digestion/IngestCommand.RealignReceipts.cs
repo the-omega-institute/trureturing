@@ -353,20 +353,39 @@ internal static partial class IngestCommand
             lean,
             verified,
             baselineDocument,
+            validateProjectedStatus: false,
             baselineSnapshot: baselineSnapshot);
+        // Binds projected_status to the evaluator's deterministic result. It does not bind any
+        // receipt hash; those four fields are owned by the receipt-integrity guard below.
+        RequireProjectedStatusesMatchDerived(finalEvaluation);
+        // Binds coverage source/target and Scribe definition/emission receipts to the final
+        // candidate snapshot and verified producer output. It does not bind projected_status.
         RequireNoReceiptIntegrityFailure(finalEvaluation);
+    }
+
+    private static void RequireProjectedStatusesMatchDerived(
+        DigestionLedgerEvaluation evaluation)
+    {
+        var mismatch = evaluation.Entries.FirstOrDefault(static item =>
+            item.Entry.ProjectedStatus != item.DerivedStatus);
+        if (mismatch is not null)
+        {
+            throw new InvalidOperationException(
+                $"atom {mismatch.Entry.AtomId} projected status differs from derived status");
+        }
     }
 
     private static string ParseRealignArguments(IReadOnlyList<string> arguments)
     {
         if (arguments.Count == 2
-            && arguments[0] == "--base"
+            && arguments[0] == "--protected-base-oid"
             && !string.IsNullOrWhiteSpace(arguments[1]))
         {
             return arguments[1];
         }
 
-        throw new InvalidOperationException("USAGE: StrataLint realign-receipts --base REV");
+        throw new InvalidOperationException(
+            "USAGE: StrataLint realign-receipts --protected-base-oid OID");
     }
 
     internal static void RequireNoReceiptIntegrityFailure(

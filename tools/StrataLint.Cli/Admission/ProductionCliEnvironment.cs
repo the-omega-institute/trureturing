@@ -20,6 +20,8 @@ internal interface IRepositoryGateway
 
     FrozenRevisionIdentity ResolveCurrentRevision();
 
+    /// The caller authenticates this exact OID as the protected baseline. The gateway only
+    /// validates object syntax and type; it must never infer trust from candidate-owned history.
     string ResolveProtectedBaseline(string revision);
 
     RawRepositorySnapshot ReadCurrent();

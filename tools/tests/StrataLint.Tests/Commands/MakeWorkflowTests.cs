@@ -372,6 +372,25 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("mktemp", producer, StringComparison.Ordinal);
         Assert.Contains("mktemp", consumer, StringComparison.Ordinal);
         Assert.Contains("STRATALINT_LEAN_REPORT", consumer, StringComparison.Ordinal);
+        Assert.DoesNotContain("may be stale", consumer, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void LocalReceiptRealignmentRefusesToInventProtectedBaselineTrust()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var result = BoundedProcessRunner.Run(
+            "/bin/bash",
+            [Path.Combine(root, IngestScriptPath), "realign-receipts", new string('a', 40)],
+            root,
+            TimeSpan.FromSeconds(10),
+            4 * 1024);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains(
+            "cannot authenticate a protected baseline",
+            System.Text.Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
     }
 
     [Fact]

@@ -112,7 +112,7 @@ public sealed class GitRepositoryGatewayRevisionTests
     }
 
     [Fact]
-    public void ResolveProtectedBaselineAcceptsOnlyCurrentHeadFirstParent()
+    public void ResolveProtectedBaselineAcceptsOnlyExternallySuppliedFullCommitOid()
     {
         using var repository = new TemporaryDirectory();
         ReviewRegressionTests.RunGit(repository.Path, "init");
@@ -142,16 +142,23 @@ public sealed class GitRepositoryGatewayRevisionTests
         ReviewRegressionTests.RunGit(repository.Path, "add", "identity.txt");
         ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "candidate");
         var candidate = ReviewRegressionTests.RunGit(repository.Path, "rev-parse", "HEAD").Trim();
+        ReviewRegressionTests.RunGit(
+            repository.Path,
+            "branch",
+            "protected-baseline-name",
+            protectedBaseline);
         var gateway = new GitRepositoryGateway(repository.Path);
 
         Assert.Equal(protectedBaseline, gateway.ResolveProtectedBaseline(protectedBaseline));
-        var candidateException = Assert.Throws<InvalidOperationException>(() =>
-            gateway.ResolveProtectedBaseline(candidate));
-        var ancestorException = Assert.Throws<InvalidOperationException>(() =>
-            gateway.ResolveProtectedBaseline(ancestor));
+        Assert.Equal(candidate, gateway.ResolveProtectedBaseline(candidate));
+        Assert.Equal(ancestor, gateway.ResolveProtectedBaseline(ancestor));
+        var symbolicException = Assert.Throws<InvalidOperationException>(() =>
+            gateway.ResolveProtectedBaseline("HEAD^1"));
+        var namedException = Assert.Throws<InvalidOperationException>(() =>
+            gateway.ResolveProtectedBaseline("protected-baseline-name"));
 
-        Assert.Contains("current HEAD first parent", candidateException.Message, StringComparison.Ordinal);
-        Assert.Contains("current HEAD first parent", ancestorException.Message, StringComparison.Ordinal);
+        Assert.Contains("full commit OID", symbolicException.Message, StringComparison.Ordinal);
+        Assert.Contains("full commit OID", namedException.Message, StringComparison.Ordinal);
     }
 
     [Fact]

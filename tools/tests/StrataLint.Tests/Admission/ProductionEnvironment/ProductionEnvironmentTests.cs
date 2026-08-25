@@ -622,7 +622,7 @@ internal sealed class FakeRepositoryGateway(
         if (!string.Equals(revision, "baseline", StringComparison.Ordinal))
         {
             throw new InvalidOperationException(
-                "realign-receipts protected baseline must resolve to the current HEAD first parent");
+                "realign-receipts protected baseline must be supplied by the base-side caller");
         }
 
         return revision;

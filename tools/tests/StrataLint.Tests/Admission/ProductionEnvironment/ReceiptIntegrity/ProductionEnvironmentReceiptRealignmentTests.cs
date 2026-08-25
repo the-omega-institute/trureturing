@@ -17,7 +17,7 @@ public sealed partial class ProductionEnvironmentTests
             .Single(static entry => entry.AtomId == "receipt-gap-sibling");
         var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
 
-        var result = environment.RealignReceipts(["--base", "baseline"]);
+        var result = environment.RealignReceipts(["--protected-base-oid", "baseline"]);
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("fatal_gaps_repaired=3", result.Output, StringComparison.Ordinal);
@@ -61,7 +61,7 @@ public sealed partial class ProductionEnvironmentTests
         var before = DirectoryLedgerTestSupport.Image(temporary.Path);
 
         var result = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files)
-            .RealignReceipts(["--base", "baseline"]);
+            .RealignReceipts(["--protected-base-oid", "baseline"]);
 
         Assert.False(result.Success);
         Assert.Contains("must have exactly one Scribe receipt", result.Error, StringComparison.Ordinal);
@@ -77,7 +77,7 @@ public sealed partial class ProductionEnvironmentTests
         var before = DirectoryLedgerTestSupport.Image(temporary.Path);
 
         var result = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files)
-            .RealignReceipts(["--base", "baseline"]);
+            .RealignReceipts(["--protected-base-oid", "baseline"]);
 
         Assert.False(result.Success);
         Assert.Contains("coverage claim changed", result.Error, StringComparison.Ordinal);
@@ -95,7 +95,7 @@ public sealed partial class ProductionEnvironmentTests
         var before = DirectoryLedgerTestSupport.Image(temporary.Path);
 
         var result = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files)
-            .RealignReceipts(["--base", "baseline"]);
+            .RealignReceipts(["--protected-base-oid", "baseline"]);
 
         Assert.False(result.Success);
         Assert.Contains("Lean declaration signature changed", result.Error, StringComparison.Ordinal);
@@ -111,7 +111,7 @@ public sealed partial class ProductionEnvironmentTests
         var before = DirectoryLedgerTestSupport.Image(temporary.Path);
 
         var result = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files)
-            .RealignReceipts(["--base", "baseline"]);
+            .RealignReceipts(["--protected-base-oid", "baseline"]);
 
         Assert.False(result.Success);
         Assert.Contains("atom content identity changed", result.Error, StringComparison.Ordinal);
@@ -119,7 +119,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void ReceiptRealignmentRejectsCandidateRevisionAsProtectedBaselineWithoutWriting()
+    public void ReceiptRealignmentRejectsLegacyBaseArgumentWithoutWriting()
     {
         var inputs = MixedReceiptBacklogInputs();
         using var temporary = new TemporaryDirectory();
@@ -137,7 +137,7 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.RealignReceipts(["--base", "candidate"]);
 
         Assert.False(result.Success);
-        Assert.Contains("protected baseline", result.Error, StringComparison.Ordinal);
+        Assert.Contains("--protected-base-oid", result.Error, StringComparison.Ordinal);
         Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
     }
 
@@ -152,7 +152,7 @@ public sealed partial class ProductionEnvironmentTests
         var before = DirectoryLedgerTestSupport.Image(temporary.Path);
 
         var result = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files)
-            .RealignReceipts(["--base", "baseline"]);
+            .RealignReceipts(["--protected-base-oid", "baseline"]);
 
         Assert.False(result.Success);
         Assert.Contains(
@@ -177,7 +177,7 @@ public sealed partial class ProductionEnvironmentTests
         var before = DirectoryLedgerTestSupport.Image(temporary.Path);
 
         var result = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files)
-            .RealignReceipts(["--base", "baseline"]);
+            .RealignReceipts(["--protected-base-oid", "baseline"]);
 
         Assert.False(result.Success);
         Assert.Contains(
@@ -210,7 +210,7 @@ public sealed partial class ProductionEnvironmentTests
         var before = DirectoryLedgerTestSupport.Image(temporary.Path);
 
         var result = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files)
-            .RealignReceipts(["--base", "baseline"]);
+            .RealignReceipts(["--protected-base-oid", "baseline"]);
 
         Assert.False(result.Success);
         Assert.Contains("scribe-definition-mismatch", result.Error, StringComparison.Ordinal);
@@ -218,7 +218,48 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void ReceiptRealignmentRejectsCorruptedSerializedLedgerBeforeWriting()
+    public void ReceiptRealignmentRejectsCorruptedSerializedCoverageSourceBeforeWriting()
+    {
+        AssertCorruptedSerializedFieldRejected(
+            "coverage-source",
+            "coverage-receipt-mismatch");
+    }
+
+    [Fact]
+    public void ReceiptRealignmentRejectsCorruptedSerializedCoverageTargetBeforeWriting()
+    {
+        AssertCorruptedSerializedFieldRejected(
+            "coverage-target",
+            "coverage-receipt-mismatch");
+    }
+
+    [Fact]
+    public void ReceiptRealignmentRejectsCorruptedSerializedScribeDefinitionBeforeWriting()
+    {
+        AssertCorruptedSerializedFieldRejected(
+            "scribe-definition",
+            "scribe-definition-mismatch");
+    }
+
+    [Fact]
+    public void ReceiptRealignmentRejectsCorruptedSerializedScribeEmissionBeforeWriting()
+    {
+        AssertCorruptedSerializedFieldRejected(
+            "scribe-emission",
+            "scribe-emission-mismatch");
+    }
+
+    [Fact]
+    public void ReceiptRealignmentRejectsCorruptedSerializedProjectedStatusBeforeWriting()
+    {
+        AssertCorruptedSerializedFieldRejected(
+            "projected-status",
+            "projected status differs from derived status");
+    }
+
+    private static void AssertCorruptedSerializedFieldRejected(
+        string field,
+        string expectedError)
     {
         var inputs = MixedReceiptBacklogInputs();
         using var temporary = new TemporaryDirectory();
@@ -233,11 +274,15 @@ public sealed partial class ProductionEnvironmentTests
                 CoverWorld.Raw(inputs.Baseline)),
             new FakeLeanReportSource(inputs.Report),
             new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
-            ["--base", "baseline"],
-            CorruptSerializedCoverageReceipt);
+            ["--protected-base-oid", "baseline"],
+            (currentRaw, currentDocument, replacementDocument) => CorruptSerializedField(
+                currentRaw,
+                currentDocument,
+                replacementDocument,
+                field));
 
         Assert.False(result.Success);
-        Assert.Contains("coverage-receipt-mismatch", result.Error, StringComparison.Ordinal);
+        Assert.Contains(expectedError, result.Error, StringComparison.Ordinal);
         Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
     }
 
@@ -368,10 +413,11 @@ public sealed partial class ProductionEnvironmentTests
         return inputs with { Files = files, Document = document };
     }
 
-    private static RawRepositorySnapshot CorruptSerializedCoverageReceipt(
+    private static RawRepositorySnapshot CorruptSerializedField(
         RawRepositorySnapshot currentRaw,
         BackfillInventoryDocument currentDocument,
-        BackfillInventoryDocument replacementDocument)
+        BackfillInventoryDocument replacementDocument,
+        string field)
     {
         var serialized = IngestCommand.ReplaceLedger(
             currentRaw,
@@ -385,18 +431,7 @@ public sealed partial class ProductionEnvironmentTests
                 .Select(source => source with
                 {
                     Entries = source.Entries.Select(entry => entry.AtomId == "receipt-gap-sibling"
-                        ? entry with
-                        {
-                            Receipts = entry.Receipts with
-                            {
-                                Coverage = entry.Receipts.Coverage
-                                    .Select(receipt => receipt with
-                                    {
-                                        SourceSha256 = "sha256:" + new string('f', 64),
-                                    })
-                                    .ToImmutableArray(),
-                            },
-                        }
+                        ? CorruptSerializedField(entry, field)
                         : entry).ToImmutableArray(),
                 })
                 .ToImmutableArray());
@@ -404,6 +439,62 @@ public sealed partial class ProductionEnvironmentTests
             serialized,
             serializedDocument,
             corruptedDocument);
+    }
+
+    private static DigestionLedgerEntry CorruptSerializedField(
+        DigestionLedgerEntry entry,
+        string field)
+    {
+        var corruptSha256 = "sha256:" + new string('f', 64);
+        return field switch
+        {
+            "coverage-source" => entry with
+            {
+                Receipts = entry.Receipts with
+                {
+                    Coverage = entry.Receipts.Coverage
+                        .Select(receipt => receipt with { SourceSha256 = corruptSha256 })
+                        .ToImmutableArray(),
+                },
+            },
+            "coverage-target" => entry with
+            {
+                Receipts = entry.Receipts with
+                {
+                    Coverage = entry.Receipts.Coverage
+                        .Select(receipt => receipt with { TargetSha256 = corruptSha256 })
+                        .ToImmutableArray(),
+                },
+            },
+            "scribe-definition" => entry with
+            {
+                Receipts = entry.Receipts with
+                {
+                    Scribe = entry.Receipts.Scribe
+                        .Select(receipt => receipt with { DefinitionSha256 = corruptSha256 })
+                        .ToImmutableArray(),
+                },
+            },
+            "scribe-emission" => entry with
+            {
+                Receipts = entry.Receipts with
+                {
+                    Scribe = entry.Receipts.Scribe
+                        .Select(receipt => receipt with { EmissionSha256 = corruptSha256 })
+                        .ToImmutableArray(),
+                },
+            },
+            "projected-status" => entry with
+            {
+                ProjectedStatus = entry.ProjectedStatus with
+                {
+                    Truth = entry.ProjectedStatus.Truth == DigestionTruthState.Open
+                        ? DigestionTruthState.Closed
+                        : DigestionTruthState.Open,
+                },
+            },
+            _ => throw new InvalidOperationException($"unknown corruption field {field}"),
+        };
     }
 
     private static CoverInputs WithChangedDeclarationSignature(

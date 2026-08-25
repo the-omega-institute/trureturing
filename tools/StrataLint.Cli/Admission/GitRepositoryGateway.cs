@@ -181,16 +181,26 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
     public string ResolveProtectedBaseline(string revision)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(revision);
-        var resolved = GitText("rev-parse", "--verify", $"{revision}^{{commit}}").Trim();
-        var protectedBaseline = GitText("rev-parse", "--verify", "HEAD^1^{commit}").Trim();
-        if (!string.Equals(resolved, protectedBaseline, StringComparison.Ordinal))
+        if (!IsFullObjectId(revision))
         {
             throw new InvalidOperationException(
-                "realign-receipts protected baseline must resolve to the current HEAD first parent");
+                "realign-receipts protected baseline must be an externally supplied full commit OID");
         }
 
-        return protectedBaseline;
+        var resolved = GitText("rev-parse", "--verify", $"{revision}^{{commit}}").Trim();
+        if (!string.Equals(resolved, revision, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                "realign-receipts protected baseline did not resolve to the supplied full commit OID");
+        }
+
+        return resolved;
     }
+
+    private static bool IsFullObjectId(string value) =>
+        value.Length is 40 or 64
+        && value.All(static character => character is >= '0' and <= '9'
+            or >= 'a' and <= 'f');
 
     public RawRepositorySnapshot ReadRevision(string revision)
     {
