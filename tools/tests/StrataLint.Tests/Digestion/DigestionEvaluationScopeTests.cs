@@ -18,6 +18,28 @@ public sealed class DigestionEvaluationScopeTests
     }
 
     [Fact]
+    public void IngestScopePartialOnlyDeltaTriggersFullScan()
+    {
+        var scope = DigestionEvaluationScopes.ForChanges(
+            RawChangeSet.Create(
+                ["tools/StrataLint.Cli/Commands/Digestion/IngestCommand.Scope.cs"]),
+            "tools/StrataLint.Cli/Commands/Digestion/IngestCommand.cs");
+
+        Assert.Equal(DigestionEvaluationScope.FullScan, scope);
+    }
+
+    [Fact]
+    public void NewCallerPartialAutomaticallyEntersImplementationDirectoryClosure()
+    {
+        var scope = DigestionEvaluationScopes.ForChanges(
+            RawChangeSet.Create(
+                ["tools/StrataLint.Cli/Commands/Digestion/IngestCommand.FuturePartial.cs"]),
+            "tools/StrataLint.Cli/Commands/Digestion/IngestCommand.cs");
+
+        Assert.Equal(DigestionEvaluationScope.FullScan, scope);
+    }
+
+    [Fact]
     public void ChangedSetDoesNotReplayProjectedStatusForAnUnchangedEntry()
     {
         var evaluation = EvaluateMismatchedProjectedStatus(
