@@ -1,0 +1,17 @@
+ast_path: section/54-3-最小可形式化定义清单
+fingerprints:
+  raw_sha256: sha256:8f550f340a56075d2e0b7a070a3f78814a780adf06d7f6677736a277f7a39cb3
+  normalized_sha256: sha256:8f550f340a56075d2e0b7a070a3f78814a780adf06d7f6677736a277f7a39cb3
+cas_ref: sha256:8f550f340a56075d2e0b7a070a3f78814a780adf06d7f6677736a277f7a39cb3
+coverage_gids:
+  - D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoWeakPreorder.pareto_weak_reflexive_transitive
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoWeakPreorder.pareto_weak_reflexive_transitive
+      source_sha256: sha256:8f550f340a56075d2e0b7a070a3f78814a780adf06d7f6677736a277f7a39cb3
+      target_sha256: sha256:40dc27be95741c558299e8227408edc5bf93a5ee6c9033638519dfa664c3a298
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoWeakPreorder.pareto_weak_reflexive_transitive
+      definition_sha256: sha256:7f058c54592326a79fa3b03a3c1874ed1c37a056c1c83c068694e1b0863e1769
+      emission_sha256: sha256:36f396f56038353ea0f3da69a21fbfad5e575d6e9eaba0f884ce6b9a9774736f
+  unresolved_subitems: []
