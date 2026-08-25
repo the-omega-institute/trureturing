@@ -74,5 +74,4 @@ The second clause exposes the independent inverse-limit image check via the fini
 - Truth anchor: `D5/S3/ConceptDynamics/Gluing/LocalDescentGlobalCompatibility.local_descent_requires_global_gluing_checks`
 - Truth anchor: `D5/S3/ConceptDynamics/Gluing/LocalDescentGlobalCompatibility.truncatedNaturalSystem`
 - Dependency: [D5/S3/ConceptDynamics/Gluing/GlobalFrameCoboundaryCriterion](GlobalFrameCoboundaryCriterion.md)
-- Dependency: [D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion](../RefinementGeometry/InverseLimitCompletion.md)
 - Dependency: [D5/S3/QuantumContext/PublicLedgerDescent](../../QuantumContext/PublicLedgerDescent.md)
