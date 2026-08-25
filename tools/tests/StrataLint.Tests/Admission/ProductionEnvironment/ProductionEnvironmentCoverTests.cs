@@ -187,7 +187,10 @@ public sealed partial class ProductionEnvironmentTests
     [Fact]
     public void AlignRejectsCoverageReceiptMismatchBeforeWritingLedger()
     {
-        var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
+        var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec() with
+        {
+            BaselineTargetIdentical = true,
+        });
         var entry = Assert.Single(
             inputs.Document.RequireDigestionEntries(),
             candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
@@ -421,6 +424,34 @@ public sealed partial class ProductionEnvironmentTests
     [InlineData("coverage-receipt-mismatch")]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
+    public void CoverAtomRejectsUnrelatedCoverWhenReceiptIntegrityBacklogExistsAtForkPoint(
+        string mismatchCode)
+    {
+        var materialized = CoverWorld.Materialize(new CoverSpec
+        {
+            OtherAtomBinding = ("receipt-gap-sibling", "D5/S0/Carrier/Probe.sibling"),
+            ReportDeclarations = ImmutableArray.Create("probe", "sibling"),
+        });
+        var inputs = DirectoryInputs(WithReceiptMismatchAtForkPoint(
+            materialized,
+            mismatchCode,
+            byteIdenticalBaseline: true));
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+        var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
+
+        var result = environment.CoverAtom(CoverArgs(inputs));
+
+        Assert.False(result.Success);
+        Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+    }
+
+    [Theory]
+    [InlineData("coverage-receipt-mismatch")]
+    [InlineData("scribe-definition-mismatch")]
+    [InlineData("scribe-emission-mismatch")]
     public void AlignScribeReceiptRejectsReceiptIntegrityMismatchOnSiblingBeforeWritingLedger(
         string mismatchCode)
     {
@@ -438,6 +469,34 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.False(result.Success);
         Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
+        Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+    }
+
+    [Theory]
+    [InlineData("coverage-receipt-mismatch")]
+    [InlineData("scribe-definition-mismatch")]
+    [InlineData("scribe-emission-mismatch")]
+    public void AlignScribeReceiptRejectsTargetRepairWhenUnrelatedBacklogExistsAtForkPoint(
+        string mismatchCode)
+    {
+        var materialized = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec() with
+        {
+            OtherAtomBinding = ("receipt-gap-sibling", "D5/S0/Carrier/Probe.sibling"),
+            ReportDeclarations = ImmutableArray.Create("probe", "sibling"),
+        });
+        var inputs = DirectoryInputs(WithReceiptMismatchAtForkPoint(
+            materialized,
+            mismatchCode,
+            byteIdenticalBaseline: true));
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+        var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
+
+        var result = environment.AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
+
+        Assert.False(result.Success);
         Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
         Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
     }
@@ -511,7 +570,7 @@ public sealed partial class ProductionEnvironmentTests
             inputs.Document.RequireDigestionEntries(),
             entry => entry.AtomId == siblingAtomId);
         var siblingGid = Assert.Single(siblingEntry.CoverageGids);
-        var documentGid = siblingGid[..siblingGid.LastIndexOf('.')];
+        var documentGid = ScribeEmissionAttestation.DocumentGid(siblingGid);
         Assert.True(inputs.VerifiedEmissions!.TryGet(documentGid, out var verified));
         var targetPath = documentGid + ".lean";
         var targetSha256 = DigestionFingerprint.Compute(
@@ -568,6 +627,23 @@ public sealed partial class ProductionEnvironmentTests
         };
     }
 
+    private static CoverInputs WithReceiptMismatchAtForkPoint(
+        CoverInputs inputs,
+        string mismatchCode,
+        bool byteIdenticalBaseline = false)
+    {
+        var current = WithSiblingReceiptMismatch(inputs, mismatchCode);
+        var baseline = byteIdenticalBaseline
+            ? new Dictionary<string, string>(current.Files, StringComparer.Ordinal)
+            : new Dictionary<string, string>(current.Baseline, StringComparer.Ordinal);
+        if (!byteIdenticalBaseline)
+        {
+            DirectoryLedgerTestSupport.ReplaceWithProjection(baseline, current.Document);
+        }
+
+        return current with { Baseline = baseline };
+    }
+
     private static CoverInputs WithSiblingDuplicateCoverageReceipt(CoverInputs inputs)
     {
         const string siblingAtomId = "finding-sibling";
@@ -616,8 +692,9 @@ public sealed partial class ProductionEnvironmentTests
         string repositoryRoot,
         CoverInputs inputs,
         IReadOnlyDictionary<string, string> currentFiles,
-        RawChangeSet? changes = null) =>
-        new(
+        RawChangeSet? changes = null)
+    {
+        return new ProductionCliEnvironment(
             repositoryRoot,
             new FakeRepositoryGateway(
                 changes ?? RawChangeSet.Create(Array.Empty<string>()),
@@ -625,6 +702,7 @@ public sealed partial class ProductionEnvironmentTests
                 CoverWorld.Raw(inputs.Baseline)),
             new FakeLeanReportSource(inputs.Report),
             new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
+    }
 
     private static void AssertProductionScribeVerifierMaterializesOnlyTheCapturedSnapshot()
     {

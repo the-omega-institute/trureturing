@@ -604,7 +604,8 @@ case "$COMMAND" in
       exit "$status"
     fi
     step align-scribe-receipt run_cli \
-      align-scribe-receipt --atom-id "$ATOM_ID" --gid "$GID"
+      align-scribe-receipt --atom-id "$ATOM_ID" --gid "$GID" --base "$BASE"
+    step emit-post-alignment make emit
     commit_all_if_needed "formalize: cover $ATOM_ID with $GID"
     ;;
   *)

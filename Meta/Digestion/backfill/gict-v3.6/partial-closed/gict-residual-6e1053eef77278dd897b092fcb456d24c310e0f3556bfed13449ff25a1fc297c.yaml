@@ -12,8 +12,8 @@ receipts:
       target_sha256: sha256:d329cb0cdf1676b321dfaf7fcb3fd6af71d7b49a09c90427592ec6f4f7e23550
   scribe:
     - gid: D5/S3/Constants/ElementaryExactValues.elementary_exact_values
-      definition_sha256: sha256:1d898990a94e25a8fa9ee512a8f860e31feeb054cf73d5e4ba3e0ed6c0055cf4
-      emission_sha256: sha256:ce39f5137cb3b7eed8a073dd95ce7e5c038a55014b68cb21e380ab7b171bc7fc
+      definition_sha256: sha256:516a3bf8c09c94e88103f8d3b95c68532e5e06e17a3ee961b75c3e6728e0437b
+      emission_sha256: sha256:0bc4c3ccd8f1e8648c308f66a3396dedab54045ae9a7b8322bde1fe805cb4670
   unresolved_subitems:
     - phi-derivative-at-zero-identification
     - ah-exact-value-delta-certificate
