@@ -65,15 +65,16 @@ internal sealed class DirectlyProvableLawsDocument : IScribeDocumentDefinition
                             + "conjunct is source clause seven, the seventh is source clause eight, "
                             + "and the eighth is source clause nine.")),
                     Paragraph(Text(
-                        "Boolean examples witness a nonempty residual, redundant zero gain, a "
-                            + "blind obstruction, and finite closure by one identity definition. "
-                            + "The infinite counting model witnesses the false bridge for source "
-                            + "clause six. Coordinate "
-                            + "swap on real pairs gives nonzero prepared and semigroup defects, "
-                            + "and the real identity map attains the cascade bound. Nine named "
-                            + "false-neighbor declarations follow the nine source-list positions; "
-                            + "the sixth records the bridge failure and the other eight negate "
-                            + "nearby strengthened or premise-weakened statements."))),
+                        "The companion DirectlyProvableLawWitnesses module gives ten named and "
+                            + "mechanically consumed checks: Boolean models witness a nonempty "
+                            + "residual, redundant zero gain, a blind obstruction, and finite "
+                            + "closure by one identity definition; coordinate swap gives nonzero "
+                            + "prepared and semigroup defects; and the real identity map attains "
+                            + "the cascade bound. Its adjacent strict capture example is not "
+                            + "source clause six. Nine named false-neighbor declarations remain "
+                            + "in this module; the sixth records only the bridge failure and the "
+                            + "other eight negate nearby strengthened or premise-weakened "
+                            + "statements."))),
                 DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()

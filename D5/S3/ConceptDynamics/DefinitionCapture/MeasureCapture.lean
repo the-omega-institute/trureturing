@@ -154,7 +154,9 @@ For `X = Nat × Bool`, the baseline residual, the pairs left after adding
 `Prod.snd`, and the pairs captured by that definition are all infinite. Thus
 ordinary counting gives `⊤ - ⊤ = 0` for `F({d})`, while captured mass is `⊤`.
 The statement also verifies symmetry, absence of diagonal pairs, and the exact
-joined-residual identity, so the witness cannot be widened to arbitrary sets. -/
+joined-residual identity, so the witness cannot be widened to arbitrary sets.
+It refutes only the compatibility of `F(S) = M(∅) - M(S)` with interpreting
+`F` as captured mass at infinite values; it does not refute submodularity. -/
 theorem infinite_counting_cas_bridge_fails :
     let X := Nat × Bool
     let q : Concept X Unit := fun _ => ()
