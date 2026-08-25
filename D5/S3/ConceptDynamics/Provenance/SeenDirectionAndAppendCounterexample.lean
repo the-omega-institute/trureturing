@@ -3,37 +3,30 @@
    mirror-B: D5/B/S3/ConceptDynamics/Provenance/SeenDirectionAndAppendCounterexample
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Direction witnesses for incoming closures and the strict late-append boundary. -/
+   digest: Concrete early-append witness for the strict post-decision boundary. -/
 
-import Mathlib.Data.List.Basic
-import Mathlib.Data.Set.Insert
-import Mathlib.Logic.Relation
 import D5.S3.ConceptDynamics.Provenance.RoleAdmissionContaminationClosure
 
 /- Library-search audit trail (2026-08-25):
-   * `rg -n 'Relation\.ReflTransGen|Set \(.*x.*\)' \
-       D5/S3/ConceptDynamics --glob '*.lean' | head -20`
-     found the pinned reachability carrier and unrelated pair relations; no
-     direction witness for DECT's evidence filtration was present.
-   * `rg -n -i 'incoming|outgoing|predecessor|ancestor|dependency closure|'\
-       'joint|common|shared|indexed|family|union|intersection|kernel|readout' \
-       D5/S3/ConceptDynamics/Provenance --glob '*.lean' | head -40`
-     found and reused `Contam`, `EvidenceFiltration.seen`, and
-     `AdjudicationSnapshot.dependencyClosure`; no synonym is introduced here.
+   * `rg -n 'AppendOnlyExtension|admissible_judge_append_invariant|'\
+       'early append|post-decision' D5/S3/ConceptDynamics \
+       docs/develop/theory/DEFINITION_ESCAPE_COMPLETION_THEORY.md`
+     found the reusable invariant in the imported role module and the source's
+     strict post-decision condition; no existing concrete early-append witness.
    * `git grep -n -E \
        '^def |^  def |^structure |^inductive |^abbrev |^theorem ' -- \
        D5/S3/ConceptDynamics/Provenance | head -60`
      found the role module's existing append-invariance theorem and no semantic
-     early-append counterexample. This file adds only concrete witness objects.
+     early-append counterexample. This file adds only its concrete neighbor.
    * `grep -rl \
        'RoleAdmissionContaminationClosure\|SeenDirectionAndAppendCounterexample' \
        Golden/Frozen/accepted/*.json`
      returned no paths, so neither module is frozen.
    * `nl -ba docs/develop/theory/DEFINITION_ESCAPE_COMPLETION_THEORY.md | \
-       sed -n '3609,3750p'`
-     confirmed outgoing `Contam` at line 3728, incoming `Dep*` at line 3694,
-     incoming access closure at line 3621, and the strict append condition at
-     line 3721. Lines 3661 and 3714-3717 only consume those directed objects.
+       sed -n '3680,3730p'`
+     confirmed at line 3721 that only tail events strictly after the decision
+     event preserve old-round admission. The witness below violates exactly
+     that premise while keeping the source ledger and snapshot types.
 -/
 
 set_option autoImplicit false
@@ -42,107 +35,6 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.ConceptDynamics.Provenance.SeenDirectionAndAppendCounterexample
 
 open D5.S3.ConceptDynamics.Provenance.RoleAdmissionContaminationClosure
-
-private def directionRelation : Bool -> Bool -> Prop :=
-  fun source target => source = false /\ target = true
-
-private def reverseDirectionRelation : Bool -> Bool -> Prop :=
-  fun source target => source = true /\ target = false
-
-private theorem direction_from_true_eq {target : Bool}
-    (reachable : Relation.ReflTransGen directionRelation true target) :
-    target = true := by
-  induction reachable with
-  | refl => rfl
-  | tail _ step _ => exact step.2
-
-private theorem reverse_from_false_eq {target : Bool}
-    (reachable : Relation.ReflTransGen reverseDirectionRelation false target) :
-    target = false := by
-  induction reachable with
-  | refl => rfl
-  | tail _ step _ => exact step.2
-
-theorem contam_direction_witness :
-    true ∈ Contam directionRelation ({false} : Set Bool) /\
-      false ∉ Contam directionRelation ({true} : Set Bool) := by
-  constructor
-  · exact ⟨false, by simp, Relation.ReflTransGen.single (by simp [directionRelation])⟩
-  · rintro ⟨root, rootMem, reachable⟩
-    have rootEq : root = true := by simpa using rootMem
-    subst root
-    exact Bool.noConfusion (direction_from_true_eq reachable)
-
-private def directionFiltration : EvidenceFiltration Nat Bool :=
-  { seen := fun cutoff =>
-      {evidence | 0 < cutoff /\
-        Relation.ReflTransGen directionRelation evidence true}
-    monotone := by
-      intro i j hij evidence seen
-      exact ⟨seen.1.trans_le hij, seen.2⟩ }
-
-private def directionSnapshot : AdjudicationSnapshot Nat Bool Nat Bool Nat 7 :=
-  { freezeEvent := 1
-    decisionEvent := 3
-    frozenAt := 1
-    decidedAt := 2
-    freezeBeforeDecision := by decide
-    timeBeforeDecision := by decide
-    filtration := directionFiltration
-    artifactDependsOn := directionRelation
-    commitmentRoots := {true}
-    evidenceDependsOn := directionRelation
-    evidenceDependencies := {false}
-    commitmentClosureVisibleAtFreeze := by
-      intro evidence dependency
-      have evidenceEq : evidence = false := by simpa using dependency
-      subst evidence
-      exact ⟨by decide,
-        Relation.ReflTransGen.single (by simp [directionRelation])⟩ }
-
-theorem dependency_closure_direction_witness :
-    false ∈ directionSnapshot.dependencyClosure /\
-      false ∈ directionSnapshot.evidenceDependencies /\
-      false ∈ directionSnapshot.filtration.seen directionSnapshot.freezeEvent /\
-      false ∉ Contam directionRelation directionSnapshot.commitmentRoots := by
-  have artifactIncoming : false ∈ directionSnapshot.dependencyClosure := by
-    refine ⟨true, by simp [directionSnapshot], ?_⟩
-    exact Relation.ReflTransGen.single ⟨rfl, rfl⟩
-  have evidenceIncoming : false ∈ directionSnapshot.evidenceDependencies := by
-    simp [directionSnapshot]
-  have visible :=
-    directionSnapshot.commitmentClosureVisibleAtFreeze evidenceIncoming
-  have notOutgoing : false ∉
-      Contam directionRelation directionSnapshot.commitmentRoots := by
-    rintro ⟨root, rootMem, reachable⟩
-    have rootEq : root = true := by simpa [directionSnapshot] using rootMem
-    subst root
-    exact Bool.noConfusion (direction_from_true_eq reachable)
-  exact ⟨artifactIncoming, evidenceIncoming, visible, notOutgoing⟩
-
-private def seenForward : EvidenceFiltration Nat Bool :=
-  directionFiltration
-
-private def seenReverse : EvidenceFiltration Nat Bool :=
-  { seen := fun cutoff =>
-      {evidence | 0 < cutoff /\
-        Relation.ReflTransGen reverseDirectionRelation evidence true}
-    monotone := by
-      intro i j hij evidence seen
-      exact ⟨seen.1.trans_le hij, seen.2⟩ }
-
-theorem seen_direction_witness :
-    false ∈ seenForward.seen 1 /\
-      false ∉ seenReverse.seen 1 /\
-      false ∉ seenForward.seen 0 := by
-  constructor
-  · exact ⟨by decide,
-      Relation.ReflTransGen.single (by simp [directionRelation])⟩
-  constructor
-  · rintro ⟨_positive, reachable⟩
-    exact Bool.noConfusion (reverse_from_false_eq reachable)
-  · rintro ⟨positive, _reachable⟩
-    omega
 
 private def semanticFiltration : EvidenceFiltration Nat Bool :=
   { seen := fun cutoff =>
@@ -165,12 +57,7 @@ private def semanticSnapshot : AdjudicationSnapshot Nat Bool Nat Bool Nat 7 :=
     artifactDependsOn := fun source target => source = target
     commitmentRoots := {true}
     evidenceDependsOn := fun source target => source = target
-    evidenceDependencies := {true}
-    commitmentClosureVisibleAtFreeze := by
-      intro evidence dependency
-      have evidenceEq : evidence = true := by simpa using dependency
-      subst evidence
-      exact Or.inl ⟨rfl, le_rfl⟩ }
+    evidenceDependencies := {true} }
 
 private def semanticAdjudicateEvent : UseEvent Nat Bool Nat Bool Unit Nat :=
   { eventId := 3
@@ -267,6 +154,21 @@ private theorem semanticNewRejected :
   intro admitted
   exact admitted.2.2.2 semanticAdaptiveUse
 
+private theorem semanticAppendEquality :
+    semanticExtendedLedger.events =
+      semanticOldLedger.events ++ [semanticAdaptiveEvent] := by
+  rfl
+
+private theorem semanticEarlyEvent :
+    semanticAdaptiveEvent.eventId <= semanticSnapshot.decisionEvent := by
+  decide
+
+private theorem semanticTouchesClosure :
+    Set.Nonempty
+      (semanticAdaptiveEvent.dependencies ∩ semanticSnapshot.dependencyClosure) := by
+  refine ⟨true, by simp [semanticAdaptiveEvent], ?_⟩
+  exact ⟨true, by simp [semanticSnapshot], Relation.ReflTransGen.refl⟩
+
 theorem admissible_judge_early_append_witness :
     AdmissibleJudge semanticOldLedger semanticSnapshot semanticOldValid false /\
       Not (AdmissibleJudge semanticExtendedLedger semanticSnapshot
@@ -276,35 +178,9 @@ theorem admissible_judge_early_append_witness :
       semanticAdaptiveEvent.eventId <= semanticSnapshot.decisionEvent /\
       Set.Nonempty
         (semanticAdaptiveEvent.dependencies ∩ semanticSnapshot.dependencyClosure) := by
-  refine ⟨semanticOldAdmissible, semanticNewRejected, rfl, by decide, ?_⟩
-  refine ⟨true, by simp [semanticAdaptiveEvent], ?_⟩
-  exact ⟨true, by simp [semanticSnapshot], Relation.ReflTransGen.refl⟩
+  exact ⟨semanticOldAdmissible, semanticNewRejected, semanticAppendEquality,
+    semanticEarlyEvent, semanticTouchesClosure⟩
 
-theorem role_admission_direction_nonvacuity :
-    (true ∈ Contam directionRelation ({false} : Set Bool) /\
-      false ∉ Contam directionRelation ({true} : Set Bool)) /\
-    (false ∈ directionSnapshot.dependencyClosure /\
-      false ∈ directionSnapshot.evidenceDependencies /\
-      false ∈ directionSnapshot.filtration.seen directionSnapshot.freezeEvent /\
-      false ∉ Contam directionRelation directionSnapshot.commitmentRoots) /\
-    (false ∈ seenForward.seen 1 /\
-      false ∉ seenReverse.seen 1 /\
-      false ∉ seenForward.seen 0) /\
-    (AdmissibleJudge semanticOldLedger semanticSnapshot semanticOldValid false /\
-      Not (AdmissibleJudge semanticExtendedLedger semanticSnapshot
-        semanticExtendedValid false) /\
-      semanticExtendedLedger.events =
-        semanticOldLedger.events ++ [semanticAdaptiveEvent] /\
-      semanticAdaptiveEvent.eventId <= semanticSnapshot.decisionEvent /\
-      Set.Nonempty
-        (semanticAdaptiveEvent.dependencies ∩ semanticSnapshot.dependencyClosure)) := by
-  exact ⟨contam_direction_witness, dependency_closure_direction_witness,
-    seen_direction_witness, admissible_judge_early_append_witness⟩
-
-#print axioms contam_direction_witness
-#print axioms dependency_closure_direction_witness
-#print axioms seen_direction_witness
 #print axioms admissible_judge_early_append_witness
-#print axioms role_admission_direction_nonvacuity
 
 end D5.S3.ConceptDynamics.Provenance.SeenDirectionAndAppendCounterexample

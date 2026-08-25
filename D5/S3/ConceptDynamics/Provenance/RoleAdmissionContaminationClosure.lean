@@ -3,11 +3,12 @@
    mirror-B: D5/B/S3/ConceptDynamics/Provenance/RoleAdmissionContaminationClosure
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Role admission over independent event, evidence, and artifact carriers. -/
+   digest: First-seen times and snapshot-bounded role admission over independent carriers. -/
 
 import Mathlib.Data.List.Basic
 import Mathlib.Data.Set.Insert
 import Mathlib.Logic.Relation
+import Mathlib.Probability.Process.HittingTime
 
 /- Library-search audit trail (2026-08-25):
    * `rg -n 'Set \([A-Za-z]+ x [A-Za-z]+\)|Relation\.ReflTransGen|'\
@@ -41,6 +42,11 @@ import Mathlib.Logic.Relation
        docs/develop/theory/DEFINITION_ESCAPE_COMPLETION_THEORY.md`
      found lines 3661 and 4714 for `ValidTrace`; these are membership reads from
      the already-directed filtration, not independent choices of edge direction.
+   * `rg -n 'hittingAfter_(eq_top|le)|noncomputable def hittingAfter' \
+       .lake/packages/mathlib/Mathlib/Probability/Process/HittingTime.lean`
+     found the pinned first-hitting-time construction and its finite-bound and
+     never-hit characterizations. `FirstSeen` reuses them for Nat-indexed
+     filtrations without choosing how any seen set is generated.
 -/
 
 set_option autoImplicit false
@@ -48,7 +54,7 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.ConceptDynamics.Provenance.RoleAdmissionContaminationClosure
 
-universe u
+universe u v
 
 inductive EvidenceRole where
   | generate
@@ -68,15 +74,41 @@ def Contam {Artifact : Type u}
     Relation.ReflTransGen dependsOn record artifact}
 
 structure EvidenceFiltration
-    (EventId Evidence : Type u) [Preorder EventId] where
+    (EventId : Type u) (Evidence : Type v) [Preorder EventId] where
   seen : EventId -> Set Evidence
   monotone : forall {i j}, i <= j -> seen i ⊆ seen j
 
 theorem EvidenceFiltration.seen_mono
-    {EventId Evidence : Type u} [Preorder EventId]
+    {EventId : Type u} {Evidence : Type v} [Preorder EventId]
     (filtration : EvidenceFiltration EventId Evidence) {i j : EventId} (hij : i <= j) :
     filtration.seen i ⊆ filtration.seen j :=
   filtration.monotone hij
+
+noncomputable def FirstSeen {Evidence : Type v}
+    (filtration : EvidenceFiltration Nat Evidence) (evidence : Evidence) : WithTop Nat :=
+  MeasureTheory.hittingAfter
+    (fun cutoff candidate => candidate ∈ filtration.seen cutoff)
+    {proposition : Prop | proposition} 0 evidence
+
+theorem first_seen_le_iff {Evidence : Type v}
+    (filtration : EvidenceFiltration Nat Evidence) (evidence : Evidence) (cutoff : Nat) :
+    FirstSeen filtration evidence ≤ (cutoff : WithTop Nat) ↔
+      ∃ index ≤ cutoff, evidence ∈ filtration.seen index := by
+  simpa [FirstSeen] using
+    (MeasureTheory.hittingAfter_bot_le_iff
+      (u := fun index candidate => candidate ∈ filtration.seen index)
+      (s := {proposition : Prop | proposition})
+      (i := cutoff) (ω := evidence))
+
+theorem first_seen_eq_top_iff {Evidence : Type v}
+    (filtration : EvidenceFiltration Nat Evidence) (evidence : Evidence) :
+    FirstSeen filtration evidence = ⊤ ↔
+      ∀ index, evidence ∉ filtration.seen index := by
+  simpa [FirstSeen] using
+    (MeasureTheory.hittingAfter_eq_top_iff
+      (u := fun index candidate => candidate ∈ filtration.seen index)
+      (s := {proposition : Prop | proposition})
+      (n := 0) (ω := evidence))
 
 structure UseEvent
     (EventId Evidence Round Artifact Protocol Time : Type u) where
@@ -125,7 +157,7 @@ def RolePrefixAtTime
 
 structure AdjudicationSnapshot
     (EventId Evidence Round Artifact Time : Type u)
-    [LinearOrder EventId] [Preorder Time] (round : Round) where
+    [Preorder EventId] [Preorder Time] (round : Round) where
   freezeEvent : EventId
   decisionEvent : EventId
   frozenAt : Time
@@ -137,13 +169,11 @@ structure AdjudicationSnapshot
   commitmentRoots : Set Artifact
   evidenceDependsOn : Evidence -> Evidence -> Prop
   evidenceDependencies : Set Evidence
-  commitmentClosureVisibleAtFreeze :
-    evidenceDependencies ⊆ filtration.seen freezeEvent
 
 /-- The incoming artifact closure: an artifact belongs when it reaches a root. -/
 def AdjudicationSnapshot.dependencyClosure
     {EventId Evidence Round Artifact Time : Type u}
-    [LinearOrder EventId] [Preorder Time] {round : Round}
+    [Preorder EventId] [Preorder Time] {round : Round}
     (snapshot : AdjudicationSnapshot EventId Evidence Round Artifact Time round) :
     Set Artifact :=
   {artifact | exists commitment, commitment ∈ snapshot.commitmentRoots /\
@@ -215,7 +245,7 @@ def AdmissibleJudge
 
 def NonAnticipating
     {EventId Evidence Round Artifact Time : Type u}
-    [LinearOrder EventId] [Preorder Time] {round : Round}
+    [Preorder EventId] [Preorder Time] {round : Round}
     (snapshot : AdjudicationSnapshot EventId Evidence Round Artifact Time round)
     (evidence : Evidence) : Prop :=
   evidence ∈ snapshot.filtration.seen snapshot.decisionEvent /\
@@ -224,7 +254,7 @@ def NonAnticipating
 
 def AdjudicationSetClean
     {EventId Evidence Round Artifact Time : Type u}
-    [LinearOrder EventId] [Preorder Time] {round : Round}
+    [Preorder EventId] [Preorder Time] {round : Round}
     (snapshot : AdjudicationSnapshot EventId Evidence Round Artifact Time round)
     (judges : Set Evidence) : Prop :=
   Contam snapshot.evidenceDependsOn judges ∩ snapshot.evidenceDependencies = ∅ /\
@@ -455,12 +485,7 @@ private def witnessSnapshot : AdjudicationSnapshot Nat Bool Nat Bool Nat 7 :=
     artifactDependsOn := fun source target => source = target
     commitmentRoots := {true}
     evidenceDependsOn := fun source target => source = target
-    evidenceDependencies := {true}
-    commitmentClosureVisibleAtFreeze := by
-      intro evidence dependency
-      have evidenceEq : evidence = true := by simpa using dependency
-      subst evidence
-      exact Or.inl ⟨rfl, le_rfl⟩ }
+    evidenceDependencies := {true} }
 
 private theorem witness_reachable_eq {source target : Bool}
     (reachable : Relation.ReflTransGen
@@ -578,6 +603,8 @@ theorem role_admission_nonvacuity :
     role_partition_boundary_witness, dependency_rejection_witness⟩
 
 #print axioms EvidenceFiltration.seen_mono
+#print axioms first_seen_le_iff
+#print axioms first_seen_eq_top_iff
 #print axioms role_admission_contamination_spec
 #print axioms admissible_judge_append_invariant
 #print axioms role_admission_nonvacuity
