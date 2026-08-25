@@ -65,6 +65,7 @@ public sealed partial class MakeWorkflowTests
         "receipts-stage",
         "deposit",
         "cover",
+        "cover-batch",
         "worktree",
         "worktree-clean",
         "pr-open",

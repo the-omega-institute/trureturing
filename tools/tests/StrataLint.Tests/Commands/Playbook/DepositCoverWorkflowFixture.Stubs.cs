@@ -131,13 +131,15 @@ public sealed partial class DepositCoverWorkflowScriptTests
                   echo 'COVER_INVALID synthetic disposition' >&2
                   exit 1
                 fi
+                secondary=''
                 if grep -q '^coverage: true$' Meta/BACKFILL.yaml; then
                   [[ $command == *'--gid D5/S3/Observer/WindowRegisterCRT.window_register_crt_decomposition'* ]] || {
                     echo 'COVER_INVALID hosted cover omitted the selected secondary GID' >&2
                     exit 1
                   }
+                  secondary='secondary: true'
                 fi
-                printf 'atom_id: atom-1\ncoverage: true\naligned: false\n' > Meta/BACKFILL.yaml
+                printf 'atom_id: atom-1\ncoverage: true\naligned: false\n%s\n' "$secondary" > Meta/BACKFILL.yaml
                 ;;
               align-scribe-receipt)
                 gid=''
@@ -156,10 +158,12 @@ public sealed partial class DepositCoverWorkflowScriptTests
                   echo 'ALIGN_SCRIBE_RECEIPT_INVALID no verified in-process Scribe emission' >&2
                   exit 1
                 }
+                secondary=''
+                grep -q '^secondary: true$' Meta/BACKFILL.yaml && secondary='secondary: true'
                 if grep -q '^aligned: covered$' Meta/BACKFILL.yaml; then
                   echo 'ALIGN_SCRIBE_RECEIPT ledger_changed=false'
                 else
-                  printf 'atom_id: atom-1\ncoverage: true\naligned: covered\n' > Meta/BACKFILL.yaml
+                  printf 'atom_id: atom-1\ncoverage: true\naligned: covered\n%s\n' "$secondary" > Meta/BACKFILL.yaml
                   echo 'ALIGN_SCRIBE_RECEIPT ledger_changed=true'
                 fi
                 ;;

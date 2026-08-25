@@ -9,6 +9,8 @@ COMMAND="${1:-}"
 BASE="${2:-origin/dev}"
 ATOM_ID="${3:-}"
 GID="${4:-}"
+BATCH_ATOM_IDS=()
+BATCH_GIDS=()
 PREPARED_RECEIPT_PATH=""
 PREPARED_RECEIPT_ORIGINAL_PATH=""
 PREPARED_RECEIPT_REPLACES_EXISTING=0
@@ -51,6 +53,44 @@ require_transaction_arguments() {
   RECEIPT_PATH="Meta/Digestion/formalizations/${ATOM_ID}.v1.json"
   if [[ "$DOCUMENT_GID" == "$GID" || ! -f "$MODULE_PATH" ]]; then
     echo "PLAYBOOK_INVALID GID does not resolve to a Lean module: $GID" >&2
+    return 2
+  fi
+}
+
+require_cover_batch_arguments() {
+  local atoms_file="$ATOM_ID" line atom gid remainder status line_number=0
+  if [[ -z "$atoms_file" || -n "$GID" || ! -f "$atoms_file" || ! -r "$atoms_file" ]]; then
+    echo "usage: playbook-workflows.sh cover-batch BASE ATOMS_FILE" >&2
+    return 2
+  fi
+
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    line_number=$((line_number + 1))
+    if [[ "$line" == *$'\r'* || "$line" != *$'\t'* ]]; then
+      echo "PLAYBOOK_INVALID cover-batch line $line_number must be ATOM_ID<TAB>GID" >&2
+      return 2
+    fi
+    atom="${line%%$'\t'*}"
+    remainder="${line#*$'\t'}"
+    if [[ "$remainder" == *$'\t'* ]]; then
+      echo "PLAYBOOK_INVALID cover-batch line $line_number must contain exactly two TSV fields" >&2
+      return 2
+    fi
+    gid="$remainder"
+    ATOM_ID="$atom"
+    GID="$gid"
+    if require_transaction_arguments; then
+      :
+    else
+      status=$?
+      return "$status"
+    fi
+    BATCH_ATOM_IDS+=("$atom")
+    BATCH_GIDS+=("$gid")
+  done < "$atoms_file"
+
+  if [[ "${#BATCH_ATOM_IDS[@]}" -eq 0 ]]; then
+    echo "PLAYBOOK_INVALID cover-batch input is empty: $atoms_file" >&2
     return 2
   fi
 }
@@ -557,6 +597,21 @@ cover_atom_or_resume() {
   fi
 }
 
+cover_one() {
+  require_transaction_arguments
+  cleanup_transaction_temporaries
+  if step cover-atom cover_atom_or_resume; then
+    :
+  else
+    local status=$?
+    commit_all_if_needed "formalize: record failed cover disposition for $ATOM_ID"
+    exit "$status"
+  fi
+  step align-scribe-receipt run_cli \
+    align-scribe-receipt --atom-id "$ATOM_ID" --gid "$GID"
+  commit_all_if_needed "formalize: cover $ATOM_ID with $GID"
+}
+
 cd "$ROOT"
 case "$COMMAND" in
   deliver-check)
@@ -593,22 +648,20 @@ case "$COMMAND" in
     commit_all_if_needed "formalize: record deposit receipt for $GID"
     ;;
   cover)
-    require_transaction_arguments
-    cleanup_transaction_temporaries
     step lean-report make lean-report
-    if step cover-atom cover_atom_or_resume; then
-      :
-    else
-      status=$?
-      commit_all_if_needed "formalize: record failed cover disposition for $ATOM_ID"
-      exit "$status"
-    fi
-    step align-scribe-receipt run_cli \
-      align-scribe-receipt --atom-id "$ATOM_ID" --gid "$GID"
-    commit_all_if_needed "formalize: cover $ATOM_ID with $GID"
+    cover_one
+    ;;
+  cover-batch)
+    require_cover_batch_arguments
+    step lean-report make lean-report
+    for index in "${!BATCH_ATOM_IDS[@]}"; do
+      ATOM_ID="${BATCH_ATOM_IDS[index]}"
+      GID="${BATCH_GIDS[index]}"
+      cover_one
+    done
     ;;
   *)
-    echo "usage: playbook-workflows.sh deliver-check|receipts-stage|deposit|cover [BASE] [ATOM_ID GID]" >&2
+    echo "usage: playbook-workflows.sh deliver-check|receipts-stage|deposit|cover|cover-batch [BASE] [ATOM_ID GID|ATOMS_FILE]" >&2
     exit 2
     ;;
 esac

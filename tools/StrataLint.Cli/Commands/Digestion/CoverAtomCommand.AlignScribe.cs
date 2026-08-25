@@ -55,7 +55,12 @@ internal static partial class CoverAtomCommand
 
         var report = leanReportSource.Load(current);
         var lean = ValidateLean(current, report);
-        var verified = scribeEmissionVerifier.Verify(current, report);
+        var alignChanges = RawChangeSet.Create([
+            $"{BackfillInventoryLoader.RootPath}{target.SourceId}/"
+            + $"{DigestionStatusNames.Migration(target.ProjectedStatus.Migration)}-"
+            + $"{DigestionStatusNames.Truth(target.ProjectedStatus.Truth)}/{target.AtomId}.yaml",
+        ]);
+        var verified = scribeEmissionVerifier.Verify(current, report, alignChanges);
         var documentGid = ScribeEmissionAttestation.DocumentGid(options.Gid);
         if (!verified.TryGet(documentGid, out var verifiedRecord)
             || !verified.ReferencesDeclaration(options.Gid))
@@ -82,16 +87,6 @@ internal static partial class CoverAtomCommand
             },
         };
         var planned = ReplaceEntry(document, options.AtomId, alignedEntry);
-        var derived = DigestionStatusEvaluator.Evaluate(
-            DigestionEvaluationScope.FullScan,
-            planned,
-            current,
-            lean,
-            verified,
-            baselineDocument: null,
-            validateProjectedStatus: false);
-        RequireNoConflictMarkedSources(derived);
-        RequireAlignedScribeReceipt(EvaluationFor(derived, options.AtomId), options.Gid);
         var finalRaw = IngestCommand.ReplaceLedger(
             currentRaw,
             document,
@@ -99,12 +94,14 @@ internal static partial class CoverAtomCommand
         var finalSnapshot = Decode(finalRaw);
         var finalDocument = LoadDocument(finalSnapshot);
         var finalEvaluation = DigestionStatusEvaluator.Evaluate(
-            DigestionEvaluationScope.FullScan,
+            DigestionEvaluationScope.ChangedSet,
             finalDocument,
             finalSnapshot,
             lean,
             verified,
-            baselineDocument: null);
+            baselineDocument: document,
+            baselineSnapshot: current,
+            changes: alignChanges);
         RequireNoConflictMarkedSources(finalEvaluation);
         RequireAlignedScribeReceipt(EvaluationFor(finalEvaluation, options.AtomId), options.Gid);
         RequireNoReceiptIntegrityFailure(finalEvaluation);
