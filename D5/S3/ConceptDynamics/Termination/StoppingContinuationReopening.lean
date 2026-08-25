@@ -25,8 +25,11 @@ import Mathlib.Tactic
    * Domain search `rg -n 'NNReal|ℝ≥0|precision : ENNReal|coe_ne_top' D5/S3/
      ConceptDynamics .lake/packages/mathlib/Mathlib -g '*.lean'` found existing
      `NNReal` budget use and the exact boundary lemma `ENNReal.coe_ne_top`.
-     Thus tolerances use finite nonnegative reals while the supremum may remain
-     extended when a target fiber is unbounded.
+     Source check `nl -ba docs/develop/theory/DEFINITION_ESCAPE_COMPLETION_THEORY.md |
+     sed -n '1038,1080p'` found that section 9.1 assumes a metric and explicitly
+     uses `eta = 0`, but gives `eta` no type and does not decide negative
+     tolerances. This module chooses finite `NNReal` tolerances as a convention;
+     the supremum remains extended when a target fiber is unbounded.
    * Neighbor vocabulary `ls D5/S3/ConceptDynamics/Termination` and
      `git grep -n '^def \|^  def ' -- D5/S3/ConceptDynamics | head -80` found no
      reusable local-completion or genuine-reopening definition. Source search for
@@ -71,8 +74,9 @@ def MethodStopped {System Evidence Proposal : Type*}
     (system : System) (evidence : Evidence) (noProposal : Proposal) : Prop :=
   method system evidence = noProposal
 
-/-- The parameters whose effect on section-43 closure is defined. Precision is a
-finite nonnegative real tolerance, matching the ordinary metric-valued source. -/
+/-- The parameters whose effect on section-43 closure is defined. The source does
+not type its tolerance or decide negative values; this interface conventionally
+chooses finite nonnegative real precision. -/
 structure LocalParameters (World Target : Type*) where
   objectDomain : Set World
   target : Concept World Target
@@ -375,32 +379,36 @@ theorem precision_change_without_new_defect_does_not_reopen :
     fin_cases first <;> fin_cases second <;>
       norm_num [defectRelation] at newResidual
 
-/-- Presence consumer for every package clause witness and every named control in
-this module. Removing or trivializing any witness leaves this aggregate ill-typed.
-The aggregate itself deliberately has no artificial outer consumer before
-deposit; its first natural content-addressed consumer is the post-deposit
-Freeze/statement-id. -/
+/-- Five concrete finite witnesses, in the source package's clause order. Unlike
+the module's mutation controls, every conjunct here instantiates one of the five
+formalized source assertions and remains meaningful independently of its theorem
+name. -/
 theorem stopping_continuation_reopening_nonvacuity :
     (¬Closed (fun _ : Bool => ()) (id : Concept Bool Bool)) ∧
     (¬ApproximatelyClosed (fun _ : Bool => ())
       (fun value : Bool => if value then (1 : Real) else 0) 0) ∧
-    ((∀ precision : NNReal, (precision : ENNReal) ≠ ⊤) ∧
-      ¬(∀ precision : ENNReal, precision ≠ ⊤)) ∧
     (¬MethodStopped (fun _ : Unit => id) () true false) ∧
-    ZeroPrecisionNonconstantFiberControl ∧
-    ChangedTargetReopeningControl ∧
-    PrecisionDecreaseReopeningControl ∧
-    PrecisionIncreaseNoReopeningControl ∧
-    NonconstantReadoutFiberGuardControl := by
+    (let parameters : LocalParameters Bool Real :=
+      { objectDomain := Set.univ
+        target := fun value => if value then 1 else 0
+        precision := 0 }
+     ¬LocallyComplete parameters (fun _ => ())) ∧
+    (let current : LocalParameters Bool Real :=
+      { objectDomain := Set.univ
+        target := fun _ => 0
+        precision := 0 }
+     let next : LocalParameters Bool Real :=
+      { objectDomain := Set.univ
+        target := fun value => if value then 1 else 0
+        precision := 0 }
+     Closed (fun _object : ↑current.objectDomain => ())
+         (fun object : ↑current.objectDomain => current.target object.1) ∧
+       Reopens current next (fun _ => ())) := by
   exact ⟨hidden_bool_target_is_not_closed,
     positive_fiber_diameter_is_not_approximately_closed,
-    finite_precision_excludes_top,
     proposal_return_is_not_method_stopped,
     zero_precision_nonconstant_fiber_is_not_locally_complete,
-    changed_target_creates_genuine_reopening,
-    precision_decrease_creates_genuine_reopening,
-    precision_change_without_new_defect_does_not_reopen,
-    nonconstant_readout_blocks_cross_fiber_reopening⟩
+    changed_target_creates_genuine_reopening⟩
 
 #print axioms stopping_continuation_reopening
 #print axioms stopping_continuation_reopening_nonvacuity

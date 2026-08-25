@@ -23,9 +23,9 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
                         "The package records five formalized assertions. Target closure uses "
                             + "the canonical `defectRelation`; approximate closure uses the supremum "
                             + "of metric target diameters over readout fibers against a finite "
-                            + "nonnegative tolerance. Empty fibers contribute zero and unbounded "
-                            + "diameters contribute top. Method stopping is the literal "
-                            + "distinguished-value equation.")),
+                            + "nonnegative tolerance chosen by this formalization. Empty fibers "
+                            + "contribute zero and unbounded diameters contribute top. Method stopping "
+                            + "is the literal distinguished-value equation.")),
                     Paragraph(Text(
                         "Local completion checks the supplied domain, target, and finite precision. "
                             + "A one-step reopening requires one of those three parameters to change "
@@ -38,6 +38,12 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
                             + "or residual, nor give a transition map to a new stage residual. This "
                             + "formalization covers only the object-domain, target, and precision "
                             + "triggers.")),
+                    Paragraph(Text(
+                        "Section 9.1 assumes a metric and explicitly uses tolerance zero, but it "
+                            + "does not type the tolerance or decide whether negative tolerances are "
+                            + "allowed. Lean conventionally uses `NNReal`; this is not presented as "
+                            + "an exact source-domain match and must be reopened if the source later "
+                            + "admits negative tolerance.")),
                     Paragraph(Text(
                         "No finiteness, decidable equality, measurability, nonempty-domain premise, "
                             + "monotonicity, or extra order law is added. The target metric is exactly "

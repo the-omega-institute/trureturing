@@ -14,11 +14,13 @@ $$\left(\operatorname{Closed}\left(q, T\right) \Leftrightarrow \operatorname{def
 
 *Commentary.*
 
-The package records five formalized assertions. Target closure uses the canonical `defectRelation`; approximate closure uses the supremum of metric target diameters over readout fibers against a finite nonnegative tolerance. Empty fibers contribute zero and unbounded diameters contribute top. Method stopping is the literal distinguished-value equation.
+The package records five formalized assertions. Target closure uses the canonical `defectRelation`; approximate closure uses the supremum of metric target diameters over readout fibers against a finite nonnegative tolerance chosen by this formalization. Empty fibers contribute zero and unbounded diameters contribute top. Method stopping is the literal distinguished-value equation.
 
 Local completion checks the supplied domain, target, and finite precision. A one-step reopening requires one of those three parameters to change and a canonical defect pair above the next precision that was absent above the current precision.
 
 Unresolved source gaps: section 5 defines a language-blind residual and section 44 defines operation-induced observational equivalence, but section 43 does not identify either construction with its stage readout or residual, nor give a transition map to a new stage residual. This formalization covers only the object-domain, target, and precision triggers.
+
+Section 9.1 assumes a metric and explicitly uses tolerance zero, but it does not type the tolerance or decide whether negative tolerances are allowed. Lean conventionally uses `NNReal`; this is not presented as an exact source-domain match and must be reopened if the source later admits negative tolerance.
 
 No finiteness, decidable equality, measurability, nonempty-domain premise, monotonicity, or extra order law is added. The target metric is exactly the structure requested by approximate closure.
 
