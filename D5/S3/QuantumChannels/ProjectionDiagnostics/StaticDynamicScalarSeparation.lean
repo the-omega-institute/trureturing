@@ -32,10 +32,25 @@ def residualReturnGenerator : Module.End ℂ QubitMatrix where
   toFun A := fun i j => if i = 0 ∧ j = 0 then A 0 1 else 0
   map_add' A B := by
     ext i j
-    by_cases hij : i = 0 ∧ j = 0 <;> simp [hij]
+    by_cases hij : i = 0 ∧ j = 0
+    · rcases hij with ⟨rfl, rfl⟩
+      change A 0 1 + B 0 1 =
+        (if (0 : Fin 2) = 0 ∧ (0 : Fin 2) = 0 then A 0 1 else 0) +
+          (if (0 : Fin 2) = 0 ∧ (0 : Fin 2) = 0 then B 0 1 else 0)
+      simp
+    · change (if i = 0 ∧ j = 0 then (A + B) 0 1 else 0) =
+        (if i = 0 ∧ j = 0 then A 0 1 else 0) +
+          (if i = 0 ∧ j = 0 then B 0 1 else 0)
+      simp [hij, Matrix.add_apply]
   map_smul' c A := by
     ext i j
-    by_cases hij : i = 0 ∧ j = 0 <;> simp [hij]
+    by_cases hij : i = 0 ∧ j = 0
+    · rcases hij with ⟨rfl, rfl⟩
+      change c * A 0 1 = c • (if (0 : Fin 2) = 0 ∧ (0 : Fin 2) = 0 then A 0 1 else 0)
+      simp
+    · change (if i = 0 ∧ j = 0 then (c • A) 0 1 else 0) =
+        c • (if i = 0 ∧ j = 0 then A 0 1 else 0)
+      simp [hij, Matrix.smul_apply]
 
 /-- The static Hilbert--Schmidt loss and the dynamic residual-return block are independent:
 static loss can exceed every prescribed bound while the identity generator has zero return,
@@ -85,7 +100,8 @@ theorem static_loss_and_dynamic_return_are_independent :
     · intro hZero
       have hAtWitness := LinearMap.congr_fun hZero qubitX
       have hFirstEntry := congrFun (congrFun hAtWitness 0) 0
-      norm_num [pinchingEnd, residualReturnGenerator, qubitX] at hFirstEntry
+      change (qubitX - pinching qubitX) 0 1 = 0 at hFirstEntry
+      norm_num [pinching_apply, qubitX, Matrix.sub_apply] at hFirstEntry
 
 #print axioms pinchingEnd
 #print axioms residualReturnGenerator

@@ -51,8 +51,8 @@ theorem renyi_divergence_tendsto_log_sup_ratio {ι : Type*} [Fintype ι] [Nonemp
     rcases (Finset.sum_pos_iff_of_nonneg fun i _ => hp.1 i).mp hsum_pos with ⟨i, _, hi⟩
     exact ⟨i, hi⟩
   have hratio_le (i : ι) : p i / q i ≤ M := by
-    simpa [M] using
-      (Finset.le_sup' (fun j => p j / q j) (Finset.mem_univ i))
+    change p i / q i ≤ Finset.univ.sup' Finset.univ_nonempty (fun j => p j / q j)
+    exact Finset.le_sup' (fun j : ι => p j / q j) (Finset.mem_univ i)
   have hM_pos : 0 < M := by
     rcases hp_exists with ⟨i, hi⟩
     exact (div_pos hi (hq i hi)).trans_le (hratio_le i)

@@ -193,9 +193,9 @@ def tribonacciNameSplitEquiv (n : Nat) :
           _ = name := rebuild0
   right_inv := by
     rintro (name | (name | name))
-    · simp [Fin.cons_zero, Fin.tail_cons]
-    · simp [Fin.cons_zero, Fin.tail_cons]
-    · simp [Fin.cons_zero, Fin.tail_cons]
+    · congr 1
+    · congr 1
+    · congr 1
 
 /-- Counts at length `n+3` split into the three preceding name layers. -/
 theorem tribonacci_name_card_add_three (n : Nat) :

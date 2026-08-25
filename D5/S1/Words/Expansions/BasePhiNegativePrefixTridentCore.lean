@@ -85,16 +85,18 @@ private theorem symmetricLucasExtension_canonical
       by_contra hne
       have := (hfar ((K : Int) + 1) hne).2
       omega
-    simp [symmetricLucasExtension, hdigit]
-    omega
+    have hnext_ne_pos : (K : Int) + 1 ≠ (K : Int) := by omega
+    have hnext_ne_neg : (K : Int) + 1 ≠ -(K : Int) := by omega
+    simp [symmetricLucasExtension, hdigit, hnext_ne_pos, hnext_ne_neg]
   · by_cases hnegative : i = -(K : Int)
     · subst i
       have hdigit : digits (-(K : Int) + 1) = 0 := by
         by_contra hne
         have := (hfar (-(K : Int) + 1) hne).1
         omega
-      simp [symmetricLucasExtension, hdigit]
-      omega
+      have hnext_ne_pos : -(K : Int) + 1 ≠ (K : Int) := by omega
+      have hnext_ne_neg : -(K : Int) + 1 ≠ -(K : Int) := by omega
+      simp [symmetricLucasExtension, hdigit, hnext_ne_pos, hnext_ne_neg]
     · have hdigit : digits i = 1 := by
         simpa [symmetricLucasExtension, hpositive, hnegative,
           Ne.symm hpositive, Ne.symm hnegative] using hi

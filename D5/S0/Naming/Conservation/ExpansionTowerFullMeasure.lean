@@ -60,8 +60,8 @@ theorem naming_expansion_full_measure
       ∀ tower : ExpansionTower X, volume tower.limitAnonymous = 1 := by
   constructor
   · intro system
-    have h := countable_tower_anonymous_full_measure
-      (X := X) (J := Unit) (fun _ => system)
+    have h := @countable_tower_anonymous_full_measure X _ _ (by assumption)
+      (by infer_instance) Unit (by infer_instance) (fun _ : Unit => system)
     have hunion : (⋃ _ : Unit, system.named) = system.named := by
       ext x
       simp
@@ -69,7 +69,8 @@ theorem naming_expansion_full_measure
     rw [hunion, IsProbabilityMeasure.measure_univ] at hfull
     simpa [anonymous] using hfull
   · intro tower
-    have h := countable_tower_anonymous_full_measure (X := X) tower.systems
+    have h := @countable_tower_anonymous_full_measure X _ _ (by assumption)
+      (by infer_instance) Nat (by infer_instance) tower.systems
     have hfull := h.2.2
     rw [IsProbabilityMeasure.measure_univ] at hfull
     simpa [ExpansionTower.limitAnonymous, ExpansionTower.limitNamed] using hfull

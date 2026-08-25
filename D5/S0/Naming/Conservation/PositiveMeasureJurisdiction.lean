@@ -31,7 +31,7 @@ theorem positive_measure_jurisdiction_uncountable
     (positive : 0 < volume (encode ⁻¹' {name})) :
     ¬ (encode ⁻¹' {name}).Countable := by
   intro countable
-  exact (ne_of_gt positive) (countable.measure_zero volume)
+  exact (ne_of_gt positive) (@Set.Countable.measure_zero X _ _ countable volume ‹NoAtoms volume›)
 
 /- The hypotheses are jointly inhabited: a constant encoding of the real line has the whole
 source as its sole jurisdiction, which has positive volume. -/

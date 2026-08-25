@@ -484,7 +484,8 @@ theorem golden_decode_step {state : GoldenCodedState} {step : GoldenPeriodicStep
     simp only [goldenStepSource] at hkind
     change goldenCodeValue coordinate ≤ goldenInverse at hbranch
     subst kind
-    simp only [decodeGoldenState, goldenTransition]
+    simp only [decodeGoldenState]
+    rw [goldenTransition]
     rw [if_pos hbranch]
     simp only [goldenApplyStepCode, goldenStepTarget, goldenStepAffine]
     congr 1
@@ -494,14 +495,15 @@ theorem golden_decode_step {state : GoldenCodedState} {step : GoldenPeriodicStep
     simp only [goldenStepSource] at hkind
     change goldenInverse < goldenCodeValue coordinate at hbranch
     subst kind
-    simp only [decodeGoldenState, goldenTransition]
+    simp only [decodeGoldenState]
+    rw [goldenTransition]
     rw [if_neg (not_le.mpr hbranch)]
     simp only [goldenApplyStepCode, goldenStepTarget, goldenStepAffine]
     congr 1
     rw [golden_code_value_add, golden_code_value_mul, golden_code_value_add,
       golden_code_value_neg]
     norm_num [goldenCodeValue, goldenCodeOne, goldenCodePhi]
-    ring
+    ring_nf
   · rcases hvalid with ⟨hkind, _⟩
     simp only [goldenStepSource] at hkind
     subst kind

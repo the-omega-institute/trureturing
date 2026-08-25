@@ -21,7 +21,7 @@ theorem reverse_eq_self_of_palindromic_coefficients {R : Type*} [Semiring R]
   by_cases hi : i ≤ p.natDegree
   · rw [Polynomial.revAt_le hi]
     exact (hpal i hi).symm
-  · simp [Polynomial.revAt, hi]
+  · rw [Polynomial.revAt_eq_self_of_lt (Nat.lt_of_not_ge hi)]
 
 #print axioms reverse_eq_self_of_palindromic_coefficients
 

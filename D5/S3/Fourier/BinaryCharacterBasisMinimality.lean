@@ -86,10 +86,23 @@ theorem binary_character_basis_minimality
     ext x
     refine QuotientAddGroup.induction_on x ?_
     intro g
-    simp only [Submodule.mem_iInf, LinearMap.mem_ker]
-    change (forall i, characters i (ModN.mkQ 2 g) = 0) <->
-      forall j, competitor j (ModN.mkQ 2 g) = 0
-    exact sameJointKernel g
+    constructor
+    · intro hx
+      have hchars : ∀ i, characters i (ModN.mkQ 2 g) = 0 := by
+        intro i
+        exact LinearMap.mem_ker.mp ((Submodule.mem_iInf _).1 hx i)
+      have hcomp := (sameJointKernel g).mp hchars
+      apply (Submodule.mem_iInf _).2
+      intro j
+      exact LinearMap.mem_ker.mpr (hcomp j)
+    · intro hx
+      have hcomp : ∀ j, competitor j (ModN.mkQ 2 g) = 0 := by
+        intro j
+        exact LinearMap.mem_ker.mp ((Submodule.mem_iInf _).1 hx j)
+      have hchars := (sameJointKernel g).mpr hcomp
+      apply (Submodule.mem_iInf _).2
+      intro i
+      exact LinearMap.mem_ker.mpr (hchars i)
   have competitorMem (j : competitorIndex) : competitor j ∈ H := by
     rw [hH]
     have hker :

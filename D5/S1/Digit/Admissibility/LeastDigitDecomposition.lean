@@ -33,7 +33,7 @@ noncomputable def dropDigits (offset : Nat) (r : RawDigits) : RawDigits :=
 
 @[simp] theorem drop_digits_apply (offset i : Nat) (r : RawDigits) :
     dropDigits offset r i = r (offset + i) := by
-  simp [dropDigits]
+  rfl
 
 private theorem shift_drop_digits_eq (offset : Nat) (r : RawDigits)
     (low : ∀ i, i < offset → r i = 0) :

@@ -6,7 +6,7 @@
    digest: The completion image is meagre and its complement has full measure. -/
 
 import D5.S0.Naming.CompletionEmbeddingDense
-import Mathlib.MeasureTheory.Measure.Typeclasses.NoAtoms
+import Mathlib.MeasureTheory.Measure.Typeclasses.NullSingletonClass
 import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
 import Mathlib.Topology.GDelta.Basic
 import Mathlib.Topology.Perfect
@@ -24,6 +24,7 @@ namespace D5.S0.Naming.Conservation.CompletionEmbeddingResidual
 
 open MeasureTheory Topology
 
+set_option checkBinderAnnotations false in
 /-- A countable metric space without isolated points has a negligible completion image. -/
 theorem completion_embedding_residual_full_measure
     {N : Type*} [MetricSpace N] [Countable N] [PerfectSpace N]
@@ -61,8 +62,10 @@ theorem completion_embedding_residual_full_measure
   have hmeagre : IsMeagre (Set.range coeCompletion) := by
     have h := isMeagre_iUnion hsingle
     simpa only [Set.iUnion_singleton_eq_range] using h
-  have hnull : mu (Set.range coeCompletion) = 0 :=
-    (Set.countable_range coeCompletion).measure_zero mu
+  have hnull : mu (Set.range coeCompletion) = 0 := by
+    exact @Set.Countable.measure_zero _ _ (Set.range coeCompletion)
+      (Set.countable_range coeCompletion) mu
+      (by assumption)
   have hfull : mu (Set.range coeCompletion)ᶜ = 1 := by
     have h := measure_of_measure_compl_eq_zero
       (μ := mu) (s := (Set.range coeCompletion)ᶜ) (by simpa using hnull)
