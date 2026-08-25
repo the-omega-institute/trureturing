@@ -7,7 +7,7 @@ namespace StrataLint.Tests;
 public sealed partial class MakeWorkflowTests
 {
     [Fact]
-    public void EngineeringCheckRunsTheCanonicalToolsTestTargetWithoutAFilter()
+    public void EngineeringCheckRunsTheCanonicalThreeStatePlannerTarget()
     {
         var root = TestRepositoryLayout.FindRoot();
         var makefile = File.ReadAllText(Path.Combine(root, ToolsMakefilePath));
@@ -15,26 +15,19 @@ public sealed partial class MakeWorkflowTests
         var engineeringStep = EngineeringTestStep(workflow);
         var targetMatches = Regex.Matches(
             engineeringStep,
-            @"(?m)^[ \t]*make[ \t]+-C[ \t]+candidate/tools[ \t]+(?<target>[A-Za-z][A-Za-z0-9_-]*)[ \t]*$",
+            @"(?m)^[ \t]*make[ \t]+-C[ \t]+candidate/tools[ \t]+(?<target>engineering-tests)\b",
             RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
 
         Assert.True(
             targetMatches.Count == 1,
             "The candidate-engineering test step must invoke exactly one concrete make target so CI cannot silently switch to a different test lane.");
         var targetMatch = targetMatches[0];
-        Assert.True(
-            !engineeringStep.Contains("--filter", StringComparison.Ordinal),
-            "The candidate-engineering check must call the canonical unfiltered test target; commit 5743d114 filtered Script tests and left those tests unexecuted in CI.");
-
         var target = targetMatch.Groups["target"].Value;
-        Assert.Equal("test", target);
+        Assert.Equal("engineering-tests", target);
         var recipe = Recipe(makefile, target);
-        Assert.True(
-            recipe.Contains("dotnet test", StringComparison.Ordinal),
-            $"The make target '{target}' called by candidate-engineering must be the .NET test target guarded by this invariant.");
-        Assert.True(
-            !recipe.Contains("--filter", StringComparison.Ordinal),
-            $"The canonical make target '{target}' must keep its dotnet test command unfiltered; commit 5743d114 filtered Script tests and CI then had no replacement lane.");
+        Assert.Contains("StrataLint.EngineeringScope.csproj", recipe, StringComparison.Ordinal);
+        Assert.Contains("--head \"$(HEAD)\" --base \"$(BASE)\"", recipe, StringComparison.Ordinal);
+        Assert.DoesNotContain("git diff", engineeringStep, StringComparison.Ordinal);
     }
 
     [Fact(DisplayName = "Makefile and inspector dispatch counts are pinned in the thin dispatch table")]
@@ -253,6 +246,10 @@ public sealed partial class MakeWorkflowTests
         var testRecipe = Recipe(makefile, "test");
         Assert.Contains("dotnet test $(HERE)/StrataLint.sln", testRecipe, StringComparison.Ordinal);
         Assert.DoesNotContain("--filter", testRecipe, StringComparison.Ordinal);
+        Assert.Contains(
+            "StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+            Recipe(makefile, "engineering-tests"),
+            StringComparison.Ordinal);
         Assert.Contains("$(HERE)/scripts/stratalint-selftest.sh", Recipe(makefile, "selftest"), StringComparison.Ordinal);
         Assert.Contains(
             "$(HERE)/scripts/update-renderer-contract.sh",
@@ -397,6 +394,14 @@ public sealed partial class MakeWorkflowTests
 
     private static IEnumerable<string> GateCommandSignatures(string shell)
     {
+        foreach (Match match in Regex.Matches(
+            shell,
+            @"(?m)^[ \t]*(?:FULL=1[ \t]+)?(?:CI=true[ \t]+)?(?:STRATALINT_REQUIRE_LIVE_REPORT=1[ \t]+)?make[ \t]+-C[ \t]+(?:candidate/)?tools[ \t]+engineering-tests[ \t]+MODE=(?<mode>plan|execute)\b[^\r\n]*$",
+            RegexOptions.CultureInvariant | RegexOptions.NonBacktracking))
+        {
+            yield return $"make -C tools engineering-tests MODE={match.Groups["mode"].Value}";
+        }
+
         foreach (Match match in Regex.Matches(
             shell,
             @"(?m)^[ \t]*(?:CI=true[ \t]+)?(?:STRATALINT_REQUIRE_LIVE_REPORT=1[ \t]+)?make[ \t]+-C[ \t]+(?:candidate/)?tools[ \t]+(?<target>dotnet|test|selftest)[ \t]*$",

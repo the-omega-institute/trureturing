@@ -64,13 +64,11 @@ public sealed class AdmissionWorkflowTests
             scopeScript,
             StringComparison.Ordinal);
         Assert.Contains(
-            "candidate_sha=\"$(git -C candidate rev-parse HEAD)\"",
+            "head_sha=\"$(git -C candidate rev-parse HEAD)\"",
             scopeScript,
             StringComparison.Ordinal);
-        Assert.Contains(
-            "git -C candidate diff --name-only -z --no-renames --diff-filter=ACDMRTUXB \"$base_sha\" \"$candidate_sha\"",
-            scopeScript,
-            StringComparison.Ordinal);
+        Assert.Contains("HEAD=\"$head_sha\" BASE=\"$base_sha\"", scopeScript, StringComparison.Ordinal);
+        Assert.DoesNotContain("git -C candidate diff", scopeScript, StringComparison.Ordinal);
         Assert.DoesNotContain("merge-base", scopeScript, StringComparison.Ordinal);
         Assert.Contains(
             "sha=\"$(git -C candidate rev-parse HEAD^1)\"",
@@ -134,7 +132,7 @@ public sealed class AdmissionWorkflowTests
     }
 
     [Fact]
-    public void CandidateEngineeringScopesPullRequestsButAlwaysRunsPushes()
+    public void CandidateEngineeringUsesOneThreeStatePlannerAndAlwaysRunsPushes()
     {
         var engineering = Job(AdmissionWorkflow(), "candidate-engineering");
         var steps = Assert.IsType<YamlSequenceNode>(
@@ -156,11 +154,13 @@ public sealed class AdmissionWorkflowTests
             scope.Children[new YamlScalarNode("run")]).Value ?? string.Empty;
         Assert.Contains("git -C candidate rev-parse HEAD^1", scopeScript, StringComparison.Ordinal);
         Assert.Contains("git -C candidate rev-parse HEAD", scopeScript, StringComparison.Ordinal);
-        Assert.Contains("git -C candidate diff", scopeScript, StringComparison.Ordinal);
-        Assert.Contains("--no-renames", scopeScript, StringComparison.Ordinal);
-        Assert.Matches(
-            "(?s)if \\[\\[ \"\\$GITHUB_EVENT_NAME\" == \"push\" \\]\\]; then.*?run=\"true\"",
-            scopeScript);
+        Assert.Contains("make -C candidate/tools engineering-tests", scopeScript, StringComparison.Ordinal);
+        Assert.Contains("MODE=plan", scopeScript, StringComparison.Ordinal);
+        Assert.Contains("FULL=1", scopeScript, StringComparison.Ordinal);
+        Assert.Contains("engineering-test-plan.json", scopeScript, StringComparison.Ordinal);
+        Assert.DoesNotContain("git -C candidate diff", scopeScript, StringComparison.Ordinal);
+        Assert.DoesNotContain("ls-tree", scopeScript, StringComparison.Ordinal);
+        Assert.DoesNotContain("StrataLint.EngineeringScope.csproj", scopeScript, StringComparison.Ordinal);
 
         var summary = steps[^1];
         Assert.Equal("Summarize candidate engineering scope", StepName(summary));
@@ -171,14 +171,14 @@ public sealed class AdmissionWorkflowTests
         // 明细走日志、摘要只走计数:逐条路径不进 step output,因而不经 env 传给这一步。
         // 有界性本身由 WorkflowOutputBoundTests 判,这里只钉"摘要读的是计数"。
         Assert.Contains("$SCOPE_CHANGED_COUNT", summaryScript, StringComparison.Ordinal);
-        Assert.Contains("$SCOPE_MATCHED_COUNT", summaryScript, StringComparison.Ordinal);
+        Assert.Contains("$SCOPE_SELECTED_COUNT", summaryScript, StringComparison.Ordinal);
         Assert.Contains("$GITHUB_STEP_SUMMARY", summaryScript, StringComparison.Ordinal);
 
         Assert.Equal(
             "make -C candidate/tools dotnet",
             StepScript(steps, "Build candidate with warnings as errors"));
         Assert.Equal(
-            "make -C candidate/tools test",
+            "make -C candidate/tools engineering-tests MODE=execute HEAD=\"${{ steps.scope.outputs.head_sha }}\" BASE=\"${{ steps.scope.outputs.base_sha }}\" PLAN_FILE=\"$RUNNER_TEMP/engineering-test-plan.json\"",
             StepScript(steps, "Run candidate golden and integration tests"));
         Assert.Equal(
             "make -C candidate/tools selftest",
@@ -187,7 +187,7 @@ public sealed class AdmissionWorkflowTests
         Assert.All(
             steps[(scopeIndex + 1)..^1],
             step => Assert.Contains(
-                "steps.scope.outputs.run == 'true'",
+                "steps.scope.outputs.state != 'none'",
                 Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("if")]).Value,
                 StringComparison.Ordinal));
     }

@@ -13,6 +13,7 @@ BASE_REF="${BASE:-origin/dev}"
 BASE_TIP_SHA=""
 BASE_SHA=""
 CANDIDATE_SHA=""
+ENGINEERING_PLAN_FILE=""
 STRATALINT_PERF_RUN_ID=""
 PREFLIGHT_DEADLINE_AT="${PREFLIGHT_DEADLINE_AT:-}"
 
@@ -47,6 +48,7 @@ finish_preflight() {
     perf_flush_events "$ROOT" "$PERF_EVENT_SPOOL" preflight 2>/dev/null || true
   fi
   if [[ -n "$PERF_TMP" ]]; then rm -rf -- "$PERF_TMP"; fi
+  if [[ -n "$ENGINEERING_PLAN_FILE" ]]; then rm -f -- "$ENGINEERING_PLAN_FILE"; fi
   exit "$rc"
 }
 trap 'finish_preflight "$?"' EXIT
@@ -109,7 +111,11 @@ STRATALINT_SCRIBE_BASE="$BASE_SHA" \
   "$ROOT/.lake/build/stratalint/raw-lean-report.json"
 record_timing scribe-content-checks
 
-CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools test
+ENGINEERING_PLAN_FILE="$(mktemp "${TMPDIR:-/tmp}/stratalint-engineering-plan.XXXXXX")"
+ENGINEERING_HEAD="$(git rev-parse HEAD)"
+ENGINEERING_BASE="$(git rev-parse HEAD^1)"
+CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools engineering-tests MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$ENGINEERING_PLAN_FILE"
+CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools engineering-tests MODE=execute HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$ENGINEERING_PLAN_FILE"
 record_timing test
 
 make -C tools selftest

@@ -188,6 +188,7 @@ public sealed partial class MakeWorkflowTests
             Path.Combine(binDirectory, "make"),
             """
             #!/usr/bin/env bash
+            original="$*"
             directory="."
             target=""
             while [[ $# -gt 0 ]]; do
@@ -204,7 +205,9 @@ public sealed partial class MakeWorkflowTests
               esac
             done
             case "${PREFLIGHT_SCENARIO:-}:$directory:$target" in
-              semantic-test:tools:test) exit 41 ;;
+              semantic-test:tools:engineering-tests)
+                [[ "$original" != *"MODE=execute"* ]] || exit 41
+                ;;
               semantic-gate:.:gate) exit 42 ;;
               timeout:.:lean-report) exit 124 ;;
               signal-term:.:lean-report) kill -TERM "$PPID"; exit 0 ;;
