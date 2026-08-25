@@ -10,55 +10,50 @@ internal sealed class TargetLaunderingCriterionDocument : IScribeDocumentDefinit
         "D5/S3/ConceptDynamics/Governance/TargetLaunderingCriterion.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Target laundering combines post-arrival protected-coordinate change, an actual "
-            + "re-evaluation, and attribution to the original commitment.",
+        "Target laundering combines freeze visibility, protected-coordinate change, "
+            + "same-round regrading, and attribution to the original commitment.",
         H("Target Laundering Criterion"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("target-laundering-criterion"),
                 DeclarationHandle.Create(DeclarationPrefix + "target_laundering_criterion"),
-                H("Target laundering has three necessary and sufficient clauses"),
+                H("The canonical definition regroups into three clauses"),
                 StatementSource.FromAuthor(CriterionFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "The protected projection retains target chain, domain, tolerance, "
-                            + "conditions, comparator, baseline, and weight specification. "
-                            + "A common access filtration records that the evidence arrived "
-                            + "before the revised commitment event.")),
+                        "The old and revised commitments share one round index. Event identifiers "
+                            + "and times remain independent types, and every protected coordinate "
+                            + "is projected directly from the revised commitment.")),
                     Paragraph(Text(
-                        "The regrade report carries a verdict together with an equality to the "
-                            + "actual evaluation of the revised commitment on the old evidence. "
-                            + "The attribution clause therefore cannot be discharged by an "
-                            + "arbitrary truth label.")),
+                        "The regrade report is indexed by the actual evaluator. Its proof field "
+                            + "certifies the reported verdict as the evaluator's value on the "
+                            + "revised commitment and old evidence.")),
                     Paragraph(Text(
-                        "A finite positive control changes a protected condition while retaining "
-                            + "the same verdict, so unequal scores are not required. Separate "
-                            + "false-side controls make each of the three clauses fail in isolation."))),
+                        "A separate temporal predicate compares a Time-valued arrival with the "
+                            + "revised freeze time. The source supplies no bridge equating that "
+                            + "comparison with freeze-event visibility."))),
                 DescribeRole.Theorem))));
 
     private static Formula CriterionFormula()
     {
         Formula evaluate = F.Id("evaluate");
-        Formula filtration = F.Id("filtration");
-        Formula original = F.Id("original");
-        Formula revised = F.Id("revised");
-        Formula evidence = F.Id("evidence");
+        Formula oldK = F.Id("oldK");
+        Formula newK = F.Id("newK");
+        Formula evidence = F.Id("Z");
         Formula report = F.Id("report");
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, evaluate, Comma, Sp, filtration, Comma, Sp, original, Comma, Sp,
-            revised, Comma, Sp, evidence, Comma, RowBreak, Grp(),
-            Forall, Sp, report, Colon, Sp, Call("RegradeReport", evaluate), Comma, RowBreak,
-            Grp(),
-            Call("TargetLaundering", evaluate, filtration, original, revised, evidence, report),
+            Forall, Sp, evaluate, Comma, Sp, oldK, Comma, Sp, newK, Comma, Sp,
+            evidence, Comma, Sp, report, Comma, RowBreak, Grp(),
+            Call("TargetLaundering", evaluate, oldK, newK, evidence, report),
             Sp, Iff, RowBreak, Grp(),
-            Call("PostArrivalProtectedChange", filtration, original, revised, evidence),
+            Call("FreezeVisibleProtectedChange", oldK, newK, evidence),
             Sp, Land, RowBreak, Grp(),
-            Call("RegradesOldRound", original, revised, evidence, Call("Time", revised), report),
+            Call("RegradesOldRound", evaluate, oldK, newK, evidence, report),
             Sp, Land, RowBreak, Grp(),
-            Call("AttributesToOriginalCommitment", evaluate, original, revised, evidence, report),
+            Call("AttributesToOriginalCommitment", evaluate, oldK, newK, evidence, report),
             Dot,
             End, Grp(F.Id("gathered"))));
     }

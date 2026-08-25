@@ -2,11 +2,11 @@
 
 ## Abstract
 
-Target laundering combines post-arrival protected-coordinate change, an actual re-evaluation, and attribution to the original commitment.
+Target laundering combines freeze visibility, protected-coordinate change, same-round regrading, and attribution to the original commitment.
 
-**Theorem 1.1 (Target laundering has three necessary and sufficient clauses).**
+**Theorem 1.1 (The canonical definition regroups into three clauses).**
 
-$$\begin{gathered}\forall evaluate, filtration, original, revised, evidence,\\{}\forall report: \operatorname{RegradeReport}\left(evaluate\right),\\{}\operatorname{TargetLaundering}\left(evaluate, filtration, original, revised, evidence, report\right) \iff\\{}\operatorname{PostArrivalProtectedChange}\left(filtration, original, revised, evidence\right) \land\\{}\operatorname{RegradesOldRound}\left(original, revised, evidence, \operatorname{Time}\left(revised\right), report\right) \land\\{}\operatorname{AttributesToOriginalCommitment}\left(evaluate, original, revised, evidence, report\right).\end{gathered}$$
+$$\begin{gathered}\forall evaluate, oldK, newK, Z, report,\\{}\operatorname{TargetLaundering}\left(evaluate, oldK, newK, Z, report\right) \iff\\{}\operatorname{FreezeVisibleProtectedChange}\left(oldK, newK, Z\right) \land\\{}\operatorname{RegradesOldRound}\left(evaluate, oldK, newK, Z, report\right) \land\\{}\operatorname{AttributesToOriginalCommitment}\left(evaluate, oldK, newK, Z, report\right).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Governance/TargetLaunderingCriterion.target_laundering_criterion` (`✓ std3`). ∎
 
@@ -14,11 +14,11 @@ $$\begin{gathered}\forall evaluate, filtration, original, revised, evidence,\\{}
 
 *Commentary.*
 
-The protected projection retains target chain, domain, tolerance, conditions, comparator, baseline, and weight specification. A common access filtration records that the evidence arrived before the revised commitment event.
+The old and revised commitments share one round index. Event identifiers and times remain independent types, and every protected coordinate is projected directly from the revised commitment.
 
-The regrade report carries a verdict together with an equality to the actual evaluation of the revised commitment on the old evidence. The attribution clause therefore cannot be discharged by an arbitrary truth label.
+The regrade report is indexed by the actual evaluator. Its proof field certifies the reported verdict as the evaluator's value on the revised commitment and old evidence.
 
-A finite positive control changes a protected condition while retaining the same verdict, so unequal scores are not required. Separate false-side controls make each of the three clauses fail in isolation.
+A separate temporal predicate compares a Time-valued arrival with the revised freeze time. The source supplies no bridge equating that comparison with freeze-event visibility.
 
 ## References
 

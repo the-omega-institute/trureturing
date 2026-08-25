@@ -3,73 +3,80 @@
    mirror-B: D5/B/S3/ConceptDynamics/Governance/TargetLaunderingCriterion
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Target laundering requires coordinate change, regrading, and original attribution. -/
+   digest: Freeze-visible change, regrading, and original attribution. -/
 
-import Mathlib.Data.Finset.Basic
 import Mathlib.Data.Fin.Basic
+import Mathlib.Data.Finset.Basic
+import Mathlib.Order.Fin.Basic
 
 /- Library-search audit trail (2026-08-25):
-   * Exact searches
-     `rg -n -i 'target.*launder|launder.*target|TargetLaundering' D5 Blueprint`
-     and searches for `PostArrivalProtectedChange`, `RegradeReport`, and
-     `ProtectedCoordinates` returned no Lean declaration. The same names occur
-     only in the DECT reference source's proposed formal interface.
-   * Type-shape searches for `structure .*Commitment`, `structure .*Report`,
-     `targetChain`, `weightSpec`, `regradedVerdict`, and `attributedTo` found no
-     commitment/report structure with this field family. `TransportReport` and
-     `TransportCert` concern scope transport, not post-arrival re-evaluation.
-   * Synonym searches covered commitment/pledge/seal (承诺/冻结/封存),
-     protected/guarded/coordinate (保护/受护/坐标),
-     arrival/first-seen/filtration (到达/首次可达/滤过),
-     regrade/reassess/evaluate/verdict (重评/复评/评价/裁决), and
-     laundering/bleaching/whitewashing/tamper/retroactive
-     (漂白/洗白/回写/篡改/追溯). Hits in ConceptDynamics concern target
-     factorization, transport, or causal attribution and do not combine a
-     protected-coordinate change with an actual revised evaluation.
-   * `git grep -n -E '^(def|theorem|structure|inductive|abbrev) ' --
-     D5/S3/ConceptDynamics/Governance D5/S3/ConceptDynamics/Attribution
-     D5/S3/ConceptDynamics/Provenance D5/S3/ConceptDynamics/Transport`
-     found no exact criterion. `TransportCertificateValidity` seals source
-     coordinates for domain transport; `OverreachWithoutLicense` rejects
-     unlicensed scope expansion. Neither records regrading or attribution.
-     The brief-named `RoleAdmissionContaminationClosure` is absent from both
-     this checkout and remote dev commit 48385266dc86.
-   * Source closure: DECT lines 3625-3631 define arrival as first reachability
-     in the access filtration, including infinity for evidence never seen; lines
-     3755-3772 define the commitment and scope; lines 4872-4932 give proposed
-     protected-coordinate and actual regrade-report interfaces. The draft at
-     line 4927 retains only membership at the freeze event, whereas the atom at
-     line 3994 requires strict arrival-before-time. The strict source formula is
-     retained here without Nat, measurability, finiteness, or decidable equality. -/
+   * `rg -n 'structure .*Commitment|structure .*Report|Finset Artifact|targetChain|
+     weightSpec|regradedVerdict|attributedTo' D5/S3/ConceptDynamics` found no
+     matching commitment/report carrier outside this module. `TransportReport`,
+     `TruthfulnessSufficiencyIndependence.ReportProfile`, and `ProvenanceReport`
+     have different fields and do not encode a prospective regrade.
+   * `rg -n 'filtration|first.?seen|arrival|freezeEvent|frozenAt|decisionEvent|
+     decidedAt' D5/S3/ConceptDynamics` found no reusable filtration or
+     adjudication snapshot outside the previous version of this module.
+   * `rg -n -i 'commitment|pledge|seal|regrade|reassess|evaluate|verdict|launder|
+     bleach|whitewash|retroactive|protected|guarded|coordinate'
+     D5/S3/ConceptDynamics` found only neighboring transport, provenance, and
+     coordinate results; none combines the canonical field family below.
+   * `ls D5/S3/ConceptDynamics` and `git grep -n '^def \|^  def ' --
+     D5/S3/ConceptDynamics | head -60` surveyed the domain vocabulary. The two
+     neighboring Governance modules contain theorem-only criteria and no carrier.
+   * The exact-name search after merge hits only this lane's pre-existing file;
+     the canonical signatures occur as source sketches at DECT 4645, 4686,
+     4798, 4804, 4872, 4882, 4899, and 4910. No frozen-ledger selector names
+     this module.
+   * Source closure: DECT 3611-3631 defines first access from the ledger; 3755-3787
+     defines the commitment; 3983-4029 defines temporal post-arrival change and
+     the three-clause criterion; 4623-4932 supplies the canonical Lean sketches.
+     The prose compares `Arrival Z` with `Time K'`, while sketch 4910 instead
+     tests freeze-event visibility and supplies no EventId-to-Time bridge. Both
+     source predicates are retained separately; no unstated bridge is added. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
+universe u
+
 namespace D5.S3.ConceptDynamics.Governance.TargetLaunderingCriterion
 
-/-- The access-ledger filtration used to interpret arrival before a commitment event. -/
-structure EvidenceFiltration (EventId Evidence : Type*) where
-  precedes : EventId -> EventId -> Prop
-  precedesRefl : forall event, precedes event event
-  precedesTrans : forall {i j k}, precedes i j -> precedes j k -> precedes i k
+/-- The canonical versioned evidence filtration from the source sketch. -/
+structure EvidenceFiltration
+    (EventId Evidence : Type u) [Preorder EventId] where
   seen : EventId -> Set Evidence
-  monotone : forall {i j}, precedes i j -> seen i <= seen j
-  firstSeen : Evidence -> Option EventId
-  seen_iff : forall {e k}, e ∈ seen k ↔
-    ∃ arrival, firstSeen e = some arrival ∧ precedes arrival k
+  monotone : forall {i j}, i <= j -> seen i <= seen j
 
-/-- Strict access-ledger order derived from the filtration's general preorder. -/
-def StrictlyPrecedes {EventId Evidence : Type*}
-    (filtration : EvidenceFiltration EventId Evidence)
-    (first second : EventId) : Prop :=
-  filtration.precedes first second ∧ ¬filtration.precedes second first
-
-/-- A prospective commitment retains its event address, full scope, evaluation
-coordinates, test plan, and finite typed artifact bundle. -/
-structure ProspectiveCommitment
-    (EventId TargetChain Domain Epsilon Condition Comparator TestPlan Baseline
-      WeightSpec Artifact : Type*) where
+/-- The canonical adjudication snapshot keeps event and clock coordinates distinct. -/
+structure AdjudicationSnapshot
+    (EventId Evidence Round Artifact Time : Type u)
+    [Preorder EventId] [Preorder Time] (n : Round) where
   freezeEvent : EventId
+  decisionEvent : EventId
+  frozenAt : Time
+  decidedAt : Time
+  freezeBeforeDecision : freezeEvent <= decisionEvent
+  timeBeforeDecision : frozenAt <= decidedAt
+  filtration : EvidenceFiltration EventId Evidence
+  dependencyClosure : Set Artifact
+  evidenceDependencies : Set Evidence
+
+/-- The candidate and feasible actions sealed into a prospective commitment. -/
+structure DecisionSet (Action : Type u) [DecidableEq Action] where
+  candidates : Finset Action
+  feasible : Finset Action
+  current : Option Action
+  feasibleFromCandidates : feasible <= candidates
+
+/-- The canonical same-round prospective commitment from the source sketch. -/
+structure ProspectiveCommitment
+    (EventId Evidence Round Artifact Time TargetChain Domain Epsilon Condition
+      Comparator TestPlan Baseline WeightSpec : Type u)
+    [LinearOrder EventId] [Preorder Time] [DecidableEq Artifact]
+    (n : Round) where
+  adjudication : AdjudicationSnapshot EventId Evidence Round Artifact Time n
   targetChain : TargetChain
   domain : Domain
   epsilon : Epsilon
@@ -78,11 +85,17 @@ structure ProspectiveCommitment
   testPlan : TestPlan
   baseline : Baseline
   weightSpec : WeightSpec
+  decision : DecisionSet Artifact
   committedArtifacts : Finset Artifact
+  baselineArtifacts : Finset Artifact
+  committedFromCandidates : committedArtifacts <= decision.candidates
+  baselinesFromCandidates : baselineArtifacts <= decision.candidates
+  committedInClosure : forall a, a ∈ committedArtifacts ->
+    a ∈ adjudication.dependencyClosure
 
-/-- Exactly the seven coordinates protected by the source definition. -/
+/-- Exactly the seven source-protected coordinates. -/
 structure ProtectedCoordinates
-    (TargetChain Domain Epsilon Condition Comparator Baseline WeightSpec : Type*) where
+    (TargetChain Domain Epsilon Condition Comparator Baseline WeightSpec : Type u) where
   targetChain : TargetChain
   domain : Domain
   epsilon : Epsilon
@@ -91,40 +104,27 @@ structure ProtectedCoordinates
   baseline : Baseline
   weightSpec : WeightSpec
 
-/-- Direct projection of every protected coordinate from a commitment. -/
+/-- Direct projection of all protected coordinates from a commitment. -/
 def protectedCoordinates
-    {EventId TargetChain Domain Epsilon Condition Comparator TestPlan Baseline
-      WeightSpec Artifact : Type*}
-    (commitment : ProspectiveCommitment EventId TargetChain Domain Epsilon Condition
-      Comparator TestPlan Baseline WeightSpec Artifact) :
-    ProtectedCoordinates TargetChain Domain Epsilon Condition Comparator Baseline
-      WeightSpec :=
-  { targetChain := commitment.targetChain
-    domain := commitment.domain
-    epsilon := commitment.epsilon
-    conditions := commitment.conditions
-    comparator := commitment.comparator
-    baseline := commitment.baseline
-    weightSpec := commitment.weightSpec }
+    {EventId Evidence Round Artifact Time TargetChain Domain Epsilon Condition
+      Comparator TestPlan Baseline WeightSpec : Type u}
+    [LinearOrder EventId] [Preorder Time] [DecidableEq Artifact]
+    {n : Round}
+    (K : ProspectiveCommitment EventId Evidence Round Artifact Time TargetChain
+      Domain Epsilon Condition Comparator TestPlan Baseline WeightSpec n) :
+    ProtectedCoordinates TargetChain Domain Epsilon Condition Comparator
+      Baseline WeightSpec :=
+  { targetChain := K.targetChain
+    domain := K.domain
+    epsilon := K.epsilon
+    conditions := K.conditions
+    comparator := K.comparator
+    baseline := K.baseline
+    weightSpec := K.weightSpec }
 
-/-- A protected-coordinate change is post-arrival precisely when the ledger's
-actual first-seen event strictly precedes the revised freeze event. -/
-def PostArrivalProtectedChange
-    {EventId Evidence TargetChain Domain Epsilon Condition Comparator TestPlan
-      Baseline WeightSpec Artifact : Type*}
-    (filtration : EvidenceFiltration EventId Evidence)
-    (original revised : ProspectiveCommitment EventId TargetChain Domain Epsilon
-      Condition Comparator TestPlan Baseline WeightSpec Artifact)
-    (evidence : Evidence) : Prop :=
-  ∃ arrival,
-    filtration.firstSeen evidence = some arrival ∧
-      StrictlyPrecedes filtration arrival revised.freezeEvent ∧
-      protectedCoordinates revised ≠ protectedCoordinates original
-
-/-- A regrade report cannot choose an arbitrary truth label: its verdict field
-is accompanied by an equality to the actual evaluation of its revised commitment. -/
+/-- A regrade report carries the actual revised evaluation as a typed field. -/
 structure RegradeReport
-    (Commitment Evidence Verdict EventId : Type*)
+    (Commitment Evidence Verdict Time : Type u)
     (evaluate : Commitment -> Evidence -> Verdict) where
   original : Commitment
   revised : Commitment
@@ -132,274 +132,467 @@ structure RegradeReport
   regradedVerdict : Verdict
   regradesOldRound : regradedVerdict = evaluate revised evidence
   attributedTo : Commitment
-  occurredAt : EventId
+  occurredAt : Time
 
-/-- Reporting a concrete verdict as success for a commitment is a pair of
-record equalities, not a caller-supplied proposition. -/
+/-- Canonical source-sketch definition. Both commitments have the same round index. -/
+def TargetLaundering
+    {EventId Evidence Round Artifact Time TargetChain Domain Epsilon Condition
+      Comparator TestPlan Baseline WeightSpec Verdict : Type u}
+    [LinearOrder EventId] [Preorder Time] [DecidableEq Artifact]
+    {n : Round}
+    (evaluate :
+      ProspectiveCommitment EventId Evidence Round Artifact Time TargetChain
+        Domain Epsilon Condition Comparator TestPlan Baseline WeightSpec n ->
+        Evidence -> Verdict)
+    (oldK newK : ProspectiveCommitment EventId Evidence Round Artifact Time
+      TargetChain Domain Epsilon Condition Comparator TestPlan Baseline
+      WeightSpec n)
+    (Z : Evidence)
+    (report : RegradeReport
+      (ProspectiveCommitment EventId Evidence Round Artifact Time TargetChain
+        Domain Epsilon Condition Comparator TestPlan Baseline WeightSpec n)
+      Evidence Verdict Time evaluate) : Prop :=
+  Z ∈ newK.adjudication.filtration.seen newK.adjudication.freezeEvent ∧
+    protectedCoordinates newK ≠ protectedCoordinates oldK ∧
+    report.original = oldK ∧ report.revised = newK ∧
+    report.evidence = Z ∧ report.regradedVerdict = evaluate newK Z ∧
+    report.attributedTo = oldK ∧
+    report.occurredAt = newK.adjudication.frozenAt
+
+/-- The prose-level post-arrival predicate compares two `Time` values. -/
+def PostArrivalProtectedChange
+    {EventId Evidence Round Artifact Time TargetChain Domain Epsilon Condition
+      Comparator TestPlan Baseline WeightSpec : Type u}
+    [LinearOrder EventId] [Preorder Time] [DecidableEq Artifact]
+    {n : Round}
+    (arrival : Evidence -> Time)
+    (oldK newK : ProspectiveCommitment EventId Evidence Round Artifact Time
+      TargetChain Domain Epsilon Condition Comparator TestPlan Baseline
+      WeightSpec n)
+    (Z : Evidence) : Prop :=
+  arrival Z < newK.adjudication.frozenAt ∧
+    protectedCoordinates newK ≠ protectedCoordinates oldK
+
+/-- The freeze-visibility pair used by the canonical `TargetLaundering` sketch. -/
+def FreezeVisibleProtectedChange
+    {EventId Evidence Round Artifact Time TargetChain Domain Epsilon Condition
+      Comparator TestPlan Baseline WeightSpec : Type u}
+    [LinearOrder EventId] [Preorder Time] [DecidableEq Artifact]
+    {n : Round}
+    (oldK newK : ProspectiveCommitment EventId Evidence Round Artifact Time
+      TargetChain Domain Epsilon Condition Comparator TestPlan Baseline
+      WeightSpec n)
+    (Z : Evidence) : Prop :=
+  Z ∈ newK.adjudication.filtration.seen newK.adjudication.freezeEvent ∧
+    protectedCoordinates newK ≠ protectedCoordinates oldK
+
+/-- Report identities that say the old evidence was evaluated in the revised
+same-round commitment and timestamped at the revised freeze time. -/
+def RegradesOldRound
+    {EventId Evidence Round Artifact Time TargetChain Domain Epsilon Condition
+      Comparator TestPlan Baseline WeightSpec Verdict : Type u}
+    [LinearOrder EventId] [Preorder Time] [DecidableEq Artifact]
+    {n : Round}
+    (evaluate :
+      ProspectiveCommitment EventId Evidence Round Artifact Time TargetChain
+        Domain Epsilon Condition Comparator TestPlan Baseline WeightSpec n ->
+        Evidence -> Verdict)
+    (oldK newK : ProspectiveCommitment EventId Evidence Round Artifact Time
+      TargetChain Domain Epsilon Condition Comparator TestPlan Baseline
+      WeightSpec n)
+    (Z : Evidence)
+    (report : RegradeReport
+      (ProspectiveCommitment EventId Evidence Round Artifact Time TargetChain
+        Domain Epsilon Condition Comparator TestPlan Baseline WeightSpec n)
+      Evidence Verdict Time evaluate) : Prop :=
+  report.original = oldK ∧ report.revised = newK ∧ report.evidence = Z ∧
+    report.occurredAt = newK.adjudication.frozenAt
+
+/-- A success report pairs the reported verdict with its attributed commitment. -/
 def ReportedAsSuccess
-    {Commitment Evidence Verdict EventId : Type*}
+    {Commitment Evidence Verdict Time : Type u}
     {evaluate : Commitment -> Evidence -> Verdict}
-    (report : RegradeReport Commitment Evidence Verdict EventId evaluate)
-    (verdict : Verdict) (commitment : Commitment) : Prop :=
+    (verdict : Verdict) (commitment : Commitment)
+    (report : RegradeReport Commitment Evidence Verdict Time evaluate) : Prop :=
   report.regradedVerdict = verdict ∧ report.attributedTo = commitment
 
-/-- The report regrades the original round with the revised coordinates and the
-old evidence, at the revised commitment event, using the actual evaluation. -/
-def RegradesOldRound
-    {Commitment Evidence Verdict EventId : Type*}
-    {evaluate : Commitment -> Evidence -> Verdict}
-    (original revised : Commitment) (evidence : Evidence) (revisedAt : EventId)
-    (report : RegradeReport Commitment Evidence Verdict EventId evaluate) : Prop :=
-  report.original = original ∧
-    report.revised = revised ∧
-    report.evidence = evidence ∧
-    report.regradedVerdict = evaluate revised evidence ∧
-    report.occurredAt = revisedAt
-
-/-- Attribution to the original commitment consumes the actual revised
-evaluation selected by `evaluate`; it has no free propositional certificate. -/
+/-- Attribution applies the actual revised evaluator to the old evidence. -/
 def AttributesToOriginalCommitment
-    {Commitment Evidence Verdict EventId : Type*}
-    (evaluate : Commitment -> Evidence -> Verdict)
-    (original revised : Commitment) (evidence : Evidence)
-    (report : RegradeReport Commitment Evidence Verdict EventId evaluate) : Prop :=
-  ReportedAsSuccess report (evaluate revised evidence) original
-
-/-- Target laundering is the conjunction of post-arrival protected change,
-actual regrading of the old round, and attribution to the original commitment. -/
-def TargetLaundering
-    {EventId Evidence TargetChain Domain Epsilon Condition Comparator TestPlan
-      Baseline WeightSpec Artifact Verdict : Type*}
+    {EventId Evidence Round Artifact Time TargetChain Domain Epsilon Condition
+      Comparator TestPlan Baseline WeightSpec Verdict : Type u}
+    [LinearOrder EventId] [Preorder Time] [DecidableEq Artifact]
+    {n : Round}
     (evaluate :
-      ProspectiveCommitment EventId TargetChain Domain Epsilon Condition Comparator
-        TestPlan Baseline WeightSpec Artifact -> Evidence -> Verdict)
-    (filtration : EvidenceFiltration EventId Evidence)
-    (original revised : ProspectiveCommitment EventId TargetChain Domain Epsilon
-      Condition Comparator TestPlan Baseline WeightSpec Artifact)
-    (evidence : Evidence)
+      ProspectiveCommitment EventId Evidence Round Artifact Time TargetChain
+        Domain Epsilon Condition Comparator TestPlan Baseline WeightSpec n ->
+        Evidence -> Verdict)
+    (oldK newK : ProspectiveCommitment EventId Evidence Round Artifact Time
+      TargetChain Domain Epsilon Condition Comparator TestPlan Baseline
+      WeightSpec n)
+    (Z : Evidence)
     (report : RegradeReport
-      (ProspectiveCommitment EventId TargetChain Domain Epsilon Condition Comparator
-        TestPlan Baseline WeightSpec Artifact)
-      Evidence Verdict EventId evaluate) : Prop :=
-  PostArrivalProtectedChange filtration original revised evidence ∧
-    RegradesOldRound original revised evidence revised.freezeEvent report ∧
-    AttributesToOriginalCommitment evaluate original revised evidence report
+      (ProspectiveCommitment EventId Evidence Round Artifact Time TargetChain
+        Domain Epsilon Condition Comparator TestPlan Baseline WeightSpec n)
+      Evidence Verdict Time evaluate) : Prop :=
+  ReportedAsSuccess (evaluate newK Z) oldK report
 
-/-- The source criterion, with all three clauses and the report's actual
-evaluation witness retained. -/
+/-- Directly consumes the proof field indexed by the actual evaluator. -/
+theorem regrade_report_carries_actual_evaluation
+    {Commitment Evidence Verdict Time : Type u}
+    {evaluate : Commitment -> Evidence -> Verdict}
+    (report : RegradeReport Commitment Evidence Verdict Time evaluate) :
+    report.regradedVerdict = evaluate report.revised report.evidence :=
+  report.regradesOldRound
+
+/-- The canonical eight fields regroup into three independently testable clauses. -/
 theorem target_laundering_criterion
-    {EventId Evidence TargetChain Domain Epsilon Condition Comparator TestPlan
-      Baseline WeightSpec Artifact Verdict : Type*}
+    {EventId Evidence Round Artifact Time TargetChain Domain Epsilon Condition
+      Comparator TestPlan Baseline WeightSpec Verdict : Type u}
+    [LinearOrder EventId] [Preorder Time] [DecidableEq Artifact]
+    {n : Round}
     (evaluate :
-      ProspectiveCommitment EventId TargetChain Domain Epsilon Condition Comparator
-        TestPlan Baseline WeightSpec Artifact -> Evidence -> Verdict)
-    (filtration : EvidenceFiltration EventId Evidence)
-    (original revised : ProspectiveCommitment EventId TargetChain Domain Epsilon
-      Condition Comparator TestPlan Baseline WeightSpec Artifact)
-    (evidence : Evidence)
+      ProspectiveCommitment EventId Evidence Round Artifact Time TargetChain
+        Domain Epsilon Condition Comparator TestPlan Baseline WeightSpec n ->
+        Evidence -> Verdict)
+    (oldK newK : ProspectiveCommitment EventId Evidence Round Artifact Time
+      TargetChain Domain Epsilon Condition Comparator TestPlan Baseline
+      WeightSpec n)
+    (Z : Evidence)
     (report : RegradeReport
-      (ProspectiveCommitment EventId TargetChain Domain Epsilon Condition Comparator
-        TestPlan Baseline WeightSpec Artifact)
-      Evidence Verdict EventId evaluate) :
-    TargetLaundering evaluate filtration original revised evidence report ↔
-      PostArrivalProtectedChange filtration original revised evidence ∧
-        RegradesOldRound original revised evidence revised.freezeEvent report ∧
-        AttributesToOriginalCommitment evaluate original revised evidence report :=
+      (ProspectiveCommitment EventId Evidence Round Artifact Time TargetChain
+        Domain Epsilon Condition Comparator TestPlan Baseline WeightSpec n)
+      Evidence Verdict Time evaluate) :
+    TargetLaundering evaluate oldK newK Z report <->
+      FreezeVisibleProtectedChange oldK newK Z ∧
+        RegradesOldRound evaluate oldK newK Z report ∧
+        AttributesToOriginalCommitment evaluate oldK newK Z report := by
+  constructor
+  · rintro ⟨visible, changed, original, revised, evidence, verdict, attributed, occurred⟩
+    exact ⟨⟨visible, changed⟩, ⟨original, revised, evidence, occurred⟩,
+      ⟨verdict, attributed⟩⟩
+  · rintro ⟨⟨visible, changed⟩, ⟨original, revised, evidence, occurred⟩,
+      ⟨verdict, attributed⟩⟩
+    exact ⟨visible, changed, original, revised, evidence, verdict, attributed, occurred⟩
+
+/-- The temporal post-arrival definition unfolds without identifying event and clock types. -/
+theorem post_arrival_protected_change_criterion
+    {EventId Evidence Round Artifact Time TargetChain Domain Epsilon Condition
+      Comparator TestPlan Baseline WeightSpec : Type u}
+    [LinearOrder EventId] [Preorder Time] [DecidableEq Artifact]
+    {n : Round}
+    (arrival : Evidence -> Time)
+    (oldK newK : ProspectiveCommitment EventId Evidence Round Artifact Time
+      TargetChain Domain Epsilon Condition Comparator TestPlan Baseline
+      WeightSpec n)
+    (Z : Evidence) :
+    PostArrivalProtectedChange arrival oldK newK Z <->
+      arrival Z < newK.adjudication.frozenAt ∧
+        protectedCoordinates newK ≠ protectedCoordinates oldK :=
   Iff.rfl
 
 namespace FiniteWitness
 
-abbrev EventId := Fin 3
+abbrev EventId := Fin 2
+abbrev Evidence := Bool
+abbrev Round := Bool
+abbrev Artifact := Bool
+abbrev Time := Fin 3
+abbrev RoundIndex : Round := false
 
 abbrev Commitment :=
-  ProspectiveCommitment EventId Unit Unit Unit Bool Unit Unit Unit Unit (Fin 1)
+  ProspectiveCommitment EventId Evidence Round Artifact Time Unit Unit Unit Bool
+    Unit Unit Unit Unit RoundIndex
 
-def filtration : EvidenceFiltration EventId Bool where
-  precedes := fun i j => i.val <= j.val
-  precedesRefl := fun event => Nat.le_refl event.val
-  precedesTrans := fun first second => Nat.le_trans first second
+def seenFiltration : EvidenceFiltration EventId Evidence where
   seen := fun _ => Set.univ
   monotone := by
     intro i j hij evidence evidenceSeen
     exact evidenceSeen
-  firstSeen := fun _ => some 0
-  seen_iff := by
-    intro evidence event
-    simp
 
-def emptyFiltration : EvidenceFiltration EventId Bool where
-  precedes := fun i j => i.val <= j.val
-  precedesRefl := fun event => Nat.le_refl event.val
-  precedesTrans := fun first second => Nat.le_trans first second
+def unseenFiltration : EvidenceFiltration EventId Evidence where
   seen := fun _ => ∅
   monotone := by
     intro i j hij evidence evidenceSeen
     exact evidenceSeen
-  firstSeen := fun _ => none
-  seen_iff := by simp
 
-def original : Commitment where
+def seenSnapshot : AdjudicationSnapshot EventId Evidence Round Artifact Time RoundIndex where
   freezeEvent := 1
+  decisionEvent := 1
+  frozenAt := 1
+  decidedAt := 2
+  freezeBeforeDecision := le_rfl
+  timeBeforeDecision := by decide
+  filtration := seenFiltration
+  dependencyClosure := Set.univ
+  evidenceDependencies := ∅
+
+def unseenSnapshot : AdjudicationSnapshot EventId Evidence Round Artifact Time RoundIndex where
+  freezeEvent := 1
+  decisionEvent := 1
+  frozenAt := 1
+  decidedAt := 2
+  freezeBeforeDecision := le_rfl
+  timeBeforeDecision := by decide
+  filtration := unseenFiltration
+  dependencyClosure := Set.univ
+  evidenceDependencies := ∅
+
+def decision : DecisionSet Artifact where
+  candidates := {false}
+  feasible := {false}
+  current := some false
+  feasibleFromCandidates := by simp
+
+def commitment
+    (snapshot : AdjudicationSnapshot EventId Evidence Round Artifact Time RoundIndex)
+    (condition : Bool) : Commitment where
+  adjudication := snapshot
   targetChain := ()
   domain := ()
   epsilon := ()
-  conditions := false
+  conditions := condition
   comparator := ()
   testPlan := ()
   baseline := ()
   weightSpec := ()
+  decision := decision
   committedArtifacts := ∅
+  baselineArtifacts := ∅
+  committedFromCandidates := by simp
+  baselinesFromCandidates := by simp
+  committedInClosure := by simp
 
-def revised : Commitment where
-  freezeEvent := 2
-  targetChain := ()
-  domain := ()
-  epsilon := ()
-  conditions := true
-  comparator := ()
-  testPlan := ()
-  baseline := ()
-  weightSpec := ()
-  committedArtifacts := ∅
+def oldK : Commitment := commitment seenSnapshot false
+def newK : Commitment := commitment seenSnapshot true
+def unseenNewK : Commitment := commitment unseenSnapshot true
+def unchangedK : Commitment := commitment seenSnapshot false
 
-def evaluate : Commitment -> Bool -> Bool := fun _ _ => false
+def evaluate : Commitment -> Evidence -> Bool := fun _ evidence => evidence
 
-def validReport : RegradeReport Commitment Bool Bool EventId evaluate where
-  original := original
-  revised := revised
+def validReport : RegradeReport Commitment Evidence Bool Time evaluate where
+  original := oldK
+  revised := newK
   evidence := true
-  regradedVerdict := false
+  regradedVerdict := true
   regradesOldRound := rfl
-  attributedTo := original
-  occurredAt := revised.freezeEvent
+  attributedTo := oldK
+  occurredAt := newK.adjudication.frozenAt
 
-def wrongRoundReport : RegradeReport Commitment Bool Bool EventId evaluate where
-  original := revised
-  revised := revised
+def unseenReport : RegradeReport Commitment Evidence Bool Time evaluate where
+  original := oldK
+  revised := unseenNewK
   evidence := true
-  regradedVerdict := false
+  regradedVerdict := true
   regradesOldRound := rfl
-  attributedTo := original
-  occurredAt := revised.freezeEvent
+  attributedTo := oldK
+  occurredAt := unseenNewK.adjudication.frozenAt
 
-def wrongAttributionReport : RegradeReport Commitment Bool Bool EventId evaluate where
-  original := original
-  revised := revised
+def wrongRoundReport : RegradeReport Commitment Evidence Bool Time evaluate where
+  original := newK
+  revised := newK
   evidence := true
-  regradedVerdict := false
+  regradedVerdict := true
   regradesOldRound := rfl
-  attributedTo := revised
-  occurredAt := revised.freezeEvent
+  attributedTo := oldK
+  occurredAt := newK.adjudication.frozenAt
 
-theorem original_ne_revised : original ≠ revised := by
+def wrongAttributionReport : RegradeReport Commitment Evidence Bool Time evaluate where
+  original := oldK
+  revised := newK
+  evidence := true
+  regradedVerdict := true
+  regradesOldRound := rfl
+  attributedTo := newK
+  occurredAt := newK.adjudication.frozenAt
+
+def arrival : Evidence -> Time := fun evidence => if evidence then 0 else 2
+def lateArrival : Evidence -> Time := fun _ => 2
+
+theorem oldK_ne_newK : oldK ≠ newK := by
   intro commitmentsEqual
-  have conditionsEqual := congrArg (fun commitment : Commitment => commitment.conditions)
-    commitmentsEqual
-  simp [original, revised] at conditionsEqual
+  have conditionsEqual := congrArg (fun K : Commitment => K.conditions) commitmentsEqual
+  simp [oldK, newK, commitment] at conditionsEqual
 
 theorem protected_coordinates_changed :
-    protectedCoordinates revised ≠ protectedCoordinates original := by
+    protectedCoordinates newK ≠ protectedCoordinates oldK := by
   intro coordinatesEqual
   have conditionsEqual := congrArg
     (fun coordinates : ProtectedCoordinates Unit Unit Unit Bool Unit Unit Unit =>
       coordinates.conditions)
     coordinatesEqual
-  simp [protectedCoordinates, original, revised] at conditionsEqual
+  simp [protectedCoordinates, oldK, newK, commitment] at conditionsEqual
 
 end FiniteWitness
 
-/-- Positive control: the protected condition changes after arrival, the report
-carries the actual revised evaluation, attribution targets the original
-commitment, and both old and revised evaluations nevertheless have one value. -/
+/-- Positive control: target laundering holds although old and new evaluations agree. -/
 theorem same_verdict_target_laundering :
-    TargetLaundering FiniteWitness.evaluate FiniteWitness.filtration
-        FiniteWitness.original FiniteWitness.revised true FiniteWitness.validReport ∧
-      FiniteWitness.evaluate FiniteWitness.original true =
-        FiniteWitness.evaluate FiniteWitness.revised true := by
+    TargetLaundering FiniteWitness.evaluate FiniteWitness.oldK FiniteWitness.newK
+        true FiniteWitness.validReport ∧
+      FiniteWitness.evaluate FiniteWitness.oldK true =
+        FiniteWitness.evaluate FiniteWitness.newK true := by
   constructor
-  · simp only [TargetLaundering]
+  · apply (target_laundering_criterion FiniteWitness.evaluate FiniteWitness.oldK
+      FiniteWitness.newK true FiniteWitness.validReport).2
     refine ⟨?_, ?_, ?_⟩
-    · refine ⟨0, rfl, ?_, FiniteWitness.protected_coordinates_changed⟩
-      simp [StrictlyPrecedes, FiniteWitness.filtration, FiniteWitness.revised]
-    · exact ⟨rfl, rfl, rfl, rfl, rfl⟩
+    · exact ⟨by simp [FiniteWitness.newK, FiniteWitness.commitment,
+        FiniteWitness.seenSnapshot, FiniteWitness.seenFiltration],
+        FiniteWitness.protected_coordinates_changed⟩
+    · exact ⟨rfl, rfl, rfl, rfl⟩
     · exact ⟨rfl, rfl⟩
   · rfl
 
-/-- False-side control for clause one: with an empty access filtration, the
-same actual report still regrades and attributes correctly, but is not post-arrival. -/
-theorem false_neighbor_no_post_arrival_change :
-    ¬PostArrivalProtectedChange FiniteWitness.emptyFiltration
-        FiniteWitness.original FiniteWitness.revised true ∧
-      RegradesOldRound FiniteWitness.original FiniteWitness.revised true
-        FiniteWitness.revised.freezeEvent FiniteWitness.validReport ∧
-      AttributesToOriginalCommitment FiniteWitness.evaluate FiniteWitness.original
-        FiniteWitness.revised true FiniteWitness.validReport := by
-  refine ⟨?_, ⟨rfl, rfl, rfl, rfl, rfl⟩, ⟨rfl, rfl⟩⟩
-  rintro ⟨arrival, firstSeen, _arrivalBefore, _coordinatesChanged⟩
-  simp [FiniteWitness.emptyFiltration] at firstSeen
+/-- False-side control for the canonical freeze-visible protected-change clause. -/
+theorem false_neighbor_no_freeze_visible_change :
+    (¬FreezeVisibleProtectedChange FiniteWitness.oldK FiniteWitness.unseenNewK true) ∧
+      RegradesOldRound FiniteWitness.evaluate FiniteWitness.oldK
+        FiniteWitness.unseenNewK true FiniteWitness.unseenReport ∧
+      AttributesToOriginalCommitment FiniteWitness.evaluate FiniteWitness.oldK
+        FiniteWitness.unseenNewK true FiniteWitness.unseenReport ∧
+      ¬TargetLaundering FiniteWitness.evaluate FiniteWitness.oldK
+        FiniteWitness.unseenNewK true FiniteWitness.unseenReport := by
+  have noVisible :
+      ¬FreezeVisibleProtectedChange FiniteWitness.oldK FiniteWitness.unseenNewK true := by
+    simp [FreezeVisibleProtectedChange, FiniteWitness.unseenNewK,
+      FiniteWitness.commitment, FiniteWitness.unseenSnapshot,
+      FiniteWitness.unseenFiltration]
+  refine ⟨noVisible, ⟨rfl, rfl, rfl, rfl⟩, ⟨rfl, rfl⟩, ?_⟩
+  intro laundering
+  exact noVisible ((target_laundering_criterion FiniteWitness.evaluate FiniteWitness.oldK
+    FiniteWitness.unseenNewK true FiniteWitness.unseenReport).1 laundering).1
 
-/-- False-side control for clause two: the report contains a genuine revised
-evaluation and correct attribution, but names the revised commitment as original. -/
+/-- False-side control for old-round report identity. -/
 theorem false_neighbor_no_old_round_regrade :
-    PostArrivalProtectedChange FiniteWitness.filtration
-        FiniteWitness.original FiniteWitness.revised true ∧
-      ¬RegradesOldRound FiniteWitness.original FiniteWitness.revised true
-        FiniteWitness.revised.freezeEvent FiniteWitness.wrongRoundReport ∧
-      AttributesToOriginalCommitment FiniteWitness.evaluate FiniteWitness.original
-        FiniteWitness.revised true FiniteWitness.wrongRoundReport := by
-  refine ⟨?_, ?_, ?_⟩
-  · refine ⟨0, rfl, ?_, FiniteWitness.protected_coordinates_changed⟩
-    simp [StrictlyPrecedes, FiniteWitness.filtration, FiniteWitness.revised]
-  · intro regrades
-    exact FiniteWitness.original_ne_revised regrades.1.symm
-  · exact ⟨rfl, rfl⟩
+    FreezeVisibleProtectedChange FiniteWitness.oldK FiniteWitness.newK true ∧
+      (¬RegradesOldRound FiniteWitness.evaluate FiniteWitness.oldK FiniteWitness.newK
+        true FiniteWitness.wrongRoundReport) ∧
+      AttributesToOriginalCommitment FiniteWitness.evaluate FiniteWitness.oldK
+        FiniteWitness.newK true FiniteWitness.wrongRoundReport ∧
+      ¬TargetLaundering FiniteWitness.evaluate FiniteWitness.oldK FiniteWitness.newK
+        true FiniteWitness.wrongRoundReport := by
+  have visible :
+      FreezeVisibleProtectedChange FiniteWitness.oldK FiniteWitness.newK true :=
+    ⟨by simp [FiniteWitness.newK, FiniteWitness.commitment,
+      FiniteWitness.seenSnapshot, FiniteWitness.seenFiltration],
+      FiniteWitness.protected_coordinates_changed⟩
+  have noRegrade :
+      ¬RegradesOldRound FiniteWitness.evaluate FiniteWitness.oldK FiniteWitness.newK
+        true FiniteWitness.wrongRoundReport := by
+    intro regrade
+    exact FiniteWitness.oldK_ne_newK regrade.1.symm
+  refine ⟨visible, noRegrade, ⟨rfl, rfl⟩, ?_⟩
+  intro laundering
+  exact noRegrade ((target_laundering_criterion FiniteWitness.evaluate FiniteWitness.oldK
+    FiniteWitness.newK true FiniteWitness.wrongRoundReport).1 laundering).2.1
 
-/-- False-side control for clause three: the report contains the actual
-re-evaluation and correct round identities, but attributes it to the revision. -/
+/-- False-side control for attribution to the original commitment. -/
 theorem false_neighbor_no_original_attribution :
-    PostArrivalProtectedChange FiniteWitness.filtration
-        FiniteWitness.original FiniteWitness.revised true ∧
-      RegradesOldRound FiniteWitness.original FiniteWitness.revised true
-        FiniteWitness.revised.freezeEvent FiniteWitness.wrongAttributionReport ∧
-      ¬AttributesToOriginalCommitment FiniteWitness.evaluate FiniteWitness.original
-        FiniteWitness.revised true FiniteWitness.wrongAttributionReport := by
-  refine ⟨?_, ?_, ?_⟩
-  · refine ⟨0, rfl, ?_, FiniteWitness.protected_coordinates_changed⟩
-    simp [StrictlyPrecedes, FiniteWitness.filtration, FiniteWitness.revised]
-  · exact ⟨rfl, rfl, rfl, rfl, rfl⟩
-  · intro attributes
-    exact FiniteWitness.original_ne_revised attributes.2.symm
+    FreezeVisibleProtectedChange FiniteWitness.oldK FiniteWitness.newK true ∧
+      RegradesOldRound FiniteWitness.evaluate FiniteWitness.oldK FiniteWitness.newK
+        true FiniteWitness.wrongAttributionReport ∧
+      (¬AttributesToOriginalCommitment FiniteWitness.evaluate FiniteWitness.oldK
+        FiniteWitness.newK true FiniteWitness.wrongAttributionReport) ∧
+      ¬TargetLaundering FiniteWitness.evaluate FiniteWitness.oldK FiniteWitness.newK
+        true FiniteWitness.wrongAttributionReport := by
+  have visible :
+      FreezeVisibleProtectedChange FiniteWitness.oldK FiniteWitness.newK true :=
+    ⟨by simp [FiniteWitness.newK, FiniteWitness.commitment,
+      FiniteWitness.seenSnapshot, FiniteWitness.seenFiltration],
+      FiniteWitness.protected_coordinates_changed⟩
+  have noAttribution :
+      ¬AttributesToOriginalCommitment FiniteWitness.evaluate FiniteWitness.oldK
+        FiniteWitness.newK true FiniteWitness.wrongAttributionReport := by
+    intro attribution
+    exact FiniteWitness.oldK_ne_newK attribution.2.symm
+  refine ⟨visible, ⟨rfl, rfl, rfl, rfl⟩, noAttribution, ?_⟩
+  intro laundering
+  exact noAttribution ((target_laundering_criterion FiniteWitness.evaluate
+    FiniteWitness.oldK FiniteWitness.newK true
+    FiniteWitness.wrongAttributionReport).1 laundering).2.2
+
+/-- Positive control for the independent Time-valued arrival predicate. -/
+theorem temporal_post_arrival_change :
+    PostArrivalProtectedChange FiniteWitness.arrival FiniteWitness.oldK
+      FiniteWitness.newK true := by
+  apply (post_arrival_protected_change_criterion FiniteWitness.arrival
+    FiniteWitness.oldK FiniteWitness.newK true).2
+  exact ⟨by decide, FiniteWitness.protected_coordinates_changed⟩
+
+/-- Temporal false-side control: coordinates change, but arrival is not before freeze. -/
+theorem false_neighbor_arrival_not_before :
+    (¬PostArrivalProtectedChange FiniteWitness.lateArrival FiniteWitness.oldK
+      FiniteWitness.newK true) ∧
+      protectedCoordinates FiniteWitness.newK ≠
+        protectedCoordinates FiniteWitness.oldK := by
+  refine ⟨?_, FiniteWitness.protected_coordinates_changed⟩
+  intro postArrival
+  have before := ((post_arrival_protected_change_criterion FiniteWitness.lateArrival
+    FiniteWitness.oldK FiniteWitness.newK true).1 postArrival).1
+  simp [FiniteWitness.lateArrival, FiniteWitness.newK, FiniteWitness.commitment,
+    FiniteWitness.seenSnapshot] at before
+
+/-- Coordinate false-side control: arrival is before freeze, but no coordinate changed. -/
+theorem false_neighbor_protected_coordinates_unchanged :
+    FiniteWitness.arrival true < FiniteWitness.unchangedK.adjudication.frozenAt ∧
+      ¬PostArrivalProtectedChange FiniteWitness.arrival FiniteWitness.oldK
+        FiniteWitness.unchangedK true := by
+  refine ⟨by decide, ?_⟩
+  intro postArrival
+  have changed := ((post_arrival_protected_change_criterion FiniteWitness.arrival
+    FiniteWitness.oldK FiniteWitness.unchangedK true).1 postArrival).2
+  apply changed
+  rfl
 
 /-- Fail-closed consumer for every named positive and false-side witness. -/
 theorem target_laundering_nondegeneracy :
-    (TargetLaundering FiniteWitness.evaluate FiniteWitness.filtration
-        FiniteWitness.original FiniteWitness.revised true FiniteWitness.validReport ∧
-      FiniteWitness.evaluate FiniteWitness.original true =
-        FiniteWitness.evaluate FiniteWitness.revised true) ∧
-    (¬PostArrivalProtectedChange FiniteWitness.emptyFiltration
-        FiniteWitness.original FiniteWitness.revised true ∧
-      RegradesOldRound FiniteWitness.original FiniteWitness.revised true
-        FiniteWitness.revised.freezeEvent FiniteWitness.validReport ∧
-      AttributesToOriginalCommitment FiniteWitness.evaluate FiniteWitness.original
-        FiniteWitness.revised true FiniteWitness.validReport) ∧
-    (PostArrivalProtectedChange FiniteWitness.filtration
-        FiniteWitness.original FiniteWitness.revised true ∧
-      ¬RegradesOldRound FiniteWitness.original FiniteWitness.revised true
-        FiniteWitness.revised.freezeEvent FiniteWitness.wrongRoundReport ∧
-      AttributesToOriginalCommitment FiniteWitness.evaluate FiniteWitness.original
-        FiniteWitness.revised true FiniteWitness.wrongRoundReport) ∧
-    (PostArrivalProtectedChange FiniteWitness.filtration
-        FiniteWitness.original FiniteWitness.revised true ∧
-      RegradesOldRound FiniteWitness.original FiniteWitness.revised true
-        FiniteWitness.revised.freezeEvent FiniteWitness.wrongAttributionReport ∧
-      ¬AttributesToOriginalCommitment FiniteWitness.evaluate FiniteWitness.original
-        FiniteWitness.revised true FiniteWitness.wrongAttributionReport) := by
+    (TargetLaundering FiniteWitness.evaluate FiniteWitness.oldK FiniteWitness.newK
+        true FiniteWitness.validReport ∧
+      FiniteWitness.evaluate FiniteWitness.oldK true =
+        FiniteWitness.evaluate FiniteWitness.newK true) ∧
+    ((¬FreezeVisibleProtectedChange FiniteWitness.oldK FiniteWitness.unseenNewK true) ∧
+      RegradesOldRound FiniteWitness.evaluate FiniteWitness.oldK
+        FiniteWitness.unseenNewK true FiniteWitness.unseenReport ∧
+      AttributesToOriginalCommitment FiniteWitness.evaluate FiniteWitness.oldK
+        FiniteWitness.unseenNewK true FiniteWitness.unseenReport ∧
+      ¬TargetLaundering FiniteWitness.evaluate FiniteWitness.oldK
+        FiniteWitness.unseenNewK true FiniteWitness.unseenReport) ∧
+    (FreezeVisibleProtectedChange FiniteWitness.oldK FiniteWitness.newK true ∧
+      (¬RegradesOldRound FiniteWitness.evaluate FiniteWitness.oldK FiniteWitness.newK
+        true FiniteWitness.wrongRoundReport) ∧
+      AttributesToOriginalCommitment FiniteWitness.evaluate FiniteWitness.oldK
+        FiniteWitness.newK true FiniteWitness.wrongRoundReport ∧
+      ¬TargetLaundering FiniteWitness.evaluate FiniteWitness.oldK FiniteWitness.newK
+        true FiniteWitness.wrongRoundReport) ∧
+    (FreezeVisibleProtectedChange FiniteWitness.oldK FiniteWitness.newK true ∧
+      RegradesOldRound FiniteWitness.evaluate FiniteWitness.oldK FiniteWitness.newK
+        true FiniteWitness.wrongAttributionReport ∧
+      (¬AttributesToOriginalCommitment FiniteWitness.evaluate FiniteWitness.oldK
+        FiniteWitness.newK true FiniteWitness.wrongAttributionReport) ∧
+      ¬TargetLaundering FiniteWitness.evaluate FiniteWitness.oldK FiniteWitness.newK
+        true FiniteWitness.wrongAttributionReport) ∧
+    PostArrivalProtectedChange FiniteWitness.arrival FiniteWitness.oldK
+      FiniteWitness.newK true ∧
+    ((¬PostArrivalProtectedChange FiniteWitness.lateArrival FiniteWitness.oldK
+      FiniteWitness.newK true) ∧
+      protectedCoordinates FiniteWitness.newK ≠
+        protectedCoordinates FiniteWitness.oldK) ∧
+    (FiniteWitness.arrival true < FiniteWitness.unchangedK.adjudication.frozenAt ∧
+      ¬PostArrivalProtectedChange FiniteWitness.arrival FiniteWitness.oldK
+        FiniteWitness.unchangedK true) ∧
+    FiniteWitness.validReport.regradedVerdict =
+      FiniteWitness.evaluate FiniteWitness.validReport.revised
+        FiniteWitness.validReport.evidence := by
   exact ⟨same_verdict_target_laundering,
-    false_neighbor_no_post_arrival_change,
+    false_neighbor_no_freeze_visible_change,
     false_neighbor_no_old_round_regrade,
-    false_neighbor_no_original_attribution⟩
+    false_neighbor_no_original_attribution,
+    temporal_post_arrival_change,
+    false_neighbor_arrival_not_before,
+    false_neighbor_protected_coordinates_unchanged,
+    regrade_report_carries_actual_evaluation FiniteWitness.validReport⟩
 
 #print axioms target_laundering_criterion
+#print axioms post_arrival_protected_change_criterion
+#print axioms regrade_report_carries_actual_evaluation
 #print axioms target_laundering_nondegeneracy
 
 end D5.S3.ConceptDynamics.Governance.TargetLaunderingCriterion
