@@ -50,6 +50,7 @@ internal sealed class BehaviorCompletionFunctorialityDocument
 
     private static Formula FunctorialityFormula()
     {
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
         Formula xType = F.Id("X");
         Formula yType = F.Id("Y");
         Formula zType = F.Id("Z");
@@ -82,8 +83,10 @@ internal sealed class BehaviorCompletionFunctorialityDocument
 
         return Disp(new Formula.Aligned([
             Seq(
-                Forall, Sp, xType, Comma, Sp, yType, Comma, Sp, zType, Comma, Sp,
-                bType, Comma, Sp, rType, Comma, Sp, sType, Comma),
+                Forall, Sp, Typed(xType, type), Comma, Sp,
+                Typed(yType, type), Comma, Sp, Typed(zType, type), Comma, Sp,
+                Typed(bType, type), Comma, Sp, Typed(rType, type), Comma, Sp,
+                Typed(sType, type), Comma),
             Seq(
                 Typed(sourceStep, Arrow(xType, xType)), Comma, Sp,
                 Typed(sourceReadout, Arrow(xType, bType)), Comma),
