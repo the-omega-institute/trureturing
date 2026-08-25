@@ -8,13 +8,22 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create()
     {
+        Formula Typed(Formula value, Formula type) => Seq(value, Colon, Sp, type);
+
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
         Formula gamma = Gamma;
         Formula delta = Delta;
         Formula indexType = F.Id("I");
         Formula state = F.Id("X");
+        Formula conceptType = F.Id("C");
+        Formula targetType = F.Id("Target");
+        Formula codomainFamily = F.Id("V");
+        Formula index = F.Id("i");
+        Formula theoremTarget = F.Id("target");
         Formula q = F.Id("q");
         Formula target = F.Id("T");
         Formula definition = F.Id("d");
+        Formula definitions = F.Id("definitions");
         Formula nu = F.Id("nu");
         Formula candidateCost = F.Id("c");
         Formula countingWeight = F.Id("countingWeight");
@@ -46,6 +55,61 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
         Formula coverEquivalence = Seq(Open,
             Open, gammaBlind, Sp, Eq, Sp, Emptyset, Close, Sp, Leftrightarrow, Sp,
             cutsCover, Close);
+
+        Formula theoremGammaBlind = Call(
+            "intersection",
+            Call("defectRelation", q, theoremTarget),
+            Call("jointKernel", gamma, definitions));
+        Formula theoremCut = Call(
+            "intersection",
+            Call("defectRelation", q, theoremTarget),
+            Call("complement", Call("conceptKernel", definitions, definition)));
+        Formula theoremCutsCover = Seq(
+            Call("union", Seq(definition, Sp, InMacro, Sp, gamma), theoremCut),
+            Sp, Eq, Sp, Call("defectRelation", q, theoremTarget));
+        Formula theoremCoverEquivalence = Seq(Open,
+            Open, theoremGammaBlind, Sp, Eq, Sp, Emptyset, Close,
+            Sp, Leftrightarrow, Sp, theoremCutsCover, Close);
+        Formula theoremFinitePremises = new Formula.Logic(
+            Call("Finite", state),
+            FormulaLogicOperator.And,
+            Seq(theoremGammaBlind, Sp, Eq, Sp, Emptyset));
+        Formula theoremFiniteClause = new Formula.Logic(
+            theoremFinitePremises,
+            FormulaLogicOperator.Implies,
+            Call(
+                "finiteSelectionSufficientOnRange",
+                gamma,
+                definitions,
+                q,
+                theoremTarget));
+        Formula finiteCoverLawsStatement = Disp(new Formula.Aligned([
+            Seq(
+                Forall, Sp, Typed(indexType, type), Comma, Sp,
+                Typed(state, type), Comma, Sp,
+                Typed(conceptType, type), Comma, Sp,
+                Typed(targetType, type), Comma),
+            Seq(
+                Typed(codomainFamily, new Formula.TypeArrow(indexType, type)),
+                Comma),
+            Seq(Typed(gamma, Call("Set", indexType)), Comma),
+            Seq(
+                Typed(
+                    definitions,
+                    Seq(
+                        Forall, Sp, Typed(index, indexType), Comma, Sp,
+                        Call("Concept", state, Seq(codomainFamily, Open, index, Close)))),
+                Comma),
+            Seq(
+                Typed(q, Call("Concept", state, conceptType)), Comma, Sp,
+                Typed(theoremTarget, Call("Concept", state, targetType)), Comma),
+            Seq(
+                new Formula.Logic(
+                    theoremCoverEquivalence,
+                    FormulaLogicOperator.And,
+                    theoremFiniteClause),
+                Dot),
+        ]));
 
         Formula singletonDefinition = Seq(OpenBrace, definition, CloseBrace);
         Formula gammaWithDefinition = Call("union", gamma, singletonDefinition);
@@ -154,6 +218,25 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
                                 + "finiteSelectionSupplement chooses "
                                 + "classical equality only inside its Finset implementation, so no "
                                 + "public declaration requires DecidableEq I."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
+                    DescribeId.Create("finite-cover-laws"),
+                    DeclarationHandle.Create(
+                        "D5/S3/ConceptDynamics/DefinitionEscape/FiniteCoverCounting."
+                            + "finite_cover_laws"),
+                    H("Finite residual-cover laws"),
+                    StatementSource.FromAuthor(finiteCoverLawsStatement),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(
+                        Paragraph(Text(
+                            "The index, state, concept-output, and target-output carriers are "
+                                + "explicit Type binders. V is the dependent codomain family over "
+                                + "I; Gamma, definitions, q, and target retain the types displayed "
+                                + "by the Lean declaration.")),
+                        Paragraph(Text(
+                            "The first clause identifies joint-kernel blindness with coverage by "
+                                + "the candidate cuts. The second keeps Finite X local to the premise "
+                                + "that extracts a finite sufficient subfamily."))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("marginal-capture-law"),
