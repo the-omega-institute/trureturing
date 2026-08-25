@@ -1,0 +1,20 @@
+### 固定截止判词
+
+在 \(D\) 对所有五个父原子执行上述 terminalization；缺证本身成为 `invalid`，故截止后没有总体 open 路径。令
+
+\[
+N:=\#\{a_i:s_i\in\{\mathsf{proved},\mathsf{refuted}\}\}.
+\]
+
+冻结预测为“五单元至少三项由 kernel 定理、机器正见证或机器反模型结案”，其总结算为
+
+\[
+\operatorname{Verdict}=
+\begin{cases}
+\mathsf{success},&N\ge3,\\
+\mathsf{failure},&N<3.
+\end{cases}
+\]
+
+`statement-revised` 与 `invalid` 均不计成功票；未能在截止前形成终态材料也按 `invalid` 处理。截止后的证据不改变本次预测判词，可另立新承诺，不回写本记录。同一截止证据集合无论事件顺序或批次如何都得到同一结果，也不以提前达到三票为截止条件。
+
