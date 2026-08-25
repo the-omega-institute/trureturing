@@ -8,16 +8,15 @@ public sealed class BoundedProcessRunnerBudgetTests
     public void ThirtySecondHangBudgetHasNoScatteredRepresentatives()
     {
         var repositoryRoot = RepositoryLayout.FindRoot();
-        var toolsRoot = Path.Combine(repositoryRoot, "tools");
         var oldRepresentative = string.Concat("TimeSpan.FromSeconds(", "30)");
-        var occurrences = Directory.EnumerateFiles(
-                toolsRoot,
-                "*.cs",
-                SearchOption.AllDirectories)
-            .Where(static path => !IsBuildOutput(path))
-            .Select(path => (
-                Path: Path.GetRelativePath(repositoryRoot, path),
-                Count: CountOccurrences(File.ReadAllText(path), oldRepresentative)))
+        var occurrences = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
+            .Where(static file => file.RelativePath.StartsWith("tools/", StringComparison.Ordinal)
+                && file.RelativePath.EndsWith(".cs", StringComparison.Ordinal))
+            .Where(static file => !IsBuildOutput(file.FullPath))
+            .Select(file => (
+                Path: file.RelativePath,
+                Count: File.ReadLines(file.FullPath)
+                    .Sum(line => CountOccurrences(line, oldRepresentative))))
             .Where(static site => site.Count > 0)
             .Select(static site => $"{site.Path}: {site.Count}")
             .ToArray();
