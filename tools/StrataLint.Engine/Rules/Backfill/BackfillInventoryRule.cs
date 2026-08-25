@@ -398,30 +398,6 @@ internal static class BackfillInventoryRule
             foreach (var (entry, gap) in receiptIntegrityGaps)
             {
                 var identity = GapIdentity(entry, gap);
-                if (gap.Code == "scribe-definition-mismatch")
-                {
-                    // open(issue-2919/scribe-definition-mismatch-baseline-membership): admission
-                    // cannot replay the baseline Scribe verifier. Keep this gap visible without
-                    // making a FullScan self-block; CoverAtom/Ingest still reject it before writes.
-                    findings.Add(new RuleFinding(
-                        BackfillPath,
-                        $"{identity.AtomId}:{gap.Code}:{identity.Detail}",
-                        AdmissionEffect.Observe));
-                    continue;
-                }
-
-                if (gap.Code == "scribe-emission-mismatch")
-                {
-                    // open(issue-2919/scribe-emission-mismatch-baseline-membership): admission
-                    // cannot replay the baseline Scribe verifier. Keep this gap visible without
-                    // making a FullScan self-block; CoverAtom/Ingest still reject it before writes.
-                    findings.Add(new RuleFinding(
-                        BackfillPath,
-                        $"{identity.AtomId}:{gap.Code}:{identity.Detail}",
-                        AdmissionEffect.Observe));
-                    continue;
-                }
-
                 if (BaselineComparableReceiptIntegrityCodes.Contains(
                         gap.Code,
                         StringComparer.Ordinal)

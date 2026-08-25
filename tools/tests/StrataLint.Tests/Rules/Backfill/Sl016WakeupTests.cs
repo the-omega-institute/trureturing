@@ -193,24 +193,26 @@ public sealed class Sl016WakeupTests
     }
 
     [Theory]
-    [InlineData("scribe-definition-mismatch")]
-    [InlineData("scribe-emission-mismatch")]
-    public void NewScribeReceiptIntegrityGapIsObservedAtSl016Admission(string mismatchCode)
+    [InlineData("scribe-definition-mismatch", false)]
+    [InlineData("scribe-emission-mismatch", false)]
+    [InlineData("scribe-definition-mismatch", true)]
+    [InlineData("scribe-emission-mismatch", true)]
+    public void ScribeReceiptIntegrityGapIsAlwaysBlockingAtSl016Admission(
+        string mismatchCode,
+        bool gapExistsInBaseline)
     {
         var (_, evaluation) = EvaluateReceiptIntegrityGap(
             mismatchCode,
-            gapExistsInBaseline: false);
+            gapExistsInBaseline);
 
         var diagnostic = Assert.Single(evaluation.Diagnostics, item => item.Message.Contains(
             mismatchCode,
             StringComparison.Ordinal));
-        Assert.Equal(AdmissionEffect.Observe, diagnostic.AdmissionEffect);
-        Assert.DoesNotContain(evaluation.Diagnostics, item =>
-            item.AdmissionEffect == AdmissionEffect.Block);
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
     }
 
     [Fact]
-    public void CandidateScribeVerificationKeepsNewGapObservedAtSl016Admission()
+    public void CandidateScribeVerificationKeepsNewGapBlockingAtSl016Admission()
     {
         var (_, evaluation) = EvaluateReceiptIntegrityGap(
             mismatchCode: null,
@@ -226,29 +228,8 @@ public sealed class Sl016WakeupTests
             var diagnostic = Assert.Single(evaluation.Diagnostics, item => item.Message.Contains(
                 mismatchCode,
                 StringComparison.Ordinal));
-            Assert.Equal(AdmissionEffect.Observe, diagnostic.AdmissionEffect);
+            Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
         }
-
-        Assert.DoesNotContain(evaluation.Diagnostics, item =>
-            item.AdmissionEffect == AdmissionEffect.Block);
-    }
-
-    [Theory]
-    [InlineData("scribe-definition-mismatch")]
-    [InlineData("scribe-emission-mismatch")]
-    public void UnchangedScribeInputsProduceNoBlockDuringSl016FullScan(string mismatchCode)
-    {
-        var (context, evaluation) = EvaluateReceiptIntegrityGap(
-            mismatchCode,
-            gapExistsInBaseline: true);
-
-        var diagnostic = Assert.Single(evaluation.Diagnostics, item => item.Message.Contains(
-            mismatchCode,
-            StringComparison.Ordinal));
-        Assert.True(context.RuleImplementationChanged);
-        Assert.Equal(AdmissionEffect.Observe, diagnostic.AdmissionEffect);
-        Assert.DoesNotContain(evaluation.Diagnostics, item =>
-            item.AdmissionEffect == AdmissionEffect.Block);
     }
 
     private static (RuleEvaluationContext Context, SingleRuleEvaluation Evaluation)

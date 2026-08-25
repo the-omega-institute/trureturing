@@ -21,6 +21,7 @@ internal static partial class IngestCommand
             var baseline = Decode(baselineRaw);
             var document = LoadDocument(current);
             var baselineDocument = BackfillInventoryLoader.LoadBaseline(baseline);
+            RequireUnchangedCoverageClaims(document, baselineDocument);
             var report = leanReportSource.Load(current);
             var lean = ValidateLean(current, report);
             var verified = scribeEmissionVerifier.Verify(current, report);
@@ -53,6 +54,10 @@ internal static partial class IngestCommand
                 validateProjectedStatus: false,
                 baselineSnapshot: baseline);
             RequireNoReceiptIntegrityFailure(derived);
+            RequireUnchangedAbsorbedDeclarationSignatures(
+                derived,
+                baseline,
+                report);
             var statusByAtomId = derived.Entries.ToDictionary(
                 static item => item.Entry.AtomId,
                 static item => item.DerivedStatus,
@@ -72,15 +77,13 @@ internal static partial class IngestCommand
             var finalRaw = ReplaceLedger(currentRaw, document, refreshed);
             var finalSnapshot = Decode(finalRaw);
             var finalDocument = LoadDocument(finalSnapshot);
-            var finalEvaluation = DigestionStatusEvaluator.Evaluate(
-                DigestionEvaluationScope.FullScan,
+            RequireFinalReceiptRealignmentFullScan(
                 finalDocument,
                 finalSnapshot,
                 lean,
                 verified,
                 baselineDocument,
-                baselineSnapshot: baseline);
-            RequireNoReceiptIntegrityFailure(finalEvaluation);
+                baseline);
             var ledgerUpdates = LedgerUpdates(currentRaw, finalRaw);
             ApplyLedgerUpdatesAtomically(repositoryRoot, currentRaw, ledgerUpdates);
 
@@ -208,6 +211,104 @@ internal static partial class IngestCommand
             throw new InvalidOperationException(
                 $"atom {entry.AtomId} GID {duplicate.Key} must have exactly one {kind} receipt");
         }
+    }
+
+    private static void RequireUnchangedCoverageClaims(
+        BackfillInventoryDocument current,
+        BackfillInventoryDocument baseline)
+    {
+        var currentByAtom = current.RequireDigestionEntries().ToDictionary(
+            static entry => entry.AtomId,
+            StringComparer.Ordinal);
+        var baselineByAtom = baseline.RequireDigestionEntries().ToDictionary(
+            static entry => entry.AtomId,
+            StringComparer.Ordinal);
+        foreach (var atomId in currentByAtom.Keys.Union(baselineByAtom.Keys, StringComparer.Ordinal))
+        {
+            var currentCoverage = currentByAtom.TryGetValue(atomId, out var currentEntry)
+                ? currentEntry.CoverageGids
+                : [];
+            var baselineCoverage = baselineByAtom.TryGetValue(atomId, out var baselineEntry)
+                ? baselineEntry.CoverageGids
+                : [];
+            if (!currentCoverage.ToHashSet(StringComparer.Ordinal)
+                    .SetEquals(baselineCoverage))
+            {
+                throw new InvalidOperationException(
+                    $"atom {atomId} coverage claim changed relative to the baseline");
+            }
+        }
+    }
+
+    private static void RequireUnchangedAbsorbedDeclarationSignatures(
+        DigestionLedgerEvaluation evaluation,
+        RepositorySnapshot baseline,
+        LeanAxiomReport currentReport)
+    {
+        foreach (var item in evaluation.Entries.Where(static item =>
+                     item.DerivedStatus.Migration == DigestionMigrationState.Absorbed))
+        {
+            var entry = item.Entry;
+            var receiptPath = DigestionFormalizationReceipt.PathForAtom(entry.AtomId);
+            if (!baseline.TryGetFile(receiptPath, out _))
+            {
+                throw new InvalidOperationException(
+                    $"atom {entry.AtomId} has no baseline formalization receipt: {receiptPath}");
+            }
+
+            var receipt = DigestionFormalizationReceipt.LoadTrusted(baseline, receiptPath);
+            if (!string.Equals(receipt.AtomId, entry.AtomId, StringComparison.Ordinal))
+            {
+                throw new InvalidOperationException(
+                    $"atom {entry.AtomId} baseline formalization receipt has a different atom_id");
+            }
+
+            var signatures = receipt.HostedExtensions.ToDictionary(
+                static extension => extension.Gid,
+                static extension => extension.Signature,
+                StringComparer.Ordinal);
+            signatures.Add(receipt.PrimaryGid, receipt.Signature);
+            foreach (var gidText in entry.CoverageGids)
+            {
+                if (!signatures.TryGetValue(gidText, out var baselineSignature))
+                {
+                    throw new InvalidOperationException(
+                        $"atom {entry.AtomId} baseline formalization receipt does not pin {gidText}");
+                }
+
+                if (!Gid.TryParse(gidText, out var gid))
+                {
+                    throw new InvalidOperationException(
+                        $"atom {entry.AtomId} coverage GID is invalid: {gidText}");
+                }
+
+                var currentSignature = DigestionFormalizationReceipt.ResolveSignature(gid, currentReport);
+                if (currentSignature != baselineSignature)
+                {
+                    throw new InvalidOperationException(
+                        $"atom {entry.AtomId} Lean declaration signature changed for {gidText}");
+                }
+            }
+        }
+    }
+
+    internal static void RequireFinalReceiptRealignmentFullScan(
+        BackfillInventoryDocument finalDocument,
+        RepositorySnapshot finalSnapshot,
+        AcceptedLeanClosure lean,
+        VerifiedScribeEmissions verified,
+        BackfillInventoryDocument baselineDocument,
+        RepositorySnapshot baselineSnapshot)
+    {
+        var finalEvaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.FullScan,
+            finalDocument,
+            finalSnapshot,
+            lean,
+            verified,
+            baselineDocument,
+            baselineSnapshot: baselineSnapshot);
+        RequireNoReceiptIntegrityFailure(finalEvaluation);
     }
 
     private static string ParseRealignArguments(IReadOnlyList<string> arguments)
