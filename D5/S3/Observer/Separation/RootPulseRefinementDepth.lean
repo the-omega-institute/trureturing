@@ -100,9 +100,10 @@ private theorem root_profiles_separate (n : Nat) (hn : 3 ≤ n) :
       exact hfuture
     have hi : i.val = 0 := by
       simpa [separationTime, hnone] using htime.symm
+    have hj_ne : j.val ≠ 0 := by
+      omega
     have hcurrent := hfuture 0
-    simp [observedAt, rootPulseReadout, hi] at hcurrent
-    omega
+    simp [observedAt, rootPulseReadout, hi, hj_ne] at hcurrent
   · have htime := (root_pulse_sharpness n (by omega)).1 j i (by simpa using hgt)
     have hnone : ¬ ∃ k,
         observedAt (@rootPulseUpdate n) (@rootPulseReadout n) k j ≠
@@ -112,9 +113,10 @@ private theorem root_profiles_separate (n : Nat) (hn : 3 ≤ n) :
       exact (hfuture k).symm
     have hj : j.val = 0 := by
       simpa [separationTime, hnone] using htime.symm
+    have hi_ne : i.val ≠ 0 := by
+      omega
     have hcurrent := hfuture 0
-    simp [observedAt, rootPulseReadout, hj] at hcurrent
-    omega
+    simp [observedAt, rootPulseReadout, hj, hi_ne] at hcurrent
 
 private theorem identity_profiles_separate (n : Nat) :
     ∀ i j : Fin n,

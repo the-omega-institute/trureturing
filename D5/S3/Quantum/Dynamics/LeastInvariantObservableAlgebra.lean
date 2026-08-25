@@ -428,14 +428,21 @@ private theorem finite_closure_is_least
 star algebras. -/
 def functionAlgebraEquiv {X Z : Type*} (equiv : X ≃ Z) :
     (X -> ℂ) ≃⋆ₐ[ℂ] (Z -> ℂ) :=
-  StarAlgEquiv.ofStarAlgHom
-    (readoutPullback equiv.symm) (readoutPullback equiv)
-    (fun f => by
+  StarAlgEquiv.ofBijective (readoutPullback equiv.symm) ⟨
+    (by
+      intro first second hsame
       funext state
-      simp [readoutPullback])
-    (fun f => by
+      have hpoint := congrFun hsame (equiv state)
+      change first (equiv.symm (equiv state)) =
+        second (equiv.symm (equiv state)) at hpoint
+      rw [equiv.symm_apply_apply] at hpoint
+      exact hpoint),
+    (by
+      intro target
+      refine ⟨readoutPullback equiv target, ?_⟩
       funext state
-      simp [readoutPullback])
+      change target (equiv (equiv.symm state)) = target state
+      rw [equiv.apply_symm_apply])⟩
 
 private def finite_closure_to_word_functions
     {Y O : Type*} [Fintype Y] (update : Y -> Y) (readout : Y -> O)
@@ -561,6 +568,23 @@ theorem least_invariant_observable_algebra
     finite_closure_invariant_at_least_depth update readout hreadout,
     finite_closure_is_least update readout hreadout, ?_⟩
   intro f state
+  unfold stableObservableAlgebraEquiv
+  change
+    (finiteObservableAlgebraEquiv update readout hreadout depth f)
+        ((stableCompletionEquiv update readout depth
+          (least_depth_relation_stable update readout)).symm
+            (completionProjection update readout state)) = f.1 state
+  have hcompletion :
+      (stableCompletionEquiv update readout depth
+          (least_depth_relation_stable update readout)).symm
+          (completionProjection update readout state) =
+        (Quotient.mk _ state : PredictionState update readout depth) := by
+    apply (stableCompletionEquiv update readout depth
+      (least_depth_relation_stable update readout)).injective
+    rw [(stableCompletionEquiv update readout depth
+      (least_depth_relation_stable update readout)).apply_symm_apply]
+    rfl
+  rw [hcompletion]
   rfl
 
 example := least_invariant_observable_algebra
