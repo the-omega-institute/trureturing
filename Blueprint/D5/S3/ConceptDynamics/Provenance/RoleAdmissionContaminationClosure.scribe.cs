@@ -24,23 +24,19 @@ internal sealed class RoleAdmissionContaminationClosureDocument : IScribeDocumen
                 Blocks(
                     Paragraph(Text(
                         "The frozen commitment carries its own round, freeze event, decision "
-                            + "event, filtration, dependency closure, and evidence-dependency "
-                            + "set. Judge admission therefore has no independent caller-supplied "
-                            + "cutoff or round.")),
+                            + "event, access-derived filtration, and commitment roots. Judge "
+                            + "admission therefore has no independent caller-supplied cutoff or "
+                            + "round.")),
                     Paragraph(Text(
                         "Both recorded roles and adaptive uses inspect only events in the "
                             + "validated event, round, and time prefix. The admission predicate "
-                            + "requires adjudication role presence, absence at freeze, absence "
-                            + "from the snapshot dependency set, and absence of adaptive use.")),
+                            + "requires adjudication role presence, first access strictly after "
+                            + "freeze, absence from the derived commitment closure, and absence "
+                            + "of adaptive use.")),
                     Paragraph(Text(
                         "If every appended event is strictly later than the decision event, none "
                             + "enters the event prefix. With ValidTrace proofs on both ledgers, "
-                            + "admission is therefore identical before and after the append.")),
-                    Paragraph(Text(
-                        "The companion formal specification defines contamination as reachability "
-                            + "from a record set. Thus derived functions, digests, labels, human "
-                            + "selections, and trained intermediates remain source-graph facts; "
-                            + "hiding an original identifier does not alter admission."))),
+                            + "admission is therefore identical before and after the append."))),
                 DescribeRole.Theorem))));
 
     private static Formula Apply(Formula function, params Formula[] arguments)
@@ -73,22 +69,22 @@ internal sealed class RoleAdmissionContaminationClosureDocument : IScribeDocumen
             F.Id("AdmissibleJudge"), extendedLedger, snapshot, validExtended, evidence);
         Formula originalAdmission = Apply(
             F.Id("AdmissibleJudge"), ledger, snapshot, validLedger, evidence);
-        Formula premise = Apply(
-            F.Id("AppendOnlyExtension"), ledger, extendedLedger, snapshot, extension);
-        Formula oldTrace = Apply(
-            F.Id("ValidTrace"), ledger, snapshot, validLedger);
-        Formula extendedTrace = Apply(
-            F.Id("ValidTrace"), extendedLedger, snapshot, validExtended);
-        Formula allPremises = Seq(
-            Open, oldTrace, Sp, Land, Sp, extendedTrace, Sp, Land, Sp,
-            premise, Close);
+        Formula validLedgerProof = Seq(
+            Open, validLedger, Sp, Colon, Sp,
+            Apply(F.Id("ValidTrace"), ledger, snapshot), Close);
+        Formula validExtendedProof = Seq(
+            Open, validExtended, Sp, Colon, Sp,
+            Apply(F.Id("ValidTrace"), extendedLedger, snapshot), Close);
+        Formula extensionProof = Seq(
+            Open, extension, Sp, Colon, Sp,
+            Apply(F.Id("AppendOnlyExtension"), ledger, extendedLedger, snapshot), Close);
 
         return Disp(Seq(
             Forall, Sp, ledger, Comma, Sp, extendedLedger, Comma, Sp, snapshot,
-            Comma, Sp, validLedger, Comma, Sp, validExtended, Comma, Sp, extension,
+            Comma, Sp, validLedgerProof, Comma, Sp, validExtendedProof,
+            Comma, Sp, extensionProof,
             Comma, Sp, evidence,
             RowBreak, Grp(),
-            allPremises, Sp, Rightarrow, Sp,
             Open, extendedAdmission, Sp, Iff, Sp, originalAdmission, Close, Dot));
     }
 }
