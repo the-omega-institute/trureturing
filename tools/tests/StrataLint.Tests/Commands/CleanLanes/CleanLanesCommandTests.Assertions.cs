@@ -1,4 +1,5 @@
 using System.Text.Json;
+using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
@@ -80,7 +81,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal(fileName, invocation.FileName);
         Assert.Equal(expectedArguments, invocation.Arguments.ToArray());
         Assert.Equal(workingDirectory, invocation.WorkingDirectory);
-        Assert.Equal(TimeSpan.FromSeconds(30), invocation.Timeout);
+        Assert.Equal(BoundedProcessRunner.HangDetectionBudget, invocation.Timeout);
     }
 
     private static bool ItemMatches(

@@ -466,7 +466,7 @@ public sealed class LeanReportInputScriptTests
                 "env",
                 arguments,
                 temporary.Path,
-                TimeSpan.FromSeconds(30),
+                BoundedProcessRunner.HangDetectionBudget,
                 1024 * 1024);
         }
 

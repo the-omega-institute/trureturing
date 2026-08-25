@@ -5578,3 +5578,3446 @@ $$
 成为未来自己选择原因的闭合历史系统。
 }
 $$
+
+---
+
+# 80. 增订三：有限维量子观察者的操作商、仪器语义与经典记录
+
+**增订版本：v1.4，2026-08-26**
+
+本增订继续以纯追加方式承接第 0–79 节，不改写、删减或重排此前内容。前文已经建立一般接口反射、状态—效应反对偶、可观测 Gram 几何、动作丛、策略充分自我与历时作者性；本增订把这些结构严格落到有限维量子力学中，回答以下问题：
+
+1. 量子观察者究竟是什么数学对象；
+2. 观察者真正获得的是状态本身、一次结果，还是一族概率签名；
+3. 静态 POVM、测量 instrument、环境记录与顺序实验为什么必须分层；
+4. 信息完备、有限时间完备、稳健完备与物理可实现完备之间是什么关系；
+5. 退相干如何产生稳定经典记录，而不额外引入“意识导致坍缩”公理；
+6. 局部观察、自我观察、经典答案表与对角逃逸分别有哪些严格边界；
+7. 如何把量子层析、prime-time observation、最小预算与 observer completion 统一为同一个可见空间／不可见残差理论。
+
+本增订沿用四级真值纪律：
+
+- **定义**：引入保守记号；
+- **本文定理**：给出完整 paper-level 证明，但尚无同名 Lean theorem；
+- **Lean 锚点**：仓库中已有机器核验结果；
+- **研究命题／形式化路线**：依赖尚未建立的统一 carrier、CP instrument、partial trace 或无限维分析接口。
+
+本增订的基础不是“观察行为自动推出量子力学”，而是标准有限维复量子结构。严格地说：
+
+$$
+\boxed{
+\text{observer existence}
+\not\Rightarrow
+\text{complex Hilbert-space quantum mechanics}.
+}
+$$
+
+要从一般操作理论重建复量子力学，还需要关于凸性、系统复合、连续可逆变换、局域层析或等价结构的额外公理。本文只在这些底层结构既定后研究观察者可见性、记录、条件化与完成。
+
+---
+
+# 81. 状态—效应配对是量子观察的基础接口
+
+固定有限维复 Hilbert 空间
+
+$$
+\mathcal H\cong\mathbb C^d,
+\qquad
+d\ge 1.
+$$
+
+记 Hermitian 实向量空间为
+
+$$
+\operatorname{Herm}_d
+=
+\{A\in M_d(\mathbb C):A^\dagger=A\},
+$$
+
+迹零子空间为
+
+$$
+\operatorname{Herm}_d^0
+=
+\{A\in\operatorname{Herm}_d:\operatorname{Tr}A=0\}.
+$$
+
+它们满足
+
+$$
+\dim_{\mathbb R}\operatorname{Herm}_d=d^2,
+$$
+
+$$
+\dim_{\mathbb R}\operatorname{Herm}_d^0=d^2-1.
+$$
+
+在 Hermitian 空间上使用 Hilbert–Schmidt 配对
+
+$$
+\langle A,B\rangle_{\mathrm{HS}}
+=
+\operatorname{Tr}(AB).
+$$
+
+## 定义 81.1（量子态）
+
+$$
+\mathsf S_d
+=
+\{\rho\in\operatorname{Herm}_d:
+\rho\ge0,\ \operatorname{Tr}\rho=1\}.
+$$
+
+纯态是
+
+$$
+\rho_\psi
+=
+|\psi\rangle\langle\psi|,
+\qquad
+\langle\psi|\psi\rangle=1.
+$$
+
+## 定义 81.2（效果）
+
+$$
+\mathsf{Eff}_d
+=
+\{E\in\operatorname{Herm}_d:0\le E\le I\}.
+$$
+
+效果 $E$ 表示一个二值问题的“是”分支。
+
+## 定义 81.3（有限测量上下文）
+
+对设置 $x$，一个有限结果 POVM 是效果族
+
+$$
+\mathcal E^x
+=
+\{E_{a|x}\}_{a\in A_x}
+$$
+
+满足
+
+$$
+E_{a|x}\ge0,
+\qquad
+\sum_{a\in A_x}E_{a|x}=I.
+$$
+
+## 原理 81.1（Born 配对）
+
+$$
+\boxed{
+p(a\mid x,\rho)
+=
+\operatorname{Tr}(\rho E_{a|x}).
+}
+$$
+
+这一定义同时保证：
+
+$$
+p(a\mid x,\rho)\ge0,
+$$
+
+$$
+\sum_a p(a\mid x,\rho)=1,
+$$
+
+以及对状态和效果的仿射性。
+
+仓库 `D5/S3/Quantum/FiniteDimensional.lean` 已经机器核验正半定、迹一矩阵对投影给出归一、可加、非负的 Born 权重；`D5/S3/Observer/BornReduction.lean` 进一步证明，当
+
+$$
+\rho=|\psi\rangle\langle\psi|,
+\qquad
+E=|\phi\rangle\langle\phi|
+$$
+
+时，
+
+$$
+\boxed{
+\operatorname{Tr}(\rho E)
+=
+|\langle\phi|\psi\rangle|^2.
+}
+$$
+
+因此“模平方”不是另一套独立规则，而是迹配对在纯态—秩一效果上的化简。
+
+---
+
+# 82. 静态量子观察者与概率签名
+
+## 定义 82.1（静态量子观察者）
+
+一个静态量子观察者定义为
+
+$$
+\mathfrak O_{\mathrm{stat}}
+=
+\left(
+X,\{A_x\}_{x\in X},
+\{E_{a|x}\}_{x,a}
+\right),
+$$
+
+其中每个 $x$ 给出一个 POVM。
+
+## 定义 82.2（观察签名）
+
+$$
+\boxed{
+\Sigma_{\mathfrak O}(\rho)
+=
+\left(
+\operatorname{Tr}(\rho E_{a|x})
+\right)_{x,a}.
+}
+$$
+
+观察者一次实验得到的是某个随机结果；只有对同一制备进行足够多次重复，才能估计上述概率签名。因此必须区分：
+
+$$
+\text{single outcome},
+$$
+
+$$
+\text{empirical frequency},
+$$
+
+$$
+\text{ideal probability signature}.
+$$
+
+层析理论讨论的是第三者与其有限样本估计，而不是“一次测量直接读出完整波函数”。
+
+## 定义 82.3（观察等价）
+
+$$
+\boxed{
+\rho\sim_{\mathfrak O}\sigma
+\iff
+\Sigma_{\mathfrak O}(\rho)
+=
+\Sigma_{\mathfrak O}(\sigma).
+}
+$$
+
+等价地：
+
+$$
+\rho\sim_{\mathfrak O}\sigma
+\iff
+\forall x,a,\quad
+\operatorname{Tr}\bigl((\rho-\sigma)E_{a|x}\bigr)=0.
+$$
+
+## 定义 82.4（操作现实）
+
+$$
+\boxed{
+\mathsf R_{\mathfrak O}
+=
+\mathsf S_d/\!\sim_{\mathfrak O}.
+}
+$$
+
+这里的商不是说完整状态“不存在”，而是说观察者的全部申报实验不能区分同一纤维中的状态。观察者现实是状态空间对其可执行实验协议的操作商。
+
+---
+
+# 83. 可见空间与不可见残差
+
+## 定义 83.1（可见实算子空间）
+
+$$
+\boxed{
+V_{\mathfrak O}
+=
+\operatorname{span}_{\mathbb R}
+\left(
+\{I\}\cup
+\{E_{a|x}\}_{x,a}
+\right)
+\subseteq
+\operatorname{Herm}_d.
+}
+$$
+
+其复化
+
+$$
+\mathcal V_{\mathfrak O}
+=
+V_{\mathfrak O}+iV_{\mathfrak O}
+$$
+
+是一个含单位、对伴随封闭的 operator system。
+
+必须严格区分：
+
+$$
+V_{\mathfrak O}
+$$
+
+与这些效果生成的乘法代数
+
+$$
+C^*(E_{a|x}).
+$$
+
+前者决定静态线性统计；后者包含效果乘积及其非交换组合。代数生成完整并不自动表示当前 POVM 概率信息完备。
+
+例如量子比特只读 $X$ 与 $Z$ 时，
+
+$$
+V_{\mathfrak O}
+=
+\operatorname{span}_{\mathbb R}\{I,X,Z\}
+$$
+
+仍看不见 $Y$ 方向；但 $X,Z$ 作为代数生成元已经生成
+
+$$
+M_2(\mathbb C).
+$$
+
+## 定义 83.2（不可见残差）
+
+$$
+\boxed{
+N_{\mathfrak O}
+=
+V_{\mathfrak O}^{\perp}
+=
+\{D\in\operatorname{Herm}_d:
+\operatorname{Tr}(DA)=0,\ \forall A\in V_{\mathfrak O}\}.
+}
+$$
+
+由于
+
+$$
+I\in V_{\mathfrak O},
+$$
+
+任意
+
+$$
+D\in N_{\mathfrak O}
+$$
+
+自动满足
+
+$$
+\operatorname{Tr}D=0.
+$$
+
+因此
+
+$$
+N_{\mathfrak O}
+\subseteq
+\operatorname{Herm}_d^0.
+$$
+
+## 定理 83.1（观察等价的残差刻画）
+
+$$
+\boxed{
+\rho\sim_{\mathfrak O}\sigma
+\iff
+\rho-\sigma\in N_{\mathfrak O}.
+}
+$$
+
+### 证明
+
+若签名相同，则 $\rho-\sigma$ 与每个效果正交；两态同为迹一，所以它也与 $I$ 正交，因此与 $V_{\mathfrak O}$ 的全部线性组合正交。
+
+反向若差属于 $N_{\mathfrak O}$，它与全部效果正交，故所有 Born 概率相同。∎
+
+## 结论 83.1
+
+量子观察者的静态结构完全由一对反对偶对象刻画：
+
+$$
+\boxed{
+V_{\mathfrak O}
+=
+\text{可见 effect 方向},
+}
+$$
+
+$$
+\boxed{
+N_{\mathfrak O}
+=
+\text{不可见 state-difference 方向}.
+}
+$$
+
+并有
+
+$$
+N_{\mathfrak O}
+=
+V_{\mathfrak O}^{\perp}.
+$$
+
+---
+
+# 84. 观察商的仿射表示
+
+定义限制映射
+
+$$
+r_{\mathfrak O}:
+\mathsf S_d\to V_{\mathfrak O}^*
+$$
+
+为
+
+$$
+r_{\mathfrak O}(\rho)(A)
+=
+\operatorname{Tr}(\rho A).
+$$
+
+## 定理 84.1（操作商表示）
+
+$$
+\boxed{
+\mathsf S_d/\!\sim_{\mathfrak O}
+\cong_{\mathrm{aff}}
+r_{\mathfrak O}(\mathsf S_d).
+}
+$$
+
+### 证明
+
+由定理 83.1，
+
+$$
+r_{\mathfrak O}(\rho)=r_{\mathfrak O}(\sigma)
+$$
+
+当且仅当
+
+$$
+\rho\sim_{\mathfrak O}\sigma.
+$$
+
+故 $r_{\mathfrak O}$ 恰以观察等价类为纤维，在商上诱导双射。迹配对对 $\rho$ 仿射，因此诱导双射保持凸组合。∎
+
+## 推论 84.1
+
+观察者所见状态空间仍是紧凸集，但一般维数下降：
+
+$$
+\dim_{\mathrm{aff}}
+\mathsf R_{\mathfrak O}
+\le
+\dim V_{\mathfrak O}-1.
+$$
+
+只有当观察者完备时，该商保留全部
+
+$$
+d^2-1
+$$
+
+个迹一 Hermitian 自由度。
+
+---
+
+# 85. 信息完备性的等价定理与显式反例证书
+
+## 定义 85.1（信息完备观察者）
+
+$$
+\mathfrak O
+\text{ 信息完备}
+$$
+
+当且仅当
+
+$$
+\rho\sim_{\mathfrak O}\sigma
+\Longrightarrow
+\rho=\sigma.
+$$
+
+## 定理 85.1（完备性四重等价）
+
+以下条件等价：
+
+$$
+\text{(i)}
+\quad
+\mathfrak O\text{ 信息完备};
+$$
+
+$$
+\text{(ii)}
+\quad
+N_{\mathfrak O}=\{0\};
+$$
+
+$$
+\text{(iii)}
+\quad
+V_{\mathfrak O}=\operatorname{Herm}_d;
+$$
+
+$$
+\text{(iv)}
+\quad
+\operatorname{span}_{\mathbb R}
+\left\{
+E_{a|x}
+-
+\frac{\operatorname{Tr}E_{a|x}}{d}I
+\right\}
+=
+\operatorname{Herm}_d^0.
+$$
+
+### 证明
+
+有限维非退化内积给出
+
+$$
+V^\perp=\{0\}
+\iff
+V=\operatorname{Herm}_d.
+$$
+
+而
+
+$$
+\operatorname{Herm}_d
+=
+\mathbb RI
+\oplus
+\operatorname{Herm}_d^0,
+$$
+
+故 (iii) 与 (iv) 等价。
+
+由定理 83.1，(ii) 立即推出 (i)。
+
+反之，若存在非零
+
+$$
+D\in N_{\mathfrak O},
+$$
+
+则
+
+$$
+\operatorname{Tr}D=0.
+$$
+
+取
+
+$$
+0<\varepsilon<
+\frac{1}{d\|D\|_\infty}
+$$
+
+并定义
+
+$$
+\rho_\pm
+=
+\frac{I}{d}
+\pm
+\varepsilon D.
+$$
+
+其最小本征值满足
+
+$$
+\lambda_{\min}(\rho_\pm)
+\ge
+\frac1d-\varepsilon\|D\|_\infty
+>0,
+$$
+
+所以
+
+$$
+\rho_\pm\in\mathsf S_d.
+$$
+
+但
+
+$$
+\rho_+-\rho_-
+=
+2\varepsilon D\in N_{\mathfrak O},
+$$
+
+故
+
+$$
+\rho_+\sim_{\mathfrak O}\rho_-,
+$$
+
+而
+
+$$
+\rho_+\neq\rho_-.
+$$
+
+这与信息完备矛盾。∎
+
+## 推论 85.1（不完备预算的物理证书）
+
+证明某观察预算不完备，不应只报告 rank deficiency；可以给出一个明确的
+
+$$
+0\neq D\in N_{\mathfrak O}
+$$
+
+以及两个物理状态
+
+$$
+\boxed{
+\rho_\pm=\frac Id\pm\varepsilon D
+}
+$$
+
+作为不可区分证书。
+
+该证书同时满足：
+
+1. 两态均正半定；
+2. 两态均迹一；
+3. 两态不同；
+4. 当前全部读出概率完全相同。
+
+这把线性 residual 转化成可审计的物理反例。
+
+---
+
+# 86. 有限效果压缩与结果预算下界
+
+## 定理 86.1（有限完备效果证书）
+
+设可能的效果族
+
+$$
+\mathcal E\subseteq\mathsf{Eff}_d
+$$
+
+可以是无限集。若它们联合起来信息完备，则存在有限子集
+
+$$
+E_1,\ldots,E_m\in\mathcal E
+$$
+
+满足
+
+$$
+m\le d^2-1,
+$$
+
+且这些效果已经能分离所有迹一量子态。
+
+### 证明
+
+对每个 $E\in\mathcal E$ 定义中心化效果
+
+$$
+\widetilde E
+=
+E-
+\frac{\operatorname{Tr}E}{d}I.
+$$
+
+信息完备等价于这些中心化效果张成
+
+$$
+\operatorname{Herm}_d^0.
+$$
+
+该空间维数为
+
+$$
+d^2-1.
+$$
+
+从任意生成集中选出一个基，至多需要 $d^2-1$ 个元素。∎
+
+## 重要解释
+
+状态集合
+
+$$
+\mathsf S_d
+$$
+
+是连续无穷的，但它嵌入有限维仿射空间。因此：
+
+$$
+\boxed{
+\text{连续无穷状态集}
++
+\text{有限算子维数}
+\Longrightarrow
+\text{有限完备观察证书}.
+}
+$$
+
+这比“有限状态空间存在有限分离窗口”更强。
+
+## 推论 86.1（单 POVM 结果数下界）
+
+若一个 POVM 有 $m$ 个结果，则
+
+$$
+\sum_{a=1}^m E_a=I.
+$$
+
+中心化后：
+
+$$
+\sum_{a=1}^m\widetilde E_a=0,
+$$
+
+所以其中心化效果最多张成 $m-1$ 维空间。若该 POVM 信息完备，则
+
+$$
+m-1\ge d^2-1,
+$$
+
+即
+
+$$
+\boxed{
+m\ge d^2.
+}
+$$
+
+## 推论 86.2（多上下文预算下界）
+
+若第 $x$ 个上下文有 $m_x$ 个结果，则信息完备必须满足
+
+$$
+\boxed{
+\sum_x(m_x-1)\ge d^2-1.
+}
+$$
+
+仓库 `CompleteContextTomography` 使用 $d+1$ 个互补秩一上下文，每个有 $d$ 个结果，其独立参数数恰为
+
+$$
+(d+1)(d-1)=d^2-1.
+$$
+
+该形式化证明了互补重叠律推出投影差与单位矩阵张成完整矩阵空间，并由全部上下文概率唯一恢复 Hermitian 迹一矩阵。
+
+---
+
+# 87. 模型相对完备性
+
+实际实验常有先验模型：
+
+$$
+\mathcal M\subseteq\mathsf S_d,
+$$
+
+例如纯态、低秩态、某对称态族或参数化热态族。
+
+## 定义 87.1（模型相对完备）
+
+观察者在 $\mathcal M$ 上完备，当且仅当
+
+$$
+\rho,\sigma\in\mathcal M,
+\quad
+\rho\sim_{\mathfrak O}\sigma
+\Longrightarrow
+\rho=\sigma.
+$$
+
+## 定理 87.1（差集判据）
+
+$$
+\boxed{
+\mathfrak O
+\text{ 在 }\mathcal M\text{ 上完备}
+\iff
+N_{\mathfrak O}
+\cap
+(\mathcal M-\mathcal M)
+=
+\{0\}.
+}
+$$
+
+其中
+
+$$
+\mathcal M-\mathcal M
+=
+\{\rho-\sigma:\rho,\sigma\in\mathcal M\}.
+$$
+
+### 证明
+
+模型上不完备恰好意味着存在不同
+
+$$
+\rho,\sigma\in\mathcal M
+$$
+
+且
+
+$$
+\rho-\sigma\in N_{\mathfrak O}.
+$$
+
+这等价于上述交集中存在非零元素。∎
+
+## 结论 87.1
+
+“观察者不完备”必须说明相对哪个状态模型。某个测量族可能无法恢复任意密度矩阵，却能唯一恢复一个低维先验族。
+
+---
+
+# 88. 观察者精化、联合与容量守恒
+
+## 定义 88.1（观察者精化）
+
+定义
+
+$$
+\mathfrak O_1\preceq\mathfrak O_2
+$$
+
+当且仅当 $\mathfrak O_2$ 至少与 $\mathfrak O_1$ 一样能区分状态：
+
+$$
+\rho\sim_{\mathfrak O_2}\sigma
+\Longrightarrow
+\rho\sim_{\mathfrak O_1}\sigma.
+$$
+
+## 定理 88.1（精化的三重等价）
+
+$$
+\boxed{
+\mathfrak O_1\preceq\mathfrak O_2
+\iff
+N_{\mathfrak O_2}\subseteq N_{\mathfrak O_1}
+\iff
+V_{\mathfrak O_1}\subseteq V_{\mathfrak O_2}.
+}
+$$
+
+### 证明
+
+第一项与第二项由定理 83.1 得到；第二项与第三项由正交补反序性得到。∎
+
+## 定理 88.2（联合观察者）
+
+令
+
+$$
+\mathfrak O_1\vee\mathfrak O_2
+$$
+
+包含两者全部效果。则
+
+$$
+V_{\mathfrak O_1\vee\mathfrak O_2}
+=
+V_{\mathfrak O_1}+V_{\mathfrak O_2},
+$$
+
+$$
+\boxed{
+N_{\mathfrak O_1\vee\mathfrak O_2}
+=
+N_{\mathfrak O_1}\cap N_{\mathfrak O_2}.
+}
+$$
+
+因此观察者合作的本体不是“平均各自观点”，而是合并可见 effect 空间；不可见残差则取交。
+
+## 定义 88.2（观察容量与残差）
+
+$$
+C(\mathfrak O)
+=
+\dim V_{\mathfrak O}-1,
+$$
+
+$$
+R(\mathfrak O)
+=
+\dim N_{\mathfrak O}.
+$$
+
+## 定理 88.3（有限维容量守恒）
+
+$$
+\boxed{
+C(\mathfrak O)+R(\mathfrak O)=d^2-1.
+}
+$$
+
+信息精化使
+
+$$
+C(\mathfrak O)\uparrow,
+$$
+
+同时使
+
+$$
+R(\mathfrak O)\downarrow.
+$$
+
+这给出量子观察者 completion 的离散进度量。
+
+---
+
+# 89. 通道、Heisenberg 拉回与时间观察
+
+设系统在测量之间通过量子通道
+
+$$
+\Phi:M_d(\mathbb C)\to M_d(\mathbb C)
+$$
+
+演化。这里 $\Phi$ 为完全正、迹保持线性映射。
+
+定义 Heisenberg 对偶
+
+$$
+\Phi^*
+$$
+
+满足
+
+$$
+\operatorname{Tr}(\Phi(\rho)A)
+=
+\operatorname{Tr}(\rho\Phi^*(A)).
+$$
+
+迹保持等价于
+
+$$
+\Phi^*(I)=I.
+$$
+
+## 定理 89.1（观察者拉回）
+
+在通道之后测量效果 $E$，等价于在初态上测量
+
+$$
+\Phi^*(E).
+$$
+
+具体地：
+
+$$
+\boxed{
+\operatorname{Tr}(\Phi^t(\rho)E)
+=
+\operatorname{Tr}\bigl(\rho(\Phi^*)^t(E)\bigr).
+}
+$$
+
+## 定义 89.1（有限时间可见空间）
+
+给定基础效果族 $\{E_r\}_{r=1}^m$，定义
+
+$$
+V_n
+=
+\operatorname{span}_{\mathbb R}
+\left\{
+I,
+(\Phi^*)^t(E_r):
+0\le t<n,\ 1\le r\le m
+\right\}.
+$$
+
+定义
+
+$$
+N_n=V_n^\perp.
+$$
+
+## 定理 89.2（时间单调性）
+
+$$
+V_n\subseteq V_{n+1},
+$$
+
+因此
+
+$$
+\boxed{
+N_{n+1}\subseteq N_n.
+}
+$$
+
+观察更久只能消除不可区分方向，不能制造新的不可区分方向。
+
+这一结论是仓库 `BiaxialMonotoneRefinement` 在量子状态—效果配对上的线性实例。
+
+## 严格实验边界 89.1
+
+必须区分：
+
+1. 每个时间点重新制备相同初态，再演化 $t$ 步并测量；
+2. 对同一个样本连续测量。
+
+第一种由 $(\Phi^*)^t(E)$ 描述；第二种必须使用 instrument 词，因为早期测量会改变后续状态。
+
+---
+
+# 90. 量子可观测矩阵、Gramian 与有限时间压缩
+
+取
+
+$$
+D=d^2-1
+$$
+
+并选择 $\operatorname{Herm}_d^0$ 的 Hilbert–Schmidt 正交基
+
+$$
+F_1,\ldots,F_D.
+$$
+
+任意状态差写成
+
+$$
+X=\sum_{\mu=1}^D x_\mu F_\mu.
+$$
+
+由于 $\Phi$ 保迹，迹零空间对 $\Phi$ 不变。令其在该基上的实矩阵表示为
+
+$$
+A\in M_D(\mathbb R).
+$$
+
+定义测量矩阵
+
+$$
+C_{r\mu}
+=
+\operatorname{Tr}(E_rF_\mu).
+$$
+
+则时间 $t$ 的概率差向量为
+
+$$
+CA^t x.
+$$
+
+## 定义 90.1（有限时间可观测矩阵）
+
+$$
+\mathscr O_n
+=
+\begin{bmatrix}
+C\\
+CA\\
+CA^2\\
+\vdots\\
+CA^{n-1}
+\end{bmatrix}.
+$$
+
+## 定义 90.2（有限时间 Gramian）
+
+$$
+W_n
+=
+\sum_{t=0}^{n-1}
+(A^t)^\top C^\top C A^t.
+$$
+
+## 定理 90.1（秩—Gram—残差等价）
+
+以下等价：
+
+$$
+N_n=\{0\},
+$$
+
+$$
+\operatorname{rank}\mathscr O_n=D,
+$$
+
+$$
+W_n>0.
+$$
+
+### 证明
+
+对任意坐标向量 $x$，
+
+$$
+x^\top W_nx
+=
+\sum_{t=0}^{n-1}
+\|CA^t x\|_2^2.
+$$
+
+故 $x$ 属于 Gramian kernel，当且仅当全部时间读出差都为零；这正是 $N_n$。有限维中 Gramian 正定等价于 kernel 为零，也等价于堆叠矩阵满列秩。∎
+
+## 定理 90.2（有限时间层析）
+
+若无限时间观察信息完备，则前
+
+$$
+D=d^2-1
+$$
+
+个时间层已经信息完备：
+
+$$
+\boxed{
+N_\infty=\{0\}
+\Longrightarrow
+N_D=\{0\}.
+}
+$$
+
+更强地：
+
+$$
+N_\infty=N_D.
+$$
+
+### 证明
+
+由 Cayley–Hamilton 定理，
+
+$$
+A^D
+$$
+
+是
+
+$$
+I,A,\ldots,A^{D-1}
+$$
+
+的线性组合。所有更高次幂递归落入相同 span，因此无限可观测矩阵的行空间已经由前 $D$ 个时间层生成。∎
+
+## 结论 90.1
+
+$$
+\boxed{
+\text{finite-dimensional quantum complete observation}
+\Longrightarrow
+\text{finite-horizon complete certificate}.
+}
+$$
+
+有限性来自 Hermitian 差空间维数，而不是来自状态集合有限。
+
+---
+
+# 91. 量子 instrument：概率与状态改变的统一
+
+POVM 只决定一步结果概率；完整测量还要描述结果后状态。
+
+## 定义 91.1（量子 instrument）
+
+对设置 $x$，量子 instrument 是一族线性映射
+
+$$
+\{\mathcal I_{a|x}\}_{a\in A_x}
+$$
+
+满足：
+
+1. 每个 $\mathcal I_{a|x}$ 完全正；
+2. 每个分支迹不增加；
+3. 分支和
+
+$$
+\Lambda_x
+=
+\sum_a\mathcal I_{a|x}
+$$
+
+迹保持。
+
+定义效果
+
+$$
+E_{a|x}
+=
+\mathcal I_{a|x}^*(I).
+$$
+
+则
+
+$$
+E_{a|x}\ge0,
+\qquad
+\sum_aE_{a|x}=I.
+$$
+
+## 定理 91.1（instrument 的 Born 边缘）
+
+$$
+\boxed{
+p(a\mid x,\rho)
+=
+\operatorname{Tr}\mathcal I_{a|x}(\rho)
+=
+\operatorname{Tr}(\rho E_{a|x}).
+}
+$$
+
+## 定义 91.2（条件状态）
+
+若
+
+$$
+p(a\mid x,\rho)>0,
+$$
+
+则
+
+$$
+\boxed{
+\rho_{a|x}
+=
+\frac{\mathcal I_{a|x}(\rho)}
+{p(a\mid x,\rho)}.
+}
+$$
+
+## 定义 91.3（未读状态）
+
+$$
+\boxed{
+\overline\rho_x
+=
+\sum_a\mathcal I_{a|x}(\rho).
+}
+$$
+
+并有量子全概率分解
+
+$$
+\boxed{
+\overline\rho_x
+=
+\sum_a
+p(a\mid x,\rho)\rho_{a|x},
+}
+$$
+
+其中零概率分支按任意约定填充而不影响加权和。
+
+仓库 `Conditioning.lean` 已在有限正交投影测量上机器核验：
+
+- 记录权重之和等于原迹；
+- 未读测量保迹；
+- 未读映射幂等；
+- 固定点恰好是记录间交叉块为零的矩阵；
+- 非零结果条件态正半定且迹一；
+- 未读状态等于条件分支的加权集合。
+
+---
+
+# 92. 同一 POVM 不等于同一观察者
+
+取量子比特 $Z$ 投影
+
+$$
+P_0=|0\rangle\langle0|,
+\qquad
+P_1=|1\rangle\langle1|.
+$$
+
+定义 Lüders instrument：
+
+$$
+\mathcal L_a(\rho)
+=
+P_a\rho P_a.
+$$
+
+再定义测量—重制备 instrument：
+
+$$
+\mathcal J_a(\rho)
+=
+\operatorname{Tr}(P_a\rho)
+|+\rangle\langle+|.
+$$
+
+两者具有相同效果：
+
+$$
+\mathcal L_a^*(I)
+=
+\mathcal J_a^*(I)
+=
+P_a.
+$$
+
+所以它们对任意初态的一步结果分布完全相同。
+
+但得到结果 $0$ 后：
+
+$$
+\mathcal L
+\text{ 产生 }|0\rangle,
+$$
+
+$$
+\mathcal J
+\text{ 产生 }|+\rangle.
+$$
+
+若随后测量 $X$，前者得到 $+$ 的概率为 $1/2$，后者为 $1$。
+
+## 定理 92.1（静态等价不推出顺序等价）
+
+存在两个 instrument：
+
+$$
+\mathcal I,\mathcal J
+$$
+
+使其效果 POVM 完全相同，但某个二步实验的联合结果分布不同。
+
+## 结论 92.1
+
+$$
+\boxed{
+\text{POVM}
+=
+\text{一步统计接口},
+}
+$$
+
+$$
+\boxed{
+\text{instrument}
+=
+\text{统计 + 干预接口}.
+}
+$$
+
+所以完整量子观察者不能只定义为一组效果；顺序观察必须保留 instrument 分支。
+
+---
+
+# 93. 顺序观察者与 word effects
+
+把一次设置—结果分支写成字母
+
+$$
+g=(x,a).
+$$
+
+对词
+
+$$
+w=g_1g_2\cdots g_n,
+$$
+
+定义 Schrödinger 分支复合
+
+$$
+\mathcal I_w
+=
+\mathcal I_{g_n}
+\circ\cdots\circ
+\mathcal I_{g_1}.
+$$
+
+定义 Heisenberg word effect
+
+$$
+\boxed{
+F_w
+=
+\mathcal I_{g_1}^*
+\circ\cdots\circ
+\mathcal I_{g_n}^*(I).
+}
+$$
+
+## 定理 93.1（词概率迹表示）
+
+$$
+\boxed{
+p(w\mid\rho)
+=
+\operatorname{Tr}\mathcal I_w(\rho)
+=
+\operatorname{Tr}(\rho F_w).
+}
+$$
+
+### 证明
+
+反复应用对偶关系：
+
+$$
+\operatorname{Tr}(\mathcal I_g(X)A)
+=
+\operatorname{Tr}(X\mathcal I_g^*(A)).
+$$
+
+从末分支向前拉回单位效果，即得。∎
+
+## 定义 93.1（顺序可见空间）
+
+$$
+V_n^{\mathrm{seq}}
+=
+\operatorname{span}_{\mathbb R}
+\{F_w:|w|\le n\}.
+$$
+
+空词满足
+
+$$
+F_\varepsilon=I.
+$$
+
+等价地可递归定义：
+
+$$
+V_0^{\mathrm{seq}}=\mathbb RI,
+$$
+
+$$
+V_{n+1}^{\mathrm{seq}}
+=
+V_n^{\mathrm{seq}}
++
+\sum_g
+\mathcal I_g^*
+\bigl(V_n^{\mathrm{seq}}\bigr).
+$$
+
+定义顺序残差
+
+$$
+N_n^{\mathrm{seq}}
+=
+\left(V_n^{\mathrm{seq}}\right)^\perp.
+$$
+
+## 定理 93.2（顺序观察等价）
+
+两个状态对全部长度不超过 $n$ 的实验词不可区分，当且仅当
+
+$$
+\rho-\sigma\in N_n^{\mathrm{seq}}.
+$$
+
+这把非交换 instrument 词纳入原文第 8–9 节的自由词 completion。
+
+---
+
+# 94. 顺序层析的有限深度终止
+
+## 定理 94.1（一次稳定永久稳定）
+
+若
+
+$$
+V_{n+1}^{\mathrm{seq}}
+=
+V_n^{\mathrm{seq}},
+$$
+
+则对所有 $m\ge n$：
+
+$$
+V_m^{\mathrm{seq}}
+=
+V_n^{\mathrm{seq}}.
+$$
+
+### 证明
+
+等式意味着对每个分支 $g$：
+
+$$
+\mathcal I_g^*
+\left(V_n^{\mathrm{seq}}\right)
+\subseteq
+V_n^{\mathrm{seq}}.
+$$
+
+因此任何更长的对偶分支复合仍把 $I$ 送入同一空间，不再产生新方向。∎
+
+## 定理 94.2（有限顺序完备证书）
+
+若全部有限实验词联合起来信息完备，则存在
+
+$$
+n\le d^2-1
+$$
+
+使长度不超过 $n$ 的词已经信息完备。
+
+### 证明
+
+递增链
+
+$$
+\mathbb RI
+=
+V_0^{\mathrm{seq}}
+\subseteq
+V_1^{\mathrm{seq}}
+\subseteq
+\cdots
+\subseteq
+\operatorname{Herm}_d
+$$
+
+从维数 $1$ 开始，最多达到 $d^2$。若在完备前某一步不再严格增长，由定理 94.1 永久稳定，永远不可能完备。因此若最终完备，至多发生 $d^2-1$ 次严格增长。∎
+
+## 解释
+
+静态效果不完备的观察者可能通过受控顺序干预变得完备；但所需词深在有限维中仍有有限上界。
+
+---
+
+# 95. 理想记录、条件化与两种“坍缩”
+
+设投影测量满足
+
+$$
+P_aP_b=\delta_{ab}P_a,
+\qquad
+\sum_aP_a=I.
+$$
+
+Lüders instrument 为
+
+$$
+\mathcal I_a(\rho)=P_a\rho P_a.
+$$
+
+引入记录空间
+
+$$
+\mathcal H_M
+=
+\operatorname{span}\{|a\rangle_M\}.
+$$
+
+定义等距映射
+
+$$
+V|\psi\rangle
+=
+\sum_a
+P_a|\psi\rangle\otimes|a\rangle_M.
+$$
+
+## 定理 95.1（记录等距性）
+
+$$
+V^\dagger V=I.
+$$
+
+### 证明
+
+$$
+V^\dagger V
+=
+\sum_{a,b}
+P_aP_b\langle a|b\rangle
+=
+\sum_aP_a
+=
+I.
+$$
+
+∎
+
+对一般状态：
+
+$$
+V\rho V^\dagger
+=
+\sum_{a,b}
+P_a\rho P_b
+\otimes
+|a\rangle\langle b|_M.
+$$
+
+## 定理 95.2（选择性条件化）
+
+读取记录 $a$ 后，系统条件态为
+
+$$
+\boxed{
+\rho_a
+=
+\frac{P_a\rho P_a}
+{\operatorname{Tr}(\rho P_a)}.
+}
+$$
+
+## 定理 95.3（非选择性边缘化）
+
+忽略记录自由度后：
+
+$$
+\boxed{
+\operatorname{Tr}_M(V\rho V^\dagger)
+=
+\sum_aP_a\rho P_a.
+}
+$$
+
+## 严格区分 95.1
+
+因此“坍缩”至少有两种不同数学含义：
+
+$$
+\boxed{
+\text{selective update}
+=
+\text{对已知记录条件化},
+}
+$$
+
+$$
+\boxed{
+\text{unread update}
+=
+\text{忽略记录后的约化通道}.
+}
+$$
+
+两者均不需要把人类意识加入动力学公式。
+
+但它们也没有单独证明：
+
+$$
+\boxed{
+\text{全局本体只保留一个分支}.
+}
+$$
+
+这是量子解释层的附加问题，不能由偏迹恒等式偷渡得到。
+
+---
+
+# 96. 环境记录 Gram 通道
+
+设系统指针基为
+
+$$
+\{|i\rangle\}_{i=1}^d,
+$$
+
+环境为每个系统地址写入归一化记录
+
+$$
+|e_i\rangle.
+$$
+
+受控记录等距映射为
+
+$$
+V|i\rangle
+=
+|i\rangle\otimes|e_i\rangle.
+$$
+
+定义记录 Gram 矩阵
+
+$$
+G_{ij}
+=
+\langle e_j|e_i\rangle.
+$$
+
+## 定理 96.1（环境边缘通道）
+
+对任意系统矩阵 $\rho$：
+
+$$
+\boxed{
+\mathcal D_G(\rho)
+=
+\operatorname{Tr}_E(V\rho V^\dagger)
+=
+G\odot\rho,
+}
+$$
+
+即
+
+$$
+(\mathcal D_G(\rho))_{ij}
+=
+G_{ij}\rho_{ij}.
+$$
+
+### 证明
+
+展开
+
+$$
+V\rho V^\dagger
+=
+\sum_{i,j}
+\rho_{ij}
+|i\rangle\langle j|
+\otimes
+|e_i\rangle\langle e_j|.
+$$
+
+对环境取偏迹，得到系数
+
+$$
+\operatorname{Tr}
+(|e_i\rangle\langle e_j|)
+=
+\langle e_j|e_i\rangle.
+$$
+
+∎
+
+仓库 `EnvironmentRecords.lean` 已在二点系统上形式化同一结构：记录重叠决定逐项 record channel，并在常数非对角重叠时精确等于 phase damping。`MeasurementMarginal.lean` 进一步证明，复制地址到正交环境记录并取偏迹时，结果恰为
+
+$$
+\sum_kP_k\rho P_k
+$$
+
+且所有非对角项为零。
+
+---
+
+# 97. 固定块代数、经典中心与指数退相干
+
+## 定理 97.1（记录通道固定点）
+
+$$
+\boxed{
+\mathcal D_G(\rho)=\rho
+\iff
+(G_{ij}-1)\rho_{ij}=0
+\quad
+\forall i,j.
+}
+$$
+
+### 证明
+
+逐矩阵元比较即可。∎
+
+## 定义 97.1（记录等价）
+
+对归一化记录，定义
+
+$$
+i\approx_E j
+\iff
+G_{ij}=1.
+$$
+
+由 Cauchy–Schwarz 等号条件，
+
+$$
+G_{ij}=1
+$$
+
+当且仅当
+
+$$
+|e_i\rangle=|e_j\rangle.
+$$
+
+故 $\approx_E$ 是等价关系。令等价类为
+
+$$
+C_1,\ldots,C_r
+$$
+
+并令
+
+$$
+P_k
+=
+\sum_{i\in C_k}|i\rangle\langle i|.
+$$
+
+## 定理 97.2（固定块代数）
+
+$$
+\boxed{
+\operatorname{Fix}(\mathcal D_G)
+=
+\bigoplus_{k=1}^r
+P_kM_d(\mathbb C)P_k
+\cong
+\bigoplus_{k=1}^r
+M_{|C_k|}(\mathbb C).
+}
+$$
+
+### 证明
+
+定理 97.1 表明，只有记录完全相同的地址之间可以保留矩阵元；这些地址恰组成上述等价类。∎
+
+## 解释
+
+环境并不总是把系统变成完全经典概率分布。更一般结果是：
+
+$$
+\boxed{
+\text{classical record label}
++
+\text{quantum state inside each indistinguishable block}.
+}
+$$
+
+固定代数的中心为
+
+$$
+Z(\operatorname{Fix}\mathcal D_G)
+=
+\bigoplus_k\mathbb CP_k,
+$$
+
+它给出稳定、可复制的经典标签；类内矩阵代数给出 decoherence-free quantum degrees of freedom。
+
+## 定理 97.3（重复记录的指数衰减）
+
+若每次交互写入独立的同型环境记录，则
+
+$$
+(\mathcal D_G^n(\rho))_{ij}
+=
+G_{ij}^n\rho_{ij}.
+$$
+
+若不同记录类之间存在统一常数
+
+$$
+|G_{ij}|\le q<1,
+$$
+
+定义极限 pinching
+
+$$
+\mathcal P(\rho)
+=
+\sum_kP_k\rho P_k.
+$$
+
+则
+
+$$
+\boxed{
+\|\mathcal D_G^n(\rho)-\mathcal P(\rho)\|_{\mathrm{HS}}
+\le
+q^n
+\|\rho-\mathcal P(\rho)\|_{\mathrm{HS}}.
+}
+$$
+
+### 证明
+
+类外矩阵元逐项乘以 $G_{ij}^n$；平方求和后提取 $q^{2n}$，再开平方。∎
+
+仓库 `QubitWitnesses` 与 `Decoherence` 已机器核验量子比特非对角项按 $c^N$ 精确衰减、阻尼复合时系数相乘，并证明非平凡相位阻尼固定点恰好是对角矩阵。
+
+## 推论 97.1（纯经典性判据）
+
+若每个记录等价类均为单点，则固定代数交换：
+
+$$
+\operatorname{Fix}(\mathcal D_G)\cong\mathbb C^d.
+$$
+
+观察者状态只剩概率向量
+
+$$
+(p_1,\ldots,p_d).
+$$
+
+因此：
+
+$$
+\boxed{
+\text{classical observable reality}
+=
+\text{stable accessible commutative algebra}.
+}
+$$
+
+---
+
+# 98. 非交换性、兼容性与不确定性
+
+仓库 `ObserverAlgebra` 定义寄存器读取
+
+$$
+(M_f\psi)(i)=f(i)\psi(i)
+$$
+
+和可逆更新
+
+$$
+(U_\tau\psi)(i)=\psi(\tau^{-1}i).
+$$
+
+`ObserverCommutator` 机器核验：
+
+$$
+\boxed{
+[U_\tau,M_f]\psi(i)
+=
+\left(
+f(\tau^{-1}i)-f(i)
+\right)
+\psi(\tau^{-1}i).
+}
+$$
+
+`ObserverMetric` 定义更新缺陷
+
+$$
+\delta_\tau f(i)
+=
+f(\tau^{-1}i)-f(i)
+$$
+
+及其有限窗口 sup 半范数，并证明其为零当且仅当读出在更新下不变。
+
+## 定义 98.1（通道不扰动可观测量）
+
+量子通道 $\Lambda$ 不扰动 Hermitian 量 $A$，若
+
+$$
+\Lambda^*(A)=A.
+$$
+
+这等价于：
+
+$$
+\operatorname{Tr}(\Lambda(\rho)A)
+=
+\operatorname{Tr}(\rho A)
+$$
+
+对所有状态成立。
+
+## 定义 98.2（操作中心）
+
+$$
+\boxed{
+\mathcal Z_{\mathrm{op}}
+=
+\mathcal A_{\mathfrak O}
+\cap
+\operatorname{Fix}(\Lambda^*).
+}
+$$
+
+它表示观察前后均可访问且期望不变的事实代数。
+
+## 定理 98.1（锐测量兼容性）
+
+两组 PVM
+
+$$
+\{P_a\},
+\qquad
+\{Q_b\}
+$$
+
+存在联合 PVM，当且仅当
+
+$$
+P_aQ_b=Q_bP_a
+$$
+
+对全部 $a,b$ 成立。
+
+### 证明
+
+若逐项交换，定义
+
+$$
+R_{ab}=P_aQ_b.
+$$
+
+它们构成联合 PVM并恢复两个边缘。
+
+反向若存在联合 PVM $R_{ab}$，则
+
+$$
+P_aQ_b
+=
+R_{ab}
+=
+Q_bP_a.
+$$
+
+∎
+
+此结论只针对锐 PVM；一般非锐 POVM 可在效果不两两交换时仍联合可测。
+
+## 定理 98.2（Robertson 不确定性）
+
+对 Hermitian $A,B$：
+
+$$
+\boxed{
+\Delta_\rho A\,
+\Delta_\rho B
+\ge
+\frac12
+\left|
+\operatorname{Tr}(\rho[A,B])
+\right|.
+}
+$$
+
+### 证明概要
+
+在算子空间定义半内积
+
+$$
+\langle X,Y\rangle_\rho
+=
+\operatorname{Tr}(\rho X^\dagger Y).
+$$
+
+对中心化算子应用 Cauchy–Schwarz，再取内积虚部，其值为交换子期望的一半。∎
+
+非交换性不是“观察者意识扰乱现实”，而是允许问题的算子组合结构依赖顺序。
+
+---
+
+# 99. 局部观察者与约化态边界
+
+设全局系统为
+
+$$
+\mathcal H_A\otimes\mathcal H_B.
+$$
+
+观察者 $B$ 只能访问局部效果
+
+$$
+I_A\otimes E_B.
+$$
+
+定义约化态
+
+$$
+\rho_B
+=
+\operatorname{Tr}_A\rho_{AB}.
+$$
+
+## 定理 99.1（局部观察等价）
+
+若观察者 $B$ 可以使用全部局部效果，则
+
+$$
+\boxed{
+\rho_{AB}\sim_B\sigma_{AB}
+\iff
+\operatorname{Tr}_A\rho_{AB}
+=
+\operatorname{Tr}_A\sigma_{AB}.
+}
+$$
+
+### 证明
+
+正向：所有局部期望相等意味着两个约化态对全部 Hermitian 局部算子配对相等，非退化性推出约化态相等。
+
+反向：由偏迹定义，
+
+$$
+\operatorname{Tr}\bigl(\rho_{AB}(I\otimes E)\bigr)
+=
+\operatorname{Tr}(\rho_BE).
+$$
+
+约化态相等即全部局部读出相等。∎
+
+## 推论 99.1（局部不可见维数）
+
+若
+
+$$
+\dim\mathcal H_A=d_A,
+\qquad
+\dim\mathcal H_B=d_B,
+$$
+
+则全局迹零 Hermitian 维数为
+
+$$
+d_A^2d_B^2-1,
+$$
+
+而全部 $B$ 局部读出最多保留
+
+$$
+d_B^2-1
+$$
+
+个自由度。因此局部不可见残差维数为
+
+$$
+\boxed{
+d_B^2(d_A^2-1).
+}
+$$
+
+## 例 99.1
+
+两个 Bell 态
+
+$$
+|\Phi^\pm\rangle
+=
+\frac{|00\rangle\pm|11\rangle}{\sqrt2}
+$$
+
+全局正交，但单边约化态均为
+
+$$
+I/2.
+$$
+
+所以任何单边观察者都看不到其全局相位差。
+
+---
+
+# 100. 单样本、自我观察与不可克隆边界
+
+## 定理 100.1（非正交态不能单次完美区分）
+
+若两个纯态可由一次测量无误区分，则它们正交。
+
+### 证明
+
+若某效果 $E$ 完美识别 $|\psi\rangle$ 而排除 $|\phi\rangle$，则
+
+$$
+\langle\psi|E|\psi\rangle=1,
+$$
+
+$$
+\langle\phi|E|\phi\rangle=0.
+$$
+
+由 $0\le E\le I$ 得
+
+$$
+E|\psi\rangle=|\psi\rangle,
+$$
+
+$$
+E|\phi\rangle=0.
+$$
+
+所以
+
+$$
+\langle\phi|\psi\rangle
+=
+\langle\phi|E|\psi\rangle
+=
+0.
+$$
+
+∎
+
+因此完整层析要求重复制备、先验限制或额外副本，不能从单个任意未知态中一次读出全部参数。
+
+## 定理 100.2（不可克隆）
+
+若酉变换 $U$ 同时满足
+
+$$
+U|\psi\rangle|0\rangle
+=
+|\psi\rangle|\psi\rangle,
+$$
+
+$$
+U|\phi\rangle|0\rangle
+=
+|\phi\rangle|\phi\rangle,
+$$
+
+则
+
+$$
+\langle\phi|\psi\rangle
+=
+\langle\phi|\psi\rangle^2.
+$$
+
+所以两态要么相同，要么正交。
+
+### 证明
+
+酉变换保持内积；输入内积为
+
+$$
+\langle\phi|\psi\rangle,
+$$
+
+输出内积为
+
+$$
+\langle\phi|\psi\rangle^2.
+$$
+
+故结论成立。∎
+
+## 自我观察边界
+
+内部观察者作为宇宙子系统，只能直接访问其局部记录代数。即使它能层析自己的约化态，也不能由局部记录唯一恢复与外部系统的全部纠缠纯化。
+
+所以：
+
+$$
+\boxed{
+\text{self-observation completeness}
+}
+$$
+
+必须相对于可重复制备、可访问代数和系统边界定义，不能被理解成“一个有限子系统瞬时拥有宇宙完整波函数”。
+
+---
+
+# 101. 经典答案表的双重障碍
+
+一种强经典模型要求每个隐藏纤维 $\lambda$ 为全部问题预先赋值，并保持矩阵代数的加法、乘法和单位：
+
+$$
+v_\lambda:
+M_d(\mathbb C)\to\mathbb C.
+$$
+
+这要求一个含单位复代数 character。
+
+## 定理 101.1（非平凡矩阵代数无 character）
+
+当 $d\ge2$ 时：
+
+$$
+\boxed{
+\operatorname{AlgHom}_{\mathbb C}
+(M_d(\mathbb C),\mathbb C)
+=
+\varnothing.
+}
+$$
+
+### 证明
+
+对矩阵单位 $e_{ij}$，若 $i\ne j$：
+
+$$
+e_{ij}^2=0,
+$$
+
+所以
+
+$$
+v(e_{ij})^2=0,
+$$
+
+从而
+
+$$
+v(e_{ij})=0.
+$$
+
+又有
+
+$$
+e_{ii}=e_{ij}e_{ji},
+$$
+
+故
+
+$$
+v(e_{ii})=0.
+$$
+
+于是
+
+$$
+1=v(I)=\sum_i v(e_{ii})=0,
+$$
+
+矛盾。∎
+
+仓库 `WindowCharacter.lean` 已用 Weyl clock–shift 关系对每个非平凡有限窗口矩阵代数形式化相同障碍。
+
+但严格边界是：
+
+$$
+\boxed{
+\text{no algebra character}
+}
+$$
+
+要求保持整个代数结构，比通常 Kochen–Specker 型投影赋值条件更强；不能不加说明地把两者视为同一 theorem。
+
+## 定理 101.2（局域确定性 CHSH 上界）
+
+对任意隐藏纤维上的
+
+$$
+A_0,A_1,B_0,B_1\in\{-1,+1\},
+$$
+
+有
+
+$$
+|A_0B_0+A_0B_1+A_1B_0-A_1B_1|
+\le2.
+$$
+
+概率混合后仍满足
+
+$$
+|\mathbb ES|\le2.
+$$
+
+而仓库 `CHSHWitness.lean` 已机器核验具体 Bell 态与四个观测量达到
+
+$$
+\boxed{
+2\sqrt2.
+}
+$$
+
+`ClassicalAnswerTableExclusion.lean` 将无 character 与 CHSH 超经典值作用于同一个 preparation-independent deterministic answer table，得到非上下文分支与局域分支的双重排除。
+
+## 结论 101.1
+
+量子观察者的结果统计不能一般地还原为一张同时满足：
+
+1. 对全部上下文预存确定答案；
+2. 保持完整矩阵代数关系；
+3. 满足局域因子化；
+4. 与 Bell 统计一致
+
+的单一经典答案表。
+
+---
+
+# 102. 稳健观察度量与噪声放大
+
+布尔完备性只回答“理论上可否区分”，实验还要回答“区分是否稳定”。
+
+取有限效果
+
+$$
+E_1,\ldots,E_m
+$$
+
+与正权重
+
+$$
+w_r>0.
+$$
+
+## 定义 102.1（状态侧观察半范数）
+
+对
+
+$$
+D\in\operatorname{Herm}_d^0
+$$
+
+定义
+
+$$
+\boxed{
+\|D\|_{\mathfrak O}^2
+=
+\sum_{r=1}^m
+w_r
+\left|
+\operatorname{Tr}(DE_r)
+\right|^2.
+}
+$$
+
+## 定理 102.1（kernel）
+
+$$
+\boxed{
+\ker\|\cdot\|_{\mathfrak O}
+=
+N_{\mathfrak O}.
+}
+$$
+
+因此
+
+$$
+d_{\mathfrak O}(\rho,\sigma)
+=
+\|\rho-\sigma\|_{\mathfrak O}
+$$
+
+在状态空间上是伪距离，在操作商上是真距离；它在完整状态空间上是真距离，当且仅当观察者信息完备。
+
+取 $\operatorname{Herm}_d^0$ 正交基，并定义矩阵
+
+$$
+M_{r\mu}
+=
+\sqrt{w_r}\operatorname{Tr}(E_rF_\mu).
+$$
+
+令
+
+$$
+\alpha
+=
+\lambda_{\min}(M^\top M),
+$$
+
+$$
+\beta
+=
+\lambda_{\max}(M^\top M).
+$$
+
+## 定理 102.2（frame bounds）
+
+$$
+\boxed{
+\alpha\|D\|_{\mathrm{HS}}^2
+\le
+\|D\|_{\mathfrak O}^2
+\le
+\beta\|D\|_{\mathrm{HS}}^2.
+}
+$$
+
+观察者完备当且仅当
+
+$$
+\alpha>0.
+$$
+
+定义条件数
+
+$$
+\boxed{
+\kappa(\mathfrak O)
+=
+\sqrt{\beta/\alpha}.
+}
+$$
+
+## 定理 102.3（线性重建噪声界）
+
+若观测模型为
+
+$$
+y=Mx+\eta
+$$
+
+并使用 Moore–Penrose 最小二乘重建，则
+
+$$
+\boxed{
+\|\widehat x-x\|_2
+\le
+\frac{\|\eta\|_2}{\sqrt\alpha}.
+}
+$$
+
+### 证明
+
+$$
+\widehat x-x=M^\dagger\eta,
+$$
+
+而
+
+$$
+\|M^\dagger\|_{2\to2}
+=
+1/\sigma_{\min}(M)
+=
+1/\sqrt\alpha.
+$$
+
+∎
+
+仓库 `ObserverMetric` 当前度量的是读出对更新的敏感度；本节度量的是状态差对观察者的可见度。二者分别属于 update-side 与 state-side geometry。
+
+---
+
+# 103. 最小观察预算是秩次模覆盖
+
+设候选测量设置集合为
+
+$$
+\mathcal X.
+$$
+
+每个设置 $x$ 贡献中心化效果子空间
+
+$$
+U_x
+=
+\operatorname{span}_{\mathbb R}
+\left\{
+E_{a|x}
+-
+\frac{\operatorname{Tr}E_{a|x}}dI
+\right\}_a.
+$$
+
+对设置集合 $S\subseteq\mathcal X$，定义
+
+$$
+r(S)
+=
+\dim
+\left(
+\sum_{x\in S}U_x
+\right).
+$$
+
+## 定理 103.1（观察秩单调）
+
+若
+
+$$
+A\subseteq B,
+$$
+
+则
+
+$$
+r(A)\le r(B).
+$$
+
+## 定理 103.2（观察秩次模）
+
+$$
+\boxed{
+r(A)+r(B)
+\ge
+r(A\cup B)+r(A\cap B).
+}
+$$
+
+### 证明
+
+令
+
+$$
+U_A=\sum_{x\in A}U_x.
+$$
+
+则
+
+$$
+\dim(U_A+U_B)
++
+\dim(U_A\cap U_B)
+=
+\dim U_A+\dim U_B.
+$$
+
+又有
+
+$$
+U_{A\cap B}\subseteq U_A\cap U_B.
+$$
+
+代入即得。∎
+
+等价的边际收益递减形式为：
+
+$$
+r(A\cup\{x\})-r(A)
+\ge
+r(B\cup\{x\})-r(B)
+$$
+
+当 $A\subseteq B$。
+
+## 定义 103.1（最小完备预算）
+
+给定成本 $c_x>0$，求
+
+$$
+\min_{S\subseteq\mathcal X}
+\sum_{x\in S}c_x
+$$
+
+满足
+
+$$
+r(S)=d^2-1.
+$$
+
+这是线性秩次模覆盖问题，而不仅是按效果标签做普通 set cover。
+
+若预算不完备，从正交补中选择
+
+$$
+0\neq D\in
+\left(\sum_{x\in S}U_x\right)^\perp
+$$
+
+即可由第 85 节构造密度矩阵对反例证书。
+
+---
+
+# 104. 量子 prime-time observer
+
+仓库一般 prime-time 观察框架使用读出
+
+$$
+O_p(T^t x).
+$$
+
+量子化时令状态为 $\rho$，动力为量子通道 $\Phi$，第 $p$ 个观察通道为效果 $E_p$：
+
+$$
+O_p(\rho)
+=
+\operatorname{Tr}(\rho E_p).
+$$
+
+对有限索引集合 $J$ 与时间窗 $m$，定义：
+
+$$
+\rho\sim_{J,m}\sigma
+$$
+
+当且仅当
+
+$$
+\operatorname{Tr}
+\left(
+E_p\Phi^t(\rho-\sigma)
+\right)
+=0
+$$
+
+对所有
+
+$$
+p\in J,
+\qquad
+0\le t<m
+$$
+
+成立。
+
+Heisenberg 化后：
+
+$$
+\operatorname{Tr}
+\left(
+(\rho-\sigma)(\Phi^*)^t(E_p)
+\right)
+=0.
+$$
+
+## 定义 104.1（prime-time 可见空间）
+
+$$
+V_{J,m}
+=
+\operatorname{span}_{\mathbb R}
+\left\{
+I,
+(\Phi^*)^t(E_p):
+p\in J,\ 0\le t<m
+\right\}.
+$$
+
+## 定理 104.1（prime-time 残差）
+
+$$
+\boxed{
+N_{J,m}
+=
+V_{J,m}^{\perp}.
+}
+$$
+
+## 定理 104.2（双轴精化）
+
+若
+
+$$
+J\subseteq K,
+\qquad
+m\le n,
+$$
+
+则
+
+$$
+V_{J,m}\subseteq V_{K,n},
+$$
+
+所以
+
+$$
+N_{K,n}\subseteq N_{J,m}.
+$$
+
+这与仓库 `BiaxialMonotoneRefinement` 的集合关系定理完全一致。
+
+## 定理 104.3（量子有限压缩）
+
+若全部索引—全部时间联合起来信息完备，则存在至多
+
+$$
+d^2-1
+$$
+
+个具体索引—时间效果
+
+$$
+(p_1,t_1),\ldots,(p_k,t_k)
+$$
+
+已经张成 $\operatorname{Herm}_d^0$，从而分离全部状态。
+
+所以：
+
+$$
+\boxed{
+\text{all-prime/all-time quantum completeness}
+\Longrightarrow
+\text{finite prime-time certificate}.
+}
+$$
+
+这里的“prime”在一般 Lean carrier 中只是自然数索引；要获得真实算术素数观察者，还需添加
+
+$$
+p\in\mathbb P
+$$
+
+约束及相应数论读出。
+
+---
+
+# 105. 对角化与量子观察者的严格边界
+
+仓库当前 `ObserverDiagonalSeparation.lean` 将两个独立事实包装在同一存在命题中：
+
+1. 一维量子上下文的读出是单射；
+2. 独立 `Unit/Bool` carrier 上存在固定点自由的对角逃逸。
+
+其逻辑形状是
+
+$$
+\exists Q,\exists D,
+\quad
+\operatorname{Tomography}(Q)
+\land
+\operatorname{DiagonalEscape}(D).
+$$
+
+它不是：
+
+$$
+\operatorname{Tomography}(Q)
+\Longrightarrow
+\operatorname{DiagonalEscape}(Q),
+$$
+
+也不是：
+
+$$
+\operatorname{DiagonalEscape}
+\Longrightarrow
+\operatorname{BornRandomness}.
+$$
+
+## 原理 105.1（真实桥的最低要求）
+
+要建立非平凡“对角—量子观察者”桥，至少需要：
+
+1. 同一个量子状态 carrier，且 $d\ge2$；
+2. 对角评估来自物理合法 instrument 或 effect；
+3. 逃逸对象对应可实验区分的状态、效果、过程或记录；
+4. 明确使用 positivity、normalization 与 complete positivity；
+5. 得到不同于已知 contextuality、Bell、no-cloning 或普通层析的结论；
+6. 给出可证伪的物理或信息论后果。
+
+## 严格结论 105.1
+
+对角化可以攻击“完整确定性答案表”的表示能力，但 Born 概率不能仅由 Cantor–Lawvere 逃逸推出。概率结构仍需：
+
+$$
+\text{positive state}
++
+\text{normalized effects}
++
+\text{state–effect pairing}.
+$$
+
+---
+
+# 106. 无限维边界：维数不是完成进度
+
+有限维理论中：
+
+$$
+R(\mathfrak O)=\dim N_{\mathfrak O}
+$$
+
+是良好离散进度量。
+
+无限维中不成立。仓库 `ResidualProgressMeasure.lean` 与 `TerminalResidualDimension.lean` 已机器核验：在
+
+$$
+\ell^2(\mathbb N)
+$$
+
+中存在严格递减闭子空间链
+
+$$
+R_0\supsetneq R_1\supsetneq R_2\supsetneq\cdots
+$$
+
+使每个 $R_n$ 都线性等距同构于整个环境空间，但
+
+$$
+\bigcap_nR_n=\{0\}.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{same Hilbert dimension at every finite stage}
+}
+$$
+
+与
+
+$$
+\boxed{
+\text{genuine strict completion progress}
+}
+$$
+
+可以同时发生。
+
+## 定义 106.1（测试残差）
+
+对闭子空间 $R$ 与测试族 $T$：
+
+$$
+\mathcal R_T(R)
+=
+\sup_{x\in T}\|P_Rx\|.
+$$
+
+仓库已经证明，对递减且具有正交投影的残差链，该量单调不增。
+
+## 结论 106.1
+
+无限维 observer completion 应使用：
+
+- 投影范数；
+- 指定测试族；
+- 谱隙；
+- trace-class / Hilbert–Schmidt 能量；
+- 强、弱或一致收敛模式
+
+而不能只用裸基数维数。
+
+---
+
+# 107. 完整量子观察者定义
+
+## 定义 107.1（量子观察者）
+
+一个有限维量子观察者定义为
+
+$$
+\boxed{
+\mathfrak O
+=
+\left(
+\mathcal H_S,
+\mathcal H_M,
+X,
+\{A_x\},
+\{\mathcal I_{a|x}\},
+\Phi,
+\mathcal A_M
+\right).
+}
+$$
+
+其中：
+
+- $\mathcal H_S$：被观察系统空间；
+- $\mathcal H_M$：记录／记忆空间；
+- $X$：可选择测量设置；
+- $A_x$：设置 $x$ 的结果集；
+- $\mathcal I_{a|x}$：CP instrument 分支；
+- $\Phi$：观察间隔中的系统动力学；
+- $\mathcal A_M$：观察者可以读取的记录代数。
+
+## 定义 107.2（经典—量子记录通道）
+
+$$
+\boxed{
+\mathcal M_x(\rho)
+=
+\sum_a
+\mathcal I_{a|x}(\rho)
+\otimes
+|a\rangle\langle a|_M.
+}
+$$
+
+若只保留结果、丢弃测后系统：
+
+$$
+\boxed{
+\mathcal C_x(\rho)
+=
+\sum_a
+\operatorname{Tr}(\rho E_{a|x})
+|a\rangle\langle a|.
+}
+$$
+
+## 定义 107.3（顺序签名）
+
+对全部允许实验词 $w$：
+
+$$
+\boxed{
+\Sigma_{\mathfrak O}^{\mathrm{seq}}(\rho)(w)
+=
+\operatorname{Tr}(\rho F_w).
+}
+$$
+
+## 定义 107.4（完整观察等价）
+
+$$
+\rho\sim_{\mathfrak O}^{\mathrm{seq}}\sigma
+$$
+
+当且仅当全部允许实验词产生相同概率。
+
+## 定义 107.5（顺序可见 operator system）
+
+$$
+\boxed{
+V_{\mathfrak O}^{\mathrm{seq}}
+=
+\operatorname{span}_{\mathbb R}
+\{F_w:w\text{ allowed}\}.
+}
+$$
+
+其不可见残差为
+
+$$
+\boxed{
+N_{\mathfrak O}^{\mathrm{seq}}
+=
+\left(
+V_{\mathfrak O}^{\mathrm{seq}}
+\right)^\perp.
+}
+$$
+
+---
+
+# 108. 量子观察者统一定理
+
+## 定理 108.1（统一 kernel 定理）
+
+对任意有限维量子观察者：
+
+$$
+\boxed{
+\rho\sim_{\mathfrak O}^{\mathrm{seq}}\sigma
+\iff
+\rho-\sigma\in
+N_{\mathfrak O}^{\mathrm{seq}}.
+}
+$$
+
+## 定理 108.2（统一完备性）
+
+以下等价：
+
+$$
+\mathfrak O
+\text{ 对允许顺序协议信息完备},
+$$
+
+$$
+N_{\mathfrak O}^{\mathrm{seq}}=\{0\},
+$$
+
+$$
+V_{\mathfrak O}^{\mathrm{seq}}
+=
+\operatorname{Herm}_d.
+$$
+
+## 定理 108.3（有限协议证书）
+
+若允许的全部有限词联合起来信息完备，则存在有限词集
+
+$$
+w_1,\ldots,w_m
+$$
+
+满足
+
+$$
+m\le d^2-1
+$$
+
+且中心化 word effects 已经张成
+
+$$
+\operatorname{Herm}_d^0.
+$$
+
+若按最大词长计，则存在
+
+$$
+n\le d^2-1
+$$
+
+使长度不超过 $n$ 的词已经完备。
+
+## 定理 108.4（不完备物理反例）
+
+若观察者不完备，则存在
+
+$$
+0\neq D\in
+N_{\mathfrak O}^{\mathrm{seq}}
+$$
+
+以及
+
+$$
+\rho_\pm
+=
+\frac Id\pm\varepsilon D
+$$
+
+使：
+
+$$
+\rho_+\neq\rho_-,
+$$
+
+但：
+
+$$
+\Sigma_{\mathfrak O}^{\mathrm{seq}}(\rho_+)
+=
+\Sigma_{\mathfrak O}^{\mathrm{seq}}(\rho_-).
+$$
+
+## 总解释
+
+统一理论由四层组成：
+
+$$
+\boxed{
+\text{effect}
+\longrightarrow
+\text{probability},
+}
+$$
+
+$$
+\boxed{
+\text{instrument}
+\longrightarrow
+\text{state intervention},
+}
+$$
+
+$$
+\boxed{
+\text{record}
+\longrightarrow
+\text{conditioning / marginalization},
+}
+$$
+
+$$
+\boxed{
+\text{visible operator system}
+\longleftrightarrow
+\text{invisible state residual}.
+}
+$$
+
+观察者不是一个额外于物理的意识变量，而是具有有限问题集、干预能力、记忆载体与可访问记录代数的操作系统。
+
+---
+
+# 109. 与当前 Lean 真值的追加锚定
+
+| 结构 | Lean 锚点 | 本增订中的角色 |
+|---|---|---|
+| Pauli 非交换、Born 权重、无矩阵 character | `D5/S3/Quantum/FiniteDimensional` | 最小有限维量子骨架 |
+| X/Z 无公共本征向量、Bell 非乘积、$c^N$ 阻尼 | `D5/S3/Quantum/QubitWitnesses` | 不兼容、纠缠与相干衰减见证 |
+| 阻尼复合与固定对角代数 | `D5/S3/Quantum/Decoherence` | 退相干半群与固定点 |
+| 环境记录 Gram 通道 | `D5/S3/Quantum/EnvironmentRecords` | 记录重叠到局部退相干 |
+| 坐标运输与 Hadamard 指针基 | `D5/S3/Quantum/PointerBasis` | 环境选择的稳定坐标 |
+| 投影记录、未读态与条件态 | `D5/S3/Observer/Conditioning` | Lüders instrument 的矩阵实例 |
+| 纯态秩一 Born 模平方化简 | `D5/S3/Observer/BornReduction` | state–effect pairing 的纯态证书 |
+| 复制地址记录的环境边缘 | `D5/S3/Observer/MeasurementMarginal` | 非选择性测量的具体 dilation |
+| 完备互补上下文层析 | `D5/S3/Quantum/Tomography/CompleteContextTomography` | $V_{\mathfrak O}=\operatorname{Herm}$ 的实例 |
+| 一维层析与独立布尔逃逸并存 | `D5/S3/Quantum/Tomography/ObserverDiagonalSeparation` | 对角—量子桥的当前严格边界 |
+| 读出—更新协变与交换子 | `D5/S3/Quantum/ObserverAlgebra`, `ObserverCommutator` | 非交换动态读出骨架 |
+| 更新缺陷半范数 | `D5/S3/Observer/ObserverMetric` | update-side geometry |
+| 循环窗口操作中心 | `D5/S3/Observer/CenterOperational` | 更新不变读出的具体中心 |
+| 非平凡窗口无 character | `D5/S3/Observer/WindowCharacter` | 强经典答案表障碍 |
+| Bell 态 CHSH 值 $2\sqrt2$ | `D5/S3/QuantumBounds/CHSHWitness` | 局域经典界之外的量子见证 |
+| 同一答案表的双重排除 | `D5/S3/Observer/ClassicalAnswerTableExclusion` | 非上下文／局域联合边界 |
+| 正迹保持映射存在平稳态 | `D5/S3/Quantum/ChannelFixedState` | 通道长期固定状态存在性 |
+| 双轴不可区分精化 | `D5/S3/Observer/Refinement/BiaxialMonotoneRefinement` | prime-time 单调性 |
+| 有限状态的有限 prime-time 层析 | `D5/S3/Observer/Refinement/FinitePrimeTimeTomography` | 量子有限维压缩的离散前身 |
+| 无限维残差测试量 | `D5/S3/Observer/Completion/ResidualProgressMeasure` | 无限维完成进度 |
+| 常维严格尾链与零终端 | `D5/S3/Observer/Completion/TerminalResidualDimension` | 裸维数失效反例 |
+| 对角通道不能造相干、Hadamard 可以 | `D5/S3/Observer/StateNotPath` | “状态不是经典路径”证书 |
+| GNS 矩阵范数平方恒等式 | `D5/S3/Quantum/GNSMatrix` | 正性配对的 Hilbert 几何 |
+| 通用克隆机约化谱与熵 | `D5/S3/Quantum/CloningMachine` | 近似克隆模型的现有分析 |
+
+本增订中的统一可见空间、物理反例证书、有限效果压缩、顺序 word-effect completion、一般 Gram 记录块、稳健 frame bounds、秩次模预算与局部约化等价尚未以本文同名 theorem 全部 Lean 闭合。
+
+---
+
+# 110. 建议追加 Lean 模块树
+
+```text
+D5/S3/QuantumObserver/Core/
+  StateEffectPairing.lean
+  StaticObserver.lean
+  QuantumInstrument.lean
+  RecordChannel.lean
+
+D5/S3/QuantumObserver/Visibility/
+  VisibleRealSpace.lean
+  InvisibleResidual.lean
+  ObservationalEquivalence.lean
+  OperationalQuotient.lean
+  RefinementOrder.lean
+  JointObserver.lean
+
+D5/S3/QuantumObserver/Tomography/
+  CompletenessEquivalences.lean
+  PhysicalIndistinguishablePair.lean
+  FiniteEffectCertificate.lean
+  OutcomeBudgetLowerBound.lean
+  ModelRelativeCompleteness.lean
+
+D5/S3/QuantumObserver/Dynamics/
+  HeisenbergPullback.lean
+  FiniteTimeVisibleSpace.lean
+  ObservabilityMatrix.lean
+  ObservabilityGramian.lean
+  FiniteHorizonTomography.lean
+
+D5/S3/QuantumObserver/Sequential/
+  WordEffect.lean
+  SequentialVisibleSpace.lean
+  SequentialStabilization.lean
+  FiniteSequentialHorizon.lean
+  SamePovmDifferentInstrument.lean
+
+D5/S3/QuantumObserver/Records/
+  IdealProjectiveDilation.lean
+  SelectiveVsUnreadUpdate.lean
+  GeneralRecordGramChannel.lean
+  RecordClassFixedAlgebra.lean
+  RepeatedRecordConvergence.lean
+  ClassicalCenter.lean
+
+D5/S3/QuantumObserver/Local/
+  PartialTraceObservationalEquivalence.lean
+  LocalResidualDimension.lean
+  SingleCopyDiscrimination.lean
+  NoCloningBoundary.lean
+  RecordConsistency.lean
+
+D5/S3/QuantumObserver/Robust/
+  StateObservationSeminorm.lean
+  ObserverFrameBounds.lean
+  ObserverConditionNumber.lean
+  LinearReconstructionNoiseBound.lean
+
+D5/S3/QuantumObserver/Budget/
+  CenteredEffectRank.lean
+  ObservationRankSubmodular.lean
+  MinimumCompleteBudget.lean
+  IncompleteBudgetPhysicalCertificate.lean
+
+D5/S3/QuantumObserver/PrimeTime/
+  QuantumPrimeTimeObserver.lean
+  PrimeTimeResidual.lean
+  FinitePrimeTimeEffectCertificate.lean
+
+D5/S3/QuantumObserver/Boundary/
+  CharacterVsContextuality.lean
+  DiagonalQuantumBridgeRequirements.lean
+  InfiniteDimensionalProgressBoundary.lean
+```
+
+建议优先闭合：
+
+```text
+observationalEquivalent_iff_sub_mem_invisibleResidual
+informationallyComplete_iff_visibleSpace_eq_top
+incomplete_observer_has_density_pair_certificate
+complete_observer_has_finite_effect_certificate
+informationallyComplete_povm_card_lower_bound
+observerRefines_iff_visibleSpace_le
+jointObserver_invisibleResidual_eq_inf
+finite_time_observability_iff_gramian_posDef
+complete_time_observer_finite_horizon
+sequence_probability_eq_trace_wordEffect
+sequential_complete_has_finite_horizon
+same_povm_different_sequential_statistics
+recordChannel_apply_eq_gram_mul
+recordChannel_fixed_iff_supported_on_record_classes
+repeated_record_converges_to_pinching
+local_observationalEquivalent_iff_partialTrace_eq
+stateObservationSeminorm_kernel
+observationRank_submodular
+quantum_prime_time_residual_eq_orthogonal
+```
+
+---
+
+# 111. 追加严格非主张
+
+1. 本增订不声称“存在观察者”本身推出复 Hilbert 空间、公理化 Born 规则或张量积系统复合。
+2. 本增订不声称人的意识是量子 instrument、偏迹或条件状态更新的必要输入。
+3. 本增订不声称 POVM 效果唯一决定测后状态；相同 POVM 可由不同 instrument 实现。
+4. 本增订不声称一次未知量子态测量可以完成状态层析。
+5. 本增订不声称层析恢复的是某个单次实验中“预先存在的经典答案表”。
+6. 本增订不声称代数生成完整等价于静态效果线性 span 完整。
+7. 本增订不声称所有非交换效果均不可联合测量；PVM 交换判据不直接推广为任意 POVM 的逐项交换必要性。
+8. 本增订不声称退相干单独证明全局本体只剩一个结果。
+9. 本增订不声称环境记录总把固定代数变成完全交换代数；一般仍可保留类内量子块。
+10. 本增订不声称 pointer basis 由意识选择；它由系统—环境耦合与稳定记录结构决定。
+11. 本增订不声称局部约化态包含全局纠缠的全部信息。
+12. 本增订不声称观察者可以从自身单一局部记录重建宇宙完整纯态。
+13. 本增订不声称无矩阵代数 character 与完整 Kochen–Specker 定理无条件等价。
+14. 本增订不声称 CHSH 超经典值单独排除所有非局域或上下文隐藏变量模型。
+15. 本增订不声称信息完备自动意味着数值稳定；最小 frame eigenvalue 可能极小。
+16. 本增订不声称 Hilbert–Schmidt 噪声界自动覆盖有限样本统计、系统漂移或模型错设。
+17. 本增订不声称秩次模预算等价于任意噪声目标下的最优实验设计。
+18. 本增订不声称 `FinitePrimeTimeTomography` 当前索引已强制为算术素数。
+19. 本增订不声称当前 `ObserverDiagonalSeparation` 已建立量子随机性与对角逃逸的因果桥。
+20. 本增订不声称 Cantor–Lawvere 对角化单独推出 Born 概率。
+21. 本增订不声称有限时间上界 $d^2-1$ 在无限维中仍成立。
+22. 本增订不声称无限维残差可由裸 Hilbert 维数测量。
+23. 本增订不声称正、迹保持但非完全正的任意抽象映射都是物理量子通道。
+24. 本增订不声称每个 paper-level 定理已经具有 Lean kernel proof term。
+25. 本增订不修改此前关于自由意志、喉部分量、RH、negative-base-$\varphi$ 或其他开放问题的边界。
+
+---
+
+# 112. 最终统一：量子观察者是全局状态到稳定记录现实的受限通道
+
+本增订把量子观察者压缩为以下对象：
+
+$$
+\begin{aligned}
+\rho
+&=
+\text{完整量子状态},\\
+E_{a|x}
+&=
+\text{可提出的问题与结果效果},\\
+\mathcal I_{a|x}
+&=
+\text{结果分支及其状态干预},\\
+F_w
+&=
+\text{顺序协议在初态上的 word effect},\\
+V_{\mathfrak O}^{\mathrm{seq}}
+&=
+\text{全部允许协议生成的可见 operator system},\\
+N_{\mathfrak O}^{\mathrm{seq}}
+&=
+\left(V_{\mathfrak O}^{\mathrm{seq}}\right)^\perp,\\
+\mathsf R_{\mathfrak O}
+&=
+\mathsf S_d/\!\sim_{\mathfrak O},\\
+\mathcal A_M
+&=
+\text{观察者能够稳定读取的记录代数}.
+\end{aligned}
+$$
+
+其基础关系为：
+
+$$
+\boxed{
+p(w\mid\rho)
+=
+\operatorname{Tr}(\rho F_w),
+}
+$$
+
+$$
+\boxed{
+\rho\sim_{\mathfrak O}\sigma
+\iff
+\rho-\sigma\in
+N_{\mathfrak O}^{\mathrm{seq}},
+}
+$$
+
+$$
+\boxed{
+\mathfrak O\text{ 完备}
+\iff
+V_{\mathfrak O}^{\mathrm{seq}}
+=
+\operatorname{Herm}_d,
+}
+$$
+
+$$
+\boxed{
+\text{有限维完备}
+\Longrightarrow
+\text{有限效果／有限词深证书},
+}
+$$
+
+$$
+\boxed{
+\text{环境记录}
+\Longrightarrow
+\text{块代数稳定化},
+}
+$$
+
+$$
+\boxed{
+\text{经典记录}
+=
+\text{稳定可访问代数的交换中心}.
+}
+$$
+
+因此最严格的本体—操作收束不是：
+
+$$
+\text{“观察者看见，于是创造世界”},
+$$
+
+而是：
+
+$$
+\boxed{
+完整量子状态通过观察者有限的效果、instrument、动力学与记录代数，
+被压缩成一个操作可区分、可条件化、可共享的现实商。
+}
+$$
+
+量子性的核心也不是“物体同时偷偷走了多条经典路径”，而是：
+
+$$
+\boxed{
+状态包含可在不同观察上下文中转化为概率差异的复相位结构；
+这些上下文与顺序干预不能一般地压缩为一张保持全部代数关系和局域统计的经典确定答案表。
+}
+$$
+
+退相干所完成的是：
+
+$$
+\boxed{
+把环境反复记录的区分放大为稳定块标签，
+并抑制这些标签之间的相干；
+它解释经典记录结构如何涌现，
+但不凭自身选定唯一量子解释。
+}
+$$
+
+把本增订与前文 observer completion、agency completion 合并，最终得到三重反射：
+
+$$
+\boxed{
+\begin{aligned}
+\text{dynamical completion}
+&=
+\text{补入未来会影响读出的状态区别},\\
+\text{quantum observer completion}
+&=
+\text{补入允许协议可生成的 effect 方向},\\
+\text{agency completion}
+&=
+\text{补入未来会改变策略的历史区别}.
+\end{aligned}
+}
+$$
+
+三者共同说明：
+
+$$
+\boxed{
+观察者不是完整宇宙的副本，
+而是一个把未来有效区别、可执行问题、实际记录与历史选择
+闭合进自身有限接口的系统。
+}
+$$

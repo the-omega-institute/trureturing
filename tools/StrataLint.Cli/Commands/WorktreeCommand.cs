@@ -178,7 +178,7 @@ internal static class WorktreeCommand
                 "git",
                 ["rev-list", "--count", "--end-of-options", $"HEAD..{options.Base}"],
                 options.Source,
-                TimeSpan.FromSeconds(30));
+                BoundedProcessRunner.HangDetectionBudget);
             if (counted.ExitCode == 0
                 && int.TryParse(
                     Encoding.UTF8.GetString(counted.StandardOutput).Trim(),
@@ -370,7 +370,7 @@ internal static class WorktreeCommand
             "git",
             ["check-ref-format", "--branch", options.Branch],
             options.Source,
-            TimeSpan.FromSeconds(30));
+            BoundedProcessRunner.HangDetectionBudget);
         if (branchFormat.ExitCode != 0)
         {
             throw new InvalidOperationException(
@@ -382,7 +382,7 @@ internal static class WorktreeCommand
             "git",
             ["show-ref", "--verify", "--quiet", $"refs/heads/{options.Branch}"],
             options.Source,
-            TimeSpan.FromSeconds(30));
+            BoundedProcessRunner.HangDetectionBudget);
         if (existingBranch.ExitCode == 0)
         {
             throw new InvalidOperationException($"branch already exists: {options.Branch}");
@@ -400,7 +400,7 @@ internal static class WorktreeCommand
             "git",
             ["rev-parse", "--verify", "--end-of-options", $"{options.Base}^{{commit}}"],
             options.Source,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             $"base revision does not resolve: {options.Base}");
 
     private static string Cleanup(WorktreeOptions options, IWorktreeProcessRunner runner)
@@ -430,7 +430,7 @@ internal static class WorktreeCommand
             "git",
             ["show-ref", "--verify", "--quiet", $"refs/heads/{options.Branch}"],
             options.Source,
-            TimeSpan.FromSeconds(30));
+            BoundedProcessRunner.HangDetectionBudget);
         if (branchLookup.ExitCode == 0)
         {
             var branchRemoval = RunProcess(
@@ -438,7 +438,7 @@ internal static class WorktreeCommand
                 "git",
                 ["branch", "-D", options.Branch],
                 options.Source,
-                TimeSpan.FromSeconds(30));
+                BoundedProcessRunner.HangDetectionBudget);
             if (branchRemoval.ExitCode != 0)
             {
                 errors.Add(ProcessError(branchRemoval, "git branch cleanup failed"));
