@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
+using StrataLint.Engine;
 
 namespace StrataLint.Scribe;
 
@@ -86,19 +87,9 @@ internal static class StatementV1Decoder
 
         internal string Name()
         {
-            if (TryTake("n0")) return "";
-            var tag = Word(2);
-            Take("(");
-            var parent = Name();
-            Take(",");
-            string part = tag switch
-            {
-                "ns" => Atom(),
-                "nn" => UInt().ToString(System.Globalization.CultureInfo.InvariantCulture),
-                _ => throw Error("Unknown name tag.")
-            };
-            Take(")");
-            return parent.Length == 0 ? part : parent + "." + part;
+            var name = CanonicalLeanNameDecoder.DecodePrefix(text, position, out var consumed);
+            position += consumed;
+            return name;
         }
 
         internal LeanLevel Level()

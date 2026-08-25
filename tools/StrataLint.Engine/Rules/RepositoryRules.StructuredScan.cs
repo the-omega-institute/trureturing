@@ -1,3 +1,4 @@
+using System.Buffers;
 using System.Collections.Immutable;
 using System.Security.Cryptography;
 using System.Text;
@@ -14,10 +15,21 @@ internal static partial class RepositoryRules
     /// assigned to the root of every scanned document, which is where a digestion entry would sit
     /// if the document were one; the position says where a node stands, not what the document is.
     /// </summary>
-    private enum AddressSlot { None, Entry, Boundary, Address }
+    private enum AddressSlot
+    {
+        None,
+        Entry,
+        Boundary,
+        Address,
+        HostedExtensions,
+        HostedExtension,
+        Signature,
+        SignatureNameKey,
+    }
 
     private static bool IsGovernedStructured(RepoPath path, ValidatedPolicy policy) =>
         (RepositoryPathPolicy.TryResolve(path, policy, out _)
+            || DigestionFormalizationReceipt.IsCanonicalPath(path.Value)
             || path.Value == TowerManifestPath)
         && (path.Value.EndsWith(".json", StringComparison.Ordinal)
             || path.Value.EndsWith(".yaml", StringComparison.Ordinal)
@@ -90,7 +102,7 @@ internal static partial class RepositoryRules
                     path,
                     child,
                     $"{location}[{index++}]",
-                    AddressSlot.None,
+                    ArrayElementSlot(slot),
                     tasks,
                     findings,
                     scanAnomalies,
@@ -201,7 +213,9 @@ internal static partial class RepositoryRules
             string.Join('\n', opaque),
             "\\\\u([0-9a-fA-F]{4})",
             static match => ((char)Convert.ToInt32(match.Groups[1].Value, 16)).ToString());
-        if ((AnomalyBearingPattern.IsMatch(unescaped) && !IsAddressShapedResidueAtDeclaredSlot(path, slot, unescaped))
+        if ((AnomalyBearingPattern.IsMatch(unescaped)
+                && !IsAddressShapedResidueAtDeclaredSlot(path, slot, unescaped)
+                && !IsSignatureNameKeyResidueAtDeclaredSlot(path, slot, unescaped))
             || Regex.IsMatch(unescaped, "\\\"(?:kind|type|category|record_type)\\\"\\s*:"))
         {
             findings.Add(new RuleFinding(path, $"unknown anomaly-bearing schema at {location}"));
@@ -219,6 +233,16 @@ internal static partial class RepositoryRules
         (AddressSlot.Entry, "ast_path") => AddressSlot.Address,
         (AddressSlot.Entry, "boundary") => AddressSlot.Boundary,
         (AddressSlot.Boundary, "ast_path") => AddressSlot.Address,
+        (AddressSlot.Entry, "hosted_extensions") => AddressSlot.HostedExtensions,
+        (AddressSlot.Entry, "precommitted_signature") => AddressSlot.Signature,
+        (AddressSlot.HostedExtension, "precommitted_signature") => AddressSlot.Signature,
+        (AddressSlot.Signature, "name_key") => AddressSlot.SignatureNameKey,
+        _ => AddressSlot.None,
+    };
+
+    private static AddressSlot ArrayElementSlot(AddressSlot slot) => slot switch
+    {
+        AddressSlot.HostedExtensions => AddressSlot.HostedExtension,
         _ => AddressSlot.None,
     };
 
@@ -253,6 +277,36 @@ internal static partial class RepositoryRules
         if (residue.Any(char.IsWhiteSpace)) return false;
         var segments = residue.Split('/');
         return segments.Length >= 2 && segments.All(segment => segment.Length > 0);
+    }
+
+    /// <summary>
+    /// Tests whether the residue matches the signature-name exemption: the path is a canonical
+    /// formalization receipt, structural descent reached a signature's <c>name_key</c>, and the
+    /// complete value is a canonical Lean name encoding whose string components have repository
+    /// identifier shape. The encoding parser is the Name sub-parser extracted from
+    /// <c>StatementV1Decoder</c> and shared back to Scribe; this is not a second grammar. The ASCII
+    /// identifier restriction is an additional repository naming policy, not part of Lean's name
+    /// encoding grammar.
+    ///
+    /// No condition is redundant. Without the path, the same signature-shaped keys in arbitrary
+    /// governed JSON would be exempt. Without the slot, a root key, a dotted key, or an unrelated
+    /// <c>name_key</c> in a receipt would be exempt. Without the shape, prose or JSON anomaly
+    /// records placed in the legitimate signature slot would be exempt.
+    ///
+    /// The slot comes only from structural descent. The rendered location cannot establish it:
+    /// property names are rendered without escaping, so a dotted property name and actual nesting
+    /// can have the same location text. Embedded-record detection remains a separate disjunct and
+    /// is unaffected by this exemption.
+    /// </summary>
+    private static bool IsSignatureNameKeyResidueAtDeclaredSlot(
+        string path,
+        AddressSlot slot,
+        string residue)
+    {
+        if (!DigestionFormalizationReceipt.IsCanonicalPath(path)) return false;
+        if (slot != AddressSlot.SignatureNameKey) return false;
+        if (!CanonicalLeanNameDecoder.IsRepositoryNameKey(residue)) return false;
+        return true;
     }
 
     private static bool TryParseEmbeddedJson(
@@ -353,5 +407,164 @@ internal static partial class RepositoryRules
                 }
             }
         }
+    }
+}
+
+/// <summary>
+/// Decodes the canonical Name production emitted by <c>Inspector.encodeName</c>. Scribe uses the
+/// prefix entry point inside statement-v1; structured scanning adds full-consumption and repository
+/// identifier checks through <see cref="IsRepositoryNameKey"/>.
+/// </summary>
+internal static class CanonicalLeanNameDecoder
+{
+    internal static string DecodePrefix(string input, int start, out int consumedCharacters)
+    {
+        ArgumentNullException.ThrowIfNull(input);
+        if ((uint)start > (uint)input.Length) throw new ArgumentOutOfRangeException(nameof(start));
+
+        var parser = new Parser(input, start);
+        var decoded = parser.Name(requireRepositoryIdentifier: false);
+        consumedCharacters = parser.Position - start;
+        return decoded;
+    }
+
+    internal static bool IsRepositoryNameKey(string input)
+    {
+        try
+        {
+            var parser = new Parser(input, 0);
+            _ = parser.Name(requireRepositoryIdentifier: true);
+            return parser.Position == input.Length;
+        }
+        catch (FormatException)
+        {
+            return false;
+        }
+    }
+
+    private sealed class Parser(string text, int start)
+    {
+        internal int Position { get; private set; } = start;
+
+        internal string Name(bool requireRepositoryIdentifier)
+        {
+            if (TryTake("n0")) return string.Empty;
+
+            var tag = Word(2);
+            Take("(");
+            var parent = Name(requireRepositoryIdentifier);
+            Take(",");
+            var part = tag switch
+            {
+                "ns" => StringPart(requireRepositoryIdentifier),
+                "nn" => CanonicalDecimal(),
+                _ => throw Error("Unknown name tag."),
+            };
+            Take(")");
+            return parent.Length == 0 ? part : parent + "." + part;
+        }
+
+        private string StringPart(bool requireRepositoryIdentifier)
+        {
+            var value = Atom();
+            if (requireRepositoryIdentifier && !IsRepositoryIdentifier(value))
+            {
+                throw Error("Name component is outside repository identifier policy.");
+            }
+
+            return value;
+        }
+
+        private string Atom()
+        {
+            var lengthText = CanonicalDecimal();
+            if (!int.TryParse(
+                    lengthText,
+                    System.Globalization.NumberStyles.None,
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    out var byteLength))
+            {
+                throw Error("Atom length exceeds supported input size.");
+            }
+
+            Take(":");
+            var atomStart = Position;
+            var bytes = 0;
+            while (bytes < byteLength)
+            {
+                if (Position == text.Length
+                    || Rune.DecodeFromUtf16(
+                        text.AsSpan(Position),
+                        out var rune,
+                        out var consumed) != OperationStatus.Done
+                    || bytes + rune.Utf8SequenceLength > byteLength)
+                {
+                    throw Error("Atom does not match its UTF-8 byte length.");
+                }
+
+                Position += consumed;
+                bytes += rune.Utf8SequenceLength;
+            }
+
+            return text[atomStart..Position];
+        }
+
+        private string CanonicalDecimal()
+        {
+            var start = Position;
+            while (Position < text.Length && text[Position] is >= '0' and <= '9') Position++;
+            if (start == Position) throw Error("Expected unsigned integer.");
+            if (text[start] == '0' && Position - start > 1)
+            {
+                throw Error("Unsigned integer has leading zeroes.");
+            }
+
+            return text[start..Position];
+        }
+
+        private string Word(int length)
+        {
+            if (Position + length > text.Length) throw Error("Unexpected end.");
+            var result = text.Substring(Position, length);
+            Position += length;
+            return result;
+        }
+
+        private void Take(string value)
+        {
+            if (!TryTake(value)) throw Error($"Expected {value}.");
+        }
+
+        private bool TryTake(string value)
+        {
+            if (!text.AsSpan(Position).StartsWith(value, StringComparison.Ordinal)) return false;
+            Position += value.Length;
+            return true;
+        }
+
+        private FormatException Error(string message) => new(
+            $"{message} At byte {Encoding.UTF8.GetByteCount(text.AsSpan(0, Position))}.");
+    }
+
+    private static bool IsRepositoryIdentifier(string value)
+    {
+        if (value.Length == 0 || value[0] is not ((>= 'A' and <= 'Z') or (>= 'a' and <= 'z') or '_'))
+        {
+            return false;
+        }
+
+        foreach (var character in value.AsSpan(1))
+        {
+            if (character is not ((>= 'A' and <= 'Z')
+                or (>= 'a' and <= 'z')
+                or (>= '0' and <= '9')
+                or '_'
+                or '\''))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

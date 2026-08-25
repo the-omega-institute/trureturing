@@ -57,6 +57,7 @@ internal static partial class CoverAtomCommand
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier scribeEmissionVerifier,
+        DateTimeOffset recordedAtUtc,
         IReadOnlyList<string> arguments)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
@@ -207,6 +208,7 @@ internal static partial class CoverAtomCommand
                         addedReceipts.Select(static receipt => receipt.Coverage)),
                     Scribe = target.Receipts.Scribe.AddRange(
                         addedReceipts.Select(static receipt => receipt.Scribe)),
+                    CoverDisposition = null,
                 },
             };
             DigestionFormalizationPrecommitmentValidator.RequireBaseOwnedEdges(
@@ -276,6 +278,18 @@ internal static partial class CoverAtomCommand
             {
                 // Initial cover keeps the old semantics exactly: the atom must become
                 // deletable Closed with no residual gap.
+                if (!IsClosedDeletable(finalTarget))
+                {
+                    RecordCoverDisposition(
+                        repositoryRoot,
+                        currentRaw,
+                        document,
+                        target,
+                        finalTarget,
+                        options.Gids,
+                        recordedAtUtc);
+                }
+
                 RequireClosedDeletable(finalTarget);
             }
             else
@@ -437,7 +451,7 @@ internal static partial class CoverAtomCommand
 
     private static void RequireClosedDeletable(DigestionEntryEvaluation covered)
     {
-        if (covered.Deletable && covered.DerivedStatus.Truth == DigestionTruthState.Closed)
+        if (IsClosedDeletable(covered))
         {
             return;
         }
@@ -448,6 +462,39 @@ internal static partial class CoverAtomCommand
             + $"{DigestionStatusNames.Truth(covered.DerivedStatus.Truth)} "
             + $"deletable={covered.Deletable.ToString().ToLowerInvariant()} "
             + $"gaps={string.Join(",", covered.Gaps.Select(static gap => gap.Code))}");
+    }
+
+    private static bool IsClosedDeletable(DigestionEntryEvaluation covered) =>
+        covered.Deletable && covered.DerivedStatus.Truth == DigestionTruthState.Closed;
+
+    private static void RecordCoverDisposition(
+        string repositoryRoot,
+        RawRepositorySnapshot currentRaw,
+        BackfillInventoryDocument document,
+        DigestionLedgerEntry target,
+        DigestionEntryEvaluation outcome,
+        ImmutableArray<string> gids,
+        DateTimeOffset recordedAtUtc)
+    {
+        var disposition = new DigestionCoverDisposition(
+            outcome.DerivedStatus,
+            gids.Order(StringComparer.Ordinal).ToImmutableArray(),
+            outcome.Gaps
+                .Select(static gap => new DigestionDispositionGap(gap.Code, gap.Detail))
+                .OrderBy(static gap => gap.Code, StringComparer.Ordinal)
+                .ThenBy(static gap => gap.Detail, StringComparer.Ordinal)
+                .ToImmutableArray(),
+            recordedAtUtc.ToUniversalTime());
+        var dispositionDocument = ReplaceEntry(
+            document,
+            target.AtomId,
+            target with
+            {
+                Receipts = target.Receipts with { CoverDisposition = disposition },
+            });
+        var dispositionRaw = IngestCommand.ReplaceLedger(currentRaw, document, dispositionDocument);
+        var ledgerUpdates = IngestCommand.LedgerUpdates(currentRaw, dispositionRaw);
+        IngestCommand.ApplyLedgerUpdatesAtomically(repositoryRoot, currentRaw, ledgerUpdates);
     }
 
     private sealed record CoverArguments(

@@ -71,6 +71,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     private readonly ILeanReportSource leanReportSource;
     private readonly IScribeEmissionVerifier? scribeEmissionVerifier;
     private readonly IFrozenLedgerAdmissionServices frozenLedgerAdmission;
+    private readonly TimeProvider timeProvider;
 
     internal ProductionCliEnvironment(string repositoryRoot)
         : this(
@@ -118,13 +119,15 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier? scribeEmissionVerifier,
-        IFrozenLedgerAdmissionServices frozenLedgerAdmission)
+        IFrozenLedgerAdmissionServices frozenLedgerAdmission,
+        TimeProvider? timeProvider = null)
     {
         this.repositoryRoot = Path.GetFullPath(repositoryRoot);
         this.repository = repository;
         this.leanReportSource = leanReportSource;
         this.scribeEmissionVerifier = scribeEmissionVerifier;
         this.frozenLedgerAdmission = frozenLedgerAdmission;
+        this.timeProvider = timeProvider ?? TimeProvider.System;
     }
 
     public AdmissionOutcome Check(IReadOnlyList<string> arguments)
@@ -354,6 +357,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 repository,
                 leanReportSource,
                 scribeEmissionVerifier,
+                timeProvider.GetUtcNow(),
                 arguments);
 
     public CommandResult AlignScribeReceipt(IReadOnlyList<string> arguments)

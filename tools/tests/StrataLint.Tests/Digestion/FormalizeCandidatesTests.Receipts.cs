@@ -7,6 +7,100 @@ namespace StrataLint.Tests;
 public sealed partial class FormalizeCandidatesTests
 {
     [Fact]
+    public void FormalizeCandidatesWithholdsRecordedCoverDisposition()
+    {
+        var entry = Entry(
+            "pzg-v170",
+            "pzg-residual-c2b458c0ec6e7494ffe7b15cc71ca9aa7afd5559254301851904c9c91c88d13f",
+            "定理",
+            "19.5",
+            coverDisposition: new DigestionCoverDisposition(
+                new DigestionStatus(
+                    DigestionMigrationState.Partial,
+                    DigestionTruthState.Closed),
+                ["D5/S0/Synthetic/Receipt.pzg_residual"],
+                [new DigestionDispositionGap("unresolved-subitem", "remaining theorem clause")],
+                new DateTimeOffset(2026, 8, 25, 4, 3, 2, TimeSpan.Zero)));
+
+        var result = Run([entry], formalizationReceipt: ValidReceipt(entry));
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        Assert.Empty(json.RootElement.GetProperty("candidates").EnumerateArray());
+        Assert.Empty(json.RootElement.GetProperty("recorded_formalizations").EnumerateArray());
+        var withheld = Assert.Single(json.RootElement.GetProperty("withheld").EnumerateArray());
+        Assert.Equal(entry.AtomId, withheld.GetProperty("atom_id").GetString());
+        Assert.Equal("cover-disposition", withheld.GetProperty("withhold_reason").GetString());
+    }
+
+    [Fact]
+    public void FormalizeCandidatesRetryDispositionRedispatchesAtom()
+    {
+        var entry = Entry(
+            "pzg-v170",
+            "pzg-residual-c2b458c0ec6e7494ffe7b15cc71ca9aa7afd5559254301851904c9c91c88d13f",
+            "定理",
+            "19.5",
+            coverDisposition: new DigestionCoverDisposition(
+                new DigestionStatus(
+                    DigestionMigrationState.Partial,
+                    DigestionTruthState.Closed),
+                ["D5/S0/Synthetic/Receipt.pzg_residual"],
+                [new DigestionDispositionGap("unresolved-subitem", "remaining theorem clause")],
+                new DateTimeOffset(2026, 8, 25, 4, 3, 2, TimeSpan.Zero)));
+
+        var result = Run(
+            [entry],
+            formalizationReceipt: ValidReceipt(entry),
+            arguments: ["--formalize-candidates", "--retry-dispositions"]);
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        var candidate = Assert.Single(json.RootElement.GetProperty("candidates").EnumerateArray());
+        Assert.Equal(entry.AtomId, candidate.GetProperty("atom_id").GetString());
+        Assert.Empty(json.RootElement.GetProperty("recorded_formalizations").EnumerateArray());
+        Assert.Empty(json.RootElement.GetProperty("withheld").EnumerateArray());
+    }
+
+    [Fact]
+    public void CoverDispositionDoesNotChangeAdmissionProjection()
+    {
+        const string atomId =
+            "pzg-residual-c2b458c0ec6e7494ffe7b15cc71ca9aa7afd5559254301851904c9c91c88d13f";
+        var plain = Entry("pzg-v170", atomId, "定理", "19.5");
+        var dispositioned = Entry(
+            "pzg-v170",
+            atomId,
+            "定理",
+            "19.5",
+            coverDisposition: new DigestionCoverDisposition(
+                new DigestionStatus(
+                    DigestionMigrationState.Partial,
+                    DigestionTruthState.Closed),
+                ["D5/S0/Synthetic/Receipt.pzg_residual"],
+                [new DigestionDispositionGap("unresolved-subitem", "remaining theorem clause")],
+                new DateTimeOffset(2026, 8, 25, 4, 3, 2, TimeSpan.Zero)));
+
+        var before = Run([plain], arguments: ["--json"]);
+        var after = Run([dispositioned], arguments: ["--json"]);
+
+        Assert.True(before.Success, before.Error);
+        Assert.True(after.Success, after.Error);
+        Assert.Equal(before.Output, after.Output);
+    }
+
+    [Fact]
+    public void RetryDispositionsRequiresFormalizeCandidates()
+    {
+        var result = Run(
+            [Entry("pzg-v170", "candidate", "定理", "19.5")],
+            arguments: ["--retry-dispositions"]);
+
+        Assert.False(result.Success);
+        Assert.Contains("USAGE", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void FormalizeCandidatesReportsRecordedFormalizationWithEmptyCoverageSeparately()
     {
         var entry = Entry(

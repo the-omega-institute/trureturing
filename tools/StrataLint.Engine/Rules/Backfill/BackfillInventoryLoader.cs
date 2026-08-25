@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using Trureturing.Truth;
 
@@ -133,6 +134,18 @@ internal sealed class BackfillInventoryDocument
                 $"entry {atomId} cannot be quarantined because coverage_gids provides a machine-form statement");
         }
 
+        if (receipts.CoverDisposition is not null && coverageGids.Length > 0)
+        {
+            throw new FormatException(
+                $"entry {atomId} cover_disposition cannot coexist with coverage_gids");
+        }
+
+        if (receipts.CoverDisposition is not null && receipts.Quarantine is not null)
+        {
+            throw new FormatException(
+                $"entry {atomId} cover_disposition cannot coexist with quarantine");
+        }
+
         var status = Mapping(entry.GetValueOrDefault("status"), $"entry {atomId} status must be a mapping");
         ExactKeys(status, ["migration", "truth"], $"entry {atomId} status");
 
@@ -164,7 +177,7 @@ internal sealed class BackfillInventoryDocument
         ExactKeys(
             receipts,
             ["coverage", "scribe", "unresolved_subitems"],
-            ["chain_atoms", "tail_authorization", "quarantine"],
+            ["chain_atoms", "tail_authorization", "quarantine", "cover_disposition"],
             $"entry {atomId} receipts");
         var coverage = ImmutableArray.CreateBuilder<DigestionCoverageReceipt>();
         foreach (var rawCoverage in List(receipts, "coverage", $"entry {atomId} coverage receipts must be a list"))
@@ -259,7 +272,93 @@ internal sealed class BackfillInventoryDocument
                     $"entry {atomId} chain_atoms")
                 : [],
             tailAuthorization,
-            quarantine);
+            quarantine,
+            ParseCoverDisposition(atomId, receipts));
+    }
+
+    private static DigestionCoverDisposition? ParseCoverDisposition(
+        string atomId,
+        IReadOnlyDictionary<string, object?> receipts)
+    {
+        if (!receipts.ContainsKey("cover_disposition"))
+        {
+            return null;
+        }
+
+        var raw = Mapping(
+            receipts.GetValueOrDefault("cover_disposition"),
+            $"entry {atomId} cover_disposition must be a mapping");
+        ExactKeys(raw, ["outcome", "recorded_at_utc", "gids", "gaps"],
+            $"entry {atomId} cover_disposition");
+
+        var outcomeText = Scalar(raw, "outcome", $"entry {atomId} cover_disposition outcome");
+        var separator = outcomeText.IndexOf('-', StringComparison.Ordinal);
+        if (separator <= 0 || separator != outcomeText.LastIndexOf("-", StringComparison.Ordinal))
+        {
+            throw new FormatException(
+                $"entry {atomId} cover_disposition outcome must be a canonical digestion status");
+        }
+
+        var outcome = new DigestionStatus(
+            ParseMigration(outcomeText[..separator]),
+            ParseTruth(outcomeText[(separator + 1)..]));
+        var gids = Strings(
+            List(raw, "gids", $"entry {atomId} cover_disposition gids must be a list"),
+            $"entry {atomId} cover_disposition gids");
+        if (gids.IsEmpty
+            || gids.Any(static gid => !Gid.TryParse(gid, out _))
+            || !gids.SequenceEqual(
+                gids.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal),
+                StringComparer.Ordinal))
+        {
+            throw new FormatException(
+                $"entry {atomId} cover_disposition gids must be sorted unique nonempty values");
+        }
+
+        var gaps = ImmutableArray.CreateBuilder<DigestionDispositionGap>();
+        foreach (var rawGap in List(
+                     raw,
+                     "gaps",
+                     $"entry {atomId} cover_disposition gaps must be a list"))
+        {
+            var gap = Mapping(rawGap, $"entry {atomId} cover_disposition gap must be a mapping");
+            ExactKeys(gap, ["code", "detail"], $"entry {atomId} cover_disposition gap");
+            gaps.Add(new DigestionDispositionGap(
+                Scalar(gap, "code", $"entry {atomId} cover_disposition gap code"),
+                Scalar(gap, "detail", $"entry {atomId} cover_disposition gap detail")));
+        }
+
+        var orderedGaps = gaps
+            .OrderBy(static gap => gap.Code, StringComparer.Ordinal)
+            .ThenBy(static gap => gap.Detail, StringComparer.Ordinal)
+            .ToImmutableArray();
+        if (!gaps.SequenceEqual(orderedGaps))
+        {
+            throw new FormatException(
+                $"entry {atomId} cover_disposition gaps must use canonical ordinal ordering");
+        }
+
+        var timestamp = Scalar(
+            raw,
+            "recorded_at_utc",
+            $"entry {atomId} cover_disposition recorded_at_utc");
+        if (!DateTimeOffset.TryParseExact(
+                timestamp,
+                "O",
+                CultureInfo.InvariantCulture,
+                DateTimeStyles.RoundtripKind,
+                out var recordedAtUtc)
+            || recordedAtUtc.Offset != TimeSpan.Zero
+            || !string.Equals(
+                timestamp,
+                recordedAtUtc.ToString("O", CultureInfo.InvariantCulture),
+                StringComparison.Ordinal))
+        {
+            throw new FormatException(
+                $"entry {atomId} cover_disposition recorded_at_utc must be canonical UTC round-trip time");
+        }
+
+        return new DigestionCoverDisposition(outcome, gids, orderedGaps, recordedAtUtc);
     }
 
     private static DigestionMigrationState ParseMigration(string value) => value switch
