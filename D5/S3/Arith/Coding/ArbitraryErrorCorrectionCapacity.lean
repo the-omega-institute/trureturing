@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Arith/Coding/ArbitraryErrorCorrectionCapacity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Correcting e arbitrary residue coordinates requires distance at least 2e+1
-     and bounds the message range by the first n-2e moduli. -/
+   digest: Arbitrary e-error correction forces distance 2e+1 and prefix capacity n-2e. -/
 
 import D5.S3.Arith.Coding.ResidueCodeDynamicRange
 import Mathlib.Tactic
