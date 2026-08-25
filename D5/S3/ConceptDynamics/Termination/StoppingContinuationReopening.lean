@@ -102,10 +102,12 @@ precision-filtered canonical target defect: a pair present after the change but
 absent before it. Each stage uses its own precision. Both sets are expressed in
 the ambient world so domain changes compare.
 
-Unresolved source gaps: DECT section 43 names operation-family and
-definition-language changes as possible triggers but supplies no map from either
-one to the readout or residual. They are therefore absent from this interface;
-this definition covers only object-domain, target, and precision triggers. -/
+Unresolved source gaps: DECT section 5 defines a language-blind residual and
+section 44 defines operation-induced observational equivalence, but section 43
+does not identify either construction with its `q_S` or `E_S(T)`, nor give a
+transition map to a new stage residual. Operation-family and definition-language
+changes are therefore absent from this interface; this definition covers only
+object-domain, target, and precision triggers. -/
 def Reopens
     {World Coordinate Target : Type*}
     [MetricSpace Target]

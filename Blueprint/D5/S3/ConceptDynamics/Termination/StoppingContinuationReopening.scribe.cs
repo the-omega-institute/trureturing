@@ -32,10 +32,12 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
                             + "and a canonical defect pair above the next precision that was absent "
                             + "above the current precision.")),
                     Paragraph(Text(
-                        "Unresolved source gaps: section 43 also names operation-family and "
-                            + "definition-language changes, but supplies no mechanism by which either "
-                            + "one alters the readout or residual. This formalization covers only the "
-                            + "object-domain, target, and precision triggers.")),
+                        "Unresolved source gaps: section 5 defines a language-blind residual and "
+                            + "section 44 defines operation-induced observational equivalence, but "
+                            + "section 43 does not identify either construction with its stage readout "
+                            + "or residual, nor give a transition map to a new stage residual. This "
+                            + "formalization covers only the object-domain, target, and precision "
+                            + "triggers.")),
                     Paragraph(Text(
                         "No finiteness, decidable equality, measurability, nonempty-domain premise, "
                             + "monotonicity, or extra order law is added. The target metric is exactly "
