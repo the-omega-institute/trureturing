@@ -1,16 +1,16 @@
-/- GID: D5/S3/ConceptDynamics/DefinitionEscape/ComplementFiberLift
+/- GID: D5/S3/ConceptDynamics/Negation/ComplementFiberLift
    generality: G
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: A section lifts base complement, and the lift square is its fiber retraction. -/
 
-import D5.S3.ConceptDynamics.DefinitionEscape.InvolutiveNegation
+import D5.S3.ConceptDynamics.Negation.InvolutiveNegation
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.DefinitionEscape.ComplementFiberLift
+namespace D5.S3.ConceptDynamics.Negation.ComplementFiberLift
 
 universe u v
 
@@ -38,18 +38,18 @@ theorem isComplementLift_iff_mem_fiber
 constructs a canonical point-valued complement lift. -/
 def sectionLift
     {X : Type u} {Q : Type v}
-    (q : X → Q) (baseNegation : Q → Q) (section : Q → X) :
+    (q : X → Q) (baseNegation : Q → Q) (sect : Q → X) :
     X → X :=
-  fun x => section (baseNegation (q x))
+  fun x => sect (baseNegation (q x))
 
 /-- A right-inverse section makes the section lift project to base
 complementation. -/
 theorem sectionLift_isComplementLift
     {X : Type u} {Q : Type v}
-    (q : X → Q) (baseNegation : Q → Q) (section : Q → X)
-    (sectionRightInverse : Function.RightInverse section q) :
+    (q : X → Q) (baseNegation : Q → Q) (sect : Q → X)
+    (sectionRightInverse : Function.RightInverse sect q) :
     IsComplementLift q baseNegation
-      (sectionLift q baseNegation section) := by
+      (sectionLift q baseNegation sect) := by
   intro x
   exact sectionRightInverse (baseNegation (q x))
 
@@ -57,51 +57,51 @@ theorem sectionLift_isComplementLift
 the retraction onto the chosen section image. -/
 theorem sectionLift_square
     {X : Type u} {Q : Type v}
-    (q : X → Q) (baseNegation : Q → Q) (section : Q → X)
-    (sectionRightInverse : Function.RightInverse section q)
+    (q : X → Q) (baseNegation : Q → Q) (sect : Q → X)
+    (sectionRightInverse : Function.RightInverse sect q)
     (baseInvolutive : Function.Involutive baseNegation) :
-    sectionLift q baseNegation section ∘
-        sectionLift q baseNegation section =
-      section ∘ q := by
+    sectionLift q baseNegation sect ∘
+        sectionLift q baseNegation sect =
+      sect ∘ q := by
   funext x
   change
-    section
+    sect
         (baseNegation
-          (q (section (baseNegation (q x))))) =
-      section (q x)
+          (q (sect (baseNegation (q x))))) =
+      sect (q x)
   rw [sectionRightInverse (baseNegation (q x)),
     baseInvolutive (q x)]
 
 /-- The section lift is genuinely involutive on the chosen section image. -/
 theorem sectionLift_involutive_on_section
     {X : Type u} {Q : Type v}
-    (q : X → Q) (baseNegation : Q → Q) (section : Q → X)
-    (sectionRightInverse : Function.RightInverse section q)
+    (q : X → Q) (baseNegation : Q → Q) (sect : Q → X)
+    (sectionRightInverse : Function.RightInverse sect q)
     (baseInvolutive : Function.Involutive baseNegation)
     (value : Q) :
-    sectionLift q baseNegation section
-        (sectionLift q baseNegation section (section value)) =
-      section value := by
+    sectionLift q baseNegation sect
+        (sectionLift q baseNegation sect (sect value)) =
+      sect value := by
   have squareAtSection :=
     congrFun
-      (sectionLift_square q baseNegation section
+      (sectionLift_square q baseNegation sect
         sectionRightInverse baseInvolutive)
-      (section value)
+      (sect value)
   simpa [Function.comp_apply, sectionRightInverse value] using squareAtSection
 
 /-- If the section is also a left inverse, no hidden fiber freedom remains and
 the lifted complement is a total-space involution. -/
 theorem sectionLift_involutive_of_leftInverse
     {X : Type u} {Q : Type v}
-    (q : X → Q) (baseNegation : Q → Q) (section : Q → X)
-    (sectionRightInverse : Function.RightInverse section q)
-    (sectionLeftInverse : Function.LeftInverse section q)
+    (q : X → Q) (baseNegation : Q → Q) (sect : Q → X)
+    (sectionRightInverse : Function.RightInverse sect q)
+    (sectionLeftInverse : Function.LeftInverse sect q)
     (baseInvolutive : Function.Involutive baseNegation) :
-    Function.Involutive (sectionLift q baseNegation section) := by
+    Function.Involutive (sectionLift q baseNegation sect) := by
   intro x
   have squareAtX :=
     congrFun
-      (sectionLift_square q baseNegation section
+      (sectionLift_square q baseNegation sect
         sectionRightInverse baseInvolutive)
       x
   simpa [Function.comp_apply, sectionLeftInverse x] using squareAtX
@@ -111,22 +111,22 @@ lift is a total-space involution exactly when the section is also a left
 inverse. -/
 theorem sectionLift_involutive_iff_leftInverse
     {X : Type u} {Q : Type v}
-    (q : X → Q) (baseNegation : Q → Q) (section : Q → X)
-    (sectionRightInverse : Function.RightInverse section q)
+    (q : X → Q) (baseNegation : Q → Q) (sect : Q → X)
+    (sectionRightInverse : Function.RightInverse sect q)
     (baseInvolutive : Function.Involutive baseNegation) :
-    Function.Involutive (sectionLift q baseNegation section) ↔
-      Function.LeftInverse section q := by
+    Function.Involutive (sectionLift q baseNegation sect) ↔
+      Function.LeftInverse sect q := by
   constructor
   · intro liftInvolutive x
     have squareAtX :=
       congrFun
-        (sectionLift_square q baseNegation section
+        (sectionLift_square q baseNegation sect
           sectionRightInverse baseInvolutive)
         x
     exact squareAtX.symm.trans (liftInvolutive x)
   · intro sectionLeftInverse
     exact sectionLift_involutive_of_leftInverse
-      q baseNegation section sectionRightInverse sectionLeftInverse
+      q baseNegation sect sectionRightInverse sectionLeftInverse
         baseInvolutive
 
 #print axioms sectionLift_isComplementLift
@@ -134,4 +134,4 @@ theorem sectionLift_involutive_iff_leftInverse
 #print axioms sectionLift_involutive_of_leftInverse
 #print axioms sectionLift_involutive_iff_leftInverse
 
-end D5.S3.ConceptDynamics.DefinitionEscape.ComplementFiberLift
+end D5.S3.ConceptDynamics.Negation.ComplementFiberLift

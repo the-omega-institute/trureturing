@@ -1,16 +1,16 @@
-/- GID: D5/S3/ConceptDynamics/DefinitionEscape/InvolutiveNegation
+/- GID: D5/S3/ConceptDynamics/Negation/InvolutiveNegation
    generality: G
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Point negation selects from complements; involution adds reversible coherence. -/
 
-import D5.S3.ConceptDynamics.DefinitionEscape.RelativeComplement
+import D5.S3.ConceptDynamics.Negation.RelativeComplement
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.DefinitionEscape.InvolutiveNegation
+namespace D5.S3.ConceptDynamics.Negation.InvolutiveNegation
 
 universe u
 
@@ -105,8 +105,8 @@ theorem no_singletonComplementing_of_three_distinct
   have bEquals : b = neg a :=
     bCases.resolve_left aNeB.symm
   have cEquals : c = neg a :=
-    cCases.resolve_left aNeC.sym
-  exact bNEC (bEquals.trans cEquals.sym)
+    cCases.resolve_left aNeC.symm
+  exact bNeC (bEquals.trans cEquals.symm)
 
 /-- Boolean negation is the canonical nontrivial instance in which singleton
 complement is again singleton-valued. -/
@@ -145,7 +145,7 @@ powerset. -/
 theorem imageSet_complement
     {X : Type u} (negation : InvolutiveNegation X)
     (subset : Set X) :
-    imageSet negation subset⶜ = (imageSet negation subset)¶� := by
+    imageSet negation subsetᶜ = (imageSet negation subset)ᶜ := by
   ext x
   simp only [mem_imageSet_iff, Set.mem_compl_iff]
 
@@ -155,4 +155,4 @@ theorem imageSet_complement
 #print axioms imageSet_involutive
 #print axioms imageSet_complement
 
-end D5.S3.ConceptDynamics.DefinitionEscape.InvolutiveNegation
+end D5.S3.ConceptDynamics.Negation.InvolutiveNegation

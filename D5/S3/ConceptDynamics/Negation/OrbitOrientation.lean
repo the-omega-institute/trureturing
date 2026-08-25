@@ -1,20 +1,20 @@
-/- GID: D5/S3/ConceptDynamics/DefinitionEscape/OrbitOrientation
+/- GID: D5/S3/ConceptDynamics/Negation/OrbitOrientation
    generality: G
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Readouts hide or expose free involutions; Boolean orientations are transversals. -/
 
-import D5.S3.ConceptDynamics.DefinitionEscape.InvolutiveNegation
+import D5.S3.ConceptDynamics.Negation.InvolutiveNegation
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.DefinitionEscape.OrbitOrientation
+namespace D5.S3.ConceptDynamics.Negation.OrbitOrientation
 
 universe u v
 
-open D5.S3.ConceptDynamics.DefinitionEscape.InvolutiveNegation
+open D5.S3.ConceptDynamics.Negation.InvolutiveNegation
 
 /-- A readout hides an involution when it is constant on every involutive
 orbit. -/
@@ -97,8 +97,9 @@ theorem orbitTransversal_iff_disjoint_union
         rw [covers]
         trivial
       rcases xInCover with xInSubset | xInImage
-      · exact False.elim (xNotInSubset xInSubset)
-      · exact (mem_imageSet_iff negation subset x).1 xInImage
+      · exact xInSubset
+      · exact False.elim
+          (xNotInSubset ((mem_imageSet_iff negation subset x).1 xInImage))
 
 /-- Every negating Boolean readout has a transversal true support. -/
 theorem negatingReadout_trueSupport_transversal
@@ -125,12 +126,13 @@ theorem negatingReadout_iff_trueSupport_transversal
     change readout x = true ↔ readout (negation.neg x) ≠ true at atX
     cases readoutAtX : readout x <;>
       cases readoutAtNegated : readout (negation.neg x) <;>
-      simp [readoutAtX, readoutAtNegated] at atX ⊺
+      simp [readoutAtX, readoutAtNegated] at atX ⊢
 
 /-- A supplied transversal constructs an explicit Boolean orientation. -/
 noncomputable def transversalReadout
-    {X : Type u} (subset : Set X) : X → Bool :=
-  fun x => if x ∈ subset then true else false
+    {X : Type u} (subset : Set X) : X → Bool := by
+  classical
+  exact fun x => if x ∈ subset then true else false
 
 /-- The Boolean readout constructed from a transversal flips on every orbit. -/
 theorem transversalReadout_negating
@@ -141,12 +143,14 @@ theorem transversalReadout_negating
   by_cases xInSubset : x ∈ subset
   · have negatedNotInSubset : negation.neg x ∉ subset :=
       (transversal x).1 xInSubset
-    simp [transversalReadout, xInSubset, negatedNotInSubset]
+    simp only [transversalReadout, if_pos xInSubset,
+      if_neg negatedNotInSubset, Bool.not_true]
   · have negatedInSubset : negation.neg x ∈ subset := by
       have atNegated := (transversal (negation.neg x)).2
       apply atNegated
       simpa only [negation.involutive x] using xInSubset
-    simp [transversalReadout, xInSubset, negatedInSubset]
+    simp only [transversalReadout, if_neg xInSubset,
+      if_pos negatedInSubset, Bool.not_false]
 
 /-- Every Boolean orbit pair is locally either hidden or negated. -/
 theorem boolean_orbit_dichotomy
@@ -215,4 +219,4 @@ theorem negatingReadout_pair_ne
 #print axioms boolean_orbit_dichotomy
 #print axioms boolean_orbit_exactly_one
 
-end D5.S3.ConceptDynamics.DefinitionEscape.OrbitOrientation
+end D5.S3.ConceptDynamics.Negation.OrbitOrientation

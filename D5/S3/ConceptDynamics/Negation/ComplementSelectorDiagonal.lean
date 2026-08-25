@@ -1,4 +1,4 @@
-/- GID: D5/S3/ConceptDynamics/DefinitionEscape/ComplementSelectorDiagonal
+/- GID: D5/S3/ConceptDynamics/Negation/ComplementSelectorDiagonal
    generality: G
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,18 +6,18 @@
    digest: Pointwise avoidance supplies the twist required for diagonal escape. -/
 
 import D5.S0.Diagonal.Lawvere.QualitativeEscape
-import D5.S3.ConceptDynamics.DefinitionEscape.InvolutiveNegation
+import D5.S3.ConceptDynamics.Negation.InvolutiveNegation
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.DefinitionEscape.ComplementSelectorDiagonal
+namespace D5.S3.ConceptDynamics.Negation.ComplementSelectorDiagonal
 
 universe u v
 
 open D5.S0.Diagonal.EscapeCount
 open D5.S0.Diagonal.Lawvere.QualitativeEscape
-open D5.S3.ConceptDynamics.DefinitionEscape.InvolutiveNegation
+open D5.S3.ConceptDynamics.Negation.InvolutiveNegation
 
 /-- An avoidance selector turns self-evaluation into a Lawvere diagonal escape. -/
 theorem avoidanceSelector_diagonal_escape
@@ -60,4 +60,4 @@ theorem avoidanceSelector_selects_diagonal_complement
 #print axioms involutiveNegation_diagonal_escape
 #print axioms boolean_complement_diagonal_escape
 
-end D5.S3.ConceptDynamics.DefinitionEscape.ComplementSelectorDiagonal
+end D5.S3.ConceptDynamics.Negation.ComplementSelectorDiagonal

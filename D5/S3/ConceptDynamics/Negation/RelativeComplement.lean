@@ -1,4 +1,4 @@
-/- GID: D5/S3/ConceptDynamics/DefinitionEscape/RelativeComplement
+/- GID: D5/S3/ConceptDynamics/Negation/RelativeComplement
    generality: G
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -11,14 +11,14 @@ import Mathlib.Data.Bool.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.DefinitionEscape.RelativeComplement
+namespace D5.S3.ConceptDynamics.Negation.RelativeComplement
 
 universe u v
 
-/-- Complement of `subset` relative to a chosen ambient region `universe`. -/
+/-- Complement of `subset` relative to a chosen ambient region `ambient`. -/
 def relativeComplement {X : Type u}
-    (universe subset : Set X) : Set X :=
-  universe \ subset
+    (ambient subset : Set X) : Set X :=
+  ambient \ subset
 
 /-- Enlarging the universe splits relative negation into the old negative region
 and the newly admitted region. -/
@@ -105,4 +105,4 @@ theorem image_complement_counterexample :
 #print axioms falseFiber_eq_compl_trueFiber
 #print axioms image_complement_counterexample
 
-end D5.S3.ConceptDynamics.DefinitionEscape.RelativeComplement
+end D5.S3.ConceptDynamics.Negation.RelativeComplement

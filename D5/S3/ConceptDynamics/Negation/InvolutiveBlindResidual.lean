@@ -1,17 +1,17 @@
-/- GID: D5/S3/ConceptDynamics/DefinitionEscape/InvolutiveBlindResidual
+/- GID: D5/S3/ConceptDynamics/Negation/InvolutiveBlindResidual
    generality: G
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Hidden involutions generate blind residuals and primitive semantic escape. -/
 
-import D5.S3.ConceptDynamics.DefinitionEscape.OrbitOrientation
+import D5.S3.ConceptDynamics.Negation.OrbitOrientation
 import D5.S3.ConceptDynamics.DefinitionEscape.DefinitionKernelGalois
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.DefinitionEscape.InvolutiveBlindResidual
+namespace D5.S3.ConceptDynamics.Negation.InvolutiveBlindResidual
 
 universe u v w z t
 
@@ -19,8 +19,8 @@ open D5.S3.ConceptDynamics.ConceptFiberDecomposition
 open D5.S3.ConceptDynamics.Faithfulness.JointFaithfulnessLeibnizCriterion
 open D5.S3.ConceptDynamics.DefinitionEscape.BlindKernelObstruction
 open D5.S3.ConceptDynamics.DefinitionEscape.DefinitionKernelGalois
-open D5.S3.ConceptDynamics.DefinitionEscape.InvolutiveNegation
-open D5.S3.ConceptDynamics.DefinitionEscape.OrbitOrientation
+open D5.S3.ConceptDynamics.Negation.InvolutiveNegation
+open D5.S3.ConceptDynamics.Negation.OrbitOrientation
 
 /-- Every member of a definition family hides the supplied involution. -/
 def FamilyHidden
@@ -119,7 +119,7 @@ theorem negating_candidate_productiveSeparation
 /-- Productive separation along a hidden involution necessarily escapes the
 complete semantic closure of the old definition family. -/
 theorem negating_candidate_primitiveEscape
-    {X : Type u} {Current : Type v} {InputíUtput : Type w}
+    {X : Type u} {Current : Type v} {InputOutput : Type w}
     [Nonempty X]
     (negation : InvolutiveNegation X)
     (Gamma : Set (Concept X InputOutput))
@@ -193,4 +193,4 @@ theorem structured_negation_escape_chain
 #print axioms negatingReadout_not_mem_semanticClosure
 #print axioms structured_negation_escape_chain
 
-end D5.S3.ConceptDynamics.DefinitionEscape.InvolutiveBlindResidual
+end D5.S3.ConceptDynamics.Negation.InvolutiveBlindResidual
