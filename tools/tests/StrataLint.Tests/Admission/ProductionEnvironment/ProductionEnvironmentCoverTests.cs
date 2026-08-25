@@ -385,16 +385,15 @@ public sealed partial class ProductionEnvironmentTests
     [InlineData("coverage-receipt-mismatch")]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
-    public void CoverAtomRejectsReceiptIntegrityMismatchOnSiblingBeforeWritingLedger(string mismatchCode)
+    public void CoverAtomIgnoresUnrelatedReceiptIntegrityMismatchOutsideAtomDelta(string mismatchCode)
     {
         const string siblingModuleGid = "D5/S0/Carrier/CoverSibling";
         const string siblingGid = siblingModuleGid + ".sibling";
         var materialized = CoverWorld.Materialize(new CoverSpec
         {
             SecondaryTarget = (siblingModuleGid, "sibling"),
-            HostedSibling = new CoverHostedSiblingSpec(
+            UnrelatedSibling = new CoverUnrelatedSiblingSpec(
                 "receipt-gap-sibling",
-                siblingGid,
                 [siblingGid],
                 [siblingGid],
                 ["historical-uncovered-clause"]),

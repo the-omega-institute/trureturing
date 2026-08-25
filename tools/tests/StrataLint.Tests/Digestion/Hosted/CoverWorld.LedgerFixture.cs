@@ -5,6 +5,31 @@ namespace StrataLint.Tests;
 
 internal static partial class CoverWorld
 {
+    private static void MaterializeOtherAtomFormalizationReceipt(
+        CoverSpec spec,
+        DigestionAtom atom,
+        IDictionary<string, string> files)
+    {
+        if (spec.OtherAtomBinding is not { } other)
+        {
+            return;
+        }
+
+        var separator = other.Gid.LastIndexOf('.');
+        var receipt = new DigestionFormalizationReceipt(
+            other.AtomId,
+            other.Gid,
+            new DigestionFormalizationSignature(
+                other.Gid[(separator + 1)..],
+                spec.ReportKind,
+                spec.ReportType),
+            atom.Fingerprints.RawSha256,
+            atom.Fingerprints.RawSha256);
+        files[DigestionFormalizationReceipt.PathForAtom(other.AtomId)] =
+            System.Text.Encoding.UTF8.GetString(
+                DigestionFormalizationReceipt.Write(receipt).AsSpan());
+    }
+
     private static BackfillInventoryDocument BuildLedger(
         CoverSpec spec,
         DigestionAtom atom,
@@ -13,9 +38,9 @@ internal static partial class CoverWorld
         string? tailAuthPath,
         string? tailAuthSha,
         string? targetSha256 = null,
-        DigestionAtom? hostedAtom = null,
-        string? hostedSourcePath = null,
-        bool useHostedBaselineCoverage = false)
+        DigestionAtom? unrelatedAtom = null,
+        string? unrelatedSourcePath = null,
+        bool useUnrelatedBaselineCoverage = false)
     {
         var sources = ImmutableArray.CreateBuilder<DigestionLedgerSource>();
         var entries = ImmutableArray.CreateBuilder<DigestionLedgerEntry>();
@@ -47,9 +72,9 @@ internal static partial class CoverWorld
                 "closed",
                 null,
                 null,
-                null,
-                null,
-                null,
+                targetSha256,
+                spec.InitialDefinitionSha256,
+                spec.InitialEmissionSha256,
                 []));
         }
 
@@ -61,27 +86,27 @@ internal static partial class CoverWorld
             GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])),
             entries.ToImmutable()));
 
-        if (spec.HostedSibling is { } hostedSibling
-            && hostedAtom is not null
-            && hostedSourcePath is not null)
+        if (spec.UnrelatedSibling is { } sibling
+            && unrelatedAtom is not null
+            && unrelatedSourcePath is not null)
         {
-            var hostedCoverage = useHostedBaselineCoverage
-                ? hostedSibling.BaselineCoverage
-                : hostedSibling.CurrentCoverage;
+            var siblingCoverage = useUnrelatedBaselineCoverage
+                ? sibling.BaselineCoverage
+                : sibling.CurrentCoverage;
             sources.Add(new DigestionLedgerSource(
-                "fixture-hosted-source",
-                hostedSourcePath,
+                "fixture-unrelated-source",
+                unrelatedSourcePath,
                 SyntheticNumberedAtomizer.Id,
                 [],
                 GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])),
                 [
                     Entry(
-                        "fixture-hosted-source",
-                        hostedSourcePath,
-                        hostedSibling.AtomId,
-                        hostedAtom.AstPath,
-                        hostedAtom.Fingerprints,
-                        hostedCoverage,
+                        "fixture-unrelated-source",
+                        unrelatedSourcePath,
+                        sibling.AtomId,
+                        unrelatedAtom.AstPath,
+                        unrelatedAtom.Fingerprints,
+                        siblingCoverage,
                         "partial",
                         "closed",
                         null,
@@ -89,7 +114,7 @@ internal static partial class CoverWorld
                         null,
                         null,
                         null,
-                        hostedSibling.UnresolvedSubitems),
+                        sibling.UnresolvedSubitems),
                 ]));
         }
 
