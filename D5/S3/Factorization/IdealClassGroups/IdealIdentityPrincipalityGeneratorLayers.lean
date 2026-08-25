@@ -147,15 +147,6 @@ theorem no_zero_divisors_is_necessary :
 
 #print axioms no_zero_divisors_is_necessary
 
-/-- The singleton ring has no nonzero candidate for the recovery theorem. -/
-theorem subsingleton_ring_has_no_nonzero_generator
-    {R : Type u} [Zero R] [Subsingleton R] :
-    ¬ ∃ base : R, base ≠ 0 := by
-  rintro ⟨base, base_ne_zero⟩
-  exact base_ne_zero (Subsingleton.elim base 0)
-
-#print axioms subsingleton_ring_has_no_nonzero_generator
-
 /-- A carrier with a zero element cannot be empty. -/
 theorem zero_carrier_is_not_empty {R : Type u} [Zero R] : Nonempty R := by
   exact ⟨0⟩

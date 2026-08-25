@@ -129,17 +129,6 @@ internal sealed class IdealIdentityPrincipalityGeneratorLayersDocument
                         + "domain condition."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("a-subsingleton-carrier-has-no-nonzero-base"),
-                DeclarationHandle.Create(
-                    DeclarationPrefix + "subsingleton_ring_has_no_nonzero_generator"),
-                H("A subsingleton carrier has no nonzero recovery base"),
-                StatementSource.FromAuthor(SubsingletonCarrierFormula()),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "ZMod one audits the one-element carrier: every possible base is zero, so "
-                        + "the positive unique-recovery theorem has no admissible base."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("a-zero-carrier-is-nonempty"),
                 DeclarationHandle.Create(
                     DeclarationPrefix + "zero_carrier_is_not_empty"),
@@ -150,15 +139,6 @@ internal sealed class IdealIdentityPrincipalityGeneratorLayersDocument
                     "The empty-type audit is definitional: the structure supplies its zero "
                         + "element. There is no natural-number parameter to audit at zero."))),
                 DescribeRole.Theorem))));
-
-    private static Formula SubsingletonCarrierFormula()
-    {
-        Formula carrier = F.Id("R");
-        Formula basis = F.Id("a");
-        return Disp(Seq(
-            Neg, Sp, Exists, Sp, basis, Colon, Sp, carrier, Comma,
-            Sp, basis, Sp, Neq, Sp, D(0), Dot));
-    }
 
     private static Formula Span(Formula value) => Call("IdealSpan", value);
 
