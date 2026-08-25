@@ -147,8 +147,20 @@ public sealed class StatementProjectionPilotTests
     [InlineData("statement-v2(uparams=[],type=es(l0))")]
     [InlineData("statement-v1(uparams=[],type=unknown())")]
     [InlineData("statement-v1(uparams=[],type=es(l0))junk")]
+    [InlineData("statement-v1(uparams=[],type=ec(ns(n0,04:Real),[]))")]
+    [InlineData("statement-v1(uparams=[],type=ec(ns(n0,1:\u00e9),[]))")]
     public void DecoderFailsClosedOnMalformedOrUnknownInput(string encoded) =>
         Assert.Throws<FormatException>(() => StatementV1Decoder.Decode(encoded));
+
+    [Fact]
+    public void DecoderCountsNameAtomLengthsInUtf8Bytes()
+    {
+        const string encoded = "statement-v1(uparams=[],type=ec(ns(n0,2:\u00e9),[]))";
+
+        var constant = Assert.IsType<LeanExpr.Constant>(StatementV1Decoder.Decode(encoded).Type);
+
+        Assert.Equal("\u00e9", constant.Name);
+    }
 
     [Fact]
     public void ProjectorMapsBindingAndPropositionCore()

@@ -3,3 +3,4 @@ path = "docs/develop/theory/FORMAL_OBSERVER_COMPLETION_REFLECTION.md"
 atomizer = "generic-v1"
 genre_registry_check = "no-registry"
 unregistered_genres = []
+acknowledged_stale = ["generic-residual-246badba1bbae92ddf776288d2dfe3bcf63b910f66b2507456f776ba2f15829f", "generic-residual-2efc8cf4a71f978bebc9bf763f506e4061c65902a1814a1bb5560022a43a2ae8", "generic-residual-476b0f8b2ad58cab66431ebe574534fc2346a03f1b4da4c2f73f85c8e50a996b"]
