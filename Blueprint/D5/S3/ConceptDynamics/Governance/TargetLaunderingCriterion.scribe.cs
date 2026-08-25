@@ -10,14 +10,14 @@ internal sealed class TargetLaunderingCriterionDocument : IScribeDocumentDefinit
         "D5/S3/ConceptDynamics/Governance/TargetLaunderingCriterion.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Target laundering combines freeze visibility, protected-coordinate change, "
+        "Target laundering combines post-arrival protected-coordinate change, "
             + "same-round regrading, and attribution to the original commitment.",
         H("Target Laundering Criterion"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("target-laundering-criterion"),
                 DeclarationHandle.Create(DeclarationPrefix + "target_laundering_criterion"),
-                H("The canonical definition regroups into three clauses"),
+                H("The boxed temporal definition regroups into three clauses"),
                 StatementSource.FromAuthor(CriterionFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
@@ -30,13 +30,20 @@ internal sealed class TargetLaunderingCriterionDocument : IScribeDocumentDefinit
                             + "certifies the reported verdict as the evaluator's value on the "
                             + "revised commitment and old evidence.")),
                     Paragraph(Text(
-                        "A separate temporal predicate compares a Time-valued arrival with the "
-                            + "revised freeze time. The source supplies no bridge equating that "
-                            + "comparison with freeze-event visibility."))),
+                        "DECT 50.4 defines this clause by a strict comparison between the "
+                            + "Time-valued first arrival and the revised freeze time. The later "
+                            + "Lean sketch instead uses visibility at the freeze EventId.")),
+                    Paragraph(Text(
+                        "Those source formulations are not equivalent under the stated data: "
+                            + "a record first seen exactly at the freeze event is visible there "
+                            + "but does not arrive strictly before it. The Lean module retains "
+                            + "the sketch separately and proves equivalence only under an exact "
+                            + "bridge between the two tests."))),
                 DescribeRole.Theorem))));
 
     private static Formula CriterionFormula()
     {
+        Formula arrival = F.Id("arrival");
         Formula evaluate = F.Id("evaluate");
         Formula oldK = F.Id("oldK");
         Formula newK = F.Id("newK");
@@ -45,15 +52,30 @@ internal sealed class TargetLaunderingCriterionDocument : IScribeDocumentDefinit
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, evaluate, Comma, Sp, oldK, Comma, Sp, newK, Comma, Sp,
-            evidence, Comma, Sp, report, Comma, RowBreak, Grp(),
-            Call("TargetLaundering", evaluate, oldK, newK, evidence, report),
-            Sp, Iff, RowBreak, Grp(),
-            Call("FreezeVisibleProtectedChange", oldK, newK, evidence),
+            Forall, Sp, arrival, Comma, Sp, evaluate, Comma, Sp, oldK, Comma, Sp,
+            newK, Comma, Sp, evidence, Comma, Sp, report, Comma, RowBreak, Grp(),
+            Call("PostArrivalProtectedChange", arrival, oldK, newK, evidence),
             Sp, Land, RowBreak, Grp(),
             Call("RegradesOldRound", evaluate, oldK, newK, evidence, report),
             Sp, Land, RowBreak, Grp(),
             Call("AttributesToOriginalCommitment", evaluate, oldK, newK, evidence, report),
+            Sp, Iff, RowBreak, Grp(),
+            Call("Arrival", arrival, evidence), Sp, Lt, Sp, Call("FreezeTime", newK),
+            Sp, Land, RowBreak, Grp(),
+            Call("Protected", newK), Sp, Neq, Sp, Call("Protected", oldK),
+            Sp, Land, RowBreak, Grp(),
+            Call("Original", report), Sp, Eq, Sp, oldK,
+            Sp, Land, RowBreak, Grp(),
+            Call("Revised", report), Sp, Eq, Sp, newK,
+            Sp, Land, RowBreak, Grp(),
+            Call("Evidence", report), Sp, Eq, Sp, evidence,
+            Sp, Land, RowBreak, Grp(),
+            Call("OccurredAt", report), Sp, Eq, Sp, Call("FreezeTime", newK),
+            Sp, Land, RowBreak, Grp(),
+            Call("RegradedVerdict", report), Sp, Eq, Sp,
+            Call("evaluate", newK, evidence),
+            Sp, Land, RowBreak, Grp(),
+            Call("AttributedTo", report), Sp, Eq, Sp, oldK,
             Dot,
             End, Grp(F.Id("gathered"))));
     }

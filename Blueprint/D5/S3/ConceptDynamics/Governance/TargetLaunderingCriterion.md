@@ -2,11 +2,11 @@
 
 ## Abstract
 
-Target laundering combines freeze visibility, protected-coordinate change, same-round regrading, and attribution to the original commitment.
+Target laundering combines post-arrival protected-coordinate change, same-round regrading, and attribution to the original commitment.
 
-**Theorem 1.1 (The canonical definition regroups into three clauses).**
+**Theorem 1.1 (The boxed temporal definition regroups into three clauses).**
 
-$$\begin{gathered}\forall evaluate, oldK, newK, Z, report,\\{}\operatorname{TargetLaundering}\left(evaluate, oldK, newK, Z, report\right) \iff\\{}\operatorname{FreezeVisibleProtectedChange}\left(oldK, newK, Z\right) \land\\{}\operatorname{RegradesOldRound}\left(evaluate, oldK, newK, Z, report\right) \land\\{}\operatorname{AttributesToOriginalCommitment}\left(evaluate, oldK, newK, Z, report\right).\end{gathered}$$
+$$\begin{gathered}\forall arrival, evaluate, oldK, newK, Z, report,\\{}\operatorname{PostArrivalProtectedChange}\left(arrival, oldK, newK, Z\right) \land\\{}\operatorname{RegradesOldRound}\left(evaluate, oldK, newK, Z, report\right) \land\\{}\operatorname{AttributesToOriginalCommitment}\left(evaluate, oldK, newK, Z, report\right) \iff\\{}\operatorname{Arrival}\left(arrival, Z\right) < \operatorname{FreezeTime}\left(newK\right) \land\\{}\operatorname{Protected}\left(newK\right) \neq \operatorname{Protected}\left(oldK\right) \land\\{}\operatorname{Original}\left(report\right) = oldK \land\\{}\operatorname{Revised}\left(report\right) = newK \land\\{}\operatorname{Evidence}\left(report\right) = Z \land\\{}\operatorname{OccurredAt}\left(report\right) = \operatorname{FreezeTime}\left(newK\right) \land\\{}\operatorname{RegradedVerdict}\left(report\right) = \operatorname{evaluate}\left(newK, Z\right) \land\\{}\operatorname{AttributedTo}\left(report\right) = oldK.\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Governance/TargetLaunderingCriterion.target_laundering_criterion` (`✓ std3`). ∎
 
@@ -18,7 +18,9 @@ The old and revised commitments share one round index. Event identifiers and tim
 
 The regrade report is indexed by the actual evaluator. Its proof field certifies the reported verdict as the evaluator's value on the revised commitment and old evidence.
 
-A separate temporal predicate compares a Time-valued arrival with the revised freeze time. The source supplies no bridge equating that comparison with freeze-event visibility.
+DECT 50.4 defines this clause by a strict comparison between the Time-valued first arrival and the revised freeze time. The later Lean sketch instead uses visibility at the freeze EventId.
+
+Those source formulations are not equivalent under the stated data: a record first seen exactly at the freeze event is visible there but does not arrive strictly before it. The Lean module retains the sketch separately and proves equivalence only under an exact bridge between the two tests.
 
 ## References
 
