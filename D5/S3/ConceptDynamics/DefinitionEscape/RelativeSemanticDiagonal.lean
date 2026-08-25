@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/DefinitionEscape/RelativeSemanticDiagonal
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DefinitionEscape/RelativeSemanticDiagonal
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Complete decoder catalogs yield diagonal targets outside the latent closure. -/
