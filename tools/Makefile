@@ -12,7 +12,7 @@ dotnet:
 	@/bin/bash $(HERE)/scripts/dotnet-build.sh
 
 test:
-	@dotnet test $(HERE)/StrataLint.sln --configuration Release --verbosity normal
+	@set -o pipefail; dotnet test $(HERE)/StrataLint.sln --configuration Release --verbosity normal --logger "trx;LogFileName=timing.trx"; rc=$$?; /usr/bin/python3 $(HERE)/scripts/timing-probe.py || true; exit $$rc
 
 selftest:
 	@/bin/bash $(HERE)/scripts/stratalint-selftest.sh
