@@ -117,62 +117,45 @@ internal static class LeanCacheBudgetPolicy
     internal const int SupersededPolicyOverrideSeconds = 3600;
 
     /// <summary>
-    /// 内容层每模块的构建秒数 —— 派生式的 `r_i`(吞吐的倒数)。
+    /// `LeanCacheProvisioner` 各命令的**挂死检测上限**,单位秒。
     ///
-    /// **实测(2026-08-23,本机 28 核)**:删空内容层后 `make lean` 全量重建,
-    /// `18:56:21 → 19:52:49` = 3388 秒,`EXIT=0`,建成 1571 个模块
-    /// ⟹ 2.157 秒/模块。向上取整到 3,理由见 `WorkThroughputMarginPercent`。
+    /// **分类:域外(活性上限),非 capacity-derived,非 policy-override。**
     ///
-    /// **该样本采于非隔离条件**(两个其它会话的 codex 席位在跑,CPU idle 81.4%),
-    /// 故它是**吞吐的下界 / 每模块耗时的上界**。这个方向是**故意保留的**:
-    /// 每模块耗时高估 ⟹ 预算高估 ⟹ timeout 更宽松 ⟹ 不会误杀正常构建。
-    /// 用一个更「精确」的隔离读数只会让预算更紧,那是危险方向。
+    /// 「量腹而食」把「正确或安全上限」「协议活性」列在容量派生域**之外**,并要求
+    /// 域外分类**须点明依据**。依据是三条实测,不是声称:
     ///
-    /// **跨机对照**(`ubuntu-24.04-arm`,run 32493250519,两层全冷):`D5/S0/Tower`
-    /// 一族 81 个模块 6305 秒 ⟹ 该族 77.8 秒/模块。族内模块远贵于均值,这正是
-    /// 「最贵单子图」项;它由 `WorkThroughputMarginPercent` 的余量吸收,不单列。
-    /// 这条同时履行了上方注释里的 ANOTHER MACHINE MUST REMEASURE。
+    /// ① **它与工作量差一个数量级,不是等待预算。** 本预算所界命令的正常路径实测:
+    ///    ensure 播种 clonefile **13 秒**;prefix 归档补编 **1m18s**(重编 19/1513 模块);
+    ///    CI 热态报告生产 **12m46s**。最大 766 秒对 7200 秒 = **9.4 倍**。
+    ///    等待预算贴着工作量走;差一个数量级的是挂死检测器。
+    ///
+    /// ② **正常路径结构上不做全量重建。** `ensure` 存在的全部意义就是先播种
+    ///    (本会话收据 `clonefile`/`seeded` 出现 58 次),播种后走增量。全量重建
+    ///    (实测 3388s@本机 / >77min@ubuntu-24.04-arm)只在 ensure 失效时发生,
+    ///    而**那条路径不由本上限兜底** —— 它归 #2814 判过的 fail-closed 门,
+    ///    实施设计与开建条件记于 #3029。
+    ///
+    /// ③ **曾经试过按容量派生,结果是空转。** PR #3045 曾以
+    ///    `模块数 × 3 秒 × 1.5` 派生本值,而 clamp 上界 7200 对应 1600 模块,
+    ///    落地当天 D5 已有 1651 个 ⟹ **每一次求值都被压回 7200**,
+    ///    「派生」二字不承重(CLAUDE.md 恒值判据)。那不是派生式没调好,
+    ///    是**有界工作量项选错了** —— 拿全量重建当界,而正常路径不走它。
+    ///
+    /// **取值依据**:须显著大于正常路径(766s)以免误杀,且须有限以免无界挂死。
+    /// 7200 秒 = 2 小时,约正常路径的 9.4 倍。**这是一个选定的上限,不是派生值**,
+    /// 但它落在域外,故不需要 policy-override 的案号;若它被改动,须重新点明域外依据。
+    ///
+    /// **失效条件**:若正常路径的观测耗时进入与本值同一量级(比值 < 3),
+    /// 则它不再是挂死检测器而变回等待预算,须重新按三型收口。
     /// </summary>
-    internal const int SecondsPerContentModule = 3;
+    internal const int LivenessCeilingSeconds = 7200;
 
     /// <summary>
-    /// 超配系数,以百分比表示(150 = 1.5 倍)。**这一项在 owner 域**
-    /// (「量腹而食」:owner 只定任务画像、具名保留、**超配系数**、规则选择)。
-    ///
-    /// 取 1.5 **不是拍的**,是跨过已证的失败区的最小整半档:
-    ///   旧值 1800 对当时最贵工作 1656 ⟹ 超配 **1.087** ⟹ 注释自陈被并发「整个吃掉」⟹ 失败;
-    ///   前值 3600 对实测全量 3388   ⟹ 超配 **1.063** ⟹ **比失败值更低**;
-    ///   1.5                          ⟹ 余量 50%,是 1.087 之上的第一个整半档。
-    ///
-    /// **未获 owner 明示,记为声明假设。** owner 若另定,改此一处即可,派生式其余部分不动。
+    /// 挂死检测的下限:低于此值的旋钮取值会把正常路径误杀。取正常路径最大观测
+    /// (766s)之下的一个整值不可行,故取 300 秒作为「fail-fast 仍有意义」的地板 ——
+    /// 它只在调用方显式设置旋钮时生效,默认路径不经过它。
     /// </summary>
-    internal const int WorkThroughputMarginPercent = 150;
-
-    /// <summary>
-    /// `LeanCacheProvisioner.LeanCommandBudget` 的默认预算,**派生值**,非 policy-override。
-    ///
-    ///   budget = contentModules × SecondsPerContentModule × WorkThroughputMarginPercent / 100
-    ///
-    /// `contentModules` 是**有界工作量**,由调用方从仓库现数(`D5/**/*.lean`),
-    /// 故仓库长大时预算自己跟着长 —— 这正是 1800 → 3600 两次拍数所缺的东西:
-    /// 那两个数一经写下就开始失真,而本式不会。
-    ///
-    /// 分类:**capacity-derived**。独立变量为「内容层模块数」(仓库可读、可复算)
-    /// 与「每模块耗时」(版本化到采集条件的实测),同输入同值。
-    /// </summary>
-    internal static int ProvisionBudgetSecondsFor(int contentModules)
-    {
-        if (contentModules <= 0)
-        {
-            throw new ArgumentOutOfRangeException(
-                nameof(contentModules),
-                contentModules,
-                "content module count must be positive; a zero count means the caller "
-                    + "failed to locate D5 rather than that the work is free");
-        }
-
-        return contentModules * SecondsPerContentModule * WorkThroughputMarginPercent / 100;
-    }
+    internal const int LivenessFloorSeconds = 300;
 
     /// <summary>
     /// 归档取回所在 job 的预算上限。取自 `.github/workflows/ci.yml` 的 `lean-inspect`

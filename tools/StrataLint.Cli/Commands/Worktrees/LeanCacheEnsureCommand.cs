@@ -230,7 +230,7 @@ internal static partial class LeanCacheEnsureCommand
                 command[0],
                 command.Skip(1).ToArray(),
                 root,
-                LeanCacheProvisioner.LeanCommandBudgetFor(root));
+                LeanCacheProvisioner.LeanCommandBudget);
             return new CommandResult(
                 invoked.ExitCode == 0,
                 receipt + Encoding.UTF8.GetString(invoked.StandardOutput),

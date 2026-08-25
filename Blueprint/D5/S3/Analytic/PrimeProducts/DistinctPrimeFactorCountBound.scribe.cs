@@ -53,10 +53,18 @@ internal sealed class DistinctPrimeFactorCountBoundDocument
             omega,
             FormulaRelationOperator.LessThanOrEqual,
             Call("floorLog2", absolute));
-
-        return F.Disp(new Formula.Logic(
+        Formula nonzero = new Formula.Relation(
+            d,
+            FormulaRelationOperator.NotEqual,
+            D(0));
+        Formula conclusion = new Formula.Logic(
             lower,
             FormulaLogicOperator.And,
-            new Formula.Logic(upper, FormulaLogicOperator.And, logarithmic)));
+            new Formula.Logic(upper, FormulaLogicOperator.And, logarithmic));
+
+        return F.Disp(new Formula.Logic(
+            nonzero,
+            FormulaLogicOperator.Implies,
+            conclusion));
     }
 }
