@@ -78,14 +78,6 @@ open D5.S3.ConceptDynamics.DefinitionEscape.ResidualJoinLaw
 open D5.S0.Diagonal.Naturality.NaturalityDefectComposition
 open MeasureTheory
 
-/- TASK D5-T0049
-   Source clause 6 remains open. CAS section 4.4 defines
-   `F(S) = M(∅) - M(S)` and also identifies `F` with captured mass. Those two
-   assertions are incompatible with unrestricted infinite values: in the CAS
-   relation model, both the remaining relation and captured cut can be infinite,
-   giving `⊤ - ⊤ = 0` while the captured count is `⊤`. A positive theorem must
-   either impose finite remaining mass or revise the source definition. -/
-
 /-- The dependent-family extension used by clauses 4 and 5.  The frozen
 `languageExtension` is its constant-codomain specialization. -/
 def dependentLanguageExtension {X C I : Type*} {D : I → Type*}
