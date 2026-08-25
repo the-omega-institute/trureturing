@@ -6,7 +6,7 @@ Independent zeta observations add their Fisher information exactly.
 
 **Theorem 1.1 (Independent zeta samples have additive information).**
 
-$$1 < s \Rightarrow \operatorname{VarianceUnder}\left(\operatorname{ProductZetaLaw}\left(s, m\right), \operatorname{SumOfLogCoordinates}\left(m\right)\right) = \operatorname{Product}\left(m, \operatorname{VarianceUnder}\left(\operatorname{ZetaLaw}\left(s\right), \operatorname{LogObservation}\left(\right)\right)\right)$$
+$$\forall s: \mathbb{R}, m: \mathbb{N},\ 1 < s \Rightarrow \operatorname{VarianceUnder}\left(\operatorname{ProductZetaLaw}\left(s, m\right), \operatorname{SumOfLogCoordinates}\left(m\right)\right) = \operatorname{Product}\left(m, \operatorname{VarianceUnder}\left(\operatorname{ZetaLaw}\left(s\right), \operatorname{LogObservation}\left(\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/ZetaObservation/ZetaSampleInformationAdditivity.zeta_sample_information_additive` (`✓ std3`). ∎
 
