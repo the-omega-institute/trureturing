@@ -39,6 +39,13 @@ public sealed partial class DepositCoverWorkflowScriptTests
             printf 'make:%s\n' "$*" >> "$PLAYBOOK_TEST_CALLS"
             case "${1:-}" in
               lean-report)
+                if compgen -G 'Meta/Digestion/formalizations/*.tmp.*' > /dev/null; then
+                  echo 'LEAN_REPORT_INVALID interrupted receipt temporary still exists' >&2
+                  exit 42
+                fi
+                mkdir -p .lake/build/stratalint
+                printf '{"schema":"synthetic-lean-report"}\n' \
+                  > .lake/build/stratalint/raw-lean-report.json
                 if [[ ${PLAYBOOK_STALE_REPORT:-0} != 1 ]]; then
                   cp D5/S0/Carrier/Probe.lean .report-source
                 fi

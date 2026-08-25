@@ -598,8 +598,6 @@ cover_atom_or_resume() {
 }
 
 cover_one() {
-  require_transaction_arguments
-  cleanup_transaction_temporaries
   if step cover-atom cover_atom_or_resume; then
     :
   else
@@ -648,6 +646,8 @@ case "$COMMAND" in
     commit_all_if_needed "formalize: record deposit receipt for $GID"
     ;;
   cover)
+    require_transaction_arguments
+    cleanup_transaction_temporaries
     step lean-report make lean-report
     cover_one
     ;;
@@ -657,6 +657,7 @@ case "$COMMAND" in
     for index in "${!BATCH_ATOM_IDS[@]}"; do
       ATOM_ID="${BATCH_ATOM_IDS[index]}"
       GID="${BATCH_GIDS[index]}"
+      cleanup_transaction_temporaries
       cover_one
     done
     ;;

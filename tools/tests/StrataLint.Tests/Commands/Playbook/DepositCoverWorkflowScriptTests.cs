@@ -402,6 +402,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
             callsPath = Path.Combine(Root, "calls");
             Directory.CreateDirectory(binPath);
             CopyScript();
+            File.Copy(
+                Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"),
+                Path.Combine(Root, "Makefile"));
             WriteFile(".gitignore", ".lake/\n.report-source\nbin/\ncalls\nfail-ledger-once\n");
             WriteFile(LeanPath, "theorem probe : True := by trivial\n");
             WriteFile(DefinitionPath, "definition baseline\n");
