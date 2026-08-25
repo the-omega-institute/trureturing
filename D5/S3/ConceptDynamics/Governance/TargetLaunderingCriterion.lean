@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/Governance/TargetLaunderingCriterion
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Freeze-visible change, regrading, and original attribution. -/
+   digest: Temporal post-arrival change, regrading, and original attribution. -/
 
 import Mathlib.Data.Fin.Basic
 import Mathlib.Data.Finset.Basic
@@ -722,6 +722,13 @@ theorem target_laundering_nondegeneracy :
     (¬PostArrivalProtectedChange FiniteWitness.arrival FiniteWitness.oldK
       FiniteWitness.unchangedK true) ∧
     (Monotone FiniteWitness.eventTime ∧
+      (FiniteWitness.firstSeenArrival true = FiniteWitness.eventTime 1 ∧
+        true ∈ FiniteWitness.simultaneousFiltration.seen (1 : FiniteWitness.EventId) ∧
+        ∀ event, true ∈ FiniteWitness.simultaneousFiltration.seen event ->
+          (1 : FiniteWitness.EventId) ≤ event) ∧
+      FiniteWitness.simultaneousNewK.adjudication.frozenAt =
+        FiniteWitness.eventTime
+          FiniteWitness.simultaneousNewK.adjudication.freezeEvent ∧
       FreezeVisibleProtectedChange FiniteWitness.oldK
         FiniteWitness.simultaneousNewK true ∧
       ¬PostArrivalProtectedChange FiniteWitness.firstSeenArrival FiniteWitness.oldK
@@ -736,9 +743,7 @@ theorem target_laundering_nondegeneracy :
     temporal_post_arrival_change,
     false_neighbor_arrival_not_before.1,
     false_neighbor_protected_coordinates_unchanged.2,
-    ⟨simultaneous_arrival_separates_source_formulations.1,
-      simultaneous_arrival_separates_source_formulations.2.2.2.1,
-      simultaneous_arrival_separates_source_formulations.2.2.2.2⟩,
+    simultaneous_arrival_separates_source_formulations,
     regrade_report_carries_actual_evaluation FiniteWitness.validReport⟩
 
 #print axioms target_laundering_criterion
