@@ -257,13 +257,19 @@ internal static class DigestionIngestor
                     // Coverage does not cross a generation boundary, and the spec already says
                     // so: "语义改写即使沿用 AST path,只要指纹改变就以完整 raw SHA-256 签发新的
                     // 唯一 residual-open atom ID". An entry carrying an inherited CoverageGid is
-                    // not residual-open, and the receipt that would back it is named by the *old*
-                    // atom id -- since atom_id == cas_ref == raw_sha256, a new generation is by
-                    // construction different bytes, so that receipt can never exist for it.
-                    // Inheriting the gid therefore writes an assertion nothing attests to, which
-                    // the SL-016 precommitment validator then correctly refuses; the two rules are
-                    // jointly unsatisfiable exactly when an already-covered atom is re-cut, and
-                    // one such re-cut took the whole intake pipeline down (#3354).
+                    // not residual-open, so inheriting one contradicts that rule outright.
+                    //
+                    // It also writes an assertion nothing attests to. An atom id binds the full
+                    // raw SHA-256 one-to-one (as <prefix>-residual-<digest>, plus an occurrence
+                    // qualifier when a generic stem repeats), so a new generation -- different
+                    // bytes -- always has a different id. The *old* generation's coverage receipt
+                    // is named by the old id and can never migrate to it. A base-owned
+                    // precommitment for the new id may of course exist, but that is something
+                    // `cover`/`deposit` establish for that atom; ingest may not presume it. Where
+                    // it does not exist, the SL-016 precommitment validator correctly refuses the
+                    // inherited edge -- and the two rules are then jointly unsatisfiable exactly
+                    // when an already-covered atom is re-cut. One such re-cut took the whole
+                    // intake pipeline down (#3354).
                     //
                     // UnresolvedSubitems still crosses: it is a negative obligation, and dropping
                     // it would silently erase a gap that was already on the books.
