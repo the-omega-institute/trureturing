@@ -7,10 +7,6 @@ REPOSITORY=""
 OUTPUT=""
 LOG_DIR=""
 MODULE_TABLE=""
-PERF_TMP=""
-PERF_EVENT_SPOOL=""
-PERF_RUN_ID=""
-PERF_BASE="unknown"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -63,31 +59,10 @@ fi
 CACHE_RUN="$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh"
 [[ -x "$CACHE_RUN" ]] || { echo "inspect.sh: cache writer is absent: $CACHE_RUN" >&2; exit 2; }
 
-# Segment timings are a side channel.  The producer remains usable in the small
-# script fixtures that intentionally omit the performance library, and any ledger
-# failure is non-fatal to report production.
-PERF_LIB="$SCRIPT_DIR/../scripts/lib/perf-event-lib.sh"
-if [[ "${STRATALINT_PERF_SEGMENTS:-0}" == "1" && -r "$PERF_LIB" ]]; then
-  source "$PERF_LIB"
-  PERF_TMP="$(perf_make_spool_dir "$REPOSITORY" stratalint-lean-report-perf 2>/dev/null || true)"
-  if [[ -n "$PERF_TMP" ]]; then
-    PERF_EVENT_SPOOL="$PERF_TMP/events.jsonl"
-    : > "$PERF_EVENT_SPOOL" || PERF_EVENT_SPOOL=""
-  fi
-  PERF_BASE_REF="${STRATALINT_PERF_BASE:-origin/dev}"
-  PERF_BASE="$(git -C "$REPOSITORY" rev-parse --verify "${PERF_BASE_REF}^{commit}" 2>/dev/null || printf unknown)"
-  [[ "$PERF_BASE" =~ ^[0-9a-fA-F]{40}([0-9a-fA-F]{24})?$ ]] || PERF_BASE="unknown"
-  PERF_RUN_ID="${STRATALINT_PERF_RUN_ID:-report-$(date +%s)-$$}"
-fi
-
 finish_inspector() {
   local rc=$?
   trap - EXIT HUP INT TERM
   set +e
-  if [[ -n "$PERF_EVENT_SPOOL" ]]; then
-    perf_flush_events "$REPOSITORY" "$PERF_EVENT_SPOOL" lean-producer >/dev/null 2>&1 || true
-  fi
-  [[ -z "$PERF_TMP" ]] || rm -rf -- "$PERF_TMP"
   [[ -z "$MODULE_TABLE" ]] || rm -f -- "$MODULE_TABLE"
   exit "$rc"
 }
@@ -121,22 +96,10 @@ run_phase() {
     printf '\n'
   } > "$command_log"
 
-  local started finished elapsed phase_status
-  started="$(date +%s)"
   set +e
   (cd "$REPOSITORY" && "$@") > "$stdout_log" 2> "$stderr_log"
   local status=$?
   set -e
-  finished="$(date +%s)"
-  elapsed=$((finished - started))
-  (( elapsed >= 0 )) || elapsed=0
-  phase_status=passed
-  [[ "$status" -eq 0 ]] || phase_status=failed
-  if [[ -n "$PERF_EVENT_SPOOL" ]]; then
-    perf_capture_event \
-      "$PERF_EVENT_SPOOL" "$REPOSITORY" "$PERF_RUN_ID" report "$PERF_BASE" \
-      "$phase" "$phase_status" "$elapsed" || true
-  fi
   printf '%s\n' "$status" > "$exit_log"
   if [[ "$status" -ne 0 ]]; then
     printf 'LEAN_INSPECTOR_FAILED phase=%s exit=%s\n' "$phase" "$status" >&2
@@ -179,7 +142,6 @@ run_phase inspect \
   "${inspector_arguments[@]}"
 
 [[ -s "$OUTPUT" ]] || { echo "inspect.sh: producer left no report at $OUTPUT" >&2; exit 2; }
-serialize_started="$(date +%s)"
 serialize_rc=0
 report_sha256=""
 set +e
@@ -190,15 +152,5 @@ if [[ "$serialize_rc" -eq 0 ]]; then
   serialize_rc=$?
 fi
 set -e
-serialize_finished="$(date +%s)"
-serialize_elapsed=$((serialize_finished - serialize_started))
-(( serialize_elapsed >= 0 )) || serialize_elapsed=0
-serialize_status=passed
-[[ "$serialize_rc" -eq 0 ]] || serialize_status=failed
-if [[ -n "$PERF_EVENT_SPOOL" ]]; then
-  perf_capture_event \
-    "$PERF_EVENT_SPOOL" "$REPOSITORY" "$PERF_RUN_ID" report "$PERF_BASE" \
-    serialize "$serialize_status" "$serialize_elapsed" || true
-fi
 [[ "$serialize_rc" -eq 0 ]] || exit "$serialize_rc"
 printf 'RAW_LEAN_REPORT file=%s content_address=sha256:%s\n' "$OUTPUT" "$report_sha256"

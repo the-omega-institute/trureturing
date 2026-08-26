@@ -119,6 +119,24 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier? scribeEmissionVerifier,
+        TimeProvider timeProvider)
+        : this(
+            repositoryRoot,
+            repository,
+            leanReportSource,
+            scribeEmissionVerifier,
+            new ProductionFrozenLedgerAdmissionServices(
+                repositoryRoot,
+                ImmutableHashSet<string>.Empty),
+            timeProvider)
+    {
+    }
+
+    internal ProductionCliEnvironment(
+        string repositoryRoot,
+        IRepositoryGateway repository,
+        ILeanReportSource leanReportSource,
+        IScribeEmissionVerifier? scribeEmissionVerifier,
         IFrozenLedgerAdmissionServices frozenLedgerAdmission,
         TimeProvider? timeProvider = null)
     {
@@ -558,12 +576,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
     public CommandResult CleanLanes(IReadOnlyList<string> arguments) =>
         CleanLanesCommand.Run(repositoryRoot, arguments, TimeProvider.System.GetUtcNow());
-
-    public CommandResult AppendPerf(IReadOnlyList<string> arguments) =>
-        PerfAppendCommand.Run(repositoryRoot, arguments);
-
-    public CommandResult PerfReport(IReadOnlyList<string> arguments) =>
-        PerfReportCommand.Run(arguments);
 
     public CommandResult Worktree(IReadOnlyList<string> arguments) =>
         WorktreeCommand.Run(repositoryRoot, arguments);

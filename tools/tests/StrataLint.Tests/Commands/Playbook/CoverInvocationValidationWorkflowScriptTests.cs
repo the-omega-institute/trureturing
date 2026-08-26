@@ -44,7 +44,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             .Any();
 
         internal ProcessOutput RunMakeCover(bool includeAtomId) =>
-            BoundedProcessRunner.Run(
+            TestProcessRunner.Run(
                 "/usr/bin/env",
                 includeAtomId
                     ?
@@ -63,7 +63,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                         "cover",
                     ],
                 Root,
-                TimeSpan.FromSeconds(5),
+                TestBudgets.ShortProcessHangGuard,
                 128 * 1024);
     }
 }

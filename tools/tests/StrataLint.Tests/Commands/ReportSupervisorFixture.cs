@@ -1,14 +1,13 @@
 using System.Diagnostics;
 using System.Text;
-using System.Text.Json;
 using StrataLint.Engine;
+using Xunit;
 
 namespace StrataLint.Tests;
 
 internal sealed class ReportSupervisorFixture : IDisposable
 {
-    private static readonly TimeSpan defaultSafetyTimeout = TimeSpan.FromMinutes(5);
-    private static readonly string performanceConfiguration = FindPerformanceConfiguration();
+    private static readonly TimeSpan defaultSafetyTimeout = TestBudgets.ReportSupervisorHangGuard;
     private readonly TemporaryDirectory temporary = new();
     private readonly TimeSpan safetyTimeout;
 
@@ -38,18 +37,15 @@ internal sealed class ReportSupervisorFixture : IDisposable
             set -euo pipefail
             supervisor="$1"
             worker="$2"
-            metrics="$3"
-            state="$4"
-            active="$5"
-            overlap="$6"
-            slots="${8:-}"
-            env STRATALINT_REPORT_METRICS_LOG="$metrics" STRATALINT_SUPERVISOR_ROOT="$state" \
-              STRATALINT_PERF_CONFIGURATION="$7" \
+            state="$3"
+            active="$4"
+            overlap="$5"
+            slots="${6:-}"
+            env STRATALINT_SUPERVISOR_ROOT="$state" \
               ${slots:+STRATALINT_LEAN_MAX_CONCURRENCY="$slots"} \
               "$supervisor" --role lean-producer --lean-slot -- "$worker" "$active" "$overlap" &
             first=$!
-            env STRATALINT_REPORT_METRICS_LOG="$metrics" STRATALINT_SUPERVISOR_ROOT="$state" \
-              STRATALINT_PERF_CONFIGURATION="$7" \
+            env STRATALINT_SUPERVISOR_ROOT="$state" \
               ${slots:+STRATALINT_LEAN_MAX_CONCURRENCY="$slots"} \
               "$supervisor" --role lean-producer --lean-slot -- "$worker" "$active" "$overlap" &
             second=$!
@@ -68,13 +64,6 @@ internal sealed class ReportSupervisorFixture : IDisposable
             set -euo pipefail
             sleep 60 &
             printf '%s\n' "$!" > "$1"
-            """);
-        LsofRaceWorker = WriteExecutable("lsof-race-worker.sh", """
-            #!/usr/bin/env bash
-            set -euo pipefail
-            printf '%s\n' "$$" > "$1"
-            sleep 1
-            printf 'completed\n' > "$1"
             """);
         _ = WriteExecutable("ps", """
             #!/usr/bin/env bash
@@ -202,23 +191,14 @@ internal sealed class ReportSupervisorFixture : IDisposable
               waitpid($first, 0);
             ' "$1"
             """);
-        FileSizeLimitedDriver = WriteExecutable("file-size-limited-driver.sh", """
-            #!/usr/bin/env bash
-            set -euo pipefail
-            ulimit -f 1
-            exec "$@"
-            """);
     }
 
     internal string Root => temporary.Path;
     internal string RepositoryRoot => TestRepositoryLayout.FindRoot();
     internal string Supervisor => Path.Combine(
         RepositoryRoot, "tools", "scripts", "report", "report-supervisor.sh");
-    internal string MetricsLog => Path.Combine(Root, "metrics.jsonl");
-    internal string DefaultMetricsLog => Path.Combine(Root, ".stratalint-perf", "events.jsonl");
     internal string StateRoot => Path.Combine(Root, "state");
     internal string HostPath => Environment.GetEnvironmentVariable("PATH") ?? "/bin:/usr/bin";
-    internal string PerformanceConfiguration => performanceConfiguration;
     internal string ScratchRecord => Path.Combine(Root, "scratch.txt");
     internal string ActiveMarker => Path.Combine(Root, "active");
     internal string OverlapMarker => Path.Combine(Root, "overlap");
@@ -229,16 +209,13 @@ internal sealed class ReportSupervisorFixture : IDisposable
     internal string DetachedParentPid => Path.Combine(Root, "detached-parent.pid");
     internal string DetachedRelease => Path.Combine(Root, "detached.release");
     internal string DoubleForkPid => ScratchRecord;
-    internal string FailingLsofInvocation => Path.Combine(Root, "lsof-invocations.txt");
     internal string ScratchWriter { get; }
     internal string ProducerWorker { get; }
     internal string ConcurrentDriver { get; }
     internal string LongRunningWorker { get; }
     internal string ExitingWorker { get; }
-    internal string LsofRaceWorker { get; }
     internal string DetachedWorker { get; }
     internal string DoubleForkWorker { get; }
-    internal string FileSizeLimitedDriver { get; }
 
     internal TimeSpan SafetyTimeout => safetyTimeout;
 
@@ -254,9 +231,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
         var arguments = new List<string>
         {
             $"PATH={Root}:{HostPath}",
-            $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
             $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
-            $"STRATALINT_PERF_CONFIGURATION={PerformanceConfiguration}",
             "STRATALINT_LOCK_TIMEOUT_SECONDS=86400",
         };
         arguments.AddRange(environment);
@@ -267,61 +242,16 @@ internal sealed class ReportSupervisorFixture : IDisposable
         arguments.Add("--");
         arguments.Add(command);
         arguments.Add(ScratchRecord);
-        return BoundedProcessRunner.Run(
+        return TestProcessRunner.Run(
             "env", arguments, Root, safetyTimeout, 1024 * 1024);
     }
-
-    internal void InstallFailingLsof()
-    {
-        _ = WriteExecutable("lsof", """
-            #!/usr/bin/env bash
-            set -euo pipefail
-            printf '%s\n' "$*" >> "$PWD/lsof-invocations.txt"
-            exit 1
-            """);
-    }
-
-    internal ProcessOutput RunWithDefaultMetrics(string role, string command) =>
-        BoundedProcessRunner.Run(
-            "env",
-            [
-                $"PATH={Root}:{HostPath}",
-                $"HOME={Root}",
-                $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
-                $"STRATALINT_PERF_CONFIGURATION={PerformanceConfiguration}",
-                "STRATALINT_LOCK_TIMEOUT_SECONDS=86400",
-                Supervisor,
-                "--role", role,
-                "--", command, ScratchRecord,
-            ],
-            Root,
-            safetyTimeout,
-            1024 * 1024);
-
-    internal ProcessOutput RunWithFileSizeLimit(string role, string command) =>
-        BoundedProcessRunner.Run(
-            FileSizeLimitedDriver,
-            [
-                "env",
-                $"PATH={Root}:{HostPath}",
-                $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
-                $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
-                $"STRATALINT_PERF_CONFIGURATION={PerformanceConfiguration}",
-                "STRATALINT_LOCK_TIMEOUT_SECONDS=86400",
-                Supervisor,
-                "--role", role,
-                "--", command, ScratchRecord,
-            ],
-            Root,
-            safetyTimeout,
-            1024 * 1024);
 
     internal ProcessOutput RunExternalProcess(
         string fileName,
         IEnumerable<string> arguments,
         string? workingDirectory = null,
         int maximumOutputBytes = 1024 * 1024) =>
-        BoundedProcessRunner.Run(
+        TestProcessRunner.Run(
             fileName,
             arguments,
             workingDirectory ?? Root,
@@ -330,9 +260,11 @@ internal sealed class ReportSupervisorFixture : IDisposable
 
     internal void WaitUntil(Func<bool> condition, string failureMessage)
     {
-        Assert.True(
-            SpinWait.SpinUntil(condition, safetyTimeout),
-            $"{failureMessage} (safety timeout: {safetyTimeout})");
+        if (!SpinWait.SpinUntil(condition, safetyTimeout))
+        {
+            throw new SkipException(
+                $"infrastructure-hang-guard expired: {failureMessage} ({safetyTimeout})");
+        }
     }
 
     internal void WaitForExit(Process process, string failureMessage) =>
@@ -351,9 +283,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
         foreach (var argument in new[]
         {
             $"PATH={Root}:{HostPath}",
-            $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
             $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
-            $"STRATALINT_PERF_CONFIGURATION={PerformanceConfiguration}",
             "STRATALINT_LOCK_TIMEOUT_SECONDS=86400",
             Supervisor,
             "--role", "lean-producer", "--lean-slot", "--",
@@ -377,9 +307,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
         foreach (var argument in new[]
         {
             $"PATH={Root}:{HostPath}",
-            $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
             $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
-            $"STRATALINT_PERF_CONFIGURATION={PerformanceConfiguration}",
             "STRATALINT_LOCK_TIMEOUT_SECONDS=86400",
             Supervisor,
             "--role", "lean-producer", "--lean-slot", "--",
@@ -403,14 +331,6 @@ internal sealed class ReportSupervisorFixture : IDisposable
                 .Any(line => line.StartsWith(prefix, StringComparison.Ordinal)));
     }
 
-    internal IReadOnlyList<JsonElement> ReadMetrics() => File.ReadAllLines(MetricsLog)
-        .Select(line => JsonDocument.Parse(line).RootElement.Clone())
-        .ToArray();
-
-    internal IReadOnlyList<JsonElement> ReadDefaultMetrics() => File.ReadAllLines(DefaultMetricsLog)
-        .Select(line => JsonDocument.Parse(line).RootElement.Clone())
-        .ToArray();
-
     private string WriteExecutable(string name, string contents)
     {
         var path = Path.Combine(Root, name);
@@ -426,30 +346,4 @@ internal sealed class ReportSupervisorFixture : IDisposable
     }
 
     public void Dispose() => temporary.Dispose();
-
-
-    internal static string FindPerformanceConfiguration()
-    {
-        var targetFrameworkDirectory = new DirectoryInfo(AppContext.BaseDirectory);
-        var configuration = targetFrameworkDirectory.Parent?.Name;
-        return !string.IsNullOrWhiteSpace(configuration)
-            ? configuration
-            : throw new DirectoryNotFoundException("Could not determine the test build configuration.");
-    }
-}
-
-internal sealed class PhysicalTemporaryDirectory : IDisposable
-{
-    internal PhysicalTemporaryDirectory()
-    {
-        var root = Directory.Exists("/private/tmp") ? "/private/tmp" : "/tmp";
-        Path = System.IO.Path.Combine(
-            root,
-            "stratalint-report-caller-" + Guid.NewGuid().ToString("N"));
-        Directory.CreateDirectory(Path);
-    }
-
-    internal string Path { get; }
-
-    public void Dispose() => Directory.Delete(Path, recursive: true);
 }

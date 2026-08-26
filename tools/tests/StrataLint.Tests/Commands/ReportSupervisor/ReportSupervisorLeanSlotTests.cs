@@ -23,8 +23,7 @@ public sealed class ReportSupervisorLeanSlotTests
         var result = fixture.RunExternalProcess(
             "bash",
             [fixture.ConcurrentDriver, fixture.Supervisor, fixture.ProducerWorker,
-             fixture.MetricsLog, fixture.StateRoot, fixture.ActiveMarker, fixture.OverlapMarker,
-             fixture.PerformanceConfiguration, "1"],
+             fixture.StateRoot, fixture.ActiveMarker, fixture.OverlapMarker, "1"],
             maximumOutputBytes: 1024 * 1024);
 
         Assert.True(
@@ -34,13 +33,6 @@ public sealed class ReportSupervisorLeanSlotTests
                 + "; stderr: "
                 + Encoding.UTF8.GetString(result.StandardError));
         Assert.False(File.Exists(fixture.OverlapMarker));
-        var metrics = fixture.ReadMetrics();
-        Assert.Equal(2, metrics.Count);
-        Assert.All(metrics, metric =>
-        {
-            Assert.Equal("lean-producer", metric.GetProperty("role").GetString());
-            Assert.Equal(1, metric.GetProperty("concurrency_count").GetInt32());
-        });
     }
 
     [Fact]
@@ -51,8 +43,7 @@ public sealed class ReportSupervisorLeanSlotTests
         var result = fixture.RunExternalProcess(
             "bash",
             [fixture.ConcurrentDriver, fixture.Supervisor, fixture.ProducerWorker,
-             fixture.MetricsLog, fixture.StateRoot, fixture.ActiveMarker, fixture.OverlapMarker,
-             fixture.PerformanceConfiguration],
+             fixture.StateRoot, fixture.ActiveMarker, fixture.OverlapMarker],
             maximumOutputBytes: 1024 * 1024);
 
         Assert.True(
@@ -64,11 +55,6 @@ public sealed class ReportSupervisorLeanSlotTests
         Assert.True(
             File.Exists(fixture.OverlapMarker),
             "the default slot count must admit two concurrent lean producers");
-        var metrics = fixture.ReadMetrics();
-        Assert.Equal(2, metrics.Count);
-        Assert.Contains(
-            metrics,
-            metric => metric.GetProperty("concurrency_count").GetInt32() > 1);
     }
     // 等槽者必须熬得过一个**合法**的持槽者,否则「合法持有」就等于「让别人红」。
     //

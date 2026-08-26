@@ -21,7 +21,6 @@ public sealed class LeanReportInputScriptTests
     private const string SupervisorScriptPath = "tools/scripts/report/report-supervisor.sh";
     private const string CacheEnsureScriptPath =
         "tools/scripts/worktree/lean-cache-ensure.sh";
-    private const string PerformanceLibraryPath = "tools/scripts/lib/perf-event-lib.sh";
     private const string ToolchainInstallerPath = "tools/scripts/workflow/install-lean-toolchain.sh";
     private const string WorkflowPath = ".github/workflows/ci.yml";
     private static readonly string CliProjectPath = string.Join(
@@ -103,7 +102,6 @@ public sealed class LeanReportInputScriptTests
         Assert.Contains(LeanModelsPath, paths);
         Assert.Contains(SupervisorScriptPath, paths);
         Assert.Contains(CacheEnsureScriptPath, paths);
-        Assert.Contains(PerformanceLibraryPath, paths);
         Assert.Contains(ToolchainInstallerPath, paths);
         Assert.Contains(WorkflowPath, paths);
         Assert.Contains(derivedProbe, paths);
@@ -279,7 +277,6 @@ public sealed class LeanReportInputScriptTests
                 SupervisorScriptPath,
                 File.ReadAllText(Path.Combine(root, SupervisorScriptPath), Encoding.UTF8));
             Write(CacheEnsureScriptPath, "#!/usr/bin/env bash\n");
-            Write(PerformanceLibraryPath, "#!/usr/bin/env bash\n");
             Write(ToolchainInstallerPath, "#!/usr/bin/env bash\n");
             Write(ScribeContentChecksPath, "#!/usr/bin/env bash\n");
             Write(
@@ -462,7 +459,7 @@ public sealed class LeanReportInputScriptTests
             [
                 "bash", script, command, "--repository", repository, "--report", report,
             ]);
-            return BoundedProcessRunner.Run(
+            return TestProcessRunner.Run(
                 "env",
                 arguments,
                 temporary.Path,

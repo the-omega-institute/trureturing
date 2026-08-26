@@ -224,15 +224,6 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "Golden/perf-budgets.toml"
-kind = "data"
-produced_by = "none"
-consumed_by = ["PerfBudgetLoader"]
-verified_by = ["PerfBudgetLoader"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
 pattern = "Golden/values-kernels.toml"
 kind = "data"
 produced_by = "none"

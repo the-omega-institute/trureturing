@@ -174,7 +174,7 @@ public sealed partial class WorktreeCommandTests
     }
 
     private static int GitExit(string workingDirectory, params string[] arguments) =>
-        BoundedProcessRunner.Run(
+        TestProcessRunner.Run(
             "git",
             arguments,
             workingDirectory,

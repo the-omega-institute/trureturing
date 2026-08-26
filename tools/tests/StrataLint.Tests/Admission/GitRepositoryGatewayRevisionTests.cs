@@ -17,8 +17,7 @@ public sealed class GitRepositoryGatewayRevisionTests
         var gateway = new GitRepositoryGateway(
             repository.Path,
             runner,
-            "git",
-            TimeSpan.FromSeconds(1));
+            "git");
 
         var snapshot = gateway.ReadRevision("synthetic-base");
 
@@ -120,8 +119,7 @@ public sealed class GitRepositoryGatewayRevisionTests
         var gateway = new GitRepositoryGateway(
             repository.Path,
             runner,
-            "git",
-            TimeSpan.FromSeconds(1));
+            "git");
 
         var prepared = gateway.Prepare("synthetic-base");
 
@@ -143,8 +141,7 @@ public sealed class GitRepositoryGatewayRevisionTests
         var gateway = new GitRepositoryGateway(
             repository.Path,
             runner,
-            "git",
-            TimeSpan.FromSeconds(1));
+            "git");
 
         var prepared = gateway.Prepare("synthetic-base");
 

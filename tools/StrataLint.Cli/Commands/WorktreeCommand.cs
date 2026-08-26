@@ -80,7 +80,6 @@ internal static class WorktreeCommand
         WorktreeOptions? options = null;
         var worktreeCreated = false;
         var halfBuiltRecovered = false;
-        var stopwatch = System.Diagnostics.Stopwatch.StartNew();
         try
         {
             options = ParseArguments(repositoryRoot, arguments);
@@ -111,7 +110,6 @@ internal static class WorktreeCommand
             }
             WorktreeCreationSafety.ValidateCreatedWorktree(options, runner);
 
-            stopwatch.Stop();
             var summary = JsonSerializer.Serialize(new
             {
                 @event = "worktree_init",
@@ -124,13 +122,11 @@ internal static class WorktreeCommand
                 donor_cache_pin = donor.CachePin,
                 halfbuilt_recovered = halfBuiltRecovered,
                 dotnet_restore = options.SkipRestore ? "skipped" : "restored",
-                elapsed_ms = stopwatch.ElapsedMilliseconds,
             }) + "\n";
             return new CommandResult(true, summary, RenderDonorWarning(options, donor));
         }
         catch (Exception exception)
         {
-            stopwatch.Stop();
             var cleanup = options is not null && worktreeCreated
                 ? Cleanup(options, runner)
                 : string.Empty;
@@ -143,7 +139,6 @@ internal static class WorktreeCommand
                 base_revision = options?.Base,
                 reason = exception.Message,
                 cleanup_error = cleanup.Length == 0 ? null : cleanup.TrimStart(';', ' '),
-                elapsed_ms = stopwatch.ElapsedMilliseconds,
             });
             return new CommandResult(
                 false,

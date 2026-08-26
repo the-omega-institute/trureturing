@@ -39,6 +39,9 @@ internal static partial class SelfTestGovernancePolicy
         "T:System.Random",
         "P:System.Environment.TickCount",
         "P:System.Environment.TickCount64",
+        "M:System.Threading.Thread.Sleep",
+        "M:System.Threading.Tasks.Task.Delay",
+        "T:System.Diagnostics.Stopwatch",
     ];
 
     internal static string[] InspectRepository(string repositoryRoot)

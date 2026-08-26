@@ -83,7 +83,7 @@ public sealed class WarmDonorScriptTests
         WriteExecutable(
             Path.Combine(bin, "make"),
             "printf 'make %s\\n' \"$*\" >> \"$WARM_CALLS\"\nexit \"$WARM_LEAN_EXIT\"");
-        var process = BoundedProcessRunner.Run(
+        var process = TestProcessRunner.Run(
             "/bin/bash",
             [
                 "-c",
@@ -98,7 +98,7 @@ public sealed class WarmDonorScriptTests
                 script,
             ],
             repository,
-            TimeSpan.FromSeconds(10),
+            TestBudgets.ScriptProcessHangGuard,
             64 * 1024);
         return new ScriptRun(fixture, calls, process);
     }

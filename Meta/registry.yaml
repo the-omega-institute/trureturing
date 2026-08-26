@@ -16,7 +16,6 @@ root_files:
 governance_documents:
   - "D5/X_Frontier/HeartsAuthorizations.md"
   - "Golden/gate-authority-roots.toml"
-  - "Golden/perf-budgets.toml"
   - "Meta/Digestion/atomizers.toml"
   - "Meta/FILEMAP.toml"
   - "docs/CONTRIBUTING.md"

@@ -313,7 +313,7 @@ public sealed class AdmissionWorkflowTests
             Path.Combine(stubBin, "sleep"),
             UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
 
-        var result = BoundedProcessRunner.Run(
+        var result = TestProcessRunner.Run(
             "env",
             [
                 $"HOME={home}",

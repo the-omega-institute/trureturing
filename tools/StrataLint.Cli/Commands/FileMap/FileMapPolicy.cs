@@ -38,8 +38,6 @@ internal static class FileMapPolicy
         "tools/StrataLint.Engine/Digestion/Configuration/TheoryAtomizerDataLoader.cs";
     private const string GateAuthorityRootCatalogLoaderPath =
         "tools/StrataLint.Cli/GateAuthority/GateAuthorityRootCatalogLoader.cs";
-    private const string PerfBudgetLoaderPath =
-        "tools/StrataLint.Cli/Performance/PerfBudgetLoader.cs";
     private const string ValuesKernelLoaderPath =
         "tools/StrataLint.Scribe/Values/ValuesKernelDataLoader.cs";
     private const string YamlSubsetParserPath =
@@ -60,7 +58,6 @@ internal static class FileMapPolicy
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
             [nameof(MissionFileLoader)] = MissionFileLoaderPath,
             ["ProblemCandidateCatalog"] = ProblemCandidateCatalogPath,
-            ["PerfBudgetLoader"] = PerfBudgetLoaderPath,
             ["RegistryLoader"] = RegistryLoaderPath,
             ["ScribeEmitter"] = ScribeEmitterPath,
             ["ScribeCompiler"] = ScribeProjectPath,

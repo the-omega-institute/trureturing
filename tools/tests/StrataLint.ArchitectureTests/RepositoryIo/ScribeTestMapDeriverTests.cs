@@ -1,3 +1,5 @@
+using StrataLint.Tests;
+
 namespace StrataLint.ArchitectureTests;
 
 public sealed class ScribeTestMapDeriverTests
@@ -660,7 +662,7 @@ public sealed class ScribeTestMapDeriverTests
     }
 
     private static ProcessOutput RunGit(string repositoryRoot, params string[] arguments) =>
-        BoundedProcessRunner.Run(
+        TestProcessRunner.Run(
             "git",
             arguments,
             repositoryRoot,

@@ -70,7 +70,7 @@ public sealed class LeanInspectorScriptTests
     }
 
     private static ProcessOutput Run(string command, IReadOnlyList<string> arguments, string cwd) =>
-        BoundedProcessRunner.Run(command, arguments, cwd, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+        TestProcessRunner.Run(command, arguments, cwd, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
 
     private static void Write(string root, string relative, string contents)
     {

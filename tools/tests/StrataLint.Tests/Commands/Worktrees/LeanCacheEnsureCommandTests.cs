@@ -579,7 +579,7 @@ public sealed class LeanCacheRunScriptTests
             wrapped,
             "#!/usr/bin/env bash\ntouch \"$WRAPPED_MARKER\"\nexit 23");
 
-        var result = BoundedProcessRunner.Run(
+        var result = TestProcessRunner.Run(
             "/bin/bash",
             [
                 "-c",
@@ -592,7 +592,7 @@ public sealed class LeanCacheRunScriptTests
                 wrapped,
             ],
             fixture.Path,
-            TimeSpan.FromSeconds(10),
+            TestBudgets.ScriptProcessHangGuard,
             64 * 1024);
 
         Assert.Equal(97, result.ExitCode);

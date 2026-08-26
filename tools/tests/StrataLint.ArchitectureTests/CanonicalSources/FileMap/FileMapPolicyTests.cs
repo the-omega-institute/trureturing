@@ -62,25 +62,6 @@ public sealed partial class FileMapPolicyTests
     }
 
     [Fact]
-    public void PerformanceBudgetsHaveARegisteredGoldenDataResidence()
-    {
-        const string value = "Golden/perf-budgets.toml";
-        var root = RepositoryLayout.FindRoot();
-        var manifest = FileMapLoader.LoadRepository(root);
-        var registry = SyntheticRegistry("Golden/perf-budgets.toml");
-        var path = RepoPath.CreateKnown(value);
-
-        var entry = Assert.Single(manifest.Match(value));
-        Assert.Equal(FileMapKind.Data, entry.Kind);
-        Assert.Equal("PerfBudgetLoader", Assert.Single(entry.ConsumedBy));
-        Assert.Equal("PerfBudgetLoader", Assert.Single(entry.VerifiedBy));
-        Assert.Contains(path, registry.Policy.GovernanceDocuments);
-        Assert.Null(RepositoryPathPolicy.Validate(path, registry.Policy));
-        Assert.IsType<BootstrapOutcome.Clear>(
-            BootstrapGate.Evaluate(RawChangeSet.Create([value])));
-    }
-
-    [Fact]
     public void AgentReportsAreAdmittedByRepositoryPathPolicy()
     {
         // Agent-written reports have generated names, cannot be enumerated in

@@ -4,8 +4,13 @@ namespace StrataLint.BannedApiCompileFailProof;
 
 internal static class BannedApiViolations
 {
-    internal static object[] MustNotCompile() =>
-    [
+    internal static object[] MustNotCompile()
+    {
+        Thread.Sleep(1); // banned-api-proof
+        _ = Task.Delay(1); // banned-api-proof
+        _ = System.Diagnostics.Stopwatch.StartNew(); // banned-api-proof
+        return
+        [
         DateTime.Now, // banned-api-proof
         DateTime.UtcNow, // banned-api-proof
         DateTimeOffset.Now, // banned-api-proof
@@ -24,5 +29,6 @@ internal static class BannedApiViolations
         1.ToString("N0"), // banned-api-proof
         DateOnly.ParseExact("2026-07-12", "yyyy-MM-dd"), // banned-api-proof
         TimeOnly.TryParseExact("12:34".AsSpan(), "HH:mm".AsSpan(), out _), // banned-api-proof
-    ];
+        ];
+    }
 }

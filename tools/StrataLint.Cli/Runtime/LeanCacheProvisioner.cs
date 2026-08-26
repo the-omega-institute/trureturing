@@ -210,7 +210,7 @@ internal static class LeanCacheProvisioner
         ArgumentNullException.ThrowIfNull(cloner);
         ArgumentNullException.ThrowIfNull(publisher);
         ArgumentNullException.ThrowIfNull(removePartial);
-        wait ??= Thread.Sleep;
+        wait ??= WaitForRetry;
         ArgumentNullException.ThrowIfNull(writerGuard);
         var target = Path.Combine(worktreeRoot, ".lake");
         writerGuard.RequireOwnershipOf(target);
@@ -704,6 +704,12 @@ internal static class LeanCacheProvisioner
     {
         if (Directory.Exists(target)) Directory.Delete(target, recursive: true);
         else if (File.Exists(target)) File.Delete(target);
+    }
+
+    internal static void WaitForRetry(TimeSpan delay)
+    {
+        using var retrySignal = new ManualResetEventSlim(initialState: false);
+        retrySignal.Wait(delay);
     }
 
     internal static string Error(ProcessOutput output, string fallback)

@@ -1,7 +1,5 @@
 using System.Diagnostics;
 using System.Text;
-using System.Text.Json;
-using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
@@ -29,7 +27,7 @@ public sealed class ReportSupervisorScriptTests
     }
 
     [Fact]
-    public void EachRunUsesIndependentScratchAndWritesStructuredMetrics()
+    public void EachRunUsesIndependentScratch()
     {
         using var fixture = new ReportSupervisorFixture();
 
@@ -40,157 +38,12 @@ public sealed class ReportSupervisorScriptTests
 
         Assert.Equal(0, first.ExitCode);
         Assert.Equal(0, second.ExitCode);
-        Assert.DoesNotContain(
-            "\"event\":\"performance_event_commit\"",
-            Encoding.UTF8.GetString(first.StandardOutput)
-                + Encoding.UTF8.GetString(second.StandardOutput),
-            StringComparison.Ordinal);
-
         var scratchPaths = File.ReadAllLines(fixture.ScratchRecord);
         Assert.Equal(2, scratchPaths.Length);
         Assert.NotEqual(scratchPaths[0], scratchPaths[1]);
         Assert.All(scratchPaths, path => Assert.Contains("/scratch", path, StringComparison.Ordinal));
         Assert.All(scratchPaths, path => Assert.False(Directory.Exists(path)));
 
-        var metrics = fixture.ReadMetrics();
-        Assert.Equal(2, metrics.Count);
-        Assert.Equal("scribe-consumer", metrics[0].GetProperty("role").GetString());
-        Assert.Equal("ingest-consumer", metrics[1].GetProperty("role").GetString());
-        Assert.All(metrics, metric =>
-        {
-            Assert.Equal("stratalint-perf-event-v1", metric.GetProperty("schema").GetString());
-            Assert.False(string.IsNullOrWhiteSpace(metric.GetProperty("run_id").GetString()));
-            Assert.Equal("resource", metric.GetProperty("kind").GetString());
-            Assert.Equal(metric.GetProperty("role").GetString(), metric.GetProperty("stage").GetString());
-            Assert.Equal("observation", metric.GetProperty("status").GetString());
-            Assert.Matches(
-                "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$",
-                metric.GetProperty("ts").GetString());
-            Assert.True(metric.GetProperty("pid").GetInt32() > 0);
-            Assert.True(metric.GetProperty("elapsed_ms").GetInt64() >= 0);
-            Assert.Equal(0, metric.GetProperty("rc").GetInt32());
-            Assert.True(metric.GetProperty("fd_peak").GetInt32() >= 0);
-            Assert.True(metric.GetProperty("rss_peak_kb").GetInt64() >= 0);
-            Assert.True(metric.GetProperty("concurrency_count").GetInt32() >= 0);
-            Assert.Equal("local", metric.GetProperty("cohort").GetProperty("venue").GetString());
-            Assert.False(string.IsNullOrWhiteSpace(
-                metric.GetProperty("cohort").GetProperty("cpu_class").GetString()));
-            Assert.Equal("report", metric.GetProperty("context").GetProperty("workload_id").GetString());
-            Assert.Equal(
-                JsonValueKind.Null,
-                metric.GetProperty("context").GetProperty("host_concurrency").ValueKind);
-            Assert.Equal(
-                metric.GetProperty("fd_peak").GetInt32(),
-                metric.GetProperty("resources").GetProperty("fd_peak").GetInt32());
-        });
-    }
-
-    [Fact]
-    public void DefaultMetricsUseTheSharedPerformanceResourceLedger()
-    {
-        using var fixture = new ReportSupervisorFixture();
-
-        var result = fixture.RunWithDefaultMetrics(
-            "scribe-consumer",
-            fixture.ScratchWriter);
-
-        Assert.Equal(0, result.ExitCode);
-        var metric = Assert.Single(fixture.ReadDefaultMetrics());
-        Assert.Equal("stratalint-perf-event-v1", metric.GetProperty("schema").GetString());
-        Assert.Equal("resource", metric.GetProperty("kind").GetString());
-        Assert.Equal("scribe-consumer", metric.GetProperty("role").GetString());
-    }
-
-    [Fact]
-    public void MetricsWriterUsesRepositoryRootInsteadOfTheCallerWorkingDirectory()
-    {
-        using var fixture = new ReportSupervisorFixture();
-        using var caller = new PhysicalTemporaryDirectory();
-        var metrics = Path.Combine(caller.Path, "metrics.jsonl");
-        var state = Path.Combine(caller.Path, "state");
-
-        var result = fixture.RunExternalProcess(
-            "env",
-            [
-                $"STRATALINT_REPORT_METRICS_LOG={metrics}",
-                $"STRATALINT_SUPERVISOR_ROOT={state}",
-                $"STRATALINT_PERF_CONFIGURATION={fixture.PerformanceConfiguration}",
-                fixture.Supervisor,
-                "--role", "scribe-consumer",
-                "--", "/usr/bin/true",
-            ],
-            caller.Path,
-            1024 * 1024);
-
-        Assert.Equal(0, result.ExitCode);
-        Assert.Single(File.ReadAllLines(metrics));
-    }
-
-    [Theory]
-    [InlineData("", "null")]
-    [InlineData("unavailable", "null")]
-    [InlineData("0.125000", "0.125000")]
-    public void ResourceMetricNumbersFailClosedToJsonNull(string sample, string expected)
-    {
-        using var fixture = new ReportSupervisorFixture();
-        var library = Path.Combine(
-            fixture.RepositoryRoot,
-            "tools", "scripts", "lib", "perf-event-lib.sh");
-
-        var result = fixture.RunExternalProcess(
-            "bash",
-            [
-                "-c",
-                "source \"$1\"; perf_json_nonnegative_number_or_null \"$2\"",
-                "bash",
-                library,
-                sample,
-            ],
-            maximumOutputBytes: 4096);
-
-        Assert.Equal(0, result.ExitCode);
-        Assert.Equal(expected, Encoding.UTF8.GetString(result.StandardOutput));
-    }
-
-    [Fact]
-    public void PerformanceWriterUsesTheCallersBuildConfiguration()
-    {
-        using var fixture = new ReportSupervisorFixture();
-        using var temporary = new TemporaryDirectory();
-        var root = TestRepositoryLayout.FindRoot();
-        var library = Path.Combine(root, "tools", "scripts", "lib", "perf-event-lib.sh");
-        var spool = Path.Combine(temporary.Path, "events.jsonl");
-        var target = Path.Combine(temporary.Path, "StrataLint.dll");
-        var invocations = Path.Combine(temporary.Path, "dotnet-invocations.txt");
-        var dotnet = Path.Combine(temporary.Path, "dotnet");
-        File.WriteAllText(spool, "{}\n", new UTF8Encoding(false));
-        File.WriteAllText(target, string.Empty, new UTF8Encoding(false));
-        File.WriteAllText(dotnet, $$"""
-            #!/usr/bin/env bash
-            set -euo pipefail
-            printf '%s\n' "$*" >> "{{invocations}}"
-            if [[ "$1" == "msbuild" ]]; then printf '%s\n' "{{target}}"; fi
-            """ + "\n", new UTF8Encoding(false));
-        var chmod = fixture.RunExternalProcess(
-            "chmod", ["+x", dotnet], temporary.Path, 4096);
-        Assert.Equal(0, chmod.ExitCode);
-
-        var result = fixture.RunExternalProcess(
-            "env",
-            [
-                $"PATH={temporary.Path}:{Environment.GetEnvironmentVariable("PATH")}",
-                "STRATALINT_PERF_CONFIGURATION=Debug",
-                "bash", "-c", "source \"$1\"; perf_flush_events \"$2\" \"$3\"",
-                "bash", library, root, spool,
-            ],
-            temporary.Path,
-            4096);
-
-        Assert.Equal(0, result.ExitCode);
-        Assert.Contains(
-            "-property:Configuration=Debug",
-            File.ReadAllText(invocations),
-            StringComparison.Ordinal);
     }
 
     [Fact]
@@ -209,40 +62,13 @@ public sealed class ReportSupervisorScriptTests
     }
 
     [Fact]
-    public void WorkerFailureIsRecordedWithItsExitCode()
+    public void WorkerFailurePreservesItsExitCode()
     {
         using var fixture = new ReportSupervisorFixture();
 
         var result = fixture.Run("ingest-consumer", leanSlot: false, "/usr/bin/false");
 
         Assert.Equal(1, result.ExitCode);
-        var metric = Assert.Single(fixture.ReadMetrics());
-        Assert.Equal("ingest-consumer", metric.GetProperty("role").GetString());
-        Assert.Equal(1, metric.GetProperty("rc").GetInt32());
-        Assert.Equal("observation", metric.GetProperty("status").GetString());
-    }
-
-    [Fact]
-    public void VanishedLsofCandidateDoesNotKillSupervisorOrHealthyChild()
-    {
-        if (Directory.Exists("/proc")) return;
-        using var fixture = new ReportSupervisorFixture();
-        fixture.InstallFailingLsof();
-
-        var result = fixture.Run(
-            "lean-producer",
-            leanSlot: false,
-            fixture.LsofRaceWorker);
-
-        Assert.True(
-            result.ExitCode == 0,
-            $"supervisor exited {result.ExitCode}; stderr: "
-                + Encoding.UTF8.GetString(result.StandardError));
-        Assert.Equal("completed\n", File.ReadAllText(fixture.ScratchRecord));
-        Assert.True(
-            File.Exists(fixture.FailingLsofInvocation),
-            "the fake lsof was not invoked");
-        Assert.NotEmpty(File.ReadAllLines(fixture.FailingLsofInvocation));
     }
 
     [Fact]
@@ -415,77 +241,6 @@ public sealed class ReportSupervisorScriptTests
     }
 
     [Fact]
-    public void MetricsCommitFailureIsObservableWithoutChangingWorkerOutcome()
-    {
-        using var fixture = new ReportSupervisorFixture();
-
-        var result = fixture.RunWithEnvironment(
-            "scribe-consumer",
-            leanSlot: false,
-            fixture.ScratchWriter,
-            $"STRATALINT_REPORT_METRICS_LOG={fixture.Root}");
-
-        Assert.Equal(0, result.ExitCode);
-        var stdout = Encoding.UTF8.GetString(result.StandardOutput);
-        Assert.Contains(
-            "{\"event\":\"performance_event_commit\",\"status\":\"failed\","
-                + "\"source\":\"report-supervisor\",\"reason\":\"append-failed\",",
-            stdout,
-            StringComparison.Ordinal);
-        Assert.DoesNotContain(
-            "performance event",
-            Encoding.UTF8.GetString(result.StandardError),
-            StringComparison.OrdinalIgnoreCase);
-    }
-
-    [Fact]
-    public void MetricsShortWriteRollsBackIncompleteEvent()
-    {
-        using var fixture = new ReportSupervisorFixture();
-        var original = Encoding.UTF8.GetBytes(
-            "{\"seed\":\"" + new string('x', 380) + "\"}\n");
-        File.WriteAllBytes(fixture.MetricsLog, original);
-
-        var result = fixture.RunWithFileSizeLimit(
-            "scribe-consumer",
-            fixture.ScratchWriter);
-
-        Assert.Equal(0, result.ExitCode);
-        Assert.True(File.Exists(fixture.MetricsLog));
-        Assert.Equal(original, File.ReadAllBytes(fixture.MetricsLog));
-        using var failureNote = JsonDocument.Parse(result.StandardOutput);
-        var failure = failureNote.RootElement;
-        Assert.Equal("performance_event_commit", failure.GetProperty("event").GetString());
-        Assert.Equal("failed", failure.GetProperty("status").GetString());
-        Assert.Equal("report-supervisor", failure.GetProperty("source").GetString());
-        Assert.DoesNotContain(
-            "performance event",
-            Encoding.UTF8.GetString(result.StandardError),
-            StringComparison.OrdinalIgnoreCase);
-    }
-
-    [Fact]
-    public void MetricsTimeoutDoesNotRemoveAnotherWritersLock()
-    {
-        using var fixture = new ReportSupervisorFixture();
-        var liveLock = fixture.MetricsLog + ".lock";
-        Directory.CreateDirectory(liveLock);
-        File.WriteAllText(
-            Path.Combine(liveLock, "owner"),
-            Environment.ProcessId.ToString(System.Globalization.CultureInfo.InvariantCulture) + "\n",
-            new UTF8Encoding(false));
-
-        var result = fixture.RunWithEnvironment(
-            "scribe-consumer",
-            leanSlot: false,
-            fixture.ScratchWriter,
-            "STRATALINT_LOCK_TIMEOUT_SECONDS=1", "STRATALINT_LEAN_MAX_CONCURRENCY=1");
-
-        Assert.Equal(0, result.ExitCode);
-        Assert.True(Directory.Exists(liveLock));
-    }
-
-    [Fact]
     public void HangingBuildIsTerminatedAtTheBuildTimeoutReleasingTheLeanSlot()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -548,16 +303,6 @@ public sealed class ReportSupervisorScriptTests
     }
 
     [Fact]
-    public void MetricsAppendDelegatesToTheCanonicalPerformanceWriter()
-    {
-        using var fixture = new ReportSupervisorFixture();
-        var source = File.ReadAllText(fixture.Supervisor);
-
-        Assert.Contains("perf_flush_events", source, StringComparison.Ordinal);
-        Assert.DoesNotContain("syswrite", source, StringComparison.Ordinal);
-    }
-
-    [Fact]
     public void TerminationReapsTheWorkerProcessTree()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -581,8 +326,6 @@ public sealed class ReportSupervisorScriptTests
             () => !ProcessExists(grandchild),
             "supervisor did not reap the worker process tree");
         Assert.False(ProcessExists(grandchild));
-        var metric = Assert.Single(fixture.ReadMetrics());
-        Assert.Equal(143, metric.GetProperty("rc").GetInt32());
     }
 
     [Fact]
@@ -708,11 +451,11 @@ public sealed class ReportSupervisorScriptTests
 
     private static bool ProcessExists(int pid)
     {
-        var result = BoundedProcessRunner.Run(
+        var result = TestProcessRunner.Run(
             "/bin/kill",
             ["-0", pid.ToString(System.Globalization.CultureInfo.InvariantCulture)],
             Directory.GetCurrentDirectory(),
-            TimeSpan.FromSeconds(5),
+            TestBudgets.ShortProcessHangGuard,
             4096);
         if (result.ExitCode != 0) return false;
         if (Directory.Exists("/proc"))

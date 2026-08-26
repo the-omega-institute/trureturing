@@ -392,7 +392,7 @@ public sealed partial class WorktreeCommandTests
         Assert.Equal(2, exitCode);
         Assert.Contains("WORKTREE_FAILED", console.Error, StringComparison.Ordinal);
         Assert.False(Directory.Exists(target));
-        var branchLookup = BoundedProcessRunner.Run(
+        var branchLookup = TestProcessRunner.Run(
             "git",
             ["show-ref", "--verify", "--quiet", $"refs/heads/{branch}"],
             repository.Path,
@@ -450,7 +450,7 @@ public sealed partial class WorktreeCommandTests
         Assert.Equal(2, exitCode);
         Assert.Contains("WORKTREE_FAILED", console.Error, StringComparison.Ordinal);
         Assert.False(Directory.Exists(target));
-        var branchLookup = BoundedProcessRunner.Run(
+        var branchLookup = TestProcessRunner.Run(
             "git",
             new[] { "show-ref", "--verify", "--quiet", "refs/heads/harness/invalid-base" },
             repository.Path,
@@ -537,7 +537,7 @@ public sealed partial class WorktreeCommandTests
     {
         foreach (var path in new[] { ".caller-review-prompt.md", ".echo-review.md", ".sshx-review" })
         {
-            var result = BoundedProcessRunner.Run(
+            var result = TestProcessRunner.Run(
                 "git",
                 ["check-ignore", "--quiet", "--no-index", path],
                 root,

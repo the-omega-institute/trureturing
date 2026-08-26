@@ -146,9 +146,6 @@ public sealed partial class MakeWorkflowTests
         var cacheEnsure = File.ReadAllText(Path.Combine(root, LeanCacheEnsureScriptPath));
         Assert.DoesNotContain("[[ -L", cacheEnsure, StringComparison.Ordinal);
         Assert.DoesNotContain("[[ -d", cacheEnsure, StringComparison.Ordinal);
-        var perfEvents = File.ReadAllText(Path.Combine(root, PerfEventScriptPath));
-        Assert.DoesNotContain(".lake/build", perfEvents, StringComparison.Ordinal);
-        Assert.Contains("cache_state\":null", perfEvents, StringComparison.Ordinal);
         Assert.Contains(ScribeScriptPath + " emit", Recipe(makefile, "emit"), StringComparison.Ordinal);
         Assert.Contains(IngestScriptPath, Recipe(makefile, "ingest"), StringComparison.Ordinal);
         var showAtomRecipe = Recipe(makefile, "show-atom");
@@ -264,8 +261,6 @@ public sealed partial class MakeWorkflowTests
         Assert.True(
             File.Exists(Path.Combine(root, RendererContractUpdateScriptPath)),
             $"{RendererContractUpdateScriptPath} is named by the update-renderer-contract recipe but is absent");
-        Assert.Contains("$(HERE)/scripts/perf-report.sh", Recipe(makefile, "perf-report"), StringComparison.Ordinal);
-        Assert.Contains("$(HERE)/../Golden/perf-budgets.toml", Recipe(makefile, "perf-report"), StringComparison.Ordinal);
         Assert.Contains("$(HERE)/scripts/clean-lanes.sh", Recipe(makefile, "clean-lanes"), StringComparison.Ordinal);
         Assert.DoesNotContain("refactor-p0-0-gate-authority", makefile, StringComparison.Ordinal);
         Assert.DoesNotContain("--old-build", makefile, StringComparison.Ordinal);
@@ -493,20 +488,20 @@ public sealed partial class MakeWorkflowTests
     public void HelpRunsAndNamesEveryTarget()
     {
         var root = TestRepositoryLayout.FindRoot();
-        var rootResult = BoundedProcessRunner.Run(
+        var rootResult = TestProcessRunner.Run(
             "make",
             ["help"],
             root,
             BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
-        var toolsResult = BoundedProcessRunner.Run(
+        var toolsResult = TestProcessRunner.Run(
             "make",
             ["-C", "tools", "help"],
             root,
             BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
-        var directToolsResult = BoundedProcessRunner.Run(
+        var directToolsResult = TestProcessRunner.Run(
             "make",
             ["-f", "tools/Makefile", "help"],
             root,

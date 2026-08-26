@@ -23,20 +23,10 @@ done
 [[ $# -gt 0 ]] || { echo "report-supervisor: command is required after --" >&2; exit 2; }
 
 REPOSITORY_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
-PERF_EVENT_LIB="$REPOSITORY_ROOT/tools/scripts/lib/perf-event-lib.sh"
-[[ -r "$PERF_EVENT_LIB" ]] || exit 2
-source "$PERF_EVENT_LIB"
 if [[ -d /private/tmp ]]; then DEFAULT_HOST_TMP=/private/tmp; else DEFAULT_HOST_TMP=/tmp; fi
 STATE_ROOT="${STRATALINT_SUPERVISOR_ROOT:-$DEFAULT_HOST_TMP/stratalint-report-supervisor-${UID:-$(id -u)}}"
 RUN_ROOT="$STATE_ROOT/runs"
 SLOT_ROOT="$STATE_ROOT/slots"
-if [[ -n "${STRATALINT_REPORT_METRICS_LOG:-}" ]]; then
-  METRICS_LOG="$STRATALINT_REPORT_METRICS_LOG"
-else
-  [[ -n "${HOME:-}" && "$HOME" == /* ]] \
-    || { echo "report-supervisor: HOME must be absolute for the performance ledger" >&2; exit 2; }
-  METRICS_LOG="$HOME/.stratalint-perf/events.jsonl"
-fi
 # 默认槽数 5(2026-08-15 用户裁决;同日先定 3,再定 5)。此前是 1,且全仓没有任何
 # 注释/文档/测试记载 1 的案由。
 #
@@ -88,10 +78,6 @@ PROCESS_CANDIDATES_FILE=""
 STDOUT_RELAY_PID=""
 STDERR_RELAY_PID=""
 SLOT_DIR=""
-METRICS_LOCK_DIR=""
-CONCURRENCY_COUNT=0
-FD_PEAK=0
-RSS_PEAK_KB=0
 STARTED_MS=0
 
 early_cleanup() {
@@ -102,7 +88,7 @@ trap 'exit 129' HUP
 trap 'exit 130' INT
 trap 'exit 143' TERM
 
-mkdir -p "$RUN_ROOT" "$SLOT_ROOT" "$(dirname "$METRICS_LOG")"
+mkdir -p "$RUN_ROOT" "$SLOT_ROOT"
 TMP_ROOT="$(mktemp -d "$RUN_ROOT/run.XXXXXXXX")"
 TMP_ROOT="$(cd "$TMP_ROOT" && pwd -P)"
 SCRATCH="$TMP_ROOT/scratch"
@@ -356,11 +342,6 @@ claim_lock() {
   release_lock_guard "$lock"
 }
 
-active_slot_count() {
-  find "$SLOT_ROOT" -maxdepth 1 -type d -name 'slot-*.lock' -print 2>/dev/null \
-    | awk 'END {print NR + 0}'
-}
-
 acquire_lean_slot() {
   local index
   local candidate
@@ -370,7 +351,6 @@ acquire_lean_slot() {
       candidate="$SLOT_ROOT/slot-$index.lock"
       if claim_lock "$candidate"; then
         SLOT_DIR="$candidate"
-        CONCURRENCY_COUNT="$(active_slot_count)"
         return 0
       fi
       reclaim_stale_lock "$candidate" || true
@@ -503,34 +483,6 @@ signal_recorded_processes() {
   done < <(sort -t '|' -k1,1nr "$PROCESS_CANDIDATES_FILE")
 }
 
-sample_process_tree() {
-  local pid rss fd members
-  local rss_total=0
-  local fd_total=0
-  members="$({
-    if [[ -n "$CHILD_PID" ]]; then collect_process_tree "$CHILD_PID"; fi
-    marker_processes
-  } | sort -un)"
-  record_process_candidates <<< "$members"
-  while IFS= read -r pid; do
-    [[ -n "$pid" \
-      && "$pid" != "$STDOUT_RELAY_PID" \
-      && "$pid" != "$STDERR_RELAY_PID" ]] || continue
-    rss="$( { ps -o rss= -p "$pid" 2>/dev/null || true; } | awk '{sum += $1} END {print sum + 0}')"
-    rss_total=$((rss_total + rss))
-    if [[ -d "/proc/$pid/fd" ]]; then
-      fd="$( { find "/proc/$pid/fd" -mindepth 1 -maxdepth 1 -print 2>/dev/null || true; } | awk 'END {print NR + 0}')"
-    elif command -v lsof >/dev/null 2>&1; then
-      fd="$( { lsof -a -p "$pid" -d 0-999999 2>/dev/null || true; } | awk 'NR > 1 {count++} END {print count + 0}')"
-    else
-      fd=0
-    fi
-    fd_total=$((fd_total + fd))
-  done <<< "$members"
-  if [[ "$rss_total" -gt "$RSS_PEAK_KB" ]]; then RSS_PEAK_KB="$rss_total"; fi
-  if [[ "$fd_total" -gt "$FD_PEAK" ]]; then FD_PEAK="$fd_total"; fi
-}
-
 terminate_process_group() {
   local group_id="$1"
   record_supervised_processes
@@ -562,118 +514,12 @@ wait_for_relay() {
   wait "$pid" >/dev/null 2>&1 || true
 }
 
-loadavg_per_cpu() {
-  local load=""
-  local cpus=""
-  if [[ -r /proc/loadavg ]]; then
-    read -r load _ < /proc/loadavg || true
-  elif command -v sysctl >/dev/null 2>&1; then
-    load="$(sysctl -n vm.loadavg 2>/dev/null \
-      | awk '{for (i=1; i<=NF; i++) if ($i ~ /^[0-9]+([.][0-9]+)?$/) {print $i; exit}}')"
-  fi
-  if command -v getconf >/dev/null 2>&1; then
-    cpus="$(getconf _NPROCESSORS_ONLN 2>/dev/null || true)"
-  fi
-  if [[ ! "$cpus" =~ ^[1-9][0-9]*$ ]] && command -v sysctl >/dev/null 2>&1; then
-    cpus="$(sysctl -n hw.logicalcpu 2>/dev/null || true)"
-  fi
-  if [[ "$load" =~ ^[0-9]+([.][0-9]+)?$ && "$cpus" =~ ^[1-9][0-9]*$ ]]; then
-    awk -v load="$load" -v cpus="$cpus" 'BEGIN {printf "%.6f", load / cpus}'
-  else
-    printf 'null'
-  fi
-}
-
-performance_event() {
-  local rc="$1"
-  local elapsed_ms="$2"
-  local timestamp status venue os arch cpu_class commit base load elapsed_seconds rss_peak_mb
-  timestamp="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
-  status=observation
-  venue=local
-  if [[ "${CI:-}" == "true" || "${CI:-}" == "1" ]]; then venue=ci; fi
-  os="$(uname -s 2>/dev/null || printf unknown)"
-  arch="$(uname -m 2>/dev/null || printf unknown)"
-  cpu_class=""
-  if command -v sysctl >/dev/null 2>&1; then
-    cpu_class="$(sysctl -n machdep.cpu.brand_string 2>/dev/null || true)"
-  fi
-  if [[ -z "$cpu_class" && -r /proc/cpuinfo ]]; then
-    cpu_class="$(awk -F ': *' '/^model name/ {print $2; exit}' /proc/cpuinfo)"
-  fi
-  if [[ -z "$cpu_class" ]]; then cpu_class="$arch"; fi
-  cpu_class="$(printf '%s' "$cpu_class" | sed 's/["\\]/_/g')"
-  commit="$(git -C "$REPOSITORY_ROOT" rev-parse --verify 'HEAD^{commit}' 2>/dev/null || printf unknown)"
-  [[ "$commit" =~ ^[0-9a-f]{40,64}$ ]] || commit=unknown
-  base="$(git -C "$REPOSITORY_ROOT" rev-parse --verify "${STRATALINT_PERF_BASE:-origin/dev}^{commit}" 2>/dev/null || printf unknown)"
-  [[ "$base" =~ ^[0-9a-f]{40,64}$ ]] || base=unknown
-  load="$(perf_json_nonnegative_number_or_null "$(loadavg_per_cpu)")"
-  elapsed_seconds="$(awk -v value="$elapsed_ms" 'BEGIN {printf "%.3f", value / 1000}')"
-  rss_peak_mb="$(awk -v value="$RSS_PEAK_KB" 'BEGIN {printf "%.3f", value / 1024}')"
-  printf '{"schema":"stratalint-perf-event-v1","run_id":"report-%s-%s","ts":"%s","cohort":{"venue":"%s","os":"%s","arch":"%s","cpu_class":"%s","runner_class":null},"context":{"commit":"%s","base":"%s","workload_id":"report","cache_state":null,"loadavg_per_cpu":%s,"host_concurrency":null},"kind":"resource","stage":"%s","status":"%s","elapsed_seconds":%s,"resources":{"disk_free_gb":null,"fd_peak":%s,"rss_peak_mb":%s},"role":"%s","pid":%s,"elapsed_ms":%s,"rc":%s,"fd_peak":%s,"rss_peak_kb":%s,"concurrency_count":%s}\n' \
-    "$STARTED_MS" "$CHILD_PID" "$timestamp" "$venue" "$os" "$arch" "$cpu_class" \
-    "$commit" "$base" "$load" "$ROLE" "$status" \
-    "$elapsed_seconds" "$FD_PEAK" "$rss_peak_mb" "$ROLE" "$CHILD_PID" \
-    "$elapsed_ms" "$rc" "$FD_PEAK" "$RSS_PEAK_KB" "$CONCURRENCY_COUNT"
-}
-
-acquire_metrics_lock() {
-  local deadline=$(( $(date +%s) + LOCK_TIMEOUT_SECONDS ))
-  local candidate="${METRICS_LOG}.lock"
-  while ! claim_lock "$candidate"; do
-    reclaim_stale_lock "$candidate" || true
-    if (( $(date +%s) >= deadline )); then
-      echo "report-supervisor: timed out waiting for the performance ledger" >&2
-      return 2
-    fi
-    sleep 0.05
-  done
-  METRICS_LOCK_DIR="$candidate"
-}
-
-append_metrics() {
-  local rc="$1"
-  local elapsed_ms="$2"
-  local event_tmp=""
-  local metrics_rc=0
-  acquire_metrics_lock || {
-    metrics_rc=$?
-    perf_emit_commit_failure report-supervisor lock-unavailable "$metrics_rc"
-    return "$metrics_rc"
-  }
-  event_tmp="$(mktemp "$TMP_ROOT/event.XXXXXXXX")" || {
-    metrics_rc=$?
-    perf_emit_commit_failure report-supervisor event-temp-unavailable "$metrics_rc"
-    return "$metrics_rc"
-  }
-  performance_event "$rc" "$elapsed_ms" > "$event_tmp" \
-    || {
-      metrics_rc=$?
-      rm -f -- "$event_tmp"
-      perf_emit_commit_failure report-supervisor event-serialization-failed "$metrics_rc"
-      return "$metrics_rc"
-    }
-  ( trap '' XFSZ
-    STRATALINT_PERF_LEDGER="$METRICS_LOG" \
-      perf_flush_events "$REPOSITORY_ROOT" "$event_tmp" report-supervisor 2>/dev/null
-  ) \
-    || {
-      metrics_rc=$?
-      rm -f -- "$event_tmp"
-      return "$metrics_rc"
-    }
-  rm -f -- "$event_tmp"
-  rm -rf -- "$METRICS_LOCK_DIR"
-  METRICS_LOCK_DIR=""
-}
-
 finish() {
   local rc=$?
-  local finished_ms
   trap - EXIT HUP INT TERM
   set +e
   if [[ -n "$PROCESS_GROUP_ID" ]]; then
-    sample_process_tree
+    record_supervised_processes
     terminate_process_group "$PROCESS_GROUP_ID"
   fi
   if [[ -n "$CHILD_PID" ]]; then
@@ -681,13 +527,6 @@ finish() {
   fi
   if [[ -n "$STDOUT_RELAY_PID" ]]; then wait_for_relay "$STDOUT_RELAY_PID"; fi
   if [[ -n "$STDERR_RELAY_PID" ]]; then wait_for_relay "$STDERR_RELAY_PID"; fi
-  finished_ms="$(now_ms)"
-  # Stdout is multiplexed: worker bytes are relayed first, then a supervisor
-  # note is appended only when the performance-event commit fails.
-  if [[ -n "$CHILD_PID" && "$STARTED_MS" -gt 0 ]]; then
-    append_metrics "$rc" "$((finished_ms - STARTED_MS))" 2>/dev/null || true
-  fi
-  if [[ -n "$METRICS_LOCK_DIR" ]]; then rm -rf -- "$METRICS_LOCK_DIR"; fi
   if [[ -n "$SLOT_DIR" ]]; then rm -rf -- "$SLOT_DIR"; fi
   rm -rf -- "$TMP_ROOT"
   exit "$rc"
@@ -700,8 +539,6 @@ trap 'exit 143' TERM
 
 if [[ "$LEAN_SLOT" == "1" ]]; then
   acquire_lean_slot
-else
-  CONCURRENCY_COUNT="$(active_slot_count)"
 fi
 
 STARTED_MS="$(now_ms)"
@@ -720,7 +557,7 @@ if (( BUILD_TIMEOUT_SECONDS > 0 )); then
 fi
 BUILD_TIMED_OUT=0
 while process_exists "$CHILD_PID"; do
-  sample_process_tree
+  record_supervised_processes
   if (( BUILD_DEADLINE > 0 )) && (( $(date +%s) >= BUILD_DEADLINE )); then
     echo "report-supervisor: build exceeded ${BUILD_TIMEOUT_SECONDS}s wall-clock budget;" \
       "terminating to release the lean slot (#403)" >&2

@@ -56,7 +56,7 @@ public sealed class BaseFactScopeProbeRatchetTests
                 $"{probe.Rule} probe {probe.Method.DeclaringType?.FullName}.{probe.Method.Name} is not named for its rule");
             Assert.True(
                 probe.Method.GetCustomAttributes()
-                    .Any(attribute => attribute.GetType().FullName is "Xunit.FactAttribute" or "Xunit.TheoryAttribute"),
+                    .Any(attribute => IsXunitTestAttribute(attribute.GetType())),
                 $"{probe.Rule} probe {probe.Method.DeclaringType?.FullName}.{probe.Method.Name} is not an executable xUnit test");
         }
 
@@ -157,6 +157,16 @@ public sealed class BaseFactScopeProbeRatchetTests
             missing.Length == 0,
             "registered finding edges missing a named differential base-fact scope probe: "
                 + string.Join(", ", missing));
+    }
+
+    private static bool IsXunitTestAttribute(Type attributeType)
+    {
+        for (var current = attributeType; current is not null; current = current.BaseType)
+        {
+            if (current.FullName is "Xunit.FactAttribute" or "Xunit.TheoryAttribute") return true;
+        }
+
+        return false;
     }
 
     [Fact]

@@ -21,7 +21,7 @@ public sealed class TemporaryDirectoryTests
                     throw new IOException("Directory not empty");
                 }
             },
-            _ => transientDelays++);
+            () => transientDelays++);
 
         Assert.Equal(3, transientAttempts);
         Assert.Equal(2, transientDelays);
@@ -35,7 +35,7 @@ public sealed class TemporaryDirectoryTests
                     persistentAttempts++;
                     throw new IOException("Directory not empty");
                 },
-                _ => { }));
+                () => { }));
 
         Assert.Equal(TestDirectoryCleanup.MaximumAttempts, persistentAttempts);
         Assert.Equal("Directory not empty", exception.Message);

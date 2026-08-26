@@ -113,11 +113,11 @@ public sealed class FaultInjectionTests
     [Fact]
     public void BoundedProcessSurfacesNonzeroAndTimeout()
     {
-        var nonzero = BoundedProcessRunner.Run(
+        var nonzero = TestProcessRunner.Run(
             "/usr/bin/false",
             Array.Empty<string>(),
             "/tmp",
-            TimeSpan.FromSeconds(2),
+            TestBudgets.LocalProcessHangGuard,
             1024);
 
         Assert.NotEqual(0, nonzero.ExitCode);
@@ -134,11 +134,11 @@ public sealed class FaultInjectionTests
     {
         var expected = Encoding.UTF8.GetBytes("base-owned replay envelope\n");
 
-        var output = BoundedProcessRunner.Run(
+        var output = TestProcessRunner.Run(
             "/bin/cat",
             Array.Empty<string>(),
             "/tmp",
-            TimeSpan.FromSeconds(2),
+            TestBudgets.LocalProcessHangGuard,
             1024,
             expected);
 

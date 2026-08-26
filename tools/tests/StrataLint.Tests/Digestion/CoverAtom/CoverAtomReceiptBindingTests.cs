@@ -59,7 +59,8 @@ public sealed partial class CoverAtomTests
                 CoverWorld.Raw(currentFiles),
                 CoverWorld.Raw(baselineFiles)),
             new FakeLeanReportSource(inputs.Report),
-            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
+            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
+            CoverWorld.TimeProvider);
 
         var result = environment.CoverAtom(
             ["--cover-atom", spec.AtomId, "--gid", inputs.Gid, "--base", "baseline",
