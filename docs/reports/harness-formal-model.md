@@ -43,17 +43,22 @@ tracked 文件数 29,407 属于 `94f64f416`;`25c3a9716` 的实测值为 29,469,�
 
 | 记号 | 名 | 含义 | 本仓现状 |
 |---|---|---|---|
-| `π(x)` | producer | 发射 x 字节的程序;`⊥` 表示手写 | FILEMAP `produced_by` |
+| `π(x)` | producer actor | `π:A(R)→ProducerActor∪{⊥}`;`⊥` 表示手写 | FILEMAP `produced_by` actor 名 |
 | `I_run(y)` | runtime inputs | `A(R) → 2^A(R)`;工件 `y` **执行时**读取的工件闭包 | **未声明**;`.NET` 工程判者仅有静态上近似 |
-| `I_prod(x)` | production inputs | `I_run(π(x))`,即生产 `x` 时的读取闭包;`π(x)=⊥` 时为 `∅` | **未声明**;`EngineeringInputDeriver` 不派生此关系 |
+| `I_prod(x)` | production inputs | 部分映射 `A(R) ⇀ 2^A(R)`;生产 `x` 时的读取闭包 | **未声明**;`EngineeringInputDeriver` 不派生此关系 |
 | `J_{D,K}(x)` | typed judges | 对象域 `D` 到判者域 `K` 的定型判定关系 | `V_path ⊆ Selector × VerifierActor`;`J_component ⊆ Component × Component`,二者不合并 |
 | `C(x)` | consumers | `A(R) → 2^(A(R) ∪ ProgramActorWords)`;执行时消费 `x` 的对象 | FILEMAP `consumed_by` 近似承载,并含仓外 actor |
 
+**producer actor 解析**:定义部分映射 `resolve_R:ProducerActor ⇀ A(R)`,只在 actor 能唯一解析到 `R` 中受治理的可执行工件时有定义。
+`π(x)=⊥` 时 `I_prod,R(x)=∅`;`resolve_R(π(x))` 有定义时 `I_prod,R(x)=I_run,R(resolve_R(π(x)))`;
+其余情况 `I_prod,R(x)` 未定义并记 `open`,不得用于投影分类。对每个判者域 `K` 另记定型读集
+`JudgeReads_R^K:K→2^A(R)`;`K=A(R)` 时它就是 `I_run,R`,actor 域不得用空集冒充。
+
 **互逆律(公理 0,工件定型子域)**:`∀ x,y ∈ A(R). y ∈ C(x) ⟺ x ∈ I_run(y)`。
 `C` 与 `I_run` 在该子域上是同一条**消费边**的两个方向;落在 `ProgramActorWords` 上的消费边属于
-另一个对象域,不参与互逆律,因而不会要求无类型的 `I_run(agent)`。`I_prod` 是经 `π` 得到的生产阶段读取闭包;
+另一个对象域,不参与互逆律,因而不会要求无类型的 `I_run(agent)`。`I_prod` 只在上述 `resolve_R` 有定义处组合;
 `J_{D,K}` 是按两端对象域定型的**判定边**,与消费边不同型。下文抽象地写 `J_{D,K}` 时一次只取一个载体;
-本仓 `V_path` 与 `J_component` 不构成单一 `J`。**投影定理只能使用 `I_prod`。**
+本仓 `V_path` 与 `J_component` 不构成单一 `J`。**投影分类只能使用有定义的 `I_prod`。**
 
 原式按原定义为假。反例是判者 `test` 执行时读取被测 `impl`,故 `test ∈ C(impl)`;
 但手写 `test` 满足 `π(test)=⊥`,于是 `I_prod(test)=∅`,`impl ∉ I_prod(test)`。
@@ -135,41 +140,25 @@ tracked 文件数 29,407 属于 `94f64f416`;`25c3a9716` 的实测值为 29,469,�
 | `root` | τ=0,信任注入点 | 内容寻址且公开可独立复验;一致性标 open |
 | `source` | 手写;`π=⊥`;字节本身即真值 | 无 producer,且承担独立权威 |
 | `ledger` | source + 单调性约束(append-only) | 承担**历史权威**:它断言「当时发生了什么」 |
-| `projection` | `x = f(I_prod(x))` | 四项合取,见下 |
+| `projection` | `I_prod(x)` 有定义,且解析后的 producer 以该闭包重发可逐字节得到 `x` | 四项合取,见下 |
 
 **投影四项合取**(CLAUDE.md 第〇节原文,此处只作形式化):
 ① `π(x)` 受 harness 治理;② `I_prod(x)` **完整声明**且受治理且保留;
 ③ 可由 `π(x)` 与 `I_prod(x)` 逐字节无损重建;
 ④ 无独立权威(不承担 policy/oracle/history authority)。四项全真才是投影;未知或外部依赖 fail-closed 判为非投影。
 
-**定理 3.1(投影字节不含输入闭包之外的信息)**:令 `I = I_prod(x)`,且逐项满足:
+**仓库政策(投影不设门)**:四项合取判为 `projection` 后,不对投影本身设置准入门。依据来自
+`CLAUDE.md` 第〇节记录的成本,不是本文自证:守投影会长出冲突分类器、自动重算链、FIFO 租约;
+实测 `pr-shepherd` 一族 shell **2,817 行** + 专职测试 **3,913 行**,其 85 个测试是 CI test 阶段最慢的
+**≈396s**;另有 `conservative` **529s/次**、`c0-renew` **24 min/次**。**这是成本论证,不是信息论定理。**
 
-1. `π(x) = f ≠ ⊥`,且 `f` 是受 harness 治理的 canonical producer;
-2. `f` total / deterministic / pure / hermetic;
-3. `I` 完整,包含**环境闭包**,受治理且保留;
-4. canonical serialization 稳定;
-5. 所讨论的 `x` 字节确为某同 revision 的 `f(I)` 结果,而非仅被**声明**为 projection;此等式是定理前提,不构成 freshness 门;
-6. `x` 不承担 policy/oracle/history 权威。
-
-则 `H(x | f, I)=0`,即 `x` 的字节不含 `I` 之外的信息。第 6 项仍是投影四项合取中的独立分类前提,
-不是从条件熵推出的结论;不能把「确定性」偷换为「相对规格正确」。
-
-> **反例**:`H(x|f,I)=0` 证的是**确定性**,不是相对规格的**正确性**。
-> 一个恒发射错误常量的确定性 `f`,其条件熵同样为零;而一个施于 `x` 的语义谓词仍能拒绝它,
-> 从而确实检验了 `f`。
-
-因此撤销「施于投影的门只可能产假阳性,不可能产真阳性」的推论。
-
-- **字节一致性验算**:`x` 与 `f(I)` 重算比对能抓陈旧副本、被手改的字节及非确定性差异;
+- **字节一致性验算**:`x` 与解析后 producer 基于 `I_prod(x)` 的重发结果比对,能抓陈旧副本、手改及非确定性差异;
   它只验投影四项合取的第三项,不构成治理、不构成准入义务,不得据此为投影设门。
-- **独立语义判定**:重算比对不能抓相对规格为错的确定性 producer bug。若 `spec=right,x=wrong,
-  f(I)=wrong`,比对仍相等;要抓此类 bug,须使用不复用 `f` 的独立语义判者来检验 producer 的语义。
+- **producer 语义判定**:重算不能抓确定性 producer bug;该语义判者应作用于 producer 与规格,而非给投影 `x` 设门。
 
-> **本仓实测(可执行,一条 python)**:63 条 FILEMAP 条目中,**8 条的 `verified_by` 恰为其 `produced_by`**
-> ——即「由自己的生产者验证自己」。其中 6 条已是 `run-local`(出库,合规),
-> **2 条仍在 git 索引内**:`Blueprint/**/*.md`(prod=ScribeEmitter)与 `Evidence/D5/values.json`(prod=ValuesEmitter)。
-> 后者正是 CLAUDE.md 已登记的开放违例 `D5-T0031`。这组读数只说明存在 producer 同名验算;
-> 它可能是第三项合取的重算验算,不能单凭同名或仍在索引内就判为独立治理门或准入义务。
+「施于投影的门不增加信息」能否得到非空洞形式陈述,记为 `open`(§10-g),不再冒充定理。
+> **现状读数**:63 条 FILEMAP 条目中 8 条 `verified_by=produced_by`;其中 6 条 `run-local`,2 条仍 tracked:
+> `Blueprint/**/*.md` 与 `Evidence/D5/values.json`(开放违例 `D5-T0031`)。这只描述同名验算,不构成政策依据。
 
 **轴 B —— 角色**(§2,per-edge;节点级摘要):`judge`(出现在某个 `J_{D,K}(y)` 中)/ `producer`(某个 `π(y)`)/ `inert`(叶)。
 
@@ -179,7 +168,7 @@ tracked 文件数 29,407 属于 `94f64f416`;`25c3a9716` 的实测值为 29,469,�
 
 | 权威 | 可否手改 | 准入义务 | 单次改动代价 |
 |---|---|---|---|
-| `projection` | 手改不承权威;应重新发射 | 无准入义务;重算只验第三项,不治理、不设门 | 0,重新发射 |
+| `projection` | 手改不承权威;应重新发射 | 四项合取分类 + CLAUDE.md 成本政策:无门;重算只验第三项 | 0,重新发射 |
 | `source` | 自由 | 其 base-解析的判者 `J_{D,K}(x)` 全部 admit | `C(τ)` |
 | `ledger` | **只许追加** | 后缀扩展检查 + 写入门作用于新增条目 | `C(τ)` / 条 |
 | `root` | 可,但贵 | 保守扩展证明 + 独立对抗评审 + 账本留痕 | `α^{τ_max}` |
@@ -199,9 +188,9 @@ tracked 文件数 29,407 属于 `94f64f416`;`25c3a9716` 的实测值为 29,469,�
 > `"non-run-local FILEMAP pattern matches no tracked repository path"`。两个方向都红。
 > **这是本仓最强的一件机器**,用户想要的「出现即登记」在文件粒度上已经成立。
 
-**公理 4(按域的引用完整性:全称,不是存在)**:`π, I_run, I_prod, J, C` 中出现的每一个名字,
-必须解析到其**声明的对象域**;逐名检查,不得对条目做存在量化。工件引用须解析到 `A(R)`;
-消费端若使用仓外 actor,则须属于仓库刻意定义的闭字母表 `ProgramActorWords`,不得冒充工件引用。
+**公理 4(按域的引用完整性:全称,不是存在)**:`π` 的非 `⊥` 名须解析到 `ProducerActor`,使用 `I_prod` 时还须有
+`resolve_R(π(x))∈A(R)`;`I_run` 的参数和值须在 `A(R)`;每个 `J_{D,K}` 的对象与判者须分别解析到 `D` 与 `K`;
+`C` 的工件引用须解析到 `A(R)`,仓外消费 actor 则须属于闭字母表 `ProgramActorWords`。逐名检查,不得对条目做存在量化。
 
 > **本仓判例(源码自记)**:`FileMapPolicy.cs` 的中文注记记着 #1116——
 > `kind=data` 的 `verified_by` 曾只检查「至少有一个真 verifier」(`.Any(...)`),
@@ -219,10 +208,12 @@ tracked 文件数 29,407 属于 `94f64f416`;`25c3a9716` 的实测值为 29,469,�
 > **本仓实测(29%,非缺陷)**:63 条中 **18 条的消费者全部**取自
 > `{reader, developer, agent, automation}`。这四个词在 `FileMapPolicy.ProgramActorWords` 中是
 > deliberate 的闭字母表成员,仓库合法放行;它们不指向 `A(R)` 中的工件。
-> 名单:`*.json`、`AGENTS.md`、`CLAUDE.md`、`Evidence/D5/values.json`、`Generated/DAG.md`、
-> `Generated/FILEMAP.md`、`Generated/echo-residuals/*.md`、`Makefile`、`README.md`、`agents/**`、
+> 以下均为 FILEMAP **selector**,不是 tree object 引用:`*.json`、`AGENTS.md`、`CLAUDE.md`、
+> `Evidence/D5/values.json`、`Makefile`、`README.md`、`agents/**`、
 > `docs/CONTRIBUTING.md`、`docs/GOVERNANCE.md`、`docs/reports/**`、`skills/**`、`tools/ARCHITECTURE.md`、
 > `tools/Architecture/HARDCODE-LEDGER.md`、`tools/Makefile`、`tools/scripts/**`。
+> 另三个 selector 条目为 `pattern = "Generated/DAG.md"`、`pattern = "Generated/FILEMAP.md"`、
+> `pattern = "Generated/echo-residuals/*.md"`;其 `runtime_disposition = "run-local"`,按声明本就不在 git 索引。
 > `Meta/FILEMAP.toml:407-411` 对 `docs/reports/**` 明文规定 `consumed_by = ["agent"]`,
 > 直接证明这是现行 spec 的合法形,不是遗漏。
 
@@ -238,10 +229,12 @@ harness 真正声称的东西是 `∀i. P(Rᵢ)`,`P` 是若干谓词的合取。
 - **重验**:每步重算 `P(Rᵢ)`,代价 `O(|R|)` / 步。
 - **归纳**:一次性证 `P(R₀)`(基例),然后每步证 `P(R) ∧ step(δ) ⟹ P(R ⊕ δ)`,代价 `O(|δ|)`。
 
-**定义(局部谓词)**:令 `ActualReads_R(ψ,x)` 为在状态 `R` 判定 `ψ(x)` 时实际读取的闭包;
-`ψ` 在 `R` 局部 ⟺ `ψ(x)` 只由 `x ∪ ActualReads_R(ψ,x)` 的字节决定。对由一组判者执行的合取,
-`ActualReads_R(ψ,x) = ⋃_{j ∈ J_{A,A}(x)} I_run,R(j)`。机器实际派生和使用的是跨步静态闭包
-`dep̂_{R→R⊕δ}`,二者不能只因名称相同就视为相等。
+**定义(局部谓词)**:令 `d ▷_R x` 表示定型对象 `d∈D` 直接命名、选择或治理工件 `x`;`D=A(R)` 时 `d=x`。
+对执行 `ψ` 的**全部**判者域定义
+`ActualReads_R(ψ,x)=⋃_{(D,K)∈Domains(ψ)}⋃_{d▷_R x}⋃_{j∈J^ψ_{D,K}(d)} JudgeReads_R^K(j)`。
+故 `V_path` 的 `Selector × VerifierActor` 分支与 `J_component` 分支都在并集内,不得被 `J_{A,A}` 吞掉或省略。
+`ψ` 在 `R` 局部 ⟺ `ψ(x)` 只由 `x ∪ ActualReads_R(ψ,x)` 的字节决定。机器使用跨步静态闭包
+`dep̂_{R→R⊕δ}`,它必须覆盖上述全域并集,不能只因名称相同就视为相等。
 
 **实例化证书义务(跨步)**:对每个继承工件 `x`,必须证明
 `ActualReads_R(ψ,x) ∪ ActualReads_{R⊕δ}(ψ,x) ⊆ dep̂_{R→R⊕δ}(x)`;候选态实际读集也在量词内。
@@ -311,10 +304,10 @@ harness 真正声称的东西是 `∀i. P(Rᵢ)`,`P` 是若干谓词的合取。
 > 其余七种情形一律回落全量:dev push、solution root 不可唯一派生、delta 命中工程根、
 > 派生进程失败、结果格式非法、`incomplete-derivation`、事件类型不识别。
 > 且 `dep` 不是手抄清单:`tools/StrataLint.Engine/RepositoryIo/EngineeringScopePolicy.cs:29 EngineeringInputDeriver`
-> 由 MSBuild `Compile` 项与工程判者消费映射现算 `dep̂`,查询不完整时返回 `IncompleteDerivation` 而非猜。
-> 它近似的是 `ActualReads_R(ψ,x) = ⋃_{j ∈ J_{A,A}(x)} I_run,R(j)`,**不是** producer 的 `I_prod(x)`。
-> 它的 fail-closed 回落满足证书无法建立时不得给 `proven-disjoint` 的义务;成功派生结果是否同时覆盖
-> 基线态与候选态实际读集,仍须由跨步实例证书证明。
+> 由 MSBuild `Compile` 项与工程判者消费映射现算工程分支,查询不完整时返回 `IncompleteDerivation` 而非猜。
+> 该分支**不是** producer 的 `I_prod(x)`,也不单独等于覆盖 `V_path` 等全部判者域的 `ActualReads_R`。
+> 完整 `dep̂` 必须并入所有判者域;缺任一域即不得给 `proven-disjoint`。成功派生结果是否同时覆盖
+> 两态全域实际读集,仍须由跨步实例证书证明。
 > 本模型只指出应把分型后的读取关系升为登记表的一等关系,
 > 让 scope 决策对所有门统一,而不是每道门各写一遍。
 
@@ -376,7 +369,7 @@ harness 真正声称的东西是 `∀i. P(Rᵢ)`,`P` 是若干谓词的合取。
 | 2 | FILEMAP / TOWER 所有权 | **对象域不同,非差距** | `verified_by` 35、`judged_by` 10、交集 1/35;该交集不证明双真源 |
 | 3 | TOWER `repository-files` 成员 | **advisory,不作为合并依据** | 10 个组件,38 行成员、31 条去重实路径;全部五种 kind 合计才是 82 行 |
 | 4 | GC 消费可达性 | **advisory,未采纳** | 18/63 使用合法 `ProgramActorWords`;当前值为非缺陷 |
-| 5 | 投影字节与语义检查(定理 3.1) | **须区分两类检查** | 重算只抓陈旧/手改/非确定性且不设门;确定性 producer bug 须独立语义判者 |
+| 5 | 投影四项分类 + 成本政策 | **政策依据是成本,不是定理** | 重算只验第三项且不设门;producer 语义另判 |
 | 6 | 公理 2 信任定向 | **未满足** | `ci.yml:749` 候选自带判官;由 rc=3 脚手架承担,CLAUDE.md 自记为 bootstrap |
 
 **撤回原先的「最高价值项」及合并处方。** 两表的天然对象域和消费者不同:
@@ -418,14 +411,14 @@ rule-catalog / ci-jobs / bootstrap 信任链;TOWER 也不能替代 FILEMAP 的�
 
 1. **枚举与登记**:建立 `Reg`,与 tracked 树在 selector 粒度双射,两向 fail-closed。新文件**未分类即拒**。
 2. **分轴**:每条目定 (权威, 居所)。无法判定者在**唯一登记真源**内 fail-closed:
-   判为非投影、拒绝准入并记具名 `open`;不得另立平行隔离清单。
+   判为非投影、拒绝准入并记具名 `open`;四项合取成立者按成本政策不设投影门;不得另立平行隔离清单。
 3. **补判者**:每个 `source` 必须按两端对象域点名 `J_{D,K}(x)`。无判者的 source 三选一——加判者、降为 projection、删。
 4. **核消费者域**:每条目点名 `C(x)`;工件引用与合法 `ProgramActorWords` 按各自对象域解析。
    只有另案采纳 GC 可达性时,才需要进一步区分 `deliverable` 与死工件。
 5. **算 τ**:仅由 `J_component` 求高度;查组件判定边无环(公理 1);查判者在 base 侧解析(公理 2)。
    `V_path` 不参与 τ,且 τ 永不手写。
 6. **审门**:每个门查两态局部性,且 `dep̂` 必须持有覆盖
-   `ActualReads_R ∪ ActualReads_{R⊕δ}` 的跨步可靠上近似证书。
+   全部判者域(含 `V_path`)之 `ActualReads_R ∪ ActualReads_{R⊕δ}` 的跨步可靠上近似证书。
    非局部者按定理 5.2 三选一,容差带按 `(w−1)·k` 定尺寸,`w` 要实测。
 7. **枚举全局参数与环境闭包**:写成显式清单并保持最小;参数变更是充分触发之一,
    证书缺失、派生失败或未声明环境漂移同样会使全量成为必要回落。
@@ -446,6 +439,7 @@ hermetic 且 deterministic 的 judge 与 producer、可证明的依赖上近似�
 |---|---|---|
 | 未登记文件数 | 0 | **0**(机器保证) |
 | 无判者的 source 数 | 0 | 未测 |
+| 施于投影的准入门数 | 0(四项分类 + 成本政策) | 未测 |
 | 消费者非工件的条目占比 | 仅当采纳 GC 可达性时适用 | **29%**(18/63,非缺陷) |
 | FILEMAP / TOWER 词表交集 | 不作为双真源判据 | **1/35**(对象域不同,非缺陷) |
 | 手工枚举的成员路径数 | 仅另案采纳派生表示时适用 | **31**(TOWER `repository-files`,38 行) |
@@ -476,14 +470,18 @@ hermetic 且 deterministic 的 judge 与 producer、可证明的依赖上近似�
   63 条 pattern。对有限 tracked tree、闭世界工件枚举、hermetic/deterministic judge 与 producer、
   可证明依赖上近似的仓库,§8 的形状是否仍成立,尚未在第二个仓库验证。
 - **(f) 跨步依赖证书**`open`。本轮核到失败时回落全量的 fail-closed 形,未证明成功派生的 `dep̂`
-  同时覆盖 `ActualReads_R` 与候选态 `ActualReads_{R⊕δ}`;在此证书建立前,不得由基线读集单独授权增量跳过。
+  同时覆盖两态的全部判者域(含 `V_path`);在此证书建立前,不得由局部域或基线读集单独授权增量跳过。
+- **(g) 投影门的信息陈述**`open`:是否存在一个**非空洞**的形式陈述,使「施于投影的门不增加信息」成立?
+  v0.1 的失败是**循环**:把「`x` 不承担独立治理权威」同时放进前提与结论。v0.2 的失败是**空洞**:
+  deterministic `f` 与 `x=f(I)` 已同义给出原结论,其余前提不起作用;且原装置把 `H` 条件于 `f`,`f` 可硬编码闭包 `I` 外常量。
+  任何新尝试必须先说明如何**同时**避开这两种失败模式,否则不必开始。
 
 ---
 
 ## v0.2 勘误记录
 
 - E1 `I` 同时充当生产与消费读取且与 `C` 互逆 → 撤销 → 依据:fidelity 席 + `Meta/FILEMAP.toml:407-411` / `FileMapPolicy.cs:81-87`。
-- E2 `H(x|f,I)=0` 推出施于投影的门不可能产真阳性 → 弱化 → 依据:parsimony 席 + 本文 §3 定理 3.1 后的错误常量 producer 反例。
+- E2 施于投影的门不可能产真阳性 → 弱化 → 依据:parsimony 席 + 本文 §10-g 的 producer 可硬编码闭包外常量失败模式。
 - E3 「登记表可算的 dep」足以支撑增量可靠性 → 弱化 → 依据:teleology / natural-ownership / proportional-containment 席 + 案卷 `#3274` / `.github/workflows/ci.yml:91,167-175` 的分歧与 fail-closed 回落。
 - E4 全量重验触发「恰有两种」且为充要条件 → 撤销 → 依据:teleology / natural-ownership / proportional-containment 席 + 案卷 `#3369` / commit `51a7e128a` 与案卷 `#3274`。
 - E5 模型与七步无条件适用于任一 git 仓库 → 弱化 → 依据:proportional-containment 席 + 本文 §8 与 §10-e 的单仓样本边界。
@@ -492,14 +490,15 @@ hermetic 且 deterministic 的 judge 与 producer、可证明的依赖上近似�
 - E8 TOWER 为 82 行 `repository-files` 成员、28 路径,且 29,407 属当前基线 → 勘正 → 依据:caller 原读数 + fidelity 席复算 + `tools/TOWER.yaml:108-116` / commits `25c3a9716`,`94f64f416`。
 - E9 产地未按第 9′ 条披露 → 勘正 → 依据:orchestrator + `CLAUDE.md` 第 9′ 条;`/consensus-rnd:sshx` 六席 = 5× codex-cli(teleology / parsimony / fidelity / natural-ownership / proportional-containment)+1× nyxid-oracle(worth),`reject 2 / revise 4`;worth attempt 1 `extraction_failure` abstained、attempt 2 完成;五席同载体族,不声称模型多样性;读数均由 orchestrator 亲验或复核。
 - E10 定理 5.2 目录容差带结论 → 弱化 → 依据:v0.1 使用了 `CLAUDE.md` 第Ⅵ节禁止的模糊措辞「很可能」;`w` 未测,故不得声称当前带宽足够。
+- E11 定理 3.1 → 降格为政策 + open 问题 → 依据:第 2 轮三席一致判其换结论空洞;两次失败模式(循环 / 同义反复且 `H` 条件于 `f`)已记入 open 条目。
 
 ---
 
 ## 附:与既有文本的关系
 
 本模型不新增任何律。它做三件事:
-① 把 CLAUDE.md 中散布的条款归约到分型的生产、运行时消费与判定关系,并明确各定理的前提
-(增量可靠性 ← 定理 5.1 的跨步上近似证书;投影字节无闭包外信息 ← 定理 3.1、无独立权威 ← 四项合取;
+① 把 CLAUDE.md 中散布的条款归约到分型的生产、运行时消费与判定关系,并明确各定理或政策的依据
+(增量可靠性 ← 定理 5.1 的跨步上近似证书;投影分类 ← 四项合取、不设投影门 ← CLAUDE.md 成本政策;
 变异证明 ← 定理 6.1/6.2;
 全量充分触发 ← 命题 5.3);
 ② 区分 FILEMAP 与 TOWER 的对象域,并保留 §4 公理 4 的逐名量词检查,不再用词表交集诊断双真源;
