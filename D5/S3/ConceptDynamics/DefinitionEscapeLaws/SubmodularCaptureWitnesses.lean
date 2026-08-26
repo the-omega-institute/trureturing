@@ -81,10 +81,8 @@ theorem fixed_language_blind_pair_persists_witness :
       definitions definition edge.1 = definitions definition edge.2 := by
     intro definition
     rfl
-  have selectionFinite : S.Finite :=
-    Set.finite_univ.subset (Set.subset_univ S)
   exact ⟨baseline, blind,
-    laws.2.2.2.2.2.2.2 S edge selectionFinite baseline blind⟩
+    laws.2.2.2.2.2.2.2 S edge baseline blind⟩
 
 /-- If the inclusion premise is removed, the required marginal direction is
 false in the same three-edge source model: the larger set is deliberately put
@@ -186,103 +184,46 @@ theorem finite_additivity_is_necessary_witness :
         (fun _ : Bool × Bool => ()) id true nu :=
   marginal_capture_law_not_implied_by_escape_weight
 
-/-- One neighboring false statement is rejected for each clause C1--C8. The
-first seven use the three-edge finite model and the last uses the canonical
-blind pair, so every negation remains inside the source model. -/
-theorem submodular_capture_clause_false_neighbors :
-    let definitions : Bool -> Concept (Bool × Bool) Bool :=
-      fun index => if index then Prod.snd else Prod.fst
-    let q : Concept (Bool × Bool) Unit := fun _ => ()
-    let target : Concept (Bool × Bool) (Bool × Bool) := id
-    let firstEdge := ((false, false), (true, false))
-    let secondEdge := ((false, false), (false, true))
-    let overlapEdge := ((false, false), (true, true))
-    let nu : EscapeWeight ((Bool × Bool) × (Bool × Bool)) :=
-      { mass := fun set =>
-          (@ite Real (firstEdge ∈ set) (Classical.propDecidable _) 1 0) +
-          (@ite Real (secondEdge ∈ set) (Classical.propDecidable _) 1 0) +
-          (@ite Real (overlapEdge ∈ set) (Classical.propDecidable _) 1 0)
-        empty_mass := by simp
-        mass_nonnegative := by intro set; split_ifs <;> norm_num }
-    let cost : Bool -> Real := fun _ => 1
-    let M := fun S : Set Bool => residualEscapeMass S definitions q target nu
-    let F := fun S : Set Bool => capturedEscapeMass S definitions q target nu
-    let captured := fun S : Set Bool =>
-      defectRelation q target ∩
-        ⋃ definition ∈ S,
-          ({pair : (Bool × Bool) × (Bool × Bool) |
-            Setoid.ker (definitions definition) pair.1 pair.2} :
-            Set ((Bool × Bool) × (Bool × Bool)))ᶜ
-    (¬M ∅ = nu.mass (defectRelation
-      (conceptJoin q
-        (jointReadout (fun item : (∅ : Set Bool) => definitions item.1)))
-      target) + 1) ∧
-    (¬F {false} = M ∅ - M {false} + 1) ∧
-    (¬F {false} = nu.mass (captured {false}) + 1) ∧
-    (¬F {false} ≤ F ∅) ∧
-    (¬F {false} + F {true} ≤
-      F ({false} ∪ {true}) + F ({false} ∩ {true})) ∧
-    (¬F ((∅ : Set Bool) ∪ {true}) - F ∅ ≤
-      F ({false} ∪ {true}) - F {false}) ∧
-    (¬¬((forall definition,
-        (M ∅ - M (∅ ∪ {definition})) / cost definition ≤
-          (M ∅ - M (∅ ∪ {false})) / cost false) ↔
-      (forall definition,
-        (F (∅ ∪ {definition}) - F ∅) / cost definition ≤
-          (F (∅ ∪ {false}) - F ∅) / cost false))) ∧
-    (let blindDefinitions : Unit -> Concept Bool Unit := fun _ _ => ()
-     let blindQ : Concept Bool Unit := fun _ => ()
-     let blindTarget : Concept Bool Bool := id
-     ¬(false, true) ∉ defectRelation
-       (conceptJoin blindQ
-         (jointReadout
-           (fun item : (Set.univ : Set Unit) => blindDefinitions item.1)))
-       blindTarget) := by
-  classical
-  dsimp only
-  have laws := finite_capture_laws_nonvacuous
-  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
-  · intro shifted
-    have exactFormula := laws.1.1
-    linarith
-  · intro shifted
-    have exactFormula := laws.2.1.1
-    linarith
-  · intro shifted
-    have exactFormula := laws.2.2.1.1
-    linarith
-  · exact not_le_of_gt laws.2.2.2.1.2
-  · exact not_le_of_gt laws.2.2.2.2.1.2
-  · exact not_le_of_gt laws.2.2.2.2.2.1.2
-  · intro deniesEquivalence
-    exact deniesEquivalence laws.2.2.2.2.2.2
-  · intro claimsEliminated
-    have persists := fixed_language_blind_pair_persists_witness
-      (Set.univ : Set Unit)
-    exact claimsEliminated persists.2.2
-
+/-- C1's false neighbor ignores the selected definition. The displayed edge
+lies in the baseline residual and is removed by the selected first coordinate,
+so the two residual sets cannot be equal. -/
 theorem clause_one_false_neighbor_witness :
     let definitions : Bool -> Concept (Bool × Bool) Bool :=
       fun index => if index then Prod.snd else Prod.fst
     let q : Concept (Bool × Bool) Unit := fun _ => ()
     let target : Concept (Bool × Bool) (Bool × Bool) := id
-    let firstEdge := ((false, false), (true, false))
-    let secondEdge := ((false, false), (false, true))
-    let overlapEdge := ((false, false), (true, true))
-    let nu : EscapeWeight ((Bool × Bool) × (Bool × Bool)) :=
-      { mass := fun set =>
-          (@ite Real (firstEdge ∈ set) (Classical.propDecidable _) 1 0) +
-          (@ite Real (secondEdge ∈ set) (Classical.propDecidable _) 1 0) +
-          (@ite Real (overlapEdge ∈ set) (Classical.propDecidable _) 1 0)
-        empty_mass := by simp
-        mass_nonnegative := by intro set; split_ifs <;> norm_num }
-    let M := fun S : Set Bool => residualEscapeMass S definitions q target nu
-    ¬M ∅ = nu.mass (defectRelation
+    let edge := ((false, false), (true, false))
+    let selectedResidual := defectRelation
       (conceptJoin q
-        (jointReadout (fun item : (∅ : Set Bool) => definitions item.1)))
-      target) + 1 :=
-  submodular_capture_clause_false_neighbors.1
+        (jointReadout (fun item : ({false} : Set Bool) => definitions item.1)))
+      target
+    edge ∈ defectRelation q target ∧
+      edge ∉ selectedResidual ∧
+      selectedResidual ≠ defectRelation q target := by
+  classical
+  dsimp only
+  have baseline :
+      ((false, false), (true, false)) ∈
+        defectRelation (fun _ : Bool × Bool => ()) id := by
+    exact ⟨rfl, by decide⟩
+  have removed :
+      ((false, false), (true, false)) ∉
+        defectRelation
+          (conceptJoin (fun _ : Bool × Bool => ())
+            (jointReadout
+              (fun item : ({false} : Set Bool) =>
+                if item.1 then Prod.snd else Prod.fst))) id := by
+    rintro ⟨joined, _targetDifferent⟩
+    have sameReadout := congrArg Prod.snd joined
+    let item : ({false} : Set Bool) := ⟨false, by simp⟩
+    have sameFirst := congrFun sameReadout item
+    norm_num [conceptJoin, jointReadout, item] at sameFirst
+  refine ⟨baseline, removed, ?_⟩
+  intro residualUnchanged
+  exact removed (residualUnchanged.symm ▸ baseline)
 
+/-- C2's false neighbor reverses the defining subtraction. Nonconstant
+residual mass makes the wrong direction disagree with `F = M(empty) - M`. -/
 theorem clause_two_false_neighbor_witness :
     let definitions : Bool -> Concept (Bool × Bool) Bool :=
       fun index => if index then Prod.snd else Prod.fst
@@ -300,93 +241,225 @@ theorem clause_two_false_neighbor_witness :
         mass_nonnegative := by intro set; split_ifs <;> norm_num }
     let M := fun S : Set Bool => residualEscapeMass S definitions q target nu
     let F := fun S : Set Bool => capturedEscapeMass S definitions q target nu
-    ¬F {false} = M ∅ - M {false} + 1 :=
-  submodular_capture_clause_false_neighbors.2.1
+    M ∅ ≠ M {false} ∧
+      F {false} = M ∅ - M {false} ∧
+      ¬F {false} = M {false} - M ∅ := by
+  classical
+  dsimp only
+  let definitions : Bool -> Concept (Bool × Bool) Bool :=
+    fun index => if index then Prod.snd else Prod.fst
+  let q : Concept (Bool × Bool) Unit := fun _ => ()
+  let target : Concept (Bool × Bool) (Bool × Bool) := id
+  let firstEdge := ((false, false), (true, false))
+  let secondEdge := ((false, false), (false, true))
+  let overlapEdge := ((false, false), (true, true))
+  let nu : EscapeWeight ((Bool × Bool) × (Bool × Bool)) :=
+    { mass := fun set =>
+        (@ite Real (firstEdge ∈ set) (Classical.propDecidable _) 1 0) +
+        (@ite Real (secondEdge ∈ set) (Classical.propDecidable _) 1 0) +
+        (@ite Real (overlapEdge ∈ set) (Classical.propDecidable _) 1 0)
+      empty_mass := by simp
+      mass_nonnegative := by intro set; split_ifs <;> norm_num }
+  let M := fun S : Set Bool => residualEscapeMass S definitions q target nu
+  let F := fun S : Set Bool => capturedEscapeMass S definitions q target nu
+  change M ∅ ≠ M {false} ∧
+    F {false} = M ∅ - M {false} ∧
+    ¬F {false} = M {false} - M ∅
+  have values : M ∅ = 3 ∧ M {false} = 1 ∧ F {false} = 2 := by
+    simpa [M, F, definitions, q, target, nu, firstEdge, secondEdge,
+      overlapEdge] using
+        ⟨finite_capture_values_witness.1,
+          finite_capture_values_witness.2.1,
+          finite_capture_values_witness.2.2.2.2.1⟩
+  rw [values.1, values.2.1, values.2.2]
+  norm_num
 
+/-- C3's false neighbor replaces the captured union by an intersection.
+The first-coordinate edge is cut by one selected definition but not the other,
+so pointwise intersection cannot replace pointwise union. -/
 theorem clause_three_false_neighbor_witness :
     let definitions : Bool -> Concept (Bool × Bool) Bool :=
       fun index => if index then Prod.snd else Prod.fst
     let q : Concept (Bool × Bool) Unit := fun _ => ()
     let target : Concept (Bool × Bool) (Bool × Bool) := id
     let firstEdge := ((false, false), (true, false))
-    let secondEdge := ((false, false), (false, true))
-    let overlapEdge := ((false, false), (true, true))
-    let nu : EscapeWeight ((Bool × Bool) × (Bool × Bool)) :=
-      { mass := fun set =>
-          (@ite Real (firstEdge ∈ set) (Classical.propDecidable _) 1 0) +
-          (@ite Real (secondEdge ∈ set) (Classical.propDecidable _) 1 0) +
-          (@ite Real (overlapEdge ∈ set) (Classical.propDecidable _) 1 0)
-        empty_mass := by simp
-        mass_nonnegative := by intro set; split_ifs <;> norm_num }
-    let F := fun S : Set Bool => capturedEscapeMass S definitions q target nu
-    let captured := fun S : Set Bool =>
+    let capturedUnion := fun S : Set Bool =>
       defectRelation q target ∩
         ⋃ definition ∈ S,
           ({pair : (Bool × Bool) × (Bool × Bool) |
             Setoid.ker (definitions definition) pair.1 pair.2} :
             Set ((Bool × Bool) × (Bool × Bool)))ᶜ
-    ¬F {false} = nu.mass (captured {false}) + 1 :=
-  submodular_capture_clause_false_neighbors.2.2.1
+    let capturedIntersection := fun S : Set Bool =>
+      defectRelation q target ∩
+        ⋂ definition ∈ S,
+          ({pair : (Bool × Bool) × (Bool × Bool) |
+            Setoid.ker (definitions definition) pair.1 pair.2} :
+            Set ((Bool × Bool) × (Bool × Bool)))ᶜ
+    firstEdge ∈ capturedUnion Set.univ ∧
+      firstEdge ∉ capturedIntersection Set.univ ∧
+      capturedIntersection Set.univ ≠ capturedUnion Set.univ := by
+  classical
+  dsimp only
+  have capturedByUnion :
+      ((false, false), (true, false)) ∈
+        defectRelation (fun _ : Bool × Bool => ()) id ∩
+          ⋃ definition ∈ (Set.univ : Set Bool),
+            ({pair : (Bool × Bool) × (Bool × Bool) |
+              Setoid.ker (if definition then Prod.snd else Prod.fst)
+                pair.1 pair.2} : Set ((Bool × Bool) × (Bool × Bool)))ᶜ := by
+    simp [defectRelation, Setoid.ker_def]
+  have notCapturedByIntersection :
+      ((false, false), (true, false)) ∉
+        defectRelation (fun _ : Bool × Bool => ()) id ∩
+          ⋂ definition ∈ (Set.univ : Set Bool),
+            ({pair : (Bool × Bool) × (Bool × Bool) |
+              Setoid.ker (if definition then Prod.snd else Prod.fst)
+                pair.1 pair.2} : Set ((Bool × Bool) × (Bool × Bool)))ᶜ := by
+    simp [defectRelation, Setoid.ker_def]
+  refine ⟨capturedByUnion, notCapturedByIntersection, ?_⟩
+  intro equalSets
+  exact notCapturedByIntersection (equalSets ▸ capturedByUnion)
 
+/-- C4's false neighbor reverses the structural inclusion of captured sets.
+It fails before any mass is evaluated, including for a zero-mass weight. -/
 theorem clause_four_false_neighbor_witness :
     let definitions : Bool -> Concept (Bool × Bool) Bool :=
       fun index => if index then Prod.snd else Prod.fst
     let q : Concept (Bool × Bool) Unit := fun _ => ()
     let target : Concept (Bool × Bool) (Bool × Bool) := id
     let firstEdge := ((false, false), (true, false))
-    let secondEdge := ((false, false), (false, true))
-    let overlapEdge := ((false, false), (true, true))
-    let nu : EscapeWeight ((Bool × Bool) × (Bool × Bool)) :=
-      { mass := fun set =>
-          (@ite Real (firstEdge ∈ set) (Classical.propDecidable _) 1 0) +
-          (@ite Real (secondEdge ∈ set) (Classical.propDecidable _) 1 0) +
-          (@ite Real (overlapEdge ∈ set) (Classical.propDecidable _) 1 0)
-        empty_mass := by simp
-        mass_nonnegative := by intro set; split_ifs <;> norm_num }
-    let F := fun S : Set Bool => capturedEscapeMass S definitions q target nu
-    ¬F {false} ≤ F ∅ :=
-  submodular_capture_clause_false_neighbors.2.2.2.1
+    let captured := fun S : Set Bool =>
+      defectRelation q target ∩
+        ⋃ definition ∈ S,
+          ({pair : (Bool × Bool) × (Bool × Bool) |
+            Setoid.ker (definitions definition) pair.1 pair.2} :
+            Set ((Bool × Bool) × (Bool × Bool)))ᶜ
+    firstEdge ∈ captured {false} ∧
+      firstEdge ∉ captured ∅ ∧
+      ¬captured {false} ⊆ captured ∅ := by
+  classical
+  dsimp only
+  have capturedBySelection :
+      ((false, false), (true, false)) ∈
+        defectRelation (fun _ : Bool × Bool => ()) id ∩
+          ⋃ definition ∈ ({false} : Set Bool),
+            ({pair : (Bool × Bool) × (Bool × Bool) |
+              Setoid.ker (if definition then Prod.snd else Prod.fst)
+                pair.1 pair.2} : Set ((Bool × Bool) × (Bool × Bool)))ᶜ := by
+    simp [defectRelation, Setoid.ker_def]
+  have notCapturedByEmpty :
+      ((false, false), (true, false)) ∉
+        defectRelation (fun _ : Bool × Bool => ()) id ∩
+          ⋃ definition ∈ (∅ : Set Bool),
+            ({pair : (Bool × Bool) × (Bool × Bool) |
+              Setoid.ker (if definition then Prod.snd else Prod.fst)
+                pair.1 pair.2} : Set ((Bool × Bool) × (Bool × Bool)))ᶜ := by
+    simp
+  refine ⟨capturedBySelection, notCapturedByEmpty, ?_⟩
+  intro reverseSubset
+  exact notCapturedByEmpty (reverseSubset capturedBySelection)
 
+/-- C5's false neighbor distributes capture through index intersection as an
+equality. Separate singleton definitions can both cut the same edge even when
+their index intersection is empty. -/
 theorem clause_five_false_neighbor_witness :
     let definitions : Bool -> Concept (Bool × Bool) Bool :=
       fun index => if index then Prod.snd else Prod.fst
     let q : Concept (Bool × Bool) Unit := fun _ => ()
     let target : Concept (Bool × Bool) (Bool × Bool) := id
-    let firstEdge := ((false, false), (true, false))
-    let secondEdge := ((false, false), (false, true))
     let overlapEdge := ((false, false), (true, true))
-    let nu : EscapeWeight ((Bool × Bool) × (Bool × Bool)) :=
-      { mass := fun set =>
-          (@ite Real (firstEdge ∈ set) (Classical.propDecidable _) 1 0) +
-          (@ite Real (secondEdge ∈ set) (Classical.propDecidable _) 1 0) +
-          (@ite Real (overlapEdge ∈ set) (Classical.propDecidable _) 1 0)
-        empty_mass := by simp
-        mass_nonnegative := by intro set; split_ifs <;> norm_num }
-    let F := fun S : Set Bool => capturedEscapeMass S definitions q target nu
-    ¬F {false} + F {true} ≤
-      F ({false} ∪ {true}) + F ({false} ∩ {true}) :=
-  submodular_capture_clause_false_neighbors.2.2.2.2.1
+    let captured := fun S : Set Bool =>
+      defectRelation q target ∩
+        ⋃ definition ∈ S,
+          ({pair : (Bool × Bool) × (Bool × Bool) |
+            Setoid.ker (definitions definition) pair.1 pair.2} :
+            Set ((Bool × Bool) × (Bool × Bool)))ᶜ
+    overlapEdge ∈ captured {false} ∩ captured {true} ∧
+      overlapEdge ∉ captured ({false} ∩ {true}) ∧
+      captured ({false} ∩ {true}) ≠ captured {false} ∩ captured {true} := by
+  classical
+  dsimp only
+  have capturedByBoth :
+      ((false, false), (true, true)) ∈
+        (defectRelation (fun _ : Bool × Bool => ()) id ∩
+            ⋃ definition ∈ ({false} : Set Bool),
+              ({pair : (Bool × Bool) × (Bool × Bool) |
+                Setoid.ker (if definition then Prod.snd else Prod.fst)
+                  pair.1 pair.2} : Set ((Bool × Bool) × (Bool × Bool)))ᶜ) ∩
+          (defectRelation (fun _ : Bool × Bool => ()) id ∩
+            ⋃ definition ∈ ({true} : Set Bool),
+              ({pair : (Bool × Bool) × (Bool × Bool) |
+                Setoid.ker (if definition then Prod.snd else Prod.fst)
+                  pair.1 pair.2} : Set ((Bool × Bool) × (Bool × Bool)))ᶜ) := by
+    simp [defectRelation, Setoid.ker_def]
+  have notCapturedByIntersection :
+      ((false, false), (true, true)) ∉
+        defectRelation (fun _ : Bool × Bool => ()) id ∩
+          ⋃ definition ∈ (({false} : Set Bool) ∩ {true}),
+            ({pair : (Bool × Bool) × (Bool × Bool) |
+              Setoid.ker (if definition then Prod.snd else Prod.fst)
+                pair.1 pair.2} : Set ((Bool × Bool) × (Bool × Bool)))ᶜ := by
+    simp
+  refine ⟨capturedByBoth, notCapturedByIntersection, ?_⟩
+  intro equalSets
+  exact notCapturedByIntersection (equalSets.symm ▸ capturedByBoth)
 
+/-- C6's false neighbor reverses inclusion between newly captured edge sets.
+The overlap edge is new over the empty selection but no longer new after the
+first coordinate has already been selected. -/
 theorem clause_six_false_neighbor_witness :
     let definitions : Bool -> Concept (Bool × Bool) Bool :=
       fun index => if index then Prod.snd else Prod.fst
     let q : Concept (Bool × Bool) Unit := fun _ => ()
     let target : Concept (Bool × Bool) (Bool × Bool) := id
-    let firstEdge := ((false, false), (true, false))
-    let secondEdge := ((false, false), (false, true))
     let overlapEdge := ((false, false), (true, true))
-    let nu : EscapeWeight ((Bool × Bool) × (Bool × Bool)) :=
-      { mass := fun set =>
-          (@ite Real (firstEdge ∈ set) (Classical.propDecidable _) 1 0) +
-          (@ite Real (secondEdge ∈ set) (Classical.propDecidable _) 1 0) +
-          (@ite Real (overlapEdge ∈ set) (Classical.propDecidable _) 1 0)
-        empty_mass := by simp
-        mass_nonnegative := by intro set; split_ifs <;> norm_num }
-    let F := fun S : Set Bool => capturedEscapeMass S definitions q target nu
-    ¬F ((∅ : Set Bool) ∪ {true}) - F ∅ ≤
-      F ({false} ∪ {true}) - F {false} :=
-  submodular_capture_clause_false_neighbors.2.2.2.2.2.1
+    let captured := fun S : Set Bool =>
+      defectRelation q target ∩
+        ⋃ definition ∈ S,
+          ({pair : (Bool × Bool) × (Bool × Bool) |
+            Setoid.ker (definitions definition) pair.1 pair.2} :
+            Set ((Bool × Bool) × (Bool × Bool)))ᶜ
+    let newlyCaptured := fun S : Set Bool =>
+      captured (S ∪ {true}) \ captured S
+    overlapEdge ∈ newlyCaptured ∅ ∧
+      overlapEdge ∉ newlyCaptured {false} ∧
+      ¬newlyCaptured ∅ ⊆ newlyCaptured {false} := by
+  classical
+  dsimp only
+  have newOverEmpty :
+      ((false, false), (true, true)) ∈
+        (defectRelation (fun _ : Bool × Bool => ()) id ∩
+            ⋃ definition ∈ ((∅ : Set Bool) ∪ {true}),
+              ({pair : (Bool × Bool) × (Bool × Bool) |
+                Setoid.ker (if definition then Prod.snd else Prod.fst)
+                  pair.1 pair.2} : Set ((Bool × Bool) × (Bool × Bool)))ᶜ) \
+          (defectRelation (fun _ : Bool × Bool => ()) id ∩
+            ⋃ definition ∈ (∅ : Set Bool),
+              ({pair : (Bool × Bool) × (Bool × Bool) |
+                Setoid.ker (if definition then Prod.snd else Prod.fst)
+                  pair.1 pair.2} : Set ((Bool × Bool) × (Bool × Bool)))ᶜ) := by
+    simp [defectRelation, Setoid.ker_def]
+  have notNewOverFirst :
+      ((false, false), (true, true)) ∉
+        (defectRelation (fun _ : Bool × Bool => ()) id ∩
+            ⋃ definition ∈ (({false} : Set Bool) ∪ {true}),
+              ({pair : (Bool × Bool) × (Bool × Bool) |
+                Setoid.ker (if definition then Prod.snd else Prod.fst)
+                  pair.1 pair.2} : Set ((Bool × Bool) × (Bool × Bool)))ᶜ) \
+          (defectRelation (fun _ : Bool × Bool => ()) id ∩
+            ⋃ definition ∈ ({false} : Set Bool),
+              ({pair : (Bool × Bool) × (Bool × Bool) |
+                Setoid.ker (if definition then Prod.snd else Prod.fst)
+                  pair.1 pair.2} : Set ((Bool × Bool) × (Bool × Bool)))ᶜ) := by
+    simp [defectRelation, Setoid.ker_def]
+  refine ⟨newOverEmpty, notNewOverFirst, ?_⟩
+  intro reverseSubset
+  exact notNewOverFirst (reverseSubset newOverEmpty)
 
+/-- C7's supporting algebraic rewrite is pinned against three structural
+miswirings: moving the denominator to the chosen candidate, changing the
+chosen candidate between the two predicates, and treating zero cost as if the
+rewrite failed. The nonconstant cost prevents constant-denominator masking. -/
 theorem clause_seven_false_neighbor_witness :
     let definitions : Bool -> Concept (Bool × Bool) Bool :=
       fun index => if index then Prod.snd else Prod.fst
@@ -402,27 +475,90 @@ theorem clause_seven_false_neighbor_witness :
           (@ite Real (overlapEdge ∈ set) (Classical.propDecidable _) 1 0)
         empty_mass := by simp
         mass_nonnegative := by intro set; split_ifs <;> norm_num }
-    let cost : Bool -> Real := fun _ => 1
+    let cost : Bool -> Real := fun index => if index then 2 else 1
+    let zeroCost : Bool -> Real := fun index => if index then 0 else 1
     let M := fun S : Set Bool => residualEscapeMass S definitions q target nu
     let F := fun S : Set Bool => capturedEscapeMass S definitions q target nu
-    ¬¬((forall definition,
-        (M ∅ - M (∅ ∪ {definition})) / cost definition ≤
-          (M ∅ - M (∅ ∪ {false})) / cost false) ↔
-      (forall definition,
-        (F (∅ ∪ {definition}) - F ∅) / cost definition ≤
-          (F (∅ ∪ {false}) - F ∅) / cost false)) :=
-  submodular_capture_clause_false_neighbors.2.2.2.2.2.2.1
+    let residualScore := fun (candidateCost : Bool -> Real) (next : Bool) =>
+      forall definition,
+        (M ∅ - M {definition}) / candidateCost definition ≤
+          (M ∅ - M {next}) / candidateCost next
+    let captureScore := fun (candidateCost : Bool -> Real) (next : Bool) =>
+      forall definition,
+        (F {definition} - F ∅) / candidateCost definition ≤
+          (F {next} - F ∅) / candidateCost next
+    let wrongDenominator := fun (candidateCost : Bool -> Real) (next : Bool) =>
+      forall definition,
+        (F {definition} - F ∅) / candidateCost next ≤
+          (F {next} - F ∅) / candidateCost next
+    (residualScore cost true ↔ captureScore cost true) ∧
+      ¬(residualScore cost true ↔ wrongDenominator cost true) ∧
+      ¬(residualScore cost false ↔ captureScore cost true) ∧
+      zeroCost true = 0 ∧
+      ¬residualScore zeroCost true ∧
+      ¬captureScore zeroCost true ∧
+      (residualScore zeroCost true ↔ captureScore zeroCost true) := by
+  classical
+  dsimp only
+  let definitions : Bool -> Concept (Bool × Bool) Bool :=
+    fun index => if index then Prod.snd else Prod.fst
+  let q : Concept (Bool × Bool) Unit := fun _ => ()
+  let target : Concept (Bool × Bool) (Bool × Bool) := id
+  let firstEdge := ((false, false), (true, false))
+  let secondEdge := ((false, false), (false, true))
+  let overlapEdge := ((false, false), (true, true))
+  let nu : EscapeWeight ((Bool × Bool) × (Bool × Bool)) :=
+    { mass := fun set =>
+        (@ite Real (firstEdge ∈ set) (Classical.propDecidable _) 1 0) +
+        (@ite Real (secondEdge ∈ set) (Classical.propDecidable _) 1 0) +
+        (@ite Real (overlapEdge ∈ set) (Classical.propDecidable _) 1 0)
+      empty_mass := by simp
+      mass_nonnegative := by intro set; split_ifs <;> norm_num }
+  let cost : Bool -> Real := fun index => if index then 2 else 1
+  let zeroCost : Bool -> Real := fun index => if index then 0 else 1
+  let M := fun S : Set Bool => residualEscapeMass S definitions q target nu
+  let F := fun S : Set Bool => capturedEscapeMass S definitions q target nu
+  let residualScore := fun (candidateCost : Bool -> Real) (next : Bool) =>
+    forall definition,
+      (M ∅ - M {definition}) / candidateCost definition ≤
+        (M ∅ - M {next}) / candidateCost next
+  let captureScore := fun (candidateCost : Bool -> Real) (next : Bool) =>
+    forall definition,
+      (F {definition} - F ∅) / candidateCost definition ≤
+        (F {next} - F ∅) / candidateCost next
+  let wrongDenominator := fun (candidateCost : Bool -> Real) (next : Bool) =>
+    forall definition,
+      (F {definition} - F ∅) / candidateCost next ≤
+        (F {next} - F ∅) / candidateCost next
+  change (residualScore cost true ↔ captureScore cost true) ∧
+    ¬(residualScore cost true ↔ wrongDenominator cost true) ∧
+    ¬(residualScore cost false ↔ captureScore cost true) ∧
+    zeroCost true = 0 ∧
+    ¬residualScore zeroCost true ∧
+    ¬captureScore zeroCost true ∧
+    (residualScore zeroCost true ↔ captureScore zeroCost true)
+  have values :
+      M ∅ = 3 ∧ M {false} = 1 ∧ M {true} = 1 ∧
+        F ∅ = 0 ∧ F {false} = 2 ∧ F {true} = 2 := by
+    have allValues := finite_capture_values_witness
+    refine ⟨allValues.1, allValues.2.1, allValues.2.2.1, ?_,
+      allValues.2.2.2.2.1, allValues.2.2.2.2.2.1⟩
+    simp [F, capturedEscapeMass]
+  simp only [residualScore, captureScore, wrongDenominator, Bool.forall_bool]
+  rw [values.1, values.2.1, values.2.2.1, values.2.2.2.1,
+    values.2.2.2.2.1, values.2.2.2.2.2]
+  norm_num [cost, zeroCost]
 
 theorem clause_eight_false_neighbor_witness :
     let blindDefinitions : Unit -> Concept Bool Unit := fun _ _ => ()
     let blindQ : Concept Bool Unit := fun _ => ()
     let blindTarget : Concept Bool Bool := id
-    ¬(false, true) ∉ defectRelation
+    (false, true) ∈ defectRelation
       (conceptJoin blindQ
         (jointReadout
           (fun item : (Set.univ : Set Unit) => blindDefinitions item.1)))
       blindTarget :=
-  submodular_capture_clause_false_neighbors.2.2.2.2.2.2.2
+  (fixed_language_blind_pair_persists_witness (Set.univ : Set Unit)).2.2
 
 /-- Every named witness is consumed at its complete statement: the quantitative
 model, blind pair, premise attacks, admissible zero mass, and all eight false
@@ -541,7 +677,6 @@ theorem submodular_capture_witnesses_nonvacuous :
            (@ite Real (overlapEdge ∈ set) (Classical.propDecidable _) 1 0)
          empty_mass := by simp
          mass_nonnegative := by intro set; split_ifs <;> norm_num }
-     let cost : Bool -> Real := fun _ => 1
      let M := fun S : Set Bool => residualEscapeMass S definitions q target nu
      let F := fun S : Set Bool => capturedEscapeMass S definitions q target nu
      let captured := fun S : Set Bool =>
@@ -550,27 +685,61 @@ theorem submodular_capture_witnesses_nonvacuous :
            ({pair : (Bool × Bool) × (Bool × Bool) |
              Setoid.ker (definitions definition) pair.1 pair.2} :
              Set ((Bool × Bool) × (Bool × Bool)))ᶜ
-     (¬M ∅ = nu.mass (defectRelation
+     let capturedIntersection := fun S : Set Bool =>
+       defectRelation q target ∩
+         ⋂ definition ∈ S,
+           ({pair : (Bool × Bool) × (Bool × Bool) |
+             Setoid.ker (definitions definition) pair.1 pair.2} :
+             Set ((Bool × Bool) × (Bool × Bool)))ᶜ
+     let selectedResidual := defectRelation
        (conceptJoin q
-         (jointReadout (fun item : (∅ : Set Bool) => definitions item.1)))
-       target) + 1) ∧
-     (¬F {false} = M ∅ - M {false} + 1) ∧
-     (¬F {false} = nu.mass (captured {false}) + 1) ∧
-     (¬F {false} <= F ∅) ∧
-     (¬F {false} + F {true} <=
-       F ({false} ∪ {true}) + F ({false} ∩ {true})) ∧
-     (¬F ((∅ : Set Bool) ∪ {true}) - F ∅ <=
-       F ({false} ∪ {true}) - F {false}) ∧
-     (¬¬((forall definition,
-         (M ∅ - M (∅ ∪ {definition})) / cost definition <=
-           (M ∅ - M (∅ ∪ {false})) / cost false) <->
-       (forall definition,
-         (F (∅ ∪ {definition}) - F ∅) / cost definition <=
-           (F (∅ ∪ {false}) - F ∅) / cost false))) ∧
+         (jointReadout (fun item : ({false} : Set Bool) => definitions item.1)))
+       target
+     let newlyCaptured := fun S : Set Bool =>
+       captured (S ∪ {true}) \ captured S
+     let cost : Bool -> Real := fun index => if index then 2 else 1
+     let zeroCost : Bool -> Real := fun index => if index then 0 else 1
+     let residualScore := fun (candidateCost : Bool -> Real) (next : Bool) =>
+       forall definition,
+         (M ∅ - M {definition}) / candidateCost definition <=
+           (M ∅ - M {next}) / candidateCost next
+     let captureScore := fun (candidateCost : Bool -> Real) (next : Bool) =>
+       forall definition,
+         (F {definition} - F ∅) / candidateCost definition <=
+           (F {next} - F ∅) / candidateCost next
+     let wrongDenominator := fun (candidateCost : Bool -> Real) (next : Bool) =>
+       forall definition,
+         (F {definition} - F ∅) / candidateCost next <=
+           (F {next} - F ∅) / candidateCost next
+     (firstEdge ∈ defectRelation q target ∧
+       firstEdge ∉ selectedResidual ∧
+       selectedResidual ≠ defectRelation q target) ∧
+     (M ∅ ≠ M {false} ∧
+       F {false} = M ∅ - M {false} ∧
+       ¬F {false} = M {false} - M ∅) ∧
+     (firstEdge ∈ captured Set.univ ∧
+       firstEdge ∉ capturedIntersection Set.univ ∧
+       capturedIntersection Set.univ ≠ captured Set.univ) ∧
+     (firstEdge ∈ captured {false} ∧
+       firstEdge ∉ captured ∅ ∧
+       ¬captured {false} ⊆ captured ∅) ∧
+     (overlapEdge ∈ captured {false} ∩ captured {true} ∧
+       overlapEdge ∉ captured ({false} ∩ {true}) ∧
+       captured ({false} ∩ {true}) ≠ captured {false} ∩ captured {true}) ∧
+     (overlapEdge ∈ newlyCaptured ∅ ∧
+       overlapEdge ∉ newlyCaptured {false} ∧
+       ¬newlyCaptured ∅ ⊆ newlyCaptured {false}) ∧
+     ((residualScore cost true <-> captureScore cost true) ∧
+       ¬(residualScore cost true <-> wrongDenominator cost true) ∧
+       ¬(residualScore cost false <-> captureScore cost true) ∧
+       zeroCost true = 0 ∧
+       ¬residualScore zeroCost true ∧
+       ¬captureScore zeroCost true ∧
+       (residualScore zeroCost true <-> captureScore zeroCost true)) ∧
      (let blindDefinitions : Unit -> Concept Bool Unit := fun _ _ => ()
       let blindQ : Concept Bool Unit := fun _ => ()
       let blindTarget : Concept Bool Bool := id
-      ¬(false, true) ∉ defectRelation
+      (false, true) ∈ defectRelation
         (conceptJoin blindQ
           (jointReadout
             (fun item : (Set.univ : Set Unit) => blindDefinitions item.1)))

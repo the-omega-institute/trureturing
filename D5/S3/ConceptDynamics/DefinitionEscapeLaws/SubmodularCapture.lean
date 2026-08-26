@@ -95,7 +95,7 @@ theorem submodular_capture
       (forall definition,
         (F (S ∪ {definition}) - F S) / cost definition ≤
           (F (S ∪ {next}) - F S) / cost next))) ∧
-    (forall (S : Set I) (pair : X × X), S.Finite ->
+    (forall (S : Set I) (pair : X × X),
       pair ∈ defectRelation q target ->
       (forall definition, definitions definition pair.1 =
         definitions definition pair.2) ->
@@ -315,7 +315,7 @@ theorem submodular_capture
       exact maximizes definition
     · rw [marginal_identity S definition, marginal_identity S next]
       exact maximizes definition
-  · intro S pair _selectionFinite baseline blind
+  · intro S pair baseline blind
     exact ⟨Prod.ext baseline.1 (by
       funext item
       exact blind item.1), baseline.2⟩

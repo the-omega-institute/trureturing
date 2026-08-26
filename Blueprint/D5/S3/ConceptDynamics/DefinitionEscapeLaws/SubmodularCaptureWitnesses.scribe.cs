@@ -44,12 +44,15 @@ internal sealed class SubmodularCaptureWitnessesDocument : IScribeDocumentDefini
                     Paragraph(Text(
                         "WfalseC1 through WfalseC8 are the named theorems "
                             + "clause_one_false_neighbor_witness through "
-                            + "clause_eight_false_neighbor_witness, projected from "
-                            + "submodular_capture_clause_false_neighbors. They respectively reject "
-                            + "a unit shift of the M formula, a unit shift of the F definition, a "
-                            + "unit shift of the captured-union expansion, reversed monotonicity, "
-                            + "reversed submodularity, reversed diminishing returns, denial of the "
-                            + "greedy-score equivalence, and elimination of a concrete blind pair.")),
+                            + "clause_eight_false_neighbor_witness. They respectively reject a "
+                            + "residual formula that ignores the selected definition; subtraction "
+                            + "in the reverse direction; intersection in place of the captured "
+                            + "union; reverse inclusion of captured sets; distribution of capture "
+                            + "through index intersection as equality; reverse inclusion of newly "
+                            + "captured sets; a score rewrite with a fixed wrong denominator, a "
+                            + "different candidate, or erased zero-cost behavior; and elimination "
+                            + "of a concrete blind pair. C4 through C6 are set-level attacks, so "
+                            + "their falsity does not depend on a chosen mass value.")),
                     Paragraph(Text(
                         "The displayed present labels are deliberately weaker than the Lean "
                             + "conjunction. The Lean consumer repeats and consumes the complete "
