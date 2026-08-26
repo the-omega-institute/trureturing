@@ -194,14 +194,14 @@ theorem clause_one_false_neighbor_witness
     (cost_nonnegative : forall definition, 0 <= cost definition)
     (mass_additive : forall left right : Set (X × X), Disjoint left right ->
       nu.mass (left ∪ right) = nu.mass left + nu.mass right)
-    (S : Set I) :
+    (S : Set I) (sourceDomainFinite : S.Finite) :
     ¬(residualEscapeMass S definitions q target nu ≠
       nu.mass (defectRelation
         (conceptJoin q
           (jointReadout (fun item : S => definitions item.1))) target)) := by
   intro denial
   exact denial ((submodular_capture definitions q target cost nu
-    cost_nonnegative mass_additive).1 S)
+    cost_nonnegative mass_additive).1 S sourceDomainFinite)
 
 /-- C2's false neighbor denies the source definition `F(S) = M(empty)-M(S)`.
 The second conjunct refutes that denial under the unchanged premises. -/
@@ -213,13 +213,13 @@ theorem clause_two_false_neighbor_witness
     (cost_nonnegative : forall definition, 0 <= cost definition)
     (mass_additive : forall left right : Set (X × X), Disjoint left right ->
       nu.mass (left ∪ right) = nu.mass left + nu.mass right)
-    (S : Set I) :
+    (S : Set I) (sourceDomainFinite : S.Finite) :
     ¬(capturedEscapeMass S definitions q target nu ≠
       residualEscapeMass ∅ definitions q target nu -
         residualEscapeMass S definitions q target nu) := by
   intro denial
   exact denial ((submodular_capture definitions q target cost nu
-    cost_nonnegative mass_additive).2.1 S)
+    cost_nonnegative mass_additive).2.1 S sourceDomainFinite)
 
 /-- C3's false neighbor denies the captured-union expansion. The third
 conjunct refutes that denial for every selection and additive mass. -/
@@ -231,7 +231,7 @@ theorem clause_three_false_neighbor_witness
     (cost_nonnegative : forall definition, 0 <= cost definition)
     (mass_additive : forall left right : Set (X × X), Disjoint left right ->
       nu.mass (left ∪ right) = nu.mass left + nu.mass right)
-    (S : Set I) :
+    (S : Set I) (sourceDomainFinite : S.Finite) :
     let captured := fun selection : Set I =>
       defectRelation q target ∩
         ⋃ definition ∈ selection,
@@ -242,7 +242,7 @@ theorem clause_three_false_neighbor_witness
   dsimp only
   intro denial
   exact denial ((submodular_capture definitions q target cost nu
-    cost_nonnegative mass_additive).2.2.1 S)
+    cost_nonnegative mass_additive).2.2.1 S sourceDomainFinite)
 
 /-- C4's false neighbor is strict decrease along an inclusion. Monotonicity
 universally refutes this strict reverse inequality. -/
@@ -254,11 +254,13 @@ theorem clause_four_false_neighbor_witness
     (cost_nonnegative : forall definition, 0 <= cost definition)
     (mass_additive : forall left right : Set (X × X), Disjoint left right ->
       nu.mass (left ∪ right) = nu.mass left + nu.mass right)
-    {A B : Set I} (subset : A ⊆ B) :
+    {A B : Set I} (aSourceDomainFinite : A.Finite)
+    (bSourceDomainFinite : B.Finite) (subset : A ⊆ B) :
     ¬capturedEscapeMass B definitions q target nu <
       capturedEscapeMass A definitions q target nu := by
   exact not_lt_of_ge ((submodular_capture definitions q target cost nu
-    cost_nonnegative mass_additive).2.2.2.1 subset)
+    cost_nonnegative mass_additive).2.2.2.1 aSourceDomainFinite
+      bSourceDomainFinite subset)
 
 /-- C5's false neighbor makes the four-term submodular inequality strictly
 point in the opposite direction. Submodularity universally refutes it. -/
@@ -270,13 +272,15 @@ theorem clause_five_false_neighbor_witness
     (cost_nonnegative : forall definition, 0 <= cost definition)
     (mass_additive : forall left right : Set (X × X), Disjoint left right ->
       nu.mass (left ∪ right) = nu.mass left + nu.mass right)
-    (A B : Set I) :
+    (A B : Set I) (aSourceDomainFinite : A.Finite)
+    (bSourceDomainFinite : B.Finite) :
     ¬capturedEscapeMass A definitions q target nu +
         capturedEscapeMass B definitions q target nu <
       capturedEscapeMass (A ∪ B) definitions q target nu +
         capturedEscapeMass (A ∩ B) definitions q target nu := by
   exact not_lt_of_ge ((submodular_capture definitions q target cost nu
-    cost_nonnegative mass_additive).2.2.2.2.1 A B)
+    cost_nonnegative mass_additive).2.2.2.2.1 A B aSourceDomainFinite
+      bSourceDomainFinite)
 
 /-- C6's false neighbor asserts strictly increasing marginal capture while
 retaining both inclusion and freshness. Diminishing returns refutes it in every
@@ -289,14 +293,16 @@ theorem clause_six_false_neighbor_witness
     (cost_nonnegative : forall definition, 0 <= cost definition)
     (mass_additive : forall left right : Set (X × X), Disjoint left right ->
       nu.mass (left ∪ right) = nu.mass left + nu.mass right)
-    {A B : Set I} (definition : I) (subset : A ⊆ B)
+    {A B : Set I} (definition : I) (bSourceDomainFinite : B.Finite)
+    (subset : A ⊆ B)
     (fresh : definition ∉ B) :
     ¬capturedEscapeMass (A ∪ {definition}) definitions q target nu -
         capturedEscapeMass A definitions q target nu <
       capturedEscapeMass (B ∪ {definition}) definitions q target nu -
         capturedEscapeMass B definitions q target nu := by
   exact not_lt_of_ge ((submodular_capture definitions q target cost nu
-    cost_nonnegative mass_additive).2.2.2.2.2.1 definition subset fresh)
+    cost_nonnegative mass_additive).2.2.2.2.2.1 definition
+      bSourceDomainFinite subset fresh)
 
 /-- C7's false neighbor denies the residual-score/capture-score equivalence.
 The algebraic rewrite refutes that denial for arbitrary costs, including zero. -/
@@ -308,7 +314,7 @@ theorem clause_seven_false_neighbor_witness
     (cost_nonnegative : forall definition, 0 <= cost definition)
     (mass_additive : forall left right : Set (X × X), Disjoint left right ->
       nu.mass (left ∪ right) = nu.mass left + nu.mass right)
-    (S : Set I) (next : I) :
+    (S : Set I) (next : I) (sourceDomainFinite : S.Finite) :
     let M := fun selection : Set I =>
       residualEscapeMass selection definitions q target nu
     let F := fun selection : Set I =>
@@ -322,18 +328,31 @@ theorem clause_seven_false_neighbor_witness
   dsimp only
   intro denial
   exact denial ((submodular_capture definitions q target cost nu
-    cost_nonnegative mass_additive).2.2.2.2.2.2.1 S next)
+    cost_nonnegative mass_additive).2.2.2.2.2.2.1 S next
+      sourceDomainFinite)
 
-theorem clause_eight_false_neighbor_witness :
-    let blindDefinitions : Unit -> Concept Bool Unit := fun _ _ => ()
-    let blindQ : Concept Bool Unit := fun _ => ()
-    let blindTarget : Concept Bool Bool := id
-    (false, true) ∈ defectRelation
-      (conceptJoin blindQ
-        (jointReadout
-          (fun item : (Set.univ : Set Unit) => blindDefinitions item.1)))
-      blindTarget :=
-  (fixed_language_blind_pair_persists_witness (Set.univ : Set Unit)).2.2
+/-- C8's false neighbor flips only the conclusion's membership to
+nonmembership. Under the unchanged theorem premises and blind-pair hypotheses,
+that neighboring proposition is universally false for arbitrary, not merely
+finite, pointwise selections. -/
+theorem clause_eight_false_neighbor_witness
+    {I X C Target : Type*} {V : I -> Type*}
+    (definitions : forall i, Concept X (V i))
+    (q : Concept X C) (target : Concept X Target)
+    (cost : I -> Real) (nu : EscapeWeight (X × X))
+    (cost_nonnegative : forall definition, 0 <= cost definition)
+    (mass_additive : forall left right : Set (X × X), Disjoint left right ->
+      nu.mass (left ∪ right) = nu.mass left + nu.mass right)
+    (S : Set I) (pair : X × X)
+    (baseline : pair ∈ defectRelation q target)
+    (blind : forall definition,
+      definitions definition pair.1 = definitions definition pair.2) :
+    ¬(pair ∉ defectRelation
+      (conceptJoin q
+        (jointReadout (fun item : S => definitions item.1))) target) := by
+  intro denial
+  exact denial ((submodular_capture definitions q target cost nu
+    cost_nonnegative mass_additive).2.2.2.2.2.2.2 S pair baseline blind)
 
 /-- Every named witness is consumed at its complete statement: the quantitative
 model, blind pair, premise attacks, admissible zero mass, and all eight false
@@ -456,33 +475,40 @@ theorem submodular_capture_witnesses_nonvacuous :
             ({pair : X × X |
               Setoid.ker (definitions definition) pair.1 pair.2} :
               Set (X × X))ᶜ
-      (forall S,
+      (forall S, S.Finite ->
         ¬(M S ≠ nu.mass (defectRelation
           (conceptJoin q
             (jointReadout (fun item : S => definitions item.1))) target))) ∧
-      (forall S, ¬(F S ≠ M ∅ - M S)) ∧
-      (forall S, ¬(F S ≠ nu.mass (captured S))) ∧
-      (forall {A B}, A ⊆ B -> ¬F B < F A) ∧
-      (forall A B,
+      (forall S, S.Finite -> ¬(F S ≠ M ∅ - M S)) ∧
+      (forall S, S.Finite -> ¬(F S ≠ nu.mass (captured S))) ∧
+      (forall {A B}, A.Finite -> B.Finite -> A ⊆ B -> ¬F B < F A) ∧
+      (forall A B, A.Finite -> B.Finite ->
         ¬F A + F B < F (A ∪ B) + F (A ∩ B)) ∧
-      (forall {A B} (definition : I), A ⊆ B -> definition ∉ B ->
+      (forall {A B} (definition : I), B.Finite -> A ⊆ B -> definition ∉ B ->
         ¬F (A ∪ {definition}) - F A <
           F (B ∪ {definition}) - F B) ∧
-      (forall S next,
+      (forall S next, S.Finite ->
         ¬(¬((forall definition,
             (M S - M (S ∪ {definition})) / cost definition <=
               (M S - M (S ∪ {next})) / cost next) <->
           (forall definition,
             (F (S ∪ {definition}) - F S) / cost definition <=
               (F (S ∪ {next}) - F S) / cost next))))) ∧
-    (let blindDefinitions : Unit -> Concept Bool Unit := fun _ _ => ()
-     let blindQ : Concept Bool Unit := fun _ => ()
-     let blindTarget : Concept Bool Bool := id
-     (false, true) ∈ defectRelation
-       (conceptJoin blindQ
-         (jointReadout
-           (fun item : (Set.univ : Set Unit) => blindDefinitions item.1)))
-       blindTarget) := by
+    (forall {I X C Target : Type*} {V : I -> Type*}
+      (definitions : forall i, Concept X (V i))
+      (q : Concept X C) (target : Concept X Target)
+      (cost : I -> Real) (nu : EscapeWeight (X × X))
+      (_cost_nonnegative : forall definition, 0 <= cost definition)
+      (_mass_additive : forall left right : Set (X × X),
+        Disjoint left right ->
+          nu.mass (left ∪ right) = nu.mass left + nu.mass right)
+      (S : Set I) (pair : X × X),
+      pair ∈ defectRelation q target ->
+      (forall definition,
+        definitions definition pair.1 = definitions definition pair.2) ->
+      ¬(pair ∉ defectRelation
+        (conceptJoin q
+          (jointReadout (fun item : S => definitions item.1))) target)) := by
   refine ⟨finite_capture_laws_nonvacuous,
     fixed_language_blind_pair_persists_witness,
     subset_premise_is_necessary_witness,
@@ -493,21 +519,22 @@ theorem submodular_capture_witnesses_nonvacuous :
     costNonnegative massAdditive
   dsimp only
   exact ⟨
-    fun S => clause_one_false_neighbor_witness definitions q target cost nu
-      costNonnegative massAdditive S,
-    fun S => clause_two_false_neighbor_witness definitions q target cost nu
-      costNonnegative massAdditive S,
-    fun S => clause_three_false_neighbor_witness definitions q target cost nu
-      costNonnegative massAdditive S,
-    fun {_A _B} subset => clause_four_false_neighbor_witness definitions q target
-      cost nu costNonnegative massAdditive subset,
-    fun A B => clause_five_false_neighbor_witness definitions q target cost nu
-      costNonnegative massAdditive A B,
-    fun {_A _B} definition subset fresh =>
+    fun S sourceFinite => clause_one_false_neighbor_witness definitions q target
+      cost nu costNonnegative massAdditive S sourceFinite,
+    fun S sourceFinite => clause_two_false_neighbor_witness definitions q target
+      cost nu costNonnegative massAdditive S sourceFinite,
+    fun S sourceFinite => clause_three_false_neighbor_witness definitions q target
+      cost nu costNonnegative massAdditive S sourceFinite,
+    fun {_A _B} aFinite bFinite subset =>
+      clause_four_false_neighbor_witness definitions q target cost nu
+        costNonnegative massAdditive aFinite bFinite subset,
+    fun A B aFinite bFinite => clause_five_false_neighbor_witness definitions q
+      target cost nu costNonnegative massAdditive A B aFinite bFinite,
+    fun {_A _B} definition bFinite subset fresh =>
       clause_six_false_neighbor_witness definitions q target cost nu
-        costNonnegative massAdditive definition subset fresh,
-    fun S next => clause_seven_false_neighbor_witness definitions q target
-      cost nu costNonnegative massAdditive S next⟩
+        costNonnegative massAdditive definition bFinite subset fresh,
+    fun S next sourceFinite => clause_seven_false_neighbor_witness definitions q
+      target cost nu costNonnegative massAdditive S next sourceFinite⟩
 
 #print axioms submodular_capture_witnesses_nonvacuous
 

@@ -14,7 +14,7 @@ $$\forall I, X, C, Target: Type,\ V: I \to Type,\ definitions: \forall i: I, \op
 
 *Commentary.*
 
-The displayed implication retains finiteness as a source-domain annotation on C1 through C7. The Lean theorem proves those clauses without finite-selection premises, so each displayed finite antecedent is weaker than its Lean counterpart rather than an additional Lean guard. C4 also retains A4 subset B4; C6 retains A6 subset B6 and definition6 not in B6. C8 has no finiteness premise, and I itself is not required to be finite. nonnegativeCost means zero is below every c(gamma), and disjointAdditive means exactly that mass(left union right) equals mass(left) plus mass(right) whenever left and right are disjoint. It does not assume strictly positive cost, positive baseline mass, countable additivity, measurability, inhabitedness, or decidable equality.
+The displayed implication binds finiteness on C1 through C7 exactly to the corresponding Lean source-domain premises. Those hypotheses are present because DECT defines q join S only for finite S; the Lean proof accepts but does not use them, so they are source-domain conditions rather than proof guards. C4 also retains A4 subset B4; C6 retains A6 subset B6 and definition6 not in B6. C8 has no finiteness premise, and I itself is not required to be finite. nonnegativeCost means zero is below every c(gamma), and disjointAdditive means exactly that mass(left union right) equals mass(left) plus mass(right) whenever left and right are disjoint. It does not assume strictly positive cost, positive baseline mass, countable additivity, measurability, inhabitedness, or decidable equality.
 
 The candidate family has the dependent Lean type definitions : forall i : I, Concept X (V i). Thus the formula does not replace the source family by a shared codomain. M is the imported residualEscapeMass and F is the imported capturedEscapeMass, whose definition is M(empty) minus M(S). The canonical defectRelation is the only target residual.
 
@@ -22,11 +22,11 @@ C1 through C6 map in order to the first six Lean conjuncts: the exact M formula;
 
 The proof reuses capture_weight_submodular for the coverage step and uses finite additivity to identify M(empty) minus M(S) with the mass of the captured union. Nondegeneracy is supplied separately by a named positive model, so the theorem itself still admits the constant-zero weight required by the source's full domain.
 
-The finite-selection annotations are retained only in this weaker source summary and do not occur in the Lean theorem type. nonnegativeCost is likewise not advertised as a proof guard. disjointAdditive is a proof guard, with its absence consumed by the named weak-weight countermodel.
+The finite-selection conditions occur in both the Lean theorem type and this projection solely to preserve the source domain. Their removal does not produce a proof failure and is not advertised as doing so. nonnegativeCost is likewise not advertised as a proof guard. disjointAdditive is a proof guard, with its absence consumed by the named weak-weight countermodel.
 
 C7 proves equality of the residual and capture score predicates. The remaining greedy-rule obligations are recorded as six locatable residual-ledger subitems, not inserted as a ninth authoritative formula conjunct.
 
-scribe_lean_correspondence: C1, C2, C3, C4, C5, C6, C7, and C8 map respectively to Lean conjuncts one through eight. Every displayed item is weaker: present(C1-C6,C8) and supportingLemma(C7) summarize the full Lean predicates, while C1-C7 additionally retain finite source-domain annotations. C4 binds A4 subset B4, and C6 binds A6 subset B6 plus definition6 not in B6. Equal mappings: zero. Stronger mappings: zero.
+scribe_lean_correspondence: C1, C2, and C3 map to Lean conjuncts one, two, and three with the same finite-S premise: weaker because present summarizes each equality. C4 maps to conjunct four with finite A4, finite B4, and A4 subset B4: weaker because present summarizes the inequality. C5 maps to conjunct five with finite A5 and finite B5: weaker. C6 maps to conjunct six with finite B6, A6 subset B6, and definition6 not in B6: weaker. C7 maps to conjunct seven with finite S7: weaker because supportingLemma summarizes the full equivalence. C8 maps to conjunct eight with no finite premise: weaker because present summarizes blind-pair persistence. Equal mappings: zero. Stronger mappings: zero.
 
 ## References
 

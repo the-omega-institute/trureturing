@@ -45,21 +45,35 @@ internal sealed class SubmodularCaptureWitnessesDocument : IScribeDocumentDefini
                         "WfalseC1 through WfalseC8 are the named theorems "
                             + "clause_one_false_neighbor_witness through "
                             + "clause_eight_false_neighbor_witness. C1 through C7 are universally "
-                            + "quantified refutations under exactly the theorem premises. They "
+                            + "quantified refutations under exactly the theorem premises, including "
+                            + "their finite-selection source-domain conditions. They "
                             + "respectively refute denial of the exact residual-mass formula; "
                             + "denial of F(S)=M(empty)-M(S); denial of the captured-union expansion; "
                             + "strict reverse monotonicity; strict reverse submodularity; strictly "
                             + "increasing marginal capture while retaining subset and freshness; "
                             + "and denial of the residual-score/capture-score equivalence. Thus "
                             + "their negations are theorems for every admissible model, not facts "
-                            + "that happen only in one finite model. C8 remains the concrete "
-                            + "Boolean refutation of eliminating a blind pair.")),
+                            + "that happen only in one finite model. C8 is likewise universal but "
+                            + "has no finite-selection premise: it flips only the conclusion from "
+                            + "membership to nonmembership and refutes that neighbor under the "
+                            + "unchanged blind-pair hypotheses.")),
                     Paragraph(Text(
                         "The displayed present labels are deliberately weaker than the Lean "
                             + "conjunction. The Lean consumer repeats and consumes the complete "
                             + "statement of every witness, including all strict inequalities, "
                             + "memberships, equalities, premise failures, and the existential "
-                            + "weak-weight countermodel."))),
+                            + "weak-weight countermodel.")),
+                    Paragraph(Text(
+                        "scribe_lean_correspondence: Wquant maps to "
+                            + "finite_capture_laws_nonvacuous; Wblind to "
+                            + "fixed_language_blind_pair_persists_witness; Wsubset to "
+                            + "subset_premise_is_necessary_witness; Wzero to "
+                            + "constant_zero_weight_is_admissible_witness; and Wadditive to "
+                            + "finite_additivity_is_necessary_witness. WfalseC1 through WfalseC8 "
+                            + "map in order to clause_one_false_neighbor_witness through "
+                            + "clause_eight_false_neighbor_witness. Each of these thirteen Formula "
+                            + "items is weaker because present(name) omits the full Lean statement. "
+                            + "Equal mappings: zero. Stronger mappings: zero."))),
                 DescribeRole.Theorem))));
 
     private static Formula WitnessFormula() => Disp(Seq(
