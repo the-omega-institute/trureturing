@@ -91,8 +91,8 @@ internal sealed class ProofTopologyCoreDocument : IScribeDocumentDefinition
         Formula localFamily = F.Id("localFamily");
         Formula global = F.Id("global");
         Formula localFamilyType = Seq(
-            Forall, Sp, Typed(index, indexType), Comma, Sp,
-            Call("Local", system, index));
+            Open, Forall, Sp, Typed(index, indexType), Comma, Sp,
+            Call("Local", system, index), Close);
         Formula hypotheses = Seq(
             Call("Covers", system), Sp, Land, Sp,
             Call("Realizable", system, localFamily));

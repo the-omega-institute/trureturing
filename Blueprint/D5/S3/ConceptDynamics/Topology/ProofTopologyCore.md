@@ -22,7 +22,7 @@ Thus the property is inaccessible by directed unions and is Scott-open in the di
 
 **Theorem 1.2 (Covered realizable local data has a unique gluing).**
 
-$$\begin{gathered}\forall Index: \operatorname{Type},\\{}system: \operatorname{CertificateSystem}\left(Index\right),\\{}localFamily: \forall index: Index, \operatorname{Local}\left(system, index\right),\\{}(\operatorname{Covers}\left(system\right) \land \operatorname{Realizable}\left(system, localFamily\right)) \Rightarrow\\{}(\exists! global: \operatorname{Global}\left(system\right), \forall index: Index, \operatorname{restrict}\left(system, index, global\right) = localFamily(index)).\end{gathered}$$
+$$\begin{gathered}\forall Index: \operatorname{Type},\\{}system: \operatorname{CertificateSystem}\left(Index\right),\\{}localFamily: (\forall index: Index, \operatorname{Local}\left(system, index\right)),\\{}(\operatorname{Covers}\left(system\right) \land \operatorname{Realizable}\left(system, localFamily\right)) \Rightarrow\\{}(\exists! global: \operatorname{Global}\left(system\right), \forall index: Index, \operatorname{restrict}\left(system, index, global\right) = localFamily(index)).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Topology/ProofTopologyCore.unique_gluing_of_cover` (`✓ std3`). ∎
 
