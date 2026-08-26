@@ -168,11 +168,13 @@ public sealed class AdmissionWorkflowTests
             summary.Children[new YamlScalarNode("if")]).Value);
         var summaryScript = Assert.IsType<YamlScalarNode>(
             summary.Children[new YamlScalarNode("run")]).Value ?? string.Empty;
+        Assert.Equal("candidate/tools/scripts/workflow/candidate-engineering-summary.sh", summaryScript);
+        var extractedSummaryScript = CandidateEngineeringWorkflowFixture.SummaryScript;
         // 明细走日志、摘要只走计数:逐条路径不进 step output,因而不经 env 传给这一步。
         // 有界性本身由 WorkflowOutputBoundTests 判,这里只钉"摘要读的是计数"。
-        Assert.Contains("$SCOPE_CHANGED_COUNT", summaryScript, StringComparison.Ordinal);
-        Assert.Contains("$SCOPE_MATCHED_COUNT", summaryScript, StringComparison.Ordinal);
-        Assert.Contains("$GITHUB_STEP_SUMMARY", summaryScript, StringComparison.Ordinal);
+        Assert.Contains("$SCOPE_CHANGED_COUNT", extractedSummaryScript, StringComparison.Ordinal);
+        Assert.Contains("$SCOPE_MATCHED_COUNT", extractedSummaryScript, StringComparison.Ordinal);
+        Assert.Contains("$GITHUB_STEP_SUMMARY", extractedSummaryScript, StringComparison.Ordinal);
 
         Assert.Equal(
             "make -C candidate/tools dotnet",
@@ -480,23 +482,92 @@ public sealed class CandidateEngineeringExecutionTests
         var result = CandidateEngineeringWorkflowWitness.Execute();
 
         Assert.True(
-            result.ExitCode == 0 && result.Verified,
-            $"execution evidence was not verified\nstdout:\n{result.StandardOutput}\nstderr:\n{result.StandardError}");
+            result.ExitCode == 0 && result.Verified && result.FailurePropagates,
+            $"execution evidence was not verified or its failure was suppressed\nstdout:\n{result.StandardOutput}\nstderr:\n{result.StandardError}");
+    }
+}
+
+public sealed class CandidateEngineeringReachabilityTests
+{
+    [Fact]
+    public void CandidateEngineeringReachabilityFollowsEveryTransitiveNeed()
+    {
+        const string workflow = """
+            on:
+              push:
+              pull_request_target:
+            jobs:
+              skipped-root:
+                if: github.event_name == 'workflow_dispatch'
+              middle:
+                needs: skipped-root
+              candidate-engineering:
+                needs: middle
+            """;
+
+        var result = CandidateEngineeringWorkflowWitness.CheckReachability(workflow);
+
+        Assert.False(result.IsReachable);
+        Assert.Contains("candidate-engineering -> middle -> skipped-root", result.Reason, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void CandidateEngineeringReachabilityFailsClosedForUndecidableCondition()
+    {
+        const string workflow = """
+            on: push
+            jobs:
+              guarded:
+                if: github.actor == 'octocat'
+              candidate-engineering:
+                needs: guarded
+            """;
+
+        var result = CandidateEngineeringWorkflowWitness.CheckReachability(workflow);
+
+        Assert.False(result.IsReachable);
+        Assert.Contains("undecidable", result.Reason, StringComparison.Ordinal);
     }
 }
 
 internal static class CandidateEngineeringWorkflowWitness
 {
     internal sealed record Result(
-        int ExitCode, bool Verified, string StandardOutput, string StandardError);
+        int ExitCode, bool Verified, bool FailurePropagates, string StandardOutput, string StandardError);
+
+    internal static CandidateEngineeringReachabilityWitness.Result CheckReachability(string workflow) =>
+        CandidateEngineeringReachabilityWitness.Check(workflow);
 
     internal static Result Execute()
     {
         if (OperatingSystem.IsWindows()) throw new PlatformNotSupportedException();
 
-        var steps = EngineeringSteps();
+        var workflow = WorkflowText();
+        var reachability = CheckReachability(workflow);
+        if (!reachability.IsReachable)
+        {
+            return new Result(-1, false, false, "", reachability.Reason);
+        }
+
+        var job = EngineeringJob(workflow);
+        if (!Condition(Scalar(job, "if"), defaultWhenEmpty: true))
+        {
+            return new Result(-1, false, false, "", "candidate-engineering job was skipped");
+        }
+
+        var steps = Steps(job);
         var producer = Step(steps, "id", "engineering-tests");
         var verifier = Step(steps, "name", "Summarize candidate engineering scope");
+        const string verifierCommand = "candidate/tools/scripts/workflow/candidate-engineering-summary.sh";
+        if (!string.Equals(Scalar(verifier, "run"), verifierCommand, StringComparison.Ordinal))
+        {
+            return new Result(-1, false, false, "", "verifier did not invoke the extracted summary script");
+        }
+        if (!string.Equals(Scalar(verifier, "shell"), "bash", StringComparison.Ordinal))
+        {
+            return new Result(-1, false, false, "", "verifier shell is not canonical bash");
+        }
+
         using var directory = new TemporaryDirectory();
         var candidateTools = Path.Combine(directory.Path, "candidate", "tools");
         var bin = Path.Combine(directory.Path, "bin");
@@ -504,6 +575,7 @@ internal static class CandidateEngineeringWorkflowWitness
         File.Copy(
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "Makefile"),
             Path.Combine(candidateTools, "Makefile"));
+        CandidateEngineeringWorkflowFixture.InstallSummaryScript(candidateTools);
         Directory.CreateDirectory(bin);
         var dotnet = Path.Combine(bin, "dotnet");
         File.WriteAllText(
@@ -526,7 +598,7 @@ internal static class CandidateEngineeringWorkflowWitness
 
         if (!Condition(Scalar(verifier, "if")))
         {
-            return new Result(-1, false, "", "verifier was skipped");
+            return new Result(-1, false, false, "", "verifier was skipped");
         }
 
         var verifierOutput = Run(
@@ -534,12 +606,25 @@ internal static class CandidateEngineeringWorkflowWitness
             directory.Path,
             bin,
             Environment(verifier, directory.Path, producerOutcome));
+        var verified = Read(Path.Combine(directory.Path, "summary"))
+            .Contains("- Engineering test execution: verified\n", StringComparison.Ordinal);
+        var receipt = Path.Combine(directory.Path, "candidate-engineering-tests.receipt");
+        File.Delete(receipt);
+        var enforcementOutput = Run(
+            Scalar(verifier, "run"),
+            directory.Path,
+            bin,
+            Environment(verifier, directory.Path, "success"));
+        var failurePropagates = enforcementOutput.ExitCode != 0
+            && !Condition(Scalar(verifier, "continue-on-error"));
         return new Result(
             verifierOutput.ExitCode,
-            Read(Path.Combine(directory.Path, "summary"))
-                .Contains("- Engineering test execution: verified\n", StringComparison.Ordinal),
-            System.Text.Encoding.UTF8.GetString(verifierOutput.StandardOutput),
-            System.Text.Encoding.UTF8.GetString(verifierOutput.StandardError));
+            verified,
+            failurePropagates,
+            System.Text.Encoding.UTF8.GetString(verifierOutput.StandardOutput)
+                + System.Text.Encoding.UTF8.GetString(enforcementOutput.StandardOutput),
+            System.Text.Encoding.UTF8.GetString(verifierOutput.StandardError)
+                + System.Text.Encoding.UTF8.GetString(enforcementOutput.StandardError));
     }
 
     private static ProcessOutput Run(
@@ -569,23 +654,31 @@ internal static class CandidateEngineeringWorkflowWitness
         }
     }
 
-    private static bool Condition(string condition) => condition
-        .Replace("${{", "", StringComparison.Ordinal)
-        .Replace("}}", "", StringComparison.Ordinal)
-        .Split("&&", StringSplitOptions.TrimEntries)
-        .All(static term => term is "true" or "always()" or "steps.scope.outputs.run == 'true'");
+    private static bool Condition(string condition, bool defaultWhenEmpty = false)
+    {
+        if (string.IsNullOrWhiteSpace(condition)) return defaultWhenEmpty;
+        return condition
+            .Replace("${{", "", StringComparison.Ordinal)
+            .Replace("}}", "", StringComparison.Ordinal)
+            .Split("&&", StringSplitOptions.TrimEntries)
+            .All(static term => term is "true" or "always()" or "steps.scope.outputs.run == 'true'");
+    }
 
-    private static YamlMappingNode[] EngineeringSteps()
+    private static string WorkflowText() => File.ReadAllText(Path.Combine(
+        TestRepositoryLayout.FindRoot(), ".github", "workflows", "ci.yml"));
+
+    private static YamlMappingNode EngineeringJob(string workflow)
     {
         var stream = new YamlStream();
-        stream.Load(new StringReader(File.ReadAllText(Path.Combine(
-            TestRepositoryLayout.FindRoot(), ".github", "workflows", "ci.yml"))));
-        var root = (YamlMappingNode)stream.Documents.Single().RootNode;
+        stream.Load(new StringReader(workflow));
+        var root = Assert.IsType<YamlMappingNode>(stream.Documents.Single().RootNode);
         var jobs = (YamlMappingNode)root.Children[new YamlScalarNode("jobs")];
-        var job = (YamlMappingNode)jobs.Children[new YamlScalarNode("candidate-engineering")];
-        return ((YamlSequenceNode)job.Children[new YamlScalarNode("steps")]).Children
-            .OfType<YamlMappingNode>().ToArray();
+        return (YamlMappingNode)jobs.Children[new YamlScalarNode("candidate-engineering")];
     }
+
+    private static YamlMappingNode[] Steps(YamlMappingNode job) =>
+        ((YamlSequenceNode)job.Children[new YamlScalarNode("steps")]).Children
+            .OfType<YamlMappingNode>().ToArray();
 
     private static YamlMappingNode Step(IEnumerable<YamlMappingNode> steps, string key, string value) =>
         steps.Single(step => Scalar(step, key) == value);
@@ -596,4 +689,25 @@ internal static class CandidateEngineeringWorkflowWitness
             : string.Empty;
 
     private static string Read(string path) => File.Exists(path) ? File.ReadAllText(path) : string.Empty;
+}
+
+internal static class CandidateEngineeringWorkflowFixture
+{
+    internal static string SummaryScript => File.ReadAllText(Path.Combine(
+        TestRepositoryLayout.FindRoot(), "tools", "scripts", "workflow", "candidate-engineering-summary.sh"));
+
+    internal static void InstallSummaryScript(string candidateTools)
+    {
+        if (OperatingSystem.IsWindows()) throw new PlatformNotSupportedException();
+
+        var workflowScripts = Path.Combine(candidateTools, "scripts", "workflow");
+        Directory.CreateDirectory(workflowScripts);
+        var destination = Path.Combine(workflowScripts, "candidate-engineering-summary.sh");
+        File.Copy(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "workflow", "candidate-engineering-summary.sh"),
+            destination);
+        File.SetUnixFileMode(
+            destination,
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+    }
 }
