@@ -1,5 +1,6 @@
 #!/bin/bash
-# preflight: 提交前一键预证 CI 三 required check 会绿(本地=CI 同一器,器之四律②)
+# preflight: 一键预证 CI 三 required check 会绿(本地=CI 同一器,器律②)。
+# 提交前不强制跑本器(用户 2026-08-26 定,见 CLAUDE.md 器律②);CI 红了用它定位。
 # 覆盖 engineering 全步骤、lean-inspect 的数学内容检查与 baseline admission(gate);
 # CI=true 复现 CI 独有构建属性。
 set -euo pipefail
