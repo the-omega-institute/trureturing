@@ -1,0 +1,33 @@
+name: temporary observer append
+on:
+  push:
+    branches:
+      - tmp-observer-append-20260827
+permissions:
+  contents: write
+jobs:
+  append:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Append theory with Python
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          target = Path('docs/develop/theory/FORMAL_OBSERVER_COMPLETION_REFLECTION.md')
+          payload = Path('.tmp/observer_append_v16.md').read_bytes()
+          with target.open('ab') as f:
+              f.write(payload)
+          PY
+      - name: Commit append
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/develop/theory/FORMAL_OBSERVER_COMPLETION_REFLECTION.md
+          git commit -m 'docs(theory): append unified observer experiment theory'
+          git push
