@@ -67,9 +67,10 @@ public sealed class ContentsWriteWorkflowClosureTests
     {
         var content = TruthReleaseWorkflow().Content;
 
-        Assert.Contains("git/ref/heads/dev", content, StringComparison.Ordinal);
-        Assert.Contains("resolved protected dev tip does not equal the push SHA", content, StringComparison.Ordinal);
-        Assert.Contains("checked out commit is not the resolved protected dev tip", content, StringComparison.Ordinal);
+        Assert.Contains("repos/${GITHUB_REPOSITORY}/branches/dev", content, StringComparison.Ordinal);
+        Assert.Contains(".protected", content, StringComparison.Ordinal);
+        Assert.Contains("the push SHA is no longer the current protected dev tip", content, StringComparison.Ordinal);
+        Assert.Contains(".merge_base_commit.sha", content, StringComparison.Ordinal);
         Assert.Contains("commit_on_protected_dev=true", content, StringComparison.Ordinal);
         Assert.Contains("--commit-on-protected-dev \"$COMMIT_ON_PROTECTED_DEV\"", content, StringComparison.Ordinal);
         Assert.DoesNotContain("--commit-on-protected-dev true", content, StringComparison.Ordinal);
@@ -81,19 +82,19 @@ public sealed class ContentsWriteWorkflowClosureTests
         var content = TruthReleaseWorkflow().Content;
 
         Assert.Contains(
-            "group: truth-release-publish-${{ needs.produce.outputs.release_digest }}",
+            "group: truth-release-publish-${{ needs.prepare.outputs.release_digest }}",
             content,
             StringComparison.Ordinal);
-        Assert.Contains("produced_at=\"$(date -u -d \"@$SOURCE_EPOCH\"", content, StringComparison.Ordinal);
+        Assert.Contains("produced_at=\"$(date -u --date=\"@${commit_epoch}\"", content, StringComparison.Ordinal);
         Assert.Contains("--sort=name", content, StringComparison.Ordinal);
         Assert.Contains("gzip -n", content, StringComparison.Ordinal);
         Assert.Contains("oras pull \"$reference\"", content, StringComparison.Ordinal);
         Assert.Contains("cmp -s \"$ARCHIVE\"", content, StringComparison.Ordinal);
         Assert.Contains("immutable_reference=\"$OCI_REPOSITORY@$oci_digest\"", content, StringComparison.Ordinal);
-        Assert.Contains("OCI tag lookup failed without a confirmed missing-manifest response", content, StringComparison.Ordinal);
+        Assert.Contains("OCI lookup failed without a definitive not-found response", content, StringComparison.Ordinal);
         Assert.Contains("OCI digest tag moved during immutable verification", content, StringComparison.Ordinal);
         Assert.Contains(
-            "org.opencontainers.image.source=https://github.com/${GITHUB_REPOSITORY}/commit/${SOURCE_COMMIT}",
+            "source_url=\"https://github.com/${GITHUB_REPOSITORY}/commit/${SOURCE_COMMIT}\"",
             content,
             StringComparison.Ordinal);
         Assert.DoesNotContain(
@@ -107,17 +108,13 @@ public sealed class ContentsWriteWorkflowClosureTests
     {
         var content = TruthReleaseWorkflow().Content;
 
-        Assert.Contains(
-            "release_collection_api=\"https://api.github.com/repos/${GITHUB_REPOSITORY}/releases\"",
-            content,
-            StringComparison.Ordinal);
-        Assert.Contains("-X POST \"$release_collection_api\"", content, StringComparison.Ordinal);
-        Assert.Contains("verify_release_asset", content, StringComparison.Ordinal);
-        Assert.Contains("upload_release_asset", content, StringComparison.Ordinal);
-        Assert.Contains("cmp -s \"$expected\" \"$downloaded\"", content, StringComparison.Ordinal);
-        Assert.Contains("asset_count", content, StringComparison.Ordinal);
-        Assert.Contains("GitHub Release asset count is not numeric", content, StringComparison.Ordinal);
-        Assert.Contains("GitHub Release disappeared during final verification", content, StringComparison.Ordinal);
+        Assert.Contains("gh release create", content, StringComparison.Ordinal);
+        Assert.Contains("gh release upload", content, StringComparison.Ordinal);
+        Assert.Contains("gh release download", content, StringComparison.Ordinal);
+        Assert.Contains("cmp -s \"$asset\" \"$verify_dir/$name\"", content, StringComparison.Ordinal);
+        Assert.Contains("count=\"$(jq --arg name", content, StringComparison.Ordinal);
+        Assert.Contains("assets=verified", content, StringComparison.Ordinal);
+        Assert.DoesNotContain("curl", content, StringComparison.Ordinal);
     }
 
     [Fact]

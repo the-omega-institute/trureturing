@@ -16,25 +16,22 @@ on:
       - 'global.json'
       - '.github/workflows/ci.yml'
       - '.github/workflows/truth-release-publish.yml'
-
 permissions:
-  contents: write
-  actions: read
-  packages: write
-  id-token: write
-  attestations: write
+  contents: read
 
 jobs:
-  produce:
-    name: produce verified truth-release inputs
+  prepare:
+    name: prepare verified truth-release
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 120
+    permissions:
+      contents: read
+      actions: read
     outputs:
-      artifact_name: ${{ steps.release.outputs.artifact_name }}
       release_digest: ${{ steps.release.outputs.release_digest }}
       source_commit: ${{ steps.source.outputs.source_commit }}
+      source_tree: ${{ steps.identity.outputs.source_tree }}
     env:
-      GH_TOKEN: ${{ github.token }}
       REQUIRED_CHECKS: >-
         Candidate harness engineering checks
         |Canonical Lean report production
@@ -43,12 +40,21 @@ jobs:
       - name: Resolve protected dev and wait for required gates
         id: source
         shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          source_commit="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/dev" --jq '.object.sha')"
+          if [[ "$GITHUB_EVENT_NAME" != 'push' || "$GITHUB_REF" != 'refs/heads/dev' ]]; then
+            printf '%s\n' 'truth releases may only be prepared by a push to dev' >&2
+            exit 1
+          fi
+          branch="$(gh api "repos/${GITHUB_REPOSITORY}/branches/dev")"
+          [[ "$(jq -r '.protected' <<< "$branch")" == 'true' ]] \
+            || { printf '%s\n' 'dev is not protected; refusing to publish' >&2; exit 1; }
+          source_commit="$(jq -r '.commit.sha' <<< "$branch")"
           [[ "$source_commit" =~ ^[0-9a-f]{40}$ ]]
           if [[ "$source_commit" != "$GITHUB_SHA" ]]; then
-            printf '%s\n' 'resolved protected dev tip does not equal the push SHA' >&2
+            printf '%s\n' 'the push SHA is no longer the current protected dev tip; refusing to publish' >&2
             exit 1
           fi
           IFS='|' read -r -a required_checks <<< "$REQUIRED_CHECKS"
@@ -171,10 +177,34 @@ jobs:
             --repository "$GITHUB_WORKSPACE" --report "$report"
           printf 'path=%s\n' "$report" >> "$GITHUB_OUTPUT"
 
+      - name: Verify source remains on protected dev
+        id: protected_dev
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_COMMIT: ${{ steps.source.outputs.source_commit }}
+        run: |
+          set -euo pipefail
+          branch="$(gh api "repos/${GITHUB_REPOSITORY}/branches/dev")"
+          [[ "$(jq -r '.protected' <<< "$branch")" == 'true' ]] \
+            || { printf '%s\n' 'dev is not protected; refusing protected-dev provenance' >&2; exit 1; }
+          dev_tip="$(jq -r '.commit.sha' <<< "$branch")"
+          [[ "$dev_tip" =~ ^[0-9a-f]{40}$ ]]
+          comparison="$(gh api "repos/${GITHUB_REPOSITORY}/compare/${SOURCE_COMMIT}...${dev_tip}")"
+          merge_base="$(jq -r '.merge_base_commit.sha' <<< "$comparison")"
+          behind_by="$(jq -r '.behind_by' <<< "$comparison")"
+          status="$(jq -r '.status' <<< "$comparison")"
+          if [[ "$merge_base" != "$SOURCE_COMMIT" || "$behind_by" != '0' \
+            || ( "$status" != 'identical' && "$status" != 'ahead' ) ]]; then
+            printf '%s\n' 'source commit is not the protected dev tip or a verified ancestor of it' >&2
+            exit 1
+          fi
+          printf 'commit_on_protected_dev=true\n' >> "$GITHUB_OUTPUT"
+
       - name: Assemble the real seven-artifact truth-release
         id: release
         env:
-          COMMIT_ON_PROTECTED_DEV: ${{ steps.identity.outputs.commit_on_protected_dev }}
+          COMMIT_ON_PROTECTED_DEV: ${{ steps.protected_dev.outputs.commit_on_protected_dev }}
           SOURCE_COMMIT: ${{ steps.source.outputs.source_commit }}
           SOURCE_TREE: ${{ steps.identity.outputs.source_tree }}
           REPORT_PATH: ${{ steps.report.outputs.path || steps.report_fallback.outputs.path }}
@@ -184,10 +214,12 @@ jobs:
           bundle="$RUNNER_TEMP/truth-release-bundle"
           rm -rf "$bundle"
           mkdir -p "$bundle"
+          [[ "$COMMIT_ON_PROTECTED_DEV" == 'true' ]] \
+            || { printf '%s\n' 'protected-dev provenance was not established' >&2; exit 1; }
           dotnet restore tools/StrataLint.Cli/StrataLint.Cli.csproj --locked-mode
-          SOURCE_EPOCH="$(git show -s --format=%ct HEAD)"
-          [[ "$SOURCE_EPOCH" =~ ^[0-9]+$ ]]
-          produced_at="$(date -u -d "@$SOURCE_EPOCH" +%Y-%m-%dT%H:%M:%SZ)"
+          commit_epoch="$(git show -s --format=%ct "$SOURCE_COMMIT")"
+          [[ "$commit_epoch" =~ ^[0-9]+$ ]]
+          produced_at="$(date -u --date="@${commit_epoch}" +%Y-%m-%dT%H:%M:%SZ)"
           dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj \
             --configuration Release --no-restore -- \
             truth-release \
@@ -204,66 +236,92 @@ jobs:
           jq -e --arg digest "$digest" \
             '.schema == "truth-release-publication.v1" and .release_digest == $digest and .bundle_ref == $digest and .source_commit == $ENV.SOURCE_COMMIT and .source_tree == $ENV.SOURCE_TREE and (.producer_commit | test("^[0-9a-f]{40}$"))' \
             "$bundle/truth-release-publication.v1.json" >/dev/null
-          archive="$RUNNER_TEMP/truth-release-${digest#sha256:}.tar.gz"
-          tar --sort=name --mtime="@$SOURCE_EPOCH" --owner=0 --group=0 --numeric-owner \
-            --format=ustar -C "$bundle" -cf - . | gzip -n > "$archive"
-          artifact_name="truth-release-publication-${digest#sha256:}"
-          staging="$RUNNER_TEMP/$artifact_name"
-          mkdir -p "$staging"
-          cp "$archive" "$bundle/truth-release-publication.v1.json" "$staging/"
-          printf 'artifact_name=%s\n' "$artifact_name" >> "$GITHUB_OUTPUT"
+          artifact="$RUNNER_TEMP/truth-release-${digest#sha256:}.tar.gz"
+          tar --sort=name --mtime='UTC 1970-01-01' --owner=0 --group=0 --numeric-owner \
+            -C "$bundle" -cf - . | gzip -n > "$artifact"
+          assets="$RUNNER_TEMP/truth-release-assets"
+          rm -rf "$assets"
+          mkdir -p "$assets"
+          cp "$artifact" "$assets/"
+          cp "$bundle/truth-release-publication.v1.json" "$assets/"
+          printf 'bundle=%s\n' "$bundle" >> "$GITHUB_OUTPUT"
+          printf 'archive=%s\n' "$artifact" >> "$GITHUB_OUTPUT"
           printf 'release_digest=%s\n' "$digest" >> "$GITHUB_OUTPUT"
-          printf 'staging=%s\n' "$staging" >> "$GITHUB_OUTPUT"
 
-      - name: Transfer immutable publication inputs
+      - name: Transfer publication assets to the digest-keyed publisher
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ steps.release.outputs.artifact_name }}
-          path: ${{ steps.release.outputs.staging }}
+          name: truth-release-publication
+          path: ${{ runner.temp }}/truth-release-assets/*
           if-no-files-found: error
           retention-days: 1
-          compression-level: 0
 
   publish:
     name: publish persistent verified truth-release
-    needs: produce
+    needs: prepare
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
+    permissions:
+      contents: write
+      actions: read
+      packages: write
+      id-token: write
+      attestations: write
     concurrency:
-      group: truth-release-publish-${{ needs.produce.outputs.release_digest }}
+      group: truth-release-publish-${{ needs.prepare.outputs.release_digest }}
       cancel-in-progress: false
     env:
-      GH_TOKEN: ${{ github.token }}
       OCI_REPOSITORY: ghcr.io/${{ github.repository_owner }}/trureturing/truth-release
       OCI_ARTIFACT_TYPE: application/vnd.theomega.truth-release.bundle.v1
       OCI_LAYER_TYPE: application/vnd.theomega.truth-release.bundle.v1+tar+gzip
-      RELEASE_DIGEST: ${{ needs.produce.outputs.release_digest }}
-      SOURCE_COMMIT: ${{ needs.produce.outputs.source_commit }}
+      RELEASE_DIGEST: ${{ needs.prepare.outputs.release_digest }}
+      SOURCE_COMMIT: ${{ needs.prepare.outputs.source_commit }}
+      SOURCE_TREE: ${{ needs.prepare.outputs.source_tree }}
     steps:
-      - name: Download immutable publication inputs
+      - name: Reverify protected dev before publication writes
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          [[ "$SOURCE_COMMIT" =~ ^[0-9a-f]{40}$ ]]
+          branch="$(gh api "repos/${GITHUB_REPOSITORY}/branches/dev")"
+          [[ "$(jq -r '.protected' <<< "$branch")" == 'true' ]] \
+            || { printf '%s\n' 'dev is not protected; refusing publication writes' >&2; exit 1; }
+          dev_tip="$(jq -r '.commit.sha' <<< "$branch")"
+          [[ "$dev_tip" =~ ^[0-9a-f]{40}$ ]]
+          comparison="$(gh api "repos/${GITHUB_REPOSITORY}/compare/${SOURCE_COMMIT}...${dev_tip}")"
+          [[ "$(jq -r '.merge_base_commit.sha' <<< "$comparison")" == "$SOURCE_COMMIT" \
+            && "$(jq -r '.behind_by' <<< "$comparison")" == '0' ]] \
+            || { printf '%s\n' 'source commit left protected dev while publication was queued' >&2; exit 1; }
+
+      - name: Download the prepared publication assets
         uses: actions/download-artifact@v4
         with:
-          name: ${{ needs.produce.outputs.artifact_name }}
-          path: ${{ runner.temp }}/truth-release-publication
+          name: truth-release-publication
+          path: ${{ runner.temp }}/truth-release-assets
 
-      - name: Validate transferred publication inputs
+      - name: Verify transferred release_digest binding
+        id: assets
         shell: bash
         run: |
           set -euo pipefail
-          root="$RUNNER_TEMP/truth-release-publication"
-          archive="$root/truth-release-${RELEASE_DIGEST#sha256:}.tar.gz"
-          publication="$root/truth-release-publication.v1.json"
           [[ "$RELEASE_DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]]
           [[ "$SOURCE_COMMIT" =~ ^[0-9a-f]{40}$ ]]
-          test -s "$archive"
-          jq -e \
-            '.schema == "truth-release-publication.v1" and .release_digest == $ENV.RELEASE_DIGEST and .bundle_ref == $ENV.RELEASE_DIGEST and .source_commit == $ENV.SOURCE_COMMIT' \
+          [[ "$SOURCE_TREE" =~ ^[0-9a-f]{40}$ ]]
+          assets="$RUNNER_TEMP/truth-release-assets"
+          archive="$assets/truth-release-${RELEASE_DIGEST#sha256:}.tar.gz"
+          publication="$assets/truth-release-publication.v1.json"
+          [[ -s "$archive" && -s "$publication" ]]
+          jq -e --arg digest "$RELEASE_DIGEST" --arg commit "$SOURCE_COMMIT" --arg tree "$SOURCE_TREE" \
+            '.schema == "truth-release-publication.v1" and .release_digest == $digest and .bundle_ref == $digest and .source_commit == $commit and .source_tree == $tree' \
             "$publication" >/dev/null
-          protected_dev_tip="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/dev" --jq '.object.sha')"
-          [[ "$protected_dev_tip" == "$SOURCE_COMMIT" ]] \
-            || { printf '%s\n' 'publication source is no longer the protected dev tip' >&2; exit 1; }
-          printf 'ARCHIVE=%s\n' "$archive" >> "$GITHUB_ENV"
-          printf 'PUBLICATION=%s\n' "$publication" >> "$GITHUB_ENV"
+          archived_publication="$RUNNER_TEMP/archived-truth-release-publication.v1.json"
+          tar -xOzf "$archive" ./truth-release-publication.v1.json > "$archived_publication"
+          cmp -s "$publication" "$archived_publication" \
+            || { printf '%s\n' 'archive publication pointer differs from the transferred pointer' >&2; exit 1; }
+          printf 'archive=%s\n' "$archive" >> "$GITHUB_OUTPUT"
+          printf 'publication=%s\n' "$publication" >> "$GITHUB_OUTPUT"
 
       - name: Install ORAS
         uses: oras-project/setup-oras@v1
@@ -277,6 +335,9 @@ jobs:
 
       - name: Publish or verify the immutable GHCR artifact
         id: oci
+        env:
+          ARCHIVE: ${{ steps.assets.outputs.archive }}
+          GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           set -euo pipefail
@@ -325,22 +386,37 @@ jobs:
           verify_protected_dev_tip
           tag="release-${RELEASE_DIGEST#sha256:}"
           reference="$OCI_REPOSITORY:$tag"
-          pushed=false
-          lookup_error="$RUNNER_TEMP/oci-lookup-error.txt"
-          if oras manifest fetch "$reference" >/dev/null 2> "$lookup_error"; then
-            :
-          elif grep -Eqi '(^|[^[:alpha:]])(404|manifest unknown|not found)([^[:alpha:]]|$)' "$lookup_error"; then
-            verify_protected_dev_tip
+          source_url="https://github.com/${GITHUB_REPOSITORY}/commit/${SOURCE_COMMIT}"
+          archive_digest="sha256:$(sha256sum "$ARCHIVE" | cut -d' ' -f1)"
+          manifest="$RUNNER_TEMP/oci-manifest.json"
+          fetch_error="$RUNNER_TEMP/oci-fetch-error.txt"
+          if oras manifest fetch "$reference" > "$manifest" 2> "$fetch_error"; then
+            pushed=false
+          else
+            if ! grep -Eqi 'manifest unknown|not found' "$fetch_error"; then
+              cat "$fetch_error" >&2
+              printf '%s\n' 'OCI lookup failed without a definitive not-found response' >&2
+              exit 1
+            fi
             oras push "$reference" \
               --artifact-type "$OCI_ARTIFACT_TYPE" \
-              --annotation "org.opencontainers.image.source=https://github.com/${GITHUB_REPOSITORY}/commit/${SOURCE_COMMIT}" \
+              --annotation "org.opencontainers.image.source=${source_url}" \
+              --annotation "org.opencontainers.image.revision=${SOURCE_COMMIT}" \
+              --annotation "org.theomega.truth-release.release-digest=${RELEASE_DIGEST}" \
               "$ARCHIVE:$OCI_LAYER_TYPE"
             pushed=true
-          else
-            printf '%s\n' 'OCI tag lookup failed without a confirmed missing-manifest response' >&2
-            sed -n '1,20p' "$lookup_error" >&2
-            exit 1
+            oras manifest fetch "$reference" > "$manifest"
           fi
+          jq -e \
+            --arg artifact_type "$OCI_ARTIFACT_TYPE" \
+            --arg layer_type "$OCI_LAYER_TYPE" \
+            --arg archive_digest "$archive_digest" \
+            --arg release_digest "$RELEASE_DIGEST" \
+            --arg source_url "$source_url" \
+            --arg source_commit "$SOURCE_COMMIT" \
+            '.schemaVersion == 2 and .artifactType == $artifact_type and (.layers | length) == 1 and .layers[0].mediaType == $layer_type and .layers[0].digest == $archive_digest and .annotations["org.theomega.truth-release.release-digest"] == $release_digest and .annotations["org.opencontainers.image.source"] == $source_url and .annotations["org.opencontainers.image.revision"] == $source_commit' \
+            "$manifest" >/dev/null \
+            || { printf '%s\n' 'existing OCI tag does not match the prepared release; refusing to overwrite or reuse it' >&2; exit 1; }
           descriptor="$RUNNER_TEMP/oci-descriptor.json"
           oras manifest fetch --descriptor "$reference" > "$descriptor"
           oci_digest="$(jq -r '.digest' "$descriptor")"
@@ -351,19 +427,10 @@ jobs:
           [[ "$current_digest" == "$oci_digest" ]] \
             || { printf '%s\n' 'OCI digest tag moved during immutable verification' >&2; exit 1; }
           printf 'OCI_ARTIFACT status=%s release_digest=%s coordinate=%s@%s\n' \
-            "$([[ "$pushed" == true ]] && printf published || printf verified)" \
+            "$([[ "$pushed" == true ]] && printf published || printf verified-existing)" \
             "$RELEASE_DIGEST" "$OCI_REPOSITORY" "$oci_digest"
           printf 'pushed=%s\n' "$pushed" >> "$GITHUB_OUTPUT"
           printf 'digest=%s\n' "$oci_digest" >> "$GITHUB_OUTPUT"
-
-      - name: Revalidate protected dev before OCI attestation
-        if: steps.oci.outputs.pushed == 'true'
-        shell: bash
-        run: |
-          set -euo pipefail
-          protected_dev_tip="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/dev" --jq '.object.sha')"
-          [[ "$protected_dev_tip" == "$SOURCE_COMMIT" ]] \
-            || { printf '%s\n' 'protected dev moved before OCI attestation' >&2; exit 1; }
 
       - name: Attest the GHCR artifact provenance
         if: steps.oci.outputs.pushed == 'true'
@@ -373,178 +440,68 @@ jobs:
           subject-digest: ${{ steps.oci.outputs.digest }}
           push-to-registry: true
 
-      - name: Create or repair the immutable GitHub Release mirror
+      - name: Create or recover the immutable GitHub Release mirror
+        env:
+          ARCHIVE: ${{ steps.assets.outputs.archive }}
+          GH_TOKEN: ${{ github.token }}
+          PUBLICATION: ${{ steps.assets.outputs.publication }}
         shell: bash
         run: |
           set -euo pipefail
 
           tag="truth-release-${RELEASE_DIGEST#sha256:}"
-          expected_name="Truth release ${RELEASE_DIGEST#sha256:}"
-          expected_body="Verified truth-release.v1 bundle for ${SOURCE_COMMIT}. The OCI artifact is keyed by ${RELEASE_DIGEST}; this release is a human mirror."
-          release_collection_api="https://api.github.com/repos/${GITHUB_REPOSITORY}/releases"
-          release_lookup_api="${release_collection_api}/tags/${tag}"
+          title="Truth release ${RELEASE_DIGEST#sha256:}"
+          body="Verified truth-release.v1 bundle for ${SOURCE_COMMIT}. The OCI artifact is keyed by ${RELEASE_DIGEST}; this release is a human mirror."
           release_json="$RUNNER_TEMP/github-release.json"
+          created=false
 
-          verify_protected_dev_tip() {
-            local protected_dev_tip
-            protected_dev_tip="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/dev" --jq '.object.sha')"
-            [[ "$protected_dev_tip" == "$SOURCE_COMMIT" ]] \
-              || { printf '%s\n' 'protected dev moved before GitHub Release publication' >&2; return 1; }
-          }
-
-          fetch_release() {
-            curl -sS -o "$release_json" -w '%{http_code}' \
-              -H "Authorization: Bearer ${GH_TOKEN}" \
-              -H 'Accept: application/vnd.github+json' \
-              "$release_lookup_api"
-          }
-
-          resolve_tag_target() {
-            local object object_type
-            object="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/tags/${tag}")"
-            object_type="$(jq -r '.object.type' <<< "$object")"
-            while [[ "$object_type" == tag ]]; do
-              object="$(gh api "repos/${GITHUB_REPOSITORY}/git/tags/$(jq -r '.object.sha' <<< "$object")")"
-              object_type="$(jq -r '.object.type' <<< "$object")"
-            done
-            [[ "$object_type" == commit ]]
-            jq -r '.object.sha' <<< "$object"
-          }
-
-          verify_existing_tag_if_present() {
-            local status target
-            status="$(curl -sS -o /dev/null -w '%{http_code}' \
-              -H "Authorization: Bearer ${GH_TOKEN}" \
-              -H 'Accept: application/vnd.github+json' \
-              "https://api.github.com/repos/${GITHUB_REPOSITORY}/git/ref/tags/${tag}")"
-            if [[ "$status" == 404 ]]; then
-              return 0
-            fi
-            [[ "$status" == 200 ]] \
-              || { printf 'GitHub tag lookup failed with HTTP %s\n' "$status" >&2; return 1; }
-            target="$(resolve_tag_target)"
-            [[ "$target" == "$SOURCE_COMMIT" ]] \
-              || { printf '%s\n' 'existing Release tag does not point to the verified source commit' >&2; return 1; }
-          }
-
-          verify_release_metadata() {
-            local target
-            jq -e \
-              --arg tag "$tag" \
-              --arg target "$SOURCE_COMMIT" \
-              --arg name "$expected_name" \
-              --arg body "$expected_body" \
-              '.tag_name == $tag
-                and .target_commitish == $target
-                and .name == $name
-                and .body == $body
-                and .draft == false
-                and .prerelease == false' \
+          verify_release() {
+            gh api "repos/${GITHUB_REPOSITORY}/releases/tags/${tag}" > "$release_json"
+            jq -e --arg tag "$tag" --arg target "$SOURCE_COMMIT" --arg title "$title" --arg body "$body" \
+              '.tag_name == $tag and .target_commitish == $target and .name == $title and .body == $body and .draft == false and .prerelease == false' \
               "$release_json" >/dev/null \
-              || { printf '%s\n' 'existing GitHub Release metadata does not match the immutable publication' >&2; return 1; }
-            target="$(resolve_tag_target)"
-            [[ "$target" == "$SOURCE_COMMIT" ]] \
-              || { printf '%s\n' 'GitHub Release tag does not point to the verified source commit' >&2; return 1; }
+              || { printf '%s\n' 'existing GitHub Release metadata does not match the prepared release' >&2; exit 1; }
+            ref="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/tags/${tag}")"
+            [[ "$(jq -r '.object.type' <<< "$ref")" == 'commit' \
+              && "$(jq -r '.object.sha' <<< "$ref")" == "$SOURCE_COMMIT" ]] \
+              || { printf '%s\n' 'existing GitHub Release tag is not bound to the source commit' >&2; exit 1; }
           }
 
-          verify_release_asset() {
-            local expected="$1"
-            local name asset_count asset_id asset_size downloaded
-            name="$(basename "$expected")"
-            asset_count="$(jq --arg name "$name" '[.assets[] | select(.name == $name)] | length' "$release_json")" \
-              || { printf '%s\n' 'GitHub Release assets are not valid JSON' >&2; return 2; }
-            [[ "$asset_count" =~ ^[0-9]+$ ]] \
-              || { printf '%s\n' 'GitHub Release asset count is not numeric' >&2; return 2; }
-            if [[ "$asset_count" -eq 0 ]]; then
-              return 1
+          if gh api "repos/${GITHUB_REPOSITORY}/releases/tags/${tag}" > "$release_json" 2>/dev/null; then
+            verify_release
+          else
+            if gh release create "$tag" --repo "$GITHUB_REPOSITORY" --target "$SOURCE_COMMIT" \
+              --title "$title" --notes "$body"; then
+              created=true
             fi
-            if [[ "$asset_count" -ne 1 ]]; then
-              printf 'GitHub Release has %s assets named %s; refusing an ambiguous binding\n' "$asset_count" "$name" >&2
-              return 2
-            fi
-            asset_id="$(jq -r --arg name "$name" '.assets[] | select(.name == $name) | .id' "$release_json")" \
-              || { printf 'GitHub Release asset id lookup failed for %s\n' "$name" >&2; return 2; }
-            asset_size="$(jq -r --arg name "$name" '.assets[] | select(.name == $name) | .size' "$release_json")" \
-              || { printf 'GitHub Release asset size lookup failed for %s\n' "$name" >&2; return 2; }
-            [[ "$asset_id" =~ ^[0-9]+$ && "$asset_size" -eq "$(stat -c '%s' "$expected")" ]] \
-              || { printf 'GitHub Release asset metadata differs for %s\n' "$name" >&2; return 2; }
-            downloaded="$RUNNER_TEMP/downloaded-${asset_id}-${name}"
-            gh api "repos/${GITHUB_REPOSITORY}/releases/assets/${asset_id}" \
-              -H 'Accept: application/octet-stream' > "$downloaded" \
-              || { printf 'GitHub Release asset download failed for %s\n' "$name" >&2; return 2; }
-            cmp -s "$expected" "$downloaded" \
-              || { printf 'GitHub Release asset bytes differ for %s\n' "$name" >&2; return 2; }
-            return 0
-          }
-
-          upload_release_asset() {
-            local expected="$1"
-            local name encoded_name upload_url response status
-            verify_protected_dev_tip
-            name="$(basename "$expected")"
-            encoded_name="$(jq -rn --arg name "$name" '$name | @uri')"
-            upload_url="$(jq -r '.upload_url' "$release_json" | sed 's/{?name,label}$//')"
-            [[ "$upload_url" =~ ^https://uploads\.github\.com/ ]] \
-              || { printf '%s\n' 'GitHub Release returned no safe upload URL' >&2; return 1; }
-            response="$RUNNER_TEMP/upload-${name}.json"
-            status="$(curl -sS -o "$response" -w '%{http_code}' -X POST "${upload_url}?name=${encoded_name}" \
-              -H "Authorization: Bearer ${GH_TOKEN}" \
-              -H 'Accept: application/vnd.github+json' \
-              -H 'Content-Type: application/octet-stream' \
-              --data-binary "@$expected")"
-            if [[ "$status" != 201 && "$status" != 422 ]]; then
-              printf 'GitHub Release asset upload failed with HTTP %s for %s\n' "$status" "$name" >&2
-              return 1
-            fi
-            [[ "$(fetch_release)" == 200 ]] \
-              || { printf '%s\n' 'GitHub Release disappeared after asset upload' >&2; return 1; }
-            verify_release_metadata
-            verify_release_asset "$expected"
-          }
-
-          verify_protected_dev_tip
-          release_status="$(fetch_release)"
-          if [[ "$release_status" == 404 ]]; then
-            verify_existing_tag_if_present
-            verify_protected_dev_tip
-            payload="$(jq -n \
-              --arg tag "$tag" \
-              --arg target "$SOURCE_COMMIT" \
-              --arg name "$expected_name" \
-              --arg body "$expected_body" \
-              '{tag_name:$tag,target_commitish:$target,name:$name,body:$body,draft:false,prerelease:false}')"
-            create_response="$RUNNER_TEMP/github-release-create.json"
-            create_status="$(curl -sS -o "$create_response" -w '%{http_code}' \
-              -X POST "$release_collection_api" \
-              -H "Authorization: Bearer ${GH_TOKEN}" \
-              -H 'Accept: application/vnd.github+json' \
-              -H 'Content-Type: application/json' \
-              --data "$payload")"
-            if [[ "$create_status" != 201 && "$create_status" != 422 ]]; then
-              printf 'GitHub Release creation failed with HTTP %s\n' "$create_status" >&2
-              exit 1
-            fi
-            release_status="$(fetch_release)"
+            verify_release
           fi
-          [[ "$release_status" == 200 ]] \
-            || { printf 'GitHub Release lookup failed with HTTP %s\n' "$release_status" >&2; exit 1; }
-          verify_release_metadata
 
           for asset in "$ARCHIVE" "$PUBLICATION"; do
-            if verify_release_asset "$asset"; then
-              printf 'GITHUB_RELEASE_ASSET status=verified name=%s\n' "$(basename "$asset")"
-            else
-              verification_status=$?
-              if [[ "$verification_status" -ne 1 ]]; then
-                exit "$verification_status"
-              fi
-              upload_release_asset "$asset"
-              printf 'GITHUB_RELEASE_ASSET status=uploaded name=%s\n' "$(basename "$asset")"
+            name="$(basename "$asset")"
+            verify_release
+            count="$(jq --arg name "$name" '[.assets[] | select(.name == $name)] | length' "$release_json")"
+            if [[ "$count" == '0' ]]; then
+              gh release upload "$tag" "$asset" --repo "$GITHUB_REPOSITORY" \
+                || printf '%s\n' "asset upload raced or failed; verifying remote asset before deciding"
+            elif [[ "$count" != '1' ]]; then
+              printf 'GitHub Release has %s assets named %s; refusing reuse\n' "$count" "$name" >&2
+              exit 1
+            fi
+            verify_release
+            count="$(jq --arg name "$name" '[.assets[] | select(.name == $name)] | length' "$release_json")"
+            [[ "$count" == '1' ]] \
+              || { printf '%s\n' "GitHub Release asset $name is absent after upload" >&2; exit 1; }
+            verify_dir="$(mktemp -d)"
+            gh release download "$tag" --repo "$GITHUB_REPOSITORY" --pattern "$name" --dir "$verify_dir"
+            if ! cmp -s "$asset" "$verify_dir/$name"; then
+              local_digest="$(sha256sum "$asset" | cut -d' ' -f1)"
+              remote_digest="$(sha256sum "$verify_dir/$name" | cut -d' ' -f1)"
+              printf 'GitHub Release asset %s is immutable but mismatched (local=%s remote=%s)\n' \
+                "$name" "$local_digest" "$remote_digest" >&2
+              exit 1
             fi
           done
-          [[ "$(fetch_release)" == 200 ]] \
-            || { printf '%s\n' 'GitHub Release disappeared during final verification' >&2; exit 1; }
-          verify_release_metadata
-          verify_release_asset "$ARCHIVE"
-          verify_release_asset "$PUBLICATION"
-          printf 'GITHUB_RELEASE status=verified tag=%s\n' "$tag"
+          verify_release
+          printf 'GITHUB_RELEASE status=%s tag=%s assets=verified\n' \
+            "$([[ "$created" == true ]] && printf published || printf verified-or-recovered)" "$tag"
