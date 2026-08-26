@@ -11,7 +11,7 @@ public sealed partial class WorktreeCommandTests
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
-        const string branch = "harness/signal-retry";
+        const string branch = "harness/math/signal-retry";
         var target = Path.Combine(repository.Path, "signal-retry");
         var missingMetadata = WorktreeMetadataPath(repository.Path, target);
         ReviewRegressionTests.RunGit(repository.Path, "branch", branch, "HEAD");
@@ -41,7 +41,7 @@ public sealed partial class WorktreeCommandTests
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
-        const string branch = "harness/postcondition-failure";
+        const string branch = "harness/math/postcondition-failure";
         var target = Path.Combine(repository.Path, "postcondition-failure");
         var missingMetadata = WorktreeMetadataPath(repository.Path, target);
         var runner = new RecordingWorktreeProcessRunner
@@ -70,7 +70,7 @@ public sealed partial class WorktreeCommandTests
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
-        const string branch = "harness/unusable-postcondition";
+        const string branch = "harness/math/unusable-postcondition";
         var target = Path.Combine(repository.Path, "unusable-postcondition");
         var runner = new RecordingWorktreeProcessRunner
         {
@@ -99,7 +99,7 @@ public sealed partial class WorktreeCommandTests
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
-        const string branch = "harness/postcondition-success";
+        const string branch = "harness/math/postcondition-success";
         var target = Path.Combine(repository.Path, "postcondition-success");
 
         var result = WorktreeCommand.Run(
@@ -132,7 +132,7 @@ public sealed partial class WorktreeCommandTests
         var result = WorktreeCommand.Run(
             repository.Path,
             [
-                "--branch", "harness/foreign-metadata",
+                "--branch", "harness/math/foreign-metadata",
                 "--path", target,
                 "--base", "HEAD",
                 "--skip-restore",
