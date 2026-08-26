@@ -52,7 +52,7 @@ internal static partial class CoverAtomCommand
     private const string ImplementationPath =
         "tools/StrataLint.Cli/Commands/Digestion/CoverAtomCommand.cs";
 
-    internal static CommandResult Run(
+    private static CommandResult RunSingle(
         string repositoryRoot,
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
