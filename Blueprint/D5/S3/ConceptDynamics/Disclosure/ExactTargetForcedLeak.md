@@ -32,7 +32,7 @@ The main theorem first places the target-forced sensitive part below the post-au
 
 **Lemma 1.3 (Boolean coordinates give a nontrivial witness).**
 
-$$\operatorname{Refines}\left(snd, \operatorname{conceptJoin}\left(fst, snd\right)\right) \land \left(\operatorname{IsConceptMeet}\left(snd, snd, snd\right) \land \left(\operatorname{IsConceptMeet}\left(\operatorname{conceptJoin}\left(fst, snd\right), snd, snd\right) \land \left(\operatorname{Refines}\left(snd, snd\right) \land \exists x \in Bool \times Bool, y \in Bool \times Bool,\; snd\left(x\right) \ne snd\left(y\right)\right)\right)\right)$$
+$$\operatorname{Refines}\left(snd, \operatorname{conceptJoin}\left(fst, snd\right)\right) \land \left(\operatorname{IsConceptMeet}\left(snd, snd, snd\right) \land \left(\operatorname{IsConceptMeet}\left(\operatorname{conceptJoin}\left(fst, snd\right), snd, snd\right) \land \left(\operatorname{Refines}\left(snd, snd\right) \land \left(\exists x \in Bool \times Bool, y \in Bool \times Bool,\; snd\left(x\right) \ne snd\left(y\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Disclosure/ExactTargetForcedLeak.exact_target_forced_leak_nontrivial_witness` (`✓ std3`). ∎
 
