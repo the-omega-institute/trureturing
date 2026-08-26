@@ -39,6 +39,33 @@ public static class LeanTruthStates
                 path => DeriveState(snapshot.Files[path], lean.Report));
     }
 
+    internal static void RequireSameManagedInputs(
+        RepositorySnapshot derivedFrom,
+        RepositorySnapshot consumingSnapshot)
+    {
+        ArgumentNullException.ThrowIfNull(derivedFrom);
+        ArgumentNullException.ThrowIfNull(consumingSnapshot);
+
+        var derivedInputs = derivedFrom.Files
+            .Where(static item => LeanClosureValidator.IsManagedLean(item.Key.Value))
+            .ToDictionary(static item => item.Key, static item => item.Value.RawBytes);
+        var consumingInputs = consumingSnapshot.Files
+            .Where(static item => LeanClosureValidator.IsManagedLean(item.Key.Value))
+            .ToDictionary(static item => item.Key, static item => item.Value.RawBytes);
+        var mismatch = derivedInputs.Keys
+            .Union(consumingInputs.Keys)
+            .OrderBy(static path => path.Value, StringComparer.Ordinal)
+            .FirstOrDefault(path =>
+                !derivedInputs.TryGetValue(path, out var derivedBytes)
+                || !consumingInputs.TryGetValue(path, out var consumingBytes)
+                || !derivedBytes.AsSpan().SequenceEqual(consumingBytes.AsSpan()));
+        if (mismatch is not null)
+        {
+            throw new InvalidOperationException(
+                $"precomputed truth states do not match managed Lean input {mismatch.Value}");
+        }
+    }
+
     private static TruthState DeriveState(
         RepositoryFile file,
         LeanAxiomReport report)

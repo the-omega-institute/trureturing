@@ -93,6 +93,17 @@ public static class TruthDagProjectionAssembler
         ArgumentNullException.ThrowIfNull(lean);
 
         var states = LeanTruthStates.Resolve(snapshot, lean);
+        return Build(snapshot, lean, states);
+    }
+
+    internal static TruthDagProjection Build(
+        RepositorySnapshot snapshot,
+        AcceptedLeanClosure lean,
+        ImmutableDictionary<RepoPath, TruthState> states)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        ArgumentNullException.ThrowIfNull(lean);
+        ArgumentNullException.ThrowIfNull(states);
         var nodes = snapshot.Files.Keys
             .Where(static path => LeanClosureValidator.IsManagedLean(path.Value))
             .OrderBy(static path => path.Value, StringComparer.Ordinal)

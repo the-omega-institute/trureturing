@@ -1,9 +1,35 @@
+using StrataLint.Engine;
+
 namespace StrataLint.Tests;
 
 public sealed partial class DepositCoverWorkflowScriptTests
 {
     internal sealed partial class TransactionFixture
     {
+        private readonly TemporaryDirectory performance = new();
+        private readonly string performanceLedgerPath;
+
+        internal string[] PerformanceEvents() => File.Exists(performanceLedgerPath)
+            ? File.ReadAllLines(performanceLedgerPath)
+            : [];
+
+        internal void ClearPerformanceEvents()
+        {
+            if (File.Exists(performanceLedgerPath)) File.Delete(performanceLedgerPath);
+        }
+
+        private void CopyScript()
+        {
+            var root = TestRepositoryLayout.FindRoot();
+            var target = Path.Combine(Root, ScriptPath);
+            Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+            File.Copy(Path.Combine(root, ScriptPath), target);
+            const string performanceLibraryPath = "tools/scripts/lib/perf-event-lib.sh";
+            var performanceTarget = Path.Combine(Root, performanceLibraryPath);
+            Directory.CreateDirectory(Path.GetDirectoryName(performanceTarget)!);
+            File.Copy(Path.Combine(root, performanceLibraryPath), performanceTarget);
+        }
+
         private void WriteGitGuardStub() => WriteExecutable("git", """
             arguments=("$@")
             index=0
@@ -28,6 +54,12 @@ public sealed partial class DepositCoverWorkflowScriptTests
               esac
             done
             subcommand=${arguments[index]:-}
+            if [[ ${PLAYBOOK_FAIL_PERF_COMMIT_PROBE:-0} == 1 \
+                && $subcommand == rev-parse \
+                && ${arguments[index+1]:-} == --verify \
+                && ${arguments[index+2]:-} == HEAD ]]; then
+              exit 98
+            fi
             if [[ $subcommand == merge ]]; then
               printf 'git-branch-merge:%s\n' "${arguments[*]}" >> "$PLAYBOOK_TEST_CALLS"
               exit 97
@@ -65,6 +97,25 @@ public sealed partial class DepositCoverWorkflowScriptTests
             """);
 
         private void WriteDotnetStub() => WriteExecutable("dotnet", """
+            if [[ ${1:-} == msbuild ]]; then
+              printf '%s\n' "$PLAYBOOK_TEST_PERF_TARGET"
+              exit 0
+            fi
+            if [[ ${1:-} == "$PLAYBOOK_TEST_PERF_TARGET" && ${2:-} == perf-append ]]; then
+              input=''
+              ledger=''
+              shift 2
+              while [[ $# -gt 0 ]]; do
+                case "$1" in
+                  --input) input=$2; shift 2 ;;
+                  --ledger) ledger=$2; shift 2 ;;
+                  *) exit 2 ;;
+                esac
+              done
+              [[ -n $input && -n $ledger ]]
+              cat "$input" >> "$ledger"
+              exit 0
+            fi
             args="$*"
             command=${args##* -- }
             printf 'dotnet:%s\n' "$command" >> "$PLAYBOOK_TEST_CALLS"
@@ -198,5 +249,50 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 ;;
             esac
             """);
+
+        internal ProcessOutput Run(
+            string command,
+            string gid = Gid,
+            string atomId = AtomId,
+            bool staleReport = false,
+            bool invalidReceipt = false,
+            bool coverDispositionFailure = false,
+            string? mutateReceiptAfterPrepare = null,
+            TimeSpan? timeout = null,
+            string? baseRevision = null,
+            bool usePerformanceProbeOverrides = true,
+            bool failPerformanceCommitProbe = false) =>
+            BoundedProcessRunner.Run(
+                "/usr/bin/env",
+                [
+                    $"PATH={binPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
+                    $"PLAYBOOK_TEST_CALLS={callsPath}",
+                    $"PLAYBOOK_STALE_REPORT={(staleReport ? "1" : "0")}",
+                    $"PLAYBOOK_INVALID_RECEIPT={(invalidReceipt ? "1" : "0")}",
+                    $"PLAYBOOK_COVER_DISPOSITION_FAILURE={(coverDispositionFailure ? "1" : "0")}",
+                    $"PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE={mutateReceiptAfterPrepare ?? string.Empty}",
+                    $"PLAYBOOK_TARGET_MODULE={(gid == SecondaryGid ? SecondaryLeanPath : gid == NewGid ? NewLeanPath : LeanPath)}",
+                    $"PLAYBOOK_TEST_PERF_TARGET={Path.Combine(binPath, "StrataLint.Cli.dll")}",
+                    $"STRATALINT_PERF_LEDGER={performanceLedgerPath}",
+                    $"STRATALINT_PERF_COMMIT={(usePerformanceProbeOverrides ? PerformanceCommit : string.Empty)}",
+                    $"STRATALINT_PERF_LOADAVG={(usePerformanceProbeOverrides ? PerformanceLoadavg : string.Empty)}",
+                    $"STRATALINT_PERF_HOST_CONCURRENCY={(usePerformanceProbeOverrides ? PerformanceHostConcurrency : string.Empty)}",
+                    $"PLAYBOOK_FAIL_PERF_COMMIT_PROBE={(failPerformanceCommitProbe ? "1" : "0")}",
+                    "/bin/bash",
+                    Path.Combine(Root, ScriptPath),
+                    command,
+                    baseRevision ?? (command == "deposit" ? "HEAD" : "synthetic-base"),
+                    atomId,
+                    gid,
+                ],
+                Root,
+                timeout ?? BoundedProcessRunner.HangDetectionBudget,
+                128 * 1024);
+
+        public void Dispose()
+        {
+            performance.Dispose();
+            temporary.Dispose();
+        }
     }
 }

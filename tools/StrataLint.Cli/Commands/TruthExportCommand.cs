@@ -78,9 +78,13 @@ internal static class TruthExportCommand
             ledgerFiles.ToImmutableDictionary(static file => file.Path)));
         var report = RawLeanReportArtifact.Read(reportBytes, snapshot);
         var truth = DagLedgerCommandPreparation.BuildTruth(snapshot, report);
+        var states = LeanTruthStates.Resolve(truth.Snapshot, truth.Lean);
+        var adjacency = LeanImportAdjacency.Build(truth.Snapshot, truth.Lean);
         var catalog = DagLedgerCommandPreparation.BuildCompleteCatalog(
             truth.Snapshot,
             truth.Lean,
+            states,
+            adjacency,
             baseView,
             identity);
         var syntax = DagLedgerCommandPreparation.LoadLedgerFiles(
@@ -90,7 +94,7 @@ internal static class TruthExportCommand
             syntax,
             catalog,
             TrustReferences(repository, syntax));
-        return new StrictTruthHistoryPreparation(truth, baseView, outcome);
+        return new StrictTruthHistoryPreparation(truth, states, baseView, outcome);
     }
 
     private static ImmutableArray<RepositoryFile> LedgerFiles(RepositorySnapshot snapshot)
@@ -227,5 +231,6 @@ internal static class TruthExportCommand
 
 internal sealed record StrictTruthHistoryPreparation(
     TruthContext Truth,
+    ImmutableDictionary<RepoPath, TruthState> States,
     FrozenLedgerBaseView BaseView,
     FrozenLedgerValidationOutcome Outcome);

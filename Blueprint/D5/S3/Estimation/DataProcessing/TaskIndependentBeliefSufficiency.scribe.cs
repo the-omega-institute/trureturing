@@ -61,7 +61,10 @@ internal sealed class TaskIndependentBeliefSufficiencyDocument
             Call("lintegral", future,
                 Apply(Apply(loss, hidden), Apply(decision, future)), KernelMeasure()),
             Posterior(h));
-        Formula BayesValue(Formula h) => Call("inf", decision, ConditionalRisk(h));
+        Formula BayesValue(Formula h) => Seq(
+            Operatorname, Grp(F.Id("inf")), Underscore,
+            Grp(decision, Colon, Sp, futureType, Sp, To, Sp, actionType), Sp,
+            ConditionalRisk(h));
         Formula markovKernelCarrier = Seq(
             OpenBrace, kernel, Colon, Sp, Call("Kernel", hiddenType, futureType), Sp,
             Mid, Sp, Call("IsMarkovKernel", kernel), CloseBrace);
