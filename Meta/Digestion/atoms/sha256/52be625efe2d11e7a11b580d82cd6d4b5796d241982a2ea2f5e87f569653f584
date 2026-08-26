@@ -1,0 +1,12 @@
+# 0. 真值层级与严格边界
+
+本文使用四种标记:
+
+- **`open`**:本文新增的全部定义、命题、评注。paper-level 论证,无 Lean proof term。
+- **`ASSUMED-UNVERIFIED`**:§5 表中全部引文条目(出处为作者记忆,本会话未联网核对,见页首收据);§5.2 列出其中已知有具体疑点者。本卷**无**任何条目处于 `literature-attested` 状态。
+- **provenance 注记**:对本库既有卷(FCD = `FORMAL_CONCEPT_DYNAMICS`,FOCR = `FORMAL_OBSERVER_COMPLETION_REFLECTION`,PT = `PROOF_TOPOLOGY_DIAGONAL_ESCAPE_THEORY`,GICT = `GICT`)的节号引用。节号会漂移,机器只验格式不验编号(`CLAUDE.md` 第 7 条)。
+
+本文**不**主张:从「所有概念都是观察者结构」推出任何规范;黄金律是完备的伦理学;各传统在历史上互相独立;任何一条引文是该传统的唯一或最高表述。这些非主张在 §7 逐条列出。
+
+---
+

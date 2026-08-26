@@ -1,0 +1,39 @@
+## 定理 123.1（量子 finite prime-time certificate）
+
+若
+
+$$
+\operatorname{span}_{\mathbb R}
+\{\widetilde E:E\in\mathcal E_\infty\}
+=
+\operatorname{Herm}_d^0,
+$$
+
+则存在
+
+$$
+m\le d^2-1
+$$
+
+个具体索引—时间效果
+
+$$
+E_{i_1,t_1},\ldots,E_{i_m,t_m}
+$$
+
+已经信息完备。
+
+### 证明
+
+$\operatorname{Herm}_d^0$ 是 $d^2-1$ 维实向量空间；从任意生成族抽取一个基即可。∎
+
+令
+
+$$
+J=\{i_1,\ldots,i_m\},
+\qquad
+T=1+\max_jt_j.
+$$
+
+则有限矩形窗口 $J\times\{0,\ldots,T-1\}$ 已经完备。
+

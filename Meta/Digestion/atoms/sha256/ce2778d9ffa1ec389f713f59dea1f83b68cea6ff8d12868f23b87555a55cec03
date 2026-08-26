@@ -1,0 +1,82 @@
+### 56.3.1 决策集级与承诺级 Stop 目标
+
+固定类型
+
+\[
+\mathsf{Goal},\mathsf{Action},\mathsf{Source},
+\mathsf{Version},\mathsf{Scope},
+\]
+
+其中 `Action` 有可判等号；固定
+
+\[
+\operatorname{AdmTarget}:\mathsf{Goal}\to\operatorname{Set}(\mathsf{Action}),
+\qquad
+\operatorname{InScope}:\mathsf{Scope}\to\mathsf{Action}\to\operatorname{Prop},
+\]
+
+完整外生规范
+
+\[
+O:
+\operatorname{OrientationSpec}
+(\mathsf{Goal},\mathsf{Action},\mathsf{Source},
+ \mathsf{Version},\mathsf{Scope},
+ \operatorname{AdmTarget},\operatorname{InScope}),
+\]
+
+以及 \(D:\operatorname{DecisionSet}(\mathsf{Action})\)。
+
+本部把第 54.3 部第 10 条后半中的未限定词 `Stop` 精确定义为
+
+\[
+\boxed{
+\begin{aligned}
+&\operatorname{AdjudicationStopTargetOnDecisionSet}
+(\operatorname{AdmTarget},\operatorname{InScope},O,D)
+\\
+&\Longleftrightarrow
+\exists a_{\mathrm{cur}}:\mathsf{Action},\
+D.\operatorname{current}=\operatorname{some}(a_{\mathrm{cur}})
+\\
+&\quad\wedge\
+a_{\mathrm{cur}}\in D.\operatorname{feasible}
+\\
+&\quad\wedge\
+\bigl(
+\forall a:\mathsf{Action},\
+a\in D.\operatorname{feasible}\to
+a\in\operatorname{AdmTarget}(O.\operatorname{goal})
+\wedge
+\operatorname{InScope}(O.\operatorname{scope},a)
+\bigr)
+\\
+&\quad\wedge\
+\neg\exists a:\mathsf{Action},\
+a\in D.\operatorname{feasible}
+\wedge
+O.\operatorname{relation}(a_{\mathrm{cur}},a)
+\wedge
+\neg O.\operatorname{relation}(a,a_{\mathrm{cur}}).
+\end{aligned}
+}
+\]
+
+这不是新停止准则，而是既有
+`OrientedStopOnDecisionSet`
+的有名展开式。
+
+对任意第 \(n\) 轮前视承诺 \(K_n\)，定义承诺级目标
+
+\[
+\boxed{
+\operatorname{AdjudicationStopTarget}
+(\operatorname{AdmTarget},\operatorname{InScope},O,K_n)
+:=
+\operatorname{AdjudicationStopTargetOnDecisionSet}
+(\operatorname{AdmTarget},\operatorname{InScope},O,K_n.\operatorname{decision}).
+}
+\]
+
+停止结算的完整地址是有序对 \((K_n,O)\)。其中 \(O\) 的 source、version 与 scope 是地址和来源字段；停止真值的行动数据只从 \(K_n.\operatorname{decision}\) 读取。此处的 Stop 不指第 43 部未带裁决输入的泛称停止，也不指任意用户自定义布尔标签。
+
