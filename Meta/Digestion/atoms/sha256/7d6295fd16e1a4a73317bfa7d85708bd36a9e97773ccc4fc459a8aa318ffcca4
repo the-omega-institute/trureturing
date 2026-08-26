@@ -1,0 +1,4 @@
+### 命题 42.4（核分离是视界的充分探测器）
+
+若存在有界 \(f\in\mathcal A_O\)、\(L_O(f)=0\)（即 \(f\in\ker L_O\)），且 \(f(o)\neq f(x)\)，则 \(x\in\mathcal H_O(o)\)。
+

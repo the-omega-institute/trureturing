@@ -1,0 +1,36 @@
+# 135. prime completion 与 dynamical completion 一般不交换
+
+令
+
+$$
+C_{\mathrm{prime}}
+$$
+
+表示只闭合所允许的 prime-local effect family，令
+
+$$
+C_\Phi
+$$
+
+表示在 Heisenberg 动力下闭合全部时间轨道。
+
+若
+
+$$
+\Phi^*(\mathcal A_p)
+\subseteq
+\mathcal A_p
+$$
+
+对每个 prime-local algebra 成立，则两种完成在该局部族内相容。
+
+但若 $\Phi$ 含跨素数耦合，则可能出现：
+
+$$
+\Phi^*(\mathcal A_p)
+\not\subseteq
+\mathcal A_p.
+$$
+
+时间闭包会生成 cross-prime effects；若每一步又投影回 prime-local 空间，这些新信息会被删除。
+

@@ -1,0 +1,10 @@
+ast_path: section/116-代数张量分解不推出状态独立
+fingerprints:
+  raw_sha256: sha256:be1783ed5e3d0cd9baf29514a8e3b50f4f599a73c54f202042798b3a17c51135
+  normalized_sha256: sha256:be1783ed5e3d0cd9baf29514a8e3b50f4f599a73c54f202042798b3a17c51135
+cas_ref: sha256:be1783ed5e3d0cd9baf29514a8e3b50f4f599a73c54f202042798b3a17c51135
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

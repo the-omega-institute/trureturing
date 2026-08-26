@@ -1,0 +1,48 @@
+\[
+\boxed{
+\begin{aligned}
+&\operatorname{TimeExpansionEscape}(q,\tau,N,N',h,x,y)
+\\
+&\Longleftrightarrow
+\bigl(
+\forall k:\mathbb N,\ k\le N\to
+q(\operatorname{timeIter}_\tau(k,x))
+=
+q(\operatorname{timeIter}_\tau(k,y))
+\bigr)
+\\
+&\quad\wedge\
+\exists k:\mathbb N,\
+N<k\ \wedge\ k\le N'
+\\
+&\qquad\qquad\wedge\
+q(\operatorname{timeIter}_\tau(k,x))
+\neq
+q(\operatorname{timeIter}_\tau(k,y)).
+\end{aligned}
+}
+\]
+
+若 \(N=N'\)，新增区间为空，所以该关系为空。
+
+再独立定义第 8 部从当前读数扩到长度 \(N\) 的预测逃逸：
+
+\[
+\boxed{
+\begin{aligned}
+&\operatorname{PredictionEscape}(q,\tau,N,x,y)
+\\
+&\Longleftrightarrow
+q(x)=q(y)
+\ \wedge\
+\exists k:\mathbb N,\ k\le N
+\ \wedge\
+q(\operatorname{timeIter}_\tau(k,x))
+\neq
+q(\operatorname{timeIter}_\tau(k,y)).
+\end{aligned}
+}
+\]
+
+两个关系都以自然数有界量词给出，不把欲证的 `ExpansionEscape` 等式偷写进定义。
+

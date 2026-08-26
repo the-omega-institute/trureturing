@@ -1,0 +1,21 @@
+## 原理 129.1
+
+必须分开：
+
+$$
+\boxed{
+\begin{aligned}
+\text{local compatibility}
+&=\text{局部对象在重叠处一致},\\
+\text{global existence}
+&=\text{存在全局对象实现局部数据},\\
+\text{global uniqueness}
+&=\text{该全局对象由局部数据唯一决定}.
+\end{aligned}
+}
+$$
+
+量子纠缠给出“existence 成立但 uniqueness 失败”的典型局部—全局 fiber。
+
+---
+

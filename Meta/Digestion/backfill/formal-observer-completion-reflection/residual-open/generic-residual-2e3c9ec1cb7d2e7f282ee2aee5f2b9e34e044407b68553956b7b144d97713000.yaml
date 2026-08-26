@@ -1,0 +1,10 @@
+ast_path: row/prime-precision-entropy-contraction
+fingerprints:
+  raw_sha256: sha256:2e3c9ec1cb7d2e7f282ee2aee5f2b9e34e044407b68553956b7b144d97713000
+  normalized_sha256: sha256:2e3c9ec1cb7d2e7f282ee2aee5f2b9e34e044407b68553956b7b144d97713000
+cas_ref: sha256:2e3c9ec1cb7d2e7f282ee2aee5f2b9e34e044407b68553956b7b144d97713000
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

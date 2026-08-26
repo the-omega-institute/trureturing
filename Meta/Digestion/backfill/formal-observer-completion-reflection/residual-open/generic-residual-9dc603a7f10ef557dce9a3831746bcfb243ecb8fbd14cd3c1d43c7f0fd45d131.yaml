@@ -1,0 +1,10 @@
+ast_path: section/124-prime-precision-entropy-与量子观察预算
+fingerprints:
+  raw_sha256: sha256:9dc603a7f10ef557dce9a3831746bcfb243ecb8fbd14cd3c1d43c7f0fd45d131
+  normalized_sha256: sha256:9dc603a7f10ef557dce9a3831746bcfb243ecb8fbd14cd3c1d43c7f0fd45d131
+cas_ref: sha256:9dc603a7f10ef557dce9a3831746bcfb243ecb8fbd14cd3c1d43c7f0fd45d131
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
