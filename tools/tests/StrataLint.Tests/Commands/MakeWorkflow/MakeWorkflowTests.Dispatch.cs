@@ -18,15 +18,13 @@ public sealed partial class MakeWorkflowTests
             @"(?m)^[ \t]*make[ \t]+-C[ \t]+candidate/tools[ \t]+(?<target>engineering-tests)\b",
             RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
 
-        Assert.True(
-            targetMatches.Count == 1,
-            "The candidate-engineering test step must invoke exactly one concrete make target so CI cannot silently switch to a different test lane.");
-        var targetMatch = targetMatches[0];
-        var target = targetMatch.Groups["target"].Value;
+        var target = Assert.Single(targetMatches.Cast<Match>()).Groups["target"].Value;
         Assert.Equal("engineering-tests", target);
         var recipe = Recipe(makefile, target);
         Assert.Contains("StrataLint.EngineeringScope.csproj", recipe, StringComparison.Ordinal);
         Assert.Contains("--head \"$(HEAD)\" --base \"$(BASE)\"", recipe, StringComparison.Ordinal);
+        Assert.Contains("dotnet test \"$ENGINEERING_TEST_TARGET\"", engineeringStep, StringComparison.Ordinal);
+        Assert.DoesNotContain("--filter", engineeringStep, StringComparison.Ordinal);
         Assert.DoesNotContain("git diff", engineeringStep, StringComparison.Ordinal);
     }
 

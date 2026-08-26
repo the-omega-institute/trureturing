@@ -34,7 +34,8 @@ concurrency:
 # candidate-owned Lean producer and .NET judge inspect GitHub's post-merge tree
 # (candidate plus the current dev parent). Candidate engineering is only a signal.
 # Admission consumes immutable raw reports from the predecessor job; the protected
-# base is the checked merge commit's first-parent SHA passed to the gate.
+# base is the checked merge commit's first-parent SHA passed to the gate. The
+# workflow itself retains an unfiltered floor for engineering and root inputs.
 jobs:
   candidate-engineering:
     name: Candidate harness engineering checks
@@ -96,7 +97,17 @@ jobs:
           head_sha="$(git -C candidate rev-parse HEAD)"
           base_sha="$(git -C candidate rev-parse HEAD^1)"
           plan_file="$RUNNER_TEMP/engineering-test-plan.json"
+          base_full_required=false
+          path=""
+          while IFS= read -r -d '' path; do
+            case "$path" in
+              tools|tools/*|.github/workflows/ci.yml) base_full_required=true ;;
+              */*) ;;
+              *) base_full_required=true ;;
+            esac
+          done < <(git -C candidate diff --name-only -z --no-renames --diff-filter=ACDMRTUXB "$base_sha" "$head_sha" --)
           if [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
+            base_full_required=true
             FULL=1 make -C candidate/tools engineering-tests MODE=plan HEAD="$head_sha" BASE="$base_sha" PLAN_FILE="$plan_file"
           else
             make -C candidate/tools engineering-tests MODE=plan HEAD="$head_sha" BASE="$base_sha" PLAN_FILE="$plan_file"
@@ -105,7 +116,13 @@ jobs:
           changed_count="$(jq -er '.plan.changed_paths | length' "$plan_file")"
           selected_count="$(jq -er '.plan.tests | length' "$plan_file")"
           [[ "$state" =~ ^(full|selected|none)$ ]]
+          run_required=false
+          if [[ "$state" != "none" || "$base_full_required" == "true" ]]; then
+            run_required=true
+          fi
           echo "state=$state" >> "$GITHUB_OUTPUT"
+          echo "base_full_required=$base_full_required" >> "$GITHUB_OUTPUT"
+          echo "run_required=$run_required" >> "$GITHUB_OUTPUT"
           echo "event=$GITHUB_EVENT_NAME" >> "$GITHUB_OUTPUT"
           echo "head_sha=$head_sha" >> "$GITHUB_OUTPUT"
           echo "base_sha=$base_sha" >> "$GITHUB_OUTPUT"
@@ -114,7 +131,7 @@ jobs:
 
       - name: Resolve judge binary content address before build outputs exist
         id: judge-address
-        if: steps.scope.outputs.state != 'none'
+        if: steps.scope.outputs.run_required == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -124,7 +141,7 @@ jobs:
 
       - name: Resolve pinned Lean toolchain
         id: lean
-        if: steps.scope.outputs.state != 'none'
+        if: steps.scope.outputs.run_required == 'true'
         shell: bash
         env:
           LEAN_TOOLCHAIN_FILE: candidate/lean-toolchain
@@ -135,7 +152,7 @@ jobs:
           echo "hash=$(sha256sum "$LEAN_TOOLCHAIN_FILE" | cut -d ' ' -f 1)" >> "$GITHUB_OUTPUT"
 
       - name: Restore elan and pinned Lean toolchain
-        if: steps.scope.outputs.state != 'none'
+        if: steps.scope.outputs.run_required == 'true'
         uses: actions/cache/restore@v4
         with:
           path: ~/.elan
@@ -146,7 +163,7 @@ jobs:
 
       - name: Install pinned Lean toolchain for producer integration tests
         id: install-elan
-        if: steps.scope.outputs.state != 'none'
+        if: steps.scope.outputs.run_required == 'true'
         shell: bash
         env:
           LEAN_TOOLCHAIN_FILE: ${{ steps.lean.outputs.file }}
@@ -158,26 +175,39 @@ jobs:
           "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/install-lean-toolchain.sh" "$LEAN_TOOLCHAIN_FILE" --github-path "$GITHUB_PATH"
 
       - name: Restore candidate locked dependencies
-        if: steps.scope.outputs.state != 'none'
+        if: steps.scope.outputs.run_required == 'true'
         run: |
           dotnet restore candidate/tools/tests/CompileFailProof/CompileFailProof.csproj --locked-mode
           dotnet restore candidate/tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj --locked-mode
 
       - name: Build candidate with warnings as errors
-        if: steps.scope.outputs.state != 'none'
+        if: steps.scope.outputs.run_required == 'true'
         run: make -C candidate/tools dotnet
 
       - name: Run candidate golden and integration tests
-        if: steps.scope.outputs.state != 'none'
-        run: make -C candidate/tools engineering-tests MODE=execute HEAD="${{ steps.scope.outputs.head_sha }}" BASE="${{ steps.scope.outputs.base_sha }}" PLAN_FILE="$RUNNER_TEMP/engineering-test-plan.json"
+        if: steps.scope.outputs.run_required == 'true'
+        shell: bash
+        env:
+          BASE_FULL_REQUIRED: ${{ steps.scope.outputs.base_full_required }}
+          PLAN_STATE: ${{ steps.scope.outputs.state }}
+          ENGINEERING_TEST_TARGET: candidate/tools/StrataLint.sln
+          ENGINEERING_HEAD: ${{ steps.scope.outputs.head_sha }}
+          ENGINEERING_BASE: ${{ steps.scope.outputs.base_sha }}
+        run: |
+          set -euo pipefail
+          if [[ "$BASE_FULL_REQUIRED" == "true" ]]; then
+            dotnet test "$ENGINEERING_TEST_TARGET" --configuration Release --no-build --no-restore --verbosity normal
+          else
+            make -C candidate/tools engineering-tests MODE=execute HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$RUNNER_TEMP/engineering-test-plan.json"
+          fi
 
       - name: Run candidate selftest twice and compare bytes
-        if: steps.scope.outputs.state != 'none'
+        if: steps.scope.outputs.run_required == 'true'
         shell: bash
         run: make -C candidate/tools selftest
 
       - name: Prove missing capability does not compile
-        if: steps.scope.outputs.state != 'none'
+        if: steps.scope.outputs.run_required == 'true'
         shell: bash
         run: |
           set +e
@@ -190,7 +220,7 @@ jobs:
           grep -F "MetaClear" <<<"$output"
 
       - name: Prove banned deterministic APIs do not compile
-        if: steps.scope.outputs.state != 'none'
+        if: steps.scope.outputs.run_required == 'true'
         shell: bash
         run: |
           proof="candidate/tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"
@@ -215,7 +245,7 @@ jobs:
 
       - name: Stage judge binaries for the shared cache (dev push only)
         id: stage-judge
-        if: steps.scope.outputs.state != 'none' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        if: steps.scope.outputs.run_required == 'true' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         shell: bash
         run: |
           set -euo pipefail
@@ -228,14 +258,14 @@ jobs:
           test -s .judge-binaries/scribe/StrataLint.Scribe.dll
 
       - name: Save judge binaries by content address (dev push only)
-        if: steps.scope.outputs.state != 'none' && steps.stage-judge.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        if: steps.scope.outputs.run_required == 'true' && steps.stage-judge.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         uses: actions/cache/save@v4
         with:
           path: .judge-binaries
           key: stratalint-judge-binaries-v1-${{ runner.os }}-${{ steps.judge-address.outputs.address }}
 
       - name: Save elan toolchain for engineering checks (dev push only)
-        if: steps.scope.outputs.state != 'none' && always() && steps.install-elan.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        if: steps.scope.outputs.run_required == 'true' && always() && steps.install-elan.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         uses: actions/cache/save@v4
         with:
           path: ~/.elan

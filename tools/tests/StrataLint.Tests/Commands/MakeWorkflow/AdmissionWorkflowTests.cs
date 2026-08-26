@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace StrataLint.Tests;
 
+[Collection("Engineering execution boundary")]
 public sealed class AdmissionWorkflowTests
 {
     private static readonly string SharedAdmissionWorkflow = AdmissionWorkflow();
@@ -68,7 +69,10 @@ public sealed class AdmissionWorkflowTests
             scopeScript,
             StringComparison.Ordinal);
         Assert.Contains("HEAD=\"$head_sha\" BASE=\"$base_sha\"", scopeScript, StringComparison.Ordinal);
-        Assert.DoesNotContain("git -C candidate diff", scopeScript, StringComparison.Ordinal);
+        Assert.Contains(
+            "git -C candidate diff --name-only -z --no-renames --diff-filter=ACDMRTUXB \"$base_sha\" \"$head_sha\" --",
+            scopeScript,
+            StringComparison.Ordinal);
         Assert.DoesNotContain("merge-base", scopeScript, StringComparison.Ordinal);
         Assert.Contains(
             "sha=\"$(git -C candidate rev-parse HEAD^1)\"",
@@ -132,7 +136,7 @@ public sealed class AdmissionWorkflowTests
     }
 
     [Fact]
-    public void CandidateEngineeringUsesOneThreeStatePlannerAndAlwaysRunsPushes()
+    public void CandidateEngineeringUsesOneThreeStatePlannerWithABaseOwnedFullFloor()
     {
         var engineering = Job(AdmissionWorkflow(), "candidate-engineering");
         var steps = Assert.IsType<YamlSequenceNode>(
@@ -158,7 +162,10 @@ public sealed class AdmissionWorkflowTests
         Assert.Contains("MODE=plan", scopeScript, StringComparison.Ordinal);
         Assert.Contains("FULL=1", scopeScript, StringComparison.Ordinal);
         Assert.Contains("engineering-test-plan.json", scopeScript, StringComparison.Ordinal);
-        Assert.DoesNotContain("git -C candidate diff", scopeScript, StringComparison.Ordinal);
+        Assert.Contains("base_full_required=false", scopeScript, StringComparison.Ordinal);
+        Assert.Contains("git -C candidate diff --name-only -z", scopeScript, StringComparison.Ordinal);
+        Assert.Contains("tools|tools/*|.github/workflows/ci.yml", scopeScript, StringComparison.Ordinal);
+        Assert.Contains("run_required=$run_required", scopeScript, StringComparison.Ordinal);
         Assert.DoesNotContain("ls-tree", scopeScript, StringComparison.Ordinal);
         Assert.DoesNotContain("StrataLint.EngineeringScope.csproj", scopeScript, StringComparison.Ordinal);
 
@@ -177,9 +184,10 @@ public sealed class AdmissionWorkflowTests
         Assert.Equal(
             "make -C candidate/tools dotnet",
             StepScript(steps, "Build candidate with warnings as errors"));
-        Assert.Equal(
-            "make -C candidate/tools engineering-tests MODE=execute HEAD=\"${{ steps.scope.outputs.head_sha }}\" BASE=\"${{ steps.scope.outputs.base_sha }}\" PLAN_FILE=\"$RUNNER_TEMP/engineering-test-plan.json\"",
-            StepScript(steps, "Run candidate golden and integration tests"));
+        var executeScript = StepScript(steps, "Run candidate golden and integration tests");
+        Assert.Contains("if [[ \"$BASE_FULL_REQUIRED\" == \"true\" ]]", executeScript, StringComparison.Ordinal);
+        Assert.Contains("dotnet test \"$ENGINEERING_TEST_TARGET\"", executeScript, StringComparison.Ordinal);
+        Assert.Contains("make -C candidate/tools engineering-tests MODE=execute", executeScript, StringComparison.Ordinal);
         Assert.Equal(
             "make -C candidate/tools selftest",
             StepScript(steps, "Run candidate selftest twice and compare bytes"));
@@ -187,9 +195,240 @@ public sealed class AdmissionWorkflowTests
         Assert.All(
             steps[(scopeIndex + 1)..^1],
             step => Assert.Contains(
-                "steps.scope.outputs.state != 'none'",
+                "steps.scope.outputs.run_required == 'true'",
                 Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("if")]).Value,
                 StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void SelectedExecuteRequiresTrxEvidenceFromProductionDotnetBoundary()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var root = TestRepositoryLayout.FindRoot();
+        using var fixture = new TemporaryDirectory();
+        var repository = Path.Combine(fixture.Path, "candidate");
+        var project = Path.Combine(repository, "tools", "tests", "Probe", "Probe.csproj");
+        Directory.CreateDirectory(Path.GetDirectoryName(project)!);
+        File.WriteAllText(
+            project,
+            """
+            <Project Sdk="Microsoft.NET.Sdk">
+              <PropertyGroup><TargetFramework>net10.0</TargetFramework><IsTestProject>true</IsTestProject><RestorePackagesWithLockFile>false</RestorePackagesWithLockFile></PropertyGroup>
+              <ItemGroup><PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" /><PackageReference Include="xunit" Version="2.9.3" /><PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" /></ItemGroup>
+            </Project>
+            """);
+        File.WriteAllText(
+            Path.Combine(Path.GetDirectoryName(project)!, "Probe.cs"),
+            "using Xunit; public sealed class ProductionBoundaryProbe { [Fact] public void Runs() { } }\n");
+        File.WriteAllText(
+            Path.Combine(repository, "tools", "StrataLint.sln"),
+            """
+            Microsoft Visual Studio Solution File, Format Version 12.00
+            # Visual Studio Version 17
+            Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Probe", "tests/Probe/Probe.csproj", "{BD700716-FC67-411D-B4E4-5F8C0A552E7B}"
+            EndProject
+            Global
+                GlobalSection(SolutionConfigurationPlatforms) = preSolution
+                    Release|Any CPU = Release|Any CPU
+                EndGlobalSection
+                GlobalSection(ProjectConfigurationPlatforms) = postSolution
+                    {BD700716-FC67-411D-B4E4-5F8C0A552E7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+                    {BD700716-FC67-411D-B4E4-5F8C0A552E7B}.Release|Any CPU.Build.0 = Release|Any CPU
+                EndGlobalSection
+            EndGlobal
+            """);
+        Git(repository, "init", "--quiet");
+        Git(repository, "config", "user.email", "engineering-boundary@example.invalid");
+        Git(repository, "config", "user.name", "engineering-boundary");
+        Git(repository, "add", ".");
+        Git(repository, "commit", "--quiet", "-m", "base");
+        File.AppendAllText(Path.Combine(Path.GetDirectoryName(project)!, "Probe.cs"), "// candidate\n");
+        Git(repository, "add", ".");
+        Git(repository, "commit", "--quiet", "-m", "candidate");
+        var head = GitText(repository, "rev-parse", "HEAD");
+        var @base = GitText(repository, "rev-parse", "HEAD^1");
+        var planFile = Path.Combine(fixture.Path, "plan.json");
+        File.WriteAllText(planFile, System.Text.Json.JsonSerializer.Serialize(new
+        {
+            version = 1,
+            head,
+            @base,
+            plan = new
+            {
+                kind = "selected",
+                changed_paths = new[] { "Meta/Digestion/probe.json" },
+                tests = new[]
+                {
+                    new
+                    {
+                        project_path = "tools/tests/Probe/Probe.csproj",
+                        id = "ProductionBoundaryProbe.Runs",
+                        reason = "unknown_input",
+                        detail = "production boundary probe",
+                    },
+                },
+                reason = "production boundary probe",
+            },
+        }));
+
+        var result = RunEngineeringScope(root, repository, planFile, head, @base);
+        var output = System.Text.Encoding.UTF8.GetString(result.StandardOutput);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains("ENGINEERING_TEST_EXECUTED", output, StringComparison.Ordinal);
+        Assert.Contains("evidence=trx executed=1", output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void TruncatedPlanArtifactFallsBackToProductionUnfilteredInvocation()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var root = TestRepositoryLayout.FindRoot();
+        using var fixture = new TemporaryDirectory();
+        var repository = Path.Combine(fixture.Path, "candidate");
+        Directory.CreateDirectory(repository);
+        Git(repository, "init", "--quiet");
+        Git(repository, "config", "user.email", "engineering-fallback@example.invalid");
+        Git(repository, "config", "user.name", "engineering-fallback");
+        File.WriteAllText(Path.Combine(repository, "probe.txt"), "base\n");
+        Git(repository, "add", "probe.txt");
+        Git(repository, "commit", "--quiet", "-m", "base");
+        File.AppendAllText(Path.Combine(repository, "probe.txt"), "candidate\n");
+        Git(repository, "add", "probe.txt");
+        Git(repository, "commit", "--quiet", "-m", "candidate");
+        var head = GitText(repository, "rev-parse", "HEAD");
+        var @base = GitText(repository, "rev-parse", "HEAD^1");
+        var planFile = Path.Combine(fixture.Path, "plan.json");
+        var bin = Path.Combine(fixture.Path, "bin");
+        var calls = Path.Combine(fixture.Path, "dotnet.calls");
+        Directory.CreateDirectory(bin);
+        File.WriteAllText(planFile, "{\"version\":1,\"head\":");
+        WriteExecutable(
+            Path.Combine(bin, "dotnet"),
+            "#!/usr/bin/env bash\nprintf '%s\\n' \"$*\" > \"$ENGINEERING_CALLS\"\nexit 23\n");
+
+        var result = RunEngineeringScope(
+            root,
+            repository,
+            planFile,
+            head,
+            @base,
+            $"PATH={bin}:{Environment.GetEnvironmentVariable("PATH")}",
+            $"ENGINEERING_CALLS={calls}");
+
+        Assert.Equal(23, result.ExitCode);
+        var invocation = ReadTemporaryText(calls);
+        Assert.Contains("test tools/StrataLint.sln", invocation, StringComparison.Ordinal);
+        Assert.DoesNotContain("--filter", invocation, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void PlannerNoneWithToolsDeltaStillExecutesRealUnfilteredBaseFloor()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        using var fixture = new TemporaryDirectory();
+        var candidate = Path.Combine(fixture.Path, "candidate");
+        var bin = Path.Combine(fixture.Path, "bin");
+        var runnerTemp = Path.Combine(fixture.Path, "runner-temp");
+        var outputs = Path.Combine(fixture.Path, "scope.outputs");
+        Directory.CreateDirectory(Path.Combine(candidate, "tools"));
+        Directory.CreateDirectory(bin);
+        Directory.CreateDirectory(runnerTemp);
+        Git(candidate, "init", "--quiet");
+        Git(candidate, "config", "user.email", "engineering-floor@example.invalid");
+        Git(candidate, "config", "user.name", "engineering-floor");
+        File.WriteAllText(Path.Combine(candidate, "tools", "planner.txt"), "base\n");
+        Git(candidate, "add", "tools/planner.txt");
+        Git(candidate, "commit", "--quiet", "-m", "base");
+        File.WriteAllText(Path.Combine(candidate, "tools", "planner.txt"), "candidate\n");
+        Git(candidate, "add", "tools/planner.txt");
+        Git(candidate, "commit", "--quiet", "-m", "candidate");
+        WriteExecutable(
+            Path.Combine(bin, "make"),
+            """
+            #!/usr/bin/env bash
+            plan=""
+            for argument in "$@"; do
+              case "$argument" in PLAN_FILE=*) plan="${argument#PLAN_FILE=}" ;; esac
+            done
+            [[ -n "$plan" ]] || exit 24
+            printf '%s\n' '{"version":1,"head":"candidate","base":"base","plan":{"kind":"none","changed_paths":["tools/planner.txt"],"tests":[],"reason":"mutated planner always returns none"}}' > "$plan"
+            """);
+
+        var workflow = AdmissionWorkflow();
+        var scope = Assert.Single(
+            JobSteps(workflow, "candidate-engineering"),
+            step => step.Children.TryGetValue(new YamlScalarNode("id"), out var id)
+                && id is YamlScalarNode { Value: "scope" });
+        var scopeScript = Assert.IsType<YamlScalarNode>(scope.Children[new YamlScalarNode("run")]).Value!;
+        var scopeResult = BoundedProcessRunner.Run(
+            "env",
+            [
+                $"PATH={bin}:{Environment.GetEnvironmentVariable("PATH")}",
+                "GITHUB_EVENT_NAME=pull_request_target",
+                $"RUNNER_TEMP={runnerTemp}",
+                $"GITHUB_OUTPUT={outputs}",
+                "/bin/bash",
+                "-c",
+                scopeScript,
+            ],
+            fixture.Path,
+            TimeSpan.FromSeconds(30),
+            64 * 1024);
+
+        Assert.Equal(0, scopeResult.ExitCode);
+        var scopeOutputs = ReadTemporaryText(outputs);
+        Assert.Contains("state=none", scopeOutputs, StringComparison.Ordinal);
+        Assert.Contains("base_full_required=true", scopeOutputs, StringComparison.Ordinal);
+        Assert.Contains("run_required=true", scopeOutputs, StringComparison.Ordinal);
+
+        var probe = Path.Combine(fixture.Path, "probe");
+        var marker = Path.Combine(fixture.Path, "probe.executed");
+        Directory.CreateDirectory(probe);
+        File.WriteAllText(
+            Path.Combine(probe, "Probe.csproj"),
+            """
+            <Project Sdk="Microsoft.NET.Sdk">
+              <PropertyGroup><TargetFramework>net10.0</TargetFramework><IsTestProject>true</IsTestProject><RestorePackagesWithLockFile>false</RestorePackagesWithLockFile></PropertyGroup>
+              <ItemGroup><PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" /><PackageReference Include="xunit" Version="2.9.3" /><PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" /></ItemGroup>
+            </Project>
+            """);
+        File.WriteAllText(
+            Path.Combine(probe, "Probe.cs"),
+            "using System; using System.IO; using Xunit; public sealed class Probe { [Fact] public void Runs() => File.WriteAllText(Environment.GetEnvironmentVariable(\"ENGINEERING_FLOOR_MARKER\")!, \"executed\\n\"); }\n");
+        var build = BoundedProcessRunner.Run(
+            DotnetHost(fixture.Path),
+            ["build", Path.Combine(probe, "Probe.csproj"), "--configuration", "Release", "--nologo"],
+            fixture.Path,
+            TimeSpan.FromMinutes(2),
+            1024 * 1024);
+        Assert.True(
+            build.ExitCode == 0,
+            System.Text.Encoding.UTF8.GetString(build.StandardOutput)
+                + System.Text.Encoding.UTF8.GetString(build.StandardError));
+
+        var executeScript = StepScript(JobSteps(workflow, "candidate-engineering"), "Run candidate golden and integration tests");
+        Assert.DoesNotContain("--filter", executeScript, StringComparison.Ordinal);
+        var execute = BoundedProcessRunner.Run(
+            "env",
+            [
+                "BASE_FULL_REQUIRED=true",
+                "PLAN_STATE=none",
+                $"ENGINEERING_TEST_TARGET={Path.Combine(probe, "Probe.csproj")}",
+                $"ENGINEERING_FLOOR_MARKER={marker}",
+                "/bin/bash",
+                "-c",
+                executeScript,
+            ],
+            fixture.Path,
+            TimeSpan.FromMinutes(2),
+            1024 * 1024);
+
+        Assert.Equal(0, execute.ExitCode);
+        Assert.Equal("executed\n", ReadTemporaryText(marker));
     }
 
     private static string StepScript(IEnumerable<YamlMappingNode> steps, string name)
@@ -197,6 +436,87 @@ public sealed class AdmissionWorkflowTests
         var step = Assert.Single(steps, candidate => StepName(candidate) == name);
         return Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("run")]).Value
             ?? string.Empty;
+    }
+
+    private static ProcessOutput RunEngineeringScope(
+        string engineeringRoot,
+        string repositoryRoot,
+        string planFile,
+        string head,
+        string @base,
+        params string[] environment)
+    {
+        var arguments = new List<string>(environment)
+        {
+            DotnetHost(engineeringRoot),
+            "run",
+            "--project",
+            Path.Combine(engineeringRoot, "tools", "StrataLint.EngineeringScope", "StrataLint.EngineeringScope.csproj"),
+            "--configuration",
+            "Release",
+            "--no-launch-profile",
+            "--no-build",
+            "--no-restore",
+            "--",
+            "--mode",
+            "execute",
+            "--repository",
+            repositoryRoot,
+            "--head",
+            head,
+            "--base",
+            @base,
+            "--plan-file",
+            planFile,
+        };
+        return BoundedProcessRunner.Run(
+            "env",
+            arguments,
+            repositoryRoot,
+            TimeSpan.FromMinutes(2),
+            2 * 1024 * 1024);
+    }
+
+    private static string DotnetHost(string root)
+    {
+        var result = BoundedProcessRunner.Run(
+            "/bin/sh",
+            ["-c", "command -v dotnet"],
+            root,
+            TimeSpan.FromSeconds(10),
+            4096);
+        Assert.Equal(0, result.ExitCode);
+        return System.Text.Encoding.UTF8.GetString(result.StandardOutput).Trim();
+    }
+
+    private static string GitText(string repository, params string[] arguments)
+    {
+        var result = BoundedProcessRunner.Run(
+            "git",
+            ["-C", repository, .. arguments],
+            repository,
+            TimeSpan.FromSeconds(30),
+            64 * 1024);
+        Assert.Equal(0, result.ExitCode);
+        return System.Text.Encoding.UTF8.GetString(result.StandardOutput).Trim();
+    }
+
+    private static void Git(string repository, params string[] arguments) =>
+        _ = GitText(repository, arguments);
+
+    private static void WriteExecutable(string path, string content)
+    {
+        File.WriteAllText(path, content);
+        if (OperatingSystem.IsWindows()) return;
+        File.SetUnixFileMode(
+            path,
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+    }
+
+    private static string ReadTemporaryText(string path)
+    {
+        using var reader = new StreamReader(path);
+        return reader.ReadToEnd();
     }
 
     // elan 从上游拉二进制,那一跳会间歇失败。两处安装都必须重试,且 elan 的缓存保存
@@ -469,3 +789,6 @@ public sealed class AdmissionWorkflowTests
     }
 
 }
+
+[CollectionDefinition("Engineering execution boundary", DisableParallelization = true)]
+public sealed class EngineeringExecutionBoundaryCollectionDefinition;

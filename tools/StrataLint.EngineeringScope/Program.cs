@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Xml.Linq;
 using StrataLint.Engine;
 
 namespace StrataLint.EngineeringScope;
@@ -12,8 +13,9 @@ internal static class Program
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
+        UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow,
         WriteIndented = true,
-        Converters = { new JsonStringEnumConverter(JsonNamingPolicy.SnakeCaseLower) },
+        Converters = { new JsonStringEnumConverter(JsonNamingPolicy.SnakeCaseLower, allowIntegerValues: false) },
     };
 
     public static int Main(string[] arguments)
@@ -70,23 +72,30 @@ internal static class Program
 
     private static int Execute(Options options, string head, string @base)
     {
-        var artifact = JsonSerializer.Deserialize<EngineeringTestPlanArtifact>(
-            File.ReadAllText(options.PlanFile, StrictUtf8),
-            JsonOptions) ?? throw new InvalidDataException("plan artifact is empty");
-        if (artifact.Version != 1 || artifact.Head != head || artifact.Base != @base)
+        EngineeringTestPlan plan;
+        try
         {
-            throw new InvalidDataException("plan artifact does not address the checked HEAD and HEAD^1");
+            var artifact = JsonSerializer.Deserialize<EngineeringTestPlanArtifact>(
+                File.ReadAllText(options.PlanFile, StrictUtf8),
+                JsonOptions) ?? throw new InvalidDataException("plan artifact is empty");
+            ValidateArtifact(artifact, head, @base);
+            plan = artifact.Plan!;
+        }
+        catch (Exception exception)
+        {
+            plan = EngineeringTestPlanPolicy.Full(
+                GitPaths(options.RepositoryRoot, @base, head),
+                $"plan artifact failed validation: {exception.Message}");
+            Console.Error.WriteLine($"ENGINEERING_TEST_PLAN_FALLBACK {exception.Message}");
         }
 
-        WritePlan(artifact.Plan);
-        return EngineeringTestExecutor.Execute(artifact.Plan, invocation => RunTests(options.RepositoryRoot, invocation));
+        WritePlan(plan);
+        return EngineeringTestExecutor.Execute(plan, invocation => RunTests(options.RepositoryRoot, invocation));
     }
 
     private static int RunTests(string repositoryRoot, EngineeringTestInvocation invocation)
     {
-        Console.WriteLine(
-            $"ENGINEERING_TEST_EXECUTED target={JsonSerializer.Serialize(invocation.Target)} "
-            + $"filter={JsonSerializer.Serialize(invocation.Filter)}");
+        var resultsDirectory = Directory.CreateTempSubdirectory("stratalint-engineering-tests-").FullName;
         var startInfo = new ProcessStartInfo
         {
             FileName = "dotnet",
@@ -102,10 +111,103 @@ internal static class Program
             startInfo.ArgumentList.Add("--filter");
             startInfo.ArgumentList.Add(invocation.Filter);
         }
+        startInfo.ArgumentList.Add("--logger");
+        startInfo.ArgumentList.Add("trx;LogFilePrefix=engineering");
+        startInfo.ArgumentList.Add("--results-directory");
+        startInfo.ArgumentList.Add(resultsDirectory);
 
-        using var process = Process.Start(startInfo) ?? throw new InvalidOperationException("could not start dotnet test");
-        process.WaitForExit();
-        return process.ExitCode;
+        try
+        {
+            using var process = Process.Start(startInfo) ?? throw new InvalidOperationException("could not start dotnet test");
+            process.WaitForExit();
+            if (process.ExitCode != 0) return process.ExitCode;
+
+            try
+            {
+                var executed = VerifyTestEvidence(repositoryRoot, invocation, resultsDirectory);
+                Console.WriteLine(
+                    $"ENGINEERING_TEST_EXECUTED target={JsonSerializer.Serialize(invocation.Target)} "
+                    + $"filter={JsonSerializer.Serialize(invocation.Filter)} evidence=trx executed={executed}");
+                return 0;
+            }
+            catch (Exception exception)
+            {
+                Console.Error.WriteLine($"ENGINEERING_TEST_EVIDENCE_FAILED {exception.Message}");
+                return 1;
+            }
+        }
+        finally
+        {
+            Directory.Delete(resultsDirectory, recursive: true);
+        }
+    }
+
+    private static int VerifyTestEvidence(
+        string repositoryRoot,
+        EngineeringTestInvocation invocation,
+        string resultsDirectory)
+    {
+        var files = Directory.GetFiles(resultsDirectory, "*.trx", SearchOption.TopDirectoryOnly);
+        if (files.Length == 0) throw new InvalidDataException("dotnet test produced no TRX evidence");
+
+        var executed = 0;
+        var actual = new HashSet<(string Assembly, string Id)>(new TestIdentityComparer());
+        foreach (var file in files)
+        {
+            var document = XDocument.Load(file, LoadOptions.None);
+            var counters = document.Descendants().Single(element => element.Name.LocalName == "Counters");
+            if (!int.TryParse((string?)counters.Attribute("executed"), out var fileExecuted))
+                throw new InvalidDataException($"TRX has no executed count: {file}");
+            executed += fileExecuted;
+
+            var resultIds = document.Descendants()
+                .Where(element => element.Name.LocalName == "UnitTestResult"
+                    && (string?)element.Attribute("outcome") != "NotExecuted")
+                .Select(element => (string?)element.Attribute("testId"))
+                .Where(static id => id is not null)
+                .ToHashSet(StringComparer.Ordinal);
+            foreach (var test in document.Descendants().Where(element => element.Name.LocalName == "UnitTest"))
+            {
+                if (!resultIds.Contains((string?)test.Attribute("id"))) continue;
+                var method = test.Elements().Single(element => element.Name.LocalName == "TestMethod");
+                var className = (string?)method.Attribute("className")
+                    ?? throw new InvalidDataException("TRX test has no class identity");
+                var methodName = (string?)method.Attribute("name")
+                    ?? throw new InvalidDataException("TRX test has no method identity");
+                var storage = (string?)test.Attribute("storage")
+                    ?? throw new InvalidDataException("TRX test has no assembly identity");
+                actual.Add((Path.GetFileNameWithoutExtension(storage), $"{className.Split('.').Last()}.{methodName}"));
+            }
+        }
+
+        if (executed == 0) throw new InvalidDataException("dotnet test executed zero tests");
+        var missing = invocation.ExpectedTests
+            .Select(test => (Assembly: ProjectAssembly(repositoryRoot, test.ProjectPath), test.Id))
+            .Where(expected => !actual.Contains(expected))
+            .Select(static expected => $"{expected.Assembly}::{expected.Id}")
+            .ToArray();
+        if (missing.Length != 0)
+            throw new InvalidDataException($"TRX is missing planned tests: {string.Join(", ", missing)}");
+        return executed;
+    }
+
+    private static string ProjectAssembly(string repositoryRoot, string projectPath)
+    {
+        var document = XDocument.Load(Path.Combine(repositoryRoot, projectPath), LoadOptions.None);
+        return document.Descendants().FirstOrDefault(element => element.Name.LocalName == "AssemblyName")?.Value
+            ?? Path.GetFileNameWithoutExtension(projectPath);
+    }
+
+    private static void ValidateArtifact(EngineeringTestPlanArtifact artifact, string head, string @base)
+    {
+        if (artifact.Version != 1 || artifact.Head != head || artifact.Base != @base)
+            throw new InvalidDataException("plan artifact does not address the checked HEAD and HEAD^1");
+        if (artifact.Plan is null || artifact.Plan.ChangedPaths.IsDefault || artifact.Plan.Tests.IsDefault
+            || string.IsNullOrWhiteSpace(artifact.Plan.Reason)
+            || (artifact.Plan.Kind == EngineeringTestPlanKind.Selected) != (artifact.Plan.Tests.Length != 0)
+            || artifact.Plan.Tests.Any(static test => string.IsNullOrWhiteSpace(test.ProjectPath)
+                || string.IsNullOrWhiteSpace(test.Id) || string.IsNullOrWhiteSpace(test.Detail)))
+            throw new InvalidDataException("plan artifact does not conform to schema version 1");
     }
 
     private static void WritePlan(EngineeringTestPlan plan)
@@ -154,7 +256,19 @@ internal static class Program
         int Version,
         string Head,
         string Base,
-        EngineeringTestPlan Plan);
+        EngineeringTestPlan? Plan);
+
+    private sealed class TestIdentityComparer : IEqualityComparer<(string Assembly, string Id)>
+    {
+        public bool Equals((string Assembly, string Id) x, (string Assembly, string Id) y) =>
+            StringComparer.OrdinalIgnoreCase.Equals(x.Assembly, y.Assembly)
+            && StringComparer.Ordinal.Equals(x.Id, y.Id);
+
+        public int GetHashCode((string Assembly, string Id) value) =>
+            HashCode.Combine(
+                StringComparer.OrdinalIgnoreCase.GetHashCode(value.Assembly),
+                StringComparer.Ordinal.GetHashCode(value.Id));
+    }
 
     private sealed record Options(string Mode, string RepositoryRoot, string Head, string Base, string PlanFile)
     {

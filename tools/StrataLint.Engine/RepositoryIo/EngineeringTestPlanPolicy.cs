@@ -21,7 +21,10 @@ internal sealed record EngineeringTestPlan(
     ImmutableArray<EngineeringSelectedTest> Tests,
     string Reason);
 
-internal sealed record EngineeringTestInvocation(string Target, string? Filter);
+internal sealed record EngineeringTestInvocation(
+    string Target,
+    string? Filter,
+    ImmutableArray<EngineeringSelectedTest> ExpectedTests);
 
 internal static class EngineeringTestPlanDeriver
 {
@@ -141,15 +144,16 @@ internal static class EngineeringTestExecutor
             return 0;
         }
 
-        if (plan.Kind == EngineeringTestPlanKind.Full) return run(new EngineeringTestInvocation("tools/StrataLint.sln", null));
+        if (plan.Kind == EngineeringTestPlanKind.Full)
+            return run(new EngineeringTestInvocation("tools/StrataLint.sln", null, []));
 
         var filter = string.Join('|', plan.Tests.Select(static test => $"FullyQualifiedName~{test.Id}").Distinct(StringComparer.Ordinal));
         try
         {
-            if (run(new EngineeringTestInvocation("tools/StrataLint.sln", filter)) == 0) return 0;
+            if (run(new EngineeringTestInvocation("tools/StrataLint.sln", filter, plan.Tests)) == 0) return 0;
         }
         catch (Exception) { }
-        return run(new EngineeringTestInvocation("tools/StrataLint.sln", null));
+        return run(new EngineeringTestInvocation("tools/StrataLint.sln", null, []));
     }
 }
 
