@@ -1,9 +1,9 @@
-/- GID: D5/S3/ConceptDynamics/Termination/StoppingContinuationReopening
+/- GID: D5/S3/ConceptDynamics/Termination/ClosureMethodStopThreeParameterCompletionReopening
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/Termination/StoppingContinuationReopening
+   mirror-B: D5/B/S3/ConceptDynamics/Termination/ClosureMethodStopThreeParameterCompletionReopening
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Exact or approximate closure, method stop, local completion, and one-step reopening. -/
+   digest: Exact/approximate closure, method stop, and three-parameter completion/reopening. -/
 
 import D5.S3.ConceptDynamics.TargetRisk.RefinementRiskCostTradeoff
 import Mathlib.Topology.EMetricSpace.Diam
@@ -42,7 +42,7 @@ import Mathlib.Tactic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.Termination.StoppingContinuationReopening
+namespace D5.S3.ConceptDynamics.Termination.ClosureMethodStopThreeParameterCompletionReopening
 
 open D5.S3.ConceptDynamics.ConceptFiberDecomposition
 open D5.S3.ConceptDynamics.TargetRisk.RefinementRiskCostTradeoff
@@ -77,16 +77,16 @@ def MethodStopped {System Evidence Proposal : Type*}
 /-- The parameters whose effect on section-43 closure is defined. The source does
 not type its tolerance or decide negative values; this interface conventionally
 chooses finite nonnegative real precision. -/
-structure LocalParameters (World Target : Type*) where
+structure ThreeParameterLocalParameters (World Target : Type*) where
   objectDomain : Set World
   target : Concept World Target
   precision : NNReal
 
 /-- Local completion checks approximate target closure on the supplied object
 domain at the supplied finite precision. -/
-def LocallyComplete
+def ThreeParameterLocallyComplete
     {World Coordinate Target : Type*} [MetricSpace Target]
-    (parameters : LocalParameters World Target)
+    (parameters : ThreeParameterLocalParameters World Target)
     (readout : Concept World Coordinate) : Prop :=
   ApproximatelyClosed
     (fun object : ↑parameters.objectDomain => readout object.1)
@@ -94,9 +94,9 @@ def LocallyComplete
     parameters.precision
 
 /-- At least one parameter with a defined residual effect changes. -/
-def LocalParametersChanged
+def ThreeParameterLocalParametersChanged
     {World Target : Type*}
-    (current next : LocalParameters World Target) : Prop :=
+    (current next : ThreeParameterLocalParameters World Target) : Prop :=
   current.objectDomain ≠ next.objectDomain ∨
     current.target ≠ next.target ∨
     current.precision ≠ next.precision
@@ -112,12 +112,12 @@ does not identify either construction with its `q_S` or `E_S(T)`, nor give a
 transition map to a new stage residual. Operation-family and definition-language
 changes are therefore absent from this interface; this definition covers only
 object-domain, target, and precision triggers. -/
-def Reopens
+def ThreeParameterReopens
     {World Coordinate Target : Type*}
     [MetricSpace Target]
-    (current next : LocalParameters World Target)
+    (current next : ThreeParameterLocalParameters World Target)
     (readout : Concept World Coordinate) : Prop :=
-  LocalParametersChanged current next ∧
+  ThreeParameterLocalParametersChanged current next ∧
     ((((defectRelation readout next.target) ∩
             {pair | (next.precision : ENNReal) <
               edist (next.target pair.1) (next.target pair.2)}) ∩
@@ -131,7 +131,7 @@ def Reopens
 covers the three source triggers with a defined residual effect; operation-family
 and definition-language triggers remain unresolved source gaps. Budget stopping
 and open-world sequence were removed after fidelity review; see issue #3157. -/
-theorem stopping_continuation_reopening :
+theorem closure_method_stop_three_parameter_completion_reopening :
     (∀ {X Coordinate Target : Type*}
       (readout : Concept X Coordinate) (target : Concept X Target),
       Closed readout target ↔ defectRelation readout target = ∅) ∧
@@ -146,19 +146,19 @@ theorem stopping_continuation_reopening :
       MethodStopped method system evidence noProposal ↔
         method system evidence = noProposal) ∧
     (∀ {World Coordinate Target : Type*} [MetricSpace Target]
-      (parameters : LocalParameters World Target)
+      (parameters : ThreeParameterLocalParameters World Target)
       (readout : Concept World Coordinate),
-      LocallyComplete parameters readout ↔
+      ThreeParameterLocallyComplete parameters readout ↔
         ApproximatelyClosed
           (fun object : ↑parameters.objectDomain => readout object.1)
           (fun object : ↑parameters.objectDomain => parameters.target object.1)
           parameters.precision) ∧
     (∀ {World Coordinate Target : Type*}
       [MetricSpace Target]
-      (current next : LocalParameters World Target)
+      (current next : ThreeParameterLocalParameters World Target)
       (readout : Concept World Coordinate),
-      Reopens current next readout ↔
-        LocalParametersChanged current next ∧
+      ThreeParameterReopens current next readout ↔
+        ThreeParameterLocalParametersChanged current next ∧
           ((((defectRelation readout next.target) ∩
                   {pair | (next.precision : ENNReal) <
                     edist (next.target pair.1) (next.target pair.2)}) ∩
@@ -224,11 +224,11 @@ theorem proposal_return_is_not_method_stopped :
   simp [MethodStopped]
 
 private abbrev ZeroPrecisionNonconstantFiberControl : Prop :=
-    let parameters : LocalParameters Bool Real :=
+    let parameters : ThreeParameterLocalParameters Bool Real :=
       { objectDomain := Set.univ
         target := fun value => if value then 1 else 0
         precision := 0 }
-    ¬LocallyComplete parameters (fun _ => ())
+    ¬ThreeParameterLocallyComplete parameters (fun _ => ())
 
 /-- Negative control for conjunct 4: local completion reads the supplied zero
 precision and rejects a nonconstant target on one readout fiber. -/
@@ -264,17 +264,17 @@ theorem zero_precision_nonconstant_fiber_is_not_locally_complete :
   norm_num at this
 
 private abbrev ChangedTargetReopeningControl : Prop :=
-    let current : LocalParameters Bool Real :=
+    let current : ThreeParameterLocalParameters Bool Real :=
       { objectDomain := Set.univ
         target := fun _ => 0
         precision := 0 }
-    let next : LocalParameters Bool Real :=
+    let next : ThreeParameterLocalParameters Bool Real :=
       { objectDomain := Set.univ
         target := fun value => if value then 1 else 0
         precision := 0 }
     Closed (fun _object : ↑current.objectDomain => ())
         (fun object : ↑current.objectDomain => current.target object.1) ∧
-      Reopens current next (fun _ => ())
+      ThreeParameterReopens current next (fun _ => ())
 
 /-- Positive finite control: the old fixed stage is closed, while a changed
 Boolean target creates a genuinely new canonical defect. -/
@@ -292,18 +292,18 @@ theorem changed_target_creates_genuine_reopening :
 
 private abbrev ObjectDomainExpansionReopeningControl : Prop :=
     let target : Concept Bool Real := fun value => if value then 1 else 0
-    let current : LocalParameters Bool Real :=
+    let current : ThreeParameterLocalParameters Bool Real :=
       { objectDomain := {false}
         target := target
         precision := 0 }
-    let next : LocalParameters Bool Real :=
+    let next : ThreeParameterLocalParameters Bool Real :=
       { objectDomain := Set.univ
         target := target
         precision := 0 }
     current.target = next.target ∧
     current.precision = next.precision ∧
       current.objectDomain ⊂ next.objectDomain ∧
-      Reopens current next (fun _ => ())
+      ThreeParameterReopens current next (fun _ => ())
 
 /-- Object-domain-only reopening control: the target and precision stay fixed,
 while expanding the Boolean domain from one point to both points admits a new
@@ -319,11 +319,11 @@ theorem object_domain_expansion_creates_genuine_reopening :
   · exact ⟨(false, true), by simp [defectRelation]⟩
 
 private abbrev NonconstantReadoutFiberGuardControl : Prop :=
-    let current : LocalParameters Bool Real :=
+    let current : ThreeParameterLocalParameters Bool Real :=
       { objectDomain := Set.univ
         target := fun _ => 0
         precision := 0 }
-    let next : LocalParameters Bool Real :=
+    let next : ThreeParameterLocalParameters Bool Real :=
       { objectDomain := Set.univ
         target := fun value => if value then 1 else 0
         precision := 0 }
@@ -336,7 +336,7 @@ private abbrev NonconstantReadoutFiberGuardControl : Prop :=
           (({pair | current.precision <
             edist (current.target pair.1) (current.target pair.2)}) ∩
               (current.objectDomain ×ˢ current.objectDomain)))) ∧
-      ¬Reopens current next readout
+      ¬ThreeParameterReopens current next readout
 
 /-- A nonconstant readout separates the two Boolean points. The same pair is
 present in a residual that only checks distance, but it is absent from the
@@ -352,17 +352,17 @@ theorem nonconstant_readout_blocks_cross_fiber_reopening :
 
 private abbrev PrecisionDecreaseReopeningControl : Prop :=
     let target : Concept Bool Real := fun value => if value then 1 else 0
-    let current : LocalParameters Bool Real :=
+    let current : ThreeParameterLocalParameters Bool Real :=
       { objectDomain := Set.univ
         target := target
         precision := 1 }
-    let next : LocalParameters Bool Real :=
+    let next : ThreeParameterLocalParameters Bool Real :=
       { objectDomain := Set.univ
         target := target
         precision := 0 }
     current.objectDomain = next.objectDomain ∧
       current.target = next.target ∧
-      Reopens current next (fun _ => ())
+      ThreeParameterReopens current next (fun _ => ())
 
 /-- Precision-only reopening control: lowering eta from one to zero exposes a
 pair at target distance one, with every other formalized parameter fixed. -/
@@ -375,18 +375,18 @@ theorem precision_decrease_creates_genuine_reopening :
 
 private abbrev PrecisionIncreaseNoReopeningControl : Prop :=
     let target : Concept Bool Real := fun value => if value then 1 else 0
-    let current : LocalParameters Bool Real :=
+    let current : ThreeParameterLocalParameters Bool Real :=
       { objectDomain := Set.univ
         target := target
         precision := 0 }
-    let next : LocalParameters Bool Real :=
+    let next : ThreeParameterLocalParameters Bool Real :=
       { objectDomain := Set.univ
         target := target
         precision := 1 }
     let readout : Concept Bool Unit := fun _ => ()
-    LocalParametersChanged current next ∧
+    ThreeParameterLocalParametersChanged current next ∧
       (defectRelation readout next.target).Nonempty ∧
-      ¬Reopens current next readout
+      ¬ThreeParameterReopens current next readout
 
 /-- Named negative control for conjunct 5: increasing precision removes rather
 than creates tolerated residuals, even though the exact defect stays nonempty. -/
@@ -401,29 +401,29 @@ theorem precision_change_without_new_defect_does_not_reopen :
 /-- Concrete finite witnesses for all five package clauses, all three supported
 reopening triggers, the canonical-fiber guard, and the precision negative
 neighbor. Every named control is consumed here fail-closed. -/
-theorem stopping_continuation_reopening_nonvacuity :
+theorem closure_method_stop_three_parameter_completion_reopening_nonvacuity :
     (¬Closed (fun _ : Bool => ()) (id : Concept Bool Bool)) ∧
     (¬ApproximatelyClosed (fun _ : Bool => ())
       (fun value : Bool => if value then (1 : Real) else 0) 0) ∧
     (¬MethodStopped (fun _ : Unit => id) () true false) ∧
-    (let parameters : LocalParameters Bool Real :=
+    (let parameters : ThreeParameterLocalParameters Bool Real :=
       { objectDomain := Set.univ
         target := fun value => if value then 1 else 0
         precision := 0 }
-     ¬LocallyComplete parameters (fun _ => ())) ∧
+     ¬ThreeParameterLocallyComplete parameters (fun _ => ())) ∧
     (let target : Concept Bool Real := fun value => if value then 1 else 0
-     let current : LocalParameters Bool Real :=
+     let current : ThreeParameterLocalParameters Bool Real :=
       { objectDomain := {false}
         target := target
         precision := 0 }
-     let next : LocalParameters Bool Real :=
+     let next : ThreeParameterLocalParameters Bool Real :=
       { objectDomain := Set.univ
         target := target
         precision := 0 }
      current.target = next.target ∧
        current.precision = next.precision ∧
        current.objectDomain ⊂ next.objectDomain ∧
-       Reopens current next (fun _ => ())) ∧
+       ThreeParameterReopens current next (fun _ => ())) ∧
     ChangedTargetReopeningControl ∧
     PrecisionDecreaseReopeningControl ∧
     NonconstantReadoutFiberGuardControl ∧
@@ -438,8 +438,8 @@ theorem stopping_continuation_reopening_nonvacuity :
     nonconstant_readout_blocks_cross_fiber_reopening,
     precision_change_without_new_defect_does_not_reopen⟩
 
-#print axioms stopping_continuation_reopening
-#print axioms stopping_continuation_reopening_nonvacuity
+#print axioms closure_method_stop_three_parameter_completion_reopening
+#print axioms closure_method_stop_three_parameter_completion_reopening_nonvacuity
 #print axioms object_domain_expansion_creates_genuine_reopening
 
-end D5.S3.ConceptDynamics.Termination.StoppingContinuationReopening
+end D5.S3.ConceptDynamics.Termination.ClosureMethodStopThreeParameterCompletionReopening

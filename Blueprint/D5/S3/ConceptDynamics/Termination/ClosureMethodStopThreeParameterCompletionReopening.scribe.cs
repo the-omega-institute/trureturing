@@ -4,18 +4,18 @@ using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Termination;
 
-internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDefinition
+internal sealed class ClosureMethodStopThreeParameterCompletionReopeningDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Exact and approximate closure support method stopping, local completion, and one-step reopening.",
-        H("Closure, Stopping, and One-Step Reopening"),
+        "Exact and approximate closure support method stopping and three-parameter completion/reopening.",
+        H("Closure, Method Stop, and Three-Parameter Completion/Reopening"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("stopping-continuation-reopening"),
+                DescribeId.Create("closure-method-stop-three-parameter-completion-reopening"),
                 DeclarationHandle.Create(
-                    "D5/S3/ConceptDynamics/Termination/StoppingContinuationReopening."
-                        + "stopping_continuation_reopening"),
-                H("Closure, stopping, and one-step reopening"),
+                    "D5/S3/ConceptDynamics/Termination/ClosureMethodStopThreeParameterCompletionReopening."
+                        + "closure_method_stop_three_parameter_completion_reopening"),
+                H("Closure, method stop, and three-parameter completion/reopening"),
                 StatementSource.FromAuthor(TheoremFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
@@ -27,8 +27,8 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
                             + "contribute zero and unbounded diameters contribute top. Method stopping "
                             + "is the literal distinguished-value equation.")),
                     Paragraph(Text(
-                        "Local completion checks the supplied domain, target, and finite precision. "
-                            + "A one-step reopening requires one of those three parameters to change "
+                        "Three-parameter local completion checks the supplied domain, target, and finite precision. "
+                            + "A three-parameter reopening requires one of those parameters to change "
                             + "and a canonical defect pair above the next precision that was absent "
                             + "above the current precision.")),
                     Paragraph(Text(
@@ -129,7 +129,7 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
         Formula clause4 = ImpliesFormula(
             targetMetric,
             IffFormula(
-                Call("LocallyComplete", parameters, q),
+                Call("ThreeParameterLocallyComplete", parameters, q),
                 Call(
                     "ApproximatelyClosed",
                     Restrict(q, Call("objectDomain", parameters)),
@@ -157,7 +157,7 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
         Formula clause5 = ImpliesFormula(
             targetMetric,
             IffFormula(
-                Call("Reopens", current, next, q),
+                Call("ThreeParameterReopens", current, next, q),
                 And(reopeningChange, newResidual)));
 
         return Disp(And(
