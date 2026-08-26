@@ -49,6 +49,8 @@ internal sealed class CompatibleFusionEmbeddingDocument : IScribeDocumentDefinit
         Formula update = F.Id("u");
         Formula readout = F.Id("q");
         Formula embedding = F.Id("J");
+        Formula embeddingDefiniens = Call(
+            "completionEmbedding", Call("componentCompletionRelation", update, readout));
         Formula fused = Call("Fused", readout);
         Formula compatible = Call("Comp", readout);
         Formula state = F.Id("z");
@@ -62,13 +64,16 @@ internal sealed class CompatibleFusionEmbeddingDocument : IScribeDocumentDefinit
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, F.Id("I"), Comma, Sp, F.Id("Y"), Comma, Sp,
+            Forall, Sp, F.Id("I"), Comma, Sp, F.Id("Y"), Colon, Sp,
+            Operatorname, Grp(F.Id("Type")), Comma, Sp,
             F.Id("O"), Colon, Sp, F.Id("I"), Sp, To, Sp,
             Operatorname, Grp(F.Id("Type")), Comma, RowBreak,
             update, Colon, Sp, F.Id("Y"), Sp, To, Sp, F.Id("Y"), Comma, Sp,
             readout, Colon, Sp, Prod, Underscore, Grp(F.Id("i")), Sp,
             Open, F.Id("Y"), Sp, To, Sp,
             F.Id("O"), Underscore, Grp(F.Id("i")), Close, Comma, RowBreak,
+            Operatorname, Grp(F.Id("let")), Sp, embedding, Sp, Colon, Eq, Sp,
+            embeddingDefiniens, Semi, RowBreak,
             Call("Injective", embedding), Sp, Land, RowBreak,
             Open, Forall, Sp, state, InMacro, Sp, fused, Comma, Sp,
             Forall, Sp, component, InMacro, Sp, F.Id("I"), Comma, RowBreak,
