@@ -6,6 +6,7 @@
    digest: Reachability generates the least successor-closed consequence set, dual to prerequisite closure. -/
 
 import D5.S3.ConceptDynamics.DagSemantics.PrerequisiteClosure
+import D5.S3.ConceptDynamics.DependencyTopology.DependencyReachabilityOrder
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -13,6 +14,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.ConceptDynamics.DagCompletion.ConsequenceClosure
 
 open D5.S3.ConceptDynamics.DagSemantics.PrerequisiteClosure
+open D5.S3.ConceptDynamics.DependencyTopology.DependencyReachabilityOrder
 
 /-- A set is successor-closed when every direct dependent of a member remains inside. -/
 def SuccessorClosed {V : Type*} (edge : V → V → Prop) (set : Set V) : Prop :=

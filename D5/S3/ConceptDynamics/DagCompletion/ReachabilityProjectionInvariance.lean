@@ -6,6 +6,7 @@
    digest: Prerequisite and consequence closures depend only on reachability, not the chosen direct-edge presentation. -/
 
 import D5.S3.ConceptDynamics.DagCompletion.ConsequenceClosure
+import D5.S3.ConceptDynamics.DependencyTopology.DependencyReachabilityOrder
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -14,6 +15,7 @@ namespace D5.S3.ConceptDynamics.DagCompletion.ReachabilityProjectionInvariance
 
 open D5.S3.ConceptDynamics.DagSemantics.PrerequisiteClosure
 open D5.S3.ConceptDynamics.DagCompletion.ConsequenceClosure
+open D5.S3.ConceptDynamics.DependencyTopology.DependencyReachabilityOrder
 
 /-- Two edge presentations are reachability-equivalent when they induce the same thin reachability relation. -/
 def SameReachability {V : Type*}

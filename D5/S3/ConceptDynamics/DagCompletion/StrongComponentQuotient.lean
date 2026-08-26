@@ -6,6 +6,7 @@
    digest: Quotienting a directed relation by mutual reachability yields a partial order of strong components. -/
 
 import D5.S3.ConceptDynamics.DagSemantics.PrerequisiteClosure
+import D5.S3.ConceptDynamics.DependencyTopology.DependencyReachabilityOrder
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -15,6 +16,7 @@ universe u
 namespace D5.S3.ConceptDynamics.DagCompletion.StrongComponentQuotient
 
 open D5.S3.ConceptDynamics.DagSemantics.PrerequisiteClosure
+open D5.S3.ConceptDynamics.DependencyTopology.DependencyReachabilityOrder
 
 /-- Two vertices lie in the same strong component when each reaches the other. -/
 def MutuallyReachable {V : Type u}

@@ -7,15 +7,19 @@
 
 import Mathlib.Logic.Relation
 import Mathlib.Data.Set.Lattice
+import D5.S3.ConceptDynamics.DependencyTopology.DependencyReachabilityOrder
+
+/- Library-search audit trail (2026-08-27):
+   * Reuses `DependencyReachabilityOrder.Reachable` and its
+     `reachable_refl`, `reachable_trans`, and `reachable_of_edge` API.
+   * No local reflexive-transitive reachability carrier is defined here. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S3.ConceptDynamics.DagSemantics.PrerequisiteClosure
 
-/-- The reflexive-transitive dependency reachability relation. -/
-abbrev Reachable {V : Type*} (edge : V → V → Prop) : V → V → Prop :=
-  Relation.ReflTransGen edge
+open D5.S3.ConceptDynamics.DependencyTopology.DependencyReachabilityOrder
 
 /-- A set is predecessor-closed when every direct prerequisite of a member is a member. -/
 def PredecessorClosed {V : Type*} (edge : V → V → Prop) (set : Set V) : Prop :=
@@ -32,7 +36,7 @@ theorem subset_prerequisiteClosure
     {V : Type*} (edge : V → V → Prop) (targets : Set V) :
     targets ⊆ prerequisiteClosure edge targets := by
   intro target targetIn
-  exact ⟨target, targetIn, Relation.ReflTransGen.refl⟩
+  exact ⟨target, targetIn, reachable_refl edge target⟩
 
 /-- Enlarging the target set enlarges its prerequisite closure. -/
 theorem prerequisiteClosure_mono
@@ -49,7 +53,7 @@ theorem prerequisiteClosure_predecessorClosed
   intro prerequisite dependent dependency
   rintro ⟨target, targetIn, dependentPath⟩
   exact ⟨target, targetIn,
-    (Relation.ReflTransGen.single dependency).trans dependentPath⟩
+    (reachable_of_edge dependency).trans dependentPath⟩
 
 /-- The prerequisite closure is the least predecessor-closed superset of its targets. -/
 theorem prerequisiteClosure_least

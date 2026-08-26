@@ -6,6 +6,7 @@
    digest: Reachability-conservative embeddings preserve and reflect prerequisite and consequence closures. -/
 
 import D5.S3.ConceptDynamics.DagCompletion.ConsequenceClosure
+import D5.S3.ConceptDynamics.DependencyTopology.DependencyReachabilityOrder
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -16,6 +17,7 @@ namespace D5.S3.ConceptDynamics.DagCompletion.ReachabilityConservativeEmbedding
 
 open D5.S3.ConceptDynamics.DagSemantics.PrerequisiteClosure
 open D5.S3.ConceptDynamics.DagCompletion.ConsequenceClosure
+open D5.S3.ConceptDynamics.DependencyTopology.DependencyReachabilityOrder
 
 /-- An embedding is reachability-conservative when old reachability is preserved and reflected. -/
 structure ReachabilityEmbedding
