@@ -6,7 +6,7 @@ A stochastic readout descends exactly when its pushed-forward one-step laws are 
 
 **Theorem 1.1 (Strong lumpability is equivalent to stochastic descent).**
 
-$$\begin{gathered}\forall X, B: \operatorname{Type},\\{}q: X \to B, K: X \to \operatorname{PMF},\\{}\operatorname{ListTFAE}\left({[\exists kernel: \operatorname(range, q) \to \operatorname{PMF}(\operatorname(range, q)), \forall x, map(K(x), realizedReadout(q)) = kernel(realizedReadout(q)(x)), \forall x, y, q(x) = q(y) \Rightarrow map(K(x), realizedReadout(q)) = map(K(y), realizedReadout(q)), \forall x, y, realizedReadout(q)(x) = realizedReadout(q)(y) \Rightarrow map(K(x), realizedReadout(q)) = map(K(y), realizedReadout(q))]}\right).\end{gathered}$$
+$$\begin{gathered}\forall X, B: \operatorname{Type},\\{}q: X \to B, K: X \to \operatorname{PMF}(X),\\{}\operatorname{ListTFAE}\left({[\exists kernel: \operatorname{range}(q) \to \operatorname{PMF}(\operatorname{range}(q)), \forall x: X, PMF.map(realizedReadout(q), K(x)) = kernel(realizedReadout(q)(x)), \forall x, y: X, q(x) = q(y) \Rightarrow PMF.map(realizedReadout(q), K(x)) = PMF.map(realizedReadout(q), K(y)), \forall x, y: X, realizedReadout(q)(x) = realizedReadout(q)(y) \Rightarrow PMF.map(realizedReadout(q), K(x)) = PMF.map(realizedReadout(q), K(y))]}\right).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/StrongLumpabilityDescent.strong_lumpability_descent_tfae` (`✓ std3`). ∎
 
