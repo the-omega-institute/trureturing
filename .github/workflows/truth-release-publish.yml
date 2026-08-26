@@ -117,16 +117,10 @@ jobs:
           set -euo pipefail
           source_commit="$(git rev-parse HEAD)"
           source_tree="$(git cat-file -p HEAD | sed -n 's/^tree //p')"
-          protected_dev_tip="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/dev" --jq '.object.sha')"
           [[ "$source_commit" =~ ^[0-9a-f]{40}$ ]]
           [[ "$source_tree" =~ ^[0-9a-f]{40}$ ]]
-          [[ "$protected_dev_tip" =~ ^[0-9a-f]{40}$ ]]
           if [[ "$source_commit" != "$RESOLVED_SOURCE_COMMIT" ]]; then
-            printf '%s\n' 'checked out commit does not equal the resolved source SHA' >&2
-            exit 1
-          fi
-          if [[ "$source_commit" != "$protected_dev_tip" ]]; then
-            printf '%s\n' 'checked out commit is not the current protected dev tip' >&2
+            printf '%s\n' 'checked out commit is not the resolved protected dev tip' >&2
             exit 1
           fi
           printf 'source_tree=%s\n' "$source_tree" >> "$GITHUB_OUTPUT"
@@ -191,7 +185,7 @@ jobs:
           rm -rf "$bundle"
           mkdir -p "$bundle"
           dotnet restore tools/StrataLint.Cli/StrataLint.Cli.csproj --locked-mode
-          SOURCE_EPOCH="$(git show -s --format=%ct "$SOURCE_COMMIT")"
+          SOURCE_EPOCH="$(git show -s --format=%ct HEAD)"
           [[ "$SOURCE_EPOCH" =~ ^[0-9]+$ ]]
           produced_at="$(date -u -d "@$SOURCE_EPOCH" +%Y-%m-%dT%H:%M:%SZ)"
           dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj \

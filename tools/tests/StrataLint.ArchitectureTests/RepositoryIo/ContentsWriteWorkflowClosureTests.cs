@@ -69,7 +69,7 @@ public sealed class ContentsWriteWorkflowClosureTests
 
         Assert.Contains("git/ref/heads/dev", content, StringComparison.Ordinal);
         Assert.Contains("resolved protected dev tip does not equal the push SHA", content, StringComparison.Ordinal);
-        Assert.Contains("checked out commit is not the current protected dev tip", content, StringComparison.Ordinal);
+        Assert.Contains("checked out commit is not the resolved protected dev tip", content, StringComparison.Ordinal);
         Assert.Contains("commit_on_protected_dev=true", content, StringComparison.Ordinal);
         Assert.Contains("--commit-on-protected-dev \"$COMMIT_ON_PROTECTED_DEV\"", content, StringComparison.Ordinal);
         Assert.DoesNotContain("--commit-on-protected-dev true", content, StringComparison.Ordinal);
