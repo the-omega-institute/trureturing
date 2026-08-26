@@ -28,7 +28,8 @@ internal sealed class TargetLaunderingCriterionDocument : IScribeDocumentDefinit
                     Paragraph(Text(
                         "The regrade report is indexed by the actual evaluator. Its proof field "
                             + "certifies the reported verdict as the evaluator's value on the "
-                            + "revised commitment and old evidence.")),
+                            + "revised commitment and old evidence. Its timestamp remains data, "
+                            + "not an extra premise of the boxed criterion.")),
                     Paragraph(Text(
                         "DECT 50.4 defines this clause by a strict comparison between the "
                             + "Time-valued first arrival and the revised freeze time. The later "
@@ -37,8 +38,8 @@ internal sealed class TargetLaunderingCriterionDocument : IScribeDocumentDefinit
                         "Those source formulations are not equivalent under the stated data: "
                             + "a record first seen exactly at the freeze event is visible there "
                             + "but does not arrive strictly before it. The Lean module retains "
-                            + "the sketch separately and proves equivalence only under an exact "
-                            + "bridge between the two tests."))),
+                            + "the sketch separately; an exact bridge reconciles only the two "
+                            + "arrival tests, while the sketch-only timestamp stays explicit."))),
                 DescribeRole.Theorem))));
 
     private static Formula CriterionFormula()
@@ -54,28 +55,13 @@ internal sealed class TargetLaunderingCriterionDocument : IScribeDocumentDefinit
             Begin, Grp(F.Id("gathered")),
             Forall, Sp, arrival, Comma, Sp, evaluate, Comma, Sp, oldK, Comma, Sp,
             newK, Comma, Sp, evidence, Comma, Sp, report, Comma, RowBreak, Grp(),
+            Call("TargetLaundering", arrival, evaluate, oldK, newK, evidence, report),
+            Sp, Iff, RowBreak, Grp(),
             Call("PostArrivalProtectedChange", arrival, oldK, newK, evidence),
             Sp, Land, RowBreak, Grp(),
             Call("RegradesOldRound", evaluate, oldK, newK, evidence, report),
             Sp, Land, RowBreak, Grp(),
             Call("AttributesToOriginalCommitment", evaluate, oldK, newK, evidence, report),
-            Sp, Iff, RowBreak, Grp(),
-            Call("Arrival", arrival, evidence), Sp, Lt, Sp, Call("FreezeTime", newK),
-            Sp, Land, RowBreak, Grp(),
-            Call("Protected", newK), Sp, Neq, Sp, Call("Protected", oldK),
-            Sp, Land, RowBreak, Grp(),
-            Call("Original", report), Sp, Eq, Sp, oldK,
-            Sp, Land, RowBreak, Grp(),
-            Call("Revised", report), Sp, Eq, Sp, newK,
-            Sp, Land, RowBreak, Grp(),
-            Call("Evidence", report), Sp, Eq, Sp, evidence,
-            Sp, Land, RowBreak, Grp(),
-            Call("OccurredAt", report), Sp, Eq, Sp, Call("FreezeTime", newK),
-            Sp, Land, RowBreak, Grp(),
-            Call("RegradedVerdict", report), Sp, Eq, Sp,
-            Call("evaluate", newK, evidence),
-            Sp, Land, RowBreak, Grp(),
-            Call("AttributedTo", report), Sp, Eq, Sp, oldK,
             Dot,
             End, Grp(F.Id("gathered"))));
     }
