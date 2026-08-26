@@ -51,13 +51,73 @@ public sealed class ContentsWriteWorkflowClosureTests
     }
 
     [Fact]
-    public void TheTruthReleasePublisherRunsOnlyOnDevPushOrManualDispatch()
+    public void TheTruthReleasePublisherRunsOnlyOnDevPush()
     {
         var publisher = Workflows.SingleOrDefault(static source => source.Path == TruthReleasePublisher);
         Assert.NotNull(publisher);
 
-        Assert.Equal(["push", "workflow_dispatch"], TriggerNames(publisher.Content));
+        Assert.Equal(["push"], TriggerNames(publisher.Content));
         Assert.Contains("branches: [dev]", publisher.Content, StringComparison.Ordinal);
+        Assert.DoesNotContain("workflow_dispatch", publisher.Content, StringComparison.Ordinal);
+        Assert.DoesNotContain("inputs.source_commit", publisher.Content, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void TheTruthReleasePublisherDerivesTrustOnlyFromTheProtectedDevTip()
+    {
+        var content = TruthReleaseWorkflow().Content;
+
+        Assert.Contains("git/ref/heads/dev", content, StringComparison.Ordinal);
+        Assert.Contains("resolved protected dev tip does not equal the push SHA", content, StringComparison.Ordinal);
+        Assert.Contains("checked out commit is not the current protected dev tip", content, StringComparison.Ordinal);
+        Assert.Contains("commit_on_protected_dev=true", content, StringComparison.Ordinal);
+        Assert.Contains("--commit-on-protected-dev \"$COMMIT_ON_PROTECTED_DEV\"", content, StringComparison.Ordinal);
+        Assert.DoesNotContain("--commit-on-protected-dev true", content, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void TheTruthReleasePublisherSerializesAndBindsImmutableDigestPublications()
+    {
+        var content = TruthReleaseWorkflow().Content;
+
+        Assert.Contains(
+            "group: truth-release-publish-${{ needs.produce.outputs.release_digest }}",
+            content,
+            StringComparison.Ordinal);
+        Assert.Contains("produced_at=\"$(date -u -d \"@$SOURCE_EPOCH\"", content, StringComparison.Ordinal);
+        Assert.Contains("--sort=name", content, StringComparison.Ordinal);
+        Assert.Contains("gzip -n", content, StringComparison.Ordinal);
+        Assert.Contains("oras pull \"$reference\"", content, StringComparison.Ordinal);
+        Assert.Contains("cmp -s \"$ARCHIVE\"", content, StringComparison.Ordinal);
+        Assert.Contains("immutable_reference=\"$OCI_REPOSITORY@$oci_digest\"", content, StringComparison.Ordinal);
+        Assert.Contains("OCI tag lookup failed without a confirmed missing-manifest response", content, StringComparison.Ordinal);
+        Assert.Contains("OCI digest tag moved during immutable verification", content, StringComparison.Ordinal);
+        Assert.Contains(
+            "org.opencontainers.image.source=https://github.com/${GITHUB_REPOSITORY}/commit/${SOURCE_COMMIT}",
+            content,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain(
+            "org.opencontainers.image.source=https://github.com/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}",
+            content,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void TheTruthReleasePublisherCreatesAndRepairsOneImmutableRelease()
+    {
+        var content = TruthReleaseWorkflow().Content;
+
+        Assert.Contains(
+            "release_collection_api=\"https://api.github.com/repos/${GITHUB_REPOSITORY}/releases\"",
+            content,
+            StringComparison.Ordinal);
+        Assert.Contains("-X POST \"$release_collection_api\"", content, StringComparison.Ordinal);
+        Assert.Contains("verify_release_asset", content, StringComparison.Ordinal);
+        Assert.Contains("upload_release_asset", content, StringComparison.Ordinal);
+        Assert.Contains("cmp -s \"$expected\" \"$downloaded\"", content, StringComparison.Ordinal);
+        Assert.Contains("asset_count", content, StringComparison.Ordinal);
+        Assert.Contains("GitHub Release asset count is not numeric", content, StringComparison.Ordinal);
+        Assert.Contains("GitHub Release disappeared during final verification", content, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -77,6 +137,9 @@ public sealed class ContentsWriteWorkflowClosureTests
 
     private static bool DeclaresContentsWrite(string content) =>
         ContentsValues(content).Contains("write", StringComparer.Ordinal);
+
+    private static WorkflowSource TruthReleaseWorkflow() =>
+        Workflows.Single(static source => source.Path == TruthReleasePublisher);
 
     private static bool DeclaresAnyContentsPermission(string content) =>
         ContentsValues(content).Count > 0;
