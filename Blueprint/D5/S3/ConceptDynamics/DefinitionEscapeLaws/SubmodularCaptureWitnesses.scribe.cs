@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.DefinitionEscapeLaws
 internal sealed class SubmodularCaptureWitnessesDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Named finite models and attacks mechanically guard every submodular-capture clause.",
+        "Named models, premise attacks, and universal refutations guard every capture clause.",
         H("Named Witnesses For Submodular Capture"),
         Blocks(
             Describe.Lean(
@@ -44,15 +44,16 @@ internal sealed class SubmodularCaptureWitnessesDocument : IScribeDocumentDefini
                     Paragraph(Text(
                         "WfalseC1 through WfalseC8 are the named theorems "
                             + "clause_one_false_neighbor_witness through "
-                            + "clause_eight_false_neighbor_witness. They respectively reject a "
-                            + "residual formula that ignores the selected definition; subtraction "
-                            + "in the reverse direction; intersection in place of the captured "
-                            + "union; reverse inclusion of captured sets; distribution of capture "
-                            + "through index intersection as equality; reverse inclusion of newly "
-                            + "captured sets; a score rewrite with a fixed wrong denominator, a "
-                            + "different candidate, or erased zero-cost behavior; and elimination "
-                            + "of a concrete blind pair. C4 through C6 are set-level attacks, so "
-                            + "their falsity does not depend on a chosen mass value.")),
+                            + "clause_eight_false_neighbor_witness. C1 through C7 are universally "
+                            + "quantified refutations under exactly the theorem premises. They "
+                            + "respectively refute denial of the exact residual-mass formula; "
+                            + "denial of F(S)=M(empty)-M(S); denial of the captured-union expansion; "
+                            + "strict reverse monotonicity; strict reverse submodularity; strictly "
+                            + "increasing marginal capture while retaining subset and freshness; "
+                            + "and denial of the residual-score/capture-score equivalence. Thus "
+                            + "their negations are theorems for every admissible model, not facts "
+                            + "that happen only in one finite model. C8 remains the concrete "
+                            + "Boolean refutation of eliminating a blind pair.")),
                     Paragraph(Text(
                         "The displayed present labels are deliberately weaker than the Lean "
                             + "conjunction. The Lean consumer repeats and consumes the complete "

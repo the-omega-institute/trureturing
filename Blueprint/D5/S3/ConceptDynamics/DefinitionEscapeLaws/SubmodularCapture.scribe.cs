@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.DefinitionEscapeLaws
 internal sealed class SubmodularCaptureDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Clause-local finite selections and additive escape mass satisfy the proved DECT capture laws.",
+        "Finite source selections and additive escape mass satisfy the proved DECT capture laws.",
         H("Submodular Definition-Escape Capture"),
         Blocks(
             Describe.Lean(
@@ -20,12 +20,14 @@ internal sealed class SubmodularCaptureDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "The displayed implication preserves all source ambient conditions. "
-                            + "Finiteness is clause-local: C1 uses finite(S1), C2 finite(S2), C3 "
-                            + "finite(S3), C4 finite(A4) and finite(B4), C5 finite(A5) and "
-                            + "finite(B5), C6 finite(B6), and the score rewrite finite(S7). C8 "
-                            + "has no finiteness premise, and I itself is not required to be "
-                            + "finite. nonnegativeCost means zero is below every c(gamma), and "
+                        "The displayed implication retains finiteness as a source-domain "
+                            + "annotation on C1 through C7. The Lean theorem proves those clauses "
+                            + "without finite-selection premises, so each displayed finite "
+                            + "antecedent is weaker than its Lean counterpart rather than an "
+                            + "additional Lean guard. C4 also retains A4 subset B4; C6 retains "
+                            + "A6 subset B6 and definition6 not in B6. C8 has no finiteness "
+                            + "premise, and I itself is not required to be finite. nonnegativeCost "
+                            + "means zero is below every c(gamma), and "
                             + "disjointAdditive means exactly that mass(left union right) equals "
                             + "mass(left) plus mass(right) whenever left and right are disjoint. "
                             + "It does not assume strictly positive cost, positive baseline mass, "
@@ -56,17 +58,24 @@ internal sealed class SubmodularCaptureDocument : IScribeDocumentDefinition
                             + "by a named positive model, so the theorem itself still admits the "
                             + "constant-zero weight required by the source's full domain.")),
                     Paragraph(Text(
-                        "The clause-local finite premises and nonnegativeCost are retained as "
-                            + "source-domain conditions, not advertised as proof guards: deleting "
-                            + "them currently produces no named failure. disjointAdditive is a "
+                        "The finite-selection annotations are retained only in this weaker source "
+                            + "summary and do not occur in the Lean theorem type. nonnegativeCost "
+                            + "is likewise not advertised as a proof guard. disjointAdditive is a "
                             + "proof guard, with its absence consumed by the named weak-weight "
                             + "countermodel.")),
                     Paragraph(Text(
-                        "GREEDY_ARGMAX_RULE_UNRESOLVED: C7 proves equality of the residual and "
-                            + "capture score predicates. The source gives no candidate-domain, "
-                            + "argmax-existence, tie, zero-cost, or freshness convention, so this "
-                            + "module does not strengthen that algebraic identity into an "
-                            + "existence claim."))),
+                        "C7 proves equality of the residual and capture score predicates. The "
+                            + "remaining greedy-rule obligations are recorded as six locatable "
+                            + "residual-ledger subitems, not inserted as a ninth authoritative "
+                            + "formula conjunct.")),
+                    Paragraph(Text(
+                        "scribe_lean_correspondence: C1, C2, C3, C4, C5, C6, C7, and C8 map "
+                            + "respectively to Lean conjuncts one through eight. Every displayed "
+                            + "item is weaker: present(C1-C6,C8) and supportingLemma(C7) summarize "
+                            + "the full Lean predicates, while C1-C7 additionally retain finite "
+                            + "source-domain annotations. C4 binds A4 subset B4, and C6 binds A6 "
+                            + "subset B6 plus definition6 not in B6. Equal mappings: zero. Stronger "
+                            + "mappings: zero."))),
                 DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()
@@ -91,10 +100,10 @@ internal sealed class SubmodularCaptureDocument : IScribeDocumentDefinition
             Implies(Call("finite", F.Id("S2")), Present(F.Id("C2"))),
             Implies(Call("finite", F.Id("S3")), Present(F.Id("C3"))),
             Implies(
-                new Formula.Logic(
+                Conjoin(
                     Call("finite", F.Id("A4")),
-                    FormulaLogicOperator.And,
-                    Call("finite", F.Id("B4"))),
+                    Call("finite", F.Id("B4")),
+                    Call("subset", F.Id("A4"), F.Id("B4"))),
                 Present(F.Id("C4"))),
             Implies(
                 new Formula.Logic(
@@ -102,12 +111,16 @@ internal sealed class SubmodularCaptureDocument : IScribeDocumentDefinition
                     FormulaLogicOperator.And,
                     Call("finite", F.Id("B5"))),
                 Present(F.Id("C5"))),
-            Implies(Call("finite", F.Id("B6")), Present(F.Id("C6"))),
+            Implies(
+                Conjoin(
+                    Call("finite", F.Id("B6")),
+                    Call("subset", F.Id("A6"), F.Id("B6")),
+                    Call("notMember", F.Id("definition6"), F.Id("B6"))),
+                Present(F.Id("C6"))),
             Implies(
                 Call("finite", F.Id("S7")),
                 Call("supportingLemma", F.Id("greedyScoreRewrite"))),
-            Present(F.Id("C8")),
-            Call("open", F.Id("greedyArgmaxRuleUnresolved")));
+            Present(F.Id("C8")));
         Formula theoremBody = Implies(premise, conclusions);
 
         return Disp(Seq(

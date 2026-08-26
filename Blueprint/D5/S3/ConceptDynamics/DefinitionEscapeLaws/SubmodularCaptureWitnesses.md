@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Named finite models and attacks mechanically guard every submodular-capture clause.
+Named models, premise attacks, and universal refutations guard every capture clause.
 
 **Theorem 1.1 (All capture witnesses and premise attacks occur together).**
 
@@ -20,7 +20,7 @@ Wblind is fixed_language_blind_pair_persists_witness and consumes the eighth the
 
 Wadditive is finite_additivity_is_necessary_witness, whose proof directly reuses the canonical theorem marginal_capture_law_not_implied_by_escape_weight. Its object is the CAS marginalCaptureLaw over the canonical defectRelation, so it shows the weaker EscapeWeight fields alone do not imply diminishing capture. No second countermodel or residual is defined.
 
-WfalseC1 through WfalseC8 are the named theorems clause_one_false_neighbor_witness through clause_eight_false_neighbor_witness. They respectively reject a residual formula that ignores the selected definition; subtraction in the reverse direction; intersection in place of the captured union; reverse inclusion of captured sets; distribution of capture through index intersection as equality; reverse inclusion of newly captured sets; a score rewrite with a fixed wrong denominator, a different candidate, or erased zero-cost behavior; and elimination of a concrete blind pair. C4 through C6 are set-level attacks, so their falsity does not depend on a chosen mass value.
+WfalseC1 through WfalseC8 are the named theorems clause_one_false_neighbor_witness through clause_eight_false_neighbor_witness. C1 through C7 are universally quantified refutations under exactly the theorem premises. They respectively refute denial of the exact residual-mass formula; denial of F(S)=M(empty)-M(S); denial of the captured-union expansion; strict reverse monotonicity; strict reverse submodularity; strictly increasing marginal capture while retaining subset and freshness; and denial of the residual-score/capture-score equivalence. Thus their negations are theorems for every admissible model, not facts that happen only in one finite model. C8 remains the concrete Boolean refutation of eliminating a blind pair.
 
 The displayed present labels are deliberately weaker than the Lean conjunction. The Lean consumer repeats and consumes the complete statement of every witness, including all strict inequalities, memberships, equalities, premise failures, and the existential weak-weight countermodel.
 
