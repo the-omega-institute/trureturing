@@ -216,8 +216,6 @@ internal static class DigestionIngestor
                 .Order(StringComparer.Ordinal)
                 .ToImmutableArray();
             var priorAcknowledgments = source.AcknowledgedStale.ToHashSet(StringComparer.Ordinal);
-            staleAcknowledged += acknowledgments.Count(priorAcknowledgment =>
-                !priorAcknowledgments.Contains(priorAcknowledgment));
             var entries = source.Entries.ToBuilder();
             foreach (var reclassification in alignment.GenreReclassifications.Where(item =>
                          item.SourceId == source.SourceId))
@@ -246,6 +244,26 @@ internal static class DigestionIngestor
                 {
                     if (!atomIds.Add(item.SuggestedAtomId))
                     {
+                        var matches = entries
+                            .Select((entry, index) => (Entry: entry, Index: index))
+                            .Where(match => match.Entry.AtomId == item.SuggestedAtomId)
+                            .ToArray();
+                        if (matches.Length == 1
+                            && AstPathKind(matches[0].Entry.AstPath)
+                                == AstPathKind(item.Atom.AstPath)
+                            && (stale.Contains(matches[0].Entry.AtomId)
+                                || !alignment.IsProduced(
+                                    source.SourceId,
+                                    matches[0].Entry.AstPath)))
+                        {
+                            var (entry, index) = matches[0];
+                            entries[index] = entry with { AstPath = item.Atom.AstPath };
+                            acknowledgments = acknowledgments
+                                .Where(atomId => atomId != entry.AtomId)
+                                .ToImmutableArray();
+                            continue;
+                        }
+
                         throw new FormatException(
                             $"ingest residual atom_id collides with the ledger: {item.SuggestedAtomId}");
                     }
@@ -351,6 +369,8 @@ internal static class DigestionIngestor
                 }
             }
 
+            staleAcknowledged += acknowledgments.Count(priorAcknowledgment =>
+                !priorAcknowledgments.Contains(priorAcknowledgment));
             sources.Add(resolvedSource with
             {
                 AcknowledgedStale = acknowledgments,
@@ -470,6 +490,12 @@ internal static class DigestionIngestor
 
         casObjects.Add(captured.Reference, captured);
         return captured;
+    }
+
+    private static string AstPathKind(string astPath)
+    {
+        var separator = astPath.IndexOf('/', StringComparison.Ordinal);
+        return separator < 0 ? astPath : astPath[..separator];
     }
 
     private static BackfillInventoryDocument PrepareLegacyMigrations(

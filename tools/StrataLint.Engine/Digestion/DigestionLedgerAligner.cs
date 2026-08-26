@@ -54,6 +54,7 @@ internal sealed record GenreResolutionReclassification(
 internal sealed record DigestionLedgerAlignment(
     ImmutableDictionary<string, DigestionReceiptAlignment> EntryAlignments,
     ImmutableDictionary<string, DigestionAtom> MatchedAtoms,
+    ImmutableDictionary<string, ImmutableHashSet<string>> ProducedAstPaths,
     ImmutableDictionary<string, GenreRegistryCheck> GenreRegistryChecks,
     ImmutableArray<StructuredResidualAdmission> Residual,
     ImmutableArray<GenreResolutionReclassification> GenreReclassifications,
@@ -70,6 +71,9 @@ internal sealed record DigestionLedgerAlignment(
             : throw new InvalidOperationException($"digestion alignment omitted entry {atomId}");
 
     internal DigestionAtom? AtomFor(string atomId) => MatchedAtoms.GetValueOrDefault(atomId);
+
+    internal bool IsProduced(string sourceId, string astPath) =>
+        ProducedAstPaths.TryGetValue(sourceId, out var paths) && paths.Contains(astPath);
 }
 
 internal static partial class DigestionLedgerAligner
@@ -132,6 +136,8 @@ internal static partial class DigestionLedgerAligner
         var alignments = ImmutableDictionary.CreateBuilder<string, DigestionReceiptAlignment>(
             StringComparer.Ordinal);
         var matchedAtoms = ImmutableDictionary.CreateBuilder<string, DigestionAtom>(StringComparer.Ordinal);
+        var producedAstPaths = ImmutableDictionary.CreateBuilder<string, ImmutableHashSet<string>>(
+            StringComparer.Ordinal);
         var genreRegistryChecks = ImmutableDictionary.CreateBuilder<string, GenreRegistryCheck>(
             StringComparer.Ordinal);
         var residual = ImmutableArray.CreateBuilder<StructuredResidualAdmission>();
@@ -437,6 +443,8 @@ internal static partial class DigestionLedgerAligner
                     return;
                 }
 
+                producedAstPaths[source.SourceId] = claims.Keys.ToImmutableHashSet(StringComparer.Ordinal);
+
                 foreach (var plan in atomized.ClausePlans)
                 {
                     var parent = claims[plan.ParentAstPath];
@@ -658,6 +666,7 @@ internal static partial class DigestionLedgerAligner
         return new DigestionLedgerAlignment(
             alignments.ToImmutable(),
             matchedAtoms.ToImmutable(),
+            producedAstPaths.ToImmutable(),
             genreRegistryChecks.ToImmutable(),
             residual.ToImmutable(),
             genreReclassifications.ToImmutable(),
