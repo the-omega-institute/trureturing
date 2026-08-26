@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/DagCompletion/StrongComponentQuotient
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DagCompletion/StrongComponentQuotient
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Quotienting a directed relation by mutual reachability yields a partial order of strong components. -/
@@ -47,11 +47,10 @@ def StrongComponent {V : Type u} (edge : V → V → Prop) : Type u :=
 /-- Reachability descends to strong components. -/
 def componentReachable {V : Type u} (edge : V → V → Prop) :
     StrongComponent edge → StrongComponent edge → Prop :=
-  Quotient.liftOn₂
-    (fun _ _ => Prop)
+  Quotient.lift₂
     (fun first second => Reachable edge first second)
     (by
-      intro first first' sameFirst second second' sameSecond
+      intro first second first' second' sameFirst sameSecond
       apply propext
       constructor
       · intro path
@@ -92,11 +91,11 @@ theorem componentReachable_antisymm
   intro firstVertex secondVertex firstSecond secondFirst
   exact Quotient.sound ⟨firstSecond, secondFirst⟩
 
-instance strongComponentLE {V : Type u} (edge : V → V → Prop) :
+instance strongComponentLE {V : Type u} {edge : V → V → Prop} :
     LE (StrongComponent edge) :=
   ⟨componentReachable edge⟩
 
-instance strongComponentPartialOrder {V : Type u} (edge : V → V → Prop) :
+instance strongComponentPartialOrder {V : Type u} {edge : V → V → Prop} :
     PartialOrder (StrongComponent edge) where
   le_refl := componentReachable_refl edge
   le_trans := by
@@ -110,7 +109,8 @@ instance strongComponentPartialOrder {V : Type u} (edge : V → V → Prop) :
 theorem quotient_mono
     {V : Type u} (edge : V → V → Prop)
     {first second : V} (path : Reachable edge first second) :
-    (Quotient.mk _ first : StrongComponent edge) ≤ Quotient.mk _ second :=
+    componentReachable edge
+      (Quotient.mk _ first) (Quotient.mk _ second) :=
   path
 
 /-- Strict component reachability is acyclic. -/
@@ -118,15 +118,22 @@ theorem no_strict_component_cycle
     {V : Type u} (edge : V → V → Prop)
     (component : StrongComponent edge) :
     ¬ Relation.TransGen
-        (fun first second : StrongComponent edge => first < second)
+        (fun first second : StrongComponent edge =>
+          componentReachable edge first second ∧
+            ¬ componentReachable edge second first)
         component component := by
   intro cycle
-  have selfLt : component < component := by
-    induction cycle with
-    | single step => exact step
-    | tail prefix step inductionHypothesis =>
-        exact lt_trans inductionHypothesis step
-  exact (lt_irrefl component) selfLt
+  let strictReach := fun first second : StrongComponent edge =>
+    componentReachable edge first second ∧
+      ¬ componentReachable edge second first
+  letI : IsTrans (StrongComponent edge) strictReach :=
+    ⟨fun first second third firstSecond secondThird =>
+      ⟨componentReachable_trans edge firstSecond.1 secondThird.1,
+        fun thirdFirst => firstSecond.2
+          (componentReachable_trans edge secondThird.1 thirdFirst)⟩⟩
+  have selfStrict : strictReach component component :=
+    Relation.transGen_minimal (fun _ _ step => step) cycle
+  exact selfStrict.2 selfStrict.1
 
 #print axioms componentReachable_antisymm
 #print axioms no_strict_component_cycle

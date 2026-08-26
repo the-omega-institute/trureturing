@@ -1,11 +1,12 @@
 /- GID: D5/S3/ConceptDynamics/DagSemantics/DependencyAggregate
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DagSemantics/DependencyAggregate
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Meet and join aggregates over prerequisite cones are antitone and monotone along dependency reachability. -/
 
 import Mathlib.Order.CompleteLattice.Basic
+import Mathlib.Data.Set.Lattice
 import Mathlib.Logic.Relation
 
 set_option autoImplicit false
@@ -50,9 +51,9 @@ theorem prerequisiteMeet_antitone
     {first second : V}
     (path : Relation.ReflTransGen edge first second) :
     prerequisiteMeet edge label second ≤ prerequisiteMeet edge label first := by
-  apply iInf_le
+  apply le_iInf
   intro prerequisite
-  apply iInf_le
+  apply le_iInf
   intro prerequisiteOfFirst
   exact iInf_le_of_le prerequisite
     (iInf_le_of_le (prerequisiteOfFirst.trans path) le_rfl)

@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/DagCompletion/DependencyClosedFiltration
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DagCompletion/DependencyClosedFiltration
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Dependency-closed append-only filtrations order prerequisite birth no later than dependent birth. -/
@@ -38,9 +38,8 @@ noncomputable def DependencyFiltration.birth
 def DependencyFiltration.prerequisiteNode
     {V : Type*} {edge : V → V → Prop}
     (filtration : DependencyFiltration V edge)
-    {prerequisite dependent : V}
-    (dependency : edge prerequisite dependent)
-    (dependentNode : PresentNode filtration) : PresentNode filtration := by
+    {dependentNode : PresentNode filtration} {prerequisite : V}
+    (dependency : edge prerequisite dependentNode.1) : PresentNode filtration := by
   refine ⟨prerequisite, ?_⟩
   rcases dependentNode.2 with ⟨level, dependentPresent⟩
   exact ⟨level,
@@ -50,11 +49,10 @@ def DependencyFiltration.prerequisiteNode
 theorem prerequisite_birth_le
     {V : Type*} {edge : V → V → Prop}
     (filtration : DependencyFiltration V edge)
-    {prerequisite dependent : V}
-    (dependency : edge prerequisite dependent)
-    (dependentNode : PresentNode filtration) :
+    (dependentNode : PresentNode filtration) {prerequisite : V}
+    (dependency : edge prerequisite dependentNode.1) :
     filtration.birth
-        (filtration.prerequisiteNode dependency dependentNode) ≤
+        (filtration.prerequisiteNode dependency) ≤
       filtration.birth dependentNode := by
   apply birthStage_le_of_mem
   exact filtration.prerequisiteClosed
@@ -75,18 +73,17 @@ theorem prerequisite_birth_lt
     {V : Type*} {edge : V → V → Prop}
     (filtration : DependencyFiltration V edge)
     (strictStaging : StrictlyDependencyStaged filtration)
-    {prerequisite dependent : V}
-    (dependency : edge prerequisite dependent)
-    (dependentNode : PresentNode filtration) :
+    (dependentNode : PresentNode filtration) {prerequisite : V}
+    (dependency : edge prerequisite dependentNode.1) :
     filtration.birth
-        (filtration.prerequisiteNode dependency dependentNode) <
+        (filtration.prerequisiteNode dependency) <
       filtration.birth dependentNode := by
   obtain ⟨earlier, earlierLt, prerequisitePresent⟩ :=
     strictStaging dependency
       (birthStage_mem filtration.stage dependentNode.1 dependentNode.2)
   exact lt_of_le_of_lt
     (birthStage_le_of_mem filtration.stage prerequisite
-      (filtration.prerequisiteNode dependency dependentNode).2
+      (filtration.prerequisiteNode dependency).2
       prerequisitePresent)
     earlierLt
 
@@ -97,15 +94,15 @@ theorem birth_mono_of_reachable
     {first last : PresentNode filtration}
     (path : Relation.ReflTransGen edge first.1 last.1) :
     filtration.birth first ≤ filtration.birth last := by
-  induction path with
-  | refl => exact le_rfl
-  | @tail firstValue middle lastValue prefix edgeStep inductionHypothesis =>
-      let middleNode : PresentNode filtration :=
-        filtration.prerequisiteNode edgeStep last
-      have firstBirthLeMiddle : filtration.birth first ≤ filtration.birth middleNode := by
-        exact inductionHypothesis
-      exact firstBirthLeMiddle.trans
-        (prerequisite_birth_le filtration edgeStep last)
+  apply birthStage_le_of_mem filtration.stage first.1 first.2
+  apply prerequisiteClosure_least
+    (closed := filtration.stage (filtration.birth last))
+  · intro node nodeEq
+    rw [Set.mem_singleton_iff] at nodeEq
+    subst node
+    exact birthStage_mem filtration.stage last.1 last.2
+  · exact filtration.prerequisiteClosed (filtration.birth last)
+  · exact ⟨last.1, Set.mem_singleton last.1, path⟩
 
 #print axioms prerequisite_birth_le
 #print axioms prerequisite_birth_lt

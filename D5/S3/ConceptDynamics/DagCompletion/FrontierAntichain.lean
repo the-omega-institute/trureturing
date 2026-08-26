@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/DagCompletion/FrontierAntichain
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DagCompletion/FrontierAntichain
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: An executable frontier over a predecessor-closed completed set is an antichain for strict dependency reachability. -/
@@ -26,7 +26,7 @@ theorem mem_of_transGen_to_predecessorClosed
   induction path with
   | single dependency =>
       exact closedUnderPrerequisites dependency lastIn
-  | tail prefix finalEdge inductionHypothesis =>
+  | tail _ finalEdge inductionHypothesis =>
       exact inductionHypothesis
         (closedUnderPrerequisites finalEdge lastIn)
 
@@ -55,27 +55,27 @@ theorem no_strictReachability_between_frontier_nodes
     ¬ Relation.TransGen edge first second := by
   intro path
   have firstCompleted : first ∈ completed := by
-    cases path with
-    | single dependency =>
-        exact secondFrontier.2 dependency
-    | @tail first middle second prefix finalEdge =>
-        exact mem_of_transGen_to_predecessorClosed completedClosed prefix
-          (secondFrontier.2 finalEdge)
+    obtain ⟨middle, initialPath, finalEdge⟩ :=
+      Relation.TransGen.tail'_iff.1 path
+    exact initialPath.head_induction_on
+      (secondFrontier.2 finalEdge)
+      (fun dependency _ inductionHypothesis =>
+        completedClosed dependency inductionHypothesis)
   exact Set.disjoint_left.1 disjoint firstCompleted firstFrontier.1
 
 /-- The complement frontier is a strict-reachability antichain. -/
 theorem complement_frontier_strict_antichain
     {V : Type*} {edge : V → V → Prop}
     {pending : Set V}
+    (completedClosed : PredecessorClosed edge pendingᶜ)
     {first second : V}
     (firstFrontier : first ∈ executableFrontier edge pendingᶜ pending)
     (secondFrontier : second ∈ executableFrontier edge pendingᶜ pending) :
     ¬ Relation.TransGen edge first second := by
   apply no_strictReachability_between_frontier_nodes
     (completed := pendingᶜ) (pending := pending)
-  · intro prerequisite dependent dependency dependentCompleted
-    exact fun prerequisitePending => dependentCompleted prerequisitePending
-  · exact Set.disjoint_compl_left
+  · exact completedClosed
+  · exact Set.disjoint_left.2 fun _ completed pendingMember => completed pendingMember
   · exact firstFrontier
   · exact secondFrontier
 

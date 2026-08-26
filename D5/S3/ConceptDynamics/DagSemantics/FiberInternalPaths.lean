@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/DagSemantics/FiberInternalPaths
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DagSemantics/FiberInternalPaths
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Paths whose edges stay inside readout fibers cannot change the observed coordinate. -/
@@ -31,7 +31,7 @@ theorem readout_eq_of_reachable
     readout first = readout last := by
   induction path with
   | refl => rfl
-  | tail prefix edgeStep inductionHypothesis =>
+  | tail _ edgeStep inductionHypothesis =>
       exact inductionHypothesis.trans (internal edgeStep)
 
 /-- States with different readouts cannot be connected by a fiber-internal path. -/

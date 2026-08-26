@@ -1,11 +1,11 @@
 /- GID: D5/S3/ConceptDynamics/DagCompletion/MinimalDependencySupport
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DagCompletion/MinimalDependencySupport
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: For a monotone finite support property, inclusion minimality is equivalent to failure after every single deletion. -/
 
-import Mathlib.Data.Finset.Lattice
+import Mathlib.Data.Finset.Basic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -51,9 +51,8 @@ theorem deletionMinimal_implies_inclusionMinimal
     InclusionMinimalSupport property support := by
   refine ⟨minimal.1, ?_⟩
   intro smaller properSubset smallerHasProperty
-  have existsDeleted : ∃ coordinate, coordinate ∈ support ∧ coordinate ∉ smaller := by
-    simpa only [Finset.ssubset_iff_subset_ne, Ne, not_forall,
-      not_imp_not] using properSubset
+  have existsDeleted : ∃ coordinate, coordinate ∈ support ∧ coordinate ∉ smaller :=
+    Finset.exists_of_ssubset properSubset
   obtain ⟨coordinate, coordinateInSupport, coordinateNotInSmaller⟩ := existsDeleted
   apply minimal.2 coordinate coordinateInSupport
   apply monotone ?_ smallerHasProperty

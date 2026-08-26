@@ -1,11 +1,12 @@
 /- GID: D5/S3/ConceptDynamics/DagSemantics/StrictDependencyCoordinate
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DagSemantics/StrictDependencyCoordinate
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: A strictly increasing dependency coordinate linearizes paths and forbids cycles. -/
 
 import Mathlib.Logic.Relation
+import Mathlib.Order.Defs.PartialOrder
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -28,7 +29,7 @@ theorem strict_of_transGen
     coordinate first < coordinate last := by
   induction path with
   | single edgeStep => exact strict edgeStep
-  | tail prefix edgeStep inductionHypothesis =>
+  | tail _ edgeStep inductionHypothesis =>
       exact lt_trans inductionHypothesis (strict edgeStep)
 
 /-- Reflexive-transitive dependency reachability is nondecreasing in a strict coordinate. -/
@@ -40,7 +41,7 @@ theorem monotone_of_reflTransGen
     coordinate first ≤ coordinate last := by
   induction path with
   | refl => exact le_rfl
-  | tail prefix edgeStep inductionHypothesis =>
+  | tail _ edgeStep inductionHypothesis =>
       exact le_trans inductionHypothesis (le_of_lt (strict edgeStep))
 
 /-- A strict dependency coordinate rules out every directed cycle. -/

@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/DagCompletion/ReachabilityConservativeEmbedding
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DagCompletion/ReachabilityConservativeEmbedding
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Reachability-conservative embeddings preserve and reflect prerequisite and consequence closures. -/

@@ -1,13 +1,13 @@
 /- GID: D5/S3/ConceptDynamics/DagSemantics/FiniteReadyExistence
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DagSemantics/FiniteReadyExistence
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Every nonempty finite pending set has a ready minimum under a topological linear order. -/
 
 import D5.S3.ConceptDynamics.DagSemantics.ExecutableFrontier
 import D5.S3.ConceptDynamics.DagSemantics.StrictDependencyCoordinate
-import Mathlib.Data.Finset.Order
+import Mathlib.Data.Finset.Max
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -30,12 +30,12 @@ theorem min_pending_ready_over_complement
   · intro prerequisite dependency
     have prerequisiteLt : prerequisite < pending.min' pendingNonempty := by
       simpa only [id_eq] using edgeForward dependency
-    have minimumLe : pending.min' pendingNonempty ≤ prerequisite :=
-      Finset.min'_le pending prerequisite
     by_contra prerequisiteOutside
     have prerequisiteIn : prerequisite ∈ pending := by
       simpa using prerequisiteOutside
-    exact (not_lt_of_ge (minimumLe prerequisiteIn)) prerequisiteLt
+    have minimumLe : pending.min' pendingNonempty ≤ prerequisite :=
+      Finset.min'_le pending prerequisite prerequisiteIn
+    exact (not_lt_of_ge minimumLe) prerequisiteLt
 
 /-- Consequently, the complement frontier of a nonempty finite pending set is nonempty. -/
 theorem complement_frontier_nonempty

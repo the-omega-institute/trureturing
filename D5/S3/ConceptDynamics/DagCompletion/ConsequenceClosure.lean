@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/DagCompletion/ConsequenceClosure
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DagCompletion/ConsequenceClosure
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Reachability generates the least successor-closed consequence set, dual to prerequisite closure. -/
@@ -56,7 +56,7 @@ theorem consequenceClosure_least
   rintro node ⟨source, sourceIn, path⟩
   induction path with
   | refl => exact contains sourceIn
-  | tail prefix edgeStep inductionHypothesis =>
+  | tail _ edgeStep inductionHypothesis =>
       exact closedUnderDependents edgeStep inductionHypothesis
 
 /-- Consequence closure is idempotent. -/

@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/DagSemantics/ConservativeDagEmbedding
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DagSemantics/ConservativeDagEmbedding
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Conservative DAG embeddings compose and preserve dependency reachability. -/
@@ -60,7 +60,7 @@ theorem ConservativeEmbedding.map_reachable
     Relation.ReflTransGen edgeW (embedding.toFun first) (embedding.toFun last) := by
   induction path with
   | refl => exact Relation.ReflTransGen.refl
-  | tail prefix edgeStep inductionHypothesis =>
+  | tail _ edgeStep inductionHypothesis =>
       exact inductionHypothesis.tail (embedding.map_edge edgeStep)
 
 /-- A conservative embedding maps every nonempty dependency path. -/
@@ -74,7 +74,7 @@ theorem ConservativeEmbedding.map_strictReachable
   induction path with
   | single edgeStep =>
       exact Relation.TransGen.single (embedding.map_edge edgeStep)
-  | tail prefix edgeStep inductionHypothesis =>
+  | tail _ edgeStep inductionHypothesis =>
       exact inductionHypothesis.tail (embedding.map_edge edgeStep)
 
 /-- Composition maps reachability exactly as successive mapping does. -/

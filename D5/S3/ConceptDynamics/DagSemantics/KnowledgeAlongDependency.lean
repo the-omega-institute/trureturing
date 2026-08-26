@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/DagSemantics/KnowledgeAlongDependency
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DagSemantics/KnowledgeAlongDependency
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Readout refinement along dependency paths enlarges answerability and shrinks target defects. -/
@@ -41,9 +41,9 @@ theorem refines_of_reachable
     Refines (readout first) (readout last) := by
   induction path with
   | refl => exact ⟨id, rfl⟩
-  | @tail first middle last prefix edgeStep inductionHypothesis =>
+  | tail _ edgeStep inductionHypothesis =>
       exact refinement_transitive
-        (readout first) (readout middle) (readout last)
+        _ _ _
         (edgeRefines edgeStep) inductionHypothesis
 
 /-- Every question answerable upstream remains answerable downstream. -/

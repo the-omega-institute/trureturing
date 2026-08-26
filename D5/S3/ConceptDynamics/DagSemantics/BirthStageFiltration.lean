@@ -1,11 +1,13 @@
 /- GID: D5/S3/ConceptDynamics/DagSemantics/BirthStageFiltration
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DagSemantics/BirthStageFiltration
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Every eventually present object in an append-only filtration has a unique first stage. -/
 
 import Mathlib.Data.Nat.Find
+import Mathlib.Data.Set.Lattice
+import Mathlib.Order.Monotone.Defs
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -20,22 +22,26 @@ def AppendOnly {V : Type*} (stage : Nat → Set V) : Prop :=
 noncomputable def birthStage
     {V : Type*} (stage : Nat → Set V) (node : V)
     (eventuallyPresent : ∃ level, node ∈ stage level) : Nat :=
-  Nat.find eventuallyPresent
+  by
+    classical
+    exact Nat.find eventuallyPresent
 
 /-- An object is present at its birth stage. -/
 theorem birthStage_mem
     {V : Type*} (stage : Nat → Set V) (node : V)
     (eventuallyPresent : ∃ level, node ∈ stage level) :
-    node ∈ stage (birthStage stage node eventuallyPresent) :=
-  Nat.find_spec eventuallyPresent
+    node ∈ stage (birthStage stage node eventuallyPresent) := by
+  classical
+  exact Nat.find_spec eventuallyPresent
 
 /-- Birth is no later than any stage at which the object is present. -/
 theorem birthStage_le_of_mem
     {V : Type*} (stage : Nat → Set V) (node : V)
     (eventuallyPresent : ∃ level, node ∈ stage level)
     {level : Nat} (present : node ∈ stage level) :
-    birthStage stage node eventuallyPresent ≤ level :=
-  Nat.find_min' eventuallyPresent present
+    birthStage stage node eventuallyPresent ≤ level := by
+  classical
+  exact Nat.find_min' eventuallyPresent present
 
 /-- No stage strictly before birth contains the object. -/
 theorem not_mem_before_birthStage

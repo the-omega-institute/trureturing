@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/DagSemantics/WellFoundedRecursiveClosure
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DagSemantics/WellFoundedRecursiveClosure
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Well-founded dependency equations have unique solutions, while a self-loop admits a fixed-point gap. -/
@@ -75,12 +75,12 @@ theorem selfLoop_has_fixedPoint_gap :
       first ≠ second ∧
       SatisfiesDependencyEquation selfLoop ∅ first ∧
       SatisfiesDependencyEquation selfLoop ∅ second := by
-  exact ⟨∅, Set.univ, by simp, empty_solves_selfLoop, univ_solves_selfLoop⟩
+  exact ⟨∅, Set.univ, Set.empty_ne_univ, empty_solves_selfLoop, univ_solves_selfLoop⟩
 
 /-- The self-loop relation is not well-founded. -/
 theorem selfLoop_not_wellFounded : ¬ WellFounded selfLoop := by
   exact nonunique_solution_implies_not_wellFounded
-    empty_solves_selfLoop univ_solves_selfLoop (by simp)
+    empty_solves_selfLoop univ_solves_selfLoop Set.empty_ne_univ
 
 #print axioms dependencyEquation_solution_unique
 #print axioms selfLoop_has_fixedPoint_gap

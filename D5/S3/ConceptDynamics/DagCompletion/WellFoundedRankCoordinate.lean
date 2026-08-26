@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/DagCompletion/WellFoundedRankCoordinate
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DagCompletion/WellFoundedRankCoordinate
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Every well-founded dependency relation has a canonical strict ordinal rank coordinate. -/
@@ -16,10 +16,10 @@ namespace D5.S3.ConceptDynamics.DagCompletion.WellFoundedRankCoordinate
 open D5.S3.ConceptDynamics.DagSemantics.StrictDependencyCoordinate
 
 /-- The canonical ordinal rank of a node in a well-founded relation. -/
-def dependencyRank
+noncomputable def dependencyRank
     {V : Type*} {edge : V → V → Prop}
     (wellFounded : WellFounded edge) : V → Ordinal :=
-  wellFounded.rank
+  fun node => (wellFounded.apply node).rank
 
 /-- Every dependency edge strictly increases the canonical ordinal rank. -/
 theorem dependencyRank_strict
@@ -27,7 +27,7 @@ theorem dependencyRank_strict
     (wellFounded : WellFounded edge) :
     StrictDependencyCoordinate edge (dependencyRank wellFounded) := by
   intro prerequisite dependent dependency
-  exact wellFounded.rank_lt_of_rel dependency
+  exact Acc.rank_lt_of_rel (wellFounded.apply dependent) dependency
 
 /-- Every nonempty dependency path strictly increases rank. -/
 theorem dependencyRank_strict_of_path

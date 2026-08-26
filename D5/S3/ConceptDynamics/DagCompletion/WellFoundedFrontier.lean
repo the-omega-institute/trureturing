@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/DagCompletion/WellFoundedFrontier
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DagCompletion/WellFoundedFrontier
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Every nonempty pending set has an executable node under a well-founded prerequisite relation. -/
@@ -46,13 +46,14 @@ theorem pending_empty_of_frontier_empty
     {pending : Set V}
     (frontierEmpty : executableFrontier edge pendingᶜ pending = ∅) :
     pending = ∅ := by
-  apply Set.eq_empty_iff_forall_not_mem.2
-  intro node nodeInPending
-  have pendingNonempty : pending.Nonempty := ⟨node, nodeInPending⟩
-  have frontierNonempty :=
-    complement_frontier_nonempty_of_wellFounded wellFounded pendingNonempty
-  rw [frontierEmpty] at frontierNonempty
-  exact frontierNonempty
+  apply Set.Subset.antisymm
+  · intro node nodeInPending
+    have pendingNonempty : pending.Nonempty := ⟨node, nodeInPending⟩
+    obtain ⟨frontierNode, frontierNodeIn⟩ :=
+      complement_frontier_nonempty_of_wellFounded wellFounded pendingNonempty
+    rw [frontierEmpty] at frontierNodeIn
+    exact frontierNodeIn
+  · exact Set.empty_subset pending
 
 /-- A dependency deadlock in a nonempty pending set certifies non-well-foundedness. -/
 theorem deadlock_implies_not_wellFounded
@@ -61,10 +62,10 @@ theorem deadlock_implies_not_wellFounded
     (frontierEmpty : executableFrontier edge pendingᶜ pending = ∅) :
     ¬ WellFounded edge := by
   intro wellFounded
-  have frontierNonempty :=
+  obtain ⟨frontierNode, frontierNodeIn⟩ :=
     complement_frontier_nonempty_of_wellFounded wellFounded pendingNonempty
-  rw [frontierEmpty] at frontierNonempty
-  exact frontierNonempty
+  rw [frontierEmpty] at frontierNodeIn
+  exact frontierNodeIn
 
 #print axioms complement_frontier_nonempty_of_wellFounded
 #print axioms deadlock_implies_not_wellFounded

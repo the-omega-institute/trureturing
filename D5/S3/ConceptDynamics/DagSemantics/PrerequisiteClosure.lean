@@ -1,11 +1,12 @@
 /- GID: D5/S3/ConceptDynamics/DagSemantics/PrerequisiteClosure
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DagSemantics/PrerequisiteClosure
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Reachability generates the least predecessor-closed set containing a target set. -/
 
 import Mathlib.Logic.Relation
+import Mathlib.Data.Set.Lattice
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -57,15 +58,10 @@ theorem prerequisiteClosure_least
     (closedUnderPrerequisites : PredecessorClosed edge closed) :
     prerequisiteClosure edge targets ⊆ closed := by
   rintro node ⟨target, targetIn, path⟩
-  revert targetIn
-  induction path with
-  | refl =>
-      intro targetIn
-      exact contains targetIn
-  | @tail first middle last prefix finalEdge inductionHypothesis =>
-      intro lastIn
-      exact inductionHypothesis
-        (closedUnderPrerequisites finalEdge lastIn)
+  exact path.head_induction_on
+    (contains targetIn)
+    (fun dependency _ inductionHypothesis =>
+      closedUnderPrerequisites dependency inductionHypothesis)
 
 /-- Applying prerequisite closure twice changes nothing. -/
 theorem prerequisiteClosure_idempotent

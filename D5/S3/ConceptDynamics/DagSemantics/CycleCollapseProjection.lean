@@ -1,11 +1,12 @@
 /- GID: D5/S3/ConceptDynamics/DagSemantics/CycleCollapseProjection
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DagSemantics/CycleCollapseProjection
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Cyclic realization paths collapse to one logical node under an antisymmetric monotone projection. -/
 
 import Mathlib.Logic.Relation
+import Mathlib.Order.Defs.PartialOrder
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -34,7 +35,7 @@ theorem projected_reachable
     logicalOrder (projection first) (projection last) := by
   induction path with
   | refl => exact refl _
-  | tail prefix edgeStep inductionHypothesis =>
+  | tail _ edgeStep inductionHypothesis =>
       exact IsTrans.trans _ _ _ inductionHypothesis (edgeMonotone edgeStep)
 
 /-- Mutual realization reachability projects to equality in an antisymmetric logical order. -/

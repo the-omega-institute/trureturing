@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/DagCompletion/DependencyAggregateRecursion
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DagCompletion/DependencyAggregateRecursion
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Global prerequisite meet and join aggregates satisfy exact local predecessor recursion laws. -/
@@ -27,14 +27,18 @@ theorem prerequisiteJoin_recursion
     intro ancestor
     apply iSup_le
     intro path
-    cases path with
-    | refl => exact le_sup_left
-    | @tail first predecessor last prefix finalEdge =>
-        exact le_trans
-          (le_iSup_of_le first (le_iSup_of_le prefix le_rfl))
-          (le_sup_of_le_right
+    rcases path.cases_tail with nodeEq | ⟨predecessor, initialPath, finalEdge⟩
+    · subst ancestor
+      exact le_sup_left
+    · exact calc
+        label ancestor ≤ prerequisiteJoin edge label predecessor :=
+          le_iSup_of_le ancestor (le_iSup_of_le initialPath le_rfl)
+        _ ≤ label node ⊔
+              ⨆ predecessor, ⨆ (_ : edge predecessor node),
+                prerequisiteJoin edge label predecessor :=
+          le_sup_of_le_right
             (le_iSup_of_le predecessor
-              (le_iSup_of_le finalEdge le_rfl)))
+              (le_iSup_of_le finalEdge le_rfl))
   · apply sup_le
     · exact self_le_prerequisiteJoin edge label node
     · apply iSup_le
@@ -65,21 +69,19 @@ theorem prerequisiteMeet_recursion
     intro ancestor
     apply le_iInf
     intro path
-    cases path with
-    | refl => exact inf_le_left
-    | @tail first predecessor last prefix finalEdge =>
-        exact le_trans
-          (inf_le_right :
-            label node ⊓
-                (⨅ predecessor, ⨅ (_ : edge predecessor node),
-                  prerequisiteMeet edge label predecessor) ≤
+    rcases path.cases_tail with nodeEq | ⟨predecessor, initialPath, finalEdge⟩
+    · subst ancestor
+      exact inf_le_left
+    · exact calc
+        label node ⊓
               (⨅ predecessor, ⨅ (_ : edge predecessor node),
-                prerequisiteMeet edge label predecessor))
-          (le_trans
-            (iInf_le predecessor)
-            (le_trans
-              (iInf_le_of_le finalEdge le_rfl)
-              (iInf_le_of_le first (iInf_le_of_le prefix le_rfl))))
+                prerequisiteMeet edge label predecessor) ≤
+            (⨅ predecessor, ⨅ (_ : edge predecessor node),
+              prerequisiteMeet edge label predecessor) := inf_le_right
+        _ ≤ prerequisiteMeet edge label predecessor :=
+          iInf_le_of_le predecessor (iInf_le_of_le finalEdge le_rfl)
+        _ ≤ label ancestor :=
+          iInf_le_of_le ancestor (iInf_le_of_le initialPath le_rfl)
 
 /-- Pointwise larger local labels produce larger prerequisite joins. -/
 theorem prerequisiteJoin_mono_label

@@ -1,6 +1,6 @@
 /- GID: D5/S3/ConceptDynamics/DagCompletion/ReachabilityProjectionInvariance
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/ConceptDynamics/DagCompletion/ReachabilityProjectionInvariance
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Prerequisite and consequence closures depend only on reachability, not the chosen direct-edge presentation. -/
@@ -79,12 +79,12 @@ theorem sameReachability_insert_redundant
   · intro path
     induction path with
     | refl => exact Relation.ReflTransGen.refl
-    | tail prefix edgeStep inductionHypothesis =>
+    | tail _ edgeStep inductionHypothesis =>
         exact inductionHypothesis.tail (Or.inl edgeStep)
   · intro path
     induction path with
     | refl => exact Relation.ReflTransGen.refl
-    | tail prefix edgeStep inductionHypothesis =>
+    | tail _ edgeStep inductionHypothesis =>
         rcases edgeStep with originalEdge | ⟨firstEq, secondEq⟩
         · exact inductionHypothesis.tail originalEdge
         · subst firstEq
