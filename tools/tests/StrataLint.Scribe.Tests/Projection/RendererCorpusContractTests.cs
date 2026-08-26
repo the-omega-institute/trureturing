@@ -9,7 +9,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed partial class FormulaCorpusInventoryTests
 {
     private const string CanonicalRendererSha256 =
-        "a0b1de75daaffa6a8ae71995885744e1be013bbd0696fd02359870623c27b400";
+        "41ce717abc2f85d0199851522063211fb581d07d7672e0b99b54dfd17790e625";
     private const string UpdateCommand = "make -C tools update-renderer-contract";
 
     [Fact]
@@ -424,6 +424,8 @@ public sealed partial class FormulaCorpusInventoryTests
             word,
             new Formula.LatexMacro(FormulaLatexMacro.Phi)));
         formulas.Add(new Formula.Subscript(word, sequence));
+        // 仓库实际使用:ℝ_{≥0} 之类「序列底、序列标」的下标(EscapeSpectrum 预算包络)。
+        formulas.Add(new Formula.Subscript(sequence, sequence));
         formulas.Add(new Formula.Subscript(
             word,
             new Formula.LatexSymbol(FormulaLatexSymbol.Plus)));
