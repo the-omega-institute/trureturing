@@ -221,7 +221,8 @@ theorem positive_fiber_diameter_is_not_approximately_closed :
 /-- Boundary control for conjunct 2: every allowed finite tolerance excludes top,
 while the rejected extended tolerance domain contains top itself. -/
 theorem finite_precision_excludes_top :
-    (∀ precision : NNReal, (precision : ENNReal) ≠ ⊤) ∧
+    (∀ parameters : LocalParameters Unit Unit,
+      (parameters.precision : ENNReal) ≠ ⊤) ∧
       ¬(∀ precision : ENNReal, precision ≠ ⊤) := by
   refine ⟨fun _ => ENNReal.coe_ne_top, ?_⟩
   intro everyExtendedPrecisionIsFinite
@@ -298,6 +299,34 @@ theorem changed_target_creates_genuine_reopening :
       have := congrFun equalTargets true
       norm_num at this
     · exact ⟨(false, true), by simp [defectRelation]⟩
+
+private abbrev ObjectDomainExpansionReopeningControl : Prop :=
+    let target : Concept Bool Real := fun value => if value then 1 else 0
+    let current : LocalParameters Bool Real :=
+      { objectDomain := {false}
+        target := target
+        precision := 0 }
+    let next : LocalParameters Bool Real :=
+      { objectDomain := Set.univ
+        target := target
+        precision := 0 }
+    current.target = next.target ∧
+      current.precision = next.precision ∧
+      current.objectDomain ⊂ next.objectDomain ∧
+      Reopens current next (fun _ => ())
+
+/-- Object-domain-only reopening control: the target and precision stay fixed,
+while expanding the Boolean domain from one point to both points admits a new
+canonical defect pair. -/
+theorem object_domain_expansion_creates_genuine_reopening :
+    ObjectDomainExpansionReopeningControl := by
+  have domainStrict : ({false} : Set Bool) ⊂ Set.univ :=
+    Set.ssubset_iff_exists.mpr
+      ⟨Set.subset_univ _, true, Set.mem_univ true, by simp⟩
+  refine ⟨rfl, rfl, domainStrict, ?_⟩
+  constructor
+  · exact Or.inl domainStrict.ne
+  · exact ⟨(false, true), by simp [defectRelation]⟩
 
 private abbrev NonconstantReadoutFiberGuardControl : Prop :=
     let current : LocalParameters Bool Real :=
@@ -379,10 +408,9 @@ theorem precision_change_without_new_defect_does_not_reopen :
     fin_cases first <;> fin_cases second <;>
       norm_num [defectRelation] at newResidual
 
-/-- Five concrete finite witnesses, in the source package's clause order. Unlike
-the module's mutation controls, every conjunct here instantiates one of the five
-formalized source assertions and remains meaningful independently of its theorem
-name. -/
+/-- Five concrete finite witnesses, in the source package's clause order. The
+reopening witness changes only the object domain, so that supported trigger is
+exercised independently of target and precision changes. -/
 theorem stopping_continuation_reopening_nonvacuity :
     (¬Closed (fun _ : Bool => ()) (id : Concept Bool Bool)) ∧
     (¬ApproximatelyClosed (fun _ : Bool => ())
@@ -393,24 +421,27 @@ theorem stopping_continuation_reopening_nonvacuity :
         target := fun value => if value then 1 else 0
         precision := 0 }
      ¬LocallyComplete parameters (fun _ => ())) ∧
-    (let current : LocalParameters Bool Real :=
-      { objectDomain := Set.univ
-        target := fun _ => 0
+    (let target : Concept Bool Real := fun value => if value then 1 else 0
+     let current : LocalParameters Bool Real :=
+      { objectDomain := {false}
+        target := target
         precision := 0 }
      let next : LocalParameters Bool Real :=
       { objectDomain := Set.univ
-        target := fun value => if value then 1 else 0
+        target := target
         precision := 0 }
-     Closed (fun _object : ↑current.objectDomain => ())
-         (fun object : ↑current.objectDomain => current.target object.1) ∧
+     current.target = next.target ∧
+       current.precision = next.precision ∧
+       current.objectDomain ⊂ next.objectDomain ∧
        Reopens current next (fun _ => ())) := by
   exact ⟨hidden_bool_target_is_not_closed,
     positive_fiber_diameter_is_not_approximately_closed,
     proposal_return_is_not_method_stopped,
     zero_precision_nonconstant_fiber_is_not_locally_complete,
-    changed_target_creates_genuine_reopening⟩
+    object_domain_expansion_creates_genuine_reopening⟩
 
 #print axioms stopping_continuation_reopening
 #print axioms stopping_continuation_reopening_nonvacuity
+#print axioms object_domain_expansion_creates_genuine_reopening
 
 end D5.S3.ConceptDynamics.Termination.StoppingContinuationReopening
