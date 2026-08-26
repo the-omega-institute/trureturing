@@ -1,3 +1,5 @@
+using StrataLint.Tests;
+
 namespace StrataLint.ArchitectureTests;
 
 public sealed class BannedApiCoverageTests
@@ -41,19 +43,18 @@ public sealed class BannedApiCoverageTests
     [Fact]
     public void DeterminismBanIsAttachedToEveryVerdictProject()
     {
-        var root = RepositoryLayout.FindRoot();
         var projects = new[]
         {
-            "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
-            "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
-            "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+            TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+                "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj")),
+            TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+                "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj")),
+            TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+                "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj")),
         };
 
-        Assert.All(projects, relativePath =>
+        Assert.All(projects, project =>
         {
-            var project = File.ReadAllText(Path.Combine(
-                root,
-                relativePath.Replace('/', Path.DirectorySeparatorChar)));
             Assert.Contains(
                 "Microsoft.CodeAnalysis.BannedApiAnalyzers",
                 project,
@@ -84,9 +85,8 @@ public sealed class BannedApiCoverageTests
     [Fact]
     public void PreflightComparesEveryMarkedLineWithAnRs0030Diagnostic()
     {
-        var path = Path.Combine(
-            RepositoryLayout.FindRoot(), "tools", "scripts", "preflight.sh");
-        var preflight = File.ReadAllText(path);
+        var preflight = TestRepositoryLayout.ReadAllText(
+            RepositoryRelativePath.Create("tools/scripts/preflight.sh"));
 
         Assert.Contains("expected_lines+=(\"$line\")", preflight, StringComparison.Ordinal);
         Assert.Contains("actual_lines+=(\"$line\")", preflight, StringComparison.Ordinal);

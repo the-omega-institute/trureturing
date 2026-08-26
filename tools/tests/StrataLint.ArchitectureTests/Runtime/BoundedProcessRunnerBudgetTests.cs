@@ -36,7 +36,9 @@ public sealed class BoundedProcessRunnerBudgetTests
         var sources = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
             .Where(static file => file.RelativePath.StartsWith("tools/tests/", StringComparison.Ordinal)
                 && file.RelativePath.EndsWith(".cs", StringComparison.Ordinal))
-            .Select(file => (file.RelativePath, Content: File.ReadAllText(file.FullPath)))
+            .Select(file => (
+                file.RelativePath,
+                Content: string.Join('\n', File.ReadLines(file.FullPath))))
             .ToArray();
         var utcNow = sources
             .SelectMany(source => Enumerable.Repeat(
