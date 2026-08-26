@@ -216,6 +216,73 @@ public sealed class GenericAtomizerTests
     }
 
     [Fact]
+    public void AClaimIncludesItsDisplayedConclusionUntilTheNextClaimOrPeerHeading()
+    {
+        const string firstClaim =
+            "## 定理 1.1（合成展示结论）\n\n"
+            + "设最大纤维大小如下：\n\n"
+            + "$$\n"
+            + "\\boxed{\n"
+            + "m_U\n"
+            + "===\n\n"
+            + "\\max_{y \\in Y}|U^{-1}(y)|\n"
+            + "}\n"
+            + "$$\n\n"
+            + "### 下界\n\n"
+            + "每个纤维中的状态需要不同标签。\n\n";
+        var document = Atomize(
+            firstClaim
+            + "## 引理 1.2（下一条）\n\n"
+            + "这是独立的下一条 claim。\n");
+
+        Assert.Equal(["定理/1.1", "引理/1.2"], Paths(document));
+        Assert.Equal(
+            firstClaim,
+            Encoding.UTF8.GetString(document.ResolveClaim("定理/1.1").RawBytes.AsSpan()));
+    }
+
+    [Fact]
+    public void ALegacyBracketDisplayIsOpaqueToClaimDiscovery()
+    {
+        const string firstClaim =
+            "## 定理 1.3（旧式展示分隔符）\n\n"
+            + "定义如下：\n\n"
+            + "[\n"
+            + "\\boxed{\n"
+            + "m_U\n"
+            + "===\n\n"
+            + "\\max_{y \\in Y}|U^{-1}(y)|\n"
+            + "}\n"
+            + "]\n\n";
+        var document = Atomize(
+            firstClaim
+            + "## 推论 1.4（下一条）\n\n"
+            + "这是独立的下一条 claim。\n");
+
+        Assert.Equal(["定理/1.3", "推论/1.4"], Paths(document));
+        Assert.Equal(
+            firstClaim,
+            Encoding.UTF8.GetString(document.ResolveClaim("定理/1.3").RawBytes.AsSpan()));
+    }
+
+    [Fact]
+    public void AdjacentClaimsRemainSeparateEvenWhenTheSecondClaimUsesADeeperHeading()
+    {
+        const string firstClaim = "## 定理 2.1（第一条）\n\n第一条正文。\n\n";
+        const string secondClaim = "### 引理 2.2（第二条）\n\n第二条正文。\n";
+
+        var document = Atomize(firstClaim + secondClaim);
+
+        Assert.Equal(["定理/2.1", "引理/2.2"], Paths(document));
+        Assert.Equal(
+            firstClaim,
+            Encoding.UTF8.GetString(document.ResolveClaim("定理/2.1").RawBytes.AsSpan()));
+        Assert.Equal(
+            secondClaim,
+            Encoding.UTF8.GetString(document.ResolveClaim("引理/2.2").RawBytes.AsSpan()));
+    }
+
+    [Fact]
     public void TheDefaultAtomizerIsRegisteredAndCarriesItsOwnResidualStem()
     {
         Assert.Contains(AtomizerRegistry.GenericId, AtomizerRegistry.RegisteredIds);
