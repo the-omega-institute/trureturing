@@ -106,7 +106,7 @@ internal sealed class SelfFormationFreeWillBoundaryDocument
             FormulaQuantifier.ForAll,
             FormulaIdentifier.Create("h"),
             history,
-            Call("Set.Nonempty", Apply(future, point)));
+            Call("Nonempty", Apply(future, point)));
     }
 
     private static Formula TotalFutureFormula()
