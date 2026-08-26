@@ -2,9 +2,12 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
-NAME="${1:-}"
-TARGET="${2:-}"
-BASE="${3:-origin/dev}"
+KIND="${1:-}"
+NAME="${2:-}"
+TARGET="${3:-}"
+BASE="${4:-origin/dev}"
+
+BRANCH="harness/$KIND/$NAME"
 
 cd "$ROOT"
 exec dotnet run \
@@ -12,6 +15,6 @@ exec dotnet run \
   --configuration Release \
   -- \
   worktree \
-  --branch "harness/$NAME" \
+  --branch "$BRANCH" \
   --path "$TARGET" \
   --base "$BASE"
