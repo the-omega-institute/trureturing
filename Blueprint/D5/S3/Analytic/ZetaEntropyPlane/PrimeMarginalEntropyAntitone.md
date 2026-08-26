@@ -18,7 +18,7 @@ The named function hGeom is minus log of one minus the ratio, minus the ratio od
 
 **Theorem 1.2 (The totalized endpoint values are both zero).**
 
-Lean statement: `D5/S3/Analytic/ZetaEntropyPlane/PrimeMarginalEntropyAntitone.hGeom_endpoint_values`
+$$hGeom\left(0\right) = 0 \land hGeom\left(1\right) = 0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/ZetaEntropyPlane/PrimeMarginalEntropyAntitone.hGeom_endpoint_values` (`✓ std3`). ∎
 
@@ -30,7 +30,7 @@ Lean's real logarithm and division are totalized. Direct substitution therefore 
 
 **Theorem 1.3 (Geometric entropy strictly increases inside the unit interval).**
 
-Lean statement: `D5/S3/Analytic/ZetaEntropyPlane/PrimeMarginalEntropyAntitone.hGeom_strictMonoOn`
+$$StrictMonoOn\left(hGeom, Ioo\left(0, 1\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/ZetaEntropyPlane/PrimeMarginalEntropyAntitone.hGeom_strictMonoOn` (`✓ std3`). ∎
 
@@ -42,7 +42,7 @@ On ratios strictly between zero and one, differentiation gives minus log of the 
 
 **Theorem 1.4 (The lower endpoint may be included).**
 
-Lean statement: `D5/S3/Analytic/ZetaEntropyPlane/PrimeMarginalEntropyAntitone.hGeom_strictMonoOn_Ico`
+$$StrictMonoOn\left(hGeom, Ico\left(0, 1\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/ZetaEntropyPlane/PrimeMarginalEntropyAntitone.hGeom_strictMonoOn_Ico` (`✓ std3`). ∎
 
@@ -54,7 +54,7 @@ Strict increase extends to the half-open interval containing zero. The endpoint 
 
 **Theorem 1.5 (The upper endpoint must remain excluded).**
 
-Lean statement: `D5/S3/Analytic/ZetaEntropyPlane/PrimeMarginalEntropyAntitone.upper_endpoint_is_necessary`
+$$\neg StrictMonoOn\left(hGeom, Ioc\left(0, 1\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/ZetaEntropyPlane/PrimeMarginalEntropyAntitone.upper_endpoint_is_necessary` (`✓ std3`). ∎
 
@@ -66,7 +66,7 @@ Including ratio one contradicts strict increase under totalization: the interior
 
 **Theorem 1.6 (A positive negative-power exponent reverses prime order).**
 
-Lean statement: `D5/S3/Analytic/ZetaEntropyPlane/PrimeMarginalEntropyAntitone.prime_rpow_lt_of_lt`
+$$\forall s \in \mathbb{R}, p \in \operatorname{Primes}, r \in \operatorname{Primes},\; \left(0 < s \land p < r\right) \Rightarrow r^{-s} < p^{-s}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/ZetaEntropyPlane/PrimeMarginalEntropyAntitone.prime_rpow_lt_of_lt` (`✓ std3`). ∎
 
@@ -78,7 +78,7 @@ For any positive real exponent, a strict increase in prime value gives a strict 
 
 **Theorem 1.7 (Exponent positivity is necessary).**
 
-Lean statement: `D5/S3/Analytic/ZetaEntropyPlane/PrimeMarginalEntropyAntitone.positive_exponent_is_necessary`
+$$2 < 3 \land \left(\neg 3^{-0} < 2^{-0}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/ZetaEntropyPlane/PrimeMarginalEntropyAntitone.positive_exponent_is_necessary` (`✓ std3`). ∎
 
@@ -90,7 +90,7 @@ At exponent zero, the ordered primes two and three both have weight one. Their s
 
 **Theorem 1.8 (The two-three weight order remains strict at exponent one).**
 
-Lean statement: `D5/S3/Analytic/ZetaEntropyPlane/PrimeMarginalEntropyAntitone.two_three_rpow_at_one`
+$$3^{-1} < 2^{-1}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/ZetaEntropyPlane/PrimeMarginalEntropyAntitone.two_three_rpow_at_one` (`✓ std3`). ∎
 
@@ -102,7 +102,7 @@ For the smallest ordered prime pair, three to the power minus one is strictly sm
 
 **Theorem 1.9 (Prime-exponent entropy is hGeom at the prime ratio).**
 
-Lean statement: `D5/S3/Analytic/ZetaEntropyPlane/PrimeMarginalEntropyAntitone.primeExponent_entropy_eq_hGeom`
+$$\forall s \in \mathbb{R}, p \in \operatorname{Primes},\; 1 < s \Rightarrow countableEntropy\left(primeExponentPMF\left(s, p\right)\right) = hGeom\left(p^{-s}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/ZetaEntropyPlane/PrimeMarginalEntropyAntitone.primeExponent_entropy_eq_hGeom` (`✓ std3`). ∎
 
@@ -114,7 +114,7 @@ The existing closed form for the complete prime-exponent marginal is rewritten e
 
 **Theorem 1.10 (Complete exponent entropy strictly decreases with the prime).**
 
-Lean statement: `D5/S3/Analytic/ZetaEntropyPlane/PrimeMarginalEntropyAntitone.primeExponent_entropy_strictAntitone`
+$$\forall s \in \mathbb{R}, p \in \operatorname{Primes}, r \in \operatorname{Primes},\; \left(1 < s \land p < r\right) \Rightarrow countableEntropy\left(primeExponentPMF\left(s, r\right)\right) < countableEntropy\left(primeExponentPMF\left(s, p\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/ZetaEntropyPlane/PrimeMarginalEntropyAntitone.primeExponent_entropy_strictAntitone` (`✓ std3`). ∎
 
@@ -126,7 +126,7 @@ Above inverse temperature one, ordered primes give oppositely ordered ratios ins
 
 **Theorem 1.11 (Strict prime order is necessary).**
 
-Lean statement: `D5/S3/Analytic/ZetaEntropyPlane/PrimeMarginalEntropyAntitone.strict_prime_order_is_necessary`
+$$\left(\neg 2^{-2} < 2^{-2}\right) \land \left(\neg countableEntropy\left(primeExponentPMF\left(2, 2\right)\right) < countableEntropy\left(primeExponentPMF\left(2, 2\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/ZetaEntropyPlane/PrimeMarginalEntropyAntitone.strict_prime_order_is_necessary` (`✓ std3`). ∎
 
@@ -138,7 +138,7 @@ Using prime two on both sides makes both the negative-power comparison and the c
 
 **Theorem 1.12 (Prime three has less exponent entropy than prime two).**
 
-Lean statement: `D5/S3/Analytic/ZetaEntropyPlane/PrimeMarginalEntropyAntitone.two_three_entropy_strict`
+$$\forall s \in \mathbb{R},\; 1 < s \Rightarrow countableEntropy\left(primeExponentPMF\left(s, 3\right)\right) < countableEntropy\left(primeExponentPMF\left(s, 2\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/ZetaEntropyPlane/PrimeMarginalEntropyAntitone.two_three_entropy_strict` (`✓ std3`). ∎
 
