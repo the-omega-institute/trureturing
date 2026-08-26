@@ -1,0 +1,40 @@
+**证明义务 56.3-B（修订后的第 10 条后半）。** 机器核验该具体有限实例满足
+
+\[
+\boxed{
+\begin{aligned}
+&\operatorname{NoDominatingCandidate}(v_2,D_2)
+\\
+&\quad\wedge\
+\operatorname{AdjudicationStopTargetOnDecisionSet}
+(\operatorname{AdmTarget}_2,\operatorname{InScope}_2,O_{\mathrm{stay}},D_2)
+\\
+&\quad\wedge\
+\neg
+\operatorname{AdjudicationStopTargetOnDecisionSet}
+(\operatorname{AdmTarget}_2,\operatorname{InScope}_2,O_{\mathrm{advance}},D_2).
+\end{aligned}
+}
+\]
+
+特别地，
+
+\[
+\boxed{
+\neg\Bigl(
+\operatorname{NoDominatingCandidate}(v_2,D_2)
+\to
+\operatorname{AdjudicationStopTargetOnDecisionSet}
+(\operatorname{AdmTarget}_2,\operatorname{InScope}_2,O_{\mathrm{advance}},D_2)
+\Bigr).
+}
+\]
+
+这就是“不提供有来源的权重或其他完整
+`OrientationSpec`
+定向时，
+`NoDominatingCandidate`
+不能推出 Stop”的可证命题：同一非空决策集、同一公共绝对坐标与同一 Pareto 前沿，在两个完整外生规范下得到不同停止真值。结论不声称停止永远不可得；它只证明 Pareto 前沿本身不包含 Stop 所需的来源化定向。
+
+### 56.3.4 停止分量的纯输入守恒
+

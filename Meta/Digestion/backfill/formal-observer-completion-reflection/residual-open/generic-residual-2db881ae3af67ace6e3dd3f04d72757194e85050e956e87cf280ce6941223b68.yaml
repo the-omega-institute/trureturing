@@ -1,0 +1,10 @@
+ast_path: section/119-跨素数相关扇区的精确正交分解
+fingerprints:
+  raw_sha256: sha256:2db881ae3af67ace6e3dd3f04d72757194e85050e956e87cf280ce6941223b68
+  normalized_sha256: sha256:2db881ae3af67ace6e3dd3f04d72757194e85050e956e87cf280ce6941223b68
+cas_ref: sha256:2db881ae3af67ace6e3dd3f04d72757194e85050e956e87cf280ce6941223b68
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

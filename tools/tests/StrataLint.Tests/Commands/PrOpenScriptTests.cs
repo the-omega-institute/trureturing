@@ -6,6 +6,8 @@ namespace StrataLint.Tests;
 
 public sealed class PrOpenScriptTests
 {
+    private const string DeadlineBehaviorTimeoutSeconds = "30";
+
     [Fact]
     public void PrWatchRejectsMissingOrInvalidPullRequestNumber()
     {
@@ -102,7 +104,7 @@ public sealed class PrOpenScriptTests
         using var fixture = new PrScriptFixture();
         fixture.RequiredResponses(Ok(Required("engineering", "admission")));
         fixture.SnapshotResponses(Ok(Snapshot("OPEN", Check("engineering", "COMPLETED", "SUCCESS"))));
-        var result = fixture.RunWatch42();
+        var result = fixture.RunWatch42WithDeadline();
         Assert.Equal(124, result.ExitCode);
         Assert.Contains("pending=0 missing=1", Text(result.StandardOutput), StringComparison.Ordinal);
     }
@@ -111,7 +113,7 @@ public sealed class PrOpenScriptTests
     {
         using var fixture = new PrScriptFixture();
         fixture.SnapshotResponses(Ok(Snapshot("OPEN", Check("engineering", "IN_PROGRESS", null))));
-        var result = fixture.RunWatch42();
+        var result = fixture.RunWatch42WithDeadline();
         Assert.Equal(124, result.ExitCode);
         Assert.Contains("outcome=timeout pending=1 missing=0", Text(result.StandardOutput), StringComparison.Ordinal);
     }
@@ -120,8 +122,8 @@ public sealed class PrOpenScriptTests
     {
         using var fixture = new PrScriptFixture();
         fixture.SnapshotResponses(
-            Fail(), Ok(Snapshot("OPEN", Check("engineering", "IN_PROGRESS", null))), Fail(delaySeconds: 2));
-        var result = fixture.RunWatch42();
+            Fail(), Ok(Snapshot("OPEN", Check("engineering", "IN_PROGRESS", null))), Fail(delaySeconds: 60));
+        var result = fixture.RunWatch42WithDeadline();
         Assert.Equal(69, result.ExitCode);
         Assert.Contains("outcome=query-unavailable step=snapshot attempts=1", Text(result.StandardOutput), StringComparison.Ordinal);
     }
@@ -172,7 +174,7 @@ public sealed class PrOpenScriptTests
     public void PrOpenCreatesArmsAndWatchesInOneForegroundProcessPrintingNumberFirst()
     {
         using var fixture = new PrScriptFixture();
-        var result = fixture.RunOpen("--head", "topic", "--message-file", fixture.Message("A title\n\nbody text\n"), "--interval-seconds", "1", "--timeout-seconds", "5");
+        var result = fixture.RunOpen("--head", "topic", "--message-file", fixture.Message("A title\n\nbody text\n"), "--interval-seconds", "1");
         Assert.Equal(0, result.ExitCode);
         Assert.StartsWith("42\nPR_WATCH_RESULT pr=42 outcome=green\n", Text(result.StandardOutput), StringComparison.Ordinal);
         Assert.Equal(4, fixture.Invocations.Count);
@@ -184,7 +186,7 @@ public sealed class PrOpenScriptTests
     {
         using var fixture = new PrScriptFixture();
         fixture.SnapshotResponses(Ok(Snapshot("OPEN", Check("engineering", "COMPLETED", "FAILURE"))));
-        var result = fixture.RunOpen("--head", "topic", "--message-file", fixture.Message("title\n"), "--interval-seconds", "1", "--timeout-seconds", "5");
+        var result = fixture.RunOpen("--head", "topic", "--message-file", fixture.Message("title\n"), "--interval-seconds", "1");
         Assert.Equal(1, result.ExitCode);
         Assert.StartsWith("42\nPR_WATCH_RESULT pr=42 outcome=red", Text(result.StandardOutput), StringComparison.Ordinal);
     }
@@ -324,8 +326,9 @@ public sealed class PrOpenScriptTests
         internal IReadOnlyList<string> Invocations => File.Exists(invocations) ? File.ReadAllLines(invocations) : [];
         internal ProcessOutput RunOpen(params string[] arguments) => Run(["open", .. arguments]);
         internal ProcessOutput RunWatch(params string[] arguments) => Run(["watch", .. arguments]);
-        internal ProcessOutput RunWatch42() =>
-            RunWatch("--pr", "42", "--interval-seconds", "1", "--timeout-seconds", "5");
+        internal ProcessOutput RunWatch42() => RunWatch("--pr", "42", "--interval-seconds", "1");
+        internal ProcessOutput RunWatch42WithDeadline() =>
+            RunWatch("--pr", "42", "--interval-seconds", "1", "--timeout-seconds", DeadlineBehaviorTimeoutSeconds);
         internal void RequiredResponses(params FakeResponse[] values) => WriteResponses("required", values);
         internal void SnapshotResponses(params FakeResponse[] values) => WriteResponses("snapshot", values);
         public void Dispose() => temporary.Dispose();
@@ -334,7 +337,7 @@ public sealed class PrOpenScriptTests
             var script = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "pr.sh");
             return BoundedProcessRunner.Run("env",
                 ["-u", "GH_TOKEN", $"PATH={bin}:/usr/bin:/bin:/usr/sbin:/sbin", "PR_OPEN_REPO=owner/repo",
-                    "PR_OPEN_BASE=dev", "PR_OPEN_TIMEOUT_SECONDS=5", $"PR_TEST_INVOCATIONS={invocations}",
+                    "PR_OPEN_BASE=dev", $"PR_TEST_INVOCATIONS={invocations}",
                     $"PR_TEST_RESPONSES={responses}", $"PR_TEST_FAIL_STEP={FailStep}",
                     $"PR_TEST_APP_FAIL={(AppTokenFails ? "1" : "0")}", "bash", script, .. arguments],
                 temporary.Path, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);

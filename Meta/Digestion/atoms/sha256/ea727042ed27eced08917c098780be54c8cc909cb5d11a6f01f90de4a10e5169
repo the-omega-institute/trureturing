@@ -1,0 +1,66 @@
+### 56.3.2 有限停止检查器
+
+进一步假设下列三个谓词在固定 \(O\) 上可判：
+
+\[
+\begin{aligned}
+&\forall a,\quad
+\operatorname{Decidable}
+\bigl(a\in\operatorname{AdmTarget}(O.\operatorname{goal})\bigr),\\
+&\forall a,\quad
+\operatorname{Decidable}
+\bigl(\operatorname{InScope}(O.\operatorname{scope},a)\bigr),\\
+&\forall a,b,\quad
+\operatorname{Decidable}
+\bigl(O.\operatorname{relation}(a,b)\bigr).
+\end{aligned}
+\]
+
+定义布尔有限扫描器
+\(\operatorname{stopCheck}\)：
+
+\[
+\boxed{
+\operatorname{stopCheck}
+(\operatorname{AdmTarget},\operatorname{InScope},O,D)
+:=
+\begin{cases}
+\mathsf{false},
+&D.\operatorname{current}=\operatorname{none},\\
+\mathsf{false},
+&D.\operatorname{current}=\operatorname{some}(a_{\mathrm{cur}})
+\text{ 且 }a_{\mathrm{cur}}\notin D.\operatorname{feasible},\\
+\mathsf{false},
+&\exists a\in D.\operatorname{feasible},\
+a\notin\operatorname{AdmTarget}(O.\operatorname{goal})
+\vee
+\neg\operatorname{InScope}(O.\operatorname{scope},a),\\
+\mathsf{false},
+&\exists a\in D.\operatorname{feasible},\
+O.\operatorname{relation}(a_{\mathrm{cur}},a)
+\wedge
+\neg O.\operatorname{relation}(a,a_{\mathrm{cur}}),\\
+\mathsf{true},
+&\text{否则}.
+\end{cases}
+}
+\]
+
+四个失败分支按所列顺序执行；后三个分支只扫描有限集
+\(D.\operatorname{feasible}\)。
+定义第 \(n\) 轮停止结算分量
+
+\[
+\boxed{
+\operatorname{settleStop}
+(\operatorname{AdmTarget},\operatorname{InScope},O,K_n)
+:=
+\operatorname{stopCheck}
+(\operatorname{AdmTarget},\operatorname{InScope},O,K_n.\operatorname{decision}).
+}
+\]
+
+若总体
+\(\operatorname{Settle}_n=\operatorname{Evaluate}(K_n,Z_n)\)
+还输出其他坐标，则 `settleStop` 只规定其中的停止分量；它不消费 \(Z_n\)，也不重新读取未来账本尾部、未冻结权重或新的目标版本。
+

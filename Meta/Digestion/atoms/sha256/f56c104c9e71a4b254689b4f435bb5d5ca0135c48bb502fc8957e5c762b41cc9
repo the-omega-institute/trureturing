@@ -1,0 +1,14 @@
+## 定理 125.1（能量恒等式）
+
+对任何迹零 Hermitian 状态差 $D$：
+
+$$
+\boxed{
+\langle D,W_{s,\beta}D\rangle_{\mathrm{HS}}
+=
+\sum_{p,k,b,a,t}
+\nu_s(p,k)\mu_\beta(t)w_{b,a}
+|\operatorname{Tr}(De_{p,k,b,a,t})|^2.
+}
+$$
+

@@ -1,0 +1,15 @@
+## Lean 锚点 115.1
+
+`D5/S3/ObserverMemory/PrimePowerTensorTower.lean` 已经在更强的完整矩阵代数层机器核验：
+
+$$
+\boxed{
+M_{\mathbb Z/M\mathbb Z}(\mathbb C)
+\cong
+\bigotimes_{p\mid M}
+M_{\mathbb Z/p^{v_p(M)}\mathbb Z}(\mathbb C).
+}
+$$
+
+其 `prime_power_tensor_factor_decomposition` 给出对应代数等价的双射性。
+

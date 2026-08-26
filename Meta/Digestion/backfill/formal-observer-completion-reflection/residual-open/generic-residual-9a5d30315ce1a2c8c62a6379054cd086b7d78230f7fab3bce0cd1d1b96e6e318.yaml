@@ -1,0 +1,10 @@
+ast_path: section/125-zeta-weighted-prime-time-Gramian
+fingerprints:
+  raw_sha256: sha256:9a5d30315ce1a2c8c62a6379054cd086b7d78230f7fab3bce0cd1d1b96e6e318
+  normalized_sha256: sha256:9a5d30315ce1a2c8c62a6379054cd086b7d78230f7fab3bce0cd1d1b96e6e318
+cas_ref: sha256:9a5d30315ce1a2c8c62a6379054cd086b7d78230f7fab3bce0cd1d1b96e6e318
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

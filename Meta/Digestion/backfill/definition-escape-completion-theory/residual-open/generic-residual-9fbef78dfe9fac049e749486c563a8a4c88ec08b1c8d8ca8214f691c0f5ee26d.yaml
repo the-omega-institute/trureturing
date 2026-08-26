@@ -1,0 +1,10 @@
+ast_path: section/8b1f60fa/occurrence/59
+fingerprints:
+  raw_sha256: sha256:9fbef78dfe9fac049e749486c563a8a4c88ec08b1c8d8ca8214f691c0f5ee26d
+  normalized_sha256: sha256:9fbef78dfe9fac049e749486c563a8a4c88ec08b1c8d8ca8214f691c0f5ee26d
+cas_ref: sha256:9fbef78dfe9fac049e749486c563a8a4c88ec08b1c8d8ca8214f691c0f5ee26d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

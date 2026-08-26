@@ -1,0 +1,13 @@
+\[
+\boxed{
+P_N^{q,\tau}(x)=P_N^{q,\tau}(y)
+\Longleftrightarrow
+\forall k:\mathbb N,\ k\le N\to
+q(\operatorname{timeIter}_\tau(k,x))
+=
+q(\operatorname{timeIter}_\tau(k,y))
+}
+\]
+
+以及
+

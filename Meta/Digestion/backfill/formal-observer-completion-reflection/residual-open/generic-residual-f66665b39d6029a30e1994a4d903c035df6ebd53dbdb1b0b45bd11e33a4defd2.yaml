@@ -1,0 +1,10 @@
+ast_path: row/prime-power-full-matrix-tensor-factorization
+fingerprints:
+  raw_sha256: sha256:f66665b39d6029a30e1994a4d903c035df6ebd53dbdb1b0b45bd11e33a4defd2
+  normalized_sha256: sha256:f66665b39d6029a30e1994a4d903c035df6ebd53dbdb1b0b45bd11e33a4defd2
+cas_ref: sha256:f66665b39d6029a30e1994a4d903c035df6ebd53dbdb1b0b45bd11e33a4defd2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
