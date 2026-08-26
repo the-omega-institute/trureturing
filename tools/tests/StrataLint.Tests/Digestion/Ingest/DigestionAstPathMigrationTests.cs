@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -200,33 +201,17 @@ public sealed partial class DigestionLedgerTests
     [Fact]
     public void IngestMigratesAContentIdenticalAtomWhoseAstPathMoved()
     {
-        const string table = "| 条目 | 内容 |\n|---|---|\n| 重复 | 内容 |\n";
-        var oldBytes = Encoding.UTF8.GetBytes("## 甲\n\n" + table + "\n## 乙\n\n" + table);
-        var newBytes = Encoding.UTF8.GetBytes("## 乙\n\n" + table);
-        var oldRows = AtomizerRegistry.Atomize(
-            AtomizerRegistry.GenericId,
-            oldBytes,
-            TheoryAtomizerRules.None).Claims
-            .Where(static atom => atom.AstPath.StartsWith("row/重复", StringComparison.Ordinal))
-            .ToArray();
-        var newAtoms = AtomizerRegistry.Atomize(
-            AtomizerRegistry.GenericId,
-            newBytes,
-            TheoryAtomizerRules.None).Claims;
-        var movedAtom = Assert.Single(
-            newAtoms,
-            static atom => atom.AstPath.StartsWith("row/重复", StringComparison.Ordinal));
-        var sectionAtom = Assert.Single(newAtoms, static atom => atom.AstPath == "section/乙");
-        Assert.Equal(2, oldRows.Length);
-        Assert.True(
-            oldRows[0].RawBytes.AsSpan().SequenceEqual(oldRows[1].RawBytes.AsSpan()),
-            $"{Convert.ToHexString(oldRows[0].RawBytes.AsSpan())} != "
-            + Convert.ToHexString(oldRows[1].RawBytes.AsSpan()));
-        Assert.True(
-            oldRows[1].RawBytes.AsSpan().SequenceEqual(movedAtom.RawBytes.AsSpan()),
-            $"{Convert.ToHexString(oldRows[1].RawBytes.AsSpan())} != "
-            + Convert.ToHexString(movedAtom.RawBytes.AsSpan()));
-        Assert.NotEqual(oldRows[1].AstPath, movedAtom.AstPath);
+        const string oldAstPath = "row/original";
+        const string movedAstPath = "row/moved";
+        var sourceBytes = Encoding.ASCII.GetBytes("same-content\n");
+        var atomized = ExplicitAtomization(
+            sourceBytes,
+            (movedAstPath, 0, sourceBytes.Length));
+        var movedAtom = Assert.Single(atomized.Claims);
+        var oldAtom = movedAtom with { AstPath = oldAstPath };
+        Assert.Equal(oldAstPath, oldAtom.AstPath);
+        Assert.Equal(movedAstPath, movedAtom.AstPath);
+        Assert.Equal(oldAtom.RawBytes, movedAtom.RawBytes);
 
         var atomId = "generic-residual-"
             + movedAtom.Fingerprints.RawSha256["sha256:".Length..];
@@ -243,28 +228,23 @@ public sealed partial class DigestionLedgerTests
             [],
             null);
         var entry = DigestionTestSupport.Entry(
-            oldRows[1],
+            oldAtom,
             atomId,
             AtomizerRegistry.GenericId,
             coverageGids: ["D5/S3/Probe.moved_atom"],
             receipts: receipts);
-        var sectionEntry = DigestionTestSupport.Entry(
-            sectionAtom,
-            "existing-section",
-            AtomizerRegistry.GenericId);
         var ledger = DigestionTestSupport.Document(
             AtomizerRegistry.GenericId,
-            [entry, sectionEntry]);
-        var capture = DigestionCasStore.Capture(oldRows[1].RawBytes.AsSpan());
-        var sectionCapture = DigestionCasStore.Capture(sectionAtom.RawBytes.AsSpan());
+            [entry]);
+        var capture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
 
         var plan = DigestionIngestor.Plan(
             ledger,
             DigestionTestSupport.Snapshot(
-                ("docs/source.md", newBytes),
-                (capture.RelativePath, capture.Bytes.ToArray()),
-                (sectionCapture.RelativePath, sectionCapture.Bytes.ToArray())),
-            ledger);
+                ("docs/source.md", sourceBytes),
+                (capture.RelativePath, capture.Bytes.ToArray())),
+            ledger,
+            atomizerResolver: _ => (_, _) => atomized);
 
         var source = Assert.Single(plan.Document.RequireDigestionSources());
         var migrated = Assert.Single(source.Entries.Where(candidate => candidate.AtomId == atomId));
@@ -281,15 +261,17 @@ public sealed partial class DigestionLedgerTests
     [Fact]
     public void IngestRejectsAContentIdCollisionWhenTheExistingAstPathIsStillProduced()
     {
-        const string table = "| 条目 | 内容 |\n|---|---|\n| 重复 | 内容 |\n";
-        var sourceBytes = Encoding.UTF8.GetBytes("## 甲\n\n" + table + "\n## 乙\n\n" + table);
-        var atoms = AtomizerRegistry.Atomize(
-            AtomizerRegistry.GenericId,
+        const string existingAstPath = "row/existing";
+        const string collidingAstPath = "row/colliding";
+        var atomBytes = Encoding.ASCII.GetBytes("same-content\n");
+        var sourceBytes = atomBytes.Concat(atomBytes).ToArray();
+        var atomized = ExplicitAtomization(
             sourceBytes,
-            TheoryAtomizerRules.None).Claims
-            .Where(static atom => atom.AstPath.StartsWith("row/重复", StringComparison.Ordinal))
-            .ToArray();
+            (existingAstPath, 0, atomBytes.Length),
+            (collidingAstPath, atomBytes.Length, sourceBytes.Length));
+        var atoms = atomized.Claims;
         Assert.Equal(2, atoms.Length);
+        Assert.Equal([existingAstPath, collidingAstPath], atoms.Select(static atom => atom.AstPath));
         Assert.True(
             atoms[0].RawBytes.AsSpan().SequenceEqual(atoms[1].RawBytes.AsSpan()),
             $"{Convert.ToHexString(atoms[0].RawBytes.AsSpan())} != "
@@ -310,10 +292,32 @@ public sealed partial class DigestionLedgerTests
             DigestionTestSupport.Snapshot(
                 ("docs/source.md", sourceBytes),
                 (capture.RelativePath, capture.Bytes.ToArray())),
-            ledger));
+            ledger,
+            atomizerResolver: _ => (_, _) => atomized));
 
         Assert.Equal(
             $"ingest residual atom_id collides with the ledger: {atomId}",
             exception.Message);
+    }
+
+    private static AtomizedTheoryDocument ExplicitAtomization(
+        byte[] sourceBytes,
+        params (string AstPath, int StartByte, int EndByte)[] claims)
+    {
+        var atoms = claims.Select(claim =>
+        {
+            var rawBytes = sourceBytes[claim.StartByte..claim.EndByte].ToImmutableArray();
+            return new DigestionAtom(
+                claim.AstPath,
+                claim.StartByte,
+                claim.EndByte,
+                rawBytes,
+                DigestionFingerprint.Compute(rawBytes.AsSpan()),
+                []);
+        }).ToImmutableArray();
+        return new AtomizedTheoryDocument(
+            atoms,
+            atoms.Select(static atom => new DigestionSlice(true, atom.RawBytes)).ToImmutableArray(),
+            GenreRegistryCheck.NoGenreRegistry);
     }
 }

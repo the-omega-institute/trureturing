@@ -135,7 +135,8 @@ internal static class DigestionIngestor
         BackfillInventoryDocument document,
         RepositorySnapshot snapshot,
         BackfillInventoryDocument baselineDocument,
-        RepositorySnapshot? baselineSnapshot = null)
+        RepositorySnapshot? baselineSnapshot = null,
+        Func<string, TheoryAtomizer>? atomizerResolver = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
@@ -148,7 +149,8 @@ internal static class DigestionIngestor
             migrationDocument,
             snapshot,
             baselineDocument,
-            DigestionAlignmentMode.Ingest);
+            DigestionAlignmentMode.Ingest,
+            atomizerResolver);
         var unverifiedChainParent = migrationDocument.RequireDigestionEntries().FirstOrDefault(entry =>
             entry.Receipts.ChainAtoms.Length > 0
             && alignment.ClausePlanChainParents.Contains(entry.AtomId)
