@@ -1,0 +1,17 @@
+ast_path: 定理/4.2
+fingerprints:
+  raw_sha256: sha256:addf3cc7380269d1d751053c6fa9ad20d9dc9c86ba0d5d037dbb275e7a140ca0
+  normalized_sha256: sha256:addf3cc7380269d1d751053c6fa9ad20d9dc9c86ba0d5d037dbb275e7a140ca0
+cas_ref: sha256:addf3cc7380269d1d751053c6fa9ad20d9dc9c86ba0d5d037dbb275e7a140ca0
+coverage_gids:
+  - D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.not_mem_semanticClosure_iff_kernel_witness
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.not_mem_semanticClosure_iff_kernel_witness
+      source_sha256: sha256:addf3cc7380269d1d751053c6fa9ad20d9dc9c86ba0d5d037dbb275e7a140ca0
+      target_sha256: sha256:36b9fa539e4af06c54652c811882204ab251f4bdaef6562ccd9d084e657b9851
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.not_mem_semanticClosure_iff_kernel_witness
+      definition_sha256: sha256:050ef6ad93efcc399a47de63484e4c4ee54e1b41369cef8740275f9296793115
+      emission_sha256: sha256:d664465bac696900359200c2412f1ef9ab8dea812c6dc1cb7674e9eaa0067638
+  unresolved_subitems: []
