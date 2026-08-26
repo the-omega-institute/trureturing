@@ -1,0 +1,46 @@
+# 115. CRT 给出真正的 prime-power 量子张量分解
+
+令
+
+$$
+M=\prod_{p\mid M}p^{v_p(M)}.
+$$
+
+定义有限寄存器 Hilbert 空间
+
+$$
+\mathcal H_M
+=
+\ell^2(\mathbb Z/M\mathbb Z).
+$$
+
+CRT 给出集合等价
+
+$$
+\mathbb Z/M\mathbb Z
+\cong
+\prod_{p\mid M}
+\mathbb Z/p^{v_p(M)}\mathbb Z.
+$$
+
+因此标准基诱导一个酉同构
+
+$$
+\boxed{
+U_{\mathrm{CRT}}:
+\mathcal H_M
+\overset\sim\longrightarrow
+\bigotimes_{p\mid M}
+\mathcal H_{p^{v_p(M)}}.
+}
+$$
+
+在计算基上：
+
+$$
+|n\bmod M\rangle
+\longmapsto
+\bigotimes_{p\mid M}
+|n\bmod p^{v_p(M)}\rangle.
+$$
+

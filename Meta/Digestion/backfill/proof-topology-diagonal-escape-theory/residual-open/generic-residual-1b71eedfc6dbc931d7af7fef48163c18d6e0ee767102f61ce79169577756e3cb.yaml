@@ -1,0 +1,10 @@
+ast_path: section/第十七部-局部闭合与普遍开放
+fingerprints:
+  raw_sha256: sha256:1b71eedfc6dbc931d7af7fef48163c18d6e0ee767102f61ce79169577756e3cb
+  normalized_sha256: sha256:1b71eedfc6dbc931d7af7fef48163c18d6e0ee767102f61ce79169577756e3cb
+cas_ref: sha256:1b71eedfc6dbc931d7af7fef48163c18d6e0ee767102f61ce79169577756e3cb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

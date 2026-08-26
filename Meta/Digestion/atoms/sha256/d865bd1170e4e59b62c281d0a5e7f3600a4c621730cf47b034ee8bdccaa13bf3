@@ -1,0 +1,26 @@
+## 定义 270.1（两类错误）
+
+[
+\begin{aligned}
+\operatorname{FP}
+&:\quad H=0,\ D=1;\
+\operatorname{FN}
+&:\quad H=1,\ D=0.
+\end{aligned}
+]
+
+在混合证据纤维中，制度必须决定更愿意承担哪类错误。
+
+所以：
+
+[
+\boxed{
+\text{举证责任}
+===========
+
+\text{在无法零错误分类时，对错误方向进行规范性分配}.
+}
+]
+
+---
+

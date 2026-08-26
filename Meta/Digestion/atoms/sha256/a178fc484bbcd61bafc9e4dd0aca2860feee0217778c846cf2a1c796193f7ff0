@@ -1,0 +1,14 @@
+## 定理 2.1（定义性保守性）
+
+若 \(T_{\mathbb P\mathrm O}\) 仅相对 \(T_0\) 加入可展开定义，则对任意旧语言命题 \(\varphi\)：
+
+\[
+T_{\mathbb P\mathrm O}\vdash\varphi
+\Rightarrow
+T_0\vdash\varphi.
+\]
+
+### 证明
+
+对推导中的全部新符号做定义展开。所得推导仅使用 \(\mathcal L_0\) 的对象与规则。故命名“素数观察者”本身不能制造任何旧语言中的新数学事实。\(\square\)
+

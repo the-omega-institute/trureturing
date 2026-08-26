@@ -1,0 +1,14 @@
+## 结论 90.1
+
+$$
+\boxed{
+\text{finite-dimensional quantum complete observation}
+\Longrightarrow
+\text{finite-horizon complete certificate}.
+}
+$$
+
+有限性来自 Hermitian 差空间维数，而不是来自状态集合有限。
+
+---
+

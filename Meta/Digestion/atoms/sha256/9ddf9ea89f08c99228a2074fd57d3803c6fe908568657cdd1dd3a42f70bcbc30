@@ -1,0 +1,151 @@
+# 112. 最终统一：量子观察者是全局状态到稳定记录现实的受限通道
+
+本增订把量子观察者压缩为以下对象：
+
+$$
+\begin{aligned}
+\rho
+&=
+\text{完整量子状态},\\
+E_{a|x}
+&=
+\text{可提出的问题与结果效果},\\
+\mathcal I_{a|x}
+&=
+\text{结果分支及其状态干预},\\
+F_w
+&=
+\text{顺序协议在初态上的 word effect},\\
+V_{\mathfrak O}^{\mathrm{seq}}
+&=
+\text{全部允许协议生成的可见 operator system},\\
+N_{\mathfrak O}^{\mathrm{seq}}
+&=
+\left(V_{\mathfrak O}^{\mathrm{seq}}\right)^\perp,\\
+\mathsf R_{\mathfrak O}
+&=
+\mathsf S_d/\!\sim_{\mathfrak O},\\
+\mathcal A_M
+&=
+\text{观察者能够稳定读取的记录代数}.
+\end{aligned}
+$$
+
+其基础关系为：
+
+$$
+\boxed{
+p(w\mid\rho)
+=
+\operatorname{Tr}(\rho F_w),
+}
+$$
+
+$$
+\boxed{
+\rho\sim_{\mathfrak O}\sigma
+\iff
+\rho-\sigma\in
+N_{\mathfrak O}^{\mathrm{seq}},
+}
+$$
+
+$$
+\boxed{
+\mathfrak O\text{ 完备}
+\iff
+V_{\mathfrak O}^{\mathrm{seq}}
+=
+\operatorname{Herm}_d,
+}
+$$
+
+$$
+\boxed{
+\text{有限维完备}
+\Longrightarrow
+\text{有限效果／有限词深证书},
+}
+$$
+
+$$
+\boxed{
+\text{环境记录}
+\Longrightarrow
+\text{块代数稳定化},
+}
+$$
+
+$$
+\boxed{
+\text{经典记录}
+=
+\text{稳定可访问代数的交换中心}.
+}
+$$
+
+因此最严格的本体—操作收束不是：
+
+$$
+\text{“观察者看见，于是创造世界”},
+$$
+
+而是：
+
+$$
+\boxed{
+完整量子状态通过观察者有限的效果、instrument、动力学与记录代数，
+被压缩成一个操作可区分、可条件化、可共享的现实商。
+}
+$$
+
+量子性的核心也不是“物体同时偷偷走了多条经典路径”，而是：
+
+$$
+\boxed{
+状态包含可在不同观察上下文中转化为概率差异的复相位结构；
+这些上下文与顺序干预不能一般地压缩为一张保持全部代数关系和局域统计的经典确定答案表。
+}
+$$
+
+退相干所完成的是：
+
+$$
+\boxed{
+把环境反复记录的区分放大为稳定块标签，
+并抑制这些标签之间的相干；
+它解释经典记录结构如何涌现，
+但不凭自身选定唯一量子解释。
+}
+$$
+
+把本增订与前文 observer completion、agency completion 合并，最终得到三重反射：
+
+$$
+\boxed{
+\begin{aligned}
+\text{dynamical completion}
+&=
+\text{补入未来会影响读出的状态区别},\\
+\text{quantum observer completion}
+&=
+\text{补入允许协议可生成的 effect 方向},\\
+\text{agency completion}
+&=
+\text{补入未来会改变策略的历史区别}.
+\end{aligned}
+}
+$$
+
+三者共同说明：
+
+$$
+\boxed{
+观察者不是完整宇宙的副本，
+而是一个把未来有效区别、可执行问题、实际记录与历史选择
+闭合进自身有限接口的系统。
+}
+$$
+
+---
+

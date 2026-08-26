@@ -1,0 +1,10 @@
+ast_path: section/6-4-非锐显性
+fingerprints:
+  raw_sha256: sha256:a4f5120575b4b095ca02668a3249c570115e9047206a6834d5ed0174cf31b7f3
+  normalized_sha256: sha256:a4f5120575b4b095ca02668a3249c570115e9047206a6834d5ed0174cf31b7f3
+cas_ref: sha256:a4f5120575b4b095ca02668a3249c570115e9047206a6834d5ed0174cf31b7f3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

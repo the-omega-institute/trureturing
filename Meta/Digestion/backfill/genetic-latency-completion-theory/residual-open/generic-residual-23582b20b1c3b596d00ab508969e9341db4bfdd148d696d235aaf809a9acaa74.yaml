@@ -1,0 +1,10 @@
+ast_path: section/24-4-动态可观测性
+fingerprints:
+  raw_sha256: sha256:23582b20b1c3b596d00ab508969e9341db4bfdd148d696d235aaf809a9acaa74
+  normalized_sha256: sha256:23582b20b1c3b596d00ab508969e9341db4bfdd148d696d235aaf809a9acaa74
+cas_ref: sha256:23582b20b1c3b596d00ab508969e9341db4bfdd148d696d235aaf809a9acaa74
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

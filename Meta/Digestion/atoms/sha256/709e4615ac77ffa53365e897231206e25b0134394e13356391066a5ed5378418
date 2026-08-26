@@ -1,0 +1,24 @@
+# 第十六部：对角逃逸经过观察
+
+设目录
+
+\[
+g:I\to(A\to Y)
+\]
+
+与候选
+
+\[
+d:A\to Y,
+\qquad
+d\notin\operatorname{range}(g).
+\]
+
+给定观察
+
+\[
+r:Y\to Z,
+\]
+
+观察后的目录和候选为 \(r\circ g_i\) 与 \(r\circ d\)。
+

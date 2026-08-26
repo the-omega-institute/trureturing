@@ -1,0 +1,17 @@
+## 定理 157.1（条件化交换）
+
+[
+\boxed{
+\mathsf{Cond}_P
+\mathsf{Cond}_Q
+===============
+
+\mathsf{Cond}_Q
+\mathsf{Cond}_P.
+}
+]
+
+因为集合交交换。
+
+---
+

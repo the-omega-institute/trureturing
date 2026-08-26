@@ -1,0 +1,30 @@
+# 第八部：目标恢复等于连续性
+
+在 \(X\) 上取 \(\tau_q\)，在目标值域 \(Y\) 上取离散拓扑。则：
+
+\[
+\boxed{
+T\text{ 对 }\tau_q\text{ 连续}
+\iff
+q(x)=q(y)\Rightarrow T(x)=T(y).
+}
+\]
+
+在非空 \(X\) 上，结合目标恢复判据：
+
+\[
+\boxed{
+\exists h:Q\to Y,\ T=h\circ q
+\iff
+T:(X,\tau_q)\to Y_{\mathrm{disc}}\text{ 连续}.
+}
+\]
+
+所以 target adequacy 有三个等价表述：
+
+1. 解码因子化；
+2. 纤维恒定；
+3. 对观察拓扑连续。
+
+---
+

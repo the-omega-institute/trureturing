@@ -1,0 +1,10 @@
+ast_path: section/44-有限深度代理谱
+fingerprints:
+  raw_sha256: sha256:203b44881b00ff0f9041b1f5cc3a13c642e55a2e170176dd039df5d6d5a3052f
+  normalized_sha256: sha256:203b44881b00ff0f9041b1f5cc3a13c642e55a2e170176dd039df5d6d5a3052f
+cas_ref: sha256:203b44881b00ff0f9041b1f5cc3a13c642e55a2e170176dd039df5d6d5a3052f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

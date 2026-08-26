@@ -1,0 +1,31 @@
+## 定理 101.2（局域确定性 CHSH 上界）
+
+对任意隐藏纤维上的
+
+$$
+A_0,A_1,B_0,B_1\in\{-1,+1\},
+$$
+
+有
+
+$$
+|A_0B_0+A_0B_1+A_1B_0-A_1B_1|
+\le2.
+$$
+
+概率混合后仍满足
+
+$$
+|\mathbb ES|\le2.
+$$
+
+而仓库 `CHSHWitness.lean` 已机器核验具体 Bell 态与四个观测量达到
+
+$$
+\boxed{
+2\sqrt2.
+}
+$$
+
+`ClassicalAnswerTableExclusion.lean` 将无 character 与 CHSH 超经典值作用于同一个 preparation-independent deterministic answer table，得到非上下文分支与局域分支的双重排除。
+

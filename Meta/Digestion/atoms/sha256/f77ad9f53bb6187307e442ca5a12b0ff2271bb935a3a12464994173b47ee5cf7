@@ -1,0 +1,32 @@
+## 定理 443.1（meet 闭合下 ratio 唯一存在）
+
+若：
+
+1. 至少存在一个可接受充分理由；
+2. (\mathcal E) 对相关 meet 闭合；
+
+则：
+
+[
+\boxed{
+R^*
+===
+
+\bigwedge
+{R\in\mathcal E\mid E_J\preceq R}
+}
+]
+
+是唯一最粗 ratio。
+
+因此：
+
+[
+\boxed{
+\text{ratio 不是判决全文，
+而是允许法律语言中足以决定结果的最小事实结构。}
+}
+]
+
+---
+

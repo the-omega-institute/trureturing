@@ -1,0 +1,21 @@
+## 定义 497.2（保证性最弱前置条件）
+
+[
+\boxed{
+\operatorname{wp}^{\forall}_R(Q)
+================================
+
+\left{
+x
+;\middle|;
+\forall y,\quad xRy\to Q(y)
+\right}.
+}
+]
+
+它表示：
+
+> 从 (x) 出发，所有允许执行结果都满足 (Q)。
+
+---
+

@@ -1,0 +1,35 @@
+## 17. 追加形式化路线与边界
+
+建议按以下顺序进入 Lean：
+
+1. `PredictiveInteriorOperator`：I_F 的收缩、单调、幂等与交保持；
+2. `ForwardCongruenceClosure`：C_F 的最小稳定超关系；
+3. `AutonomyAdjointTriple`：C_F ⊣ j ⊣ I_F；
+4. `ObserverRepairCost`：有限类数代价分解；
+5. `SensorFusionCompletion`：预测完成保持接口交；
+6. `ProductClosureSpectrum`：直积核、类数、增量与深度；
+7. `TimeBlockingKernel`：精确时间分块公式；
+8. `DiscountedFutureBellman`：压缩映射、唯一固定点与截断界；
+9. `FiberDiameterLowerBound`：通用二分之一直径下界；
+10. `FeedbackPolicyIndistinguishability`：开环词与反馈政策等价。
+
+本次追加不声称：
+
+1. 记忆代价与遗忘代价具有普适物理单位；
+2. 格论伴随本身证明意识、自由意志或量子坍缩本体论；
+3. 折扣未来伪度量是唯一可能的近似观察几何；
+4. 时间分块公式排除连续时间、超限时间或类型扩张中的额外困难；
+5. 开环—反馈等价适用于可直接访问隐藏状态的 oracle 政策；
+6. 新增纸面定理已经 Lean 闭合。
+
+最终，观察者自治不是信息最大化，而是“所声明的相同”在过程作用下保持为相同。不闭合时，规范选择只有在约束方向明确后才唯一：
+
+```text
+记忆完成：Kq ↦ I_F(Kq)，通过增加区别恢复自治；
+遗忘完成：Kq ↦ C_F(Kq)，通过删除区别恢复自治。
+```
+
+时间分辨率决定哪些时刻能够见证不相容；行动族决定哪些实验路径能够见证不相容；折扣未来几何把二值见证转化为可计算误差。三者共同把“观察者闭合”从静态接口性质提升为时间、控制与近似误差的统一结构。
+
+---
+

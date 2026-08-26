@@ -1,0 +1,31 @@
+## 定理 108.4（不完备物理反例）
+
+若观察者不完备，则存在
+
+$$
+0\neq D\in
+N_{\mathfrak O}^{\mathrm{seq}}
+$$
+
+以及
+
+$$
+\rho_\pm
+=
+\frac Id\pm\varepsilon D
+$$
+
+使：
+
+$$
+\rho_+\neq\rho_-,
+$$
+
+但：
+
+$$
+\Sigma_{\mathfrak O}^{\mathrm{seq}}(\rho_+)
+=
+\Sigma_{\mathfrak O}^{\mathrm{seq}}(\rho_-).
+$$
+

@@ -1,0 +1,10 @@
+ast_path: section/自我模型不完备
+fingerprints:
+  raw_sha256: sha256:676b6ac02c10c5cf2076cc5b5dee39e87fb1af02e29275cfc525d63059b97920
+  normalized_sha256: sha256:676b6ac02c10c5cf2076cc5b5dee39e87fb1af02e29275cfc525d63059b97920
+cas_ref: sha256:676b6ac02c10c5cf2076cc5b5dee39e87fb1af02e29275cfc525d63059b97920
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

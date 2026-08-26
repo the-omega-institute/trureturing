@@ -1,0 +1,13 @@
+## 结论 126.1
+
+$$
+\boxed{
+\text{quantum postprocessing cannot recover information
+already erased by the Frobenius-class quotient}.
+}
+$$
+
+若要区分同一 Frobenius fiber 内的素数，必须增加不经该粗标签因子化的新接口，而不是只对旧标签做更复杂的量子处理。
+
+---
+

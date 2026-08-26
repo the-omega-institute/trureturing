@@ -1,0 +1,34 @@
+# 483. 默认推理是优选模型上的后果关系
+
+设有限模型集合：
+
+[
+W.
+]
+
+给定典型性排序：
+
+[
+\kappa:W\to\mathbb N\cup{\infty}.
+]
+
+数字越小，模型越正常。
+
+对命题 (A\subseteq W)，定义最正常的 (A)-模型：
+
+[
+\boxed{
+\operatorname{Min}_\kappa(A)
+============================
+
+\left{
+w\in A
+\mid
+\kappa(w)
+=========
+
+\min_{v\in A}\kappa(v)
+\right}.
+}
+]
+

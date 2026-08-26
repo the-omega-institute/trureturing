@@ -1,0 +1,42 @@
+## 定理 506.1（知识沿一致 refinement 单调）
+
+若：
+
+[
+S'\subseteq S,
+]
+
+[
+S'\neq\varnothing,
+]
+
+且 (S) 知道 (T)，则 (S') 也知道同一个目标值。
+
+### 证明
+
+若：
+
+[
+\operatorname{Ans}_T(S)={y},
+]
+
+则：
+
+[
+\operatorname{Ans}_T(S')
+\subseteq{y}.
+]
+
+因为 (S'\neq\varnothing)，其答案集非空，所以也恰为 ({y})。
+
+(\square)
+
+这统一了：
+
+* 纤维知识；
+* 公告更新；
+* 证据 refinement；
+* 安全拒答。
+
+---
+

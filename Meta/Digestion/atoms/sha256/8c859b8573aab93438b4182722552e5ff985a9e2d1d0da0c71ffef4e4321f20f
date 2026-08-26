@@ -1,0 +1,57 @@
+## 定理 96.1（环境边缘通道）
+
+对任意系统矩阵 $\rho$：
+
+$$
+\boxed{
+\mathcal D_G(\rho)
+=
+\operatorname{Tr}_E(V\rho V^\dagger)
+=
+G\odot\rho,
+}
+$$
+
+即
+
+$$
+(\mathcal D_G(\rho))_{ij}
+=
+G_{ij}\rho_{ij}.
+$$
+
+### 证明
+
+展开
+
+$$
+V\rho V^\dagger
+=
+\sum_{i,j}
+\rho_{ij}
+|i\rangle\langle j|
+\otimes
+|e_i\rangle\langle e_j|.
+$$
+
+对环境取偏迹，得到系数
+
+$$
+\operatorname{Tr}
+(|e_i\rangle\langle e_j|)
+=
+\langle e_j|e_i\rangle.
+$$
+
+∎
+
+仓库 `EnvironmentRecords.lean` 已在二点系统上形式化同一结构：记录重叠决定逐项 record channel，并在常数非对角重叠时精确等于 phase damping。`MeasurementMarginal.lean` 进一步证明，复制地址到正交环境记录并取偏迹时，结果恰为
+
+$$
+\sum_kP_k\rho P_k
+$$
+
+且所有非对角项为零。
+
+---
+
