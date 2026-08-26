@@ -1,0 +1,17 @@
+ast_path: 定理/8.1
+fingerprints:
+  raw_sha256: sha256:102f184059aff795fe0b8960193fd298ca2e0412d1dccfc30d65ec303390ac31
+  normalized_sha256: sha256:102f184059aff795fe0b8960193fd298ca2e0412d1dccfc30d65ec303390ac31
+cas_ref: sha256:102f184059aff795fe0b8960193fd298ca2e0412d1dccfc30d65ec303390ac31
+coverage_gids:
+  - D5/S3/Observer/ProbabilisticClosure/StrongLumpabilityDescent.strong_lumpability_descent_tfae
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/ProbabilisticClosure/StrongLumpabilityDescent.strong_lumpability_descent_tfae
+      source_sha256: sha256:102f184059aff795fe0b8960193fd298ca2e0412d1dccfc30d65ec303390ac31
+      target_sha256: sha256:582972ca761ef0b7e77da1c6401179c8790185f22b847bf74caabd4f7e7f09c8
+  scribe:
+    - gid: D5/S3/Observer/ProbabilisticClosure/StrongLumpabilityDescent.strong_lumpability_descent_tfae
+      definition_sha256: sha256:e1af1fe0901d06883ccd70f2c8f9746992e79f7eb3428658e995c1fea1d0f1f9
+      emission_sha256: sha256:f697edff01971afe71a52dc864571a7f49870a6560a4a5bc896e2b479bab7fc6
+  unresolved_subitems: []
