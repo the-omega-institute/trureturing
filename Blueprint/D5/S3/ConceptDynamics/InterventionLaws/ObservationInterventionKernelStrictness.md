@@ -6,7 +6,7 @@ The intervention kernel is already strictly finer than the observational kernel 
 
 **Theorem 1.1 (The first causal-kernel inclusion is strict).**
 
-$$\begin{gathered}IntProfile : DeterministicBoolSCM \to \left(Option\left(Bool\right) \to \left(Bool \to Bool \times Bool\right)\right),\\{}IntProfile(M, a, u) := optionCases\left(a, Obs\left(M, u\right), \lambda x, Int\left(M, x, u\right)\right),\\{}ker\left(IntProfile\right) \subset ker\left(Obs\right).\end{gathered}$$
+$$\begin{gathered}IntProfile : DeterministicBoolSCM \to \left(Option\left(Bool\right) \to \left(Bool \to Bool \times Bool\right)\right),\\{}IntProfile(M, a, u) := optionCases\left(a, Obs\left(M, u\right), \lambda x, Int\left(M, x, u\right)\right),\\{}StrictSubset\left(ker\left(IntProfile\right), ker\left(Obs\right)\right).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InterventionLaws/ObservationInterventionKernelStrictness.intervention_kernel_strictly_finer_than_observation` (`✓ std3`). ∎
 
