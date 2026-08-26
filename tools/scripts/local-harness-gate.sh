@@ -169,6 +169,8 @@ PAIR_PRODUCER="$CANDIDATE_ROOT/tools/scripts/lean-report-pair.sh"
 
 # User-private content-addressed report cache for local producer runs.
 export STRATALINT_REPORT_CACHE_ROOT="${STRATALINT_REPORT_CACHE_ROOT:-${XDG_CACHE_HOME:-$HOME/.cache}/stratalint-lean-report-cache}"
+# Record build/inspect/serialize/verify timings for the direct pair invocation.
+export STRATALINT_PERF_SEGMENTS=1
 
 CANDIDATE_REPORT="$CANDIDATE_ROOT/.lake/build/stratalint/raw-lean-report.json"
 run_stage lean-reports \
