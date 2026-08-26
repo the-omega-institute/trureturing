@@ -25,10 +25,17 @@ public sealed class ConceptDynamicsFormalAnswerDocumentTests
     public void UniversalValueRoleInvarianceConstructsThreeDeclarations()
     {
         var document = new UniversalValueRoleInvarianceDocument().Create().Document;
+        var describes = document.Content.Items.OfType<DocumentBlock.Describe>().ToArray();
 
         Assert.Equal(
             "D5/S3/ConceptDynamics/NormativeStructure/UniversalValueRoleInvariance",
             document.Header.Gid.Value);
-        Assert.Equal(3, document.Content.Items.OfType<DocumentBlock.Describe>().Count());
+        Assert.Equal(3, describes.Length);
+        var counterexample = LatexWriter.WriteStatement(describes[2].StatementFormula!);
+        Assert.Contains(@"\neg", counterexample, StringComparison.Ordinal);
+        Assert.Contains(
+            @"\operatorname{NamedPrivilege}",
+            counterexample,
+            StringComparison.Ordinal);
     }
 }
