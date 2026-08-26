@@ -74,6 +74,8 @@ public sealed class ContentsWriteWorkflowClosureTests
         Assert.Contains("commit_on_protected_dev=true", content, StringComparison.Ordinal);
         Assert.Contains("--commit-on-protected-dev \"$COMMIT_ON_PROTECTED_DEV\"", content, StringComparison.Ordinal);
         Assert.DoesNotContain("--commit-on-protected-dev true", content, StringComparison.Ordinal);
+        Assert.Contains("COMMIT_ON_PROTECTED_DEV: ${{ steps.identity.outputs.commit_on_protected_dev }}", content, StringComparison.Ordinal);
+        Assert.Contains("git show -s --format=%ct HEAD", content, StringComparison.Ordinal);
     }
 
     [Fact]
