@@ -155,34 +155,10 @@ jobs:
             --repository "$GITHUB_WORKSPACE" --report "$report"
           printf 'path=%s\n' "$report" >> "$GITHUB_OUTPUT"
 
-      - name: Verify source remains on protected dev
-        id: protected_dev
-        shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
-          SOURCE_COMMIT: ${{ steps.source.outputs.source_commit }}
-        run: |
-          set -euo pipefail
-          branch="$(gh api "repos/${GITHUB_REPOSITORY}/branches/dev")"
-          [[ "$(jq -r '.protected' <<< "$branch")" == 'true' ]] \
-            || { printf '%s\n' 'dev is not protected; refusing protected-dev provenance' >&2; exit 1; }
-          dev_tip="$(jq -r '.commit.sha' <<< "$branch")"
-          [[ "$dev_tip" =~ ^[0-9a-f]{40}$ ]]
-          comparison="$(gh api "repos/${GITHUB_REPOSITORY}/compare/${SOURCE_COMMIT}...${dev_tip}")"
-          merge_base="$(jq -r '.merge_base_commit.sha' <<< "$comparison")"
-          behind_by="$(jq -r '.behind_by' <<< "$comparison")"
-          status="$(jq -r '.status' <<< "$comparison")"
-          if [[ "$merge_base" != "$SOURCE_COMMIT" || "$behind_by" != '0' \
-            || ( "$status" != 'identical' && "$status" != 'ahead' ) ]]; then
-            printf '%s\n' 'source commit is not the protected dev tip or a verified ancestor of it' >&2
-            exit 1
-          fi
-          printf 'commit_on_protected_dev=true\n' >> "$GITHUB_OUTPUT"
-
       - name: Assemble the real seven-artifact truth-release
         id: release
         env:
-          COMMIT_ON_PROTECTED_DEV: ${{ steps.protected_dev.outputs.commit_on_protected_dev }}
+          COMMIT_ON_PROTECTED_DEV: ${{ steps.identity.outputs.commit_on_protected_dev }}
           SOURCE_COMMIT: ${{ steps.source.outputs.source_commit }}
           SOURCE_TREE: ${{ steps.identity.outputs.source_tree }}
           REPORT_PATH: ${{ steps.report.outputs.path }}
@@ -195,7 +171,7 @@ jobs:
           [[ "$COMMIT_ON_PROTECTED_DEV" == 'true' ]] \
             || { printf '%s\n' 'protected-dev provenance was not established' >&2; exit 1; }
           dotnet restore tools/StrataLint.Cli/StrataLint.Cli.csproj --locked-mode
-          commit_epoch="$(git show -s --format=%ct "$SOURCE_COMMIT")"
+          commit_epoch="$(git show -s --format=%ct HEAD)"
           [[ "$commit_epoch" =~ ^[0-9]+$ ]]
           produced_at="$(date -u --date="@${commit_epoch}" +%Y-%m-%dT%H:%M:%SZ)"
           dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj \
