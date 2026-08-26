@@ -604,6 +604,14 @@ public sealed partial class MakeWorkflowTests
             case "${1:-}" in
               --version|restore) exit 0 ;;
               build)
+                if [[ "$*" == *BannedApiCompileFailProof.csproj* ]]; then
+                  while IFS=: read -r line _; do
+                    printf '%s(%s,1): error RS0030: fixture banned API\n' \
+                      'tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs' "$line" >&2
+                  done < <(grep -nF '// banned-api-proof' \
+                    tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs)
+                  exit 1
+                fi
                 [[ "$*" != *CompileFailProof.csproj* ]] || exit 1
                 exit 0
                 ;;
@@ -661,6 +669,7 @@ public sealed partial class MakeWorkflowTests
     private static void WriteHarnessGateChainReportPair(string candidateRoot)
     {
         CopyAdmissionBaseLibraryIfPresent(candidateRoot);
+        CopyBannedApiCompileFailProof(candidateRoot);
         var gateDirectory = Path.Combine(candidateRoot, ".github", "scripts");
         Directory.CreateDirectory(gateDirectory);
         File.Copy(
@@ -702,6 +711,15 @@ public sealed partial class MakeWorkflowTests
         if (!File.Exists(source)) return;
 
         var target = Path.Combine(candidateRoot, AdmissionBaseScriptPath);
+        Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+        File.Copy(source, target, overwrite: true);
+    }
+
+    private static void CopyBannedApiCompileFailProof(string candidateRoot)
+    {
+        const string proofPath = "tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs";
+        var source = Path.Combine(TestRepositoryLayout.FindRoot(), proofPath);
+        var target = Path.Combine(candidateRoot, proofPath);
         Directory.CreateDirectory(Path.GetDirectoryName(target)!);
         File.Copy(source, target, overwrite: true);
     }

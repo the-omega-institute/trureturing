@@ -123,6 +123,7 @@ public sealed partial class MakeWorkflowTests
         var preflight = Path.Combine(root, PreflightScriptPath);
         var report = Path.Combine(root, ".lake", "build", "stratalint", "raw-lean-report.json");
         CopyPreflightScriptClosure(sourceRoot, root);
+        CopyBannedApiCompileFailProof(root);
         Directory.CreateDirectory(Path.GetDirectoryName(report)!);
         Directory.CreateDirectory(binDirectory);
         File.WriteAllText(
@@ -171,6 +172,14 @@ public sealed partial class MakeWorkflowTests
             if [[ "${PREFLIGHT_SCENARIO:-}" == stale-values && "$*" == *"emit-values --check"* ]]; then
               printf '%s\n' 'out of date: Evidence/D5/values.json' >&2
               exit 44
+            fi
+            if [[ "${1:-}" == build && "$*" == *BannedApiCompileFailProof.csproj* ]]; then
+              while IFS=: read -r line _; do
+                printf '%s(%s,1): error RS0030: fixture banned API\n' \
+                  'tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs' "$line" >&2
+              done < <(grep -nF '// banned-api-proof' \
+                tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs)
+              exit 1
             fi
             if [[ "${1:-}" == build ]]; then exit 1; fi
             if [[ "${1:-}" == msbuild ]]; then exit 1; fi
