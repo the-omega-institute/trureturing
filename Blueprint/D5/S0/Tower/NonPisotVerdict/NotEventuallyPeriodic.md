@@ -12,7 +12,7 @@ Nothing here is proved for the first time. Every step is a statement landed sepa
 
 **Theorem 1.1 (The expansion is not eventually periodic).**
 
-$$\neg \exists p \in N, N \in N,\; 0 < p \land \forall n \in N,\; N \le n \Rightarrow \operatorname{beta13GreedyDigit}\left(n + p\right) = \operatorname{beta13GreedyDigit}\left(n\right)$$
+$$\neg \left(\exists p \in N, N \in N,\; 0 < p \land \left(\forall n \in N,\; N \le n \Rightarrow \operatorname{beta13GreedyDigit}\left(n + p\right) = \operatorname{beta13GreedyDigit}\left(n\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Tower/NonPisotVerdict/NotEventuallyPeriodic.digits_not_eventually_periodic` (`✓ std3`). ∎
 

@@ -6,7 +6,7 @@ An encoding is lossless on a sender exactly when it is injective on the coordina
 
 **Theorem 1.1 (Losslessness is injectivity on the sender image).**
 
-$$\forall X \in Type, S \in Type, M \in Type, sender \in X \to S, encoder \in S \to M,\; \operatorname{InjOn}\left(encoder, \operatorname{range}\left(sender\right)\right) \Leftrightarrow \forall x \in X, y \in X,\; \operatorname{messageConcept}\left(sender, encoder, x\right) = \operatorname{messageConcept}\left(sender, encoder, y\right) \Leftrightarrow sender\left(x\right) = sender\left(y\right)$$
+$$\forall X \in Type, S \in Type, M \in Type, sender \in X \to S, encoder \in S \to M,\; \operatorname{InjOn}\left(encoder, \operatorname{range}\left(sender\right)\right) \Leftrightarrow \left(\forall x \in X, y \in X,\; \operatorname{messageConcept}\left(sender, encoder, x\right) = \operatorname{messageConcept}\left(sender, encoder, y\right) \Leftrightarrow sender\left(x\right) = sender\left(y\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/LosslessEncodingCriterion.lossless_iff_injective_on_image` (`✓ std3`). ∎
 
@@ -20,7 +20,7 @@ Injectivity prevents the encoder from merging distinct realized coordinates. Con
 
 **Lemma 1.2 (Noninjectivity is exactly a collapsed sender distinction).**
 
-$$\forall X \in Type, S \in Type, M \in Type, sender \in X \to S, encoder \in S \to M,\; \left(\neg \operatorname{InjOn}\left(encoder, \operatorname{range}\left(sender\right)\right)\right) \Leftrightarrow \exists x \in X, y \in X,\; \operatorname{messageConcept}\left(sender, encoder, x\right) = \operatorname{messageConcept}\left(sender, encoder, y\right) \land sender\left(x\right) \ne sender\left(y\right)$$
+$$\forall X \in Type, S \in Type, M \in Type, sender \in X \to S, encoder \in S \to M,\; \left(\neg \operatorname{InjOn}\left(encoder, \operatorname{range}\left(sender\right)\right)\right) \Leftrightarrow \left(\exists x \in X, y \in X,\; \operatorname{messageConcept}\left(sender, encoder, x\right) = \operatorname{messageConcept}\left(sender, encoder, y\right) \land sender\left(x\right) \ne sender\left(y\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/LosslessEncodingCriterion.not_injective_on_image_iff_strictly_coarser` (`✓ std3`). ∎
 

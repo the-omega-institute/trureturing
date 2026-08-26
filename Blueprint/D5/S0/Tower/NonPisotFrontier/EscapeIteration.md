@@ -8,7 +8,7 @@ Naming the excess above the threshold turns the escape into a single multiplicat
 
 **Theorem 1.1 (The escape iterates).**
 
-$$1 < \left|\mathit{betaThirteenConjugate}\right| \land \forall x \in R, d \in R,\; \mathit{escapeThreshold} < \left|x\right| \Rightarrow \mathit{escapeThreshold} + \left|\mathit{betaThirteenConjugate}\right| \cdot \left(\left|x\right| - \mathit{escapeThreshold}\right) \le \left|\mathit{betaThirteenConjugate} \cdot x - d\right|$$
+$$1 < \left|\mathit{betaThirteenConjugate}\right| \land \left(\forall x \in R, d \in R,\; \mathit{escapeThreshold} < \left|x\right| \Rightarrow \mathit{escapeThreshold} + \left|\mathit{betaThirteenConjugate}\right| \cdot \left(\left|x\right| - \mathit{escapeThreshold}\right) \le \left|\mathit{betaThirteenConjugate} \cdot x - d\right|\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Tower/NonPisotFrontier/EscapeIteration.escape_iterates` (`✓ std3`). ∎
 

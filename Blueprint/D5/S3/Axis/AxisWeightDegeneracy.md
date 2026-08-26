@@ -60,7 +60,7 @@ The coincidence is confined to the diagonal: whenever the two readings differ, s
 
 **Theorem 1.5 (The degeneracy locus packaged).**
 
-$$\forall x \in R, y \in R,\; \operatorname{axisWeight}\left(x, y, 0\right) = \operatorname{axisWeight}\left(x, y, 1\right) \Leftrightarrow x = y \land \left(\operatorname{axisWeight}\left(1, 1, 0\right) = \operatorname{axisWeight}\left(1, 1, 1\right) \land \forall x \in R, y \in R,\; x \ne y \Rightarrow \operatorname{axisWeight}\left(x, y, 0\right) \ne \operatorname{axisWeight}\left(x, y, 1\right)\right)$$
+$$\left(\forall x \in R, y \in R,\; \operatorname{axisWeight}\left(x, y, 0\right) = \operatorname{axisWeight}\left(x, y, 1\right) \Leftrightarrow x = y\right) \land \left(\operatorname{axisWeight}\left(1, 1, 0\right) = \operatorname{axisWeight}\left(1, 1, 1\right) \land \left(\forall x \in R, y \in R,\; x \ne y \Rightarrow \operatorname{axisWeight}\left(x, y, 0\right) \ne \operatorname{axisWeight}\left(x, y, 1\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Axis/AxisWeightDegeneracy.axis_weight_degeneracy_locus_package` (`✓ std3`). ∎
 
