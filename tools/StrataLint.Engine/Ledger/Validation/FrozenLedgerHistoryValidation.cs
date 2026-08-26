@@ -20,8 +20,7 @@ public static partial class FrozenLedger
             syntax,
             catalog,
             trustedReferences,
-            requireCompleteCatalog: true,
-            allowPendingReattestation: false);
+            requireCompleteCatalog: true);
 
     internal static FrozenLedgerValidationOutcome ValidateHistoryPrefix(
         FrozenLedgerSyntax syntax,
@@ -31,15 +30,13 @@ public static partial class FrozenLedger
             syntax,
             catalog,
             trustedReferences,
-            requireCompleteCatalog: false,
-            allowPendingReattestation: true);
+            requireCompleteCatalog: false);
 
     private static FrozenLedgerValidationOutcome ValidateHistory(
         FrozenLedgerSyntax syntax,
         FrozenMaterialCatalog catalog,
         TrustedFrozenGitReferences trustedReferences,
-        bool requireCompleteCatalog,
-        bool allowPendingReattestation)
+        bool requireCompleteCatalog)
     {
         ArgumentNullException.ThrowIfNull(syntax);
         ArgumentNullException.ThrowIfNull(catalog);
@@ -114,20 +111,6 @@ public static partial class FrozenLedger
                             AxiomClosureKnown: freeze.HasAxiomClosure));
                     events.Add(new FrozenLedgerEvent.Freeze(sequence, eventHash, previousHash, freeze));
                 }
-                else if (eventType == "Reattest")
-                {
-                    var reattest = ParseReattest(payload, active, trustedReferences);
-                    active[reattest.CaseId] = ApplyReattest(
-                        active[reattest.CaseId],
-                        reattest,
-                        eventHash);
-
-                    events.Add(new FrozenLedgerEvent.Reattest(
-                        sequence,
-                        eventHash,
-                        previousHash,
-                        reattest));
-                }
                 else if (eventType == SupersedeEventType)
                 {
                     var supersede = ValidateSupersede(
@@ -187,7 +170,7 @@ public static partial class FrozenLedger
                     missing,
                     "Closed modules are missing Freeze events: "
                     + string.Join(", ", missing.Select(static path => path.Value))
-                    + "; run ledger-sync to append the missing Freeze events.");
+                    + "; run ledger-append to append the missing Freeze events.");
             }
 
             var outside = actualByPath.Keys.Except(expectedByPath.Keys)
@@ -220,17 +203,12 @@ public static partial class FrozenLedger
                 {
                     throw new HistoryFinalStateException(
                         ImmutableArray.Create(material.RepoPath),
-                        $"Active module {material.RepoPath.Value} statement identity changed; append Revoke before rerunning ledger-sync.");
-                }
-
-                if (allowPendingReattestation)
-                {
-                    continue;
+                        $"Active module {material.RepoPath.Value} statement identity changed; append Revoke before rerunning ledger-append.");
                 }
 
                 throw new HistoryFinalStateException(
                     ImmutableArray.Create(material.RepoPath),
-                    $"Active module {material.RepoPath.Value} has material/blob drift and lacks a matching Reattest event; run ledger-sync to close it with Reattest in the same transaction.");
+                    $"Active module {material.RepoPath.Value} changed identity; append Revoke before rerunning ledger-append.");
             }
 
             var activeEntries = active.ToImmutableDictionary(StringComparer.Ordinal);
@@ -364,7 +342,6 @@ public static partial class FrozenLedger
         && payload.WitnessId == material.WitnessId
         && payload.FrozenNodeId == material.FrozenNodeId
         && payload.PrerequisiteFrozenNodeIds.SequenceEqual(material.PrerequisiteFrozenNodeIds)
-        && payload.Input.DescriptorBlobOid == material.Attestation.SourceBlobOid
         && payload.Input.DescriptorSelector == material.RepoPath.Value;
 
     private static StatementId ParseStatementId(string value, string label) =>

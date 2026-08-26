@@ -10,25 +10,17 @@ namespace StrataLint.Tests;
 public sealed class FrozenLedgerSchemaV4Tests
 {
     [Fact]
-    public void CurrentAttestationWritersOmitProjectionAliasesAndUseTheEventHashAddress()
+    public void CurrentFreezeWriterOmitsProjectionAliasesAndUsesTheEventHashAddress()
     {
         var catalog = BuildCatalog(Module("A"));
         var baselineBytes = FrozenLedgerGenerator.GenerateGenesis(
             catalog,
             new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
-        var baseline = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateGenesis(Load(baselineBytes), catalog)).Capability;
         var freezePayload = Payload(Lines(baselineBytes)[1]);
         var freezeEvent = FrozenLedgerCanonicalWriter.WriteDagEvent("Freeze", freezePayload);
-        var reattestedBytes = FrozenLedgerGenerator.AppendReattestation(
-            baseline,
-            Assert.Single(baseline.ActiveEntries).Key,
-            Assert.Single(baseline.ActiveEntries).Value.Payload.Input);
-        var reattestPayload = Payload(Lines(reattestedBytes)[^1]);
 
         Assert.Equal(4, FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion);
         AssertProjectionAliasesAbsent(freezePayload, includesNodePath: true);
-        AssertProjectionAliasesAbsent(reattestPayload, includesNodePath: false);
         Assert.Equal(
             freezeEvent.Hash,
             FrozenLedgerCanonicalWriter.EventIdentity("Freeze", freezePayload, freezeEvent.Hash));
@@ -56,11 +48,6 @@ public sealed class FrozenLedgerSchemaV4Tests
             .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly)
             .Select(static property => property.Name)
             .ToHashSet(StringComparer.Ordinal);
-        var reattestFields = typeof(FrozenReattestPayload)
-            .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly)
-            .Select(static property => property.Name)
-            .ToHashSet(StringComparer.Ordinal);
-
         Assert.Empty(freezeFields.Intersect(
         [
             "CaseClass",
@@ -71,7 +58,6 @@ public sealed class FrozenLedgerSchemaV4Tests
             "SemanticReceipt",
             "TruthState",
         ]));
-        Assert.Empty(reattestFields.Intersect(["InputFingerprint", "SemanticReceipt"]));
     }
 
     [Fact]
@@ -114,9 +100,4 @@ public sealed class FrozenLedgerSchemaV4Tests
         return document.RootElement.GetProperty("payload").Clone();
     }
 
-    private static FrozenLedgerSyntax Load(IEnumerable<byte> bytes)
-    {
-        var loaded = Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes.ToArray()));
-        return loaded.Syntax;
-    }
 }

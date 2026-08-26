@@ -14,7 +14,6 @@ public sealed class FrozenLedgerAdmissionDiagnosticsTests
     [InlineData("WitnessId")]
     [InlineData("FrozenNodeId")]
     [InlineData("PrerequisiteFrozenNodeIds")]
-    [InlineData("Input.DescriptorBlobOid")]
     [InlineData("Input.DescriptorSelector")]
     public void Sl008DiagnosticNamesExpectedAndActualForEachComparedField(string field)
     {
@@ -53,19 +52,18 @@ public sealed class FrozenLedgerAdmissionDiagnosticsTests
     [InlineData("WitnessId")]
     [InlineData("FrozenNodeId")]
     [InlineData("PrerequisiteFrozenNodeIds")]
-    [InlineData("Input.DescriptorBlobOid")]
     [InlineData("Input.DescriptorSelector")]
     [InlineData("all")]
-    public void Sl008AdmissionDecisionMatchesLegacySevenFieldPredicate(string mutation)
+    public void Sl008AdmissionDecisionMatchesTheSixIdentityFieldPredicate(string mutation)
     {
         var scenario = CreateScenario(mutation);
-        var legacyDecision = LegacyHistoricalActiveFreezeMatches(
+        var expectedDecision = HistoricalActiveFreezeMatches(
             scenario.Payload,
             scenario.ExpectedMaterial);
 
         var failure = Evaluate(scenario);
 
-        Assert.Equal(legacyDecision, failure is null);
+        Assert.Equal(expectedDecision, failure is null);
     }
 
     [Fact]
@@ -82,7 +80,6 @@ public sealed class FrozenLedgerAdmissionDiagnosticsTests
             "WitnessId",
             "FrozenNodeId",
             "PrerequisiteFrozenNodeIds",
-            "Input.DescriptorBlobOid",
             "Input.DescriptorSelector",
         };
         var offsets = fields
@@ -97,7 +94,7 @@ public sealed class FrozenLedgerAdmissionDiagnosticsTests
     {
         var scenario = CreateScenario("WitnessId", "FrozenNodeId");
         var expected =
-            $"Active module {ModulePath} has material/blob drift and lacks a matching Reattest event; run ledger-sync.; "
+            $"Active module {ModulePath} changed identity; append Revoke before rerunning ledger-append; "
             + "field differences: "
             + $"WitnessId expected={Sha256('c')}, actual={Sha256('2')}; "
             + $"FrozenNodeId expected={Sha256('d')}, actual={Sha256('3')}; "
@@ -214,17 +211,6 @@ public sealed class FrozenLedgerAdmissionDiagnosticsTests
             };
         }
 
-        if (mutationSet.Contains("Input.DescriptorBlobOid") || mutationSet.Contains("all"))
-        {
-            expected = expected with
-            {
-                Attestation = expected.Attestation with
-                {
-                    SourceBlobOid = FrozenLedgerTestData.GitOid('2'),
-                },
-            };
-        }
-
         var payload = PayloadFrom(actual);
         if (mutationSet.Contains("Input.DescriptorSelector") || mutationSet.Contains("all"))
         {
@@ -327,7 +313,7 @@ public sealed class FrozenLedgerAdmissionDiagnosticsTests
         AxiomClosure = material.AxiomClosure,
     };
 
-    private static bool LegacyHistoricalActiveFreezeMatches(
+    private static bool HistoricalActiveFreezeMatches(
         FrozenFreezePayload payload,
         FrozenNodeMaterial material) =>
         payload.DeclarationStatementIds.SequenceEqual(material.DeclarationStatementIds)
@@ -335,7 +321,6 @@ public sealed class FrozenLedgerAdmissionDiagnosticsTests
         && payload.WitnessId == material.WitnessId
         && payload.FrozenNodeId == material.FrozenNodeId
         && payload.PrerequisiteFrozenNodeIds.SequenceEqual(material.PrerequisiteFrozenNodeIds)
-        && payload.Input.DescriptorBlobOid == material.Attestation.SourceBlobOid
         && payload.Input.DescriptorSelector == material.RepoPath.Value;
 
     private static (string Expected, string Actual) ProbeFor(
@@ -352,8 +337,6 @@ public sealed class FrozenLedgerAdmissionDiagnosticsTests
             "PrerequisiteFrozenNodeIds" =>
                 (FormatNodeIds(material.PrerequisiteFrozenNodeIds),
                     FormatNodeIds(payload.PrerequisiteFrozenNodeIds)),
-            "Input.DescriptorBlobOid" =>
-                (material.Attestation.SourceBlobOid, payload.Input.DescriptorBlobOid),
             "Input.DescriptorSelector" =>
                 (material.RepoPath.Value, payload.Input.DescriptorSelector),
             _ => (material.StatementId.Value, payload.StatementId.Value),

@@ -346,13 +346,10 @@ public sealed partial class RevocationTests
         var ledger = Genesis(catalog);
         var node = Assert.Single(ledger.ActiveFrozenNodes);
         var receipts = ReceiptStore(ledger, KernelFailure(node));
-        var freeze = Assert.IsType<FrozenLedgerEvent.Freeze>(ledger.Events[1]);
-        var advancedBytes = FrozenLedgerGenerator.AppendReattestation(
-            ledger,
-            freeze.Payload.CaseId,
-            freeze.Payload.Input);
+        var advancedCatalog = BuildCatalog(Module("A"), Module("B"));
+        var advancedBytes = FrozenLedgerGenerator.AppendMissingFreezes(ledger, advancedCatalog);
         var advanced = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateCandidate(Load(advancedBytes), ledger, catalog)).Capability;
+            ValidateCandidate(Load(advancedBytes), ledger, advancedCatalog)).Capability;
 
         var rejected = Assert.IsType<RevocationEvidenceValidationOutcome.Rejected>(
             RevocationEvidenceValidator.Validate(receipts.Evidence[0], advanced, receipts.Store));
@@ -456,9 +453,10 @@ public sealed partial class RevocationTests
             ValidateCandidate(Load(resurrectBytes), baseline, baselineCatalog, receipts.Store));
         Assert.Contains("reused", resurrected.Message, StringComparison.OrdinalIgnoreCase);
 
-        var correctedCatalog = BuildCatalog(Module(
+        var correctedCatalog = BuildCatalog(ModuleWithReport(
             "A",
-            source: "theorem a : True := by exact True.intro\n"));
+            "theorem a : True ∧ True := by constructor <;> trivial\n",
+            "True ∧ True"));
         var correctedNode = Assert.Single(correctedCatalog.ClosedNodes);
         Assert.NotEqual(oldNode.FrozenNodeId, correctedNode.FrozenNodeId);
         var correctedBytes = FrozenLedgerGenerator.AppendMissingFreezes(revoked, correctedCatalog);

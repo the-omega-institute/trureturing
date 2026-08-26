@@ -537,7 +537,7 @@ public sealed partial class ProductionEnvironmentTests
             DagLedgerLoader.Load(baselineLedger.AsSpan())).Syntax;
         var baselineCapability = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
             FrozenLedgerTestData.ValidateGenesis(baselineSyntax, baselineCatalog)).Capability;
-        var currentLedger = FrozenLedgerGenerator.AppendSynchronization(
+        var currentLedger = FrozenLedgerGenerator.AppendMissingFreezes(
             baselineCapability,
             currentCatalog);
         SetLedger(fixture.Files, Encoding.UTF8.GetString(currentLedger.AsSpan()));

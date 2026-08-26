@@ -1,7 +1,6 @@
 using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Nodes;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -32,7 +31,7 @@ internal static class DagLedgerAppendWriter
             {
                 return new CommandResult(
                     true,
-                    $"LEDGER_APPEND appended_reattests=0 appended_freezes=0 no catalog reconciliation required "
+                    $"LEDGER_APPEND appended_freezes=0 no catalog reconciliation required "
                     + $"events={context.Baseline.Events.Length} head={context.Baseline.HeadHash}\n",
                     string.Empty);
             }
@@ -58,26 +57,19 @@ internal static class DagLedgerAppendWriter
             };
             RequireUnchangedBaseline(context.LedgerPath, context.BaselineFiles, "ledger-append");
 
-            var pending = BuildNewEventFiles(
-                candidateSyntax.Lines,
-                knownDagHashes: context.BaseView.EventHashes);
+            var pending = BuildNewEventFiles(candidateSyntax.Lines);
             var prospective = DagLedgerCommandPreparation.ValidateGeneratedEventFiles(
                 context.BaseView,
                 pending,
                 "generated frozen ledger suffix");
             WriteEventFiles(context.LedgerPath, pending, context.BaselineFiles);
             var appended = candidate.Events.Skip(context.Baseline.Events.Length).ToImmutableArray();
-            var reattests = appended
-                .OfType<FrozenLedgerEvent.Reattest>()
-                .ToImmutableArray();
             var freezes = appended
                 .OfType<FrozenLedgerEvent.Freeze>()
                 .ToImmutableArray();
-            var output = $"LEDGER_APPEND appended_reattests={reattests.Length} appended_freezes={freezes.Length} "
+            var output = $"LEDGER_APPEND appended_freezes={freezes.Length} "
                 + $"events={candidate.Events.Length} "
                 + $"head={context.BaseView.EventSetRoot(prospective.Select(static item => item.EventHash))}\n"
-                + string.Concat(reattests.Select(item =>
-                    $"REATTESTED {context.Baseline.ActiveEntries[item.Payload.CaseId].Material.RepoPath.Value}\n"))
                 + string.Concat(freezes.Select(static item => $"FROZEN {item.Payload.Input.DescriptorSelector}\n"));
             return new CommandResult(true, output, string.Empty);
         }
@@ -105,63 +97,26 @@ internal static class DagLedgerAppendWriter
         string directory,
         IEnumerable<FrozenLedgerLineSyntax> lines,
         int skip = 0,
-        ImmutableArray<RepositoryFile> expectedBaselineFiles = default,
-        FrozenLedgerSyntax? existingSyntax = null) =>
+        ImmutableArray<RepositoryFile> expectedBaselineFiles = default) =>
         WriteEventFiles(
             directory,
-            BuildNewEventFiles(lines, skip, existingSyntax),
+            BuildNewEventFiles(lines, skip),
             expectedBaselineFiles);
 
     internal static ImmutableArray<RepositoryFile> BuildNewEventFiles(
         IEnumerable<FrozenLedgerLineSyntax> lines,
-        int skip = 0,
-        FrozenLedgerSyntax? existingSyntax = null,
-        IReadOnlySet<string>? knownDagHashes = null)
+        int skip = 0)
     {
         var files = ImmutableArray.CreateBuilder<RepositoryFile>();
-        var linearToDagHash = new Dictionary<string, string>(StringComparer.Ordinal);
-        var existingDagHashByLinearHash = existingSyntax?.Lines
-            .Where(static line => line.SourceDagEventHash is not null)
-            .ToDictionary(
-                static line => line.Value.GetProperty("event_hash").GetString()!,
-                static line => line.SourceDagEventHash!,
-                StringComparer.Ordinal)
-            ?? new Dictionary<string, string>(StringComparer.Ordinal);
         var sequence = 0;
         foreach (var line in lines)
         {
             var eventType = line.Value.GetProperty("event_type").GetString()!;
             var payload = line.Value.GetProperty("payload");
-            var linearEventHash = line.Value.GetProperty("event_hash").GetString()!;
-            if (sequence < skip
-                && existingDagHashByLinearHash.TryGetValue(linearEventHash, out var existingDagHash))
-            {
-                linearToDagHash.Add(linearEventHash, existingDagHash);
-                sequence++;
-                continue;
-            }
-
-            if (payload.TryGetProperty("previous_attestation_event_hash", out var previous))
-            {
-                var previousHash = previous.GetString()!;
-                if (linearToDagHash.TryGetValue(previousHash, out var dagPrevious))
-                {
-                    var rewritten = JsonNode.Parse(payload.GetRawText())!.AsObject();
-                    rewritten["previous_attestation_event_hash"] = dagPrevious;
-                    payload = JsonSerializer.SerializeToElement(rewritten);
-                }
-                else if (knownDagHashes is null || !knownDagHashes.Contains(previousHash))
-                {
-                    throw new InvalidOperationException(
-                        "generated attestation names an unknown predecessor");
-                }
-            }
-
             var schemaVersion = sequence < skip && !payload.TryGetProperty("axiom_closure", out _)
                 ? 2
                 : FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion;
             var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(eventType, payload, schemaVersion);
-            linearToDagHash.Add(linearEventHash, encoded.Hash);
             if (sequence++ < skip)
             {
                 continue;

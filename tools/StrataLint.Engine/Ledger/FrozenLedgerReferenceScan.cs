@@ -158,42 +158,6 @@ internal static class FrozenLedgerReferenceProjection
         "prerequisite_frozen_node_ids", "statement_id", "witness_id",
     ];
 
-    internal static string[] LegacyReattestPayloadFields { get; } =
-    [
-        "case_id", "input", "input_fingerprint", "previous_attestation_event_hash", "semantic_receipt",
-    ];
-
-    internal static string[] LegacyReattestPayloadFieldsV3 { get; } =
-    [
-        "axiom_closure", "case_id", "input", "input_fingerprint",
-        "previous_attestation_event_hash", "semantic_receipt",
-    ];
-
-    internal static string[] ExtendedReattestPayloadFields { get; } =
-    [
-        "case_id", "declaration_statement_ids", "frozen_node_id", "input", "input_fingerprint",
-        "prerequisite_frozen_node_ids", "previous_attestation_event_hash", "semantic_receipt",
-        "statement_id", "witness_id",
-    ];
-
-    internal static string[] ExtendedReattestPayloadFieldsV3 { get; } =
-    [
-        "axiom_closure", "case_id", "declaration_statement_ids", "frozen_node_id", "input",
-        "input_fingerprint", "prerequisite_frozen_node_ids", "previous_attestation_event_hash",
-        "semantic_receipt", "statement_id", "witness_id",
-    ];
-
-    internal static string[] LegacyReattestPayloadFieldsV4 { get; } =
-    [
-        "axiom_closure", "case_id", "input", "previous_attestation_event_hash",
-    ];
-
-    internal static string[] ExtendedReattestPayloadFieldsV4 { get; } =
-    [
-        "axiom_closure", "case_id", "declaration_statement_ids", "frozen_node_id", "input",
-        "prerequisite_frozen_node_ids", "previous_attestation_event_hash", "statement_id", "witness_id",
-    ];
-
     internal static string[] RevokePayloadFields { get; } =
     [
         "affected_case_ids", "affected_frozen_node_ids", "closure_hash", "evidence",
@@ -243,7 +207,7 @@ public static partial class FrozenLedger
             return null;
         }
 
-        if (eventType is "Freeze" or "Reattest")
+        if (eventType == "Freeze")
         {
             RequireEventPayloadFields(payload, eventType, schemaVersion);
             if (!payload.TryGetProperty("input", out var input))
@@ -346,7 +310,7 @@ public static partial class FrozenLedger
                         RequiredString(payload, FrozenLedgerReferenceProjection.OriginTreeOid),
                         "Genesis origin tree");
                 }
-                else if (eventType is "Freeze" or "Reattest")
+                else if (eventType == "Freeze")
                 {
                     RequireEventPayloadFields(payload, eventType);
                     if (!payload.TryGetProperty("input", out var input))
@@ -460,7 +424,7 @@ public static partial class FrozenLedger
 
                 var eventType = RequiredString(root, "event_type");
                 var payload = root.GetProperty("payload");
-                if (eventType is "Freeze" or "Reattest")
+                if (eventType == "Freeze")
                 {
                     RequireEventPayloadFields(payload, eventType);
                     var parsed = ParseInput(payload.GetProperty("input"));
@@ -534,68 +498,27 @@ public static partial class FrozenLedger
         string eventType,
         int? schemaVersion = null)
     {
-        if (eventType == "Freeze")
+        if (eventType != "Freeze")
         {
-            if (schemaVersion is null
-                && (HasExactObjectFields(payload, FrozenLedgerReferenceProjection.FreezePayloadFields)
-                    || HasExactObjectFields(payload, FrozenLedgerReferenceProjection.FreezePayloadFieldsV3)
-                    || HasExactObjectFields(payload, FrozenLedgerReferenceProjection.FreezePayloadFieldsV4)))
-            {
-                return;
-            }
-
-            RequireObjectFields(
-                payload,
-                "Freeze payload",
-                schemaVersion switch
-                {
-                    3 => FrozenLedgerReferenceProjection.FreezePayloadFieldsV3,
-                    4 => FrozenLedgerReferenceProjection.FreezePayloadFieldsV4,
-                    _ => FrozenLedgerReferenceProjection.FreezePayloadFields,
-                });
-            return;
+            throw new FormatException($"Unknown frozen event type {eventType}.");
         }
 
-        var allowed = schemaVersion switch
-        {
-            2 => new[]
-            {
-                FrozenLedgerReferenceProjection.LegacyReattestPayloadFields,
-                FrozenLedgerReferenceProjection.ExtendedReattestPayloadFields,
-            },
-            3 => new[]
-            {
-                FrozenLedgerReferenceProjection.LegacyReattestPayloadFieldsV3,
-                FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV3,
-            },
-            4 => new[]
-            {
-                FrozenLedgerReferenceProjection.LegacyReattestPayloadFieldsV4,
-                FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV4,
-            },
-            _ => new[]
-            {
-                FrozenLedgerReferenceProjection.LegacyReattestPayloadFields,
-                FrozenLedgerReferenceProjection.ExtendedReattestPayloadFields,
-                FrozenLedgerReferenceProjection.LegacyReattestPayloadFieldsV3,
-                FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV3,
-                FrozenLedgerReferenceProjection.LegacyReattestPayloadFieldsV4,
-                FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV4,
-            },
-        };
-        if (allowed.Any(fields => HasExactObjectFields(payload, fields)))
+        if (schemaVersion is null
+            && (HasExactObjectFields(payload, FrozenLedgerReferenceProjection.FreezePayloadFields)
+                || HasExactObjectFields(payload, FrozenLedgerReferenceProjection.FreezePayloadFieldsV3)
+                || HasExactObjectFields(payload, FrozenLedgerReferenceProjection.FreezePayloadFieldsV4)))
         {
             return;
         }
 
         RequireObjectFields(
             payload,
-            "Reattest payload",
+            "Freeze payload",
             schemaVersion switch
             {
-                2 => FrozenLedgerReferenceProjection.ExtendedReattestPayloadFields,
-                4 => FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV4,
-                _ => FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV3,
+                3 => FrozenLedgerReferenceProjection.FreezePayloadFieldsV3,
+                4 => FrozenLedgerReferenceProjection.FreezePayloadFieldsV4,
+                _ => FrozenLedgerReferenceProjection.FreezePayloadFields,
             });
     }
 

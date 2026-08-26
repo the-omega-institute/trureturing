@@ -58,9 +58,7 @@ internal static class DagLedgerRevokeWriter
                 FrozenLedgerValidationOutcome.Rejected rejected => throw new FormatException(rejected.Message),
             };
 
-            var eventFiles = DagLedgerAppendWriter.BuildNewEventFiles(
-                candidate.Lines,
-                knownDagHashes: context.BaseView.EventHashes);
+            var eventFiles = DagLedgerAppendWriter.BuildNewEventFiles(candidate.Lines);
             _ = DagLedgerCommandPreparation.ValidateGeneratedEventFiles(
                 context.BaseView,
                 eventFiles,

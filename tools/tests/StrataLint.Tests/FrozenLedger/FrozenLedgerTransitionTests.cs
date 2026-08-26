@@ -93,38 +93,4 @@ public sealed partial class FrozenLedgerTests
         Assert.Contains("non-Closed", rejected.Message, StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void ReattestCannotSwapDescriptorBytes()
-    {
-        var catalog = BuildCatalog(Module("A"));
-        var bytes = FrozenLedgerGenerator.GenerateGenesis(
-            catalog,
-            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
-        var baseline = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateGenesis(
-                Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes.AsSpan())).Syntax,
-                catalog)).Capability;
-        var freeze = Assert.IsType<FrozenLedgerEvent.Freeze>(baseline.Events[1]);
-        var forged = new FrozenReattestPayload(
-            freeze.Payload.CaseId,
-            freeze.Payload.Input with { DescriptorBlobOid = GitOid('f') },
-            freeze.EventHash)
-        {
-            AxiomClosure = freeze.Payload.AxiomClosure,
-        };
-        var line = FrozenLedgerCanonicalWriter.WriteEvent(
-            "Reattest",
-            FrozenLedgerCanonicalWriter.ReattestElement(forged),
-            baseline.HeadHash,
-            baseline.Events.Length).Bytes;
-
-        var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
-            ValidateCandidate(
-                Assert.IsType<DagLedgerLoadOutcome.Loaded>(
-                    DagLedgerLoader.Load(bytes.Concat(line).ToArray())).Syntax,
-                baseline,
-                catalog));
-
-        Assert.Contains("attestation", rejected.Message, StringComparison.OrdinalIgnoreCase);
-    }
 }

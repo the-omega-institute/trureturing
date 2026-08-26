@@ -36,6 +36,23 @@ public sealed class LedgerAppendCommandTests
         Assert.DoesNotContain("UNKNOWN_COMMAND", console.Error, StringComparison.Ordinal);
     }
 
+    [Theory]
+    [InlineData("ledger-reattest")]
+    [InlineData("ledger-sync")]
+    public void RetiredLedgerVerbUsesUnknownCommandFailurePath(string command)
+    {
+        var console = new BufferedConsole();
+
+        var exitCode = CliApplication.Run(
+            new[] { command },
+            new StubCliEnvironment(new AdmissionOutcome.InfrastructureFailure("unused")),
+            console);
+
+        Assert.Equal(2, exitCode);
+        Assert.Equal($"UNKNOWN_COMMAND {command}\n", console.Error);
+        Assert.DoesNotContain(command, CliApplication.ImplementedCommands);
+    }
+
     [Fact]
     public void ProductionCommandAppendsEveryMissingFreezeWithoutRewritingTheBaseline()
     {
@@ -46,7 +63,6 @@ public sealed class LedgerAppendCommandTests
             new[] { "--candidate-lean-report", fixture.ReportPath });
 
         Assert.True(result.Success, result.Error);
-        Assert.Contains("appended_reattests=0", result.Output, StringComparison.Ordinal);
         Assert.Contains("appended_freezes=2", result.Output, StringComparison.Ordinal);
         var appendedBytes = FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath);
         var appendedLines = FrozenLedgerTestData.Lines(ImmutableArray.CreateRange(appendedBytes));
@@ -81,15 +97,13 @@ public sealed class LedgerAppendCommandTests
     [Fact]
     public void ProductionCommandWithOneAppendValidatesOnlyTheSuffixOids()
     {
-        using var fixture = new LedgerAppendFixture(
-            addSecondClosedModule: false,
-            historicalReattest: true);
+        using var fixture = new LedgerAppendFixture(addSecondClosedModule: false);
         var preparation = DagLedgerCommandPreparation.Prepare(
             fixture.Root,
             fixture.Gateway,
             fixture.ReportPath);
 
-        Assert.Equal(3, preparation.BaseView.EventCount);
+        Assert.Equal(2, preparation.BaseView.EventCount);
 
         var result = fixture.Environment.AppendLedger(
             new[] { "--candidate-lean-report", fixture.ReportPath });
@@ -108,21 +122,21 @@ public sealed class LedgerAppendCommandTests
     }
 
     [Fact]
-    public void ProductionCommandDirectsExistingIdentityDriftToLedgerSyncWithoutWriting()
+    public void ProductionCommandTreatsRepresentationDriftAsNoOpWithoutWriting()
     {
         using var fixture = new LedgerAppendFixture(
             driftARepresentation: true,
-            reportADriftInChangeSet: true);
+            addSecondClosedModule: false,
+            reportADriftInChangeSet: true,
+            aImportsB: true);
+        var before = FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath);
         var result = fixture.Environment.AppendLedger(
             new[] { "--candidate-lean-report", fixture.ReportPath });
 
-        Assert.False(result.Success, result.Output);
-        Assert.Contains(FrozenLedgerTestData.PathFor("A"), result.Error, StringComparison.Ordinal);
-        Assert.Contains("changed identity", result.Error, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("ledger-sync", result.Error, StringComparison.Ordinal);
-        Assert.Equal(
-            fixture.BaselineBytes.AsSpan().ToArray(),
-            FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("no catalog reconciliation required", result.Output, StringComparison.Ordinal);
+        Assert.Contains("appended_freezes=0", result.Output, StringComparison.Ordinal);
+        Assert.Equal(before, FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
     }
 
     [Fact]
@@ -157,14 +171,6 @@ public sealed class LedgerAppendCommandTests
             new[] { FrozenLedgerTestData.PathFor("A"), FrozenLedgerTestData.PathFor("B") },
             dependencyPreparation.Catalog.ClosedNodes.Select(static node => node.RepoPath.Value));
 
-        var dependencyResult = dependencyFixture.Environment.SyncLedger(
-            new[] { "--candidate-lean-report", dependencyFixture.ReportPath });
-        Assert.True(dependencyResult.Success, dependencyResult.Error);
-        Assert.Contains("appended_reattests=2", dependencyResult.Output, StringComparison.Ordinal);
-        Assert.Contains(
-            $"REATTESTED {FrozenLedgerTestData.PathFor("A")}",
-            dependencyResult.Output,
-            StringComparison.Ordinal);
     }
 
     [Fact]
@@ -198,7 +204,6 @@ public sealed class LedgerAppendCommandTests
 
         Assert.True(second.Success, second.Error);
         Assert.Contains("no catalog reconciliation required", second.Output, StringComparison.Ordinal);
-        Assert.Contains("appended_reattests=0", second.Output, StringComparison.Ordinal);
         Assert.Contains("appended_freezes=0", second.Output, StringComparison.Ordinal);
         Assert.Equal(appendedBytes, FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
     }
@@ -259,7 +264,7 @@ public sealed class LedgerAppendCommandTests
     {
         using var temporary = new TemporaryDirectory();
         var (baselineBytes, baseline, candidateCatalog) = ReconciliationFixture(includeNewModule: true);
-        var candidateBytes = FrozenLedgerGenerator.AppendSynchronization(baseline, candidateCatalog);
+        var candidateBytes = FrozenLedgerGenerator.AppendMissingFreezes(baseline, candidateCatalog);
         var candidateSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
             DagLedgerLoader.Load(candidateBytes.AsSpan())).Syntax;
         FrozenLedgerTestData.WriteLedgerDirectory(temporary.Path, baselineBytes);
@@ -273,7 +278,7 @@ public sealed class LedgerAppendCommandTests
         var competingCatalog = FrozenLedgerTestData.BuildCatalog(
             FrozenLedgerTestData.Module("A", source: competing),
             FrozenLedgerTestData.Module("C", imports: new[] { "A" }));
-        var competingBytes = FrozenLedgerGenerator.AppendSynchronization(baseline, competingCatalog);
+        var competingBytes = FrozenLedgerGenerator.AppendMissingFreezes(baseline, competingCatalog);
         var competingSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
             DagLedgerLoader.Load(competingBytes.AsSpan())).Syntax;
         DagLedgerAppendWriter.WriteNewEvents(
@@ -397,7 +402,6 @@ public sealed class LedgerAppendCommandTests
             string currentAStatementMaterial = "True",
             bool pinBump = false,
             bool addSecondClosedModule = true,
-            bool historicalReattest = false,
             bool reportADriftInChangeSet = false,
             bool aImportsB = false,
             bool reportBDriftInChangeSet = false,
@@ -504,19 +508,6 @@ public sealed class LedgerAppendCommandTests
                 new FrozenGenesisDescriptor(
                     FrozenLedgerTestData.GitOid('e'),
                     RuleCatalog.Default.RootSha256));
-            if (historicalReattest)
-            {
-                var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
-                    DagLedgerLoader.Load(BaselineBytes.AsSpan())).Syntax;
-                var baseline = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-                    FrozenLedgerTestData.ValidateGenesis(syntax, baselineCatalog)).Capability;
-                var entry = Assert.Single(baseline.ActiveEntries).Value;
-                BaselineBytes = FrozenLedgerGenerator.AppendReattestation(
-                    baseline,
-                    entry.Payload.CaseId,
-                    entry.Payload.Input);
-            }
-
             var files = new Dictionary<string, string>(StringComparer.Ordinal)
             {
                 ["lean-toolchain"] = currentToolchain,

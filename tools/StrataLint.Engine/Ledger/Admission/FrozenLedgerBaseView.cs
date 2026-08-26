@@ -110,11 +110,6 @@ internal sealed class FrozenLedgerBaseView
                 item.EventHash,
                 previousHash,
                 FrozenLedgerBaseViewReader.ReadFreeze(item.Payload, item.EventHash).Payload),
-            "Reattest" => new FrozenLedgerEvent.Reattest(
-                sequence,
-                item.EventHash,
-                previousHash,
-                FrozenLedgerBaseViewReader.ReadReattest(item.Payload)),
             FrozenLedger.SupersedeEventType => new FrozenLedgerEvent.Supersede(
                 sequence,
                 item.EventHash,
@@ -170,9 +165,8 @@ internal static class FrozenLedgerAttestationChain
     internal static ImmutableArray<TrustedFrozenLedgerEvent> ActiveAttestations(
         ImmutableArray<TrustedFrozenLedgerEvent> events)
     {
-        var byHash = events.ToDictionary(static item => item.EventHash, StringComparer.Ordinal);
         var superseded = events
-            .Where(static item => item.EventType is "Reattest" or FrozenLedger.SupersedeEventType)
+            .Where(static item => item.EventType == FrozenLedger.SupersedeEventType)
             .Select(static item => RequiredString(item.Payload, "previous_attestation_event_hash"))
             .ToImmutableHashSet(StringComparer.Ordinal);
         var revokedCases = events
@@ -186,19 +180,17 @@ internal static class FrozenLedgerAttestationChain
                 "affected_frozen_node_ids"))
             .ToImmutableHashSet(StringComparer.Ordinal);
         return events
-            .Where(static item => item.EventType is "Freeze" or "Reattest"
+            .Where(static item => item.EventType is "Freeze"
                 or FrozenLedger.SupersedeEventType)
             .Where(item => !superseded.Contains(item.EventHash)
                 && (revokedCases.Count == 0
                     || !revokedCases.Contains(RequiredString(item.Payload, "case_id")))
                 && (revokedNodes.Count == 0
-                    || !revokedNodes.Contains(ActiveFrozenNodeId(item, byHash))))
+                    || !revokedNodes.Contains(ActiveFrozenNodeId(item))))
             .ToImmutableArray();
     }
 
-    private static string ActiveFrozenNodeId(
-        TrustedFrozenLedgerEvent item,
-        IReadOnlyDictionary<string, TrustedFrozenLedgerEvent> byHash)
+    private static string ActiveFrozenNodeId(TrustedFrozenLedgerEvent item)
     {
         var visiting = new HashSet<string>(StringComparer.Ordinal);
         var current = item;
@@ -214,20 +206,6 @@ internal static class FrozenLedgerAttestationChain
                 || current.Payload.TryGetProperty("frozen_node_id", out _))
             {
                 return RequiredString(current.Payload, "frozen_node_id");
-            }
-
-            if (current.EventType == "Reattest")
-            {
-                var previousHash = RequiredString(
-                    current.Payload,
-                    "previous_attestation_event_hash");
-                if (!byHash.TryGetValue(previousHash, out current!))
-                {
-                    throw new InvalidOperationException(
-                        "trusted protected-base attestation chain names an absent predecessor");
-                }
-
-                continue;
             }
 
             if (current.EventType == "Freeze")
@@ -329,7 +307,7 @@ internal static class FrozenLedgerBaseViewReader
                 break;
             }
 
-            if (current.EventType is not ("Reattest" or FrozenLedger.SupersedeEventType))
+            if (current.EventType != FrozenLedger.SupersedeEventType)
             {
                 throw new InvalidOperationException(
                     $"trusted protected-base active event has unsupported type {current.EventType}");
@@ -347,8 +325,7 @@ internal static class FrozenLedgerBaseViewReader
 
         var freeze = ReadFreeze(chain[^1].Payload, chain[^1].EventHash);
         var coordinate = chain.First(static item => item.EventType is "Freeze"
-            or FrozenLedger.SupersedeEventType
-            || item.Payload.TryGetProperty("declaration_statement_ids", out _));
+            or FrozenLedger.SupersedeEventType);
         var axiomSource = chain.FirstOrDefault(static item =>
             item.Payload.TryGetProperty("axiom_closure", out _));
         var environmentSource = chain.FirstOrDefault(static item =>
@@ -373,7 +350,6 @@ internal static class FrozenLedgerBaseViewReader
             "Freeze" => CoordinateValues.FromFreeze(ReadFreeze(
                 coordinate.Payload,
                 coordinate.EventHash).Payload),
-            "Reattest" => CoordinateValues.FromReattest(ReadReattest(coordinate.Payload)),
             FrozenLedger.SupersedeEventType => CoordinateValues.FromSupersede(
                 ReadSupersede(coordinate.Payload)),
             _ => throw new InvalidOperationException(
@@ -382,7 +358,6 @@ internal static class FrozenLedgerBaseViewReader
         var headValues = head.EventType switch
         {
             "Freeze" => HeadValues.FromFreeze(ReadFreeze(head.Payload, head.EventHash).Payload),
-            "Reattest" => HeadValues.FromReattest(ReadReattest(head.Payload)),
             FrozenLedger.SupersedeEventType => HeadValues.FromSupersede(ReadSupersede(head.Payload)),
             _ => throw new InvalidOperationException(
                 $"trusted protected-base head event has unsupported type {head.EventType}"),
@@ -436,16 +411,6 @@ internal static class FrozenLedgerBaseViewReader
             payload.FrozenNodeId,
             payload.PrerequisiteFrozenNodeIds);
 
-        internal static CoordinateValues FromReattest(FrozenReattestPayload payload) => new(
-            payload.DeclarationStatementIds,
-            payload.StatementId ?? throw new FormatException(
-                "trusted extended Reattest is missing statement_id"),
-            payload.WitnessId ?? throw new FormatException(
-                "trusted extended Reattest is missing witness_id"),
-            payload.FrozenNodeId ?? throw new FormatException(
-                "trusted extended Reattest is missing frozen_node_id"),
-            payload.PrerequisiteFrozenNodeIds);
-
         internal static CoordinateValues FromSupersede(FrozenSupersedePayload payload) => new(
             payload.DeclarationStatementIds,
             payload.StatementId,
@@ -457,9 +422,6 @@ internal static class FrozenLedgerBaseViewReader
     private sealed record HeadValues(FrozenLedgerInput Input)
     {
         internal static HeadValues FromFreeze(FrozenFreezePayload payload) => new(
-            payload.Input);
-
-        internal static HeadValues FromReattest(FrozenReattestPayload payload) => new(
             payload.Input);
 
         internal static HeadValues FromSupersede(FrozenSupersedePayload payload) => new(
@@ -536,39 +498,6 @@ internal static class FrozenLedgerBaseViewReader
             freeze,
             eventHash,
             AxiomClosureKnown: !axiomClosure.IsDefault);
-    }
-
-    internal static FrozenReattestPayload ReadReattest(JsonElement payload)
-    {
-        var input = ReadInput(payload.GetProperty("input"));
-        var caseId = FrozenLedgerAttestationChain.RequiredString(payload, "case_id");
-        var previous = FrozenLedgerAttestationChain.RequiredString(
-            payload,
-            "previous_attestation_event_hash");
-        if (!payload.TryGetProperty("declaration_statement_ids", out var declarations))
-        {
-            return new FrozenReattestPayload(caseId, input, previous)
-            {
-                AxiomClosure = ReadOptionalAxiomClosure(payload),
-            };
-        }
-
-        var witness = WitnessId.Create(
-            FrozenLedgerAttestationChain.RequiredString(payload, "witness_id"));
-        var frozen = FrozenNodeId.Create(
-            FrozenLedgerAttestationChain.RequiredString(payload, "frozen_node_id"));
-        return new FrozenReattestPayload(
-            caseId,
-            ReadDeclarations(declarations),
-            frozen,
-            input,
-            ReadFrozenNodeIds(payload, "prerequisite_frozen_node_ids"),
-            previous,
-            StatementId.Create(FrozenLedgerAttestationChain.RequiredString(payload, "statement_id")),
-            witness)
-        {
-            AxiomClosure = ReadOptionalAxiomClosure(payload),
-        };
     }
 
     internal static FrozenSupersedePayload ReadSupersede(JsonElement payload) => new(

@@ -27,7 +27,7 @@ public static class FrozenCoverageLedger
                 var root = line.Value;
                 var eventType = RequiredString(root, "event_type");
                 var payload = RequiredObject(root, "payload");
-                if (!sawGenesis && eventType is "Freeze" or "Reattest" or "Supersede" or "Revoke")
+                if (!sawGenesis && eventType is "Freeze" or "Supersede" or "Revoke")
                 {
                     throw new FormatException($"{eventType} event occurs before Genesis");
                 }
@@ -59,33 +59,6 @@ public static class FrozenCoverageLedger
                         if (!activePaths.Add(path))
                         {
                             throw new FormatException($"Freeze has a duplicate path {path.Value}");
-                        }
-                        break;
-                    case "Reattest":
-                        // Reattest 换 frozen_node_id(witness 含 source blob),路径不变。
-                        // 不跟着换,后续 Revoke 指向新 id 时 active 表里没有它 ⟹ 整册被拒。
-                        // v4 extended 用正名 frozen_node_id。v2/v3 的 semantic_receipt 只作
-                        // 历史字节兼容，不是运行时 identity；v4 legacy 两者皆无。两种 legacy
-                        // 形都保持前驱 active identity 不动。
-                        var reattested = payload.TryGetProperty("frozen_node_id", out var freshNode)
-                            && freshNode.ValueKind == JsonValueKind.String
-                                ? freshNode.GetString()!
-                                : null;
-                        if (reattested is null)
-                        {
-                            break;
-                        }
-
-                        var reattestPath = RequiredString(
-                            payload.GetProperty("input"), "descriptor_selector");
-                        var priorNode = active.SingleOrDefault(item => item.Value.Value == reattestPath);
-                        if (!FrozenHashSyntax.IsSha256(reattested)
-                            || priorNode.Equals(default(KeyValuePair<string, RepoPath>))
-                            || !active.Remove(priorNode.Key, out var reattestedPath)
-                            || !active.TryAdd(reattested, reattestedPath))
-                        {
-                            throw new FormatException(
-                                "Reattest has an invalid or inactive node identity");
                         }
                         break;
                     case "Supersede":

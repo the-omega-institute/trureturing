@@ -75,13 +75,13 @@ public static partial class FrozenLedgerGenerator
                 || !active.DeclarationStatementIds.SequenceEqual(candidate.DeclarationStatementIds))
             {
                 throw new InvalidOperationException(
-                    $"Active module {path.Value} statement identity changed; append Revoke before rerunning ledger-sync.");
+                    $"Active module {path.Value} statement identity changed; append Revoke before rerunning ledger-append.");
             }
 
             if (active.FrozenNodeId != candidate.FrozenNodeId)
             {
                 throw new InvalidOperationException(
-                    $"Active module {path.Value} changed identity; run ledger-sync to reconcile it.");
+                    $"Active module {path.Value} changed identity; append Revoke before rerunning ledger-append.");
             }
         }
 
@@ -93,154 +93,6 @@ public static partial class FrozenLedgerGenerator
             .ToImmutableArray();
         return payloads;
     }
-
-    public static ImmutableArray<byte> AppendReattestation(
-        FrozenLedgerConsistent baseline,
-        string caseId,
-        FrozenLedgerInput input)
-    {
-        ArgumentNullException.ThrowIfNull(baseline);
-        ArgumentNullException.ThrowIfNull(caseId);
-        ArgumentNullException.ThrowIfNull(input);
-        if (!baseline.ActiveEntries.TryGetValue(caseId, out var entry))
-        {
-            throw new ArgumentException("Reattest case is not active.", nameof(caseId));
-        }
-
-        var payload = new FrozenReattestPayload(
-            caseId,
-            input,
-            entry.LastAttestationEventHash)
-        {
-            AxiomClosure = entry.Payload.AxiomClosure,
-        };
-        return Append(
-            baseline,
-            ImmutableArray.Create(("Reattest", FrozenLedgerCanonicalWriter.ReattestElement(payload))));
-    }
-
-    public static ImmutableArray<byte> AppendReattestation(
-        FrozenLedgerConsistent baseline,
-        FrozenMaterialCatalog candidateCatalog)
-    {
-        ArgumentNullException.ThrowIfNull(baseline);
-        ArgumentNullException.ThrowIfNull(candidateCatalog);
-        return Append(baseline, ReattestationEvents(baseline, candidateCatalog));
-    }
-
-    public static ImmutableArray<byte> AppendSynchronization(
-        FrozenLedgerConsistent baseline,
-        FrozenMaterialCatalog candidateCatalog)
-    {
-        ArgumentNullException.ThrowIfNull(baseline);
-        ArgumentNullException.ThrowIfNull(candidateCatalog);
-        var reattestations = ReattestationEvents(baseline, candidateCatalog);
-        var activeAfterReattestation = baseline.ActiveEntries.Values.ToDictionary(
-            static entry => entry.Material.RepoPath,
-            static entry => entry.Material);
-        foreach (var (path, candidate) in candidateCatalog.ByPath)
-        {
-            if (activeAfterReattestation.ContainsKey(path))
-            {
-                activeAfterReattestation[path] = candidate;
-            }
-        }
-
-        var freezes = MissingFreezeEvents(activeAfterReattestation, candidateCatalog);
-        return Append(baseline, reattestations.AddRange(freezes));
-    }
-
-    private static ImmutableArray<(string Type, JsonElement Payload)> ReattestationEvents(
-        FrozenLedgerConsistent baseline,
-        FrozenMaterialCatalog candidateCatalog)
-    {
-        var activeByPath = baseline.ActiveEntries.Values.ToDictionary(
-            static entry => entry.Material.RepoPath);
-        var currentClosedPaths = candidateCatalog.States
-            .Where(static item => item.Value is TruthState.Closed)
-            .Select(static item => item.Key)
-            .ToHashSet();
-        var payloads = ImmutableArray.CreateBuilder<(string Type, JsonElement Payload)>();
-        foreach (var (path, entry) in activeByPath.OrderBy(
-            static item => item.Key.Value,
-            StringComparer.Ordinal))
-        {
-            if (!currentClosedPaths.Contains(path))
-            {
-                throw new InvalidOperationException(
-                    $"Active module {path.Value} is no longer Closed; append Revoke before rerunning ledger-sync.");
-            }
-
-            if (!candidateCatalog.ByPath.TryGetValue(path, out var candidate))
-            {
-                continue;
-            }
-
-            if (entry.Payload.StatementId != candidate.StatementId
-                || !entry.Payload.DeclarationStatementIds.SequenceEqual(candidate.DeclarationStatementIds))
-            {
-                var candidateInput = FrozenLedgerCanonicalWriter.FreezePayload(
-                    candidateCatalog.Environment,
-                    candidate).Input;
-                var sourceUnchanged = entry.Payload.Input.DescriptorBlobOid
-                    == candidateInput.DescriptorBlobOid;
-                var pinsChanged = !entry.Payload.Input.SupportingBlobOids
-                    .Order(StringComparer.Ordinal)
-                    .SequenceEqual(
-                        candidateInput.SupportingBlobOids.Order(StringComparer.Ordinal),
-                        StringComparer.Ordinal);
-                if (sourceUnchanged && pinsChanged)
-                {
-                    throw new InvalidOperationException(
-                        $"Active module {path.Value} statement identity changed while its source blob is unchanged; run ledger-supersede for the environment-pin drift.");
-                }
-
-                throw new InvalidOperationException(
-                    $"Active module {path.Value} statement identity changed without an admissible source-preserving environment-pin drift; append Revoke, then add a new Freeze before rerunning ledger-sync.");
-            }
-
-            var materialUnchanged = entry.Material.FrozenNodeId == candidate.FrozenNodeId
-                && entry.Payload.Input.DescriptorBlobOid == candidate.Attestation.SourceBlobOid;
-            if (materialUnchanged && entry.AxiomClosureKnown)
-            {
-                continue;
-            }
-
-            var input = FrozenLedgerCanonicalWriter.FreezePayload(
-                candidateCatalog.Environment,
-                candidate).Input;
-            var payload = materialUnchanged
-                ? new FrozenReattestPayload(
-                    entry.Payload.CaseId,
-                    input,
-                    entry.LastAttestationEventHash)
-                {
-                    AxiomClosure = candidate.AxiomClosure,
-                }
-                : ExtendedReattestPayload(entry.Payload.CaseId, entry, candidate, input);
-            payloads.Add(("Reattest", FrozenLedgerCanonicalWriter.ReattestElement(payload)));
-        }
-
-        return payloads.ToImmutable();
-    }
-
-    private static FrozenReattestPayload ExtendedReattestPayload(
-        string caseId,
-        FrozenActiveEntry entry,
-        FrozenNodeMaterial material,
-        FrozenLedgerInput input) =>
-        new(
-            caseId,
-            material.DeclarationStatementIds,
-            material.FrozenNodeId,
-            input,
-            material.PrerequisiteFrozenNodeIds,
-            entry.LastAttestationEventHash,
-            material.StatementId,
-            material.WitnessId)
-        {
-            AxiomClosure = material.AxiomClosure,
-        };
 
     public static ImmutableArray<byte> AppendRevocation(
         FrozenLedgerConsistent baseline,
@@ -410,50 +262,6 @@ internal static class FrozenLedgerCanonicalWriter
             materializer = input.Materializer,
             supporting_blob_oids = input.SupportingBlobOids,
         });
-
-    internal static JsonElement ReattestElement(FrozenReattestPayload payload)
-    {
-        if (payload.IsLegacyFormat)
-        {
-            var element = JsonSerializer.SerializeToElement(new
-            {
-                case_id = payload.CaseId,
-                input = InputElement(payload.Input),
-                previous_attestation_event_hash = payload.PreviousAttestationEventHash,
-            });
-            return WithAxiomClosure(element, payload.AxiomClosure);
-        }
-
-        if (!payload.IsExtendedFormat)
-        {
-            throw new InvalidOperationException(
-                "Reattest payload must use either the legacy or extended field set.");
-        }
-
-        var frozenNodeId = payload.FrozenNodeId
-            ?? throw new InvalidOperationException("Extended Reattest is missing frozen_node_id.");
-        var statementId = payload.StatementId
-            ?? throw new InvalidOperationException("Extended Reattest is missing statement_id.");
-        var witnessId = payload.WitnessId
-            ?? throw new InvalidOperationException("Extended Reattest is missing witness_id.");
-        var extended = JsonSerializer.SerializeToElement(new
-        {
-            case_id = payload.CaseId,
-            declaration_statement_ids = payload.DeclarationStatementIds.Select(static declaration => new
-            {
-                declaration_name_key = declaration.DeclarationNameKey,
-                kind = declaration.Kind,
-                statement_id = declaration.StatementId.Value,
-            }),
-            frozen_node_id = frozenNodeId.Value,
-            input = InputElement(payload.Input),
-            prerequisite_frozen_node_ids = payload.PrerequisiteFrozenNodeIds.Select(static id => id.Value),
-            previous_attestation_event_hash = payload.PreviousAttestationEventHash,
-            statement_id = statementId.Value,
-            witness_id = witnessId.Value,
-        });
-        return WithAxiomClosure(extended, payload.AxiomClosure);
-    }
 
     private static JsonElement WithAxiomClosure(
         JsonElement value,

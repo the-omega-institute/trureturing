@@ -434,8 +434,6 @@ internal static class DagLedgerCommandPreparation
                 "Genesis" => result.Count == 0,
                 "Freeze" => result.Count > 0
                     && DependenciesPresent(item.Payload, "prerequisite_frozen_node_ids", identities),
-                "Reattest" => item.Payload.TryGetProperty("previous_attestation_event_hash", out var previous)
-                    && hashes.Contains(previous.GetString()!),
                 FrozenLedger.SupersedeEventType =>
                     item.Payload.TryGetProperty("previous_attestation_event_hash", out var previous)
                     && hashes.Contains(previous.GetString()!)

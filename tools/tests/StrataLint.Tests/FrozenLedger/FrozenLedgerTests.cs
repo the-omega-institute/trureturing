@@ -19,13 +19,6 @@ public sealed partial class FrozenLedgerTests
             catalog,
             new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
         var genesisSyntax = Loaded(genesis.AsSpan());
-        var history = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateGenesis(genesisSyntax, catalog)).Capability;
-        var reattest = FrozenLedgerGenerator.AppendReattestation(
-            history,
-            Assert.Single(history.ActiveEntries).Key,
-            Assert.Single(Assert.IsType<FrozenLedgerReferenceScanOutcome.Accepted>(
-                FrozenLedger.ScanReferences(genesisSyntax)).References.Inputs));
         var revokePayload = JsonSerializer.SerializeToElement(new
         {
             affected_case_ids = Array.Empty<string>(),
@@ -43,7 +36,6 @@ public sealed partial class FrozenLedgerTests
 
         AssertUnknownPayloadFieldRejected(genesisSyntax.RawBytes, 0);
         AssertUnknownPayloadFieldRejected(genesisSyntax.RawBytes, 1);
-        AssertUnknownPayloadFieldRejected(reattest, 2);
         var supersedeFixture = SupersedeFixture();
         AssertUnknownPayloadFieldRejected(
             AppendSupersede(supersedeFixture),
@@ -100,7 +92,7 @@ public sealed partial class FrozenLedgerTests
             FrozenHashDomains.FrozenCase,
             currentFreezePreimage.AsSpan());
         Assert.Equal(
-            "sha256:bc26beb01426312924f4e7ab9a8c3c133e613c24a3a17debb6d8cd6b9c0b94fc",
+            "sha256:57186bdd08632aaf5e457646a39b7a1fd1d6746e2ccff91482c1970958a510fa",
             expected);
         Assert.Equal(expected, FrozenLedger.ComputeCaseLeaf(payload));
 
@@ -113,7 +105,7 @@ public sealed partial class FrozenLedgerTests
             ValidateGenesis(syntax, catalog)).Capability;
         var corpusRoot = capability.CorpusRoot;
         Assert.Equal(
-            "sha256:ec20b7688474625e1c70a41871b3b47253dd672c43c960128ec3c812017effcb",
+            "sha256:b9ad4d943f7df27a05565878eafbeeef223485c940c70a05577894b2a52d8f1e",
             corpusRoot);
     }
 
@@ -298,90 +290,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.Equal(GitOid('f'), appended.Payload.Input.BaseCommitOid);
         Assert.Equal(GitOid('1'), appended.Payload.Input.BaseTreeOid);
-    }
-
-    [Fact]
-    public void ReattestCanRefreshReachabilityWithoutChangingFrozenIdentity()
-    {
-        var catalog = BuildCatalog(Module("A"));
-        var baselineBytes = FrozenLedgerGenerator.GenerateGenesis(
-            catalog,
-            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
-        var baselineSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
-            DagLedgerLoader.Load(baselineBytes.AsSpan())).Syntax;
-        var baseline = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateGenesis(baselineSyntax, catalog)).Capability;
-        var freeze = Assert.IsType<FrozenLedgerEvent.Freeze>(baseline.Events[1]);
-        var refreshedInput = freeze.Payload.Input with
-        {
-            BaseCommitOid = GitOid('f'),
-            BaseTreeOid = GitOid('1'),
-        };
-
-        var candidateBytes = FrozenLedgerGenerator.AppendReattestation(
-            baseline,
-            freeze.Payload.CaseId,
-            refreshedInput);
-        var candidateSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
-            DagLedgerLoader.Load(candidateBytes.AsSpan())).Syntax;
-        var accepted = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateCandidate(candidateSyntax, baseline, catalog));
-
-        Assert.Equal(
-            baseline.ActiveFrozenNodes.Single().FrozenNodeId,
-            accepted.Capability.ActiveFrozenNodes.Single().FrozenNodeId);
-        Assert.NotEqual(baseline.HeadHash, accepted.Capability.HeadHash);
-        var reattestPayload = candidateSyntax.Lines[^1].Value.GetProperty("payload");
-        Assert.Equal(
-            new[]
-            {
-                "axiom_closure",
-                "case_id",
-                "input",
-                "previous_attestation_event_hash",
-            },
-            reattestPayload.EnumerateObject()
-                .Select(static property => property.Name)
-                .Order(StringComparer.Ordinal));
-        Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateHistory(candidateSyntax, catalog));
-    }
-
-    [Fact]
-    public void ReattestFailsWhenItsCommitAndTreeWereNotValidatedByTheGitAdapter()
-    {
-        var catalog = BuildCatalog(Module("A"));
-        var baselineBytes = FrozenLedgerGenerator.GenerateGenesis(
-            catalog,
-            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
-        var baselineSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
-            DagLedgerLoader.Load(baselineBytes.AsSpan())).Syntax;
-        var baselineReferences = TrustedFrozenGitReferences.CreateForTrustedAdapter(
-            Assert.IsType<FrozenLedgerReferenceScanOutcome.Accepted>(
-                FrozenLedger.ScanReferences(baselineSyntax)).References.Inputs);
-        var baseline = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateGenesis(baselineSyntax, catalog, baselineReferences)).Capability;
-        var freeze = Assert.IsType<FrozenLedgerEvent.Freeze>(baseline.Events[1]);
-        var candidateBytes = FrozenLedgerGenerator.AppendReattestation(
-            baseline,
-            freeze.Payload.CaseId,
-            freeze.Payload.Input with
-            {
-                BaseCommitOid = GitOid('f'),
-                BaseTreeOid = GitOid('1'),
-            });
-        var candidateSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
-            DagLedgerLoader.Load(candidateBytes.AsSpan())).Syntax;
-
-        var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
-            ValidateCandidate(
-                candidateSyntax,
-                baseline,
-                catalog,
-                baselineReferences,
-                TrustedRevocationReceiptStore.Empty(baseline)));
-
-        Assert.Contains("Git", rejected.Message, StringComparison.OrdinalIgnoreCase);
     }
 
     private static FrozenLedgerSyntax Loaded(ReadOnlySpan<byte> bytes) =>

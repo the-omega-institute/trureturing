@@ -122,6 +122,9 @@ public sealed partial class ProductionEnvironmentTests
             [],
             "Nat",
             [dependencyModule]);
+        fixture.BaselineReports[RuleFixture.RingPath] = fixture.Reports[RuleFixture.RingPath];
+        fixture.Baseline[dependencyPath] = fixture.Files[dependencyPath];
+        fixture.BaselineReports[dependencyPath] = fixture.Reports[dependencyPath];
         _ = AddFrozenLedger(fixture);
         foreach (var item in fixture.Files)
         {
@@ -231,6 +234,7 @@ public sealed partial class ProductionEnvironmentTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         fixture.Reports[RuleFixture.RingPath] = RingReport(baselineAxioms);
+        fixture.BaselineReports[RuleFixture.RingPath] = fixture.Reports[RuleFixture.RingPath];
         _ = AddFrozenLedger(fixture);
         foreach (var item in fixture.Files)
         {

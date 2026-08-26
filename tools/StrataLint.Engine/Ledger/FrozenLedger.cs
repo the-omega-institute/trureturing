@@ -50,51 +50,6 @@ public sealed record FrozenFreezePayload(
     internal bool HasAxiomClosure => !AxiomClosure.IsDefault;
 }
 
-public sealed record FrozenReattestPayload(
-    string CaseId,
-    ImmutableArray<FrozenDeclarationStatement> DeclarationStatementIds,
-    FrozenNodeId? FrozenNodeId,
-    FrozenLedgerInput Input,
-    ImmutableArray<FrozenNodeId> PrerequisiteFrozenNodeIds,
-    string PreviousAttestationEventHash,
-    StatementId? StatementId,
-    WitnessId? WitnessId)
-{
-    public ImmutableArray<string> AxiomClosure { get; init; }
-
-    internal bool HasAxiomClosure => !AxiomClosure.IsDefault;
-
-    public FrozenReattestPayload(
-        string caseId,
-        FrozenLedgerInput input,
-        string previousAttestationEventHash)
-        : this(
-            caseId,
-            default,
-            null,
-            input,
-            default,
-            previousAttestationEventHash,
-            null,
-            null)
-    {
-    }
-
-    internal bool IsLegacyFormat =>
-        DeclarationStatementIds.IsDefault
-        && FrozenNodeId is null
-        && PrerequisiteFrozenNodeIds.IsDefault
-        && StatementId is null
-        && WitnessId is null;
-
-    internal bool IsExtendedFormat =>
-        !DeclarationStatementIds.IsDefault
-        && FrozenNodeId is not null
-        && !PrerequisiteFrozenNodeIds.IsDefault
-        && StatementId is not null
-        && WitnessId is not null;
-}
-
 public sealed record FrozenRevokePayload(
     ImmutableArray<string> AffectedCaseIds,
     ImmutableArray<FrozenNodeId> AffectedFrozenNodeIds,
@@ -135,12 +90,6 @@ public partial record FrozenLedgerEvent
         string EventHash,
         string PreviousHash,
         FrozenFreezePayload Payload);
-
-    public partial record Reattest(
-        int Sequence,
-        string EventHash,
-        string PreviousHash,
-        FrozenReattestPayload Payload);
 
     public partial record Supersede(
         int Sequence,

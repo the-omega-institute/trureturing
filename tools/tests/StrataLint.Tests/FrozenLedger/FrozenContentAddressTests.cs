@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using StrataLint.Cli;
 using StrataLint.Engine;
+using Trureturing.Truth;
 using static StrataLint.Tests.FrozenLedgerTestData;
 
 namespace StrataLint.Tests;
@@ -9,16 +10,20 @@ namespace StrataLint.Tests;
 public sealed class FrozenContentAddressTests
 {
     [Fact]
-    public void ProofOnlyRewritePreservesStatementIdAndChangesWitnessAndFrozenNodeIds()
+    public void ProofOnlyRewritePreservesWitnessAndFrozenNodeIdentity()
     {
-        var first = BuildCatalog(Module("A", source: "theorem a : True := by trivial\n"));
-        var second = BuildCatalog(Module("A", source: "theorem a : True := by exact True.intro\n"));
+        const string firstSource = "theorem a : True := by trivial\n";
+        var secondSource = firstSource;
+        secondSource = "theorem a : True := by exact True.intro\n";
+        var first = BuildCatalog(Module("A", source: firstSource));
+        var second = BuildCatalog(Module("A", source: secondSource));
 
         var firstNode = Assert.Single(first.ClosedNodes);
         var secondNode = Assert.Single(second.ClosedNodes);
+        Assert.NotEqual(firstNode.Attestation.SourceBlobOid, secondNode.Attestation.SourceBlobOid);
         Assert.Equal(firstNode.StatementId, secondNode.StatementId);
-        Assert.NotEqual(firstNode.WitnessId, secondNode.WitnessId);
-        Assert.NotEqual(firstNode.FrozenNodeId, secondNode.FrozenNodeId);
+        Assert.Equal(firstNode.WitnessId, secondNode.WitnessId);
+        Assert.Equal(firstNode.FrozenNodeId, secondNode.FrozenNodeId);
 
         const string source = "theorem a : True := by trivial\n";
         var raw = RawRepositorySnapshot.Create([
@@ -58,12 +63,109 @@ public sealed class FrozenContentAddressTests
     }
 
     [Fact]
+    public void WitnessV2PreimageContainsExactlyTheFiveIdentityFields()
+    {
+        var node = Assert.Single(BuildCatalog(Module(
+            "A",
+            axioms: new[] { "Classical.choice" })).ClosedNodes);
+        var material = JsonSerializer.SerializeToElement(new
+        {
+            axiom_closure = node.AxiomClosure,
+            imports = Array.Empty<string>(),
+            module_path = node.RepoPath.Value,
+            schema = "witness-v2",
+            statement_id = node.StatementId.Value,
+        });
+
+        Assert.Equal(
+            ["axiom_closure", "imports", "module_path", "schema", "statement_id"],
+            material.EnumerateObject().Select(static property => property.Name));
+        Assert.False(material.TryGetProperty("source_blob_oid", out _));
+        Assert.False(material.TryGetProperty("source_sha256", out _));
+        Assert.False(material.TryGetProperty("lean_toolchain_blob_oid", out _));
+        Assert.False(material.TryGetProperty("lake_manifest_blob_oid", out _));
+        Assert.Equal("witness-v2", material.GetProperty("schema").GetString());
+
+        var expected = FrozenContentHash.Compute(
+            FrozenHashDomains.Witness,
+            StructuredCanonicalWriter.WriteJson(material).AsSpan());
+        Assert.Equal(expected, node.WitnessId.Value);
+    }
+
+    [Fact]
+    public void PinBlobOidChangesPreserveWitnessIdentity()
+    {
+        const string firstToolchain = "leanprover/lean4:v4.24.0\n";
+        const string firstManifest = "{}\n";
+        var secondToolchain = firstToolchain;
+        var secondManifest = firstManifest;
+        secondToolchain = "leanprover/lean4:v4.31.0\n";
+        secondManifest = "{\"packages\":[]}\n";
+        var first = BuildCatalogWithEnvironment(
+            firstToolchain,
+            "[package]\nname = \"fixture\"\n",
+            firstManifest,
+            GitOid('a'),
+            GitOid('b'),
+            Module("A"));
+        var second = BuildCatalogWithEnvironment(
+            secondToolchain,
+            "[package]\nname = \"fixture\"\n",
+            secondManifest,
+            GitOid('a'),
+            GitOid('b'),
+            Module("A"));
+
+        var firstNode = Assert.Single(first.ClosedNodes);
+        var secondNode = Assert.Single(second.ClosedNodes);
+        Assert.Equal(firstNode.StatementId, secondNode.StatementId);
+        Assert.Equal(firstNode.Attestation.SourceBlobOid, secondNode.Attestation.SourceBlobOid);
+        Assert.NotEqual(
+            first.Environment.LeanToolchainBlobOid,
+            second.Environment.LeanToolchainBlobOid);
+        Assert.NotEqual(
+            first.Environment.LakeManifestBlobOid,
+            second.Environment.LakeManifestBlobOid);
+        Assert.Equal(firstNode.WitnessId, secondNode.WitnessId);
+    }
+
+    [Fact]
+    public void StatementIdChangeChangesWitnessIdentity()
+    {
+        const string source = "theorem a : True := by trivial\n";
+        const string firstStatement = "True";
+        var secondStatement = firstStatement;
+        secondStatement = "False";
+        var first = Assert.Single(BuildCatalog(
+            ModuleWithReport("A", source, firstStatement)).ClosedNodes);
+        var second = Assert.Single(BuildCatalog(
+            ModuleWithReport("A", source, secondStatement)).ClosedNodes);
+
+        Assert.Equal(first.Attestation.SourceBlobOid, second.Attestation.SourceBlobOid);
+        Assert.NotEqual(first.StatementId, second.StatementId);
+        Assert.NotEqual(first.WitnessId, second.WitnessId);
+    }
+
+    [Fact]
+    public void AxiomClosureChangeChangesWitnessIdentity()
+    {
+        const string source = "theorem a : True := by trivial\n";
+        var first = Assert.Single(BuildCatalog(Module("A", source)).ClosedNodes);
+        var second = Assert.Single(BuildCatalog(Module(
+            "A",
+            source,
+            axioms: new[] { "Classical.choice" })).ClosedNodes);
+
+        Assert.Equal(first.Attestation.SourceBlobOid, second.Attestation.SourceBlobOid);
+        Assert.Equal(first.StatementId, second.StatementId);
+        Assert.NotEqual(first.AxiomClosure, second.AxiomClosure);
+        Assert.NotEqual(first.WitnessId, second.WitnessId);
+    }
+
+    [Fact]
     public void ContentAddressBytesArePinnedOnAFixedFixture()
     {
-        // #3030 phase 1 invariant: shrinking the truth-DAG node domain to managed Lean modules
-        // must not move a single frozen address byte. The fixture snapshot deliberately carries
-        // non-Lean files (lean-toolchain, lakefile.toml, lake-manifest.json), so these literals
-        // span the domain change: they were captured before the shrink and must hold after it.
+        // Pin witness-v2 and derived frozen-node bytes for a representative dependency graph.
         var catalog = BuildCatalog(Module("A"), Module("B", imports: new[] { "A" }));
 
         var nodes = catalog.ClosedNodes
@@ -73,11 +175,11 @@ public sealed class FrozenContentAddressTests
         var a = nodes[0];
         var b = nodes[1];
         Assert.Equal("sha256:2737dabb279d14181efe09f7531e5c4664421bdbc19bbcf8b588f8d71123954c", a.StatementId.Value);
-        Assert.Equal("sha256:0d37e262a8c68df2ebd0e192b50b7167e5b697bb36d6f0c02649ede0e9844d9e", a.WitnessId.Value);
-        Assert.Equal("sha256:e6a10a73d813973ee49f0fa6bbb0ae9d2c3b2c7931a283509c1e3e97df05acde", a.FrozenNodeId.Value);
+        Assert.Equal("sha256:bced4890a6a5d0cfce247bb5608fbd2e1fd31a67f286ef45634b13e0bb09116b", a.WitnessId.Value);
+        Assert.Equal("sha256:65ca68f9792e942e51248f5ba3853bf2aa68b2dee1339d705ecfeb72b9074424", a.FrozenNodeId.Value);
         Assert.Equal("sha256:211af3769c4571cac3b50ccaad89160fef4f94e790bc01fdc890d927c6b63112", b.StatementId.Value);
-        Assert.Equal("sha256:6fbd91738bbd18aeb82433e85e57a82611c1bdf456463a51dbcaedfc483a838f", b.WitnessId.Value);
-        Assert.Equal("sha256:7c7584c4367278ce869226f688f6b67bfc072742811497c19f2d7fb197a8c15e", b.FrozenNodeId.Value);
+        Assert.Equal("sha256:d62be4f4f1020a5327aeee895906604afc45f47aafdf83a304365ddc807d9b0c", b.WitnessId.Value);
+        Assert.Equal("sha256:a4c3e6cec8afccd31005f5e5647c768526ac07455028266264a4b6f16945107d", b.FrozenNodeId.Value);
         var prerequisite = Assert.Single(b.PrerequisiteFrozenNodeIds);
         Assert.Equal(a.FrozenNodeId.Value, prerequisite.Value);
 
@@ -89,13 +191,13 @@ public sealed class FrozenContentAddressTests
             .OrderBy(static node => node.RepoPath.Value, StringComparer.Ordinal)
             .ToArray()[2];
         Assert.Equal("sha256:7fe10a833c778c19c4bf29a36f7a07486253042f63965d955ead898161fe7094", c.StatementId.Value);
-        Assert.Equal("sha256:bc2cc19c308ddbe355363aafa34dff87472b0f5cd4d35b5fb89f771b3d9c6a4b", c.WitnessId.Value);
-        Assert.Equal("sha256:65df0e281883e52131685be2fe5187a763c89314b8bc3f414e4f29c47cb57585", c.FrozenNodeId.Value);
+        Assert.Equal("sha256:026d035ace228a479271d344acdf23b6f624a026456b1c135d8fc0243420b47f", c.WitnessId.Value);
+        Assert.Equal("sha256:a921df0b56da97cda70c14f33eea1f5820368c1b8b0de02bbeb91dfa0d3a6ce6", c.FrozenNodeId.Value);
         Assert.Equal(
             new[]
             {
-                "sha256:7c7584c4367278ce869226f688f6b67bfc072742811497c19f2d7fb197a8c15e",
-                "sha256:e6a10a73d813973ee49f0fa6bbb0ae9d2c3b2c7931a283509c1e3e97df05acde",
+                "sha256:65ca68f9792e942e51248f5ba3853bf2aa68b2dee1339d705ecfeb72b9074424",
+                "sha256:a4c3e6cec8afccd31005f5e5647c768526ac07455028266264a4b6f16945107d",
             },
             c.PrerequisiteFrozenNodeIds.Select(static id => id.Value));
     }

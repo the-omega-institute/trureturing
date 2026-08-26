@@ -249,7 +249,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CheckRetainsScopedMaterialBlobDriftDetection()
+    public void CheckAllowsScopedMaterialBlobDriftWhenFrozenIdentityIsStable()
     {
         using var temporary = new TemporaryDirectory();
         var fixture = TrustedFrozenFixture();
@@ -265,15 +265,7 @@ public sealed partial class ProductionEnvironmentTests
         var outcome = environment.Check(
             ["--candidate-lean-report", WriteCandidateReport(temporary, fixture)]);
 
-        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
-        var diagnostic = Assert.Single(
-            rejected.Diagnostics.Where(static item => item.RuleId == RuleId.CreateKnown(8)));
-        Assert.Equal(RuleFixture.RingPath, diagnostic.Path);
-        Assert.Contains("material/blob drift", diagnostic.Message, StringComparison.Ordinal);
-        Assert.Contains(
-            "delta witness: " + RuleFixture.RingPath,
-            diagnostic.Message,
-            StringComparison.Ordinal);
+        Assert.IsType<AdmissionOutcome.Admitted>(outcome);
     }
 
     private static RuleFixture TrustedFrozenFixtureWithLedger(
@@ -292,45 +284,6 @@ public sealed partial class ProductionEnvironmentTests
         }
 
         return fixture;
-    }
-
-    private static string AddIncompleteReattest(RuleFixture fixture)
-    {
-        var payload = JsonSerializer.SerializeToElement(new
-        {
-            frozen_node_id = "sha256:" + new string('9', 64),
-            input = new
-            {
-                base_commit_oid = FrozenLedgerTestData.GitOid('a'),
-                base_tree_oid = FrozenLedgerTestData.GitOid('b'),
-                descriptor_blob_oid = FrozenLedgerTestData.GitBlobOid(
-                    fixture.Files[RuleFixture.RingPath]),
-                descriptor_selector = RuleFixture.RingPath,
-                materializer = "repository-snapshot-v1",
-                supporting_blob_oids = Array.Empty<string>(),
-            },
-        });
-        var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent("Reattest", payload);
-        var identity = FrozenLedgerCanonicalWriter.EventIdentity(
-            "Reattest",
-            payload,
-            encoded.Hash);
-        var path = FrozenLedgerChangeClassifier.AcceptedPath(identity);
-        fixture.Files[path] = Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
-        return path;
-    }
-
-    private static string AddMatchingReattest(
-        RuleFixture fixture,
-        FrozenLedgerConsistent baselineLedger,
-        out ImmutableArray<byte> reattestedLedger)
-    {
-        var candidateCatalog = BuildFrozenCatalog(fixture.Files, fixture.Reports);
-        reattestedLedger = FrozenLedgerGenerator.AppendReattestation(
-            baselineLedger,
-            candidateCatalog);
-        SetLedger(fixture.Files, Encoding.UTF8.GetString(reattestedLedger.AsSpan()));
-        return Assert.Single(AddedLedgerPaths(fixture), path => EventType(fixture.Files[path]) == "Reattest");
     }
 
     private static FrozenMaterialCatalog BuildFrozenCatalog(

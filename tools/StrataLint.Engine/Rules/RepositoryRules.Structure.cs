@@ -341,7 +341,7 @@ internal static partial class RepositoryRules
             {
                 findings.Add(new RuleFinding(
                     change.Path.Value,
-                    "accepted frozen-ledger event files are append-only; run ledger-sync to "
+                    "accepted frozen-ledger event files are append-only; run ledger-append to "
                     + "add a new event and do not modify an already-frozen fragment"));
             }
         }

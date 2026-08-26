@@ -15,7 +15,7 @@ public sealed class TruthExportCommandTests
     private const string Manifest = "{}\n";
 
     [Fact]
-    public void ExportEqualsStrictActiveSetDroppingRevokedAndKeepingReattested()
+    public void ExportEqualsStrictActiveSetDroppingRevokedNodes()
     {
         using var fixture = DivergentLedgerFixture();
         using var output = new TemporaryDirectory();
@@ -44,10 +44,6 @@ public sealed class TruthExportCommandTests
         Assert.Contains(model.Nodes, node => node.RepoPath == PathFor("A"));
         Assert.Contains(model.Nodes, node => node.RepoPath == PathFor("C"));
 
-        var exportedA = model.Nodes.Single(node => node.RepoPath == PathFor("A"));
-        Assert.Equal(fixture.ChangedAFrozenNodeId, exportedA.FrozenNodeId);
-        Assert.NotEqual(fixture.OriginalAFrozenNodeId, exportedA.FrozenNodeId);
-
         foreach (var node in expected)
         {
             var exportedNode = model.Nodes.Single(item => item.FrozenNodeId == node.FrozenNodeId.Value);
@@ -60,26 +56,6 @@ public sealed class TruthExportCommandTests
                 node.PrerequisiteFrozenNodeIds.Select(static id => id.Value),
                 exportedNode.PrerequisiteFrozenNodeIds);
         }
-    }
-
-    [Fact]
-    public void PendingReattestationDriftFailsClosedWithNoOutput()
-    {
-        var original = Module("A", source: "theorem a : True := by trivial\n");
-        var changed = Module("A", source: "-- drifted\ntheorem a : True := by trivial\n");
-        var genesisCatalog = BuildCatalog(original);
-        var ledgerBytes = FrozenLedgerGenerator.GenerateGenesis(
-            genesisCatalog,
-            new FrozenGenesisDescriptor(GitOid('e'), Sha256("historical-rule-catalog")));
-        using var fixture = FixtureFromLedger(ledgerBytes, [changed]);
-        using var output = new TemporaryDirectory();
-
-        var (exitCode, console) = Run(fixture, output.Path);
-
-        Assert.Equal(2, exitCode);
-        Assert.Contains("TRUTH_EXPORT_REJECTED", console.Error, StringComparison.Ordinal);
-        Assert.False(File.Exists(Path.Combine(output.Path, "truth-export.v1.json")));
-        Assert.Empty(Directory.EnumerateFiles(output.Path));
     }
 
     [Fact]
@@ -201,7 +177,6 @@ public sealed class TruthExportCommandTests
     private static TruthExportFixture DivergentLedgerFixture()
     {
         var originalA = Module("A", source: "theorem a : True := by trivial\n");
-        var changedA = Module("A", source: "-- reattested\ntheorem a : True := by trivial\n");
         var moduleB = Module("B");
         var moduleC = Module("C");
 
@@ -210,26 +185,18 @@ public sealed class TruthExportCommandTests
             genesisCatalog,
             new FrozenGenesisDescriptor(GitOid('e'), Sha256("historical-rule-catalog"))), genesisCatalog);
 
-        var reattestCatalog = BuildCatalog(changedA, moduleB, moduleC);
-        var reattestBytes = FrozenLedgerGenerator.AppendReattestation(genesis, reattestCatalog);
-        var reattested = Baseline(reattestBytes, reattestCatalog);
-
-        var bNode = reattested.ActiveFrozenNodes.Single(node => node.RepoPath.Value == PathFor("B"));
-        var (evidence, store) = ReceiptStore(reattested, KernelFailure(bNode));
+        var bNode = genesis.ActiveFrozenNodes.Single(node => node.RepoPath.Value == PathFor("B"));
+        var (evidence, store) = ReceiptStore(genesis, KernelFailure(bNode));
         var validated = Assert.IsType<RevocationEvidenceValidationOutcome.Accepted>(
-            RevocationEvidenceValidator.Validate(evidence[0], reattested, store)).Capability;
+            RevocationEvidenceValidator.Validate(evidence[0], genesis, store)).Capability;
         var plan = Assert.IsType<RevocationPlanOutcome.Accepted>(
-            RevocationPlanner.Plan(reattested, [validated])).Capability;
-        var ledgerBytes = FrozenLedgerGenerator.AppendRevocation(reattested, plan);
+            RevocationPlanner.Plan(genesis, [validated])).Capability;
+        var ledgerBytes = FrozenLedgerGenerator.AppendRevocation(genesis, plan);
 
-        var finalCatalog = BuildCatalog(changedA, moduleC);
-        var fixture = FixtureFromLedger(ledgerBytes, [changedA, moduleC]);
+        var finalCatalog = BuildCatalog(originalA, moduleC);
+        var fixture = FixtureFromLedger(ledgerBytes, [originalA, moduleC]);
         fixture.LedgerBytes = ledgerBytes;
         fixture.FinalCatalog = finalCatalog;
-        fixture.OriginalAFrozenNodeId = genesisCatalog.ClosedNodes
-            .Single(node => node.RepoPath.Value == PathFor("A")).FrozenNodeId.Value;
-        fixture.ChangedAFrozenNodeId = finalCatalog.ClosedNodes
-            .Single(node => node.RepoPath.Value == PathFor("A")).FrozenNodeId.Value;
         return fixture;
     }
 
@@ -420,10 +387,6 @@ public sealed class TruthExportCommandTests
         internal ImmutableArray<byte> LedgerBytes { get; set; }
 
         internal FrozenMaterialCatalog FinalCatalog { get; set; } = null!;
-
-        internal string OriginalAFrozenNodeId { get; set; } = string.Empty;
-
-        internal string ChangedAFrozenNodeId { get; set; } = string.Empty;
 
         public void Dispose() => temporary.Dispose();
     }

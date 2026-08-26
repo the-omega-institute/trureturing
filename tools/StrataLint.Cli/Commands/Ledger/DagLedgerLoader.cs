@@ -203,13 +203,6 @@ public static class DagLedgerLoader
                 && placedIdentities.Contains(prerequisite.GetString()!));
         }
 
-        if (item.EventType == "Reattest")
-        {
-            return item.Payload.TryGetProperty("previous_attestation_event_hash", out var previous)
-                && previous.ValueKind == JsonValueKind.String
-                && placedHashes.Contains(previous.GetString()!);
-        }
-
         if (item.EventType == FrozenLedger.SupersedeEventType)
         {
             return item.Payload.TryGetProperty("previous_attestation_event_hash", out var previous)

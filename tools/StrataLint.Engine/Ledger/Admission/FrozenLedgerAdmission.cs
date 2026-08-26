@@ -264,26 +264,6 @@ public static partial class FrozenLedger
                             new FrozenActiveEntry(material, freeze, item.EventHash));
                         activePathCases.Add(freezePath, freeze.CaseId);
                     }
-                    else if (item.EventType == "Reattest")
-                    {
-                        var reattest = ParseReattest(
-                            item.Payload,
-                            active,
-                            trustedReferences,
-                            requireAxiomClosure: true);
-                        var entry = active[reattest.CaseId];
-                        var material = ValidateReattestCandidateMaterial(
-                            reattest,
-                            entry,
-                            catalog,
-                            "is not Closed");
-
-                        active[reattest.CaseId] = ApplyReattest(
-                            entry,
-                            reattest,
-                            item.EventHash,
-                            material);
-                    }
                     else if (item.EventType == SupersedeEventType)
                     {
                         var supersede = ValidateSupersede(
@@ -399,7 +379,7 @@ public static partial class FrozenLedger
                     return Failure(
                         [path],
                         scope.WitnessesFor(path),
-                        $"Closed module {path.Value} is missing a Freeze event; run ledger-sync.");
+                        $"Closed module {path.Value} is missing a Freeze event; run ledger-append.");
                 }
 
                 if (!hasExpected && hasActual)
@@ -441,7 +421,7 @@ public static partial class FrozenLedger
                 return Failure(
                     [path],
                     scope.WitnessesFor(path),
-                    $"Active module {path.Value} has material/blob drift and lacks a matching Reattest event; run ledger-sync.; field differences: {differenceMessage}");
+                    $"Active module {path.Value} changed identity; append Revoke before rerunning ledger-append; field differences: {differenceMessage}");
             }
 
             return null;
@@ -512,14 +492,6 @@ public static partial class FrozenLedger
                 material.PrerequisiteFrozenNodeIds,
                 payload.PrerequisiteFrozenNodeIds,
                 static item => item.Value));
-        }
-
-        if (payload.Input.DescriptorBlobOid != material.Attestation.SourceBlobOid)
-        {
-            result.Add(ScalarDifference(
-                "Input.DescriptorBlobOid",
-                material.Attestation.SourceBlobOid,
-                payload.Input.DescriptorBlobOid));
         }
 
         if (payload.Input.DescriptorSelector != material.RepoPath.Value)
