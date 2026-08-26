@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/ExperimentDesign/StaticExactExperimentDesign
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Two complementary change experiments are jointly exact, and every
-   exact static selection contains both. -/
+   digest: Two complementary change experiments are jointly exact, and every exact static selection contains both. -/
 
 import D5.S3.ConceptDynamics.Faithfulness.JointFaithfulnessLeibnizCriterion
 import Mathlib.Tactic
