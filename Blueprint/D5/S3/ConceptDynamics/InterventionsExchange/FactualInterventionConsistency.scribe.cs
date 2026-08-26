@@ -2,13 +2,13 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.InterventionsCore;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.InterventionsExchange;
 
 internal sealed class FactualInterventionConsistencyDocument
     : IScribeDocumentDefinition
 {
     private const string Declaration =
-        "D5/S3/ConceptDynamics/InterventionsCore/FactualInterventionConsistency."
+        "D5/S3/ConceptDynamics/InterventionsExchange/FactualInterventionConsistency."
             + "factual_intervention_consistency";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(

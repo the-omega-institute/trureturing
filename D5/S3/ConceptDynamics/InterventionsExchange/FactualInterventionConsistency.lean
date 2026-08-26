@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/InterventionsCore/FactualInterventionConsistency
+/- GID: D5/S3/ConceptDynamics/InterventionsExchange/FactualInterventionConsistency
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/InterventionsCore/FactualInterventionConsistency
+   mirror-B: D5/B/S3/ConceptDynamics/InterventionsExchange/FactualInterventionConsistency
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: A factual outcome agrees with the matching intervention under one shared mechanism. -/
@@ -18,7 +18,7 @@
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.InterventionsCore.FactualInterventionConsistency
+namespace D5.S3.ConceptDynamics.InterventionsExchange.FactualInterventionConsistency
 
 universe uU uX uY
 
@@ -47,4 +47,4 @@ example :
 
 #print axioms factual_intervention_consistency
 
-end D5.S3.ConceptDynamics.InterventionsCore.FactualInterventionConsistency
+end D5.S3.ConceptDynamics.InterventionsExchange.FactualInterventionConsistency
