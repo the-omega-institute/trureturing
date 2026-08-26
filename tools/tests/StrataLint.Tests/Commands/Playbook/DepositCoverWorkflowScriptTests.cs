@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json;
+using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -29,6 +30,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "dotnet:ledger-append",
             ],
             fixture.CallKinds());
+        AssertDepositPerformanceEvents(fixture);
 
         var phaseA = fixture.CommitPaths("HEAD~1");
         Assert.Contains(TransactionFixture.LeanPath, phaseA);
@@ -331,6 +333,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var deposit = fixture.Run("deposit");
         Assert.True(deposit.ExitCode == 0, Diagnostics(deposit));
         fixture.ClearCalls();
+        fixture.ClearPerformanceEvents();
         var before = fixture.CommitCount();
 
         var result = fixture.Run("cover");
@@ -345,6 +348,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "make:emit",
             ],
             fixture.CallKinds());
+        AssertCoverPerformanceEvents(fixture);
         Assert.Contains("aligned: covered", fixture.BackfillContents(), StringComparison.Ordinal);
         Assert.Equal("emission: covered\n", fixture.EmissionContents());
         Assert.Empty(fixture.Status());
@@ -367,7 +371,25 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(before + 1, fixture.CommitCount());
         Assert.Contains("cover_disposition:", fixture.BackfillContents(), StringComparison.Ordinal);
         Assert.Equal(["make:lean-report", "dotnet:cover-atom"], fixture.CallKinds());
+        AssertFailedCoverPerformanceEvents(fixture);
         Assert.Empty(fixture.Status());
+
+        using var probeFailureFixture = new TransactionFixture();
+        var probeFailure = probeFailureFixture.Run(
+            "cover",
+            coverDispositionFailure: true,
+            usePerformanceProbeOverrides: false,
+            failPerformanceCommitProbe: true);
+        Assert.NotEqual(0, probeFailure.ExitCode);
+        var degradedEvents = probeFailureFixture.PerformanceEvents()
+            .Select(PerfEventCodec.ParseLine)
+            .ToArray();
+        Assert.NotEmpty(degradedEvents);
+        Assert.All(degradedEvents, item =>
+        {
+            Assert.Equal("unknown", item.Context.Commit);
+            Assert.Equal("observation", item.Status);
+        });
     }
 
     private static string Diagnostics(ProcessOutput result) =>
@@ -393,6 +415,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
         internal const string ReceiptRelativePath = "Meta/Digestion/formalizations/atom-1.v1.json";
         internal const string SecondaryReceiptRelativePath =
             "Meta/Digestion/formalizations/atom-2.v1.json";
+        internal const string PerformanceCommit = "0123456789abcdef0123456789abcdef01234567";
+        internal const string PerformanceLoadavg = "0.25";
+        internal const string PerformanceHostConcurrency = "3";
 
         private const string ScriptPath = "tools/scripts/workflow/playbook-workflows.sh";
         private readonly TemporaryDirectory temporary = new();
@@ -404,6 +429,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             Root = temporary.Path;
             binPath = Path.Combine(Root, "bin");
             callsPath = Path.Combine(Root, "calls");
+            performanceLedgerPath = Path.Combine(performance.Path, "events.jsonl");
             Directory.CreateDirectory(binPath);
             CopyScript();
             File.Copy(
@@ -414,6 +440,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             WriteFile(DefinitionPath, "definition baseline\n");
             WriteFile(EmissionPath, "emission: baseline\n");
             Directory.CreateDirectory(Path.Combine(Root, LedgerPath));
+            File.WriteAllBytes(Path.Combine(binPath, "StrataLint.Cli.dll"), []);
             WriteFile(BackfillPath, $"atom_id: {AtomId}\ncoverage: false\naligned: false\n");
             WriteMakeStub();
             WriteDotnetStub();
@@ -621,37 +648,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
             WriteFile(receiptRelativePath + ".tmp.abandoned", "partial receipt\n");
         }
 
-        internal ProcessOutput Run(
-            string command,
-            string gid = Gid,
-            string atomId = AtomId,
-            bool staleReport = false,
-            bool invalidReceipt = false,
-            bool coverDispositionFailure = false,
-            string? mutateReceiptAfterPrepare = null,
-            TimeSpan? timeout = null,
-            string? baseRevision = null) =>
-            BoundedProcessRunner.Run(
-                "/usr/bin/env",
-                [
-                    $"PATH={binPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
-                    $"PLAYBOOK_TEST_CALLS={callsPath}",
-                    $"PLAYBOOK_STALE_REPORT={(staleReport ? "1" : "0")}",
-                    $"PLAYBOOK_INVALID_RECEIPT={(invalidReceipt ? "1" : "0")}",
-                    $"PLAYBOOK_COVER_DISPOSITION_FAILURE={(coverDispositionFailure ? "1" : "0")}",
-                    $"PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE={mutateReceiptAfterPrepare ?? string.Empty}",
-                    $"PLAYBOOK_TARGET_MODULE={(gid == SecondaryGid ? SecondaryLeanPath : gid == NewGid ? NewLeanPath : LeanPath)}",
-                    "/bin/bash",
-                    Path.Combine(Root, ScriptPath),
-                    command,
-                    baseRevision ?? (command == "deposit" ? "HEAD" : "synthetic-base"),
-                    atomId,
-                    gid,
-                ],
-                Root,
-                timeout ?? BoundedProcessRunner.HangDetectionBudget,
-                128 * 1024);
-
         internal int CommitCount() => int.Parse(Git("rev-list", "--count", "HEAD").Trim());
 
         internal int FreezeCount(string leanPath = LeanPath) =>
@@ -738,14 +734,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
             if (File.Exists(callsPath)) File.Delete(callsPath);
         }
 
-        private void CopyScript()
-        {
-            var root = TestRepositoryLayout.FindRoot();
-            var target = Path.Combine(Root, ScriptPath);
-            Directory.CreateDirectory(Path.GetDirectoryName(target)!);
-            File.Copy(Path.Combine(root, ScriptPath), target);
-        }
-
         private string Git(params string[] arguments)
         {
             var result = BoundedProcessRunner.Run(
@@ -783,8 +771,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
             Directory.CreateDirectory(Path.GetDirectoryName(path) ?? Root);
             File.WriteAllText(path, content, new UTF8Encoding(false));
         }
-
-        public void Dispose() => temporary.Dispose();
 
     }
 }

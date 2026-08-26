@@ -14,13 +14,40 @@ BATCH_GIDS=()
 PREPARED_RECEIPT_PATH=""
 PREPARED_RECEIPT_ORIGINAL_PATH=""
 PREPARED_RECEIPT_REPLACES_EXISTING=0
+PERF_ENABLED=0
+PERF_TMP=""
+PERF_EVENT_SPOOL=""
+PERF_WORKLOAD_ID=""
+PERF_BASE="unknown"
+PERF_RUN_ID=""
+PERF_STARTED=0
+PERF_ACTIVE_STAGE=""
+PERF_STAGE_STARTED=0
 
 cleanup_prepared_receipt() {
   [[ -z "$PREPARED_RECEIPT_PATH" ]] || rm -f -- "$PREPARED_RECEIPT_PATH"
   [[ -z "$PREPARED_RECEIPT_ORIGINAL_PATH" ]] \
     || rm -f -- "$PREPARED_RECEIPT_ORIGINAL_PATH"
 }
-trap cleanup_prepared_receipt EXIT
+
+finish_playbook() {
+  local rc=$? finished status="failed"
+  trap - EXIT
+  set +e
+  cleanup_prepared_receipt
+  if [[ "$PERF_ENABLED" -eq 1 ]]; then
+    [[ -z "$PERF_ACTIVE_STAGE" ]] || complete_step failed
+    [[ "$rc" -ne 0 ]] || status="passed"
+    finished="$(date +%s 2>/dev/null || printf '%s' "$PERF_STARTED")"
+    perf_capture_event \
+      "$PERF_EVENT_SPOOL" "$ROOT" "$PERF_RUN_ID" "$PERF_WORKLOAD_ID" "$PERF_BASE" \
+      total "$status" "$((finished-PERF_STARTED))" || true
+    perf_flush_events "$ROOT" "$PERF_EVENT_SPOOL" "$PERF_WORKLOAD_ID" 2>/dev/null || true
+  fi
+  [[ -z "$PERF_TMP" ]] || rm -rf -- "$PERF_TMP"
+  exit "$rc"
+}
+trap finish_playbook EXIT
 
 run_cli() {
   dotnet run --project "$PROJECT" --configuration Release -- "$@"
@@ -35,11 +62,30 @@ receipts_stage() {
   run_digest_status
 }
 
+begin_step() {
+  local label="$1"
+  printf 'PLAYBOOK_STEP command=%s detail=%s\n' "$COMMAND" "$label" >&2
+  PERF_ACTIVE_STAGE="$label"
+  PERF_STAGE_STARTED="$(date +%s)"
+}
+
+complete_step() {
+  local status="$1" finished
+  finished="$(date +%s)"
+  if [[ "$PERF_ENABLED" -eq 1 ]]; then
+    perf_capture_event \
+      "$PERF_EVENT_SPOOL" "$ROOT" "$PERF_RUN_ID" "$PERF_WORKLOAD_ID" "$PERF_BASE" \
+      "$PERF_ACTIVE_STAGE" "$status" "$((finished-PERF_STAGE_STARTED))" || true
+  fi
+  PERF_ACTIVE_STAGE=""
+}
+
 step() {
   local label="$1"
   shift
-  printf 'PLAYBOOK_STEP command=%s detail=%s\n' "$COMMAND" "$label" >&2
+  begin_step "$label"
   "$@"
+  complete_step passed
 }
 
 require_transaction_arguments() {
@@ -136,7 +182,6 @@ cleanup_transaction_temporaries() {
 }
 
 commit_phase_a_if_needed() {
-  printf 'PLAYBOOK_STEP command=deposit detail=stage-phase-a\n' >&2
   git add -A
   git reset --quiet HEAD -- "$FROZEN_LEDGER" "$RECEIPT_PATH"
   if git diff --cached --quiet; then
@@ -149,7 +194,6 @@ commit_phase_a_if_needed() {
 
 commit_all_if_needed() {
   local message="$1"
-  printf 'PLAYBOOK_STEP command=%s detail=stage-final-tree\n' "$COMMAND" >&2
   git add -A
   if git diff --cached --quiet; then
     printf 'PLAYBOOK_SKIP command=%s detail=final-tree-unchanged\n' "$COMMAND" >&2
@@ -512,7 +556,6 @@ prepare_formalization_receipt() {
     --out "$temporary"
   )
 
-  printf 'PLAYBOOK_STEP command=deposit detail=validate-formalization-receipt\n' >&2
   if run_cli "${receipt_arguments[@]}"; then
     :
   else
@@ -613,11 +656,14 @@ cover_atom_or_resume() {
 }
 
 cover_row() {
-  if step cover-atom cover_atom_or_resume; then
-    :
+  begin_step cover-atom
+  if cover_atom_or_resume; then
+    complete_step passed
   else
     local status=$?
-    commit_all_if_needed "formalize: record failed cover disposition for $ATOM_ID"
+    complete_step failed
+    step stage-final-tree commit_all_if_needed \
+      "formalize: record failed cover disposition for $ATOM_ID"
     exit "$status"
   fi
   step align-scribe-receipt run_cli \
@@ -625,6 +671,23 @@ cover_row() {
 }
 
 cd "$ROOT"
+case "$COMMAND" in
+  cover|cover-batch) PERF_WORKLOAD_ID="cover" ;;
+  deposit) PERF_WORKLOAD_ID="deposit" ;;
+esac
+if [[ -n "$PERF_WORKLOAD_ID" ]]; then
+  source "$ROOT/tools/scripts/lib/perf-event-lib.sh"
+  PERF_STARTED="$(date +%s)"
+  PERF_TMP="$(perf_make_spool_dir "$ROOT" stratalint-playbook-perf 2>/dev/null || true)"
+  if [[ -n "$PERF_TMP" ]]; then
+    PERF_EVENT_SPOOL="$PERF_TMP/events.jsonl"
+    : > "$PERF_EVENT_SPOOL" || PERF_EVENT_SPOOL=""
+  fi
+  PERF_COMMIT="$(git rev-parse --verify HEAD 2>/dev/null || printf unknown)"
+  PERF_BASE="$(git rev-parse --verify "${BASE}^{commit}" 2>/dev/null || printf unknown)"
+  PERF_RUN_ID="${STRATALINT_PERF_RUN_ID:-${PERF_WORKLOAD_ID}-${PERF_STARTED}-$$-${PERF_COMMIT:0:12}}"
+  PERF_ENABLED=1
+fi
 case "$COMMAND" in
   deliver-check)
     make lean-report
@@ -652,12 +715,12 @@ case "$COMMAND" in
       [[ "$status" -eq 1 ]] || exit "$status"
       step lean-report make lean-report
       step emit make emit
-      commit_phase_a_if_needed
+      step stage-phase-a commit_phase_a_if_needed
     fi
-    prepare_formalization_receipt
+    step validate-formalization-receipt prepare_formalization_receipt
     freeze_module_if_needed
     install_prepared_formalization_receipt
-    commit_all_if_needed "formalize: record deposit receipt for $GID"
+    step stage-final-tree commit_all_if_needed "formalize: record deposit receipt for $GID"
     ;;
   cover)
     require_transaction_arguments
@@ -665,7 +728,7 @@ case "$COMMAND" in
     step lean-report make lean-report
     cover_row
     step emit-post-alignment make emit
-    commit_all_if_needed "formalize: cover $ATOM_ID with $GID"
+    step stage-final-tree commit_all_if_needed "formalize: cover $ATOM_ID with $GID"
     ;;
   cover-batch)
     require_cover_batch_arguments
@@ -674,10 +737,10 @@ case "$COMMAND" in
     for index in "${!BATCH_ATOM_IDS[@]}"; do
       derive_cover_batch_row_state "$index"
       cover_row
-      commit_all_if_needed "formalize: cover $ATOM_ID with $GID"
+      step stage-final-tree commit_all_if_needed "formalize: cover $ATOM_ID with $GID"
     done
     step emit-post-alignment make emit
-    commit_all_if_needed "formalize: emit projections after cover batch"
+    step stage-final-tree commit_all_if_needed "formalize: emit projections after cover batch"
     ;;
   *)
     echo "usage: playbook-workflows.sh deliver-check|receipts-stage|deposit|cover|cover-batch [BASE] [ATOM_ID GID|ATOMS_FILE]" >&2
