@@ -59,22 +59,25 @@ internal sealed class DefinitionalConservativityDocument : IScribeDocumentDefini
         Formula expansion = F.Id("e");
         Formula embedding = F.Id("i");
         Formula sentence = F.Id("phi");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
         Formula extension = Call("pullbackCalculus", baseCalculus, expansion);
         Formula derivation = Call("Derivation", extension, Call("i", sentence));
         Formula baseDerivation = Call("Derivation", baseCalculus, sentence);
-        Formula sectionLaw = Seq(
-            Forall, Sp, sentence, Comma, Sp,
+        Formula sectionLaw = Grp(Open,
+            Forall, Sp, sentence, Colon, Sp, baseLanguage, Comma, Sp,
             expansion, Open, embedding, Open, sentence, Close, Close,
-            Sp, Eq, Sp, sentence);
+            Sp, Eq, Sp, sentence, Close);
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            baseLanguage, Comma, Sp, extendedLanguage, Comma, Sp, RowBreak, Grp(),
+            Forall, Sp, baseLanguage, Comma, Sp, extendedLanguage, Colon, Sp, type,
+            Comma, Sp, RowBreak, Grp(),
             baseCalculus, Colon, Sp, Call("Calculus", baseLanguage), Comma, Sp,
             expansion, Colon, Sp, extendedLanguage, Sp, To, Sp, baseLanguage, Comma, Sp,
             embedding, Colon, Sp, baseLanguage, Sp, To, Sp, extendedLanguage, Comma,
             RowBreak, Grp(),
             sectionLaw, Comma, RowBreak, Grp(),
+            sentence, Colon, Sp, baseLanguage, Comma, RowBreak, Grp(),
             Open, derivation, Close, Sp, Rightarrow, Sp, baseDerivation, Dot,
             End, Grp(F.Id("gathered"))));
     }
