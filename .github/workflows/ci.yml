@@ -98,8 +98,10 @@ jobs:
           base_sha="$(git -C candidate rev-parse HEAD^1)"
           plan_file="$RUNNER_TEMP/engineering-test-plan.json"
           base_full_required=false
+          changed_count=0
           path=""
           while IFS= read -r -d '' path; do
+            changed_count="$(expr "$changed_count" + 1)"
             case "$path" in
               tools|tools/*|.github/workflows/ci.yml) base_full_required=true ;;
               */*) ;;
@@ -112,10 +114,35 @@ jobs:
           else
             make -C candidate/tools engineering-tests MODE=plan HEAD="$head_sha" BASE="$base_sha" PLAN_FILE="$plan_file"
           fi
-          state="$(jq -er '.plan.kind' "$plan_file")"
-          changed_count="$(jq -er '.plan.changed_paths | length' "$plan_file")"
-          selected_count="$(jq -er '.plan.tests | length' "$plan_file")"
-          [[ "$state" =~ ^(full|selected|none)$ ]]
+          fallback_count=0
+          plan_summary=""
+          if plan_summary="$(PLAN_EXPECTED_HEAD="$head_sha" PLAN_EXPECTED_BASE="$base_sha" jq -er '
+            select(
+                (type == "object" and (keys | sort) == ["base", "head", "plan", "version"])
+                and .version == 1 and .head == env.PLAN_EXPECTED_HEAD and .base == env.PLAN_EXPECTED_BASE
+                and (.plan | type == "object" and (keys | sort) == ["changed_paths", "kind", "reason", "tests"])
+                and (.plan.kind == "full" or .plan.kind == "selected" or .plan.kind == "none")
+                and (.plan.changed_paths | type == "array" and all(.[]; type == "string"))
+                and (.plan.tests | type == "array" and all(.[];
+                  type == "object" and (keys | sort) == ["detail", "id", "project_path", "reason"]
+                  and (.project_path | type == "string" and test("\\S"))
+                  and (.id | type == "string" and test("\\S"))
+                  and (.detail | type == "string" and test("\\S"))
+                  and (.reason == "unknown_input" or .reason == "declared_input" or .reason == "compiled_input")))
+                and (.plan.reason | type == "string" and test("\\S"))
+                and ((.plan.kind == "selected") == ((.plan.tests | length) != 0)))
+            | [.plan.kind, (.plan.changed_paths | length), (.plan.tests | length)] | @tsv
+          ' "$plan_file" 2>/dev/null)"; then
+            IFS=$'\t' read -r state artifact_changed_count selected_count <<< "$plan_summary"
+          else
+            artifact_changed_count=-1
+          fi
+          if [[ "$artifact_changed_count" -ne "$changed_count" ]]; then
+            printf '%s\n' 'ENGINEERING_TEST_PLAN_FALLBACK artifact unreadable or schema-invalid' >&2
+            state=full
+            selected_count=0
+            fallback_count=1
+          fi
           run_required=false
           if [[ "$state" != "none" || "$base_full_required" == "true" ]]; then
             run_required=true
@@ -128,7 +155,7 @@ jobs:
           echo "base_sha=$base_sha" >> "$GITHUB_OUTPUT"
           echo "changed_count=$changed_count" >> "$GITHUB_OUTPUT"
           echo "selected_count=$selected_count" >> "$GITHUB_OUTPUT"
-
+          echo "fallback_count=$fallback_count" >> "$GITHUB_OUTPUT"
       - name: Resolve judge binary content address before build outputs exist
         id: judge-address
         if: steps.scope.outputs.run_required == 'true'
@@ -183,20 +210,42 @@ jobs:
       - name: Build candidate with warnings as errors
         if: steps.scope.outputs.run_required == 'true'
         run: make -C candidate/tools dotnet
-
       - name: Run candidate golden and integration tests
         if: steps.scope.outputs.run_required == 'true'
         shell: bash
         env:
           BASE_FULL_REQUIRED: ${{ steps.scope.outputs.base_full_required }}
           PLAN_STATE: ${{ steps.scope.outputs.state }}
-          ENGINEERING_TEST_TARGET: candidate/tools/StrataLint.sln
           ENGINEERING_HEAD: ${{ steps.scope.outputs.head_sha }}
           ENGINEERING_BASE: ${{ steps.scope.outputs.base_sha }}
         run: |
           set -euo pipefail
           if [[ "$BASE_FULL_REQUIRED" == "true" ]]; then
-            dotnet test "$ENGINEERING_TEST_TARGET" --configuration Release --no-build --no-restore --verbosity normal
+            required_test_projects=(
+              'candidate/tools/tests/StrataLint.Tests/StrataLint.Tests.csproj|StrataLint.Tests'
+              'candidate/tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj|StrataLint.Scribe.Tests'
+              'candidate/tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj|StrataLint.ArchitectureTests'
+            )
+            floor_results="$(mktemp -d "$RUNNER_TEMP/engineering-base-floor.XXXXXX")"
+            trap 'rm -rf -- "$floor_results"' EXIT
+            for required in "${required_test_projects[@]}"; do
+              IFS='|'
+              read -r project assembly <<< "$required"
+              assembly_results="$floor_results/$assembly"
+              mkdir -p "$assembly_results"
+              dotnet test "$project" --configuration Release --verbosity normal \
+                --logger 'trx;LogFileName=floor.trx' --results-directory "$assembly_results"
+              python3 -c '
+          import os, sys, xml.etree.ElementTree as ET; path, expected = sys.argv[1:]
+          root = ET.parse(path).getroot(); local = lambda element: element.tag.rsplit("}", 1)[-1]
+          counters = [element for element in root.iter() if local(element) == "Counters"]
+          if len(counters) != 1 or int(counters[0].attrib.get("executed", "0")) <= 0: raise SystemExit(f"TRX has no nonzero executed count for {expected}")
+          results = {element.attrib.get("testId") for element in root.iter() if local(element) == "UnitTestResult" and element.attrib.get("outcome") != "NotExecuted"}
+          executed = sum(1 for element in root.iter() if local(element) == "UnitTest" and element.attrib.get("id") in results and os.path.splitext(os.path.basename(element.attrib.get("storage", "")))[0].casefold() == expected.casefold())
+          if executed <= 0: raise SystemExit(f"TRX has no executed identity from required assembly {expected}")
+          print(f"ENGINEERING_BASE_FLOOR_EXECUTED assembly={expected} evidence=trx executed={executed}")
+          ' "$assembly_results/floor.trx" "$assembly"
+            done
           else
             make -C candidate/tools engineering-tests MODE=execute HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$RUNNER_TEMP/engineering-test-plan.json"
           fi
@@ -280,12 +329,15 @@ jobs:
           SCOPE_BASE: ${{ steps.scope.outputs.base_sha }}
           SCOPE_CHANGED_COUNT: ${{ steps.scope.outputs.changed_count }}
           SCOPE_SELECTED_COUNT: ${{ steps.scope.outputs.selected_count }}
+          SCOPE_FALLBACK_COUNT: ${{ steps.scope.outputs.fallback_count }}
         run: |
           set -euo pipefail
           result="$SCOPE_STATE"
           if [[ -z "$result" ]]; then
             result="unavailable"
           fi
+          fallback_count="$SCOPE_FALLBACK_COUNT"
+          [[ -n "$fallback_count" ]] || fallback_count=0
           {
             printf '%s\n' '## Candidate engineering scope'
             printf '\n'
@@ -294,6 +346,7 @@ jobs:
             printf -- '- Dev parent: %s\n' "$SCOPE_BASE"
             printf -- '- Changed paths: %s\n' "$SCOPE_CHANGED_COUNT"
             printf -- '- Selected tests: %s\n' "$SCOPE_SELECTED_COUNT"
+            printf -- '- Planner fallback count: %s\n' "$fallback_count"
             printf -- '%s\n' '- Detail: see the ENGINEERING_TEST_PLAN and ENGINEERING_TEST_SELECTED log lines of the planning step.'
           } >> "$GITHUB_STEP_SUMMARY"
 

@@ -24,16 +24,18 @@ internal static class Program
         {
             var options = Options.Parse(arguments);
             var head = GitText(options.RepositoryRoot, "rev-parse", "HEAD");
-            var @base = GitText(options.RepositoryRoot, "rev-parse", "HEAD^1");
-            if (options.Head != head || options.Base != @base)
+            if (options.Head != head
+                || !IsObjectId(options.Base, head.Length)
+                || !GitSucceeds(options.RepositoryRoot, "merge-base", "--is-ancestor", options.Base, head))
             {
-                throw new InvalidOperationException("--head and --base must equal rev-parse HEAD and rev-parse HEAD^1");
+                throw new InvalidOperationException(
+                    "--head must equal the checked HEAD and --base must be a full object ID ancestral to HEAD");
             }
 
             return options.Mode switch
             {
-                "plan" => Plan(options, head, @base),
-                "execute" => Execute(options, head, @base),
+                "plan" => Plan(options, head, options.Base),
+                "execute" => Execute(options, head, options.Base),
                 _ => throw new ArgumentException($"unknown mode: {options.Mode}"),
             };
         }
@@ -201,7 +203,7 @@ internal static class Program
     private static void ValidateArtifact(EngineeringTestPlanArtifact artifact, string head, string @base)
     {
         if (artifact.Version != 1 || artifact.Head != head || artifact.Base != @base)
-            throw new InvalidDataException("plan artifact does not address the checked HEAD and HEAD^1");
+            throw new InvalidDataException("plan artifact does not address the checked head and base");
         if (artifact.Plan is null || artifact.Plan.ChangedPaths.IsDefault || artifact.Plan.Tests.IsDefault
             || string.IsNullOrWhiteSpace(artifact.Plan.Reason)
             || (artifact.Plan.Kind == EngineeringTestPlanKind.Selected) != (artifact.Plan.Tests.Length != 0)
@@ -238,6 +240,18 @@ internal static class Program
         if (output.ExitCode != 0) throw new InvalidOperationException(StrictUtf8.GetString(output.StandardError).Trim());
         return StrictUtf8.GetString(output.StandardOutput).Trim();
     }
+
+    private static bool GitSucceeds(string repositoryRoot, params string[] arguments) =>
+        BoundedProcessRunner.Run(
+            "git",
+            ["-C", repositoryRoot, .. arguments],
+            repositoryRoot,
+            TimeSpan.FromSeconds(30),
+            1024 * 1024).ExitCode == 0;
+
+    private static bool IsObjectId(string value, int expectedLength) =>
+        value.Length == expectedLength
+        && value.All(static character => character is >= '0' and <= '9' or >= 'a' and <= 'f');
 
     private static IReadOnlyList<string> GitPaths(string repositoryRoot, string @base, string head)
     {

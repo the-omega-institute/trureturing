@@ -7,11 +7,12 @@ namespace StrataLint.Tests;
 public sealed partial class MakeWorkflowTests
 {
     [Fact]
-    public void EngineeringCheckRunsTheCanonicalToolsTestTargetWithoutAFilter()
+    public void EngineeringCheckUsesScopedExecutionAndABaseOwnedRequiredProjectFloor()
     {
-        var root = TestRepositoryLayout.FindRoot();
-        var makefile = File.ReadAllText(Path.Combine(root, ToolsMakefilePath));
-        var workflow = File.ReadAllText(Path.Combine(root, AdmissionWorkflowPath));
+        var makefile = TestRepositoryLayout.ReadAllText(
+            RepositoryRelativePath.Create("tools/Makefile"));
+        var workflow = TestRepositoryLayout.ReadAllText(
+            RepositoryRelativePath.Create(".github/workflows/ci.yml"));
         var engineeringStep = EngineeringTestStep(workflow);
         var targetMatches = Regex.Matches(
             engineeringStep,
@@ -23,7 +24,17 @@ public sealed partial class MakeWorkflowTests
         var recipe = Recipe(makefile, target);
         Assert.Contains("StrataLint.EngineeringScope.csproj", recipe, StringComparison.Ordinal);
         Assert.Contains("--head \"$(HEAD)\" --base \"$(BASE)\"", recipe, StringComparison.Ordinal);
-        Assert.Contains("dotnet test \"$ENGINEERING_TEST_TARGET\"", engineeringStep, StringComparison.Ordinal);
+        foreach (var project in new[]
+        {
+            "candidate/tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
+            "candidate/tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
+            "candidate/tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+        })
+        {
+            Assert.Contains(project, engineeringStep, StringComparison.Ordinal);
+        }
+        Assert.Contains("dotnet test \"$project\"", engineeringStep, StringComparison.Ordinal);
+        Assert.Contains("ENGINEERING_BASE_FLOOR_EXECUTED", engineeringStep, StringComparison.Ordinal);
         Assert.DoesNotContain("--filter", engineeringStep, StringComparison.Ordinal);
         Assert.DoesNotContain("git diff", engineeringStep, StringComparison.Ordinal);
     }

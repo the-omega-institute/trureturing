@@ -5,9 +5,146 @@ using System.Text.RegularExpressions;
 namespace StrataLint.Tests;
 
 [Collection("Engineering execution boundary")]
-public sealed class AdmissionWorkflowTests
+public sealed partial class AdmissionWorkflowTests
 {
     private static readonly string SharedAdmissionWorkflow = AdmissionWorkflow();
+
+    // elan 从上游拉二进制,那一跳会间歇失败。两处安装都必须重试,且 elan 的缓存保存
+    // 不得挂在 success() 上:装成功就该存,否则一次下载失败会让 job 红、缓存不写、
+    // 下次继续 miss —— 故障自我延续。2026-08-13 实测:最近 10 个 run 里 2 个撞它,
+    // dev push 上那次还连带 skip 了 admission(needs: lean-inspect)。
+    [Fact]
+    public void ElanInstallRetriesAndItsCacheSaveDoesNotHangOnJobSuccess()
+    {
+        const string installerPath = "tools/scripts/workflow/install-lean-toolchain.sh";
+        var workflow = AdmissionWorkflow();
+        var installer = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), installerPath));
+
+        // 安装算法只在脚本实现一次,两个 CI 步骤都从候选树调用它。
+        Assert.Single(Regex.Matches(installer, @"elan-init\.sh"));
+        Assert.Single(Regex.Matches(installer, @"elan_install_with_retry\(\) \{"));
+        // 数的是行首直接调用(与 Dispatch parity 扫描器同口径),不数路径字面量——
+        // 调用前的具名缺席检查也引用同一路径,那不是第三次调用。
+        Assert.Equal(
+            2,
+            Regex.Matches(
+                workflow,
+                "(?m)^[ \\t]*\"" + Regex.Escape($"$GITHUB_WORKSPACE/candidate/{installerPath}") + "\"",
+                RegexOptions.CultureInvariant | RegexOptions.NonBacktracking).Count);
+        Assert.DoesNotContain("elan-init.sh", workflow, StringComparison.Ordinal);
+
+        // 调用形是行为投影的一部分:engineering 必须把 elan 写进 GITHUB_PATH 供后续 step 用,
+        // lean-inspect 不写(它在同一 step 内自己拼 PATH)。只数调用次数抓不住这两条。
+        Assert.Contains(
+            $"\"$GITHUB_WORKSPACE/candidate/{installerPath}\" \"$LEAN_TOOLCHAIN_FILE\" --github-path \"$GITHUB_PATH\"",
+            workflow,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            $"\"$GITHUB_WORKSPACE/candidate/{installerPath}\" candidate/lean-toolchain\n",
+            workflow,
+            StringComparison.Ordinal);
+
+        // 工具链下载是第二个网络跳,单独失败过(releases.lean-lang.org 返回空响应),
+        // 所以它也必须走重试,而不是裸 elan toolchain install。
+        Assert.Single(Regex.Matches(installer, @"elan_toolchain_with_retry\(\) \{"));
+        Assert.DoesNotContain("\"$HOME/.elan/bin/elan\" toolchain install \"$toolchain\"", installer, StringComparison.Ordinal);
+
+        // 每一处 ~/.elan 的 restore 都必须有前缀回退。两个 job 的精确 key 由不同表达式算出
+        // (单文件 sha256 vs hashFiles 两文件),永不相等;没有回退,写入方存的缓存读取方
+        // 就够不着,于是每轮都联网重下工具链。实测:仓库里有 695MB 的 elan 缓存,而
+        // engineering job 从来没命中过。
+        // 用 YAML 解析而非正则:step 里的注释会打断任何「key 紧跟 restore-keys」的文本假设。
+        var elanRestores = Jobs(workflow).Children.Values
+            .OfType<YamlMappingNode>()
+            .Where(job => job.Children.ContainsKey(new YamlScalarNode("steps")))
+            .SelectMany(job => ((YamlSequenceNode)job.Children[new YamlScalarNode("steps")])
+                .Children.OfType<YamlMappingNode>())
+            .Where(step => step.Children.TryGetValue(new YamlScalarNode("uses"), out var uses)
+                && uses is YamlScalarNode { Value: not null } u
+                && u.Value.StartsWith("actions/cache/restore@", StringComparison.Ordinal))
+            .Where(step => step.Children.TryGetValue(new YamlScalarNode("with"), out var with)
+                && with is YamlMappingNode w
+                && w.Children.TryGetValue(new YamlScalarNode("path"), out var path)
+                && path is YamlScalarNode { Value: "~/.elan" })
+            .Select(step => (YamlMappingNode)step.Children[new YamlScalarNode("with")])
+            .ToArray();
+
+        Assert.Equal(2, elanRestores.Length);
+        Assert.All(
+            elanRestores,
+            with => Assert.True(
+                with.Children.ContainsKey(new YamlScalarNode("restore-keys")),
+                "an ~/.elan restore without restore-keys can never reach the cache the other job wrote"));
+
+        // 用 YAML 解析而非正则:步骤上方的注释会把「name 紧跟 if」的文本假设打断。
+        var leanInspect = Assert.IsType<YamlMappingNode>(
+            Jobs(workflow).Children[new YamlScalarNode("lean-inspect")]);
+        var steps = Assert.IsType<YamlSequenceNode>(
+            leanInspect.Children[new YamlScalarNode("steps")]);
+        var save = Assert.Single(
+            steps.Children.OfType<YamlMappingNode>(),
+            node => node.Children.TryGetValue(new YamlScalarNode("name"), out var name)
+                && name is YamlScalarNode { Value: not null } scalar
+                && scalar.Value.StartsWith("Save elan toolchains", StringComparison.Ordinal));
+        var condition = Assert.IsType<YamlScalarNode>(
+            save.Children[new YamlScalarNode("if")]).Value ?? string.Empty;
+        Assert.DoesNotContain("success()", condition, StringComparison.Ordinal);
+        Assert.Contains("always()", condition, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void LeanToolchainInstallerHonorsAttemptsAndGithubPath()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var root = TestRepositoryLayout.FindRoot();
+        var installer = Path.Combine(root, "tools", "scripts", "workflow", "install-lean-toolchain.sh");
+        using var fixture = new TemporaryDirectory();
+        var home = Path.Combine(fixture.Path, "home");
+        var elanBin = Path.Combine(home, ".elan", "bin");
+        var stubBin = Path.Combine(fixture.Path, "bin");
+        var attempts = Path.Combine(fixture.Path, "attempts.log");
+        var githubPath = Path.Combine(fixture.Path, "github-path");
+        var toolchain = Path.Combine(fixture.Path, "lean-toolchain");
+        Directory.CreateDirectory(elanBin);
+        Directory.CreateDirectory(stubBin);
+        File.WriteAllText(toolchain, "leanprover/lean4:v4.24.0\n");
+        File.WriteAllText(
+            Path.Combine(elanBin, "elan"),
+            "#!/usr/bin/env bash\n"
+                + "if [[ \"${1:-}\" == toolchain && \"${2:-}\" == list ]]; then exit 0; fi\n"
+                + "if [[ \"${1:-}\" == toolchain && \"${2:-}\" == install ]]; then printf 'attempt\\n' >> \"$ATTEMPTS_LOG\"; exit 42; fi\n"
+                + "exit 0\n");
+        File.WriteAllText(Path.Combine(stubBin, "sleep"), "#!/usr/bin/env bash\nexit 0\n");
+        File.SetUnixFileMode(
+            Path.Combine(elanBin, "elan"),
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        File.SetUnixFileMode(
+            Path.Combine(stubBin, "sleep"),
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+
+        var result = BoundedProcessRunner.Run(
+            "env",
+            [
+                $"HOME={home}",
+                $"PATH={stubBin}:{Environment.GetEnvironmentVariable("PATH")}",
+                $"ATTEMPTS_LOG={attempts}",
+                "/bin/bash",
+                installer,
+                toolchain,
+                "--attempts",
+                "2",
+                "--github-path",
+                githubPath,
+            ],
+            root,
+            TimeSpan.FromSeconds(30),
+            64 * 1024);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Equal(2, File.ReadAllLines(attempts).Length);
+        Assert.Equal($"{elanBin}\n", File.ReadAllText(githubPath));
+    }
 
     [Fact]
     public void BaselineAdmissionNeedsExactlyLeanInspect()
@@ -166,6 +303,8 @@ public sealed class AdmissionWorkflowTests
         Assert.Contains("git -C candidate diff --name-only -z", scopeScript, StringComparison.Ordinal);
         Assert.Contains("tools|tools/*|.github/workflows/ci.yml", scopeScript, StringComparison.Ordinal);
         Assert.Contains("run_required=$run_required", scopeScript, StringComparison.Ordinal);
+        Assert.Contains("fallback_count=$fallback_count", scopeScript, StringComparison.Ordinal);
+        Assert.Contains("ENGINEERING_TEST_PLAN_FALLBACK", scopeScript, StringComparison.Ordinal);
         Assert.DoesNotContain("ls-tree", scopeScript, StringComparison.Ordinal);
         Assert.DoesNotContain("StrataLint.EngineeringScope.csproj", scopeScript, StringComparison.Ordinal);
 
@@ -179,6 +318,7 @@ public sealed class AdmissionWorkflowTests
         // 有界性本身由 WorkflowOutputBoundTests 判,这里只钉"摘要读的是计数"。
         Assert.Contains("$SCOPE_CHANGED_COUNT", summaryScript, StringComparison.Ordinal);
         Assert.Contains("$SCOPE_SELECTED_COUNT", summaryScript, StringComparison.Ordinal);
+        Assert.Contains("SCOPE_FALLBACK_COUNT", summaryScript, StringComparison.Ordinal);
         Assert.Contains("$GITHUB_STEP_SUMMARY", summaryScript, StringComparison.Ordinal);
 
         Assert.Equal(
@@ -186,7 +326,8 @@ public sealed class AdmissionWorkflowTests
             StepScript(steps, "Build candidate with warnings as errors"));
         var executeScript = StepScript(steps, "Run candidate golden and integration tests");
         Assert.Contains("if [[ \"$BASE_FULL_REQUIRED\" == \"true\" ]]", executeScript, StringComparison.Ordinal);
-        Assert.Contains("dotnet test \"$ENGINEERING_TEST_TARGET\"", executeScript, StringComparison.Ordinal);
+        Assert.Contains("dotnet test \"$project\"", executeScript, StringComparison.Ordinal);
+        Assert.DoesNotContain("ENGINEERING_TEST_TARGET", executeScript, StringComparison.Ordinal);
         Assert.Contains("make -C candidate/tools engineering-tests MODE=execute", executeScript, StringComparison.Ordinal);
         Assert.Equal(
             "make -C candidate/tools selftest",
@@ -201,7 +342,7 @@ public sealed class AdmissionWorkflowTests
     }
 
     [Fact]
-    public void SelectedExecuteRequiresTrxEvidenceFromProductionDotnetBoundary()
+    public void SelectedExecuteMissingPlannedIdentityFallsBackToUnfilteredFullRun()
     {
         if (OperatingSystem.IsWindows()) return;
 
@@ -267,47 +408,105 @@ public sealed class AdmissionWorkflowTests
                         reason = "unknown_input",
                         detail = "production boundary probe",
                     },
+                    new
+                    {
+                        project_path = "tools/tests/Probe/Probe.csproj",
+                        id = "ProductionBoundaryProbe.Missing",
+                        reason = "unknown_input",
+                        detail = "planned identity with no executed result",
+                    },
                 },
                 reason = "production boundary probe",
             },
         }));
 
+        var probeBuild = BoundedProcessRunner.Run(
+            DotnetHost(root),
+            ["build", project, "--configuration", "Release", "--nologo"],
+            repository,
+            TimeSpan.FromMinutes(3),
+            1024 * 1024);
+        Assert.True(
+            probeBuild.ExitCode == 0,
+            System.Text.Encoding.UTF8.GetString(probeBuild.StandardOutput)
+                + System.Text.Encoding.UTF8.GetString(probeBuild.StandardError));
+
         var result = RunEngineeringScope(root, repository, planFile, head, @base);
         var output = System.Text.Encoding.UTF8.GetString(result.StandardOutput);
+        var error = System.Text.Encoding.UTF8.GetString(result.StandardError);
 
         Assert.Equal(0, result.ExitCode);
-        Assert.Contains("ENGINEERING_TEST_EXECUTED", output, StringComparison.Ordinal);
-        Assert.Contains("evidence=trx executed=1", output, StringComparison.Ordinal);
+        Assert.Contains(
+            "ENGINEERING_TEST_EVIDENCE_FAILED TRX is missing planned tests: Probe::ProductionBoundaryProbe.Missing",
+            error,
+            StringComparison.Ordinal);
+        Assert.Contains("filter=null evidence=trx executed=1", output, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void TruncatedPlanArtifactFallsBackToProductionUnfilteredInvocation()
+    public void TruncatedPlannerArtifactInRealWorkflowFallsBackToProductionUnfilteredInvocation()
     {
         if (OperatingSystem.IsWindows()) return;
 
         var root = TestRepositoryLayout.FindRoot();
         using var fixture = new TemporaryDirectory();
         var repository = Path.Combine(fixture.Path, "candidate");
-        Directory.CreateDirectory(repository);
+        Directory.CreateDirectory(Path.Combine(repository, "tools"));
         Git(repository, "init", "--quiet");
         Git(repository, "config", "user.email", "engineering-fallback@example.invalid");
         Git(repository, "config", "user.name", "engineering-fallback");
-        File.WriteAllText(Path.Combine(repository, "probe.txt"), "base\n");
-        Git(repository, "add", "probe.txt");
+        File.WriteAllText(Path.Combine(repository, "tools", "planner.txt"), "base\n");
+        Git(repository, "add", "tools/planner.txt");
         Git(repository, "commit", "--quiet", "-m", "base");
-        File.AppendAllText(Path.Combine(repository, "probe.txt"), "candidate\n");
-        Git(repository, "add", "probe.txt");
+        File.AppendAllText(Path.Combine(repository, "tools", "planner.txt"), "candidate\n");
+        Git(repository, "add", "tools/planner.txt");
         Git(repository, "commit", "--quiet", "-m", "candidate");
         var head = GitText(repository, "rev-parse", "HEAD");
         var @base = GitText(repository, "rev-parse", "HEAD^1");
-        var planFile = Path.Combine(fixture.Path, "plan.json");
         var bin = Path.Combine(fixture.Path, "bin");
         var calls = Path.Combine(fixture.Path, "dotnet.calls");
+        var outputs = Path.Combine(fixture.Path, "scope.outputs");
+        var runnerTemp = Path.Combine(fixture.Path, "runner-temp");
+        var planFile = Path.Combine(runnerTemp, "engineering-test-plan.json");
         Directory.CreateDirectory(bin);
-        File.WriteAllText(planFile, "{\"version\":1,\"head\":");
+        Directory.CreateDirectory(runnerTemp);
+        WriteExecutable(
+            Path.Combine(bin, "make"),
+            "#!/usr/bin/env bash\n"
+                + "plan=''\n"
+                + "for argument in \"$@\"; do case \"$argument\" in PLAN_FILE=*) plan=\"${argument#PLAN_FILE=}\" ;; esac; done\n"
+                + "printf '%s' '{\"version\":1,\"head\":' > \"$plan\"\n");
         WriteExecutable(
             Path.Combine(bin, "dotnet"),
             "#!/usr/bin/env bash\nprintf '%s\\n' \"$*\" > \"$ENGINEERING_CALLS\"\nexit 23\n");
+
+        var scope = Assert.Single(
+            JobSteps(AdmissionWorkflow(), "candidate-engineering"),
+            step => step.Children.TryGetValue(new YamlScalarNode("id"), out var id)
+                && id is YamlScalarNode { Value: "scope" });
+        var scopeScript = Assert.IsType<YamlScalarNode>(scope.Children[new YamlScalarNode("run")]).Value!;
+        var scopeResult = BoundedProcessRunner.Run(
+            "env",
+            [
+                $"PATH={bin}:{Environment.GetEnvironmentVariable("PATH")}",
+                "GITHUB_EVENT_NAME=pull_request_target",
+                $"RUNNER_TEMP={runnerTemp}",
+                $"GITHUB_OUTPUT={outputs}",
+                "/bin/bash",
+                "-c",
+                scopeScript,
+            ],
+            fixture.Path,
+            TimeSpan.FromSeconds(30),
+            64 * 1024);
+
+        Assert.Equal(0, scopeResult.ExitCode);
+        Assert.Equal(20, new FileInfo(planFile).Length);
+        var scopeOutputs = ReadTemporaryText(outputs);
+        Assert.Contains("state=full", scopeOutputs, StringComparison.Ordinal);
+        Assert.Contains("base_full_required=true", scopeOutputs, StringComparison.Ordinal);
+        Assert.Contains("run_required=true", scopeOutputs, StringComparison.Ordinal);
+        Assert.Contains("fallback_count=1", scopeOutputs, StringComparison.Ordinal);
 
         var result = RunEngineeringScope(
             root,
@@ -319,13 +518,62 @@ public sealed class AdmissionWorkflowTests
             $"ENGINEERING_CALLS={calls}");
 
         Assert.Equal(23, result.ExitCode);
+        Assert.Contains(
+            "ENGINEERING_TEST_PLAN_FALLBACK",
+            System.Text.Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
         var invocation = ReadTemporaryText(calls);
         Assert.Contains("test tools/StrataLint.sln", invocation, StringComparison.Ordinal);
         Assert.DoesNotContain("--filter", invocation, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void PlannerNoneWithToolsDeltaStillExecutesRealUnfilteredBaseFloor()
+    public void PreflightEngineeringScopeUsesCompleteCandidateDeltaAcrossMultipleCommits()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var root = TestRepositoryLayout.FindRoot();
+        var preflight = TestRepositoryLayout.ReadAllText(
+            RepositoryRelativePath.Create("tools/scripts/preflight.sh"));
+        Assert.Contains("ENGINEERING_HEAD=\"$CANDIDATE_SHA\"", preflight, StringComparison.Ordinal);
+        Assert.Contains("ENGINEERING_BASE=\"$BASE_SHA\"", preflight, StringComparison.Ordinal);
+        Assert.DoesNotContain("ENGINEERING_BASE=\"$(git rev-parse HEAD^1)\"", preflight, StringComparison.Ordinal);
+
+        using var fixture = new TemporaryDirectory();
+        var repository = Path.Combine(fixture.Path, "candidate");
+        Directory.CreateDirectory(repository);
+        Git(repository, "init", "--quiet");
+        Git(repository, "config", "user.email", "engineering-complete-delta@example.invalid");
+        Git(repository, "config", "user.name", "engineering-complete-delta");
+        File.WriteAllText(Path.Combine(repository, "README.md"), "base\n");
+        Git(repository, "add", "README.md");
+        Git(repository, "commit", "--quiet", "-m", "base");
+        var @base = GitText(repository, "rev-parse", "HEAD");
+        Directory.CreateDirectory(Path.Combine(repository, "Blueprint"));
+        File.WriteAllText(Path.Combine(repository, "Blueprint", "probe.scribe.cs"), "blueprint input\n");
+        Git(repository, "add", "Blueprint/probe.scribe.cs");
+        Git(repository, "commit", "--quiet", "-m", "blueprint change");
+        Directory.CreateDirectory(Path.Combine(repository, "docs"));
+        File.WriteAllText(Path.Combine(repository, "docs", "note.md"), "docs only\n");
+        Git(repository, "add", "docs/note.md");
+        Git(repository, "commit", "--quiet", "-m", "docs only");
+        var head = GitText(repository, "rev-parse", "HEAD");
+        var planFile = Path.Combine(fixture.Path, "plan.json");
+
+        var result = RunEngineeringScopeMode(root, repository, planFile, head, @base, "plan", "FULL=1");
+
+        Assert.Equal(0, result.ExitCode);
+        using var artifact = System.Text.Json.JsonDocument.Parse(ReadTemporaryText(planFile));
+        var changedPaths = artifact.RootElement.GetProperty("plan").GetProperty("changed_paths")
+            .EnumerateArray()
+            .Select(static path => path.GetString())
+            .ToArray();
+        Assert.Contains("Blueprint/probe.scribe.cs", changedPaths);
+        Assert.Contains("docs/note.md", changedPaths);
+    }
+
+    [Fact]
+    public void PlannerNoneAndSolutionWithoutTestMembersStillExecutesEveryBaseOwnedRequiredAssembly()
     {
         if (OperatingSystem.IsWindows()) return;
 
@@ -337,6 +585,13 @@ public sealed class AdmissionWorkflowTests
         Directory.CreateDirectory(Path.Combine(candidate, "tools"));
         Directory.CreateDirectory(bin);
         Directory.CreateDirectory(runnerTemp);
+        var marker = Path.Combine(fixture.Path, "floor.executed");
+        WriteFloorProject(candidate, "StrataLint.Tests", "StrataLintTestsFloorProbe");
+        WriteFloorProject(candidate, "StrataLint.Scribe.Tests", "StrataLintScribeTestsFloorProbe");
+        WriteFloorProject(candidate, "StrataLint.ArchitectureTests", "StrataLintArchitectureTestsFloorProbe");
+        File.WriteAllText(
+            Path.Combine(candidate, "tools", "StrataLint.sln"),
+            "Microsoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio Version 17\nGlobal\nEndGlobal\n");
         Git(candidate, "init", "--quiet");
         Git(candidate, "config", "user.email", "engineering-floor@example.invalid");
         Git(candidate, "config", "user.name", "engineering-floor");
@@ -351,11 +606,17 @@ public sealed class AdmissionWorkflowTests
             """
             #!/usr/bin/env bash
             plan=""
+            head=""
+            base=""
             for argument in "$@"; do
-              case "$argument" in PLAN_FILE=*) plan="${argument#PLAN_FILE=}" ;; esac
+              case "$argument" in
+                PLAN_FILE=*) plan="${argument#PLAN_FILE=}" ;;
+                HEAD=*) head="${argument#HEAD=}" ;;
+                BASE=*) base="${argument#BASE=}" ;;
+              esac
             done
-            [[ -n "$plan" ]] || exit 24
-            printf '%s\n' '{"version":1,"head":"candidate","base":"base","plan":{"kind":"none","changed_paths":["tools/planner.txt"],"tests":[],"reason":"mutated planner always returns none"}}' > "$plan"
+            [[ -n "$plan" && -n "$head" && -n "$base" ]] || exit 24
+            printf '{"version":1,"head":"%s","base":"%s","plan":{"kind":"none","changed_paths":["tools/planner.txt"],"tests":[],"reason":"mutated planner always returns none"}}\n' "$head" "$base" > "$plan"
             """);
 
         var workflow = AdmissionWorkflow();
@@ -385,31 +646,6 @@ public sealed class AdmissionWorkflowTests
         Assert.Contains("base_full_required=true", scopeOutputs, StringComparison.Ordinal);
         Assert.Contains("run_required=true", scopeOutputs, StringComparison.Ordinal);
 
-        var probe = Path.Combine(fixture.Path, "probe");
-        var marker = Path.Combine(fixture.Path, "probe.executed");
-        Directory.CreateDirectory(probe);
-        File.WriteAllText(
-            Path.Combine(probe, "Probe.csproj"),
-            """
-            <Project Sdk="Microsoft.NET.Sdk">
-              <PropertyGroup><TargetFramework>net10.0</TargetFramework><IsTestProject>true</IsTestProject><RestorePackagesWithLockFile>false</RestorePackagesWithLockFile></PropertyGroup>
-              <ItemGroup><PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" /><PackageReference Include="xunit" Version="2.9.3" /><PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" /></ItemGroup>
-            </Project>
-            """);
-        File.WriteAllText(
-            Path.Combine(probe, "Probe.cs"),
-            "using System; using System.IO; using Xunit; public sealed class Probe { [Fact] public void Runs() => File.WriteAllText(Environment.GetEnvironmentVariable(\"ENGINEERING_FLOOR_MARKER\")!, \"executed\\n\"); }\n");
-        var build = BoundedProcessRunner.Run(
-            DotnetHost(fixture.Path),
-            ["build", Path.Combine(probe, "Probe.csproj"), "--configuration", "Release", "--nologo"],
-            fixture.Path,
-            TimeSpan.FromMinutes(2),
-            1024 * 1024);
-        Assert.True(
-            build.ExitCode == 0,
-            System.Text.Encoding.UTF8.GetString(build.StandardOutput)
-                + System.Text.Encoding.UTF8.GetString(build.StandardError));
-
         var executeScript = StepScript(JobSteps(workflow, "candidate-engineering"), "Run candidate golden and integration tests");
         Assert.DoesNotContain("--filter", executeScript, StringComparison.Ordinal);
         var execute = BoundedProcessRunner.Run(
@@ -417,256 +653,28 @@ public sealed class AdmissionWorkflowTests
             [
                 "BASE_FULL_REQUIRED=true",
                 "PLAN_STATE=none",
-                $"ENGINEERING_TEST_TARGET={Path.Combine(probe, "Probe.csproj")}",
+                $"RUNNER_TEMP={runnerTemp}",
                 $"ENGINEERING_FLOOR_MARKER={marker}",
+                $"ENGINEERING_HEAD={GitText(candidate, "rev-parse", "HEAD")}",
+                $"ENGINEERING_BASE={GitText(candidate, "rev-parse", "HEAD^1")}",
                 "/bin/bash",
                 "-c",
                 executeScript,
             ],
             fixture.Path,
-            TimeSpan.FromMinutes(2),
-            1024 * 1024);
-
-        Assert.Equal(0, execute.ExitCode);
-        Assert.Equal("executed\n", ReadTemporaryText(marker));
-    }
-
-    private static string StepScript(IEnumerable<YamlMappingNode> steps, string name)
-    {
-        var step = Assert.Single(steps, candidate => StepName(candidate) == name);
-        return Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("run")]).Value
-            ?? string.Empty;
-    }
-
-    private static ProcessOutput RunEngineeringScope(
-        string engineeringRoot,
-        string repositoryRoot,
-        string planFile,
-        string head,
-        string @base,
-        params string[] environment)
-    {
-        var arguments = new List<string>(environment)
-        {
-            DotnetHost(engineeringRoot),
-            "run",
-            "--project",
-            Path.Combine(engineeringRoot, "tools", "StrataLint.EngineeringScope", "StrataLint.EngineeringScope.csproj"),
-            "--configuration",
-            "Release",
-            "--no-launch-profile",
-            "--no-build",
-            "--no-restore",
-            "--",
-            "--mode",
-            "execute",
-            "--repository",
-            repositoryRoot,
-            "--head",
-            head,
-            "--base",
-            @base,
-            "--plan-file",
-            planFile,
-        };
-        return BoundedProcessRunner.Run(
-            "env",
-            arguments,
-            repositoryRoot,
-            TimeSpan.FromMinutes(2),
+            TimeSpan.FromMinutes(5),
             2 * 1024 * 1024);
-    }
 
-    private static string DotnetHost(string root)
-    {
-        var result = BoundedProcessRunner.Run(
-            "/bin/sh",
-            ["-c", "command -v dotnet"],
-            root,
-            TimeSpan.FromSeconds(10),
-            4096);
-        Assert.Equal(0, result.ExitCode);
-        return System.Text.Encoding.UTF8.GetString(result.StandardOutput).Trim();
-    }
-
-    private static string GitText(string repository, params string[] arguments)
-    {
-        var result = BoundedProcessRunner.Run(
-            "git",
-            ["-C", repository, .. arguments],
-            repository,
-            TimeSpan.FromSeconds(30),
-            64 * 1024);
-        Assert.Equal(0, result.ExitCode);
-        return System.Text.Encoding.UTF8.GetString(result.StandardOutput).Trim();
-    }
-
-    private static void Git(string repository, params string[] arguments) =>
-        _ = GitText(repository, arguments);
-
-    private static void WriteExecutable(string path, string content)
-    {
-        File.WriteAllText(path, content);
-        if (OperatingSystem.IsWindows()) return;
-        File.SetUnixFileMode(
-            path,
-            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-    }
-
-    private static string ReadTemporaryText(string path)
-    {
-        using var reader = new StreamReader(path);
-        return reader.ReadToEnd();
-    }
-
-    // elan 从上游拉二进制,那一跳会间歇失败。两处安装都必须重试,且 elan 的缓存保存
-    // 不得挂在 success() 上:装成功就该存,否则一次下载失败会让 job 红、缓存不写、
-    // 下次继续 miss —— 故障自我延续。2026-08-13 实测:最近 10 个 run 里 2 个撞它,
-    // dev push 上那次还连带 skip 了 admission(needs: lean-inspect)。
-    [Fact]
-    public void ElanInstallRetriesAndItsCacheSaveDoesNotHangOnJobSuccess()
-    {
-        const string installerPath = "tools/scripts/workflow/install-lean-toolchain.sh";
-        var workflow = AdmissionWorkflow();
-        var installer = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), installerPath));
-
-        // 安装算法只在脚本实现一次,两个 CI 步骤都从候选树调用它。
-        Assert.Single(Regex.Matches(installer, @"elan-init\.sh"));
-        Assert.Single(Regex.Matches(installer, @"elan_install_with_retry\(\) \{"));
-        // 数的是行首直接调用(与 Dispatch parity 扫描器同口径),不数路径字面量——
-        // 调用前的具名缺席检查也引用同一路径,那不是第三次调用。
+        var executeOutput = System.Text.Encoding.UTF8.GetString(execute.StandardOutput)
+            + System.Text.Encoding.UTF8.GetString(execute.StandardError);
+        Assert.True(execute.ExitCode == 0, executeOutput);
+        foreach (var assembly in new[] { "StrataLint.Tests", "StrataLint.Scribe.Tests", "StrataLint.ArchitectureTests" })
+        {
+            Assert.Contains($"assembly={assembly}", executeOutput, StringComparison.Ordinal);
+        }
         Assert.Equal(
-            2,
-            Regex.Matches(
-                workflow,
-                "(?m)^[ \\t]*\"" + Regex.Escape($"$GITHUB_WORKSPACE/candidate/{installerPath}") + "\"",
-                RegexOptions.CultureInvariant | RegexOptions.NonBacktracking).Count);
-        Assert.DoesNotContain("elan-init.sh", workflow, StringComparison.Ordinal);
-
-        // 调用形是行为投影的一部分:engineering 必须把 elan 写进 GITHUB_PATH 供后续 step 用,
-        // lean-inspect 不写(它在同一 step 内自己拼 PATH)。只数调用次数抓不住这两条。
-        Assert.Contains(
-            $"\"$GITHUB_WORKSPACE/candidate/{installerPath}\" \"$LEAN_TOOLCHAIN_FILE\" --github-path \"$GITHUB_PATH\"",
-            workflow,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            $"\"$GITHUB_WORKSPACE/candidate/{installerPath}\" candidate/lean-toolchain\n",
-            workflow,
-            StringComparison.Ordinal);
-
-        // 工具链下载是第二个网络跳,单独失败过(releases.lean-lang.org 返回空响应),
-        // 所以它也必须走重试,而不是裸 `elan toolchain install`。
-        Assert.Single(Regex.Matches(installer, @"elan_toolchain_with_retry\(\) \{"));
-        Assert.DoesNotContain("\"$HOME/.elan/bin/elan\" toolchain install \"$toolchain\"", installer, StringComparison.Ordinal);
-
-        // 每一处 ~/.elan 的 restore 都必须有前缀回退。两个 job 的精确 key 由不同表达式算出
-        // (单文件 sha256 vs hashFiles 两文件),永不相等;没有回退,写入方存的缓存读取方
-        // 就够不着,于是每轮都联网重下工具链。实测:仓库里有 695MB 的 elan 缓存,而
-        // engineering job 从来没命中过。
-        // 用 YAML 解析而非正则:step 里的注释会打断任何「key 紧跟 restore-keys」的文本假设。
-        var elanRestores = Jobs(workflow).Children.Values
-            .OfType<YamlMappingNode>()
-            .Where(job => job.Children.ContainsKey(new YamlScalarNode("steps")))
-            .SelectMany(job => ((YamlSequenceNode)job.Children[new YamlScalarNode("steps")])
-                .Children.OfType<YamlMappingNode>())
-            .Where(step => step.Children.TryGetValue(new YamlScalarNode("uses"), out var uses)
-                && uses is YamlScalarNode { Value: not null } u
-                && u.Value.StartsWith("actions/cache/restore@", StringComparison.Ordinal))
-            .Where(step => step.Children.TryGetValue(new YamlScalarNode("with"), out var with)
-                && with is YamlMappingNode w
-                && w.Children.TryGetValue(new YamlScalarNode("path"), out var path)
-                && path is YamlScalarNode { Value: "~/.elan" })
-            .Select(step => (YamlMappingNode)step.Children[new YamlScalarNode("with")])
-            .ToArray();
-
-        Assert.Equal(2, elanRestores.Length);
-        Assert.All(
-            elanRestores,
-            with => Assert.True(
-                with.Children.ContainsKey(new YamlScalarNode("restore-keys")),
-                "an ~/.elan restore without restore-keys can never reach the cache the other job wrote"));
-
-        // 用 YAML 解析而非正则:步骤上方的注释会把「name 紧跟 if」的文本假设打断。
-        var leanInspect = Assert.IsType<YamlMappingNode>(
-            Jobs(workflow).Children[new YamlScalarNode("lean-inspect")]);
-        var steps = Assert.IsType<YamlSequenceNode>(
-            leanInspect.Children[new YamlScalarNode("steps")]);
-        var save = Assert.Single(
-            steps.Children.OfType<YamlMappingNode>(),
-            node => node.Children.TryGetValue(new YamlScalarNode("name"), out var name)
-                && name is YamlScalarNode { Value: not null } scalar
-                && scalar.Value.StartsWith("Save elan toolchains", StringComparison.Ordinal));
-        var condition = Assert.IsType<YamlScalarNode>(
-            save.Children[new YamlScalarNode("if")]).Value ?? string.Empty;
-        Assert.DoesNotContain("success()", condition, StringComparison.Ordinal);
-        Assert.Contains("always()", condition, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void LeanToolchainInstallerHonorsAttemptsAndGithubPath()
-    {
-        if (OperatingSystem.IsWindows()) return;
-
-        var root = TestRepositoryLayout.FindRoot();
-        var installer = Path.Combine(root, "tools", "scripts", "workflow", "install-lean-toolchain.sh");
-        using var fixture = new TemporaryDirectory();
-        var home = Path.Combine(fixture.Path, "home");
-        var elanBin = Path.Combine(home, ".elan", "bin");
-        var stubBin = Path.Combine(fixture.Path, "bin");
-        var attempts = Path.Combine(fixture.Path, "attempts.log");
-        var githubPath = Path.Combine(fixture.Path, "github-path");
-        var toolchain = Path.Combine(fixture.Path, "lean-toolchain");
-        Directory.CreateDirectory(elanBin);
-        Directory.CreateDirectory(stubBin);
-        File.WriteAllText(toolchain, "leanprover/lean4:v4.24.0\n");
-        File.WriteAllText(
-            Path.Combine(elanBin, "elan"),
-            "#!/usr/bin/env bash\n"
-                + "if [[ \"${1:-}\" == toolchain && \"${2:-}\" == list ]]; then exit 0; fi\n"
-                + "if [[ \"${1:-}\" == toolchain && \"${2:-}\" == install ]]; then printf 'attempt\\n' >> \"$ATTEMPTS_LOG\"; exit 42; fi\n"
-                + "exit 0\n");
-        File.WriteAllText(Path.Combine(stubBin, "sleep"), "#!/usr/bin/env bash\nexit 0\n");
-        File.SetUnixFileMode(
-            Path.Combine(elanBin, "elan"),
-            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-        File.SetUnixFileMode(
-            Path.Combine(stubBin, "sleep"),
-            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-
-        var result = BoundedProcessRunner.Run(
-            "env",
-            [
-                $"HOME={home}",
-                $"PATH={stubBin}:{Environment.GetEnvironmentVariable("PATH")}",
-                $"ATTEMPTS_LOG={attempts}",
-                "/bin/bash",
-                installer,
-                toolchain,
-                "--attempts",
-                "2",
-                "--github-path",
-                githubPath,
-            ],
-            root,
-            TimeSpan.FromSeconds(30),
-            64 * 1024);
-
-        Assert.Equal(1, result.ExitCode);
-        Assert.Equal(2, File.ReadAllLines(attempts).Length);
-        Assert.Equal($"{elanBin}\n", File.ReadAllText(githubPath));
-    }
-
-    private static string BaselineResolutionScript(string workflow)
-    {
-        var leanInspect = Assert.IsType<YamlMappingNode>(
-            Jobs(workflow).Children[new YamlScalarNode("lean-inspect")]);
-        var steps = Assert.IsType<YamlSequenceNode>(
-            leanInspect.Children[new YamlScalarNode("steps")]);
-        var step = Assert.Single(
-            steps.Children.OfType<YamlMappingNode>(),
-            node => node.Children.TryGetValue(new YamlScalarNode("id"), out var id)
-                && id is YamlScalarNode { Value: "base" });
-        return Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("run")]).Value ?? string.Empty;
+            new[] { "StrataLint.ArchitectureTests", "StrataLint.Scribe.Tests", "StrataLint.Tests" },
+            File.ReadAllLines(marker).Order(StringComparer.Ordinal));
     }
 
     [Fact]
@@ -740,52 +748,6 @@ public sealed class AdmissionWorkflowTests
         Assert.DoesNotContain("dotnet test", leanInspect, StringComparison.Ordinal);
         Assert.Contains("actions/cache/restore@v4", admission, StringComparison.Ordinal);
         Assert.Contains("--judge-dll", admission, StringComparison.Ordinal);
-    }
-
-    private static string JobText(string workflow, string job, string nextJob)
-    {
-        var start = workflow.IndexOf($"  {job}:\n", StringComparison.Ordinal);
-        var end = workflow.IndexOf($"  {nextJob}:\n", start, StringComparison.Ordinal);
-        Assert.True(start >= 0 && end > start);
-        return workflow[start..end];
-    }
-
-    private static string AdmissionWorkflow() =>
-        File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), ".github", "workflows", "ci.yml"));
-
-    private static YamlMappingNode Jobs(string workflow)
-    {
-        var stream = new YamlStream();
-        stream.Load(new StringReader(workflow));
-        var document = Assert.IsType<YamlMappingNode>(stream.Documents[0].RootNode);
-        return Assert.IsType<YamlMappingNode>(document.Children[new YamlScalarNode("jobs")]);
-    }
-
-    private static YamlMappingNode Job(string workflow, string job) =>
-        Assert.IsType<YamlMappingNode>(Jobs(workflow).Children[new YamlScalarNode(job)]);
-
-    private static YamlMappingNode[] JobSteps(string workflow, string job) =>
-        Assert.IsType<YamlSequenceNode>(Job(workflow, job).Children[new YamlScalarNode("steps")])
-            .Children
-            .OfType<YamlMappingNode>()
-            .ToArray();
-
-    private static string StepName(YamlMappingNode step) =>
-        Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("name")]).Value ?? string.Empty;
-
-    private static bool BaselineNeedsExactlyLeanInspect(string workflow) =>
-        Needs(Job(workflow, "baseline-admission")).SequenceEqual(["lean-inspect"], StringComparer.Ordinal);
-
-    private static IEnumerable<string> Needs(YamlMappingNode job)
-    {
-        if (!job.Children.TryGetValue(new YamlScalarNode("needs"), out var needs)) yield break;
-        if (needs is YamlScalarNode scalar)
-        {
-            yield return scalar.Value!;
-            yield break;
-        }
-        foreach (var item in Assert.IsType<YamlSequenceNode>(needs).Children.OfType<YamlScalarNode>())
-            yield return item.Value!;
     }
 
 }
