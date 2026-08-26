@@ -1,0 +1,17 @@
+ast_path: section/区分闭包逃逸
+fingerprints:
+  raw_sha256: sha256:1484944e3aba0ad8053d02b27985af4f8220b2b9cd44f53aab8f99f7056a83d8
+  normalized_sha256: sha256:1484944e3aba0ad8053d02b27985af4f8220b2b9cd44f53aab8f99f7056a83d8
+cas_ref: sha256:1484944e3aba0ad8053d02b27985af4f8220b2b9cd44f53aab8f99f7056a83d8
+coverage_gids:
+  - D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.not_mem_semanticClosure_iff_kernel_witness
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.not_mem_semanticClosure_iff_kernel_witness
+      source_sha256: sha256:1484944e3aba0ad8053d02b27985af4f8220b2b9cd44f53aab8f99f7056a83d8
+      target_sha256: sha256:36b9fa539e4af06c54652c811882204ab251f4bdaef6562ccd9d084e657b9851
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.not_mem_semanticClosure_iff_kernel_witness
+      definition_sha256: sha256:c75ed5939f189dab1b866d64f9284e9f1cc1436ea5837f9f6b567026e6cdb42b
+      emission_sha256: sha256:3010a0c0dc9641a9e4b2ae511c2276afe028a0565da39bb5e41e18a3881cf9f3
+  unresolved_subitems: []
