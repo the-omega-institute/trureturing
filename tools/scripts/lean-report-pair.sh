@@ -13,6 +13,12 @@ INPUT_HELPER="$SCRIPT_DIR/report/lean-report-input.sh"
 # Local opt-in only: a host/UID-scoped content-addressed report cache.
 # Never set in CI, so CI behaviour is byte-for-byte unchanged.
 CACHE_ROOT="${STRATALINT_REPORT_CACHE_ROOT:-}"
+SEGMENT_PERF_ENABLED=0
+SEGMENT_PERF_SPOOL=""
+SEGMENT_PERF_TMP=""
+SEGMENT_PERF_RUN_ID=""
+SEGMENT_PERF_BASE="unknown"
+SEGMENT_PERF_STARTED=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -45,6 +51,29 @@ INSPECTOR="$(dirname "$PRODUCER")/Inspector.lean"
 
 TMP_ROOT="$(mktemp -d)"
 STAGING_DIRS=()
+
+# The canonical make/local-gate entry points opt in explicitly; GitHub Actions
+# invokes this helper directly, so recognize that production environment too.
+# Other direct script fixtures retain their existing resource-only observation.
+if [[ "${STRATALINT_PERF_SEGMENTS:-0}" == "1" || "${GITHUB_ACTIONS:-}" == "true" ]]; then
+  PERF_LIB="$SCRIPT_DIR/lib/perf-event-lib.sh"
+  if [[ -r "$PERF_LIB" ]]; then
+    source "$PERF_LIB"
+    SEGMENT_PERF_TMP="$(perf_make_spool_dir "$CANDIDATE_ROOT" stratalint-lean-report-perf 2>/dev/null || true)"
+    if [[ -n "$SEGMENT_PERF_TMP" ]]; then
+      SEGMENT_PERF_SPOOL="$SEGMENT_PERF_TMP/events.jsonl"
+      : > "$SEGMENT_PERF_SPOOL" || SEGMENT_PERF_SPOOL=""
+    fi
+    SEGMENT_PERF_BASE_REF="${STRATALINT_PERF_BASE:-origin/dev}"
+    SEGMENT_PERF_BASE="$(git -C "$CANDIDATE_ROOT" rev-parse --verify "${SEGMENT_PERF_BASE_REF}^{commit}" 2>/dev/null || printf unknown)"
+    [[ "$SEGMENT_PERF_BASE" =~ ^[0-9a-fA-F]{40}([0-9a-fA-F]{24})?$ ]] || SEGMENT_PERF_BASE="unknown"
+    SEGMENT_PERF_RUN_ID="${STRATALINT_PERF_RUN_ID:-report-$(date +%s)-$$}"
+    SEGMENT_PERF_STARTED="$(date +%s)"
+    export STRATALINT_PERF_BASE="$SEGMENT_PERF_BASE" STRATALINT_PERF_RUN_ID="$SEGMENT_PERF_RUN_ID"
+    SEGMENT_PERF_ENABLED=1
+  fi
+fi
+
 cleanup() {
   local directory
   if [[ ${#STAGING_DIRS[@]} -gt 0 ]]; then
@@ -52,7 +81,30 @@ cleanup() {
   fi
   rm -rf -- "$TMP_ROOT"
 }
-trap cleanup EXIT
+finish_pair() {
+  local rc=$?
+  trap - EXIT HUP INT TERM
+  set +e
+  if [[ "$SEGMENT_PERF_ENABLED" -eq 1 && -n "$SEGMENT_PERF_SPOOL" ]]; then
+    finished="$(date +%s)"
+    elapsed=$((finished - SEGMENT_PERF_STARTED))
+    (( elapsed >= 0 )) || elapsed=0
+    status=passed
+    [[ "$rc" -eq 0 ]] || status=failed
+    perf_capture_event \
+      "$SEGMENT_PERF_SPOOL" "$CANDIDATE_ROOT" "$SEGMENT_PERF_RUN_ID" report "$SEGMENT_PERF_BASE" \
+      total "$status" "$elapsed" || true
+    # The pair script lives in the repository checkout, so use that stable root
+    # to resolve the canonical .NET writer while the event context remains bound
+    # to the candidate root above.
+    PERF_FLUSH_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd -P)"
+    perf_flush_events "$PERF_FLUSH_ROOT" "$SEGMENT_PERF_SPOOL" lean-producer >/dev/null 2>&1 || true
+  fi
+  [[ -z "$SEGMENT_PERF_TMP" ]] || rm -rf -- "$SEGMENT_PERF_TMP"
+  cleanup
+  exit "$rc"
+}
+trap finish_pair EXIT
 trap 'exit 129' HUP
 trap 'exit 130' INT
 trap 'exit 143' TERM
@@ -159,6 +211,42 @@ cache_evict() {
   rm -rf -- "$CACHE_ROOT/$address" 2>/dev/null || true
 }
 
+cache_provenance_matches() {
+  local provenance="$1"
+  local address="$2"
+  local report_sha256="$3"
+  python3 - "$provenance" "$address" "$report_sha256" \
+    "${candidate_producer:-}" "${candidate_resident:-}" \
+    "${candidate_sources:-}" "${candidate_config:-}" <<'PY'
+import json
+import pathlib
+import sys
+
+path, address, report_sha, producer, resident, sources, config = sys.argv[1:]
+try:
+    value = json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
+except (OSError, UnicodeError, ValueError, json.JSONDecodeError):
+    raise SystemExit(1)
+expected_keys = {
+    "schema", "side", "mode", "source_side", "input_address",
+    "producer_sha256", "repository_inspector_sha256", "lean_sources_sha256",
+    "lean_config_sha256", "report_sha256",
+}
+if (set(value) != expected_keys
+        or value.get("schema") != "stratalint-lean-report-provenance-v1"
+        or value.get("side") != "candidate"
+        or value.get("source_side") != "candidate"
+        or value.get("mode") not in ("produced", "cached")
+        or value.get("input_address") != "sha256:" + address
+        or value.get("producer_sha256") != producer
+        or value.get("repository_inspector_sha256") != resident
+        or value.get("lean_sources_sha256") != sources
+        or value.get("lean_config_sha256") != config
+        or value.get("report_sha256") != report_sha):
+    raise SystemExit(1)
+PY
+}
+
 # Serve the complete bundle at $output from the cache entry for
 # content address $address, re-verified against repository $root. Sets
 # LAST_REPORT_SHA256 and returns 0 on a verified hit; returns 1 on miss/anomaly
@@ -201,6 +289,15 @@ cache_try_restore() {
     cache_evict "$address"
     rm -rf -- "$output" "${output}.provenance.json" \
       "${output}.input.attestation" "${output}.logs"
+    return 1
+  fi
+  # Validate the stored provenance before treating an exact-address hit as
+  # authoritative.  prepare_bundle rewrites the staged provenance later, so
+  # this check must happen here or a damaged cache sidecar could be masked.
+  if ! cache_provenance_matches "${output}.provenance.json" "$address" "$actual"; then
+    cache_evict "$address"
+    rm -rf -- "$output" "${output}.sha256" \
+      "${output}.input.attestation" "${output}.provenance.json" "${output}.logs"
     return 1
   fi
   # Re-stamp the sidecar for this output's basename so it is self-consistent.
@@ -275,7 +372,14 @@ materialize_report() {
   # SDK 10.0.201, so one producer SHA can otherwise execute code built by different
   # toolchains. Keep production on the complete-report path until that is solved.
   "$SUPERVISOR" --role lean-producer --lean-slot -- \
-    env LAKE_BIN="$LAKE_BIN" "$PRODUCER" --repository "$root" --output "$output"
+    env LAKE_BIN="$LAKE_BIN" \
+      STRATALINT_REPORT_INPUT_ADDRESS="$input_address" \
+      STRATALINT_REPORT_REPOSITORY_SHA256="$repository_sha256" \
+      STRATALINT_REPORT_PRODUCER_SHA256="$producer_sha256" \
+      STRATALINT_REPORT_RESIDENT_SHA256="$resident_sha256" \
+      STRATALINT_REPORT_SOURCES_SHA256="$sources_sha256" \
+      STRATALINT_REPORT_CONFIG_SHA256="$config_sha256" \
+      "$PRODUCER" --repository "$root" --output "$output"
   verify_report "$output"
   LAST_REPORT_MODE="produced"
 }
@@ -349,6 +453,28 @@ verify_bundle() {
     || { echo "lean-report-pair: input attestation mismatch: $output" >&2; return 2; }
 }
 
+verify_bundle_timed() {
+  local started finished elapsed rc status
+  if [[ "$SEGMENT_PERF_ENABLED" -ne 1 || -z "$SEGMENT_PERF_SPOOL" ]]; then
+    verify_bundle "$@"
+    return
+  fi
+  started="$(date +%s)"
+  set +e
+  verify_bundle "$@"
+  rc=$?
+  set -e
+  finished="$(date +%s)"
+  elapsed=$((finished - started))
+  (( elapsed >= 0 )) || elapsed=0
+  status=passed
+  [[ "$rc" -eq 0 ]] || status=failed
+  perf_capture_event \
+    "$SEGMENT_PERF_SPOOL" "$CANDIDATE_ROOT" "$SEGMENT_PERF_RUN_ID" report "$SEGMENT_PERF_BASE" \
+    verify "$status" "$elapsed" || true
+  return "$rc"
+}
+
 create_staging_output() {
   local live_output="$1"
   local parent
@@ -386,7 +512,7 @@ prepare_bundle() {
     "$config_sha256" "$report_sha256"
   write_input_attestation \
     "$staged_output" "$repository_sha256" "$producer_sha256" "$report_sha256"
-  verify_bundle \
+  verify_bundle_timed \
     "$root" "$staged_output" "$mode" "$input_address" \
     "$producer_sha256" "$resident_sha256" "$sources_sha256" \
     "$config_sha256" "$repository_sha256" "$report_sha256"
