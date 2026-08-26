@@ -12,6 +12,9 @@ internal static partial class RepositoryPathPolicy
     // 缓存发布 workflow（#2542）。`.github` 下是白名单而非通配，新增控制工件必须在此具名登记。
     internal const string CachePublicationWorkflowPath =
         ".github/workflows/lean-cache-publish.yml";
+    // Persistent truth-release publisher. `.github` remains an explicit allowlist.
+    internal const string TruthReleasePublicationWorkflowPath =
+        ".github/workflows/truth-release-publish.yml";
     internal const string HarnessGatePath = ".github/scripts/harness-gate.sh";
 
     internal static ImmutableArray<Diagnostic> Evaluate(
@@ -104,6 +107,7 @@ internal static partial class RepositoryPathPolicy
             or "Golden/values-kernels.toml"
             or WorkflowPath
             or CachePublicationWorkflowPath
+            or TruthReleasePublicationWorkflowPath
             or ".github/CODEOWNERS"
             or HarnessGatePath
             || value.StartsWith("tools/", StringComparison.Ordinal)

@@ -50,11 +50,33 @@ jobs:
       OCI_LAYER_TYPE: application/vnd.theomega.truth-release.bundle.v1+tar+gzip
     steps:
       - name: Check out the exact dev commit
+        id: checkout
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event_name == 'workflow_dispatch' && inputs.source_commit || github.sha }}
           fetch-depth: 0
           persist-credentials: false
+
+      - name: Strip checkout remote state
+        if: steps.checkout.outcome == 'success'
+        shell: bash
+        env:
+          CHECKOUT_PATH: .
+        run: |
+          set -euo pipefail
+          git -C "$CHECKOUT_PATH" remote remove origin
+          git -C "$CHECKOUT_PATH" for-each-ref --format='delete %(refname)' refs/remotes/ |
+            git -C "$CHECKOUT_PATH" update-ref --stdin
+          remote_count="$(git -C "$CHECKOUT_PATH" remote | wc -l)"
+          remote_ref_count="$(git -C "$CHECKOUT_PATH" for-each-ref --format='%(refname)' refs/remotes/ | wc -l)"
+          if [[ "$remote_count" -ne 0 || "$remote_ref_count" -ne 0 ]]; then
+            printf '%s\n' "checkout still exposes remotes or remote-tracking refs" >&2
+            exit 1
+          fi
+          head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
+          base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
+          test -n "$head_sha"
+          test -n "$base_sha"
 
       - name: Resolve immutable source identity
         id: source

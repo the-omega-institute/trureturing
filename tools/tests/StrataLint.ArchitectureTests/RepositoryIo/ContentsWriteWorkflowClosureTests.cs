@@ -9,10 +9,10 @@ namespace StrataLint.ArchitectureTests;
 /// run --ref` selects the workflow version from that branch, so a non-base version can delete
 /// its own check. The boundary has to be the trigger set itself.
 ///
-/// This pins the closure rather than any single file: exactly one workflow may hold
-/// `contents: write`, and that workflow may only run on a schedule. A second writable
-/// workflow, or a manual trigger added back to this one, turns this red instead of relying
-/// on a reviewer remembering why it mattered.
+/// This pins the closure rather than any single file: the two explicitly authorized writers
+/// are the scheduled Lean cache publisher and the dev-only truth-release publisher. A third
+/// writable workflow, or an unapproved trigger added to either one, turns this red instead of
+/// relying on a reviewer remembering why it mattered.
 /// </summary>
 public sealed class ContentsWriteWorkflowClosureTests
 {
@@ -28,16 +28,17 @@ public sealed class ContentsWriteWorkflowClosureTests
             .ToArray();
 
     private const string ArchivePublisher = ".github/workflows/lean-cache-publish.yml";
+    private const string TruthReleasePublisher = ".github/workflows/truth-release-publish.yml";
 
     [Fact]
-    public void OnlyTheArchivePublisherMayWriteRepositoryContents()
+    public void OnlyTheAuthorizedPublishersMayWriteRepositoryContents()
     {
         var writers = Workflows
             .Where(static source => DeclaresContentsWrite(source.Content))
             .Select(static source => source.Path)
             .ToArray();
 
-        Assert.Equal([ArchivePublisher], writers);
+        Assert.Equal([ArchivePublisher, TruthReleasePublisher], writers);
     }
 
     [Fact]
@@ -47,6 +48,16 @@ public sealed class ContentsWriteWorkflowClosureTests
         Assert.NotNull(publisher);
 
         Assert.Equal(["schedule"], TriggerNames(publisher.Content));
+    }
+
+    [Fact]
+    public void TheTruthReleasePublisherRunsOnlyOnDevPushOrManualDispatch()
+    {
+        var publisher = Workflows.SingleOrDefault(static source => source.Path == TruthReleasePublisher);
+        Assert.NotNull(publisher);
+
+        Assert.Equal(["push", "workflow_dispatch"], TriggerNames(publisher.Content));
+        Assert.Contains("branches: [dev]", publisher.Content, StringComparison.Ordinal);
     }
 
     [Fact]
