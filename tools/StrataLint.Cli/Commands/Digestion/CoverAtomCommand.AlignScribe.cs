@@ -18,9 +18,11 @@ internal static partial class CoverAtomCommand
     {
         var options = ParseAlignArguments(arguments);
         var currentRaw = repository.ReadCurrent();
+        var baselineRaw = repository.ReadRevision(options.BaselineRevision);
         var current = Decode(currentRaw);
-        _ = Decode(repository.ReadRevision(options.BaselineRevision));
+        var baseline = Decode(baselineRaw);
         var document = LoadDocument(current);
+        var baselineDocument = BackfillInventoryLoader.LoadBaseline(baseline);
         var report = leanReportSource.Load(current);
         var lean = ValidateLean(current, report);
         var truthStates = LeanTruthStates.Resolve(current, lean);
@@ -105,8 +107,9 @@ internal static partial class CoverAtomCommand
             current,
             lean,
             verified,
-            baselineDocument: null,
+            baselineDocument,
             validateProjectedStatus: false,
+            baselineSnapshot: baseline,
             truthStates: truthStates);
         RequireNoConflictMarkedSources(derived);
         foreach (var pair in options.Pairs)
@@ -127,7 +130,8 @@ internal static partial class CoverAtomCommand
             finalSnapshot,
             lean,
             verified,
-            baselineDocument: null,
+            baselineDocument,
+            baselineSnapshot: baseline,
             truthStates: truthStates);
         RequireNoConflictMarkedSources(finalEvaluation);
         foreach (var pair in options.Pairs)
