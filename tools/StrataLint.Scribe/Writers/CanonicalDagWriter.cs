@@ -23,9 +23,7 @@ public static class CanonicalDagWriter
     {
         ArgumentNullException.ThrowIfNull(dag);
 
-        var nodes = dag.Nodes
-            .OrderBy(static node => node.RepoPath.Value, StringComparer.Ordinal)
-            .ToImmutableArray();
+        var nodes = dag.Nodes;
         var identifiers = nodes
             .Select(static (node, index) => (node.RepoPath, Id: "n" + index.ToString(CultureInfo.InvariantCulture)))
             .ToImmutableDictionary(static item => item.RepoPath, static item => item.Id);
@@ -94,9 +92,7 @@ public static class CanonicalDagWriter
                 .Append('\n');
         }
 
-        foreach (var edge in dag.Edges
-            .OrderBy(static edge => edge.Dependency.Value, StringComparer.Ordinal)
-            .ThenBy(static edge => edge.Dependent.Value, StringComparer.Ordinal))
+        foreach (var edge in dag.Edges)
         {
             builder.Append("  ")
                 .Append(identifiers[edge.Dependency])
@@ -119,9 +115,7 @@ public static class CanonicalDagWriter
 
         // A managed import with no node behind it is a hole in the graph. Listing it keeps the
         // picture honest: the flowchart above shows no edge there, and this says why.
-        foreach (var blocker in dag.OpenBlockers
-            .OrderBy(static blocker => blocker.Dependent.Value, StringComparer.Ordinal)
-            .ThenBy(static blocker => blocker.DependencyModule, StringComparer.Ordinal))
+        foreach (var blocker in dag.OpenBlockers)
         {
             builder.Append("- `")
                 .Append(blocker.Dependent.Value)
@@ -153,7 +147,7 @@ public static class CanonicalDagWriter
             builder.Append("### depth ")
                 .Append(Count(group.Key))
                 .Append("\n\n");
-            foreach (var node in group.OrderBy(static node => node.RepoPath.Value, StringComparer.Ordinal))
+            foreach (var node in group)
             {
                 builder.Append("- `")
                     .Append(node.RepoPath.Value)
