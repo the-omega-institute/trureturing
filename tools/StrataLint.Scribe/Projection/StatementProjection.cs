@@ -472,7 +472,10 @@ internal static class StatementProjectionFixtureLoader
             var candidate = JsonDocument.Parse(File.ReadAllBytes(reportPath));
             if (candidate.RootElement.ValueKind != JsonValueKind.Object
                 || !candidate.RootElement.TryGetProperty("modules", out var modules)
-                || modules.ValueKind != JsonValueKind.Array)
+                || modules.ValueKind != JsonValueKind.Array
+                || !candidate.RootElement.TryGetProperty("schema", out var schema)
+                || schema.ValueKind != JsonValueKind.String
+                || schema.GetString() != RawLeanReportArtifact.Schema)
             {
                 candidate.Dispose();
                 return false;
@@ -664,10 +667,13 @@ internal static class StatementProjectionFixtureLoader
                          .SelectMany(static module => module.GetProperty("declarations").EnumerateArray()))
             {
                 var name = declaration.GetProperty("name").GetString()!;
-                var statement = declaration.GetProperty("type").GetString()!;
+                var statementAddress = declaration.GetProperty("type_sha256").GetString()
+                    ?? throw new FormatException($"Raw Lean report has a null type address: {name}");
                 var kind = declaration.TryGetProperty("kind", out var kindElement)
                     ? kindElement.GetString() ?? "unknown" : "unknown";
-                declarations[name] = new StatementEntry(statement, kind);
+                declarations[name] = new StatementEntry(
+                    kind,
+                    () => RawLeanReportArtifact.ReadStatementMaterial(reportPath, statementAddress));
             }
         }
         return declarations.ToImmutable();
@@ -688,4 +694,24 @@ internal static class StatementProjectionFixtureLoader
     }
 }
 
-internal sealed record StatementEntry(string Type, string Kind);
+internal sealed class StatementEntry
+{
+    private readonly string? inlineType;
+    private readonly Lazy<string>? material;
+
+    internal StatementEntry(string type, string kind) =>
+        (inlineType, Kind) = (type, kind);
+
+    internal StatementEntry(string kind, Func<string> loadMaterial)
+    {
+        Kind = kind;
+        material = new Lazy<string>(
+            loadMaterial ?? throw new ArgumentNullException(nameof(loadMaterial)),
+            LazyThreadSafetyMode.ExecutionAndPublication);
+    }
+
+    internal string Type => inlineType ?? material?.Value
+        ?? throw new InvalidDataException("Statement projection has no material source.");
+
+    internal string Kind { get; }
+}

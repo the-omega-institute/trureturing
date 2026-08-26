@@ -35,11 +35,12 @@ internal static class TruthReleaseCommand
                 () => repository.ReadRevision(identity.Revision)));
             var rawLeanReportBytes = ImmutableArray.CreateRange(
                 File.ReadAllBytes(options.CandidateLeanReport));
+            var report = RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, snapshot);
             var preparation = TruthExportCommand.PrepareStrictHistory(
                 repository,
                 snapshot,
                 identity,
-                rawLeanReportBytes.AsSpan());
+                report);
             if (preparation.Outcome is FrozenLedgerValidationOutcome.Rejected rejected)
             {
                 return new ExplicitCommandResult(

@@ -404,6 +404,7 @@ public sealed class LeanReportPairScriptTests
             printf '%s\n' "$((count + 1))" > "$count_file"
             printf '%s\n' "${STRATALINT_PERF_CONFIGURATION-}" > "$STUB_PERF_CONFIGURATION_LOG"
             mkdir -p "$(dirname "$output")"
+            mkdir -p "${output}.materials/sha256"
             source_hash="$(openssl dgst -sha256 "$repository/Trureturing.lean" | awk '{print $NF}')"
             printf '{"source_sha256":"%s"}\n' "$source_hash" > "$output"
             report_hash="$(openssl dgst -sha256 "$output" | awk '{print $NF}')"

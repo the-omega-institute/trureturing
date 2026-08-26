@@ -246,11 +246,12 @@ public sealed class TruthExportCommandTests
         var immutableRevision = RawSnapshot(revisionFiles);
         var revisionSnapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
             SnapshotDecoder.Decode(immutableRevision)).Snapshot;
-        var reportBytes = RawLeanReportArtifact.Write(
+        var reportPath = Path.Combine(temporary.Path, "candidate-lean-report.json");
+        RawLeanReportArtifact.WriteFile(
+            reportPath,
             revisionSnapshot,
             LeanAxiomReport.Create(revisionReports));
-        var reportPath = Path.Combine(temporary.Path, "candidate-lean-report.json");
-        File.WriteAllBytes(reportPath, reportBytes.AsSpan());
+        var reportBytes = ImmutableArray.CreateRange(File.ReadAllBytes(reportPath));
         var mutableModules = workingModules ?? revisionModules;
         var mutableFiles = RepositoryFiles(mutableModules);
         AddLedgerFiles(mutableFiles, ledgerBytes);

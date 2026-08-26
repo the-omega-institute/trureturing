@@ -11,15 +11,19 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import pathlib
 import re
+import shutil
+import stat
 import sys
+import tempfile
 
 
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
 SHA_FIELD = re.compile(r"^sha256:[0-9a-f]{64}$")
 PREFIX = '{"modules": ['
-SUFFIX = '], "schema": "stratalint-raw-lean-report-v1"}\n'
+SUFFIX = '], "schema": "stratalint-raw-lean-report-v2"}\n'
 
 
 def current_modules(module_table: pathlib.Path, repository: pathlib.Path) -> dict[str, dict[str, str]]:
@@ -40,6 +44,10 @@ def sidecar_path(report: pathlib.Path) -> pathlib.Path:
     return pathlib.Path(str(report) + ".sha256")
 
 
+def materials_path(report: pathlib.Path) -> pathlib.Path:
+    return pathlib.Path(str(report) + ".materials")
+
+
 def parse_json_modules(report: pathlib.Path) -> tuple[dict[str, dict], str]:
     data = report.read_bytes()
     digest = hashlib.sha256(data).hexdigest()
@@ -52,7 +60,7 @@ def parse_json_modules(report: pathlib.Path) -> tuple[dict[str, dict], str]:
     if fields[0] != digest or not HEX64.fullmatch(fields[0]):
         raise ValueError("report SHA sidecar does not match report")
     root = json.loads(data.decode("utf-8"))
-    if root.get("schema") != "stratalint-raw-lean-report-v1" or not isinstance(root.get("modules"), list):
+    if root.get("schema") != "stratalint-raw-lean-report-v2" or not isinstance(root.get("modules"), list):
         raise ValueError("report schema is not canonical")
     modules: dict[str, dict] = {}
     for item in root["modules"]:
@@ -62,11 +70,17 @@ def parse_json_modules(report: pathlib.Path) -> tuple[dict[str, dict], str]:
         source_path = item.get("source_path")
         source_sha = item.get("source_sha256")
         imports = item.get("imports")
+        declarations = item.get("declarations")
         if (not isinstance(name, str) or not name or name in modules
                 or not isinstance(source_path, str) or not source_path
                 or not isinstance(source_sha, str) or not SHA_FIELD.fullmatch(source_sha)
                 or not isinstance(imports, list)
-                or any(not isinstance(value, str) for value in imports)):
+                or any(not isinstance(value, str) for value in imports)
+                or not isinstance(declarations, list)
+                or any(not isinstance(value, dict)
+                       or not SHA_FIELD.fullmatch(value.get("type_sha256", ""))
+                       or not SHA_FIELD.fullmatch(value.get("statement_id", ""))
+                       for value in declarations)):
             raise ValueError("module record is malformed")
         modules[name] = {
             "path": source_path,
@@ -89,6 +103,7 @@ def valid_baseline(
     attestation = pathlib.Path(str(report) + ".input.attestation")
     provenance = pathlib.Path(str(report) + ".provenance.json")
     if not (report.is_file() and sidecar_path(report).is_file()
+            and (materials_path(report) / "sha256").is_dir()
             and attestation.is_file() and provenance.is_file()
             and (report.parent / "raw-lean-report.json.logs").is_dir()
             and any(path.is_file() for path in
@@ -257,6 +272,7 @@ def merge(args: argparse.Namespace) -> int:
         raise ValueError("baseline removal set changed during production")
 
     merged: dict[str, str] = {}
+    merged_values: dict[str, dict] = {}
     for name in current:
         if name in recheck:
             raw, value = subset[name]
@@ -265,6 +281,7 @@ def merge(args: argparse.Namespace) -> int:
                     or value.get("source_sha256") != expected["source_sha256"]):
                 raise ValueError("subset source binding does not match current tree")
             merged[name] = raw
+            merged_values[name] = value
         else:
             if name not in baseline:
                 raise ValueError("unchanged module is absent from baseline")
@@ -274,11 +291,44 @@ def merge(args: argparse.Namespace) -> int:
                     or value.get("source_sha256") != expected["source_sha256"]):
                 raise ValueError("unchanged module is not unchanged")
             merged[name] = raw
+            merged_values[name] = value
 
-    pathlib.Path(args.output).write_text(
-        PREFIX + ", ".join(merged[name] for name in sorted(current)) + SUFFIX,
-        encoding="utf-8",
-    )
+    output = pathlib.Path(args.output)
+    output_materials = materials_path(output)
+    staged = pathlib.Path(tempfile.mkdtemp(prefix=".lean-delta-materials.", dir=output.parent))
+    staged_sha = staged / "sha256"
+    staged_sha.mkdir()
+    try:
+        addresses = sorted({
+            declaration["type_sha256"]
+            for value in merged_values.values()
+            for declaration in value["declarations"]
+        })
+        sources = (
+            materials_path(subset_path) / "sha256",
+            materials_path(pathlib.Path(plan_value["baseline"])) / "sha256",
+        )
+        for address in addresses:
+            source = next(
+                (root / address[7:] for root in sources if (root / address[7:]).exists()),
+                None,
+            )
+            if source is None or not stat.S_ISREG(source.lstat().st_mode):
+                raise ValueError(f"statement material is missing for {address}")
+            destination = staged_sha / address[7:]
+            try:
+                os.link(source, destination)
+            except OSError:
+                shutil.copyfile(source, destination)
+        if output_materials.exists():
+            shutil.rmtree(output_materials)
+        pathlib.Path(staged).replace(output_materials)
+        output.write_text(
+            PREFIX + ", ".join(merged[name] for name in sorted(current)) + SUFFIX,
+            encoding="utf-8",
+        )
+    finally:
+        shutil.rmtree(staged, ignore_errors=True)
     return 0
 
 

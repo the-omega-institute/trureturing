@@ -397,6 +397,14 @@ public sealed class LeanReportCacheTests
                 entries[".logs/" + Path.GetRelativePath(logs, path)] = HashFile(path);
             }
 
+            var materials = Output + ".materials";
+            Assert.True(Directory.Exists(materials), $"bundle material sidecar is missing: {materials}");
+            foreach (var path in Directory.EnumerateFiles(materials, "*", SearchOption.AllDirectories)
+                         .Order(StringComparer.Ordinal))
+            {
+                entries[".materials/" + Path.GetRelativePath(materials, path)] = HashFile(path);
+            }
+
             return entries.Select(static pair => $"{pair.Key}={pair.Value}").ToArray();
         }
 
@@ -466,6 +474,9 @@ public sealed class LeanReportCacheTests
             [[ -n "$output" ]] || { echo "stub-producer: no --output" >&2; exit 2; }
             mkdir -p "$(dirname "$output")"
             printf '%s\n' "$STUB_REPORT_CONTENT" > "$output"
+            rm -rf -- "${output}.materials"
+            mkdir -p "${output}.materials/sha256"
+            printf '%s\n' "$STUB_REPORT_CONTENT" > "${output}.materials/sha256/stub"
             if command -v sha256sum >/dev/null 2>&1; then
               h="$(sha256sum "$output" | awk '{print $1}')"
             elif command -v openssl >/dev/null 2>&1; then
