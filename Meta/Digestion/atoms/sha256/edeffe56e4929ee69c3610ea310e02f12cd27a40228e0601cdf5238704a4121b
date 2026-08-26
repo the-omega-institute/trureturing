@@ -1,0 +1,22 @@
+## 原理 116.1
+
+$$
+\boxed{
+\text{factorization of observable algebra}
+\not\Rightarrow
+\text{factorization of state}.
+}
+$$
+
+只有当状态本身为乘积态且测量局部张量分解时，联合概率才分解：
+
+$$
+P((a_p)_p)
+=
+\prod_pP_p(a_p).
+$$
+
+因此 `PrimePowerTensorTower` 建立了 carrier/algebra 分解，但不能被解释成“不同素数在任意量子状态中统计独立”。
+
+---
+
