@@ -12,7 +12,7 @@ dotnet:
 	@/bin/bash $(HERE)/scripts/dotnet-build.sh
 
 test:
-	@dotnet test $(HERE)/StrataLint.sln --configuration Release --verbosity normal
+	@/bin/bash $(HERE)/scripts/dotnet-test.sh $(HERE)/StrataLint.sln
 
 engineering-tests:
 	@cd $(HERE)/.. && dotnet run --project tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj --configuration Release --no-launch-profile -- --mode "$(MODE)" --repository "$(HERE)/.." --head "$(HEAD)" --base "$(BASE)" --plan-file "$(PLAN_FILE)"

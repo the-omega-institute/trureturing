@@ -1,4 +1,5 @@
 using StrataLint.Tests;
+using System.Xml.Linq;
 
 namespace StrataLint.ArchitectureTests;
 
@@ -43,25 +44,27 @@ public sealed class BannedApiCoverageTests
     [Fact]
     public void DeterminismBanIsAttachedToEveryVerdictProject()
     {
-        var projects = new[]
-        {
-            TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
-                "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj")),
-            TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
-                "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj")),
-            TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
-                "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj")),
-        };
+        var repositoryRoot = RepositoryLayout.FindRoot();
+        var projects = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
+            .Where(static file => file.RelativePath.StartsWith("tools/tests/", StringComparison.Ordinal)
+                && file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal))
+            .Select(file => (file.RelativePath, Document: XDocument.Load(file.FullPath, LoadOptions.None)))
+            .Where(static project => project.Document.Descendants()
+                .Any(element => element.Name.LocalName == "IsTestProject" && element.Value == "true"))
+            .Select(project => (project.RelativePath, Content: File.ReadAllText(
+                Path.Combine(repositoryRoot, project.RelativePath))))
+            .ToArray();
 
+        Assert.NotEmpty(projects);
         Assert.All(projects, project =>
         {
             Assert.Contains(
                 "Microsoft.CodeAnalysis.BannedApiAnalyzers",
-                project,
+                project.Content,
                 StringComparison.Ordinal);
             Assert.Contains(
                 "BannedSymbols.Determinism.txt",
-                project,
+                project.Content,
                 StringComparison.Ordinal);
         });
     }

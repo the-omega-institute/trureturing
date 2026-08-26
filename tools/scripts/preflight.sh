@@ -29,6 +29,9 @@ finish_preflight() {
   trap - EXIT
   trap '' INT TERM
   set +e
+  if [[ -n "$ROOT" ]] && declare -F resource_observe >/dev/null; then
+    resource_observe preflight-finish "$ROOT" || true
+  fi
   if [[ -n "$ENGINEERING_PLAN_FILE" ]]; then rm -f -- "$ENGINEERING_PLAN_FILE"; fi
   exit "$rc"
 }
@@ -45,6 +48,7 @@ lake --version >/dev/null
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
 source "$ROOT/tools/scripts/lib/admission-base-lib.sh"
+source "$ROOT/tools/scripts/lib/resource-observation-lib.sh"
 
 remote="${BASE_REF%%/*}"
 if [[ "$remote" != "$BASE_REF" ]] && git remote | grep -Fxq "$remote"; then
@@ -55,6 +59,7 @@ if ! admission_resolve_base "$ROOT" "$BASE_REF"; then
 fi
 
 PREFLIGHT_STARTED="$(date +%s)"
+resource_observe preflight-start "$ROOT" || true
 
 record_timing() {
   local stage="$1"

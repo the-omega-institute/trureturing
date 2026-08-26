@@ -34,7 +34,10 @@ public sealed partial class MakeWorkflowTests
             Assert.Contains(project, engineeringStep, StringComparison.Ordinal);
         }
         Assert.Contains("dotnet test \"$project\"", engineeringStep, StringComparison.Ordinal);
-        Assert.Contains("ENGINEERING_BASE_FLOOR_EXECUTED", engineeringStep, StringComparison.Ordinal);
+        Assert.Contains(
+            "verify-trx --results-directory \"$assembly_results\" --required-assembly \"$assembly\"",
+            engineeringStep,
+            StringComparison.Ordinal);
         Assert.DoesNotContain("--filter", engineeringStep, StringComparison.Ordinal);
         Assert.DoesNotContain("git diff", engineeringStep, StringComparison.Ordinal);
     }
@@ -250,8 +253,11 @@ public sealed partial class MakeWorkflowTests
 
         Assert.Contains("$(HERE)/scripts/dotnet-build.sh", Recipe(makefile, "dotnet"), StringComparison.Ordinal);
         var testRecipe = Recipe(makefile, "test");
-        Assert.Contains("dotnet test $(HERE)/StrataLint.sln", testRecipe, StringComparison.Ordinal);
+        Assert.Contains("scripts/dotnet-test.sh $(HERE)/StrataLint.sln", testRecipe, StringComparison.Ordinal);
         Assert.DoesNotContain("--filter", testRecipe, StringComparison.Ordinal);
+        var dotnetTest = File.ReadAllText(Path.Combine(root, "tools", "scripts", "dotnet-test.sh"));
+        Assert.Contains("dotnet test \"$@\"", dotnetTest, StringComparison.Ordinal);
+        Assert.Contains("verify-trx --results-directory \"$RESULTS_DIRECTORY\"", dotnetTest, StringComparison.Ordinal);
         Assert.Contains(
             "StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
             Recipe(makefile, "engineering-tests"),

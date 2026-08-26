@@ -100,7 +100,7 @@ public sealed partial class CoverAtomTests
             [new DigestionDispositionGap(
                 "unresolved-subitem",
                 "prior failed attempt")],
-            new DateTimeOffset(2026, 8, 25, 4, 3, 2, TimeSpan.Zero));
+            new DateTimeOffset(2026, 8, 25, 4, 3, 2, TestBudgets.ZeroDuration));
 
     private static CoverExecution ExecuteWithPriorDisposition(
         CoverSpec spec,

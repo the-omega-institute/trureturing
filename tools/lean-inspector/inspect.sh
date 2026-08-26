@@ -46,6 +46,7 @@ mkdir -p "$(dirname "$OUTPUT")" "$LOG_DIR"
 rm -f "$OUTPUT" "${OUTPUT}.sha256"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+source "$SCRIPT_DIR/../scripts/lib/resource-observation-lib.sh"
 INSPECTOR="$SCRIPT_DIR/Inspector.lean"
 [[ -f "$INSPECTOR" ]] || { echo "inspect.sh: Lean producer is absent: $INSPECTOR" >&2; exit 2; }
 
@@ -68,11 +69,13 @@ finish_inspector() {
   [[ -z "$MODULE_TABLE" ]] || rm -f -- "$MODULE_TABLE"
   [[ -z "$DELTA_PLAN" ]] || rm -f -- "$DELTA_PLAN"
   [[ -z "$DELTA_SUBSET_OUTPUT" ]] || rm -f -- "$DELTA_SUBSET_OUTPUT"
+  resource_observe lean-inspector-finish "$REPOSITORY" || true
   exit "$rc"
 }
 trap finish_inspector EXIT
 trap 'exit 130' INT
 trap 'exit 143' TERM
+resource_observe lean-inspector-start "$REPOSITORY" || true
 
 hash_file() {
   local file="$1"

@@ -465,6 +465,11 @@ public sealed class LeanCacheProvisionerTests
                 TestBudgets.LeanCacheRetryFour,
             ],
             waits);
+        Assert.Equal(4, waits.Count);
+        for (var index = 1; index < waits.Count; index++)
+        {
+            Assert.Equal(waits[index - 1] + waits[index - 1], waits[index]);
+        }
         var copy = Assert.Single(runner.Invocations, static call => call.FileName == "cp");
         Assert.Equal("-R", copy.Arguments[0]);
         Assert.Equal(5, result.Clonefile.Attempts);

@@ -559,7 +559,7 @@ internal sealed record CoverSpec
 internal static partial class CoverWorld
 {
     internal const string DefaultAtomId = "cover-1";
-    internal static readonly DateTimeOffset RecordedAtUtc = new(2026, 8, 26, 4, 3, 2, TimeSpan.Zero);
+    internal static readonly DateTimeOffset RecordedAtUtc = new(2026, 8, 26, 4, 3, 2, TestBudgets.ZeroDuration);
     internal static TimeProvider TimeProvider { get; } = new FixedTimeProvider(RecordedAtUtc);
 
     internal static CoverSpec StaleReceiptSpec() => new()

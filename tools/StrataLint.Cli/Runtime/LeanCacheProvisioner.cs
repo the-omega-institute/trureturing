@@ -1,4 +1,5 @@
 using System.Text;
+using System.Collections.Immutable;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -67,7 +68,7 @@ internal static class LeanCacheProvisioner
     /// </summary>
     internal const int MaxProvisionBudgetSeconds = LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds;
     private const int MissingOleanSampleLimit = 5;
-    private static readonly TimeSpan[] CloneRetryBackoffs =
+    internal static ImmutableArray<TimeSpan> CloneRetryBackoffs { get; } =
         [TimeSpan.FromMilliseconds(250), TimeSpan.FromMilliseconds(500),
          TimeSpan.FromMilliseconds(1000), TimeSpan.FromMilliseconds(2000)];
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);

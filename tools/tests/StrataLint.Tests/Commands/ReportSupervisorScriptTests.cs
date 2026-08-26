@@ -72,18 +72,52 @@ public sealed class ReportSupervisorScriptTests
     }
 
     [Fact]
+    public void VanishedLsofCandidateDoesNotKillSupervisorOrHealthyChild()
+    {
+        if (Directory.Exists("/proc")) return;
+        using var fixture = new ReportSupervisorFixture();
+        fixture.InstallLsofRaceHarness();
+
+        var result = fixture.Run(
+            "lean-producer",
+            leanSlot: false,
+            fixture.LsofRaceWorker);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal("completed\n", File.ReadAllText(fixture.ScratchRecord));
+        Assert.NotEmpty(File.ReadAllLines(fixture.FailingLsofInvocation));
+    }
+
+    [Fact]
+    public void ResourceObservationPreservesDiskFdAndRssIncidentFields()
+    {
+        using var fixture = new ReportSupervisorFixture();
+
+        var result = fixture.Run("scribe-consumer", leanSlot: false, fixture.ScratchWriter);
+
+        Assert.Equal(0, result.ExitCode);
+        var observation = Encoding.UTF8.GetString(result.StandardError)
+            .Split('\n', StringSplitOptions.RemoveEmptyEntries)
+            .Single(line => line.StartsWith("RESOURCE_OBSERVATION stage=report-supervisor-", StringComparison.Ordinal));
+        Assert.Matches(@"disk_free_kb=[0-9]+", observation);
+        Assert.Matches(@"fd_soft_limit=[0-9]+", observation);
+        Assert.Matches(@"fd_peak=[0-9]+", observation);
+        Assert.Matches(@"rss_peak_kb=[0-9]+", observation);
+    }
+
+    [Fact]
     public void OwnerlessSlotIsNeverGuessedStale()
     {
         using var fixture = new ReportSupervisorFixture();
         var ownerlessLock = Path.Combine(fixture.StateRoot, "slots", "slot-1.lock");
         Directory.CreateDirectory(ownerlessLock);
-        // Decades, not minutes, of margin; not wall-clock-free. Hermetic requires injecting the script clock.
         Directory.SetLastWriteTimeUtc(ownerlessLock, new DateTime(2100, 1, 1, 0, 0, 0, DateTimeKind.Utc));
         var result = fixture.RunWithEnvironment(
             "lean-producer",
             leanSlot: true,
             fixture.ScratchWriter,
-            "STRATALINT_LOCK_TIMEOUT_SECONDS=1", "STRATALINT_LEAN_MAX_CONCURRENCY=1");
+            "STRATALINT_LOCK_TIMEOUT_SECONDS=1", "STRATALINT_LEAN_MAX_CONCURRENCY=1",
+            fixture.ClockEnvironment);
 
         Assert.Equal(2, result.ExitCode);
         Assert.True(Directory.Exists(ownerlessLock));
@@ -127,12 +161,12 @@ public sealed class ReportSupervisorScriptTests
         using var fixture = new ReportSupervisorFixture();
         var abandonedLock = Path.Combine(fixture.StateRoot, "slots", "slot-1.lock");
         Directory.CreateDirectory(abandonedLock);
-        // Decades, not minutes, of margin; not wall-clock-free. Hermetic requires injecting the script clock.
         Directory.SetLastWriteTimeUtc(
             abandonedLock,
             new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc));
 
-        var result = fixture.Run("lean-producer", leanSlot: true, fixture.ScratchWriter);
+        var result = fixture.RunWithEnvironment(
+            "lean-producer", leanSlot: true, fixture.ScratchWriter, fixture.ClockEnvironment);
 
         Assert.Equal(0, result.ExitCode);
     }
@@ -150,7 +184,6 @@ public sealed class ReportSupervisorScriptTests
             Path.Combine(liveLock, "owner"),
             $"{ownerPid}|{ownerStart}\n",
             new UTF8Encoding(false));
-        // Decades, not minutes, of margin; not wall-clock-free. Hermetic requires injecting the script clock.
         Directory.SetLastWriteTimeUtc(
             liveLock,
             new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc));
@@ -159,7 +192,8 @@ public sealed class ReportSupervisorScriptTests
             "lean-producer",
             leanSlot: true,
             fixture.ScratchWriter,
-            "STRATALINT_LOCK_TIMEOUT_SECONDS=1", "STRATALINT_LEAN_MAX_CONCURRENCY=1");
+            "STRATALINT_LOCK_TIMEOUT_SECONDS=1", "STRATALINT_LEAN_MAX_CONCURRENCY=1",
+            fixture.ClockEnvironment);
 
         var stderr = Encoding.UTF8.GetString(result.StandardError);
         Assert.True(
@@ -193,7 +227,7 @@ public sealed class ReportSupervisorScriptTests
             leanSlot: true,
             fixture.ScratchWriter,
             "STRATALINT_LOCK_TIMEOUT_SECONDS=1", "STRATALINT_LEAN_MAX_CONCURRENCY=1",
-            "STRATALINT_TEST_PS_FAIL_AFTER_COMMAND=1");
+            fixture.ClockEnvironment, "STRATALINT_TEST_PS_FAIL_AFTER_COMMAND=1");
 
         Assert.Equal(2, result.ExitCode);
         var stderr = Encoding.UTF8.GetString(result.StandardError);
@@ -206,8 +240,7 @@ public sealed class ReportSupervisorScriptTests
     public async Task HolderExitDuringTimeoutReportingIsStatedPlainly()
     {
         using var fixture = new ReportSupervisorFixture();
-        using var owner = new Process { StartInfo = new ProcessStartInfo("/bin/sleep", "60") };
-        Assert.True(owner.Start());
+        using var owner = fixture.StartSentinelBlockedProcess();
         var ownerPid = owner.Id.ToString(System.Globalization.CultureInfo.InvariantCulture);
         var liveLock = Path.Combine(fixture.StateRoot, "slots", "slot-1.lock");
         Directory.CreateDirectory(liveLock);
@@ -220,7 +253,7 @@ public sealed class ReportSupervisorScriptTests
         var waiter = Task.Run(() => fixture.RunWithEnvironment(
             "lean-producer", leanSlot: true, fixture.ScratchWriter,
             "STRATALINT_LOCK_TIMEOUT_SECONDS=1", "STRATALINT_LEAN_MAX_CONCURRENCY=1",
-            "STRATALINT_TEST_PS_PAUSE_ON_COMMAND=1"));
+            fixture.ClockEnvironment, "STRATALINT_TEST_PS_PAUSE_ON_COMMAND=1"));
         try
         {
             fixture.WaitUntil(() => File.Exists(observed), "timeout diagnostics did not inspect owner command");
@@ -253,7 +286,7 @@ public sealed class ReportSupervisorScriptTests
             "lean-producer",
             leanSlot: true,
             fixture.LongRunningWorker,
-            "STRATALINT_BUILD_TIMEOUT_SECONDS=2");
+            "STRATALINT_BUILD_TIMEOUT_SECONDS=2", fixture.ClockEnvironment);
 
         // The fixture's five-minute process bound is only a runaway guard. The
         // verdict comes from the supervisor's state transition and artifacts.
@@ -265,6 +298,7 @@ public sealed class ReportSupervisorScriptTests
             "exceeded",
             Encoding.UTF8.GetString(result.StandardError),
             StringComparison.OrdinalIgnoreCase);
+        Assert.True(fixture.ClockReads > 0, "the injected supervisor clock was not read");
         var grandchild = int.Parse(
             File.ReadAllText(fixture.ScratchRecord).Trim(),
             System.Globalization.CultureInfo.InvariantCulture);

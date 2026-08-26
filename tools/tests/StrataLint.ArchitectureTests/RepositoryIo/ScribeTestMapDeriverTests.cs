@@ -166,7 +166,7 @@ public sealed class ScribeTestMapDeriverTests
 
         var map = ScribeTestMapDeriver.DeriveRepository(
             repository.Path,
-            timeout: TimeSpan.Zero);
+            timeout: TestBudgets.ZeroDuration);
         var finding = Assert.Single(map.CompileQueryFindings);
 
         Assert.Contains("timed out", finding.Message, StringComparison.Ordinal);

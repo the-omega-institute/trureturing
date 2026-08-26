@@ -37,7 +37,7 @@ internal static class TestProcessRunner
         catch (TimeoutException exception)
         {
             throw new SkipException(
-                $"infrastructure-hang-guard expired for {command}: {exception.Message}");
+                $"{InfrastructureHangGuard.SkipReasonPrefix} for {command}: {exception.Message}");
         }
     }
 }

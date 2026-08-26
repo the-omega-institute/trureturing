@@ -109,19 +109,23 @@ public sealed class TruthGraphJsonTests
             index => index == 0 ? Report() : Report($"D5.S0.Carrier.M{index - 1}"),
             StringComparer.Ordinal);
         var outputs = new HashSet<string>(StringComparer.Ordinal);
+        var inputs = new HashSet<string>(StringComparer.Ordinal);
+        int[] multipliers = [1, 2, 4, 5];
         for (var permutation = 0; permutation < 20; permutation++)
         {
-            var multiplier = (permutation % 4 * 2) + 1;
+            var multiplier = multipliers[permutation % multipliers.Length];
             var offset = permutation / 4;
             var shuffled = modules
                 .Select((module, index) => (Module: module, Key: (index * multiplier + offset) % modules.Length))
                 .OrderBy(static item => item.Key)
                 .Select(static item => item.Module)
                 .ToArray();
+            inputs.Add(string.Join('\n', shuffled.Select(static module => module.Key)));
             var dag = BuildFromEntries(shuffled, reports);
             outputs.Add(Convert.ToBase64String(TruthGraphJsonWriter.Write(TruthGraphModelBuilder.Create(dag, Provenance)).AsSpan()));
         }
 
+        Assert.Equal(20, inputs.Count);
         Assert.Single(outputs);
     }
 

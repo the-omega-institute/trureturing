@@ -37,7 +37,7 @@ public sealed partial class DigestionAlignmentTests
                                 [new DigestionDispositionGap(
                                     "unresolved-subitem",
                                     "remaining theorem clause")],
-                                new DateTimeOffset(2026, 8, 25, 4, 3, 2, TimeSpan.Zero)),
+                                new DateTimeOffset(2026, 8, 25, 4, 3, 2, TestBudgets.ZeroDuration)),
                         },
                     }
                     : entry).ToImmutableArray(),

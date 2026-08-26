@@ -14,7 +14,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
     internal ReportSupervisorFixture(TimeSpan? safetyTimeout = null)
     {
         this.safetyTimeout = safetyTimeout ?? defaultSafetyTimeout;
-        if (this.safetyTimeout <= TimeSpan.Zero)
+        if (this.safetyTimeout <= TestBudgets.ZeroDuration)
         {
             throw new ArgumentOutOfRangeException(
                 nameof(safetyTimeout),
@@ -55,16 +55,49 @@ internal sealed class ReportSupervisorFixture : IDisposable
         LongRunningWorker = WriteExecutable("long-running-worker.sh", """
             #!/usr/bin/env bash
             set -euo pipefail
-            while :; do sleep 60; done &
+            release="$PWD/long-running-release.fifo"
+            mkfifo "$release"
+            { IFS= read -r _ < "$release"; } &
             printf '%s\n' "$!" > "$1"
-            wait
+            wait "$!"
             """);
         ExitingWorker = WriteExecutable("exiting-worker.sh", """
             #!/usr/bin/env bash
             set -euo pipefail
-            sleep 60 &
+            release="$PWD/exiting-worker-release.fifo"
+            mkfifo "$release"
+            { IFS= read -r _ < "$release"; } &
             printf '%s\n' "$!" > "$1"
             """);
+        LsofRaceWorker = WriteExecutable("lsof-race-worker.sh", """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            candidate_release="$PWD/lsof-candidate-release.fifo"
+            lsof_complete="$PWD/lsof-complete.fifo"
+            mkfifo "$candidate_release" "$lsof_complete"
+            { IFS= read -r _ < "$candidate_release"; } &
+            candidate="$!"
+            printf '%s\n' "$candidate" > "$1"
+            wait "$candidate"
+            : > "$PWD/lsof-candidate-exited"
+            IFS= read -r _ < "$lsof_complete"
+            printf 'completed\n' > "$1"
+            """);
+        StepClock = WriteExecutable("step-clock.sh", """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            lock="$PWD/step-clock.lock"
+            while ! mkdir "$lock" 2>/dev/null; do :; done
+            trap 'rmdir "$lock"' EXIT
+            read -r current < "$PWD/step-clock.state"
+            printf '%s\n' "$((current + 1))" > "$PWD/step-clock.state.tmp.$$"
+            mv "$PWD/step-clock.state.tmp.$$" "$PWD/step-clock.state"
+            printf '%s\n' "$current"
+            """);
+        File.WriteAllText(
+            Path.Combine(Root, "step-clock.state"),
+            "2000000000\n",
+            new UTF8Encoding(false));
         _ = WriteExecutable("ps", """
             #!/usr/bin/env bash
             set -euo pipefail
@@ -90,11 +123,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
               fi
               if [[ "${STRATALINT_TEST_PS_PAUSE_ON_COMMAND:-}" == "1" ]]; then
                 : > "$PWD/ps-command-observed"
-                for _ in {1..1000}; do
-                  [[ ! -e "$PWD/ps-command-release" ]] || break
-                  sleep 0.01
-                done
-                [[ -e "$PWD/ps-command-release" ]] || exit 2
+                while [[ ! -e "$PWD/ps-command-release" ]]; do :; done
               fi
               printf 'synthetic-command-%s\n' "$requested_pid"
             elif [[ "$*" == *"stat="* ]]; then
@@ -209,11 +238,18 @@ internal sealed class ReportSupervisorFixture : IDisposable
     internal string DetachedParentPid => Path.Combine(Root, "detached-parent.pid");
     internal string DetachedRelease => Path.Combine(Root, "detached.release");
     internal string DoubleForkPid => ScratchRecord;
+    internal string FailingLsofInvocation => Path.Combine(Root, "lsof-invocations.txt");
+    internal string ClockEnvironment => $"STRATALINT_SUPERVISOR_CLOCK={StepClock}";
+    internal long ClockReads => long.Parse(
+        File.ReadAllText(Path.Combine(Root, "step-clock.state")).Trim(),
+        System.Globalization.CultureInfo.InvariantCulture) - 2_000_000_000L;
     internal string ScratchWriter { get; }
     internal string ProducerWorker { get; }
     internal string ConcurrentDriver { get; }
     internal string LongRunningWorker { get; }
     internal string ExitingWorker { get; }
+    internal string LsofRaceWorker { get; }
+    internal string StepClock { get; }
     internal string DetachedWorker { get; }
     internal string DoubleForkWorker { get; }
 
@@ -257,6 +293,48 @@ internal sealed class ReportSupervisorFixture : IDisposable
             workingDirectory ?? Root,
             safetyTimeout,
             maximumOutputBytes);
+
+    internal void InstallLsofRaceHarness()
+    {
+        _ = WriteExecutable("lsof", """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            printf '%s\n' "$*" >> "$PWD/lsof-invocations.txt"
+            if [[ "$*" == *"0-999999"* ]]; then exit 1; fi
+            printf 'release\n' > "$PWD/lsof-candidate-release.fifo"
+            while [[ ! -e "$PWD/lsof-candidate-exited" ]]; do :; done
+            printf 'complete\n' > "$PWD/lsof-complete.fifo"
+            exit 1
+            """);
+    }
+
+    internal Process StartSentinelBlockedProcess()
+    {
+        var release = Path.Combine(Root, "owner-release.fifo");
+        var ready = Path.Combine(Root, "owner-ready");
+        var blocker = WriteExecutable("owner-blocker.sh", """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            : > "$2"
+            IFS= read -r _ < "$1"
+            """);
+        var mkfifo = RunExternalProcess("mkfifo", [release], maximumOutputBytes: 4096);
+        Assert.Equal(0, mkfifo.ExitCode);
+        var process = new Process
+        {
+            StartInfo = new ProcessStartInfo
+            {
+                FileName = blocker,
+                WorkingDirectory = Root,
+                UseShellExecute = false,
+            },
+        };
+        process.StartInfo.ArgumentList.Add(release);
+        process.StartInfo.ArgumentList.Add(ready);
+        Assert.True(process.Start());
+        WaitUntil(() => File.Exists(ready), "sentinel-blocked owner did not become ready");
+        return process;
+    }
 
     internal void WaitUntil(Func<bool> condition, string failureMessage)
     {

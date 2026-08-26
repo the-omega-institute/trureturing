@@ -56,7 +56,7 @@ public sealed partial class AdmissionWorkflowTests
             DotnetHost(engineeringRoot),
             ["build", project, "--configuration", "Release", "--no-restore", "--nologo"],
             engineeringRoot,
-            TimeSpan.FromMinutes(2),
+            TestBudgets.LeanProcessHangGuard,
             2 * 1024 * 1024);
         Assert.True(
             build.ExitCode == 0,
@@ -89,7 +89,7 @@ public sealed partial class AdmissionWorkflowTests
             "env",
             arguments,
             repositoryRoot,
-            TimeSpan.FromMinutes(2),
+            TestBudgets.LeanProcessHangGuard,
             2 * 1024 * 1024);
     }
 
@@ -99,7 +99,7 @@ public sealed partial class AdmissionWorkflowTests
             "/bin/sh",
             ["-c", "command -v dotnet"],
             root,
-            TimeSpan.FromSeconds(10),
+            TestBudgets.ScriptProcessHangGuard,
             4096);
         Assert.Equal(0, result.ExitCode);
         return System.Text.Encoding.UTF8.GetString(result.StandardOutput).Trim();

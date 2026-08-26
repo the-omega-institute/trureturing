@@ -125,7 +125,7 @@ public sealed class FaultInjectionTests
             "/bin/sleep",
             new[] { "2" },
             "/tmp",
-            TimeSpan.Zero,
+            TestBudgets.ZeroDuration,
             1024));
     }
 

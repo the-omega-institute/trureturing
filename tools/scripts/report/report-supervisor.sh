@@ -23,6 +23,9 @@ done
 [[ $# -gt 0 ]] || { echo "report-supervisor: command is required after --" >&2; exit 2; }
 
 REPOSITORY_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
+RESOURCE_OBSERVATION_LIB="$REPOSITORY_ROOT/tools/scripts/lib/resource-observation-lib.sh"
+[[ -r "$RESOURCE_OBSERVATION_LIB" ]] || exit 2
+source "$RESOURCE_OBSERVATION_LIB"
 if [[ -d /private/tmp ]]; then DEFAULT_HOST_TMP=/private/tmp; else DEFAULT_HOST_TMP=/tmp; fi
 STATE_ROOT="${STRATALINT_SUPERVISOR_ROOT:-$DEFAULT_HOST_TMP/stratalint-report-supervisor-${UID:-$(id -u)}}"
 RUN_ROOT="$STATE_ROOT/runs"
@@ -70,6 +73,11 @@ BUILD_TIMEOUT_SECONDS="${STRATALINT_BUILD_TIMEOUT_SECONDS:-7200}"
 [[ "$BUILD_TIMEOUT_SECONDS" =~ ^[0-9]+$ && "$BUILD_TIMEOUT_SECONDS" -le 86400 ]] \
   || { echo "report-supervisor: STRATALINT_BUILD_TIMEOUT_SECONDS must be 0..86400" >&2; exit 2; }
 LOCK_INITIALIZATION_GRACE_SECONDS=5
+CLOCK_SOURCE="${STRATALINT_SUPERVISOR_CLOCK:-}"
+if [[ -n "$CLOCK_SOURCE" && ( "$CLOCK_SOURCE" != /* || ! -x "$CLOCK_SOURCE" ) ]]; then
+  echo "report-supervisor: STRATALINT_SUPERVISOR_CLOCK must be an absolute executable" >&2
+  exit 2
+fi
 
 TMP_ROOT=""
 CHILD_PID=""
@@ -78,6 +86,8 @@ PROCESS_CANDIDATES_FILE=""
 STDOUT_RELAY_PID=""
 STDERR_RELAY_PID=""
 SLOT_DIR=""
+FD_PEAK=0
+RSS_PEAK_KB=0
 STARTED_MS=0
 
 early_cleanup() {
@@ -105,12 +115,20 @@ if [[ ! -d /proc ]] && ! command -v lsof >/dev/null 2>&1; then
   exit 2
 fi
 
-now_ms() {
-  if command -v perl >/dev/null 2>&1; then
-    perl -MTime::HiRes=time -e 'printf "%.0f\n", time() * 1000'
+now_seconds() {
+  local value=""
+  if [[ -n "$CLOCK_SOURCE" ]]; then
+    value="$("$CLOCK_SOURCE")"
   else
-    printf '%s000\n' "$(date +%s)"
+    value="$(date +%s)"
   fi
+  [[ "$value" =~ ^[0-9]+$ ]] \
+    || { echo "report-supervisor: clock source returned a non-integer epoch" >&2; return 2; }
+  printf '%s\n' "$value"
+}
+
+now_ms() {
+  printf '%s000\n' "$(now_seconds)"
 }
 
 process_exists() { kill -0 "$1" >/dev/null 2>&1; }
@@ -158,7 +176,7 @@ lock_is_stale() {
   fi
   mtime="$(lock_mtime "$lock" || true)"
   [[ "$mtime" =~ ^[0-9]+$ ]] || return 1
-  (( $(date +%s) - mtime >= LOCK_INITIALIZATION_GRACE_SECONDS ))
+  (( $(now_seconds) - mtime >= LOCK_INITIALIZATION_GRACE_SECONDS ))
 }
 
 process_command() {
@@ -263,7 +281,7 @@ report_lean_slot_holder() {
     echo "report-supervisor: $slot holder command unavailable for confirmed pid=$pid" >&2
     return
   fi
-  current_time="$(date +%s)"
+  current_time="$(now_seconds)"
   if [[ ! "$mtime" =~ ^[0-9]+$ || "$mtime" -gt "$current_time" ]]; then
     echo "report-supervisor: $slot hold duration unavailable: lock timestamp is invalid" >&2
     return
@@ -296,13 +314,13 @@ reclaim_lock_without_guard() {
 acquire_lock_guard() {
   local lock="$1"
   local guard="${lock}.reclaim-guard"
-  local deadline=$(( $(date +%s) + LOCK_TIMEOUT_SECONDS ))
+  local deadline=$(( $(now_seconds) + LOCK_TIMEOUT_SECONDS ))
   local identity
   identity="$(owner_identity)" \
     || { echo "report-supervisor: could not identify lock owner process" >&2; return 2; }
   while ! mkdir "$guard" 2>/dev/null; do
     reclaim_lock_without_guard "$guard" || true
-    if (( $(date +%s) >= deadline )); then return 2; fi
+    if (( $(now_seconds) >= deadline )); then return 2; fi
     sleep 0.05
   done
   if ! printf '%s\n' "$identity" > "$guard/owner"; then
@@ -345,7 +363,7 @@ claim_lock() {
 acquire_lean_slot() {
   local index
   local candidate
-  local deadline=$(( $(date +%s) + LOCK_TIMEOUT_SECONDS ))
+  local deadline=$(( $(now_seconds) + LOCK_TIMEOUT_SECONDS ))
   while true; do
     for ((index = 1; index <= MAX_CONCURRENCY; index++)); do
       candidate="$SLOT_ROOT/slot-$index.lock"
@@ -355,7 +373,7 @@ acquire_lean_slot() {
       fi
       reclaim_stale_lock "$candidate" || true
     done
-    if (( $(date +%s) >= deadline )); then
+    if (( $(now_seconds) >= deadline )); then
       report_lean_slot_timeout
       return 2
     fi
@@ -467,6 +485,37 @@ record_supervised_processes() {
   } | sort -un | record_process_candidates
 }
 
+sample_supervised_resources() {
+  local pid rss fd members
+  local rss_total=0
+  local fd_total=0
+  members="$({
+    if [[ -n "$CHILD_PID" ]]; then collect_process_tree "$CHILD_PID"; fi
+    marker_processes
+  } | sort -un)"
+  record_process_candidates <<< "$members"
+  while IFS= read -r pid; do
+    [[ -n "$pid" \
+      && "$pid" != "$STDOUT_RELAY_PID" \
+      && "$pid" != "$STDERR_RELAY_PID" ]] || continue
+    rss="$( { ps -o rss= -p "$pid" 2>/dev/null || true; } \
+      | awk '{sum += $1} END {print sum + 0}')"
+    rss_total=$((rss_total + rss))
+    if [[ -d "/proc/$pid/fd" ]]; then
+      fd="$( { find "/proc/$pid/fd" -mindepth 1 -maxdepth 1 -print 2>/dev/null || true; } \
+        | awk 'END {print NR + 0}')"
+    elif command -v lsof >/dev/null 2>&1; then
+      fd="$( { lsof -a -p "$pid" -d 0-999999 2>/dev/null || true; } \
+        | awk 'NR > 1 {count++} END {print count + 0}')"
+    else
+      fd=0
+    fi
+    fd_total=$((fd_total + fd))
+  done <<< "$members"
+  if [[ "$rss_total" -gt "$RSS_PEAK_KB" ]]; then RSS_PEAK_KB="$rss_total"; fi
+  if [[ "$fd_total" -gt "$FD_PEAK" ]]; then FD_PEAK="$fd_total"; fi
+}
+
 signal_recorded_processes() {
   local signal="$1"
   local pid identity current_identity
@@ -498,12 +547,12 @@ terminate_process_group() {
 
 wait_for_relay() {
   local pid="$1"
-  local deadline=$(( $(date +%s) + 2 ))
+  local deadline=$(( $(now_seconds) + 2 ))
   local state=""
   while process_exists "$pid"; do
     state="$(ps -o stat= -p "$pid" 2>/dev/null | awk '{$1=$1; print; exit}')"
     if [[ -z "$state" || "$state" == Z* ]]; then break; fi
-    if (( $(date +%s) >= deadline )); then
+    if (( $(now_seconds) >= deadline )); then
       kill -TERM "$pid" >/dev/null 2>&1 || true
       sleep 0.1
       kill -KILL "$pid" >/dev/null 2>&1 || true
@@ -519,7 +568,7 @@ finish() {
   trap - EXIT HUP INT TERM
   set +e
   if [[ -n "$PROCESS_GROUP_ID" ]]; then
-    record_supervised_processes
+    sample_supervised_resources
     terminate_process_group "$PROCESS_GROUP_ID"
   fi
   if [[ -n "$CHILD_PID" ]]; then
@@ -527,6 +576,7 @@ finish() {
   fi
   if [[ -n "$STDOUT_RELAY_PID" ]]; then wait_for_relay "$STDOUT_RELAY_PID"; fi
   if [[ -n "$STDERR_RELAY_PID" ]]; then wait_for_relay "$STDERR_RELAY_PID"; fi
+  resource_observe "report-supervisor-$ROLE" "$REPOSITORY_ROOT" "$FD_PEAK" "$RSS_PEAK_KB" || true
   if [[ -n "$SLOT_DIR" ]]; then rm -rf -- "$SLOT_DIR"; fi
   rm -rf -- "$TMP_ROOT"
   exit "$rc"
@@ -553,12 +603,12 @@ PROCESS_GROUP_ID="$CHILD_PID"
 set +m
 BUILD_DEADLINE=0
 if (( BUILD_TIMEOUT_SECONDS > 0 )); then
-  BUILD_DEADLINE=$(( $(date +%s) + BUILD_TIMEOUT_SECONDS ))
+  BUILD_DEADLINE=$(( $(now_seconds) + BUILD_TIMEOUT_SECONDS ))
 fi
 BUILD_TIMED_OUT=0
 while process_exists "$CHILD_PID"; do
-  record_supervised_processes
-  if (( BUILD_DEADLINE > 0 )) && (( $(date +%s) >= BUILD_DEADLINE )); then
+  sample_supervised_resources
+  if (( BUILD_DEADLINE > 0 )) && (( $(now_seconds) >= BUILD_DEADLINE )); then
     echo "report-supervisor: build exceeded ${BUILD_TIMEOUT_SECONDS}s wall-clock budget;" \
       "terminating to release the lean slot (#403)" >&2
     terminate_process_group "$PROCESS_GROUP_ID"

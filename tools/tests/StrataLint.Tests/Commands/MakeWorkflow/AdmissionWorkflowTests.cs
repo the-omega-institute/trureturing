@@ -367,6 +367,7 @@ public sealed partial class AdmissionWorkflowTests
         var executeScript = StepScript(steps, "Run candidate golden and integration tests");
         Assert.Contains("if [[ \"$BASE_FULL_REQUIRED\" == \"true\" ]]", executeScript, StringComparison.Ordinal);
         Assert.Contains("dotnet test \"$project\"", executeScript, StringComparison.Ordinal);
+        Assert.Contains("verify-trx --results-directory \"$assembly_results\"", executeScript, StringComparison.Ordinal);
         Assert.DoesNotContain("ENGINEERING_TEST_TARGET", executeScript, StringComparison.Ordinal);
         Assert.Contains("make -C candidate/tools engineering-tests MODE=execute", executeScript, StringComparison.Ordinal);
         Assert.Equal(
@@ -464,7 +465,7 @@ public sealed partial class AdmissionWorkflowTests
             DotnetHost(root),
             ["build", project, "--configuration", "Release", "--nologo"],
             repository,
-            TimeSpan.FromMinutes(3),
+            TestBudgets.LongWorkflowProcessHangGuard,
             1024 * 1024);
         Assert.True(
             probeBuild.ExitCode == 0,
@@ -702,7 +703,7 @@ public sealed partial class AdmissionWorkflowTests
                 executeScript,
             ],
             fixture.Path,
-            TimeSpan.FromMinutes(5),
+            TestBudgets.ReportSupervisorHangGuard,
             2 * 1024 * 1024);
 
         var executeOutput = System.Text.Encoding.UTF8.GetString(execute.StandardOutput)

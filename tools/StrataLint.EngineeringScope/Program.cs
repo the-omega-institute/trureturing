@@ -22,6 +22,19 @@ internal static class Program
     {
         try
         {
+            if (arguments.FirstOrDefault() == "verify-trx")
+            {
+                try
+                {
+                    return VerifyTrx(VerifyTrxOptions.Parse(arguments.Skip(1).ToArray()));
+                }
+                catch (Exception exception)
+                {
+                    Console.Error.WriteLine($"TEST_EVIDENCE_FAILED {exception.Message}");
+                    return 2;
+                }
+            }
+
             var options = Options.Parse(arguments);
             var head = GitText(options.RepositoryRoot, "rev-parse", "HEAD");
             if (options.Head != head
@@ -149,48 +162,36 @@ internal static class Program
         EngineeringTestInvocation invocation,
         string resultsDirectory)
     {
-        var files = Directory.GetFiles(resultsDirectory, "*.trx", SearchOption.TopDirectoryOnly);
-        if (files.Length == 0) throw new InvalidDataException("dotnet test produced no TRX evidence");
-
-        var executed = 0;
-        var actual = new HashSet<(string Assembly, string Id)>(new TestIdentityComparer());
-        foreach (var file in files)
-        {
-            var document = XDocument.Load(file, LoadOptions.None);
-            var counters = document.Descendants().Single(element => element.Name.LocalName == "Counters");
-            if (!int.TryParse((string?)counters.Attribute("executed"), out var fileExecuted))
-                throw new InvalidDataException($"TRX has no executed count: {file}");
-            executed += fileExecuted;
-
-            var resultIds = document.Descendants()
-                .Where(element => element.Name.LocalName == "UnitTestResult"
-                    && (string?)element.Attribute("outcome") != "NotExecuted")
-                .Select(element => (string?)element.Attribute("testId"))
-                .Where(static id => id is not null)
-                .ToHashSet(StringComparer.Ordinal);
-            foreach (var test in document.Descendants().Where(element => element.Name.LocalName == "UnitTest"))
-            {
-                if (!resultIds.Contains((string?)test.Attribute("id"))) continue;
-                var method = test.Elements().Single(element => element.Name.LocalName == "TestMethod");
-                var className = (string?)method.Attribute("className")
-                    ?? throw new InvalidDataException("TRX test has no class identity");
-                var methodName = (string?)method.Attribute("name")
-                    ?? throw new InvalidDataException("TRX test has no method identity");
-                var storage = (string?)test.Attribute("storage")
-                    ?? throw new InvalidDataException("TRX test has no assembly identity");
-                actual.Add((Path.GetFileNameWithoutExtension(storage), $"{className.Split('.').Last()}.{methodName}"));
-            }
-        }
-
-        if (executed == 0) throw new InvalidDataException("dotnet test executed zero tests");
+        var evidence = TestResultEvidence.Load(resultsDirectory);
         var missing = invocation.ExpectedTests
             .Select(test => (Assembly: ProjectAssembly(repositoryRoot, test.ProjectPath), test.Id))
-            .Where(expected => !actual.Contains(expected))
+            .Where(expected => !evidence.ExecutedTests.Contains(expected))
             .Select(static expected => $"{expected.Assembly}::{expected.Id}")
             .ToArray();
         if (missing.Length != 0)
             throw new InvalidDataException($"TRX is missing planned tests: {string.Join(", ", missing)}");
-        return executed;
+        return evidence.Executed;
+    }
+
+    private static int VerifyTrx(VerifyTrxOptions options)
+    {
+        var evidence = TestResultEvidence.Load(options.ResultsDirectory);
+        if (options.RequiredAssembly is not null)
+        {
+            var assemblyExecuted = evidence.CountAssembly(options.RequiredAssembly);
+            if (assemblyExecuted == 0)
+                throw new InvalidDataException(
+                    $"TRX has no executed identity from required assembly {options.RequiredAssembly}");
+            Console.WriteLine(
+                $"ENGINEERING_BASE_FLOOR_EXECUTED assembly={options.RequiredAssembly} "
+                + $"evidence=trx executed={assemblyExecuted}");
+        }
+        else
+        {
+            Console.WriteLine($"TEST_EVIDENCE_ACCEPTED evidence=trx executed={evidence.Executed}");
+        }
+
+        return 0;
     }
 
     private static string ProjectAssembly(string repositoryRoot, string projectPath)
@@ -272,18 +273,6 @@ internal static class Program
         string Base,
         EngineeringTestPlan? Plan);
 
-    private sealed class TestIdentityComparer : IEqualityComparer<(string Assembly, string Id)>
-    {
-        public bool Equals((string Assembly, string Id) x, (string Assembly, string Id) y) =>
-            StringComparer.OrdinalIgnoreCase.Equals(x.Assembly, y.Assembly)
-            && StringComparer.Ordinal.Equals(x.Id, y.Id);
-
-        public int GetHashCode((string Assembly, string Id) value) =>
-            HashCode.Combine(
-                StringComparer.OrdinalIgnoreCase.GetHashCode(value.Assembly),
-                StringComparer.Ordinal.GetHashCode(value.Id));
-    }
-
     private sealed record Options(string Mode, string RepositoryRoot, string Head, string Base, string PlanFile)
     {
         internal static Options Parse(IReadOnlyList<string> arguments)
@@ -309,5 +298,29 @@ internal static class Program
             values.TryGetValue(name, out var value) && !string.IsNullOrWhiteSpace(value)
                 ? value
                 : throw new ArgumentException($"{name} is required");
+    }
+
+    private sealed record VerifyTrxOptions(string ResultsDirectory, string? RequiredAssembly)
+    {
+        internal static VerifyTrxOptions Parse(IReadOnlyList<string> arguments)
+        {
+            var values = new Dictionary<string, string>(StringComparer.Ordinal);
+            for (var index = 0; index < arguments.Count; index += 2)
+            {
+                if (index + 1 >= arguments.Count || !arguments[index].StartsWith("--", StringComparison.Ordinal))
+                    throw new ArgumentException("verify-trx options must be --name value pairs");
+                if (!values.TryAdd(arguments[index], arguments[index + 1]))
+                    throw new ArgumentException($"duplicate option: {arguments[index]}");
+            }
+
+            if (!values.TryGetValue("--results-directory", out var resultsDirectory)
+                || string.IsNullOrWhiteSpace(resultsDirectory))
+            {
+                throw new ArgumentException("--results-directory is required");
+            }
+
+            values.TryGetValue("--required-assembly", out var requiredAssembly);
+            return new VerifyTrxOptions(Path.GetFullPath(resultsDirectory), requiredAssembly);
+        }
     }
 }
