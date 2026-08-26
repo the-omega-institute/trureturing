@@ -19,8 +19,8 @@ public sealed record TruthReleaseBundleInput(
 
 /// <summary>
 /// The package-owned write authority for a truth-release bundle. It assigns every wire filename,
-/// hashes the exact artifact bytes it writes, emits canonical SHA256SUMS, and finally emits the canonical
-/// manifest that records the resulting release digest.
+/// hashes the exact artifact bytes it writes, emits canonical SHA256SUMS, emits the canonical manifest,
+/// and finally publishes a transport-neutral coordinate for downstream services.
 /// </summary>
 public static class TruthReleaseBundleWriter
 {
@@ -33,6 +33,7 @@ public static class TruthReleaseBundleWriter
     public const string ResidualFrontierFileName = "echo-residual-summary.md";
     public const string Sha256SumsFileName = "SHA256SUMS";
     public const string ManifestFileName = "release-manifest.v1.json";
+    public const string PublicationFileName = "truth-release-publication.v1.json";
 
     private static readonly UTF8Encoding Utf8 = new(false, true);
 
@@ -88,6 +89,19 @@ public static class TruthReleaseBundleWriter
             input.ProducedAt);
         var manifestBytes = TruthReleaseManifestJsonWriter.Write(manifest);
         File.WriteAllBytes(Path.Combine(outputDirectory, ManifestFileName), manifestBytes.ToArray());
+
+        // This coordinate is intentionally outside SHA256SUMS. It names the already-complete bundle
+        // by the out-of-band release digest and carries no physical locator, queue, or consumer semantics.
+        var publication = new TruthReleasePublication(
+            releaseDigest,
+            releaseDigest,
+            input.Source.SourceCommit,
+            input.Source.SourceTree,
+            input.Producer.PackageCommit);
+        var publicationBytes = TruthReleasePublicationJsonWriter.Write(publication);
+        File.WriteAllBytes(
+            Path.Combine(outputDirectory, PublicationFileName),
+            publicationBytes.ToArray());
         return releaseDigest;
     }
 
