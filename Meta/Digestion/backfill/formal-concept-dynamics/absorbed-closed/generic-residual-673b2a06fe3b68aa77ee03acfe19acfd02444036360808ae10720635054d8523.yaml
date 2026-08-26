@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.dynamic_closure_is_least
       definition_sha256: sha256:1fa026f38741deb6094246860c4301343c0da6066c37fa00e9abe39ca8479fb9
-      emission_sha256: sha256:976119414852799a0321c62b69fa175af5275d1610c2119c23d44a16a71d2faa
+      emission_sha256: sha256:31522fe613979eacc33f914c16ab80ae7c0bc23a6319b9f1254e36cc9e52db0e
   unresolved_subitems: []
