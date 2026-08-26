@@ -74,8 +74,31 @@ public sealed class TruthReleaseBundleWriterTests
             var releaseDigest = TruthReleaseBundleWriter.WriteBundle(directory, fixture.Input);
 
             var verified = TruthReleaseVerification.Verify(directory, releaseDigest);
+            var publicationBytes = File.ReadAllBytes(Path.Combine(
+                directory,
+                TruthReleaseBundleWriter.PublicationFileName));
+            var publication = TruthReleasePublicationReader.Read(publicationBytes);
+            var publicationVerified = TruthReleasePublicationVerification.Verify(directory, publication);
 
             Assert.Equal(releaseDigest, verified.ReleaseDigest);
+            Assert.Equal(releaseDigest, publicationVerified.ReleaseDigest);
+            Assert.Equal(releaseDigest, publication.ReleaseDigest);
+            Assert.Equal(releaseDigest, publication.BundleRef);
+            Assert.Equal(fixture.Input.Source.SourceCommit, publication.SourceCommit);
+            Assert.Equal(fixture.Input.Source.SourceTree, publication.SourceTree);
+            Assert.Equal(fixture.Input.Producer.PackageCommit, publication.ProducerCommit);
+            Assert.Equal(
+                publicationBytes,
+                TruthReleasePublicationJsonWriter.Write(publication).ToArray());
+            Assert.Throws<FormatException>(() => TruthReleasePublicationVerification.Verify(
+                directory,
+                publication with { SourceCommit = new string('9', 40) }));
+            Assert.Throws<FormatException>(() => TruthReleasePublicationVerification.Verify(
+                directory,
+                publication with { SourceTree = new string('8', 40) }));
+            Assert.Throws<FormatException>(() => TruthReleasePublicationVerification.Verify(
+                directory,
+                publication with { ProducerCommit = new string('7', 40) }));
             Assert.Equal("source-snapshot.v1.json", verified.Manifest.Artifacts.SourceSnapshot.File);
             Assert.Equal("truth-graph.v1.json", verified.Manifest.Artifacts.TruthGraph.File);
             Assert.Equal("raw-lean-report.json", verified.Manifest.Artifacts.RawLeanReport.File);
