@@ -1,0 +1,10 @@
+ast_path: section/16-2-每个非单射观察都隐藏某个逃逸
+fingerprints:
+  raw_sha256: sha256:501671a2374aa2bffe6c3d00e60f9224696541e1bc60b1413f41542e75840fa1
+  normalized_sha256: sha256:501671a2374aa2bffe6c3d00e60f9224696541e1bc60b1413f41542e75840fa1
+cas_ref: sha256:501671a2374aa2bffe6c3d00e60f9224696541e1bc60b1413f41542e75840fa1
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

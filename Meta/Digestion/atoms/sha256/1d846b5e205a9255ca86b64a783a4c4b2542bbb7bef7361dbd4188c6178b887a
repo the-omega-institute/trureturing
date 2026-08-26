@@ -1,0 +1,12 @@
+## 定义 107.3（顺序签名）
+
+对全部允许实验词 $w$：
+
+$$
+\boxed{
+\Sigma_{\mathfrak O}^{\mathrm{seq}}(\rho)(w)
+=
+\operatorname{Tr}(\rho F_w).
+}
+$$
+

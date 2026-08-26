@@ -1,0 +1,25 @@
+## 定理 88.1（完整观察表达判据）
+
+对任意 \(T:X\to Y\)，以下等价：
+
+1. \(T\in\operatorname{Expr}_Y(q)\)；
+2. \(R_q\subseteq\ker T\)；
+3. 对任意 \(x,y\)：
+
+\[
+\left(\forall i,
+q_i(x)=q_i(y)\right)
+\Longrightarrow
+T(x)=T(y).
+\]
+
+### 证明
+
+若 \(T=\bar Tq_{\mathcal I}^{\operatorname{eff}}\)，完整画像相等立即推出目标相等。反之，在有效像上定义：
+
+\[
+\bar T(q_{\mathcal I}(x))=T(x).
+\]
+
+纤维稳定性保证该定义与代表选择无关。这里使用有效像而非整个形式乘积，因此不需要为未实现画像任意补值。\(\square\)
+

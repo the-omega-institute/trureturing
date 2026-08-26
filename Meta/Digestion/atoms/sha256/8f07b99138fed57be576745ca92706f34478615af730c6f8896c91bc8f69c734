@@ -1,0 +1,32 @@
+## 14.2 实际未来
+
+定义：
+
+$$
+Future(g,x_0,c)
+=
+Permit_Ω(g)
+\cap
+Reach(g,x_0,c)
+\cap
+Viable(g,c)
+\cap
+ResourceFeasible(c).
+$$
+
+所以：
+
+$$
+Future\subseteq Permit.
+$$
+
+但一般：
+
+$$
+Permit\not\subseteq Reach.
+$$
+
+最小反例是恒等动力学：全部状态均被许可，但从初态只能到达自身。
+
+---
+

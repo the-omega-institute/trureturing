@@ -1,0 +1,16 @@
+## 定义 4.3(结构交换形:白金律)
+
+按定义 3.2 的结构交换,用对方的欲评价实际行动:
+
+\[
+\operatorname{Forbidden}^{\mathrm{str}}_i(x,u\!\to\! j)
+\Longleftarrow
+\neg W_j\bigl(F(x,u,i\!\to\! j)\bigr),
+\qquad
+\operatorname{Obligated}^{\mathrm{str}}_i(x,u\!\to\! j)
+\Longleftarrow
+W_j\bigl(F(x,u,i\!\to\! j)\bigr)\wedge\operatorname{Can}_i(x,u,j).
+\]
+
+「以彼之欲度彼。」注意与 4.1/4.2 的两处差别:评价谓词 \(W_i\to W_j\),行动 \(j\!\to\! i\)(镜像)\(\to i\!\to\! j\)(实际)。
+

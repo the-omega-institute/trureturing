@@ -1,0 +1,26 @@
+## 定理 58.1（确定性安全策略存在判据）
+
+在每个有效纤维上，一个只依赖 $q$ 的确定性安全策略存在，当且仅当
+
+$$
+\forall z\in\operatorname{range}(q),
+\qquad
+\mathcal A_q(z)\neq\varnothing.
+$$
+
+### 证明
+
+若存在安全策略 $s(z)$，则对每个 $x$ 满足 $q(x)=z$，均有
+
+$$
+s(z)\in\mathcal A_X(x),
+$$
+
+故
+
+$$
+s(z)\in\mathcal A_q(z).
+$$
+
+反向，若每个交集非空，对每个有效 $z$ 选择一个元素即可形成纤维常值安全策略。有限情形无需额外可测选择条件；无限可测情形还须申报 measurability。∎
+

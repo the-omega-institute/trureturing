@@ -79,11 +79,12 @@ internal static class WorktreeCommand
 
         WorktreeOptions? options = null;
         var worktreeCreated = false;
+        var halfBuiltRecovered = false;
         var stopwatch = System.Diagnostics.Stopwatch.StartNew();
         try
         {
             options = ParseArguments(repositoryRoot, arguments);
-            ValidatePreflight(options, runner);
+            halfBuiltRecovered = ValidatePreflight(options, runner);
             GitWorktreeInventory.FetchRemoteBase(options.Source, options.Base, runner);
             VerifyBase(options, runner);
             var pins = LeanPinSet.ReadBase(options.Source, options.Base, runner);
@@ -108,6 +109,7 @@ internal static class WorktreeCommand
                     TimeSpan.FromSeconds(1800),
                     "dotnet restore failed");
             }
+            WorktreeCreationSafety.ValidateCreatedWorktree(options, runner);
 
             stopwatch.Stop();
             var summary = JsonSerializer.Serialize(new
@@ -120,6 +122,7 @@ internal static class WorktreeCommand
                 pin_sha256 = pins.Sha256,
                 donor_behind_base = donor.BehindBase,
                 donor_cache_pin = donor.CachePin,
+                halfbuilt_recovered = halfBuiltRecovered,
                 dotnet_restore = options.SkipRestore ? "skipped" : "restored",
                 elapsed_ms = stopwatch.ElapsedMilliseconds,
             }) + "\n";
@@ -353,13 +356,14 @@ internal static class WorktreeCommand
                 "branch must match harness/* or agent/<official>/<task-code>");
     }
 
-    private static void ValidatePreflight(WorktreeOptions options, IWorktreeProcessRunner runner)
+    private static bool ValidatePreflight(WorktreeOptions options, IWorktreeProcessRunner runner)
     {
         if (!Directory.Exists(options.Source))
         {
             throw new InvalidOperationException($"source does not exist: {options.Source}");
         }
 
+        var halfBuiltRecovered = WorktreeCreationSafety.RecoverHalfBuiltWorktree(options, runner);
         if (File.Exists(options.Path) || Directory.Exists(options.Path))
         {
             throw new InvalidOperationException($"path already exists: {options.Path}");
@@ -392,6 +396,8 @@ internal static class WorktreeCommand
         {
             throw new InvalidOperationException(ProcessError(existingBranch, "could not inspect branch"));
         }
+
+        return halfBuiltRecovered;
     }
 
     private static void VerifyBase(WorktreeOptions options, IWorktreeProcessRunner runner) =>

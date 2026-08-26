@@ -1,0 +1,56 @@
+## 3.2 观察语言
+
+单个读出为：
+
+$$
+q:\mathcal X\to Y.
+$$
+
+一般观察语言定义为：
+
+$$
+\mathcal L=\{q_i:\mathcal X\to Y_i\}_{i\in I}.
+$$
+
+联合 profile：
+
+$$
+Π_{\mathcal L}(x)=(q_i(x))_{i\in I}.
+$$
+
+定义观察 residual：
+
+$$
+R_{\mathcal L}=ker(Π_{\mathcal L}).
+$$
+
+即：
+
+$$
+xR_{\mathcal L}y
+\iff
+∀i\in I,\ q_i(x)=q_i(y).
+$$
+
+规范商为：
+
+$$
+Z_{\mathcal L}=\mathcal X/R_{\mathcal L},
+$$
+
+规范投影为：
+
+$$
+π_{\mathcal L}:\mathcal X\to Z_{\mathcal L}.
+$$
+
+观察者看到的是商类：
+
+$$
+[x]_{\mathcal L},
+$$
+
+而不是完整状态 x。
+
+---
+

@@ -1,0 +1,14 @@
+## 定理 226.1（零余量判据）
+
+\[
+\boxed{
+\operatorname{StatRes}(x,y)=0
+\iff
+\mathbf P_x\perp\mathbf P_y.
+}
+\]
+
+### 证明
+
+概率测度总变差等于 \(1\) 当且仅当两测度互奇；代入等先验 Bayes 错误公式。 \(\square\)
+

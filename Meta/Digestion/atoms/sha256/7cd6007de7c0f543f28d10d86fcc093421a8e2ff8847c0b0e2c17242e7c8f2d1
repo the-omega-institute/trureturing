@@ -1,0 +1,16 @@
+\[
+\boxed{
+\operatorname{restrictTime}_h(P_{N'}^{q,\tau}(x))
+=
+P_N^{q,\tau}(x).
+}
+\]
+
+特别地，
+
+\[
+P_0^{q,\tau}(x)(0)=q(x).
+\]
+
+这些结论只用 `Fin` 边界证明、递归化简与有限函数外延。
+

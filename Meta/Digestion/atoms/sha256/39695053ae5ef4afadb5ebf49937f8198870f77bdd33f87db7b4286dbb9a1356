@@ -1,0 +1,50 @@
+## 定理 454.2（覆盖最大性）
+
+设任意回答器：
+
+[
+g:B_C\to Y\sqcup{\bot_{\mathrm{ans}}}
+]
+
+满足零错误条件：
+
+[
+g(C(x))\in Y
+\Longrightarrow
+g(C(x))=T(x)
+]
+
+对全部合法 (x) 成立。
+
+则：
+
+[
+g(b)\in Y
+\Longrightarrow
+\widehat T_C(b)\in Y.
+]
+
+### 证明
+
+若 (g(b)=y)，则对所有合法 (x) 且 (C(x)=b)：
+
+[
+T(x)=y.
+]
+
+所以 (Y_b={y})，规范回答器也回答 (y)。 (\square)
+
+因此：
+
+[
+\boxed{
+\widehat T_C
+}
+]
+
+是在现有概念下所有零错误回答器中覆盖范围最大的一个。
+
+这给出了“知道什么时候不回答”的严格最优性。
+
+---
+

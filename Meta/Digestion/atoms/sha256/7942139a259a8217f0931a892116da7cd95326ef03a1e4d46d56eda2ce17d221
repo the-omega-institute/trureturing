@@ -1,0 +1,121 @@
+# 237. 当前最深层的新结论
+
+本轮最重要的推导不是又增加了一批哲学术语，而是揭示了六个此前未完全显式化的结构事实。
+
+第一，**问题与概念是同一种对象**：
+
+[
+\boxed{
+\text{所谓“无法回答”，往往不是缺少推理，
+而是当前证据余纤维仍跨越多个答案值。}
+}
+]
+
+第二，**自适应实验不能突破全部被动实验的联合盲点**：
+
+[
+\boxed{
+\text{策略能降低成本，但不能创造实验体系不存在的分辨能力。}
+}
+]
+
+第三，**信任和共识必须审计 provenance**：
+
+[
+\boxed{
+\text{一百个同源报告在结构上仍可能只有一个信息源。}
+}
+]
+
+第四，**更多信息同时意味着更多制度权力**：
+
+[
+\boxed{
+\text{refinement 不只扩大可知集合，也扩大可差别行动集合。}
+}
+]
+
+第五，**意识私人性是实验制度相对的，而不是纯粹形而上标签**：
+
+[
+\boxed{
+\text{私人余量是否可公开化，
+取决于允许的行动、报告和观测是否能把它运输到公共读出。}
+}
+]
+
+第六，也是最承重的一条：
+
+[
+\boxed{
+\text{形式哲学的基本单位不应是“命题”，
+而应是“问题—界面—证明—反例—修复—来源”六元组。}
+}
+]
+
+可以写成：
+
+[
+\boxed{
+\mathfrak Q
+===========
+
+(
+T,
+C,
+p,
+\Delta,
+R,
+\Pi
+),
+}
+]
+
+其中：
+
+[
+\begin{aligned}
+T&=\text{要回答的问题};\
+C&=\text{当前信息界面};\
+p&=\text{因子化或证明见证};\
+\Delta&=\text{缺陷和反模型};\
+R&=\text{最小修复};\
+\Pi&=\text{proof provenance}.
+\end{aligned}
+]
+
+因此，整套理论的总公式进一步发展为：
+
+[
+\boxed{
+\begin{aligned}
+\textbf{Formal Concept Dynamics}
+={}&
+\textbf{a calculus of questions}\
+&+
+\textbf{an algebra of experiments}\
+&+
+\textbf{a provenance theory of trust}\
+&+
+\textbf{a belief-state theory of agency}\
+&+
+\textbf{a structural theory of privacy and power}\
+&+
+\textbf{an empirical quotient theory of mind and science}.
+\end{aligned}
+}
+]
+
+最凝练的一句是：
+
+[
+\boxed{
+\text{一个系统知道什么，取决于它能区分什么；
+它能控制什么，取决于这些区别能支持什么政策；
+它应当被允许知道什么，则取决于我们愿意赋予它多少区别对待世界的能力。}
+}
+]
+以下从 **§238** 继续。仍然只进行纸面推理，不处理 GitHub，也不把这些新增定义与定理标记为已经获得 Lean proof term 的 `Closed` 结论。
+
+---
+

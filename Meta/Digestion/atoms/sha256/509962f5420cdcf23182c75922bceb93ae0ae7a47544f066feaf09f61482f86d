@@ -1,0 +1,18 @@
+# 131. 横向素数与纵向精度在量子化后仍不对称
+
+`FORMAL_PRIME_OBSERVER_DYNAMICS.md` 的核心结构轴是：
+
+$$
+\boxed{
+\text{different primes = horizontal combination},
+}
+$$
+
+$$
+\boxed{
+\text{same prime precision = vertical refinement}.
+}
+$$
+
+这一结构在量子化后必须保留。
+

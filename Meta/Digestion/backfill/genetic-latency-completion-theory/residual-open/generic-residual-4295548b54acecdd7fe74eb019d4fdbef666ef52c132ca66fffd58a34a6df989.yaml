@@ -1,0 +1,10 @@
+ast_path: section/7-1-相容精度塔
+fingerprints:
+  raw_sha256: sha256:4295548b54acecdd7fe74eb019d4fdbef666ef52c132ca66fffd58a34a6df989
+  normalized_sha256: sha256:4295548b54acecdd7fe74eb019d4fdbef666ef52c132ca66fffd58a34a6df989
+cas_ref: sha256:4295548b54acecdd7fe74eb019d4fdbef666ef52c132ca66fffd58a34a6df989
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

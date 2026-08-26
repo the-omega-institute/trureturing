@@ -1,0 +1,12 @@
+## 定义 64.1（策略等价历史）
+
+$$
+\boxed{
+h\sim_{\mathrm{self}}h'
+\iff
+\forall w\in W^*,
+\quad
+\Pi_h(w)=\Pi_{h'}(w).
+}
+$$
+

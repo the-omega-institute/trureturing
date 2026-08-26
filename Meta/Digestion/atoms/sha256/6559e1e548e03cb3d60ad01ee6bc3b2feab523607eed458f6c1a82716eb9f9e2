@@ -1,0 +1,14 @@
+# 20. Agency completion 是历史接口上的闭包算子
+
+设当前自我接口为
+
+$$
+m:\mathcal H\to M,
+$$
+
+代理画像接口为
+
+$$
+q_{\mathrm{ag}}(h)=[h]_{\mathrm{ag}}.
+$$
+

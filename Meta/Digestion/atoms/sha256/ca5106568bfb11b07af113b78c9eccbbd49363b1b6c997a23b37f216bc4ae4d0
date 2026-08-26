@@ -1,0 +1,13 @@
+## 条件化
+
+对命题 (P\subseteq X)：
+
+[
+\boxed{
+\mathsf{Cond}_P(A)
+==================
+
+A\cap P.
+}
+]
+

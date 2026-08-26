@@ -1,0 +1,5 @@
+source_id = "observer-structure-universal-values"
+path = "docs/develop/theory/OBSERVER_STRUCTURE_UNIVERSAL_VALUES.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

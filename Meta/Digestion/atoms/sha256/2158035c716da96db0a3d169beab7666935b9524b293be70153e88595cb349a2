@@ -1,0 +1,14 @@
+## 严格边界 62.1
+
+$\omega$ 是观察性分解，不是自动的因果证明。若 $M$ 与 $A$ 由共同隐藏变量驱动，互信息可能高而 $\alpha(e)$ 仍为零。因此作者性审计至少应同时报告：
+
+$$
+\boxed{
+\text{observational attribution }\omega
+\quad+
+\text{interventional control }\alpha.
+}
+$$
+
+---
+

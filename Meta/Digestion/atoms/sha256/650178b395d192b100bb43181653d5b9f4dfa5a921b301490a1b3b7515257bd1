@@ -1,0 +1,45 @@
+# 515. 可控前驱是行动版最弱前置条件
+
+设每个状态 (x) 有可用行动：
+
+[
+U(x).
+]
+
+行动 (u) 产生非空后继集合：
+
+[
+R_u(x)\subseteq X.
+]
+
+对目标集合 (S\subseteq X)，定义：
+
+[
+\boxed{
+\operatorname{CPre}(S)
+======================
+
+\left{
+x
+;\middle|;
+\exists u\in U(x),
+\quad
+R_u(x)\subseteq S
+\right}.
+}
+]
+
+它表示：
+
+> 主体存在一个行动，能够保证下一步进入 (S)。
+
+这不是普通存在可达：
+
+[
+\exists u,\exists y\in R_u(x)\cap S.
+]
+
+而是控制意义上的保证。
+
+---
+

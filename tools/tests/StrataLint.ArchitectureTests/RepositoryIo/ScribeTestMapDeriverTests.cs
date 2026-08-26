@@ -135,6 +135,46 @@ public sealed class ScribeTestMapDeriverTests
     }
 
     [Fact]
+    public void MsBuildCompileQueryFailureDoesNotProduceOrphanFindings()
+    {
+        const string sourcePath = "tools/tests/CompileFailProof/MissingCapability.cs";
+        using var repository = CreateTrackedRepository(
+            ("tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", SdkProject),
+            ("tools/tests/CompileFailProof/CompileFailProof.csproj", SdkProject),
+            (sourcePath, "class MissingCapability { }"));
+
+        var map = ScribeTestMapDeriver.DeriveRepository(
+            repository.Path,
+            Path.Combine(repository.Path, "missing-dotnet"));
+        var findings = ScribeUnknownDebtPolicy.InspectCurrent(map);
+
+        Assert.NotEmpty(map.CompileQueryFindings);
+        Assert.Contains(findings, static finding => finding.Message.Contains(
+            "MSBuild Compile query failed closed",
+            StringComparison.Ordinal));
+        Assert.DoesNotContain(sourcePath, map.OrphanManagedSourcePaths);
+        Assert.DoesNotContain(findings, finding => finding.Path == sourcePath);
+    }
+
+    [Fact]
+    public void MsBuildCompileQueryFailureMakesEngineeringScopeIncomplete()
+    {
+        const string sourcePath = "tools/tests/CompileFailProof/MissingCapability.cs";
+        using var repository = CreateTrackedRepository(
+            ("tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", SdkProject),
+            ("tools/tests/CompileFailProof/CompileFailProof.csproj", SdkProject),
+            (sourcePath, "class MissingCapability { }"));
+
+        var closure = EngineeringInputDeriver.DeriveRepository(
+            repository.Path,
+            Path.Combine(repository.Path, "missing-dotnet"));
+
+        Assert.False(closure.IsComplete);
+        Assert.Contains("MSBuild Compile query failed closed", closure.IncompleteReason, StringComparison.Ordinal);
+        Assert.DoesNotContain(sourcePath, closure.IncompleteReason, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void MsBuildCompileQueryTimeoutProducesBlockingFinding()
     {
         using var repository = CreateTrackedRepository(

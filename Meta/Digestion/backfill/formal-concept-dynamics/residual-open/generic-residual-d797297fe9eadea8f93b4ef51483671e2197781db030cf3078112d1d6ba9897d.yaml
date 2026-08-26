@@ -1,0 +1,10 @@
+ast_path: section/412-预注册锁定的是推理路径-而不是真理
+fingerprints:
+  raw_sha256: sha256:d797297fe9eadea8f93b4ef51483671e2197781db030cf3078112d1d6ba9897d
+  normalized_sha256: sha256:d797297fe9eadea8f93b4ef51483671e2197781db030cf3078112d1d6ba9897d
+cas_ref: sha256:d797297fe9eadea8f93b4ef51483671e2197781db030cf3078112d1d6ba9897d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

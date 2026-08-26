@@ -1,0 +1,41 @@
+## 3.4 Alexandrov 依赖拓扑
+
+采用上集开集约定：
+
+\[
+U\text{ 开}
+\iff
+x\in U,\ x\preceq y
+\Rightarrow y\in U.
+\]
+
+主开集与主闭集为
+
+\[
+\uparrow x=\{y:x\preceq y\},
+\qquad
+\downarrow x=\{y:y\preceq x\}.
+\]
+
+有
+
+\[
+\boxed{
+\operatorname{MinOpen}(x)=\uparrow x,
+\qquad
+\overline{\{x\}}=\downarrow x.
+}
+\]
+
+并且
+
+\[
+u\preceq v
+\Rightarrow
+\downarrow u\subseteq\downarrow v,
+\qquad
+\uparrow v\subseteq\uparrow u.
+\]
+
+所以 \(\downarrow v\) 是认证基础，\(\uparrow v\) 是结构影响锥。
+

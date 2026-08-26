@@ -1,0 +1,55 @@
+# 415. 科学共识不是证据充分性的替代品
+
+设共识概念：
+
+[
+C_{\mathrm{cons}}:X\to B_{\mathrm{cons}}.
+]
+
+真理目标：
+
+[
+T:X\to Y.
+]
+
+即使所有主体一致，使 (C_{\mathrm{cons}}) 近乎常值，也不自动有：
+
+[
+E_T\preceq C_{\mathrm{cons}}.
+]
+
+可以存在两个世界：
+
+[
+C_{\mathrm{cons}}(x)
+====================
+
+C_{\mathrm{cons}}(y),
+]
+
+但：
+
+[
+T(x)\neq T(y).
+]
+
+所以：
+
+[
+\boxed{
+\text{agreement}
+\neq
+\text{truth sufficiency}.
+}
+]
+
+共识的认识价值来自：
+
+* 证据是否独立；
+* 专家接口是否目标充分；
+* provenance 是否可信；
+* 反例是否开放；
+* 结果是否跨环境稳定。
+
+---
+

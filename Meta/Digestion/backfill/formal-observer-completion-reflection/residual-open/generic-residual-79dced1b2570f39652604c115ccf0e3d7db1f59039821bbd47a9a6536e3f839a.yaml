@@ -1,0 +1,10 @@
+ast_path: section/39-无典范选择定理
+fingerprints:
+  raw_sha256: sha256:79dced1b2570f39652604c115ccf0e3d7db1f59039821bbd47a9a6536e3f839a
+  normalized_sha256: sha256:79dced1b2570f39652604c115ccf0e3d7db1f59039821bbd47a9a6536e3f839a
+cas_ref: sha256:79dced1b2570f39652604c115ccf0e3d7db1f59039821bbd47a9a6536e3f839a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

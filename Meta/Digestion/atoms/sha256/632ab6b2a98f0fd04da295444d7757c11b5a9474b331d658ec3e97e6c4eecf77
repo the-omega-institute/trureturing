@@ -1,0 +1,84 @@
+### 56.4.1 有限迭代、时域索引与投影
+
+固定任意类型 \(X,O\)、更新
+
+\[
+\tau:X\to X
+\]
+
+与当前读数
+
+\[
+q:X\to O.
+\]
+
+定义自然数迭代
+
+\[
+\boxed{
+\begin{aligned}
+&\operatorname{timeIter}_\tau(0,x):=x,\\
+&\operatorname{timeIter}_\tau(k+1,x)
+:=
+\tau(\operatorname{timeIter}_\tau(k,x)).
+\end{aligned}
+}
+\]
+
+对 \(N:\mathbb N\)，定义有限时域索引
+
+\[
+\boxed{
+\operatorname{TimeIndex}(N):=\operatorname{Fin}(N+1)
+}
+\]
+
+和时域投影
+
+\[
+\boxed{
+\begin{aligned}
+&\operatorname{timeProjection}(q,\tau,N)
+:X\to(\operatorname{TimeIndex}(N)\to O),\\
+&\operatorname{timeProjection}(q,\tau,N)(x)(i)
+:=
+q(\operatorname{timeIter}_\tau(i.1,x)).
+\end{aligned}
+}
+\]
+
+记该投影为 \(P_N^{q,\tau}\)。它正是第 8.1 部
+
+\[
+T_N(x)=(q(x),q(\tau x),\ldots,q(\tau^N x))
+\]
+
+的有类型有限函数实现。有限性来自索引
+\(\operatorname{Fin}(N+1)\)；不要求 \(X\) 或 \(O\) 本身有限。
+
+若 \(h:N\le N'\)，定义保值下标嵌入
+
+\[
+\boxed{
+\iota_h:
+\operatorname{TimeIndex}(N)\hookrightarrow
+\operatorname{TimeIndex}(N'),
+\qquad
+\iota_h(i).1=i.1,
+}
+\]
+
+以及限制函数
+
+\[
+\boxed{
+\operatorname{restrictTime}_h
+:
+(\operatorname{TimeIndex}(N')\to O)
+\to
+(\operatorname{TimeIndex}(N)\to O),
+\qquad
+\operatorname{restrictTime}_h(u):=u\circ\iota_h.
+}
+\]
+
