@@ -1,0 +1,43 @@
+# 120. $m$-素数观察层级
+
+定义
+
+$$
+V_{\le m}
+=
+\bigoplus_{|S|\le m}V_S.
+$$
+
+则
+
+$$
+\boxed{
+\dim V_{\le m}
+=
+\sum_{|S|\le m}
+\prod_{j\in S}(d_j^2-1).
+}
+$$
+
+定义残差
+
+$$
+N_{>m}
+=
+V_{\le m}^{\perp}
+=
+\bigoplus_{|S|>m}V_S.
+$$
+
+于是形成严格层级：
+
+$$
+V_{\le1}
+\subseteq
+V_{\le2}
+\subseteq\cdots\subseteq
+V_{\le r}
+=
+\operatorname{Herm}(\mathcal H).
+$$
+

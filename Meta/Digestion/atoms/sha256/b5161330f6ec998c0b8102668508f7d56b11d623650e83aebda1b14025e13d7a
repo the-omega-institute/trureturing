@@ -1,0 +1,30 @@
+**证明义务 56.2-A（对称核的可判等价律）。** 对上述任意类型、可判预序、\(F\) 与 \(v\)，机器核验
+
+\[
+\begin{aligned}
+&\forall x:A_F,\quad
+\operatorname{ParetoEqOn}(v,F,x,x),\\
+&\forall x,y:A_F,\quad
+\operatorname{ParetoEqOn}(v,F,x,y)
+\to
+\operatorname{ParetoEqOn}(v,F,y,x),\\
+&\forall x,y,z:A_F,\quad
+\operatorname{ParetoEqOn}(v,F,x,y)
+\to
+\operatorname{ParetoEqOn}(v,F,y,z)
+\to
+\operatorname{ParetoEqOn}(v,F,x,z),
+\end{aligned}
+\]
+
+并从五个坐标关系的可判性构造
+
+\[
+\forall x,y:A_F,\quad
+\operatorname{Decidable}
+\bigl(\operatorname{ParetoEqOn}(v,F,x,y)\bigr).
+\]
+
+反身与传递部分应复用已冻结的
+`pareto_weak_reflexive_transitive`；不得把待证结论重新列为前件。
+

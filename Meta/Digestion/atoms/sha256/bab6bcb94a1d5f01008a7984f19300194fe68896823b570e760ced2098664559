@@ -1,0 +1,12 @@
+## 定义 4.1(消极形:银律)
+
+\[
+\boxed{
+\operatorname{Forbidden}_i(x,u\!\to\! j)
+\ \Longleftarrow\
+\neg W_i\bigl(F(x,u,j\!\to\! i)\bigr).
+}
+\]
+
+「若我不愿此事施于我,则禁止我施于人。」它是一个**阻断谓词**:只划定禁区,不规定义务;fail-closed。
+

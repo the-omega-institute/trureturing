@@ -1,0 +1,10 @@
+ast_path: row/completion-noncommutation-defect
+fingerprints:
+  raw_sha256: sha256:97ac851f90754900c4290ab3e1bfe3563beb06890e597ed7b0915a562e37598d
+  normalized_sha256: sha256:97ac851f90754900c4290ab3e1bfe3563beb06890e597ed7b0915a562e37598d
+cas_ref: sha256:97ac851f90754900c4290ab3e1bfe3563beb06890e597ed7b0915a562e37598d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
