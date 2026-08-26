@@ -342,14 +342,17 @@ theorem top_predecessor_period_two_orbit (d Q₀ : Nat) (hd : 3 ≤ d)
         largeLeft lowArm htop_nonzero hbase
       constructor
       · simpa using hbase
-      · convert hmiddle using 1
-        · omega
-        · apply Fin.ext
+      · have hindex : 2 * 0 + Q₀ + 1 = Q₀ + 1 := by omega
+        have hletter :
+            topPredecessorGapLetter d (by omega) =
+              ⟨(D5.S0.Tower.DBonacci.GapAlphabet.topGapLetter d (by omega)).1 - 1,
+                by omega⟩ := by
+          apply Fin.ext
           simp [D5.S0.Tower.DBonacci.GapAlphabet.topGapLetter,
             topPredecessorGapLetter]
           omega
-        · exact hlargeBranch.symm
-        · exact hmiddleRight.symm
+        rw [hindex, hletter, ← hlargeBranch, ← hmiddleRight]
+        exact hmiddle
   | succ k ih =>
       have hlarge := letter_orbit_gap_left_child d (2 * k + Q₀ + 1)
         (by omega) x (topPredecessorGapLetter d (by omega))
@@ -366,14 +369,17 @@ theorem top_predecessor_period_two_orbit (d Q₀ : Nat) (hd : 3 ≤ d)
       constructor
       · convert hlarge' using 1
         omega
-      · convert hmiddle using 1
-        · omega
-        · apply Fin.ext
+      · have hindex : 2 * (k + 1) + Q₀ + 1 = 2 * k + Q₀ + 1 + 1 + 1 := by omega
+        have hletter :
+            topPredecessorGapLetter d (by omega) =
+              ⟨(D5.S0.Tower.DBonacci.GapAlphabet.topGapLetter d (by omega)).1 - 1,
+                by omega⟩ := by
+          apply Fin.ext
           simp [D5.S0.Tower.DBonacci.GapAlphabet.topGapLetter,
             topPredecessorGapLetter]
           omega
-        · exact hlargeBranch.symm
-        · exact hmiddleRight.symm
+        rw [hindex, hletter, ← hlargeBranch, ← hmiddleRight]
+        exact hmiddle
 
 /-- The order-four orbit is an instance of the uniform typed period-two theorem. -/
 theorem four_champion_gap_orbit_reproved (k : Nat) :

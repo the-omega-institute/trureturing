@@ -58,10 +58,13 @@ theorem endpoints_are_gap_lengths :
 /-- The large endpoint maps to the combined endpoint. -/
 theorem large_to_combined :
     tribonacciPeriodicTransition largeEndpoint = combinedEndpoint := by
-  have hbranch : ¬ ((1 : Real) ≤ t⁻¹) := by
-    push_neg; exact inv_t_lt_one
-  simp only [largeEndpoint, combinedEndpoint, tribonacciPeriodicTransition,
-    if_neg hbranch]
+  have hbranch : ¬ (largeEndpoint.coordinate ≤ t⁻¹) := by
+    change ¬ ((1 : Real) ≤ t⁻¹)
+    push_neg
+    exact inv_t_lt_one
+  simp only [tribonacciPeriodicTransition]
+  simp only [if_neg hbranch]
+  simp only [largeEndpoint, combinedEndpoint]
   norm_num
 
 /-- The combined endpoint maps to the small endpoint.  This step is where the
@@ -70,14 +73,18 @@ inverse of the constant, and that is the small gap's length. -/
 theorem combined_to_small :
     tribonacciPeriodicTransition combinedEndpoint = smallEndpoint := by
   have hinv := tribonacci_inverse_polynomial
-  have hbranch : ¬ (t - 1 ≤ t⁻¹) := by
+  have hbranch : ¬ (combinedEndpoint.coordinate ≤ t⁻¹) := by
+    change ¬ (t - 1 ≤ t⁻¹)
     push_neg
     rw [hinv]
     nlinarith [one_lt_t, t_lt_two,
       D5.S0.Tower.Tribonacci.Values.tribonacciConstant_cubic]
-  simp only [combinedEndpoint, smallEndpoint, tribonacciPeriodicTransition,
-    if_neg hbranch, TribonacciPeriodicState.mk.injEq, true_and]
-  rw [hinv]; ring
+  simp only [tribonacciPeriodicTransition]
+  simp only [if_neg hbranch]
+  simp only [combinedEndpoint, smallEndpoint,
+    TribonacciPeriodicState.mk.injEq, true_and]
+  rw [hinv]
+  ring
 
 /-- The small endpoint maps back to the large endpoint, closing the cycle. -/
 theorem small_to_large :

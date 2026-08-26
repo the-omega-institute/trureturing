@@ -176,10 +176,11 @@ theorem tribonacci_decode_step {state : CodedState} {step : Step}
     rcases hvalid with ⟨hkind, hbranch⟩ <;>
     simp only [D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciStepSource]
       at hkind <;>
-    subst kind <;>
-    simp only [D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.decodeTribonacciState,
-      D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciPeriodicTransition]
+    subst kind
+  all_goals
+    simp only [D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciPeriodicTransition]
   · simp only [tribonacciApplyStepCode,
+      D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.decodeTribonacciState,
       D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciStepTarget,
       D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciStepAffine]
     congr 1
@@ -188,20 +189,35 @@ theorem tribonacci_decode_step {state : CodedState} {step : Step}
     norm_num [D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciCodeValue,
       D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciCodeRoot,
       D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciCodeZero]
-  · rw [if_pos hbranch]
+  · have hbranch' :
+        (D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.decodeTribonacciState
+          ({kind := .combined, coordinate := coordinate} : CodedState)).coordinate ≤ t⁻¹ := by
+      change D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciCodeValue
+          coordinate ≤ t⁻¹
+      exact hbranch
+    simp only [if_pos hbranch']
     simp only [tribonacciApplyStepCode,
-      D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciStepTarget,
-      D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciStepAffine]
+        D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.decodeTribonacciState,
+        D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciStepTarget,
+        D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciStepAffine]
     congr 1
     rw [D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacci_code_value_add,
       D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacci_code_value_mul]
     norm_num [D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciCodeValue,
       D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciCodeRoot,
       D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciCodeZero]
-  · rw [if_neg (not_le.mpr hbranch)]
+  · have hbranch' : t⁻¹ <
+        (D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.decodeTribonacciState
+          ({kind := .combined, coordinate := coordinate} : CodedState)).coordinate := by
+      change t⁻¹ <
+          D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciCodeValue
+            coordinate
+      exact hbranch
+    simp only [if_neg (not_le_of_gt hbranch')]
     simp only [tribonacciApplyStepCode,
-      D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciStepTarget,
-      D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciStepAffine]
+        D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.decodeTribonacciState,
+        D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciStepTarget,
+        D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciStepAffine]
     congr 1
     rw [D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacci_code_value_add,
       D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacci_code_value_mul,
@@ -210,20 +226,35 @@ theorem tribonacci_decode_step {state : CodedState} {step : Step}
       D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciCodeRoot,
       D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciCodeOne]
     ring
-  · rw [if_pos hbranch]
+  · have hbranch' :
+        (D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.decodeTribonacciState
+          ({kind := .large, coordinate := coordinate} : CodedState)).coordinate ≤ t⁻¹ := by
+      change D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciCodeValue
+          coordinate ≤ t⁻¹
+      exact hbranch
+    simp only [if_pos hbranch']
     simp only [tribonacciApplyStepCode,
-      D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciStepTarget,
-      D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciStepAffine]
+        D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.decodeTribonacciState,
+        D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciStepTarget,
+        D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciStepAffine]
     congr 1
     rw [D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacci_code_value_add,
       D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacci_code_value_mul]
     norm_num [D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciCodeValue,
       D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciCodeRoot,
       D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciCodeZero]
-  · rw [if_neg (not_le.mpr hbranch)]
+  · have hbranch' : t⁻¹ <
+        (D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.decodeTribonacciState
+          ({kind := .large, coordinate := coordinate} : CodedState)).coordinate := by
+      change t⁻¹ <
+          D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciCodeValue
+            coordinate
+      exact hbranch
+    simp only [if_neg (not_le_of_gt hbranch')]
     simp only [tribonacciApplyStepCode,
-      D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciStepTarget,
-      D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciStepAffine]
+        D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.decodeTribonacciState,
+        D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciStepTarget,
+        D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciStepAffine]
     congr 1
     rw [D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacci_code_value_add,
       D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacci_code_value_mul,
