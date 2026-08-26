@@ -135,8 +135,7 @@ internal static class DagLedgerCommandPreparation
         var selectedPaths = closedPaths
             .Where(path => !baseView.ActiveByPath.TryGetValue(path, out var entry)
                 || !entry.AxiomClosureKnown
-                || changedPaths.Contains(path)
-                || FrozenLedger.EnvironmentPinsChanged(environment, entry))
+                || changedPaths.Contains(path))
             .ToHashSet();
         foreach (var path in LeanImportAdjacency.DependenciesFirst(closedPaths, adjacency)
             .Where(path => states.TryGetValue(path, out var state) && state is TruthState.Closed))
@@ -426,7 +425,6 @@ internal static class DagLedgerCommandPreparation
         var remaining = events.ToList();
         var result = ImmutableArray.CreateBuilder<DagLedgerFileEvent>(events.Length);
         var identities = new HashSet<string>(StringComparer.Ordinal);
-        var hashes = new HashSet<string>(StringComparer.Ordinal);
         while (remaining.Count > 0)
         {
             var index = remaining.FindIndex(item => item.EventType switch
@@ -434,13 +432,6 @@ internal static class DagLedgerCommandPreparation
                 "Genesis" => result.Count == 0,
                 "Freeze" => result.Count > 0
                     && DependenciesPresent(item.Payload, "prerequisite_frozen_node_ids", identities),
-                FrozenLedger.SupersedeEventType =>
-                    item.Payload.TryGetProperty("previous_attestation_event_hash", out var previous)
-                    && hashes.Contains(previous.GetString()!)
-                    && DependenciesPresent(
-                        item.Payload,
-                        "prerequisite_frozen_node_ids",
-                        identities),
                 "Revoke" => RevokeDependenciesPresent(item.Payload, identities),
                 _ => true,
             });
@@ -461,7 +452,6 @@ internal static class DagLedgerCommandPreparation
             {
                 identities.Add(frozenNodeId.GetString()!);
             }
-            hashes.Add(item.EventHash);
         }
 
         return result.MoveToImmutable();
@@ -497,8 +487,7 @@ internal static class DagLedgerCommandPreparation
         return references.CommitOids.IsEmpty
             && references.TreeOids.IsEmpty
             && references.BlobOids.IsEmpty
-            && references.EnvironmentReferences.IsEmpty
-                ? TrustedFrozenGitReferences.CreateForTrustedAdapter([], [])
+                ? TrustedFrozenGitReferences.CreateForTrustedAdapter([])
                 : repository.ValidateFrozenReferences(references);
     }
 
@@ -507,9 +496,7 @@ internal static class DagLedgerCommandPreparation
         FrozenLedgerConsistent baseline,
         string label) => FrozenLedger.ScanSuffixReferences(
             syntax,
-            baseline.Events.Length - baseline.SyntaxStartSequence,
-            baseline.SyntaxStartSequence,
-            baseline.HeadHash) switch
+            baseline.Events.Length - baseline.SyntaxStartSequence) switch
         {
             FrozenLedgerReferenceScanOutcome.Accepted accepted => accepted.References,
             FrozenLedgerReferenceScanOutcome.Rejected rejected => throw new InvalidOperationException(

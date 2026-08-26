@@ -10,7 +10,6 @@ internal sealed record TrustedFrozenLedgerEvent(
     string EventHash,
     string Identity,
     JsonElement Payload,
-    int SchemaVersion = FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion,
     ImmutableArray<byte> RawBytes = default,
     JsonElement Root = default);
 
@@ -54,7 +53,6 @@ internal sealed class FrozenLedgerBaseView
 
     internal FrozenLedgerConsistent ToWriterBaseline()
     {
-        var byDagHash = Events.ToDictionary(static item => item.EventHash, StringComparer.Ordinal);
         var typed = ImmutableArray.CreateBuilder<FrozenLedgerEvent>(Events.Length);
         for (var sequence = 0; sequence < Events.Length; sequence++)
         {
@@ -66,10 +64,6 @@ internal sealed class FrozenLedgerBaseView
         }
 
         var activeEntries = ActiveByCase;
-        var superseded = Events
-            .Where(static item => item.EventType == FrozenLedger.SupersedeEventType)
-            .Select(item => ReadActiveBefore(item, byDagHash).Material.FrozenNodeId)
-            .ToImmutableHashSet();
         var revoked = Events
             .Where(static item => item.EventType == "Revoke")
             .SelectMany(static item => FrozenLedgerAttestationChain.RequiredStringArray(
@@ -90,7 +84,6 @@ internal sealed class FrozenLedgerBaseView
             graphRoot: FrozenLedger.ComputeFrozenGraphRoot(activeNodes),
             activeEntries,
             AllCaseIds,
-            superseded,
             revoked,
             syntaxStartSequence: Events.Length);
     }
@@ -110,11 +103,6 @@ internal sealed class FrozenLedgerBaseView
                 item.EventHash,
                 previousHash,
                 FrozenLedgerBaseViewReader.ReadFreeze(item.Payload, item.EventHash).Payload),
-            FrozenLedger.SupersedeEventType => new FrozenLedgerEvent.Supersede(
-                sequence,
-                item.EventHash,
-                previousHash,
-                FrozenLedgerBaseViewReader.ReadSupersede(item.Payload)),
             "Revoke" => new FrozenLedgerEvent.Revoke(
                 sequence,
                 item.EventHash,
@@ -138,19 +126,6 @@ internal sealed class FrozenLedgerBaseView
             StructuredCanonicalWriter.WriteJson(material).AsSpan());
     }
 
-    private static FrozenActiveEntry ReadActiveBefore(
-        TrustedFrozenLedgerEvent item,
-        IReadOnlyDictionary<string, TrustedFrozenLedgerEvent> byHash)
-    {
-        var previousHash = FrozenLedgerAttestationChain.RequiredString(
-            item.Payload,
-            "previous_attestation_event_hash");
-        return byHash.TryGetValue(previousHash, out var previous)
-            ? FrozenLedgerBaseViewReader.ReadActiveEntry(previous, byHash)
-            : throw new InvalidOperationException(
-                "trusted Supersede names an absent predecessor");
-    }
-
     private static FrozenGenesisPayload ReadGenesis(JsonElement payload) => new(
         FrozenLedgerAttestationChain.RequiredString(payload, "generator_blob_oid"),
         FrozenLedgerAttestationChain.RequiredString(payload, "origin_commit_oid"),
@@ -165,10 +140,6 @@ internal static class FrozenLedgerAttestationChain
     internal static ImmutableArray<TrustedFrozenLedgerEvent> ActiveAttestations(
         ImmutableArray<TrustedFrozenLedgerEvent> events)
     {
-        var superseded = events
-            .Where(static item => item.EventType == FrozenLedger.SupersedeEventType)
-            .Select(static item => RequiredString(item.Payload, "previous_attestation_event_hash"))
-            .ToImmutableHashSet(StringComparer.Ordinal);
         var revokedCases = events
             .Where(static item => item.EventType == "Revoke")
             .SelectMany(static item => OptionalStringArray(item.Payload, "affected_case_ids"))
@@ -180,42 +151,12 @@ internal static class FrozenLedgerAttestationChain
                 "affected_frozen_node_ids"))
             .ToImmutableHashSet(StringComparer.Ordinal);
         return events
-            .Where(static item => item.EventType is "Freeze"
-                or FrozenLedger.SupersedeEventType)
-            .Where(item => !superseded.Contains(item.EventHash)
-                && (revokedCases.Count == 0
+            .Where(static item => item.EventType == "Freeze")
+            .Where(item => (revokedCases.Count == 0
                     || !revokedCases.Contains(RequiredString(item.Payload, "case_id")))
                 && (revokedNodes.Count == 0
-                    || !revokedNodes.Contains(ActiveFrozenNodeId(item))))
+                    || !revokedNodes.Contains(RequiredString(item.Payload, "frozen_node_id"))))
             .ToImmutableArray();
-    }
-
-    private static string ActiveFrozenNodeId(TrustedFrozenLedgerEvent item)
-    {
-        var visiting = new HashSet<string>(StringComparer.Ordinal);
-        var current = item;
-        while (true)
-        {
-            if (!visiting.Add(current.EventHash))
-            {
-                throw new InvalidOperationException(
-                    "trusted protected-base attestation chain contains a cycle");
-            }
-
-            if (current.EventType == FrozenLedger.SupersedeEventType
-                || current.Payload.TryGetProperty("frozen_node_id", out _))
-            {
-                return RequiredString(current.Payload, "frozen_node_id");
-            }
-
-            if (current.EventType == "Freeze")
-            {
-                return current.Identity;
-            }
-
-            throw new InvalidOperationException(
-                $"trusted protected-base attestation has unsupported type {current.EventType}");
-        }
     }
 
     internal static string RequiredString(JsonElement value, string property) =>
@@ -264,9 +205,8 @@ internal static class FrozenLedgerBaseViewReader
         var origin = new FrozenLedgerOrigin(
             FrozenLedgerAttestationChain.RequiredString(genesis[0].Payload, "origin_commit_oid"),
             FrozenLedgerAttestationChain.RequiredString(genesis[0].Payload, "origin_tree_oid"));
-        var byHash = events.ToDictionary(static item => item.EventHash, StringComparer.Ordinal);
         var activeByCase = FrozenLedgerAttestationChain.ActiveAttestations(events)
-            .Select(item => ReadActiveEntry(item, byHash))
+            .Select(ReadActiveEntry)
             .ToImmutableDictionary(static entry => entry.Payload.CaseId, StringComparer.Ordinal);
         var allCaseIds = events
             .Where(static item => item.EventType == "Freeze")
@@ -286,154 +226,31 @@ internal static class FrozenLedgerBaseViewReader
                 .ToImmutableHashSet(StringComparer.Ordinal));
     }
 
-    internal static FrozenActiveEntry ReadActiveEntry(
-        TrustedFrozenLedgerEvent head,
-        IReadOnlyDictionary<string, TrustedFrozenLedgerEvent> byHash)
+    internal static FrozenActiveEntry ReadActiveEntry(TrustedFrozenLedgerEvent head)
     {
-        var chain = ImmutableArray.CreateBuilder<TrustedFrozenLedgerEvent>();
-        var visiting = new HashSet<string>(StringComparer.Ordinal);
-        var current = head;
-        while (true)
+        if (head.EventType != "Freeze")
         {
-            if (!visiting.Add(current.EventHash))
-            {
-                throw new InvalidOperationException(
-                    "trusted protected-base attestation chain contains a cycle");
-            }
-
-            chain.Add(current);
-            if (current.EventType == "Freeze")
-            {
-                break;
-            }
-
-            if (current.EventType != FrozenLedger.SupersedeEventType)
-            {
-                throw new InvalidOperationException(
-                    $"trusted protected-base active event has unsupported type {current.EventType}");
-            }
-
-            var previousHash = FrozenLedgerAttestationChain.RequiredString(
-                current.Payload,
-                "previous_attestation_event_hash");
-            if (!byHash.TryGetValue(previousHash, out current!))
-            {
-                throw new InvalidOperationException(
-                    "trusted protected-base attestation chain names an absent predecessor");
-            }
+            throw new InvalidOperationException(
+                $"trusted protected-base active event has unsupported type {head.EventType}");
         }
 
-        var freeze = ReadFreeze(chain[^1].Payload, chain[^1].EventHash);
-        var coordinate = chain.First(static item => item.EventType is "Freeze"
-            or FrozenLedger.SupersedeEventType);
-        var axiomSource = chain.FirstOrDefault(static item =>
-            item.Payload.TryGetProperty("axiom_closure", out _));
-        var environmentSource = chain.FirstOrDefault(static item =>
-            item.EventType == FrozenLedger.SupersedeEventType);
-        return ReadProjectedEntry(
-            freeze,
-            head,
-            coordinate,
-            axiomSource,
-            environmentSource);
-    }
-
-    private static FrozenActiveEntry ReadProjectedEntry(
-        FrozenActiveEntry freeze,
-        TrustedFrozenLedgerEvent head,
-        TrustedFrozenLedgerEvent coordinate,
-        TrustedFrozenLedgerEvent? axiomSource,
-        TrustedFrozenLedgerEvent? environmentSource)
-    {
-        var coordinateValues = coordinate.EventType switch
-        {
-            "Freeze" => CoordinateValues.FromFreeze(ReadFreeze(
-                coordinate.Payload,
-                coordinate.EventHash).Payload),
-            FrozenLedger.SupersedeEventType => CoordinateValues.FromSupersede(
-                ReadSupersede(coordinate.Payload)),
-            _ => throw new InvalidOperationException(
-                $"trusted protected-base coordinate event has unsupported type {coordinate.EventType}"),
-        };
-        var headValues = head.EventType switch
-        {
-            "Freeze" => HeadValues.FromFreeze(ReadFreeze(head.Payload, head.EventHash).Payload),
-            FrozenLedger.SupersedeEventType => HeadValues.FromSupersede(ReadSupersede(head.Payload)),
-            _ => throw new InvalidOperationException(
-                $"trusted protected-base head event has unsupported type {head.EventType}"),
-        };
-        var axiomClosure = axiomSource is null
-            ? ImmutableArray<string>.Empty
-            : FrozenLedgerAttestationChain.RequiredStringArray(
-                axiomSource.Payload,
-                "axiom_closure");
-        var path = freeze.Material.RepoPath;
-        var material = ReadMaterial(
-            path,
-            coordinateValues.Declarations,
-            coordinateValues.Statement,
-            coordinateValues.Witness,
-            coordinateValues.Frozen,
-            coordinateValues.Prerequisites,
-            axiomClosure,
-            headValues.Input);
-        var payload = freeze.Payload with
-        {
-            AxiomClosure = axiomClosure,
-            DeclarationStatementIds = coordinateValues.Declarations,
-            FrozenNodeId = coordinateValues.Frozen,
-            Input = headValues.Input,
-            PrerequisiteFrozenNodeIds = coordinateValues.Prerequisites,
-            StatementId = coordinateValues.Statement,
-            WitnessId = coordinateValues.Witness,
-        };
-        return new FrozenActiveEntry(
-            material,
-            payload,
-            head.EventHash,
-            AxiomClosureKnown: axiomSource is not null,
-            Environment: environmentSource is null
-                ? null
-                : ReadSupersede(environmentSource.Payload).Environment);
-    }
-
-    private sealed record CoordinateValues(
-        ImmutableArray<FrozenDeclarationStatement> Declarations,
-        StatementId Statement,
-        WitnessId Witness,
-        FrozenNodeId Frozen,
-        ImmutableArray<FrozenNodeId> Prerequisites)
-    {
-        internal static CoordinateValues FromFreeze(FrozenFreezePayload payload) => new(
-            payload.DeclarationStatementIds,
-            payload.StatementId,
-            payload.WitnessId,
-            payload.FrozenNodeId,
-            payload.PrerequisiteFrozenNodeIds);
-
-        internal static CoordinateValues FromSupersede(FrozenSupersedePayload payload) => new(
-            payload.DeclarationStatementIds,
-            payload.StatementId,
-            payload.WitnessId,
-            payload.FrozenNodeId,
-            payload.PrerequisiteFrozenNodeIds);
-    }
-
-    private sealed record HeadValues(FrozenLedgerInput Input)
-    {
-        internal static HeadValues FromFreeze(FrozenFreezePayload payload) => new(
-            payload.Input);
-
-        internal static HeadValues FromSupersede(FrozenSupersedePayload payload) => new(
-            payload.Input);
+        return ReadFreeze(head.Payload, head.EventHash);
     }
 
     private static TrustedFrozenLedgerEvent ReadEvent(RepositoryFile file)
     {
         using var document = JsonDocument.Parse(file.RawBytes.ToArray());
         var root = document.RootElement;
+        if (!FrozenLedgerCanonicalWriter.ReadTrustedDagEvent(
+                root,
+                out var identity,
+                out var eventHash,
+                out var message))
+        {
+            throw new FormatException(message);
+        }
+
         var eventType = FrozenLedgerAttestationChain.RequiredString(root, "event_type");
-        var eventHash = FrozenLedgerAttestationChain.RequiredString(root, "event_hash");
         if (!root.TryGetProperty("payload", out var payload) || payload.ValueKind != JsonValueKind.Object)
         {
             throw new FormatException("trusted frozen ledger payload is not an object");
@@ -441,19 +258,12 @@ internal static class FrozenLedgerBaseViewReader
 
         var payloadClone = payload.Clone();
         var rootClone = root.Clone();
-        var schemaVersion = root.GetProperty("schema_version").GetInt32();
-        var identity = FrozenLedgerCanonicalWriter.EventIdentity(
-            eventType,
-            payload,
-            eventHash,
-            schemaVersion);
         return new TrustedFrozenLedgerEvent(
             file.Path,
             eventType,
             eventHash,
             identity,
             payloadClone,
-            schemaVersion,
             file.RawBytes,
             rootClone);
     }
@@ -461,10 +271,7 @@ internal static class FrozenLedgerBaseViewReader
     internal static FrozenActiveEntry ReadFreeze(JsonElement payload, string eventHash)
     {
         var input = ReadInput(payload.GetProperty("input"));
-        var currentShape = !payload.TryGetProperty("node_path", out _);
-        var path = ReadPath(currentShape
-            ? input.DescriptorSelector
-            : FrozenLedgerAttestationChain.RequiredString(payload, "node_path"));
+        var path = ReadPath(input.DescriptorSelector);
         var declarations = ReadDeclarations(payload.GetProperty("declaration_statement_ids"));
         var statement = StatementId.Create(
             FrozenLedgerAttestationChain.RequiredString(payload, "statement_id"));
@@ -500,39 +307,12 @@ internal static class FrozenLedgerBaseViewReader
             AxiomClosureKnown: !axiomClosure.IsDefault);
     }
 
-    internal static FrozenSupersedePayload ReadSupersede(JsonElement payload) => new(
-        FrozenLedgerAttestationChain.RequiredStringArray(payload, "axiom_closure"),
-        FrozenLedgerAttestationChain.RequiredString(payload, "case_id"),
-        ReadDeclarations(payload.GetProperty("declaration_statement_ids")),
-        ReadEnvironmentPins(payload.GetProperty("environment")),
-        FrozenNodeId.Create(FrozenLedgerAttestationChain.RequiredString(payload, "frozen_node_id")),
-        ReadSupersedeInput(payload.GetProperty("input")),
-        ReadFrozenNodeIds(payload, "prerequisite_frozen_node_ids"),
-        FrozenLedgerAttestationChain.RequiredString(payload, "previous_attestation_event_hash"),
-        StatementId.Create(FrozenLedgerAttestationChain.RequiredString(payload, "statement_id")),
-        WitnessId.Create(FrozenLedgerAttestationChain.RequiredString(payload, "witness_id")));
-
-    private static FrozenEnvironmentPins ReadEnvironmentPins(JsonElement value) => new(
-        FrozenLedgerAttestationChain.RequiredString(value, "lake_manifest_blob_oid"),
-        FrozenLedgerAttestationChain.RequiredString(value, "lakefile_blob_oid"),
-        ReadPath(FrozenLedgerAttestationChain.RequiredString(value, "lakefile_path")),
-        FrozenLedgerAttestationChain.RequiredString(value, "lean_toolchain_blob_oid"));
-
     private static FrozenLedgerInput ReadInput(JsonElement value) => new(
         FrozenLedgerAttestationChain.RequiredString(value, "base_commit_oid"),
         FrozenLedgerAttestationChain.RequiredString(value, "base_tree_oid"),
         FrozenLedgerAttestationChain.RequiredString(value, "descriptor_blob_oid"),
         FrozenLedgerAttestationChain.RequiredString(value, "descriptor_selector"),
-        FrozenLedgerAttestationChain.RequiredString(value, "materializer"),
         FrozenLedgerAttestationChain.RequiredStringArray(value, "supporting_blob_oids"));
-
-    private static FrozenLedgerInput ReadSupersedeInput(JsonElement value) => new(
-        FrozenLedgerAttestationChain.RequiredString(value, "base_commit_oid"),
-        FrozenLedgerAttestationChain.RequiredString(value, "base_tree_oid"),
-        FrozenLedgerAttestationChain.RequiredString(value, "descriptor_blob_oid"),
-        FrozenLedgerAttestationChain.RequiredString(value, "descriptor_selector"),
-        FrozenLedgerAttestationChain.RequiredString(value, "materializer"),
-        ImmutableArray<string>.Empty);
 
     private static ImmutableArray<FrozenDeclarationStatement> ReadDeclarations(JsonElement value)
     {

@@ -155,25 +155,13 @@ public static partial class FrozenLedgerGenerator
 
 internal static class FrozenLedgerCanonicalWriter
 {
+    internal const int GenesisDagSchemaVersion = 2;
     internal const int CurrentDagSchemaVersion = 4;
 
-    private sealed record EnvelopeField(string Name, bool InV1, bool InV2);
-
-    private static readonly EnvelopeField[] EnvelopeFieldTable =
-    {
-        new("event_hash", InV1: true, InV2: true),
-        new("event_type", InV1: true, InV2: true),
-        new("payload", InV1: true, InV2: true),
-        new("previous_hash", InV1: true, InV2: false),
-        new("schema_version", InV1: true, InV2: true),
-        new("sequence", InV1: true, InV2: false),
-    };
-
-    private static readonly string[] V1EnvelopeFields = EnvelopeFieldTable
-        .Where(static field => field.InV1).Select(static field => field.Name).ToArray();
-
-    private static readonly string[] V2EnvelopeFields = EnvelopeFieldTable
-        .Where(static field => field.InV2).Select(static field => field.Name).ToArray();
+    private static readonly string[] DagEnvelopeFields =
+    [
+        "event_hash", "event_type", "payload", "schema_version",
+    ];
 
     internal const string ZeroHash = "sha256:0000000000000000000000000000000000000000000000000000000000000000";
 
@@ -197,7 +185,6 @@ internal static class FrozenLedgerCanonicalWriter
                 node.Attestation.BaseTreeOid ?? environment.OriginTreeOid,
                 node.Attestation.SourceBlobOid,
                 node.RepoPath.Value,
-                "repository-snapshot-v1",
                 supporting),
             node.PrerequisiteFrozenNodeIds,
             node.StatementId,
@@ -239,19 +226,6 @@ internal static class FrozenLedgerCanonicalWriter
         return WithAxiomClosure(element, payload.AxiomClosure);
     }
 
-    internal static JsonElement ExpectedElement(FrozenExpectedVerdict expected) =>
-        JsonSerializer.SerializeToElement(new
-        {
-            allowed_dispositions = expected.AllowedDispositions,
-            diagnostic_match = expected.DiagnosticMatch,
-            required_diagnostics = expected.RequiredDiagnostics.Select(static diagnostic => new
-            {
-                message_sha256 = diagnostic.MessageSha256,
-                path = diagnostic.Path,
-                rule_id = diagnostic.RuleId,
-            }),
-        });
-
     internal static JsonElement InputElement(FrozenLedgerInput input) =>
         JsonSerializer.SerializeToElement(new
         {
@@ -259,7 +233,6 @@ internal static class FrozenLedgerCanonicalWriter
             base_tree_oid = input.BaseTreeOid,
             descriptor_blob_oid = input.DescriptorBlobOid,
             descriptor_selector = input.DescriptorSelector,
-            materializer = input.Materializer,
             supporting_blob_oids = input.SupportingBlobOids,
         });
 
@@ -286,51 +259,6 @@ internal static class FrozenLedgerCanonicalWriter
             evidence = payload.Evidence.Select(EvidenceElement),
             graph_root = payload.GraphRoot,
             root_case_ids = payload.RootCaseIds,
-        });
-
-    internal static JsonElement SupersedeElement(FrozenSupersedePayload payload)
-    {
-        var element = JsonSerializer.SerializeToElement(new
-        {
-            axiom_closure = payload.AxiomClosure,
-            case_id = payload.CaseId,
-            declaration_statement_ids = DeclarationStatementIdsElement(payload.DeclarationStatementIds),
-            environment = EnvironmentPinsElement(payload.Environment),
-            frozen_node_id = payload.FrozenNodeId.Value,
-            input = InputElement(payload.Input),
-            prerequisite_frozen_node_ids = payload.PrerequisiteFrozenNodeIds
-                .Select(static id => id.Value),
-            previous_attestation_event_hash = payload.PreviousAttestationEventHash,
-            statement_id = payload.StatementId.Value,
-            witness_id = payload.WitnessId.Value,
-        });
-        var result = JsonNode.Parse(element.GetRawText())!.AsObject();
-        result["input"]!.AsObject().Remove("supporting_blob_oids");
-        return JsonSerializer.SerializeToElement(result);
-    }
-
-    private static object DeclarationStatementIdsElement(
-        ImmutableArray<FrozenDeclarationStatement> declarations) =>
-        declarations.Select(static declaration => new
-        {
-            declaration_name_key = declaration.DeclarationNameKey,
-            kind = declaration.Kind,
-            statement_id = declaration.StatementId.Value,
-        });
-
-    internal static object EnvironmentPinsElement(FrozenEnvironmentPins environment) => new
-    {
-        lake_manifest_blob_oid = environment.LakeManifestBlobOid,
-        lakefile_blob_oid = environment.LakefileBlobOid,
-        lakefile_path = environment.LakefilePath.Value,
-        lean_toolchain_blob_oid = environment.LeanToolchainBlobOid,
-    };
-
-    internal static JsonElement EnvironmentReferenceElement(FrozenEnvironmentReference reference) =>
-        JsonSerializer.SerializeToElement(new
-        {
-            environment = EnvironmentPinsElement(reference.Environment),
-            input = InputElement(reference.Input),
         });
 
     internal static JsonElement EvidenceElement(RevocationEvidence evidence) => evidence switch
@@ -375,21 +303,23 @@ internal static class FrozenLedgerCanonicalWriter
         JsonElement payload,
         string previousHash,
         int sequence) =>
-        WriteEnvelope(eventType, payload, 1, previousHash, sequence);
+        WriteReplayEnvelope(eventType, payload, previousHash, sequence);
 
     internal static (ImmutableArray<byte> Bytes, string Hash) WriteDagEvent(
         string eventType,
         JsonElement payload,
-        int schemaVersion = CurrentDagSchemaVersion)
+        int? schemaVersion = null)
     {
-        if (schemaVersion is not (2 or 3 or CurrentDagSchemaVersion))
+        var expectedVersion = ExpectedDagSchemaVersion(eventType);
+        var version = schemaVersion ?? expectedVersion;
+        if (version != expectedVersion)
         {
             throw new ArgumentOutOfRangeException(
                 nameof(schemaVersion),
-                "Content-addressed event schema_version must be 2, 3, or 4.");
+                $"Content-addressed {eventType} schema_version must be {expectedVersion}.");
         }
 
-        return WriteEnvelope(eventType, payload, schemaVersion, null, null);
+        return WriteDagEnvelope(eventType, payload, version);
     }
 
     internal static bool ValidateDagEvent(
@@ -417,7 +347,7 @@ internal static class FrozenLedgerCanonicalWriter
         eventHash = string.Empty;
         message = string.Empty;
         if (value.ValueKind != JsonValueKind.Object
-            || !HasExactFields(value, V2EnvelopeFields))
+            || !HasExactFields(value, DagEnvelopeFields))
         {
             message = "content-addressed event envelope has unknown, missing, or duplicate fields.";
             return false;
@@ -436,16 +366,18 @@ internal static class FrozenLedgerCanonicalWriter
             return false;
         }
 
-        if (version is not (2 or 3 or CurrentDagSchemaVersion))
+        var type = eventType.GetString()!;
+        var expectedVersion = ExpectedDagSchemaVersion(type);
+        if (version != expectedVersion)
         {
-            message = "content-addressed event schema_version must be 2, 3, or 4.";
+            message = $"content-addressed {type} schema_version must be {expectedVersion}.";
             return false;
         }
 
         eventHash = claimedHash.GetString()!;
         if (validateRecordedHash
             && !string.Equals(
-                WriteDagEvent(eventType.GetString()!, payload, version).Hash,
+                WriteDagEvent(type, payload, version).Hash,
                 eventHash,
                 StringComparison.Ordinal))
         {
@@ -453,73 +385,78 @@ internal static class FrozenLedgerCanonicalWriter
             return false;
         }
 
-        identity = EventIdentity(eventType.GetString()!, payload, eventHash, version);
+        identity = EventIdentity(eventHash);
         return true;
     }
 
-    internal static string EventIdentity(string eventType, JsonElement payload, string eventHash) =>
-        EventIdentity(eventType, payload, eventHash, CurrentDagSchemaVersion);
+    internal static string EventIdentity(string eventHash) => eventHash;
 
-    internal static string EventIdentity(
+    private static int ExpectedDagSchemaVersion(string eventType) =>
+        eventType == "Genesis" ? GenesisDagSchemaVersion : CurrentDagSchemaVersion;
+
+    private static (ImmutableArray<byte> Bytes, string Hash) WriteReplayEnvelope(
         string eventType,
         JsonElement payload,
-        string eventHash,
-        int schemaVersion)
+        string previousHash,
+        int sequence)
     {
-        if (schemaVersion >= 4 || eventType == FrozenLedger.SupersedeEventType)
-        {
-            return eventHash;
-        }
-
-        return payload.TryGetProperty("frozen_node_id", out var frozenNodeId)
-            && frozenNodeId.ValueKind == JsonValueKind.String
-            ? frozenNodeId.GetString()!
-            : eventHash;
-    }
-
-    private static (ImmutableArray<byte> Bytes, string Hash) WriteEnvelope(
-        string eventType,
-        JsonElement payload,
-        int schemaVersion,
-        string? previousHash,
-        int? sequence)
-    {
-        var withoutHash = Envelope(eventType, payload, schemaVersion, previousHash, sequence, null);
+        var withoutHash = ReplayEnvelope(eventType, payload, previousHash, sequence, null);
         var hash = FrozenContentHash.Compute(
             FrozenHashDomains.FrozenEvent,
             StructuredCanonicalWriter.WriteJson(withoutHash).AsSpan());
-        var complete = Envelope(eventType, payload, schemaVersion, previousHash, sequence, hash);
+        var complete = ReplayEnvelope(eventType, payload, previousHash, sequence, hash);
         return (StructuredCanonicalWriter.WriteJson(complete), hash);
     }
 
-    private static JsonElement Envelope(
+    private static JsonElement ReplayEnvelope(
+        string eventType,
+        JsonElement payload,
+        string previousHash,
+        int sequence,
+        string? eventHash)
+    {
+        var envelope = new JsonObject();
+        if (eventHash is not null)
+        {
+            envelope.Add("event_hash", eventHash);
+        }
+
+        envelope.Add("event_type", eventType);
+        envelope.Add("payload", JsonNode.Parse(payload.GetRawText()));
+        envelope.Add("previous_hash", previousHash);
+        envelope.Add("schema_version", 1);
+        envelope.Add("sequence", sequence);
+        return JsonSerializer.SerializeToElement(envelope);
+    }
+
+    private static (ImmutableArray<byte> Bytes, string Hash) WriteDagEnvelope(
+        string eventType,
+        JsonElement payload,
+        int schemaVersion)
+    {
+        var withoutHash = DagEnvelope(eventType, payload, schemaVersion, null);
+        var hash = FrozenContentHash.Compute(
+            FrozenHashDomains.FrozenEvent,
+            StructuredCanonicalWriter.WriteJson(withoutHash).AsSpan());
+        var complete = DagEnvelope(eventType, payload, schemaVersion, hash);
+        return (StructuredCanonicalWriter.WriteJson(complete), hash);
+    }
+
+    private static JsonElement DagEnvelope(
         string eventType,
         JsonElement payload,
         int schemaVersion,
-        string? previousHash,
-        int? sequence,
         string? eventHash)
     {
-        var fields = schemaVersion == 1 ? V1EnvelopeFields : V2EnvelopeFields;
         var envelope = new JsonObject();
-        foreach (var field in fields)
+        if (eventHash is not null)
         {
-            JsonNode? value = field switch
-            {
-                "event_hash" => eventHash,
-                "event_type" => eventType,
-                "payload" => JsonNode.Parse(payload.GetRawText()),
-                "previous_hash" => previousHash,
-                "schema_version" => schemaVersion,
-                "sequence" => sequence,
-                _ => throw new InvalidOperationException("unknown frozen ledger envelope field"),
-            };
-            if (value is not null)
-            {
-                envelope.Add(field, value);
-            }
+            envelope.Add("event_hash", eventHash);
         }
 
+        envelope.Add("event_type", eventType);
+        envelope.Add("payload", JsonNode.Parse(payload.GetRawText()));
+        envelope.Add("schema_version", schemaVersion);
         return JsonSerializer.SerializeToElement(envelope);
     }
 

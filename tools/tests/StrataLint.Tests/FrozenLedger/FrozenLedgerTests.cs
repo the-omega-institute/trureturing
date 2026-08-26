@@ -36,10 +36,6 @@ public sealed partial class FrozenLedgerTests
 
         AssertUnknownPayloadFieldRejected(genesisSyntax.RawBytes, 0);
         AssertUnknownPayloadFieldRejected(genesisSyntax.RawBytes, 1);
-        var supersedeFixture = SupersedeFixture();
-        AssertUnknownPayloadFieldRejected(
-            AppendSupersede(supersedeFixture),
-            supersedeFixture.Baseline.Events.Length);
         AssertUnknownPayloadFieldRejected(genesisSyntax.Lines[0].RawBytes.AddRange(revokeLine), 1);
     }
 
@@ -92,7 +88,7 @@ public sealed partial class FrozenLedgerTests
             FrozenHashDomains.FrozenCase,
             currentFreezePreimage.AsSpan());
         Assert.Equal(
-            "sha256:57186bdd08632aaf5e457646a39b7a1fd1d6746e2ccff91482c1970958a510fa",
+            "sha256:0d0ebd8962121dbce1316da817e1197d99507a354a00dfabd233497a951961c6",
             expected);
         Assert.Equal(expected, FrozenLedger.ComputeCaseLeaf(payload));
 
@@ -105,7 +101,7 @@ public sealed partial class FrozenLedgerTests
             ValidateGenesis(syntax, catalog)).Capability;
         var corpusRoot = capability.CorpusRoot;
         Assert.Equal(
-            "sha256:b9ad4d943f7df27a05565878eafbeeef223485c940c70a05577894b2a52d8f1e",
+            "sha256:d2011cf44d4ffbe8c11ac2163d67a92af50e559b3f0389eefea6b732f47c1fe8",
             corpusRoot);
     }
 

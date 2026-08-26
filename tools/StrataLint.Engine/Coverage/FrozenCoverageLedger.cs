@@ -27,7 +27,7 @@ public static class FrozenCoverageLedger
                 var root = line.Value;
                 var eventType = RequiredString(root, "event_type");
                 var payload = RequiredObject(root, "payload");
-                if (!sawGenesis && eventType is "Freeze" or "Supersede" or "Revoke")
+                if (!sawGenesis && eventType is "Freeze" or "Revoke")
                 {
                     throw new FormatException($"{eventType} event occurs before Genesis");
                 }
@@ -42,14 +42,9 @@ public static class FrozenCoverageLedger
                         break;
                     case "Freeze":
                         var nodeId = RequiredString(payload, "frozen_node_id");
-                        // schema v4 retired the node_path alias; the authoritative path has
-                        // always been input.descriptor_selector. Committed v2/v3 events keep
-                        // the alias, so read the authority first and fall back for history.
-                        var pathText = payload.TryGetProperty("input", out var freezeInput)
-                            && freezeInput.TryGetProperty("descriptor_selector", out var selector)
-                            && selector.ValueKind == JsonValueKind.String
-                                ? selector.GetString()!
-                                : RequiredString(payload, "node_path");
+                        var pathText = RequiredString(
+                            payload.GetProperty("input"),
+                            "descriptor_selector");
                         if (!FrozenHashSyntax.IsSha256(nodeId)
                             || !RepoPath.TryCreate(pathText, out var path)
                             || !active.TryAdd(nodeId, path))
@@ -59,21 +54,6 @@ public static class FrozenCoverageLedger
                         if (!activePaths.Add(path))
                         {
                             throw new FormatException($"Freeze has a duplicate path {path.Value}");
-                        }
-                        break;
-                    case "Supersede":
-                        var caseId = RequiredString(payload, "case_id");
-                        var newNodeId = RequiredString(payload, "frozen_node_id");
-                        var oldNode = active.SingleOrDefault(item =>
-                            item.Value.Value == RequiredString(payload.GetProperty("input"), "descriptor_selector"));
-                        if (!FrozenHashSyntax.IsSha256(newNodeId)
-                            || string.IsNullOrEmpty(caseId)
-                            || oldNode.Equals(default(KeyValuePair<string, RepoPath>))
-                            || !active.Remove(oldNode.Key, out var supersededPath)
-                            || !active.TryAdd(newNodeId, supersededPath))
-                        {
-                            throw new FormatException(
-                                "Supersede has an invalid or inactive node identity");
                         }
                         break;
                     case "Revoke":

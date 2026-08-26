@@ -51,7 +51,6 @@ public sealed class FrozenGitReferenceAdapterTests
             "git-sha1:" + tree,
             "git-sha1:" + source,
             "D5/S0/Carrier/A.lean",
-            "repository-snapshot-v1",
             new[] { "git-sha1:" + manifest, "git-sha1:" + toolchain }
                 .Order(StringComparer.Ordinal)
                 .ToImmutableArray());
@@ -70,90 +69,6 @@ public sealed class FrozenGitReferenceAdapterTests
                 ImmutableArray.Create(forged),
                 ImmutableArray<string>.Empty)));
         Assert.Equal(FrozenReferenceRejectionKind.InvalidReference, exception.Kind);
-    }
-
-    [Fact]
-    public void SupersedeReferencesBindAllThreePinsToNamedPaths()
-    {
-        using var repository = new TemporaryDirectory();
-        ReviewRegressionTests.RunGit(repository.Path, "init");
-        ReviewRegressionTests.RunGit(repository.Path, "config", "user.email", "stratalint@example.invalid");
-        ReviewRegressionTests.RunGit(repository.Path, "config", "user.name", "StrataLint Tests");
-        var sourcePath = Path.Combine(repository.Path, "D5", "S0", "Carrier", "A.lean");
-        Directory.CreateDirectory(Path.GetDirectoryName(sourcePath)!);
-        File.WriteAllText(sourcePath, "theorem a : True := by trivial\n", new UTF8Encoding(false));
-        WriteEnvironment(repository.Path, "v4.31.0", "old");
-        ReviewRegressionTests.RunGit(repository.Path, "add", ".");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "old environment");
-        var oldReference = EnvironmentReference(repository.Path);
-        WriteEnvironment(repository.Path, "v4.33.0", "new");
-        ReviewRegressionTests.RunGit(repository.Path, "add", ".");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "new environment");
-        var newReference = EnvironmentReference(repository.Path);
-        var references = FrozenLedgerReferenceSet.Create(
-            ImmutableArray.Create(oldReference.Input, newReference.Input),
-            ImmutableArray.Create(oldReference, newReference),
-            ImmutableArray<string>.Empty);
-        var gateway = new GitRepositoryGateway(repository.Path);
-
-        var capability = gateway.ValidateFrozenReferences(references);
-
-        Assert.NotNull(capability);
-        var forgedEnvironment = oldReference.Environment with
-        {
-            LakefileBlobOid = oldReference.Environment.LakeManifestBlobOid,
-        };
-        var forgedReference = oldReference with { Environment = forgedEnvironment };
-        var forged = FrozenLedgerReferenceSet.Create(
-            ImmutableArray.Create(oldReference.Input, newReference.Input),
-            ImmutableArray.Create(forgedReference, newReference),
-            ImmutableArray<string>.Empty);
-        var exception = Assert.Throws<FrozenReferenceRejectionException>(() =>
-            gateway.ValidateFrozenReferences(forged));
-        Assert.Equal(FrozenReferenceRejectionKind.InvalidReference, exception.Kind);
-        Assert.Contains("lakefile pin", exception.Message, StringComparison.Ordinal);
-    }
-
-    private static void WriteEnvironment(string root, string toolchain, string marker)
-    {
-        File.WriteAllText(
-            Path.Combine(root, "lean-toolchain"),
-            $"leanprover/lean4:{toolchain}\n",
-            new UTF8Encoding(false));
-        File.WriteAllText(
-            Path.Combine(root, "lakefile.toml"),
-            $"[package]\nname = \"{marker}\"\n",
-            new UTF8Encoding(false));
-        File.WriteAllText(
-            Path.Combine(root, "lake-manifest.json"),
-            $"{{\"version\":\"{marker}\"}}\n",
-            new UTF8Encoding(false));
-    }
-
-    private static FrozenEnvironmentReference EnvironmentReference(string root)
-    {
-        var commit = ReviewRegressionTests.RunGit(root, "rev-parse", "HEAD").Trim();
-        var tree = ReviewRegressionTests.RunGit(root, "rev-parse", "HEAD^{tree}").Trim();
-        var source = ReviewRegressionTests.RunGit(root, "rev-parse", "HEAD:D5/S0/Carrier/A.lean").Trim();
-        var toolchain = ReviewRegressionTests.RunGit(root, "rev-parse", "HEAD:lean-toolchain").Trim();
-        var lakefile = ReviewRegressionTests.RunGit(root, "rev-parse", "HEAD:lakefile.toml").Trim();
-        var manifest = ReviewRegressionTests.RunGit(root, "rev-parse", "HEAD:lake-manifest.json").Trim();
-        var prefix = commit.Length == 40 ? "git-sha1:" : "git-sha256:";
-        var input = new FrozenLedgerInput(
-            prefix + commit,
-            prefix + tree,
-            prefix + source,
-            "D5/S0/Carrier/A.lean",
-            "repository-snapshot-v1",
-            new[] { prefix + toolchain, prefix + lakefile, prefix + manifest }
-                .Order(StringComparer.Ordinal)
-                .ToImmutableArray());
-        var environment = new FrozenEnvironmentPins(
-            prefix + manifest,
-            prefix + lakefile,
-            RepoPath.CreateKnown("lakefile.toml"),
-            prefix + toolchain);
-        return new FrozenEnvironmentReference(input, environment);
     }
 
     private static FrozenLedgerInput CreateFrozenInput(
@@ -185,7 +100,6 @@ public sealed class FrozenGitReferenceAdapterTests
             prefix + tree,
             prefix + source,
             "D5/S0/Carrier/A.lean",
-            "repository-snapshot-v1",
             new[] { prefix + manifest, prefix + toolchain }
                 .Order(StringComparer.Ordinal)
                 .ToImmutableArray());

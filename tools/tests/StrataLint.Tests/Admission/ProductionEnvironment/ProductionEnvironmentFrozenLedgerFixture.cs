@@ -153,33 +153,6 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CheckAdmitsHistoricalClosurelessV2FreezeDuringIncrementalEvaluation()
-    {
-        using var temporary = new TemporaryDirectory();
-        var fixture = TrustedFrozenFixture();
-        var freezePath = FreezePathFor(fixture, RuleFixture.RingPath);
-        var historicalPath = RewriteFreezeWithoutAxiomClosure(
-            fixture.Files,
-            freezePath,
-            schemaVersion: 2);
-        Assert.Equal(
-            historicalPath,
-            RewriteFreezeWithoutAxiomClosure(fixture.Baseline, freezePath, schemaVersion: 2));
-        var environment = new ProductionCliEnvironment(
-            "/repo",
-            new FakeRepositoryGateway(
-                RawChangeSet.CreateWithKinds([(RuleFixture.RingPath, RawChangeKind.Modified)]),
-                Snapshot(fixture.Files),
-                Snapshot(fixture.Baseline)),
-            new FakeLeanReportSource(null));
-
-        var outcome = environment.Check(
-            ["--candidate-lean-report", WriteCandidateReport(temporary, fixture)]);
-
-        Assert.IsType<AdmissionOutcome.Admitted>(outcome);
-    }
-
-    [Fact]
     public void CheckAdmitsAddedFreezeAnchoredToPhaseAWhenCurrentRevisionIsPhaseB()
     {
         using var temporary = new TemporaryDirectory();
@@ -286,58 +259,6 @@ public sealed partial class ProductionEnvironmentTests
         return fixture;
     }
 
-    private static FrozenMaterialCatalog BuildFrozenCatalog(
-        IReadOnlyDictionary<string, string> files,
-        IReadOnlyDictionary<string, LeanFileReport> reports)
-    {
-        var (snapshot, lean, _) = BuildState(files, reports);
-        var states = LeanTruthStates.Resolve(snapshot, lean);
-        var adjacency = LeanImportAdjacency.Build(snapshot, lean);
-        var attestations = states
-            .Where(static item => item.Value is TruthState.Closed)
-            .Select(item => new FrozenModuleAttestation(
-                item.Key,
-                FrozenLedgerTestData.GitBlobOid(files[item.Key.Value]))
-            {
-                BaseCommitOid = FrozenLedgerTestData.GitOid('a'),
-                BaseTreeOid = FrozenLedgerTestData.GitOid('b'),
-            });
-        return Assert.IsType<FrozenMaterialOutcome.Accepted>(
-            FrozenContentAddress.Build(
-                snapshot, lean, states, adjacency, FrozenEnvironment(files), attestations)).Capability;
-    }
-
-    private static FrozenEnvironmentAttestation FrozenEnvironment(
-        IReadOnlyDictionary<string, string> files) => new(
-            FrozenLedgerTestData.GitOid('a'),
-            FrozenLedgerTestData.GitOid('b'),
-            FrozenLedgerTestData.GitBlobOid(files["lean-toolchain"]),
-            FrozenLedgerTestData.GitBlobOid(files["lake-manifest.json"]))
-        {
-            LakefilePath = "lakefile.toml",
-            LakefileBlobOid = FrozenLedgerTestData.GitBlobOid(files["lakefile.toml"]),
-        };
-
-    private static FrozenEnvironmentPins FrozenPins(FrozenEnvironmentAttestation environment) => new(
-        environment.LakeManifestBlobOid,
-        environment.LakefileBlobOid!,
-        RepoPath.CreateKnown(environment.LakefilePath!),
-        environment.LeanToolchainBlobOid);
-
-    private static ImmutableArray<string> EnvironmentOids(FrozenEnvironmentPins environment) =>
-        new[]
-        {
-            environment.LakeManifestBlobOid,
-            environment.LakefileBlobOid,
-            environment.LeanToolchainBlobOid,
-        }.Order(StringComparer.Ordinal).ToImmutableArray();
-
-    private static string EventType(string contents)
-    {
-        using var document = JsonDocument.Parse(contents);
-        return document.RootElement.GetProperty("event_type").GetString()!;
-    }
-
     private static string RewriteFreezeWithoutAxiomClosure(
         IDictionary<string, string> files,
         string eventPath,
@@ -348,33 +269,12 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal("Freeze", root.GetProperty("event_type").GetString());
         var payload = JsonNode.Parse(root.GetProperty("payload").GetRawText())!.AsObject();
         Assert.True(payload.Remove("axiom_closure"));
-        if (schemaVersion == 2)
-        {
-            var input = payload["input"]!.AsObject();
-            payload["case_class"] = "active-frozen";
-            payload["evaluation"] = "admission";
-            payload["expected"] = new JsonObject
-            {
-                ["allowed_dispositions"] = new JsonArray("admit"),
-                ["diagnostic_match"] = "none",
-                ["required_diagnostics"] = new JsonArray(),
-            };
-            payload["input_fingerprint"] = payload["witness_id"]!.GetValue<string>();
-            payload["node_path"] = input["descriptor_selector"]!.GetValue<string>();
-            payload["semantic_receipt"] = payload["frozen_node_id"]!.GetValue<string>();
-            payload["truth_state"] = nameof(TruthState.Closed);
-        }
-
         var payloadElement = JsonSerializer.SerializeToElement(payload);
         var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
             "Freeze",
             payloadElement,
             schemaVersion);
-        var identity = FrozenLedgerCanonicalWriter.EventIdentity(
-            "Freeze",
-            payloadElement,
-            encoded.Hash,
-            schemaVersion);
+        var identity = FrozenLedgerCanonicalWriter.EventIdentity(encoded.Hash);
         var rewrittenPath = FrozenLedgerChangeClassifier.AcceptedPath(identity);
         files.Remove(eventPath);
         files[rewrittenPath] = Encoding.UTF8.GetString(encoded.Bytes.AsSpan());

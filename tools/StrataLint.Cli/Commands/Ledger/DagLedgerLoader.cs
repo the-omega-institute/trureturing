@@ -1,7 +1,6 @@
 using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Nodes;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -203,18 +202,6 @@ public static class DagLedgerLoader
                 && placedIdentities.Contains(prerequisite.GetString()!));
         }
 
-        if (item.EventType == FrozenLedger.SupersedeEventType)
-        {
-            return item.Payload.TryGetProperty("previous_attestation_event_hash", out var previous)
-                && previous.ValueKind == JsonValueKind.String
-                && placedHashes.Contains(previous.GetString()!)
-                && item.Payload.TryGetProperty("prerequisite_frozen_node_ids", out var prerequisites)
-                && prerequisites.ValueKind == JsonValueKind.Array
-                && prerequisites.EnumerateArray().All(prerequisite =>
-                    prerequisite.ValueKind == JsonValueKind.String
-                    && placedIdentities.Contains(prerequisite.GetString()!));
-        }
-
         if (item.EventType == "Revoke")
         {
             return item.Payload.TryGetProperty("evidence", out var evidence)
@@ -229,28 +216,18 @@ public static class DagLedgerLoader
         return true;
     }
 
-    // v2 目录事件 → v1 线性 syntax 的唯一转换处。稳态校验与保守扩展都经由它,
-    // 不得各自再抄一份(否则两处对 previous_attestation_event_hash 的重映射会分叉)。
+    // Content-addressed directory events are projected into the internal replay sequence here.
     internal static FrozenLedgerSyntax ToLinearSyntax(ImmutableArray<DagLedgerFileEvent> events)
     {
         var raw = ImmutableArray.CreateBuilder<byte>();
         var lines = ImmutableArray.CreateBuilder<FrozenLedgerLineSyntax>();
         var previous = FrozenLedgerCanonicalWriter.ZeroHash;
-        var dagToLinearHash = new Dictionary<string, string>(StringComparer.Ordinal);
         for (var sequence = 0; sequence < events.Length; sequence++)
         {
             var item = events[sequence];
-            var payload = item.Payload;
-            if (payload.TryGetProperty("previous_attestation_event_hash", out var dagPrevious))
-            {
-                var rewritten = JsonNode.Parse(payload.GetRawText())!.AsObject();
-                rewritten["previous_attestation_event_hash"] = dagToLinearHash[dagPrevious.GetString()!];
-                payload = JsonSerializer.SerializeToElement(rewritten);
-            }
-
             var encoded = FrozenLedgerCanonicalWriter.WriteEvent(
                 item.EventType,
-                payload,
+                item.Payload,
                 previous,
                 sequence);
             using var document = JsonDocument.Parse(encoded.Bytes.AsSpan()[..^1].ToArray());
@@ -260,7 +237,6 @@ public static class DagLedgerLoader
                 item.EventHash);
             raw.AddRange(encoded.Bytes);
             lines.Add(line);
-            dagToLinearHash.Add(item.EventHash, encoded.Hash);
             previous = encoded.Hash;
         }
 

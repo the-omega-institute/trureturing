@@ -46,7 +46,7 @@ internal static class DagLedgerRevokeWriter
                 DagLedgerLoadOutcome.Invalid invalid => throw new FormatException(invalid.Message),
                 _ => throw new InvalidOperationException("unknown ledger load outcome"),
             };
-            var trustedReferences = TrustedFrozenGitReferences.CreateForTrustedAdapter([], []);
+            var trustedReferences = TrustedFrozenGitReferences.CreateForTrustedAdapter([]);
             _ = FrozenLedger.ValidateCandidate(
                 candidate,
                 context.Baseline,

@@ -53,7 +53,6 @@ public static partial class FrozenLedger
             var active = new Dictionary<string, FrozenActiveEntry>(StringComparer.Ordinal);
             var activePaths = new HashSet<RepoPath>();
             var allCaseIds = new HashSet<string>(StringComparer.Ordinal);
-            var superseded = new HashSet<FrozenNodeId>();
             var revoked = new HashSet<FrozenNodeId>();
             var previous = ZeroHash;
             for (var index = 0; index < syntax.Lines.Length; index++)
@@ -110,29 +109,6 @@ public static partial class FrozenLedger
                             eventHash,
                             AxiomClosureKnown: freeze.HasAxiomClosure));
                     events.Add(new FrozenLedgerEvent.Freeze(sequence, eventHash, previousHash, freeze));
-                }
-                else if (eventType == SupersedeEventType)
-                {
-                    var supersede = ValidateSupersede(
-                        payload,
-                        active,
-                        trustedReferences,
-                        candidateCatalog: null,
-                        repositoryImportClosureUnchanged: false,
-                        externalImportsCoveredByNamedPins: true,
-                        relevantSemanticPinsChanged: false,
-                        candidateStatementsAvoidTrivialTruth: true);
-                    var oldEntry = active[supersede.CaseId];
-                    superseded.Add(oldEntry.Material.FrozenNodeId);
-                    active[supersede.CaseId] = ApplySupersede(
-                        oldEntry,
-                        supersede,
-                        eventHash);
-                    events.Add(new FrozenLedgerEvent.Supersede(
-                        sequence,
-                        eventHash,
-                        previousHash,
-                        supersede));
                 }
                 else if (eventType == "Revoke")
                 {
@@ -227,7 +203,6 @@ public static partial class FrozenLedger
                 ComputeFrozenGraphRoot(activeNodes),
                 activeEntries,
                 allCaseIds.ToImmutableHashSet(StringComparer.Ordinal),
-                superseded.ToImmutableHashSet(),
                 revoked.ToImmutableHashSet()));
         }
         catch (Exception exception) when (
@@ -265,13 +240,8 @@ public static partial class FrozenLedger
         TrustedFrozenGitReferences trustedReferences)
     {
         RequireEventPayloadFields(payload, "Freeze");
-        var currentShape = HasExactObjectFields(
-            payload,
-            FrozenLedgerReferenceProjection.FreezePayloadFieldsV4);
         var input = ParseInput(payload.GetProperty("input"));
-        var pathText = currentShape
-            ? input.DescriptorSelector
-            : RequiredString(payload, "node_path");
+        var pathText = input.DescriptorSelector;
         if (!RepoPath.TryCreate(pathText, out var path))
         {
             throw new FormatException($"Freeze has invalid node_path {pathText}.");
@@ -295,26 +265,8 @@ public static partial class FrozenLedger
         {
             throw new FormatException("Historical Freeze input has no validated Git commit/tree/blob capability.");
         }
-        if (!currentShape)
-        {
-            var expected = ParseExpected(payload.GetProperty("expected"));
-            if (RequiredString(payload, "case_class") != "active-frozen"
-                || RequiredString(payload, "evaluation") != "admission"
-                || RequiredString(payload, "truth_state") != nameof(TruthState.Closed)
-                || !expected.AllowedDispositions.SequenceEqual(new[] { "admit" }, StringComparer.Ordinal)
-                || expected.DiagnosticMatch != "none"
-                || expected.RequiredDiagnostics.Length != 0
-                || RequiredString(payload, "input_fingerprint") != witness.Value
-                || RequiredString(payload, "semantic_receipt") != frozen.Value)
-            {
-                throw new FormatException(
-                    $"Historical Freeze payload is not a canonical Closed module at {path.Value}.");
-            }
-        }
-
         if (result.CaseId != FrozenLedgerCanonicalWriter.CaseId(frozen)
-            || result.Input.DescriptorSelector != path.Value
-            || result.Input.Materializer != "repository-snapshot-v1")
+            || result.Input.DescriptorSelector != path.Value)
         {
             throw new FormatException($"Historical Freeze payload is not a canonical Closed module at {path.Value}.");
         }

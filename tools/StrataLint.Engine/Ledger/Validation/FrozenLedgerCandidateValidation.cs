@@ -77,8 +77,6 @@ public static partial class FrozenLedger
             var events = baseline.Events.ToBuilder();
             var active = baseline.ActiveEntries.ToDictionary(static item => item.Key, static item => item.Value, StringComparer.Ordinal);
             var allCaseIds = baseline.AllCaseIds.ToHashSet(StringComparer.Ordinal);
-            var superseded = baseline.SupersededFrozenNodeIds.ToHashSet();
-            var supersededBaseCases = new HashSet<string>(StringComparer.Ordinal);
             var revoked = baseline.RevokedFrozenNodeIds.ToHashSet();
             var activePathCases = active.Values.ToDictionary(
                 static item => item.Material.RepoPath,
@@ -124,35 +122,6 @@ public static partial class FrozenLedger
                         new FrozenActiveEntry(material, freeze, eventHash));
                     activePathCases.Add(freezePath, freeze.CaseId);
                     events.Add(new FrozenLedgerEvent.Freeze(sequence, eventHash, previousHash, freeze));
-                }
-                else if (eventType == SupersedeEventType)
-                {
-                    var supersede = ValidateSupersede(
-                        payload,
-                        active,
-                        trustedReferences,
-                        catalog,
-                        repositoryImportClosureUnchanged: false,
-                        externalImportsCoveredByNamedPins: true,
-                        relevantSemanticPinsChanged: false,
-                        candidateStatementsAvoidTrivialTruth: true);
-                    if (!baseline.ActiveEntries.TryGetValue(supersede.CaseId, out var baseEntry)
-                        || !supersededBaseCases.Add(supersede.CaseId))
-                    {
-                        throw new FormatException(
-                            "Supersede must target each protected-base active case at most once.");
-                    }
-
-                    superseded.Add(baseEntry.Material.FrozenNodeId);
-                    active[supersede.CaseId] = ApplySupersede(
-                        active[supersede.CaseId],
-                        supersede,
-                        eventHash);
-                    events.Add(new FrozenLedgerEvent.Supersede(
-                        sequence,
-                        eventHash,
-                        previousHash,
-                        supersede));
                 }
                 else if (eventType == "Revoke")
                 {
@@ -222,7 +191,6 @@ public static partial class FrozenLedger
                 ComputeFrozenGraphRoot(activeNodes),
                 activeEntries,
                 allCaseIds.ToImmutableHashSet(StringComparer.Ordinal),
-                superseded.ToImmutableHashSet(),
                 revoked.ToImmutableHashSet(),
                 baseline.SyntaxStartSequence));
         }

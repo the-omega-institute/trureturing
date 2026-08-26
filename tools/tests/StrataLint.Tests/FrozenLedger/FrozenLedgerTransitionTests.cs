@@ -66,7 +66,6 @@ public sealed partial class FrozenLedgerTests
                 catalog.Environment.OriginTreeOid,
                 GitBlobOid(source),
                 pathText,
-                "repository-snapshot-v1",
                 new[]
                 {
                     catalog.Environment.LakeManifestBlobOid,

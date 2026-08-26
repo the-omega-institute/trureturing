@@ -19,15 +19,7 @@ public sealed record FrozenLedgerInput(
     string BaseTreeOid,
     string DescriptorBlobOid,
     string DescriptorSelector,
-    string Materializer,
     ImmutableArray<string> SupportingBlobOids);
-
-public sealed record FrozenExpectedVerdict(
-    ImmutableArray<string> AllowedDispositions,
-    string DiagnosticMatch,
-    ImmutableArray<FrozenExpectedDiagnostic> RequiredDiagnostics);
-
-public sealed record FrozenExpectedDiagnostic(string MessageSha256, string Path, string RuleId);
 
 public sealed record FrozenGenesisPayload(
     string GeneratorBlobOid,
@@ -58,24 +50,6 @@ public sealed record FrozenRevokePayload(
     string GraphRoot,
     ImmutableArray<string> RootCaseIds);
 
-public sealed record FrozenEnvironmentPins(
-    string LakeManifestBlobOid,
-    string LakefileBlobOid,
-    RepoPath LakefilePath,
-    string LeanToolchainBlobOid);
-
-public sealed record FrozenSupersedePayload(
-    ImmutableArray<string> AxiomClosure,
-    string CaseId,
-    ImmutableArray<FrozenDeclarationStatement> DeclarationStatementIds,
-    FrozenEnvironmentPins Environment,
-    FrozenNodeId FrozenNodeId,
-    FrozenLedgerInput Input,
-    ImmutableArray<FrozenNodeId> PrerequisiteFrozenNodeIds,
-    string PreviousAttestationEventHash,
-    StatementId StatementId,
-    WitnessId WitnessId);
-
 [Union(EnableImplicitConversions = false)]
 public partial record FrozenLedgerEvent
 {
@@ -90,12 +64,6 @@ public partial record FrozenLedgerEvent
         string EventHash,
         string PreviousHash,
         FrozenFreezePayload Payload);
-
-    public partial record Supersede(
-        int Sequence,
-        string EventHash,
-        string PreviousHash,
-        FrozenSupersedePayload Payload);
 
     public partial record Revoke(
         int Sequence,
@@ -115,7 +83,6 @@ public sealed class FrozenLedgerConsistent
         string graphRoot,
         ImmutableDictionary<string, FrozenActiveEntry> activeEntries,
         ImmutableHashSet<string> allCaseIds,
-        ImmutableHashSet<FrozenNodeId> supersededFrozenNodeIds,
         ImmutableHashSet<FrozenNodeId> revokedFrozenNodeIds,
         int syntaxStartSequence)
     {
@@ -127,7 +94,6 @@ public sealed class FrozenLedgerConsistent
         GraphRoot = graphRoot;
         ActiveEntries = activeEntries;
         AllCaseIds = allCaseIds;
-        SupersededFrozenNodeIds = supersededFrozenNodeIds;
         RevokedFrozenNodeIds = revokedFrozenNodeIds;
         SyntaxStartSequence = syntaxStartSequence;
     }
@@ -143,8 +109,6 @@ public sealed class FrozenLedgerConsistent
     public string GraphRoot { get; }
 
     public ImmutableHashSet<FrozenNodeId> RevokedFrozenNodeIds { get; }
-
-    public ImmutableHashSet<FrozenNodeId> SupersededFrozenNodeIds { get; }
 
     internal ImmutableArray<byte> RawBytes { get; }
 
@@ -163,7 +127,6 @@ public sealed class FrozenLedgerConsistent
         string graphRoot,
         ImmutableDictionary<string, FrozenActiveEntry> activeEntries,
         ImmutableHashSet<string> allCaseIds,
-        ImmutableHashSet<FrozenNodeId> supersededFrozenNodeIds,
         ImmutableHashSet<FrozenNodeId> revokedFrozenNodeIds,
         int syntaxStartSequence = 0) =>
         new(
@@ -175,7 +138,6 @@ public sealed class FrozenLedgerConsistent
             graphRoot,
             activeEntries,
             allCaseIds,
-            supersededFrozenNodeIds,
             revokedFrozenNodeIds,
             syntaxStartSequence);
 }
@@ -184,8 +146,7 @@ internal sealed record FrozenActiveEntry(
     FrozenNodeMaterial Material,
     FrozenFreezePayload Payload,
     string LastAttestationEventHash,
-    bool AxiomClosureKnown = true,
-    FrozenEnvironmentPins? Environment = null);
+    bool AxiomClosureKnown = true);
 
 [Union(EnableImplicitConversions = false)]
 public partial record FrozenLedgerValidationOutcome

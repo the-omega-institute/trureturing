@@ -110,8 +110,7 @@ public static class FrozenAcceptedEventLoader
                 var schemaVersion = value.GetProperty("schema_version").GetInt32();
                 var input = FrozenLedger.ParseAcceptedEventInput(
                     eventType,
-                    payload,
-                    schemaVersion);
+                    payload);
 
                 events.Add(new DagLedgerFileEvent(
                     file.Path,

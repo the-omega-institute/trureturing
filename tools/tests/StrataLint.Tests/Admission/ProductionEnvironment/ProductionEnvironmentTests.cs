@@ -477,18 +477,6 @@ public sealed partial class ProductionEnvironmentTests
         });
     }
 
-    private static (RepositorySnapshot Snapshot, AcceptedLeanClosure Lean, TruthDagProjection Dag) BuildState(
-        IReadOnlyDictionary<string, string> files,
-        IReadOnlyDictionary<string, LeanFileReport> reports)
-    {
-        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-            SnapshotDecoder.Decode(Snapshot(files))).Snapshot;
-        var lean = Assert.IsType<LeanValidationOutcome.Accepted>(
-            LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
-        var dag = TruthDagProjectionAssembler.Build(snapshot, lean);
-        return (snapshot, lean, dag);
-    }
-
     private static void AssertCompleteRuleDisposition(AdmissionCertificate certificate)
     {
         var deferred = certificate.DeferredRules.Select(static item => item.RuleId).ToImmutableArray();
@@ -652,9 +640,7 @@ internal sealed class FakeRepositoryGateway(
     {
         FrozenReferenceValidations.Add(references);
         return frozenReferenceValidator?.Invoke(references)
-            ?? TrustedFrozenGitReferences.CreateForTrustedAdapter(
-                references.Inputs,
-                references.EnvironmentReferences);
+            ?? TrustedFrozenGitReferences.CreateForTrustedAdapter(references.Inputs);
     }
 
     private static RawRepositorySnapshot WithAtomizerData(RawRepositorySnapshot snapshot) =>

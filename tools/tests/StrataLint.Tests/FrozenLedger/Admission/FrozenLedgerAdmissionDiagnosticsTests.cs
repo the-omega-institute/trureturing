@@ -126,7 +126,7 @@ public sealed class FrozenLedgerAdmissionDiagnosticsTests
             baseView,
             [],
             ImmutableHashSet<string>.Empty,
-            TrustedFrozenGitReferences.CreateForTrustedAdapter([], []));
+            TrustedFrozenGitReferences.CreateForTrustedAdapter([]));
         var changes = RawChangeSet.CreateWithKinds([(ModulePath, RawChangeKind.Modified)]);
         var scope = FrozenLedgerAdmissionScope.Create(
             changes,
@@ -144,7 +144,6 @@ public sealed class FrozenLedgerAdmissionDiagnosticsTests
             preparation,
             scope,
             expectedCatalog,
-            changes,
             preparation.TrustedDeltaReferences);
     }
 
@@ -304,7 +303,6 @@ public sealed class FrozenLedgerAdmissionDiagnosticsTests
             FrozenLedgerTestData.GitOid('b'),
             material.Attestation.SourceBlobOid,
             material.RepoPath.Value,
-            "repository-snapshot-v1",
             []),
         material.PrerequisiteFrozenNodeIds,
         material.StatementId,

@@ -31,7 +31,7 @@ public sealed class CoverageLedgerIndexTests
         var bytes = Encoding.UTF8.GetBytes(
             "{\"event_type\":\"Genesis\",\"payload\":{}}\n"
             + "{\"event_type\":\"Freeze\",\"payload\":{\"frozen_node_id\":\"" + node
-            + "\",\"node_path\":\"D5/S0/Carrier/Ring.lean\"}}\n"
+            + "\",\"input\":{\"descriptor_selector\":\"D5/S0/Carrier/Ring.lean\"}}}\n"
             + "{\"event_type\":\"Revoke\",\"payload\":{\"affected_frozen_node_ids\":[\"" + node + "\"]}}\n");
         var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes)).Syntax;
 
@@ -72,26 +72,17 @@ public sealed class CoverageLedgerIndexTests
     }
 
     [Fact]
-    public void SupersedeReplacesTheActiveNodeIdentityWithoutChangingCoveragePath()
+    public void RetiredSupersedeEventFailsClosed()
     {
-        const string oldNode = "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-        const string newNode = "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
-        const string path = "D5/S0/Carrier/Ring.lean";
         var bytes = Encoding.UTF8.GetBytes(
             "{\"event_type\":\"Genesis\",\"payload\":{}}\n"
-            + Freeze(oldNode, path)
-            + "{\"event_type\":\"Supersede\",\"payload\":{"
-            + "\"case_id\":\"active-frozen/test\","
-            + "\"frozen_node_id\":\"" + newNode + "\","
-            + "\"input\":{\"descriptor_selector\":\"" + path + "\"}}}\n"
-            + "{\"event_type\":\"Revoke\",\"payload\":{\"affected_frozen_node_ids\":[\""
-            + newNode + "\"]}}\n");
+            + "{\"event_type\":\"Supersede\",\"payload\":{}}\n");
         var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes)).Syntax;
 
-        var loaded = Assert.IsType<FrozenCoverageLoadOutcome.Loaded>(
+        var invalid = Assert.IsType<FrozenCoverageLoadOutcome.Invalid>(
             FrozenCoverageLedger.Load(syntax));
 
-        Assert.Empty(loaded.ActiveFrozenPaths);
+        Assert.Contains("unknown event type Supersede", invalid.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -110,7 +101,7 @@ public sealed class CoverageLedgerIndexTests
 
     private static string Freeze(string node, string path) =>
         "{\"event_type\":\"Freeze\",\"payload\":{\"frozen_node_id\":\"" + node
-        + "\",\"node_path\":\"" + path + "\"}}\n";
+        + "\",\"input\":{\"descriptor_selector\":\"" + path + "\"}}}\n";
 
     [Fact]
     public void SchemaV4FreezeWithoutNodePathAliasIsIndexedByItsDescriptorSelector()

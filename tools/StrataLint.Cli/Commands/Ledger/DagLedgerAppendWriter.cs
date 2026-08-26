@@ -113,20 +113,13 @@ internal static class DagLedgerAppendWriter
         {
             var eventType = line.Value.GetProperty("event_type").GetString()!;
             var payload = line.Value.GetProperty("payload");
-            var schemaVersion = sequence < skip && !payload.TryGetProperty("axiom_closure", out _)
-                ? 2
-                : FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion;
-            var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(eventType, payload, schemaVersion);
+            var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(eventType, payload);
             if (sequence++ < skip)
             {
                 continue;
             }
 
-            var identity = FrozenLedgerCanonicalWriter.EventIdentity(
-                eventType,
-                payload,
-                encoded.Hash,
-                schemaVersion);
+            var identity = FrozenLedgerCanonicalWriter.EventIdentity(encoded.Hash);
             var path = RepoPath.CreateKnown(
                 $"{FrozenLedgerChangeClassifier.AcceptedRoot}/{identity[7..]}.json");
             files.Add(new RepositoryFile(

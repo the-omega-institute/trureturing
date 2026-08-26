@@ -275,7 +275,7 @@ freeze_exists() {
       ($target_cases | split("\n")) as $target_case_ids
       | [.[]
         | select(
-            if (.event_type == "Freeze" or .event_type == "Supersede") then
+            if .event_type == "Freeze" then
               (.payload.case_id // null) as $case
               | (($case | type) == "string"
                   and (($target_case_ids | index($case)) != null))
@@ -293,47 +293,15 @@ freeze_exists() {
       | ([$events[]
         | select(.event_type == "Revoke")
         | .payload.affected_frozen_node_ids[]] | unique) as $revoked_ids
-      | (reduce $events[] as $event ({};
-          ($event.event_hash // null) as $event_hash
-          | if (($event_hash | type) == "string") then .[$event_hash] = $event else . end
-        )) as $events_by_hash
       | def replay_rank:
           if . == "Genesis" then 0
           elif . == "Freeze" then 1
-          elif . == "Supersede" then 2
-          elif . == "Revoke" then 3
-          else 4
-          end;
-      def attestation_depth($event; $visited):
-          if $event.event_type == "Freeze" then
-            0
-          elif $event.event_type == "Supersede" then
-            ($event.event_hash // null) as $event_hash
-            | if (($event_hash | type) != "string") then
-                error("Supersede is missing its event hash")
-              elif ($visited[$event_hash] // false) then
-                error("Supersede chain contains a cycle")
-              else
-                ($event.payload.previous_attestation_event_hash // null) as $previous_hash
-                | if (($previous_hash | type) != "string") then
-                    error("Supersede references an unknown previous attestation")
-                  else
-                    ($events_by_hash[$previous_hash] // null) as $previous
-                    | if (($previous | type) != "object") then
-                        error("Supersede references an unknown previous attestation")
-                      else
-                        1 + attestation_depth($previous; $visited + {($event_hash): true})
-                      end
-                  end
-              end
-          else
-            error("Supersede chain does not terminate at Freeze")
+          elif . == "Revoke" then 2
+          else 3
           end;
       to_entries
       | sort_by([
           (.value.event_type | replay_rank),
-          (if .value.event_type == "Supersede"
-            then attestation_depth(.value; {}) else 0 end),
           .key
         ])
       | map(.value)
@@ -358,19 +326,6 @@ freeze_exists() {
                 node_path: $path,
                 descriptor_blob_oid: $blob
               }
-            end
-        elif $event.event_type == "Supersede" then
-          ($event.payload.case_id // null) as $case
-          | ($event.payload.input.descriptor_blob_oid // null) as $blob
-          | ($event.payload.frozen_node_id // null) as $frozen_id
-          | if (($case | type) != "string"
-              or ($blob | type) != "string"
-              or ($frozen_id | type) != "string"
-              or (has($case) | not)) then
-              error("Supersede targets no active case or lacks module identity")
-            else
-              .[$case].descriptor_blob_oid = $blob
-              | .[$case].frozen_node_id = $frozen_id
             end
         elif $event.event_type == "Revoke" then
           ($event.payload.affected_case_ids // null) as $cases
@@ -425,7 +380,7 @@ verify_added_frozen_event_ancestor() {
   fi
 
   case "$event_type" in
-    Freeze|Supersede) input_selector='.payload.input.base_commit_oid' ;;
+    Freeze) input_selector='.payload.input.base_commit_oid' ;;
     Genesis|Revoke) return 0 ;;
     *)
       echo "PLAYBOOK_INVALID added frozen event has unsupported event_type $event_type: $path" >&2

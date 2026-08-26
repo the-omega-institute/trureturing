@@ -237,35 +237,20 @@ internal static class FrozenLedgerTestData
         TrustedFrozenGitReferences.CreateForTrustedAdapter(
             FrozenLedger.ScanReferences(syntax) is FrozenLedgerReferenceScanOutcome.Accepted accepted
                 ? accepted.References.Inputs
-                : ImmutableArray<FrozenLedgerInput>.Empty,
-            FrozenLedger.ScanReferences(syntax) is FrozenLedgerReferenceScanOutcome.Accepted environmentAccepted
-                ? environmentAccepted.References.EnvironmentReferences
-                : ImmutableArray<FrozenEnvironmentReference>.Empty);
+                : ImmutableArray<FrozenLedgerInput>.Empty);
 
     internal static void AddLedgerFiles(
         IDictionary<string, string> files,
         ImmutableArray<byte> bytes)
     {
         var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes.AsSpan())).Syntax;
-        var linearToDagHash = new Dictionary<string, string>(StringComparer.Ordinal);
         foreach (var line in syntax.Lines)
         {
             var payload = line.Value.GetProperty("payload");
-            if (payload.TryGetProperty("previous_attestation_event_hash", out var previous))
-            {
-                var rewritten = JsonNode.Parse(payload.GetRawText())!.AsObject();
-                rewritten["previous_attestation_event_hash"] = linearToDagHash[previous.GetString()!];
-                payload = JsonSerializer.SerializeToElement(rewritten);
-            }
-
             var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
                 line.Value.GetProperty("event_type").GetString()!,
                 payload);
-            linearToDagHash.Add(line.Value.GetProperty("event_hash").GetString()!, encoded.Hash);
-            var identity = FrozenLedgerCanonicalWriter.EventIdentity(
-                line.Value.GetProperty("event_type").GetString()!,
-                payload,
-                encoded.Hash);
+            var identity = FrozenLedgerCanonicalWriter.EventIdentity(encoded.Hash);
             files[$"{FrozenLedgerChangeClassifier.AcceptedRoot}/{identity[7..]}.json"] =
                 Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
         }

@@ -126,8 +126,7 @@ internal static class TruthExportCommand
         return references.CommitOids.IsEmpty
             && references.TreeOids.IsEmpty
             && references.BlobOids.IsEmpty
-            && references.EnvironmentReferences.IsEmpty
-                ? TrustedFrozenGitReferences.CreateForTrustedAdapter([], [])
+                ? TrustedFrozenGitReferences.CreateForTrustedAdapter([])
                 : repository.ValidateFrozenReferences(references);
     }
 

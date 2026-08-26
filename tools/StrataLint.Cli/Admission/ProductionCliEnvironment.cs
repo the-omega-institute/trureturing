@@ -541,9 +541,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     public CommandResult RevokeLedger(IReadOnlyList<string> arguments) =>
         DagLedgerRevokeWriter.Revoke(repositoryRoot, repository, arguments);
 
-    public CommandResult SupersedeLedger(IReadOnlyList<string> arguments) =>
-        DagLedgerSupersedeWriter.Supersede(repositoryRoot, repository, arguments);
-
     public ExplicitCommandResult TruthRelease(IReadOnlyList<string> arguments) =>
         TruthReleaseCommand.Run(repository, scribeEmissionVerifier, arguments);
 

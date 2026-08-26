@@ -110,7 +110,6 @@ public sealed class FrozenSurfaceRuleTests
             base_tree_oid = "git-sha1:" + new string('2', 40),
             descriptor_blob_oid = "git-sha1:" + new string('3', 40),
             descriptor_selector = descriptorSelector,
-            materializer = "repository-snapshot-v1",
             supporting_blob_oids = Array.Empty<string>(),
         };
         var payload = JsonSerializer.SerializeToElement(new

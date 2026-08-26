@@ -229,9 +229,6 @@ internal sealed class StubCliEnvironment(
     public CommandResult RevokeLedger(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ledger revoke is not configured in this fixture");
 
-    public CommandResult SupersedeLedger(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "ledger supersede is not configured in this fixture");
-
     public ExplicitCommandResult TruthExport(IReadOnlyList<string> arguments) =>
         new(2, string.Empty, "truth export is not configured in this fixture");
 

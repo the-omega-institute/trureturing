@@ -441,7 +441,6 @@ internal sealed partial class RuleFixture
                     base_tree_oid = FrozenLedgerTestData.GitOid('5'),
                     descriptor_blob_oid = FrozenLedgerTestData.GitOid('6'),
                     descriptor_selector = currentMotivationPath,
-                    materializer = "repository-snapshot-v1",
                     supporting_blob_oids = Array.Empty<string>(),
                 },
                 input_fingerprint =

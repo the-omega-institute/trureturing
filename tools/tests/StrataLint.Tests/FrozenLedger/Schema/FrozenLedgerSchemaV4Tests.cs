@@ -23,7 +23,69 @@ public sealed class FrozenLedgerSchemaV4Tests
         AssertProjectionAliasesAbsent(freezePayload, includesNodePath: true);
         Assert.Equal(
             freezeEvent.Hash,
-            FrozenLedgerCanonicalWriter.EventIdentity("Freeze", freezePayload, freezeEvent.Hash));
+            FrozenLedgerCanonicalWriter.EventIdentity(freezeEvent.Hash));
+    }
+
+    [Fact]
+    public void DagSchemaVersionIsPinnedByEventType()
+    {
+        var payload = JsonSerializer.SerializeToElement(new { });
+        var genesis = FrozenLedgerCanonicalWriter.WriteDagEvent("Genesis", payload);
+        var freeze = FrozenLedgerCanonicalWriter.WriteDagEvent("Freeze", payload);
+
+        Assert.Equal(2, SchemaVersion(genesis.Bytes));
+        Assert.Equal(4, SchemaVersion(freeze.Bytes));
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            FrozenLedgerCanonicalWriter.WriteDagEvent("Genesis", payload, 4));
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            FrozenLedgerCanonicalWriter.WriteDagEvent("Freeze", payload, 2));
+
+        AssertRejectedByBothReaders(WithSchemaVersion(genesis.Bytes, 4), "Genesis", 2);
+        AssertRejectedByBothReaders(WithSchemaVersion(freeze.Bytes, 2), "Freeze", 4);
+    }
+
+    [Fact]
+    public void DagReaderRejectsRetiredV1EnvelopeFields()
+    {
+        var payload = JsonSerializer.SerializeToElement(new { });
+        var freeze = FrozenLedgerCanonicalWriter.WriteDagEvent("Freeze", payload);
+        using var document = JsonDocument.Parse(freeze.Bytes.AsSpan()[..^1].ToArray());
+        var root = System.Text.Json.Nodes.JsonNode.Parse(document.RootElement.GetRawText())!.AsObject();
+        root["previous_hash"] = FrozenLedgerCanonicalWriter.ZeroHash;
+        root["sequence"] = 1;
+        var legacyEnvelope = JsonSerializer.SerializeToElement(root);
+
+        Assert.False(FrozenLedgerCanonicalWriter.ValidateDagEvent(
+            legacyEnvelope,
+            out _,
+            out _,
+            out var validationMessage));
+        Assert.False(FrozenLedgerCanonicalWriter.ReadTrustedDagEvent(
+            legacyEnvelope,
+            out _,
+            out _,
+            out var trustedMessage));
+        Assert.Contains("unknown, missing, or duplicate fields", validationMessage, StringComparison.Ordinal);
+        Assert.Equal(validationMessage, trustedMessage);
+    }
+
+    [Fact]
+    public void FreezeInputRejectsRetiredMaterializerField()
+    {
+        var catalog = BuildCatalog(Module("A"));
+        var payload = FrozenLedgerCanonicalWriter.FreezeElement(
+            FrozenLedgerCanonicalWriter.FreezePayload(
+                catalog.Environment,
+                Assert.Single(catalog.ClosedNodes)));
+        var withMaterializer = System.Text.Json.Nodes.JsonNode.Parse(payload.GetRawText())!.AsObject();
+        withMaterializer["input"]!.AsObject()["materializer"] = "repository-snapshot-v1";
+
+        var exception = Assert.Throws<FormatException>(() =>
+            FrozenLedger.ParseAcceptedEventInput(
+                "Freeze",
+                JsonSerializer.SerializeToElement(withMaterializer)));
+
+        Assert.Contains("unknown, missing, or duplicate fields", exception.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -98,6 +160,40 @@ public sealed class FrozenLedgerSchemaV4Tests
     {
         using var document = JsonDocument.Parse(line.AsMemory(0, line.Length - 1));
         return document.RootElement.GetProperty("payload").Clone();
+    }
+
+    private static int SchemaVersion(ImmutableArray<byte> bytes)
+    {
+        using var document = JsonDocument.Parse(bytes.AsSpan()[..^1].ToArray());
+        return document.RootElement.GetProperty("schema_version").GetInt32();
+    }
+
+    private static JsonElement WithSchemaVersion(ImmutableArray<byte> bytes, int schemaVersion)
+    {
+        using var document = JsonDocument.Parse(bytes.AsSpan()[..^1].ToArray());
+        var root = System.Text.Json.Nodes.JsonNode.Parse(document.RootElement.GetRawText())!.AsObject();
+        root["schema_version"] = schemaVersion;
+        return JsonSerializer.SerializeToElement(root);
+    }
+
+    private static void AssertRejectedByBothReaders(
+        JsonElement value,
+        string eventType,
+        int expectedVersion)
+    {
+        Assert.False(FrozenLedgerCanonicalWriter.ValidateDagEvent(
+            value,
+            out _,
+            out _,
+            out var validationMessage));
+        Assert.False(FrozenLedgerCanonicalWriter.ReadTrustedDagEvent(
+            value,
+            out _,
+            out _,
+            out var trustedMessage));
+        var expected = $"content-addressed {eventType} schema_version must be {expectedVersion}.";
+        Assert.Equal(expected, validationMessage);
+        Assert.Equal(expected, trustedMessage);
     }
 
 }

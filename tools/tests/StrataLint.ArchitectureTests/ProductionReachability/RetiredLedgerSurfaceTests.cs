@@ -25,14 +25,63 @@ public sealed class RetiredLedgerSurfaceTests
         Assert.Empty(findings);
     }
 
+    [Fact]
+    public void ProductionCodeContainsNoHistoricalDagSchemaCompatibility()
+    {
+        var findings = InspectProductionCode(
+            static token => token.ValueText is "FreezePayloadFieldsV3"
+                || token.ValueText.Contains("must be 2, 3, or 4", StringComparison.Ordinal),
+            static line => line.Contains("2 or 3 or CurrentDagSchemaVersion", StringComparison.Ordinal));
+
+        Assert.Empty(findings);
+    }
+
+    [Fact]
+    public void ProductionCodeContainsNoV1LedgerEnvelopeCompatibility()
+    {
+        var findings = InspectProductionCode(
+            static token => token.ValueText is "EnvelopeField" or "V1EnvelopeFields",
+            static line => line.Contains("V1EnvelopeFields", StringComparison.Ordinal)).ToList();
+        findings.AddRange(InspectSourceFile(
+            "tools/StrataLint.Engine/Ledger/FrozenLedgerReferenceScan.cs",
+            static token => token.ValueText is "previous_hash" or "sequence"));
+
+        Assert.Empty(findings);
+    }
+
+    [Fact]
+    public void ProductionCodeContainsNoLedgerSupersedeProtocol()
+    {
+        var findings = InspectProductionCode(
+            static token => token.ValueText.Contains("Supersede", StringComparison.Ordinal),
+            static line => line.Contains("ledger-supersede", StringComparison.Ordinal),
+            IsFrozenLedgerProtocolPath);
+
+        Assert.Empty(findings);
+    }
+
+    [Fact]
+    public void ProductionCodeContainsNoFrozenInputMaterializer()
+    {
+        var findings = InspectProductionCode(
+            static token => token.ValueText.Contains("Materializer", StringComparison.Ordinal)
+                || token.ValueText.Contains("materializer", StringComparison.Ordinal),
+            static line => line.Contains("repository-snapshot-v1", StringComparison.Ordinal),
+            IsFrozenLedgerProtocolPath);
+
+        Assert.Empty(findings);
+    }
+
     private static IReadOnlyList<string> InspectProductionCode(
         Func<SyntaxToken, bool> csharpPredicate,
-        Func<string, bool> textPredicate)
+        Func<string, bool> textPredicate,
+        Func<string, bool>? pathPredicate = null)
     {
         var repositoryRoot = RepositoryLayout.FindRoot();
         var findings = new List<string>();
         foreach (var file in GitIndexRepositoryFiles.Enumerate(repositoryRoot)
-            .Where(static file => IsProductionCodePath(file.RelativePath)))
+            .Where(file => IsProductionCodePath(file.RelativePath)
+                && (pathPredicate is null || pathPredicate(file.RelativePath))))
         {
             if (file.RelativePath.EndsWith(".cs", StringComparison.Ordinal))
             {
@@ -56,6 +105,22 @@ public sealed class RetiredLedgerSurfaceTests
         return findings;
     }
 
+    private static IReadOnlyList<string> InspectSourceFile(
+        string relativePath,
+        Func<SyntaxToken, bool> predicate)
+    {
+        var repositoryRoot = RepositoryLayout.FindRoot();
+        var fullPath = Path.Combine(repositoryRoot, relativePath);
+        var root = CSharpSyntaxTree.ParseText(
+            File.ReadAllText(fullPath),
+            CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.Preview),
+            relativePath).GetRoot();
+        return root.DescendantTokens()
+            .Where(predicate)
+            .Select(token => $"{relativePath}:{token.GetLocation().GetLineSpan().StartLinePosition.Line + 1}:{token.ValueText}")
+            .ToArray();
+    }
+
     private static bool IsProductionCodePath(string path) =>
         !path.StartsWith("tools/tests/", StringComparison.Ordinal)
         && !path.StartsWith("D5/", StringComparison.Ordinal)
@@ -69,4 +134,12 @@ public sealed class RetiredLedgerSurfaceTests
             || path.EndsWith(".yaml", StringComparison.Ordinal)
             || path.EndsWith("Makefile", StringComparison.Ordinal)
             || path.EndsWith(".mk", StringComparison.Ordinal));
+
+    private static bool IsFrozenLedgerProtocolPath(string path) =>
+        path.Contains("FrozenLedger", StringComparison.Ordinal)
+        || path.Contains("/Commands/Ledger/", StringComparison.Ordinal)
+        || path.EndsWith("CliApplication.cs", StringComparison.Ordinal)
+        || path.EndsWith("ProductionCliEnvironment.cs", StringComparison.Ordinal)
+        || path.EndsWith("RevocationPlanner.cs", StringComparison.Ordinal)
+        || path.EndsWith("playbook-workflows.sh", StringComparison.Ordinal);
 }
