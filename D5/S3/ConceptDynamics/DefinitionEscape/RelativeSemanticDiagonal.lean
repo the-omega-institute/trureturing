@@ -56,8 +56,9 @@ theorem relative_semantic_diagonal_ne_listed_decode
       decoderCatalog address ∘ latent := by
   intro equality
   apply fixedPointFree (decoderCatalog address (latent address))
-  simpa [relativeSemanticDiagonal, Function.comp_apply] using
-    congrFun equality address
+  have pointwise := congrFun equality address
+  unfold relativeSemanticDiagonal Function.comp at pointwise
+  exact pointwise
 
 /-- Therefore the diagonal target lies outside the entire listed decoded
 catalog. -/
@@ -109,8 +110,9 @@ theorem semantic_diagonal_target_inadequate
     ¬TargetAdequate latent (semanticDiagonal twist latent) := by
   rintro ⟨decoder, factors⟩
   apply fixedPointFree (decoder (latent decoder))
-  simpa [semanticDiagonal, Function.comp_apply] using
-    congrFun factors decoder
+  have pointwise := congrFun factors decoder
+  unfold semanticDiagonal Function.comp at pointwise
+  exact pointwise
 
 /-- Every fixed latent has a concrete target outside its adequate-target
 class. -/

@@ -326,6 +326,7 @@ theorem beta13_normalized_gap_code_count_eight :
   set_option maxRecDepth 100000 in
     decide
 
+set_option maxRecDepth 100000 in
 /-- The exact code spectrum has cardinality ten at level ten. -/
 theorem beta13_normalized_gap_code_count_ten :
     (beta13NormalizedGapCodes 10).card = 10 := by
