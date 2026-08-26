@@ -135,8 +135,12 @@ public sealed partial class DigestionAlignmentTests
         Assert.Equal(currentAtom.Fingerprints, result.AtomFor("live-receipt")?.Fingerprints);
     }
 
-    [Fact]
-    public void IngestCarriesCoverageAndUnresolvedSubitemsForwardAcrossAtomGenerations()
+    /// Two invariants used to ride in one test, so a change to either read as a change to
+    /// both. They are split because they are not the same claim: coverage is an assertion
+    /// about bytes a receipt is bound to, and a new generation is by construction different
+    /// bytes; an unresolved subitem is an open obligation, and carrying it forward keeps a
+    /// known gap visible rather than asserting anything.
+    private (DigestionLedgerEntry Old, DigestionLedgerEntry Next) AtomGenerationPair()
     {
         var oldBytes = Encoding.UTF8.GetBytes("# SYNTH-VOL\n\n**定理 1.1(A)**。old。\n");
         var currentBytes = Encoding.UTF8.GetBytes("# SYNTH-VOL\n\n**定理 1.1(A)**。rewritten。\n");
@@ -175,9 +179,34 @@ public sealed partial class DigestionAlignmentTests
             Assert.Single(plan.Document.RequireDigestionSources()).Entries,
             static entry => entry.AtomId != "old-receipt");
 
-        Assert.Empty(oldEntry.CoverageGids.Except(nextGeneration.CoverageGids, StringComparer.Ordinal));
-        Assert.Empty(oldEntry.Receipts.UnresolvedSubitems.Except(
-            nextGeneration.Receipts.UnresolvedSubitems,
+        return (oldEntry, nextGeneration);
+    }
+
+    /// The spec already decides this: "语义改写即使沿用 AST path,只要指纹改变就以完整 raw
+    /// SHA-256 签发新的唯一 residual-open atom ID". An entry carrying inherited CoverageGids
+    /// is not residual-open, and the receipt that would back the claim is named by the *old*
+    /// atom id, so it cannot exist for the new one. Carrying coverage forward therefore
+    /// manufactures an assertion nothing attests to, which SL-016 then correctly refuses --
+    /// blocking every ingest repository-wide.
+    [Fact]
+    public void IngestDoesNotCarryCoverageAcrossAtomGenerations()
+    {
+        var (_, next) = AtomGenerationPair();
+
+        Assert.Empty(next.CoverageGids);
+        Assert.Empty(next.Receipts.Coverage);
+    }
+
+    /// Unchanged invariant, kept explicit so removing it later is a deliberate act rather
+    /// than a side effect: an unresolved subitem is a negative obligation, and dropping it
+    /// would silently erase a gap that was already on the books.
+    [Fact]
+    public void IngestCarriesUnresolvedSubitemsForwardAcrossAtomGenerations()
+    {
+        var (old, next) = AtomGenerationPair();
+
+        Assert.Empty(old.Receipts.UnresolvedSubitems.Except(
+            next.Receipts.UnresolvedSubitems,
             StringComparer.Ordinal));
     }
 

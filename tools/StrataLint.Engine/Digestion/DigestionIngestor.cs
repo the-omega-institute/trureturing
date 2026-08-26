@@ -254,10 +254,19 @@ internal static class DigestionIngestor
                     var priorGenerations = source.Entries
                         .Where(entry => entry.AstPath == item.Atom.AstPath)
                         .ToArray();
-                    var inheritedCoverage = priorGenerations
-                        .SelectMany(static entry => entry.CoverageGids)
-                        .Distinct(StringComparer.Ordinal)
-                        .ToImmutableArray();
+                    // Coverage does not cross a generation boundary, and the spec already says
+                    // so: "语义改写即使沿用 AST path,只要指纹改变就以完整 raw SHA-256 签发新的
+                    // 唯一 residual-open atom ID". An entry carrying an inherited CoverageGid is
+                    // not residual-open, and the receipt that would back it is named by the *old*
+                    // atom id -- since atom_id == cas_ref == raw_sha256, a new generation is by
+                    // construction different bytes, so that receipt can never exist for it.
+                    // Inheriting the gid therefore writes an assertion nothing attests to, which
+                    // the SL-016 precommitment validator then correctly refuses; the two rules are
+                    // jointly unsatisfiable exactly when an already-covered atom is re-cut, and
+                    // one such re-cut took the whole intake pipeline down (#3354).
+                    //
+                    // UnresolvedSubitems still crosses: it is a negative obligation, and dropping
+                    // it would silently erase a gap that was already on the books.
                     var inheritedUnresolvedSubitems = priorGenerations
                         .SelectMany(static entry => entry.Receipts.UnresolvedSubitems)
                         .Distinct(StringComparer.Ordinal)
@@ -270,7 +279,7 @@ internal static class DigestionIngestor
                         item.Atom.AstPath,
                         Boundary: null,
                         item.Atom.Fingerprints,
-                        CoverageGids: inheritedCoverage,
+                        CoverageGids: [],
                         new DigestionReceipts([], [], inheritedUnresolvedSubitems, [], null),
                         item.ProjectedStatus,
                         CasRef: captured.Reference));
