@@ -623,6 +623,14 @@ internal static partial class DigestionLedgerAligner
                                  && entry.AtomId != authoritativeAtomId
                                  && !FingerprintsMatch(entry.Fingerprints, atom.Fingerprints)))
                     {
+                        if (!CanAcknowledgeSupersededGeneration(
+                            priorGeneration,
+                            alignments.GetValueOrDefault(priorGeneration.AtomId),
+                            ownedAtomIds))
+                        {
+                            continue;
+                        }
+
                         actualStale.Add(priorGeneration.AtomId);
                         if (alignments.GetValueOrDefault(priorGeneration.AtomId)
                                 != DigestionReceiptAlignment.Seen

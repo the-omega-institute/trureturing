@@ -637,10 +637,10 @@ public sealed partial class DigestionAlignmentTests
             baseline);
         var secondBytes = DirectoryLedgerTestSupport.Image(second.Document);
 
-        Assert.Equal(1, first.StaleAcknowledged);
+        Assert.Equal(0, first.StaleAcknowledged);
         Assert.Equal(2, first.ResidualOpenAdded);
         var source = Assert.Single(first.Document.RequireDigestionSources());
-        Assert.Equal(["old-receipt"], source.AcknowledgedStale.ToArray());
+        Assert.Empty(source.AcknowledgedStale);
         Assert.All(source.Entries, static entry => Assert.Null(entry.Boundary));
         Assert.Equal(0, second.StaleAcknowledged);
         Assert.Equal(0, second.ResidualOpenAdded);
