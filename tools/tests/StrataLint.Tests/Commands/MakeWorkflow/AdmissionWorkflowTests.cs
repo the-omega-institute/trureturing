@@ -90,11 +90,14 @@ public sealed class AdmissionWorkflowTests
     [Theory]
     [InlineData("printf '%s\\n' 'dotnet is provisioned by the next step'", false)]
     [InlineData("echo 'dotnet is only mentioned here'", false)]
+    [InlineData("output=\"$(dotnet build candidate/project.csproj)\"", true)]
+    [InlineData("output=`dotnet build candidate/project.csproj`", true)]
+    [InlineData("sh -c \"dotnet build\"", true)]
     [InlineData("printf '%s\\n' ready | dotnet restore", true)]
     [InlineData("env DOTNET_ROOT=/tmp dotnet build", true)]
     [InlineData("printf '%s\\n' ready\ndotnet test", true)]
     [InlineData("printf '%s\\n' ready && dotnet publish", true)]
-    public void DotnetConsumerDetectionUsesShellCommandPosition(string run, bool expected)
+    public void DotnetConsumerDetectionFailsClosedOutsideSingleQuotedLiterals(string run, bool expected)
     {
         Assert.Equal(expected, ContainsDotnetInvocation(run));
     }
@@ -407,122 +410,54 @@ public sealed class AdmissionWorkflowTests
 
     private static bool ContainsDotnetInvocation(string script)
     {
-        var shell = MaskShellLiterals(script);
-        foreach (var segment in Regex.Split(
+        var shell = MaskSingleQuotedLiterals(script);
+        return Regex.IsMatch(
             shell,
-            @"(?:\r?\n|;|&&|\|\||\|)",
-            RegexOptions.CultureInvariant | RegexOptions.NonBacktracking))
-        {
-            var command = segment.Split(
-                [' ', '\t', '\r'],
-                StringSplitOptions.RemoveEmptyEntries);
-            if (SegmentInvokesDotnet(command)) return true;
-        }
-
-        return false;
+            @"(?:^|[^\w])dotnet(?:[^\w]|$)",
+            RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
     }
 
-    private static string MaskShellLiterals(string script)
+    private static string MaskSingleQuotedLiterals(string script)
     {
         var characters = script.ToCharArray();
-        var quote = '\0';
+        var singleQuoteStart = -1;
+        var inDoubleQuote = false;
         var escaped = false;
         for (var index = 0; index < characters.Length; index++)
         {
             var character = characters[index];
+            if (singleQuoteStart >= 0)
+            {
+                if (character != '\'') continue;
+
+                Array.Fill(characters, ' ', singleQuoteStart, index - singleQuoteStart + 1);
+                singleQuoteStart = -1;
+                continue;
+            }
+
             if (escaped)
             {
-                characters[index] = ' ';
                 escaped = false;
-                continue;
-            }
-
-            if (quote != '\0')
-            {
-                if (character == quote)
-                {
-                    characters[index] = ' ';
-                    quote = '\0';
-                }
-                else if (quote == '"' && character == '\\')
-                {
-                    characters[index] = ' ';
-                    escaped = true;
-                }
-                else
-                {
-                    characters[index] = ' ';
-                }
-                continue;
-            }
-
-            if (character is '\'' or '"')
-            {
-                quote = character;
-                characters[index] = ' ';
                 continue;
             }
 
             if (character == '\\')
             {
-                characters[index] = ' ';
                 escaped = true;
                 continue;
             }
+
+            if (character == '"')
+            {
+                inDoubleQuote = !inDoubleQuote;
+                continue;
+            }
+
+            if (!inDoubleQuote && character == '\'') singleQuoteStart = index;
         }
 
         return new string(characters);
     }
-
-    private static bool SegmentInvokesDotnet(IReadOnlyList<string> segment)
-    {
-        var index = 0;
-        while (index < segment.Count && IsAssignment(segment[index])) index++;
-        if (index >= segment.Count) return false;
-
-        var command = segment[index];
-        if (IsDotnetExecutable(command)) return true;
-
-        if (command == "env")
-        {
-            index++;
-            while (index < segment.Count)
-            {
-                var argument = segment[index];
-                if (argument == "--")
-                {
-                    index++;
-                    break;
-                }
-
-                if (IsAssignment(argument))
-                {
-                    index++;
-                    continue;
-                }
-
-                if (argument.Length > 0 && argument[0] == '-')
-                {
-                    index++;
-                    if (argument is "-u" or "--unset" or "-C" or "--chdir") index++;
-                    continue;
-                }
-
-                break;
-            }
-
-            return index < segment.Count && IsDotnetExecutable(segment[index]);
-        }
-
-        // `make ... dotnet` is the canonical workflow target that invokes the SDK indirectly.
-        return command == "make" && segment.Skip(index + 1).Any(IsDotnetExecutable);
-    }
-
-    private static bool IsAssignment(string token) =>
-        Regex.IsMatch(token, @"^[A-Za-z_][A-Za-z0-9_]*=", RegexOptions.CultureInvariant);
-
-    private static bool IsDotnetExecutable(string token) =>
-        token == "dotnet" || token.EndsWith("/dotnet", StringComparison.Ordinal);
 
     private static bool BaselineNeedsExactlyLeanInspect(string workflow) =>
         Needs(Job(workflow, "baseline-admission")).SequenceEqual(["lean-inspect"], StringComparer.Ordinal);
