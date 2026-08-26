@@ -11,6 +11,7 @@ BASE_REF="${BASE:-origin/dev}"
 BASE_TIP_SHA=""
 BASE_SHA=""
 CANDIDATE_SHA=""
+ENGINEERING_PLAN_FILE=""
 PREFLIGHT_DEADLINE_AT="${PREFLIGHT_DEADLINE_AT:-}"
 
 # Remaining seconds of preflight's optional absolute deadline, or empty when unbounded.
@@ -23,6 +24,15 @@ remaining_deadline_seconds() {
   printf '%s\n' "$(( deadline - now ))"
 }
 
+finish_preflight() {
+  local rc="$1"
+  trap - EXIT
+  trap '' INT TERM
+  set +e
+  if [[ -n "$ENGINEERING_PLAN_FILE" ]]; then rm -f -- "$ENGINEERING_PLAN_FILE"; fi
+  exit "$rc"
+}
+trap 'finish_preflight "$?"' EXIT
 trap 'exit 130' INT
 trap 'exit 143' TERM
 
@@ -69,7 +79,11 @@ STRATALINT_SCRIBE_BASE="$BASE_SHA" \
   "$ROOT/.lake/build/stratalint/raw-lean-report.json"
 record_timing scribe-content-checks
 
-CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools test
+ENGINEERING_PLAN_FILE="$(mktemp "${TMPDIR:-/tmp}/stratalint-engineering-plan.XXXXXX")"
+ENGINEERING_HEAD="$CANDIDATE_SHA"
+ENGINEERING_BASE="$BASE_SHA"
+CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools engineering-tests MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$ENGINEERING_PLAN_FILE"
+CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools engineering-tests MODE=execute HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$ENGINEERING_PLAN_FILE"
 record_timing test
 
 make -C tools selftest

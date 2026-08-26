@@ -167,6 +167,42 @@ cache_evict() {
   rm -rf -- "$CACHE_ROOT/$address" 2>/dev/null || true
 }
 
+cache_provenance_matches() {
+  local provenance="$1"
+  local address="$2"
+  local report_sha256="$3"
+  python3 - "$provenance" "$address" "$report_sha256" \
+    "${candidate_producer:-}" "${candidate_resident:-}" \
+    "${candidate_sources:-}" "${candidate_config:-}" <<'PY'
+import json
+import pathlib
+import sys
+
+path, address, report_sha, producer, resident, sources, config = sys.argv[1:]
+try:
+    value = json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
+except (OSError, UnicodeError, ValueError, json.JSONDecodeError):
+    raise SystemExit(1)
+expected_keys = {
+    "schema", "side", "mode", "source_side", "input_address",
+    "producer_sha256", "repository_inspector_sha256", "lean_sources_sha256",
+    "lean_config_sha256", "report_sha256",
+}
+if (set(value) != expected_keys
+        or value.get("schema") != "stratalint-lean-report-provenance-v1"
+        or value.get("side") != "candidate"
+        or value.get("source_side") != "candidate"
+        or value.get("mode") not in ("produced", "cached")
+        or value.get("input_address") != "sha256:" + address
+        or value.get("producer_sha256") != producer
+        or value.get("repository_inspector_sha256") != resident
+        or value.get("lean_sources_sha256") != sources
+        or value.get("lean_config_sha256") != config
+        or value.get("report_sha256") != report_sha):
+    raise SystemExit(1)
+PY
+}
+
 # Serve the complete bundle at $output from the cache entry for
 # content address $address, re-verified against repository $root. Sets
 # LAST_REPORT_SHA256 and returns 0 on a verified hit; returns 1 on miss/anomaly
@@ -209,6 +245,15 @@ cache_try_restore() {
     cache_evict "$address"
     rm -rf -- "$output" "${output}.provenance.json" \
       "${output}.input.attestation" "${output}.logs"
+    return 1
+  fi
+  # Validate the stored provenance before treating an exact-address hit as
+  # authoritative.  prepare_bundle rewrites the staged provenance later, so
+  # this check must happen here or a damaged cache sidecar could be masked.
+  if ! cache_provenance_matches "${output}.provenance.json" "$address" "$actual"; then
+    cache_evict "$address"
+    rm -rf -- "$output" "${output}.sha256" \
+      "${output}.input.attestation" "${output}.provenance.json" "${output}.logs"
     return 1
   fi
   # Re-stamp the sidecar for this output's basename so it is self-consistent.
@@ -283,7 +328,14 @@ materialize_report() {
   # SDK 10.0.201, so one producer SHA can otherwise execute code built by different
   # toolchains. Keep production on the complete-report path until that is solved.
   "$SUPERVISOR" --role lean-producer --lean-slot -- \
-    env LAKE_BIN="$LAKE_BIN" "$PRODUCER" --repository "$root" --output "$output"
+    env LAKE_BIN="$LAKE_BIN" \
+      STRATALINT_REPORT_INPUT_ADDRESS="$input_address" \
+      STRATALINT_REPORT_REPOSITORY_SHA256="$repository_sha256" \
+      STRATALINT_REPORT_PRODUCER_SHA256="$producer_sha256" \
+      STRATALINT_REPORT_RESIDENT_SHA256="$resident_sha256" \
+      STRATALINT_REPORT_SOURCES_SHA256="$sources_sha256" \
+      STRATALINT_REPORT_CONFIG_SHA256="$config_sha256" \
+      "$PRODUCER" --repository "$root" --output "$output"
   verify_report "$output"
   LAST_REPORT_MODE="produced"
 }

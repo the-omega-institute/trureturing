@@ -528,7 +528,8 @@ public sealed partial class MakeWorkflowTests
             case "$*" in
               "rev-parse --show-toplevel") printf '%s\n' '{{candidateRoot}}' ;;
               "rev-parse --verify base^{commit}"|"rev-parse --verify 0000000000000000000000000000000000000001^{commit}") printf '%040d\n' 1 ;;
-              "rev-parse --verify HEAD^{commit}"|"rev-parse --verify HEAD") printf '%040d\n' 2 ;;
+              "rev-parse --verify HEAD^{commit}"|"rev-parse --verify HEAD"|"rev-parse HEAD") printf '%040d\n' 2 ;;
+              "rev-parse HEAD^1") printf '%040d\n' 1 ;;
               "merge-base 0000000000000000000000000000000000000001 0000000000000000000000000000000000000002") printf '%040d\n' 1 ;;
               "merge-base --is-ancestor "*) exit 0 ;;
               "cat-file -e {{GateForkSha}}^{commit}"|"diff --name-only --no-renames -z {{GateForkSha}} --"|"ls-files --others --exclude-standard -z") exit 0 ;;
@@ -584,7 +585,8 @@ public sealed partial class MakeWorkflowTests
               "rev-parse --show-toplevel") printf '%s\n' '{{candidateRoot}}' ;;
               "rev-parse --verify base^{commit}") printf '%s\n' '{{baseTipSha}}' ;;
               "rev-parse --verify {{forkSha}}^{commit}") printf '%s\n' '{{forkSha}}' ;;
-              "rev-parse --verify HEAD^{commit}"|"rev-parse --verify HEAD") printf '%s\n' '{{candidateSha}}' ;;
+              "rev-parse --verify HEAD^{commit}"|"rev-parse --verify HEAD"|"rev-parse HEAD") printf '%s\n' '{{candidateSha}}' ;;
+              "rev-parse HEAD^1") printf '%s\n' '{{forkSha}}' ;;
               "merge-base {{baseTipSha}} {{candidateSha}}") printf '%s\n' '{{forkSha}}' ;;
               "merge-base {{forkSha}} {{candidateSha}}") printf '%s\n' '{{forkSha}}' ;;
               "merge-base --is-ancestor {{baseTipSha}} {{candidateSha}}") exit {{(diverged ? 1 : 0)}} ;;
@@ -643,7 +645,7 @@ public sealed partial class MakeWorkflowTests
             gate_base=""
             for arg in "$@"; do
               case "$arg" in
-                gate|dotnet|lean-report|test|selftest) target="$arg" ;;
+                gate|dotnet|lean-report|test|engineering-tests|selftest) target="$arg" ;;
                 GATE_ARGS=*) gate_args="${arg#GATE_ARGS=}" ;;
                 BASE=*) gate_base="${arg#BASE=}" ;;
               esac

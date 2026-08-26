@@ -78,6 +78,7 @@ public sealed partial class MakeWorkflowTests
         "help",
         "dotnet",
         "test",
+        "engineering-tests",
         "selftest",
         "update-renderer-contract",
         "clean-lanes",
@@ -198,14 +199,14 @@ public sealed partial class MakeWorkflowTests
         var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
 
         Assert.Contains("make -C candidate/tools dotnet", workflow, StringComparison.Ordinal);
-        Assert.Contains("make -C candidate/tools test", workflow, StringComparison.Ordinal);
+        Assert.Contains("make -C candidate/tools engineering-tests", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C candidate/tools selftest", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C \"$CANDIDATE_ROOT/tools\" dotnet", localGate, StringComparison.Ordinal);
         Assert.Contains("make -C \"$CANDIDATE_ROOT/tools\" test", localGate, StringComparison.Ordinal);
         Assert.Contains("make -C \"$CANDIDATE_ROOT/tools\" selftest", localGate, StringComparison.Ordinal);
         Assert.Contains("CI=true make -C tools dotnet", preflight, StringComparison.Ordinal);
         Assert.Contains(
-            "CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools test",
+            "CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools engineering-tests",
             preflight,
             StringComparison.Ordinal);
         Assert.Contains("make -C tools selftest", preflight, StringComparison.Ordinal);
@@ -271,7 +272,7 @@ public sealed partial class MakeWorkflowTests
         var dotnetIndex = preflight.IndexOf("CI=true make -C tools dotnet", StringComparison.Ordinal);
         var leanReportIndex = preflight.IndexOf("make lean-report", StringComparison.Ordinal);
         var testIndex = preflight.IndexOf(
-            "CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools test",
+            "CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools engineering-tests",
             StringComparison.Ordinal);
 
         Assert.True(dotnetIndex >= 0, "preflight must build the .NET report consumer");
