@@ -84,6 +84,11 @@ jobs:
           fi
           exit 1
 
+      - name: Install pinned SDK for candidate engineering checks
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: candidate/global.json
+
       - name: Resolve judge binary content address before build outputs exist
         id: judge-address
         shell: bash
