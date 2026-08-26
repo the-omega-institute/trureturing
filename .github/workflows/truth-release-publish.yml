@@ -20,7 +20,7 @@ permissions: {}
 
 jobs:
   produce:
-    name: produce verified truth-release
+    name: produce verified truth-release inputs
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 120
     permissions:
