@@ -175,7 +175,9 @@ public sealed class LeanReportInputScriptTests
     public void CacheClosureHashesSeparateConfigurationFromSources()
     {
         using var fixture = new LeanReportInputFixture();
+        if (!OperatingSystem.IsWindows()) fixture.InitializeGitRepository();
         var before = fixture.CacheIdentity();
+        fixture.AssertMemoBehavior(before);
 
         fixture.Append("lean-toolchain", "mutation\n");
         var configChanged = fixture.CacheIdentity();
@@ -192,7 +194,13 @@ public sealed class LeanReportInputScriptTests
     public void AddingASecondSourceWithIdenticalContentsChangesTheSourcesHash()
     {
         using var fixture = new LeanReportInputFixture();
+        if (!OperatingSystem.IsWindows()) fixture.InitializeGitRepository();
         var before = fixture.CacheIdentity();
+
+        fixture.Append("D5/Probe.lean", " ");
+        Assert.NotEqual(before.Sources, fixture.CacheIdentity().Sources);
+        fixture.WriteSource("D5/Probe.lean", "theorem probe : True := by trivial\n");
+        Assert.Equal(before, fixture.CacheIdentity());
 
         fixture.WriteSource("D5/Copy.lean", "theorem probe : True := by trivial\n");
 
@@ -304,6 +312,10 @@ public sealed class LeanReportInputScriptTests
                 new UTF8Encoding(false));
         }
 
+        internal string MemoRoot => Path.Combine(temporary.Path, "memo");
+
+        internal string MemoFile => Path.Combine(MemoRoot, "memo.v1");
+
         internal ProcessOutput CaptureProductionInput()
         {
             var result = Run("address");
@@ -350,6 +362,73 @@ public sealed class LeanReportInputScriptTests
 
         internal void WriteSource(string relativePath, string contents) => Write(relativePath, contents);
 
+        internal void InitializeGitRepository()
+        {
+            ReviewRegressionTests.RunGit(repository, "init", "--quiet");
+            ReviewRegressionTests.RunGit(repository, "config", "user.email", "stratalint@example.invalid");
+            ReviewRegressionTests.RunGit(repository, "config", "user.name", "StrataLint Tests");
+            ReviewRegressionTests.RunGit(repository, "add", ".");
+            ReviewRegressionTests.RunGit(repository, "commit", "--quiet", "-m", "lean input fixture");
+        }
+
+        internal void AssertMemoBehavior((string Sources, string Config) before)
+        {
+            if (OperatingSystem.IsWindows()) return;
+
+            Assert.True(File.Exists(MemoFile));
+            var memo = File.ReadAllBytes(MemoFile);
+            Assert.Equal(before, CacheIdentity());
+
+            PoisonSourceMemo();
+            File.SetUnixFileMode(
+                MemoRoot,
+                UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute
+                    | UnixFileMode.GroupRead | UnixFileMode.GroupWrite | UnixFileMode.GroupExecute
+                    | UnixFileMode.OtherRead | UnixFileMode.OtherWrite | UnixFileMode.OtherExecute);
+            Assert.Equal(before, CacheIdentity());
+
+            File.SetUnixFileMode(
+                MemoRoot,
+                UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+            foreach (var failure in new[] { "malformed", "unreadable" })
+            {
+                File.WriteAllBytes(MemoFile, memo);
+                MakeMemoUnusable(failure);
+                Assert.Equal(before, CacheIdentity());
+                File.SetUnixFileMode(
+                    MemoFile,
+                    UnixFileMode.UserRead | UnixFileMode.UserWrite);
+            }
+            File.WriteAllBytes(MemoFile, memo);
+        }
+
+        [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
+        internal void MakeMemoUnusable(string failure)
+        {
+            if (failure == "malformed")
+            {
+                File.WriteAllText(MemoFile, "not a memo\n", new UTF8Encoding(false));
+                return;
+            }
+
+            Assert.Equal("unreadable", failure);
+            File.SetUnixFileMode(MemoFile, 0);
+        }
+
+        internal void PoisonSourceMemo()
+        {
+            var sourceOid = ReviewRegressionTests.RunGit(
+                    repository, "rev-parse", "HEAD:D5/Probe.lean")
+                .Trim();
+            var lines = File.ReadAllLines(MemoFile);
+            var index = Array.FindIndex(
+                lines,
+                line => line.StartsWith(sourceOid + " ", StringComparison.Ordinal));
+            Assert.True(index >= 0, "source blob is absent from memo");
+            lines[index] = $"{sourceOid} {new string('0', 64)}";
+            File.WriteAllLines(MemoFile, lines, new UTF8Encoding(false));
+        }
+
         internal string Producer()
         {
             var result = Run("address");
@@ -373,12 +452,23 @@ public sealed class LeanReportInputScriptTests
             contents,
             new UTF8Encoding(false));
 
-        private ProcessOutput Run(string command) => BoundedProcessRunner.Run(
-            "bash",
-            [script, command, "--repository", repository, "--report", report],
-            temporary.Path,
-            BoundedProcessRunner.HangDetectionBudget,
-            1024 * 1024);
+        private ProcessOutput Run(string command)
+        {
+            var arguments = new List<string>
+            {
+                $"STRATALINT_LEAN_INPUT_MEMO_ROOT={MemoRoot}",
+            };
+            arguments.AddRange(
+            [
+                "bash", script, command, "--repository", repository, "--report", report,
+            ]);
+            return BoundedProcessRunner.Run(
+                "env",
+                arguments,
+                temporary.Path,
+                BoundedProcessRunner.HangDetectionBudget,
+                1024 * 1024);
+        }
 
         private void Write(string relativePath, string contents)
         {
