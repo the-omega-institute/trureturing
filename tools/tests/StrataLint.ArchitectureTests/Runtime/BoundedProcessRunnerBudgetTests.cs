@@ -39,12 +39,14 @@ public sealed class BoundedProcessRunnerBudgetTests
             .Select(file => (file.RelativePath, Content: File.ReadAllText(file.FullPath)))
             .ToArray();
         var utcNow = sources
-            .Where(source => source.Content.Contains(systemUtcNow, StringComparison.Ordinal))
-            .Select(static source => source.RelativePath)
+            .SelectMany(source => Enumerable.Repeat(
+                source.RelativePath,
+                CountOccurrences(source.Content, systemUtcNow)))
             .ToArray();
         var retryPause = sources
-            .Where(source => source.Content.Contains(retryWait, StringComparison.Ordinal))
-            .Select(static source => source.RelativePath)
+            .SelectMany(source => Enumerable.Repeat(
+                source.RelativePath,
+                CountOccurrences(source.Content, retryWait)))
             .ToArray();
         var bridge = Assert.Single(sources, static source => source.RelativePath == bridgePath).Content;
 
@@ -53,6 +55,19 @@ public sealed class BoundedProcessRunnerBudgetTests
         Assert.Contains("internal static class TestEnvironmentBridge", bridge, StringComparison.Ordinal);
         Assert.Contains("internal static DateTime UtcNow()", bridge, StringComparison.Ordinal);
         Assert.Contains("internal static void PauseBeforeCleanupRetry()", bridge, StringComparison.Ordinal);
+    }
+
+    private static int CountOccurrences(string content, string value)
+    {
+        var count = 0;
+        var index = 0;
+        while ((index = content.IndexOf(value, index, StringComparison.Ordinal)) >= 0)
+        {
+            count++;
+            index += value.Length;
+        }
+
+        return count;
     }
 
     [Fact]
