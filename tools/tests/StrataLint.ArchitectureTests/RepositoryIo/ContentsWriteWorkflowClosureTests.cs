@@ -82,7 +82,7 @@ public sealed class ContentsWriteWorkflowClosureTests
         var content = TruthReleaseWorkflow().Content;
 
         Assert.Contains(
-            "group: truth-release-publish-${{ needs.prepare.outputs.release_digest }}",
+            "group: truth-release-publish-${{ needs.produce.outputs.release_digest }}",
             content,
             StringComparison.Ordinal);
         Assert.Contains("produced_at=\"$(date -u --date=\"@${commit_epoch}\"", content, StringComparison.Ordinal);
@@ -104,6 +104,59 @@ public sealed class ContentsWriteWorkflowClosureTests
     }
 
     [Fact]
+    public void TheTruthReleaseProducerCannotPublishOrMintOidcCredentials()
+    {
+        var root = WorkflowRoot(TruthReleaseWorkflow());
+
+        Assert.Empty(Permissions(root));
+        Assert.Equal(
+            new Dictionary<string, string>(StringComparer.Ordinal) { ["contents"] = "read" },
+            Permissions(Job(root, "produce")));
+        Assert.Equal(
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                ["contents"] = "write",
+                ["packages"] = "write",
+                ["id-token"] = "write",
+                ["attestations"] = "write",
+            },
+            Permissions(Job(root, "publish")));
+    }
+
+    [Fact]
+    public void TheTruthReleasePublisherConsumesOnlyTheRunBoundTransfer()
+    {
+        var content = TruthReleaseWorkflow().Content;
+        var publisherScalars = ScalarValues(Job(WorkflowRoot(TruthReleaseWorkflow()), "publish"));
+
+        Assert.Contains("artifact-ids: ${{ needs.produce.outputs.artifact_id }}", content, StringComparison.Ordinal);
+        Assert.Contains("truth-release-transfer.v1", content, StringComparison.Ordinal);
+        Assert.Contains(".run_id == $ENV.GITHUB_RUN_ID", content, StringComparison.Ordinal);
+        Assert.Contains(".run_attempt == $ENV.GITHUB_RUN_ATTEMPT", content, StringComparison.Ordinal);
+        Assert.Contains(".release_digest == $ENV.RELEASE_DIGEST", content, StringComparison.Ordinal);
+        Assert.DoesNotContain(publisherScalars, static value => value.Contains("actions/checkout", StringComparison.Ordinal));
+        Assert.DoesNotContain(publisherScalars, static value => value.Contains("actions/setup-dotnet", StringComparison.Ordinal));
+        Assert.DoesNotContain(publisherScalars, static value => value.Contains("dotnet ", StringComparison.Ordinal));
+        Assert.DoesNotContain(publisherScalars, static value => value.Contains("lake ", StringComparison.Ordinal));
+        Assert.DoesNotContain(publisherScalars, static value => value.Contains("make ", StringComparison.Ordinal));
+        Assert.DoesNotContain(publisherScalars, static value => value.Contains("tools/", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void TheTruthReleasePublisherRepairsAndVerifiesProvenanceOnEveryRun()
+    {
+        var content = TruthReleaseWorkflow().Content;
+
+        Assert.DoesNotContain("steps.oci.outputs.pushed", content, StringComparison.Ordinal);
+        Assert.Contains("attestations/${encoded_digest}", content, StringComparison.Ordinal);
+        Assert.Contains("gh attestation verify", content, StringComparison.Ordinal);
+        Assert.Contains("--signer-workflow \"$GITHUB_REPOSITORY/.github/workflows/truth-release-publish.yml\"", content, StringComparison.Ordinal);
+        Assert.Contains("--source-digest \"$SOURCE_COMMIT\"", content, StringComparison.Ordinal);
+        Assert.Contains("--source-ref 'refs/heads/dev'", content, StringComparison.Ordinal);
+        Assert.Contains("GHCR provenance did not become verifiable", content, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void TheTruthReleasePublisherCreatesAndRepairsOneImmutableRelease()
     {
         var content = TruthReleaseWorkflow().Content;
@@ -114,7 +167,7 @@ public sealed class ContentsWriteWorkflowClosureTests
         Assert.Contains("cmp -s \"$asset\" \"$verify_dir/$name\"", content, StringComparison.Ordinal);
         Assert.Contains("count=\"$(jq --arg name", content, StringComparison.Ordinal);
         Assert.Contains("assets=verified", content, StringComparison.Ordinal);
-        Assert.DoesNotContain("curl", content, StringComparison.Ordinal);
+        Assert.DoesNotContain("release_collection_api=", content, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -137,6 +190,57 @@ public sealed class ContentsWriteWorkflowClosureTests
 
     private static WorkflowSource TruthReleaseWorkflow() =>
         Workflows.Single(static source => source.Path == TruthReleasePublisher);
+
+    private static YamlMappingNode WorkflowRoot(WorkflowSource workflow) =>
+        Assert.IsType<YamlMappingNode>(Assert.Single(Documents(workflow.Content)));
+
+    private static YamlMappingNode Job(YamlMappingNode root, string name)
+    {
+        var jobs = Assert.IsType<YamlMappingNode>(MappingValue(root, "jobs"));
+        return Assert.IsType<YamlMappingNode>(MappingValue(jobs, name));
+    }
+
+    private static IReadOnlyDictionary<string, string> Permissions(YamlMappingNode mapping)
+    {
+        var permissions = Assert.IsType<YamlMappingNode>(MappingValue(mapping, "permissions"));
+        return permissions.Children
+            .ToDictionary(
+                static pair => Assert.IsType<YamlScalarNode>(pair.Key).Value ?? string.Empty,
+                static pair => Assert.IsType<YamlScalarNode>(pair.Value).Value ?? string.Empty,
+                StringComparer.Ordinal);
+    }
+
+    private static YamlNode MappingValue(YamlMappingNode mapping, string key) =>
+        mapping.Children.Single(pair =>
+            pair.Key is YamlScalarNode scalar && string.Equals(scalar.Value, key, StringComparison.Ordinal)).Value;
+
+    private static IReadOnlyList<string> ScalarValues(YamlNode root)
+    {
+        var values = new List<string>();
+        Visit(root);
+        return values;
+
+        void Visit(YamlNode node)
+        {
+            switch (node)
+            {
+                case YamlScalarNode { Value: { } value }:
+                    values.Add(value);
+                    break;
+                case YamlMappingNode mapping:
+                    foreach (var (key, value) in mapping.Children)
+                    {
+                        Visit(key);
+                        Visit(value);
+                    }
+
+                    break;
+                case YamlSequenceNode sequence:
+                    foreach (var item in sequence.Children) Visit(item);
+                    break;
+            }
+        }
+    }
 
     private static bool DeclaresAnyContentsPermission(string content) =>
         ContentsValues(content).Count > 0;
