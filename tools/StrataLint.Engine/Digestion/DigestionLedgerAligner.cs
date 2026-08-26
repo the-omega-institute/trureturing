@@ -147,11 +147,10 @@ internal static partial class DigestionLedgerAligner
         var verifiedClausePlanParents = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         var fallbacks = ImmutableArray.CreateBuilder<DigestionIngestFallback>();
         var actualStale = ImmutableArray.CreateBuilder<string>();
-        // Existing IDs occupy the legacy content-stem namespace.  Seed the suggestion set so
-        // a repeated residual gets its deterministic source/locator qualification instead of
-        // attempting to reuse an existing ledger primary key.  If that qualified ID is also
-        // occupied, the stable logical address is genuinely ambiguous and ingest remains
-        // fail-closed.
+        // Existing IDs occupy the legacy content-stem namespace. Seed the suggestion set so
+        // repeated residuals can receive deterministic source/locator qualification. An
+        // existing stem can still be selected below when ingest must decide whether its
+        // content-identical entry moved or remains a true collision.
         var suggestedAtomIds = sources
             .SelectMany(static source => source.Entries)
             .Select(static entry => entry.AtomId)
@@ -590,11 +589,17 @@ internal static partial class DigestionLedgerAligner
                     findings);
 
                 var registration = AtomizerRegistry.Require(source.Atomizer);
+                string ResidualStem(DigestionAtom atom) => registration.ResidualPrefix
+                    + "-residual-"
+                    + atom.Fingerprints.RawSha256["sha256:".Length..];
+                static string AstPathKind(string astPath)
+                {
+                    var separator = astPath.IndexOf('/', StringComparison.Ordinal);
+                    return separator < 0 ? astPath : astPath[..separator];
+                }
                 var duplicateResidualStems = atomized.Claims
                     .GroupBy(
-                        atom => registration.ResidualPrefix
-                            + "-residual-"
-                            + atom.Fingerprints.RawSha256["sha256:".Length..],
+                        ResidualStem,
                         StringComparer.Ordinal)
                     .Where(static group => group.Count() > 1)
                     .Select(static group => group.Key)
@@ -613,13 +618,23 @@ internal static partial class DigestionLedgerAligner
                         : null;
                     if (!matchedAstPaths.Contains(atom.AstPath))
                     {
-                        authoritativeAtomId = SuggestedAtomId(
-                            source,
-                            registration,
-                            atom,
-                            "residual",
-                            suggestedAtomIds,
-                            duplicateResidualStems);
+                        var residualStem = ResidualStem(atom);
+                        var existingStem = source.Entries.FirstOrDefault(entry =>
+                            entry.AtomId == residualStem
+                            && FingerprintsMatch(entry.Fingerprints, atom.Fingerprints));
+                        var preserveExistingStem = existingStem is not null
+                            && AstPathKind(existingStem.AstPath) == AstPathKind(atom.AstPath)
+                            && (!claims.ContainsKey(existingStem.AstPath)
+                                || source.Atomizer == AtomizerRegistry.GenericId);
+                        authoritativeAtomId = preserveExistingStem
+                            ? residualStem
+                            : SuggestedAtomId(
+                                source,
+                                registration,
+                                atom,
+                                "residual",
+                                suggestedAtomIds,
+                                duplicateResidualStems);
                         residual.Add(new StructuredResidualAdmission(
                             source.SourceId,
                             source.SourcePath,
