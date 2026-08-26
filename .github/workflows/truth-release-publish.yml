@@ -80,7 +80,7 @@ jobs:
 
       - name: Check out the exact protected dev tip
         id: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           ref: ${{ steps.source.outputs.source_commit }}
           fetch-depth: 0
@@ -126,7 +126,7 @@ jobs:
           printf 'commit_on_protected_dev=true\n' >> "$GITHUB_OUTPUT"
 
       - name: Set up pinned .NET SDK
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
         with:
           global-json-file: global.json
 
@@ -226,7 +226,7 @@ jobs:
       # refused by produce's current-dev-tip freshness check above.
       - name: Transfer publication assets to the digest-keyed publisher
         id: transfer
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: ${{ steps.release.outputs.artifact_name }}
           path: ${{ runner.temp }}/truth-release-assets/*
@@ -276,7 +276,7 @@ jobs:
             || { printf '%s\n' 'source commit left protected dev while publication was queued' >&2; exit 1; }
 
       - name: Download the prepared publication assets
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           artifact-ids: ${{ needs.produce.outputs.artifact_id }}
           path: ${{ runner.temp }}/truth-release-assets
@@ -333,10 +333,10 @@ jobs:
           printf 'publication=%s\n' "$publication" >> "$GITHUB_OUTPUT"
 
       - name: Install ORAS
-        uses: oras-project/setup-oras@v1
+        uses: oras-project/setup-oras@22ce207df3b08e061f537244349aac6ae1d214f6 # v1.2.4
 
       - name: Log in to GHCR
-        uses: docker/login-action@v3
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3.7.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -481,7 +481,7 @@ jobs:
 
       - name: Attest the GHCR artifact provenance
         if: steps.provenance.outputs.needed == 'true'
-        uses: actions/attest-build-provenance@v2
+        uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be # v2.4.0
         with:
           subject-name: ${{ env.OCI_REPOSITORY }}
           subject-digest: ${{ steps.oci.outputs.digest }}
