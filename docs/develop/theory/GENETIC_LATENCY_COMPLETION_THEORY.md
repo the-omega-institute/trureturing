@@ -2683,3 +2683,1091 @@ $$
 隐性也不是不存在；
 它是尚未逃逸出当前观察核的未来差异。}
 $$
+
+---
+
+# Part XXV：追加版本、真值勘误与承重替换
+
+**追加版本：v1.2，2026-08-26。**
+
+本追加严格位于 v1.0 原文之后，不删除、不改写此前任何段落。若前文的仓库真值标签与本追加发生冲突，以本节的后验勘误为准。
+
+## 25.1 两项 receipt 撤回
+
+仓库在后续 wave-57 errata 中撤回了以下两个 digestion receipt：
+
+1. `ObservableEventAlgebraDuality` 的 receipt：审查认为它形成了对既有 pullback-algebra 结构的定义性分叉；
+2. `PosteriorFuturePolicySufficiency` 的 receipt：审查指出其未来 transcript 核在类型上不依赖历史，结论实质上只是用后验相等进行重写。
+
+对应冻结 Lean 文件、Blueprint 和 Golden shard 仍在仓库中，但本追加不再把这两个 receipt 作为新的承重成果。
+
+事件侧改由以下结构承重：
+
+- `ConceptKernelOrderDuality`；
+- `LeastCommonReadoutRefinement`；
+- `FiberModalOperatorLaws`；
+- 本文直接给出的纤维事件证明。
+
+后验决策侧改由本文的 belief-Markov 前件承重：只有当未来生成律对历史的依赖确实经当前 belief 因子化时，相同后验才推出相同未来政策价值。
+
+---
+
+# Part XXVI：观察纤维上的知识、可能性与遗传认识论边界
+
+## 26.1 纤维模态算子
+
+给定观察：
+
+$$
+q:X\to B,
+$$
+
+定义状态 x 的观察纤维：
+
+$$
+[x]_q=\{y:q(y)=q(x)\}.
+$$
+
+对事件 P 定义知识与可能性：
+
+$$
+K_q(P)=\{x:[x]_q\subseteq P\},
+$$
+
+$$
+\Diamond_q(P)=\{x:[x]_q\cap P\neq\varnothing\}.
+$$
+
+仓库 `FiberModalOperatorLaws` 已机器验证：K_q 是收缩、单调、幂等且保持有限交的内算子；Diamond_q 是扩张、单调、幂等的对偶闭包，并满足：
+
+$$
+K_q(P)=\bigl(\Diamond_q(P^c)\bigr)^c.
+$$
+
+## 26.2 完全显性纤维中的精确计算
+
+令：
+
+$$
+X=\{AA,Aa,aa\},
+$$
+
+且：
+
+$$
+q(AA)=q(Aa)=D,
+\qquad
+q(aa)=R.
+$$
+
+定义：
+
+$$
+E_A=\{AA,Aa\},
+\quad
+E_a=\{Aa,aa\},
+\quad
+C_a=\{Aa\}.
+$$
+
+则：
+
+$$
+K_q(E_A)=E_A,
+\qquad
+\Diamond_q(E_A)=E_A;
+$$
+
+$$
+K_q(E_a)=\{aa\},
+\qquad
+\Diamond_q(E_a)=X;
+$$
+
+$$
+K_q(C_a)=\varnothing,
+\qquad
+\Diamond_q(C_a)=\{AA,Aa\}.
+$$
+
+因此，显性表型能确定“至少含一个 A”，却不能确定是否携带 a；整个显性纤维都与 carrier 身份相容。
+
+## 26.3 认识论边界
+
+定义：
+
+$$
+\partial_qP=\Diamond_q(P)\setminus K_q(P).
+$$
+
+它包含所有既不能由当前观察确定、又不能被当前观察排除的状态。
+
+在完全显性模型中：
+
+$$
+\partial_qC_a=\{AA,Aa\}.
+$$
+
+所以经典 carrier 状态不是“不可存在”，而是位于当前表型的认识论边界。
+
+## 定理 26.1（观察精化压缩认识论边界）
+
+若 r 精化 q，即存在 f 使：
+
+$$
+q=f\circ r,
+$$
+
+则对任意事件 P：
+
+$$
+K_q(P)\subseteq K_r(P),
+$$
+
+$$
+\Diamond_r(P)\subseteq\Diamond_q(P),
+$$
+
+$$
+\partial_rP\subseteq\partial_qP.
+$$
+
+### 证明
+
+r-纤维包含于 q-纤维。粗纤维全部落入 P 时，细纤维也全部落入 P；细纤维与 P 相交时，粗纤维亦相交。第三式由前两式直接推出。证毕。
+
+---
+
+# Part XXVII：目标识别、规范最小披露与遗传隐私
+
+## 27.1 查询族识别
+
+设候选模型空间 M，查询族：
+
+$$
+Q_i:M\to A_i,
+$$
+
+联合查询：
+
+$$
+Q_*(m)=(Q_i(m))_i,
+$$
+
+目标：
+
+$$
+T:M\to Z.
+$$
+
+仓库 `QueryFamilyIdentification` 已机器验证：
+
+$$
+Q\text{ 识别 }T
+\iff
+\ker Q_*\subseteq\ker T,
+$$
+
+并等价于 T 唯一地经查询商因子化。
+
+因此实验族不需要恢复完整基因型；它只需要切开所有目标不同的模型对。
+
+## 27.2 规范目标商
+
+定义：
+
+$$
+Z_T=M/\ker T.
+$$
+
+该商只保留决定 T 所必需的区别。若 Q 识别 T，则存在唯一映射：
+
+$$
+h:M/\ker Q_*\to Z_T
+$$
+
+使目标投影经查询商下降。
+
+所以 Z_T 是精确决定目标的最粗接口，也是目的限制披露的规范状态。
+
+## 27.3 超额披露
+
+在 Q 已识别 T 的前提下，定义：
+
+$$
+Excess(Q;T)
+=
+\{\{x,y\}:T(x)=T(y),\ Q_*(x)\neq Q_*(y)\}.
+$$
+
+则：
+
+$$
+Excess(Q;T)=\varnothing
+\iff
+\ker Q_*=\ker T.
+$$
+
+### 证明
+
+目标识别给出 ker(Q_*) 包含于 ker(T)。超额披露为空给出反向包含；反向由 kernel 相等直接成立。证毕。
+
+完全显性表型可以识别当前显性／隐性性状，却不识别 carrier；这不是逻辑缺陷，而是一种目标限制隐私。
+
+---
+
+# Part XXVIII：实验面板作为目标相关纠错码
+
+## 28.1 观察码距
+
+令有限实验坐标集为 I。每个状态 x 的码字为：
+
+$$
+c_Q(x)=(q_i(x))_{i\in I}.
+$$
+
+定义 Hamming 分离数：
+
+$$
+d_Q(x,y)=|\{i:q_i(x)\neq q_i(y)\}|.
+$$
+
+对目标 T 定义：
+
+$$
+d_T(Q)=\min_{T(x)\neq T(y)}d_Q(x,y).
+$$
+
+## 定理 28.1（坐标删除鲁棒性）
+
+删除任意至多 f 个实验后，剩余面板仍识别 T，当且仅当：
+
+$$
+d_T(Q)\ge f+1.
+$$
+
+### 证明
+
+若每个目标不同状态对至少有 f+1 个分离坐标，删除 f 个不可能抹去全部分离。反向若某目标不同状态对仅被至多 f 个坐标分开，删除这些坐标即产生目标碰撞。证毕。
+
+仓库 `CoordinateDeletionRobustness` 已机器验证完整状态单射版本。
+
+## 定理 28.2（对抗错误纠正）
+
+若：
+
+$$
+d_T(Q)\ge2e+1,
+$$
+
+则至多 e 个坐标错误时，目标类仍可唯一恢复。
+
+### 证明
+
+若一个接收码字同时位于两个不同目标码字的 e-球内，则三角不等式使两真实码字距离至多 2e，与最小距离矛盾。证毕。
+
+所以遗传检测面板不仅是统计量集合，也可以按目标相关纠错码设计。
+
+---
+
+# Part XXIX：隐性等位基因作为预测状态中的必要记忆
+
+## 29.1 最大稳定 residual
+
+给定当前表型 q 与动力学 tau，定义：
+
+$$
+\mathsf C_\tau(\ker q)
+=
+\bigcap_{n\ge0}(\tau^n\times\tau^n)^{-1}(\ker q).
+$$
+
+仓库 `CongruenceKernel` 已机器验证：该关系是包含于 ker(q) 的最大前向同余，并且单调、收缩、幂等。
+
+## 定理 29.1（未来显现排除表型自治）
+
+若：
+
+$$
+q(AA)=q(Aa),
+$$
+
+但存在 n 使：
+
+$$
+q(\tau^nAA)\neq q(\tau^nAa),
+$$
+
+则不存在闭合表型动力学 bar_tau 满足：
+
+$$
+q\tau=\bar\tau q.
+$$
+
+### 证明
+
+若下降存在，则 q(tau^n x)=bar_tau^n(q(x))，当前相等会推出所有未来相等，矛盾。证毕。
+
+## 定理 29.2（预测记忆必要性）
+
+设 r:X→Z 精化 q，且存在 tau_Z 使：
+
+$$
+r\tau=\tau_Zr.
+$$
+
+若 AA 与 Aa 在某个未来 q-读出上不同，则：
+
+$$
+r(AA)\neq r(Aa).
+$$
+
+所以会影响未来的隐性等位基因不能从任何精确预测状态中删除。
+
+在有限概率模型中，可定义额外预测记忆：
+
+$$
+M_q=H(X/\mathsf C_\tau(\ker q)\mid q(X)).
+$$
+
+它衡量在知道当前表型后，为精确预测未来仍须保存多少状态信息。
+
+---
+
+# Part XXX：坐标干预、目标效应与修复 residual
+
+## 30.1 四种不同的干预成功
+
+仓库 `InterventionEffectiveness` 已机器验证：结构干预中的被选坐标最终精确等于赋值。但必须区分：
+
+$$
+\begin{aligned}
+\text{坐标有效}&:x'_v=a_v,\\
+\text{状态有效}&:x'\neq x,\\
+\text{目标有效}&:T(x')\neq T(x),\\
+\text{安全修复}&:x'\in A.
+\end{aligned}
+$$
+
+完全显性模型中，Aa→AA 的编辑可以在坐标上完全成功，却保持当前表型不变。
+
+## 30.2 修复成本
+
+设安全集 A，允许干预 U，成本 c。定义：
+
+$$
+C_A(x)=\inf\{c(u):u\cdot x\in A\}.
+$$
+
+定义修复潜伏对：
+
+$$
+Gap_{repair}(q,A)
+=
+\{(x,y):q(x)=q(y),\ C_A(x)\neq C_A(y)\}.
+$$
+
+若该集合非空，则 C_A 不能经当前表型 q 因子化。
+
+所以当前表型相同并不推出相同最小治疗、相同剂量、相同副作用或相同复发路径。
+
+## 30.3 干预目标商
+
+定义：
+
+$$
+u\sim_Tv
+\iff
+\forall x,\ T(u\cdot x)=T(v\cdot x).
+$$
+
+不同编辑操作可以在当前目标下属于同一类，而在更精细的未来或分子目标下重新分离。
+
+---
+
+# Part XXXI：拷贝显现阶、群体可见阶与选择阶
+
+## 31.1 拷贝显现阶
+
+在 p 倍体中，令 y_k 表示含 k 个 b 拷贝时的目标值。定义：
+
+$$
+r_{copy}=\min\{k\ge1:y_k\neq y_0\}.
+$$
+
+二倍体完全隐性正是：
+
+$$
+y_0=y_1\neq y_2,
+\qquad
+r_{copy}=2.
+$$
+
+## 定理 31.1（群体可见性阶）
+
+若每个拷贝独立以概率 x 为 b，则含至少 r 个 b 拷贝的群体质量：
+
+$$
+M_r^{(p)}(x)=\sum_{k=r}^{p}\binom pkx^k(1-x)^{p-k}
+$$
+
+满足：
+
+$$
+M_r^{(p)}(x)=\binom prx^r+O(x^{r+1}).
+$$
+
+所以最低拷贝显现阶就是稀有等位基因进入群体表型的最低频率阶。
+
+## 定理 31.2（选择潜伏阶）
+
+假设 k<r 时适合度为 1，而 k=r 时适合度为 1-s，更高拷贝项有界。则：
+
+$$
+x'-x
+=
+-\kappa_rx^r+O(x^{r+1}),
+$$
+
+其中：
+
+$$
+\kappa_r=\frac rp\binom prs.
+$$
+
+所以：
+
+$$
+r_{copy}=r_{population}=r_{selection}
+$$
+
+在该模型中由同一最低非零作用阶控制。
+
+## 31.3 突变—选择平衡
+
+加入每个非 b 拷贝以概率 μ 正向突变为 b，忽略反向突变，则：
+
+$$
+x'-x
+=
+\mu-\kappa_rx^r+o(\mu+x^r).
+$$
+
+平衡频率满足：
+
+$$
+\boxed{
+x_*=
+\left(\frac{\mu}{\kappa_r}\right)^{1/r}(1+o(1)).}
+$$
+
+对应平均适合度损失：
+
+$$
+L_*=1-\bar w
+\sim
+\frac pr\mu.
+$$
+
+高阶隐性提高平衡等位基因频率与携带者储库，但群体负荷仍保持一阶 μ 量级。
+
+---
+
+# Part XXXII：跨代 test-cross 的有限与无限完成
+
+## 32.1 理想 test-cross
+
+未知显性表型亲本为 AA 或 Aa，与 aa 交配。
+
+若为 AA，全部后代显性；若为 Aa，每个后代显性／隐性各半。
+
+观察 n 个后代而未见隐性个体时，carrier 漏检概率为：
+
+$$
+2^{-n}.
+$$
+
+要使该概率不超过 α，足够取：
+
+$$
+n\ge\left\lceil\log_2\frac1α\right\rceil.
+$$
+
+## 32.2 后验更新
+
+若先验：
+
+$$
+P(Aa)=π,
+\qquad
+P(AA)=1-π,
+$$
+
+连续观察 n 个显性后代后：
+
+$$
+P(Aa\mid D^n)
+=
+\frac{π2^{-n}}{(1-π)+π2^{-n}}.
+$$
+
+任意有限 n 都不能逻辑上排除 carrier；但出现一个隐性后代，在理想模型中立即排除 AA。
+
+## 32.3 无限行为完成
+
+在无限后代序列空间，事件“全部后代显性”在 AA 下概率 1，在 Aa 下概率 0。因此两个无限 transcript 律互相奇异。仓库 `SingularProbabilityPerfectSeparator` 给出一般完美分离事件。
+
+所以有限样本逐渐压缩后验，而无限行为完成可以将两个生成机制零误差分开。
+
+---
+
+# Part XXXIII：环境显性相变与鲁棒边际
+
+## 33.1 连续显性系数
+
+沿连续上下文路径 t↦c(t)，设：
+
+$$
+y_{AA}(t),\ y_{Aa}(t),\ y_{aa}(t)
+$$
+
+连续，且两纯合体始终不同。定义：
+
+$$
+h(t)=\frac{y_{Aa}(t)-y_{aa}(t)}{y_{AA}(t)-y_{aa}(t)}.
+$$
+
+若 h(0)=1 而 h(1)=0，则介值定理保证 h 必经过所有中间值。因此连续上下文中的显性反转必须经过不完全显性或某个纯合体退化边界；真正跳变需要阈值、不连通吸引域或离散跃迁。
+
+## 33.2 度量边际
+
+在一般度量表型空间定义：
+
+$$
+d_A=d(y_{Aa},y_{AA}),
+\qquad
+d_a=d(y_{Aa},y_{aa}),
+$$
+
+$$
+m_A=d_a-d_A.
+$$
+
+若每个表型点受到至多 η 的扰动，则每个距离改变至多 2η，从而：
+
+$$
+m'_A\ge m_A-4η.
+$$
+
+因此：
+
+$$
+m_A>4η
+\Rightarrow
+\text{显性方向在该扰动下保持。}
+$$
+
+该边际比要求精确相等更适合真实实验。
+
+---
+
+# Part XXXIV：锚点识别与 belief-Markov 修正版
+
+## 34.1 锚点完整识别
+
+设初始锚点 a，可达集 R(a)，完整行为读出 beta。仓库 `AnchorFullIdentification` 已机器验证：
+
+$$
+\text{完整锚定识别}
+\iff
+R(a)=X
+\quad\land\quad
+β\text{ 单射}.
+$$
+
+因此实验失败有两类：目标状态不可达，或可达状态在完整行为下仍碰撞。
+
+## 34.2 相同后验为何一般不够
+
+设未来核：
+
+$$
+Q(p,h,θ).
+$$
+
+即使两个历史 h、h' 对 θ 的后验相同，只要 Q 仍显式依赖历史，未来价值仍可不同。最小反例取单点隐藏状态，此时所有历史后验相同，却可指定不同未来 transcript 律。
+
+## 定义 34.1（belief-Markov 条件）
+
+存在 bar_Q 使：
+
+$$
+Q(p,h,θ)=\bar Q(p,π_h,θ),
+$$
+
+其中 π_h 为当前 belief。
+
+## 定理 34.1（修正的后验政策充分性）
+
+在 belief-Markov 条件下：
+
+$$
+π_h=π_{h'}
+$$
+
+推出同一策略下全部状态条件未来核相等，因此任意共同损失函数下的规则风险与 Bayes 最优值相同。
+
+这是真正把历史压缩到后验所需的结构前件。对遗传系统，充分 belief 通常不能只包含基因型后验，还可能必须包含表观状态、损伤、年龄和代谢记忆的联合后验。
+
+---
+
+# Part XXXV：亲本来源、有序基因型与一般对称商
+
+## 35.1 有序二倍体
+
+定义：
+
+$$
+\widetilde{\mathcal G}
+=\mathcal A_m\times\mathcal A_p.
+$$
+
+来源交换 involution：
+
+$$
+σ(a_m,b_p)=(b_m,a_p).
+$$
+
+无序二倍体是其轨道商。
+
+## 定理 35.1（来源下降判据）
+
+目标：
+
+$$
+T:\widetilde{\mathcal G}\to Y
+$$
+
+经无序商唯一下降，当且仅当：
+
+$$
+T(a_m,b_p)=T(b_m,a_p)
+$$
+
+对全部 a、b 成立。
+
+若该等式失败，普通记号 ab 已过早合并了两个目标不同的来源状态。
+
+## 35.2 群作用推广
+
+若群 Γ 作用于遗传微状态 X，则目标经轨道商 X/Γ 下降，当且仅当：
+
+$$
+T(γx)=T(x)
+$$
+
+对全部 γ、x 成立。每一次使用商基因型都隐含“被商掉的对称方向对全部目标无影响”的假设。
+
+仓库 `InvolutiveBlindResidual` 提供来源交换被旧语言隐藏、被新读出反转时的 blind-residual 形式锚点。
+
+---
+
+# Part XXXVI：单倍型相位与连续重组可见度
+
+## 36.1 两位点相位
+
+单倍型空间：
+
+$$
+\mathcal H=\{AB,Ab,aB,ab\}.
+$$
+
+coupling 与 repulsion 状态：
+
+$$
+C=\{AB,ab\},
+\qquad
+R=\{Ab,aB\}.
+$$
+
+二者逐位点基因型同为 (Aa,Bb)，所以逐位点接口不能恢复相位。
+
+## 36.2 配子律
+
+重组比例 r∈[0,1/2]。coupling 下：
+
+$$
+P_C^r(AB)=P_C^r(ab)=\frac{1-r}{2},
+$$
+
+$$
+P_C^r(Ab)=P_C^r(aB)=\frac r2.
+$$
+
+repulsion 下交换上述两组概率。
+
+## 定理 36.1（相位总变差可见度）
+
+$$
+\boxed{
+d_{TV}(P_C^r,P_R^r)=|1-2r|.}
+$$
+
+当 r=0 时两律支撑不交；当 0<r<1/2 时统计可分但单次不完美；当 r=1/2 时两律同为均匀分布，相位被繁殖输出完全抹除。
+
+因此离散相位差异通过连续重组参数被调制为连续可见强度。
+
+## 36.3 重复后代
+
+对 r<1/2，经验配子频率在两个相位下收敛到不同极限，因此无限独立繁殖 transcript 可渐近完美识别相位。
+
+---
+
+# Part XXXVII：互补粗观察、联合完成与重复的边界
+
+## 37.1 对立显性联合恢复
+
+取：
+
+$$
+q_1(AA)=q_1(Aa)=0,
+\quad
+q_1(aa)=1,
+$$
+
+$$
+q_2(AA)=0,
+\quad
+q_2(Aa)=q_2(aa)=1.
+$$
+
+单独每个读出都合并一对基因型，但联合值分别为：
+
+$$
+AA\mapsto(0,0),
+\quad
+Aa\mapsto(0,1),
+\quad
+aa\mapsto(1,1),
+$$
+
+因此联合读出单射。
+
+仓库 `LeastCommonReadoutRefinement` 已机器验证联合读出是最小共同精化，kernel 等于两个 kernel 的交。
+
+## 定理 37.1（确定性重复无增益）
+
+对：
+
+$$
+q^{[n]}(x)=(q(x),\ldots,q(x)),
+$$
+
+有：
+
+$$
+\ker q^{[n]}=\ker q.
+$$
+
+所以重复同一个无噪声粗表型不能恢复 carrier。
+
+## 37.2 随机重复
+
+若状态诱导的单次随机律不同，则重复样本可以估计该分布坐标；有限输出空间上，不同 i.i.d. 律的无限乘积可由经验频率极限分开。若单次律本来相同，任意重复仍相同。
+
+必须区分 observer depth 与 sample depth：前者增加新语义坐标，后者提高对既有随机通道的估计精度。
+
+---
+
+# Part XXXVIII：mosaic 群体、bulk 平均与非线性 carry
+
+## 38.1 分布值状态
+
+细胞群体状态应表示为：
+
+$$
+μ\in Prob(V).
+$$
+
+bulk 均值接口：
+
+$$
+m(μ)=\int z\,dμ(z).
+$$
+
+取：
+
+$$
+μ=δ_0,
+\qquad
+ν=\frac12δ_{-1}+\frac12δ_1.
+$$
+
+二者均值均为 0，但二阶矩分别为 0 与 1。
+
+## 定理 38.1（均值闭合判据）
+
+对单细胞映射 f，存在 F 使：
+
+$$
+\int f(z)dμ(z)=F\left(\int zdμ(z)\right)
+$$
+
+对所有有限支撑概率分布成立，当且仅当 f 保持所有有限凸组合：
+
+$$
+f\left(\sum_iλ_iz_i\right)=\sum_iλ_if(z_i).
+$$
+
+### 证明
+
+取 Dirac 分布得 F=f；再取任意有限混合得凸组合保持。反向直接代入。证毕。
+
+所以 bulk 均值只有在底层响应对群体混合仿射时才是精确闭合状态。真正非线性一般会产生均值相同、未来均值不同的 mosaic carry。
+
+---
+
+# Part XXXIX：中性网络、突变鲁棒性与 cryptic variation
+
+## 39.1 突变图
+
+令基因型空间带突变图：
+
+$$
+\mathcal M=(G,E).
+$$
+
+表型纤维 q^{-1}(y) 的内部连通分量称为 neutral network。
+
+在：
+
+$$
+AA\leftrightarrow Aa\leftrightarrow aa
+$$
+
+中，完全显性使 AA↔Aa 成为中性边，而 Aa↔aa 穿过表型边界。
+
+## 39.2 鲁棒半径
+
+定义：
+
+$$
+ρ_q(x)=\inf\{d_\mathcal M(x,z):q(z)\neq q(x)\}-1.
+$$
+
+距离不超过 ρ_q(x) 的突变均保持表型。
+
+定义中性分量直径：
+
+$$
+D_{cryptic}(x;q)
+=
+\sup_{u,v\in\mathcal N_q(x)}d_\mathcal M(u,v).
+$$
+
+大直径表示系统可在表型不变时积累大量基因型差异。换环境目标 r 后，原来 q-中性的状态对可能被 r 分离；联合读出 kernel 等于两个环境 kernel 的交。
+
+---
+
+# Part XL：修复完成与治疗潜伏
+
+## 40.1 修复 profile
+
+定义完整响应：
+
+$$
+\mathcal R_A(x)
+=
+\bigl(\mathbf1_A(u\cdot x),c(u)\bigr)_{u\in\mathcal U}.
+$$
+
+两个状态治疗等价，当且仅当该 profile 相同。
+
+可能出现：
+
+$$
+q(AA)=q(Aa),
+$$
+
+但：
+
+$$
+\mathcal R_A(AA)\neq\mathcal R_A(Aa).
+$$
+
+此时隐性等位基因不改变未治疗表型，却改变可修复性、成本、剂量或副作用。
+
+## 40.2 修复目标非下降定理
+
+若存在 q(x)=q(y) 但 C_A(x)≠C_A(y)，则不存在 bar_C_A 使：
+
+$$
+C_A=\bar C_A\circ q.
+$$
+
+任何精确决定修复方案的接口必须切开所有治疗潜伏对。
+
+---
+
+# Part XLI：统一协议完成
+
+定义遗传协议：
+
+$$
+\mathfrak P=(Γ,\mathcal L,S,N,\mathcal T),
+$$
+
+其中：
+
+- Γ：允许商掉的遗传对称；
+- L：观察语言；
+- S：时间与干预过程；
+- N：重复采样规则；
+- T：目标族。
+
+协议 profile Π_P 同时记录观察、过程、随机 transcript、繁殖相位、修复响应和群体选择输出。
+
+定义规范协议状态：
+
+$$
+Z_\mathfrak P=X/\ker Π_\mathfrak P.
+$$
+
+于是：
+
+$$
+a\triangleright_{\mathfrak P,c}b
+\iff
+[x_{aa,c}]_\mathfrak P
+=
+[x_{ab,c}]_\mathfrak P
+\neq
+[x_{bb,c}]_\mathfrak P.
+$$
+
+隐性就是某个差异尚未被协议 profile 分离。
+
+---
+
+# Part XLII：扩展遗传潜伏签名
+
+定义：
+
+$$
+Λ^{++}(a,b;c)
+=
+(\partial_qC_b,d_T,f_{max},M_q,D_{origin},V_{phase},V_{mosaic},D_{cryptic},r_{copy},x_*,L_*,C_A,λ_{causal},σ_{law}).
+$$
+
+其中：
+
+- partial_q C_b：carrier 的认识论边界；
+- d_T：目标类最小实验码距；
+- f_max=d_T-1：坐标删除容忍度；
+- M_q：精确未来预测所需的额外记忆；
+- D_origin：亲本来源交换缺陷；
+- V_phase=|1-2r|：相位可见度；
+- V_mosaic：bulk 平均未表达的细胞异质性；
+- D_cryptic：中性网络隐藏尺度；
+- r_copy：最低拷贝显现阶；
+- x_*：突变—选择平衡频率；
+- L_*：对应群体负荷；
+- C_A：最小修复成本；
+- lambda_causal：因果查询潜伏深度；
+- sigma_law：统计分离类别。
+
+传统 dominant／recessive 只是该签名在一个固定当前表型上的 Boolean 投影。
+
+---
+
+# Part XLIII：追加形式化路线
+
+建议在既有规划中继续增加：
+
+```text
+D5/S3/Biology/GeneticLatency/
+  FiberGeneticKnowledge.lean
+  GeneticEpistemicBoundary.lean
+  TargetMinimalDisclosure.lean
+  TargetObservationCode.lean
+  PredictiveGeneticMemory.lean
+  RepairCompletion.lean
+  CopyRevealOrder.lean
+  TestCrossCompletion.lean
+  BeliefMarkovGenetics.lean
+  OrderedGenotypeOrigin.lean
+  HaplotypePhaseVisibility.lean
+  OpposedDominanceCompletion.lean
+  RepeatedObservation.lean
+  MosaicMeanClosure.lean
+  NeutralMutationNetwork.lean
+  MutationSelectionLatency.lean
+  GeneticProtocolCompletion.lean
+```
+
+优先承重定理：
+
+```text
+carrier_possible_but_not_known_under_complete_dominance
+refinement_shrinks_genetic_epistemic_boundary
+target_quotient_is_minimal_disclosure
+target_distance_characterizes_erasure_robustness
+target_distance_corrects_adversarial_errors
+future_reveal_forces_predictive_state_separation
+effective_edit_does_not_imply_target_effect
+copy_reveal_order_controls_population_visibility
+copy_reveal_order_controls_selection_order
+finite_testcross_false_negative_probability
+infinite_testcross_laws_are_singular
+equal_posterior_requires_belief_markov_future_kernel
+ordered_genotype_target_descends_iff_swap_invariant
+coupling_repulsion_gamete_tv_distance
+deterministic_repetition_preserves_kernel
+bulk_mean_closes_iff_map_preserves_convex_combinations
+mutation_selection_latency_equilibrium
+repair_gap_obstructs_phenotype_factorization
+```
+
+---
+
+# 追加总结
+
+本追加得到的统一链条是：
+
+$$
+\boxed{
+\text{看不见}
+\neq
+\text{不知道}
+\neq
+\text{不可识别}
+\neq
+\text{不能影响未来}.
+}
+$$
+
+$$
+\boxed{
+\text{无序基因型}
+\to
+\text{来源 residual},
+\qquad
+\text{逐位点基因型}
+\to
+\text{相位 residual},
+}
+$$
+
+$$
+\boxed{
+\text{bulk 平均}
+\to
+\text{mosaic residual},
+\qquad
+\text{当前表型}
+\to
+\text{预测与修复 residual}.
+}
+$$
+
+最终，遗传潜伏不是某个等位基因“没有作用”，而是一个真实差异被当前采用的对称商、聚合器、观察语言、采样深度、动力学接口或目标族压在 residual 中。显现则是该差异在新的来源坐标、单倍型查询、非线性流、随机重复、环境目标、繁殖过程、选择动力或修复任务中重新成为可分辨量。
