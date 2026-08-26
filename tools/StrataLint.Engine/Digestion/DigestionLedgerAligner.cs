@@ -141,7 +141,15 @@ internal static partial class DigestionLedgerAligner
         var verifiedClausePlanParents = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         var fallbacks = ImmutableArray.CreateBuilder<DigestionIngestFallback>();
         var actualStale = ImmutableArray.CreateBuilder<string>();
-        var suggestedAtomIds = new HashSet<string>(StringComparer.Ordinal);
+        // Existing IDs occupy the legacy content-stem namespace.  Seed the suggestion set so
+        // a repeated residual gets its deterministic source/locator qualification instead of
+        // attempting to reuse an existing ledger primary key.  If that qualified ID is also
+        // occupied, the stable logical address is genuinely ambiguous and ingest remains
+        // fail-closed.
+        var suggestedAtomIds = sources
+            .SelectMany(static source => source.Entries)
+            .Select(static entry => entry.AtomId)
+            .ToHashSet(StringComparer.Ordinal);
         var ownedAtomIds = FindOwnedAtomIds(
             snapshot,
             sources.SelectMany(static source => source.Entries)
@@ -574,6 +582,15 @@ internal static partial class DigestionLedgerAligner
                     findings);
 
                 var registration = AtomizerRegistry.Require(source.Atomizer);
+                var duplicateResidualStems = atomized.Claims
+                    .GroupBy(
+                        atom => registration.ResidualPrefix
+                            + "-residual-"
+                            + atom.Fingerprints.RawSha256["sha256:".Length..],
+                        StringComparer.Ordinal)
+                    .Where(static group => group.Count() > 1)
+                    .Select(static group => group.Key)
+                    .ToHashSet(StringComparer.Ordinal);
                 foreach (var atom in atomized.Claims)
                 {
                     var matchingAtomIds = source.Entries
@@ -593,7 +610,8 @@ internal static partial class DigestionLedgerAligner
                             registration,
                             atom,
                             "residual",
-                            suggestedAtomIds);
+                            suggestedAtomIds,
+                            duplicateResidualStems);
                         residual.Add(new StructuredResidualAdmission(
                             source.SourceId,
                             source.SourcePath,
