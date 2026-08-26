@@ -574,7 +574,8 @@ internal sealed class FakeRepositoryGateway(
     Func<FrozenLedgerReferenceSet, TrustedFrozenGitReferences>? frozenReferenceValidator = null,
     Func<FrozenRevisionIdentity>? currentRevisionResolver = null,
     Func<string, RawChangeSet>? changesForBase = null,
-    RawRepositorySnapshot? forkPoint = null)
+    RawRepositorySnapshot? forkPoint = null,
+    Func<RawRepositorySnapshot>? currentReader = null)
     : IRepositoryGateway
 {
     internal int ReadCount { get; private set; }
@@ -620,7 +621,9 @@ internal sealed class FakeRepositoryGateway(
         ReadCount++;
         ReadCurrentCount++;
         return WithAtomizerData(
-            current ?? throw new InvalidOperationException("current snapshot should not be read"));
+            currentReader?.Invoke()
+            ?? current
+            ?? throw new InvalidOperationException("current snapshot should not be read"));
     }
 
     public RawRepositorySnapshot ReadRevision(string revision)

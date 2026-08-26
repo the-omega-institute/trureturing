@@ -1,0 +1,51 @@
+## 定理 142.1（有效像上的自然性）
+
+若 (C,T) 的 transport 方格自然，且：
+
+[
+T_e=f_eC_e,
+\qquad
+T_{e'}=f_{e'}C_{e'},
+]
+
+则：
+
+[
+Y_uf_e
+======
+
+f_{e'}B_u
+]
+
+至少在：
+
+[
+\operatorname{Im}(C_e)
+]
+
+上成立。
+
+### 证明
+
+对任意 (x:X_e)：
+
+[
+\begin{aligned}
+Y_uf_e(C_ex)
+&=
+Y_uT_e(x)\
+&=
+T_{e'}(X_ux)\
+&=
+f_{e'}C_{e'}(X_ux)\
+&=
+f_{e'}B_u(C_ex).
+\end{aligned}
+]
+
+(\square)
+
+若 (C_e) 满射，则自然性在整个 (B_e) 上成立。
+
+---
+

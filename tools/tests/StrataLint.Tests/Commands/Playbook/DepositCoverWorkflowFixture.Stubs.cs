@@ -1,9 +1,39 @@
+using StrataLint.Engine;
+
 namespace StrataLint.Tests;
 
 public sealed partial class DepositCoverWorkflowScriptTests
 {
     internal sealed partial class TransactionFixture
     {
+        private readonly TemporaryDirectory performance = new();
+        private readonly string performanceLedgerPath;
+
+        internal string[] PerformanceEvents() => File.Exists(performanceLedgerPath)
+            ? File.ReadAllLines(performanceLedgerPath)
+            : [];
+
+        internal void ClearPerformanceEvents()
+        {
+            if (File.Exists(performanceLedgerPath)) File.Delete(performanceLedgerPath);
+        }
+
+        internal int FreezeProbeCount() => File.Exists(freezeProbePath)
+            ? File.ReadAllLines(freezeProbePath).Length
+            : 0;
+
+        private void CopyScript()
+        {
+            var root = TestRepositoryLayout.FindRoot();
+            var target = Path.Combine(Root, ScriptPath);
+            Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+            File.Copy(Path.Combine(root, ScriptPath), target);
+            const string performanceLibraryPath = "tools/scripts/lib/perf-event-lib.sh";
+            var performanceTarget = Path.Combine(Root, performanceLibraryPath);
+            Directory.CreateDirectory(Path.GetDirectoryName(performanceTarget)!);
+            File.Copy(Path.Combine(root, performanceLibraryPath), performanceTarget);
+        }
+
         private void WriteGitGuardStub() => WriteExecutable("git", """
             arguments=("$@")
             index=0
@@ -28,6 +58,15 @@ public sealed partial class DepositCoverWorkflowScriptTests
               esac
             done
             subcommand=${arguments[index]:-}
+            if [[ $subcommand == hash-object && ${PLAYBOOK_INSIDE_LEDGER_STUB:-0} != 1 ]]; then
+              printf 'freeze-exists\n' >> "$PLAYBOOK_TEST_FREEZE_PROBES"
+            fi
+            if [[ ${PLAYBOOK_FAIL_PERF_COMMIT_PROBE:-0} == 1 \
+                && $subcommand == rev-parse \
+                && ${arguments[index+1]:-} == --verify \
+                && ${arguments[index+2]:-} == HEAD ]]; then
+              exit 98
+            fi
             if [[ $subcommand == merge ]]; then
               printf 'git-branch-merge:%s\n' "${arguments[*]}" >> "$PLAYBOOK_TEST_CALLS"
               exit 97
@@ -65,6 +104,25 @@ public sealed partial class DepositCoverWorkflowScriptTests
             """);
 
         private void WriteDotnetStub() => WriteExecutable("dotnet", """
+            if [[ ${1:-} == msbuild ]]; then
+              printf '%s\n' "$PLAYBOOK_TEST_PERF_TARGET"
+              exit 0
+            fi
+            if [[ ${1:-} == "$PLAYBOOK_TEST_PERF_TARGET" && ${2:-} == perf-append ]]; then
+              input=''
+              ledger=''
+              shift 2
+              while [[ $# -gt 0 ]]; do
+                case "$1" in
+                  --input) input=$2; shift 2 ;;
+                  --ledger) ledger=$2; shift 2 ;;
+                  *) exit 2 ;;
+                esac
+              done
+              [[ -n $input && -n $ledger ]]
+              cat "$input" >> "$ledger"
+              exit 0
+            fi
             args="$*"
             command=${args##* -- }
             printf 'dotnet:%s\n' "$command" >> "$PLAYBOOK_TEST_CALLS"
@@ -72,7 +130,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             case "${parts[0]:-}" in
               ledger-append)
                 target_module=${PLAYBOOK_TARGET_MODULE:-D5/S0/Carrier/Probe.lean}
-                descriptor_blob_oid="git-sha1:$(git hash-object -- "$target_module")"
+                descriptor_blob_oid="git-sha1:$(PLAYBOOK_INSIDE_LEDGER_STUB=1 git hash-object -- "$target_module")"
                 base_commit_oid="git-sha1:$(git rev-parse HEAD)"
                 if [[ $target_module == D5/S0/Carrier/Probe.lean ]]; then
                   event_id=2222222222222222222222222222222222222222222222222222222222222222
@@ -135,11 +193,13 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 atom=''
                 gid=''
                 envelope=''
+                align=0
                 for ((index=1; index<${#parts[@]}; index+=2)); do
                   case "${parts[index]}" in
                     --cover-atom) atom=${parts[index+1]} ;;
                     --gid) gid=${parts[index+1]} ;;
                     --envelope) envelope=${parts[index+1]} ;;
+                    --align-scribe-receipt) align=1 ;;
                   esac
                 done
                 expected_envelope="Meta/Digestion/formalizations/${atom}.v1.json"
@@ -150,6 +210,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 if [[ ${PLAYBOOK_COVER_DISPOSITION_FAILURE:-0} == 1 ]]; then
                   printf 'atom_id: %s\ncoverage: false\naligned: false\ncover_disposition: synthetic\n' "$atom" \
                     > Meta/BACKFILL.yaml
+                  [[ $align -eq 0 ]] || echo 'COVER_ATOM_ALIGNED cover=failed' >&2
                   echo 'COVER_INVALID synthetic disposition' >&2
                   exit 1
                 fi
@@ -165,6 +226,24 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 fi
                 printf 'atom_id: %s\ncoverage: true\naligned: false\n%s\n' \
                   "$atom" "$secondary" > Meta/BACKFILL.yaml
+                if [[ $align -eq 1 ]]; then
+                  definition_path="Blueprint/${gid%.*}.scribe.cs"
+                  verified_emission=''
+                  if [[ -s $definition_path ]] \
+                      && grep -q "^atom_id: ${atom}$" Meta/BACKFILL.yaml \
+                      && grep -q '^coverage: true$' Meta/BACKFILL.yaml; then
+                    verified_emission='emission: covered'
+                  fi
+                  [[ $verified_emission == 'emission: covered' ]] || {
+                    echo 'COVER_ATOM_ALIGNED cover=passed align=failed' >&2
+                    echo 'ALIGN_SCRIBE_RECEIPT_INVALID no verified in-process Scribe emission' >&2
+                    exit 1
+                  }
+                  printf 'atom_id: %s\ncoverage: true\naligned: covered\n%s\n' \
+                    "$atom" "$secondary" > Meta/BACKFILL.yaml
+                  echo 'COVER_ATOM_ALIGNED cover=passed align=passed'
+                  echo 'ALIGN_SCRIBE_RECEIPT ledger_changed=true'
+                fi
                 ;;
               align-scribe-receipt)
                 atom=''
@@ -198,5 +277,51 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 ;;
             esac
             """);
+
+        internal ProcessOutput Run(
+            string command,
+            string gid = Gid,
+            string atomId = AtomId,
+            bool staleReport = false,
+            bool invalidReceipt = false,
+            bool coverDispositionFailure = false,
+            string? mutateReceiptAfterPrepare = null,
+            TimeSpan? timeout = null,
+            string? baseRevision = null,
+            bool usePerformanceProbeOverrides = true,
+            bool failPerformanceCommitProbe = false) =>
+            BoundedProcessRunner.Run(
+                "/usr/bin/env",
+                [
+                    $"PATH={binPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
+                    $"PLAYBOOK_TEST_CALLS={callsPath}",
+                    $"PLAYBOOK_TEST_FREEZE_PROBES={freezeProbePath}",
+                    $"PLAYBOOK_STALE_REPORT={(staleReport ? "1" : "0")}",
+                    $"PLAYBOOK_INVALID_RECEIPT={(invalidReceipt ? "1" : "0")}",
+                    $"PLAYBOOK_COVER_DISPOSITION_FAILURE={(coverDispositionFailure ? "1" : "0")}",
+                    $"PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE={mutateReceiptAfterPrepare ?? string.Empty}",
+                    $"PLAYBOOK_TARGET_MODULE={(gid == SecondaryGid ? SecondaryLeanPath : gid == NewGid ? NewLeanPath : LeanPath)}",
+                    $"PLAYBOOK_TEST_PERF_TARGET={Path.Combine(binPath, "StrataLint.Cli.dll")}",
+                    $"STRATALINT_PERF_LEDGER={performanceLedgerPath}",
+                    $"STRATALINT_PERF_COMMIT={(usePerformanceProbeOverrides ? PerformanceCommit : string.Empty)}",
+                    $"STRATALINT_PERF_LOADAVG={(usePerformanceProbeOverrides ? PerformanceLoadavg : string.Empty)}",
+                    $"STRATALINT_PERF_HOST_CONCURRENCY={(usePerformanceProbeOverrides ? PerformanceHostConcurrency : string.Empty)}",
+                    $"PLAYBOOK_FAIL_PERF_COMMIT_PROBE={(failPerformanceCommitProbe ? "1" : "0")}",
+                    "/bin/bash",
+                    Path.Combine(Root, ScriptPath),
+                    command,
+                    baseRevision ?? (command == "deposit" ? "HEAD" : "synthetic-base"),
+                    atomId,
+                    gid,
+                ],
+                Root,
+                timeout ?? BoundedProcessRunner.HangDetectionBudget,
+                128 * 1024);
+
+        public void Dispose()
+        {
+            performance.Dispose();
+            temporary.Dispose();
+        }
     }
 }

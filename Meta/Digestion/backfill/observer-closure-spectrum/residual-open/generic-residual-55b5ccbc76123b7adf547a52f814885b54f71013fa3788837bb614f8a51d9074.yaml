@@ -1,0 +1,10 @@
+ast_path: section/32-集体作者联盟与委托瓶颈
+fingerprints:
+  raw_sha256: sha256:55b5ccbc76123b7adf547a52f814885b54f71013fa3788837bb614f8a51d9074
+  normalized_sha256: sha256:55b5ccbc76123b7adf547a52f814885b54f71013fa3788837bb614f8a51d9074
+cas_ref: sha256:55b5ccbc76123b7adf547a52f814885b54f71013fa3788837bb614f8a51d9074
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

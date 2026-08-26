@@ -93,7 +93,17 @@ public static class TruthDagProjectionAssembler
         ArgumentNullException.ThrowIfNull(lean);
 
         var states = LeanTruthStates.Resolve(snapshot, lean);
-        var adjacency = LeanImportAdjacency.Build(snapshot, lean);
+        return Build(snapshot, lean, states);
+    }
+
+    internal static TruthDagProjection Build(
+        RepositorySnapshot snapshot,
+        AcceptedLeanClosure lean,
+        ImmutableDictionary<RepoPath, TruthState> states)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        ArgumentNullException.ThrowIfNull(lean);
+        ArgumentNullException.ThrowIfNull(states);
         var nodes = snapshot.Files.Keys
             .Where(static path => LeanClosureValidator.IsManagedLean(path.Value))
             .OrderBy(static path => path.Value, StringComparer.Ordinal)
@@ -106,11 +116,6 @@ public static class TruthDagProjectionAssembler
         var blockerSet = new HashSet<TruthProjectionBlocker>();
         foreach (var node in nodes)
         {
-            foreach (var dependency in adjacency[node.RepoPath])
-            {
-                edgeSet.Add(new TruthProjectionEdge(dependency, node.RepoPath));
-            }
-
             if (!lean.Report.Files.TryGetValue(node.RepoPath, out var report))
             {
                 continue;
@@ -118,7 +123,11 @@ public static class TruthDagProjectionAssembler
 
             foreach (var importedModule in report.Imports.Distinct(StringComparer.Ordinal))
             {
-                if (!pathsByModule.ContainsKey(importedModule) && IsManagedModuleReference(importedModule))
+                if (pathsByModule.TryGetValue(importedModule, out var dependency))
+                {
+                    edgeSet.Add(new TruthProjectionEdge(dependency, node.RepoPath));
+                }
+                else if (IsManagedModuleReference(importedModule))
                 {
                     blockerSet.Add(new TruthProjectionBlocker(node.RepoPath, importedModule));
                 }

@@ -90,7 +90,10 @@ public static class CoverageAnalyzer
         if (value.StartsWith("Papers/", StringComparison.Ordinal)) return ArtifactClass.P;
         if (value.StartsWith("Meta/", StringComparison.Ordinal)) return ArtifactClass.Meta;
         if (value.StartsWith(".github/", StringComparison.Ordinal)) return ArtifactClass.GitHub;
-        if (value.StartsWith("agents/", StringComparison.Ordinal)) return ArtifactClass.Agents;
+        if (value.StartsWith(RepositoryPathPolicy.AgentFilesRootPath, StringComparison.Ordinal))
+        {
+            return ArtifactClass.Agents;
+        }
         if (value.StartsWith("docs/", StringComparison.Ordinal)) return ArtifactClass.Docs;
         return value.Contains('/', StringComparison.Ordinal) ? ArtifactClass.Other : ArtifactClass.Root;
     }

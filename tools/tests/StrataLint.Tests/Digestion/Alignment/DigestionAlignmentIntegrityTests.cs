@@ -136,7 +136,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void IngestCarriesCoverageAndUnresolvedSubitemsForwardAcrossAtomGenerations()
+    public void IngestCarriesReceiptedCoverageAndUnresolvedSubitemsForwardAcrossAtomGenerations()
     {
         var oldBytes = Encoding.UTF8.GetBytes("# SYNTH-VOL\n\n**定理 1.1(A)**。old。\n");
         var currentBytes = Encoding.UTF8.GetBytes("# SYNTH-VOL\n\n**定理 1.1(A)**。rewritten。\n");
@@ -166,11 +166,39 @@ public sealed partial class DigestionAlignmentTests
         };
         var ledger = loaded.WithDigestionSources(
             [source with { Entries = [oldEntry] }]);
+        var currentAtom = Assert.Single(AtomizerRegistry.Atomize(
+            AtomizerRegistry.GictId,
+            currentBytes,
+            DigestionTestSupport.Rules).Claims);
+        var currentAtomId = "gict-residual-"
+            + currentAtom.Fingerprints.RawSha256["sha256:".Length..];
+        var formalizationReceipt = DigestionFormalizationReceipt.Write(
+            new DigestionFormalizationReceipt(
+                currentAtomId,
+                oldEntry.CoverageGids[0],
+                new DigestionFormalizationSignature(
+                    "window_algebra_has_no_character",
+                    "theorem",
+                    "True"),
+                currentAtom.Fingerprints.RawSha256,
+                currentAtom.Fingerprints.RawSha256,
+                [new DigestionFormalizationExtension(
+                    oldEntry.CoverageGids[1],
+                    new DigestionFormalizationSignature(
+                        "bell_coefficients_are_not_product",
+                        "theorem",
+                        "True"))]));
 
-        var plan = DigestionIngestor.Plan(
-            ledger,
-            Snapshot(currentBytes, [oldCapture]),
-            ledger);
+        var snapshot = Snapshot(
+            currentBytes,
+            [oldCapture],
+            extraEntries:
+            [
+                new RawRepositoryEntry(
+                    DigestionFormalizationReceipt.PathForAtom(currentAtomId),
+                    formalizationReceipt),
+            ]);
+        var plan = DigestionIngestor.Plan(ledger, snapshot, ledger, snapshot);
         var nextGeneration = Assert.Single(
             Assert.Single(plan.Document.RequireDigestionSources()).Entries,
             static entry => entry.AtomId != "old-receipt");

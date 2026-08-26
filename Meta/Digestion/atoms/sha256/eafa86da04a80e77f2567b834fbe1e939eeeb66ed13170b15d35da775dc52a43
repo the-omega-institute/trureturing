@@ -1,0 +1,57 @@
+# Part XXII：与仓库现有形式化的连接
+
+以下是本理论的主要 Lean 锚点。它们提供抽象基础，但不等于基因专用结论已经自动闭合。
+
+1. `D5/S0/Conventions/AmbientComplementDependence`
+   - 环境相对补。
+2. `D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois`
+   - 观察族与关系的 Galois 对应。
+3. `D5/S3/ConceptDynamics/RefinementAlgebra/ObservableEventAlgebraDuality`
+   - refinement、kernel 与事件代数对偶。
+4. `D5/S3/ConceptDynamics/RefinementFactorization/CompatiblePrecisionTowerMonotonicity`
+   - 精度塔 kernel 反单调。
+5. `D5/S3/Observer/Separation/FiniteFutureCongruence`
+   - 有限未来完成与最大不变同余。
+6. `D5/S3/ConceptDynamics/Disclosure/NoninterferenceSecretFlowExclusion`
+   - 非干扰排除隐藏信息流。
+7. `D5/S3/Observer/HiddenFlow/ProjectionCommutatorIdentity`
+   - 可见—隐藏交叉块与交换子。
+8. `D5/S3/ConceptDynamics/Control/ControlQuotientUniversalMinimality`
+   - 动作完成商的普适最小性。
+9. `D5/S3/ConceptDynamics/Causal/ParentOrderedStructuralEvaluationSemantics`
+   - 父节点有序 SCM 的唯一求值。
+10. `D5/S3/ConceptDynamics/Causal/InterventionEffectiveness`
+    - 干预坐标固定为指定值。
+11. `D5/S3/ConceptDynamics/Causal/ObservationInterventionCounterfactualChain`
+    - 观察、干预、反事实 kernel 链。
+12. `D5/S3/ConceptDynamics/CanonicalImage/GlobalProfileCounterfactualTargetMinimality`
+    - 反事实目标族经规范 profile image 因子化。
+13. `D5/S3/ConceptDynamics/SufficiencyQuotient/TargetFamilyMinimalQuotient`
+    - 联合目标最小充分商。
+14. `D5/S3/ConceptDynamics/Experiment/FiniteInterventionExtraction`
+    - 有限候选模型的有限分离干预族。
+15. `D5/S3/ConceptDynamics/ExperimentDesign/MinimumCompleteObserverSetCover`
+    - 最小完整观察器等价于加权 set cover。
+16. `D5/S3/ConceptDynamics/ResidualCoverage/ResidualSeparationAdapter`
+    - exact cover 与无盲 residual pair 等价。
+17. `D5/S3/ConceptDynamics/ResidualCoverage/WeightedResidualCoverage`
+    - 加权 residual capture 次模性。
+18. `D5/S3/ConceptDynamics/ResidualCoverage/GreedyResidualAllocation`
+    - 贪心单步最优与正进展。
+19. `D5/S3/Observer/MeasureSeparation/EquivalentLawPosteriorInterior`
+    - 等价律后验内部性与无完美分离。
+20. `D5/S3/Observer/MeasureSeparation/SingularProbabilityPerfectSeparator`
+    - 奇异律完美分离。
+21. `D5/S3/Estimation/DecisionRisk/BoundedRiskSimulatorTransport`
+    - 总变差模拟误差控制决策风险。
+22. `D5/S3/Estimation/DecisionRisk/PosteriorFuturePolicySufficiency`
+    - 后验对全部未来政策 Bayes 值充分。
+23. `D5/S3/ConceptDynamics/DecisionValueScale/OptimalAcceptanceThreshold`
+    - 成本敏感行动阈值。
+24. `D5/S3/ConceptDynamics/Gluing/SheafPairwiseEqualizer`
+    - 兼容局部截面的唯一全局粘合。
+25. `D5/S0/Observation/PowerTraceSimilarityCountermodel`
+    - 丰富摘要仍可能遗漏完整机制类。
+
+---
+

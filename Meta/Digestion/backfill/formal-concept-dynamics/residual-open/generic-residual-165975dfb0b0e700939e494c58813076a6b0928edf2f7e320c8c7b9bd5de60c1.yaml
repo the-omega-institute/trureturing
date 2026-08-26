@@ -1,0 +1,10 @@
+ast_path: section/372-2-代表
+fingerprints:
+  raw_sha256: sha256:165975dfb0b0e700939e494c58813076a6b0928edf2f7e320c8c7b9bd5de60c1
+  normalized_sha256: sha256:165975dfb0b0e700939e494c58813076a6b0928edf2f7e320c8c7b9bd5de60c1
+cas_ref: sha256:165975dfb0b0e700939e494c58813076a6b0928edf2f7e320c8c7b9bd5de60c1
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

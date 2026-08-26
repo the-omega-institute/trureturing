@@ -1,0 +1,54 @@
+## 定义 83.1（可见实算子空间）
+
+$$
+\boxed{
+V_{\mathfrak O}
+=
+\operatorname{span}_{\mathbb R}
+\left(
+\{I\}\cup
+\{E_{a|x}\}_{x,a}
+\right)
+\subseteq
+\operatorname{Herm}_d.
+}
+$$
+
+其复化
+
+$$
+\mathcal V_{\mathfrak O}
+=
+V_{\mathfrak O}+iV_{\mathfrak O}
+$$
+
+是一个含单位、对伴随封闭的 operator system。
+
+必须严格区分：
+
+$$
+V_{\mathfrak O}
+$$
+
+与这些效果生成的乘法代数
+
+$$
+C^*(E_{a|x}).
+$$
+
+前者决定静态线性统计；后者包含效果乘积及其非交换组合。代数生成完整并不自动表示当前 POVM 概率信息完备。
+
+例如量子比特只读 $X$ 与 $Z$ 时，
+
+$$
+V_{\mathfrak O}
+=
+\operatorname{span}_{\mathbb R}\{I,X,Z\}
+$$
+
+仍看不见 $Y$ 方向；但 $X,Z$ 作为代数生成元已经生成
+
+$$
+M_2(\mathbb C).
+$$
+

@@ -1,0 +1,98 @@
+# 51. 建议 Lean 模块树
+
+```text
+D5/S3/Observer/Agency/Core/
+  AgentiveProfile.lean
+  AgentiveHistoryQuotient.lean
+  AgencyCompletion.lean
+  AgencyCompletionClosure.lean
+  AutonomyResidual.lean
+  ReasonBypassResidual.lean
+
+D5/S3/Observer/Agency/Choice/
+  LegalActionBundle.lean
+  DeterministicPolicySection.lean
+  EquivariantSelectorObstruction.lean
+  EndogenousSymmetryBreaking.lean
+  SymmetricChoiceMemoryLowerBound.lean
+
+D5/S3/Observer/Agency/Ownership/
+  CausalAutonomyCapacity.lean
+  OwnershipClosure.lean
+  AutonomousCore.lean
+  StableSelfBoundary.lean
+  ObservationalAuthorshipCountermodel.lean
+
+D5/S3/Observer/Agency/Reflexive/
+  TransparentPredictionDiagonal.lean
+  ResponseFixedPoint.lean
+  MetaPolicyDynamics.lean
+  ValuePolicyEquilibrium.lean
+  PolicyHolonomy.lean
+  ProvenanceOrder.lean
+
+D5/S3/Observer/Agency/Linear/
+  OwnedReachableSubspace.lean
+  ExternalReachableSubspace.lean
+  DiscountedControllabilityGramian.lean
+  AgentiveBehaviorQuotient.lean
+  SilentControlExactSequence.lean
+  ImposedBehaviorExactSequence.lean
+  AuthorabilityGramian.lean
+  AgencyHankelOperator.lean
+  MinimumRevisionEnergy.lean
+
+D5/S3/Observer/Agency/Provenance/
+  ObservableControlOverlap.lean
+  ProvenanceDecomposition.lean
+  ProvenanceConditionNumber.lean
+  UniqueOwnedBehaviorQuotient.lean
+  DecisionExecutionRecordLedger.lean
+
+D5/S3/Observer/Agency/Approximation/
+  ApproximateSelfDimension.lean
+  AgencyBalancedCoordinates.lean
+  RobustAgencyRank.lean
+  EssentialAgencyResidual.lean
+  CoarseGrainingMonotonicity.lean
+
+D5/S3/Observer/Agency/Throat/
+  StrategyPathCocycle.lean
+  ThroatComponentCocycle.lean
+  ClosedLoopPotentialCriterion.lean
+  ActionOrderCurvature.lean
+  StrategyThroatSemidirect.lean
+  CovertThroatTransport.lean
+  LedgerThroatAudit.lean
+
+D5/S3/Observer/Agency/Viability/
+  AgencySafeSet.lean
+  AgencyViabilityKernel.lean
+  FreedomPreservingPolicy.lean
+  SelfAbandoningAction.lean
+```
+
+建议优先闭合低依赖、高区分度结果：
+
+```text
+agentive_profile_kernel
+agentive_completion_least
+agency_completion_idempotent
+no_equivariant_selector_of_fixed_state
+symmetric_choice_memory_card_lower_bound
+reason_sufficient_iff_factors
+stable_self_boundary_fixed
+transparent_counterprediction_impossible
+finite_constitution_root_or_cycle
+agentiveQuotient_equiv_reachable_mod_silent
+agentiveQuotient_dim
+authorabilityGramian_rank
+agencyHankel_rank
+source_decomposition_unique_iff_disjoint
+covert_throat_zero_iff_factors
+agency_viability_greatest
+operational_agency_sixfold_equiv
+```
+
+---
+

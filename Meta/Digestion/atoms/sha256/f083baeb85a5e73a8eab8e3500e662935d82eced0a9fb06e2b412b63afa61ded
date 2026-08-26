@@ -1,0 +1,59 @@
+# 43. 非线性局部代理与 Lie 括号方向
+
+对非线性系统
+
+$$
+x_{t+1}=F_t(x_t,u_t,e_t),
+\qquad
+y_t=h_t(x_t),
+$$
+
+沿实际轨迹线性化：
+
+$$
+\delta x_{t+1}
+=A_t\delta x_t+B_t^O\delta u_t+B_t^E\delta e_t,
+$$
+
+$$
+\delta y_t=C_t\delta x_t.
+$$
+
+将有限控制扰动映射到未来输出扰动得到 Jacobian $\mathcal J_{O,N}$，其块为
+
+$$
+\frac{\partial y_k}{\partial u_j}
+=
+C_kA_{k-1}\cdots A_{j+1}B_j^O.
+$$
+
+定义局部代理秩
+
+$$
+\boxed{r_{\mathrm{loc}}=\operatorname{rank}\mathcal J_{O,N}.}
+$$
+
+若秩在邻域恒定，则行为等价控制纤维局部形成余维 $r_{\mathrm{loc}}$ 的子流形。
+
+连续时间控制仿射系统
+
+$$
+\dot x=f_0(x)+\sum_i u_if_i(x)
+$$
+
+中，单个方向可能满足 $dh(f_i)=dh(f_j)=0$，而动作小回路产生二阶 Lie 括号位移
+
+$$
+x\mapsto x+\varepsilon^2[f_i,f_j](x)+O(\varepsilon^3).
+$$
+
+若
+
+$$
+dh([f_i,f_j])\ne0,
+$$
+
+则任一单步一阶不可见，但特定顺序组合产生可见代理方向。动作词本身可以创造单个动作不具备的能力。
+
+---
+

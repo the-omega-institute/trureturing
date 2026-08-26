@@ -1,0 +1,26 @@
+## 定义 54.2（确定性策略截面）
+
+确定性策略是一个截面
+
+$$
+s:Q\to E_{\mathcal A}
+$$
+
+满足
+
+$$
+p\circ s=\operatorname{id}_Q.
+$$
+
+等价地，写
+
+$$
+s(q)=(q,\sigma(q)),
+$$
+
+则
+
+$$
+\sigma(q)\in\mathcal A(q).
+$$
+

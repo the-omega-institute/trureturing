@@ -1,0 +1,20 @@
+## 定理 238.1（posterior universal sufficiency）
+
+若两个 histories \(h,h'\) 产生同一后验：
+
+\[
+\pi_h=\pi_{h'},
+\]
+
+则对任意行动空间、任意损失函数和任意未来实验 policy，它们具有完全相同的条件 Bayes value。
+
+### 证明
+
+所有关于隐藏状态的条件期望都只依赖 conditional law：
+
+\[
+\mathcal L(X\mid h)=\pi_h.
+\]
+
+实验的未来输出 law 又由 \(\pi_h\) 与 kernel family 决定，因此递归 continuation value 相同。 \(\square\)
+

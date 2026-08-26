@@ -1,0 +1,43 @@
+# 47. 无限维不可压缩余量与粗粒化单调性
+
+若代理 Hankel 算子作用于无限维 Hilbert 空间，定义本质范数
+
+$$
+\boxed{
+\|\mathcal H_O\|_{\mathrm{ess}}
+=
+\inf_{\operatorname{rank}K<\infty}
+\|\mathcal H_O-K\|.
+}
+$$
+
+若该值正，则任何有限维自我模型都至少具有同样大的算子误差。定义
+
+$$
+R_{\mathrm{inf}}=\|\mathcal H_O\|_{\mathrm{ess}}
+$$
+
+为不可压缩代理余量。有限记忆可任意逼近主体不是自动真理，而取决于算子的紧致性。
+
+若限制控制接口 $S:U'\to U$，粗化输出 $P:Y\to Y'$，新代理算子为
+
+$$
+H'=PHS.
+$$
+
+则
+
+$$
+\operatorname{rank}H'\le\operatorname{rank}H.
+$$
+
+当 $\|P\|,\|S\|\le1$ 时，
+
+$$
+\sigma_i(PHS)\le\sigma_i(H).
+$$
+
+确定后处理还满足数据处理不等式。删除控制、压缩读出或遗忘记录都不能创造新的操作代理能力。
+
+---
+

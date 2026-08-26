@@ -1,0 +1,10 @@
+ast_path: section/243-公共公告与表演性语言具有不同代数
+fingerprints:
+  raw_sha256: sha256:52037940f617e58664f98999e4c5eb3ef053bd804e9c848dad7f7c76af039682
+  normalized_sha256: sha256:52037940f617e58664f98999e4c5eb3ef053bd804e9c848dad7f7c76af039682
+cas_ref: sha256:52037940f617e58664f98999e4c5eb3ef053bd804e9c848dad7f7c76af039682
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

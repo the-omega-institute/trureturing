@@ -1,0 +1,10 @@
+ast_path: section/42-近似自我谱-平衡坐标与鲁棒代理秩
+fingerprints:
+  raw_sha256: sha256:ffdbd7a308abd251d55458e6bf7305fe0abd5b83f58e6d04c7ec2620455fd257
+  normalized_sha256: sha256:ffdbd7a308abd251d55458e6bf7305fe0abd5b83f58e6d04c7ec2620455fd257
+cas_ref: sha256:ffdbd7a308abd251d55458e6bf7305fe0abd5b83f58e6d04c7ec2620455fd257
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

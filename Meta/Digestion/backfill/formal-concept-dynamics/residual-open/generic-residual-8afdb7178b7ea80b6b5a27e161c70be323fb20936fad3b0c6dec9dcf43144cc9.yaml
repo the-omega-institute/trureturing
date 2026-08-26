@@ -1,0 +1,10 @@
+ast_path: section/429-保守扩张可以由准入满射投影刻画
+fingerprints:
+  raw_sha256: sha256:8afdb7178b7ea80b6b5a27e161c70be323fb20936fad3b0c6dec9dcf43144cc9
+  normalized_sha256: sha256:8afdb7178b7ea80b6b5a27e161c70be323fb20936fad3b0c6dec9dcf43144cc9
+cas_ref: sha256:8afdb7178b7ea80b6b5a27e161c70be323fb20936fad3b0c6dec9dcf43144cc9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

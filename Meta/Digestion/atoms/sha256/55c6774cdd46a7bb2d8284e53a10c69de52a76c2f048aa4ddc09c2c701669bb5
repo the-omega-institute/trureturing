@@ -1,0 +1,18 @@
+# 40. 外部控制重叠与来源可识别性
+
+令自我输入与外部输入到未来行为的算子分别为
+
+$$
+\mathcal H_O:\mathcal U_O\to\mathcal Y,
+\qquad
+\mathcal H_E:\mathcal U_E\to\mathcal Y.
+$$
+
+记
+
+$$
+S_O=\operatorname{im}\mathcal H_O,
+\qquad
+S_E=\operatorname{im}\mathcal H_E.
+$$
+

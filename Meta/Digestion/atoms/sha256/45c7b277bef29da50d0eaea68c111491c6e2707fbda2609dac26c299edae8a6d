@@ -1,0 +1,40 @@
+# 90. 量子可观测矩阵、Gramian 与有限时间压缩
+
+取
+
+$$
+D=d^2-1
+$$
+
+并选择 $\operatorname{Herm}_d^0$ 的 Hilbert–Schmidt 正交基
+
+$$
+F_1,\ldots,F_D.
+$$
+
+任意状态差写成
+
+$$
+X=\sum_{\mu=1}^D x_\mu F_\mu.
+$$
+
+由于 $\Phi$ 保迹，迹零空间对 $\Phi$ 不变。令其在该基上的实矩阵表示为
+
+$$
+A\in M_D(\mathbb R).
+$$
+
+定义测量矩阵
+
+$$
+C_{r\mu}
+=
+\operatorname{Tr}(E_rF_\mu).
+$$
+
+则时间 $t$ 的概率差向量为
+
+$$
+CA^t x.
+$$
+

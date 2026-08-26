@@ -1,0 +1,10 @@
+ast_path: section/72-责任是作者关系的事后可审计面
+fingerprints:
+  raw_sha256: sha256:07cb6bddc1673d080f0728aa2f5a402a751065e309f96f1c0447d43241d8fb17
+  normalized_sha256: sha256:07cb6bddc1673d080f0728aa2f5a402a751065e309f96f1c0447d43241d8fb17
+cas_ref: sha256:07cb6bddc1673d080f0728aa2f5a402a751065e309f96f1c0447d43241d8fb17
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

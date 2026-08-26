@@ -5,6 +5,8 @@ namespace StrataLint.Cli;
 
 // align-scribe 动词:只修复目标条目的 Scribe 收据(cover 的姊妹路径),与其专属参数解析
 // 及守卫同居;主文件保留 cover 事务与共享辅助。
+// 接受一对或多对 (--atom-id, --gid):终评是全库校验,存量 mismatch 互为否决,故修复
+// 必须能在一个事务里对齐全部受影响收据、只验一次(#3297 判例:逐对顺序修不可收敛)。
 internal static partial class CoverAtomCommand
 {
     internal static CommandResult AlignScribeReceipt(
@@ -16,88 +18,111 @@ internal static partial class CoverAtomCommand
     {
         var options = ParseAlignArguments(arguments);
         var currentRaw = repository.ReadCurrent();
+        var baselineRaw = repository.ReadRevision(options.BaselineRevision);
         var current = Decode(currentRaw);
-        _ = Decode(repository.ReadRevision(options.BaselineRevision));
+        var baseline = Decode(baselineRaw);
         var document = LoadDocument(current);
-        var matches = document.RequireDigestionEntries()
-            .Where(entry => string.Equals(entry.AtomId, options.AtomId, StringComparison.Ordinal))
-            .ToArray();
-        if (matches.Length != 1)
-        {
-            throw new InvalidOperationException(
-                matches.Length == 0
-                    ? $"align atom {options.AtomId} is absent from the ledger"
-                    : $"align atom {options.AtomId} is ambiguous in the ledger");
-        }
-
-        var target = matches[0];
-        if (target.CoverageGids.Count(gid =>
-                string.Equals(gid, options.Gid, StringComparison.Ordinal)) != 1)
-        {
-            throw new InvalidOperationException(
-                $"align GID {options.Gid} must occur exactly once in atom {options.AtomId} coverage_gids");
-        }
-
-        var receiptMatches = target.Receipts.Scribe
-            .Where(receipt => string.Equals(receipt.Gid, options.Gid, StringComparison.Ordinal))
-            .ToArray();
-        if (receiptMatches.Length != 1)
-        {
-            throw new InvalidOperationException(
-                $"align GID {options.Gid} must have exactly one Scribe receipt in atom {options.AtomId}");
-        }
-
-        if (!Gid.TryParse(options.Gid, out var gid)
-            || gid.ToTarget() is not Target.Formal { Declaration: not null })
-        {
-            throw new InvalidOperationException(
-                $"align GID must select a Lean declaration: {options.Gid}");
-        }
-
+        var baselineDocument = BackfillInventoryLoader.LoadBaseline(baseline);
         var report = leanReportSource.Load(current);
         var lean = ValidateLean(current, report);
+        var truthStates = LeanTruthStates.Resolve(current, lean);
         var verified = scribeEmissionVerifier.Verify(current, report);
-        var documentGid = ScribeEmissionAttestation.DocumentGid(options.Gid);
-        if (!verified.TryGet(documentGid, out var verifiedRecord)
-            || !verified.ReferencesDeclaration(options.Gid))
+
+        var planned = document;
+        var outputLines = new List<string>();
+        foreach (var pair in options.Pairs)
         {
-            throw new InvalidOperationException(
-                $"align GID {options.Gid} has no verified Scribe emission and declaration reference");
+            var matches = planned.RequireDigestionEntries()
+                .Where(entry => string.Equals(entry.AtomId, pair.AtomId, StringComparison.Ordinal))
+                .ToArray();
+            if (matches.Length != 1)
+            {
+                throw new InvalidOperationException(
+                    matches.Length == 0
+                        ? $"align atom {pair.AtomId} is absent from the ledger"
+                        : $"align atom {pair.AtomId} is ambiguous in the ledger");
+            }
+
+            var target = matches[0];
+            if (target.CoverageGids.Count(gid =>
+                    string.Equals(gid, pair.Gid, StringComparison.Ordinal)) != 1)
+            {
+                throw new InvalidOperationException(
+                    $"align GID {pair.Gid} must occur exactly once in atom {pair.AtomId} coverage_gids");
+            }
+
+            var receiptMatches = target.Receipts.Scribe
+                .Where(receipt => string.Equals(receipt.Gid, pair.Gid, StringComparison.Ordinal))
+                .ToArray();
+            if (receiptMatches.Length != 1)
+            {
+                throw new InvalidOperationException(
+                    $"align GID {pair.Gid} must have exactly one Scribe receipt in atom {pair.AtomId}");
+            }
+
+            if (!Gid.TryParse(pair.Gid, out var gid)
+                || gid.ToTarget() is not Target.Formal { Declaration: not null })
+            {
+                throw new InvalidOperationException(
+                    $"align GID must select a Lean declaration: {pair.Gid}");
+            }
+
+            var documentGid = ScribeEmissionAttestation.DocumentGid(pair.Gid);
+            if (!verified.TryGet(documentGid, out var verifiedRecord)
+                || !verified.ReferencesDeclaration(pair.Gid))
+            {
+                throw new InvalidOperationException(
+                    $"align GID {pair.Gid} has no verified Scribe emission and declaration reference");
+            }
+
+            var oldReceipt = receiptMatches[0];
+            var newReceipt = oldReceipt with
+            {
+                DefinitionSha256 = verifiedRecord.DefinitionSha256,
+                EmissionSha256 = verifiedRecord.EmissionSha256,
+            };
+            var alignedEntry = target with
+            {
+                Receipts = target.Receipts with
+                {
+                    Scribe = target.Receipts.Scribe
+                        .Select(receipt => string.Equals(receipt.Gid, pair.Gid, StringComparison.Ordinal)
+                                ? newReceipt
+                                : receipt)
+                        .ToImmutableArray(),
+                },
+            };
+            planned = ReplaceEntry(planned, pair.AtomId, alignedEntry);
+            outputLines.Add(
+                $"ALIGN_SCRIBE_RECEIPT atom_id={pair.AtomId} gid={pair.Gid} "
+                + $"old_definition_sha256={oldReceipt.DefinitionSha256} "
+                + $"new_definition_sha256={newReceipt.DefinitionSha256} "
+                + $"old_emission_sha256={oldReceipt.EmissionSha256} "
+                + $"new_emission_sha256={newReceipt.EmissionSha256} ");
         }
 
-        var oldReceipt = receiptMatches[0];
-        var newReceipt = oldReceipt with
-        {
-            DefinitionSha256 = verifiedRecord.DefinitionSha256,
-            EmissionSha256 = verifiedRecord.EmissionSha256,
-        };
-        var alignedEntry = target with
-        {
-            Receipts = target.Receipts with
-            {
-                Scribe = target.Receipts.Scribe
-                    .Select(receipt => string.Equals(receipt.Gid, options.Gid, StringComparison.Ordinal)
-                            ? newReceipt
-                            : receipt)
-                    .ToImmutableArray(),
-            },
-        };
-        var planned = ReplaceEntry(document, options.AtomId, alignedEntry);
         var derived = DigestionStatusEvaluator.Evaluate(
             DigestionEvaluationScope.FullScan,
             planned,
             current,
             lean,
             verified,
-            baselineDocument: null,
-            validateProjectedStatus: false);
+            baselineDocument,
+            validateProjectedStatus: false,
+            baselineSnapshot: baseline,
+            truthStates: truthStates);
         RequireNoConflictMarkedSources(derived);
-        RequireAlignedScribeReceipt(EvaluationFor(derived, options.AtomId), options.Gid);
+        foreach (var pair in options.Pairs)
+        {
+            RequireAlignedScribeReceipt(EvaluationFor(derived, pair.AtomId), pair.Gid);
+        }
+
         var finalRaw = IngestCommand.ReplaceLedger(
             currentRaw,
             document,
             planned);
         var finalSnapshot = Decode(finalRaw);
+        LeanTruthStates.RequireSameManagedInputs(current, finalSnapshot);
         var finalDocument = LoadDocument(finalSnapshot);
         var finalEvaluation = DigestionStatusEvaluator.Evaluate(
             DigestionEvaluationScope.FullScan,
@@ -105,23 +130,25 @@ internal static partial class CoverAtomCommand
             finalSnapshot,
             lean,
             verified,
-            baselineDocument: null);
+            baselineDocument,
+            baselineSnapshot: baseline,
+            truthStates: truthStates);
         RequireNoConflictMarkedSources(finalEvaluation);
-        RequireAlignedScribeReceipt(EvaluationFor(finalEvaluation, options.AtomId), options.Gid);
+        foreach (var pair in options.Pairs)
+        {
+            RequireAlignedScribeReceipt(EvaluationFor(finalEvaluation, pair.AtomId), pair.Gid);
+        }
+
         IngestCommand.RequireNoReceiptIntegrityFailure(finalEvaluation);
 
         var ledgerUpdates = IngestCommand.LedgerUpdates(currentRaw, finalRaw);
         var changed = ledgerUpdates.Length > 0;
         IngestCommand.ApplyLedgerUpdatesAtomically(repositoryRoot, currentRaw, ledgerUpdates);
 
+        var suffix = $"ledger_changed={changed.ToString().ToLowerInvariant()}\n";
         return new CommandResult(
             true,
-            $"ALIGN_SCRIBE_RECEIPT atom_id={options.AtomId} gid={options.Gid} "
-            + $"old_definition_sha256={oldReceipt.DefinitionSha256} "
-            + $"new_definition_sha256={newReceipt.DefinitionSha256} "
-            + $"old_emission_sha256={oldReceipt.EmissionSha256} "
-            + $"new_emission_sha256={newReceipt.EmissionSha256} "
-            + $"ledger_changed={changed.ToString().ToLowerInvariant()}\n",
+            string.Concat(outputLines.Select(line => line + suffix)),
             string.Empty);
     }
 
@@ -144,14 +171,9 @@ internal static partial class CoverAtomCommand
 
     private static AlignArguments ParseAlignArguments(IReadOnlyList<string> arguments)
     {
-        if (arguments.Count != 6)
-        {
-            throw AlignUsage();
-        }
-
-        string? atomId = null;
-        string? gid = null;
         string? baselineRevision = null;
+        string? pendingAtomId = null;
+        var pairs = ImmutableArray.CreateBuilder<AlignPair>();
         for (var index = 0; index < arguments.Count; index += 2)
         {
             if (index + 1 >= arguments.Count)
@@ -159,34 +181,39 @@ internal static partial class CoverAtomCommand
                 throw AlignUsage();
             }
 
+            var value = arguments[index + 1];
             switch (arguments[index])
             {
-                case "--atom-id" when atomId is null:
-                    atomId = arguments[index + 1];
+                case "--atom-id" when pendingAtomId is null:
+                    pendingAtomId = value;
                     break;
-                case "--gid" when gid is null:
-                    gid = arguments[index + 1];
+                case "--gid" when pendingAtomId is not null:
+                    pairs.Add(new AlignPair(pendingAtomId, value));
+                    pendingAtomId = null;
                     break;
                 case "--base" when baselineRevision is null:
-                    baselineRevision = arguments[index + 1];
+                    baselineRevision = value;
                     break;
                 default:
                     throw AlignUsage();
             }
         }
 
-        if (string.IsNullOrWhiteSpace(atomId)
-            || string.IsNullOrWhiteSpace(gid)
-            || string.IsNullOrWhiteSpace(baselineRevision))
+        if (pendingAtomId is not null
+            || pairs.Count == 0
+            || string.IsNullOrWhiteSpace(baselineRevision)
+            || pairs.Any(pair =>
+                string.IsNullOrWhiteSpace(pair.AtomId) || string.IsNullOrWhiteSpace(pair.Gid))
+            || pairs.Distinct().Count() != pairs.Count)
         {
             throw AlignUsage();
         }
 
-        return new AlignArguments(atomId, gid, baselineRevision);
+        return new AlignArguments(pairs.ToImmutable(), baselineRevision);
     }
 
     private static InvalidOperationException AlignUsage() => new(
-        "USAGE: StrataLint align-scribe-receipt --atom-id ATOM_ID --gid GID --base REV");
+        "USAGE: StrataLint align-scribe-receipt (--atom-id ATOM_ID --gid GID)+ --base REV");
 
     // align-scribe 只容忍非致命 gap;源文本冲突与其余 receipt-integrity failure
     // 均不得写账本。

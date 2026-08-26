@@ -1,0 +1,22 @@
+# 47. 一步完整操作语义
+
+定义观察者—喉部系统
+
+$$
+\mathfrak M
+=
+(
+\Sigma_\infty,
+K_\infty,
+G,
+q,
+c,
+P,
+\ell,
+\mathrm{cost},
+\Lambda
+).
+$$
+
+第 $t$ 步可严格拆为：
+

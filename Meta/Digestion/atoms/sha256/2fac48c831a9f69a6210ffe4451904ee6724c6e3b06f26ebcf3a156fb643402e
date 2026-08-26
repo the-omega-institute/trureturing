@@ -1,0 +1,12 @@
+## 结论 69.1
+
+$$
+\boxed{
+\text{choice information}
+\neq
+\text{outcome randomness}.
+}
+$$
+
+把 $H(Y\mid Q,A)$ 直接称为自由，会把测量结果的不确定性与设置／行动选择混为一谈。
+

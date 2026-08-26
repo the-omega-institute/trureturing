@@ -1,0 +1,10 @@
+ast_path: section/60-对称性障碍与唯一不变随机策略
+fingerprints:
+  raw_sha256: sha256:d06d6007ba4735de55e434082e657fcf916d3a27bfe5c64b05516827c325cc64
+  normalized_sha256: sha256:d06d6007ba4735de55e434082e657fcf916d3a27bfe5c64b05516827c325cc64
+cas_ref: sha256:d06d6007ba4735de55e434082e657fcf916d3a27bfe5c64b05516827c325cc64
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

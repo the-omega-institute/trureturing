@@ -1,0 +1,30 @@
+## 定义 107.1（量子观察者）
+
+一个有限维量子观察者定义为
+
+$$
+\boxed{
+\mathfrak O
+=
+\left(
+\mathcal H_S,
+\mathcal H_M,
+X,
+\{A_x\},
+\{\mathcal I_{a|x}\},
+\Phi,
+\mathcal A_M
+\right).
+}
+$$
+
+其中：
+
+- $\mathcal H_S$：被观察系统空间；
+- $\mathcal H_M$：记录／记忆空间；
+- $X$：可选择测量设置；
+- $A_x$：设置 $x$ 的结果集；
+- $\mathcal I_{a|x}$：CP instrument 分支；
+- $\Phi$：观察间隔中的系统动力学；
+- $\mathcal A_M$：观察者可以读取的记录代数。
+

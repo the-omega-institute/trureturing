@@ -1,0 +1,61 @@
+# 最终总结构
+
+本理论的最短公式是：
+
+$$
+\boxed{
+a\triangleright_{\mathcal L,c}b
+\iff
+[x_{aa,c}]_{\mathcal L}
+=
+[x_{ab,c}]_{\mathcal L}
+\neq
+[x_{bb,c}]_{\mathcal L}.}
+$$
+
+可揭示隐性为：
+
+$$
+\boxed{
+[x_{aa,c}]_{\mathcal L_0}
+=
+[x_{ab,c}]_{\mathcal L_0},
+\qquad
+[x_{aa,c}]_{\mathcal L_*}
+\neq
+[x_{ab,c}]_{\mathcal L_*}.}
+$$
+
+完整链条为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{显性}
+&=\text{当前观察商中的相等},\\
+\text{隐性}
+&=\text{当前 residual 中的非零差异},\\
+\text{显现}
+&=\text{差异逃逸出 residual},\\
+\text{完成}
+&=\text{加入全部相关未来、动作、反事实与目标},\\
+\text{潜能}
+&=\text{完成商中的状态},\\
+\text{实验价值}
+&=\text{切开的目标 residual，而不是数据字节数},\\
+\text{决策意义}
+&=\text{后验与政策价值商中的区别},\\
+\text{进化显现}
+&=\text{差异进入适合度读出的最低频率阶}.
+\end{aligned}}
+$$
+
+最终一句：
+
+$$
+\boxed{
+\text{显性不是一个等位基因压掉另一个等位基因；
+它是观察接口把不同底层状态投影到同一个结果。
+隐性也不是不存在；
+它是尚未逃逸出当前观察核的未来差异。}
+$$
