@@ -12,7 +12,7 @@ internal sealed class CoordinateStreamlineDecompositionDocument
             + "exists_coordinate_streamline_decomposition";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Every unit-interval solenoid path has one compatible coordinate offset family.",
+        "Every compact real-interval solenoid path has one compatible coordinate offset family.",
         H("Coordinate Streamline Decomposition"),
         Blocks(Describe.Lean(
             DescribeId.Create("every-coordinate-has-one-compatible-offset-family"),
@@ -22,8 +22,12 @@ internal sealed class CoordinateStreamlineDecompositionDocument
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
-                    "The frozen interval decomposition supplies a continuous real lift and "
-                        + "one constant element of the visible projection kernel.")),
+                    "For a nondegenerate interval, the canonical affine homeomorphism transports "
+                        + "the path to the unit interval. The frozen interval decomposition then "
+                        + "supplies a continuous real lift and one constant element of the visible "
+                        + "projection kernel. A singleton interval is transported by the constant "
+                        + "unit-interval path, so ordered endpoints cover every nonempty compact "
+                        + "real interval.")),
                 Paragraph(Text(
                     "The canonical exact-sequence theorem identifies that kernel element with "
                         + "a compatible residue at every positive modulus. Projecting the "
@@ -43,7 +47,10 @@ internal sealed class CoordinateStreamlineDecompositionDocument
 
     private static Formula TheoremFormula()
     {
-        Formula interval = Seq(OpenBracket, D(0), Comma, Sp, D(1), CloseBracket);
+        Formula leftEndpoint = F.Id("a");
+        Formula rightEndpoint = F.Id("b");
+        Formula interval = Seq(
+            OpenBracket, leftEndpoint, Comma, Sp, rightEndpoint, CloseBracket);
         Formula solenoid = F.Id("UniversalSolenoid");
         Formula reals = Seq(Mathbb, Grp(F.Id("R")));
         Formula path = GammaLower;
@@ -63,7 +70,11 @@ internal sealed class CoordinateStreamlineDecompositionDocument
 
         return Disp(new Formula.Aligned([
             Seq(
-                Forall, Sp, path, Colon, Sp, continuousPaths, Comma, Sp,
+                Forall, Sp, leftEndpoint, Comma, Sp, rightEndpoint, Colon, Sp,
+                reals, Comma, Sp,
+                path, Colon, Sp, continuousPaths, Comma),
+            Seq(
+                leftEndpoint, Sp, Le, Sp, rightEndpoint, Sp, Rightarrow, Sp,
                 Exists, Sp, lift, Colon, Sp, continuousLifts, Comma),
             Seq(
                 Exists, Sp, offset, Colon, Sp, F.Id("CongruenceData"), Comma, Sp,

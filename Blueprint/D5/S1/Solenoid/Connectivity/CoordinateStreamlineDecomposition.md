@@ -2,11 +2,11 @@
 
 ## Abstract
 
-Every unit-interval solenoid path has one compatible coordinate offset family.
+Every compact real-interval solenoid path has one compatible coordinate offset family.
 
 **Theorem 1.1 (Every coordinate shares one compatible offset family).**
 
-$$\begin{aligned}\forall \gamma: \operatorname{ContinuousMaps}\left([0, 1], UniversalSolenoid\right), \exists x: \operatorname{ContinuousMaps}\left([0, 1], \mathbb{R}\right),\\\exists c: CongruenceData, \forall m: PositiveNaturals, t: [0, 1],\\\operatorname{coord}\left(\gamma(t), m\right) = \operatorname{circleClass}\left(x(t) / m\right) + \operatorname{coord}\left(\operatorname{congruenceEmbedding}\left(c\right), m\right).\end{aligned}$$
+$$\begin{aligned}\forall a, b: \mathbb{R}, \gamma: \operatorname{ContinuousMaps}\left([a, b], UniversalSolenoid\right),\\a \le b \Rightarrow \exists x: \operatorname{ContinuousMaps}\left([a, b], \mathbb{R}\right),\\\exists c: CongruenceData, \forall m: PositiveNaturals, t: [a, b],\\\operatorname{coord}\left(\gamma(t), m\right) = \operatorname{circleClass}\left(x(t) / m\right) + \operatorname{coord}\left(\operatorname{congruenceEmbedding}\left(c\right), m\right).\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Solenoid/Connectivity/CoordinateStreamlineDecomposition.exists_coordinate_streamline_decomposition` (`✓ std3`). ∎
 
@@ -14,7 +14,7 @@ $$\begin{aligned}\forall \gamma: \operatorname{ContinuousMaps}\left([0, 1], Univ
 
 *Commentary.*
 
-The frozen interval decomposition supplies a continuous real lift and one constant element of the visible projection kernel.
+For a nondegenerate interval, the canonical affine homeomorphism transports the path to the unit interval. The frozen interval decomposition then supplies a continuous real lift and one constant element of the visible projection kernel. A singleton interval is transported by the constant unit-interval path, so ordered endpoints cover every nonempty compact real interval.
 
 The canonical exact-sequence theorem identifies that kernel element with a compatible residue at every positive modulus. Projecting the solenoid reconstruction at an arbitrary modulus gives the displayed circle-coordinate equation for every time.
 
