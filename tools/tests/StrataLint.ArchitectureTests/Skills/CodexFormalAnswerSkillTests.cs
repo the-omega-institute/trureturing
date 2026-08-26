@@ -10,6 +10,7 @@ namespace StrataLint.ArchitectureTests;
 public sealed class CodexFormalAnswerSkillTests
 {
     private const string AuthorityHeading = "5. Derive outcomes from owner facts";
+    private const string GeneralizationHeading = "Generalization bridge";
 
     private static readonly MarkdownPipeline Pipeline = new MarkdownPipelineBuilder()
         .UsePipeTables()
@@ -122,6 +123,32 @@ public sealed class CodexFormalAnswerSkillTests
             "SKILL.md")))));
     }
 
+    [Fact]
+    public void GeneralizationWithoutConcreteSpecializationIsRejected()
+    {
+        var document = Parse(
+            """
+            ## Generalization bridge
+
+            1. Record the concrete proposition `P`.
+            2. Record the generalized theorem `G`.
+            """);
+
+        Assert.False(DefinesCompleteGeneralizationBridge(document));
+    }
+
+    [Fact]
+    public void CodexFormalAnswerGeneralizationReturnsToTheConcreteProposition()
+    {
+        var skill = File.ReadAllText(Path.Combine(
+            RepositoryLayout.FindRoot(),
+            "skills",
+            "codex-formal-answer",
+            "SKILL.md"));
+
+        Assert.True(DefinesCompleteGeneralizationBridge(Parse(skill)));
+    }
+
     private static bool DefinesSingleStructurallyTotalAuthority(MarkdownDocument document)
     {
         var authoritySection = FindSection(document, AuthorityHeading);
@@ -138,6 +165,46 @@ public sealed class CodexFormalAnswerSkillTests
         return orderedAuthority is not null
             && terminalItemIsCatchAll
             && acceptanceAndDecisionSectionsHaveNoTables;
+    }
+
+    private static bool DefinesCompleteGeneralizationBridge(MarkdownDocument document)
+    {
+        var headings = document
+            .OfType<HeadingBlock>()
+            .Where(heading => PlainText(heading).Equals(
+                GeneralizationHeading,
+                StringComparison.Ordinal))
+            .ToArray();
+        if (headings.Length != 1)
+        {
+            return false;
+        }
+
+        var orderedLists = SectionBlocks(document, headings[0])
+            .SelectMany(SelfAndDescendants)
+            .OfType<ListBlock>()
+            .Where(list => list.IsOrdered)
+            .ToArray();
+        if (orderedLists.Length != 1)
+        {
+            return false;
+        }
+
+        var items = orderedLists[0].OfType<ListItemBlock>().ToArray();
+        if (items.Length != 3)
+        {
+            return false;
+        }
+
+        var concreteCodes = InlineCodeValues(items[0]).ToHashSet(StringComparer.Ordinal);
+        var generalCodes = InlineCodeValues(items[1]).ToHashSet(StringComparer.Ordinal);
+        var specializationCodes = InlineCodeValues(items[2]).ToHashSet(StringComparer.Ordinal);
+
+        return concreteCodes.Contains("P")
+            && generalCodes.Contains("G")
+            && specializationCodes.Contains("S")
+            && specializationCodes.Contains("G")
+            && specializationCodes.Contains("P");
     }
 
     private static ListBlock? FindOrderedFirstMatchList(IReadOnlyList<Block> section)
@@ -226,6 +293,36 @@ public sealed class CodexFormalAnswerSkillTests
             foreach (var descendant in SelfAndDescendants(child))
             {
                 yield return descendant;
+            }
+        }
+    }
+
+    private static IEnumerable<string> InlineCodeValues(Block block)
+    {
+        foreach (var leaf in SelfAndDescendants(block).OfType<LeafBlock>())
+        {
+            foreach (var value in InlineCodeValues(leaf.Inline?.FirstChild))
+            {
+                yield return value;
+            }
+        }
+    }
+
+    private static IEnumerable<string> InlineCodeValues(Inline? inline)
+    {
+        for (var current = inline; current is not null; current = current.NextSibling)
+        {
+            if (current is CodeInline code)
+            {
+                yield return code.Content;
+            }
+
+            if (current is ContainerInline container)
+            {
+                foreach (var value in InlineCodeValues(container.FirstChild))
+                {
+                    yield return value;
+                }
             }
         }
     }
