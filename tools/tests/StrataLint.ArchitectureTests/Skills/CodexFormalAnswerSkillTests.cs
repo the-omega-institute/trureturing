@@ -281,9 +281,9 @@ public sealed class CodexFormalAnswerSkillTests
             return false;
         }
 
-        var concreteCodes = InlineCodeValues(items[0]).ToHashSet(StringComparer.Ordinal);
-        var generalCodes = InlineCodeValues(items[1]).ToHashSet(StringComparer.Ordinal);
-        var specializationCodes = InlineCodeValues(items[2]).ToHashSet(StringComparer.Ordinal);
+        var concreteCodes = InlineCodeValuesFromBlock(items[0]).ToHashSet(StringComparer.Ordinal);
+        var generalCodes = InlineCodeValuesFromBlock(items[1]).ToHashSet(StringComparer.Ordinal);
+        var specializationCodes = InlineCodeValuesFromBlock(items[2]).ToHashSet(StringComparer.Ordinal);
 
         return concreteCodes.Contains("P")
             && generalCodes.Contains("G")
@@ -321,9 +321,9 @@ public sealed class CodexFormalAnswerSkillTests
             return false;
         }
 
-        var discoveryCodes = InlineCodeValues(items[0]).ToHashSet(StringComparer.Ordinal);
-        var formalCodes = InlineCodeValues(items[1]).ToHashSet(StringComparer.Ordinal);
-        var modelingCodes = InlineCodeValues(items[2]).ToHashSet(StringComparer.Ordinal);
+        var discoveryCodes = InlineCodeValuesFromBlock(items[0]).ToHashSet(StringComparer.Ordinal);
+        var formalCodes = InlineCodeValuesFromBlock(items[1]).ToHashSet(StringComparer.Ordinal);
+        var modelingCodes = InlineCodeValuesFromBlock(items[2]).ToHashSet(StringComparer.Ordinal);
 
         var requiredDiscoverySurfaces = new[]
         {
@@ -396,16 +396,16 @@ public sealed class CodexFormalAnswerSkillTests
             return false;
         }
 
-        var premiseCodes = InlineCodeValues(completionItems[0]).ToHashSet(StringComparer.Ordinal);
-        var generalCodes = InlineCodeValues(completionItems[1]).ToHashSet(StringComparer.Ordinal);
-        var specializationCodes = InlineCodeValues(completionItems[2]).ToHashSet(StringComparer.Ordinal);
-        var reuseCodes = InlineCodeValues(persistenceItems[0]).ToHashSet(StringComparer.Ordinal);
-        var thinCodes = InlineCodeValues(persistenceItems[1]).ToHashSet(StringComparer.Ordinal);
-        var persistenceCodes = InlineCodeValues(persistenceItems[2]).ToHashSet(StringComparer.Ordinal);
-        var blockedCodes = InlineCodeValues(persistenceItems[3]).ToHashSet(StringComparer.Ordinal);
+        var premiseCodes = InlineCodeValuesFromBlock(completionItems[0]).ToHashSet(StringComparer.Ordinal);
+        var generalCodes = InlineCodeValuesFromBlock(completionItems[1]).ToHashSet(StringComparer.Ordinal);
+        var specializationCodes = InlineCodeValuesFromBlock(completionItems[2]).ToHashSet(StringComparer.Ordinal);
+        var reuseCodes = InlineCodeValuesFromBlock(persistenceItems[0]).ToHashSet(StringComparer.Ordinal);
+        var thinCodes = InlineCodeValuesFromBlock(persistenceItems[1]).ToHashSet(StringComparer.Ordinal);
+        var persistenceCodes = InlineCodeValuesFromBlock(persistenceItems[2]).ToHashSet(StringComparer.Ordinal);
+        var blockedCodes = InlineCodeValuesFromBlock(persistenceItems[3]).ToHashSet(StringComparer.Ordinal);
         var allCodes = document
             .SelectMany(SelfAndDescendants)
-            .SelectMany(InlineCodeValues)
+            .SelectMany(InlineCodeValuesFromBlock)
             .ToHashSet(StringComparer.Ordinal);
         var forbiddenTruthDagDependencies = new[]
         {
@@ -524,18 +524,18 @@ public sealed class CodexFormalAnswerSkillTests
         }
     }
 
-    private static IEnumerable<string> InlineCodeValues(Block block)
+    private static IEnumerable<string> InlineCodeValuesFromBlock(Block block)
     {
         foreach (var leaf in SelfAndDescendants(block).OfType<LeafBlock>())
         {
-            foreach (var value in InlineCodeValues(leaf.Inline?.FirstChild))
+            foreach (var value in InlineCodeValuesFromInline(leaf.Inline?.FirstChild))
             {
                 yield return value;
             }
         }
     }
 
-    private static IEnumerable<string> InlineCodeValues(Inline? inline)
+    private static IEnumerable<string> InlineCodeValuesFromInline(Inline? inline)
     {
         for (var current = inline; current is not null; current = current.NextSibling)
         {
@@ -546,7 +546,7 @@ public sealed class CodexFormalAnswerSkillTests
 
             if (current is ContainerInline container)
             {
-                foreach (var value in InlineCodeValues(container.FirstChild))
+                foreach (var value in InlineCodeValuesFromInline(container.FirstChild))
                 {
                     yield return value;
                 }

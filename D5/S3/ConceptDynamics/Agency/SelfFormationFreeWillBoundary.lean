@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/Agency/SelfFormationFreeWillBoundary
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Separate history identity, voluntariness, and branching freedom
-     from reductive determinism. -/
+   digest: History identity, voluntariness, and branching freedom obstruct reduction. -/
 
 import D5.S0.Rewriting.Quotients.AnswerabilityCriterion
 import D5.S3.ConceptDynamics.Fibers.BranchingFreedomNeedsRelation
