@@ -503,7 +503,11 @@ internal static partial class CoverAtomCommand
         string BaselineRevision,
         string EnvelopePath);
 
-    private sealed record AlignArguments(string AtomId, string Gid, string BaselineRevision);
+    private sealed record AlignPair(string AtomId, string Gid);
+
+    private sealed record AlignArguments(
+        ImmutableArray<AlignPair> Pairs,
+        string BaselineRevision);
 
     private static CoverArguments ParseArguments(IReadOnlyList<string> arguments)
     {
