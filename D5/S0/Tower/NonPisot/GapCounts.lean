@@ -142,9 +142,157 @@ def beta13OrderedNames : Nat -> List (List Nat)
         (tails.takeWhile fun tail => beta13BelowGreedyPrefix (2 :: tail)).map (2 :: ·)
 
 /-- At level ten the ordered generator is exactly the suffix-tested greedy generator. -/
-theorem beta13_names_ten_eq_ordered : beta13Names 10 = beta13OrderedNames 10 := by
-  set_option maxRecDepth 100000 in
-    decide
+theorem beta13_names_ten_eq_ordered : beta13Names 10 = beta13OrderedNames 10 :=
+  by
+    have orderedPairwise : ∀ Q,
+        (beta13OrderedNames Q).Pairwise
+          (fun left right => (compare left right).isLE) := by
+      intro Q
+      induction Q with
+      | zero => simp [beta13OrderedNames]
+      | succ Q ih =>
+          let tails := beta13OrderedNames Q
+          let topTails := tails.takeWhile fun tail =>
+            beta13BelowGreedyPrefix (2 :: tail)
+          have pairwiseMap (digit : Nat) (words : List (List Nat))
+              (hwords : words.Pairwise
+                (fun left right => (compare left right).isLE)) :
+              (words.map (digit :: ·)).Pairwise
+                (fun left right => (compare left right).isLE) := by
+            rw [List.pairwise_map]
+            exact hwords.imp fun hab => by simpa using hab
+          have htop : topTails.Pairwise
+              (fun left right => (compare left right).isLE) :=
+            ih.sublist (List.takeWhile_sublist _)
+          have hzero := pairwiseMap 0 tails ih
+          have hone := pairwiseMap 1 tails ih
+          have htwo := pairwiseMap 2 topTails htop
+          change ((tails.map (0 :: ·) ++ tails.map (1 :: ·)) ++
+            topTails.map (2 :: ·)).Pairwise
+              (fun left right => (compare left right).isLE)
+          apply List.pairwise_append.mpr
+          refine ⟨?_, htwo, ?_⟩
+          · apply List.pairwise_append.mpr
+            refine ⟨hzero, hone, ?_⟩
+            intro left hleft right hright
+            rcases List.mem_map.mp hleft with ⟨left, _, rfl⟩
+            rcases List.mem_map.mp hright with ⟨right, _, rfl⟩
+            change ((compare 0 1).then (compare left right)).isLE = true
+            rw [show compare 0 1 = .lt by decide]
+            rfl
+          · intro left hleft right hright
+            rw [List.mem_append] at hleft
+            rcases hleft with hleft | hleft
+            · rcases List.mem_map.mp hleft with ⟨left, _, rfl⟩
+              rcases List.mem_map.mp hright with ⟨right, _, rfl⟩
+              change ((compare 0 2).then (compare left right)).isLE = true
+              rw [show compare 0 2 = .lt by decide]
+              rfl
+            · rcases List.mem_map.mp hleft with ⟨left, _, rfl⟩
+              rcases List.mem_map.mp hright with ⟨right, _, rfl⟩
+              change ((compare 1 2).then (compare left right)).isLE = true
+              rw [show compare 1 2 = .lt by decide]
+              rfl
+    have filterMapTakeWhile
+        (words : List (List Nat)) (p : List Nat → Bool)
+        (f : List Nat → List Nat)
+        (hwords : words.Pairwise
+          (fun left right => (compare left right).isLE))
+        (hfalse : ∀ left ∈ words, ∀ right ∈ words,
+          (compare left right).isLE → p left = false → p right = false) :
+        words.filterMap (fun word => if p word then some (f word) else none) =
+          (words.takeWhile p).map f := by
+      induction words with
+      | nil => rfl
+      | cons head tail ih =>
+          rw [List.pairwise_cons] at hwords
+          by_cases hhead : p head
+          · have hfalseTail : ∀ left ∈ tail, ∀ right ∈ tail,
+                (compare left right).isLE → p left = false →
+                  p right = false := by
+              intro left hleft right hright
+              exact hfalse left (by simp [hleft]) right (by simp [hright])
+            simp [hhead, ih hwords.2 hfalseTail]
+          · have hheadFalse : p head = false := by simpa using hhead
+            have htailFalse : ∀ word ∈ tail, p word = false := by
+              intro word hword
+              exact hfalse head (by simp) word (by simp [hword])
+                (hwords.1 word hword) hheadFalse
+            rw [List.takeWhile_cons_of_neg hhead]
+            simp only [List.filterMap_cons, hheadFalse, Bool.false_eq_true, ↓reduceIte]
+            exact List.filterMap_eq_nil_iff.mpr fun word hword => by
+              simp [htailFalse word hword]
+    have belowIff (word : List Nat) :
+        beta13BelowGreedyPrefix word = true ↔
+          (compare word (beta13GreedyDigits.take word.length)).isLE := by
+      simp [beta13BelowGreedyPrefix, Ordering.isLE_iff_ne_gt]
+    have lowDigit (digit : Nat) (hdigit : digit < 2) (tail : List Nat) :
+        beta13BelowGreedyPrefix (digit :: tail) = true := by
+      apply (belowIff _).mpr
+      rcases digit with _ | _ | digit
+      · change ((compare 0 2).then
+            (compare tail (List.take tail.length [0, 1, 1, 0, 2, 0, 0, 1, 0]))).isLE = true
+        rw [show compare 0 2 = .lt by decide]
+        rfl
+      · change ((compare 1 2).then
+            (compare tail (List.take tail.length [0, 1, 1, 0, 2, 0, 0, 1, 0]))).isLE = true
+        rw [show compare 1 2 = .lt by decide]
+        rfl
+      · omega
+    have filterLowDigit (digit : Nat) (hdigit : digit < 2)
+        (words : List (List Nat)) :
+        words.filterMap (fun tail =>
+          if beta13BelowGreedyPrefix (digit :: tail) then
+            some (digit :: tail) else none) = words.map (digit :: ·) := by
+      induction words with
+      | nil => rfl
+      | cons head tail ih => simp [lowDigit digit hdigit, ih]
+    have orderedLength : ∀ Q word, word ∈ beta13OrderedNames Q →
+        word.length = Q := by
+      intro Q
+      induction Q with
+      | zero =>
+          intro word hword
+          simpa [beta13OrderedNames] using hword
+      | succ Q ih =>
+          intro word hword
+          simp only [beta13OrderedNames, List.mem_append] at hword
+          rcases hword with (hword | hword) | hword
+          · rcases List.mem_map.mp hword with ⟨tail, htail, rfl⟩
+            simp [ih tail htail]
+          · rcases List.mem_map.mp hword with ⟨tail, htail, rfl⟩
+            simp [ih tail htail]
+          · rcases List.mem_map.mp hword with ⟨tail, htail, rfl⟩
+            have htail' : tail ∈ beta13OrderedNames Q :=
+              (List.takeWhile_sublist _).subset htail
+            simp [ih tail htail']
+    have generatorsEqual : ∀ Q, beta13Names Q = beta13OrderedNames Q := by
+      intro Q
+      induction Q with
+      | zero => rfl
+      | succ Q ih =>
+          simp only [beta13Names, beta13OrderedNames, ih, List.flatMap_cons,
+            List.flatMap_nil, List.append_nil]
+          rw [filterLowDigit 0 (by omega), filterLowDigit 1 (by omega)]
+          rw [← List.append_assoc]
+          apply congrArg (fun suffix =>
+            (beta13OrderedNames Q).map (0 :: ·) ++
+              (beta13OrderedNames Q).map (1 :: ·) ++ suffix)
+          apply filterMapTakeWhile _ _ _ (orderedPairwise Q)
+          intro left hleft right hright hle hleftFalse
+          apply Bool.eq_false_of_not_eq_true
+          intro hrightTrue
+          have hleftTrue : beta13BelowGreedyPrefix (2 :: left) = true :=
+            (belowIff _).mpr (by
+              have hleftLength := orderedLength Q left hleft
+              have hrightLength := orderedLength Q right hright
+              have hleftLeRight : (compare (2 :: left) (2 :: right)).isLE := by
+                simpa using hle
+              have hrightLeBound := (belowIff _).mp hrightTrue
+              simp only [List.length_cons, hleftLength, hrightLength] at hrightLeBound ⊢
+              exact Std.TransCmp.isLE_trans hleftLeRight hrightLeBound)
+          simpa [hleftFalse] using hleftTrue
+    exact generatorsEqual 10
 
 /-- The code for `beta13^Q` times the value of a length-`Q` name. -/
 def beta13NormalizedNameCode (word : List Nat) : Beta13GapCode :=
