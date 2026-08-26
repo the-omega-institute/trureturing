@@ -1,6 +1,6 @@
 ---
 name: codex-formal-answer
-description: Use when answering natural-language mathematical assertions by finding or proving a reusable general theorem, specializing it back to the clause-complete concrete proposition, and reporting owner-issued Lean evidence without depositing repository truth.
+description: Use when answering natural-language mathematical, conceptual, philosophical, or metaphysical assertions and questions by discovering the repository's existing theory, finding or proving a reusable general theorem, specializing it back to the clause-complete concrete proposition, and reporting owner-issued Lean evidence without depositing repository truth.
 ---
 
 # Codex Formal Answer Workflow
@@ -27,6 +27,18 @@ This file is Codex-specific packaging of repository obligations; it has no autho
 - `tools/lean-inspector/Inspector.lean` and the canonical `make lean-report` output, which own declaration axiom closures.
 - The existing `codex-formalize`, `codex-theorize`, or `codex-theory-ingest` skill only when a separate durable task is routed to it.
 
+## Repository concept search
+
+This repository is not merely a library of conventional mathematical theorems. It contains typed and narrative theories of concepts, interpretation, identity, ontology, metaphysics, language, ethics, agency, religion, and other domains. An absent mathlib theorem or an absent exact keyword is therefore not evidence that an input is unformalizable. Before fixing `P`, execute this repository-first discovery path and retain every query, result count, address, cross-reference, and reuse disposition:
+
+1. `C`: enumerate the current text-bearing semantic surfaces from `Meta/FILEMAP.toml`, then search at least `D5/`, `Blueprint/`, `Library/`, `Problems/`, `docs/develop/theory/`, `Evidence/`, `Chronicle/`, and `Meta/Digestion/`. Search the original wording, translations, historical spellings, synonyms, antonyms, and structural roles such as identity, refinement, factorization, interpretation context, grounding, modality, observer, and relation. Follow references instead of treating a truncated lexical hit list as a completed search.
+2. `F`: trace each useful conceptual hit to its formal and provenance owners: exact declarations and statement shapes in `D5/`, rendered meaning and GIDs in `Blueprint/`, active evidence in `Golden/Frozen/accepted/`, and source-to-atom or coverage links in `Meta/Digestion/`. Narrative and theory sources may supply canonical vocabulary, modeling choices, and candidate propositions, but only eligible owner-issued Lean evidence may supply a kernel grade.
+3. `M`: use the discovered repository theory to model the input before declaring residual ambiguity. Prefer explicit parameters for tradition, language, context, observer, admissible worlds, modality, or interpretation over silently choosing one meaning. Then construct the concrete or context-indexed `P`, reusable `G`, and applying specialization `S`; only a clause-preserving modeling failure after `C` and `F` may leave the record ambiguous or not formalized.
+
+Search breadth is measured, not asserted. Use the live FILEMAP classification rather than assuming the minimum paths above are exhaustive, and do not call a search complete if output was cut off, a referenced address was not opened, or a semantic synonym/statement-shape pass was skipped. A prose hit never becomes a theorem receipt, but it can prevent an invented abstraction by leading to the repository's existing formal vocabulary.
+
+Formalizability means that a claim can be represented under explicit types, parameters, relations, and hypotheses. It does not mean every wording determines one privileged model, that every defined type is inhabited, or that a formal conditional proves its empirical or metaphysical premises. Reify honest ambiguity as data when the repository supplies that pattern; never manufacture existence, identity, causation, or necessity by definition.
+
 ## Generalization bridge
 
 When the assertion is scenario-specific or the user requests generalization, build exactly one bridge before proof construction. The bridge is a proof obligation, not explanatory prose:
@@ -35,7 +47,7 @@ When the assertion is scenario-specific or the user requests generalization, bui
 2. `G` is a reusable Lean theorem that captures the inferential content of `P` by replacing scenario-specific objects and constants with canonical carriers, functions, relations, and explicit hypotheses. Reuse an existing repository or pinned-mathlib abstraction when one owns the shape. A renamed copy of `P`, a theorem whose conclusion is assumed verbatim, or a custom predicate duplicating an existing abstraction is not a generalization.
 3. `S` is an exact Lean specialization that applies `G` back to `P` under an explicit substitution map and discharges every resulting hypothesis. Its statement must be exact `P`, or the exact negation of `P` on a refutation branch. `S` may not restate or independently reprove the concrete result; without eligible evidence for both `G` and `S`, generalized evidence cannot grade `P`.
 
-If the input is already stated at the reusable canonical level, record that finding and do not manufacture a tautological `G`; the exact proposition remains the main theorem. Otherwise, every concrete clause in `P` must be accounted for by a parameter, hypothesis, conclusion component, or explicit substitution in the bridge. Empirical premises remain premises unless separately discharged by eligible owner evidence.
+If the input is already stated at the reusable canonical level, record that finding and do not manufacture a tautological `G`; the exact proposition remains the main theorem. Otherwise, every concrete clause in `P` must be accounted for by a parameter, hypothesis, conclusion component, or explicit substitution in the bridge. For conceptual inputs, `G` should quantify over the discovered repository carriers and relations, while `S` supplies the named concepts and any explicit context index. Empirical and metaphysical premises remain premises unless separately discharged by eligible owner evidence.
 
 ## State machine
 
@@ -55,34 +67,34 @@ Split the input into assertion records while preserving each clause verbatim. Fo
 
 - `formalizable`: it can be stated exactly as a proposition; this says nothing about decidability or provability.
 - `conditional-empirical`: its force depends on an explicit empirical condition that must remain visible.
-- `ambiguous`: retain a bounded set of materially distinct candidate formalizations without choosing one. Never claim the set is exhaustive without a finiteness proof, and never ask the user to choose.
-- `not-formalizable`: no exact proposition can be stated; create no ornamental Lean.
+- `ambiguous`: provisionally retain a bounded set of materially distinct candidate formalizations without choosing one. Never claim the set is exhaustive without a finiteness proof, and never ask the user to choose. Before this classification can survive Step 2, attempt to turn the variation into an explicit tradition, context, observer, language, modality, or interpretation parameter using repository theory.
+- `not-formalizable`: no clause-preserving proposition or explicit model family can be stated even after the complete repository concept search; create no ornamental Lean. Lack of an exact theorem, lack of a keyword hit, or dependence on stated premises does not satisfy this classification.
 
 Separate explanatory prose from assertions. Explanations need no grade; every assertion does.
 
-For each formalizable record, decide whether the generalization bridge is required. It is required when the input names scenario-specific objects or constants, or when the user asks for a reusable or generalized theorem. Record the decision and its clause-level reason; an already canonical reusable statement is the only non-error reason to omit a requested bridge.
+For each formalizable record, decide whether the generalization bridge is required. It is required when the input names scenario-specific objects or constants, asks what concepts are or how they relate, or asks for a reusable or generalized theorem. An interrogative is not itself graded as an assertion: turn its proposed definitions and relationship answers into separate assertion records, each with its own premises and grade. Record the bridge decision and its clause-level reason; an already canonical reusable statement is the only non-error reason to omit a requested bridge.
 
 Postcondition: every assertion and every material clause is present exactly once, with original wording, classification, clause coverage, and a recorded bridge requirement; no assertion has been dropped or weakened.
 
 ### 2. Coordinate and search for reuse
 
-Execute CLAUDE.md item 11's current owner-defined ordered search before fixing the typed echo. At every stage search the concrete proposition, its negation or counterexample shape, and, when the bridge is required, candidate generalized positive and negative shapes. Search canonical mathematical vocabulary and existing abstractions before introducing local names. Record the verbatim query, where it ran, hit or miss, and the address of every hit. A textual hit discharges nothing until it is exactly reused or applied.
+Execute the repository concept search above before fixing the typed echo. Use its discovered vocabulary and formal addresses to execute CLAUDE.md item 11's current owner-defined ordered theorem search. At every stage search the concrete proposition, its negation or counterexample shape, and, when the bridge is required, candidate generalized positive and negative shapes. Search canonical repository and mathematical vocabulary, hypothesis/conclusion structure, imported families, and existing abstractions before introducing local names. Record the verbatim query, where it ran, hit or miss, and the address of every hit. A textual hit discharges nothing until it is exactly reused or applied.
 
 Third-party reuse and admission are owned by specification A17.2. This invocation performs no admission: record an exact third-party hit as provenance, and let Step 5 accept it as kernel basis only if an owner separately issues eligible in-repository evidence.
 
 Invoke specification 11.20.4 for the current SL-028 semantics. This file neither defines its admission effect nor assumes its output is visible; record only output actually received.
 
-Postcondition: each searchable record has the owner-ordered trace for the concrete and required generalized positive and negative shapes, or the exact blocked stage has an addressed owner-issued `wait-for-capability` fact; every hit has an address and an explicit reuse disposition.
+Postcondition: each searchable record has complete `C`, `F`, and `M` receipts plus the owner-ordered theorem trace for the concrete and required generalized positive and negative shapes, or the exact blocked stage has an addressed owner-issued `wait-for-capability` fact; every hit has an address and an explicit reuse disposition. No record remains ambiguous or not formalized merely because exact-word or pure-mathematics search missed.
 
 ### 3. Fix the exact statement echo
 
-Only after search has fixed canonical domains, types, declarations, and imports, invoke `agents/echo-template.md`; do not copy its fields here. Complete the clause-coverage account against one exact Lean proposition `P`. An ambiguous or not-formalizable record gets no exact Lean proposition.
+Only after search has fixed canonical domains, types, declarations, and imports, invoke `agents/echo-template.md`; do not copy its fields here. Complete the clause-coverage account against one exact Lean proposition `P`. If the input's meanings vary by an index represented in repository theory, make that index explicit in `P` or create separate bounded candidate records rather than selecting one interpretation. Only ambiguity or modeling failure that remains after `C`, `F`, and `M` gets no exact Lean proposition.
 
 When the bridge is required, also fix exact Lean statements for `G` and `S` plus the substitution map from `G` to `P`. Check that `G` is reusable beyond the named scenario, that none of its hypotheses assumes its conclusion, and that each clause of `P` is accounted for. The statement of `S` must be exact `P`, or its exact negation on the refutation branch, and its planned proof term must apply `G`.
 
 Kernel outcomes attach only to exact `P` or its exact negation, never to the original prose or to a nearby statement.
 
-Postcondition: every eligible record has an owner-shaped exact echo whose clause mapping is complete; each required bridge fixes exact `G`, exact `S`, and a total substitution map back to `P`; ambiguous and not-formalizable records remain explicitly non-kernel branches.
+Postcondition: every eligible record has an owner-shaped exact echo whose clause mapping is complete; each required bridge fixes exact `G`, exact `S`, and a total substitution map back to `P`; context-indexed models expose their indices; only residual ambiguous and not-formalizable records remain explicitly non-kernel branches.
 
 ### 4. Construct a report-owned run-local declaration
 
@@ -110,7 +122,7 @@ Postcondition: every assertion has exactly one mechanically projected outcome, a
 
 ### 6. Render the reply
 
-For each assertion render the original clause, exact `P` or its explicit absence, the outcome, source or report address, exact commands and exit codes, axiom closure, search trace, and persistence marking. For a required bridge, also render exact `G`, exact `S`, the substitution map, the generalized positive and negative search receipts, and the separate axiom closures for `G` and `S`. Mark evidence `active-frozen` or `run-local`; for run-local evidence include the recorded pins on which it expires.
+For each assertion render the original clause, exact `P` or its explicit absence, the outcome, source or report address, exact commands and exit codes, axiom closure, search trace, and persistence marking. For a required bridge, also render exact `G`, exact `S`, the substitution map, the generalized positive and negative search receipts, and the separate axiom closures for `G` and `S`. For conceptual questions, render the repository concepts and addresses that shaped the model, all explicit context indices, and the boundary between formal consequence and unproved empirical, metaphysical, existential, or interpretive premises. Mark evidence `active-frozen` or `run-local`; for run-local evidence include the recorded pins on which it expires.
 
 The outcome vocabulary is closed: `proved`, `refuted`, `conditional`, `open`, `not-formalized`. Do not add an informal assertion grade or any human-review state. Third-party provenance must be visibly distinguished from kernel basis.
 
@@ -134,6 +146,8 @@ These are the only hard gates added by this adapter; each names an occurred fail
 
 - **Honor the owner-issued reuse disposition; never invent a reproof path.** Invoke `CLAUDE.md` item 11 and specification A17.2 (`docs/develop/spec/golden-ledger-repo-spec.md:163`). The occurred incident is the third-party path collapsing into forbidden reproof.
 - **Reject a tautological or thin mapping.** Invoke `skills/codex-formalize/SKILL.md`, "Mathematical content" and "Deposit substance," which record seven definitional-tautology cases and the landed thin-deposit case.
+- **Reject premature ambiguity caused by a narrow repository search.** Complete the `C`, `F`, and `M` path before retaining `ambiguous` or `not-formalizable`; exact-keyword-only, D5-only, and mathlib-only searches are incomplete for conceptual inputs.
+- **Never turn representation into existence.** A type, predicate, structure, or context-indexed interpretation supplies a model, not an inhabitant or a proof about reality. Definitions may expose premises; they may not discharge them by construction.
 - **Never use a cold bare `lake build`.** Invoke `CLAUDE.md` tool law 3, which records issue #2762's multi-hour cold-lane failure and PR #2764's repair.
 - **Treat owner summaries here as non-load-bearing.** Invoke the owner before use; any summary is void on disagreement and may not create an independent rule. Specification revision v7.16 R20 at `docs/develop/spec/golden-ledger-repo-spec.md:877` records the stale `skills/` copy left when a reference-closure sweep missed that directory.
 - **Never claim a command result without its exit code.** Invoke `skills/codex-formalize/SKILL.md`, "Process honesty," which records the seat that reported a failed Lean build as green.

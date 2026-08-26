@@ -11,6 +11,7 @@ public sealed class CodexFormalAnswerSkillTests
 {
     private const string AuthorityHeading = "5. Derive outcomes from owner facts";
     private const string GeneralizationHeading = "Generalization bridge";
+    private const string RepositoryConceptSearchHeading = "Repository concept search";
 
     private static readonly MarkdownPipeline Pipeline = new MarkdownPipelineBuilder()
         .UsePipeTables()
@@ -149,6 +150,32 @@ public sealed class CodexFormalAnswerSkillTests
         Assert.True(DefinesCompleteGeneralizationBridge(Parse(skill)));
     }
 
+    [Fact]
+    public void FormalLibrarySearchWithoutRepositoryConceptDiscoveryIsRejected()
+    {
+        var document = Parse(
+            """
+            ## Repository concept search
+
+            1. `F`: Search `D5/` and mathlib for exact declarations.
+            2. `M`: Construct `P`, `G`, and `S`.
+            """);
+
+        Assert.False(DefinesCompleteRepositoryConceptSearch(document));
+    }
+
+    [Fact]
+    public void CodexFormalAnswerSearchesRepositoryTheoryBeforeDeclaringAmbiguity()
+    {
+        var skill = File.ReadAllText(Path.Combine(
+            RepositoryLayout.FindRoot(),
+            "skills",
+            "codex-formal-answer",
+            "SKILL.md"));
+
+        Assert.True(DefinesCompleteRepositoryConceptSearch(Parse(skill)));
+    }
+
     private static bool DefinesSingleStructurallyTotalAuthority(MarkdownDocument document)
     {
         var authoritySection = FindSection(document, AuthorityHeading);
@@ -205,6 +232,69 @@ public sealed class CodexFormalAnswerSkillTests
             && specializationCodes.Contains("S")
             && specializationCodes.Contains("G")
             && specializationCodes.Contains("P");
+    }
+
+    private static bool DefinesCompleteRepositoryConceptSearch(MarkdownDocument document)
+    {
+        var headings = document
+            .OfType<HeadingBlock>()
+            .Where(heading => PlainText(heading).Equals(
+                RepositoryConceptSearchHeading,
+                StringComparison.Ordinal))
+            .ToArray();
+        if (headings.Length != 1)
+        {
+            return false;
+        }
+
+        var orderedLists = SectionBlocks(document, headings[0])
+            .SelectMany(SelfAndDescendants)
+            .OfType<ListBlock>()
+            .Where(list => list.IsOrdered)
+            .ToArray();
+        if (orderedLists.Length != 1)
+        {
+            return false;
+        }
+
+        var items = orderedLists[0].OfType<ListItemBlock>().ToArray();
+        if (items.Length != 3)
+        {
+            return false;
+        }
+
+        var discoveryCodes = InlineCodeValues(items[0]).ToHashSet(StringComparer.Ordinal);
+        var formalCodes = InlineCodeValues(items[1]).ToHashSet(StringComparer.Ordinal);
+        var modelingCodes = InlineCodeValues(items[2]).ToHashSet(StringComparer.Ordinal);
+
+        var requiredDiscoverySurfaces = new[]
+        {
+            "C",
+            "Meta/FILEMAP.toml",
+            "D5/",
+            "Blueprint/",
+            "Library/",
+            "Problems/",
+            "docs/develop/theory/",
+            "Evidence/",
+            "Chronicle/",
+            "Meta/Digestion/",
+        };
+        var requiredFormalSurfaces = new[]
+        {
+            "F",
+            "D5/",
+            "Blueprint/",
+            "Golden/Frozen/accepted/",
+            "Meta/Digestion/",
+        };
+
+        return requiredDiscoverySurfaces.All(discoveryCodes.Contains)
+            && requiredFormalSurfaces.All(formalCodes.Contains)
+            && modelingCodes.Contains("M")
+            && modelingCodes.Contains("P")
+            && modelingCodes.Contains("G")
+            && modelingCodes.Contains("S");
     }
 
     private static ListBlock? FindOrderedFirstMatchList(IReadOnlyList<Block> section)
