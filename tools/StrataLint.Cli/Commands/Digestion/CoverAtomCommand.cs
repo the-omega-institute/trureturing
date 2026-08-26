@@ -179,6 +179,7 @@ internal static partial class CoverAtomCommand
                 ImplementationPath);
             var report = leanReportSource.Load(current);
             var lean = ValidateLean(current, report);
+            var truthStates = LeanTruthStates.Resolve(current, lean);
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(current, report, coverChanges);
             var beforeEvaluation = DigestionStatusEvaluator.Evaluate(
                 evaluationScope,
@@ -188,7 +189,8 @@ internal static partial class CoverAtomCommand
                 verifiedScribeEmissions,
                 baselineDocument,
                 baselineSnapshot: baseline,
-                changes: coverChanges);
+                changes: coverChanges,
+                truthStates: truthStates);
             IngestCommand.RequireNoReceiptIntegrityFailure(beforeEvaluation);
 
             var addedReceipts = gids
@@ -228,7 +230,8 @@ internal static partial class CoverAtomCommand
                 baselineDocument,
                 validateProjectedStatus: false,
                 baselineSnapshot: baseline,
-                changes: coverChanges);
+                changes: coverChanges,
+                truthStates: truthStates);
             IngestCommand.RequireNoReceiptIntegrityFailure(derived);
 
             var statusByAtomId = derived.Entries.ToDictionary(
@@ -253,6 +256,7 @@ internal static partial class CoverAtomCommand
                 document,
                 refreshed);
             var finalSnapshot = Decode(finalRaw);
+            LeanTruthStates.RequireSameManagedInputs(current, finalSnapshot);
             var finalDocument = LoadDocument(finalSnapshot);
             var evaluation = DigestionStatusEvaluator.Evaluate(
                 evaluationScope,
@@ -262,7 +266,8 @@ internal static partial class CoverAtomCommand
                 verifiedScribeEmissions,
                 baselineDocument,
                 baselineSnapshot: baseline,
-                changes: coverChanges);
+                changes: coverChanges,
+                truthStates: truthStates);
             IngestCommand.RequireNoReceiptIntegrityFailure(evaluation);
             var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
                 finalDocument,
@@ -302,8 +307,7 @@ internal static partial class CoverAtomCommand
                     EvaluationFor(beforeEvaluation, options.AtomId),
                     finalTarget,
                     addedGids,
-                    finalSnapshot,
-                    lean);
+                    truthStates);
             }
 
             // Gate ②(c): base-owned pre-committed formalization receipt +

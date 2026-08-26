@@ -56,6 +56,7 @@ internal static partial class CoverAtomCommand
 
         var report = leanReportSource.Load(current);
         var lean = ValidateLean(current, report);
+        var truthStates = LeanTruthStates.Resolve(current, lean);
         var verified = scribeEmissionVerifier.Verify(current, report);
         var documentGid = ScribeEmissionAttestation.DocumentGid(options.Gid);
         if (!verified.TryGet(documentGid, out var verifiedRecord)
@@ -90,7 +91,8 @@ internal static partial class CoverAtomCommand
             lean,
             verified,
             baselineDocument: null,
-            validateProjectedStatus: false);
+            validateProjectedStatus: false,
+            truthStates: truthStates);
         RequireNoConflictMarkedSources(derived);
         RequireAlignedScribeReceipt(EvaluationFor(derived, options.AtomId), options.Gid);
         var finalRaw = IngestCommand.ReplaceLedger(
@@ -98,6 +100,7 @@ internal static partial class CoverAtomCommand
             document,
             planned);
         var finalSnapshot = Decode(finalRaw);
+        LeanTruthStates.RequireSameManagedInputs(current, finalSnapshot);
         var finalDocument = LoadDocument(finalSnapshot);
         var finalEvaluation = DigestionStatusEvaluator.Evaluate(
             DigestionEvaluationScope.FullScan,
@@ -105,7 +108,8 @@ internal static partial class CoverAtomCommand
             finalSnapshot,
             lean,
             verified,
-            baselineDocument: null);
+            baselineDocument: null,
+            truthStates: truthStates);
         RequireNoConflictMarkedSources(finalEvaluation);
         RequireAlignedScribeReceipt(EvaluationFor(finalEvaluation, options.AtomId), options.Gid);
         IngestCommand.RequireNoReceiptIntegrityFailure(finalEvaluation);

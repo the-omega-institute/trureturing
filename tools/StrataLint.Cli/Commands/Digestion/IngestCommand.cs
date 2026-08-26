@@ -56,6 +56,7 @@ internal static partial class IngestCommand
                 ImplementationPath);
             var report = leanReportSource.Load(current);
             var lean = ValidateLean(plannedSnapshot, report);
+            var truthStates = LeanTruthStates.Resolve(plannedSnapshot, lean);
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(
                 plannedSnapshot,
                 report,
@@ -69,7 +70,8 @@ internal static partial class IngestCommand
                 baselineDocument,
                 validateProjectedStatus: false,
                 baselineSnapshot: baseline,
-                changes: plannedChanges);
+                changes: plannedChanges,
+                truthStates: truthStates);
             RequireNoReceiptIntegrityFailure(derived);
 
             var statusByAtomId = derived.Entries.ToDictionary(
@@ -92,6 +94,7 @@ internal static partial class IngestCommand
                 ReplaceLedger(currentRaw, document, refreshed),
                 plan.CasObjects);
             var finalSnapshot = Decode(finalRaw);
+            LeanTruthStates.RequireSameManagedInputs(plannedSnapshot, finalSnapshot);
             var finalDocument = LoadDocument(finalSnapshot);
             var finalChanges = IngestChanges(
                 repositoryChanges,
@@ -110,7 +113,8 @@ internal static partial class IngestCommand
                 verifiedScribeEmissions,
                 baselineDocument,
                 baselineSnapshot: baseline,
-                changes: finalChanges);
+                changes: finalChanges,
+                truthStates: truthStates);
             RequireNoReceiptIntegrityFailure(evaluation);
             var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
                 finalDocument,
