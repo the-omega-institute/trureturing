@@ -731,7 +731,7 @@ internal static partial class CleanLanesCommand
             "git",
             ["rev-parse", "--absolute-git-dir"],
             repositoryRoot,
-            TimeSpan.FromSeconds(30));
+            BoundedProcessRunner.HangDetectionBudget);
         return result.ExitCode == 0
             ? Decode(result.StandardOutput).Trim()
             : null;
