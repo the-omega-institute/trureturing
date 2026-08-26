@@ -1,0 +1,20 @@
+# 121. 局部动力学不能自动消除跨素数余量
+
+设
+
+$$
+\Phi
+=
+\bigotimes_{j=1}^{r}\Phi_j
+$$
+
+是完全局部的乘积通道。
+
+若效果 $E_j$ 只作用在第 $j$ 个因子，则
+
+$$
+\Phi^*(E_j\otimes I_{\widehat j})
+=
+\Phi_j^*(E_j)\otimes I_{\widehat j}.
+$$
+

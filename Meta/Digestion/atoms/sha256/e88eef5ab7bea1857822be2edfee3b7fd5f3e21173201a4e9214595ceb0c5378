@@ -1,0 +1,16 @@
+## 定理 126.1（后处理不可恢复）
+
+$$
+\boxed{
+\ker O_{\mathrm{Frob}}
+\subseteq
+\ker(
+\Sigma_{\mathfrak O}\circ\eta\circ O_{\mathrm{Frob}}
+).
+}
+$$
+
+### 证明
+
+若两个素数已有完全相同的 Frobenius 标签，则其量子编码态相同，任何确定的下游量子通道与统计读出必给相同结果。∎
+

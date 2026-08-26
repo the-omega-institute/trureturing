@@ -1,0 +1,21 @@
+## 原理 132.1
+
+纯 arithmetic prime observer 对应 clock/residue sector；真正局部完备的 quantum prime observer 至少需要加入与 residue algebra 不共同对角化的相位上下文。
+
+因此可写：
+
+$$
+\boxed{
+\begin{aligned}
+\text{arithmetic prime observer}
+&=\text{residue / clock sector},\\
+\text{local quantum prime observer}
+&=\text{clock + shift + instruments},\\
+\text{global quantum prime observer}
+&=\text{local sectors + cross-prime correlations}.
+\end{aligned}
+}
+$$
+
+---
+

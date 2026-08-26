@@ -1,0 +1,61 @@
+# 138. 建议追加 Lean 模块树
+
+```text
+D5/S3/Quantum/PrimeObserver/
+  DeterministicPrimeObserverEmbedding.lean
+  PrimeIndexedEffectFamily.lean
+  QuantumPrimeTimeVisibleSpace.lean
+  FiniteQuantumPrimeTimeTomography.lean
+  ZetaWeightedPrimeTimeGramian.lean
+
+D5/S3/Quantum/PrimeTensor/
+  CRTBasisTensorEquiv.lean
+  PrimeLocalMarginalMap.lean
+  PrimeLocalGlobalResidual.lean
+  CorrelationSectorDecomposition.lean
+  PrimeCorrelationOrder.lean
+
+D5/S3/Quantum/PrimeDynamics/
+  ProductChannelPrimeSupport.lean
+  HamiltonianPrimeSupportPropagation.lean
+  PrimeCompletionCommutation.lean
+  PrimeCompletionDefect.lean
+
+D5/S3/Quantum/GaloisObserver/
+  FrobeniusClassQuantumEncoding.lean
+  FrobeniusPostprocessingNoRecovery.lean
+  QuadraticProfileCommutativeNoGo.lean
+  GaloisQuantumLocalGlobalComparison.lean
+
+D5/S3/Quantum/PrimeActive/
+  PrimeInstrumentAction.lean
+  PrimeBeliefState.lean
+  AdaptivePrimeExperiment.lean
+  PrimeTaskRelativeCompletion.lean
+```
+
+建议优先闭合低依赖定理：
+
+```text
+deterministic_readout_pvm
+basis_state_prime_kernel_iff
+prime_local_marginals_not_injective
+correlation_sector_dimension
+local_product_channel_preserves_support
+quantum_prime_time_has_finite_certificate
+frobenius_quantum_postprocessing_kernel_mono
+quadratic_profile_postprocessing_no_refinement
+task_complete_iff_target_subspace_le_visible
+```
+
+随后再闭合：
+
+```text
+zeta_prime_precision_weight_sum_one
+zeta_weighted_gramian_inner
+zeta_weighted_gramian_kernel
+prime_completion_defect_zero_iff_local_preserved
+```
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/127-Frobenius-素数身份的相对信息率趋零
+fingerprints:
+  raw_sha256: sha256:343d0ba5154315577904d66feb762dd896883038d37a2bc8ebe59b7c3007cef9
+  normalized_sha256: sha256:343d0ba5154315577904d66feb762dd896883038d37a2bc8ebe59b7c3007cef9
+cas_ref: sha256:343d0ba5154315577904d66feb762dd896883038d37a2bc8ebe59b7c3007cef9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
