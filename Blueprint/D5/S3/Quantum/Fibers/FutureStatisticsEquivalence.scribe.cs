@@ -79,7 +79,9 @@ internal sealed class FutureStatisticsEquivalenceDocument : IScribeDocumentDefin
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, d, Comma, Sp, Call("Finite", d), Comma, RowBreak, Grp(),
+            Forall, Sp, d, Comma, Sp, Call("Finite", d), Comma, Sp,
+            OpenBracket, Operatorname, Grp(F.Id("DecidableEq")), Open, d, Close,
+            CloseBracket, Comma, RowBreak, Grp(),
             channel, Colon, Sp, channelType, Comma, Sp,
             heisenberg, Colon, Sp, mapType, Comma, Sp,
             Apply(heisenberg, F.Id("I")), Sp, Eq, Sp, F.Id("I"), Comma, RowBreak, Grp(),
