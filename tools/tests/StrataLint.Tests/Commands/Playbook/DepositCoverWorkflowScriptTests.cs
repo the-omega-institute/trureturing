@@ -29,6 +29,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "dotnet:ledger-append",
             ],
             fixture.CallKinds());
+        AssertDepositPerformanceEvents(fixture);
 
         var phaseA = fixture.CommitPaths("HEAD~1");
         Assert.Contains(TransactionFixture.LeanPath, phaseA);
@@ -331,6 +332,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var deposit = fixture.Run("deposit");
         Assert.True(deposit.ExitCode == 0, Diagnostics(deposit));
         fixture.ClearCalls();
+        fixture.ClearPerformanceEvents();
         var before = fixture.CommitCount();
 
         var result = fixture.Run("cover");
@@ -345,6 +347,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "make:emit",
             ],
             fixture.CallKinds());
+        AssertCoverPerformanceEvents(fixture);
         Assert.Contains("aligned: covered", fixture.BackfillContents(), StringComparison.Ordinal);
         Assert.Equal("emission: covered\n", fixture.EmissionContents());
         Assert.Empty(fixture.Status());
@@ -367,6 +370,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(before + 1, fixture.CommitCount());
         Assert.Contains("cover_disposition:", fixture.BackfillContents(), StringComparison.Ordinal);
         Assert.Equal(["make:lean-report", "dotnet:cover-atom"], fixture.CallKinds());
+        AssertFailedCoverPerformanceEvents(fixture);
         Assert.Empty(fixture.Status());
     }
 
@@ -404,6 +408,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             Root = temporary.Path;
             binPath = Path.Combine(Root, "bin");
             callsPath = Path.Combine(Root, "calls");
+            performanceLedgerPath = Path.Combine(performance.Path, "events.jsonl");
             Directory.CreateDirectory(binPath);
             CopyScript();
             File.Copy(
@@ -414,6 +419,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             WriteFile(DefinitionPath, "definition baseline\n");
             WriteFile(EmissionPath, "emission: baseline\n");
             Directory.CreateDirectory(Path.Combine(Root, LedgerPath));
+            File.WriteAllBytes(Path.Combine(binPath, "StrataLint.Cli.dll"), []);
             WriteFile(BackfillPath, $"atom_id: {AtomId}\ncoverage: false\naligned: false\n");
             WriteMakeStub();
             WriteDotnetStub();
@@ -641,6 +647,8 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     $"PLAYBOOK_COVER_DISPOSITION_FAILURE={(coverDispositionFailure ? "1" : "0")}",
                     $"PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE={mutateReceiptAfterPrepare ?? string.Empty}",
                     $"PLAYBOOK_TARGET_MODULE={(gid == SecondaryGid ? SecondaryLeanPath : gid == NewGid ? NewLeanPath : LeanPath)}",
+                    $"PLAYBOOK_TEST_PERF_TARGET={Path.Combine(binPath, "StrataLint.Cli.dll")}",
+                    $"STRATALINT_PERF_LEDGER={performanceLedgerPath}",
                     "/bin/bash",
                     Path.Combine(Root, ScriptPath),
                     command,
@@ -738,14 +746,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
             if (File.Exists(callsPath)) File.Delete(callsPath);
         }
 
-        private void CopyScript()
-        {
-            var root = TestRepositoryLayout.FindRoot();
-            var target = Path.Combine(Root, ScriptPath);
-            Directory.CreateDirectory(Path.GetDirectoryName(target)!);
-            File.Copy(Path.Combine(root, ScriptPath), target);
-        }
-
         private string Git(params string[] arguments)
         {
             var result = BoundedProcessRunner.Run(
@@ -783,8 +783,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
             Directory.CreateDirectory(Path.GetDirectoryName(path) ?? Root);
             File.WriteAllText(path, content, new UTF8Encoding(false));
         }
-
-        public void Dispose() => temporary.Dispose();
 
     }
 }

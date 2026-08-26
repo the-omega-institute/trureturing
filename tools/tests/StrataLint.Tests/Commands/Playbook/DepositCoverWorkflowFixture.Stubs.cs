@@ -4,6 +4,30 @@ public sealed partial class DepositCoverWorkflowScriptTests
 {
     internal sealed partial class TransactionFixture
     {
+        private readonly TemporaryDirectory performance = new();
+        private readonly string performanceLedgerPath;
+
+        internal string[] PerformanceEvents() => File.Exists(performanceLedgerPath)
+            ? File.ReadAllLines(performanceLedgerPath)
+            : [];
+
+        internal void ClearPerformanceEvents()
+        {
+            if (File.Exists(performanceLedgerPath)) File.Delete(performanceLedgerPath);
+        }
+
+        private void CopyScript()
+        {
+            var root = TestRepositoryLayout.FindRoot();
+            var target = Path.Combine(Root, ScriptPath);
+            Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+            File.Copy(Path.Combine(root, ScriptPath), target);
+            const string performanceLibraryPath = "tools/scripts/lib/perf-event-lib.sh";
+            var performanceTarget = Path.Combine(Root, performanceLibraryPath);
+            Directory.CreateDirectory(Path.GetDirectoryName(performanceTarget)!);
+            File.Copy(Path.Combine(root, performanceLibraryPath), performanceTarget);
+        }
+
         private void WriteGitGuardStub() => WriteExecutable("git", """
             arguments=("$@")
             index=0
@@ -65,6 +89,25 @@ public sealed partial class DepositCoverWorkflowScriptTests
             """);
 
         private void WriteDotnetStub() => WriteExecutable("dotnet", """
+            if [[ ${1:-} == msbuild ]]; then
+              printf '%s\n' "$PLAYBOOK_TEST_PERF_TARGET"
+              exit 0
+            fi
+            if [[ ${1:-} == "$PLAYBOOK_TEST_PERF_TARGET" && ${2:-} == perf-append ]]; then
+              input=''
+              ledger=''
+              shift 2
+              while [[ $# -gt 0 ]]; do
+                case "$1" in
+                  --input) input=$2; shift 2 ;;
+                  --ledger) ledger=$2; shift 2 ;;
+                  *) exit 2 ;;
+                esac
+              done
+              [[ -n $input && -n $ledger ]]
+              cat "$input" >> "$ledger"
+              exit 0
+            fi
             args="$*"
             command=${args##* -- }
             printf 'dotnet:%s\n' "$command" >> "$PLAYBOOK_TEST_CALLS"
@@ -198,5 +241,11 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 ;;
             esac
             """);
+
+        public void Dispose()
+        {
+            performance.Dispose();
+            temporary.Dispose();
+        }
     }
 }

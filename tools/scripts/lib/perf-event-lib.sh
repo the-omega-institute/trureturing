@@ -68,10 +68,11 @@ perf_loadavg_per_cpu() {
 }
 
 perf_host_concurrency() {
-  command -v pgrep >/dev/null 2>&1 || return 0
   local pids=""
-  pids="$(pgrep -f '(^|/)(local-harness-gate|preflight)\.sh' 2>/dev/null || true)"
-  if [[ -n "$pids" ]]; then printf '%s\n' "$pids" | awk 'END { print NR }'; fi
+  if command -v pgrep >/dev/null 2>&1; then
+    pids="$(pgrep -f '(^|/)(local-harness-gate|playbook-workflows|preflight)\.sh' 2>/dev/null || true)"
+  fi
+  if [[ -n "$pids" ]]; then printf '%s\n' "$pids" | awk 'END { print NR }'; else printf '1'; fi
 }
 
 perf_cpu_class() {
