@@ -9,10 +9,11 @@ namespace StrataLint.ArchitectureTests;
 
 public sealed class CodexFormalAnswerSkillTests
 {
-    private const string AuthorityHeading = "5. Derive outcomes from owner facts";
+    private const string AuthorityHeading = "5. Derive outcomes from compiled declarations";
     private const string GeneralizationHeading = "Generalization bridge";
     private const string RepositoryConceptSearchHeading = "Repository concept search";
-    private const string DurabilityRoutingHeading = "Durability routing";
+    private const string InferentialCompletionHeading = "Inferential completion";
+    private const string ProjectPersistenceHeading = "Project source persistence";
 
     private static readonly MarkdownPipeline Pipeline = new MarkdownPipelineBuilder()
         .UsePipeTables()
@@ -31,7 +32,7 @@ public sealed class CodexFormalAnswerSkillTests
     {
         var document = Parse(
             """
-            ### 5. Derive outcomes from owner facts
+            ### 5. Derive outcomes from compiled declarations
 
             Apply the first matching rule:
 
@@ -51,7 +52,7 @@ public sealed class CodexFormalAnswerSkillTests
     {
         var document = Parse(
             """
-            ### 5. Derive outcomes from owner facts
+            ### 5. Derive outcomes from compiled declarations
 
             Apply the first matching rule:
 
@@ -71,7 +72,7 @@ public sealed class CodexFormalAnswerSkillTests
     {
         var document = Parse(
             """
-            ### 5. Derive outcomes from owner facts
+            ### 5. Derive outcomes from compiled declarations
 
             Apply the first matching rule:
 
@@ -93,7 +94,7 @@ public sealed class CodexFormalAnswerSkillTests
     {
         var document = Parse(
             """
-            ### 5. Derive outcomes from owner facts
+            ### 5. Derive outcomes from compiled declarations
 
             Apply the first matching rule:
 
@@ -178,21 +179,51 @@ public sealed class CodexFormalAnswerSkillTests
     }
 
     [Fact]
-    public void DurabilityRoutingWithoutReuseAndThinBranchesIsRejected()
+    public void SearchWithoutInferentialCompletionIsRejected()
     {
         var document = Parse(
             """
-            ## Durability routing
+            ## Repository concept search
 
-            1. `deposit-new`: Send every compiling declaration to `codex-formalize`.
-            2. `open-deposit`: Report a blocked deposit as `open`.
+            1. `C`: Search repository concepts.
+            2. `F`: Search Lean declarations.
+            3. `M`: Render the hits as an answer.
+
+            ## Project source persistence
+
+            1. `reuse-complete`: cite a hit.
+            2. `discard-thin`: discard `run-local` wrappers.
+            3. `persist-synthesis`: retain `tracked-lean` after `make lean`.
+            4. `open-compile`: preserve an `open` compiler failure.
             """);
 
-        Assert.False(DefinesCompleteDurabilityRouting(document));
+        Assert.False(DefinesInferentialCompletionAndProjectPersistence(document));
     }
 
     [Fact]
-    public void CodexFormalAnswerPersistsOnlySubstantiveNewReusableTheoremsThroughOwner()
+    public void TruthDagGatedPersistenceIsRejected()
+    {
+        var document = Parse(
+            """
+            ## Inferential completion
+
+            1. `premise-map`: identify premises.
+            2. `G`: derive a reusable theorem.
+            3. `S`: apply `G` to exact `P`.
+
+            ## Project source persistence
+
+            1. `reuse-complete`: require `active-frozen` evidence.
+            2. `discard-thin`: discard `run-local` wrappers.
+            3. `persist-synthesis`: invoke `codex-formalize` and `deposit-new`.
+            4. `open-compile`: preserve an `open` compiler failure.
+            """);
+
+        Assert.False(DefinesInferentialCompletionAndProjectPersistence(document));
+    }
+
+    [Fact]
+    public void CodexFormalAnswerCompletesInferenceAndPersistsCompiledProjectSource()
     {
         var skill = File.ReadAllText(Path.Combine(
             RepositoryLayout.FindRoot(),
@@ -200,7 +231,7 @@ public sealed class CodexFormalAnswerSkillTests
             "codex-formal-answer",
             "SKILL.md"));
 
-        Assert.True(DefinesCompleteDurabilityRouting(Parse(skill)));
+        Assert.True(DefinesInferentialCompletionAndProjectPersistence(Parse(skill)));
     }
 
     private static bool DefinesSingleStructurallyTotalAuthority(MarkdownDocument document)
@@ -312,8 +343,7 @@ public sealed class CodexFormalAnswerSkillTests
             "F",
             "D5/",
             "Blueprint/",
-            "Golden/Frozen/accepted/",
-            "Meta/Digestion/",
+            ".lake/packages/mathlib/Mathlib/",
         };
 
         return requiredDiscoverySurfaces.All(discoveryCodes.Contains)
@@ -324,48 +354,84 @@ public sealed class CodexFormalAnswerSkillTests
             && modelingCodes.Contains("S");
     }
 
-    private static bool DefinesCompleteDurabilityRouting(MarkdownDocument document)
+    private static bool DefinesInferentialCompletionAndProjectPersistence(
+        MarkdownDocument document)
     {
-        var headings = document
+        var completionHeadings = document
             .OfType<HeadingBlock>()
             .Where(heading => PlainText(heading).Equals(
-                DurabilityRoutingHeading,
+                InferentialCompletionHeading,
                 StringComparison.Ordinal))
             .ToArray();
-        if (headings.Length != 1)
+        var persistenceHeadings = document
+            .OfType<HeadingBlock>()
+            .Where(heading => PlainText(heading).Equals(
+                ProjectPersistenceHeading,
+                StringComparison.Ordinal))
+            .ToArray();
+        if (completionHeadings.Length != 1 || persistenceHeadings.Length != 1)
         {
             return false;
         }
 
-        var orderedLists = SectionBlocks(document, headings[0])
+        var completionLists = SectionBlocks(document, completionHeadings[0])
             .SelectMany(SelfAndDescendants)
             .OfType<ListBlock>()
             .Where(list => list.IsOrdered)
             .ToArray();
-        if (orderedLists.Length != 1)
+        var persistenceLists = SectionBlocks(document, persistenceHeadings[0])
+            .SelectMany(SelfAndDescendants)
+            .OfType<ListBlock>()
+            .Where(list => list.IsOrdered)
+            .ToArray();
+        if (completionLists.Length != 1 || persistenceLists.Length != 1)
         {
             return false;
         }
 
-        var items = orderedLists[0].OfType<ListItemBlock>().ToArray();
-        if (items.Length != 4)
+        var completionItems = completionLists[0].OfType<ListItemBlock>().ToArray();
+        var persistenceItems = persistenceLists[0].OfType<ListItemBlock>().ToArray();
+        if (completionItems.Length != 3 || persistenceItems.Length != 4)
         {
             return false;
         }
 
-        var reuseCodes = InlineCodeValues(items[0]).ToHashSet(StringComparer.Ordinal);
-        var thinCodes = InlineCodeValues(items[1]).ToHashSet(StringComparer.Ordinal);
-        var depositCodes = InlineCodeValues(items[2]).ToHashSet(StringComparer.Ordinal);
-        var blockedCodes = InlineCodeValues(items[3]).ToHashSet(StringComparer.Ordinal);
+        var premiseCodes = InlineCodeValues(completionItems[0]).ToHashSet(StringComparer.Ordinal);
+        var generalCodes = InlineCodeValues(completionItems[1]).ToHashSet(StringComparer.Ordinal);
+        var specializationCodes = InlineCodeValues(completionItems[2]).ToHashSet(StringComparer.Ordinal);
+        var reuseCodes = InlineCodeValues(persistenceItems[0]).ToHashSet(StringComparer.Ordinal);
+        var thinCodes = InlineCodeValues(persistenceItems[1]).ToHashSet(StringComparer.Ordinal);
+        var persistenceCodes = InlineCodeValues(persistenceItems[2]).ToHashSet(StringComparer.Ordinal);
+        var blockedCodes = InlineCodeValues(persistenceItems[3]).ToHashSet(StringComparer.Ordinal);
+        var allCodes = document
+            .SelectMany(SelfAndDescendants)
+            .SelectMany(InlineCodeValues)
+            .ToHashSet(StringComparer.Ordinal);
+        var forbiddenTruthDagDependencies = new[]
+        {
+            "active-frozen",
+            "Golden/Frozen/accepted/",
+            "codex-formalize",
+            "deposit-new",
+            "open-deposit",
+        };
 
-        return reuseCodes.Contains("reuse-existing")
-            && reuseCodes.Contains("active-frozen")
+        return premiseCodes.Contains("premise-map")
+            && generalCodes.Contains("G")
+            && specializationCodes.Contains("S")
+            && specializationCodes.Contains("G")
+            && specializationCodes.Contains("P")
+            && reuseCodes.Contains("reuse-complete")
+            && reuseCodes.Contains("project-source")
             && thinCodes.Contains("discard-thin")
             && thinCodes.Contains("run-local")
-            && depositCodes.Contains("deposit-new")
-            && depositCodes.Contains("codex-formalize")
-            && blockedCodes.Contains("open-deposit")
-            && blockedCodes.Contains("open");
+            && persistenceCodes.Contains("persist-synthesis")
+            && persistenceCodes.Contains("tracked-lean")
+            && persistenceCodes.Contains("Describe")
+            && persistenceCodes.Contains("make lean")
+            && blockedCodes.Contains("open-compile")
+            && blockedCodes.Contains("open")
+            && forbiddenTruthDagDependencies.All(code => !allCodes.Contains(code));
     }
 
     private static ListBlock? FindOrderedFirstMatchList(IReadOnlyList<Block> section)
