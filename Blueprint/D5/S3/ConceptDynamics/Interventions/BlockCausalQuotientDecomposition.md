@@ -6,7 +6,7 @@ Block-product intervention channels decompose causal equivalence and its quotien
 
 **Theorem 1.1 (Causal equivalence and the causal quotient decompose by blocks).**
 
-$$\forall M \in \operatorname{BlockModel}\left(I\right), N \in \operatorname{BlockModel}\left(I\right),\; \forall a \in \operatorname{JointIntervention}\left(I\right),\; \operatorname{blockInterventionalOutcome}\left(a, M\right) = \operatorname{blockInterventionalOutcome}\left(a, N\right) \Leftrightarrow \forall i \in I,\; \forall u \in \operatorname{Action}\left(i\right),\; \operatorname{apply}\left(M, i, u\right) = \operatorname{apply}\left(N, i, u\right) \land \forall M \in \operatorname{BlockModel}\left(I\right),\; \operatorname{causalQuotientEquiv}\left(\operatorname{globalClass}\left(M\right)\right) = \operatorname{localClasses}\left(M\right)$$
+$$\left(\forall M \in \operatorname{BlockModel}\left(I\right), N \in \operatorname{BlockModel}\left(I\right),\; \left(\forall a \in \operatorname{JointIntervention}\left(I\right),\; \operatorname{blockInterventionalOutcome}\left(a, M\right) = \operatorname{blockInterventionalOutcome}\left(a, N\right)\right) \Leftrightarrow \left(\forall i \in I,\; \forall u \in \operatorname{Action}\left(i\right),\; \operatorname{apply}\left(M, i, u\right) = \operatorname{apply}\left(N, i, u\right)\right)\right) \land \left(\forall M \in \operatorname{BlockModel}\left(I\right),\; \operatorname{causalQuotientEquiv}\left(\operatorname{globalClass}\left(M\right)\right) = \operatorname{localClasses}\left(M\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Interventions/BlockCausalQuotientDecomposition.causal_equivalence_block_decomposition` (`✓ std3`). ∎
 

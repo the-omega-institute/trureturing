@@ -8,7 +8,7 @@ The greedy step has the same integer action on coordinates under both embeddings
 
 **Theorem 1.1 (The conjugate bridge).**
 
-$$\forall p \in R, q \in R,\; p + q \cdot \mathit{betaThirteen} - \left(p + q \cdot \mathit{betaThirteenConjugate}\right) = q \cdot \operatorname{sqrt}\left(13\right) \land 1 < \left|\mathit{betaThirteenConjugate}\right|$$
+$$\left(\forall p \in R, q \in R,\; p + q \cdot \mathit{betaThirteen} - \left(p + q \cdot \mathit{betaThirteenConjugate}\right) = q \cdot \operatorname{sqrt}\left(13\right)\right) \land 1 < \left|\mathit{betaThirteenConjugate}\right|$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Tower/NonPisotFrontier/ConjugateBridge.conjugate_bridge` (`✓ std3`). ∎
 
