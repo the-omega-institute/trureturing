@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Policy/StrictPolicyPowerGrowth.strict_policy_power_growth
       source_sha256: sha256:bae8bea10b1a9b88fd3680f93b6647f23cad212ccbbde2409e8b9ff8a2b9b366
-      target_sha256: sha256:cee4f0bfb0354ae237a1dcbd0d61e0a94fd355ea9a062c0e4357368333914dce
+      target_sha256: sha256:8937e2f5c46c27de8eb3ab7d0288513e1f0bfcdb8641508a3c64d203677ea220
   scribe:
     - gid: D5/S3/ConceptDynamics/Policy/StrictPolicyPowerGrowth.strict_policy_power_growth
       definition_sha256: sha256:ecf5ff1ad3502be0e4e14148f535f4c2412795817120cd5b8dd39a03f44f4cea

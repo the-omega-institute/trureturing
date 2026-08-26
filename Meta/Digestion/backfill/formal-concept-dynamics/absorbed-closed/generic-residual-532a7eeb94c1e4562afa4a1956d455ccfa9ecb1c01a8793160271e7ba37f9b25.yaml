@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/InstitutionalCapture/KnowledgePolicyThreshold.knowledge_policy_threshold_consistent
       source_sha256: sha256:532a7eeb94c1e4562afa4a1956d455ccfa9ecb1c01a8793160271e7ba37f9b25
-      target_sha256: sha256:c9d64e6c48457ebee2eb5f553c993fa39f3f885392f20ce05d2baf4adf53fa31
+      target_sha256: sha256:c85c1cf75429d13e116f6c72fef7e55807832e18b901913c3b2ba60fc48c2f79
   scribe:
     - gid: D5/S3/ConceptDynamics/InstitutionalCapture/KnowledgePolicyThreshold.knowledge_policy_threshold_consistent
       definition_sha256: sha256:267bede864e146a51c0f31501fe2d2ede7589c1032b9cb52917fa3a0d456704d

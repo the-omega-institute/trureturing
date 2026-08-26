@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/StrictRefinementCapability.strict_refinement_capability
       source_sha256: sha256:09ad8d609f687be833c200a5cfb15f9ab115f0d53847ab19025cb5008d5944b0
-      target_sha256: sha256:1e781798a83bceccd1b1cb2a88a5e68c295c2211b6589c75a5d499a537da35be
+      target_sha256: sha256:f1256d3b05801aa7d9597749a58dcc659b30a5f75910da0dab5516750b507e6a
   scribe:
     - gid: D5/S3/ConceptDynamics/StrictRefinementCapability.strict_refinement_capability
       definition_sha256: sha256:14110ba79bd3ade9851e7f19b483c803856f340960d3fb9f65f159999e76aceb
