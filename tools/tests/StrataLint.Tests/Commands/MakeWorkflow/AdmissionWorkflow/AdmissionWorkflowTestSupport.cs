@@ -166,6 +166,51 @@ public sealed partial class AdmissionWorkflowTests
     private static string StepName(YamlMappingNode step) =>
         Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("name")]).Value ?? string.Empty;
 
+    private static bool ContainsDotnetInvocation(string script) =>
+        MaskSingleQuotedLiterals(script).Contains("dotnet", StringComparison.Ordinal);
+
+    private static string MaskSingleQuotedLiterals(string script)
+    {
+        var characters = script.ToCharArray();
+        var singleQuoteStart = -1;
+        var inDoubleQuote = false;
+        var escaped = false;
+        for (var index = 0; index < characters.Length; index++)
+        {
+            var character = characters[index];
+            if (singleQuoteStart >= 0)
+            {
+                if (character != '\'') continue;
+
+                Array.Fill(characters, ' ', singleQuoteStart, index - singleQuoteStart + 1);
+                singleQuoteStart = -1;
+                continue;
+            }
+
+            if (escaped)
+            {
+                escaped = false;
+                continue;
+            }
+
+            if (character == '\\')
+            {
+                escaped = true;
+                continue;
+            }
+
+            if (character == '"')
+            {
+                inDoubleQuote = !inDoubleQuote;
+                continue;
+            }
+
+            if (!inDoubleQuote && character == '\'') singleQuoteStart = index;
+        }
+
+        return new string(characters);
+    }
+
     private static bool BaselineNeedsExactlyLeanInspect(string workflow) =>
         Needs(Job(workflow, "baseline-admission")).SequenceEqual(["lean-inspect"], StringComparer.Ordinal);
 
