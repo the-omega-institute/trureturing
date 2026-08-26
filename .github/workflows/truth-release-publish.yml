@@ -1,0 +1,279 @@
+name: truth-release-publish
+
+on:
+  push:
+    branches: [dev]
+    paths:
+      - 'D5/**/*.lean'
+      - 'Trureturing.lean'
+      - 'Blueprint/**/*.scribe.cs'
+      - 'Evidence/**'
+      - 'Meta/**'
+      - 'tools/**'
+      - 'lakefile.lean'
+      - 'lake-manifest.json'
+      - 'lean-toolchain'
+      - 'global.json'
+      - '.github/workflows/ci.yml'
+      - '.github/workflows/truth-release-publish.yml'
+  workflow_dispatch:
+    inputs:
+      source_commit:
+        description: 'Dev commit to publish (defaults to the current dev tip)'
+        required: false
+        default: dev
+
+permissions:
+  contents: write
+  actions: read
+  packages: write
+  id-token: write
+  attestations: write
+
+concurrency:
+  group: truth-release-publish-${{ github.event_name == 'workflow_dispatch' && inputs.source_commit || github.sha }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: publish persistent verified truth-release
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 120
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REQUIRED_CHECKS: >-
+        Candidate harness engineering checks
+        |Canonical Lean report production
+        |Content-addressed dev baseline admission
+      OCI_REPOSITORY: ghcr.io/${{ github.repository_owner }}/trureturing/truth-release
+      OCI_ARTIFACT_TYPE: application/vnd.theomega.truth-release.bundle.v1
+      OCI_LAYER_TYPE: application/vnd.theomega.truth-release.bundle.v1+tar+gzip
+    steps:
+      - name: Check out the exact dev commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.source_commit || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Resolve immutable source identity
+        id: source
+        shell: bash
+        run: |
+          set -euo pipefail
+          source_commit="$(git rev-parse HEAD)"
+          source_tree="$(git rev-parse HEAD^{tree})"
+          [[ "$source_commit" =~ ^[0-9a-f]{40}$ ]]
+          [[ "$source_tree" =~ ^[0-9a-f]{40}$ ]]
+          if [[ "$GITHUB_EVENT_NAME" == "push" && "$source_commit" != "$GITHUB_SHA" ]]; then
+            printf '%s\n' "checked out commit does not equal the push SHA" >&2
+            exit 1
+          fi
+          printf 'source_commit=%s\n' "$source_commit" >> "$GITHUB_OUTPUT"
+          printf 'source_tree=%s\n' "$source_tree" >> "$GITHUB_OUTPUT"
+
+      - name: Wait for required dev gates to be green
+        shell: bash
+        env:
+          SOURCE_COMMIT: ${{ steps.source.outputs.source_commit }}
+        run: |
+          set -euo pipefail
+          IFS='|' read -r -a required_checks <<< "$REQUIRED_CHECKS"
+          for attempt in $(seq 1 60); do
+            checks="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${SOURCE_COMMIT}/check-runs?per_page=100" \
+              --jq '[.check_runs[]]')"
+            all_green=true
+            summary=()
+            for required in "${required_checks[@]}"; do
+              conclusion="$(jq -r --arg name "$required" \
+                '[.[] | select(.name == $name and .status == "completed") | .conclusion] | if length == 0 then "missing" else .[0] end' \
+                <<< "$checks")"
+              summary+=("$required=$conclusion")
+              [[ "$conclusion" == "success" ]] || all_green=false
+            done
+            printf 'required-gates attempt=%s %s\n' "$attempt" "${summary[*]}"
+            if [[ "$all_green" == true ]]; then
+              exit 0
+            fi
+            sleep 60
+          done
+          printf '%s\n' "required dev gates did not become green within the publish window" >&2
+          exit 1
+
+      - name: Set up pinned .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Install the pinned Lean toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+
+      - name: Warm the Lean dependency cache
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake exe cache get || printf '%s\n' 'mathlib cache get missed; lake build/report will fill remaining dependencies'
+          make lean-cache-from-github-without-mathlib \
+            || printf '%s\n' 'repository Lean build cache was unavailable; the canonical report artifact remains the primary input'
+
+      - name: Find the canonical report check run
+        id: canonical_run
+        env:
+          SOURCE_COMMIT: ${{ steps.source.outputs.source_commit }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          run_id="$(gh run list --workflow ci.yml --commit "$SOURCE_COMMIT" --limit 20 \
+            --json databaseId,status,conclusion \
+            --jq '[.[] | select(.status == "completed" and .conclusion == "success")][0].databaseId // empty')"
+          if [[ -n "$run_id" && "$run_id" =~ ^[0-9]+$ ]]; then
+            printf 'run_id=%s\n' "$run_id" >> "$GITHUB_OUTPUT"
+          else
+            printf '%s\n' 'no successful CI run was found for this exact dev commit' >&2
+            exit 1
+          fi
+
+      - name: Reuse the canonical Lean report artifact
+        id: report
+        continue-on-error: true
+        env:
+          CI_RUN_ID: ${{ steps.canonical_run.outputs.run_id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          report_root="$RUNNER_TEMP/canonical-lean-report"
+          mkdir -p "$report_root"
+          gh run download "$CI_RUN_ID" --repo "$GITHUB_REPOSITORY" \
+            --name raw-lean-reports --dir "$report_root"
+          report="$(find "$report_root" -type f -name candidate-lean-report.json -print -quit)"
+          [[ -s "$report" ]] || { printf '%s\n' 'canonical report artifact is missing candidate-lean-report.json' >&2; exit 1; }
+          helper="$GITHUB_WORKSPACE/tools/scripts/report/lean-report-input.sh"
+          "$helper" verify --repository "$GITHUB_WORKSPACE" --report "$report"
+          printf 'path=%s\n' "$report" >> "$GITHUB_OUTPUT"
+
+      - name: Fall back to warm-cache canonical report production
+        if: steps.report.outcome != 'success'
+        id: report_fallback
+        shell: bash
+        run: |
+          set -euo pipefail
+          make lean-report
+          report="$GITHUB_WORKSPACE/.lake/build/stratalint/raw-lean-report.json"
+          test -s "$report"
+          tools/scripts/report/lean-report-input.sh verify \
+            --repository "$GITHUB_WORKSPACE" --report "$report"
+          printf 'path=%s\n' "$report" >> "$GITHUB_OUTPUT"
+
+      - name: Assemble the real seven-artifact truth-release
+        id: release
+        env:
+          SOURCE_COMMIT: ${{ steps.source.outputs.source_commit }}
+          SOURCE_TREE: ${{ steps.source.outputs.source_tree }}
+          REPORT_PATH: ${{ steps.report.outputs.path || steps.report_fallback.outputs.path }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          bundle="$RUNNER_TEMP/truth-release-bundle"
+          rm -rf "$bundle"
+          mkdir -p "$bundle"
+          dotnet restore tools/StrataLint.Cli/StrataLint.Cli.csproj --locked-mode
+          produced_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj \
+            --configuration Release --no-restore -- \
+            truth-release \
+            --out "$bundle" \
+            --candidate-lean-report "$REPORT_PATH" \
+            --producer-package-commit "$SOURCE_COMMIT" \
+            --produced-at "$produced_at" \
+            --commit-on-protected-dev true \
+            --required-check 'Candidate harness engineering checks=success' \
+            --required-check 'Canonical Lean report production=success' \
+            --required-check 'Content-addressed dev baseline admission=success'
+          digest="$(find "$bundle" -maxdepth 1 -type f -name release-manifest.v1.json -exec jq -r '.release_digest' {} \;)"
+          [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]
+          jq -e --arg digest "$digest" \
+            '.schema == "truth-release-publication.v1" and .release_digest == $digest and .bundle_ref == $digest and .source_commit == $ENV.SOURCE_COMMIT and .source_tree == $ENV.SOURCE_TREE and (.producer_commit | test("^[0-9a-f]{40}$"))' \
+            "$bundle/truth-release-publication.v1.json" >/dev/null
+          artifact="$RUNNER_TEMP/truth-release-${digest#sha256:}.tar.gz"
+          tar -C "$bundle" -czf "$artifact" .
+          printf 'bundle=%s\n' "$bundle" >> "$GITHUB_OUTPUT"
+          printf 'archive=%s\n' "$artifact" >> "$GITHUB_OUTPUT"
+          printf 'release_digest=%s\n' "$digest" >> "$GITHUB_OUTPUT"
+
+      - name: Install ORAS
+        uses: oras-project/setup-oras@v1
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      - name: Publish the immutable GHCR artifact keyed by release_digest
+        id: oci
+        env:
+          ARCHIVE: ${{ steps.release.outputs.archive }}
+          RELEASE_DIGEST: ${{ steps.release.outputs.release_digest }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="release-${RELEASE_DIGEST#sha256:}"
+          reference="$OCI_REPOSITORY:$tag"
+          if oras manifest fetch "$reference" >/dev/null 2>&1; then
+            printf 'OCI_ARTIFACT status=exists reference=%s\n' "$reference"
+            pushed=false
+          else
+            oras push "$reference" \
+              --artifact-type "$OCI_ARTIFACT_TYPE" \
+              --annotation "org.opencontainers.image.source=https://github.com/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}" \
+              "$ARCHIVE:$OCI_LAYER_TYPE"
+            pushed=true
+          fi
+          descriptor="$RUNNER_TEMP/oci-descriptor.json"
+          oras manifest fetch --descriptor "$reference" > "$descriptor"
+          oci_digest="$(jq -r '.digest' "$descriptor")"
+          [[ "$oci_digest" =~ ^sha256:[0-9a-f]{64}$ ]]
+          printf 'OCI_ARTIFACT status=%s release_digest=%s coordinate=%s@%s\n' \
+            "$([[ "$pushed" == true ]] && printf published || printf exists)" \
+            "$RELEASE_DIGEST" "$OCI_REPOSITORY" "$oci_digest"
+          printf 'pushed=%s\n' "$pushed" >> "$GITHUB_OUTPUT"
+          printf 'digest=%s\n' "$oci_digest" >> "$GITHUB_OUTPUT"
+          printf 'reference=%s@%s\n' "$OCI_REPOSITORY" "$oci_digest" >> "$GITHUB_OUTPUT"
+
+      - name: Attest the GHCR artifact provenance
+        if: steps.oci.outputs.pushed == 'true'
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-name: ${{ env.OCI_REPOSITORY }}
+          subject-digest: ${{ steps.oci.outputs.digest }}
+          push-to-registry: true
+
+      - name: Create the immutable GitHub Release human mirror
+        env:
+          ARCHIVE: ${{ steps.release.outputs.archive }}
+          BUNDLE: ${{ steps.release.outputs.bundle }}
+          RELEASE_DIGEST: ${{ steps.release.outputs.release_digest }}
+          SOURCE_COMMIT: ${{ steps.source.outputs.source_commit }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="truth-release-${RELEASE_DIGEST#sha256:}"
+          publication="$BUNDLE/truth-release-publication.v1.json"
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            assets="$(gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name')"
+            grep -Fxq "$(basename "$ARCHIVE")" <<< "$assets" \
+              || { printf '%s\n' 'existing truth-release is missing its bundle asset; refusing to overwrite it' >&2; exit 1; }
+            grep -Fxq "truth-release-publication.v1.json" <<< "$assets" \
+              || { printf '%s\n' 'existing truth-release is missing its publication pointer; refusing to overwrite it' >&2; exit 1; }
+            printf 'GITHUB_RELEASE status=exists tag=%s\n' "$tag"
+          else
+            gh release create "$tag" --repo "$GITHUB_REPOSITORY" --target "$SOURCE_COMMIT" \
+              --title "Truth release ${RELEASE_DIGEST#sha256:}" \
+              --notes "Verified truth-release.v1 bundle for ${SOURCE_COMMIT}. The OCI artifact is keyed by ${RELEASE_DIGEST}; this release is a human mirror." \
+              "$ARCHIVE" "$publication"
+            printf 'GITHUB_RELEASE status=published tag=%s\n' "$tag"
+          fi
