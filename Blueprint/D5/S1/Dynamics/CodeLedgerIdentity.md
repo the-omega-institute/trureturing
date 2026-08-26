@@ -6,7 +6,7 @@ A canonical prime-axis code together with a ledger coordinate exactly determines
 
 **Theorem 1.1 (States agree exactly when their codes and ledgers agree).**
 
-$$K_1=K_2 \iff \operatorname{code}(K_1)=\operatorname{code}(K_2) \land \operatorname{ledger}(K_1)=\operatorname{ledger}(K_2)$$
+$$\forall Ledger: \operatorname{Type}, \forall K_1, K_2: \operatorname{CodeLedgerState}(Ledger), K_1=K_2 \iff \operatorname{code}(K_1)=\operatorname{code}(K_2) \land \operatorname{ledger}(K_1)=\operatorname{ledger}(K_2)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Dynamics/CodeLedgerIdentity.same_state_iff_same_code_and_ledger` (`✓ std3`). ∎
 
