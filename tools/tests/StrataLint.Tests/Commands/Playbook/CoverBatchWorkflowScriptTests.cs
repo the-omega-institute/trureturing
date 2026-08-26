@@ -125,6 +125,10 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     "PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE=",
                     $"PLAYBOOK_TEST_PERF_TARGET={Path.Combine(binPath, "StrataLint.Cli.dll")}",
                     $"STRATALINT_PERF_LEDGER={performanceLedgerPath}",
+                    $"STRATALINT_PERF_COMMIT={PerformanceCommit}",
+                    $"STRATALINT_PERF_LOADAVG={PerformanceLoadavg}",
+                    $"STRATALINT_PERF_HOST_CONCURRENCY={PerformanceHostConcurrency}",
+                    "PLAYBOOK_FAIL_PERF_COMMIT_PROBE=0",
                     "/bin/bash",
                     Path.Combine(Root, ScriptPath),
                     "cover-batch",
@@ -169,7 +173,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
         {
             Assert.Equal(PerfEventCodec.Schema, item.Schema);
             Assert.Equal(workloadId, item.Context.WorkloadId);
-            Assert.True(item.Context.HostConcurrency is >= 1);
+            Assert.Equal(TransactionFixture.PerformanceCommit, item.Context.Commit);
+            Assert.Equal(0.25, item.Context.LoadavgPerCpu);
+            Assert.Equal(3, item.Context.HostConcurrency);
         });
         Assert.Single(events.Select(static item => item.RunId).Distinct(StringComparer.Ordinal));
     }

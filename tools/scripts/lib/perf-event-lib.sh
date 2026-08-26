@@ -53,6 +53,10 @@ perf_cpu_count() {
 }
 
 perf_loadavg_per_cpu() {
+  if [[ -n "${STRATALINT_PERF_LOADAVG:-}" ]]; then
+    printf '%s' "$STRATALINT_PERF_LOADAVG"
+    return 0
+  fi
   local load=""
   local cpus=""
   cpus="$(perf_cpu_count)"
@@ -68,6 +72,10 @@ perf_loadavg_per_cpu() {
 }
 
 perf_host_concurrency() {
+  if [[ -n "${STRATALINT_PERF_HOST_CONCURRENCY:-}" ]]; then
+    printf '%s' "$STRATALINT_PERF_HOST_CONCURRENCY"
+    return 0
+  fi
   local pids=""
   if command -v pgrep >/dev/null 2>&1; then
     pids="$(pgrep -f '(^|/)(local-harness-gate|playbook-workflows|preflight)\.sh' 2>/dev/null || true)"
@@ -107,15 +115,20 @@ perf_capture_event() {
   local os="$(uname -s 2>/dev/null || printf unknown)"
   local arch="$(uname -m 2>/dev/null || printf unknown)"
   local cpu_class="$(perf_cpu_class)"
-  local commit="$(git -C "$root" rev-parse --verify HEAD 2>/dev/null || printf unknown)"
+  local commit="${STRATALINT_PERF_COMMIT:-}"
+  if [[ -z "$commit" ]]; then
+    commit="$(git -C "$root" rev-parse --verify HEAD 2>/dev/null || printf unknown)"
+  fi
+  if [[ ! "$commit" =~ ^[0-9a-fA-F]{40}([0-9a-fA-F]{24})?$ ]]; then commit="unknown"; fi
   local loadavg="$(perf_loadavg_per_cpu)"
   local concurrency="$(perf_host_concurrency)"
   local disk_free="$(perf_disk_free_gb "$root")"
   local timestamp="$(date -u '+%Y-%m-%dT%H:%M:%SZ' 2>/dev/null || printf '1970-01-01T00:00:00Z')"
   local runner_json="null"
   if [[ -n "$runner_class" ]]; then runner_json="$(perf_json_quote "$runner_class")"; fi
-  local loadavg_json="${loadavg:-null}"
-  local concurrency_json="${concurrency:-null}"
+  local loadavg_json="$(perf_json_nonnegative_number_or_null "$loadavg")"
+  local concurrency_json="null"
+  if [[ "$concurrency" =~ ^[1-9][0-9]*$ ]]; then concurrency_json="$concurrency"; fi
   local disk_json="${disk_free:-null}"
   if [[ -z "$base" ]]; then base="unknown"; fi
 
