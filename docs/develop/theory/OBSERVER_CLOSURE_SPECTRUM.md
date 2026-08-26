@@ -2333,8 +2333,7 @@ $$
 由最佳低秩逼近定理：
 
 $$
-\boxed{
-d_\varepsilon=\#\{i:\sigma_i>\varepsilon\}.}
+\boxed{d_\varepsilon=\#\{i:\sigma_i>\varepsilon\}.}
 $$
 
 任意 $k$ 维行为模型的最坏误差至少为 $\sigma_{k+1}$；截断奇异值展开达到该界。
@@ -2965,3 +2964,1260 @@ $$
 由过去自己的选择塑造，并能通过记录继续属于未来的自己。
 }
 $$
+
+---
+
+# 54. v1.3 增订：鲁棒主体、信息率、身份治理与分布式自由
+
+**追加版本：v1.3，2026-08-26**
+
+本增订只追加于第 53 节之后，不删改此前任何内容。它把前文的自由保持核从单主体、完全观察、非对抗模型提升到：环境对抗、部分观察、信息率限制、身份纠错、分布式治理、自我修改与可判定性边界。
+
+继续使用同一真值纪律：以下新增结论是 paper-level 定义、定理与证明；除明确列出的形式化路线外，不声称已有同名 Lean proof term。核心边界仍是：
+
+```text
+鲁棒自主性不是强本体非决定性的证明；
+随机性不是作者性；
+账本不创造行动来源；
+策略存在不等于策略可实现；
+当前自由不等于未来自由可保持。
+```
+
+---
+
+# 55. 对抗自由保持核
+
+设完整状态空间为 $X$，最低主体性安全域为 $S_{\mathrm{ag}}\subseteq X$，观察者合法动作集为 $\mathcal A(x)$，观察者选择动作 $a$ 后环境可选响应集为 $\mathcal E(x,a)$，状态更新为
+
+$$
+F:X\times A\times E\to X.
+$$
+
+## 定义 55.1（观察者先行动的鲁棒前驱）
+
+$$
+\boxed{
+\operatorname{Pre}_{\exists\forall}(Z)
+=
+\{x\in S_{\mathrm{ag}}:
+\exists a\in\mathcal A(x),\
+\forall e\in\mathcal E(x,a),\
+F(x,a,e)\in Z\}.
+}
+$$
+
+## 定义 55.2（鲁棒自由保持核）
+
+$$
+\boxed{
+\mathsf{FreeKernel}_{\mathrm{rob}}
+=
+\nu Z.\operatorname{Pre}_{\exists\forall}(Z).
+}
+$$
+
+有限状态下，从 $Z_0=S_{\mathrm{ag}}$ 递减迭代
+
+$$
+Z_{n+1}=\operatorname{Pre}_{\exists\forall}(Z_n)
+$$
+
+最终稳定于该最大固定点。
+
+## 本文定理 55.1（无记忆鲁棒保持策略）
+
+在有限、完全观察模型中，每个
+
+$$
+x\in\mathsf{FreeKernel}_{\mathrm{rob}}
+$$
+
+都存在动作 $a_x$，使所有允许环境响应的后继仍位于该核。因而状态反馈策略 $\pi(x)=a_x$ 能永久维持最低主体性。
+
+### 证明
+
+最大固定点满足
+
+$$
+\mathsf{FreeKernel}_{\mathrm{rob}}
+=
+\operatorname{Pre}_{\exists\forall}
+(\mathsf{FreeKernel}_{\mathrm{rob}}).
+$$
+
+逐状态选择存在见证动作并重复即可。无限或可测系统还需可测选择前件。∎
+
+定义自由保持动作集
+
+$$
+\mathcal A_{\mathrm{keep}}(x)
+=
+\{a:\forall e,\ F(x,a,e)\in\mathsf{FreeKernel}_{\mathrm{rob}}\}.
+$$
+
+按完整未来后果商去重复标签，可定义鲁棒操作自由容量
+
+$$
+F_{\mathrm{rob}}(x)
+=
+\log_2
+|\mathcal A_{\mathrm{keep}}(x)/{\sim_x}|.
+$$
+
+核成员资格只保证至少有一条保持路径，不保证当前仍有多个保持自由的动作。
+
+---
+
+# 56. 量词次序与信息时序
+
+若环境先显露响应，观察者随后选择动作，前驱变为
+
+$$
+\boxed{
+\operatorname{Pre}_{\forall\exists}(Z)
+=
+\{x\in S_{\mathrm{ag}}:
+\forall e\in\mathcal E(x),\
+\exists a\in\mathcal A(x,e),\
+F(x,a,e)\in Z\}.
+}
+$$
+
+总有
+
+$$
+\operatorname{Pre}_{\exists\forall}(Z)
+\subseteq
+\operatorname{Pre}_{\forall\exists}(Z),
+$$
+
+故对应最大固定点满足
+
+$$
+\boxed{
+\mathsf{FreeKernel}_{\mathrm{act\mbox{-}first}}
+\subseteq
+\mathsf{FreeKernel}_{\mathrm{observe\mbox{-}first}}.
+}
+$$
+
+这说明自由不仅由动作数量决定，还由观察者何时得到环境信息决定。先承诺后观察要求一个对所有环境响应统一安全的动作；先观察后行动允许条件化响应，因此鲁棒区域通常更大。
+
+---
+
+# 57. 部分观察与信念自由核
+
+观察者通常只访问读出 $q:X\to O$，不能直接使用真实状态。对观察历史 $h$，定义信念状态
+
+$$
+B(h)=\{x:x\text{ 与 }h\text{ 相容}\}\subseteq X.
+$$
+
+动作 $a$ 后得到新观察 $o'$ 时，定义信念后继
+
+$$
+\boxed{
+\operatorname{Post}(B,a,o')
+=
+\{F(x,a,e):x\in B,\ e\in\mathcal E(x,a),\ q(F(x,a,e))=o'\}.
+}
+$$
+
+对信念集合族 $\mathcal Z$，定义
+
+$$
+\boxed{
+\begin{aligned}
+\operatorname{Pre}_B(\mathcal Z)
+=\{B:\;&B\subseteq S_{\mathrm{ag}},\
+\exists a\text{ 对所有 }x\in B\text{ 均合法},\\
+&\forall o',\ \operatorname{Post}(B,a,o')\ne\varnothing
+\Rightarrow\operatorname{Post}(B,a,o')\in\mathcal Z\}.
+\end{aligned}
+}
+$$
+
+## 定义 57.1（信念自由核）
+
+$$
+\boxed{
+\mathsf{BeliefFreeKernel}
+=
+\nu\mathcal Z.\operatorname{Pre}_B(\mathcal Z).
+}
+$$
+
+## 本文定理 57.1（信念状态充分性）
+
+任何只依赖观察历史的鲁棒安全策略，都可改写为只依赖当前信念 $B(h)$ 的策略。
+
+### 证明
+
+若两段历史产生同一信念，则当前可能真实状态、每个动作的后继信念族以及环境可能响应完全相同；安全延续条件只依赖该集合。∎
+
+若接口 $r$ 精化 $q$，则相同历史下
+
+$$
+B_r(h)\subseteq B_q(h).
+$$
+
+在观察无成本且允许忽略额外信息时，精化不会降低鲁棒能力；更细信念可能解除粗纤维中互相冲突的安全约束。
+
+---
+
+# 58. 自由充分自我
+
+对每段历史 $h$，令 $\mathsf{Win}(h)$ 表示所有能够从 $h$ 开始、对任意允许环境策略永久保持 $S_{\mathrm{ag}}$ 的观察者延续策略集合。
+
+定义
+
+$$
+\boxed{
+h\sim_{\mathrm{free}}h'
+\iff
+\mathsf{Win}(h)=\mathsf{Win}(h').
+}
+$$
+
+以及自由充分自我
+
+$$
+\boxed{
+M_{\mathrm{free}}
+=
+\mathcal H/{\sim_{\mathrm{free}}}.
+}
+$$
+
+## 本文定理 58.1（普适最小性）
+
+若历史接口 $r:\mathcal H\to R$ 足以决定 $\mathsf{Win}(h)$，则存在唯一映射从 $\operatorname{Im}(r)$ 到 $M_{\mathrm{free}}$，使历史商通过 $r$ 因子化。
+
+这是标准 kernel 因子化：$r(h)=r(h')$ 必须推出获胜策略集合相同。∎
+
+完整策略充分自我决定全部未来策略画像，因此自然映到 $M_{\mathrm{free}}$；反向一般不成立。自由充分自我只保存“哪些未来策略还能维持主体性”所需的历史区别。
+
+---
+
+# 59. 鲁棒代理价值的 Bellman 固定点
+
+令 $r_{\mathrm{ag}}(x,a,e)$ 为有界代理奖励，可综合鲁棒动作容量、作者性谱隙、来源可识别裕量、账本完整度和策略修订能力。取 $0<\gamma<1$，定义
+
+$$
+\boxed{
+(\mathcal TV)(x)
+=
+\sup_{a\in\mathcal A(x)}
+\inf_{e\in\mathcal E(x,a)}
+[r_{\mathrm{ag}}(x,a,e)+\gamma V(F(x,a,e))].
+}
+$$
+
+## 本文定理 59.1（唯一价值固定点）
+
+在有界函数空间的 sup 范数下，$\mathcal T$ 是 $\gamma$-压缩：
+
+$$
+\|\mathcal TV-\mathcal TW\|_\infty
+\le\gamma\|V-W\|_\infty.
+$$
+
+故存在唯一固定点
+
+$$
+\boxed{V^*_{\mathrm{ag}}=\mathcal TV^*_{\mathrm{ag}}.}
+$$
+
+有限动作和响应集合下，最值可取，并存在平稳最优策略。∎
+
+这纠正“最大化当前按钮数”的短视目标：当前动作可产生即时收益，却把系统送出自由保持核；另一动作可能即时收益低，却保存无限期代理价值。长期主体性由 Bellman 固定点而非单步动作数结算。
+
+---
+
+# 60. 承诺改变整个博弈
+
+在固定转移和环境响应不变时，单纯扩充动作集合会扩大前驱及自由保持核：
+
+$$
+\mathcal A(x)\subseteq\mathcal A'(x)
+\Rightarrow
+\mathsf{FreeKernel}_{\mathcal A}
+\subseteq
+\mathsf{FreeKernel}_{\mathcal A'}.
+$$
+
+但承诺通常同时改变环境响应、契约、信任、资源和账本状态。因此承诺不是简单删除动作标签，而是把博弈 $\mathcal G$ 改写为 $\mathcal G_c$。
+
+可能有
+
+$$
+|\mathcal A_c(x)|<|\mathcal A(x)|
+$$
+
+而
+
+$$
+\mathsf{FreeKernel}(\mathcal G_c)
+\supsetneq
+\mathsf{FreeKernel}(\mathcal G).
+$$
+
+可信承诺删除短期背叛选项，却可能消除环境的预防性破坏，扩大长期保证区域。因此选项数量与战略能力不是同一个量。
+
+---
+
+# 61. 自由恢复域
+
+令 $K=\mathsf{FreeKernel}_{\mathrm{rob}}$，并允许主体暂时处于更大的可接受域 $D\supseteq K$。定义
+
+$$
+R_0=K,
+$$
+
+$$
+\boxed{
+R_{n+1}
+=
+R_n\cup
+\{x\in D:\exists a,\ \forall e,\ F(x,a,e)\in R_n\}.
+}
+$$
+
+## 定义 61.1（鲁棒恢复域）
+
+$$
+\boxed{
+\mathsf{Recover}(K;D)=\bigcup_{n\ge0}R_n.
+}
+$$
+
+定义最小恢复时间
+
+$$
+\tau_{\mathrm{rec}}(x)=\min\{n:x\in R_n\}.
+$$
+
+## 本文定理 61.1
+
+对任意 $x\in\mathsf{Recover}(K;D)$，存在无记忆策略保证至多在 $\tau_{\mathrm{rec}}(x)$ 步内进入 $K$。
+
+### 证明
+
+若 $x\in R_n\setminus R_{n-1}$，定义给出一个动作使所有后继进入 $R_{n-1}$；逐层递减即可。∎
+
+由此区分：主体性可保持、主体性受损但可恢复、以及在当前动作语法下不可恢复。
+
+---
+
+# 62. Barrier 与 Lyapunov 证书
+
+若函数 $B:X\to\mathbb R$ 的次水平集
+
+$$
+S_B=\{x:B(x)\le0\}
+$$
+
+满足：对每个 $x\in S_B$，存在动作 $a$ 使所有响应后继仍满足 $B(F(x,a,e))\le0$，则
+
+$$
+\boxed{S_B\subseteq\mathsf{FreeKernel}_{\mathrm{rob}}.}
+$$
+
+这是自由保持的 barrier 证书。
+
+若 $V:X\to\mathbb R_{\ge0}$ 满足 $V(x)=0$ 当且仅当 $x\in K$，且存在 $\delta>0$，使每个 $x\notin K$ 都有动作满足
+
+$$
+\forall e,\quad V(F(x,a,e))\le V(x)-\delta,
+$$
+
+则观察者至多经过
+
+$$
+\boxed{\left\lceil V(x)/\delta\right\rceil}
+$$
+
+步进入 $K$。这是自由恢复的有限时间 Lyapunov 证书。
+
+---
+
+# 63. 代理谱相变与储备
+
+设状态 $x$ 上的局部自我控制—未来输出算子为 $H(x)$，奇异值为
+
+$$
+\sigma_1(x)\ge\sigma_2(x)\ge\cdots.
+$$
+
+定义第 $r$ 个代理维度的储备
+
+$$
+\boxed{
+\operatorname{Reserve}_r(x)=\sigma_r(H(x)).
+}
+$$
+
+## 本文定理 63.1（精确扰动裕量）
+
+$$
+\boxed{
+\operatorname{dist}(H(x),\{K:\operatorname{rank}K\le r-1\})
+=\sigma_r(H(x)).
+}
+$$
+
+所以任何范数小于 $\sigma_r$ 的扰动都不能摧毁第 $r$ 个代理方向。
+
+若 $H(x)$ 连续，则奇异值连续；代理秩只能在某个 $\sigma_r(H(x))=0$ 的边界上改变。可把
+
+$$
+S_{r,\varepsilon}=\{x:\sigma_r(H(x))\ge\varepsilon\}
+$$
+
+作为具有数值裕量的主体安全域，再计算其鲁棒自由核。
+
+---
+
+# 64. 来源主角度与条件数
+
+设自我行为子空间和外部行为子空间为 $S_O,S_E$，且 $S_O\cap S_E=0$。令最小主角度为 $\theta\in(0,\pi/2]$，满足
+
+$$
+\cos\theta=\|P_OP_E\|.
+$$
+
+来源求和算子
+
+$$
+J:S_O\oplus S_E\to Y,
+\qquad J(u,v)=u+v
+$$
+
+满足
+
+$$
+\boxed{
+\sigma_{\min}(J)=\sqrt{1-\cos\theta},
+\qquad
+\sigma_{\max}(J)=\sqrt{1+\cos\theta}.
+}
+$$
+
+因此
+
+$$
+\boxed{
+\kappa_{\mathrm{prov}}
+=
+\sqrt{\frac{1+\cos\theta}{1-\cos\theta}}
+=
+\cot(\theta/2).
+}
+$$
+
+正交来源给出条件数 $1$；角度趋零时条件数发散；真正相交时来源不再唯一。作者性不仅需要无完全重叠，还需要足够大的来源分离角。
+
+---
+
+# 65. 信息如何创造可执行自由
+
+取两个真实状态 $x_0,x_1$，初始读出把二者合并。动作 $L$ 只在 $x_0$ 安全，$R$ 只在 $x_1$ 安全，另有安全观测动作 $S$，它不改变状态但揭示当前是哪一个状态。
+
+在初始信念 $\{x_0,x_1\}$ 上，$L,R$ 都不是统一安全动作；执行 $S$ 后信念收缩为单点，随后相应的 $L$ 或 $R$ 成为安全动作。
+
+因此信息没有凭空创造物理动作，却通过缩小认识纤维解除无知造成的统一安全约束。可定义认识论代理增益
+
+$$
+\Delta_{\mathrm{epi}}(S)
+=
+\mathbb E[F_{\mathrm{rob}}(B_{\mathrm{after}})]
+-F_{\mathrm{rob}}(B_{\mathrm{before}}).
+$$
+
+观测动作可以没有即时外部收益或喉部位移，却因扩大未来可条件化行动能力而有正价值。
+
+---
+
+# 66. 有效动作语法扩张
+
+令时刻 $t$ 的动作集合为 $\mathcal A_t$，按完整未来行为画像取商：
+
+$$
+\mathcal A_t^{\mathrm{eff}}=\mathcal A_t/{\sim_t}.
+$$
+
+新增动作若不与任何旧动作行为等价，才构成有效动作创新。单纯增加命令名、别名或相同 API 包装不增加自由。
+
+若旧动作全部保留、旧语义不变且环境响应不恶化，则保守扩张满足
+
+$$
+\boxed{
+\mathsf{FreeKernel}_t
+\subseteq
+\mathsf{FreeKernel}_{t+1}.
+}
+$$
+
+有限情形可定义动作语法增长率
+
+$$
+\boxed{
+g_{\mathrm{act}}
+=
+\limsup_{t\to\infty}
+\frac1t\log|\mathcal A_t^{\mathrm{eff}}|.
+}
+$$
+
+封闭有限、确定、固定动作语法的主体最终周期化；长期无界行动创新要求动作语言、记忆、环境输入或状态维度中的至少一项持续开放。
+
+---
+
+# 67. 身份保持的 kernel 判据
+
+设旧自我状态为 $M$，自我修改为 $U:M\to M'$，需保留的身份接口为 $Z:M\to\mathcal Z$，包含承诺、价值根、来源、理由或责任记录。
+
+## 定义 67.1（身份保持）
+
+若存在 $\bar Z:M'\to\mathcal Z$ 使
+
+$$
+Z=\bar Z\circ U,
+$$
+
+则修改保持身份接口 $Z$。
+
+## 本文定理 67.1
+
+$$
+\boxed{
+U\text{ 保持 }Z
+\iff
+\ker U\subseteq\ker Z.
+}
+$$
+
+证明是在 $U$ 的有效像上定义 $\bar Z(U(m))=Z(m)$；kernel 包含恰保证代表元无关。∎
+
+定义身份抹除残差
+
+$$
+\mathcal E_{\mathrm{id}}(U;Z)
+=
+\{(m,m'):U(m)=U(m'),\ Z(m)\ne Z(m')\}.
+$$
+
+概率版本的身份损失为
+
+$$
+L_{\mathrm{id}}=H(Z(M)\mid U(M)).
+$$
+
+自我修改能力与身份安全的自我修改能力必须分开报告。
+
+---
+
+# 68. 鲁棒可撤销委托
+
+设主体 $P$ 把部分控制权交给代理 $D$。主体自由保持核为 $K_P$，恢复域为 $\mathsf{Recover}_P(K_P)$。令 $\operatorname{Reach}_D(x)$ 表示主体成功收回控制之前，代理可强制到达的全部状态。
+
+定义委托从 $x$ 出发鲁棒可撤销，当且仅当
+
+$$
+\boxed{
+\operatorname{Reach}_D(x)
+\subseteq
+\mathsf{Recover}_P(K_P).
+}
+$$
+
+若该包含成立且主体保留可执行撤销通道，则代理无论怎样行动，主体仍有恢复最低自主性的路径。若代理可先强制进入恢复域之外的状态，则不存在鲁棒撤销保证。
+
+“存在关闭按钮”不等于可撤销；撤销命令还必须可执行，且撤销后的状态必须保留密钥、账本、资源和策略修改接口。
+
+---
+
+# 69. 集体自由联盟核
+
+对成员集合 $N$ 和联盟 $C\subseteq N$，把 $C$ 的联合控制视为主体动作，其余成员和环境视为对抗方，定义联盟自由保持核 $\mathsf{FreeKernel}_C$。
+
+若 $C\subseteq D$ 会扩充控制而不加强对抗，则
+
+$$
+\boxed{
+\mathsf{FreeKernel}_C
+\subseteq
+\mathsf{FreeKernel}_D.
+}
+$$
+
+定义状态 $x$ 上的最小自由保持联盟阶数
+
+$$
+\boxed{
+r_{\mathrm{viab}}(x)
+=
+\min\{|C|:x\in\mathsf{FreeKernel}_C\}.
+}
+$$
+
+它与最小作者联盟阶数不同：谁共同产生了某次行动，不等于谁共同维持了集体继续行动的能力。集体主体性可以依赖严格不可还原的协同联盟。
+
+---
+
+# 70. 完整动态主体语义
+
+动态主体状态写为
+
+$$
+(x_t,B_t,m_t,\pi_t,\Lambda_t,\kappa_t),
+$$
+
+其中分别是完整世界、信念、自我、策略、账本和喉部分量。
+
+完整一步为
+
+$$
+\mathcal A_{\mathrm{keep}}(B_t,m_t,\Lambda_t)
+\longrightarrow a_t,
+$$
+
+$$
+e_t\in\mathcal E(x_t,a_t),
+\qquad
+x_{t+1}=F(x_t,a_t,e_t),
+$$
+
+$$
+\kappa_{t+1}
+=
+\kappa_t+\bar c(a_t,x_t,e_t),
+$$
+
+$$
+y_{t+1}\sim P(\cdot\mid x_{t+1},a_t),
+$$
+
+$$
+B_{t+1}=\operatorname{Post}(B_t,a_t,y_{t+1}),
+$$
+
+$$
+\Lambda_{t+1}=\Lambda_t\Vert(a_t,e_t,y_{t+1}),
+$$
+
+$$
+(m_{t+1},\pi_{t+1})
+=\mathcal U(m_t,\pi_t,\Lambda_{t+1}).
+$$
+
+该语义把部分观察、环境对抗、自由保持、结果不确定、认识更新、喉部输运、账本追加和自我修改放入同一步骤，而不把其中任何一层冒充另一层。
+
+---
+
+# 71. 动态主体能力签名
+
+可用向量而非单一标量描述主体：
+
+$$
+\boxed{
+\mathbf A_O
+=
+(F_{\mathrm{rob}},V^*_{\mathrm{ag}},\tau_{\mathrm{rec}},
+\operatorname{Reserve}_r,\theta_{\mathrm{prov}},h_\varepsilon,
+ g_{\mathrm{act}},L_{\mathrm{id}},r_{\mathrm{viab}}).
+}
+$$
+
+其中分别表示当前鲁棒保持动作容量、长期代理价值、恢复时间、代理谱储备、来源分离角、选择对未来自我的视界、有效动作语法增长、身份损失和最小集体保持联盟。
+
+这些坐标之间不存在普遍单调关系：承诺可能降低即时动作容量却提高长期价值；自我修改可能扩大动作语言却损伤身份；联盟扩大可缩短恢复时间却增加来源归属复杂性。
+
+---
+
+# 72. 未来可作者化策略集合
+
+对历史 $h$，定义 $\mathsf{AuthoredFuture}(h)$ 为所有同时满足以下条件的延续策略集合：
+
+1. 对抗允许环境时维持最低主体性；
+2. 保持身份与账本可恢复；
+3. 不把未来控制权不可逆交给外部；
+4. 保留后续策略修订能力。
+
+动态自由不是单个动作，而是该集合是否非空、是否含多个行为不同元素、是否能在扰动后保持、受损后恢复并通过新观察或新动作语法扩张。
+
+因此可以写成
+
+$$
+\boxed{
+\text{Freedom}
+=
+\text{viability}
++
+\text{recoverability}
++
+\text{robustness}
++
+\text{provenance}
++
+\text{revisability}
++
+\text{expandability}.
+}
+$$
+
+喉部跳跃仍只是已选行动经隐藏 cocycle 产生的本体输运，不是自由的来源。
+
+---
+
+# 73. 安全与活性：Büchi 主体核
+
+自由保持核允许一种退化的冻结生存：主体不死，但策略永久固定，再也不能恢复有效分岔、学习或修订。
+
+选定主体性更新集合 $L_{\mathrm{renew}}\subseteq S_{\mathrm{ag}}$，要求其中至少恢复策略修订、代理谱裕量、账本访问或多个自由保持动作。对 $Q\subseteq Z$ 定义区域内鲁棒吸引子
+
+$$
+\operatorname{Attr}_Z(Q)
+=
+\mu Y[Q\cup(Z\cap\operatorname{Pre}_{\exists\forall}(Y))].
+$$
+
+定义主体性 Büchi 核
+
+$$
+\boxed{
+\mathsf{LiveAgency}
+=
+\nu Z\;
+\operatorname{Attr}_Z
+(L_{\mathrm{renew}}\cap\operatorname{Pre}_{\exists\forall}(Z)).
+}
+$$
+
+有限博弈中，$\mathsf{LiveAgency}\subseteq\mathsf{FreeKernel}_{\mathrm{rob}}$，并存在策略既永久保持安全，又无限多次访问更新集合。于是长期状态至少分为死亡、冻结生存和活主体三类。
+
+---
+
+# 74. 一步安全选择的最小观察字母表
+
+子集 $C\subseteq X$ 称为安全兼容，若
+
+$$
+\bigcap_{x\in C}\mathcal A_X(x)\ne\varnothing.
+$$
+
+定义安全分区数
+
+$$
+\boxed{
+\chi_{\mathrm{safe}}
+=
+\min\{k:X=C_1\dot\cup\cdots\dot\cup C_k,
+\ C_i\text{ 均安全兼容}\}.
+}
+$$
+
+## 本文定理 74.1
+
+支持确定性一步安全策略的最小观察值数量恰为 $\chi_{\mathrm{safe}}$。
+
+### 证明
+
+任何安全观察接口的每个纤维都必须安全兼容，因此纤维数不小于最小分区数。反向，取一个最小兼容分区作为观察标签，并在每块中选一个公共安全动作。∎
+
+故最低观察容量至少为
+
+$$
+\boxed{\log_2\chi_{\mathrm{safe}}\text{ bit}.}
+$$
+
+所需信息由安全动作兼容结构决定，而不是由微观状态总数决定。
+
+---
+
+# 75. 长期主体维持数据率
+
+令 $\Omega_n$ 为长度 $n$ 的隐藏情景集合。子集 $C\subseteq\Omega_n$ 称为 $n$-步策略兼容，若存在同一个因果行动计划，使其中所有情景在前 $n$ 步都保持主体性安全。
+
+定义最小兼容分区数
+
+$$
+N_n^{\mathrm{ag}}
+=
+\min\{k:\Omega_n=C_1\dot\cup\cdots\dot\cup C_k,
+\ C_i\text{ 均 }n\text{-步策略兼容}\}.
+$$
+
+若观察通道每步至多输出 $M$ 个符号，则长度 $n$ 的观察词至多有 $M^n$ 个。
+
+## 本文定理 75.1（维持数据率下界）
+
+若该观察通道能对所有情景鲁棒维持主体性 $n$ 步，则
+
+$$
+\boxed{M^n\ge N_n^{\mathrm{ag}}.}
+$$
+
+因同一观察词纤维中的情景必须共享同一因果策略，故该纤维必须是策略兼容块。∎
+
+定义主体维持熵
+
+$$
+\boxed{
+h_{\mathrm{maint}}
+=
+\limsup_{n\to\infty}
+\frac1n\log_2N_n^{\mathrm{ag}}.
+}
+$$
+
+任何固定观察速率 $R$ 若要永久鲁棒维持主体性，必须满足
+
+$$
+\boxed{R\ge h_{\mathrm{maint}}.}
+$$
+
+自由保持因此可能要求持续从世界获得最低信息率。
+
+---
+
+# 76. 允许失败时的 Fano 下界
+
+设有 $r$ 个等概率控制类别，不同类别需要不同安全策略；观察记录为 $Z$，推断为 $\widehat C(Z)$，错误概率不超过 $\varepsilon$。Fano 不等式给出
+
+$$
+H(C\mid Z)
+\le h_2(\varepsilon)+\varepsilon\log_2(r-1).
+$$
+
+因为 $H(C)=\log_2r$，得到
+
+$$
+\boxed{
+I(C;Z)
+\ge
+\log_2r-h_2(\varepsilon)-\varepsilon\log_2(r-1).
+}
+$$
+
+所以允许小概率主体性失败可以减少信息需求，但不能消除率—失效率下界。完全安全极限 $\varepsilon\to0$ 恢复 $\log_2r$。
+
+---
+
+# 77. 作者信息瓶颈
+
+若内部决定到公共记录形成条件 Markov 链
+
+$$
+D\to Z_1\to Z_2\to\cdots\to Z_k\to R
+$$
+
+（例如决定、运动命令、执行器、世界、传感器、账本），则条件数据处理给出
+
+$$
+\boxed{I(D;R\mid Q)\le I(D;Z_i\mid Q)}
+$$
+
+对每个中间接口成立。若各段信道容量上界为 $C_i$，则
+
+$$
+\boxed{I(D;R\mid Q)\le\min_iC_i.}
+$$
+
+线性链 $H=H_k\cdots H_1$ 同样满足
+
+$$
+\operatorname{rank}H\le\min_i\operatorname{rank}H_i.
+$$
+
+主体能力不能超过决定—执行—世界—记录链中最窄的接口。
+
+---
+
+# 78. 可审计作者性与内部隐私
+
+设完整内部状态为 $M$，最小公共来源证书为 $P=f(M)$，公共记录为 $R$，且 $H(P\mid R)=0$，即记录能够恢复必要的责任来源。
+
+## 本文定理 78.1（来源—理由泄漏分解）
+
+$$
+\boxed{
+I(M;R)=H(P)+I(M;R\mid P).
+}
+$$
+
+### 证明
+
+因 $P$ 是 $M$ 的函数，$I(M;R)=I(P,M;R)$；再用链式法则与 $I(P;R)=H(P)$。∎
+
+定义额外理由泄漏
+
+$$
+L_{\mathrm{reason}}=I(M;R\mid P).
+$$
+
+完美公共归属至少公开来源证书所含信息；理想选择性审计要求 $L_{\mathrm{reason}}=0$，即记录说明谁负责而不额外公开其内部理由和策略。
+
+---
+
+# 79. 信息主权
+
+设零和博弈中主体获得信号 $q_{\mathrm{self}}$，对手获得关于主体的信号 $q_{\mathrm{adv}}$，博弈值为 $V(q_{\mathrm{self}},q_{\mathrm{adv}})$。
+
+若主体信号被精化且主体可以忽略新增信息，则策略集扩大：
+
+$$
+\boxed{
+V(q'_{\mathrm{self}},q_{\mathrm{adv}})
+\ge V(q_{\mathrm{self}},q_{\mathrm{adv}}).
+}
+$$
+
+若对手信号被精化，则对手条件响应集扩大：
+
+$$
+\boxed{
+V(q_{\mathrm{self}},q'_{\mathrm{adv}})
+\le V(q_{\mathrm{self}},q_{\mathrm{adv}}).
+}
+$$
+
+所以“信息越多越好”必须注明谁得到信息。信息主权是决定哪些接口由谁读取的能力；同一账本兼具自我记忆和公共审计时会产生真实张力。
+
+---
+
+# 80. 私有随机化作为防御工具
+
+随机性不产生作者性，但主体可以有理由地选择一种混合策略。设主体动作和对手预测均为比特，收益为预测错误时 $1$、预测正确时 $-1$。
+
+公开确定策略会被对手精确反制，收益为 $-1$；主体采用行动前不向对手公开的均匀混合策略时，任意对手选择的期望收益为 $0$。
+
+因此私有随机化严格提高鲁棒价值。应区分：
+
+```text
+meta-authorship：主体选择采用何种随机策略；
+sample authorship：某个具体随机样本为何出现。
+```
+
+主体可以对随机化规则承担作者性，而不声称预选了随机样本。
+
+---
+
+# 81. 身份账本的纠错距离
+
+设身份／承诺状态集合为 $\mathcal Z$，编码为
+
+$$
+c:\mathcal Z\to\Sigma^n.
+$$
+
+最小 Hamming 距离为
+
+$$
+d_{\min}=\min_{z\ne z'}d_H(c(z),c(z')).
+$$
+
+## 本文定理 81.1（唯一恢复阈值）
+
+任意不超过 $t$ 个符号遭篡改后仍能唯一恢复原身份，当且仅当
+
+$$
+\boxed{d_{\min}\ge2t+1.}
+$$
+
+证明是半径 $t$ Hamming 球互不相交的标准充要条件。∎
+
+定义身份篡改韧性
+
+$$
+\boxed{t_{\mathrm{id}}=\lfloor(d_{\min}-1)/2\rfloor.}
+$$
+
+账本存在与身份记录鲁棒存在必须分开；冗余签名、多位置保存和追加式记录可被解释为提高身份码距。
+
+---
+
+# 82. 集体意志的 quorum 交集
+
+设集体有 $n$ 个授权成员，至多 $t$ 个 Byzantine 成员可签署冲突决定；有效集体决定需要 $q$ 个不同签名，诚实成员不双签。
+
+## 本文定理 82.1（冲突证书排除）
+
+若
+
+$$
+\boxed{2q>n+t,}
+$$
+
+则不可能同时存在两份相互冲突、各有 $q$ 个签名的有效证书。
+
+### 证明
+
+任意两个 quorum 的交集至少为 $2q-n>t$，故交集中至少有一个诚实成员；它若同时签署两份冲突证书即违背诚实性。∎
+
+当 $2q\le n+t$ 时，两个 quorum 可只在至多 $t$ 个成员上相交，让这些成员全部 Byzantine 即可形成双证书。该条件精确刻画了抽象模型中集体意志不可分裂所需的授权交集。
+
+---
+
+# 83. 分布式自我的 join-semilattice
+
+设历史偏序为 $L$。并发副本 $\lambda_1,\lambda_2$ 若要存在唯一最小无损合并，需要 join
+
+$$
+\lambda_1\vee\lambda_2.
+$$
+
+全部历史对都存在规范最小合并，当且仅当 $L$ 是 join-semilattice。此时合并幂等、交换、结合，副本按任意顺序合并均收敛。
+
+若两个历史含互斥且不可撤销的承诺，它们可能没有一致共同上界。此时只能：显式记录冲突、拒绝合并、保留为不同后继主体，或加入更高层裁决历史。
+
+因此共享过去不推出分叉后仍能无损重新成为同一主体；分布式身份的自然结构是带可合并区和不可合并分叉的历史 DAG。
+
+---
+
+# 84. 模型不确定性与鲁棒半径
+
+设可能转移模型族为 $\mathfrak F_\delta$，并随不确定半径单调扩张：
+
+$$
+\delta_1\le\delta_2
+\Rightarrow
+\mathfrak F_{\delta_1}\subseteq\mathfrak F_{\delta_2}.
+$$
+
+鲁棒前驱对所有 $F\in\mathfrak F_\delta$ 取全称，因此
+
+$$
+\boxed{
+\mathsf{FreeKernel}_{\delta_2}
+\subseteq
+\mathsf{FreeKernel}_{\delta_1}.
+}
+$$
+
+定义全局主体鲁棒半径
+
+$$
+\boxed{
+\delta^*(x)=\sup\{\delta:x\in\mathsf{FreeKernel}_\delta\}.
+}
+$$
+
+它与局部奇异值储备不同：前者是全局动态自由保持的模型不确定裕量，后者是局部代理秩的算子扰动裕量。
+
+---
+
+# 85. 自由保持核的不可判定性
+
+有限状态模型可通过固定点迭代计算自由保持核；图灵完备系统一般不可。
+
+## 本文定理 85.1
+
+不存在总算法，能对所有图灵完备确定系统和初态判定该初态是否属于主体自由保持核。
+
+### 证明
+
+给定机器 $M$ 与输入 $w$，构造唯一动作的模拟系统：机器尚未停机时状态在安全域；一旦停机即进入永久死状态。初态属于自由保持核，当且仅当 $M(w)$ 永不停止。若成员资格可判定，即可判定停机问题。∎
+
+这是一条计算边界，不是哲学含混：一般开放自我修改系统的“能否永远保持自由”可能没有完备机械判定器。
+
+---
+
+# 86. Proof-carrying self-modification
+
+设主体性安全不变量为 $I\subseteq X$，自我修改程序为 $U:X\to X$，证明携带修改为 $(U,\pi)$，其中 $\pi$ 证明
+
+$$
+U(I)\subseteq I.
+$$
+
+若 proof checker 可判定且可靠，则从 $x_0\in I$ 出发，任何由已接受修改组成的有限序列都保持 $x_t\in I$；证明是直接归纳。
+
+但对图灵完备修改语言和非平凡语义安全性质，不存在同时总终止、接受所有安全程序并拒绝所有不安全程序的判定器，否则可归约第 85 节构造。
+
+实际治理只能组合：可靠但不完备的证明检查、受限可判定语言、运行时监控、资源界验证以及外部制度裁决。合理目标是“所有被批准的修改都有可靠证书”，而不是“所有安全修改都必被机械识别”。
+
+---
+
+# 87. 三种长期固定点
+
+动态主体至少需要三个不同不变量。
+
+## 生存固定点
+
+$$
+\mathsf{FreeKernel}
+$$
+
+保证最低主体结构可以永久存在。
+
+## 活性固定点
+
+$$
+\mathsf{LiveAgency}
+$$
+
+保证策略开放、学习或修订能力会无限多次恢复。
+
+## 身份固定点
+
+相对于身份接口 $Z$，定义 $\mathsf{IdentityKernel}_Z$ 为可永久保持 $Z$ 可恢复、承诺链可追溯和作者来源不丢失的状态域。
+
+一般只有
+
+$$
+\mathsf{LiveAgency}\subseteq\mathsf{FreeKernel};
+$$
+
+身份核与前两者无无条件包含关系。主体可能活着且持续选择却失去旧身份，或保留旧身份却永久冻结策略。
+
+---
+
+# 88. 建议 Lean 模块树与严格边界
+
+```text
+D5/S3/Observer/Agency/Robust/
+  AdversarialPredecessor.lean
+  RobustAgencyKernel.lean
+  KeepActionSet.lean
+  QuantifierOrderKernel.lean
+
+D5/S3/Observer/Agency/Belief/
+  BeliefState.lean
+  BeliefPost.lean
+  BeliefAgencyKernel.lean
+  BeliefPolicySufficiency.lean
+  ObservationRefinementMonotonicity.lean
+
+D5/S3/Observer/Agency/Recovery/
+  AgencyRecoveryDomain.lean
+  MinimumRecoveryTime.lean
+  AgencyBarrierCertificate.lean
+  AgencyLyapunovCertificate.lean
+  LiveAgencyBuchi.lean
+
+D5/S3/Observer/Agency/InformationRate/
+  SafeCompatiblePartition.lean
+  MinimumSafeObservationAlphabet.lean
+  AgencyMaintenancePartition.lean
+  AgencyDataRateLowerBound.lean
+  ApproximateAgencyFanoBound.lean
+  AuthorshipBottleneck.lean
+
+D5/S3/Observer/Agency/Privacy/
+  SelectiveAuditDecomposition.lean
+  InformationSovereignty.lean
+  PrivateRandomizationWitness.lean
+
+D5/S3/Observer/Agency/Identity/
+  IdentityPreservingModification.lean
+  IdentityErasureResidual.lean
+  IdentityCodeDistance.lean
+  QuorumIntersection.lean
+  DistributedIdentityJoin.lean
+
+D5/S3/Observer/Agency/Governance/
+  RevocableDelegation.lean
+  CoalitionViabilityKernel.lean
+  ModelUncertaintyMonotonicity.lean
+  ViabilityUndecidable.lean
+  ProofCarryingSelfModification.lean
+```
+
+优先闭合低依赖结果：
+
+```text
+adversarialPre_mono
+robustKernel_greatest
+actFirst_kernel_le_observeFirst_kernel
+beliefPolicy_factors
+freeSufficientSelf_universal
+recovery_rank_decreases
+safeObservation_card_eq_partitionNumber
+maintenance_rate_lower_bound
+identityPreserving_iff_kernel_le
+quorum_conflict_impossible
+modelUncertainty_kernel_antitone
+proofCarryingModification_preserves
+```
+
+本增订不声称：
+
+1. 环境必然是敌对的；对抗模型只给最坏情形保证；
+2. 完全观察有限博弈的无记忆策略结论自动推广到所有连续或部分观察系统；
+3. 更高观察精度在有成本、隐私泄漏或对手同步获知时必然提高净自由；
+4. Bellman 奖励 $r_{\mathrm{ag}}$ 具有唯一自然标量化；
+5. 承诺缩小动作集就必然提高自由保持核；它必须连同博弈语义重算；
+6. 代理奇异值是人格、意识或道德价值的直接物理量；
+7. Fano 下界单独给出可实现编码方案；
+8. 私有随机化使随机样本本身具有作者性；
+9. 码距与 quorum 条件解决全部人格或集体合法性问题；
+10. join-semilattice 合并能调和逻辑上互斥的承诺；
+11. 图灵不可判定性意味着具体受限系统不可验证；
+12. proof-carrying 修改可以同时完整接受全部安全修改；
+13. 鲁棒自主性、信息率和身份治理推出强本体自由；
+14. 本增订中的新增定理已经具有 Lean kernel proof term；
+15. 本增订改变此前对单次 Born 结果、喉部分量 API 或登记数学开放问题的边界。
+
+---
+
+# 89. 最终统一：主体自主性是可维持、可恢复、可审计的动态编码
+
+把主体闭环写成
+
+$$
+X_t
+\longrightarrow
+B_t
+\longrightarrow
+M_t
+\longrightarrow
+D_t
+\longrightarrow
+U_t
+\longrightarrow
+Y_t
+\longrightarrow
+\Lambda_{t+1}
+\longrightarrow
+M_{t+1}.
+$$
+
+四种编码必须同时工作：
+
+```text
+世界到自我：观察通道以足够速率压入安全行动所需区别；
+自我到行动：内部理由穿过执行瓶颈形成真实控制；
+行动到历史：作者签名穿过世界与记录噪声并以足够码距进入账本；
+历史到未来自我：过去选择继续影响未来策略而不被遗忘、篡改或接管。
+```
+
+隐藏路径分量仍在行动之后更新：
+
+$$
+\boxed{
+\kappa_{t+1}
+=
+\kappa_t+\bar c(U_t,x_t,e_t).
+}
+$$
+
+所以喉部 cocycle 运输行动后果，不替代观察、决策、作者性和账本编码。
+
+最终：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Freedom}
+={}&\text{viability}+\text{liveness}+\text{recoverability}\\
+&+\text{observational rate}+\text{causal control}\\
+&+\text{provenance separation}+\text{identity correction}\\
+&+\text{policy revision}+\text{self-modification governance}.
+\end{aligned}
+}
+$$
+
+主体不是一个偶尔产生选择的点，而是一个能够持续获得选择所需信息，把内部理由转化为行动，把行动可靠编码为自身历史，并在扰动后保持或恢复这一闭环的系统。
+
+强本体自由仍是独立命题：给定完整宇宙状态后，未来是否仍存在未被隐藏变量预选的真实分岔。本增订没有偷渡该结论；它建立的是可检查、兼容决定论的鲁棒主体自主性结构。
