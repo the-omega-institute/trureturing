@@ -40,7 +40,6 @@ internal sealed class PositivePriorConditionalIndependenceDocument
     private static Formula TheoremFormula()
     {
         Formula type = F.Id("Type");
-        Formula real = F.Id("Real");
         Formula stateType = F.Id("X");
         Formula conceptType = F.Id("C");
         Formula targetType = F.Id("Y");
@@ -53,26 +52,20 @@ internal sealed class PositivePriorConditionalIndependenceDocument
         Formula reduced = F.Id("Kbar");
         Formula joint = F.Id("jointLaw");
         Formula pmfTarget = Call("PMF", targetType);
-        Formula jointType = Arrow(
-            Call("Prod", stateType, Call("Prod", conceptType, targetType)),
-            real);
         Formula jointCell = ApplyMany(joint, state, conceptValue, targetValue);
         Formula priorCell = Apply(prior, state);
         Formula kernelCell = Apply(Apply(kernel, state), targetValue);
         Formula sameConcept = Relation(
             conceptValue, FormulaRelationOperator.Equal, Apply(concept, state));
-        Formula jointDefinition = new Formula.BindMany(
-            FormulaQuantifier.ForAll,
-            [
-                Bound("x", stateType),
-                Bound("c", conceptType),
-                Bound("y", targetType),
-            ],
-            Relation(
-                jointCell,
-                FormulaRelationOperator.Equal,
-                Call("ite", sameConcept, Multiply(priorCell, kernelCell),
-                    new Formula.Number(0))));
+        Formula jointDefiniens = Call(
+            "ite",
+            sameConcept,
+            Multiply(Call("toReal", priorCell), Call("toReal", kernelCell)),
+            new Formula.Number(0));
+        Formula jointLet = F.Seq(
+            F.Operatorname, F.Grp(F.Id("let")), F.Sp, joint, F.Sp, F.Colon, F.Eq, F.Sp,
+            F.Open, state, F.Comma, F.Open, conceptValue, F.Comma, targetValue,
+            F.Close, F.Close, F.Sp, F.Mapsto, F.Sp, jointDefiniens, F.Semi, F.Sp);
         Formula positivePrior = new Formula.Bind(
             FormulaQuantifier.ForAll,
             FormulaIdentifier.Create("x"),
@@ -107,11 +100,11 @@ internal sealed class PositivePriorConditionalIndependenceDocument
                 Bound("mu", Call("PMF", stateType)),
                 Bound("K", Arrow(stateType, pmfTarget)),
                 Bound("concept", Arrow(stateType, conceptType)),
-                Bound("jointLaw", jointType),
             ],
             Implies(
-                And(positivePrior, jointDefinition),
-                Logic(factorization, FormulaLogicOperator.Iff, conditionalIdentity)));
+                positivePrior,
+                F.Seq(jointLet,
+                    Logic(factorization, FormulaLogicOperator.Iff, conditionalIdentity))));
 
         return F.Disp(new Formula.BindMany(
             FormulaQuantifier.ForAll,
