@@ -12,6 +12,7 @@ public sealed class CodexFormalAnswerSkillTests
     private const string AuthorityHeading = "5. Derive outcomes from owner facts";
     private const string GeneralizationHeading = "Generalization bridge";
     private const string RepositoryConceptSearchHeading = "Repository concept search";
+    private const string DurabilityRoutingHeading = "Durability routing";
 
     private static readonly MarkdownPipeline Pipeline = new MarkdownPipelineBuilder()
         .UsePipeTables()
@@ -176,6 +177,32 @@ public sealed class CodexFormalAnswerSkillTests
         Assert.True(DefinesCompleteRepositoryConceptSearch(Parse(skill)));
     }
 
+    [Fact]
+    public void DurabilityRoutingWithoutReuseAndThinBranchesIsRejected()
+    {
+        var document = Parse(
+            """
+            ## Durability routing
+
+            1. `deposit-new`: Send every compiling declaration to `codex-formalize`.
+            2. `open-deposit`: Report a blocked deposit as `open`.
+            """);
+
+        Assert.False(DefinesCompleteDurabilityRouting(document));
+    }
+
+    [Fact]
+    public void CodexFormalAnswerPersistsOnlySubstantiveNewReusableTheoremsThroughOwner()
+    {
+        var skill = File.ReadAllText(Path.Combine(
+            RepositoryLayout.FindRoot(),
+            "skills",
+            "codex-formal-answer",
+            "SKILL.md"));
+
+        Assert.True(DefinesCompleteDurabilityRouting(Parse(skill)));
+    }
+
     private static bool DefinesSingleStructurallyTotalAuthority(MarkdownDocument document)
     {
         var authoritySection = FindSection(document, AuthorityHeading);
@@ -295,6 +322,50 @@ public sealed class CodexFormalAnswerSkillTests
             && modelingCodes.Contains("P")
             && modelingCodes.Contains("G")
             && modelingCodes.Contains("S");
+    }
+
+    private static bool DefinesCompleteDurabilityRouting(MarkdownDocument document)
+    {
+        var headings = document
+            .OfType<HeadingBlock>()
+            .Where(heading => PlainText(heading).Equals(
+                DurabilityRoutingHeading,
+                StringComparison.Ordinal))
+            .ToArray();
+        if (headings.Length != 1)
+        {
+            return false;
+        }
+
+        var orderedLists = SectionBlocks(document, headings[0])
+            .SelectMany(SelfAndDescendants)
+            .OfType<ListBlock>()
+            .Where(list => list.IsOrdered)
+            .ToArray();
+        if (orderedLists.Length != 1)
+        {
+            return false;
+        }
+
+        var items = orderedLists[0].OfType<ListItemBlock>().ToArray();
+        if (items.Length != 4)
+        {
+            return false;
+        }
+
+        var reuseCodes = InlineCodeValues(items[0]).ToHashSet(StringComparer.Ordinal);
+        var thinCodes = InlineCodeValues(items[1]).ToHashSet(StringComparer.Ordinal);
+        var depositCodes = InlineCodeValues(items[2]).ToHashSet(StringComparer.Ordinal);
+        var blockedCodes = InlineCodeValues(items[3]).ToHashSet(StringComparer.Ordinal);
+
+        return reuseCodes.Contains("reuse-existing")
+            && reuseCodes.Contains("active-frozen")
+            && thinCodes.Contains("discard-thin")
+            && thinCodes.Contains("run-local")
+            && depositCodes.Contains("deposit-new")
+            && depositCodes.Contains("codex-formalize")
+            && blockedCodes.Contains("open-deposit")
+            && blockedCodes.Contains("open");
     }
 
     private static ListBlock? FindOrderedFirstMatchList(IReadOnlyList<Block> section)

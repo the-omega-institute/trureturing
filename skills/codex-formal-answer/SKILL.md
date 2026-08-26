@@ -1,6 +1,6 @@
 ---
 name: codex-formal-answer
-description: Use when answering natural-language mathematical, conceptual, philosophical, or metaphysical assertions and questions by discovering the repository's existing theory, finding or proving a reusable general theorem, specializing it back to the clause-complete concrete proposition, and reporting owner-issued Lean evidence without depositing repository truth.
+description: Use when answering natural-language mathematical, conceptual, philosophical, or metaphysical assertions and questions by discovering repository theory, proving a reusable general theorem, specializing it to the concrete proposition, and routing substantive new Lean results into the repository's durable formalization workflow.
 ---
 
 # Codex Formal Answer Workflow
@@ -11,9 +11,9 @@ This is a Codex skill package. Install it by copying the `skills/codex-formal-an
 
 ## Scope and authority
 
-This skill is a thin adapter for one invocation, from a user's natural-language input to an evidence-bearing reply. It owns only (1) the clause-complete mapping from that input to exact propositions and (2) the per-assertion rendering of facts issued by existing owners. It owns no proof status and defaults to zero repository mutation.
+This skill coordinates one invocation from a user's natural-language input to an evidence-bearing reply and, when the work produces a substantive new reusable Lean result, to its durable repository owner. It owns (1) the clause-complete mapping from that input to exact propositions, (2) the `P`/`G`/`S` bridge, and (3) the durability disposition. It owns no proof status, admission decision, frozen receipt, or pull-request mechanism.
 
-A reply is a proof-carrying projection over existing truth, not a new truth plane or an automatic frozen node. A request for a durable contribution is a separate task routed to the existing Frontier, formalization, or admission workflow; answering never deposits or freezes by itself.
+A reply remains a proof-carrying projection over owner-issued truth, not a new truth plane. The workflow must not strand a substantive new reusable theorem in a disposable file merely because the immediate reply can cite run-local evidence. It routes such a theorem through the existing Frontier, formalization, and admission owners; exact reuse, thin wrappers, and scenario-only specializations create no duplicate repository node.
 
 This file is Codex-specific packaging of repository obligations; it has no authority over owner facts. `docs/develop/spec/golden-ledger-repo-spec.md` is the sole normative specification, `CLAUDE.md` is the invariant frame, and live owner output decides facts about the current tree. Any current-state summary below is a non-load-bearing reading: it creates no rule independent of its owner, and if the owner disagrees, follow the owner and treat the summary here as void.
 
@@ -25,7 +25,8 @@ This file is Codex-specific packaging of repository obligations; it has no autho
 - `agents/echo-template.md`, which owns the exact-statement record.
 - `make help`, which owns the live catalogue of canonical doors.
 - `tools/lean-inspector/Inspector.lean` and the canonical `make lean-report` output, which own declaration axiom closures.
-- The existing `codex-formalize`, `codex-theorize`, or `codex-theory-ingest` skill only when a separate durable task is routed to it.
+- `skills/codex-formalize/SKILL.md` in full as soon as `deposit-new` becomes a candidate; it owns the durable theorem workflow and its substance gate.
+- `skills/codex-theorize/SKILL.md` or `skills/codex-theory-ingest/SKILL.md` only when the live owner routes a valuable statement through Frontier or source ingestion before formalization.
 
 ## Repository concept search
 
@@ -48,6 +49,17 @@ When the assertion is scenario-specific or the user requests generalization, bui
 3. `S` is an exact Lean specialization that applies `G` back to `P` under an explicit substitution map and discharges every resulting hypothesis. Its statement must be exact `P`, or the exact negation of `P` on a refutation branch. `S` may not restate or independently reprove the concrete result; without eligible evidence for both `G` and `S`, generalized evidence cannot grade `P`.
 
 If the input is already stated at the reusable canonical level, record that finding and do not manufacture a tautological `G`; the exact proposition remains the main theorem. Otherwise, every concrete clause in `P` must be accounted for by a parameter, hypothesis, conclusion component, or explicit substitution in the bridge. For conceptual inputs, `G` should quantify over the discovered repository carriers and relations, while `S` supplies the named concepts and any explicit context index. Empirical and metaphysical premises remain premises unless separately discharged by eligible owner evidence.
+
+## Durability routing
+
+After the exact declarations have been checked, apply the first matching route and stop at one. Durability is a disposition over code, separate from the truth outcome assigned in Step 5:
+
+1. `reuse-existing`: an eligible repository declaration already owns exact `G` or canonical `P`. Apply it and cite its `active-frozen` evidence; do not deposit a renamed theorem or convenience wrapper.
+2. `discard-thin`: the only new code is `S`, a one-off wrapper, a renamed duplicate, an ornamental definition, or a declaration that fails the `codex-formalize` mathematical-content or deposit-substance gate. Retain it only as `run-local` evidence for the reply and remove the disposable source after reporting it.
+3. `deposit-new`: exact `G`, or canonical `P` when no bridge is needed, is a genuine repository miss, compiles with an eligible axiom closure, is reusable beyond the named scenario, and passes every `codex-formalize` fidelity and non-hollowness obligation. Invoke `codex-formalize` in an isolated worktree and let its owners perform formalization, deposit, cover, verification, and publication. Include `S` only when it is independently citable repository mathematics and passes the same gate; scenario-only specialization remains run-local.
+4. `open-deposit`: a result already classified as substantive and new cannot yet enter through a current owner-recognized atom, Frontier candidate, or admission route, or the durable owner's capability or execution state machine ends `open`. Preserve the exact statement, proof source, receipts, and named blocking fact as `open`; never bypass the missing route, hand-edit governance data, or silently delete the only recoverable proof artifact.
+
+A successful local compilation is necessary but insufficient for `deposit-new`. Conversely, once a declaration satisfies that route, run-local cleanup is not completion: continue through the owner workflow and report the actual repository or pull-request state. The adapter never copies the deposit procedure; it invokes its owner.
 
 ## State machine
 
@@ -96,13 +108,13 @@ Kernel outcomes attach only to exact `P` or its exact negation, never to the ori
 
 Postcondition: every eligible record has an owner-shaped exact echo whose clause mapping is complete; each required bridge fixes exact `G`, exact `S`, and a total substitution map back to `P`; context-indexed models expose their indices; only residual ambiguous and not-formalizable records remain explicitly non-kernel branches.
 
-### 4. Construct a report-owned run-local declaration
+### 4. Stage report-owned declarations
 
 After the owner-ordered search, and only with measured Lean capability, follow the current reuse-before-proof rule in `CLAUDE.md` item 11 in a disposable isolated lane on exactly two occasions: (1) for an exact in-repository or pinned-mathlib hit, create the thinnest honest wrapper that imports and applies the hit; this is reuse, not reproof, and a wrapper that restates or reproves the hit instead of applying it is forbidden; (2) for a genuine miss, create a local proof declaration. When the bridge is required, the main run-local declaration is `G`, and the same managed source must declare `S` by applying `G` under the fixed substitution map. When no bridge is required, declare exact `P` or its exact negation directly. These forms give the canonical report run-local managed declarations it can own and issue declaration receipts for. Select the current build and report doors from the current `make help`; never use a cold bare `lake build`.
 
-This step is run-local: never deposit, freeze, cover, or edit a receipt. Retain the exact commands, exit codes, diagnostics, pins, and canonical report address. A failed attempt is evidence of failure to prove, never evidence that `P` is false.
+This step is run-local staging: do not deposit, freeze, cover, or edit a receipt here. Retain the exact commands, exit codes, diagnostics, pins, canonical report address, and proof source for the later durability decision. A failed attempt is evidence of failure to prove, never evidence that `P` is false.
 
-Postcondition: owner output contains either an exact declaration for `P` or its negation, or, for a required bridge, exact declarations for both `G` and the applying specialization `S`; otherwise it retains the failed attempts and machine diagnostics as facts for Step 5. The repository has no new mutation from this skill.
+Postcondition: owner output contains either an exact declaration for `P` or its negation, or, for a required bridge, exact declarations for both `G` and the applying specialization `S`; otherwise it retains the failed attempts and machine diagnostics as facts for Step 5. Every successful new declaration remains available for the durability routing rather than existing only in an already-deleted temporary file.
 
 ### 5. Derive outcomes from owner facts
 
@@ -120,25 +132,33 @@ These rules are a total function over reachable owner-fact states: rule 1 handle
 
 Postcondition: every assertion has exactly one mechanically projected outcome, and every formalizable assertion is graded `proved`, `refuted`, `conditional`, or `open`.
 
-### 6. Render the reply
+### 6. Persist substantive new formalization
 
-For each assertion render the original clause, exact `P` or its explicit absence, the outcome, source or report address, exact commands and exit codes, axiom closure, search trace, and persistence marking. For a required bridge, also render exact `G`, exact `S`, the substitution map, the generalized positive and negative search receipts, and the separate axiom closures for `G` and `S`. For conceptual questions, render the repository concepts and addresses that shaped the model, all explicit context indices, and the boundary between formal consequence and unproved empirical, metaphysical, existential, or interpretive premises. Mark evidence `active-frozen` or `run-local`; for run-local evidence include the recorded pins on which it expires.
+Apply the durability routing once to every successful new declaration set. Duplicate search and the `codex-formalize` fidelity and non-hollowness gate decide whether code is substantive; compilation alone does not. When the route is `deposit-new`, invoke `codex-formalize` and follow its current state machine without copying, weakening, or partially simulating it. Use the authoritative atom or owner-issued candidate address it requires. If no current owner can supply such an address, use `open-deposit`; do not invent an atom, append governance data by hand, or treat an untracked file as durable.
+
+Truth grading remains exactly Step 5's function. A deposit failure does not change `proved` to `open` when eligible run-local evidence already proves exact `P`; it changes only the persistence disposition to `open-deposit`. Likewise, an opened or in-flight pull request is not `active-frozen`: report the exact owner-issued state, and call the declaration durable only after the repository owner has actually admitted it.
+
+Postcondition: every successful new declaration set has exactly one durability disposition; every `deposit-new` candidate has been handed to and advanced through the durable owner as far as its state machine permits; every blocked persistence attempt retains an evidence-complete `open-deposit` record.
+
+### 7. Render the reply
+
+For each assertion render the original clause, exact `P` or its explicit absence, the outcome, source or report address, exact commands and exit codes, axiom closure, search trace, and persistence marking. For a required bridge, also render exact `G`, exact `S`, the substitution map, the generalized positive and negative search receipts, and the separate axiom closures for `G` and `S`. For conceptual questions, render the repository concepts and addresses that shaped the model, all explicit context indices, and the boundary between formal consequence and unproved empirical, metaphysical, existential, or interpretive premises. Render the durability route separately from the truth outcome, including the frozen GID, actual pull-request state, run-local pins, or the exact `open-deposit` blocker as applicable.
 
 The outcome vocabulary is closed: `proved`, `refuted`, `conditional`, `open`, `not-formalized`. Do not add an informal assertion grade or any human-review state. Third-party provenance must be visibly distinguished from kernel basis.
 
 Postcondition: the reply is clause-complete, evidence-bearing per assertion, uses only the closed outcome set, exposes every persistence boundary, and makes every required generalization bridge auditable from concrete proposition through reusable theorem to verified specialization.
 
-### 7. Close without repository mutation
+### 8. Close with persistence accounted
 
-Compare the repository change set with the pre-run state and leave it unchanged. State explicitly which conclusions are active-frozen and which are run-local. Route any requested durable contribution as a separate task; do not continue into deposit, freeze, coverage, receipts, PR, CI, or merge work.
+Compare every participating worktree with its pre-run state. For `reuse-existing` and `discard-thin`, remove disposable sources and leave the repository worktree unchanged. For `deposit-new`, preserve and report only artifacts produced or required by the durable owner, including its commits and pull-request state; never clean them away merely to recreate a zero-mutation ending. For `open-deposit`, retain the evidence bundle at its owner-prescribed durable location and report any intentionally dirty worktree exactly.
 
-Postcondition: the answer has been delivered, its persistence scope is explicit, and this invocation has made zero repository changes.
+Postcondition: the answer has been delivered, every truth outcome and durability disposition is explicit, thin staging artifacts are gone, and every substantive new reusable result is either admitted through its owner or preserved with an evidence-complete `open-deposit` continuation.
 
 ## Acceptance obligation
 
 At runtime, Step 5's ordered rules are the sole outcome authority. Each assertion record carries the specific address of every owner fact it actually relied on; it never fabricates unused owner addresses.
 
-At skill-change time, before changing this file, the editor must verify that the ordered rules remain a total function: exhaustive over reachable owner-fact states and single-valued by first-match evaluation. A pull request changing this file carries that verification as the executable echo required by `CLAUDE.md` item 11. Failed verification is a defect, not a human-review state. This is a **SOFT** acceptance obligation and adds no per-skill machine test; the FILEMAP owner remains authoritative for repository-policy classification.
+At skill-change time, before changing this file, the editor must verify that the ordered truth rules remain a total function and that the durability routes remain exhaustive and single-valued. The focused architecture tests are their executable echoes; semantic fidelity remains a **SOFT** obligation, and the FILEMAP owner remains authoritative for repository-policy classification. Failed verification is a defect, not a human-review state.
 
 ## Earned hard gates
 
@@ -146,6 +166,7 @@ These are the only hard gates added by this adapter; each names an occurred fail
 
 - **Honor the owner-issued reuse disposition; never invent a reproof path.** Invoke `CLAUDE.md` item 11 and specification A17.2 (`docs/develop/spec/golden-ledger-repo-spec.md:163`). The occurred incident is the third-party path collapsing into forbidden reproof.
 - **Reject a tautological or thin mapping.** Invoke `skills/codex-formalize/SKILL.md`, "Mathematical content" and "Deposit substance," which record seven definitional-tautology cases and the landed thin-deposit case.
+- **Do not discard a substantive new reusable proof after local success.** The occurred failure is a valid generalization surviving only in a disposable answer lane, so later questions had to rediscover it. Once `deposit-new` applies, persistence through the existing owner is part of answering, not an optional follow-up.
 - **Reject premature ambiguity caused by a narrow repository search.** Complete the `C`, `F`, and `M` path before retaining `ambiguous` or `not-formalizable`; exact-keyword-only, D5-only, and mathlib-only searches are incomplete for conceptual inputs.
 - **Never turn representation into existence.** A type, predicate, structure, or context-indexed interpretation supplies a model, not an inhabitant or a proof about reality. Definitions may expose premises; they may not discharge them by construction.
 - **Never use a cold bare `lake build`.** Invoke `CLAUDE.md` tool law 3, which records issue #2762's multi-hour cold-lane failure and PR #2764's repair.
@@ -154,12 +175,12 @@ These are the only hard gates added by this adapter; each names an occurred fail
 
 ## Prohibitions
 
-- No deposit, freeze, coverage edit, or receipt edit; the `make` deposit and cover doors and the existing formalize, theorize, and ingest skills own them.
+- No direct deposit, freeze, coverage edit, or receipt edit by this adapter; invoke `codex-formalize` and the canonical doors that own those mutations.
 - No second axiom parser, search engine, ledger, or receipt service; `tools/lean-inspector/Inspector.lean` via `make lean-report`, CLAUDE.md item 11, and the frozen ledger own those facts.
 - No `requires human review`, `awaiting human`, or equivalent branch; `CLAUDE.md` item 22 owns that prohibition.
 - No hedging word in place of a measurement; `CLAUDE.md` section VI owns its typed alternatives.
-- No third-party admission in this run; specification A17.2 owns that separate workflow.
-- No automatic conversion of a reply into a repository node; the F-plane admission and freezing workflows own durable truth.
+- No third-party admission by this adapter; specification A17.2 and the durable owner decide it.
+- No repository node for a duplicate, thin wrapper, scenario-only specialization, or declaration that has not passed the durable owner's substance gate.
 
 ## What this skill does not own
 
