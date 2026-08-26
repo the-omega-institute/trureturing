@@ -127,7 +127,7 @@ public sealed class TruthReleasePublicationTests
                 directory,
                 TruthReleaseBundleWriter.PublicationFileName));
             var publication = TruthReleasePublicationReader.Read(publicationBytes);
-            var verified = TruthReleaseVerification.Verify(directory, releaseDigest);
+            var verified = TruthReleasePublicationVerification.Verify(directory, publication);
 
             Assert.Equal(releaseDigest, verified.ReleaseDigest);
             Assert.Equal(releaseDigest, publication.ReleaseDigest);
@@ -138,6 +138,34 @@ public sealed class TruthReleasePublicationTests
             Assert.Equal(
                 publicationBytes,
                 TruthReleasePublicationJsonWriter.Write(publication).ToArray());
+        }
+        finally
+        {
+            Directory.Delete(directory, recursive: true);
+        }
+    }
+
+    [Fact]
+    public void PublicationVerificationRejectsSourceAndProducerRebinding()
+    {
+        var directory = Directory.CreateTempSubdirectory("truth-release-publication-rebinding").FullName;
+        try
+        {
+            var input = BundleInput();
+            _ = TruthReleaseBundleWriter.WriteBundle(directory, input);
+            var publication = TruthReleasePublicationReader.Read(File.ReadAllBytes(Path.Combine(
+                directory,
+                TruthReleaseBundleWriter.PublicationFileName)));
+
+            Assert.Throws<FormatException>(() => TruthReleasePublicationVerification.Verify(
+                directory,
+                publication with { SourceCommit = new string('9', 40) }));
+            Assert.Throws<FormatException>(() => TruthReleasePublicationVerification.Verify(
+                directory,
+                publication with { SourceTree = new string('8', 40) }));
+            Assert.Throws<FormatException>(() => TruthReleasePublicationVerification.Verify(
+                directory,
+                publication with { ProducerCommit = new string('7', 40) }));
         }
         finally
         {
