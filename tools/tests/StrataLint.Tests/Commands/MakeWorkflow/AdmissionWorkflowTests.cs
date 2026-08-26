@@ -48,40 +48,6 @@ public sealed class AdmissionWorkflowTests
     }
 
     [Fact]
-    public void PullRequestDeltaIsDevParentToCheckedMergeResult()
-    {
-        var workflow = SharedAdmissionWorkflow;
-        var scope = Assert.Single(
-            JobSteps(workflow, "candidate-engineering"),
-            step => step.Children.TryGetValue(new YamlScalarNode("id"), out var id)
-                && id is YamlScalarNode { Value: "scope" });
-        var scopeScript = Assert.IsType<YamlScalarNode>(
-            scope.Children[new YamlScalarNode("run")]).Value ?? string.Empty;
-        var baselineScript = BaselineResolutionScript(workflow);
-
-        Assert.Contains(
-            "base_sha=\"$(git -C candidate rev-parse HEAD^1)\"",
-            scopeScript,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "candidate_sha=\"$(git -C candidate rev-parse HEAD)\"",
-            scopeScript,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "git -C candidate diff --name-only -z --no-renames --diff-filter=ACDMRTUXB \"$base_sha\" \"$candidate_sha\"",
-            scopeScript,
-            StringComparison.Ordinal);
-        Assert.DoesNotContain("merge-base", scopeScript, StringComparison.Ordinal);
-        Assert.Contains(
-            "sha=\"$(git -C candidate rev-parse HEAD^1)\"",
-            baselineScript,
-            StringComparison.Ordinal);
-        Assert.DoesNotContain("merge-base", baselineScript, StringComparison.Ordinal);
-        Assert.DoesNotContain("HEAD^2", scopeScript, StringComparison.Ordinal);
-        Assert.DoesNotContain("HEAD^2", baselineScript, StringComparison.Ordinal);
-    }
-
-    [Fact]
     public void PushFallbackBaseIsCheckedHeadFirstParent()
     {
         var baselineScript = BaselineResolutionScript(SharedAdmissionWorkflow);
@@ -131,72 +97,6 @@ public sealed class AdmissionWorkflowTests
             Assert.Contains("admission fails closed", script, StringComparison.Ordinal);
             Assert.Contains("exit 1", script, StringComparison.Ordinal);
         }
-    }
-
-    [Fact]
-    public void CandidateEngineeringScopesPullRequestsButAlwaysRunsPushes()
-    {
-        var engineering = Job(AdmissionWorkflow(), "candidate-engineering");
-        var steps = Assert.IsType<YamlSequenceNode>(
-            engineering.Children[new YamlScalarNode("steps")]).Children
-            .OfType<YamlMappingNode>()
-            .ToArray();
-        Assert.True(steps.Length > 3);
-        Assert.Equal("Check out candidate", StepName(steps[0]));
-
-        var scopeIndex = Array.FindIndex(
-            steps,
-            step => step.Children.TryGetValue(new YamlScalarNode("id"), out var id)
-                && id is YamlScalarNode { Value: "scope" });
-        Assert.True(scopeIndex > 0);
-        var scope = steps[scopeIndex];
-        Assert.Equal("scope", Assert.IsType<YamlScalarNode>(
-            scope.Children[new YamlScalarNode("id")]).Value);
-        var scopeScript = Assert.IsType<YamlScalarNode>(
-            scope.Children[new YamlScalarNode("run")]).Value ?? string.Empty;
-        Assert.Contains("git -C candidate rev-parse HEAD^1", scopeScript, StringComparison.Ordinal);
-        Assert.Contains("git -C candidate rev-parse HEAD", scopeScript, StringComparison.Ordinal);
-        Assert.Contains("git -C candidate diff", scopeScript, StringComparison.Ordinal);
-        Assert.Contains("--no-renames", scopeScript, StringComparison.Ordinal);
-        Assert.Matches(
-            "(?s)if \\[\\[ \"\\$GITHUB_EVENT_NAME\" == \"push\" \\]\\]; then.*?run=\"true\"",
-            scopeScript);
-
-        var summary = steps[^1];
-        Assert.Equal("Summarize candidate engineering scope", StepName(summary));
-        Assert.Equal("always()", Assert.IsType<YamlScalarNode>(
-            summary.Children[new YamlScalarNode("if")]).Value);
-        var summaryScript = Assert.IsType<YamlScalarNode>(
-            summary.Children[new YamlScalarNode("run")]).Value ?? string.Empty;
-        // 明细走日志、摘要只走计数:逐条路径不进 step output,因而不经 env 传给这一步。
-        // 有界性本身由 WorkflowOutputBoundTests 判,这里只钉"摘要读的是计数"。
-        Assert.Contains("$SCOPE_CHANGED_COUNT", summaryScript, StringComparison.Ordinal);
-        Assert.Contains("$SCOPE_MATCHED_COUNT", summaryScript, StringComparison.Ordinal);
-        Assert.Contains("$GITHUB_STEP_SUMMARY", summaryScript, StringComparison.Ordinal);
-
-        Assert.Equal(
-            "make -C candidate/tools dotnet",
-            StepScript(steps, "Build candidate with warnings as errors"));
-        Assert.Equal(
-            "make -C candidate/tools test",
-            StepScript(steps, "Run candidate golden and integration tests"));
-        Assert.Equal(
-            "make -C candidate/tools selftest",
-            StepScript(steps, "Run candidate selftest twice and compare bytes"));
-
-        Assert.All(
-            steps[(scopeIndex + 1)..^1],
-            step => Assert.Contains(
-                "steps.scope.outputs.run == 'true'",
-                Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("if")]).Value,
-                StringComparison.Ordinal));
-    }
-
-    private static string StepScript(IEnumerable<YamlMappingNode> steps, string name)
-    {
-        var step = Assert.Single(steps, candidate => StepName(candidate) == name);
-        return Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("run")]).Value
-            ?? string.Empty;
     }
 
     // elan 从上游拉二进制,那一跳会间歇失败。两处安装都必须重试,且 elan 的缓存保存

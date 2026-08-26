@@ -60,7 +60,7 @@ internal static class ScribeTestMapDeriver
         };
 
     // This list governs the declared-path debt check. Entries are either exact files or directory
-    // roots; engineering scope is derived from consumers and does not use this declaration.
+    // roots.
     internal static readonly IReadOnlyList<string> DeclaredPathWhitelist =
     [
         // 消化退出 CI 后,ci.yml 是仓内唯一的 workflow;守卫「无 workflow 代跑消化」
