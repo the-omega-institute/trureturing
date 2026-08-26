@@ -1,4 +1,6 @@
+using System.Collections.Concurrent;
 using System.Collections.Immutable;
+using System.IO.Compression;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -12,20 +14,22 @@ internal static class RawLeanReportArtifact
     internal const string DefaultRelativePath = ".lake/build/stratalint/raw-lean-report.json";
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
-
     internal static LeanAxiomReport ReadFile(string path, RepositorySnapshot snapshot)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(path);
-        return Read(File.ReadAllBytes(path), snapshot, Path.GetFullPath(path));
+        var fullPath = Path.GetFullPath(path);
+        var bytes = File.ReadAllBytes(fullPath);
+        var materials = StatementMaterialArchive.Open(MaterialsPath(fullPath));
+        return Read(bytes, snapshot, materials);
     }
 
     internal static LeanAxiomReport Read(ReadOnlySpan<byte> bytes, RepositorySnapshot snapshot)
-        => Read(bytes, snapshot, reportPath: null);
+        => Read(bytes, snapshot, materialArchive: null);
 
     private static LeanAxiomReport Read(
         ReadOnlySpan<byte> bytes,
         RepositorySnapshot snapshot,
-        string? reportPath)
+        StatementMaterialArchive? materialArchive)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         var text = StrictUtf8.GetString(bytes);
@@ -89,7 +93,7 @@ internal static class RawLeanReportArtifact
             var imports = ReadSortedStrings(RequiredArray(moduleElement, "imports"), "imports");
             var declarations = ReadDeclarations(
                 RequiredArray(moduleElement, "declarations"),
-                reportPath);
+                materialArchive);
             if (!reports.TryAdd(sourcePath, new LeanFileReport(imports, declarations)))
             {
                 throw new FormatException($"Raw Lean report contains duplicate path {sourcePath}.");
@@ -106,6 +110,10 @@ internal static class RawLeanReportArtifact
             throw new FormatException(
                 "Raw Lean report is missing modules: " + string.Join(", ", missing));
         }
+
+        materialArchive?.ValidateAddresses(reports.Values
+            .SelectMany(static report => report.Declarations)
+            .Select(static declaration => declaration.StatementTypeAddress));
 
         return LeanAxiomReport.Create(reports);
     }
@@ -170,9 +178,12 @@ internal static class RawLeanReportArtifact
         {
             Directory.Delete(materials, recursive: true);
         }
+        if (File.Exists(materials))
+        {
+            File.Delete(materials);
+        }
 
-        var shaDirectory = Path.Combine(materials, "sha256");
-        Directory.CreateDirectory(shaDirectory);
+        var materialByAddress = new SortedDictionary<string, string>(StringComparer.Ordinal);
         foreach (var declaration in report.Files.Values
                      .SelectMany(static file => file.Declarations))
         {
@@ -184,21 +195,41 @@ internal static class RawLeanReportArtifact
                     $"Lean declaration {declaration.Name} statement material hash does not match its address.");
             }
 
-            var materialPath = Path.Combine(shaDirectory, address[7..]);
-            if (!File.Exists(materialPath))
+            if (materialByAddress.TryGetValue(address, out var previous))
             {
-                File.WriteAllBytes(materialPath, StrictUtf8.GetBytes(value));
+                if (!string.Equals(previous, value, StringComparison.Ordinal))
+                {
+                    throw new InvalidDataException(
+                        $"Lean statement material address collision for {address}.");
+                }
+            }
+            else
+            {
+                materialByAddress.Add(address, value);
             }
         }
 
         Directory.CreateDirectory(
             Path.GetDirectoryName(fullPath)
                 ?? throw new InvalidOperationException("Raw Lean report path has no parent."));
+        using (var stream = File.Create(materials))
+        using (var archive = new ZipArchive(stream, ZipArchiveMode.Create, leaveOpen: false))
+        {
+            foreach (var (address, value) in materialByAddress)
+            {
+                var entry = archive.CreateEntry(
+                    StatementMaterialArchive.EntryName(address),
+                    CompressionLevel.SmallestSize);
+                entry.LastWriteTime = StatementMaterialArchive.CanonicalTimestamp;
+                using var destination = entry.Open();
+                destination.Write(StrictUtf8.GetBytes(value));
+            }
+        }
         File.WriteAllBytes(fullPath, Write(snapshot, report).AsSpan());
     }
 
     internal static string MaterialsPath(string reportPath) =>
-        Path.GetFullPath(reportPath) + ".materials";
+        Path.GetFullPath(reportPath) + ".materials.zip";
 
     internal static string ContentAddress(ReadOnlySpan<byte> canonicalBytes) =>
         "sha256:" + Convert.ToHexStringLower(SHA256.HashData(canonicalBytes));
@@ -207,47 +238,20 @@ internal static class RawLeanReportArtifact
         Path.GetFullPath(repositoryRoot),
         DefaultRelativePath.Replace('/', Path.DirectorySeparatorChar));
 
-    internal static string ReadStatementMaterial(string reportPath, string address)
+    internal static Func<string, string> OpenStatementMaterialSource(
+        string reportPath,
+        IEnumerable<string> addresses)
     {
-        if (!FrozenHashSyntax.IsSha256(address))
-        {
-            throw new InvalidDataException("Lean statement material address is malformed.");
-        }
-
-        var path = Path.Combine(MaterialsPath(reportPath), "sha256", address[7..]);
-        if (!File.Exists(path))
-        {
-            throw new InvalidDataException(
-                $"Lean statement material is missing for {address}: {path}");
-        }
-
-        byte[] bytes;
-        string value;
-        try
-        {
-            bytes = File.ReadAllBytes(path);
-            value = StrictUtf8.GetString(bytes);
-        }
-        catch (DecoderFallbackException exception)
-        {
-            throw new InvalidDataException(
-                $"Lean statement material is not strict UTF-8 for {address}.",
-                exception);
-        }
-
-        var actual = FrozenContentHash.Compute(FrozenHashDomains.Statement, bytes);
-        if (!string.Equals(actual, address, StringComparison.Ordinal))
-        {
-            throw new InvalidDataException(
-                $"Lean statement material hash mismatch for {address}: actual {actual}.");
-        }
-
-        return value;
+        ArgumentException.ThrowIfNullOrWhiteSpace(reportPath);
+        ArgumentNullException.ThrowIfNull(addresses);
+        var archive = StatementMaterialArchive.Open(MaterialsPath(reportPath));
+        archive.ValidateAddresses(addresses);
+        return archive.Read;
     }
 
     private static ImmutableArray<LeanDeclaration> ReadDeclarations(
         JsonElement declarations,
-        string? reportPath)
+        StatementMaterialArchive? materialArchive)
     {
         var builder = ImmutableArray.CreateBuilder<LeanDeclaration>();
         string? previousNameKey = null;
@@ -278,10 +282,10 @@ internal static class RawLeanReportArtifact
                 statementTypeAddress,
                 statementId,
                 ReadSortedStrings(RequiredArray(declarationElement, "axioms"), "axioms"),
-                reportPath is null
+                materialArchive is null
                     ? () => throw new InvalidDataException(
                         "Lean declaration has no statement material source; read the report from its file path.")
-                    : () => ReadStatementMaterial(reportPath, statementTypeAddress))
+                    : () => materialArchive.Read(statementTypeAddress))
             {
                 IncludeInStatement = RequiredBoolean(declarationElement, "include_in_statement"),
                 NameKey = nameKey,
@@ -289,6 +293,137 @@ internal static class RawLeanReportArtifact
         }
 
         return builder.ToImmutable();
+    }
+
+    private sealed class StatementMaterialArchive
+    {
+        private const string EntryPrefix = "sha256/";
+        private readonly object archiveGate = new();
+        private readonly ZipArchive archive;
+        private readonly ImmutableDictionary<string, ZipArchiveEntry> entries;
+        private readonly ConcurrentDictionary<string, Lazy<string>> material = new(StringComparer.Ordinal);
+
+        private StatementMaterialArchive(byte[] bytes, string path)
+        {
+            try
+            {
+                archive = new ZipArchive(new MemoryStream(bytes, writable: false), ZipArchiveMode.Read);
+                var builder = ImmutableDictionary.CreateBuilder<string, ZipArchiveEntry>(StringComparer.Ordinal);
+                foreach (var entry in archive.Entries)
+                {
+                    if (!entry.FullName.StartsWith(EntryPrefix, StringComparison.Ordinal)
+                        || !FrozenHashSyntax.IsSha256("sha256:" + entry.FullName[EntryPrefix.Length..])
+                        || !builder.TryAdd(entry.FullName, entry))
+                    {
+                        throw new InvalidDataException(
+                            $"Lean statement material archive has a malformed or duplicate entry: {path}");
+                    }
+                }
+                entries = builder.ToImmutable();
+            }
+            catch (InvalidDataException exception)
+            {
+                throw new InvalidDataException(
+                    $"Lean statement material archive is invalid: {path}", exception);
+            }
+        }
+
+        internal static DateTimeOffset CanonicalTimestamp { get; } =
+            new(1980, 1, 1, 0, 0, 0, TimeSpan.Zero);
+
+        internal static StatementMaterialArchive Open(string path)
+        {
+            if (!File.Exists(path))
+            {
+                throw new InvalidDataException($"Lean statement material archive is missing: {path}");
+            }
+
+            try
+            {
+                return new StatementMaterialArchive(File.ReadAllBytes(path), path);
+            }
+            catch (IOException exception)
+            {
+                throw new InvalidDataException(
+                    $"Lean statement material archive cannot be read: {path}", exception);
+            }
+        }
+
+        internal static string EntryName(string address) => EntryPrefix + address[7..];
+
+        internal void ValidateAddresses(IEnumerable<string> addresses)
+        {
+            var expected = addresses
+                .Select(EntryName)
+                .ToImmutableHashSet(StringComparer.Ordinal);
+            var missing = expected.Except(entries.Keys, StringComparer.Ordinal).Order(StringComparer.Ordinal).FirstOrDefault();
+            if (missing is not null)
+            {
+                throw new InvalidDataException(
+                    $"Lean statement material archive is missing {missing}.");
+            }
+
+            var extra = entries.Keys.Except(expected, StringComparer.Ordinal).Order(StringComparer.Ordinal).FirstOrDefault();
+            if (extra is not null)
+            {
+                throw new InvalidDataException(
+                    $"Lean statement material archive has unreferenced entry {extra}.");
+            }
+        }
+
+        internal string Read(string address)
+        {
+            if (!FrozenHashSyntax.IsSha256(address))
+            {
+                throw new InvalidDataException("Lean statement material address is malformed.");
+            }
+
+            return material.GetOrAdd(
+                address,
+                value => new Lazy<string>(
+                    () => ReadCore(value),
+                    LazyThreadSafetyMode.ExecutionAndPublication)).Value;
+        }
+
+        private string ReadCore(string address)
+        {
+            if (!entries.TryGetValue(EntryName(address), out var entry))
+            {
+                throw new InvalidDataException($"Lean statement material is missing for {address}.");
+            }
+            if (entry.Length > int.MaxValue)
+            {
+                throw new InvalidDataException($"Lean statement material is too large for {address}.");
+            }
+
+            var bytes = new byte[(int)entry.Length];
+            lock (archiveGate)
+            {
+                using var stream = entry.Open();
+                stream.ReadExactly(bytes);
+            }
+
+            string value;
+            try
+            {
+                value = StrictUtf8.GetString(bytes);
+            }
+            catch (DecoderFallbackException exception)
+            {
+                throw new InvalidDataException(
+                    $"Lean statement material is not strict UTF-8 for {address}.",
+                    exception);
+            }
+
+            var actual = FrozenContentHash.Compute(FrozenHashDomains.Statement, bytes);
+            if (!string.Equals(actual, address, StringComparison.Ordinal))
+            {
+                throw new InvalidDataException(
+                    $"Lean statement material hash mismatch for {address}: actual {actual}.");
+            }
+
+            return value;
+        }
     }
 
     private static string DeclarationStatementId(RepoPath path, LeanDeclaration declaration) =>

@@ -12,12 +12,14 @@ import shutil
 import stat
 import sys
 import tempfile
+import zipfile
 
 
 SPOOL_SCHEMA = "stratalint-lean-inspector-spool-v1"
 REPORT_SCHEMA = "stratalint-raw-lean-report-v2"
 STATEMENT_DOMAIN = b"trureturing:statement:v1\0"
 MATERIAL_FILE = re.compile(r"^[0-9]+\.statement$")
+ARCHIVE_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
 
 
 def canonical_json(value: object) -> bytes:
@@ -196,10 +198,23 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
         report_bytes = canonical_json({"modules": modules, "schema": REPORT_SCHEMA})
         staged_report = staged_root / "report.json"
         staged_report.write_bytes(report_bytes)
-        live_materials = pathlib.Path(str(output) + ".materials")
-        if live_materials.exists():
-            shutil.rmtree(live_materials)
-        os.replace(staged_root / "materials", live_materials)
+        staged_archive = staged_root / "materials.zip"
+        with zipfile.ZipFile(
+                staged_archive, "w", compression=zipfile.ZIP_DEFLATED,
+                compresslevel=6, allowZip64=True) as archive:
+            for source in sorted(staged_materials.iterdir(), key=lambda path: path.name):
+                info = zipfile.ZipInfo(f"sha256/{source.name}", ARCHIVE_TIMESTAMP)
+                info.compress_type = zipfile.ZIP_DEFLATED
+                info.create_system = 3
+                info.external_attr = (stat.S_IFREG | 0o644) << 16
+                with source.open("rb") as reader, archive.open(info, "w") as writer:
+                    shutil.copyfileobj(reader, writer)
+        live_materials = pathlib.Path(str(output) + ".materials.zip")
+        legacy_materials = pathlib.Path(str(output) + ".materials")
+        if legacy_materials.exists():
+            shutil.rmtree(legacy_materials)
+        live_materials.unlink(missing_ok=True)
+        os.replace(staged_archive, live_materials)
         os.replace(staged_report, output)
         print(
             "LEAN_REPORT_MATERIALS "

@@ -1,5 +1,6 @@
 using System.Text;
 using System.Security.Cryptography;
+using System.IO.Compression;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -76,24 +77,58 @@ public sealed class RawLeanReportArtifactTests
             "statement-v1(test)",
             fromDisk.Files.Single().Value.Declarations.Single().LoadTypeRepresentation());
 
-        var material = Directory.EnumerateFiles(
-            RawLeanReportArtifact.MaterialsPath(path),
-            "*",
-            SearchOption.AllDirectories).Single();
-        File.WriteAllText(material, "statement-v1(tampered)", new UTF8Encoding(false));
+        var materialArchive = RawLeanReportArtifact.MaterialsPath(path);
+        using (var archive = ZipFile.Open(materialArchive, ZipArchiveMode.Update))
+        {
+            var entry = Assert.Single(archive.Entries);
+            var name = entry.FullName;
+            entry.Delete();
+            var replacement = archive.CreateEntry(name, CompressionLevel.SmallestSize);
+            using var writer = new StreamWriter(
+                replacement.Open(), new UTF8Encoding(false), leaveOpen: false);
+            writer.Write("statement-v1(tampered)");
+        }
         var tampered = RawLeanReportArtifact.ReadFile(path, snapshot);
         Assert.Contains(
             "hash",
             Assert.Throws<InvalidDataException>(() =>
                 _ = tampered.Files.Single().Value.Declarations.Single().LoadTypeRepresentation()).Message,
             StringComparison.OrdinalIgnoreCase);
-        File.Delete(material);
-        var missing = RawLeanReportArtifact.ReadFile(path, snapshot);
+        using (var archive = ZipFile.Open(materialArchive, ZipArchiveMode.Update))
+        {
+            Assert.Single(archive.Entries).Delete();
+        }
         Assert.Contains(
             "missing",
-            Assert.Throws<InvalidDataException>(() =>
-                _ = missing.Files.Single().Value.Declarations.Single().LoadTypeRepresentation()).Message,
+            Assert.Throws<InvalidDataException>(() => RawLeanReportArtifact.ReadFile(path, snapshot)).Message,
             StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void MaterialBundleIsOneArchiveAndItsAbsenceFailsAtReportLoad()
+    {
+        using var temporary = new TemporaryDirectory();
+        var path = Path.Combine(temporary.Path, "raw-lean-report.json");
+        var snapshot = Snapshot();
+        var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
+        {
+            ["Trureturing.lean"] = new(
+                [],
+                [new LeanDeclaration("probe", "axiom", "statement-v1(test)", [])
+                {
+                    NameKey = "ns(n0,5:probe)",
+                }]),
+        });
+
+        RawLeanReportArtifact.WriteFile(path, snapshot, report);
+
+        var archive = RawLeanReportArtifact.MaterialsPath(path);
+        Assert.True(File.Exists(archive), $"material archive is absent: {archive}");
+        Assert.False(Directory.Exists(archive), $"material bundle is still a directory: {archive}");
+        File.Delete(archive);
+        var exception = Assert.Throws<InvalidDataException>(() =>
+            RawLeanReportArtifact.ReadFile(path, snapshot));
+        Assert.Contains("material archive", exception.Message, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]

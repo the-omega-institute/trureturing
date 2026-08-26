@@ -49,7 +49,7 @@ if [[ "$OUTPUT" != /* ]]; then OUTPUT="$REPOSITORY/$OUTPUT"; fi
 if [[ -z "$LOG_DIR" ]]; then LOG_DIR="${OUTPUT}.logs"; fi
 if [[ "$LOG_DIR" != /* ]]; then LOG_DIR="$REPOSITORY/$LOG_DIR"; fi
 mkdir -p "$(dirname "$OUTPUT")" "$LOG_DIR"
-rm -rf -- "$OUTPUT" "${OUTPUT}.sha256" "${OUTPUT}.materials"
+rm -rf -- "$OUTPUT" "${OUTPUT}.sha256" "${OUTPUT}.materials" "${OUTPUT}.materials.zip"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 INSPECTOR="$SCRIPT_DIR/Inspector.lean"
@@ -187,7 +187,7 @@ invoke_inspector() {
   [[ -r "$compactor" ]] || { echo "inspect.sh: material compactor is absent: $compactor" >&2; return 2; }
   SPOOL_REPORT="${output}.spool.json"
   MATERIAL_SPOOL="${output}.material-spool"
-  rm -rf -- "$SPOOL_REPORT" "$MATERIAL_SPOOL" "${output}.materials"
+  rm -rf -- "$SPOOL_REPORT" "$MATERIAL_SPOOL" "${output}.materials" "${output}.materials.zip"
   mkdir -p "$MATERIAL_SPOOL"
   inspector_arguments=()
   while IFS=$'\t' read -r module path; do
@@ -348,7 +348,7 @@ fi
 if [[ "$delta_status" == "delta" || "$delta_status" == "reuse" ]]; then
   if [[ "$delta_status" == "reuse" ]]; then
     cp "$delta_baseline" "$OUTPUT"
-    cp -R "${delta_baseline}.materials" "${OUTPUT}.materials"
+    cp "${delta_baseline}.materials.zip" "${OUTPUT}.materials.zip"
   elif ! python3 "$DELTA_SCRIPT" merge \
       "$DELTA_PLAN" "$DELTA_SUBSET_OUTPUT" "$OUTPUT"; then
     delta_status="full-fallback"
@@ -356,7 +356,7 @@ if [[ "$delta_status" == "delta" || "$delta_status" == "reuse" ]]; then
 fi
 
 if [[ "$delta_status" == "full-fallback" ]]; then
-  rm -rf -- "$DELTA_SUBSET_OUTPUT" "${DELTA_SUBSET_OUTPUT}.materials"
+  rm -rf -- "$DELTA_SUBSET_OUTPUT" "${DELTA_SUBSET_OUTPUT}.materials.zip"
   invoke_inspector "$OUTPUT"
 fi
 
@@ -365,8 +365,8 @@ printf 'LEAN_REPORT_DELTA mode=%s changed=%s added=%s removed=%s recheck=%s\n' \
   "$delta_removed_count" "$delta_recheck_count"
 
 [[ -s "$OUTPUT" ]] || { echo "inspect.sh: producer left no report at $OUTPUT" >&2; exit 2; }
-[[ -d "${OUTPUT}.materials/sha256" ]] \
-  || { echo "inspect.sh: producer left no materials at ${OUTPUT}.materials" >&2; exit 2; }
+[[ -f "${OUTPUT}.materials.zip" ]] \
+  || { echo "inspect.sh: producer left no material archive at ${OUTPUT}.materials.zip" >&2; exit 2; }
 serialize_started="$(date +%s)"
 serialize_rc=0
 report_sha256=""

@@ -18,12 +18,14 @@ import shutil
 import stat
 import sys
 import tempfile
+import zipfile
 
 
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
 SHA_FIELD = re.compile(r"^sha256:[0-9a-f]{64}$")
 PREFIX = '{"modules": ['
 SUFFIX = '], "schema": "stratalint-raw-lean-report-v2"}\n'
+ARCHIVE_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
 
 
 def current_modules(module_table: pathlib.Path, repository: pathlib.Path) -> dict[str, dict[str, str]]:
@@ -45,7 +47,7 @@ def sidecar_path(report: pathlib.Path) -> pathlib.Path:
 
 
 def materials_path(report: pathlib.Path) -> pathlib.Path:
-    return pathlib.Path(str(report) + ".materials")
+    return pathlib.Path(str(report) + ".materials.zip")
 
 
 def parse_json_modules(report: pathlib.Path) -> tuple[dict[str, dict], str]:
@@ -103,7 +105,7 @@ def valid_baseline(
     attestation = pathlib.Path(str(report) + ".input.attestation")
     provenance = pathlib.Path(str(report) + ".provenance.json")
     if not (report.is_file() and sidecar_path(report).is_file()
-            and (materials_path(report) / "sha256").is_dir()
+            and materials_path(report).is_file()
             and attestation.is_file() and provenance.is_file()
             and (report.parent / "raw-lean-report.json.logs").is_dir()
             and any(path.is_file() for path in
@@ -296,33 +298,50 @@ def merge(args: argparse.Namespace) -> int:
     output = pathlib.Path(args.output)
     output_materials = materials_path(output)
     staged = pathlib.Path(tempfile.mkdtemp(prefix=".lean-delta-materials.", dir=output.parent))
-    staged_sha = staged / "sha256"
-    staged_sha.mkdir()
+    staged_archive = staged / "materials.zip"
     try:
         addresses = sorted({
             declaration["type_sha256"]
             for value in merged_values.values()
             for declaration in value["declarations"]
         })
-        sources = (
-            materials_path(subset_path) / "sha256",
-            materials_path(pathlib.Path(plan_value["baseline"])) / "sha256",
+        source_paths = (
+            materials_path(subset_path),
+            materials_path(pathlib.Path(plan_value["baseline"])),
         )
-        for address in addresses:
-            source = next(
-                (root / address[7:] for root in sources if (root / address[7:]).exists()),
-                None,
-            )
-            if source is None or not stat.S_ISREG(source.lstat().st_mode):
-                raise ValueError(f"statement material is missing for {address}")
-            destination = staged_sha / address[7:]
-            try:
-                os.link(source, destination)
-            except OSError:
-                shutil.copyfile(source, destination)
+        sources = [
+            zipfile.ZipFile(path, "r") if path.is_file() else None
+            for path in source_paths
+        ]
+        try:
+            with zipfile.ZipFile(
+                    staged_archive, "w", compression=zipfile.ZIP_DEFLATED,
+                    compresslevel=6, allowZip64=True) as destination:
+                for address in addresses:
+                    name = "sha256/" + address[7:]
+                    material = None
+                    for source in sources:
+                        if source is None:
+                            continue
+                        try:
+                            material = source.read(name)
+                            break
+                        except KeyError:
+                            continue
+                    if material is None:
+                        raise ValueError(f"statement material is missing for {address}")
+                    info = zipfile.ZipInfo(name, ARCHIVE_TIMESTAMP)
+                    info.compress_type = zipfile.ZIP_DEFLATED
+                    info.create_system = 3
+                    info.external_attr = (stat.S_IFREG | 0o644) << 16
+                    destination.writestr(info, material)
+        finally:
+            for source in sources:
+                if source is not None:
+                    source.close()
         if output_materials.exists():
-            shutil.rmtree(output_materials)
-        pathlib.Path(staged).replace(output_materials)
+            output_materials.unlink()
+        staged_archive.replace(output_materials)
         output.write_text(
             PREFIX + ", ".join(merged[name] for name in sorted(current)) + SUFFIX,
             encoding="utf-8",

@@ -151,8 +151,8 @@ verify_report() {
     || { echo "lean-report-pair: producer left no report: $output" >&2; return 2; }
   [[ -f "${output}.sha256" ]] \
     || { echo "lean-report-pair: producer left no SHA sidecar: $output" >&2; return 2; }
-  [[ -d "${output}.materials/sha256" ]] \
-    || { echo "lean-report-pair: producer left no materials sidecar: $output" >&2; return 2; }
+  [[ -s "${output}.materials.zip" ]] \
+    || { echo "lean-report-pair: producer left no material archive: $output" >&2; return 2; }
   local declared=""
   local declared_name=""
   read -r declared declared_name < "${output}.sha256"
@@ -266,7 +266,7 @@ cache_try_restore() {
   # Completeness: the whole stored bundle must be present before we trust it.
   [[ -s "$report" && -s "${report}.sha256" \
     && -s "${report}.input.attestation" && -s "${report}.provenance.json" \
-    && -d "${report}.logs" && -d "${report}.materials/sha256" ]] \
+    && -d "${report}.logs" && -s "${report}.materials.zip" ]] \
     || { cache_evict "$address"; return 1; }
   local declared="" declared_name=""
   read -r declared declared_name < "${report}.sha256" || true
@@ -275,15 +275,15 @@ cache_try_restore() {
     && "$(awk 'END {print NR}' "${report}.sha256")" == "1" ]] \
     || { cache_evict "$address"; return 1; }
   rm -rf -- "$output" "${output}.sha256" "${output}.provenance.json" \
-    "${output}.input.attestation" "${output}.logs" "${output}.materials"
+    "${output}.input.attestation" "${output}.logs" "${output}.materials.zip"
   mkdir -p "$(dirname "$output")"
   if ! { cp "$report" "$output" \
     && cp "${report}.input.attestation" "${output}.input.attestation" \
     && cp "${report}.provenance.json" "${output}.provenance.json" \
     && cp -R "${report}.logs" "${output}.logs" \
-    && cp -R "${report}.materials" "${output}.materials"; }; then
+    && cp "${report}.materials.zip" "${output}.materials.zip"; }; then
     rm -rf -- "$output" "${output}.sha256" "${output}.provenance.json" \
-      "${output}.input.attestation" "${output}.logs" "${output}.materials"
+      "${output}.input.attestation" "${output}.logs" "${output}.materials.zip"
     return 2
   fi
   local actual
@@ -291,7 +291,7 @@ cache_try_restore() {
   if [[ "$actual" != "$declared" ]]; then
     cache_evict "$address"
     rm -rf -- "$output" "${output}.provenance.json" \
-      "${output}.input.attestation" "${output}.logs" "${output}.materials"
+      "${output}.input.attestation" "${output}.logs" "${output}.materials.zip"
     return 1
   fi
   # Validate the stored provenance before treating an exact-address hit as
@@ -301,7 +301,7 @@ cache_try_restore() {
     cache_evict "$address"
     rm -rf -- "$output" "${output}.sha256" \
       "${output}.input.attestation" "${output}.provenance.json" \
-      "${output}.logs" "${output}.materials"
+      "${output}.logs" "${output}.materials.zip"
     return 1
   fi
   # Re-stamp the sidecar for this output's basename so it is self-consistent.
@@ -312,7 +312,7 @@ cache_try_restore() {
     --producer "$PRODUCER" --inspector "$INSPECTOR" >/dev/null 2>&1; then
     cache_evict "$address"
     rm -rf -- "$output" "${output}.sha256" "${output}.provenance.json" \
-      "${output}.input.attestation" "${output}.logs" "${output}.materials"
+      "${output}.input.attestation" "${output}.logs" "${output}.materials.zip"
     return 1
   fi
   LAST_REPORT_SHA256="$actual"
@@ -328,7 +328,7 @@ cache_store() {
   [[ -n "$CACHE_ROOT" && "$address" =~ ^[0-9a-f]{64}$ ]] || return 0
   [[ -s "$output" && -s "${output}.sha256" \
     && -s "${output}.input.attestation" && -s "${output}.provenance.json" \
-    && -d "${output}.logs" && -d "${output}.materials/sha256" ]] \
+    && -d "${output}.logs" && -s "${output}.materials.zip" ]] \
     || return 0
   local entry="$CACHE_ROOT/$address"
   [[ -e "$entry" ]] && return 0
@@ -347,7 +347,7 @@ cache_store() {
     && cp "${output}.input.attestation" "${report}.input.attestation" \
     && cp "${output}.provenance.json" "${report}.provenance.json" \
     && cp -R "${output}.logs" "${report}.logs" \
-    && cp -R "${output}.materials" "${report}.materials" \
+    && cp "${output}.materials.zip" "${report}.materials.zip" \
     && printf '%s  raw-lean-report.json\n' "$(hash_file "$report")" > "${report}.sha256"; }; then
     rm -rf -- "$tmp"
     return 0
@@ -439,8 +439,8 @@ verify_bundle() {
 
   [[ -d "${output}.logs" && -n "$(find "${output}.logs" -type f -print -quit)" ]] \
     || { echo "lean-report-pair: producer left no log sidecar: $output" >&2; return 2; }
-  [[ -d "${output}.materials/sha256" ]] \
-    || { echo "lean-report-pair: producer left no materials sidecar: $output" >&2; return 2; }
+  [[ -s "${output}.materials.zip" ]] \
+    || { echo "lean-report-pair: producer left no material archive: $output" >&2; return 2; }
   "$INPUT_HELPER" verify --repository "$root" --report "$output" \
     --producer "$PRODUCER" --inspector "$INSPECTOR" >/dev/null
 
@@ -532,9 +532,9 @@ publish_bundle() {
   local staged="$1"
   local live="$2"
   local suffix
-  for suffix in "" ".sha256" ".input.attestation" ".provenance.json" ".logs" ".materials"; do
-    [[ "$suffix" != ".logs" && "$suffix" != ".materials" ]] \
-      || rm -rf -- "${live}${suffix}"
+  rm -rf -- "${live}.materials"
+  for suffix in "" ".sha256" ".input.attestation" ".provenance.json" ".logs" ".materials.zip"; do
+    [[ "$suffix" != ".logs" ]] || rm -rf -- "${live}${suffix}"
     mv -f "${staged}${suffix}" "${live}${suffix}"
   done
 }

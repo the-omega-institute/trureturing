@@ -478,13 +478,13 @@ jobs:
           reports="$RUNNER_TEMP/raw-lean-reports"
           mkdir -p "$reports"
           # verify 需要 .sha256 旁文件(lean-report-input.sh:100),故一并要求存在。
-          for suffix in '' .sha256 .input.attestation .provenance.json; do
+          for suffix in '' .sha256 .input.attestation .provenance.json .materials.zip; do
             test -s "${source}${suffix}"
           done
           helper="$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh"
           # 缓存条目对候选树重新验一次地址与报告哈希;不符即整体回落,不静默使用。
           "$helper" verify --repository "$GITHUB_WORKSPACE/candidate" --report "$source"
-          for suffix in '' .input.attestation .provenance.json; do
+          for suffix in '' .input.attestation .provenance.json .materials.zip; do
             cp "${source}${suffix}" "$reports/candidate-lean-report.json${suffix}"
           done
           printf '%s  %s\n' \
@@ -590,7 +590,7 @@ jobs:
           source="$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json"
           target="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
           mkdir -p "$(dirname "$target")"
-          for suffix in '' .input.attestation .provenance.json; do
+          for suffix in '' .input.attestation .provenance.json .materials.zip; do
             test -s "${source}${suffix}"
             cp "${source}${suffix}" "${target}${suffix}"
           done

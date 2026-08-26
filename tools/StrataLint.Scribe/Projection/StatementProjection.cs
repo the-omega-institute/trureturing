@@ -663,17 +663,26 @@ internal static class StatementProjectionFixtureLoader
         if (File.Exists(reportPath) && TryReadModules(reportPath, out var reportDocument))
         {
             using var report = reportDocument;
-            foreach (var declaration in report.RootElement.GetProperty("modules").EnumerateArray()
-                         .SelectMany(static module => module.GetProperty("declarations").EnumerateArray()))
+            var reportDeclarations = report.RootElement.GetProperty("modules").EnumerateArray()
+                .SelectMany(static module => module.GetProperty("declarations").EnumerateArray())
+                .Select(static declaration =>
+                {
+                    var name = declaration.GetProperty("name").GetString()!;
+                    var address = declaration.GetProperty("type_sha256").GetString()
+                        ?? throw new FormatException($"Raw Lean report has a null type address: {name}");
+                    var kind = declaration.TryGetProperty("kind", out var kindElement)
+                        ? kindElement.GetString() ?? "unknown" : "unknown";
+                    return (Name: name, Address: address, Kind: kind);
+                })
+                .ToArray();
+            var loadMaterial = RawLeanReportArtifact.OpenStatementMaterialSource(
+                reportPath,
+                reportDeclarations.Select(static declaration => declaration.Address));
+            foreach (var declaration in reportDeclarations)
             {
-                var name = declaration.GetProperty("name").GetString()!;
-                var statementAddress = declaration.GetProperty("type_sha256").GetString()
-                    ?? throw new FormatException($"Raw Lean report has a null type address: {name}");
-                var kind = declaration.TryGetProperty("kind", out var kindElement)
-                    ? kindElement.GetString() ?? "unknown" : "unknown";
-                declarations[name] = new StatementEntry(
-                    kind,
-                    () => RawLeanReportArtifact.ReadStatementMaterial(reportPath, statementAddress));
+                declarations[declaration.Name] = new StatementEntry(
+                    declaration.Kind,
+                    () => loadMaterial(declaration.Address));
             }
         }
         return declarations.ToImmutable();
