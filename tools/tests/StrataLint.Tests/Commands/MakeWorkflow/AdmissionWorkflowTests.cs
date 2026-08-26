@@ -48,6 +48,49 @@ public sealed class AdmissionWorkflowTests
     }
 
     [Fact]
+    public void CandidateEngineeringInstallsPinnedSdkBeforeEveryDotnetCommand()
+    {
+        var steps = JobSteps(SharedAdmissionWorkflow, "candidate-engineering");
+        var sdk = Assert.Single(
+            steps.Select(static (step, index) => (Step: step, Index: index)),
+            candidate => candidate.Step.Children.TryGetValue(new YamlScalarNode("uses"), out var uses)
+                && uses is YamlScalarNode { Value: not null } scalar
+                && scalar.Value.StartsWith("actions/setup-dotnet@", StringComparison.Ordinal));
+
+        Assert.Equal(
+            "actions/setup-dotnet@v4",
+            Assert.IsType<YamlScalarNode>(sdk.Step.Children[new YamlScalarNode("uses")]).Value);
+        var inputs = Assert.IsType<YamlMappingNode>(
+            sdk.Step.Children[new YamlScalarNode("with")]);
+        Assert.Equal(
+            "candidate/global.json",
+            Assert.IsType<YamlScalarNode>(
+                inputs.Children[new YamlScalarNode("global-json-file")]).Value);
+        Assert.False(
+            sdk.Step.Children.ContainsKey(new YamlScalarNode("if")),
+            "the candidate-engineering SDK setup step must not be conditionally disabled");
+
+        var dotnetStepIndices = steps
+            .Select(static (step, index) => (Step: step, Index: index))
+            .Where(candidate => candidate.Step.Children.TryGetValue(
+                    new YamlScalarNode("run"),
+                    out var run)
+                && run is YamlScalarNode { Value: not null } scalar
+                && Regex.IsMatch(
+                    scalar.Value,
+                    @"(?m)(^|[^\w-])dotnet(?:[^\w-]|$)",
+                    RegexOptions.CultureInvariant | RegexOptions.NonBacktracking))
+            .ToArray();
+
+        Assert.NotEmpty(dotnetStepIndices);
+        Assert.All(
+            dotnetStepIndices,
+            candidate => Assert.True(
+                sdk.Index < candidate.Index,
+                $"the pinned SDK setup must precede dotnet command step '{StepName(candidate.Step)}'"));
+    }
+
+    [Fact]
     public void PushFallbackBaseIsCheckedHeadFirstParent()
     {
         var baselineScript = BaselineResolutionScript(SharedAdmissionWorkflow);
