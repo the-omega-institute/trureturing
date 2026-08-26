@@ -12,7 +12,7 @@ public sealed record TruthProjectionNode
         RepoPath repoPath,
         Gid? gid,
         TruthState state,
-        string? moduleName)
+        string moduleName)
     {
         RepoPath = repoPath;
         Gid = gid;
@@ -26,13 +26,13 @@ public sealed record TruthProjectionNode
 
     public TruthState State { get; }
 
-    public string? ModuleName { get; }
+    public string ModuleName { get; }
 
     internal static TruthProjectionNode Create(
         RepoPath repoPath,
         Gid? gid,
         TruthState state,
-        string? moduleName) =>
+        string moduleName) =>
         new(repoPath, gid, state, moduleName);
 }
 
@@ -50,20 +50,15 @@ public sealed class TruthDagProjection
         ImmutableArray<TruthProjectionEdge> edges,
         ImmutableArray<TruthProjectionBlocker> openBlockers,
         string rootSha256,
-        ImmutableArray<TruthProjectionNode> topologicalOrder,
-        ImmutableDictionary<RepoPath, int> depths,
-        ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>> dependencies)
+        ImmutableDictionary<RepoPath, int> depths)
     {
         Nodes = nodes;
         Edges = edges;
         OpenBlockers = openBlockers;
         RootSha256 = rootSha256;
-        TopologicalOrder = topologicalOrder;
         this.depths = depths;
-        this.dependencies = dependencies;
     }
 
-    private readonly ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>> dependencies;
     private readonly ImmutableDictionary<RepoPath, int> depths;
 
     public ImmutableArray<TruthProjectionNode> Nodes { get; }
@@ -73,13 +68,6 @@ public sealed class TruthDagProjection
     public ImmutableArray<TruthProjectionBlocker> OpenBlockers { get; }
 
     public string RootSha256 { get; }
-
-    public ImmutableArray<TruthProjectionNode> TopologicalOrder { get; }
-
-    public ImmutableArray<RepoPath> DependenciesOf(RepoPath node) =>
-        dependencies.TryGetValue(node, out var result)
-            ? result
-            : throw new KeyNotFoundException($"Truth projection does not contain {node.Value}.");
 
     public int Depth(RepoPath node) =>
         depths.TryGetValue(node, out var result)
@@ -91,10 +79,8 @@ public sealed class TruthDagProjection
         ImmutableArray<TruthProjectionEdge> edges,
         ImmutableArray<TruthProjectionBlocker> openBlockers,
         string rootSha256,
-        ImmutableArray<TruthProjectionNode> topologicalOrder,
-        ImmutableDictionary<RepoPath, int> depths,
-        ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>> dependencies) =>
-        new(nodes, edges, openBlockers, rootSha256, topologicalOrder, depths, dependencies);
+        ImmutableDictionary<RepoPath, int> depths) =>
+        new(nodes, edges, openBlockers, rootSha256, depths);
 }
 
 public static class TruthDagProjectionAssembler
@@ -113,14 +99,12 @@ public static class TruthDagProjectionAssembler
             .OrderBy(static path => path.Value, StringComparer.Ordinal)
             .Select(path => CreateNode(snapshot.Files[path], states[path]))
             .ToImmutableArray();
-        var nodesByPath = nodes.ToImmutableDictionary(static node => node.RepoPath);
         var pathsByModule = nodes
-            .Where(static node => node.ModuleName is not null)
-            .ToImmutableDictionary(static node => node.ModuleName!, static node => node.RepoPath, StringComparer.Ordinal);
+            .ToImmutableDictionary(static node => node.ModuleName, static node => node.RepoPath, StringComparer.Ordinal);
 
         var edgeSet = new HashSet<TruthProjectionEdge>();
         var blockerSet = new HashSet<TruthProjectionBlocker>();
-        foreach (var node in nodes.Where(static node => node.ModuleName is not null))
+        foreach (var node in nodes)
         {
             foreach (var dependency in adjacency[node.RepoPath])
             {
@@ -178,14 +162,14 @@ public static class TruthDagProjectionAssembler
             }
         }
 
-        var topological = ImmutableArray.CreateBuilder<TruthProjectionNode>(nodes.Length);
+        var processedNodeCount = 0;
         var mutableDepths = new Dictionary<RepoPath, int>();
         while (ready.TryDequeue(out var path, out _))
         {
             mutableDepths[path] = dependencies[path].Length == 0
                 ? 0
                 : 1 + dependencies[path].Max(dependency => mutableDepths[dependency]);
-            topological.Add(nodesByPath[path]);
+            processedNodeCount++;
             foreach (var dependent in dependents[path])
             {
                 indegree[dependent]--;
@@ -196,7 +180,7 @@ public static class TruthDagProjectionAssembler
             }
         }
 
-        if (topological.Count != nodes.Length)
+        if (processedNodeCount != nodes.Length)
         {
             throw new InvalidOperationException("Lean truth projection is not topologically ordered.");
         }
@@ -206,9 +190,7 @@ public static class TruthDagProjectionAssembler
             edges,
             blockers,
             ComputeRoot(nodes, edges, blockers),
-            topological.MoveToImmutable(),
-            mutableDepths.ToImmutableDictionary(),
-            dependencies);
+            mutableDepths.ToImmutableDictionary());
     }
 
     private static TruthProjectionNode CreateNode(RepositoryFile file, TruthState state)
