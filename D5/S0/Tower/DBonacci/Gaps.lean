@@ -45,8 +45,7 @@ theorem boundedGapFuelList_length (maxTrue fuel Q : Nat) (hfuel : fuel ≤ maxTr
         refine ⟨⟨fun i => Fin.elim0 i, by simp [runAdmissible]⟩, ?_⟩
         intro name
         apply Subtype.ext
-        funext i
-        exact Fin.elim0 i
+        funext i; exact Fin.elim0 i
       simp [boundedGapFuelList, hcard]
   | succ Q ih =>
       cases fuel with

@@ -187,14 +187,10 @@ theorem golden_states_for_first_three_steps_split_four
     simp only [goldenStatesForFirstThreeStepsIn, List.filterMap_map,
       Function.comp_apply, List.mem_toFinset, List.mem_filterMap] at hstate
     obtain ⟨item, hitem, hselected⟩ := hstate
-    by_cases hselectedCondition :
-        (goldenFirstThreeOfFour item).2.1 = first ∧
-          (goldenFirstThreeOfFour item).2.2.1 = second ∧
-          (goldenFirstThreeOfFour item).2.2.2 = third
+    by_cases hselectedCondition : (goldenFirstThreeOfFour item).2.1 = first ∧ (goldenFirstThreeOfFour item).2.2.1 = second ∧ (goldenFirstThreeOfFour item).2.2.2 = third
     · rw [if_pos hselectedCondition] at hselected
       simp only [Option.some.injEq, goldenFirstThreeOfFour] at hselected
-      have hthree :
-          item.2.1 = first ∧ item.2.2.1 = second ∧ item.2.2.2.1 = third := by
+      have hthree : item.2.1 = first ∧ item.2.2.1 = second ∧ item.2.2.2.1 = third := by
         simpa only [goldenFirstThreeOfFour] using hselectedCondition
       rw [Finset.mem_union]
       rcases List.forall_iff_forall_mem.mp hfourth item hitem hthree with
