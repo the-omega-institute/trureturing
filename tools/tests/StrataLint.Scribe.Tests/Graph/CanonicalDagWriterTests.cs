@@ -76,7 +76,7 @@ public sealed class CanonicalDagWriterTests
         Assert.Contains("D5/S0/Carrier/Delta.lean", fence, StringComparison.Ordinal);
         Assert.DoesNotContain("Meta/notes.md", text, StringComparison.Ordinal);
         Assert.Contains("semantic 0", text, StringComparison.Ordinal);
-        Assert.Contains("(0 carry no module and are not drawn)", text, StringComparison.Ordinal);
+        Assert.Contains("- nodes: 1 total\n", text, StringComparison.Ordinal);
     }
 
     [Fact]
