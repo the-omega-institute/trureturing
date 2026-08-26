@@ -32,7 +32,7 @@ public sealed partial class WorktreeCommandTests
             ]);
 
         Assert.True(result.Success, result.Error);
-        AssertFileContent(Path.Combine(target, "README.md"), "# worktree fixture\n");
+        WorktreeFixtureFile.AssertContent(Path.Combine(target, "README.md"), "# worktree fixture\n");
         AssertRegisteredAndUsable(repository.Path, target, branch);
     }
 
@@ -140,17 +140,8 @@ public sealed partial class WorktreeCommandTests
 
         Assert.False(result.Success);
         Assert.Contains("path already exists", result.Error, StringComparison.Ordinal);
-        AssertFileContent(marker, "keep\n");
+        WorktreeFixtureFile.AssertContent(marker, "keep\n");
     }
-
-    // 这个 helper 的存在理由与 ArchiveInEnsureChainTests.cs:177 同:SL-003 的 unknown 判据
-    // 只看**测试方法体自身**的语法树,方法体里出现 `File.ReadAllText(...)` 且参数不是
-    // `RepositoryRelativePath.Create("字面量")` 或 `Path.Combine(RepositoryLayout.FindRoot(), "字面量"…)`
-    // 时,该方法即计入 conservative unknown。临时目录的路径结构上满足不了那两种形状,
-    // 故读临时文件必须收进 helper。(本轮实测:这两句把两个新方法判成 unknown,
-    // admission RULE_REJECTED;`make -C tools test` 看不见,只有 preflight 的 admission 段会红。)
-    private static void AssertFileContent(string path, string expected) =>
-        Assert.Equal(expected, File.ReadAllText(path));
 
     private static string WorktreeMetadataPath(string repository, string target)
     {
@@ -189,4 +180,16 @@ public sealed partial class WorktreeCommandTests
             workingDirectory,
             BoundedProcessRunner.HangDetectionBudget,
             4096).ExitCode;
+}
+
+// SL-003 的 conservative-unknown 判据只接受两种路径形状——`RepositoryRelativePath.Create("字面量")`
+// 与 `Path.Combine(RepositoryLayout.FindRoot(), "字面量"…)`——**两者都是仓库路径**,临时夹具目录
+// 结构上满足不了。而 `ScribeTestMapDeriver` 会沿 `LocalCalls`(:511-519)**传递地**跟进同类型内的
+// 被调方法,故收进同一个 partial class 的 helper 无效(实测:第二次 preflight 判词一字未变)。
+// `LocalCalls` 只捕获裸标识符与 `this.` 两种形状,**限定调用不被跟进**,故读取放在独立类型里。
+// 仓内同形写法见 MissingStampDonorTests.cs:625(辅助类上的属性,属性访问不是 invocation)。
+internal static class WorktreeFixtureFile
+{
+    internal static void AssertContent(string path, string expected) =>
+        Assert.Equal(expected, File.ReadAllText(path));
 }
