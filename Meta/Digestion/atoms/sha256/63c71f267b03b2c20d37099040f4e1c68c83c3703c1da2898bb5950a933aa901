@@ -1,0 +1,20 @@
+## 推论 121.1（纯局部 prime-time no-go）
+
+若初始可见空间只有 $V_{\le1}$，且动力学始终是局部乘积通道，则全部时间 Heisenberg 闭包不能生成 $|S|\ge2$ 的新联合相关方向。
+
+因此：
+
+$$
+\boxed{
+\text{local measurement}
++
+\text{local dynamics}
+\not\Rightarrow
+\text{global quantum tomography}.
+}
+$$
+
+跨素数相关余量若要通过时间变得可见，必须存在跨因子耦合或直接联合测量。
+
+---
+

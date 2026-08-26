@@ -1,0 +1,12 @@
+### 定义 42.3（观察者视界与可见球）
+
+\[
+\boxed{
+\mathcal H_O(o)=\{x:\ d_O(o,x)=+\infty\},
+\qquad
+\mathcal B_O(o)=\{x:\ d_O(o,x)<+\infty\}.
+}
+\]
+
+注意 \(d_O(o,x)=0\) 的点属于 \(\mathcal B_O(o)\)：零距离是"不可分辨"，不是"视界之外"。
+

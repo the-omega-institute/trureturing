@@ -1,0 +1,22 @@
+## 原理 120.1（prime correlation order）
+
+素数观察者的索引轴不能只写成
+
+$$
+(p,k,t).
+$$
+
+量子化后还必须允许“参与联合可观测量的素数子集”这一相关阶数轴：
+
+$$
+\boxed{
+(S,k,b,a,t),
+\qquad
+S\subseteq\mathbb P_{\mathrm{finite}}.
+}
+$$
+
+这把“增加素数数量”和“增加联合相关阶数”严格区分。
+
+---
+

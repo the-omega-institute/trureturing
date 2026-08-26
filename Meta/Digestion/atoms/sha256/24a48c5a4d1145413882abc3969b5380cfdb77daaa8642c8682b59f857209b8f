@@ -1,0 +1,33 @@
+# 126. Frobenius 观察的量子后处理不可恢复定理
+
+仓库 `D5/S3/Factorization/Galois/GaloisPrimeObserver.lean` 定义带分歧标签的 Frobenius 素数观察器：未分歧素数输出 Frobenius 共轭类，分歧素数输出 `none`。
+
+它已经机器核验：若共轭类输出有限且分歧素数集合有限，则存在某个共轭类被无限多个未分歧素数共同输出；并分别给出删除两个假设后的边界反例。
+
+现在设任意量子编码
+
+$$
+\eta:
+\operatorname{Option}(\operatorname{ConjClasses}G)
+\to
+\mathsf S(\mathcal H),
+$$
+
+后接任意量子通道／instrument 观察签名
+
+$$
+\Sigma_{\mathfrak O}.
+$$
+
+定义复合：
+
+$$
+p
+\mapsto
+O_{\mathrm{Frob}}(p)
+\mapsto
+\eta(O_{\mathrm{Frob}}(p))
+\mapsto
+\Sigma_{\mathfrak O}.
+$$
+

@@ -1,0 +1,35 @@
+# 125. zeta-weighted prime-time Gramian
+
+再令
+
+$$
+\mu_\beta(t)
+=(1-\beta)\beta^t,
+\qquad 0<\beta<1.
+$$
+
+对中心化 Heisenberg 效果
+
+$$
+e_{p,k,b,a,t}
+=
+(\Phi^*)^t(E_{p,k,b,a})
+-
+\frac{\operatorname{Tr}((\Phi^*)^tE_{p,k,b,a})}{d}I,
+$$
+
+给定上下文／结果正权重 $w_{b,a}$，定义形式上的 prime-time Gram 算子：
+
+$$
+\boxed{
+W_{s,\beta}
+=
+\sum_{p,k,b,a,t}
+\nu_s(p,k)\mu_\beta(t)w_{b,a}
+|e_{p,k,b,a,t}\rangle
+\langle e_{p,k,b,a,t}|.
+}
+$$
+
+有限维且权重总和有限时，该正算子和在算子范数下收敛。
+

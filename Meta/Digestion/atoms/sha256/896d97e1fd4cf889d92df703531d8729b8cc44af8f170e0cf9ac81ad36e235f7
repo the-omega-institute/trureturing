@@ -1,0 +1,38 @@
+# 132. prime Weyl observer：从 residue 读出升级到相位读出
+
+对
+
+$$
+\mathcal H_{p^k}
+=
+\ell^2(\mathbb Z/p^k\mathbb Z)
+$$
+
+定义 clock 与 shift：
+
+$$
+Z|x\rangle
+=\omega^x|x\rangle,
+$$
+
+$$
+X|x\rangle
+=|x+1\rangle,
+$$
+
+其中
+
+$$
+\omega=e^{2\pi i/p^k}.
+$$
+
+它们满足 Weyl 关系：
+
+$$
+\boxed{
+ZX=\omega XZ.
+}
+$$
+
+$Z$ 的谱投影读取 residue／address；Fourier 变换后的 $X$ 上下文读取相位／频率。二者共同生成完整局部矩阵代数。
+
