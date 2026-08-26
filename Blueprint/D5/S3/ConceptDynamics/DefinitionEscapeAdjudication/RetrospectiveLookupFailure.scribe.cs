@@ -88,7 +88,9 @@ internal sealed class RetrospectiveLookupFailureDocument : IScribeDocumentDefini
             Open, Forall, Sp, recordVariable, Colon, Sp, record, Comma, Sp,
             Not(Call("NonAnticipating", commitment, recordVariable)), Close);
         Formula gain = F.Id("prospectiveGain");
-        Formula gainType = Arrow(Arrow(record, answer), NaturalNumbers());
+        Formula gainType = Arrow(
+            Seq(Open, record, Sp, To, Sp, answer, Close),
+            NaturalNumbers());
         Formula allGains = Seq(
             Forall, Sp, gain, Colon, Sp, gainType, Comma, Sp,
             Call("PositiveProspectiveGain", gain, copier));
