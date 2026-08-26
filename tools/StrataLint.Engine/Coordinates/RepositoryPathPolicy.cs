@@ -12,6 +12,12 @@ internal static partial class RepositoryPathPolicy
     // 缓存发布 workflow（#2542）。`.github` 下是白名单而非通配，新增控制工件必须在此具名登记。
     internal const string CachePublicationWorkflowPath =
         ".github/workflows/lean-cache-publish.yml";
+
+    // 集成分支的 Lean 缓存 seed(mathlib v4.33 升级用)。**临时工件**:升级合入 dev 后即删,
+    // 届时本常量与下方 pattern 分支一并移除。它只在 `integration-**` 分支上存在,
+    // push 触发,非 required check,权限只有 contents: read。案号 #2814。
+    internal const string IntegrationCacheSeedWorkflowPath =
+        ".github/workflows/lean-cache-seed.yml";
     internal const string HarnessGatePath = ".github/scripts/harness-gate.sh";
 
     internal static ImmutableArray<Diagnostic> Evaluate(
@@ -104,6 +110,7 @@ internal static partial class RepositoryPathPolicy
             or "Golden/values-kernels.toml"
             or WorkflowPath
             or CachePublicationWorkflowPath
+            or IntegrationCacheSeedWorkflowPath
             or ".github/CODEOWNERS"
             or HarnessGatePath
             || value.StartsWith("tools/", StringComparison.Ordinal)
