@@ -30,7 +30,7 @@ The injectivity-cover equivalence rewrites both completeness of J and completene
 
 **Theorem 1.3 (One collision certifies incompleteness).**
 
-$$\forall X \in \operatorname{Type}, I \in \operatorname{Type}, V \in I \to \operatorname{Type}, q \in \operatorname{ObserverFamily}\left(I, X, V\right), J \in \operatorname{Finset}\left(I\right),\; \exists x \in X, y \in X,\; x \ne y \land \operatorname{jointReadoutAt}\left(J, q, x\right) = \operatorname{jointReadoutAt}\left(J, q, y\right) \Rightarrow \left(\neg \operatorname{Injective}\left(\operatorname{jointReadout}\left(J, q\right)\right)\right)$$
+$$\forall X \in \operatorname{Type}, I \in \operatorname{Type}, V \in I \to \operatorname{Type}, q \in \operatorname{ObserverFamily}\left(I, X, V\right), J \in \operatorname{Finset}\left(I\right),\; \left(\exists x \in X, y \in X,\; x \ne y \land \operatorname{jointReadoutAt}\left(J, q, x\right) = \operatorname{jointReadoutAt}\left(J, q, y\right)\right) \Rightarrow \left(\neg \operatorname{Injective}\left(\operatorname{jointReadout}\left(J, q\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/Budget/MinimumCompleteSetCover.counterexample_certifies_incomplete_budget` (`✓ std3`). ∎
 
@@ -42,7 +42,7 @@ Two distinct states with equal selected joint readouts contradict injectivity. T
 
 **Theorem 1.4 (Completeness separates every distinct pair).**
 
-$$\forall X \in \operatorname{Type}, I \in \operatorname{Type}, V \in I \to \operatorname{Type}, q \in \operatorname{ObserverFamily}\left(I, X, V\right), J \in \operatorname{Finset}\left(I\right),\; \operatorname{Injective}\left(\operatorname{jointReadout}\left(J, q\right)\right) \Rightarrow \forall x \in X, y \in X,\; x \ne y \Rightarrow \left(\exists i \in I,\; i \in J \land \operatorname{Separates}\left(q, i, x, y\right)\right)$$
+$$\forall X \in \operatorname{Type}, I \in \operatorname{Type}, V \in I \to \operatorname{Type}, q \in \operatorname{ObserverFamily}\left(I, X, V\right), J \in \operatorname{Finset}\left(I\right),\; \operatorname{Injective}\left(\operatorname{jointReadout}\left(J, q\right)\right) \Rightarrow \left(\forall x \in X, y \in X,\; x \ne y \Rightarrow \left(\exists i \in I,\; i \in J \land \operatorname{Separates}\left(q, i, x, y\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/Budget/MinimumCompleteSetCover.injective_budget_covers_every_distinct_pair` (`✓ std3`). ∎
 
