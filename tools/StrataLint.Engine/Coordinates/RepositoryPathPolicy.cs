@@ -17,11 +17,22 @@ internal static partial class RepositoryPathPolicy
     internal const string TruthReleasePublicationWorkflowPath =
         ".github/workflows/truth-release-publish.yml";
     internal const string HarnessGatePath = ".github/scripts/harness-gate.sh";
+    internal const string RepositoryCoordinate = "the-omega-institute/trureturing";
 
     internal static bool ContainsRepositorySourceExecutionIndicator(string value) =>
-        value.StartsWith("actions/checkout@", StringComparison.OrdinalIgnoreCase)
-        || value.StartsWith("./.github/actions/", StringComparison.Ordinal)
+        value.StartsWith("./", StringComparison.Ordinal)
+        || value.StartsWith("actions/checkout@", StringComparison.OrdinalIgnoreCase)
+        || IsSelfRepositorySourceExecutionIndicator(value)
         || RepositorySourceExecutionIndicator().IsMatch(value);
+
+    private static bool IsSelfRepositorySourceExecutionIndicator(string value) =>
+        value.StartsWith($"{RepositoryCoordinate}/", StringComparison.OrdinalIgnoreCase)
+        && RepositorySelfSourceExecutionIndicator().IsMatch(value[RepositoryCoordinate.Length..]);
+
+    [GeneratedRegex(
+        @"^/\.github/(?:workflows|actions)/[^@\s]+@[^@\s]+$",
+        RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)]
+    private static partial Regex RepositorySelfSourceExecutionIndicator();
 
     [GeneratedRegex(
         @"(?:^|[\s;&|])(?:dotnet\s+(?:build|run|test)\b|lake(?:\s|$)|make\s+|run\s+--project\b|(?:\./)?tools/)",

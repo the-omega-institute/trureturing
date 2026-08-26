@@ -149,10 +149,36 @@ public sealed class ContentsWriteWorkflowClosureTests
                 steps:
                   - name: Execute repository code while holding write authority
                     run: dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj
+                  - run: lake build
+                  - run: make lean-report
             """;
 
         var failure = Record.Exception(() =>
             AssertNoWriteJobExecutesRepositoryCode(new WorkflowSource("hostile-fixture.yml", hostileWorkflow)));
+
+        Assert.NotNull(failure);
+        Assert.Contains(
+            "Jobs with publication/OIDC write authority may not execute repository code: hostile",
+            failure.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void AHostileWriteJobThatCallsALocalReusableWorkflowMakesTheClosureGuardRed()
+    {
+        const string hostileWorkflow = """
+            permissions: {}
+            jobs:
+              hostile:
+                permissions:
+                  contents: write
+                steps:
+                  - name: Execute a local reusable workflow while holding write authority
+                    uses: ./.github/workflows/anything.yml
+            """;
+
+        var failure = Record.Exception(() =>
+            AssertNoWriteJobExecutesRepositoryCode(new WorkflowSource("hostile-local-workflow.yml", hostileWorkflow)));
 
         Assert.NotNull(failure);
         Assert.Contains(
@@ -208,7 +234,7 @@ public sealed class ContentsWriteWorkflowClosureTests
         Assert.Contains("([.assets[].name] | sort) == $expected", content, StringComparison.Ordinal);
         Assert.Contains("protected dev moved before GitHub Release publication", content, StringComparison.Ordinal);
         Assert.Contains("verify_protected_dev_tip\n            if gh release create", content, StringComparison.Ordinal);
-        Assert.Contains("verify_protected_dev_tip\n              gh release upload", content, StringComparison.Ordinal);
+        Assert.DoesNotContain("verify_protected_dev_tip\n              gh release upload", content, StringComparison.Ordinal);
         Assert.Contains("assets=verified", content, StringComparison.Ordinal);
         Assert.DoesNotContain("release_collection_api=", content, StringComparison.Ordinal);
     }
