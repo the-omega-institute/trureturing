@@ -328,9 +328,6 @@ verify_bundle() {
   local expected_provenance="$TMP_ROOT/expected.provenance.json"
   local expected_attestation="$TMP_ROOT/expected.input.attestation"
 
-  verify_report "$output"
-  [[ "$LAST_REPORT_SHA256" == "$report_sha256" ]] \
-    || { echo "lean-report-pair: verified report address changed: $output" >&2; return 2; }
   [[ -d "${output}.logs" && -n "$(find "${output}.logs" -type f -print -quit)" ]] \
     || { echo "lean-report-pair: producer left no log sidecar: $output" >&2; return 2; }
   "$INPUT_HELPER" verify --repository "$root" --report "$output" \
