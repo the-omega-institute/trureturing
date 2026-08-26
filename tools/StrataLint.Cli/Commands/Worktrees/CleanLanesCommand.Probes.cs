@@ -31,7 +31,7 @@ internal static partial class CleanLanesCommand
             "git",
             ["merge-base", "--is-ancestor", ancestor, descendant],
             repositoryRoot,
-            TimeSpan.FromSeconds(30));
+            BoundedProcessRunner.HangDetectionBudget);
         if (result.ExitCode == 0) return true;
         if (result.ExitCode == 1) return false;
         var error = Decode(result.StandardError).Trim();
@@ -111,7 +111,7 @@ internal static partial class CleanLanesCommand
                     "100",
                 ],
                 repositoryRoot,
-                TimeSpan.FromSeconds(30));
+                BoundedProcessRunner.HangDetectionBudget);
             if (result.ExitCode != 0
                 || result.StandardOutput.Length == 0
                 || result.StandardError.Length != 0)
@@ -191,7 +191,7 @@ internal static partial class CleanLanesCommand
                 "lsof",
                 ["-nP", "-F0pfn"],
                 Path.GetTempPath(),
-                TimeSpan.FromSeconds(30));
+                BoundedProcessRunner.HangDetectionBudget);
             if (result.ExitCode != 0
                 || result.StandardOutput.Length == 0
                 || result.StandardError.Length != 0

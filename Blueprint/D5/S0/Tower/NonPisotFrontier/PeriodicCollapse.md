@@ -8,7 +8,7 @@ Reading a whole period as one step turns it into multiplication by the conjugate
 
 **Theorem 1.1 (A periodic block collapses to one orbit).**
 
-$$\forall c \in R, y \in R,\; \left(y = \operatorname{collapseCentre}\left(p, c\right) \Rightarrow \forall k \in N,\; \operatorname{collapseIterate}\left(p, c, k, y\right) = y\right) \land \left(y \ne \operatorname{collapseCentre}\left(p, c\right) \Rightarrow \forall M \in R,\; \exists k \in N,\; M < \left|\operatorname{collapseIterate}\left(p, c, k, y\right) - \operatorname{collapseCentre}\left(p, c\right)\right|\right)$$
+$$\forall c \in R, y \in R,\; \left(y = \operatorname{collapseCentre}\left(p, c\right) \Rightarrow \left(\forall k \in N,\; \operatorname{collapseIterate}\left(p, c, k, y\right) = y\right)\right) \land \left(y \ne \operatorname{collapseCentre}\left(p, c\right) \Rightarrow \left(\forall M \in R,\; \exists k \in N,\; M < \left|\operatorname{collapseIterate}\left(p, c, k, y\right) - \operatorname{collapseCentre}\left(p, c\right)\right|\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Tower/NonPisotFrontier/PeriodicCollapse.periodic_block_collapses_to_one_orbit` (`✓ std3`). ∎
 

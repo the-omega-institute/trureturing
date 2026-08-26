@@ -337,18 +337,21 @@ public sealed partial class ProductionEnvironmentTests
         IReadOnlyDictionary<string, string> files,
         IReadOnlyDictionary<string, LeanFileReport> reports)
     {
-        var (snapshot, lean, dag) = BuildState(files, reports);
-        var attestations = dag.Nodes
-            .Where(static node => node.State is TruthState.Closed && node.ModuleName is not null)
-            .Select(node => new FrozenModuleAttestation(
-                node.RepoPath,
-                FrozenLedgerTestData.GitBlobOid(files[node.RepoPath.Value]))
+        var (snapshot, lean, _) = BuildState(files, reports);
+        var states = LeanTruthStates.Resolve(snapshot, lean);
+        var adjacency = LeanImportAdjacency.Build(snapshot, lean);
+        var attestations = states
+            .Where(static item => item.Value is TruthState.Closed)
+            .Select(item => new FrozenModuleAttestation(
+                item.Key,
+                FrozenLedgerTestData.GitBlobOid(files[item.Key.Value]))
             {
                 BaseCommitOid = FrozenLedgerTestData.GitOid('a'),
                 BaseTreeOid = FrozenLedgerTestData.GitOid('b'),
             });
         return Assert.IsType<FrozenMaterialOutcome.Accepted>(
-            FrozenContentAddress.Build(snapshot, lean, FrozenEnvironment(files), attestations)).Capability;
+            FrozenContentAddress.Build(
+                snapshot, lean, states, adjacency, FrozenEnvironment(files), attestations)).Capability;
     }
 
     private static FrozenEnvironmentAttestation FrozenEnvironment(

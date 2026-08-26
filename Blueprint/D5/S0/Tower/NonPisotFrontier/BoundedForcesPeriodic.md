@@ -10,7 +10,7 @@ The multiplier is arbitrary, so the same statement applies on both sides of the 
 
 **Theorem 1.1 (Periodic digits force a periodic orbit).**
 
-$$1 < \left|c\right| \Rightarrow \forall n \in N,\; N \le n \Rightarrow \operatorname{r}\left(n + p\right) = \operatorname{r}\left(n\right)$$
+$$1 < \left|c\right| \Rightarrow \left(\forall n \in N,\; N \le n \Rightarrow \operatorname{r}\left(n + p\right) = \operatorname{r}\left(n\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Tower/NonPisotFrontier/BoundedForcesPeriodic.periodic_digits_force_periodic_orbit` (`✓ std3`). ∎
 

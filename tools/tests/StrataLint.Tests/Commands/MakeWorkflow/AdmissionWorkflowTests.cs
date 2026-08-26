@@ -328,7 +328,7 @@ public sealed class AdmissionWorkflowTests
                 githubPath,
             ],
             root,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
         Assert.Equal(1, result.ExitCode);

@@ -62,7 +62,8 @@ internal static class FrozenLedgerTestData
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
         var closure = Assert.IsType<LeanValidationOutcome.Accepted>(
             LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
-        var dag = TruthDagProjectionAssembler.Build(snapshot, closure);
+        var states = LeanTruthStates.Resolve(snapshot, closure);
+        var adjacency = LeanImportAdjacency.Build(snapshot, closure);
         var environment = new FrozenEnvironmentAttestation(
             originCommitOid,
             originTreeOid,
@@ -81,7 +82,7 @@ internal static class FrozenLedgerTestData
         });
 
         return Assert.IsType<FrozenMaterialOutcome.Accepted>(
-            FrozenContentAddress.Build(snapshot, closure, environment, attestations)).Capability;
+            FrozenContentAddress.Build(snapshot, closure, states, adjacency, environment, attestations)).Capability;
     }
 
     internal static FrozenMaterialOutcome BuildCatalogOutcome(
@@ -105,17 +106,15 @@ internal static class FrozenLedgerTestData
                 {
                     [path] = report,
                 }))).Capability;
-        var dag = TruthDagProjectionAssembler.Build(snapshot, closure);
+        var states = LeanTruthStates.Resolve(snapshot, closure);
+        var adjacency = LeanImportAdjacency.Build(snapshot, closure);
         var environment = new FrozenEnvironmentAttestation(
             GitOid('a'),
             GitOid('b'),
             GitBlobOid(files["lean-toolchain"]),
             GitBlobOid(files["lake-manifest.json"]));
         return FrozenContentAddress.Build(
-            snapshot,
-            closure,
-            environment,
-            Array.Empty<FrozenModuleAttestation>());
+            snapshot, closure, states, adjacency, environment, Array.Empty<FrozenModuleAttestation>());
     }
 
     internal static ModuleSpec Module(

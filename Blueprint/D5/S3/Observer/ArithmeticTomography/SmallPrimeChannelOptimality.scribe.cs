@@ -74,9 +74,10 @@ internal sealed class SmallPrimeChannelOptimalityDocument : IScribeDocumentDefin
         Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
         Formula reals = Seq(Mathbb, Grp(F.Id("R")));
         Formula primes = Seq(Operatorname, Grp(F.Id("Primes")));
+        Formula parameterDomain = Seq(Open, D(1), Comma, Sp, Infty, Close);
         Formula finiteIndex = Call("Fin", channelCount);
         Formula informationType = Seq(
-            Call("Ioi", D(1)), Sp, To, Sp, primes, Sp, To, Sp, reals);
+            parameterDomain, Sp, To, Sp, primes, Sp, To, Sp, reals);
         Formula chosenType = Call("OrderEmbedding", finiteIndex, naturals);
         Formula InformationAt(Formula p) => Apply(information, parameter, p);
         Formula ChosenAt(Formula i) => Apply(chosen, i);
@@ -97,11 +98,10 @@ internal sealed class SmallPrimeChannelOptimalityDocument : IScribeDocumentDefin
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, parameter, Sp, InMacro, Sp, reals, Comma, Sp,
+            Forall, Sp, parameter, Sp, InMacro, Sp, parameterDomain, Comma, Sp,
             information, Colon, Sp, informationType, Comma, RowBreak, Grp(),
             channelCount, Sp, InMacro, Sp, naturals, Comma, Sp,
             chosen, Colon, Sp, chosenType, Comma, RowBreak, Grp(),
-            D(1), Sp, Lt, Sp, parameter, Sp, Land, Sp,
             Open, strictlyDecreasing, Close, Sp, Land, Sp,
             Open, selectedArePrime, Close, Sp, Rightarrow, RowBreak, Grp(),
             selectedSum, Sp, Leq, Sp, firstPrimeSum, Dot,

@@ -10,7 +10,7 @@ Stating the identity is what remains, and it earns its place rather than only ti
 
 **Theorem 1.1 (The two middle coordinates are one).**
 
-$$\forall d \in N,\; \operatorname{championMid}\left(d\right) = \operatorname{championMidCoordinate}\left(\operatorname{dbonacciPerronRoot}\left(d\right)\right) \land \operatorname{Tendsto}\left(\mathit{championMid}, \mathit{atTop}, \operatorname{nhds}\left(\frac{1}{3}\right)\right)$$
+$$\left(\forall d \in N,\; \operatorname{championMid}\left(d\right) = \operatorname{championMidCoordinate}\left(\operatorname{dbonacciPerronRoot}\left(d\right)\right)\right) \land \operatorname{Tendsto}\left(\mathit{championMid}, \mathit{atTop}, \operatorname{nhds}\left(\frac{1}{3}\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Tower/DBonacciGeneral/ChampionMidBridge.the_two_middle_coordinates_are_one` (`✓ std3`). ∎
 
