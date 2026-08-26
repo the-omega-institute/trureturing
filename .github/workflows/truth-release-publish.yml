@@ -521,8 +521,17 @@ jobs:
           body="Verified truth-release.v1 bundle for ${SOURCE_COMMIT}. The OCI artifact is keyed by ${RELEASE_DIGEST}; this release is a human mirror."
           release_json="$RUNNER_TEMP/github-release.json"
           created=false
+          expected_assets=("$(basename "$ARCHIVE")" "$(basename "$PUBLICATION")")
+          expected_assets_json="$(printf '%s\n' "${expected_assets[@]}" | jq -Rsc 'split("\n")[:-1] | sort')"
 
-          verify_release() {
+          verify_protected_dev_tip() {
+            local protected_dev_tip
+            protected_dev_tip="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/dev" --jq '.object.sha')"
+            [[ "$protected_dev_tip" == "$SOURCE_COMMIT" ]] \
+              || { printf '%s\n' 'protected dev moved before GitHub Release publication' >&2; return 1; }
+          }
+
+          verify_release_metadata() {
             gh api "repos/${GITHUB_REPOSITORY}/releases/tags/${tag}" > "$release_json"
             jq -e --arg tag "$tag" --arg target "$SOURCE_COMMIT" --arg title "$title" --arg body "$body" \
               '.tag_name == $tag and .target_commitish == $target and .name == $title and .body == $body and .draft == false and .prerelease == false' \
@@ -532,30 +541,47 @@ jobs:
             [[ "$(jq -r '.object.type' <<< "$ref")" == 'commit' \
               && "$(jq -r '.object.sha' <<< "$ref")" == "$SOURCE_COMMIT" ]] \
               || { printf '%s\n' 'existing GitHub Release tag is not bound to the source commit' >&2; exit 1; }
+            jq -e --argjson expected "$expected_assets_json" \
+              '[.assets[].name] as $actual
+                | ($actual | length) == ($actual | unique | length)
+                  and (($actual - $expected) | length) == 0' \
+              "$release_json" >/dev/null \
+              || { printf '%s\n' 'GitHub Release contains an unexpected or duplicate asset' >&2; exit 1; }
+          }
+
+          verify_release() {
+            verify_release_metadata
+            jq -e --argjson expected "$expected_assets_json" \
+              '(.assets | length) == ($expected | length)
+                and ([.assets[].name] | sort) == $expected' \
+              "$release_json" >/dev/null \
+              || { printf '%s\n' 'GitHub Release asset set does not exactly match the prepared release' >&2; exit 1; }
           }
 
           if gh api "repos/${GITHUB_REPOSITORY}/releases/tags/${tag}" > "$release_json" 2>/dev/null; then
-            verify_release
+            verify_release_metadata
           else
+            verify_protected_dev_tip
             if gh release create "$tag" --repo "$GITHUB_REPOSITORY" --target "$SOURCE_COMMIT" \
               --title "$title" --notes "$body"; then
               created=true
             fi
-            verify_release
+            verify_release_metadata
           fi
 
           for asset in "$ARCHIVE" "$PUBLICATION"; do
             name="$(basename "$asset")"
-            verify_release
+            verify_release_metadata
             count="$(jq --arg name "$name" '[.assets[] | select(.name == $name)] | length' "$release_json")"
             if [[ "$count" == '0' ]]; then
+              verify_protected_dev_tip
               gh release upload "$tag" "$asset" --repo "$GITHUB_REPOSITORY" \
                 || printf '%s\n' "asset upload raced or failed; verifying remote asset before deciding"
             elif [[ "$count" != '1' ]]; then
               printf 'GitHub Release has %s assets named %s; refusing reuse\n' "$count" "$name" >&2
               exit 1
             fi
-            verify_release
+            verify_release_metadata
             count="$(jq --arg name "$name" '[.assets[] | select(.name == $name)] | length' "$release_json")"
             [[ "$count" == '1' ]] \
               || { printf '%s\n' "GitHub Release asset $name is absent after upload" >&2; exit 1; }

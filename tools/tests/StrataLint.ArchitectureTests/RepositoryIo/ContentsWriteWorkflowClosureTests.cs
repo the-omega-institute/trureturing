@@ -28,7 +28,10 @@ public sealed class ContentsWriteWorkflowClosureTests
             .ToArray();
 
     private const string ArchivePublisher = ".github/workflows/lean-cache-publish.yml";
-    private const string TruthReleasePublisher = ".github/workflows/truth-release-publish.yml";
+    private const string TruthReleasePublisher = RepositoryPathPolicy.TruthReleasePublicationWorkflowPath;
+
+    private static readonly IReadOnlySet<string> PublicationWriteScopes =
+        new HashSet<string>(["contents", "packages", "id-token", "attestations"], StringComparer.Ordinal);
 
     [Fact]
     public void OnlyTheAuthorizedPublishersMayWriteRepositoryContents()
@@ -126,6 +129,39 @@ public sealed class ContentsWriteWorkflowClosureTests
     }
 
     [Fact]
+    public void NoTruthReleaseJobExecutesRepositoryCodeWithPublicationWriteAuthority() =>
+        AssertNoWriteJobExecutesRepositoryCode(TruthReleaseWorkflow());
+
+    [Fact]
+    public void AHostileWriteJobThatRunsDotnetMakesTheClosureGuardRed()
+    {
+        const string hostileWorkflow = """
+            permissions: {}
+            jobs:
+              producer:
+                permissions:
+                  contents: read
+                steps:
+                  - run: dotnet test harmless.csproj
+              hostile:
+                permissions:
+                  contents: write
+                steps:
+                  - name: Execute repository code while holding write authority
+                    run: dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj
+            """;
+
+        var failure = Record.Exception(() =>
+            AssertNoWriteJobExecutesRepositoryCode(new WorkflowSource("hostile-fixture.yml", hostileWorkflow)));
+
+        Assert.NotNull(failure);
+        Assert.Contains(
+            "Jobs with publication/OIDC write authority may not execute repository code: hostile",
+            failure.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void TheTruthReleasePublisherConsumesOnlyTheRunBoundTransfer()
     {
         var content = TruthReleaseWorkflow().Content;
@@ -168,6 +204,11 @@ public sealed class ContentsWriteWorkflowClosureTests
         Assert.Contains("gh release download", content, StringComparison.Ordinal);
         Assert.Contains("cmp -s \"$asset\" \"$verify_dir/$name\"", content, StringComparison.Ordinal);
         Assert.Contains("count=\"$(jq --arg name", content, StringComparison.Ordinal);
+        Assert.Contains("(.assets | length) == ($expected | length)", content, StringComparison.Ordinal);
+        Assert.Contains("([.assets[].name] | sort) == $expected", content, StringComparison.Ordinal);
+        Assert.Contains("protected dev moved before GitHub Release publication", content, StringComparison.Ordinal);
+        Assert.Contains("verify_protected_dev_tip\n            if gh release create", content, StringComparison.Ordinal);
+        Assert.Contains("verify_protected_dev_tip\n              gh release upload", content, StringComparison.Ordinal);
         Assert.Contains("assets=verified", content, StringComparison.Ordinal);
         Assert.DoesNotContain("release_collection_api=", content, StringComparison.Ordinal);
     }
@@ -202,6 +243,73 @@ public sealed class ContentsWriteWorkflowClosureTests
         return Assert.IsType<YamlMappingNode>(MappingValue(jobs, name));
     }
 
+    private static void AssertNoWriteJobExecutesRepositoryCode(WorkflowSource workflow)
+    {
+        var root = WorkflowRoot(workflow);
+        var offenders = Jobs(root)
+            .Where(pair => HoldsPublicationWriteScope(root, pair.Value)
+                && ExecutesRepositoryCode(pair.Value))
+            .Select(static pair => pair.Key)
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+
+        Assert.True(
+            offenders.Length == 0,
+            $"Jobs with publication/OIDC write authority may not execute repository code: {string.Join(", ", offenders)}");
+    }
+
+    private static IReadOnlyDictionary<string, YamlMappingNode> Jobs(YamlMappingNode root)
+    {
+        var jobs = Assert.IsType<YamlMappingNode>(MappingValue(root, "jobs"));
+        return jobs.Children.ToDictionary(
+            static pair => Assert.IsType<YamlScalarNode>(pair.Key).Value ?? string.Empty,
+            static pair => Assert.IsType<YamlMappingNode>(pair.Value),
+            StringComparer.Ordinal);
+    }
+
+    private static bool HoldsPublicationWriteScope(YamlMappingNode root, YamlMappingNode job)
+    {
+        var permissions = TryMappingValue(job, "permissions", out var jobPermissions)
+            ? jobPermissions
+            : TryMappingValue(root, "permissions", out var workflowPermissions)
+                ? workflowPermissions
+                : null;
+
+        return permissions switch
+        {
+            YamlScalarNode { Value: "write-all" } => true,
+            YamlMappingNode mapping => mapping.Children.Any(pair =>
+                pair.Key is YamlScalarNode { Value: { } name }
+                && PublicationWriteScopes.Contains(name)
+                && pair.Value is YamlScalarNode { Value: "write" }),
+            _ => false,
+        };
+    }
+
+    private static bool ExecutesRepositoryCode(YamlMappingNode job)
+    {
+        if (TryMappingValue(job, "uses", out var reusableWorkflow)
+            && reusableWorkflow is YamlScalarNode { Value: { } workflow }
+            && RepositoryPathPolicy.ContainsRepositorySourceExecutionIndicator(workflow))
+        {
+            return true;
+        }
+
+        if (!TryMappingValue(job, "steps", out var stepsNode)
+            || stepsNode is not YamlSequenceNode steps)
+        {
+            return false;
+        }
+
+        return steps.Children.OfType<YamlMappingNode>().Any(step =>
+            (TryMappingValue(step, "uses", out var uses)
+                && uses is YamlScalarNode { Value: { } action }
+                && RepositoryPathPolicy.ContainsRepositorySourceExecutionIndicator(action))
+            || (TryMappingValue(step, "run", out var run)
+                && run is YamlScalarNode { Value: { } command }
+                && RepositoryPathPolicy.ContainsRepositorySourceExecutionIndicator(command)));
+    }
+
     private static IReadOnlyDictionary<string, string> Permissions(YamlMappingNode mapping)
     {
         var permissions = Assert.IsType<YamlMappingNode>(MappingValue(mapping, "permissions"));
@@ -215,6 +323,22 @@ public sealed class ContentsWriteWorkflowClosureTests
     private static YamlNode MappingValue(YamlMappingNode mapping, string key) =>
         mapping.Children.Single(pair =>
             pair.Key is YamlScalarNode scalar && string.Equals(scalar.Value, key, StringComparison.Ordinal)).Value;
+
+    private static bool TryMappingValue(YamlMappingNode mapping, string key, out YamlNode value)
+    {
+        foreach (var pair in mapping.Children)
+        {
+            if (pair.Key is YamlScalarNode scalar
+                && string.Equals(scalar.Value, key, StringComparison.Ordinal))
+            {
+                value = pair.Value;
+                return true;
+            }
+        }
+
+        value = null!;
+        return false;
+    }
 
     private static IReadOnlyList<string> ScalarValues(YamlNode root)
     {

@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Text.RegularExpressions;
 
 namespace StrataLint.Engine;
 
@@ -16,6 +17,16 @@ internal static partial class RepositoryPathPolicy
     internal const string TruthReleasePublicationWorkflowPath =
         ".github/workflows/truth-release-publish.yml";
     internal const string HarnessGatePath = ".github/scripts/harness-gate.sh";
+
+    internal static bool ContainsRepositorySourceExecutionIndicator(string value) =>
+        value.StartsWith("actions/checkout@", StringComparison.OrdinalIgnoreCase)
+        || value.StartsWith("./.github/actions/", StringComparison.Ordinal)
+        || RepositorySourceExecutionIndicator().IsMatch(value);
+
+    [GeneratedRegex(
+        @"(?:^|[\s;&|])(?:dotnet\s+(?:build|run|test)\b|lake(?:\s|$)|make\s+|run\s+--project\b|(?:\./)?tools/)",
+        RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)]
+    private static partial Regex RepositorySourceExecutionIndicator();
 
     internal static ImmutableArray<Diagnostic> Evaluate(
         RepositorySnapshot snapshot,
