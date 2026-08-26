@@ -114,6 +114,18 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(0, result.ExitCode);
     }
 
+    [Fact]
+    public void BannedApiDiagnosticParityMismatchFailsPreflight()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var result = RunPreflightScenario(
+            "banned-api-diagnostic-mismatch",
+            TestRepositoryLayout.FindRoot());
+
+        Assert.Equal(1, result.ExitCode);
+    }
+
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
     private static ProcessOutput RunPreflightScenario(string scenario, string sourceRoot)
     {
@@ -174,7 +186,12 @@ public sealed partial class MakeWorkflowTests
               exit 44
             fi
             if [[ "${1:-}" == build && "$*" == *BannedApiCompileFailProof.csproj* ]]; then
+              skipped=0
               while IFS=: read -r line _; do
+                if [[ "${PREFLIGHT_SCENARIO:-}" == banned-api-diagnostic-mismatch && "$skipped" -eq 0 ]]; then
+                  skipped=1
+                  continue
+                fi
                 printf '%s(%s,1): error RS0030: fixture banned API\n' \
                   'tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs' "$line" >&2
               done < <(grep -nF '// banned-api-proof' \
