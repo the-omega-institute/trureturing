@@ -148,7 +148,7 @@ Run:
 ```sh
 eval "$(sed -n '/^export PATH=/p' tools/scripts/local-harness-gate.sh)"
 # If no dispatcher-assigned isolated lane exists:
-make worktree NAME=<lane> && cd <created-path-from-output>
+make worktree KIND=theory NAME=<lane> && cd <created-path-from-output>
 pwd -P && git rev-parse --show-toplevel && git status --short
 ```
 
