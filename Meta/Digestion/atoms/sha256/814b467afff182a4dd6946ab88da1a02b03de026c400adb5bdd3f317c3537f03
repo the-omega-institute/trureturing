@@ -1,0 +1,23 @@
+## 定理 153.1（来源闭包三律）
+
+[
+S\subseteq\operatorname{cl}(S),
+]
+
+[
+S\subseteq T
+\Longrightarrow
+\operatorname{cl}(S)\subseteq\operatorname{cl}(T),
+]
+
+[
+\operatorname{cl}(\operatorname{cl}(S))
+=======================================
+
+\operatorname{cl}(S).
+]
+
+所以信息源依赖天然形成闭包空间。
+
+---
+

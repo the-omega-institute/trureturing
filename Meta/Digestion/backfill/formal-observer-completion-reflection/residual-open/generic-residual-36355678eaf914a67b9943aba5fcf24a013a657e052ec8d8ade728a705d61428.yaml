@@ -1,0 +1,10 @@
+ast_path: row/对角通道不能造相干-Hadamard-可以
+fingerprints:
+  raw_sha256: sha256:36355678eaf914a67b9943aba5fcf24a013a657e052ec8d8ade728a705d61428
+  normalized_sha256: sha256:36355678eaf914a67b9943aba5fcf24a013a657e052ec8d8ade728a705d61428
+cas_ref: sha256:36355678eaf914a67b9943aba5fcf24a013a657e052ec8d8ade728a705d61428
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,37 @@
+# 241. 劝服与操纵作用在认识状态的不同位置
+
+定义主体的认识状态：
+
+[
+\boxed{
+\mathcal E
+==========
+
+(A,C,\beta),
+}
+]
+
+其中：
+
+[
+\begin{aligned}
+A&:X\to\mathsf{Prop}
+&&\text{当前允许世界};\
+C&:X\to B_C
+&&\text{当前证据概念};\
+\beta&:\operatorname{EpistemicInput}\to\operatorname{Belief}
+&&\text{推断／选择规则}.
+\end{aligned}
+]
+
+一次沟通或干预将其变为：
+
+[
+\mathcal E'
+===========
+
+(A',C',\beta').
+]
+
+---
+

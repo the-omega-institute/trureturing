@@ -1,0 +1,25 @@
+# 第十四部：Boolean 对合观察量
+
+对命题观察量 \(P:X\to\mathrm{Prop}\)，定义 flip sector：
+
+\[
+P(\kappa x)\iff\neg P(x),
+\]
+
+定义 invariant sector：
+
+\[
+P(\kappa x)\iff P(x).
+\]
+
+有如下奇偶律：
+
+1. 两个 flip 观察量的 XOR invariant；
+2. 两个 flip 观察量的等价关系 invariant；
+3. 一个 flip 与一个 invariant 的 XOR 仍 flip；
+4. 在非空空间中，同一观察量不能同时 flip 与 invariant。
+
+这形成一个 \(\mathbb Z_2\) 奇偶结构。偶数个翻转相消为不可见，奇数个翻转保留对合可见性。
+
+---
+

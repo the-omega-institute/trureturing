@@ -1,0 +1,10 @@
+ast_path: section/372-7-可持续性
+fingerprints:
+  raw_sha256: sha256:2ac68c466e11e702af12df251e10962db726c8094a62909a7939df0f687cfbff
+  normalized_sha256: sha256:2ac68c466e11e702af12df251e10962db726c8094a62909a7939df0f687cfbff
+cas_ref: sha256:2ac68c466e11e702af12df251e10962db726c8094a62909a7939df0f687cfbff
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

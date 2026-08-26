@@ -1,0 +1,16 @@
+## 定理 97.1（记录通道固定点）
+
+$$
+\boxed{
+\mathcal D_G(\rho)=\rho
+\iff
+(G_{ij}-1)\rho_{ij}=0
+\quad
+\forall i,j.
+}
+$$
+
+### 证明
+
+逐矩阵元比较即可。∎
+

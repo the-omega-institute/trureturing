@@ -1,0 +1,10 @@
+ast_path: section/297-预防原则是模型集合上的稳健准入
+fingerprints:
+  raw_sha256: sha256:4031a366538d020b203fa9e4a6751040bc2dfa9806a6b496ddf4a51b248211f0
+  normalized_sha256: sha256:4031a366538d020b203fa9e4a6751040bc2dfa9806a6b496ddf4a51b248211f0
+cas_ref: sha256:4031a366538d020b203fa9e4a6751040bc2dfa9806a6b496ddf4a51b248211f0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

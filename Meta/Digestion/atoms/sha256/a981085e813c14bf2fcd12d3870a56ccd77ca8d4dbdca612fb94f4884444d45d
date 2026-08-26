@@ -1,0 +1,30 @@
+# 96. 环境记录 Gram 通道
+
+设系统指针基为
+
+$$
+\{|i\rangle\}_{i=1}^d,
+$$
+
+环境为每个系统地址写入归一化记录
+
+$$
+|e_i\rangle.
+$$
+
+受控记录等距映射为
+
+$$
+V|i\rangle
+=
+|i\rangle\otimes|e_i\rangle.
+$$
+
+定义记录 Gram 矩阵
+
+$$
+G_{ij}
+=
+\langle e_j|e_i\rangle.
+$$
+

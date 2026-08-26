@@ -1,0 +1,47 @@
+# 50. 建议追加 Lean 模块
+
+```text
+D5/S1/Solenoid/ComponentQuotient/
+  HiddenDiagonalEmbedding.lean
+  ComponentClass.lean
+  ComponentClassPathCriterion.lean
+  SameFiberIntegerOrbit.lean
+
+D5/S3/Observer/HiddenFlow/
+  HiddenJumpRelation.lean
+  ComponentJumpCriterion.lean
+  RealFlowIntegerBridge.lean
+  HiddenMotionDichotomy.lean
+
+D5/S3/Observer/Policy/
+  PolicyFactorization.lean
+  ControlQuotientPolicy.lean
+  EquivariantSelectorObstruction.lean
+  AcceptableActionRelation.lean
+  LedgerCommitmentMonotonicity.lean
+  AgencyCountermodels.lean
+
+D5/S3/Observer/Decision/
+  InformationGainPolicy.lean
+  TargetResidualPolicy.lean
+  PolicyTieBreaking.lean
+
+D5/S3/Observer/Semantics/
+  OnticControlEpistemicRecordJump.lean
+  ObserverStepSemantics.lean
+```
+
+建议优先闭合：
+
+```text
+same_visible_path_joined_iff_integer_realFlow
+policy_factors_iff_constant_on_readout_fibers
+no_equivariant_selector_of_fixed_state_no_fixed_action
+component_translation_changes_iff_nonzero_class
+ledger_append_shrinks_consistent_actions
+noncanonical_does_not_imply_agency
+prediction_sufficiency_determines_optimal_set_not_unique_choice
+```
+
+---
+

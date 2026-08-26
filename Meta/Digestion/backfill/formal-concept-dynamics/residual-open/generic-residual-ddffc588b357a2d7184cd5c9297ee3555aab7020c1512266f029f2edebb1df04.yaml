@@ -1,0 +1,10 @@
+ast_path: section/294-决策本质可以比预测本质更粗
+fingerprints:
+  raw_sha256: sha256:ddffc588b357a2d7184cd5c9297ee3555aab7020c1512266f029f2edebb1df04
+  normalized_sha256: sha256:ddffc588b357a2d7184cd5c9297ee3555aab7020c1512266f029f2edebb1df04
+cas_ref: sha256:ddffc588b357a2d7184cd5c9297ee3555aab7020c1512266f029f2edebb1df04
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

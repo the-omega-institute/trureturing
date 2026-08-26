@@ -1,0 +1,23 @@
+## 定理 33.1（纯隐藏连续实流为零；Lean 锚点）
+
+任意连续加法同态
+
+$$
+\Phi:\mathbb R\to K_\infty
+$$
+
+都满足
+
+$$
+\Phi=0.
+$$
+
+对应仓库锚点：
+
+```text
+D5/S3/Observer/HiddenFlow/ContinuousRigidity.
+  continuous_hidden_flow_eq_zero
+```
+
+这一定理只排除非平凡的连续实参数**纯隐藏流**。它没有证明所有非平凡隐藏动作都由整数参数化，也没有从拓扑中选出某一个物理动作。
+

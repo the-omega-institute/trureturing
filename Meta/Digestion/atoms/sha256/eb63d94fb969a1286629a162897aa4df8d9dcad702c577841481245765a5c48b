@@ -1,0 +1,10 @@
+## 47.6 追加动作账
+
+$$
+\Lambda_t^+
+=
+\Lambda_t
+\mathbin{\Vert}
+(a_t,c(a_t,x_t),\mathrm{source},\mathrm{time},\mathrm{detector}).
+$$
+

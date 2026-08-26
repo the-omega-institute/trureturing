@@ -1,0 +1,52 @@
+# 104. 量子 prime-time observer
+
+仓库一般 prime-time 观察框架使用读出
+
+$$
+O_p(T^t x).
+$$
+
+量子化时令状态为 $\rho$，动力为量子通道 $\Phi$，第 $p$ 个观察通道为效果 $E_p$：
+
+$$
+O_p(\rho)
+=
+\operatorname{Tr}(\rho E_p).
+$$
+
+对有限索引集合 $J$ 与时间窗 $m$，定义：
+
+$$
+\rho\sim_{J,m}\sigma
+$$
+
+当且仅当
+
+$$
+\operatorname{Tr}
+\left(
+E_p\Phi^t(\rho-\sigma)
+\right)
+=0
+$$
+
+对所有
+
+$$
+p\in J,
+\qquad
+0\le t<m
+$$
+
+成立。
+
+Heisenberg 化后：
+
+$$
+\operatorname{Tr}
+\left(
+(\rho-\sigma)(\Phi^*)^t(E_p)
+\right)
+=0.
+$$
+

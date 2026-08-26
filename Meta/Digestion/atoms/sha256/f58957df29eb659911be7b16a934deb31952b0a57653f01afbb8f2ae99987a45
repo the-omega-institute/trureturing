@@ -1,0 +1,27 @@
+## 定理 5.2（线性下降判据）
+
+把接口取为 \(q=P:H\to V\)。以下等价：
+
+1. 存在线性 \(\overline T:V\to V\) 使
+   \[
+   PT=\overline TP;
+   \]
+2. \(PTQ=0\)；
+3. \(PTx\) 只依赖于 \(Px\)。
+
+此时唯一下降为
+
+\[
+\overline T=PT|_V.
+\]
+
+### 证明
+
+若 \(PT=\overline TP\)，右乘 \(Q\) 得 \(PTQ=\overline TPQ=0\)。反向由
+
+\[
+PT=PT(P+Q)=PTP
+\]
+
+并取 \(\overline T=PT|_V\)。\(\square\)
+

@@ -1,0 +1,43 @@
+## 定理 481.1（Bayes plausibility）
+
+[
+\boxed{
+\sum_s
+\lambda_s\mu_s
+==============
+
+\mu.
+}
+]
+
+逐状态写为：
+
+[
+\sum_s
+\lambda_s\mu_s(\omega)
+======================
+
+\mu(\omega).
+]
+
+### 证明
+
+[
+\lambda_s\mu_s(\omega)
+======================
+
+# \Pr(s)\Pr(\omega\mid s)
+
+\Pr(\omega,s).
+]
+
+对 (s) 求和得到：
+
+[
+\Pr(\omega)=\mu(\omega).
+]
+
+(\square)
+
+---
+

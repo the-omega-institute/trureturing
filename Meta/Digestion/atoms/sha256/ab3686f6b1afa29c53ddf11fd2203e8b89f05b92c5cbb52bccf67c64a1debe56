@@ -1,0 +1,22 @@
+# 46. 隐蔽喉部输运与账本审计
+
+设完整控制历史空间为 $\mathcal U$，公开行为映射为
+
+$$
+H:\mathcal U\to\mathcal Y,
+$$
+
+喉部分量输运为
+
+$$
+K:\mathcal U\to\mathcal K.
+$$
+
+定义公开静默控制 $\ker H$ 与隐蔽喉部输运群
+
+$$
+\boxed{
+\mathsf{CovertThroat}=K(\ker H).
+}
+$$
+

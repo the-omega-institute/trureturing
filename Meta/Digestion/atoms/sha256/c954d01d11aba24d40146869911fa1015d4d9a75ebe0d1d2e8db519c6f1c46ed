@@ -1,0 +1,20 @@
+## 定理 186.1（kernel 增量计数）
+
+令：
+
+\[
+b_k=a_k-a_{k-1}.
+\]
+
+则 \(b_k\) 等于 Jordan 分块中大小至少为 \(k\) 的 block 数。
+
+### 证明
+
+单个大小为 \(r\) 的 nilpotent Jordan block 对 \(\dim\ker N^k\) 的贡献是：
+
+\[
+\min(k,r).
+\]
+
+从 \(k-1\) 到 \(k\) 的增量为一，当且仅当 \(r\ge k\)。对全部 block 求和即得。\(\square\)
+

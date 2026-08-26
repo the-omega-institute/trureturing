@@ -1,0 +1,10 @@
+ast_path: row/读出与可逆更新的协变骨架
+fingerprints:
+  raw_sha256: sha256:3d868b05c6a25ff0724784b8702b5a2c701c37e05c5e75a0094fea7fdfab7438
+  normalized_sha256: sha256:3d868b05c6a25ff0724784b8702b5a2c701c37e05c5e75a0094fea7fdfab7438
+cas_ref: sha256:3d868b05c6a25ff0724784b8702b5a2c701c37e05c5e75a0094fea7fdfab7438
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

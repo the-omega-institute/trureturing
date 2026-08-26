@@ -1,0 +1,26 @@
+## 定理 84.1（操作商表示）
+
+$$
+\boxed{
+\mathsf S_d/\!\sim_{\mathfrak O}
+\cong_{\mathrm{aff}}
+r_{\mathfrak O}(\mathsf S_d).
+}
+$$
+
+### 证明
+
+由定理 83.1，
+
+$$
+r_{\mathfrak O}(\rho)=r_{\mathfrak O}(\sigma)
+$$
+
+当且仅当
+
+$$
+\rho\sim_{\mathfrak O}\sigma.
+$$
+
+故 $r_{\mathfrak O}$ 恰以观察等价类为纤维，在商上诱导双射。迹配对对 $\rho$ 仿射，因此诱导双射保持凸组合。∎
+

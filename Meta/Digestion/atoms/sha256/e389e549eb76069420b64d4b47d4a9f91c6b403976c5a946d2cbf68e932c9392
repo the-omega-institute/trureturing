@@ -1,0 +1,36 @@
+## 1.2 四种不同的“反”
+
+必须区分：
+
+$$
+\neg P
+$$
+
+作为命题否定；
+
+$$
+Ω \setminus A
+$$
+
+作为环境 Ω 中的集合补；
+
+$$
+c_u(x)=u-x
+$$
+
+作为相对于总量 u 的代数补；
+
+以及 DNA 配对规则：
+
+$$
+A\leftrightarrow T,
+\qquad
+C\leftrightarrow G.
+$$
+
+这些运算的输入、输出类型和语义均不同。
+
+仓库 `D5/S0/Conventions/AmbientComplementDependence` 已机器验证：减法补必须携带显式 ambient total；同一对象在不同总量下的补一般不同。
+
+---
+

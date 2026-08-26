@@ -1,0 +1,14 @@
+## 定理 203.1（统计 kernel 判据）
+
+对任意后处理、任意样本量和任意随机决策器，若：
+
+\[
+x\sim_K^{\mathrm{law}}y,
+\]
+
+则由 \(K\) 生成的全部 transcript 在 \(x,y\) 下具有相同分布。
+
+### 证明
+
+任何 transcript law 都由 \(K(x,\cdot)\) 经乘积、条件抽样或 Markov 后处理得到。输入 measure 相等时，所有这些函子性构造保持相等。 \(\square\)
+

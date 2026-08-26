@@ -1,0 +1,26 @@
+## 定义 441.1（危险联盟阈值）
+
+[
+\boxed{
+\tau_S
+======
+
+\min
+\left{
+|J|
+;\middle|;
+S\subseteq\bigcup_{i\in J}P_i
+\right}.
+}
+]
+
+若：
+
+[
+\tau_S>1,
+]
+
+则单个角色无法完成该危险工作流。
+
+---
+

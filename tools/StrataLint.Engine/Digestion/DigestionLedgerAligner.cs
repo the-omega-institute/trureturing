@@ -54,6 +54,7 @@ internal sealed record GenreResolutionReclassification(
 internal sealed record DigestionLedgerAlignment(
     ImmutableDictionary<string, DigestionReceiptAlignment> EntryAlignments,
     ImmutableDictionary<string, DigestionAtom> MatchedAtoms,
+    ImmutableDictionary<string, ImmutableHashSet<string>> ProducedAstPaths,
     ImmutableDictionary<string, GenreRegistryCheck> GenreRegistryChecks,
     ImmutableArray<StructuredResidualAdmission> Residual,
     ImmutableArray<GenreResolutionReclassification> GenreReclassifications,
@@ -70,6 +71,9 @@ internal sealed record DigestionLedgerAlignment(
             : throw new InvalidOperationException($"digestion alignment omitted entry {atomId}");
 
     internal DigestionAtom? AtomFor(string atomId) => MatchedAtoms.GetValueOrDefault(atomId);
+
+    internal bool IsProduced(string sourceId, string astPath) =>
+        ProducedAstPaths.TryGetValue(sourceId, out var paths) && paths.Contains(astPath);
 }
 
 internal static partial class DigestionLedgerAligner
@@ -132,6 +136,8 @@ internal static partial class DigestionLedgerAligner
         var alignments = ImmutableDictionary.CreateBuilder<string, DigestionReceiptAlignment>(
             StringComparer.Ordinal);
         var matchedAtoms = ImmutableDictionary.CreateBuilder<string, DigestionAtom>(StringComparer.Ordinal);
+        var producedAstPaths = ImmutableDictionary.CreateBuilder<string, ImmutableHashSet<string>>(
+            StringComparer.Ordinal);
         var genreRegistryChecks = ImmutableDictionary.CreateBuilder<string, GenreRegistryCheck>(
             StringComparer.Ordinal);
         var residual = ImmutableArray.CreateBuilder<StructuredResidualAdmission>();
@@ -141,11 +147,10 @@ internal static partial class DigestionLedgerAligner
         var verifiedClausePlanParents = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         var fallbacks = ImmutableArray.CreateBuilder<DigestionIngestFallback>();
         var actualStale = ImmutableArray.CreateBuilder<string>();
-        // Existing IDs occupy the legacy content-stem namespace.  Seed the suggestion set so
-        // a repeated residual gets its deterministic source/locator qualification instead of
-        // attempting to reuse an existing ledger primary key.  If that qualified ID is also
-        // occupied, the stable logical address is genuinely ambiguous and ingest remains
-        // fail-closed.
+        // Existing IDs occupy the legacy content-stem namespace. Seed the suggestion set so
+        // repeated residuals can receive deterministic source/locator qualification. An
+        // existing stem can still be selected below when ingest must decide whether its
+        // content-identical entry moved or remains a true collision.
         var suggestedAtomIds = sources
             .SelectMany(static source => source.Entries)
             .Select(static entry => entry.AtomId)
@@ -445,6 +450,8 @@ internal static partial class DigestionLedgerAligner
                     return;
                 }
 
+                producedAstPaths[source.SourceId] = claims.Keys.ToImmutableHashSet(StringComparer.Ordinal);
+
                 foreach (var plan in atomized.ClausePlans)
                 {
                     var parent = claims[plan.ParentAstPath];
@@ -582,11 +589,17 @@ internal static partial class DigestionLedgerAligner
                     findings);
 
                 var registration = AtomizerRegistry.Require(source.Atomizer);
+                string ResidualStem(DigestionAtom atom) => registration.ResidualPrefix
+                    + "-residual-"
+                    + atom.Fingerprints.RawSha256["sha256:".Length..];
+                static string AstPathKind(string astPath)
+                {
+                    var separator = astPath.IndexOf('/', StringComparison.Ordinal);
+                    return separator < 0 ? astPath : astPath[..separator];
+                }
                 var duplicateResidualStems = atomized.Claims
                     .GroupBy(
-                        atom => registration.ResidualPrefix
-                            + "-residual-"
-                            + atom.Fingerprints.RawSha256["sha256:".Length..],
+                        ResidualStem,
                         StringComparer.Ordinal)
                     .Where(static group => group.Count() > 1)
                     .Select(static group => group.Key)
@@ -605,13 +618,23 @@ internal static partial class DigestionLedgerAligner
                         : null;
                     if (!matchedAstPaths.Contains(atom.AstPath))
                     {
-                        authoritativeAtomId = SuggestedAtomId(
-                            source,
-                            registration,
-                            atom,
-                            "residual",
-                            suggestedAtomIds,
-                            duplicateResidualStems);
+                        var residualStem = ResidualStem(atom);
+                        var existingStem = source.Entries.FirstOrDefault(entry =>
+                            entry.AtomId == residualStem
+                            && FingerprintsMatch(entry.Fingerprints, atom.Fingerprints));
+                        var preserveExistingStem = existingStem is not null
+                            && AstPathKind(existingStem.AstPath) == AstPathKind(atom.AstPath)
+                            && (!claims.ContainsKey(existingStem.AstPath)
+                                || source.Atomizer == AtomizerRegistry.GenericId);
+                        authoritativeAtomId = preserveExistingStem
+                            ? residualStem
+                            : SuggestedAtomId(
+                                source,
+                                registration,
+                                atom,
+                                "residual",
+                                suggestedAtomIds,
+                                duplicateResidualStems);
                         residual.Add(new StructuredResidualAdmission(
                             source.SourceId,
                             source.SourcePath,
@@ -631,14 +654,26 @@ internal static partial class DigestionLedgerAligner
                     foreach (var priorGeneration in source.Entries.Where(entry =>
                                  entry.AstPath == atom.AstPath
                                  && entry.AtomId != authoritativeAtomId
-                                 && !FingerprintsMatch(entry.Fingerprints, atom.Fingerprints)
-                                 && alignments.GetValueOrDefault(entry.AtomId)
-                                    == DigestionReceiptAlignment.Seen
-                                 && IsUnownedResidualOpen(entry, ownedAtomIds)))
+                                 && !FingerprintsMatch(entry.Fingerprints, atom.Fingerprints)))
                     {
+                        if (!CanAcknowledgeSupersededGeneration(
+                            priorGeneration,
+                            alignments.GetValueOrDefault(priorGeneration.AtomId),
+                            ownedAtomIds))
+                        {
+                            continue;
+                        }
+
+                        actualStale.Add(priorGeneration.AtomId);
+                        if (alignments.GetValueOrDefault(priorGeneration.AtomId)
+                                != DigestionReceiptAlignment.Seen
+                            || !IsUnownedResidualOpen(priorGeneration, ownedAtomIds))
+                        {
+                            continue;
+                        }
+
                         alignments[priorGeneration.AtomId] = DigestionReceiptAlignment.Stale;
                         sourceStale.Add(priorGeneration.AtomId);
-                        actualStale.Add(priorGeneration.AtomId);
                     }
                 }
 
@@ -676,6 +711,7 @@ internal static partial class DigestionLedgerAligner
         return new DigestionLedgerAlignment(
             alignments.ToImmutable(),
             matchedAtoms.ToImmutable(),
+            producedAstPaths.ToImmutable(),
             genreRegistryChecks.ToImmutable(),
             residual.ToImmutable(),
             genreReclassifications.ToImmutable(),

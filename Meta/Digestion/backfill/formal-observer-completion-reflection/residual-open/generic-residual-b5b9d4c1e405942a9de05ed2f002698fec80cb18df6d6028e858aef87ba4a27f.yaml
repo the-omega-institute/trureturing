@@ -1,0 +1,10 @@
+ast_path: section/64-自我作为策略充分历史商
+fingerprints:
+  raw_sha256: sha256:b5b9d4c1e405942a9de05ed2f002698fec80cb18df6d6028e858aef87ba4a27f
+  normalized_sha256: sha256:b5b9d4c1e405942a9de05ed2f002698fec80cb18df6d6028e858aef87ba4a27f
+cas_ref: sha256:b5b9d4c1e405942a9de05ed2f002698fec80cb18df6d6028e858aef87ba4a27f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

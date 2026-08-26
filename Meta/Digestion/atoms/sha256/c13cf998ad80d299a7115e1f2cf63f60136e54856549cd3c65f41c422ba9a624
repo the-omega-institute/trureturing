@@ -1,0 +1,20 @@
+# 48. 自由保持核与 meta-agency
+
+设 $S_{\mathrm{ag}}\subseteq X$ 为满足最低主体条件的安全区域，例如：
+
+```text
+代理商非零；
+策略仍可修改；
+关键账本仍可访问；
+作者状态仍可读写；
+控制权未全部不可逆交给外部。
+```
+
+定义安全前驱算子
+
+$$
+\operatorname{Pre}_S(Z)
+=
+\{x\in S:\exists a\in\mathcal A(x),\ T(x,a)\in Z\}.
+$$
+

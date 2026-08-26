@@ -1,0 +1,10 @@
+ast_path: row/非平凡窗口无-character
+fingerprints:
+  raw_sha256: sha256:18cfb894b0f595b06eae76dce18259d8bdda9114d7a54f8f1b6210e13f6ada14
+  normalized_sha256: sha256:18cfb894b0f595b06eae76dce18259d8bdda9114d7a54f8f1b6210e13f6ada14
+cas_ref: sha256:18cfb894b0f595b06eae76dce18259d8bdda9114d7a54f8f1b6210e13f6ada14
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

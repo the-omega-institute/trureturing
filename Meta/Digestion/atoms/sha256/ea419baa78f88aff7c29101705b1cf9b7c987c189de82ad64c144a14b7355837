@@ -1,0 +1,20 @@
+## 定理 6.2（索引增加单调精化）
+
+若 \(J\subseteq K\)，则：
+
+\[
+q_J\preceq q_K,
+\qquad
+\sim_K\subseteq\sim_J.
+\]
+
+### 证明
+
+坐标限制投影 \(\pi_{K,J}:O_K\to O_J\) 满足：
+
+\[
+q_J=\pi_{K,J}\circ q_K.
+\]
+
+故核反向包含。\(\square\)
+

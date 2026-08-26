@@ -1,0 +1,10 @@
+## 推论 25.3（交换子是 completion 导数）
+
+Hamiltonian 情形中，i[H,E] 是 effect orbit 在 t=0 的时间导数；嵌套交换子塔生成全部 effect reflector。因此
+
+$$
+i·ad_H
+=
+observer-completion generator.
+$$
+

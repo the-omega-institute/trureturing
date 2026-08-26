@@ -1,0 +1,32 @@
+## 定理 98.2（Robertson 不确定性）
+
+对 Hermitian $A,B$：
+
+$$
+\boxed{
+\Delta_\rho A\,
+\Delta_\rho B
+\ge
+\frac12
+\left|
+\operatorname{Tr}(\rho[A,B])
+\right|.
+}
+$$
+
+### 证明概要
+
+在算子空间定义半内积
+
+$$
+\langle X,Y\rangle_\rho
+=
+\operatorname{Tr}(\rho X^\dagger Y).
+$$
+
+对中心化算子应用 Cauchy–Schwarz，再取内积虚部，其值为交换子期望的一半。∎
+
+非交换性不是“观察者意识扰乱现实”，而是允许问题的算子组合结构依赖顺序。
+
+---
+

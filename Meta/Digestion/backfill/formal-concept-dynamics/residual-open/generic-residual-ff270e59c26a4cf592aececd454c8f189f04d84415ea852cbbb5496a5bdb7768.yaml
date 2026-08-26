@@ -1,0 +1,10 @@
+ast_path: section/252-完全对称的共同结果不能选出唯一责任人
+fingerprints:
+  raw_sha256: sha256:ff270e59c26a4cf592aececd454c8f189f04d84415ea852cbbb5496a5bdb7768
+  normalized_sha256: sha256:ff270e59c26a4cf592aececd454c8f189f04d84415ea852cbbb5496a5bdb7768
+cas_ref: sha256:ff270e59c26a4cf592aececd454c8f189f04d84415ea852cbbb5496a5bdb7768
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

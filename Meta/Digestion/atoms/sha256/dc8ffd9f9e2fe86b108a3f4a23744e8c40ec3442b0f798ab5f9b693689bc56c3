@@ -1,0 +1,66 @@
+## 定理 217.1（精确目标的强制泄漏）
+
+设目标 (T) 必须通过新增信息精确实现：
+
+[
+E_T\preceq P\vee M.
+]
+
+令：
+
+[
+K=E_T\wedge S
+]
+
+为目标和敏感概念的最大共同部分。
+
+则：
+
+[
+\boxed{
+K\preceq(P\vee M)\wedge S.
+}
+]
+
+### 证明
+
+因为：
+
+[
+K\preceq E_T
+\preceq P\vee M,
+]
+
+且：
+
+[
+K\preceq S.
+]
+
+所以 (K) 是 (P\vee M) 与 (S) 的共同下界，故：
+
+[
+K\preceq(P\vee M)\wedge S.
+]
+
+(\square)
+
+若：
+
+[
+K\not\preceq P\wedge S,
+]
+
+则无新增泄漏不可能成立。
+
+因此：
+
+[
+\boxed{
+\text{若目标本身包含当前公开信息尚未暴露的敏感区别，
+任何精确实现都必然增加敏感泄漏。}
+}
+]
+
+---
+
