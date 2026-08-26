@@ -18,7 +18,7 @@ A branch gives one predecessor two distinct successors. Right uniqueness would f
 
 **Theorem 1.2 (Branching memory inheritance is not equality).**
 
-$$\forall Person \in Type, M \in Person \to \left(Person \to Prop\right),\; \operatorname{AllowsBranching}\left(M\right) \Rightarrow \left(\neg \forall a \in Person, b \in Person,\; M\left(a, b\right) \Leftrightarrow a = b\right)$$
+$$\forall Person \in Type, M \in Person \to \left(Person \to Prop\right),\; \operatorname{AllowsBranching}\left(M\right) \Rightarrow \left(\neg \left(\forall a \in Person, b \in Person,\; M\left(a, b\right) \Leftrightarrow a = b\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Identity/MemoryInheritanceNotIdentity.branching_memory_is_not_equality` (`✓ std3`). ∎
 

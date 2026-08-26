@@ -36,6 +36,8 @@ internal static class EmitFormalizationReceiptCommand
         try
         {
             var options = ParseArguments(arguments);
+            var relativeOut = options.OutPath ?? DigestionFormalizationReceipt.PathForAtom(options.AtomId);
+            var outputPath = ResolveOutputPath(repositoryRoot, options.AtomId, relativeOut);
 
             // Gate: the primary and every hosted-extension GID must select a Lean
             // declaration, not a module.
@@ -122,10 +124,6 @@ internal static class EmitFormalizationReceiptCommand
                 extensions.Values.OrderBy(static extension => extension.Gid, StringComparer.Ordinal).ToImmutableArray());
             var bytes = DigestionFormalizationReceipt.Write(receipt);
 
-            var relativeOut = options.OutPath ?? DigestionFormalizationReceipt.PathForAtom(options.AtomId);
-            var outputPath = Path.Combine(
-                Path.GetFullPath(repositoryRoot),
-                relativeOut.Replace('/', Path.DirectorySeparatorChar));
             var directory = Path.GetDirectoryName(outputPath)
                 ?? throw new InvalidOperationException("receipt output path has no parent directory");
             Directory.CreateDirectory(directory);
@@ -191,6 +189,45 @@ internal static class EmitFormalizationReceiptCommand
         }
     }
 
+    private static string ResolveOutputPath(
+        string repositoryRoot,
+        string atomId,
+        string relativeOut)
+    {
+        if (Path.IsPathRooted(relativeOut))
+        {
+            throw new InvalidOperationException("receipt --out must be repository-relative");
+        }
+
+        var fullRepositoryRoot = Path.GetFullPath(repositoryRoot);
+        var outputPath = Path.GetFullPath(Path.Combine(
+            fullRepositoryRoot,
+            relativeOut.Replace('/', Path.DirectorySeparatorChar)));
+        var outputDirectory = Path.GetDirectoryName(outputPath);
+        var canonicalDirectory = Path.GetFullPath(Path.Combine(
+            fullRepositoryRoot,
+            "Meta/Digestion/formalizations"));
+        if (!string.Equals(outputDirectory, canonicalDirectory, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                "receipt --out must resolve directly under Meta/Digestion/formalizations/");
+        }
+
+        var canonicalFileName = Path.GetFileName(
+            DigestionFormalizationReceipt.PathForAtom(atomId));
+        var outputFileName = Path.GetFileName(outputPath);
+        var temporaryPrefix = canonicalFileName + ".tmp.";
+        if (!string.Equals(outputFileName, canonicalFileName, StringComparison.Ordinal)
+            && (!outputFileName.StartsWith(temporaryPrefix, StringComparison.Ordinal)
+                || outputFileName.Length == temporaryPrefix.Length))
+        {
+            throw new InvalidOperationException(
+                $"receipt --out must name {canonicalFileName} or {temporaryPrefix}<suffix>");
+        }
+
+        return outputPath;
+    }
+
     private sealed record ReceiptArguments(
         string AtomId,
         ImmutableArray<string> Gids,
@@ -232,10 +269,15 @@ internal static class EmitFormalizationReceiptCommand
             throw Usage();
         }
 
+        if (outPath is not null && string.IsNullOrWhiteSpace(outPath))
+        {
+            throw new InvalidOperationException("receipt --out must not be empty");
+        }
+
         return new ReceiptArguments(
             atomId,
             gids.ToImmutable(),
-            string.IsNullOrWhiteSpace(outPath) ? null : outPath);
+            outPath);
     }
 
     private static InvalidOperationException Usage() => new(

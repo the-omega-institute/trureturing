@@ -42,7 +42,4 @@ set +e
 "$SUPERVISOR" --role "$ROLE" -- env STRATALINT_LEAN_REPORT="$SNAPSHOT_REPORT" "$@"
 rc=$?
 set -e
-if [[ "$rc" -ne 0 ]]; then
-  echo "report-consumer: consumption failed; the raw Lean report may be stale, run make lean-report first" >&2
-fi
 exit "$rc"

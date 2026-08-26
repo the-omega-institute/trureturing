@@ -22,11 +22,7 @@ internal static class BackfillInventoryRule
         string Detail);
 
     internal static ImmutableArray<string> BaselineComparableReceiptIntegrityCodes { get; } =
-    [
-        "coverage-receipt-mismatch",
-        "scribe-definition-mismatch",
-        "scribe-emission-mismatch",
-    ];
+        ["coverage-receipt-mismatch"];
 
     private static readonly Regex SourceIdPattern = new(
         "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",

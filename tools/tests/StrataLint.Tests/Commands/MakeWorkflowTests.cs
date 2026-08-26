@@ -65,6 +65,7 @@ public sealed partial class MakeWorkflowTests
         "receipts-stage",
         "deposit",
         "cover",
+        "cover-batch",
         "worktree",
         "worktree-clean",
         "pr-open",
@@ -122,7 +123,7 @@ public sealed partial class MakeWorkflowTests
             "/bin/bash",
             ["-c", "PATH=\"$1:$PATH\" exec make --no-print-directory echo-residual-summary BASE=synthetic-base", "echo-make", binDirectory],
             fixture.Path,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
         Assert.Equal(0, result.ExitCode);
@@ -179,7 +180,7 @@ public sealed partial class MakeWorkflowTests
                 problemPath,
             ],
             fixture.Path,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
         Assert.Equal(0, result.ExitCode);
@@ -371,6 +372,7 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("mktemp", producer, StringComparison.Ordinal);
         Assert.Contains("mktemp", consumer, StringComparison.Ordinal);
         Assert.Contains("STRATALINT_LEAN_REPORT", consumer, StringComparison.Ordinal);
+        Assert.DoesNotContain("may be stale", consumer, StringComparison.Ordinal);
     }
 
     [Fact]

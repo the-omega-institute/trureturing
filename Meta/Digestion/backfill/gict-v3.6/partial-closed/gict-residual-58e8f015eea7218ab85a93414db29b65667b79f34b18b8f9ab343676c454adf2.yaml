@@ -14,6 +14,6 @@ receipts:
       target_sha256: sha256:351b14e9a00f243b0d304094d2272f8f0648c9f79e4ddd3a566bf8007810dc50
   scribe:
     - gid: D5/S1/Scale/CarrierFoundations.golden_carrier_foundations
-      definition_sha256: sha256:a268022c9b907374e781a6b2d73d63c1107fa6b4e7945646d2fa12ba6b508821
-      emission_sha256: sha256:3e82b018a0847a9b13c4a842836bb0722107d39c73cf291c1c41313fc7f4850c
+      definition_sha256: sha256:6321f4fe5fe4256a8b86138ff30ede3d7cf8f1da90e9da885d46b3ba60f11f71
+      emission_sha256: sha256:88c7642710aea377e360cb7f722fcc7f2db9e872a61aaffb9eb350224fae74c7
   unresolved_subitems: []

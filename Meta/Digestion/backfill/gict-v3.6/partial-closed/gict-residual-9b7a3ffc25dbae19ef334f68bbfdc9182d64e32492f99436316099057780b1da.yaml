@@ -14,6 +14,6 @@ receipts:
       target_sha256: sha256:b1e01c10f2d6c4dd59c845865f66719b63dbc0ce9536f0898733a0588d51e307
   scribe:
     - gid: D5/S1/Dynamics/RecursiveDefinition.is_recursive_definition_iff_fixed_point
-      definition_sha256: sha256:3021da8fafaf8200ce1a15fae6cb8a6afd4133c0dcc93c3d1ea996fe224143ca
-      emission_sha256: sha256:9c1cdae8f7352bdfe9555e8e3848617a10f7898131e353c1a521de4295a6f2c1
+      definition_sha256: sha256:cda4200d1442ecf3540d4309105921148fa15722b199a7d8b898fe01eda5e5e3
+      emission_sha256: sha256:6e265ce2fec24c0a3a00699b2e3416562c594f9978536c3a3408bd1024d44b7c
   unresolved_subitems: []

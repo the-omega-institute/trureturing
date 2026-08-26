@@ -97,7 +97,7 @@ public sealed partial class CleanLanesCommandTests
                 fileName,
                 arguments,
                 workingDirectory,
-                TimeSpan.FromSeconds(30));
+                BoundedProcessRunner.HangDetectionBudget);
             var inventory = Encoding.UTF8.GetString(output.StandardOutput);
             var recordStart = inventory.IndexOf(
                 $"worktree {retained}\0",

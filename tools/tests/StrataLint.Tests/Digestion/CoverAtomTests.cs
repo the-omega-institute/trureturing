@@ -7,8 +7,9 @@ namespace StrataLint.Tests;
 
 // Phase 1 cover transaction gate matrix. cover binds one already-proven Lean
 // declaration to an existing open residual atom by writing coverage_gids +
-// coverage/scribe receipts, all-or-nothing. Every reject path must leave
-// Meta/BACKFILL.yaml byte-unchanged. The envelope / pre-committed-receipt /
+// coverage/scribe receipts, all-or-nothing. Precondition and integrity rejects
+// leave the ledger unchanged; a terminal initial-cover failure writes only its
+// disposition. The envelope / pre-committed-receipt /
 // declaration-signature gates (spec §11.21) live in the CoverAtomEnvelopeTests.cs
 // partial (kept there so this file stays under the SL-003 800-line cap).
 public sealed partial class CoverAtomTests
@@ -209,14 +210,14 @@ public sealed partial class CoverAtomTests
     [Fact]
     public void CoverRejectsDeclarationProvedOnlyWithSorry()
     {
-        var (result, after, before, _) = Execute(new CoverSpec
+        var execution = Execute(new CoverSpec
         {
             TargetAxioms = ImmutableArray.Create("sorryAx"),
         });
 
-        Assert.False(result.Success);
-        Assert.Contains("lean-state-open", result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, after);
+        Assert.False(execution.Result.Success);
+        Assert.Contains("lean-state-open", execution.Result.Error, StringComparison.Ordinal);
+        AssertFailedDispositionDoesNotAdmitCoverage(execution);
     }
 
     [Fact]
@@ -251,16 +252,16 @@ public sealed partial class CoverAtomTests
         // tail authorization — so it would reach Absorbed-Tail-deletable — cover
         // must reject: spec §3.4 ③ requires TruthDag=Closed with no
         // sorry/private/unregistered axiom.
-        var (result, after, before, _) = Execute(new CoverSpec
+        var execution = Execute(new CoverSpec
         {
             TargetAxioms = ImmutableArray.Create("customAxiom"),
             TailAuthorized = true,
         });
 
-        Assert.False(result.Success);
-        Assert.Contains("Closed", result.Error, StringComparison.Ordinal);
-        Assert.Contains("absorbed-tail", result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, after);
+        Assert.False(execution.Result.Success);
+        Assert.Contains("Closed", execution.Result.Error, StringComparison.Ordinal);
+        Assert.Contains("absorbed-tail", execution.Result.Error, StringComparison.Ordinal);
+        AssertFailedDispositionDoesNotAdmitCoverage(execution);
     }
 
     [Fact]
@@ -568,7 +569,7 @@ internal static partial class CoverWorld
     };
 
     internal static string[] AlignArgs(CoverInputs inputs) =>
-        ["--atom-id", DefaultAtomId, "--gid", inputs.Gid];
+        ["--atom-id", DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline"];
 
     internal static ProductionCliEnvironment Environment(
         string repositoryRoot,

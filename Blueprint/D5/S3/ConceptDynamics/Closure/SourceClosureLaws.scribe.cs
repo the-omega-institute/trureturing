@@ -57,6 +57,6 @@ internal sealed class SourceClosureLawsDocument : IScribeDocumentDefinition
             Forall, Sp, carrier, Colon, Sp, Operatorname, Grp(F.Id("Type")), Comma, Sp,
             closure, Colon, Sp, closureType, Comma, Sp,
             source, Comma, Sp, target, Colon, Sp, setCarrier, Comma, RowBreak, Grp(),
-            inclusion, Sp, Land, Sp, monotone, Dot));
+            inclusion, Sp, Land, Sp, Open, monotone, Close, Dot));
     }
 }

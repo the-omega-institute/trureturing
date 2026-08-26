@@ -54,8 +54,26 @@ internal sealed class ExternalizedCertificationMeaningDocument
         return Seq([.. items]);
     }
 
-    private static Formula Apply(Formula function, Formula argument) =>
-        Seq(function, Open, argument, Close);
+    private static Formula Apply(Formula function, params Formula[] arguments)
+    {
+        var items = new List<Formula> { function, Open };
+        for (var index = 0; index < arguments.Length; index++)
+        {
+            if (index > 0) items.AddRange([Comma, Sp]);
+            items.Add(arguments[index]);
+        }
+        items.Add(Close);
+        return Seq([.. items]);
+    }
+
+    private static Formula Arrow(Formula source, Formula target) =>
+        Seq(source, Sp, To, Sp, target);
+
+    private static Formula Field(Formula value, byte field) =>
+        Seq(value, Dot, D(field));
+
+    private static Formula ToReal(Formula value) =>
+        Seq(Open, value, Close, Dot, F.Id("toReal"));
 
     private static Formula TheoremFormula()
     {
@@ -65,25 +83,64 @@ internal sealed class ExternalizedCertificationMeaningDocument
         Formula coSelected = new Formula.Subscript(F.Id("W"), F.Id("c"));
         Formula independent = new Formula.Subscript(F.Id("W"), F.Id("i"));
         Formula index = F.Id("j");
+        Formula input = F.Id("input");
+        Formula worldValue = F.Id("world");
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
         Formula natural = Seq(Mathbb, Grp(F.Id("N")));
         Formula boolType = F.Id("Bool");
         Formula pmfBool = Call("PMF", boolType);
-        Formula world = Call("World", budget);
-        Formula suite = Seq(Operatorname, Grp(F.Id("suite")));
-        Formula transcript = Seq(Operatorname, Grp(F.Id("Transcript")));
-        Formula badGreen = Seq(Operatorname, Grp(F.Id("BadGreenMass")));
-        Formula loss = Call("Loss", F.Id("constantFalse"), F.Id("id"), deployment);
-        Formula suiteCo = Apply(suite, coSelected);
-        Formula suiteIndependent = Apply(suite, independent);
+        Formula finBudget = Call("Fin", budget);
+        Formula implementation = F.Id("implementation");
+        Formula expected = F.Id("expected");
+        Formula world = F.Id("World");
+        Formula transcript = F.Id("transcript");
+        Formula badGreen = F.Id("badGreenMass");
+        Formula worldType = Seq(
+            Open, Arrow(finBudget, pmfBool), Close, Sp, Times, Sp,
+            Open, Arrow(finBudget, boolType), Close);
+        Formula worldSuite = Field(worldValue, 2);
+        Formula worldLaws = Field(worldValue, 1);
+        Formula realizedInput = Apply(worldSuite, index);
+        Formula implementationDefinition = Seq(
+            implementation, Colon, Sp, Arrow(boolType, boolType), Sp, Eq, Sp,
+            Open, Underscore, Sp, Mapsto, Sp, F.Id("false"), Close);
+        Formula expectedDefinition = Seq(
+            expected, Colon, Sp, Arrow(boolType, boolType), Sp, Eq, Sp, F.Id("id"));
+        Formula worldDefinition = Seq(world, Sp, Eq, Sp, worldType);
+        Formula transcriptDefinition = Seq(
+            transcript, Colon, Sp, Arrow(world, Arrow(finBudget, boolType)), Sp, Eq, Sp,
+            Open, worldValue, Sp, Mapsto, Sp, index, Sp, Mapsto, Sp,
+            Call("decide", Seq(
+                Apply(implementation, realizedInput), Sp, Eq, Sp,
+                Apply(expected, realizedInput))), Close);
+        Formula badGreenDefinition = Seq(
+            badGreen, Colon, Sp, Arrow(world, real), Sp, Eq, Sp,
+            Open, worldValue, Sp, Mapsto, Sp,
+            Prod, Underscore, Grp(index), Sp,
+            ToReal(Apply(Apply(worldLaws, index), F.Id("false"))), Close);
+        Formula suiteCo = Field(coSelected, 2);
+        Formula suiteIndependent = Field(independent, 2);
+        Formula lawsCo = Field(coSelected, 1);
+        Formula lawsIndependent = Field(independent, 1);
+        Formula loss = Seq(
+            Sum, Underscore, Grp(input, Colon, Sp, boolType), Sp,
+            F.Text, Grp(F.Id("if"), Sp),
+            Apply(implementation, input), Sp, Eq, Sp, Apply(expected, input),
+            F.Text, Grp(Sp, F.Id("then"), Sp), D(0),
+            F.Text, Grp(Sp, F.Id("else"), Sp),
+            ToReal(Apply(deployment, input)));
         Formula independentRate = new Formula.Fraction(
             Seq(D(1), Minus, epsilon), D(2));
         Formula independentMass = new Formula.Power(
             Seq(independentRate), Seq(budget));
         Formula envelope = Call(
-            "exp", Seq(Minus, epsilon, Sp, Times, Sp, budget));
+            "exp", Seq(Minus, Open, epsilon, Sp, Times, Sp,
+                Open, budget, Colon, Sp, real, Close, Close));
         Formula factorsMass = Call("FactorsThrough", badGreen, transcript);
-        Formula independentPredicate = Call("IndependentOf", deployment);
+        Formula independentPredicate = Seq(
+            Open, worldValue, Sp, Mapsto, Sp,
+            Forall, Sp, index, Comma, Sp,
+            Apply(Field(worldValue, 1), index), Sp, Eq, Sp, deployment, Close);
         Formula factorsIndependence =
             Call("FactorsThrough", independentPredicate, transcript);
 
@@ -93,21 +150,27 @@ internal sealed class ExternalizedCertificationMeaningDocument
             budget, Colon, Sp, natural, Comma, RowBreak, Grp(),
             D(0), Sp, Lt, Sp, epsilon, Sp, Lt, Sp, D(1), Sp, Land, Sp,
             D(0), Sp, Lt, Sp, budget, Sp, Rightarrow, RowBreak, Grp(),
+            Operatorname, Grp(F.Id("let")), Open,
+            implementationDefinition, Comma, RowBreak, Grp(),
+            expectedDefinition, Comma, RowBreak, Grp(),
+            worldDefinition, Comma, RowBreak, Grp(),
+            transcriptDefinition, Comma, RowBreak, Grp(),
+            badGreenDefinition, Close, Semi, RowBreak, Grp(),
             Exists, Sp, deployment, Colon, Sp, pmfBool, Comma, Sp,
             coSelected, Comma, Sp, independent, Colon, Sp, world, Comma,
             RowBreak, Grp(),
             suiteCo, Sp, Eq, Sp, suiteIndependent, Sp, Land, RowBreak, Grp(),
-            Forall, Sp, index, Comma, Sp,
-            Apply(suiteCo, index), Sp, Eq, Sp, F.Id("false"), Sp, Land,
+            Open, Forall, Sp, index, Comma, Sp,
+            Apply(suiteCo, index), Sp, Eq, Sp, F.Id("false"), Close, Sp, Land,
             RowBreak, Grp(),
             Apply(transcript, coSelected), Sp, Eq, Sp,
             Apply(transcript, independent), Sp, Land, RowBreak, Grp(),
-            Forall, Sp, index, Comma, Sp,
-            Call("law", coSelected, index), Sp, Eq, Sp,
-            Call("pure", Apply(suiteCo, index)), Sp, Land, RowBreak, Grp(),
-            Forall, Sp, index, Comma, Sp,
-            Call("law", independent, index), Sp, Eq, Sp,
-            deployment, Sp, Land, RowBreak, Grp(),
+            Open, Forall, Sp, index, Comma, Sp,
+            Apply(lawsCo, index), Sp, Eq, Sp,
+            Call("pure", Apply(suiteCo, index)), Close, Sp, Land, RowBreak, Grp(),
+            Open, Forall, Sp, index, Comma, Sp,
+            Apply(lawsIndependent, index), Sp, Eq, Sp,
+            deployment, Close, Sp, Land, RowBreak, Grp(),
             loss, Sp, Eq, Sp,
             new Formula.Fraction(Seq(D(1), Plus, epsilon), D(2)), Sp, Land,
             RowBreak, Grp(),
@@ -120,8 +183,7 @@ internal sealed class ExternalizedCertificationMeaningDocument
             envelope, Sp, Land, RowBreak, Grp(),
             envelope, Sp, Lt, Sp, Apply(badGreen, coSelected), Sp, Land,
             RowBreak, Grp(),
-            Call("laws", coSelected), Sp, Neq, Sp,
-            Call("laws", independent), Sp, Land, RowBreak, Grp(),
+            lawsCo, Sp, Neq, Sp, lawsIndependent, Sp, Land, RowBreak, Grp(),
             Neg, Sp, factorsMass, Sp, Land, RowBreak, Grp(),
             Neg, Sp, factorsIndependence, Dot,
             End, Grp(F.Id("gathered"))));

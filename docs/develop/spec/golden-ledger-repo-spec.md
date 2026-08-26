@@ -1,4 +1,4 @@
-# trureturing / D5 —— 仓库规范全卷 v7.16(定本:宪法·地层·编码·执法·八官·管线·治理·引导)
+# trureturing / D5 —— 仓库规范全卷 v7.17(定本:宪法·地层·编码·执法·八官·管线·治理·引导)
 
 > ⚑ **铭牌**。组织:**trureturing**(收据三张:27.99 真理为攀登而不可达之 ν、27.90 理论过自家分类器返回原点、仪文"账本的最后一行永远是下一轮的第一行")。仓库名:**trureturing**——**仓库即模空间,单库承全族**(v7.4 裁决,撤姊妹分库):`Metallic/`(G 层参数化机器)+ `D5/ D8/ …`(实例层,按需生长)+ `Moduli/`(跨理论比较定理之家);分库仅当已证实压力(治理/许可/规模),**裂由压力,不预裂**。
 > README 首行:*trureturing — the last line of the ledger is always the first line of the next round.*
@@ -451,7 +451,7 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 
 ### 11.20.1 THEORY-GENERATION-P1(候选投影与类型化 Frontier 资格)
 
-`StrataLint theory-candidates` 是 P1 唯一 producer；根 `make theory-candidates [OWNER_OVERRIDE_FILE=path]` 只作薄包装。producer 只向 stdout 发射 canonical JSON，不写仓库、不提交聚合物。产物顶层封闭为 `{schema,selection_receipt,candidates}`，其中 `schema="stratalint-theory-candidates-v1"`；每个 candidate 封闭为 `{candidate_id,source_kind,source_ref,content_sha256,downstream_lane,problem_text}`，declaration-ready 项另携 `statement_type_sha256`（`CanonicalStatementWriter.StatementTypeAddress` 的 type-only 地址，即 V2 Frontier 契约 `exact_statement.statement_sha256` 的抄写源；仅该类携带，其余项序列化时省略该字段）；`selection_receipt` 封闭为 `{input_snapshot_sha256,lean_report_sha256,candidate_set_sha256,ordering_version,order_kind,tie_break,selection_mode,selected_candidate_id}`。三个 SHA-256 字段均为 `sha256:<64 lowercase hex>`；`selected_candidate_id` 在空候选集时为 `null`。完整承重输入闭包恰为 candidate `RepositorySnapshot`、由 `RawLeanReportArtifact.Write` canonical 化后的 Lean report，以及存在时的 owner override 原始文件字节；Scribe verification 必须把该 captured snapshot 物化到一次性 pinned root 后与同一 Lean report 求 typed capability，禁止再读 constructor 所持 live `repositoryRoot`，临时路径只作 bytes 载体而非决策输入。`candidate_set_sha256` 绑定 canonical `candidates` 数组，但不替代前两个输入地址。
+`StrataLint theory-candidates` 是 P1 唯一 producer；根 `make theory-candidates [OWNER_OVERRIDE_FILE=path]` 只作薄包装。producer 只向 stdout 发射 canonical JSON，不写仓库、不提交聚合物。产物顶层封闭为 `{schema,selection_receipt,withheld,candidates}`，其中 `schema="stratalint-theory-candidates-v1"`；每个 candidate 封闭为 `{candidate_id,source_kind,source_ref,content_sha256,downstream_lane,problem_text}`，declaration-ready 项另携 `statement_type_sha256`（`CanonicalStatementWriter.StatementTypeAddress` 的 type-only 地址，即 V2 Frontier 契约 `exact_statement.statement_sha256` 的抄写源；仅该类携带，其余项序列化时省略该字段）；每个 withheld 项封闭为 `{candidate_id,source_kind,source_ref,withhold_reason}`。`selection_receipt` 封闭为 `{input_snapshot_sha256,lean_report_sha256,candidate_set_sha256,ordering_version,order_kind,tie_break,selection_mode,selected_candidate_id}`。三个 SHA-256 字段均为 `sha256:<64 lowercase hex>`；`selected_candidate_id` 在空候选集时为 `null`。完整承重输入闭包恰为 candidate `RepositorySnapshot`、由 `RawLeanReportArtifact.Write` canonical 化后的 Lean report，以及存在时的 owner override 原始文件字节；Scribe verification 必须把该 captured snapshot 物化到一次性 pinned root 后与同一 Lean report 求 typed capability，禁止再读 constructor 所持 live `repositoryRoot`，临时路径只作 bytes 载体而非决策输入。`candidate_set_sha256` 绑定 canonical `candidates` 数组，但不替代前两个输入地址。
 
 Frontier 语义资格的唯一数据 owner 是 `docs/MISSION.md` 的可选 `frontier_eligibility` 数组；这是基线迁移所需的唯一宽松处：无该字段的旧基线仍可由 `MissionFileLoader` 解码为空表，但 P1 对其 open Frontier 一律得到 `unknown` 并 fail-closed，绝不默认成数学或治理。字段存在时每项按 `source_ref` 字典序排列且唯一；非 `retired` 项封闭为 `{source_ref,kind}`，`retired` 项封闭为 `{source_ref,kind,delivery_gids}`。非 `retired` 的 `source_ref` 必须是存在的 canonical `D5/X_Frontier/<Module>` 文件 GID；`retired` 允许其载体文件已删除，但每个 `delivery_gids` 必须是存在的 canonical formal declaration GID。`kind` 的封闭字母表恰为：
 
@@ -555,6 +555,24 @@ Frontier 语义资格的唯一数据 owner 是 `docs/MISSION.md` 的可选 `fron
 `DigestionLedgerEvaluation.HasReceiptIntegrityFailure` 对 coverage/Scribe mismatch 的**绝对式谓词本体**不因 M:N 放开而弱化;`digest-status` 等全账读侧仍如实报告全部 fatal identity,闭合仍要求 entry 的全部 GID 收据与 Lean/Scribe 条件齐备。为避免存量 backlog 令所有无关写入全局自锁,`cover-atom` 与其 post-cover `align-scribe-receipt` 写前门采用 fork-point delta:按 `(code,atom_id,detail)` 只 grandfather baseline 已存在的同一 fatal identity,任何 candidate-new identity 与所有结构 findings 仍 fail-closed;这只是 writer 消费作用域,不改上述中央谓词。
 
 **formalization receipt v1 是预承诺唯一真源。** `primary_gid` 仅记录首个登记的 GID,不享有 cover、追加或读侧特权;其余登记存于按 GID 序排列的 `hosted_extensions`,完整有序集合唯一派生为 `[primary_gid, ...hosted_extensions.gid]`。新 receipt 可在首次 cover 前一次预承诺多个 GID;已有 receipt 可在首条 coverage 尚未落账时追加独立 GID,且不得改写既有 signature。`digest-status --formalize-candidates` 默认仍只枚举 coverage 为空的 atom,以防重复劳动;`--atom-id <id>` 是已 coverage atom 的显式二次形式化入口。`formalize-candidates` 的 `recorded_formalizations.gids` 与 `show-atom` 的 self/parent pointer 均从同一 v1 receipt 派生完整有序集合,不得复制进 ledger 或另建第二真源。signature-match 只证明 deposited declaration 等于预承诺,尚不证明预承诺本身忠实且非空洞;后者保持具名 hollow-fidelity open,不得冒领为现役执法。
+
+**cover 终判词与选择重试(#2137)。** `cover-atom` 已通过预承诺、Lean/Scribe 与结构门、但结果仍非 deletable `closed` 时,命令虽保持失败退出,仍须把该次机器终判词原子写入同一 canonical atom 文件 `Meta/Digestion/backfill/<source>/<projected-state>/<atom_id>.yaml` 的 `receipts.cover_disposition`;不得另建 session 清单或第二套 governance store。此字段与人工语义隔离用的 `receipts.quarantine` 分工明确:前者是 cover 机器对一次精确 GID 集的失败结果,后者是带 justification/reentry condition 的人工治理判断;两者不得共存。精确账形为:
+
+```yaml
+receipts:
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-25T04:03:02.0000000+00:00
+    gids:
+      - D5/S0/Carrier/Probe.probe
+    gaps:
+      - code: unresolved-subitem
+        detail: remaining theorem clause
+```
+
+对象键集封闭为 `{outcome,recorded_at_utc,gids,gaps}`:`outcome` 是 canonical 双轴状态;时间必须是 offset zero 的 round-trip UTC 形;`gids` 非空、逐项为 canonical GID、ordinal 排序且无重复;`gaps` 每项键集封闭为 `{code,detail}` 并按 `(code,detail)` ordinal 排序。未知键、非 UTC 时间、非法/乱序/重复 GID 或乱序 gap 均 fail-closed。失败落账只写 selector 数据:原 entry 的 `coverage_gids`、coverage/Scribe receipts 与 projected `status` 保持不变,故 SL-016/admission 的派生状态、gaps 与 deletable 判词加字段前后逐字等价;`cover_disposition` 也不得与非空 `coverage_gids` 共存。下一次显式重试若仍失败,以该次精确结果替换当前终判词,历史由 git 保存;若成功,与 coverage receipts 同一原子写入中清掉旧终判词。
+
+`digest-status --formalize-candidates` 与 `theory-candidates` 消费同一个 `DigestionCoverDispositionSelector` 判据；未显式重试的 disposition atom 在两者中均优先投影到 `withheld[]`,`withhold_reason="cover-disposition"`,即使旧 formalization receipt 仍 current,也不得把它投影到 candidate/`recorded_formalizations` 后交回批处理。重试是显式单通道：`--retry-dispositions` 只在 `digest-status --formalize-candidates` 下合法,仅对带 disposition 的 atom 绕过该 withhold 与旧 formalization receipt,使其重新进入 `candidates`;`theory-candidates` 不接受 retry 参数。无 disposition atom 的 receipt 语义不变。residual summary 与 echo shard 默认同样排除 disposition atom。由此,各机 `mk-coverable` / `known-fail` 第五层影子清单在消费者切到 canonical selector 后退役:先确认 selector 输出不再含对应 atom,再删除本机影子数据;不把影子数据回灌成另一真源,也不由本变更跨机修改脚本。
 
 **消化 = 语义权威迁移;删除只是收据齐备后的物理后果,禁以删代证。**理论原子可删除当且仅当以下合取全真:adapter 对该 unit 边界机器可重现;全部主张有逐 GID coverage receipt;目标 GID 存在;Lean 为 Closed,或已按上款获 absorbed-tail 授权;Scribe definition 被 `DocumentDefinitions` 发现且其 canonical Markdown 本轮现产成功,账本 Scribe receipt 的 `definition_sha256` 与当前 `.scribe.cs` 真源一致、保留的 `emission_sha256` 与本轮 producer 现产 `VerifiedScribeEmissions` 一致,且 declaration reference capability 逐 GID 对齐;tracked `.md` 与 run-local `tools/Generated/scribe-emissions.v1.json` 均为投影,不参与 `deletable` 判词,后者只作审计输出且不得自证执行成功;`unresolved_subitems` 为空;全部连锁迁移完成。缺一则 `deletable=false`,并由 `digest-status [--json]` 输出缺口。`Blueprint/**/*.scribe.cs` 虽由 FILEMAP 如实分类为程序集外 typed data,仍属既有 SL-022 保护面;已闭合的 `RESIDENCE-EPOCH` 只退休其五个精确 Golden 旧路径,不得借数据分类收缩 Blueprint predecessor contract。任一独立的 `ProtectedSurfaceVerificationRequired` 变更下,若基线 Scribe 因候选执行依赖演进而无法签发 capability,则以无 capability 继续 SL-016+SL-022:不得在同一基线下宣称相关原子 absorbed。无保护面变更的 producer-current 验证失败仍为 infrastructure 硬失败,不得借投影分类绕过发射验证。
 
@@ -889,6 +907,8 @@ Blueprint markdown 已证有仓内语义 consumer，移出 PR-A；只有独立 P
 ---
 
 # CHANGELOG(原位演进史;只追加)
+
+- **v7.17 R1**（2026-08-25，#2137）：`cover-atom` 将非 deletable Closed 的 per-atom 终判词落在 canonical directory Digestion ledger 的 `receipts.cover_disposition`，封闭携带 outcome、UTC time、排序 GID 与排序 gaps；失败写入不增加 coverage 或改 projected status，成功 retry 清除旧判词。`digest-status --formalize-candidates` 默认将其投影为 `withhold_reason=cover-disposition`，residual summary/shard 同样排除；显式 `--retry-dispositions` 仅为该 selector 合法，并对 disposition atom 绕过旧 formalization receipt 重新派发。字段与 coverage、quarantine 互斥，loader fail-closed，writer golden replay byte-stable；各机 `mk-coverable` / `known-fail` 影子层可在切换 canonical selector 后退役。
 
 - **v7.16 R23**（2026-08-23，#2612）：闭合 §11.20.4 R18 所记的 `SL-028` CLI 可见性 `open(案号待开)`。`Admitted` 路径的 `OBSERVED` 渲染自 `9e20d3680`（2026-08-19）起已经存在；本修订补齐 `ProtectedSurfaceChange` 的 observations 载体与渲染，按 `SL-022` → `DEFERRED` → `OBSERVED` 的完整顺序复用同一 observation renderer，且退出码保持 3。四条具名测试各自钉住 protected 放行侧、SL-028 载体、完整输出顺序、退出码一个契约；变异归因的完全对角化记为 `open`（#2612），本修订不为此硬拆测试；`Admitted` 路径实现不改。本次改动一并对齐了这 12 条 `spec-acceptance` 收据边界；该边界集在此之前即已陈旧，其规模与所属的未决问题记录在 #2907。
 - **v7.16 R22**（2026-08-23，#2803）：勘正 R21 的 statement-address affectedness 空门。场 9-14、16-17 的八次真实 Frontier blob 变化中，契约根 `exact_statement.statement_sha256` 始终为 `sha256:25ddd0972fd7b97c88f87ea47bb9843e5c014cdad5344c37451293f18cb4a0d9`，旧门因而 8/8 跳过 SL-027；现改为 existing V2 同路径模块 raw bytes 任一变化即须 revision，并把八组 commit/blob/statement 地址写成生产回放夹具。前驱改绑 `(predecessor_blob_oid, predecessor_statement_sha256)` 二元内容地址。四值 kind 增 `definition-refactor`：statement SHA 不变时只准该值；statement SHA 变化时禁止该值，`equivalent-restatement|strengthening|weakening` 因方向不可机器判而全部须 canonical `case_id`，其中 weakening 义务不变。新契约、bytes 未变的历史 V2、changed-path 假信号与无关 PR 继续零税；V2 epoch、退役 baseline revision 读取与 Frozen accepted 字节不变。

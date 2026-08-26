@@ -331,7 +331,7 @@ public sealed class LeanCachePublishTests
                 "chmod",
                 ["+x", gh],
                 Path.GetDirectoryName(gh)!,
-                TimeSpan.FromSeconds(30),
+                BoundedProcessRunner.HangDetectionBudget,
                 4096).ExitCode);
 
         var result = fixture.RunPublish(ScriptPath(), Sha, "4242");
@@ -550,7 +550,7 @@ public sealed class LeanCachePublishTests
                 "chmod",
                 ["+x", path],
                 Path.GetDirectoryName(path)!,
-                TimeSpan.FromSeconds(30),
+                BoundedProcessRunner.HangDetectionBudget,
                 4096);
             Assert.Equal(0, chmod.ExitCode);
         }
@@ -704,7 +704,7 @@ public sealed class LeanCachePublishTests
                 "chmod",
                 ["+x", path],
                 Path.GetDirectoryName(path)!,
-                TimeSpan.FromSeconds(30),
+                BoundedProcessRunner.HangDetectionBudget,
                 4096);
             Assert.Equal(0, chmod.ExitCode);
         }

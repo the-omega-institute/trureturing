@@ -147,7 +147,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         // This generous wall-clock budget is only a runaway guard; the verdict is
         // the deterministic cycle diagnostic and exit code below.
-        var result = fixture.Run("deposit", timeout: TimeSpan.FromSeconds(30));
+        var result = fixture.Run("deposit", timeout: BoundedProcessRunner.HangDetectionBudget);
 
         Assert.Equal(2, result.ExitCode);
         Assert.Contains(
@@ -323,7 +323,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
     }
 
     [Fact]
-    public void CoverAlignsFromVerifiedEmissionWithoutReemittingThenCommitsOnce()
+    public void CoverAlignsThenReemitsAndCommitsOnce()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -342,10 +342,31 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "make:lean-report",
                 "dotnet:cover-atom",
                 "dotnet:align-scribe-receipt",
+                "make:emit",
             ],
             fixture.CallKinds());
         Assert.Contains("aligned: covered", fixture.BackfillContents(), StringComparison.Ordinal);
-        Assert.Equal("emission: open\n", fixture.EmissionContents());
+        Assert.Equal("emission: covered\n", fixture.EmissionContents());
+        Assert.Empty(fixture.Status());
+    }
+
+    [Fact]
+    public void FailedCoverCommitsDispositionBeforeReturningFailure()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        var before = fixture.CommitCount();
+
+        var result = fixture.Run("cover", coverDispositionFailure: true);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Contains(
+            "COVER_INVALID synthetic disposition",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
+        Assert.Equal(before + 1, fixture.CommitCount());
+        Assert.Contains("cover_disposition:", fixture.BackfillContents(), StringComparison.Ordinal);
+        Assert.Equal(["make:lean-report", "dotnet:cover-atom"], fixture.CallKinds());
         Assert.Empty(fixture.Status());
     }
 
@@ -356,6 +377,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
     internal sealed partial class TransactionFixture : IDisposable
     {
         internal const string AtomId = "atom-1";
+        internal const string SecondaryAtomId = "atom-2";
         internal const string Gid = "D5/S0/Carrier/Probe.probe";
         internal const string LeanPath = "D5/S0/Carrier/Probe.lean";
         internal const string SecondaryGid =
@@ -369,6 +391,8 @@ public sealed partial class DepositCoverWorkflowScriptTests
         internal const string LedgerPath = FrozenLedgerChangeClassifier.AcceptedRoot;
         internal const string BackfillPath = "Meta/BACKFILL.yaml";
         internal const string ReceiptRelativePath = "Meta/Digestion/formalizations/atom-1.v1.json";
+        internal const string SecondaryReceiptRelativePath =
+            "Meta/Digestion/formalizations/atom-2.v1.json";
 
         private const string ScriptPath = "tools/scripts/workflow/playbook-workflows.sh";
         private readonly TemporaryDirectory temporary = new();
@@ -382,6 +406,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
             callsPath = Path.Combine(Root, "calls");
             Directory.CreateDirectory(binPath);
             CopyScript();
+            File.Copy(
+                Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"),
+                Path.Combine(Root, "Makefile"));
             WriteFile(".gitignore", ".lake/\n.report-source\nbin/\ncalls\nfail-ledger-once\n");
             WriteFile(LeanPath, "theorem probe : True := by trivial\n");
             WriteFile(DefinitionPath, "definition baseline\n");
@@ -588,16 +615,19 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 ("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.json", second));
         }
 
-        internal void LeaveInterruptedTemporaryFiles()
+        internal void LeaveInterruptedTemporaryFiles(
+            string receiptRelativePath = ReceiptRelativePath)
         {
-            WriteFile(ReceiptRelativePath + ".tmp.abandoned", "partial receipt\n");
+            WriteFile(receiptRelativePath + ".tmp.abandoned", "partial receipt\n");
         }
 
         internal ProcessOutput Run(
             string command,
             string gid = Gid,
+            string atomId = AtomId,
             bool staleReport = false,
             bool invalidReceipt = false,
+            bool coverDispositionFailure = false,
             string? mutateReceiptAfterPrepare = null,
             TimeSpan? timeout = null,
             string? baseRevision = null) =>
@@ -608,17 +638,18 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     $"PLAYBOOK_TEST_CALLS={callsPath}",
                     $"PLAYBOOK_STALE_REPORT={(staleReport ? "1" : "0")}",
                     $"PLAYBOOK_INVALID_RECEIPT={(invalidReceipt ? "1" : "0")}",
+                    $"PLAYBOOK_COVER_DISPOSITION_FAILURE={(coverDispositionFailure ? "1" : "0")}",
                     $"PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE={mutateReceiptAfterPrepare ?? string.Empty}",
                     $"PLAYBOOK_TARGET_MODULE={(gid == SecondaryGid ? SecondaryLeanPath : gid == NewGid ? NewLeanPath : LeanPath)}",
                     "/bin/bash",
                     Path.Combine(Root, ScriptPath),
                     command,
                     baseRevision ?? (command == "deposit" ? "HEAD" : "synthetic-base"),
-                    AtomId,
+                    atomId,
                     gid,
                 ],
                 Root,
-                timeout ?? TimeSpan.FromSeconds(30),
+                timeout ?? BoundedProcessRunner.HangDetectionBudget,
                 128 * 1024);
 
         internal int CommitCount() => int.Parse(Git("rev-list", "--count", "HEAD").Trim());

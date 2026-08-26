@@ -337,7 +337,7 @@ public sealed class PrOpenScriptTests
                     "PR_OPEN_BASE=dev", "PR_OPEN_TIMEOUT_SECONDS=5", $"PR_TEST_INVOCATIONS={invocations}",
                     $"PR_TEST_RESPONSES={responses}", $"PR_TEST_FAIL_STEP={FailStep}",
                     $"PR_TEST_APP_FAIL={(AppTokenFails ? "1" : "0")}", "bash", script, .. arguments],
-                temporary.Path, TimeSpan.FromSeconds(30), 1024 * 1024);
+                temporary.Path, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
         }
         private void WriteResponses(string kind, FakeResponse[] values)
         {
@@ -355,7 +355,12 @@ public sealed class PrOpenScriptTests
         private void WriteExecutable(string path, string contents)
         {
             File.WriteAllText(path, contents, new UTF8Encoding(false));
-            var chmod = BoundedProcessRunner.Run("chmod", ["+x", path], temporary.Path, TimeSpan.FromSeconds(30), 4096);
+            var chmod = BoundedProcessRunner.Run(
+                "chmod",
+                ["+x", path],
+                temporary.Path,
+                BoundedProcessRunner.HangDetectionBudget,
+                4096);
             Assert.Equal(0, chmod.ExitCode);
         }
         private const string FakeGh = """

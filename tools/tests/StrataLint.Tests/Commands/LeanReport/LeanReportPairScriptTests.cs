@@ -217,7 +217,7 @@ public sealed class LeanReportPairScriptTests
                 "pwd",
                 ["-P"],
                 candidateRoot,
-                TimeSpan.FromSeconds(30),
+                BoundedProcessRunner.HangDetectionBudget,
                 4096);
             Assert.Equal(0, physicalRoot.ExitCode);
             canonicalCandidateRoot = Encoding.UTF8.GetString(physicalRoot.StandardOutput).Trim();
@@ -237,7 +237,7 @@ public sealed class LeanReportPairScriptTests
                 "chmod",
                 ["+x", producer],
                 temporary.Path,
-                TimeSpan.FromSeconds(30),
+                BoundedProcessRunner.HangDetectionBudget,
                 4096);
             Assert.Equal(0, chmod.ExitCode);
         }
@@ -289,7 +289,7 @@ public sealed class LeanReportPairScriptTests
                     "--candidate-output", candidateReport,
                 ],
                 temporary.Path,
-                TimeSpan.FromSeconds(30),
+                BoundedProcessRunner.HangDetectionBudget,
                 1024 * 1024);
         }
 

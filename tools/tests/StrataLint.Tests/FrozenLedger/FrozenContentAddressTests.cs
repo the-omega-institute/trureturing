@@ -42,12 +42,16 @@ public sealed class FrozenContentAddressTests
             GitOid('b'),
             GitBlobOid("leanprover/lean4:v4.24.0\n"),
             GitBlobOid("{}\n"));
+        var states = LeanTruthStates.Resolve(snapshot, closure);
+        var adjacency = LeanImportAdjacency.Build(snapshot, closure);
 
         Assert.False(snapshot.Files.ContainsKey(RepoPathFor("Missing")));
         var danglingImportCatalog = Assert.IsType<FrozenMaterialOutcome.Accepted>(
             FrozenContentAddress.Build(
                 snapshot,
                 closure,
+                states,
+                adjacency,
                 environment,
                 [new FrozenModuleAttestation(RepoPathFor("A"), GitBlobOid(source))])).Capability;
         Assert.Empty(Assert.Single(danglingImportCatalog.ClosedNodes).PrerequisiteFrozenNodeIds);

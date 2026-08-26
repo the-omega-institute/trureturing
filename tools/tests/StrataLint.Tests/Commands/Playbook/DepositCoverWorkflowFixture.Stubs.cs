@@ -39,6 +39,13 @@ public sealed partial class DepositCoverWorkflowScriptTests
             printf 'make:%s\n' "$*" >> "$PLAYBOOK_TEST_CALLS"
             case "${1:-}" in
               lean-report)
+                if compgen -G 'Meta/Digestion/formalizations/*.tmp.*' > /dev/null; then
+                  echo 'LEAN_REPORT_INVALID interrupted receipt temporary still exists' >&2
+                  exit 42
+                fi
+                mkdir -p .lake/build/stratalint
+                printf '{"schema":"synthetic-lean-report"}\n' \
+                  > .lake/build/stratalint/raw-lean-report.json
                 if [[ ${PLAYBOOK_STALE_REPORT:-0} != 1 ]]; then
                   cp D5/S0/Carrier/Probe.lean .report-source
                 fi
@@ -125,24 +132,53 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 fi
                 ;;
               cover-atom)
-                if grep -q '^coverage: true$' Meta/BACKFILL.yaml; then
-                  [[ $command == *'--gid D5/S3/Observer/WindowRegisterCRT.window_register_crt_decomposition'* ]] || {
+                atom=''
+                gid=''
+                envelope=''
+                for ((index=1; index<${#parts[@]}; index+=2)); do
+                  case "${parts[index]}" in
+                    --cover-atom) atom=${parts[index+1]} ;;
+                    --gid) gid=${parts[index+1]} ;;
+                    --envelope) envelope=${parts[index+1]} ;;
+                  esac
+                done
+                expected_envelope="Meta/Digestion/formalizations/${atom}.v1.json"
+                if [[ $envelope != "$expected_envelope" ]]; then
+                  echo "COVER_INVALID envelope $envelope does not match atom $atom" >&2
+                  exit 46
+                fi
+                if [[ ${PLAYBOOK_COVER_DISPOSITION_FAILURE:-0} == 1 ]]; then
+                  printf 'atom_id: %s\ncoverage: false\naligned: false\ncover_disposition: synthetic\n' "$atom" \
+                    > Meta/BACKFILL.yaml
+                  echo 'COVER_INVALID synthetic disposition' >&2
+                  exit 1
+                fi
+                secondary=''
+                existing_atom=$(sed -n 's/^atom_id: //p' Meta/BACKFILL.yaml)
+                if [[ $existing_atom == "$atom" ]] \
+                    && grep -q '^coverage: true$' Meta/BACKFILL.yaml; then
+                  [[ $gid == D5/S3/Observer/WindowRegisterCRT.window_register_crt_decomposition ]] || {
                     echo 'COVER_INVALID hosted cover omitted the selected secondary GID' >&2
                     exit 1
                   }
+                  secondary='secondary: true'
                 fi
-                printf 'atom_id: atom-1\ncoverage: true\naligned: false\n' > Meta/BACKFILL.yaml
+                printf 'atom_id: %s\ncoverage: true\naligned: false\n%s\n' \
+                  "$atom" "$secondary" > Meta/BACKFILL.yaml
                 ;;
               align-scribe-receipt)
+                atom=''
                 gid=''
                 for ((index=1; index<${#parts[@]}; index+=2)); do
                   case "${parts[index]}" in
+                    --atom-id) atom=${parts[index+1]} ;;
                     --gid) gid=${parts[index+1]} ;;
                   esac
                 done
                 definition_path="Blueprint/${gid%.*}.scribe.cs"
                 verified_emission=''
                 if [[ -s $definition_path ]] \
+                    && grep -q "^atom_id: ${atom}$" Meta/BACKFILL.yaml \
                     && grep -q '^coverage: true$' Meta/BACKFILL.yaml; then
                   verified_emission='emission: covered'
                 fi
@@ -150,10 +186,13 @@ public sealed partial class DepositCoverWorkflowScriptTests
                   echo 'ALIGN_SCRIBE_RECEIPT_INVALID no verified in-process Scribe emission' >&2
                   exit 1
                 }
+                secondary=''
+                grep -q '^secondary: true$' Meta/BACKFILL.yaml && secondary='secondary: true'
                 if grep -q '^aligned: covered$' Meta/BACKFILL.yaml; then
                   echo 'ALIGN_SCRIBE_RECEIPT ledger_changed=false'
                 else
-                  printf 'atom_id: atom-1\ncoverage: true\naligned: covered\n' > Meta/BACKFILL.yaml
+                  printf 'atom_id: %s\ncoverage: true\naligned: covered\n%s\n' \
+                    "$atom" "$secondary" > Meta/BACKFILL.yaml
                   echo 'ALIGN_SCRIBE_RECEIPT ledger_changed=true'
                 fi
                 ;;

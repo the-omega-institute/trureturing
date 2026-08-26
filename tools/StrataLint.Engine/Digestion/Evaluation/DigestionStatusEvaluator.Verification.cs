@@ -219,6 +219,9 @@ internal static partial class DigestionStatusEvaluator
                 continue;
             }
 
+            // Binds coverage.source_sha256 to the atom raw fingerprint and
+            // coverage.target_sha256 to the current GID target bytes. This guard does not bind
+            // either Scribe hash or projected_status.
             if (!targets.TryGetValue(gid, out var target)
                 || receipt.SourceSha256 != entry.Fingerprints.RawSha256
                 || receipt.TargetSha256 != DigestionFingerprint.Compute(target.RawBytes.AsSpan()).RawSha256)
@@ -313,6 +316,8 @@ internal static partial class DigestionStatusEvaluator
                     DigestionGapSeverity.NonFatal));
                 complete = false;
             }
+            // Binds scribe.definition_sha256 to both the definition bytes and verified Scribe
+            // record. This guard does not bind emission, coverage, or projected_status.
             else if (hasReceipt
                 && receiptInputChanged
                 && (receipt!.DefinitionSha256
@@ -328,6 +333,8 @@ internal static partial class DigestionStatusEvaluator
                 complete = false;
             }
 
+            // Binds scribe.emission_sha256 to the verified Scribe emission record. This guard
+            // does not bind definition, coverage, or projected_status.
             if (hasReceipt
                 && receiptInputChanged
                 && verified is not null
