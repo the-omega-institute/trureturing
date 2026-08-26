@@ -37,3 +37,4 @@ The displayed strict-component relation abbreviates forward component reachabili
 - Truth anchor: `D5/S3/ConceptDynamics/DagCompletion/StrongComponentQuotient.componentReachable_antisymm`
 - Truth anchor: `D5/S3/ConceptDynamics/DagCompletion/StrongComponentQuotient.no_strict_component_cycle`
 - Dependency: [D5/S3/ConceptDynamics/DagSemantics/PrerequisiteClosure](../DagSemantics/PrerequisiteClosure.md)
+- Dependency: [D5/S3/ConceptDynamics/DependencyTopology/DependencyReachabilityOrder](../DependencyTopology/DependencyReachabilityOrder.md)

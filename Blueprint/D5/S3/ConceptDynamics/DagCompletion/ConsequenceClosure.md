@@ -37,3 +37,4 @@ The equivalence uses the same reachability direction on both sides and does not 
 - Truth anchor: `D5/S3/ConceptDynamics/DagCompletion/ConsequenceClosure.consequenceClosure_least`
 - Truth anchor: `D5/S3/ConceptDynamics/DagCompletion/ConsequenceClosure.mem_prerequisiteClosure_iff_consequence_inter`
 - Dependency: [D5/S3/ConceptDynamics/DagSemantics/PrerequisiteClosure](../DagSemantics/PrerequisiteClosure.md)
+- Dependency: [D5/S3/ConceptDynamics/DependencyTopology/DependencyReachabilityOrder](../DependencyTopology/DependencyReachabilityOrder.md)

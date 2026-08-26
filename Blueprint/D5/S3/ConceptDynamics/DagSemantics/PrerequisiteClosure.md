@@ -21,3 +21,4 @@ Both containment and predecessor closure are explicit antecedents. The conclusio
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/DagSemantics/PrerequisiteClosure.prerequisiteClosure_least`
+- Dependency: [D5/S3/ConceptDynamics/DependencyTopology/DependencyReachabilityOrder](../DependencyTopology/DependencyReachabilityOrder.md)

@@ -37,3 +37,4 @@ The theorem changes only the edge presentation and holds the source set fixed on
 - Truth anchor: `D5/S3/ConceptDynamics/DagCompletion/ReachabilityProjectionInvariance.consequenceClosure_eq`
 - Truth anchor: `D5/S3/ConceptDynamics/DagCompletion/ReachabilityProjectionInvariance.prerequisiteClosure_eq`
 - Dependency: [D5/S3/ConceptDynamics/DagCompletion/ConsequenceClosure](ConsequenceClosure.md)
+- Dependency: [D5/S3/ConceptDynamics/DependencyTopology/DependencyReachabilityOrder](../DependencyTopology/DependencyReachabilityOrder.md)

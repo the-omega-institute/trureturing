@@ -37,3 +37,4 @@ No statement is made about target-carrier nodes outside the embedding's image.
 - Truth anchor: `D5/S3/ConceptDynamics/DagCompletion/ReachabilityConservativeEmbedding.mem_consequenceClosure_image_iff`
 - Truth anchor: `D5/S3/ConceptDynamics/DagCompletion/ReachabilityConservativeEmbedding.mem_prerequisiteClosure_image_iff`
 - Dependency: [D5/S3/ConceptDynamics/DagCompletion/ConsequenceClosure](ConsequenceClosure.md)
+- Dependency: [D5/S3/ConceptDynamics/DependencyTopology/DependencyReachabilityOrder](../DependencyTopology/DependencyReachabilityOrder.md)
