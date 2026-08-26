@@ -1,0 +1,17 @@
+## 定义 497.3（关系最强后置条件）
+
+[
+\boxed{
+\operatorname{sp}_R(P)
+======================
+
+\left{
+y
+;\middle|;
+\exists x,\quad P(x)\land xRy
+\right}.
+}
+]
+
+---
+

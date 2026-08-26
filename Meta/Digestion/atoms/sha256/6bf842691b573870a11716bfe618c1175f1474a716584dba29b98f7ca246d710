@@ -1,0 +1,36 @@
+## 定理 31.1（归一化流线分解；Lean 锚点）
+
+对任意连续路径
+
+$$
+\gamma:\mathbb R\to\Sigma_\infty,
+$$
+
+固定基准时刻与可见相位的实代表后，存在唯一连续实提升 $r$ 与唯一时间无关的隐藏偏移 $k_0$，使
+
+$$
+\gamma(t)
+=
+\operatorname{realFlow}(r(t))
++
+\iota(k_0).
+$$
+
+对应仓库锚点：
+
+```text
+D5/S1/Solenoid/StreamlineDecomposition.
+  existsUnique_normalized_streamline
+```
+
+### 结论
+
+连续完整路径可以改变可见提升 $r(t)$，但不能连续改变隐藏流线标签 $k_0$。因此严格结论不是“完整 solenoid 中没有连续运动”，而是：
+
+$$
+\boxed{
+连续运动只能沿一条 real-flow 流线发生；
+纯隐藏偏移沿连续时间恒定。
+}
+$$
+

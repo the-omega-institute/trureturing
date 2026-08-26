@@ -1,0 +1,125 @@
+## 定理 85.1（完备性四重等价）
+
+以下条件等价：
+
+$$
+\text{(i)}
+\quad
+\mathfrak O\text{ 信息完备};
+$$
+
+$$
+\text{(ii)}
+\quad
+N_{\mathfrak O}=\{0\};
+$$
+
+$$
+\text{(iii)}
+\quad
+V_{\mathfrak O}=\operatorname{Herm}_d;
+$$
+
+$$
+\text{(iv)}
+\quad
+\operatorname{span}_{\mathbb R}
+\left\{
+E_{a|x}
+-
+\frac{\operatorname{Tr}E_{a|x}}{d}I
+\right\}
+=
+\operatorname{Herm}_d^0.
+$$
+
+### 证明
+
+有限维非退化内积给出
+
+$$
+V^\perp=\{0\}
+\iff
+V=\operatorname{Herm}_d.
+$$
+
+而
+
+$$
+\operatorname{Herm}_d
+=
+\mathbb RI
+\oplus
+\operatorname{Herm}_d^0,
+$$
+
+故 (iii) 与 (iv) 等价。
+
+由定理 83.1，(ii) 立即推出 (i)。
+
+反之，若存在非零
+
+$$
+D\in N_{\mathfrak O},
+$$
+
+则
+
+$$
+\operatorname{Tr}D=0.
+$$
+
+取
+
+$$
+0<\varepsilon<
+\frac{1}{d\|D\|_\infty}
+$$
+
+并定义
+
+$$
+\rho_\pm
+=
+\frac{I}{d}
+\pm
+\varepsilon D.
+$$
+
+其最小本征值满足
+
+$$
+\lambda_{\min}(\rho_\pm)
+\ge
+\frac1d-\varepsilon\|D\|_\infty
+>0,
+$$
+
+所以
+
+$$
+\rho_\pm\in\mathsf S_d.
+$$
+
+但
+
+$$
+\rho_+-\rho_-
+=
+2\varepsilon D\in N_{\mathfrak O},
+$$
+
+故
+
+$$
+\rho_+\sim_{\mathfrak O}\rho_-,
+$$
+
+而
+
+$$
+\rho_+\neq\rho_-.
+$$
+
+这与信息完备矛盾。∎
+

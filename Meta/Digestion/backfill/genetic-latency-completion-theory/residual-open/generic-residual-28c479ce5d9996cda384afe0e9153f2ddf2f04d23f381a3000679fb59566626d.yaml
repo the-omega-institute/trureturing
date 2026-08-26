@@ -1,0 +1,10 @@
+ast_path: section/24-5-因果潜显层级
+fingerprints:
+  raw_sha256: sha256:28c479ce5d9996cda384afe0e9153f2ddf2f04d23f381a3000679fb59566626d
+  normalized_sha256: sha256:28c479ce5d9996cda384afe0e9153f2ddf2f04d23f381a3000679fb59566626d
+cas_ref: sha256:28c479ce5d9996cda384afe0e9153f2ddf2f04d23f381a3000679fb59566626d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,61 @@
+## 定理 522.1（有限正支持情形）
+
+以下等价：
+
+[
+\boxed{
+K=\overline K\circ C
+}
+]
+
+与：
+
+[
+\boxed{
+Y\perp X\mid C.
+}
+]
+
+### 证明
+
+若 (K) 通过 (C) 因子化，则：
+
+[
+\Pr(Y=y\mid X=x,C=c)
+====================
+
+# K(x)(y)
+
+\overline K(c)(y),
+]
+
+只依赖 (c)，所以条件独立。
+
+反之，若条件独立，则：
+
+[
+\Pr(Y=y\mid X=x)
+================
+
+\Pr(Y=y\mid C=C(x)).
+]
+
+定义：
+
+[
+\overline K(c)
+==============
+
+\mathcal L(Y\mid C=c).
+]
+
+于是：
+
+[
+K(x)=\overline K(Cx).
+]
+
+(\square)
+
+---
+

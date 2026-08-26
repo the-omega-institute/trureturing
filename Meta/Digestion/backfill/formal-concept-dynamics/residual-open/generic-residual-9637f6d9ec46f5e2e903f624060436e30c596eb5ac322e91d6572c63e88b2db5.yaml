@@ -1,0 +1,10 @@
+ast_path: section/407-科学结论是一条-proof-carrying-数据流水线
+fingerprints:
+  raw_sha256: sha256:9637f6d9ec46f5e2e903f624060436e30c596eb5ac322e91d6572c63e88b2db5
+  normalized_sha256: sha256:9637f6d9ec46f5e2e903f624060436e30c596eb5ac322e91d6572c63e88b2db5
+cas_ref: sha256:9637f6d9ec46f5e2e903f624060436e30c596eb5ac322e91d6572c63e88b2db5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

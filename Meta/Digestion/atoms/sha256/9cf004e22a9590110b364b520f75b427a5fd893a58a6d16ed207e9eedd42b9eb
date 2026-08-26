@@ -1,0 +1,18 @@
+## 47.5 执行状态更新
+
+$$
+x_t^+
+=
+T_{a_t}(x_t).
+$$
+
+若分量 cocycle 已定义，则
+
+$$
+\operatorname{Comp}(x_t^+)
+=
+\operatorname{Comp}(x_t)
++
+\bar c(a_t,x_t).
+$$
+

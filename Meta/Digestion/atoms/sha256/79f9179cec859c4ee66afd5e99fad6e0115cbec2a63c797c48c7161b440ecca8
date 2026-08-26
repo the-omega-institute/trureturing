@@ -1,0 +1,23 @@
+## 定理 167.1（最小审计集是 set cover）
+
+寻找最少测试覆盖全部已知缺陷，正是：
+
+[
+\boxed{
+\min
+\left{
+|\mathcal S|
+\mid
+\bigcup_{\tau\in\mathcal S}
+\operatorname{Cover}(\tau)
+==========================
+
+\Delta(C;T)
+\right}.
+}
+]
+
+所以理论验证成本可以转化为覆盖问题。
+
+---
+

@@ -1,0 +1,40 @@
+# 275. 非支配要求限制制度能力，而不只是限制当前行为
+
+设制度持有细概念：
+
+[
+D:X\to B_D.
+]
+
+规范上允许使用的概念为：
+
+[
+A:X\to B_A,
+\qquad
+A\preceq D.
+]
+
+行动集合为 (U)。
+
+制度基于 (D) 能实施的全部政策：
+
+[
+\Pi(D;U).
+]
+
+规范允许政策：
+
+[
+\boxed{
+\Pi_A
+=====
+
+\left{
+\pi:X\to U
+\mid
+\exists\bar\pi,\
+\pi=\bar\pi\circ A
+\right}.
+}
+]
+

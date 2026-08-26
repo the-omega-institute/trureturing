@@ -1,0 +1,41 @@
+# 37. 完整控制画像是策略的规范信息底座
+
+设幺半群 $G$ 作用于 $X$，公开读出为
+
+$$
+q:X\to O.
+$$
+
+定义完整控制画像
+
+$$
+\operatorname{Ctrl}_q(x)(g)
+=
+q(g\cdot x).
+$$
+
+定义控制等价
+
+$$
+x\sim_{\mathrm{ctl}}y
+\iff
+\forall g\in G,
+\quad
+q(g\cdot x)=q(g\cdot y).
+$$
+
+仓库已经证明，按完整控制画像取商得到的控制商：
+
+1. 恢复当前公开读出；
+2. 承载每个控制动作诱导的商上动作；
+3. 决定每个动作的公开后果；
+4. 是具有这些性质的最粗接口；
+5. 与有限干预词的动态闭包在 kernel 层相同。
+
+对应 Lean 锚点：
+
+```text
+D5/S3/ConceptDynamics/Control/ControlQuotientUniversalMinimality.
+  control_quotient_universal_minimality
+```
+

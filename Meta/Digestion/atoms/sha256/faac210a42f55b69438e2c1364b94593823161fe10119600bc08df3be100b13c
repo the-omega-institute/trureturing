@@ -1,0 +1,12 @@
+\[
+\operatorname{SepDef}(q\vee d,T)
+=
+\operatorname{SepDef}(q,T)
+\cap
+\operatorname{Insep}(\tau_d).
+\]
+
+候选只能删除自己能在拓扑上分开的 residual pairs。
+
+---
+

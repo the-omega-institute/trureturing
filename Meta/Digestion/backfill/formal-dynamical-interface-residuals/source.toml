@@ -3,3 +3,4 @@ path = "docs/develop/theory/FORMAL_DYNAMICAL_INTERFACE_RESIDUALS.md"
 atomizer = "generic-v1"
 genre_registry_check = "no-registry"
 unregistered_genres = []
+acknowledged_stale = ["generic-residual-1492a47f492cc5ba3a13081c06678772f34f5834d8e1fe9bad3720b17f699e7f", "generic-residual-498ddf358cc992327f2a6dd4c917a5c097afa4bb9f22177f9033e466508ced95", "generic-residual-7c1543072190e266672dc1a799dee54270c9d77331692fd304c2370852d1928f", "generic-residual-9877bfeab8519ccfa8e03d9a4d61ad39326e97b0010d0d75dcef515607d94980", "generic-residual-c3796bda88454d8c3f69e4926fc80b19b3aca2abafdb296f41921ee6dd2868af", "generic-residual-d5b03b55de7f33e2a33daf55f5bab863be203788a782badc1ea97a99663f72c2", "generic-residual-d67cd8a5b3fc64af4fc7558efaff2f6b57f427cac50cc0e3e92470b326c19d25"]

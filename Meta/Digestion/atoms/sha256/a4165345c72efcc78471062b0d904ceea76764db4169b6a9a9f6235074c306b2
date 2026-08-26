@@ -1,0 +1,97 @@
+# Part XXIII：建议的 Lean 4 形式化结构
+
+建议新建：
+
+```text
+D5/S3/Biology/GeneticLatency/
+  AlleleAndGenotype.lean
+  AllelePresenceOverlap.lean
+  ContextualRealization.lean
+  ObservationLanguage.lean
+  GeneticResidual.lean
+  CompleteDominance.lean
+  DominanceEventAlgebra.lean
+  DominanceBand.lean
+  PrecisionRevealInterval.lean
+  TimePrecisionRevealFrontier.lean
+  DynamicCompletion.lean
+  RevealDepth.lean
+  ProcessCompletion.lean
+  NoninterferenceReveal.lean
+  LinearHiddenLeakage.lean
+  CausalDominanceHierarchy.lean
+  DistributionalDominance.lean
+  FuturePermission.lean
+  TargetFamilyGeneticQuotient.lean
+  CarrierCompletion.lean
+  FiniteRevealExperiments.lean
+  ContextualDominanceSheaf.lean
+  GeneticHiddenInformation.lean
+  PopulationSelectionLatency.lean
+  PosteriorDecisionDominance.lean
+```
+
+最小接口草案：
+
+```lean
+structure GeneticLatencyModel where
+  Allele : Type u
+  Genotype : Type v
+  Context : Type w
+  State : Type x
+  ObsIdx : Type i
+  Outcome : ObsIdx → Type o
+  realize : Genotype → Context → State
+  readout : (j : ObsIdx) → State → Outcome j
+
+def profile
+    (M : GeneticLatencyModel)
+    (x : M.State) :
+    (j : M.ObsIdx) → M.Outcome j :=
+  fun j => M.readout j x
+
+def ObsEquivalent
+    (M : GeneticLatencyModel)
+    (x y : M.State) : Prop :=
+  M.profile x = M.profile y
+
+def CompleteDominates
+    (M : GeneticLatencyModel)
+    (aa ab bb : M.Genotype)
+    (c : M.Context) : Prop :=
+  M.ObsEquivalent (M.realize aa c) (M.realize ab c) ∧
+  ¬ M.ObsEquivalent (M.realize ab c) (M.realize bb c)
+```
+
+首批应闭合的基因专用承重定理：
+
+```text
+allele_presence_overlap_of_mixed_genotype
+allele_presence_not_complement_in_diploid
+complete_dominance_iff_kernel_pattern
+complete_dominance_iff_event_indistinguishable
+observer_closure_operator
+primitive_assay_iff_separates_current_residual
+dominance_band_order_convex
+dominance_precision_interval
+time_precision_reveal_upper_set
+process_completion_kernel_formula
+process_completion_universal_minimality
+current_dominance_does_not_imply_dynamic_dominance
+noninterference_excludes_recessive_reveal
+visible_autonomy_iff_hidden_visible_block_zero
+finite_state_reveal_depth_bound
+observation_intervention_counterfactual_dominance_chain
+gamete_target_separates_carrier
+target_family_genetic_quotient_minimal
+finite_genetic_model_finite_reveal_family
+target_sufficient_panel_iff_target_pair_cover
+local_dominance_glues_to_global
+hidden_genetic_information_antitone
+diploid_recessive_selection_is_second_order
+polyploid_recessive_selection_order_eq_ploidy
+equal_posterior_equal_future_policy_value
+```
+
+---
+

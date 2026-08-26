@@ -1,0 +1,10 @@
+ast_path: section/257-治理的核心是从多个合法修复中选择一个
+fingerprints:
+  raw_sha256: sha256:260e22afc0d2a1a9c40bed41f85b4f3fc952bd00da81e0b9e9b5b6ae27b0f2b2
+  normalized_sha256: sha256:260e22afc0d2a1a9c40bed41f85b4f3fc952bd00da81e0b9e9b5b6ae27b0f2b2
+cas_ref: sha256:260e22afc0d2a1a9c40bed41f85b4f3fc952bd00da81e0b9e9b5b6ae27b0f2b2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

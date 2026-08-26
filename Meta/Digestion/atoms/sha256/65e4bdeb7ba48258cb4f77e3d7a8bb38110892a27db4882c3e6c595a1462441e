@@ -1,0 +1,44 @@
+# 81. 状态—效应配对是量子观察的基础接口
+
+固定有限维复 Hilbert 空间
+
+$$
+\mathcal H\cong\mathbb C^d,
+\qquad
+d\ge 1.
+$$
+
+记 Hermitian 实向量空间为
+
+$$
+\operatorname{Herm}_d
+=
+\{A\in M_d(\mathbb C):A^\dagger=A\},
+$$
+
+迹零子空间为
+
+$$
+\operatorname{Herm}_d^0
+=
+\{A\in\operatorname{Herm}_d:\operatorname{Tr}A=0\}.
+$$
+
+它们满足
+
+$$
+\dim_{\mathbb R}\operatorname{Herm}_d=d^2,
+$$
+
+$$
+\dim_{\mathbb R}\operatorname{Herm}_d^0=d^2-1.
+$$
+
+在 Hermitian 空间上使用 Hilbert–Schmidt 配对
+
+$$
+\langle A,B\rangle_{\mathrm{HS}}
+=
+\operatorname{Tr}(AB).
+$$
+

@@ -1,0 +1,31 @@
+## 定理 253.1（严格单调因子化保证优化对齐）
+
+若存在严格递增函数：
+
+[
+g:\mathbb R\to\mathbb R
+]
+
+使：
+
+[
+\boxed{
+O_P=g\circ O_A,
+}
+]
+
+则在任意相同可行域中：
+
+[
+\operatorname{argmax}O_A
+========================
+
+\operatorname{argmax}O_P.
+]
+
+### 证明
+
+严格递增函数保持并反射大小顺序。 (\square)
+
+---
+

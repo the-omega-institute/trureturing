@@ -1,0 +1,10 @@
+ast_path: section/1-2-目标充分性
+fingerprints:
+  raw_sha256: sha256:c4771b136e997f48dafc9c7d8bcb3966e1c93bafd1cbda174cabcd083ed03724
+  normalized_sha256: sha256:c4771b136e997f48dafc9c7d8bcb3966e1c93bafd1cbda174cabcd083ed03724
+cas_ref: sha256:c4771b136e997f48dafc9c7d8bcb3966e1c93bafd1cbda174cabcd083ed03724
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

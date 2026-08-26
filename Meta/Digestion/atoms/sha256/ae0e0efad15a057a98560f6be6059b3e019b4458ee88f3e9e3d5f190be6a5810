@@ -1,0 +1,20 @@
+## 定理 89.1（同族修复不可能性）
+
+若：
+
+\[
+T\notin\operatorname{Expr}_Y(q),
+\]
+
+则对任意子族 \(J\subseteq\mathcal I\)，包括任意有限、可数或全部允许子族，都有：
+
+\[
+\boxed{
+T\notin\operatorname{Expr}_Y(q_J).
+}
+\]
+
+### 证明
+
+存在 \(x,y\) 使所有 \(q_i\) 均相同而 \(T(x)\ne T(y)\)。它们当然在任意子族上仍相同，因此任何 \(q_J\) 都不能决定 \(T\)。\(\square\)
+

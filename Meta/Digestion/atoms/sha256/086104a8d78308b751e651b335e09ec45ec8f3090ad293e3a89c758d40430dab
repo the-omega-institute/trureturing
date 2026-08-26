@@ -1,0 +1,18 @@
+## 4.3 标签沿路径单调
+
+令 \(A:V\to L\) 取值于任意预序。如果
+
+\[
+E(u,v)\Rightarrow A(u)\le A(v),
+\]
+
+则
+
+\[
+u\preceq v\Rightarrow A(u)\le A(v).
+\]
+
+集合值 axiom closure 是此定理的实例。实际 truth export 是否满足边局部前件，仍取决于 edge 与 axiom-closure 字段是否使用同一依赖语义。
+
+---
+

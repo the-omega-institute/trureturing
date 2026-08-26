@@ -1,0 +1,14 @@
+# 34. cocycle 规定组合一致性，不规定选择理由
+
+令 $G$ 为允许控制动作的幺半群，并设其对完整状态的作用为
+
+$$
+T_g:\Sigma_\infty\to\Sigma_\infty.
+$$
+
+若隐藏位移依赖动作和当前状态，引入
+
+$$
+c:G\times\Sigma_\infty\to K_\infty.
+$$
+

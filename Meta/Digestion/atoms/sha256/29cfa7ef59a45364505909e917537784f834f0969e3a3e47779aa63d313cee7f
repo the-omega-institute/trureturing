@@ -1,0 +1,33 @@
+# 105. 对角化与量子观察者的严格边界
+
+仓库当前 `ObserverDiagonalSeparation.lean` 将两个独立事实包装在同一存在命题中：
+
+1. 一维量子上下文的读出是单射；
+2. 独立 `Unit/Bool` carrier 上存在固定点自由的对角逃逸。
+
+其逻辑形状是
+
+$$
+\exists Q,\exists D,
+\quad
+\operatorname{Tomography}(Q)
+\land
+\operatorname{DiagonalEscape}(D).
+$$
+
+它不是：
+
+$$
+\operatorname{Tomography}(Q)
+\Longrightarrow
+\operatorname{DiagonalEscape}(Q),
+$$
+
+也不是：
+
+$$
+\operatorname{DiagonalEscape}
+\Longrightarrow
+\operatorname{BornRandomness}.
+$$
+

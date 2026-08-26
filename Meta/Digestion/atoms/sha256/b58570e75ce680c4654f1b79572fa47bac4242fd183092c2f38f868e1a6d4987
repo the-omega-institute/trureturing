@@ -1,0 +1,82 @@
+# 514. 精确因果抽象推出有限时域决策充分
+
+设行动集合 (U) 相同。
+
+微观过程：
+
+[
+F_u:X\to X.
+]
+
+宏观过程：
+
+[
+G_u:Z\to Z.
+]
+
+满足：
+
+[
+CF_u=G_uC.
+]
+
+单步奖励满足：
+
+[
+\boxed{
+r(x,u)
+======
+
+\overline r(Cx,u).
+}
+]
+
+终端价值满足：
+
+[
+\boxed{
+q(x)
+====
+
+\overline q(Cx).
+}
+]
+
+定义微观有限时域价值：
+
+[
+V_0(x)=q(x),
+]
+
+[
+\boxed{
+V_{n+1}(x)
+==========
+
+\max_{u\in U}
+\left[
+r(x,u)+V_n(F_ux)
+\right].
+}
+]
+
+定义宏观价值：
+
+[
+\overline V_0(z)=\overline q(z),
+]
+
+[
+\boxed{
+\overline V_{n+1}(z)
+====================
+
+\max_{u\in U}
+\left[
+\overline r(z,u)
++
+\overline V_n(G_uz)
+\right].
+}
+]
+

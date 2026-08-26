@@ -1,0 +1,70 @@
+# 77. 建议追加模块树
+
+```text
+D5/S3/Observer/Agency/
+  LegalActionBundle.lean
+  DeterministicPolicySection.lean
+  FinitePolicySectionCount.lean
+  NaturalChoiceObstruction.lean
+  EffectiveActionQuotient.lean
+  OperationalFreedomCapacity.lean
+
+D5/S3/Observer/Agency/Safety/
+  FiberSafeActions.lean
+  SafePolicyExistence.lean
+  SafeActionsRefinementMonotonicity.lean
+  EpistemicCompulsionCountermodel.lean
+
+D5/S3/Observer/Agency/Decision/
+  PredictionDoesNotFixValue.lean
+  OptimalSetNonuniqueness.lean
+  InvariantRandomPolicy.lean
+  ActionEntropyAgencyCountermodels.lean
+
+D5/S3/Observer/Agency/Self/
+  PolicyProfile.lean
+  PolicySufficientSelfQuotient.lean
+  AgencyCompletion.lean
+  AgencyCompletionFixedPoint.lean
+  ObserverBoundaryAuthorship.lean
+
+D5/S3/Observer/Agency/Holonomy/
+  MemoryTransport.lean
+  ActionLoopRequiresMemory.lean
+  DoubleCoverNoSection.lean
+
+D5/S3/Observer/Agency/Information/
+  ChoiceOutcomeEntropyChain.lean
+  ObservationalAuthorshipRatio.lean
+  CausalAuthorshipTV.lean
+  CommitmentPlanContraction.lean
+  DiachronicAuthorshipDPI.lean
+
+D5/S3/Observer/Agency/Responsibility/
+  ControlKnowledgeAuthorshipTraceability.lean
+  ResponsibilityCountermodels.lean
+
+D5/S3/Observer/Agency/Throat/
+  ActionComponentCocycle.lean
+  SelfPolicyThroatDisplacement.lean
+```
+
+建议优先闭合低依赖、高区分度命题：
+
+```text
+finite_policy_sections_card
+no_natural_choice_on_nonempty_finsets
+effective_action_duplicate_invariant
+safe_actions_mono_of_refines
+safe_policy_exists_iff_fiber_inter_nonempty
+same_prediction_opposite_losses
+transitive_invariant_pmf_eq_uniform
+action_entropy_does_not_determine_authorship
+policy_sufficient_self_universal
+same_public_state_different_action_requires_memory
+commitment_depth_telescope
+choice_outcome_entropy_chain
+```
+
+---
+

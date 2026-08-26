@@ -1,0 +1,22 @@
+# 32. 路径分量商与三类隐藏变化
+
+在标准 solenoid 商表示中，可把状态写成
+
+$$
+[t,k],
+\qquad
+t\in\mathbb R,
+\quad
+k\in K_\infty,
+$$
+
+并按对角整数嵌入 $\Delta:\mathbb Z\to K_\infty$ 识别
+
+$$
+(t,k)
+\sim
+(t+n,k-\Delta(n)).
+$$
+
+符号正负依具体坐标约定而变，但商类不变。
+
