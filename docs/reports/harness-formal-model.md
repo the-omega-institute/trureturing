@@ -20,10 +20,11 @@ tracked 文件数 29,407 属于 `94f64f416`;`25c3a9716` 的实测值为 29,469,�
 - **P1(本仓分类闭合)**:`trureturing@25c3a9716` 的受管字节可由三个正交轴唯一定位;
   跨仓推广只保留为带前提的条件命题,且尚未在第二个仓库验证(§8、§10-e)。
 - **P2(规则派生)**:改动规则是 `(权威, τ)` 的函数,不是逐工件声明的自由文本。若某工件必须写一条只适用于它自己的规则,P2 被证伪。
-- **P3(带前提的充分条件)**:在 artifact universe 稳定、`dep` 可靠且稳定、judge 与 producer
+- **P3(带前提的充分条件)**:在 artifact universe 稳定、`dep` 可靠且稳定并持有覆盖候选态实际读集的跨步证书、judge 与 producer
   均 deterministic/hermetic、基例证书已建立时,强化不变量或改动已声明的全局参数,均足以触发全量重验;
   此二者不再声称穷尽所有触发。
-  **已于 2026-08-26 被证伪(见 §5),按本节自己的规矩,模型据此改写。**
+  **2026-08-26 被证伪的是原 P3(v0.1「恰有两种」的充要/穷尽形,见 §5),不是本条当前 P3。**
+  当前 P3 是改写后成立的带前提充分条件,仍待实例化检验。
 
 不下注的部分明写为 `open`(§10),不用语气代替读数。
 
@@ -43,14 +44,16 @@ tracked 文件数 29,407 属于 `94f64f416`;`25c3a9716` 的实测值为 29,469,�
 | 记号 | 名 | 含义 | 本仓现状 |
 |---|---|---|---|
 | `π(x)` | producer | 发射 x 字节的程序;`⊥` 表示手写 | FILEMAP `produced_by` |
-| `I_run(p)` | runtime inputs | 程序/判者 `p` **执行时**读取的工件闭包 | **未声明**(仅部分消费者可由实现反查) |
-| `I_prod(x)` | production inputs | `I_run(π(x))`,即生产 `x` 时的读取闭包;`π(x)=⊥` 时为 `∅` | 仅 .NET 面由 `EngineeringInputDeriver` 现算一部分 |
-| `J(x)` | judges | 其执行决定「x 的改动可否准入」的工件集 | FILEMAP `verified_by` + TOWER `judged_by`(两处) |
-| `C(x)` | consumers | `I_run` 的逆像,即执行时读取 `x` 的程序/判者集 | FILEMAP `consumed_by` 近似承载,但含仓外 actor |
+| `I_run(y)` | runtime inputs | `A(R) → 2^A(R)`;工件 `y` **执行时**读取的工件闭包 | **未声明**;`.NET` 工程判者仅有静态上近似 |
+| `I_prod(x)` | production inputs | `I_run(π(x))`,即生产 `x` 时的读取闭包;`π(x)=⊥` 时为 `∅` | **未声明**;`EngineeringInputDeriver` 不派生此关系 |
+| `J_{D,K}(x)` | typed judges | 对象域 `D` 到判者域 `K` 的定型判定关系 | `V_path ⊆ Selector × VerifierActor`;`J_component ⊆ Component × Component`,二者不合并 |
+| `C(x)` | consumers | `A(R) → 2^(A(R) ∪ ProgramActorWords)`;执行时消费 `x` 的对象 | FILEMAP `consumed_by` 近似承载,并含仓外 actor |
 
-**互逆律(公理 0,分型后)**:`y ∈ C(x) ⟺ x ∈ I_run(y)`。
-`C` 与 `I_run` 是同一条**消费边**的两个方向;`I_prod` 是经 `π` 得到的生产阶段读取闭包;
-`J` 是**判定边**,与二者不同型,不得并入。**投影定理只能使用 `I_prod`。**
+**互逆律(公理 0,工件定型子域)**:`∀ x,y ∈ A(R). y ∈ C(x) ⟺ x ∈ I_run(y)`。
+`C` 与 `I_run` 在该子域上是同一条**消费边**的两个方向;落在 `ProgramActorWords` 上的消费边属于
+另一个对象域,不参与互逆律,因而不会要求无类型的 `I_run(agent)`。`I_prod` 是经 `π` 得到的生产阶段读取闭包;
+`J_{D,K}` 是按两端对象域定型的**判定边**,与消费边不同型。下文抽象地写 `J_{D,K}` 时一次只取一个载体;
+本仓 `V_path` 与 `J_component` 不构成单一 `J`。**投影定理只能使用 `I_prod`。**
 
 原式按原定义为假。反例是判者 `test` 执行时读取被测 `impl`,故 `test ∈ C(impl)`;
 但手写 `test` 满足 `π(test)=⊥`,于是 `I_prod(test)=∅`,`impl ∉ I_prod(test)`。
@@ -66,15 +69,16 @@ tracked 文件数 29,407 属于 `94f64f416`;`25c3a9716` 的实测值为 29,469,�
 
 用户直觉的精确形式:**「是程序还是数据」不是 `x` 的属性,而是边 `x → y` 的角色。**
 
-对每条边 `j → x`(`j ∈ J(x)`)或 `π(x) → x`:左端是**程序**,右端是**数据**。同一份字节可在一条边上是程序、
+对每条同域边 `j → x`(`j ∈ J_{D,D}(x)`)或 `π(x) → x`:左端是**程序**,右端是**数据**。同一份字节可在一条边上是程序、
 在另一条边上是数据。测试代码判定实现,故 `test → impl`:测试是程序,实现是它的数据。
 而**谁判定测试?** 变异运行器 `m`:`m` 把测试当数据,把实现当扰动源。故 `m → test → impl` 是一条链,不是环。
 
-> **变异证明不是纪律,是本模型的强制推论**:`test ∈ J(impl)` 一旦成立,`J(test)` 就必须非空,
-> 否则 test 是一个无人判定的判者(§6)。变异运行器是 `J(test)` 的规范居民。
+> **变异证明不是纪律,是本模型的强制推论**:`test ∈ J_{A,A}(impl)` 一旦成立,`J_{A,A}(test)` 就必须非空,
+> 否则 test 是一个无人判定的判者(§6)。变异运行器是 `J_{A,A}(test)` 的规范居民。
 
-**公理 1(治理无环)**:`J ∪ π` 无环。
-等价说法:没有工件参与决定它自己的准入。**这不是洁癖**——`J` 中一个环使准入方程
+**公理 1(治理无环,按域定型)**:在任一共同对象域 `D` 内,`J_{D,D} ∪ Π_D` 无环,其中
+`Π_D = {(π(x),x) : x,π(x) ∈ D, π(x) ≠ ⊥}`。不同载体未经定型注入不得作无类型的并集;
+特别地,本仓 `V_path` 不与 `J_component` 相并。等价说法:没有工件参与决定它自己的准入。**这不是洁癖**——`J_{D,D}` 中一个环使准入方程
 `H = F(H)` 有多个不动点,其中恒含平凡解「全部 admit」。恶意或失手的候选提交 `return Accepted`
 就是在选那个不动点。CLAUDE.md 已记 2026-07-20 判例(候选驱动证书)。
 
@@ -89,15 +93,16 @@ tracked 文件数 29,407 属于 `94f64f416`;`25c3a9716` 的实测值为 29,469,�
 > 缺口当前由 `pull_request_target` 的 workflow 文本取自 base 侧 + rc=3 元层脚手架承担,
 > CLAUDE.md 自己称其为「记录在案的 bootstrap 脚手架」。本模型的立场:这是**已知负债**,不是设计,记 `open`(§10-a)。
 
-**信任地层 τ**:由 `J` 派生,**永不声明**。
+**信任地层 τ**:`τ: Component → ℕ` 仅由组件判定边 `J_component` 派生,**永不声明**;`V_path` 不参与 `τ`。
 ```
-τ(x) = 0                         若 J(x) = ∅ 且 x 是信任根
-τ(x) = 1 + max{ τ(j) : j ∈ J(x) } 否则
+τ(c) = 0                                   若 J_component(c) = ∅ 且 c 是信任根
+τ(c) = 1 + max{ τ(j) : j ∈ J_component(c) } 否则
 ```
-判者的 τ 严格小于被判者。内容工件坐在 τ_max。**τ 是图的高度函数,不是任意拓扑序号,也不是入度**
+组件判者的 τ 严格小于被判组件。下文对工件写 `τ(x)` 时,仅是其唯一治理组件 `c_x` 的 `τ(c_x)` 简写;
+该组件无法唯一解析时 fail-closed。内容组件坐在 τ_max。**τ 是组件判定图的高度函数,不是任意拓扑序号,也不是入度**
 (CLAUDE.md 第〇节已禁与证明深度 depth(v) 混用;二者相关而不同构)。
 
-**定理 2.1(塔必有顶,顶不可自证)**:`J` 有限且无环 ⟹ 判者链终止。
+**定理 2.1(塔必有顶,顶不可自证)**:`J_component` 有限且无环 ⟹ 组件判者链终止。
 终点不能是「一个没有任何东西判定它的测试」——无人判定的判者与不存在的判者在观测上等价(§6)。
 故终点必是信任根 `τ=0`,其可信来自**内容寻址 + 公开可独立复验**,而非任何判者的背书;其自身一致性标 `open`。
 
@@ -137,32 +142,36 @@ tracked 文件数 29,407 属于 `94f64f416`;`25c3a9716` 的实测值为 29,469,�
 ③ 可由 `π(x)` 与 `I_prod(x)` 逐字节无损重建;
 ④ 无独立权威(不承担 policy/oracle/history authority)。四项全真才是投影;未知或外部依赖 fail-closed 判为非投影。
 
-**定理 3.1(投影不承担独立治理权威)**:令 `I = I_prod(x)`,且逐项满足:
+**定理 3.1(投影字节不含输入闭包之外的信息)**:令 `I = I_prod(x)`,且逐项满足:
 
-1. `f` total / deterministic / pure / hermetic;
-2. `I` 完整,包含**环境闭包**,受治理且保留;
-3. canonical serialization 稳定;
-4. `x` 确为同一 revision 下 `f(I)` 的**新鲜、原子发布**结果,而非仅被**声明**为 projection;
-5. `x` 不承担 policy/oracle/history 权威。
+1. `π(x) = f ≠ ⊥`,且 `f` 是受 harness 治理的 canonical producer;
+2. `f` total / deterministic / pure / hermetic;
+3. `I` 完整,包含**环境闭包**,受治理且保留;
+4. canonical serialization 稳定;
+5. 所讨论的 `x` 字节确为某同 revision 的 `f(I)` 结果,而非仅被**声明**为 projection;此等式是定理前提,不构成 freshness 门;
+6. `x` 不承担 policy/oracle/history 权威。
 
-则 `x` 不承担独立治理权威。这里 `H(x | f, I)=0` 只说明在这些前提下字节由输入确定,
-不能把「确定性」偷换为「相对规格正确」。
+则 `H(x | f, I)=0`,即 `x` 的字节不含 `I` 之外的信息。第 6 项仍是投影四项合取中的独立分类前提,
+不是从条件熵推出的结论;不能把「确定性」偷换为「相对规格正确」。
 
 > **反例**:`H(x|f,I)=0` 证的是**确定性**,不是相对规格的**正确性**。
 > 一个恒发射错误常量的确定性 `f`,其条件熵同样为零;而一个施于 `x` 的语义谓词仍能拒绝它,
 > 从而确实检验了 `f`。
 
 因此撤销「施于投影的门只可能产假阳性,不可能产真阳性」的推论。
-**重算比对**(`x` 与 `f(I)` 比)仍能产真阳性:它能抓到陈旧副本、被手改的字节、以及 producer 的实现 bug。
-该验算合法,不在「投影不设门」之禁内;禁的是让 `x` 自身承担与其真源并列的独立治理权威。
+
+- **字节一致性验算**:`x` 与 `f(I)` 重算比对能抓陈旧副本、被手改的字节及非确定性差异;
+  它只验投影四项合取的第三项,不构成治理、不构成准入义务,不得据此为投影设门。
+- **独立语义判定**:重算比对不能抓相对规格为错的确定性 producer bug。若 `spec=right,x=wrong,
+  f(I)=wrong`,比对仍相等;要抓此类 bug,须使用不复用 `f` 的独立语义判者来检验 producer 的语义。
 
 > **本仓实测(可执行,一条 python)**:63 条 FILEMAP 条目中,**8 条的 `verified_by` 恰为其 `produced_by`**
 > ——即「由自己的生产者验证自己」。其中 6 条已是 `run-local`(出库,合规),
 > **2 条仍在 git 索引内**:`Blueprint/**/*.md`(prod=ScribeEmitter)与 `Evidence/D5/values.json`(prod=ValuesEmitter)。
 > 后者正是 CLAUDE.md 已登记的开放违例 `D5-T0031`。这组读数只说明存在 producer 同名验算;
-> 它可能是合法的重算比对,不能单凭同名或仍在索引内就判为独立治理门。
+> 它可能是第三项合取的重算验算,不能单凭同名或仍在索引内就判为独立治理门或准入义务。
 
-**轴 B —— 角色**(§2,per-edge;节点级摘要):`judge`(出现在某个 `J(y)` 中)/ `producer`(某个 `π(y)`)/ `inert`(叶)。
+**轴 B —— 角色**(§2,per-edge;节点级摘要):`judge`(出现在某个 `J_{D,K}(y)` 中)/ `producer`(某个 `π(y)`)/ `inert`(叶)。
 
 **轴 C —— 居所**:`committed` / `run-local` / `external`。本仓已有(`runtime_disposition`,52/6/5 分布)。
 
@@ -170,8 +179,8 @@ tracked 文件数 29,407 属于 `94f64f416`;`25c3a9716` 的实测值为 29,469,�
 
 | 权威 | 可否手改 | 准入义务 | 单次改动代价 |
 |---|---|---|---|
-| `projection` | **禁手改** | 不承担独立治理权威;允许重算比对(定理 3.1) | 0,重新发射 |
-| `source` | 自由 | 其 base-解析的判者 `J(x)` 全部 admit | `C(τ)` |
+| `projection` | 手改不承权威;应重新发射 | 无准入义务;重算只验第三项,不治理、不设门 | 0,重新发射 |
+| `source` | 自由 | 其 base-解析的判者 `J_{D,K}(x)` 全部 admit | `C(τ)` |
 | `ledger` | **只许追加** | 后缀扩展检查 + 写入门作用于新增条目 | `C(τ)` / 条 |
 | `root` | 可,但贵 | 保守扩展证明 + 独立对抗评审 + 账本留痕 | `α^{τ_max}` |
 
@@ -229,25 +238,27 @@ harness 真正声称的东西是 `∀i. P(Rᵢ)`,`P` 是若干谓词的合取。
 - **重验**:每步重算 `P(Rᵢ)`,代价 `O(|R|)` / 步。
 - **归纳**:一次性证 `P(R₀)`(基例),然后每步证 `P(R) ∧ step(δ) ⟹ P(R ⊕ δ)`,代价 `O(|δ|)`。
 
-**定义(局部谓词)**:令 `ActualReads_R(x)` 为判定 `ψ(x)` 时实际读取的闭包;
-`ψ` 局部 ⟺ `ψ(x)` 只由 `x ∪ ActualReads_R(x)` 的字节决定。机器实际派生和使用的是 `dep̂_R`,
-两者不能只因名称相同就视为相等。
+**定义(局部谓词)**:令 `ActualReads_R(ψ,x)` 为在状态 `R` 判定 `ψ(x)` 时实际读取的闭包;
+`ψ` 在 `R` 局部 ⟺ `ψ(x)` 只由 `x ∪ ActualReads_R(ψ,x)` 的字节决定。对由一组判者执行的合取,
+`ActualReads_R(ψ,x) = ⋃_{j ∈ J_{A,A}(x)} I_run,R(j)`。机器实际派生和使用的是跨步静态闭包
+`dep̂_{R→R⊕δ}`,二者不能只因名称相同就视为相等。
 
-**实例化证书义务**:`ActualReads_R(x) ⊆ dep̂_R(x)`。也就是说,`dep̂` 必须是运行时实际读取集的
-可靠上近似,而不只是「登记表可算」的某个集合。派生失败、结果非法或不完整时,机器**不得**给出
-`proven-disjoint`,必须回落全量。
+**实例化证书义务(跨步)**:对每个继承工件 `x`,必须证明
+`ActualReads_R(ψ,x) ∪ ActualReads_{R⊕δ}(ψ,x) ⊆ dep̂_{R→R⊕δ}(x)`;候选态实际读集也在量词内。
+新工件归入 `δ` 并必查。`dep̂` 必须是该步两态运行时实际读取集的可靠上近似,而不只是基线态上
+「登记表可算」的某个集合。派生失败、结果非法或不完整时,机器**不得**给出 `proven-disjoint`,必须回落全量。
 
-**定理 5.1(带可靠上近似前提的增量可靠性)**:若 `P` 的每个合取项都局部,且上式证书成立,
-则只检查 `touched(δ) = δ ∪ { y : dep̂_R(y) ∩ δ ≠ ∅ }` 即充分。
-> 证明:对 `x ∉ touched(δ)`,`x ∪ ActualReads_R(x)` 在 R 与 R⊕δ 中逐字节相同(git 性质);
-> `ψ` 是这些字节的函数;归纳假设给出 `ψ(x)` 在 R 中成立。∎
+**定理 5.1(带跨步可靠上近似前提的增量可靠性)**:若 `P` 的每个合取项在两态均局部,且上述跨步证书成立,
+则只检查 `touched(δ) = δ ∪ { y : dep̂_{R→R⊕δ}(y) ∩ δ ≠ ∅ }` 即充分。
+> 证明:对 `x ∉ touched(δ)`,两态的 `x` 及实际读集都落在未被 `δ` 触碰的同一闭包内,
+> 故其字节逐字节相同(git 性质);`ψ` 是这些字节的函数;归纳假设给出 `ψ(x)` 在 R 中成立。∎
 
 > **席位间分歧与调和**:两席判原条件式本身成立,因为「`ψ` 只由 `x ∪ dep(x)` 的字节决定」
 > 在语义上已经蕴含依赖完备性,漏洞在可执行证书而非条件证明;一席判原表述不成立,
 > 因为「登记表可算」不蕴含「可靠」。二者可调和:**条件式无误,缺的是实例化时的证书义务**。
 
-> **条件推论**:在局部性与可靠上近似证书均成立时,对未触碰的 `x` 重跑 `ψ` 是在重新推导归纳假设。
-> 该结论只在这些前提内支撑增量跳过,不能脱离证书扩张成无条件禁令。
+> **条件推论**:只有局部性与覆盖候选态实际读集的跨步证书均成立时,才可对未触碰的 `x` 增量跳过。
+> 基线态证书不能独自授权跳过,也不能把该条件结论扩张成无条件禁令。
 
 **定理 5.2(非局部谓词只有三种修法)**:聚合式谓词(计数、唯一性、跨文件 join、全局 schema 版本断言)非局部,
 增量检查不可靠。可靠的修法恰有三种:
@@ -255,6 +266,9 @@ harness 真正声称的东西是 `∀i. P(Rᵢ)`,`P` 是若干谓词的合取。
 2. **降级到检测层**:移出准入,改为合并后巡检 + 勘误。**仅当违例可逆时合法**(CLAUDE.md 第 20 条分级)。
 3. **容差带**:对单调有界聚合(`count ≤ B`),准入判 `count(R⊕δ) ≤ B − (w−1)·k`,
    其中 `w` = 合并并发宽度,`k` = 单 PR 最大增量。
+
+**本轮第十项处置(E10)**:v0.1 以被 CLAUDE.md 第Ⅵ节「禁模糊措辞代替测量」禁止的「很可能」
+声称目录容差带足够;`w` 未测,故本轮保留弱化后的条件结论,不再声称当前带宽足够。
 
 > **本仓实测(定理 5.2 的第 2+3 混合形,且推导与仓内注释独立一致)**:
 > `tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs:73` `DirectoryFileLimit = 12`(准入,局部:只判被碰目录),
@@ -269,7 +283,7 @@ harness 真正声称的东西是 `∀i. P(Rᵢ)`,`P` 是若干谓词的合取。
 **命题 5.3(全量的带前提充分触发)** —— 即改写后的 P3。先显式要求:
 
 1. artifact universe 稳定;
-2. `dep` 可靠且稳定,机器的 `dep̂` 持有定理 5.1 的上近似证书;
+2. `dep` 可靠且稳定,机器的 `dep̂` 持有定理 5.1 覆盖候选态实际读集的跨步上近似证书;
 3. judge 与 producer 均 deterministic / hermetic;
 4. `P(R)` 的基例证书已建立且仍有效。
 
@@ -297,9 +311,10 @@ harness 真正声称的东西是 `∀i. P(Rᵢ)`,`P` 是若干谓词的合取。
 > 其余七种情形一律回落全量:dev push、solution root 不可唯一派生、delta 命中工程根、
 > 派生进程失败、结果格式非法、`incomplete-derivation`、事件类型不识别。
 > 且 `dep` 不是手抄清单:`tools/StrataLint.Engine/RepositoryIo/EngineeringScopePolicy.cs:29 EngineeringInputDeriver`
-> 由 MSBuild `Compile` 项现算消费者输入闭包,查询不完整时返回 `IncompleteDerivation` 而非猜。
-> **这是 `I_run` / `I_prod` 在 .NET 面的局部实现形**——它的 fail-closed 回落满足
-> 证书无法建立时不得给 `proven-disjoint` 的义务;成功派生结果是否构成可靠上近似仍须由实例证书证明。
+> 由 MSBuild `Compile` 项与工程判者消费映射现算 `dep̂`,查询不完整时返回 `IncompleteDerivation` 而非猜。
+> 它近似的是 `ActualReads_R(ψ,x) = ⋃_{j ∈ J_{A,A}(x)} I_run,R(j)`,**不是** producer 的 `I_prod(x)`。
+> 它的 fail-closed 回落满足证书无法建立时不得给 `proven-disjoint` 的义务;成功派生结果是否同时覆盖
+> 基线态与候选态实际读集,仍须由跨步实例证书证明。
 > 本模型只指出应把分型后的读取关系升为登记表的一等关系,
 > 让 scope 决策对所有门统一,而不是每道门各写一遍。
 
@@ -356,12 +371,12 @@ harness 真正声称的东西是 `∀i. P(Rᵢ)`,`P` 是若干谓词的合取。
 | 0 | 公理 4 引用完整性逐名 | **已满足** | 同文件 #1116 注记;`.Any` 已改逐名 |
 | 0 | 粒度律(定理 2.2) | **已满足** | TOWER 16 组件细在 harness;FILEMAP 63 pattern 覆盖 29,469 文件 |
 | 0 | 塔顶诚实标 open | **已满足** | `TOWER.yaml` bootstrap `judge: open` |
-| 0 | 增量须证明 disjoint | **fail-closed 形已满足;证书义务待核** | `ci.yml:91`,七种回落全量;成功派生的 `dep̂` 仍须证明可靠上近似 |
+| 0 | 增量须证明 disjoint | **fail-closed 形已满足;证书义务待核** | `ci.yml:91`,七种回落全量;成功派生的 `dep̂` 仍须证明跨步覆盖候选态实际读集 |
 | 1 | 公理 0 分型互逆律 | **无完整对侧可核** | FILEMAP 无 `I_run`;`consumed_by` 还含不在 `A(R)` 内的仓外 actor |
 | 2 | FILEMAP / TOWER 所有权 | **对象域不同,非差距** | `verified_by` 35、`judged_by` 10、交集 1/35;该交集不证明双真源 |
 | 3 | TOWER `repository-files` 成员 | **advisory,不作为合并依据** | 10 个组件,38 行成员、31 条去重实路径;全部五种 kind 合计才是 82 行 |
 | 4 | GC 消费可达性 | **advisory,未采纳** | 18/63 使用合法 `ProgramActorWords`;当前值为非缺陷 |
-| 5 | 投影无独立治理权威(定理 3.1) | **须区分治理与验算** | 8 条 producer 同名验算,其中 2 条仍在索引;重算比对可产真阳性 |
+| 5 | 投影字节与语义检查(定理 3.1) | **须区分两类检查** | 重算只抓陈旧/手改/非确定性且不设门;确定性 producer bug 须独立语义判者 |
 | 6 | 公理 2 信任定向 | **未满足** | `ci.yml:749` 候选自带判官;由 rc=3 脚手架承担,CLAUDE.md 自记为 bootstrap |
 
 **撤回原先的「最高价值项」及合并处方。** 两表的天然对象域和消费者不同:
@@ -402,12 +417,15 @@ rule-catalog / ci-jobs / bootstrap 信任链;TOWER 也不能替代 FILEMAP 的�
 以下七步只概括 `trureturing@25c3a9716` 上已经核过的结构,不冒领跨仓样本:
 
 1. **枚举与登记**:建立 `Reg`,与 tracked 树在 selector 粒度双射,两向 fail-closed。新文件**未分类即拒**。
-2. **分轴**:每条目定 (权威, 居所)。初次普查中无法判定者一律进**隔离清单 + 案号**,不许默认放行。
-3. **补判者**:每个 `source` 必须点名 `J(x)`。无判者的 source 三选一——加判者、降为 projection、删。
+2. **分轴**:每条目定 (权威, 居所)。无法判定者在**唯一登记真源**内 fail-closed:
+   判为非投影、拒绝准入并记具名 `open`;不得另立平行隔离清单。
+3. **补判者**:每个 `source` 必须按两端对象域点名 `J_{D,K}(x)`。无判者的 source 三选一——加判者、降为 projection、删。
 4. **核消费者域**:每条目点名 `C(x)`;工件引用与合法 `ProgramActorWords` 按各自对象域解析。
    只有另案采纳 GC 可达性时,才需要进一步区分 `deliverable` 与死工件。
-5. **算 τ**:由 `J` 求高度;查无环(公理 1);查判者在 base 侧解析(公理 2)。τ 永不手写。
-6. **审门**:每个门查局部性,且 `dep̂` 必须持有 `ActualReads ⊆ dep̂` 的可靠上近似证书。
+5. **算 τ**:仅由 `J_component` 求高度;查组件判定边无环(公理 1);查判者在 base 侧解析(公理 2)。
+   `V_path` 不参与 τ,且 τ 永不手写。
+6. **审门**:每个门查两态局部性,且 `dep̂` 必须持有覆盖
+   `ActualReads_R ∪ ActualReads_{R⊕δ}` 的跨步可靠上近似证书。
    非局部者按定理 5.2 三选一,容差带按 `(w−1)·k` 定尺寸,`w` 要实测。
 7. **枚举全局参数与环境闭包**:写成显式清单并保持最小;参数变更是充分触发之一,
    证书缺失、派生失败或未声明环境漂移同样会使全量成为必要回落。
@@ -433,7 +451,7 @@ hermetic 且 deterministic 的 judge 与 producer、可证明的依赖上近似�
 | 手工枚举的成员路径数 | 仅另案采纳派生表示时适用 | **31**(TOWER `repository-files`,38 行) |
 | 非局部门的数量 | 显式枚举且有限 | 未测(已知 ≥1:目录容量) |
 | 全局参数数量 | 显式枚举且最小 | 未测(已知含 `lean-toolchain`、mathlib rev、规则目录) |
-| 每 PR 门代价 | `O(|δ|)` | 部分(.NET 面会发射 `proven-disjoint`,其上近似证书未测;Lean 面走缓存) |
+| 每 PR 门代价 | `O(|δ|)` | 部分(.NET 面会发射 `proven-disjoint`,其跨步上近似证书未测;Lean 面走缓存) |
 | 判者活性被钉住的比例 | 100% | 未测(已知曾为 0,见 `if: false` 判例) |
 
 ---
@@ -446,31 +464,34 @@ hermetic 且 deterministic 的 judge 与 producer、可证明的依赖上近似�
   **未构造**「候选提交一个恒 admit 的判者」的实验。测法:在集成分支上把判者的 admit 路径变异为恒真,
   看三条 required check 是否仍全绿。**在做这个实验之前,不得声称本仓可被此路径攻破**——
   当前只能说「公理 2 在文本上未被满足」。
-- **(b) 无判者的 source 数量**`open`。需要先按修正后的投影前提分类 source,再从 `J` 计算;
+- **(b) 无判者的 source 数量**`open`。需要先按修正后的投影前提分类 source,再从各定型关系 `J_{D,K}` 计算;
   本轮未作该全量分类。
 - **(c) 合并并发宽度 `w`**`open`。定理 5.2 的容差带尺寸依赖它。
   测法:取最近 N 个合入 dev 的 PR,统计「同时处于开启且 base 相同」的最大集合基数。
   当前带宽 12 对 `w ≤ 13` 可靠;`w` 未测,故**不得声称当前带宽足够**,只能说它给出了明确的监控量。
 - **(d) 本模型自身没有判者**。本文件是 `kind=data`,`verified_by=SnapshotDecoder`,即只验它能被解码,不验它说得对。
   按定理 6.1,它现在处在「健全性未钉、活性未钉」的状态。**这是提案的正当状态,不是缺陷**;
-  它要成为律法,须走 §8 第 3 步:点名 `J(自己)`——即把 §9 的指标做成机器可算的巡检。
+  它要成为律法,须走 §8 第 3 步:按两端对象域点名 `J_{D,K}(自己)`——即把 §9 的指标做成机器可算的巡检。
 - **(e) 跨仓条件命题是否可推广**`open`。P1 的实现结论只覆盖 `trureturing@25c3a9716` 的
   63 条 pattern。对有限 tracked tree、闭世界工件枚举、hermetic/deterministic judge 与 producer、
   可证明依赖上近似的仓库,§8 的形状是否仍成立,尚未在第二个仓库验证。
+- **(f) 跨步依赖证书**`open`。本轮核到失败时回落全量的 fail-closed 形,未证明成功派生的 `dep̂`
+  同时覆盖 `ActualReads_R` 与候选态 `ActualReads_{R⊕δ}`;在此证书建立前,不得由基线读集单独授权增量跳过。
 
 ---
 
 ## v0.2 勘误记录
 
 - E1 `I` 同时充当生产与消费读取且与 `C` 互逆 → 撤销 → 依据:fidelity 席 + `Meta/FILEMAP.toml:407-411` / `FileMapPolicy.cs:81-87`。
-- E2 `H(x|f,I)=0` 推出施于投影的门不可能产真阳性 → 弱化 → 依据:parsimony 席 + `docs/reports/harness-formal-model.md:140-157` 的错误常量 producer 反例。
+- E2 `H(x|f,I)=0` 推出施于投影的门不可能产真阳性 → 弱化 → 依据:parsimony 席 + 本文 §3 定理 3.1 后的错误常量 producer 反例。
 - E3 「登记表可算的 dep」足以支撑增量可靠性 → 弱化 → 依据:teleology / natural-ownership / proportional-containment 席 + 案卷 `#3274` / `.github/workflows/ci.yml:91,167-175` 的分歧与 fail-closed 回落。
 - E4 全量重验触发「恰有两种」且为充要条件 → 撤销 → 依据:teleology / natural-ownership / proportional-containment 席 + 案卷 `#3369` / commit `51a7e128a` 与案卷 `#3274`。
-- E5 模型与七步无条件适用于任一 git 仓库 → 弱化 → 依据:proportional-containment 席 + `docs/reports/harness-formal-model.md:400-421,457-459` 的单仓样本边界。
-- E6 FILEMAP 与 TOWER 是同一 `J` 的两个真源,TOWER 应合并为 FILEMAP 投影 → 撤销 → 依据:natural-ownership 席 + `docs/develop/spec/golden-ledger-repo-spec.md:1009` 的 `v7.14 R10`。
+- E5 模型与七步无条件适用于任一 git 仓库 → 弱化 → 依据:proportional-containment 席 + 本文 §8 与 §10-e 的单仓样本边界。
+- E6 FILEMAP 与 TOWER 是同一 `J` 的两个真源,TOWER 应合并为 FILEMAP 投影 → 撤销 → 依据:natural-ownership 席 + `docs/develop/spec/golden-ledger-repo-spec.md` 的 `v7.14 R10`。
 - E7 消费者非工件的 18/63 即 29% 缺陷 → 撤销 → 依据:caller + fidelity / natural-ownership / teleology 席 + `FileMapPolicy.cs:81-87` / `Meta/FILEMAP.toml:407-411`。
 - E8 TOWER 为 82 行 `repository-files` 成员、28 路径,且 29,407 属当前基线 → 勘正 → 依据:caller 原读数 + fidelity 席复算 + `tools/TOWER.yaml:108-116` / commits `25c3a9716`,`94f64f416`。
-- E9 产地未按第 9′ 条披露 → 勘正 → 依据:orchestrator + `CLAUDE.md:101`;`/consensus-rnd:sshx` 六席 = 5× codex-cli(teleology / parsimony / fidelity / natural-ownership / proportional-containment)+1× nyxid-oracle(worth),`reject 2 / revise 4`;worth attempt 1 `extraction_failure` abstained、attempt 2 完成;五席同载体族,不声称模型多样性;读数均由 orchestrator 亲验或复核。
+- E9 产地未按第 9′ 条披露 → 勘正 → 依据:orchestrator + `CLAUDE.md` 第 9′ 条;`/consensus-rnd:sshx` 六席 = 5× codex-cli(teleology / parsimony / fidelity / natural-ownership / proportional-containment)+1× nyxid-oracle(worth),`reject 2 / revise 4`;worth attempt 1 `extraction_failure` abstained、attempt 2 完成;五席同载体族,不声称模型多样性;读数均由 orchestrator 亲验或复核。
+- E10 定理 5.2 目录容差带结论 → 弱化 → 依据:v0.1 使用了 `CLAUDE.md` 第Ⅵ节禁止的模糊措辞「很可能」;`w` 未测,故不得声称当前带宽足够。
 
 ---
 
@@ -478,7 +499,8 @@ hermetic 且 deterministic 的 judge 与 producer、可证明的依赖上近似�
 
 本模型不新增任何律。它做三件事:
 ① 把 CLAUDE.md 中散布的条款归约到分型的生产、运行时消费与判定关系,并明确各定理的前提
-(增量可靠性 ← 定理 5.1 的上近似证书;投影无独立治理权威 ← 定理 3.1;变异证明 ← 定理 6.1/6.2;
+(增量可靠性 ← 定理 5.1 的跨步上近似证书;投影字节无闭包外信息 ← 定理 3.1、无独立权威 ← 四项合取;
+变异证明 ← 定理 6.1/6.2;
 全量充分触发 ← 命题 5.3);
 ② 区分 FILEMAP 与 TOWER 的对象域,并保留 §4 公理 4 的逐名量词检查,不再用词表交集诊断双真源;
 ③ 给出本仓已验的七步形状;跨仓推广只对满足 §8 前提的仓库成立为待验证条件命题。
