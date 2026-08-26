@@ -125,7 +125,25 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-
 
+      # 【增量续编】实测:本 runner(`ubuntu-24.04-arm`)在约 76 分钟处砍掉正在跑的步骤,
+      # job 级 `timeout-minutes` 无效 —— 两个独立样本 run 32493250519(76m44s)与
+      # 32962231614(76m11s),误差 33 秒。而内容层冷编本机 28 核尚需 24.7 分钟,
+      # CI 单核编不完,所以**一轮编不完是常态,不是故障**。
+      #
+      # 故这里保存"进度快照":上一轮编到哪算哪,下一轮 restore 后由 lake 增量续编。
+      # 正式 key 只在真正编完(EXIT=0)时才写,避免把半成品当成完整缓存喂给消费侧。
+      - name: Restore the newest progress snapshot
+        if: steps.lake-build-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-seed-progress-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ github.run_id }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-seed-progress-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-
+
       - name: Build the pinned Lean content
+        id: build
+        continue-on-error: true
         shell: bash
         working-directory: candidate
         run: |
@@ -133,8 +151,28 @@ jobs:
           export PATH="$HOME/.elan/bin:$PATH"
           make lean
 
+      # 进度快照:无论构建是完成还是被砍都保存,供下一轮续编。
+      # key 带 run_id 以避免同 key 重复写入被拒;消费由上面的 restore-keys 前缀完成。
+      - name: Save the progress snapshot
+        if: always() && steps.lake-build-cache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        timeout-minutes: 12
+        uses: actions/cache/save@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-seed-progress-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ github.run_id }}
+
+      - name: Report whether this round finished the build
+        if: always()
+        shell: bash
+        run: |
+          printf 'SEED_ROUND build_outcome=%s\n' "${{ steps.build.outcome }}"
+          if [ "${{ steps.build.outcome }}" != "success" ]; then
+            printf '%s\n' "this round did not finish; a progress snapshot was saved, push again to continue"
+          fi
+
       - name: Save the dependency layer
-        if: success() && steps.lake-deps-cache.outputs.cache-hit != 'true'
+        if: steps.build.outcome == 'success' && steps.lake-deps-cache.outputs.cache-hit != 'true'
         continue-on-error: true
         timeout-minutes: 12
         uses: actions/cache/save@v4
@@ -147,7 +185,7 @@ jobs:
           key: ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.lean-report-input.outputs.config_sha256 }}
 
       - name: Save the project layer
-        if: success() && steps.lake-build-cache.outputs.cache-hit != 'true'
+        if: steps.build.outcome == 'success' && steps.lake-build-cache.outputs.cache-hit != 'true'
         continue-on-error: true
         timeout-minutes: 12
         uses: actions/cache/save@v4
