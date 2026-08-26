@@ -9021,3 +9021,1736 @@ $$
 闭合进自身有限接口的系统。
 }
 $$
+
+---
+
+# 113. 增订四：素数观察者与量子观察者的局部—全局统一
+
+**增订版本：v1.5，2026-08-26**
+
+本增订继续纯追加承接第 0–112 节，不改写、删除或重排此前内容。它把 `FORMAL_PRIME_OBSERVER_DYNAMICS.md` 中的素数／素数幂局部接口、CRT 联合、prime-time 行为商、Galois–Frobenius 观察，以及本文件第 80–112 节的有限维量子观察者统一到同一个状态—效应—残差框架。
+
+核心禁令是：
+
+$$
+\boxed{
+\text{prime observer}\neq\text{quantum observer}.
+}
+$$
+
+素数观察者首先规定局部算术坐标、精度塔和实验索引；量子观察者规定状态—效应配对、非交换 instrument、记录和动态协议。二者的严格交汇对象是：
+
+$$
+\boxed{
+\text{prime-indexed quantum observer}.
+}
+$$
+
+其基本索引可以写成
+
+$$
+i=(p,k,b,a,t),
+$$
+
+其中 $p$ 是素数，$k$ 是 $p$-进／素数幂精度，$b$ 是量子测量上下文，$a$ 是结果分支，$t$ 是演化时间。
+
+本增订严格区分：
+
+- **Lean 锚点**：仓库已有机器核验；
+- **本文定理**：本增订给出纸面证明；
+- **条件桥**：需要额外 carrier、partial trace、CP map 或无限和 API；
+- **非主张**：不得由形式相似偷渡为物理本体结论。
+
+---
+
+# 114. 确定性素数观察者嵌入交换量子理论
+
+设 $X$ 为有限状态集，局部接口为
+
+$$
+q_i:X\to O_i.
+$$
+
+令
+
+$$
+\mathcal H_X=\mathbb C^X
+$$
+
+并以
+
+$$
+\{|x\rangle:x\in X\}
+$$
+
+为标准正交基。
+
+对每个结果 $o\in O_i$ 定义投影
+
+$$
+\boxed{
+P_{o|i}
+=
+\sum_{x:q_i(x)=o}
+|x\rangle\langle x|.
+}
+$$
+
+## 定理 114.1（确定性读出的 PVM 实现）
+
+对固定 $i$：
+
+$$
+P_{o|i}P_{o'|i}
+=
+\delta_{oo'}P_{o|i},
+$$
+
+且
+
+$$
+\sum_oP_{o|i}=I.
+$$
+
+### 证明
+
+不同读出纤维互不相交，因此相应基投影正交；所有纤维并为 $X$，故投影和为单位。∎
+
+## 定理 114.2（kernel 保持）
+
+对计算基态
+
+$$
+\rho_x=|x\rangle\langle x|,
+$$
+
+有
+
+$$
+\operatorname{Tr}(\rho_xP_{o|i})
+=
+\mathbf1_{\{q_i(x)=o\}}.
+$$
+
+因此
+
+$$
+\boxed{
+q_i(x)=q_i(y)
+\iff
+\rho_x,\rho_y
+\text{ 对该 PVM 不可区分}.
+}
+$$
+
+## 定理 114.3（交换性）
+
+所有由这些确定性接口得到的投影均在同一标准基对角，因此
+
+$$
+[P_{o|i},P_{o'|j}]=0.
+$$
+
+所以任何有限确定性素数观察系统都可以忠实嵌入一个交换量子观察子理论：
+
+$$
+\boxed{
+\text{deterministic prime observation}
+\hookrightarrow
+\text{commutative quantum observation}.
+}
+$$
+
+反向不成立：一般量子观察者可包含相位、非交换上下文与纠缠，这些结构不能由一族共同对角的确定性读出穷尽。
+
+---
+
+# 115. CRT 给出真正的 prime-power 量子张量分解
+
+令
+
+$$
+M=\prod_{p\mid M}p^{v_p(M)}.
+$$
+
+定义有限寄存器 Hilbert 空间
+
+$$
+\mathcal H_M
+=
+\ell^2(\mathbb Z/M\mathbb Z).
+$$
+
+CRT 给出集合等价
+
+$$
+\mathbb Z/M\mathbb Z
+\cong
+\prod_{p\mid M}
+\mathbb Z/p^{v_p(M)}\mathbb Z.
+$$
+
+因此标准基诱导一个酉同构
+
+$$
+\boxed{
+U_{\mathrm{CRT}}:
+\mathcal H_M
+\overset\sim\longrightarrow
+\bigotimes_{p\mid M}
+\mathcal H_{p^{v_p(M)}}.
+}
+$$
+
+在计算基上：
+
+$$
+|n\bmod M\rangle
+\longmapsto
+\bigotimes_{p\mid M}
+|n\bmod p^{v_p(M)}\rangle.
+$$
+
+## Lean 锚点 115.1
+
+`D5/S3/ObserverMemory/PrimePowerTensorTower.lean` 已经在更强的完整矩阵代数层机器核验：
+
+$$
+\boxed{
+M_{\mathbb Z/M\mathbb Z}(\mathbb C)
+\cong
+\bigotimes_{p\mid M}
+M_{\mathbb Z/p^{v_p(M)}\mathbb Z}(\mathbb C).
+}
+$$
+
+其 `prime_power_tensor_factor_decomposition` 给出对应代数等价的双射性。
+
+## 结论 115.1
+
+这里“不同素数是横向张量因子”不再只是比喻。对有限 CRT 窗口，prime-power 分解确实给出量子寄存器的自然局部子系统分解。
+
+---
+
+# 116. 代数张量分解不推出状态独立
+
+即使
+
+$$
+\mathcal B(\mathcal H_M)
+\cong
+\bigotimes_p
+\mathcal B(\mathcal H_{p^{k_p}}),
+$$
+
+一般量子态并不满足
+
+$$
+\rho=\bigotimes_p\rho_p.
+$$
+
+它可以包含经典相关、相位相关和纠缠。
+
+## 原理 116.1
+
+$$
+\boxed{
+\text{factorization of observable algebra}
+\not\Rightarrow
+\text{factorization of state}.
+}
+$$
+
+只有当状态本身为乘积态且测量局部张量分解时，联合概率才分解：
+
+$$
+P((a_p)_p)
+=
+\prod_pP_p(a_p).
+$$
+
+因此 `PrimePowerTensorTower` 建立了 carrier/algebra 分解，但不能被解释成“不同素数在任意量子状态中统计独立”。
+
+---
+
+# 117. CRT 层析的三个模型层级
+
+## 117.1 单一计算基标签
+
+若先验模型限制为
+
+$$
+\rho_n=|n\bmod M\rangle\langle n\bmod M|,
+$$
+
+则全部 prime-power residue 坐标
+
+$$
+(n\bmod p^{v_p(M)})_{p\mid M}
+$$
+
+由 CRT 唯一恢复 $n\bmod M$。
+
+所以 CRT 对该离散基模型信息完备。
+
+## 117.2 计算基上的经典概率混合
+
+若
+
+$$
+\rho
+=
+\sum_{n\bmod M}
+\mu(n)|n\rangle\langle n|,
+$$
+
+完整联合 residue tuple 的分布可恢复 $\mu$。但只知道各 prime-power 边缘分布
+
+$$
+(\mu_p)_p
+$$
+
+一般不能恢复跨素数相关。
+
+## 117.3 任意量子状态
+
+纯 residue PVM 只读取对角元
+
+$$
+\rho_{nn}.
+$$
+
+例如
+
+$$
+|\psi_\pm\rangle
+=
+\frac{|x\rangle\pm|y\rangle}{\sqrt2}
+$$
+
+在所有计算基 residue 统计上相同，却具有不同相对相位。
+
+若 $\dim\mathcal H_M=M$，对角 Hermitian 可见空间维数为 $M$，而全部 Hermitian 空间维数为 $M^2$。所以纯 residue 观察留下
+
+$$
+\boxed{
+M^2-M
+}
+$$
+
+维线性不可见残差。
+
+## 结论 117.1
+
+$$
+\boxed{
+\text{CRT tomography}
+=
+\text{classical basis-label tomography},
+}
+$$
+
+不是任意量子态的完整层析。
+
+---
+
+# 118. 量子素数局部—全局余量
+
+设
+
+$$
+\mathcal H
+=
+\bigotimes_{j=1}^{r}\mathcal H_j,
+\qquad
+\dim\mathcal H_j=d_j,
+$$
+
+其中每个 $j$ 对应一个 prime-power 因子。
+
+定义所有单素数约化态读出：
+
+$$
+\mathcal R_{\mathrm{loc}}(\rho)
+=
+(\rho_j)_{j=1}^{r},
+$$
+
+其中
+
+$$
+\rho_j
+=
+\operatorname{Tr}_{\widehat j}\rho.
+$$
+
+## 定义 118.1（量子局部—全局余量）
+
+$$
+\boxed{
+\operatorname{QLGRes}
+=
+\{(\rho,\sigma):
+\rho\neq\sigma,
+\ \rho_j=\sigma_j\ \forall j\}.
+}
+$$
+
+## 定理 118.1（局部完整仍可全局不唯一）
+
+若至少两个因子维数不小于 $2$，则
+
+$$
+\operatorname{QLGRes}\neq\varnothing.
+$$
+
+### 证明
+
+在两个因子的二维子空间中取
+
+$$
+|\Phi^\pm\rangle
+=
+\frac{|00\rangle\pm|11\rangle}{\sqrt2}.
+$$
+
+二者是不同正交全局态，但每个单边约化态均为 $I/2$；其余因子固定为同一纯态即可。∎
+
+## 结论 118.1
+
+$$
+\boxed{
+\text{知道每个 prime factor 的完整局部量子态}
+\not\Rightarrow
+\text{知道完整全局量子态}.
+}
+$$
+
+这给出了 `FORMAL_PRIME_OBSERVER_DYNAMICS.md` 的“局部—全局余量”在量子理论中的直接非交换实例。
+
+---
+
+# 119. 跨素数相关扇区的精确正交分解
+
+对每个局部 Hermitian 空间写
+
+$$
+\operatorname{Herm}(\mathcal H_j)
+=
+\mathbb RI_j
+\oplus
+\operatorname{Herm}_0(\mathcal H_j).
+$$
+
+张量积展开得到全局正交直和：
+
+$$
+\boxed{
+\operatorname{Herm}(\mathcal H)
+=
+\bigoplus_{S\subseteq[r]}
+V_S,
+}
+$$
+
+其中
+
+$$
+V_S
+=
+\left(
+\bigotimes_{j\in S}
+\operatorname{Herm}_0(\mathcal H_j)
+\right)
+\otimes
+\left(
+\bigotimes_{j\notin S}\mathbb RI_j
+\right).
+$$
+
+其维数为
+
+$$
+\boxed{
+\dim V_S
+=
+\prod_{j\in S}(d_j^2-1).
+}
+$$
+
+空集项 $V_\varnothing=\mathbb RI$。
+
+## 定理 119.1（单素数可见空间）
+
+若观察者能使用每个单素数因子的全部局部 Hermitian 效果，但不能直接测联合相关，则可见线性空间为
+
+$$
+V_{\le1}
+=
+V_\varnothing
+\oplus
+\bigoplus_{|S|=1}V_S.
+$$
+
+其维数：
+
+$$
+\boxed{
+1+\sum_{j=1}^r(d_j^2-1).
+}
+$$
+
+总 Hilbert 维数记为
+
+$$
+D=\prod_jd_j.
+$$
+
+因此不可见迹零残差维数为
+
+$$
+\boxed{
+D^2-1-
+\sum_{j=1}^r(d_j^2-1).
+}
+$$
+
+它恰由所有 $|S|\ge2$ 的跨素数相关扇区组成。
+
+## 最深解释 119.1
+
+$$
+\boxed{
+\text{quantum local-global residual}
+=
+\text{cross-prime correlation sectors}.
+}
+$$
+
+量子层揭示的不是“素数神秘纠缠”，而是张量分解后局部边缘天然遗漏联合算子方向。
+
+---
+
+# 120. $m$-素数观察层级
+
+定义
+
+$$
+V_{\le m}
+=
+\bigoplus_{|S|\le m}V_S.
+$$
+
+则
+
+$$
+\boxed{
+\dim V_{\le m}
+=
+\sum_{|S|\le m}
+\prod_{j\in S}(d_j^2-1).
+}
+$$
+
+定义残差
+
+$$
+N_{>m}
+=
+V_{\le m}^{\perp}
+=
+\bigoplus_{|S|>m}V_S.
+$$
+
+于是形成严格层级：
+
+$$
+V_{\le1}
+\subseteq
+V_{\le2}
+\subseteq\cdots\subseteq
+V_{\le r}
+=
+\operatorname{Herm}(\mathcal H).
+$$
+
+## 原理 120.1（prime correlation order）
+
+素数观察者的索引轴不能只写成
+
+$$
+(p,k,t).
+$$
+
+量子化后还必须允许“参与联合可观测量的素数子集”这一相关阶数轴：
+
+$$
+\boxed{
+(S,k,b,a,t),
+\qquad
+S\subseteq\mathbb P_{\mathrm{finite}}.
+}
+$$
+
+这把“增加素数数量”和“增加联合相关阶数”严格区分。
+
+---
+
+# 121. 局部动力学不能自动消除跨素数余量
+
+设
+
+$$
+\Phi
+=
+\bigotimes_{j=1}^{r}\Phi_j
+$$
+
+是完全局部的乘积通道。
+
+若效果 $E_j$ 只作用在第 $j$ 个因子，则
+
+$$
+\Phi^*(E_j\otimes I_{\widehat j})
+=
+\Phi_j^*(E_j)\otimes I_{\widehat j}.
+$$
+
+## 定理 121.1（局部支持保持）
+
+乘积动力学的 Heisenberg 拉回保持每个相关扇区的支持集合：若
+
+$$
+A\in V_S,
+$$
+
+则
+
+$$
+\Phi^*(A)
+\in
+\bigoplus_{T\subseteq S}V_T
+$$
+
+；若各 $\Phi_j^*$ 还保持迹零局部空间，则甚至
+
+$$
+\Phi^*(V_S)\subseteq V_S.
+$$
+
+### 证明
+
+对简单张量逐因子作用，再由线性扩张得到。若某局部迹零方向在非双随机通道下可产生单位分量，支持可以下降但不能引入新的外部因子；若局部对偶保持迹零，则支持集合保持。∎
+
+## 推论 121.1（纯局部 prime-time no-go）
+
+若初始可见空间只有 $V_{\le1}$，且动力学始终是局部乘积通道，则全部时间 Heisenberg 闭包不能生成 $|S|\ge2$ 的新联合相关方向。
+
+因此：
+
+$$
+\boxed{
+\text{local measurement}
++
+\text{local dynamics}
+\not\Rightarrow
+\text{global quantum tomography}.
+}
+$$
+
+跨素数相关余量若要通过时间变得可见，必须存在跨因子耦合或直接联合测量。
+
+---
+
+# 122. 跨素数耦合把高阶相关运输进局部读出
+
+设 Hamiltonian 分解为
+
+$$
+H=\sum_SH_S,
+$$
+
+其中 $H_S$ 只作用于素数集合 $S$。
+
+若 $A_R$ 只作用在 $R$ 上，则
+
+$$
+\operatorname{supp}[H_S,A_R]
+\subseteq
+S\cup R.
+$$
+
+Heisenberg 方程为
+
+$$
+\frac{dA}{dt}
+=i[H,A].
+$$
+
+因此 effect support 沿由非零 $H_S$ 定义的相互作用超图传播。
+
+## 原理 122.1（交互图必要性）
+
+如果相互作用超图分成两个互不连通的 prime blocks，起初只位于一个 block 的效果在全部嵌套交换子下都不能获得另一个 block 的支持。
+
+所以全局 prime-time 完备至少需要：
+
+$$
+\boxed{
+\text{measurement support}
++
+\text{interaction propagation}
+}
+$$
+
+覆盖全部相关扇区。
+
+图连通本身不是充分条件；交换子 Lie 闭包仍可能因对称性、守恒量或退化而落在真子代数中。
+
+---
+
+# 123. 量子有限 prime-time 压缩定理
+
+仓库 `D5/S3/Observer/Refinement/FinitePrimeTimeTomography.lean` 已证明：若状态类型 $X$ 有限且全部自然数索引—全部时间读出共同分离状态，则存在一个有限索引集与有限时间深度已经分离；其源码明确指出该 `Nat` 索引并未强制为真实素数。
+
+有限维量子情形可以去掉“状态集合有限”条件。
+
+设全部 prime/precision/context/time 效果记为
+
+$$
+\mathcal E_\infty
+=
+\{(\Phi^*)^t(E_{p,k,b,a})\}.
+$$
+
+对每个效果中心化：
+
+$$
+\widetilde E
+=
+E-
+\frac{\operatorname{Tr}E}{d}I.
+$$
+
+## 定理 123.1（量子 finite prime-time certificate）
+
+若
+
+$$
+\operatorname{span}_{\mathbb R}
+\{\widetilde E:E\in\mathcal E_\infty\}
+=
+\operatorname{Herm}_d^0,
+$$
+
+则存在
+
+$$
+m\le d^2-1
+$$
+
+个具体索引—时间效果
+
+$$
+E_{i_1,t_1},\ldots,E_{i_m,t_m}
+$$
+
+已经信息完备。
+
+### 证明
+
+$\operatorname{Herm}_d^0$ 是 $d^2-1$ 维实向量空间；从任意生成族抽取一个基即可。∎
+
+令
+
+$$
+J=\{i_1,\ldots,i_m\},
+\qquad
+T=1+\max_jt_j.
+$$
+
+则有限矩形窗口 $J\times\{0,\ldots,T-1\}$ 已经完备。
+
+## 结论 123.1
+
+$$
+\boxed{
+\text{all-prime/all-precision/all-time completeness}
+\Longrightarrow
+\text{finite prime-time quantum certificate}.
+}
+$$
+
+这里的有限性来自算子空间维数，不来自量子状态集合的基数。
+
+---
+
+# 124. prime precision entropy 与量子观察预算
+
+仓库 `D5/S3/Analytic/PrimeProducts/PrimePrecisionEntropyContraction.lean` 已机器核验：对 $s>1$、素数 $p$，canonical prime-exponent geometric channel 的未解析尾熵在每增加一层精度时精确按
+
+$$
+\boxed{
+p^{-s}}
+$$
+
+缩放。
+
+若记第 $k$ 层未解析熵为 $R_{p,k}$，则：
+
+$$
+\boxed{
+R_{p,k+1}
+=p^{-s}R_{p,k}.
+}
+$$
+
+这一定理属于算术概率通道，不是量子退相干定理；但它提供了自然的纵向 prime-precision 成本权重。
+
+## 定义 124.1（prime-precision 概率权重）
+
+令
+
+$$
+Z_s=\sum_{p\in\mathbb P}p^{-s},
+\qquad s>1.
+$$
+
+定义
+
+$$
+\boxed{
+\nu_s(p,k)
+=
+\frac{(1-p^{-s})p^{-s(k+1)}}{Z_s},
+\qquad k\ge0.
+}
+$$
+
+因为
+
+$$
+\sum_{k\ge0}(1-p^{-s})p^{-s(k+1)}=p^{-s},
+$$
+
+故
+
+$$
+\sum_{p,k}\nu_s(p,k)=1.
+$$
+
+这给出一个横向 prime、纵向 precision 的规范可和预算分布。
+
+---
+
+# 125. zeta-weighted prime-time Gramian
+
+再令
+
+$$
+\mu_\beta(t)
+=(1-\beta)\beta^t,
+\qquad 0<\beta<1.
+$$
+
+对中心化 Heisenberg 效果
+
+$$
+e_{p,k,b,a,t}
+=
+(\Phi^*)^t(E_{p,k,b,a})
+-
+\frac{\operatorname{Tr}((\Phi^*)^tE_{p,k,b,a})}{d}I,
+$$
+
+给定上下文／结果正权重 $w_{b,a}$，定义形式上的 prime-time Gram 算子：
+
+$$
+\boxed{
+W_{s,\beta}
+=
+\sum_{p,k,b,a,t}
+\nu_s(p,k)\mu_\beta(t)w_{b,a}
+|e_{p,k,b,a,t}\rangle
+\langle e_{p,k,b,a,t}|.
+}
+$$
+
+有限维且权重总和有限时，该正算子和在算子范数下收敛。
+
+## 定理 125.1（能量恒等式）
+
+对任何迹零 Hermitian 状态差 $D$：
+
+$$
+\boxed{
+\langle D,W_{s,\beta}D\rangle_{\mathrm{HS}}
+=
+\sum_{p,k,b,a,t}
+\nu_s(p,k)\mu_\beta(t)w_{b,a}
+|\operatorname{Tr}(De_{p,k,b,a,t})|^2.
+}
+$$
+
+## 定理 125.2（kernel）
+
+若所有申报权重严格为正，则
+
+$$
+\boxed{
+\ker W_{s,\beta}
+=
+\bigcap_{p,k,b,a,t}
+\ker\bigl[D\mapsto
+\operatorname{Tr}(De_{p,k,b,a,t})\bigr].
+}
+$$
+
+### 证明
+
+右侧显然包含于 kernel。反向若二次型为零，则正权重下每个非负平方项都必须为零。∎
+
+所以：
+
+$$
+\boxed{
+W_{s,\beta}>0
+\iff
+\text{全部加权 prime-time effects 信息完备}.
+}
+$$
+
+参数具有清楚的实验设计含义：
+
+$$
+\begin{aligned}
+s&=\text{横向素数预算衰减},\\
+k&=\text{纵向同素数精度},\\
+\beta&=\text{时间深度折扣}.
+\end{aligned}
+$$
+
+不得把某个特殊 $s$ 值无条件解释成物理相变或 RH 临界线。
+
+---
+
+# 126. Frobenius 观察的量子后处理不可恢复定理
+
+仓库 `D5/S3/Factorization/Galois/GaloisPrimeObserver.lean` 定义带分歧标签的 Frobenius 素数观察器：未分歧素数输出 Frobenius 共轭类，分歧素数输出 `none`。
+
+它已经机器核验：若共轭类输出有限且分歧素数集合有限，则存在某个共轭类被无限多个未分歧素数共同输出；并分别给出删除两个假设后的边界反例。
+
+现在设任意量子编码
+
+$$
+\eta:
+\operatorname{Option}(\operatorname{ConjClasses}G)
+\to
+\mathsf S(\mathcal H),
+$$
+
+后接任意量子通道／instrument 观察签名
+
+$$
+\Sigma_{\mathfrak O}.
+$$
+
+定义复合：
+
+$$
+p
+\mapsto
+O_{\mathrm{Frob}}(p)
+\mapsto
+\eta(O_{\mathrm{Frob}}(p))
+\mapsto
+\Sigma_{\mathfrak O}.
+$$
+
+## 定理 126.1（后处理不可恢复）
+
+$$
+\boxed{
+\ker O_{\mathrm{Frob}}
+\subseteq
+\ker(
+\Sigma_{\mathfrak O}\circ\eta\circ O_{\mathrm{Frob}}
+).
+}
+$$
+
+### 证明
+
+若两个素数已有完全相同的 Frobenius 标签，则其量子编码态相同，任何确定的下游量子通道与统计读出必给相同结果。∎
+
+## 结论 126.1
+
+$$
+\boxed{
+\text{quantum postprocessing cannot recover information
+already erased by the Frobenius-class quotient}.
+}
+$$
+
+若要区分同一 Frobenius fiber 内的素数，必须增加不经该粗标签因子化的新接口，而不是只对旧标签做更复杂的量子处理。
+
+---
+
+# 127. Frobenius 素数身份的相对信息率趋零
+
+固定 $N$，令 $P_N$ 在所有 $p\le N$ 的素数中均匀分布。则素数身份熵：
+
+$$
+H(P_N)=\log\pi(N).
+$$
+
+若某固定 Galois/Frobenius 观察器只有 $r<\infty$ 个可能输出，则
+
+$$
+H(O(P_N))\le\log r.
+$$
+
+因此：
+
+$$
+\boxed{
+\frac{H(O(P_N))}{H(P_N)}
+\le
+\frac{\log r}{\log\pi(N)}
+\longrightarrow0.
+}
+$$
+
+## 原理 127.1
+
+有限输出的素数观察器即使对某些算术性质极有意义，也不可能以正比例保存不断增长的“素数身份信息”。
+
+这比“存在无限 fiber”更定量，但仍不等于 Chebotarev 密度定理；它只使用有限输出容量与素数数量发散。
+
+---
+
+# 128. 二次角色观察是一个交换量子子代数
+
+仓库 `D5/S3/PrimeForms/Splitting/QuadraticCharacterProfileRedundancy.lean` 已机器核验：在
+
+$$
+(\mathbb Z/60\mathbb Z)^\times
+$$
+
+上，Gaussian、Eisenstein、Golden 三个 splitting characters 生成全部二次 character；所有二次 character 都在三环画像 fiber 上常值，而每个 fiber 恰有两个元素。
+
+把单位类 $u$ 编码为计算基态 $|u\rangle$。每个二次角色成为对角可观测量：
+
+$$
+A_\chi
+=
+\sum_u\chi(u)|u\rangle\langle u|.
+$$
+
+这些算子两两交换。
+
+## 定理 128.1（二次角色量子后处理 no-go）
+
+若
+
+$$
+\operatorname{triRingImage}(u)
+=
+\operatorname{triRingImage}(v),
+$$
+
+则对任何由三 splitting characters 通过加法、乘法、函数演算以及仅依赖其联合经典输出的量子制备得到的观察协议，$u,v$ 仍不可区分。
+
+### 证明
+
+仓库定理说明每个二次 character 都在该 fiber 上常值；这些 character 生成的交换代数中任意函数亦常值。任何只依赖其输出的下游通道仍通过同一 quotient 因子化。∎
+
+## 结论 128.1
+
+$$
+\boxed{
+\text{adding more quadratic characters}
+\text{ cannot recover the missing two-element fiber bit}.
+}
+$$
+
+必须加入不属于该二次角色代数的新观察量，例如定向信息或更精细非因子化接口。
+
+---
+
+# 129. Galois fiber product 与量子 marginal fiber 的差异
+
+仓库 `D5/S3/Factorization/Galois/GaloisFusion.lean` 已机器核验：两个子扩张的联合 Galois restriction 必须满足共同交域上的兼容性，即落在相应 group fiber product；在适当的生成、有限 Galois 与线性无交条件下，联合 restriction 可以达到更强的乘积分解。
+
+量子系统有一个形式相似但本质不同的 map：
+
+$$
+R:
+\mathsf S(\mathcal H_A\otimes\mathcal H_B)
+\to
+\mathsf S(\mathcal H_A)
+\times
+\mathsf S(\mathcal H_B),
+$$
+
+$$
+R(\rho)=(\rho_A,\rho_B).
+$$
+
+它对任意局部状态对 $(\alpha,\beta)$ 有乘积态扩张 $\alpha\otimes\beta$，故满射；但它不单射，因为纠缠态可共享同一 marginals。
+
+## 原理 129.1
+
+必须分开：
+
+$$
+\boxed{
+\begin{aligned}
+\text{local compatibility}
+&=\text{局部对象在重叠处一致},\\
+\text{global existence}
+&=\text{存在全局对象实现局部数据},\\
+\text{global uniqueness}
+&=\text{该全局对象由局部数据唯一决定}.
+\end{aligned}
+}
+$$
+
+量子纠缠给出“existence 成立但 uniqueness 失败”的典型局部—全局 fiber。
+
+---
+
+# 130. 平行精化与串行后处理的 kernel 演算
+
+设两个观察接口
+
+$$
+q_1:X\to O_1,
+\qquad
+q_2:X\to O_2.
+$$
+
+平行联合
+
+$$
+q(x)=(q_1(x),q_2(x))
+$$
+
+满足：
+
+$$
+\boxed{
+\ker q
+=
+\ker q_1\cap\ker q_2.
+}
+$$
+
+所以平行增加独立接口只会减少余量。
+
+反之，串行后处理
+
+$$
+X\xrightarrow qO\xrightarrow fY
+$$
+
+满足：
+
+$$
+\boxed{
+\ker q
+\subseteq
+\ker(f\circ q).
+}
+$$
+
+所以后处理只能保持或扩大不可区分关系。
+
+## 量子对应
+
+平行加入观察者：
+
+$$
+V_{1\vee2}=V_1+V_2,
+$$
+
+$$
+N_{1\vee2}=N_1\cap N_2.
+$$
+
+串行 CPTP／经典后处理服从数据处理原则，不可能把已完全相同的上游状态／law 标签再次区分。
+
+## 结论 130.1
+
+“量子技术增强素数观察”只有在它加入新的平行效果、联合上下文或动力生成方向时才可能真正缩小 kernel；如果量子层仅位于一个已经压缩的 arithmetic label 后面，它不能恢复上游丢失信息。
+
+---
+
+# 131. 横向素数与纵向精度在量子化后仍不对称
+
+`FORMAL_PRIME_OBSERVER_DYNAMICS.md` 的核心结构轴是：
+
+$$
+\boxed{
+\text{different primes = horizontal combination},
+}
+$$
+
+$$
+\boxed{
+\text{same prime precision = vertical refinement}.
+}
+$$
+
+这一结构在量子化后必须保留。
+
+## 横向
+
+不同 prime powers 形成真实张量因子：
+
+$$
+\mathcal H_{p^k}\otimes\mathcal H_{q^\ell},
+\qquad p\neq q.
+$$
+
+它们允许独立局部效果、联合效果、经典相关和纠缠。
+
+## 纵向
+
+同一素数的 residue tower 是粗化链：
+
+$$
+\mathbb Z/p^{k+1}\mathbb Z
+\to
+\mathbb Z/p^k\mathbb Z.
+$$
+
+在 outcome 侧是逆系统；在 effect 侧通过拉回形成正向嵌入：
+
+$$
+\mathcal A_{p,k}
+\hookrightarrow
+\mathcal A_{p,k+1}.
+$$
+
+因此不同 $k$ 层不是独立张量因子。把它们当成独立子系统会重复计算同一 $p$-进信息。
+
+---
+
+# 132. prime Weyl observer：从 residue 读出升级到相位读出
+
+对
+
+$$
+\mathcal H_{p^k}
+=
+\ell^2(\mathbb Z/p^k\mathbb Z)
+$$
+
+定义 clock 与 shift：
+
+$$
+Z|x\rangle
+=\omega^x|x\rangle,
+$$
+
+$$
+X|x\rangle
+=|x+1\rangle,
+$$
+
+其中
+
+$$
+\omega=e^{2\pi i/p^k}.
+$$
+
+它们满足 Weyl 关系：
+
+$$
+\boxed{
+ZX=\omega XZ.
+}
+$$
+
+$Z$ 的谱投影读取 residue／address；Fourier 变换后的 $X$ 上下文读取相位／频率。二者共同生成完整局部矩阵代数。
+
+## 原理 132.1
+
+纯 arithmetic prime observer 对应 clock/residue sector；真正局部完备的 quantum prime observer 至少需要加入与 residue algebra 不共同对角化的相位上下文。
+
+因此可写：
+
+$$
+\boxed{
+\begin{aligned}
+\text{arithmetic prime observer}
+&=\text{residue / clock sector},\\
+\text{local quantum prime observer}
+&=\text{clock + shift + instruments},\\
+\text{global quantum prime observer}
+&=\text{local sectors + cross-prime correlations}.
+\end{aligned}
+}
+$$
+
+---
+
+# 133. 自适应 prime-quantum 实验
+
+仓库 `D5/S3/ConceptDynamics/ExperimentDesign/ThreeStateAdaptiveEarlyStopping.lean` 已机器核验一个三状态例子：固定两实验 transcript 与自适应 transcript 都保持精确识别，自适应策略最坏深度仍为 $2$，但期望实验数降为
+
+$$
+1+2\varepsilon<2
+$$
+
+对 $0<\varepsilon<1/2$ 成立。
+
+在 prime-quantum setting 中，将实验动作定义为：
+
+$$
+\boxed{
+a_t=(p_t,k_t,b_t,\mathcal I_t,\Phi_t).
+}
+$$
+
+它分别选择 prime、precision、measurement basis/instrument 与动力学准备。
+
+设候选量子状态／通道模型为 $\theta\in\Theta$，历史为 $h_t$，posterior：
+
+$$
+\pi_t(\theta)=P(\theta\mid h_t).
+$$
+
+一个自适应 policy：
+
+$$
+a_t=\pi_{\mathrm{policy}}(\pi_t)
+$$
+
+可根据当前剩余 fiber 选择下一个 prime-time experiment，并在满足风险阈值时提前停止。
+
+## 严格边界 133.1
+
+必须区分：
+
+1. 每轮重新制备同一未知态后执行不同 prime-time 测量；
+2. 对同一个单量子样本连续执行 instrument。
+
+第二种情况下早期测量改变后续状态，不能用相互独立的静态 Born law 替代 instrument word probability。
+
+---
+
+# 134. 四层 prime-quantum residual tower
+
+合并两套理论后，不应把所有“剩余”压成一个未类型化集合。至少区分：
+
+## 定义 134.1（算术 residual）
+
+$$
+N_{\mathrm{arith}}
+=
+\{(x,y):q_{p,k}(x)=q_{p,k}(y)\ \forall p,k\}.
+$$
+
+## 定义 134.2（量子 visibility residual）
+
+$$
+N_{\mathrm{quant}}
+=
+V_{\mathfrak O}^{\perp}.
+$$
+
+## 定义 134.3（cross-prime correlation residual）
+
+对只看至多 $m$-prime observables 的观察者：
+
+$$
+N_{>m}
+=
+\bigoplus_{|S|>m}V_S.
+$$
+
+## 定义 134.4（sequential protocol residual）
+
+$$
+N_{\mathrm{seq}}
+=
+\left(\operatorname{span}\{F_w:w\text{ allowed}\}\right)^\perp.
+$$
+
+如果这些是**平行独立接口**，联合残差由 kernel 交给出；若它们处于**串行压缩管道**中，则必须计算复合接口的 kernel，不能机械写成集合交。
+
+这条 typed-residual discipline 是后续 Lean 统一时必须保持的约束。
+
+---
+
+# 135. prime completion 与 dynamical completion 一般不交换
+
+令
+
+$$
+C_{\mathrm{prime}}
+$$
+
+表示只闭合所允许的 prime-local effect family，令
+
+$$
+C_\Phi
+$$
+
+表示在 Heisenberg 动力下闭合全部时间轨道。
+
+若
+
+$$
+\Phi^*(\mathcal A_p)
+\subseteq
+\mathcal A_p
+$$
+
+对每个 prime-local algebra 成立，则两种完成在该局部族内相容。
+
+但若 $\Phi$ 含跨素数耦合，则可能出现：
+
+$$
+\Phi^*(\mathcal A_p)
+\not\subseteq
+\mathcal A_p.
+$$
+
+时间闭包会生成 cross-prime effects；若每一步又投影回 prime-local 空间，这些新信息会被删除。
+
+## 定义 135.1（cross-prime completion defect）
+
+令
+
+$$
+\Pi_{\mathrm{loc}}
+$$
+
+为到 $V_{\le1}$ 的 Hilbert–Schmidt 正交投影。定义
+
+$$
+\boxed{
+\Delta_\Phi(E)
+=
+\|(I-\Pi_{\mathrm{loc}})\Phi^*(E)\|_{\mathrm{HS}}.
+}
+$$
+
+若
+
+$$
+\Delta_\Phi(E)=0,
+$$
+
+该局部效果一步后仍无跨素数部分；若正，则动力学已把局部问题运输出新的相关信息。
+
+## 原理 135.1
+
+一般不能无条件写：
+
+$$
+C_\Phi C_{\mathrm{prime}}
+=
+C_{\mathrm{prime}}C_\Phi.
+$$
+
+完成次序本身可以携带信息，这正是原文非交换 reflector 的 prime-quantum 具体实例。
+
+---
+
+# 136. 任务相对 prime-quantum 完成
+
+完整量子态层析通常不是实际任务所需的最小预算。
+
+设目标 observable 子空间为
+
+$$
+T\subseteq\operatorname{Herm}_d.
+$$
+
+设当前 prime-time 可见空间为
+
+$$
+V_{J,m}.
+$$
+
+## 定义 136.1（任务完成）
+
+观察者对目标 $T$ 完成，当且仅当
+
+$$
+T\subseteq V_{J,m}.
+$$
+
+## 定理 136.1（目标预测充分性）
+
+若 $T\subseteq V_{J,m}$，则对任意 $A\in T$，其期望
+
+$$
+\operatorname{Tr}(\rho A)
+$$
+
+由 prime-time 观察签名唯一决定。
+
+反之，若存在
+
+$$
+A\in T\setminus V_{J,m},
+$$
+
+则存在迹零残差方向 $D\in V_{J,m}^\perp$ 与 $\operatorname{Tr}(DA)\neq0$，从而可构造两个当前观察不可区分、但目标期望不同的物理状态。
+
+因此 prime-quantum 实验设计应首先问：
+
+$$
+\boxed{
+\text{which target subspace must be captured?}
+}
+$$
+
+而不是默认追求所有 $d^2-1$ 个状态自由度。
+
+---
+
+# 137. 当前 Lean 锚点与新桥状态
+
+| 统一结构 | 当前仓库锚点 | 本增订状态 |
+|---|---|---|
+| finite prime-time separation | `D5/S3/Observer/Refinement/FinitePrimeTimeTomography` | Lean closed；索引是一般 `Nat` |
+| prime-power full matrix tensor factorization | `D5/S3/ObserverMemory/PrimePowerTensorTower` | Lean closed |
+| Frobenius observer infinite fiber | `D5/S3/Factorization/Galois/GaloisPrimeObserver` | Lean closed |
+| Galois restriction fiber-product compatibility | `D5/S3/Factorization/Galois/GaloisFusion` | Lean closed |
+| three-ring quadratic-character redundancy | `D5/S3/PrimeForms/Splitting/QuadraticCharacterProfileRedundancy` | Lean closed |
+| prime precision entropy contraction | `D5/S3/Analytic/PrimeProducts/PrimePrecisionEntropyContraction` | Lean closed |
+| static quantum visible-space theory | 本文件 81–88 | paper-level unified layer |
+| Heisenberg finite-horizon theory | 本文件 89–94 | paper-level unified layer |
+| local reduced-state boundary | 本文件 99 | paper-level theorem |
+| deterministic prime observer → commuting PVM | 本增订 114 | paper-level direct proof |
+| quantum prime local-global residual | 本增订 118–120 | paper-level direct proof |
+| finite-dimensional quantum prime-time certificate | 本增订 123 | paper-level direct proof |
+| zeta-weighted prime-time Gramian | 本增订 124–125 | paper-level / Lean target |
+| Frobenius quantum postprocessing no-recovery | 本增订 126 | paper-level factorization theorem |
+| completion noncommutation defect | 本增订 135 | definition / research bridge |
+
+已有 Lean 文件只锚定各自实际声明；本表不得解释为新增 prime-quantum 总理论已经全部通过 kernel。
+
+---
+
+# 138. 建议追加 Lean 模块树
+
+```text
+D5/S3/Quantum/PrimeObserver/
+  DeterministicPrimeObserverEmbedding.lean
+  PrimeIndexedEffectFamily.lean
+  QuantumPrimeTimeVisibleSpace.lean
+  FiniteQuantumPrimeTimeTomography.lean
+  ZetaWeightedPrimeTimeGramian.lean
+
+D5/S3/Quantum/PrimeTensor/
+  CRTBasisTensorEquiv.lean
+  PrimeLocalMarginalMap.lean
+  PrimeLocalGlobalResidual.lean
+  CorrelationSectorDecomposition.lean
+  PrimeCorrelationOrder.lean
+
+D5/S3/Quantum/PrimeDynamics/
+  ProductChannelPrimeSupport.lean
+  HamiltonianPrimeSupportPropagation.lean
+  PrimeCompletionCommutation.lean
+  PrimeCompletionDefect.lean
+
+D5/S3/Quantum/GaloisObserver/
+  FrobeniusClassQuantumEncoding.lean
+  FrobeniusPostprocessingNoRecovery.lean
+  QuadraticProfileCommutativeNoGo.lean
+  GaloisQuantumLocalGlobalComparison.lean
+
+D5/S3/Quantum/PrimeActive/
+  PrimeInstrumentAction.lean
+  PrimeBeliefState.lean
+  AdaptivePrimeExperiment.lean
+  PrimeTaskRelativeCompletion.lean
+```
+
+建议优先闭合低依赖定理：
+
+```text
+deterministic_readout_pvm
+basis_state_prime_kernel_iff
+prime_local_marginals_not_injective
+correlation_sector_dimension
+local_product_channel_preserves_support
+quantum_prime_time_has_finite_certificate
+frobenius_quantum_postprocessing_kernel_mono
+quadratic_profile_postprocessing_no_refinement
+task_complete_iff_target_subspace_le_visible
+```
+
+随后再闭合：
+
+```text
+zeta_prime_precision_weight_sum_one
+zeta_weighted_gramian_inner
+zeta_weighted_gramian_kernel
+prime_completion_defect_zero_iff_local_preserved
+```
+
+---
+
+# 139. 追加严格非主张
+
+1. 本增订不声称素数本身是有意识的观察者。
+2. 本增订不声称素数产生量子力学或量子随机性。
+3. 本增订不声称所有量子系统天然具有 arithmetic prime-power tensor decomposition；这里的分解针对选定 CRT finite-register carrier。
+4. 本增订不声称 `PrimePowerTensorTower` 推出任意量子态按素数统计独立。
+5. 本增订不声称 CRT residue 数据可以恢复任意量子相位或纠缠。
+6. 本增订不声称各单素数 reduced states 决定全局状态。
+7. 本增订不声称跨素数相关 residual 必然是物理基本粒子之间的纠缠；它首先是所选张量分解上的算子扇区。
+8. 本增订不声称相互作用图连通足以保证完整层析。
+9. 本增订不声称局部动力学能通过延长时间自动看到跨素数 correlation sectors。
+10. 本增订不声称 `FinitePrimeTimeTomography` 当前 Lean theorem 已把索引限制为真实素数。
+11. 本增订不声称 finite quantum prime-time certificate 已有同名 Lean proof term。
+12. 本增订不声称 prime precision entropy contraction 是量子退相干定律。
+13. 本增订不声称 zeta-weighted Gramian 的 $s$ 参数具有已证明的物理温度、能量或 RH 临界意义。
+14. 本增订不声称 $s=1/2$、$s=1$ 或其他特殊值自动对应量子相变。
+15. 本增订不声称 Frobenius infinite fiber theorem 等价于 Chebotarev 密度定理。
+16. 本增订不声称量子后处理可以恢复已经由 Frobenius quotient 删除的 prime identity。
+17. 本增订不声称 three-ring quadratic profile 是完整 mod-$60$ 身份接口；现有 Lean theorem 反而证明其 fiber 大小为二。
+18. 本增订不声称增加任意数量的二次 character 可以打破现有三环 fiber。
+19. 本增订不声称 Galois fiber product 与量子 marginal fiber 是同一个数学对象；它们只共享局部—全局 compatibility/existence/uniqueness 的组织问题。
+20. 本增订不声称不同 prime precision 层是独立量子子系统。
+21. 本增订不声称 Weyl clock/shift 结构本身是新物理定律。
+22. 本增订不声称 adaptive prime experiment 必然优于所有静态方案；优势依赖 prior、cost、loss 与实验模型。
+23. 本增订不声称后验 belief 可在单样本未知态问题中绕过不可克隆或状态扰动。
+24. 本增订不声称所有 residual 可以不分类型地取交；串行接口必须计算复合 kernel。
+25. 本增订不修改此前关于对角逃逸、意识、自由意志、RH、negative-base-$\varphi$ 或其他开放问题的严格边界。
+
+---
+
+# 140. 最终统一：素数给局部坐标，量子给非交换可见性，时间给相关运输
+
+把本增订压缩为一个统一 prime-quantum observer：
+
+$$
+\boxed{
+\mathfrak O_{\mathbb P,Q}
+=
+\left(
+\mathcal H,
+\{\mathcal H_{p^k}\},
+\{E_{p,k,b,a}\},
+\{\mathcal I_{p,k,b,a}\},
+\Phi,
+\mathcal A_M
+\right).
+}
+$$
+
+其静态／动态可见空间为：
+
+$$
+V_{J,T}
+=
+\operatorname{span}_{\mathbb R}
+\left\{
+I,
+(\Phi^*)^t(E_i):
+i\in J,\ 0\le t<T
+\right\},
+$$
+
+不可见 residual 为：
+
+$$
+N_{J,T}=V_{J,T}^\perp.
+$$
+
+在 CRT finite-register 模型中：
+
+$$
+\boxed{
+\text{prime powers}
+\longrightarrow
+\text{tensor factors},
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{local marginals}
+\not\Rightarrow
+\text{global state},
+}
+$$
+
+因为遗漏的是：
+
+$$
+\boxed{
+\text{cross-prime correlation sectors}.
+}
+$$
+
+纯 residue 观察读取交换对角代数；Weyl 相位上下文补入局部非交换方向；跨 prime coupling 或联合 effects 才能访问高阶相关扇区。时间的作用因此不是简单“多等一会儿”，而可以是：
+
+$$
+\boxed{
+\text{transport hidden correlation directions into measurable effect directions}.
+}
+$$
+
+Frobenius 与二次角色结果提供另一条严格边界：
+
+$$
+\boxed{
+\text{once a prime identity difference is quotiented out by a coarse arithmetic label,}
+\text{downstream quantum processing cannot recreate it}.
+}
+$$
+
+所以最深的统一不是“素数 = 量子”，而是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{prime structure}
+&=\text{where local questions are indexed and factored},\\
+\text{quantum structure}
+&=\text{which state differences those questions can reveal},\\
+\text{correlation structure}
+&=\text{what remains invisible to all local prime marginals},\\
+\text{dynamics}
+&=\text{which invisible directions can later enter the visible span},\\
+\text{completion}
+&=\text{the minimal finite protocol whose effects capture the required target space}.
+\end{aligned}
+}
+$$
+
+因此：
+
+$$
+\boxed{
+经典 CRT 说明局部素数坐标可以恢复离散基标签；
+量子局部—全局余量说明，同样的局部坐标并不足以恢复振幅之间的相位、相关与纠缠。
+}
+$$
+
+这正是素数观察者理论进入量子层后新增的核心结构：
+
+$$
+\boxed{
+\text{local arithmetic coordinates}
++
+\text{noncommutative measurement contexts}
++
+\text{cross-prime correlations}
++
+\text{prime-time dynamical completion}.
+}
+$$
