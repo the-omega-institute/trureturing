@@ -58,6 +58,44 @@ public sealed class LeanTruthStatesTests
         Assert.Equal(6, states.Count);
     }
 
+    [Fact]
+    public void ManagedInputIdentityIgnoresDigestionLedgerAndCasChanges()
+    {
+        const string leanPath = "D5/S0/Carrier/ClosedFact.lean";
+        var before = Decode(new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            [leanPath] = "theorem closedFact : True := True.intro\n",
+            ["Meta/Digestion/backfill/source/open-open/atom.yaml"] = "projected_status = \"open-open\"\n",
+        });
+        var after = Decode(new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            [leanPath] = "theorem closedFact : True := True.intro\n",
+            ["Meta/Digestion/backfill/source/closed-closed/atom.yaml"] = "projected_status = \"closed-closed\"\n",
+            ["Meta/Digestion/atoms/sha256/abc"] = "canonical atom bytes\n",
+        });
+
+        LeanTruthStates.RequireSameManagedInputs(before, after);
+    }
+
+    [Fact]
+    public void ManagedInputIdentityRejectsLeanByteChanges()
+    {
+        const string leanPath = "D5/S0/Carrier/ClosedFact.lean";
+        var before = Decode(new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            [leanPath] = "theorem closedFact : True := True.intro\n",
+        });
+        var after = Decode(new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            [leanPath] = "theorem closedFact : 1 = 1 := rfl\n",
+        });
+
+        var exception = Assert.Throws<InvalidOperationException>(
+            () => LeanTruthStates.RequireSameManagedInputs(before, after));
+
+        Assert.Contains(leanPath, exception.Message, StringComparison.Ordinal);
+    }
+
     private static (RepositorySnapshot Snapshot, AcceptedLeanClosure Closure) ValidatedStateFixture(
         IReadOnlyDictionary<string, string> files,
         IReadOnlyDictionary<string, LeanFileReport> reports)
@@ -67,6 +105,13 @@ public sealed class LeanTruthStatesTests
         var closure = Assert.IsType<LeanValidationOutcome.Accepted>(
             LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
         return (snapshot, closure);
+    }
+
+    private static RepositorySnapshot Decode(IReadOnlyDictionary<string, string> files)
+    {
+        var raw = RawRepositorySnapshot.Create(
+            files.Select(pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
+        return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
     }
 
     private static RepoPath Path(string value) =>

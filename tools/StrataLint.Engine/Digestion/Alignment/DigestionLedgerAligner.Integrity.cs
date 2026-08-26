@@ -148,7 +148,13 @@ internal static partial class DigestionLedgerAligner
     {
         var admissionEntry = entry with
         {
-            Receipts = entry.Receipts with { CoverDisposition = null },
+            // Scribe receipts have their own fail-closed producer verification. They do not
+            // change the source atom identity that this structural inheritance key protects.
+            Receipts = entry.Receipts with
+            {
+                Scribe = [],
+                CoverDisposition = null,
+            },
         };
         return Convert.ToBase64String(BackfillInventoryWriter.WriteEntry(admissionEntry).AsSpan());
     }

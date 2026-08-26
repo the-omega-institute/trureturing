@@ -12,6 +12,6 @@ receipts:
       target_sha256: sha256:71cf4324c66d160342032d3a468d25e12547446034cf7f3434d0897f1c12239d
   scribe:
     - gid: D5/S3/ObserverMemory/Fusion/CompatibleFusionEmbedding.compatible_fusion_embedding
-      definition_sha256: sha256:f259620753bc405efc5073eeb2454b6e1b6865ce0ac56a97b2f3fb998b037712
-      emission_sha256: sha256:25c0a827097e7fa04ad2c00c9799f0d4984ae314cfeacc651a02b0d571c71c8f
+      definition_sha256: sha256:9c937616026bb46f1a3f501ac75bb634be05c74ca3c20ed2b4a7e544bbb0a76b
+      emission_sha256: sha256:008ebb55e3ed77ea890a7820b3cc9e9480a388646d800606d0aee00de3ab865f
   unresolved_subitems: []
