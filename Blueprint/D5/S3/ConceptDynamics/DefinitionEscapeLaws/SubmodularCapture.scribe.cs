@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.DefinitionEscapeLaws
 internal sealed class SubmodularCaptureDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A positive finitely additive escape mass makes DECT capture a submodular coverage law.",
+        "Finite selections with nonnegative costs and additive escape mass satisfy the DECT capture laws.",
         H("Submodular Definition-Escape Capture"),
         Blocks(
             Describe.Lean(
@@ -20,12 +20,14 @@ internal sealed class SubmodularCaptureDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "The displayed implication preserves both Lean premises. Positive means "
-                            + "zero is strictly below nu.mass(defectRelation(q,T)); "
-                            + "disjointAdditive means exactly that mass(left union right) equals "
+                        "The displayed implication preserves all source ambient conditions. Each "
+                            + "selection variable is accompanied by Set.Finite, nonnegativeCost "
+                            + "means zero is below every c(gamma), and disjointAdditive means "
+                            + "exactly that mass(left union right) equals "
                             + "mass(left) plus mass(right) whenever left and right are disjoint. "
-                            + "It does not abbreviate countable additivity, measurability, "
-                            + "finiteness, inhabitedness, decidable equality, or monotonicity.")),
+                            + "It does not assume that the whole candidate language is finite, "
+                            + "strictly positive cost, positive baseline mass, countable "
+                            + "additivity, measurability, inhabitedness, or decidable equality.")),
                     Paragraph(Text(
                         "The candidate family has the dependent Lean type definitions : "
                             + "forall i : I, Concept X (V i). Thus the formula does not replace "
@@ -35,7 +37,7 @@ internal sealed class SubmodularCaptureDocument : IScribeDocumentDefinition
                             + "defectRelation is the only target residual.")),
                     Paragraph(Text(
                         "C1 through C8 map in order to the eight Lean conjuncts: the exact M "
-                            + "formula together with positive M(empty); the exact two-step F "
+                            + "formula on finite selections; the exact two-step F "
                             + "definition; the captured-union "
                             + "expansion; monotonicity; four-term submodularity; diminishing "
                             + "returns under A subset B and d not in B; equivalence of the two "
@@ -45,9 +47,15 @@ internal sealed class SubmodularCaptureDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "The proof reuses capture_weight_submodular for the coverage step and "
                             + "uses finite additivity to identify M(empty) minus M(S) with the "
-                            + "mass of the captured union. The positive premise excludes the "
-                            + "constant-zero interpretation; it is not used as a hidden premise "
-                            + "for only one selected conclusion."))),
+                            + "mass of the captured union. Nondegeneracy is supplied separately "
+                            + "by a named positive model, so the theorem itself still admits the "
+                            + "constant-zero weight required by the source's full domain.")),
+                    Paragraph(Text(
+                        "GREEDY_ARGMAX_RULE_UNRESOLVED: C7 proves equality of the residual and "
+                            + "capture score predicates. The source gives no candidate-domain, "
+                            + "argmax-existence, tie, zero-cost, or freshness convention, so this "
+                            + "module does not strengthen that algebraic identity into an "
+                            + "existence claim."))),
                 DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()
@@ -64,8 +72,10 @@ internal sealed class SubmodularCaptureDocument : IScribeDocumentDefinition
         Formula cost = F.Id("c");
         Formula nu = F.Id("nu");
         Formula premise = new Formula.Logic(
-            Seq(D(0), Sp, Lt, Sp,
-                Call("mass", nu, Call("defectRelation", q, target))),
+            new Formula.Logic(
+                Call("finiteSelectionArguments", indexType),
+                FormulaLogicOperator.And,
+                Call("nonnegativeCost", cost)),
             FormulaLogicOperator.And,
             Call("disjointAdditive", nu));
         Formula conclusions = Seq(

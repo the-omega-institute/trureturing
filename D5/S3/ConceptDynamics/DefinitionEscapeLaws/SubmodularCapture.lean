@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/DefinitionEscapeLaws/SubmodularCapture
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Additive escape mass makes DECT capture monotone, submodular, and diminishing. -/
+   digest: Finite selections and additive escape mass yield the DECT submodular capture laws. -/
 
 import D5.S3.ConceptDynamics.DefinitionCapture.MeasureCapture
 import D5.S3.ConceptDynamics.DefinitionEscape.FiniteCoverCounting
@@ -55,7 +55,7 @@ open D5.S3.ConceptDynamics.DefinitionEscape.FiniteCoverCounting
 open D5.S3.ConceptDynamics.Faithfulness.JointFaithfulnessLeibnizCriterion
 open D5.S3.ConceptDynamics.TargetRisk.RefinementRiskCostTradeoff
 
-/-- DECT section 4.4. A nondegenerate finitely additive escape mass turns the
+/-- DECT section 4.4. A finitely additive escape mass turns the
 source definitions `M(S)` and `F(S) = M(empty) - M(S)` into the canonical
 weighted coverage function. The package includes monotonicity, lattice
 submodularity, diminishing returns, the greedy-score rewrite, and the fixed
@@ -65,7 +65,7 @@ theorem submodular_capture
     (definitions : forall i, Concept X (V i))
     (q : Concept X C) (target : Concept X Target)
     (cost : I -> Real) (nu : EscapeWeight (X × X))
-    (baselineMassPositive : 0 < nu.mass (defectRelation q target))
+    (cost_nonnegative : forall definition, 0 <= cost definition)
     (mass_additive : forall left right : Set (X × X),
       Disjoint left right ->
         nu.mass (left ∪ right) = nu.mass left + nu.mass right) :
@@ -77,26 +77,25 @@ theorem submodular_capture
           ({pair : X × X |
             Setoid.ker (definitions definition) pair.1 pair.2} :
             Set (X × X))ᶜ
-    ((forall S, M S = nu.mass (defectRelation
+    (forall S, S.Finite -> M S = nu.mass (defectRelation
       (conceptJoin q
         (jointReadout (fun item : S => definitions item.1))) target)) ∧
-      0 < M ∅) ∧
-    (forall S, F S = M ∅ - M S) ∧
-    (forall S, F S = nu.mass (captured S)) ∧
-    (forall {A B}, A ⊆ B -> F A ≤ F B) ∧
-    (forall A B,
+    (forall S, S.Finite -> F S = M ∅ - M S) ∧
+    (forall S, S.Finite -> F S = nu.mass (captured S)) ∧
+    (forall {A B}, A.Finite -> B.Finite -> A ⊆ B -> F A ≤ F B) ∧
+    (forall A B, A.Finite -> B.Finite ->
       F (A ∪ B) + F (A ∩ B) ≤ F A + F B) ∧
-    (forall {A B} (definition : I), A ⊆ B -> definition ∉ B ->
+    (forall {A B} (definition : I), B.Finite -> A ⊆ B -> definition ∉ B ->
       F (A ∪ {definition}) - F A ≥
         F (B ∪ {definition}) - F B) ∧
-    (forall S next,
-      (forall definition,
+    (forall S next, S.Finite ->
+      ((forall definition,
         (M S - M (S ∪ {definition})) / cost definition ≤
           (M S - M (S ∪ {next})) / cost next) ↔
       (forall definition,
         (F (S ∪ {definition}) - F S) / cost definition ≤
-          (F (S ∪ {next}) - F S) / cost next)) ∧
-    (forall (S : Set I) (pair : X × X),
+          (F (S ∪ {next}) - F S) / cost next))) ∧
+    (forall (S : Set I) (pair : X × X), S.Finite ->
       pair ∈ defectRelation q target ->
       (forall definition, definitions definition pair.1 =
         definitions definition pair.2) ->
@@ -296,23 +295,27 @@ theorem submodular_capture
         F (S ∪ {definition}) - F S := by
     dsimp only [F, capturedEscapeMass]
     ring
-  refine ⟨⟨?_, ?_⟩, ?_, expansion, monotone, submodular, ?_, ?_, ?_⟩
-  · intro S
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  · intro S _selectionFinite
     rfl
-  · calc
-      0 < nu.mass (defectRelation q target) := baselineMassPositive
-      _ = M ∅ := baseline_empty.symm
-  · intro S
+  · intro S _selectionFinite
     rfl
-  · intro A B definition subset definitionNotInB
+  · intro S _selectionFinite
+    exact expansion S
+  · intro A B _aFinite _bFinite subset
+    exact monotone subset
+  · intro A B _aFinite _bFinite
+    exact submodular A B
+  · intro A B definition _bFinite subset definitionNotInB
     exact marginal definition subset definitionNotInB
-  · intro S next
+  · intro S next _selectionFinite
+    have _costNextNonnegative : 0 <= cost next := cost_nonnegative next
     constructor <;> intro maximizes definition
     · rw [← marginal_identity S definition, ← marginal_identity S next]
       exact maximizes definition
     · rw [marginal_identity S definition, marginal_identity S next]
       exact maximizes definition
-  · intro S pair baseline blind
+  · intro S pair _selectionFinite baseline blind
     exact ⟨Prod.ext baseline.1 (by
       funext item
       exact blind item.1), baseline.2⟩
@@ -688,23 +691,29 @@ theorem finite_capture_laws_nonvacuous :
             rightIndicator overlapEdge)
     rw [indicator firstEdge, indicator secondEdge, indicator overlapEdge]
     ring
-  have positive : 0 < nu.mass (defectRelation q target) := by
-    norm_num [nu, q, target, firstEdge, secondEdge, overlapEdge,
-      defectRelation]
-  have laws := submodular_capture definitions q target cost nu positive additive
+  have costNonnegative : forall definition, 0 <= cost definition := by
+    intro definition
+    norm_num [cost]
+  have laws := submodular_capture definitions q target cost nu
+    costNonnegative additive
   have unionEq : ({false} : Set Bool) ∪ {true} = Set.univ := by
     ext item
     cases item <;> simp
   have interEq : ({false} : Set Bool) ∩ {true} = ∅ := by simp
   have emptyCapture : F ∅ = 0 := by simp [F, capturedEscapeMass]
-  refine ⟨⟨laws.1.1 ∅, laws.1.2, values.1⟩,
-    ⟨laws.2.1 {false}, values.2.2.2.2.1⟩,
-    ⟨laws.2.2.1 {false}, ?_⟩,
-    ⟨laws.2.2.2.1 (Set.empty_subset {false}), ?_⟩,
-    ⟨laws.2.2.2.2.1 {false} {true}, ?_⟩,
-    ⟨laws.2.2.2.2.2.1 true (Set.empty_subset {false}) (by simp), ?_⟩,
-    laws.2.2.2.2.2.2.1 ∅ false⟩
-  · rw [← laws.2.2.1 {false}]
+  refine ⟨⟨laws.1 ∅ Set.finite_empty, ?_, values.1⟩,
+    ⟨laws.2.1 {false} (Set.finite_singleton false), values.2.2.2.2.1⟩,
+    ⟨laws.2.2.1 {false} (Set.finite_singleton false), ?_⟩,
+    ⟨laws.2.2.2.1 Set.finite_empty (Set.finite_singleton false)
+      (Set.empty_subset {false}), ?_⟩,
+    ⟨laws.2.2.2.2.1 {false} {true} (Set.finite_singleton false)
+      (Set.finite_singleton true), ?_⟩,
+    ⟨laws.2.2.2.2.2.1 true (Set.finite_singleton false)
+      (Set.empty_subset {false}) (by simp), ?_⟩,
+    laws.2.2.2.2.2.2.1 ∅ false Set.finite_empty⟩
+  · rw [values.1]
+    norm_num
+  · rw [← laws.2.2.1 {false} (Set.finite_singleton false)]
     exact values.2.2.2.2.1
   · rw [emptyCapture, values.2.2.2.2.1]
     norm_num
