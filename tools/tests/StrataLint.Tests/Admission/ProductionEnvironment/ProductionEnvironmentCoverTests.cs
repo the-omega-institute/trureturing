@@ -64,6 +64,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.False(File.Exists(Path.Combine(
             temporary.Path,
             BackfillInventoryLoader.RelativePath.Replace('/', Path.DirectorySeparatorChar))));
+        AssertAlignedCoverRepairsPersistedScribeReceipt();
     }
 
     [Fact]
