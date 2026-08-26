@@ -47,6 +47,8 @@ internal sealed class DiscountedObservabilityGramianEquationDocument
         Formula evolution = F.Id("T");
         Formula readout = F.Id("C");
         Formula discount = Beta;
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula real = Seq(Mathbb, Grp(F.Id("R")));
         Formula evolutionType = Call("LinearMap", scalar, state, state);
         Formula readoutType = Call("LinearMap", scalar, state, output);
         Formula gramian = Call("discountedObservabilityGramian", evolution, readout, discount);
@@ -62,19 +64,19 @@ internal sealed class DiscountedObservabilityGramianEquationDocument
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, scalar, Comma, Sp, state, Comma, Sp, output, Comma, Sp,
+            Forall, Sp, scalar, Comma, Sp, state, Comma, Sp, output, Colon, Sp, type,
+            Comma, Sp,
             RowBreak, Grp(),
+            Typeclass("RCLike", scalar), Comma, Sp,
+            Typeclass("NormedAddCommGroup", state), Comma, Sp,
+            Typeclass("InnerProductSpace", scalar, state), Comma, Sp,
+            Typeclass("FiniteDimensional", scalar, state), Comma, RowBreak, Grp(),
+            Typeclass("NormedAddCommGroup", output), Comma, Sp,
+            Typeclass("InnerProductSpace", scalar, output), Comma, Sp,
+            Typeclass("FiniteDimensional", scalar, output), Comma, RowBreak, Grp(),
             evolution, Colon, Sp, evolutionType, Comma, Sp,
             readout, Colon, Sp, readoutType, Comma, Sp,
-            discount, Comma, RowBreak, Grp(),
-            Call("RCLike", scalar), Sp, Land, Sp,
-            Call("NormedAddCommGroup", state), Sp, Land, Sp,
-            Call("InnerProductSpace", scalar, state), Sp, Land, Sp,
-            Call("FiniteDimensional", scalar, state), Sp, Land, Sp,
-            Call("NormedAddCommGroup", output), Sp, Land, Sp,
-            Call("InnerProductSpace", scalar, output), Sp, Land, Sp,
-            Call("FiniteDimensional", scalar, output), Sp, Land,
-            RowBreak, Grp(),
+            discount, Colon, Sp, real, Comma, RowBreak, Grp(),
             convergence, Sp, Rightarrow,
             RowBreak, Grp(),
             equation, Dot,
@@ -93,4 +95,7 @@ internal sealed class DiscountedObservabilityGramianEquationDocument
         items.Add(Close);
         return Seq([.. items]);
     }
+
+    private static Formula Typeclass(string name, params Formula[] arguments) =>
+        Seq(OpenBracket, Call(name, arguments), CloseBracket);
 }
