@@ -243,20 +243,18 @@ jobs:
         run: |
           dotnet restore candidate/tools/tests/CompileFailProof/CompileFailProof.csproj --locked-mode
           dotnet restore candidate/tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj --locked-mode
-
       - name: Build candidate with warnings as errors
         if: steps.scope.outputs.run == 'true'
         run: make -C candidate/tools dotnet
-
       - name: Run candidate golden and integration tests
+        id: engineering-tests
         if: steps.scope.outputs.run == 'true'
+        env: { ENGINEERING_EXECUTION_RECEIPT: "${{ runner.temp }}/candidate-engineering-tests.receipt" }
         run: make -C candidate/tools test
-
       - name: Run candidate selftest twice and compare bytes
         if: steps.scope.outputs.run == 'true'
         shell: bash
         run: make -C candidate/tools selftest
-
       - name: Prove missing capability does not compile
         if: steps.scope.outputs.run == 'true'
         shell: bash
@@ -269,7 +267,6 @@ jobs:
           test "$status" -ne 0
           grep -F "CS7036" <<<"$output"
           grep -F "MetaClear" <<<"$output"
-
       - name: Prove banned deterministic APIs do not compile
         if: steps.scope.outputs.run == 'true'
         shell: bash
@@ -293,7 +290,6 @@ jobs:
             test "${actual_lines[$index]}" = "$expected_line"
             ((index += 1))
           done
-
       - name: Stage judge binaries for the shared cache (dev push only)
         id: stage-judge
         if: steps.scope.outputs.run == 'true' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
@@ -332,8 +328,11 @@ jobs:
           SCOPE_CHANGED_COUNT: ${{ steps.scope.outputs.changed_count }}
           SCOPE_MATCHED_COUNT: ${{ steps.scope.outputs.matched_count }}
           SCOPE_REASON: ${{ steps.scope.outputs.reason }}
+          ENGINEERING_EXECUTION_RECEIPT: ${{ runner.temp }}/candidate-engineering-tests.receipt
+          ENGINEERING_TEST_OUTCOME: ${{ steps.engineering-tests.outcome }}
         run: |
           set -euo pipefail
+          engineering_test_evidence="not-required"; if [[ "$SCOPE_RUN" == "true" ]]; then if [[ "$ENGINEERING_TEST_OUTCOME" != "success" || ! -f "$ENGINEERING_EXECUTION_RECEIPT" || "$(cat -- "$ENGINEERING_EXECUTION_RECEIPT" 2>/dev/null)" != "candidate-engineering-tests-v1" ]]; then printf 'candidate engineering execution evidence is absent or invalid (outcome=%s)\n' "$ENGINEERING_TEST_OUTCOME" >&2; exit 1; fi; engineering_test_evidence="verified"; fi
           result="$SCOPE_RUN"
           if [[ -z "$result" ]]; then
             result="unavailable"
@@ -347,6 +346,7 @@ jobs:
             printf -- '- Changed paths: %s\n' "$SCOPE_CHANGED_COUNT"
             printf -- '- Trigger matches: %s\n' "$SCOPE_MATCHED_COUNT"
             printf -- '- Decision: %s\n' "$SCOPE_REASON"
+            printf -- '- Engineering test execution: %s\n' "$engineering_test_evidence"
             printf -- '%s\n' '- Detail: see the ENGINEERING_SCOPE_CHANGED and ENGINEERING_SCOPE_MATCHED log lines of the scope step.'
           } >> "$GITHUB_STEP_SUMMARY"
 

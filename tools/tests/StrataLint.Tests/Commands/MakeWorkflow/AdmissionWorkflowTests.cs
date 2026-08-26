@@ -469,3 +469,131 @@ public sealed class AdmissionWorkflowTests
     }
 
 }
+
+public sealed class CandidateEngineeringExecutionTests
+{
+    [Fact]
+    public void CandidateEngineeringTestsProduceAndVerifyExecutionEvidence()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var result = CandidateEngineeringWorkflowWitness.Execute();
+
+        Assert.True(
+            result.ExitCode == 0 && result.Verified,
+            $"execution evidence was not verified\nstdout:\n{result.StandardOutput}\nstderr:\n{result.StandardError}");
+    }
+}
+
+internal static class CandidateEngineeringWorkflowWitness
+{
+    internal sealed record Result(
+        int ExitCode, bool Verified, string StandardOutput, string StandardError);
+
+    internal static Result Execute()
+    {
+        if (OperatingSystem.IsWindows()) throw new PlatformNotSupportedException();
+
+        var steps = EngineeringSteps();
+        var producer = Step(steps, "id", "engineering-tests");
+        var verifier = Step(steps, "name", "Summarize candidate engineering scope");
+        using var directory = new TemporaryDirectory();
+        var candidateTools = Path.Combine(directory.Path, "candidate", "tools");
+        var bin = Path.Combine(directory.Path, "bin");
+        Directory.CreateDirectory(candidateTools);
+        File.Copy(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "Makefile"),
+            Path.Combine(candidateTools, "Makefile"));
+        Directory.CreateDirectory(bin);
+        var dotnet = Path.Combine(bin, "dotnet");
+        File.WriteAllText(
+            dotnet,
+            "#!/usr/bin/env bash\nexit 0\n");
+        File.SetUnixFileMode(
+            dotnet,
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+
+        var producerOutcome = "skipped";
+        if (Condition(Scalar(producer, "if")))
+        {
+            var output = Run(
+                Scalar(producer, "run"),
+                directory.Path,
+                bin,
+                Environment(producer, directory.Path, producerOutcome));
+            producerOutcome = output.ExitCode == 0 ? "success" : "failure";
+        }
+
+        if (!Condition(Scalar(verifier, "if")))
+        {
+            return new Result(-1, false, "", "verifier was skipped");
+        }
+
+        var verifierOutput = Run(
+            Scalar(verifier, "run"),
+            directory.Path,
+            bin,
+            Environment(verifier, directory.Path, producerOutcome));
+        return new Result(
+            verifierOutput.ExitCode,
+            Read(Path.Combine(directory.Path, "summary"))
+                .Contains("- Engineering test execution: verified\n", StringComparison.Ordinal),
+            System.Text.Encoding.UTF8.GetString(verifierOutput.StandardOutput),
+            System.Text.Encoding.UTF8.GetString(verifierOutput.StandardError));
+    }
+
+    private static ProcessOutput Run(
+        string script,
+        string root,
+        string bin,
+        IEnumerable<string> environment) =>
+        BoundedProcessRunner.Run(
+            "env",
+            [$"PATH={bin}:/usr/bin:/bin", $"RUNNER_TEMP={root}", $"GITHUB_STEP_SUMMARY={Path.Combine(root, "summary")}",
+                .. environment, "/bin/bash", "--noprofile", "--norc", "-e", "-o", "pipefail", "-c", script],
+            root,
+            TimeSpan.FromSeconds(10),
+            16 * 1024);
+
+    private static IEnumerable<string> Environment(YamlMappingNode step, string root, string outcome)
+    {
+        var environment = (YamlMappingNode)step.Children[new YamlScalarNode("env")];
+        foreach (var item in environment.Children)
+        {
+            var key = ((YamlScalarNode)item.Key).Value!;
+            var value = ((YamlScalarNode)item.Value).Value!;
+            yield return key + "=" + value
+                .Replace("${{ runner.temp }}", root, StringComparison.Ordinal)
+                .Replace("${{ steps.engineering-tests.outcome }}", outcome, StringComparison.Ordinal)
+                .Replace("${{ steps.scope.outputs.run }}", "true", StringComparison.Ordinal);
+        }
+    }
+
+    private static bool Condition(string condition) => condition
+        .Replace("${{", "", StringComparison.Ordinal)
+        .Replace("}}", "", StringComparison.Ordinal)
+        .Split("&&", StringSplitOptions.TrimEntries)
+        .All(static term => term is "true" or "always()" or "steps.scope.outputs.run == 'true'");
+
+    private static YamlMappingNode[] EngineeringSteps()
+    {
+        var stream = new YamlStream();
+        stream.Load(new StringReader(File.ReadAllText(Path.Combine(
+            TestRepositoryLayout.FindRoot(), ".github", "workflows", "ci.yml"))));
+        var root = (YamlMappingNode)stream.Documents.Single().RootNode;
+        var jobs = (YamlMappingNode)root.Children[new YamlScalarNode("jobs")];
+        var job = (YamlMappingNode)jobs.Children[new YamlScalarNode("candidate-engineering")];
+        return ((YamlSequenceNode)job.Children[new YamlScalarNode("steps")]).Children
+            .OfType<YamlMappingNode>().ToArray();
+    }
+
+    private static YamlMappingNode Step(IEnumerable<YamlMappingNode> steps, string key, string value) =>
+        steps.Single(step => Scalar(step, key) == value);
+
+    private static string Scalar(YamlMappingNode node, string key) =>
+        node.Children.TryGetValue(new YamlScalarNode(key), out var value)
+            ? ((YamlScalarNode)value).Value ?? string.Empty
+            : string.Empty;
+
+    private static string Read(string path) => File.Exists(path) ? File.ReadAllText(path) : string.Empty;
+}

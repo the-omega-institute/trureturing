@@ -12,7 +12,7 @@ dotnet:
 	@/bin/bash $(HERE)/scripts/dotnet-build.sh
 
 test:
-	@dotnet test $(HERE)/StrataLint.sln --configuration Release --verbosity normal
+	@set -e; if [[ -n "$${ENGINEERING_EXECUTION_RECEIPT:-}" ]]; then rm -f -- "$$ENGINEERING_EXECUTION_RECEIPT" "$$ENGINEERING_EXECUTION_RECEIPT.tmp"; fi; dotnet test $(HERE)/StrataLint.sln --configuration Release --verbosity normal; if [[ -n "$${ENGINEERING_EXECUTION_RECEIPT:-}" ]]; then printf '%s\n' 'candidate-engineering-tests-v1' > "$$ENGINEERING_EXECUTION_RECEIPT.tmp" && mv -f -- "$$ENGINEERING_EXECUTION_RECEIPT.tmp" "$$ENGINEERING_EXECUTION_RECEIPT"; fi
 
 selftest:
 	@/bin/bash $(HERE)/scripts/stratalint-selftest.sh
