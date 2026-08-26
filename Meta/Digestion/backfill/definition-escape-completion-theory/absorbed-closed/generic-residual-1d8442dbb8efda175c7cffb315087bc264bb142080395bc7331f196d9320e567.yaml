@@ -1,0 +1,17 @@
+ast_path: section/49-4-事后复制定理骨架
+fingerprints:
+  raw_sha256: sha256:1d8442dbb8efda175c7cffb315087bc264bb142080395bc7331f196d9320e567
+  normalized_sha256: sha256:1d8442dbb8efda175c7cffb315087bc264bb142080395bc7331f196d9320e567
+cas_ref: sha256:1d8442dbb8efda175c7cffb315087bc264bb142080395bc7331f196d9320e567
+coverage_gids:
+  - D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure.lookup_copy_zero_loss_and_nonanticipating_failure
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure.lookup_copy_zero_loss_and_nonanticipating_failure
+      source_sha256: sha256:1d8442dbb8efda175c7cffb315087bc264bb142080395bc7331f196d9320e567
+      target_sha256: sha256:28ecaff3776a5c4f0ac97e3dd31dc27ad7cc5d834a536d6904477a36a645d583
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure.lookup_copy_zero_loss_and_nonanticipating_failure
+      definition_sha256: sha256:842aa7a6d22df583a311e74b3bde1cf6afa086159c626508669de205e76bf662
+      emission_sha256: sha256:cc4b4ab0108ce915b8c96a1e172fb28732ba038381f81b1af25ba5addaa68dec
+  unresolved_subitems: []

@@ -27,6 +27,12 @@ internal static partial class RepositoryRules
         Signature,
         SignatureNameKey,
         PrimaryGid,
+        CoverageGids,
+        CoverageGid,
+        Receipts,
+        ReceiptList,
+        ReceiptEntry,
+        ReceiptGid,
     }
 
     private static bool IsGovernedStructured(RepoPath path, ValidatedPolicy policy) =>
@@ -239,6 +245,11 @@ internal static partial class RepositoryRules
         (AddressSlot.Entry, "hosted_extensions") => AddressSlot.HostedExtensions,
         (AddressSlot.Entry, "precommitted_signature") => AddressSlot.Signature,
         (AddressSlot.Entry, "primary_gid") => AddressSlot.PrimaryGid,
+        (AddressSlot.Entry, "coverage_gids") => AddressSlot.CoverageGids,
+        (AddressSlot.Entry, "receipts") => AddressSlot.Receipts,
+        (AddressSlot.Receipts, "coverage") => AddressSlot.ReceiptList,
+        (AddressSlot.Receipts, "scribe") => AddressSlot.ReceiptList,
+        (AddressSlot.ReceiptEntry, "gid") => AddressSlot.ReceiptGid,
         (AddressSlot.HostedExtension, "precommitted_signature") => AddressSlot.Signature,
         (AddressSlot.HostedExtension, "gid") => AddressSlot.HostedExtensionGid,
         (AddressSlot.Signature, "name_key") => AddressSlot.SignatureNameKey,
@@ -248,6 +259,8 @@ internal static partial class RepositoryRules
     private static AddressSlot ArrayElementSlot(AddressSlot slot) => slot switch
     {
         AddressSlot.HostedExtensions => AddressSlot.HostedExtension,
+        AddressSlot.CoverageGids => AddressSlot.CoverageGid,
+        AddressSlot.ReceiptList => AddressSlot.ReceiptEntry,
         _ => AddressSlot.None,
     };
 
@@ -334,9 +347,15 @@ internal static partial class RepositoryRules
         AddressSlot slot,
         string residue)
     {
-        if (!DigestionFormalizationReceipt.IsCanonicalPath(path)) return false;
-        if (slot is not (AddressSlot.PrimaryGid or AddressSlot.HostedExtensionGid)) return false;
-        return DigestionFormalizationReceipt.SelectsDeclaration(residue);
+        var declared = slot switch
+        {
+            AddressSlot.PrimaryGid or AddressSlot.HostedExtensionGid =>
+                DigestionFormalizationReceipt.IsCanonicalPath(path),
+            AddressSlot.CoverageGid or AddressSlot.ReceiptGid =>
+                BackfillInventoryLoader.IsCanonicalPath(path),
+            _ => false,
+        };
+        return declared && DigestionFormalizationReceipt.SelectsDeclaration(residue);
     }
 
     private static bool TryParseEmbeddedJson(
