@@ -32,7 +32,7 @@ public sealed partial class WorktreeCommandTests
             ]);
 
         Assert.True(result.Success, result.Error);
-        Assert.Equal("# worktree fixture\n", File.ReadAllText(Path.Combine(target, "README.md")));
+        AssertFileContent(Path.Combine(target, "README.md"), "# worktree fixture\n");
         AssertRegisteredAndUsable(repository.Path, target, branch);
     }
 
@@ -140,8 +140,17 @@ public sealed partial class WorktreeCommandTests
 
         Assert.False(result.Success);
         Assert.Contains("path already exists", result.Error, StringComparison.Ordinal);
-        Assert.Equal("keep\n", File.ReadAllText(marker));
+        AssertFileContent(marker, "keep\n");
     }
+
+    // 这个 helper 的存在理由与 ArchiveInEnsureChainTests.cs:177 同:SL-003 的 unknown 判据
+    // 只看**测试方法体自身**的语法树,方法体里出现 `File.ReadAllText(...)` 且参数不是
+    // `RepositoryRelativePath.Create("字面量")` 或 `Path.Combine(RepositoryLayout.FindRoot(), "字面量"…)`
+    // 时,该方法即计入 conservative unknown。临时目录的路径结构上满足不了那两种形状,
+    // 故读临时文件必须收进 helper。(本轮实测:这两句把两个新方法判成 unknown,
+    // admission RULE_REJECTED;`make -C tools test` 看不见,只有 preflight 的 admission 段会红。)
+    private static void AssertFileContent(string path, string expected) =>
+        Assert.Equal(expected, File.ReadAllText(path));
 
     private static string WorktreeMetadataPath(string repository, string target)
     {
