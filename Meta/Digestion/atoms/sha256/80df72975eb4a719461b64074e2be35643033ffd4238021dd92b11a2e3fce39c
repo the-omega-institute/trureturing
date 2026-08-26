@@ -1,0 +1,49 @@
+# 216. 多目标修复的联合缺陷图
+
+设目标族：
+
+[
+T_1,\ldots,T_n.
+]
+
+联合目标：
+
+[
+T=(T_1,\ldots,T_n).
+]
+
+则：
+
+[
+\ker T
+======
+
+\bigcap_i\ker T_i.
+]
+
+所以：
+
+[
+\begin{aligned}
+\Delta(C;T)
+&=
+\ker C\setminus\bigcap_i\ker T_i\
+&=
+\bigcup_i
+\left(
+\ker C\setminus\ker T_i
+\right).
+\end{aligned}
+]
+
+即：
+
+[
+\boxed{
+\Delta(C;T)
+===========
+
+\bigcup_i\Delta(C;T_i).
+}
+]
+

@@ -162,6 +162,8 @@ internal static class DagLedgerCommandPreparation
         return FrozenContentAddress.BuildAdmissionCatalog(
             snapshot,
             lean,
+            states,
+            adjacency,
             environment,
             attestations,
             selectedPaths,
@@ -173,6 +175,8 @@ internal static class DagLedgerCommandPreparation
     internal static FrozenMaterialCatalog BuildAdmissionCatalog(
         RepositorySnapshot snapshot,
         AcceptedLeanClosure lean,
+        ImmutableDictionary<RepoPath, TruthState> states,
+        ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency,
         FrozenLedgerBaseView baseView,
         FrozenLedgerAdmissionScope scope,
         FrozenRevisionIdentity currentIdentity)
@@ -191,7 +195,6 @@ internal static class DagLedgerCommandPreparation
         var algorithm = environment.OriginCommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
             ? HashAlgorithmName.SHA256
             : HashAlgorithmName.SHA1;
-        var states = LeanTruthStates.Resolve(snapshot, lean);
         var attestations = states
             .Where(item => item.Value is TruthState.Closed
                 && scope.Paths.Contains(item.Key))
@@ -208,6 +211,8 @@ internal static class DagLedgerCommandPreparation
         return FrozenContentAddress.BuildAdmissionCatalog(
             snapshot,
             lean,
+            states,
+            adjacency,
             environment,
             attestations,
             scope.Paths,
@@ -222,6 +227,8 @@ internal static class DagLedgerCommandPreparation
     internal static FrozenMaterialCatalog BuildCompleteCatalog(
         RepositorySnapshot snapshot,
         AcceptedLeanClosure lean,
+        ImmutableDictionary<RepoPath, TruthState> states,
+        ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency,
         FrozenLedgerBaseView baseView,
         FrozenRevisionIdentity currentIdentity)
     {
@@ -239,7 +246,6 @@ internal static class DagLedgerCommandPreparation
         var algorithm = environment.OriginCommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
             ? HashAlgorithmName.SHA256
             : HashAlgorithmName.SHA1;
-        var states = LeanTruthStates.Resolve(snapshot, lean);
         var attestations = states
             .Where(static item => item.Value is TruthState.Closed)
             .Select(item => new FrozenModuleAttestation(
@@ -252,7 +258,7 @@ internal static class DagLedgerCommandPreparation
                 BaseTreeOid = currentIdentity.TreeOid,
             })
             .ToImmutableArray();
-        return FrozenContentAddress.Build(snapshot, lean, environment, attestations) switch
+        return FrozenContentAddress.Build(snapshot, lean, states, adjacency, environment, attestations) switch
         {
             FrozenMaterialOutcome.Accepted accepted => accepted.Capability,
             FrozenMaterialOutcome.Rejected rejected => throw new InvalidOperationException(

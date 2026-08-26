@@ -1,0 +1,43 @@
+## 定理 8.2（任何近似下降的误差下界）
+
+定义最佳 Markov 下降误差
+
+\[
+\varepsilon_q^*(K)
+:=
+\inf_{\overline K}
+\sup_x
+\operatorname{TV}
+\bigl(q_*K_x,\overline K_{q(x)}\bigr).
+\]
+
+则
+
+\[
+\boxed{
+\frac12\delta_q(K)
+\le
+\varepsilon_q^*(K).
+}
+\]
+
+若每个 fiber 选定代表元，则还有
+
+\[
+\varepsilon_q^*(K)
+\le
+\delta_q(K).
+\]
+
+### 证明
+
+对同一 fiber 中任意 \(x,y\)，三角不等式给出
+
+\[
+\operatorname{TV}(q_*K_x,q_*K_y)
+\le
+e_x+e_y,
+\]
+
+故至少一个误差不小于该 pair 距离的一半。取上确界与下确界得到下界。上界取每个 fiber 的代表分布作为 \(\overline K\)。\(\square\)
+

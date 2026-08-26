@@ -1,0 +1,68 @@
+\operatorname{Finset.univ},
+\qquad
+D_2.\operatorname{current}
+=
+\operatorname{some}(0),
+\qquad
+D_2.\operatorname{feasibleFromCandidates}
+:
+\forall a,a\in D_2.\operatorname{feasible}
+\to
+a\in D_2.\operatorname{candidates}
+\quad\text{取恒等包含证明}.
+\]
+
+五坐标都取 \(\mathbb N\)，定义
+
+\[
+v_2(0)=(1,0,0,0,0),
+\qquad
+v_2(1)=(0,1,0,0,0).
+\]
+
+这里前两坐标分别使 \(0\) 与 \(1\) 各有一项严格优势，其余三坐标相同，所以二者在
+`ParetoWeak`
+下不可比；特别地当前行动 \(0\) 不受任何候选严格支配。
+
+再取
+
+\[
+\mathsf{Goal}_2=\mathsf{Scope}_2=\operatorname{Unit},
+\qquad
+\mathsf{Source}_2=\mathsf{Version}_2=\operatorname{Bool},
+\]
+
+并令所有行动都属于目标允许集且都在 scope 内：
+
+\[
+\operatorname{AdmTarget}_2(\star)=\operatorname{Set.univ},
+\qquad
+\operatorname{InScope}_2(\star,a)\Longleftrightarrow\mathsf{True}.
+\]
+
+定义两个完整、可判的外生规范；两者都取
+\(\operatorname{goal}=\star\)
+与
+\(\operatorname{scope}=\star\)：
+
+\[
+\begin{aligned}
+&O_{\mathrm{stay}}.\operatorname{source}=\mathsf{false},
+\quad
+O_{\mathrm{stay}}.\operatorname{version}=\mathsf{false},
+\quad
+O_{\mathrm{stay}}.\operatorname{relation}(a,b)
+\Longleftrightarrow a=b,\\
+&O_{\mathrm{advance}}.\operatorname{source}=\mathsf{true},
+\quad
+O_{\mathrm{advance}}.\operatorname{version}=\mathsf{true},
+\quad
+O_{\mathrm{advance}}.\operatorname{relation}(a,b)
+\Longleftrightarrow a.1\le b.1.
+\end{aligned}
+\]
+
+两者都携带
+`relationInDeclaredDomain`、`refl` 与 `trans`
+的直接有限证明；它们不是缺字段的裸关系。
+

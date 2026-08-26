@@ -1,0 +1,41 @@
+# 488. 证据状态应同时记录正支持和反支持
+
+对命题 (P)，定义证据值：
+
+[
+\boxed{
+v(P)
+====
+
+(t_P,f_P)
+\in{0,1}^2.
+}
+]
+
+其中：
+
+* (t_P=1)：存在对 (P) 的支持；
+* (f_P=1)：存在对 (\neg P) 的支持。
+
+于是有四种状态：
+
+[
+\begin{array}{c|c|c}
+\text{名称}&t_P&f_P\
+\hline
+\mathbf N&0&0\
+\mathbf T&1&0\
+\mathbf F&0&1\
+\mathbf B&1&1
+\end{array}
+]
+
+其中：
+
+* (\mathbf N)：既无正支持也无反支持；
+* (\mathbf T)：只支持真；
+* (\mathbf F)：只支持假；
+* (\mathbf B)：正反均被支持。
+
+---
+

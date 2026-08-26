@@ -250,7 +250,7 @@ public sealed partial class MakeWorkflowTests
                 baseRevisionOverride ?? baseRevision,
             ],
             Repository,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
         internal string[] Invocations() => File.Exists(log) ? File.ReadAllLines(log) : [];
@@ -263,7 +263,7 @@ public sealed partial class MakeWorkflowTests
                 "git",
                 arguments,
                 Repository,
-                TimeSpan.FromSeconds(30),
+                BoundedProcessRunner.HangDetectionBudget,
                 64 * 1024);
             Assert.Equal(0, result.ExitCode);
             return Encoding.UTF8.GetString(result.StandardOutput).Trim();

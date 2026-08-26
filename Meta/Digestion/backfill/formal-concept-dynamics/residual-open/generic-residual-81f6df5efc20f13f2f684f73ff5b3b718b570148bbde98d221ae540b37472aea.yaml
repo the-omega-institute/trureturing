@@ -1,0 +1,10 @@
+ast_path: section/143-通过删去反例-任何概念都能伪装成完美规律
+fingerprints:
+  raw_sha256: sha256:81f6df5efc20f13f2f684f73ff5b3b718b570148bbde98d221ae540b37472aea
+  normalized_sha256: sha256:81f6df5efc20f13f2f684f73ff5b3b718b570148bbde98d221ae540b37472aea
+cas_ref: sha256:81f6df5efc20f13f2f684f73ff5b3b718b570148bbde98d221ae540b37472aea
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

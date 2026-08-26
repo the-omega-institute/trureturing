@@ -1,0 +1,10 @@
+## 定义 81.2（效果）
+
+$$
+\mathsf{Eff}_d
+=
+\{E\in\operatorname{Herm}_d:0\le E\le I\}.
+$$
+
+效果 $E$ 表示一个二值问题的“是”分支。
+

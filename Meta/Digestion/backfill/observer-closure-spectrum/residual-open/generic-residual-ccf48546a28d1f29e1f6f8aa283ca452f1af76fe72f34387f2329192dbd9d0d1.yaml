@@ -1,0 +1,10 @@
+ast_path: section/18-v1-2-增订-反身代理-来源治理与可控-可观测闭包
+fingerprints:
+  raw_sha256: sha256:ccf48546a28d1f29e1f6f8aa283ca452f1af76fe72f34387f2329192dbd9d0d1
+  normalized_sha256: sha256:ccf48546a28d1f29e1f6f8aa283ca452f1af76fe72f34387f2329192dbd9d0d1
+cas_ref: sha256:ccf48546a28d1f29e1f6f8aa283ca452f1af76fe72f34387f2329192dbd9d0d1
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

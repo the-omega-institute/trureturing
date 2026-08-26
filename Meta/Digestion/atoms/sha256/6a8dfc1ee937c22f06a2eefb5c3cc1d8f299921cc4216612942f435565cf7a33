@@ -1,0 +1,32 @@
+# 481. 信息设计受 Bayes plausibility 约束
+
+设有限状态空间 (\Omega)，先验：
+
+[
+\mu(\omega)>0.
+]
+
+发送者选择信号核：
+
+[
+\kappa(s\mid\omega).
+]
+
+信号概率：
+
+[
+\lambda_s
+=========
+
+\Pr(s).
+]
+
+收到 (s) 后的后验：
+
+[
+\mu_s(\omega)
+=============
+
+\Pr(\omega\mid s).
+]
+

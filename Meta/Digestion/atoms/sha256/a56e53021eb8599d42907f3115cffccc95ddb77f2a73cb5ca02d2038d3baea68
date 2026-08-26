@@ -1,0 +1,24 @@
+## 定理 10.1（最小记忆）
+
+最小预测商
+
+\[
+\pi_\infty:X\to Z_q=X/K_\infty
+\]
+
+是所有精确预测记忆中的最粗者：对任意 \(r\)，存在唯一
+
+\[
+\theta:\operatorname{Im}(r)\to Z_q
+\]
+
+使
+
+\[
+\pi_\infty=\theta\circ r.
+\]
+
+### 证明
+
+若 \(r(x)=r(y)\)，下降性给出 \(r(F^nx)=r(F^ny)\)；当前读数沿 \(r\) 因子化，故全部未来 \(q\)-读数相等，即 \(xK_\infty y\)。应用核判据。\(\square\)
+

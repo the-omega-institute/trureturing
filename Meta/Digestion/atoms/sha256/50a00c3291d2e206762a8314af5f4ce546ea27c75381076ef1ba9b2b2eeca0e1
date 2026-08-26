@@ -1,0 +1,27 @@
+## 10.2 观察—干预—反事实层级
+
+仓库 `ObservationInterventionCounterfactualChain` 已机器验证，在有限确定性 Boolean SCM 中：
+
+$$
+R_{CF}\subseteq R_{Int}\subseteq R_{Obs},
+$$
+
+并且两次包含均可严格。
+
+因此定义因果显性深度：
+
+- -1：aa 与 ab 在观察层已不同；
+- 0：观察层相同，但干预层可分；
+- 1：全部干预边缘相同，但联合反事实 profile 可分；
+- 2：完整反事实 profile 仍相同。
+
+于是：
+
+$$
+\boxed{
+\text{“显性有多强”可以定义为它能穿过多深的因果查询层。}
+}
+$$
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/第二层-结构非典范性
+fingerprints:
+  raw_sha256: sha256:86e744c12ba1daaab26a49f9644645326c2b1d5ad6f5d10520e43f310f6f4bdc
+  normalized_sha256: sha256:86e744c12ba1daaab26a49f9644645326c2b1d5ad6f5d10520e43f310f6f4bdc
+cas_ref: sha256:86e744c12ba1daaab26a49f9644645326c2b1d5ad6f5d10520e43f310f6f4bdc
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

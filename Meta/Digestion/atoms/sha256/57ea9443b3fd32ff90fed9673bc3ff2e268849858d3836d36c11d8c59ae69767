@@ -1,0 +1,36 @@
+# 27. 元策略、价值—策略平衡与事实—价值缺口
+
+普通策略为
+
+$$
+\pi_t:Q\to\operatorname{Dist}(A).
+$$
+
+令策略空间为 $\mathcal P$，记忆、价值和承诺状态为 $M$，元更新器为
+
+$$
+\mathcal U:M\times\mathcal P\times Y\to M\times\mathcal P.
+$$
+
+更新：
+
+$$
+(m_{t+1},\pi_{t+1})
+=
+\mathcal U(m_t,\pi_t,y_t).
+$$
+
+一阶自由选择当前动作；二阶自由修改以后怎样选择。
+
+若价值状态为 $v_t\in\mathcal V$，策略响应为 $\pi_t=B(v_t)$，经验反过来修改价值：
+
+$$
+v_{t+1}=E(v_t,\pi_t,y_t,\Lambda_t),
+$$
+
+则联合更新为
+
+$$
+(v_{t+1},\pi_{t+1})=\mathcal R(v_t,\pi_t).
+$$
+

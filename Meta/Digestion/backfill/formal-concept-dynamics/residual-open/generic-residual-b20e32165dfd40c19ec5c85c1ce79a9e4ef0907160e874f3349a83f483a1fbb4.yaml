@@ -1,0 +1,10 @@
+ast_path: section/153-信息源依赖形成一般闭包系统-而不必形成向量空间
+fingerprints:
+  raw_sha256: sha256:b20e32165dfd40c19ec5c85c1ce79a9e4ef0907160e874f3349a83f483a1fbb4
+  normalized_sha256: sha256:b20e32165dfd40c19ec5c85c1ce79a9e4ef0907160e874f3349a83f483a1fbb4
+cas_ref: sha256:b20e32165dfd40c19ec5c85c1ce79a9e4ef0907160e874f3349a83f483a1fbb4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

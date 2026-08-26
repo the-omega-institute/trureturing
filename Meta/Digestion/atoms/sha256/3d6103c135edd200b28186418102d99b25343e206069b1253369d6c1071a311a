@@ -1,0 +1,34 @@
+# 447. 困难案件是公共法律概念纤维中的结果多重性
+
+设公共法律事实概念：
+
+[
+C_{\mathrm{law}}:X\to B.
+]
+
+制度允许结果关系：
+
+[
+\operatorname{Permitted}:X\times Y\to\mathsf{Prop}.
+]
+
+对法律事实值 (b)，定义允许结果纤维：
+
+[
+\boxed{
+\mathcal O(b)
+=============
+
+\left{
+y
+;\middle|;
+\exists x,\
+\operatorname{Adm}(x)
+\land
+C_{\mathrm{law}}(x)=b
+\land
+\operatorname{Permitted}(x,y)
+\right}.
+}
+]
+

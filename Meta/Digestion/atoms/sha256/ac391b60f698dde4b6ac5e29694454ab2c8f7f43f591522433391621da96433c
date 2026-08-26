@@ -1,0 +1,77 @@
+# 第五十六部　54.3 三处源缺口的有限闭合
+
+## 56.1 增订目的、继承接口与收窄纪律
+
+本部是 v1.4 的追加式增订，只精确化第 54.3 部证明义务 9 的商序半条、证明义务 10 的 Stop 半条，以及证明义务 12 的时域投影半条。第 1—55 部的定义、开放问题、冻结结算与已形式化定理均不回写、不删除，也不因本部而改变原地址。
+
+本部预期进入既有 canonical 命名空间
+
+`D5.S3.ConceptDynamics.DefinitionEscape.Adjudication`
+
+并直接复用其中已经给出的
+
+`GainVector`、`ParetoWeak`、`ParetoStrict`、`NoDominatingCandidate`、`DecisionSet`、`OrientationSpec`、`ProspectiveCommitment`、`OrientedStopOnDecisionSet`、`OrientedStop` 与 `ExpansionEscape`。
+
+本部只使用以下初等构件：
+
+- 有限集、有限子类型与有限过滤；
+- 预序、偏序、关系的对称核；
+- `Fin (N+1)`、自然数有限迭代与函数外延；
+- 布尔有限扫描及其命题正确性。
+
+不引入测度、概率、拓扑、抽象商选择、线性延伸或任意代表选择。所有空类型、空有限集与单点有限集都按定义处理，不暗加 `Nonempty`。
+
+## 56.2 弱支配诱导的有限显式商
+
+### 56.2.1 有限承载、承载枚举与对称核
+
+固定类型
+
+\[
+\mathsf{Action},\ \mathsf I,\ \mathsf R,\ \mathsf{Tr},\ \mathsf C,\ \mathsf Q,
+\]
+
+其中 `Action` 有可判等号；五个坐标分别带 `Preorder`，且各自的 \(\le\) 可判。固定有限行动集
+
+\[
+F:\operatorname{Finset}(\mathsf{Action})
+\]
+
+以及公共绝对坐标
+
+\[
+v:\mathsf{Action}\to
+\operatorname{GainVector}(\mathsf I,\mathsf R,\mathsf{Tr},\mathsf C,\mathsf Q).
+\]
+
+定义有限承载子类型与它的显式枚举
+
+\[
+A_F:=\{a:\mathsf{Action}\mid a\in F\},
+\qquad
+\operatorname{carrierEnum}_F:=F.\operatorname{attach}
+\in\operatorname{Finset}(A_F).
+\]
+
+对 \(x,y:A_F\)，定义承载上的弱支配
+
+\[
+\operatorname{ParetoWeakOn}(v,F,x,y)
+\Longleftrightarrow
+\operatorname{ParetoWeak}(v,x.1,y.1),
+\]
+
+并定义弱支配的对称核
+
+\[
+\boxed{
+\operatorname{ParetoEqOn}(v,F,x,y)
+\Longleftrightarrow
+\operatorname{ParetoWeakOn}(v,F,x,y)
+\wedge
+\operatorname{ParetoWeakOn}(v,F,y,x).
+}
+\]
+
+该等价完全由弱支配诱导；它不是另给标签，也不预先把“同向量”写进定义。
+

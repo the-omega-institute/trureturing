@@ -1,0 +1,42 @@
+## 定理 125.2（kernel）
+
+若所有申报权重严格为正，则
+
+$$
+\boxed{
+\ker W_{s,\beta}
+=
+\bigcap_{p,k,b,a,t}
+\ker\bigl[D\mapsto
+\operatorname{Tr}(De_{p,k,b,a,t})\bigr].
+}
+$$
+
+### 证明
+
+右侧显然包含于 kernel。反向若二次型为零，则正权重下每个非负平方项都必须为零。∎
+
+所以：
+
+$$
+\boxed{
+W_{s,\beta}>0
+\iff
+\text{全部加权 prime-time effects 信息完备}.
+}
+$$
+
+参数具有清楚的实验设计含义：
+
+$$
+\begin{aligned}
+s&=\text{横向素数预算衰减},\\
+k&=\text{纵向同素数精度},\\
+\beta&=\text{时间深度折扣}.
+\end{aligned}
+$$
+
+不得把某个特殊 $s$ 值无条件解释成物理相变或 RH 临界线。
+
+---
+

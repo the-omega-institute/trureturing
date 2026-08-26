@@ -1,0 +1,10 @@
+ast_path: section/保持矛盾
+fingerprints:
+  raw_sha256: sha256:671cf0493034d8632e09b44ebd9f37a880840b1285fe2c266046e5717d822789
+  normalized_sha256: sha256:671cf0493034d8632e09b44ebd9f37a880840b1285fe2c266046e5717d822789
+cas_ref: sha256:671cf0493034d8632e09b44ebd9f37a880840b1285fe2c266046e5717d822789
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

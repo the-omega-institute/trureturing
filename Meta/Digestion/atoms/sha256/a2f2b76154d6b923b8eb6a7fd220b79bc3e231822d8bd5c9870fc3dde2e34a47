@@ -1,0 +1,10 @@
+## 定义 134.3（cross-prime correlation residual）
+
+对只看至多 $m$-prime observables 的观察者：
+
+$$
+N_{>m}
+=
+\bigoplus_{|S|>m}V_S.
+$$
+

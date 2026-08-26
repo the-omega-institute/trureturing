@@ -1,0 +1,10 @@
+ast_path: section/24-3-最小揭示实验
+fingerprints:
+  raw_sha256: sha256:d9ff63ba28f75cf44ac001dee98d2d709c8092e41c33af3b19255e4934cbf264
+  normalized_sha256: sha256:d9ff63ba28f75cf44ac001dee98d2d709c8092e41c33af3b19255e4934cbf264
+cas_ref: sha256:d9ff63ba28f75cf44ac001dee98d2d709c8092e41c33af3b19255e4934cbf264
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

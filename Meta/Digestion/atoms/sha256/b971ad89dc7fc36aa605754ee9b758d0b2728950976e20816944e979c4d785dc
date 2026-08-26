@@ -1,0 +1,16 @@
+# 136. 任务相对 prime-quantum 完成
+
+完整量子态层析通常不是实际任务所需的最小预算。
+
+设目标 observable 子空间为
+
+$$
+T\subseteq\operatorname{Herm}_d.
+$$
+
+设当前 prime-time 可见空间为
+
+$$
+V_{J,m}.
+$$
+

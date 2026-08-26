@@ -1,0 +1,6 @@
+## 命题 76.8（策略充分自我普适最小性）
+
+历史按完整策略画像 kernel 取商，是所有策略充分历史接口中的最粗者。
+
+**状态**：`realized_image_unique_factorization_iff_reverse_kernel` 的自然新实例。
+

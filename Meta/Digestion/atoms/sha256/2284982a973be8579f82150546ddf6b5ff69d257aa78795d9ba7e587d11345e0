@@ -1,0 +1,52 @@
+# 21. 合法动作丛、策略截面与无典范选择
+
+设规范观察状态空间为 $Q$，动作类型为 $A$，合法关系为
+
+$$
+\operatorname{Legal}:Q\times A\to\operatorname{Prop}.
+$$
+
+定义动作纤维
+
+$$
+\mathcal A(q)=\{a:\operatorname{Legal}(q,a)\}
+$$
+
+和总空间
+
+$$
+E_{\mathcal A}
+=
+\{(q,a):a\in\mathcal A(q)\}.
+$$
+
+投影
+
+$$
+p:E_{\mathcal A}\to Q,
+\qquad
+p(q,a)=q
+$$
+
+称为合法动作丛；这里不预设局部平凡、光滑或向量丛结构。
+
+确定性策略是截面
+
+$$
+s:Q\to E_{\mathcal A},
+\qquad
+p\circ s=\operatorname{id}_Q.
+$$
+
+随机策略则是支撑位于 $\mathcal A(q)$ 内的 Markov kernel。
+
+所以：
+
+$$
+\boxed{
+\text{Law}=\text{合法动作纤维与后果核},
+\qquad
+\text{Policy}=\text{动作丛上的截面}.
+}
+$$
+

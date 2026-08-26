@@ -1,0 +1,30 @@
+## 14.3 五层未来分解
+
+有限深度 n 下定义：
+
+$$
+F_n\subseteq V_n\subseteq R_n\subseteq P_n\subseteq Ω_n.
+$$
+
+分别表示实际可实现、可存活、可达、DNA 许可和全部候选前缀。
+
+有不交并分解：
+
+$$
+Ω_n
+=
+(Ω_n\setminus P_n)
+\sqcup
+(P_n\setminus R_n)
+\sqcup
+(R_n\setminus V_n)
+\sqcup
+(V_n\setminus F_n)
+\sqcup
+F_n.
+$$
+
+分别对应 DNA 拒绝、许可但不可达、可达但不可存活、可存活但资源不可行、真实可实现。
+
+---
+

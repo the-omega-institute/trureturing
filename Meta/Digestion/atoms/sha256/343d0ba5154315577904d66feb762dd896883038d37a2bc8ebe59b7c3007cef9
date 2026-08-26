@@ -1,0 +1,25 @@
+# 127. Frobenius 素数身份的相对信息率趋零
+
+固定 $N$，令 $P_N$ 在所有 $p\le N$ 的素数中均匀分布。则素数身份熵：
+
+$$
+H(P_N)=\log\pi(N).
+$$
+
+若某固定 Galois/Frobenius 观察器只有 $r<\infty$ 个可能输出，则
+
+$$
+H(O(P_N))\le\log r.
+$$
+
+因此：
+
+$$
+\boxed{
+\frac{H(O(P_N))}{H(P_N)}
+\le
+\frac{\log r}{\log\pi(N)}
+\longrightarrow0.
+}
+$$
+

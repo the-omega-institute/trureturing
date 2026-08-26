@@ -1,0 +1,57 @@
+# 355. 地方自治与统一标准的冲突是共同因子问题
+
+设不同区域：
+
+[
+r\in R
+]
+
+拥有本地概念：
+
+[
+C_r.
+]
+
+统一中央规则只能依赖所有地区共同可表达的概念：
+
+[
+\boxed{
+C_{\mathrm{common}}
+===================
+
+\bigwedge_rC_r.
+}
+]
+
+如果某个政策目标 (T) 满足：
+
+[
+E_T\preceq C_{\mathrm{common}},
+]
+
+则可以制定真正统一且各地区都能独立解释的规则。
+
+若：
+
+[
+E_T\not\preceq C_{\mathrm{common}},
+]
+
+统一规则必须：
+
+* 增加中央信息；
+* 忽略部分地方差异；
+* 或允许地方分支规则。
+
+所以中央统一与地方适应之间的矛盾可以表示为：
+
+[
+\boxed{
+\text{common factor}
+\quad\text{vs}\quad
+\text{local refinement}.
+}
+]
+
+---
+

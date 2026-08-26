@@ -1,0 +1,10 @@
+ast_path: section/104-量子-prime-time-observer
+fingerprints:
+  raw_sha256: sha256:af21f3eaf83346eba3ae2a7c8caf56650f058ddca46952027661d31a5bd139fa
+  normalized_sha256: sha256:af21f3eaf83346eba3ae2a7c8caf56650f058ddca46952027661d31a5bd139fa
+cas_ref: sha256:af21f3eaf83346eba3ae2a7c8caf56650f058ddca46952027661d31a5bd139fa
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

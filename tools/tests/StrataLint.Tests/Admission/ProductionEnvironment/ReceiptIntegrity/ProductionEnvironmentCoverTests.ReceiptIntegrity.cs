@@ -91,4 +91,34 @@ public sealed partial class ProductionEnvironmentTests
         };
     }
 
+    private static void AssertAlignedCoverRepairsPersistedScribeReceipt()
+    {
+        var inputs = DirectoryInputs(CoverWorld.Materialize(CoverWorld.StaleReceiptSpec()));
+        var documentGid = ScribeEmissionAttestation.DocumentGid(inputs.Gid);
+        Assert.True(inputs.VerifiedEmissions!.TryGet(documentGid, out var verified));
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var stale = Assert.Single(
+            BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries(),
+            candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
+        var staleReceipt = Assert.Single(
+            stale.Receipts.Scribe,
+            candidate => candidate.Gid == inputs.Gid);
+        Assert.NotEqual(verified.DefinitionSha256, staleReceipt.DefinitionSha256);
+        Assert.NotEqual(verified.EmissionSha256, staleReceipt.EmissionSha256);
+
+        var result = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files)
+            .CoverAtom([.. CoverArgs(inputs), "--align-scribe-receipt"]);
+
+        Assert.True(result.Success, result.Error);
+        var persisted = Assert.Single(
+            BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries(),
+            candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
+        var persistedReceipt = Assert.Single(
+            persisted.Receipts.Scribe,
+            candidate => candidate.Gid == inputs.Gid);
+        Assert.Equal(verified.DefinitionSha256, persistedReceipt.DefinitionSha256);
+        Assert.Equal(verified.EmissionSha256, persistedReceipt.EmissionSha256);
+    }
+
 }

@@ -1,0 +1,46 @@
+# 第十三部：对合横截与 Boolean 定向
+
+设
+
+\[
+\kappa:X\to X,
+\qquad
+\kappa^2=\operatorname{id}.
+\]
+
+集合 \(S\subseteq X\) 是轨道横截集，当
+
+\[
+\boxed{
+\kappa(x)\in S
+\iff
+x\notin S.
+}
+\]
+
+等价地：
+
+\[
+\kappa^{-1}(S)=X\setminus S.
+\]
+
+横截条件强制 \(\kappa\) 无不动点。若 \(\kappa\) 是对合，还得到
+
+\[
+\kappa(S)=X\setminus S.
+\]
+
+因此 Boolean 化需要两项数据：
+
+\[
+\boxed{
+\text{固定点自由的二元轨道}
++
+\text{每个轨道上的一致选边}.
+}
+\]
+
+对合提供另一侧方向。横截选择决定哪一侧命名为 true。
+
+---
+

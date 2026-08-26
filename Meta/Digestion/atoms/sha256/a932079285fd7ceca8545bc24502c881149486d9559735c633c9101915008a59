@@ -1,0 +1,22 @@
+## 结论 61.1
+
+$$
+\boxed{
+H(A\mid Q)>0
+\not\Rightarrow
+\text{agency};
+}
+$$
+
+$$
+\boxed{
+H(A\mid Q,M)=0
+\not\Rightarrow
+\text{nonfree}.
+}
+$$
+
+随机熵度量行动不可预测性；作者性度量内部状态对行动的控制。二者是不同维度。
+
+---
+

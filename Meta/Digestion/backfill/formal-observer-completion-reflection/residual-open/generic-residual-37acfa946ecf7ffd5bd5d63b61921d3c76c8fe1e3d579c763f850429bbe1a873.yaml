@@ -1,0 +1,10 @@
+ast_path: section/34-cocycle-规定组合一致性-不规定选择理由
+fingerprints:
+  raw_sha256: sha256:37acfa946ecf7ffd5bd5d63b61921d3c76c8fe1e3d579c763f850429bbe1a873
+  normalized_sha256: sha256:37acfa946ecf7ffd5bd5d63b61921d3c76c8fe1e3d579c763f850429bbe1a873
+cas_ref: sha256:37acfa946ecf7ffd5bd5d63b61921d3c76c8fe1e3d579c763f850429bbe1a873
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

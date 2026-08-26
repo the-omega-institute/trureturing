@@ -1,0 +1,10 @@
+ast_path: section/24-6-局部-全局障碍
+fingerprints:
+  raw_sha256: sha256:2e8da9c1e170dff5655a766df449867cae23fb21d2785b55a079c2730b8f2061
+  normalized_sha256: sha256:2e8da9c1e170dff5655a766df449867cae23fb21d2785b55a079c2730b8f2061
+cas_ref: sha256:2e8da9c1e170dff5655a766df449867cae23fb21d2785b55a079c2730b8f2061
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

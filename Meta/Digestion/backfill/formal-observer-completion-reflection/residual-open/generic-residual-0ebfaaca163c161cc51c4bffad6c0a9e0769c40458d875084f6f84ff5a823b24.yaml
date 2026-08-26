@@ -1,0 +1,10 @@
+ast_path: section/第一层-操作开放性
+fingerprints:
+  raw_sha256: sha256:0ebfaaca163c161cc51c4bffad6c0a9e0769c40458d875084f6f84ff5a823b24
+  normalized_sha256: sha256:0ebfaaca163c161cc51c4bffad6c0a9e0769c40458d875084f6f84ff5a823b24
+cas_ref: sha256:0ebfaaca163c161cc51c4bffad6c0a9e0769c40458d875084f6f84ff5a823b24
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -33,7 +33,7 @@ public sealed partial class MakeWorkflowTests
             "git",
             ["rev-parse", "HEAD"],
             root,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
         Assert.Equal(0, headResult.ExitCode);
         var baseRevision = Encoding.UTF8.GetString(headResult.StandardOutput).Trim();
@@ -65,7 +65,7 @@ public sealed partial class MakeWorkflowTests
                 baseRevision,
             ],
             root,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
         Assert.True(
@@ -110,7 +110,7 @@ public sealed partial class MakeWorkflowTests
                     scribe,
                 ],
                 root,
-                TimeSpan.FromSeconds(30),
+                BoundedProcessRunner.HangDetectionBudget,
                 64 * 1024);
 
             Assert.NotEqual(0, result.ExitCode);
@@ -160,7 +160,7 @@ public sealed partial class MakeWorkflowTests
                 judge,
             ],
             candidateRoot,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
         Assert.Equal(0, result.ExitCode);
@@ -227,7 +227,7 @@ public sealed partial class MakeWorkflowTests
                 Path.Combine(root, PreflightScriptPath),
             ],
             candidateRoot,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
         var output = Encoding.UTF8.GetString(result.StandardOutput);
@@ -304,7 +304,7 @@ public sealed partial class MakeWorkflowTests
                 Path.Combine(root, PreflightScriptPath),
             ],
             candidateRoot,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
         var output = Encoding.UTF8.GetString(result.StandardOutput);
@@ -412,7 +412,7 @@ public sealed partial class MakeWorkflowTests
                 baseArgument,
             ],
             candidateRoot,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
         var error = Encoding.UTF8.GetString(result.StandardError);
@@ -475,7 +475,7 @@ public sealed partial class MakeWorkflowTests
                 candidateRoot,
             ],
             candidateRoot,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
     }
 

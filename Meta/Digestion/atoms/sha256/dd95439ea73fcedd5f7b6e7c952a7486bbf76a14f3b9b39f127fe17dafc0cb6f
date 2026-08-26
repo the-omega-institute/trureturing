@@ -1,0 +1,46 @@
+## 定理 464.1（拓扑知识算子）
+
+(K_\tau) 满足：
+
+### 事实性
+
+[
+\boxed{
+K_\tau(P)\subseteq P.
+}
+]
+
+### 单调性
+
+[
+P\subseteq Q
+\Longrightarrow
+K_\tau(P)\subseteq K_\tau(Q).
+]
+
+### 合取保持
+
+[
+\boxed{
+K_\tau(P\cap Q)
+===============
+
+K_\tau(P)\cap K_\tau(Q).
+}
+]
+
+### 正内省／幂等性
+
+[
+\boxed{
+K_\tau(K_\tau(P))
+=================
+
+K_\tau(P).
+}
+]
+
+所以一般观察拓扑自然产生 S4 型知识结构。
+
+---
+

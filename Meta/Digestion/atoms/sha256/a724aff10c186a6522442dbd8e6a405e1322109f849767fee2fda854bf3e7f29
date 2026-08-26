@@ -1,0 +1,16 @@
+### 互相奇异
+
+$$
+μ_{aa}\perp μ_{ab}.
+$$
+
+仓库 `SingularProbabilityPerfectSeparator` 已机器验证：存在可测事件 A，使：
+
+$$
+μ_{aa}(A)=1,
+\qquad
+μ_{ab}(A)=0.
+$$
+
+反向亦直接成立，所以互相奇异等价于存在零误差可测分离。
+

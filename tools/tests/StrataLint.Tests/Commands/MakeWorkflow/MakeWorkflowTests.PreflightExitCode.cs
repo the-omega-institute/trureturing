@@ -231,7 +231,7 @@ public sealed partial class MakeWorkflowTests
                 preflight,
             ],
             root,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
         return result;
@@ -402,7 +402,7 @@ public sealed partial class MakeWorkflowTests
                     GateForkSha,
                 ],
                 candidateRoot,
-                TimeSpan.FromSeconds(30),
+                BoundedProcessRunner.HangDetectionBudget,
                 64 * 1024);
 
             return new PerfFlushFailureScenario(fixture, result, probe);

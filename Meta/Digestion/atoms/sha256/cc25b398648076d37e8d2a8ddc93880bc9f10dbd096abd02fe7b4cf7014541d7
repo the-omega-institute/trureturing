@@ -1,0 +1,57 @@
+## 定义 426.1（模型态射）
+
+从 (\mathfrak M) 到 (\mathfrak N) 的模型态射至少包括：
+
+[
+h:X\to Y,
+]
+
+[
+\phi:U_X\to U_Y,
+]
+
+并满足：
+
+### 准入保持
+
+[
+\boxed{
+\operatorname{Adm}_X(x)
+\Longrightarrow
+\operatorname{Adm}_Y(hx).
+}
+]
+
+### 锚点保持
+
+[
+\boxed{
+h(a_X)=a_Y.
+}
+]
+
+### 动力相容
+
+[
+\boxed{
+h(F^X_u x)
+==========
+
+F^Y_{\phi(u)}(hx).
+}
+]
+
+即：
+
+[
+\begin{array}{ccc}
+X&\xrightarrow{F^X_u}&X\
+\downarrow h&&\downarrow h\
+Y&\xrightarrow{F^Y_{\phi(u)}}&Y
+\end{array}
+]
+
+交换。
+
+---
+

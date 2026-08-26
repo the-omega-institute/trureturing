@@ -1,0 +1,26 @@
+## 定义 23.1（自主性残差）
+
+$$
+\mathcal R_{\mathrm{aut}}(e;\Pi)
+=
+\{(h,h'):e(h)=e(h'),\ \Pi(h)\ne\Pi(h')\}.
+$$
+
+它记录外部环境相同而策略不同的历史对。
+
+若自我接口为 $m:\mathcal H\to M$，则联合接口 $e\vee m$ 决定策略，当且仅当
+
+$$
+\boxed{
+\mathcal R_{\mathrm{aut}}(e;\Pi)\cap K_m=\varnothing.
+}
+$$
+
+这说明自我接口的最低功能是切开环境无法解释的策略差异。
+
+再设观察者认可的理由接口为
+
+$$
+r:\mathcal H\to R.
+$$
+

@@ -1,0 +1,65 @@
+## 定理 101.1（非平凡矩阵代数无 character）
+
+当 $d\ge2$ 时：
+
+$$
+\boxed{
+\operatorname{AlgHom}_{\mathbb C}
+(M_d(\mathbb C),\mathbb C)
+=
+\varnothing.
+}
+$$
+
+### 证明
+
+对矩阵单位 $e_{ij}$，若 $i\ne j$：
+
+$$
+e_{ij}^2=0,
+$$
+
+所以
+
+$$
+v(e_{ij})^2=0,
+$$
+
+从而
+
+$$
+v(e_{ij})=0.
+$$
+
+又有
+
+$$
+e_{ii}=e_{ij}e_{ji},
+$$
+
+故
+
+$$
+v(e_{ii})=0.
+$$
+
+于是
+
+$$
+1=v(I)=\sum_i v(e_{ii})=0,
+$$
+
+矛盾。∎
+
+仓库 `WindowCharacter.lean` 已用 Weyl clock–shift 关系对每个非平凡有限窗口矩阵代数形式化相同障碍。
+
+但严格边界是：
+
+$$
+\boxed{
+\text{no algebra character}
+}
+$$
+
+要求保持整个代数结构，比通常 Kochen–Specker 型投影赋值条件更强；不能不加说明地把两者视为同一 theorem。
+

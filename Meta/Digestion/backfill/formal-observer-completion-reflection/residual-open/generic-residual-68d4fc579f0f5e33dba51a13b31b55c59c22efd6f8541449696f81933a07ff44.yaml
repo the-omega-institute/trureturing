@@ -1,0 +1,10 @@
+ast_path: section/40-没有必然策略是自由的席位-不是自由本身
+fingerprints:
+  raw_sha256: sha256:68d4fc579f0f5e33dba51a13b31b55c59c22efd6f8541449696f81933a07ff44
+  normalized_sha256: sha256:68d4fc579f0f5e33dba51a13b31b55c59c22efd6f8541449696f81933a07ff44
+cas_ref: sha256:68d4fc579f0f5e33dba51a13b31b55c59c22efd6f8541449696f81933a07ff44
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: row/three-ring-quadratic-character-redundancy
+fingerprints:
+  raw_sha256: sha256:3b1064855fde6070c53e4b57a738652ee42ebe2160b4c72bf5828575298eff7e
+  normalized_sha256: sha256:3b1064855fde6070c53e4b57a738652ee42ebe2160b4c72bf5828575298eff7e
+cas_ref: sha256:3b1064855fde6070c53e4b57a738652ee42ebe2160b4c72bf5828575298eff7e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

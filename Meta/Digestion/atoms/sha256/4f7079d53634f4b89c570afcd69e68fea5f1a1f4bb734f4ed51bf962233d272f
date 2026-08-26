@@ -1,0 +1,20 @@
+## 定理 8.1（联合概念的普适性质）
+
+有：
+
+\[
+C\preceq C\vee D,
+\qquad
+D\preceq C\vee D.
+\]
+
+若 \(C\preceq E\) 且 \(D\preceq E\)，则：
+
+\[
+\boxed{C\vee D\preceq E.}
+\]
+
+### 证明
+
+从 \(E\) 的值分别计算 \(C,D\)，再配对即可。\(\square\)
+

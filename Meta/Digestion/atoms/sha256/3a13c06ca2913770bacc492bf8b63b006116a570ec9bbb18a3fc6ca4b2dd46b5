@@ -1,0 +1,8 @@
+## 15.4 次模收益与贪心推进
+
+仓库 `WeightedResidualCoverage` 已机器验证加权 residual capture 的边际收益递减；`GreedyResidualAllocation` 已机器验证贪心选择每一步最大化单步收益，且只要仍有正权重 residual 可被候选实验分开，就取得严格正进展。
+
+这为基因检测面板、干预组合和跨组织采样提供了统一的有限覆盖语义。
+
+---
+

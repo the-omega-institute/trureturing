@@ -6,7 +6,7 @@ A transcript deciding a nonconstant Boolean proposition must reveal a distinctio
 
 **Theorem 1.1 (A nonconstant proposition forces a transcript distinction).**
 
-$$\forall Secret \in Type, Transcript \in Type, transcript \in Secret \to Transcript, Q \in Secret \to Bool,\; \left(\operatorname{ProvesProposition}\left(transcript, Q\right) \land \exists s1 \in Secret, s2 \in Secret,\; Q\left(s1\right) \ne Q\left(s2\right)\right) \Rightarrow \exists s1 \in Secret, s2 \in Secret,\; transcript\left(s1\right) \ne transcript\left(s2\right)$$
+$$\forall Secret \in Type, Transcript \in Type, transcript \in Secret \to Transcript, Q \in Secret \to Bool,\; \left(\operatorname{ProvesProposition}\left(transcript, Q\right) \land \left(\exists s1 \in Secret, s2 \in Secret,\; Q\left(s1\right) \ne Q\left(s2\right)\right)\right) \Rightarrow \left(\exists s1 \in Secret, s2 \in Secret,\; transcript\left(s1\right) \ne transcript\left(s2\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Communication/PropositionLeakLowerBound.transcript_leaks_at_least_the_proposition` (`✓ std3`). ∎
 

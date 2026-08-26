@@ -117,7 +117,7 @@ public sealed class WorktreeCacheStrategyTests
             "git",
             ["grep", "-n", "-I", "-e", shellForm, "-e", argumentForm, "--", "."],
             root,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             1024 * 1024);
 
         Assert.Equal(
@@ -146,7 +146,7 @@ public sealed class WorktreeCacheStrategyTests
             "git",
             ["show-ref", "--verify", "--quiet", $"refs/heads/{branch}"],
             root,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             4096);
         Assert.Equal(1, lookup.ExitCode);
     }

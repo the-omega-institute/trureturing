@@ -1,0 +1,16 @@
+## 11.1 随机实现
+
+将实现映射推广为概率核：
+
+$$
+ρ:\mathcal G_p\times\mathcal C\to Prob(\mathcal X).
+$$
+
+观察与过程诱导完整 transcript 概率律：
+
+$$
+μ_{g,c}^{\mathcal L,S}\in Prob(Ω_{\mathcal L,S}).
+$$
+
+---
+
