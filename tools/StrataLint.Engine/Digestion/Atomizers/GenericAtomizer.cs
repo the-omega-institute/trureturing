@@ -63,7 +63,8 @@ internal static class GenericAtomizer
             identifyHeading: IdentifyHeading,
             parse: MarkdigBlockAst.Parse,
             identifyTableRow: IdentifyTableRow,
-            dropEmptyHeadingClaims: true);
+            dropEmptyHeadingClaims: true,
+            identifyHeadingClaim: IsHeadingClaim);
 
     /// <summary>
     /// A claim table states one proposition per row — each with its own attestation and its
@@ -82,6 +83,8 @@ internal static class GenericAtomizer
             ? claim.Groups["kind"].Value + "/" + claim.Groups["number"].Value
             : "section/" + Slug(heading);
     }
+
+    private static bool IsHeadingClaim(string heading) => HeadingClaim.IsMatch(heading);
 
     private static string? IdentifyParagraph(string paragraph)
     {
