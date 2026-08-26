@@ -5,6 +5,99 @@ namespace StrataLint.Tests;
 
 public sealed partial class DigestionLedgerTests
 {
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void IngestInheritsCoverageAcrossAtomGenerationsOnlyWhenNewPairIsReceipted(
+        bool hasNewGenerationReceipt)
+    {
+        const string gid =
+            "D5/S3/Observer/WindowCharacter.window_algebra_has_no_character";
+        const string unresolvedSubitem = "preserve-this-unresolved-subitem";
+        var oldBytes = Encoding.UTF8.GetBytes(
+            "# SYNTH-VOL\n\n**定理 1.1(A)**。old。\n");
+        var currentBytes = Encoding.UTF8.GetBytes(
+            "# SYNTH-VOL\n\n**定理 1.1(A)**。rewritten。\n");
+        var oldAtom = Assert.Single(AtomizerRegistry.Atomize(
+            AtomizerRegistry.GictId,
+            oldBytes,
+            DigestionTestSupport.Rules).Claims);
+        var currentAtom = Assert.Single(AtomizerRegistry.Atomize(
+            AtomizerRegistry.GictId,
+            currentBytes,
+            DigestionTestSupport.Rules).Claims);
+        var oldAtomId = "gict-residual-"
+            + oldAtom.Fingerprints.RawSha256["sha256:".Length..];
+        var currentAtomId = "gict-residual-"
+            + currentAtom.Fingerprints.RawSha256["sha256:".Length..];
+        Assert.Equal(oldAtom.AstPath, currentAtom.AstPath);
+        Assert.NotEqual(oldAtomId, currentAtomId);
+
+        var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
+        var oldEntry = DigestionTestSupport.Entry(
+            oldAtom,
+            oldAtomId,
+            AtomizerRegistry.GictId,
+            coverageGids: [gid],
+            receipts: new DigestionReceipts(
+                [new DigestionCoverageReceipt(
+                    gid,
+                    oldAtom.Fingerprints.RawSha256,
+                    "sha256:" + new string('a', 64))],
+                [],
+                [unresolvedSubitem],
+                [],
+                null),
+            casRef: oldCapture.Reference);
+        var ledger = DigestionTestSupport.Document(
+            AtomizerRegistry.GictId,
+            [oldEntry],
+            acknowledgedStale: [oldAtomId]);
+        var snapshotFiles = new List<(string Path, byte[] Bytes)>
+        {
+            ("docs/source.md", currentBytes),
+            (oldCapture.RelativePath, oldCapture.Bytes.ToArray()),
+        };
+        if (hasNewGenerationReceipt)
+        {
+            var receipt = new DigestionFormalizationReceipt(
+                currentAtomId,
+                gid,
+                new DigestionFormalizationSignature(
+                    "window_algebra_has_no_character",
+                    "theorem",
+                    "True"),
+                currentAtom.Fingerprints.RawSha256,
+                currentAtom.Fingerprints.RawSha256);
+            snapshotFiles.Add((
+                DigestionFormalizationReceipt.PathForAtom(currentAtomId),
+                DigestionFormalizationReceipt.Write(receipt).ToArray()));
+        }
+
+        var snapshot = DigestionTestSupport.Snapshot(snapshotFiles.ToArray());
+        var plan = DigestionIngestor.Plan(ledger, snapshot, ledger, snapshot);
+
+        var source = Assert.Single(plan.Document.RequireDigestionSources());
+        var newEntry = Assert.Single(
+            source.Entries,
+            entry => entry.AtomId == currentAtomId);
+        Assert.Contains(oldEntry, source.Entries);
+        Assert.Equal(
+            hasNewGenerationReceipt ? [gid] : Array.Empty<string>(),
+            newEntry.CoverageGids.ToArray());
+        Assert.Empty(newEntry.Receipts.Coverage);
+        if (hasNewGenerationReceipt)
+        {
+            return;
+        }
+
+        Assert.Contains(oldAtomId, source.AcknowledgedStale);
+        Assert.Equal([unresolvedSubitem], newEntry.Receipts.UnresolvedSubitems.ToArray());
+        Assert.Equal(
+            new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open),
+            newEntry.ProjectedStatus);
+    }
+
     [Fact]
     public void IngestMigratesAContentIdenticalAtomWhoseAstPathMoved()
     {

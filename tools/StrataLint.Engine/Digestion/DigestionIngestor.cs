@@ -134,7 +134,8 @@ internal static class DigestionIngestor
     internal static DigestionIngestPlan Plan(
         BackfillInventoryDocument document,
         RepositorySnapshot snapshot,
-        BackfillInventoryDocument baselineDocument)
+        BackfillInventoryDocument baselineDocument,
+        RepositorySnapshot? baselineSnapshot = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
@@ -272,13 +273,27 @@ internal static class DigestionIngestor
                     var priorGenerations = source.Entries
                         .Where(entry => entry.AstPath == item.Atom.AstPath)
                         .ToArray();
+                    var receiptedCoverage = baselineSnapshot is null
+                        ? ImmutableHashSet<string>.Empty
+                        : DigestionFormalizationPrecommitmentValidator.RegisteredBaseOwnedGids(
+                            baselineSnapshot,
+                            item.SuggestedAtomId,
+                            item.Atom.Fingerprints.RawSha256);
                     var inheritedCoverage = priorGenerations
                         .SelectMany(static entry => entry.CoverageGids)
                         .Distinct(StringComparer.Ordinal)
+                        .Where(receiptedCoverage.Contains)
                         .ToImmutableArray();
                     var inheritedUnresolvedSubitems = priorGenerations
                         .SelectMany(static entry => entry.Receipts.UnresolvedSubitems)
                         .Distinct(StringComparer.Ordinal)
+                        .ToImmutableArray();
+                    acknowledgments = acknowledgments
+                        .Concat(priorGenerations
+                            .Select(static entry => entry.AtomId)
+                            .Where(priorAcknowledgments.Contains))
+                        .Distinct(StringComparer.Ordinal)
+                        .Order(StringComparer.Ordinal)
                         .ToImmutableArray();
                     entries.Add(new DigestionLedgerEntry(
                         source.SourceId,

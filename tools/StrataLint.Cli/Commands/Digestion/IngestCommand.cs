@@ -30,7 +30,11 @@ internal static partial class IngestCommand
             var baseline = Decode(baselineRaw);
             var document = LoadDocument(current);
             var baselineDocument = BackfillInventoryLoader.LoadBaseline(baseline);
-            var plan = DigestionIngestor.Plan(document, current, baselineDocument);
+            var plan = DigestionIngestor.Plan(
+                document,
+                current,
+                baselineDocument,
+                baseline);
             var repositoryChanges = repository.ReadChanges(baselineRevision);
             var crossVolumeClearanceGaps = RenderCrossVolumeClearanceGaps(
                 plan.Document,
