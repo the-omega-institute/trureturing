@@ -9,6 +9,8 @@ PREFLIGHT_STARTED=0
 PERF_TMP=""
 PERF_EVENT_SPOOL=""
 PERF_BASE="unknown"
+SCOPE_TMP=""
+ENGINEERING_RUN="true"
 BASE_REF="${BASE:-origin/dev}"
 BASE_TIP_SHA=""
 BASE_SHA=""
@@ -47,6 +49,7 @@ finish_preflight() {
     perf_flush_events "$ROOT" "$PERF_EVENT_SPOOL" preflight 2>/dev/null || true
   fi
   if [[ -n "$PERF_TMP" ]]; then rm -rf -- "$PERF_TMP"; fi
+  if [[ -n "$SCOPE_TMP" ]]; then rm -rf -- "$SCOPE_TMP"; fi
   exit "$rc"
 }
 trap 'finish_preflight "$?"' EXIT
@@ -83,6 +86,16 @@ PERF_BASE="$BASE_SHA"
 STRATALINT_PERF_RUN_ID="${STRATALINT_PERF_RUN_ID:-preflight-${PREFLIGHT_STARTED}-$$-${PERF_COMMIT:0:12}}"
 export STRATALINT_PERF_RUN_ID
 
+SCOPE_TMP="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-preflight-scope.XXXXXXXX")"
+SCOPE_RESULT="$SCOPE_TMP/result"
+/bin/bash "$ROOT/tools/scripts/workflow/engineering-scope.sh" \
+  --repository "$ROOT" \
+  --mode pull-request \
+  --result-file "$SCOPE_RESULT"
+ENGINEERING_RUN="$(sed -n 's/^run=//p' "$SCOPE_RESULT")"
+[[ "$ENGINEERING_RUN" == "true" || "$ENGINEERING_RUN" == "false" ]] \
+  || { echo "[preflight] engineering scope returned an invalid run decision" >&2; exit 2; }
+
 record_timing() {
   local stage="$1"
   local elapsed="$(( $(date +%s) - T ))"
@@ -94,12 +107,19 @@ record_timing() {
 }
 T=$(date +%s)
 
-dotnet restore tools/tests/CompileFailProof/CompileFailProof.csproj --locked-mode >/dev/null
-dotnet restore tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj --locked-mode >/dev/null
-record_timing restore-proofs
+if [[ "$ENGINEERING_RUN" == "true" ]]; then
+  dotnet restore tools/tests/CompileFailProof/CompileFailProof.csproj --locked-mode >/dev/null
+  dotnet restore tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj --locked-mode >/dev/null
+  record_timing restore-proofs
 
-CI=true make -C tools dotnet
-record_timing dotnet
+  CI=true make -C tools dotnet
+  record_timing dotnet
+else
+  printf '%s\n' '[preflight] engineering       skipped (proven disjoint)'
+  perf_capture_event \
+    "$PERF_EVENT_SPOOL" "$ROOT" "$STRATALINT_PERF_RUN_ID" "preflight" "$PERF_BASE" \
+    engineering skipped 0 || true
+fi
 
 make lean-report
 record_timing lean-report
@@ -109,40 +129,42 @@ STRATALINT_SCRIBE_BASE="$BASE_SHA" \
   "$ROOT/.lake/build/stratalint/raw-lean-report.json"
 record_timing scribe-content-checks
 
-CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools test
-record_timing test
+if [[ "$ENGINEERING_RUN" == "true" ]]; then
+  CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools test
+  record_timing test
 
-make -C tools selftest
-record_timing selftest
+  make -C tools selftest
+  record_timing selftest
 
-expect_compile_failure() {
-  local project="$1"
-  local label="$2"
-  local failure_reason="$3"
-  local rc=0
-  set +e
-  dotnet build "$project" --no-restore --configuration Release >/dev/null 2>&1
-  rc=$?
-  set -e
-  if [[ "$rc" -eq 0 ]]; then
-    echo "[preflight] FAIL: $label 竟然编译通过($failure_reason)" >&2
-    return 1
-  fi
-  case "$rc" in
-    124|126|127|130|143) return "$rc" ;;
-  esac
-  return 0
-}
+  expect_compile_failure() {
+    local project="$1"
+    local label="$2"
+    local failure_reason="$3"
+    local rc=0
+    set +e
+    dotnet build "$project" --no-restore --configuration Release >/dev/null 2>&1
+    rc=$?
+    set -e
+    if [[ "$rc" -eq 0 ]]; then
+      echo "[preflight] FAIL: $label 竟然编译通过($failure_reason)" >&2
+      return 1
+    fi
+    case "$rc" in
+      124|126|127|130|143) return "$rc" ;;
+    esac
+    return 0
+  }
 
-expect_compile_failure \
-  tools/tests/CompileFailProof/CompileFailProof.csproj \
-  CompileFailProof \
-  "能力链证明失效"
-expect_compile_failure \
-  tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj \
-  BannedApiCompileFailProof \
-  "禁 API 证明失效"
-record_timing compile-fail-proofs
+  expect_compile_failure \
+    tools/tests/CompileFailProof/CompileFailProof.csproj \
+    CompileFailProof \
+    "能力链证明失效"
+  expect_compile_failure \
+    tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj \
+    BannedApiCompileFailProof \
+    "禁 API 证明失效"
+  record_timing compile-fail-proofs
+fi
 
 # Measure what is left of the outer deadline before entering the most expensive stage,
 # and name the owner when it is already spent. Without this the gate starts, runs its

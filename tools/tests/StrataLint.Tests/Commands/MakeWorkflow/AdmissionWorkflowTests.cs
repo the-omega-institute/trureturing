@@ -57,29 +57,42 @@ public sealed class AdmissionWorkflowTests
                 && id is YamlScalarNode { Value: "scope" });
         var scopeScript = Assert.IsType<YamlScalarNode>(
             scope.Children[new YamlScalarNode("run")]).Value ?? string.Empty;
+        var predicate = EngineeringScopePredicate();
         var baselineScript = BaselineResolutionScript(workflow);
 
         Assert.Contains(
-            "base_sha=\"$(git -C candidate rev-parse HEAD^1)\"",
-            scopeScript,
+            "base_sha=\"$(git -C \"$repository\" rev-parse HEAD^1)\"",
+            predicate,
             StringComparison.Ordinal);
         Assert.Contains(
-            "candidate_sha=\"$(git -C candidate rev-parse HEAD)\"",
-            scopeScript,
+            "head_sha=\"$(git -C \"$repository\" rev-parse HEAD)\"",
+            predicate,
             StringComparison.Ordinal);
         Assert.Contains(
-            "git -C candidate diff --name-only -z --no-renames --diff-filter=ACDMRTUXB \"$base_sha\" \"$candidate_sha\"",
+            "git -C \"$repository\" diff --name-only -z --no-renames --diff-filter=ACDMRTUXB",
+            predicate,
+            StringComparison.Ordinal);
+        Assert.Contains("\"$base_sha\" \"$head_sha\" --", predicate, StringComparison.Ordinal);
+        Assert.Contains(
+            "git -C candidate archive HEAD^1 -- tools/scripts/workflow/engineering-scope.sh | tar -xO > \"$scope_script\"",
             scopeScript,
             StringComparison.Ordinal);
+        Assert.DoesNotContain("git -C candidate diff", scopeScript, StringComparison.Ordinal);
         Assert.DoesNotContain("merge-base", scopeScript, StringComparison.Ordinal);
+        Assert.DoesNotContain("merge-base", predicate, StringComparison.Ordinal);
         Assert.Contains(
             "sha=\"$(git -C candidate rev-parse HEAD^1)\"",
             baselineScript,
             StringComparison.Ordinal);
         Assert.DoesNotContain("merge-base", baselineScript, StringComparison.Ordinal);
-        Assert.DoesNotContain("HEAD^2", scopeScript, StringComparison.Ordinal);
+        Assert.DoesNotContain("HEAD^2", predicate, StringComparison.Ordinal);
         Assert.DoesNotContain("HEAD^2", baselineScript, StringComparison.Ordinal);
     }
+
+    private static string EngineeringScopePredicate() =>
+        File.ReadAllText(Path.Combine(
+            TestRepositoryLayout.FindRoot(),
+            "tools/scripts/workflow/engineering-scope.sh"));
 
     [Fact]
     public void PushFallbackBaseIsCheckedHeadFirstParent()
@@ -156,11 +169,9 @@ public sealed class AdmissionWorkflowTests
             scope.Children[new YamlScalarNode("run")]).Value ?? string.Empty;
         Assert.Contains("git -C candidate rev-parse HEAD^1", scopeScript, StringComparison.Ordinal);
         Assert.Contains("git -C candidate rev-parse HEAD", scopeScript, StringComparison.Ordinal);
-        Assert.Contains("git -C candidate diff", scopeScript, StringComparison.Ordinal);
-        Assert.Contains("--no-renames", scopeScript, StringComparison.Ordinal);
-        Assert.Matches(
-            "(?s)if \\[\\[ \"\\$GITHUB_EVENT_NAME\" == \"push\" \\]\\]; then.*?run=\"true\"",
-            scopeScript);
+        Assert.Contains("mode=\"push\"", scopeScript, StringComparison.Ordinal);
+        Assert.Contains("mode=\"pull-request\"", scopeScript, StringComparison.Ordinal);
+        Assert.Contains("/bin/bash \"$scope_script\"", scopeScript, StringComparison.Ordinal);
 
         var summary = steps[^1];
         Assert.Equal("Summarize candidate engineering scope", StepName(summary));

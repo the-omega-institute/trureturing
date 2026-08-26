@@ -84,114 +84,40 @@ jobs:
           fi
           exit 1
 
-      - name: Install pinned SDK for scope derivation
-        uses: actions/setup-dotnet@v4
-        with:
-          global-json-file: candidate/global.json
       - name: Decide candidate engineering scope
         id: scope
         shell: bash
         run: |
           set -euo pipefail
-          run="true"
-          reason="dev push always runs the union engineering check"
-          base_sha="not-applicable"
-          changed_count="0"
-          matched_count="0"
-          if [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
-            :
-          elif [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
+          mode="push"
+          scope_script="candidate/tools/scripts/workflow/engineering-scope.sh"
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
             base_sha="$(git -C candidate rev-parse HEAD^1)"
-            candidate_sha="$(git -C candidate rev-parse HEAD)"
-            if [[ -z "$base_sha" || "$base_sha" =~ ^0+$ || -z "$candidate_sha" || "$candidate_sha" =~ ^0+$ ]]; then
-              printf '%s\n' "pull request merge result has no content-addressable dev parent or candidate SHA" >&2
+            head_sha="$(git -C candidate rev-parse HEAD)"
+            if [[ -z "$base_sha" || "$base_sha" =~ ^0+$ || -z "$head_sha" || "$head_sha" =~ ^0+$ ]]; then
+              printf '%s\n' "pull request merge result has no content-addressable base or head SHA" >&2
               exit 1
             fi
-            changed_file="$RUNNER_TEMP/engineering-changed-paths"
-            derived_result="$RUNNER_TEMP/engineering-scope-result"
-            derived_log="$RUNNER_TEMP/engineering-scope.log"
-            git -C candidate diff --name-only -z --no-renames --diff-filter=ACDMRTUXB "$base_sha" "$candidate_sha" -- > "$changed_file"
-            mapfile -d '' -t changed_paths < "$changed_file"
-            changed_count="${#changed_paths[@]}"
-            mapfile -d '' -t solution_paths < <(
-              git -C candidate ls-tree -r --name-only -z "$base_sha" -- '*.sln'
-            )
-            engineering_root=""
-            if [[ "${#solution_paths[@]}" -eq 1 ]]; then
-              engineering_root="$(dirname -- "${solution_paths[0]}")"
-            else
-              reason="engineering solution root is not uniquely derivable; scope fails closed to the full check"
-            fi
-            quoted_path=""
-            for path in "${changed_paths[@]}"; do
-              printf -v quoted_path '%q' "$path"
-              printf 'ENGINEERING_SCOPE_CHANGED %s\n' "$quoted_path"
-              structural_reason=""
-              if [[ "$path" != */* ]]; then
-                structural_reason="repository-root input"
-              elif [[ -n "$engineering_root" && ( "$engineering_root" == "." ||
-                "$path" == "$engineering_root" || "$path" == "$engineering_root/"* ) ]]; then
-                structural_reason="derived engineering project root $engineering_root"
-              fi
-              if [[ -n "$structural_reason" ]]; then
-                printf 'ENGINEERING_SCOPE_MATCHED %s -> %s\n' "$quoted_path" "$structural_reason"
-                ((matched_count += 1))
-              fi
-            done
-            if [[ -z "$engineering_root" ]]; then
-              run="true"
-            elif [[ "$matched_count" -gt 0 ]]; then
-              run="true"
-              reason="post-merge delta intersects the mechanically derived engineering project surface"
-            else
-              rm -f "$derived_result"
-              set +e
-              {
-                dotnet restore candidate/tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj --locked-mode &&
-                  dotnet run --project candidate/tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj \
-                    --configuration Release --no-launch-profile --no-restore -- --repository candidate \
-                    --changes-file "$changed_file" \
-                    --result-file "$derived_result"
-              } > "$derived_log" 2>&1
-              derived_status=$?
-              set -e
-              cat "$derived_log"
-              if [[ "$derived_status" -ne 0 || ! -s "$derived_result" ]]; then
-                run="true"
-                reason="consumer input derivation failed; scope fails closed to the full check"
-              else
-                derived_run="$(sed -n 's/^run=//p' "$derived_result")"
-                derived_matched="$(sed -n 's/^matched_count=//p' "$derived_result")"
-                derived_reason="$(sed -n 's/^reason=//p' "$derived_result")"
-                if [[ ! "$derived_run" =~ ^(true|false)$ || ! "$derived_matched" =~ ^[0-9]+$ ||
-                      ! "$derived_reason" =~ ^(consumer-derived-input|proven-disjoint|incomplete-derivation)$ ]]; then
-                  run="true"
-                  reason="consumer input derivation returned an invalid result; scope fails closed to the full check"
-                else
-                  run="$derived_run"
-                  matched_count="$derived_matched"
-                  if [[ "$derived_reason" == "proven-disjoint" ]]; then
-                    reason="post-merge delta is proven disjoint from the consumer-derived engineering input closure"
-                  elif [[ "$derived_reason" == "incomplete-derivation" ]]; then
-                    reason="consumer input derivation is incomplete; scope fails closed to the full check"
-                  else
-                    reason="post-merge delta intersects the consumer-derived engineering input closure"
-                  fi
-                fi
-              fi
-            fi
-          else
-            run="true"
-            reason="unrecognized event fails closed to the full engineering check"
+            scope_script="$RUNNER_TEMP/base-engineering-scope.sh"
+            git -C candidate archive HEAD^1 -- tools/scripts/workflow/engineering-scope.sh | tar -xO > "$scope_script"
+            mode="pull-request"
+          elif [[ "$GITHUB_EVENT_NAME" != "push" ]]; then
+            printf 'unsupported engineering scope event: %s\n' "$GITHUB_EVENT_NAME" >&2
+            exit 1
           fi
-          printf 'ENGINEERING_SCOPE event=%s run=%s base=%s changed=%s matched=%s reason=%s\n' \
-            "$GITHUB_EVENT_NAME" "$run" "$base_sha" "$changed_count" "$matched_count" "$reason"
-          echo "run=$run" >> "$GITHUB_OUTPUT"
-          echo "event=$GITHUB_EVENT_NAME" >> "$GITHUB_OUTPUT"
-          echo "base_sha=$base_sha" >> "$GITHUB_OUTPUT"
-          echo "changed_count=$changed_count" >> "$GITHUB_OUTPUT"
-          echo "matched_count=$matched_count" >> "$GITHUB_OUTPUT"
-          echo "reason=$reason" >> "$GITHUB_OUTPUT"
+          scope_result="$RUNNER_TEMP/engineering-scope-result"
+          /bin/bash "$scope_script" \
+            --repository candidate \
+            --mode "$mode" \
+            --result-file "$scope_result"
+          cat "$scope_result"
+          cat "$scope_result" >> "$GITHUB_OUTPUT"
+
+      - name: Install pinned SDK
+        if: steps.scope.outputs.run == 'true'
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: candidate/global.json
 
       - name: Resolve judge binary content address before build outputs exist
         id: judge-address
