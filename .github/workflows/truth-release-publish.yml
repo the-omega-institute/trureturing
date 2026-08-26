@@ -30,6 +30,7 @@ jobs:
       artifact_id: ${{ steps.transfer.outputs.artifact-id }}
       artifact_digest: ${{ steps.transfer.outputs.artifact-digest }}
       release_digest: ${{ steps.release.outputs.release_digest }}
+      run_attempt: ${{ steps.release.outputs.run_attempt }}
       source_commit: ${{ steps.source.outputs.source_commit }}
       source_tree: ${{ steps.identity.outputs.source_tree }}
     env:
@@ -218,7 +219,11 @@ jobs:
           artifact_name="truth-release-publication-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-${digest#sha256:}"
           printf 'artifact_name=%s\n' "$artifact_name" >> "$GITHUB_OUTPUT"
           printf 'release_digest=%s\n' "$digest" >> "$GITHUB_OUTPUT"
+          printf 'run_attempt=%s\n' "$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
 
+      # Partial Release recovery must use GitHub's "Re-run failed jobs" so only publish
+      # retries with this retained transfer. A full re-run after dev advances is intentionally
+      # refused by produce's current-dev-tip freshness check above.
       - name: Transfer publication assets to the digest-keyed publisher
         id: transfer
         uses: actions/upload-artifact@v4
@@ -226,7 +231,7 @@ jobs:
           name: ${{ steps.release.outputs.artifact_name }}
           path: ${{ runner.temp }}/truth-release-assets/*
           if-no-files-found: error
-          retention-days: 1
+          retention-days: 7
           compression-level: 0
 
   publish:
@@ -247,6 +252,7 @@ jobs:
       OCI_ARTIFACT_TYPE: application/vnd.theomega.truth-release.bundle.v1
       OCI_LAYER_TYPE: application/vnd.theomega.truth-release.bundle.v1+tar+gzip
       RELEASE_DIGEST: ${{ needs.produce.outputs.release_digest }}
+      PRODUCE_RUN_ATTEMPT: ${{ needs.produce.outputs.run_attempt }}
       SOURCE_COMMIT: ${{ needs.produce.outputs.source_commit }}
       SOURCE_TREE: ${{ needs.produce.outputs.source_tree }}
       TRANSFER_ARTIFACT_ID: ${{ needs.produce.outputs.artifact_id }}
@@ -309,7 +315,7 @@ jobs:
             '.schema == "truth-release-transfer.v1"
               and .repository == $ENV.GITHUB_REPOSITORY
               and .run_id == $ENV.GITHUB_RUN_ID
-              and .run_attempt == $ENV.GITHUB_RUN_ATTEMPT
+              and .run_attempt == $ENV.PRODUCE_RUN_ATTEMPT
               and .source_commit == $ENV.SOURCE_COMMIT
               and .source_tree == $ENV.SOURCE_TREE
               and .release_digest == $ENV.RELEASE_DIGEST
@@ -352,27 +358,34 @@ jobs:
               || { printf '%s\n' 'protected dev moved before OCI publication' >&2; return 1; }
           }
 
-          verify_oci_artifact() {
+          verify_pinned_oci_artifact() {
             local reference="$1"
             local manifest="$RUNNER_TEMP/oci-manifest.json"
-            local expected_digest expected_size pull_dir downloaded
+            local expected_digest expected_size pull_dir downloaded source_url
+            [[ "$reference" == "$OCI_REPOSITORY@"* ]]
+            [[ "${reference##*@}" =~ ^sha256:[0-9a-f]{64}$ ]]
             oras manifest fetch "$reference" > "$manifest"
             expected_digest="sha256:$(sha256sum "$ARCHIVE" | awk '{print $1}')"
             expected_size="$(stat -c '%s' "$ARCHIVE")"
+            source_url="https://github.com/${GITHUB_REPOSITORY}/commit/${SOURCE_COMMIT}"
             jq -e \
               --arg artifact_type "$OCI_ARTIFACT_TYPE" \
               --arg layer_type "$OCI_LAYER_TYPE" \
               --arg digest "$expected_digest" \
               --argjson size "$expected_size" \
-              --arg source "https://github.com/${GITHUB_REPOSITORY}/commit/${SOURCE_COMMIT}" \
-              '.artifactType == $artifact_type
+              --arg release_digest "$RELEASE_DIGEST" \
+              --arg source_url "$source_url" \
+              --arg source_commit "$SOURCE_COMMIT" \
+              '.schemaVersion == 2 and .artifactType == $artifact_type
                 and (.layers | length) == 1
                 and .layers[0].mediaType == $layer_type
                 and .layers[0].digest == $digest
                 and .layers[0].size == $size
-                and .annotations["org.opencontainers.image.source"] == $source' \
+                and .annotations["org.theomega.truth-release.release-digest"] == $release_digest
+                and .annotations["org.opencontainers.image.source"] == $source_url
+                and .annotations["org.opencontainers.image.revision"] == $source_commit' \
               "$manifest" >/dev/null \
-              || { printf '%s\n' 'existing OCI tag is not immutably bound to the expected archive and source' >&2; return 1; }
+              || { printf '%s\n' 'pinned OCI manifest is not immutably bound to the expected archive and source' >&2; return 1; }
             pull_dir="$RUNNER_TEMP/oci-pull"
             rm -rf "$pull_dir"
             mkdir -p "$pull_dir"
@@ -390,10 +403,9 @@ jobs:
           tag="release-${RELEASE_DIGEST#sha256:}"
           reference="$OCI_REPOSITORY:$tag"
           source_url="https://github.com/${GITHUB_REPOSITORY}/commit/${SOURCE_COMMIT}"
-          archive_digest="sha256:$(sha256sum "$ARCHIVE" | cut -d' ' -f1)"
-          manifest="$RUNNER_TEMP/oci-manifest.json"
+          descriptor="$RUNNER_TEMP/oci-descriptor.json"
           fetch_error="$RUNNER_TEMP/oci-fetch-error.txt"
-          if oras manifest fetch "$reference" > "$manifest" 2> "$fetch_error"; then
+          if oras manifest fetch --descriptor "$reference" > "$descriptor" 2> "$fetch_error"; then
             pushed=false
           else
             if ! grep -Eqi 'manifest unknown|not found' "$fetch_error"; then
@@ -408,24 +420,12 @@ jobs:
               --annotation "org.theomega.truth-release.release-digest=${RELEASE_DIGEST}" \
               "$ARCHIVE:$OCI_LAYER_TYPE"
             pushed=true
-            oras manifest fetch "$reference" > "$manifest"
+            oras manifest fetch --descriptor "$reference" > "$descriptor"
           fi
-          jq -e \
-            --arg artifact_type "$OCI_ARTIFACT_TYPE" \
-            --arg layer_type "$OCI_LAYER_TYPE" \
-            --arg archive_digest "$archive_digest" \
-            --arg release_digest "$RELEASE_DIGEST" \
-            --arg source_url "$source_url" \
-            --arg source_commit "$SOURCE_COMMIT" \
-            '.schemaVersion == 2 and .artifactType == $artifact_type and (.layers | length) == 1 and .layers[0].mediaType == $layer_type and .layers[0].digest == $archive_digest and .annotations["org.theomega.truth-release.release-digest"] == $release_digest and .annotations["org.opencontainers.image.source"] == $source_url and .annotations["org.opencontainers.image.revision"] == $source_commit' \
-            "$manifest" >/dev/null \
-            || { printf '%s\n' 'existing OCI tag does not match the prepared release; refusing to overwrite or reuse it' >&2; exit 1; }
-          descriptor="$RUNNER_TEMP/oci-descriptor.json"
-          oras manifest fetch --descriptor "$reference" > "$descriptor"
           oci_digest="$(jq -r '.digest' "$descriptor")"
           [[ "$oci_digest" =~ ^sha256:[0-9a-f]{64}$ ]]
           immutable_reference="$OCI_REPOSITORY@$oci_digest"
-          verify_oci_artifact "$immutable_reference"
+          verify_pinned_oci_artifact "$immutable_reference"
           current_digest="$(oras manifest fetch --descriptor "$reference" | jq -r '.digest')"
           [[ "$current_digest" == "$oci_digest" ]] \
             || { printf '%s\n' 'OCI digest tag moved during immutable verification' >&2; exit 1; }
@@ -433,12 +433,14 @@ jobs:
             "$([[ "$pushed" == true ]] && printf published || printf verified-existing)" \
             "$RELEASE_DIGEST" "$OCI_REPOSITORY" "$oci_digest"
           printf 'digest=%s\n' "$oci_digest" >> "$GITHUB_OUTPUT"
+          printf 'reference=%s\n' "$immutable_reference" >> "$GITHUB_OUTPUT"
 
       - name: Verify existing provenance or request repair
         id: provenance
         env:
           GH_TOKEN: ${{ github.token }}
           SUBJECT_DIGEST: ${{ steps.oci.outputs.digest }}
+          SUBJECT_REFERENCE: ${{ steps.oci.outputs.reference }}
         shell: bash
         run: |
           set -euo pipefail
@@ -446,6 +448,7 @@ jobs:
           [[ "$protected_dev_tip" == "$SOURCE_COMMIT" ]] \
             || { printf '%s\n' 'protected dev moved before OCI attestation' >&2; exit 1; }
           [[ "$SUBJECT_DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]]
+          [[ "$SUBJECT_REFERENCE" == "$OCI_REPOSITORY@$SUBJECT_DIGEST" ]]
           encoded_digest="$(jq -rn --arg digest "$SUBJECT_DIGEST" '$digest | @uri')"
           inventory="$RUNNER_TEMP/provenance-inventory.json"
           status="$(curl -sS -o "$inventory" -w '%{http_code}' \
@@ -464,7 +467,7 @@ jobs:
             printf 'needed=true\n' >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          if gh attestation verify "oci://${OCI_REPOSITORY}@${SUBJECT_DIGEST}" \
+          if gh attestation verify "oci://${SUBJECT_REFERENCE}" \
             --repo "$GITHUB_REPOSITORY" \
             --signer-workflow "$GITHUB_REPOSITORY/.github/workflows/truth-release-publish.yml" \
             --source-digest "$SOURCE_COMMIT" \
@@ -488,12 +491,14 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           SUBJECT_DIGEST: ${{ steps.oci.outputs.digest }}
+          SUBJECT_REFERENCE: ${{ steps.oci.outputs.reference }}
         shell: bash
         run: |
           set -euo pipefail
           [[ "$SUBJECT_DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]]
+          [[ "$SUBJECT_REFERENCE" == "$OCI_REPOSITORY@$SUBJECT_DIGEST" ]]
           for attempt in $(seq 1 6); do
-            if gh attestation verify "oci://${OCI_REPOSITORY}@${SUBJECT_DIGEST}" \
+            if gh attestation verify "oci://${SUBJECT_REFERENCE}" \
               --repo "$GITHUB_REPOSITORY" \
               --signer-workflow "$GITHUB_REPOSITORY/.github/workflows/truth-release-publish.yml" \
               --source-digest "$SOURCE_COMMIT" \

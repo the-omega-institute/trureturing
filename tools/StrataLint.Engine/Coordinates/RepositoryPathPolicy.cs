@@ -19,23 +19,31 @@ internal static partial class RepositoryPathPolicy
     internal const string HarnessGatePath = ".github/scripts/harness-gate.sh";
     internal const string RepositoryCoordinate = "the-omega-institute/trureturing";
 
-    internal static bool ContainsRepositorySourceExecutionIndicator(string value) =>
+    internal static bool ContainsRepositorySourceMaterializationIndicator(string value) =>
         value.StartsWith("./", StringComparison.Ordinal)
         || value.StartsWith("actions/checkout@", StringComparison.OrdinalIgnoreCase)
-        || IsSelfRepositorySourceExecutionIndicator(value)
-        || RepositorySourceExecutionIndicator().IsMatch(value);
+        || IsSelfRepositorySourceMaterializationIndicator(value)
+        || RepositorySourceMaterializationIndicator().IsMatch(value);
 
-    private static bool IsSelfRepositorySourceExecutionIndicator(string value) =>
+    internal static bool ContainsRepositorySourceExecutionIndicator(string value) =>
+        RepositorySourceExecutionIndicator().IsMatch(value);
+
+    private static bool IsSelfRepositorySourceMaterializationIndicator(string value) =>
         value.StartsWith($"{RepositoryCoordinate}/", StringComparison.OrdinalIgnoreCase)
-        && RepositorySelfSourceExecutionIndicator().IsMatch(value[RepositoryCoordinate.Length..]);
+        && RepositorySelfSourceMaterializationIndicator().IsMatch(value[RepositoryCoordinate.Length..]);
 
     [GeneratedRegex(
-        @"^/\.github/(?:workflows|actions)/[^@\s]+@[^@\s]+$",
+        @"^/[^@\s]+@[^@\s]+$",
         RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)]
-    private static partial Regex RepositorySelfSourceExecutionIndicator();
+    private static partial Regex RepositorySelfSourceMaterializationIndicator();
 
     [GeneratedRegex(
-        @"(?:^|[\s;&|])(?:dotnet\s+(?:build|run|test)\b|lake(?:\s|$)|make\s+|run\s+--project\b|(?:\./)?tools/)",
+        @"(?:^|[\s;&|])(?:git\s+(?:clone|fetch|checkout|switch|worktree)\b|gh\s+repo\s+clone\b)",
+        RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)]
+    private static partial Regex RepositorySourceMaterializationIndicator();
+
+    [GeneratedRegex(
+        @"(?:^|[\s;&|])(?:dotnet\s+(?:build|run|test)\b|lake(?:\s|$)|make\s+|run\s+--project\b|(?:\./)?(?:tools|scripts)/|(?:bash|sh|source|python\d*|node)\s+\./)",
         RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)]
     private static partial Regex RepositorySourceExecutionIndicator();
 
