@@ -210,8 +210,9 @@ internal static class FileMapPolicy
             File.ReadAllBytes(Absolute(repositoryRoot, "Meta/domains.yaml")));
         var registryFindings = registry is RegistryLoadOutcome.Accepted accepted
             ? InspectRegistryRootAlignment(
-                accepted.Policy.RootFiles.Select(static path => path.Value),
-                paths.Where(static path => !path.Contains('/', StringComparison.Ordinal)))
+                    accepted.Policy.RootFiles.Select(static path => path.Value),
+                    paths.Where(static path => !path.Contains('/', StringComparison.Ordinal)))
+                .Concat(InspectRegistryReferences(accepted.Policy, paths))
             : [new FileMapFinding(
                 "FILEMAP-REGISTRY-ALIGNMENT",
                 "Meta/registry.yaml",
@@ -428,6 +429,32 @@ internal static class FileMapPolicy
                 $"registry-only [{string.Join(", ", registryOnly)}]; "
                 + $"tracked-only [{string.Join(", ", trackedOnly)}]"),
         ];
+    }
+
+    internal static IReadOnlyList<FileMapFinding> InspectRegistryReferences(
+        ValidatedPolicy policy,
+        IEnumerable<string> trackedPaths)
+    {
+        ArgumentNullException.ThrowIfNull(policy);
+        ArgumentNullException.ThrowIfNull(trackedPaths);
+        var tracked = trackedPaths.ToHashSet(StringComparer.Ordinal);
+        var references = policy.RootFiles
+            .Select(static path => (Path: path.Value, Field: "root_files"))
+            .Concat(policy.GovernanceDocuments.Select(
+                static path => (Path: path.Value, Field: "governance_documents")))
+            .Concat(policy.AgentFiles.Select(
+                static name => (
+                    Path: RepositoryPathPolicy.AgentFilesRootPath + name,
+                    Field: "agent_files")));
+
+        return references
+            .Where(reference => !tracked.Contains(reference.Path))
+            .OrderBy(static reference => reference.Path, StringComparer.Ordinal)
+            .Select(static reference => new FileMapFinding(
+                "FILEMAP-REGISTRY-DANGLING",
+                reference.Path,
+                $"registry {reference.Field} reference does not name a tracked, present file"))
+            .ToArray();
     }
 
     internal static IReadOnlyList<FileMapFinding> InspectGitIgnore(IEnumerable<string> lines)

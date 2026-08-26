@@ -7,6 +7,7 @@ internal sealed record RepositoryPathIssue(RuleId RuleId, string Path, string Me
 [FindingEdgeProvider(15)]
 internal static partial class RepositoryPathPolicy
 {
+    internal const string AgentFilesRootPath = "agents/";
     internal const string AssumptionRegistryPath = "D5/X_Assumptions/REGISTRY.md";
     internal const string WorkflowPath = ".github/workflows/ci.yml";
     // 缓存发布 workflow（#2542）。`.github` 下是白名单而非通配，新增控制工件必须在此具名登记。
@@ -91,9 +92,9 @@ internal static partial class RepositoryPathPolicy
             return null;
         }
 
-        if (value.StartsWith("agents/", StringComparison.Ordinal))
+        if (value.StartsWith(AgentFilesRootPath, StringComparison.Ordinal))
         {
-            return policy.AgentFiles.Contains(value["agents/".Length..])
+            return policy.AgentFiles.Contains(value[AgentFilesRootPath.Length..])
                 ? null
                 : Sl000(value, "unknown agent charter artifact");
         }
@@ -212,8 +213,8 @@ internal static partial class RepositoryPathPolicy
         if (Validate(path, policy) is null) sources.Add("path-policy");
         if (policy.RootFiles.Contains(path)) sources.Add("registry:root-files");
         if (policy.GovernanceDocuments.Contains(path)) sources.Add("registry:governance-documents");
-        if (path.Value.StartsWith("agents/", StringComparison.Ordinal)
-            && policy.AgentFiles.Contains(path.Value["agents/".Length..]))
+        if (path.Value.StartsWith(AgentFilesRootPath, StringComparison.Ordinal)
+            && policy.AgentFiles.Contains(path.Value[AgentFilesRootPath.Length..]))
         {
             sources.Add("registry:agent-files");
         }
