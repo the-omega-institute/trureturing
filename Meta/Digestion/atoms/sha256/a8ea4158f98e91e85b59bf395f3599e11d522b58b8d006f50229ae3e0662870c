@@ -1,0 +1,15 @@
+\[
+\boxed{
+\operatorname{settleStop}
+(\operatorname{AdmTarget},\operatorname{InScope},O,K)
+=
+\operatorname{settleStop}
+(\operatorname{AdmTarget},\operatorname{InScope},O',K').
+}
+\]
+
+`settleStop`
+的函数签名不含裁决记录 \(Z\)；这是“停止分量不消费 \(Z_n\)”的机器可见边界，而不是另加一个带虚假 \(Z\) 实参的恒等式。56.3-C 不取代第 50.3 部及冻结
+`append_only_old_settlement_unchanged`
+对完整旧轮结算的守恒定理。向账本追加事件、产生 \(K_{n+1}\) 或登记新 \(O'\) 时，旧地址 \((K_n,O)\) 的停止分量仍由旧输入重算；新地址的结果不得回写旧地址。
+

@@ -1,0 +1,14 @@
+## 原理 135.1
+
+一般不能无条件写：
+
+$$
+C_\Phi C_{\mathrm{prime}}
+=
+C_{\mathrm{prime}}C_\Phi.
+$$
+
+完成次序本身可以携带信息，这正是原文非交换 reflector 的 prime-quantum 具体实例。
+
+---
+

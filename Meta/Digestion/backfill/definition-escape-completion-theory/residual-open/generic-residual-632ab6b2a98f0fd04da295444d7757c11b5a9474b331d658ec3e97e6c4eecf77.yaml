@@ -1,0 +1,10 @@
+ast_path: section/56-4-1-有限迭代-时域索引与投影
+fingerprints:
+  raw_sha256: sha256:632ab6b2a98f0fd04da295444d7757c11b5a9474b331d658ec3e97e6c4eecf77
+  normalized_sha256: sha256:632ab6b2a98f0fd04da295444d7757c11b5a9474b331d658ec3e97e6c4eecf77
+cas_ref: sha256:632ab6b2a98f0fd04da295444d7757c11b5a9474b331d658ec3e97e6c4eecf77
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

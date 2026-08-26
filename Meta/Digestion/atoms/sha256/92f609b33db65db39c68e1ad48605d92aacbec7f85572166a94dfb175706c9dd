@@ -1,0 +1,23 @@
+# 123. 量子有限 prime-time 压缩定理
+
+仓库 `D5/S3/Observer/Refinement/FinitePrimeTimeTomography.lean` 已证明：若状态类型 $X$ 有限且全部自然数索引—全部时间读出共同分离状态，则存在一个有限索引集与有限时间深度已经分离；其源码明确指出该 `Nat` 索引并未强制为真实素数。
+
+有限维量子情形可以去掉“状态集合有限”条件。
+
+设全部 prime/precision/context/time 效果记为
+
+$$
+\mathcal E_\infty
+=
+\{(\Phi^*)^t(E_{p,k,b,a})\}.
+$$
+
+对每个效果中心化：
+
+$$
+\widetilde E
+=
+E-
+\frac{\operatorname{Tr}E}{d}I.
+$$
+

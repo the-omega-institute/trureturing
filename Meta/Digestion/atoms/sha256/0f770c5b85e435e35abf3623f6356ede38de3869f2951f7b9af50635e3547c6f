@@ -1,0 +1,17 @@
+### 命题 42.10（置换模型下的非对称格）
+
+取 \(X=I\)，\(O,O'\) 皆为置换模型，更新分别为 \(\tau,\tau'\)。设 \(\ell:I\to\Lambda\) 为 \(\tau\)-不变标记（\(\ell\circ\tau=\ell\)），且存在 \(x,y\in I\) 满足
+\[
+\ell(x)\neq\ell(y)
+\qquad\text{且}\qquad
+x=\tau'^{\,n}y\ \ (\text{某 }n\in\mathbb Z).
+\]
+则
+\[
+\boxed{
+d_O(x,y)=+\infty,
+\qquad
+d_{O'}(x,y)\le|n|<+\infty.
+}
+\]
+
