@@ -86,10 +86,9 @@ theorem knowledge_policy_threshold_consistent
       have hfactorPoint := congrFun hfactor x
       unfold Function.comp at hpolicyPoint hfactorPoint ⊢
       calc
-        secret x = recoverViaPolicy secret policyMap hinjective
-            (policyMap (secret x)) := (hrecover x).symm
-        _ = recoverViaPolicy secret policyMap hinjective (policy x) :=
-          congrArg (recoverViaPolicy secret policyMap hinjective) hpolicyPoint.symm
+        secret x = recoverViaPolicy secret policyMap hinjective (policy x) := by
+          simp only [hpolicy]
+          exact (hrecover x).symm
         _ = recoverViaPolicy secret policyMap hinjective
             (factor (coalitionReadout share K x)) :=
           congrArg (recoverViaPolicy secret policyMap hinjective) hfactorPoint

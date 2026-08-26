@@ -443,10 +443,11 @@ theorem tribonacci_champion_large_transition :
   have hbranch : ¬ (tribonacciChampionLargeState.coordinate ≤ t⁻¹) := by
     change ¬ (tribonacciLargeCoordinate ≤ t⁻¹)
     exact not_le.mpr tribonacci_inverse_lt_large
-  simp only [
-    D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciPeriodicTransition]
+  rw [D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciPeriodicTransition.eq_1,
+    show tribonacciChampionLargeState.kind = .large by rfl]
   simp only [if_neg hbranch]
-  simp only [tribonacciChampionLargeState]
+  simp only [
+    tribonacciChampionLargeState]
   congr 1
   exact tribonacci_large_branch
 
@@ -455,10 +456,11 @@ theorem tribonacci_champion_combined_transition :
   have hbranch : tribonacciChampionCombinedState.coordinate ≤ t⁻¹ := by
     change tribonacciMiddleCoordinate ≤ t⁻¹
     exact tribonacci_middle_le_inverse
-  simp only [
-    D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciPeriodicTransition]
+  rw [D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciPeriodicTransition.eq_1,
+    show tribonacciChampionCombinedState.kind = .combined by rfl]
   simp only [if_pos hbranch]
-  simp only [tribonacciChampionCombinedState]
+  simp only [
+    tribonacciChampionCombinedState]
   congr 1
   exact tribonacci_middle_scale
 

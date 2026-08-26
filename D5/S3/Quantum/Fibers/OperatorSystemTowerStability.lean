@@ -45,8 +45,8 @@ def heisenbergOnHermitian
       { exists_nonneg_sub_nonneg := by
           intro a ha
           refine ⟨a⁺, a⁻, ?_, ?_, ?_⟩
-          · cfc_tac
-          · cfc_tac
+          · exact CFC.posPart_nonneg a
+          · exact CFC.negPart_nonneg a
           · exact (CFC.posPart_sub_negPart a ha).symm }
     IsSelfAdjoint.map' (F := MatrixAlgebra d →CP MatrixAlgebra d)
       (E := MatrixAlgebra d) (R := MatrixAlgebra d) A.2 heisenberg⟩

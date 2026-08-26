@@ -62,7 +62,8 @@ theorem large_to_combined :
     change ¬ ((1 : Real) ≤ t⁻¹)
     push_neg
     exact inv_t_lt_one
-  simp only [tribonacciPeriodicTransition]
+  rw [tribonacciPeriodicTransition.eq_1,
+    show largeEndpoint.kind = .large by rfl]
   simp only [if_neg hbranch]
   simp only [largeEndpoint, combinedEndpoint]
   norm_num
@@ -79,7 +80,8 @@ theorem combined_to_small :
     rw [hinv]
     nlinarith [one_lt_t, t_lt_two,
       D5.S0.Tower.Tribonacci.Values.tribonacciConstant_cubic]
-  simp only [tribonacciPeriodicTransition]
+  rw [tribonacciPeriodicTransition.eq_1,
+    show combinedEndpoint.kind = .combined by rfl]
   simp only [if_neg hbranch]
   simp only [combinedEndpoint, smallEndpoint,
     TribonacciPeriodicState.mk.injEq, true_and]
