@@ -1,0 +1,28 @@
+## 定理 102.2（frame bounds）
+
+$$
+\boxed{
+\alpha\|D\|_{\mathrm{HS}}^2
+\le
+\|D\|_{\mathfrak O}^2
+\le
+\beta\|D\|_{\mathrm{HS}}^2.
+}
+$$
+
+观察者完备当且仅当
+
+$$
+\alpha>0.
+$$
+
+定义条件数
+
+$$
+\boxed{
+\kappa(\mathfrak O)
+=
+\sqrt{\beta/\alpha}.
+}
+$$
+

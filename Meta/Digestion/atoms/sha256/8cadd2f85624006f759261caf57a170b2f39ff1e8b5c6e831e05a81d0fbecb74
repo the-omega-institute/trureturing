@@ -1,0 +1,14 @@
+## 严格结论 105.1
+
+对角化可以攻击“完整确定性答案表”的表示能力，但 Born 概率不能仅由 Cantor–Lawvere 逃逸推出。概率结构仍需：
+
+$$
+\text{positive state}
++
+\text{normalized effects}
++
+\text{state–effect pairing}.
+$$
+
+---
+

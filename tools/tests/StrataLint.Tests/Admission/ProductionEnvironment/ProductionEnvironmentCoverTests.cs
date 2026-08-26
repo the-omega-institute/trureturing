@@ -19,14 +19,29 @@ public sealed partial class ProductionEnvironmentTests
         };
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, directoryInputs.Files);
-        var environment = BuildCoverEnvironment(
+        var reportSource = new FakeLeanReportSource(directoryInputs.Report);
+        var currentReadCount = 0;
+        var environment = new ProductionCliEnvironment(
             temporary.Path,
-            directoryInputs,
-            directoryInputs.Files);
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                current: null,
+                CoverWorld.Raw(directoryInputs.Baseline),
+                currentReader: () => CoverWorld.Raw(
+                    currentReadCount++ == 0
+                        ? directoryInputs.Files
+                        : FilesWithLedgerFromRoot(directoryInputs.Files, temporary.Path))),
+            reportSource,
+            new FakeScribeEmissionVerifier(directoryInputs.VerifiedEmissions));
 
-        var result = environment.CoverAtom(CoverArgs(directoryInputs));
+        var result = environment.CoverAtom([.. CoverArgs(directoryInputs), "--align-scribe-receipt"]);
 
         Assert.True(result.Success, result.Error);
+        Assert.Contains(
+            "COVER_ATOM_ALIGNED cover=passed align=passed",
+            result.Output,
+            StringComparison.Ordinal);
+        Assert.Equal(1, reportSource.CallCount);
         Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
         var oldPath = Path.Combine(
             temporary.Path,
@@ -49,6 +64,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.False(File.Exists(Path.Combine(
             temporary.Path,
             BackfillInventoryLoader.RelativePath.Replace('/', Path.DirectorySeparatorChar))));
+        AssertAlignedCoverRepairsPersistedScribeReceipt();
     }
 
     [Fact]

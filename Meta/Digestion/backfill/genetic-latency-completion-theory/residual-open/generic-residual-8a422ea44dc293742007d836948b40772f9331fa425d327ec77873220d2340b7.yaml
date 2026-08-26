@@ -1,0 +1,10 @@
+ast_path: section/3-1-上下文与内部实现
+fingerprints:
+  raw_sha256: sha256:8a422ea44dc293742007d836948b40772f9331fa425d327ec77873220d2340b7
+  normalized_sha256: sha256:8a422ea44dc293742007d836948b40772f9331fa425d327ec77873220d2340b7
+cas_ref: sha256:8a422ea44dc293742007d836948b40772f9331fa425d327ec77873220d2340b7
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

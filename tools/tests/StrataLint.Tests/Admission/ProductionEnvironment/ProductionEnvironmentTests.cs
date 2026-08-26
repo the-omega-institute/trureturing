@@ -553,14 +553,15 @@ public sealed partial class ProductionEnvironmentTests
                 SnapshotDecoder.Decode(Snapshot(files))).Snapshot;
             var closure = Assert.IsType<LeanValidationOutcome.Accepted>(
                 LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
-            var dag = TruthDagProjectionAssembler.Build(snapshot, closure);
-            var attestations = dag.Nodes
-                .Where(static node => node.State is TruthState.Closed && node.ModuleName is not null)
-                .Select(node => new FrozenModuleAttestation(
-                    node.RepoPath,
-                    FrozenLedgerTestData.GitBlobOid(files[node.RepoPath.Value])));
+            var states = LeanTruthStates.Resolve(snapshot, closure);
+            var adjacency = LeanImportAdjacency.Build(snapshot, closure);
+            var attestations = states
+                .Where(static item => item.Value is TruthState.Closed)
+                .Select(item => new FrozenModuleAttestation(
+                    item.Key,
+                    FrozenLedgerTestData.GitBlobOid(files[item.Key.Value])));
             return Assert.IsType<FrozenMaterialOutcome.Accepted>(
-                FrozenContentAddress.Build(snapshot, closure, environment, attestations)).Capability;
+                FrozenContentAddress.Build(snapshot, closure, states, adjacency, environment, attestations)).Capability;
         }
     }
 
@@ -573,7 +574,8 @@ internal sealed class FakeRepositoryGateway(
     Func<FrozenLedgerReferenceSet, TrustedFrozenGitReferences>? frozenReferenceValidator = null,
     Func<FrozenRevisionIdentity>? currentRevisionResolver = null,
     Func<string, RawChangeSet>? changesForBase = null,
-    RawRepositorySnapshot? forkPoint = null)
+    RawRepositorySnapshot? forkPoint = null,
+    Func<RawRepositorySnapshot>? currentReader = null)
     : IRepositoryGateway
 {
     internal int ReadCount { get; private set; }
@@ -619,7 +621,9 @@ internal sealed class FakeRepositoryGateway(
         ReadCount++;
         ReadCurrentCount++;
         return WithAtomizerData(
-            current ?? throw new InvalidOperationException("current snapshot should not be read"));
+            currentReader?.Invoke()
+            ?? current
+            ?? throw new InvalidOperationException("current snapshot should not be read"));
     }
 
     public RawRepositorySnapshot ReadRevision(string revision)

@@ -1,0 +1,10 @@
+ast_path: section/45-决定-执行-世界-记录的信息结算
+fingerprints:
+  raw_sha256: sha256:983b383f32e951562b734ec283f0cb66acf952e882d0082bcd59a2634a14a147
+  normalized_sha256: sha256:983b383f32e951562b734ec283f0cb66acf952e882d0082bcd59a2634a14a147
+cas_ref: sha256:983b383f32e951562b734ec283f0cb66acf952e882d0082bcd59a2634a14a147
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

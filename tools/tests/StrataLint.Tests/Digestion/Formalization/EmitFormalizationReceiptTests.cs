@@ -187,7 +187,96 @@ public sealed class EmitFormalizationReceiptTests
     }
 
     [Fact]
-    public void EmitHonorsAnExplicitOutPath()
+    public void EmitAcceptsAtomDerivedTemporaryOutPath()
+    {
+        var inputs = CoverWorld.Materialize(new CoverSpec { IncludeEnvelope = false });
+        using var temporary = new TemporaryDirectory();
+        var environment = BuildEmitEnvironment(temporary.Path, inputs);
+        var relativeOut = "Meta/Digestion/formalizations/"
+            + CoverWorld.DefaultAtomId
+            + ".v1.json.tmp.fixture123";
+
+        var result = environment.EmitFormalizationReceipt(
+            ["--atom-id", CoverWorld.DefaultAtomId, "--gid", inputs.Gid,
+                "--out", relativeOut]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("out=" + relativeOut, result.Output, StringComparison.Ordinal);
+        Assert.True(File.Exists(Path.Combine(temporary.Path, relativeOut)));
+        Assert.False(File.Exists(Path.Combine(
+            temporary.Path,
+            DigestionFormalizationReceipt.PathForAtom(CoverWorld.DefaultAtomId))));
+    }
+
+    [Fact]
+    public void EmitRejectsAbsoluteOutPathEvenInsideCanonicalDirectory()
+    {
+        var inputs = CoverWorld.Materialize(new CoverSpec { IncludeEnvelope = false });
+        using var temporary = new TemporaryDirectory();
+        var environment = BuildEmitEnvironment(temporary.Path, inputs);
+        var absoluteOut = Path.Combine(
+            temporary.Path,
+            DigestionFormalizationReceipt.PathForAtom(CoverWorld.DefaultAtomId)
+                + ".tmp.absolute");
+
+        var result = environment.EmitFormalizationReceipt(
+            ["--atom-id", CoverWorld.DefaultAtomId, "--gid", inputs.Gid,
+                "--out", absoluteOut]);
+
+        Assert.False(result.Success);
+        Assert.Contains("--out must be repository-relative", result.Error, StringComparison.Ordinal);
+        Assert.False(File.Exists(absoluteOut));
+    }
+
+    [Fact]
+    public void EmitRejectsOutPathThatNormalizesOutsideCanonicalDirectory()
+    {
+        var inputs = CoverWorld.Materialize(new CoverSpec { IncludeEnvelope = false });
+        using var temporary = new TemporaryDirectory();
+        var environment = BuildEmitEnvironment(temporary.Path, inputs);
+        var relativeOut = "Meta/Digestion/formalizations/../../../escape/"
+            + CoverWorld.DefaultAtomId
+            + ".v1.json.tmp.traversal";
+        var escapedOut = Path.Combine(
+            temporary.Path,
+            "escape",
+            CoverWorld.DefaultAtomId + ".v1.json.tmp.traversal");
+
+        var result = environment.EmitFormalizationReceipt(
+            ["--atom-id", CoverWorld.DefaultAtomId, "--gid", inputs.Gid,
+                "--out", relativeOut]);
+
+        Assert.False(result.Success);
+        Assert.Contains(
+            "--out must resolve directly under Meta/Digestion/formalizations/",
+            result.Error,
+            StringComparison.Ordinal);
+        Assert.False(File.Exists(escapedOut));
+    }
+
+    [Fact]
+    public void EmitRejectsAnotherAtomsCanonicalOutPath()
+    {
+        var inputs = CoverWorld.Materialize(new CoverSpec { IncludeEnvelope = false });
+        using var temporary = new TemporaryDirectory();
+        var environment = BuildEmitEnvironment(temporary.Path, inputs);
+        const string relativeOut = "Meta/Digestion/formalizations/neighbour.v1.json";
+
+        var result = environment.EmitFormalizationReceipt(
+            ["--atom-id", CoverWorld.DefaultAtomId, "--gid", inputs.Gid,
+                "--out", relativeOut]);
+
+        Assert.False(result.Success);
+        Assert.Contains(
+            $"--out must name {CoverWorld.DefaultAtomId}.v1.json or "
+            + $"{CoverWorld.DefaultAtomId}.v1.json.tmp.<suffix>",
+            result.Error,
+            StringComparison.Ordinal);
+        Assert.False(File.Exists(Path.Combine(temporary.Path, relativeOut)));
+    }
+
+    [Fact]
+    public void EmitRejectsBlankExplicitOutInsteadOfFallingBackToCanonical()
     {
         var inputs = CoverWorld.Materialize(new CoverSpec { IncludeEnvelope = false });
         using var temporary = new TemporaryDirectory();
@@ -195,11 +284,13 @@ public sealed class EmitFormalizationReceiptTests
 
         var result = environment.EmitFormalizationReceipt(
             ["--atom-id", CoverWorld.DefaultAtomId, "--gid", inputs.Gid,
-                "--out", "Meta/Digestion/formalizations/custom.json"]);
+                "--out", ""]);
 
-        Assert.True(result.Success, result.Error);
-        Assert.True(File.Exists(
-            Path.Combine(temporary.Path, "Meta/Digestion/formalizations/custom.json")));
+        Assert.False(result.Success);
+        Assert.Contains("--out must not be empty", result.Error, StringComparison.Ordinal);
+        Assert.False(File.Exists(Path.Combine(
+            temporary.Path,
+            DigestionFormalizationReceipt.PathForAtom(CoverWorld.DefaultAtomId))));
     }
 
     [Fact]

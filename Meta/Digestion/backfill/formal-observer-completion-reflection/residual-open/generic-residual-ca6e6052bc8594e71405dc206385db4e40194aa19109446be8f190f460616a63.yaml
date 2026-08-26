@@ -1,0 +1,10 @@
+ast_path: section/56-无结构非空集合不存在自然确定性选择
+fingerprints:
+  raw_sha256: sha256:ca6e6052bc8594e71405dc206385db4e40194aa19109446be8f190f460616a63
+  normalized_sha256: sha256:ca6e6052bc8594e71405dc206385db4e40194aa19109446be8f190f460616a63
+cas_ref: sha256:ca6e6052bc8594e71405dc206385db4e40194aa19109446be8f190f460616a63
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

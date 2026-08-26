@@ -629,7 +629,7 @@ public sealed partial class CleanLanesCommandTests
                 "git",
                 ["show-ref", "--verify", "--quiet", $"refs/heads/{branch}"],
                 repository.Path,
-                TimeSpan.FromSeconds(30),
+                BoundedProcessRunner.HangDetectionBudget,
                 4096);
             return result.ExitCode == 0;
         }

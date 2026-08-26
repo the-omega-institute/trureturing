@@ -859,3 +859,2109 @@ observer-feedback control
 ```
 
 时间分辨率决定哪些时刻能够见证不相容；行动族决定哪些实验路径能够见证不相容；折扣未来几何把二值见证转化为可计算误差。三者共同把“观察者闭合”从静态接口性质提升为时间、控制与近似误差的统一结构。
+
+---
+
+# 18. v1.2 增订：反身代理、来源治理与可控—可观测闭包
+
+**追加版本：v1.2，2026-08-26**
+
+本增订只追加于前文之后，不删改第 0–17 节。前文已经把观察者闭合刻画为当前核关系在动力学或行动词作用下的稳定性；本增订进一步研究：当观察者不仅读取世界，而且能够选择行动、修改策略、承担记录并保持自身行动能力时，最小闭合对象是什么。
+
+本增订统一四条此前分散的链：
+
+1. **策略闭合**：哪些历史差异会改变未来选择；
+2. **作者闭合**：行动差异究竟来自观察者内部、外部控制还是无主随机；
+3. **控制—观察对偶**：哪些内部方向既能由观察者改变，又会在未来留下可见差异；
+4. **自由保持**：观察者是否存在一种策略，使未来的自己仍然保有选择、修订与追溯能力。
+
+全文继续使用以下真值纪律：
+
+- **定义**：保守引入对象；
+- **本文定理**：给出 paper-level 证明；
+- **条件命题**：依赖额外拓扑、概率、可计算性或物理实现前件；
+- **形式化路线**：尚待 Lean kernel 闭合；
+- **非断言**：明确排除把操作自主性冒充为强本体自由。
+
+核心边界是：
+
+```text
+没有典范策略 ≠ 没有确定策略；
+行为随机 ≠ 行为属于主体；
+内部相关 ≠ 内部因果控制；
+操作自主 ≠ 完整宇宙非决定性。
+```
+
+---
+
+# 19. 代理因果画像与最小历史商
+
+设全部有限历史构成集合 $\mathcal H$，未来允许施加的环境或控制协议构成 $\mathcal W$，未来行动—观察—记录序列空间为 $\mathcal Z$。对历史 $h$ 与协议 $w$，定义完整未来交互律
+
+$$
+\Gamma(h)(w)
+=
+\operatorname{Law}
+\bigl(Z_{\mathrm{future}}\mid h,\operatorname{do}(w)\bigr).
+$$
+
+## 定义 19.1（代理等价）
+
+$$
+h\sim_{\mathrm{ag}}h'
+\iff
+\forall w\in\mathcal W,
+\quad
+\Gamma(h)(w)=\Gamma(h')(w).
+$$
+
+定义代理因果状态空间
+
+$$
+\boxed{
+S_{\mathrm{ag}}
+=
+\mathcal H/{\sim_{\mathrm{ag}}}.
+}
+$$
+
+它不只决定下一动作，还决定在所有允许干预下未来行动、环境响应、记录与内部更新的联合分布。
+
+## 本文定理 19.1（普适最小性）
+
+若历史接口
+
+$$
+r:\mathcal H\to R
+$$
+
+足以决定完整未来交互画像，即存在
+
+$$
+F:R\to(\mathcal W\to\operatorname{Prob}(\mathcal Z))
+$$
+
+满足 $\Gamma=F\circ r$，则存在唯一映射
+
+$$
+\bar r:\operatorname{Im}(r)\to S_{\mathrm{ag}}
+$$
+
+使
+
+$$
+[h]_{\mathrm{ag}}=\bar r(r(h)).
+$$
+
+### 证明
+
+若 $r(h)=r(h')$，则
+
+$$
+\Gamma(h)=F(r(h))=F(r(h'))=\Gamma(h'),
+$$
+
+故 $h\sim_{\mathrm{ag}}h'$。于是 $r(h)\mapsto[h]_{\mathrm{ag}}$ 与代表元无关；在有效像上唯一。∎
+
+因此：
+
+$$
+\boxed{
+\text{代理自我}
+=
+\text{保持全部未来可干预交互规律的最粗历史表示}.
+}
+$$
+
+只保留未来动作分布得到的“策略自我”是它的进一步商；完整代理自我还保留行动与世界共同演化的差异。
+
+---
+
+# 20. Agency completion 是历史接口上的闭包算子
+
+设当前自我接口为
+
+$$
+m:\mathcal H\to M,
+$$
+
+代理画像接口为
+
+$$
+q_{\mathrm{ag}}(h)=[h]_{\mathrm{ag}}.
+$$
+
+## 定义 20.1（代理完成）
+
+$$
+\boxed{
+C_{\mathrm{ag}}(m)
+=
+m\vee q_{\mathrm{ag}},
+}
+$$
+
+即
+
+$$
+C_{\mathrm{ag}}(m)(h)
+=
+\bigl(m(h),[h]_{\mathrm{ag}}\bigr).
+$$
+
+其核满足
+
+$$
+K_{C_{\mathrm{ag}}(m)}
+=
+K_m\cap K_{\mathrm{ag}}.
+$$
+
+## 本文定理 20.1（最小代理充分精化）
+
+$C_{\mathrm{ag}}(m)$ 是同时满足以下两项的最粗接口：
+
+1. 精化当前接口 $m$；
+2. 决定完整代理画像 $\Gamma$。
+
+### 证明
+
+若 $r$ 同时决定 $m$ 与 $\Gamma$，则
+
+$$
+K_r\subseteq K_m,
+\qquad
+K_r\subseteq K_{\mathrm{ag}}.
+$$
+
+所以
+
+$$
+K_r\subseteq K_m\cap K_{\mathrm{ag}}
+=K_{C_{\mathrm{ag}}(m)}.
+$$
+
+由核因子化判据得到结论。∎
+
+## 本文定理 20.2（闭包三律）
+
+在接口精化偏序上：
+
+```text
+m ⪯ C_ag(m)；
+m ⪯ n  ⇒  C_ag(m) ⪯ C_ag(n)；
+C_ag(C_ag(m)) ≃ C_ag(m).
+```
+
+因此 $C_{\mathrm{ag}}$ 是 closure operator。其固定点满足
+
+$$
+C_{\mathrm{ag}}(m)\simeq m,
+$$
+
+恰表示当前自我状态已包含全部会改变未来交互行为的历史区别。
+
+这只是相对于已申报环境输入、行动语法与未来协议族的闭合，不是无条件“完全自知”。
+
+---
+
+# 21. 合法动作丛、策略截面与无典范选择
+
+设规范观察状态空间为 $Q$，动作类型为 $A$，合法关系为
+
+$$
+\operatorname{Legal}:Q\times A\to\operatorname{Prop}.
+$$
+
+定义动作纤维
+
+$$
+\mathcal A(q)=\{a:\operatorname{Legal}(q,a)\}
+$$
+
+和总空间
+
+$$
+E_{\mathcal A}
+=
+\{(q,a):a\in\mathcal A(q)\}.
+$$
+
+投影
+
+$$
+p:E_{\mathcal A}\to Q,
+\qquad
+p(q,a)=q
+$$
+
+称为合法动作丛；这里不预设局部平凡、光滑或向量丛结构。
+
+确定性策略是截面
+
+$$
+s:Q\to E_{\mathcal A},
+\qquad
+p\circ s=\operatorname{id}_Q.
+$$
+
+随机策略则是支撑位于 $\mathcal A(q)$ 内的 Markov kernel。
+
+所以：
+
+$$
+\boxed{
+\text{Law}=\text{合法动作纤维与后果核},
+\qquad
+\text{Policy}=\text{动作丛上的截面}.
+}
+$$
+
+## 本文定理 21.1（无等变确定性选择）
+
+设群 $G$ 同时作用于状态与动作，并保持全部已申报结构。若存在状态 $q$ 与 $g\in G$ 满足
+
+$$
+gq=q,
+$$
+
+但 $g$ 在 $\mathcal A(q)$ 上无固定点，则不存在等变确定性截面
+
+$$
+s(gq)=g\,s(q).
+$$
+
+### 证明
+
+若存在，则
+
+$$
+s(q)=s(gq)=g\,s(q),
+$$
+
+故 $s(q)$ 是固定动作，与前件矛盾。∎
+
+这证明的是“裸结构没有自然指定唯一动作”，不是“任何更丰富完整状态都不能确定动作”。
+
+---
+
+# 22. 内生对称破缺与内部信息下界
+
+令内部历史状态为 $m\in M$，策略改为
+
+$$
+s:Q\times M\to A.
+$$
+
+若 $G$ 也作用于 $M$，并存在等变映射
+
+$$
+u:M\to A,
+$$
+
+则
+
+$$
+s(q,m)=u(m)
+$$
+
+定义联合等变策略：
+
+$$
+s(gq,gm)=g\,s(q,m).
+$$
+
+因此，公开状态仍然对称，而内部状态提供了条件化的分支坐标。
+
+## 本文定理 22.1（有限对称选择的记忆下界）
+
+若有限群在有限动作集 $A$ 上传递作用，$M$ 是非空有限 $G$-集合，且存在等变映射 $u:M\to A$，则
+
+$$
+\boxed{|M|\ge|A|.}
+$$
+
+### 证明
+
+$u(M)$ 是 $A$ 的非空 $G$-不变子集。传递性迫使 $u(M)=A$，故 $u$ 满射。∎
+
+若动作由 $(Q,M)$ 确定，则
+
+$$
+H(A\mid Q)\le H(M\mid Q).
+$$
+
+当固定公开状态下有 $r$ 个均匀对称动作时：
+
+$$
+H(M\mid Q)\ge\log_2r.
+$$
+
+所以分支信息必来自至少一处：
+
+```text
+观察者历史；
+外部隐藏变量；
+随机种子。
+```
+
+主体性问题不是分支信息是否存在，而是这部分信息是否由观察者自己的历史形成、读取、修改并继承。
+
+---
+
+# 23. 自主性残差、理由绕过与作者性不可识别
+
+设环境接口为
+
+$$
+e:\mathcal H\to E,
+$$
+
+完整策略画像为
+
+$$
+\Pi:\mathcal H\to P.
+$$
+
+## 定义 23.1（自主性残差）
+
+$$
+\mathcal R_{\mathrm{aut}}(e;\Pi)
+=
+\{(h,h'):e(h)=e(h'),\ \Pi(h)\ne\Pi(h')\}.
+$$
+
+它记录外部环境相同而策略不同的历史对。
+
+若自我接口为 $m:\mathcal H\to M$，则联合接口 $e\vee m$ 决定策略，当且仅当
+
+$$
+\boxed{
+\mathcal R_{\mathrm{aut}}(e;\Pi)\cap K_m=\varnothing.
+}
+$$
+
+这说明自我接口的最低功能是切开环境无法解释的策略差异。
+
+再设观察者认可的理由接口为
+
+$$
+r:\mathcal H\to R.
+$$
+
+## 定义 23.2（理由绕过残差）
+
+$$
+\mathcal B_r(\Pi)
+=
+\{(h,h'):r(h)=r(h'),\ \Pi(h)\ne\Pi(h')\}.
+$$
+
+有
+
+$$
+\mathcal B_r(\Pi)=\varnothing
+\iff
+\exists f,\ \Pi=f\circ r.
+$$
+
+因此可以区分：
+
+- **说服**：新证据改变理由，策略随理由改变；
+- **操控**：理由接口不变，策略却被绕过而改变；
+- **强迫**：外部约束把安全动作集压成单点。
+
+## 观察作者性不可识别反例
+
+令 $U$ 为公平比特。
+
+模型 S：
+
+$$
+M=U,
+\qquad
+A=M.
+$$
+
+模型 H：
+
+$$
+M=U,
+\qquad
+A=U,
+$$
+
+但模型 H 中没有 $M\to A$，二者只共享隐藏原因 $U$。两模型具有相同观察联合分布，却满足
+
+$$
+P_S(A\mid do(M))\ne P_H(A\mid do(M)).
+$$
+
+所以相关性、预测精度与行为一致性都不足以证明作者性；必须增加干预、自然实验、结构方程或来源账本。
+
+---
+
+# 24. 因果自主容量与作者变量所有权
+
+固定环境值 $e$，内部状态干预产生动作信道
+
+$$
+K_e(a\mid m)
+=
+P(A=a\mid do(M=m),E=e).
+$$
+
+## 定义 24.1（因果自主容量）
+
+有限模型中定义
+
+$$
+\boxed{
+C_{\mathrm{aut}}(e)
+=
+\sup_{\nu\in\operatorname{Prob}(M)}I_\nu(M;A).
+}
+$$
+
+## 本文定理 24.1（零容量判据）
+
+$$
+C_{\mathrm{aut}}(e)=0
+$$
+
+当且仅当所有输入行相同：
+
+$$
+\forall m,m',
+\quad
+K_e(\cdot\mid m)=K_e(\cdot\mid m').
+$$
+
+若存在两行不同，取只支撑于这两个输入的非退化分布即可得到正互信息。∎
+
+但正容量仍可能来自外部植入的内部寄存器。要把决定变量 $Z$ 认作观察者所有，至少应要求：
+
+```text
+Readable：观察者能恢复其行动相关部分；
+Writable：观察者过去行动能改变其未来值；
+PolicyRelevant：干预 Z 会改变未来策略；
+LedgerTraceable：Z 的形成与修改可追溯到观察、选择或承诺；
+BoundaryClosed：其更新在申报输入后能在观察者边界内下降。
+```
+
+记这些条件的合取为
+
+$$
+\operatorname{Owned}_O(Z).
+$$
+
+内部空间位置不是主体所有权；一个体内寄存器仍可能只是外部遥控端点。
+
+---
+
+# 25. 自我边界：所有权闭包与自主核心
+
+设候选内部变量全集为 $I$，种子自我变量为 $S_0\subseteq I$。设读取、改写、策略依赖与来源追溯算子均对集合包含单调：
+
+$$
+\operatorname{Read},
+\operatorname{Write},
+\operatorname{Dep},
+\operatorname{Trace}:
+\mathcal P(I)\to\mathcal P(I).
+$$
+
+## 定义 25.1（所有权扩张）
+
+$$
+\Gamma(S)
+=
+S\cup S_0
+\cup\operatorname{Read}(S)
+\cup\operatorname{Write}(S)
+\cup\operatorname{Dep}(S)
+\cup\operatorname{Trace}(S).
+$$
+
+它单调且扩张，因此在幂集完备格上存在最小固定点
+
+$$
+\boxed{
+\operatorname{Own}(S_0)=\mu S.\Gamma(S).
+}
+$$
+
+它是包含种子自我并对行动相关依赖闭合的最小边界。
+
+所有权扩张可能不断吞入环境，因此还需反向剪枝。令 $\operatorname{Eligible}(S)$ 表示在 $S$ 内可读、可更新、可审计并可追溯的变量，假设它单调，定义
+
+$$
+\Psi(S)=S\cap\operatorname{Eligible}(S).
+$$
+
+它单调且收缩，因此存在最大固定点
+
+$$
+\boxed{
+\operatorname{Core}(I)=\nu S.\Psi(S).
+}
+$$
+
+## 定义 25.2（双固定自我边界）
+
+稳定自我边界满足
+
+$$
+\boxed{S=\Gamma(S)=\Psi(S).}
+$$
+
+它既不遗漏行动与自我更新所需的依赖，又不包含只能由边界外隐藏机制维持的伪内部变量。
+
+若
+
+$$
+\operatorname{Own}(S_0)\not\subseteq\operatorname{Core}(I),
+$$
+
+则完整解释行动所需的某些变量无法纳入自主闭合边界；这构成外部控制、自我模型不完备或边界错误的可审计见证。
+
+---
+
+# 26. 透明自我预测三难与反身固定点
+
+设动作集 $A$ 存在无不动点映射
+
+$$
+\delta:A\to A,
+\qquad
+\delta(a)\ne a.
+$$
+
+行动前公开预测为
+
+$$
+p:S\to A,
+$$
+
+实际行动为 $a:S\to A$。若观察者采用反预测响应
+
+$$
+a(s)=\delta(p(s)),
+$$
+
+则不存在任何状态满足 $p(s)=a(s)$。
+
+### 证明
+
+若相等，则
+
+$$
+p(s)=\delta(p(s)),
+$$
+
+与无不动点矛盾。∎
+
+因此以下三项不能同时成立：
+
+```text
+预测完全正确；
+预测在行动前对观察者透明可用；
+观察者能够并承诺采取无固定点反制。
+```
+
+这不排除隐藏于观察者之外的预测器正确预测行为；它排除的是“可被反预测主体作为输入使用的完美公开预测”。
+
+更一般地，若响应为
+
+$$
+a=R(p),
+$$
+
+稳定公开预测存在，当且仅当
+
+$$
+\operatorname{Fix}(R)\ne\varnothing.
+$$
+
+所以成熟意志未必表现为最大不可预测性。稳定履行承诺可构成反身固定点，并且完全可预测而不必是外部强迫。
+
+---
+
+# 27. 元策略、价值—策略平衡与事实—价值缺口
+
+普通策略为
+
+$$
+\pi_t:Q\to\operatorname{Dist}(A).
+$$
+
+令策略空间为 $\mathcal P$，记忆、价值和承诺状态为 $M$，元更新器为
+
+$$
+\mathcal U:M\times\mathcal P\times Y\to M\times\mathcal P.
+$$
+
+更新：
+
+$$
+(m_{t+1},\pi_{t+1})
+=
+\mathcal U(m_t,\pi_t,y_t).
+$$
+
+一阶自由选择当前动作；二阶自由修改以后怎样选择。
+
+若价值状态为 $v_t\in\mathcal V$，策略响应为 $\pi_t=B(v_t)$，经验反过来修改价值：
+
+$$
+v_{t+1}=E(v_t,\pi_t,y_t,\Lambda_t),
+$$
+
+则联合更新为
+
+$$
+(v_{t+1},\pi_{t+1})=\mathcal R(v_t,\pi_t).
+$$
+
+## 定义 27.1（反身价值—策略平衡）
+
+$$
+\mathcal R(v_*,\pi_*)=(v_*,\pi_*).
+$$
+
+它表示当前策略表达当前价值，而观察者理解该策略及后果后仍认可这一价值—策略对。
+
+预测完备不能自动产生此平衡。即使全部后果分布已知，不同损失函数仍可产生相反唯一最优动作；事实接口只决定“会怎样”，不能从自身推出唯一“应怎样”。
+
+承诺的更深作用是改写元更新器：
+
+$$
+\Lambda\mapsto\mathcal U_\Lambda.
+$$
+
+它可以删除某些策略固定点、创造新固定点、改变吸引盆，并把短期游移变成长程稳定人格。
+
+---
+
+# 28. 策略 holonomy、来源偏序与身份 DAG
+
+设公开状态沿路径
+
+$$
+\gamma:q_0\to q_1\to\cdots\to q_n
+$$
+
+变化，记忆运输为
+
+$$
+U_{q_i\to q_{i+1}}:M_{q_i}\to M_{q_{i+1}}.
+$$
+
+当 $q_n=q_0$ 时定义
+
+$$
+\operatorname{Hol}_\gamma
+=
+U_{q_{n-1}\to q_n}\circ\cdots\circ U_{q_0\to q_1}.
+$$
+
+若
+
+$$
+\operatorname{Hol}_\gamma(m)\ne m,
+$$
+
+则公开情境回到原点，选择者却已改变。非平凡 holonomy 情形下，历史不是附加缓存，而是使策略成为函数所必需的坐标。
+
+身份也不宜只写成对称等价关系。设历史前缀关系为 $h\preceq h'$，定义作者连续关系 $h\rightsquigarrow h'$：
+
+1. $h'$ 由 $h$ 追加得到；
+2. 中间每次策略或价值修改均由当时主体授权；
+3. 修改进入账本；
+4. 无未授权身份接管。
+
+在授权复合闭合时，$\rightsquigarrow$ 是偏序：反身、传递，且由前缀反对称性得到反对称。
+
+复制导致一个历史拥有多个后继；合并导致多个历史形成联合主体。因此最一般身份结构是带授权、分叉、合并和来源证明的历史 DAG，而不是单线或静态等价类。
+
+---
+
+# 29. 承诺深度、自由深度与代理视界
+
+设历史 $h$ 的相容未来计划集为 $\Omega_h$。选择动作 $a$ 后，计划柱集为
+
+$$
+\Omega_{h,a}
+=
+\{\omega\in\Omega_h:A_h(\omega)=a\}.
+$$
+
+有限情形定义承诺深度
+
+$$
+B(h,a)
+=
+\log_2|\Omega_h|-
+\log_2|\Omega_{h,a}|.
+$$
+
+沿历史 $h_0\to\cdots\to h_n$，若每一步恰对应所选计划柱集，则
+
+$$
+\boxed{
+\sum_{t=0}^{n-1}B(h_t,a_t)
+=
+\log_2|\Omega_{h_0}|-
+\log_2|\Omega_{h_n}|.
+}
+$$
+
+选择把未来可能性体积转换成追加式历史信息。
+
+对目标时刻 $t$，令
+
+$$
+B_t(h_\tau)
+=
+\{A_t(\omega):\omega\text{ 从 }h_\tau\text{ 延伸至 }t\}.
+$$
+
+若 $h_\tau\preceq h_{\tau'}$，则
+
+$$
+B_t(h_{\tau'})\subseteq B_t(h_\tau).
+$$
+
+定义最近真实分支时刻
+
+$$
+\tau^*(t)
+=
+\max\{\tau\le t:|B_t(h_\tau)|\ge2\}
+$$
+
+和自由深度
+
+$$
+\boxed{d_{\mathrm{free}}(t)=t-\tau^*(t).}
+$$
+
+当前只有一个动作，不表示它从未自由；它可能由更早承诺锁定。
+
+再令当前承诺为 $C_t$，未来自我状态为 $M_{t+k}$，定义
+
+$$
+J_k=I(C_t;M_{t+k}\mid E).
+$$
+
+若记忆形成 Markov 信道，则 $J_{k+1}\le J_k$。定义 $\varepsilon$-代理视界
+
+$$
+\boxed{
+h_\varepsilon(C_t)=\sup\{k:J_k\ge\varepsilon\}.
+}
+$$
+
+意志强度不仅取决于此刻选择了什么，还取决于这一选择能在未来自己中存活多久。
+
+---
+
+# 30. 自我治理的根—环边界与审计不完备
+
+设有限规则集合为 $R$，边 $r_i\to r_j$ 表示规则 $r_i$ 有权修改 $r_j$。
+
+## 本文定理 30.1（有限宪法根—环二分）
+
+有限授权图至少满足一项：
+
+1. 存在没有任何规则有权修改的根规则；
+2. 授权图含有向环。
+
+### 证明
+
+若无根，则每个顶点至少有一条入边。不断沿入边逆行，有限性迫使某顶点重复，从而形成有向环。∎
+
+所以有限治理无法同时满足“全部规则可修改”与“授权完全无环”。冻结根提供稳定性但限制最高层修订；授权环提供内生修订但引入自指与固定点风险。
+
+若自我修改语言图灵完备，则任意非平凡外延行为性质——例如永远保持某承诺、永不把控制权交给外部——不存在对所有程序都正确终止的通用判定器，否则可归约停机问题。
+
+因此：
+
+```text
+完全开放的自我修改语言 → 通用安全审计不完备；
+完全机械可判的自我修改 → 必须限制表达能力。
+```
+
+可行治理只能在 proof-carrying modification、受限能力语言、运行时监控、外部裁决与不完备审查之间组合。
+
+---
+
+# 31. 封闭有限主体的周期化与新颖性边界
+
+设主体内部元状态 $z_t=(m_t,\pi_t)$ 位于有限集合，且在固定环境中确定更新：
+
+$$
+z_{t+1}=F(z_t).
+$$
+
+## 本文定理 31.1（最终周期化）
+
+任意轨迹最终进入周期。
+
+### 证明
+
+有限状态序列中必有两个时刻状态相同；确定更新使以后轨迹逐项重复。∎
+
+若行动由固定函数 $a_t=g(z_t)$ 给出，则行动轨迹也最终周期。长度 $n$ 前缀可由固定程序、初态和整数 $n$ 生成，因此其描述复杂度至多为
+
+$$
+K(a_{<n})\le K(n)+O(1)=O(\log n).
+$$
+
+所以有限、封闭、确定主体可以产生很长的表面复杂轨迹，却不能持续注入与时间成正比的不可约新信息。
+
+长期正新颖性率至少需要：
+
+```text
+开放环境输入；
+随机输入；
+无界记忆增长；
+无限维状态；
+扩展中的动作或语言空间。
+```
+
+随机输入只提供熵，不自动提供有效逻辑；知识还要求验证、压缩、去重、整合与保存。
+
+---
+
+# 32. 集体作者联盟与委托瓶颈
+
+设成员集合为 $N=\{1,\ldots,n\}$，成员内部状态为 $M_i$，集体策略画像为 $\Pi$。
+
+## 定义 32.1（策略充分联盟）
+
+联盟 $C\subseteq N$ 充分，当且仅当存在 $f_C$ 使
+
+$$
+\Pi=f_C(M_C,E).
+$$
+
+若 $C$ 充分且 $C\subseteq D$，则 $D$ 也充分；故充分联盟构成幂集格中的上闭集。其极小元素形成反链。
+
+定义最小作者联盟阶数
+
+$$
+\boxed{
+r_{\mathrm{coll}}
+=
+\min\{|C|:C\text{ 策略充分}\}.
+}
+$$
+
+XOR 例中
+
+$$
+A=M_1\oplus M_2
+$$
+
+满足每个单成员与 $A$ 的互信息为零，但联合状态完全决定 $A$，所以 $r_{\mathrm{coll}}=2$。集体作者性可以严格不可约为任何个人。
+
+委托链则有不同结构。设委托接口
+
+$$
+H_1:U_1\to Z
+$$
+
+和执行接口
+
+$$
+H_2:Z\to Y.
+$$
+
+总代理为 $H_2H_1$，并有
+
+$$
+\boxed{
+\operatorname{rank}(H_2H_1)
+=
+\operatorname{rank}H_1
+-
+\dim(\operatorname{im}H_1\cap\ker H_2).
+}
+$$
+
+交集是已传给执行者、却无法继续成为世界后果的委托方向。任务作者性与实施作者性必须分别记账。
+
+---
+
+# 33. 策略 cocycle、喉部 cocycle 与势函数障碍
+
+设增强观察状态为 $z=(q,m)$。合法转移边 $e:z\to z'$ 携带隐藏分量增量
+
+$$
+c(e)\in\mathcal K,
+\qquad
+\mathcal K=K_\infty/\Delta(\mathbb Z),
+$$
+
+其中该商仍是前文登记的条件接口，不冒充现成 Lean 类型。
+
+对路径 $\gamma=e_1\cdots e_n$ 定义
+
+$$
+C(\gamma)=\sum_i c(e_i).
+$$
+
+它满足路径拼接加法。
+
+## 本文定理 33.1（零环和与势函数等价）
+
+在连通路径群胚中，若反向边满足 $c(e^{-1})=-c(e)$，则以下等价：
+
+1. 每条闭合路径 $\gamma:z\to z$ 满足 $C(\gamma)=0$；
+2. 存在势函数 $\Phi:Z\to\mathcal K$，使
+
+   $$
+   c(e)=\Phi(z')-\Phi(z).
+   $$
+
+### 证明
+
+势函数情形沿闭环望远镜求和为零。反向选基点 $z_0$，定义 $\Phi(z)$ 为任一从 $z_0$ 到 $z$ 的路径积分；零环和保证路径无关。∎
+
+因此增强主体闭环具有非零隐藏位移，当且仅当 cocycle 不是 exact。
+
+必须区分：公开状态回到原点但记忆 holonomy 非零，只是历史泵浦；只有公开状态和策略状态均回到原点而隐藏位移非零，才是内禀喉部泵浦。
+
+---
+
+# 34. 动作顺序曲率与策略—喉部半直积
+
+设动作 $a,b$ 的增强状态更新为 $T_a,T_b$，隐藏增量为 $c(a,z),c(b,z)$。定义离散曲率
+
+$$
+\boxed{
+\Omega_{a,b}(z)
+=
+c(a,z)+c(b,T_az)
+-c(b,z)-c(a,T_bz).
+}
+$$
+
+若 $T_aT_bz=T_bT_az$ 且 $c=d\Phi$，则 $\Omega_{a,b}(z)=0$。所以非零曲率表示动作顺序携带不能由单一状态势消除的隐藏信息。
+
+若策略 holonomy 群 $H$ 作用于 $\mathcal K$：
+
+$$
+\alpha:H\to\operatorname{Aut}(\mathcal K),
+$$
+
+则组合输运位于半直积
+
+$$
+\boxed{\mathcal K\rtimes_\alpha H}
+$$
+
+中，其乘法为
+
+$$
+(k_2,h_2)(k_1,h_1)
+=
+(k_2+\alpha_{h_2}(k_1),h_2h_1).
+$$
+
+即使 $\mathcal K$ 阿贝尔，半直积也可能非交换：
+
+$$
+[(0,h),(k,e)]
+=(\alpha_h(k)-k,e).
+$$
+
+先改变选择者再执行喉部动作，与先执行动作再改变选择者，可以产生不同隐藏结果。
+
+---
+
+# 35. 线性受控观察者：可达空间与不可观测空间
+
+设有限维内积空间 $V$ 上有受控动力学
+
+$$
+x_{t+1}=Tx_t+B_Ou_t+B_Ee_t,
+$$
+
+读出为
+
+$$
+y_t=Cx_t.
+$$
+
+其中 $B_O$ 是观察者拥有的控制通道，$B_E$ 是环境通道。
+
+定义永久不可观测子空间
+
+$$
+\boxed{
+N_\infty
+=
+\bigcap_{n\ge0}\ker(CT^n),
+}
+$$
+
+自我可达子空间
+
+$$
+\boxed{
+R_O
+=
+\operatorname{span}_{n\ge0}\operatorname{ran}(T^nB_O),
+}
+$$
+
+环境可达子空间
+
+$$
+R_E
+=
+\operatorname{span}_{n\ge0}\operatorname{ran}(T^nB_E).
+$$
+
+三者均对 $T$ 前向不变。
+
+这里出现两个方向相反的闭包：
+
+```text
+N∞ = 能永久保持隐藏的最大不变方向；
+R_O = 能由观察者行动生成的最小不变方向。
+```
+
+前者是可观测闭包的 kernel 面，后者是控制闭包的 image 面。
+
+---
+
+# 36. 可观测与可控 Gramian
+
+取 $0<\beta<1$ 且满足收敛条件。定义
+
+$$
+W_o
+=
+\sum_{n\ge0}\beta^n(T^*)^nC^*CT^n,
+$$
+
+$$
+W_c^O
+=
+\sum_{n\ge0}\beta^nT^nB_OB_O^*(T^*)^n.
+$$
+
+有能量恒等式
+
+$$
+\langle x,W_ox\rangle
+=
+\sum_{n\ge0}\beta^n\|CT^nx\|^2,
+$$
+
+$$
+\langle x,W_c^Ox\rangle
+=
+\sum_{n\ge0}\beta^n\|B_O^*(T^*)^nx\|^2.
+$$
+
+因此
+
+$$
+\boxed{
+\ker W_o=N_\infty,
+\qquad
+\ker W_c^O=R_O^\perp,
+\qquad
+\operatorname{ran}W_c^O=R_O.
+}
+$$
+
+并满足双 Lyapunov 方程
+
+$$
+W_o=C^*C+\beta T^*W_oT,
+$$
+
+$$
+W_c^O=B_OB_O^*+\beta TW_c^OT^*.
+$$
+
+观察完成与行动完成由此形成状态—效应对偶。
+
+---
+
+# 37. 规范代理商与两条正合列
+
+完整行为商为 $V/N_\infty$。观察者在其中真正拥有的方向是自我可达空间的像。
+
+## 定义 37.1（规范代理状态空间）
+
+$$
+\boxed{
+\mathsf{Agt}_O
+=
+\frac{R_O+N_\infty}{N_\infty}
+\cong
+\frac{R_O}{R_O\cap N_\infty}.
+}
+$$
+
+其维数为
+
+$$
+\boxed{
+\dim\mathsf{Agt}_O
+=
+\dim R_O-
+\dim(R_O\cap N_\infty).
+}
+$$
+
+它恰好保存既能由观察者改变、又会在未来留下可观察差异的状态方向。
+
+定义静默控制
+
+$$
+\mathsf{Silent}_O=R_O\cap N_\infty,
+$$
+
+得到正合列
+
+$$
+0\to\mathsf{Silent}_O
+\to R_O
+\to\mathsf{Agt}_O
+\to0.
+$$
+
+行为商中非自我可达的部分为
+
+$$
+\mathsf{Imposed}_O
+=
+\frac{V/N_\infty}{\mathsf{Agt}_O}
+\cong
+\frac{V}{R_O+N_\infty},
+$$
+
+并有
+
+$$
+0\to\mathsf{Agt}_O
+\to V/N_\infty
+\to\mathsf{Imposed}_O
+\to0.
+$$
+
+## 本文定理 37.1（精确代理闭合）
+
+以下等价：
+
+```text
+R_O → V/N∞ 的自然映射是同构；
+R_O∩N∞=0 且 R_O+N∞=V；
+V=R_O⊕N∞.
+```
+
+此时每个行为状态具有唯一自我可达代表元。
+
+---
+
+# 38. 作者性 Gramian、代理 Hankel 与最小实现
+
+定义
+
+$$
+L_O=W_o^{1/2}(W_c^O)^{1/2}
+$$
+
+和作者性 Gramian
+
+$$
+\boxed{
+G_O
+=
+W_o^{1/2}W_c^OW_o^{1/2}.
+}
+$$
+
+## 本文定理 38.1（作者性秩）
+
+$$
+\boxed{
+\operatorname{rank}G_O
+=
+\dim\mathsf{Agt}_O.
+}
+$$
+
+### 证明
+
+$(W_c^O)^{1/2}$ 的像是 $R_O$，$W_o^{1/2}$ 的核是 $N_\infty$。故复合在 $R_O$ 上丢失的恰是 $R_O\cap N_\infty$。∎
+
+定义折扣观察算子 $\mathcal O_\beta$ 与自我可达算子 $\mathcal C_{\beta,O}$：
+
+$$
+\mathcal O_\beta x=(\beta^{n/2}CT^nx)_{n\ge0},
+$$
+
+$$
+\mathcal C_{\beta,O}(u)
+=
+\sum_{n\ge0}\beta^{n/2}T^nB_Ou_n.
+$$
+
+代理 Hankel 算子为
+
+$$
+\boxed{
+\mathcal H_O
+=
+\mathcal O_\beta\mathcal C_{\beta,O}.
+}
+$$
+
+其秩满足
+
+$$
+\boxed{
+\operatorname{rank}\mathcal H_O
+=
+\dim\mathsf{Agt}_O.
+}
+$$
+
+因此任何精确实现同一“自身过去控制到未来读出”映射的有限维系统，状态维数至少为该秩；可达且可观测实现恰达到它。这给“最小操作自我”一个系统论定义。
+
+---
+
+# 39. 最小自我修改能量与代理条件数
+
+对 $r\in R_O$ 定义达到该状态的最低控制能量
+
+$$
+E_O(r)
+=
+\inf_{\mathcal C_Ou=r}\|u\|^2.
+$$
+
+## 本文定理 39.1（伪逆能量公式）
+
+$$
+\boxed{
+E_O(r)
+=
+\langle r,(W_c^O)^\dagger r\rangle.
+}
+$$
+
+同一行为商类的代表元可相差静默方向，故操作能量应进一步取
+
+$$
+E_O([r])
+=
+\inf_{n\in R_O\cap N_\infty}E_O(r+n).
+$$
+
+令 $\sigma_1\ge\cdots\ge\sigma_s>0$ 为 $L_O$ 或 $\mathcal H_O$ 的非零奇异值，定义
+
+$$
+\kappa_{\mathrm{ag}}=\frac{\sigma_1}{\sigma_s}.
+$$
+
+即使代理商非零，若最小奇异值极小，关键自我方向仍可能需要巨大能量、极低噪声或很长时间才能稳定使用。
+
+所以必须区分：
+
+```text
+exact agency；
+conditioned agency；
+physically realizable agency.
+```
+
+---
+
+# 40. 外部控制重叠与来源可识别性
+
+令自我输入与外部输入到未来行为的算子分别为
+
+$$
+\mathcal H_O:\mathcal U_O\to\mathcal Y,
+\qquad
+\mathcal H_E:\mathcal U_E\to\mathcal Y.
+$$
+
+记
+
+$$
+S_O=\operatorname{im}\mathcal H_O,
+\qquad
+S_E=\operatorname{im}\mathcal H_E.
+$$
+
+## 本文定理 40.1（来源贡献唯一分解）
+
+每个 $y\in S_O+S_E$ 的分解
+
+$$
+y=y_O+y_E
+$$
+
+唯一，当且仅当
+
+$$
+\boxed{S_O\cap S_E=0.}
+$$
+
+若交非零，则对任意 $z$ 属于交，可用 $(y_O+z,y_E-z)$ 构造另一分解。∎
+
+定义来源求和算子
+
+$$
+J:S_O\oplus S_E\to\mathcal Y,
+\qquad
+J(y_O,y_E)=y_O+y_E.
+$$
+
+其核同构于 $S_O\cap S_E$。在 $J$ 单射时可定义来源条件数
+
+$$
+\kappa_{\mathrm{prov}}
+=
+\sigma_{\max}(J)/\sigma_{\min}(J).
+$$
+
+交为零只保证精确可识别；若两子空间几乎平行，来源分解仍对噪声脆弱。
+
+定义抗外部复制商
+
+$$
+\boxed{
+\mathsf{Unique}_O
+=
+S_O/(S_O\cap S_E).
+}
+$$
+
+它只相对于当前申报的外部通道定义，不是绝对自由空间。
+
+---
+
+# 41. 资源受限代理容量与外部噪声
+
+考虑高斯输入—输出模型
+
+$$
+Y=HU+\Xi,
+\qquad
+\Xi\sim\mathcal N(0,\Sigma),
+\qquad
+\Sigma\succ0,
+$$
+
+其中 $H=\mathcal H_O$，输入协方差 $S\succeq0$ 满足 $\operatorname{tr}S\le P$。
+
+定义代理信道容量
+
+$$
+\boxed{
+C_O(P)
+=
+\sup_S
+\frac12\log_2\det
+\bigl(I+\Sigma^{-1/2}HSH^*\Sigma^{-1/2}\bigr).
+}
+$$
+
+## 本文定理 41.1（零容量判据）
+
+对 $P>0$：
+
+$$
+C_O(P)=0
+\iff H=0
+\iff\mathsf{Agt}_O=0.
+$$
+
+若 $H\ne0$，选择沿非零方向的秩一协方差即可得到正容量。∎
+
+若外部独立扰动经 $H_E$ 注入，等效噪声变为
+
+$$
+\Sigma_{\mathrm{eff}}
+=
+\Sigma+H_ES_EH_E^*.
+$$
+
+当 $S_E'\succeq S_E$ 时，容量单调不增。
+
+统计噪声之外，外部还能主动取消任何属于 $S_O\cap S_E$ 的行为方向。抗取消代理商正是
+
+$$
+\boxed{
+(S_O+S_E)/S_E
+\cong
+S_O/(S_O\cap S_E).
+}
+$$
+
+---
+
+# 42. 近似自我谱、平衡坐标与鲁棒代理秩
+
+令代理 Hankel 奇异值为
+
+$$
+\sigma_1\ge\cdots\ge\sigma_r>0.
+$$
+
+## 定义 42.1（$\varepsilon$-自我维数）
+
+$$
+\boxed{
+d_\varepsilon
+=
+\min\{k:\exists K,\ \operatorname{rank}K\le k,
+\ \|\mathcal H_O-K\|\le\varepsilon\}.
+}
+$$
+
+由最佳低秩逼近定理：
+
+$$
+\boxed{
+d_\varepsilon=\#\{i:\sigma_i>\varepsilon\}.}
+$$
+
+任意 $k$ 维行为模型的最坏误差至少为 $\sigma_{k+1}$；截断奇异值展开达到该界。
+
+在最小可控—可观测实现上可选平衡坐标，使
+
+$$
+W_o=W_c^O=\operatorname{diag}(\sigma_1,\ldots,\sigma_r).
+$$
+
+高奇异值方向是容易由自身修改、又强烈影响未来的代理核心；低奇异值方向是可在容许误差下压缩的代理边缘。
+
+若模型扰动满足 $\|\Delta\|\le\delta$，则
+
+$$
+|\sigma_i(\mathcal H_O+\Delta)-\sigma_i(\mathcal H_O)|\le\delta.
+$$
+
+定义鲁棒代理秩
+
+$$
+\boxed{r_{\mathrm{rob}}(\delta)=\#\{i:\sigma_i>\delta\}.}
+$$
+
+精确主体方向若小于模型误差，就不能被稳定宣称存在。
+
+---
+
+# 43. 非线性局部代理与 Lie 括号方向
+
+对非线性系统
+
+$$
+x_{t+1}=F_t(x_t,u_t,e_t),
+\qquad
+y_t=h_t(x_t),
+$$
+
+沿实际轨迹线性化：
+
+$$
+\delta x_{t+1}
+=A_t\delta x_t+B_t^O\delta u_t+B_t^E\delta e_t,
+$$
+
+$$
+\delta y_t=C_t\delta x_t.
+$$
+
+将有限控制扰动映射到未来输出扰动得到 Jacobian $\mathcal J_{O,N}$，其块为
+
+$$
+\frac{\partial y_k}{\partial u_j}
+=
+C_kA_{k-1}\cdots A_{j+1}B_j^O.
+$$
+
+定义局部代理秩
+
+$$
+\boxed{r_{\mathrm{loc}}=\operatorname{rank}\mathcal J_{O,N}.}
+$$
+
+若秩在邻域恒定，则行为等价控制纤维局部形成余维 $r_{\mathrm{loc}}$ 的子流形。
+
+连续时间控制仿射系统
+
+$$
+\dot x=f_0(x)+\sum_i u_if_i(x)
+$$
+
+中，单个方向可能满足 $dh(f_i)=dh(f_j)=0$，而动作小回路产生二阶 Lie 括号位移
+
+$$
+x\mapsto x+\varepsilon^2[f_i,f_j](x)+O(\varepsilon^3).
+$$
+
+若
+
+$$
+dh([f_i,f_j])\ne0,
+$$
+
+则任一单步一阶不可见，但特定顺序组合产生可见代理方向。动作词本身可以创造单个动作不具备的能力。
+
+---
+
+# 44. 有限深度代理谱
+
+定义有限可达与可观测矩阵
+
+$$
+\mathcal C_N=[B_O,TB_O,\ldots,T^{N-1}B_O],
+$$
+
+$$
+\mathcal O_N=
+\begin{bmatrix}C\\CT\\\vdots\\CT^{N-1}\end{bmatrix},
+$$
+
+以及有限 Hankel 算子
+
+$$
+\mathcal H_N=\mathcal O_N\mathcal C_N.
+$$
+
+令
+
+$$
+r_N=\operatorname{rank}\mathcal H_N.
+$$
+
+则
+
+$$
+\boxed{r_N\le r_{N+1}.}
+$$
+
+有限维中它最终稳定于 $\dim\mathsf{Agt}_O$。定义代理完成深度
+
+$$
+\boxed{
+d_{\mathrm{ag}}
+=
+\min\{N:r_N=\dim\mathsf{Agt}_O\}
+}
+$$
+
+和新增代理谱
+
+$$
+\Delta r_N=r_N-r_{N-1}.
+$$
+
+这表示观察者必须考虑多长的过去控制与未来读出窗口，才能显现全部有效行动维度。有些能力立即可见，有些必须经过长时间传播才形成差异。
+
+---
+
+# 45. 决定—执行—世界—记录的信息结算
+
+设内部决定 $D$ 经执行接口成为控制 $U$，产生世界结果 $Y$，再进入记录 $R$：
+
+$$
+D\to U\to Y\to R
+$$
+
+条件于公开状态 $Q$ 构成 Markov 链。
+
+链式法则与数据处理给出：
+
+$$
+\boxed{
+\begin{aligned}
+H(D\mid Q)
+={}&H(D\mid U,Q)\\
+&+[I(D;U\mid Q)-I(D;Y\mid Q)]\\
+&+[I(D;Y\mid Q)-I(D;R\mid Q)]\\
+&+I(D;R\mid Q).
+\end{aligned}
+}
+$$
+
+四项均非负，分别解释为：
+
+```text
+未执行的决定信息；
+被世界动力学抹除的决定信息；
+被记录接口抹除的决定信息；
+最终保留的作者签名。
+```
+
+线性情形下，若决定接口为 $K:D\to U$，世界行为接口为 $H:U\to Y$，则有效决定商为
+
+$$
+\mathsf{DecisionAgt}=D/\ker(HK).
+$$
+
+并有
+
+$$
+\ker(HK)/\ker K
+\cong
+\operatorname{im}K\cap\ker H.
+$$
+
+所以“有意愿”“被执行”“产生后果”“进入记录”是四个不同层次。
+
+---
+
+# 46. 隐蔽喉部输运与账本审计
+
+设完整控制历史空间为 $\mathcal U$，公开行为映射为
+
+$$
+H:\mathcal U\to\mathcal Y,
+$$
+
+喉部分量输运为
+
+$$
+K:\mathcal U\to\mathcal K.
+$$
+
+定义公开静默控制 $\ker H$ 与隐蔽喉部输运群
+
+$$
+\boxed{
+\mathsf{CovertThroat}=K(\ker H).
+}
+$$
+
+## 本文定理 46.1（公开恢复判据）
+
+以下等价：
+
+1. 存在 $\bar K:\operatorname{im}H\to\mathcal K$ 使 $K=\bar K\circ H$；
+2. $\ker H\subseteq\ker K$；
+3. $\mathsf{CovertThroat}=0$。
+
+这是标准核因子化判据。∎
+
+若加入动作账本
+
+$$
+L:\mathcal U\to\Lambda,
+$$
+
+联合接口为 $(H,L)$，不可恢复输运缩为
+
+$$
+K(\ker H\cap\ker L)
+\subseteq
+K(\ker H).
+$$
+
+所以增加账本不能增加来源歧义，只能保持或缩小它；但账本不改变已经发生的本体输运，只改善“谁做了什么、因此隐藏分量如何变化”的可恢复性。
+
+---
+
+# 47. 无限维不可压缩余量与粗粒化单调性
+
+若代理 Hankel 算子作用于无限维 Hilbert 空间，定义本质范数
+
+$$
+\boxed{
+\|\mathcal H_O\|_{\mathrm{ess}}
+=
+\inf_{\operatorname{rank}K<\infty}
+\|\mathcal H_O-K\|.
+}
+$$
+
+若该值正，则任何有限维自我模型都至少具有同样大的算子误差。定义
+
+$$
+R_{\mathrm{inf}}=\|\mathcal H_O\|_{\mathrm{ess}}
+$$
+
+为不可压缩代理余量。有限记忆可任意逼近主体不是自动真理，而取决于算子的紧致性。
+
+若限制控制接口 $S:U'\to U$，粗化输出 $P:Y\to Y'$，新代理算子为
+
+$$
+H'=PHS.
+$$
+
+则
+
+$$
+\operatorname{rank}H'\le\operatorname{rank}H.
+$$
+
+当 $\|P\|,\|S\|\le1$ 时，
+
+$$
+\sigma_i(PHS)\le\sigma_i(H).
+$$
+
+确定后处理还满足数据处理不等式。删除控制、压缩读出或遗忘记录都不能创造新的操作代理能力。
+
+---
+
+# 48. 自由保持核与 meta-agency
+
+设 $S_{\mathrm{ag}}\subseteq X$ 为满足最低主体条件的安全区域，例如：
+
+```text
+代理商非零；
+策略仍可修改；
+关键账本仍可访问；
+作者状态仍可读写；
+控制权未全部不可逆交给外部。
+```
+
+定义安全前驱算子
+
+$$
+\operatorname{Pre}_S(Z)
+=
+\{x\in S:\exists a\in\mathcal A(x),\ T(x,a)\in Z\}.
+$$
+
+## 定义 48.1（主体生存核）
+
+$$
+\boxed{
+\mathsf{FreeKernel}
+=
+\nu Z.\operatorname{Pre}_{S_{\mathrm{ag}}}(Z).
+}
+$$
+
+它是安全区域中最大的受控前向不变集合。
+
+有限状态下从 $Z_0=S_{\mathrm{ag}}$ 迭代
+
+$$
+Z_{n+1}=\operatorname{Pre}_{S_{\mathrm{ag}}}(Z_n)
+$$
+
+最终稳定于该核。
+
+因此存在三类状态：
+
+```text
+当前自由且可无限保持；
+当前自由但任何策略最终都会失去主体能力；
+当前已不满足主体条件。
+```
+
+若 $x\in\mathsf{FreeKernel}$，而某动作把后继送出该核，则它是自我放弃动作。自由选择不等于选择保持自由。
+
+定义 meta-agency 为保持、扩大或恢复未来代理能力的能力。它是高于即时动作数的治理自由。
+
+---
+
+# 49. 操作代理存在的六重等价
+
+在线性系统
+
+$$
+x_{t+1}=Tx_t+B_Ou_t,
+\qquad y_t=Cx_t
+$$
+
+中，以下条件等价：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{(i)}\;&\mathsf{Agt}_O\ne0;\\
+\mathrm{(ii)}\;&R_O\not\subseteq N_\infty;\\
+\mathrm{(iii)}\;&\exists n\ge0,\ CT^nB_O\ne0;\\
+\mathrm{(iv)}\;&\mathcal H_O\ne0;\\
+\mathrm{(v)}\;&G_O\ne0;\\
+\mathrm{(vi)}\;&\forall P>0,\ C_O(P)>0.
+\end{aligned}
+}
+$$
+
+### 证明
+
+代理商非零等价于存在自我可达方向不在永久不可观测核中。$R_O$ 由 $T^jB_Ou$ 张成，故等价于某个 $CT^{n+j}B_Ou$ 非零；这又等价于输入—输出 Hankel 非零。前文秩等式给出 $G_O$ 非零等价；高斯容量零恰当且仅当输入—输出算子为零。∎
+
+该定理只证明存在自身可执行控制会在未来造成可见差异；它不自动证明来源所有权、理由响应、策略可修改或强本体分岔。
+
+---
+
+# 50. 自由与主体的九级阶梯
+
+可以把结构按强度排列为：
+
+1. **动作存在**：$\mathcal A(x)\ne\varnothing$；
+2. **有效分岔**：存在后果真正不同的动作；
+3. **非典范性**：裸结构不提供保持全部对称性的唯一选择；
+4. **操作代理**：$\mathsf{Agt}_O\ne0$；
+5. **稳健代理**：在噪声和模型误差下仍有非零代理秩；
+6. **来源代理**：自身行为不能被外部通道完全复制，或账本能恢复来源；
+7. **策略代理**：观察者能修改以后怎样选择；
+8. **历时与自由保持**：过去选择进入未来自我，且状态位于 $\mathsf{FreeKernel}$；
+9. **本体自由**：给定完整宇宙过去仍有未被隐藏变量预选的真实分岔。
+
+当前理论严格给出前八层的形式结构。第九层需要关于完整状态空间与真实转移关系的独立本体前件。
+
+必须保持以下非蕴含：
+
+```text
+随机性 ⇏ 作者性；
+不可预测 ⇏ 自由；
+可预测 ⇏ 不自由；
+内部影响 ⇏ 所有权；
+代理商非零 ⇏ 来源可识别；
+策略可修改 ⇏ 身份连续；
+身份连续 ⇏ 本体分岔。
+```
+
+---
+
+# 51. 建议 Lean 模块树
+
+```text
+D5/S3/Observer/Agency/Core/
+  AgentiveProfile.lean
+  AgentiveHistoryQuotient.lean
+  AgencyCompletion.lean
+  AgencyCompletionClosure.lean
+  AutonomyResidual.lean
+  ReasonBypassResidual.lean
+
+D5/S3/Observer/Agency/Choice/
+  LegalActionBundle.lean
+  DeterministicPolicySection.lean
+  EquivariantSelectorObstruction.lean
+  EndogenousSymmetryBreaking.lean
+  SymmetricChoiceMemoryLowerBound.lean
+
+D5/S3/Observer/Agency/Ownership/
+  CausalAutonomyCapacity.lean
+  OwnershipClosure.lean
+  AutonomousCore.lean
+  StableSelfBoundary.lean
+  ObservationalAuthorshipCountermodel.lean
+
+D5/S3/Observer/Agency/Reflexive/
+  TransparentPredictionDiagonal.lean
+  ResponseFixedPoint.lean
+  MetaPolicyDynamics.lean
+  ValuePolicyEquilibrium.lean
+  PolicyHolonomy.lean
+  ProvenanceOrder.lean
+
+D5/S3/Observer/Agency/Linear/
+  OwnedReachableSubspace.lean
+  ExternalReachableSubspace.lean
+  DiscountedControllabilityGramian.lean
+  AgentiveBehaviorQuotient.lean
+  SilentControlExactSequence.lean
+  ImposedBehaviorExactSequence.lean
+  AuthorabilityGramian.lean
+  AgencyHankelOperator.lean
+  MinimumRevisionEnergy.lean
+
+D5/S3/Observer/Agency/Provenance/
+  ObservableControlOverlap.lean
+  ProvenanceDecomposition.lean
+  ProvenanceConditionNumber.lean
+  UniqueOwnedBehaviorQuotient.lean
+  DecisionExecutionRecordLedger.lean
+
+D5/S3/Observer/Agency/Approximation/
+  ApproximateSelfDimension.lean
+  AgencyBalancedCoordinates.lean
+  RobustAgencyRank.lean
+  EssentialAgencyResidual.lean
+  CoarseGrainingMonotonicity.lean
+
+D5/S3/Observer/Agency/Throat/
+  StrategyPathCocycle.lean
+  ThroatComponentCocycle.lean
+  ClosedLoopPotentialCriterion.lean
+  ActionOrderCurvature.lean
+  StrategyThroatSemidirect.lean
+  CovertThroatTransport.lean
+  LedgerThroatAudit.lean
+
+D5/S3/Observer/Agency/Viability/
+  AgencySafeSet.lean
+  AgencyViabilityKernel.lean
+  FreedomPreservingPolicy.lean
+  SelfAbandoningAction.lean
+```
+
+建议优先闭合低依赖、高区分度结果：
+
+```text
+agentive_profile_kernel
+agentive_completion_least
+agency_completion_idempotent
+no_equivariant_selector_of_fixed_state
+symmetric_choice_memory_card_lower_bound
+reason_sufficient_iff_factors
+stable_self_boundary_fixed
+transparent_counterprediction_impossible
+finite_constitution_root_or_cycle
+agentiveQuotient_equiv_reachable_mod_silent
+agentiveQuotient_dim
+authorabilityGramian_rank
+agencyHankel_rank
+source_decomposition_unique_iff_disjoint
+covert_throat_zero_iff_factors
+agency_viability_greatest
+operational_agency_sixfold_equiv
+```
+
+---
+
+# 52. 追加严格非断言
+
+本增订不声称：
+
+1. 无典范策略等价于不存在任何确定策略；
+2. 策略空间大、动作熵高或行为不可预测自动等于自由意志；
+3. 内部状态与行动相关自动证明内部状态具有因果控制；
+4. 任意体内变量都属于观察者自我；
+5. 因果自主容量正自动建立道德责任；
+6. 代理因果状态商等于意识、现象自我或全部人格；
+7. 完整预测分布能够从纯事实自动生成唯一价值排序；
+8. 反预测障碍证明宇宙整体不可预测或非决定；
+9. 反身固定点证明某项承诺合理、善或不可修改；
+10. 策略 holonomy 必然存在于现实人类或量子观察者；
+11. 历史来源偏序单独解决人格同一性的全部哲学问题；
+12. 图灵完备自我修改完全不可治理；结论只是否定完备总判定器；
+13. 有限封闭周期化排除开放系统的长期新颖性；
+14. 集体联盟阶数是唯一合理的集体作者性指标；
+15. $K_\infty/\Delta(\mathbb Z)$ 已经成为仓库中的完整公共 quotient API；
+16. 非零喉部 cocycle 自动意味着物理允许的跨流线控制；
+17. 作者性 Gramian 或代理 Hankel 的非零特征值就是自由意志；
+18. 高斯容量公式适用于任意非线性、非高斯或量子控制系统；
+19. 低秩自我近似自动保持因果性、稳定性、正性或 complete positivity；
+20. 线性来源子空间交为零自动恢复原始细粒控制历史；
+21. 账本创造作者性；账本只改善已有来源链的可审计性；
+22. 自由保持核要求观察者永远选择留在其中；它只证明存在保持策略；
+23. 前八级代理结构推出第九级强 libertarian freedom；
+24. 本增订中的 paper-level 定理已经具有 Lean kernel proof term；
+25. 本增订推进 RH、negative-base-$\varphi$、Born 规则起源或其他登记开放问题。
+
+---
+
+# 53. 最终统一：闭合观察者、反身主体与喉部输运
+
+本增订把主体结构压缩为以下对象：
+
+$$
+\begin{aligned}
+K_\infty
+&=\text{永久不可观测方向},\\
+R_O
+&=\text{观察者自身可达方向},\\
+\mathsf{Agt}_O
+&=R_O/(R_O\cap N_\infty),\\
+G_O
+&=W_o^{1/2}W_c^OW_o^{1/2},\\
+\mathcal H_O
+&=\mathcal O_\beta\mathcal C_{\beta,O},\\
+S_{\mathrm{ag}}
+&=\text{完整未来交互画像的最小历史商},\\
+C_{\mathrm{ag}}
+&=\text{把当前自我接口反射到代理充分接口的闭包},\\
+s
+&=\text{历史生成的动作截面},\\
+\Lambda
+&=\text{行动、结果、理由与授权的追加账本},\\
+\bar c
+&=\text{已选动作的喉部分量 cocycle},\\
+\mathsf{FreeKernel}
+&=\text{可无限保持最低主体能力的最大受控不变集}.
+\end{aligned}
+$$
+
+完整回路是：
+
+$$
+\boxed{
+\Lambda_t
+\longrightarrow
+M_t
+\longrightarrow
+\pi_t
+\longrightarrow
+A_t
+\longrightarrow
+\Delta\kappa_t
+\longrightarrow
+Y_t
+\longrightarrow
+\Lambda_{t+1}.
+}
+$$
+
+其中：
+
+```text
+Law 给出合法动作纤维与后果核；
+Self 是所有权闭包与自主核心共同稳定的历史状态；
+Will 是由该历史状态生成的内生对称破缺截面；
+Choice 是截面在当前状态上的实际取值；
+Commitment 把未来计划空间收缩为可追溯历史；
+Agency 是自身控制穿过不可观测核后仍留在行为商中的部分；
+Provenance 区分这一行为究竟来自自身还是外部通道；
+Meta-agency 使观察者能够修改并保持未来的选择能力；
+Throat transport 是已选动作经 cocycle 产生的隐藏分量后果。
+```
+
+因此最严格的统一不是：
+
+```text
+自由 = 没有原因；
+自由 = 随机结果；
+自由 = 喉部坐标本身。
+```
+
+而是：
+
+$$
+\boxed{
+自由的操作核心，是观察者能够以自身拥有并由历史塑造的内部状态形成控制，
+使该控制对未来产生可识别差异，把差异写入账本，
+据此修订未来策略，并存在一种策略能够保持这种能力。
+}
+$$
+
+喉部跳跃在其中的准确位置是：
+
+$$
+\boxed{
+喉部跳跃不是意志本身，
+而是一个来源可归属、策略可解释、历史可追溯的已选行动，
+在隐藏路径分量空间中产生的本体输运。
+}
+$$
+
+最后，兼容决定论但足以刻画自主性的最强结论是：
+
+$$
+\boxed{
+行动不必没有原因；
+关键在于行动原因是否在观察者边界内形成、可被读取和修订、
+由过去自己的选择塑造，并能通过记录继续属于未来的自己。
+}
+$$

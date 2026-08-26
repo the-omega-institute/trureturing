@@ -23,8 +23,16 @@ internal static partial class RepositoryRules
         Address,
         HostedExtensions,
         HostedExtension,
+        HostedExtensionGid,
         Signature,
         SignatureNameKey,
+        PrimaryGid,
+        CoverageGids,
+        CoverageGid,
+        Receipts,
+        ReceiptList,
+        ReceiptEntry,
+        ReceiptGid,
     }
 
     private static bool IsGovernedStructured(RepoPath path, ValidatedPolicy policy) =>
@@ -215,7 +223,8 @@ internal static partial class RepositoryRules
             static match => ((char)Convert.ToInt32(match.Groups[1].Value, 16)).ToString());
         if ((AnomalyBearingPattern.IsMatch(unescaped)
                 && !IsAddressShapedResidueAtDeclaredSlot(path, slot, unescaped)
-                && !IsSignatureNameKeyResidueAtDeclaredSlot(path, slot, unescaped))
+                && !IsSignatureNameKeyResidueAtDeclaredSlot(path, slot, unescaped)
+                && !IsDeclarationGidResidueAtDeclaredSlot(path, slot, unescaped))
             || Regex.IsMatch(unescaped, "\\\"(?:kind|type|category|record_type)\\\"\\s*:"))
         {
             findings.Add(new RuleFinding(path, $"unknown anomaly-bearing schema at {location}"));
@@ -235,7 +244,14 @@ internal static partial class RepositoryRules
         (AddressSlot.Boundary, "ast_path") => AddressSlot.Address,
         (AddressSlot.Entry, "hosted_extensions") => AddressSlot.HostedExtensions,
         (AddressSlot.Entry, "precommitted_signature") => AddressSlot.Signature,
+        (AddressSlot.Entry, "primary_gid") => AddressSlot.PrimaryGid,
+        (AddressSlot.Entry, "coverage_gids") => AddressSlot.CoverageGids,
+        (AddressSlot.Entry, "receipts") => AddressSlot.Receipts,
+        (AddressSlot.Receipts, "coverage") => AddressSlot.ReceiptList,
+        (AddressSlot.Receipts, "scribe") => AddressSlot.ReceiptList,
+        (AddressSlot.ReceiptEntry, "gid") => AddressSlot.ReceiptGid,
         (AddressSlot.HostedExtension, "precommitted_signature") => AddressSlot.Signature,
+        (AddressSlot.HostedExtension, "gid") => AddressSlot.HostedExtensionGid,
         (AddressSlot.Signature, "name_key") => AddressSlot.SignatureNameKey,
         _ => AddressSlot.None,
     };
@@ -243,6 +259,8 @@ internal static partial class RepositoryRules
     private static AddressSlot ArrayElementSlot(AddressSlot slot) => slot switch
     {
         AddressSlot.HostedExtensions => AddressSlot.HostedExtension,
+        AddressSlot.CoverageGids => AddressSlot.CoverageGid,
+        AddressSlot.ReceiptList => AddressSlot.ReceiptEntry,
         _ => AddressSlot.None,
     };
 
@@ -307,6 +325,37 @@ internal static partial class RepositoryRules
         if (slot != AddressSlot.SignatureNameKey) return false;
         if (!CanonicalLeanNameDecoder.IsRepositoryNameKey(residue)) return false;
         return true;
+    }
+
+    /// <summary>
+    /// Tests whether the residue matches the receipt-GID exemption: the path is a canonical
+    /// formalization receipt, structural descent reached the receipt's own <c>primary_gid</c> or
+    /// a hosted extension's <c>gid</c>, and the complete value parses under the repository GID
+    /// address algebra as selecting a Lean declaration. The shape authority is
+    /// <c>DigestionFormalizationReceipt.SelectsDeclaration</c> — the same predicate the canonical
+    /// writer enforces — not a second grammar. A GID names its subject, so an anomaly word inside
+    /// it (a module or theorem literally about failure) is mathematical content, the same holding
+    /// already established for digestion addresses and signature name keys.
+    ///
+    /// No condition is redundant. Without the path, a <c>primary_gid</c> key in arbitrary governed
+    /// JSON would be exempt. Without the slot, a nested or dotted key of the same name would be.
+    /// Without the parse, prose or a serialized record placed in the legitimate GID slot would be.
+    /// Embedded-record detection remains a separate disjunct and is unaffected.
+    /// </summary>
+    private static bool IsDeclarationGidResidueAtDeclaredSlot(
+        string path,
+        AddressSlot slot,
+        string residue)
+    {
+        var declared = slot switch
+        {
+            AddressSlot.PrimaryGid or AddressSlot.HostedExtensionGid =>
+                DigestionFormalizationReceipt.IsCanonicalPath(path),
+            AddressSlot.CoverageGid or AddressSlot.ReceiptGid =>
+                BackfillInventoryLoader.IsCanonicalPath(path),
+            _ => false,
+        };
+        return declared && DigestionFormalizationReceipt.SelectsDeclaration(residue);
     }
 
     private static bool TryParseEmbeddedJson(

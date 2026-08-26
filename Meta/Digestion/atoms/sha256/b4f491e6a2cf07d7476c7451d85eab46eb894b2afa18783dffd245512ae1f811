@@ -1,0 +1,52 @@
+# 222. 一个定理应被表示为依赖包
+
+设模型类型为 (\mathcal M)。
+
+结论为：
+
+[
+P:\mathcal M\to\mathsf{Prop}.
+]
+
+假设包为：
+
+[
+A:\mathcal M\to\mathsf{Prop}.
+]
+
+证明为：
+
+[
+p:
+\forall m,\quad
+A(m)\to P(m).
+]
+
+完整定理包：
+
+[
+\boxed{
+\operatorname{Claim}(P)
+=======================
+
+\sum_{A:\mathcal M\to\mathsf{Prop}}
+\left[
+\left(
+\forall m,\ A(m)\to P(m)
+\right)
+\times
+\operatorname{Provenance}(A,P)
+\right].
+}
+]
+
+因此一个定理不仅包含结论，还包含：
+
+* 有效域；
+* 假设；
+* proof term；
+* 依赖来源；
+* 使用的逻辑原则。
+
+---
+

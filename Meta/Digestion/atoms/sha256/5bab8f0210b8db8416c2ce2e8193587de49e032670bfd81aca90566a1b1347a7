@@ -1,0 +1,58 @@
+## 定理 231.1（弱素数信号完成阈值）
+
+由于每个坐标两 law 严格正，Kakutani 前件成立。于是：
+
+\[
+\boxed{
+\bigotimes_pP_{\delta_p}
+\perp
+\bigotimes_pQ_{\delta_p}
+\iff
+\sum_p\delta_p^2=\infty.
+}
+\]
+
+而：
+
+\[
+\sum_p\delta_p^2
+=c^2\sum_pp^{-2\alpha}.
+\]
+
+故：
+
+\[
+\boxed{
+\begin{aligned}
+\alpha\le\frac12
+&\Rightarrow
+\text{无限 transcript 零错误完成};\\
+\alpha>\frac12
+&\Rightarrow
+\text{两 product laws 等价，保留正 Bayes 余量}.
+\end{aligned}
+}
+\]
+
+### 证明纲要
+
+由第 230 节：
+
+\[
+H_p^2\asymp\delta_p^2.
+\]
+
+Kakutani 判据把 product singularity 等价为：
+
+\[
+\sum_pH_p^2=\infty.
+\]
+
+素数 Dirichlet 级数：
+
+\[
+\sum_pp^{-s}
+\]
+
+在 \(s>1\) 收敛，在 \(s\le1\) 发散，代入 \(s=2\alpha\)。 \(\square\)
+

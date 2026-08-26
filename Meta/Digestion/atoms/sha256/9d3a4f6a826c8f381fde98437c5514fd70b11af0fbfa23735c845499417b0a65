@@ -1,0 +1,9 @@
+## 18.2 InvolutionLogic
+
+```text
+D5/S3/ConceptDynamics/InvolutionLogic/RelativeNegation.lean
+D5/S3/ConceptDynamics/InvolutionLogic/AtomicNegationRigidity.lean
+D5/S3/ConceptDynamics/InvolutionLogic/InvolutionTransversal.lean
+D5/S3/ConceptDynamics/InvolutionLogic/BooleanInvolutionObservables.lean
+```
+

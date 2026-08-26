@@ -1,0 +1,94 @@
+# 226. 理论 revision 一般不交换
+
+设当前允许世界集合为：
+
+[
+A\subseteq X.
+]
+
+定义一个简单 revision 算子：
+
+[
+\boxed{
+\operatorname{Rev}_P(A)
+=======================
+
+\begin{cases}
+A\cap P,&A\cap P\neq\varnothing,\
+P,&A\cap P=\varnothing.
+\end{cases}
+}
+]
+
+它表示：
+
+* 若新命题与旧理论一致，则条件化；
+* 若完全冲突，则放弃旧域，改以新命题为准。
+
+取：
+
+[
+X={1,2,3},
+]
+
+[
+A={1},
+]
+
+[
+P={2,3},
+]
+
+[
+Q={1,2}.
+]
+
+先修订 (P)：
+
+[
+\operatorname{Rev}_P(A)={2,3}.
+]
+
+再修订 (Q)：
+
+[
+\operatorname{Rev}_Q\operatorname{Rev}_P(A)
+===========================================
+
+{2}.
+]
+
+反向：
+
+[
+\operatorname{Rev}_Q(A)={1},
+]
+
+再修订 (P)：
+
+[
+\operatorname{Rev}_P\operatorname{Rev}_Q(A)
+===========================================
+
+{2,3}.
+]
+
+因此：
+
+[
+\boxed{
+\operatorname{Rev}_Q\operatorname{Rev}_P
+\neq
+\operatorname{Rev}_P\operatorname{Rev}_Q.
+}
+]
+
+所以理论 revision 的路径依赖不是偶然现象，而来自：
+
+* 冲突时保留什么；
+* 哪个证据更新得更晚；
+* 使用什么距离；
+* 哪些前提有更高优先级。
+
+---
+

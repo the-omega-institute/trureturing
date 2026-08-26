@@ -1,0 +1,10 @@
+ast_path: row/预测充分性推出决策充分性
+fingerprints:
+  raw_sha256: sha256:1a3456fbd42e65b7434de8496acc2b7fc926143e0be16306ebeda7967b619a34
+  normalized_sha256: sha256:1a3456fbd42e65b7434de8496acc2b7fc926143e0be16306ebeda7967b619a34
+cas_ref: sha256:1a3456fbd42e65b7434de8496acc2b7fc926143e0be16306ebeda7967b619a34
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

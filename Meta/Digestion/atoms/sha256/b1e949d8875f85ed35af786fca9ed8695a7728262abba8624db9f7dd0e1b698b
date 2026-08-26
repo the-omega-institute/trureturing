@@ -1,0 +1,26 @@
+## 本文定理 20.1（最小代理充分精化）
+
+$C_{\mathrm{ag}}(m)$ 是同时满足以下两项的最粗接口：
+
+1. 精化当前接口 $m$；
+2. 决定完整代理画像 $\Gamma$。
+
+### 证明
+
+若 $r$ 同时决定 $m$ 与 $\Gamma$，则
+
+$$
+K_r\subseteq K_m,
+\qquad
+K_r\subseteq K_{\mathrm{ag}}.
+$$
+
+所以
+
+$$
+K_r\subseteq K_m\cap K_{\mathrm{ag}}
+=K_{C_{\mathrm{ag}}(m)}.
+$$
+
+由核因子化判据得到结论。∎
+

@@ -5505,3 +5505,999 @@ e_*:=\min\{e:\forall\alpha\in A,\ \operatorname{Terminal}_{s_{\le e}}(\alpha)\}.
 - 本批只提出问题，零新定理主张，整体组合标为 suspected-novel。
 
 后续增订继续严格追加于本节之后。
+
+---
+# 第五十六部　54.3 三处源缺口的有限闭合
+
+## 56.1 增订目的、继承接口与收窄纪律
+
+本部是 v1.4 的追加式增订，只精确化第 54.3 部证明义务 9 的商序半条、证明义务 10 的 Stop 半条，以及证明义务 12 的时域投影半条。第 1—55 部的定义、开放问题、冻结结算与已形式化定理均不回写、不删除，也不因本部而改变原地址。
+
+本部预期进入既有 canonical 命名空间
+
+`D5.S3.ConceptDynamics.DefinitionEscape.Adjudication`
+
+并直接复用其中已经给出的
+
+`GainVector`、`ParetoWeak`、`ParetoStrict`、`NoDominatingCandidate`、`DecisionSet`、`OrientationSpec`、`ProspectiveCommitment`、`OrientedStopOnDecisionSet`、`OrientedStop` 与 `ExpansionEscape`。
+
+本部只使用以下初等构件：
+
+- 有限集、有限子类型与有限过滤；
+- 预序、偏序、关系的对称核；
+- `Fin (N+1)`、自然数有限迭代与函数外延；
+- 布尔有限扫描及其命题正确性。
+
+不引入测度、概率、拓扑、抽象商选择、线性延伸或任意代表选择。所有空类型、空有限集与单点有限集都按定义处理，不暗加 `Nonempty`。
+
+## 56.2 弱支配诱导的有限显式商
+
+### 56.2.1 有限承载、承载枚举与对称核
+
+固定类型
+
+\[
+\mathsf{Action},\ \mathsf I,\ \mathsf R,\ \mathsf{Tr},\ \mathsf C,\ \mathsf Q,
+\]
+
+其中 `Action` 有可判等号；五个坐标分别带 `Preorder`，且各自的 \(\le\) 可判。固定有限行动集
+
+\[
+F:\operatorname{Finset}(\mathsf{Action})
+\]
+
+以及公共绝对坐标
+
+\[
+v:\mathsf{Action}\to
+\operatorname{GainVector}(\mathsf I,\mathsf R,\mathsf{Tr},\mathsf C,\mathsf Q).
+\]
+
+定义有限承载子类型与它的显式枚举
+
+\[
+A_F:=\{a:\mathsf{Action}\mid a\in F\},
+\qquad
+\operatorname{carrierEnum}_F:=F.\operatorname{attach}
+\in\operatorname{Finset}(A_F).
+\]
+
+对 \(x,y:A_F\)，定义承载上的弱支配
+
+\[
+\operatorname{ParetoWeakOn}(v,F,x,y)
+\Longleftrightarrow
+\operatorname{ParetoWeak}(v,x.1,y.1),
+\]
+
+并定义弱支配的对称核
+
+\[
+\boxed{
+\operatorname{ParetoEqOn}(v,F,x,y)
+\Longleftrightarrow
+\operatorname{ParetoWeakOn}(v,F,x,y)
+\wedge
+\operatorname{ParetoWeakOn}(v,F,y,x).
+}
+\]
+
+该等价完全由弱支配诱导；它不是另给标签，也不预先把“同向量”写进定义。
+
+**证明义务 56.2-A（对称核的可判等价律）。** 对上述任意类型、可判预序、\(F\) 与 \(v\)，机器核验
+
+\[
+\begin{aligned}
+&\forall x:A_F,\quad
+\operatorname{ParetoEqOn}(v,F,x,x),\\
+&\forall x,y:A_F,\quad
+\operatorname{ParetoEqOn}(v,F,x,y)
+\to
+\operatorname{ParetoEqOn}(v,F,y,x),\\
+&\forall x,y,z:A_F,\quad
+\operatorname{ParetoEqOn}(v,F,x,y)
+\to
+\operatorname{ParetoEqOn}(v,F,y,z)
+\to
+\operatorname{ParetoEqOn}(v,F,x,z),
+\end{aligned}
+\]
+
+并从五个坐标关系的可判性构造
+
+\[
+\forall x,y:A_F,\quad
+\operatorname{Decidable}
+\bigl(\operatorname{ParetoEqOn}(v,F,x,y)\bigr).
+\]
+
+反身与传递部分应复用已冻结的
+`pareto_weak_reflexive_transitive`；不得把待证结论重新列为前件。
+
+### 56.2.2 等价类、类像与有限商承载
+
+对 \(x:A_F\)，定义显式等价类
+
+\[
+\boxed{
+\operatorname{paretoClass}_{v,F}(x)
+:=
+\operatorname{carrierEnum}_F.\operatorname{filter}
+\bigl(\lambda y:A_F,\
+\operatorname{ParetoEqOn}(v,F,y,x)\bigr).
+}
+\]
+
+定义全部类的有限像
+
+\[
+\operatorname{paretoClassImage}_{v,F}
+:=
+\operatorname{carrierEnum}_F.\operatorname{image}
+\bigl(\operatorname{paretoClass}_{v,F}\bigr)
+\in
+\operatorname{Finset}\bigl(\operatorname{Finset}(A_F)\bigr).
+\]
+
+定义有限 Pareto 商承载
+
+\[
+\boxed{
+\operatorname{FiniteParetoQuotient}(v,F)
+:=
+\left\{
+C:\operatorname{Finset}(A_F)
+\ \middle|\
+C\in\operatorname{paretoClassImage}_{v,F}
+\right\}.
+}
+\]
+
+记该类型为 \(Q_{v,F}\)。再定义它的显式全枚举
+
+\[
+\boxed{
+\operatorname{quotientEnum}_{v,F}
+:=
+\operatorname{paretoClassImage}_{v,F}.\operatorname{attach}
+\in\operatorname{Finset}(Q_{v,F}).
+}
+\]
+
+这里的“商”就是有限类像本身；下游不需要选择代表元，也不需要调用抽象 `Quotient`。
+
+**证明义务 56.2-B（类的精确性与枚举完备性）。** 对任意 \(x,y:A_F\) 与 \(C:Q_{v,F}\)，机器核验
+
+\[
+\begin{aligned}
+&x\in\operatorname{carrierEnum}_F,\\
+&y\in\operatorname{paretoClass}_{v,F}(x)
+\Longleftrightarrow
+\operatorname{ParetoEqOn}(v,F,y,x),\\
+&x\in\operatorname{paretoClass}_{v,F}(x),\\
+&\operatorname{paretoClass}_{v,F}(x)
+=
+\operatorname{paretoClass}_{v,F}(y)
+\Longleftrightarrow
+\operatorname{ParetoEqOn}(v,F,x,y),\\
+&C.1.\operatorname{Nonempty},\\
+&\forall z:A_F,\ z\in C.1\to
+\operatorname{paretoClass}_{v,F}(z)=C.1,\\
+&C\in\operatorname{quotientEnum}_{v,F}.
+\end{aligned}
+\]
+
+最后一式给出 \(Q_{v,F}\) 的显式有限枚举，因而可据此构造 `Fintype Q_{v,F}`，不以 `Nonempty Q_{v,F}` 为前件。退化承载也必须机器核验：
+
+\[
+\begin{aligned}
+&F=\varnothing
+\to
+\forall C:Q_{v,F},\ \mathsf{False},\\
+&F.\operatorname{card}=1
+\to
+\exists C:Q_{v,F},\
+\forall D:Q_{v,F},\ D=C.
+\end{aligned}
+\]
+
+所以空 \(F\) 给出空商，单点 \(F\) 给出恰一商类。
+
+### 56.2.3 商上的弱支配
+
+对 \(C,D:Q_{v,F}\)，定义
+
+\[
+\boxed{
+\begin{aligned}
+&\operatorname{QuotientParetoWeak}(v,F,C,D)
+\\
+&\Longleftrightarrow
+\exists x:A_F,\ x\in C.1
+\wedge
+\exists y:A_F,\ y\in D.1
+\wedge
+\operatorname{ParetoWeakOn}(v,F,x,y).
+\end{aligned}
+}
+\]
+
+这是“类 \(C\) 弱支配类 \(D\)”的存在代表式。由于类由弱支配的对称核生成，该式必须与代表选择无关。
+
+**证明义务 56.2-C（代表无关、可判与偏序）。** 对任意 \(C,D,E:Q_{v,F}\)，机器核验
+
+\[
+\begin{aligned}
+&\operatorname{QuotientParetoWeak}(v,F,C,D)
+\\
+&\quad\Longleftrightarrow
+\forall x:A_F,\ x\in C.1\to
+\forall y:A_F,\ y\in D.1\to
+\operatorname{ParetoWeakOn}(v,F,x,y),\\[1mm]
+&\operatorname{Decidable}
+\bigl(\operatorname{QuotientParetoWeak}(v,F,C,D)\bigr)
+\quad\text{可由 }C.1,D.1\text{ 的有限扫描构造},\\[1mm]
+&\operatorname{QuotientParetoWeak}(v,F,C,C),\\
+&\operatorname{QuotientParetoWeak}(v,F,C,D)
+\to
+\operatorname{QuotientParetoWeak}(v,F,D,E)
+\to
+\operatorname{QuotientParetoWeak}(v,F,C,E),\\
+&\operatorname{QuotientParetoWeak}(v,F,C,D)
+\to
+\operatorname{QuotientParetoWeak}(v,F,D,C)
+\to
+C=D.
+\end{aligned}
+\]
+
+后三式分别是反身、传递与反对称。因此
+\(\operatorname{QuotientParetoWeak}(v,F,\cdot,\cdot)\)
+在有限承载 \(Q_{v,F}\) 上为偏序关系。空商上的三律按空类型全称命题解释，不需要补一个虚构元素。
+
+### 56.2.4 与既有“同向量取商”的一致性
+
+现在加强前件：五个坐标都带偏序，而不只是预序。由原先可判的
+\(\le\)
+与反对称性，逐坐标构造可判等号，再由五个字段构造
+`GainVector`
+的可判等号。定义同向量类
+
+\[
+\operatorname{sameVectorClass}_{v,F}(x)
+:=
+\operatorname{carrierEnum}_F.\operatorname{filter}
+\bigl(\lambda y:A_F,\ v(y.1)=v(x.1)\bigr).
+\]
+
+**证明义务 56.2-D（对称核等价于同向量等价）。** 在五坐标均为偏序的前件下，机器核验
+
+\[
+\boxed{
+\forall x,y:A_F,\quad
+\operatorname{ParetoEqOn}(v,F,x,y)
+\Longleftrightarrow
+v(x.1)=v(y.1)
+}
+\]
+
+以及
+
+\[
+\boxed{
+\forall x:A_F,\quad
+\operatorname{paretoClass}_{v,F}(x)
+=
+\operatorname{sameVectorClass}_{v,F}(x).
+}
+\]
+
+所以第 52.3 部“按同向量等价取商”的有限限制，与本部“按弱支配对称核取商”的类像外延相同；本部补的是此前缺失的承载、枚举、代表无关关系及反对称证明，不改变旧命题的方向或前件。若 `Action` 本身为有限类型并取
+\(F=\operatorname{Finset.univ}\)，本构造覆盖完整行动载体；一般情况下，本部只关闭用户指定的有限承载版本，不冒领无限承载的机器实现。
+
+## 56.3 与 \(K_n\) 结算一致的精确 Stop 目标
+
+### 56.3.1 决策集级与承诺级 Stop 目标
+
+固定类型
+
+\[
+\mathsf{Goal},\mathsf{Action},\mathsf{Source},
+\mathsf{Version},\mathsf{Scope},
+\]
+
+其中 `Action` 有可判等号；固定
+
+\[
+\operatorname{AdmTarget}:\mathsf{Goal}\to\operatorname{Set}(\mathsf{Action}),
+\qquad
+\operatorname{InScope}:\mathsf{Scope}\to\mathsf{Action}\to\operatorname{Prop},
+\]
+
+完整外生规范
+
+\[
+O:
+\operatorname{OrientationSpec}
+(\mathsf{Goal},\mathsf{Action},\mathsf{Source},
+ \mathsf{Version},\mathsf{Scope},
+ \operatorname{AdmTarget},\operatorname{InScope}),
+\]
+
+以及 \(D:\operatorname{DecisionSet}(\mathsf{Action})\)。
+
+本部把第 54.3 部第 10 条后半中的未限定词 `Stop` 精确定义为
+
+\[
+\boxed{
+\begin{aligned}
+&\operatorname{AdjudicationStopTargetOnDecisionSet}
+(\operatorname{AdmTarget},\operatorname{InScope},O,D)
+\\
+&\Longleftrightarrow
+\exists a_{\mathrm{cur}}:\mathsf{Action},\
+D.\operatorname{current}=\operatorname{some}(a_{\mathrm{cur}})
+\\
+&\quad\wedge\
+a_{\mathrm{cur}}\in D.\operatorname{feasible}
+\\
+&\quad\wedge\
+\bigl(
+\forall a:\mathsf{Action},\
+a\in D.\operatorname{feasible}\to
+a\in\operatorname{AdmTarget}(O.\operatorname{goal})
+\wedge
+\operatorname{InScope}(O.\operatorname{scope},a)
+\bigr)
+\\
+&\quad\wedge\
+\neg\exists a:\mathsf{Action},\
+a\in D.\operatorname{feasible}
+\wedge
+O.\operatorname{relation}(a_{\mathrm{cur}},a)
+\wedge
+\neg O.\operatorname{relation}(a,a_{\mathrm{cur}}).
+\end{aligned}
+}
+\]
+
+这不是新停止准则，而是既有
+`OrientedStopOnDecisionSet`
+的有名展开式。
+
+对任意第 \(n\) 轮前视承诺 \(K_n\)，定义承诺级目标
+
+\[
+\boxed{
+\operatorname{AdjudicationStopTarget}
+(\operatorname{AdmTarget},\operatorname{InScope},O,K_n)
+:=
+\operatorname{AdjudicationStopTargetOnDecisionSet}
+(\operatorname{AdmTarget},\operatorname{InScope},O,K_n.\operatorname{decision}).
+}
+\]
+
+停止结算的完整地址是有序对 \((K_n,O)\)。其中 \(O\) 的 source、version 与 scope 是地址和来源字段；停止真值的行动数据只从 \(K_n.\operatorname{decision}\) 读取。此处的 Stop 不指第 43 部未带裁决输入的泛称停止，也不指任意用户自定义布尔标签。
+
+### 56.3.2 有限停止检查器
+
+进一步假设下列三个谓词在固定 \(O\) 上可判：
+
+\[
+\begin{aligned}
+&\forall a,\quad
+\operatorname{Decidable}
+\bigl(a\in\operatorname{AdmTarget}(O.\operatorname{goal})\bigr),\\
+&\forall a,\quad
+\operatorname{Decidable}
+\bigl(\operatorname{InScope}(O.\operatorname{scope},a)\bigr),\\
+&\forall a,b,\quad
+\operatorname{Decidable}
+\bigl(O.\operatorname{relation}(a,b)\bigr).
+\end{aligned}
+\]
+
+定义布尔有限扫描器
+\(\operatorname{stopCheck}\)：
+
+\[
+\boxed{
+\operatorname{stopCheck}
+(\operatorname{AdmTarget},\operatorname{InScope},O,D)
+:=
+\begin{cases}
+\mathsf{false},
+&D.\operatorname{current}=\operatorname{none},\\
+\mathsf{false},
+&D.\operatorname{current}=\operatorname{some}(a_{\mathrm{cur}})
+\text{ 且 }a_{\mathrm{cur}}\notin D.\operatorname{feasible},\\
+\mathsf{false},
+&\exists a\in D.\operatorname{feasible},\
+a\notin\operatorname{AdmTarget}(O.\operatorname{goal})
+\vee
+\neg\operatorname{InScope}(O.\operatorname{scope},a),\\
+\mathsf{false},
+&\exists a\in D.\operatorname{feasible},\
+O.\operatorname{relation}(a_{\mathrm{cur}},a)
+\wedge
+\neg O.\operatorname{relation}(a,a_{\mathrm{cur}}),\\
+\mathsf{true},
+&\text{否则}.
+\end{cases}
+}
+\]
+
+四个失败分支按所列顺序执行；后三个分支只扫描有限集
+\(D.\operatorname{feasible}\)。
+定义第 \(n\) 轮停止结算分量
+
+\[
+\boxed{
+\operatorname{settleStop}
+(\operatorname{AdmTarget},\operatorname{InScope},O,K_n)
+:=
+\operatorname{stopCheck}
+(\operatorname{AdmTarget},\operatorname{InScope},O,K_n.\operatorname{decision}).
+}
+\]
+
+若总体
+\(\operatorname{Settle}_n=\operatorname{Evaluate}(K_n,Z_n)\)
+还输出其他坐标，则 `settleStop` 只规定其中的停止分量；它不消费 \(Z_n\)，也不重新读取未来账本尾部、未冻结权重或新的目标版本。
+
+**证明义务 56.3-A（定义忠实、边界行为与检查器正确性）。** 在上述任意类型与可判前件下，机器核验
+
+\[
+\begin{aligned}
+&\operatorname{AdjudicationStopTargetOnDecisionSet}
+(\operatorname{AdmTarget},\operatorname{InScope},O,D)
+\\
+&\qquad\Longleftrightarrow
+\operatorname{OrientedStopOnDecisionSet}
+(\operatorname{AdmTarget},\operatorname{InScope},O,D),\\
+&\operatorname{AdjudicationStopTarget}
+(\operatorname{AdmTarget},\operatorname{InScope},O,K_n)
+\\
+&\qquad\Longleftrightarrow
+\operatorname{OrientedStop}
+(\operatorname{AdmTarget},\operatorname{InScope},O,K_n),\\
+&\operatorname{stopCheck}
+(\operatorname{AdmTarget},\operatorname{InScope},O,D)=\mathsf{true}
+\\
+&\qquad\Longleftrightarrow
+\operatorname{AdjudicationStopTargetOnDecisionSet}
+(\operatorname{AdmTarget},\operatorname{InScope},O,D),\\
+&\operatorname{settleStop}
+(\operatorname{AdmTarget},\operatorname{InScope},O,K_n)=\mathsf{true}
+\\
+&\qquad\Longleftrightarrow
+\operatorname{AdjudicationStopTarget}
+(\operatorname{AdmTarget},\operatorname{InScope},O,K_n),\\
+&\operatorname{settleStop}
+(\operatorname{AdmTarget},\operatorname{InScope},O,K_n)=\mathsf{false}
+\\
+&\qquad\Longleftrightarrow
+\neg\operatorname{AdjudicationStopTarget}
+(\operatorname{AdmTarget},\operatorname{InScope},O,K_n).
+\end{aligned}
+\]
+
+为缩短下式，记
+
+\[
+\operatorname{StopTarget}_O(D)
+:=
+\operatorname{AdjudicationStopTargetOnDecisionSet}
+(\operatorname{AdmTarget},\operatorname{InScope},O,D).
+\]
+
+并分别核验
+
+\[
+\begin{aligned}
+&D.\operatorname{current}=\operatorname{none}
+\to
+\neg\operatorname{StopTarget}_O(D),\\
+&D.\operatorname{feasible}=\varnothing
+\to
+\neg\operatorname{StopTarget}_O(D),\\
+&D.\operatorname{current}=\operatorname{some}(a)
+\wedge a\notin D.\operatorname{feasible}
+\to
+\neg\operatorname{StopTarget}_O(D).
+\end{aligned}
+\]
+
+因此空可行集或缺失 current 不会因全称命题真空而误报 Stop。
+
+### 56.3.3 Pareto 前沿不决定 Stop 的有限非退化见证
+
+为排除“候选集与可行集不同”这一平凡解释，以下见证令二者相等。
+
+取
+
+\[
+\mathsf{Action}_2:=\operatorname{Fin}(2),
+\qquad
+D_2.\operatorname{candidates}
+=
+D_2.\operatorname{feasible}
+=
+\operatorname{Finset.univ},
+\qquad
+D_2.\operatorname{current}
+=
+\operatorname{some}(0),
+\qquad
+D_2.\operatorname{feasibleFromCandidates}
+:
+\forall a,a\in D_2.\operatorname{feasible}
+\to
+a\in D_2.\operatorname{candidates}
+\quad\text{取恒等包含证明}.
+\]
+
+五坐标都取 \(\mathbb N\)，定义
+
+\[
+v_2(0)=(1,0,0,0,0),
+\qquad
+v_2(1)=(0,1,0,0,0).
+\]
+
+这里前两坐标分别使 \(0\) 与 \(1\) 各有一项严格优势，其余三坐标相同，所以二者在
+`ParetoWeak`
+下不可比；特别地当前行动 \(0\) 不受任何候选严格支配。
+
+再取
+
+\[
+\mathsf{Goal}_2=\mathsf{Scope}_2=\operatorname{Unit},
+\qquad
+\mathsf{Source}_2=\mathsf{Version}_2=\operatorname{Bool},
+\]
+
+并令所有行动都属于目标允许集且都在 scope 内：
+
+\[
+\operatorname{AdmTarget}_2(\star)=\operatorname{Set.univ},
+\qquad
+\operatorname{InScope}_2(\star,a)\Longleftrightarrow\mathsf{True}.
+\]
+
+定义两个完整、可判的外生规范；两者都取
+\(\operatorname{goal}=\star\)
+与
+\(\operatorname{scope}=\star\)：
+
+\[
+\begin{aligned}
+&O_{\mathrm{stay}}.\operatorname{source}=\mathsf{false},
+\quad
+O_{\mathrm{stay}}.\operatorname{version}=\mathsf{false},
+\quad
+O_{\mathrm{stay}}.\operatorname{relation}(a,b)
+\Longleftrightarrow a=b,\\
+&O_{\mathrm{advance}}.\operatorname{source}=\mathsf{true},
+\quad
+O_{\mathrm{advance}}.\operatorname{version}=\mathsf{true},
+\quad
+O_{\mathrm{advance}}.\operatorname{relation}(a,b)
+\Longleftrightarrow a.1\le b.1.
+\end{aligned}
+\]
+
+两者都携带
+`relationInDeclaredDomain`、`refl` 与 `trans`
+的直接有限证明；它们不是缺字段的裸关系。
+
+**证明义务 56.3-B（修订后的第 10 条后半）。** 机器核验该具体有限实例满足
+
+\[
+\boxed{
+\begin{aligned}
+&\operatorname{NoDominatingCandidate}(v_2,D_2)
+\\
+&\quad\wedge\
+\operatorname{AdjudicationStopTargetOnDecisionSet}
+(\operatorname{AdmTarget}_2,\operatorname{InScope}_2,O_{\mathrm{stay}},D_2)
+\\
+&\quad\wedge\
+\neg
+\operatorname{AdjudicationStopTargetOnDecisionSet}
+(\operatorname{AdmTarget}_2,\operatorname{InScope}_2,O_{\mathrm{advance}},D_2).
+\end{aligned}
+}
+\]
+
+特别地，
+
+\[
+\boxed{
+\neg\Bigl(
+\operatorname{NoDominatingCandidate}(v_2,D_2)
+\to
+\operatorname{AdjudicationStopTargetOnDecisionSet}
+(\operatorname{AdmTarget}_2,\operatorname{InScope}_2,O_{\mathrm{advance}},D_2)
+\Bigr).
+}
+\]
+
+这就是“不提供有来源的权重或其他完整
+`OrientationSpec`
+定向时，
+`NoDominatingCandidate`
+不能推出 Stop”的可证命题：同一非空决策集、同一公共绝对坐标与同一 Pareto 前沿，在两个完整外生规范下得到不同停止真值。结论不声称停止永远不可得；它只证明 Pareto 前沿本身不包含 Stop 所需的来源化定向。
+
+### 56.3.4 停止分量的纯输入守恒
+
+**证明义务 56.3-C（只消费 \(K.\operatorname{decision}\) 与 \(O\)）。** 对同一轮次、同一承诺类型的任意
+\(K,K'\)
+及同一 OrientationSpec 类型的任意
+\(O,O'\)，若
+
+\[
+K.\operatorname{decision}=K'.\operatorname{decision}
+\quad\wedge\quad
+O=O',
+\]
+
+则机器核验
+
+\[
+\boxed{
+\operatorname{settleStop}
+(\operatorname{AdmTarget},\operatorname{InScope},O,K)
+=
+\operatorname{settleStop}
+(\operatorname{AdmTarget},\operatorname{InScope},O',K').
+}
+\]
+
+`settleStop`
+的函数签名不含裁决记录 \(Z\)；这是“停止分量不消费 \(Z_n\)”的机器可见边界，而不是另加一个带虚假 \(Z\) 实参的恒等式。56.3-C 不取代第 50.3 部及冻结
+`append_only_old_settlement_unchanged`
+对完整旧轮结算的守恒定理。向账本追加事件、产生 \(K_{n+1}\) 或登记新 \(O'\) 时，旧地址 \((K_n,O)\) 的停止分量仍由旧输入重算；新地址的结果不得回写旧地址。
+
+## 56.4 有限时域投影机器
+
+### 56.4.1 有限迭代、时域索引与投影
+
+固定任意类型 \(X,O\)、更新
+
+\[
+\tau:X\to X
+\]
+
+与当前读数
+
+\[
+q:X\to O.
+\]
+
+定义自然数迭代
+
+\[
+\boxed{
+\begin{aligned}
+&\operatorname{timeIter}_\tau(0,x):=x,\\
+&\operatorname{timeIter}_\tau(k+1,x)
+:=
+\tau(\operatorname{timeIter}_\tau(k,x)).
+\end{aligned}
+}
+\]
+
+对 \(N:\mathbb N\)，定义有限时域索引
+
+\[
+\boxed{
+\operatorname{TimeIndex}(N):=\operatorname{Fin}(N+1)
+}
+\]
+
+和时域投影
+
+\[
+\boxed{
+\begin{aligned}
+&\operatorname{timeProjection}(q,\tau,N)
+:X\to(\operatorname{TimeIndex}(N)\to O),\\
+&\operatorname{timeProjection}(q,\tau,N)(x)(i)
+:=
+q(\operatorname{timeIter}_\tau(i.1,x)).
+\end{aligned}
+}
+\]
+
+记该投影为 \(P_N^{q,\tau}\)。它正是第 8.1 部
+
+\[
+T_N(x)=(q(x),q(\tau x),\ldots,q(\tau^N x))
+\]
+
+的有类型有限函数实现。有限性来自索引
+\(\operatorname{Fin}(N+1)\)；不要求 \(X\) 或 \(O\) 本身有限。
+
+若 \(h:N\le N'\)，定义保值下标嵌入
+
+\[
+\boxed{
+\iota_h:
+\operatorname{TimeIndex}(N)\hookrightarrow
+\operatorname{TimeIndex}(N'),
+\qquad
+\iota_h(i).1=i.1,
+}
+\]
+
+以及限制函数
+
+\[
+\boxed{
+\operatorname{restrictTime}_h
+:
+(\operatorname{TimeIndex}(N')\to O)
+\to
+(\operatorname{TimeIndex}(N)\to O),
+\qquad
+\operatorname{restrictTime}_h(u):=u\circ\iota_h.
+}
+\]
+
+### 56.4.2 两个独立定义的有限时域逃逸关系
+
+对 \(h:N\le N'\) 与 \(x,y:X\)，不用 `ExpansionEscape` 作为定义，独立定义“延长时域后首次暴露”：
+
+\[
+\boxed{
+\begin{aligned}
+&\operatorname{TimeExpansionEscape}(q,\tau,N,N',h,x,y)
+\\
+&\Longleftrightarrow
+\bigl(
+\forall k:\mathbb N,\ k\le N\to
+q(\operatorname{timeIter}_\tau(k,x))
+=
+q(\operatorname{timeIter}_\tau(k,y))
+\bigr)
+\\
+&\quad\wedge\
+\exists k:\mathbb N,\
+N<k\ \wedge\ k\le N'
+\\
+&\qquad\qquad\wedge\
+q(\operatorname{timeIter}_\tau(k,x))
+\neq
+q(\operatorname{timeIter}_\tau(k,y)).
+\end{aligned}
+}
+\]
+
+若 \(N=N'\)，新增区间为空，所以该关系为空。
+
+再独立定义第 8 部从当前读数扩到长度 \(N\) 的预测逃逸：
+
+\[
+\boxed{
+\begin{aligned}
+&\operatorname{PredictionEscape}(q,\tau,N,x,y)
+\\
+&\Longleftrightarrow
+q(x)=q(y)
+\ \wedge\
+\exists k:\mathbb N,\ k\le N
+\ \wedge\
+q(\operatorname{timeIter}_\tau(k,x))
+\neq
+q(\operatorname{timeIter}_\tau(k,y)).
+\end{aligned}
+}
+\]
+
+两个关系都以自然数有界量词给出，不把欲证的 `ExpansionEscape` 等式偷写进定义。
+
+### 56.4.3 投影、限制与核的基本律
+
+**证明义务 56.4-A（投影展开与限制律）。** 对任意
+\(N,N':\mathbb N\)、\(h:N\le N'\) 与 \(x,y:X\)，机器核验
+
+\[
+\boxed{
+P_N^{q,\tau}(x)=P_N^{q,\tau}(y)
+\Longleftrightarrow
+\forall k:\mathbb N,\ k\le N\to
+q(\operatorname{timeIter}_\tau(k,x))
+=
+q(\operatorname{timeIter}_\tau(k,y))
+}
+\]
+
+以及
+
+\[
+\boxed{
+\operatorname{restrictTime}_h(P_{N'}^{q,\tau}(x))
+=
+P_N^{q,\tau}(x).
+}
+\]
+
+特别地，
+
+\[
+P_0^{q,\tau}(x)(0)=q(x).
+\]
+
+这些结论只用 `Fin` 边界证明、递归化简与有限函数外延。
+
+**证明义务 56.4-B（时域核反单调）。** 对任意
+\(N,N'\)、\(h:N\le N'\)，机器核验
+
+\[
+\boxed{
+\forall x,y:X,\quad
+P_{N'}^{q,\tau}(x)=P_{N'}^{q,\tau}(y)
+\to
+P_N^{q,\tau}(x)=P_N^{q,\tau}(y).
+}
+\]
+
+等价地，
+
+\[
+\ker P_{N'}^{q,\tau}
+\subseteq
+\ker P_N^{q,\tau}.
+\]
+
+该结论由 56.4-A 的限制律直接得到，不需要动力系统、概率或测度前件。
+
+### 56.4.4 `ExpansionEscape` 的两个精确实例
+
+**证明义务 56.4-C（延长时域实例）。** 假设 \(O\) 有可判等号。对任意
+\(N,N'\)、\(h:N\le N'\) 与 \(x,y:X\)，机器核验
+
+\[
+\boxed{
+\operatorname{TimeExpansionEscape}(q,\tau,N,N',h,x,y)
+\Longleftrightarrow
+\operatorname{ExpansionEscape}
+(P_N^{q,\tau},P_{N'}^{q,\tau})(x,y).
+}
+\]
+
+从右到左唯一需要的有限见证步骤是：若两个
+\(\operatorname{Fin}(N'+1)\to O\)
+函数不等，则有限扫描找出一个不等坐标；旧投影相等排除 \(k\le N\)，故该坐标满足 \(N<k\le N'\)。
+
+当 \(N<N'\) 时，该式正是第 51.5 部
+
+\[
+\ker P_N^{q,\tau}\setminus\ker P_{N'}^{q,\tau}
+=
+\operatorname{ExpansionEscape}(P_N^{q,\tau},P_{N'}^{q,\tau})
+\]
+
+的逐对版本；当 \(N=N'\) 时，两边同时为空。
+
+**证明义务 56.4-D（第 8 部预测逃逸实例）。** 在 \(O\) 有可判等号的前件下，对任意
+\(N:\mathbb N\) 与 \(x,y:X\)，机器核验
+
+\[
+\boxed{
+\operatorname{PredictionEscape}(q,\tau,N,x,y)
+\Longleftrightarrow
+\operatorname{ExpansionEscape}
+(q,P_N^{q,\tau})(x,y).
+}
+\]
+
+因此第 8.1 部的
+
+\[
+\mathcal E_N(q,\tau)=\mathcal E(q;T_N)
+\]
+
+在本部的有类型实现中就是
+
+\[
+\mathcal E_N(q,\tau)
+=
+\operatorname{ExpansionEscape}(q,P_N^{q,\tau}).
+\]
+
+56.4-C 与 56.4-D 分别处理“旧时域扩到新时域”和“当前读数扩到有限轨迹”；二者不得再混成一个未定型投影。
+
+**证明义务 56.4-E（有限可判性）。** 若 \(O\) 有可判等号，则对任意
+\(N,N'\)、\(h:N\le N'\) 与 \(x,y:X\)，机器从
+\(\operatorname{Finset.range}(N+1)\)
+和
+\(\operatorname{Finset.range}(N'+1)\)
+的有限扫描构造
+
+\[
+\begin{aligned}
+&\operatorname{Decidable}
+\bigl(\operatorname{TimeExpansionEscape}(q,\tau,N,N',h,x,y)\bigr),\\
+&\operatorname{Decidable}
+\bigl(\operatorname{PredictionEscape}(q,\tau,N,x,y)\bigr),\\
+&\operatorname{Decidable}
+\bigl(P_N^{q,\tau}(x)=P_N^{q,\tau}(y)\bigr).
+\end{aligned}
+\]
+
+该义务不要求 `Fintype X`、`Fintype O` 或 `Nonempty X`。
+
+## 56.5 对第 54.3 部三条义务的追加式精确重述
+
+从本部追加后，第 54.3 部相关文字按以下自包含命题消费；旧编号不删除。
+
+1. **第 9 条商序半条。** 对任意有限
+   \(F:\operatorname{Finset}(\mathsf{Action})\)
+   和五个可判预序坐标，弱支配对称核
+   `ParetoEqOn`
+   形成可判等价关系；显式类像
+   `FiniteParetoQuotient`
+   上的
+   `QuotientParetoWeak`
+   代表无关且满足反身、传递、反对称。若五坐标是偏序，则该对称核恰等于同向量等价。证明目标精确为 56.2-A—56.2-D。
+
+2. **第 10 条 Stop 半条。** `Stop` 精确指
+   `AdjudicationStopTarget`
+   即既有 `OrientedStop`；其有限检查器为 `settleStop`。具体
+   \(\operatorname{Fin}(2)\)
+   见证满足
+   `NoDominatingCandidate`
+   而在完整
+   \(O_{\mathrm{advance}}\)
+   下不满足 Stop，并在完整
+   \(O_{\mathrm{stay}}\)
+   下满足 Stop。证明目标精确为 56.3-A—56.3-C。第 10 条前半的 gainDifference 自差与 cocycle 继续由已冻结
+   `gain_difference_self_zero_and_cocycle`
+   承担，本部不重证。
+
+3. **第 12 条时域半条。** 对
+   \(P_N^{q,\tau}:X\to(\operatorname{Fin}(N+1)\to O)\)，
+   从 \(P_N\) 扩到 \(P_{N'}\) 的时域逃逸是
+   `ExpansionEscape P_N P_N'`
+   的实例；从当前读数 \(q\) 扩到 \(P_N\) 的第 8 部预测逃逸是
+   `ExpansionEscape q P_N`
+   的实例。证明目标精确为 56.4-A—56.4-E。
+
+## 56.6 边界、非冒领与第 55 部保持开放
+
+本部不主张弱支配商、有限轨迹、有限状态检查器或预序对称核为首创；这些都是标准初等构件。本部只把它们接到 DECT 已有接口上，以消除“实现即发明”的源缺口。
+
+本部特别不做以下越界：
+
+- 不从 Pareto maximal、greatest 或任意线性延伸推出新的 Stop 等价式；
+- 不构造第 55.2.5 部 OP5 的线性延伸，也不改变其 open 状态；
+- 不把 `NoDominatingCandidate` 的候选集语义偷换成 Stop 的可行集语义；56.3-B 特意令二者相等以排除该平凡差异；
+- 不把有限商上的代表选择隐藏进 Classical.choice；
+- 不要求有限承载非空；空集与单点集的行为已经逐条给出；
+- 不要求时域状态空间或读数值域有限；只有时间索引有限，机器可判性另以 `DecidableEq O` 为显式前件；
+- 不把本部的 Stop 布尔分量冒充完整
+  \(\operatorname{Evaluate}(K_n,Z_n)\)
+  的全部裁决结果。
+
+因此，本部只关闭三条已被拒绝的源陈述缺口，不结算第 55 部任何开放问题，也不改变五条既有裁决层定理的地址或结论。
+
+---
+# 追加账本增订
+## v1.4 — 2026-08-26
+
+追加存入：
+
+- 弱支配对称核 `ParetoEqOn`、有限承载枚举、显式等价类像 `FiniteParetoQuotient`、全枚举与代表无关商序；
+- 在偏序坐标前件下，对称核等价与既有同向量等价的外延一致性；
+- 第 54.3 部 `Stop` 的唯一指称：既有 `OrientedStop` 的有名展开 `AdjudicationStopTarget`；
+- 只扫描有限可行集的 `stopCheck`/`settleStop`，以及空可行集、缺失 current 和 current 不可行时必不停止的边界律；
+- 一个候选集等于可行集的 `Fin 2` 非退化见证：同一 Pareto 前沿在两个完整、来源化 OrientationSpec 下给出不同停止真值；
+- `Fin (N+1)` 时域索引、有限迭代、时域投影、下标嵌入与限制律；
+- 延长时域逃逸与第 8 部预测逃逸分别作为 `ExpansionEscape` 的两个精确有限实例；
+- 对第 54.3 部第 9、10、12 条缺口的自包含重述；
+- 第 55 部 OP1—OP6，尤其 OP5，全部保持 open；
+- 零新增首创声明，零测度论前件，零既有段落回写。
+
+后续增订继续严格追加于本节之后。

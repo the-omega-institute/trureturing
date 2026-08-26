@@ -396,7 +396,7 @@ public sealed partial class WorktreeCommandTests
             "git",
             ["show-ref", "--verify", "--quiet", $"refs/heads/{branch}"],
             repository.Path,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             4096);
         Assert.Equal(1, branchLookup.ExitCode);
     }
@@ -454,7 +454,7 @@ public sealed partial class WorktreeCommandTests
             "git",
             new[] { "show-ref", "--verify", "--quiet", "refs/heads/harness/invalid-base" },
             repository.Path,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             4096);
         Assert.Equal(1, branchLookup.ExitCode);
     }
@@ -541,7 +541,7 @@ public sealed partial class WorktreeCommandTests
                 "git",
                 ["check-ignore", "--quiet", "--no-index", path],
                 root,
-                TimeSpan.FromSeconds(30),
+                BoundedProcessRunner.HangDetectionBudget,
                 4096);
             Assert.Equal(0, result.ExitCode);
         }

@@ -1,0 +1,18 @@
+\[
+\operatorname{SepDef}(q,T)
+=
+\{(x,y):x,y\text{ 在 }\tau_q\text{ 中不可分，且在 }\tau_T\text{ 中可分}\}.
+\]
+
+由核等价立即得到
+
+\[
+\boxed{
+\operatorname{SepDef}(q,T)=\mathcal E(q;T).
+}
+\]
+
+因此 residual 不是单纯的误差集合。它是当前观察拓扑相对于目标观察拓扑缺少的分离关系。
+
+加入候选定义后：
+

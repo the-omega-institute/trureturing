@@ -1,0 +1,11 @@
+## 定义 58.1（纤维安全动作集）
+
+$$
+\boxed{
+\mathcal A_q(z)
+=
+\bigcap_{x:q(x)=z}
+\mathcal A_X(x).
+}
+$$
+

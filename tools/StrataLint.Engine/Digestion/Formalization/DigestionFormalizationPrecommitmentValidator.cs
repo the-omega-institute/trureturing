@@ -99,30 +99,67 @@ internal static class DigestionFormalizationPrecommitmentValidator
         ArgumentNullException.ThrowIfNull(gids);
         ArgumentNullException.ThrowIfNull(candidateReport);
 
-        var receipt = DigestionFormalizationReceipt.LoadTrusted(baselineSnapshot, receiptPath);
-        RequireEnvelopeBinding(receipt, entry);
+        var receipt = LoadBaseOwnedReceipt(
+            baselineSnapshot,
+            receiptPath,
+            entry.AtomId,
+            entry.Fingerprints.RawSha256);
         foreach (var gidText in gids.Distinct(StringComparer.Ordinal))
         {
             RequireRegisteredSignature(receipt, entry.AtomId, gidText, candidateReport);
         }
     }
 
+    internal static ImmutableHashSet<string> RegisteredBaseOwnedGids(
+        RepositorySnapshot baselineSnapshot,
+        string atomId,
+        string rawSha256)
+    {
+        try
+        {
+            return LoadBaseOwnedReceipt(
+                    baselineSnapshot,
+                    DigestionFormalizationReceipt.PathForAtom(atomId),
+                    atomId,
+                    rawSha256)
+                .RegisteredGids
+                .ToImmutableHashSet(StringComparer.Ordinal);
+        }
+        catch (Exception exception) when (
+            exception is FormatException or InvalidOperationException)
+        {
+            return ImmutableHashSet<string>.Empty;
+        }
+    }
+
+    private static DigestionFormalizationReceipt LoadBaseOwnedReceipt(
+        RepositorySnapshot baselineSnapshot,
+        string receiptPath,
+        string atomId,
+        string rawSha256)
+    {
+        var receipt = DigestionFormalizationReceipt.LoadTrusted(baselineSnapshot, receiptPath);
+        RequireEnvelopeBinding(receipt, atomId, rawSha256);
+        return receipt;
+    }
+
     private static void RequireEnvelopeBinding(
         DigestionFormalizationReceipt receipt,
-        DigestionLedgerEntry entry)
+        string atomId,
+        string rawSha256)
     {
-        if (!string.Equals(receipt.AtomId, entry.AtomId, StringComparison.Ordinal))
+        if (!string.Equals(receipt.AtomId, atomId, StringComparison.Ordinal))
         {
             throw new InvalidOperationException(
-                $"formalization receipt atom_id {receipt.AtomId} does not match atom {entry.AtomId}");
+                $"formalization receipt atom_id {receipt.AtomId} does not match atom {atomId}");
         }
 
-        if (!string.Equals(receipt.CasRef, entry.Fingerprints.RawSha256, StringComparison.Ordinal)
-            || !string.Equals(receipt.RawSha256, entry.Fingerprints.RawSha256, StringComparison.Ordinal))
+        if (!string.Equals(receipt.CasRef, rawSha256, StringComparison.Ordinal)
+            || !string.Equals(receipt.RawSha256, rawSha256, StringComparison.Ordinal))
         {
             throw new InvalidOperationException(
-                $"formalization receipt fingerprint does not match atom {entry.AtomId} "
-                + $"(atom raw {entry.Fingerprints.RawSha256})");
+                $"formalization receipt fingerprint does not match atom {atomId} "
+                + $"(atom raw {rawSha256})");
         }
     }
 

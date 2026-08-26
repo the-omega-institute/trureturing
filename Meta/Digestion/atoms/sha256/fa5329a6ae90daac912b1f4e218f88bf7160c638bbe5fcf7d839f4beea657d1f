@@ -1,0 +1,12 @@
+\[
+\boxed{
+\mathcal E(q\vee d;T)
+=
+\mathcal E(q;T)\cap\ker(d).
+}
+\]
+
+因此新定义不会创造旧目标残差。它只删除自己能够分开的残差对。
+
+---
+

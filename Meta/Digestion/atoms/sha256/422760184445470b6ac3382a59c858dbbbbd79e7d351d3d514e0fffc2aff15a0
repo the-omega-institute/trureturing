@@ -1,0 +1,22 @@
+## 解释
+
+环境并不总是把系统变成完全经典概率分布。更一般结果是：
+
+$$
+\boxed{
+\text{classical record label}
++
+\text{quantum state inside each indistinguishable block}.
+}
+$$
+
+固定代数的中心为
+
+$$
+Z(\operatorname{Fix}\mathcal D_G)
+=
+\bigoplus_k\mathbb CP_k,
+$$
+
+它给出稳定、可复制的经典标签；类内矩阵代数给出 decoherence-free quantum degrees of freedom。
+

@@ -1,0 +1,26 @@
+## 定理 9.1（有界整数 CRT 完备判据）
+
+令：
+
+\[
+M=\prod_{p\in S}p^{\kappa(p)}.
+\]
+
+联合剩余读出：
+
+\[
+q_{S,\kappa}:X_N
+\to
+\prod_{p\in S}\mathbb Z/p^{\kappa(p)}\mathbb Z
+\]
+
+单射，当且仅当：
+
+\[
+\boxed{M\ge N.}
+\]
+
+### 证明
+
+若 \(M\ge N\)，且 \(q(x)=q(y)\)，则 \(M\mid x-y\)。但 \(|x-y|<N\le M\)，故 \(x-y=0\)。反之若 \(M<N\)，则 \(0,M\in X_N\)，且二者所有局部剩余相同。\(\square\)
+

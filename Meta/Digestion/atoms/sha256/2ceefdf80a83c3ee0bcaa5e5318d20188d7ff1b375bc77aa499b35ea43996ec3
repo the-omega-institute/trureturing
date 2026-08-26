@@ -1,0 +1,12 @@
+## 定理 95.3（非选择性边缘化）
+
+忽略记录自由度后：
+
+$$
+\boxed{
+\operatorname{Tr}_M(V\rho V^\dagger)
+=
+\sum_aP_a\rho P_a.
+}
+$$
+

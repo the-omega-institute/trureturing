@@ -1,0 +1,36 @@
+## 定义 155.1（规范运气余量）
+
+[
+\boxed{
+\Delta_{\mathrm{luck}}
+======================
+
+\ker C_{\mathrm{ctl}}
+\setminus
+\ker J.
+}
+]
+
+其元素是控制轮廓完全相同、评价却不同的状态对。
+
+因此对道德运气有两种精确修复：
+
+[
+\boxed{
+\begin{aligned}
+\text{扩大责任概念}
+&:\quad
+C_{\mathrm{ctl}}\vee E_J;\
+\text{压缩评价}
+&:\quad
+J_{\mathrm{fair}}.
+\end{aligned}
+}
+]
+
+前者把更多外部事实纳入责任；后者放弃无法由控制恢复的评价区别。
+
+哪一种规范上正确，不由形式结构单独决定。
+
+---
+

@@ -1,0 +1,35 @@
+## 定义 528.1（条件逻辑杂质）
+
+[
+\boxed{
+\operatorname{Imp}_\mu(C;T)
+===========================
+
+\Pr
+\left[
+T(X)\neq T(X')
+\right],
+}
+]
+
+其中 (X,X') 在给定同一 (C)-值后条件独立同分布。
+
+展开为：
+
+[
+\boxed{
+\operatorname{Imp}_\mu(C;T)
+===========================
+
+\sum_b
+\Pr(C=b)
+\left[
+1-
+\sum_t
+\Pr(T=t\mid C=b)^2
+\right].
+}
+]
+
+---
+

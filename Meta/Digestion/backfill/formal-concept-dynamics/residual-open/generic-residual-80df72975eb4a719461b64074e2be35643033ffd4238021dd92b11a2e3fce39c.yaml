@@ -1,0 +1,10 @@
+ast_path: section/216-多目标修复的联合缺陷图
+fingerprints:
+  raw_sha256: sha256:80df72975eb4a719461b64074e2be35643033ffd4238021dd92b11a2e3fce39c
+  normalized_sha256: sha256:80df72975eb4a719461b64074e2be35643033ffd4238021dd92b11a2e3fce39c
+cas_ref: sha256:80df72975eb4a719461b64074e2be35643033ffd4238021dd92b11a2e3fce39c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

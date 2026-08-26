@@ -1,0 +1,18 @@
+## 定理 89.1（观察者拉回）
+
+在通道之后测量效果 $E$，等价于在初态上测量
+
+$$
+\Phi^*(E).
+$$
+
+具体地：
+
+$$
+\boxed{
+\operatorname{Tr}(\Phi^t(\rho)E)
+=
+\operatorname{Tr}\bigl(\rho(\Phi^*)^t(E)\bigr).
+}
+$$
+

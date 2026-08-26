@@ -1,0 +1,10 @@
+ast_path: section/330-5-权利过程
+fingerprints:
+  raw_sha256: sha256:f3480589e37e6095eafccefb5d105f85d83844f060307fcd1603733b778cf8d0
+  normalized_sha256: sha256:f3480589e37e6095eafccefb5d105f85d83844f060307fcd1603733b778cf8d0
+cas_ref: sha256:f3480589e37e6095eafccefb5d105f85d83844f060307fcd1603733b778cf8d0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

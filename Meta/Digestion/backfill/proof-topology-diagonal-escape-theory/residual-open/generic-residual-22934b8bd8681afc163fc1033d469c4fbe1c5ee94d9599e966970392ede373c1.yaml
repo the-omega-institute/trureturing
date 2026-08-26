@@ -1,0 +1,10 @@
+ast_path: section/16-3-Lawvere-对角线
+fingerprints:
+  raw_sha256: sha256:22934b8bd8681afc163fc1033d469c4fbe1c5ee94d9599e966970392ede373c1
+  normalized_sha256: sha256:22934b8bd8681afc163fc1033d469c4fbe1c5ee94d9599e966970392ede373c1
+cas_ref: sha256:22934b8bd8681afc163fc1033d469c4fbe1c5ee94d9599e966970392ede373c1
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

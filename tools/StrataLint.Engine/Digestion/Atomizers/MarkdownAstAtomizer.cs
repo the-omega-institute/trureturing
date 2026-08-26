@@ -25,7 +25,8 @@ internal static class MarkdownAstAtomizer
         Func<string, ImmutableArray<MarkdownBlock>>? parse = null,
         Func<MarkdownTableRow, string?>? identifyTableRow = null,
         bool dropEmptyHeadingClaims = false,
-        bool extendLineClaims = true)
+        bool extendLineClaims = true,
+        Func<string, bool>? identifyHeadingClaim = null)
     {
         ArgumentNullException.ThrowIfNull(genreRegistryCheck);
         var raw = bytes.ToArray();
@@ -33,7 +34,7 @@ internal static class MarkdownAstAtomizer
         var blocks = (parse ?? MarkdownBlockAst.Parse)(text);
         var headings = new List<DigestionContext>();
         var candidates = new List<Candidate>();
-        var headingStarts = new List<int>();
+        var headingStarts = new List<HeadingBoundary>();
         var failures = new List<UnrecognisedLead>();
         foreach (var block in blocks)
         {
@@ -53,11 +54,13 @@ internal static class MarkdownAstAtomizer
                         text.Length,
                         headings.ToImmutableArray(),
                         Extend: true,
+                        IsClaim: identifyHeadingClaim?.Invoke(heading.Text) ?? false,
+                        ScopeHeadingLevel: heading.Level,
                         IsHeading: true));
                 }
 
                 headings.Add(new DigestionContext(heading.Level, heading.Text));
-                headingStarts.Add(heading.Start);
+                headingStarts.Add(new HeadingBoundary(heading.Start, heading.Level));
                 continue;
             }
 
@@ -79,7 +82,9 @@ internal static class MarkdownAstAtomizer
                         row.Start,
                         row.End,
                         headings.ToImmutableArray(),
-                        Extend: false));
+                        Extend: false,
+                        IsClaim: true,
+                        ScopeHeadingLevel: ScopeHeadingLevel(headings)));
                 }
 
                 continue;
@@ -104,7 +109,9 @@ internal static class MarkdownAstAtomizer
                         lineClaim.Line.Start,
                         extendLineClaims ? text.Length : lineClaim.Line.End,
                         headings.ToImmutableArray(),
-                        Extend: extendLineClaims));
+                        Extend: extendLineClaims,
+                        IsClaim: true,
+                        ScopeHeadingLevel: ScopeHeadingLevel(headings)));
                 }
 
                 continue;
@@ -122,7 +129,9 @@ internal static class MarkdownAstAtomizer
                 paragraph.Start,
                 text.Length,
                 headings.ToImmutableArray(),
-                Extend: true));
+                Extend: true,
+                IsClaim: true,
+                ScopeHeadingLevel: ScopeHeadingLevel(headings)));
         }
 
         if (failures.Count > 0)
@@ -136,7 +145,7 @@ internal static class MarkdownAstAtomizer
         }
 
         var boundaries = candidates.Select(static candidate => candidate.StartCharacter)
-            .Concat(headingStarts)
+            .Concat(headingStarts.Select(static heading => heading.StartCharacter))
             .Distinct()
             .Order()
             .ToArray();
@@ -148,12 +157,23 @@ internal static class MarkdownAstAtomizer
                 continue;
             }
 
-            var nestedBoundary = boundaries.FirstOrDefault(start =>
-                start > candidate.StartCharacter && start < candidate.EndCharacter);
+            var nestedBoundary = identifyHeadingClaim is not null && candidate.IsClaim
+                ? FirstScopedClaimBoundary(candidate, candidates, headingStarts)
+                : boundaries.FirstOrDefault(start =>
+                    start > candidate.StartCharacter && start < candidate.EndCharacter);
             if (nestedBoundary > 0)
             {
                 candidates[index] = candidate with { EndCharacter = nestedBoundary };
             }
+        }
+
+        if (identifyHeadingClaim is not null)
+        {
+            var claimSpans = candidates.Where(static candidate => candidate.IsClaim).ToArray();
+            candidates.RemoveAll(candidate =>
+                !candidate.IsClaim && claimSpans.Any(claim =>
+                    claim.StartCharacter < candidate.StartCharacter
+                    && candidate.StartCharacter < claim.EndCharacter));
         }
 
         if (dropEmptyHeadingClaims)
@@ -231,6 +251,31 @@ internal static class MarkdownAstAtomizer
             ? StrictUtf8.GetByteCount(text)
             : StrictUtf8.GetByteCount(text.AsSpan(0, characterOffset));
 
+    private static int? ScopeHeadingLevel(List<DigestionContext> headings) =>
+        headings.Count == 0 ? null : headings[^1].Level;
+
+    private static int FirstScopedClaimBoundary(
+        Candidate candidate,
+        List<Candidate> candidates,
+        List<HeadingBoundary> headingStarts)
+    {
+        var nextClaim = candidates
+            .Where(item => item.IsClaim && item.StartCharacter > candidate.StartCharacter)
+            .Select(static item => item.StartCharacter)
+            .DefaultIfEmpty(int.MaxValue)
+            .Min();
+        var nextPeerHeading = headingStarts
+            .Where(heading =>
+                heading.StartCharacter > candidate.StartCharacter
+                && (candidate.ScopeHeadingLevel is null
+                    || heading.Level <= candidate.ScopeHeadingLevel.Value))
+            .Select(static heading => heading.StartCharacter)
+            .DefaultIfEmpty(int.MaxValue)
+            .Min();
+        var boundary = Math.Min(nextClaim, nextPeerHeading);
+        return boundary < candidate.EndCharacter ? boundary : 0;
+    }
+
     private static IEnumerable<SourceLine> SourceLines(string paragraph, int sourceStart)
     {
         var offset = 0;
@@ -254,7 +299,11 @@ internal static class MarkdownAstAtomizer
         int EndCharacter,
         ImmutableArray<DigestionContext> Context,
         bool Extend,
+        bool IsClaim,
+        int? ScopeHeadingLevel,
         bool IsHeading = false);
 
     private sealed record SourceLine(string Text, int Start, int End);
+
+    private sealed record HeadingBoundary(int StartCharacter, int Level);
 }

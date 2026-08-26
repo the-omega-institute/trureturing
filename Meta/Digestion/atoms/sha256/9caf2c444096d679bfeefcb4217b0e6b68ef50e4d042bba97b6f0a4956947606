@@ -1,0 +1,38 @@
+# 525. 决策充分性可以严格粗于随机预测充分性
+
+设行动集合：
+
+[
+A.
+]
+
+损失函数：
+
+[
+\ell:A\times Y\to\mathbb R.
+]
+
+对状态 (x)，定义每个行动的条件期望损失：
+
+[
+\boxed{
+L_K(x)(a)
+=========
+
+\mathbb E_{Y\sim K(x)}
+[\ell(a,Y)].
+}
+]
+
+定义最优行动集合：
+
+[
+\boxed{
+A^*(x)
+======
+
+\operatorname{argmin}_{a\in A}
+L_K(x)(a).
+}
+]
+
