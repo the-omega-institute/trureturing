@@ -10,3 +10,4 @@ receipts:
   unresolved_subitems:
     - source-formulation-divergence-50.4-prose-strict-arrival-vs-sketch-freeze-visibility
     - source-formulation-divergence-50.4-prose-no-report-timestamp-vs-sketch-freeze-time-report
+    - source-formulation-divergence-50.4-prose-reported-success-vs-sketch-verdict-attribution-only
