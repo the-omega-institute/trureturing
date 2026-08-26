@@ -183,11 +183,17 @@ internal sealed class BackfillInventoryDocument
         foreach (var rawCoverage in List(receipts, "coverage", $"entry {atomId} coverage receipts must be a list"))
         {
             var item = Mapping(rawCoverage, $"entry {atomId} coverage receipt must be a mapping");
-            ExactKeys(item, ["gid", "source_sha256", "target_sha256"], $"entry {atomId} coverage receipt");
+            ExactKeys(
+                item,
+                ["gid", "source_sha256", "target_statement_id"],
+                $"entry {atomId} coverage receipt");
             coverage.Add(new DigestionCoverageReceipt(
                 Scalar(item, "gid", $"entry {atomId} coverage gid"),
                 Scalar(item, "source_sha256", $"entry {atomId} coverage source_sha256"),
-                Scalar(item, "target_sha256", $"entry {atomId} coverage target_sha256")));
+                Scalar(
+                    item,
+                    "target_statement_id",
+                    $"entry {atomId} coverage target_statement_id")));
         }
 
         var scribe = ImmutableArray.CreateBuilder<DigestionScribeReceipt>();

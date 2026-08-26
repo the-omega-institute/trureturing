@@ -15,7 +15,6 @@ public sealed partial class DigestionLedgerTests
         var target = Encoding.UTF8.GetBytes(Lean("D5/S0/Carrier/Probe"));
         var definition = Encoding.UTF8.GetBytes("scribe definition\n");
         var emission = Encoding.UTF8.GetBytes("# emitted narrative\n");
-        var targetHash = DigestionFingerprint.Compute(target).RawSha256;
         var definitionHash = DigestionFingerprint.Compute(definition).RawSha256;
         var emissionHash = DigestionFingerprint.Compute(emission).RawSha256;
         var scribeAttestation = ScribeEmissionAttestation.Write(
@@ -35,18 +34,20 @@ public sealed partial class DigestionLedgerTests
             new DigestionCoverageReceipt(
                 "D5/S0/Carrier/Probe",
                 atom.Fingerprints.RawSha256,
-                targetHash),
+                TestModuleStatementId),
             new DigestionScribeReceipt(
                 "D5/S0/Carrier/Probe",
                 definitionHash,
                 emissionHash));
-        var snapshot = Snapshot(
+        var snapshot = Snapshot([
             ("docs/source.md", source),
             CasFile(atom),
             ("D5/S0/Carrier/Probe.lean", target),
             ("Blueprint/D5/S0/Carrier/Probe.scribe.cs", definition),
             ("Blueprint/D5/S0/Carrier/Probe.md", emission),
-            (ScribeEmissionAttestation.RelativePath, scribeAttestation));
+            (ScribeEmissionAttestation.RelativePath, scribeAttestation),
+            .. FrozenLedgerFiles("D5/S0/Carrier/Probe.lean", "probe"),
+        ]);
         var lean = AcceptedLean("D5/S0/Carrier/Probe.lean");
 
         var evaluation = DigestionStatusEvaluator.Evaluate(
@@ -79,17 +80,19 @@ public sealed partial class DigestionLedgerTests
             new DigestionCoverageReceipt(
                 "D5/S0/Carrier/Probe",
                 atom.Fingerprints.RawSha256,
-                DigestionFingerprint.Compute(target).RawSha256),
+                TestModuleStatementId),
             new DigestionScribeReceipt(
                 "D5/S0/Carrier/Probe",
                 DigestionFingerprint.Compute(definition).RawSha256,
                 DigestionFingerprint.Compute(emission).RawSha256));
-        var snapshot = Snapshot(
+        var snapshot = Snapshot([
             ("docs/source.md", source),
             CasFile(atom),
             ("D5/S0/Carrier/Probe.lean", target),
             ("Blueprint/D5/S0/Carrier/Probe.scribe.cs", definition),
-            ("Blueprint/D5/S0/Carrier/Probe.md", emission));
+            ("Blueprint/D5/S0/Carrier/Probe.md", emission),
+            .. FrozenLedgerFiles("D5/S0/Carrier/Probe.lean", "probe"),
+        ]);
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
             DigestionEvaluationScope.FullScan,
@@ -172,7 +175,7 @@ public sealed partial class DigestionLedgerTests
             new DigestionCoverageReceipt(
                 gid,
                 atom.Fingerprints.RawSha256,
-                DigestionFingerprint.Compute(target).RawSha256),
+                TestModuleStatementId),
             new DigestionScribeReceipt(gid, staleDefinitionHash, staleEmissionHash));
         var record = new ScribeEmissionRecord(
             gid,
@@ -180,12 +183,14 @@ public sealed partial class DigestionLedgerTests
             definitionHash,
             ScribeEmissionAttestation.EmissionPath(gid),
             emissionHash);
-        var snapshot = Snapshot(
+        var snapshot = Snapshot([
             ("docs/source.md", source),
             CasFile(atom),
             (targetPath, target),
             (record.DefinitionPath, definition),
-            (record.EmissionPath, emission));
+            (record.EmissionPath, emission),
+            .. FrozenLedgerFiles(targetPath, "probe"),
+        ]);
 
         var evaluation = DigestionStatusEvaluator.Evaluate(
             DigestionEvaluationScope.FullScan,

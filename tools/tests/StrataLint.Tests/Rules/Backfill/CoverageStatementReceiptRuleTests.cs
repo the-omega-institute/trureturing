@@ -37,6 +37,33 @@ public sealed class CoverageStatementReceiptRuleTests
             finding.Message);
     }
 
+    [Fact]
+    public void BackfillInventoryRuleRecognizesHistoricalMismatchFromFrozenStatementId()
+    {
+        var receiptStatementId = FrozenStatementReceiptTestData.Id('5');
+        var frozenStatementId = FrozenStatementReceiptTestData.Id('7');
+        var current = CoverageStatementReceiptTests.Evaluate(
+            "D5/S0/Carrier/StatementReceipt.target",
+            receiptStatementId,
+            frozenStatementId,
+            FrozenStatementReceiptTestData.Id('6'),
+            TargetSource());
+        var baselineDocument = DigestionTestSupport.Document(
+            AtomizerRegistry.NoAtomizerId,
+            [current.Entries.Single().Entry]);
+        var baselineSnapshot = SnapshotWithStatement(frozenStatementId);
+
+        var finding = Assert.Single(BackfillInventoryRule.ClassifyReceiptIntegrityGaps(
+            current,
+            baselineDocument,
+            baselineSnapshot));
+
+        Assert.Equal(AdmissionEffect.Observe, finding.Effect);
+        Assert.Equal(
+            "statement-receipt:coverage-receipt-mismatch:D5/S0/Carrier/StatementReceipt.target",
+            finding.Message);
+    }
+
     private static RepositorySnapshot SnapshotWithStatement(string statementId)
     {
         const string modulePath = "D5/S0/Carrier/StatementReceipt.lean";

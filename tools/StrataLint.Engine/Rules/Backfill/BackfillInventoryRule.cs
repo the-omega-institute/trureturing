@@ -54,6 +54,7 @@ internal static class BackfillInventoryRule
                 || path.Value.StartsWith(
                     "tools/Authorizations/digestion-tail/",
                     StringComparison.Ordinal)
+                || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path.Value)
                 || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path.Value)
                 // 理论卷按路径规则治理后,`GovernanceDocuments` 里已无理论路径;
                 // 若此处仍只靠那张清单,只改理论卷的候选就**整条规则不触发**
@@ -458,6 +459,16 @@ internal static class BackfillInventoryRule
         RepositorySnapshot snapshot)
     {
         var gaps = new HashSet<ReceiptIntegrityGapIdentity>();
+        FrozenStatementIndex? frozenStatements;
+        try
+        {
+            frozenStatements = FrozenStatementIndex.Load(snapshot);
+        }
+        catch (Exception exception) when (exception is FormatException or InvalidOperationException)
+        {
+            frozenStatements = null;
+        }
+
         foreach (var entry in document.RequireDigestionEntries())
         {
             var coverageReceipts = FirstReceiptByGid(
@@ -468,7 +479,9 @@ internal static class BackfillInventoryRule
                 if (coverageReceipts.TryGetValue(gid, out var coverage)
                     && (coverage.SourceSha256 != entry.Fingerprints.RawSha256
                         || !Gid.TryParse(gid, out var parsedGid)
-                        || !SnapshotFileMatches(snapshot, parsedGid.Path.Value, coverage.TargetSha256)))
+                        || frozenStatements is null
+                        || !frozenStatements.TryResolve(parsedGid, out var statementId, out _)
+                        || coverage.TargetStatementId != statementId!.Value))
                 {
                     gaps.Add(new ReceiptIntegrityGapIdentity(
                         entry.AtomId,
@@ -527,13 +540,6 @@ internal static class BackfillInventoryRule
 
         return result;
     }
-
-    private static bool SnapshotFileMatches(
-        RepositorySnapshot snapshot,
-        string path,
-        string expectedSha256) =>
-        snapshot.TryGetFile(path, out var file)
-        && DigestionFingerprint.Compute(file.RawBytes.AsSpan()).RawSha256 == expectedSha256;
 
     private static BackfillInventoryDocument LoadBaselineDocument(RepositorySnapshot baseline)
     {

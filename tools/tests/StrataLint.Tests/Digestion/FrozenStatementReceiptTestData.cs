@@ -67,6 +67,41 @@ internal static class FrozenStatementReceiptTestData
         }
     }
 
+    internal static (string Path, byte[] Bytes)[] LedgerFiles(params Module[] modules)
+    {
+        var files = new Dictionary<string, string>(StringComparer.Ordinal);
+        AddLedger(files, modules);
+        return files.Select(static item =>
+            (item.Key, Encoding.UTF8.GetBytes(item.Value))).ToArray();
+    }
+
+    internal static string Resolve(
+        IReadOnlyDictionary<string, string> files,
+        string gid)
+    {
+        var raw = RawRepositorySnapshot.Create(files.Select(static item =>
+            RawRepositoryEntry.FromText(item.Key, item.Value)));
+        if (SnapshotDecoder.Decode(raw) is not SnapshotDecodeOutcome.Decoded decoded)
+        {
+            throw new InvalidOperationException(
+                $"fixture snapshot does not decode while resolving {gid}");
+        }
+        if (!Gid.TryParse(gid, out var parsed))
+        {
+            throw new InvalidOperationException($"fixture GID does not parse: {gid}");
+        }
+        if (!FrozenStatementIndex.Load(decoded.Snapshot).TryResolve(
+                parsed,
+                out var statementId,
+                out var message))
+        {
+            throw new InvalidOperationException(
+                $"fixture frozen statement does not resolve for {gid}: {message}");
+        }
+
+        return statementId!.Value;
+    }
+
     private static void AddEvent(
         IDictionary<string, string> files,
         (ImmutableArray<byte> Bytes, string Hash) encoded) =>

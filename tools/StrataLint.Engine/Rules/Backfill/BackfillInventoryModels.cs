@@ -9,7 +9,7 @@ internal sealed record DigestionBoundary(string AstPath, int StartByte, int EndB
 internal sealed record DigestionCoverageReceipt(
     string Gid,
     string SourceSha256,
-    string TargetSha256);
+    string TargetStatementId);
 
 internal sealed record DigestionScribeReceipt(
     string Gid,

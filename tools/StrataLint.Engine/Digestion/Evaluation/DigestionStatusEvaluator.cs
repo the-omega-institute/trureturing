@@ -39,6 +39,7 @@ internal static partial class DigestionStatusEvaluator
                 static source => source.SourceId,
                 static source => source.GenreRegistryCheck,
                 StringComparer.Ordinal);
+        var frozenStatements = new Lazy<FrozenStatementIndex>(() => FrozenStatementIndex.Load(snapshot));
         var work = entries
             .Where(static entry => entry.CoverageGids.Length == 0)
             .Select(entry => Inspect(
@@ -50,6 +51,7 @@ internal static partial class DigestionStatusEvaluator
                 emptyLeanReport,
                 emptyTruthStates,
                 verifiedScribeEmissions: null,
+                frozenStatements,
                 genreChecks[entry.SourceId],
                 changes,
                 isBaseFactAffected: null,
@@ -125,6 +127,7 @@ internal static partial class DigestionStatusEvaluator
                 static source => source.SourceId,
                 static source => source.GenreRegistryCheck,
                 StringComparer.Ordinal);
+        var frozenStatements = new Lazy<FrozenStatementIndex>(() => FrozenStatementIndex.Load(snapshot));
         var work = entries.Select(entry =>
         {
             var baselineMigration = baselineEntries.TryGetValue(entry.AtomId, out var baselineEntry)
@@ -139,6 +142,7 @@ internal static partial class DigestionStatusEvaluator
                 lean.Report,
                 states,
                 verifiedScribeEmissions,
+                frozenStatements,
                 genreChecks[entry.SourceId],
                 changes,
                 isBaseFactAffected,
@@ -259,6 +263,7 @@ internal static partial class DigestionStatusEvaluator
         LeanAxiomReport leanReport,
         IReadOnlyDictionary<RepoPath, TruthState> states,
         VerifiedScribeEmissions? verifiedScribeEmissions,
+        Lazy<FrozenStatementIndex> frozenStatements,
         GenreRegistryCheck genreRegistryCheck,
         RawChangeSet? changes,
         Func<string, bool>? isBaseFactAffected,
@@ -317,6 +322,7 @@ internal static partial class DigestionStatusEvaluator
         var coverage = VerifyCoverageReceipts(
             entry,
             existingTargets,
+            frozenStatements,
             coverageVerificationChanges,
             gaps,
             findings);
@@ -402,7 +408,9 @@ internal static partial class DigestionStatusEvaluator
 
         bool Affected(string path) => isBaseFactAffected?.Invoke(path) ?? PathChanged(changes, path);
 
-        if (Affected(entry.SourcePath)
+        if (changes.Paths.Any(path =>
+                FrozenLedgerChangeClassifier.IsAcceptedEventPath(path.Value))
+            || Affected(entry.SourcePath)
             || Affected(TheoryAtomizerDataLoader.DataPath)
             || DigestionFingerprint.IsCanonicalSha256(entry.CasRef)
                 && Affected(DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..])

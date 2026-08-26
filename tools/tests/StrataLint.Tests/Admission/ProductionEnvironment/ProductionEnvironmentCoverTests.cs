@@ -225,7 +225,7 @@ public sealed partial class ProductionEnvironmentTests
                             [
                                 oldCoverage with
                                 {
-                                    TargetSha256 = "sha256:" + new string('c', 64),
+                                    TargetStatementId = "sha256:" + new string('c', 64),
                                 },
                             ],
                         },
@@ -278,7 +278,7 @@ public sealed partial class ProductionEnvironmentTests
                     {
                         Coverage = entry.Receipts.Coverage.Select(receipt => receipt with
                         {
-                            TargetSha256 = "sha256:" + new string('c', 64),
+                            TargetStatementId = "sha256:" + new string('c', 64),
                         }).ToImmutableArray(),
                     },
                 });
@@ -588,10 +588,8 @@ public sealed partial class ProductionEnvironmentTests
         var siblingGid = Assert.Single(siblingEntry.CoverageGids);
         var documentGid = ScribeEmissionAttestation.DocumentGid(siblingGid);
         Assert.True(inputs.VerifiedEmissions!.TryGet(documentGid, out var verified));
-        var targetPath = documentGid + ".lean";
-        var targetSha256 = DigestionFingerprint.Compute(
-            Encoding.UTF8.GetBytes(inputs.Files[targetPath])).RawSha256;
-        var mismatchSha256 = "sha256:" + new string('c', 64);
+        var targetStatementId = FrozenStatementReceiptTestData.Resolve(inputs.Files, siblingGid);
+        var mismatchStatementId = FrozenStatementReceiptTestData.Id('0');
         BackfillInventoryDocument WithMismatch(BackfillInventoryDocument document) =>
             document.WithDigestionSources(document.RequireDigestionSources()
                 .Select(source => source with
@@ -607,18 +605,18 @@ public sealed partial class ProductionEnvironmentTests
                                         siblingGid,
                                         entry.Fingerprints.RawSha256,
                                         mismatchCode == "coverage-receipt-mismatch"
-                                            ? mismatchSha256
-                                            : targetSha256),
+                                            ? mismatchStatementId
+                                            : targetStatementId),
                                 ],
                                 Scribe =
                                 [
                                     new DigestionScribeReceipt(
                                         siblingGid,
                                         mismatchCode == "scribe-definition-mismatch"
-                                            ? mismatchSha256
+                                            ? mismatchStatementId
                                             : verified.DefinitionSha256,
                                         mismatchCode == "scribe-emission-mismatch"
-                                            ? mismatchSha256
+                                            ? mismatchStatementId
                                             : verified.EmissionSha256),
                                 ],
                             },
@@ -665,8 +663,7 @@ public sealed partial class ProductionEnvironmentTests
         const string siblingAtomId = "finding-sibling";
         var documentGid = inputs.Gid[..inputs.Gid.LastIndexOf('.')];
         Assert.True(inputs.VerifiedEmissions!.TryGet(documentGid, out var verified));
-        var targetSha256 = DigestionFingerprint.Compute(
-            Encoding.UTF8.GetBytes(inputs.Files[documentGid + ".lean"])).RawSha256;
+        var targetStatementId = FrozenStatementReceiptTestData.Resolve(inputs.Files, inputs.Gid);
         var document = inputs.Document.WithDigestionSources(
             inputs.Document.RequireDigestionSources()
                 .Select(source => source with
@@ -681,11 +678,11 @@ public sealed partial class ProductionEnvironmentTests
                                     new DigestionCoverageReceipt(
                                         inputs.Gid,
                                         entry.Fingerprints.RawSha256,
-                                        targetSha256),
+                                        targetStatementId),
                                     new DigestionCoverageReceipt(
                                         inputs.Gid,
                                         entry.Fingerprints.RawSha256,
-                                        targetSha256),
+                                        targetStatementId),
                                 ],
                                 Scribe =
                                 [

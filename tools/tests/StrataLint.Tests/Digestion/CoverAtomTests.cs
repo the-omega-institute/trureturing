@@ -636,7 +636,7 @@ internal static partial class CoverWorld
             includeOtherAtom: true,
             tailAuthPath,
             tailAuthSha,
-            DigestionFingerprint.Compute(targetBytes).RawSha256,
+            gid => FrozenStatementIdFor(spec, gid),
             unrelatedAtom,
             unrelatedSourcePath,
             useUnrelatedBaselineCoverage: false);
@@ -728,27 +728,7 @@ internal static partial class CoverWorld
             .ToImmutableArray();
         var report = MaterializeReport(spec, targetPath, declarations);
 
-        if (spec.FreezeTargetModule)
-        {
-            var frozenModules = report.Files.Select(file =>
-                new FrozenStatementReceiptTestData.Module(
-                    file.Key.Value,
-                    FrozenStatementReceiptTestData.Id('b'),
-                    file.Value.Declarations.Select(declaration =>
-                        new FrozenStatementReceiptTestData.Declaration(
-                            declaration.Name[(declaration.Name.LastIndexOf('.') + 1)..],
-                            string.Equals(file.Key.Value, targetPath, StringComparison.Ordinal)
-                                && string.Equals(
-                                    declaration.Name[(declaration.Name.LastIndexOf('.') + 1)..],
-                                    spec.Declaration,
-                                    StringComparison.Ordinal)
-                                    ? spec.TargetStatementId
-                                    : FrozenStatementReceiptTestData.Id('c')))
-                        .ToImmutableArray()))
-                .ToArray();
-            FrozenStatementReceiptTestData.AddLedger(files, frozenModules);
-            FrozenStatementReceiptTestData.AddLedger(baseline, frozenModules);
-        }
+        MaterializeFrozenLedger(spec, report, targetPath, files, baseline);
 
         var verified = spec.VerifyScribe
             ? VerifiedScribeEmissions.Create(records, MaterializeVerifiedGids(spec))
