@@ -39,8 +39,14 @@ internal static partial class SelfTestGovernancePolicy
         "T:System.Random",
         "P:System.Environment.TickCount",
         "P:System.Environment.TickCount64",
-        "M:System.Threading.Thread.Sleep",
-        "M:System.Threading.Tasks.Task.Delay",
+        "M:System.Threading.Thread.Sleep(System.Int32)",
+        "M:System.Threading.Thread.Sleep(System.TimeSpan)",
+        "M:System.Threading.Tasks.Task.Delay(System.Int32)",
+        "M:System.Threading.Tasks.Task.Delay(System.Int32,System.Threading.CancellationToken)",
+        "M:System.Threading.Tasks.Task.Delay(System.TimeSpan)",
+        "M:System.Threading.Tasks.Task.Delay(System.TimeSpan,System.Threading.CancellationToken)",
+        "M:System.Threading.Tasks.Task.Delay(System.TimeSpan,System.TimeProvider)",
+        "M:System.Threading.Tasks.Task.Delay(System.TimeSpan,System.TimeProvider,System.Threading.CancellationToken)",
         "T:System.Diagnostics.Stopwatch",
     ];
 

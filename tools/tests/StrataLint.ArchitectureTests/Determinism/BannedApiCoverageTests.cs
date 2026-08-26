@@ -10,7 +10,7 @@ public sealed class BannedApiCoverageTests
             "tools", "tests", "BannedApiCompileFailProof",
             "BannedApiViolations.cs");
 
-        Assert.Equal(21, File.ReadLines(path).Count(static line =>
+        Assert.Equal(27, File.ReadLines(path).Count(static line =>
             line.Contains("// banned-api-proof", StringComparison.Ordinal)));
     }
 
@@ -22,12 +22,17 @@ public sealed class BannedApiCoverageTests
             "tools", "Architecture", "BannedSymbols.Determinism.txt");
         var entries = File.ReadAllLines(path).ToHashSet(StringComparer.Ordinal);
 
-        Assert.Contains(
-            "M:System.Threading.Thread.Sleep;Use an injected synchronization primitive outside deterministic tests.",
-            entries);
-        Assert.Contains(
-            "M:System.Threading.Tasks.Task.Delay;Use virtual time or an injected synchronization primitive.",
-            entries);
+        Assert.All(new[]
+        {
+            "M:System.Threading.Thread.Sleep(System.Int32);Use an injected synchronization primitive outside deterministic tests.",
+            "M:System.Threading.Thread.Sleep(System.TimeSpan);Use an injected synchronization primitive outside deterministic tests.",
+            "M:System.Threading.Tasks.Task.Delay(System.Int32);Use virtual time or an injected synchronization primitive.",
+            "M:System.Threading.Tasks.Task.Delay(System.Int32,System.Threading.CancellationToken);Use virtual time or an injected synchronization primitive.",
+            "M:System.Threading.Tasks.Task.Delay(System.TimeSpan);Use virtual time or an injected synchronization primitive.",
+            "M:System.Threading.Tasks.Task.Delay(System.TimeSpan,System.Threading.CancellationToken);Use virtual time or an injected synchronization primitive.",
+            "M:System.Threading.Tasks.Task.Delay(System.TimeSpan,System.TimeProvider);Use virtual time or an injected synchronization primitive.",
+            "M:System.Threading.Tasks.Task.Delay(System.TimeSpan,System.TimeProvider,System.Threading.CancellationToken);Use virtual time or an injected synchronization primitive.",
+        }, entry => Assert.Contains(entry, entries));
         Assert.Contains(
             "T:System.Diagnostics.Stopwatch;Do not make test verdicts or diagnostics depend on machine speed.",
             entries);
@@ -73,6 +78,22 @@ public sealed class BannedApiCoverageTests
         Assert.Contains(
             "test \"${#actual_lines[@]}\" -eq \"${#expected_lines[@]}\"",
             workflow,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void PreflightComparesEveryMarkedLineWithAnRs0030Diagnostic()
+    {
+        var path = Path.Combine(
+            RepositoryLayout.FindRoot(), "tools", "scripts", "preflight.sh");
+        var preflight = File.ReadAllText(path);
+
+        Assert.Contains("expected_lines+=(\"$line\")", preflight, StringComparison.Ordinal);
+        Assert.Contains("actual_lines+=(\"$line\")", preflight, StringComparison.Ordinal);
+        Assert.Contains("error RS0030", preflight, StringComparison.Ordinal);
+        Assert.Contains(
+            "test \"${#actual_lines[@]}\" -eq \"${#expected_lines[@]}\"",
+            preflight,
             StringComparison.Ordinal);
     }
 }

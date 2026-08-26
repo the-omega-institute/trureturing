@@ -7,7 +7,13 @@ internal static class BannedApiViolations
     internal static object[] MustNotCompile()
     {
         Thread.Sleep(1); // banned-api-proof
+        Thread.Sleep(TimeSpan.Zero); // banned-api-proof
         _ = Task.Delay(1); // banned-api-proof
+        _ = Task.Delay(1, CancellationToken.None); // banned-api-proof
+        _ = Task.Delay(TimeSpan.Zero); // banned-api-proof
+        _ = Task.Delay(TimeSpan.Zero, CancellationToken.None); // banned-api-proof
+        _ = Task.Delay(TimeSpan.Zero, TimeProvider.System); // banned-api-proof
+        _ = Task.Delay(TimeSpan.Zero, TimeProvider.System, CancellationToken.None); // banned-api-proof
         _ = System.Diagnostics.Stopwatch.StartNew(); // banned-api-proof
         return
         [
