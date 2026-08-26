@@ -18,6 +18,10 @@ public sealed partial class DepositCoverWorkflowScriptTests
             if (File.Exists(performanceLedgerPath)) File.Delete(performanceLedgerPath);
         }
 
+        internal int FreezeProbeCount() => File.Exists(freezeProbePath)
+            ? File.ReadAllLines(freezeProbePath).Length
+            : 0;
+
         private void CopyScript()
         {
             var root = TestRepositoryLayout.FindRoot();
@@ -54,6 +58,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
               esac
             done
             subcommand=${arguments[index]:-}
+            if [[ $subcommand == hash-object && ${PLAYBOOK_INSIDE_LEDGER_STUB:-0} != 1 ]]; then
+              printf 'freeze-exists\n' >> "$PLAYBOOK_TEST_FREEZE_PROBES"
+            fi
             if [[ ${PLAYBOOK_FAIL_PERF_COMMIT_PROBE:-0} == 1 \
                 && $subcommand == rev-parse \
                 && ${arguments[index+1]:-} == --verify \
@@ -123,7 +130,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             case "${parts[0]:-}" in
               ledger-append)
                 target_module=${PLAYBOOK_TARGET_MODULE:-D5/S0/Carrier/Probe.lean}
-                descriptor_blob_oid="git-sha1:$(git hash-object -- "$target_module")"
+                descriptor_blob_oid="git-sha1:$(PLAYBOOK_INSIDE_LEDGER_STUB=1 git hash-object -- "$target_module")"
                 base_commit_oid="git-sha1:$(git rev-parse HEAD)"
                 if [[ $target_module == D5/S0/Carrier/Probe.lean ]]; then
                   event_id=2222222222222222222222222222222222222222222222222222222222222222
@@ -186,11 +193,13 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 atom=''
                 gid=''
                 envelope=''
+                align=0
                 for ((index=1; index<${#parts[@]}; index+=2)); do
                   case "${parts[index]}" in
                     --cover-atom) atom=${parts[index+1]} ;;
                     --gid) gid=${parts[index+1]} ;;
                     --envelope) envelope=${parts[index+1]} ;;
+                    --align-scribe-receipt) align=1 ;;
                   esac
                 done
                 expected_envelope="Meta/Digestion/formalizations/${atom}.v1.json"
@@ -201,6 +210,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 if [[ ${PLAYBOOK_COVER_DISPOSITION_FAILURE:-0} == 1 ]]; then
                   printf 'atom_id: %s\ncoverage: false\naligned: false\ncover_disposition: synthetic\n' "$atom" \
                     > Meta/BACKFILL.yaml
+                  [[ $align -eq 0 ]] || echo 'COVER_ATOM_ALIGNED cover=failed' >&2
                   echo 'COVER_INVALID synthetic disposition' >&2
                   exit 1
                 fi
@@ -216,6 +226,24 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 fi
                 printf 'atom_id: %s\ncoverage: true\naligned: false\n%s\n' \
                   "$atom" "$secondary" > Meta/BACKFILL.yaml
+                if [[ $align -eq 1 ]]; then
+                  definition_path="Blueprint/${gid%.*}.scribe.cs"
+                  verified_emission=''
+                  if [[ -s $definition_path ]] \
+                      && grep -q "^atom_id: ${atom}$" Meta/BACKFILL.yaml \
+                      && grep -q '^coverage: true$' Meta/BACKFILL.yaml; then
+                    verified_emission='emission: covered'
+                  fi
+                  [[ $verified_emission == 'emission: covered' ]] || {
+                    echo 'COVER_ATOM_ALIGNED cover=passed align=failed' >&2
+                    echo 'ALIGN_SCRIBE_RECEIPT_INVALID no verified in-process Scribe emission' >&2
+                    exit 1
+                  }
+                  printf 'atom_id: %s\ncoverage: true\naligned: covered\n%s\n' \
+                    "$atom" "$secondary" > Meta/BACKFILL.yaml
+                  echo 'COVER_ATOM_ALIGNED cover=passed align=passed'
+                  echo 'ALIGN_SCRIBE_RECEIPT ledger_changed=true'
+                fi
                 ;;
               align-scribe-receipt)
                 atom=''
@@ -267,6 +295,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 [
                     $"PATH={binPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
                     $"PLAYBOOK_TEST_CALLS={callsPath}",
+                    $"PLAYBOOK_TEST_FREEZE_PROBES={freezeProbePath}",
                     $"PLAYBOOK_STALE_REPORT={(staleReport ? "1" : "0")}",
                     $"PLAYBOOK_INVALID_RECEIPT={(invalidReceipt ? "1" : "0")}",
                     $"PLAYBOOK_COVER_DISPOSITION_FAILURE={(coverDispositionFailure ? "1" : "0")}",
