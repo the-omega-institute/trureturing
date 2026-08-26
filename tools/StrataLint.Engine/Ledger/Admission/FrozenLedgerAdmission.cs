@@ -284,6 +284,11 @@ public static partial class FrozenLedger
             }
 
             var actualByPath = active.Values.ToDictionary(static entry => entry.Material.RepoPath);
+            var recordedPathsByIdentity = FrozenPathsByIdentity(
+                active.Values.Select(static entry => entry.Material));
+            var currentPathsByIdentity = FrozenPathsByIdentity(
+                active.Values.Select(static entry => entry.Material),
+                catalog.ClosedNodes);
             foreach (var path in scope.Paths.OrderBy(static item => item.Value, StringComparer.Ordinal))
             {
                 var hasExpected = catalog.ByPath.TryGetValue(path, out var material);
@@ -314,6 +319,8 @@ public static partial class FrozenLedger
                 var materialMatches = HistoricalActiveFreezeMatches(
                     activeEntry.Payload,
                     expectedMaterial,
+                    recordedPathsByIdentity,
+                    currentPathsByIdentity,
                     out var materialDifferences);
                 if (materialMatches)
                 {
@@ -362,6 +369,8 @@ public static partial class FrozenLedger
     private static bool HistoricalActiveFreezeMatches(
         FrozenFreezePayload payload,
         FrozenNodeMaterial material,
+        IReadOnlyDictionary<FrozenNodeId, RepoPath> recordedPathsByIdentity,
+        IReadOnlyDictionary<FrozenNodeId, RepoPath> currentPathsByIdentity,
         out ImmutableArray<string> differences)
     {
         var result = ImmutableArray.CreateBuilder<string>();
@@ -383,28 +392,50 @@ public static partial class FrozenLedger
                 payload.StatementId.Value));
         }
 
-        if (payload.WitnessId != material.WitnessId)
+        var expectedAxiomClosure = NormalizeAxiomClosure(material.AxiomClosure).ToImmutableArray();
+        if (!payload.HasAxiomClosure)
         {
-            result.Add(ScalarDifference(
-                "WitnessId",
-                material.WitnessId.Value,
-                payload.WitnessId.Value));
+            result.Add(
+                $"AxiomClosure expected={FormatSequence(expectedAxiomClosure, static item => item)}, actual=<missing>");
+        }
+        else
+        {
+            var actualAxiomClosure = NormalizeAxiomClosure(payload.AxiomClosure).ToImmutableArray();
+            if (!actualAxiomClosure.SequenceEqual(expectedAxiomClosure, StringComparer.Ordinal))
+            {
+                result.Add(SequenceDifference(
+                    "AxiomClosure",
+                    expectedAxiomClosure,
+                    actualAxiomClosure,
+                    static item => item));
+            }
         }
 
-        if (payload.FrozenNodeId != material.FrozenNodeId)
+        var hasExpectedPrerequisitePaths = TryResolvePrerequisitePaths(
+            material.PrerequisiteFrozenNodeIds,
+            currentPathsByIdentity,
+            out var expectedPrerequisitePaths,
+            out var unresolvedExpectedIdentity);
+        var hasActualPrerequisitePaths = TryResolvePrerequisitePaths(
+            payload.PrerequisiteFrozenNodeIds,
+            recordedPathsByIdentity,
+            out var actualPrerequisitePaths,
+            out var unresolvedActualIdentity);
+        if (!hasExpectedPrerequisitePaths)
         {
-            result.Add(ScalarDifference(
-                "FrozenNodeId",
-                material.FrozenNodeId.Value,
-                payload.FrozenNodeId.Value));
+            result.Add(
+                $"PrerequisitePaths expected=<unresolved:{unresolvedExpectedIdentity!.Value}>, "
+                + (hasActualPrerequisitePaths
+                    ? $"actual={FormatSequence(actualPrerequisitePaths, static item => item.Value)}"
+                    : $"actual=<unresolved:{unresolvedActualIdentity!.Value}>"));
         }
-
-        if (!payload.PrerequisiteFrozenNodeIds.SequenceEqual(material.PrerequisiteFrozenNodeIds))
+        else if (hasActualPrerequisitePaths
+            && !actualPrerequisitePaths.SequenceEqual(expectedPrerequisitePaths))
         {
             result.Add(SequenceDifference(
-                "PrerequisiteFrozenNodeIds",
-                material.PrerequisiteFrozenNodeIds,
-                payload.PrerequisiteFrozenNodeIds,
+                "PrerequisitePaths",
+                expectedPrerequisitePaths,
+                actualPrerequisitePaths,
                 static item => item.Value));
         }
 

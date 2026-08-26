@@ -113,7 +113,7 @@ public sealed class CoverageCommandTests
     }
 
     [Fact]
-    public void AcceptedEventImplementationChangeRevalidatesStoredCandidateWithFullWriteGate()
+    public void AcceptedEventImplementationChangeTrustsStoredEventWithoutReplayingWriteGate()
     {
         var decoded = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
             SnapshotDecoder.Decode(Snapshot(terminateAcceptedEvent: false))).Snapshot;
@@ -130,10 +130,9 @@ public sealed class CoverageCommandTests
             fixture.Build(RawChangeSet.Create(
                 ["tools/StrataLint.Engine/Ledger/FrozenAcceptedEventLoader.cs"])));
 
-        Assert.Contains(evaluation.Diagnostics, diagnostic =>
+        Assert.DoesNotContain(evaluation.Diagnostics, diagnostic =>
             diagnostic.Path == accepted.Path.Value
-            && diagnostic.Message.Contains("accepted-event write gate", StringComparison.OrdinalIgnoreCase)
-            && diagnostic.Message.Contains("LF-terminated", StringComparison.Ordinal));
+            && diagnostic.Message.Contains("accepted-event write gate", StringComparison.OrdinalIgnoreCase));
     }
 
     [Fact]

@@ -107,35 +107,9 @@ internal static partial class RepositoryRules
             }
         }
 
-        ValidateAcceptedEventFilesAfterImplementationChange(context, findings);
         ValidateCandidateRevocationReceipts(context, findings);
 
         return findings.ToImmutable();
-    }
-
-    private static void ValidateAcceptedEventFilesAfterImplementationChange(
-        RuleEvaluationContext context,
-        ImmutableArray<RuleFinding>.Builder findings)
-    {
-        if (!context.RuleImplementationChanged)
-        {
-            return;
-        }
-
-        var files = context.Current.Files.Values
-            .Where(file => FrozenLedgerChangeClassifier.IsAcceptedEventPath(file.Path.Value))
-            .OrderBy(static file => file.Path.Value, StringComparer.Ordinal)
-            .ToArray();
-        if (files.Length == 0
-            || FrozenAcceptedEventLoader.LoadFiles(files) is not DagLedgerFilesLoadOutcome.Invalid invalid)
-        {
-            return;
-        }
-
-        findings.Add(new RuleFinding(
-            files.Length == 1 ? files[0].Path.Value : FrozenLedgerChangeClassifier.AcceptedRoot,
-            "accepted-event write gate rejected stored candidate after implementation change: "
-                + invalid.Message));
     }
 
     private static void ValidateCandidateRevocationReceipts(

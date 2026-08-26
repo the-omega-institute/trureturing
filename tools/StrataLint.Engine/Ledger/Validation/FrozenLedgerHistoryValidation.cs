@@ -137,6 +137,9 @@ public static partial class FrozenLedger
 
             var expectedByPath = catalog.ClosedNodes.ToDictionary(static node => node.RepoPath);
             var actualByPath = active.Values.ToDictionary(static entry => entry.Material.RepoPath);
+            var recordedPathsByIdentity = FrozenPathsByIdentity(
+                active.Values.Select(static entry => entry.Material));
+            var currentPathsByIdentity = FrozenPathsByIdentity(catalog.ClosedNodes);
             var missing = expectedByPath.Keys.Except(actualByPath.Keys)
                 .OrderBy(static path => path.Value, StringComparer.Ordinal)
                 .ToImmutableArray();
@@ -166,7 +169,11 @@ public static partial class FrozenLedger
                 StringComparer.Ordinal).ToArray())
             {
                 var material = expectedByPath[entry.Material.RepoPath];
-                var materialMatches = HistoricalActiveFreezeMatches(entry.Payload, material);
+                var materialMatches = HistoricalActiveFreezeMatches(
+                    entry.Payload,
+                    material,
+                    recordedPathsByIdentity,
+                    currentPathsByIdentity);
                 if (materialMatches)
                 {
                     active[caseId] = entry with { Material = material };
@@ -288,13 +295,76 @@ public static partial class FrozenLedger
 
     private static bool HistoricalActiveFreezeMatches(
         FrozenFreezePayload payload,
-        FrozenNodeMaterial material) =>
+        FrozenNodeMaterial material,
+        IReadOnlyDictionary<FrozenNodeId, RepoPath> recordedPathsByIdentity,
+        IReadOnlyDictionary<FrozenNodeId, RepoPath> currentPathsByIdentity) =>
         payload.DeclarationStatementIds.SequenceEqual(material.DeclarationStatementIds)
         && payload.StatementId == material.StatementId
-        && payload.WitnessId == material.WitnessId
-        && payload.FrozenNodeId == material.FrozenNodeId
-        && payload.PrerequisiteFrozenNodeIds.SequenceEqual(material.PrerequisiteFrozenNodeIds)
+        && payload.HasAxiomClosure
+        && NormalizeAxiomClosure(payload.AxiomClosure).SequenceEqual(
+            NormalizeAxiomClosure(material.AxiomClosure),
+            StringComparer.Ordinal)
+        && TryResolvePrerequisitePaths(
+            material.PrerequisiteFrozenNodeIds,
+            currentPathsByIdentity,
+            out var currentPrerequisitePaths,
+            out _)
+        && (!TryResolvePrerequisitePaths(
+                payload.PrerequisiteFrozenNodeIds,
+                recordedPathsByIdentity,
+                out var recordedPrerequisitePaths,
+                out _)
+            || recordedPrerequisitePaths.SequenceEqual(currentPrerequisitePaths))
         && payload.Input.DescriptorSelector == material.RepoPath.Value;
+
+    private static IEnumerable<string> NormalizeAxiomClosure(ImmutableArray<string> closure) =>
+        closure.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal);
+
+    private static ImmutableDictionary<FrozenNodeId, RepoPath> FrozenPathsByIdentity(
+        params IEnumerable<FrozenNodeMaterial>[] materialGroups)
+    {
+        var result = ImmutableDictionary.CreateBuilder<FrozenNodeId, RepoPath>();
+        foreach (var material in materialGroups.SelectMany(static group => group))
+        {
+            if (result.TryGetValue(material.FrozenNodeId, out var existing)
+                && existing != material.RepoPath)
+            {
+                throw new FormatException(
+                    $"Frozen node identity {material.FrozenNodeId.Value} resolves to multiple module paths.");
+            }
+
+            result[material.FrozenNodeId] = material.RepoPath;
+        }
+
+        return result.ToImmutable();
+    }
+
+    private static bool TryResolvePrerequisitePaths(
+        ImmutableArray<FrozenNodeId> identities,
+        IReadOnlyDictionary<FrozenNodeId, RepoPath> pathsByIdentity,
+        out ImmutableArray<RepoPath> paths,
+        out FrozenNodeId? unresolvedIdentity)
+    {
+        var resolved = ImmutableArray.CreateBuilder<RepoPath>(identities.Length);
+        foreach (var identity in identities)
+        {
+            if (!pathsByIdentity.TryGetValue(identity, out var path))
+            {
+                paths = [];
+                unresolvedIdentity = identity;
+                return false;
+            }
+
+            resolved.Add(path);
+        }
+
+        paths = resolved
+            .Distinct()
+            .OrderBy(static path => path.Value, StringComparer.Ordinal)
+            .ToImmutableArray();
+        unresolvedIdentity = null;
+        return true;
+    }
 
     private static StatementId ParseStatementId(string value, string label) =>
         FrozenHashSyntax.IsSha256(value)
