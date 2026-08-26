@@ -111,7 +111,7 @@ public sealed partial class AdmissionWorkflowTests
             "git",
             ["-C", repository, .. arguments],
             repository,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
         Assert.Equal(0, result.ExitCode);
         return System.Text.Encoding.UTF8.GetString(result.StandardOutput).Trim();

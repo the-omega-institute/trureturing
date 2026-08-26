@@ -236,7 +236,7 @@ internal static class Program
 
     private static string GitText(string repositoryRoot, params string[] arguments)
     {
-        var output = BoundedProcessRunner.Run("git", ["-C", repositoryRoot, .. arguments], repositoryRoot, TimeSpan.FromSeconds(30), 1024 * 1024);
+        var output = BoundedProcessRunner.Run("git", ["-C", repositoryRoot, .. arguments], repositoryRoot, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
         if (output.ExitCode != 0) throw new InvalidOperationException(StrictUtf8.GetString(output.StandardError).Trim());
         return StrictUtf8.GetString(output.StandardOutput).Trim();
     }
@@ -246,7 +246,7 @@ internal static class Program
             "git",
             ["-C", repositoryRoot, .. arguments],
             repositoryRoot,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             1024 * 1024).ExitCode == 0;
 
     private static bool IsObjectId(string value, int expectedLength) =>
@@ -259,7 +259,7 @@ internal static class Program
             "git",
             ["-C", repositoryRoot, "diff", "--name-only", "-z", "--no-renames", "--diff-filter=ACDMRTUXB", @base, head, "--"],
             repositoryRoot,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             32 * 1024 * 1024);
         if (output.ExitCode != 0) throw new InvalidOperationException(StrictUtf8.GetString(output.StandardError).Trim());
         return StrictUtf8.GetString(output.StandardOutput)

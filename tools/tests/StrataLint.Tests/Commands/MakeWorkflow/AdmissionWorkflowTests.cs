@@ -497,7 +497,7 @@ public sealed partial class AdmissionWorkflowTests
                 scopeScript,
             ],
             fixture.Path,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
         Assert.Equal(0, scopeResult.ExitCode);
@@ -637,7 +637,7 @@ public sealed partial class AdmissionWorkflowTests
                 scopeScript,
             ],
             fixture.Path,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
         Assert.Equal(0, scopeResult.ExitCode);
