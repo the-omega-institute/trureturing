@@ -227,6 +227,8 @@ internal static class DagLedgerCommandPreparation
     internal static FrozenMaterialCatalog BuildCompleteCatalog(
         RepositorySnapshot snapshot,
         AcceptedLeanClosure lean,
+        ImmutableDictionary<RepoPath, TruthState> states,
+        ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency,
         FrozenLedgerBaseView baseView,
         FrozenRevisionIdentity currentIdentity)
     {
@@ -244,8 +246,6 @@ internal static class DagLedgerCommandPreparation
         var algorithm = environment.OriginCommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
             ? HashAlgorithmName.SHA256
             : HashAlgorithmName.SHA1;
-        var states = LeanTruthStates.Resolve(snapshot, lean);
-        var adjacency = LeanImportAdjacency.Build(snapshot, lean);
         var attestations = states
             .Where(static item => item.Value is TruthState.Closed)
             .Select(item => new FrozenModuleAttestation(

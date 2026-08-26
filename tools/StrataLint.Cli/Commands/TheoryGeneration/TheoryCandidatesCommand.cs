@@ -130,7 +130,8 @@ internal static class TheoryCandidatesCommand
                     DigestionEvaluationScopes.ResolveChanges(scope, changes),
                     IsBaseFactAffected),
                 changes: changes,
-                isBaseFactAffected: IsBaseFactAffected);
+                isBaseFactAffected: IsBaseFactAffected,
+                truthStates: states);
             if (digestion.HasReceiptIntegrityFailure)
             {
                 throw new InvalidOperationException(

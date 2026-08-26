@@ -55,7 +55,10 @@ internal static class TruthReleaseCommand
                 frozen.Capability.ActiveFrozenNodes,
                 identity.Revision,
                 sourceTree));
-            var projection = TruthDagProjectionAssembler.Build(truth.Snapshot, truth.Lean);
+            var projection = TruthDagProjectionAssembler.Build(
+                truth.Snapshot,
+                truth.Lean,
+                preparation.States);
             var dagMarkdownBytes = CanonicalDagWriter.Write(projection);
             var truthGraphBytes = AssembleTruthGraph(snapshot, truth, projection, rawLeanReportBytes);
             var blueprintIndexBytes = BlueprintIndexAssembler.Assemble(snapshot);
@@ -64,7 +67,8 @@ internal static class TruthReleaseCommand
                 snapshot,
                 truth.Lean,
                 truth.Report,
-                verifier);
+                verifier,
+                preparation.States);
             var sourceSnapshot = SourceSnapshotAssembler.Assemble(
                 snapshot,
                 identity,

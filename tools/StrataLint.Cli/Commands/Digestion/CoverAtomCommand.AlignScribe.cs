@@ -23,6 +23,7 @@ internal static partial class CoverAtomCommand
         var document = LoadDocument(current);
         var report = leanReportSource.Load(current);
         var lean = ValidateLean(current, report);
+        var truthStates = LeanTruthStates.Resolve(current, lean);
         var verified = scribeEmissionVerifier.Verify(current, report);
 
         var planned = document;
@@ -105,7 +106,8 @@ internal static partial class CoverAtomCommand
             lean,
             verified,
             baselineDocument: null,
-            validateProjectedStatus: false);
+            validateProjectedStatus: false,
+            truthStates: truthStates);
         RequireNoConflictMarkedSources(derived);
         foreach (var pair in options.Pairs)
         {
@@ -117,6 +119,7 @@ internal static partial class CoverAtomCommand
             document,
             planned);
         var finalSnapshot = Decode(finalRaw);
+        LeanTruthStates.RequireSameManagedInputs(current, finalSnapshot);
         var finalDocument = LoadDocument(finalSnapshot);
         var finalEvaluation = DigestionStatusEvaluator.Evaluate(
             DigestionEvaluationScope.FullScan,
@@ -124,7 +127,8 @@ internal static partial class CoverAtomCommand
             finalSnapshot,
             lean,
             verified,
-            baselineDocument: null);
+            baselineDocument: null,
+            truthStates: truthStates);
         RequireNoConflictMarkedSources(finalEvaluation);
         foreach (var pair in options.Pairs)
         {
