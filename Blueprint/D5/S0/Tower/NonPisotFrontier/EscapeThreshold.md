@@ -8,7 +8,7 @@ The threshold is two divided by the excess of the conjugate modulus over one, wh
 
 **Theorem 1.1 (The escape threshold is a threshold).**
 
-$$\left(\left|\mathit{betaThirteenConjugate}\right| - 1\right) \cdot \mathit{escapeThreshold} = 2 \land \forall x \in R, d \in R,\; \mathit{escapeThreshold} < \left|x\right| \Rightarrow \left|x\right| < \left|\mathit{betaThirteenConjugate} \cdot x - d\right|$$
+$$\left(\left|\mathit{betaThirteenConjugate}\right| - 1\right) \cdot \mathit{escapeThreshold} = 2 \land \left(\forall x \in R, d \in R,\; \mathit{escapeThreshold} < \left|x\right| \Rightarrow \left|x\right| < \left|\mathit{betaThirteenConjugate} \cdot x - d\right|\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Tower/NonPisotFrontier/EscapeThreshold.escape_threshold_is_a_threshold` (`✓ std3`). ∎
 
