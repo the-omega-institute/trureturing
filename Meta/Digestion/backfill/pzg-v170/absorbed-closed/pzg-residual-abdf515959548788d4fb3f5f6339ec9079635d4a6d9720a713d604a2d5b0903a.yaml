@@ -10,10 +10,10 @@ receipts:
   coverage:
     - gid: D5/S0/Conventions/DiagonalSwap.swap_changes_self_diagonal
       source_sha256: sha256:abdf515959548788d4fb3f5f6339ec9079635d4a6d9720a713d604a2d5b0903a
-      target_sha256: sha256:828d364acdb8c2eee34cbf82bab7ff4ecee8129c3c72404c7223f641091ea7d9
+      target_statement_id: sha256:fc62f68d3f1dd431994a72e8042eea34ba0bd8fdd43ebcf52aaa1301268adae9
     - gid: D5/S0/Computability/Diagonalization/BooleanSwapLoad.boolean_swap_carries_diagonal_escape
       source_sha256: sha256:abdf515959548788d4fb3f5f6339ec9079635d4a6d9720a713d604a2d5b0903a
-      target_sha256: sha256:22fe9c0d343159908373ead17b40247b6e102efcba4c1ace1a0f186f11258571
+      target_statement_id: sha256:29c54ae2c2fb54f060de45e17bb7d5ce4a8a56a969abdccc0b9169392216913e
   scribe:
     - gid: D5/S0/Conventions/DiagonalSwap.swap_changes_self_diagonal
       definition_sha256: sha256:b77b10cfbca2eb5f8a2b25b31ccdfe20a3f6958a48d39030e2175006a544912e

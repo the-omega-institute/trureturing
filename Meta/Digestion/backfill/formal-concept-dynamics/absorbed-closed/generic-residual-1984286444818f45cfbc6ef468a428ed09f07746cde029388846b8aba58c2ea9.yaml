@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.joint_faithfulness_tfae
       source_sha256: sha256:1984286444818f45cfbc6ef468a428ed09f07746cde029388846b8aba58c2ea9
-      target_sha256: sha256:3c1f39424ce5e132841242ab6ecb76e8d760352cedbc4a1cd32a16b98b33aa05
+      target_statement_id: sha256:a20f50b5081e5521ee1aed73df16bddf829d17cbb008210ed887bb5599bf6b5e
   scribe:
     - gid: D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.joint_faithfulness_tfae
       definition_sha256: sha256:385c05f342fee54bbbca59430bba13605c53e3d7ac7ac8d3d3dc0da638f25acb

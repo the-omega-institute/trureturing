@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Conventions/GeometricWeights.no_geometric_weights_match_zeckendorf_singletons
       source_sha256: sha256:531a18111d5f820a156152fe74f716d49261aa65427277290081f7031d0791f9
-      target_sha256: sha256:30ccb203247941c3c194f3637d4b2ae7411c3028de52b9c42ecfad7ed26dcd7e
+      target_statement_id: sha256:9b316a7162b1dbb4d9d42e1178ceef70d5bffed613052ef3c3e353bb2a77871d
   scribe:
     - gid: D5/S0/Conventions/GeometricWeights.no_geometric_weights_match_zeckendorf_singletons
       definition_sha256: sha256:2dfe651a3675845ad03a1ee62361941a4b7375a01178ce403c699354fc185599

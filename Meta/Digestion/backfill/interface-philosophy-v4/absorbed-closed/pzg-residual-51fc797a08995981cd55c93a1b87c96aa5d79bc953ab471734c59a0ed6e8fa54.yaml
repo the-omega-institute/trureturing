@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Naming/Conservation/NamingTowerConservation.countable_tower_anonymous_full_measure
       source_sha256: sha256:51fc797a08995981cd55c93a1b87c96aa5d79bc953ab471734c59a0ed6e8fa54
-      target_sha256: sha256:924b053e548916cd3b4d1bb3e86bf7afcf1522898a4a564a11d88369bebf9733
+      target_statement_id: sha256:e233b5a6d1578de89a566d77195cffbc6758ff58e347bcc39eb3ad6efaf48347
   scribe:
     - gid: D5/S0/Naming/Conservation/NamingTowerConservation.countable_tower_anonymous_full_measure
       definition_sha256: sha256:dc0dbef74b4926571e327eb29dc89e179ee072e46b8716abc9e575153809a565

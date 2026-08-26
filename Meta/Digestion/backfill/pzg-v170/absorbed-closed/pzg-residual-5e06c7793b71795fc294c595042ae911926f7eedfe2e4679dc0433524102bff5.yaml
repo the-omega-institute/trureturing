@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Dynamics/ProfiniteCharacter.continuous_character_factors_through_residue
       source_sha256: sha256:5e06c7793b71795fc294c595042ae911926f7eedfe2e4679dc0433524102bff5
-      target_sha256: sha256:27f2131972f1e2978b96440f24127bb876641a61da2be6e9315ebf2adf595ff0
+      target_statement_id: sha256:491d9c475d6218a65194146f851c7d3303d0cebe4ae5556dc99f8918b7593592
   scribe:
     - gid: D5/S1/Dynamics/ProfiniteCharacter.continuous_character_factors_through_residue
       definition_sha256: sha256:8cbda9877ff6b8d9318da1e720eb4047022ab2da55f3a33500bccef4420342d4

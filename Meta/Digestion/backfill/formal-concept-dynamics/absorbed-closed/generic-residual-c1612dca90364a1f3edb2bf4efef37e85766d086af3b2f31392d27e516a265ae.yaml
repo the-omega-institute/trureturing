@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/DecisionValue/DecisionWithoutFullPrediction.decision_sufficiency_without_full_prediction
       source_sha256: sha256:c1612dca90364a1f3edb2bf4efef37e85766d086af3b2f31392d27e516a265ae
-      target_sha256: sha256:1977a3b5025fcc3b670c406ae8f395b12ec1cf33331875eb1829cd55cf7809bf
+      target_statement_id: sha256:5eb70d036f5415c6c1cda04e20a6b28514d8e0d2c5048a026ef43606425a20ff
   scribe:
     - gid: D5/S3/ConceptDynamics/DecisionValue/DecisionWithoutFullPrediction.decision_sufficiency_without_full_prediction
       definition_sha256: sha256:13a186d8f603f1836e6fc46b207ac5022f94c0a5c464225568781e16e2b28042

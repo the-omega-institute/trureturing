@@ -9,6 +9,6 @@ receipts:
   coverage:
     - gid: D5/S3/Weil/SpectralHilbert.source_pairing_eq_tsum
       source_sha256: sha256:6fa767a00cb34998e03748cb25ec509032903a22a447e8ad48b19159208b1fa0
-      target_sha256: sha256:9bd6f6d9aaff6d0e63a1e6ac8035b64a2e5aef3b3c7a958ad7fbcfebec1d43ae
+      target_statement_id: sha256:eb977b2a1ab6230995791140394f8c8b1f2946be2e3c6509b6a68eff482d2603
   scribe: []
   unresolved_subitems: []

@@ -11,7 +11,7 @@ receipts:
   coverage:
     - gid: D5/S1/Dynamics/RecursiveDefinition.is_recursive_definition_iff_fixed_point
       source_sha256: sha256:9b7a3ffc25dbae19ef334f68bbfdc9182d64e32492f99436316099057780b1da
-      target_sha256: sha256:b1e01c10f2d6c4dd59c845865f66719b63dbc0ce9536f0898733a0588d51e307
+      target_statement_id: sha256:b76fb4639ee3b26a5cf742fbd2e1fdb826e6e9ee9ae639ffedd8169e0dd6306c
   scribe:
     - gid: D5/S1/Dynamics/RecursiveDefinition.is_recursive_definition_iff_fixed_point
       definition_sha256: sha256:cda4200d1442ecf3540d4309105921148fa15722b199a7d8b898fe01eda5e5e3

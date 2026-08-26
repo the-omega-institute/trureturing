@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Axis/AxisRecurrencePair.axis_recurrence_pair
       source_sha256: sha256:e54274710dfae75da8fb393d2dedb31f37a6a6b352ec72636c403e3243a1ffec
-      target_sha256: sha256:561ef4b362a0785b3cffed0e6c01bf8eab469dc2559a4767db3d686ab1d9b875
+      target_statement_id: sha256:810351c5162afbc074cfe0623fe430f0efb6e47ea245588ee3a70b8d0191cb2c
   scribe:
     - gid: D5/S3/Axis/AxisRecurrencePair.axis_recurrence_pair
       definition_sha256: sha256:b5e7942ee57ed80c67976aee24adc1db5894bcb313f06a3daae7dd82211d354a

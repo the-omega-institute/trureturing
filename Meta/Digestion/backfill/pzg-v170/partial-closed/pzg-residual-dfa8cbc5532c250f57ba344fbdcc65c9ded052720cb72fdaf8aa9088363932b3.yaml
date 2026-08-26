@@ -10,7 +10,7 @@ receipts:
   coverage:
     - gid: D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
       source_sha256: sha256:dfa8cbc5532c250f57ba344fbdcc65c9ded052720cb72fdaf8aa9088363932b3
-      target_sha256: sha256:e5f92d4916205485ea789f89371c05116711359cfb58561e3a65a39561657036
+      target_statement_id: sha256:773d66b0555f487674ddca38ae7bcaa9d03ca98e1bc0feb168ec3c60b371ed67
   scribe:
     - gid: D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
       definition_sha256: sha256:bde4ed75cb707872d65ee1d8275ee4883ea7cd4a9fe14d00b44b6f218b59be0f

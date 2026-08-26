@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/PrimeForms/Crossing/NoIntegralAffineLine.crossing_surface_has_no_nonconstant_integral_affine_line
       source_sha256: sha256:472de553e2503655e5f2400f7bec26010856b696b46eb8ff5c516859d1d5f371
-      target_sha256: sha256:da1701657affa67fc8625c2f724388374b21c53c4543e014329ea290c0f765ff
+      target_statement_id: sha256:572795707664ae0e97bb62d5733a806459951f589250fee0206445981e7e19c1
   scribe:
     - gid: D5/S3/PrimeForms/Crossing/NoIntegralAffineLine.crossing_surface_has_no_nonconstant_integral_affine_line
       definition_sha256: sha256:c46377836d432a076a5bca0c0ff011fb1591503529fea6ab577877d280d1d7fa

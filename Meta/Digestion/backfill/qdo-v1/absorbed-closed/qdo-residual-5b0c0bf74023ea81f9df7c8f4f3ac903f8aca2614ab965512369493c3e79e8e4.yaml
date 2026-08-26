@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/Fusion/JointPredictionProductFullness.joint_prediction_product_fullness_criterion
       source_sha256: sha256:5b0c0bf74023ea81f9df7c8f4f3ac903f8aca2614ab965512369493c3e79e8e4
-      target_sha256: sha256:cb077ba614b2f0801f81a940ac24d61a9577194f07360bc5675f568e9e8616ca
+      target_statement_id: sha256:2b176ee6448d0b17d0851101cb8b15476b0c0fb4473c706479bc27fc65ed871f
   scribe:
     - gid: D5/S3/ObserverMemory/Fusion/JointPredictionProductFullness.joint_prediction_product_fullness_criterion
       definition_sha256: sha256:7eebbc30bd9fadc14f308df67cd04ff9459867f78549e1065b16f2b9d066fffe

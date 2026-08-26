@@ -10,10 +10,10 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoWeakPreorder.pareto_weak_reflexive_transitive
       source_sha256: sha256:8f550f340a56075d2e0b7a070a3f78814a780adf06d7f6677736a277f7a39cb3
-      target_sha256: sha256:40dc27be95741c558299e8227408edc5bf93a5ee6c9033638519dfa664c3a298
+      target_statement_id: sha256:57f54dd66f8944b9f51c64a24eccba18d2cd7118ed38d48962098a346143f367
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/GainDifferenceCocycle.gain_difference_self_zero_and_cocycle
       source_sha256: sha256:8f550f340a56075d2e0b7a070a3f78814a780adf06d7f6677736a277f7a39cb3
-      target_sha256: sha256:bccf7ed02fcd53f925e9c22564ce355484353c69b308dfc26cddb15d0983c27e
+      target_statement_id: sha256:8b708816711811a199192ea7077ff26d9c26167339a066abf2e570fe47732104
   scribe:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoWeakPreorder.pareto_weak_reflexive_transitive
       definition_sha256: sha256:7f058c54592326a79fa3b03a3c1874ed1c37a056c1c83c068694e1b0863e1769

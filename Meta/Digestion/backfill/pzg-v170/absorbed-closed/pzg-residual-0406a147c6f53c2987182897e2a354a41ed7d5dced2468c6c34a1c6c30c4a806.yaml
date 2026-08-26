@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Deficit/FixedModulusNoncongruence.deficit_not_determined_by_fixed_modulus
       source_sha256: sha256:0406a147c6f53c2987182897e2a354a41ed7d5dced2468c6c34a1c6c30c4a806
-      target_sha256: sha256:54142eca07a09cc744fbea2701cc9ade079104fe4f7f2b26a2e5b3acff872237
+      target_statement_id: sha256:d605f0abf2d589a24411670833205f2041a788163220324e4f9c8ff096f0bd94
   scribe:
     - gid: D5/S1/Deficit/FixedModulusNoncongruence.deficit_not_determined_by_fixed_modulus
       definition_sha256: sha256:cbd655f48036859af7591c36292c74fb4f790881e52474b8e3d97a2baf049613

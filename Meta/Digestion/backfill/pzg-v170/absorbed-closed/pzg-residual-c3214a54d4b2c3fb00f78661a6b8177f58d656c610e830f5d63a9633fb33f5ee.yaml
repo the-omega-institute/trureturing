@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Rewriting/CascadeContinuation.cascade_continues_to_all_stages
       source_sha256: sha256:c3214a54d4b2c3fb00f78661a6b8177f58d656c610e830f5d63a9633fb33f5ee
-      target_sha256: sha256:ef05b7ff837a50094dfca8e1d70a3cccc9a89062180d3a3d98eec7db8a7b881c
+      target_statement_id: sha256:fc724cea66a7649bfe52a131c282bff306c717d9d62d0159fccd0753d1d04c45
   scribe:
     - gid: D5/S0/Rewriting/CascadeContinuation.cascade_continues_to_all_stages
       definition_sha256: sha256:2329187752509d1c9fa72f23c3184217333e140f352f4962fbc4aed22b62caea

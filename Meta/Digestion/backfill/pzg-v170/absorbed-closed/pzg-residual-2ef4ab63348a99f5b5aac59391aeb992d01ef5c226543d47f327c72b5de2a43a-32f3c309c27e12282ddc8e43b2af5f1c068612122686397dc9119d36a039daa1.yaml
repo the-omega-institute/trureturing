@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/History/Accounting/CumulativeTax.terminal_balance_eq_initial_add_tax
       source_sha256: sha256:2ef4ab63348a99f5b5aac59391aeb992d01ef5c226543d47f327c72b5de2a43a
-      target_sha256: sha256:c91a4f6ff991d365cc00bc445aa6764c364c68255ec1fd2ac78daac354b50c6f
+      target_statement_id: sha256:79e3c49a01d618db127d0f4d1537f39e9bbe2b2bf06fb5af1b7acc5e686c8070
   scribe:
     - gid: D5/S0/History/Accounting/CumulativeTax.terminal_balance_eq_initial_add_tax
       definition_sha256: sha256:809128821576fcf1ed54c7c42287329524d620d51a5413113199db4c2a2f2ea2

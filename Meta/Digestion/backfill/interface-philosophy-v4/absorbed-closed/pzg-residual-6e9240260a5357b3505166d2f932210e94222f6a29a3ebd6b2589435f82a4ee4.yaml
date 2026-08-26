@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Naming/CompletionEmbeddingDense.completion_embedding_dense
       source_sha256: sha256:6e9240260a5357b3505166d2f932210e94222f6a29a3ebd6b2589435f82a4ee4
-      target_sha256: sha256:3d3e7714a1003f954e4749d848dcf211e4cf451fc8144123af1c97ad03b73c27
+      target_statement_id: sha256:c081e6e7f7e3ae13a6b316593e8800f2e8dbb95a7dbba463a2a2e1ee79a895fc
   scribe:
     - gid: D5/S0/Naming/CompletionEmbeddingDense.completion_embedding_dense
       definition_sha256: sha256:b980074fed83d7bce49120168513a57defce55c3a089d893a951639cd22dd332

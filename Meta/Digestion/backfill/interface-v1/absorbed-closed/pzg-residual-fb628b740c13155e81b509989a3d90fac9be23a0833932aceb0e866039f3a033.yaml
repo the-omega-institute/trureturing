@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Diagonal/Probability/EquivariantEscape.transitive_equivariant_escape_probability
       source_sha256: sha256:fb628b740c13155e81b509989a3d90fac9be23a0833932aceb0e866039f3a033
-      target_sha256: sha256:fa16dac0e43c3839c4f9fdf4b03af1a581f1e5bde0be4c69333b43afeb2966dc
+      target_statement_id: sha256:ecb8257c6887145b13d10c942b486fb7284b684ee5aaa377e053238bdbc7e6b9
   scribe:
     - gid: D5/S0/Diagonal/Probability/EquivariantEscape.transitive_equivariant_escape_probability
       definition_sha256: sha256:935e75a477616d7b374fe3139eeba255e61513ac6401549e6a3a689189863ce8

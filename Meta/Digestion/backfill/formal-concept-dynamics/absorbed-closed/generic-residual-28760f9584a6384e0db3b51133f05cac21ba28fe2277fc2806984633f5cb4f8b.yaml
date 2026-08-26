@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Termination/GuardedRankingTermination.guarded_ranking_terminates
       source_sha256: sha256:28760f9584a6384e0db3b51133f05cac21ba28fe2277fc2806984633f5cb4f8b
-      target_sha256: sha256:db0967ae28b2c0f92a7a7057e20d6b0e58ab3b6a2bf6d679d98ab0d2e3ec572a
+      target_statement_id: sha256:bd876d45ae98ada765b5ad6fcfef9491c8507b4f93fdb495f892950c24a125af
   scribe:
     - gid: D5/S3/ConceptDynamics/Termination/GuardedRankingTermination.guarded_ranking_terminates
       definition_sha256: sha256:c4baf2b14007c1d33c481f5a892a8fde0e0e069cd1ed61ac3fc13e19702a90cb

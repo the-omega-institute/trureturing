@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Epistemic/TopologicalKnowledgeOperator.topological_knowledge_operator_laws
       source_sha256: sha256:6c7710a7951789594194f7bc2757b31ff95b928e9bb34131977d69f73fdc9822
-      target_sha256: sha256:f11ee7ac20198c512574ff8cc72b0cf5d4b6d3c29bca19d2045710947932d10f
+      target_statement_id: sha256:75fe62b3e9a51170aad2f772edb9b79f532602d1fada319a21f30fcf6c58b838
   scribe:
     - gid: D5/S3/ConceptDynamics/Epistemic/TopologicalKnowledgeOperator.topological_knowledge_operator_laws
       definition_sha256: sha256:ec151693f3d35f009adbc2f978197057c87251b61b1b93716c1ea2767f60e377

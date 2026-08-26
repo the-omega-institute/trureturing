@@ -11,7 +11,7 @@ receipts:
   coverage:
     - gid: D5/S1/Scale/CarrierFoundations.golden_carrier_foundations
       source_sha256: sha256:58e8f015eea7218ab85a93414db29b65667b79f34b18b8f9ab343676c454adf2
-      target_sha256: sha256:351b14e9a00f243b0d304094d2272f8f0648c9f79e4ddd3a566bf8007810dc50
+      target_statement_id: sha256:8b5f1150ad873810ad1aadab93db5f8b1520d811696143e6fc911eb31525238b
   scribe:
     - gid: D5/S1/Scale/CarrierFoundations.golden_carrier_foundations
       definition_sha256: sha256:6321f4fe5fe4256a8b86138ff30ede3d7cf8f1da90e9da885d46b3ba60f11f71

@@ -10,7 +10,7 @@ receipts:
   coverage:
     - gid: D5/S3/Zeros/CompletedZeta.zero_quartet_scaling_spec
       source_sha256: sha256:7de29f3405ccdbc2c1589a2c5c920f082cb315e5a04d741b93ff716018191994
-      target_sha256: sha256:51e9ac062d8281e341170f2059134974fa4f755b4e88e8ff9bb56f7bc5b6d2cc
+      target_statement_id: sha256:54194a5ed453f9739fa911583246728277b4fa9d97b031a0c37dbfb7e7d82e0d
   scribe:
     - gid: D5/S3/Zeros/CompletedZeta.zero_quartet_scaling_spec
       definition_sha256: sha256:7adc01d7166094417b25c9f92fa6ca76769854941c96daab523be09d629b3fa2

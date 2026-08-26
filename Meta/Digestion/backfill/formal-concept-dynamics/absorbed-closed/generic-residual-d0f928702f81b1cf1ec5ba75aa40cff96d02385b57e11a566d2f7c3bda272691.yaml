@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Coding/FiberBinaryIdentification.arbitrary_binary_questions_identify_target
       source_sha256: sha256:d0f928702f81b1cf1ec5ba75aa40cff96d02385b57e11a566d2f7c3bda272691
-      target_sha256: sha256:6f09bcfdab2dbf6e316a7e276d9d2a9bc84e375cb47b0a1ea4c23a772e3891fc
+      target_statement_id: sha256:4f6474b879450a7c309582fffd9df0bb65d6bb3ad9c9479b2ea3071d8a98af4f
   scribe:
     - gid: D5/S3/ConceptDynamics/Coding/FiberBinaryIdentification.arbitrary_binary_questions_identify_target
       definition_sha256: sha256:5385a6eeb0f62ee8778033e31a0385cd92fba1aad411c337c605d0bd0bf24374

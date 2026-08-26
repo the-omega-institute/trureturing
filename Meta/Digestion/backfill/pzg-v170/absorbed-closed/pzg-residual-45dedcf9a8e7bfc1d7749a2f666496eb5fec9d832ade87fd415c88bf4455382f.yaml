@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/PrimeForms/SumTwoSquares.prime_eq_sq_add_sq_of_mod_four_eq_one
       source_sha256: sha256:45dedcf9a8e7bfc1d7749a2f666496eb5fec9d832ade87fd415c88bf4455382f
-      target_sha256: sha256:688296f25e98e5e045c7c2d55139452efd1002dc82ae9615598c6573b5b566c7
+      target_statement_id: sha256:e537f586b6ff647865988df7c55cb094fb626128802129da97e5dd610ae4c69a
   scribe:
     - gid: D5/S3/PrimeForms/SumTwoSquares.prime_eq_sq_add_sq_of_mod_four_eq_one
       definition_sha256: sha256:ee571a24e783bedaa1e2c1296dc029b1bbbafb1fce18f06b0c61d3eb791b514b

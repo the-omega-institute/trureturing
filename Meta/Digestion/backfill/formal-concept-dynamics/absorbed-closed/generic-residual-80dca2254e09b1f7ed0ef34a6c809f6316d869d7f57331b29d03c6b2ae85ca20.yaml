@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/InstitutionalCapture/ByzantineRecoveryImpossibility.deterministic_recovery_impossible
       source_sha256: sha256:80dca2254e09b1f7ed0ef34a6c809f6316d869d7f57331b29d03c6b2ae85ca20
-      target_sha256: sha256:5971856c89a2718f3ba4625245f1fc41b72dfd3f4fa89da56805d47566962aea
+      target_statement_id: sha256:c218100433b18bfa259e218e595f6b60ceccd9f60bf7c9d918dbc1fd9810d6a5
   scribe:
     - gid: D5/S3/ConceptDynamics/InstitutionalCapture/ByzantineRecoveryImpossibility.deterministic_recovery_impossible
       definition_sha256: sha256:90ac93819a40a0b684183bf78b5dddcf8e09f6f30cb0b137b44d08c2e9347017

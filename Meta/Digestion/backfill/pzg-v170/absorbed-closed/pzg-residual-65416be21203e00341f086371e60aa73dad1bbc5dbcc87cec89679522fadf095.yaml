@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/PrimeForms/Crossing/GlideCrossingParity.glide_crossing_count_even
       source_sha256: sha256:65416be21203e00341f086371e60aa73dad1bbc5dbcc87cec89679522fadf095
-      target_sha256: sha256:cca470880a63b8a92824a50239ea0db38586f97b5037c8f401989ba0687fc324
+      target_statement_id: sha256:fe94679447dd7dce2f59e682f3c19feada6dc543da3167847ed3a9ba247e8f57
   scribe:
     - gid: D5/S3/PrimeForms/Crossing/GlideCrossingParity.glide_crossing_count_even
       definition_sha256: sha256:2925d6c624ba3d7e9ec4ebb59d7021070b5795fd61a49f78aa691cdf2d92c0e5

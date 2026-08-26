@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/ActionStateRightsSeparation.no_action_state_separates_rights
       source_sha256: sha256:af46ad38e3dbb41c9fc2de2c16bdcae53d820ffcf6aa00811e73ef0fa309a845
-      target_sha256: sha256:d7c77be4ac046dcf74afc325a9a3c95d0102b2e4f52c08153bd3d237cd13dcff
+      target_statement_id: sha256:1f8aee4d1e05886ac2299a6b13afe90d839c00de202252abf8d1eb3855591662
   scribe:
     - gid: D5/S3/ConceptDynamics/ActionStateRightsSeparation.no_action_state_separates_rights
       definition_sha256: sha256:4afe40a2495d6bd56fb36699207fd864b84d5a890466f945dec3b0b7dc7437ae

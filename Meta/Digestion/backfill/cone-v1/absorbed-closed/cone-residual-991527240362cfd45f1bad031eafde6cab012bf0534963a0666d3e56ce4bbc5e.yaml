@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Constants/MidslopeDoubleDual.arithmetic_geometric_double_dual
       source_sha256: sha256:991527240362cfd45f1bad031eafde6cab012bf0534963a0666d3e56ce4bbc5e
-      target_sha256: sha256:d728bc1dc2edb9e46c1e239bfdc0b4e1d7aef51d569a450747b2cb57d7dd3d17
+      target_statement_id: sha256:ff505c89ec062e77026818f043cdaafafa087977b19013872c39fca04827dedf
   scribe:
     - gid: D5/S3/Constants/MidslopeDoubleDual.arithmetic_geometric_double_dual
       definition_sha256: sha256:05a1bef51989a4a7cef25ef25eff9ec023aee5f4774cf3e47d31657cabbc5930

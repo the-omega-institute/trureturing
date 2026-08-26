@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Diagonal/Naturality/QuotientTwistBlindness.quotient_twist_blindness
       source_sha256: sha256:4536b4abfc383bf09ecf167c3aa54ed04933e99d369d4fbcc3c1759dac7d30fc
-      target_sha256: sha256:49d39a7c34b9c04a62e5bdd2b6da9af30aa5b858f991ab99205162028023d6a0
+      target_statement_id: sha256:c7d867adb16f662d333ce50d902e37ff13c02056918f1f7bdc76b62b0bebdfb8
   scribe:
     - gid: D5/S0/Diagonal/Naturality/QuotientTwistBlindness.quotient_twist_blindness
       definition_sha256: sha256:973eba1668d3da36cc70e926038325e0a2ef4a4482d83c1c600b6ef383928ac5

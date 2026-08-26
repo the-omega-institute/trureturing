@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Constants/Limits/HarmonicResidualLimit.harmonic_residual_tendsto_one_sub_euler_constant
       source_sha256: sha256:c8bf519d4e90ccbed39e67a361735abdaf0dd272abc4e775ec5811ebfdd8e5d8
-      target_sha256: sha256:404963aae8f60835eae8568197ead67922ce48bcfc2e803bcc0a94fe8ba8d3f1
+      target_statement_id: sha256:e03cf48fed7b35e2fd4d538849e560b486b7d72114e7cc54a4bb9c3c2d33db22
   scribe:
     - gid: D5/S3/Constants/Limits/HarmonicResidualLimit.harmonic_residual_tendsto_one_sub_euler_constant
       definition_sha256: sha256:b09713f7ff2dbcbfb07e84eb5c69549c25b487683ff7bdf79233f94940fb8e17

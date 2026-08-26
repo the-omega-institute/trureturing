@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Zeros/Density/ZeroDensityCrossover.guth_maynard_dominates_iff
       source_sha256: sha256:ad0e01fa80e00f479ed6e8652a22c38913a1e0544ea69711fdf2286d48842202
-      target_sha256: sha256:28d005d24a74812d8399a4704fee064877e8dd7d170c090aa86d0f54403f4839
+      target_statement_id: sha256:5fb13beeb4548847fcb1f3136786144982efc49d52a8f984f5b89a3fe97dc4fd
   scribe:
     - gid: D5/S3/Zeros/Density/ZeroDensityCrossover.guth_maynard_dominates_iff
       definition_sha256: sha256:cd8d712c0b4db4491df4d6a6719d89e63d06672eb549d6041e05b9b1025320e0

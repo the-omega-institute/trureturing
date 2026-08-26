@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Words/Mechanical/GoldenFiberPrefixCount.golden_fiber_prefix_count
       source_sha256: sha256:ff4cf731ee49eba80a3c0f7db4b6a291ffe66fb3cd1bbe4d857b6c3a14190f13
-      target_sha256: sha256:6eb9409ab31b282f0b3cd022355c330394ce0eab1eceb164d8d98ea8d1b12dbf
+      target_statement_id: sha256:145dbe0b8c5f2ce12f643881d20a1c307cd86c732c095ed2cd8841831ce50e76
   scribe:
     - gid: D5/S1/Words/Mechanical/GoldenFiberPrefixCount.golden_fiber_prefix_count
       definition_sha256: sha256:0ab57541ec9faa9f33cb4a4043772088edcff0f8012fec7fa437a086cbb77bb8

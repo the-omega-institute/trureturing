@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Reporting/PhenomenalSupervenience.supervenience_xor_zombie_witness
       source_sha256: sha256:2a9fe89e975909f061f65bf1efc686d168980671d8d3705aea95fcb0bcdd6b06
-      target_sha256: sha256:419f74da9349b75610c626643a638bca3d2a3d8a4477c90a3469a7c6ba10011a
+      target_statement_id: sha256:49cd0c6d312bb172fbdb31665b3bbad4cb9cb920a898fafe906cd41841304160
   scribe:
     - gid: D5/S3/ConceptDynamics/Reporting/PhenomenalSupervenience.supervenience_xor_zombie_witness
       definition_sha256: sha256:b4fa2ea49353eff4a2f4a11bf81914708a55979e6ecebef14e9e2a39578df1b5

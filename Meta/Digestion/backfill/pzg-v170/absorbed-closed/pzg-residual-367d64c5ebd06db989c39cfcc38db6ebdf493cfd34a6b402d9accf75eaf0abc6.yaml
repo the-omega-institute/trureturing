@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Rewriting/Newman.newman_unique_normal_form
       source_sha256: sha256:367d64c5ebd06db989c39cfcc38db6ebdf493cfd34a6b402d9accf75eaf0abc6
-      target_sha256: sha256:346adbbabe6f97bd2efec007983e0a6639ff96315ba8382409063f9c6363a593
+      target_statement_id: sha256:1f1a54e2e08541385ddf383402c9c43fe07d2584f1327241520e4b1ec6a8f196
   scribe:
     - gid: D5/S0/Rewriting/Newman.newman_unique_normal_form
       definition_sha256: sha256:1e1313263f57049dbe7d12e34bcc9138f8125f55ba12be4fcfb793b1f933a303

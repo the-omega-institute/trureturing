@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Tower/NonPisotVerdict/SubstitutionTowerClause.substitution_tower_clause
       source_sha256: sha256:3869ae73114b259f48df63a0a7f9a22865a0c47f3248299643a5b7e5eb328969
-      target_sha256: sha256:eb73fe202ddb39ac48ac798268c0607eefef398820663fde6435f11e74fc52b9
+      target_statement_id: sha256:9bb59a63ad50c0108dbe1ab4479d8c54724dd787c913852e7c1075ebc6aa0b35
   scribe:
     - gid: D5/S0/Tower/NonPisotVerdict/SubstitutionTowerClause.substitution_tower_clause
       definition_sha256: sha256:bf0b258fc5050fd633b021d3f11aa9a544a116b9984b9600bffa9f0fb1d75a72

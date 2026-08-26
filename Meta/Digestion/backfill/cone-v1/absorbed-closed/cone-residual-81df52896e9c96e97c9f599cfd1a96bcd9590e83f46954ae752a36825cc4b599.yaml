@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Divergence/MeanKernels/LogarithmicMeanSandwich.logMean_kernel_sandwich
       source_sha256: sha256:81df52896e9c96e97c9f599cfd1a96bcd9590e83f46954ae752a36825cc4b599
-      target_sha256: sha256:2a986668b84b261183b0dbe28e21f055f8ae5420e0435a25e9b3377548b558c3
+      target_statement_id: sha256:415fea501e8f267d1cf5e0faf6c282a6d429f23298c9eed8e88a6cdf7a06d49a
   scribe:
     - gid: D5/S3/Divergence/MeanKernels/LogarithmicMeanSandwich.logMean_kernel_sandwich
       definition_sha256: sha256:200aad3d28a12b540c000c1e2f1d0843b59240e23c67d4d9fd7cc95c7d99950c

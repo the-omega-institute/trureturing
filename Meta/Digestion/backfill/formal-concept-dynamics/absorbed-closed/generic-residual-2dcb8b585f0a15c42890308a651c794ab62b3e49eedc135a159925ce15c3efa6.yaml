@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Sufficiency/PermissionIntersectionLeast.sufficient_intersection_is_unique_least
       source_sha256: sha256:2dcb8b585f0a15c42890308a651c794ab62b3e49eedc135a159925ce15c3efa6
-      target_sha256: sha256:6815bcad6fdb809e13e89f931f836123644628ab14246510e2ee559fa4c6c294
+      target_statement_id: sha256:60973b1ed083336e3cd08acd418560280f96fd8608f84b4aba418e15518126e4
   scribe:
     - gid: D5/S3/ConceptDynamics/Sufficiency/PermissionIntersectionLeast.sufficient_intersection_is_unique_least
       definition_sha256: sha256:5d0da53bfb48689c24a58fb7c629160b1a5993ef4103aefcc2f5dca85a664bfb

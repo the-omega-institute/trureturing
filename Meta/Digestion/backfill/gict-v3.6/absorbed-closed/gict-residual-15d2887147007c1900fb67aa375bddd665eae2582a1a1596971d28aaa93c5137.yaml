@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Factorization/PrimePowers/PrimePowerCriterion.prime_power_iff_unique_prime_divisor
       source_sha256: sha256:15d2887147007c1900fb67aa375bddd665eae2582a1a1596971d28aaa93c5137
-      target_sha256: sha256:36044ee4ece41439c2a4c515cabf1c2bd709ddff7fa514767013c5da2862a991
+      target_statement_id: sha256:e96d36a06cb0f86a9ceb11162d6f5045b2a1eb2f32718461ab9182716390b889
   scribe:
     - gid: D5/S3/Factorization/PrimePowers/PrimePowerCriterion.prime_power_iff_unique_prime_divisor
       definition_sha256: sha256:c4e5409387dc87f38306fe124ff54b6f699d6a3a89269a6a6e52671afce34902

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/DecisionValue/ContributionIncentiveThreshold.contribution_incentive_threshold
       source_sha256: sha256:66388ecf15acc2d65e6dc3bbe684b63ee5ae9633668003a6f916c2542596a51d
-      target_sha256: sha256:853d05dc6459266389570e9fd1497c9d22f0a52e19e79c0c8f3993265357d05d
+      target_statement_id: sha256:cf2171fa2d488bd85f46e3362d1de73202835e868158350f2874ed34eca4a04d
   scribe:
     - gid: D5/S3/ConceptDynamics/DecisionValue/ContributionIncentiveThreshold.contribution_incentive_threshold
       definition_sha256: sha256:92a146a3bc1fb799c99a83c4ac842610a4ed97780240e3d484ae187acda6eefa

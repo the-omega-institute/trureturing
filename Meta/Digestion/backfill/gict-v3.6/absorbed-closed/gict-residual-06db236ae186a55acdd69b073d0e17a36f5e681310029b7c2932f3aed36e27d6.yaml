@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Zeros/Symmetry/TwelveOrbitMultiplicity.twelve_orbit_multiplicity
       source_sha256: sha256:06db236ae186a55acdd69b073d0e17a36f5e681310029b7c2932f3aed36e27d6
-      target_sha256: sha256:5ddc296615d4a61651ca0e30f9f91d9b66b03e376fe546beccb828b1c6d25cac
+      target_statement_id: sha256:0dfe4561d139bd9ac25e8e50e00f5e642a0e0e7d99f95dc191813ce47aec7778
   scribe:
     - gid: D5/S3/Zeros/Symmetry/TwelveOrbitMultiplicity.twelve_orbit_multiplicity
       definition_sha256: sha256:00993f76e26c0641c20522fd17f91624d1d20e8529fef0ec13a4cb780341931f

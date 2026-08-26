@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec
       source_sha256: sha256:79a9167842a2fdbb7eddc754d6af9c39b648fb57496175fd0df605e16979a017
-      target_sha256: sha256:17c9cf3ca266daee964ca1511d0c12fb2c6889f4e6d57bebb38719cbecf0840a
+      target_statement_id: sha256:4af4e2de2fd4006228a7de048b6a7dcec6777e3c0e19ac1c5b2860c7b17bbd1f
   scribe:
     - gid: D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec
       definition_sha256: sha256:a7ace774c3d716d0dc13cf0d9ec25bef26c0ed49cb7e7df6bba141c24bf3d9b7

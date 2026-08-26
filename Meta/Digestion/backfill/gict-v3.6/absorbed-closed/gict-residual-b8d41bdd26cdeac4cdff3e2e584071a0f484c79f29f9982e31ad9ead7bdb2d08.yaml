@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Diagonal/SelfApplicationFates.self_application_four_fates
       source_sha256: sha256:b8d41bdd26cdeac4cdff3e2e584071a0f484c79f29f9982e31ad9ead7bdb2d08
-      target_sha256: sha256:c745691ad335d5bb747276cac582235a8e1938d9edbb4687eea1a73493efa7ea
+      target_statement_id: sha256:11dfa8e1bf50d6c32809bdc047e3baee053d2b5d27fc2ed9b627268892eb6c27
   scribe:
     - gid: D5/S0/Diagonal/SelfApplicationFates.self_application_four_fates
       definition_sha256: sha256:283985793d553d0460de129b577fb0578c83e7bb5cb62ecbac98194307a82f2e

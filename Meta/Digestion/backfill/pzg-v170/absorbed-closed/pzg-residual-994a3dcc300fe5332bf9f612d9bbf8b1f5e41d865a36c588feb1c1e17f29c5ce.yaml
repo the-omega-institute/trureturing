@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Eigenstructure/ZeroSlopeCombinations.zero_slope_combinations_finrank_add_one
       source_sha256: sha256:994a3dcc300fe5332bf9f612d9bbf8b1f5e41d865a36c588feb1c1e17f29c5ce
-      target_sha256: sha256:dbd1529615ee8f14e3f6c1b29595fbf871dcf728a9b575607fd75b5bf3972340
+      target_statement_id: sha256:1cf3aacc20490ce03e7478b1f9851715775531d1fd1a8ff6112cf09ef2fb4e65
   scribe:
     - gid: D5/S1/Eigenstructure/ZeroSlopeCombinations.zero_slope_combinations_finrank_add_one
       definition_sha256: sha256:af94c7f1fe37e3d17360ec36c1fae09bc9d1ae2455dc1c0b5423adc2f7922720

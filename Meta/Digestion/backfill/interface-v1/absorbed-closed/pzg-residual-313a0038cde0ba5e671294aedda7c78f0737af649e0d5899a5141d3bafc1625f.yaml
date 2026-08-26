@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ArithUnits/ThreeWayClassification.three_way_classification_not_binary
       source_sha256: sha256:313a0038cde0ba5e671294aedda7c78f0737af649e0d5899a5141d3bafc1625f
-      target_sha256: sha256:56852031aaef3ac3213e469b534041101739cd003b217ab5afe60457c4981780
+      target_statement_id: sha256:0b7ab8a7f5b5227bdd9b6ba9d7edf684cca583a813b349e4c94811b14f76b7d6
   scribe:
     - gid: D5/S3/ArithUnits/ThreeWayClassification.three_way_classification_not_binary
       definition_sha256: sha256:a40edfc5c8fb2013830acec109dab0113c0f05bdd41cae4aefafe2e7e729c62f

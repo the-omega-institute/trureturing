@@ -11,7 +11,7 @@ receipts:
   coverage:
     - gid: D5/S3/Fourier/FinitePoisson.finite_poisson_summation
       source_sha256: sha256:b2ff1592c4c24b12dcc970a03ac6e2d0665a0b789156795ae37275aef122977c
-      target_sha256: sha256:f84f54241ab57e89ad70448f03c112e69abf149c5e104cca590b883521a06dd1
+      target_statement_id: sha256:dd2087ed1d7fcd6c5a37640c6bf0d261b4d579724126e496c963d70fd6516e42
   scribe:
     - gid: D5/S3/Fourier/FinitePoisson.finite_poisson_summation
       definition_sha256: sha256:365a4400a8faffee66fb222fefd13edd983e609d7c3dca438f58fc6204ff11fb

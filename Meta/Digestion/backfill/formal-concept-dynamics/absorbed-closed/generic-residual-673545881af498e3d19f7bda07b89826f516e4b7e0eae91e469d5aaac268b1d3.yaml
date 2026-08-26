@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Interventions/RedundantAppealDefectPersistence.redundant_appeal_cannot_repair_structural_defect
       source_sha256: sha256:673545881af498e3d19f7bda07b89826f516e4b7e0eae91e469d5aaac268b1d3
-      target_sha256: sha256:631d5f8b65a7599aab5ca15b317e76f875026767a067f56cebb9c3ec6f782b4a
+      target_statement_id: sha256:05dca09f40cae23df10edafffc9868b6db1a379a3c2613082b2006f90b7be53b
   scribe:
     - gid: D5/S3/ConceptDynamics/Interventions/RedundantAppealDefectPersistence.redundant_appeal_cannot_repair_structural_defect
       definition_sha256: sha256:099b05e3afda67d97d2dc84b90d8ad3578b8d09781bab3792de949516fb18047

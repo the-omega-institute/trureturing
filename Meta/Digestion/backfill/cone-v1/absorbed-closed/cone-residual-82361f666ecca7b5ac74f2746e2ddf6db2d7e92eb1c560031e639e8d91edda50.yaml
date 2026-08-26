@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/DivergenceSupport/LandauerBound.landauer_bound_of_balance
       source_sha256: sha256:82361f666ecca7b5ac74f2746e2ddf6db2d7e92eb1c560031e639e8d91edda50
-      target_sha256: sha256:4bea0c525ff335896704ac20efb40cb3e26d04e7c9871f310e3a54b41f94a1c5
+      target_statement_id: sha256:e4c1b9123fa382f1fb3911b27020bad6d289877529a0a5388160b6de29fb8da9
   scribe:
     - gid: D5/S3/DivergenceSupport/LandauerBound.landauer_bound_of_balance
       definition_sha256: sha256:5ed07cab00bcc7cb97b2941d9c47f3717bd1033ce005d583e521e6f5317b588f

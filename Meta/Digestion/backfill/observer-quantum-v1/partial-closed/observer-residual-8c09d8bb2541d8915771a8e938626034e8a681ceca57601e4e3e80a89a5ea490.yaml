@@ -18,9 +18,9 @@ receipts:
   coverage:
     - gid: D5/S3/Quantum/FiniteDimensional.qubit_weyl_star
       source_sha256: sha256:8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490
-      target_sha256: sha256:664b9ea50bca484513a28f5cd812e270f0c8da5394cdd768298b61b65e111844
+      target_statement_id: sha256:931be2d295596973acc624a50f21c2aea1041140be79b0538eed55285f8ad2c5
     - gid: D5/S3/Quantum/QubitWitnesses.pauli_observables_have_no_common_eigenvector
       source_sha256: sha256:8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490
-      target_sha256: sha256:89457799a8e0362f3113889e39ef6eeadabe40f2c9e3228af2bffe7d66acda31
+      target_statement_id: sha256:b1a1da6d492c36f898a4531971380a05d06ab0621252bc1d74732f2fe07f82ad
   scribe: []
   unresolved_subitems: []

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/MetricGeometry/DiscretePredictionUltrametric.discounted_prediction_distance_strong_triangle
       source_sha256: sha256:50a15f11a5feb2a75e6663c818c6b2fc47d41338f892ad017030d141fd0f5cb3
-      target_sha256: sha256:e4a833f761372658f32e83afe672fccf3e449b5bda5a3c6b67cc4de0c7931e47
+      target_statement_id: sha256:e69267746ed1134d5ed268143146457001d0b1646e25cb9000e813dd366988ff
   scribe:
     - gid: D5/S3/Observer/MetricGeometry/DiscretePredictionUltrametric.discounted_prediction_distance_strong_triangle
       definition_sha256: sha256:2cbe4db0100a61c0b71a88e87982c020b4342c41255c628e3e605652a923cc96

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Arith/Congruence/ModThreeNormObstruction.three_mul_sub_one_not_quadratic_norm
       source_sha256: sha256:d94e3e0eb73e161aa996b6db40ed210897b81d2611007e21386adfb53b617f29
-      target_sha256: sha256:f0c36a2ab601005a7b0b7039f3e1307825a969de110e6644a0a86de855cb327a
+      target_statement_id: sha256:ed0c2f270118e7d95cdf4499e5b60b47da1413aabf4d99121f1d1f1f508c3243
   scribe:
     - gid: D5/S3/Arith/Congruence/ModThreeNormObstruction.three_mul_sub_one_not_quadratic_norm
       definition_sha256: sha256:6a879be225434e20af48893b45be07de4ed4089586f938cfe166f1d48d38b547

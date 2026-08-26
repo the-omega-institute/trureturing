@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/NormativeStructure/HistorySensitiveOutcomeReductionObstruction.history_sensitive_evaluation_not_outcome_reducible
       source_sha256: sha256:911e30f5792b47e32a9080f546aed9ad75aa36320f887433b0e088ea48f4f874
-      target_sha256: sha256:6381f4683fa06a247c026f51ea530e653ae02bf822e98c77aba3e8ae2ce26ce2
+      target_statement_id: sha256:44f91f7e9b71e71110e6d62e92051f01779ce6ba6aed300b612dd8ae441d63ee
   scribe:
     - gid: D5/S3/ConceptDynamics/NormativeStructure/HistorySensitiveOutcomeReductionObstruction.history_sensitive_evaluation_not_outcome_reducible
       definition_sha256: sha256:34520e1cf89b84ee77fa0c2df0d0d97f58d46d41c9114ad7ddeb17edba1aebcb

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Depth/IrrationalContinuedFractionNontermination.irrational_continued_fraction_nontermination
       source_sha256: sha256:56c59f5870cc50a4b8e26887a0cb19ef520e8240bb5967550f7fecd85e4b3f03
-      target_sha256: sha256:572e955178b5690db1b44152efcf9dfec513e27d247f16b1eb1ae79ef4bd3f93
+      target_statement_id: sha256:8780492361ca50908420eaee41122e029cff218c4d612b83d6157472a047728a
   scribe:
     - gid: D5/S1/Depth/IrrationalContinuedFractionNontermination.irrational_continued_fraction_nontermination
       definition_sha256: sha256:4f6697d81052a26326c6483625433d26abc9cc417c891eb8b0816a04abc2b09b

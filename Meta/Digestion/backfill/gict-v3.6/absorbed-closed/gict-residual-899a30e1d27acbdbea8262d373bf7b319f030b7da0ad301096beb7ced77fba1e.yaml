@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/PrimeForms/Crossing/OddCoreParameterCriterion.odd_core_parameter_criterion
       source_sha256: sha256:899a30e1d27acbdbea8262d373bf7b319f030b7da0ad301096beb7ced77fba1e
-      target_sha256: sha256:3971c0b54fc4a3d8ee12c3e14f58581582d014e4d2cffa9434030a4c7b444b43
+      target_statement_id: sha256:07df95a620f4686cbd914f42ca875d9ea0650f8af7a9b8690ed473b63ba2bb1a
   scribe:
     - gid: D5/S3/PrimeForms/Crossing/OddCoreParameterCriterion.odd_core_parameter_criterion
       definition_sha256: sha256:b3ba73d8997c89f6f062e36b2fada72e5fd072de2fdb18dbd0750d15c664488c

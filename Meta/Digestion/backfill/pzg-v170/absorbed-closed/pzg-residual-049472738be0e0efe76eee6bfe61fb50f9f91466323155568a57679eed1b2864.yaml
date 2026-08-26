@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/History/PrimeSequenceCode.prime_sequence_code_injective
       source_sha256: sha256:049472738be0e0efe76eee6bfe61fb50f9f91466323155568a57679eed1b2864
-      target_sha256: sha256:2cef98e780c54cb4357c54a58c3e962b1c1bc4880df9a79c8fc03db42226b018
+      target_statement_id: sha256:db4db76a1e3c209e081a6beb17760c65d9583f75799689e9ded2d8709d571231
   scribe:
     - gid: D5/S0/History/PrimeSequenceCode.prime_sequence_code_injective
       definition_sha256: sha256:bea3255b806b0b99e560633cb73b2474d06257b8e694607494221d905089ae7b

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Quantum/DoubleArtanhBounds.double_artanh_bounds
       source_sha256: sha256:3d583abe686668a01e81875675171d67ddd7d5b5157e3d99fcf1cb77b0aeffe1
-      target_sha256: sha256:84730a60fe25c9ecbfa7867f8e9f1e5a0badd1c6fc9db5153ae862dcb9ced802
+      target_statement_id: sha256:0a990625ba3b3b504dd232417eabd2852011cf84e9c76641b91fedef10cbcf36
   scribe:
     - gid: D5/S3/Quantum/DoubleArtanhBounds.double_artanh_bounds
       definition_sha256: sha256:6e8f7b95dfa462ce80e2ee1052d1ffad8544e9c0631bb687a7dbee9d2c30b04c

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/DecisionValue/FiniteHorizonOptimalActionDescent.finite_horizon_optimal_actions_descend
       source_sha256: sha256:5159b75557982a626321377e7edac3ca8fd0949aec299c30fff3ea577f3a4ca0
-      target_sha256: sha256:7291f005875e7f58cbe66f19ce0354f50edbe6881bbbc50a44af2ddb237bd0e1
+      target_statement_id: sha256:a80913e339cbcd36f2481666c7040c5c236a3746dfd5e6d7d1e2590ee42cb6ac
   scribe:
     - gid: D5/S3/ConceptDynamics/DecisionValue/FiniteHorizonOptimalActionDescent.finite_horizon_optimal_actions_descend
       definition_sha256: sha256:8b11231406559e845d54de2e4bcf097627de00d022d4a948d613e39b43c9cec3

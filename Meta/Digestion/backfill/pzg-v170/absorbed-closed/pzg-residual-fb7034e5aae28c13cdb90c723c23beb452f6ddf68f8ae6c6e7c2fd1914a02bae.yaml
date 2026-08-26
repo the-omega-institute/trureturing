@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Digit/PrimeAxis/PrimeAxisNormalizationUnique.normalized_prime_axis_add_unique
       source_sha256: sha256:fb7034e5aae28c13cdb90c723c23beb452f6ddf68f8ae6c6e7c2fd1914a02bae
-      target_sha256: sha256:e4cdae2aa9a9a507fca18ae9a4c857d96da8d7e27a3ecb89e5639a1ee584df5e
+      target_statement_id: sha256:0854fd0f57f6f177c114e6ecac4e54e625ef2f8951ab9fac4cc8d6a2a5491eea
   scribe:
     - gid: D5/S1/Digit/PrimeAxis/PrimeAxisNormalizationUnique.normalized_prime_axis_add_unique
       definition_sha256: sha256:ed23c59f080eb32cb5a88c4fc87b73dfec95327d1080b5fe768cd496a5e672a4

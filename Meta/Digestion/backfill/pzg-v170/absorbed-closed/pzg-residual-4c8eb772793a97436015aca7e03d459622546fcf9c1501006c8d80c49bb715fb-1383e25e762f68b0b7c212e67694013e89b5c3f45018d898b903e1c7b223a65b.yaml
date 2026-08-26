@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Axis/MultiplicativeDigitInvariant.lambda_minus_is_a_multiplicative_digit_invariant
       source_sha256: sha256:4c8eb772793a97436015aca7e03d459622546fcf9c1501006c8d80c49bb715fb
-      target_sha256: sha256:fd686bc4cda882190d3f46ecdeb031cd9b20c974f79d0d733ad80b1574e8d4a7
+      target_statement_id: sha256:a637ac8446174331176ae367d34114c25ccac700e64d9bc7662d9ee6e76e1e9e
   scribe:
     - gid: D5/S3/Axis/MultiplicativeDigitInvariant.lambda_minus_is_a_multiplicative_digit_invariant
       definition_sha256: sha256:a07cde402baabb468ed7d683accba2d2a14d43b453716f7e635888f19203f3de

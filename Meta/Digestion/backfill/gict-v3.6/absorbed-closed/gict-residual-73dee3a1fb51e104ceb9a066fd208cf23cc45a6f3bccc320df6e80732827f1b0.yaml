@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/QuantumChannels/BoundaryArtanhDivergence.logarithmic_tax_diverges_at_boundary
       source_sha256: sha256:73dee3a1fb51e104ceb9a066fd208cf23cc45a6f3bccc320df6e80732827f1b0
-      target_sha256: sha256:2067373adc2500674d5a7a20f08d9a6e3c684bab475bed499d9af97c03ae2035
+      target_statement_id: sha256:5651aa6136583bcd1b181e3842cd7f16a162755a52b4c07b5fb91028f8e1ed22
   scribe:
     - gid: D5/S3/QuantumChannels/BoundaryArtanhDivergence.logarithmic_tax_diverges_at_boundary
       definition_sha256: sha256:e0080dc9a00b1ab414a3429dfd32509ad867d072d2a4dbe432bfe2297f11f31c

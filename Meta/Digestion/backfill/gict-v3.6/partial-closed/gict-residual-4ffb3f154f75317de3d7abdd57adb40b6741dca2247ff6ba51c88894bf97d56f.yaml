@@ -13,13 +13,13 @@ receipts:
   coverage:
     - gid: D5/S1/Phase/SeatTowerArithmetic.pythagorean_gate_iff_eisenstein_norm
       source_sha256: sha256:4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f
-      target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
+      target_statement_id: sha256:072b2d6f462d064898b0495a22c46a66c0111666a8276174cb5ca63b71095c30
     - gid: D5/S1/Phase/SeatTowerConsequences.cosecant_peak_identity
       source_sha256: sha256:4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f
-      target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
+      target_statement_id: sha256:ffff29775ac90deb5feb58180878e5041cffcd17e50eac5595116ff5aac8d92c
     - gid: D5/S1/Phase/SeatTowerConsequences.dominant_term_gap_bound
       source_sha256: sha256:4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f
-      target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
+      target_statement_id: sha256:b969234b2c95a486e0f6869810c37f2027feafa3cfc5c4f176b30701c181d425
   scribe: []
   unresolved_subitems:
     - pythagorean-closure-for-orbit-parameters

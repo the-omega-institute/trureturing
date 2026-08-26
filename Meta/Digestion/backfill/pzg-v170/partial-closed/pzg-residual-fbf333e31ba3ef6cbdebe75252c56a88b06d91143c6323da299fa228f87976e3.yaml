@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Zeros/ZeroGeometry.projection_zero_labeled_vector_spec
       source_sha256: sha256:fbf333e31ba3ef6cbdebe75252c56a88b06d91143c6323da299fa228f87976e3
-      target_sha256: sha256:f5fa23f5e88014c485cf5f1fd4dac3bd2998ca1d5c31bb1af635abf0c3602cb9
+      target_statement_id: sha256:5008a23d3d3a5f3f14c7785a36fd680d60741848e6b4b7dfa80dee9f639e52e9
   scribe: []
   unresolved_subitems:
     - analytic-projection-map-and-continued-projection-identity

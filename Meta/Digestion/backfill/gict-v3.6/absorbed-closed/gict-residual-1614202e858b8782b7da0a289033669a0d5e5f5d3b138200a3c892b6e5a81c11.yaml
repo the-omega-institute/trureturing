@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Analytic/LiCausalTrichotomy.causal_iff_integer_iff_monodromy
       source_sha256: sha256:1614202e858b8782b7da0a289033669a0d5e5f5d3b138200a3c892b6e5a81c11
-      target_sha256: sha256:2fd22301f5414f5466b60b1b87ab4b032f98b144c9759976ed92a35523168bdb
+      target_statement_id: sha256:b319f57cd0f5280932ca0f8ee899112336d3b73c177345f56481a543ad97a633
   scribe:
     - gid: D5/S3/Analytic/LiCausalTrichotomy.causal_iff_integer_iff_monodromy
       definition_sha256: sha256:80315b7dd95e2517433838675ac3c33be9671aa65fbed9f43b32ea6f3dde38e9

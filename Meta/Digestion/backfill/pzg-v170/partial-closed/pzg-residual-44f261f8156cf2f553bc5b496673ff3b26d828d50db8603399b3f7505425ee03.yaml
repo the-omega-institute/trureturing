@@ -9,6 +9,6 @@ receipts:
   coverage:
     - gid: D5/S1/Phase/Basic
       source_sha256: sha256:44f261f8156cf2f553bc5b496673ff3b26d828d50db8603399b3f7505425ee03
-      target_sha256: sha256:37ba6a539502b682b05a2e78ae0eff9f701f4dbfa9154661d6774bd33c88886b
+      target_statement_id: sha256:931856c78824b9a6224418f283b6ac8f38e957d7aba99cd9486dacce49d02cbc
   scribe: []
   unresolved_subitems: []

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Midline/AutomaticMidlineDecomposition.half_density_unitarity_iff_self_resonance
       source_sha256: sha256:285db8f38013cb8ba4ef3c3dc00a597c3ae22871f85e248538ea8f39353906a8
-      target_sha256: sha256:4c432156766c7295eb35b6f6841942242e062e29345c64ee417019baa79ec77a
+      target_statement_id: sha256:ae278ffc5bdededbafe8c775139adc2be11e41847ffb40007ecabe1413a62477
   scribe:
     - gid: D5/S3/Midline/AutomaticMidlineDecomposition.half_density_unitarity_iff_self_resonance
       definition_sha256: sha256:98c41809d6d984c90fd09711d3a7f86bc7663ec258a9c1d4eaab8b1d4c6546aa

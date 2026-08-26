@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Resource/LogDet/PathSpectralClassical.log_det_path_spectral_classical
       source_sha256: sha256:7a2d0fc7339dd13df63a994dd709a602528359d77fccc67746a4d212291497f1
-      target_sha256: sha256:e2c17f0315b9979378ad724f205597891b860ba6be96ffa1b4e5fbc8b7efcb1b
+      target_statement_id: sha256:8ec35d237d687ad78dd05226a9ee7ef309f90d6c2d3a794539fe7f2d8218f826
   scribe:
     - gid: D5/S3/Resource/LogDet/PathSpectralClassical.log_det_path_spectral_classical
       definition_sha256: sha256:59ac4e2f110f7ebb5bff38fec6f8a803f0b143c8e6d24eff7b74ca43c59ce504

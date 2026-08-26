@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Zeros/Symmetry/RightHalfReflectionCriterion.reflection_symmetric_right_half_iff
       source_sha256: sha256:99fb8c8beca326203ac1fb228016701dec18333d514198dbed7157d380dcf909
-      target_sha256: sha256:8251aa13e41895111e94de9877ccc2476cd0adf0388f6c27e70dd82584356291
+      target_statement_id: sha256:5232472806d83c2278a6253b9397a3fd48001e41b704b54baf38cd701b767b22
   scribe:
     - gid: D5/S3/Zeros/Symmetry/RightHalfReflectionCriterion.reflection_symmetric_right_half_iff
       definition_sha256: sha256:d15eff629a5bad5f0a550048357872ee89437342e346370bd1d44f08e5c4fed9

@@ -10,7 +10,7 @@ receipts:
   coverage:
     - gid: D5/S3/Weil/SpectralHilbert.labeled_zeta_inner
       source_sha256: sha256:a6f74e6a8e4132f20ee2a8095395e4f53295446e0f6868b77c5a4aee689b72d5
-      target_sha256: sha256:9bd6f6d9aaff6d0e63a1e6ac8035b64a2e5aef3b3c7a958ad7fbcfebec1d43ae
+      target_statement_id: sha256:d1271f0d4f4e3394f8d165dc88a36ad3097ec54b31d142c558f87460c3b000d5
   scribe:
     - gid: D5/S3/Weil/SpectralHilbert.labeled_zeta_inner
       definition_sha256: sha256:61461dc14bbd4ff3954fedf0aca29d469f932f407b2f71f93f4308f77fdeb94d

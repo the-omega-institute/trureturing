@@ -10,10 +10,10 @@ receipts:
   coverage:
     - gid: D5/S0/Tower/Champions/RadixTable.radix_champion_table
       source_sha256: sha256:df6ef4735bab962b12e7708d6bdb4eb9715378cda58a6423a3f5d88647e5ba2d
-      target_sha256: sha256:31daf3e7cac1e919467770c491c7355c33df4d57a700f9131cda6bf055b67c8e
+      target_statement_id: sha256:beb9d0e3e6745fdf5b9459545712a70ff28699f24210ea7acd09d2fe3b3e2043
     - gid: D5/S0/Tower/ChampionExtremality.odd_half_arm
       source_sha256: sha256:df6ef4735bab962b12e7708d6bdb4eb9715378cda58a6423a3f5d88647e5ba2d
-      target_sha256: sha256:c97a1199b78b352eb8ab4adc1ef5d7a838103e42e2637f643928bc4739ff416c
+      target_statement_id: sha256:e9e049f826868fc8e5f6c9d611123ca0f44c05a932e96db08b1ffafce7d48717
   scribe:
     - gid: D5/S0/Tower/Champions/RadixTable.radix_champion_table
       definition_sha256: sha256:f7431db61ab5b4893e061991b1843ba4200c18eefa76f4555956ad4320467a59

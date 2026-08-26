@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Deliberation/InformationCompleteNormativeDivergence.complete_information_permits_normative_divergence
       source_sha256: sha256:452901d3d91a8b0d58a39c2d11be3369893f6bce2b8ca07dc4d72143df0117da
-      target_sha256: sha256:8c222e4d463b96e63c22eaec191fa84150996d6ee5ea66dab74537aef8b8cb21
+      target_statement_id: sha256:56d5f06d78e8d568a1bbd573efe622a937271eaae1144fda81b2eb6f6491d20f
   scribe:
     - gid: D5/S3/ConceptDynamics/Deliberation/InformationCompleteNormativeDivergence.complete_information_permits_normative_divergence
       definition_sha256: sha256:4bbf3a6900d226b6985aa9007acbcaf5923546597583a2b5e1e34a7dee558e0f

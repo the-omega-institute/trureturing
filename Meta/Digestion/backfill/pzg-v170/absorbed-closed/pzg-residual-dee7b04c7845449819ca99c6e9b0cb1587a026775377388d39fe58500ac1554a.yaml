@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/FiniteReadoutKernel.finite_readout_quotient_equiv_range
       source_sha256: sha256:dee7b04c7845449819ca99c6e9b0cb1587a026775377388d39fe58500ac1554a
-      target_sha256: sha256:7afe43a0747876cbde0f67be61fb6ce1c53c5bd70e75c851a9f421072e0a34c2
+      target_statement_id: sha256:5b2be47623af68c25267d683f271a8fdffab2adbc1d0b933417a47935c4fa785
   scribe:
     - gid: D5/S3/ObserverMemory/FiniteReadoutKernel.finite_readout_quotient_equiv_range
       definition_sha256: sha256:f188e7f3e5d5abb5b57f44e753615b891854cc1d45e950c2a37854ba42bd4412

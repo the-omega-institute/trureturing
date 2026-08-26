@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/QuantumContext/GroupValuedDiagonalEscape.group_valued_diagonal_escape
       source_sha256: sha256:158eb25ce065e93ea5968376d3a94fb23a7566a75359347bc9e279834204c165
-      target_sha256: sha256:cbcb6159214f5c263cc76b501118fe311f3f777d2a30958c2bab35d7175a7a1d
+      target_statement_id: sha256:6f16723369a2f7f11dffe0bd5ae6ba814c8e79d76a018f2b1ea55d059a70bc99
   scribe:
     - gid: D5/S3/QuantumContext/GroupValuedDiagonalEscape.group_valued_diagonal_escape
       definition_sha256: sha256:ba6110351ef414c923c7dba608cf2cf21b845ef78d63a708ceaedd2d0615743a

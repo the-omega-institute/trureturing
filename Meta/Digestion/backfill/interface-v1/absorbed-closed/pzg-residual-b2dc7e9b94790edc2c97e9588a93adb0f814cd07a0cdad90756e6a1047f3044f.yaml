@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Tower/GoldenChampionPoint.golden_champion_point_identity
       source_sha256: sha256:b2dc7e9b94790edc2c97e9588a93adb0f814cd07a0cdad90756e6a1047f3044f
-      target_sha256: sha256:237e29f0c1ab1811afcff30854c722b6ed1fb22469577c6525eeda929450a3a0
+      target_statement_id: sha256:f42b985769eb818cad5dc59343421b1988f4f641ae4f4c87ba337d4f07c53852
   scribe:
     - gid: D5/S0/Tower/GoldenChampionPoint.golden_champion_point_identity
       definition_sha256: sha256:42d7aebcded52bcee6a28303ba55c83a47c0ea19bbb421fc0d46f71eb21205c8

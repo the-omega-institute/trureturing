@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Naming/TranslationComposition.translation_composition
       source_sha256: sha256:28eb48df44ffffd604e0570bc4185c2259059002b76c54e351f13ceb726571a4
-      target_sha256: sha256:07d4ef9a0c37923402c510ed833c1aaa22e1119703cdd63b3ddbbb8898785f1a
+      target_statement_id: sha256:39100380c12232ff74182ea041e2c7675bc224eaa1dbf45c0a2338506594824a
   scribe:
     - gid: D5/S0/Naming/TranslationComposition.translation_composition
       definition_sha256: sha256:ab1bb01ac75fb3b261c681d4a9b5dcc505a8da4af3260a1ad8c1c6e7cb3b2644

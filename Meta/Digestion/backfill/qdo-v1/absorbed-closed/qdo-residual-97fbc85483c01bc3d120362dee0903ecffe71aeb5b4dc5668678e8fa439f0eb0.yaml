@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ResourceOrder/OneStepHedgingGain.one_step_hedging_gain
       source_sha256: sha256:97fbc85483c01bc3d120362dee0903ecffe71aeb5b4dc5668678e8fa439f0eb0
-      target_sha256: sha256:7f69d933fadff6f4af79e52e56995ebc27ceca0197ade8a5bed42920b39af55c
+      target_statement_id: sha256:5781f82074e1f8b8bfbef145a9e146276beb07ef98a079ab520bf36592157005
   scribe:
     - gid: D5/S3/ResourceOrder/OneStepHedgingGain.one_step_hedging_gain
       definition_sha256: sha256:46d488458d30a0227b1e60ace7d20e48e740beb009e17cf6f5b51daa7dbb541e

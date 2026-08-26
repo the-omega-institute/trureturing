@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Rights/ConflictRepairHittingSet.repair_hits_every_conflict_core
       source_sha256: sha256:6352c6898f961fe1f58761b0615e035bae555c90f0418c7637cf5c6982f26f89
-      target_sha256: sha256:e4893597696c58b16d31b1f33a7a101a8127e08b0e02c1600b723e293d68c14b
+      target_statement_id: sha256:00b01df5dfda38ee3b47a531ef41d4257368780bd1301ca22ecd528cb7e9d880
   scribe:
     - gid: D5/S3/ConceptDynamics/Rights/ConflictRepairHittingSet.repair_hits_every_conflict_core
       definition_sha256: sha256:fab1d0745d965451d76f6a4a2f80d7038e97b8421b56415ef5497b04e2d7e7ed

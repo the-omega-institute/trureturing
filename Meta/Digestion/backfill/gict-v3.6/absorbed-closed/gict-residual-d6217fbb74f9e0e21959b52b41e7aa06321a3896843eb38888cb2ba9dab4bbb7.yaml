@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/QuantumContext/ParallelogramNormLaw.inner_product_norm_parallelogram_law
       source_sha256: sha256:d6217fbb74f9e0e21959b52b41e7aa06321a3896843eb38888cb2ba9dab4bbb7
-      target_sha256: sha256:5cfe26db14157a2afcaadcf7a428cd03c0263837e5050b9f216091f5657110aa
+      target_statement_id: sha256:e8084dc997c4185ec501fe44968826a09cd86b12d8786371ea15972dfcfaa12b
   scribe:
     - gid: D5/S3/QuantumContext/ParallelogramNormLaw.inner_product_norm_parallelogram_law
       definition_sha256: sha256:4b80cae3b9c69403a7473996a217141f45a7304196ef9b16e4de44302ff08cc6

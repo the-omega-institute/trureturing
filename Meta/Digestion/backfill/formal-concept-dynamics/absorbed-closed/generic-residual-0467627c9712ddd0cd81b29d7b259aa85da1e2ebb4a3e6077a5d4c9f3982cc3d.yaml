@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Rewriting/Quotients/AnswerabilityCriterion.answerability_criterion
       source_sha256: sha256:0467627c9712ddd0cd81b29d7b259aa85da1e2ebb4a3e6077a5d4c9f3982cc3d
-      target_sha256: sha256:b569c1cceef06cfd91cb675e3567d5c61e256ac0ffbede367513a1eff61ed053
+      target_statement_id: sha256:d887b7104159cf41938aeec82b9398fbbb1c89e91843f778b37b158ceea3762a
   scribe:
     - gid: D5/S0/Rewriting/Quotients/AnswerabilityCriterion.answerability_criterion
       definition_sha256: sha256:306ceaef1d218812facd1b10e7187c3da958d38e0bedaef531cd1c2458753ff9

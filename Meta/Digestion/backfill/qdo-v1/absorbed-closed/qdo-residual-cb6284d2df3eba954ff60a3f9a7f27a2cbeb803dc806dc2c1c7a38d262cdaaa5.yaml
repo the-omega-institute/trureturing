@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/MetricGeometry/FiniteWordFiberDiameter.finite_word_fiber_prediction_diameter
       source_sha256: sha256:cb6284d2df3eba954ff60a3f9a7f27a2cbeb803dc806dc2c1c7a38d262cdaaa5
-      target_sha256: sha256:ab81855300bba04cdfc64687edf214f8f9980cb64d5f9aaeecb8052df1a5e81c
+      target_statement_id: sha256:a15085bbf062132df7d16e66166ecb06720f6018c8853f9f1f7f6cea2fce2c60
   scribe:
     - gid: D5/S3/Observer/MetricGeometry/FiniteWordFiberDiameter.finite_word_fiber_prediction_diameter
       definition_sha256: sha256:a40da3b595fc3d96e81439c28df52fa028d58eacaaf140ef45cd98a259093053

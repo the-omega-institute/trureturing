@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/NormativeStructure/DescriptiveNormativeSeparation.descriptive_structure_does_not_uniquely_determine_norms
       source_sha256: sha256:c698373a75be228498aeecc656afccb7ff6486d1920e1861ea3a46f0ce1b6541
-      target_sha256: sha256:805758061edbd9f3b023b37e2c221d2510093f5f769f37728780c1770f9f1a63
+      target_statement_id: sha256:2bcbacbcd6199ea2f4d768a2d61a63bda1e001fac7d7709a750d61351999dc0a
   scribe:
     - gid: D5/S3/ConceptDynamics/NormativeStructure/DescriptiveNormativeSeparation.descriptive_structure_does_not_uniquely_determine_norms
       definition_sha256: sha256:abe29c18d96d2e48955d0775c0b1c4f218d9bf3bca90b24c95e757928a514408
