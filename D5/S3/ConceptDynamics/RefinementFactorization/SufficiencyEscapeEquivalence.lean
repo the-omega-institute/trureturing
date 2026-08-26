@@ -6,6 +6,7 @@
    digest: Four sufficient target conditions agree on realized readout images. -/
 
 import D5.S3.ConceptDynamics.DefinitionEscapeLaws.DirectlyProvableLaws
+import D5.S3.ConceptDynamics.Refinement.InductiveSufficiency
 import D5.S3.ConceptDynamics.Transportability.ModelClassTransportabilityCriterion
 import Mathlib.Tactic.TFAE
 
@@ -16,14 +17,14 @@ import Mathlib.Tactic.TFAE
    * English synonym search for escape/residual/defect, kernel/inclusion,
      fiber/fibre/constant/constancy, factor/factorization/descent, and image/range
      found the exact local components `directly_provable_laws` (empty defect iff
-     `Function.FactorsThrough`) and `model_class_transportability_criterion` (empty
-     defect iff reverse kernel inclusion, plus unique computation between realized
-     images). Both are applied directly.
+     `Function.FactorsThrough`), `model_class_transportability_criterion` (empty
+     defect iff reverse kernel inclusion), and `inductive_sufficiency_criterion`
+     (`Function.FactorsThrough` iff descent through the realized image). All three
+     are applied directly.
      `CompleteObservationExpressibilityCriterion` and `InterventionTargetFactorization`
-     concern joint families. `ModelClassTransportabilityCriterion.2` is the exact
-     first-to-second-clause equivalence. Its `.1` descends to `Set.range target`; the
-     proof below bridges that codomain to the source's whole `Target` by composing
-     with `Subtype.val` and reconstructing the unique range-valued computation.
+     concern joint families. `ModelClassTransportabilityCriterion.1` instead states
+     uniqueness of a computation into `Set.range target`, so it is adjacent rather
+     than the exact third-to-fourth-clause equivalence used here.
    * Chinese synonym search `rg -n '逃逸|残差|缺陷|核包含|纤维|常值|因子化|实现像|下降|充分性'
      D5/S3/ConceptDynamics docs/develop/theory/DEFINITION_ESCAPE_COMPLETION_THEORY.md`
      confirmed the source vocabulary and the existing canonical residual/fiber modules.
@@ -34,10 +35,10 @@ import Mathlib.Tactic.TFAE
      already have twelve, so route placed this module here without crossing SL-003.
    * Pinned Mathlib search found `Function.FactorsThrough` and
      `Function.factorsThrough_iff` in `Mathlib/Logic/Function/Basic.lean`, plus
-     `Set.rangeFactorization`, its surjectivity, and equality API in
-     `Mathlib/Data/Set/Operations.lean`. The whole-codomain theorem is not used because
-     it requires `[Nonempty Y]`, absent from the source; the realized-image theorem
-     imported above has no such restriction. `loogle` and `leansearch` were not on PATH. -/
+     `Set.rangeFactorization` in `Mathlib/Data/Set/Operations.lean`. The whole-codomain
+     theorem is not used because it requires `[Nonempty Y]`, absent from the source;
+     the realized-image theorem imported above has no such restriction. `loogle` and
+     `leansearch` were not on PATH. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -48,6 +49,7 @@ open D5.S3.ConceptDynamics.ConceptFiberDecomposition
 open D5.S3.ConceptDynamics.ConceptJoinUniversal
 open D5.S3.ConceptDynamics.TargetRisk.RefinementRiskCostTradeoff
 open D5.S3.ConceptDynamics.DefinitionEscapeLaws.DirectlyProvableLaws
+open D5.S3.ConceptDynamics.Refinement.InductiveSufficiency
 open D5.S3.ConceptDynamics.Transportability.ModelClassTransportabilityCriterion
 
 universe u v w
@@ -73,45 +75,10 @@ theorem sufficiency_escape_equivalence_tfae
   have emptyIffKernel :
       defectRelation q target = ∅ ↔ Setoid.ker q ≤ Setoid.ker target :=
     transportability.2
-  have uniqueRangeIffImage :
-      (∃! compute : Set.range q → Set.range target,
-          ∀ model,
-            compute (Set.rangeFactorization q model) =
-              Set.rangeFactorization target model) ↔
-        ∃ descend : Set.range q → Target,
-          target = descend ∘ Set.rangeFactorization q := by
-    constructor
-    · rintro ⟨compute, computesTarget, _unique⟩
-      refine ⟨fun value => (compute value).1, funext fun model => ?_⟩
-      exact (congrArg Subtype.val (computesTarget model)).symm
-    · rintro ⟨descend, factorization⟩
-      let compute : Set.range q → Set.range target := fun value =>
-        Set.rangeFactorization target (Set.rangeSplitting q value)
-      have computesTarget :
-          ∀ model,
-            compute (Set.rangeFactorization q model) =
-              Set.rangeFactorization target model := by
-        intro model
-        apply Subtype.ext
-        change target (Set.rangeSplitting q (Set.rangeFactorization q model)) =
-          target model
-        rw [factorization]
-        apply congrArg descend
-        apply Subtype.ext
-        exact Set.apply_rangeSplitting q (Set.rangeFactorization q model)
-      refine ⟨compute, computesTarget, ?_⟩
-      intro other otherComputesTarget
-      funext value
-      obtain ⟨model, rfl⟩ := Set.rangeFactorization_surjective value
-      exact (otherComputesTarget model).trans (computesTarget model).symm
-  have emptyIffImage :
-      defectRelation q target = ∅ ↔
-        ∃ descend : Set.range q → Target,
-          target = descend ∘ Set.rangeFactorization q :=
-    transportability.1.symm.trans uniqueRangeIffImage
   tfae_have 1 ↔ 2 := emptyIffKernel
   tfae_have 1 ↔ 3 := emptyIffFibers
-  tfae_have 1 ↔ 4 := emptyIffImage
+  tfae_have 3 ↔ 4 := by
+    exact (inductive_sufficiency_criterion q target).1
   tfae_finish
 
 /-- Identity readout and target realize all four sufficient conditions, with two

@@ -22,4 +22,5 @@ The descending map is defined only on the realized range of q. No inhabitance as
 
 - Truth anchor: `D5/S3/ConceptDynamics/RefinementFactorization/SufficiencyEscapeEquivalence.sufficiency_escape_equivalence_tfae`
 - Dependency: [D5/S3/ConceptDynamics/DefinitionEscapeLaws/DirectlyProvableLaws](../DefinitionEscapeLaws/DirectlyProvableLaws.md)
+- Dependency: [D5/S3/ConceptDynamics/Refinement/InductiveSufficiency](../Refinement/InductiveSufficiency.md)
 - Dependency: [D5/S3/ConceptDynamics/Transportability/ModelClassTransportabilityCriterion](../Transportability/ModelClassTransportabilityCriterion.md)
