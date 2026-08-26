@@ -74,9 +74,13 @@ public sealed class TruthReleaseBundleWriterTests
             var releaseDigest = TruthReleaseBundleWriter.WriteBundle(directory, fixture.Input);
 
             var verified = TruthReleaseVerification.Verify(directory, releaseDigest);
-            var publicationBytes = File.ReadAllBytes(Path.Combine(
-                directory,
-                TruthReleaseBundleWriter.PublicationFileName));
+            var publicationBytes = Encoding.UTF8.GetBytes(
+                string.Join(
+                    "\n",
+                    File.ReadAllLines(Path.Combine(
+                        directory,
+                        TruthReleaseBundleWriter.PublicationFileName)))
+                + "\n");
             var publication = TruthReleasePublicationReader.Read(publicationBytes);
             var publicationVerified = TruthReleasePublicationVerification.Verify(directory, publication);
 
