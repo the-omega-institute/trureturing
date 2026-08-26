@@ -1,10 +1,109 @@
 using System.Text;
+using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
 public sealed partial class DigestionLedgerTests
 {
+    [Fact]
+    public void IngestAcknowledgesCoveredPriorGenerationStaleWhenReatomizedTextSupersedesIt()
+    {
+        const string gid =
+            "D5/S3/Observer/WindowCharacter.window_algebra_has_no_character";
+        var oldBytes = Encoding.UTF8.GetBytes(
+            "# SYNTH-VOL\n\n**定理 1.1(A)**。old。\n");
+        var currentBytes = Encoding.UTF8.GetBytes(
+            "# SYNTH-VOL\n\n**定理 1.1(A)**。rewritten。\n");
+        var oldAtom = Assert.Single(AtomizerRegistry.Atomize(
+            AtomizerRegistry.GictId,
+            oldBytes,
+            DigestionTestSupport.Rules).Claims);
+        var currentAtom = Assert.Single(AtomizerRegistry.Atomize(
+            AtomizerRegistry.GictId,
+            currentBytes,
+            DigestionTestSupport.Rules).Claims);
+        var oldAtomId = "gict-residual-"
+            + oldAtom.Fingerprints.RawSha256["sha256:".Length..];
+        var currentAtomId = "gict-residual-"
+            + currentAtom.Fingerprints.RawSha256["sha256:".Length..];
+        Assert.Equal(oldAtom.AstPath, currentAtom.AstPath);
+        Assert.NotEqual(oldAtomId, currentAtomId);
+
+        var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
+        var oldEntry = DigestionTestSupport.Entry(
+            oldAtom,
+            oldAtomId,
+            AtomizerRegistry.GictId,
+            migration: DigestionMigrationState.Absorbed,
+            truth: DigestionTruthState.Closed,
+            coverageGids: [gid],
+            receipts: new DigestionReceipts(
+                [new DigestionCoverageReceipt(
+                    gid,
+                    oldAtom.Fingerprints.RawSha256,
+                    "sha256:" + new string('a', 64))],
+                [new DigestionScribeReceipt(
+                    gid,
+                    "sha256:" + new string('b', 64),
+                    "sha256:" + new string('c', 64))],
+                [],
+                [],
+                null),
+            casRef: oldCapture.Reference);
+        var ledger = DigestionTestSupport.Document(
+            AtomizerRegistry.GictId,
+            [oldEntry]);
+        var oldFormalizationReceipt = DigestionFormalizationReceipt.Write(
+            new DigestionFormalizationReceipt(
+                oldAtomId,
+                gid,
+                new DigestionFormalizationSignature(
+                    "window_algebra_has_no_character",
+                    "theorem",
+                    "True"),
+                oldAtom.Fingerprints.RawSha256,
+                oldAtom.Fingerprints.RawSha256));
+        var oldFormalizationPath = DigestionFormalizationReceipt.PathForAtom(oldAtomId);
+        var snapshot = DigestionTestSupport.Snapshot(
+            ("docs/source.md", currentBytes),
+            (oldCapture.RelativePath, oldCapture.Bytes.ToArray()),
+            (oldFormalizationPath, oldFormalizationReceipt.ToArray()));
+
+        var plan = DigestionIngestor.Plan(ledger, snapshot, ledger, snapshot);
+
+        var source = Assert.Single(plan.Document.RequireDigestionSources());
+        var retainedOldEntry = Assert.Single(
+            source.Entries,
+            entry => entry.AtomId == oldAtomId);
+        var newEntry = Assert.Single(
+            source.Entries,
+            entry => entry.AtomId == currentAtomId);
+        Assert.Equal(oldEntry, retainedOldEntry);
+        Assert.Contains(oldAtomId, source.AcknowledgedStale);
+        Assert.Empty(newEntry.CoverageGids);
+        Assert.Equal(
+            new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open),
+            newEntry.ProjectedStatus);
+
+        var sourceMetadata = BackfillInventoryWriter.WriteSourceMetadata(
+            Assert.Single(ledger.RequireDigestionSources()));
+        var currentRaw = RawRepositorySnapshot.Create(snapshot.Files.Values
+            .Select(static file => new RawRepositoryEntry(file.Path.Value, file.RawBytes))
+            .Append(new RawRepositoryEntry(
+                $"{BackfillInventoryLoader.RootPath}source/source.toml",
+                sourceMetadata))
+            .Append(new RawRepositoryEntry(
+                $"{BackfillInventoryLoader.RootPath}source/absorbed-closed/{oldAtomId}.yaml",
+                BackfillInventoryWriter.WriteAtom(oldEntry))));
+        var replaced = IngestCommand.ReplaceLedger(currentRaw, ledger, plan.Document);
+        Assert.Equal(
+            oldFormalizationReceipt.ToArray(),
+            Assert.Single(replaced.Entries, entry => entry.Path == oldFormalizationPath)
+                .Bytes
+                .ToArray());
+    }
+
     [Theory]
     [InlineData(false)]
     [InlineData(true)]

@@ -621,14 +621,18 @@ internal static partial class DigestionLedgerAligner
                     foreach (var priorGeneration in source.Entries.Where(entry =>
                                  entry.AstPath == atom.AstPath
                                  && entry.AtomId != authoritativeAtomId
-                                 && !FingerprintsMatch(entry.Fingerprints, atom.Fingerprints)
-                                 && alignments.GetValueOrDefault(entry.AtomId)
-                                    == DigestionReceiptAlignment.Seen
-                                 && IsUnownedResidualOpen(entry, ownedAtomIds)))
+                                 && !FingerprintsMatch(entry.Fingerprints, atom.Fingerprints)))
                     {
+                        actualStale.Add(priorGeneration.AtomId);
+                        if (alignments.GetValueOrDefault(priorGeneration.AtomId)
+                                != DigestionReceiptAlignment.Seen
+                            || !IsUnownedResidualOpen(priorGeneration, ownedAtomIds))
+                        {
+                            continue;
+                        }
+
                         alignments[priorGeneration.AtomId] = DigestionReceiptAlignment.Stale;
                         sourceStale.Add(priorGeneration.AtomId);
-                        actualStale.Add(priorGeneration.AtomId);
                     }
                 }
 
