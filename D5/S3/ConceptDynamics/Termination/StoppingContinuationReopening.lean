@@ -263,6 +263,33 @@ theorem zero_precision_nonconstant_fiber_is_not_locally_complete :
   have : (1 : ENNReal) ≤ 0 := oneLeWorst.trans locallyComplete
   norm_num at this
 
+private abbrev ChangedTargetReopeningControl : Prop :=
+    let current : LocalParameters Bool Real :=
+      { objectDomain := Set.univ
+        target := fun _ => 0
+        precision := 0 }
+    let next : LocalParameters Bool Real :=
+      { objectDomain := Set.univ
+        target := fun value => if value then 1 else 0
+        precision := 0 }
+    Closed (fun _object : ↑current.objectDomain => ())
+        (fun object : ↑current.objectDomain => current.target object.1) ∧
+      Reopens current next (fun _ => ())
+
+/-- Positive finite control: the old fixed stage is closed, while a changed
+Boolean target creates a genuinely new canonical defect. -/
+theorem changed_target_creates_genuine_reopening :
+    ChangedTargetReopeningControl := by
+  constructor
+  · ext pair
+    simp [defectRelation]
+  · constructor
+    · refine Or.inr (Or.inl ?_)
+      intro equalTargets
+      have := congrFun equalTargets true
+      norm_num at this
+    · exact ⟨(false, true), by simp [defectRelation]⟩
+
 private abbrev ObjectDomainExpansionReopeningControl : Prop :=
     let target : Concept Bool Real := fun value => if value then 1 else 0
     let current : LocalParameters Bool Real :=
@@ -274,7 +301,7 @@ private abbrev ObjectDomainExpansionReopeningControl : Prop :=
         target := target
         precision := 0 }
     current.target = next.target ∧
-      current.precision = next.precision ∧
+    current.precision = next.precision ∧
       current.objectDomain ⊂ next.objectDomain ∧
       Reopens current next (fun _ => ())
 
@@ -291,9 +318,89 @@ theorem object_domain_expansion_creates_genuine_reopening :
   · exact Or.inl domainStrict.ne
   · exact ⟨(false, true), by simp [defectRelation]⟩
 
-/-- Five concrete finite witnesses, in the source package's clause order. The
-reopening witness changes only the object domain, so that supported trigger is
-exercised independently of target and precision changes. -/
+private abbrev NonconstantReadoutFiberGuardControl : Prop :=
+    let current : LocalParameters Bool Real :=
+      { objectDomain := Set.univ
+        target := fun _ => 0
+        precision := 0 }
+    let next : LocalParameters Bool Real :=
+      { objectDomain := Set.univ
+        target := fun value => if value then 1 else 0
+        precision := 0 }
+    let readout : Concept Bool Bool := id
+    readout false ≠ readout true ∧
+      ((false, true) ∈
+        ((({pair | next.precision <
+            edist (next.target pair.1) (next.target pair.2)}) ∩
+              (next.objectDomain ×ˢ next.objectDomain)) \
+          (({pair | current.precision <
+            edist (current.target pair.1) (current.target pair.2)}) ∩
+              (current.objectDomain ×ˢ current.objectDomain)))) ∧
+      ¬Reopens current next readout
+
+/-- A nonconstant readout separates the two Boolean points. The same pair is
+present in a residual that only checks distance, but it is absent from the
+canonical fiber-conditioned residual, so deleting either `defectRelation`
+intersection makes this named consumer fail. -/
+theorem nonconstant_readout_blocks_cross_fiber_reopening :
+    NonconstantReadoutFiberGuardControl := by
+  refine ⟨Bool.false_ne_true, ?_, ?_⟩
+  · simp
+  · rintro ⟨_, ⟨⟨first, second⟩, newResidual, _⟩⟩
+    simp [defectRelation] at newResidual
+    exact newResidual.2 (by simpa [newResidual.1])
+
+private abbrev PrecisionDecreaseReopeningControl : Prop :=
+    let target : Concept Bool Real := fun value => if value then 1 else 0
+    let current : LocalParameters Bool Real :=
+      { objectDomain := Set.univ
+        target := target
+        precision := 1 }
+    let next : LocalParameters Bool Real :=
+      { objectDomain := Set.univ
+        target := target
+        precision := 0 }
+    current.objectDomain = next.objectDomain ∧
+      current.target = next.target ∧
+      Reopens current next (fun _ => ())
+
+/-- Precision-only reopening control: lowering eta from one to zero exposes a
+pair at target distance one, with every other formalized parameter fixed. -/
+theorem precision_decrease_creates_genuine_reopening :
+    PrecisionDecreaseReopeningControl := by
+  refine ⟨rfl, rfl, ?_⟩
+  constructor
+  · exact Or.inr (Or.inr one_ne_zero)
+  · exact ⟨(false, true), by simp [defectRelation]⟩
+
+private abbrev PrecisionIncreaseNoReopeningControl : Prop :=
+    let target : Concept Bool Real := fun value => if value then 1 else 0
+    let current : LocalParameters Bool Real :=
+      { objectDomain := Set.univ
+        target := target
+        precision := 0 }
+    let next : LocalParameters Bool Real :=
+      { objectDomain := Set.univ
+        target := target
+        precision := 1 }
+    let readout : Concept Bool Unit := fun _ => ()
+    LocalParametersChanged current next ∧
+      (defectRelation readout next.target).Nonempty ∧
+      ¬Reopens current next readout
+
+/-- Named negative control for conjunct 5: increasing precision removes rather
+than creates tolerated residuals, even though the exact defect stays nonempty. -/
+theorem precision_change_without_new_defect_does_not_reopen :
+    PrecisionIncreaseNoReopeningControl := by
+  refine ⟨Or.inr (Or.inr zero_ne_one), ?_, ?_⟩
+  · exact ⟨(false, true), by simp [defectRelation]⟩
+  · rintro ⟨_, ⟨⟨first, second⟩, newResidual, _⟩⟩
+    fin_cases first <;> fin_cases second <;>
+      norm_num [defectRelation] at newResidual
+
+/-- Concrete finite witnesses for all five package clauses, all three supported
+reopening triggers, the canonical-fiber guard, and the precision negative
+neighbor. Every named control is consumed here fail-closed. -/
 theorem stopping_continuation_reopening_nonvacuity :
     (¬Closed (fun _ : Bool => ()) (id : Concept Bool Bool)) ∧
     (¬ApproximatelyClosed (fun _ : Bool => ())
@@ -316,12 +423,20 @@ theorem stopping_continuation_reopening_nonvacuity :
      current.target = next.target ∧
        current.precision = next.precision ∧
        current.objectDomain ⊂ next.objectDomain ∧
-       Reopens current next (fun _ => ())) := by
+       Reopens current next (fun _ => ())) ∧
+    ChangedTargetReopeningControl ∧
+    PrecisionDecreaseReopeningControl ∧
+    NonconstantReadoutFiberGuardControl ∧
+    PrecisionIncreaseNoReopeningControl := by
   exact ⟨hidden_bool_target_is_not_closed,
     positive_fiber_diameter_is_not_approximately_closed,
     proposal_return_is_not_method_stopped,
     zero_precision_nonconstant_fiber_is_not_locally_complete,
-    object_domain_expansion_creates_genuine_reopening⟩
+    object_domain_expansion_creates_genuine_reopening,
+    changed_target_creates_genuine_reopening,
+    precision_decrease_creates_genuine_reopening,
+    nonconstant_readout_blocks_cross_fiber_reopening,
+    precision_change_without_new_defect_does_not_reopen⟩
 
 #print axioms stopping_continuation_reopening
 #print axioms stopping_continuation_reopening_nonvacuity

@@ -65,6 +65,12 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
     private static Formula IffFormula(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.Iff, right);
 
+    private static Formula ImpliesFormula(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.Implies, right);
+
+    private static Formula Typeclass(string name, Formula argument) =>
+        Seq(OpenBracket, Operatorname, Grp(F.Id(name)), Open, argument, Close, CloseBracket);
+
     private static Formula Nonempty(Formula value) =>
         Call("Nonempty", value);
 
@@ -94,6 +100,7 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
     {
         Formula q = F.Id("q");
         Formula target = F.Id("T");
+        Formula targetMetric = Typeclass("MetricSpace", target);
         Formula epsilon = Seq(
             Open, Varepsilon, Colon, Sp, Operatorname, Grp(F.Id("NNReal")), Close);
         Formula epsilonExtended = Call("coeENNReal", epsilon);
@@ -109,21 +116,25 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
             Call("Closed", q, target),
             Equal(Defect(q, target), Emptyset));
 
-        Formula clause2 = IffFormula(
-            Call("ApproximatelyClosed", q, target, epsilon),
-            LessOrEqual(Call("worstFiberDefect", q, target), epsilonExtended));
+        Formula clause2 = ImpliesFormula(
+            targetMetric,
+            IffFormula(
+                Call("ApproximatelyClosed", q, target, epsilon),
+                LessOrEqual(Call("worstFiberDefect", q, target), epsilonExtended)));
 
         Formula clause3 = IffFormula(
             Call("MethodStopped", method, system, evidence, noProposal),
             Equal(Apply(method, system, evidence), noProposal));
 
-        Formula clause4 = IffFormula(
-            Call("LocallyComplete", parameters, q),
-            Call(
-                "ApproximatelyClosed",
-                Restrict(q, Call("objectDomain", parameters)),
-                Restrict(Call("target", parameters), Call("objectDomain", parameters)),
-                Call("precision", parameters)));
+        Formula clause4 = ImpliesFormula(
+            targetMetric,
+            IffFormula(
+                Call("LocallyComplete", parameters, q),
+                Call(
+                    "ApproximatelyClosed",
+                    Restrict(q, Call("objectDomain", parameters)),
+                    Restrict(Call("target", parameters), Call("objectDomain", parameters)),
+                    Call("precision", parameters))));
 
         Formula reopeningChange = Or(
             NotEqual(Call("objectDomain", current), Call("objectDomain", next)),
@@ -143,9 +154,11 @@ internal sealed class StoppingContinuationReopeningDocument : IScribeDocumentDef
             Call("precision", next),
             nextDomain);
         Formula newResidual = Nonempty(SetDifference(newDefects, oldDefects));
-        Formula clause5 = IffFormula(
-            Call("Reopens", current, next, q),
-            And(reopeningChange, newResidual));
+        Formula clause5 = ImpliesFormula(
+            targetMetric,
+            IffFormula(
+                Call("Reopens", current, next, q),
+                And(reopeningChange, newResidual)));
 
         return Disp(And(
             clause1,
