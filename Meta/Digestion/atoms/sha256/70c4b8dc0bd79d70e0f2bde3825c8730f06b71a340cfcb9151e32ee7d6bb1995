@@ -1,0 +1,9 @@
+### 命题 42.6（视界随 refinement 不减）
+
+设 \(\mathcal A_m\subseteq\mathcal A_{m+1}\) 定义于同一载体，\(L_{m+1}|_{\mathcal A_m}=L_m\)。则
+\[
+\boxed{
+\mathcal H_m(o)\subseteq\mathcal H_{m+1}(o).
+}
+\]
+

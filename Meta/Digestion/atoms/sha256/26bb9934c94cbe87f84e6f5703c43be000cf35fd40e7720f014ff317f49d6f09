@@ -1,0 +1,21 @@
+# 129. Galois fiber product 与量子 marginal fiber 的差异
+
+仓库 `D5/S3/Factorization/Galois/GaloisFusion.lean` 已机器核验：两个子扩张的联合 Galois restriction 必须满足共同交域上的兼容性，即落在相应 group fiber product；在适当的生成、有限 Galois 与线性无交条件下，联合 restriction 可以达到更强的乘积分解。
+
+量子系统有一个形式相似但本质不同的 map：
+
+$$
+R:
+\mathsf S(\mathcal H_A\otimes\mathcal H_B)
+\to
+\mathsf S(\mathcal H_A)
+\times
+\mathsf S(\mathcal H_B),
+$$
+
+$$
+R(\rho)=(\rho_A,\rho_B).
+$$
+
+它对任意局部状态对 $(\alpha,\beta)$ 有乘积态扩张 $\alpha\otimes\beta$，故满射；但它不单射，因为纠缠态可共享同一 marginals。
+

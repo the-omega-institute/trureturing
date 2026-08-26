@@ -1,0 +1,16 @@
+## v1.3 — 2026-08-24
+
+追加存入：
+
+- 从 \(K.\operatorname{adjudication}\) 派生且唯一命名的 \(\operatorname{AdjudicationSignature}\)：冻结/裁决可见性、\(\operatorname{evidenceDependencies}\) 与不保留 ReuseDepth 的角色存在签名投影；
+- 单 Evidence 接口的逐点全称提升、四个原签名与逐字段 \(\operatorname{SameOut}\)，以及以 OP1 因子化为前件的四方向坐标消融；
+- 总编码长度 \(N\) 的 word-RAM/查询模型、显式闭包与 ValidTrace 核验，以及对冻结 `ClosureUndecidable.closure_reading_unreachable` 的复用边界；
+- 受有限集合、收据、部分预测和真值表一致性约束的外推模型类内五项独立性；
+- 回拉到 Action 并复制 source/version/scope 的完整线性延伸 OrientationSpec，以及 maximal/greatest 两个未决等价式；等变唯一选择不再列 open，归既有冻结 `IncomparableRepairCosts` 与 `SymmetricEventNoUniqueCulprit`；
+- 在完整已观察边缘上一致的 \(\Omega_{\mathrm{obs}}\times\Omega_{\mathrm{next}}\) 双联合律、可积损失与未来条件期望异号问题；
+- 不设无地址 atom 总数；六个 OP 为预测分母，每个 atom 恰属一个父 OP，并只在全部冻结 atoms 首次全达 proved/refuted/statement-revised 终态的账本前缀上按“至少四个存活且至少三个 kernel/机器反模型结案”结算；
+- 本批只提出问题，零新定理主张，整体组合标为 suspected-novel。
+
+后续增订继续严格追加于本节之后。
+
+---

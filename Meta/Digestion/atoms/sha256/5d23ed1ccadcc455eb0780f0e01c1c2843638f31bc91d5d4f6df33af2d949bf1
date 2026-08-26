@@ -1,0 +1,10 @@
+### 命题 42.7（字母表容量界）
+
+设 \(\operatorname{Im}q_O\) 有限，\(P\) 为 \(X\) 上任一概率分布，\(H\) 为离散 Shannon 熵。则
+\[
+\boxed{
+H\bigl(q_O(P)\bigr)\le\log\bigl|\operatorname{Im}q_O\bigr|,
+}
+\]
+右侧与读出纤维 \(q_O^{-1}(y)\) 的大小无关。
+

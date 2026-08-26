@@ -1,0 +1,36 @@
+## 定义 124.1（prime-precision 概率权重）
+
+令
+
+$$
+Z_s=\sum_{p\in\mathbb P}p^{-s},
+\qquad s>1.
+$$
+
+定义
+
+$$
+\boxed{
+\nu_s(p,k)
+=
+\frac{(1-p^{-s})p^{-s(k+1)}}{Z_s},
+\qquad k\ge0.
+}
+$$
+
+因为
+
+$$
+\sum_{k\ge0}(1-p^{-s})p^{-s(k+1)}=p^{-s},
+$$
+
+故
+
+$$
+\sum_{p,k}\nu_s(p,k)=1.
+$$
+
+这给出一个横向 prime、纵向 precision 的规范可和预算分布。
+
+---
+
