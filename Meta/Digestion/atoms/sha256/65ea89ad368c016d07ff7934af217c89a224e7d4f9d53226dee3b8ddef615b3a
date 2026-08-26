@@ -1,0 +1,22 @@
+## 定理 114.3（交换性）
+
+所有由这些确定性接口得到的投影均在同一标准基对角，因此
+
+$$
+[P_{o|i},P_{o'|j}]=0.
+$$
+
+所以任何有限确定性素数观察系统都可以忠实嵌入一个交换量子观察子理论：
+
+$$
+\boxed{
+\text{deterministic prime observation}
+\hookrightarrow
+\text{commutative quantum observation}.
+}
+$$
+
+反向不成立：一般量子观察者可包含相位、非交换上下文与纠缠，这些结构不能由一族共同对角的确定性读出穷尽。
+
+---
+

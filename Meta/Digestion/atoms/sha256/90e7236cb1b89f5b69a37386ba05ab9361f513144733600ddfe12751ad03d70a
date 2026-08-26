@@ -1,0 +1,31 @@
+**证明义务 56.2-C（代表无关、可判与偏序）。** 对任意 \(C,D,E:Q_{v,F}\)，机器核验
+
+\[
+\begin{aligned}
+&\operatorname{QuotientParetoWeak}(v,F,C,D)
+\\
+&\quad\Longleftrightarrow
+\forall x:A_F,\ x\in C.1\to
+\forall y:A_F,\ y\in D.1\to
+\operatorname{ParetoWeakOn}(v,F,x,y),\\[1mm]
+&\operatorname{Decidable}
+\bigl(\operatorname{QuotientParetoWeak}(v,F,C,D)\bigr)
+\quad\text{可由 }C.1,D.1\text{ 的有限扫描构造},\\[1mm]
+&\operatorname{QuotientParetoWeak}(v,F,C,C),\\
+&\operatorname{QuotientParetoWeak}(v,F,C,D)
+\to
+\operatorname{QuotientParetoWeak}(v,F,D,E)
+\to
+\operatorname{QuotientParetoWeak}(v,F,C,E),\\
+&\operatorname{QuotientParetoWeak}(v,F,C,D)
+\to
+\operatorname{QuotientParetoWeak}(v,F,D,C)
+\to
+C=D.
+\end{aligned}
+\]
+
+后三式分别是反身、传递与反对称。因此
+\(\operatorname{QuotientParetoWeak}(v,F,\cdot,\cdot)\)
+在有限承载 \(Q_{v,F}\) 上为偏序关系。空商上的三律按空类型全称命题解释，不需要补一个虚构元素。
+

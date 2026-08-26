@@ -1,0 +1,10 @@
+ast_path: section/217-隐私应定义为-共享敏感信息没有增加
+fingerprints:
+  raw_sha256: sha256:fd6c859ccb8a1f454cd25607608e76a4f8ef3404dfd8d4eb83c8545dc5baa02b
+  normalized_sha256: sha256:fd6c859ccb8a1f454cd25607608e76a4f8ef3404dfd8d4eb83c8545dc5baa02b
+cas_ref: sha256:fd6c859ccb8a1f454cd25607608e76a4f8ef3404dfd8d4eb83c8545dc5baa02b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

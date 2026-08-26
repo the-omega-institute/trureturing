@@ -1,0 +1,10 @@
+ast_path: row/一维层析与独立布尔逃逸并存
+fingerprints:
+  raw_sha256: sha256:face618214804dfda908097c74ca7e38e6f2f1a01561dfeec84fae6733baae3d
+  normalized_sha256: sha256:face618214804dfda908097c74ca7e38e6f2f1a01561dfeec84fae6733baae3d
+cas_ref: sha256:face618214804dfda908097c74ca7e38e6f2f1a01561dfeec84fae6733baae3d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

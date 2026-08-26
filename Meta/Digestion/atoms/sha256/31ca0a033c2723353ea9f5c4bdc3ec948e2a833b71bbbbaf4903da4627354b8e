@@ -1,0 +1,38 @@
+## 定义 91.1（量子 instrument）
+
+对设置 $x$，量子 instrument 是一族线性映射
+
+$$
+\{\mathcal I_{a|x}\}_{a\in A_x}
+$$
+
+满足：
+
+1. 每个 $\mathcal I_{a|x}$ 完全正；
+2. 每个分支迹不增加；
+3. 分支和
+
+$$
+\Lambda_x
+=
+\sum_a\mathcal I_{a|x}
+$$
+
+迹保持。
+
+定义效果
+
+$$
+E_{a|x}
+=
+\mathcal I_{a|x}^*(I).
+$$
+
+则
+
+$$
+E_{a|x}\ge0,
+\qquad
+\sum_aE_{a|x}=I.
+$$
+

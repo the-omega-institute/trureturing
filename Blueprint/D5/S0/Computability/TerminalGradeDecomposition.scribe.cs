@@ -15,50 +15,7 @@ internal sealed class TerminalGradeDecompositionDocument : IScribeDocumentDefini
                 DeclarationHandle.Create(
                     "D5/S0/Computability/TerminalGradeDecomposition.terminal_grade_three_way_decomposition"),
                 H("Terminal grades give a three-way disjoint decomposition"),
-                StatementSource.FromAuthor(Disp(Seq(
-                    Operatorname, Grp(F.Id("RepairClause")), Open, F.Id("history"), Close, Comma, Sp,
-                    F.Id("W"), Sp, Subseteq, Sp, F.Id("Sem"), Comma, RowBreak,
-                    Forall, Sp, F.Id("t"), Comma, Sp, F.Id("g"), InMacro, Sp, F.Id("T"), Comma, Sp,
-                    SigmaLower, Underscore, Grp(F.Id("t")), Open, F.Id("g"), Close,
-                    InMacro, Sp, F.Id("Gplus"), Comma, RowBreak,
-                    Forall, Sp, F.Id("t"), Comma, Sp, F.Id("w"), InMacro, Sp, F.Id("W"), Comma, Sp,
-                    Open, SigmaLower, Underscore, Grp(F.Id("t")), Open, F.Id("w"), Close,
-                    InMacro, Sp, F.Id("Gplus"), Sp, Land, Sp,
-                    Forall, Sp, F.Id("g"), InMacro, Sp, F.Id("T"), Comma, Sp,
-                    SigmaLower, Underscore, Grp(F.Id("t")), Open, F.Id("g"), Close,
-                    InMacro, Sp, F.Id("Gplus"), Close, Sp, Rightarrow, Sp,
-                    Operatorname, Grp(F.Id("forbidden")), Open, F.Id("t"), Comma, F.Id("w"), Close,
-                    Comma, RowBreak,
-                    Forall, Sp, F.Id("t"), Comma, Sp, F.Id("w"), InMacro, Sp, F.Id("W"), Comma, Sp,
-                    Neg, Operatorname, Grp(F.Id("forbidden")), Open,
-                    F.Id("t"), Comma, F.Id("w"), Close, RowBreak,
-                    Rightarrow, Sp, Exists, Bang, Sp,
-                    SigmaLower, Underscore, Grp(Infty), Colon, Sp,
-                    F.Id("Statement"), Sp, To, Sp, F.Id("Grade"), Comma, Sp,
-                    Open, Forall, Sp, F.Id("s"), Comma, Sp, Exists, Sp, F.Id("N"), Sp,
-                    Geq, Sp,
-                    Operatorname, Grp(F.Id("enrolledAt")), Open, F.Id("s"), Close, Comma, Sp,
-                    Forall, Sp, F.Id("t"), Sp, Geq, Sp, F.Id("N"), Comma, Sp,
-                    SigmaLower, Underscore, Grp(F.Id("t")), Open, F.Id("s"), Close,
-                    Sp, Eq, Sp, SigmaLower, Underscore, Grp(Infty), Open, F.Id("s"), Close,
-                    Close, Sp, Land, RowBreak,
-                    F.Id("M"), Sp, Eq, Sp,
-                    Operatorname, Grp(F.Id("intersection")), Open,
-                    F.Id("Sem"), Comma,
-                    Operatorname, Grp(F.Id("preimage")), Open,
-                    SigmaLower, Underscore, Grp(Infty), Comma, F.Id("Gplus"), Close, Close,
-                    Comma, Sp,
-                    F.Id("R"), Sp, Eq, Sp, F.Id("Sem"), Sp, Setminus, Sp,
-                    Open, F.Id("M"), Sp, Operatorname, Grp(F.Id("union")), Sp, F.Id("W"), Close,
-                    Comma, RowBreak,
-                    F.Id("Sem"), Sp, Eq, Sp, F.Id("M"), Sp,
-                    Operatorname, Grp(F.Id("union")), Sp, F.Id("W"), Sp,
-                    Operatorname, Grp(F.Id("union")), Sp, F.Id("R"), Sp, Land, RowBreak,
-                    Operatorname, Grp(F.Id("Disjoint")), Open, F.Id("M"), Comma, F.Id("W"), Close,
-                    Sp, Land, Sp,
-                    Operatorname, Grp(F.Id("Disjoint")), Open, F.Id("M"), Comma, F.Id("R"), Close,
-                    Sp, Land, Sp,
-                    Operatorname, Grp(F.Id("Disjoint")), Open, F.Id("W"), Comma, F.Id("R"), Close, Dot))),
+                StatementSource.FromAuthor(ThreeWayDecompositionFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -81,4 +38,217 @@ internal sealed class TerminalGradeDecompositionDocument : IScribeDocumentDefini
                         + "module checks that all assumptions can hold simultaneously."))),
                 DescribeRole.Theorem)),
         []));
+
+    private static Formula ThreeWayDecompositionFormula()
+    {
+        Formula statementType = F.Id("Statement");
+        Formula gradeType = F.Id("Grade");
+        Formula history = F.Id("history");
+        Formula positiveGrades = F.Id("positiveGrades");
+        Formula semantic = F.Id("semantic");
+        Formula wall = F.Id("wall");
+        Formula gatekeepers = F.Id("gatekeepers");
+
+        Formula classAssumptions = Conjoin(
+            Call("Countable", statementType),
+            Call("Finite", gradeType),
+            Call("PartialOrder", gradeType));
+        Formula repairClause = new Formula.Bind(
+            FormulaQuantifier.ForAll,
+            FormulaIdentifier.Create("statement"),
+            statementType,
+            Call(
+                "Finite",
+                Call(
+                    "revisionTimesFrom",
+                    Call("enrolledAt", history, F.Id("statement")),
+                    Call("grade", history, F.Id("statement")))));
+        Formula gatekeepersPositive = new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [
+                new Formula.BoundVariable(FormulaIdentifier.Create("t"), F.Id("Nat")),
+                new Formula.BoundVariable(FormulaIdentifier.Create("g"), statementType),
+            ],
+            new Formula.Logic(
+                new Formula.Relation(F.Id("g"), FormulaRelationOperator.MemberOf, gatekeepers),
+                FormulaLogicOperator.Implies,
+                new Formula.Relation(
+                    GradeAt(history, F.Id("t"), F.Id("g")),
+                    FormulaRelationOperator.MemberOf,
+                    positiveGrades)));
+        Formula jointPositiveForbidden = new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [
+                new Formula.BoundVariable(FormulaIdentifier.Create("t"), F.Id("Nat")),
+                new Formula.BoundVariable(FormulaIdentifier.Create("w"), statementType),
+            ],
+            new Formula.Logic(
+                new Formula.Relation(F.Id("w"), FormulaRelationOperator.MemberOf, wall),
+                FormulaLogicOperator.Implies,
+                new Formula.Logic(
+                    new Formula.Relation(
+                        GradeAt(history, F.Id("t"), F.Id("w")),
+                        FormulaRelationOperator.MemberOf,
+                        positiveGrades),
+                    FormulaLogicOperator.Implies,
+                    new Formula.Logic(
+                        new Formula.Bind(
+                            FormulaQuantifier.ForAll,
+                            FormulaIdentifier.Create("g"),
+                            statementType,
+                            new Formula.Logic(
+                                new Formula.Relation(
+                                    F.Id("g"),
+                                    FormulaRelationOperator.MemberOf,
+                                    gatekeepers),
+                                FormulaLogicOperator.Implies,
+                                new Formula.Relation(
+                                    GradeAt(history, F.Id("t"), F.Id("g")),
+                                    FormulaRelationOperator.MemberOf,
+                                    positiveGrades))),
+                        FormulaLogicOperator.Implies,
+                        Call("forbidden", F.Id("t"), F.Id("w"))))));
+        Formula consistent = new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [
+                new Formula.BoundVariable(FormulaIdentifier.Create("t"), F.Id("Nat")),
+                new Formula.BoundVariable(FormulaIdentifier.Create("w"), statementType),
+            ],
+            new Formula.Logic(
+                new Formula.Relation(F.Id("w"), FormulaRelationOperator.MemberOf, wall),
+                FormulaLogicOperator.Implies,
+                new Formula.Not(Call("forbidden", F.Id("t"), F.Id("w")))));
+        Formula assumptions = Conjoin(
+            new Formula.Relation(wall, FormulaRelationOperator.SubsetOf, semantic),
+            gatekeepersPositive,
+            jointPositiveForbidden,
+            consistent);
+        Formula conclusion = ConclusionFormula(
+            history,
+            positiveGrades,
+            semantic,
+            wall,
+            statementType,
+            gradeType);
+
+        Formula body = new Formula.Bind(
+            FormulaQuantifier.ForAll,
+            FormulaIdentifier.Create("history"),
+            Call("LedgerHistory", statementType, gradeType),
+            new Formula.Logic(
+                repairClause,
+                FormulaLogicOperator.Implies,
+                new Formula.Bind(
+                    FormulaQuantifier.ForAll,
+                    FormulaIdentifier.Create("positiveGrades"),
+                    Call("Set", gradeType),
+                    new Formula.BindMany(
+                        FormulaQuantifier.ForAll,
+                        [
+                            new Formula.BoundVariable(FormulaIdentifier.Create("semantic"), Call("Set", statementType)),
+                            new Formula.BoundVariable(FormulaIdentifier.Create("wall"), Call("Set", statementType)),
+                            new Formula.BoundVariable(FormulaIdentifier.Create("gatekeepers"), Call("Set", statementType)),
+                        ],
+                        new Formula.Bind(
+                            FormulaQuantifier.ForAll,
+                            FormulaIdentifier.Create("forbidden"),
+                            new Formula.TypeArrow(
+                                F.Id("Nat"),
+                                new Formula.TypeArrow(statementType, F.Id("Prop"))),
+                            new Formula.Logic(
+                                assumptions,
+                                FormulaLogicOperator.Implies,
+                                conclusion))))));
+
+        return Disp(new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [
+                new Formula.BoundVariable(FormulaIdentifier.Create("Statement"), F.Id("Type")),
+                new Formula.BoundVariable(FormulaIdentifier.Create("Grade"), F.Id("Type")),
+            ],
+            new Formula.Logic(
+                classAssumptions,
+                FormulaLogicOperator.Implies,
+                body)));
+    }
+
+    private static Formula ConclusionFormula(
+        Formula history,
+        Formula positiveGrades,
+        Formula semantic,
+        Formula wall,
+        Formula statementType,
+        Formula gradeType)
+    {
+        Formula terminalGrade = F.Id("terminalGrade");
+        Formula statement = F.Id("statement");
+        Formula cutoff = F.Id("cutoff");
+        Formula time = F.Id("t");
+        Formula migrated = F.Id("migrated");
+        Formula resident = F.Id("resident");
+        Formula stability = new Formula.Bind(
+            FormulaQuantifier.ForAll,
+            FormulaIdentifier.Create("statement"),
+            statementType,
+            new Formula.Bind(
+                FormulaQuantifier.Exists,
+                FormulaIdentifier.Create("cutoff"),
+                F.Id("Nat"),
+                new Formula.Logic(
+                    new Formula.Relation(
+                        Call("enrolledAt", history, statement),
+                        FormulaRelationOperator.LessThanOrEqual,
+                        cutoff),
+                    FormulaLogicOperator.And,
+                    new Formula.Bind(
+                        FormulaQuantifier.ForAll,
+                        FormulaIdentifier.Create("t"),
+                        F.Id("Nat"),
+                        new Formula.Logic(
+                            new Formula.Relation(time, FormulaRelationOperator.GreaterThanOrEqual, cutoff),
+                            FormulaLogicOperator.Implies,
+                            new Formula.Relation(
+                                GradeAt(history, time, statement),
+                                FormulaRelationOperator.Equal,
+                                new Formula.Apply(terminalGrade, [statement])))))));
+        Formula decomposition = F.Seq(
+            Open, stability, Close, Sp, Land, Sp, RowBreak, Grp(),
+            migrated, Sp, Eq, Sp,
+            Operatorname, Grp(F.Id("intersection")), Open,
+            semantic, Comma,
+            Operatorname, Grp(F.Id("preimage")), Open,
+            terminalGrade, Comma, positiveGrades, Close, Close,
+            Comma, Sp,
+            resident, Sp, Eq, Sp, semantic, Sp, Setminus, Sp,
+            Open, migrated, Sp, Operatorname, Grp(F.Id("union")), Sp, wall, Close,
+            Comma, RowBreak, Grp(),
+            semantic, Sp, Eq, Sp, migrated, Sp,
+            Operatorname, Grp(F.Id("union")), Sp, wall, Sp,
+            Operatorname, Grp(F.Id("union")), Sp, resident, Sp, Land, RowBreak, Grp(),
+            Operatorname, Grp(F.Id("Disjoint")), Open, migrated, Comma, wall, Close,
+            Sp, Land, Sp,
+            Operatorname, Grp(F.Id("Disjoint")), Open, migrated, Comma, resident, Close,
+            Sp, Land, Sp,
+            Operatorname, Grp(F.Id("Disjoint")), Open, wall, Comma, resident, Close, Close);
+
+        return F.Seq(
+            Exists, Bang, Sp,
+            terminalGrade, Colon, Sp,
+            new Formula.TypeArrow(statementType, gradeType), Comma, Sp,
+            decomposition, Dot);
+    }
+
+    private static Formula Conjoin(Formula first, params Formula[] rest)
+    {
+        var result = first;
+        foreach (var item in rest)
+        {
+            result = new Formula.Logic(result, FormulaLogicOperator.And, item);
+        }
+
+        return result;
+    }
+
+    private static Formula GradeAt(Formula history, Formula time, Formula statement) =>
+        Call("grade", history, statement, time);
 }

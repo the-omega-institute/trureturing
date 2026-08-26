@@ -1,0 +1,8 @@
+\[
+\mathcal E_N(q,\tau)
+=
+\operatorname{ExpansionEscape}(q,P_N^{q,\tau}).
+\]
+
+56.4-C 与 56.4-D 分别处理“旧时域扩到新时域”和“当前读数扩到有限轨迹”；二者不得再混成一个未定型投影。
+

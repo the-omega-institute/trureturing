@@ -1,0 +1,10 @@
+ast_path: section/227-现象差异可以是公开行为上的惰性余量
+fingerprints:
+  raw_sha256: sha256:14588e12c3a3702baca583ca98a25a828f515365b6f6630a57f0f5153995cb91
+  normalized_sha256: sha256:14588e12c3a3702baca583ca98a25a828f515365b6f6630a57f0f5153995cb91
+cas_ref: sha256:14588e12c3a3702baca583ca98a25a828f515365b6f6630a57f0f5153995cb91
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

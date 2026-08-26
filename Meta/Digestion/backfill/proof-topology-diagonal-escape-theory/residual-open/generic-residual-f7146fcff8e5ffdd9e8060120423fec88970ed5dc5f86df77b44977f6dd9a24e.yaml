@@ -1,0 +1,10 @@
+ast_path: section/第五部-dominator-cut
+fingerprints:
+  raw_sha256: sha256:f7146fcff8e5ffdd9e8060120423fec88970ed5dc5f86df77b44977f6dd9a24e
+  normalized_sha256: sha256:f7146fcff8e5ffdd9e8060120423fec88970ed5dc5f86df77b44977f6dd9a24e
+cas_ref: sha256:f7146fcff8e5ffdd9e8060120423fec88970ed5dc5f86df77b44977f6dd9a24e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

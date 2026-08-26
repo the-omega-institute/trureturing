@@ -430,13 +430,11 @@ freeze_exists() {
 }
 
 freeze_module_if_needed() {
-  if freeze_exists; then
+  local already_frozen="$1"
+  if [[ "$already_frozen" -eq 1 ]]; then
     printf 'PLAYBOOK_SKIP command=deposit detail=module-already-frozen path=%s\n' \
       "$MODULE_PATH" >&2
     return
-  else
-    local status=$?
-    [[ "$status" -eq 1 ]] || return "$status"
   fi
 
   step "ledger-append $MODULE_PATH" run_cli \
@@ -670,6 +668,31 @@ cover_row() {
     align-scribe-receipt --atom-id "$ATOM_ID" --gid "$GID" --base "$BASE"
 }
 
+cover_batch_row() {
+  local output status
+  begin_step cover-atom-aligned
+  if output="$(run_cli cover-atom --cover-atom "$ATOM_ID" --gid "$GID" \
+      --base "$BASE" --envelope "$RECEIPT_PATH" --align-scribe-receipt 2>&1)"; then
+    [[ -z "$output" ]] || printf '%s\n' "$output"
+    if grep -Fq "COVER_ATOM_ALIGNED cover=resumed align=passed" <<<"$output"; then
+      printf 'PLAYBOOK_SKIP command=cover detail=coverage-already-applied atom_id=%s gid=%s\n' \
+        "$ATOM_ID" "$GID" >&2
+    fi
+    complete_step passed
+    return
+  else
+    status=$?
+  fi
+
+  printf '%s\n' "$output" >&2
+  complete_step failed
+  if grep -Fq "COVER_ATOM_ALIGNED cover=failed" <<<"$output"; then
+    step stage-final-tree commit_all_if_needed \
+      "formalize: record failed cover disposition for $ATOM_ID"
+  fi
+  exit "$status"
+}
+
 cd "$ROOT"
 case "$COMMAND" in
   cover|cover-batch) PERF_WORKLOAD_ID="cover" ;;
@@ -708,17 +731,19 @@ case "$COMMAND" in
     require_new_module_blueprint_mirror
     cleanup_transaction_temporaries
     if freeze_exists; then
+      freeze_precheck=1
       printf 'PLAYBOOK_SKIP command=deposit detail=phase-a-already-committed path=%s\n' \
         "$MODULE_PATH" >&2
     else
       status=$?
       [[ "$status" -eq 1 ]] || exit "$status"
+      freeze_precheck=0
       step lean-report make lean-report
       step emit make emit
       step stage-phase-a commit_phase_a_if_needed
     fi
     step validate-formalization-receipt prepare_formalization_receipt
-    freeze_module_if_needed
+    freeze_module_if_needed "$freeze_precheck"
     install_prepared_formalization_receipt
     step stage-final-tree commit_all_if_needed "formalize: record deposit receipt for $GID"
     ;;
@@ -736,7 +761,7 @@ case "$COMMAND" in
     step lean-report make lean-report
     for index in "${!BATCH_ATOM_IDS[@]}"; do
       derive_cover_batch_row_state "$index"
-      cover_row
+      cover_batch_row
       step stage-final-tree commit_all_if_needed "formalize: cover $ATOM_ID with $GID"
     done
     step emit-post-alignment make emit

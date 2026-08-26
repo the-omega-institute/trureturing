@@ -1,0 +1,12 @@
+## 21.3 干预显性的反驳
+
+若存在允许动作 s：
+
+$$
+Π_{\mathcal L}(s\cdot x_{aa,c})
+\neq
+Π_{\mathcal L}(s\cdot x_{ab,c}),
+$$
+
+则干预显性为假。
+

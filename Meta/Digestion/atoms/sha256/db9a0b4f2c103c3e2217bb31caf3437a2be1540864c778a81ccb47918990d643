@@ -1,0 +1,34 @@
+# 67. 策略 holonomy：回到同一情境，不再是同一个选择者
+
+设公开状态沿路径
+
+$$
+\gamma:
+q_0\to q_1\to\cdots\to q_n
+$$
+
+演化，记忆运输为
+
+$$
+U_{q_i\to q_{i+1}}:
+M_{q_i}\to M_{q_{i+1}}.
+$$
+
+若
+
+$$
+q_n=q_0,
+$$
+
+定义回路 holonomy
+
+$$
+\operatorname{Hol}_\gamma
+=
+U_{q_{n-1}\to q_n}
+\circ\cdots\circ
+U_{q_0\to q_1}
+:
+M_{q_0}\to M_{q_0}.
+$$
+

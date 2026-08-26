@@ -1,0 +1,42 @@
+## 推论 31.1（同一可见纤维的整数绕行判据；本文推论）
+
+若
+
+$$
+\pi(x)=\pi(y),
+$$
+
+则
+
+$$
+\operatorname{Joined}(x,y)
+\iff
+\exists n\in\mathbb Z,
+\quad
+y=\operatorname{realFlow}(n)+x.
+$$
+
+### 证明
+
+由定理 31.2，路径相连等价于存在 $t\in\mathbb R$ 使
+
+$$
+y=\operatorname{realFlow}(t)+x.
+$$
+
+作用 $\pi$ 并利用 $\pi(x)=\pi(y)$，得到
+
+$$
+0
+=
+\pi(\operatorname{realFlow}(t))
+=
+t\pmod{\mathbb Z}.
+$$
+
+故 $t\in\mathbb Z$。反向由定理 31.2 立即成立。∎
+
+这一区分修正了“同一喉部中的任何端点变化都是不可连续跳跃”的过强说法。若差值是整数 real-flow 端点，它可由完整空间中的连续绕行实现；只有不属于该整数子群的横向位移才真正跨路径分量。
+
+---
+

@@ -1,0 +1,102 @@
+# 53. 最终统一：闭合观察者、反身主体与喉部输运
+
+本增订把主体结构压缩为以下对象：
+
+$$
+\begin{aligned}
+K_\infty
+&=\text{永久不可观测方向},\\
+R_O
+&=\text{观察者自身可达方向},\\
+\mathsf{Agt}_O
+&=R_O/(R_O\cap N_\infty),\\
+G_O
+&=W_o^{1/2}W_c^OW_o^{1/2},\\
+\mathcal H_O
+&=\mathcal O_\beta\mathcal C_{\beta,O},\\
+S_{\mathrm{ag}}
+&=\text{完整未来交互画像的最小历史商},\\
+C_{\mathrm{ag}}
+&=\text{把当前自我接口反射到代理充分接口的闭包},\\
+s
+&=\text{历史生成的动作截面},\\
+\Lambda
+&=\text{行动、结果、理由与授权的追加账本},\\
+\bar c
+&=\text{已选动作的喉部分量 cocycle},\\
+\mathsf{FreeKernel}
+&=\text{可无限保持最低主体能力的最大受控不变集}.
+\end{aligned}
+$$
+
+完整回路是：
+
+$$
+\boxed{
+\Lambda_t
+\longrightarrow
+M_t
+\longrightarrow
+\pi_t
+\longrightarrow
+A_t
+\longrightarrow
+\Delta\kappa_t
+\longrightarrow
+Y_t
+\longrightarrow
+\Lambda_{t+1}.
+}
+$$
+
+其中：
+
+```text
+Law 给出合法动作纤维与后果核；
+Self 是所有权闭包与自主核心共同稳定的历史状态；
+Will 是由该历史状态生成的内生对称破缺截面；
+Choice 是截面在当前状态上的实际取值；
+Commitment 把未来计划空间收缩为可追溯历史；
+Agency 是自身控制穿过不可观测核后仍留在行为商中的部分；
+Provenance 区分这一行为究竟来自自身还是外部通道；
+Meta-agency 使观察者能够修改并保持未来的选择能力；
+Throat transport 是已选动作经 cocycle 产生的隐藏分量后果。
+```
+
+因此最严格的统一不是：
+
+```text
+自由 = 没有原因；
+自由 = 随机结果；
+自由 = 喉部坐标本身。
+```
+
+而是：
+
+$$
+\boxed{
+自由的操作核心，是观察者能够以自身拥有并由历史塑造的内部状态形成控制，
+使该控制对未来产生可识别差异，把差异写入账本，
+据此修订未来策略，并存在一种策略能够保持这种能力。
+}
+$$
+
+喉部跳跃在其中的准确位置是：
+
+$$
+\boxed{
+喉部跳跃不是意志本身，
+而是一个来源可归属、策略可解释、历史可追溯的已选行动，
+在隐藏路径分量空间中产生的本体输运。
+}
+$$
+
+最后，兼容决定论但足以刻画自主性的最强结论是：
+
+$$
+\boxed{
+行动不必没有原因；
+关键在于行动原因是否在观察者边界内形成、可被读取和修订、
+由过去自己的选择塑造，并能通过记录继续属于未来的自己。
+}
+$$

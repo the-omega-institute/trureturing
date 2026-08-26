@@ -1,0 +1,45 @@
+# 232. 理论空间的普遍经验商
+
+设理论或模型空间为：
+
+[
+\Theta.
+]
+
+允许的实验协议族为：
+
+[
+\mathcal P.
+]
+
+每个协议 (\pi) 在模型 (\theta) 下产生结果分布：
+
+[
+\mathsf{Out}_{\pi}(\theta).
+]
+
+定义：
+
+[
+\boxed{
+\theta\sim_{\mathcal P}\theta'
+\iff
+\forall\pi\in\mathcal P,\quad
+\mathsf{Out}_{\pi}(\theta)
+==========================
+
+\mathsf{Out}_{\pi}(\theta').
+}
+]
+
+经验模型商：
+
+[
+\boxed{
+\Theta_{\mathrm{emp}}
+=====================
+
+\Theta/{\sim_{\mathcal P}}.
+}
+]
+

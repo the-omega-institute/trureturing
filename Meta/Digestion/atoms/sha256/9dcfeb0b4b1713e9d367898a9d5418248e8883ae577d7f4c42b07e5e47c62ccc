@@ -1,0 +1,60 @@
+# 339. 财产权不是一个标签，而是一组过程权限
+
+设资源状态类型：
+
+[
+X.
+]
+
+行动集合：
+
+[
+U.
+]
+
+主体 (i) 对资源的权利束定义为：
+
+[
+\boxed{
+\mathcal R_i(x)
+\subseteq U
+}
+]
+
+以及对他人行动的否决集合：
+
+[
+\boxed{
+\mathcal V_i(x)
+\subseteq U_{\mathrm{others}}.
+}
+]
+
+典型权限可以包括：
+
+[
+\begin{aligned}
+&\text{使用};\
+&\text{排他};\
+&\text{转让};\
+&\text{收益};\
+&\text{抵押};\
+&\text{销毁};\
+&\text{继承};\
+&\text{授权}.
+\end{aligned}
+]
+
+因此：
+
+[
+\boxed{
+\text{Property}
+===============
+
+\text{a bundle of admissible FLOW controls}.
+}
+]
+
+---
+

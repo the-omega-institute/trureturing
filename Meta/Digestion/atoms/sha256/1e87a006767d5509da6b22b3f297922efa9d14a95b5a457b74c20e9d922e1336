@@ -1,0 +1,30 @@
+## 结论 83.1
+
+量子观察者的静态结构完全由一对反对偶对象刻画：
+
+$$
+\boxed{
+V_{\mathfrak O}
+=
+\text{可见 effect 方向},
+}
+$$
+
+$$
+\boxed{
+N_{\mathfrak O}
+=
+\text{不可见 state-difference 方向}.
+}
+$$
+
+并有
+
+$$
+N_{\mathfrak O}
+=
+V_{\mathfrak O}^{\perp}.
+$$
+
+---
+

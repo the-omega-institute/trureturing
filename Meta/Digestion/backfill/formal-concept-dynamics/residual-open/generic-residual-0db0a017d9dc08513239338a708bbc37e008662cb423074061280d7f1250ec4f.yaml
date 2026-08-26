@@ -1,0 +1,10 @@
+ast_path: section/第一人称余量
+fingerprints:
+  raw_sha256: sha256:0db0a017d9dc08513239338a708bbc37e008662cb423074061280d7f1250ec4f
+  normalized_sha256: sha256:0db0a017d9dc08513239338a708bbc37e008662cb423074061280d7f1250ec4f
+cas_ref: sha256:0db0a017d9dc08513239338a708bbc37e008662cb423074061280d7f1250ec4f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

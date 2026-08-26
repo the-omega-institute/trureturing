@@ -1,0 +1,36 @@
+# 93. 顺序观察者与 word effects
+
+把一次设置—结果分支写成字母
+
+$$
+g=(x,a).
+$$
+
+对词
+
+$$
+w=g_1g_2\cdots g_n,
+$$
+
+定义 Schrödinger 分支复合
+
+$$
+\mathcal I_w
+=
+\mathcal I_{g_n}
+\circ\cdots\circ
+\mathcal I_{g_1}.
+$$
+
+定义 Heisenberg word effect
+
+$$
+\boxed{
+F_w
+=
+\mathcal I_{g_1}^*
+\circ\cdots\circ
+\mathcal I_{g_n}^*(I).
+}
+$$
+

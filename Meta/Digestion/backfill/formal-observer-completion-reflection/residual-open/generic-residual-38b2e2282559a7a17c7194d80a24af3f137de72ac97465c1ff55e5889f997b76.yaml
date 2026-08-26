@@ -1,0 +1,10 @@
+ast_path: 推论/86.1
+fingerprints:
+  raw_sha256: sha256:38b2e2282559a7a17c7194d80a24af3f137de72ac97465c1ff55e5889f997b76
+  normalized_sha256: sha256:38b2e2282559a7a17c7194d80a24af3f137de72ac97465c1ff55e5889f997b76
+cas_ref: sha256:38b2e2282559a7a17c7194d80a24af3f137de72ac97465c1ff55e5889f997b76
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

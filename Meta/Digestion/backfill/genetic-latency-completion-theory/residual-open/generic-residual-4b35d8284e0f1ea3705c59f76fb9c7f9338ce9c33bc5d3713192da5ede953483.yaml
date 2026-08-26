@@ -1,0 +1,10 @@
+ast_path: section/16-2-表型非加性不自动等于分子直接相互作用
+fingerprints:
+  raw_sha256: sha256:4b35d8284e0f1ea3705c59f76fb9c7f9338ce9c33bc5d3713192da5ede953483
+  normalized_sha256: sha256:4b35d8284e0f1ea3705c59f76fb9c7f9338ce9c33bc5d3713192da5ede953483
+cas_ref: sha256:4b35d8284e0f1ea3705c59f76fb9c7f9338ce9c33bc5d3713192da5ede953483
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

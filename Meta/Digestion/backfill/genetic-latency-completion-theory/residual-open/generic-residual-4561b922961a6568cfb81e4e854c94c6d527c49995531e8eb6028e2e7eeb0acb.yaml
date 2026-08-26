@@ -1,0 +1,10 @@
+ast_path: section/24-7-群体选择潜伏阶
+fingerprints:
+  raw_sha256: sha256:4561b922961a6568cfb81e4e854c94c6d527c49995531e8eb6028e2e7eeb0acb
+  normalized_sha256: sha256:4561b922961a6568cfb81e4e854c94c6d527c49995531e8eb6028e2e7eeb0acb
+cas_ref: sha256:4561b922961a6568cfb81e4e854c94c6d527c49995531e8eb6028e2e7eeb0acb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

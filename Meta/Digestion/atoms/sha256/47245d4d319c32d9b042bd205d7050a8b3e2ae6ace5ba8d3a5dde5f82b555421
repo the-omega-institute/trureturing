@@ -1,0 +1,19 @@
+## 定义 91.2（条件状态）
+
+若
+
+$$
+p(a\mid x,\rho)>0,
+$$
+
+则
+
+$$
+\boxed{
+\rho_{a|x}
+=
+\frac{\mathcal I_{a|x}(\rho)}
+{p(a\mid x,\rho)}.
+}
+$$
+

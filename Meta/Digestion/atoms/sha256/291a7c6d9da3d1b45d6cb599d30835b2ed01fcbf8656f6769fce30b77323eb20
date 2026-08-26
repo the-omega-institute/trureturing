@@ -1,0 +1,33 @@
+## 9.4 折扣可观测能量
+
+在级数收敛条件下，定义：
+
+$$
+W_β=
+\sum_{n\ge0}β^n(T^*)^nP^*PT^n,
+\qquad
+0<β<1.
+$$
+
+定义潜伏—显现能量：
+
+$$
+\mathcal V_β(δ)
+=
+\langle δ,W_βδ\rangle
+=
+\sum_{n\ge0}β^n\|PT^nδ\|^2.
+$$
+
+于是：
+
+$$
+\mathcal V_β(δ)=0
+\iff
+δ\in\mathcal N_∞.
+$$
+
+该 Gramian 方向与 `FORMAL_OBSERVER_COMPLETION_REFLECTION.md` 的 paper-level observer-completion 分析一致；本文不把它误标为已有基因专用 Lean 定理。
+
+---
+

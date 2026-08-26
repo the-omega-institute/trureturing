@@ -1,0 +1,24 @@
+## 定理 93.1（词概率迹表示）
+
+$$
+\boxed{
+p(w\mid\rho)
+=
+\operatorname{Tr}\mathcal I_w(\rho)
+=
+\operatorname{Tr}(\rho F_w).
+}
+$$
+
+### 证明
+
+反复应用对偶关系：
+
+$$
+\operatorname{Tr}(\mathcal I_g(X)A)
+=
+\operatorname{Tr}(X\mathcal I_g^*(A)).
+$$
+
+从末分支向前拉回单位效果，即得。∎
+

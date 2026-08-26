@@ -1,0 +1,50 @@
+# 119. 跨素数相关扇区的精确正交分解
+
+对每个局部 Hermitian 空间写
+
+$$
+\operatorname{Herm}(\mathcal H_j)
+=
+\mathbb RI_j
+\oplus
+\operatorname{Herm}_0(\mathcal H_j).
+$$
+
+张量积展开得到全局正交直和：
+
+$$
+\boxed{
+\operatorname{Herm}(\mathcal H)
+=
+\bigoplus_{S\subseteq[r]}
+V_S,
+}
+$$
+
+其中
+
+$$
+V_S
+=
+\left(
+\bigotimes_{j\in S}
+\operatorname{Herm}_0(\mathcal H_j)
+\right)
+\otimes
+\left(
+\bigotimes_{j\notin S}\mathbb RI_j
+\right).
+$$
+
+其维数为
+
+$$
+\boxed{
+\dim V_S
+=
+\prod_{j\in S}(d_j^2-1).
+}
+$$
+
+空集项 $V_\varnothing=\mathbb RI$。
+

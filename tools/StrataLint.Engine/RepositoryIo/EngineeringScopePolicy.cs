@@ -38,7 +38,10 @@ internal static class EngineeringInputDeriver
             "None",
             "ProjectReference");
 
-    internal static EngineeringInputClosure DeriveRepository(string repositoryRoot)
+    internal static EngineeringInputClosure DeriveRepository(
+        string repositoryRoot,
+        string? dotnetExecutable = null,
+        TimeSpan? timeout = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         var files = GitIndexRepositoryFiles.Enumerate(repositoryRoot);
@@ -48,7 +51,10 @@ internal static class EngineeringInputDeriver
                 file.RelativePath,
                 File.ReadAllText(file.FullPath)))
             .ToArray();
-        var map = ScribeTestMapDeriver.DeriveRepository(repositoryRoot);
+        var map = ScribeTestMapDeriver.DeriveRepository(
+            repositoryRoot,
+            dotnetExecutable,
+            timeout);
         var repositoryReads = map.Methods
             .SelectMany(static method => method.Paths)
             .Concat(files
@@ -63,6 +69,12 @@ internal static class EngineeringInputDeriver
             .ToArray();
         var unknownConsumerCount = map.Methods.Count(static method => method.IsUnknown);
         var incompleteReasons = new List<string>();
+        if (map.CompileQueryFindings.Count != 0)
+        {
+            incompleteReasons.Add("MSBuild Compile ownership derivation is incomplete: "
+                + string.Join(", ", map.CompileQueryFindings.Select(static finding =>
+                    $"{finding.Path}: {finding.Message}")));
+        }
         if (structuralFailures.Length != 0)
         {
             incompleteReasons.Add("test project classification is incomplete: "

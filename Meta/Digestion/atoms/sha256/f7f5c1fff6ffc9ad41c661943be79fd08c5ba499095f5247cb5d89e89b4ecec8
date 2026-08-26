@@ -1,0 +1,12 @@
+## 24.1 显性带几何
+
+研究所有保持：
+
+$$
+aa\sim ab,
+\qquad
+ab\not\sim bb
+$$
+
+的观察接口在 partition lattice 中形成的序凸区域。
+

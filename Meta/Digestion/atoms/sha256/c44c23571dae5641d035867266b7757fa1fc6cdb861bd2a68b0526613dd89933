@@ -1,0 +1,20 @@
+## 原理 122.1（交互图必要性）
+
+如果相互作用超图分成两个互不连通的 prime blocks，起初只位于一个 block 的效果在全部嵌套交换子下都不能获得另一个 block 的支持。
+
+所以全局 prime-time 完备至少需要：
+
+$$
+\boxed{
+\text{measurement support}
++
+\text{interaction propagation}
+}
+$$
+
+覆盖全部相关扇区。
+
+图连通本身不是充分条件；交换子 Lie 闭包仍可能因对称性、守恒量或退化而落在真子代数中。
+
+---
+

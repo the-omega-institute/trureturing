@@ -1,0 +1,20 @@
+## 定理 14.1（识别即 kernel 包含）
+
+目标 \(T:\mathcal M\to Z\) 由查询族 \(\mathcal Q\) 识别，当且仅当
+
+\[
+\boxed{
+K_\mathcal Q\subseteq K_T.
+}
+\]
+
+等价地，\(T\) 唯一因子化通过查询商
+
+\[
+\mathcal M/K_\mathcal Q.
+\]
+
+### 证明
+
+定理 1.1，取状态空间为模型类。\(\square\)
+

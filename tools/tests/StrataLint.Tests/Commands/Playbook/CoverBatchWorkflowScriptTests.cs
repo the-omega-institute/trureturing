@@ -34,9 +34,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             [
                 "make:lean-report",
                 "dotnet:cover-atom",
-                "dotnet:align-scribe-receipt",
                 "dotnet:cover-atom",
-                "dotnet:align-scribe-receipt",
                 "make:emit",
             ],
             fixture.CallKinds());
@@ -47,16 +45,32 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 + $" --cover-atom {TransactionFixture.AtomId}"
                 + $" --gid {TransactionFixture.Gid}"
                 + " --base synthetic-base"
-                + $" --envelope {TransactionFixture.ReceiptRelativePath}",
+                + $" --envelope {TransactionFixture.ReceiptRelativePath}"
+                + " --align-scribe-receipt",
             fixture.Calls());
         Assert.Contains(
             "dotnet:cover-atom"
                 + $" --cover-atom {TransactionFixture.SecondaryAtomId}"
                 + $" --gid {TransactionFixture.SecondaryGid}"
                 + " --base synthetic-base"
-                + $" --envelope {TransactionFixture.SecondaryReceiptRelativePath}",
+                + $" --envelope {TransactionFixture.SecondaryReceiptRelativePath}"
+                + " --align-scribe-receipt",
             fixture.Calls());
         Assert.Empty(fixture.Status());
+
+        using var failedFixture = new TransactionFixture();
+        var failedAtoms = failedFixture.WriteBatchFile(
+            $"{TransactionFixture.AtomId}\t{TransactionFixture.Gid}\n");
+        var failedBefore = failedFixture.CommitCount();
+        var failed = failedFixture.RunBatch(failedAtoms, coverDispositionFailure: true);
+        Assert.NotEqual(0, failed.ExitCode);
+        Assert.Equal(failedBefore + 1, failedFixture.CommitCount());
+        Assert.Contains("cover_disposition:", failedFixture.BackfillContents(), StringComparison.Ordinal);
+        Assert.Equal(
+            ["make:lean-report", "dotnet:cover-atom"],
+            failedFixture.CallKinds());
+        AssertFailedCoverBatchPerformanceEvents(failedFixture);
+        Assert.Empty(failedFixture.Status());
     }
 
     [Fact]
@@ -113,7 +127,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             return path;
         }
 
-        internal ProcessOutput RunBatch(string atomsFile) =>
+        internal ProcessOutput RunBatch(string atomsFile, bool coverDispositionFailure = false) =>
             BoundedProcessRunner.Run(
                 "/usr/bin/env",
                 [
@@ -121,7 +135,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     $"PLAYBOOK_TEST_CALLS={callsPath}",
                     "PLAYBOOK_STALE_REPORT=0",
                     "PLAYBOOK_INVALID_RECEIPT=0",
-                    "PLAYBOOK_COVER_DISPOSITION_FAILURE=0",
+                    $"PLAYBOOK_COVER_DISPOSITION_FAILURE={(coverDispositionFailure ? "1" : "0")}",
                     "PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE=",
                     $"PLAYBOOK_TEST_PERF_TARGET={Path.Combine(binPath, "StrataLint.Cli.dll")}",
                     $"STRATALINT_PERF_LEDGER={performanceLedgerPath}",
@@ -157,10 +171,15 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
     private static void AssertCoverBatchPerformanceEvents(TransactionFixture fixture) =>
         AssertPerformanceEvents(fixture, "cover",
-            "lean-report:passed", "cover-atom:passed", "align-scribe-receipt:passed",
-            "stage-final-tree:passed", "cover-atom:passed", "align-scribe-receipt:passed",
+            "lean-report:passed", "cover-atom-aligned:passed",
+            "stage-final-tree:passed", "cover-atom-aligned:passed",
             "stage-final-tree:passed", "emit-post-alignment:passed", "stage-final-tree:passed",
             "total:passed");
+
+    private static void AssertFailedCoverBatchPerformanceEvents(TransactionFixture fixture) =>
+        AssertPerformanceEvents(fixture, "cover",
+            "lean-report:passed", "cover-atom-aligned:failed", "stage-final-tree:passed",
+            "total:failed");
 
     private static void AssertPerformanceEvents(
         TransactionFixture fixture,

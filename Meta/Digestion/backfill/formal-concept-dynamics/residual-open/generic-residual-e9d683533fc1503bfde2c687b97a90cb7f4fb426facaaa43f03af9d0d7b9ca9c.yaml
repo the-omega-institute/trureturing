@@ -1,0 +1,10 @@
+ast_path: section/154-控制身份是所有可行动后果的规范商
+fingerprints:
+  raw_sha256: sha256:e9d683533fc1503bfde2c687b97a90cb7f4fb426facaaa43f03af9d0d7b9ca9c
+  normalized_sha256: sha256:e9d683533fc1503bfde2c687b97a90cb7f4fb426facaaa43f03af9d0d7b9ca9c
+cas_ref: sha256:e9d683533fc1503bfde2c687b97a90cb7f4fb426facaaa43f03af9d0d7b9ca9c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

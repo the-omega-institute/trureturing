@@ -1,0 +1,21 @@
+### 56.2.3 商上的弱支配
+
+对 \(C,D:Q_{v,F}\)，定义
+
+\[
+\boxed{
+\begin{aligned}
+&\operatorname{QuotientParetoWeak}(v,F,C,D)
+\\
+&\Longleftrightarrow
+\exists x:A_F,\ x\in C.1
+\wedge
+\exists y:A_F,\ y\in D.1
+\wedge
+\operatorname{ParetoWeakOn}(v,F,x,y).
+\end{aligned}
+}
+\]
+
+这是“类 \(C\) 弱支配类 \(D\)”的存在代表式。由于类由弱支配的对称核生成，该式必须与代表选择无关。
+

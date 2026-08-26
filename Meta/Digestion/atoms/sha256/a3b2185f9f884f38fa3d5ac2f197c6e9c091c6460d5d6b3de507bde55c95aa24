@@ -1,0 +1,26 @@
+## 定义 20.1（代理完成）
+
+$$
+\boxed{
+C_{\mathrm{ag}}(m)
+=
+m\vee q_{\mathrm{ag}},
+}
+$$
+
+即
+
+$$
+C_{\mathrm{ag}}(m)(h)
+=
+\bigl(m(h),[h]_{\mathrm{ag}}\bigr).
+$$
+
+其核满足
+
+$$
+K_{C_{\mathrm{ag}}(m)}
+=
+K_m\cap K_{\mathrm{ag}}.
+$$
+

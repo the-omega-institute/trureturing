@@ -1,0 +1,32 @@
+## 定义 3.1（完全显性）
+
+在观察语言 L 与上下文 c 下，定义：
+
+$$
+a\triangleright_{\mathcal L,c}b
+$$
+
+当且仅当：
+
+$$
+π_{\mathcal L}(x_{aa,c})
+=
+π_{\mathcal L}(x_{ab,c})
+\neq
+π_{\mathcal L}(x_{bb,c}).
+$$
+
+等价地：
+
+$$
+x_{aa,c}R_{\mathcal L}x_{ab,c},
+$$
+
+且：
+
+$$
+\neg(x_{ab,c}R_{\mathcal L}x_{bb,c}).
+$$
+
+---
+

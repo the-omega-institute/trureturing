@@ -1,0 +1,22 @@
+## 定义 65.2（当前自我 kernel 与策略 kernel）
+
+$$
+K_{m_0}
+=
+\{(h,h'):m_0(h)=m_0(h')\},
+$$
+
+$$
+K_{\mathrm{ag}}
+=
+\{(h,h'):P_\infty(h)=P_\infty(h')\}.
+$$
+
+完成 kernel 为
+
+$$
+K_{C_{\mathrm{ag}}(m_0)}
+=
+K_{m_0}\cap K_{\mathrm{ag}}.
+$$
+

@@ -1,0 +1,24 @@
+## 定理 504.1（Kleene 固定点）
+
+[
+\boxed{
+\mu\Phi
+=
+
+\bigvee_{n<\omega}\Phi^n(\bot).
+}
+]
+
+所以最小递归意义可以通过：
+
+[
+\bot,
+\Phi(\bot),
+\Phi^2(\bot),
+\ldots
+]
+
+逐层逼近。
+
+---
+

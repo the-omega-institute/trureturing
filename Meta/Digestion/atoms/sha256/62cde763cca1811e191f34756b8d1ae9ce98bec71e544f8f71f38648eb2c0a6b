@@ -1,0 +1,8 @@
+## Proof Topology, Involution Logic, and Visible Diagonal Escape
+
+> 状态：理论输入稿，2026-08-25。  
+> 真源纪律：本文解释形式结构。Lean 声明、证明项及其 axiom closure 才是 Base 的形式真值。  
+> 范围：只讨论关系、偏序、拓扑、读数核、对合、因子化、残差与对角逃逸。工程流程、自动科研角色和论文生产协议不进入承重定义。
+
+---
+

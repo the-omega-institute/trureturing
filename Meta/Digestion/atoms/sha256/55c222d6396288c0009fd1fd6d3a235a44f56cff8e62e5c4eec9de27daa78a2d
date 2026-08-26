@@ -1,0 +1,24 @@
+## 2.1 基因型空间
+
+设等位基因类型为：
+
+$$
+\mathcal A.
+$$
+
+p 倍体基因型定义为无序多重集：
+
+$$
+\mathcal G_p = Sym^p(\mathcal A).
+$$
+
+对二等位二倍体：
+
+$$
+\mathcal A=\{a,b\},
+\qquad
+\mathcal G_2=\{aa,ab,bb\}.
+$$
+
+---
+
