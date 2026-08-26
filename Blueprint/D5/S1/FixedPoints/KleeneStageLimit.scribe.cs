@@ -41,10 +41,20 @@ internal sealed class KleeneStageLimitDocument : IScribeDocumentDefinition
         Formula stage = Seq(
             f, Caret, Grp(OpenBracket, n, CloseBracket), Open,
             Operatorname, Grp(F.Id("bottom")), Close);
+        Formula orderEndomorphism = Seq(
+            Alpha, Sp, To, Underscore, Grp(F.Id("o")), Sp, Alpha);
+        Formula omegaScottContinuous = Seq(
+            Omega, Operatorname, Grp(F.Id("ScottContinuous")), Open, f, Close);
 
         return Disp(Seq(
+            Begin, Grp(F.Id("gathered")),
+            Forall, Sp, Alpha, Colon, Sp, Operatorname, Grp(F.Id("Type")), Comma, Sp,
+            OpenBracket, Call("CompleteLattice", Alpha), CloseBracket, Comma, RowBreak, Grp(),
+            f, Colon, Sp, orderEndomorphism, Comma, Sp,
+            omegaScottContinuous, Sp, Rightarrow, Sp,
             Operatorname, Grp(F.Id("lfp")), Open, f, Close, Eq,
             Operatorname, Grp(F.Id("sup")), Underscore,
-            Grp(n, InMacro, Sp, Mathbb, Grp(F.Id("N"))), Sp, stage, Dot));
+            Grp(n, InMacro, Sp, Mathbb, Grp(F.Id("N"))), Sp, stage, Dot,
+            End, Grp(F.Id("gathered"))));
     }
 }
