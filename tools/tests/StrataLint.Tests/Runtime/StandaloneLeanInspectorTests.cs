@@ -35,11 +35,11 @@ public sealed class StandaloneLeanInspectorTests
         File.WriteAllText(Path.Combine(repository.Path, "lakefile.toml"), Lakefile + "\n");
         File.WriteAllText(Path.Combine(repository.Path, "lean-toolchain"), "leanprover/lean4:v4.31.0\n");
         File.WriteAllText(Path.Combine(repository.Path, "Trureturing.lean"), "def diskOnly : Nat := 1\n");
-        var build = BoundedProcessRunner.Run(
+        var build = TestProcessRunner.Run(
             "lake",
             new[] { "build" },
             repository.Path,
-            TimeSpan.FromSeconds(120),
+            TestBudgets.LeanProcessHangGuard,
             4 * 1024 * 1024);
         Assert.Equal(0, build.ExitCode);
         var raw = RawRepositorySnapshot.Create(new[]
@@ -319,11 +319,11 @@ public sealed class StandaloneLeanInspectorTests
                 File.WriteAllBytes(destination, file.RawBytes.AsSpan());
             }
 
-            var build = BoundedProcessRunner.Run(
+            var build = TestProcessRunner.Run(
                 "lake",
                 ["build"],
                 repositoryRoot,
-                TimeSpan.FromSeconds(120),
+                TestBudgets.LeanProcessHangGuard,
                 8 * 1024 * 1024);
             Assert.True(
                 build.ExitCode == 0,
@@ -357,11 +357,11 @@ public sealed class StandaloneLeanInspectorTests
                 arguments.Add("sha256:" + Convert.ToHexStringLower(SHA256.HashData(file.RawBytes.AsSpan())));
             }
 
-            var inspection = BoundedProcessRunner.Run(
+            var inspection = TestProcessRunner.Run(
                 "lake",
                 arguments,
                 repositoryRoot,
-                TimeSpan.FromSeconds(120),
+                TestBudgets.LeanProcessHangGuard,
                 8 * 1024 * 1024);
             Assert.True(
                 inspection.ExitCode == 0,
@@ -376,7 +376,7 @@ public sealed class StandaloneLeanInspectorTests
                     "compact", spoolReport, spoolMaterials, output,
                 ],
                 repositoryRoot,
-                TimeSpan.FromSeconds(120),
+                TestBudgets.LeanProcessHangGuard,
                 8 * 1024 * 1024);
             Assert.True(
                 compacted.ExitCode == 0,

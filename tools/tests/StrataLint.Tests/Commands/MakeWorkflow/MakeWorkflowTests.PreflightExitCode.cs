@@ -1,4 +1,3 @@
-using System.Text;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -115,6 +114,18 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(0, result.ExitCode);
     }
 
+    [Fact]
+    public void BannedApiDiagnosticParityMismatchFailsPreflight()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var result = RunPreflightScenario(
+            "banned-api-diagnostic-mismatch",
+            TestRepositoryLayout.FindRoot());
+
+        Assert.Equal(1, result.ExitCode);
+    }
+
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
     private static ProcessOutput RunPreflightScenario(string scenario, string sourceRoot)
     {
@@ -124,6 +135,7 @@ public sealed partial class MakeWorkflowTests
         var preflight = Path.Combine(root, PreflightScriptPath);
         var report = Path.Combine(root, ".lake", "build", "stratalint", "raw-lean-report.json");
         CopyPreflightScriptClosure(sourceRoot, root);
+        CopyBannedApiCompileFailProof(root);
         Directory.CreateDirectory(Path.GetDirectoryName(report)!);
         Directory.CreateDirectory(binDirectory);
         File.WriteAllText(
@@ -173,6 +185,19 @@ public sealed partial class MakeWorkflowTests
               printf '%s\n' 'out of date: Evidence/D5/values.json' >&2
               exit 44
             fi
+            if [[ "${1:-}" == build && "$*" == *BannedApiCompileFailProof.csproj* ]]; then
+              skipped=0
+              while IFS=: read -r line _; do
+                if [[ "${PREFLIGHT_SCENARIO:-}" == banned-api-diagnostic-mismatch && "$skipped" -eq 0 ]]; then
+                  skipped=1
+                  continue
+                fi
+                printf '%s(%s,1): error RS0030: fixture banned API\n' \
+                  'tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs' "$line" >&2
+              done < <(grep -nF '// banned-api-proof' \
+                tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs)
+              exit 1
+            fi
             if [[ "${1:-}" == build ]]; then exit 1; fi
             if [[ "${1:-}" == msbuild ]]; then exit 1; fi
             exit 0
@@ -220,7 +245,7 @@ public sealed partial class MakeWorkflowTests
             exit 0
             """);
 
-        var result = BoundedProcessRunner.Run(
+        var result = TestProcessRunner.Run(
             "/bin/bash",
             [
                 "-c",
@@ -254,11 +279,11 @@ public sealed partial class MakeWorkflowTests
 
     private static void RunScenarioGit(string root, params string[] arguments)
     {
-        var result = BoundedProcessRunner.Run(
+        var result = TestProcessRunner.Run(
             "/usr/bin/git",
             arguments,
             root,
-            TimeSpan.FromSeconds(10),
+            TestBudgets.ScriptProcessHangGuard,
             64 * 1024);
         if (result.ExitCode != 0)
         {
@@ -269,11 +294,11 @@ public sealed partial class MakeWorkflowTests
 
     private static string RunScenarioGitForOutput(string root, params string[] arguments)
     {
-        var result = BoundedProcessRunner.Run(
+        var result = TestProcessRunner.Run(
             "/usr/bin/git",
             arguments,
             root,
-            TimeSpan.FromSeconds(10),
+            TestBudgets.ScriptProcessHangGuard,
             64 * 1024);
         if (result.ExitCode != 0)
         {
@@ -292,136 +317,4 @@ public sealed partial class MakeWorkflowTests
             UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
     }
 
-    [Fact]
-    public void PreflightReportsTriggeredPerfFlushFailureWithoutChangingSuccess()
-    {
-        if (OperatingSystem.IsWindows()) return;
-
-        using var scenario = RunPerfFlushFailureScenario(PreflightScriptPath, "preflight");
-        var output = Encoding.UTF8.GetString(scenario.Result.StandardOutput);
-
-        Assert.Equal(0, scenario.Result.ExitCode);
-        Assert.Equal(
-            ["local-harness-gate", "preflight"],
-            File.ReadAllLines(scenario.Probe));
-        Assert.Contains(
-            "{\"event\":\"performance_event_commit\",\"status\":\"failed\","
-                + "\"source\":\"preflight\",\"reason\":\"fixture-failure\","
-                + "\"exit_code\":23}",
-            output,
-            StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void LocalHarnessGateReportsTriggeredPerfFlushFailureWithoutChangingSuccess()
-    {
-        if (OperatingSystem.IsWindows()) return;
-
-        using var scenario = RunPerfFlushFailureScenario(
-            LocalHarnessGateScriptPath,
-            "local-harness-gate");
-        var output = Encoding.UTF8.GetString(scenario.Result.StandardOutput);
-
-        Assert.Equal(0, scenario.Result.ExitCode);
-        Assert.Equal(["local-harness-gate"], File.ReadAllLines(scenario.Probe));
-        Assert.Contains(
-            "{\"event\":\"performance_event_commit\",\"status\":\"failed\","
-                + "\"source\":\"local-harness-gate\",\"reason\":\"fixture-failure\","
-                + "\"exit_code\":23}",
-            output,
-            StringComparison.Ordinal);
-    }
-
-    [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
-    private static PerfFlushFailureScenario RunPerfFlushFailureScenario(
-        string scriptPath,
-        string failingSource)
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var fixture = new TemporaryDirectory();
-        try
-        {
-            var candidateRoot = Path.Combine(fixture.Path, "candidate");
-            var homeDirectory = Path.Combine(fixture.Path, "home");
-            var binDirectory = Path.Combine(homeDirectory, ".dotnet");
-            var candidateDll = Path.Combine(candidateRoot, "bin", "candidate.dll");
-            var probe = Path.Combine(fixture.Path, "perf-flush-probe.txt");
-            Directory.CreateDirectory(Path.GetDirectoryName(candidateDll)!);
-            Directory.CreateDirectory(binDirectory);
-            Directory.CreateDirectory(Path.Combine(candidateRoot, "tools", "scripts", "lib"));
-            File.WriteAllText(candidateDll, string.Empty);
-            File.WriteAllText(
-                Path.Combine(candidateRoot, "tools", "scripts", "lib", "perf-event-lib.sh"),
-                "perf_make_spool_dir() { mktemp -d; }\n"
-                    + "perf_capture_event() { printf '{}\\n' >> \"$1\"; }\n"
-                    + "perf_flush_events() {\n"
-                    + "  printf '%s\\n' \"${3:-missing-source}\" >> \"$PERF_FLUSH_PROBE\"\n"
-                    + "  if [[ \"${3:-}\" == \"$PERF_FLUSH_FAILURE_SOURCE\" ]]; then\n"
-                    + "    printf '{\"event\":\"performance_event_commit\",\"status\":\"failed\",\"source\":\"%s\",\"reason\":\"fixture-failure\",\"exit_code\":23}\\n' \"$3\"\n"
-                    + "    return 23\n"
-                    + "  fi\n"
-                    + "}\n",
-                new UTF8Encoding(false));
-            var localGate = Path.Combine(candidateRoot, LocalHarnessGateScriptPath);
-            Directory.CreateDirectory(Path.GetDirectoryName(localGate)!);
-            File.Copy(Path.Combine(root, LocalHarnessGateScriptPath), localGate);
-            File.SetUnixFileMode(
-                localGate,
-                UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-            WriteHarnessGateChainReportPair(candidateRoot);
-            WriteHarnessGateChainGitShim(binDirectory, candidateRoot);
-            WriteHarnessGateChainDotnetShim(binDirectory);
-            WriteExecutable(
-                Path.Combine(binDirectory, "lake"),
-                "#!/usr/bin/env bash\n[[ \"${1:-}\" == --version ]] || exit 64\nexit 0");
-            WriteHarnessGateChainMakeShim(binDirectory);
-
-            var command = scriptPath == PreflightScriptPath
-                ? "PREFLIGHT_ADMISSION_RC=0 PREFLIGHT_CANDIDATE_ROOT=\"$1\" "
-                    + "PREFLIGHT_GATE=\"$2\" PREFLIGHT_LOCAL_GATE=\"$3\" HOME=\"$4\" "
-                    + "BASE=base PATH=\"$5:/usr/bin:/bin\" PERF_FLUSH_PROBE=\"$6\" "
-                    + "PERF_FLUSH_FAILURE_SOURCE=\"$7\" exec /bin/bash \"$8\""
-                : "PREFLIGHT_ADMISSION_RC=0 PREFLIGHT_EXPECTED_GATE_BASE=\"$9\" "
-                    + "HOME=\"$4\" PATH=\"$5:/usr/bin:/bin\" PERF_FLUSH_PROBE=\"$6\" "
-                    + "PERF_FLUSH_FAILURE_SOURCE=\"$7\" exec /bin/bash \"$3\" "
-                    + "--candidate \"$1\" --base base --skip-engineering";
-            var result = BoundedProcessRunner.Run(
-                "/bin/bash",
-                [
-                    "-c",
-                    command,
-                    "perf-flush-failure",
-                    candidateRoot,
-                    Path.Combine(root, ".github", "scripts", "harness-gate.sh"),
-                    localGate,
-                    homeDirectory,
-                    binDirectory,
-                    probe,
-                    failingSource,
-                    Path.Combine(root, PreflightScriptPath),
-                    GateForkSha,
-                ],
-                candidateRoot,
-                BoundedProcessRunner.HangDetectionBudget,
-                64 * 1024);
-
-            return new PerfFlushFailureScenario(fixture, result, probe);
-        }
-        catch
-        {
-            fixture.Dispose();
-            throw;
-        }
-    }
-
-    private sealed class PerfFlushFailureScenario(
-        TemporaryDirectory fixture,
-        ProcessOutput result,
-        string probe) : IDisposable
-    {
-        internal ProcessOutput Result { get; } = result;
-        internal string Probe { get; } = probe;
-
-        public void Dispose() => fixture.Dispose();
-    }
 }
