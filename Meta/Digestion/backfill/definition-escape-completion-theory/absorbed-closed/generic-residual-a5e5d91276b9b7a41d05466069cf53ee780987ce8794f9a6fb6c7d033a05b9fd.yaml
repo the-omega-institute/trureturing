@@ -1,0 +1,17 @@
+ast_path: 证明义务/56.4/occurrence/4
+fingerprints:
+  raw_sha256: sha256:a5e5d91276b9b7a41d05466069cf53ee780987ce8794f9a6fb6c7d033a05b9fd
+  normalized_sha256: sha256:a5e5d91276b9b7a41d05466069cf53ee780987ce8794f9a6fb6c7d033a05b9fd
+cas_ref: sha256:a5e5d91276b9b7a41d05466069cf53ee780987ce8794f9a6fb6c7d033a05b9fd
+coverage_gids:
+  - D5/S3/ConceptDynamics/TimeProjection/PredictionExpansionEscape.prediction_escape_iff_expansion_escape
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/TimeProjection/PredictionExpansionEscape.prediction_escape_iff_expansion_escape
+      source_sha256: sha256:a5e5d91276b9b7a41d05466069cf53ee780987ce8794f9a6fb6c7d033a05b9fd
+      target_sha256: sha256:7e341d391029165cf1325313ed08dd9a9fc4fd1efff7923316a906c6bc759e9c
+  scribe:
+    - gid: D5/S3/ConceptDynamics/TimeProjection/PredictionExpansionEscape.prediction_escape_iff_expansion_escape
+      definition_sha256: sha256:5cab71fbdf9ba870aadb92c16189f902cfd37b2ef335d2f7d07aeb2cc6b93111
+      emission_sha256: sha256:e1165913075ee0163901a625afcc207d906df6cfd1c6e6ddfe0dc69cb8136da3
+  unresolved_subitems: []

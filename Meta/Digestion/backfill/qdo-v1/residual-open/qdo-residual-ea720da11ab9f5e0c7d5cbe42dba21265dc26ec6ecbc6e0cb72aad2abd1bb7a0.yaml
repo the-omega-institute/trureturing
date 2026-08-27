@@ -1,0 +1,10 @@
+ast_path: proposition/43.8
+fingerprints:
+  raw_sha256: sha256:ea720da11ab9f5e0c7d5cbe42dba21265dc26ec6ecbc6e0cb72aad2abd1bb7a0
+  normalized_sha256: sha256:ea720da11ab9f5e0c7d5cbe42dba21265dc26ec6ecbc6e0cb72aad2abd1bb7a0
+cas_ref: sha256:ea720da11ab9f5e0c7d5cbe42dba21265dc26ec6ecbc6e0cb72aad2abd1bb7a0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

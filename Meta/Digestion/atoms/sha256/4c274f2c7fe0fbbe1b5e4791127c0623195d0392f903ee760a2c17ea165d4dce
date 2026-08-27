@@ -1,0 +1,38 @@
+## 112.1 Ramanujan congruence 的格几何解释
+
+因为：
+
+$$
+r_\Lambda(n)\in\mathbb Z,
+$$
+
+而：
+
+$$
+\gcd(65520,691)=1,
+$$
+
+所以：
+
+$$
+\boxed{
+\tau(n)\equiv\sigma_{11}(n)\pmod{691}.
+}
+\tag{112.5}
+$$
+
+这就是 Ramanujan 的 \(691\) congruence。现代工作仍把 \(691\) 视为 weight-\(12\) Eisenstein–cusp congruence 的原型。([arXiv][4])
+
+因此：
+
+$$
+\boxed{
+691
+=
+\text{weight-12 Eisenstein 主项与 primitive cusp residual
+在有限特征中发生碰撞的素数。}
+}
+$$
+
+---
+

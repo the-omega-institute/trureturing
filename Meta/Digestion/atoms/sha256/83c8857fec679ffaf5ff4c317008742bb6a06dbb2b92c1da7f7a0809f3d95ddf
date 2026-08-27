@@ -1,0 +1,46 @@
+# 第一百三十六部　无质量状态与 genus-zero 刚性
+
+Monster 模块满足：
+
+$$
+(V^\natural)_1=0.
+$$
+
+对应：
+
+$$
+\boxed{
+c(0)=0.
+}
+$$
+
+由于 Monster Lie 根重数为：
+
+$$
+c(mn),
+$$
+
+坐标轴上的潜在根：
+
+$$
+mn=0
+$$
+
+没有普通根重数贡献。
+
+因此在根空间图表中，没有一整族零质量／零能量根通道。
+
+这不是单独证明 genus zero 的充分条件，但它是 Lie 代数结构中极其关键的刚性条件。在 Fricke-type Monstrous Lie algebras 中，由 no-ghost theorem 产生的兼容条件可以导出 moonshine functions 的 genus-zero 性质。([arXiv][5])
+
+OACTC 的结构解释为：
+
+$$
+\boxed{
+\text{genus-zero 刚性需要：
+极点源明确、零质量通道受控、
+Hecke 动力学闭合。}
+}
+$$
+
+---
+

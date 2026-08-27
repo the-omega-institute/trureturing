@@ -1,0 +1,45 @@
+# 第一百三十二部　Golden Monster 热乘积
+
+令：
+
+$$
+p=e^{-\varphi t},
+\qquad
+q=e^{-t},
+\qquad
+t>0.
+$$
+
+定义：
+
+$$
+\boxed{
+\mathcal M_\varphi(t)
+=
+\frac{
+J(e^{-\varphi t})-J(e^{-t})
+}{
+e^{\varphi t}-e^t
+}.
+}
+\tag{132.1}
+$$
+
+在乘积收敛区域中，Monster denominator 给出：
+
+$$
+\boxed{
+\mathcal M_\varphi(t)
+=
+\prod_{m,n\ge1}
+\left(
+1-e^{-t(m\varphi+n)}
+\right)^{c(mn)}.
+}
+\tag{132.2}
+$$
+
+这就是 **Golden Monster product**。
+
+---
+

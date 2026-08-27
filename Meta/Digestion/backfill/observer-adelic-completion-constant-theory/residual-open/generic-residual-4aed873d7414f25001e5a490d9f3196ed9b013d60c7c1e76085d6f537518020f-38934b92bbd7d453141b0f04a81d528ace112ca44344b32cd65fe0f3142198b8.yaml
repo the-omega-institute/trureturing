@@ -1,0 +1,10 @@
+ast_path: section/104-2-Deng-层/clause/1
+fingerprints:
+  raw_sha256: sha256:4aed873d7414f25001e5a490d9f3196ed9b013d60c7c1e76085d6f537518020f
+  normalized_sha256: sha256:4aed873d7414f25001e5a490d9f3196ed9b013d60c7c1e76085d6f537518020f
+cas_ref: sha256:4aed873d7414f25001e5a490d9f3196ed9b013d60c7c1e76085d6f537518020f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

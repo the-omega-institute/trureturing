@@ -1,0 +1,16 @@
+### 动力学完备性
+
+$$
+T_rf
+\in
+\mathbb C[f]
+$$
+
+或更强：
+
+$$
+rT_rf=\mathcal P_r(f).
+$$
+
+所有 Hecke coarse-graining 都闭合回同一个坐标。
+

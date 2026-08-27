@@ -1,0 +1,44 @@
+## 定理 126.1（Monster primitive Möbius recovery）
+
+令：
+
+$$
+L(p,q)=-\log\mathcal D(p,q).
+$$
+
+则：
+
+$$
+\boxed{
+H(p,q)
+=
+\sum_{k\ge1}
+\frac{\mu(k)}k
+L(p^k,q^k).
+}
+\tag{126.3}
+$$
+
+### 证明
+
+代入式 (126.2)：
+
+$$
+\begin{aligned}
+\sum_{k\ge1}\frac{\mu(k)}kL(p^k,q^k)
+&=
+\sum_{k,r\ge1}
+\frac{\mu(k)}{kr}
+H(p^{kr},q^{kr})\\
+&=
+\sum_{N\ge1}
+\frac1N
+\left(\sum_{k\mid N}\mu(k)\right)
+H(p^N,q^N).
+\end{aligned}
+$$
+
+只有 \(N=1\) 时除数 Möbius 和为 \(1\)，其余为 \(0\)。∎
+
+---
+

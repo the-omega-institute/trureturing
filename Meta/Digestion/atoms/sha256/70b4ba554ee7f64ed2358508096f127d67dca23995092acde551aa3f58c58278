@@ -1,0 +1,46 @@
+* \(C_{\mathrm{McKay}}\)：McKay \(E_8\) Coxeter 算子。
+
+真正的比较桥可以改写为寻找：
+
+$$
+\boxed{
+U\in GL_8(\mathbb Z)
+}
+$$
+
+使：
+
+$$
+\boxed{
+U^TG_{\mathrm{ico}}U
+=
+G_{\mathrm{McKay}},
+}
+\tag{102.1}
+$$
+
+并且：
+
+$$
+\boxed{
+U^{-1}C_{\mathrm{ico}}U
+=
+C_{\mathrm{McKay}}.
+}
+\tag{102.2}
+$$
+
+如果进一步要求：
+
+$$
+U^{-1}J_{\mathrm{Hodge}}U
+=
+J_{\mathrm{Cox}},
+$$
+
+则该问题成为一个完全有限、可计算、可证书化的整数共轭问题。
+
+这比泛泛询问“两个 \(E_8\) 为什么相同”更适合科学研究。
+
+---
+
