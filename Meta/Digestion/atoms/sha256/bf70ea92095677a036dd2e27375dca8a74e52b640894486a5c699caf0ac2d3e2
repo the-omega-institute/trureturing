@@ -1,0 +1,58 @@
+# 166. 委托链中的信任可以组合，但错误预算也组合
+
+设：
+
+[
+X\xrightarrow{R_1}M_1\xrightarrow{R_2}M_2\xrightarrow{R_3}Y.
+]
+
+如果全部方格精确，则：
+
+[
+T=R_3R_2R_1
+]
+
+给出精确委托链。
+
+若每一步具有度量误差：
+
+[
+\epsilon_i,
+]
+
+并且后续映射 Lipschitz 常数分别为：
+
+[
+L_2,L_3,
+]
+
+则总误差满足：
+
+[
+\boxed{
+\epsilon_{\mathrm{total}}
+\le
+L_3L_2\epsilon_1
++
+L_3\epsilon_2
++
+\epsilon_3.
+}
+]
+
+这与前面 defect chain rule 同型。
+
+所以：
+
+[
+\boxed{
+\text{长信任链的风险}
+==============
+
+\text{早期误差经过后续 transport 被放大}.
+}
+]
+
+这适用于：
+
+* 多级官僚体系；

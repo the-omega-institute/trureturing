@@ -1,0 +1,10 @@
+ast_path: 假说/4.8/clause/2
+fingerprints:
+  raw_sha256: sha256:f61d434e59c26b94e598573a797effe7c451b1193002c61c189067db862caf2a
+  normalized_sha256: sha256:f61d434e59c26b94e598573a797effe7c451b1193002c61c189067db862caf2a
+cas_ref: sha256:f61d434e59c26b94e598573a797effe7c451b1193002c61c189067db862caf2a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

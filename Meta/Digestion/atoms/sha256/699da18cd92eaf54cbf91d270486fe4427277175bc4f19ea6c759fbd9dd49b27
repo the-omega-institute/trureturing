@@ -1,0 +1,16 @@
+\[
+\boxed{
+\rho_\Gamma(L,N)
+=
+\inf_{C(S)\le L}
+\frac{
+\nu(\mathcal E_N(q\vee S,\tau))
+}{
+\nu(\mathcal E_N(q,\tau))
+}.
+}
+\]
+
+这是一张二维曲面：
+
+- 沿 \(L\) 增大，允许更复杂的定义；

@@ -1,0 +1,16 @@
+- realizability 或 admission 拒绝某些形式坐标。
+
+因此必须分开：
+
+\[
+\boxed{
+\text{state faithfulness}
+\neq
+\text{representation surjectivity}
+\neq
+\text{dynamic closure}
+\neq
+\text{self-description closure}.
+}
+\]
+

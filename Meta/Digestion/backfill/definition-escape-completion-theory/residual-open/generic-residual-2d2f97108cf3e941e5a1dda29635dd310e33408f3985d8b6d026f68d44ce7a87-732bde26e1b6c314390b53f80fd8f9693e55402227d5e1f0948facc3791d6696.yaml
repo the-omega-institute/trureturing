@@ -1,0 +1,10 @@
+ast_path: section/12-1-单项小不推出全族小/clause/1
+fingerprints:
+  raw_sha256: sha256:2d2f97108cf3e941e5a1dda29635dd310e33408f3985d8b6d026f68d44ce7a87
+  normalized_sha256: sha256:2d2f97108cf3e941e5a1dda29635dd310e33408f3985d8b6d026f68d44ce7a87
+cas_ref: sha256:2d2f97108cf3e941e5a1dda29635dd310e33408f3985d8b6d026f68d44ce7a87
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

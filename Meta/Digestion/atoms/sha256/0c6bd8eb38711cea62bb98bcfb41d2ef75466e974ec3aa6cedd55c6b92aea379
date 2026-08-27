@@ -1,0 +1,1 @@
+- `D5/S3/Analytic/Zeta/ZetaPrimeIndependence.lean`：证明全部素数索引的指数坐标构成 `iIndepFun`，不是只证明有限或两两独立；

@@ -1,0 +1,10 @@
+ast_path: section/328-在完全相同的认识与规范输入下-确定主体不能持续分歧/clause/4
+fingerprints:
+  raw_sha256: sha256:adeac5a7a432ac25b5c114d30d798b8383dc916708d4fc831ee02bf22ef8dd39
+  normalized_sha256: sha256:adeac5a7a432ac25b5c114d30d798b8383dc916708d4fc831ee02bf22ef8dd39
+cas_ref: sha256:adeac5a7a432ac25b5c114d30d798b8383dc916708d4fc831ee02bf22ef8dd39
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

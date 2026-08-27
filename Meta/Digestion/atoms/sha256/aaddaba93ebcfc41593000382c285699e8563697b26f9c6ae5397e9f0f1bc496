@@ -1,0 +1,16 @@
+- `invalid`：规范证据槽缺失、格式不可判、证书不通过，或同一冻结命题同时出现有效正反证据。T1--T3、T5 与每个 T4 子项均按 `statement-revised` → 上述 `invalid` → `refuted` → `proved` → 缺少决定性证据则 `invalid` 的固定优先序取值，故子项结算也是总函数。
+
+T4 先冻结两个合取子命题 \(C_{4a}\)、\(C_{4b}\)，分别对应 T4(a)、T4(b)，并各自按上式结算。kernel 定理与机器见证只是证据载体不同，都会归一为子项 `proved`。父项按以下总函数聚合：
+
+\[
+s_4=
+\begin{cases}
+\mathsf{statement\mbox{-}revised},&\text{T4 或任一子命题被改写},\\
+\mathsf{refuted},&\text{否则，至少一个子命题被有效反驳},\\
+\mathsf{proved},&\text{否则，两个子命题均为 proved},\\
+\mathsf{invalid},&\text{否则}.
+\end{cases}
+\]
+
+因此一项由 kernel 定理证明、另一项由机器见证验证的混合正证据聚合为 T4 `proved`；一正一反聚合为 T4 `refuted`，不会永久 open。机器验证两个边界反模型是在支持 T4，不是反驳 T4。
+

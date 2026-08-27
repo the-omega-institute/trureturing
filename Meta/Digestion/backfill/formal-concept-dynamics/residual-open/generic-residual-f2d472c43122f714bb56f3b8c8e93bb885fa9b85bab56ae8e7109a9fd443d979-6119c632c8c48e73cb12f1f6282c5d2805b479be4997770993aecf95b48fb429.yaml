@@ -1,0 +1,10 @@
+ast_path: section/问责/clause/1
+fingerprints:
+  raw_sha256: sha256:f2d472c43122f714bb56f3b8c8e93bb885fa9b85bab56ae8e7109a9fd443d979
+  normalized_sha256: sha256:f2d472c43122f714bb56f3b8c8e93bb885fa9b85bab56ae8e7109a9fd443d979
+cas_ref: sha256:f2d472c43122f714bb56f3b8c8e93bb885fa9b85bab56ae8e7109a9fd443d979
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/1-1-素数-二次型与-crossing-锚点/clause/1
+fingerprints:
+  raw_sha256: sha256:fab58b0eb20533a1f8be8080959b63a2c92835c3e99c24ad04f4918904097edd
+  normalized_sha256: sha256:fab58b0eb20533a1f8be8080959b63a2c92835c3e99c24ad04f4918904097edd
+cas_ref: sha256:fab58b0eb20533a1f8be8080959b63a2c92835c3e99c24ad04f4918904097edd
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

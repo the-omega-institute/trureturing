@@ -1,0 +1,16 @@
+\[
+\boxed{
+\mathfrak E
+=
+\bigl(
+X,\Theta,\pi,\mathcal I,
+(O_i,\Sigma_i)_{i\in\mathcal I},
+(K_i)_{i\in\mathcal I},
+T,c
+\bigr),
+}
+\]
+
+其中：
+
+- \(X\) 是真实状态空间；

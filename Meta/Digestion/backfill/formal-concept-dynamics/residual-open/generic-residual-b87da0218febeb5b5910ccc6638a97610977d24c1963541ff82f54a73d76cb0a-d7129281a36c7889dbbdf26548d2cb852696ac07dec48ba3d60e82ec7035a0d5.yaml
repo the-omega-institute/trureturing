@@ -1,0 +1,10 @@
+ast_path: section/状态公开后再自愿协商/clause/2
+fingerprints:
+  raw_sha256: sha256:b87da0218febeb5b5910ccc6638a97610977d24c1963541ff82f54a73d76cb0a
+  normalized_sha256: sha256:b87da0218febeb5b5910ccc6638a97610977d24c1963541ff82f54a73d76cb0a
+cas_ref: sha256:b87da0218febeb5b5910ccc6638a97610977d24c1963541ff82f54a73d76cb0a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

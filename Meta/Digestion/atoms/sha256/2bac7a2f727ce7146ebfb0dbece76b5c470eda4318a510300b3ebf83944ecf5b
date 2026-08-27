@@ -1,0 +1,10 @@
+## 命题 76.1（策略截面计数）
+
+有限非空动作纤维上：
+
+$$
+|\operatorname{Sec}(\mathcal A)|
+=
+\prod_q|\mathcal A(q)|.
+$$
+

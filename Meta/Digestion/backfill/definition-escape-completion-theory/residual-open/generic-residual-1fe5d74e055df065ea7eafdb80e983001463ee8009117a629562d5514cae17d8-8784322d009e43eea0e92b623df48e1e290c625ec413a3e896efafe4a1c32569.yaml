@@ -1,0 +1,10 @@
+ast_path: section/第三十一部-开放反射完成/clause/1
+fingerprints:
+  raw_sha256: sha256:1fe5d74e055df065ea7eafdb80e983001463ee8009117a629562d5514cae17d8
+  normalized_sha256: sha256:1fe5d74e055df065ea7eafdb80e983001463ee8009117a629562d5514cae17d8
+cas_ref: sha256:1fe5d74e055df065ea7eafdb80e983001463ee8009117a629562d5514cae17d8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

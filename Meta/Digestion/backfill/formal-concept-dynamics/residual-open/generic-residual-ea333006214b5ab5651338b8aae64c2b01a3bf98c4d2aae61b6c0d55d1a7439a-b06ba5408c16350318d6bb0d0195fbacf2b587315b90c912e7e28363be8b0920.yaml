@@ -1,0 +1,10 @@
+ast_path: section/最小表达完成/clause/5
+fingerprints:
+  raw_sha256: sha256:ea333006214b5ab5651338b8aae64c2b01a3bf98c4d2aae61b6c0d55d1a7439a
+  normalized_sha256: sha256:ea333006214b5ab5651338b8aae64c2b01a3bf98c4d2aae61b6c0d55d1a7439a
+cas_ref: sha256:ea333006214b5ab5651338b8aae64c2b01a3bf98c4d2aae61b6c0d55d1a7439a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,13 @@
+## 命题 48.1（同纤维路径判据）
+
+$$
+\pi(x)=\pi(y)
+\Rightarrow
+\left[
+\operatorname{Joined}(x,y)
+\iff
+\exists n\in\mathbb Z,
+\ y=\operatorname{realFlow}(n)+x
+\right].
+$$
+

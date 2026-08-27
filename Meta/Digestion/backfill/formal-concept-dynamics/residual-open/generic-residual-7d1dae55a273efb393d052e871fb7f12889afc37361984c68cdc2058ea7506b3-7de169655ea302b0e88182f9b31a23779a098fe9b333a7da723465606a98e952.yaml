@@ -1,0 +1,10 @@
+ast_path: section/400-制度可以充当均衡选择器-但选择不是由收益结构唯一推出/clause/1
+fingerprints:
+  raw_sha256: sha256:7d1dae55a273efb393d052e871fb7f12889afc37361984c68cdc2058ea7506b3
+  normalized_sha256: sha256:7d1dae55a273efb393d052e871fb7f12889afc37361984c68cdc2058ea7506b3
+cas_ref: sha256:7d1dae55a273efb393d052e871fb7f12889afc37361984c68cdc2058ea7506b3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
