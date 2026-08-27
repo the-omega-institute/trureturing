@@ -3,19 +3,18 @@
    mirror-B: D5/B/S3/Analytic/Adelic/ZeroSumGaugeGlobalCompletion
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: A zero-sum gauge preserves the global defect and its completion-point orbit class. -/
+   digest: A zero-sum gauge preserves the global defect and any gauge-invariant completion set. -/
 
-import Mathlib.GroupTheory.GroupAction.Basic
 import Mathlib.Topology.Algebra.InfiniteSum.Group
 import Mathlib.Topology.Algebra.Ring.Real
 
 /- Library-search audit trail (2026-08-28):
    * Repository searches found no prior adelic completion-point or completion-signature model.
    * Pinned Mathlib supplies `Summable.tsum_add`, used for the additive-defect equality.
-   * Pinned Mathlib also supplies `AddAction.orbitRel.Quotient` and `Quotient.sound`, used
-     directly for the source's structural signature `Sigma(C) = K(C)/G`.
    * The defect codomain is therefore abstracted to a Hausdorff topological additive
      commutative group. `Real` appears only in the concrete reverse-fidelity probe.
+   * `T2Space Defect` is required by Mathlib's `tsum` representation and is not a
+     hypothesis stated in the source atom.
    * Both finite and infinite place types are required to be nonempty, matching the source's
      finite-prime channel and real infinite factor. -/
 
@@ -105,7 +104,10 @@ def globalAdditiveDefect {FinitePlace : Type u_f} {InfinitePlace : Type u_i}
     (ledger : AdelicLocalLedger FinitePlace InfinitePlace Defect) : Defect :=
   ∑' place, ledger.localContribution place
 
-/-- The section-15 sum calculation: a zero-sum gauge preserves `Delta_glob`. -/
+/-- The section-15 sum calculation: a zero-sum gauge preserves `Delta_glob`.
+
+`T2Space Defect` is required by Mathlib's `tsum` representation; it is not a source
+hypothesis. -/
 theorem globalAdditiveDefect_gaugeTransform
     {FinitePlace : Type u_f} {InfinitePlace : Type u_i} {Defect : Type u_d}
     [Nonempty FinitePlace] [Nonempty InfinitePlace]
@@ -123,119 +125,59 @@ theorem globalAdditiveDefect_gaugeTransform
       (ZeroSumGauge.hasSum_zero gauge).summable,
     (ZeroSumGauge.hasSum_zero gauge).tsum_eq, add_zero]
 
-/-- The normalization condition for the section-15 additive completion problem. -/
-def normalizedLedgerSet {FinitePlace : Type u_f} {InfinitePlace : Type u_i}
-    {Defect : Type u_d} [Nonempty FinitePlace] [Nonempty InfinitePlace]
-    [AddCommGroup Defect] [TopologicalSpace Defect] :
-    Set (AdelicLocalLedger FinitePlace InfinitePlace Defect) :=
-  Set.univ
+/-- The source's completion-point set `K(C) = {L in N | Delta_glob(L) = 0}`.
 
-/-- The source's completion-point set `K(C) = {L in N | Delta_glob(L) = 0}`. -/
+The source leaves the normalization constraint `N` abstract, so it is an explicit
+parameter rather than being identified with the full ledger space. -/
 def globalCompletionPointSet
     {FinitePlace : Type u_f} {InfinitePlace : Type u_i} {Defect : Type u_d}
     [Nonempty FinitePlace] [Nonempty InfinitePlace]
-    [AddCommGroup Defect] [TopologicalSpace Defect] :
+    [AddCommGroup Defect] [TopologicalSpace Defect]
+    (normalizationSet : Set (AdelicLocalLedger FinitePlace InfinitePlace Defect)) :
     Set (AdelicLocalLedger FinitePlace InfinitePlace Defect) :=
-  normalizedLedgerSet ∩ { ledger | globalAdditiveDefect ledger = 0 }
+  normalizationSet ∩ { ledger | globalAdditiveDefect ledger = 0 }
 
-/-- A point of `K(C)`, bundled with normalization and vanishing global defect. -/
-abbrev GlobalCompletionPoint
-    (FinitePlace : Type u_f) (InfinitePlace : Type u_i) (Defect : Type u_d)
-    [Nonempty FinitePlace] [Nonempty InfinitePlace]
-    [AddCommGroup Defect] [TopologicalSpace Defect] :=
-  globalCompletionPointSet (FinitePlace := FinitePlace)
-    (InfinitePlace := InfinitePlace) (Defect := Defect)
+/-- A zero-sum local gauge preserves the global additive defect. If both the gauge and its
+inverse preserve the source's abstract normalization set `N`, its image on the completion
+set is exactly `K(C)`.
 
-/-- A zero-sum gauge maps a completion point to a completion point. -/
-def gaugeTransformCompletionPoint
-    {FinitePlace : Type u_f} {InfinitePlace : Type u_i} {Defect : Type u_d}
-    [Nonempty FinitePlace] [Nonempty InfinitePlace]
-    [AddCommGroup Defect] [TopologicalSpace Defect]
-    [IsTopologicalAddGroup Defect] [T2Space Defect]
-    (completionPoint : GlobalCompletionPoint FinitePlace InfinitePlace Defect)
-    (gauge : ZeroSumGauge FinitePlace InfinitePlace Defect) :
-    GlobalCompletionPoint FinitePlace InfinitePlace Defect :=
-  ⟨gaugeTransform completionPoint.1 gauge, by
-    refine ⟨Set.mem_univ _, ?_⟩
-    change globalAdditiveDefect (gaugeTransform completionPoint.1 gauge) = 0
-    rw [globalAdditiveDefect_gaugeTransform, completionPoint.property.2]⟩
-
-/-- The zero-sum gauge group acts on the global completion-point set `K(C)`. -/
-instance globalCompletionPointAddAction
-    {FinitePlace : Type u_f} {InfinitePlace : Type u_i} {Defect : Type u_d}
-    [Nonempty FinitePlace] [Nonempty InfinitePlace]
-    [AddCommGroup Defect] [TopologicalSpace Defect]
-    [IsTopologicalAddGroup Defect] [T2Space Defect] :
-    AddAction (ZeroSumGauge FinitePlace InfinitePlace Defect)
-      (GlobalCompletionPoint FinitePlace InfinitePlace Defect) where
-  vadd gauge completionPoint := gaugeTransformCompletionPoint completionPoint gauge
-  zero_vadd completionPoint := by
-    apply Subtype.ext
-    apply AdelicLocalLedger.ext
-    funext place
-    change completionPoint.1.localContribution place + 0 =
-      completionPoint.1.localContribution place
-    exact add_zero _
-  add_vadd first second completionPoint := by
-    apply Subtype.ext
-    apply AdelicLocalLedger.ext
-    funext place
-    change completionPoint.1.localContribution place +
-        (first.1 place + second.1 place) =
-      (completionPoint.1.localContribution place + second.1 place) + first.1 place
-    abel
-
-/-- The structural completion signature `Sigma(C) = K(C)/G`. -/
-abbrev StructuralCompletionSignature
-    (FinitePlace : Type u_f) (InfinitePlace : Type u_i) (Defect : Type u_d)
-    [Nonempty FinitePlace] [Nonempty InfinitePlace]
-    [AddCommGroup Defect] [TopologicalSpace Defect]
-    [IsTopologicalAddGroup Defect] [T2Space Defect] :=
-  AddAction.orbitRel.Quotient (ZeroSumGauge FinitePlace InfinitePlace Defect)
-    (GlobalCompletionPoint FinitePlace InfinitePlace Defect)
-
-/-- The orbit class of a completion point in the structural completion signature. -/
-def structuralCompletionSignatureClass
-    {FinitePlace : Type u_f} {InfinitePlace : Type u_i} {Defect : Type u_d}
-    [Nonempty FinitePlace] [Nonempty InfinitePlace]
-    [AddCommGroup Defect] [TopologicalSpace Defect]
-    [IsTopologicalAddGroup Defect] [T2Space Defect]
-    (completionPoint : GlobalCompletionPoint FinitePlace InfinitePlace Defect) :
-    StructuralCompletionSignature FinitePlace InfinitePlace Defect :=
-  Quotient.mk'' completionPoint
-
-/-- Moving a completion point by a gauge does not change its class in `K(C)/G`. -/
-theorem structuralCompletionSignatureClass_gaugeTransform
-    {FinitePlace : Type u_f} {InfinitePlace : Type u_i} {Defect : Type u_d}
-    [Nonempty FinitePlace] [Nonempty InfinitePlace]
-    [AddCommGroup Defect] [TopologicalSpace Defect]
-    [IsTopologicalAddGroup Defect] [T2Space Defect]
-    (completionPoint : GlobalCompletionPoint FinitePlace InfinitePlace Defect)
-    (gauge : ZeroSumGauge FinitePlace InfinitePlace Defect) :
-    structuralCompletionSignatureClass
-        (gaugeTransformCompletionPoint completionPoint gauge) =
-      structuralCompletionSignatureClass completionPoint := by
-  apply Quotient.sound
-  exact ⟨gauge, rfl⟩
-
-/-- A zero-sum local gauge preserves both the global additive defect and every structural
-completion-signature class in `Sigma(C) = K(C)/G`. -/
+`T2Space Defect` is required by Mathlib's `tsum` representation; it is not a source
+hypothesis. -/
 theorem zero_sum_gauge_preserves_global_completion
     {FinitePlace : Type u_f} {InfinitePlace : Type u_i} {Defect : Type u_d}
     [Nonempty FinitePlace] [Nonempty InfinitePlace]
     [AddCommGroup Defect] [TopologicalSpace Defect]
     [IsTopologicalAddGroup Defect] [T2Space Defect]
+    (normalizationSet : Set (AdelicLocalLedger FinitePlace InfinitePlace Defect))
     (ledger : AdelicLocalLedger FinitePlace InfinitePlace Defect)
-    (gauge : ZeroSumGauge FinitePlace InfinitePlace Defect) :
+    (gauge : ZeroSumGauge FinitePlace InfinitePlace Defect)
+    (normalizationSet_gauge_closed :
+      Set.MapsTo (fun localLedger ↦ gaugeTransform localLedger gauge)
+        normalizationSet normalizationSet)
+    (normalizationSet_neg_gauge_closed :
+      Set.MapsTo (fun localLedger ↦ gaugeTransform localLedger (-gauge))
+        normalizationSet normalizationSet) :
     globalAdditiveDefect (gaugeTransform ledger gauge) =
         globalAdditiveDefect ledger ∧
-      ∀ completionPoint : GlobalCompletionPoint FinitePlace InfinitePlace Defect,
-        structuralCompletionSignatureClass
-            (gaugeTransformCompletionPoint completionPoint gauge) =
-          structuralCompletionSignatureClass completionPoint := by
-  exact ⟨globalAdditiveDefect_gaugeTransform ledger gauge,
-    fun completionPoint ↦
-      structuralCompletionSignatureClass_gaugeTransform completionPoint gauge⟩
+      (fun localLedger ↦ gaugeTransform localLedger gauge) ''
+          globalCompletionPointSet normalizationSet =
+        globalCompletionPointSet normalizationSet := by
+  refine ⟨globalAdditiveDefect_gaugeTransform ledger gauge,
+    Set.Subset.antisymm ?_ ?_⟩
+  · rintro transformedLedger ⟨completionPoint, completionPoint_mem, rfl⟩
+    exact ⟨normalizationSet_gauge_closed completionPoint_mem.1,
+      (globalAdditiveDefect_gaugeTransform completionPoint gauge).trans
+        completionPoint_mem.2⟩
+  · intro completionPoint completionPoint_mem
+    refine ⟨gaugeTransform completionPoint (-gauge), ?_, ?_⟩
+    · exact ⟨normalizationSet_neg_gauge_closed completionPoint_mem.1,
+        (globalAdditiveDefect_gaugeTransform completionPoint (-gauge)).trans
+          completionPoint_mem.2⟩
+    · apply AdelicLocalLedger.ext
+      funext place
+      change (completionPoint.localContribution place + -gauge.1 place) +
+          gauge.1 place = completionPoint.localContribution place
+      abel
 
 private def pairedGauge (r : Real) : ZeroSumGauge Unit Unit Real :=
   ⟨fun place ↦
@@ -250,28 +192,71 @@ private def pairedGauge (r : Real) : ZeroSumGauge Unit Unit Real :=
           (hasSum_ite_eq (Sum.inr () : AdelicPlace Unit Unit) (-r))⟩
 
 /- Reverse-fidelity probe: a nonzero gauge moves defect between the finite and infinite
-channels while preserving both the total defect and the completion-point orbit class. -/
-example (completionPoint : GlobalCompletionPoint Unit Unit Real)
+channels while preserving both the total defect and a gauge-invariant completion set. -/
+example (ledger : AdelicLocalLedger Unit Unit Real)
     (r : Real) (hr : r ≠ 0) :
-    (gaugeTransform completionPoint.1 (pairedGauge r)).localContribution (Sum.inl ()) ≠
-        completionPoint.1.localContribution (Sum.inl ()) ∧
-      globalAdditiveDefect (gaugeTransform completionPoint.1 (pairedGauge r)) =
-        globalAdditiveDefect completionPoint.1 ∧
-      structuralCompletionSignatureClass
-          (gaugeTransformCompletionPoint completionPoint (pairedGauge r)) =
-        structuralCompletionSignatureClass completionPoint := by
+    (gaugeTransform ledger (pairedGauge r)).localContribution (Sum.inl ()) ≠
+        ledger.localContribution (Sum.inl ()) ∧
+      globalAdditiveDefect (gaugeTransform ledger (pairedGauge r)) =
+          globalAdditiveDefect ledger ∧
+        (fun localLedger ↦ gaugeTransform localLedger (pairedGauge r)) ''
+            globalCompletionPointSet
+              { localLedger | globalAdditiveDefect localLedger = 0 } =
+          globalCompletionPointSet
+            { localLedger | globalAdditiveDefect localLedger = 0 } := by
   constructor
   · intro localUnchanged
-    have localUnchanged' : completionPoint.1.localContribution (Sum.inl ()) + r =
-        completionPoint.1.localContribution (Sum.inl ()) := by
+    have localUnchanged' : ledger.localContribution (Sum.inl ()) + r =
+        ledger.localContribution (Sum.inl ()) := by
       simpa [gaugeTransform, pairedGauge, ZeroSumGauge.shift] using localUnchanged
     apply hr
-    apply add_left_cancel (a := completionPoint.1.localContribution (Sum.inl ()))
+    apply add_left_cancel (a := ledger.localContribution (Sum.inl ()))
     simpa using localUnchanged'
-  · refine ⟨(zero_sum_gauge_preserves_global_completion
-      completionPoint.1 (pairedGauge r)).1, ?_⟩
-    exact (zero_sum_gauge_preserves_global_completion
-      completionPoint.1 (pairedGauge r)).2 completionPoint
+  · refine ⟨globalAdditiveDefect_gaugeTransform ledger (pairedGauge r), ?_⟩
+    refine ((zero_sum_gauge_preserves_global_completion
+      { localLedger | globalAdditiveDefect localLedger = 0 }
+      ledger (pairedGauge r)) ?_ ?_).2
+    · intro localLedger localLedger_mem
+      exact (globalAdditiveDefect_gaugeTransform localLedger (pairedGauge r)).trans
+        localLedger_mem
+    · intro localLedger localLedger_mem
+      exact (globalAdditiveDefect_gaugeTransform localLedger (-pairedGauge r)).trans
+        localLedger_mem
+
+private def zeroLedger : AdelicLocalLedger Unit Unit Real where
+  localContribution := 0
+  summable_localContribution := hasSum_zero.summable
+
+/- Construction-identity probe: without normalization invariance, the image equality can
+fail even though the completion set is built by the same definition. -/
+example :
+    (fun localLedger ↦ gaugeTransform localLedger (pairedGauge 1)) ''
+        globalCompletionPointSet
+          ({zeroLedger} : Set (AdelicLocalLedger Unit Unit Real)) ≠
+      globalCompletionPointSet
+        ({zeroLedger} : Set (AdelicLocalLedger Unit Unit Real)) := by
+  have zeroLedger_mem : zeroLedger ∈ globalCompletionPointSet
+      ({zeroLedger} : Set (AdelicLocalLedger Unit Unit Real)) := by
+    refine ⟨Set.mem_singleton zeroLedger, ?_⟩
+    simp [globalAdditiveDefect, zeroLedger]
+  have transformed_not_mem : gaugeTransform zeroLedger (pairedGauge 1) ∉
+      globalCompletionPointSet
+        ({zeroLedger} : Set (AdelicLocalLedger Unit Unit Real)) := by
+    intro transformed_mem
+    have transformed_eq : gaugeTransform zeroLedger (pairedGauge 1) = zeroLedger :=
+      Set.mem_singleton_iff.mp transformed_mem.1
+    have local_eq := congrArg
+      (fun localLedger ↦ localLedger.localContribution (Sum.inl ())) transformed_eq
+    simp only [gaugeTransform, pairedGauge, ZeroSumGauge.shift, zeroLedger,
+      Pi.zero_apply, if_pos] at local_eq
+    have place_ne : (Sum.inl () : AdelicPlace Unit Unit) ≠ Sum.inr () := by
+      simp
+    rw [if_neg place_ne] at local_eq
+    norm_num at local_eq
+  intro image_eq
+  apply transformed_not_mem
+  rw [← image_eq]
+  exact ⟨zeroLedger, zeroLedger_mem, rfl⟩
 
 /- Nondegeneracy probe: the type constraints provide an actual finite and infinite place. -/
 example {FinitePlace : Type u_f} {InfinitePlace : Type u_i}
@@ -285,22 +270,29 @@ example {FinitePlace : Type u_f} {InfinitePlace : Type u_i}
   exact ⟨⟨Sum.inl finitePlace, finitePlace, rfl⟩,
     ⟨Sum.inr infinitePlace, infinitePlace, rfl⟩⟩
 
-/- Public-contract probe: the theorem must be scalar-generic, exclude empty finite or
-infinite place channels, and expose structural-signature preservation as a conjunct. -/
+/- Public-contract probe: the theorem is scalar-generic, excludes empty finite or infinite
+place channels, keeps normalization abstract, and exposes exact completion-set invariance. -/
 example
     {FinitePlace InfinitePlace Defect : Type*}
     [Nonempty FinitePlace] [Nonempty InfinitePlace]
     [AddCommGroup Defect] [TopologicalSpace Defect]
     [IsTopologicalAddGroup Defect] [T2Space Defect]
+    (normalizationSet : Set (AdelicLocalLedger FinitePlace InfinitePlace Defect))
     (ledger : AdelicLocalLedger FinitePlace InfinitePlace Defect)
-    (gauge : ZeroSumGauge FinitePlace InfinitePlace Defect) :
+    (gauge : ZeroSumGauge FinitePlace InfinitePlace Defect)
+    (normalizationSet_gauge_closed :
+      Set.MapsTo (fun localLedger ↦ gaugeTransform localLedger gauge)
+        normalizationSet normalizationSet)
+    (normalizationSet_neg_gauge_closed :
+      Set.MapsTo (fun localLedger ↦ gaugeTransform localLedger (-gauge))
+        normalizationSet normalizationSet) :
     globalAdditiveDefect (gaugeTransform ledger gauge) =
         globalAdditiveDefect ledger ∧
-      ∀ completionPoint : GlobalCompletionPoint FinitePlace InfinitePlace Defect,
-        structuralCompletionSignatureClass
-            (gaugeTransformCompletionPoint completionPoint gauge) =
-          structuralCompletionSignatureClass completionPoint :=
-  zero_sum_gauge_preserves_global_completion ledger gauge
+      (fun localLedger ↦ gaugeTransform localLedger gauge) ''
+          globalCompletionPointSet normalizationSet =
+        globalCompletionPointSet normalizationSet :=
+  zero_sum_gauge_preserves_global_completion normalizationSet ledger gauge
+    normalizationSet_gauge_closed normalizationSet_neg_gauge_closed
 
 #print axioms zero_sum_gauge_preserves_global_completion
 
