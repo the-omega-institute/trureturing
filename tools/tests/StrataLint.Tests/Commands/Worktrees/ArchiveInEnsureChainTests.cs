@@ -1,5 +1,6 @@
 using System.Text.Json;
 using StrataLint.Cli;
+using YamlDotNet.RepresentationModel;
 
 namespace StrataLint.Tests;
 
@@ -357,9 +358,8 @@ public sealed partial class LeanCacheEnsureCommandTests
     ///
     /// `ci.yml` 由 `pull_request_target` 触发:workflow 文本来自 base 侧,但 `candidate/`
     /// 里检出的是 **PR 作者可控的代码**,而 ensure 正是那份代码。它现在会去调 `gh`。
-    /// 今天仓内 token 暴露为 **0 处**(本断言即钉住这一点),故不可利用 —— **但这个设计
-    /// 会制造添加 token 的压力**:归档路径在 CI 上必然因缺 auth 而失败,下一个想让它
-    /// 工作的人自然会加 `GH_TOKEN`,**那一刻才是漏洞**。
+    /// base-owned 的 merge-ref wait 可在 checkout 前用 token;除此之外 token 暴露仍为
+    /// **0 处**。尤其不能把 token 递给 candidate 侧 ensure。
     ///
     /// 所以拦的不是今天的状态,是那个将来的动作。要让归档在 CI 上真正可用,正解是走
     /// **公开 HTTPS**(本仓 `visibility=public`,release 资产与 REST 元数据都无需认证),
@@ -370,11 +370,34 @@ public sealed partial class LeanCacheEnsureCommandTests
     {
         var workflow = File.ReadAllText(Path.Combine(
             TestRepositoryLayout.FindRoot(), ".github", "workflows", "ci.yml"));
+        var stream = new YamlStream();
+        stream.Load(new StringReader(workflow));
+        var root = Assert.IsType<YamlMappingNode>(stream.Documents.Single().RootNode);
+        var jobs = Assert.IsType<YamlMappingNode>(root.Children[new YamlScalarNode("jobs")]);
 
-        foreach (var name in new[] { "GH_TOKEN", "GITHUB_TOKEN", "github.token" })
+        foreach (var job in jobs.Children.Values.OfType<YamlMappingNode>())
         {
-            Assert.DoesNotContain(name, workflow, StringComparison.Ordinal);
+            foreach (var step in Assert.IsType<YamlSequenceNode>(
+                         job.Children[new YamlScalarNode("steps")]).Children.OfType<YamlMappingNode>())
+            {
+                if (step.Children.TryGetValue(new YamlScalarNode("name"), out var nameNode)
+                    && nameNode is YamlScalarNode { Value: "Wait for the GitHub merge ref" })
+                    continue;
+
+                AssertNoGitHubToken(step);
+            }
+
+            if (job.Children.TryGetValue(new YamlScalarNode("env"), out var environment))
+                AssertNoGitHubToken(environment);
         }
+    }
+
+    private static void AssertNoGitHubToken(YamlNode node)
+    {
+        var scalarValues = node.AllNodes.OfType<YamlScalarNode>().Select(static scalar => scalar.Value ?? "");
+        foreach (var value in scalarValues)
+        foreach (var name in new[] { "GH_TOKEN", "GITHUB_TOKEN", "github.token" })
+            Assert.DoesNotContain(name, value, StringComparison.Ordinal);
     }
 
     private sealed class EnsureArchiveFixture
