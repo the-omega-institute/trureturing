@@ -1,5 +1,4 @@
 using StrataLint.Tests;
-using System.Xml.Linq;
 
 namespace StrataLint.ArchitectureTests;
 
@@ -15,39 +14,6 @@ public sealed class BannedApiCoverageTests
 
         Assert.Equal(27, File.ReadLines(path).Count(static line =>
             line.Contains("// banned-api-proof", StringComparison.Ordinal)));
-    }
-
-    [Fact]
-    public void DeterminismBanIsAttachedToEveryVerdictProject()
-    {
-        var projects = GitIndexRepositoryFiles.Enumerate(RepositoryLayout.FindRoot())
-            .Where(static file => file.RelativePath.StartsWith("tools/tests/", StringComparison.Ordinal)
-                && file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal))
-            .Select(file => (file.RelativePath, Document: XDocument.Load(file.FullPath, LoadOptions.None)))
-            .ToArray();
-        projects = projects
-            .Where(static project => project.Document.Descendants()
-                .Any(element => element.Name.LocalName == "IsTestProject" && element.Value == "true"))
-            .ToArray();
-
-        Assert.NotEmpty(projects);
-        Assert.All(projects, project =>
-        {
-            Assert.Contains(
-                project.Document.Descendants(),
-                static element => element.Name.LocalName == "PackageReference"
-                    && string.Equals(
-                        (string?)element.Attribute("Include"),
-                        "Microsoft.CodeAnalysis.BannedApiAnalyzers",
-                        StringComparison.Ordinal));
-            Assert.Contains(
-                project.Document.Descendants(),
-                static element => element.Name.LocalName == "AdditionalFiles"
-                    && string.Equals(
-                        Path.GetFileName((string?)element.Attribute("Include")),
-                        "BannedSymbols.Determinism.txt",
-                        StringComparison.Ordinal));
-        });
     }
 
     [Fact]

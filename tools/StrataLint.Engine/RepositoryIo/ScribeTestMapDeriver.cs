@@ -330,11 +330,6 @@ internal static class ScribeTestMapDeriver
     {
         foreach (var invocation in method.Syntax.DescendantNodes().OfType<InvocationExpressionSyntax>())
         {
-            if (TryAddBoundedTrackedTestEnumeration(invocation, paths, reasons))
-            {
-                continue;
-            }
-
             if (IsAccessorCall(invocation, "Discover"))
             {
                 AddDiscoveryPaths(invocation, discoveryPaths, paths, reasons);
@@ -355,12 +350,6 @@ internal static class ScribeTestMapDeriver
             AddLiteralCreatePath(invocation.ArgumentList.Arguments.FirstOrDefault()?.Expression, paths, reasons);
         }
     }
-
-    private static bool TryAddBoundedTrackedTestEnumeration(
-        InvocationExpressionSyntax invocation,
-        HashSet<string> paths,
-        HashSet<TestMapUnknownReason> reasons) =>
-        ScribeTestMapSpineMatcher.TryAddBoundedTrackedTestEnumeration(invocation, paths, reasons);
 
     private static void AddLiteralCreatePath(
         ExpressionSyntax? argument,

@@ -26,18 +26,6 @@ public sealed class ScribeTestMapDeriverTests
             path => Assert.True(
                 ScribeTestMapDeriver.IsDeclaredPathAllowed(path),
                 $"undeclared repository read path: {path}"));
-        Assert.Equal(
-            ["tools/tests"],
-            map.Methods.Single(static method => method.Id
-                == "BannedApiCoverageTests.DeterminismBanIsAttachedToEveryVerdictProject").Paths);
-        Assert.Equal(
-            ["tools/tests"],
-            map.Methods.Single(static method => method.Id
-                == "BoundedProcessRunnerBudgetTests.TrackedTestDurationsHaveOneAnnotatedSource").Paths);
-        Assert.Equal(
-            ["tools/tests/StrataLint.Tests/TestBudgets.cs"],
-            map.Methods.Single(static method => method.Id
-                == "BoundedProcessRunnerBudgetTests.EveryPublishedTestBudgetHasOneSourceClassification").Paths);
     }
 
     [Fact]
@@ -545,37 +533,6 @@ public sealed class ScribeTestMapDeriverTests
         var method = Assert.Single(map.Methods);
         Assert.Equal([".github/workflows/ci.yml"], method.Paths);
         Assert.False(method.IsUnknown);
-    }
-
-    [Fact]
-    public void BoundedTrackedTestEnumerationPropagatesContentReads()
-    {
-        const string source = """
-            class TrackedTestPolicyTests {
-              [Fact] public void ReadsProjects() {
-                _ = GitIndexRepositoryFiles.Enumerate(RepositoryLayout.FindRoot())
-                  .Where(file => file.RelativePath.StartsWith("tools/tests/", StringComparison.Ordinal)
-                    && file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal))
-                  .Select(file => XDocument.Load(file.FullPath, LoadOptions.None))
-                  .ToArray();
-              }
-              [Fact] public void ReadsSources() {
-                _ = GitIndexRepositoryFiles.Enumerate(RepositoryLayout.FindRoot())
-                  .Where(file => file.RelativePath.StartsWith("tools/tests/", StringComparison.Ordinal)
-                    && file.RelativePath.EndsWith(".cs", StringComparison.Ordinal))
-                  .Select(file => string.Join('\n', File.ReadLines(file.FullPath)))
-                  .ToArray();
-              }
-            }
-            """;
-
-        var map = DeriveSources([new("TrackedTestPolicyTests.cs", source)]);
-
-        Assert.All(map.Methods, method =>
-        {
-            Assert.Equal(["tools/tests"], method.Paths);
-            Assert.False(method.IsUnknown);
-        });
     }
 
     [Fact]
