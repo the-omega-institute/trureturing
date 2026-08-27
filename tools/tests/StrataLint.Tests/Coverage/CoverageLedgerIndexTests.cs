@@ -45,6 +45,28 @@ public sealed class CoverageLedgerIndexTests
     }
 
     [Fact]
+    public void ExtendedReattestMigratesActiveNodeIdentityBeforeRevocation()
+    {
+        const string frozen = "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc";
+        const string reattested = "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd";
+        const string path = "D5/S0/Carrier/Ring.lean";
+        var loaded = Assert.IsType<FrozenCoverageLoadOutcome.Loaded>(
+            FrozenCoverageLedger.Load(
+            [
+                Event("Genesis", new { }),
+                Freeze(frozen, path),
+                Event("Reattest", new
+                {
+                    frozen_node_id = reattested,
+                    input = new { descriptor_selector = path },
+                }),
+                Event("Revoke", new { affected_frozen_node_ids = new[] { reattested } }),
+            ]));
+
+        Assert.Empty(loaded.ActiveFrozenPaths);
+    }
+
+    [Fact]
     public void TwoActiveFrozenNodesCannotCollapseOntoOnePath()
     {
         const string first = "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";

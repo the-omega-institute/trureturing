@@ -69,6 +69,20 @@ public static class FrozenCoverageLedger
                         }
                         break;
                     case "Reattest":
+                        var reattestedNodeId = RequiredString(payload, "frozen_node_id");
+                        var reattestedPathText = RequiredString(
+                            payload.GetProperty("input"),
+                            "descriptor_selector");
+                        var priorNode = active.SingleOrDefault(
+                            item => item.Value.Value == reattestedPathText);
+                        if (!FrozenHashSyntax.IsSha256(reattestedNodeId)
+                            || priorNode.Equals(default(KeyValuePair<string, RepoPath>))
+                            || !active.Remove(priorNode.Key, out var reattestedPath)
+                            || !active.TryAdd(reattestedNodeId, reattestedPath))
+                        {
+                            throw new FormatException(
+                                "Reattest has an invalid or inactive node identity");
+                        }
                         break;
                     default:
                         throw new FormatException($"unknown event type {eventType}");
