@@ -20,11 +20,6 @@ if [[ "${CI:-}" != "true" && "${CI:-}" != "1" ]]; then
   export STRATALINT_REPORT_CACHE_ROOT="${STRATALINT_REPORT_CACHE_ROOT:-${XDG_CACHE_HOME:-$HOME/.cache}/stratalint-lean-report-cache}"
 fi
 
-# The canonical report path records producer phase timings in the external perf
-# ledger.  This is deliberately an environment flag: the pair helper's script
-# fixtures and other direct callers retain their historical resource-only event.
-export STRATALINT_PERF_SEGMENTS=1
-
 exec "$PAIR" \
   --producer "$INSPECTOR" \
   --lake-bin "$LAKE_BIN" \

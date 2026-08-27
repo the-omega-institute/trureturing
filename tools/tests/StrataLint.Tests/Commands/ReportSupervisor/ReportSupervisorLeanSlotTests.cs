@@ -7,6 +7,20 @@ namespace StrataLint.Tests;
 // 而重写时,原文件已 790 行、逼近 SL-003 的 800 硬线,顺势按第8条裂到既有子目录。
 public sealed class ReportSupervisorLeanSlotTests
 {
+    [Fact]
+    public void ConcurrencyFixtureUsesReleaseSignalsInsteadOfElapsedWindows()
+    {
+        var source = TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+            "tools/tests/StrataLint.Tests/Commands/ReportSupervisorFixture.cs"));
+
+        Assert.DoesNotContain("sleep 1", source, StringComparison.Ordinal);
+        Assert.DoesNotContain("sleep 60", source, StringComparison.Ordinal);
+        Assert.DoesNotContain("exec \"sleep\", \"60\"", source, StringComparison.Ordinal);
+        Assert.Contains("second-acquisition", source, StringComparison.Ordinal);
+        Assert.Contains("release.fifo", source, StringComparison.Ordinal);
+        Assert.Contains("IFS= read -r _ < \"$2\"", source, StringComparison.Ordinal);
+    }
+
     // 2026-08-15 用户裁决:默认槽数 1 -> 5(同日先定 3,再定 5)。命题因此换了,不是删掉——
     // "槽机制会封顶"仍受钉,
     // 只是封顶值由默认值给出。两条一起看才完整:显式设 1 时仍然串行(机制还在),用默认值时
@@ -23,8 +37,7 @@ public sealed class ReportSupervisorLeanSlotTests
         var result = fixture.RunExternalProcess(
             "bash",
             [fixture.ConcurrentDriver, fixture.Supervisor, fixture.ProducerWorker,
-             fixture.MetricsLog, fixture.StateRoot, fixture.ActiveMarker, fixture.OverlapMarker,
-             fixture.PerformanceConfiguration, "1"],
+             fixture.StateRoot, fixture.ActiveMarker, fixture.OverlapMarker, "1"],
             maximumOutputBytes: 1024 * 1024);
 
         Assert.True(
@@ -34,13 +47,6 @@ public sealed class ReportSupervisorLeanSlotTests
                 + "; stderr: "
                 + Encoding.UTF8.GetString(result.StandardError));
         Assert.False(File.Exists(fixture.OverlapMarker));
-        var metrics = fixture.ReadMetrics();
-        Assert.Equal(2, metrics.Count);
-        Assert.All(metrics, metric =>
-        {
-            Assert.Equal("lean-producer", metric.GetProperty("role").GetString());
-            Assert.Equal(1, metric.GetProperty("concurrency_count").GetInt32());
-        });
     }
 
     [Fact]
@@ -51,8 +57,7 @@ public sealed class ReportSupervisorLeanSlotTests
         var result = fixture.RunExternalProcess(
             "bash",
             [fixture.ConcurrentDriver, fixture.Supervisor, fixture.ProducerWorker,
-             fixture.MetricsLog, fixture.StateRoot, fixture.ActiveMarker, fixture.OverlapMarker,
-             fixture.PerformanceConfiguration],
+             fixture.StateRoot, fixture.ActiveMarker, fixture.OverlapMarker],
             maximumOutputBytes: 1024 * 1024);
 
         Assert.True(
@@ -64,11 +69,6 @@ public sealed class ReportSupervisorLeanSlotTests
         Assert.True(
             File.Exists(fixture.OverlapMarker),
             "the default slot count must admit two concurrent lean producers");
-        var metrics = fixture.ReadMetrics();
-        Assert.Equal(2, metrics.Count);
-        Assert.Contains(
-            metrics,
-            metric => metric.GetProperty("concurrency_count").GetInt32() > 1);
     }
     // 等槽者必须熬得过一个**合法**的持槽者,否则「合法持有」就等于「让别人红」。
     //

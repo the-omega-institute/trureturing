@@ -365,7 +365,7 @@ public sealed class PrOpenScriptTests
         private ProcessOutput Run(string[] arguments)
         {
             var script = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "pr.sh");
-            return BoundedProcessRunner.Run("env",
+            return TestProcessRunner.Run("env",
                 ["-u", "GH_TOKEN", $"PATH={bin}:/usr/bin:/bin:/usr/sbin:/sbin", "PR_OPEN_REPO=owner/repo",
                     "PR_OPEN_BASE=dev", $"PR_TEST_INVOCATIONS={invocations}",
                     $"PR_TEST_RESPONSES={responses}", $"PR_TEST_FAIL_STEP={FailStep}",
@@ -388,7 +388,7 @@ public sealed class PrOpenScriptTests
         private void WriteExecutable(string path, string contents)
         {
             File.WriteAllText(path, contents, new UTF8Encoding(false));
-            var chmod = BoundedProcessRunner.Run(
+            var chmod = TestProcessRunner.Run(
                 "chmod",
                 ["+x", path],
                 temporary.Path,

@@ -208,11 +208,11 @@ public sealed class RawLeanReportArtifactTests
             Path.Combine(repository.Path, "Trureturing.lean"),
             unicodeSource,
             new UTF8Encoding(false));
-        var build = BoundedProcessRunner.Run(
+        var build = TestProcessRunner.Run(
             "lake",
             ["build"],
             repository.Path,
-            TimeSpan.FromSeconds(120),
+            TestBudgets.LeanProcessHangGuard,
             8 * 1024 * 1024);
         Assert.True(
             build.ExitCode == 0,
@@ -227,7 +227,7 @@ public sealed class RawLeanReportArtifactTests
         var sourceHash = "sha256:" + Convert.ToHexStringLower(
             SHA256.HashData(Encoding.UTF8.GetBytes(unicodeSource)));
 
-        var inspected = BoundedProcessRunner.Run(
+        var inspected = TestProcessRunner.Run(
             "lake",
             [
                 "env", "lean", "--run", inspector,
@@ -236,7 +236,7 @@ public sealed class RawLeanReportArtifactTests
                 "Trureturing", "Trureturing.lean", sourceHash,
             ],
             repository.Path,
-            TimeSpan.FromSeconds(120),
+            TestBudgets.LeanProcessHangGuard,
             8 * 1024 * 1024);
 
         Assert.True(
@@ -250,7 +250,7 @@ public sealed class RawLeanReportArtifactTests
                 "compact", spoolReport, spoolMaterials, output,
             ],
             repository.Path,
-            TimeSpan.FromSeconds(120),
+            TestBudgets.LeanProcessHangGuard,
             8 * 1024 * 1024);
         Assert.True(
             compacted.ExitCode == 0,

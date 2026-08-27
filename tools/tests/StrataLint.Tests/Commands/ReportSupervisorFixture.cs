@@ -1,21 +1,20 @@
 using System.Diagnostics;
 using System.Text;
-using System.Text.Json;
 using StrataLint.Engine;
+using Xunit;
 
 namespace StrataLint.Tests;
 
 internal sealed class ReportSupervisorFixture : IDisposable
 {
-    private static readonly TimeSpan defaultSafetyTimeout = TimeSpan.FromMinutes(5);
-    private static readonly string performanceConfiguration = FindPerformanceConfiguration();
+    private static readonly TimeSpan defaultSafetyTimeout = TestBudgets.ReportSupervisorHangGuard;
     private readonly TemporaryDirectory temporary = new();
     private readonly TimeSpan safetyTimeout;
 
     internal ReportSupervisorFixture(TimeSpan? safetyTimeout = null)
     {
         this.safetyTimeout = safetyTimeout ?? defaultSafetyTimeout;
-        if (this.safetyTimeout <= TimeSpan.Zero)
+        if (this.safetyTimeout <= TestBudgets.ZeroDuration)
         {
             throw new ArgumentOutOfRangeException(
                 nameof(safetyTimeout),
@@ -26,56 +25,143 @@ internal sealed class ReportSupervisorFixture : IDisposable
             set -euo pipefail
             printf '%s\n' "$TMPDIR" >> "$1"
             """);
+        _ = WriteExecutable("mkdir", """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            event_fifo="${STRATALINT_TEST_SLOT_EVENT_FIFO:-}"
+            if [[ -n "$event_fifo" && "$#" == "1" && "$1" == */slot-*.lock ]]; then
+              set +e
+              /bin/mkdir "$@"
+              rc=$?
+              set -e
+              if (( rc == 0 )); then state=acquired; else state=blocked; fi
+              printf '%s:%s\n' "$state" "${1##*/}" > "$event_fifo"
+              exit "$rc"
+            fi
+            exec /bin/mkdir "$@"
+            """);
         ProducerWorker = WriteExecutable("producer-worker.sh", """
             #!/usr/bin/env bash
             set -euo pipefail
-            if ! mkdir "$1" 2>/dev/null; then touch "$2"; fi
-            sleep 1
-            rmdir "$1" 2>/dev/null || true
+            printf 'acquired\n' > "$1"
+            IFS= read -r _ < "$2"
             """);
         ConcurrentDriver = WriteExecutable("concurrent-driver.sh", """
             #!/usr/bin/env bash
             set -euo pipefail
             supervisor="$1"
             worker="$2"
-            metrics="$3"
-            state="$4"
-            active="$5"
-            overlap="$6"
-            slots="${8:-}"
-            env STRATALINT_REPORT_METRICS_LOG="$metrics" STRATALINT_SUPERVISOR_ROOT="$state" \
-              STRATALINT_PERF_CONFIGURATION="$7" \
+            state="$3"
+            overlap="$5"
+            slots="${6:-}"
+            fixture_bin="$(cd "$(dirname "$worker")" && pwd -P)"
+            run="$state/concurrency-$$"
+            first_acquired="$run/first-acquired.fifo"
+            second_acquired="$run/second-acquired.fifo"
+            second_acquisition="$run/second-acquisition.fifo"
+            first_release="$run/first-release.fifo"
+            second_release="$run/second-release.fifo"
+            mkdir -p "$run"
+            mkfifo "$first_acquired" "$second_acquired" "$second_acquisition" \
+              "$first_release" "$second_release"
+            first=""
+            second=""
+            cleanup() {
+              [[ -z "$first" ]] || kill "$first" 2>/dev/null || true
+              [[ -z "$second" ]] || kill "$second" 2>/dev/null || true
+            }
+            read_acquisition() {
+              while ! IFS= read -r acquisition_event < "$second_acquisition"; do :; done
+            }
+            trap cleanup EXIT
+            env STRATALINT_SUPERVISOR_ROOT="$state" \
+              PATH="$fixture_bin:$PATH" \
               ${slots:+STRATALINT_LEAN_MAX_CONCURRENCY="$slots"} \
-              "$supervisor" --role lean-producer --lean-slot -- "$worker" "$active" "$overlap" &
+              "$supervisor" --role lean-producer --lean-slot -- \
+              "$worker" "$first_acquired" "$first_release" &
             first=$!
-            env STRATALINT_REPORT_METRICS_LOG="$metrics" STRATALINT_SUPERVISOR_ROOT="$state" \
-              STRATALINT_PERF_CONFIGURATION="$7" \
+            IFS= read -r _ < "$first_acquired"
+            env STRATALINT_SUPERVISOR_ROOT="$state" \
+              STRATALINT_TEST_SLOT_EVENT_FIFO="$second_acquisition" \
+              PATH="$fixture_bin:$PATH" \
               ${slots:+STRATALINT_LEAN_MAX_CONCURRENCY="$slots"} \
-              "$supervisor" --role lean-producer --lean-slot -- "$worker" "$active" "$overlap" &
+              "$supervisor" --role lean-producer --lean-slot -- \
+              "$worker" "$second_acquired" "$second_release" &
             second=$!
+            read_acquisition
+            first_event="$acquisition_event"
+            [[ "$first_event" == "blocked:slot-1.lock" ]]
+            if [[ "$slots" == "1" ]]; then
+              printf 'release\n' > "$first_release"
+              while true; do
+                read_acquisition
+                second_event="$acquisition_event"
+                [[ "$second_event" == "blocked:slot-1.lock" ]] && continue
+                [[ "$second_event" == "acquired:slot-1.lock" ]]
+                break
+              done
+              IFS= read -r _ < "$second_acquired"
+              printf 'release\n' > "$second_release"
+            else
+              read_acquisition
+              second_event="$acquisition_event"
+              [[ "$second_event" == "acquired:slot-2.lock" ]]
+              IFS= read -r _ < "$second_acquired"
+              kill -0 "$first"
+              : > "$overlap"
+              printf 'release\n' > "$first_release"
+              printf 'release\n' > "$second_release"
+            fi
             wait "$first"
             wait "$second"
+            trap - EXIT
             """);
         LongRunningWorker = WriteExecutable("long-running-worker.sh", """
             #!/usr/bin/env bash
             set -euo pipefail
-            while :; do sleep 60; done &
+            release="$PWD/long-running-release.fifo"
+            mkfifo "$release"
+            { IFS= read -r _ < "$release"; } &
             printf '%s\n' "$!" > "$1"
-            wait
+            wait "$!"
             """);
         ExitingWorker = WriteExecutable("exiting-worker.sh", """
             #!/usr/bin/env bash
             set -euo pipefail
-            sleep 60 &
+            release="$PWD/exiting-worker-release.fifo"
+            mkfifo "$release"
+            { IFS= read -r _ < "$release"; } &
             printf '%s\n' "$!" > "$1"
             """);
         LsofRaceWorker = WriteExecutable("lsof-race-worker.sh", """
             #!/usr/bin/env bash
             set -euo pipefail
-            printf '%s\n' "$$" > "$1"
-            sleep 1
+            candidate_release="$PWD/lsof-candidate-release.fifo"
+            lsof_complete="$PWD/lsof-complete.fifo"
+            mkfifo "$candidate_release" "$lsof_complete"
+            { IFS= read -r _ < "$candidate_release"; } &
+            candidate="$!"
+            printf '%s\n' "$candidate" > "$1"
+            wait "$candidate"
+            : > "$PWD/lsof-candidate-exited"
+            IFS= read -r _ < "$lsof_complete"
             printf 'completed\n' > "$1"
             """);
+        StepClock = WriteExecutable("step-clock.sh", """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            lock="$PWD/step-clock.lock"
+            while ! mkdir "$lock" 2>/dev/null; do :; done
+            trap 'rmdir "$lock"' EXIT
+            read -r current < "$PWD/step-clock.state"
+            printf '%s\n' "$((current + 1))" > "$PWD/step-clock.state.tmp.$$"
+            mv "$PWD/step-clock.state.tmp.$$" "$PWD/step-clock.state"
+            printf '%s\n' "$current"
+            """);
+        File.WriteAllText(
+            Path.Combine(Root, "step-clock.state"),
+            "2000000000\n",
+            new UTF8Encoding(false));
         _ = WriteExecutable("ps", """
             #!/usr/bin/env bash
             set -euo pipefail
@@ -101,11 +187,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
               fi
               if [[ "${STRATALINT_TEST_PS_PAUSE_ON_COMMAND:-}" == "1" ]]; then
                 : > "$PWD/ps-command-observed"
-                for _ in {1..1000}; do
-                  [[ ! -e "$PWD/ps-command-release" ]] || break
-                  sleep 0.01
-                done
-                [[ -e "$PWD/ps-command-release" ]] || exit 2
+                while [[ ! -e "$PWD/ps-command-release" ]]; do :; done
               fi
               printf 'synthetic-command-%s\n' "$requested_pid"
             elif [[ "$*" == *"stat="* ]]; then
@@ -147,9 +229,9 @@ internal sealed class ReportSupervisorFixture : IDisposable
             #!/usr/bin/env bash
             set -euo pipefail
             printf '%s\n' "$$" > "$1"
+            mkfifo "$4" "$5" "$6"
             perl -MPOSIX -e '
-              my ($pid_path, $parent_path, $release) = @ARGV;
-              my $deadline = time() + 20;
+              my ($pid_path, $parent_path, $parent_release, $child_release) = @ARGV;
               my $child = fork();
               die "fork failed" unless defined $child;
               if ($child == 0) {
@@ -160,28 +242,26 @@ internal sealed class ReportSupervisorFixture : IDisposable
                 close STDOUT;
                 close STDERR;
                 POSIX::close(9);
-                while (!-e $release && time() < $deadline) {
-                  select undef, undef, undef, 0.02;
-                }
-                exit 2 unless -e $release;
-                exec "sleep", "60";
+                open my $hold, "<", $child_release or die $!;
+                <$hold>;
+                exit 0;
               }
               open my $parent, ">", $parent_path or die $!;
               print {$parent} "$$\n";
               close $parent or die $!;
-              while (!-e $release && time() < $deadline) {
-                select undef, undef, undef, 0.02;
-              }
-              exit 2 unless -e $release;
-            ' "$2" "$3" "$4" &
+              open my $release, "<", $parent_release or die $!;
+              <$release>;
+            ' "$2" "$3" "$4" "$5" &
             wait "$!"
-            sleep 60
+            IFS= read -r _ < "$6"
             """);
         DoubleForkWorker = WriteExecutable("double-fork-worker.sh", """
             #!/usr/bin/env bash
             set -euo pipefail
+            release="$PWD/double-fork-release.fifo"
+            mkfifo "$release"
             perl -MPOSIX -e '
-              my $path = shift;
+              my ($path, $release) = @ARGV;
               my $first = fork();
               die "first fork failed" unless defined $first;
               if ($first == 0) {
@@ -192,7 +272,9 @@ internal sealed class ReportSupervisorFixture : IDisposable
                   $^F = 9;
                   open STDOUT, ">", "/dev/null" or die $!;
                   open STDERR, ">", "/dev/null" or die $!;
-                  exec "sleep", "60";
+                  open my $hold, "<", $release or die $!;
+                  <$hold>;
+                  exit 0;
                 }
                 open my $out, ">", $path or die $!;
                 print {$out} "$second\n";
@@ -200,13 +282,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
                 exit 0;
               }
               waitpid($first, 0);
-            ' "$1"
-            """);
-        FileSizeLimitedDriver = WriteExecutable("file-size-limited-driver.sh", """
-            #!/usr/bin/env bash
-            set -euo pipefail
-            ulimit -f 1
-            exec "$@"
+            ' "$1" "$release"
             """);
     }
 
@@ -214,11 +290,8 @@ internal sealed class ReportSupervisorFixture : IDisposable
     internal string RepositoryRoot => TestRepositoryLayout.FindRoot();
     internal string Supervisor => Path.Combine(
         RepositoryRoot, "tools", "scripts", "report", "report-supervisor.sh");
-    internal string MetricsLog => Path.Combine(Root, "metrics.jsonl");
-    internal string DefaultMetricsLog => Path.Combine(Root, ".stratalint-perf", "events.jsonl");
     internal string StateRoot => Path.Combine(Root, "state");
     internal string HostPath => Environment.GetEnvironmentVariable("PATH") ?? "/bin:/usr/bin";
-    internal string PerformanceConfiguration => performanceConfiguration;
     internal string ScratchRecord => Path.Combine(Root, "scratch.txt");
     internal string ActiveMarker => Path.Combine(Root, "active");
     internal string OverlapMarker => Path.Combine(Root, "overlap");
@@ -227,18 +300,24 @@ internal sealed class ReportSupervisorFixture : IDisposable
     internal string DetachedPid => Path.Combine(Root, "detached.pid");
     internal string DetachedWorkerPid => Path.Combine(Root, "detached-worker.pid");
     internal string DetachedParentPid => Path.Combine(Root, "detached-parent.pid");
-    internal string DetachedRelease => Path.Combine(Root, "detached.release");
+    internal string DetachedParentRelease => Path.Combine(Root, "detached-parent-release.fifo");
+    internal string DetachedChildRelease => Path.Combine(Root, "detached-child-release.fifo");
+    internal string DetachedWorkerRelease => Path.Combine(Root, "detached-worker-release.fifo");
     internal string DoubleForkPid => ScratchRecord;
     internal string FailingLsofInvocation => Path.Combine(Root, "lsof-invocations.txt");
+    internal string ClockEnvironment => $"STRATALINT_SUPERVISOR_CLOCK={StepClock}";
+    internal long ClockReads => long.Parse(
+        File.ReadAllText(Path.Combine(Root, "step-clock.state")).Trim(),
+        System.Globalization.CultureInfo.InvariantCulture) - 2_000_000_000L;
     internal string ScratchWriter { get; }
     internal string ProducerWorker { get; }
     internal string ConcurrentDriver { get; }
     internal string LongRunningWorker { get; }
     internal string ExitingWorker { get; }
     internal string LsofRaceWorker { get; }
+    internal string StepClock { get; }
     internal string DetachedWorker { get; }
     internal string DoubleForkWorker { get; }
-    internal string FileSizeLimitedDriver { get; }
 
     internal TimeSpan SafetyTimeout => safetyTimeout;
 
@@ -254,9 +333,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
         var arguments = new List<string>
         {
             $"PATH={Root}:{HostPath}",
-            $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
             $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
-            $"STRATALINT_PERF_CONFIGURATION={PerformanceConfiguration}",
             "STRATALINT_LOCK_TIMEOUT_SECONDS=86400",
         };
         arguments.AddRange(environment);
@@ -267,72 +344,71 @@ internal sealed class ReportSupervisorFixture : IDisposable
         arguments.Add("--");
         arguments.Add(command);
         arguments.Add(ScratchRecord);
-        return BoundedProcessRunner.Run(
+        return TestProcessRunner.Run(
             "env", arguments, Root, safetyTimeout, 1024 * 1024);
     }
-
-    internal void InstallFailingLsof()
-    {
-        _ = WriteExecutable("lsof", """
-            #!/usr/bin/env bash
-            set -euo pipefail
-            printf '%s\n' "$*" >> "$PWD/lsof-invocations.txt"
-            exit 1
-            """);
-    }
-
-    internal ProcessOutput RunWithDefaultMetrics(string role, string command) =>
-        BoundedProcessRunner.Run(
-            "env",
-            [
-                $"PATH={Root}:{HostPath}",
-                $"HOME={Root}",
-                $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
-                $"STRATALINT_PERF_CONFIGURATION={PerformanceConfiguration}",
-                "STRATALINT_LOCK_TIMEOUT_SECONDS=86400",
-                Supervisor,
-                "--role", role,
-                "--", command, ScratchRecord,
-            ],
-            Root,
-            safetyTimeout,
-            1024 * 1024);
-
-    internal ProcessOutput RunWithFileSizeLimit(string role, string command) =>
-        BoundedProcessRunner.Run(
-            FileSizeLimitedDriver,
-            [
-                "env",
-                $"PATH={Root}:{HostPath}",
-                $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
-                $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
-                $"STRATALINT_PERF_CONFIGURATION={PerformanceConfiguration}",
-                "STRATALINT_LOCK_TIMEOUT_SECONDS=86400",
-                Supervisor,
-                "--role", role,
-                "--", command, ScratchRecord,
-            ],
-            Root,
-            safetyTimeout,
-            1024 * 1024);
 
     internal ProcessOutput RunExternalProcess(
         string fileName,
         IEnumerable<string> arguments,
         string? workingDirectory = null,
         int maximumOutputBytes = 1024 * 1024) =>
-        BoundedProcessRunner.Run(
+        TestProcessRunner.Run(
             fileName,
             arguments,
             workingDirectory ?? Root,
             safetyTimeout,
             maximumOutputBytes);
 
+    internal void InstallLsofRaceHarness()
+    {
+        _ = WriteExecutable("lsof", """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            printf '%s\n' "$*" >> "$PWD/lsof-invocations.txt"
+            if [[ "$*" == *"0-999999"* ]]; then exit 1; fi
+            printf 'release\n' > "$PWD/lsof-candidate-release.fifo"
+            while [[ ! -e "$PWD/lsof-candidate-exited" ]]; do :; done
+            printf 'complete\n' > "$PWD/lsof-complete.fifo"
+            exit 1
+            """);
+    }
+
+    internal Process StartSentinelBlockedProcess()
+    {
+        var release = Path.Combine(Root, "owner-release.fifo");
+        var ready = Path.Combine(Root, "owner-ready");
+        var blocker = WriteExecutable("owner-blocker.sh", """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            : > "$2"
+            IFS= read -r _ < "$1"
+            """);
+        var mkfifo = RunExternalProcess("mkfifo", [release], maximumOutputBytes: 4096);
+        Assert.Equal(0, mkfifo.ExitCode);
+        var process = new Process
+        {
+            StartInfo = new ProcessStartInfo
+            {
+                FileName = blocker,
+                WorkingDirectory = Root,
+                UseShellExecute = false,
+            },
+        };
+        process.StartInfo.ArgumentList.Add(release);
+        process.StartInfo.ArgumentList.Add(ready);
+        Assert.True(process.Start());
+        WaitUntil(() => File.Exists(ready), "sentinel-blocked owner did not become ready");
+        return process;
+    }
+
     internal void WaitUntil(Func<bool> condition, string failureMessage)
     {
-        Assert.True(
-            SpinWait.SpinUntil(condition, safetyTimeout),
-            $"{failureMessage} (safety timeout: {safetyTimeout})");
+        if (!SpinWait.SpinUntil(condition, safetyTimeout))
+        {
+            throw new SkipException(
+                $"infrastructure-hang-guard expired: {failureMessage} ({safetyTimeout})");
+        }
     }
 
     internal void WaitForExit(Process process, string failureMessage) =>
@@ -351,9 +427,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
         foreach (var argument in new[]
         {
             $"PATH={Root}:{HostPath}",
-            $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
             $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
-            $"STRATALINT_PERF_CONFIGURATION={PerformanceConfiguration}",
             "STRATALINT_LOCK_TIMEOUT_SECONDS=86400",
             Supervisor,
             "--role", "lean-producer", "--lean-slot", "--",
@@ -377,13 +451,12 @@ internal sealed class ReportSupervisorFixture : IDisposable
         foreach (var argument in new[]
         {
             $"PATH={Root}:{HostPath}",
-            $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
             $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
-            $"STRATALINT_PERF_CONFIGURATION={PerformanceConfiguration}",
             "STRATALINT_LOCK_TIMEOUT_SECONDS=86400",
             Supervisor,
             "--role", "lean-producer", "--lean-slot", "--",
-            DetachedWorker, DetachedWorkerPid, DetachedPid, DetachedParentPid, DetachedRelease,
+            DetachedWorker, DetachedWorkerPid, DetachedPid, DetachedParentPid,
+            DetachedParentRelease, DetachedChildRelease, DetachedWorkerRelease,
         }) info.ArgumentList.Add(argument);
         var process = new Process { StartInfo = info };
         Assert.True(process.Start());
@@ -403,14 +476,6 @@ internal sealed class ReportSupervisorFixture : IDisposable
                 .Any(line => line.StartsWith(prefix, StringComparison.Ordinal)));
     }
 
-    internal IReadOnlyList<JsonElement> ReadMetrics() => File.ReadAllLines(MetricsLog)
-        .Select(line => JsonDocument.Parse(line).RootElement.Clone())
-        .ToArray();
-
-    internal IReadOnlyList<JsonElement> ReadDefaultMetrics() => File.ReadAllLines(DefaultMetricsLog)
-        .Select(line => JsonDocument.Parse(line).RootElement.Clone())
-        .ToArray();
-
     private string WriteExecutable(string name, string contents)
     {
         var path = Path.Combine(Root, name);
@@ -426,30 +491,4 @@ internal sealed class ReportSupervisorFixture : IDisposable
     }
 
     public void Dispose() => temporary.Dispose();
-
-
-    internal static string FindPerformanceConfiguration()
-    {
-        var targetFrameworkDirectory = new DirectoryInfo(AppContext.BaseDirectory);
-        var configuration = targetFrameworkDirectory.Parent?.Name;
-        return !string.IsNullOrWhiteSpace(configuration)
-            ? configuration
-            : throw new DirectoryNotFoundException("Could not determine the test build configuration.");
-    }
-}
-
-internal sealed class PhysicalTemporaryDirectory : IDisposable
-{
-    internal PhysicalTemporaryDirectory()
-    {
-        var root = Directory.Exists("/private/tmp") ? "/private/tmp" : "/tmp";
-        Path = System.IO.Path.Combine(
-            root,
-            "stratalint-report-caller-" + Guid.NewGuid().ToString("N"));
-        Directory.CreateDirectory(Path);
-    }
-
-    internal string Path { get; }
-
-    public void Dispose() => Directory.Delete(Path, recursive: true);
 }

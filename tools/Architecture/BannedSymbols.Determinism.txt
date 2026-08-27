@@ -5,3 +5,12 @@ P:System.DateTimeOffset.UtcNow;Inject a clock or pass an explicit deterministic 
 T:System.Random;Inject a deterministic entropy source with an explicit seed.
 P:System.Environment.TickCount;Use an injected monotonic clock outside deterministic code.
 P:System.Environment.TickCount64;Use an injected monotonic clock outside deterministic code.
+M:System.Threading.Thread.Sleep(System.Int32);Use an injected synchronization primitive outside deterministic tests.
+M:System.Threading.Thread.Sleep(System.TimeSpan);Use an injected synchronization primitive outside deterministic tests.
+M:System.Threading.Tasks.Task.Delay(System.Int32);Use virtual time or an injected synchronization primitive.
+M:System.Threading.Tasks.Task.Delay(System.Int32,System.Threading.CancellationToken);Use virtual time or an injected synchronization primitive.
+M:System.Threading.Tasks.Task.Delay(System.TimeSpan);Use virtual time or an injected synchronization primitive.
+M:System.Threading.Tasks.Task.Delay(System.TimeSpan,System.Threading.CancellationToken);Use virtual time or an injected synchronization primitive.
+M:System.Threading.Tasks.Task.Delay(System.TimeSpan,System.TimeProvider);Use virtual time or an injected synchronization primitive.
+M:System.Threading.Tasks.Task.Delay(System.TimeSpan,System.TimeProvider,System.Threading.CancellationToken);Use virtual time or an injected synchronization primitive.
+T:System.Diagnostics.Stopwatch;Do not make test verdicts or diagnostics depend on machine speed.
