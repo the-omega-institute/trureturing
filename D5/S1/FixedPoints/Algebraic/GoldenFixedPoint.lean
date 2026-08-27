@@ -35,38 +35,51 @@ set_option relaxedAutoImplicit false
 noncomputable def goldenReciprocalMap (x : Real) : Real :=
   1 + 1 / x
 
-/-- On the positive reals, the reciprocal residual map has exactly the
-displayed radical golden ratio as its fixed point. -/
-theorem golden_fixed_point_unique (x : Real) (hx : 0 < x) :
-    goldenReciprocalMap x = x ↔ x = (1 + Real.sqrt 5) / 2 := by
+/-- The displayed radical is a positive fixed point, and it is the unique
+positive fixed point of the reciprocal residual map. -/
+theorem golden_fixed_point_unique :
+    0 < (1 + Real.sqrt 5) / 2 ∧
+      goldenReciprocalMap ((1 + Real.sqrt 5) / 2) = (1 + Real.sqrt 5) / 2 ∧
+      ∀ x : Real, 0 < x →
+        (goldenReciprocalMap x = x ↔ x = (1 + Real.sqrt 5) / 2) := by
   rw [← golden_ratio_spec.1]
-  constructor
-  · intro hfixed
-    have hx0 : x ≠ 0 := ne_of_gt hx
-    have hquad : x ^ 2 = x + 1 := by
-      apply (quadratic_fixed_point_iff x hx0).2
-      exact hfixed.symm
-    have hfactor :
-        (x - Real.goldenRatio) * (x + Real.goldenRatio - 1) = 0 := by
-      nlinarith [hquad, golden_ratio_spec.2.1]
-    rcases mul_eq_zero.mp hfactor with hsame | himpossible
-    · exact sub_eq_zero.mp hsame
-    · exfalso
-      have hpositive : 0 < x + Real.goldenRatio - 1 := by
-        nlinarith [Real.one_lt_goldenRatio]
-      exact (ne_of_gt hpositive) himpossible
-  · intro hgolden
-    subst x
-    change 1 + 1 / Real.goldenRatio = Real.goldenRatio
+  refine ⟨Real.goldenRatio_pos, ?_, ?_⟩
+  · change 1 + 1 / Real.goldenRatio = Real.goldenRatio
     exact golden_ratio_reciprocal_fixed_point.symm
+  · intro x hx
+    constructor
+    · intro hfixed
+      have hx0 : x ≠ 0 := ne_of_gt hx
+      have hquad : x ^ 2 = x + 1 := by
+        apply (quadratic_fixed_point_iff x hx0).2
+        exact hfixed.symm
+      have hfactor :
+          (x - Real.goldenRatio) * (x + Real.goldenRatio - 1) = 0 := by
+        nlinarith [hquad, golden_ratio_spec.2.1]
+      rcases mul_eq_zero.mp hfactor with hsame | himpossible
+      · exact sub_eq_zero.mp hsame
+      · exfalso
+        have hpositive : 0 < x + Real.goldenRatio - 1 := by
+          nlinarith [Real.one_lt_goldenRatio]
+        exact (ne_of_gt hpositive) himpossible
+    · intro hgolden
+      subst x
+      change 1 + 1 / Real.goldenRatio = Real.goldenRatio
+      exact golden_ratio_reciprocal_fixed_point.symm
 
 /-- Reverse probe: the public characterization recovers the nontrivial
 quadratic identity of every positive fixed point. -/
 example {x : Real} (hx : 0 < x) (hfixed : goldenReciprocalMap x = x) :
     x ^ 2 = x + 1 := by
-  have hgolden := (golden_fixed_point_unique x hx).1 hfixed
+  have hgolden := (golden_fixed_point_unique).2.2 x hx |>.1 hfixed
   rw [hgolden, ← golden_ratio_spec.1]
   exact golden_ratio_spec.2.1
+
+example : 0 < (1 + Real.sqrt 5) / 2 := golden_fixed_point_unique.1
+
+example :
+    goldenReciprocalMap ((1 + Real.sqrt 5) / 2) = (1 + Real.sqrt 5) / 2 :=
+  golden_fixed_point_unique.2.1
 
 /-- Trivialization probe: one is not a fixed point of the source map. -/
 example : goldenReciprocalMap 1 ≠ 1 := by

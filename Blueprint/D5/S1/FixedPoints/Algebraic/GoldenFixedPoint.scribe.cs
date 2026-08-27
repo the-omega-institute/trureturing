@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.FixedPoints.Algebraic;
 internal sealed class GoldenFixedPointDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The positive real fixed point of the reciprocal residual map is uniquely the golden ratio.",
+        "The displayed radical is a positive fixed point of the reciprocal residual map, and it is the unique positive fixed point.",
         H("Golden Reciprocal Fixed Point Uniqueness"),
         Blocks(
             Describe.Lean(
@@ -20,8 +20,11 @@ internal sealed class GoldenFixedPointDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Define R(x) = 1 + 1/x. For every positive real x, R(x) equals x "
-                            + "if and only if x is the displayed positive radical root.")),
+                        "Define R(x) = 1 + 1/x. The displayed radical is asserted to be "
+                            + "positive and to satisfy R(the displayed radical) = the displayed "
+                            + "radical; the quantified clause then "
+                            + "says that every positive real x is a fixed point exactly when "
+                            + "it equals that radical.")),
                     Paragraph(Text(
                         "The reverse direction applies the repository's existing golden-ratio "
                             + "fixed-point theorem. For the forward direction, the existing "
@@ -29,8 +32,9 @@ internal sealed class GoldenFixedPointDocument : IScribeDocumentDefinition
                             + "x plus one; comparison with the golden-ratio identity factors "
                             + "the difference, and positivity excludes the other factor.")),
                     Paragraph(Text(
-                        "Thus the statement includes both that the displayed value is a fixed "
-                            + "point and that every positive fixed point equals it. No continuity, "
+                        "Thus the type carries the existence witness directly as its first two "
+                            + "conjuncts (positivity and fixed-point equality), and carries "
+                            + "uniqueness in the final universal characterization. No continuity, "
                             + "nonzero, or conjectural premise is added."))),
                 DescribeRole.Theorem)),
         [DocumentEdge.Dependency.Create(
@@ -46,8 +50,12 @@ internal sealed class GoldenFixedPointDocument : IScribeDocumentDefinition
         Formula residual = Seq(D(1), Sp, Plus, Sp, Frac, Grp(D(1)), Grp(x));
         Formula radical = Seq(
             Frac, Grp(D(1), Sp, Plus, Sp, Sqrt, Grp(D(5))), Grp(D(2)));
+        Formula witnessResidual = Seq(
+            D(1), Sp, Plus, Sp, Frac, Grp(D(1)), Grp(radical));
 
         return Disp(Seq(
+            D(0), Sp, Lt, Sp, radical, Sp, Land, Sp,
+            Open, witnessResidual, Sp, Eq, Sp, radical, Close, Sp, Land, Sp,
             Forall, Sp, x, Sp, InMacro, Sp, Mathbb, Grp(F.Id("R")), Comma, Sp,
             D(0), Sp, Lt, Sp, x, Sp, Rightarrow, Sp,
             Open, residual, Sp, Eq, Sp, x, Sp, Iff, Sp,
