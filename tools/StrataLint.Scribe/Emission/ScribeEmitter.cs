@@ -78,6 +78,49 @@ public static class ScribeEmitter
             suppliedDefinitions: definitions).ExitCode;
     }
 
+    /// <summary>
+    /// Puts the formulas of the markdown a change touches in front of the pinned KaTeX,
+    /// on both the committed bytes and the current render. The corpus is still rendered —
+    /// a document's bytes depend on the whole document graph — but only the named
+    /// projections are judged and reported, and freshness stays ungated.
+    /// </summary>
+    internal static int CheckMarkdown(
+        string repositoryRoot,
+        TextWriter output,
+        TextWriter error,
+        LeanAxiomReport leanReport,
+        MarkdownFormulaScope scope)
+    {
+        ArgumentNullException.ThrowIfNull(leanReport);
+        ArgumentNullException.ThrowIfNull(scope);
+        ArgumentNullException.ThrowIfNull(output);
+        ArgumentNullException.ThrowIfNull(error);
+        var run = Run(
+            repositoryRoot,
+            check: true,
+            TextWriter.Null,
+            error,
+            _ => leanReport,
+            validateRepository: false,
+            tolerateAbsentDocuments: false,
+            markdownScope: scope);
+        if (run.ExitCode != 0)
+        {
+            return run.ExitCode;
+        }
+
+        scope.Close();
+        foreach (var finding in scope.Findings)
+        {
+            error.WriteLine($"markdown red {finding}");
+        }
+
+        output.WriteLine(
+            $"markdown: judged={scope.Judged} formula(s)={scope.Formulas} "
+            + $"red={scope.Findings.Length}");
+        return scope.Findings.IsEmpty ? 0 : 1;
+    }
+
     internal static VerifiedScribeEmissions? Verify(
         string repositoryRoot,
         TextWriter error,
@@ -102,7 +145,8 @@ public static class ScribeEmitter
         Func<string, LeanAxiomReport> loadLeanReport,
         bool validateRepository,
         bool tolerateAbsentDocuments,
-        IReadOnlyList<DocumentDefinition>? suppliedDefinitions = null)
+        IReadOnlyList<DocumentDefinition>? suppliedDefinitions = null,
+        MarkdownFormulaScope? markdownScope = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(output);
@@ -205,7 +249,7 @@ public static class ScribeEmitter
                 + $"narrative={graphEdges.OfType<DocumentEdge.NarrativeReference>().Count()}");
             return EmitVerified(
                 repositoryRoot, check, output, error,
-                declarationCatalog, definitions, graph);
+                declarationCatalog, definitions, graph, markdownScope);
         }
         catch (Exception exception) when (
             exception is InvalidOperationException
@@ -226,7 +270,8 @@ public static class ScribeEmitter
         TextWriter error,
         DeclarationCatalog declarationCatalog,
         IReadOnlyList<DocumentDefinition> definitions,
-        DocumentGraph graph)
+        DocumentGraph graph,
+        MarkdownFormulaScope? markdownScope)
     {
         var rendered = new List<(DocumentDefinition Definition, byte[] Bytes)>();
         var attestations = new List<ScribeEmissionRecord>();
@@ -242,6 +287,7 @@ public static class ScribeEmitter
                 graph).ToArray();
 
             rendered.Add((definition, bytes));
+            markdownScope?.Inspect(definition, bytes);
             var gid = definition.Document.Header.Gid.Value;
             var definitionPath = ScribeEmissionAttestation.DefinitionPath(gid);
             var source = File.ReadAllBytes(Path.Combine(repositoryRoot, definitionPath));

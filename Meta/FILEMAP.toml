@@ -575,3 +575,12 @@ consumed_by = ["TestRegistry"]
 verified_by = ["TestRegistry"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "tools/vendor/**"
+kind = "data"
+produced_by = "none"
+consumed_by = ["Scribe"]
+verified_by = ["KatexParser"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
