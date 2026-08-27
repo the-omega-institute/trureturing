@@ -1,0 +1,28 @@
+## RH 层：需要 twined positivity
+
+Riemann \(\xi\) 可能相当于一个过度压缩的 scalar character。
+
+真正有希望的补全可能需要：
+
+$$
+\boxed{
+\text{prime／character／regulator／boundary twining}
+}
+$$
+
+使 off-line 零点不能躲在标量纤维中。
+
+但要形成 RH 证明，仍必须建立：
+
+$$
+\boxed{
+\text{off-line zero}
+\Longrightarrow
+\text{某个 refined observer 中的不可消除负见证}.
+}
+$$
+
+本轮没有证明该桥。
+
+---
+

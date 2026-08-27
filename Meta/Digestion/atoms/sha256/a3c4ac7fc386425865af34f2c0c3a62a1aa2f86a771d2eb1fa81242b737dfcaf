@@ -1,0 +1,23 @@
+### 乘法完备性
+
+\(f\) 的 Fourier 系数成为广义 Kac–Moody 根重数，并具有 denominator product。
+
+因此定义：
+
+$$
+\boxed{
+\operatorname{SelfComplete}(f)
+=
+\left(
+\text{Hauptmodul},
+\text{Hecke-replicable},
+\text{Borcherds-denominator}
+\right).
+}
+\tag{135.2}
+$$
+
+Monstrous Moonshine 的 McKay–Thompson series 正体现了这一三重结构：Conway–Norton 猜想它们是特定 genus-zero groups 的 Hauptmodul，Borcherds 通过 Monster Lie 代数和 twisted denominator identities 完成证明。([London Mathematical Society (LMS)][4])
+
+---
+

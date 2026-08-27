@@ -1,0 +1,10 @@
+ast_path: section/乘法图表
+fingerprints:
+  raw_sha256: sha256:a33d8c69ee9b07d68b62a1230a53d0bcab5b87949772c3e67ddaff97f265993d
+  normalized_sha256: sha256:a33d8c69ee9b07d68b62a1230a53d0bcab5b87949772c3e67ddaff97f265993d
+cas_ref: sha256:a33d8c69ee9b07d68b62a1230a53d0bcab5b87949772c3e67ddaff97f265993d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

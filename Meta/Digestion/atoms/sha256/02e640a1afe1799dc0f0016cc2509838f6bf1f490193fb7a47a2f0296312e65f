@@ -1,0 +1,42 @@
+## 94.1 全部高阶 cumulants 有限状态闭合
+
+定义：
+
+$$
+\kappa_n
+=
+D^n\log Q.
+$$
+
+因为：
+
+$$
+D\bigl(\mathbb Q[P,Q,R]\bigr)
+\subseteq
+\mathbb Q[P,Q,R],
+$$
+
+所以：
+
+$$
+\boxed{
+\kappa_n
+\in
+\mathbb Q(P,Q,R)
+}
+$$
+
+对所有 \(n\ge1\) 成立。
+
+即：
+
+$$
+\boxed{
+\text{\(E_8\) 格点能量的全部高阶 cumulants，
+都由三个动态变量 }(P,Q,R)\text{ 闭合。}
+}
+$$
+
+这给 Yu Deng 式 cumulant 方法一个完全精确、无截断的可解模型：
+
+* 完整历史：全部 \(E_8\) 格点；

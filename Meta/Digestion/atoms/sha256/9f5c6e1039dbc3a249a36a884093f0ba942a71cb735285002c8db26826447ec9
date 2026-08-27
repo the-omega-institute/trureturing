@@ -1,0 +1,107 @@
+# 第一百一十六部　Ramanujan–Leech–Monster 卷积恒等式
+
+设：
+
+$$
+c(n)
+=
+[q^n]J(q),
+\qquad
+n\ge1.
+$$
+
+令：
+
+$$
+r_\Lambda(k)
+=
+[q^k]\Theta_\Lambda(q),
+\qquad
+r_\Lambda(0)=1.
+$$
+
+由：
+
+$$
+J+24
+=
+q^{-1}\Theta_\Lambda P_{24},
+$$
+
+对 \(n\ge1\) 得：
+
+$$
+\boxed{
+c(n)
+=
+\sum_{k=0}^{n+1}
+r_\Lambda(k)\,
+p_{24}(n+1-k).
+}
+\tag{116.1}
+$$
+
+再代入式 (112.4)：
+
+$$
+r_\Lambda(k)
+=
+\frac{65520}{691}
+\left(
+\sigma_{11}(k)-\tau(k)
+\right),
+\qquad
+k\ge1,
+$$
+
+得到：
+
+$$
+\boxed{
+\begin{aligned}
+c(n)
+={}&
+p_{24}(n+1)\\
+&+
+\frac{65520}{691}
+\sum_{k=1}^{n+1}
+\left(
+\sigma_{11}(k)-\tau(k)
+\right)
+p_{24}(n+1-k).
+\end{aligned}
+}
+\tag{116.2}
+$$
+
+这是一个完整的生成链：
+
+$$
+\boxed{
+\begin{aligned}
+\sigma_{11}
+&=\text{Eisenstein 连续密度};\\
+\tau
+&=\text{primitive cusp residual};\\
+\sigma_{11}-\tau
+&=\text{Leech 壳层};\\
+p_{24}
+&=\text{二十四振子完成};\\
+c(n)
+&=\text{Monster }J\text{ 系数}.
+\end{aligned}
+}
+$$
+
+所以 Monster Moonshine 的标量系数可以被严格写成：
+
+$$
+\boxed{
+\text{Ramanujan cusp-corrected lattice density}
+*
+\text{24-color oscillator completion}.
+}
+$$
+
+---
+

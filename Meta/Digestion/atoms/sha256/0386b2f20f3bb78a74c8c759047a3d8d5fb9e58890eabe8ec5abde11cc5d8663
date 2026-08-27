@@ -1,0 +1,73 @@
+# 第九十一部　Icosian \(E_8\) 的 Theta 函数就是 Ramanujan 的 \(E_4\)
+
+定义：
+
+$$
+q=e^{2\pi i\tau},
+\qquad
+\Im\tau>0.
+$$
+
+定义完成格 Theta：
+
+$$
+\boxed{
+\Theta_{\mathbb I}(\tau)
+=
+\sum_{x\in\mathbb I}
+q^{Q_E(x)}.
+}
+\tag{91.1}
+$$
+
+因为 \((\mathbb I,2Q_E)\) 是秩 \(8\) 的 even unimodular 格，其 Theta 函数是 weight \(4\)、level \(1\) 的模形式。
+
+而：
+
+$$
+\dim M_4(SL_2(\mathbb Z))=1.
+$$
+
+常数项为 \(1\)，所以：
+
+$$
+\boxed{
+\Theta_{\mathbb I}(\tau)
+=
+E_4(\tau).
+}
+\tag{91.2}
+$$
+
+其展开为：
+
+$$
+\boxed{
+\Theta_{\mathbb I}(\tau)
+=
+1+
+240\sum_{n\ge1}\sigma_3(n)q^n.
+}
+\tag{91.3}
+$$
+
+因此：
+
+$$
+r_{E_8}(n)
+:=
+\#\{x\in\mathbb I:Q_E(x)=n\}
+=
+240\sigma_3(n).
+$$
+
+特别地：
+
+$$
+r_{E_8}(1)=240.
+$$
+
+\(E_8\) Theta 等于 \(E_4\)，其壳层数为 \(240\sigma_3(n)\)，是 \(E_8\) 格的标准模形式描述。([维基百科][5])
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/108-1-标量-Theta-观察者的盲核
+fingerprints:
+  raw_sha256: sha256:6e87e141a33e6f7e0c15578da3a3862ee5ee0f76a57fa8f578b0d2f62867b071
+  normalized_sha256: sha256:6e87e141a33e6f7e0c15578da3a3862ee5ee0f76a57fa8f578b0d2f62867b071
+cas_ref: sha256:6e87e141a33e6f7e0c15578da3a3862ee5ee0f76a57fa8f578b0d2f62867b071
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,36 @@
+# 第一百二十七部　对角塌缩得到 Ramanujan 微分乘积
+
+令：
+
+$$
+p\longrightarrow q.
+$$
+
+加法图表的极限为：
+
+$$
+\begin{aligned}
+\mathcal D_\Delta(q)
+&=
+\lim_{p\to q}
+\frac{J(p)-J(q)}
+{p^{-1}-q^{-1}}\\
+&=
+-q^2J'(q).
+\end{aligned}
+$$
+
+乘法图表给出：
+
+$$
+\boxed{
+-q^2J'(q)
+=
+\prod_{m,n\ge1}
+(1-q^{m+n})^{c(mn)}.
+}
+\tag{127.1}
+$$
+
+---
+

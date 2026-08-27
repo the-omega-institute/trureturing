@@ -1,0 +1,88 @@
+# 第一百三十一部　Golden Minkowski 双观察
+
+定义：
+
+$$
+\boxed{
+\lambda_+(m,n)=m\varphi+n,
+}
+$$
+
+$$
+\boxed{
+\lambda_-(m,n)=m\varphi'+n.
+}
+\tag{131.1}
+$$
+
+联合映射：
+
+$$
+\iota_\varphi:
+\mathbb Z^2\to\mathbb R^2,
+\qquad
+(m,n)\mapsto(\lambda_+,\lambda_-)
+$$
+
+的矩阵为：
+
+$$
+\begin{pmatrix}
+\varphi&1\\
+\varphi'&1
+\end{pmatrix},
+$$
+
+行列式为：
+
+$$
+\boxed{
+\varphi-\varphi'=\sqrt5.
+}
+$$
+
+所以其像是协体积 \(\sqrt5\) 的 Minkowski 格。
+
+反演公式为：
+
+$$
+\boxed{
+m=\frac{\lambda_+-\lambda_-}{\sqrt5},
+}
+\tag{131.2}
+$$
+
+$$
+\boxed{
+n=
+\frac{
+\varphi\lambda_-
+-\varphi'\lambda_+
+}{\sqrt5}.
+}
+\tag{131.3}
+$$
+
+因此：
+
+* \(\lambda_+\)：物理／可见 Golden 能量；
+* \(\lambda_-\)：Galois 共轭／内部坐标；
+* 两者联合给出整数认证的完整根标签。
+
+虽然 \(\lambda_+\) 在无限精度下已单射，但 \(\lambda_-\) 提供：
+
+* Galois 证书；
+* 稳定逆变换；
+* cut-and-project 窗口；
+* finite-resolution residual。
+
+这与此前六维准晶体的：
+
+$$
+E_\parallel\oplus E_\perp
+$$
+
+完全同型，只是秩一版本。
+
+---
+
