@@ -1,0 +1,50 @@
+# 第二十二部　建议的 Lean 形式化目录
+
+```text
+D5/S3/ConceptDynamics/ConstantSemantics/
+  CompletionProblem.lean
+  CompletionSignature.lean
+  GaugeCovariance.lean
+  RoleCertificate.lean
+  EscapeSelectedConstant.lean
+
+D5/S3/Analytic/Completion/
+  LocalGlobalLedger.lean
+  MellinSubtraction.lean
+  LinearDensitySpectralZeta.lean
+  ConnectionCoefficient.lean
+
+D5/S3/Fourier/CompletionConstants/
+  GaussianSelfDualPi.lean
+  GaussianMellinFactor.lean
+  ExponentialFlowE.lean
+
+D5/S3/Analytic/ConstantRoles/
+  GoldenFixedPoint.lean
+  PrimeValuationLog.lean
+  EulerGammaResidual.lean
+  ReflectionMidpoint.lean
+
+D5/S3/Analytic/Ramanujan/
+  Question541GaussianVisible.lean
+  Question541GaussianTail.lean
+  Question541Completion.lean
+
+D5/S3/Analytic/Lambert/
+  PrimeDeletedDivisorSum.lean
+  PrimeDeletedLambertMellin.lean
+  RegularizedMellinObserver.lean
+
+D5/S3/Analytic/GoldenCompletion/
+  GoldenCountingDensity.lean
+  GoldenSpectralZeta.lean
+  GoldenWittCounterterms.lean
+
+D5/S3/Adelic/Completion/
+  FinitePlaceLedger.lean
+  ArchimedeanLedger.lean
+  AdelicBalance.lean
+```
+
+---
+

@@ -1,0 +1,39 @@
+## 未来效力
+
+当前被合并的差异是否会在未来改变：
+
+* 读出；
+* 预测；
+* 决策；
+* 策略。
+
+线性系统中，若当前读出为 \(C\)，完整未来不可见空间为 \(N_\infty\)，则：
+
+$$
+\boxed{
+M_{\mathrm{pred}}
+=
+\ker C/N_\infty
+}
+$$
+
+表示“当前不可见、但未来会产生观察差异”的记忆坐标。
+
+于是：
+
+$$
+\boxed{
+\text{stored}
+\neq
+\text{accessible}
+\neq
+\text{known}
+\neq
+\text{future-relevant}.
+}
+$$
+
+仓库的 `TwoTimeKnowledge` 已明确证明：事件可以在完整 ledger 中持续存在，但后期 readout 变粗后，事件值不再在读出纤维上常值，于是发生真正的语义遗忘。
+
+---
+

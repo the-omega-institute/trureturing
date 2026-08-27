@@ -1,0 +1,53 @@
+## 43.3 密度—调节子留数
+
+\(K=\mathbb Q(\sqrt5)\) 的：
+
+* 判别式为 \(5\)；
+* 类数为 \(1\)；
+* 单位群为：
+
+$$
+\mathcal O_K^\times
+=
+\{\pm\varphi^n:n\in\mathbb Z\};
+$$
+
+* 调节子为：
+
+$$
+R_K=\log\varphi.
+$$
+
+解析类数公式给出一般数域 zeta 在 \(s=1\) 的留数表达。([lmfdb.org][2])
+
+在本例中：
+
+$$
+\boxed{
+\operatorname*{Res}_{s=1}\zeta_K(s)
+=
+\frac{2\log\varphi}{\sqrt5}.
+}
+\tag{43.1}
+$$
+
+它可以被解释为：
+
+$$
+\boxed{
+\frac{2\log\varphi}{\sqrt5}
+=
+\underbrace{2\log\varphi}_{\text{单位流基本周期}}
+\times
+\underbrace{\frac1{\sqrt5}}_{\text{Minkowski 横截密度}}.
+}
+$$
+
+这是一条非常完整的“常数意义”恒等式：
+
+* \(\sqrt5\) 记录数域和格的横向协体积；
+* \(\log\varphi\) 记录单位轨道的纵向基本长度；
+* 两者乘积给出全局算术体积。
+
+---
+

@@ -1,0 +1,15 @@
+ast_path: section/24-1-为什么单一观察图表可能天然不闭合
+fingerprints:
+  raw_sha256: sha256:b68b805c085ec85583478165d22bfd06dcccc90e6e71845c39b1729f3b17e517
+  normalized_sha256: sha256:b68b805c085ec85583478165d22bfd06dcccc90e6e71845c39b1729f3b17e517
+cas_ref: sha256:b68b805c085ec85583478165d22bfd06dcccc90e6e71845c39b1729f3b17e517
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-fb3526fd1f5eb9c4294de9c6a825061902bb6a5d1ecfe12e6bd89dadfcb4d16f-7529b76b0d03830c95bd81aee93726886926f33520f1d1a851e4aa310e8b2446
+    - generic-residual-844ea7ddb379d0d02b08b2e6d382073c43fee39c90ad0ea5847d03b9639a34b8-d5e153e0885d3497a16d05b2496e79ae589df070d4256a34843177c9b73a9949
+    - generic-residual-0de1d27ddfe7bf394b8143a65c4ebc843cf2de6dd6365e2aa3fdd91f55c2e925-fcfc3ff38d34a0d246e4276d313ccb244c1c18cbfa2f6ee8c283b025a7a4e501
+    - generic-residual-44e4d36cc08aef990e6ba2ee05f03f95c5700cf1f6d0ec062a6999a875a11e6f-ec10c488e2e81c7d5bee24aed577f159ca33b679c3870abca7e6a2ddf22444ab

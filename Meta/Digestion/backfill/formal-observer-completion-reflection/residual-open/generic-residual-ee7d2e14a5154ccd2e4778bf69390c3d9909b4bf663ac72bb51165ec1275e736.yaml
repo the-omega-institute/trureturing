@@ -1,0 +1,10 @@
+ast_path: section/210-1-联合-分布式知识
+fingerprints:
+  raw_sha256: sha256:ee7d2e14a5154ccd2e4778bf69390c3d9909b4bf663ac72bb51165ec1275e736
+  normalized_sha256: sha256:ee7d2e14a5154ccd2e4778bf69390c3d9909b4bf663ac72bb51165ec1275e736
+cas_ref: sha256:ee7d2e14a5154ccd2e4778bf69390c3d9909b4bf663ac72bb51165ec1275e736
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

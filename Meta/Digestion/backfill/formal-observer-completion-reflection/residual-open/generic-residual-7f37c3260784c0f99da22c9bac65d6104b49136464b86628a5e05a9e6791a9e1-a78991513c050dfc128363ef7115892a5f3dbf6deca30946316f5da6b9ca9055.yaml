@@ -1,0 +1,10 @@
+ast_path: section/未来效力/clause/3
+fingerprints:
+  raw_sha256: sha256:7f37c3260784c0f99da22c9bac65d6104b49136464b86628a5e05a9e6791a9e1
+  normalized_sha256: sha256:7f37c3260784c0f99da22c9bac65d6104b49136464b86628a5e05a9e6791a9e1
+cas_ref: sha256:7f37c3260784c0f99da22c9bac65d6104b49136464b86628a5e05a9e6791a9e1
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

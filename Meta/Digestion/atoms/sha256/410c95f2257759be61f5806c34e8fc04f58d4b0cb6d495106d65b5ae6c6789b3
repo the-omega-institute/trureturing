@@ -1,0 +1,53 @@
+## 定理 6.2：最优对数壳
+
+令：
+
+$$
+J(\beta)=\frac{\beta}{\log\beta},
+\qquad
+\beta>1.
+$$
+
+则：
+
+$$
+\boxed{
+J\text{ 的唯一极小点是 }\beta=e.
+}
+$$
+
+### 证明
+
+$$
+J'(\beta)
+=
+\frac{\log\beta-1}{(\log\beta)^2}.
+$$
+
+故：
+
+$$
+J'(\beta)=0
+\iff
+\log\beta=1
+\iff
+\beta=e.
+$$
+
+且导数在 \(e\) 左负右正。∎
+
+所以 \(e\) 同时具有两种独立角色：
+
+$$
+\boxed{
+\begin{aligned}
+e&=\text{连续指数流的规范};\\
+e&=\text{乘法壳每单位对数信息成本的极值尺度}.
+\end{aligned}
+}
+$$
+
+`p-adic-zeta-density` 草稿的壳计数中也通过最小化 \(\beta/\log\beta\) 得到 \(e\)；这是其 density 系数中 \(e\) 的明确来源，而不是数值巧合。
+
+---
+

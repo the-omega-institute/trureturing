@@ -1,0 +1,16 @@
+* 上下文族对有限 join 封闭。
+
+设给定一个兼容记录族：
+
+$$
+b=(b_c)_c.
+$$
+
+并假设每个有限上下文记录都可实现：
+
+$$
+b_c\in\operatorname{Im}\beta_c
+\qquad
+\forall c.
+$$
+

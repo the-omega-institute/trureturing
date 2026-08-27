@@ -1,0 +1,13 @@
+ast_path: section/71-2-观察者意义
+fingerprints:
+  raw_sha256: sha256:07bfb14264e97739d669fc0c8d14d4165ed13ef1831eb3b2c541a9459c5c1a2a
+  normalized_sha256: sha256:07bfb14264e97739d669fc0c8d14d4165ed13ef1831eb3b2c541a9459c5c1a2a
+cas_ref: sha256:07bfb14264e97739d669fc0c8d14d4165ed13ef1831eb3b2c541a9459c5c1a2a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-f124494f5def80210561d5490db85533d3ef96518efa7196ab9dac918167bb52-eb48dc9faa13e44a5b929d9dc88005fb6ebd2cd386144d86699f56fa67f0255f
+    - generic-residual-6a1756469cb7ab35b7d3742d6683238a5690d97fc439a35428b9751ca261368e-89f55c13a15764c0ac787e1329d2ba1f2de59ee97033f1ff1165f0b0dd53e11d

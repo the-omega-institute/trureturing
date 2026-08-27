@@ -1,0 +1,14 @@
+## 最深解释 212.1
+
+观察困难并不只属于被观察对象，也不只属于仪器；它是状态空间与协议空间耦合后的共同谱性质：
+
+$$
+\boxed{
+\text{weak state mode}
+\Longleftrightarrow
+\text{nearly redundant protocol mode}.
+}
+$$
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/185-5-Gluing-residual
+fingerprints:
+  raw_sha256: sha256:2be96d6563c5bf9071fcced49189f7df4cce09cabfeb597d3f3ad6baa90e6984
+  normalized_sha256: sha256:2be96d6563c5bf9071fcced49189f7df4cce09cabfeb597d3f3ad6baa90e6984
+cas_ref: sha256:2be96d6563c5bf9071fcced49189f7df4cce09cabfeb597d3f3ad6baa90e6984
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

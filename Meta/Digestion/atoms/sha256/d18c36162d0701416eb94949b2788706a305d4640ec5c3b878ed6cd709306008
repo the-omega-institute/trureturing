@@ -1,0 +1,27 @@
+## 51.2 调节子模式族
+
+每个：
+
+$$
+L(s,\chi_m)
+$$
+
+都有真正的理想 Euler product。
+
+因此式 (45.3) 展示了一个重要机制：
+
+$$
+\boxed{
+\text{几何耦合主函数}
+\xrightarrow{\text{单位流 Fourier}}
+\text{乘法 primitive Hecke 通道}.
+}
+$$
+
+这正是 Yu Deng 式 primitive decomposition 的算术原型：
+
+* 原始对象中全部单位历史混合；
+* 对调节子圆做 Fourier 分解；
+* 每个 Fourier 模式成为不可再混合的乘法角色；
+* Gamma 因子自动给出 Archimedean 完成。
+

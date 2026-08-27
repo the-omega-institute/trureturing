@@ -1,0 +1,27 @@
+## 2.1 参数化新定义
+
+设：
+
+$$
+d_a:X\to D_a,
+\qquad a\in A.
+$$
+
+令 \(\nu\) 是残差空间上的忠实测度或计数，即：
+
+$$
+\nu(S)=0\iff S=\varnothing.
+$$
+
+定义参数 \(a\) 的逃逸缺陷：
+
+$$
+\boxed{
+\Delta_{q,T}(a)
+=
+\nu\bigl(\mathcal E(q\vee d_a;T)\bigr).
+}
+$$
+
+---
+

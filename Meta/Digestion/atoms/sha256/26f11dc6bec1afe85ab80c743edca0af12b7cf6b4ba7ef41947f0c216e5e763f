@@ -1,0 +1,13 @@
+# 222. 近似观察者：kernel 应升级为伪度量
+
+精确 kernel 只区分：
+
+$$
+D=0
+\quad\text{与}\quad
+D>0.
+$$
+
+设 \(D\) 是 law 空间上的区分度，例如：
+
+* total variation；

@@ -1,0 +1,48 @@
+## 定理 44.1（调节子周期）
+
+$$
+\boxed{
+\mathfrak Z_\varphi(s,\eta+2\log\varphi)
+=
+\mathfrak Z_\varphi(s,\eta).
+}
+$$
+
+### 证明
+
+乘以单位 \(\varphi\) 后：
+
+$$
+a_{\varphi\alpha}
+=
+\varphi^2a_\alpha,
+$$
+
+$$
+b_{\varphi\alpha}
+=
+\varphi^{-2}b_\alpha.
+$$
+
+所以：
+
+$$
+Q_\eta(\varphi\alpha)
+=
+Q_{\eta+2\log\varphi}(\alpha).
+$$
+
+而 \(\alpha\mapsto\varphi\alpha\) 是 \(\mathcal O_K\setminus\{0\}\) 的双射。∎
+
+因此 \(\eta\) 不属于整条实线，而属于调节子圆：
+
+$$
+\boxed{
+\eta\in
+\mathbb R/
+2\log\varphi\,\mathbb Z.
+}
+$$
+
+---
+

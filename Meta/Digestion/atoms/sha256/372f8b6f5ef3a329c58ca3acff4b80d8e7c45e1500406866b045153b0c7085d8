@@ -1,0 +1,42 @@
+## 证明
+
+若 \(xK_\infty y\)，则对任意 \(u,w,f\)：
+
+$$
+f(T_uT_wx)
+=
+f(T_uT_wy),
+$$
+
+故：
+
+$$
+T_wxK_\infty T_wy.
+$$
+
+若 \(R\subseteq K_0\) 且 \(R\) 不变，则：
+
+$$
+xRy
+\Rightarrow
+T_wxRT_wy
+\Rightarrow
+f(T_wx)=f(T_wy).
+$$
+
+因此 \(R\subseteq K_\infty\)。证毕。
+
+所以：
+
+$$
+\boxed{
+\text{observer completion}
+=
+\text{dual probes 的最小不变闭包}
+=
+\text{state residual 的最大不变子关系}.
+}
+$$
+
+---
+

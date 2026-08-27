@@ -1,0 +1,32 @@
+* \(4\)：奇格偶化与二进 Fourier 规范。
+
+因此 Ramanujan 图表更可能需要同时使用：
+
+$$
+r(\tau)
+\quad\text{和}\quad
+r(2\tau),
+$$
+
+而不只是 \(r(\tau)\)。
+
+已有研究证明了：
+
+$$
+k(\tau)=r(\tau)r(2\tau)^2
+$$
+
+在 \(\Gamma_1(10)\) 上的模性；更多 \(r(\tau)^ar(2\tau)^b\) 的组合也形成 level-\(10\) 模函数，而 Ramanujan 的 order-\(10\) continued fractions 已被证明是 level-\(10\) 模函数。([数字对象标识符][4])
+
+所以 OACTC 的预测是：
+
+$$
+\boxed{
+\text{六维黄金 Theta 的 Ramanujan 坐标，
+应属于 level }5\text{ 与 level }10\text{ 的联合函数域}.
+}
+\tag{79.3}
+$$
+
+---
+

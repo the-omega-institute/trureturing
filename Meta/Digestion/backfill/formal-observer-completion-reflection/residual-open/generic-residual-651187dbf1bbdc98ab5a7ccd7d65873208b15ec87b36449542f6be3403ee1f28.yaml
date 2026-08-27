@@ -1,0 +1,10 @@
+ast_path: section/176-记忆不是一个对象-而是四种不同关系
+fingerprints:
+  raw_sha256: sha256:651187dbf1bbdc98ab5a7ccd7d65873208b15ec87b36449542f6be3403ee1f28
+  normalized_sha256: sha256:651187dbf1bbdc98ab5a7ccd7d65873208b15ec87b36449542f6be3403ee1f28
+cas_ref: sha256:651187dbf1bbdc98ab5a7ccd7d65873208b15ec87b36449542f6be3403ee1f28
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

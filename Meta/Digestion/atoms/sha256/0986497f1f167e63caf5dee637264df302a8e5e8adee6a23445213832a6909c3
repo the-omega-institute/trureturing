@@ -1,0 +1,60 @@
+## 定理 206.4（双外延坍缩的普适最小性）
+
+设存在满射
+
+$$
+a:X\twoheadrightarrow X',
+\qquad
+b:P\twoheadrightarrow P',
+$$
+
+以及双外延评价
+
+$$
+e':X'\times P'\to\Lambda
+$$
+
+满足
+
+$$
+e(x,p)=e'(a(x),b(p)).
+$$
+
+则存在唯一双射
+
+$$
+\alpha:\overline X\overset{\sim}{\longrightarrow}X',
+$$
+
+以及唯一双射
+
+$$
+\beta:\overline P\overset{\sim}{\longrightarrow}P'
+$$
+
+使整个评价方块交换。
+
+### 证明
+
+若 $xK_Xy$，则对全部 $p$：
+
+$$
+e'(a(x),b(p))
+=
+e'(a(y),b(p)).
+$$
+
+由于 $b$ 满射，上式对全部 $p'\in P'$ 成立。由 $e'$ 的状态外延性：
+
+$$
+a(x)=a(y).
+$$
+
+反向若 $a(x)=a(y)$，显然 $xK_Xy$。所以
+
+$$
+\ker a=K_X.
+$$
+
+因此 $a$ 在 $\overline X$ 上诱导双射。协议侧同理。∎
+

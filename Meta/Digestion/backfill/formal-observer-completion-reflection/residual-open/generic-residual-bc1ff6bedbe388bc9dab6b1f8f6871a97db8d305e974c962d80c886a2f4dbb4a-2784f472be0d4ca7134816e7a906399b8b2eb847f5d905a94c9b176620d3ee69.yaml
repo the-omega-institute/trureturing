@@ -1,0 +1,10 @@
+ast_path: section/207-Completion-是反射-而-kernel-completion-是内算子/clause/3
+fingerprints:
+  raw_sha256: sha256:bc1ff6bedbe388bc9dab6b1f8f6871a97db8d305e974c962d80c886a2f4dbb4a
+  normalized_sha256: sha256:bc1ff6bedbe388bc9dab6b1f8f6871a97db8d305e974c962d80c886a2f4dbb4a
+cas_ref: sha256:bc1ff6bedbe388bc9dab6b1f8f6871a97db8d305e974c962d80c886a2f4dbb4a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

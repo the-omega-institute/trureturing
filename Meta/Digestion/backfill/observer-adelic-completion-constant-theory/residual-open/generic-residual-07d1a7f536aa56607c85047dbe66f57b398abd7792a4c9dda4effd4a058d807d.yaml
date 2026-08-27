@@ -1,0 +1,10 @@
+ast_path: section/第二部-常数作为定义逃逸的消除参数
+fingerprints:
+  raw_sha256: sha256:07d1a7f536aa56607c85047dbe66f57b398abd7792a4c9dda4effd4a058d807d
+  normalized_sha256: sha256:07d1a7f536aa56607c85047dbe66f57b398abd7792a4c9dda4effd4a058d807d
+cas_ref: sha256:07d1a7f536aa56607c85047dbe66f57b398abd7792a4c9dda4effd4a058d807d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

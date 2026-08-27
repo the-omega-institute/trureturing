@@ -1,0 +1,10 @@
+## 定义 224.1（预测等价）
+
+$$
+h\sim_{\mathrm{pred}}h'
+\iff
+\forall w,
+\quad
+\mathsf L(h,w)=\mathsf L(h',w).
+$$
+

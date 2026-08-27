@@ -1,0 +1,82 @@
+# 250. 预测记忆的熵分解
+
+假设过程平稳，并定义预测状态熵：
+
+$$
+C_\mu
+=
+H(S_t).
+$$
+
+定义过去—未来互信息：
+
+$$
+E
+=
+I(
+\overleftarrow X_t;
+\overrightarrow X_t
+).
+$$
+
+由于：
+
+$$
+S_t=f(\overleftarrow X_t),
+$$
+
+且：
+
+$$
+\overrightarrow X_t
+\perp
+\overleftarrow X_t
+\mid S_t,
+$$
+
+可得：
+
+$$
+E
+=
+I(
+S_t;
+\overrightarrow X_t
+).
+$$
+
+于是：
+
+$$
+H(S_t)
+=
+I(
+S_t;
+\overrightarrow X_t
+)
++
+H(
+S_t\mid\overrightarrow X_t
+).
+$$
+
+定义：
+
+$$
+\chi
+=
+H(
+S_t\mid\overrightarrow X_t
+).
+$$
+
+因此：
+
+$$
+\boxed{
+C_\mu
+=
+E+\chi.
+}
+$$
+

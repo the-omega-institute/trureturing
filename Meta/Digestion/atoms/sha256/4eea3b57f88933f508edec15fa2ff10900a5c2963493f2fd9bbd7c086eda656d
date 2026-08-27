@@ -1,0 +1,11 @@
+# 217. 近似 kernel 与超度量闭包
+
+给定协议族 $Q\subseteq P$，定义
+
+$$
+d_Q(x,y)
+=
+\sup_{p\in Q}
+d_\Lambda(e(x,p),e(y,p)).
+$$
+

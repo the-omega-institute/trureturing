@@ -1,0 +1,25 @@
+## 35.1 Golden Euler germ
+
+仓库已经定义 Golden 指数：
+
+$$
+\operatorname{o5Beta}(v)
+=
+\sqrt5\,v+\frac1\varphi
+-\operatorname{fract}((v+1)\varphi),
+$$
+
+并证明其初始指数为：
+
+$$
+\varphi^2,\varphi^3,\varphi^4.
+$$
+
+它属于：
+
+$$
+\boxed{
+\text{秩一 Golden 共轭完成}.
+}
+$$
+

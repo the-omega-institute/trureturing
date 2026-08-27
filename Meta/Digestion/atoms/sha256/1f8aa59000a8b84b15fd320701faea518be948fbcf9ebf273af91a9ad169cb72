@@ -1,0 +1,34 @@
+* 格的奇偶性还引入一个 \(2\)-primary 完成。
+
+因此正确的候选不是：
+
+$$
+\boldsymbol\Theta_L
+=
+\mathcal Q_{\mathrm{RR}},
+$$
+
+而是：
+
+$$
+\boxed{
+P_3\boldsymbol\Theta_L
+=
+F_+(\tau)\,
+\operatorname{Sym}^2\mathbf R(\tau),
+}
+\tag{79.1}
+$$
+
+$$
+\boxed{
+P_{3'}\boldsymbol\Theta_L
+=
+F_-(\tau)\,
+\operatorname{Sym}^2\mathbf R^\sigma(\tau),
+}
+\tag{79.2}
+$$
+
+其中：
+

@@ -1,0 +1,10 @@
+ast_path: section/第七-自我递归不能恢复被内部接口删除的数据
+fingerprints:
+  raw_sha256: sha256:44ca6c3ab6b65f8dab877393114f4560232b94ba05bab2e86863b95ec1945d8d
+  normalized_sha256: sha256:44ca6c3ab6b65f8dab877393114f4560232b94ba05bab2e86863b95ec1945d8d
+cas_ref: sha256:44ca6c3ab6b65f8dab877393114f4560232b94ba05bab2e86863b95ec1945d8d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

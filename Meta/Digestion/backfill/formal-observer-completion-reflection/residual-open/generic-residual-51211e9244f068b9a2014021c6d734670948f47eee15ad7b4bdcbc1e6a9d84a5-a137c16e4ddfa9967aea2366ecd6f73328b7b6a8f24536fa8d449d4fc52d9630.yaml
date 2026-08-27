@@ -1,0 +1,10 @@
+ast_path: section/182-新推论-平均观察深度的熵下界/clause/2
+fingerprints:
+  raw_sha256: sha256:51211e9244f068b9a2014021c6d734670948f47eee15ad7b4bdcbc1e6a9d84a5
+  normalized_sha256: sha256:51211e9244f068b9a2014021c6d734670948f47eee15ad7b4bdcbc1e6a9d84a5
+cas_ref: sha256:51211e9244f068b9a2014021c6d734670948f47eee15ad7b4bdcbc1e6a9d84a5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

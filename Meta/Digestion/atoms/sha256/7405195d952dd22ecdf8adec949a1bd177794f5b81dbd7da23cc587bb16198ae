@@ -1,0 +1,31 @@
+## 定理 222.2（后处理收缩）
+
+设线性后处理
+
+$$
+B:Y\to Z.
+$$
+
+则
+
+$$
+\boxed{
+\operatorname{dist}(By,B(I))
+\le
+\|B\|\,
+\operatorname{dist}(y,I).
+}
+$$
+
+特别地，若 $|B|\le1$：
+
+$$
+\operatorname{RealizationDefect}(By)
+\le
+\operatorname{RealizationDefect}(y).
+$$
+
+所以规范化的串行后处理不能增强对上游不一致性的区分能力。
+
+---
+

@@ -1,0 +1,33 @@
+## 定理 57.1（有限二十面体轴分解）
+
+$$
+\boxed{
+\mathbb P^2(\mathbb F_5)
+=
+\mathcal A_5
+\sqcup
+\mathcal A_3
+\sqcup
+\mathcal A_2,
+}
+$$
+
+其中：
+
+$$
+|\mathcal A_5|=6,
+\qquad
+|\mathcal A_3|=10,
+\qquad
+|\mathcal A_2|=15.
+$$
+
+各轨道稳定子阶分别为：
+
+$$
+10,\qquad6,\qquad4,
+$$
+
+即对应：
+
+* 五阶循环子群的 normalizer；

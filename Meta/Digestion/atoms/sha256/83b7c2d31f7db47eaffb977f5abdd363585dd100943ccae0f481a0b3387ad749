@@ -1,0 +1,140 @@
+# 256. 最终统一：观察者、控制者与预测者是同一个行为核的三个方向
+
+此前的评价网是：
+
+$$
+e:X\times P\longrightarrow\Lambda.
+$$
+
+现在加入动作输入和未来协议后，真正的核心对象成为：
+
+$$
+\mathcal B:
+X_{\mathrm{rch}}
+\longrightarrow
+\prod_{p\in P}
+\mathsf{Law}_p.
+$$
+
+其 kernel 给出：
+
+$$
+K_{\mathrm{beh}}
+=
+\ker\mathcal B.
+$$
+
+规范状态是：
+
+$$
+Q_{\mathrm{core}}
+=
+X_{\mathrm{rch}}/K_{\mathrm{beh}}.
+$$
+
+但完整理论还需要三个互补结构。
+
+统计决策序：
+
+$$
+E\succeq_B F
+$$
+
+回答一个观察者能否模拟另一个观察者的全部决策。
+
+局部—全局像：
+
+$$
+\operatorname{Im}(\operatorname{Marg})
+$$
+
+回答兼容局部 law 是否来自某个全局对象。
+
+观察—控制 Hankel 核：
+
+$$
+\mathcal X_{\min}
+=
+\mathcal R/
+(\mathcal R\cap\mathcal N)
+$$
+
+回答哪些状态方向既能被行动产生，又能在未来被观察。
+
+预测因果状态：
+
+$$
+S
+=
+\frac{
+\text{pasts}
+}{
+\text{equal future laws}
+}
+$$
+
+回答哪些历史差异仍会改变未来概率。
+
+于是统一结构可以写为：
+
+$$
+\begin{aligned}
+\text{Observer}
+&=
+\text{questions that distinguish states},
+\\
+\text{Controller}
+&=
+\text{actions that reach states},
+\\
+\text{Predictor}
+&=
+\text{history quotient that determines future laws},
+\\
+\text{Contextuality}
+&=
+\text{compatible local laws outside the global image},
+\\
+\text{Decision power}
+&=
+\text{downstream tasks simulable by postprocessing},
+\\
+\text{Minimal reality}
+&=
+\text{reachable states modulo complete behavioral equivalence}.
+\end{aligned}
+$$
+
+最深的收束是：
+
+> **世界状态只有在能够被某种允许行动触达、能够通过某种允许协议影响未来记录，并且其局部行为能够进入一个真实全局实现时，才属于观察者—行动者的有效现实核心。**
+
+更短地：
+
+$$
+\boxed{
+Q_{\mathrm{effective}}
+=
+\frac{
+\text{reachable states}
+}{
+\text{indistinguishable under every future protocol}
+}.
+}
+$$
+
+而这个商的强弱，不再只由 kernel 衡量，还必须同时报告：
+
+$$
+\boxed{
+\text{decision order},
+\quad
+\text{deficiency},
+\quad
+\text{realization image},
+\quad
+\text{Hankel spectrum},
+\quad
+\text{predictive memory}.
+}
+$$

@@ -1,0 +1,10 @@
+ast_path: section/42-3-正性完成
+fingerprints:
+  raw_sha256: sha256:ee5c90b6a02f4b96e705911577fa8ab5c2b1e0b1d183de013387f137000edde2
+  normalized_sha256: sha256:ee5c90b6a02f4b96e705911577fa8ab5c2b1e0b1d183de013387f137000edde2
+cas_ref: sha256:ee5c90b6a02f4b96e705911577fa8ab5c2b1e0b1d183de013387f137000edde2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

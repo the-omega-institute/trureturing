@@ -1,0 +1,10 @@
+ast_path: section/247-平衡观察-控制坐标/clause/2
+fingerprints:
+  raw_sha256: sha256:0432670d572041aba97fc0a965c6520f87c0bd11994e051a2348471d4375f93b
+  normalized_sha256: sha256:0432670d572041aba97fc0a965c6520f87c0bd11994e051a2348471d4375f93b
+cas_ref: sha256:0432670d572041aba97fc0a965c6520f87c0bd11994e051a2348471d4375f93b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

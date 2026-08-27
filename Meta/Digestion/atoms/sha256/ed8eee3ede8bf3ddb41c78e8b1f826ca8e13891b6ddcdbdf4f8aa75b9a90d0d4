@@ -1,0 +1,4 @@
+## 原理
+
+若观察者精化链所在的偏序具有有限高度或 ascending-chain condition，则任何由逐步加入协议产生的 completion 都会有限停止。
+

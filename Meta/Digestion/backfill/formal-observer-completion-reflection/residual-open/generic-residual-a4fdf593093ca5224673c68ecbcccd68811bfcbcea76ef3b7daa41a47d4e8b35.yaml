@@ -1,0 +1,10 @@
+ast_path: section/234-3-随机后处理
+fingerprints:
+  raw_sha256: sha256:a4fdf593093ca5224673c68ecbcccd68811bfcbcea76ef3b7daa41a47d4e8b35
+  normalized_sha256: sha256:a4fdf593093ca5224673c68ecbcccd68811bfcbcea76ef3b7daa41a47d4e8b35
+cas_ref: sha256:a4fdf593093ca5224673c68ecbcccd68811bfcbcea76ef3b7daa41a47d4e8b35
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,50 @@
+* 限制到某个观察上下文。
+
+因此协议索引最好组织成范畴：
+
+$$
+\mathcal C_{\mathfrak O}.
+$$
+
+对象 \(c\) 表示一个有限观察上下文。
+
+态射：
+
+$$
+u:c\to d
+$$
+
+表示从较丰富的 \(d\)-记录限制或后处理得到 \(c\)-记录。
+
+令：
+
+$$
+\mathcal B:
+\mathcal C_{\mathfrak O}^{op}\to\mathbf{Set}
+$$
+
+为记录预层：
+
+$$
+c\longmapsto\mathcal B(c).
+$$
+
+其中 \(\mathcal B(c)\) 是上下文 \(c\) 的形式记录空间。
+
+若：
+
+$$
+u:c\to d,
+$$
+
+则：
+
+$$
+\mathcal B(u):
+\mathcal B(d)\to\mathcal B(c)
+$$
+
+是限制映射。
+
+---
+

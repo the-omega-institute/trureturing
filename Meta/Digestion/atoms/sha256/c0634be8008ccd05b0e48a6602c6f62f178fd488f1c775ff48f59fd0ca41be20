@@ -1,0 +1,67 @@
+## 25.1 可见与共轭空间
+
+定义：
+
+$$
+E_\parallel=M_{\sigma_+},
+\qquad
+E_\perp=M_{\sigma_-}.
+$$
+
+其中：
+
+* \(E_\parallel\) 是选择 \(\varphi>1\) 的可见嵌入；
+* \(E_\perp\) 是选择 \(\varphi'=-1/\varphi\) 的共轭嵌入。
+
+乘以 \(\varphi\) 在六维完成空间上的作用为：
+
+$$
+\boxed{
+R_\varphi
+=
+\begin{pmatrix}
+\varphi I_3&0\\
+0&\varphi'I_3
+\end{pmatrix}.
+}
+$$
+
+因此：
+
+$$
+\|R_\varphi|_{E_\parallel}\|=\varphi>1,
+$$
+
+而：
+
+$$
+\|R_\varphi|_{E_\perp}\|
+=
+|\varphi'|
+=
+\varphi^{-1}<1.
+$$
+
+这说明黄金比例同时完成两个相反任务：
+
+$$
+\boxed{
+\begin{aligned}
+E_\parallel &: \text{尺度膨胀};\\
+E_\perp &: \text{隐藏残差收缩}.
+\end{aligned}
+}
+$$
+
+所以 \(\varphi\) 的更精确角色是：
+
+$$
+\boxed{
+\varphi
+=
+\text{共轭完成空间中的双曲重整化单位。}
+}
+$$
+
+---
+

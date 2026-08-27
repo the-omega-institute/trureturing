@@ -1,0 +1,34 @@
+# 218. 素数观察者的规范加权度量
+
+考虑隐藏素数地址空间
+
+$$
+K_\infty
+=
+\prod_{p\in\mathbb P}\mathbb Z_p.
+$$
+
+在每个坐标上使用标准 $p$-进度量：
+
+$$
+d_p(u_p,v_p)
+=
+p^{-v_p(u_p-v_p)},
+$$
+
+约定
+
+$$
+p^{-\infty}=0.
+$$
+
+令
+
+$$
+Z_{\mathbb P}(s)
+=
+\sum_{p\in\mathbb P}p^{-s},
+\qquad
+s>1.
+$$
+

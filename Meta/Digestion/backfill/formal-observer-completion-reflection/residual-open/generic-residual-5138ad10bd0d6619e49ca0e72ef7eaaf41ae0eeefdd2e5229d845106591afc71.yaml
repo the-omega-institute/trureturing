@@ -1,0 +1,14 @@
+ast_path: section/194-观察者不是单边商-而是一个双侧评价结构
+fingerprints:
+  raw_sha256: sha256:5138ad10bd0d6619e49ca0e72ef7eaaf41ae0eeefdd2e5229d845106591afc71
+  normalized_sha256: sha256:5138ad10bd0d6619e49ca0e72ef7eaaf41ae0eeefdd2e5229d845106591afc71
+cas_ref: sha256:5138ad10bd0d6619e49ca0e72ef7eaaf41ae0eeefdd2e5229d845106591afc71
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-cc3857f3e4c0f4ee9cd4d8c05e33a2e136d498bebdb5ca57ddd431490c42c67a-4cd58343a37a342af95eeddeea2ef3a124bdbf094289706f2a77ac353629b68f
+    - generic-residual-9fa1b03ace603c059e809dc6fba20c127b725484e469d969740b2c9b001fb2bc-a5fab48727011d7689a816f84b3f280cd85ae64c175a7da019b6f53493042b40
+    - generic-residual-d0a97a0762cec3a471795e44f6d4120793b6fabe423d23f71d855ee3fa28a7c5-3fd91a9f557a92e75d00cd98503041682a3bf40792d4b8994564d7a907a83277

@@ -1,0 +1,28 @@
+## 定理 70.1（十二 cusp—vertex 识别）
+
+$$
+\boxed{
+\widetilde{\mathcal C}_5
+\simeq I_+
+}
+$$
+
+作为 \(PSL_2(\mathbb F_5)\simeq A_5\)-集合成立。
+
+另一方面，主同余子群 \(\Gamma(5)\) 的 cusp 等价正由 primitive pairs 模 \(5\) 的 \(\pm\)-等价给出；因此 \(X(5)\) 有十二个 cusps，并可置于二十面体十二个顶点上。([SageMath 文档][1])
+
+所以：
+
+$$
+\boxed{
+\text{六维格的一个非零 isotropic 边界轨道}
+=
+\text{level-5 模曲线的 cusp 集}
+=
+\text{二十面体十二个顶点}.
+}
+$$
+
+这已经把：
+
+* 五次方程的 \(A_5\)；

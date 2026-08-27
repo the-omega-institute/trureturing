@@ -1,0 +1,10 @@
+ast_path: section/第三十六部-新的科学问题
+fingerprints:
+  raw_sha256: sha256:f2d6068b5ca62a49723d3a8900f4afeb74071664aa2d2ce0c2aab39c5fbcdea1
+  normalized_sha256: sha256:f2d6068b5ca62a49723d3a8900f4afeb74071664aa2d2ce0c2aab39c5fbcdea1
+cas_ref: sha256:f2d6068b5ca62a49723d3a8900f4afeb74071664aa2d2ce0c2aab39c5fbcdea1
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

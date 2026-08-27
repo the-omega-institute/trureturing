@@ -1,0 +1,10 @@
+ast_path: section/225-预测商-风险商与决策商
+fingerprints:
+  raw_sha256: sha256:d9cf6b4a1bc1479d813d4ebb3ade662b445f5dc70fda5dcd6f33df24fe5a379c
+  normalized_sha256: sha256:d9cf6b4a1bc1479d813d4ebb3ade662b445f5dc70fda5dcd6f33df24fe5a379c
+cas_ref: sha256:d9cf6b4a1bc1479d813d4ebb3ade662b445f5dc70fda5dcd6f33df24fe5a379c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

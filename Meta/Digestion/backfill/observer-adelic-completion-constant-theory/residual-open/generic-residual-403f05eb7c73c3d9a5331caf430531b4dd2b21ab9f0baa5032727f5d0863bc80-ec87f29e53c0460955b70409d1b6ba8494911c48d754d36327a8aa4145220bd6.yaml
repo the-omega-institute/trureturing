@@ -1,0 +1,10 @@
+ast_path: section/78-1-二维到三维/clause/3
+fingerprints:
+  raw_sha256: sha256:403f05eb7c73c3d9a5331caf430531b4dd2b21ab9f0baa5032727f5d0863bc80
+  normalized_sha256: sha256:403f05eb7c73c3d9a5331caf430531b4dd2b21ab9f0baa5032727f5d0863bc80
+cas_ref: sha256:403f05eb7c73c3d9a5331caf430531b4dd2b21ab9f0baa5032727f5d0863bc80
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

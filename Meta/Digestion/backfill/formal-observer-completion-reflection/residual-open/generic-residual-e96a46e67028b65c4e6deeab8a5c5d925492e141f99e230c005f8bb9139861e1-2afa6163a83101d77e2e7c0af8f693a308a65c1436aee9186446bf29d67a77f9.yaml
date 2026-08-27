@@ -1,0 +1,10 @@
+ast_path: section/242-观察者必须与控制者同时建模/clause/3
+fingerprints:
+  raw_sha256: sha256:e96a46e67028b65c4e6deeab8a5c5d925492e141f99e230c005f8bb9139861e1
+  normalized_sha256: sha256:e96a46e67028b65c4e6deeab8a5c5d925492e141f99e230c005f8bb9139861e1
+cas_ref: sha256:e96a46e67028b65c4e6deeab8a5c5d925492e141f99e230c005f8bb9139861e1
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

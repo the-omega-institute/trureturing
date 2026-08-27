@@ -1,0 +1,23 @@
+## 210.1 联合／分布式知识
+
+所有主体把记录汇集起来：
+
+$$
+K_{\mathrm{pool}}
+=
+\bigcap_iK_i.
+$$
+
+其可观察代数：
+
+$$
+\mathcal A_{\mathrm{pool}}
+=
+\operatorname{Obs}
+\left(
+\bigcap_iK_i
+\right).
+$$
+
+这是联合后能够知道的一切。
+

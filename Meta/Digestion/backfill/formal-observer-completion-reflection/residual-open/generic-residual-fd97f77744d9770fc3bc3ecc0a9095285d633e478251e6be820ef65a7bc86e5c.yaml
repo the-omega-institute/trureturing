@@ -1,0 +1,10 @@
+ast_path: section/236-Kernel-完备远弱于统计完备
+fingerprints:
+  raw_sha256: sha256:fd97f77744d9770fc3bc3ecc0a9095285d633e478251e6be820ef65a7bc86e5c
+  normalized_sha256: sha256:fd97f77744d9770fc3bc3ecc0a9095285d633e478251e6be820ef65a7bc86e5c
+cas_ref: sha256:fd97f77744d9770fc3bc3ecc0a9095285d633e478251e6be820ef65a7bc86e5c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

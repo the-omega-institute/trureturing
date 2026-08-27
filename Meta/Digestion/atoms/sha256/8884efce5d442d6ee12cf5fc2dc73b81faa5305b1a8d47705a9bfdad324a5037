@@ -1,0 +1,24 @@
+## 定义 207.1（协议族诱导的状态关系）
+
+对任意协议子集
+
+$$
+Q\subseteq P,
+$$
+
+定义
+
+$$
+K(Q)
+=
+\bigcap_{p\in Q}\ker c_p.
+$$
+
+即
+
+$$
+xK(Q)y
+\iff
+\forall p\in Q,\quad e(x,p)=e(y,p).
+$$
+

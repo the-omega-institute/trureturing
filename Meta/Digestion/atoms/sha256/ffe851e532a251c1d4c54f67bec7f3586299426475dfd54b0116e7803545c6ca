@@ -1,0 +1,12 @@
+* 每个 $e_p:X\to\mathbb R$ 连续且仿射。
+
+则
+
+$$
+\Sigma(X)
+\subseteq
+\mathbb R^P
+$$
+
+是紧致凸集，其中 $\mathbb R^P$ 使用乘积拓扑。
+

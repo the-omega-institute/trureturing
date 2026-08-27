@@ -1,0 +1,10 @@
+ast_path: section/221-抽象观察者与物理观察者之间还缺一层实现态射/clause/8
+fingerprints:
+  raw_sha256: sha256:94680f3e82a86458212f34989df1a74208f6d14b335959e062b08cd7b40d32e8
+  normalized_sha256: sha256:94680f3e82a86458212f34989df1a74208f6d14b335959e062b08cd7b40d32e8
+cas_ref: sha256:94680f3e82a86458212f34989df1a74208f6d14b335959e062b08cd7b40d32e8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

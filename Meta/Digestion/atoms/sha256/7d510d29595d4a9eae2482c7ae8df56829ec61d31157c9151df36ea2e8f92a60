@@ -1,0 +1,23 @@
+## 51.1 Golden Dedekind GRH
+
+因为：
+
+$$
+\zeta_K(s)=\zeta(s)L(s,\chi_5),
+$$
+
+所以 \(\zeta_K\) 的广义 RH 等价于：
+
+$$
+\boxed{
+\mathrm{RH}(\zeta)
+\quad+\quad
+\mathrm{GRH}(L(s,\chi_5)).
+}
+$$
+
+这并没有降低难度，却提供了一个更有结构的联合系统：
+
+* 一个无扭曲通道；
+* 一个模 \(5\) 分裂／惰性通道。
+

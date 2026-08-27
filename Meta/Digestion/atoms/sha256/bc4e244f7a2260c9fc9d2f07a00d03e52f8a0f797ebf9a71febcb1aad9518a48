@@ -1,0 +1,29 @@
+## 定理 58.1（观察者类型不可替代性）
+
+存在有限群 \(G=A_5\)，使：
+
+$$
+\boxed{
+\text{全部 prime-power quotient observers 不忠实，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{一个 characteristic-5 residue-linear observer 忠实。}
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{同一个素数上的“局部观察”并不是单一概念。}
+}
+$$
+
+观察载体的范畴：
+
+* 群商；

@@ -1,0 +1,51 @@
+# 172. 协议闭包是观察者反射
+
+设初始观察函数族为：
+
+$$
+\mathcal F_0.
+$$
+
+设允许动作、动力或仪器生成一个协议幺半群／自由范畴：
+
+$$
+\mathcal P.
+$$
+
+对每个协议 \(w\)，状态演化为：
+
+$$
+T_w.
+$$
+
+确定性情况下定义：
+
+$$
+T_w^*f
+=
+f\circ T_w.
+$$
+
+定义协议闭包：
+
+$$
+\boxed{
+\mathcal F_\infty
+=
+\operatorname{Closure}
+\left\{
+T_w^*f:
+w\in\mathcal P,\ f\in\mathcal F_0
+\right\}.
+}
+$$
+
+其共同 kernel 为：
+
+$$
+K_\infty
+=
+\bigcap_{w,f}
+\ker(T_w^*f).
+$$
+

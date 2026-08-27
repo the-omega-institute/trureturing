@@ -1,0 +1,12 @@
+## 定义 218.1（zeta 加权素数观察度量）
+
+$$
+\boxed{
+D_s(u,v)
+=
+\frac1{Z_{\mathbb P}(s)}
+\sum_{p\in\mathbb P}
+p^{-s}d_p(u_p,v_p).
+}
+$$
+

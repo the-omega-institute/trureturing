@@ -1,0 +1,10 @@
+ast_path: section/196-3-行为像缺陷
+fingerprints:
+  raw_sha256: sha256:f88697bc0309ea63f19c2915e015b3d4b506018e7f4abe2026ee05f6a17e1e43
+  normalized_sha256: sha256:f88697bc0309ea63f19c2915e015b3d4b506018e7f4abe2026ee05f6a17e1e43
+cas_ref: sha256:f88697bc0309ea63f19c2915e015b3d4b506018e7f4abe2026ee05f6a17e1e43
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

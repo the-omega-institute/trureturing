@@ -1,0 +1,36 @@
+# 第六十七部　建议形式化顺序
+
+```text
+D5/S3/Geometry/GoldenCompletion/
+  ExteriorA4SmithNormalForm.lean
+  RamifiedHodgeNilpotent.lean
+  DiscriminantRadicalBridge.lean
+  GoldenRamifiedJet.lean
+
+D5/S3/Factorization/IcosahedralModFive/
+  FaithfulThreeDimensionalRepresentation.lean
+  InvariantQuadraticForm.lean
+  VectorOrbitClassification.lean
+  ProjectiveAxisClassification.lean
+  PrimePowerBlindLinearFaithfulContrast.lean
+
+D5/S3/Analytic/FiniteWeilFive/
+  FiniteFourierTransform.lean
+  SevenOrbitFourierMatrix.lean
+  CoarseChiralDecomposition.lean
+  ModularAlternatingFiveRelations.lean
+  OnePlusThreePlusThree.lean
+
+D5/S3/Analytic/RamanujanGenome/LevelFive/
+  IcosahedralThetaSevenState.lean
+  ThreeDimensionalThetaProjection.lean
+  RogersRamanujanComparison.lean
+
+D5/S3/Observer/ArithmeticTomography/
+  RamifiedConjugateJet.lean
+  IcosahedralBoundaryObserver.lean
+  PrimeRegulatorTimeIcosahedralObserver.lean
+```
+
+---
+

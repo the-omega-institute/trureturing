@@ -1,0 +1,10 @@
+ast_path: section/32-2-素数-5-判别式与分歧/clause/3
+fingerprints:
+  raw_sha256: sha256:b55fe4d528b29415dd4580bdb913d11a3c8b13cb09e959d4ebfd13297e7697c2
+  normalized_sha256: sha256:b55fe4d528b29415dd4580bdb913d11a3c8b13cb09e959d4ebfd13297e7697c2
+cas_ref: sha256:b55fe4d528b29415dd4580bdb913d11a3c8b13cb09e959d4ebfd13297e7697c2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

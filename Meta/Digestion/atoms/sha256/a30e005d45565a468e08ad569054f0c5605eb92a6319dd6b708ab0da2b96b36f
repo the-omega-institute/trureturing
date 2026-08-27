@@ -1,0 +1,32 @@
+## 状态不可区分
+
+存在：
+
+$$
+x\neq y,
+\qquad
+\Sigma(x)=\Sigma(y).
+$$
+
+它是：
+
+$$
+\boxed{
+\text{kernel defect}.
+}
+$$
+
+三者必须分开：
+
+$$
+\boxed{
+\text{non-uniqueness}
+\neq
+\text{non-existence}
+\neq
+\text{dynamic inconsistency}.
+}
+$$
+
+---
+

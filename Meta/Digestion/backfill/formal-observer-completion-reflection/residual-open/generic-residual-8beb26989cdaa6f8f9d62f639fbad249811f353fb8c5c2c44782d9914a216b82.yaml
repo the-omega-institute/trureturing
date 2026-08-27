@@ -1,0 +1,15 @@
+ast_path: 定理/179.1
+fingerprints:
+  raw_sha256: sha256:8beb26989cdaa6f8f9d62f639fbad249811f353fb8c5c2c44782d9914a216b82
+  normalized_sha256: sha256:8beb26989cdaa6f8f9d62f639fbad249811f353fb8c5c2c44782d9914a216b82
+cas_ref: sha256:8beb26989cdaa6f8f9d62f639fbad249811f353fb8c5c2c44782d9914a216b82
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-67e3c5ca74c604afb50fbae5f106457eacfb2b891e8e1448bcd35d8e98c722da-c53d968407c6df88a88f5a8b5a5f2ee320973ce6f729efde472b086062317ff4
+    - generic-residual-3146ef1a570891dd37cef5f27b45af2f64167f3feb9aac736a047ffacb4efac2-5276e892a36e97873234fac5c855b7d5d60341ee472f4512ad3715d7103cd9d9
+    - generic-residual-cdaca376151e88f9d070dc956639d1419016b543c31eeef4afa93767305cdce3-0e77901af42c10db4c2ff53839b230f823fc99d24bd3a14002aaae154347f4be
+    - generic-residual-5316eb6f1ce8e08c215be43390374101375b4a12fc4f67adeff9882c2bb06d88-38e00de20b30b0be42918636623156613ed2019eeae297c41bf9326934c4df0d

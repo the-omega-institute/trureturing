@@ -1,0 +1,10 @@
+## 第四步：行为像化
+
+只保留真实可实现行为：
+
+$$
+B_{\mathrm{real}}
+=
+\operatorname{Im}\Sigma.
+$$
+

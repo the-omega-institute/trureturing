@@ -1,0 +1,10 @@
+ast_path: section/19-7-定理生产门/clause/4
+fingerprints:
+  raw_sha256: sha256:19c201198bd33d1a9b7f9fb18715ebc6b48f6c88ebc285f601fbcf8b19e46fde
+  normalized_sha256: sha256:19c201198bd33d1a9b7f9fb18715ebc6b48f6c88ebc285f601fbcf8b19e46fde
+cas_ref: sha256:19c201198bd33d1a9b7f9fb18715ebc6b48f6c88ebc285f601fbcf8b19e46fde
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

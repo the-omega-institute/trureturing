@@ -1,0 +1,17 @@
+## 84.3 尚缺失的中心桥
+
+即使上述结构全部闭合，仍需证明：
+
+$$
+\boxed{
+\rho\text{ 为 off-line ζ zero}
+\Longrightarrow
+\exists(p,m,t,\alpha)
+\text{ 产生不可消除的负 Weil witness}.
+}
+\tag{84.1}
+$$
+
+在这条充分性定理建立之前，本理论提供的是：
+
+* 一个更精细的观察坐标；
