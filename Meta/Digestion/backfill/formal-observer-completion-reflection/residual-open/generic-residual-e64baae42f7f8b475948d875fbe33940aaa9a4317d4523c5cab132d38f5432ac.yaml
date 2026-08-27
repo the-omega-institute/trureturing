@@ -1,0 +1,10 @@
+ast_path: section/196-2-协议-column-缺陷
+fingerprints:
+  raw_sha256: sha256:e64baae42f7f8b475948d875fbe33940aaa9a4317d4523c5cab132d38f5432ac
+  normalized_sha256: sha256:e64baae42f7f8b475948d875fbe33940aaa9a4317d4523c5cab132d38f5432ac
+cas_ref: sha256:e64baae42f7f8b475948d875fbe33940aaa9a4317d4523c5cab132d38f5432ac
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

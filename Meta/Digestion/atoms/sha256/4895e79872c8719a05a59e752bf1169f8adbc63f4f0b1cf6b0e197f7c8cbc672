@@ -1,0 +1,72 @@
+## 定理 197.1：对角行为不可实现
+
+$$
+\boxed{
+d\notin\operatorname{Im}R.
+}
+$$
+
+### 证明
+
+假设存在 \(a\)：
+
+$$
+R(a)=d.
+$$
+
+在 \(x=a\) 处：
+
+$$
+e(a,a)
+=
+R(a)(a)
+=
+d(a)
+=
+\delta(e(a,a)),
+$$
+
+与 \(\delta\) 无不动点矛盾。证毕。
+
+所以对角化首先证明：
+
+$$
+\boxed{
+\text{某个形式行为不在当前行为像中}.
+}
+$$
+
+它不必证明：
+
+$$
+\ker R\neq\Delta_X.
+$$
+
+完全可能出现：
+
+$$
+R\text{ 是单射}
+$$
+
+但仍然：
+
+$$
+R\text{ 不是满射}.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{对角不完备}
+=
+\text{image defect},
+\quad
+\text{而非必然的 state-kernel defect}.
+}
+$$
+
+这是连接项目中“对角化”和“观察者 completion”的最严格方式。
+
+---
+

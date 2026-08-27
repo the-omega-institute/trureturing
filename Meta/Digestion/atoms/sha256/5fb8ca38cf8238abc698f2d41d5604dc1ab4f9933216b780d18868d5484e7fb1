@@ -1,0 +1,16 @@
+## 串行后处理
+
+$$
+X\xrightarrow{\Sigma}B\xrightarrow{f}C
+$$
+
+给出：
+
+$$
+\boxed{
+K_\Sigma
+\subseteq
+K_{f\circ\Sigma}.
+}
+$$
+

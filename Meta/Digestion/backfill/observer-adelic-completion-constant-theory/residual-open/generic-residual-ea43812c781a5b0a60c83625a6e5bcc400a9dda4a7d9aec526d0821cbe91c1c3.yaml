@@ -1,0 +1,10 @@
+ast_path: section/第四十一部-六维二十面体-Epstein-zeta
+fingerprints:
+  raw_sha256: sha256:ea43812c781a5b0a60c83625a6e5bcc400a9dda4a7d9aec526d0821cbe91c1c3
+  normalized_sha256: sha256:ea43812c781a5b0a60c83625a6e5bcc400a9dda4a7d9aec526d0821cbe91c1c3
+cas_ref: sha256:ea43812c781a5b0a60c83625a6e5bcc400a9dda4a7d9aec526d0821cbe91c1c3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

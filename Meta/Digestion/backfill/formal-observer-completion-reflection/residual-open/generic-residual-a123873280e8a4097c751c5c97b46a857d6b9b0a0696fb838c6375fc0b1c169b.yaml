@@ -1,0 +1,10 @@
+ast_path: section/结论七-adaptivity-改变平均成本-不取消信息预算
+fingerprints:
+  raw_sha256: sha256:a123873280e8a4097c751c5c97b46a857d6b9b0a0696fb838c6375fc0b1c169b
+  normalized_sha256: sha256:a123873280e8a4097c751c5c97b46a857d6b9b0a0696fb838c6375fc0b1c169b
+cas_ref: sha256:a123873280e8a4097c751c5c97b46a857d6b9b0a0696fb838c6375fc0b1c169b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/168-统一观察者表示定理
+fingerprints:
+  raw_sha256: sha256:5b0b286ed98d5992f688b0b812cca8634ea686bb4805d9083242ba8308b7d8a2
+  normalized_sha256: sha256:5b0b286ed98d5992f688b0b812cca8634ea686bb4805d9083242ba8308b7d8a2
+cas_ref: sha256:5b0b286ed98d5992f688b0b812cca8634ea686bb4805d9083242ba8308b7d8a2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

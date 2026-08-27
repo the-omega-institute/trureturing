@@ -1,0 +1,89 @@
+# 摘要
+
+一个裸常数
+
+$$
+\kappa\in\mathbb R\ \text{或}\ \mathbb C
+$$
+
+没有独立的数学“意义”。它的意义来自一个有类型的结构记录：
+
+$$
+\boxed{
+\operatorname{Role}(\kappa)
+=
+(
+\text{对象族},
+\text{变换},
+\text{观察者},
+\text{缺陷},
+\text{规范},
+\text{局部位置},
+\text{唯一性证明},
+\text{来源}
+).
+}
+$$
+
+例如，\(\pi\) 可以作为：
+
+* 圆周周期；
+* Fourier 自对偶 Gaussian 的尺度；
+* Archimedean Gamma 因子的规范；
+* Gaussian 总质量；
+* 复积分绕数单位。
+
+这些角色具有相同数值，但不是同一个定义。仅观察数值会把不同角色错误地压缩进同一纤维。
+
+本文将特殊常数统一为六类：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{固定点常数};\\
+&\text{规范化常数};\\
+&\text{局部尺度常数};\\
+&\text{连接常数};\\
+&\text{极值常数};\\
+&\text{重整化残余常数}.
+\end{aligned}
+}
+$$
+
+并证明：
+
+* \(\pi\) 是标准 Fourier 规范下唯一的 Gaussian 自对偶尺度；
+* \(e\) 是加法流变成乘法流的唯一微分规范；
+* \(\varphi\) 是 Fibonacci 替换的正膨胀固定点；
+* \(\log p\) 是 \(p\)-进精度一级变化对应的实加法尺度；
+* \(\gamma\) 是调和和与 Riemann 积分之间的唯一有限反项；
+* \(\tfrac12\) 是完成对偶 \(s\mapsto1-s\) 的固定中点。
+
+随后建立：
+
+$$
+\boxed{
+\text{级数图表}
++
+\text{连分数残余图表}
+=
+\text{积分完成}
+}
+$$
+
+的 Ramanujan 模型，以及：
+
+$$
+\boxed{
+\text{局部 }p\text{-进数据}
++
+\text{Archimedean Mellin 数据}
+=
+\text{阿代尔完成观察}
+}
+$$
+
+的 ζ 模型。
+
+---
+

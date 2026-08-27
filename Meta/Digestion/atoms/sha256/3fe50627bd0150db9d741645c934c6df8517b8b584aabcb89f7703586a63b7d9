@@ -1,0 +1,68 @@
+## 173.3 量子层
+
+若 \(\Phi\) 是量子通道：
+
+$$
+\operatorname{Tr}(\Phi(\rho)E)
+=
+\operatorname{Tr}(\rho\Phi^*(E)).
+$$
+
+若 \(\mathcal I_a\) 是 instrument 分支，协议词 \(w\) 的 word effect 为：
+
+$$
+F_w
+=
+\mathcal I_{w_1}^*
+\cdots
+\mathcal I_{w_n}^*(I).
+$$
+
+于是：
+
+$$
+P(w\mid\rho)
+=
+\operatorname{Tr}(\rho F_w).
+$$
+
+完整可见空间：
+
+$$
+V_\infty
+=
+\operatorname{span}_{\mathbb R}
+\{F_w:w\in\mathcal P\}.
+$$
+
+不可见 residual：
+
+$$
+\boxed{
+N_\infty
+=
+V_\infty^\perp.
+}
+$$
+
+因此三种理论共享同一结构：
+
+$$
+\boxed{
+\begin{aligned}
+\text{state evolution}
+&:\text{covariant};\\
+\text{observable propagation}
+&:\text{contravariant};\\
+\text{observer completion}
+&:\text{least invariant dual closure};\\
+\text{hidden residual}
+&:\text{annihilator of that closure}.
+\end{aligned}
+}
+$$
+
+量子理论的特殊性不是 kernel 逻辑改变了，而是 dual probe 空间变成了非交换 operator system。
+
+---
+

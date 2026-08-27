@@ -1,0 +1,87 @@
+# 254. 建议 Lean 模块树
+
+```text
+D5/S3/Observer/UnifiedMorphisms/
+  EvaluationObserver.lean
+  ObserverMorphism.lean
+  ObserverDual.lean
+  ReachableBehaviorCore.lean
+
+D5/S3/Observer/DecisionOrder/
+  FiniteExperiment.lean
+  StochasticPostprocessing.lean
+  BlackwellForward.lean
+  BlackwellFiniteConverse.lean
+  KernelOrderStrictlyWeaker.lean
+  ExperimentDeficiency.lean
+  DeficiencyRiskBound.lean
+  DeficiencyTriangle.lean
+
+D5/S3/QuantumObserver/DecisionOrder/
+  QuantumExperimentPostprocessing.lean
+  StateFamilyDeficiency.lean
+  ChannelDiamondDeficiency.lean
+
+D5/S3/Observer/Contextuality/
+  MeasurementScenario.lean
+  CompatibleEmpiricalModel.lean
+  GlobalMarginalMap.lean
+  NoncontextualImage.lean
+  StrongContextuality.lean
+  ContextualWitness.lean
+  ContextualDistance.lean
+
+D5/S3/Observer/ControlDuality/
+  ReachableSubspace.lean
+  UnobservableSubspace.lean
+  ReachableObservableQuotient.lean
+  HankelFactorization.lean
+  HankelRankMinimality.lean
+  ControllabilityGramian.lean
+  ObservabilityGramian.lean
+  HankelSingularValues.lean
+  BalancedObserverAgentCore.lean
+
+D5/S3/Observer/PredictiveStates/
+  PredictiveEquivalence.lean
+  PredictiveStateUniversal.lean
+  PredictiveStateUnifilar.lean
+  StatisticalComplexity.lean
+  PredictiveMemoryDecomposition.lean
+  PolicyCausalState.lean
+```
+
+优先形式化的低依赖定理：
+
+```text
+stochasticPostprocessing_kernel_mono
+
+noisyInjectiveExperiment_not_blackwellAbove_perfect
+
+deficiency_risk_bound
+
+compatibleModel_noncontextual_iff_mem_marginalRange
+
+strongContextual_implies_contextual
+
+reachableObservableQuotient_reachable
+
+reachableObservableQuotient_observable
+
+hankel_rank_eq_reachable_dim_sub_inter_unobservable_dim
+
+observabilityGramian_kernel
+
+controllabilityGramian_range
+
+predictiveState_universal
+
+predictiveState_update_wellDefined
+
+predictiveComplexity_eq_excess_add_hiddenMemory
+
+reachableBehaviorCore_universal
+```
+
+---
+

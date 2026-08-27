@@ -1,0 +1,10 @@
+ast_path: section/第五层-行动可达能力
+fingerprints:
+  raw_sha256: sha256:138af911e022b9a8aa60a6a6e47654b1d09447e1839b74b80eddab8ae1bf6e1f
+  normalized_sha256: sha256:138af911e022b9a8aa60a6a6e47654b1d09447e1839b74b80eddab8ae1bf6e1f
+cas_ref: sha256:138af911e022b9a8aa60a6a6e47654b1d09447e1839b74b80eddab8ae1bf6e1f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

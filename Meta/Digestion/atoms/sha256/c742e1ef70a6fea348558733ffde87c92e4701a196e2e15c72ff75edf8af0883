@@ -1,0 +1,54 @@
+# 第六十四部　新的 RH 观察接口
+
+此前定义：
+
+$$
+q_{p,m,t}
+$$
+
+作为 Prime–Regulator–Time Observer。
+
+现在需要再加入有限二十面体通道：
+
+$$
+\boxed{
+q_{p,m,t,\alpha},
+}
+$$
+
+其中：
+
+$$
+\alpha\in
+\{
+0,I_+,I_-,F_2,F_3,E_1,E_4
+\}.
+$$
+
+四个索引分别读取：
+
+$$
+\begin{aligned}
+p&:\text{素数局部因子};\\
+m&:\text{单位流 Fourier／Hecke 模式};\\
+t&:\text{Mellin 高度或时间};\\
+\alpha&:\text{五进二十面体边界类型}.
+\end{aligned}
+$$
+
+更粗的观察可只保留：
+
+$$
+\alpha_{\mathrm{coarse}}
+\in
+\{0,I,F,E\}.
+$$
+
+完整观察还必须保留三个 chiral residual：
+
+$$
+I_a,\qquad F_a,\qquad E_a.
+$$
+
+---
+

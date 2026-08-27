@@ -1,0 +1,36 @@
+# 第八十六部　建议形式化顺序
+
+```text
+D5/S3/Geometry/GoldenCompletion/
+  BoundaryReductionMap.lean
+  BoundaryEnergyCongruence.lean
+  BinaryQuadraticConicModel.lean
+  IcosahedralShortShells.lean
+  BoundaryLiftEnergy.lean
+
+D5/S3/Factorization/IcosahedralModFive/
+  LevelFiveCuspCover.lean
+  AntipodalEvenOddDecomposition.lean
+  OddVertexCrystallographicRepresentation.lean
+  OuterAutomorphismGoldenConjugation.lean
+
+D5/S3/Analytic/FiniteWeilFive/
+  RamifiedFiveDissection.lean
+  SixStateThetaPacket.lean
+  GoldenClassDifferenceOperator.lean
+  ThreePlusThreeThetaProjection.lean
+
+D5/S3/Analytic/RamanujanGenome/LevelFive/
+  RogersRamanujanDoublet.lean
+  BinaryIcosahedralSymmetricSquare.lean
+  RogersRamanujanThetaIntertwiner.lean
+  LevelTenParityCompletion.lean
+
+D5/S3/Analytic/GoldenCompletion/
+  BoundaryEpsteinPacket.lean
+  VectorFunctionalEquation.lean
+  IcosahedralEpsteinGenome.lean
+```
+
+---
+

@@ -1,0 +1,66 @@
+## 74.1 奇置换交换两个 isotropic 通道
+
+任取一个奇置换：
+
+$$
+c\in S_5\setminus A_5.
+$$
+
+其在 \(L\) 上的作用满足：
+
+$$
+c^TGc=G,
+$$
+
+以及：
+
+$$
+\boxed{
+cJ=-Jc.
+}
+\tag{74.3}
+$$
+
+在五进边界上，它交换：
+
+$$
+I_+\longleftrightarrow I_-,
+$$
+
+而保持其他四个非零范数轨道。
+
+因此：
+
+$$
+\boxed{
+\Theta_{I_+}(X)
+=
+\Theta_{I_-}(X)
+}
+\tag{74.4}
+$$
+
+对全部阶数成立，而不仅是有限枚举中的偶然相等。
+
+记：
+
+$$
+\Theta_I=\Theta_{I_+}=\Theta_{I_-}.
+$$
+
+于是原七状态 Theta packet 实际只含六个独立函数：
+
+$$
+\boxed{
+\Theta_{O_0},
+\Theta_I,
+\Theta_{Q_2},
+\Theta_{Q_4},
+\Theta_{Q_1},
+\Theta_{Q_3}.
+}
+\tag{74.5}
+$$
+
+---
+

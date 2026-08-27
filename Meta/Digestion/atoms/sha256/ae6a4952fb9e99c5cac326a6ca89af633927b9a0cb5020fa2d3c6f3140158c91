@@ -1,0 +1,48 @@
+## 213.2 串行后处理
+
+设现有观察之后执行线性后处理
+
+$$
+B:Y\to Z.
+$$
+
+新观察为
+
+$$
+M'=BM.
+$$
+
+则
+
+$$
+\boxed{
+\ker M
+\subseteq
+\ker(BM).
+}
+$$
+
+后处理只能保持或扩大不可见 kernel。
+
+其 Gramian 为
+
+$$
+W'
+=
+M^*B^*BM.
+$$
+
+若 $B$ 是 contraction：
+
+$$
+B^*B\le I,
+$$
+
+则
+
+$$
+\boxed{
+W'\le W.
+}
+$$
+

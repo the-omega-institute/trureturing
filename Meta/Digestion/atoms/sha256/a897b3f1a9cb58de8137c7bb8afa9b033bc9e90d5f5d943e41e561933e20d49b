@@ -1,0 +1,28 @@
+## 定理 243.3（商系统可观察）
+
+若某个商类的全部未来输出为零，则其代表属于 `\mathcal N`；又因为代表属于 `\mathcal R`，它属于：
+
+$$
+\mathcal R\cap\mathcal N,
+$$
+
+所以该商类为零。
+
+因此：
+
+$$
+\boxed{
+\mathcal X_{\min}
+=
+\frac{
+\text{reachable states}
+}{
+\text{reachable but forever invisible states}
+}.
+}
+$$
+
+这才是同时相对于观察和行动的最小状态。
+
+---
+

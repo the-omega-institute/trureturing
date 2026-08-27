@@ -1,0 +1,10 @@
+ast_path: section/19-4-规范门/clause/2
+fingerprints:
+  raw_sha256: sha256:073459cfffc56c9135b9d4ed8b80ecae5cbec606f4cc11de0605881238c1761f
+  normalized_sha256: sha256:073459cfffc56c9135b9d4ed8b80ecae5cbec606f4cc11de0605881238c1761f
+cas_ref: sha256:073459cfffc56c9135b9d4ed8b80ecae5cbec606f4cc11de0605881238c1761f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

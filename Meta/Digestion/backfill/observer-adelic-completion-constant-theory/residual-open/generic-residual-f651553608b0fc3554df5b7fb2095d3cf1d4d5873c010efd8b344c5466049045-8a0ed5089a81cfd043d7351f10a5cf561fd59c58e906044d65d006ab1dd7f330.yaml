@@ -1,0 +1,10 @@
+ast_path: section/60-1-最重要的解释/clause/3
+fingerprints:
+  raw_sha256: sha256:f651553608b0fc3554df5b7fb2095d3cf1d4d5873c010efd8b344c5466049045
+  normalized_sha256: sha256:f651553608b0fc3554df5b7fb2095d3cf1d4d5873c010efd8b344c5466049045
+cas_ref: sha256:f651553608b0fc3554df5b7fb2095d3cf1d4d5873c010efd8b344c5466049045
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

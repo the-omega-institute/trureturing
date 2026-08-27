@@ -1,0 +1,10 @@
+ast_path: section/最终收束
+fingerprints:
+  raw_sha256: sha256:8e6d8b08fe331b2fe4bf22a13e9ecae43d8352a6d0563c8d8fc813c68ffb6edd
+  normalized_sha256: sha256:8e6d8b08fe331b2fe4bf22a13e9ecae43d8352a6d0563c8d8fc813c68ffb6edd
+cas_ref: sha256:8e6d8b08fe331b2fe4bf22a13e9ecae43d8352a6d0563c8d8fc813c68ffb6edd
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

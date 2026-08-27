@@ -1,0 +1,37 @@
+## 定理 244.1（Hankel rank）
+
+当 `r,s` 足够大时：
+
+$$
+\boxed{
+\operatorname{rank}\mathcal H_{r,s}
+=
+\dim\mathcal R
+-
+\dim(\mathcal R\cap\mathcal N).
+}
+$$
+
+### 证明
+
+`\mathcal C_s` 的像最终稳定为 `\mathcal R`。
+
+`\mathcal O_r` 在 `\mathcal R` 上的 kernel 最终稳定为：
+
+$$
+\mathcal R\cap\mathcal N.
+$$
+
+所以：
+
+$$
+\operatorname{rank}
+(\mathcal O_r|_{\mathcal R})
+=
+\dim\mathcal R
+-
+\dim(\mathcal R\cap\mathcal N).
+$$
+
+Hankel 矩阵的像正是该可见可达像。∎
+

@@ -1,0 +1,20 @@
+## 35.2 Golden ζ 因子抽取
+
+仓库已经证明：
+
+$$
+\mathcal Z_G(s)
+=
+\zeta(\varphi^2s)G(s),
+$$
+
+而局部首项抵消改善余乘积收敛域。
+
+它属于：
+
+$$
+\boxed{
+\text{Golden inflation 在 Euler product 图表中的重整化表现}.
+}
+$$
+

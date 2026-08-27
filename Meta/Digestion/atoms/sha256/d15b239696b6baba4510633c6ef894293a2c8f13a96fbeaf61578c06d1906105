@@ -1,0 +1,63 @@
+## 7.2 替换矩阵意义
+
+令：
+
+$$
+M=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+$$
+
+则：
+
+$$
+M
+\begin{pmatrix}
+\varphi\\1
+\end{pmatrix}
+=
+\varphi
+\begin{pmatrix}
+\varphi\\1
+\end{pmatrix}.
+$$
+
+所以：
+
+$$
+\boxed{
+\varphi
+=
+\text{Fibonacci 两状态替换系统的 Perron 膨胀率。}
+}
+$$
+
+它与 \(e\) 的角色不同：
+
+* \(e\)：连续流；
+* \(\varphi\)：离散递归；
+* \(e\) 更适合外层连续乘法壳；
+* \(\varphi\) 更适合壳内的有限状态递归细分。
+
+项目的 `GoldenEulerBeta` 已定义：
+
+$$
+\beta(n)
+=
+\sqrt5\,n+\frac1\varphi-\{(n+1)\varphi\},
+$$
+
+并证明：
+
+$$
+\beta(1)=\varphi^2,\qquad
+\beta(2)=\varphi^3,\qquad
+\beta(3)=\varphi^4,
+$$
+
+以及线性增长。
+
+---
+

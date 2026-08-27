@@ -1,0 +1,10 @@
+ast_path: section/228-所有-completion-算子不一定交换/clause/1
+fingerprints:
+  raw_sha256: sha256:3294e7255484bfe501f4d9af9d3afae95e8c6097bace21f9aa6ece2cc1e8cdea
+  normalized_sha256: sha256:3294e7255484bfe501f4d9af9d3afae95e8c6097bace21f9aa6ece2cc1e8cdea
+cas_ref: sha256:3294e7255484bfe501f4d9af9d3afae95e8c6097bace21f9aa6ece2cc1e8cdea
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

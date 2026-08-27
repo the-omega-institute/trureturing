@@ -1,0 +1,66 @@
+# 235. 下一阶段最值得 Lean 化的定理链
+
+```text
+Observer/Unified/Evaluation/
+  StateRowKernel.lean
+  ProtocolColumnKernel.lean
+  BiextensionalCollapse.lean
+
+Observer/Unified/Presheaf/
+  FiniteContextRecords.lean
+  CompatibleRecordFamily.lean
+  ObservationalCompactness.lean
+  SeparationRealizationExactness.lean
+
+Observer/Unified/Diagonal/
+  DiagonalEscapeIsImageDefect.lean
+  SelfReportKernelMonotonicity.lean
+  TransparentPredictionNoFixedPoint.lean
+
+Observer/Unified/MultiAgent/
+  PooledObserverKernel.lean
+  CommonKnowledgeKernel.lean
+  CommonVsDistributedObservableAlgebra.lean
+  LosslessCommunicationOnRealizedRange.lean
+
+Observer/Unified/Dynamics/
+  StateKernelObservableClosureDuality.lean
+  ProtocolNoveltyCriterion.lean
+  CommonCompletionFixedPoint.lean
+
+Observer/Unified/Approximate/
+  ProtocolLawPseudometric.lean
+  TargetLipschitzSufficiency.lean
+  WeightedGramKernel.lean
+```
+
+首要 theorem names 可以是：
+
+```lean
+stateQuotient_equiv_behaviorRange
+
+biextensionalEvaluation_descends
+
+diagonalEscape_mem_imageResidual
+
+selfReport_kernel_mono
+
+compatibleFiniteRecords_realized_of_compact
+
+localGlobalExact_iff_separating_and_surjective
+
+dynamicKernel_eq_kernel_observableClosure
+
+protocol_strictly_innovative_iff_separates_oldFiber
+
+commonObservableAlgebra_eq_iInter
+
+pooledObserver_kernel_eq_iInter
+
+losslessCommunication_iff_injective_on_realizedRange
+
+equalPosterior_factors_futureBehavior
+```
+
+---
+

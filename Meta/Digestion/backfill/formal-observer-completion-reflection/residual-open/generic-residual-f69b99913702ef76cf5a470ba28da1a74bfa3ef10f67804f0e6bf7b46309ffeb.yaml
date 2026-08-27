@@ -1,0 +1,10 @@
+ast_path: section/192-严格非主张
+fingerprints:
+  raw_sha256: sha256:f69b99913702ef76cf5a470ba28da1a74bfa3ef10f67804f0e6bf7b46309ffeb
+  normalized_sha256: sha256:f69b99913702ef76cf5a470ba28da1a74bfa3ef10f67804f0e6bf7b46309ffeb
+cas_ref: sha256:f69b99913702ef76cf5a470ba28da1a74bfa3ef10f67804f0e6bf7b46309ffeb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

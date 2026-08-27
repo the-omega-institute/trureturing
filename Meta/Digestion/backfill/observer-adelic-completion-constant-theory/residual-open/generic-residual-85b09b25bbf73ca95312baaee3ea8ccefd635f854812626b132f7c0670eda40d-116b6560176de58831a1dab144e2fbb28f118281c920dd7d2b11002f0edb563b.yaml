@@ -1,0 +1,10 @@
+ast_path: section/60-1-最重要的解释/clause/4
+fingerprints:
+  raw_sha256: sha256:85b09b25bbf73ca95312baaee3ea8ccefd635f854812626b132f7c0670eda40d
+  normalized_sha256: sha256:85b09b25bbf73ca95312baaee3ea8ccefd635f854812626b132f7c0670eda40d
+cas_ref: sha256:85b09b25bbf73ca95312baaee3ea8ccefd635f854812626b132f7c0670eda40d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

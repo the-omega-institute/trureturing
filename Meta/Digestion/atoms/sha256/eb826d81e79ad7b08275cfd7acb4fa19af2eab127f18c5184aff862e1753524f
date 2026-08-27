@@ -1,0 +1,20 @@
+## 与统一理论的关系
+
+前文的实现缺陷为：
+
+$$
+B_{\mathrm{formal}}
+\setminus
+B_{\mathrm{real}}.
+$$
+
+这里：
+
+$$
+B_{\mathrm{real}}=\mathcal N.
+$$
+
+所以 Bell witness、上下文 witness 和一般观察 realization witness 都属于同一个凸像分离结构。
+
+---
+

@@ -1,0 +1,22 @@
+* \(\varphi\) 更适合壳内的有限状态递归细分。
+
+项目的 `GoldenEulerBeta` 已定义：
+
+$$
+\beta(n)
+=
+\sqrt5\,n+\frac1\varphi-\{(n+1)\varphi\},
+$$
+
+并证明：
+
+$$
+\beta(1)=\varphi^2,\qquad
+\beta(2)=\varphi^3,\qquad
+\beta(3)=\varphi^4,
+$$
+
+以及线性增长。
+
+---
+

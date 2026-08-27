@@ -1,0 +1,17 @@
+ast_path: section/206-受控观察的最小行为实现
+fingerprints:
+  raw_sha256: sha256:e04669ae342cbe50e7fa4fd6fc682cace5c5bd6b765ff30fbd10f8eae07f9edd
+  normalized_sha256: sha256:e04669ae342cbe50e7fa4fd6fc682cace5c5bd6b765ff30fbd10f8eae07f9edd
+cas_ref: sha256:e04669ae342cbe50e7fa4fd6fc682cace5c5bd6b765ff30fbd10f8eae07f9edd
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-f643c1b710380271675fd0da4ecd6a89ab419a72c837c22dbdac8badd192edfd-3b9118b1c58920fcc488a3ca9c00d046be2031a44683521096fee7177452fa6a
+    - generic-residual-6941c9797b920f9dad5cc54d4e4e055b9c57f57549b449e130fac1d7179880ad-0e12a8300823715608e5eea112cb3835083a28cae2bfba3b46328a7a38107f04
+    - generic-residual-bf90c9973d42ef913e2816ddec6b75b30db723b5b431a26864e2008ef5a9647b-a6684b56afa7792d9aed906be0828c00f7dcf656798eedd936f4a44997916db0
+    - generic-residual-e9a4f1c7ffbff40111dedefa9a22f9a2202cd7571f83d398d27fa84154b27bc1-d60429b048770c8c87b165b7352ffcd2dca56023aa70ae5a24c0542102d780e1
+    - generic-residual-890a3adebb7cb01bdbd5327bedb21823936411f3242106f112f20372e860128f-b7fffd5a28615f774330a97090b57a8e7bf888c116482ea1b33226c0c9c4503e
+    - generic-residual-6ee6691f6f648fdedd044852d80ed99d1648f37a8adccc3f77751a29fa08c38a-7f62170faa1c213895737c04eabb07cfa0308441f93d08da5dea65290ef6a9a7

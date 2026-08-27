@@ -1,0 +1,50 @@
+## 定理 179.1（观察 atlas 分解）
+
+最强局部—全局完整性：
+
+$$
+\Sigma_{\mathrm{loc}}
+\text{ 是双射}
+$$
+
+等价于以下两个条件同时成立。
+
+### 分离性
+
+$$
+\boxed{
+K_{\Sigma_{\mathrm{loc}}}
+=
+\Delta_X.
+}
+$$
+
+局部数据唯一决定全局对象。
+
+### 胶合性
+
+$$
+\boxed{
+\operatorname{range}\Sigma_{\mathrm{loc}}
+=
+L_{\mathrm{loc}}.
+}
+$$
+
+每个兼容局部族都由某个全局对象实现。
+
+因此：
+
+$$
+\boxed{
+\text{local–global exactness}
+=
+\text{uniqueness}
++
+\text{existence}.
+}
+$$
+
+这两者逻辑独立。
+
+* 量子局部边缘可以不唯一决定全局纠缠态；

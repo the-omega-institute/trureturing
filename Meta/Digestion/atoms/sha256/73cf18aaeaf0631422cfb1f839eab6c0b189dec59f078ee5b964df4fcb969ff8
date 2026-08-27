@@ -1,0 +1,31 @@
+## 定理 218.2（有限 prime–precision 窗口误差）
+
+给定有限素数集 $F$ 和每个 $p\in F$ 的精度 $K_p$，定义
+
+$$
+D_{s,F,K}(u,v)
+=
+\frac1{Z_{\mathbb P}(s)}
+\sum_{p\in F}
+p^{-s}d_p^{(K_p)}(u_p,v_p).
+$$
+
+则一致误差满足：
+
+$$
+\boxed{
+0
+\le
+D_s-D_{s,F,K}
+\le
+\frac{
+\displaystyle
+\sum_{p\notin F}p^{-s}
++
+\sum_{p\in F}p^{-(s+K_p)}
+}{
+Z_{\mathbb P}(s)
+}.
+}
+$$
+

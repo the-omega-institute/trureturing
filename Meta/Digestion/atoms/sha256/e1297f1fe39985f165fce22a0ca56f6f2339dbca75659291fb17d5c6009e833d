@@ -1,0 +1,70 @@
+## 31.2 四个观察图表
+
+定义 \(A_5\) 观察图册：
+
+$$
+\boxed{
+\mathfrak A_5
+=
+\left(
+\mathcal X_{\mathrm{root}},
+\mathcal X_{\mathrm{ico}},
+\mathcal X_{\mathrm{mod}},
+\mathcal X_{\mathrm{lattice}}
+\right).
+}
+$$
+
+其中：
+
+$$
+\mathcal X_{\mathrm{root}}
+=
+\text{五次根的 Galois 图表},
+$$
+
+$$
+\mathcal X_{\mathrm{ico}}
+=
+\text{二十面体旋转图表},
+$$
+
+$$
+\mathcal X_{\mathrm{mod}}
+=
+\text{level-5 模函数图表},
+$$
+
+$$
+\mathcal X_{\mathrm{lattice}}
+=
+\text{六维 crystallographic 图表}.
+$$
+
+它们不是相同对象，但共享同一个有限对称核心。
+
+对应关系为：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{图表}&\text{主要读数}\\
+\hline
+\text{五次根}&\text{根置换与 Galois 轨道}\\
+\text{二十面体}&\text{三维旋转与五重轴}\\
+\text{level 5 模函数}&\text{解析单值化与特殊值}\\
+\text{六维格}&\text{整数闭合与准晶体投影}
+\end{array}
+}
+$$
+
+因此 Ramanujan level-5 函数不应被视为“另一个黄金比例公式”，而是：
+
+$$
+\boxed{
+\text{同一 }A_5\text{ 完成结构的解析观察图表。}
+}
+$$
+
+---
+

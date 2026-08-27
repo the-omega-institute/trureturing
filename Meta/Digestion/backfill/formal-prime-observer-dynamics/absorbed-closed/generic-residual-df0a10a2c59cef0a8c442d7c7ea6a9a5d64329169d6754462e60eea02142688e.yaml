@@ -1,0 +1,17 @@
+ast_path: 定理/31.1
+fingerprints:
+  raw_sha256: sha256:df0a10a2c59cef0a8c442d7c7ea6a9a5d64329169d6754462e60eea02142688e
+  normalized_sha256: sha256:df0a10a2c59cef0a8c442d7c7ea6a9a5d64329169d6754462e60eea02142688e
+cas_ref: sha256:df0a10a2c59cef0a8c442d7c7ea6a9a5d64329169d6754462e60eea02142688e
+coverage_gids:
+  - D5/S3/Arith/Congruence/PadicPrecisionBlindSpot.first_distinguishing_precision
+receipts:
+  coverage:
+    - gid: D5/S3/Arith/Congruence/PadicPrecisionBlindSpot.first_distinguishing_precision
+      source_sha256: sha256:df0a10a2c59cef0a8c442d7c7ea6a9a5d64329169d6754462e60eea02142688e
+      target_sha256: sha256:f960df5a148bd2db80e5456a04fb3de5d55d2bc8cac1846d200b2fac52215dfa
+  scribe:
+    - gid: D5/S3/Arith/Congruence/PadicPrecisionBlindSpot.first_distinguishing_precision
+      definition_sha256: sha256:f74edfb93c5c49ea0b5d4c2ff3fd297f4a9579b0c0978fee311a5dbe9256807f
+      emission_sha256: sha256:96f6774e6775861630887160ed4b7542822572ebf6ab75dec0d0d784b7ec501e
+  unresolved_subitems: []

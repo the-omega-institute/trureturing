@@ -1,0 +1,10 @@
+ast_path: section/219-紧致状态空间的局部-全局实现定理
+fingerprints:
+  raw_sha256: sha256:3f438ba15e630b62262d1db986e219a3a97682c406fc3e6de8e3b18d6906bd71
+  normalized_sha256: sha256:3f438ba15e630b62262d1db986e219a3a97682c406fc3e6de8e3b18d6906bd71
+cas_ref: sha256:3f438ba15e630b62262d1db986e219a3a97682c406fc3e6de8e3b18d6906bd71
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

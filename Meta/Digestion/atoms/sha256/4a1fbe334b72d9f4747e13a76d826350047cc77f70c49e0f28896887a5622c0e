@@ -1,0 +1,48 @@
+# 203. 紧致性解决 existence，但不解决 uniqueness
+
+若再有：
+
+$$
+\ker\beta=\Delta_X,
+$$
+
+则上述实现唯一。
+
+因此：
+
+$$
+\boxed{
+\text{紧致性}
++
+\text{有限局部可实现}
+\Longrightarrow
+\text{全局存在};
+}
+$$
+
+$$
+\boxed{
+\text{观察分离性}
+\Longrightarrow
+\text{全局唯一}.
+}
+$$
+
+最终：
+
+$$
+\boxed{
+\text{局部—全局精确性}
+=
+\text{compact realization}
++
+\text{observational separation}.
+}
+$$
+
+有限状态空间是紧致定理的最简单实例。
+
+仓库的有限 itinerary 工作甚至证明了更强结果：在有限状态系统中，不仅兼容完整前缀族可以实现，而且存在一个有限 completion depth，达到该深度后就已经决定全部未来。
+
+---
+

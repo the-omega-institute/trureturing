@@ -1,0 +1,10 @@
+ast_path: section/19-6-跨构造复现门/clause/1
+fingerprints:
+  raw_sha256: sha256:0541dcd36fc4f79883482bde5260c76c4a08a5f3f58795dc370c0d4b4cc8ac26
+  normalized_sha256: sha256:0541dcd36fc4f79883482bde5260c76c4a08a5f3f58795dc370c0d4b4cc8ac26
+cas_ref: sha256:0541dcd36fc4f79883482bde5260c76c4a08a5f3f58795dc370c0d4b4cc8ac26
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

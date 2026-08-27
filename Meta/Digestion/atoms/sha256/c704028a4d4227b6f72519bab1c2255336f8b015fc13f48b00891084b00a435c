@@ -1,0 +1,88 @@
+## 28.1 非最大阶
+
+整数算子 \(J\) 满足：
+
+$$
+J^2=5I.
+$$
+
+所以 \(W_{\mathbb Z}\) 自然成为：
+
+$$
+\mathbb Z[\sqrt5]
+$$
+
+上的模。
+
+但：
+
+$$
+\mathbb Z[\sqrt5]
+$$
+
+不是 \(K=\mathbb Q(\sqrt5)\) 的最大整数环。
+
+最大整数环是：
+
+$$
+\mathcal O_K
+=
+\mathbb Z\left[\frac{1+\sqrt5}{2}\right]
+=
+\mathbb Z[\varphi].
+$$
+
+定义黄金算子：
+
+$$
+\boxed{
+\Phi
+=
+\frac{I+J}{2}.
+}
+$$
+
+由 \(J^2=5I\) 得：
+
+$$
+\begin{aligned}
+\Phi^2
+&=
+\frac{I+2J+J^2}{4}\\
+&=
+\frac{6I+2J}{4}\\
+&=
+\frac{3I+J}{2}\\
+&=
+\Phi+I.
+\end{aligned}
+$$
+
+所以：
+
+$$
+\boxed{
+\Phi^2-\Phi-I=0.
+}
+$$
+
+其两个特征值为：
+
+$$
+\boxed{
+\varphi,\qquad\varphi'.
+}
+$$
+
+这给出 \(\varphi\) 的又一个严格角色：
+
+$$
+\boxed{
+\varphi
+=
+\text{整数 Hodge 判别式算子完成到最大整数阶后的正特征值。}
+}
+$$
+
+---
+

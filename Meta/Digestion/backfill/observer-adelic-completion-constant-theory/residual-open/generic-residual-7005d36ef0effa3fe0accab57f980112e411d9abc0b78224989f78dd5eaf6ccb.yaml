@@ -1,0 +1,14 @@
+ast_path: section/40-3-自对偶-Gibbs-能量恒等式
+fingerprints:
+  raw_sha256: sha256:7005d36ef0effa3fe0accab57f980112e411d9abc0b78224989f78dd5eaf6ccb
+  normalized_sha256: sha256:7005d36ef0effa3fe0accab57f980112e411d9abc0b78224989f78dd5eaf6ccb
+cas_ref: sha256:7005d36ef0effa3fe0accab57f980112e411d9abc0b78224989f78dd5eaf6ccb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-e5174c02711e89905e42bef42370f7db5e452012fecf5dcf16c80e47848aa2e4-7391c8b185056842464b6bc5af9ae18916ab1f93854f25c9213a231d1893dc97
+    - generic-residual-37a63fe85955e56274bce5717c41964012004f7a83b600265d6b81ebacc529fa-300728ca7d79b9fd91248a1a9eebeaf7a20bf083f6a41226e5816cfd049ea229
+    - generic-residual-6e64a503f72d0ec407b9d95d9e60be558d644c672b5cd61bb6b4f6beecbee58d-45f8e203799eae91f7305909a5e53e1aea68c4a85df215979476eb7706f487a7

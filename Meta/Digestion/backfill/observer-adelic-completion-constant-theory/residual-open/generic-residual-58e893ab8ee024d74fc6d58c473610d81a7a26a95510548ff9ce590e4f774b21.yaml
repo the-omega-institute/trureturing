@@ -1,0 +1,10 @@
+ast_path: section/27-2-外幂格的判别式
+fingerprints:
+  raw_sha256: sha256:58e893ab8ee024d74fc6d58c473610d81a7a26a95510548ff9ce590e4f774b21
+  normalized_sha256: sha256:58e893ab8ee024d74fc6d58c473610d81a7a26a95510548ff9ce590e4f774b21
+cas_ref: sha256:58e893ab8ee024d74fc6d58c473610d81a7a26a95510548ff9ce590e4f774b21
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

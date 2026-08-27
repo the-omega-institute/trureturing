@@ -1,0 +1,35 @@
+## 43.1 素数局部因子
+
+令 \(\chi_5\) 为模 \(5\) 的二次特征。则：
+
+$$
+\boxed{
+\zeta_K(s)
+=
+\zeta(s)L(s,\chi_5).
+}
+$$
+
+局部因子为：
+
+$$
+\zeta_{K,p}(s)
+=
+\begin{cases}
+(1-p^{-s})^{-2},
+&
+p\equiv\pm1\pmod5,
+\\[1mm]
+(1-p^{-2s})^{-1},
+&
+p\equiv\pm2\pmod5,
+\\[1mm]
+(1-5^{-s})^{-1},
+&
+p=5.
+\end{cases}
+$$
+
+项目已经机器核验：
+
+* \(p\equiv\pm1\pmod5\) 时在 GoldenInt 中分裂；

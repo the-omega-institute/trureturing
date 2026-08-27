@@ -1,0 +1,42 @@
+## 213.1 平行观察
+
+设两个观察算子为
+
+$$
+M_1:V\to Y_1,
+\qquad
+M_2:V\to Y_2.
+$$
+
+联合观察为
+
+$$
+M_{\parallel}v
+=
+(M_1v,M_2v).
+$$
+
+则
+
+$$
+\boxed{
+\ker M_{\parallel}
+=
+\ker M_1\cap\ker M_2,
+}
+$$
+
+以及
+
+$$
+\boxed{
+W_{\parallel}
+=
+M_{\parallel}^*M_{\parallel}
+=
+W_1+W_2.
+}
+$$
+
+所以真正增加新实验是把正半定信息算子相加。
+

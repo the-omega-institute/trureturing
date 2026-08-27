@@ -1,0 +1,55 @@
+# 225. Observer completion 不等于 metric completion
+
+精确行为像：
+
+$$
+B_{\mathrm{real}}
+=
+\operatorname{Im}\Sigma
+$$
+
+可能不是完备空间。
+
+对其度量完成：
+
+$$
+\widehat B
+$$
+
+可能加入一些 ideal behaviors：
+
+$$
+\widehat B\setminus B_{\mathrm{real}}.
+$$
+
+这些 ideal behavior 可以是：
+
+* Cauchy 极限；
+* 无限精度局部记录；
+* profinite 点；
+* 无限时间统计极限；
+* 弱算子极限；
+* 不由任何原始有限状态实现的理想态。
+
+所以必须区分：
+
+$$
+\boxed{
+\text{观测商完成}
+}
+$$
+
+与：
+
+$$
+\boxed{
+\text{拓扑／度量完成}.
+}
+$$
+
+前者删除不可区分状态；后者添加极限点。
+
+两者方向完全不同。
+
+---
+

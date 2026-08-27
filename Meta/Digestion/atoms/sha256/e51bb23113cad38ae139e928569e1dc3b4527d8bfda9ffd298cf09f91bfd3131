@@ -1,0 +1,27 @@
+## 84.1 Non-sticky 分支
+
+如果潜在负 Weil 模式分散于多个：
+
+$$
+(p,m,t,\alpha)
+$$
+
+通道，则可以同时利用：
+
+* prime-channel 正交；
+* regulator Fourier 正交；
+* height separation；
+* 有限 \(A_5\) 表示正交。
+
+争取建立：
+
+$$
+\boxed{
+\text{non-sticky}
+\Longrightarrow
+\text{strict positivity gain}.
+}
+$$
+
+---
+

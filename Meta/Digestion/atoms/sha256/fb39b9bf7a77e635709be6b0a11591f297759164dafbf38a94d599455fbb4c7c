@@ -1,0 +1,30 @@
+# 241. 上下文 witness 与实现距离
+
+有限测量情形中，全部非上下文模型形成一个凸多面体：
+
+$$
+\mathcal N
+=
+\operatorname{conv}
+\left\{
+\text{deterministic global assignments}
+\right\}.
+$$
+
+若：
+
+$$
+e\notin\mathcal N,
+$$
+
+凸分离定理给出线性 witness：
+
+$$
+\langle w,e\rangle
+>
+\sup_{n\in\mathcal N}
+\langle w,n\rangle.
+$$
+
+这就是一般形式的上下文不等式。
+

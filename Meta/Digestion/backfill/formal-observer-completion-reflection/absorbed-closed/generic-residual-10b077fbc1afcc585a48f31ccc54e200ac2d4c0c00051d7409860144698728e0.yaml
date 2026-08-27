@@ -1,0 +1,17 @@
+ast_path: 推论/15.1
+fingerprints:
+  raw_sha256: sha256:10b077fbc1afcc585a48f31ccc54e200ac2d4c0c00051d7409860144698728e0
+  normalized_sha256: sha256:10b077fbc1afcc585a48f31ccc54e200ac2d4c0c00051d7409860144698728e0
+cas_ref: sha256:10b077fbc1afcc585a48f31ccc54e200ac2d4c0c00051d7409860144698728e0
+coverage_gids:
+  - D5/S3/Observer/Linear/DiscountedObservabilityGramianPositivity.discounted_observability_gramian_nonnegative
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/Linear/DiscountedObservabilityGramianPositivity.discounted_observability_gramian_nonnegative
+      source_sha256: sha256:10b077fbc1afcc585a48f31ccc54e200ac2d4c0c00051d7409860144698728e0
+      target_sha256: sha256:0045d52a98f5fb9da086f5825d35666e1f028190d3c884a916fc56f61090caae
+  scribe:
+    - gid: D5/S3/Observer/Linear/DiscountedObservabilityGramianPositivity.discounted_observability_gramian_nonnegative
+      definition_sha256: sha256:7cf921ac80024588bb5b37907eec27990651a37427b674498ab85dee0ac78355
+      emission_sha256: sha256:d3f9b4d9f7577772913bfa3660147ea3e341bbfc8dab7a181b3ea61afec90673
+  unresolved_subitems: []

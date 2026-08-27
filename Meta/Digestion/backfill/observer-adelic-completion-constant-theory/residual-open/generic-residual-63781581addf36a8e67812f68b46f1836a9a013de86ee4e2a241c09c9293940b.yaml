@@ -1,0 +1,10 @@
+ast_path: section/19-3-扰动门
+fingerprints:
+  raw_sha256: sha256:63781581addf36a8e67812f68b46f1836a9a013de86ee4e2a241c09c9293940b
+  normalized_sha256: sha256:63781581addf36a8e67812f68b46f1836a9a013de86ee4e2a241c09c9293940b
+cas_ref: sha256:63781581addf36a8e67812f68b46f1836a9a013de86ee4e2a241c09c9293940b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

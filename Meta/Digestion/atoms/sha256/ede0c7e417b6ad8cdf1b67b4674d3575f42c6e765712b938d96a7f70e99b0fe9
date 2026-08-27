@@ -1,0 +1,21 @@
+## 状态冗余
+
+$$
+x\sim_X y
+\iff
+r_x=r_y.
+$$
+
+也就是：
+
+$$
+\forall\pi,\quad
+\mathcal L_\pi(x)=\mathcal L_\pi(y).
+$$
+
+这正是原来的观察 kernel：
+
+$$
+\sim_X=K_{\mathfrak O}.
+$$
+

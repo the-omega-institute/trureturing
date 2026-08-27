@@ -1,0 +1,30 @@
+## 定义 237.1（单向 deficiency）
+
+定义 `E` 模拟 `F` 的误差：
+
+$$
+\delta(F\mid E)
+=
+\inf_K
+\sup_{\theta}
+d_{\mathrm{TV}}
+\left(
+F_\theta,
+K E_\theta
+\right).
+$$
+
+其中 `K` 遍历所有从 `Y` 到 `Z` 的 Markov kernel。
+
+若：
+
+$$
+\delta(F\mid E)=0,
+$$
+
+在有限情形下即表示：
+
+$$
+E\succeq_B F.
+$$
+

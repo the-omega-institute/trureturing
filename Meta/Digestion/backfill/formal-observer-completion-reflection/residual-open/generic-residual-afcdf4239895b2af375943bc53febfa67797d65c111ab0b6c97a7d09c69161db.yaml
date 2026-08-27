@@ -1,0 +1,10 @@
+ast_path: section/并行加入
+fingerprints:
+  raw_sha256: sha256:afcdf4239895b2af375943bc53febfa67797d65c111ab0b6c97a7d09c69161db
+  normalized_sha256: sha256:afcdf4239895b2af375943bc53febfa67797d65c111ab0b6c97a7d09c69161db
+cas_ref: sha256:afcdf4239895b2af375943bc53febfa67797d65c111ab0b6c97a7d09c69161db
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,46 @@
+## 36.1 已由本文独立推导
+
+$$
+\boxed{
+\Lambda^2V_4\simeq V_3\oplus V_3'.
+}
+$$
+
+$$
+\boxed{
+\det(\Lambda^2A_4)=5^3.
+}
+$$
+
+$$
+\boxed{
+J=\sqrt5*
+\text{ 可在 }\Lambda^2A_4\text{ 上取整数矩阵，且 }J^2=5I.
+}
+$$
+
+$$
+\boxed{
+\Phi=(I+J)/2,\qquad
+\Phi^2=\Phi+I.
+}
+$$
+
+$$
+\boxed{
+[W_{\max}:W_{\mathbb Z}]=2.
+}
+$$
+
+$$
+\boxed{
+\Phi|_{E_\parallel}=\varphi,
+\qquad
+\Phi|_{E_\perp}=\varphi'.
+}
+$$
+
+这些适合直接转化为 Lean 目标。
+
+---
+

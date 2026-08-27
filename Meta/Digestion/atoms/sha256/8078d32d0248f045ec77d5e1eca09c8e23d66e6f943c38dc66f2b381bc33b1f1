@@ -1,0 +1,24 @@
+### 证明
+
+\(\Phi W_{\mathbb Z}/W_{\mathbb Z}\) 由：
+
+$$
+\frac{I+J}{2}W_{\mathbb Z}
+$$
+
+在 \(\frac12W_{\mathbb Z}/W_{\mathbb Z}\simeq(\mathbb Z/2)^6\) 中的像决定。该像等价于 \(I+J\) 模 \(2\) 的列空间，其秩为 \(1\)，故商大小为 \(2\)。∎
+
+并且：
+
+$$
+\Phi(W_{\max})\subseteq W_{\max},
+$$
+
+因为：
+
+$$
+\Phi^2=\Phi+I.
+$$
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/200-每个世界状态产生一个兼容记录族/clause/8
+fingerprints:
+  raw_sha256: sha256:fce7dee89294e4ed21f2411292ac8c8c212addef3b51661c64f5dded581c464d
+  normalized_sha256: sha256:fce7dee89294e4ed21f2411292ac8c8c212addef3b51661c64f5dded581c464d
+cas_ref: sha256:fce7dee89294e4ed21f2411292ac8c8c212addef3b51661c64f5dded581c464d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

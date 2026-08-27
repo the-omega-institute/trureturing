@@ -1,0 +1,48 @@
+## 定理 5.1：Gaussian 自对偶常数唯一性
+
+$$
+\boxed{
+\widehat g_a=g_a
+\iff
+a=\pi.
+}
+$$
+
+### 证明
+
+取 \(\xi=0\)：
+
+$$
+\sqrt{\frac{\pi}{a}}=1,
+$$
+
+故：
+
+$$
+a=\pi.
+$$
+
+反之代入 \(a=\pi\)：
+
+$$
+\widehat g_\pi(\xi)
+=
+e^{-\pi\xi^2}
+=
+g_\pi(\xi).
+$$
+
+∎
+
+所以：
+
+$$
+\boxed{
+\pi
+=
+\text{标准实 Fourier 对偶中 Gaussian 严格自对偶的唯一尺度。}
+}
+$$
+
+---
+

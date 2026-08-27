@@ -1,0 +1,18 @@
+## 4.2 规范化常数
+
+给定候选对象族 \(F_a\) 与变换 \(\mathcal T\)，定义：
+
+$$
+\Delta(a)=\mathcal T(F_a)-F_a.
+$$
+
+典型：
+
+$$
+\pi
+$$
+
+作为 Gaussian Fourier 自对偶尺度。
+
+---
+

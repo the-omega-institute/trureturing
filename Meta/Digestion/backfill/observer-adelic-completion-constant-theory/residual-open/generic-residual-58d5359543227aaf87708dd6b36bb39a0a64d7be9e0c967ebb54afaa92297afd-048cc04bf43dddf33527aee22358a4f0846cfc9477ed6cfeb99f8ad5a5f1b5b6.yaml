@@ -1,0 +1,10 @@
+ast_path: section/4-4-连接常数/clause/1
+fingerprints:
+  raw_sha256: sha256:58d5359543227aaf87708dd6b36bb39a0a64d7be9e0c967ebb54afaa92297afd
+  normalized_sha256: sha256:58d5359543227aaf87708dd6b36bb39a0a64d7be9e0c967ebb54afaa92297afd
+cas_ref: sha256:58d5359543227aaf87708dd6b36bb39a0a64d7be9e0c967ebb54afaa92297afd
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

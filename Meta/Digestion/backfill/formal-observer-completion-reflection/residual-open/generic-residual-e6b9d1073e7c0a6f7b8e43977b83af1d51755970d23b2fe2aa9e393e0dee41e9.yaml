@@ -1,0 +1,10 @@
+ast_path: section/结论二-所有-completion-都是-target-completion
+fingerprints:
+  raw_sha256: sha256:e6b9d1073e7c0a6f7b8e43977b83af1d51755970d23b2fe2aa9e393e0dee41e9
+  normalized_sha256: sha256:e6b9d1073e7c0a6f7b8e43977b83af1d51755970d23b2fe2aa9e393e0dee41e9
+cas_ref: sha256:e6b9d1073e7c0a6f7b8e43977b83af1d51755970d23b2fe2aa9e393e0dee41e9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,91 @@
+# 191. 建议的统一 Lean 模块
+
+```text
+D5/S3/Observer/Unified/
+  ProtocolObserver.lean
+  DependentOutcomeLaw.lean
+  BehaviorSignature.lean
+  ObservationalKernel.lean
+  KernelRangeRepresentation.lean
+  MinimalBehaviorRealization.lean
+  ObserverRefinementOrder.lean
+  ObserverLattice.lean
+  ParallelSerialLaws.lean
+
+D5/S3/Observer/Unified/Target/
+  TargetKernel.lean
+  TargetSufficiency.lean
+  TargetCompletion.lean
+  KnowledgeAsFactorization.lean
+  PredictionAsTargetCompletion.lean
+  PolicyProfileCompletion.lean
+
+D5/S3/Observer/Unified/Dynamics/
+  ProtocolGeneratedClosure.lean
+  GreatestInvariantResidual.lean
+  HeisenbergProbeClosure.lean
+  CommonCompletionFixedPoint.lean
+  CompletionOrderDefect.lean
+  NoetherianObserverPrinciple.lean
+
+D5/S3/Observer/Unified/Atlas/
+  CompatibleRecordFamily.lean
+  ObserverQuotientLimit.lean
+  SeparationVsRealization.lean
+  LocalGlobalExactness.lean
+  ObserverImageDefect.lean
+  FiberProductFusion.lean
+
+D5/S3/Observer/Unified/Belief/
+  BeliefFutureBehaviorFactor.lean
+  BeliefMinimalityCriterion.lean
+  PosteriorBehaviorQuotient.lean
+  PolicySelfQuotient.lean
+
+D5/S3/Observer/Unified/Memory/
+  StoredAccessibleKnownRelevant.lean
+  PredictiveMemoryResidual.lean
+  SelfReportNoAmplification.lean
+
+D5/S3/Observer/Unified/Budget/
+  TargetWorstCaseDepthLowerBound.lean
+  ExpectedDepthEntropyLowerBound.lean
+  ApproximateIdentificationFanoBound.lean
+
+D5/S3/Observer/Unified/Quantitative/
+  ObserverLawPseudometric.lean
+  WeightedObserverGramian.lean
+  GramKernelIntersection.lean
+  StatisticalConditioning.lean
+
+D5/S3/Observer/Unified/Instances/
+  DeterministicObserver.lean
+  MarkovObserver.lean
+  QuantumInstrumentObserver.lean
+  PrimeIndexedObserver.lean
+  CausalInterventionObserver.lean
+  AgencyObserver.lean
+```
+
+优先形式化顺序应为：
+
+```text
+behaviorSignature
+observationalKernel
+quotient_equiv_behaviorRange
+interface_sufficient_iff_kernel_le
+targetSufficient_iff_kernel_le
+targetCompletion_least
+jointObserver_kernel_eq_inf
+postprocessing_kernel_mono
+postprocessing_kernel_eq_iff_injective_on_range
+observerAtlas_exact_iff_injective_surjective
+belief_factors_to_futureBehavior
+belief_minimal_iff_futureBehavior_factor_injective
+selfReport_kernel_mono
+target_depth_clog_lower_bound
+weightedGramian_kernel
+```
+
+---
+

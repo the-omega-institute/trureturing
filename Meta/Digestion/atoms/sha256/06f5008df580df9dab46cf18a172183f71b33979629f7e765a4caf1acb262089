@@ -1,0 +1,14 @@
+* 实际物理 law \(\mathcal L^{\mathrm{phys}}\)。
+
+并满足：
+
+$$
+\boxed{
+\mathcal L^{\mathrm{phys}}_{C(\pi)}(w)
+=
+\mathcal L_\pi(h(w)).
+}
+$$
+
+量子情况下还要满足：
+

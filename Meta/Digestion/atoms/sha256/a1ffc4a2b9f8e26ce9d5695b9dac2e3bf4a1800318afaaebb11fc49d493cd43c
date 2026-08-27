@@ -1,0 +1,62 @@
+## 定理 168.1（统一观察者表示）
+
+存在规范等价：
+
+$$
+\boxed{
+X/K_{\mathfrak O}
+\cong
+\operatorname{range}\Sigma_{\mathfrak O}.
+}
+$$
+
+而且，对任意其他接口：
+
+$$
+r:X\to R,
+$$
+
+以下三个条件等价。
+
+### 条件一：协议充分性
+
+所有协议 law 都通过 \(r\) 因子化：
+
+$$
+\forall\pi,\quad
+\exists \overline{\mathcal L}_\pi,
+\qquad
+\mathcal L_\pi
+=
+\overline{\mathcal L}_\pi\circ r.
+$$
+
+### 条件二：kernel 包含
+
+$$
+\boxed{
+K_r\subseteq K_{\mathfrak O}.
+}
+$$
+
+### 条件三：规范因子化
+
+存在唯一映射：
+
+$$
+\bar r:
+\operatorname{range}r
+\to
+\operatorname{range}\Sigma_{\mathfrak O}
+$$
+
+使：
+
+$$
+\Sigma_{\mathfrak O}
+=
+\bar r\circ r
+$$
+
+在 \(r\) 的有效像上成立。
+

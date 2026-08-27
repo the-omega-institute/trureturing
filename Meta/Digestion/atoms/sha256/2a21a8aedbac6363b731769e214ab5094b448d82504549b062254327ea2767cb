@@ -1,0 +1,22 @@
+## 45.2 双曲核的 Fourier 变换
+
+对 \(\Re(s)>0\)：
+
+$$
+\boxed{
+\int_{-\infty}^{\infty}
+(2\cosh x)^{-s}
+e^{-i\omega x}\,dx
+=
+\frac{
+\Gamma\left(\frac{s+i\omega}{2}\right)
+\Gamma\left(\frac{s-i\omega}{2}\right)
+}{
+2\Gamma(s)
+}.
+}
+\tag{45.2}
+$$
+
+对单位轨道应用 Poisson 求和，得到：
+

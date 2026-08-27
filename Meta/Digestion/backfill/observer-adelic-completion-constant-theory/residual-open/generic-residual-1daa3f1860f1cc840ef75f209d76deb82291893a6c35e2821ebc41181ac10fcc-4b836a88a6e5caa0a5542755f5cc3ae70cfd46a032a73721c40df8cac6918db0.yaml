@@ -1,0 +1,10 @@
+ast_path: section/80-1-一个必须比较的-CM-模形式/clause/1
+fingerprints:
+  raw_sha256: sha256:1daa3f1860f1cc840ef75f209d76deb82291893a6c35e2821ebc41181ac10fcc
+  normalized_sha256: sha256:1daa3f1860f1cc840ef75f209d76deb82291893a6c35e2821ebc41181ac10fcc
+cas_ref: sha256:1daa3f1860f1cc840ef75f209d76deb82291893a6c35e2821ebc41181ac10fcc
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/第六层-闭环预测能力/clause/3
+fingerprints:
+  raw_sha256: sha256:5ad3e9eb21658dec3db4838b8a3478252bf629511ff3aee394a5ae93a1f7a658
+  normalized_sha256: sha256:5ad3e9eb21658dec3db4838b8a3478252bf629511ff3aee394a5ae93a1f7a658
+cas_ref: sha256:5ad3e9eb21658dec3db4838b8a3478252bf629511ff3aee394a5ae93a1f7a658
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

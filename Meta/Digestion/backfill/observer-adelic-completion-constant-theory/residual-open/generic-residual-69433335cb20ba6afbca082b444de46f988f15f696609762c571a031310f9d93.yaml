@@ -1,0 +1,10 @@
+ast_path: section/19-1-隐藏数值门
+fingerprints:
+  raw_sha256: sha256:69433335cb20ba6afbca082b444de46f988f15f696609762c571a031310f9d93
+  normalized_sha256: sha256:69433335cb20ba6afbca082b444de46f988f15f696609762c571a031310f9d93
+cas_ref: sha256:69433335cb20ba6afbca082b444de46f988f15f696609762c571a031310f9d93
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

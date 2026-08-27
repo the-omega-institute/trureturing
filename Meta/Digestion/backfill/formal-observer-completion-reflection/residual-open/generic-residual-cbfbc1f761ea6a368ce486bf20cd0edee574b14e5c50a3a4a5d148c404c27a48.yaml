@@ -1,0 +1,10 @@
+ast_path: section/233-双侧观察者态射
+fingerprints:
+  raw_sha256: sha256:cbfbc1f761ea6a368ce486bf20cd0edee574b14e5c50a3a4a5d148c404c27a48
+  normalized_sha256: sha256:cbfbc1f761ea6a368ce486bf20cd0edee574b14e5c50a3a4a5d148c404c27a48
+cas_ref: sha256:cbfbc1f761ea6a368ce486bf20cd0edee574b14e5c50a3a4a5d148c404c27a48
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

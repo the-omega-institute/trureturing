@@ -1,0 +1,22 @@
+## 定义 205.3（双侧 kernel）
+
+状态 kernel 为
+
+$$
+K_X
+=
+\ker\Sigma_X
+=
+\{(x,y):r_x=r_y\},
+$$
+
+协议 kernel 为
+
+$$
+K_P
+=
+\ker\Sigma_P
+=
+\{(p,q):c_p=c_q\}.
+$$
+
