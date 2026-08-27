@@ -454,5 +454,6 @@ internal sealed class NoOpFrozenLedgerAdmissionServices : IFrozenLedgerAdmission
         AcceptedLeanClosure lean,
         LeanAxiomReport report,
         RawChangeSet changes,
-        FrozenRevisionIdentity currentIdentity) => null;
+        FrozenRevisionIdentity currentIdentity,
+        AdmissionCheckTiming timing) => null;
 }

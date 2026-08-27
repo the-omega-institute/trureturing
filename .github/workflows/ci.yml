@@ -161,9 +161,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          address="${{ hashFiles('candidate/tools/**', 'candidate/Blueprint/**/*.scribe.cs', 'candidate/Directory.*', 'candidate/global.json') }}"
-          [[ "$address" =~ ^[0-9a-f]{64}$ ]]
-          echo "address=$address" >> "$GITHUB_OUTPUT"
+          source_address="${{ hashFiles('candidate/tools/**', 'candidate/Blueprint/**/*.scribe.cs', 'candidate/Directory.*', 'candidate/global.json') }}"
+          candidate/tools/scripts/workflow/judge-content-address.sh "$source_address" >> "$GITHUB_OUTPUT"
 
       - name: Resolve pinned Lean toolchain
         id: lean
@@ -310,7 +309,7 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: .judge-binaries
-          key: stratalint-judge-binaries-v1-${{ runner.os }}-${{ steps.judge-address.outputs.address }}
+          key: stratalint-judge-binaries-v2-${{ runner.os }}-${{ steps.judge-address.outputs.runtime }}-${{ steps.judge-address.outputs.address }}
 
       - name: Save elan toolchain for engineering checks (dev push only)
         if: steps.scope.outputs.run_required == 'true' && always() && steps.install-elan.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
@@ -398,21 +397,25 @@ jobs:
           fi
           exit 1
 
+      - name: Install pinned SDK for statement projection reconciliation
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: candidate/global.json
+
       - name: Resolve judge binary content address before build outputs exist
         id: judge-address
         shell: bash
         run: |
           set -euo pipefail
-          address="${{ hashFiles('candidate/tools/**', 'candidate/Blueprint/**/*.scribe.cs', 'candidate/Directory.*', 'candidate/global.json') }}"
-          [[ "$address" =~ ^[0-9a-f]{64}$ ]]
-          echo "address=$address" >> "$GITHUB_OUTPUT"
+          source_address="${{ hashFiles('candidate/tools/**', 'candidate/Blueprint/**/*.scribe.cs', 'candidate/Directory.*', 'candidate/global.json') }}"
+          candidate/tools/scripts/workflow/judge-content-address.sh "$source_address" >> "$GITHUB_OUTPUT"
 
       - name: Restore judge binaries
         id: judge-cache
         uses: actions/cache/restore@v4
         with:
           path: .judge-binaries
-          key: stratalint-judge-binaries-v1-${{ runner.os }}-${{ steps.judge-address.outputs.address }}
+          key: stratalint-judge-binaries-v2-${{ runner.os }}-${{ steps.judge-address.outputs.runtime }}-${{ steps.judge-address.outputs.address }}
 
       - name: Resolve checked merge result's dev parent
         id: base
@@ -506,11 +509,6 @@ jobs:
             exit 1
           fi
           "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/install-lean-toolchain.sh" candidate/lean-toolchain
-
-      - name: Install pinned SDK for statement projection reconciliation
-        uses: actions/setup-dotnet@v4
-        with:
-          global-json-file: candidate/global.json
 
       - name: Build Scribe binary on judge cache miss
         if: steps.judge-cache.outputs.cache-hit != 'true'
@@ -709,26 +707,25 @@ jobs:
           fi
           exit 1
 
+      - name: Install pinned SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: candidate/global.json
+
       - name: Resolve judge binary content address before build outputs exist
         id: judge-address
         shell: bash
         run: |
           set -euo pipefail
-          address="${{ hashFiles('candidate/tools/**', 'candidate/Blueprint/**/*.scribe.cs', 'candidate/Directory.*', 'candidate/global.json') }}"
-          [[ "$address" =~ ^[0-9a-f]{64}$ ]]
-          echo "address=$address" >> "$GITHUB_OUTPUT"
+          source_address="${{ hashFiles('candidate/tools/**', 'candidate/Blueprint/**/*.scribe.cs', 'candidate/Directory.*', 'candidate/global.json') }}"
+          candidate/tools/scripts/workflow/judge-content-address.sh "$source_address" >> "$GITHUB_OUTPUT"
 
       - name: Restore judge binaries
         id: judge-cache
         uses: actions/cache/restore@v4
         with:
           path: .judge-binaries
-          key: stratalint-judge-binaries-v1-${{ runner.os }}-${{ steps.judge-address.outputs.address }}
-
-      - name: Install pinned SDK
-        uses: actions/setup-dotnet@v4
-        with:
-          global-json-file: candidate/global.json
+          key: stratalint-judge-binaries-v2-${{ runner.os }}-${{ steps.judge-address.outputs.runtime }}-${{ steps.judge-address.outputs.address }}
 
       - name: Download canonical Lean reports
         uses: actions/download-artifact@v4

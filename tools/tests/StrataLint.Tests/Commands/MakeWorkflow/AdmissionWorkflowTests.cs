@@ -761,7 +761,7 @@ public sealed partial class AdmissionWorkflowTests
         var workflow = AdmissionWorkflow();
         var cacheKeyLines = workflow.Split('\n')
             .Where(static line => line.TrimStart().StartsWith(
-                "key: stratalint-judge-binaries-v1-",
+                "key: stratalint-judge-binaries-v2-",
                 StringComparison.Ordinal))
             .Select(static line => line.Trim())
             .Distinct(StringComparer.Ordinal)
