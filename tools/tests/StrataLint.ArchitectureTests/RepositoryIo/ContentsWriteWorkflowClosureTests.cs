@@ -54,16 +54,20 @@ public sealed class ContentsWriteWorkflowClosureTests
     }
 
     [Fact]
-    public void TheTruthReleasePublisherRunsOnlyOnASchedule()
+    public void TheTruthReleasePublisherRunsOnlyOnScheduleOrRepositoryDispatch()
     {
         var publisher = Workflows.SingleOrDefault(static source => source.Path == TruthReleasePublisher);
         Assert.NotNull(publisher);
 
-        // Schedule-only: no workflow_dispatch. GitHub's dispatch `ref` selector would let a caller
-        // run a modified workflow definition (holding publication write credentials) from an
-        // arbitrary ref, so the publisher must not expose workflow_dispatch at all.
-        Assert.Equal(["schedule"], TriggerNames(publisher.Content));
+        // schedule + repository_dispatch only. workflow_dispatch is forbidden: GitHub's dispatch
+        // `ref` selector would let a caller run a modified workflow definition (holding publication
+        // write credentials) from an arbitrary ref. repository_dispatch has no ref selector — it
+        // always runs the DEFAULT-branch workflow definition and carries no source_commit input —
+        // so it cannot execute attacker-modified workflow text or select an arbitrary commit; the
+        // produce job still walk-backs to the newest gate-verified protected-dev commit.
+        Assert.Equal(["schedule", "repository_dispatch"], TriggerNames(publisher.Content));
         Assert.Contains("cron: '17 * * * *'", publisher.Content, StringComparison.Ordinal);
+        Assert.Contains("types: [publish-truth-release]", publisher.Content, StringComparison.Ordinal);
         Assert.DoesNotContain("workflow_dispatch", publisher.Content, StringComparison.Ordinal);
     }
 
