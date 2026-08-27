@@ -625,7 +625,7 @@ public sealed partial class CleanLanesCommandTests
     {
         internal bool BranchExists(string branch)
         {
-            var result = BoundedProcessRunner.Run(
+            var result = TestProcessRunner.Run(
                 "git",
                 ["show-ref", "--verify", "--quiet", $"refs/heads/{branch}"],
                 repository.Path,

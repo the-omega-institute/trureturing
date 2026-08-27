@@ -45,7 +45,7 @@ public sealed partial class CleanLanesCommandTests
                 new UTF8Encoding(false));
             Git(repository.Path, "add", "README.md");
             Git(repository.Path, "commit", "-m", "fixture baseline");
-            now = TimeProvider.System.GetUtcNow().AddHours(48);
+            now = new DateTimeOffset(2030, 1, 2, 0, 0, 0, TestBudgets.ZeroDuration);
         }
 
         internal string RepositoryRoot =>

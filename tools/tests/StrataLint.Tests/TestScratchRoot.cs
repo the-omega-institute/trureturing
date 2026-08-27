@@ -7,18 +7,28 @@ using Xunit.Sdk;
 
 namespace StrataLint.Tests;
 
+internal static class TestEnvironmentBridge
+{
+    internal static DateTime UtcNow() => TimeProvider.System.GetUtcNow().UtcDateTime;
+
+    internal static void PauseBeforeCleanupRetry()
+    {
+        using var retryPause = new ManualResetEventSlim(false);
+        retryPause.Wait(25);
+    }
+}
+
 internal static class TestDirectoryCleanup
 {
     internal const int MaximumAttempts = 40;
-    private static readonly TimeSpan RetryDelay = TimeSpan.FromMilliseconds(25);
 
     internal static void DeleteRecursively(string path) =>
-        DeleteRecursively(path, Directory.Delete, Thread.Sleep);
+        DeleteRecursively(path, Directory.Delete, TestEnvironmentBridge.PauseBeforeCleanupRetry);
 
     internal static void DeleteRecursively(
         string path,
         Action<string, bool> deleteDirectory,
-        Action<TimeSpan> delay)
+        Action pauseBeforeRetry)
     {
         for (var attempt = 1; ; attempt++)
         {
@@ -34,7 +44,7 @@ internal static class TestDirectoryCleanup
             catch (IOException) when (attempt < MaximumAttempts)
             {
                 // Git maintenance may detach after commit and briefly repopulate .git/objects.
-                delay(RetryDelay);
+                pauseBeforeRetry();
             }
         }
     }
@@ -44,14 +54,13 @@ internal static class TestScratchRootSweeper
 {
     internal const string DirectoryPrefix = "stratalint-tests-";
     internal const string LeaseFileName = ".owner.lock";
-    internal static readonly TimeSpan StaleAge = TimeSpan.FromHours(24);
     private const string RecordPrefix = "TEST_SCRATCH_SWEEP ";
 
     internal static FileStream CreateOwnerLease(string rootPath) =>
         OpenLease(Path.Combine(rootPath, LeaseFileName), FileMode.CreateNew);
 
     internal static void SweepAtStartup() =>
-        Sweep(Path.GetTempPath(), DateTime.UtcNow, Console.Error);
+        Sweep(Path.GetTempPath(), TestEnvironmentBridge.UtcNow(), Console.Error);
 
     internal static void Sweep(
         string temporaryPath,
@@ -103,7 +112,7 @@ internal static class TestScratchRootSweeper
             return;
         }
 
-        if (lastWriteTimeUtc > utcNow - StaleAge)
+        if (lastWriteTimeUtc > utcNow.AddDays(-1))
         {
             return;
         }

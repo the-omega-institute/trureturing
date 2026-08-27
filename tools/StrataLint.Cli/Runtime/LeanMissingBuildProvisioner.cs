@@ -24,7 +24,7 @@ internal static class LeanMissingBuildProvisioner
         ArgumentNullException.ThrowIfNull(stateProbe);
         ArgumentNullException.ThrowIfNull(writerGuard);
         writerGuard.RequireOwnershipOf(Path.Combine(worktreeRoot, ".lake"));
-        wait ??= Thread.Sleep;
+        wait ??= LeanCacheProvisioner.WaitForRetry;
         writeStamp ??= LeanCacheStamp.WriteNew;
         if (selection.Donor is null)
         {
