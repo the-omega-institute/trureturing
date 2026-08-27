@@ -94,7 +94,9 @@ public sealed class RuleCatalog
             .ToImmutableArray();
     }
 
-    internal RuleExecutionOutcome Execute(RuleEvaluationContext context)
+    internal RuleExecutionOutcome Execute(
+        RuleEvaluationContext context,
+        RuleEvaluationMeasure? measureRule = null)
     {
         try
         {
@@ -145,9 +147,13 @@ public sealed class RuleCatalog
                         context.IsBaseFactAffected));
                 }
 
-                diagnostics.AddRange(Stamp(
-                    descriptor,
-                    registration.Rule.EvaluateCandidateDelta(context)));
+                var findings = measureRule is null
+                    ? registration.Rule.EvaluateCandidateDelta(context)
+                    : measureRule(
+                        descriptor.Id,
+                        descriptor.AdmissionEffect,
+                        () => registration.Rule.EvaluateCandidateDelta(context));
+                diagnostics.AddRange(Stamp(descriptor, findings));
             }
 
             return new RuleExecutionOutcome.Completed(CompletedRuleSet.Create(

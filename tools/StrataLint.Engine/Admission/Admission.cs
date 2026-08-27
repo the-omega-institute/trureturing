@@ -230,7 +230,8 @@ public static class AdmissionPipeline
         RawChangeSet changes,
         MetaClear metaClear,
         VerifiedScribeEmissions? verifiedScribeEmissions,
-        RepositorySnapshot? forkPoint = null)
+        RepositorySnapshot? forkPoint = null,
+        RuleEvaluationMeasure? measureRule = null)
         => Evaluate(
             current,
             baseline,
@@ -239,7 +240,8 @@ public static class AdmissionPipeline
             changes,
             MetaEvaluationProfile.ForClear(metaClear),
             verifiedScribeEmissions,
-            forkPoint);
+            forkPoint,
+            measureRule);
 
     internal static AdmissionOutcome EvaluateProtectedSurface(
         RepositorySnapshot current,
@@ -249,7 +251,8 @@ public static class AdmissionPipeline
         RawChangeSet changes,
         MetaChangeSet protectedChanges,
         VerifiedScribeEmissions? verifiedScribeEmissions = null,
-        RepositorySnapshot? forkPoint = null)
+        RepositorySnapshot? forkPoint = null,
+        RuleEvaluationMeasure? measureRule = null)
         => Evaluate(
             current,
             baseline,
@@ -258,7 +261,8 @@ public static class AdmissionPipeline
             changes,
             MetaEvaluationProfile.ForProtectedSurface(protectedChanges),
             verifiedScribeEmissions,
-            forkPoint);
+            forkPoint,
+            measureRule);
 
     private static AdmissionOutcome Evaluate(
         RepositorySnapshot current,
@@ -268,7 +272,8 @@ public static class AdmissionPipeline
         RawChangeSet changes,
         MetaEvaluationProfile metaEvaluation,
         VerifiedScribeEmissions? verifiedScribeEmissions,
-        RepositorySnapshot? forkPoint = null)
+        RepositorySnapshot? forkPoint = null,
+        RuleEvaluationMeasure? measureRule = null)
     {
         var context = RuleEvaluationContext.Create(
             current,
@@ -279,7 +284,7 @@ public static class AdmissionPipeline
             metaEvaluation,
             verifiedScribeEmissions,
             forkPoint);
-        return RuleCatalog.Default.Execute(context) switch
+        return RuleCatalog.Default.Execute(context, measureRule) switch
         {
             RuleExecutionOutcome.Completed completed => Complete(
                 current, policy, lean, completed.Capability, metaEvaluation, changes),

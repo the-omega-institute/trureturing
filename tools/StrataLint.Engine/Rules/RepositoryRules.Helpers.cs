@@ -146,11 +146,13 @@ internal static partial class RepositoryRules
         return seen;
     }
 
-    private static HashSet<string> CollectTaskCodes(RepositorySnapshot snapshot)
+    private static HashSet<string> CollectTaskCodes(RepositorySnapshot snapshot) =>
+        CollectTaskCodes(FormalFiles(snapshot).Select(static item => item.File));
+
+    private static HashSet<string> CollectTaskCodes(IEnumerable<RepositoryFile> files)
     {
         var result = new HashSet<string>(StringComparer.Ordinal);
-        foreach (var (path, file) in FormalFiles(snapshot)
-            .OrderBy(static item => item.Path.Value, StringComparer.Ordinal))
+        foreach (var file in files.OrderBy(static item => item.Path.Value, StringComparer.Ordinal))
         {
             foreach (Match match in TaskBlockReferenceSyntax.TaskTokenPattern.Matches(file.Text))
             {

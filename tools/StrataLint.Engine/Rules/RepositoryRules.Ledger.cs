@@ -13,13 +13,13 @@ internal static partial class RepositoryRules
     private static ImmutableArray<RuleFinding> Ledger(RuleEvaluationContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        var tasks = CollectTaskCodes(context.Current);
+        var taskSetChanged = !context.RuleImplementationChanged && ChangedLeanTaskSet(context);
+        HashSet<string>? tasks = null;
         foreach (var (path, file) in context.Current.Files)
         {
             var governed = IsGovernedStructured(path, context.Policy);
             var pathAffected = context.IsBaseFactAffected(path.Value);
-            var anomalyAffected = pathAffected || context.Changes.Paths.Any(change =>
-                IsManagedLeanPath(change.Value));
+            var anomalyAffected = pathAffected || taskSetChanged;
             if (governed && pathAffected)
             {
                 if (file.HasBom)
@@ -58,6 +58,13 @@ internal static partial class RepositoryRules
 
                 continue;
             }
+
+            if (!anomalyAffected)
+            {
+                continue;
+            }
+
+            tasks ??= CollectTaskCodes(context.Current);
 
             if (path.Value.EndsWith(".json", StringComparison.Ordinal))
             {
@@ -111,6 +118,25 @@ internal static partial class RepositoryRules
         ValidateCandidateRevocationReceipts(context, findings);
 
         return findings.ToImmutable();
+    }
+
+    private static bool ChangedLeanTaskSet(RuleEvaluationContext context)
+    {
+        var changedPaths = context.Changes.Paths
+            .Where(static path => IsManagedLeanPath(path.Value))
+            .ToHashSet();
+        if (changedPaths.Count == 0)
+        {
+            return false;
+        }
+
+        var currentTasks = CollectTaskCodes(context.Current.Files
+            .Where(item => changedPaths.Contains(item.Key))
+            .Select(static item => item.Value));
+        var forkPointTasks = CollectTaskCodes(context.ForkPoint.Files
+            .Where(item => changedPaths.Contains(item.Key))
+            .Select(static item => item.Value));
+        return !currentTasks.SetEquals(forkPointTasks);
     }
 
     private static void ValidateAcceptedEventFilesAfterImplementationChange(

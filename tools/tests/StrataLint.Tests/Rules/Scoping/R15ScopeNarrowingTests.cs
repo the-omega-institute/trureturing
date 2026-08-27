@@ -202,6 +202,7 @@ public sealed class R15ScopeNarrowingTests
             historicalPath);
 
         var taskSetDelta = AnomalyHistory(historicalPath);
+        AddHistoricalTask(taskSetDelta);
         AssertFinding(
             Execute(taskSetDelta, RuleFixture.ValuesBindingPath),
             19,
@@ -209,6 +210,7 @@ public sealed class R15ScopeNarrowingTests
             historicalPath);
 
         var bothDelta = AnomalyHistory(historicalPath);
+        AddHistoricalTask(bothDelta);
         AssertFinding(
             Execute(bothDelta, historicalPath, RuleFixture.ValuesBindingPath),
             19,
@@ -343,6 +345,13 @@ public sealed class R15ScopeNarrowingTests
         var fixture = new RuleFixture();
         SetHistorical(fixture, path, "{\"kind\":\"fixture-anomaly\",\"state\":\"invalid\"}\n");
         return fixture;
+    }
+
+    private static void AddHistoricalTask(RuleFixture fixture)
+    {
+        const string task = "/-- TASK D5-T0099\n    historical task. -/\n";
+        fixture.Baseline[RuleFixture.ValuesBindingPath] += task;
+        fixture.ForkPoint[RuleFixture.ValuesBindingPath] += task;
     }
 
     private static RuleFixture AxiomHistory(string? dependencyPath = null)

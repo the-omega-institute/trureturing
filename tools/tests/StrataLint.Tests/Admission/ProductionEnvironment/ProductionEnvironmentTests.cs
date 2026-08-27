@@ -1,10 +1,13 @@
 using System.Collections.Immutable;
+using System.Globalization;
 using System.Text;
+using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
+[Collection(AdmissionCheckTimingConsoleCollection.Name)]
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
@@ -188,6 +191,94 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(1, ledger.IncrementalValidationCount);
         Assert.Equal(1, gateway.CurrentRevisionResolutionCount);
         Assert.Equal(0, gateway.FrozenReferenceValidationCount);
+    }
+
+    [Fact]
+    public void CheckWritesOneTimingEventForEveryExecutedAdmissionPhase()
+    {
+        using var temporary = new TemporaryDirectory();
+        var fixture = TrustedFrozenFixture();
+        var currentRaw = Snapshot(fixture.Files);
+        var baselineRaw = Snapshot(fixture.Baseline);
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.CreateWithKinds([(RuleFixture.RingPath, RawChangeKind.Modified)]),
+            currentRaw,
+            baselineRaw);
+        var ledger = new ProductionFrozenLedgerAdmissionServices(
+            "/repo",
+            ImmutableHashSet<string>.Empty);
+        var candidateReport = Path.Combine(temporary.Path, "candidate.json");
+        File.WriteAllBytes(
+            candidateReport,
+            RawLeanReportArtifact.Write(
+                Decode(currentRaw),
+                LeanAxiomReport.Create(fixture.Reports)).AsSpan());
+        using var timingOutput = new StringWriter(CultureInfo.InvariantCulture);
+        var originalError = Console.Error;
+        AdmissionOutcome outcome;
+        try
+        {
+            Console.SetError(timingOutput);
+            var environment = new ProductionCliEnvironment(
+                "/repo",
+                gateway,
+                new FakeLeanReportSource(null),
+                scribeEmissionVerifier: null,
+                ledger);
+
+            outcome = environment.Check([
+                "--candidate-lean-report", candidateReport,
+            ]);
+        }
+        finally
+        {
+            Console.SetError(originalError);
+        }
+
+        Assert.IsType<AdmissionOutcome.Admitted>(outcome);
+        var events = timingOutput.ToString()
+            .Split('\n', StringSplitOptions.RemoveEmptyEntries)
+            .Select(static line => JsonDocument.Parse(line))
+            .ToArray();
+        try
+        {
+            Assert.Contains(
+                events,
+                static document => document.RootElement.GetProperty("stage").GetString()
+                    == "rule-sl-003");
+            Assert.Equal(
+                [
+                    "repository-prepare",
+                    "snapshot-load",
+                    "lean-report-load",
+                    "scribe-verify",
+                    "policy-load",
+                    "lean-closure",
+                    "rule-passes",
+                    "frozen-ledger-prepare",
+                    "frozen-ledger-scope",
+                    "frozen-ledger-catalog",
+                    "frozen-ledger-delta",
+                ],
+                events
+                    .Select(static document => document.RootElement.GetProperty("stage").GetString())
+                    .Where(static stage => !stage!.StartsWith("rule-sl-", StringComparison.Ordinal)));
+            foreach (var document in events)
+            {
+                var root = document.RootElement;
+                Assert.Equal("gate_stage_timing", root.GetProperty("event").GetString());
+                Assert.Equal("admission-check", root.GetProperty("scope").GetString());
+                Assert.Equal("passed", root.GetProperty("status").GetString());
+                Assert.True(root.GetProperty("elapsed_seconds").GetDouble() >= 0);
+            }
+        }
+        finally
+        {
+            foreach (var document in events)
+            {
+                document.Dispose();
+            }
+        }
     }
 
     [Fact]
@@ -685,4 +776,10 @@ internal sealed class FakeScribeEmissionVerifier(VerifiedScribeEmissions? verifi
         RawChangeSet? changes = null) =>
         verification
         ?? throw new InvalidOperationException("Scribe emission verification failed: synthetic");
+}
+
+[CollectionDefinition(Name, DisableParallelization = true)]
+public sealed class AdmissionCheckTimingConsoleCollection
+{
+    public const string Name = "Admission check timing console";
 }
