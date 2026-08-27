@@ -1,0 +1,14 @@
+ast_path: section/第一百二十六部-对数把-primitive-roots-展开成复合历史
+fingerprints:
+  raw_sha256: sha256:7880bd7ddc2bb33cf03fcb224d40d2c2e2faa03967726e57556d27babbb3ea97
+  normalized_sha256: sha256:7880bd7ddc2bb33cf03fcb224d40d2c2e2faa03967726e57556d27babbb3ea97
+cas_ref: sha256:7880bd7ddc2bb33cf03fcb224d40d2c2e2faa03967726e57556d27babbb3ea97
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-c1c1f62d088f1fad058dd725b3af89ffc9442db70a1a5bd97f44ec493761e389-ac3b8792ee0d2f90d4e02359bec4680e7f5d61e175f295e8f1a70a14d4daafa2
+    - generic-residual-ce1edd8767f7b43fb7fd0cd175776081f0411c5b532dc7d538bcc016885eaf7f-35a2db7e42a2991977117ae438db4b764309e254e1e13ea5526202c502293c9c
+    - generic-residual-56e41e23740902462b24f81c9f7fcab9f4fb102d30fb62e1cb46bb3944c9557c-0648944ec47d1b02b125d8a5ba6185dfdb3bee96ab2c450b788fa93fdf306f9e

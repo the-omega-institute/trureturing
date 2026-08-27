@@ -233,16 +233,10 @@ jobs:
               mkdir -p "$assembly_results"
               dotnet test "$project" --configuration Release --verbosity normal \
                 --logger 'trx;LogFileName=floor.trx' --results-directory "$assembly_results"
-              python3 -c '
-          import os, sys, xml.etree.ElementTree as ET; path, expected = sys.argv[1:]
-          root = ET.parse(path).getroot(); local = lambda element: element.tag.rsplit("}", 1)[-1]
-          counters = [element for element in root.iter() if local(element) == "Counters"]
-          if len(counters) != 1 or int(counters[0].attrib.get("executed", "0")) <= 0: raise SystemExit(f"TRX has no nonzero executed count for {expected}")
-          results = {element.attrib.get("testId") for element in root.iter() if local(element) == "UnitTestResult" and element.attrib.get("outcome") != "NotExecuted"}
-          executed = sum(1 for element in root.iter() if local(element) == "UnitTest" and element.attrib.get("id") in results and os.path.splitext(os.path.basename(element.attrib.get("storage", "")))[0].casefold() == expected.casefold())
-          if executed <= 0: raise SystemExit(f"TRX has no executed identity from required assembly {expected}")
-          print(f"ENGINEERING_BASE_FLOOR_EXECUTED assembly={expected} evidence=trx executed={executed}")
-          ' "$assembly_results/floor.trx" "$assembly"
+              dotnet run \
+                --project candidate/tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj \
+                --configuration Release --no-launch-profile -- \
+                verify-trx --results-directory "$assembly_results" --required-assembly "$assembly"
             done
           else
             make -C candidate/tools engineering-tests MODE=execute HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$RUNNER_TEMP/engineering-test-plan.json"

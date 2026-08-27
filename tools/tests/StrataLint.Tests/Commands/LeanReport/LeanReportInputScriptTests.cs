@@ -23,7 +23,8 @@ public sealed class LeanReportInputScriptTests
         "tools/scripts/report/lean-report-ci-baseline.sh";
     private const string CacheEnsureScriptPath =
         "tools/scripts/worktree/lean-cache-ensure.sh";
-    private const string PerformanceLibraryPath = "tools/scripts/lib/perf-event-lib.sh";
+    private const string ResourceObservationLibraryPath =
+        "tools/scripts/lib/resource-observation-lib.sh";
     private const string ToolchainInstallerPath = "tools/scripts/workflow/install-lean-toolchain.sh";
     private const string JudgeContentAddressPath =
         "tools/scripts/workflow/judge-content-address.sh";
@@ -108,7 +109,7 @@ public sealed class LeanReportInputScriptTests
         Assert.Contains(SupervisorScriptPath, paths);
         Assert.Contains(CiBaselineScriptPath, paths);
         Assert.Contains(CacheEnsureScriptPath, paths);
-        Assert.Contains(PerformanceLibraryPath, paths);
+        Assert.Contains(ResourceObservationLibraryPath, paths);
         Assert.Contains(ToolchainInstallerPath, paths);
         Assert.Contains(JudgeContentAddressPath, paths);
         Assert.Contains(WorkflowPath, paths);
@@ -131,6 +132,7 @@ public sealed class LeanReportInputScriptTests
         Assert.Contains(RawReportPath, paths);
         Assert.Contains(LeanModelsPath, paths);
         Assert.Contains(CacheEnsureScriptPath, paths);
+        Assert.Contains(ResourceObservationLibraryPath, paths);
         Assert.Contains(JudgeContentAddressPath, paths);
         Assert.DoesNotContain(TestSourcePath, paths);
         Assert.DoesNotContain(BlueprintSourcePath, paths);
@@ -290,7 +292,9 @@ public sealed class LeanReportInputScriptTests
                 CiBaselineScriptPath,
                 File.ReadAllText(Path.Combine(root, CiBaselineScriptPath), Encoding.UTF8));
             Write(CacheEnsureScriptPath, "#!/usr/bin/env bash\n");
-            Write(PerformanceLibraryPath, "#!/usr/bin/env bash\n");
+            Write(
+                ResourceObservationLibraryPath,
+                File.ReadAllText(Path.Combine(root, ResourceObservationLibraryPath), Encoding.UTF8));
             Write(ToolchainInstallerPath, "#!/usr/bin/env bash\n");
             Write(
                 JudgeContentAddressPath,
@@ -476,7 +480,7 @@ public sealed class LeanReportInputScriptTests
             [
                 "bash", script, command, "--repository", repository, "--report", report,
             ]);
-            return BoundedProcessRunner.Run(
+            return TestProcessRunner.Run(
                 "env",
                 arguments,
                 temporary.Path,

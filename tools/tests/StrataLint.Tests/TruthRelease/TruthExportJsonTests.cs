@@ -91,10 +91,15 @@ public sealed class TruthExportJsonTests
                 declarations: new[] { ($"nk-{index}", "theorem", Id((char)('0' + index))) }))
             .ToArray();
         var outputs = new HashSet<string>(StringComparer.Ordinal);
-        for (var seed = 0; seed < 20; seed++)
+        for (var permutation = 0; permutation < 20; permutation++)
         {
-            var random = new Random(seed);
-            var shuffled = nodes.OrderBy(_ => random.Next()).ToImmutableArray();
+            var multiplier = (permutation % 4 * 2) + 1;
+            var offset = permutation / 4;
+            var shuffled = nodes
+                .Select((node, index) => (Node: node, Key: (index * multiplier + offset) % nodes.Length))
+                .OrderBy(static item => item.Key)
+                .Select(static item => item.Node)
+                .ToImmutableArray();
             outputs.Add(Convert.ToBase64String(
                 TruthExportJsonWriter.Write(TruthExportModel.Create(shuffled, Commit, Tree)).AsSpan()));
         }

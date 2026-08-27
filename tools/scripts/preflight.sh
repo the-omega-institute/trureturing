@@ -7,15 +7,11 @@ set -euo pipefail
 
 ROOT=""
 PREFLIGHT_STARTED=0
-PERF_TMP=""
-PERF_EVENT_SPOOL=""
-PERF_BASE="unknown"
 BASE_REF="${BASE:-origin/dev}"
 BASE_TIP_SHA=""
 BASE_SHA=""
 CANDIDATE_SHA=""
 ENGINEERING_PLAN_FILE=""
-STRATALINT_PERF_RUN_ID=""
 PREFLIGHT_DEADLINE_AT="${PREFLIGHT_DEADLINE_AT:-}"
 
 # Remaining seconds of preflight's optional absolute deadline, or empty when unbounded.
@@ -30,25 +26,12 @@ remaining_deadline_seconds() {
 
 finish_preflight() {
   local rc="$1"
-  local status="failed"
-  local finished_at="$PREFLIGHT_STARTED"
   trap - EXIT
   trap '' INT TERM
   set +e
-  set +u
-
-  if [[ "$rc" -eq 0 ]]; then
-    status="passed"
+  if [[ -n "$ROOT" ]] && declare -F resource_observe >/dev/null; then
+    resource_observe preflight-finish "$ROOT" || true
   fi
-
-  finished_at="$(date +%s 2>/dev/null || printf '%s' "$PREFLIGHT_STARTED")"
-  if [[ -n "$ROOT" ]] && declare -F perf_capture_event >/dev/null; then
-    perf_capture_event \
-      "$PERF_EVENT_SPOOL" "$ROOT" "$STRATALINT_PERF_RUN_ID" "preflight" "$PERF_BASE" \
-      total "$status" "$(( finished_at - PREFLIGHT_STARTED ))" || true
-    perf_flush_events "$ROOT" "$PERF_EVENT_SPOOL" preflight 2>/dev/null || true
-  fi
-  if [[ -n "$PERF_TMP" ]]; then rm -rf -- "$PERF_TMP"; fi
   if [[ -n "$ENGINEERING_PLAN_FILE" ]]; then rm -f -- "$ENGINEERING_PLAN_FILE"; fi
   exit "$rc"
 }
@@ -65,7 +48,7 @@ lake --version >/dev/null
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
 source "$ROOT/tools/scripts/lib/admission-base-lib.sh"
-source "$ROOT/tools/scripts/lib/perf-event-lib.sh"
+source "$ROOT/tools/scripts/lib/resource-observation-lib.sh"
 
 remote="${BASE_REF%%/*}"
 if [[ "$remote" != "$BASE_REF" ]] && git remote | grep -Fxq "$remote"; then
@@ -76,23 +59,12 @@ if ! admission_resolve_base "$ROOT" "$BASE_REF"; then
 fi
 
 PREFLIGHT_STARTED="$(date +%s)"
-PERF_TMP="$(perf_make_spool_dir "$ROOT" stratalint-preflight-perf 2>/dev/null || true)"
-if [[ -n "$PERF_TMP" ]]; then
-  PERF_EVENT_SPOOL="$PERF_TMP/events.jsonl"
-  : > "$PERF_EVENT_SPOOL" || PERF_EVENT_SPOOL=""
-fi
-PERF_COMMIT="$(git rev-parse --verify HEAD 2>/dev/null || printf unknown)"
-PERF_BASE="$BASE_SHA"
-STRATALINT_PERF_RUN_ID="${STRATALINT_PERF_RUN_ID:-preflight-${PREFLIGHT_STARTED}-$$-${PERF_COMMIT:0:12}}"
-export STRATALINT_PERF_RUN_ID
+resource_observe preflight-start "$ROOT" || true
 
 record_timing() {
   local stage="$1"
   local elapsed="$(( $(date +%s) - T ))"
   printf '[preflight] %-22s %ss\n' "$stage" "$elapsed"
-  perf_capture_event \
-    "$PERF_EVENT_SPOOL" "$ROOT" "$STRATALINT_PERF_RUN_ID" "preflight" "$PERF_BASE" \
-    "$stage" passed "$elapsed" || true
   T=$(date +%s)
 }
 T=$(date +%s)
@@ -141,14 +113,41 @@ expect_compile_failure() {
   return 0
 }
 
+prove_banned_api_compile_failure() {
+  local project="tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj"
+  local proof="tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"
+  local output=""
+  local status=0
+  set +e
+  output="$(dotnet build "$project" --no-restore --configuration Release 2>&1)"
+  status=$?
+  set -e
+  printf '%s\n' "$output"
+  test "$status" -ne 0
+  case "$status" in
+    124|126|127|130|143) return "$status" ;;
+  esac
+  local expected_lines=()
+  local actual_lines=()
+  while IFS= read -r line; do expected_lines+=("$line"); done \
+    < <(grep -nF "// banned-api-proof" "$proof" | cut -d: -f1)
+  while IFS= read -r line; do actual_lines+=("$line"); done \
+    < <(sed -n 's#.*BannedApiViolations.cs(\([0-9][0-9]*\),[0-9][0-9]*): error RS0030:.*#\1#p' <<<"$output" | sort -nu)
+  test "${#expected_lines[@]}" -gt 0
+  test "${#actual_lines[@]}" -eq "${#expected_lines[@]}"
+  test -z "$(grep -F ': error ' <<<"$output" | grep -vF ': error RS0030:' || true)"
+  local index=0
+  for expected_line in "${expected_lines[@]}"; do
+    test "${actual_lines[$index]}" = "$expected_line"
+    ((index += 1))
+  done
+}
+
 expect_compile_failure \
   tools/tests/CompileFailProof/CompileFailProof.csproj \
   CompileFailProof \
   "能力链证明失效"
-expect_compile_failure \
-  tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj \
-  BannedApiCompileFailProof \
-  "禁 API 证明失效"
+prove_banned_api_compile_failure
 record_timing compile-fail-proofs
 
 # Measure what is left of the outer deadline before entering the most expensive stage,

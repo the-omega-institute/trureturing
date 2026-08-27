@@ -1,0 +1,24 @@
+## 推论 120.1
+
+$$
+\boxed{
+\text{函数方程、正系数与高度模对称，
+都不保证观察者已经完备。}
+}
+$$
+
+这对 RH 研究极其重要：
+
+> 即使 completed \(\xi(s)\) 是最自然、最对称的标量完成对象，它仍可能不是最适合显现 primitive positivity 的观察图表。
+
+需要考虑：
+
+* twisted \(L\)-functions；
+* prime-indexed channels；
+* regulator modes；
+* vector-valued explicit formulae；
+* twined Weil forms；
+* operator-valued completion。
+
+---
+

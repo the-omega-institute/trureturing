@@ -1,0 +1,10 @@
+ast_path: section/第一百零二部-两种-E-8-构造之间的比较残余
+fingerprints:
+  raw_sha256: sha256:d716c1e1b37e99a34502f243175cd8f7f43f176742ff9bd7293fde2156a7c56a
+  normalized_sha256: sha256:d716c1e1b37e99a34502f243175cd8f7f43f176742ff9bd7293fde2156a7c56a
+cas_ref: sha256:d716c1e1b37e99a34502f243175cd8f7f43f176742ff9bd7293fde2156a7c56a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

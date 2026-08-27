@@ -1,0 +1,39 @@
+## 定理 107.1（二十四维根残差定理）
+
+$$
+\boxed{
+\Theta_N
+=
+E_4^3+(r_N-720)\Delta.
+}
+\tag{107.3}
+$$
+
+这意味着：
+
+> 对二十四维偶自对偶格，整个无限壳层谱在标量 Theta 层面，只需一个低能数据——根数——就能确定。
+
+这是一个精确的有限状态闭合：
+
+$$
+\boxed{
+\text{无限壳层数据}
+=
+\text{固定 Eisenstein 主体}
++
+\text{一维 cusp residual}.
+}
+$$
+
+Niemeier 格的 genus-one Theta 公式通常写为
+
+$$
+\Theta_N
+=
+E_4^3+(24h-720)\Delta,
+$$
+
+其中 \(h\) 是其根系各不可约分量的共同 Coxeter 数。([Wiley Online Library][1])
+
+---
+
