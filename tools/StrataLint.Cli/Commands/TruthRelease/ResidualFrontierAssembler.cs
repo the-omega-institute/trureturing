@@ -27,6 +27,11 @@ internal static class ResidualFrontierAssembler
             snapshot,
             lean,
             verifiedScribeEmissions,
+            // A read-only assembly of the current tree is its own baseline; without one the
+            // aligner reports acknowledged prior generations as structurally rejected and the
+            // throw below fires on nothing (#3354).
+            baselineDocument: document,
+            baselineSnapshot: snapshot,
             truthStates: truthStates);
         if (evaluation.HasReceiptIntegrityFailure)
         {

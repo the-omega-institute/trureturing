@@ -7,6 +7,32 @@ namespace StrataLint.Tests;
 
 public sealed class DigestionEvaluationScopeTests
 {
+    /// A missing baseline used to be a *mode* rather than a mistake. Without one the aligner
+    /// cannot recognise a prior generation the ledger has already acknowledged as superseded,
+    /// so it classifies that entry `Rejected`, structural alignment fails, and the caller is
+    /// handed a different verdict rather than a refusal. Both parameters defaulted to null, so
+    /// omitting them compiled silently: two production callers did, and both misreported the
+    /// same 55 entries as `handwritten absorbed-closed differs from derived partial-closed`
+    /// while `digest-status`, which differs only by passing a baseline, reported none on the
+    /// same tree (#3354). Refuse the omission instead of answering it.
+    [Fact]
+    public void EvaluateRefusesAMissingBaselineRatherThanSilentlyChangingTheVerdict()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes("a missing baseline is a refusal\n");
+        var atom = Atom("manual/missing-baseline", sourceBytes);
+        var document = Ledger(
+            atom,
+            DigestionMigrationState.Absorbed,
+            DigestionTruthState.Closed,
+            includeCoverageGid: false);
+
+        Assert.Throws<ArgumentNullException>(() => DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.FullScan,
+            document,
+            Snapshot(("docs/source.md", sourceBytes), CasFile(atom)),
+            AcceptedLean(Array.Empty<string>())));
+    }
+
     [Fact]
     public void EmptyChangeSetRetainsWholeTreeDiagnostics()
     {
@@ -118,7 +144,8 @@ public sealed class DigestionEvaluationScopeTests
                 ("docs/source.md", sourceBytes),
                 (casPath, Encoding.UTF8.GetBytes("tampered committed CAS\n"))),
             AcceptedLean(Array.Empty<string>()),
-            changes: changes);
+            changes: changes,
+            baselineDocument: document);
 
         Assert.Equal(DigestionEvaluationScope.FullScan, scope);
         Assert.Contains(
@@ -147,7 +174,8 @@ public sealed class DigestionEvaluationScopeTests
                 snapshot,
                 AcceptedLean(Array.Empty<string>()),
                 casEvaluation: fullScanCas,
-                changes: changes));
+                changes: changes,
+            baselineDocument: document));
 
         Assert.Contains("CAS evaluation scope does not match", exception.Message, StringComparison.Ordinal);
     }
@@ -192,7 +220,8 @@ public sealed class DigestionEvaluationScopeTests
             document,
             Snapshot(("docs/source.md", sourceBytes), CasFile(atom)),
             AcceptedLean(Array.Empty<string>()),
-            changes: changes);
+            changes: changes,
+            baselineDocument: document);
     }
 
     private static DigestionLedgerEvaluation EvaluateMismatchedCoverageReceipt(

@@ -53,7 +53,8 @@ public sealed partial class DigestionLedgerTests
             DigestionEvaluationScope.FullScan,
             ledger,
             snapshot,
-            lean);
+            lean,
+            baselineDocument: ledger);
         var status = Assert.Single(evaluation.Entries);
 
         Assert.False(status.Deletable);
@@ -95,7 +96,8 @@ public sealed partial class DigestionLedgerTests
             DigestionEvaluationScope.FullScan,
             ledger,
             snapshot,
-            AcceptedLean("D5/S0/Carrier/Probe.lean")).Entries);
+            AcceptedLean("D5/S0/Carrier/Probe.lean"),
+            baselineDocument: ledger).Entries);
 
         Assert.False(status.Deletable);
         Assert.Contains(status.Gaps, gap => gap.Code == "scribe-emission-unverified");
@@ -226,7 +228,8 @@ public sealed partial class DigestionLedgerTests
             DigestionEvaluationScope.FullScan,
             ledger,
             snapshot,
-            lean).Entries);
+            lean,
+            baselineDocument: ledger).Entries);
 
         Assert.Equal(DigestionTruthState.Open, status.DerivedStatus.Truth);
         Assert.Contains(status.Gaps, gap => gap.Code == "tail-authorization-missing");
@@ -377,7 +380,8 @@ public sealed partial class DigestionLedgerTests
             DigestionEvaluationScope.FullScan,
             ledger,
             snapshot,
-            AcceptedLean("D5/X_Frontier/Probe.lean"));
+            AcceptedLean("D5/X_Frontier/Probe.lean"),
+            baselineDocument: ledger);
 
         Assert.Contains(evaluation.Findings, finding =>
             finding.Contains("fingerprint", StringComparison.OrdinalIgnoreCase));

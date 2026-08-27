@@ -83,6 +83,14 @@ internal static partial class DigestionStatusEvaluator
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(lean);
+        // A baseline is not a mode. Without one the aligner cannot recognise a prior generation
+        // the ledger has already acknowledged as superseded, so it classifies that entry
+        // `Rejected` and every caller downstream is handed a *different verdict* rather than a
+        // refusal. Both parameters used to default to null, which made the omission compile
+        // silently -- and two production callers took it, each misreporting the same 55 entries
+        // (#3354). The parameters stay optional in position only because making them required
+        // would reorder 43 call sites; the refusal below is what actually holds the contract.
+        ArgumentNullException.ThrowIfNull(baselineDocument);
         changes = DigestionEvaluationScopes.ResolveChanges(scope, changes);
         var entries = document.RequireDigestionEntries();
         var findings = ImmutableArray.CreateBuilder<string>();

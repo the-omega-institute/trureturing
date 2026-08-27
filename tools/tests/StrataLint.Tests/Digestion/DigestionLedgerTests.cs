@@ -348,7 +348,8 @@ public sealed partial class DigestionLedgerTests
             DigestionEvaluationScope.FullScan,
             ledger,
             snapshot,
-            lean);
+            lean,
+            baselineDocument: ledger);
         var status = Assert.Single(evaluation.Entries);
 
         Assert.Equal(DigestionMigrationState.Partial, status.DerivedStatus.Migration);
@@ -374,7 +375,8 @@ public sealed partial class DigestionLedgerTests
             DigestionEvaluationScope.FullScan,
             ledger,
             Snapshot(("docs/source.md", source), CasFile(atom)),
-            AcceptedLean(Array.Empty<string>())).Entries);
+            AcceptedLean(Array.Empty<string>()),
+            baselineDocument: ledger).Entries);
 
         Assert.Equal(DigestionMigrationState.Residual, status.DerivedStatus.Migration);
         Assert.Equal(DigestionTruthState.Open, status.DerivedStatus.Truth);
@@ -531,7 +533,8 @@ public sealed partial class DigestionLedgerTests
             ledger,
             snapshot,
             AcceptedLean(targetPath),
-            VerifiedScribeEmissions.Create([record], describedDeclarations)).Entries);
+            VerifiedScribeEmissions.Create([record], describedDeclarations),
+            baselineDocument: ledger).Entries);
     }
 
     private static DigestionEntryEvaluation EvaluateCompleteTail(
@@ -600,7 +603,8 @@ public sealed partial class DigestionLedgerTests
             snapshot,
             AcceptedLean((targetPath, report)),
             verifiedEmissions,
-            changes: changes).Entries);
+            changes: changes,
+            baselineDocument: ledger).Entries);
     }
 
     private static BackfillInventoryDocument Ledger(
