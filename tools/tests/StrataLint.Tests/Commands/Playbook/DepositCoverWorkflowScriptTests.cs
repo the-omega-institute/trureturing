@@ -32,7 +32,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "dotnet:ledger-append",
             ],
             fixture.CallKinds());
-        AssertDepositPerformanceEvents(fixture);
 
         var phaseA = fixture.CommitPaths("HEAD~1");
         Assert.Contains(TransactionFixture.LeanPath, phaseA);
@@ -345,7 +344,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var deposit = fixture.Run("deposit");
         Assert.True(deposit.ExitCode == 0, Diagnostics(deposit));
         fixture.ClearCalls();
-        fixture.ClearPerformanceEvents();
         var before = fixture.CommitCount();
 
         var result = fixture.Run("cover");
@@ -360,7 +358,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "make:emit",
             ],
             fixture.CallKinds());
-        AssertCoverPerformanceEvents(fixture);
         Assert.Contains("aligned: covered", fixture.BackfillContents(), StringComparison.Ordinal);
         Assert.Equal("emission: covered\n", fixture.EmissionContents());
         Assert.Empty(fixture.Status());
@@ -383,25 +380,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(before + 1, fixture.CommitCount());
         Assert.Contains("cover_disposition:", fixture.BackfillContents(), StringComparison.Ordinal);
         Assert.Equal(["make:lean-report", "dotnet:cover-atom"], fixture.CallKinds());
-        AssertFailedCoverPerformanceEvents(fixture);
         Assert.Empty(fixture.Status());
-
-        using var probeFailureFixture = new TransactionFixture();
-        var probeFailure = probeFailureFixture.Run(
-            "cover",
-            coverDispositionFailure: true,
-            usePerformanceProbeOverrides: false,
-            failPerformanceCommitProbe: true);
-        Assert.NotEqual(0, probeFailure.ExitCode);
-        var degradedEvents = probeFailureFixture.PerformanceEvents()
-            .Select(PerfEventCodec.ParseLine)
-            .ToArray();
-        Assert.NotEmpty(degradedEvents);
-        Assert.All(degradedEvents, item =>
-        {
-            Assert.Equal("unknown", item.Context.Commit);
-            Assert.Equal("observation", item.Status);
-        });
     }
 
     private static string Diagnostics(ProcessOutput result) =>
@@ -427,9 +406,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
         internal const string ReceiptRelativePath = "Meta/Digestion/formalizations/atom-1.v1.json";
         internal const string SecondaryReceiptRelativePath =
             "Meta/Digestion/formalizations/atom-2.v1.json";
-        internal const string PerformanceCommit = "0123456789abcdef0123456789abcdef01234567";
-        internal const string PerformanceLoadavg = "0.25";
-        internal const string PerformanceHostConcurrency = "3";
 
         private const string ScriptPath = "tools/scripts/workflow/playbook-workflows.sh";
         private readonly TemporaryDirectory temporary = new();
@@ -443,7 +419,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
             binPath = Path.Combine(Root, "bin");
             callsPath = Path.Combine(Root, "calls");
             freezeProbePath = Path.Combine(Root, "freeze-probes");
-            performanceLedgerPath = Path.Combine(performance.Path, "events.jsonl");
             Directory.CreateDirectory(binPath);
             CopyScript();
             File.Copy(
@@ -760,11 +735,11 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         private string Git(params string[] arguments)
         {
-            var result = BoundedProcessRunner.Run(
+            var result = TestProcessRunner.Run(
                 "/usr/bin/git",
                 arguments,
                 Root,
-                TimeSpan.FromSeconds(15),
+                TestBudgets.PlaybookProcessHangGuard,
                 128 * 1024);
             if (result.ExitCode != 0)
             {

@@ -20,7 +20,7 @@ public sealed partial class FormalizeCandidatesTests
                     DigestionTruthState.Closed),
                 ["D5/S0/Synthetic/Receipt.pzg_residual"],
                 [new DigestionDispositionGap("unresolved-subitem", "remaining theorem clause")],
-                new DateTimeOffset(2026, 8, 25, 4, 3, 2, TimeSpan.Zero)));
+                new DateTimeOffset(2026, 8, 25, 4, 3, 2, TestBudgets.ZeroDuration)));
 
         var result = Run([entry], formalizationReceipt: ValidReceipt(entry));
 
@@ -47,7 +47,7 @@ public sealed partial class FormalizeCandidatesTests
                     DigestionTruthState.Closed),
                 ["D5/S0/Synthetic/Receipt.pzg_residual"],
                 [new DigestionDispositionGap("unresolved-subitem", "remaining theorem clause")],
-                new DateTimeOffset(2026, 8, 25, 4, 3, 2, TimeSpan.Zero)));
+                new DateTimeOffset(2026, 8, 25, 4, 3, 2, TestBudgets.ZeroDuration)));
 
         var result = Run(
             [entry],
@@ -79,7 +79,7 @@ public sealed partial class FormalizeCandidatesTests
                     DigestionTruthState.Closed),
                 ["D5/S0/Synthetic/Receipt.pzg_residual"],
                 [new DigestionDispositionGap("unresolved-subitem", "remaining theorem clause")],
-                new DateTimeOffset(2026, 8, 25, 4, 3, 2, TimeSpan.Zero)));
+                new DateTimeOffset(2026, 8, 25, 4, 3, 2, TestBudgets.ZeroDuration)));
 
         var before = Run([plain], arguments: ["--json"]);
         var after = Run([dispositioned], arguments: ["--json"]);

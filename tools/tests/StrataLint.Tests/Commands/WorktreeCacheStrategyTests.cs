@@ -119,7 +119,7 @@ public sealed class WorktreeCacheStrategyTests
         var recursiveFlag = string.Concat('-', 'R');
         var shellForm = $"cp {cloneFlag}";
         var argumentForm = $"\"{cloneFlag}\", \"{recursiveFlag}\"";
-        var scan = BoundedProcessRunner.Run(
+        var scan = TestProcessRunner.Run(
             "git",
             ["grep", "-n", "-I", "-e", shellForm, "-e", argumentForm, "--", "."],
             root,
@@ -148,7 +148,7 @@ public sealed class WorktreeCacheStrategyTests
 
     private static void AssertBranchMissing(string root, string branch)
     {
-        var lookup = BoundedProcessRunner.Run(
+        var lookup = TestProcessRunner.Run(
             "git",
             ["show-ref", "--verify", "--quiet", $"refs/heads/{branch}"],
             root,
@@ -362,7 +362,7 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
             return FailDotnet ? Failure("dotnet restore failed") : Success();
         }
 
-        var result = BoundedProcessRunner.Run(
+        var result = TestProcessRunner.Run(
             fileName,
             arguments,
             workingDirectory,

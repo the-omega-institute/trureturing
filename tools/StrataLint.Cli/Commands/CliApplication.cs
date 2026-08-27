@@ -59,10 +59,6 @@ internal interface ICliEnvironment
 
     CommandResult CleanLanes(IReadOnlyList<string> arguments);
 
-    CommandResult AppendPerf(IReadOnlyList<string> arguments);
-
-    CommandResult PerfReport(IReadOnlyList<string> arguments);
-
     CommandResult Worktree(IReadOnlyList<string> arguments);
 
 }
@@ -127,10 +123,6 @@ internal static class CliApplication
                 RenderCommand(environment.SupersedeLedger(tail), console),
             ["ledger-sync"] = static (environment, tail, console) =>
                 RenderCommand(environment.SyncLedger(tail), console),
-            ["perf-append"] = static (environment, tail, console) =>
-                RenderCommand(environment.AppendPerf(tail), console),
-            ["perf-report"] = static (environment, tail, console) =>
-                RenderCommand(environment.PerfReport(tail), console),
             ["route"] = static (environment, tail, console) =>
                 RenderCommand(environment.Route(tail), console),
             ["selftest"] = static (environment, tail, console) =>
