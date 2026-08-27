@@ -1,0 +1,39 @@
+## 7.2 替换矩阵意义
+
+令：
+
+$$
+M=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+$$
+
+则：
+
+$$
+M
+\begin{pmatrix}
+\varphi\\1
+\end{pmatrix}
+=
+\varphi
+\begin{pmatrix}
+\varphi\\1
+\end{pmatrix}.
+$$
+
+所以：
+
+$$
+\boxed{
+\varphi
+=
+\text{Fibonacci 两状态替换系统的 Perron 膨胀率。}
+}
+$$
+
+它与 \(e\) 的角色不同：
+
+* \(e\)：连续流；

@@ -1,0 +1,10 @@
+ast_path: section/83-3-Orientation-completion
+fingerprints:
+  raw_sha256: sha256:a15800869c12ae41610ed5b7b0a2af83ce1553943afbd681c506bf15c7d44db5
+  normalized_sha256: sha256:a15800869c12ae41610ed5b7b0a2af83ce1553943afbd681c506bf15c7d44db5
+cas_ref: sha256:a15800869c12ae41610ed5b7b0a2af83ce1553943afbd681c506bf15c7d44db5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

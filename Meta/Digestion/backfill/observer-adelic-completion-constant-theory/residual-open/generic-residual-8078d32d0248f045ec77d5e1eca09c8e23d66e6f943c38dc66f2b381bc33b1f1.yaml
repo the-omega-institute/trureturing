@@ -1,0 +1,10 @@
+ast_path: section/证明/occurrence/1
+fingerprints:
+  raw_sha256: sha256:8078d32d0248f045ec77d5e1eca09c8e23d66e6f943c38dc66f2b381bc33b1f1
+  normalized_sha256: sha256:8078d32d0248f045ec77d5e1eca09c8e23d66e6f943c38dc66f2b381bc33b1f1
+cas_ref: sha256:8078d32d0248f045ec77d5e1eca09c8e23d66e6f943c38dc66f2b381bc33b1f1
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

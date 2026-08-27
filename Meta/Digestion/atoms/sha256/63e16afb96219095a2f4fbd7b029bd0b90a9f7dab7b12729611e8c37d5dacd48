@@ -1,0 +1,13 @@
+## 定理 237.2（三角不等式）
+
+$$
+\delta(G\mid E)
+\le
+\delta(G\mid F)
++
+\delta(F\mid E).
+$$
+
+原因是：
+
+* 用 `E` 近似模拟 `F`；

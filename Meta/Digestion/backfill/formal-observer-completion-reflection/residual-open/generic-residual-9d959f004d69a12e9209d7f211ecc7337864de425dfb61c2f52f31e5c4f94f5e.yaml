@@ -1,0 +1,10 @@
+ast_path: section/第三-对角化作用在-image-不必作用在-kernel
+fingerprints:
+  raw_sha256: sha256:9d959f004d69a12e9209d7f211ecc7337864de425dfb61c2f52f31e5c4f94f5e
+  normalized_sha256: sha256:9d959f004d69a12e9209d7f211ecc7337864de425dfb61c2f52f31e5c4f94f5e
+cas_ref: sha256:9d959f004d69a12e9209d7f211ecc7337864de425dfb61c2f52f31e5c4f94f5e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

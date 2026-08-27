@@ -1,0 +1,27 @@
+# 225. Observer completion 不等于 metric completion
+
+精确行为像：
+
+$$
+B_{\mathrm{real}}
+=
+\operatorname{Im}\Sigma
+$$
+
+可能不是完备空间。
+
+对其度量完成：
+
+$$
+\widehat B
+$$
+
+可能加入一些 ideal behaviors：
+
+$$
+\widehat B\setminus B_{\mathrm{real}}.
+$$
+
+这些 ideal behavior 可以是：
+
+* Cauchy 极限；

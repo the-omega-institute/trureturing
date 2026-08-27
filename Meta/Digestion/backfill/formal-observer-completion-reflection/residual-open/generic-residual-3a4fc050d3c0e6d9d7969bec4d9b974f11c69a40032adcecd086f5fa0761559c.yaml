@@ -1,0 +1,10 @@
+ast_path: section/记录完备
+fingerprints:
+  raw_sha256: sha256:3a4fc050d3c0e6d9d7969bec4d9b974f11c69a40032adcecd086f5fa0761559c
+  normalized_sha256: sha256:3a4fc050d3c0e6d9d7969bec4d9b974f11c69a40032adcecd086f5fa0761559c
+cas_ref: sha256:3a4fc050d3c0e6d9d7969bec4d9b974f11c69a40032adcecd086f5fa0761559c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

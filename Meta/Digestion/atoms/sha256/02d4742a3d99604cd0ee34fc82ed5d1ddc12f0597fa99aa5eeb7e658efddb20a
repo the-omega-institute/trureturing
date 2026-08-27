@@ -1,0 +1,67 @@
+## 79.1 为什么需要 order \(10\)
+
+对偶化格取 Gram：
+
+$$
+A=2G.
+$$
+
+其最小模 level 为：
+
+$$
+\boxed{
+N=20.
+}
+$$
+
+因为：
+
+$$
+20A^{-1}
+$$
+
+为偶整数矩阵，而更小正整数不满足这一条件。
+
+所以全局 Theta 的模结构不是纯 level \(5\)，而是：
+
+$$
+\boxed{
+20=4\times5.
+}
+$$
+
+其中：
+
+* \(5\)：黄金判别式、二十面体与分歧边界；
+* \(4\)：奇格偶化与二进 Fourier 规范。
+
+因此 Ramanujan 图表更可能需要同时使用：
+
+$$
+r(\tau)
+\quad\text{和}\quad
+r(2\tau),
+$$
+
+而不只是 \(r(\tau)\)。
+
+已有研究证明了：
+
+$$
+k(\tau)=r(\tau)r(2\tau)^2
+$$
+
+在 \(\Gamma_1(10)\) 上的模性；更多 \(r(\tau)^ar(2\tau)^b\) 的组合也形成 level-\(10\) 模函数，而 Ramanujan 的 order-\(10\) continued fractions 已被证明是 level-\(10\) 模函数。([数字对象标识符][4])
+
+所以 OACTC 的预测是：
+
+$$
+\boxed{
+\text{六维黄金 Theta 的 Ramanujan 坐标，
+应属于 level }5\text{ 与 level }10\text{ 的联合函数域}.
+}
+\tag{79.3}
+$$
+
+---
+

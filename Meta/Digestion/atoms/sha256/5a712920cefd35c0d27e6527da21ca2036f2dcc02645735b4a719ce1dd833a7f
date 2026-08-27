@@ -1,0 +1,32 @@
+## 严格边界 227.1
+
+若动作不连续，真实行为像可以动力不变，而其闭包不再不变。
+
+例如令
+
+$$
+I=\{1/n:n\ge1\}\subset\mathbb R,
+$$
+
+定义
+
+$$
+F(1/n)=1,
+\qquad
+F(0)=\sqrt2.
+$$
+
+则
+
+$$
+F(I)\subseteq I,
+$$
+
+但
+
+$$
+0\in\overline I,
+\qquad
+F(0)\notin\overline I.
+$$
+

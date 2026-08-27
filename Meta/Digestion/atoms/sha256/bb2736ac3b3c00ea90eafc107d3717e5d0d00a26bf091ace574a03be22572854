@@ -1,0 +1,15 @@
+# 214. 观察、干预和反事实构成严格协议层级
+
+设：
+
+$$
+P_{\mathrm{obs}}
+\subseteq
+P_{\mathrm{int}}
+\subseteq
+P_{\mathrm{cf}}.
+$$
+
+分别为：
+
+* 被动观察协议；

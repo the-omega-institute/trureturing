@@ -1,0 +1,22 @@
+## 定理 233.1（复合）
+
+若：
+
+$$
+(f_1,g_1):
+\mathfrak O_1\longrightarrow\mathfrak O_2,
+$$
+
+$$
+(f_2,g_2):
+\mathfrak O_2\longrightarrow\mathfrak O_3,
+$$
+
+则复合为：
+
+$$
+(f_2\circ f_1,\ g_1\circ g_2).
+$$
+
+评价保持由两次代入立即得到。
+

@@ -1,0 +1,10 @@
+ast_path: section/40-3-自对偶-Gibbs-能量恒等式/clause/3
+fingerprints:
+  raw_sha256: sha256:6e64a503f72d0ec407b9d95d9e60be558d644c672b5cd61bb6b4f6beecbee58d
+  normalized_sha256: sha256:6e64a503f72d0ec407b9d95d9e60be558d644c672b5cd61bb6b4f6beecbee58d
+cas_ref: sha256:6e64a503f72d0ec407b9d95d9e60be558d644c672b5cd61bb6b4f6beecbee58d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

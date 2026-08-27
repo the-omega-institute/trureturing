@@ -1,0 +1,42 @@
+# 第七十八部　Rogers–Ramanujan 双态的对称平方桥
+
+定义 Rogers–Ramanujan 两个主级数：
+
+$$
+G(q),
+\qquad
+H(q),
+$$
+
+以及模归一化双态：
+
+$$
+\boxed{
+\mathbf R(\tau)
+=
+\begin{pmatrix}
+q^{-1/60}G(q)\\
+q^{11/60}H(q)
+\end{pmatrix},
+\qquad
+q=e^{2\pi i\tau}.
+}
+\tag{78.1}
+$$
+
+其射影比值为 Rogers–Ramanujan continued fraction：
+
+$$
+r(\tau)
+=
+\frac{
+q^{11/60}H(q)
+}{
+q^{-1/60}G(q)
+}.
+$$
+
+\(r\) 是 level-5 模函数坐标，其模变换的射影像为二十面体 \(A_5\)；Duke 的工作系统阐明了 continued fractions、模函数和二十面体之间的关系。([MaRDI Portal][3])
+
+---
+

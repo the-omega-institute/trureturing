@@ -1,0 +1,10 @@
+ast_path: section/素数观察者
+fingerprints:
+  raw_sha256: sha256:54c1cfa8be299bdf158abc7185173ff1e15e4eaec340e85b4ca704bf0fff715d
+  normalized_sha256: sha256:54c1cfa8be299bdf158abc7185173ff1e15e4eaec340e85b4ca704bf0fff715d
+cas_ref: sha256:54c1cfa8be299bdf158abc7185173ff1e15e4eaec340e85b4ca704bf0fff715d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

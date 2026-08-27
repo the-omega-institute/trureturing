@@ -1,0 +1,75 @@
+## 55.1 判别式模等同于 nilpotent radical
+
+前文已经证明：
+
+$$
+L^\#=\frac J5L.
+$$
+
+定义映射：
+
+$$
+\Psi:
+L^\#/L
+\longrightarrow
+R
+$$
+
+为：
+
+$$
+\Psi\left(
+\frac{Jx}{5}+L
+\right)
+=
+\overline J\,\overline x.
+$$
+
+若：
+
+$$
+\frac{Jx}{5}
+-
+\frac{Jy}{5}
+\in L,
+$$
+
+则：
+
+$$
+J(x-y)\in5L,
+$$
+
+所以：
+
+$$
+\overline J(\overline x-\overline y)=0.
+$$
+
+因此 \(\Psi\) 良定义。
+
+它显然满射，而两侧均有 \(5^3\) 个元素，所以：
+
+$$
+\boxed{
+D_L
+\simeq
+R
+}
+\tag{55.3}
+$$
+
+作为 \(A_5\)-模成立。
+
+因此：
+
+$$
+\boxed{
+\text{六维格的判别式边界}
+=
+\text{模 }5\text{ Hodge nilpotent 的三维像}.
+}
+$$
+
+---
+

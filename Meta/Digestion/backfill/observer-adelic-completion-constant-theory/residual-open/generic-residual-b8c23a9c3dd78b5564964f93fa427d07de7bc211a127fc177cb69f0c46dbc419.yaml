@@ -1,0 +1,10 @@
+ast_path: section/35-5-六维准晶体
+fingerprints:
+  raw_sha256: sha256:b8c23a9c3dd78b5564964f93fa427d07de7bc211a127fc177cb69f0c46dbc419
+  normalized_sha256: sha256:b8c23a9c3dd78b5564964f93fa427d07de7bc211a127fc177cb69f0c46dbc419
+cas_ref: sha256:b8c23a9c3dd78b5564964f93fa427d07de7bc211a127fc177cb69f0c46dbc419
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

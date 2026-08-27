@@ -1,0 +1,10 @@
+ast_path: section/35-3-A-5-观察者盲区
+fingerprints:
+  raw_sha256: sha256:834d015fac969191e770006f83c9b055747fbf39467e24774b2746460a3bb083
+  normalized_sha256: sha256:834d015fac969191e770006f83c9b055747fbf39467e24774b2746460a3bb083
+cas_ref: sha256:834d015fac969191e770006f83c9b055747fbf39467e24774b2746460a3bb083
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

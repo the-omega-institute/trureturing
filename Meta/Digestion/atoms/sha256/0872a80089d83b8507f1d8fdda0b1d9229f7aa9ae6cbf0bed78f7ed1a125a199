@@ -1,0 +1,75 @@
+## 已由整数矩阵与有限枚举精确推出
+
+$$
+\boxed{
+R_5^THR_5\equiv2G\pmod5.
+}
+$$
+
+$$
+\boxed{
+q_R(\rho_5(x))
+\equiv2Q(x)\pmod5.
+}
+$$
+
+$$
+\boxed{
+R\simeq\operatorname{Sym}^2(\mathbb F_5^2),
+\quad
+q_R\simeq3(b^2-ac).
+}
+$$
+
+$$
+\boxed{
+I_+
+\simeq
+(\mathbb F_5^2\setminus0)/\{\pm1\}.
+}
+$$
+
+$$
+\boxed{
+\mathbb C[I_+]^+
+\simeq1\oplus5,
+\qquad
+\mathbb C[I_+]^-
+\simeq3\oplus3'.
+}
+$$
+
+$$
+\boxed{
+S_3=20,\quad
+S_4=30,\quad
+S_5=12+12.
+}
+$$
+
+$$
+\boxed{
+\Theta_{I_+}=\Theta_{I_-}.
+}
+$$
+
+$$
+\boxed{
+\text{实际五进 Theta packet 属于 }3\oplus3'.
+}
+$$
+
+$$
+\boxed{
+6
+=
+5\text{ residue states}
++
+1\text{ ramification residual}.
+}
+$$
+
+这些结果目前是纸面矩阵证明和完整有限枚举结果，尚未进入 Lean 真源。
+
+---
+

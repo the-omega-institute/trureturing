@@ -1,0 +1,12 @@
+## 定理 248.1（预测充分性）
+
+$$
+\overrightarrow X_t
+\perp
+\overleftarrow X_t
+\mid
+S_t.
+$$
+
+因为 `S_t` 已经保留了过去对未来条件分布的全部影响。
+

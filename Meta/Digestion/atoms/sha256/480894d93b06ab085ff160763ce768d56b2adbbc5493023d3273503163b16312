@@ -1,0 +1,46 @@
+## 170.2 共同粗化是 meet
+
+两个观察者的最细共同粗化，对应包含：
+
+$$
+K_{\mathfrak O_1}\cup K_{\mathfrak O_2}
+$$
+
+的最小等价关系：
+
+$$
+\boxed{
+K_{\mathfrak O_1\wedge\mathfrak O_2}
+=
+\operatorname{EqClosure}
+\left(
+K_{\mathfrak O_1}\cup
+K_{\mathfrak O_2}
+\right).
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{观察者格}
+\cong
+\text{状态分割格的反序}.
+}
+$$
+
+仓库的 pullback algebra 结果已经机器核验了相应的三重对偶：
+
+$$
+\boxed{
+\text{观察精化}
+\iff
+\text{反向 kernel 包含}
+\iff
+\text{可观察函数代数包含}.
+}
+$$
+
+---
+

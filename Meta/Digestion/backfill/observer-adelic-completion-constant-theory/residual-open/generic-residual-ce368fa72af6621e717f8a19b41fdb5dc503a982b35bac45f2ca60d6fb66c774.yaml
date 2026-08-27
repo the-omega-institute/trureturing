@@ -1,0 +1,10 @@
+ast_path: section/第四十六部-Golden-留数完成方块
+fingerprints:
+  raw_sha256: sha256:ce368fa72af6621e717f8a19b41fdb5dc503a982b35bac45f2ca60d6fb66c774
+  normalized_sha256: sha256:ce368fa72af6621e717f8a19b41fdb5dc503a982b35bac45f2ca60d6fb66c774
+cas_ref: sha256:ce368fa72af6621e717f8a19b41fdb5dc503a982b35bac45f2ca60d6fb66c774
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

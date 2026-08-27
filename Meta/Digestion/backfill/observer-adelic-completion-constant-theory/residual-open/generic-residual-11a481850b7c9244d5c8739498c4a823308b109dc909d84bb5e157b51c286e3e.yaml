@@ -1,0 +1,14 @@
+ast_path: section/Wang-层
+fingerprints:
+  raw_sha256: sha256:11a481850b7c9244d5c8739498c4a823308b109dc909d84bb5e157b51c286e3e
+  normalized_sha256: sha256:11a481850b7c9244d5c8739498c4a823308b109dc909d84bb5e157b51c286e3e
+cas_ref: sha256:11a481850b7c9244d5c8739498c4a823308b109dc909d84bb5e157b51c286e3e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-ddf7e0368a21f4d21a5ad27f6697a9e4ba1d3f24763ec7fa92ad61b641ac3885-e9ce09daf06313d41cd448824362b3b24357dcab91e07208c8cba00fbe49832a
+    - generic-residual-c047f34e2cb00988497011075ba55aecefedce036f2e0897098a795ae6cfe4ef-aeb8e343a003d60e22efee935334ac8ddf0c65d50c0a581f503dcaecbb004694
+    - generic-residual-b322283eea676ad056dc0c2d251e9d647ca4fae1cdc338cb097bf9311473e81e-8351b530da2044803f336e9ca27035933ab21ce339d7831f2b42a88ea6159b9e

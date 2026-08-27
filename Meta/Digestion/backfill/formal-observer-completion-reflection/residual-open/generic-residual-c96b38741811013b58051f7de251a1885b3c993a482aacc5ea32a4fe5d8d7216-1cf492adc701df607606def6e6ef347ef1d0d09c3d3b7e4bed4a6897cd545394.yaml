@@ -1,0 +1,10 @@
+ast_path: section/继续-统一观察者演算的闭合形式/clause/3
+fingerprints:
+  raw_sha256: sha256:c96b38741811013b58051f7de251a1885b3c993a482aacc5ea32a4fe5d8d7216
+  normalized_sha256: sha256:c96b38741811013b58051f7de251a1885b3c993a482aacc5ea32a4fe5d8d7216
+cas_ref: sha256:c96b38741811013b58051f7de251a1885b3c993a482aacc5ea32a4fe5d8d7216
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,23 @@
+# 第二十一部　Wang–Deng–常数完成程序
+
+本理论为此前的 Wang–Deng RH 研究提供了更清楚的尺度分工：
+
+$$
+\boxed{
+\begin{aligned}
+e
+&:\text{外层最优乘法壳};\\
+\varphi
+&:\text{壳内 Fibonacci 递归};\\
+\log p
+&:\text{有限素数通道长度};\\
+\pi
+&:\text{Archimedean 完成尺度};\\
+\gamma,\ B_{2n}
+&:\text{离散—积分 counterterms};\\
+\tfrac12
+&:\text{完成对偶固定线}.
+\end{aligned}
+}
+$$
+

@@ -1,0 +1,24 @@
+## 234.3 随机后处理
+
+若存在 Markov kernel：
+
+$$
+K(z\mid y)
+$$
+
+使：
+
+$$
+F_\theta(z)
+=
+\sum_y K(z\mid y)E_\theta(y),
+$$
+
+则记：
+
+$$
+E\succeq_B F.
+$$
+
+这称为统计模拟序或决策序。
+

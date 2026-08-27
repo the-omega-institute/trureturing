@@ -1,0 +1,10 @@
+ast_path: section/202-观察紧致性定理/clause/1
+fingerprints:
+  raw_sha256: sha256:ecc3c89ba7413fb4b6f9b7ce00e1e1cedb4576c8d9c6cd6ba30360839ba01ca7
+  normalized_sha256: sha256:ecc3c89ba7413fb4b6f9b7ce00e1e1cedb4576c8d9c6cd6ba30360839ba01ca7
+cas_ref: sha256:ecc3c89ba7413fb4b6f9b7ce00e1e1cedb4576c8d9c6cd6ba30360839ba01ca7
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

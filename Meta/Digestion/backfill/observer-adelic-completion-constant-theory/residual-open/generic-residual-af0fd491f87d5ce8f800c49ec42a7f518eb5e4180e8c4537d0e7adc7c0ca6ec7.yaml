@@ -1,0 +1,10 @@
+ast_path: section/45-1-单位轨道的双曲余弦形式
+fingerprints:
+  raw_sha256: sha256:af0fd491f87d5ce8f800c49ec42a7f518eb5e4180e8c4537d0e7adc7c0ca6ec7
+  normalized_sha256: sha256:af0fd491f87d5ce8f800c49ec42a7f518eb5e4180e8c4537d0e7adc7c0ca6ec7
+cas_ref: sha256:af0fd491f87d5ce8f800c49ec42a7f518eb5e4180e8c4537d0e7adc7c0ca6ec7
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

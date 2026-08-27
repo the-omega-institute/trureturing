@@ -1,0 +1,32 @@
+## 15.2 ζ 的局部角色表
+
+$$
+\boxed{
+\begin{array}{c|l}
+p&\text{有限素数通道}\\
+\log p&\text{有限通道的实长度}\\
+e^{-s\log p}&\text{局部权重}\\
+(1-p^{-s})^{-1}&\text{局部 Euler 因子}\\
+\pi^{-s/2}\Gamma(s/2)&\text{实无穷位因子}\\
+\tfrac12s(s-1)&\text{极点消除}\\
+\tfrac12&\text{完成对偶固定中点}
+\end{array}
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\xi(s)
+=
+\text{极点完成}
+\times
+\text{无穷位完成}
+\times
+\text{有限素数对象}.
+}
+$$
+
+---
+

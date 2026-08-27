@@ -1,0 +1,10 @@
+ast_path: section/解释/occurrence/15/clause/3
+fingerprints:
+  raw_sha256: sha256:336c23c9e3c2cc715819d623a92db89b7d486b7ad3e3a8a5bd3f3f5dbec6d0c5
+  normalized_sha256: sha256:336c23c9e3c2cc715819d623a92db89b7d486b7ad3e3a8a5bd3f3f5dbec6d0c5
+cas_ref: sha256:336c23c9e3c2cc715819d623a92db89b7d486b7ad3e3a8a5bd3f3f5dbec6d0c5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

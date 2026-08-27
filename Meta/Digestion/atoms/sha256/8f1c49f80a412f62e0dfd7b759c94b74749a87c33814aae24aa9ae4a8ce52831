@@ -1,0 +1,73 @@
+## 定理 45.1（Golden 调节子 Fourier–Hecke 分解）
+
+$$
+\boxed{
+\begin{aligned}
+\mathfrak Z_\varphi(s,\eta)
+={}&
+\frac1{2\log\varphi\,\Gamma(s)}
+\sum_{m\in\mathbb Z}
+\Gamma\left(\frac{s+i\omega_m}{2}\right)
+\Gamma\left(\frac{s-i\omega_m}{2}\right)
+\\
+&\qquad\qquad\qquad
+\times
+L(s,\chi_m)e^{i\omega_m\eta}.
+\end{aligned}
+}
+\tag{45.3}
+$$
+
+其中：
+
+$$
+\boxed{
+\chi_m((\alpha))
+=
+\left|
+\frac{\sigma_+(\alpha)}
+     {\sigma_-(\alpha)}
+\right|^{i\omega_m}.
+}
+$$
+
+### 良定义性
+
+若换生成元：
+
+$$
+\alpha\mapsto\pm\varphi^n\alpha,
+$$
+
+则：
+
+$$
+\log
+\left|
+\frac{\sigma_+(\varphi^n\alpha)}
+     {\sigma_-(\varphi^n\alpha)}
+\right|
+=
+\log
+\left|
+\frac{\sigma_+(\alpha)}
+     {\sigma_-(\alpha)}
+\right|
++
+2n\log\varphi.
+$$
+
+所以相位增加：
+
+$$
+2n\omega_m\log\varphi
+=
+2\pi mn,
+$$
+
+指数不变。
+
+因此 \(\chi_m\) 是理想上的良定义单位ary Hecke 型字符。
+
+---
+

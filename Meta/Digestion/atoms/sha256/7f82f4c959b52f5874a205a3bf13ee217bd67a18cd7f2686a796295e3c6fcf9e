@@ -1,0 +1,26 @@
+## 定义 248.1（预测等价过去）
+
+两个过去 `h,h'` 等价，当且仅当：
+
+$$
+P(\overrightarrow X_t\mid h)
+=
+P(\overrightarrow X_t\mid h').
+$$
+
+定义预测状态映射：
+
+$$
+\epsilon(h)
+=
+[h].
+$$
+
+预测状态随机变量为：
+
+$$
+S_t
+=
+\epsilon(\overleftarrow X_t).
+$$
+

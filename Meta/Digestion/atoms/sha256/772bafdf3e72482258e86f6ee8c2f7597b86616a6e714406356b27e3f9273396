@@ -1,0 +1,67 @@
+## 54.2 黄金算子的 ramified jet
+
+前文定义：
+
+$$
+\Phi=\frac{I+J}{2},
+\qquad
+\Phi^2-\Phi-I=0.
+$$
+
+模 \(5\) 时：
+
+$$
+2^{-1}\equiv3\pmod5,
+$$
+
+所以：
+
+$$
+\overline\Phi
+=
+3(I+\overline J)
+=
+3I+3\overline J.
+$$
+
+定义：
+
+$$
+N:=\overline\Phi-3I.
+$$
+
+则：
+
+$$
+\boxed{
+N=3\overline J,
+\qquad
+N^2=0,
+\qquad
+\operatorname{rank}N=3.
+}
+\tag{54.5}
+$$
+
+而黄金多项式在 \(\mathbb F_5\) 上退化为：
+
+$$
+x^2-x-1
+=
+(x-3)^2.
+$$
+
+所以：
+
+$$
+\boxed{
+\overline\Phi
+=
+3I+N
+}
+$$
+
+不是普通特征值 \(3\)，而是一个带一阶 infinitesimal direction 的重根观察。
+
+---
+

@@ -1,0 +1,18 @@
+## Wang 层
+
+定义近负模式在：
+
+* \(e\)-对数壳；
+* Fibonacci 子窗口；
+* prime/Mellin 频带；
+
+上的多尺度质量画像。
+
+证明：
+
+$$
+\text{non-sticky}
+\Longrightarrow
+\text{严格正性增益}.
+$$
+

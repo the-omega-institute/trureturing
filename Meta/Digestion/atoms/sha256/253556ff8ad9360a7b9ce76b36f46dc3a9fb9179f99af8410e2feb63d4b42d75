@@ -1,0 +1,56 @@
+# 221. 抽象观察者与物理观察者之间还缺一层实现态射
+
+一个抽象观察者可以定义任意 law：
+
+$$
+\mathcal L_\pi:X\to\mathsf{Law}(O_\pi).
+$$
+
+但物理实现必须给出：
+
+* 物理状态空间 \(W\)；
+* 状态编码 \(h:W\to X\)；
+* 协议编译器 \(C:P\to P_{\mathrm{phys}}\)；
+* 实际物理 law \(\mathcal L^{\mathrm{phys}}\)。
+
+并满足：
+
+$$
+\boxed{
+\mathcal L^{\mathrm{phys}}_{C(\pi)}(w)
+=
+\mathcal L_\pi(h(w)).
+}
+$$
+
+量子情况下还要满足：
+
+* 完全正性；
+* 迹保持或迹不增；
+* 局域性；
+* no-signalling；
+* 有限能量／有限维近似；
+* 合法记录实现。
+
+因此：
+
+$$
+\boxed{
+\text{abstract semantic completeness}
+\not\Rightarrow
+\text{physical realizability}.
+}
+$$
+
+同理：
+
+$$
+\boxed{
+\text{存在一个区分函数}
+\not\Rightarrow
+\text{存在一个可实施实验}.
+}
+$$
+
+---
+

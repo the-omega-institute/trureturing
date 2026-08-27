@@ -1,0 +1,47 @@
+## 解释
+
+同一个定理产生：
+
+* 线性系统 observability Gramian；
+* 量子效果 frame operator；
+* prime-time 加权 Gramian；
+* zeta-weighted prime-precision Gramian；
+* 参数模型 Fisher 信息矩阵；
+* 局部层析的条件数；
+* 实验设计中的最弱可见方向。
+
+所以：
+
+$$
+\boxed{
+\text{Gramian}
+=
+\text{观察 kernel 的二次型量化}.
+}
+$$
+
+最小正特征值：
+
+$$
+\lambda_{\min}^+(W_{\mathfrak O})
+$$
+
+不是额外装饰，而是最难观察方向的统计稳定度。
+
+这解释了为什么：
+
+$$
+K_{\mathfrak O}=\Delta
+$$
+
+仍远远不够。kernel 可以已经消失，但：
+
+$$
+\lambda_{\min}
+\approx0
+$$
+
+时，有限噪声下仍几乎不可识别。
+
+---
+

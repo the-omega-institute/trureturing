@@ -1,0 +1,11 @@
+## 185.3 Dynamic residual
+
+$$
+\operatorname{DynRes}
+=
+\left\{
+(x,y)\in K_{\mathfrak O}:
+(F_ax,F_ay)\notin K_{\mathfrak O}
+\right\}.
+$$
+

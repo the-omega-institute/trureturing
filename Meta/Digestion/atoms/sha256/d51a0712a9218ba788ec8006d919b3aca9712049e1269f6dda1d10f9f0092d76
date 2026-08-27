@@ -1,0 +1,27 @@
+## 多主体观察者
+
+上下文是有限主体集合及其公开记录。
+
+限制是忘记部分主体消息。
+
+所以：
+
+$$
+\boxed{
+\text{time completion},
+\text{prime completion},
+\text{quantum protocol completion},
+\text{causal completion}
+}
+$$
+
+都可以解释为：
+
+$$
+\boxed{
+\text{在各自协议 site 上研究兼容局部记录的全局截面}.
+}
+$$
+
+---
+

@@ -1,0 +1,70 @@
+# 第七十九部　Ramanujan–Theta 因子化猜想
+
+现在有两个承载同一有限表示的对象：
+
+$$
+\boldsymbol\Theta_L
+\in
+V_3\oplus V_3',
+$$
+
+以及：
+
+$$
+\mathcal Q_{\mathrm{RR}}
+=
+\operatorname{Sym}^2\mathbf R
+\oplus
+\operatorname{Sym}^2\mathbf R^\sigma.
+$$
+
+但二者的解析权和二进规范不同：
+
+* \(\mathcal Q_{\mathrm{RR}}\) 本质上是 weight \(0\) 的模函数双态的对称平方；
+* 六维格 Theta 具有 weight \(3\)；
+* 五进边界只提供 level \(5\) 部分；
+* 格的奇偶性还引入一个 \(2\)-primary 完成。
+
+因此正确的候选不是：
+
+$$
+\boldsymbol\Theta_L
+=
+\mathcal Q_{\mathrm{RR}},
+$$
+
+而是：
+
+$$
+\boxed{
+P_3\boldsymbol\Theta_L
+=
+F_+(\tau)\,
+\operatorname{Sym}^2\mathbf R(\tau),
+}
+\tag{79.1}
+$$
+
+$$
+\boxed{
+P_{3'}\boldsymbol\Theta_L
+=
+F_-(\tau)\,
+\operatorname{Sym}^2\mathbf R^\sigma(\tau),
+}
+\tag{79.2}
+$$
+
+其中：
+
+* \(P_3,P_{3'}\) 是 \(J_{\mathrm{mod}}\) 的谱投影；
+* \(F_\pm\) 是待识别的 weight-\(3\) 标量模形式或小维标量模形式组合。
+
+外部 Galois/奇置换对称预期强迫：
+
+$$
+F_-=\sigma(F_+).
+$$
+
+---
+

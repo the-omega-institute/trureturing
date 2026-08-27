@@ -1,0 +1,10 @@
+## 定义 217.1（$\varepsilon$-不可区分关系）
+
+$$
+K_Q^\varepsilon
+=
+\{(x,y):d_Q(x,y)\le\varepsilon\}.
+$$
+
+一般度量情形下，$K_Q^\varepsilon$ 未必传递，但满足精确的加法组合律：
+

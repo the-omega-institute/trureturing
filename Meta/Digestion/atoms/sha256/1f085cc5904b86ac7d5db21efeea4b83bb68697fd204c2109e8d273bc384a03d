@@ -1,0 +1,11 @@
+## 结论五：self 是策略相对的观察商
+
+$$
+\boxed{
+\text{self}
+=
+\frac{\text{histories}}
+{\text{same future action profile}}.
+}
+$$
+

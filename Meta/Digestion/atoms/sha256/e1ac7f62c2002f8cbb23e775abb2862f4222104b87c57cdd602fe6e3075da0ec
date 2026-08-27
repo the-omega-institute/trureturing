@@ -1,0 +1,53 @@
+# 第十七部　\(p\)-adic capacity 作为候选阿代尔完成实例
+
+`octonion/p-adic-zeta-density` 声明的候选 exact capacity pair 为：
+
+$$
+\Lambda_p(Y)
+=
+\frac{12\log p}{p-1}-2\pi Y,
+$$
+
+$$
+\mathscr H_p(Y)
+=
+\frac{12\log p}{p-1}-2\pi Y+C_p(Y).
+$$
+
+其结构读法是：
+
+$$
+\boxed{
+\begin{aligned}
+\frac{12\log p}{p-1}
+&:\text{有限 }p\text{-进 continuation 增益};\\
+2\pi Y
+&:\text{Archimedean }q\text{-圆盘成本};\\
+C_p(Y)
+&:\text{Green--Jensen 碰撞残余}.
+\end{aligned}
+}
+$$
+
+手稿把有限项与 supersingular reduction graph 的 effective resistance 联系起来，并把无穷位项写成 Archimedean \(q\)-圆盘贡献。
+
+但该仓库明确标记为 research draft，并说明仍需要独立专家审查。
+
+附带证书确实使用外向取整定点区间运算并输出：
+
+```text
+CERTIFICATE: PASS
+```
+
+但它验证的是 exact capacity 公式推出的有限 packet 后果，而不是独立证明该 capacity 公式。
+
+因此在本理论中，它应被登记为：
+
+$$
+\boxed{
+\text{高价值候选阿代尔完成实例，尚非已闭合真源。}
+}
+$$
+
+---
+

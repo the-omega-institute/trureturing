@@ -1,0 +1,14 @@
+## 19.6 跨构造复现门
+
+同一角色必须在独立构造中复现。
+
+例如 \(\pi\) 的 Archimedean 完成角色同时出现在：
+
+* Gaussian Fourier 自对偶；
+* theta/Poisson；
+* Mellin Gamma 因子；
+* Ramanujan Gaussian 完成；
+* \(q=e^{2\pi i\tau}\) 的无穷位参数化。
+
+---
+

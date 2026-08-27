@@ -1,0 +1,69 @@
+## 定理 12.1：有限反项延拓
+
+定义：
+
+$$
+\begin{aligned}
+M_m(s)
+={}&
+\int_0^1
+t^{s-1}
+\left[
+\Theta(t)-\sum_{j=0}^{m-1}a_jt^{-\alpha_j}
+\right]dt
+\\
+&+
+\int_1^\infty t^{s-1}\Theta(t)\,dt
++
+\sum_{j=0}^{m-1}\frac{a_j}{s-\alpha_j}.
+\end{aligned}
+$$
+
+则 \(M_m(s)\) 在：
+
+$$
+\boxed{
+\Re(s)>\alpha_m
+}
+$$
+
+亚纯，并与原始 \(M(s)\) 在共同收敛域一致。
+
+### 证明
+
+在 \(t=0\) 附近，方括号内为：
+
+$$
+O(t^{-\alpha_m}),
+$$
+
+所以第一积分在 \(\Re(s)>\alpha_m\) 收敛。第二积分由无穷远衰减收敛。被减掉的每一项满足：
+
+$$
+\int_0^1t^{s-\alpha_j-1}dt
+=
+\frac1{s-\alpha_j}.
+$$
+
+故等式成立。∎
+
+定义谱 ζ：
+
+$$
+Z(s)=\frac{M_m(s)}{\Gamma(s)}.
+$$
+
+则各个 \(a_j\) 是该谱完成的局部 counterterm，\(\alpha_j\) 是可能的极点位置。
+
+这就是 Riemann 积分在本理论中的核心角色：
+
+$$
+\boxed{
+\text{积分不是把离散对象粗暴连续化，}
+\quad
+\text{而是在精确减去离散主模式后完成高阶余项。}
+}
+$$
+
+---
+

@@ -1,0 +1,54 @@
+# 第三十部　黄金 inflation 是显—隐残差运输
+
+由：
+
+$$
+\Phi P_\parallel
+=
+\varphi P_\parallel,
+$$
+
+$$
+\Phi P_\perp
+=
+\varphi'P_\perp,
+$$
+
+得到：
+
+$$
+\boxed{
+q_\parallel(\Phi x)
+=
+\varphi q_\parallel(x),
+}
+$$
+
+$$
+\boxed{
+q_\perp(\Phi x)
+=
+\varphi' q_\perp(x).
+}
+$$
+
+所以每次 inflation：
+
+* 可见物理尺度扩大 \(\varphi\)；
+* 内部残差缩小 \(\varphi^{-1}\)；
+* 同时因 \(\varphi'<0\) 发生方向翻转。
+
+如果使用 \(\Phi^2\)，则：
+
+$$
+\Phi^2|_{E_\parallel}=\varphi^2I,
+$$
+
+$$
+\Phi^2|_{E_\perp}=\varphi^{-2}I,
+$$
+
+两个尺度均保持方向。
+
+因此得到：
+

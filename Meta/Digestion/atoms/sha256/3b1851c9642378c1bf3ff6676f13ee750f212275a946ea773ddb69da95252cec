@@ -1,0 +1,60 @@
+# 第七十六部　局部七状态 Weil 表示与全局六状态 Theta
+
+前文已经得到五进边界的七轨道函数空间：
+
+$$
+\mathbb C[R]^{A_5},
+$$
+
+其维数为 \(7\)。
+
+有限 Fourier 变换与二次相位生成的 level-5 模表示满足：
+
+$$
+\boxed{
+\mathbb C[R]^{A_5}
+\simeq
+\mathbf1\oplus V_3\oplus V_3'.
+}
+\tag{76.1}
+$$
+
+其中平凡表示正由：
+
+$$
+\boxed{
+\mathbf1
+=
+\operatorname{span}
+\left(
+\mathbf1_{I_+}-\mathbf1_{I_-}
+\right)
+}
+\tag{76.2}
+$$
+
+给出。
+
+但六维格的奇置换对称强迫：
+
+$$
+\Theta_{I_+}-\Theta_{I_-}=0.
+$$
+
+因此实际 Theta packet 没有平凡分量：
+
+$$
+\boxed{
+\boldsymbol\Theta_L
+\in
+V_3\oplus V_3'.
+}
+\tag{76.3}
+$$
+
+这是目前最直接的结论：
+
+> 六维 crystallographic 表示 \(3\oplus3'\)，不只是格点坐标空间的抽象表示；它还精确成为五进边界 Theta packet 的实际模变换状态空间。
+
+---
+

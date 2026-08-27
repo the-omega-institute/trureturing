@@ -1,0 +1,50 @@
+## 精确无损判据
+
+串行后处理保持 kernel：
+
+$$
+K_{f\circ\Sigma}
+=
+K_\Sigma
+$$
+
+当且仅当 \(f\) 在实际像：
+
+$$
+\operatorname{range}\Sigma
+$$
+
+上单射。
+
+所以：
+
+$$
+\boxed{
+\text{后处理无损}
+\iff
+\text{后处理在实际行为像上可逆}.
+}
+$$
+
+但这只是集合层无损。若要求恢复映射还必须是：
+
+* 连续；
+* 可测；
+* 仿射；
+* 随机通道；
+* 完全正量子通道；
+
+则还需要相应的结构化左逆。
+
+这严格区分：
+
+$$
+\boxed{
+\text{semantic injectivity}
+\neq
+\text{physical recoverability}.
+}
+$$
+
+---
+

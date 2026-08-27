@@ -1,0 +1,19 @@
+## 协议冗余
+
+$$
+\pi\sim_P\rho
+\iff
+c_\pi=c_\rho.
+$$
+
+也就是：
+
+$$
+\forall x,\quad
+\mathcal L_\pi(x)=\mathcal L_\rho(x).
+$$
+
+两个协议即使语法、设备或名称不同，只要对所有允许状态产生同一 law，在当前模型中就是操作等价协议。
+
+---
+

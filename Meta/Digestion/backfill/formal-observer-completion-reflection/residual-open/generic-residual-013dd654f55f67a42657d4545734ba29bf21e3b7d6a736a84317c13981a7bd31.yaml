@@ -1,0 +1,10 @@
+ast_path: section/任意观察族在有限状态上的实例
+fingerprints:
+  raw_sha256: sha256:013dd654f55f67a42657d4545734ba29bf21e3b7d6a736a84317c13981a7bd31
+  normalized_sha256: sha256:013dd654f55f67a42657d4545734ba29bf21e3b7d6a736a84317c13981a7bd31
+cas_ref: sha256:013dd654f55f67a42657d4545734ba29bf21e3b7d6a736a84317c13981a7bd31
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

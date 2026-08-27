@@ -1,0 +1,18 @@
+## Riemann 层
+
+在精确 primitive 抵消之后，使用 Mellin/Riemann 积分控制连续尾部。
+
+正确顺序是：
+
+$$
+\boxed{
+\text{先保留离散结构}
+\to
+\text{精确抵消}
+\to
+\text{最后积分完成}.
+}
+$$
+
+---
+

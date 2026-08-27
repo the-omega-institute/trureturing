@@ -1,0 +1,29 @@
+## 47.2 两变量 Hilbert Theta
+
+定义：
+
+$$
+\boxed{
+\Theta_{\mathcal H}(z_+,z_-)
+=
+\sum_{x\in W_{\max}}
+\exp\left[
+\pi i
+\left(
+z_+\sigma_+(\mathcal H[x])
++
+z_-\sigma_-(\mathcal H[x])
+\right)
+\right].
+}
+\tag{47.2}
+$$
+
+其中：
+
+$$
+(z_+,z_-)\in\mathbb H^2.
+$$
+
+不同观察限制给出不同对象：
+

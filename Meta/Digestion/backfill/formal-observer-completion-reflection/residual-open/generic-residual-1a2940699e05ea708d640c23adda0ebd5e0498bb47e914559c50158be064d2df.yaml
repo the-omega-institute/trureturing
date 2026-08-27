@@ -1,0 +1,10 @@
+ast_path: section/193-最终统一公式
+fingerprints:
+  raw_sha256: sha256:1a2940699e05ea708d640c23adda0ebd5e0498bb47e914559c50158be064d2df
+  normalized_sha256: sha256:1a2940699e05ea708d640c23adda0ebd5e0498bb47e914559c50158be064d2df
+cas_ref: sha256:1a2940699e05ea708d640c23adda0ebd5e0498bb47e914559c50158be064d2df
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

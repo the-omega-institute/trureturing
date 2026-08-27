@@ -1,0 +1,29 @@
+# 第五部　\(\pi\)：Archimedean 自对偶完成签名
+
+采用标准 Fourier 变换：
+
+$$
+\widehat f(\xi)
+=
+\int_{\mathbb R}
+f(x)e^{-2\pi i x\xi}\,dx.
+$$
+
+考虑 Gaussian 族：
+
+$$
+g_a(x)=e^{-ax^2},
+\qquad a>0.
+$$
+
+直接计算：
+
+$$
+\widehat g_a(\xi)
+=
+\sqrt{\frac{\pi}{a}}
+e^{-\pi^2\xi^2/a}.
+$$
+
+---
+

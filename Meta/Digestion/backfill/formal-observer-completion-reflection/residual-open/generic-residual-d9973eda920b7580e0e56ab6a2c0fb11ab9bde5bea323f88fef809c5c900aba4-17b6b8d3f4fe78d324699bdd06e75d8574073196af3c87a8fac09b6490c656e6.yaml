@@ -1,0 +1,10 @@
+ast_path: section/169-最小行为实现-观察者的-Nerode-型商/clause/1
+fingerprints:
+  raw_sha256: sha256:d9973eda920b7580e0e56ab6a2c0fb11ab9bde5bea323f88fef809c5c900aba4
+  normalized_sha256: sha256:d9973eda920b7580e0e56ab6a2c0fb11ab9bde5bea323f88fef809c5c900aba4
+cas_ref: sha256:d9973eda920b7580e0e56ab6a2c0fb11ab9bde5bea323f88fef809c5c900aba4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

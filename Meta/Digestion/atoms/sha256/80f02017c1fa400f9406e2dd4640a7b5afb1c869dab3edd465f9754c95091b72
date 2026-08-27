@@ -1,0 +1,14 @@
+## 结论 216.1
+
+精确 kernel 只保留零与非零。度量富化则保留完整可区分强度：
+
+$$
+\boxed{
+\text{kernel}
+=
+\text{observer metric 的零层}.
+}
+$$
+
+---
+

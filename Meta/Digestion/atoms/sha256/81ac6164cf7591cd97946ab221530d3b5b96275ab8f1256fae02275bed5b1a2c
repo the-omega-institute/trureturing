@@ -1,0 +1,33 @@
+# 第六十二部　这是 level-5 Ramanujan 图表的精确有限骨架
+
+经典同构：
+
+$$
+PSL_2(\mathbb F_5)\simeq A_5
+$$
+
+说明第二个 \(A_5^{\mathrm{mod}}\) 正是 level-5 模群的有限商。
+
+因此现在得到了一条不再依赖表面类比的桥：
+
+$$
+\boxed{
+\begin{aligned}
+\text{六维黄金格}
+&\longrightarrow
+D_L\simeq(\mathbb F_5)^3\\
+&\longrightarrow
+A_5^{\mathrm{geo}}\text{ 轨道}\\
+&\longrightarrow
+7\text{ 状态 Fourier 空间}\\
+&\longrightarrow
+A_5^{\mathrm{mod}}\simeq PSL_2(\mathbb F_5)\\
+&\longrightarrow
+1\oplus3\oplus3'.
+\end{aligned}
+}
+$$
+
+所以：
+
+* 准晶体的 \(3\oplus3'\)；

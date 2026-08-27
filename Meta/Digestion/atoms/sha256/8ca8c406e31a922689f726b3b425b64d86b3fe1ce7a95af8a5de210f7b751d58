@@ -1,0 +1,13 @@
+# 209. 旧协议重复不能穿透精确 kernel
+
+若一切新 transcript 都只是完整旧协议 law 画像的函数，则：
+
+$$
+K_{\mathrm{old}}
+\subseteq
+K_{\mathrm{transcript}}.
+$$
+
+所以以下操作不会穿透旧 kernel：
+
+* 无限重复同一实验；

@@ -1,0 +1,10 @@
+ast_path: section/211-一个极端的共同知识-联合知识分离例子/clause/2
+fingerprints:
+  raw_sha256: sha256:ab2e8bfe7a607c6a62bd1ed8e250a988bfc1995be849cf0ca7c46088ae10b957
+  normalized_sha256: sha256:ab2e8bfe7a607c6a62bd1ed8e250a988bfc1995be849cf0ca7c46088ae10b957
+cas_ref: sha256:ab2e8bfe7a607c6a62bd1ed8e250a988bfc1995be849cf0ca7c46088ae10b957
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

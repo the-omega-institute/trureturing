@@ -1,0 +1,13 @@
+## 25.1 可见与共轭空间
+
+定义：
+
+$$
+E_\parallel=M_{\sigma_+},
+\qquad
+E_\perp=M_{\sigma_-}.
+$$
+
+其中：
+
+* \(E_\parallel\) 是选择 \(\varphi>1\) 的可见嵌入；

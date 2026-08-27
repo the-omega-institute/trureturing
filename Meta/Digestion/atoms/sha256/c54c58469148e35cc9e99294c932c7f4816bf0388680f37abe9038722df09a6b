@@ -1,0 +1,4 @@
+## 结论四：posterior 通常不是最小 observer state
+
+posterior 是充分坐标；最小状态还要继续模去对所有可用未来协议都无差别的 posterior。
+

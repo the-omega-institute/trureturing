@@ -1,0 +1,10 @@
+ast_path: section/26-1-五个根的一阶中心化状态
+fingerprints:
+  raw_sha256: sha256:a467f7452b59489c61f51c1bbdd1ee64a2470dfd05c72f0c0e08c058978bd4d6
+  normalized_sha256: sha256:a467f7452b59489c61f51c1bbdd1ee64a2470dfd05c72f0c0e08c058978bd4d6
+cas_ref: sha256:a467f7452b59489c61f51c1bbdd1ee64a2470dfd05c72f0c0e08c058978bd4d6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

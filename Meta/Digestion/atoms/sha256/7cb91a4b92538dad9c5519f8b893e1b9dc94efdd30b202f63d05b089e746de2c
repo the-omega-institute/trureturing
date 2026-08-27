@@ -1,0 +1,108 @@
+# 175. Posterior、未来行为状态与 self 的严格层级
+
+设历史空间为：
+
+$$
+\mathcal H.
+$$
+
+posterior：
+
+$$
+\pi:
+\mathcal H\to\mathsf{Prob}(\Theta).
+$$
+
+完整未来实验行为：
+
+$$
+\Sigma_{\mathrm{fut}}:
+\mathcal H\to B_{\mathrm{fut}}.
+$$
+
+策略画像：
+
+$$
+\Sigma_{\mathrm{act}}:
+\mathcal H\to B_{\mathrm{act}}.
+$$
+
+仓库已证明：在 Bayes update 与 kernel 一致时，相同 posterior 保证所有 belief-adaptive 有限未来输出 law 以及递归 Bayes continuation value 相同。
+
+更一般的可测版本证明，相同 belief 对任意未来 policy 和任意 Bayes 决策问题产生相同最优值。
+
+因此存在因子：
+
+$$
+F:
+\operatorname{range}\pi
+\to
+B_{\mathrm{fut}}
+$$
+
+满足：
+
+$$
+\Sigma_{\mathrm{fut}}
+=
+F\circ\pi.
+$$
+
+所以：
+
+$$
+\boxed{
+K_\pi
+\subseteq
+K_{\mathrm{fut}}.
+}
+$$
+
+若策略进一步只依赖 posterior：
+
+$$
+\Sigma_{\mathrm{act}}
+=
+G\circ\pi,
+$$
+
+则：
+
+$$
+\boxed{
+K_\pi
+\subseteq
+K_{\mathrm{act}}.
+}
+$$
+
+于是形成：
+
+$$
+\boxed{
+\mathcal H
+\xrightarrow{\pi}
+\operatorname{range}\pi
+\twoheadrightarrow
+Q_{\mathrm{fut}}
+\twoheadrightarrow
+M_{\mathrm{self}}.
+}
+$$
+
+其中：
+
+$$
+Q_{\mathrm{fut}}
+=
+\mathcal H/K_{\mathrm{fut}},
+$$
+
+$$
+M_{\mathrm{self}}
+=
+\mathcal H/K_{\mathrm{act}}.
+$$
+
+这带来两个重要结论。
+

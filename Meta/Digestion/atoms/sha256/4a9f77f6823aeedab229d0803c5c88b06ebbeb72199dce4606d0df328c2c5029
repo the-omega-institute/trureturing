@@ -1,0 +1,66 @@
+## 定理 14.1：Golden 谱 ζ 完成
+
+定义：
+
+$$
+Z_\varphi(s)
+=
+\sum_{n\ge1}\beta(n)^{-s}.
+$$
+
+则：
+
+$$
+\boxed{
+Z_\varphi(s)
+\text{ 亚纯延拓到 }
+\Re(s)>0,
+}
+$$
+
+且：
+
+$$
+\boxed{
+\operatorname*{Res}_{s=1}Z_\varphi(s)
+=
+\frac1{\sqrt5}.
+}
+$$
+
+这里：
+
+$$
+\boxed{
+\varphi=\text{递归排列尺度},
+\qquad
+\frac1{\sqrt5}=\text{连续平均密度}.
+}
+$$
+
+这与项目已有的 Golden Euler prime product 不同：前者是指数谱 ζ，后者是再对全部素数形成的 Euler product。
+
+项目已经证明 Golden germ 的第一个局部主模式可抽取为：
+
+$$
+\zeta(\varphi^2s),
+$$
+
+并将归一化余乘积的绝对收敛域推进到：
+
+$$
+\Re(s)>\frac1{\varphi^3}.
+$$
+
+因此下一层研究是：
+
+$$
+\boxed{
+\text{Golden 谱的 Mellin 反项}
+\quad+\quad
+\text{Golden Euler product 的 Witt/ζ 反项}.
+}
+$$
+
+---
+

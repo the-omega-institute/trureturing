@@ -1,0 +1,12 @@
+## 推论 212.1（秩一致）
+
+$$
+\boxed{
+\operatorname{rank}W_X
+=
+\operatorname{rank}M
+=
+\operatorname{rank}W_P.
+}
+$$
+

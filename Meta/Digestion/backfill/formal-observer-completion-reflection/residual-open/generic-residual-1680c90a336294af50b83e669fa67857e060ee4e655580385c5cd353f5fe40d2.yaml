@@ -1,0 +1,10 @@
+ast_path: section/227-2-动力完成
+fingerprints:
+  raw_sha256: sha256:1680c90a336294af50b83e669fa67857e060ee4e655580385c5cd353f5fe40d2
+  normalized_sha256: sha256:1680c90a336294af50b83e669fa67857e060ee4e655580385c5cd353f5fe40d2
+cas_ref: sha256:1680c90a336294af50b83e669fa67857e060ee4e655580385c5cd353f5fe40d2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

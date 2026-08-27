@@ -1,0 +1,81 @@
+# 182. 新推论：平均观察深度的熵下界
+
+上一节是最坏情形界。统一协议理论还能推出平均情形界。
+
+设目标随机变量为：
+
+$$
+Z=T(X)
+$$
+
+并具有先验分布。
+
+设一个零错误自适应 \(B\)-叉协议在随机停止时间 \(\tau\) 终止，其叶 transcript 为 \(W\)。
+
+因为协议能从 \(W\) 唯一恢复 \(Z\)：
+
+$$
+H(Z\mid W)=0.
+$$
+
+所以：
+
+$$
+H(Z)\le H(W).
+$$
+
+而 \(B\)-叉前缀树的叶编码满足：
+
+$$
+H(W)
+\le
+\mathbb E[\tau]\log B.
+$$
+
+因此：
+
+$$
+\boxed{
+\mathbb E[\tau]
+\ge
+\frac{H(Z)}{\log B}.
+}
+$$
+
+这说明：
+
+$$
+\boxed{
+\text{自适应策略可以靠先验不均匀降低平均深度，}
+\text{但不能低于目标熵所要求的平均信息预算}.
+}
+$$
+
+若允许错误概率 \(\varepsilon\)，结合 Fano 型界可得到：
+
+$$
+\boxed{
+\mathbb E[\tau]\log B
+\ge
+H(Z)
+-
+h_2(\varepsilon)
+-
+\varepsilon\log(|Z|-1).
+}
+$$
+
+这会自然连接仓库已有的：
+
+* worst-case depth；
+* adaptive early stopping；
+* posterior；
+* mutual information；
+* Bayes risk；
+
+形成一个统一的**观察编码定理**。
+
+该平均深度结论目前是 paper-level 推论，不应在建立相应 prefix-code 与随机停止形式化前标记为 Lean-closed。
+
+---
+

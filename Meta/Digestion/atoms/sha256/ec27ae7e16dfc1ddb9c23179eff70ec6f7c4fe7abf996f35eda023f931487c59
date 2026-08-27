@@ -1,0 +1,47 @@
+## 定理 2.1：定义完成点等价于逃逸清零
+
+$$
+\boxed{
+\Delta_{q,T}(a)=0
+\iff
+T\text{ 可由 }q\vee d_a\text{ 决定}.
+}
+$$
+
+### 证明
+
+由忠实性：
+
+$$
+\Delta_{q,T}(a)=0
+\iff
+\mathcal E(q\vee d_a;T)=\varnothing.
+$$
+
+而 DECT 的充分性—逃逸等价说明：
+
+$$
+\mathcal E(q\vee d_a;T)=\varnothing
+$$
+
+当且仅当 \(T\) 在每个 \((q\vee d_a)\)-纤维上为常值，即 \(T\) 通过联合读数因子化。∎
+
+因此一个常数可以由以下过程产生：
+
+$$
+\boxed{
+\kappa
+=
+\operatorname*{arg\,min}_{a}
+\left[
+\Delta_{q,T}(a)
++
+\lambda\,\operatorname{Cost}(d_a)
+\right].
+}
+$$
+
+当存在唯一的低成本、非泄漏参数将逃逸清零时，\(\kappa\) 就具有可审计的结构意义。
+
+---
+

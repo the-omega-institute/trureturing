@@ -1,0 +1,45 @@
+* 对证明系统的编码；
+
+则没有理由要求 completion 在有限步停止。
+
+定义协议语法生成器：
+
+$$
+G(P)
+=
+P\cup
+\{\text{由 }P\text{ 可构造的新协议}\}.
+$$
+
+统一完成：
+
+$$
+P^*
+=
+\operatorname{lfp}G.
+$$
+
+有限阶段：
+
+$$
+P_{n+1}=G(P_n).
+$$
+
+极限阶段：
+
+$$
+P_\lambda
+=
+\bigcup_{\alpha<\lambda}P_\alpha.
+$$
+
+所以超限 completion 不是神秘递归，而是：
+
+$$
+\boxed{
+\text{在开放协议语法下寻找最小固定点}.
+}
+$$
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/222-近似观察者-kernel-应升级为伪度量/clause/2
+fingerprints:
+  raw_sha256: sha256:367bdcc3b7417ac049f0d431b7639ff5eebdb80f878dd350d146e2322959cf9f
+  normalized_sha256: sha256:367bdcc3b7417ac049f0d431b7639ff5eebdb80f878dd350d146e2322959cf9f
+cas_ref: sha256:367bdcc3b7417ac049f0d431b7639ff5eebdb80f878dd350d146e2322959cf9f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

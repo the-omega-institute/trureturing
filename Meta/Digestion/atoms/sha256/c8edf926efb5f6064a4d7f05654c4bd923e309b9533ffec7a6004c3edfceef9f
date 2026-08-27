@@ -1,0 +1,28 @@
+## 175.2 Self 不是完整 belief
+
+self 只保留 belief／history 中会改变未来策略的部分：
+
+$$
+\boxed{
+\text{self}
+=
+\text{policy-relevant quotient of belief and history}.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{world}
+\neq
+\text{belief}
+\neq
+\text{predictive state}
+\neq
+\text{self}.
+}
+$$
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/第二-kernel-和-image-是两种完全不同的不完备
+fingerprints:
+  raw_sha256: sha256:d460686e3a7e4480599eb492e385ee527fa76292624c7f7c4ede12683aebe3c5
+  normalized_sha256: sha256:d460686e3a7e4480599eb492e385ee527fa76292624c7f7c4ede12683aebe3c5
+cas_ref: sha256:d460686e3a7e4480599eb492e385ee527fa76292624c7f7c4ede12683aebe3c5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

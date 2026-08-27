@@ -1,0 +1,19 @@
+# 第三十二部　黄金阿代尔完成签名
+
+黄金结构的局部账本并不只有一个素数。
+
+定义：
+
+$$
+\boxed{
+\mathfrak S_{\mathrm{gold}}
+=
+\left(
+\infty_+,
+\infty_-;
+2_{\mathrm{cond}},
+5_{\mathrm{disc}}
+\right).
+}
+$$
+

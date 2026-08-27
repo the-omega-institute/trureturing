@@ -1,0 +1,17 @@
+## 36.4 RH 桥仍然开放
+
+要作用于 RH，必须证明某个由 level-5／黄金六维结构生成的测试函数族对离线 ζ 零点是充分的：
+
+$$
+\boxed{
+\rho\notin\{\Re s=1/2\}
+\Longrightarrow
+\exists g\in\mathcal G_{\mathrm{gold},5},
+\quad
+Q_W(g)<0.
+}
+$$
+
+在没有这一观察充分性定理之前，六维准晶体只能作为：
+
+* 观察者完备性的严格模型；

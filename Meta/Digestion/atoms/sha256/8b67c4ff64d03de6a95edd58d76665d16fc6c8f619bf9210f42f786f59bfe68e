@@ -1,0 +1,31 @@
+## 210.2 共同知识
+
+定义主体可达关系的等价闭包：
+
+$$
+K_{\mathrm{common}}
+=
+\operatorname{EqClosure}
+\left(
+\bigcup_iK_i
+\right).
+$$
+
+共同知识函数必须沿每个主体的不可区分边，以及所有这些边的有限链保持不变：
+
+$$
+\mathcal A_{\mathrm{common}}
+=
+\operatorname{Obs}(K_{\mathrm{common}}).
+$$
+
+有：
+
+$$
+\boxed{
+\mathcal A_{\mathrm{common}}
+=
+\bigcap_i\mathcal A_i.
+}
+$$
+

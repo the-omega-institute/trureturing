@@ -1,0 +1,22 @@
+### 模／Fourier \(A_5^{\mathrm{mod}}\)
+
+由：
+
+$$
+S=-\text{finite Fourier},
+\qquad
+T=\text{quadratic phase}
+$$
+
+生成，作用于：
+
+$$
+\mathbb C[R]^{A_5^{\mathrm{geo}}}.
+$$
+
+因为 Fourier 和二次相位与正交群作用相容，两套作用形成有限 Weil 双对结构。
+
+有限判别式模上的 Weil 表示能够分解为各素数局部部分，是标准的 \(p\)-adic Weil 表示框架。([arXiv][3])
+
+---
+

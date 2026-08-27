@@ -1,0 +1,10 @@
+ast_path: section/224-随机-instrument-的预测状态完成
+fingerprints:
+  raw_sha256: sha256:490c982c308721385151995eb226551b78be02e9daea71b6a29cdef41315420c
+  normalized_sha256: sha256:490c982c308721385151995eb226551b78be02e9daea71b6a29cdef41315420c
+cas_ref: sha256:490c982c308721385151995eb226551b78be02e9daea71b6a29cdef41315420c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

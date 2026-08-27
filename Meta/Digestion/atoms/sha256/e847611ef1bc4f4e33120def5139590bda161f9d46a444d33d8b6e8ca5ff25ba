@@ -1,0 +1,23 @@
+## 定义 240.3（概率上下文性）
+
+即使存在某些支持相容赋值，也可能不存在任何全局概率分布的凸组合重现全部上下文概率。
+
+因此：
+
+$$
+\text{strong contextuality}
+\Longrightarrow
+\text{probabilistic contextuality},
+$$
+
+反向不必成立。
+
+这对应两种 image defect：
+
+* 支持层的全局截面为空；
+* 概率层的全局凸实现为空。
+
+Bell 非局域性可以视为增加空间分离和局域因子约束后的特殊上下文 image defect，但一般上下文性并不要求空间分离。
+
+---
+

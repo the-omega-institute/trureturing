@@ -1,0 +1,22 @@
+### 证明
+
+函数若在每个 \(K_i\) 上常值，就在其并及等价闭包上常值。
+
+反向显然。证毕。
+
+因此：
+
+$$
+\boxed{
+\mathcal A_{\mathrm{common}}
+\subseteq
+\mathcal A_i
+\subseteq
+\mathcal A_{\mathrm{pool}}.
+}
+$$
+
+共同知识是**交**，联合知识是**join**。
+
+---
+

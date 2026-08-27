@@ -1,0 +1,32 @@
+# 第十六部　prime-deleted Lambert–Mellin 观察者
+
+对整数 \(r>1\)，定义去掉素数 \(p\) 的除数和：
+
+$$
+\sigma_{-r}^{(p)}(n)
+=
+\sum_{\substack{d\mid n\\p\nmid d}}d^{-r}.
+$$
+
+定义 Lambert 热核：
+
+$$
+\boxed{
+\mathcal L_{p,r}(t)
+=
+\sum_{n\ge1}
+\sigma_{-r}^{(p)}(n)e^{-nt}.
+}
+$$
+
+交换除数求和：
+
+$$
+\mathcal L_{p,r}(t)
+=
+\sum_{\substack{d\ge1\\p\nmid d}}
+\frac{d^{-r}}{e^{dt}-1}.
+$$
+
+---
+
