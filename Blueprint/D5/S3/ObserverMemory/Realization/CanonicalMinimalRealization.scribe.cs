@@ -19,6 +19,8 @@ internal sealed class CanonicalMinimalRealizationDocument : IScribeDocumentDefin
         Formula nu = F.Id("nu");
         Formula readout = F.Id("o");
         Formula pi = F.Id("pi");
+        Formula hcommute = F.Id("hcommute");
+        Formula hreadout = F.Id("hreadout");
         Formula type = Seq(Operatorname, Grp(F.Id("Type")));
         Formula rOfX = new Formula.Apply(r, [x]);
         Formula fOfX = new Formula.Apply(f, [x]);
@@ -35,7 +37,7 @@ internal sealed class CanonicalMinimalRealizationDocument : IScribeDocumentDefin
         Formula rangeFactorR = new Formula.Apply(
             Seq(Operatorname, Grp(F.Id("rangeFactorization"))), [r]);
         Formula reachableUpdate = new Formula.Apply(
-            Seq(Operatorname, Grp(F.Id("reachableUpdate"))), [r, nu]);
+            Seq(Operatorname, Grp(F.Id("reachableUpdate"))), [f, r, nu, hcommute]);
         Formula shift = F.Id("shift");
 
         Formula invariantStatement = Disp(Seq(
@@ -58,10 +60,10 @@ internal sealed class CanonicalMinimalRealizationDocument : IScribeDocumentDefin
             r, Colon, Sp, new Formula.TypeArrow(xType, stateType), Comma, RowBreak,
             Grp(), nu, Colon, Sp, new Formula.TypeArrow(stateType, stateType), Comma, Sp,
             readout, Colon, Sp, new Formula.TypeArrow(stateType, outputType), Comma, RowBreak,
-            Grp(), Open, Forall, Sp, x, Comma, Sp,
-            rOfFOfX, Sp, Eq, Sp, nuOfRofX, Close, Sp, Land, Sp,
-            Open, Forall, Sp, x, Comma, Sp,
-            qOfX, Sp, Eq, Sp, oOfRofX, Close, Sp, Rightarrow, RowBreak,
+            Grp(), hcommute, Colon, Sp, Forall, Sp, x, Colon, Sp, xType, Comma, Sp,
+            rOfFOfX, Sp, Eq, Sp, nuOfRofX, Comma, RowBreak,
+            Grp(), hreadout, Colon, Sp, Forall, Sp, x, Colon, Sp, xType, Comma, Sp,
+            qOfX, Sp, Eq, Sp, oOfRofX, Comma, RowBreak,
             Grp(), bq, Sp, Eq, Sp,
             new Formula.Apply(Seq(Operatorname, Grp(F.Id("completeItinerary"))), [f, q]),
             Comma, Sp, zq, Sp, Eq, Sp, rangeBq, Comma, RowBreak,

@@ -12,6 +12,6 @@ receipts:
       target_sha256: sha256:c49cfc5eb1ef9cc337b349f1aea1c131bc8d368009659f131456910348a577b5
   scribe:
     - gid: D5/S3/ConceptDynamics/Transport/MacroInterventionCriterion.macro_intervention_carry_criterion
-      definition_sha256: sha256:eb99291671c7ec45231a00463b5289e8429f0f7fb1a03533aaaf3cd4026b9fb9
-      emission_sha256: sha256:2c264146a1ae2edf414b746d48ffa70f9bc058aa62af38ab2de95eaf8d5fa6e5
+      definition_sha256: sha256:c87c007fa779cf4fec004a537b3b82e5b8e9b1a93ae46c374637ca098dd3896e
+      emission_sha256: sha256:ac8ec9e092c87e3d45fc555ca8ceb13612f3ffe05a3389aa7726efa2c6e0d4f0
   unresolved_subitems: []

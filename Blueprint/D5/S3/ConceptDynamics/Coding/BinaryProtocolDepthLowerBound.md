@@ -6,7 +6,7 @@ Identifying a target by adaptive binary questions requires logarithmic fiber dep
 
 **Theorem 1.1 (Binary identification depth is bounded below by fiber diversity).**
 
-$$\begin{gathered}\forall X, C, Target,\\{}[\operatorname{Fintype}(X)] [\operatorname{Fintype}(C)],\\{}c: X \to C, t: X \to Target,\\{}d \in \mathbb{N}, pi: \operatorname{BinaryProtocol}(X, d),\\{}\operatorname{IdentifiesGiven}(c, t, pi) \implies\\{}\operatorname{clog}(2, \operatorname{worstFiberDiversity}(c, t)) \leq d.\end{gathered}$$
+$$\begin{gathered}\forall X, C, Target: \operatorname{Type},\\{}[\operatorname{Fintype}(X)], [\operatorname{Fintype}(C)],\\{}c: \operatorname{Concept}(X, C), t: \operatorname{Concept}(X, Target),\\{}d: \mathbb{N}, pi: \operatorname{BinaryProtocol}(X, d),\\{}identifies: \operatorname{IdentifiesGiven}(c, t, pi),\\{}\operatorname{clog}(2, \operatorname{worstFiberDiversity}(c, t)) \leq d.\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/BinaryProtocolDepthLowerBound.adaptive_binary_protocol_depth_lower_bound` (`✓ std3`). ∎
 

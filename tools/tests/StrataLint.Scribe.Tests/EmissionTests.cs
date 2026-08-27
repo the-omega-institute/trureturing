@@ -683,6 +683,14 @@ public sealed class EmissionTests
             var reportDestination = Path.Combine(destinationRoot, rawReport);
             TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(reportDestination)!);
             repository.CopyTo(rawReportPath, reportDestination, overwrite: true);
+            var materialArchive = RepositoryRelativePath.Create(rawReport + ".materials.zip");
+            if (repository.FileExists(materialArchive))
+            {
+                repository.CopyTo(
+                    materialArchive,
+                    reportDestination + ".materials.zip",
+                    overwrite: true);
+            }
         }
     }
 }

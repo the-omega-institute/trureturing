@@ -19,11 +19,13 @@ public sealed class LeanReportPairScriptTests
     public void SingleProductionWritesOneVerifiedCandidateBundle()
     {
         using var fixture = new LeanReportPairFixture();
+        fixture.SeedLegacyCandidateMaterials();
 
         var result = fixture.Run();
 
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
         Assert.Equal(1, fixture.ProducerInvocationCount);
+        Assert.False(fixture.CandidateLegacyMaterialsExist);
         using var candidate = fixture.ReadCandidateProvenance();
         Assert.Equal("candidate", candidate.RootElement.GetProperty("side").GetString());
         Assert.Equal("produced", candidate.RootElement.GetProperty("mode").GetString());
@@ -262,6 +264,9 @@ public sealed class LeanReportPairScriptTests
         internal bool CandidateLogExists =>
             Directory.Exists(candidateReport + ".logs");
 
+        internal bool CandidateLegacyMaterialsExist =>
+            Directory.Exists(candidateReport + ".materials");
+
         internal string ProducerPerformanceConfiguration =>
             File.ReadAllText(producerPerformanceConfigurationLog).Trim();
 
@@ -297,6 +302,9 @@ public sealed class LeanReportPairScriptTests
 
         internal void AppendProducerComment() =>
             File.AppendAllText(producer, "\n# producer mutation\n", new UTF8Encoding(false));
+
+        internal void SeedLegacyCandidateMaterials() =>
+            Directory.CreateDirectory(Path.Combine(candidateReport + ".materials", "sha256"));
 
         internal JsonDocument ReadCandidateProvenance() =>
             JsonDocument.Parse(File.ReadAllBytes(candidateReport + ".provenance.json"));
@@ -404,6 +412,7 @@ public sealed class LeanReportPairScriptTests
             printf '%s\n' "$((count + 1))" > "$count_file"
             printf '%s\n' "${STRATALINT_PERF_CONFIGURATION-}" > "$STUB_PERF_CONFIGURATION_LOG"
             mkdir -p "$(dirname "$output")"
+            printf '%s\n' 'stub material archive' > "${output}.materials.zip"
             source_hash="$(openssl dgst -sha256 "$repository/Trureturing.lean" | awk '{print $NF}')"
             printf '{"source_sha256":"%s"}\n' "$source_hash" > "$output"
             report_hash="$(openssl dgst -sha256 "$output" | awk '{print $NF}')"

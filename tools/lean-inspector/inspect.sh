@@ -13,6 +13,8 @@ PERF_TMP=""
 PERF_EVENT_SPOOL=""
 PERF_RUN_ID=""
 PERF_BASE="unknown"
+MATERIAL_SPOOL=""
+SPOOL_REPORT=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -47,7 +49,7 @@ if [[ "$OUTPUT" != /* ]]; then OUTPUT="$REPOSITORY/$OUTPUT"; fi
 if [[ -z "$LOG_DIR" ]]; then LOG_DIR="${OUTPUT}.logs"; fi
 if [[ "$LOG_DIR" != /* ]]; then LOG_DIR="$REPOSITORY/$LOG_DIR"; fi
 mkdir -p "$(dirname "$OUTPUT")" "$LOG_DIR"
-rm -f "$OUTPUT" "${OUTPUT}.sha256"
+rm -rf -- "$OUTPUT" "${OUTPUT}.sha256" "${OUTPUT}.materials" "${OUTPUT}.materials.zip"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 INSPECTOR="$SCRIPT_DIR/Inspector.lean"
@@ -93,6 +95,8 @@ finish_inspector() {
   [[ -z "$MODULE_TABLE" ]] || rm -f -- "$MODULE_TABLE"
   [[ -z "$DELTA_PLAN" ]] || rm -f -- "$DELTA_PLAN"
   [[ -z "$DELTA_SUBSET_OUTPUT" ]] || rm -f -- "$DELTA_SUBSET_OUTPUT"
+  [[ -z "$MATERIAL_SPOOL" ]] || rm -rf -- "$MATERIAL_SPOOL"
+  [[ -z "$SPOOL_REPORT" ]] || rm -f -- "$SPOOL_REPORT"
   exit "$rc"
 }
 trap finish_inspector EXIT
@@ -179,6 +183,12 @@ append_module() {
 invoke_inspector() {
   local output="$1"
   local selection_file="${2:-}"
+  local compactor="$INSPECTOR_DIR/materials.py"
+  [[ -r "$compactor" ]] || { echo "inspect.sh: material compactor is absent: $compactor" >&2; return 2; }
+  SPOOL_REPORT="${output}.spool.json"
+  MATERIAL_SPOOL="${output}.material-spool"
+  rm -rf -- "$SPOOL_REPORT" "$MATERIAL_SPOOL" "${output}.materials" "${output}.materials.zip"
+  mkdir -p "$MATERIAL_SPOOL"
   inspector_arguments=()
   while IFS=$'\t' read -r module path; do
     if [[ -n "$selection_file" ]] \
@@ -189,8 +199,14 @@ invoke_inspector() {
   done < "$MODULE_TABLE"
   [[ "${#inspector_arguments[@]}" -gt 0 ]] || return 2
   run_phase inspect \
-    "$CACHE_RUN" "$LAKE" env lean --run "$INSPECTOR" --output "$output" \
+    "$CACHE_RUN" "$LAKE" env lean --run "$INSPECTOR" \
+    --output "$SPOOL_REPORT" --material-spool "$MATERIAL_SPOOL" \
     "${inspector_arguments[@]}"
+  run_phase compact python3 "$compactor" compact \
+    "$SPOOL_REPORT" "$MATERIAL_SPOOL" "$output"
+  rm -rf -- "$SPOOL_REPORT" "$MATERIAL_SPOOL"
+  SPOOL_REPORT=""
+  MATERIAL_SPOOL=""
 }
 
 DELTA_SCRIPT="$INSPECTOR_DIR/delta.py"
@@ -332,6 +348,7 @@ fi
 if [[ "$delta_status" == "delta" || "$delta_status" == "reuse" ]]; then
   if [[ "$delta_status" == "reuse" ]]; then
     cp "$delta_baseline" "$OUTPUT"
+    cp "${delta_baseline}.materials.zip" "${OUTPUT}.materials.zip"
   elif ! python3 "$DELTA_SCRIPT" merge \
       "$DELTA_PLAN" "$DELTA_SUBSET_OUTPUT" "$OUTPUT"; then
     delta_status="full-fallback"
@@ -339,7 +356,7 @@ if [[ "$delta_status" == "delta" || "$delta_status" == "reuse" ]]; then
 fi
 
 if [[ "$delta_status" == "full-fallback" ]]; then
-  rm -f -- "$DELTA_SUBSET_OUTPUT"
+  rm -rf -- "$DELTA_SUBSET_OUTPUT" "${DELTA_SUBSET_OUTPUT}.materials.zip"
   invoke_inspector "$OUTPUT"
 fi
 
@@ -348,6 +365,8 @@ printf 'LEAN_REPORT_DELTA mode=%s changed=%s added=%s removed=%s recheck=%s\n' \
   "$delta_removed_count" "$delta_recheck_count"
 
 [[ -s "$OUTPUT" ]] || { echo "inspect.sh: producer left no report at $OUTPUT" >&2; exit 2; }
+[[ -f "${OUTPUT}.materials.zip" ]] \
+  || { echo "inspect.sh: producer left no material archive at ${OUTPUT}.materials.zip" >&2; exit 2; }
 serialize_started="$(date +%s)"
 serialize_rc=0
 report_sha256=""
