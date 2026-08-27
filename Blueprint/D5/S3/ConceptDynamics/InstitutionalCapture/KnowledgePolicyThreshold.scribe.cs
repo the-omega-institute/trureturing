@@ -47,24 +47,63 @@ internal sealed class KnowledgePolicyThresholdDocument : IScribeDocumentDefiniti
     private static Formula Apply(string name, params Formula[] arguments) =>
         Call(name, arguments);
 
+    private static Formula Arrow(Formula domain, Formula codomain) =>
+        new Formula.TypeArrow(domain, codomain);
+
+    private static Formula Typeclass(string name, Formula type) =>
+        Seq(OpenBracket, Operatorname, Grp(F.Id(name)), Open, type, Close, CloseBracket);
+
     private static Formula ThresholdFormula()
     {
+        Formula participantType = F.Id("I");
+        Formula stateType = F.Id("X");
+        Formula shareType = F.Id("V");
+        Formula secretType = F.Id("B");
+        Formula policyType = F.Id("U");
         Formula share = F.Id("share");
         Formula secret = F.Id("secret");
         Formula policy = F.Id("policy");
         Formula policyFactor = F.Id("policyFactor");
         Formula fullRecovery = F.Id("fullRecovery");
-        Formula coalition = F.Id("coalition");
-        Formula policyMinimum = Apply("minimumCoalitionSize",
-            Apply("Refines", policy, Apply("coalitionReadout", share, coalition)));
-        Formula secretMinimum = Apply("minimumCoalitionSize",
-            Apply("Refines", secret, Apply("coalitionReadout", share, coalition)));
+        Formula coalition = F.Id("K");
+        Formula policyMap = F.Id("policyMap");
+        Formula type = F.Id("Type");
+        Formula finsetI = Apply("Finset", participantType);
+        Formula coalitionReadout = Apply("coalitionReadout", share, coalition);
+        Formula policyFactorLaw = Seq(
+            Exists, Sp, policyMap, Colon, Sp, Arrow(secretType, policyType), Comma, Sp,
+            policy, Sp, Eq, Sp, policyMap, Sp, Circ, Sp, secret, Sp, Land, Sp,
+            Apply("InjOn", policyMap, Apply("range", secret)));
+        Formula fullRecoveryLaw = Apply(
+            "Refines",
+            secret,
+            Apply(
+                "coalitionReadout",
+                share,
+                Seq(Open, F.Id("univ"), Colon, Sp, finsetI, Close)));
+        Formula policyMinimum = Apply(
+            "minimumCoalitionSize",
+            Grp(
+                Lambda, Sp, coalition, Colon, Sp, finsetI, Comma, Sp,
+                Apply("Refines", policy, coalitionReadout)));
+        Formula secretMinimum = Apply(
+            "minimumCoalitionSize",
+            Grp(
+                Lambda, Sp, coalition, Colon, Sp, finsetI, Comma, Sp,
+                Apply("Refines", secret, coalitionReadout)));
 
         return Disp(Seq(
-            Forall, Sp, share, Comma, Sp,
-            Forall, Sp, secret, Comma, Sp,
-            Forall, Sp, policy, Comma, Sp,
-            policyFactor, Sp, Land, Sp, fullRecovery, Sp, Rightarrow, Sp,
+            Forall, Sp,
+            participantType, Comma, Sp, stateType, Comma, Sp, shareType, Comma, Sp,
+            secretType, Comma, Sp, policyType, Colon, Sp, type, Comma, Esc,
+            Typeclass("Fintype", participantType), Comma, Sp,
+            Typeclass("DecidableEq", participantType), Comma, Sp,
+            Typeclass("Nonempty", secretType), Comma, Esc,
+            share, Colon, Sp, Arrow(participantType, Arrow(stateType, shareType)), Comma, Sp,
+            secret, Colon, Sp, Apply("Concept", stateType, secretType), Comma, Sp,
+            policy, Colon, Sp, Apply("Concept", stateType, policyType), Comma, Esc,
+            policyFactor, Colon, Sp, Grp(policyFactorLaw), Comma, Esc,
+            fullRecovery, Colon, Sp, fullRecoveryLaw, Comma, Esc,
             policyMinimum, Sp, Eq, Sp, secretMinimum, Dot));
     }
 }

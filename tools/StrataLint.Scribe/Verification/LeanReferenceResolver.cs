@@ -63,8 +63,9 @@ public static class LeanReferenceResolver
                 + "but the compiled report contains sorryAx.");
         }
 
-        if (string.IsNullOrWhiteSpace(declaration.TypeRepresentation)
-            || declaration.TypeRepresentation.IndexOfAny(['\r', '\n', '`']) >= 0)
+        var typeRepresentation = declaration.LoadTypeRepresentation();
+        if (string.IsNullOrWhiteSpace(typeRepresentation)
+            || typeRepresentation.IndexOfAny(['\r', '\n', '`']) >= 0)
         {
             throw new InvalidOperationException(
                 $"Lean declaration {reference.Value} has a malformed compiled TypeRepresentation.");

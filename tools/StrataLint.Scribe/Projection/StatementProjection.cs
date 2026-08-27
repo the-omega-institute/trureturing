@@ -472,7 +472,10 @@ internal static class StatementProjectionFixtureLoader
             var candidate = JsonDocument.Parse(File.ReadAllBytes(reportPath));
             if (candidate.RootElement.ValueKind != JsonValueKind.Object
                 || !candidate.RootElement.TryGetProperty("modules", out var modules)
-                || modules.ValueKind != JsonValueKind.Array)
+                || modules.ValueKind != JsonValueKind.Array
+                || !candidate.RootElement.TryGetProperty("schema", out var schema)
+                || schema.ValueKind != JsonValueKind.String
+                || schema.GetString() != RawLeanReportArtifact.Schema)
             {
                 candidate.Dispose();
                 return false;
@@ -660,14 +663,26 @@ internal static class StatementProjectionFixtureLoader
         if (File.Exists(reportPath) && TryReadModules(reportPath, out var reportDocument))
         {
             using var report = reportDocument;
-            foreach (var declaration in report.RootElement.GetProperty("modules").EnumerateArray()
-                         .SelectMany(static module => module.GetProperty("declarations").EnumerateArray()))
+            var reportDeclarations = report.RootElement.GetProperty("modules").EnumerateArray()
+                .SelectMany(static module => module.GetProperty("declarations").EnumerateArray())
+                .Select(static declaration =>
+                {
+                    var name = declaration.GetProperty("name").GetString()!;
+                    var address = declaration.GetProperty("type_sha256").GetString()
+                        ?? throw new FormatException($"Raw Lean report has a null type address: {name}");
+                    var kind = declaration.TryGetProperty("kind", out var kindElement)
+                        ? kindElement.GetString() ?? "unknown" : "unknown";
+                    return (Name: name, Address: address, Kind: kind);
+                })
+                .ToArray();
+            var loadMaterial = RawLeanReportArtifact.OpenStatementMaterialSource(
+                reportPath,
+                reportDeclarations.Select(static declaration => declaration.Address));
+            foreach (var declaration in reportDeclarations)
             {
-                var name = declaration.GetProperty("name").GetString()!;
-                var statement = declaration.GetProperty("type").GetString()!;
-                var kind = declaration.TryGetProperty("kind", out var kindElement)
-                    ? kindElement.GetString() ?? "unknown" : "unknown";
-                declarations[name] = new StatementEntry(statement, kind);
+                declarations[declaration.Name] = new StatementEntry(
+                    declaration.Kind,
+                    () => loadMaterial(declaration.Address));
             }
         }
         return declarations.ToImmutable();
@@ -688,4 +703,24 @@ internal static class StatementProjectionFixtureLoader
     }
 }
 
-internal sealed record StatementEntry(string Type, string Kind);
+internal sealed class StatementEntry
+{
+    private readonly string? inlineType;
+    private readonly Lazy<string>? material;
+
+    internal StatementEntry(string type, string kind) =>
+        (inlineType, Kind) = (type, kind);
+
+    internal StatementEntry(string kind, Func<string> loadMaterial)
+    {
+        Kind = kind;
+        material = new Lazy<string>(
+            loadMaterial ?? throw new ArgumentNullException(nameof(loadMaterial)),
+            LazyThreadSafetyMode.ExecutionAndPublication);
+    }
+
+    internal string Type => inlineType ?? material?.Value
+        ?? throw new InvalidDataException("Statement projection has no material source.");
+
+    internal string Kind { get; }
+}

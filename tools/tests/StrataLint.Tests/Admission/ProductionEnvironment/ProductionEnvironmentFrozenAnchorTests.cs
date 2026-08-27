@@ -675,11 +675,10 @@ public sealed partial class ProductionEnvironmentTests
     private static string WriteCandidateReport(TemporaryDirectory temporary, RuleFixture fixture)
     {
         var candidateReport = Path.Combine(temporary.Path, "candidate.json");
-        File.WriteAllBytes(
+        RawLeanReportArtifact.WriteFile(
             candidateReport,
-            RawLeanReportArtifact.Write(
-                Decode(Snapshot(fixture.Files)),
-                LeanAxiomReport.Create(fixture.Reports)).AsSpan());
+            Decode(Snapshot(fixture.Files)),
+            LeanAxiomReport.Create(fixture.Reports));
         return candidateReport;
     }
 }

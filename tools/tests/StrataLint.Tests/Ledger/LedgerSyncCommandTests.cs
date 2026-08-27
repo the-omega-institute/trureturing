@@ -598,7 +598,7 @@ public sealed class LedgerSyncCommandTests
                 FrozenLedgerChangeClassifier.AcceptedRoot.Replace('/', Path.DirectorySeparatorChar));
             FrozenLedgerTestData.WriteLedgerDirectory(LedgerPath, BaselineBytes);
             ReportPath = Path.Combine(temporary.Path, "candidate-lean-report.json");
-            File.WriteAllBytes(ReportPath, RawLeanReportArtifact.Write(snapshot, report).AsSpan());
+            RawLeanReportArtifact.WriteFile(ReportPath, snapshot, report);
             var changedPaths = candidates
                 .Take(candidateChangeCount)
                 .Select(static module => FrozenLedgerTestData.PathFor(module.Name))
