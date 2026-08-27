@@ -1,0 +1,41 @@
+## 91.1 Ramanujan 主状态的几何身份
+
+Ramanujan 常用记号中的：
+
+$$
+Q=E_4.
+$$
+
+因此：
+
+$$
+\boxed{
+Q
+=
+\Theta_{E_8}
+=
+\Theta_{\mathbb I}.
+}
+\tag{91.4}
+$$
+
+这给此前的 Ramanujan 主函数基因组一个最具体的几何含义：
+
+$$
+\boxed{
+\text{Ramanujan 的 }Q
+\text{ 不是任意 Eisenstein 级数，}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{黄金二十面体 Spin 完成到 }E_8
+\text{ 后的全局标量配分函数。}
+}
+$$
+
+---
+

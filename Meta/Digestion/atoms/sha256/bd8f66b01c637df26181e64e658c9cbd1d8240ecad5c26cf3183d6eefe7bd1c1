@@ -1,0 +1,21 @@
+## OACTC 解释 118.1（Moonshine 观察者完备化）
+
+$$
+\boxed{
+\text{Moonshine}
+=
+\text{对过度压缩的标量模观察，
+加入群作用、twining 与边界 completion，
+从而恢复隐藏结构。}
+}
+$$
+
+这不是 Umbral Moonshine 原始定义，而是 OACTC 的统一解释。
+
+特别是：
+
+* rootful Niemeier 的隐藏残余表现为 mock modular／umbral 数据；
+* rootless Leech 的隐藏残余表现为 Monster／Conway 数据。
+
+---
+

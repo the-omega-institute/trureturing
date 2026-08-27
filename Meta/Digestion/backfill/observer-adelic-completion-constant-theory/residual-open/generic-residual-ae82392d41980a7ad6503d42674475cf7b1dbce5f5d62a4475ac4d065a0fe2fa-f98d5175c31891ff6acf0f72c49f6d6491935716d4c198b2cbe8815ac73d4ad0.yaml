@@ -1,0 +1,10 @@
+ast_path: section/139-1-对角观察/clause/3
+fingerprints:
+  raw_sha256: sha256:ae82392d41980a7ad6503d42674475cf7b1dbce5f5d62a4475ac4d065a0fe2fa
+  normalized_sha256: sha256:ae82392d41980a7ad6503d42674475cf7b1dbce5f5d62a4475ac4d065a0fe2fa
+cas_ref: sha256:ae82392d41980a7ad6503d42674475cf7b1dbce5f5d62a4475ac4d065a0fe2fa
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

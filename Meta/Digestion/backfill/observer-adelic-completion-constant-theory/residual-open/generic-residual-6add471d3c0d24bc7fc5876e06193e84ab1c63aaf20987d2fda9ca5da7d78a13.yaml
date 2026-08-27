@@ -1,0 +1,15 @@
+ast_path: section/104-2-Deng-层
+fingerprints:
+  raw_sha256: sha256:6add471d3c0d24bc7fc5876e06193e84ab1c63aaf20987d2fda9ca5da7d78a13
+  normalized_sha256: sha256:6add471d3c0d24bc7fc5876e06193e84ab1c63aaf20987d2fda9ca5da7d78a13
+cas_ref: sha256:6add471d3c0d24bc7fc5876e06193e84ab1c63aaf20987d2fda9ca5da7d78a13
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-4aed873d7414f25001e5a490d9f3196ed9b013d60c7c1e76085d6f537518020f-38934b92bbd7d453141b0f04a81d528ace112ca44344b32cd65fe0f3142198b8
+    - generic-residual-7ce551f0ee96a1e494dd792eed7d5bf137a0b171ebe73bf87a194615657d24c4-ecbf97c9d6436f538467968c0ca6bb32a1a2d8beea3888a9f86ce1d751c3917f
+    - generic-residual-75a0f0d32fb13dc1ef5d58645304437b0f069de780c998e5878177ddf9b8668e-fc003486c9094d5cf593a2d327521bd5788bf8cdda48c527f0194dd3be5dd738
+    - generic-residual-af53ade9ca08c54c5409c34e829491d2adfdeb949e2c11e59d68beb0d7d8470a-7ec6690bef00e408fa5614df2208f6817675242d5f4cb264cb56242c06493d67

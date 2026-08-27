@@ -1,0 +1,16 @@
+## 104.1 Wang 层
+
+把格点按：
+
+* 能量壳；
+* 两个 \(H_4\) 扇区；
+* Coxeter \(\chi_5\) 扇区；
+* binary icosahedral 不可约表示；
+
+进行多尺度分块。
+
+研究 near-extremal 状态是否：
+
+* 分散：non-sticky；
+* 沿 Coxeter/H4 链集中：sticky。
+

@@ -1,0 +1,48 @@
+# 第九十五部　McKay \(E_8\)：同一个 \(120\) 状态的表示完成
+
+令：
+
+$$
+\Gamma=2.A_5.
+$$
+
+它有九个复不可约表示，其维数多重集为：
+
+$$
+\boxed{
+1,2,2,3,3,4,4,5,6.
+}
+\tag{95.1}
+$$
+
+按 affine \(E_8\) 图排序，可写成：
+
+$$
+1,2,3,4,5,6,4,3,2.
+$$
+
+令 \(U\) 是 \(\Gamma\subset SU(2)\) 的定义二维表示。
+
+对每个不可约表示 \(\rho_i\)，分解：
+
+$$
+U\otimes\rho_i
+=
+\bigoplus_jA_{ij}\rho_j.
+$$
+
+McKay 对应说明：
+
+$$
+\boxed{
+A
+=
+\text{affine }E_8\text{ Dynkin 图的邻接矩阵}.
+}
+\tag{95.2}
+$$
+
+Binary polyhedral group 与 affine ADE 图之间的这一对应是经典 McKay correspondence。([arXiv][7])
+
+---
+

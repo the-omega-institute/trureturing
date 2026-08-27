@@ -1,0 +1,103 @@
+# 本轮最终结论
+
+此前我们已经得到三个六维解释：
+
+$$
+3\times2,
+\qquad
+5+1,
+\qquad
+3+3'.
+$$
+
+现在进一步得到八维完成：
+
+$$
+\boxed{
+8
+=
+4\text{ 个 quaternionic spinor 坐标}
+\times
+2\text{ 个黄金 Galois 嵌入}.
+}
+$$
+
+以及：
+
+$$
+\boxed{
+240
+=
+120
++
+120
+=
+2\cdot|2.A_5|
+=
+8\cdot30.
+}
+$$
+
+而：
+
+$$
+\boxed{
+30
+=
+\left(
+\frac12+\frac13+\frac15-1
+\right)^{-1}.
+}
+$$
+
+最深的统一链是：
+
+$$
+\boxed{
+\begin{aligned}
+(2,3,5)
+&\longrightarrow
+A_5\\
+&\longrightarrow
+2.A_5\\
+&\longrightarrow
+H_4\\
+&\longrightarrow
+\mathbb I\\
+&\longrightarrow
+E_8\\
+&\longrightarrow
+E_4\\
+&\longrightarrow
+(P,Q,R).
+\end{aligned}
+}
+$$
+
+所以拉马努金主函数家族与黄金二十面体结构之间的最直接桥，不再只是 Rogers–Ramanujan continued fraction，而是：
+
+$$
+\boxed{
+Q=E_4=\Theta_{E_8}=\Theta_{\mathbb I}.
+}
+$$
+
+换言之：
+
+$$
+\boxed{
+\text{Ramanujan 的三变量微分宇宙，
+其中一个核心坐标正是整个 Icosian–}E_8
+\text{ 完成对象的配分函数。}
+}
+$$
+
+而同一个模 \(5\) 二次特征：
+
+$$
+\chi_5
+$$
+
+又同时区分：
+
+* 黄金整数环中的分裂／惰性素数；

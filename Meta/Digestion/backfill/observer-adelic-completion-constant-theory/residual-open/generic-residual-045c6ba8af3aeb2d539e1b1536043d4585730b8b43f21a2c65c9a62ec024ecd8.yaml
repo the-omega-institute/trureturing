@@ -1,0 +1,10 @@
+ast_path: section/130-1-一维编码的最优数量级
+fingerprints:
+  raw_sha256: sha256:045c6ba8af3aeb2d539e1b1536043d4585730b8b43f21a2c65c9a62ec024ecd8
+  normalized_sha256: sha256:045c6ba8af3aeb2d539e1b1536043d4585730b8b43f21a2c65c9a62ec024ecd8
+cas_ref: sha256:045c6ba8af3aeb2d539e1b1536043d4585730b8b43f21a2c65c9a62ec024ecd8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

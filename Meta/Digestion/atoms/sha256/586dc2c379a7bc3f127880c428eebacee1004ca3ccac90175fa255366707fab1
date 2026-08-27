@@ -1,0 +1,29 @@
+## 113.2 常数分母的新解释
+
+常数公式中出现的大素数不一定是“复杂计算留下的分母”。
+
+它们可能标记：
+
+$$
+\boxed{
+\text{两个特征零中独立的观察通道，
+在某有限特征中失去可分离性的地点。}
+}
+$$
+
+这比“691 是 Bernoulli 数分子”更结构化：
+
+$$
+\boxed{
+\text{Bernoulli／特殊 }L\text{-值分子}
+\longrightarrow
+\text{Eisenstein–cusp collision}
+\longrightarrow
+\text{\(p\)-adic extension data}.
+}
+$$
+
+这也把 OACTC 与 Kubota–Leopoldt \(p\)-adic zeta 路线重新接上；不规则 Bernoulli 对应的确与 \(p\)-adic zeta 零点和高阶同余结构相关。([arXiv][5])
+
+---
+

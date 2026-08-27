@@ -1,0 +1,37 @@
+## 114.2 Monster 表示分解
+
+Monstrous Moonshine 的第一个著名维数恒等式是：
+
+$$
+\boxed{
+196884
+=
+1+196883.
+}
+\tag{114.5}
+$$
+
+其中 \(196883\) 是 Monster 的一个非平凡不可约表示维数，而 \(1\) 是平凡表示。Conway 与 Norton 的原始 Moonshine 论文及后续综述正是从这类系数分解出发。([London Mathematical Society (LMS)][6])
+
+因此同一个完成状态空间具有两种完全不同的分解：
+
+$$
+\boxed{
+\underbrace{196560+324}_{\text{Leech geometry + oscillators}}
+=
+\underbrace{1+196883}_{\text{Virasoro vacuum + Monster primitive}}.
+}
+\tag{114.6}
+$$
+
+OACTC 将 Moonshine 的这一层解释为：
+
+$$
+\boxed{
+\text{同一完成空间在几何观察图表
+与有限群表示图表之间的非平凡换基。}
+}
+$$
+
+---
+
