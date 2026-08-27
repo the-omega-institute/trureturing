@@ -1,0 +1,11 @@
+## 原理 105.1（真实桥的最低要求）
+
+要建立非平凡“对角—量子观察者”桥，至少需要：
+
+1. 同一个量子状态 carrier，且 $d\ge2$；
+2. 对角评估来自物理合法 instrument 或 effect；
+3. 逃逸对象对应可实验区分的状态、效果、过程或记录；
+4. 明确使用 positivity、normalization 与 complete positivity；
+5. 得到不同于已知 contextuality、Bell、no-cloning 或普通层析的结论；
+6. 给出可证伪的物理或信息论后果。
+

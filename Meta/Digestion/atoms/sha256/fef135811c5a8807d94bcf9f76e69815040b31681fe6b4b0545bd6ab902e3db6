@@ -1,0 +1,33 @@
+# 114. 确定性素数观察者嵌入交换量子理论
+
+设 $X$ 为有限状态集，局部接口为
+
+$$
+q_i:X\to O_i.
+$$
+
+令
+
+$$
+\mathcal H_X=\mathbb C^X
+$$
+
+并以
+
+$$
+\{|x\rangle:x\in X\}
+$$
+
+为标准正交基。
+
+对每个结果 $o\in O_i$ 定义投影
+
+$$
+\boxed{
+P_{o|i}
+=
+\sum_{x:q_i(x)=o}
+|x\rangle\langle x|.
+}
+$$
+

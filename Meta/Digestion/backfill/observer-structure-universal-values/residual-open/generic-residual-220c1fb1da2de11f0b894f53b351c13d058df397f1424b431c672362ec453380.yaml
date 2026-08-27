@@ -1,0 +1,10 @@
+ast_path: section/5-1-主表-全部-ASSUMED-UNVERIFIED-出处与译文按记忆写出-本会话未联网核对-f41c59dd
+fingerprints:
+  raw_sha256: sha256:220c1fb1da2de11f0b894f53b351c13d058df397f1424b431c672362ec453380
+  normalized_sha256: sha256:220c1fb1da2de11f0b894f53b351c13d058df397f1424b431c672362ec453380
+cas_ref: sha256:220c1fb1da2de11f0b894f53b351c13d058df397f1424b431c672362ec453380
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

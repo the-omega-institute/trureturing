@@ -1,0 +1,13 @@
+## 47.2 构造可行动作集
+
+$$
+\mathcal A_t
+=
+\left\{
+ a\in G:
+ \operatorname{Legal}(a,z_t,\Lambda_t),
+ \quad
+ \mathrm{cost}(a)\le B_t
+\right\}.
+$$
+

@@ -40,6 +40,7 @@
 #   写得出来，但没有人去核它们。**在 consumer 核验落地之前，ensure 不得自动 fetch
 #   本归档** —— 当前也确实没有，手工 target 只作诊断。
 set -euo pipefail
+export LC_ALL=C
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 REPO="${STRATALINT_CACHE_REPO:-the-omega-institute/trureturing}"

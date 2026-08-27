@@ -1,0 +1,10 @@
+ast_path: section/增加可验证性
+fingerprints:
+  raw_sha256: sha256:1a28cce89380955970f98c405fa35809f0c0e76c49e4be833e101a498f8fd588
+  normalized_sha256: sha256:1a28cce89380955970f98c405fa35809f0c0e76c49e4be833e101a498f8fd588
+cas_ref: sha256:1a28cce89380955970f98c405fa35809f0c0e76c49e4be833e101a498f8fd588
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

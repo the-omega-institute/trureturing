@@ -1,0 +1,10 @@
+ast_path: section/65-Agency-completion-观察者完成在选择侧的对应物
+fingerprints:
+  raw_sha256: sha256:251438717e74015fb2ee0fb6869c9899294b226c74cd78c4e88a07a871a02e10
+  normalized_sha256: sha256:251438717e74015fb2ee0fb6869c9899294b226c74cd78c4e88a07a871a02e10
+cas_ref: sha256:251438717e74015fb2ee0fb6869c9899294b226c74cd78c4e88a07a871a02e10
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

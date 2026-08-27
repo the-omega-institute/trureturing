@@ -331,6 +331,76 @@ public sealed partial class ReviewRegressionTests
                 "unknown anomaly-bearing schema", StringComparison.Ordinal));
     }
 
+    [Fact]
+    public void Sl019AcceptsInventoryCoverageAndReceiptGidsWhoseSubjectIsNamedAfterAFailure()
+    {
+        var fixture = new RuleFixture();
+        const string path = "Meta/Digestion/backfill/interface-v1/absorbed-closed/probe.yaml";
+        const string gid =
+            "D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure"
+            + ".lookup_copy_zero_loss_and_nonanticipating_failure";
+        fixture.Files[path] = "ast_path: row/probe\n"
+            + "cas_ref: sha256:00\n"
+            + "coverage_gids:\n  - " + gid + "\n"
+            + "receipts:\n"
+            + "  coverage:\n"
+            + "    - gid: " + gid + "\n"
+            + "      source_sha256: sha256:00\n"
+            + "      target_sha256: sha256:00\n"
+            + "  scribe:\n"
+            + "    - gid: " + gid + "\n"
+            + "      definition_sha256: sha256:00\n"
+            + "      emission_sha256: sha256:00\n";
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(19),
+            fixture.Build(RawChangeSet.Create([path])));
+
+        Assert.DoesNotContain(
+            evaluation.Diagnostics,
+            item => item.Path == path && item.Message.Contains(
+                "anomaly-bearing", StringComparison.Ordinal));
+    }
+
+    [Theory]
+    [InlineData("coverage_gids:\n  - unresolved failure without case\n")]
+    [InlineData("receipts:\n  coverage:\n    - gid: FiniteFailure\n")]
+    [InlineData("failure_gids:\n  - D5/S0/Carrier/ProbeFailure.failure_probe\n")]
+    [InlineData("outer:\n  coverage_gids:\n    - D5/S0/Carrier/ProbeFailure.failure_probe\n")]
+    public void Sl019RejectsAnomalyResiduesOutsideTheDeclaredInventoryGidSlots(string body)
+    {
+        var fixture = new RuleFixture();
+        const string path = "Meta/Digestion/backfill/interface-v1/absorbed-closed/rogue.yaml";
+        fixture.Files[path] = "ast_path: row/probe\ncas_ref: sha256:00\n" + body;
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(19),
+            fixture.Build(RawChangeSet.Create([path])));
+
+        Assert.Contains(
+            evaluation.Diagnostics,
+            item => item.Path == path && item.Message.Contains(
+                "anomaly-bearing", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void Sl019RejectsAValidGidInInventorySlotsOutsideACanonicalInventoryPath()
+    {
+        var fixture = new RuleFixture();
+        const string path = "Evidence/D5/S0/Carrier/Inventory.run.json";
+        fixture.Files[path] =
+            "{\"coverage_gids\":[\"D5/S0/Carrier/ProbeFailure.failure_probe\"]}\n";
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(19),
+            fixture.Build(RawChangeSet.Create([path])));
+
+        Assert.Contains(
+            evaluation.Diagnostics,
+            item => item.Path == path && item.Message.Contains(
+                "anomaly-bearing", StringComparison.Ordinal));
+    }
+
     [Theory]
     [InlineData("ast_path")]
     [InlineData("boundary")]
@@ -469,12 +539,11 @@ public sealed partial class ReviewRegressionTests
             gateway,
             new FakeLeanReportSource(null));
         var candidateReportPath = Path.Combine(temporary.Path, "candidate.json");
-        File.WriteAllBytes(
+        RawLeanReportArtifact.WriteFile(
             candidateReportPath,
-            RawLeanReportArtifact.Write(
-                Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-                    SnapshotDecoder.Decode(Snapshot(fixture.Files))).Snapshot,
-                currentReport).AsSpan());
+            Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+                SnapshotDecoder.Decode(Snapshot(fixture.Files))).Snapshot,
+            currentReport);
         var outcome = environment.Check(new[]
         {
             "--candidate-lean-report", candidateReportPath,

@@ -72,7 +72,7 @@ public static class StatementProjectionReconciliation
                 findings.Add(
                     $"pinned statement projection is ambiguous in live report: {item.Key} ({live.Length} declarations)");
             }
-            else if (!StringComparer.Ordinal.Equals(item.Value, live[0].TypeRepresentation))
+            else if (!StringComparer.Ordinal.Equals(item.Value, live[0].LoadTypeRepresentation()))
             {
                 findings.Add($"pinned statement projection differs from live report: {item.Key}");
             }

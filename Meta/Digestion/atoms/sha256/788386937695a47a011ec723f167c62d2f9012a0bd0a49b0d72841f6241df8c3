@@ -1,0 +1,20 @@
+## 定理 14.2（观察—干预—反事实 kernel 链）
+
+若干预查询族包含空干预的观察 law，反事实查询族包含所有单世界干预边缘，则
+
+\[
+\boxed{
+K_{\mathrm{cf}}
+\subseteq
+K_{\mathrm{int}}
+\subseteq
+K_{\mathrm{obs}}.
+}
+\]
+
+两个包含都可以严格。
+
+### 证明
+
+加入查询只会增加相等条件，因此 kernel 只能缩小。严格性由标准方向反转反模型与相同单世界边缘、不同 cross-world coupling 的反模型给出。\(\square\)
+

@@ -1,0 +1,14 @@
+## 定义 134.4（sequential protocol residual）
+
+$$
+N_{\mathrm{seq}}
+=
+\left(\operatorname{span}\{F_w:w\text{ allowed}\}\right)^\perp.
+$$
+
+如果这些是**平行独立接口**，联合残差由 kernel 交给出；若它们处于**串行压缩管道**中，则必须计算复合接口的 kernel，不能机械写成集合交。
+
+这条 typed-residual discipline 是后续 Lean 统一时必须保持的约束。
+
+---
+

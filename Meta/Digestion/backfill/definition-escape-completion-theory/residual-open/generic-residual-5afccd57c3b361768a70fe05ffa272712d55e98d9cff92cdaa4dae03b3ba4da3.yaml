@@ -1,0 +1,10 @@
+ast_path: section/56-4-2-两个独立定义的有限时域逃逸关系
+fingerprints:
+  raw_sha256: sha256:5afccd57c3b361768a70fe05ffa272712d55e98d9cff92cdaa4dae03b3ba4da3
+  normalized_sha256: sha256:5afccd57c3b361768a70fe05ffa272712d55e98d9cff92cdaa4dae03b3ba4da3
+cas_ref: sha256:5afccd57c3b361768a70fe05ffa272712d55e98d9cff92cdaa4dae03b3ba4da3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

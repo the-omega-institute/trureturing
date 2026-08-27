@@ -1,0 +1,18 @@
+## 15.3 Residual exact cover
+
+仓库 `ResidualSeparationAdapter` 已机器验证：有限 residual snapshot 被精确覆盖，当且仅当选定 package 中不存在仍被联合 kernel 盲掉的 residual pair；正权重下未覆盖权重为零与无盲对等价。
+
+定义最小揭示复杂度：
+
+$$
+m^*=\min\{|J|:J\text{ 覆盖全部目标 residual}\}.
+$$
+
+定义最小揭示成本：
+
+$$
+C^*=\min\{\sum_{i\in J}c_i:J\text{ 覆盖全部目标 residual}\}.
+$$
+
+---
+

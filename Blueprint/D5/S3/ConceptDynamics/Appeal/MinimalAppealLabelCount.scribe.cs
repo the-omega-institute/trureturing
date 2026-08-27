@@ -59,7 +59,7 @@ internal sealed class MinimalAppealLabelCountDocument : IScribeDocumentDefinitio
         Formula targetCarrier = F.Id("Y");
         Formula record = F.Id("r");
         Formula target = F.Id("t");
-        Formula diversity = F.Id("d");
+        Formula diversity = Call("worstFiberDiversity", record, target);
         Formula exactLabel = new Formula.Subscript(F.Id("ell"), F.Id("exact"));
         Formula candidateLabel = new Formula.Subscript(F.Id("ell"), F.Id("candidate"));
         Formula labelCount = F.Id("m");
@@ -72,17 +72,15 @@ internal sealed class MinimalAppealLabelCountDocument : IScribeDocumentDefinitio
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
             Forall, Sp, state, Comma, Sp, recordCarrier, Comma, Sp, targetCarrier,
-            Comma, RowBreak, Grp(),
-            Fintype(state), Sp, Fintype(recordCarrier), Comma, RowBreak, Grp(),
+            Colon, Sp, F.Id("Type"), Comma, RowBreak, Grp(),
+            Fintype(state), Comma, Sp, Fintype(recordCarrier), Comma, RowBreak, Grp(),
             record, Colon, Sp, state, Sp, To, Sp, recordCarrier, Comma, Sp,
             target, Colon, Sp, state, Sp, To, Sp, targetCarrier, Comma,
             RowBreak, Grp(),
-            diversity, Sp, Eq, Sp, Call("worstFiberDiversity", record, target),
-            Comma, RowBreak, Grp(),
             Open, Exists, Sp, exactLabel, Colon, Sp, state, Sp, To, Sp,
             Fin(diversity), Comma, Sp, Determines(exactLabel), Close,
             Sp, Land, Sp, RowBreak, Grp(),
-            Open, Forall, Sp, labelCount, Sp, InMacro, Sp, naturalNumbers,
+            Open, Forall, Sp, labelCount, Colon, Sp, naturalNumbers,
             Comma, Sp, candidateLabel, Colon, Sp, state, Sp, To, Sp,
             Fin(labelCount), Comma, RowBreak, Grp(),
             Determines(candidateLabel), Sp, Rightarrow, Sp,

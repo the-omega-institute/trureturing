@@ -1,0 +1,25 @@
+## 5.1 可观察事件
+
+定义：
+
+$$
+\mathcal E(\mathcal L)
+=
+\{A\subseteq\mathcal X:
+ xR_{\mathcal L}y
+\Rightarrow
+(x\in A\iff y\in A)\}.
+$$
+
+仓库 `ObservableEventAlgebraDuality` 已机器验证：
+
+$$
+\text{观察精化}
+\iff
+\text{kernel 反向包含}
+\iff
+\text{可观察事件代数正向包含}.
+$$
+
+---
+

@@ -1,0 +1,22 @@
+## 定理 20.2（证据精化单调性）
+
+若：
+
+\[
+E\preceq E',
+\]
+
+即 \(E'\) 更精细，则：
+
+\[
+\boxed{
+\operatorname{Know}_E(P,a)
+\Longrightarrow
+\operatorname{Know}_{E'}(P,a).
+}
+\]
+
+### 证明
+
+\(E'\)-纤维包含于 \(E\)-纤维；在大纤维上稳定必在子纤维上稳定。\(\square\)
+

@@ -1,0 +1,26 @@
+## 定义 67.1（非平凡策略 holonomy）
+
+若存在 $m$ 使
+
+$$
+\operatorname{Hol}_\gamma(m)\neq m,
+$$
+
+则该回路在记忆层具有非平凡 holonomy。
+
+若策略为
+
+$$
+s(q,m),
+$$
+
+可能出现
+
+$$
+s(q_0,m)
+\neq
+s(q_0,\operatorname{Hol}_\gamma(m)).
+$$
+
+即公开环境回到同一状态，但经历该回路后的观察者具有不同选择倾向。
+

@@ -30,7 +30,7 @@ trap 'exit 130' INT
 trap 'exit 143' TERM
 
 SNAPSHOT_REPORT="$SNAPSHOT_ROOT/$(basename "$REPORT")"
-for suffix in '' .sha256 .input.attestation .provenance.json; do
+for suffix in '' .sha256 .input.attestation .provenance.json .materials.zip; do
   [[ -f "${REPORT}${suffix}" ]] || {
     echo "report-consumer: raw Lean report bundle is incomplete at ${REPORT}${suffix}; run make lean-report first" >&2
     exit 2

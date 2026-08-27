@@ -1,0 +1,44 @@
+## 定义 42.1（$\varepsilon$-自我维数）
+
+$$
+\boxed{
+d_\varepsilon
+=
+\min\{k:\exists K,\ \operatorname{rank}K\le k,
+\ \|\mathcal H_O-K\|\le\varepsilon\}.
+}
+$$
+
+由最佳低秩逼近定理：
+
+$$
+\boxed{
+d_\varepsilon=\#\{i:\sigma_i>\varepsilon\}.}
+$$
+
+任意 $k$ 维行为模型的最坏误差至少为 $\sigma_{k+1}$；截断奇异值展开达到该界。
+
+在最小可控—可观测实现上可选平衡坐标，使
+
+$$
+W_o=W_c^O=\operatorname{diag}(\sigma_1,\ldots,\sigma_r).
+$$
+
+高奇异值方向是容易由自身修改、又强烈影响未来的代理核心；低奇异值方向是可在容许误差下压缩的代理边缘。
+
+若模型扰动满足 $\|\Delta\|\le\delta$，则
+
+$$
+|\sigma_i(\mathcal H_O+\Delta)-\sigma_i(\mathcal H_O)|\le\delta.
+$$
+
+定义鲁棒代理秩
+
+$$
+\boxed{r_{\mathrm{rob}}(\delta)=\#\{i:\sigma_i>\delta\}.}
+$$
+
+精确主体方向若小于模型误差，就不能被稳定宣称存在。
+
+---
+

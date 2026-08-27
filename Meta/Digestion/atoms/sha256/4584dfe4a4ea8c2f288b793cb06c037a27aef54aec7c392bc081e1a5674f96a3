@@ -1,0 +1,18 @@
+## 15.2 最小成本面板
+
+给每个实验成本 c_i，最小目标充分面板是：
+
+$$
+\min_J\sum_{i\in J}c_i
+$$
+
+满足：
+
+$$
+U_T=\bigcup_{i\in J}D_i.
+$$
+
+仓库 `MinimumCompleteObserverSetCover` 已机器验证完整状态识别版本等价于加权 set cover。本文的目标相关版本只把覆盖全集缩小为 U_T。
+
+---
+

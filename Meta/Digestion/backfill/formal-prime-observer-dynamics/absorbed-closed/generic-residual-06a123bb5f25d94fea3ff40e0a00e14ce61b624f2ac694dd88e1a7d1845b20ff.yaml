@@ -1,0 +1,17 @@
+ast_path: 定理/203.1
+fingerprints:
+  raw_sha256: sha256:06a123bb5f25d94fea3ff40e0a00e14ce61b624f2ac694dd88e1a7d1845b20ff
+  normalized_sha256: sha256:06a123bb5f25d94fea3ff40e0a00e14ce61b624f2ac694dd88e1a7d1845b20ff
+cas_ref: sha256:06a123bb5f25d94fea3ff40e0a00e14ce61b624f2ac694dd88e1a7d1845b20ff
+coverage_gids:
+  - D5/S3/Observer/ProbabilisticClosure/KernelTranscriptInvariance.statistical_kernel_transcript_law_invariant
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/ProbabilisticClosure/KernelTranscriptInvariance.statistical_kernel_transcript_law_invariant
+      source_sha256: sha256:06a123bb5f25d94fea3ff40e0a00e14ce61b624f2ac694dd88e1a7d1845b20ff
+      target_sha256: sha256:c79b99a7cf46775a6a27a970a1155eae8dfe4be439e098c7cad544c2c4502907
+  scribe:
+    - gid: D5/S3/Observer/ProbabilisticClosure/KernelTranscriptInvariance.statistical_kernel_transcript_law_invariant
+      definition_sha256: sha256:bdd24624d7adc78c4572ef73aeeece42ce21d9127ea46ba92189099102ce2f3b
+      emission_sha256: sha256:5307ff5c22efa9fd5ce5ab9e627401a4b5e95ff8cf20ac7515f6bea18e5795c0
+  unresolved_subitems: []

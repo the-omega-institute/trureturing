@@ -1,0 +1,10 @@
+ast_path: section/462-2-保守扩张
+fingerprints:
+  raw_sha256: sha256:d2f1d1a9b5dbf031c5c0a39086c9c75b37c92fa2e67af0f698bd27d5d748bc54
+  normalized_sha256: sha256:d2f1d1a9b5dbf031c5c0a39086c9c75b37c92fa2e67af0f698bd27d5d748bc54
+cas_ref: sha256:d2f1d1a9b5dbf031c5c0a39086c9c75b37c92fa2e67af0f698bd27d5d748bc54
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

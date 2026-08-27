@@ -1,0 +1,47 @@
+## 定理 90.1（角色秩—画像基数定理）
+
+在有限群对偶性下：
+
+\[
+\boxed{
+\begin{aligned}
+\ker\Phi_{\chi}
+&=
+\bigcap_{j=1}^{m}\ker\chi_j,\\
+|\operatorname{Im}\Phi_{\chi}|
+&=2^r,\\
+|\Phi_{\chi}^{-1}(b)|
+&=\frac{|G|}{2^r}
+\quad
+\text{对每个已实现画像 }b.
+\end{aligned}
+}
+\]
+
+### 证明
+
+第一式由乘积映射的核直接得到。把 \(g\in G\) 送到对 \(H\) 的求值函数：
+
+\[
+\operatorname{ev}_g:
+H\to\mu_2,
+\qquad
+\chi\mapsto\chi(g).
+\]
+
+有限阿贝尔群的对偶性给出：
+
+\[
+G/\operatorname{Ann}(H)
+\simeq
+\widehat H,
+\]
+
+而：
+
+\[
+|\widehat H|=|H|=2^r.
+\]
+
+画像映射与该求值映射只有坐标选择差异，因此像大小为 \(2^r\)。每个非空纤维是核的陪集，故具有统一大小。\(\square\)
+

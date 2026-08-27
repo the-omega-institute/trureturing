@@ -1,0 +1,14 @@
+## 定义 35.1（合法动作关系）
+
+$$
+\operatorname{Legal}(x,a)
+$$
+
+表示动作 $a$ 在状态 $x$ 下可执行。定义
+
+$$
+\mathcal A(x)
+=
+\{a\in A:\operatorname{Legal}(x,a)\}.
+$$
+

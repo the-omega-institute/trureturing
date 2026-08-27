@@ -1,0 +1,29 @@
+## 定义 382.1（行为等价）
+
+[
+\boxed{
+x\sim_\beta y
+\iff
+\forall m\in M,\quad
+O(F_mx)=O(F_my).
+}
+]
+
+行为商：
+
+[
+\boxed{
+Z_\beta
+=
+
+\operatorname{Reach}*M(a)/{\sim*\beta}.
+}
+]
+
+它同时删除：
+
+1. 从锚点不可达的状态；
+2. 所有允许行动下始终不可区分的状态差异。
+
+---
+

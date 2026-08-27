@@ -1,0 +1,25 @@
+## 定义 42.1（观察者可接受动作集）
+
+$$
+\mathcal A_O(z,\Lambda)
+=
+\left\{
+ a:
+ \begin{array}{l}
+ \operatorname{Legal}(z,a),\\
+ \operatorname{Affordable}(z,a),\\
+ \operatorname{GoalCoherent}_O(z,a),\\
+ \operatorname{LedgerConsistent}_O(\Lambda,a),\\
+ \operatorname{IdentityPreserving}_O(\Lambda,a)
+ \end{array}
+\right\}.
+$$
+
+规律层只要求
+
+$$
+a_t\in\mathcal A_O(z_t,\Lambda_t).
+$$
+
+它不必再给出唯一元素。
+

@@ -1,4 +1,5 @@
--- Statement IDs remain owned by the .NET canonical statement writer.
+-- Statement encodings are spooled here; the producer compactor computes the
+-- byte-identical .NET statement addresses before publishing the report.
 
 import Lean.Environment
 import Lean.CoreM
@@ -16,9 +17,9 @@ structure DeclarationReport where
   axioms : Array String
   includeInStatement : Bool
   kind : String
+  materialFile : String
   name : String
   nameKey : String
-  type : String
 
 structure ModuleReport where
   declarations : Array DeclarationReport
@@ -191,26 +192,33 @@ def collectAxiomsShared (environment : Environment)
   return ((← state.get).closure.find? constant).getD #[]
 
 def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
+    (materialSpool : System.FilePath) (materialCounter : IO.Ref Nat)
     (input : ModuleInput) : IO ModuleReport := do
   let moduleName := input.moduleName.toName
   let some moduleIdx := env.getModuleIdx? moduleName
     | throw <| IO.userError s!"module not loaded: {input.moduleName}"
   let moduleData := env.header.moduleData[moduleIdx]!
   let environment := env.setExporting false
-  let declarations ← moduleData.constNames.mapM fun name => do
+  let names := moduleData.constNames.qsort fun left right => encodeName left < encodeName right
+  let declarations ← names.mapM fun name => do
     let some info := environment.find? name
       | throw <| IO.userError s!"declaration missing: {name}"
     let axioms ← collectAxiomsShared environment cache name
+    let statement := encodeStatement info
+    let materialIndex ← materialCounter.get
+    materialCounter.set (materialIndex + 1)
+    let materialFile := s!"{materialIndex}.statement"
+    IO.FS.writeFile (materialSpool / materialFile) statement
     return {
       axioms := sortedUnique (axioms.map Name.toString)
       includeInStatement := includeInStatement name info
       kind := kindOf info
+      materialFile
       name := name.toString
       nameKey := encodeName name
-      type := encodeStatement info
     }
   return {
-    declarations := declarations.qsort (fun left right => left.nameKey < right.nameKey)
+    declarations
     imports := sortedUnique (moduleData.imports.map (fun item => item.module.toString))
     moduleName := input.moduleName
     sourcePath := input.sourcePath
@@ -250,9 +258,9 @@ def renderDeclaration (declaration : DeclarationReport) : String :=
     ++ ", \"include_in_statement\": "
     ++ (if declaration.includeInStatement then "true" else "false")
     ++ ", \"kind\": " ++ jsonString declaration.kind
+    ++ ", \"material_file\": " ++ jsonString declaration.materialFile
     ++ ", \"name\": " ++ jsonString declaration.name
-    ++ ", \"name_key\": " ++ jsonString declaration.nameKey
-    ++ ", \"type\": " ++ jsonString declaration.type ++ "}"
+    ++ ", \"name_key\": " ++ jsonString declaration.nameKey ++ "}"
 
 def renderModule (report : ModuleReport) : String :=
   "{\"declarations\": ["
@@ -264,7 +272,7 @@ def renderModule (report : ModuleReport) : String :=
 
 def renderReport (reports : Array ModuleReport) : String :=
   "{\"modules\": [" ++ String.intercalate ", " (reports.toList.map renderModule)
-    ++ "], \"schema\": \"stratalint-raw-lean-report-v1\"}\n"
+    ++ "], \"schema\": \"stratalint-lean-inspector-spool-v1\"}\n"
 
 def parseModuleInputs : List String → Except String (Array ModuleInput)
   | [] => .ok #[]
@@ -273,21 +281,26 @@ def parseModuleInputs : List String → Except String (Array ModuleInput)
       return #[{ moduleName, sourcePath, sourceSha256 }] ++ tail
   | _ => .error "module arguments must be repeated triples: MODULE SOURCE_PATH SOURCE_SHA256"
 
-def parseArguments : List String → Except String (System.FilePath × Array ModuleInput)
-  | "--output" :: output :: rest => do
+def parseArguments : List String → Except String
+    (System.FilePath × System.FilePath × Array ModuleInput)
+  | "--output" :: output :: "--material-spool" :: materialSpool :: rest => do
       let inputs ← parseModuleInputs rest
       if inputs.isEmpty then
         throw "at least one module is required"
-      return (output, inputs.qsort (fun left right => left.moduleName < right.moduleName))
-  | _ => .error "usage: Inspector.lean --output FILE MODULE SOURCE_PATH SOURCE_SHA256 [...]"
+      return (output, materialSpool,
+        inputs.qsort (fun left right => left.moduleName < right.moduleName))
+  | _ => .error
+      "usage: Inspector.lean --output FILE --material-spool DIR MODULE SOURCE_PATH SOURCE_SHA256 [...]"
 
 unsafe def main (args : List String) : IO Unit := do
-  let (output, inputs) ← match parseArguments args with
+  let (output, materialSpool, inputs) ← match parseArguments args with
     | .ok parsed => pure parsed
     | .error message => throw <| IO.userError message
+  IO.FS.createDirAll materialSpool
   initSearchPath (← findSysroot)
   let imports := inputs.map fun input => { module := input.moduleName.toName }
   let env ← importModules imports {} (trustLevel := 0)
   let cache ← IO.mkRef ({} : AxiomClosureState)
-  let reports ← inputs.mapM (inspectModule env cache)
+  let materialCounter ← IO.mkRef 0
+  let reports ← inputs.mapM (inspectModule env cache materialSpool materialCounter)
   IO.FS.writeFile output (renderReport reports)

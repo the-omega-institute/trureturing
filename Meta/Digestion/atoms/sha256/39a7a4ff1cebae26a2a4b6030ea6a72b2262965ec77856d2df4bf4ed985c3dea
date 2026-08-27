@@ -1,0 +1,101 @@
+# 373. 当前最深的新结论
+
+本轮最重要的结构结论可以压缩为八条。
+
+第一，**代表制失败可以来自授权接口本身的信息瓶颈，即使代表完全忠诚**：
+
+[
+\boxed{
+\text{fidelity}
+\not\Rightarrow
+\text{sufficiency}.
+}
+]
+
+第二，**财产权的本体不是“谁的”，而是“谁能合法实施哪些 FLOW”**：
+
+[
+\boxed{
+\text{ownership}
+================
+
+\text{typed control bundle}.
+}
+]
+
+第三，**价格只是交换制度中的压缩接口，并不忠实表示所有价值维度**：
+
+[
+\boxed{
+\text{price}
+\neq
+\text{value}.
+}
+]
+
+第四，**外部性本质上是私人界面对公共目标的不充分**：
+
+[
+\boxed{
+E_{T_{\mathrm{public}}}
+\not\preceq
+C_{\mathrm{private}}.
+}
+]
+
+第五，**主权不是最大的一阶行动能力，而是改变行动、规则和最终申诉结构的元能力**。
+
+第六，**代际伦理首先是 representation 问题：未来主体利益通常不在当前投票概念里**。
+
+第七，**理论的零反例既可以通过修复概念获得，也可以通过削弱目标或缩小领域伪造**。
+
+第八，也是最承重的一条：
+
+[
+\boxed{
+\text{任何严肃的形式哲学，都必须同时审计：
+它区分了什么、忽略了什么、适用于哪里、
+由谁授权、能恢复什么、影响谁的未来，
+以及它通过什么方式保持自身“正确”.}
+}
+]
+
+因此整套理论可以进一步写成：
+
+[
+\boxed{
+\begin{aligned}
+\textbf{Formal Concept Dynamics}
+={}&
+\textbf{a theory of legitimate delegation}\
+&+
+\textbf{a process theory of property}\
+&+
+\textbf{an interface theory of markets}\
+&+
+\textbf{a meta-control theory of sovereignty}\
+&+
+\textbf{an intergenerational theory of admissibility}\
+&+
+\textbf{a robustness and resilience calculus}\
+&+
+\textbf{a self-audit theory of philosophical domain validity}.
+\end{aligned}
+}
+]
+
+最凝练的一句是：
+
+[
+\boxed{
+\text{制度、市场、产权、主权和代际伦理看似属于不同领域，
+但它们都在回答同一个结构问题：
+哪些区别被谁看见，
+哪些过程被谁允许，
+哪些后果被谁承担，
+以及这些权限如何跨时间被运输、限制和修复。}
+]
+以下从 **§374** 继续。仍然只进行纸面推理，不处理 GitHub，也不把新增定义与定理标记为已经获得 Lean proof term 的 `Closed` 结论。
+
+---
+

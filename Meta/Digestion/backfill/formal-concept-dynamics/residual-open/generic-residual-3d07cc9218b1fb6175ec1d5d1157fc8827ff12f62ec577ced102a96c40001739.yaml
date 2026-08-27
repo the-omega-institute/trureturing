@@ -1,0 +1,10 @@
+ast_path: section/223-隐藏假设就是声明域中的反模型
+fingerprints:
+  raw_sha256: sha256:3d07cc9218b1fb6175ec1d5d1157fc8827ff12f62ec577ced102a96c40001739
+  normalized_sha256: sha256:3d07cc9218b1fb6175ec1d5d1157fc8827ff12f62ec577ced102a96c40001739
+cas_ref: sha256:3d07cc9218b1fb6175ec1d5d1157fc8827ff12f62ec577ced102a96c40001739
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

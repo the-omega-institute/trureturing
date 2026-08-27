@@ -1,0 +1,53 @@
+# 92. 同一 POVM 不等于同一观察者
+
+取量子比特 $Z$ 投影
+
+$$
+P_0=|0\rangle\langle0|,
+\qquad
+P_1=|1\rangle\langle1|.
+$$
+
+定义 Lüders instrument：
+
+$$
+\mathcal L_a(\rho)
+=
+P_a\rho P_a.
+$$
+
+再定义测量—重制备 instrument：
+
+$$
+\mathcal J_a(\rho)
+=
+\operatorname{Tr}(P_a\rho)
+|+\rangle\langle+|.
+$$
+
+两者具有相同效果：
+
+$$
+\mathcal L_a^*(I)
+=
+\mathcal J_a^*(I)
+=
+P_a.
+$$
+
+所以它们对任意初态的一步结果分布完全相同。
+
+但得到结果 $0$ 后：
+
+$$
+\mathcal L
+\text{ 产生 }|0\rangle,
+$$
+
+$$
+\mathcal J
+\text{ 产生 }|+\rangle.
+$$
+
+若随后测量 $X$，前者得到 $+$ 的概率为 $1/2$，后者为 $1$。
+

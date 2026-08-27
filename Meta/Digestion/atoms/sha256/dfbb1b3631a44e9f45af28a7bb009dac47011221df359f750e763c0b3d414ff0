@@ -1,0 +1,18 @@
+## 命题 4.5(对换不变性生成全群不变性)〔`open`;群论核为 mathlib 一行〕
+
+设准入谓词 \(T:X\times U\times I\times I\to\mathsf{Prop}\)(「在 \(x\) 下允许 \(i\) 对 \(j\) 施 \(u\)」)。\(\operatorname{Sym}(I)\) 以 \((\sigma\cdot T)(x,u,i,j):=T(x,u,\sigma^{-1}i,\sigma^{-1}j)\) 作用于谓词空间 \(\mathcal T\)。称 \(T\) 对 \(\sigma\) 不变,若 \(\sigma\cdot T=T\),即
+
+\[
+\forall x,u,i,j:\ T(x,u,\sigma i,\sigma j)\iff T(x,u,i,j).
+\]
+
+则以下等价:
+
+(a) \(T\) 对每一个对换 \((i\ j)\) 不变(**黄金律,逐对量化**);
+(b) \(T\) 对 \(\operatorname{Sym}(I)\) 全体不变(**FCD 定义 41.2 群对称公平在 \(G=\operatorname{Sym}(I)\) 下的实例**;FCD 的 \(G\) 是「道德上无关的身份置换群」,取 \(G=\operatorname{Sym}(I)\) 是**额外假设**「全部身份置换皆道德无关」,见评注 4.6(β));
+(c) \(T\) 通过 \((X\times U\times I\times I)/\operatorname{Sym}(I)\) 因子化(**删除身份坐标后的选择**,即 FCD 哲学对照表「罗尔斯无知之幕」行)。
+
+**证明梗概。** (b)⇒(a) 平凡。(a)⇒(b):稳定子 \(\operatorname{Stab}(T)=\{\sigma\mid\sigma\cdot T=T\}\) 是 \(\operatorname{Sym}(I)\) 的子群(群作用的稳定子恒为子群);它包含全部对换;\(I\) 有限时对换生成全群——mathlib `Equiv.Perm.closure_isSwap`(`Mathlib/GroupTheory/Perm/Sign.lean:121`),故 \(\operatorname{Stab}(T)=\operatorname{Sym}(I)\)。(b)⇔(c):\(T\) 对 \(G\) 不变当且仅当 \(T\) 在轨道上常值,当且仅当 \(T\) 通过轨道商 \((X\times U\times I\times I)/G\)(\(G\) 只作用于后两个坐标)因子化。∎
+
+**读法。** 「己所不欲,勿施于人」量化到全部对 \((i,j)\) 后,与「制度对道德无关身份置换不变」是**同一个**数学对象;康德「只按你同时能愿其成为普遍法则的准则行动」中的「普遍」在置换意义下即 (b);罗尔斯把人放到无知之幕后,即取 (c) 的商。**这不是说三者在文本上互相化归**——它们的差别在 \(G\) 取什么(见评注 4.6),且康德的「准则」与「法则」、罗尔斯的「原则选择」都比一个准入谓词 \(T\) 多出结构——而是说它们共用一个不变性内核。
+

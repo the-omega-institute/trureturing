@@ -1,0 +1,10 @@
+ast_path: section/第四层-历时所有权
+fingerprints:
+  raw_sha256: sha256:ff016706442a6c18f849fc5b2e244ad3cb2985d1141700edd7ec8d28b86d0a61
+  normalized_sha256: sha256:ff016706442a6c18f849fc5b2e244ad3cb2985d1141700edd7ec8d28b86d0a61
+cas_ref: sha256:ff016706442a6c18f849fc5b2e244ad3cb2985d1141700edd7ec8d28b86d0a61
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -15,6 +15,14 @@ public sealed class LeanReportCacheWorkflowTests
             .Split("      - name: ", StringSplitOptions.None)[0];
         var productionStep = workflow.Split("      - name: Produce source-bound canonical Lean reports\n", StringSplitOptions.None)[1]
             .Split("      - name: ", StringSplitOptions.None)[0];
+        var reuseStep = workflow.Split(
+                "      - name: Serve candidate canonical Lean report from the cached address\n",
+                StringSplitOptions.None)[1]
+            .Split("      - name: ", StringSplitOptions.None)[0];
+        var stagingStep = workflow.Split(
+                "      - name: Stage candidate canonical Lean report cache\n",
+                StringSplitOptions.None)[1]
+            .Split("      - name: ", StringSplitOptions.None)[0];
         var pair = File.ReadAllText(Path.Combine(root, PairScriptPath));
 
         Assert.DoesNotContain("restore-keys:", restoreStep, StringComparison.Ordinal);
@@ -24,6 +32,8 @@ public sealed class LeanReportCacheWorkflowTests
         Assert.DoesNotContain("--module-cache-report", pair, StringComparison.Ordinal);
         Assert.DoesNotContain("--module-cache-manifest", pair, StringComparison.Ordinal);
         Assert.DoesNotContain("--modules-file", pair, StringComparison.Ordinal);
+        Assert.Contains(".materials.zip", reuseStep, StringComparison.Ordinal);
+        Assert.Contains(".materials.zip", stagingStep, StringComparison.Ordinal);
     }
 
 }

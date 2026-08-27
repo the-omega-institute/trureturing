@@ -1,0 +1,26 @@
+## 4.1 深度兼容性
+
+设
+
+\[
+d:V\to\mathbb N
+\]
+
+满足每条直接边严格增加：
+
+\[
+E(u,v)\Rightarrow d(u)<d(v).
+\]
+
+则沿任意非空路径仍有
+
+\[
+u\prec v\Rightarrow d(u)<d(v),
+\]
+
+沿可达关系有
+
+\[
+u\preceq v\Rightarrow d(u)\le d(v).
+\]
+

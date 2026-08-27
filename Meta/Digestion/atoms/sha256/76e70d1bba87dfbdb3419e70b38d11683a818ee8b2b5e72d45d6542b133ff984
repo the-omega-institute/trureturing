@@ -1,0 +1,52 @@
+### 证明
+
+显然：
+
+[
+C\preceq C^+.
+]
+
+另一方面，因为 (T=f\circ C)，所以：
+
+[
+C^+(x)
+======
+
+(C(x),f(C(x)))
+]
+
+完全由 (C(x)) 决定，因此：
+
+[
+C^+\preceq C.
+]
+
+(\square)
+
+但在 (C^+) 中，目标 (T) 可以直接通过第二投影读取：
+
+[
+T=\operatorname{snd}\circ C^+.
+]
+
+如果从 (C) 计算 (f) 很昂贵，而投影很便宜，则：
+
+[
+\boxed{
+\text{缓存没有增加语义分辨率，
+但增加了操作可达性。}
+}
+]
+
+因此必须区分：
+
+[
+\boxed{
+\text{semantic refinement}
+\quad\text{与}\quad
+\text{computational enrichment}.
+}
+]
+
+---
+

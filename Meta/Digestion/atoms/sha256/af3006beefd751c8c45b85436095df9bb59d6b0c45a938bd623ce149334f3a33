@@ -1,0 +1,19 @@
+## 定义 75.1（自我生成系统）
+
+一个自我生成系统由四个映射／kernel 组成：
+
+$$
+\begin{aligned}
+\text{policy}:&\quad
+S:M\times Q\to\operatorname{Dist}(A),\\
+\text{world/record}:&\quad
+R:Q\times A\to\operatorname{Dist}(Y\times Q'),\\
+\text{ledger append}:&\quad
+L:\Lambda\times A\times Y\to\Lambda',\\
+\text{self update}:&\quad
+U:M\times\Lambda'\to M'.
+\end{aligned}
+$$
+
+并要求 $M$ 对未来 policy 充分。
+

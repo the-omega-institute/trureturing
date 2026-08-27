@@ -1,0 +1,10 @@
+ast_path: section/互相奇异
+fingerprints:
+  raw_sha256: sha256:a724aff10c186a6522442dbd8e6a405e1322109f849767fee2fda854bf3e7f29
+  normalized_sha256: sha256:a724aff10c186a6522442dbd8e6a405e1322109f849767fee2fda854bf3e7f29
+cas_ref: sha256:a724aff10c186a6522442dbd8e6a405e1322109f849767fee2fda854bf3e7f29
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

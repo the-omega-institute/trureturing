@@ -20,6 +20,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.True(result.ExitCode == 0, Diagnostics(result));
         Assert.Equal(before + 2, fixture.CommitCount());
         Assert.Equal(1, fixture.FreezeCount());
+        Assert.Equal(2, fixture.FreezeProbeCount());
         Assert.True(File.Exists(fixture.ReceiptPath));
         Assert.Empty(fixture.Status());
         Assert.Equal(
@@ -423,19 +424,23 @@ public sealed partial class DepositCoverWorkflowScriptTests
         private readonly TemporaryDirectory temporary = new();
         private readonly string binPath;
         private readonly string callsPath;
+        private readonly string freezeProbePath;
 
         internal TransactionFixture()
         {
             Root = temporary.Path;
             binPath = Path.Combine(Root, "bin");
             callsPath = Path.Combine(Root, "calls");
+            freezeProbePath = Path.Combine(Root, "freeze-probes");
             performanceLedgerPath = Path.Combine(performance.Path, "events.jsonl");
             Directory.CreateDirectory(binPath);
             CopyScript();
             File.Copy(
                 Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"),
                 Path.Combine(Root, "Makefile"));
-            WriteFile(".gitignore", ".lake/\n.report-source\nbin/\ncalls\nfail-ledger-once\n");
+            WriteFile(
+                ".gitignore",
+                ".lake/\n.report-source\nbin/\ncalls\nfreeze-probes\nfail-ledger-once\n");
             WriteFile(LeanPath, "theorem probe : True := by trivial\n");
             WriteFile(DefinitionPath, "definition baseline\n");
             WriteFile(EmissionPath, "emission: baseline\n");

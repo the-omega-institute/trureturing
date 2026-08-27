@@ -1,0 +1,26 @@
+## 10.1 过程 monoid 完成
+
+设 monoid S 作用于 X。定义完成 profile：
+
+$$
+C_S(q)(x)=(q(s\cdot x))_{s\in S}.
+$$
+
+完成 residual：
+
+$$
+R_{q,S}=ker(C_S(q))
+=
+\bigcap_{s\in S}(s\times s)^{-1}(ker q).
+$$
+
+仓库 `ControlQuotientUniversalMinimality` 已机器验证：按所有 monoid-indexed public outcomes 取商，是所有能恢复当前读出、对动作封闭并决定全部动作后果的表示中规范最粗的表示。
+
+定义控制潜能：
+
+$$
+Potential_{q,S}(x)=[x]_{R_{q,S}}.
+$$
+
+---
+

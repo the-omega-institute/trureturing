@@ -1,0 +1,15 @@
+## 定理 16.2（三环画像满射且纤维大小为二）
+
+\[
+\bar\Sigma_3:
+(\mathbb Z/60\mathbb Z)^\times
+\twoheadrightarrow
+\{\mathrm S,\mathrm I\}^3
+\]
+
+满射，且每个纤维恰有两个元素。
+
+### 证明
+
+单位剩余类共有 \(\varphi(60)=16\) 个。附录 B 给出八种分裂模式，每种恰由两个剩余类实现。\(\square\)
+

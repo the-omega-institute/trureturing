@@ -1,0 +1,10 @@
+ast_path: section/209-信任传递需要目标类型对齐
+fingerprints:
+  raw_sha256: sha256:01cc0d8a6b7c77022cae9ebc5743ded1555e9fde65f28013858895e454298d67
+  normalized_sha256: sha256:01cc0d8a6b7c77022cae9ebc5743ded1555e9fde65f28013858895e454298d67
+cas_ref: sha256:01cc0d8a6b7c77022cae9ebc5743ded1555e9fde65f28013858895e454298d67
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,36 @@
+## 定理 297.1（模型不确定性扩大使安全集缩小）
+
+若：
+
+[
+\mathcal M\subseteq\mathcal M',
+]
+
+则：
+
+[
+\boxed{
+\operatorname{Safe}*\alpha(\mathcal M')
+\subseteq
+\operatorname{Safe}*\alpha(\mathcal M).
+}
+]
+
+### 证明
+
+对更大的模型集合取上确界，不会降低最坏风险。 (\square)
+
+因此，预防性约束不是单一预测概率的结果，而取决于：
+
+[
+\boxed{
+\text{允许哪些模型进入风险审计}
++
+\text{风险阈值如何规定}.
+}
+]
+
+两者都包含准入和规范 doctrine。
+
+---
+

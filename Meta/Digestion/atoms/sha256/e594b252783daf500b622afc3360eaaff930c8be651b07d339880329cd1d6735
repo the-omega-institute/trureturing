@@ -1,0 +1,12 @@
+## 条件命题 32.1（分量分类）
+
+在上述商接口完成后，应有
+
+$$
+\operatorname{Joined}(x,y)
+\iff
+\operatorname{Comp}(x)=\operatorname{Comp}(y).
+$$
+
+这与定理 31.2 等价地表达“路径分量就是 real-flow 轨道”。当前仓库已经机器证明轨道分类，但尚未公开完成 $K_\infty/\mathbb Z$ 的 typed quotient/jump API；因此本命题在本文中只作标准模型的条件封装，不冒充已有 Lean 声明。
+

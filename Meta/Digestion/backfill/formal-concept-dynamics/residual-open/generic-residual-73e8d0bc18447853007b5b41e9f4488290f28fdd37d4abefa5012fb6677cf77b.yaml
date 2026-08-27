@@ -1,0 +1,10 @@
+ast_path: section/242-任何命题都可以通过删去世界而变成-必然
+fingerprints:
+  raw_sha256: sha256:73e8d0bc18447853007b5b41e9f4488290f28fdd37d4abefa5012fb6677cf77b
+  normalized_sha256: sha256:73e8d0bc18447853007b5b41e9f4488290f28fdd37d4abefa5012fb6677cf77b
+cas_ref: sha256:73e8d0bc18447853007b5b41e9f4488290f28fdd37d4abefa5012fb6677cf77b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

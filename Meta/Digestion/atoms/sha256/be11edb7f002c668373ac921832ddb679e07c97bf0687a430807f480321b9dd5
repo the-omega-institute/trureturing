@@ -1,0 +1,40 @@
+## 定理 102.3（线性重建噪声界）
+
+若观测模型为
+
+$$
+y=Mx+\eta
+$$
+
+并使用 Moore–Penrose 最小二乘重建，则
+
+$$
+\boxed{
+\|\widehat x-x\|_2
+\le
+\frac{\|\eta\|_2}{\sqrt\alpha}.
+}
+$$
+
+### 证明
+
+$$
+\widehat x-x=M^\dagger\eta,
+$$
+
+而
+
+$$
+\|M^\dagger\|_{2\to2}
+=
+1/\sigma_{\min}(M)
+=
+1/\sqrt\alpha.
+$$
+
+∎
+
+仓库 `ObserverMetric` 当前度量的是读出对更新的敏感度；本节度量的是状态差对观察者的可见度。二者分别属于 update-side 与 state-side geometry。
+
+---
+

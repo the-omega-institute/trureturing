@@ -1,0 +1,10 @@
+ast_path: section/110-建议追加-Lean-模块树
+fingerprints:
+  raw_sha256: sha256:e0d643369fdb25168ca77168f96c94c8019851dce1fd266e885d2ed1b7e5a6e2
+  normalized_sha256: sha256:e0d643369fdb25168ca77168f96c94c8019851dce1fd266e885d2ed1b7e5a6e2
+cas_ref: sha256:e0d643369fdb25168ca77168f96c94c8019851dce1fd266e885d2ed1b7e5a6e2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

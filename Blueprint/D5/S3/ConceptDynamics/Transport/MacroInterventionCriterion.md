@@ -6,7 +6,7 @@ Macro interventions are characterized by empty carry.
 
 **Theorem 1.1 (Existence excludes carry; empty carry gives unique descent).**
 
-$$\forall X, Y, B_{C}, B_{D}: \operatorname{Type},\ [\operatorname{Fintype}(X)], [\operatorname{DecidableEq}(X)], [\operatorname{Fintype}(B_{C})], [\operatorname{DecidableEq}(B_{C})], [\operatorname{Fintype}(B_{D})], [\operatorname{DecidableEq}(B_{D})],\ F: X \to Y, C: X \to B_{C}, D: Y \to B_{D},\ (\exists G: B_{C} \to B_{D}, \operatorname{MacroIntervention}(F, C, D, G)) \Rightarrow \operatorname{Carry}(F, C, D) = \emptyset \land \operatorname{Carry}(F, C, D) = \emptyset \Rightarrow \exists! \overline{G}: \operatorname{range}(C) \to B_{D}, \operatorname{EffectiveImageDescent}(F, C, D, \overline{G}).$$
+$$\forall X, Y, B_{C}, B_{D}: \operatorname{Type},\ [\operatorname{Fintype}(X)], [\operatorname{DecidableEq}(X)], [\operatorname{Fintype}(B_{C})], [\operatorname{DecidableEq}(B_{C})], [\operatorname{Fintype}(B_{D})], [\operatorname{DecidableEq}(B_{D})],\ F: X \to Y, C: X \to B_{C}, D: Y \to B_{D},\ {((\exists G: B_{C} \to B_{D}, \operatorname{MacroIntervention}(F, C, D, G)) \Rightarrow \operatorname{IsEmpty}(\operatorname{Carry}(F, C, D)))} \land {(\operatorname{IsEmpty}(\operatorname{Carry}(F, C, D)) \Rightarrow \exists! \overline{G}: \operatorname{range}(C) \to B_{D}, \operatorname{EffectiveImageDescent}(F, C, D, \overline{G}))}.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Transport/MacroInterventionCriterion.macro_intervention_carry_criterion` (`✓ std3`). ∎
 

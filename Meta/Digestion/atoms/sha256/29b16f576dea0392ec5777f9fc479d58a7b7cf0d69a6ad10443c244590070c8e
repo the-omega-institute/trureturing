@@ -1,0 +1,46 @@
+## 定理 455.1
+
+若 (\widehat T_C) 在实际状态 (x) 上回答，则：
+
+[
+\widehat T_D
+]
+
+也在 (x) 上回答相同目标值。
+
+因此：
+
+[
+\boxed{
+\text{安全可回答域沿概念精化单调扩大。}
+}
+]
+
+给定概率分布，定义安全覆盖率：
+
+[
+\operatorname{Cov}_{\mathrm{safe}}(C;T)
+=======================================
+
+\Pr
+\left[
+\widehat T_C(C(X))
+\neq
+\bot_{\mathrm{ans}}
+\right].
+]
+
+则：
+
+[
+C\preceq D
+\Longrightarrow
+\boxed{
+\operatorname{Cov}*{\mathrm{safe}}(C;T)
+\le
+\operatorname{Cov}*{\mathrm{safe}}(D;T).
+}
+]
+
+---
+

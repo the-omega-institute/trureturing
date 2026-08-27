@@ -1,0 +1,40 @@
+## 定理 100.1（非正交态不能单次完美区分）
+
+若两个纯态可由一次测量无误区分，则它们正交。
+
+### 证明
+
+若某效果 $E$ 完美识别 $|\psi\rangle$ 而排除 $|\phi\rangle$，则
+
+$$
+\langle\psi|E|\psi\rangle=1,
+$$
+
+$$
+\langle\phi|E|\phi\rangle=0.
+$$
+
+由 $0\le E\le I$ 得
+
+$$
+E|\psi\rangle=|\psi\rangle,
+$$
+
+$$
+E|\phi\rangle=0.
+$$
+
+所以
+
+$$
+\langle\phi|\psi\rangle
+=
+\langle\phi|E|\psi\rangle
+=
+0.
+$$
+
+∎
+
+因此完整层析要求重复制备、先验限制或额外副本，不能从单个任意未知态中一次读出全部参数。
+

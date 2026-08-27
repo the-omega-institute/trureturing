@@ -1,0 +1,38 @@
+## 定理 228.1（可数 pairwise singular 的共同分割）
+
+成对互奇推出：
+
+\[
+f_nf_m=0
+\quad
+\lambda\text{-a.e.}
+\qquad(n\neq m).
+\]
+
+因此存在两两不交的可测集 \((A_n)_n\)，满足：
+
+\[
+\boxed{
+\mathbf P_n(A_n)=1
+\qquad
+\forall n.
+}
+\]
+
+### 证明纲要
+
+令：
+
+\[
+S_n=\{f_n>0\}.
+\]
+
+成对互奇使：
+
+\[
+\lambda(S_n\cap S_m)=0
+\qquad(n\neq m).
+\]
+
+递归定义：
+
