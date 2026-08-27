@@ -32,8 +32,8 @@ theorem every_reachable_behavior_class_is_reachable
     Function.Surjective
       (behaviorClass (M := M) (X := X) (B := B) anchor readout) := by
   intro behavior
-  refine Quotient.inductionOn behavior ?_
-  rintro ⟨state, action, action_reaches_state⟩
+  obtain ⟨reachable_state, rfl⟩ := Quotient.mk_surjective behavior
+  rcases reachable_state with ⟨state, action, action_reaches_state⟩
   refine ⟨action, ?_⟩
   change Quotient.mk _ (orbitPoint anchor action) =
     Quotient.mk _ ⟨state, ⟨action, action_reaches_state⟩⟩
