@@ -1,0 +1,10 @@
+ast_path: section/70-完整动态主体状态与未来可作者化策略集
+fingerprints:
+  raw_sha256: sha256:076ce00901655ce232bd9610e405128172f0773af9eb2080ff5c23e76d64138e
+  normalized_sha256: sha256:076ce00901655ce232bd9610e405128172f0773af9eb2080ff5c23e76d64138e
+cas_ref: sha256:076ce00901655ce232bd9610e405128172f0773af9eb2080ff5c23e76d64138e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

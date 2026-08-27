@@ -1,0 +1,47 @@
+# 64. 来源可识别性由主角度控制
+
+设自我行为空间为 $S_O$，外部行为空间为 $S_E$，并假设
+
+$$
+S_O\cap S_E=0.
+$$
+
+令二者最小主角度为 $\theta\in(0,\pi/2]$，即
+
+$$
+\cos\theta=\|P_OP_E\|.
+$$
+
+对来源求和算子
+
+$$
+J:S_O\oplus S_E\to Y,
+\quad J(u,v)=u+v,
+$$
+
+有
+
+$$
+\boxed{
+\sigma_{\min}(J)=\sqrt{1-\cos\theta},
+\qquad
+\sigma_{\max}(J)=\sqrt{1+\cos\theta}.
+}
+$$
+
+因此
+
+$$
+\boxed{
+\kappa_{\mathrm{prov}}
+=
+\sqrt{\frac{1+\cos\theta}{1-\cos\theta}}
+=
+\cot(\theta/2).
+}
+$$
+
+当 $\theta=\pi/2$ 时来源正交且条件数为 $1$；当 $\theta\to0$ 时条件数发散。作者性不只需要“没有完全重叠”，还需要足够大的来源分离角。
+
+---
+

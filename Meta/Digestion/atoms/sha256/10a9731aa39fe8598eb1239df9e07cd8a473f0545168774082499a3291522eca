@@ -1,0 +1,32 @@
+# 75. 作者信息受决定—执行—世界—账本链中的最窄通道限制
+
+设条件于公共上下文 $Q$ 有 Markov 链
+
+$$
+D\to Z_1\to Z_2\to\cdots\to Z_k\to R,
+$$
+
+其中中间接口可表示运动命令、执行器、世界后果、传感器与记录层。
+
+由条件数据处理：
+
+$$
+\boxed{I(D;R\mid Q)\le I(D;Z_i\mid Q)\quad\forall i.}
+$$
+
+若第 $i$ 个信道容量不超过 $C_i$，则
+
+$$
+\boxed{I(D;R\mid Q)\le\min_i C_i.}
+$$
+
+线性串联系统 $H=H_k\cdots H_1$ 同样满足
+
+$$
+\operatorname{rank}H\le\min_i\operatorname{rank}H_i.
+$$
+
+内部拥有复杂理由不表示这些理由能被执行、世界保存或公共账本恢复。主体能力由整个链条的瓶颈共同限制。
+
+---
+

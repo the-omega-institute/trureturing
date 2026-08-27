@@ -1,0 +1,41 @@
+## 定义 63.1（$r$ 维代理储备）
+
+$$
+\boxed{
+\operatorname{Reserve}_r(x)=\sigma_r(H(x)).
+}
+$$
+
+由最佳低秩逼近定理：
+
+$$
+\boxed{
+\operatorname{dist}
+(H(x),\{K:\operatorname{rank}K\le r-1\})
+=
+\sigma_r(H(x)).
+}
+$$
+
+所以小于该值的任意算子扰动都无法摧毁第 $r$ 个代理维度。
+
+若 $H(x)$ 连续依赖 $x$，奇异值亦连续；代理秩只能在
+
+$$
+\sigma_r(H(x))=0
+$$
+
+的边界上改变。可以把
+
+$$
+S_{r,\varepsilon}
+=
+\{x:\sigma_r(H(x))\ge\varepsilon\}
+$$
+
+作为“至少保持 $r$ 个代理维度且具有 $\varepsilon$ 裕量”的安全区，再计算其鲁棒自由核。
+
+因此主体性不仅有维数，还有离相变边界多远的**自由储备**。
+
+---
+

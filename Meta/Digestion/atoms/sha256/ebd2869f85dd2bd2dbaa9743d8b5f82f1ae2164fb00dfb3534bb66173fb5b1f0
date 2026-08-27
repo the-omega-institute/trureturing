@@ -1,0 +1,39 @@
+# 56. 行动顺序改变自由核：∃∀ 与 ∀∃ 不同
+
+若环境先揭示扰动，观察者随后响应，则前驱变为
+
+$$
+\boxed{
+\operatorname{Pre}_{\forall\exists}(Z)
+=
+\{x\in S_{\mathrm{ag}}:
+\forall e\in\mathcal E(x),
+\ \exists a\in\mathcal A(x,e),
+\ F(x,a,e)\in Z\}.
+}
+$$
+
+逻辑上总有
+
+$$
+\boxed{
+\operatorname{Pre}_{\exists\forall}(Z)
+\subseteq
+\operatorname{Pre}_{\forall\exists}(Z).
+}
+$$
+
+因此观察者必须先承诺动作时的鲁棒自由核，不大于观察环境后再响应时的自由核。
+
+这给出一个精确结论：
+
+$$
+\boxed{
+\text{自由不只取决于动作集合，也取决于信息到达与行动承诺的顺序。}
+}
+$$
+
+“先知道再选”可以增加主体能力；“先承诺再揭示环境”会要求更强的单一鲁棒动作。
+
+---
+

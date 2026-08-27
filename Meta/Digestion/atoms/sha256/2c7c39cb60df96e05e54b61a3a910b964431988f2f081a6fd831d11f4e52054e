@@ -1,0 +1,10 @@
+## 定义 58.1（自由等价历史）
+
+$$
+\boxed{
+h\sim_{\mathrm{free}}h'
+\iff
+\mathsf{Win}(h)=\mathsf{Win}(h').
+}
+$$
+

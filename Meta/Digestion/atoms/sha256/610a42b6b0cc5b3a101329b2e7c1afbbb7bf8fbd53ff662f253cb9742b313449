@@ -1,0 +1,20 @@
+## 定义 55.2（鲁棒自由保持核）
+
+$$
+\boxed{
+\mathsf{FreeKernel}_{\mathrm{rob}}
+=
+\nu Z.\operatorname{Pre}_{\exists\forall}(Z).
+}
+$$
+
+有限状态情形从
+
+$$
+Z_0=S_{\mathrm{ag}},
+\qquad
+Z_{n+1}=\operatorname{Pre}_{\exists\forall}(Z_n)
+$$
+
+递减迭代，最终稳定于该最大固定点。
+

@@ -1,0 +1,26 @@
+## 本文定理 58.1（普适最小性）
+
+若历史接口 $r:\mathcal H\to R$ 足以决定 $\mathsf{Win}(h)$，即存在 $G$ 使
+
+$$
+\mathsf{Win}(h)=G(r(h)),
+$$
+
+则存在唯一因子
+
+$$
+\operatorname{Im}(r)\to M_{\mathrm{free}}.
+$$
+
+证明仍是纤维常值与 kernel factorization。∎
+
+完整策略充分自我决定一切未来策略画像，因此自然细化自由充分自我：
+
+$$
+M_{\mathrm{policy}}\longrightarrow M_{\mathrm{free}}.
+$$
+
+自由充分自我只保存“以后还有哪些属于自己的可行策略”，而不是保存全部行为细节。
+
+---
+

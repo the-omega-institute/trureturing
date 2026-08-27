@@ -1,0 +1,10 @@
+ast_path: section/64-来源可识别性由主角度控制
+fingerprints:
+  raw_sha256: sha256:f60df6098a20a51e9ed0d4a74a6dc9c644e4c8558db15b2b5178aa17653a4103
+  normalized_sha256: sha256:f60df6098a20a51e9ed0d4a74a6dc9c644e4c8558db15b2b5178aa17653a4103
+cas_ref: sha256:f60df6098a20a51e9ed0d4a74a6dc9c644e4c8558db15b2b5178aa17653a4103
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

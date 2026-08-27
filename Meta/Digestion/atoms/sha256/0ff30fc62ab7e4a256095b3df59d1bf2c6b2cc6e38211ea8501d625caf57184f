@@ -1,0 +1,28 @@
+# 74. 容错选择的 Fano 下界
+
+设有 $r$ 个等概率控制类别 $C\in\{1,\ldots,r\}$，不同类别需要不同安全策略。观察记录为 $Z$，由 $Z$ 推断类别的错误概率不超过 $\varepsilon$。
+
+Fano 界给出
+
+$$
+H(C\mid Z)
+\le
+h_2(\varepsilon)+\varepsilon\log_2(r-1),
+$$
+
+所以
+
+$$
+\boxed{
+I(C;Z)
+\ge
+\log_2r
+-h_2(\varepsilon)
+-\varepsilon\log_2(r-1).
+}
+$$
+
+这给出主体维持的率—失效率边界：允许一定概率的安全选择失败，可以降低所需信息，但不能把需要区分的控制类别免费消除。
+
+---
+
