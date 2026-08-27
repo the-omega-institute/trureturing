@@ -287,8 +287,8 @@ public sealed partial class CoverAtomTests
                 CoverWorld.Raw(currentFiles),
                 CoverWorld.Raw(baselineFiles)),
             new FakeLeanReportSource(inputs.Report),
-            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
-
+            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
+            CoverWorld.TimeProvider);
         var result = environment.CoverAtom(
             ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline",
                 "--envelope", inputs.EnvelopePath]);
@@ -322,7 +322,8 @@ public sealed partial class CoverAtomTests
                 CoverWorld.Raw(currentFiles),
                 CoverWorld.Raw(baselineFiles)),
             new FakeLeanReportSource(inputs.Report),
-            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
+            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
+            CoverWorld.TimeProvider);
 
         var result = environment.CoverAtom(
             ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline",
@@ -401,11 +402,11 @@ public sealed partial class CoverAtomTests
                 CoverWorld.Raw(currentFiles),
                 CoverWorld.Raw(baselineFiles)),
             new FakeLeanReportSource(inputs.Report),
-            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
+            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
+            CoverWorld.TimeProvider);
         var effectiveArgs = args
             ?? ["--cover-atom", spec.AtomId, "--gid", inputs.Gid, "--base", "baseline",
                 "--envelope", inputs.EnvelopePath];
-
         var result = environment.CoverAtom(effectiveArgs);
 
         var afterDocument = BackfillInventoryLoader.LoadRoot(temporary.Path);
@@ -558,6 +559,8 @@ internal sealed record CoverSpec
 internal static partial class CoverWorld
 {
     internal const string DefaultAtomId = "cover-1";
+    internal static readonly DateTimeOffset RecordedAtUtc = new(2026, 8, 26, 4, 3, 2, TestBudgets.ZeroDuration);
+    internal static TimeProvider TimeProvider { get; } = new FixedTimeProvider(RecordedAtUtc);
 
     internal static CoverSpec StaleReceiptSpec() => new()
     {
@@ -582,7 +585,8 @@ internal static partial class CoverWorld
                 Raw(currentFiles),
                 Raw(inputs.Baseline)),
             new FakeLeanReportSource(inputs.Report),
-            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
+            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
+            TimeProvider);
 
     internal static RawRepositorySnapshot Raw(IReadOnlyDictionary<string, string> files) =>
         RawRepositorySnapshot.Create(files.Select(pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
@@ -792,3 +796,5 @@ internal static partial class CoverWorld
             .ToImmutableArray();
     }
 }
+
+internal sealed class FixedTimeProvider(DateTimeOffset utcNow) : TimeProvider { public override DateTimeOffset GetUtcNow() => utcNow; }

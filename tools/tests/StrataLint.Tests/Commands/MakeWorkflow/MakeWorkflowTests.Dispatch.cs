@@ -34,7 +34,10 @@ public sealed partial class MakeWorkflowTests
             Assert.Contains(project, engineeringStep, StringComparison.Ordinal);
         }
         Assert.Contains("dotnet test \"$project\"", engineeringStep, StringComparison.Ordinal);
-        Assert.Contains("ENGINEERING_BASE_FLOOR_EXECUTED", engineeringStep, StringComparison.Ordinal);
+        Assert.Contains(
+            "verify-trx --results-directory \"$assembly_results\" --required-assembly \"$assembly\"",
+            engineeringStep,
+            StringComparison.Ordinal);
         Assert.DoesNotContain("--filter", engineeringStep, StringComparison.Ordinal);
         Assert.DoesNotContain("git diff", engineeringStep, StringComparison.Ordinal);
     }
@@ -148,9 +151,6 @@ public sealed partial class MakeWorkflowTests
         var cacheEnsure = File.ReadAllText(Path.Combine(root, LeanCacheEnsureScriptPath));
         Assert.DoesNotContain("[[ -L", cacheEnsure, StringComparison.Ordinal);
         Assert.DoesNotContain("[[ -d", cacheEnsure, StringComparison.Ordinal);
-        var perfEvents = File.ReadAllText(Path.Combine(root, PerfEventScriptPath));
-        Assert.DoesNotContain(".lake/build", perfEvents, StringComparison.Ordinal);
-        Assert.Contains("cache_state\":null", perfEvents, StringComparison.Ordinal);
         Assert.Contains(ScribeScriptPath + " emit", Recipe(makefile, "emit"), StringComparison.Ordinal);
         Assert.Contains(IngestScriptPath, Recipe(makefile, "ingest"), StringComparison.Ordinal);
         var showAtomRecipe = Recipe(makefile, "show-atom");
@@ -255,8 +255,11 @@ public sealed partial class MakeWorkflowTests
 
         Assert.Contains("$(HERE)/scripts/dotnet-build.sh", Recipe(makefile, "dotnet"), StringComparison.Ordinal);
         var testRecipe = Recipe(makefile, "test");
-        Assert.Contains("dotnet test $(HERE)/StrataLint.sln", testRecipe, StringComparison.Ordinal);
+        Assert.Contains("scripts/dotnet-test.sh $(HERE)/StrataLint.sln", testRecipe, StringComparison.Ordinal);
         Assert.DoesNotContain("--filter", testRecipe, StringComparison.Ordinal);
+        var dotnetTest = File.ReadAllText(Path.Combine(root, "tools", "scripts", "dotnet-test.sh"));
+        Assert.Contains("dotnet test \"$@\"", dotnetTest, StringComparison.Ordinal);
+        Assert.Contains("verify-trx --results-directory \"$RESULTS_DIRECTORY\"", dotnetTest, StringComparison.Ordinal);
         Assert.Contains(
             "StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
             Recipe(makefile, "engineering-tests"),
@@ -272,8 +275,6 @@ public sealed partial class MakeWorkflowTests
         Assert.True(
             File.Exists(Path.Combine(root, RendererContractUpdateScriptPath)),
             $"{RendererContractUpdateScriptPath} is named by the update-renderer-contract recipe but is absent");
-        Assert.Contains("$(HERE)/scripts/perf-report.sh", Recipe(makefile, "perf-report"), StringComparison.Ordinal);
-        Assert.Contains("$(HERE)/../Golden/perf-budgets.toml", Recipe(makefile, "perf-report"), StringComparison.Ordinal);
         Assert.Contains("$(HERE)/scripts/clean-lanes.sh", Recipe(makefile, "clean-lanes"), StringComparison.Ordinal);
         Assert.DoesNotContain("refactor-p0-0-gate-authority", makefile, StringComparison.Ordinal);
         Assert.DoesNotContain("--old-build", makefile, StringComparison.Ordinal);
@@ -509,20 +510,20 @@ public sealed partial class MakeWorkflowTests
     public void HelpRunsAndNamesEveryTarget()
     {
         var root = TestRepositoryLayout.FindRoot();
-        var rootResult = BoundedProcessRunner.Run(
+        var rootResult = TestProcessRunner.Run(
             "make",
             ["help"],
             root,
             BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
-        var toolsResult = BoundedProcessRunner.Run(
+        var toolsResult = TestProcessRunner.Run(
             "make",
             ["-C", "tools", "help"],
             root,
             BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
-        var directToolsResult = BoundedProcessRunner.Run(
+        var directToolsResult = TestProcessRunner.Run(
             "make",
             ["-f", "tools/Makefile", "help"],
             root,

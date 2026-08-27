@@ -235,7 +235,7 @@ public sealed partial class MakeWorkflowTests
             File.AppendAllText(path, "changed\n", new UTF8Encoding(false));
         }
 
-        internal ProcessOutput Run(string? baseRevisionOverride = null) => BoundedProcessRunner.Run(
+        internal ProcessOutput Run(string? baseRevisionOverride = null) => TestProcessRunner.Run(
             "/bin/bash",
             [
                 "-c",
@@ -259,7 +259,7 @@ public sealed partial class MakeWorkflowTests
 
         private string RunGit(IReadOnlyList<string> arguments)
         {
-            var result = BoundedProcessRunner.Run(
+            var result = TestProcessRunner.Run(
                 "git",
                 arguments,
                 Repository,

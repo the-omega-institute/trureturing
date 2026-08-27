@@ -29,7 +29,7 @@ public sealed partial class MakeWorkflowTests
         WriteExecutable(
             Path.Combine(binDirectory, "dotnet"),
             "#!/usr/bin/env bash\nprintf '%s|%s\\n' \"$STRATALINT_LEAN_REPORT\" \"$*\" >> \"$SCRIBE_LOG\"");
-        var headResult = BoundedProcessRunner.Run(
+        var headResult = TestProcessRunner.Run(
             "git",
             ["rev-parse", "HEAD"],
             root,
@@ -49,7 +49,7 @@ public sealed partial class MakeWorkflowTests
             esac
             """);
 
-        var result = BoundedProcessRunner.Run(
+        var result = TestProcessRunner.Run(
             "/bin/bash",
             [
                 "-c",
@@ -98,7 +98,7 @@ public sealed partial class MakeWorkflowTests
 
         foreach (var report in new[] { emptyReport, missingReport })
         {
-            var result = BoundedProcessRunner.Run(
+            var result = TestProcessRunner.Run(
                 "/bin/bash",
                 [
                     "-c",
@@ -145,7 +145,7 @@ public sealed partial class MakeWorkflowTests
             exit 91
             """);
 
-        var result = BoundedProcessRunner.Run(
+        var result = TestProcessRunner.Run(
             "/bin/bash",
             [
                 "-c",
@@ -193,13 +193,7 @@ public sealed partial class MakeWorkflowTests
         var candidateDll = Path.Combine(candidateRoot, "bin", "candidate.dll");
         Directory.CreateDirectory(Path.GetDirectoryName(candidateDll)!);
         Directory.CreateDirectory(binDirectory);
-        Directory.CreateDirectory(Path.Combine(candidateRoot, "tools", "scripts", "lib"));
         File.WriteAllText(candidateDll, string.Empty);
-        File.WriteAllText(
-            Path.Combine(candidateRoot, "tools", "scripts", "lib", "perf-event-lib.sh"),
-            "perf_make_spool_dir() { mktemp -d; }\n"
-            + "perf_capture_event() { :; }\n"
-            + "perf_flush_events() { :; }\n");
         WriteHarnessGateChainReportPair(candidateRoot);
 
         WriteHarnessGateChainGitShim(binDirectory, candidateRoot);
@@ -209,7 +203,7 @@ public sealed partial class MakeWorkflowTests
             "#!/usr/bin/env bash\n[[ \"${1:-}\" == --version ]] || exit 64\nexit 0");
         WriteHarnessGateChainMakeShim(binDirectory);
 
-        var result = BoundedProcessRunner.Run(
+        var result = TestProcessRunner.Run(
             "/bin/bash",
             [
                 "-c",
@@ -258,13 +252,7 @@ public sealed partial class MakeWorkflowTests
         var baseTipSha = diverged ? GateBaseTipSha : GateForkSha;
         Directory.CreateDirectory(Path.GetDirectoryName(candidateDll)!);
         Directory.CreateDirectory(binDirectory);
-        Directory.CreateDirectory(Path.Combine(candidateRoot, "tools", "scripts", "lib"));
         File.WriteAllText(candidateDll, string.Empty);
-        File.WriteAllText(
-            Path.Combine(candidateRoot, "tools", "scripts", "lib", "perf-event-lib.sh"),
-            "perf_make_spool_dir() { mktemp -d; }\n"
-            + "perf_capture_event() { :; }\n"
-            + "perf_flush_events() { :; }\n");
         var gitStateBefore = Encoding.UTF8.GetBytes(diverged
             ? $"HEAD {GateCandidateSha} {GateForkSha}\nBASE {baseTipSha} 0000000000000000000000000000000000000003 {GateForkSha}\nrefs {GateCandidateSha} {baseTipSha}\n"
             : $"HEAD {GateCandidateSha} {baseTipSha}\nrefs {GateCandidateSha} {baseTipSha}\n");
@@ -284,7 +272,7 @@ public sealed partial class MakeWorkflowTests
             "#!/usr/bin/env bash\n[[ \"${1:-}\" == --version ]] || exit 64\nexit 0");
         WriteHarnessGateChainMakeShim(binDirectory);
 
-        var result = BoundedProcessRunner.Run(
+        var result = TestProcessRunner.Run(
             "/bin/bash",
             [
                 "-c",
@@ -395,7 +383,7 @@ public sealed partial class MakeWorkflowTests
         WriteExecutable(Path.Combine(binDirectory, "lake"), "#!/usr/bin/env bash\nexit 0");
         WriteObservedBaseGitShim(binDirectory, candidateRoot, baseArgument);
 
-        var result = BoundedProcessRunner.Run(
+        var result = TestProcessRunner.Run(
             "/bin/bash",
             [
                 "-c",
@@ -441,14 +429,9 @@ public sealed partial class MakeWorkflowTests
         var candidateRoot = Path.Combine(fixture.Path, "candidate");
         var homeDirectory = Path.Combine(fixture.Path, "home");
         var binDirectory = Path.Combine(homeDirectory, ".dotnet");
-        Directory.CreateDirectory(Path.Combine(candidateRoot, "tools", "scripts", "lib"));
         Directory.CreateDirectory(binDirectory);
-        File.WriteAllText(
-            Path.Combine(candidateRoot, "tools", "scripts", "lib", "perf-event-lib.sh"),
-            "perf_make_spool_dir() { mktemp -d; }\n"
-                + "perf_capture_event() { :; }\n"
-                + "perf_flush_events() { :; }\n");
         CopyAdmissionBaseLibraryIfPresent(candidateRoot);
+        CopyResourceObservationLibrary(candidateRoot);
         WriteInvalidMergeBaseGitShim(binDirectory, candidateRoot);
         WriteExecutable(
             Path.Combine(binDirectory, "dotnet"),
@@ -461,7 +444,7 @@ public sealed partial class MakeWorkflowTests
         var command = scriptPath == PreflightScriptPath
             ? "HOME=\"$1\" BASE=\"$2\" PATH=\"$3:/usr/bin:/bin\" MERGE_BASE_MODE=\"$4\" exec /bin/bash \"$5\""
             : "HOME=\"$1\" PATH=\"$3:/usr/bin:/bin\" MERGE_BASE_MODE=\"$4\" exec /bin/bash \"$5\" --candidate \"$6\" --base \"$2\" --skip-engineering";
-        return BoundedProcessRunner.Run(
+        return TestProcessRunner.Run(
             "/bin/bash",
             [
                 "-c",
@@ -572,7 +555,7 @@ public sealed partial class MakeWorkflowTests
                   count="$(cat "$GATE_BASE_REF_COUNT" 2>/dev/null || printf 0)"
                   count="$((count + 1))"
                   printf '%s\n' "$count" > "$GATE_BASE_REF_COUNT"
-                  if [[ "$count" -ge 3 ]]; then
+                  if [[ "$count" -ge 2 ]]; then
                     printf '%s\n' '{{GateAdvancedBaseTipSha}}'
                   else
                     printf '%s\n' '{{GateBaseTipSha}}'
@@ -624,6 +607,14 @@ public sealed partial class MakeWorkflowTests
             case "${1:-}" in
               --version|restore) exit 0 ;;
               build)
+                if [[ "$*" == *BannedApiCompileFailProof.csproj* ]]; then
+                  while IFS=: read -r line _; do
+                    printf '%s(%s,1): error RS0030: fixture banned API\n' \
+                      'tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs' "$line" >&2
+                  done < <(grep -nF '// banned-api-proof' \
+                    tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs)
+                  exit 1
+                fi
                 [[ "$*" != *CompileFailProof.csproj* ]] || exit 1
                 exit 0
                 ;;
@@ -681,6 +672,8 @@ public sealed partial class MakeWorkflowTests
     private static void WriteHarnessGateChainReportPair(string candidateRoot)
     {
         CopyAdmissionBaseLibraryIfPresent(candidateRoot);
+        CopyResourceObservationLibrary(candidateRoot);
+        CopyBannedApiCompileFailProof(candidateRoot);
         var gateDirectory = Path.Combine(candidateRoot, ".github", "scripts");
         Directory.CreateDirectory(gateDirectory);
         File.Copy(
@@ -722,6 +715,24 @@ public sealed partial class MakeWorkflowTests
         if (!File.Exists(source)) return;
 
         var target = Path.Combine(candidateRoot, AdmissionBaseScriptPath);
+        Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+        File.Copy(source, target, overwrite: true);
+    }
+
+    private static void CopyResourceObservationLibrary(string candidateRoot)
+    {
+        const string relativePath = "tools/scripts/lib/resource-observation-lib.sh";
+        var source = Path.Combine(TestRepositoryLayout.FindRoot(), relativePath);
+        var target = Path.Combine(candidateRoot, relativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+        File.Copy(source, target, overwrite: true);
+    }
+
+    private static void CopyBannedApiCompileFailProof(string candidateRoot)
+    {
+        const string proofPath = "tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs";
+        var source = Path.Combine(TestRepositoryLayout.FindRoot(), proofPath);
+        var target = Path.Combine(candidateRoot, proofPath);
         Directory.CreateDirectory(Path.GetDirectoryName(target)!);
         File.Copy(source, target, overwrite: true);
     }

@@ -371,11 +371,11 @@ public sealed class LeanReportCacheTests
                 "--candidate-output", Output,
             ]);
 
-            return BoundedProcessRunner.Run(
+            return TestProcessRunner.Run(
                 "env",
                 arguments,
                 Repo,
-                TimeSpan.FromSeconds(60),
+                TestBudgets.WorkflowProcessHangGuard,
                 1024 * 1024);
         }
 

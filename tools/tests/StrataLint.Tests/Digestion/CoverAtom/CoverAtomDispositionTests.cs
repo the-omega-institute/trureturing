@@ -22,12 +22,10 @@ public sealed partial class CoverAtomTests
     [Fact]
     public void CoverRecordsPartialClosedDispositionWithoutAdmittingCoverage()
     {
-        var startedAt = TimeProvider.System.GetUtcNow();
         var execution = Execute(new CoverSpec
         {
             InitialUnresolvedSubitems = ["remaining theorem clause"],
         });
-        var finishedAt = TimeProvider.System.GetUtcNow();
 
         Assert.False(execution.Result.Success);
         Assert.Contains("partial-closed", execution.Result.Error, StringComparison.Ordinal);
@@ -44,7 +42,7 @@ public sealed partial class CoverAtomTests
         var gap = Assert.Single(disposition.Gaps);
         Assert.Equal("unresolved-subitem", gap.Code);
         Assert.Equal("remaining theorem clause", gap.Detail);
-        Assert.InRange(disposition.RecordedAtUtc, startedAt, finishedAt);
+        Assert.Equal(CoverWorld.RecordedAtUtc, disposition.RecordedAtUtc);
         Assert.Empty(entry.CoverageGids);
         Assert.Empty(entry.Receipts.Coverage);
         Assert.Empty(entry.Receipts.Scribe);
@@ -87,7 +85,7 @@ public sealed partial class CoverAtomTests
         var gap = Assert.Single(replacement.Gaps);
         Assert.Equal("unresolved-subitem", gap.Code);
         Assert.Equal("new failed retry", gap.Detail);
-        Assert.True(replacement.RecordedAtUtc > prior.RecordedAtUtc);
+        Assert.Equal(CoverWorld.RecordedAtUtc, replacement.RecordedAtUtc);
         Assert.Empty(entry.CoverageGids);
         Assert.Empty(entry.Receipts.Coverage);
         Assert.Empty(entry.Receipts.Scribe);
@@ -102,7 +100,7 @@ public sealed partial class CoverAtomTests
             [new DigestionDispositionGap(
                 "unresolved-subitem",
                 "prior failed attempt")],
-            new DateTimeOffset(2026, 8, 25, 4, 3, 2, TimeSpan.Zero));
+            new DateTimeOffset(2026, 8, 25, 4, 3, 2, TestBudgets.ZeroDuration));
 
     private static CoverExecution ExecuteWithPriorDisposition(
         CoverSpec spec,

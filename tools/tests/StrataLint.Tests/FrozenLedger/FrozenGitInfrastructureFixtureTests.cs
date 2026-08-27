@@ -66,8 +66,7 @@ public sealed class FrozenGitInfrastructureFixtureTests
         var gateway = new GitRepositoryGateway(
             repository.Path,
             new ProductionGitProcessRunner(),
-            missingGit,
-            TimeSpan.FromSeconds(1));
+            missingGit);
 
         var exception = Assert.Throws<GitInfrastructureException>(() =>
             gateway.ValidateFrozenReferences(NoReferences()));
@@ -89,8 +88,7 @@ public sealed class FrozenGitInfrastructureFixtureTests
         var gateway = new GitRepositoryGateway(
             repository.Path,
             new ThrowingGitProcessRunner(new TimeoutException("synthetic Git timeout")),
-            "git",
-            TimeSpan.FromSeconds(1));
+            "git");
 
         var exception = Assert.Throws<GitInfrastructureException>(() =>
             gateway.ValidateFrozenReferences(NoReferences()));
@@ -107,8 +105,7 @@ public sealed class FrozenGitInfrastructureFixtureTests
         var gateway = new GitRepositoryGateway(
             repository.Path,
             new ThrowingGitProcessRunner(new IOException("synthetic Git pipe read failure")),
-            "git",
-            TimeSpan.FromSeconds(1));
+            "git");
 
         var exception = Assert.Throws<GitInfrastructureException>(() =>
             gateway.ValidateFrozenReferences(NoReferences()));
@@ -125,8 +122,7 @@ public sealed class FrozenGitInfrastructureFixtureTests
         var gateway = new GitRepositoryGateway(
             repository.Path,
             new DelegateGitProcessRunner(_ => Output(41, stderr: "rev-parse fixture failure\n")),
-            "git",
-            TimeSpan.FromSeconds(1));
+            "git");
 
         var exception = Assert.Throws<GitInfrastructureException>(() =>
             gateway.ValidateFrozenReferences(NoReferences()));
@@ -152,8 +148,7 @@ public sealed class FrozenGitInfrastructureFixtureTests
                 "rev-parse" => Output(0, input.BaseTreeOid["git-sha1:".Length..] + "\n"),
                 _ => throw new InvalidOperationException("unexpected fixture command"),
             }),
-            "git",
-            TimeSpan.FromSeconds(1));
+            "git");
 
         var exception = Assert.Throws<GitInfrastructureException>(() =>
             gateway.ValidateFrozenReferences(FrozenLedgerReferenceSet.Create(
