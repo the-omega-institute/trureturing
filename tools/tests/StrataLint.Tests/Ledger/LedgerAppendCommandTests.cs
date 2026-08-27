@@ -395,6 +395,7 @@ public sealed class LedgerAppendCommandTests
         internal LedgerAppendFixture(
             bool driftARepresentation = false,
             string currentAStatementMaterial = "True",
+            string currentBStatementMaterial = "True",
             bool pinBump = false,
             bool addSecondClosedModule = true,
             bool historicalReattest = false,
@@ -562,7 +563,7 @@ public sealed class LedgerAppendCommandTests
                             : Array.Empty<string>()),
                 [FrozenLedgerTestData.PathFor("B")] = Report(
                     "B",
-                    "True",
+                    currentBStatementMaterial,
                     aImportsB ? Array.Empty<string>() : new[] { "A" }),
             };
             if (addSecondClosedModule)

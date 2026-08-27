@@ -27,20 +27,7 @@ internal static class DagLedgerSupersedeWriter
             var baselineFiles = candidate.BaselineFiles;
             var protectedBase = candidate.BaseView;
             var pins = FrozenLedger.EnvironmentPins(candidate.Catalog.Environment);
-            var protectedSnapshots = new Dictionary<string, RepositorySnapshot>(StringComparer.Ordinal);
-            RepositorySnapshot ProtectedSnapshot(FrozenActiveEntry entry)
-            {
-                var taggedCommit = entry.Payload.Input.BaseCommitOid;
-                if (!protectedSnapshots.TryGetValue(taggedCommit, out var snapshot))
-                {
-                    var revision = taggedCommit[(taggedCommit.IndexOf(':') + 1)..];
-                    snapshot = DecodeProtectedSnapshot(DagLedgerCommandPreparation.Ask(
-                        () => repository.ReadRevision(revision)));
-                    protectedSnapshots.Add(taggedCommit, snapshot);
-                }
-
-                return snapshot;
-            }
+            var protectedSnapshots = new ProtectedPinSnapshotReader(repository);
 
             var generated = BuildEvents(
                 protectedBase,
@@ -49,7 +36,7 @@ internal static class DagLedgerSupersedeWriter
                 candidate.Changes,
                 candidate.Snapshot,
                 pins,
-                ProtectedSnapshot);
+                protectedSnapshots.Read);
             if (generated.IsEmpty)
             {
                 return new CommandResult(
@@ -73,7 +60,7 @@ internal static class DagLedgerSupersedeWriter
                 candidate.Snapshot,
                 trustedCandidateReferences,
                 generated,
-                ProtectedSnapshot);
+                protectedSnapshots.Read);
 
             var eventFiles = generated.Select(static item => item.File).ToImmutableArray();
             _ = DagLedgerCommandPreparation.ValidateGeneratedEventFiles(
@@ -236,14 +223,6 @@ internal static class DagLedgerSupersedeWriter
         }
     }
 
-    private static RepositorySnapshot DecodeProtectedSnapshot(RawRepositorySnapshot raw) =>
-        SnapshotDecoder.Decode(raw) switch
-        {
-            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
-            SnapshotDecodeOutcome.InfrastructureFailure failure => throw new InvalidOperationException(
-                "protected semantic-pin snapshot is unavailable: " + failure.Message),
-        };
-
     private sealed record GeneratedSupersede(
         FrozenSupersedePayload Payload,
         string EventHash,
@@ -255,4 +234,39 @@ internal static class DagLedgerSupersedeWriter
         public LeanAxiomReport Load(RepositorySnapshot snapshot) =>
             RawLeanReportArtifact.ReadFile(path, snapshot);
     }
+}
+
+internal sealed class ProtectedPinSnapshotReader(IRepositoryGateway repository)
+{
+    private readonly Dictionary<string, RepositorySnapshot> snapshots = new(StringComparer.Ordinal);
+
+    internal RepositorySnapshot Read(FrozenActiveEntry entry)
+    {
+        ArgumentNullException.ThrowIfNull(entry);
+        var supporting = entry.Payload.Input.SupportingBlobOids;
+        if (supporting.Length != 2
+            || supporting.Distinct(StringComparer.Ordinal).Count() != 2)
+        {
+            throw new InvalidOperationException(
+                "protected semantic pins require exactly two distinct supporting blob OIDs");
+        }
+
+        var key = string.Join('\n', supporting.Order(StringComparer.Ordinal));
+        if (!snapshots.TryGetValue(key, out var snapshot))
+        {
+            snapshot = Decode(DagLedgerCommandPreparation.Ask(
+                () => repository.ReadEnvironmentPinBlobs(entry.Payload.Input)));
+            snapshots.Add(key, snapshot);
+        }
+
+        return snapshot;
+    }
+
+    private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
+        SnapshotDecoder.Decode(raw) switch
+        {
+            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
+            SnapshotDecodeOutcome.InfrastructureFailure failure => throw new InvalidOperationException(
+                "protected semantic-pin snapshot is unavailable: " + failure.Message),
+        };
 }

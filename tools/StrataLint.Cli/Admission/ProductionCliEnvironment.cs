@@ -24,6 +24,8 @@ internal interface IRepositoryGateway
 
     RawRepositorySnapshot ReadRevision(string revision);
 
+    RawRepositorySnapshot ReadEnvironmentPinBlobs(FrozenLedgerInput input);
+
     RawChangeSet ReadCurrentChanges();
 
     /// Reads the working-tree delta against an explicit revision, in the caller-supplied
