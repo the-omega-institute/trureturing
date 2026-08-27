@@ -23,21 +23,25 @@ public sealed class BannedApiCoverageTests
             .Select(file => (file.RelativePath, Document: XDocument.Load(file.FullPath, LoadOptions.None)))
             .Where(static project => project.Document.Descendants()
                 .Any(element => element.Name.LocalName == "IsTestProject" && element.Value == "true"))
-            .Select(project => (project.RelativePath, Content: File.ReadAllText(
-                Path.Combine(repositoryRoot, project.RelativePath))))
             .ToArray();
 
         Assert.NotEmpty(projects);
         Assert.All(projects, project =>
         {
             Assert.Contains(
-                "Microsoft.CodeAnalysis.BannedApiAnalyzers",
-                project.Content,
-                StringComparison.Ordinal);
+                project.Document.Descendants(),
+                static element => element.Name.LocalName == "PackageReference"
+                    && string.Equals(
+                        (string?)element.Attribute("Include"),
+                        "Microsoft.CodeAnalysis.BannedApiAnalyzers",
+                        StringComparison.Ordinal));
             Assert.Contains(
-                "BannedSymbols.Determinism.txt",
-                project.Content,
-                StringComparison.Ordinal);
+                project.Document.Descendants(),
+                static element => element.Name.LocalName == "AdditionalFiles"
+                    && string.Equals(
+                        Path.GetFileName((string?)element.Attribute("Include")),
+                        "BannedSymbols.Determinism.txt",
+                        StringComparison.Ordinal));
         });
     }
 

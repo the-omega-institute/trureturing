@@ -18,7 +18,7 @@ public sealed class BoundedProcessRunnerBudgetTests
                 && file.RelativePath.EndsWith(".cs", StringComparison.Ordinal)
                 && !file.RelativePath.StartsWith("tools/tests/BannedApiCompileFailProof/", StringComparison.Ordinal))
             .Where(file => file.RelativePath != budgetPath)
-            .Select(file => (file.RelativePath, Content: File.ReadAllText(file.FullPath)))
+            .Select(file => (file.RelativePath, Content: string.Join('\n', File.ReadLines(file.FullPath))))
             .ToArray();
 
         Assert.Empty(FindTimeSpanFactorySites(sources));
@@ -29,7 +29,8 @@ public sealed class BoundedProcessRunnerBudgetTests
     {
         const string budgetPath = "tools/tests/StrataLint.Tests/TestBudgets.cs";
         var tree = CSharpSyntaxTree.ParseText(
-            TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(budgetPath)),
+            TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+                "tools/tests/StrataLint.Tests/TestBudgets.cs")),
             new CSharpParseOptions(LanguageVersion.Latest),
             budgetPath);
         var declarations = tree.GetRoot().DescendantNodes()
