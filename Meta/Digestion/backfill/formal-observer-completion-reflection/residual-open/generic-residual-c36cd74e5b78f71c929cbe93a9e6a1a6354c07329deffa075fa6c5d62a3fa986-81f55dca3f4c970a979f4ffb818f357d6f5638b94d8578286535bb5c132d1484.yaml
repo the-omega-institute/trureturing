@@ -1,0 +1,10 @@
+ast_path: section/稳定接口的普适闭包-状态-效应反对偶与定量可观测性/clause/1
+fingerprints:
+  raw_sha256: sha256:c36cd74e5b78f71c929cbe93a9e6a1a6354c07329deffa075fa6c5d62a3fa986
+  normalized_sha256: sha256:c36cd74e5b78f71c929cbe93a9e6a1a6354c07329deffa075fa6c5d62a3fa986
+cas_ref: sha256:c36cd74e5b78f71c929cbe93a9e6a1a6354c07329deffa075fa6c5d62a3fa986
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -26,6 +26,8 @@ public sealed class LeanReportInputScriptTests
     private const string ResourceObservationLibraryPath =
         "tools/scripts/lib/resource-observation-lib.sh";
     private const string ToolchainInstallerPath = "tools/scripts/workflow/install-lean-toolchain.sh";
+    private const string JudgeContentAddressPath =
+        "tools/scripts/workflow/judge-content-address.sh";
     private const string WorkflowPath = ".github/workflows/ci.yml";
     private static readonly string CliProjectPath = string.Join(
         '/', "tools", "StrataLint.Cli", "StrataLint.Cli.csproj");
@@ -109,6 +111,7 @@ public sealed class LeanReportInputScriptTests
         Assert.Contains(CacheEnsureScriptPath, paths);
         Assert.Contains(ResourceObservationLibraryPath, paths);
         Assert.Contains(ToolchainInstallerPath, paths);
+        Assert.Contains(JudgeContentAddressPath, paths);
         Assert.Contains(WorkflowPath, paths);
         Assert.Contains(derivedProbe, paths);
         Assert.DoesNotContain(TestSourcePath, paths);
@@ -130,6 +133,7 @@ public sealed class LeanReportInputScriptTests
         Assert.Contains(LeanModelsPath, paths);
         Assert.Contains(CacheEnsureScriptPath, paths);
         Assert.Contains(ResourceObservationLibraryPath, paths);
+        Assert.Contains(JudgeContentAddressPath, paths);
         Assert.DoesNotContain(TestSourcePath, paths);
         Assert.DoesNotContain(BlueprintSourcePath, paths);
     }
@@ -153,6 +157,7 @@ public sealed class LeanReportInputScriptTests
         Assert.Contains(LeanModelsPath, paths);
         Assert.Contains(ScribeProjectPath, paths);
         Assert.Contains(ScribeContentChecksPath, paths);
+        Assert.Contains(JudgeContentAddressPath, paths);
         Assert.Contains(derivedProbe, paths);
         Assert.DoesNotContain(TestSourcePath, paths);
     }
@@ -291,6 +296,9 @@ public sealed class LeanReportInputScriptTests
                 ResourceObservationLibraryPath,
                 File.ReadAllText(Path.Combine(root, ResourceObservationLibraryPath), Encoding.UTF8));
             Write(ToolchainInstallerPath, "#!/usr/bin/env bash\n");
+            Write(
+                JudgeContentAddressPath,
+                File.ReadAllText(Path.Combine(root, JudgeContentAddressPath), Encoding.UTF8));
             Write(ScribeContentChecksPath, "#!/usr/bin/env bash\n");
             Write(
                 WorkflowPath,

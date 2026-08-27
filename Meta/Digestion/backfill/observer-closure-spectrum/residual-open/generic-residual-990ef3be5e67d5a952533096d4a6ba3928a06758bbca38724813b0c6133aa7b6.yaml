@@ -1,0 +1,10 @@
+ast_path: section/79-身份账本是一种纠错码
+fingerprints:
+  raw_sha256: sha256:990ef3be5e67d5a952533096d4a6ba3928a06758bbca38724813b0c6133aa7b6
+  normalized_sha256: sha256:990ef3be5e67d5a952533096d4a6ba3928a06758bbca38724813b0c6133aa7b6
+cas_ref: sha256:990ef3be5e67d5a952533096d4a6ba3928a06758bbca38724813b0c6133aa7b6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

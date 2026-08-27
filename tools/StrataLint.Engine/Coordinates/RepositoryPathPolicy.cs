@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Text.RegularExpressions;
 
 namespace StrataLint.Engine;
 
@@ -13,7 +14,39 @@ internal static partial class RepositoryPathPolicy
     // 缓存发布 workflow（#2542）。`.github` 下是白名单而非通配，新增控制工件必须在此具名登记。
     internal const string CachePublicationWorkflowPath =
         ".github/workflows/lean-cache-publish.yml";
+    // Persistent truth-release publisher. `.github` remains an explicit allowlist.
+    internal const string TruthReleasePublicationWorkflowPath =
+        ".github/workflows/truth-release-publish.yml";
     internal const string HarnessGatePath = ".github/scripts/harness-gate.sh";
+    internal const string RepositoryCoordinate = "the-omega-institute/trureturing";
+
+    internal static bool ContainsRepositorySourceMaterializationIndicator(string value) =>
+        value.StartsWith("./", StringComparison.Ordinal)
+        || value.StartsWith("actions/checkout@", StringComparison.OrdinalIgnoreCase)
+        || IsSelfRepositorySourceMaterializationIndicator(value)
+        || RepositorySourceMaterializationIndicator().IsMatch(value);
+
+    internal static bool ContainsRepositorySourceExecutionIndicator(string value) =>
+        RepositorySourceExecutionIndicator().IsMatch(value);
+
+    private static bool IsSelfRepositorySourceMaterializationIndicator(string value) =>
+        value.StartsWith($"{RepositoryCoordinate}/", StringComparison.OrdinalIgnoreCase)
+        && RepositorySelfSourceMaterializationIndicator().IsMatch(value[RepositoryCoordinate.Length..]);
+
+    [GeneratedRegex(
+        @"^/[^@\s]+@[^@\s]+$",
+        RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)]
+    private static partial Regex RepositorySelfSourceMaterializationIndicator();
+
+    [GeneratedRegex(
+        @"(?:^|[\s;&|])(?:git\s+(?:clone|fetch|checkout|switch|worktree)\b|gh\s+repo\s+clone\b)",
+        RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)]
+    private static partial Regex RepositorySourceMaterializationIndicator();
+
+    [GeneratedRegex(
+        @"(?:^|[\s;&|])(?:dotnet\s+(?:build|run|test)\b|lake(?:\s|$)|make\s+|run\s+--project\b|(?:\./)?(?:tools|scripts)/|(?:bash|sh|source|python\d*|node)\s+\./)",
+        RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)]
+    private static partial Regex RepositorySourceExecutionIndicator();
 
     internal static ImmutableArray<Diagnostic> Evaluate(
         RepositorySnapshot snapshot,
@@ -105,6 +138,7 @@ internal static partial class RepositoryPathPolicy
             or "Golden/values-kernels.toml"
             or WorkflowPath
             or CachePublicationWorkflowPath
+            or TruthReleasePublicationWorkflowPath
             or ".github/CODEOWNERS"
             or HarnessGatePath
             || value.StartsWith("tools/", StringComparison.Ordinal)

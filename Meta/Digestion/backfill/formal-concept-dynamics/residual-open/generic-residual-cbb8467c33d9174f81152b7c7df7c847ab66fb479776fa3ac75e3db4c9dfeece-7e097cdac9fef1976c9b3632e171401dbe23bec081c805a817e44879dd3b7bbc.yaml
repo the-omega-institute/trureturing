@@ -1,0 +1,10 @@
+ast_path: section/474-概率拒答的最优阈值/clause/4
+fingerprints:
+  raw_sha256: sha256:cbb8467c33d9174f81152b7c7df7c847ab66fb479776fa3ac75e3db4c9dfeece
+  normalized_sha256: sha256:cbb8467c33d9174f81152b7c7df7c847ab66fb479776fa3ac75e3db4c9dfeece
+cas_ref: sha256:cbb8467c33d9174f81152b7c7df7c847ab66fb479776fa3ac75e3db4c9dfeece
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/63-可发表结构/clause/3
+fingerprints:
+  raw_sha256: sha256:14297ef5e03c3bcbc857f43b65cce434e2e57f1d5ebb55a415d3a662096eda69
+  normalized_sha256: sha256:14297ef5e03c3bcbc857f43b65cce434e2e57f1d5ebb55a415d3a662096eda69
+cas_ref: sha256:14297ef5e03c3bcbc857f43b65cce434e2e57f1d5ebb55a415d3a662096eda69
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

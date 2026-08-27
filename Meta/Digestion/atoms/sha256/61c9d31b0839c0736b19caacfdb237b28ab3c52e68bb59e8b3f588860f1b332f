@@ -1,0 +1,30 @@
+## 本文定理 67.1（kernel 判据）
+
+$$
+\boxed{
+U\text{ 保持 }Z
+\iff
+\ker U\subseteq\ker Z.
+}
+$$
+
+反向由 $\bar Z(U(m)):=Z(m)$ 的纤维良定义性得到。∎
+
+定义身份抹除残差
+
+$$
+\mathcal E_{\mathrm{id}}(U;Z)
+=
+\{(m,m'):U(m)=U(m'),\ Z(m)\ne Z(m')\},
+$$
+
+概率版本的信息损失为
+
+$$
+\boxed{L_{\mathrm{id}}=H(Z(M)\mid U(M)).}
+$$
+
+自我修改能力因此与身份安全修改能力严格不同。
+
+---
+

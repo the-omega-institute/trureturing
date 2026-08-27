@@ -15,7 +15,6 @@ internal static class StrataLintEngineBuildInputs
         ProjectDirectory + "/Coordinates/RepositoryPathPolicy.cs";
     private const string RepositoryPathPolicyPathsPath =
         ProjectDirectory + "/Coordinates/RepositoryPathPolicy.Paths.cs";
-
     internal static bool Contains(string path)
     {
         if (path == ProjectPath
@@ -51,6 +50,19 @@ internal static class StrataLintEngineBuildInputs
         path == ProjectPath
         || path.StartsWith(RulesDirectory + "/", StringComparison.Ordinal)
             && path.EndsWith(".cs", StringComparison.Ordinal);
+
+    /// <summary>
+    /// The judge-source side of the CI judge content address. Every non-test path under
+    /// <c>tools/</c> can change the program that interprets repository facts. Blueprint scribe
+    /// definitions are also judge source because <c>tools/StrataLint.Scribe/StrataLint.Scribe.csproj</c>
+    /// compiles <c>Blueprint/**/*.scribe.cs</c>. Membership is therefore structural rather than a
+    /// list of today's transitive helpers.
+    /// </summary>
+    internal static bool ContainsJudgeSource(string path) =>
+        path.StartsWith("tools/", StringComparison.Ordinal)
+            && !path.StartsWith("tools/tests/", StringComparison.Ordinal)
+        || path.StartsWith("Blueprint/", StringComparison.Ordinal)
+            && path.EndsWith(".scribe.cs", StringComparison.Ordinal);
 
     private static bool IsInheritedBuildInput(string path)
     {

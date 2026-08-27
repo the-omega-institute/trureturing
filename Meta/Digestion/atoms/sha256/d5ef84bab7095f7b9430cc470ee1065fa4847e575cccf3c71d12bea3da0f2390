@@ -1,0 +1,13 @@
+# 19. 当前 negative-base-\(\varphi\) 前沿的重新定位
+
+仓库当前已经闭合以下结构：
+
+1. admissible negative prefix 的 core 无限；
+2. 可由严格枚举得到真实 core frontier；
+3. 连续枚举值构成相邻 core pair；
+4. 给定左端点，相邻右端点唯一；
+5. phase-enriched trace 与 exact gap phase 等价。
+
+对应 Lean 锚点包括：
+
+- `D5/S1/Words/Expansions/BasePhiNegativePrefixTridentCore.core_infinite_proved`；

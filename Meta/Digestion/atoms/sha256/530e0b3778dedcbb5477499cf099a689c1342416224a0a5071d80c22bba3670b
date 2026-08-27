@@ -1,0 +1,35 @@
+# 66. 有效动作语法的开放增长
+
+令时刻 $t$ 的动作集合为 $\mathcal A_t$，按完整未来行为画像取商
+
+$$
+\mathcal A_t^{\mathrm{eff}}=\mathcal A_t/{\sim_t}.
+$$
+
+新增动作只有在产生旧行为类无法复制的新画像时，才构成有效动作创新；增加命令别名、包装器或相同 API 标签不算创新。
+
+若动作语法是保守扩张：旧动作保留、旧转移语义不变、环境不因扩张获得额外破坏能力，则
+
+$$
+\boxed{
+\mathsf{FreeKernel}_t
+\subseteq
+\mathsf{FreeKernel}_{t+1}.
+}
+$$
+
+有限情形可定义动作语法增长率
+
+$$
+\boxed{
+g_{\mathrm{act}}
+=
+\limsup_{t\to\infty}
+\frac1t\log|\mathcal A_t^{\mathrm{eff}}|.
+}
+$$
+
+长期无界的新行动类型至少需要有效动作语法、内部状态、环境输入或载体维数中的某一项持续扩张。
+
+---
+

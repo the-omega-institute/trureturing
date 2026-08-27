@@ -1,0 +1,10 @@
+ast_path: section/83-图灵完备系统中的自由保持成员资格一般不可判定
+fingerprints:
+  raw_sha256: sha256:525d2582e8e65ac99c9b73fa93755d2c69471e91522d5f11af5ea287255e24e8
+  normalized_sha256: sha256:525d2582e8e65ac99c9b73fa93755d2c69471e91522d5f11af5ea287255e24e8
+cas_ref: sha256:525d2582e8e65ac99c9b73fa93755d2c69471e91522d5f11af5ea287255e24e8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

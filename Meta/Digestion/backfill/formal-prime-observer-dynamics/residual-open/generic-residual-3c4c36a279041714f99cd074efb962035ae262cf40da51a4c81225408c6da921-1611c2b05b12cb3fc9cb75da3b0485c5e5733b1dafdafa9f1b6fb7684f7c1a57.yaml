@@ -1,0 +1,10 @@
+ast_path: 经典定理/181.1/clause/1
+fingerprints:
+  raw_sha256: sha256:3c4c36a279041714f99cd074efb962035ae262cf40da51a4c81225408c6da921
+  normalized_sha256: sha256:3c4c36a279041714f99cd074efb962035ae262cf40da51a4c81225408c6da921
+cas_ref: sha256:3c4c36a279041714f99cd074efb962035ae262cf40da51a4c81225408c6da921
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

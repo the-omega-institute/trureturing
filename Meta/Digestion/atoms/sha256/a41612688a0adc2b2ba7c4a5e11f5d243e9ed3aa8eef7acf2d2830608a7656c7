@@ -1,0 +1,13 @@
+# 442. 读取权限和写入权限形成知识—控制双序
+
+设系统安全状态为：
+
+[
+\boxed{
+\mathcal S=(C_{\mathrm{read}},M_{\mathrm{write}}).
+}
+]
+
+其中：
+
+* (C_{\mathrm{read}}) 决定主体能够区分哪些状态；

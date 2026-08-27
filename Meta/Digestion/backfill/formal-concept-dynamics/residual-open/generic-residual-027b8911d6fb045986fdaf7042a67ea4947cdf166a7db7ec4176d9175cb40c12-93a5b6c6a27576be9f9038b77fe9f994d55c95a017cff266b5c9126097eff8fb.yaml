@@ -1,0 +1,10 @@
+ast_path: section/161-3-知识判据/clause/1
+fingerprints:
+  raw_sha256: sha256:027b8911d6fb045986fdaf7042a67ea4947cdf166a7db7ec4176d9175cb40c12
+  normalized_sha256: sha256:027b8911d6fb045986fdaf7042a67ea4947cdf166a7db7ec4176d9175cb40c12
+cas_ref: sha256:027b8911d6fb045986fdaf7042a67ea4947cdf166a7db7ec4176d9175cb40c12
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

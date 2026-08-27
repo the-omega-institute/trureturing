@@ -1,0 +1,10 @@
+ast_path: section/边界/occurrence/3/clause/5
+fingerprints:
+  raw_sha256: sha256:3c2f236549e6135162d80e63ff577699905b22c9a0f757bc0c71eff866bebbd8
+  normalized_sha256: sha256:3c2f236549e6135162d80e63ff577699905b22c9a0f757bc0c71eff866bebbd8
+cas_ref: sha256:3c2f236549e6135162d80e63ff577699905b22c9a0f757bc0c71eff866bebbd8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/74-形式化准入纪律/clause/4
+fingerprints:
+  raw_sha256: sha256:574a0e22d437d65bd325be40780b9a7525cb77361f2e9d0243c88f809a201b12
+  normalized_sha256: sha256:574a0e22d437d65bd325be40780b9a7525cb77361f2e9d0243c88f809a201b12
+cas_ref: sha256:574a0e22d437d65bd325be40780b9a7525cb77361f2e9d0243c88f809a201b12
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

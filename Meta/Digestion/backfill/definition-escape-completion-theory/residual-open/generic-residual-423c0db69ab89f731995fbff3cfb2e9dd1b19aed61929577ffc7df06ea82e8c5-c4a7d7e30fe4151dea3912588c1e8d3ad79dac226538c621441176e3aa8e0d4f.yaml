@@ -1,0 +1,10 @@
+ast_path: section/54-2-参照系与新颖性边界/clause/5
+fingerprints:
+  raw_sha256: sha256:423c0db69ab89f731995fbff3cfb2e9dd1b19aed61929577ffc7df06ea82e8c5
+  normalized_sha256: sha256:423c0db69ab89f731995fbff3cfb2e9dd1b19aed61929577ffc7df06ea82e8c5
+cas_ref: sha256:423c0db69ab89f731995fbff3cfb2e9dd1b19aed61929577ffc7df06ea82e8c5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

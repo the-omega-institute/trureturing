@@ -1,0 +1,10 @@
+ast_path: section/解释/occurrence/4/clause/1
+fingerprints:
+  raw_sha256: sha256:bd0dff2a184f5ceb7ad672b754ff2507a774ca8c219df2f2681bc9905a3b4c69
+  normalized_sha256: sha256:bd0dff2a184f5ceb7ad672b754ff2507a774ca8c219df2f2681bc9905a3b4c69
+cas_ref: sha256:bd0dff2a184f5ceb7ad672b754ff2507a774ca8c219df2f2681bc9905a3b4c69
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

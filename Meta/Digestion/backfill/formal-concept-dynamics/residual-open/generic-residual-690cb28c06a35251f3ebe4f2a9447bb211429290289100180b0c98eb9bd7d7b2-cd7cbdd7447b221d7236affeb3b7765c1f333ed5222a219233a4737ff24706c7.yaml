@@ -1,0 +1,10 @@
+ast_path: section/390-最小模块接口修复/clause/3
+fingerprints:
+  raw_sha256: sha256:690cb28c06a35251f3ebe4f2a9447bb211429290289100180b0c98eb9bd7d7b2
+  normalized_sha256: sha256:690cb28c06a35251f3ebe4f2a9447bb211429290289100180b0c98eb9bd7d7b2
+cas_ref: sha256:690cb28c06a35251f3ebe4f2a9447bb211429290289100180b0c98eb9bd7d7b2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

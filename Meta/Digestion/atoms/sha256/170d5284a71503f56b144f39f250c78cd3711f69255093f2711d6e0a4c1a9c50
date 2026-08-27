@@ -1,0 +1,16 @@
+* 所有状态都是固定点。
+
+因此：
+
+[
+\boxed{
+\text{self-consistent}
+\not\Rightarrow
+\text{unique}
+\not\Rightarrow
+\text{actual}.
+}
+]
+
+要从固定点集合中选出实际对象，还需要：
+
