@@ -54,19 +54,17 @@ public sealed class ContentsWriteWorkflowClosureTests
     }
 
     [Fact]
-    public void TheTruthReleasePublisherRunsOnlyOnScheduleOrInputFreeDispatch()
+    public void TheTruthReleasePublisherRunsOnlyOnASchedule()
     {
         var publisher = Workflows.SingleOrDefault(static source => source.Path == TruthReleasePublisher);
         Assert.NotNull(publisher);
 
-        Assert.Equal(["schedule", "workflow_dispatch"], TriggerNames(publisher.Content));
+        // Schedule-only: no workflow_dispatch. GitHub's dispatch `ref` selector would let a caller
+        // run a modified workflow definition (holding publication write credentials) from an
+        // arbitrary ref, so the publisher must not expose workflow_dispatch at all.
+        Assert.Equal(["schedule"], TriggerNames(publisher.Content));
         Assert.Contains("cron: '17 * * * *'", publisher.Content, StringComparison.Ordinal);
-
-        var root = WorkflowRoot(publisher);
-        var triggerSet = Assert.IsType<YamlMappingNode>(root.Children.Single(pair =>
-            pair.Key is YamlScalarNode { Value: "on" or "True" or "true" }).Value);
-        var dispatch = Assert.IsType<YamlScalarNode>(MappingValue(triggerSet, "workflow_dispatch"));
-        Assert.True(string.IsNullOrEmpty(dispatch.Value));
+        Assert.DoesNotContain("workflow_dispatch", publisher.Content, StringComparison.Ordinal);
     }
 
     [Fact]

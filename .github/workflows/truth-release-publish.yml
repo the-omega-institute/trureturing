@@ -3,7 +3,6 @@ name: truth-release-publish
 on:
   schedule:
     - cron: '17 * * * *'
-  workflow_dispatch:
 permissions: {}
 concurrency:
   group: truth-release-publish-dev
@@ -351,10 +350,12 @@ jobs:
           set -euo pipefail
 
           verify_protected_dev_tip() {
-            local protected_dev_tip
-            protected_dev_tip="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/dev" --jq '.object.sha')"
-            [[ "$protected_dev_tip" == "$SOURCE_COMMIT" ]] \
-              || { printf '%s\n' 'protected dev moved before OCI publication' >&2; return 1; }
+            local comparison status merge_base
+            comparison="$(gh api "repos/${GITHUB_REPOSITORY}/compare/${SOURCE_COMMIT}...dev")"
+            status="$(jq -r '.status' <<< "$comparison")"
+            merge_base="$(jq -r '.merge_base_commit.sha' <<< "$comparison")"
+            { [[ "$status" == "ahead" || "$status" == "identical" ]] && [[ "$merge_base" == "$SOURCE_COMMIT" ]]; } \
+              || { printf '%s\n' 'source commit is no longer an ancestor of protected dev before OCI publication; refusing to publish' >&2; return 1; }
           }
 
           verify_pinned_oci_artifact() {
@@ -443,9 +444,11 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          protected_dev_tip="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/dev" --jq '.object.sha')"
-          [[ "$protected_dev_tip" == "$SOURCE_COMMIT" ]] \
-            || { printf '%s\n' 'protected dev moved before OCI attestation' >&2; exit 1; }
+          attest_comparison="$(gh api "repos/${GITHUB_REPOSITORY}/compare/${SOURCE_COMMIT}...dev")"
+          attest_status="$(jq -r '.status' <<< "$attest_comparison")"
+          attest_merge_base="$(jq -r '.merge_base_commit.sha' <<< "$attest_comparison")"
+          { [[ "$attest_status" == "ahead" || "$attest_status" == "identical" ]] && [[ "$attest_merge_base" == "$SOURCE_COMMIT" ]]; } \
+            || { printf '%s\n' 'source commit is no longer an ancestor of protected dev before OCI attestation; refusing to publish' >&2; exit 1; }
           [[ "$SUBJECT_DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]]
           [[ "$SUBJECT_REFERENCE" == "$OCI_REPOSITORY@$SUBJECT_DIGEST" ]]
           encoded_digest="$(jq -rn --arg digest "$SUBJECT_DIGEST" '$digest | @uri')"
@@ -529,10 +532,12 @@ jobs:
           expected_assets_json="$(printf '%s\n' "${expected_assets[@]}" | jq -Rsc 'split("\n")[:-1] | sort')"
 
           verify_protected_dev_tip() {
-            local protected_dev_tip
-            protected_dev_tip="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/dev" --jq '.object.sha')"
-            [[ "$protected_dev_tip" == "$SOURCE_COMMIT" ]] \
-              || { printf '%s\n' 'protected dev moved before GitHub Release publication' >&2; return 1; }
+            local comparison status merge_base
+            comparison="$(gh api "repos/${GITHUB_REPOSITORY}/compare/${SOURCE_COMMIT}...dev")"
+            status="$(jq -r '.status' <<< "$comparison")"
+            merge_base="$(jq -r '.merge_base_commit.sha' <<< "$comparison")"
+            { [[ "$status" == "ahead" || "$status" == "identical" ]] && [[ "$merge_base" == "$SOURCE_COMMIT" ]]; } \
+              || { printf '%s\n' 'source commit is no longer an ancestor of protected dev before GitHub Release publication; refusing to publish' >&2; return 1; }
           }
 
           verify_release_metadata() {
