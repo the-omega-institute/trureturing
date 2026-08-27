@@ -19,6 +19,8 @@ public sealed class LeanReportInputScriptTests
     private static readonly string PairScriptPath = string.Join(
         '/', "tools", "scripts", "lean-report-pair.sh");
     private const string SupervisorScriptPath = "tools/scripts/report/report-supervisor.sh";
+    private const string CiBaselineScriptPath =
+        "tools/scripts/report/lean-report-ci-baseline.sh";
     private const string CacheEnsureScriptPath =
         "tools/scripts/worktree/lean-cache-ensure.sh";
     private const string PerformanceLibraryPath = "tools/scripts/lib/perf-event-lib.sh";
@@ -102,6 +104,7 @@ public sealed class LeanReportInputScriptTests
         Assert.Contains(RawReportPath, paths);
         Assert.Contains(LeanModelsPath, paths);
         Assert.Contains(SupervisorScriptPath, paths);
+        Assert.Contains(CiBaselineScriptPath, paths);
         Assert.Contains(CacheEnsureScriptPath, paths);
         Assert.Contains(PerformanceLibraryPath, paths);
         Assert.Contains(ToolchainInstallerPath, paths);
@@ -278,6 +281,9 @@ public sealed class LeanReportInputScriptTests
             Write(
                 SupervisorScriptPath,
                 File.ReadAllText(Path.Combine(root, SupervisorScriptPath), Encoding.UTF8));
+            Write(
+                CiBaselineScriptPath,
+                File.ReadAllText(Path.Combine(root, CiBaselineScriptPath), Encoding.UTF8));
             Write(CacheEnsureScriptPath, "#!/usr/bin/env bash\n");
             Write(PerformanceLibraryPath, "#!/usr/bin/env bash\n");
             Write(ToolchainInstallerPath, "#!/usr/bin/env bash\n");
