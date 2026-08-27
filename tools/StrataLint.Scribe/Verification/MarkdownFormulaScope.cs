@@ -45,6 +45,22 @@ internal sealed class MarkdownFormulaScope
             .ToImmutableHashSet(StringComparer.Ordinal);
     }
 
+    /// <summary>
+    /// The NUL-separated repository-relative paths a caller hands in, as `git diff -z`
+    /// writes them: a path may hold anything but NUL, so nothing weaker separates them.
+    /// </summary>
+    internal static ImmutableArray<string> ParsePaths(string payload)
+    {
+        ArgumentNullException.ThrowIfNull(payload);
+        return
+        [
+            .. payload
+                .Split('\0', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .Distinct(StringComparer.Ordinal)
+                .Order(StringComparer.Ordinal),
+        ];
+    }
+
     /// <summary>The markdown projections this scope names.</summary>
     internal ImmutableHashSet<string> Paths => paths;
 

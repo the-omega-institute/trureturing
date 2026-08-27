@@ -3,30 +3,27 @@ namespace StrataLint.Scribe.Tests;
 public sealed class MarkdownCheckCommandTests
 {
     [Fact]
-    public void JudgesThePathsItReadsFromStandardInput()
+    public void ReadsTheNulSeparatedPathsAChangeHandsIt()
     {
-        var repository = RepositoryAccessor.Discover(
-            RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound);
-        var definition = DocumentDefinitions.All.First(candidate =>
-            MarkdownMath.Extract(repository.ReadAllText(
-                RepositoryRelativePath.Create(candidate.RelativePath.Value))).Length > 0);
-        var output = new StringWriter();
-        var error = new StringWriter();
+        // `git diff -z` writes them this way, and the workflow pipes that verbatim.
+        var paths = MarkdownFormulaScope.ParsePaths(
+            "Blueprint/D5/S0/Second.md\0Blueprint/D5/S0/First.scribe.cs\0"
+            + "Blueprint/D5/S0/Second.md\0\0 Blueprint/D5/S0/Third.md \0");
 
-        // NUL-separated, as `git diff -z` writes them and the workflow pipes them in.
-        var exit = ScribeCli.Run(
-            ["markdown-check", "--report", "unused", "--paths-from", "-"],
-            repository.Root.FullPath,
-            output,
-            error,
-            LeanReportFixture.ForDocuments(
-                DocumentDefinitions.All.Select(static item => item.Document)),
-            new StringReader(definition.RelativePath.Value + "\0"));
+        Assert.Equal(
+            [
+                "Blueprint/D5/S0/First.scribe.cs",
+                "Blueprint/D5/S0/Second.md",
+                "Blueprint/D5/S0/Third.md",
+            ],
+            paths.AsEnumerable());
+    }
 
-        Assert.Equal(0, exit);
-        Assert.Empty(error.ToString());
-        Assert.Contains("markdown: judged=1", output.ToString(), StringComparison.Ordinal);
-        Assert.Contains("red=0", output.ToString(), StringComparison.Ordinal);
+    [Fact]
+    public void ReadsNothingFromAnEmptyChange()
+    {
+        Assert.Empty(MarkdownFormulaScope.ParsePaths(string.Empty));
+        Assert.Empty(MarkdownFormulaScope.ParsePaths("\0\0"));
     }
 
     [Theory]
@@ -37,16 +34,12 @@ public sealed class MarkdownCheckCommandTests
     [InlineData("markdown-check", "--report", "", "--paths-from", "-")]
     public void RefusesAnIncompleteInvocationWithTheUsageLine(params string[] arguments)
     {
+        // The arguments are judged before any root is resolved, so a throwaway working
+        // directory is all this needs.
+        using var temporary = new TemporaryRoot();
         var error = new StringWriter();
 
-        var exit = ScribeCli.Run(
-            arguments,
-            RepositoryAccessor
-                .Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound)
-                .Root
-                .FullPath,
-            TextWriter.Null,
-            error);
+        var exit = ScribeCli.Run(arguments, temporary.Path, TextWriter.Null, error);
 
         Assert.Equal(2, exit);
         Assert.Contains(

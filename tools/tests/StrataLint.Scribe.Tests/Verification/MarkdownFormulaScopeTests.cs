@@ -7,8 +7,9 @@ public sealed class MarkdownFormulaScopeTests
     [Fact]
     public void AScribeSourceNamesTheMarkdownItProjectsAndNothingElseNamesADocument()
     {
+        using var temporary = new TemporaryRoot();
         var scope = new MarkdownFormulaScope(
-            RepositoryRootPath,
+            temporary.Path,
             [
                 "Blueprint/D5/S0/Probe.scribe.cs",
                 "Blueprint/D5/S0/Other.md",
@@ -106,65 +107,85 @@ public sealed class MarkdownFormulaScopeTests
     }
 
     [Fact]
-    public void ARealDocumentPassesTheGateThroughTheEmitter()
+    public void CarriesTheVerdictThroughTheEmitterOnBothSidesOfADocument()
     {
-        var root = RepositoryRootPath;
-        var repository = RepositoryAccessor.Discover(
-            RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound);
-        var definition = DocumentDefinitions.All.First(candidate =>
-            MarkdownMath.Extract(repository.ReadAllText(
-                RepositoryRelativePath.Create(candidate.RelativePath.Value))).Length > 0);
-        var report = LeanReportFixture.ForDocuments(
-            DocumentDefinitions.All.Select(static item => item.Document));
-        var output = new StringWriter();
+        using var temporary = new TemporaryRoot();
+        var definition = SyntheticDefinition(FormulaDsl.Seq(
+            FormulaDsl.Id("x"), FormulaDsl.Caret, FormulaDsl.Grp(FormulaDsl.D(2))));
+        DocumentDefinition[] definitions = [definition];
+        SyntheticScribeRepository.WriteInputs(temporary.Path, definition);
+        SyntheticScribeRepository.WriteVendoredKatex(temporary.Path);
+        var report = LeanReportFixture.ForDocuments([definition.Document]);
         var error = new StringWriter();
-        var scope = new MarkdownFormulaScope(root, [definition.RelativePath.Value]);
+        Assert.Equal(
+            0,
+            ScribeEmitter.Emit(temporary.Path, check: false, TextWriter.Null, error, report, definitions));
 
-        var exit = ScribeEmitter.CheckMarkdown(root, output, error, report, scope);
+        var output = new StringWriter();
+        var exit = ScribeEmitter.CheckMarkdown(
+            temporary.Path,
+            output,
+            error,
+            report,
+            new MarkdownFormulaScope(temporary.Path, [definition.RelativePath.Value]),
+            definitions);
 
         Assert.Equal(0, exit);
-        Assert.Empty(error.ToString());
-        Assert.Equal(1, scope.Judged);
-        Assert.True(scope.Formulas > 0);
         Assert.Contains("markdown: judged=1", output.ToString(), StringComparison.Ordinal);
+        Assert.Contains("red=0", output.ToString(), StringComparison.Ordinal);
+
+        // The committed bytes are what the site publishes, so editing them past the
+        // emitter is exactly the case the gate has to keep judging.
+        TemporaryFileSystem.File.WriteAllText(
+            Path.Combine(temporary.Path, definition.RelativePath.Value),
+            Markdown("u_{n}_{i}"),
+            new UTF8Encoding(false, true));
+        var second = new StringWriter();
+        var redError = new StringWriter();
+
+        var redExit = ScribeEmitter.CheckMarkdown(
+            temporary.Path,
+            second,
+            redError,
+            report,
+            new MarkdownFormulaScope(temporary.Path, [definition.RelativePath.Value]),
+            definitions);
+
+        Assert.Equal(1, redExit);
+        Assert.Contains("markdown red", redError.ToString(), StringComparison.Ordinal);
+        Assert.Contains("Double subscript", redError.ToString(), StringComparison.Ordinal);
     }
 
-    private static string RepositoryRootPath => RepositoryAccessor
-        .Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound)
-        .Root
-        .FullPath;
-
-    private static Func<KatexParser> Parser => () => KatexParser.Load(RepositoryRootPath);
+    /// <summary>A parser built from a copy of the vendored bytes under a throwaway root.</summary>
+    private static Func<KatexParser> Parser
+    {
+        get
+        {
+            var temporary = new TemporaryRoot();
+            SyntheticScribeRepository.WriteVendoredKatex(temporary.Path);
+            return () => KatexParser.Load(temporary.Path);
+        }
+    }
 
     private static byte[] Utf8(string text) => new UTF8Encoding(false, true).GetBytes(text);
 
     private static string Markdown(string formula) =>
         $"# Probe\n\n## Abstract\n\nProbe.\n\n$${formula}$$\n";
 
-    private static DocumentDefinition SyntheticDefinition()
+    private static DocumentDefinition SyntheticDefinition(Formula? statement = null)
     {
+        var body = statement is null
+            ? DefinitionDsl.Paragraph(DefinitionDsl.Text("Synthetic body."))
+            : DefinitionDsl.Paragraph(
+                DefinitionDsl.Text("Synthetic body with "),
+                DefinitionDsl.Math(statement),
+                DefinitionDsl.Text("."));
         var document = ScribeDocument.Create(
             DefinitionDsl.Header("D5/S0/Synthetic/MarkdownGate", "Synthetic markdown gate fixture."),
             DefinitionDsl.H("Synthetic markdown gate"),
-            DefinitionDsl.Blocks(
-                DefinitionDsl.Paragraph(DefinitionDsl.Text("Synthetic body."))));
+            DefinitionDsl.Blocks(body));
         return DocumentDefinition.Create(
             document,
             "Blueprint/D5/S0/Synthetic/MarkdownGate.scribe.cs");
-    }
-
-    private sealed class TemporaryRoot : IDisposable
-    {
-        internal TemporaryRoot()
-        {
-            Path = System.IO.Path.Combine(
-                System.IO.Path.GetTempPath(),
-                "stratalint-markdown-gate-" + Guid.NewGuid().ToString("N"));
-            TemporaryFileSystem.Directory.CreateDirectory(Path);
-        }
-
-        internal string Path { get; }
-
-        public void Dispose() => TemporaryFileSystem.Directory.Delete(Path, recursive: true);
     }
 }

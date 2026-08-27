@@ -89,7 +89,8 @@ public static class ScribeEmitter
         TextWriter output,
         TextWriter error,
         LeanAxiomReport leanReport,
-        MarkdownFormulaScope scope)
+        MarkdownFormulaScope scope,
+        IReadOnlyList<DocumentDefinition>? definitions = null)
     {
         ArgumentNullException.ThrowIfNull(leanReport);
         ArgumentNullException.ThrowIfNull(scope);
@@ -103,6 +104,7 @@ public static class ScribeEmitter
             _ => leanReport,
             validateRepository: false,
             tolerateAbsentDocuments: false,
+            suppliedDefinitions: definitions,
             markdownScope: scope);
         if (run.ExitCode != 0)
         {

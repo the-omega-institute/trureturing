@@ -203,24 +203,13 @@ public static class ScribeCli
         + "| markdown-check --report <file> --paths-from <file|->";
 
     /// <summary>
-    /// The NUL-separated repository-relative paths to judge, as `git diff -z` produces
-    /// them: a path may hold anything but NUL, so nothing weaker separates them safely.
-    /// `-` reads them from standard input, which keeps the change's paths out of a
-    /// temporary file the caller would then have to clean up.
+    /// The paths to judge. `-` reads them from standard input, which keeps the change's
+    /// paths out of a temporary file the caller would then have to clean up.
     /// </summary>
-    private static ImmutableArray<string> ReadPaths(string pathsFile, TextReader? input)
-    {
-        var payload = string.Equals(pathsFile, "-", StringComparison.Ordinal)
+    private static ImmutableArray<string> ReadPaths(string pathsFile, TextReader? input) =>
+        MarkdownFormulaScope.ParsePaths(string.Equals(pathsFile, "-", StringComparison.Ordinal)
             ? (input ?? Console.In).ReadToEnd()
-            : File.ReadAllText(pathsFile);
-        return
-        [
-            .. payload
-                .Split('\0', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-                .Distinct(StringComparer.Ordinal)
-                .Order(StringComparer.Ordinal),
-        ];
-    }
+            : File.ReadAllText(pathsFile));
 
     private static string FindRepositoryRoot(string workingDirectory)
     {

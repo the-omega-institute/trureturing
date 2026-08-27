@@ -5,7 +5,8 @@ public sealed class KatexParserTests
     [Fact]
     public void ParsesWithThePinnedVendoredKatex()
     {
-        var parser = Load();
+        using var temporary = new TemporaryRoot();
+        var parser = LoadVendoredKatex(temporary);
 
         // The version is pinned by the vendored bytes; tools/vendor/katex/README.md
         // records where they came from, and raising it is a deliberate act.
@@ -17,7 +18,8 @@ public sealed class KatexParserTests
     [Fact]
     public void RejectsTheShapesThatReachedTheSiteUnrendered()
     {
-        var parser = Load();
+        using var temporary = new TemporaryRoot();
+        var parser = LoadVendoredKatex(temporary);
 
         Assert.Contains(
             "Double superscript",
@@ -39,14 +41,31 @@ public sealed class KatexParserTests
         // The corpus emits `\\{}` line breaks in display mode by the thousand. KaTeX's
         // strict mode warns about them; the site renders them, so the gate must not
         // manufacture a verdict the site does not act on.
-        var parser = Load();
+        using var temporary = new TemporaryRoot();
+        var parser = LoadVendoredKatex(temporary);
 
         Assert.Null(parser.Reject(@"a = b,\\{}c = d", displayMode: true));
     }
 
-    private static KatexParser Load() => KatexParser.Load(
+    [Fact]
+    public void FailsClosedWhenTheVendoredParserIsAbsent()
+    {
+        using var temporary = new TemporaryRoot();
+
+        var absent = Assert.Throws<InvalidOperationException>(() => KatexParser.Load(temporary.Path));
+
+        Assert.Contains(KatexParser.VendorRelativePath, absent.Message, StringComparison.Ordinal);
+    }
+
+    /// <summary>Loads the repository's own vendored bytes from a copy of them.</summary>
+    private static KatexParser LoadVendoredKatex(TemporaryRoot temporary)
+    {
         RepositoryAccessor
             .Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound)
-            .Root
-            .FullPath);
+            .CopyTo(
+                RepositoryRelativePath.Create("tools/vendor/katex/katex.min.js"),
+                temporary.Resolve("tools/vendor/katex/katex.min.js"),
+                overwrite: true);
+        return KatexParser.Load(temporary.Path);
+    }
 }
