@@ -9,17 +9,38 @@ namespace StrataLint.Engine;
 internal static partial class RepositoryRules
 {
     internal const string TowerManifestPath = "tools/TOWER.yaml";
+    internal const string RegistryPolicyPath = "Meta/registry.yaml";
+    internal const string DomainsPolicyPath = "Meta/domains.yaml";
+    internal const string FileMapPolicyPath = "Meta/FILEMAP.toml";
+
+    // Registry and domain bytes compile ValidatedPolicy. FILEMAP is a conservative wake path:
+    // SL-019 does not read FileMapManifest, but replaying on its change is intentionally harmless.
+    // This bounded schema-owned inventory is unlike the structurally defined judge-code closure.
+    private static readonly ImmutableHashSet<string> LedgerPolicyDataPaths =
+        ImmutableHashSet.Create(
+            StringComparer.Ordinal,
+            RegistryPolicyPath,
+            DomainsPolicyPath,
+            FileMapPolicyPath);
 
     private static ImmutableArray<RuleFinding> Ledger(RuleEvaluationContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        var tasks = CollectTaskCodes(context.Current);
+        var judgeSourceChanged = JudgeSourceChanged(context);
+        var taskSetChanged = ChangedLeanTaskSet(context);
+        var policyDataChanged = PolicyDataChanged(context);
+        HashSet<string>? tasks = null;
         foreach (var (path, file) in context.Current.Files)
         {
             var governed = IsGovernedStructured(path, context.Policy);
             var pathAffected = context.IsBaseFactAffected(path.Value);
-            var anomalyAffected = pathAffected || context.Changes.Paths.Any(change =>
-                IsManagedLeanPath(change.Value));
+            var replay = ShouldReplayLedgerArtifact(
+                context,
+                path.Value,
+                judgeSourceChanged,
+                taskSetChanged,
+                policyDataChanged);
+            var anomalyAffected = pathAffected || replay;
             if (governed && pathAffected)
             {
                 if (file.HasBom)
@@ -58,6 +79,13 @@ internal static partial class RepositoryRules
 
                 continue;
             }
+
+            if (!anomalyAffected)
+            {
+                continue;
+            }
+
+            tasks ??= CollectTaskCodes(context.Current);
 
             if (path.Value.EndsWith(".json", StringComparison.Ordinal))
             {
@@ -107,17 +135,68 @@ internal static partial class RepositoryRules
             }
         }
 
-        ValidateAcceptedEventFilesAfterImplementationChange(context, findings);
+        ValidateAcceptedEventFilesAfterJudgeSourceChange(
+            context,
+            findings,
+            judgeSourceChanged);
         ValidateCandidateRevocationReceipts(context, findings);
 
         return findings.ToImmutable();
     }
 
-    private static void ValidateAcceptedEventFilesAfterImplementationChange(
-        RuleEvaluationContext context,
-        ImmutableArray<RuleFinding>.Builder findings)
+    private static bool ChangedLeanTaskSet(RuleEvaluationContext context)
     {
-        if (!context.RuleImplementationChanged)
+        var currentTasks = CollectTaskCodes(context.Current);
+        var forkPointTasks = CollectTaskCodes(context.ForkPoint);
+        return !currentTasks.SetEquals(forkPointTasks);
+    }
+
+    private static bool PolicyDataChanged(RuleEvaluationContext context) =>
+        context.Changes.Paths.Any(path => IsLedgerPolicyDataPath(path.Value));
+
+    private static bool JudgeSourceChanged(RuleEvaluationContext context) =>
+        context.RuleImplementationChanged
+        || context.Changes.Paths.Any(path =>
+            StrataLintEngineBuildInputs.ContainsJudgeSource(path.Value));
+
+    /// <summary>
+    /// SL-019 may skip a stored artifact only when all four replay-contract conditions hold:
+    /// (a) the complete judge source closure is unchanged (<c>tools/</c>, excluding
+    /// <c>tools/tests/</c>, Blueprint scribe compile inputs, plus inherited build inputs); (b) none
+    /// of the closed policy or conservative wake paths changed; (c) the formal-file TASK-code set
+    /// is unchanged; and (d) this artifact is not an affected JSON, YAML, or Chronicle ledger path.
+    /// Conditions (a)-(c) replay the full corpus; condition (d) preserves the per-artifact scan for
+    /// affected paths.
+    /// </summary>
+    private static bool ShouldReplayLedgerArtifact(
+        RuleEvaluationContext context,
+        string path,
+        bool judgeSourceChanged,
+        bool taskSetChanged,
+        bool policyDataChanged) =>
+        judgeSourceChanged
+        || policyDataChanged
+        || taskSetChanged
+        || LedgerArtifactChanged(context, path);
+
+    private static bool LedgerArtifactChanged(RuleEvaluationContext context, string path) =>
+        context.IsBaseFactAffected(path) && IsStructuredLedgerArtifactPath(path);
+
+    private static bool IsStructuredLedgerArtifactPath(string path) =>
+        path.EndsWith(".json", StringComparison.Ordinal)
+        || path.EndsWith(".yaml", StringComparison.Ordinal)
+        || path.EndsWith(".yml", StringComparison.Ordinal)
+        || path.StartsWith("Chronicle/", StringComparison.Ordinal);
+
+    internal static bool IsLedgerPolicyDataPath(string path) =>
+        LedgerPolicyDataPaths.Contains(path);
+
+    private static void ValidateAcceptedEventFilesAfterJudgeSourceChange(
+        RuleEvaluationContext context,
+        ImmutableArray<RuleFinding>.Builder findings,
+        bool judgeSourceChanged)
+    {
+        if (!judgeSourceChanged)
         {
             return;
         }
