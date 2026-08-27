@@ -94,6 +94,10 @@ public sealed class AcceptedLeanClosure
     internal LeanAxiomReport Report { get; }
 
     internal static AcceptedLeanClosure Create(LeanAxiomReport report) => new(report);
+
+    // Header-only rules can run without a report; Lean-dependent rules must use Create.
+    internal static AcceptedLeanClosure CreateWithoutReport() =>
+        new(LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)));
 }
 
 [Union(EnableImplicitConversions = false)]
