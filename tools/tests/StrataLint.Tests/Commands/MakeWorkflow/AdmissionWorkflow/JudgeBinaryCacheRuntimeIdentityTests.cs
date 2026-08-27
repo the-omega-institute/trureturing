@@ -78,7 +78,7 @@ public sealed partial class AdmissionWorkflowTests
             "/bin/bash",
             [resolver, SourceAddress],
             root,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
         var output = Encoding.UTF8.GetString(result.StandardOutput)
             + Encoding.UTF8.GetString(result.StandardError);
