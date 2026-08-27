@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Quantum/Sharpness/BranchOverlap.pt_branch_overlap
       source_sha256: sha256:38470526c6d35c410540531c3056bbc4115ee6c60a83af4f05f5010956093873
-      target_statement_id: sha256:2bccdf83133cdedd661b7c277c88fd33e769d179708782d91e3cbff3be5b7a70
+      target_sha256: sha256:7c9cd84236c0d02903e33ffb42205b3cda3161d1d2b4e9171306b15440bf5a47
   scribe:
     - gid: D5/S3/Quantum/Sharpness/BranchOverlap.pt_branch_overlap
       definition_sha256: sha256:c5e8a446753b18f3fbd0aec0258b5fe64c7efa0ecfc97666d76cc2c68d2dd8bc

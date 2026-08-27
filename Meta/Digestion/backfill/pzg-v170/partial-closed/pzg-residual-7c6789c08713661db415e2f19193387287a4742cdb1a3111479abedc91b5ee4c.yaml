@@ -9,6 +9,6 @@ receipts:
   coverage:
     - gid: D5/S0/Carrier/Norm
       source_sha256: sha256:7c6789c08713661db415e2f19193387287a4742cdb1a3111479abedc91b5ee4c
-      target_statement_id: sha256:c4f5cc5e163371dd94da0a55809709297a222bd47ad93480f32df345f87ddf60
+      target_sha256: sha256:b57395f1b17fe9ea49458279de3338c5a5d58ff9728e331fdbf41c75be2f127d
   scribe: []
   unresolved_subitems: []

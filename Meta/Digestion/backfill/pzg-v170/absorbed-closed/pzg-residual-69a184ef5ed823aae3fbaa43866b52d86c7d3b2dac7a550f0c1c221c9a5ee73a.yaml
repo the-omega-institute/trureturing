@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Constants/Moments/GoldenWindowMoment.golden_window_moment
       source_sha256: sha256:69a184ef5ed823aae3fbaa43866b52d86c7d3b2dac7a550f0c1c221c9a5ee73a
-      target_statement_id: sha256:d8e2dd29a5d2d7c3d0c6029ea07cce955ea611fa390b7e34bcc7c8f3dcbc5012
+      target_sha256: sha256:231649ceaf8990cdc82441b952900fe38dc455eb952fbc445fe6c6a7f3cfedd0
   scribe:
     - gid: D5/S3/Constants/Moments/GoldenWindowMoment.golden_window_moment
       definition_sha256: sha256:be93218bd78a4dd0ca6dab75853db4209ca7a8deadab7efe5ad1e6459d806e21

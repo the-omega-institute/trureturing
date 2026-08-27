@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Dynamics/KnasterTarskiWitness.knaster_tarski_with_three_cycle_instance
       source_sha256: sha256:922b0bff9129a59885f446f0858e25f6a580f81f77f5dec77a657fb7404fcad4
-      target_statement_id: sha256:8b3bbeba63a2813a713753b2ffe59aac3e9442437475110f0f41edf34d11c196
+      target_sha256: sha256:d5c55a94a02a20940b9a39180d91ff8d4180244c73d535be428c8bf55a4a45f2
   scribe:
     - gid: D5/S1/Dynamics/KnasterTarskiWitness.knaster_tarski_with_three_cycle_instance
       definition_sha256: sha256:21bed76da1b279d146e9ea3c4438210db966cacac4df2a8077f9206a8f15d6ad

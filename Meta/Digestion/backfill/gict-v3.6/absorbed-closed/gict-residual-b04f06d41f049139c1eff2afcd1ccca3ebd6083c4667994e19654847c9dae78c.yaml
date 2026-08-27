@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/PrimeForms/Crossing/NegativeDeterminantTraceSquare.trace_square_of_det_neg_one
       source_sha256: sha256:b04f06d41f049139c1eff2afcd1ccca3ebd6083c4667994e19654847c9dae78c
-      target_statement_id: sha256:e6d7ae459cc71bf8a6c2bac8d87afe2653df40bc753a28cf80aa8668f47836a8
+      target_sha256: sha256:e91a70a2fc568234adc05439969e8cc85c6f467aa0acc656940efa26c528e836
   scribe:
     - gid: D5/S3/PrimeForms/Crossing/NegativeDeterminantTraceSquare.trace_square_of_det_neg_one
       definition_sha256: sha256:b6151ecb43afa21a162e28bd6bad4f990dd87978ea22d759656992c65cae65bf

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/DivergenceSupport/Equality/PetzClassicalCorollary.zero_defect_equivalences_and_permutation_channel
       source_sha256: sha256:11b1a5fd861ba4cdfeb6d0b960c829985e5e82c2cfffa878ed9f945fb22bc574
-      target_statement_id: sha256:2cb97276c74437fc0236e0af3cfeab8a3045daf7ba418939035acf3d903ff02c
+      target_sha256: sha256:29466383694b7724b4a096a55c88045a3b3bb6d1c5eae69e6ff6e89c8023f91d
   scribe:
     - gid: D5/S3/DivergenceSupport/Equality/PetzClassicalCorollary.zero_defect_equivalences_and_permutation_channel
       definition_sha256: sha256:55db187947c8133c36c53f56dd7e7ac0dec09df1139f6427f0e0a27eb62f6a2b

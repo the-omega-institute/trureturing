@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Arith/Congruence/QuarticThirtySix.thirtySix_dvd_m
       source_sha256: sha256:ba04398fae04da9fb04ea85d6e85a2d51cb2b8ec6f12238a6f7ddaaafb3a54a0
-      target_statement_id: sha256:de8a0a63d15fb7da7cf05150b0837994eb7705cc6b6e23f6b441c6a4ae811aea
+      target_sha256: sha256:30718e862c5c1be6ed62d88a048d425fc8c4460263b2837dc470cd68748ff3ae
   scribe:
     - gid: D5/S3/Arith/Congruence/QuarticThirtySix.thirtySix_dvd_m
       definition_sha256: sha256:5835d798ffda82d999188cca695c455526bc6df38aef9240c13dc3f8fa4bad6f

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Transport/ContinuousDescent.continuous_descent
       source_sha256: sha256:c97ad433cddda4aff2e541ec283b495a343fd2910a57c00c5bbf70b95d95c750
-      target_statement_id: sha256:82988ad2e85c318303bca7606f1851c1e7b53ca0b0b405b5e7ca744ba12ef450
+      target_sha256: sha256:a21aec5dac1e6ea070a584d7d1a88ee256de18b36d75a449038aeeea729685fd
   scribe:
     - gid: D5/S3/ConceptDynamics/Transport/ContinuousDescent.continuous_descent
       definition_sha256: sha256:6857bae981abb1bb988cd5b3cc57f3912c5195d130a3b1516d98ce0d60f7db63

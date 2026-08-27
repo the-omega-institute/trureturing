@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Words/Palindromes/PalindromicPolynomial.reverse_eq_self_of_palindromic_coefficients
       source_sha256: sha256:63263fb21789ac96838ec62cecf6c2635a905766154b97c3221074293a1d7640
-      target_statement_id: sha256:4b4f6468771bc68f3a91867544ed5f850e6e548ad399be8cbbfaddf00007499e
+      target_sha256: sha256:dbbabe71f3dd6c222e882ff332a7e6b8ae2b4562a007db4e447140b51d992018
   scribe:
     - gid: D5/S1/Words/Palindromes/PalindromicPolynomial.reverse_eq_self_of_palindromic_coefficients
       definition_sha256: sha256:b1468d3e3c95fe2d375c074bea8cdf8a3e6e3f920f6f4d5fa7c81de04f9456e8

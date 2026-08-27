@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/PrimeForms/Crossing/ExactPropagation.exact_propagation_positive_cone
       source_sha256: sha256:016405e3f90569bc8d01a710d5245744e6b552aef37619038693a14113adf6c1
-      target_statement_id: sha256:d0245cd57a37c1133825aaa7f783365c13605eeae7ea2bac344bce1283684772
+      target_sha256: sha256:f96ef92124ab331bd35c6a48bccab76eee8e05790efd737d28f6a46aab6e4bbc
   scribe:
     - gid: D5/S3/PrimeForms/Crossing/ExactPropagation.exact_propagation_positive_cone
       definition_sha256: sha256:67d95a1f6596f03a326fbbac4376878bc75283a1bdd939d4f8f3511fe331754a

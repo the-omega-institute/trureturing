@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Fourier/CotangentHeckeIdentity.cotangent_double_angle
       source_sha256: sha256:df21c59693a80bf785b58ee02042aea31303c02403d7721036e4b6501d4870d0
-      target_statement_id: sha256:3f8b9444f7c24c3745cf7ea003f9bf5cffea13f16a5f3211f29693b95bffd62b
+      target_sha256: sha256:d4918535966be80f647381eb10e2827426a7b07c7604ce1035a1252af8342687
   scribe:
     - gid: D5/S3/Fourier/CotangentHeckeIdentity.cotangent_double_angle
       definition_sha256: sha256:a8db274768103fb42ea8c7c779ac7a0ade450ff9cd155143d9992d43e07a2585

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Contracts/FutureObligationIncompleteness.nonfaithful_interface_future_incomplete
       source_sha256: sha256:250bd74f4f2b10216bbef95b515be5f7588c0351c9356cb244dcb961fc4bbf66
-      target_statement_id: sha256:838980007bb9ee116a243cf6bb1fa3475b4424a0721d03a2f498150aecf3c882
+      target_sha256: sha256:c87d1a50e2cb5e3014041aa38e63dc46615491639916a75593e09e3140ed6c4c
   scribe:
     - gid: D5/S3/ConceptDynamics/Contracts/FutureObligationIncompleteness.nonfaithful_interface_future_incomplete
       definition_sha256: sha256:2fcdf2d4f9b1945ad30ad4a1024774f082c706ce850b95a3a9a75a68333da216

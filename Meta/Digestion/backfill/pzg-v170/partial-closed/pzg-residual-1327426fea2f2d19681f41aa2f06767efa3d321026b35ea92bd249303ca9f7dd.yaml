@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Analytic/CompletedZetaMellinReconstruction.completed_zeta_mellin_reconstruction
       source_sha256: sha256:1327426fea2f2d19681f41aa2f06767efa3d321026b35ea92bd249303ca9f7dd
-      target_statement_id: sha256:cb4be47b53ec7692e9fe338bec396f0683868af5131a6683f5f2e6e7d85e1579
+      target_sha256: sha256:609dc1bffd415ff55b22a425c5838711ba9aeef00be2c1f7331d9451f4b008b5
   scribe:
     - gid: D5/S3/Analytic/CompletedZetaMellinReconstruction.completed_zeta_mellin_reconstruction
       definition_sha256: sha256:2de8843d9faf3f08273a4e1c443faf82bac098460f773d7ececb93854bb88457

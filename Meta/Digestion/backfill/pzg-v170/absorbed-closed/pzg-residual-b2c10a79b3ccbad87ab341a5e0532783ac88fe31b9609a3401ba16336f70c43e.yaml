@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ArithUnits/PrimeModInverse.prime_not_dvd_is_unit
       source_sha256: sha256:b2c10a79b3ccbad87ab341a5e0532783ac88fe31b9609a3401ba16336f70c43e
-      target_statement_id: sha256:696146f948615b5c389b6859ceb77f97236e4755b219e900dcff6ac3e224d058
+      target_sha256: sha256:7e5d85e7162531a120e039759b1b977bb6bf1b6b0f4c27d56eb5fe312f6e6723
   scribe:
     - gid: D5/S3/ArithUnits/PrimeModInverse.prime_not_dvd_is_unit
       definition_sha256: sha256:d0d35112269790e0c92aefdd6cf4ac0eb2ba43e594b8df653738bb493419bb91

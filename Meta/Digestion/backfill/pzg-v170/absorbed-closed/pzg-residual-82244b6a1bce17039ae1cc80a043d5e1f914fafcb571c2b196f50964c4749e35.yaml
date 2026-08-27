@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Eigenstructure/ReciprocalBalance.metallic_reciprocal_symmetry_forces_balance
       source_sha256: sha256:82244b6a1bce17039ae1cc80a043d5e1f914fafcb571c2b196f50964c4749e35
-      target_statement_id: sha256:cd73116663d9e34fb91c6fa740b9619ba4b45dcc34ba52382d039af3a18a0a88
+      target_sha256: sha256:21082641c7ea6af52b09c9beb72ff59892905fc3d5310eaf7f87ac2ec0530e70
   scribe:
     - gid: D5/S1/Eigenstructure/ReciprocalBalance.metallic_reciprocal_symmetry_forces_balance
       definition_sha256: sha256:03215dd829d29336bbfd4d29fdbbe46954d56274ef8296c4ff12f9067e2268b6

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/ContextUpdates/SuffixMergeCriterion.context_update_eq_iff
       source_sha256: sha256:1c0abd2fab1f49a70e36c7cd009f5e478bae52045c8aa330123e28c2c5f333ef
-      target_statement_id: sha256:54ade1919d88c5fd39129d30e19cb888a304a10e6d7601ba1d4152c2825825bb
+      target_sha256: sha256:022ac6623ba68b66356ab38fd801c22096951c8db6d9b55199795a8991e437b6
   scribe:
     - gid: D5/S3/ObserverMemory/ContextUpdates/SuffixMergeCriterion.context_update_eq_iff
       definition_sha256: sha256:73b89bafd07e3f53b1af7b2b9cdb94cc9cb6cc0667a7e56841ddbdcf68f04927

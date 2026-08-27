@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Eigenstructure/EigenframeInvariance.eigenframe_coordinate_line_invariant
       source_sha256: sha256:cc740689efe2d2b18b689fb0a385015b171f7d9a23936e409309cf837aa40be6
-      target_statement_id: sha256:8e4243c3b9174c54b37b80188cacf8520ee20981be5d92afc737ca929752289a
+      target_sha256: sha256:7405b0f8783cb34877d5a25c703bcdf85b219017eea27f53c8a10cfb16171992
   scribe:
     - gid: D5/S1/Eigenstructure/EigenframeInvariance.eigenframe_coordinate_line_invariant
       definition_sha256: sha256:89724fc986fc9ca63ee3980c8a961b11d532ab9dba6ec33292f8365cbb3870e7

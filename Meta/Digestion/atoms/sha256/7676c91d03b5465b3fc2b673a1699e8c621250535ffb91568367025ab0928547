@@ -1,0 +1,38 @@
+## 97.1 Orbit–stabilizer 完成律
+
+三个次数和三个指数分别满足：
+
+$$
+\boxed{
+\begin{array}{c|c|c}
+\text{几何对象}&\text{轨道大小}&\text{稳定子阶}\\
+\hline
+\text{顶点}&12&5\\
+\text{面}&20&3\\
+\text{边}&30&2
+\end{array}
+}
+$$
+
+每一行都满足：
+
+$$
+\text{轨道大小}\times\text{稳定子阶}=60.
+$$
+
+所以 \(E^2,F^3,V^5\) 同权，不是偶然代数配平，而是 orbit–stabilizer 的多项式化。
+
+这给 OACTC 一条一般原理：
+
+$$
+\boxed{
+\text{局部轨道观察}
+\times
+\text{局部稳定子阶}
+=
+\text{全局群完成度}.
+}
+$$
+
+---
+

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Diagonal/RecordExtensionCount.restricted_extension_card_le
       source_sha256: sha256:10e89ae3eda3a42b90a7b78838b22969c61cbf89d351b9af54016962aaa994a5
-      target_statement_id: sha256:0a362812e830ae25fa6d81b8a5bd13cde2851587262567b5a0e32de590e7d5b5
+      target_sha256: sha256:18a1c3e60725018d9b0fd8c2b40a68beb9f9f683843d49019e02be0b7e68e3d9
   scribe:
     - gid: D5/S0/Diagonal/RecordExtensionCount.restricted_extension_card_le
       definition_sha256: sha256:b657b0413ba86adcee211117e90a53ef577423999fc2fc1be257f75f937c73a4

@@ -213,20 +213,10 @@ public sealed class DigestionEvaluationScopeTests
                 gid,
                 atom.Fingerprints.RawSha256,
                 "sha256:0000000000000000000000000000000000000000000000000000000000000000"));
-        var snapshot = Snapshot([
-            (targetPath, target),
-            CasFile(atom),
-            ("docs/source.md", sourceBytes),
-            .. FrozenStatementReceiptTestData.LedgerFiles(
-                new FrozenStatementReceiptTestData.Module(
-                    targetPath,
-                    FrozenStatementReceiptTestData.Id('a'),
-                    [])),
-        ]);
         return DigestionStatusEvaluator.Evaluate(
             scope,
             document,
-            snapshot,
+            Snapshot((targetPath, target), CasFile(atom), ("docs/source.md", sourceBytes)),
             AcceptedLean(targetPath),
             baselineDocument: document,
             changes: changes);

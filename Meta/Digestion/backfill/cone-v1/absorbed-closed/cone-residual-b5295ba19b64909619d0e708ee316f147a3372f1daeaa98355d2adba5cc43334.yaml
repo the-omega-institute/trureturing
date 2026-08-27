@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Entropy/Feedback/DemonIdentity.demon_average_divergence_eq
       source_sha256: sha256:b5295ba19b64909619d0e708ee316f147a3372f1daeaa98355d2adba5cc43334
-      target_statement_id: sha256:15e5d42ec57f262d820334e1a5eaa1e91b37b64b86c36d219891f67002f20495
+      target_sha256: sha256:c784b70a90bd487de40d33ea490a888ebaa8daf749b62ce9c539c9bae00dd74f
   scribe:
     - gid: D5/S3/Entropy/Feedback/DemonIdentity.demon_average_divergence_eq
       definition_sha256: sha256:79af463a5a5b13c9b1afc2d9ac3dfecc5da4e99f93607a00a6a1d9ea7347c0e0

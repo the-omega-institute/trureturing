@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/PrimeForms/Crossing/CrossingNormForm.Qform_range_eq_eisNorm
       source_sha256: sha256:ecc44b02ca72ef0b9284fcd293ac4a670c3bad6f3f1e09008d9c6c7367003e0a
-      target_statement_id: sha256:b866667e6c3aa34654c6f7711482762c40940fbba312741f5297ac49bcf569cc
+      target_sha256: sha256:57a50bf1515db27a07a25d3fa7fb31c4f49eb1dff47fe085d917337c657467ca
   scribe:
     - gid: D5/S3/PrimeForms/Crossing/CrossingNormForm.Qform_range_eq_eisNorm
       definition_sha256: sha256:554fea8a7b279b4106e8717732fe358b8c77a88a031c16fe937a5057fc7ce60e

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ArithUnits/PrimeAdditiveGenerator.nonzero_generates_additive_group
       source_sha256: sha256:49b32120b5c81a774f96bf4b272507eb10788618b448237f0f713526e7714e2c
-      target_statement_id: sha256:44b44e9491db1b392e27486c2ea3c447f2d531034e2bd6f4d6f1aad507ce3b07
+      target_sha256: sha256:290dbcb4f5494fc5d3d163f32032911d4c94747fdf57c1977b2dca638c5e3766
   scribe:
     - gid: D5/S3/ArithUnits/PrimeAdditiveGenerator.nonzero_generates_additive_group
       definition_sha256: sha256:be3e31c4206ea34778faf4fce5d41b77b3da81c40bf8aeeaa22b01a81f908810

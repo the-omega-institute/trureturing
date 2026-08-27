@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/QuantumChannels/ContractionGeometry/PauliTopBoundary.pauli_top_boundary_volume_zero
       source_sha256: sha256:14f29f5085fe94287401df89373a14e7d9f7bab87c3ea95143ccff10298e5bc6
-      target_statement_id: sha256:8fddef9a95a4304404a8af4d53d3d94789cb6a81c684f0d6a7178e597af0b9f6
+      target_sha256: sha256:432f01d00ce66ed2547224ab550c0ae619654d695ca6185e58fd00a10846fb0d
   scribe:
     - gid: D5/S3/QuantumChannels/ContractionGeometry/PauliTopBoundary.pauli_top_boundary_volume_zero
       definition_sha256: sha256:56a807cb2421d3fb6023628c1248a05503984c4b824a48711607775043a2bc4a

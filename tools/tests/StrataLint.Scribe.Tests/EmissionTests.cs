@@ -647,15 +647,6 @@ public sealed class EmissionTests
             var destination = Path.Combine(destinationRoot, source.Value);
             TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
             repository.CopyTo(source, destination);
-            if (source.Value.EndsWith(".yaml", StringComparison.Ordinal))
-            {
-                var migrated = TemporaryFileSystem.File.ReadAllText(destination)
-                    .Replace("target_sha256:", "target_statement_id:", StringComparison.Ordinal);
-                TemporaryFileSystem.File.WriteAllText(
-                    destination,
-                    migrated,
-                    new UTF8Encoding(false, true));
-            }
         }
 
         foreach (var source in repository.EnumerateFiles(

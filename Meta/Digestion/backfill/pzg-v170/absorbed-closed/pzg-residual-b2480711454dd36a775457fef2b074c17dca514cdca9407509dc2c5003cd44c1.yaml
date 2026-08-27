@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/History/ResidualDiscrepancy.residual_iff_observed_ne_expected
       source_sha256: sha256:b2480711454dd36a775457fef2b074c17dca514cdca9407509dc2c5003cd44c1
-      target_statement_id: sha256:bf697d55e7494ec3eba9c6ede32737c62a0923ee116ded282bd91df6e7c2cf12
+      target_sha256: sha256:95426dda791987bcd11bace66d4c8d89faf1203181987f6865784f75a7f35602
   scribe:
     - gid: D5/S0/History/ResidualDiscrepancy.residual_iff_observed_ne_expected
       definition_sha256: sha256:66ea018351cff311a377cb14234530a9bfb0cfcb9c1a9f03b4fafdfdb8fbdd82

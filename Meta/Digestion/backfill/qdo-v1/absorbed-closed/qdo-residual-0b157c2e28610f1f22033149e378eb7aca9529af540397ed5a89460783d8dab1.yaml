@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Quantum/Algebra/FutureWordOrthogonalResidual.future_word_orthogonal_residual
       source_sha256: sha256:0b157c2e28610f1f22033149e378eb7aca9529af540397ed5a89460783d8dab1
-      target_statement_id: sha256:61a04641e1e768332bc523867c6d5d0d5e334f85269afd39c9c9ca5cedf5c806
+      target_sha256: sha256:bf385739b928bdb12607c0beb56ed66f62c079d51db34a3416ab578b5a8e1777
   scribe:
     - gid: D5/S3/Quantum/Algebra/FutureWordOrthogonalResidual.future_word_orthogonal_residual
       definition_sha256: sha256:37c29b6ee9cf46fc7de2d9f1d60fa7c97ac20ab0608a2ef86253b9bdbb683cc2

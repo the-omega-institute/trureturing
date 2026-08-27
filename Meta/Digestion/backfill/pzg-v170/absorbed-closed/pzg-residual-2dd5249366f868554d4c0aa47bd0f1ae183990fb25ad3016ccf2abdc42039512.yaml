@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Arith/Wilson.wilson_theorem
       source_sha256: sha256:2dd5249366f868554d4c0aa47bd0f1ae183990fb25ad3016ccf2abdc42039512
-      target_statement_id: sha256:a62e96103a1d487bcc501af5cbf2b1a98b27c01b1f469f3da95a4c595eeff692
+      target_sha256: sha256:75c1cc30e8dbb4c839c13d4b6525a420760748b9a203c4d2efcd0aa37e8bcd99
   scribe:
     - gid: D5/S3/Arith/Wilson.wilson_theorem
       definition_sha256: sha256:d176d9486c5ac7b9e0a001b1aa8d30653eeb23d656b644a76fcf5a0f98a8af3c

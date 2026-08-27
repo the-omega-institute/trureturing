@@ -89,27 +89,6 @@ internal static partial class CoverAtomCommand
 
                 return gid;
             }).ToImmutableArray();
-            FrozenStatementIndex frozenStatements;
-            try
-            {
-                frozenStatements = FrozenStatementIndex.Load(current);
-            }
-            catch (Exception exception) when (exception is FormatException or InvalidOperationException)
-            {
-                throw new InvalidOperationException(
-                    $"cover target module {gids[0].Path.Value} is not frozen; "
-                    + "run make deposit before cover");
-            }
-
-            foreach (var gid in gids)
-            {
-                if (!frozenStatements.ContainsModule(gid.Path))
-                {
-                    throw new InvalidOperationException(
-                        $"cover target module {gid.Path.Value} is not frozen; "
-                        + "run make deposit before cover");
-                }
-            }
 
             // Gate ①: locate the single target atom. An initial cover requires an
             // open atom; a hosted extension adds at least one declaration while
@@ -220,7 +199,6 @@ internal static partial class CoverAtomCommand
                     target,
                     gid,
                     current,
-                    frozenStatements,
                     verifiedScribeEmissions))
                 .ToImmutableArray();
             var covered = target with
@@ -421,18 +399,11 @@ internal static partial class CoverAtomCommand
         DigestionLedgerEntry entry,
         Gid gid,
         RepositorySnapshot snapshot,
-        FrozenStatementIndex frozenStatements,
         VerifiedScribeEmissions verifiedScribeEmissions)
     {
         if (!snapshot.TryGetFile(gid.Path.Value, out var target))
         {
             throw new InvalidOperationException($"cover target Lean file is absent: {gid.Path.Value}");
-        }
-
-        if (!frozenStatements.TryResolve(gid, out var targetStatementId, out var resolutionError))
-        {
-            throw new InvalidOperationException(
-                $"cover target has no unique frozen statement: {gid.Value} ({resolutionError})");
         }
 
         var documentGid = ScribeEmissionAttestation.DocumentGid(gid.Value);
@@ -452,7 +423,7 @@ internal static partial class CoverAtomCommand
         var coverage = new DigestionCoverageReceipt(
             gid.Value,
             entry.Fingerprints.RawSha256,
-            targetStatementId!.Value);
+            DigestionFingerprint.Compute(target.RawBytes.AsSpan()).RawSha256);
         var scribe = new DigestionScribeReceipt(
             gid.Value,
             DigestionFingerprint.Compute(definition.RawBytes.AsSpan()).RawSha256,

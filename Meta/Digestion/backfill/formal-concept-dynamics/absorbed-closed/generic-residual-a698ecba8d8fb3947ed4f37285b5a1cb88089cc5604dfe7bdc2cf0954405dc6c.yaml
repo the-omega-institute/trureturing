@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/Knowledge/StrongestPostconditionAdjunction.sp_wp_adjunction
       source_sha256: sha256:a698ecba8d8fb3947ed4f37285b5a1cb88089cc5604dfe7bdc2cf0954405dc6c
-      target_statement_id: sha256:30f602f3a8768b5b3773d9c83cd6d19cc4d9b122cf94b1845aec629d341c52a3
+      target_sha256: sha256:165fba19341602b6e20327e7dd8da97890f77a7668e8f32b292d80c2f4afbd18
   scribe:
     - gid: D5/S3/ObserverMemory/Knowledge/StrongestPostconditionAdjunction.sp_wp_adjunction
       definition_sha256: sha256:ce99e84fa9a18630152afffe55e5e931e6aeaca2ae16774190127a591719fd95

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Eigenstructure/FibonacciMatrixDiscriminant.fibonacci_substitution_trace_det_discriminant
       source_sha256: sha256:6ac63fdbdbbaff16ad0437f87e901e7a023f2b407ce28364834e05f55f1a045b
-      target_statement_id: sha256:c26c9f47279be64780875e23dfe1e8432088edefdf547ac8e50bbdefe017c308
+      target_sha256: sha256:7c712c6ecfcbe5a2df96db3a3e6abd62bc6d397be8d42adbb88e442bd293cc57
   scribe:
     - gid: D5/S1/Eigenstructure/FibonacciMatrixDiscriminant.fibonacci_substitution_trace_det_discriminant
       definition_sha256: sha256:62e13a02e5b7c9010278c7f9d5813b37ce6feb9191d57671ffec6b7c4423d3bc

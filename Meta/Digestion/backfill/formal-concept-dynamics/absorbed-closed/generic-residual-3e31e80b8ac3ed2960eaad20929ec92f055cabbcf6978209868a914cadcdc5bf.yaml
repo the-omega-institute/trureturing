@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Refinement/StrictRefinementBound.strict_refinement_steps_le_card_sub_initial_image
       source_sha256: sha256:3e31e80b8ac3ed2960eaad20929ec92f055cabbcf6978209868a914cadcdc5bf
-      target_statement_id: sha256:a52ab6182aa934c7e59ab8c22a2775cc6df584b51727667d7c286c6ddf6bf0ef
+      target_sha256: sha256:a26afa04ca85e1aad2e439dc37a261c1214cded32bc13d17313ea1b26bd0c0aa
   scribe:
     - gid: D5/S3/ConceptDynamics/Refinement/StrictRefinementBound.strict_refinement_steps_le_card_sub_initial_image
       definition_sha256: sha256:b74973a1850ccf0ebc11bc84c62739ed7aff0ba2c5ff6c2ca7870085ef8c52bb

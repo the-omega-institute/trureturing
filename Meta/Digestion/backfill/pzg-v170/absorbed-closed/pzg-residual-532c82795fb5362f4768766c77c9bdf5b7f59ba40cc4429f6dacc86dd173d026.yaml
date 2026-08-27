@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Depth/ContinuedFractions/PeriodicThreeComplement.periodic_three_continued_fraction_complement
       source_sha256: sha256:532c82795fb5362f4768766c77c9bdf5b7f59ba40cc4429f6dacc86dd173d026
-      target_statement_id: sha256:30888dae7c155a220d7427e611da47e3a1fa7d91f06105d7a34947226717f815
+      target_sha256: sha256:2e46613d3d81ef92883d1246df20ca5b5ed45e89b6fa3bd915c6bd2f22636324
   scribe:
     - gid: D5/S1/Depth/ContinuedFractions/PeriodicThreeComplement.periodic_three_continued_fraction_complement
       definition_sha256: sha256:85746603154713cd83b7ab85d0aa52462725017615680103804b7ad6f2106e13

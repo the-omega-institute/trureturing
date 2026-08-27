@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Diagonal/Naturality/CoordinateRestrictionNaturality.coordinate_restriction_naturality
       source_sha256: sha256:cc30348fd80fa94880179149e16260bb17c8e3294c04f3061ab695f3d236656e
-      target_statement_id: sha256:cbf7a5db7caad7e7a82772e196fb50183dbbb02f4f96a4ed3773810fdf6f2529
+      target_sha256: sha256:17ff228a0a1ac250033898e6a59c9c8baf23b534d6bea4663b28231567c09735
   scribe:
     - gid: D5/S0/Diagonal/Naturality/CoordinateRestrictionNaturality.coordinate_restriction_naturality
       definition_sha256: sha256:77a89db654e6ba688434aec65cf84f857fa9af014612791c13b2ab838278f924

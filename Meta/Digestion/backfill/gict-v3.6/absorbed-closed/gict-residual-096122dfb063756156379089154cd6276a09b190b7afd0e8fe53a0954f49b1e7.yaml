@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ArithUnits/NegativePellSquare.negative_pell_square_unit
       source_sha256: sha256:096122dfb063756156379089154cd6276a09b190b7afd0e8fe53a0954f49b1e7
-      target_statement_id: sha256:9e953ba2caef1fc4e2bd522be868c4860b2d03de962a0070fb1758bc0447165a
+      target_sha256: sha256:55b1c81dbbbfff0df7c60ecff2c9cae678033555fb83a5ff0d79a413985981bd
   scribe:
     - gid: D5/S3/ArithUnits/NegativePellSquare.negative_pell_square_unit
       definition_sha256: sha256:187dbb47d238c9674758a65cdf12b2083af6caa60cddfff64ec1edefb6e894e4

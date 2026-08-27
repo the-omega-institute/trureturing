@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/PrimeForms/PellFamilies/CrossingPellFamily.crossing_pell_invariant
       source_sha256: sha256:b00766467d1118d89ec09d3983a39726f446b3f0b40e54dc9dd3e49a50df381e
-      target_statement_id: sha256:de2788e95e54216e78a912a51b2ad1354c6d217684044ef90efa133c80d86056
+      target_sha256: sha256:c93d40a70f50b4dcd6f2a7e1982125cdc2072d6be9a4e445644a20258c7a277c
   scribe:
     - gid: D5/S3/PrimeForms/PellFamilies/CrossingPellFamily.crossing_pell_invariant
       definition_sha256: sha256:d5fd2587fedbe578a709c8411d244da544bee4b04b1c5dad0bb9cf0480f8ca6c

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Transport/DefinitionalConservativity.definitional_conservativity
       source_sha256: sha256:c006a5ad9275dfec4d5485ee0b6415c5861fee8b380b3b8bbae33385fd058438
-      target_statement_id: sha256:1c376a51829e0c0aa8a81317806d7eb5010e961db630295ccdc095607a410581
+      target_sha256: sha256:68271ed8bf8efaa615ce65685e97ec8430c2f7ffe3c4be65e2241c4167826ffb
   scribe:
     - gid: D5/S3/ConceptDynamics/Transport/DefinitionalConservativity.definitional_conservativity
       definition_sha256: sha256:979c88dbcd7e38a2406a17d7b62dbc374440d5b50f2ff197c7ee5f00992f965d

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Arith/ResidueSeparation.residue_separation
       source_sha256: sha256:20f648ea5c78c25c814862a3eb098cdc4b6a8ad9d578a3f4177b448a6a6d3841
-      target_statement_id: sha256:6a588b8f01e7229023d7f7b2558d528340cd971060c6c0f780d560266a3deeb8
+      target_sha256: sha256:9059d951457c0196457f830f43d7bebcf6468419498fe0379125088b1e8cad54
   scribe:
     - gid: D5/S3/Arith/ResidueSeparation.residue_separation
       definition_sha256: sha256:6a99cd344cba6c140676ee83644977068e9c62ce48ba8afd1bf2bdfdc6546bc2

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ResourceOrder/PayoffPricingFactorization.payoff_price_factorization_iff
       source_sha256: sha256:325e585194898f14ad5f72c580d596555f450f13d59ffb121c471def9d8513c5
-      target_statement_id: sha256:d4a0e65962e4c1229849e139308b20da93baaac1c0a820c18cf87221e6a002c1
+      target_sha256: sha256:13a341ee810e9bcd65e55dae88cfaf0c513045c5278fbbbeed184f4108c34962
   scribe:
     - gid: D5/S3/ResourceOrder/PayoffPricingFactorization.payoff_price_factorization_iff
       definition_sha256: sha256:7de65e2375a527c0eada07f7162ee9fabfdcfbbeb73e6b6d770fa12877df98ab

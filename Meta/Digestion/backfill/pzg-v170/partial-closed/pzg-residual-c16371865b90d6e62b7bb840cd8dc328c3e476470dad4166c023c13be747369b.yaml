@@ -26,58 +26,58 @@ receipts:
   coverage:
     - gid: D5/S1/Phase/SeatTowerArithmetic.twelve_le_abs_of_dvd_of_ne_zero
       source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-      target_statement_id: sha256:88a37c18382b6beff5598f0114d854328e4eaa5749985ebee32e5510acdbd6ed
+      target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
     - gid: D5/S1/Depth/StationingCombinatorics.stationing_count
       source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-      target_statement_id: sha256:4586693c09d7166b022400c075b0d979304951d81d298b3803e22013ed86e3a5
+      target_sha256: sha256:893642c6d9ab9fd04c668d410a09bb00e0a54a93e3af56ad03625f9f45b1ab51
     - gid: D5/S1/Depth/StationingCombinatorics.occupied_stations_mirror
       source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-      target_statement_id: sha256:579f4c5973935047cafc6b410474d0a896e2a1e1754f4abe8d816d4f179d5725
+      target_sha256: sha256:893642c6d9ab9fd04c668d410a09bb00e0a54a93e3af56ad03625f9f45b1ab51
     - gid: D5/S1/Depth/StationingCombinatorics.mirror_occupied_count
       source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-      target_statement_id: sha256:92d9e320d02c8df7f8c676759e5c2bf0e1b40b1f3a111ce23c2253fb40fc0a2f
+      target_sha256: sha256:893642c6d9ab9fd04c668d410a09bb00e0a54a93e3af56ad03625f9f45b1ab51
     - gid: D5/S1/Depth/StationingCombinatorics.mirror_stationing_ne_self
       source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-      target_statement_id: sha256:33b0fcbdaef7eadb01f8e71b6db99127b3702d37498693eea71bca68cb5f428a
+      target_sha256: sha256:893642c6d9ab9fd04c668d410a09bb00e0a54a93e3af56ad03625f9f45b1ab51
     - gid: D5/S1/Depth/StationingCombinatorics.occupied_count_stationing_count
       source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-      target_statement_id: sha256:e09f1325330a6ab515d57a0c53edd3da5522c63f950426dab2e4be5098200710
+      target_sha256: sha256:893642c6d9ab9fd04c668d410a09bb00e0a54a93e3af56ad03625f9f45b1ab51
     - gid: D5/S1/Phase/SeatTowerCombinatorics.mirror_normalization_is_unique
       source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-      target_statement_id: sha256:c9a43ce5ebfecedfe6d7d43cdee006df51abe63fbd607018d7bea4a1ca1028f6
+      target_sha256: sha256:96070d8daaad89aeab17050aeaf70fc1cc1954c2538f0a5ce1685cc157ea01e7
     - gid: D5/S1/Phase/SeatTowerCombinatorics.mirror_representative_count
       source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-      target_statement_id: sha256:ef9304844411ad34b28870f5a5ad171d131ca0371e31c9a4aafd880bdb27f5ba
+      target_sha256: sha256:96070d8daaad89aeab17050aeaf70fc1cc1954c2538f0a5ce1685cc157ea01e7
     - gid: D5/S1/Phase/SeatTowerConsequences.singleton_stationing_choice_count
       source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-      target_statement_id: sha256:6666b90019b26c32797254ba1de6431b2ee0d16647f8893e68cc37aeee45ae00
+      target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
     - gid: D5/S1/Depth/TwelveScaleReduction.twelve_scale_le_normalized_magnitude
       source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-      target_statement_id: sha256:a0f2938a95495bdd131b57c3d302cac4441b27d729bb445fe59af04f1ee55508
+      target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
     - gid: D5/S1/Depth/TwelveScaleReduction.normalized_magnitude_eq_twelve_scale_iff
       source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-      target_statement_id: sha256:5b74c2340ecc8d5b75e77f89faffb5a052be49f0fef0f9d5129e801138b81dee
+      target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
     - gid: D5/S1/Depth/TwelveScaleReduction.twelve_scale_is_normalized_sample_minimum
       source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-      target_statement_id: sha256:6e9c9e95469c91fa82055403defeaa52f5118c151982ac3f356ad9911a52bbfb
+      target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
     - gid: D5/S1/Depth/TwelveScaleReduction.normalized_sample_minimum_unique
       source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-      target_statement_id: sha256:f26d1c902a4550c04f00dd78c8f573d6fdaf8ca3e9fcf69b304b65882c56cc50
+      target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
     - gid: D5/S1/Depth/PartialQuotientExtraction.partialQuotients
       source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-      target_statement_id: sha256:cae5176e9ec7630464893a32b2d10fc5cf14f45fef1516a10e437a93c7c052fd
+      target_sha256: sha256:efe135773ed76938ae1181d98a890914faa56118f1b352fe5676ba5552684f7e
     - gid: D5/S1/Depth/PartialQuotientExtraction.aMax
       source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-      target_statement_id: sha256:1200d0e02a6840560c8181044bb74c8e8a6c1e477b6420ab958ce863d1b145fe
+      target_sha256: sha256:efe135773ed76938ae1181d98a890914faa56118f1b352fe5676ba5552684f7e
     - gid: D5/S1/Depth/PartialQuotientExtraction.partialQuotients_nonempty
       source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-      target_statement_id: sha256:8dcad86014718d3bf73ab645ac31d5adc398131d4b3a5932eb49f2f77c82f7cd
+      target_sha256: sha256:efe135773ed76938ae1181d98a890914faa56118f1b352fe5676ba5552684f7e
     - gid: D5/S1/Depth/PartialQuotientExtraction.aMax_pos
       source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-      target_statement_id: sha256:b3ca4ece426cf5317efaccb2d5a5255208591962dfbef1eaf80c7c90d8a9b35f
+      target_sha256: sha256:efe135773ed76938ae1181d98a890914faa56118f1b352fe5676ba5552684f7e
     - gid: D5/S1/Depth/PartialQuotientExtraction.twelve_scale_is_extracted_normalized_sample_minimum
       source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-      target_statement_id: sha256:8a90cb14d941a89541fd22738e8989bafde62b44e6f89211212f4e7077fce805
+      target_sha256: sha256:efe135773ed76938ae1181d98a890914faa56118f1b352fe5676ba5552684f7e
   scribe:
     - gid: D5/S1/Depth/TwelveScaleReduction.twelve_scale_le_normalized_magnitude
       definition_sha256: sha256:93aeb146ce5db59a24a18c4d380ce5cdc728d104a2b829bda0c8bb0960084f3d

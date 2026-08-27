@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Transport/MacroInterventionCriterion.macro_intervention_carry_criterion
       source_sha256: sha256:11d26e8120ab721779698193df66228d9ce5276b1c732982aaeee841a3f83ee2
-      target_statement_id: sha256:41b9453e7d659578b02bf4afb75d8d002404b91db57d60a78ab573da53fe13fb
+      target_sha256: sha256:c49cfc5eb1ef9cc337b349f1aea1c131bc8d368009659f131456910348a577b5
   scribe:
     - gid: D5/S3/ConceptDynamics/Transport/MacroInterventionCriterion.macro_intervention_carry_criterion
       definition_sha256: sha256:c87c007fa779cf4fec004a537b3b82e5b8e9b1a93ae46c374637ca098dd3896e

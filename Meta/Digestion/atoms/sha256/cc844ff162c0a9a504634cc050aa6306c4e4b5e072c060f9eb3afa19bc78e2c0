@@ -1,0 +1,69 @@
+## 89.1 完成范数不是普通迹范数
+
+对：
+
+$$
+q\in\mathbb I,
+$$
+
+其四元数约化范数属于黄金域：
+
+$$
+n(q)=q\overline q=x+\sqrt5\,y,
+\qquad
+x,y\in\mathbb Q.
+$$
+
+定义：
+
+$$
+\boxed{
+Q_E(q)=x+y.
+}
+\tag{89.2}
+$$
+
+它也可以写成加权域迹：
+
+$$
+\boxed{
+Q_E(q)
+=
+\operatorname{Tr}_{K/\mathbb Q}
+\left(
+\frac{5+\sqrt5}{10}\,n(q)
+\right),
+\qquad
+K=\mathbb Q(\sqrt5).
+}
+\tag{89.3}
+$$
+
+因为若：
+
+$$
+\alpha=\frac{5+\sqrt5}{10},
+$$
+
+则：
+
+$$
+\operatorname{Tr}_{K/\mathbb Q}
+\bigl(\alpha(x+\sqrt5 y)\bigr)=x+y.
+$$
+
+系数 \(\alpha\) 属于逆不同理想乘以一个单位；它正是把朴素迹配对修正为整数、最终成为 unimodular 配对的局部反项。
+
+标准 icosian 定理说明：
+
+$$
+\boxed{
+(\mathbb I,2Q_E)\simeq E_8
+}
+\tag{89.4}
+$$
+
+其中 \(2Q_E\) 使用标准 \(E_8\) 根长平方 \(2\) 的规范。([Pasayten Institute][3])
+
+---
+

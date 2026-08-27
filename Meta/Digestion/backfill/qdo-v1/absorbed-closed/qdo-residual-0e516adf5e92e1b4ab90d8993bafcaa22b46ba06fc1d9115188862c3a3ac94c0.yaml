@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/MetricGeometry/BellmanMaxEquation.discounted_prediction_distance_bellman
       source_sha256: sha256:0e516adf5e92e1b4ab90d8993bafcaa22b46ba06fc1d9115188862c3a3ac94c0
-      target_statement_id: sha256:af817306cd710894cf6e1bbd7e0e766b1862513c7c12646a56d1e54bfd535a93
+      target_sha256: sha256:4d11d9f57973a1d063d0a315377ffc8d2e811e943823f1ceddd017cc4f53bd71
   scribe:
     - gid: D5/S3/Observer/MetricGeometry/BellmanMaxEquation.discounted_prediction_distance_bellman
       definition_sha256: sha256:d12657fd9b98d001f3a8d6e82a9e3cba4c9c792dd2eb278b68532c31b40644de

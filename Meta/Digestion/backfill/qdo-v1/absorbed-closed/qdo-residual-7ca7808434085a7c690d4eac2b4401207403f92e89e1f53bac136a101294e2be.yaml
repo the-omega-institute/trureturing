@@ -10,10 +10,10 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/InverseLimits/FunctionGraphSpectrumCollision.same_trace_rank_spectra_not_function_graph_conjugate
       source_sha256: sha256:7ca7808434085a7c690d4eac2b4401207403f92e89e1f53bac136a101294e2be
-      target_statement_id: sha256:67ed7448512dda9b96cfe3f37d8576ee96009003d7275c6fdbd14fe5068344da
+      target_sha256: sha256:6e3b86f51b659e2a8cbe87a0af9ae84d3ae6ca20b41682e57bfb5a93e5c26441
     - gid: D5/S3/ObserverMemory/InverseLimits/FunctionGraphLinearSimilarity.transition_matrices_linearly_similar
       source_sha256: sha256:7ca7808434085a7c690d4eac2b4401207403f92e89e1f53bac136a101294e2be
-      target_statement_id: sha256:63162002fb0f34dbcdc59172c373cd71c24b125de42c5790c517d8550a479c8b
+      target_sha256: sha256:5ec7b547e8c08f2e5c43e6333f6c53d832c1a8e19075e1ddc749af2522b2055a
   scribe:
     - gid: D5/S3/ObserverMemory/InverseLimits/FunctionGraphSpectrumCollision.same_trace_rank_spectra_not_function_graph_conjugate
       definition_sha256: sha256:ddd60b47159249a78aa9d70018a60341cfcb5f87bcaed3504a437796b95bf121

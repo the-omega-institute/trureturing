@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/DecisionValue/ThresholdPublicGoodDualEquilibria.threshold_public_good_dual_equilibria
       source_sha256: sha256:752202d7cd952490a7f68b6326b02dbaa530e0997f7579002bb28743a96b816d
-      target_statement_id: sha256:3fac8b85fb2ad8422713699662ae066a3e38d49636078e179e879f7038eb7110
+      target_sha256: sha256:143d6c5a810a144b83b9488f03182ad81ec16aebeac3755fe877b2fb978ebced
   scribe:
     - gid: D5/S3/ConceptDynamics/DecisionValue/ThresholdPublicGoodDualEquilibria.threshold_public_good_dual_equilibria
       definition_sha256: sha256:69875d78d0293c867ea643c4e8f3051ee08c937c6c37ca674b05af3ff7046b81

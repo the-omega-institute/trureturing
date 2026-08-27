@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Computability/DescriptionComplexity/LookupProgramUpperBound.lookup_program_upper_bound
       source_sha256: sha256:432400fb37fe428d07eb53b710abc81899ad1d6d2bc7ade87314757f57b2f40f
-      target_statement_id: sha256:a36e220ac19a3f75ad18b701da99ca456ea83bb591c07fe9b5037d7e3d509672
+      target_sha256: sha256:0f4c922e0e791897d05253deef52e89c15a0ae6a755b399c2708ca09fb07c9a8
   scribe:
     - gid: D5/S0/Computability/DescriptionComplexity/LookupProgramUpperBound.lookup_program_upper_bound
       definition_sha256: sha256:02cc5d60df482042cc4580f453073cad720bfdc79d88c0b532aa3e5a4755728a

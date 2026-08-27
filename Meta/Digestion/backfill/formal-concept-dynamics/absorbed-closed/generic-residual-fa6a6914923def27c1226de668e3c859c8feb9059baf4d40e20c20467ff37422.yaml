@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Answering/SafeAnswerCoverageMaximality.safe_answer_coverage_maximality
       source_sha256: sha256:fa6a6914923def27c1226de668e3c859c8feb9059baf4d40e20c20467ff37422
-      target_statement_id: sha256:1f366496a1c235473a7e64fc76d661ce17dd88bb305da3c17291819977636e00
+      target_sha256: sha256:d7005d32394d4c9e99970728c1690efbe657fce1c1eda6456b27c7a45a6cc3a0
   scribe:
     - gid: D5/S3/ConceptDynamics/Answering/SafeAnswerCoverageMaximality.safe_answer_coverage_maximality
       definition_sha256: sha256:5a1c4f21e3348ce6ffb6224cea664f160e2bdc721924f8f3438b8576d2538cd6

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Quantum/GNSMatrix.gns_matrix_identity
       source_sha256: sha256:294bcabd4a75eb29ea22d0f93c089a1f1c7a4d0229e292cc53ae7a944298d00a
-      target_statement_id: sha256:9fc47911c9e256c4159d8617429c5d2c6577c28d620b4c1e4a8ecf9811296804
+      target_sha256: sha256:fb49fe80f17c43064d1b17d2e6d6aacae54a52c68a1b22828618416ad9c7dd5c
   scribe:
     - gid: D5/S3/Quantum/GNSMatrix.gns_matrix_identity
       definition_sha256: sha256:2f0b6b5fcef9dfcc136d95fb8a45a2dc74ed6a152fcd76041deaa0b3226f72c6

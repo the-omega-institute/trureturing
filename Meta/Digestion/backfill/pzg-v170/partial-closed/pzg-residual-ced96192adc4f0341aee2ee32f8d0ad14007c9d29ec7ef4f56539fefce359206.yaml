@@ -10,7 +10,7 @@ receipts:
   coverage:
     - gid: D5/S3/Weil/CriticalLine.unitarity_line_iff
       source_sha256: sha256:ced96192adc4f0341aee2ee32f8d0ad14007c9d29ec7ef4f56539fefce359206
-      target_statement_id: sha256:0915061fdce78dc64a2a0c1db7dc5ec24ddb614cfd7dece77507d444d05f7b6f
+      target_sha256: sha256:7b72300093e9a801e544c48fb92c4c651a5eeacd3dab9b32fd28c8da28b76a34
   scribe:
     - gid: D5/S3/Weil/CriticalLine.unitarity_line_iff
       definition_sha256: sha256:268a66fbf2c27762c3b2f461b61e5eed199b91174f0caa6af19e27380105ca3e

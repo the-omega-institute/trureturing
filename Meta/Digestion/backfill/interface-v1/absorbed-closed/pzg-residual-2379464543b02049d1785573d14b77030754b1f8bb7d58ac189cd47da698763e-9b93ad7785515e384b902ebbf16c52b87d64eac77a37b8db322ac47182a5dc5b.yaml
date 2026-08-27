@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Asymptotics/EscapeProbability/EscapeRegimeCorollary.escape_probability_realizable_regimes
       source_sha256: sha256:2379464543b02049d1785573d14b77030754b1f8bb7d58ac189cd47da698763e
-      target_statement_id: sha256:079c2ddd449928273e57d9a5c58611be48ebe9fbcda45e593b882d0e4f9eb5ce
+      target_sha256: sha256:6788a222b91554d09279c7aea103d464f1f792895336613d3ec81a8e36428ea0
   scribe:
     - gid: D5/S0/Asymptotics/EscapeProbability/EscapeRegimeCorollary.escape_probability_realizable_regimes
       definition_sha256: sha256:0e6cc0781b69dd5ba4ae8eacb41db61899d67f5e01d69d09f709ac93d6d1a85f

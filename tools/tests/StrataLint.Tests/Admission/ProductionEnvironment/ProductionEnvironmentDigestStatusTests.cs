@@ -463,7 +463,7 @@ public sealed partial class ProductionEnvironmentTests
                 "coverage:\n"
                 + $"    - gid: {gid}\n"
                 + $"      source_sha256: {RuleFixture.FixtureCasReference}\n"
-                + "      target_statement_id: sha256:0000000000000000000000000000000000000000000000000000000000000000",
+                + "      target_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000",
                 StringComparison.Ordinal)
             .Replace(
                 "scribe: []",

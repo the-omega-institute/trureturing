@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/PrimeForms/LowSpectrumLegIdentity.low_spectrum_leg_identity
       source_sha256: sha256:5b81623d5d29b130eeee48c63e5d25e59fa420f15a6e50e51499127cb606425c
-      target_statement_id: sha256:b6ab38f5b70ea755336d6a4e148230c676f4834074ad21a2523a6ebd5af69afd
+      target_sha256: sha256:67be77203676af9900e48126c4901eadd846f11984b4c4f4f8be51e2d983b9bc
   scribe:
     - gid: D5/S3/PrimeForms/LowSpectrumLegIdentity.low_spectrum_leg_identity
       definition_sha256: sha256:8d10f9299e3375c28f606becbed47ee21e9a8c1544b09c1bfa0f9ef57e1bfab3

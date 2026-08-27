@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/AnalyticClosure/CofinalTailDiscipline.cofinal_windows_and_vanishing_budget_close
       source_sha256: sha256:0ef34fa177de3dc443912d8b9221b0c28ca7e92be21d7cbda2afa5bbf759548e
-      target_statement_id: sha256:b662808a15f3631ec905e960a3a1b03dca86dcb082f28f780fc0d098fc08b128
+      target_sha256: sha256:bab7873eb8f037905e9d578e4522af2e43beb244848a7df84cd836cbc5cc103b
   scribe:
     - gid: D5/S3/AnalyticClosure/CofinalTailDiscipline.cofinal_windows_and_vanishing_budget_close
       definition_sha256: sha256:c706a2c4a4c9795d4812cfe8aec7fce1304883f92108e431c5b8698aa7e5b0cf

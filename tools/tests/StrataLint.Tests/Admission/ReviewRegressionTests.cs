@@ -346,7 +346,7 @@ public sealed partial class ReviewRegressionTests
             + "  coverage:\n"
             + "    - gid: " + gid + "\n"
             + "      source_sha256: sha256:00\n"
-            + "      target_statement_id: sha256:00\n"
+            + "      target_sha256: sha256:00\n"
             + "  scribe:\n"
             + "    - gid: " + gid + "\n"
             + "      definition_sha256: sha256:00\n"

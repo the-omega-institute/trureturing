@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Factorization/BasicDiscriminantMinimum.basic_discriminant_minimum
       source_sha256: sha256:af99ceb28deef2731809442e66334f866649e1d6510f977290f9b1ee40db18de
-      target_statement_id: sha256:6a5a32b82384f90ba77a006b0b25208fa2ac957366be23ab34bdaf55c674b7a1
+      target_sha256: sha256:101d58bcfc56bda7263f5002cc9b37888916bbdfead8fc36894330f68781fae6
   scribe:
     - gid: D5/S3/Factorization/BasicDiscriminantMinimum.basic_discriminant_minimum
       definition_sha256: sha256:c643c49201afe10fe67acbd6b932f3a05fe912c885f428831e22aa836557aee4

@@ -9,6 +9,6 @@ receipts:
   coverage:
     - gid: D5/S1/Digit/PrimeAxisTable.prime_axis_table_spec
       source_sha256: sha256:28a2415fbe4936c1c56a1471d7f72cb1af759747b9f985e4112a0cd5ce3e08a3
-      target_statement_id: sha256:e665a7f1916cdb3299447fa765a2f210ad3414fcf4e881ade7539c335083cfe9
+      target_sha256: sha256:a2d6ad89bad13070c0a7b89109f5e059124c149a445162c95be046c21b8971e2
   scribe: []
   unresolved_subitems: []

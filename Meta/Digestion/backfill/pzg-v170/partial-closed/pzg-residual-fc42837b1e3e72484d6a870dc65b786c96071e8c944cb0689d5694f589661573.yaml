@@ -9,6 +9,6 @@ receipts:
   coverage:
     - gid: D5/S0/Conventions/TotalCode.no_hidden_register
       source_sha256: sha256:fc42837b1e3e72484d6a870dc65b786c96071e8c944cb0689d5694f589661573
-      target_statement_id: sha256:cd08b63faaeaa2dbd34ef07b6c09048866441ffe1996d5d741771b0434912ab6
+      target_sha256: sha256:c337cb95188e487e9ff5c97829a911e26bb7ca24e574155ac7555a24ac56462c
   scribe: []
   unresolved_subitems: []

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Quantum/Sharpness/SpectralPairingCapacity.spectral_pairing_capacity_monotone_of_doubly_stochastic
       source_sha256: sha256:fd5b9316936b31ee36ddba9f28a43997ad393cb3af862e55cc6efed4e9c0533d
-      target_statement_id: sha256:c3912a36b2b4ffbb11280490cc2b087e78011e2e5e74f16a80efec47310c2bc0
+      target_sha256: sha256:ded1f1925bd7fd5d43f00e1197813c535fc78ea074e334c19608178c8aa6eedc
   scribe:
     - gid: D5/S3/Quantum/Sharpness/SpectralPairingCapacity.spectral_pairing_capacity_monotone_of_doubly_stochastic
       definition_sha256: sha256:fb0b5cdc94a0e44537bbc72cd778016315e1a668814cdb6c0d8c80adb10e830c

@@ -14,7 +14,7 @@ receipts:
   coverage:
     - gid: D5/S3/Quantum/FiniteDimensional.born_probability_skeleton
       source_sha256: sha256:a6962d32cb2d5b0127bc20031cd895bdfb1d232901e5e21eb0a62b55e49930eb
-      target_statement_id: sha256:23ce2a1f8e999242868864e28a8bf0653ddac0dbc9455b6bf5795fa62fd1e2cc
+      target_sha256: sha256:664b9ea50bca484513a28f5cd812e270f0c8da5394cdd768298b61b65e111844
   scribe: []
   unresolved_subitems:
     - gleason-representation-and-uniqueness-dimension-at-least-three

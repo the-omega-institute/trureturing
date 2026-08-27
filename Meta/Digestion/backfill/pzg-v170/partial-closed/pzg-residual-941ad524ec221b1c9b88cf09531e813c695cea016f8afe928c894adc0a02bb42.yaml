@@ -11,7 +11,7 @@ receipts:
   coverage:
     - gid: D5/S3/Zeros/EulerWindows.finite_euler_window_ne_zero
       source_sha256: sha256:941ad524ec221b1c9b88cf09531e813c695cea016f8afe928c894adc0a02bb42
-      target_statement_id: sha256:8080a08a44641ca29857c4301c1f005735b2f78acf43ee63f65db82a45ad769d
+      target_sha256: sha256:b93cbfd5915a7afb81096c609720e034fa22e7e5e7bbf23e6d9a51cb640fa4cf
   scribe:
     - gid: D5/S3/Zeros/EulerWindows.finite_euler_window_ne_zero
       definition_sha256: sha256:fb4a3fac0bdca0866a7f14deaf210045ce7935bba8fdf75aed36fb6a6bf120fa

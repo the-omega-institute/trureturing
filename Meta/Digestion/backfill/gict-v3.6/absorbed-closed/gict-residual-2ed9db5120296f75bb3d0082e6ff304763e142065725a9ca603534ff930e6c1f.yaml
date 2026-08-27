@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/PrimeForms/Crossing/ResonanceFactors.resonance_factors_identically_zero_iff
       source_sha256: sha256:2ed9db5120296f75bb3d0082e6ff304763e142065725a9ca603534ff930e6c1f
-      target_statement_id: sha256:8532f022508dbc1691208b39bc0e97790bc537f108348d6fd2a75cd5c76f7d9a
+      target_sha256: sha256:b1308aa56af472b970cd0622278c8229e4bf57737698289f03455646eeacedd3
   scribe:
     - gid: D5/S3/PrimeForms/Crossing/ResonanceFactors.resonance_factors_identically_zero_iff
       definition_sha256: sha256:f961b038dda497bfbc2c310d50f1bdf3e96054d20bcabb6ceab5aab84b6a9ea2

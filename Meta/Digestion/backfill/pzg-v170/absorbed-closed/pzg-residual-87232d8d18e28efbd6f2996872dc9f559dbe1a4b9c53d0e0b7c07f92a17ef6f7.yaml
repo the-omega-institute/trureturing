@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Eigenstructure/GoldenExponentRays.golden_exponent_rational_ray_iff
       source_sha256: sha256:87232d8d18e28efbd6f2996872dc9f559dbe1a4b9c53d0e0b7c07f92a17ef6f7
-      target_statement_id: sha256:9df5999a32b84e0a674186a2a06a6744469e08045b11aa600ac9162c128af866
+      target_sha256: sha256:b1e5786793d3f859e1afb4bb2dc57c975a62ca568e9ecafcbb365c848d9eec5d
   scribe:
     - gid: D5/S1/Eigenstructure/GoldenExponentRays.golden_exponent_rational_ray_iff
       definition_sha256: sha256:6e44020f2f89e0d0ea50c7af575726d5adfca401f6ba5664933c99f3562b3677

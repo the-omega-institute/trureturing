@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/DecisionValue/CompleteInputDeterminism.complete_input_agreement_excludes_deterministic_disagreement
       source_sha256: sha256:3ac6f54f82ba144564aa8bf385abb4701f25df94c16d53d26f20f4b1c550a7bf
-      target_statement_id: sha256:92ae3b9227b0cef4c30c3ce93685ad76204fdb9279faf8117f959bced5f361e4
+      target_sha256: sha256:ab9ee283504f05363555152f571c8931392334ea1c46abf5065548f10459e206
   scribe:
     - gid: D5/S3/ConceptDynamics/DecisionValue/CompleteInputDeterminism.complete_input_agreement_excludes_deterministic_disagreement
       definition_sha256: sha256:306a00eeaf993967708eca31861b8727cb24c4f21203933b418615a9e6dad62e

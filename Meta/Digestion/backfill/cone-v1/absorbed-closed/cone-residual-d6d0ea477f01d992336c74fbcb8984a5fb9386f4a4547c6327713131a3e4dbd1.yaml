@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Quantum/MatrixInversion.positive_definite_inversion_identity
       source_sha256: sha256:d6d0ea477f01d992336c74fbcb8984a5fb9386f4a4547c6327713131a3e4dbd1
-      target_statement_id: sha256:3882db17a33baf5a3f062a69409db3f3f28c3b7daa863930e3fc7f77f82aa52d
+      target_sha256: sha256:21c5338331db2a72a01f5ea3dd8ddc8d6e531ba09cc196ac2f71fe42bf0ae8a1
   scribe:
     - gid: D5/S3/Quantum/MatrixInversion.positive_definite_inversion_identity
       definition_sha256: sha256:468aca955d0f917efbfabab8ce239fc3ae59f5e50272f385defcdc6272329b85

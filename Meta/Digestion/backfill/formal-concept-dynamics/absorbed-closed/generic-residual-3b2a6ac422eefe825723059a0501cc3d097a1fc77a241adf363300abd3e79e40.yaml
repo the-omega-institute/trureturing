@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Transport/AdmissionValidityPreservation.validity_preserved_by_admission_map
       source_sha256: sha256:3b2a6ac422eefe825723059a0501cc3d097a1fc77a241adf363300abd3e79e40
-      target_statement_id: sha256:b921fe5de5397b82dbc6230f47a7e67cd00aaaf18accf1ba2ede503ae3c5700c
+      target_sha256: sha256:443af1277d6cc40643b4241cd675eabce78aa08fa8145ee8d686629178fc868d
   scribe:
     - gid: D5/S3/ConceptDynamics/Transport/AdmissionValidityPreservation.validity_preserved_by_admission_map
       definition_sha256: sha256:49225a8bc7b140b2ecaa1212d4b11bf7d27284acd40588c4f9adc03f428e52c1

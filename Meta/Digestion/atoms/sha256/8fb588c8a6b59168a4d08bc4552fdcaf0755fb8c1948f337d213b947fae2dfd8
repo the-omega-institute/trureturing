@@ -1,0 +1,34 @@
+## 88.1 为什么从三维进入四维
+
+三维 Euclidean Clifford 代数的偶子代数满足：
+
+$$
+\boxed{
+\operatorname{Cl}^{+}(3)\simeq\mathbb H.
+}
+$$
+
+它作为实向量空间维数为 \(4\)。
+
+令 \(\Delta_{H_3}\) 是三维二十面体根系。取所有偶数个根的 Clifford 乘积，归一化后得到 \(120\) 个 spinors。
+
+这些 spinors：
+
+1. 在四元数乘法下闭合；
+2. 构成 binary icosahedral group；
+3. 作为四维向量构成 \(H_4\) 根系；
+4. 同时是正 \(600\)-胞体的 \(120\) 个顶点。([arXiv][2])
+
+因此：
+
+$$
+\boxed{
+H_3
+\xrightarrow{\text{even Clifford products}}
+H_4.
+}
+\tag{88.1}
+$$
+
+---
+

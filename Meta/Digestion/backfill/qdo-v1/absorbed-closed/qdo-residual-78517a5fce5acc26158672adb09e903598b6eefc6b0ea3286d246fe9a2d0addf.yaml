@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/Naturality/DiagonalNaturalityDefect.diagonal_naturality_defect_eq_semiconjugacy_defect
       source_sha256: sha256:78517a5fce5acc26158672adb09e903598b6eefc6b0ea3286d246fe9a2d0addf
-      target_statement_id: sha256:fbf73cce1ff01a996c2a44b4fea5d90a7c4aada705fed4fa3bbd92cbdec2c6f7
+      target_sha256: sha256:f3e4809cfde5ec5b28e406a5691daa3c4f5959fdb19dfa86389a2edb8e3d9f0e
   scribe:
     - gid: D5/S3/Observer/Naturality/DiagonalNaturalityDefect.diagonal_naturality_defect_eq_semiconjugacy_defect
       definition_sha256: sha256:8cab5dae3eb281e3b6a30aa8d9fe5050c99dad07c3af0f83c81414c00ae89d98

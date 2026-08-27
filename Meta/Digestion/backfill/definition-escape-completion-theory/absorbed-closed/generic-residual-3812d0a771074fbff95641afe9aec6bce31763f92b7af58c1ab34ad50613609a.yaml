@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/TargetChangeSettlementConservation.append_only_old_settlement_unchanged
       source_sha256: sha256:3812d0a771074fbff95641afe9aec6bce31763f92b7af58c1ab34ad50613609a
-      target_statement_id: sha256:45c867f6217084d3a800ee25732afe954289afa1c4088fa6bd3a4e9d2359ee19
+      target_sha256: sha256:551fe67f81d654b43eee6b56aa4393c7433983844fcc0c25f2db3c84a839361c
   scribe:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/TargetChangeSettlementConservation.append_only_old_settlement_unchanged
       definition_sha256: sha256:a854e92465ce67b133c9af6b725c0b37c48d69a9f4719fcae0471e068f352f65

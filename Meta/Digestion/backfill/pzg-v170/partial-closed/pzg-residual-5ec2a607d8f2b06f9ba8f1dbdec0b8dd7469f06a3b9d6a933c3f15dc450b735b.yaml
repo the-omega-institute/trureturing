@@ -21,22 +21,22 @@ receipts:
   coverage:
     - gid: D5/S1/Phase/SeatTowerArithmetic.mod_twenty_four_eq_zero_or_twelve
       source_sha256: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
-      target_statement_id: sha256:8a50e401580b7951561cd3a1d416585460cb0ebe1811cace4b2e4aeea279d33f
+      target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
     - gid: D5/S1/Phase/SeatTowerArithmetic.twenty_four_dvd_iff_even_quotient
       source_sha256: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
-      target_statement_id: sha256:e4f822db95151ad38062e097d33a6c14c5932bbb9bcab4cd31a914272a1769f1
+      target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
     - gid: D5/S1/Phase/SeatTowerCombinatorics.full_exponent_stationing_count
       source_sha256: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
-      target_statement_id: sha256:380a231706a46fc14777d9f018cf192293e63d988129a7a79849cf52b5d936ac
+      target_sha256: sha256:96070d8daaad89aeab17050aeaf70fc1cc1954c2538f0a5ce1685cc157ea01e7
     - gid: D5/S1/Phase/SeatTowerConsequences.jacobi_factorization_of_selector_numerator
       source_sha256: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
-      target_statement_id: sha256:f228a3a6442d3e435f1946c719e0463541f3ae817b3114ee72b05f83e269971f
+      target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
     - gid: D5/S1/Phase/SeatTowerConsequences.singleton_stationing_choice_count
       source_sha256: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
-      target_statement_id: sha256:6666b90019b26c32797254ba1de6431b2ee0d16647f8893e68cc37aeee45ae00
+      target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
     - gid: D5/S1/Phase/SeatTowerConsequences.three_split_primes_have_three_singleton_choices
       source_sha256: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
-      target_statement_id: sha256:38fe3a77dcf59dd28a73d24e9308519f04188987facfefc13b458f03aeb140e7
+      target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
   scribe:
     - gid: D5/S1/Phase/SeatTowerCombinatorics.full_exponent_stationing_count
       definition_sha256: sha256:466422dc735d4dc550e46a2cb24f7f1cacd0880c37ff6e8bf96af19a36db1939

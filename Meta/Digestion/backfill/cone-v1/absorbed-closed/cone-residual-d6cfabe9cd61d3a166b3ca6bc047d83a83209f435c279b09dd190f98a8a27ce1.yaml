@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/QuantumBounds/LandauIdentity.landau_identity
       source_sha256: sha256:d6cfabe9cd61d3a166b3ca6bc047d83a83209f435c279b09dd190f98a8a27ce1
-      target_statement_id: sha256:c90549f499e166ded00dd1d94590938b85526e2f806958eaa8dfee21b1b9ba2d
+      target_sha256: sha256:ddb4faa5dd1abbf0d3eb346e226160661dfbc02bb86a8eac63ccfd8fdf7f4b89
   scribe:
     - gid: D5/S3/QuantumBounds/LandauIdentity.landau_identity
       definition_sha256: sha256:c31de35460c62c1185c1ed87feac645fbeffb71295653bf70c70c5a569232c7e

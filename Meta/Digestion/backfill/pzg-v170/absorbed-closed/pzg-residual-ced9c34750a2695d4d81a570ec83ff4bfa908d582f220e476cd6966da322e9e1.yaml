@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Zeros/Repulsion/RepulsionMaximum.repulsion_profile_has_exact_maximum
       source_sha256: sha256:ced9c34750a2695d4d81a570ec83ff4bfa908d582f220e476cd6966da322e9e1
-      target_statement_id: sha256:cebd607f640f4a0f9df2f1009ff840c17af81589ed47ec633a0f6d49529e423c
+      target_sha256: sha256:1c96f7f587b1e5f27505093d6832708cd46783ae8e4e33baf39ad0af9e727bf3
   scribe:
     - gid: D5/S3/Zeros/Repulsion/RepulsionMaximum.repulsion_profile_has_exact_maximum
       definition_sha256: sha256:7bb099b1cd8372de46cccf9b99bdffa565b4e9d365b5de6fd4e2390e6231101a

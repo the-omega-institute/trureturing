@@ -74,6 +74,7 @@ internal static class ScribeTestMapDeriver
         "Golden",
         "Golden/Projection",
         "Golden/values-kernels.toml",
+        "docs/develop/spec/golden-ledger-repo-spec.md",
         "Library",
         "Meta",
         "Meta/Digestion/backfill",

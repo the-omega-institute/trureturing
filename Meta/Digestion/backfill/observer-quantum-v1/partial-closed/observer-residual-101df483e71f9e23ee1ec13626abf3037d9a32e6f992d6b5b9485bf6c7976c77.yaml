@@ -21,10 +21,10 @@ receipts:
   coverage:
     - gid: D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character
       source_sha256: sha256:101df483e71f9e23ee1ec13626abf3037d9a32e6f992d6b5b9485bf6c7976c77
-      target_statement_id: sha256:dc5c3f103d0e67f17a64f1ed85c361cc4e5496ba2bd4aa43444d74ecb8f19d9a
+      target_sha256: sha256:664b9ea50bca484513a28f5cd812e270f0c8da5394cdd768298b61b65e111844
     - gid: D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product
       source_sha256: sha256:101df483e71f9e23ee1ec13626abf3037d9a32e6f992d6b5b9485bf6c7976c77
-      target_statement_id: sha256:0d54c32903e14d268173a993a963a82faee352eeb70f0ca1a56573c397a5eeb0
+      target_sha256: sha256:89457799a8e0362f3113889e39ef6eeadabe40f2c9e3228af2bffe7d66acda31
   scribe: []
   unresolved_subitems:
     - kochen-specker-projection-valuation-obstruction

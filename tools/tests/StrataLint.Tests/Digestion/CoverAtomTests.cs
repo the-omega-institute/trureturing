@@ -5,13 +5,9 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-// Phase 1 cover transaction gate matrix. cover binds one already-proven Lean
-// declaration to an existing open residual atom by writing coverage_gids +
-// coverage/scribe receipts, all-or-nothing. Precondition and integrity rejects
-// leave the ledger unchanged; a terminal initial-cover failure writes only its
-// disposition. The envelope / pre-committed-receipt /
-// declaration-signature gates (spec §11.21) live in the CoverAtomEnvelopeTests.cs
-// partial (kept there so this file stays under the SL-003 800-line cap).
+// Phase 1 cover transaction gate matrix. Cover binds a proven Lean declaration
+// to an open residual atom atomically; rejects leave only a terminal disposition.
+// Envelope, receipt and signature gates live in the partial companion test file.
 public sealed partial class CoverAtomTests
 {
     [Fact]
@@ -287,8 +283,9 @@ public sealed partial class CoverAtomTests
                 CoverWorld.Raw(currentFiles),
                 CoverWorld.Raw(baselineFiles)),
             new FakeLeanReportSource(inputs.Report),
-            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
-
+            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
+            new NoOpFrozenLedgerAdmissionServices(),
+            CoverWorld.TimeProvider);
         var result = environment.CoverAtom(
             ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline",
                 "--envelope", inputs.EnvelopePath]);
@@ -322,7 +319,9 @@ public sealed partial class CoverAtomTests
                 CoverWorld.Raw(currentFiles),
                 CoverWorld.Raw(baselineFiles)),
             new FakeLeanReportSource(inputs.Report),
-            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
+            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
+            new NoOpFrozenLedgerAdmissionServices(),
+            CoverWorld.TimeProvider);
 
         var result = environment.CoverAtom(
             ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline",
@@ -401,11 +400,12 @@ public sealed partial class CoverAtomTests
                 CoverWorld.Raw(currentFiles),
                 CoverWorld.Raw(baselineFiles)),
             new FakeLeanReportSource(inputs.Report),
-            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
+            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
+            new NoOpFrozenLedgerAdmissionServices(),
+            CoverWorld.TimeProvider);
         var effectiveArgs = args
             ?? ["--cover-atom", spec.AtomId, "--gid", inputs.Gid, "--base", "baseline",
                 "--envelope", inputs.EnvelopePath];
-
         var result = environment.CoverAtom(effectiveArgs);
 
         var afterDocument = BackfillInventoryLoader.LoadRoot(temporary.Path);
@@ -495,10 +495,6 @@ internal sealed record CoverSpec
 
     internal bool VerifyScribe { get; init; } = true;
 
-    internal bool FreezeTargetModule { get; init; } = true;
-
-    internal string TargetStatementId { get; init; } = FrozenStatementReceiptTestData.Id('a');
-
     // Pre-committed formalization receipt (digestion-formalization-v1, spec §11.21).
     // Defaults produce a receipt that binds this atom and pins a signature equal to
     // the deposited declaration; each envelope gate test flips exactly one field.
@@ -562,6 +558,8 @@ internal sealed record CoverSpec
 internal static partial class CoverWorld
 {
     internal const string DefaultAtomId = "cover-1";
+    internal static readonly DateTimeOffset RecordedAtUtc = new(2026, 8, 26, 4, 3, 2, TimeSpan.Zero);
+    internal static TimeProvider TimeProvider { get; } = new FixedTimeProvider(RecordedAtUtc);
 
     internal static CoverSpec StaleReceiptSpec() => new()
     {
@@ -586,7 +584,9 @@ internal static partial class CoverWorld
                 Raw(currentFiles),
                 Raw(inputs.Baseline)),
             new FakeLeanReportSource(inputs.Report),
-            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
+            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
+            new NoOpFrozenLedgerAdmissionServices(),
+            TimeProvider);
 
     internal static RawRepositorySnapshot Raw(IReadOnlyDictionary<string, string> files) =>
         RawRepositorySnapshot.Create(files.Select(pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
@@ -636,7 +636,7 @@ internal static partial class CoverWorld
             includeOtherAtom: true,
             tailAuthPath,
             tailAuthSha,
-            gid => FrozenStatementIdFor(spec, gid),
+            DigestionFingerprint.Compute(targetBytes).RawSha256,
             unrelatedAtom,
             unrelatedSourcePath,
             useUnrelatedBaselineCoverage: false);
@@ -728,8 +728,6 @@ internal static partial class CoverWorld
             .ToImmutableArray();
         var report = MaterializeReport(spec, targetPath, declarations);
 
-        MaterializeFrozenLedger(spec, report, targetPath, files, baseline);
-
         var verified = spec.VerifyScribe
             ? VerifiedScribeEmissions.Create(records, MaterializeVerifiedGids(spec))
             : VerifiedScribeEmissions.Empty;
@@ -798,3 +796,5 @@ internal static partial class CoverWorld
             .ToImmutableArray();
     }
 }
+
+internal sealed class FixedTimeProvider(DateTimeOffset utcNow) : TimeProvider { public override DateTimeOffset GetUtcNow() => utcNow; }

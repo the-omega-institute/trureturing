@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/HiddenFlow/DenseOrbitInvariant.continuous_invariant_of_dense_orbit_constant
       source_sha256: sha256:55c40a5907e999769e4dd87e1fa3726ec20c33ed45725fabd75805d5bf3fec51
-      target_statement_id: sha256:1e546471d3cdfb42f0828187c19b1934e11cbf5944b7883015a0ac56b8b4d398
+      target_sha256: sha256:9e479e0689b09d58b8aa55111a8dcb8f2002daec532b308df3c84245dfd7935a
   scribe:
     - gid: D5/S3/Observer/HiddenFlow/DenseOrbitInvariant.continuous_invariant_of_dense_orbit_constant
       definition_sha256: sha256:e347ccfdaf110cc22808020e67a9971bbd4de3de680ed73b62d74f9e9f4cb594

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Rewriting/Quotients/RelativeIdentityRefinement.relative_identity_refinement
       source_sha256: sha256:9cbd5454e4464eb527f9e996993dc72fdc5305d0ce8a4ad1fadeaaa429cec9be
-      target_statement_id: sha256:7ca0acc269a24023306a9952b705197c65a065f5861ea7ffbb399df1a34c9c80
+      target_sha256: sha256:ddb96a0cc077f03931312eccc884bd3a8cfb01156663b0e9a42dd368a403d402
   scribe:
     - gid: D5/S0/Rewriting/Quotients/RelativeIdentityRefinement.relative_identity_refinement
       definition_sha256: sha256:9eb8fd2751de1d2a5e9b0caa346510b3a6151c642a841938139c497850cd22d0

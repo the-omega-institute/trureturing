@@ -414,7 +414,6 @@ public sealed class Sl016WakeupTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         fixture.UseValidDirectoryBackfill();
-        InstallFrozenModules(fixture, coverageGid);
 
         var definitionPath = ScribeEmissionAttestation.DefinitionPath(coverageGid);
         var emissionPath = ScribeEmissionAttestation.EmissionPath(coverageGid);
@@ -426,9 +425,8 @@ public sealed class Sl016WakeupTests
             Encoding.UTF8.GetBytes(candidateDefinition)).RawSha256;
         var candidateEmissionSha256 = DigestionFingerprint.Compute(
             Encoding.UTF8.GetBytes(candidateEmission)).RawSha256;
-        var targetStatementId = FrozenStatementReceiptTestData.Resolve(
-            fixture.Files,
-            coverageGid);
+        var targetSha256 = DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes(fixture.Files[targetPath])).RawSha256;
         var mismatchSha256 = "sha256:" + new string('0', 64);
         foreach (var files in new[] { fixture.Baseline, fixture.ForkPoint })
         {
@@ -442,7 +440,7 @@ public sealed class Sl016WakeupTests
         var receiptProjection = "coverage:\n"
             + $"    - gid: {coverageGid}\n"
             + $"      source_sha256: {RuleFixture.FixtureCasReference}\n"
-            + $"      target_statement_id: {(mismatchCode == "coverage-receipt-mismatch" ? mismatchSha256 : targetStatementId)}\n"
+            + $"      target_sha256: {(mismatchCode == "coverage-receipt-mismatch" ? mismatchSha256 : targetSha256)}\n"
             + "  scribe:\n"
             + $"    - gid: {coverageGid}\n"
             + $"      definition_sha256: {(mismatchCode == "scribe-definition-mismatch" ? mismatchSha256 : baselineDefinitionSha256)}\n"
@@ -515,11 +513,11 @@ public sealed class Sl016WakeupTests
 
         var definitionSha256 = Sha256(definition);
         var emissionSha256 = Sha256(emission);
-        var targetStatementId = FrozenStatementReceiptTestData.Resolve(fixture.Files, gid);
+        var targetSha256 = Sha256(fixture.Files[targetPath]);
         var receipts = "coverage:\n"
             + $"    - gid: {gid}\n"
             + $"      source_sha256: {RuleFixture.FixtureCasReference}\n"
-            + $"      target_statement_id: {targetStatementId}\n"
+            + $"      target_sha256: {targetSha256}\n"
             + "  scribe:\n"
             + $"    - gid: {gid}\n"
             + $"      definition_sha256: {definitionSha256}\n"
@@ -579,11 +577,9 @@ public sealed class Sl016WakeupTests
         const string secondAtomPath = atomRoot + "second-atom.yaml";
         const string coverageGid = "D5/S0/Carrier/BackfillTarget";
         var fixture = PreparedCoverageFixture();
-        var targetStatementId = FrozenStatementReceiptTestData.Resolve(
-            fixture.Files,
-            coverageGid);
+        var targetSha256 = Sha256(fixture.Files[coverageGid + ".lean"]);
         var mismatchSha256 = MismatchSha256();
-        var correctReceipt = CoverageReceipt(coverageGid, targetStatementId);
+        var correctReceipt = CoverageReceipt(coverageGid, targetSha256);
         var mismatchedReceipt = CoverageReceipt(coverageGid, mismatchSha256);
         var secondAtom = fixture.Files[firstAtomPath].Replace(
             "ast_path: manual/fixture",
@@ -654,9 +650,7 @@ public sealed class Sl016WakeupTests
         const string secondGid = "D5/S0/Carrier/BackfillTargetB";
         var fixture = PreparedCoverageFixture();
         AddSecondTarget(fixture, firstGid, secondGid);
-        var secondTargetStatementId = FrozenStatementReceiptTestData.Resolve(
-            fixture.Files,
-            secondGid);
+        var secondTargetSha256 = Sha256(fixture.Files[secondGid + ".lean"]);
         foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
         {
             files[atomPath] = files[atomPath].Replace(
@@ -667,7 +661,7 @@ public sealed class Sl016WakeupTests
 
         var baselineReceipts = CoverageReceipts(
             (firstGid, MismatchSha256()),
-            (secondGid, secondTargetStatementId));
+            (secondGid, secondTargetSha256));
         var candidateReceipts = CoverageReceipts(
             (firstGid, MismatchSha256()),
             (secondGid, MismatchSha256()));
@@ -686,7 +680,6 @@ public sealed class Sl016WakeupTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         fixture.UseValidDirectoryBackfill();
-        InstallFrozenModules(fixture, "D5/S0/Carrier/BackfillTarget");
         const string targetPath = "D5/S0/Carrier/BackfillTarget.lean";
         foreach (var files in new[] { fixture.Baseline, fixture.ForkPoint })
         {
@@ -707,31 +700,6 @@ public sealed class Sl016WakeupTests
         foreach (var files in new[] { fixture.Baseline, fixture.ForkPoint })
         {
             files[secondPath] = fixture.Files[secondPath];
-        }
-        InstallFrozenModules(fixture, firstGid, secondGid);
-    }
-
-    private static void InstallFrozenModules(RuleFixture fixture, params string[] moduleGids)
-    {
-        var modules = moduleGids.Select(gid =>
-            new FrozenStatementReceiptTestData.Module(
-                gid + ".lean",
-                FrozenStatementReceiptTestData.Id('a'),
-                [
-                    new FrozenStatementReceiptTestData.Declaration(
-                        "protectedTargetFixture",
-                        FrozenStatementReceiptTestData.Id('b')),
-                ]))
-            .ToArray();
-        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
-        {
-            foreach (var path in files.Keys
-                         .Where(static path => FrozenLedgerChangeClassifier.IsAcceptedEventPath(path))
-                         .ToArray())
-            {
-                files.Remove(path);
-            }
-            FrozenStatementReceiptTestData.AddLedger(files, modules);
         }
     }
 
@@ -756,15 +724,15 @@ public sealed class Sl016WakeupTests
         Assert.Equal(effect, diagnostic.AdmissionEffect);
     }
 
-    private static string CoverageReceipt(string gid, string targetStatementId) =>
-        CoverageReceipts((gid, targetStatementId));
+    private static string CoverageReceipt(string gid, string targetSha256) =>
+        CoverageReceipts((gid, targetSha256));
 
-    private static string CoverageReceipts(params (string Gid, string TargetStatementId)[] receipts) =>
+    private static string CoverageReceipts(params (string Gid, string TargetSha256)[] receipts) =>
         "coverage:\n"
         + string.Concat(receipts.Select(static receipt =>
             $"    - gid: {receipt.Gid}\n"
             + $"      source_sha256: {RuleFixture.FixtureCasReference}\n"
-            + $"      target_statement_id: {receipt.TargetStatementId}\n"))
+            + $"      target_sha256: {receipt.TargetSha256}\n"))
         + "  scribe: []";
 
     private static string Sha256(string text) =>

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/History/FiniteDescriptionSelfCode.finite_description_self_encoding_bijective
       source_sha256: sha256:acc3cfb3610d53691486d38c3b9d8d8407e4002dd5b83d8f77fabe66b1ff6872
-      target_statement_id: sha256:769ce5e0a6d01a8a58012e29ba2c572fdb8e83d4698b3a1afafd3d33018bb599
+      target_sha256: sha256:9a777747b6a4f827c619db55edf4e069feaabfc8ce00379c2376df82a053fd70
   scribe:
     - gid: D5/S0/History/FiniteDescriptionSelfCode.finite_description_self_encoding_bijective
       definition_sha256: sha256:0b2cb68e1eacff3e6678e4d0e25318252e0ca95d6c6cc591fa648940813ba617

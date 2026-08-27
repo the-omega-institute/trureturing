@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Diagonal/Lawvere/TheoryIsConsequenceFixedPoint.theory_iff_consequence_fixedPoint
       source_sha256: sha256:345c00e75efa6387c97717df2d117e3ae889903a7c1a03bf64b82f18a928a0e2
-      target_statement_id: sha256:98104489cf9d0b67b4944e59e0978d899327e6309e3736634767b9dd00ac23e9
+      target_sha256: sha256:ec9eab7336eaab07625cf6e54bf016e35b0054697808c5e532eae64b127c0664
   scribe:
     - gid: D5/S0/Diagonal/Lawvere/TheoryIsConsequenceFixedPoint.theory_iff_consequence_fixedPoint
       definition_sha256: sha256:5275784e9211f50bdd74aaa48296d7ead7db7126a7d288be6476491f2662af82

@@ -8,33 +8,6 @@ namespace StrataLint.Tests;
 public sealed partial class CoverAtomTests
 {
     [Fact]
-    public void CoverReceiptBindsTheFrozenDeclarationStatementId()
-    {
-        var spec = new CoverSpec();
-        var execution = Execute(spec);
-
-        Assert.True(execution.Result.Success, execution.Result.Error);
-        var entry = Assert.Single(
-            execution.AfterDocument.RequireDigestionEntries(),
-            candidate => candidate.AtomId == spec.AtomId);
-        var receipt = Assert.Single(entry.Receipts.Coverage);
-        var (_, _, targetBinding) = receipt;
-        Assert.Equal(spec.TargetStatementId, targetBinding);
-    }
-
-    [Fact]
-    public void CoverRejectsTargetWhoseHostModuleIsNotFrozen()
-    {
-        var spec = new CoverSpec { FreezeTargetModule = false };
-        var execution = Execute(spec);
-
-        Assert.False(execution.Result.Success);
-        Assert.Contains(spec.ModuleGid + ".lean", execution.Result.Error, StringComparison.Ordinal);
-        Assert.Contains("is not frozen; run make deposit before cover", execution.Result.Error, StringComparison.Ordinal);
-        Assert.Equal(execution.Before, execution.After);
-    }
-
-    [Fact]
     public void CoverAcceptsGidAlreadyBoundToAnotherAtomWithIndependentPairReceipts()
     {
         const string gid = "D5/S0/Carrier/Probe.probe";
@@ -86,7 +59,9 @@ public sealed partial class CoverAtomTests
                 CoverWorld.Raw(currentFiles),
                 CoverWorld.Raw(baselineFiles)),
             new FakeLeanReportSource(inputs.Report),
-            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
+            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
+            new NoOpFrozenLedgerAdmissionServices(),
+            CoverWorld.TimeProvider);
 
         var result = environment.CoverAtom(
             ["--cover-atom", spec.AtomId, "--gid", inputs.Gid, "--base", "baseline",

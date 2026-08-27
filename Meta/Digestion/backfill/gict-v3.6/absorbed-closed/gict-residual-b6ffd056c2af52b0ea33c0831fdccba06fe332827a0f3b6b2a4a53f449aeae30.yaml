@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Factorization/SquarefreeSquareDecomposition.bcs_square_squarefree_unique
       source_sha256: sha256:b6ffd056c2af52b0ea33c0831fdccba06fe332827a0f3b6b2a4a53f449aeae30
-      target_statement_id: sha256:95d1090d76d8b7835745d5c7950947b432dfb46d42a97938c8d12bb6dd726a56
+      target_sha256: sha256:55c159d2ef67699fc00b9fb2315d17c12ba94eeea53cd3a275ea74f2224beb5b
   scribe:
     - gid: D5/S3/Factorization/SquarefreeSquareDecomposition.bcs_square_squarefree_unique
       definition_sha256: sha256:0585ec7c1274099a3d1b5743ebb25c58fd9ab231c819a833089817f7b44315f5

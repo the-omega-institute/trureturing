@@ -5,7 +5,7 @@ using Trureturing.Truth;
 
 namespace StrataLint.Engine;
 
-internal sealed partial class BackfillInventoryDocument
+internal sealed class BackfillInventoryDocument
 {
     internal static IReadOnlyList<string> EntryFieldUniverse { get; } =
     [
@@ -83,8 +83,7 @@ internal sealed partial class BackfillInventoryDocument
         string sourceId,
         string sourcePath,
         string atomizer,
-        object? rawEntry,
-        bool allowLegacyCoverageReceipts = false)
+        object? rawEntry)
     {
         var entry = Mapping(rawEntry, $"source {sourceId} entries must be mappings");
         var hasBoundary = entry.ContainsKey("boundary");
@@ -128,10 +127,7 @@ internal sealed partial class BackfillInventoryDocument
         var coverageGids = Strings(
             List(entry, "coverage_gids", $"entry {atomId} coverage_gids must be a list"),
             $"entry {atomId} coverage_gids");
-        var receipts = ParseReceipts(
-            atomId,
-            entry.GetValueOrDefault("receipts"),
-            allowLegacyCoverageReceipts);
+        var receipts = ParseReceipts(atomId, entry.GetValueOrDefault("receipts"));
         if (receipts.Quarantine is not null && coverageGids.Length > 0)
         {
             throw new FormatException(
@@ -167,6 +163,117 @@ internal sealed partial class BackfillInventoryDocument
                 ParseMigration(Scalar(status, "migration", $"entry {atomId} migration")),
                 ParseTruth(Scalar(status, "truth", $"entry {atomId} truth"))),
             Scalar(entry, "cas_ref", $"entry {atomId} cas_ref"));
+    }
+
+    private static DigestionReceipts ParseReceipts(string atomId, object? rawReceipts)
+    {
+        var receipts = Mapping(rawReceipts, $"entry {atomId} receipts must be a mapping");
+
+        // chain_atoms 与 tail_authorization 降为**可选键**:一节点一文件的目录形态不再写出
+        // 它们(实测 dev 现有 2,030 条记录里 100% 为 `[]` 与 `null`)。
+        // 但**在场时校验一字不减** —— tail_authorization 是活的能力(absorbed-tail 授权删除,
+        // 见 DigestionLedgerTests 的 ArbitraryHashedRepositoryFileCannotAuthorizeTailDeletion),
+        // 只是尚无实例;把「当前没有实例」当成「机制已死」会削掉一条真能力。
+        ExactKeys(
+            receipts,
+            ["coverage", "scribe", "unresolved_subitems"],
+            ["chain_atoms", "tail_authorization", "quarantine", "cover_disposition"],
+            $"entry {atomId} receipts");
+        var coverage = ImmutableArray.CreateBuilder<DigestionCoverageReceipt>();
+        foreach (var rawCoverage in List(receipts, "coverage", $"entry {atomId} coverage receipts must be a list"))
+        {
+            var item = Mapping(rawCoverage, $"entry {atomId} coverage receipt must be a mapping");
+            ExactKeys(item, ["gid", "source_sha256", "target_sha256"], $"entry {atomId} coverage receipt");
+            coverage.Add(new DigestionCoverageReceipt(
+                Scalar(item, "gid", $"entry {atomId} coverage gid"),
+                Scalar(item, "source_sha256", $"entry {atomId} coverage source_sha256"),
+                Scalar(item, "target_sha256", $"entry {atomId} coverage target_sha256")));
+        }
+
+        var scribe = ImmutableArray.CreateBuilder<DigestionScribeReceipt>();
+        foreach (var rawScribe in List(receipts, "scribe", $"entry {atomId} scribe receipts must be a list"))
+        {
+            var item = Mapping(rawScribe, $"entry {atomId} scribe receipt must be a mapping");
+            ExactKeys(item, ["gid", "definition_sha256", "emission_sha256"], $"entry {atomId} scribe receipt");
+            scribe.Add(new DigestionScribeReceipt(
+                Scalar(item, "gid", $"entry {atomId} scribe gid"),
+                Scalar(item, "definition_sha256", $"entry {atomId} definition_sha256"),
+                Scalar(item, "emission_sha256", $"entry {atomId} emission_sha256")));
+        }
+
+        DigestionExternalReceipt? tailAuthorization = null;
+        if (receipts.GetValueOrDefault("tail_authorization") is { } rawTail)
+        {
+            var tail = Mapping(rawTail, $"entry {atomId} tail_authorization must be null or a mapping");
+            ExactKeys(tail, ["path", "sha256"], $"entry {atomId} tail_authorization");
+            tailAuthorization = new DigestionExternalReceipt(
+                Scalar(tail, "path", $"entry {atomId} tail authorization path"),
+                Scalar(tail, "sha256", $"entry {atomId} tail authorization sha256"));
+        }
+
+        DigestionQuarantine? quarantine = null;
+        if (receipts.ContainsKey("quarantine"))
+        {
+            var rawQuarantine = Mapping(
+                receipts.GetValueOrDefault("quarantine"),
+                $"entry {atomId} quarantine must be a mapping");
+            if (!rawQuarantine.ContainsKey("justification"))
+            {
+                throw new FormatException(
+                    $"entry {atomId} quarantine justification is required");
+            }
+
+            if (!rawQuarantine.ContainsKey("reentry_condition"))
+            {
+                throw new FormatException(
+                    $"entry {atomId} quarantine reentry_condition is required");
+            }
+
+            // `ExactKeys` 要求键集**恰好相等**(不是白名单),故按 blocker_class 是否出现
+            // 分别给出期望键集——否则既有的两键条目会被判「keys are not exactly …」而全部拒载。
+            ExactKeys(
+                rawQuarantine,
+                rawQuarantine.ContainsKey("blocker_class")
+                    ? ["justification", "reentry_condition", "blocker_class"]
+                    : ["justification", "reentry_condition"],
+                $"entry {atomId} quarantine");
+            string? blockerClass = null;
+            if (rawQuarantine.ContainsKey("blocker_class"))
+            {
+                blockerClass = Scalar(
+                    rawQuarantine,
+                    "blocker_class",
+                    $"entry {atomId} quarantine blocker_class");
+                // 封闭字母表,未知取值 fail-closed:分类的价值全在于它可被机器统计与比较,
+                // 放行任意字符串等于退回自由文本(#2137 要治的正是那个)。
+                if (!DigestionQuarantine.BlockerClasses.Contains(blockerClass, StringComparer.Ordinal))
+                {
+                    throw new FormatException(
+                        $"entry {atomId} quarantine blocker_class '{blockerClass}' is not one of "
+                        + string.Join(", ", DigestionQuarantine.BlockerClasses));
+                }
+            }
+
+            quarantine = new DigestionQuarantine(
+                Scalar(rawQuarantine, "justification", $"entry {atomId} quarantine justification"),
+                Scalar(rawQuarantine, "reentry_condition", $"entry {atomId} quarantine reentry_condition"),
+                blockerClass);
+        }
+
+        return new DigestionReceipts(
+            coverage.ToImmutable(),
+            scribe.ToImmutable(),
+            Strings(
+                List(receipts, "unresolved_subitems", $"entry {atomId} unresolved_subitems must be a list"),
+                $"entry {atomId} unresolved_subitems"),
+            receipts.ContainsKey("chain_atoms")
+                ? Strings(
+                    List(receipts, "chain_atoms", $"entry {atomId} chain_atoms must be a list"),
+                    $"entry {atomId} chain_atoms")
+                : [],
+            tailAuthorization,
+            quarantine,
+            ParseCoverDisposition(atomId, receipts));
     }
 
     private static DigestionCoverDisposition? ParseCoverDisposition(
@@ -421,9 +528,7 @@ internal static partial class BackfillInventoryLoader
         var decoded = SnapshotDecoder.Decode(RawRepositorySnapshot.Create(entries.Values));
         return decoded switch
         {
-            SnapshotDecodeOutcome.Decoded decodedSnapshot => LoadSnapshot(
-                decodedSnapshot.Snapshot,
-                snapshot => LoadCandidateDeltaDirectorySnapshot(snapshot, changed)),
+            SnapshotDecodeOutcome.Decoded decodedSnapshot => Load(decodedSnapshot.Snapshot),
             SnapshotDecodeOutcome.InfrastructureFailure failure => throw new FormatException(failure.Message),
         };
     }
@@ -463,14 +568,6 @@ internal static partial class BackfillInventoryLoader
     }
 
     internal static BackfillInventoryDocument LoadRoot(string repositoryRoot)
-        => LoadRoot(repositoryRoot, trustedHistory: false);
-
-    internal static BackfillInventoryDocument LoadTrustedRoot(string repositoryRoot)
-        => LoadRoot(repositoryRoot, trustedHistory: true);
-
-    private static BackfillInventoryDocument LoadRoot(
-        string repositoryRoot,
-        bool trustedHistory)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         var root = Path.GetFullPath(repositoryRoot);
@@ -492,16 +589,11 @@ internal static partial class BackfillInventoryLoader
                     .Replace(Path.DirectorySeparatorChar, '/'))
                 .Any(IsCanonicalPath);
         return hasDirectory
-            ? LoadDirectory(repositoryRoot, trustedHistory)
+            ? LoadDirectory(repositoryRoot)
             : throw new FormatException("required governance document is missing");
     }
 
     internal static BackfillInventoryDocument LoadDirectory(string repositoryRoot)
-        => LoadDirectory(repositoryRoot, trustedHistory: false);
-
-    private static BackfillInventoryDocument LoadDirectory(
-        string repositoryRoot,
-        bool trustedHistory)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         var root = Path.GetFullPath(repositoryRoot);
@@ -509,22 +601,19 @@ internal static partial class BackfillInventoryLoader
         var paths = Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories)
             .Concat(EnumerateD5LeanPaths(root))
             .Concat(EnumerateFormalizationReceiptPaths(root));
-        return LoadRootSnapshot(root, paths, trustedHistory);
+        return LoadRootSnapshot(root, paths);
     }
 
     private static BackfillInventoryDocument LoadRootSnapshot(
         string root,
-        IEnumerable<string> paths,
-        bool trustedHistory)
+        IEnumerable<string> paths)
     {
         var raw = RawRepositorySnapshot.Create(paths.Select(path => new RawRepositoryEntry(
             Path.GetRelativePath(root, path).Replace(Path.DirectorySeparatorChar, '/'),
             ImmutableArray.CreateRange(File.ReadAllBytes(path)))));
         return SnapshotDecoder.Decode(raw) switch
         {
-            SnapshotDecodeOutcome.Decoded decoded => trustedHistory
-                ? LoadBaseline(decoded.Snapshot)
-                : Load(decoded.Snapshot),
+            SnapshotDecodeOutcome.Decoded decoded => Load(decoded.Snapshot),
             SnapshotDecodeOutcome.InfrastructureFailure failure =>
                 throw new FormatException(failure.Message),
         };
@@ -545,23 +634,11 @@ internal static partial class BackfillInventoryLoader
 
     private static BackfillInventoryDocument LoadBaselineDirectorySnapshot(
         RepositorySnapshot snapshot) =>
-        LoadDirectorySnapshot(
-            snapshot,
-            ParseBaselineSourceMetadata,
-            static _ => true);
-
-    private static BackfillInventoryDocument LoadCandidateDeltaDirectorySnapshot(
-        RepositorySnapshot snapshot,
-        IReadOnlySet<string> changed) =>
-        LoadDirectorySnapshot(
-            snapshot,
-            static (text, path) => ParseCandidateSourceMetadata(text, path),
-            path => !changed.Contains(path));
+        LoadDirectorySnapshot(snapshot, ParseBaselineSourceMetadata);
 
     private static BackfillInventoryDocument LoadDirectorySnapshot(
         RepositorySnapshot snapshot,
-        Func<string, string, ParsedSourceMetadata> parseSourceMetadata,
-        Func<string, bool>? allowLegacyCoverageReceipt = null)
+        Func<string, string, ParsedSourceMetadata> parseSourceMetadata)
     {
         var metadata = snapshot.Files
             .Where(static pair => pair.Key.Value.StartsWith(RootPath, StringComparison.Ordinal)
@@ -615,8 +692,7 @@ internal static partial class BackfillInventoryLoader
                     sourceId,
                     fields["path"].Single(),
                     fields["atomizer"].Single(),
-                    entry,
-                    allowLegacyCoverageReceipt?.Invoke(path.Value) ?? false);
+                    entry);
                 entries.Add(parsedEntry);
             }
 

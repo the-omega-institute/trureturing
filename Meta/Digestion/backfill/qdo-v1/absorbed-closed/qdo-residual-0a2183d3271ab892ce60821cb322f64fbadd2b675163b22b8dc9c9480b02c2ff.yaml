@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/Fusion/LeastCommonRefinement.least_common_refinement_universal_property
       source_sha256: sha256:0a2183d3271ab892ce60821cb322f64fbadd2b675163b22b8dc9c9480b02c2ff
-      target_statement_id: sha256:2fe20fcf7b7c21eb2b4ca9cdc41de126ac629bd70eed7506ce9693ec236e0976
+      target_sha256: sha256:4639e676fb67a83aaa1dc2e1dc93e0c651e7d09640d9c948c9a8c80d39579ac0
   scribe:
     - gid: D5/S3/ObserverMemory/Fusion/LeastCommonRefinement.least_common_refinement_universal_property
       definition_sha256: sha256:664f65e9e33dfa43476c3168d6f356df49de1057657eb185630572725418e619

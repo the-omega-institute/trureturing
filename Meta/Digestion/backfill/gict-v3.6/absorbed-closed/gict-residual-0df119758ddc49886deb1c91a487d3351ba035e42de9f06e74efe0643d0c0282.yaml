@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/PrimeForms/Symmetry/InversionAntisymmetricSum.inversion_antisymmetric_sum_eq_zero
       source_sha256: sha256:0df119758ddc49886deb1c91a487d3351ba035e42de9f06e74efe0643d0c0282
-      target_statement_id: sha256:dd271608110335237725e050ada883b2b6c2776324a902b4e922420963f83ea8
+      target_sha256: sha256:439172e8c846de45b88b3d6bee9261939e70fab412659cc983484d3c196f0a20
   scribe:
     - gid: D5/S3/PrimeForms/Symmetry/InversionAntisymmetricSum.inversion_antisymmetric_sum_eq_zero
       definition_sha256: sha256:642f410c8ba351cfd772b3a6601f07e2a0c980bfa78fa1abda3026b1ad4c6d9b

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/Prediction/FeedbackCompletionNaturality.feedback_completion_naturality
       source_sha256: sha256:cd598e6d39c6ae08fb07a0d5626605035ca09d0d229269bbce23e6a8b17b76a9
-      target_statement_id: sha256:43bb5eeb36414c4139151f6109c076711bbc6705528ed906e1bb39f666d3764f
+      target_sha256: sha256:6fe31f8c27779c960c8809794bf2c118cadb13cb3f8ae23f01ba0d8bb9843c0c
   scribe:
     - gid: D5/S3/ObserverMemory/Prediction/FeedbackCompletionNaturality.feedback_completion_naturality
       definition_sha256: sha256:2d8bdbce5639bf7fcbb1cde96e9811a0f3aba733cc265f87ba382d0b9ab60734

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Arith/Congruence/InertPrimeMod12.inert_prime_dvd_mod_twelve
       source_sha256: sha256:a5406a0ac26f880d9c52fa5f22fb04d9834095035fbc2e65ee0c0d8a3f86626b
-      target_statement_id: sha256:ba9a2206f0b1b5fd08d59e9ffa510f5c7b652f51732e2193de4588cc18185977
+      target_sha256: sha256:0e869a092346cae35ea79964ee05b94f25f2e1980fb41579f9fc9bac5693c6ac
   scribe:
     - gid: D5/S3/Arith/Congruence/InertPrimeMod12.inert_prime_dvd_mod_twelve
       definition_sha256: sha256:ede0c198a5ff7eb7e2207be7e7386b5de4521b302a777a01cb865125026d2f1b

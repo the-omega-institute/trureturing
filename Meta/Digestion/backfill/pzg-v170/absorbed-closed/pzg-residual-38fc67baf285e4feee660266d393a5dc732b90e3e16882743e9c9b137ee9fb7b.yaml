@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Deficit/DoubleFaceLength.lambdaPlus_sub_lambdaMinus
       source_sha256: sha256:38fc67baf285e4feee660266d393a5dc732b90e3e16882743e9c9b137ee9fb7b
-      target_statement_id: sha256:c8ddb07ba9812f0bdee4b5370b62bb792b54735156a812a42021ac026645f761
+      target_sha256: sha256:7e3e5feb1d36c4cf435348ec6eeec95aeb98aadc433336b4da71aa243181130d
   scribe:
     - gid: D5/S1/Deficit/DoubleFaceLength.lambdaPlus_sub_lambdaMinus
       definition_sha256: sha256:c9b06b4e5d19cd3219fc82594b2b036889cea93b346afee8850adc6dc9b1eaee

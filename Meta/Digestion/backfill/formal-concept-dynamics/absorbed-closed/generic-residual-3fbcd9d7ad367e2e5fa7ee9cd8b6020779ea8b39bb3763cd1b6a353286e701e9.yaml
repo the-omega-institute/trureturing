@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Aggregation/MajorityCycleNotScalarOrder.majority_cycle_not_scalar_order
       source_sha256: sha256:3fbcd9d7ad367e2e5fa7ee9cd8b6020779ea8b39bb3763cd1b6a353286e701e9
-      target_statement_id: sha256:715ea485a1ce9782405ca362f733bf38f95ce7e1f869228d42255681b88b24cf
+      target_sha256: sha256:0f9f7dbc4cb6dd63d1f06bdaea96b0170d07b962ac2265d8573e0dddacef39b6
   scribe:
     - gid: D5/S3/ConceptDynamics/Aggregation/MajorityCycleNotScalarOrder.majority_cycle_not_scalar_order
       definition_sha256: sha256:2f72518b4edfc6c67905a1a4ea5c21ebd04b50622ba8d8e768e97f51c2ec0406

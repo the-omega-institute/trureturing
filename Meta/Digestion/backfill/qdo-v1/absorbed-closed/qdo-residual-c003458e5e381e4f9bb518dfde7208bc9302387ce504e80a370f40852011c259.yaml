@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/Tomography/FiniteStageExpansion.finite_stage_expansion
       source_sha256: sha256:c003458e5e381e4f9bb518dfde7208bc9302387ce504e80a370f40852011c259
-      target_statement_id: sha256:87196c92650ed61d4aa7bbf32cf7d395480a7a15a78edc17387d5d9136038a78
+      target_sha256: sha256:6f66faa9d013a0d654acbf38dde7839d16e3ac42f9478e7abe5d80281ee575fd
   scribe:
     - gid: D5/S3/Observer/Tomography/FiniteStageExpansion.finite_stage_expansion
       definition_sha256: sha256:6e6a87597b4b3bad1baa49297446d103372fc22a10d3ffbd037becfce8881649

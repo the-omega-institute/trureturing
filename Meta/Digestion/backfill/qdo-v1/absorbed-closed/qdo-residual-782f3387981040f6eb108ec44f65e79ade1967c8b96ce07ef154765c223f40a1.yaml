@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/InverseLimits/StableImagePeriodicCore.iterate_range_card_antitone_and_stable
       source_sha256: sha256:782f3387981040f6eb108ec44f65e79ade1967c8b96ce07ef154765c223f40a1
-      target_statement_id: sha256:09fd0dae58349f1bcd4b20374ef2e3ad3ff33bc03615954425d20e551d082584
+      target_sha256: sha256:4f398a3a3b0d2d5dc68250b8128f42ce815fa9df90676a83bd024ceaa0857f05
   scribe:
     - gid: D5/S3/ObserverMemory/InverseLimits/StableImagePeriodicCore.iterate_range_card_antitone_and_stable
       definition_sha256: sha256:819b052a06f69fee8ab458c499f0b13e481e36200d63f8f9281183c8f2254fb9

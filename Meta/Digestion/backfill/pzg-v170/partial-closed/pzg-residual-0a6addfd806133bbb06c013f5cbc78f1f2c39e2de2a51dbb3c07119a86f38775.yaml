@@ -11,7 +11,7 @@ receipts:
   coverage:
     - gid: D5/S0/Carrier/Units.norm_phi_pow
       source_sha256: sha256:0a6addfd806133bbb06c013f5cbc78f1f2c39e2de2a51dbb3c07119a86f38775
-      target_statement_id: sha256:641e4448f9368dd15a82928c485e506168e9ef3f71b7504a7bf547446f165ebf
+      target_sha256: sha256:70b3304a3a4c40b076d251f8d5f4d71dcc8c3febdd0a916f904a80f7df00b064
   scribe: []
   unresolved_subitems:
     - even-weight-integral-as-jeffreys-symmetric-divergence

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Completion/CompletionInformationCost.completion_information_cost
       source_sha256: sha256:4d6dbb6508b634084572f196a05349f9f4380b3aa306001b08433c173433486d
-      target_statement_id: sha256:da90589319d87473778e89f0c384f541e43909ab4ebc134ee7bfec7f508508e9
+      target_sha256: sha256:3a3092b5b59abdf8f57f2892a22c827f2a96fe36f4fd7e7065889180467f10e0
   scribe:
     - gid: D5/S3/ConceptDynamics/Completion/CompletionInformationCost.completion_information_cost
       definition_sha256: sha256:42029fda8a1b66006e0197498d86665a1c13456e9f1f35f95a34bcadc974b859

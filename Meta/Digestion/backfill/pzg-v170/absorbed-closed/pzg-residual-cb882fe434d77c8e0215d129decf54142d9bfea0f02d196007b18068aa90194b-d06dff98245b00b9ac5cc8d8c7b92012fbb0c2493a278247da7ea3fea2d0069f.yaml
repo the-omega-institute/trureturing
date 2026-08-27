@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Factorization/Embeddings/PrimeLedgerGroupification.prime_ledger_direction_and_groupification
       source_sha256: sha256:cb882fe434d77c8e0215d129decf54142d9bfea0f02d196007b18068aa90194b
-      target_statement_id: sha256:ebab81fe79b415eb77888e11b8dd223ed82728b084b5d8fc69554527cce6c90c
+      target_sha256: sha256:74fe77a140b4d018f8ebbad0af4cbbea0b33ecfe8697fa5f7e277d12f7b39107
   scribe:
     - gid: D5/S3/Factorization/Embeddings/PrimeLedgerGroupification.prime_ledger_direction_and_groupification
       definition_sha256: sha256:faba5a18b2c785c6b72abc002dc2520c806f630f4b9ce0e92f41a2eb39a656a8

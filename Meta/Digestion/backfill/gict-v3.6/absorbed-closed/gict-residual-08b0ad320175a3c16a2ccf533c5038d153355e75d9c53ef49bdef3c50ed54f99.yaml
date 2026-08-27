@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Arith/Congruence/OddSquareModuloEight.eight_dvd_odd_square_sub_one
       source_sha256: sha256:08b0ad320175a3c16a2ccf533c5038d153355e75d9c53ef49bdef3c50ed54f99
-      target_statement_id: sha256:b66dd89074a0558cf662882b047d16137d8ca8c1cabefc748511595bf4932355
+      target_sha256: sha256:892946f281f5f9e3e54263ac842857ae289767e5aa8bb16a420c36b0231d40f0
   scribe:
     - gid: D5/S3/Arith/Congruence/OddSquareModuloEight.eight_dvd_odd_square_sub_one
       definition_sha256: sha256:ed1044d4a42623cfd980910e37862f348f68062f3a47ad5c3bc88ef16a8dcb97

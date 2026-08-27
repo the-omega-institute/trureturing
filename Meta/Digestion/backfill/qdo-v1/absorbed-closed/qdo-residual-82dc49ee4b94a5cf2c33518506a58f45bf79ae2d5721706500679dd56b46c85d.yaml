@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.controlled_behavior_universal_property
       source_sha256: sha256:82dc49ee4b94a5cf2c33518506a58f45bf79ae2d5721706500679dd56b46c85d
-      target_statement_id: sha256:de805d087611b1667c8361035aa8040ecb153790a89b7df3360d8b469ae07b3f
+      target_sha256: sha256:e151d5dd6d0e86246406db5810c99ade0cb7c21516c64196158e1ab0de771fb0
   scribe:
     - gid: D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.controlled_behavior_universal_property
       definition_sha256: sha256:84e9d6253ea89ed7e70205fb1eb6e7e559835088b6effc88766bb3cd949eb798

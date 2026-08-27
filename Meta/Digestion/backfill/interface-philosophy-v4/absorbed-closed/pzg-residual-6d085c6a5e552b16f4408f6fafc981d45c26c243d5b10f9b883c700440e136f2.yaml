@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Computability/LedgerGovernance/GuardedWallPersistence.guarded_wall_persists_in_ledger_limit
       source_sha256: sha256:6d085c6a5e552b16f4408f6fafc981d45c26c243d5b10f9b883c700440e136f2
-      target_statement_id: sha256:66cb97d4881b0fb34924da3f3eb8f854108740ed026612fe935914b162562bbd
+      target_sha256: sha256:c6e8cffdb1b1a0796c422d43a479fb7add87885ae24c72debdb39f4f6092b7c0
   scribe:
     - gid: D5/S0/Computability/LedgerGovernance/GuardedWallPersistence.guarded_wall_persists_in_ledger_limit
       definition_sha256: sha256:34e495d01b95e8054d72256651b00fd48872ca26a3c3389376b9ab480c9b158a

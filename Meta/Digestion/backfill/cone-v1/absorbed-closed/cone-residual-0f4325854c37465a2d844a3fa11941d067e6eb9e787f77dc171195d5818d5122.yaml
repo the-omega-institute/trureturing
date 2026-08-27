@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Resource/CompositeCones/StrictChain.strict_composite_cone_chain_and_block_criterion
       source_sha256: sha256:0f4325854c37465a2d844a3fa11941d067e6eb9e787f77dc171195d5818d5122
-      target_statement_id: sha256:1412b0136ced7d1e8eb4820abe0159188365fddfaf322303944ecb7a2d6efb68
+      target_sha256: sha256:0c70793ea919b97e9bf0d150c6d194ad81c4ede845a0276297d678d66ca04240
   scribe:
     - gid: D5/S3/Resource/CompositeCones/StrictChain.strict_composite_cone_chain_and_block_criterion
       definition_sha256: sha256:31d92007b629755c5b9a15fa4340a4be87e7c3325daeb0d88f185de916d4d4a9

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Zeros/ToySpectrum/FourPointPowerDefect.four_point_power_defect_eq
       source_sha256: sha256:d04f41c3612d0baaf0b2430e263e09a99103c4bb8eacd28a6dbe85baa4d77cdd
-      target_statement_id: sha256:3d8e2efb47a03aeb43233dceecaf7b3ec461ce349dd1d3fb89ca3e7cf046894f
+      target_sha256: sha256:0c3157145cb40f7f5bea7e836080cba9650ad14ae37ca96bc3a5add15b357b3d
   scribe:
     - gid: D5/S3/Zeros/ToySpectrum/FourPointPowerDefect.four_point_power_defect_eq
       definition_sha256: sha256:04b2af2b34d4c21b9a7e05214e28b0457840b74a24b30570a492b670e320afec

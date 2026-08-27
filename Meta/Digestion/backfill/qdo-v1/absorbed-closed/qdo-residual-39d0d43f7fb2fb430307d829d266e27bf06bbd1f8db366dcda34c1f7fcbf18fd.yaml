@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Entropy/Forgetting/CompletionEntropyMinimality.completion_conditional_entropy_le_of_factorization
       source_sha256: sha256:39d0d43f7fb2fb430307d829d266e27bf06bbd1f8db366dcda34c1f7fcbf18fd
-      target_statement_id: sha256:abb4abd493515c25b3b128ea960df8618ab961dafa22982a6cae6aecc7b926c3
+      target_sha256: sha256:815d3feab6f4fd343853682f8c55fd4be41afc197de216631c1b7c4570ceb953
   scribe:
     - gid: D5/S3/Entropy/Forgetting/CompletionEntropyMinimality.completion_conditional_entropy_le_of_factorization
       definition_sha256: sha256:791281902e8404646765a60016d2ea84ca9668642d2b9128b1482a91c022d05d

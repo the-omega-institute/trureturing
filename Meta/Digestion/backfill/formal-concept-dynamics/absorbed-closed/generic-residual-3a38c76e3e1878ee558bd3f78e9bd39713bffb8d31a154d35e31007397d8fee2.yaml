@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/FiniteCountermodels/CounterfactualFairnessDoesNotImplyGroupParity.counterfactual_fairness_does_not_imply_group_parity
       source_sha256: sha256:3a38c76e3e1878ee558bd3f78e9bd39713bffb8d31a154d35e31007397d8fee2
-      target_statement_id: sha256:6e290b4c6a8eacc48925421a130e4cf8eec704514136051d502e3dead01be8d2
+      target_sha256: sha256:c061f1aa1f7c9a95cb2ba845d8ed20a626f1bbb5446d524cbc62a8b22b004f82
   scribe:
     - gid: D5/S3/ObserverMemory/FiniteCountermodels/CounterfactualFairnessDoesNotImplyGroupParity.counterfactual_fairness_does_not_imply_group_parity
       definition_sha256: sha256:0f48e91464cd82955dd349525234dd80227081e35b5ca75b9d0d6f21c475999e

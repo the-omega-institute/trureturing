@@ -5,10 +5,9 @@ public sealed class RetiredLedgerSpecificationTests
     [Fact]
     public void CurrentSpecificationMarksSupersedeProtocolRetired()
     {
-        var path = Path.Combine(
+        var text = File.ReadAllText(Path.Combine(
             RepositoryLayout.FindRoot(),
-            "docs/develop/spec/golden-ledger-repo-spec.md");
-        var text = File.ReadAllText(path);
+            "docs", "develop", "spec", "golden-ledger-repo-spec.md"));
 
         Assert.Contains("**A14（retired）", text, StringComparison.Ordinal);
         Assert.DoesNotContain("现役第五事件 `Supersede`", text, StringComparison.Ordinal);

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Constants/Transcription/ConjugatePolynomialCertificate.conjugate_quadratic_product
       source_sha256: sha256:1f01e7e19a7c6ff3da34ac49e88fc9ab4d286b11f7972b95a3370b2044b09d91
-      target_statement_id: sha256:4f03c69080e8ba15432bb27ece736f6f6ee199e4e390170fc9ebe5082b69a2bf
+      target_sha256: sha256:d7f9b46a9c77d54a997a4ba35f7ecc56ded8b784cd1b50c9c60cc017dbfdc18a
   scribe:
     - gid: D5/S3/Constants/Transcription/ConjugatePolynomialCertificate.conjugate_quadratic_product
       definition_sha256: sha256:c7f218ebebfb76def167cbcf2d25c4a6a2de9b930e93b931c2a110f1358f81fb

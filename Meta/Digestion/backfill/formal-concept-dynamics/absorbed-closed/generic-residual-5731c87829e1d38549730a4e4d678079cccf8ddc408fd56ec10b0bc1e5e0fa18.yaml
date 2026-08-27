@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Appeal/MinimalAppealLabelCount.minimal_appeal_label_count
       source_sha256: sha256:5731c87829e1d38549730a4e4d678079cccf8ddc408fd56ec10b0bc1e5e0fa18
-      target_statement_id: sha256:42469cf88e86060070e10b0fa4704f2e06299647d1dd561766ab5fbf7c7c7edd
+      target_sha256: sha256:3bd84c805a89dace8775ef04b41c88fce098f1b67bc1f753ca89d77abe97cb83
   scribe:
     - gid: D5/S3/ConceptDynamics/Appeal/MinimalAppealLabelCount.minimal_appeal_label_count
       definition_sha256: sha256:ee5bc3e48782c2513b6ab238fb9f1cdc11081ec711a08b5ee1a18dfe4147874e

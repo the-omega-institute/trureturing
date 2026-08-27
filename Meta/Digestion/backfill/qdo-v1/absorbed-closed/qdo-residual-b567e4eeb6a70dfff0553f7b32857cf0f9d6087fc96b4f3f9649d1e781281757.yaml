@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Solenoid/ConnectedDiscreteDegeneracy.connected_discrete_has_unique_point
       source_sha256: sha256:b567e4eeb6a70dfff0553f7b32857cf0f9d6087fc96b4f3f9649d1e781281757
-      target_statement_id: sha256:1837741f32e14e8303f4d971d276fc2fad491635e71ab889f490ee9d7abea709
+      target_sha256: sha256:eeca4563d235ce2a2c12e90957af596dce6d7a8e741c3bed095a3b669f5bdc48
   scribe:
     - gid: D5/S1/Solenoid/ConnectedDiscreteDegeneracy.connected_discrete_has_unique_point
       definition_sha256: sha256:7102f1d6d56c5b5fda51d4687730681ccaf3a9a369bcab5f951d51a3f9c74d1d

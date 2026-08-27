@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/BoundedKnowledge/ResourceMonotoneBoundedKnowledge.resource_monotone_bounded_knowledge
       source_sha256: sha256:ac32cb65bcc5b3a02f5ab7f2e1474b17a042ef2342985c74c49c07f44d138cff
-      target_statement_id: sha256:9904af26a600804290f25de0da60f5b8a42c2f574d028749677f4db59cb499ce
+      target_sha256: sha256:dd8b36071223553b6ed4c0aeeb291a4720af0f411ad02d8e0cc4ce812df0405b
   scribe:
     - gid: D5/S3/ConceptDynamics/BoundedKnowledge/ResourceMonotoneBoundedKnowledge.resource_monotone_bounded_knowledge
       definition_sha256: sha256:a08650d213489db3e0ba28044d2f8722991847e88ce9f315fcf86dad7016a686

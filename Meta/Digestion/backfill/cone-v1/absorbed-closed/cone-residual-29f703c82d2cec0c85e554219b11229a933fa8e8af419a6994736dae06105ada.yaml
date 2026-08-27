@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Constants/WignerYanaseSpectrum.wy_contraction_spectrum_strict_order
       source_sha256: sha256:29f703c82d2cec0c85e554219b11229a933fa8e8af419a6994736dae06105ada
-      target_statement_id: sha256:95f6f3f4adf72e221b20010c32f50e9c6e9d27b936ef2ac6ec58a57691d06484
+      target_sha256: sha256:e600b45e0979a10f8bebe2ac0a7d322df5cd5ee9409b8f98d138195f37da720a
   scribe:
     - gid: D5/S3/Constants/WignerYanaseSpectrum.wy_contraction_spectrum_strict_order
       definition_sha256: sha256:b25e916b367995690c810845147127c3f24cbc060b21d6f5ae9f6be176a5786a

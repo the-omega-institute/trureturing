@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/PredictionPseudometrics/FiniteHorizonPredictionPseudometric.finite_horizon_prediction_pseudometric
       source_sha256: sha256:50a65fc73f800a5c397eb164c7451697b73b4b7e0abf8e7c3395c2029be5766e
-      target_statement_id: sha256:8ff8517e140c338fbe42b846af2d0a22c6beae38f365f3093591b2ccae52e159
+      target_sha256: sha256:649cfc0aa9482608110675d0d2dfb7210abfb9c4dca60355a01a5d41202fe990
   scribe:
     - gid: D5/S3/ObserverMemory/PredictionPseudometrics/FiniteHorizonPredictionPseudometric.finite_horizon_prediction_pseudometric
       definition_sha256: sha256:ea318cc9d347c9d16c7a7407ee9b2f7f7421aa64ac032c276c6d90aacd37b38a

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Information/RefinementEntropyMonotonicity.refinement_information_residual_monotone
       source_sha256: sha256:cd33ff15242b6bd5603cfb7333bc6f0f52b4e9e3307ff42f0a5466e9a15730ac
-      target_statement_id: sha256:215822fbfabe2e830e1e9b10ffb686167a970888799e6d7d55a30079bfb777fd
+      target_sha256: sha256:c3cf0890dc77743bac994bda01f059e85d75bf95d96bca3deb3852e214b5ed64
   scribe:
     - gid: D5/S3/ConceptDynamics/Information/RefinementEntropyMonotonicity.refinement_information_residual_monotone
       definition_sha256: sha256:01b6d824ecb15b288e83c33dbe5e5e78ef8ac71ecb0c1cf2d06bbde6b716f273

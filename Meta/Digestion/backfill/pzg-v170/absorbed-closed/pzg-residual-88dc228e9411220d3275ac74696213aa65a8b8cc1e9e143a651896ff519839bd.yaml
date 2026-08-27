@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Zeros/OffLineWitness.closed_zero_midline_refutation
       source_sha256: sha256:88dc228e9411220d3275ac74696213aa65a8b8cc1e9e143a651896ff519839bd
-      target_statement_id: sha256:24d32e0e560131087f06557ead24e37cd3f3ae2ead906f9e8a80f12f25f1e197
+      target_sha256: sha256:45be3bd5274512a9c9a4891b2f560ccfa1da8ab5234e115ce393a0000d41f03f
   scribe:
     - gid: D5/S3/Zeros/OffLineWitness.closed_zero_midline_refutation
       definition_sha256: sha256:2229469c482d13e5ba0c5168a481c0d3a4ef41c490f629b25712e5299bbe44bd

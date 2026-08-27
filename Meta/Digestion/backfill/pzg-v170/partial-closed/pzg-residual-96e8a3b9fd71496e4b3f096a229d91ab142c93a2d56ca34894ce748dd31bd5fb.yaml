@@ -12,10 +12,10 @@ receipts:
   coverage:
     - gid: D5/S1/Phase/SeatTowerConsequences.cosecant_peak_identity
       source_sha256: sha256:96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb
-      target_statement_id: sha256:ffff29775ac90deb5feb58180878e5041cffcd17e50eac5595116ff5aac8d92c
+      target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
     - gid: D5/S1/Phase/SeatTowerConsequences.dominant_term_gap_bound
       source_sha256: sha256:96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb
-      target_statement_id: sha256:b969234b2c95a486e0f6869810c37f2027feafa3cfc5c4f176b30701c181d425
+      target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
   scribe: []
   unresolved_subitems:
     - pin-angle-formula

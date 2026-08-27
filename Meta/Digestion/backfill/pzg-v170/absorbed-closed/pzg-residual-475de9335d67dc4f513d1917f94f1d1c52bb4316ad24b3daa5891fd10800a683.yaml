@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Phase/GoldenBeattyCount.golden_beatty_count
       source_sha256: sha256:475de9335d67dc4f513d1917f94f1d1c52bb4316ad24b3daa5891fd10800a683
-      target_statement_id: sha256:dfd86016332517e92dcfd0f8aaf18a5b0ec7ede122ad9d3038271a0be079bfd8
+      target_sha256: sha256:65330548e3111f5f1e25794415de6992a2125833c70d5cd3471d2065d5c55f02
   scribe:
     - gid: D5/S1/Phase/GoldenBeattyCount.golden_beatty_count
       definition_sha256: sha256:3c4d7c7af03b3b43165b31aed48cf397ab519ab068d81c0337bd78a36c1daf3b

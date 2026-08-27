@@ -526,7 +526,7 @@ public sealed partial class DigestionAlignmentTests
         var emission = Encoding.UTF8.GetBytes("# emitted narrative\n");
         var definitionHash = DigestionFingerprint.Compute(definition).RawSha256;
         var emissionHash = DigestionFingerprint.Compute(emission).RawSha256;
-        var targetStatementId = FrozenStatementReceiptTestData.Id('a');
+        var targetHash = DigestionFingerprint.Compute(target).RawSha256;
         DigestionLedgerEntry Complete(
             DigestionLedgerEntry template,
             string atomId,
@@ -539,7 +539,7 @@ public sealed partial class DigestionAlignmentTests
             Fingerprints = atom.Fingerprints,
             CoverageGids = [gid],
             Receipts = new DigestionReceipts(
-                [new DigestionCoverageReceipt(gid, atom.Fingerprints.RawSha256, targetStatementId)],
+                [new DigestionCoverageReceipt(gid, atom.Fingerprints.RawSha256, targetHash)],
                 [new DigestionScribeReceipt(gid, definitionHash, emissionHash)],
                 [],
                 chainAtoms,
@@ -566,19 +566,13 @@ public sealed partial class DigestionAlignmentTests
             definitionHash,
             ScribeEmissionAttestation.EmissionPath(gid),
             emissionHash);
-        var snapshot = DigestionTestSupport.Snapshot([
+        var snapshot = DigestionTestSupport.Snapshot(
             ("docs/source.md", sourceBytes),
             DigestionTestSupport.CasFile(parent),
             DigestionTestSupport.CasFile(first),
             (targetPath, target),
             (record.DefinitionPath, definition),
-            (record.EmissionPath, emission),
-            .. FrozenStatementReceiptTestData.LedgerFiles(
-                new FrozenStatementReceiptTestData.Module(
-                    targetPath,
-                    targetStatementId,
-                    [])),
-        ]);
+            (record.EmissionPath, emission));
 
         var evaluation = DigestionStatusEvaluator.Evaluate(
             DigestionEvaluationScope.FullScan,

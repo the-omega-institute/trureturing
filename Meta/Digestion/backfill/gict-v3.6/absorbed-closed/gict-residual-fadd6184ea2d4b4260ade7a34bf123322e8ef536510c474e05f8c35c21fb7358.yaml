@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Fourier/ReductionKernel.reduction_kernel
       source_sha256: sha256:fadd6184ea2d4b4260ade7a34bf123322e8ef536510c474e05f8c35c21fb7358
-      target_statement_id: sha256:b737adc8210be647a3f07a224c2b2125b7176567800d1c7ce8ae93991d0a86a0
+      target_sha256: sha256:7f83e4b67f1715fa0e23707b0a7d8e5411150be7e6f56e6eb7002c5e5bcecb28
   scribe:
     - gid: D5/S3/Fourier/ReductionKernel.reduction_kernel
       definition_sha256: sha256:7f0163a70d667a6ad77554eef8a81d27d81dbeac2989445cba3a8aca80f78f20

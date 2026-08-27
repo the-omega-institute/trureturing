@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/Separation/ConeResidualWitness.cone_residual_observer_duality
       source_sha256: sha256:9c7306ff2b8ee11b269ed4e878a3486b884a58c333922d9c910f9dcf359a091d
-      target_statement_id: sha256:c7462848a775dede8ac4ace211f9877ba3e24e8a5e7a12e494fb901982220761
+      target_sha256: sha256:b3ad348b8b6f8bc5a7571bdc66062fefc80a4c022ab7cfdb509df2a210a51b57
   scribe:
     - gid: D5/S3/Observer/Separation/ConeResidualWitness.cone_residual_observer_duality
       definition_sha256: sha256:1cbb8df318d6614f610dd539781dcdb6c1262d4ef1bc35223bb6773f153a5c4c

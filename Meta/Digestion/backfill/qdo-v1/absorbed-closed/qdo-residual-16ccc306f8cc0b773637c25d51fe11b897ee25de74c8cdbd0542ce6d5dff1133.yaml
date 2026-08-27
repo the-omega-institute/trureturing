@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/QuantumContext/CompleteBasisReconstruction.complete_basis_reconstruction
       source_sha256: sha256:16ccc306f8cc0b773637c25d51fe11b897ee25de74c8cdbd0542ce6d5dff1133
-      target_statement_id: sha256:c8cbf71fbaf284b29e8e4bc26f6b43de1b06a4d964a8f72bfc8bff1a102e1f1e
+      target_sha256: sha256:a5027271da52a399ae5b985a695ae44061508e57eaa168aa44c442c3bd159a39
   scribe:
     - gid: D5/S3/QuantumContext/CompleteBasisReconstruction.complete_basis_reconstruction
       definition_sha256: sha256:e64e02fd30377701ecf1bfc08cba3cda02d516f55504afc47435fc46b0fdb95b

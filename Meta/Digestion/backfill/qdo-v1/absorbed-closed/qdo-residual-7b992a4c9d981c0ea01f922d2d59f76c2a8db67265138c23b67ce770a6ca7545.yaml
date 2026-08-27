@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Recurrence/FloorCounts/RotationEventCount.bounded_event_count
       source_sha256: sha256:7b992a4c9d981c0ea01f922d2d59f76c2a8db67265138c23b67ce770a6ca7545
-      target_statement_id: sha256:280a5840a9b4b982422d4882882aa79c123a19ad3f2de367faf06e42dfc002e9
+      target_sha256: sha256:5276266e59d864180a2775b22f06640588daa4c197cb63f793199ceb2602e01a
   scribe:
     - gid: D5/S1/Recurrence/FloorCounts/RotationEventCount.bounded_event_count
       definition_sha256: sha256:b66f730739c2c9de68a4ad8c8bc67d676c56b22348e407bbd6056600392c3010

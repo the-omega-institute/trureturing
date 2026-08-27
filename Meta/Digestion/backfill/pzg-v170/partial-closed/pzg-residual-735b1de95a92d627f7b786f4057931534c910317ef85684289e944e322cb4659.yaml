@@ -16,7 +16,7 @@ receipts:
   coverage:
     - gid: D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus
       source_sha256: sha256:735b1de95a92d627f7b786f4057931534c910317ef85684289e944e322cb4659
-      target_statement_id: sha256:c8292c52963f1ae54dcfbc9c3ca4a31de24bf18bd7f06ad9839b898e60028afa
+      target_sha256: sha256:ad68e04ffe461a7cd468c188da3685076e9ef22c4436ea5fa92fcc922cd6ffed
   scribe:
     - gid: D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus
       definition_sha256: sha256:7c42f364cffc731328d1c66c59da12ca61ccf5d6797838678b81eda30edf196f

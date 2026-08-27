@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/History/Generation/EventHistoryInduction.event_history_induction
       source_sha256: sha256:284ed78a42fabc1ff7bd109cbbb475649ff9794d54073ff7cf1f5a536ed25cca
-      target_statement_id: sha256:b444f9942d8465c19542baa54d001720875cb855e6b01c542cb4d5e3249fa08d
+      target_sha256: sha256:3ef7ae5ee0dfe7cefd1c6c77bc76358b965ff538f91394c33a24a8c754de22e7
   scribe:
     - gid: D5/S0/History/Generation/EventHistoryInduction.event_history_induction
       definition_sha256: sha256:0828538cfce56c0f7e86eb4adb0df1c4f20f86a897a592bd6dda887912e72154

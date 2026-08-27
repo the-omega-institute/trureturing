@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Dynamics/SolenoidCharacter.continuous_solenoid_characters_are_rational
       source_sha256: sha256:e6eb2d213b8ee7740f813ad6b845cf82bfffa9b56ac567b239a944b2ccd6485f
-      target_statement_id: sha256:fdca2324aac5703b814022e93dd67f4fbdaa9fb2e4d0667d6eac87f18daaefd8
+      target_sha256: sha256:aecb7299434d1b411946d0762292e13c5209c32b341ba89b5041d40be89b60db
   scribe:
     - gid: D5/S1/Dynamics/SolenoidCharacter.continuous_solenoid_characters_are_rational
       definition_sha256: sha256:7e15b4f0f2a596f775e2270849c9f123bd126159ebed59ae500a781883e72add

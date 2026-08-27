@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Constants/Transcription/PhiSecondTranscription.phi_second_transcription_exact
       source_sha256: sha256:badae06d389041c05c56b9bf56eff22fe33e952a338b2da730bf87accd04d749
-      target_statement_id: sha256:ef5943c85c5cf4ea7cff8ecce3ac8fb607405704605faf967c48c5695d02225e
+      target_sha256: sha256:44c287367e46b17d41564a3159a8b5bdbe16a090832fd885f97ba35b4d5d5841
   scribe:
     - gid: D5/S3/Constants/Transcription/PhiSecondTranscription.phi_second_transcription_exact
       definition_sha256: sha256:35649af2a9ebde3173765790c78bc324054d8c1c30b168a63af7f64cb732bcf6

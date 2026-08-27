@@ -1,0 +1,10 @@
+ast_path: section/假设-OACTC-24C-Collision-prime-jet-principle
+fingerprints:
+  raw_sha256: sha256:9a48fa7f57e92d442dc9f330df15883140f2c563f25c8031efe5ef40565ca1ce
+  normalized_sha256: sha256:9a48fa7f57e92d442dc9f330df15883140f2c563f25c8031efe5ef40565ca1ce
+cas_ref: sha256:9a48fa7f57e92d442dc9f330df15883140f2c563f25c8031efe5ef40565ca1ce
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

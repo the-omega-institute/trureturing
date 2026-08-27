@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Depth/ContinuedFractions/GaussInfiniteFiber.gauss_map_interior_fiber_infinite
       source_sha256: sha256:03682508f70cb8bd4b556025433cbc480080e6afdd794d278153ab6cc2295c77
-      target_statement_id: sha256:facc4003ff0f7909deffb1337bca904fb136838f59145eb762765536fd1bcba1
+      target_sha256: sha256:4631c243446cf115a54f11b60c62b00d8ae787cdea88c38c80ba88ab4731e63e
   scribe:
     - gid: D5/S1/Depth/ContinuedFractions/GaussInfiniteFiber.gauss_map_interior_fiber_infinite
       definition_sha256: sha256:87909cd660bf8fae7e74e20b86e9eb8fb3a7c22ca5f65d0bc3009b75cf6dc400

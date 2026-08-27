@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ResourceOrder/LiquidityReserveBound.liquidity_reserve_nonnegative
       source_sha256: sha256:c4eed44a7868133a4d15c1221a52a0a7e225b81ce63bc7f17699df5aa898b14b
-      target_statement_id: sha256:37503d015b5e46a41ca2e199d72a34da5b39e3bc1ddd56c8c84ed44aad9d2ca4
+      target_sha256: sha256:77df0539efb06e757f870c508fb7be129aa2406987c09efd3a6daec9b3752c8a
   scribe:
     - gid: D5/S3/ResourceOrder/LiquidityReserveBound.liquidity_reserve_nonnegative
       definition_sha256: sha256:93c673fc5716bd2823c61590b19a1525ee4b14caac697bdb846658261626b2cb

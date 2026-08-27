@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Transport/ConservativeExtensionAnswerability.answerability_transports_along_surjection
       source_sha256: sha256:a6346e4c076c54b43aba70934d0af3c15eb9b8b4d24d78c5e3781ab6f9e7850d
-      target_statement_id: sha256:1ad7d94beb7e558e1f90420879f879a000d610e751fb4c967c48740c91f6f503
+      target_sha256: sha256:d4cb14268a99965a3957dd8e43ab375b0cb20eed91664c506528418a3008c4e7
   scribe:
     - gid: D5/S3/ConceptDynamics/Transport/ConservativeExtensionAnswerability.answerability_transports_along_surjection
       definition_sha256: sha256:1c0d0783a3e956808f2cf16c66ff4ccb69107072b62d96de7cc370a2e5ca3db8

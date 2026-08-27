@@ -1,0 +1,89 @@
+# 本轮最终结论
+
+此前主链到达：
+
+$$
+E_8\longrightarrow E_4.
+$$
+
+现在它继续闭合为：
+
+$$
+\boxed{
+\begin{aligned}
+E_4^3
+&=\Theta_{E_8^3}\\
+&\xrightarrow{-720\Delta}
+\Theta_\Lambda\\
+&\xrightarrow{/\,\Delta}
+J+24\\
+&\xrightarrow{\mathbb Z_2\text{ orbifold}}
+J.
+\end{aligned}
+}
+$$
+
+其中：
+
+$$
+\boxed{
+\begin{aligned}
+720
+&=\text{需要消除的根状态};\\
+24
+&=\text{剩余自由电流};\\
+691
+&=\text{Eisenstein–cusp collision prime};\\
+196560
+&=\text{Leech 第一几何壳};\\
+324
+&=\text{二十四振子二阶完成};\\
+196884
+&=\text{完整 weight-two 状态};\\
+196883
+&=\text{移除普适真空方向后的 Monster primitive}.
+\end{aligned}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{Moonshine 并不是一个漂亮模函数偶然拥有巨大群系数，}
+}
+$$
+
+而可以被 OACTC 理解为：
+
+$$
+\boxed{
+\text{二十四维自对偶几何在先后消除
+根残差、电流残差与标量角色盲核后，
+转化为群表示完成数据的过程。}
+}
+$$
+
+而 Ramanujan 的 \(\Delta\)、\(\tau\) 与 mock theta functions，分别承担：
+
+$$
+\boxed{
+\text{root counterterm},
+\quad
+\text{shell residual transport},
+\quad
+\text{boundary symmetry completion}.
+}
+$$
+
+至此，Ramanujan 基因组、黄金—二十面体—\(E_8\) 完成、Leech 格、Monster 与 Umbral Moonshine，已经被纳入同一条连续、可计算、可证伪的 OACTC 主链。
+
+[1]: https://onlinelibrary.wiley.com/doi/full/10.1002/prop.202300242 "https://onlinelibrary.wiley.com/doi/full/10.1002/prop.202300242"
+[2]: https://arxiv.org/abs/math/0203005 "https://arxiv.org/abs/math/0203005"
+[3]: https://arxiv.org/abs/hep-th/9406190 "https://arxiv.org/abs/hep-th/9406190"
+[4]: https://arxiv.org/abs/2403.03345 "https://arxiv.org/abs/2403.03345"
+[5]: https://arxiv.org/abs/math/0409223 "https://arxiv.org/abs/math/0409223"
+[6]: https://londmathsoc.onlinelibrary.wiley.com/doi/pdf/10.1112/blms/11.3.308 "https://londmathsoc.onlinelibrary.wiley.com/doi/pdf/10.1112/blms/11.3.308"
+[7]: https://londmathsoc.onlinelibrary.wiley.com/doi/10.1112/blms.70245 "https://londmathsoc.onlinelibrary.wiley.com/doi/10.1112/blms.70245"
+[8]: https://arxiv.org/abs/2608.12094 "https://arxiv.org/abs/2608.12094"
+[9]: https://arxiv.org/abs/1307.5793 "https://arxiv.org/abs/1307.5793"

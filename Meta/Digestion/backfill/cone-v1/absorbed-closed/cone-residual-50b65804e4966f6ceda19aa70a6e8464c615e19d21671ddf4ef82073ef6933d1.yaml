@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Divergence/MeanKernels/BelavkinStaszewskiPath.belavkin_staszewski_path
       source_sha256: sha256:50b65804e4966f6ceda19aa70a6e8464c615e19d21671ddf4ef82073ef6933d1
-      target_statement_id: sha256:043a7c8b2e8e4c47e3cb439ffdfa7ecaca177be9148564e9a18a01d4ba792963
+      target_sha256: sha256:c28608bbba4ab19af0bae40ab949d8c303b57ac21ecba396f433c261b6f18b29
   scribe:
     - gid: D5/S3/Divergence/MeanKernels/BelavkinStaszewskiPath.belavkin_staszewski_path
       definition_sha256: sha256:b56a6356d3386559ff9c13b7ae9a1f7fe43e080c05714520b22029d4d5584407

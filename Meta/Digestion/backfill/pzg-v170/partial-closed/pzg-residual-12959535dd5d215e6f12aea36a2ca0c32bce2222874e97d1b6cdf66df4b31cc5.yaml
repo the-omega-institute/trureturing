@@ -9,6 +9,6 @@ receipts:
   coverage:
     - gid: D5/S3/Midline/OffLineScaling.off_line_scaling_ledger_growth
       source_sha256: sha256:12959535dd5d215e6f12aea36a2ca0c32bce2222874e97d1b6cdf66df4b31cc5
-      target_statement_id: sha256:d95301b6af884b83fa0ae204404760225ce7f2cc61c95f57515358ab07c9a5c9
+      target_sha256: sha256:b2589658600ebcfe91be9052225f465e1d58ceb65f00bbeacc8f57b68e5704d6
   scribe: []
   unresolved_subitems: []

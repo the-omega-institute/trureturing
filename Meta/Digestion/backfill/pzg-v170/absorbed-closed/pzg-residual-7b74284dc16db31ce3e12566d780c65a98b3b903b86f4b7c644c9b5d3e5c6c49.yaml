@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Arith/ChineseRemainder.chinese_remainder_bijective
       source_sha256: sha256:7b74284dc16db31ce3e12566d780c65a98b3b903b86f4b7c644c9b5d3e5c6c49
-      target_statement_id: sha256:1d3e34eb651fdb3e88ecee6f005aa747a3b9acd4416543d5b1bfd6c8a8927b1b
+      target_sha256: sha256:1fdc7aff680f38fd5562f3586b84840a1f8701906f2275c3bbb17b1bed7ad7b2
   scribe:
     - gid: D5/S3/Arith/ChineseRemainder.chinese_remainder_bijective
       definition_sha256: sha256:fe47a46d6f248310a041f1aa1d459d45bc4796294a0ff69813f61318b67f0e70

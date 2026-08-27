@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/ProvenanceAdmissionCountermodel.equal_content_does_not_determine_admission
       source_sha256: sha256:84b9d9bd073eb4b6f750116f0aa4ea6d14dafdce1523dd37b4dbfece1bcc76bf
-      target_statement_id: sha256:9bbf9813dd3da4a2a2f9b10ef96d89f46f412b0486539cede16b5c3dd722e9fa
+      target_sha256: sha256:d979972c8e224a84f22e46be8be0cfedcf2014a0833f230e315fa5b09a3de540
   scribe:
     - gid: D5/S3/ConceptDynamics/ProvenanceAdmissionCountermodel.equal_content_does_not_determine_admission
       definition_sha256: sha256:c2a4b8e654d8e1b8fc1ee8b324175ec726e7714d779115ddcad1908e39674ac3

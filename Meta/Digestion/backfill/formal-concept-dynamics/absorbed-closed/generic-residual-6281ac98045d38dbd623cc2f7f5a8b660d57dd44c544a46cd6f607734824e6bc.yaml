@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Interventions/ExperimentalQuotientUniversality.experimental_quotient_universality
       source_sha256: sha256:6281ac98045d38dbd623cc2f7f5a8b660d57dd44c544a46cd6f607734824e6bc
-      target_statement_id: sha256:4b4f89a065b92efef1a90b5cfdcac3454c191e550c1f91d0d7aaac1ba36a3c9e
+      target_sha256: sha256:53321ab017fa7fe6032a74316f81984b7f257bc3225718eaa12950dc32119243
   scribe:
     - gid: D5/S3/ConceptDynamics/Interventions/ExperimentalQuotientUniversality.experimental_quotient_universality
       definition_sha256: sha256:770cbe78edbc76df4a066438469895e1d92878a06669dc030e139bb01dd25664

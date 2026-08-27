@@ -9,6 +9,6 @@ receipts:
   coverage:
     - gid: D5/S1/Digit/PrimeAxisAddition.prime_axis_addition_spec
       source_sha256: sha256:6ade320007ff03163fd22af955a6a0ca8d4b371ef23def697929153f626d621e
-      target_statement_id: sha256:a23c639bb7d0b7244e8d237835a05fb4bf57833d8e54cab8f4b31cd62d7c497f
+      target_sha256: sha256:00557dc5c6b8352bc93b89b3e0932c7316483cd7b3e11f2d2561d761206b6d8e
   scribe: []
   unresolved_subitems: []

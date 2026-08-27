@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/Knowledge/RelationalPreconditionAdjunction.relational_adjunction_and_may_not_guarantee
       source_sha256: sha256:24605c954875eec228cd6006c734e9c06adce66c6bdbeccd60aef067fdd96ebf
-      target_statement_id: sha256:694a8223b93a9e5cc0d5f08cf119658efade5a8726ed02f63e5beb519c1fb332
+      target_sha256: sha256:622e781363f996ac72359eba6bc34732b80dd2a025232f329185d181b0469568
   scribe:
     - gid: D5/S3/ObserverMemory/Knowledge/RelationalPreconditionAdjunction.relational_adjunction_and_may_not_guarantee
       definition_sha256: sha256:dee4c683a3edf9ef9d351ab5e38d36b677a357f1b5465960d3bad3464348aaa4

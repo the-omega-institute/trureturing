@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Resource/DivideConquer.resource_functional_subadditive
       source_sha256: sha256:c4b27f4cb7321bd03276650f5b5e653ff7da3aa51c936213880bc617abacdf93
-      target_statement_id: sha256:8afd4f8415662f3abe09ab8b3e7e07a7134303973a79007ad39d74aba61c2243
+      target_sha256: sha256:301cdd28d3cbb74fabcd62920331332f336a723938988e1c032b0013a5c44cf0
   scribe:
     - gid: D5/S3/Resource/DivideConquer.resource_functional_subadditive
       definition_sha256: sha256:72b08dda98ceeb08b74c5cc0cd6ae9609899cc4f0493bca31dae042262e8a5ea

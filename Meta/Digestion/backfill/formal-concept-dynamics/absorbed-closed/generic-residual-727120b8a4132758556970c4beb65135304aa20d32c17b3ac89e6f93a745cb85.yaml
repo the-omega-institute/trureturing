@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Epistemic/PartitionAndGeneralNegativeIntrospectionContrast.partition_and_general_negative_introspection_contrast
       source_sha256: sha256:727120b8a4132758556970c4beb65135304aa20d32c17b3ac89e6f93a745cb85
-      target_statement_id: sha256:3aeede211a5f63507d35ab1ffd609fa05bf94a7b7ea03a26725a0a3927f4345c
+      target_sha256: sha256:813df18c44a25b1b68ce2966b880535f36be92321219b4283b14fc3002c79c72
   scribe:
     - gid: D5/S3/ConceptDynamics/Epistemic/PartitionAndGeneralNegativeIntrospectionContrast.partition_and_general_negative_introspection_contrast
       definition_sha256: sha256:3862e959cbdec84b8afcbfb9059146b3d5316e5f317705764c07dbdb2a87b9b7

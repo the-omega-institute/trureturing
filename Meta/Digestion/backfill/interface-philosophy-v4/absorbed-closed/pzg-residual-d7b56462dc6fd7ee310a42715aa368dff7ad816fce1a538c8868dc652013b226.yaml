@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Rewriting/BinaryPatchFamily.binary_patch_family_injective_and_consistent
       source_sha256: sha256:d7b56462dc6fd7ee310a42715aa368dff7ad816fce1a538c8868dc652013b226
-      target_statement_id: sha256:184e1157973e0f37ac0592f40895d462a2db47a89032a29729851cf33cb99b69
+      target_sha256: sha256:9cb12a5a13921076011dea6a3606da24616528c7f758c9d965c5fd1a10e671b5
   scribe:
     - gid: D5/S0/Rewriting/BinaryPatchFamily.binary_patch_family_injective_and_consistent
       definition_sha256: sha256:4fa684a47b88348163ca03601f2b54e1f677eb08c92ac2ae1524f91de34e217d

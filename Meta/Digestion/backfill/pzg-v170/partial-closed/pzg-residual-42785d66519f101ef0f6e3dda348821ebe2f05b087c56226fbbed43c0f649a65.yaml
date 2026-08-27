@@ -12,7 +12,7 @@ receipts:
   coverage:
     - gid: D5/S3/Zeros/SpectralShift.labeled_zeta_vector_backward_shift_eigen
       source_sha256: sha256:42785d66519f101ef0f6e3dda348821ebe2f05b087c56226fbbed43c0f649a65
-      target_statement_id: sha256:46e07413f9530fc9aa9774f681f4ccfb60e4db0f99fdcb520534c4fbf46a6d02
+      target_sha256: sha256:d321a4dbb32f7d67f235f44f2304a6d1703b07c3844f2b224f6a0b9a06fb925e
   scribe:
     - gid: D5/S3/Zeros/SpectralShift.labeled_zeta_vector_backward_shift_eigen
       definition_sha256: sha256:649f018fa7635908470d4164283dfa9397d15d32cfd02f18ac9c347b0bb12e4d

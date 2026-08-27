@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/PrimeForms/GaussianIntegers/GaussianIntegerNorm.gaussian_integer_mul_conj_eq_sq_add_sq
       source_sha256: sha256:aa9d76fb36c4c36c803f4311736a47ec9cd52b3639822c8cc242e407f39a4ccb
-      target_statement_id: sha256:0e7ea13e2e8bbf87b2bd68b59546f6150b4408b2ed850fcee22f51f759a7ffc7
+      target_sha256: sha256:1c0506fe543abc80daac69f5d3c1b39769c4618ff6c17f7aa7014a62f5f3fd26
   scribe:
     - gid: D5/S3/PrimeForms/GaussianIntegers/GaussianIntegerNorm.gaussian_integer_mul_conj_eq_sq_add_sq
       definition_sha256: sha256:99d411a6dc7a0be435638085c87f6b2c86ada398d4c53748140b45e4382f1cdc

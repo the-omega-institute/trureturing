@@ -34,17 +34,15 @@ public sealed partial class DigestionLedgerTests
             new DigestionCoverageReceipt(
                 gid,
                 atom.Fingerprints.RawSha256,
-                TestModuleStatementId),
+                DigestionFingerprint.Compute(target).RawSha256),
             new DigestionScribeReceipt(gid, definitionHash, emissionHash),
             atomizer: AtomizerRegistry.NoAtomizerId);
-        var snapshot = Snapshot([
+        var snapshot = Snapshot(
             ("docs/source.md", currentSource),
             CasFile(atom),
             (targetPath, target),
             (ScribeEmissionAttestation.DefinitionPath(gid), definition),
-            (ScribeEmissionAttestation.EmissionPath(gid), emission),
-            .. FrozenLedgerFiles(targetPath),
-        ]);
+            (ScribeEmissionAttestation.EmissionPath(gid), emission));
         var verifiedEmissions = VerifiedScribeEmissions.Create(
         [
             new ScribeEmissionRecord(

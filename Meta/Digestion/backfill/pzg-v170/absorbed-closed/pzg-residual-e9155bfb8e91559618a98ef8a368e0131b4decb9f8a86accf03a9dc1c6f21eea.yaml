@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Arith/EuclidLemma.euclid_prime_dvd_mul
       source_sha256: sha256:e9155bfb8e91559618a98ef8a368e0131b4decb9f8a86accf03a9dc1c6f21eea
-      target_statement_id: sha256:5806d4d4368267138798351e8beea47d17a8949c1df14701372c842e7f7f5c05
+      target_sha256: sha256:9584966ae5edc94f100aa0085339fc81ea04fd8c4d033624698346619e5f083b
   scribe:
     - gid: D5/S3/Arith/EuclidLemma.euclid_prime_dvd_mul
       definition_sha256: sha256:06235d8bada51b58bd5eb045a3234e7fa0139817515e9833335f6fdca6d876c3

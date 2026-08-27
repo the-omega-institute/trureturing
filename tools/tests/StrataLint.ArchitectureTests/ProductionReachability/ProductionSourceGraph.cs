@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Xml.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -7,40 +8,40 @@ namespace StrataLint.ArchitectureTests;
 
 internal sealed class ProductionSourceGraph
 {
-    private static readonly string[] ProductionPrefixes =
-    [
-        "tools/StrataLint.Cli/",
-        "tools/StrataLint.Engine/",
-        "tools/StrataLint.Scribe/",
-        "tools/Trureturing.Truth/",
-    ];
-
     private readonly CSharpCompilation compilation;
     private readonly IReadOnlyDictionary<SyntaxTree, string> paths;
     private readonly Dictionary<IMethodSymbol, SyntaxNode> declarations;
     private readonly Dictionary<IFieldSymbol, SyntaxNode> fieldInitializers;
     private readonly Dictionary<IPropertySymbol, SyntaxNode> propertyInitializers;
     private readonly ImmutableArray<IMethodSymbol> sourceMethods;
+    private readonly ImmutableArray<(string Description, IMethodSymbol Method)> executableMethodRoots;
+    private readonly ImmutableArray<(string Description, SyntaxNode Statement)> executableTopLevelRoots;
 
     private ProductionSourceGraph(
         CSharpCompilation compilation,
         IReadOnlyDictionary<SyntaxTree, string> paths,
         Dictionary<IMethodSymbol, SyntaxNode> declarations,
         Dictionary<IFieldSymbol, SyntaxNode> fieldInitializers,
-        Dictionary<IPropertySymbol, SyntaxNode> propertyInitializers)
+        Dictionary<IPropertySymbol, SyntaxNode> propertyInitializers,
+        ImmutableArray<(string Description, IMethodSymbol Method)> executableMethodRoots,
+        ImmutableArray<(string Description, SyntaxNode Statement)> executableTopLevelRoots)
     {
         this.compilation = compilation;
         this.paths = paths;
         this.declarations = declarations;
         this.fieldInitializers = fieldInitializers;
         this.propertyInitializers = propertyInitializers;
+        this.executableMethodRoots = executableMethodRoots;
+        this.executableTopLevelRoots = executableTopLevelRoots;
         sourceMethods = declarations.Keys.ToImmutableArray();
     }
 
     internal static ProductionSourceGraph Create(string repositoryRoot)
     {
-        var sources = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
-            .Where(static file => IsProductionPath(file.RelativePath)
+        var repositoryFiles = GitIndexRepositoryFiles.Enumerate(repositoryRoot);
+        var projects = LoadProductionProjects(repositoryFiles);
+        var sources = repositoryFiles
+            .Where(file => projects.Any(project => project.Includes(file.RelativePath))
                 && file.RelativePath.EndsWith(".cs", StringComparison.Ordinal))
             .Select(file => (
                 file.RelativePath,
@@ -104,20 +105,65 @@ internal sealed class ProductionSourceGraph
             }
         }
 
+        var executableMethodRoots = ImmutableArray.CreateBuilder<(string, IMethodSymbol)>();
+        var executableTopLevelRoots = ImmutableArray.CreateBuilder<(string, SyntaxNode)>();
+        foreach (var project in projects.Where(static project => project.IsExecutable))
+        {
+            var projectMethods = declarations
+                .Where(item => item.Key is { Name: "Main", IsStatic: true, MethodKind: MethodKind.Ordinary }
+                    && project.Includes(paths[item.Value.SyntaxTree]))
+                .OrderBy(static item => Display(item.Key), StringComparer.Ordinal)
+                .ToArray();
+            var projectTopLevel = sources
+                .Where(source => project.Includes(source.RelativePath))
+                .SelectMany(source => source.Tree.GetRoot()
+                    .DescendantNodes()
+                    .OfType<GlobalStatementSyntax>()
+                    .Select(statement => (source.RelativePath, Statement: (SyntaxNode)statement)))
+                .OrderBy(static item => item.RelativePath, StringComparer.Ordinal)
+                .ThenBy(static item => item.Statement.SpanStart)
+                .ToArray();
+            if (projectMethods.Length == 0 && projectTopLevel.Length == 0)
+            {
+                throw new InvalidOperationException(
+                    $"tracked executable project has no discovered C# entry point: {project.RelativePath}");
+            }
+
+            foreach (var item in projectMethods)
+            {
+                executableMethodRoots.Add(($"{project.RelativePath}::{Display(item.Key)}", item.Key));
+            }
+            foreach (var item in projectTopLevel)
+            {
+                executableTopLevelRoots.Add((
+                    $"{project.RelativePath}::top-level:{item.RelativePath}",
+                    item.Statement));
+            }
+        }
+
         return new ProductionSourceGraph(
             compilation,
             paths,
             declarations,
             fieldInitializers,
-            propertyInitializers);
+            propertyInitializers,
+            executableMethodRoots.ToImmutable(),
+            executableTopLevelRoots.ToImmutable());
     }
 
-    internal IReadOnlyList<string> ReachableFrom(string entryPoint)
+    internal IReadOnlyList<string> ExecutableEntryPointDescriptions => executableMethodRoots
+        .Select(static root => root.Description)
+        .Concat(executableTopLevelRoots.Select(static root => root.Description))
+        .Distinct(StringComparer.Ordinal)
+        .Order(StringComparer.Ordinal)
+        .ToArray();
+
+    internal IReadOnlyList<string> ReachableFromExecutableEntryPoints()
     {
-        var entry = declarations.Keys.Single(method => Display(method) == entryPoint);
         var pending = new Queue<ISymbol>();
         var visited = new HashSet<ISymbol>(SymbolEqualityComparer.Default);
-        pending.Enqueue(entry);
+        foreach (var root in executableMethodRoots) pending.Enqueue(root.Method);
+        foreach (var root in executableTopLevelRoots) AddDependencies(root.Statement, pending);
         while (pending.TryDequeue(out var symbol))
         {
             symbol = Normalize(symbol);
@@ -277,8 +323,108 @@ internal sealed class ProductionSourceGraph
     private static string Display(ISymbol symbol) =>
         symbol.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
 
-    private static bool IsProductionPath(string path) =>
-        ProductionPrefixes.Any(prefix => path.StartsWith(prefix, StringComparison.Ordinal));
+    private static ImmutableArray<ProductionProject> LoadProductionProjects(
+        IReadOnlyList<(string RelativePath, string FullPath)> repositoryFiles) => repositoryFiles
+        .Where(static file => file.RelativePath.StartsWith("tools/", StringComparison.Ordinal)
+            && !file.RelativePath.StartsWith("tools/tests/", StringComparison.Ordinal)
+            && file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal))
+        .Select(static file => ProductionProject.Load(file.RelativePath, file.FullPath))
+        .OrderBy(static project => project.RelativePath, StringComparer.Ordinal)
+        .ToImmutableArray();
+
+    private sealed record ProductionProject(
+        string RelativePath,
+        string DirectoryPrefix,
+        bool DefaultCompileItems,
+        bool IsExecutable,
+        ImmutableArray<System.Text.RegularExpressions.Regex> ExplicitCompileIncludes)
+    {
+        internal static ProductionProject Load(string relativePath, string fullPath)
+        {
+            var document = XDocument.Load(fullPath, LoadOptions.None);
+            var directoryPrefix = relativePath[..(relativePath.LastIndexOf('/') + 1)];
+            var defaultCompileItems = !document.Descendants()
+                .Where(static element => element.Name.LocalName == "EnableDefaultCompileItems")
+                .Select(static element => element.Value.Trim())
+                .Any(static value => string.Equals(value, "false", StringComparison.OrdinalIgnoreCase));
+            var isExecutable = document.Descendants()
+                .Where(static element => element.Name.LocalName == "OutputType")
+                .Select(static element => element.Value.Trim())
+                .Any(static value => value is "Exe" or "WinExe");
+            var explicitCompileIncludes = document.Descendants()
+                .Where(static element => element.Name.LocalName == "Compile")
+                .Select(static element => (string?)element.Attribute("Include"))
+                .Where(static include => !string.IsNullOrWhiteSpace(include))
+                .Select(include => GlobRegex(NormalizePattern(directoryPrefix, include!)))
+                .ToImmutableArray();
+            return new ProductionProject(
+                relativePath,
+                directoryPrefix,
+                defaultCompileItems,
+                isExecutable,
+                explicitCompileIncludes);
+        }
+
+        internal bool Includes(string path) =>
+            (DefaultCompileItems && path.StartsWith(DirectoryPrefix, StringComparison.Ordinal))
+            || ExplicitCompileIncludes.Any(pattern => pattern.IsMatch(path));
+
+        private static string NormalizePattern(string directoryPrefix, string include)
+        {
+            var segments = new List<string>();
+            foreach (var segment in (directoryPrefix + include.Replace('\\', '/'))
+                .Split('/', StringSplitOptions.RemoveEmptyEntries))
+            {
+                if (segment == ".") continue;
+                if (segment == "..")
+                {
+                    if (segments.Count == 0)
+                        throw new InvalidDataException($"compile include escapes repository root: {include}");
+                    segments.RemoveAt(segments.Count - 1);
+                    continue;
+                }
+                segments.Add(segment);
+            }
+            return string.Join('/', segments);
+        }
+
+        private static System.Text.RegularExpressions.Regex GlobRegex(string pattern)
+        {
+            var expression = new System.Text.StringBuilder("^");
+            for (var index = 0; index < pattern.Length; index++)
+            {
+                if (pattern[index] == '*' && index + 1 < pattern.Length && pattern[index + 1] == '*')
+                {
+                    index++;
+                    if (index + 1 < pattern.Length && pattern[index + 1] == '/')
+                    {
+                        index++;
+                        expression.Append("(?:.*/)?");
+                    }
+                    else
+                    {
+                        expression.Append(".*");
+                    }
+                }
+                else if (pattern[index] == '*')
+                {
+                    expression.Append("[^/]*");
+                }
+                else if (pattern[index] == '?')
+                {
+                    expression.Append("[^/]");
+                }
+                else
+                {
+                    expression.Append(System.Text.RegularExpressions.Regex.Escape(pattern[index].ToString()));
+                }
+            }
+            expression.Append('$');
+            return new System.Text.RegularExpressions.Regex(
+                expression.ToString(),
+                System.Text.RegularExpressions.RegexOptions.CultureInvariant);
+        }
+    }
 
     private static IEnumerable<MetadataReference> PlatformReferences()
     {

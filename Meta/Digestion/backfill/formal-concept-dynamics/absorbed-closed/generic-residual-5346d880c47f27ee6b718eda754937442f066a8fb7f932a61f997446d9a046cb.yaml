@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Epistemic/RobustKnowledgeConjunction.robust_knowledge_conjunction
       source_sha256: sha256:5346d880c47f27ee6b718eda754937442f066a8fb7f932a61f997446d9a046cb
-      target_statement_id: sha256:eedca84512abe07938f3fde1c8f68e7ae64e4687d56d92ab195e835209380df9
+      target_sha256: sha256:0f7ba9a3c0807b76471207243257d0262cdbe5ae4d2649cc0550281360e4610d
   scribe:
     - gid: D5/S3/ConceptDynamics/Epistemic/RobustKnowledgeConjunction.robust_knowledge_conjunction
       definition_sha256: sha256:7f62764e9fd8b985ddaef54eee6e35ba5d044f58d87de73ae4ac4a8f857f1996

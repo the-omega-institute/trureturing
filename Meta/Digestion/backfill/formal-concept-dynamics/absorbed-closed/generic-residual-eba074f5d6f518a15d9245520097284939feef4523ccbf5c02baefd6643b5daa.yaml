@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Identifiability/AnchorFullIdentification.anchor_full_identification_iff
       source_sha256: sha256:eba074f5d6f518a15d9245520097284939feef4523ccbf5c02baefd6643b5daa
-      target_statement_id: sha256:a5672ec8ce2ec1d5bc489730212126205e4735458ade8ba8913d9f05908e188f
+      target_sha256: sha256:c2483c7d1d860c3e40707fb1bd089431bb0a324fabf10d11189844582d918d7a
   scribe:
     - gid: D5/S3/ConceptDynamics/Identifiability/AnchorFullIdentification.anchor_full_identification_iff
       definition_sha256: sha256:61edc4a8b8655ed906a43d3638ebc3fbaf4d95487d5cedb79179df8596baff2f

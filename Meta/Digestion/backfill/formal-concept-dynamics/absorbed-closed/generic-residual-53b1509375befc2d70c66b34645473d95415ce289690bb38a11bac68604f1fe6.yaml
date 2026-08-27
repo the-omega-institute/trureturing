@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Answering/InformationRefinementShrinksAnswers.answer_set_antitone_in_information
       source_sha256: sha256:53b1509375befc2d70c66b34645473d95415ce289690bb38a11bac68604f1fe6
-      target_statement_id: sha256:bf80d3f0f65c62ed90f2c06fdf29f72637f73e0091d0f75363b4de0748043bb3
+      target_sha256: sha256:8c1691f56691df8489a5fa24ce14c698d75250343480faade2c09b425bb18543
   scribe:
     - gid: D5/S3/ConceptDynamics/Answering/InformationRefinementShrinksAnswers.answer_set_antitone_in_information
       definition_sha256: sha256:e4393d8c62d49d14663dc041c287495f5bf4d862845e9070fbe2ef8fa198f96e

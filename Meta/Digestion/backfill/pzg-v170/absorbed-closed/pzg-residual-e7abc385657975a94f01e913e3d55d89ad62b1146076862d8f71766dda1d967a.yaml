@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Computability/SyntaxSemanticsBoundary.same_layer_predicates_not_enumerable
       source_sha256: sha256:e7abc385657975a94f01e913e3d55d89ad62b1146076862d8f71766dda1d967a
-      target_statement_id: sha256:cdb41993e43a7b35e44d7d13801215300dab6f1e6b6cee9664d43de19d2a09ef
+      target_sha256: sha256:3df3e97588f2f8ac713982a47dd4e7812cf408ff2e07e59f10d0e7fc1a3d81c5
   scribe:
     - gid: D5/S0/Computability/SyntaxSemanticsBoundary.same_layer_predicates_not_enumerable
       definition_sha256: sha256:a6bf6279d58ec17f40316785ac45fcc798641f413d95850f3dc91d9fa8015a01

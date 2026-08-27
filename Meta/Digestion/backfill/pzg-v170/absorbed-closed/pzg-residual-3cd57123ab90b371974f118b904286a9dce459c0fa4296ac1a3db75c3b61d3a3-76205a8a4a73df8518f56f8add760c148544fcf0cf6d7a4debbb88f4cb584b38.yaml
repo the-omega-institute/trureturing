@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/QuantumContext/CliffordPhaseKernel.clifford_phase_kernel_invariant
       source_sha256: sha256:3cd57123ab90b371974f118b904286a9dce459c0fa4296ac1a3db75c3b61d3a3
-      target_statement_id: sha256:ff0092705d76cc704bc6ba231746c164493be28be3262697739c8ad1ce800423
+      target_sha256: sha256:376c593f2ed7f8fb8e9eaf7736c5a2c28509a3c57c38e8d3f38f2c87fdfc9975
   scribe:
     - gid: D5/S3/QuantumContext/CliffordPhaseKernel.clifford_phase_kernel_invariant
       definition_sha256: sha256:bcf90268c03782ad3effa98f611f0db118ce3a2ecd18ddbab51b6a723f81c27c

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/Prediction/FiniteOrbitPeriodBound.finite_orbit_and_readout_eventually_periodic
       source_sha256: sha256:2778adad317cbef42aa93aee1a0eccb6826df67a9a57a4af1424bd8fc9dcce5b
-      target_statement_id: sha256:bd70ef59a10653f056f4ac5b0deb32b02b974892da08715be5667ddedd8df65c
+      target_sha256: sha256:d28109af12e439e7fd1e35894417203a97c9044c12b81bfbc52e1cff623ee3f6
   scribe:
     - gid: D5/S3/ObserverMemory/Prediction/FiniteOrbitPeriodBound.finite_orbit_and_readout_eventually_periodic
       definition_sha256: sha256:e8a97348e6181d55fd94371d351c2e727c1244c8a7432c21072f403506ade98b

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Topology/UniversalT0Quotient.universal_t0_quotient
       source_sha256: sha256:f89bd055c58e627b846b3d99d5ae8d06262161255ec660bcccee3a6883bfa281
-      target_statement_id: sha256:dfc32a63125d0c51d28a2756ffa4a71fe920e61c9b97b626e06d6ac43941222c
+      target_sha256: sha256:4c1ab40b9263fb7b1742962e887ce196536b39df87e3a80e9eb7858fb098e949
   scribe:
     - gid: D5/S3/ConceptDynamics/Topology/UniversalT0Quotient.universal_t0_quotient
       definition_sha256: sha256:2874f16f031be8fcab22cfa9c353cf92c2a0901158d84439aaad985eff11a0d9

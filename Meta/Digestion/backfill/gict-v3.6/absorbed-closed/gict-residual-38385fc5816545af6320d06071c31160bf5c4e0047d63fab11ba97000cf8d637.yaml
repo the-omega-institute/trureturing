@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Words/AdmissibleWords/AdmissibleCount.admissibleWord_card_eq_fib
       source_sha256: sha256:38385fc5816545af6320d06071c31160bf5c4e0047d63fab11ba97000cf8d637
-      target_statement_id: sha256:705c7bcc0099280c8ed68bf461eca8cd390b7cba0709b2017097cd718d7e6bba
+      target_sha256: sha256:0ba7e80fc9767f55dace138d0804f3ec75e64e7424426b4033045ca14fad9bc3
   scribe:
     - gid: D5/S1/Words/AdmissibleWords/AdmissibleCount.admissibleWord_card_eq_fib
       definition_sha256: sha256:62e2a38d2bd1d1af658d847beffff246755b81b1b6d974a4ce78064241bc8424

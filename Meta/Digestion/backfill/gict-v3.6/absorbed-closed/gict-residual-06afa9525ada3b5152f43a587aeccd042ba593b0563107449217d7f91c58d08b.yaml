@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Constants/DeltaMeanArtifact.abs_delta_mean_zero
       source_sha256: sha256:06afa9525ada3b5152f43a587aeccd042ba593b0563107449217d7f91c58d08b
-      target_statement_id: sha256:2aa04b4d2d2e8a019bbd8057e117d698d4d43a6bc546184dd50031b878a057c6
+      target_sha256: sha256:6fc98148879bce1c4f62de2e1c52b1a4d5da5defa1f8d37a7d0d9574f9690d51
   scribe:
     - gid: D5/S3/Constants/DeltaMeanArtifact.abs_delta_mean_zero
       definition_sha256: sha256:6e3f256d804cc6a28cf58afd36c0c1dbaf638779d3882a39eca632f213d736e7

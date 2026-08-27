@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/PrimeForms/BronzeLadderLeg.bronze_leg
       source_sha256: sha256:2bea1b88bb2edd33956260cadc84396c27345d06b9b71bd6b8f2495720a58598
-      target_statement_id: sha256:90783abad8cd17a0fb84f8e541ecd444efc5613b3cfefdc5eb3e61024260c9aa
+      target_sha256: sha256:16dfe53dbb815b1b568fcc1c867dcf3c22137fb14f258c672dc70778ad245f13
   scribe:
     - gid: D5/S3/PrimeForms/BronzeLadderLeg.bronze_leg
       definition_sha256: sha256:46281792913930034203d090dde965843d59e70bdba947d3329fedd0ef56709e

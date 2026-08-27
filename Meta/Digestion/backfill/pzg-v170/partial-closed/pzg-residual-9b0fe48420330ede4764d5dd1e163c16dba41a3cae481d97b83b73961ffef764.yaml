@@ -9,6 +9,6 @@ receipts:
   coverage:
     - gid: D5/S3/Weil/ReflectionLedger
       source_sha256: sha256:9b0fe48420330ede4764d5dd1e163c16dba41a3cae481d97b83b73961ffef764
-      target_statement_id: sha256:f7f3a823b3af405f57350ce4f5e7408bee50a5a95313132cc7bb8f55c765bc8d
+      target_sha256: sha256:eadb8ba77aa7d9d1648ae398d680d11c525bca2e60ec090ae38e35d7f5e738e5
   scribe: []
   unresolved_subitems: []

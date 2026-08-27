@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Prediction/ConditionalExpectationOptimality.conditional_expectation_minimizes_mean_square_error
       source_sha256: sha256:d9dd00c3d60eb4790214378948001677967b41c6ef863fce340d546575b7d57a
-      target_statement_id: sha256:fbf4fdc11a246038778da6b919bc95abe81f8c9bb937c7af8473e4a9d5174506
+      target_sha256: sha256:d17b30cd6b6b2740359ae16904e58ca3a824e18004322e6faef62f71f84c75ec
   scribe:
     - gid: D5/S3/ConceptDynamics/Prediction/ConditionalExpectationOptimality.conditional_expectation_minimizes_mean_square_error
       definition_sha256: sha256:bc46ea137f03195e5534c2d350b3e591566b1c8a836afbe4fec951fa32f0680e

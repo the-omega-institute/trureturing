@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/BlindNaturalityCountermodel.blind_naturality_counterexample
       source_sha256: sha256:55cd3f5d18d4b6508eb720782cde9dbf9ff18c3243a908a6944ac2882ccb16a2
-      target_statement_id: sha256:686881b61a2e4ef329fbdc45a545a5e55b557ce498c556ebc0f7decc42d64b20
+      target_sha256: sha256:d9d746cbd4d8f38d3fc48fbf7a8cc444e290f2e0e68d5c690b7b8881a79787b5
   scribe:
     - gid: D5/S3/ConceptDynamics/BlindNaturalityCountermodel.blind_naturality_counterexample
       definition_sha256: sha256:066ccd315cbda8f215273a9bbfa3229b147cdc1e506c2be901a78632572bfcd0

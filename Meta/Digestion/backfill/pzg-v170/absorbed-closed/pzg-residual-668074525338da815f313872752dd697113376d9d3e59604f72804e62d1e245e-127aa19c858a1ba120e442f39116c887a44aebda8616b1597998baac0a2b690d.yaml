@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Deficit/GoldenPhaseDeficit.golden_phase_deficit
       source_sha256: sha256:668074525338da815f313872752dd697113376d9d3e59604f72804e62d1e245e
-      target_statement_id: sha256:89371cdcbd791d399992807aef97c8f61742f2ec75a7d777c754e87a4170751d
+      target_sha256: sha256:aeb447b4360494e2d4b247609e81c531702f17543e123076e21bbe6779182708
   scribe:
     - gid: D5/S1/Deficit/GoldenPhaseDeficit.golden_phase_deficit
       definition_sha256: sha256:a2169b99f1b88938be81c55dfdcb7ab99f4a021c25f19d110113383624d5defd

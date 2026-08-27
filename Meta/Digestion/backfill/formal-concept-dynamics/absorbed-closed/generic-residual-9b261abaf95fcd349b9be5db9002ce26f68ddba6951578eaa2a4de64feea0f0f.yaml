@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Modularity/InterfaceInsufficiency.modular_interfaces_cannot_verify_global_target
       source_sha256: sha256:9b261abaf95fcd349b9be5db9002ce26f68ddba6951578eaa2a4de64feea0f0f
-      target_statement_id: sha256:c19d9502f40b3ee5aae4ffbe9fbe6ddfb4e29bdb6e1c11abd3ddec4d8c2f79e8
+      target_sha256: sha256:19f28033ccdfb0ac5dff5a24bdd505c69a1823d25505de079cbcc95bfecc1219
   scribe:
     - gid: D5/S3/ConceptDynamics/Modularity/InterfaceInsufficiency.modular_interfaces_cannot_verify_global_target
       definition_sha256: sha256:db23d26f890faca4b4e1b5160e3b4a912b86b0d544d5bd06ecc75ba10795d2cb

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/FiniteCountermodels/MinimalMacroFactorizationCounterexample.deterministic_three_state_process_has_no_macro_factorization
       source_sha256: sha256:515d2d3b19f1786bbd8ad3408f7f555d81f09542183d1eb7dda794792bef9d5b
-      target_statement_id: sha256:1012f3c6976c7ef7cd761e66d91c1f1623b1d7940d6f1818a3df66c204964c96
+      target_sha256: sha256:f072b60512900454a8f3fdcb0d49e357eda0dd2df137177435175154c0aca2a3
   scribe:
     - gid: D5/S3/ObserverMemory/FiniteCountermodels/MinimalMacroFactorizationCounterexample.deterministic_three_state_process_has_no_macro_factorization
       definition_sha256: sha256:29e0d455607d0671e8bfa48cad4b56fe3ffbb0bf126c4efac6c42af1ccb616ef

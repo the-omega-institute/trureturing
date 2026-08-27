@@ -1,0 +1,22 @@
+### 黄金几何碰撞
+
+$$
+\varphi\neq\varphi'
+$$
+
+但模 \(5\)：
+
+$$
+\varphi\equiv\varphi'\equiv3.
+$$
+
+碰撞后由 nilpotent jet：
+
+$$
+N^2=0
+$$
+
+保留一阶残余。
+
+项目已经机器核验 \(5\) 是 GoldenInt 的分歧素数。
+

@@ -9,6 +9,6 @@ receipts:
   coverage:
     - gid: D5/S3/Zeros/CompletedZeta.analytic_continuation_unique
       source_sha256: sha256:75cc0a67e5c379ce5cf902aa60560f9b9606f9db97dda541b4b798155db46b56
-      target_statement_id: sha256:a34aa79f81c432cc8ebe832fc84ec799508a54508f2eb4eb3947cf3e7154b6c3
+      target_sha256: sha256:51e9ac062d8281e341170f2059134974fa4f755b4e88e8ff9bb56f7bc5b6d2cc
   scribe: []
   unresolved_subitems: []

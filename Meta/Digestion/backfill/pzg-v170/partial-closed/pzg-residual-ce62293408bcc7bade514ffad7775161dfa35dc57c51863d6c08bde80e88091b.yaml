@@ -9,6 +9,6 @@ receipts:
   coverage:
     - gid: D5/S1/Scale/MinkowskiModelSet
       source_sha256: sha256:ce62293408bcc7bade514ffad7775161dfa35dc57c51863d6c08bde80e88091b
-      target_statement_id: sha256:956f084020737b86ed8576d155ad8fa856e0ed560c764aeaee887ad80f44eff9
+      target_sha256: sha256:17c9cf3ca266daee964ca1511d0c12fb2c6889f4e6d57bebb38719cbecf0840a
   scribe: []
   unresolved_subitems: []

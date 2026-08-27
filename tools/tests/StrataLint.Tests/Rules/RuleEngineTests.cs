@@ -441,10 +441,33 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
-    public void Sl016RechecksCoverageReceiptWhenFrozenStatementChanges()
+    public void Sl016RehashesCoverageReceiptWhenEvidenceTargetChanges()
     {
-        var (fixture, frozenChanges) = FrozenStatementDriftFixture();
-        var changes = RawChangeSet.Create(frozenChanges);
+        const string evidenceGid = "D5/E/values--json";
+        var fixture = new RuleFixture();
+        fixture.AddValuesProjection();
+        var baselineTarget = fixture.Files[RuleFixture.ValuesProjectionPath];
+        var targetSha256 = DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes(baselineTarget)).RawSha256;
+        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        {
+            files[RuleFixture.ValuesProjectionPath] = baselineTarget;
+            files[RuleFixture.FixtureBackfillAtomPath] = files[RuleFixture.FixtureBackfillAtomPath]
+                .Replace(
+                    "D5/S0/Carrier/BackfillTarget",
+                    evidenceGid,
+                    StringComparison.Ordinal)
+                .Replace(
+                    "coverage: []",
+                    "coverage:\n"
+                    + $"    - gid: {evidenceGid}\n"
+                    + $"      source_sha256: {RuleFixture.FixtureCasReference}\n"
+                    + $"      target_sha256: {targetSha256}",
+                    StringComparison.Ordinal);
+        }
+
+        fixture.Files[RuleFixture.ValuesProjectionPath] = baselineTarget + " ";
+        var changes = RawChangeSet.Create([RuleFixture.ValuesProjectionPath]);
         var context = fixture.Build(changes);
         var document = BackfillInventoryLoader.Load(context.Current);
         var evaluation = DigestionStatusEvaluator.Evaluate(
@@ -488,23 +511,46 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
-    public void Sl016DerivedStatusIsTheSameWhetherOrNotFrozenStatementDriftIsInTheCandidateDelta()
+    public void Sl016DerivedStatusIsTheSameWhetherOrNotTheEntryIsInTheCandidateDelta()
     {
         // Skipping historical receipt replay must reuse the base verdict rather than turn a
         // partial entry into absorbed. The stale receipt itself is reported only when its
         // authority input is in the candidate delta.
-        const string coverageGid = "D5/S0/Carrier/BackfillTarget";
-        var (fixture, frozenChanges) = FrozenStatementDriftFixture();
+        const string evidenceGid = "D5/E/values--json";
+        var fixture = new RuleFixture();
+        fixture.AddValuesProjection();
+        var baselineTarget = fixture.Files[RuleFixture.ValuesProjectionPath];
+        var targetSha256 = DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes(baselineTarget)).RawSha256;
+        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        {
+            files[RuleFixture.ValuesProjectionPath] = baselineTarget;
+            files[RuleFixture.FixtureBackfillAtomPath] = files[RuleFixture.FixtureBackfillAtomPath]
+                .Replace(
+                    "D5/S0/Carrier/BackfillTarget",
+                    evidenceGid,
+                    StringComparison.Ordinal)
+                .Replace(
+                    "coverage: []",
+                    "coverage:\n"
+                    + $"    - gid: {evidenceGid}\n"
+                    + $"      source_sha256: {RuleFixture.FixtureCasReference}\n"
+                    + $"      target_sha256: {targetSha256}",
+                    StringComparison.Ordinal);
+        }
 
-        var touched = StatementDriftEvaluation(
+        // The committed target drifted from the receipt it is hashed against.
+        fixture.Files[RuleFixture.ValuesProjectionPath] = baselineTarget + " ";
+
+        var touched = EvidenceDriftEvaluation(
             fixture,
-            RawChangeSet.Create(frozenChanges));
-        var untouched = StatementDriftEvaluation(
+            RawChangeSet.Create([RuleFixture.ValuesProjectionPath]));
+        var untouched = EvidenceDriftEvaluation(
             fixture,
             RawChangeSet.Create(["notes/unrelated.txt"]));
 
         Assert.Contains(touched.Gaps, gap =>
-            gap.Code == "coverage-receipt-mismatch" && gap.Detail == coverageGid);
+            gap.Code == "coverage-receipt-mismatch" && gap.Detail == evidenceGid);
         Assert.DoesNotContain(untouched.Gaps, static gap => gap.Code == "coverage-receipt-mismatch");
         Assert.Equal(DigestionMigrationState.Partial, untouched.DerivedStatus.Migration);
         Assert.Equal(touched.DerivedStatus, untouched.DerivedStatus);
@@ -536,7 +582,7 @@ public sealed class RuleEngineTests
             diagnostic.Message.Contains("handwritten status", StringComparison.Ordinal));
     }
 
-    private static DigestionEntryEvaluation StatementDriftEvaluation(
+    private static DigestionEntryEvaluation EvidenceDriftEvaluation(
         RuleFixture fixture,
         RawChangeSet changes)
     {
@@ -553,49 +599,6 @@ public sealed class RuleEngineTests
             changes: changes);
         return Assert.Single(evaluation.Entries);
     }
-
-    private static (RuleFixture Fixture, string[] FrozenChanges) FrozenStatementDriftFixture()
-    {
-        const string coverageGid = "D5/S0/Carrier/BackfillTarget";
-        const string targetPath = coverageGid + ".lean";
-        var baselineStatementId = FrozenStatementReceiptTestData.Id('a');
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
-        {
-            files[targetPath] = fixture.Files[targetPath];
-            files[RuleFixture.FixtureBackfillAtomPath] = files[RuleFixture.FixtureBackfillAtomPath]
-                .Replace(
-                    "coverage: []",
-                    "coverage:\n"
-                    + $"    - gid: {coverageGid}\n"
-                    + $"      source_sha256: {RuleFixture.FixtureCasReference}\n"
-                    + $"      target_statement_id: {baselineStatementId}",
-                    StringComparison.Ordinal);
-        }
-
-        InstallFrozenStatement(fixture.Files, targetPath, FrozenStatementReceiptTestData.Id('b'));
-        InstallFrozenStatement(fixture.Baseline, targetPath, baselineStatementId);
-        InstallFrozenStatement(fixture.ForkPoint, targetPath, baselineStatementId);
-        var currentEvents = fixture.Files.Keys
-            .Where(static path => FrozenLedgerChangeClassifier.IsAcceptedEventPath(path));
-        var baselineEvents = fixture.Baseline.Keys
-            .Where(static path => FrozenLedgerChangeClassifier.IsAcceptedEventPath(path));
-        var frozenChanges = currentEvents
-            .Except(baselineEvents, StringComparer.Ordinal)
-            .Concat(baselineEvents.Except(currentEvents, StringComparer.Ordinal))
-            .ToArray();
-        Assert.NotEmpty(frozenChanges);
-        return (fixture, frozenChanges);
-    }
-
-    private static void InstallFrozenStatement(
-        IDictionary<string, string> files,
-        string targetPath,
-        string statementId) =>
-        FrozenStatementReceiptTestData.AddLedger(
-            files,
-            new FrozenStatementReceiptTestData.Module(targetPath, statementId, []));
 
     [Fact]
     public void Sl001AllowsContentToImportTheAssumptionFoundationButNotTheReverse()

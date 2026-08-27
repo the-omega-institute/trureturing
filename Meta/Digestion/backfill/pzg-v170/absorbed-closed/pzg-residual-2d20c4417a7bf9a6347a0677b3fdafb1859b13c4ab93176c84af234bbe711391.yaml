@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Analytic/AlternatingPoleCoefficients.alternating_pole_coefficients
       source_sha256: sha256:2d20c4417a7bf9a6347a0677b3fdafb1859b13c4ab93176c84af234bbe711391
-      target_statement_id: sha256:77527347682f21c106660792971e49fa51e0998bf28383972ca1da0f356bc3f2
+      target_sha256: sha256:42be1b8cfbda8835ecfb0812a282f06b6656b28b9097a75f166d1516409f6f99
   scribe:
     - gid: D5/S3/Analytic/AlternatingPoleCoefficients.alternating_pole_coefficients
       definition_sha256: sha256:8b52f1d0c5bcb9a69a17316c0caee80cc8fdb80c7c49b748b46a3d6db658d6f4

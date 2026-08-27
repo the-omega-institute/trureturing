@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/TargetRisk/RefinementTargetRiskMonotonicity.refinement_monotone_target_risk
       source_sha256: sha256:348793664ed40f84c34cceeb798d9f3abdc69294e921c08a85ff73e7c9e39e5e
-      target_statement_id: sha256:05336a7b3f92105473a31fb2ffe08e5f3dcf2489de8796564f74ca11002d490f
+      target_sha256: sha256:268fb256e812b82bfe45ace3f13bcad07deca73b1d756cbab702e98b782a87a2
   scribe:
     - gid: D5/S3/ConceptDynamics/TargetRisk/RefinementTargetRiskMonotonicity.refinement_monotone_target_risk
       definition_sha256: sha256:1e47c3ef56863fc75957aee5ac95f708ec97a7a61071791b7957cf29d7e63f4b

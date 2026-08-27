@@ -27,12 +27,13 @@ public sealed class TruthExportCommandTests
         Assert.Equal(string.Empty, console.Error);
         var exportPath = Path.Combine(output.Path, "truth-export.v1.json");
         Assert.True(File.Exists(exportPath));
-        using (var document = JsonDocument.Parse(File.ReadAllBytes(exportPath)))
+        using (var document = JsonDocument.Parse(
+                   TemporaryFileSystem.ReadAllBytes(output, "truth-export.v1.json")))
         {
             Assert.False(document.RootElement.TryGetProperty("lean_report_digest", out _));
         }
 
-        var model = ParseExport(exportPath);
+        var model = ParseExport(output);
         Assert.Equal("TruthExportCommand", model.Producer);
 
         var expected = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
@@ -112,7 +113,7 @@ public sealed class TruthExportCommandTests
 
         Assert.Equal(0, exitCode);
         Assert.Equal(string.Empty, console.Error);
-        var model = ParseExport(Path.Combine(output.Path, "truth-export.v1.json"));
+        var model = ParseExport(output);
         Assert.Equal(new string('c', 40), model.SourceCommit);
         Assert.Equal(new string('d', 40), model.SourceTree);
         Assert.Equal(1, fixture.Gateway.CurrentRevisionResolutionCount);
@@ -135,8 +136,8 @@ public sealed class TruthExportCommandTests
         Assert.Equal(0, Run(fixture, second.Path).ExitCode);
 
         Assert.Equal(
-            File.ReadAllBytes(Path.Combine(first.Path, "truth-export.v1.json")),
-            File.ReadAllBytes(Path.Combine(second.Path, "truth-export.v1.json")));
+            TemporaryFileSystem.ReadAllBytes(first, "truth-export.v1.json"),
+            TemporaryFileSystem.ReadAllBytes(second, "truth-export.v1.json"));
     }
 
     [Theory]
@@ -281,9 +282,10 @@ public sealed class TruthExportCommandTests
         RawRepositorySnapshot.Create(
             files.Select(static pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
 
-    private static ParsedExport ParseExport(string path)
+    private static ParsedExport ParseExport(TemporaryDirectory output)
     {
-        using var document = JsonDocument.Parse(File.ReadAllBytes(path));
+        using var document = JsonDocument.Parse(
+            TemporaryFileSystem.ReadAllBytes(output, "truth-export.v1.json"));
         var root = document.RootElement;
         var nodes = root.GetProperty("nodes").EnumerateArray()
             .Select(static node => new ParsedExportNode(
@@ -316,6 +318,19 @@ public sealed class TruthExportCommandTests
         string[] AxiomClosure,
         string[] DeclarationStatementIds,
         string[] PrerequisiteFrozenNodeIds);
+
+    private static class TemporaryFileSystem
+    {
+        internal static byte[] ReadAllBytes(TemporaryDirectory directory, string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName) || Path.GetFileName(fileName) != fileName)
+            {
+                throw new ArgumentException("temporary output name must be a single file name", nameof(fileName));
+            }
+
+            return File.ReadAllBytes(Path.Combine(directory.Path, fileName));
+        }
+    }
 
     private static LeanFileReport ReportFor(ModuleSpec module)
     {

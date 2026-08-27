@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Refinement/ConceptKernelOrderDuality.concept_kernel_order_duality
       source_sha256: sha256:17f4d0ec99b15da3818d8d36066ed5d7b98ddadebb1217c0ae3242c6d02110b3
-      target_statement_id: sha256:e72219ae864ebeec92673ad85ff992fa292d18ac32ba2a590f52b5fc582d731e
+      target_sha256: sha256:761cd85d329c419abdb5e790b90c4e4c476d29b99ec26119c3361a4f99ab723e
   scribe:
     - gid: D5/S3/ConceptDynamics/Refinement/ConceptKernelOrderDuality.concept_kernel_order_duality
       definition_sha256: sha256:b8f167fc0a04708d79a0f0030c85523e4ebe05a49af5016914f8ddf6952f364d

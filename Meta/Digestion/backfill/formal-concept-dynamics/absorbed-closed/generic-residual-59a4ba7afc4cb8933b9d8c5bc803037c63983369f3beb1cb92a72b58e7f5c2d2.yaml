@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Transport/TargetRelativeBiinterpretation.target_relative_biinterpretation_transports_answerability
       source_sha256: sha256:59a4ba7afc4cb8933b9d8c5bc803037c63983369f3beb1cb92a72b58e7f5c2d2
-      target_statement_id: sha256:76a8cadbe749c31b81c25e3ef6d31cc36783aa84e7963ecae2a27cef4ecb7edf
+      target_sha256: sha256:e2f6ad52896b8cdefc3411c428bc109ecd317d69d5614e584f051fee415c4256
   scribe:
     - gid: D5/S3/ConceptDynamics/Transport/TargetRelativeBiinterpretation.target_relative_biinterpretation_transports_answerability
       definition_sha256: sha256:96e2e1dd3f97a81a0e4cfc64dc96c8665ccaaa66c199bb649623d48dd9a619d1

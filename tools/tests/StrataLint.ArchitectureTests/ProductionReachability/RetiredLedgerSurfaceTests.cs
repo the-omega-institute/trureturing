@@ -11,10 +11,21 @@ public sealed class RetiredLedgerSurfaceTests
     }
 
     [Fact]
-    public void CliEntryPointCannotReachV1ReplayOrRetiredLedgerWriteProtocol()
+    public void TrackedDotnetExecutableRootsHaveNoStaticallyBoundPathToRetiredLedgerWriteProtocols()
     {
         var graph = ProductionSourceGraph.Create(RepositoryLayout.FindRoot());
-        var reachable = graph.ReachableFrom("StrataLint.Cli.Program.Main(string[])");
+        Assert.Equal(
+            [
+                "tools/StrataLint.Cli/StrataLint.Cli.csproj::StrataLint.Cli.Program.Main(string[])",
+                "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj::StrataLint.EngineeringScope.Program.Main(string[])",
+                "tools/StrataLint.Scribe/StrataLint.Scribe.csproj::top-level:tools/StrataLint.Scribe/Program.cs",
+            ],
+            graph.ExecutableEntryPointDescriptions);
+
+        // This is a conservative static C# graph: calls, construction, delegates, initializers,
+        // and interface/virtual dispatch are covered. Reflection, dynamic/native invocation and
+        // arbitrary shell behavior are outside the claim made by this test.
+        var reachable = graph.ReachableFromExecutableEntryPoints();
         var forbidden = reachable
             .Where(static symbol => symbol is
                 "StrataLint.Cli.DagLedgerLoader.ToLinearSyntax(System.Collections.Immutable.ImmutableArray<StrataLint.Engine.DagLedgerFileEvent>)"

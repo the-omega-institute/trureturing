@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Arith/PrimeFactorization.exists_prime_factorization
       source_sha256: sha256:0c12d6f29b67f19afd7260e90da96e6c8522e6bda9d50a46d407ddb19fc4d2ed
-      target_statement_id: sha256:3faf3ec896407c2d0872bf8751de8a3e0759aedb7184e90359003e64d4f49881
+      target_sha256: sha256:714a1c568291451bddbacc784c75342e724836383e80f9cce80394e2450a9f89
   scribe:
     - gid: D5/S3/Arith/PrimeFactorization.exists_prime_factorization
       definition_sha256: sha256:985237215f793c022cf096daa1e1ed07c9208538ae769abf5e5568dc42838f5c

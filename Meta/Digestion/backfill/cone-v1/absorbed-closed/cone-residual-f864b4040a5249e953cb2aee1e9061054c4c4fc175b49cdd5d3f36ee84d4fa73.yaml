@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/DivergenceSupport/PathRatioBound.path_ratio_weighted_average_and_bound
       source_sha256: sha256:f864b4040a5249e953cb2aee1e9061054c4c4fc175b49cdd5d3f36ee84d4fa73
-      target_statement_id: sha256:cff8c4acfb4ef43473f798e2773acc0df0a25d4688fc352aa426a605296a3fd6
+      target_sha256: sha256:950c265694e601c8a71e0bc944a2e7132efc39fb383c1f206cc7530eb91d0a69
   scribe:
     - gid: D5/S3/DivergenceSupport/PathRatioBound.path_ratio_weighted_average_and_bound
       definition_sha256: sha256:5ee2a8fff524622c1ce997ccb763648fb136d41529c2b734ed71e14308c5086f

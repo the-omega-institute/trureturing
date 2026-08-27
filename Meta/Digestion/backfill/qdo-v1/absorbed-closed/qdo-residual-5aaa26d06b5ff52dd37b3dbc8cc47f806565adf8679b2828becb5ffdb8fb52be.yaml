@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/Separation/InvariantObservableInfinity.invariant_separation_distance_eq_top
       source_sha256: sha256:5aaa26d06b5ff52dd37b3dbc8cc47f806565adf8679b2828becb5ffdb8fb52be
-      target_statement_id: sha256:2829b5a4890a0b45cefeed422d8ea27634e72f4fd4cd40f846cf1ba27ba99a82
+      target_sha256: sha256:8856f3a642ce2408f91dea4430e53e45c15121d060dd6c2899559562a17b776c
   scribe:
     - gid: D5/S3/Observer/Separation/InvariantObservableInfinity.invariant_separation_distance_eq_top
       definition_sha256: sha256:7b841cd68c225cfe95281f02d1951b65be7d0a22e72531fd3beeb4e9927eb3cd

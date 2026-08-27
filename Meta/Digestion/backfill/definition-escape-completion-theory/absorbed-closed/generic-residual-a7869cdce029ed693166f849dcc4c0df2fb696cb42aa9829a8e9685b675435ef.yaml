@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeLaws/DirectlyProvableLaws.directly_provable_laws
       source_sha256: sha256:a7869cdce029ed693166f849dcc4c0df2fb696cb42aa9829a8e9685b675435ef
-      target_statement_id: sha256:68f398072893392a1ae35afa74d8d64bea5dadb2cf81ff307a790258ab1f844e
+      target_sha256: sha256:dba4cb96f9d173b3f942423ea47ba4bbb3b1fafe99d6104ecd675c4e26f72a07
   scribe:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeLaws/DirectlyProvableLaws.directly_provable_laws
       definition_sha256: sha256:fd0e9a98f703ca5ee1eed9bbc46003608a30ecc13e0fc55c0057f38274ab83ad

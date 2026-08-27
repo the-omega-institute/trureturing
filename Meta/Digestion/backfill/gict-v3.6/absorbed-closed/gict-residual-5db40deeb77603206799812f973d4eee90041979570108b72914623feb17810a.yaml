@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Factorization/Solenoid/AllPrimeRegisterExactSequence.all_prime_register_short_exact
       source_sha256: sha256:5db40deeb77603206799812f973d4eee90041979570108b72914623feb17810a
-      target_statement_id: sha256:594c21a53f2a6f413ac90d3f77e6d83f9155aeadb467263ee471f9d5873565bb
+      target_sha256: sha256:2160db2c494b6b0e2b0423afd9820c9527b3f8a228eafa5221f792c513b03c1a
   scribe:
     - gid: D5/S3/Factorization/Solenoid/AllPrimeRegisterExactSequence.all_prime_register_short_exact
       definition_sha256: sha256:de70a7a47a2dae570ead87e4955599ba13155592a84a8c4ed4dad53651d96e59

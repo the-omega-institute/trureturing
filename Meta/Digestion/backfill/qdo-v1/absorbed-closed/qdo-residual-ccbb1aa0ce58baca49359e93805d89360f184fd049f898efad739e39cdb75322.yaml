@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Rewriting/QuotientFutureRelation.quotient_future_relation_iff
       source_sha256: sha256:ccbb1aa0ce58baca49359e93805d89360f184fd049f898efad739e39cdb75322
-      target_statement_id: sha256:0085d69f736a3a70f546f6215ea9b445c76811145c56ba11560dabb10a211a74
+      target_sha256: sha256:7c52ecf66cd2e14800454188c8bc8f12ae6b34d958bbc2788be02b292a92304d
   scribe:
     - gid: D5/S0/Rewriting/QuotientFutureRelation.quotient_future_relation_iff
       definition_sha256: sha256:476dec9123ebea92c2fd21b2ba05dc0cea61873749cca873a4ce7d3d60017124

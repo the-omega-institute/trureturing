@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Rewriting/Quotients/DynamicsDescent.dynamics_descends_iff
       source_sha256: sha256:0538fc110b0161cd629963375fd0552ba891b55936f33e8026209b23da5b851c
-      target_statement_id: sha256:1597f85593485709f45a1213c2894b011254268c520083900fa931f9f261c89f
+      target_sha256: sha256:6726b9daecb8b137eace494f8fbc0bc84c83134d26b2ff1fadffd809b1972401
   scribe:
     - gid: D5/S0/Rewriting/Quotients/DynamicsDescent.dynamics_descends_iff
       definition_sha256: sha256:52771b601426bda602c73583e32d00eb11f620ad45d033eff0ef2be730f6d24c

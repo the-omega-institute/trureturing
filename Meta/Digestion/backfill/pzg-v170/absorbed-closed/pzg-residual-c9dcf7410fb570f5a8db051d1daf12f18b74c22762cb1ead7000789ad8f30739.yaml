@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Factorization/HilbertMonoidNonUnique.hilbert_monoid_factorization_not_unique
       source_sha256: sha256:c9dcf7410fb570f5a8db051d1daf12f18b74c22762cb1ead7000789ad8f30739
-      target_statement_id: sha256:95b95df5144408495e97b78de631ea598ae06c00e75312967e1ffd8c0fadd017
+      target_sha256: sha256:79df41f302cac78e97333988c50cd613f58da17204c5ab8aa3cfb311efcbacfa
   scribe:
     - gid: D5/S3/Factorization/HilbertMonoidNonUnique.hilbert_monoid_factorization_not_unique
       definition_sha256: sha256:9880fd5cb7fd1c8f3c204c2c2d63d53cf254b9f33a4786edc4ea2f46de97216c

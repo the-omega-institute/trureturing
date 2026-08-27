@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Rewriting/Safety/InvariantSafety.invariant_safety
       source_sha256: sha256:05e36064ee70d49a776a11e23b98e6b77a5f6f1e88b1ed0cd627778fe8d2de8c
-      target_statement_id: sha256:fe0d280a7b8250e545a7a59dd809198e4855329ddb0861ee1492199b8ff3f0dc
+      target_sha256: sha256:a2bb93cea0d70f018e1137cbceb61d7a3be72be86be99f21e28baa9259fb5f17
   scribe:
     - gid: D5/S0/Rewriting/Safety/InvariantSafety.invariant_safety
       definition_sha256: sha256:c2111dfaf000d95be9900daa6d90da4d6fcc412f5ec03b97e22fdacb5d1cf325

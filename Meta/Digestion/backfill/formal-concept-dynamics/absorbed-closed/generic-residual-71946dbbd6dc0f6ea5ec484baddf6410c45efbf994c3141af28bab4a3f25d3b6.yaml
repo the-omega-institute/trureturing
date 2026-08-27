@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/FiniteCountermodels/MinimalGeneratingSetCounterexample.boolean_square_has_minimal_generators_of_sizes_one_and_two
       source_sha256: sha256:71946dbbd6dc0f6ea5ec484baddf6410c45efbf994c3141af28bab4a3f25d3b6
-      target_statement_id: sha256:0966b5da01d8526a032d872ddaec3c7b8a9fa183550fb62b7024e4007bf15578
+      target_sha256: sha256:c621860201283f91c23e901d650ef271b3acc69c9cf4e822cec8b970f01a6d0f
   scribe:
     - gid: D5/S3/ObserverMemory/FiniteCountermodels/MinimalGeneratingSetCounterexample.boolean_square_has_minimal_generators_of_sizes_one_and_two
       definition_sha256: sha256:dda5a730ff1c2861d339ee44a074b549a4149b3c423461baecf41a052909a454

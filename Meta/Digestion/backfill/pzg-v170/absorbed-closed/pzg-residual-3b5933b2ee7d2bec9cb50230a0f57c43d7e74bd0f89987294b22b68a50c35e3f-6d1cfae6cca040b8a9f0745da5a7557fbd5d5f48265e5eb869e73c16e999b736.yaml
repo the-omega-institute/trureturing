@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Constants/Cyclotomy/RealSubfield.real_cyclotomic_generator_adjoin_eq_sqrt_five
       source_sha256: sha256:3b5933b2ee7d2bec9cb50230a0f57c43d7e74bd0f89987294b22b68a50c35e3f
-      target_statement_id: sha256:5d8aa6adb40088cd257eb2071ae590b0923c3a5064194d33764467338eb86556
+      target_sha256: sha256:c4923ca4af825a9e1cfa1b5338e6ef0ed9c7342ebe0c8a104c202632c9dcd97d
   scribe:
     - gid: D5/S3/Constants/Cyclotomy/RealSubfield.real_cyclotomic_generator_adjoin_eq_sqrt_five
       definition_sha256: sha256:6536160c78402ee11fd35a71ee319a9fa8c451db1c190acabc2d1c561ec5788e

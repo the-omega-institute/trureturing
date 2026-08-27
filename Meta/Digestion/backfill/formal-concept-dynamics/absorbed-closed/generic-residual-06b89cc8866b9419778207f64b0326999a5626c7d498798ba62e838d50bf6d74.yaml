@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/PredictionFactors/ReachableBehaviorMinimality.finite_state_minimality
       source_sha256: sha256:06b89cc8866b9419778207f64b0326999a5626c7d498798ba62e838d50bf6d74
-      target_statement_id: sha256:5f7f15371b48f838b6d7c3cc4f48d46281def6d09207d4e0fb71a296f0c5582b
+      target_sha256: sha256:9185001324a076edd56fba78986de7afa54301e7e99359bc1eb2f3d1bc7201cb
   scribe:
     - gid: D5/S3/ObserverMemory/PredictionFactors/ReachableBehaviorMinimality.finite_state_minimality
       definition_sha256: sha256:eaa5b84644097b75ac2706fc6b6cd0fb8ab2a617c2894c3d9bba80c696709ccf

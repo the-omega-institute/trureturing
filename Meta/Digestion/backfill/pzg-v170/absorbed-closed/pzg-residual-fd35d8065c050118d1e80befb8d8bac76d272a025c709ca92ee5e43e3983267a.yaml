@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Arith/FiniteWindowEscape.finite_window_escape_and_hidden_fiber
       source_sha256: sha256:fd35d8065c050118d1e80befb8d8bac76d272a025c709ca92ee5e43e3983267a
-      target_statement_id: sha256:973e7cc126a76ce84a712499b8db169609567e706702ff054af3a40de6d9b2c0
+      target_sha256: sha256:43dd77d9a52b633bca89504a8e089cb9be74ca05bdfc8f1f0a8d757a79079370
   scribe:
     - gid: D5/S3/Arith/FiniteWindowEscape.finite_window_escape_and_hidden_fiber
       definition_sha256: sha256:b29583b83402471172c9500fba0a5516d9bd27ac32fb54205e0711abeff91b05

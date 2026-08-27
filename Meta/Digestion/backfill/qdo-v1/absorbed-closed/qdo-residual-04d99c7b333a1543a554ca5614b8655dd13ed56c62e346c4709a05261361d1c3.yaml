@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ResourceOrder/MinimumMeanSquareHedge.minimum_mean_square_hedge
       source_sha256: sha256:04d99c7b333a1543a554ca5614b8655dd13ed56c62e346c4709a05261361d1c3
-      target_statement_id: sha256:06f14a9a6c47fd48d2b70c9f09de48251dc49e42a06b840f6fd96182a54919ac
+      target_sha256: sha256:03163d84ca1d3fedf96d88e800dcd96df8dcf2379d27c8d595d7d462043cd9fa
   scribe:
     - gid: D5/S3/ResourceOrder/MinimumMeanSquareHedge.minimum_mean_square_hedge
       definition_sha256: sha256:d44c4523efc207b9946f098dd03d5d38ae6b6b4f41044ea2ef1ef70c4b70e1a1

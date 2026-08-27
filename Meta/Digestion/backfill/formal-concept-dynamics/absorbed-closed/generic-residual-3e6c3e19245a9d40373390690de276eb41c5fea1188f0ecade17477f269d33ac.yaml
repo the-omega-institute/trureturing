@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/Knowledge/WeakestPrecondition.wp_minimal
       source_sha256: sha256:3e6c3e19245a9d40373390690de276eb41c5fea1188f0ecade17477f269d33ac
-      target_statement_id: sha256:808f978d9fd584da7bd577131bf14fdbfc7eefebd059c6019c26ecb8d4d7f630
+      target_sha256: sha256:d9a0cf83d1f039c877862b049fb726b48d68b11b7280d2f937cc76be0af200ec
   scribe:
     - gid: D5/S3/ObserverMemory/Knowledge/WeakestPrecondition.wp_minimal
       definition_sha256: sha256:4f84c30e27990cefbe3fba388cd57613ce97e88cc94fee1c3d79ca88da1fb0da

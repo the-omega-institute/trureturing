@@ -1,0 +1,45 @@
+# 第一百零六部　建议形式化顺序
+
+```text
+D5/S3/Factorization/BinaryIcosahedral/
+  SpinCover.lean
+  UnitIcosians.lean
+  McKayDimensionVector.lean
+  McKayAffineE8.lean
+
+D5/S3/Geometry/IcosianCompletion/
+  H3SpinorClosure.lean
+  H4RootShell.lean
+  IcosianRing.lean
+  IcosianEuclideanNorm.lean
+  TwoH4RootShells.lean
+  IcosianE8Isometry.lean
+
+D5/S3/Analytic/E8Ramanujan/
+  E8ThetaEqualsE4.lean
+  E8ShellDirichletSeries.lean
+  E8PrimeLocalTwoChannel.lean
+  E8GibbsMean.lean
+  E8GibbsVariance.lean
+  E8CumulantClosure.lean
+
+D5/S3/Factorization/IcosahedralMcKay/
+  TwoThreeFiveOrbifoldDefect.lean
+  KleinInvariantWeightedCompletion.lean
+  RootCountConservation.lean
+
+D5/S3/Geometry/E8Coxeter/
+  CoxeterPolynomialThirty.lean
+  QuadraticCharacterSectorSplit.lean
+  GoldenQuarticFactors.lean
+  CoxeterGaussOperator.lean
+  HodgeModularCoxeterGoldenBridge.lean
+
+D5/S3/Analytic/RamanujanGenome/E8/
+  H4InvariantDegreeSector.lean
+  MissingE8InvariantSector.lean
+  IcosianMcKayComparisonResidual.lean
+```
+
+---
+

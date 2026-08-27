@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/MoralLuck/MoralLuckDescent.moral_luck_descent_iff
       source_sha256: sha256:1dd1be19d56ddc8ef60405b88ede7d611f17c150dcaef785fe90136046d62ee1
-      target_statement_id: sha256:881b22dc10bd1989ab49f08816d8c2a5f91eb7aeb1bb1d2d71b37d61243607cf
+      target_sha256: sha256:3a2049dfc8c3dcddf91e1a5da7c40269d3f5b6bfb283bbe5792b3ae17aa27da9
   scribe:
     - gid: D5/S3/ConceptDynamics/MoralLuck/MoralLuckDescent.moral_luck_descent_iff
       definition_sha256: sha256:c7a8bfb46e740e6473d7b97d8919fb57955bd2dc717db528c6ec3879bdc59c5f

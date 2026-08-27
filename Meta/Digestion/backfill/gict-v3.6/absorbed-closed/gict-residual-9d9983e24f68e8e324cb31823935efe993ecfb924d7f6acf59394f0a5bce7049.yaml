@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Constants/PentagonCosines.pentagon_golden_cosines
       source_sha256: sha256:9d9983e24f68e8e324cb31823935efe993ecfb924d7f6acf59394f0a5bce7049
-      target_statement_id: sha256:bac3543c6e87b499f27a2c899592e9e02a39a00af5e71ecad7a96be59f6e3712
+      target_sha256: sha256:15f7dbb764e5df0d6923541006ba4b706af2d2bd4b89ac2b3b9cc0286686b955
   scribe:
     - gid: D5/S3/Constants/PentagonCosines.pentagon_golden_cosines
       definition_sha256: sha256:20b4b5e9851f8528fb3771ab3f1edb6fa82f7f740ec06f2345cc6fb1db73a905

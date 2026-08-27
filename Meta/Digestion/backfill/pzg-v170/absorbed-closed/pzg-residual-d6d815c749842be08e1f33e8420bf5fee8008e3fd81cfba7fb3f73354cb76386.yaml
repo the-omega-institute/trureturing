@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Factorization/UniqueFactorization.prime_factorization_unique
       source_sha256: sha256:d6d815c749842be08e1f33e8420bf5fee8008e3fd81cfba7fb3f73354cb76386
-      target_statement_id: sha256:79db67bf8787cd7620d0ee23df4fb4093d1012b69d2f876c575f8486875be0b7
+      target_sha256: sha256:0ecb108821f08fb06ff2a99b1685e0e2eefa4744cfce06d4d35e2e5bf4c48d04
   scribe:
     - gid: D5/S3/Factorization/UniqueFactorization.prime_factorization_unique
       definition_sha256: sha256:059ba3a2a4c7b7946016931f0be055a97180da9d858d434ee2c5e288fa4efa2f

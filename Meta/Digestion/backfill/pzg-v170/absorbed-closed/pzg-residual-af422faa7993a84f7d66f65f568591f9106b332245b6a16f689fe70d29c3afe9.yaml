@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ArithUnits/FermatLittle.fermat_little_theorem
       source_sha256: sha256:af422faa7993a84f7d66f65f568591f9106b332245b6a16f689fe70d29c3afe9
-      target_statement_id: sha256:d928480aa47e865501af0973bd4c41e30571e18e97e8238604fdd9de27f7e17e
+      target_sha256: sha256:47cc90b80572faadf20fc6304b583e116e662e90537586886659bb66d8b707a8
   scribe:
     - gid: D5/S3/ArithUnits/FermatLittle.fermat_little_theorem
       definition_sha256: sha256:cd78594b0e0e6d0d0ec44c3f45bce895a11c6c8b0e5c7fb9c3bbe700438bd8d1

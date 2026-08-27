@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/DependencyClosureAdmissionAntitone.dependency_closure_admission_antitone
       source_sha256: sha256:661d307df0f3cf908d1089852a0092a99bdea5a95b4148987313a2d4df5e016b
-      target_statement_id: sha256:81b8e65076919833f7c40d83b0415aff335fe14334356760a588064bf67f2410
+      target_sha256: sha256:d063bfdbe2909737064645e8d79152f42a7c5f13e17711a0bc40f2b1dc9b6fff
   scribe:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/DependencyClosureAdmissionAntitone.dependency_closure_admission_antitone
       definition_sha256: sha256:27ef1cc7bd1f3b4c44e864ad048fa132212f777c26a58bf7e24528fba37a1dd0

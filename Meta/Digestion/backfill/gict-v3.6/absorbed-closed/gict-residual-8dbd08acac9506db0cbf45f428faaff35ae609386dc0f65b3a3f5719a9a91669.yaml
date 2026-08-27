@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Fourier/WindowDiffraction.golden_window_fourier_amplitude
       source_sha256: sha256:8dbd08acac9506db0cbf45f428faaff35ae609386dc0f65b3a3f5719a9a91669
-      target_statement_id: sha256:5ca98055eb468c7b3a914369618240defc77b6c97e721968a5851d4d0046597b
+      target_sha256: sha256:5ccac425a2d3166e7ef3b302e0cbaa8cb059516b6e1dcbf717d1fca0bcb58d98
   scribe:
     - gid: D5/S3/Fourier/WindowDiffraction.golden_window_fourier_amplitude
       definition_sha256: sha256:ee0cf527b3e64a05ccbf9aed7384ef457372962d95f9688f5edd656ea93af459

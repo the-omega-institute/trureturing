@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Constants/SelfSimilar/GoldenCompatibleIFS.golden_compatible_ifs_has_unique_attractor
       source_sha256: sha256:d379b38443675096ca09ed4d31a17bdfc63785598b7ea4c120d3b7ac6b087dff
-      target_statement_id: sha256:985b5a9d59cf2b4c34f4da32273c618e2ddbe0f87b99f7dbc1f98dcb64081504
+      target_sha256: sha256:1e518caa59be981ddeca0548fadac9fd60c42fa9861990e17cc3f04294ac1163
   scribe:
     - gid: D5/S3/Constants/SelfSimilar/GoldenCompatibleIFS.golden_compatible_ifs_has_unique_attractor
       definition_sha256: sha256:1f42651855e965b17c859df2401fd66bd2249fb1f7aaea863b546525f2876404

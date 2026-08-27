@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/Separation/CompletionCriterion.completion_criterion
       source_sha256: sha256:cea627de3872f058def49660f3bc197f3f08483c7bb7159520079f9c0ceae95b
-      target_statement_id: sha256:c8c8c57e189a6580cf76467242acbb4d3b43ad823ac545a6e9db93b0ca196950
+      target_sha256: sha256:9e915a676277be710d200691af9c4a87c8591d427e74031d090ecaf709457419
   scribe:
     - gid: D5/S3/Observer/Separation/CompletionCriterion.completion_criterion
       definition_sha256: sha256:7dca738db564eb2d65c4aec34c502cd06d4f7f5d024c273bb3a749dd5c58267b

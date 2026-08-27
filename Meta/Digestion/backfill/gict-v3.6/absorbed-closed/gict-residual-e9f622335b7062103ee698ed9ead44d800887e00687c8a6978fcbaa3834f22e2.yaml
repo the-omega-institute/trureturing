@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/QuantumStates/GNSExpectation.expectation_eq_preGNS_norm_sq
       source_sha256: sha256:e9f622335b7062103ee698ed9ead44d800887e00687c8a6978fcbaa3834f22e2
-      target_statement_id: sha256:f33dce95a1cce89aeb8f95885048a7db68b20eda8225131c9c0ae66b1fd59b11
+      target_sha256: sha256:2c2dfd520b51995d8ef9c6f179bff441728aa42eafaa1ed152efcc9b1a7dbd80
   scribe:
     - gid: D5/S3/QuantumStates/GNSExpectation.expectation_eq_preGNS_norm_sq
       definition_sha256: sha256:d195431805680708d78eb69c3e2a6fc40e09e0c7552a699559af4122b86ba006

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Carrier/Powers/GoldenCriticalBandScaling.golden_critical_band_scaling
       source_sha256: sha256:1b3e6df4f6ac105b43076d27f6e27dd0ed183b9e40f9097f1691cfb6240a44af
-      target_statement_id: sha256:c259263fdd1f40070da1279fba775a1f91af77f4a2fd4056383fccb9ee0d89d3
+      target_sha256: sha256:ac37eba092cb0e43bf73217eb05909286cfbf32ab26aeb283790715685ba189c
   scribe:
     - gid: D5/S0/Carrier/Powers/GoldenCriticalBandScaling.golden_critical_band_scaling
       definition_sha256: sha256:e8d964630b9bd00fc4e04f69ae723121241ca7b91f66c7a8fd2d3fad7a96ed45

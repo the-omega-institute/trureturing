@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/PrimeForms/AlignmentClifford.generalized_flow
       source_sha256: sha256:89724ead6b6bd82c2fe8aded9bed7c7af1cd72eebc4b514c52e3f8f60355b003
-      target_statement_id: sha256:f89edee2d27e7fe82c7832e526dbe9c8fd054a4dbd41d3f8112a7ba10cae9f9b
+      target_sha256: sha256:055a55371ecf223a48bd741faa8e454f81f4c23e6fe13195beab0c664ac7b42f
   scribe:
     - gid: D5/S3/PrimeForms/AlignmentClifford.generalized_flow
       definition_sha256: sha256:eff007be0a9e9cb5e60ce87315a712750d603ad8d04d1c230ce766426820f4e1

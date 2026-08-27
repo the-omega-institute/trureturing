@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Axis/PrimeAddressTrichotomy.prime_address_mod_four_trichotomy
       source_sha256: sha256:c3a872d239986ac45db496c2eecb559f9cd2a024e5e06f17f974bfd41fb6728b
-      target_statement_id: sha256:5bbca7a90a51cb9894141c6c60cd56f9db508fd9def5a67f3f12a696e93de2f4
+      target_sha256: sha256:3ec4a52bed3ef5f12e0e478c17bb9eecbaf36d6d40570dbf380577070cc4c5d0
   scribe:
     - gid: D5/S3/Axis/PrimeAddressTrichotomy.prime_address_mod_four_trichotomy
       definition_sha256: sha256:2eb9bffa2caec73f3764c48545eea26e96272b10fadece2521a97f0a9b58c33d

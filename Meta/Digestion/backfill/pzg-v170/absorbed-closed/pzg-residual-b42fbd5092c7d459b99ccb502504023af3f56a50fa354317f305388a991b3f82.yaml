@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Computability/CodeFixedPoint.code_fixed_point
       source_sha256: sha256:b42fbd5092c7d459b99ccb502504023af3f56a50fa354317f305388a991b3f82
-      target_statement_id: sha256:31802605fc1280f8e08a0e44c448cbd51e0ce2161b23d8865d774639c9b2cd9c
+      target_sha256: sha256:e5c1da528db0b19e39af78d255220d8bec8a2b1f41cfefa62669c55bd9d06612
   scribe:
     - gid: D5/S0/Computability/CodeFixedPoint.code_fixed_point
       definition_sha256: sha256:fa6c25fecdcd809f1df27ef420424064f08fd6d80441d712e3638b5632c6cde3

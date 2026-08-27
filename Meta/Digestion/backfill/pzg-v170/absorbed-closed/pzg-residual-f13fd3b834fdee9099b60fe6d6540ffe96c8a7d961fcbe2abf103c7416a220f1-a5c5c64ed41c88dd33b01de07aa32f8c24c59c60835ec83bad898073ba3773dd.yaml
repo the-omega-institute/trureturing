@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/QuantumContext/TwoTorsionPhaseIndices.nonzero_two_torsion_phase_indices
       source_sha256: sha256:f13fd3b834fdee9099b60fe6d6540ffe96c8a7d961fcbe2abf103c7416a220f1
-      target_statement_id: sha256:387fd5efc4b018efaf774573d4b8bdb2b7017f826c11d7b4945af7f65eb3e453
+      target_sha256: sha256:a281425c2b3958b09aac147ef59c42dda63f019a94152287847f79482e5f5dd2
   scribe:
     - gid: D5/S3/QuantumContext/TwoTorsionPhaseIndices.nonzero_two_torsion_phase_indices
       definition_sha256: sha256:8285ed9c26c2e0ba858bf73a424bd045f1eee34a514105ee66b5d2e38a422f0c

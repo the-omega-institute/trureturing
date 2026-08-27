@@ -37,7 +37,7 @@ internal static partial class CoverWorld
         bool includeOtherAtom,
         string? tailAuthPath,
         string? tailAuthSha,
-        Func<string, string>? coverageStatementId = null,
+        string? targetSha256 = null,
         DigestionAtom? unrelatedAtom = null,
         string? unrelatedSourcePath = null,
         bool useUnrelatedBaselineCoverage = false)
@@ -55,7 +55,7 @@ internal static partial class CoverWorld
             spec.Truth,
             tailAuthPath,
             tailAuthSha,
-            coverage.Length == 1 ? coverageStatementId?.Invoke(coverage[0]) : null,
+            targetSha256,
             spec.InitialDefinitionSha256,
             spec.InitialEmissionSha256,
             spec.InitialUnresolvedSubitems));
@@ -72,7 +72,7 @@ internal static partial class CoverWorld
                 "closed",
                 null,
                 null,
-                coverageStatementId?.Invoke(other.Gid),
+                targetSha256,
                 spec.InitialDefinitionSha256,
                 spec.InitialEmissionSha256,
                 []));
@@ -132,16 +132,16 @@ internal static partial class CoverWorld
         string truth,
         string? tailAuthPath,
         string? tailAuthSha,
-        string? targetStatementId,
+        string? targetSha256,
         string? definitionSha256,
         string? emissionSha256,
         ImmutableArray<string> unresolvedSubitems)
     {
-        var coverageReceipts = coverage.Length == 1 && targetStatementId is not null
+        var coverageReceipts = coverage.Length == 1 && targetSha256 is not null
             ? ImmutableArray.Create(new DigestionCoverageReceipt(
                 coverage[0],
                 fingerprints.RawSha256,
-                targetStatementId))
+                targetSha256))
             : [];
         var scribeReceipts = coverage.Length == 1
             && definitionSha256 is not null
@@ -171,65 +171,6 @@ internal static partial class CoverWorld
                 tailAuthorization),
             new DigestionStatus(Migration(migration), Truth(truth)),
             fingerprints.RawSha256);
-    }
-
-    private static string FrozenStatementIdFor(CoverSpec spec, string gid)
-    {
-        if (Gid.TryParse(gid, out var parsed)
-            && parsed.ToTarget() is Target.Formal { Declaration: null })
-        {
-            return FrozenStatementReceiptTestData.Id('b');
-        }
-
-        return string.Equals(gid, spec.Gid, StringComparison.Ordinal)
-            ? spec.TargetStatementId
-            : FrozenStatementReceiptTestData.Id('c');
-    }
-
-    internal static void MaterializeFrozenLedger(
-        CoverSpec spec,
-        LeanAxiomReport report,
-        string targetPath,
-        IDictionary<string, string> files,
-        IDictionary<string, string> baseline)
-    {
-        var frozenModules = report.Files
-            .Where(file => spec.FreezeTargetModule
-                || !string.Equals(file.Key.Value, targetPath, StringComparison.Ordinal))
-            .Select(file =>
-        {
-            var declarations = file.Value.Declarations.Select(declaration =>
-                new FrozenStatementReceiptTestData.Declaration(
-                    declaration.Name[(declaration.Name.LastIndexOf('.') + 1)..],
-                    string.Equals(file.Key.Value, targetPath, StringComparison.Ordinal)
-                        && string.Equals(
-                            declaration.Name[(declaration.Name.LastIndexOf('.') + 1)..],
-                            spec.Declaration,
-                            StringComparison.Ordinal)
-                            ? spec.TargetStatementId
-                            : FrozenStatementReceiptTestData.Id('c')))
-                .ToList();
-            if (string.Equals(file.Key.Value, targetPath, StringComparison.Ordinal)
-                && spec.Declaration is not null
-                && declarations.All(item => !string.Equals(
-                    item.Selector,
-                    spec.Declaration,
-                    StringComparison.Ordinal)))
-            {
-                declarations.Add(
-                    new FrozenStatementReceiptTestData.Declaration(
-                        spec.Declaration,
-                        spec.TargetStatementId));
-            }
-
-            return new FrozenStatementReceiptTestData.Module(
-                file.Key.Value,
-                FrozenStatementReceiptTestData.Id('b'),
-                declarations.ToImmutableArray());
-        })
-            .ToArray();
-        FrozenStatementReceiptTestData.AddLedger(files, frozenModules);
-        FrozenStatementReceiptTestData.AddLedger(baseline, frozenModules);
     }
 
     private static DigestionMigrationState Migration(string value) => value switch

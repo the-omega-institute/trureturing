@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/ObservationOrder/CommonPriorPosteriorAgreement.common_knowledge_posteriors_agree
       source_sha256: sha256:671d587cf73443a53ebf3e02bc5fc9c2f8816d7f04dd0509eaf1478e410c0a24
-      target_statement_id: sha256:a10b2210a3ffa17a9cef9a430b7a00f08094624f9b06845331f3235125f56f20
+      target_sha256: sha256:669103618545ef0b989bf227ade1b0e7064025fd5fca09df4d187b0ac8912e48
   scribe:
     - gid: D5/S3/ConceptDynamics/ObservationOrder/CommonPriorPosteriorAgreement.common_knowledge_posteriors_agree
       definition_sha256: sha256:155f2125d17acbae8676e10afd6e5723ae55ddd2d0559e1cd863ea6fe86cf731

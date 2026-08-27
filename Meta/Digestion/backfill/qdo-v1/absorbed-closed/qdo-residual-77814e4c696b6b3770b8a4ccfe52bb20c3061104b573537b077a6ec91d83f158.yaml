@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/Prediction/EventualCycleAverage.eventual_cycle_average
       source_sha256: sha256:77814e4c696b6b3770b8a4ccfe52bb20c3061104b573537b077a6ec91d83f158
-      target_statement_id: sha256:2e3154d85f7181f0927cc78bd2487ecbbef22bbb3b139cd74a7bb868b5c281be
+      target_sha256: sha256:7238333d90faebf1bc3355cecad4077ac33849031ddc1b94351024b7851804da
   scribe:
     - gid: D5/S3/ObserverMemory/Prediction/EventualCycleAverage.eventual_cycle_average
       definition_sha256: sha256:cb467e421c1833e9550210f4c9b108e4b2282290afe646ddefc42f0d36235b8f

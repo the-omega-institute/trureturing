@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Digit/Carry/Successor.zeckendorf_successor_carry_terminates
       source_sha256: sha256:dd37ec10b4856390b24c6749adb3d8a62c63a366f4f320ae20882826002740e1
-      target_statement_id: sha256:c712307b8bdd264692ce666644c475b312c467164a6e99b2b860a88fe3124bd9
+      target_sha256: sha256:9ed1c3c046c882da1d5866c91c041625e7e4e53732c264d61f4d276111be1168
   scribe:
     - gid: D5/S1/Digit/Carry/Successor.zeckendorf_successor_carry_terminates
       definition_sha256: sha256:0719df98000fbdff34fab9a6eb22fbd0c05d091163158bbcaf5f7f3ef3e556d7

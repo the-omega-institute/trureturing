@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/Thresholds/UnboundedOutputInfinity.unbounded_output_implies_infinite
       source_sha256: sha256:787fd8717c30fd2c4753e83a9619edc0b32d5dd534339f162cc9193fdb7f18f9
-      target_statement_id: sha256:1e4b965b0a77023daedea8bde172aee5a6777601347884eb8c91915f1a4ae4e0
+      target_sha256: sha256:3d7aa71d1778417175bc532d5d0ce50645269946fced685120869af5294b5a9e
   scribe:
     - gid: D5/S3/ObserverMemory/Thresholds/UnboundedOutputInfinity.unbounded_output_implies_infinite
       definition_sha256: sha256:2884f82c120be6cf449e5a8ecad36604283ff2e8891369e03bc99fe010b96c21

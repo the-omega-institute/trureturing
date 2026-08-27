@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Arith/HiddenFiberRigidity.hidden_fiber_rigidity
       source_sha256: sha256:19d504af31c9add47a2f4e0f1c44efc82d5447e8a418dacc7eeb17ac7af7677f
-      target_statement_id: sha256:e3da7845c4b4082f88b933d847481aee966730803fc2bfc81a52e695ed1cbfd0
+      target_sha256: sha256:ca6b448393c8b3a2fa0f33ec59a1106f9114f2550ea096ad58956b13f2c02546
   scribe:
     - gid: D5/S3/Arith/HiddenFiberRigidity.hidden_fiber_rigidity
       definition_sha256: sha256:0dbe0f8dd3075304d9f596e8bea4cbc2ec1d34092d214f4f41af362d08700c87

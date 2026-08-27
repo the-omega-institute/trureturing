@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Rewriting/Quotients/InformedDisclosureDefect.informed_disclosure_defect
       source_sha256: sha256:04ab77c2f9b2908a81a6c27fffa46aceb29d33926c8d966095e81988d08f6dde
-      target_statement_id: sha256:9e1e5dcc8445342c8de82c50f19b0e501f48bda194e0ff4190cd6f2fae8bd3a3
+      target_sha256: sha256:8b28774628a35ddff0fda8f3a7bd7693813384adf582347d33b591c72c8cc0dd
   scribe:
     - gid: D5/S0/Rewriting/Quotients/InformedDisclosureDefect.informed_disclosure_defect
       definition_sha256: sha256:f9789c99e9efd65276bbaa5073c90969837ae0b456491e12598b5e331ab89dcf

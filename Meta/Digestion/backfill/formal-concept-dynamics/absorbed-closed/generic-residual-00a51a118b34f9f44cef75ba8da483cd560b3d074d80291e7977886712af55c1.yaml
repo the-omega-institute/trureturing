@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/FixedPoints/FiniteContractingStability.finite_contracting_updates_stabilize
       source_sha256: sha256:00a51a118b34f9f44cef75ba8da483cd560b3d074d80291e7977886712af55c1
-      target_statement_id: sha256:0682715cef264d20ddf65160ae6d138bc0ce902c91f2f83e3f0a964b2e96dc06
+      target_sha256: sha256:86b7c545fd0376f1ba3d425bc67f78cfa96827f9af9137f890973116ad6975ff
   scribe:
     - gid: D5/S1/FixedPoints/FiniteContractingStability.finite_contracting_updates_stabilize
       definition_sha256: sha256:1f792a851f0515d2177d2a587d6d4b15ed1c26af46274edf01c3fa40e4530c20

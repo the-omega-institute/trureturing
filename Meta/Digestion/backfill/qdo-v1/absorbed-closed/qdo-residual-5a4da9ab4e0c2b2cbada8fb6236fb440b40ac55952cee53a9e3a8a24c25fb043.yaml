@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Quantum/Algebra/UnitaryNaturalSelector.no_unitary_natural_orthogonal_selector
       source_sha256: sha256:5a4da9ab4e0c2b2cbada8fb6236fb440b40ac55952cee53a9e3a8a24c25fb043
-      target_statement_id: sha256:46424f9ac83079411944b111a10bc5138d8fd4979bfb33cffad8e0b0edb2af16
+      target_sha256: sha256:7b49fc0c59b275a0dfb76273e4d0b76b1763f7d14c6e8811918cf612f367603d
   scribe:
     - gid: D5/S3/Quantum/Algebra/UnitaryNaturalSelector.no_unitary_natural_orthogonal_selector
       definition_sha256: sha256:e8380cf3ea8c67ae038e5bfb84cd17c00b42c9f07625f372ab9f7d95c0eaa8c6

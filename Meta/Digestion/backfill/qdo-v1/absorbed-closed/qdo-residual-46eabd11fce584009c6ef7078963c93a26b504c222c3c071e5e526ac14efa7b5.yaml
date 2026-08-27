@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/Prediction/ForwardMergePersistence.forward_merge_persistence
       source_sha256: sha256:46eabd11fce584009c6ef7078963c93a26b504c222c3c071e5e526ac14efa7b5
-      target_statement_id: sha256:233f8aa3af9c13aadb60044207ded2f2ef00b7982e727434ba7892c4e1c5c608
+      target_sha256: sha256:a55d0c0ca61871d1094bf656da547111ef27d46b6ebfc3278e39aa46ecec7236
   scribe:
     - gid: D5/S3/ObserverMemory/Prediction/ForwardMergePersistence.forward_merge_persistence
       definition_sha256: sha256:b5ead09b71833a9732106943b1df1e909e064fb923923c4b524d56c573c871b3

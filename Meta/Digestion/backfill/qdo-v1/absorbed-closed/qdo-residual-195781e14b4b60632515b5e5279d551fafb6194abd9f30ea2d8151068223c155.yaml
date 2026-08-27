@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/QuantumStates/ZeroWeightSupportFace.zero_weight_support_face
       source_sha256: sha256:195781e14b4b60632515b5e5279d551fafb6194abd9f30ea2d8151068223c155
-      target_statement_id: sha256:c21f5826b1569f02708c19839f076c2ce1484bce1cbb7dbe8279a52fd19c8092
+      target_sha256: sha256:303d5d211a79d644197b0a229f701cfc55fdd212030d028ec30951d3e88ac986
   scribe:
     - gid: D5/S3/QuantumStates/ZeroWeightSupportFace.zero_weight_support_face
       definition_sha256: sha256:d7be02a2fe4d205bbc8a9cbb2ffacbcf4d945fc95a939a7c33c445246cafa8d5

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Constants/Radicals/SqrtThreeThreshold.three_lt_two_mul_sqrt_three
       source_sha256: sha256:66912752d8fadf16299b00e7f4d7300e26349c53630444c5b60d4a2a5f7baa7a
-      target_statement_id: sha256:e7bbf8841c116faa63d7f25f61e6929a2e6b290d0dab3f3d3f4bf96fc4ccc2b8
+      target_sha256: sha256:915c0aa0972349bc867a2333a9791adfdecfdb0eec57e869ca86d942d4481bb6
   scribe:
     - gid: D5/S3/Constants/Radicals/SqrtThreeThreshold.three_lt_two_mul_sqrt_three
       definition_sha256: sha256:98094b535cdc63e16c6beba946f33f01d9ca2379b5cca9355e76061c1191166a

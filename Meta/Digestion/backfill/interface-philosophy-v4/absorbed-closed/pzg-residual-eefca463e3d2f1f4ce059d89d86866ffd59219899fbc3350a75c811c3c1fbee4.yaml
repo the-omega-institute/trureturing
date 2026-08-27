@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Computability/ConditionalComplexityFloor.conditional_complexity_floor
       source_sha256: sha256:eefca463e3d2f1f4ce059d89d86866ffd59219899fbc3350a75c811c3c1fbee4
-      target_statement_id: sha256:53eb2a141bfcf5f6cff36dde708f8ae4f339a7d7227d42ef2bce01ac892cf2c0
+      target_sha256: sha256:440a2986c36be3d60de55b61c3c36c592f5f90ebb909098c6624bb0efabc45d8
   scribe:
     - gid: D5/S0/Computability/ConditionalComplexityFloor.conditional_complexity_floor
       definition_sha256: sha256:a85054e035042f5325d96d86956d77c91943757b148af90ccfe5ff98e8255de2

@@ -1,0 +1,10 @@
+ast_path: section/114-1-几何-振子分解/clause/2
+fingerprints:
+  raw_sha256: sha256:57eb188d64f9f6bb0b9702c82fae8bf38b328067498ea2a446d2371e7e5b59e4
+  normalized_sha256: sha256:57eb188d64f9f6bb0b9702c82fae8bf38b328067498ea2a446d2371e7e5b59e4
+cas_ref: sha256:57eb188d64f9f6bb0b9702c82fae8bf38b328067498ea2a446d2371e7e5b59e4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

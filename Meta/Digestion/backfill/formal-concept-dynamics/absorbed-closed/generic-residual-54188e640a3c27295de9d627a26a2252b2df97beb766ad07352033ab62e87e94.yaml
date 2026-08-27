@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Prediction/PublicPredictionDiagonal.no_correct_public_predictor
       source_sha256: sha256:54188e640a3c27295de9d627a26a2252b2df97beb766ad07352033ab62e87e94
-      target_statement_id: sha256:b805226990da501d2ef107db76b68c03eb09480fd549f15d2f7a1e40be301074
+      target_sha256: sha256:79942898b5cab731113687d0b49df21047a669cbb62e27ad3ae8dfc2742ee096
   scribe:
     - gid: D5/S3/ConceptDynamics/Prediction/PublicPredictionDiagonal.no_correct_public_predictor
       definition_sha256: sha256:d3649fa3b5b9466bd0798b035a4e814e79aa452bb0e9b60823175cfdccd6f392

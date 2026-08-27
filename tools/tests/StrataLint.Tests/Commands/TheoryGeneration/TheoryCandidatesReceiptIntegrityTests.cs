@@ -13,7 +13,7 @@ public sealed partial class TheoryCandidatesTests
             "coverage:\n"
             + "    - gid: D5/X_Frontier/FrontierMathematicalOpen\n"
             + $"      source_sha256: {RuleFixture.FixtureCasReference}\n"
-            + "      target_statement_id: sha256:0000000000000000000000000000000000000000000000000000000000000000",
+            + "      target_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000",
             StringComparison.Ordinal);
 
         var result = Run(fixture);

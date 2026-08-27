@@ -13,19 +13,19 @@ receipts:
   coverage:
     - gid: D5/S1/Phase/ZeroOrbitCongruence.eisenstein_norm_mod_three
       source_sha256: sha256:447122eca84f80ed4adff91aa43cb176bac30244d3ed913efd17ebf8dc1726ef
-      target_statement_id: sha256:d7c5ae0ee5a33adab783955c84377089ae0de554d368db1cccd217989e983786
+      target_sha256: sha256:6b00638f950465c622f2834e59e2007dd3ca4ba88c7035050646851e72f7e656
     - gid: D5/S1/Phase/ZeroOrbitCongruence.thirty_six_dvd_of_local_candidates_and_eisenstein_norm
       source_sha256: sha256:447122eca84f80ed4adff91aa43cb176bac30244d3ed913efd17ebf8dc1726ef
-      target_statement_id: sha256:ed53bf4af84cef6493391ed9ff73bf32c945bec346957267208fd47f3d7853e9
+      target_sha256: sha256:6b00638f950465c622f2834e59e2007dd3ca4ba88c7035050646851e72f7e656
     - gid: D5/S1/Phase/SeatTowerCombinatorics.reversal_swaps_parity
       source_sha256: sha256:447122eca84f80ed4adff91aa43cb176bac30244d3ed913efd17ebf8dc1726ef
-      target_statement_id: sha256:0caaa569dfd4278ea7784790034d37682e28d6ac703ff5a7ca9a8fbbfbf5743b
+      target_sha256: sha256:96070d8daaad89aeab17050aeaf70fc1cc1954c2538f0a5ce1685cc157ea01e7
     - gid: D5/S1/Phase/SeatTowerCombinatorics.matching_rotation_offset_is_odd
       source_sha256: sha256:447122eca84f80ed4adff91aa43cb176bac30244d3ed913efd17ebf8dc1726ef
-      target_statement_id: sha256:33a703eafd23dab2d4aadf46bd260b7331088e7070f3d725966045226e12448a
+      target_sha256: sha256:96070d8daaad89aeab17050aeaf70fc1cc1954c2538f0a5ce1685cc157ea01e7
     - gid: D5/S1/Phase/SeatTowerCombinatorics.even_offset_skeleton_count
       source_sha256: sha256:447122eca84f80ed4adff91aa43cb176bac30244d3ed913efd17ebf8dc1726ef
-      target_statement_id: sha256:0f08622db2ebe644797934e71f8e786ea10d264d875412357c09491e44daafd0
+      target_sha256: sha256:96070d8daaad89aeab17050aeaf70fc1cc1954c2538f0a5ce1685cc157ea01e7
   scribe:
     - gid: D5/S1/Phase/ZeroOrbitCongruence.eisenstein_norm_mod_three
       definition_sha256: sha256:9f86dea5bfcc72ffcf380ed16a5ee6f142da9ebc4add2bdb27b41e5dddffc9ba

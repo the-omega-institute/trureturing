@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Naming/NamingSystem.dark_side_conservation
       source_sha256: sha256:e8d70a57b27363cefbfc01228e99831d00f441ed7ee2229dc0656e89e9f4ef94
-      target_statement_id: sha256:e98fd3aab7eda77be8803801834d01acdcba120b6b6cada00e84adb538801644
+      target_sha256: sha256:d08781bda5eeaae8cef5250386a3cadd0e5b1e168ac1effb7eba01c156f304ab
   scribe:
     - gid: D5/S0/Naming/NamingSystem.dark_side_conservation
       definition_sha256: sha256:dfb10b0df8157d6d5ec1eb93226f6af021ef155be24a3456d625cbea1745b817

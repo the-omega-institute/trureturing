@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Analytic/PoleLayerSelection.pole_layer_coefficient
       source_sha256: sha256:57f51ea9df1e31fdab94679f09bf42e2e0d48b26ec8076c6f0ee0afe0245f702
-      target_statement_id: sha256:b51201c78a0d0bb0fc60bba1c81bec1b0d45df23cd3a3639c4d5823f628dabf3
+      target_sha256: sha256:2aac522f80d4467a56916da8a00da62b6a5741bf0f92c52ecea8e9e8c652840b
   scribe:
     - gid: D5/S3/Analytic/PoleLayerSelection.pole_layer_coefficient
       definition_sha256: sha256:f6e4296b9243112cff4ffcd05afc2e4bf28b323735b312c2fa81e602e9fccc18

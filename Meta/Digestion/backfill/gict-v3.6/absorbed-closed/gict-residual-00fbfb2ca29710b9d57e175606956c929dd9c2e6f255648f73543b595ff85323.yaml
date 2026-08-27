@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Words/Palindromes/PalindromeMiddleParity.odd_palindrome_sum_mod_two_eq_middle
       source_sha256: sha256:00fbfb2ca29710b9d57e175606956c929dd9c2e6f255648f73543b595ff85323
-      target_statement_id: sha256:ce66eb03213351ce2c5d30d5245eeca50d282caba082814494ab5caca4ecbc8f
+      target_sha256: sha256:d86fa1522d305e6ae7a4192ce9f3a54190f009c921d9f740b1d86477d48677b8
   scribe:
     - gid: D5/S1/Words/Palindromes/PalindromeMiddleParity.odd_palindrome_sum_mod_two_eq_middle
       definition_sha256: sha256:76ee9e17ea3f9703deb53f08558ae4119f928270e3265d4778e0ce32536b101e

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Quantum/Algebra/OrthogonalProjectionComplement.orthogonal_complement_projection_identities
       source_sha256: sha256:00071aa6bf419fb4f82520e53a00de371123777568fe9aea5018f5a59159721c
-      target_statement_id: sha256:b3103ac37be0ec41bf2f5c4a16bae30825a37d019fc0d05ecfcfc90adad225f1
+      target_sha256: sha256:2c5e8192b29404a65ed71f68d469e5ad66f829fd04e3d98c33fca9c0e3c2388e
   scribe:
     - gid: D5/S3/Quantum/Algebra/OrthogonalProjectionComplement.orthogonal_complement_projection_identities
       definition_sha256: sha256:d44be02742f425fdf1c0ba62b1f36035b9f8f532df342d6cbe174f2005459159

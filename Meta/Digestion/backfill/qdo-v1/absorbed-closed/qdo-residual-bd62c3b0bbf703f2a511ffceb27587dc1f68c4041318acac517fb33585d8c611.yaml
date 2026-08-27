@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/Tomography/InnovationEnergyRecurrence.innovation_energy_recurrence
       source_sha256: sha256:bd62c3b0bbf703f2a511ffceb27587dc1f68c4041318acac517fb33585d8c611
-      target_statement_id: sha256:b83d729c3f284f8c27167ee5776ddfb5c24e3edd7f8cf1c3a62442019341b51a
+      target_sha256: sha256:82b3a2ec08f8bd68c9822faa572c51f059c42b578fc07866e6d5cdbfc043a6bf
   scribe:
     - gid: D5/S3/Observer/Tomography/InnovationEnergyRecurrence.innovation_energy_recurrence
       definition_sha256: sha256:869137c85c72699fe596498743a8fbcdb338515c4085d7317591e940ec0c26bc
