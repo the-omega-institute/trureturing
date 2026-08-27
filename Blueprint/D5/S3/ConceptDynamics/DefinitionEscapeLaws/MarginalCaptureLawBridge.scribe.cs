@@ -43,11 +43,18 @@ internal sealed class MarginalCaptureLawBridgeDocument : IScribeDocumentDefiniti
                             + "additivity is the proof guard that connects the weak EscapeWeight "
                             + "interface to the source weighted-cover reading.")),
                     Paragraph(Text(
+                        "Boundary: this bridge proves the law only under the displayed finite-"
+                            + "additivity premise. Downstream users must not cite it as proving "
+                            + "diminishing marginal capture from the weak EscapeWeight interface "
+                            + "alone. FiniteCoverCounting.lean:380 contains the canonical weak-"
+                            + "interface countermodel.")),
+                    Paragraph(Text(
                         "The named Boolean positive witness supplies a nonempty finite model with "
-                            + "strictly decreasing marginal capture. The named universal false "
+                            + "strictly decreasing marginal capture. The imported clause-six false "
                             + "neighbor changes only the inequality to a strict inequality in the "
                             + "opposite direction under unchanged premises. The nonvacuity theorem "
-                            + "consumes both complete witness statements.")),
+                            + "consumes the local positive witness and that existing complete false-"
+                            + "neighbor statement directly.")),
                     Paragraph(Text(
                         "Named scope limit MARGINAL_CAPTURE_BRIDGE_DOES_NOT_REPACKAGE_"
                             + "MONOTONICITY_OR_FOUR_TERM_SUBMODULARITY: DECT source line 550 also "

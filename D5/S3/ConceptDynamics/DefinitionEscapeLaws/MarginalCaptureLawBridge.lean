@@ -5,9 +5,25 @@
    anchors: []
    digest: Finite additive escape mass discharges the canonical marginal capture law. -/
 
-import D5.S3.ConceptDynamics.DefinitionEscapeLaws.SubmodularCapture
+import D5.S3.ConceptDynamics.DefinitionEscapeLaws.SubmodularCaptureWitnesses
 
 /- Library-search audit trail (2026-08-27):
+   * Direct-import inventory: this module imports only
+     `SubmodularCaptureWitnesses`. The command `grep -nE
+     '^(theorem|def|structure|abbrev|noncomputable def) '
+     D5/S3/ConceptDynamics/DefinitionEscapeLaws/SubmodularCaptureWitnesses.lean`
+     enumerated all thirteen exported declarations: the fixed-language,
+     subset-premise, constant-zero-weight, and finite-additivity witnesses;
+     `clause_one_false_neighbor_witness` through
+     `clause_eight_false_neighbor_witness`; and
+     `submodular_capture_witnesses_nonvacuous`.
+   * Shape comparison within that direct import found exactly one declaration
+     with the same finite-additive marginal inequality, inclusion, freshness,
+     and finite-right-set premises:
+     `clause_six_false_neighbor_witness`. It is reused below. Clauses one--five,
+     seven, and eight concern different conclusions; the four premise/model
+     witnesses and package consumer have different quantifier shapes and do
+     not replace either the bridge or its positive witness.
    * Type-shape search `rg -n 'Set \(X × X\)' D5/S3/ConceptDynamics`
      found the canonical `defectRelation`, `EscapeWeight`, and neighboring
      relation-valued declarations. This module introduces no relation, residual,
@@ -49,6 +65,7 @@ open D5.S3.AnalyticClosure.Budget.BudgetedEscapeRateAntitone
 open D5.S3.ConceptDynamics.ConceptFiberDecomposition
 open D5.S3.ConceptDynamics.DefinitionEscape.FiniteCoverCounting
 open D5.S3.ConceptDynamics.DefinitionEscapeLaws.SubmodularCapture
+open D5.S3.ConceptDynamics.DefinitionEscapeLaws.SubmodularCaptureWitnesses
 
 /-- Finite additivity discharges the canonical CAS marginal-capture proposition.
 `Delta.Finite` and nonnegative cost retain the source domain. The projection of
@@ -158,28 +175,6 @@ theorem marginal_capture_law_bridge_positive_witness :
         (finite_capture_laws_nonvacuous.2.2.2.2.2.1.2)
   exact ⟨law, strictDecrease⟩
 
-/-- The false neighbor changes only the true marginal inequality to a strict
-inequality in the opposite direction. The unchanged source premises refute it
-for every admissible model. -/
-theorem marginal_capture_law_bridge_false_neighbor
-    {I X C Target : Type*} {V : I -> Type*}
-    (Gamma Delta : Set I) (definitions : forall i, Concept X (V i))
-    (q : Concept X C) (target : Concept X Target) (definition : I)
-    (cost : I -> Real) (nu : EscapeWeight (X × X))
-    (cost_nonnegative : forall candidate, 0 <= cost candidate)
-    (mass_additive : forall left right : Set (X × X), Disjoint left right ->
-      nu.mass (left ∪ right) = nu.mass left + nu.mass right)
-    (delta_source_domain_finite : Delta.Finite)
-    (subset : Gamma ⊆ Delta) (fresh : definition ∉ Delta) :
-    ¬capturedEscapeMass (Gamma ∪ {definition}) definitions q target nu -
-        capturedEscapeMass Gamma definitions q target nu <
-      capturedEscapeMass (Delta ∪ {definition}) definitions q target nu -
-        capturedEscapeMass Delta definitions q target nu := by
-  exact not_lt_of_ge
-    ((marginal_capture_law_of_finite_additive_mass Gamma Delta definitions q
-      target definition cost nu cost_nonnegative mass_additive
-      delta_source_domain_finite) ⟨subset, fresh⟩)
-
 /-- Fail-closed consumer for both complete witness statements. Deleting either
 named witness leaves a dangling reference; weakening either statement makes
 the corresponding projection fail. -/
@@ -219,8 +214,8 @@ theorem marginal_capture_law_bridge_nonvacuous :
   refine ⟨marginal_capture_law_bridge_positive_witness, ?_⟩
   intro I X C Target V Gamma Delta definitions q target definition cost nu
     costNonnegative massAdditive deltaFinite subset fresh
-  exact marginal_capture_law_bridge_false_neighbor Gamma Delta definitions q
-    target definition cost nu costNonnegative massAdditive deltaFinite subset fresh
+  exact clause_six_false_neighbor_witness definitions q target cost nu
+    costNonnegative massAdditive definition deltaFinite subset fresh
 
 #print axioms marginal_capture_law_of_finite_additive_mass
 #print axioms marginal_capture_law_bridge_nonvacuous

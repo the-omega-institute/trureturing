@@ -20,7 +20,9 @@ The Lean conclusion is the imported marginalCaptureLaw without any change to its
 
 The proof is exactly the sixth projection of submodular_capture. The finite-Delta and nonnegative-cost assumptions are retained source-domain conditions, not advertised as local proof guards. Finite additivity is the proof guard that connects the weak EscapeWeight interface to the source weighted-cover reading.
 
-The named Boolean positive witness supplies a nonempty finite model with strictly decreasing marginal capture. The named universal false neighbor changes only the inequality to a strict inequality in the opposite direction under unchanged premises. The nonvacuity theorem consumes both complete witness statements.
+Boundary: this bridge proves the law only under the displayed finite-additivity premise. Downstream users must not cite it as proving diminishing marginal capture from the weak EscapeWeight interface alone. FiniteCoverCounting.lean:380 contains the canonical weak-interface countermodel.
+
+The named Boolean positive witness supplies a nonempty finite model with strictly decreasing marginal capture. The imported clause-six false neighbor changes only the inequality to a strict inequality in the opposite direction under unchanged premises. The nonvacuity theorem consumes the local positive witness and that existing complete false-neighbor statement directly.
 
 Named scope limit MARGINAL_CAPTURE_BRIDGE_DOES_NOT_REPACKAGE_MONOTONICITY_OR_FOUR_TERM_SUBMODULARITY: DECT source line 550 also states monotonicity and four-term submodularity. This bridge covers only the diminishing-return clause at source lines 550-558 because that is the missing FiniteCoverCounting clause. The omitted source claims are already closed by submodular_capture conjuncts four and five; this is a named scope boundary, not an open mathematical gap.
 
@@ -29,4 +31,4 @@ scribe_lean_correspondence: the single displayed item present(diminishingMargina
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/DefinitionEscapeLaws/MarginalCaptureLawBridge.marginal_capture_law_of_finite_additive_mass`
-- Dependency: [D5/S3/ConceptDynamics/DefinitionEscapeLaws/SubmodularCapture](SubmodularCapture.md)
+- Dependency: [D5/S3/ConceptDynamics/DefinitionEscapeLaws/SubmodularCaptureWitnesses](SubmodularCaptureWitnesses.md)
