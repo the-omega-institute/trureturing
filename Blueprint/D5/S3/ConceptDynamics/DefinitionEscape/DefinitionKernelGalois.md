@@ -20,7 +20,7 @@ The two implications unpack the same pairwise equality in opposite directions. N
 
 **Theorem 1.2 (Escaping the semantic closure is exactly having a kernel witness).**
 
-$$\neg(target \in \operatorname{SemanticClosure}\left(Gamma\right)) \iff \exists left, right, (\forall definition \in Gamma, \operatorname{definition}\left(left\right) = \operatorname{definition}\left(right\right)) \land \operatorname{target}\left(left\right) \neq \operatorname{target}\left(right\right).$$
+$$\forall X, InputOutput, Output: Type,\ Gamma: \operatorname{Set}\left(\operatorname{Concept}\left(X, InputOutput\right)\right), target: \operatorname{Concept}\left(X, Output\right),\ \neg(target \in \operatorname{SemanticClosure}\left(Gamma\right)) \iff \exists left, right: X, (\forall definition: Gamma, \operatorname{definition}\left(left\right) = \operatorname{definition}\left(right\right)) \land \operatorname{target}\left(left\right) \neq \operatorname{target}\left(right\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.not_mem_semanticClosure_iff_kernel_witness` (`✓ std3`). ∎
 

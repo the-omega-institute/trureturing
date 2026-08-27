@@ -35,29 +35,48 @@ internal sealed class AdmissionValidityPreservationDocument : IScribeDocumentDef
     private static Formula Apply(Formula function, Formula argument) =>
         Seq(function, Open, argument, Close);
 
-    private static Formula Admission(Formula carrier, Formula state) =>
-        Apply(Seq(Operatorname, Grp(F.Id("Adm")), Underscore, Grp(carrier)), state);
+    private static Formula Arrow(Formula domain, Formula codomain) =>
+        new Formula.TypeArrow(domain, codomain);
 
     private static Formula TheoremFormula()
     {
         Formula source = F.Id("X");
         Formula target = F.Id("Y");
+        Formula sourceAdmissible = F.Id("sourceAdmissible");
+        Formula targetAdmissible = F.Id("targetAdmissible");
         Formula x = F.Id("x");
         Formula y = F.Id("y");
         Formula transport = F.Id("h");
         Formula predicate = F.Id("P");
-        Formula mappedX = Apply(transport, x);
+        Formula targetValid = F.Id("targetValid");
+        Formula admissionPreserving = F.Id("admissionPreserving");
+        Formula proposition = F.Id("Prop");
         Formula pullback = Seq(Open, predicate, Sp, Circ, Sp, transport, Close);
+        Formula sourceSet = Seq(
+            OpenBrace, x, Colon, Sp, source, Sp, Mid, Sp,
+            Apply(sourceAdmissible, x), CloseBrace);
+        Formula targetSet = Seq(
+            OpenBrace, y, Colon, Sp, target, Sp, Mid, Sp,
+            Apply(targetAdmissible, y), CloseBrace);
+        Formula targetValidityLaw = Seq(
+            Forall, Sp, y, Colon, Sp, target, Comma, Sp,
+            Apply(targetAdmissible, y), Sp, Rightarrow, Sp, Apply(predicate, y));
+        Formula admissionPreservingLaw = Call(
+            "MapsTo", transport, sourceSet, targetSet);
 
         return Disp(Seq(
-            Open, Forall, Sp, y, Comma, Sp,
-            Admission(target, y), Sp, Rightarrow, Sp, Apply(predicate, y), Close,
+            Forall, Sp, source, Comma, Sp, target, Colon, Sp, F.Id("Type"),
             Comma, RowBreak, Grp(),
-            Open, Forall, Sp, x, Comma, Sp,
-            Admission(source, x), Sp, Rightarrow, Sp,
-            Admission(target, mappedX), Close,
+            sourceAdmissible, Colon, Sp, Arrow(source, proposition), Comma, Sp,
+            targetAdmissible, Colon, Sp, Arrow(target, proposition), Comma,
             RowBreak, Grp(),
-            Rightarrow, Sp, Forall, Sp, x, Comma, Sp,
-            Admission(source, x), Sp, Rightarrow, Sp, Apply(pullback, x), Dot));
+            transport, Colon, Sp, Call("Concept", source, target), Comma, Sp,
+            predicate, Colon, Sp, Arrow(target, proposition), Comma, RowBreak, Grp(),
+            targetValid, Colon, Sp, Grp(targetValidityLaw), Comma, RowBreak, Grp(),
+            admissionPreserving, Colon, Sp, admissionPreservingLaw, Comma,
+            RowBreak, Grp(),
+            Forall, Sp, x, Colon, Sp, source, Comma, Sp,
+            Apply(sourceAdmissible, x), Sp, Rightarrow, Sp,
+            Apply(pullback, x), Dot));
     }
 }
