@@ -9,11 +9,11 @@ namespace StrataLint.ArchitectureTests;
 
 public sealed class CodexFormalAnswerSkillTests
 {
-    private const string AuthorityHeading = "5. Derive outcomes from compiled declarations";
-    private const string GeneralizationHeading = "Generalization bridge";
-    private const string RepositoryConceptSearchHeading = "Repository concept search";
-    private const string InferentialCompletionHeading = "Inferential completion";
-    private const string ProjectPersistenceHeading = "Project source persistence";
+    private const string AuthorityHeading = "5. Settle outcomes and freeze the answer register";
+    private const string GeneralizationHeading = "3. Fix the exact statement echo";
+    private const string RepositoryConceptSearchHeading = "2. Search and model";
+    private const string InferentialCompletionHeading = "4. Implement the inferential completion";
+    private const string ProjectPersistenceHeading = "6. Persist project source and account for the worktree";
 
     private static readonly MarkdownPipeline Pipeline = new MarkdownPipelineBuilder()
         .UsePipeTables()
@@ -32,7 +32,7 @@ public sealed class CodexFormalAnswerSkillTests
     {
         var document = Parse(
             """
-            ### 5. Derive outcomes from compiled declarations
+            ### 5. Settle outcomes and freeze the answer register
 
             Apply the first matching rule:
 
@@ -52,7 +52,7 @@ public sealed class CodexFormalAnswerSkillTests
     {
         var document = Parse(
             """
-            ### 5. Derive outcomes from compiled declarations
+            ### 5. Settle outcomes and freeze the answer register
 
             Apply the first matching rule:
 
@@ -72,7 +72,7 @@ public sealed class CodexFormalAnswerSkillTests
     {
         var document = Parse(
             """
-            ### 5. Derive outcomes from compiled declarations
+            ### 5. Settle outcomes and freeze the answer register
 
             Apply the first matching rule:
 
@@ -94,7 +94,7 @@ public sealed class CodexFormalAnswerSkillTests
     {
         var document = Parse(
             """
-            ### 5. Derive outcomes from compiled declarations
+            ### 5. Settle outcomes and freeze the answer register
 
             Apply the first matching rule:
 
@@ -131,7 +131,7 @@ public sealed class CodexFormalAnswerSkillTests
     {
         var document = Parse(
             """
-            ## Generalization bridge
+            ## 3. Fix the exact statement echo
 
             1. Record the concrete proposition `P`.
             2. Record the generalized theorem `G`.
@@ -157,7 +157,7 @@ public sealed class CodexFormalAnswerSkillTests
     {
         var document = Parse(
             """
-            ## Repository concept search
+            ## 2. Search and model
 
             1. `F`: Search `D5/` and mathlib for exact declarations.
             2. `M`: Construct `P`, `G`, and `S`.
@@ -183,13 +183,13 @@ public sealed class CodexFormalAnswerSkillTests
     {
         var document = Parse(
             """
-            ## Repository concept search
+            ## 2. Search and model
 
             1. `C`: Search repository concepts.
             2. `F`: Search Lean declarations.
             3. `M`: Render the hits as an answer.
 
-            ## Project source persistence
+            ## 6. Persist project source and account for the worktree
 
             1. `reuse-complete`: cite a hit.
             2. `discard-thin`: discard `run-local` wrappers.
@@ -205,17 +205,17 @@ public sealed class CodexFormalAnswerSkillTests
     {
         var document = Parse(
             """
-            ## Inferential completion
+            ## 4. Implement the inferential completion
 
             1. `premise-map`: identify premises.
             2. `G`: derive a reusable theorem.
             3. `S`: apply `G` to exact `P`.
 
-            ## Project source persistence
+            ## 6. Persist project source and account for the worktree
 
-            1. `reuse-complete`: require `active-frozen` evidence.
+            1. `reuse-complete`: cite `project-source` and require `active-frozen` evidence.
             2. `discard-thin`: discard `run-local` wrappers.
-            3. `persist-synthesis`: invoke `codex-formalize` and `deposit-new`.
+            3. `persist-synthesis`: retain `tracked-lean` with `Describe`, verify `make lean`, and invoke `codex-formalize` and `deposit-new`.
             4. `open-compile`: preserve an `open` compiler failure.
             """);
 
