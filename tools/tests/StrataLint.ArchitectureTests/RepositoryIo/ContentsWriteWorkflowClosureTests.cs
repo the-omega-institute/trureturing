@@ -10,7 +10,7 @@ namespace StrataLint.ArchitectureTests;
 /// its own check. The boundary has to be the trigger set itself.
 ///
 /// This pins the closure rather than any single file: the two explicitly authorized writers
-/// are the scheduled Lean cache publisher and the dev-only truth-release publisher. A third
+/// are the scheduled Lean cache publisher and the protected-dev truth-release publisher. A third
 /// writable workflow, or an unapproved trigger added to either one, turns this red instead of
 /// relying on a reviewer remembering why it mattered.
 /// </summary>
@@ -54,15 +54,19 @@ public sealed class ContentsWriteWorkflowClosureTests
     }
 
     [Fact]
-    public void TheTruthReleasePublisherRunsOnlyOnDevPush()
+    public void TheTruthReleasePublisherRunsOnlyOnScheduleOrInputFreeDispatch()
     {
         var publisher = Workflows.SingleOrDefault(static source => source.Path == TruthReleasePublisher);
         Assert.NotNull(publisher);
 
-        Assert.Equal(["push"], TriggerNames(publisher.Content));
-        Assert.Contains("branches: [dev]", publisher.Content, StringComparison.Ordinal);
-        Assert.DoesNotContain("workflow_dispatch", publisher.Content, StringComparison.Ordinal);
-        Assert.DoesNotContain("inputs.source_commit", publisher.Content, StringComparison.Ordinal);
+        Assert.Equal(["schedule", "workflow_dispatch"], TriggerNames(publisher.Content));
+        Assert.Contains("cron: '17 * * * *'", publisher.Content, StringComparison.Ordinal);
+
+        var root = WorkflowRoot(publisher);
+        var triggerSet = Assert.IsType<YamlMappingNode>(root.Children.Single(pair =>
+            pair.Key is YamlScalarNode { Value: "on" or "True" or "true" }).Value);
+        var dispatch = Assert.IsType<YamlScalarNode>(MappingValue(triggerSet, "workflow_dispatch"));
+        Assert.True(string.IsNullOrEmpty(dispatch.Value));
     }
 
     [Fact]
@@ -72,7 +76,14 @@ public sealed class ContentsWriteWorkflowClosureTests
 
         Assert.Contains("repos/${GITHUB_REPOSITORY}/branches/dev", content, StringComparison.Ordinal);
         Assert.Contains(".protected", content, StringComparison.Ordinal);
-        Assert.Contains("the push SHA is no longer the current protected dev tip", content, StringComparison.Ordinal);
+        Assert.DoesNotContain("$GITHUB_SHA", content, StringComparison.Ordinal);
+        Assert.Contains("for attempt in $(seq 1 30)", content, StringComparison.Ordinal);
+        Assert.Contains("publish_ready=false", content, StringComparison.Ordinal);
+        Assert.Contains("git symbolic-ref -q HEAD", content, StringComparison.Ordinal);
+        Assert.Contains(
+            "REQUIRED_CHECKS: 'Candidate harness engineering checks|Canonical Lean report production|Content-addressed dev baseline admission'",
+            content,
+            StringComparison.Ordinal);
         Assert.Contains(".merge_base_commit.sha", content, StringComparison.Ordinal);
         Assert.Contains("commit_on_protected_dev=true", content, StringComparison.Ordinal);
         Assert.Contains("--commit-on-protected-dev \"$COMMIT_ON_PROTECTED_DEV\"", content, StringComparison.Ordinal);
@@ -84,12 +95,13 @@ public sealed class ContentsWriteWorkflowClosureTests
     [Fact]
     public void TheTruthReleasePublisherSerializesAndBindsImmutableDigestPublications()
     {
+        var root = WorkflowRoot(TruthReleaseWorkflow());
         var content = TruthReleaseWorkflow().Content;
+        var concurrency = Assert.IsType<YamlMappingNode>(MappingValue(root, "concurrency"));
 
-        Assert.Contains(
-            "group: truth-release-publish-${{ needs.produce.outputs.release_digest }}",
-            content,
-            StringComparison.Ordinal);
+        Assert.Equal("truth-release-publish-dev", Assert.IsType<YamlScalarNode>(MappingValue(concurrency, "group")).Value);
+        Assert.Equal("false", Assert.IsType<YamlScalarNode>(MappingValue(concurrency, "cancel-in-progress")).Value);
+        Assert.False(TryMappingValue(Job(root, "publish"), "concurrency", out _));
         Assert.Contains("produced_at=\"$(date -u --date=\"@${commit_epoch}\"", content, StringComparison.Ordinal);
         Assert.Contains("--sort=name", content, StringComparison.Ordinal);
         Assert.Contains("gzip -n", content, StringComparison.Ordinal);

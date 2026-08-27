@@ -1,22 +1,16 @@
 name: truth-release-publish
 
 on:
-  push:
-    branches: [dev]
-    paths:
-      - 'D5/**/*.lean'
-      - 'Trureturing.lean'
-      - 'Blueprint/**/*.scribe.cs'
-      - 'Evidence/**'
-      - 'Meta/**'
-      - 'tools/**'
-      - 'lakefile.lean'
-      - 'lake-manifest.json'
-      - 'lean-toolchain'
-      - 'global.json'
-      - '.github/workflows/ci.yml'
-      - '.github/workflows/truth-release-publish.yml'
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
 permissions: {}
+concurrency:
+  group: truth-release-publish-dev
+  cancel-in-progress: false
+
+# Truth releases are ordered by dev history: a release is newer exactly when its
+# source_commit is a descendant. Consumers must never use wall-clock publication order.
 
 jobs:
   produce:
@@ -33,11 +27,9 @@ jobs:
       run_attempt: ${{ steps.release.outputs.run_attempt }}
       source_commit: ${{ steps.source.outputs.source_commit }}
       source_tree: ${{ steps.identity.outputs.source_tree }}
+      publish_ready: ${{ steps.source.outputs.publish_ready }}
     env:
-      REQUIRED_CHECKS: >-
-        Candidate harness engineering checks
-        |Canonical Lean report production
-        |Content-addressed dev baseline admission
+      REQUIRED_CHECKS: 'Candidate harness engineering checks|Canonical Lean report production|Content-addressed dev baseline admission'
     steps:
       - name: Resolve protected dev and wait for required gates
         id: source
@@ -46,22 +38,15 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          if [[ "$GITHUB_EVENT_NAME" != 'push' || "$GITHUB_REF" != 'refs/heads/dev' ]]; then
-            printf '%s\n' 'truth releases may only be prepared by a push to dev' >&2
-            exit 1
-          fi
           branch="$(gh api "repos/${GITHUB_REPOSITORY}/branches/dev")"
           [[ "$(jq -r '.protected' <<< "$branch")" == 'true' ]] \
             || { printf '%s\n' 'dev is not protected; refusing to publish' >&2; exit 1; }
           source_commit="$(jq -r '.commit.sha' <<< "$branch")"
           [[ "$source_commit" =~ ^[0-9a-f]{40}$ ]]
-          if [[ "$source_commit" != "$GITHUB_SHA" ]]; then
-            printf '%s\n' 'the push SHA is no longer the current protected dev tip; refusing to publish' >&2
-            exit 1
-          fi
+          printf 'source_commit=%s\n' "$source_commit" >> "$GITHUB_OUTPUT"
           IFS='|' read -r -a required_checks <<< "$REQUIRED_CHECKS"
           all_green=false
-          for attempt in $(seq 1 60); do
+          for attempt in $(seq 1 30); do
             checks="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${source_commit}/check-runs?per_page=100" --jq '.check_runs')"
             all_green=true
             summary=()
@@ -73,13 +58,18 @@ jobs:
             printf 'required-gates attempt=%s %s\n' "$attempt" "${summary[*]}"
             [[ "$all_green" == true ]] && break
             all_green=false
-            sleep 60
+            [[ "$attempt" -eq 30 ]] || sleep 60
           done
-          [[ "$all_green" == true ]] || { printf '%s\n' 'required dev gates did not become green within the publish window' >&2; exit 1; }
-          printf 'source_commit=%s\n' "$source_commit" >> "$GITHUB_OUTPUT"
+          if [[ "$all_green" != true ]]; then
+            printf '%s\n' 'required dev gates did not become green within the publish window; leaving publication for the next scheduled run'
+            printf 'publish_ready=false\n' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          printf 'publish_ready=true\n' >> "$GITHUB_OUTPUT"
 
       - name: Check out the exact protected dev tip
         id: checkout
+        if: steps.source.outputs.publish_ready == 'true'
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           ref: ${{ steps.source.outputs.source_commit }}
@@ -109,6 +99,7 @@ jobs:
 
       - name: Verify checked-out protected dev identity
         id: identity
+        if: steps.source.outputs.publish_ready == 'true'
         env:
           RESOLVED_SOURCE_COMMIT: ${{ steps.source.outputs.source_commit }}
         shell: bash
@@ -116,6 +107,10 @@ jobs:
           set -euo pipefail
           source_commit="$(git rev-parse HEAD)"
           source_tree="$(git cat-file -p HEAD | sed -n 's/^tree //p')"
+          if git symbolic-ref -q HEAD >/dev/null; then
+            printf '%s\n' 'protected dev source must be checked out detached' >&2
+            exit 1
+          fi
           [[ "$source_commit" =~ ^[0-9a-f]{40}$ ]]
           [[ "$source_tree" =~ ^[0-9a-f]{40}$ ]]
           if [[ "$source_commit" != "$RESOLVED_SOURCE_COMMIT" ]]; then
@@ -126,17 +121,20 @@ jobs:
           printf 'commit_on_protected_dev=true\n' >> "$GITHUB_OUTPUT"
 
       - name: Set up pinned .NET SDK
+        if: steps.source.outputs.publish_ready == 'true'
         uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
         with:
           global-json-file: global.json
 
       - name: Install the pinned Lean toolchain
+        if: steps.source.outputs.publish_ready == 'true'
         shell: bash
         run: |
           set -euo pipefail
           tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
 
       - name: Warm the Lean dependency cache
+        if: steps.source.outputs.publish_ready == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -146,6 +144,7 @@ jobs:
 
       - name: Produce the canonical Lean report
         id: report
+        if: steps.source.outputs.publish_ready == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -158,6 +157,7 @@ jobs:
 
       - name: Assemble the real seven-artifact truth-release
         id: release
+        if: steps.source.outputs.publish_ready == 'true'
         env:
           COMMIT_ON_PROTECTED_DEV: ${{ steps.identity.outputs.commit_on_protected_dev }}
           SOURCE_COMMIT: ${{ steps.source.outputs.source_commit }}
@@ -222,10 +222,11 @@ jobs:
           printf 'run_attempt=%s\n' "$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
 
       # Partial Release recovery must use GitHub's "Re-run failed jobs" so only publish
-      # retries with this retained transfer. A full re-run after dev advances is intentionally
-      # refused by produce's current-dev-tip freshness check above.
+      # retries with this retained transfer. A full re-run resolves and freezes the then-current
+      # protected dev tip again and produces a new run-attempt-bound transfer.
       - name: Transfer publication assets to the digest-keyed publisher
         id: transfer
+        if: steps.source.outputs.publish_ready == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: ${{ steps.release.outputs.artifact_name }}
@@ -237,6 +238,7 @@ jobs:
   publish:
     name: publish persistent verified truth-release
     needs: produce
+    if: needs.produce.outputs.publish_ready == 'true'
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     permissions:
@@ -244,9 +246,6 @@ jobs:
       packages: write
       id-token: write
       attestations: write
-    concurrency:
-      group: truth-release-publish-${{ needs.produce.outputs.release_digest }}
-      cancel-in-progress: false
     env:
       OCI_REPOSITORY: ghcr.io/${{ github.repository_owner }}/trureturing/truth-release
       OCI_ARTIFACT_TYPE: application/vnd.theomega.truth-release.bundle.v1
