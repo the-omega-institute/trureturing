@@ -84,7 +84,8 @@ public sealed class FrozenLedgerConsistent
         ImmutableDictionary<string, FrozenActiveEntry> activeEntries,
         ImmutableHashSet<string> allCaseIds,
         ImmutableHashSet<FrozenNodeId> revokedFrozenNodeIds,
-        int syntaxStartSequence)
+        int eventCount,
+        int syntaxLineCount)
     {
         RawBytes = rawBytes;
         Events = events;
@@ -95,7 +96,8 @@ public sealed class FrozenLedgerConsistent
         ActiveEntries = activeEntries;
         AllCaseIds = allCaseIds;
         RevokedFrozenNodeIds = revokedFrozenNodeIds;
-        SyntaxStartSequence = syntaxStartSequence;
+        EventCount = eventCount;
+        SyntaxLineCount = syntaxLineCount;
     }
 
     public ImmutableArray<FrozenLedgerEvent> Events { get; }
@@ -116,7 +118,9 @@ public sealed class FrozenLedgerConsistent
 
     internal ImmutableHashSet<string> AllCaseIds { get; }
 
-    internal int SyntaxStartSequence { get; }
+    internal int EventCount { get; }
+
+    internal int SyntaxLineCount { get; }
 
     internal static FrozenLedgerConsistent Create(
         ImmutableArray<byte> rawBytes,
@@ -128,7 +132,8 @@ public sealed class FrozenLedgerConsistent
         ImmutableDictionary<string, FrozenActiveEntry> activeEntries,
         ImmutableHashSet<string> allCaseIds,
         ImmutableHashSet<FrozenNodeId> revokedFrozenNodeIds,
-        int syntaxStartSequence = 0) =>
+        int? eventCount = null,
+        int? syntaxLineCount = null) =>
         new(
             rawBytes,
             events,
@@ -139,7 +144,8 @@ public sealed class FrozenLedgerConsistent
             activeEntries,
             allCaseIds,
             revokedFrozenNodeIds,
-            syntaxStartSequence);
+            eventCount ?? events.Length,
+            syntaxLineCount ?? events.Length);
 }
 
 internal sealed record FrozenActiveEntry(

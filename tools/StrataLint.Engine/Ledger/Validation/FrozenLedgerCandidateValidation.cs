@@ -66,7 +66,7 @@ public static partial class FrozenLedger
                     "Candidate frozen ledger does not retain the exact baseline byte prefix.");
             }
 
-            var baselineLineCount = baseline.Events.Length - baseline.SyntaxStartSequence;
+            var baselineLineCount = baseline.SyntaxLineCount;
             if (syntax.Lines.Length < baselineLineCount)
             {
                 throw new FormatException("Candidate frozen ledger truncated the baseline event prefix.");
@@ -94,7 +94,7 @@ public static partial class FrozenLedger
                 var sequence = RequiredNonnegativeInteger(root, "sequence");
                 var previousHash = RequiredString(root, "previous_hash");
                 var eventHash = RequiredString(root, "event_hash");
-                if (sequence != baseline.SyntaxStartSequence + index
+                if (sequence != baseline.EventCount + index - baselineLineCount
                     || RequiredNonnegativeInteger(root, "schema_version") != 1
                     || !string.Equals(previousHash, previous, StringComparison.Ordinal)
                     || !FrozenHashSyntax.IsSha256(eventHash)
@@ -192,7 +192,8 @@ public static partial class FrozenLedger
                 activeEntries,
                 allCaseIds.ToImmutableHashSet(StringComparer.Ordinal),
                 revoked.ToImmutableHashSet(),
-                baseline.SyntaxStartSequence));
+                eventCount: baseline.EventCount + syntax.Lines.Length - baselineLineCount,
+                syntaxLineCount: syntax.Lines.Length));
         }
         catch (Exception exception) when (exception is FormatException or JsonException or InvalidOperationException)
         {

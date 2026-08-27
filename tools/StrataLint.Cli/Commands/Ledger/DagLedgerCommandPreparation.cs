@@ -496,7 +496,7 @@ internal static class DagLedgerCommandPreparation
         FrozenLedgerConsistent baseline,
         string label) => FrozenLedger.ScanSuffixReferences(
             syntax,
-            baseline.Events.Length - baseline.SyntaxStartSequence) switch
+            baseline.SyntaxLineCount) switch
         {
             FrozenLedgerReferenceScanOutcome.Accepted accepted => accepted.References,
             FrozenLedgerReferenceScanOutcome.Rejected rejected => throw new InvalidOperationException(

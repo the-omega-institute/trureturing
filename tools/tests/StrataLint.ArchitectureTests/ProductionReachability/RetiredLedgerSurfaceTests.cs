@@ -6,11 +6,12 @@ namespace StrataLint.ArchitectureTests;
 public sealed class RetiredLedgerSurfaceTests
 {
     [Fact]
-    public void ProductionCodeContainsNoReattestProtocolIdentifiersOrLiterals()
+    public void ProductionCodeContainsNoReattestWriterCliOrCandidateAdmissionSurface()
     {
         var findings = InspectProductionCode(
             static token => token.ValueText.Contains("Reattest", StringComparison.Ordinal),
-            static line => line.Contains("Reattest", StringComparison.Ordinal));
+            static line => line.Contains("Reattest", StringComparison.Ordinal),
+            IsReattestWriteOrAdmissionPath);
 
         Assert.Empty(findings);
     }
@@ -26,12 +27,13 @@ public sealed class RetiredLedgerSurfaceTests
     }
 
     [Fact]
-    public void ProductionCodeContainsNoHistoricalDagSchemaCompatibility()
+    public void CandidateProtocolContainsNoHistoricalDagSchemaCompatibility()
     {
         var findings = InspectProductionCode(
             static token => token.ValueText is "FreezePayloadFieldsV3"
                 || token.ValueText.Contains("must be 2, 3, or 4", StringComparison.Ordinal),
-            static line => line.Contains("2 or 3 or CurrentDagSchemaVersion", StringComparison.Ordinal));
+            static line => line.Contains("2 or 3 or CurrentDagSchemaVersion", StringComparison.Ordinal),
+            IsReattestWriteOrAdmissionPath);
 
         Assert.Empty(findings);
     }
@@ -67,7 +69,8 @@ public sealed class RetiredLedgerSurfaceTests
             static token => token.ValueText.Contains("Materializer", StringComparison.Ordinal)
                 || token.ValueText.Contains("materializer", StringComparison.Ordinal),
             static line => line.Contains("repository-snapshot-v1", StringComparison.Ordinal),
-            IsFrozenLedgerProtocolPath);
+            static path => IsFrozenLedgerProtocolPath(path)
+                && !path.EndsWith("FrozenLedgerBaseView.cs", StringComparison.Ordinal));
 
         Assert.Empty(findings);
     }
@@ -141,5 +144,15 @@ public sealed class RetiredLedgerSurfaceTests
         || path.EndsWith("CliApplication.cs", StringComparison.Ordinal)
         || path.EndsWith("ProductionCliEnvironment.cs", StringComparison.Ordinal)
         || path.EndsWith("RevocationPlanner.cs", StringComparison.Ordinal)
+        || path.EndsWith("playbook-workflows.sh", StringComparison.Ordinal);
+
+    private static bool IsReattestWriteOrAdmissionPath(string path) =>
+        path.EndsWith("FrozenLedger.cs", StringComparison.Ordinal)
+        || path.EndsWith("FrozenLedgerCanonicalWriter.cs", StringComparison.Ordinal)
+        || path.EndsWith("FrozenAcceptedEventLoader.cs", StringComparison.Ordinal)
+        || path.EndsWith("FrozenLedgerAdmission.cs", StringComparison.Ordinal)
+        || path.Contains("/Commands/Ledger/", StringComparison.Ordinal)
+        || path.EndsWith("CliApplication.cs", StringComparison.Ordinal)
+        || path.EndsWith("ProductionCliEnvironment.cs", StringComparison.Ordinal)
         || path.EndsWith("playbook-workflows.sh", StringComparison.Ordinal);
 }

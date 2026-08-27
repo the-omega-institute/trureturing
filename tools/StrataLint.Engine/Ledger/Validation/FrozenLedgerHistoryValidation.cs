@@ -169,6 +169,13 @@ public static partial class FrozenLedger
                 StringComparer.Ordinal).ToArray())
             {
                 var material = expectedByPath[entry.Material.RepoPath];
+                if (!material.AxiomClosure.All(LeanAxiomFacts.IsStandard))
+                {
+                    throw new HistoryFinalStateException(
+                        ImmutableArray.Create(material.RepoPath),
+                        $"Active module {material.RepoPath.Value} current axiom closure exceeds the standard axiom allowlist.");
+                }
+
                 var materialMatches = HistoricalActiveFreezeMatches(
                     entry.Payload,
                     material,
@@ -300,10 +307,7 @@ public static partial class FrozenLedger
         IReadOnlyDictionary<FrozenNodeId, RepoPath> currentPathsByIdentity) =>
         payload.DeclarationStatementIds.SequenceEqual(material.DeclarationStatementIds)
         && payload.StatementId == material.StatementId
-        && payload.HasAxiomClosure
-        && NormalizeAxiomClosure(payload.AxiomClosure).SequenceEqual(
-            NormalizeAxiomClosure(material.AxiomClosure),
-            StringComparer.Ordinal)
+        && material.AxiomClosure.All(LeanAxiomFacts.IsStandard)
         && TryResolvePrerequisitePaths(
             material.PrerequisiteFrozenNodeIds,
             currentPathsByIdentity,
@@ -316,9 +320,6 @@ public static partial class FrozenLedger
                 out _)
             || recordedPrerequisitePaths.SequenceEqual(currentPrerequisitePaths))
         && payload.Input.DescriptorSelector == material.RepoPath.Value;
-
-    private static IEnumerable<string> NormalizeAxiomClosure(ImmutableArray<string> closure) =>
-        closure.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal);
 
     private static ImmutableDictionary<FrozenNodeId, RepoPath> FrozenPathsByIdentity(
         params IEnumerable<FrozenNodeMaterial>[] materialGroups)

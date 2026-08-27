@@ -278,9 +278,9 @@ public static class RevocationPlanner
         }
 
         var reverse = new Dictionary<FrozenNodeId, HashSet<FrozenNodeId>>();
-        var currentEdges = events.OfType<FrozenLedgerEvent.Freeze>().Select(static freeze => (
-            Node: freeze.Payload.FrozenNodeId,
-            Prerequisites: freeze.Payload.PrerequisiteFrozenNodeIds));
+        var currentEdges = activeEntries.Values.Select(static entry => (
+            Node: entry.Material.FrozenNodeId,
+            Prerequisites: entry.Material.PrerequisiteFrozenNodeIds));
         foreach (var (node, prerequisites) in currentEdges)
         {
             foreach (var prerequisite in prerequisites)

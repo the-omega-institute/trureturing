@@ -141,7 +141,7 @@ public static partial class FrozenLedgerGenerator
     {
         var result = baseline.RawBytes.ToBuilder();
         var previous = baseline.HeadHash;
-        var sequence = baseline.Events.Length;
+        var sequence = baseline.EventCount;
         foreach (var item in suffix)
         {
             var line = FrozenLedgerCanonicalWriter.WriteEvent(item.Type, item.Payload, previous, sequence++);

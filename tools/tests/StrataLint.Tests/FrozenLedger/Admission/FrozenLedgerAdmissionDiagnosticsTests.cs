@@ -92,7 +92,7 @@ public sealed class FrozenLedgerAdmissionDiagnosticsTests
     }
 
     [Fact]
-    public void Sl008AdmissionRejectsHistoricalEventWithoutAxiomClosure()
+    public void Sl008AdmissionAllowsHistoricalEventWithoutAxiomClosure()
     {
         var scenario = CreateScenario("match");
         scenario = scenario with
@@ -100,16 +100,44 @@ public sealed class FrozenLedgerAdmissionDiagnosticsTests
             Payload = scenario.Payload with { AxiomClosure = default },
         };
 
+        Assert.Null(Evaluate(scenario));
+    }
+
+    [Fact]
+    public void Sl008AdmissionAllowsHistoricalAxiomClosureDifferenceWhenCurrentClosureIsStandard()
+    {
+        var scenario = CreateScenario("match");
+        scenario = scenario with
+        {
+            ExpectedMaterial = scenario.ExpectedMaterial with
+            {
+                AxiomClosure = ["Quot.sound"],
+            },
+        };
+
+        Assert.Null(Evaluate(scenario));
+    }
+
+    [Fact]
+    public void Sl008AdmissionRejectsCurrentAxiomClosureOutsideStandardAllowlist()
+    {
+        var scenario = CreateScenario("match");
+        scenario = scenario with
+        {
+            ExpectedMaterial = scenario.ExpectedMaterial with
+            {
+                AxiomClosure = ["Nonstandard.axiom"],
+            },
+        };
+
         var failure = Assert.IsType<FrozenLedgerAdmissionFailure>(Evaluate(scenario));
 
-        Assert.Contains("AxiomClosure expected=", failure.Message, StringComparison.Ordinal);
-        Assert.Contains("actual=<missing>", failure.Message, StringComparison.Ordinal);
+        Assert.Contains("standard axiom allowlist", failure.Message, StringComparison.Ordinal);
     }
 
     [Theory]
     [InlineData("DeclarationStatementIds")]
     [InlineData("StatementId")]
-    [InlineData("AxiomClosure")]
     [InlineData("Input.DescriptorSelector")]
     public void Sl008DiagnosticNamesExpectedAndActualForEachComparedField(string field)
     {
@@ -126,8 +154,6 @@ public sealed class FrozenLedgerAdmissionDiagnosticsTests
     [InlineData("DeclarationStatementIds", "missing")]
     [InlineData("DeclarationStatementIds", "extra")]
     [InlineData("DeclarationStatementIds", "order")]
-    [InlineData("AxiomClosure", "missing")]
-    [InlineData("AxiomClosure", "extra")]
     public void Sl008SequenceDiagnosticIdentifiesTheConcreteDifference(string field, string shape)
     {
         var scenario = CreateSequenceScenario(field, shape);
@@ -144,7 +170,6 @@ public sealed class FrozenLedgerAdmissionDiagnosticsTests
     [InlineData("match")]
     [InlineData("DeclarationStatementIds")]
     [InlineData("StatementId")]
-    [InlineData("AxiomClosure")]
     [InlineData("WitnessId")]
     [InlineData("FrozenNodeId")]
     [InlineData("Input.DescriptorSelector")]
@@ -172,7 +197,6 @@ public sealed class FrozenLedgerAdmissionDiagnosticsTests
         {
             "DeclarationStatementIds",
             "StatementId",
-            "AxiomClosure",
             "Input.DescriptorSelector",
         };
         var offsets = fields
@@ -185,12 +209,11 @@ public sealed class FrozenLedgerAdmissionDiagnosticsTests
     [Fact]
     public void Sl008FieldDifferenceDiagnosticIsByteDeterministic()
     {
-        var scenario = CreateScenario("AxiomClosure");
+        var scenario = CreateScenario("Input.DescriptorSelector");
         var expected =
             $"Active module {ModulePath} changed identity; append Revoke before rerunning ledger-append; "
             + "field differences: "
-            + "AxiomClosure expected=[Classical.choice, Quot.sound], "
-            + "actual=[Classical.choice, propext], missing=[Quot.sound], extra=[propext]; "
+            + $"Input.DescriptorSelector expected={ModulePath}, actual={AlternateModulePath}; "
             + $"delta witness: {ModulePath}";
 
         var first = Assert.IsType<FrozenLedgerAdmissionFailure>(Evaluate(scenario));
@@ -442,10 +465,7 @@ public sealed class FrozenLedgerAdmissionDiagnosticsTests
         FrozenNodeMaterial material) =>
         payload.DeclarationStatementIds.SequenceEqual(material.DeclarationStatementIds)
         && payload.StatementId == material.StatementId
-        && payload.HasAxiomClosure
-        && NormalizeAxiomClosure(payload.AxiomClosure).SequenceEqual(
-            NormalizeAxiomClosure(material.AxiomClosure),
-            StringComparer.Ordinal)
+        && material.AxiomClosure.All(LeanAxiomFacts.IsStandard)
         && payload.Input.DescriptorSelector == material.RepoPath.Value;
 
     private static (string Expected, string Actual) ProbeFor(

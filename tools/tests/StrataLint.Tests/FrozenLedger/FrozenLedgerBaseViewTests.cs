@@ -73,7 +73,7 @@ public sealed class FrozenLedgerBaseViewTests(ITestOutputHelper output)
             view.EventCount,
             timings.Min().TotalMilliseconds);
 
-        Assert.Equal(view.EventCount, baseline!.Events.Length);
+        Assert.Equal(view.EventCount, baseline!.EventCount);
         Assert.Equal(view.ActiveByCase.Keys.Order(), baseline.ActiveEntries.Keys.Order());
         Assert.DoesNotContain("ToWriterSyntax", source, StringComparison.Ordinal);
         Assert.DoesNotContain(
@@ -111,13 +111,23 @@ public sealed class FrozenLedgerBaseViewTests(ITestOutputHelper output)
                 protocol_version = 1,
                 rule_catalog_root = RuleCatalog.Default.RootSha256,
             }));
-        var freeze = FrozenLedgerCanonicalWriter.WriteDagEvent(
-            "Freeze",
-            JsonSerializer.SerializeToElement(new
+        var freeze = JsonSerializer.Serialize(new
+        {
+            event_hash = FrozenLedgerTestData.Sha256("trusted v3 freeze"),
+            event_type = "Freeze",
+            payload = new
             {
                 axiom_closure = new[] { "Classical.choice" },
+                case_class = "active-frozen",
                 case_id = "persisted-case-id",
                 declaration_statement_ids = Array.Empty<object>(),
+                evaluation = "admission",
+                expected = new
+                {
+                    allowed_dispositions = new[] { "admit" },
+                    diagnostic_match = "none",
+                    required_diagnostics = Array.Empty<object>(),
+                },
                 frozen_node_id = FrozenId,
                 input = new
                 {
@@ -125,13 +135,20 @@ public sealed class FrozenLedgerBaseViewTests(ITestOutputHelper output)
                     base_tree_oid = FrozenLedgerTestData.GitOid('5'),
                     descriptor_blob_oid = FrozenLedgerTestData.GitOid('6'),
                     descriptor_selector = ModulePath,
+                    materializer = "repository-snapshot-v1",
                     supporting_blob_oids = Array.Empty<string>(),
                 },
+                input_fingerprint = FrozenLedgerTestData.Sha256("trusted v3 input"),
+                node_path = ModulePath,
                 prerequisite_frozen_node_ids = Array.Empty<string>(),
+                semantic_receipt = FrozenId,
                 statement_id = "persisted-statement-id",
+                truth_state = "Closed",
                 witness_id = "persisted-witness-id",
-            }));
-        var noncanonicalFreeze = "  " + Encoding.UTF8.GetString(freeze.Bytes.AsSpan()).TrimEnd() + "\n";
+            },
+            schema_version = 3,
+        });
+        var noncanonicalFreeze = "  " + freeze + "\n";
         return new Dictionary<string, string>(StringComparer.Ordinal)
         {
             [FrozenLedgerChangeClassifier.AcceptedRoot + "/genesis-with-untrusted-name.json"] =

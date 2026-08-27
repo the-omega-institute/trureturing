@@ -2,7 +2,6 @@ using System.Collections.Immutable;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Nodes;
 using StrataLint.Cli;
 using StrataLint.Engine;
 

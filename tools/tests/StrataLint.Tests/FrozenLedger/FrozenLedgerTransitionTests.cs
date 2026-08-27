@@ -69,16 +69,34 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Fact]
-    public void HistoricalComparisonRejectsAxiomClosureChange()
+    public void HistoricalComparisonAllowsDifferentRecordedAxiomClosureWhenCurrentClosureIsStandard()
     {
         var recordedCatalog = BuildCatalog(Module("A"));
         var currentCatalog = BuildCatalog(Module("A", axioms: ["propext"]));
         var history = GenerateHistory(recordedCatalog);
 
+        var accepted = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateHistory(LoadedHistory(history.AsSpan()), currentCatalog));
+
+        Assert.Single(accepted.Capability.ActiveFrozenNodes);
+    }
+
+    [Fact]
+    public void HistoricalComparisonRejectsCurrentAxiomClosureOutsideStandardAllowlist()
+    {
+        var catalog = BuildCatalog(Module("A"));
+        var material = Assert.Single(catalog.ClosedNodes) with
+        {
+            AxiomClosure = ["Nonstandard.axiom"],
+        };
+        var recordedCatalog = ReplaceMaterial(catalog, material);
+        var currentCatalog = ReplaceMaterial(catalog, material);
+        var history = GenerateHistory(recordedCatalog);
+
         var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
             ValidateHistory(LoadedHistory(history.AsSpan()), currentCatalog));
 
-        Assert.Contains("changed identity", rejected.Message, StringComparison.Ordinal);
+        Assert.Contains("standard axiom allowlist", rejected.Message, StringComparison.Ordinal);
     }
 
     [Fact]

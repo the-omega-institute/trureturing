@@ -392,23 +392,10 @@ public static partial class FrozenLedger
                 payload.StatementId.Value));
         }
 
-        var expectedAxiomClosure = NormalizeAxiomClosure(material.AxiomClosure).ToImmutableArray();
-        if (!payload.HasAxiomClosure)
+        if (!material.AxiomClosure.All(LeanAxiomFacts.IsStandard))
         {
             result.Add(
-                $"AxiomClosure expected={FormatSequence(expectedAxiomClosure, static item => item)}, actual=<missing>");
-        }
-        else
-        {
-            var actualAxiomClosure = NormalizeAxiomClosure(payload.AxiomClosure).ToImmutableArray();
-            if (!actualAxiomClosure.SequenceEqual(expectedAxiomClosure, StringComparer.Ordinal))
-            {
-                result.Add(SequenceDifference(
-                    "AxiomClosure",
-                    expectedAxiomClosure,
-                    actualAxiomClosure,
-                    static item => item));
-            }
+                $"AxiomClosure current={FormatSequence(material.AxiomClosure, static item => item)} exceeds the standard axiom allowlist");
         }
 
         var hasExpectedPrerequisitePaths = TryResolvePrerequisitePaths(

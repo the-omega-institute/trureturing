@@ -417,7 +417,6 @@ internal sealed partial class RuleFixture
             JsonSerializer.SerializeToElement(new
             {
                 axiom_closure = Array.Empty<string>(),
-                case_class = "active-frozen",
                 case_id = "active-frozen/theorist-contract-fixture",
                 declaration_statement_ids = Reports[currentMotivationPath].Declarations.Select(
                     static declaration => new
@@ -427,13 +426,6 @@ internal sealed partial class RuleFixture
                         statement_id =
                             "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
                     }).ToArray(),
-                evaluation = "admission",
-                expected = new
-                {
-                    allowed_dispositions = new[] { "admit" },
-                    diagnostic_match = "none",
-                    required_diagnostics = Array.Empty<object>(),
-                },
                 frozen_node_id = frozenId,
                 input = new
                 {
@@ -441,16 +433,12 @@ internal sealed partial class RuleFixture
                     base_tree_oid = FrozenLedgerTestData.GitOid('5'),
                     descriptor_blob_oid = FrozenLedgerTestData.GitOid('6'),
                     descriptor_selector = currentMotivationPath,
+                    materializer = "repository-snapshot-v1",
                     supporting_blob_oids = Array.Empty<string>(),
                 },
-                input_fingerprint =
-                    "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-                node_path = currentMotivationPath,
                 prerequisite_frozen_node_ids = Array.Empty<string>(),
-                semantic_receipt = frozenId,
                 statement_id =
                     "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-                truth_state = "Closed",
                 witness_id =
                     "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
             }));

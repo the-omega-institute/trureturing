@@ -32,7 +32,7 @@ internal static class DagLedgerAppendWriter
                 return new CommandResult(
                     true,
                     $"LEDGER_APPEND appended_freezes=0 no catalog reconciliation required "
-                    + $"events={context.Baseline.Events.Length} head={context.Baseline.HeadHash}\n",
+                    + $"events={context.Baseline.EventCount} head={context.Baseline.HeadHash}\n",
                     string.Empty);
             }
 
@@ -68,7 +68,7 @@ internal static class DagLedgerAppendWriter
                 .OfType<FrozenLedgerEvent.Freeze>()
                 .ToImmutableArray();
             var output = $"LEDGER_APPEND appended_freezes={freezes.Length} "
-                + $"events={candidate.Events.Length} "
+                + $"events={candidate.EventCount} "
                 + $"head={context.BaseView.EventSetRoot(prospective.Select(static item => item.EventHash))}\n"
                 + string.Concat(freezes.Select(static item => $"FROZEN {item.Payload.Input.DescriptorSelector}\n"));
             return new CommandResult(true, output, string.Empty);
