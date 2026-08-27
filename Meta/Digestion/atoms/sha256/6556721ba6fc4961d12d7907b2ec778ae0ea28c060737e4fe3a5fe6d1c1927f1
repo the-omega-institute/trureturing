@@ -1,0 +1,69 @@
+# 228. 所有 completion 算子不一定交换
+
+设：
+
+$$
+C_T
+$$
+
+为时间 completion，
+
+$$
+C_I
+$$
+
+为干预 completion，
+
+$$
+C_P
+$$
+
+为素数 completion，
+
+$$
+C_Q
+$$
+
+为量子上下文 completion，
+
+$$
+C_M
+$$
+
+为记忆 completion。
+
+一般：
+
+$$
+C_iC_j(q)
+\neq
+C_jC_i(q).
+$$
+
+例如：
+
+* 先让动力传播局部信息，再加入跨素数读出；
+* 先把每一步投影到局部代数，再做动力闭包；
+
+可能得到不同可见空间。
+
+统一完成必须取所有 completion 的最小共同固定点：
+
+$$
+\boxed{
+q^*
+=
+\operatorname{lfp}
+\left(
+q\mapsto
+\bigvee_iC_i(q)
+\right).
+}
+$$
+
+若各 completion 两两交换，则一次组合后即可稳定。
+
+若不交换，则必须迭代。
+
+---
+

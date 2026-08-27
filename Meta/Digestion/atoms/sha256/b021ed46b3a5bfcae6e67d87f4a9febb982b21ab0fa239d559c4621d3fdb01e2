@@ -1,0 +1,34 @@
+## 定理 217.1
+
+$$
+\boxed{
+K_Q^\varepsilon
+\circ
+K_Q^\delta
+\subseteq
+K_Q^{\varepsilon+\delta}.
+}
+$$
+
+### 证明
+
+若
+
+$$
+d_Q(x,y)\le\varepsilon,
+\qquad
+d_Q(y,z)\le\delta,
+$$
+
+则由三角不等式
+
+$$
+d_Q(x,z)
+\le
+d_Q(x,y)+d_Q(y,z)
+\le
+\varepsilon+\delta.
+$$
+
+∎
+

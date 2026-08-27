@@ -1,0 +1,21 @@
+# 184. 完整性不应再使用单一布尔值
+
+一个观察者至少需要六个独立状态字段。
+
+$$
+\boxed{
+\operatorname{Status}(\mathfrak O)
+=
+\left(
+S_{\mathrm{sep}},
+S_{\mathrm{img}},
+S_{\mathrm{dyn}},
+S_{\mathrm{task}},
+S_{\mathrm{stat}},
+S_{\mathrm{rec}}
+\right).
+}
+$$
+
+其中：
+

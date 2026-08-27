@@ -1,0 +1,24 @@
+* 合法记录实现。
+
+因此：
+
+$$
+\boxed{
+\text{abstract semantic completeness}
+\not\Rightarrow
+\text{physical realizability}.
+}
+$$
+
+同理：
+
+$$
+\boxed{
+\text{存在一个区分函数}
+\not\Rightarrow
+\text{存在一个可实施实验}.
+}
+$$
+
+---
+

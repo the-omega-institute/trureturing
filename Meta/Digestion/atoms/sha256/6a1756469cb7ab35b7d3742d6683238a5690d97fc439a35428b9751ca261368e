@@ -1,0 +1,12 @@
+* 六维 crystallographic 表示却是 \(3\oplus3'\)。
+
+它们的差别不是维数，而是：
+
+$$
+\boxed{
+\text{是否保留 antipodal orientation}.
+}
+$$
+
+---
+

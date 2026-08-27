@@ -1,0 +1,10 @@
+ast_path: section/185-2-Target-residual
+fingerprints:
+  raw_sha256: sha256:ceb48f9367157b3e927fe9b02637f0f492c9a95b2d49cd05e8575d0b043e0df6
+  normalized_sha256: sha256:ceb48f9367157b3e927fe9b02637f0f492c9a95b2d49cd05e8575d0b043e0df6
+cas_ref: sha256:ceb48f9367157b3e927fe9b02637f0f492c9a95b2d49cd05e8575d0b043e0df6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

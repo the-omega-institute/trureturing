@@ -1,0 +1,23 @@
+# 第七十九部　Ramanujan–Theta 因子化猜想
+
+现在有两个承载同一有限表示的对象：
+
+$$
+\boldsymbol\Theta_L
+\in
+V_3\oplus V_3',
+$$
+
+以及：
+
+$$
+\mathcal Q_{\mathrm{RR}}
+=
+\operatorname{Sym}^2\mathbf R
+\oplus
+\operatorname{Sym}^2\mathbf R^\sigma.
+$$
+
+但二者的解析权和二进规范不同：
+
+* \(\mathcal Q_{\mathrm{RR}}\) 本质上是 weight \(0\) 的模函数双态的对称平方；

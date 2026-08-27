@@ -1,0 +1,36 @@
+## 定理 208.1：协议创新判据
+
+新协议严格增加观察能力，当且仅当存在：
+
+$$
+x,y\in X
+$$
+
+满足：
+
+$$
+xK_Py
+$$
+
+但：
+
+$$
+\mathcal L_\pi(x)
+\neq
+\mathcal L_\pi(y).
+$$
+
+即：
+
+$$
+\boxed{
+\pi\text{ 有创新}
+\iff
+\exists(x,y)\in
+K_P\setminus\ker\mathcal L_\pi.
+}
+$$
+
+因此一个实验是否“新”，不取决于：
+
+* 名称不同；

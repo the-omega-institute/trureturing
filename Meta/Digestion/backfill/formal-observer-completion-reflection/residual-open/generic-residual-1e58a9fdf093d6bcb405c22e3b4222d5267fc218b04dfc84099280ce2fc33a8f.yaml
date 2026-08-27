@@ -1,0 +1,10 @@
+ast_path: section/结论三-所有动力观察都是-Heisenberg-closure
+fingerprints:
+  raw_sha256: sha256:1e58a9fdf093d6bcb405c22e3b4222d5267fc218b04dfc84099280ce2fc33a8f
+  normalized_sha256: sha256:1e58a9fdf093d6bcb405c22e3b4222d5267fc218b04dfc84099280ce2fc33a8f
+cas_ref: sha256:1e58a9fdf093d6bcb405c22e3b4222d5267fc218b04dfc84099280ce2fc33a8f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

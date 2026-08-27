@@ -1,0 +1,17 @@
+## 31.1 模群商
+
+主同余子群的 level-5 商满足：
+
+$$
+\boxed{
+PSL_2(\mathbb Z)/\overline{\Gamma(5)}
+\simeq
+PSL_2(\mathbb F_5)
+\simeq
+A_5.
+}
+$$
+
+所以同一个 \(A_5\) 同时出现于：
+
+* 五次根的偶置换；

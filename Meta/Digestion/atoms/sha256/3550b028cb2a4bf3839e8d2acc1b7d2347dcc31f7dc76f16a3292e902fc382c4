@@ -1,0 +1,12 @@
+## 第四：动态 completion 是三重对偶
+
+$$
+\boxed{
+\text{最大稳定 residual}
+\leftrightarrow
+\text{最小稳定 observer refinement}
+\leftrightarrow
+\text{最小不变 observable closure}.
+}
+$$
+

@@ -1,0 +1,10 @@
+ast_path: section/41-1-维数归一化后的临界中点
+fingerprints:
+  raw_sha256: sha256:9b612b1b78022cab320a1ae4d656591f06f18e3380cb91a3728decbe9743c9d2
+  normalized_sha256: sha256:9b612b1b78022cab320a1ae4d656591f06f18e3380cb91a3728decbe9743c9d2
+cas_ref: sha256:9b612b1b78022cab320a1ae4d656591f06f18e3380cb91a3728decbe9743c9d2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

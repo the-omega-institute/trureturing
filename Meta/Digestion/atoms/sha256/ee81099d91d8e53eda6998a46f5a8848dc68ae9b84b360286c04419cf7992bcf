@@ -1,0 +1,14 @@
+## 定理 225.2（任务族分离判据）
+
+若 $\mathcal L$ 对允许 law 是 measure-determining 的，即任意不同 law 总能被某个损失函数区分，则
+
+$$
+\boxed{
+K_{\mathrm{pred}}
+=
+K_{\mathrm{risk}}.
+}
+$$
+
+有限结果空间中，包含全部事件指示函数的损失族可以分离全部概率 law。
+

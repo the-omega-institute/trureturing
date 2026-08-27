@@ -1,0 +1,20 @@
+* 多个二十面体类型 \(\alpha\)；
+
+间分散，称为四轴 non-sticky。
+
+可以期待：
+
+$$
+\text{prime orthogonality}
++
+\text{regulator Fourier orthogonality}
++
+\text{height separation}
++
+\text{finite Weil orthogonality}
+$$
+
+共同产生严格增益。
+
+---
+

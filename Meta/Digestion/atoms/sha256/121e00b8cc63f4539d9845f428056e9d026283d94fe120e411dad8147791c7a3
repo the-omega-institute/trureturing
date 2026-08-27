@@ -1,0 +1,61 @@
+## 29.2 物理观察与内部观察
+
+定义：
+
+$$
+q_\parallel(x)=P_\parallel x,
+$$
+
+$$
+q_\perp(x)=P_\perp x.
+$$
+
+联合读数：
+
+$$
+(q_\parallel,q_\perp):
+W_{\max}
+\longrightarrow
+E_\parallel\oplus E_\perp
+$$
+
+是完整的六维观察。
+
+但物理观察者只保留：
+
+$$
+q_\parallel.
+$$
+
+这时不能简单说“隐藏空间被删除”。真正的模型还需要一个内部接受窗口：
+
+$$
+\Omega\subset E_\perp.
+$$
+
+定义显现门：
+
+$$
+A_\Omega(x)
+=
+\mathbf1_\Omega(q_\perp(x)).
+$$
+
+最终三维可见集合为：
+
+$$
+\boxed{
+\Lambda(\Omega)
+=
+\left\{
+q_\parallel(x):
+x\in W_{\max},
+\ q_\perp(x)\in\Omega
+\right\}.
+}
+$$
+
+这就是 cut-and-project 结构的观察者版本。六维模型由物理空间和内部空间两个三维子空间组成；实际三维原子结构由内部 occupation domain 选择后投影得到。([国际晶体学期刊][3])
+
+---
+

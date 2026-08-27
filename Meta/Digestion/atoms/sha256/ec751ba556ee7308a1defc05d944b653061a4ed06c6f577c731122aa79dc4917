@@ -1,0 +1,16 @@
+## Deng 层
+
+把 sticky 历史分成：
+
+$$
+\text{全部历史}
+\to
+\text{connected cumulant}
+\to
+\text{primitive history}
+\to
+\text{counterterm}.
+$$
+
+证明高阶余项不支付阶乘复杂度。
+

@@ -1,0 +1,13 @@
+ast_path: 严格边界/251.1
+fingerprints:
+  raw_sha256: sha256:2f76d693a8888e10231cd8e092628589082e0969a0b9dd308ab5215b323068a9
+  normalized_sha256: sha256:2f76d693a8888e10231cd8e092628589082e0969a0b9dd308ab5215b323068a9
+cas_ref: sha256:2f76d693a8888e10231cd8e092628589082e0969a0b9dd308ab5215b323068a9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-a69a542e536b294a9da8889b72a502ef93b4a980e72828b8b90c9741b322d456-b4389157dc9e2c9cc40a1994ebeea35a23a0045c6aa9b7cf0945a5541ae774a0
+    - generic-residual-eb8a8b14ee2b8f472fe2aa56818d2de75dba8ad48674de83b5052aca5a13ad45-a9fed5e4fa606fbd8bf5153471b8496ccbcc55ec2563c0a9d4644b015d78aad8

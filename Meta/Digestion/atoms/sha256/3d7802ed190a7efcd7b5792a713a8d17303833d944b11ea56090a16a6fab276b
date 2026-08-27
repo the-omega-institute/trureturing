@@ -1,0 +1,64 @@
+## 5.2 Mellin 影像
+
+计算：
+
+$$
+2\int_0^\infty e^{-\pi x^2}x^{s-1}\,dx.
+$$
+
+令：
+
+$$
+u=\pi x^2,
+$$
+
+得到：
+
+$$
+\boxed{
+2\int_0^\infty e^{-\pi x^2}x^{s-1}\,dx
+=
+\pi^{-s/2}\Gamma\left(\frac s2\right).
+}
+$$
+
+因此 Riemann ζ 的无穷位因子：
+
+$$
+\Gamma_\infty(s)
+=
+\pi^{-s/2}\Gamma(s/2)
+$$
+
+正是自对偶 Gaussian 的 Mellin 观察。标准完成函数为：
+
+$$
+\xi(s)
+=
+\frac12s(s-1)
+\pi^{-s/2}
+\Gamma(s/2)\zeta(s).
+$$
+
+DLMF 给出该定义及相应反射公式。([dlmf.nist.gov][1])
+
+于是：
+
+$$
+\boxed{
+\pi
+=
+\text{有限素数 Euler 对象闭合进实无穷位时的 Fourier–Mellin 规范。}
+}
+$$
+
+这比“\(\pi\) 是完成化”更准确：
+
+$$
+\boxed{
+\pi\text{ 是 Archimedean 完成签名的数值代表。}
+}
+$$
+
+---
+

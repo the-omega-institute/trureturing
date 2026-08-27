@@ -1,0 +1,16 @@
+## 定理 223.2
+
+$\equiv_{\mathrm{act}}$ 是 $A^*$ 上的双边幺半群同余。
+
+因此可定义有效协议作用幺半群：
+
+$$
+\boxed{
+M_{\mathrm{eff}}
+=
+A^*/{\equiv_{\mathrm{act}}}.
+}
+$$
+
+它在 $Q_\infty$ 上忠实作用。
+

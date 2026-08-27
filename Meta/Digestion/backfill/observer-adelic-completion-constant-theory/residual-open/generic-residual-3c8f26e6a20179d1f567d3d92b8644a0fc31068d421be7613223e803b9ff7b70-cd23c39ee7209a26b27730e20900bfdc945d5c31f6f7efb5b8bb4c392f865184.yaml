@@ -1,0 +1,10 @@
+ast_path: section/73-1-纤维均匀性/clause/2
+fingerprints:
+  raw_sha256: sha256:3c8f26e6a20179d1f567d3d92b8644a0fc31068d421be7613223e803b9ff7b70
+  normalized_sha256: sha256:3c8f26e6a20179d1f567d3d92b8644a0fc31068d421be7613223e803b9ff7b70
+cas_ref: sha256:3c8f26e6a20179d1f567d3d92b8644a0fc31068d421be7613223e803b9ff7b70
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

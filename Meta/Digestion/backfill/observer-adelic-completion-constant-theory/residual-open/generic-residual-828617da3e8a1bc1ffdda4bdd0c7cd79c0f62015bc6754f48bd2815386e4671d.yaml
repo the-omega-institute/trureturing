@@ -1,0 +1,10 @@
+ast_path: section/42-2-乘法完成
+fingerprints:
+  raw_sha256: sha256:828617da3e8a1bc1ffdda4bdd0c7cd79c0f62015bc6754f48bd2815386e4671d
+  normalized_sha256: sha256:828617da3e8a1bc1ffdda4bdd0c7cd79c0f62015bc6754f48bd2815386e4671d
+cas_ref: sha256:828617da3e8a1bc1ffdda4bdd0c7cd79c0f62015bc6754f48bd2815386e4671d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/36-4-RH-桥仍然开放/clause/4
+fingerprints:
+  raw_sha256: sha256:13f5276ab4faaff274ab38faea439197fe305a49b0268f7240e761a60fc15ae7
+  normalized_sha256: sha256:13f5276ab4faaff274ab38faea439197fe305a49b0268f7240e761a60fc15ae7
+cas_ref: sha256:13f5276ab4faaff274ab38faea439197fe305a49b0268f7240e761a60fc15ae7
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

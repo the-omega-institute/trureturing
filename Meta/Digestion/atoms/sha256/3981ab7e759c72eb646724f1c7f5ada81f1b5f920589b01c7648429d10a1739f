@@ -1,0 +1,57 @@
+## 统一观察者双完成定理
+
+给定协议评价系统：
+
+$$
+e:X\times P\to\Lambda,
+$$
+
+并给定协议生成闭包 \(\operatorname{Cl}(P)\)，则存在规范结构：
+
+$$
+\mathfrak O^*
+=
+(X^*,P^*,e^*,B_{\mathrm{real}},B_{\mathrm{formal}})
+$$
+
+满足：
+
+$$
+X^*
+=
+X/\!\sim_X,
+$$
+
+$$
+P^*
+=
+\operatorname{Cl}(P)/\!\sim_P,
+$$
+
+$$
+B_{\mathrm{real}}
+=
+\operatorname{Im}
+\left(
+X\to
+\Lambda^{\operatorname{Cl}(P)}
+\right),
+$$
+
+并且：
+
+1. \(e^*\) 没有重复状态行；
+2. \(e^*\) 没有重复协议列；
+3. \(X^*\cong B_{\mathrm{real}}\)；
+4. 任意保持全部协议行为的状态实现都满射到 \(X^*\)；
+5. 任意纯后处理不能缩小 \(X^*\) 的 kernel；
+6. 新协议严格增加能力，当且仅当它切开某个旧 residual fiber；
+7. \(B_{\mathrm{formal}}\setminus B_{\mathrm{real}}\) 精确描述 realization defect；
+8. 对角化在满足自地址和固定点自由条件时构造 realization defect；
+9. 若状态空间紧致且所有有限局部记录连续可实现，则兼容局部记录全局可实现；
+10. 若再有状态分离，则局部记录唯一决定全局状态。
+
+这可以视为此前“协议—商—极限”理论的真正双侧闭合。
+
+---
+

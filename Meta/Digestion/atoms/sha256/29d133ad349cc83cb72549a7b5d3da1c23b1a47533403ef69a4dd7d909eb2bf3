@@ -1,0 +1,35 @@
+## 定理 217.2（超度量阈值闭合）
+
+若 $d_\Lambda$ 是超度量：
+
+$$
+d(a,c)
+\le
+\max\{d(a,b),d(b,c)\},
+$$
+
+则 $d_Q$ 也是超度量，并且对每个 $\varepsilon$：
+
+$$
+\boxed{
+K_Q^\varepsilon
+\text{ 是等价关系}.
+}
+$$
+
+### 解释
+
+普通噪声几何产生“容差逐步累积”；超度量几何产生真正的嵌套观察分块：
+
+$$
+\varepsilon_1\le\varepsilon_2
+\Longrightarrow
+K_Q^{\varepsilon_1}
+\subseteq
+K_Q^{\varepsilon_2}.
+$$
+
+这正适合 $p$-进精度观察：同一精度阈值内的不可区分关系天然传递。
+
+---
+

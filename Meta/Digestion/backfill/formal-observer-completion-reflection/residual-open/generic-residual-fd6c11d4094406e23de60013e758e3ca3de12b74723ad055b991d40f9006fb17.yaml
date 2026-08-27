@@ -1,0 +1,10 @@
+ast_path: section/187-Noetherian-observer-principle
+fingerprints:
+  raw_sha256: sha256:fd6c11d4094406e23de60013e758e3ca3de12b74723ad055b991d40f9006fb17
+  normalized_sha256: sha256:fd6c11d4094406e23de60013e758e3ca3de12b74723ad055b991d40f9006fb17
+cas_ref: sha256:fd6c11d4094406e23de60013e758e3ca3de12b74723ad055b991d40f9006fb17
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

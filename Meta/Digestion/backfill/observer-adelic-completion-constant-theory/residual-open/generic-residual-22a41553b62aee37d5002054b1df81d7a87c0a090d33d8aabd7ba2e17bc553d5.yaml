@@ -1,0 +1,14 @@
+ast_path: section/4-4-连接常数
+fingerprints:
+  raw_sha256: sha256:22a41553b62aee37d5002054b1df81d7a87c0a090d33d8aabd7ba2e17bc553d5
+  normalized_sha256: sha256:22a41553b62aee37d5002054b1df81d7a87c0a090d33d8aabd7ba2e17bc553d5
+cas_ref: sha256:22a41553b62aee37d5002054b1df81d7a87c0a090d33d8aabd7ba2e17bc553d5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-58d5359543227aaf87708dd6b36bb39a0a64d7be9e0c967ebb54afaa92297afd-048cc04bf43dddf33527aee22358a4f0846cfc9477ed6cfeb99f8ad5a5f1b5b6
+    - generic-residual-f9b77450ad9dcfee4b4246ee49b3f44550903f15a619e8bd29edbafcdce89f50-6a29d660bb5a44808596cb9a65ddde399b1a09004b1bfd9a79229e66f93ff224
+    - generic-residual-50de429782dad23a1da7bd7ab4f456f265e91c2fd9501dacb1923c1690ca00ab-ee01d8acf00fe90c36115a4ff5ae9064460d474ff8f52830bbee2a5425c73811

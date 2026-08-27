@@ -1,0 +1,11 @@
+# 186. Completion 算子的公共固定点
+
+设：
+
+$$
+C_1,\ldots,C_m
+$$
+
+分别表示：
+
+* 时间 completion；

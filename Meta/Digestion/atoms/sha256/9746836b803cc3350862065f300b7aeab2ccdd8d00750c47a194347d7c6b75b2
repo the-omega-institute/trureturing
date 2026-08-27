@@ -1,0 +1,49 @@
+# 第四十五部　调节子 Fourier 基因组
+
+定义调节子频率：
+
+$$
+\boxed{
+\omega_m
+=
+\frac{\pi m}{\log\varphi},
+\qquad
+m\in\mathbb Z.
+}
+\tag{45.1}
+$$
+
+它不是人为选择，而是圆
+
+$$
+\mathbb R/
+2\log\varphi\,\mathbb Z
+$$
+
+的字符频率：
+
+$$
+e^{i\omega_m(\eta+2\log\varphi)}
+=
+e^{i\omega_m\eta}.
+$$
+
+因此：
+
+$$
+\boxed{
+\frac{\pi}{\log\varphi}
+=
+\text{Golden 单位流基本圆的 Fourier 频率单位。}
+}
+$$
+
+这里：
+
+* \(\pi\) 来自 Fourier 字符；
+* \(\log\varphi\) 来自算术调节子。
+
+二者同时出现不是数值巧合。
+
+---
+

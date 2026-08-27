@@ -1,0 +1,10 @@
+ast_path: section/访问
+fingerprints:
+  raw_sha256: sha256:ad4e46570ad0cd77b97b70df7bf7a7eff5ade3eb273658f34ae01e26efe145c4
+  normalized_sha256: sha256:ad4e46570ad0cd77b97b70df7bf7a7eff5ade3eb273658f34ae01e26efe145c4
+cas_ref: sha256:ad4e46570ad0cd77b97b70df7bf7a7eff5ade3eb273658f34ae01e26efe145c4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,36 @@
+## 定理 68.1（能量—边界选择律）
+
+对任意 \(x\in L\)：
+
+$$
+\boxed{
+q_R(\rho_5(x))
+\equiv
+2\,\langle x,x\rangle
+\pmod5.
+}
+\tag{68.4}
+$$
+
+### 证明
+
+$$
+\begin{aligned}
+q_R(\rho_5(x))
+&=
+x^TR_5^THR_5x\\
+&\equiv
+2x^TGx
+\pmod5.
+\end{aligned}
+$$
+
+∎
+
+这条恒等式说明：
+
+> 六维格点的实能量，不仅在 \(\mathbb R\) 中定义一个壳层；其模 \(5\) 剩余还精确决定了该格点进入哪一种有限二十面体边界类型。
+
+项目已经机器核验了黄金整数环中：
+
+* \(p\equiv\pm1\pmod5\) 分裂；

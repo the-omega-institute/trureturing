@@ -1,0 +1,10 @@
+ast_path: section/250-预测记忆的熵分解
+fingerprints:
+  raw_sha256: sha256:27f58167acc1ecb288123c2774c53de59c4f94bd493b48cf9d560dc8b6e880b2
+  normalized_sha256: sha256:27f58167acc1ecb288123c2774c53de59c4f94bd493b48cf9d560dc8b6e880b2
+cas_ref: sha256:27f58167acc1ecb288123c2774c53de59c4f94bd493b48cf9d560dc8b6e880b2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

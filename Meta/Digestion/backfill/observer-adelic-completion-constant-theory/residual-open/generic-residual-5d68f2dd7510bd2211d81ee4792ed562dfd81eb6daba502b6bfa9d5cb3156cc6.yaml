@@ -1,0 +1,10 @@
+ast_path: section/57-2-十个非平方方向
+fingerprints:
+  raw_sha256: sha256:5d68f2dd7510bd2211d81ee4792ed562dfd81eb6daba502b6bfa9d5cb3156cc6
+  normalized_sha256: sha256:5d68f2dd7510bd2211d81ee4792ed562dfd81eb6daba502b6bfa9d5cb3156cc6
+cas_ref: sha256:5d68f2dd7510bd2211d81ee4792ed562dfd81eb6daba502b6bfa9d5cb3156cc6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

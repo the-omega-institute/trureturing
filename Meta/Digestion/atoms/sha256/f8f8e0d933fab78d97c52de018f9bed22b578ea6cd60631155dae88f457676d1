@@ -1,0 +1,16 @@
+## 结论 249.1
+
+预测 completion 不只是一个静态 sufficient statistic；它自动产生闭合状态更新：
+
+$$
+\boxed{
+\text{predictive quotient}
++
+\text{new observation}
+\longrightarrow
+\text{next predictive quotient}.
+}
+$$
+
+---
+

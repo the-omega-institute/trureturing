@@ -1,0 +1,75 @@
+## 定理 16.1：prime-deleted Lambert–Mellin 桥
+
+在绝对收敛区域：
+
+$$
+\Re(w)>1,
+\qquad
+\Re(w+r)>1,
+$$
+
+有：
+
+$$
+\boxed{
+\int_0^\infty
+t^{w-1}\mathcal L_{p,r}(t)\,dt
+=
+\Gamma(w)
+\zeta(w)
+\zeta(w+r)
+\left(1-p^{-(w+r)}\right).
+}
+\tag{PLM}
+$$
+
+### 证明
+
+$$
+\begin{aligned}
+\int_0^\infty
+t^{w-1}\mathcal L_{p,r}(t)\,dt
+&=
+\sum_{\substack{d\ge1\\p\nmid d}}
+d^{-r}
+\sum_{m\ge1}
+\int_0^\infty
+t^{w-1}e^{-dmt}\,dt
+\\
+&=
+\Gamma(w)
+\sum_{m\ge1}m^{-w}
+\sum_{\substack{d\ge1\\p\nmid d}}d^{-(w+r)}
+\\
+&=
+\Gamma(w)\zeta(w)
+\zeta(w+r)
+(1-p^{-(w+r)}).
+\end{aligned}
+$$
+
+∎
+
+这是一个重要的新观察接口：
+
+$$
+\boxed{
+\text{一个正系数 Lambert }q\text{-级数的 Mellin 观察，}
+\newline
+\text{同时读取 }\zeta(w)\text{ 与一个被删除的素数通道。}
+}
+$$
+
+你提供的 \(p\)-adic ζ 草稿从：
+
+$$
+K_{p,r}(q)
+=
+\frac{\zeta_p(r)}2
++
+\sum_{n\ge1}\sigma_{-r}^{(p)}(n)q^n
+$$
+
+出发，因此同一个 \(q\)-对象：
+
+* 常数项携带 \(p\)-adic ζ 值；

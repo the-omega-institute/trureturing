@@ -1,0 +1,21 @@
+* 损失函数为：
+
+$$
+\ell:\Theta\times A\longrightarrow\mathbb R.
+$$
+
+实验 `E` 下的最优 Bayes 风险定义为：
+
+$$
+R^*(E;\pi,\ell)
+=
+\inf_d
+\sum_{\theta,y,a}
+\pi(\theta)
+E_\theta(y)
+d(a\mid y)
+\ell(\theta,a),
+$$
+
+其中 `d` 遍历所有输出到动作的随机决策规则。
+

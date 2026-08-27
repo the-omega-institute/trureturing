@@ -1,0 +1,10 @@
+ast_path: section/27-4-sqrt5-的结构角色/clause/3
+fingerprints:
+  raw_sha256: sha256:2258751738fc0f324aa9f47da79fe070b7211b3bb2152dda1534d947ca7b3bcc
+  normalized_sha256: sha256:2258751738fc0f324aa9f47da79fe070b7211b3bb2152dda1534d947ca7b3bcc
+cas_ref: sha256:2258751738fc0f324aa9f47da79fe070b7211b3bb2152dda1534d947ca7b3bcc
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

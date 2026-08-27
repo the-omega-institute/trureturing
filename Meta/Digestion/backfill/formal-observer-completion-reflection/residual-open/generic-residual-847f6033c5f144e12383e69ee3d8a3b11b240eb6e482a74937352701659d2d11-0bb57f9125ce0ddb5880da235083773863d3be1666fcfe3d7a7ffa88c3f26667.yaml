@@ -1,0 +1,10 @@
+ast_path: section/225-Observer-completion-不等于-metric-completion/clause/5
+fingerprints:
+  raw_sha256: sha256:847f6033c5f144e12383e69ee3d8a3b11b240eb6e482a74937352701659d2d11
+  normalized_sha256: sha256:847f6033c5f144e12383e69ee3d8a3b11b240eb6e482a74937352701659d2d11
+cas_ref: sha256:847f6033c5f144e12383e69ee3d8a3b11b240eb6e482a74937352701659d2d11
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

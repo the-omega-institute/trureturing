@@ -1,0 +1,24 @@
+## 234.1 Kernel 精化
+
+定义：
+
+$$
+E\succeq_K F
+$$
+
+当且仅当：
+
+$$
+E_\theta=E_{\theta'}
+\Longrightarrow
+F_\theta=F_{\theta'}.
+$$
+
+等价地：
+
+$$
+K_E\subseteq K_F.
+$$
+
+它只比较哪些参数被完全合并。
+

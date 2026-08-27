@@ -1,0 +1,10 @@
+ast_path: section/61-1-两个不同的-A-5
+fingerprints:
+  raw_sha256: sha256:bd7924f4b38d78b26c1062eb16ad0ecb45973fb70e9cabb6a04088d5ae49f3a2
+  normalized_sha256: sha256:bd7924f4b38d78b26c1062eb16ad0ecb45973fb70e9cabb6a04088d5ae49f3a2
+cas_ref: sha256:bd7924f4b38d78b26c1062eb16ad0ecb45973fb70e9cabb6a04088d5ae49f3a2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

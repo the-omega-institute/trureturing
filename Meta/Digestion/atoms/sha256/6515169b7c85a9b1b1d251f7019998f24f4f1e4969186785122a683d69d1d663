@@ -1,0 +1,75 @@
+# 第六十一部　有限 Weil 变换产生第二个 \(A_5\)
+
+现在定义：
+
+$$
+Q(x)=\frac12q(x)\in\mathbb F_5.
+$$
+
+令有限相位算子：
+
+$$
+\boxed{
+(Tf)(x)
+=
+\zeta_5^{Q(x)}f(x).
+}
+\tag{61.1}
+$$
+
+在七轨道基中：
+
+$$
+T=
+\operatorname{diag}
+\left(
+1,1,1,
+\zeta_5,\zeta_5^4,
+\zeta_5^3,\zeta_5^2
+\right).
+$$
+
+令 \(\widetilde{\mathcal F}\) 是在正交归一轨道基中的单位 Fourier 变换：
+
+$$
+\widetilde{\mathcal F}
+=
+125^{-1/2}\mathcal F.
+$$
+
+再定义：
+
+$$
+S:=-\widetilde{\mathcal F}.
+$$
+
+对上述七维空间进行直接 cyclotomic 矩阵计算，得到：
+
+$$
+\boxed{
+S^2=I,
+\qquad
+T^5=I,
+\qquad
+(ST)^3=I.
+}
+\tag{61.2}
+$$
+
+这正是二十面体群的表示：
+
+$$
+\boxed{
+\langle S,T
+\mid
+S^2=T^5=(ST)^3=1
+\rangle
+\simeq
+A_5.
+}
+$$
+
+因为 \(T\) 确实具有阶 \(5\)，所得表示非平凡；由 \(A_5\) 单性，像是忠实的。
+
+---
+

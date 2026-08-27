@@ -1,0 +1,40 @@
+## 83.2 Ramification residual
+
+普通余数观察：
+
+$$
+Q(x)\bmod5
+$$
+
+不能区分：
+
+$$
+\rho_5(x)=0
+$$
+
+与：
+
+$$
+q_R(\rho_5(x))=0,\quad \rho_5(x)\neq0.
+$$
+
+因此需要加入：
+
+$$
+\boxed{
+\operatorname{RamRes}_5(x)
+=
+\mathbf1_{\rho_5(x)\neq0}.
+}
+$$
+
+这正是 DECT 中一个最小新定义：
+
+$$
+\text{它只切开普通模 }5\text{ 观察的零纤维，}
+$$
+
+但不增加其他余数类的冗余信息。
+
+---
+

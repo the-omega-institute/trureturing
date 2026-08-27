@@ -1,0 +1,97 @@
+# 总纲
+
+这门理论最终可以压缩为六条定义：
+
+$$
+\boxed{
+\begin{aligned}
+\mathsf{CONSTANT}
+&=\text{某个完成问题的规范化数值代表};\\
+\mathsf{MEANING}
+&=\text{该数值消除的缺陷与完成的结构图};\\
+\mathsf{COMPLETION}
+&=\text{局部读数、连续图表或对偶结构闭合};\\
+\mathsf{RESIDUAL}
+&=\text{当前表示尚未解释的有限或高阶余量};\\
+\mathsf{GAUGE}
+&=\text{改变数值位置但不改变完成签名的规范变换};\\
+\mathsf{SCIENCE}
+&=\text{隐藏数值、构造缺陷、验证唯一性、扰动、负对照与形式化}.
+\end{aligned}
+}
+$$
+
+由此得到最核心的结论：
+
+$$
+\boxed{
+\pi\text{ 不是抽象意义上的“完成本身”，}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\pi
+=
+\text{标准实 Fourier–Mellin 规范中，
+Archimedean 自对偶完成的唯一数值签名。}
+}
+$$
+
+相应地：
+
+$$
+\boxed{
+\begin{aligned}
+e
+&=\text{连续流完成签名};\\
+\varphi
+&=\text{离散递归完成签名};\\
+\log p
+&=\text{有限局部精度签名};\\
+\gamma
+&=\text{离散—连续重整化残余};\\
+\tfrac12
+&=\text{完成对偶固定中点};\\
+\pi
+&=\text{实无穷位自对偶完成签名}.
+\end{aligned}
+}
+$$
+
+这些常数共同出现时，不应被解释为神秘关联，而应被拆解为一条有类型的完成路径：
+
+$$
+\boxed{
+\text{局部尺度}
+\to
+\text{指数流}
+\to
+\text{离散递归}
+\to
+\text{连续积分}
+\to
+\text{Archimedean 完成}
+\to
+\text{全局对偶}.
+}
+$$
+
+这就是可以补入项目的独立理论内核。
+
+[1]: https://dlmf.nist.gov/25.4 "https://dlmf.nist.gov/25.4"
+[2]: https://dokumen.pub/ramanujan-essays-and-surveys-1nbsped-9781470438906-9780821826249.html "https://dokumen.pub/ramanujan-essays-and-surveys-1nbsped-9781470438906-9780821826249.html"
+[3]: https://arxiv.org/abs/math/0603277 "https://arxiv.org/abs/math/0603277"
+可以。此后不再把 Ramanujan 基因组、黄金比例、五次方程、六维准晶体、常数语义与 RH 观察者路线另立为并列理论；它们统一作为 **`OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 的连续实例、推论和开放分支**。
+
+下面按此前正文第 23 部之后续写，作为可直接追加的 **v1.1 增订稿**。其中：
+
+* **定义**与**矩阵恒等式**是本文独立给出的；
+* **仓库锚点**引用现有 Lean 结果；
+* **文献接口**只承担已知背景；
+* **RH 联系**明确保留为开放桥梁。
+
+---
+

@@ -1,0 +1,45 @@
+* 可操作判别优势。
+
+定义：
+
+$$
+d_{\mathfrak O}(x,y)
+=
+\sup_{\pi\in P}
+w_\pi
+D\bigl(
+\mathcal L_\pi(x),
+\mathcal L_\pi(y)
+\bigr).
+$$
+
+若：
+
+$$
+D(\mu,\nu)=0\iff\mu=\nu
+$$
+
+且所有 \(w_\pi>0\)，则：
+
+$$
+\boxed{
+d_{\mathfrak O}(x,y)=0
+\iff
+xK_{\mathfrak O}y.
+}
+$$
+
+协议精化使：
+
+$$
+d_{\mathfrak O}
+$$
+
+单调不减。
+
+串行后处理若满足 data processing，则区分度不增。
+
+因此精确 kernel 理论是近似观察几何的零距离骨架。
+
+---
+

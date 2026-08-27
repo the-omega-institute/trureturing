@@ -1,0 +1,10 @@
+ast_path: section/218-精确透明自我预测的不可能三角
+fingerprints:
+  raw_sha256: sha256:1138aa04b83a9ab90799f5270f849a822ab631b3be4a1bb6ac062faede276dd7
+  normalized_sha256: sha256:1138aa04b83a9ab90799f5270f849a822ab631b3be4a1bb6ac062faede276dd7
+cas_ref: sha256:1138aa04b83a9ab90799f5270f849a822ab631b3be4a1bb6ac062faede276dd7
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

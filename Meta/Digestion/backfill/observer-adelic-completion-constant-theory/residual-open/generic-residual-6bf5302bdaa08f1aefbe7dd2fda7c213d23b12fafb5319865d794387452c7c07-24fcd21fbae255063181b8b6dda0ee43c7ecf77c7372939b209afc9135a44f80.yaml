@@ -1,0 +1,10 @@
+ast_path: section/1-1-完成问题/clause/1
+fingerprints:
+  raw_sha256: sha256:6bf5302bdaa08f1aefbe7dd2fda7c213d23b12fafb5319865d794387452c7c07
+  normalized_sha256: sha256:6bf5302bdaa08f1aefbe7dd2fda7c213d23b12fafb5319865d794387452c7c07
+cas_ref: sha256:6bf5302bdaa08f1aefbe7dd2fda7c213d23b12fafb5319865d794387452c7c07
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

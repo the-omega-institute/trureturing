@@ -1,0 +1,28 @@
+# 211. 线性观察算子与双 Gram 几何
+
+设状态差异空间为有限维 Hilbert 空间 $V$，协议读出是线性泛函
+
+$$
+\ell_i:V\to\mathbb F,
+\qquad
+1\le i\le m,
+$$
+
+其中 $\mathbb F=\mathbb R$ 或 $\mathbb C$。
+
+定义观察算子
+
+$$
+M:V\to\mathbb F^m,
+$$
+
+$$
+Mv
+=
+\begin{bmatrix}
+\ell_1(v)\\
+\vdots\\
+\ell_m(v)
+\end{bmatrix}.
+$$
+

@@ -1,0 +1,10 @@
+ast_path: section/摘要/clause/4
+fingerprints:
+  raw_sha256: sha256:d1b754dbbb91990aa23f7972c929ed066770dd351f5318fd03f82d8e97f0a925
+  normalized_sha256: sha256:d1b754dbbb91990aa23f7972c929ed066770dd351f5318fd03f82d8e97f0a925
+cas_ref: sha256:d1b754dbbb91990aa23f7972c929ed066770dd351f5318fd03f82d8e97f0a925
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

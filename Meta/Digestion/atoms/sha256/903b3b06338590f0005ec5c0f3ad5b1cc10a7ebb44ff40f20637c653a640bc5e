@@ -1,0 +1,12 @@
+## 结论 228.5（素数观察具有统一有限逼近率）
+
+$$
+\boxed{
+\text{全 prime–precision 观察误差}
+\le
+\text{prime tail}
++
+\text{precision tail}.
+}
+$$
+

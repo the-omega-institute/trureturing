@@ -1,0 +1,13 @@
+## 定义 238.2（状态族 deficiency）
+
+$$
+\delta_Q(\sigma\mid\rho)
+=
+\inf_\Lambda
+\sup_\theta
+\frac12
+\left\|
+\sigma_\theta-\Lambda(\rho_\theta)
+\right\|_1.
+$$
+

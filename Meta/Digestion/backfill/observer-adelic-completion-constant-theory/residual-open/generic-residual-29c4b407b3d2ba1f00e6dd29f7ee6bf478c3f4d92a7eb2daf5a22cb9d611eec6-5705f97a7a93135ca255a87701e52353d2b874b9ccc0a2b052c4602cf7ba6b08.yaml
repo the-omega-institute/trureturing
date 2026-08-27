@@ -1,0 +1,10 @@
+ast_path: section/51-1-Golden-Dedekind-GRH/clause/1
+fingerprints:
+  raw_sha256: sha256:29c4b407b3d2ba1f00e6dd29f7ee6bf478c3f4d92a7eb2daf5a22cb9d611eec6
+  normalized_sha256: sha256:29c4b407b3d2ba1f00e6dd29f7ee6bf478c3f4d92a7eb2daf5a22cb9d611eec6
+cas_ref: sha256:29c4b407b3d2ba1f00e6dd29f7ee6bf478c3f4d92a7eb2daf5a22cb9d611eec6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

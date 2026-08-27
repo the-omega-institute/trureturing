@@ -1,0 +1,87 @@
+# 第二十三部　首批应冻结的定理
+
+最适合立即进入项目真源的结果是：
+
+$$
+\boxed{
+\widehat{e^{-ax^2}}=e^{-ax^2}
+\iff
+a=\pi.
+}
+$$
+
+$$
+\boxed{
+2\int_0^\infty
+e^{-\pi x^2}x^{s-1}\,dx
+=
+\pi^{-s/2}\Gamma(s/2).
+}
+$$
+
+$$
+\boxed{
+E(x+y)=E(x)E(y),\ E'(0)=1
+\Longrightarrow
+E(x)=e^x.
+}
+$$
+
+$$
+\boxed{
+x=1+\frac1x,\ x>0
+\iff
+x=\varphi.
+}
+$$
+
+$$
+\boxed{
+e^{-\ell_p(p)}=p^{-1}
+\iff
+\ell_p(p)=\log p.
+}
+$$
+
+$$
+\boxed{
+H_n-\log n-\gamma\to0.
+}
+$$
+
+$$
+\boxed{
+s=1-\overline s
+\iff
+\Re(s)=\frac12.
+}
+$$
+
+$$
+\boxed{
+S(x)+T(x)
+=
+\sqrt{\frac{\pi e^x}{2x}}.
+}
+$$
+
+$$
+\boxed{
+\int_0^\infty
+t^{w-1}\mathcal L_{p,r}(t)\,dt
+=
+\Gamma(w)\zeta(w)\zeta(w+r)(1-p^{-w-r}).
+}
+$$
+
+$$
+\boxed{
+Z_\varphi(s)
+\text{ 亚纯延拓至 }\Re(s)>0,
+\qquad
+\operatorname*{Res}_{s=1}Z_\varphi(s)=\frac1{\sqrt5}.
+}
+$$
+
+---
+

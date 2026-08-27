@@ -1,0 +1,22 @@
+## 定义 226.1（响应函数完备）
+
+称评价
+
+$$
+e:X\times P\to\Lambda
+$$
+
+在协议侧响应完备，若对每个函数
+
+$$
+f:X\to\Lambda
+$$
+
+都存在协议 $p_f\in P$ 使
+
+$$
+e(x,p_f)=f(x)
+\qquad
+\forall x.
+$$
+

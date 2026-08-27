@@ -1,0 +1,21 @@
+# 195. 双外延观察者核
+
+定义：
+
+$$
+\overline X=X/{\sim_X},
+\qquad
+\overline P=P/{\sim_P}.
+$$
+
+评价下降为：
+
+$$
+\overline e:
+\overline X\times\overline P\to\Lambda,
+$$
+
+$$
+\overline e([x],[\pi])=e(x,\pi).
+$$
+

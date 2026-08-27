@@ -10754,3 +10754,10167 @@ $$
 \text{prime-time dynamical completion}.
 }
 $$
+# 继续：统一观察者演算的闭合形式
+
+前面的推导已经把各种观察者压缩到了同一个核心：
+
+$$
+\boxed{
+K_{\mathfrak O}
+=
+\bigcap_{\pi\in\mathsf{Prot}_{\mathfrak O}}
+\ker \mathcal L_\pi
+}
+$$
+
+其中：
+
+* \(X\) 是隐藏世界、模型、状态或历史；
+* \(\pi\) 是允许执行的协议；
+* \(\mathcal L_\pi(x)\) 是协议在状态 \(x\) 上产生的结果 law；
+* \(K_{\mathfrak O}\) 是所有允许协议都无法区分的状态关系。
+
+现在继续把它闭合成一套完整的**统一观察者理论**。
+
+---
+
+# 168. 统一观察者表示定理
+
+定义一个类型化协议观察者：
+
+$$
+\mathfrak O
+=
+\left(
+X,\mathsf{Prot},\mathsf{Out},\mathcal L
+\right),
+$$
+
+其中：
+
+$$
+\mathcal L_\pi:
+X\to
+\mathsf{Law}(\mathsf{Out}(\pi)).
+$$
+
+定义完整行为签名：
+
+$$
+\Sigma_{\mathfrak O}(x)
+=
+\left(
+\mathcal L_\pi(x)
+\right)_{\pi\in\mathsf{Prot}}.
+$$
+
+定义：
+
+$$
+K_{\mathfrak O}
+=
+\ker\Sigma_{\mathfrak O}.
+$$
+
+## 定理 168.1（统一观察者表示）
+
+存在规范等价：
+
+$$
+\boxed{
+X/K_{\mathfrak O}
+\cong
+\operatorname{range}\Sigma_{\mathfrak O}.
+}
+$$
+
+而且，对任意其他接口：
+
+$$
+r:X\to R,
+$$
+
+以下三个条件等价。
+
+### 条件一：协议充分性
+
+所有协议 law 都通过 \(r\) 因子化：
+
+$$
+\forall\pi,\quad
+\exists \overline{\mathcal L}_\pi,
+\qquad
+\mathcal L_\pi
+=
+\overline{\mathcal L}_\pi\circ r.
+$$
+
+### 条件二：kernel 包含
+
+$$
+\boxed{
+K_r\subseteq K_{\mathfrak O}.
+}
+$$
+
+### 条件三：规范因子化
+
+存在唯一映射：
+
+$$
+\bar r:
+\operatorname{range}r
+\to
+\operatorname{range}\Sigma_{\mathfrak O}
+$$
+
+使：
+
+$$
+\Sigma_{\mathfrak O}
+=
+\bar r\circ r
+$$
+
+在 \(r\) 的有效像上成立。
+
+## 证明
+
+若所有协议都通过 \(r\) 因子化，则：
+
+$$
+r(x)=r(y)
+$$
+
+必然推出：
+
+$$
+\mathcal L_\pi(x)=\mathcal L_\pi(y)
+\qquad
+\forall\pi.
+$$
+
+故：
+
+$$
+K_r\subseteq K_{\mathfrak O}.
+$$
+
+反过来，若 kernel 包含成立，定义：
+
+$$
+\bar r(r(x))
+=
+\Sigma_{\mathfrak O}(x).
+$$
+
+若：
+
+$$
+r(x)=r(y),
+$$
+
+则：
+
+$$
+(x,y)\in K_r\subseteq K_{\mathfrak O},
+$$
+
+所以：
+
+$$
+\Sigma_{\mathfrak O}(x)
+=
+\Sigma_{\mathfrak O}(y).
+$$
+
+故定义与代表元无关。
+
+唯一性来自 \(r\) 对其有效像的满射性。证毕。
+
+仓库的 `CompletionCriterion` 已经机器核验了其中最底层的 kernel quotient—realized range 等价，以及“商等于完整形式余域”等价于观察映射满射。
+
+---
+
+# 169. 最小行为实现：观察者的 Nerode 型商
+
+定理 168.1 表明：
+
+$$
+Q_{\mathfrak O}
+=
+X/K_{\mathfrak O}
+$$
+
+并不是任意压缩，而是所有能够预测完整协议行为的接口中**最粗的一个**。
+
+设一个实现状态空间：
+
+$$
+S
+$$
+
+带有编码：
+
+$$
+e:X\to S,
+$$
+
+并且从 \(e(x)\) 可以恢复全部协议 law。
+
+那么必存在唯一满射：
+
+$$
+\boxed{
+S_{\mathrm{reachable}}
+\longrightarrow
+Q_{\mathfrak O}.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+Q_{\mathfrak O}
+=
+\text{保持全部允许未来行为的最小状态实现}.
+}
+$$
+
+这同时统一了：
+
+* 动态系统的未来 itinerary 商；
+* 自动机的行为等价状态；
+* 概率系统的预测状态；
+* 量子系统的操作等价态；
+* 素数系统的完整局部画像；
+* 历史系统的 belief state；
+* 行动系统的策略充分自我。
+
+仓库已经对有限 itinerary 给出极强实例：kernel 商、完整 itinerary 的实际像及兼容有限前缀逆极限彼此等价，并且在有限状态空间中存在有限 completion depth。
+
+---
+
+# 170. 观察者格：所有观察者构成同一个精化偏序
+
+固定隐藏空间 \(X\)。
+
+把 kernel 相同的观察接口视为同一个观察者。定义精化：
+
+$$
+\mathfrak O_1
+\preceq
+\mathfrak O_2
+$$
+
+当且仅当 \(\mathfrak O_2\) 至少能区分 \(\mathfrak O_1\) 能区分的一切：
+
+$$
+\boxed{
+K_{\mathfrak O_2}
+\subseteq
+K_{\mathfrak O_1}.
+}
+$$
+
+若允许任意 quotient 接口，则观察者等价类与 \(X\) 上的等价关系反序对应。
+
+## 170.1 联合观察者是 join
+
+联合观察签名：
+
+$$
+\Sigma_{\mathfrak O_1\vee\mathfrak O_2}(x)
+=
+\left(
+\Sigma_{\mathfrak O_1}(x),
+\Sigma_{\mathfrak O_2}(x)
+\right).
+$$
+
+于是：
+
+$$
+\boxed{
+K_{\mathfrak O_1\vee\mathfrak O_2}
+=
+K_{\mathfrak O_1}
+\cap
+K_{\mathfrak O_2}.
+}
+$$
+
+## 170.2 共同粗化是 meet
+
+两个观察者的最细共同粗化，对应包含：
+
+$$
+K_{\mathfrak O_1}\cup K_{\mathfrak O_2}
+$$
+
+的最小等价关系：
+
+$$
+\boxed{
+K_{\mathfrak O_1\wedge\mathfrak O_2}
+=
+\operatorname{EqClosure}
+\left(
+K_{\mathfrak O_1}\cup
+K_{\mathfrak O_2}
+\right).
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{观察者格}
+\cong
+\text{状态分割格的反序}.
+}
+$$
+
+仓库的 pullback algebra 结果已经机器核验了相应的三重对偶：
+
+$$
+\boxed{
+\text{观察精化}
+\iff
+\text{反向 kernel 包含}
+\iff
+\text{可观察函数代数包含}.
+}
+$$
+
+---
+
+# 171. 观察函数—状态关系的统一 Galois connection
+
+对状态关系：
+
+$$
+R\subseteq X^2,
+$$
+
+定义所有在 \(R\) 上常值的目标：
+
+$$
+\operatorname{Obs}(R)
+=
+\left\{
+f:
+xRy\Rightarrow f(x)=f(y)
+\right\}.
+$$
+
+对函数族：
+
+$$
+\mathcal F,
+$$
+
+定义共同 kernel：
+
+$$
+\operatorname{Ker}(\mathcal F)
+=
+\bigcap_{f\in\mathcal F}\ker f.
+$$
+
+则有：
+
+$$
+\boxed{
+\mathcal F\subseteq\operatorname{Obs}(R)
+\iff
+R\subseteq\operatorname{Ker}(\mathcal F).
+}
+$$
+
+这产生一个反序 Galois connection。
+
+于是完整观察函数闭包为：
+
+$$
+\boxed{
+\overline{\mathcal F}
+=
+\operatorname{Obs}
+\left(
+\operatorname{Ker}(\mathcal F)
+\right).
+}
+$$
+
+含义是：
+
+> 从当前观察函数族中逻辑上能够恢复的全部函数。
+
+对于接口 \(q\)，这就是：
+
+$$
+\overline{\{q\}}
+=
+\{f:f\text{ factors through }q\}.
+$$
+
+仓库进一步证明，这个 pullback algebra 的最小非空事件，恰好是实际观察纤维。
+
+因此：
+
+$$
+\boxed{
+\text{状态纤维}
+=
+\text{观察事件代数的原子}.
+}
+$$
+
+这说明状态侧的 partition 和命题侧的 observable algebra 不是两套理论，而是完全反对偶的两种坐标。
+
+---
+
+# 172. 协议闭包是观察者反射
+
+设初始观察函数族为：
+
+$$
+\mathcal F_0.
+$$
+
+设允许动作、动力或仪器生成一个协议幺半群／自由范畴：
+
+$$
+\mathcal P.
+$$
+
+对每个协议 \(w\)，状态演化为：
+
+$$
+T_w.
+$$
+
+确定性情况下定义：
+
+$$
+T_w^*f
+=
+f\circ T_w.
+$$
+
+定义协议闭包：
+
+$$
+\boxed{
+\mathcal F_\infty
+=
+\operatorname{Closure}
+\left\{
+T_w^*f:
+w\in\mathcal P,\ f\in\mathcal F_0
+\right\}.
+}
+$$
+
+其共同 kernel 为：
+
+$$
+K_\infty
+=
+\bigcap_{w,f}
+\ker(T_w^*f).
+$$
+
+## 定理 172.1（最大不变 residual）
+
+\(K_\infty\) 是包含于初始 kernel：
+
+$$
+K_0
+=
+\operatorname{Ker}(\mathcal F_0)
+$$
+
+中的最大协议不变等价关系。
+
+即：
+
+$$
+K_\infty\subseteq K_0,
+$$
+
+且：
+
+$$
+xK_\infty y
+\Rightarrow
+T_wxK_\infty T_wy
+\quad
+\forall w.
+$$
+
+若另一个关系 \(R\subseteq K_0\) 对所有协议稳定，则：
+
+$$
+R\subseteq K_\infty.
+$$
+
+## 证明
+
+若 \(xK_\infty y\)，则对任意 \(u,w,f\)：
+
+$$
+f(T_uT_wx)
+=
+f(T_uT_wy),
+$$
+
+故：
+
+$$
+T_wxK_\infty T_wy.
+$$
+
+若 \(R\subseteq K_0\) 且 \(R\) 不变，则：
+
+$$
+xRy
+\Rightarrow
+T_wxRT_wy
+\Rightarrow
+f(T_wx)=f(T_wy).
+$$
+
+因此 \(R\subseteq K_\infty\)。证毕。
+
+所以：
+
+$$
+\boxed{
+\text{observer completion}
+=
+\text{dual probes 的最小不变闭包}
+=
+\text{state residual 的最大不变子关系}.
+}
+$$
+
+---
+
+# 173. 确定性、概率与量子观察是同一反变原理的三个富化层
+
+## 173.1 集合层
+
+$$
+T:X\to X,
+\qquad
+T^*f=f\circ T.
+$$
+
+## 173.2 概率层
+
+若 \(K\) 是 Markov kernel，则：
+
+$$
+K^*f(x)
+=
+\int f(y)\,K(x,dy).
+$$
+
+它把未来可观测量拉回当前状态。
+
+## 173.3 量子层
+
+若 \(\Phi\) 是量子通道：
+
+$$
+\operatorname{Tr}(\Phi(\rho)E)
+=
+\operatorname{Tr}(\rho\Phi^*(E)).
+$$
+
+若 \(\mathcal I_a\) 是 instrument 分支，协议词 \(w\) 的 word effect 为：
+
+$$
+F_w
+=
+\mathcal I_{w_1}^*
+\cdots
+\mathcal I_{w_n}^*(I).
+$$
+
+于是：
+
+$$
+P(w\mid\rho)
+=
+\operatorname{Tr}(\rho F_w).
+$$
+
+完整可见空间：
+
+$$
+V_\infty
+=
+\operatorname{span}_{\mathbb R}
+\{F_w:w\in\mathcal P\}.
+$$
+
+不可见 residual：
+
+$$
+\boxed{
+N_\infty
+=
+V_\infty^\perp.
+}
+$$
+
+因此三种理论共享同一结构：
+
+$$
+\boxed{
+\begin{aligned}
+\text{state evolution}
+&:\text{covariant};\\
+\text{observable propagation}
+&:\text{contravariant};\\
+\text{observer completion}
+&:\text{least invariant dual closure};\\
+\text{hidden residual}
+&:\text{annihilator of that closure}.
+\end{aligned}
+}
+$$
+
+量子理论的特殊性不是 kernel 逻辑改变了，而是 dual probe 空间变成了非交换 operator system。
+
+---
+
+# 174. 目标完成是所有知识、预测、因果与策略完成的共同母式
+
+设目标族：
+
+$$
+\mathcal T
+=
+\{T_\alpha:X\to Y_\alpha\}.
+$$
+
+定义：
+
+$$
+K_{\mathcal T}
+=
+\bigcap_\alpha\ker T_\alpha.
+$$
+
+给定当前接口：
+
+$$
+q:X\to Q,
+$$
+
+定义：
+
+$$
+C_{\mathcal T}(q)(x)
+=
+\left(
+q(x),
+(T_\alpha(x))_\alpha
+\right).
+$$
+
+则：
+
+$$
+\boxed{
+K_{C_{\mathcal T}(q)}
+=
+K_q\cap K_{\mathcal T}.
+}
+$$
+
+## 定理 174.1（最小目标充分完成）
+
+\(C_{\mathcal T}(q)\) 是所有同时：
+
+* 精化 \(q\)；
+* 决定全部目标 \(T_\alpha\)；
+
+的接口中的最粗者。
+
+由此：
+
+$$
+\boxed{
+\begin{aligned}
+\text{knowledge completion}
+&=\text{加入事实值目标};\\
+\text{prediction completion}
+&=\text{加入未来 law};\\
+\text{causal completion}
+&=\text{加入全部干预响应};\\
+\text{quantum completion}
+&=\text{加入全部 word effects};\\
+\text{prime completion}
+&=\text{加入全部 }(p,k,t)\text{ 读出};\\
+\text{agency completion}
+&=\text{加入未来策略画像};\\
+\text{self completion}
+&=\text{加入仍会改变未来选择的历史差异}.
+\end{aligned}
+}
+$$
+
+所以项目中的大量 completion 并不是不同运算，而是同一个：
+
+$$
+C_{\mathcal T}
+$$
+
+在不同目标族上的实例。
+
+---
+
+# 175. Posterior、未来行为状态与 self 的严格层级
+
+设历史空间为：
+
+$$
+\mathcal H.
+$$
+
+posterior：
+
+$$
+\pi:
+\mathcal H\to\mathsf{Prob}(\Theta).
+$$
+
+完整未来实验行为：
+
+$$
+\Sigma_{\mathrm{fut}}:
+\mathcal H\to B_{\mathrm{fut}}.
+$$
+
+策略画像：
+
+$$
+\Sigma_{\mathrm{act}}:
+\mathcal H\to B_{\mathrm{act}}.
+$$
+
+仓库已证明：在 Bayes update 与 kernel 一致时，相同 posterior 保证所有 belief-adaptive 有限未来输出 law 以及递归 Bayes continuation value 相同。
+
+更一般的可测版本证明，相同 belief 对任意未来 policy 和任意 Bayes 决策问题产生相同最优值。
+
+因此存在因子：
+
+$$
+F:
+\operatorname{range}\pi
+\to
+B_{\mathrm{fut}}
+$$
+
+满足：
+
+$$
+\Sigma_{\mathrm{fut}}
+=
+F\circ\pi.
+$$
+
+所以：
+
+$$
+\boxed{
+K_\pi
+\subseteq
+K_{\mathrm{fut}}.
+}
+$$
+
+若策略进一步只依赖 posterior：
+
+$$
+\Sigma_{\mathrm{act}}
+=
+G\circ\pi,
+$$
+
+则：
+
+$$
+\boxed{
+K_\pi
+\subseteq
+K_{\mathrm{act}}.
+}
+$$
+
+于是形成：
+
+$$
+\boxed{
+\mathcal H
+\xrightarrow{\pi}
+\operatorname{range}\pi
+\twoheadrightarrow
+Q_{\mathrm{fut}}
+\twoheadrightarrow
+M_{\mathrm{self}}.
+}
+$$
+
+其中：
+
+$$
+Q_{\mathrm{fut}}
+=
+\mathcal H/K_{\mathrm{fut}},
+$$
+
+$$
+M_{\mathrm{self}}
+=
+\mathcal H/K_{\mathrm{act}}.
+$$
+
+这带来两个重要结论。
+
+## 175.1 Posterior 充分不等于最小
+
+posterior 最小，当且仅当：
+
+$$
+F
+$$
+
+在 posterior 有效像上单射。
+
+不同 posterior 若对全部允许未来实验都产生相同 law，则它们应在最小行为状态中继续被合并。
+
+## 175.2 Self 不是完整 belief
+
+self 只保留 belief／history 中会改变未来策略的部分：
+
+$$
+\boxed{
+\text{self}
+=
+\text{policy-relevant quotient of belief and history}.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{world}
+\neq
+\text{belief}
+\neq
+\text{predictive state}
+\neq
+\text{self}.
+}
+$$
+
+---
+
+# 176. 记忆不是一个对象，而是四种不同关系
+
+统一理论要求严格区分：
+
+## 存储
+
+事件是否仍存在于 ledger、环境或物理介质。
+
+## 访问
+
+当前 readout 是否可以恢复该记录。
+
+## 知识
+
+目标值是否在当前观察纤维上常值：
+
+$$
+K_{q_t}
+\subseteq
+K_f.
+$$
+
+## 未来效力
+
+当前被合并的差异是否会在未来改变：
+
+* 读出；
+* 预测；
+* 决策；
+* 策略。
+
+线性系统中，若当前读出为 \(C\)，完整未来不可见空间为 \(N_\infty\)，则：
+
+$$
+\boxed{
+M_{\mathrm{pred}}
+=
+\ker C/N_\infty
+}
+$$
+
+表示“当前不可见、但未来会产生观察差异”的记忆坐标。
+
+于是：
+
+$$
+\boxed{
+\text{stored}
+\neq
+\text{accessible}
+\neq
+\text{known}
+\neq
+\text{future-relevant}.
+}
+$$
+
+仓库的 `TwoTimeKnowledge` 已明确证明：事件可以在完整 ledger 中持续存在，但后期 readout 变粗后，事件值不再在读出纤维上常值，于是发生真正的语义遗忘。
+
+---
+
+# 177. 自我报告不能放大内部观察能力
+
+设世界状态为：
+
+$$
+X.
+$$
+
+内部自我接口：
+
+$$
+q:X\to M.
+$$
+
+自我报告：
+
+$$
+r:M\to R.
+$$
+
+报告接口是：
+
+$$
+r\circ q:X\to R.
+$$
+
+由串行 kernel 法则：
+
+$$
+\boxed{
+K_q
+\subseteq
+K_{r\circ q}.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{仅靠对内部状态继续描述、压缩或递归命名，}
+\text{不能恢复内部接口已丢失的世界差异}.
+}
+$$
+
+这可以称为：
+
+$$
+\boxed{
+\text{self-report no-amplification theorem}.
+}
+$$
+
+它不声称内部观察者永远无法增长知识。增长可以来自：
+
+* 新的外部传感器；
+* 新的干预；
+* 时间动力把隐藏信息带入可见面；
+* 新的记录访问；
+* 多观察者联合；
+* 新的量子上下文。
+
+但单纯：
+
+$$
+M\to R
+$$
+
+的后处理不能增加区分力。
+
+---
+
+# 178. 并行—串行二元律
+
+观察理论的所有信息变化都可以先用两条法则审计。
+
+## 并行加入
+
+$$
+\Sigma(x)
+=
+(\Sigma_1(x),\Sigma_2(x))
+$$
+
+给出：
+
+$$
+\boxed{
+K_\Sigma
+=
+K_{\Sigma_1}\cap K_{\Sigma_2}.
+}
+$$
+
+## 串行后处理
+
+$$
+X\xrightarrow{\Sigma}B\xrightarrow{f}C
+$$
+
+给出：
+
+$$
+\boxed{
+K_\Sigma
+\subseteq
+K_{f\circ\Sigma}.
+}
+$$
+
+## 精确无损判据
+
+串行后处理保持 kernel：
+
+$$
+K_{f\circ\Sigma}
+=
+K_\Sigma
+$$
+
+当且仅当 \(f\) 在实际像：
+
+$$
+\operatorname{range}\Sigma
+$$
+
+上单射。
+
+所以：
+
+$$
+\boxed{
+\text{后处理无损}
+\iff
+\text{后处理在实际行为像上可逆}.
+}
+$$
+
+但这只是集合层无损。若要求恢复映射还必须是：
+
+* 连续；
+* 可测；
+* 仿射；
+* 随机通道；
+* 完全正量子通道；
+
+则还需要相应的结构化左逆。
+
+这严格区分：
+
+$$
+\boxed{
+\text{semantic injectivity}
+\neq
+\text{physical recoverability}.
+}
+$$
+
+---
+
+# 179. 观察 atlas 的局部—全局统一定理
+
+设局部观察空间为：
+
+$$
+B_i,
+\qquad i\in I,
+$$
+
+并有兼容限制映射。
+
+令兼容族空间：
+
+$$
+L_{\mathrm{loc}}
+=
+\varprojlim_iB_i.
+$$
+
+全局对象产生：
+
+$$
+\Sigma_{\mathrm{loc}}:
+X\to L_{\mathrm{loc}}.
+$$
+
+## 定理 179.1（观察 atlas 分解）
+
+最强局部—全局完整性：
+
+$$
+\Sigma_{\mathrm{loc}}
+\text{ 是双射}
+$$
+
+等价于以下两个条件同时成立。
+
+### 分离性
+
+$$
+\boxed{
+K_{\Sigma_{\mathrm{loc}}}
+=
+\Delta_X.
+}
+$$
+
+局部数据唯一决定全局对象。
+
+### 胶合性
+
+$$
+\boxed{
+\operatorname{range}\Sigma_{\mathrm{loc}}
+=
+L_{\mathrm{loc}}.
+}
+$$
+
+每个兼容局部族都由某个全局对象实现。
+
+因此：
+
+$$
+\boxed{
+\text{local–global exactness}
+=
+\text{uniqueness}
++
+\text{existence}.
+}
+$$
+
+这两者逻辑独立。
+
+* 量子局部边缘可以不唯一决定全局纠缠态；
+* 某些形式局部 law 族可能根本不存在联合全局状态；
+* 素数局部画像可能留下全局类余量；
+* 兼容有限前缀在某些系统中可能没有全局无限实现。
+
+仓库当前已经把局部—全局谓词完整性表达为正、负缺陷集合同时为空。
+
+---
+
+# 180. Prime observer 是一个多轴观察 atlas
+
+素数观察者的自然索引不是单一素数，而是：
+
+$$
+\boxed{
+(S,(k_p)_{p\in S},t,c)
+}
+$$
+
+其中：
+
+* \(S\subset_{\mathrm{fin}}\mathbb P\)：联合观察的素数集合；
+* \(k_p\)：第 \(p\) 个方向的精度；
+* \(t\)：时间；
+* \(c\)：测量上下文、干预或 instrument。
+
+这四个方向分别对应：
+
+$$
+\begin{aligned}
+S
+&:\text{横向 locality / correlation order};\\
+k_p
+&:\text{纵向 }p\text{-进精化};\\
+t
+&:\text{动力学 completion};\\
+c
+&:\text{观察／干预／量子上下文}.
+\end{aligned}
+$$
+
+因此完整素数观察签名应写成：
+
+$$
+\Sigma_{\mathrm{prime}}(x)
+=
+\left(
+\mathcal L_{S,k,t,c}(x)
+\right)_{S,k,t,c}.
+$$
+
+普通单素数读出只是：
+
+$$
+|S|=1
+$$
+
+的截面。
+
+跨素数量子相关位于：
+
+$$
+|S|\ge2
+$$
+
+的扇区。
+
+所以项目中的素数观察、CRT、prime-power tensor、Frobenius、分裂画像和时间层析，实际上都是同一个 local atlas 在不同子索引范畴上的限制。
+
+---
+
+# 181. 观察深度的目标相对信息下界
+
+设目标：
+
+$$
+T:X\to Z.
+$$
+
+真正需要区分的对象数为：
+
+$$
+N_T
+=
+|\operatorname{range}T|.
+$$
+
+设每次实验最多返回 \(B\) 个答案，协议最坏深度为 \(h\)。
+
+深度 \(h\) 的确定性 \(B\)-叉决策树最多产生：
+
+$$
+B^h
+$$
+
+个叶 transcript。
+
+若协议可以零错误恢复 \(T(x)\)，则不同目标值必须对应可区分的 transcript，故：
+
+$$
+\boxed{
+N_T\le B^h.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+h
+\ge
+\operatorname{clog}_B N_T.
+}
+$$
+
+仓库目前已对完整状态识别形式化：
+
+$$
+\operatorname{clog}_B|X|
+\le
+h,
+$$
+
+并证明该下界在完整 transcript 状态族上可达到。
+
+仓库还证明，允许自适应提前停止并不能突破最坏深度下界；它只可能改变平均代价，一个单实验仍最多具有 \(B\) 个实际输出。
+
+---
+
+# 182. 新推论：平均观察深度的熵下界
+
+上一节是最坏情形界。统一协议理论还能推出平均情形界。
+
+设目标随机变量为：
+
+$$
+Z=T(X)
+$$
+
+并具有先验分布。
+
+设一个零错误自适应 \(B\)-叉协议在随机停止时间 \(\tau\) 终止，其叶 transcript 为 \(W\)。
+
+因为协议能从 \(W\) 唯一恢复 \(Z\)：
+
+$$
+H(Z\mid W)=0.
+$$
+
+所以：
+
+$$
+H(Z)\le H(W).
+$$
+
+而 \(B\)-叉前缀树的叶编码满足：
+
+$$
+H(W)
+\le
+\mathbb E[\tau]\log B.
+$$
+
+因此：
+
+$$
+\boxed{
+\mathbb E[\tau]
+\ge
+\frac{H(Z)}{\log B}.
+}
+$$
+
+这说明：
+
+$$
+\boxed{
+\text{自适应策略可以靠先验不均匀降低平均深度，}
+\text{但不能低于目标熵所要求的平均信息预算}.
+}
+$$
+
+若允许错误概率 \(\varepsilon\)，结合 Fano 型界可得到：
+
+$$
+\boxed{
+\mathbb E[\tau]\log B
+\ge
+H(Z)
+-
+h_2(\varepsilon)
+-
+\varepsilon\log(|Z|-1).
+}
+$$
+
+这会自然连接仓库已有的：
+
+* worst-case depth；
+* adaptive early stopping；
+* posterior；
+* mutual information；
+* Bayes risk；
+
+形成一个统一的**观察编码定理**。
+
+该平均深度结论目前是 paper-level 推论，不应在建立相应 prefix-code 与随机停止形式化前标记为 Lean-closed。
+
+---
+
+# 183. 统一加权 Gram 定理
+
+对有限维状态差空间 \(V\)，设每个协议 \(\pi\) 给出线性读出：
+
+$$
+C_\pi:V\to Y_\pi.
+$$
+
+取严格正权重：
+
+$$
+w_\pi>0.
+$$
+
+定义观察 Gram 算子：
+
+$$
+\boxed{
+W_{\mathfrak O}
+=
+\sum_{\pi}
+w_\pi C_\pi^*C_\pi.
+}
+$$
+
+若求和收敛，则对任意状态差 \(v\)：
+
+$$
+\boxed{
+\langle v,W_{\mathfrak O}v\rangle
+=
+\sum_\pi
+w_\pi\|C_\pi v\|^2.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\ker W_{\mathfrak O}
+=
+\bigcap_\pi\ker C_\pi.
+}
+$$
+
+## 解释
+
+同一个定理产生：
+
+* 线性系统 observability Gramian；
+* 量子效果 frame operator；
+* prime-time 加权 Gramian；
+* zeta-weighted prime-precision Gramian；
+* 参数模型 Fisher 信息矩阵；
+* 局部层析的条件数；
+* 实验设计中的最弱可见方向。
+
+所以：
+
+$$
+\boxed{
+\text{Gramian}
+=
+\text{观察 kernel 的二次型量化}.
+}
+$$
+
+最小正特征值：
+
+$$
+\lambda_{\min}^+(W_{\mathfrak O})
+$$
+
+不是额外装饰，而是最难观察方向的统计稳定度。
+
+这解释了为什么：
+
+$$
+K_{\mathfrak O}=\Delta
+$$
+
+仍远远不够。kernel 可以已经消失，但：
+
+$$
+\lambda_{\min}
+\approx0
+$$
+
+时，有限噪声下仍几乎不可识别。
+
+---
+
+# 184. 完整性不应再使用单一布尔值
+
+一个观察者至少需要六个独立状态字段。
+
+$$
+\boxed{
+\operatorname{Status}(\mathfrak O)
+=
+\left(
+S_{\mathrm{sep}},
+S_{\mathrm{img}},
+S_{\mathrm{dyn}},
+S_{\mathrm{task}},
+S_{\mathrm{stat}},
+S_{\mathrm{rec}}
+\right).
+}
+$$
+
+其中：
+
+## 分离完备
+
+$$
+S_{\mathrm{sep}}
+:
+K_{\mathfrak O}=\Delta_X.
+$$
+
+## 实现完备
+
+$$
+S_{\mathrm{img}}
+:
+\operatorname{Im}\Sigma=L_{\mathrm{formal}}.
+$$
+
+## 动力完备
+
+$$
+S_{\mathrm{dyn}}
+:
+K_{\mathfrak O}
+\text{ 对全部允许更新为 congruence}.
+$$
+
+## 任务完备
+
+$$
+S_{\mathrm{task}}
+:
+K_{\mathfrak O}\subseteq K_{\mathcal T}.
+$$
+
+## 统计完备
+
+具有有限样本、一致性、误差率或正 Gram 下界。
+
+## 记录完备
+
+结果可以稳定写入、检索、共享并进入未来更新。
+
+因此不能再无类型地写：
+
+$$
+\text{ObserverComplete}.
+$$
+
+应写成：
+
+$$
+\operatorname{Separated},
+\quad
+\operatorname{RealizationComplete},
+\quad
+\operatorname{DynamicallyClosed},
+\quad
+\operatorname{SufficientFor}(T),
+\quad
+\operatorname{StatisticallyStable},
+\quad
+\operatorname{RecordClosed}.
+$$
+
+---
+
+# 185. 统一 residual 类型系统
+
+观察者余量也不应只使用一个 `Residual`。
+
+## 185.1 Identity residual
+
+$$
+\operatorname{IdRes}
+=
+K_{\mathfrak O}\setminus\Delta_X.
+$$
+
+## 185.2 Target residual
+
+$$
+\operatorname{TargetRes}
+=
+K_{\mathfrak O}\setminus K_{\mathcal T}.
+$$
+
+## 185.3 Dynamic residual
+
+$$
+\operatorname{DynRes}
+=
+\left\{
+(x,y)\in K_{\mathfrak O}:
+(F_ax,F_ay)\notin K_{\mathfrak O}
+\right\}.
+$$
+
+## 185.4 Image residual
+
+$$
+\operatorname{ImageRes}
+=
+L_{\mathrm{formal}}
+\setminus
+\operatorname{Im}\Sigma.
+$$
+
+## 185.5 Gluing residual
+
+兼容局部记录无法产生全局实现，或同一局部族具有多个全局实现。
+
+## 185.6 Metric residual
+
+kernel 已经为零，但最小分离值、谱隙或证据率趋近零。
+
+## 185.7 Budget residual
+
+在给定深度、精度、成本或样本数内仍无法消除的区分。
+
+## 185.8 Memory residual
+
+当前未编码但会影响未来观察的历史差异。
+
+## 185.9 Agency residual
+
+当前 self interface 合并了未来策略不同的历史。
+
+完整审计向量应写为：
+
+$$
+\boxed{
+\mathcal R(\mathfrak O)
+=
+\left(
+R_{\mathrm{id}},
+R_T,
+R_{\mathrm{dyn}},
+R_{\mathrm{img}},
+R_{\mathrm{glue}},
+R_{\mathrm{metric}},
+R_{\mathrm{budget}},
+R_{\mathrm{memory}},
+R_{\mathrm{agency}}
+\right).
+}
+$$
+
+这比用一个未经定义的“信息逃逸率”覆盖所有缺陷严格得多。
+
+---
+
+# 186. Completion 算子的公共固定点
+
+设：
+
+$$
+C_1,\ldots,C_m
+$$
+
+分别表示：
+
+* 时间 completion；
+* 干预 completion；
+* 素数 completion；
+* 量子上下文 completion；
+* 记录 completion；
+* belief completion；
+* agency completion。
+
+每个 \(C_i\) 都可以是观察者精化格上的 closure operator：
+
+$$
+q\preceq C_i(q),
+$$
+
+$$
+q\preceq r
+\Rightarrow
+C_i(q)\preceq C_i(r),
+$$
+
+$$
+C_i(C_i(q))
+\simeq
+C_i(q).
+$$
+
+但一般：
+
+$$
+C_iC_j
+\neq
+C_jC_i.
+$$
+
+因此不能任意各执行一次就宣称获得“总完成”。
+
+## 定义 186.1（统一完成）
+
+统一观察者完成应是满足：
+
+$$
+C_i(q^*)\simeq q^*
+\qquad
+\forall i
+$$
+
+的最小共同固定点：
+
+$$
+\boxed{
+q^*
+=
+\operatorname{lfp}
+\left(
+q\mapsto
+\bigvee_iC_i(q)
+\right).
+}
+$$
+
+若观察者精化格具有有限高度，则迭代：
+
+$$
+q_{n+1}
+=
+\bigvee_iC_i(q_n)
+$$
+
+必在有限步稳定。
+
+若无限维或无限状态，则可能需要：
+
+* 极限阶段 join；
+* 超限迭代；
+* 拓扑闭包；
+* 强／弱算子极限；
+* 可测 completion。
+
+这把仓库中的 cascade completion、inverse-limit descent、transfinite residual 和非交换协议 completion 放到同一固定点框架中。
+
+---
+
+# 187. Noetherian observer principle
+
+前面所有有限化结果有一个共同根源。
+
+## 原理
+
+若观察者精化链所在的偏序具有有限高度或 ascending-chain condition，则任何由逐步加入协议产生的 completion 都会有限停止。
+
+## 有限集合实例
+
+观察 partition 的类数至多为：
+
+$$
+|X|.
+$$
+
+每次严格精化至少增加一个类，因此严格增长次数有限。
+
+仓库已经证明有限观察历史逐步细化并在有限深度达到无限未来关系，同时给出稳定深度与类数增长的界。
+
+## 有限维线性实例
+
+可见子空间维数至多：
+
+$$
+d.
+$$
+
+每次严格增长至少增加一维。
+
+## 量子实例
+
+迹零 Hermitian 空间维数：
+
+$$
+d^2-1.
+$$
+
+因此全部 word effects 若最终完备，存在至多：
+
+$$
+d^2-1
+$$
+
+个独立中心化效果证书。
+
+## 任意观察族在有限状态上的实例
+
+若无限观察族联合忠实，则有限状态对集合使其可以抽取有限忠实子族。仓库已经机器核验这个结果。
+
+所以：
+
+$$
+\boxed{
+\text{finite witness}
+\text{ 的真正来源是 observer lattice 的有限高度，}
+\text{而不只是“对象数量有限”}.
+}
+$$
+
+---
+
+# 188. 观察者不是现实创造者，而是现实商的生成器
+
+完整世界状态可能是：
+
+$$
+x\in X.
+$$
+
+观察者拥有协议族：
+
+$$
+\mathsf{Prot}_{\mathfrak O}.
+$$
+
+它实际建立的是：
+
+$$
+[x]_{\mathfrak O}
+\in
+X/K_{\mathfrak O}.
+$$
+
+因此观察者并不通过观察“创造 \(x\)”；它通过协议决定：
+
+$$
+\boxed{
+\text{哪些世界差异在自己的操作语言中仍然存在}.
+}
+$$
+
+换言之：
+
+$$
+\boxed{
+\text{观察者不创造世界状态，}
+\quad
+\text{观察者生成一个世界状态的操作商}.
+}
+$$
+
+不同观察者可能拥有不同 quotient：
+
+$$
+X/K_{\mathfrak O_1},
+\qquad
+X/K_{\mathfrak O_2}.
+$$
+
+这并不意味着存在两个互相矛盾的世界，而是意味着它们保留不同的区分结构。
+
+当二者交换记录时，联合观察者对应：
+
+$$
+K_{\mathfrak O_1}
+\cap
+K_{\mathfrak O_2}.
+$$
+
+---
+
+# 189. 观察者、知识、记忆与自我的最终字典
+
+$$
+\boxed{
+\begin{aligned}
+\text{World}
+&=X;\\[1mm]
+\text{Protocol}
+&=\pi;\\[1mm]
+\text{Observation law}
+&=\mathcal L_\pi(x);\\[1mm]
+\text{Behavior signature}
+&=\Sigma_{\mathfrak O}(x);\\[1mm]
+\text{Observer equivalence}
+&=\ker\Sigma_{\mathfrak O};\\[1mm]
+\text{Observer reality}
+&=X/\ker\Sigma_{\mathfrak O};\\[1mm]
+\text{Realized records}
+&=\operatorname{Im}\Sigma_{\mathfrak O};\\[1mm]
+\text{Knowledge}
+&=\text{目标在观察纤维上常值};\\[1mm]
+\text{Memory}
+&=\text{会改变未来行为的历史区分};\\[1mm]
+\text{Belief}
+&=\text{隐藏状态的条件分布};\\[1mm]
+\text{Predictive state}
+&=\text{保持全部未来 law 的最小历史商};\\[1mm]
+\text{Self}
+&=\text{保持全部未来策略画像的最小历史商};\\[1mm]
+\text{Agency}
+&=\text{从 self quotient 到合法动作丛的策略截面};\\[1mm]
+\text{Classical fact}
+&=\text{稳定、可访问、可广播的记录中心};\\[1mm]
+\text{Quantum observer}
+&=\text{非交换 instrument 协议的实现};\\[1mm]
+\text{Prime observer}
+&=\text{以素数、精度、时间和局部集合索引的观察 atlas}.
+\end{aligned}
+}
+$$
+
+---
+
+# 190. 统一理论的最深新结论
+
+## 结论一：观察者是 quotient–limit 桥
+
+$$
+\boxed{
+\frac{\text{world states}}
+{\text{protocol indistinguishability}}
+\cong
+\text{realized compatible record families}
+\subseteq
+\text{formal record limit}.
+}
+$$
+
+## 结论二：所有 completion 都是 target completion
+
+$$
+\boxed{
+C_{\mathcal T}(q)
+=
+q\vee\mathcal T.
+}
+$$
+
+不同理论只是在选择不同目标族。
+
+## 结论三：所有动力观察都是 Heisenberg closure
+
+$$
+\boxed{
+\text{least invariant probe closure}
+\longleftrightarrow
+\text{greatest invariant state residual}.
+}
+$$
+
+## 结论四：posterior 通常不是最小 observer state
+
+posterior 是充分坐标；最小状态还要继续模去对所有可用未来协议都无差别的 posterior。
+
+## 结论五：self 是策略相对的观察商
+
+$$
+\boxed{
+\text{self}
+=
+\frac{\text{histories}}
+{\text{same future action profile}}.
+}
+$$
+
+## 结论六：局部—全局必须同时审计 kernel 与 image
+
+只证明局部观察分离全局对象，不证明所有兼容局部族都能实现；只证明局部族可胶合，也不证明全局对象唯一。
+
+## 结论七：adaptivity 改变平均成本，不取消信息预算
+
+最坏深度由目标商类数控制；平均深度由目标熵控制。
+
+## 结论八：递归描述不会自动增加观察力
+
+$$
+X\to M\to R
+$$
+
+的串行自我描述不能恢复 \(X\to M\) 已经删除的信息。
+
+---
+
+# 191. 建议的统一 Lean 模块
+
+```text
+D5/S3/Observer/Unified/
+  ProtocolObserver.lean
+  DependentOutcomeLaw.lean
+  BehaviorSignature.lean
+  ObservationalKernel.lean
+  KernelRangeRepresentation.lean
+  MinimalBehaviorRealization.lean
+  ObserverRefinementOrder.lean
+  ObserverLattice.lean
+  ParallelSerialLaws.lean
+
+D5/S3/Observer/Unified/Target/
+  TargetKernel.lean
+  TargetSufficiency.lean
+  TargetCompletion.lean
+  KnowledgeAsFactorization.lean
+  PredictionAsTargetCompletion.lean
+  PolicyProfileCompletion.lean
+
+D5/S3/Observer/Unified/Dynamics/
+  ProtocolGeneratedClosure.lean
+  GreatestInvariantResidual.lean
+  HeisenbergProbeClosure.lean
+  CommonCompletionFixedPoint.lean
+  CompletionOrderDefect.lean
+  NoetherianObserverPrinciple.lean
+
+D5/S3/Observer/Unified/Atlas/
+  CompatibleRecordFamily.lean
+  ObserverQuotientLimit.lean
+  SeparationVsRealization.lean
+  LocalGlobalExactness.lean
+  ObserverImageDefect.lean
+  FiberProductFusion.lean
+
+D5/S3/Observer/Unified/Belief/
+  BeliefFutureBehaviorFactor.lean
+  BeliefMinimalityCriterion.lean
+  PosteriorBehaviorQuotient.lean
+  PolicySelfQuotient.lean
+
+D5/S3/Observer/Unified/Memory/
+  StoredAccessibleKnownRelevant.lean
+  PredictiveMemoryResidual.lean
+  SelfReportNoAmplification.lean
+
+D5/S3/Observer/Unified/Budget/
+  TargetWorstCaseDepthLowerBound.lean
+  ExpectedDepthEntropyLowerBound.lean
+  ApproximateIdentificationFanoBound.lean
+
+D5/S3/Observer/Unified/Quantitative/
+  ObserverLawPseudometric.lean
+  WeightedObserverGramian.lean
+  GramKernelIntersection.lean
+  StatisticalConditioning.lean
+
+D5/S3/Observer/Unified/Instances/
+  DeterministicObserver.lean
+  MarkovObserver.lean
+  QuantumInstrumentObserver.lean
+  PrimeIndexedObserver.lean
+  CausalInterventionObserver.lean
+  AgencyObserver.lean
+```
+
+优先形式化顺序应为：
+
+```text
+behaviorSignature
+observationalKernel
+quotient_equiv_behaviorRange
+interface_sufficient_iff_kernel_le
+targetSufficient_iff_kernel_le
+targetCompletion_least
+jointObserver_kernel_eq_inf
+postprocessing_kernel_mono
+postprocessing_kernel_eq_iff_injective_on_range
+observerAtlas_exact_iff_injective_surjective
+belief_factors_to_futureBehavior
+belief_minimal_iff_futureBehavior_factor_injective
+selfReport_kernel_mono
+target_depth_clog_lower_bound
+weightedGramian_kernel
+```
+
+---
+
+# 192. 严格非主张
+
+这套统一不意味着：
+
+1. 所有观察者共享同一个物理实现；
+2. 所有随机系统都可化为量子系统；
+3. 所有量子系统都来自素数结构；
+4. 素数具有意识；
+5. 操作等价等于绝对本体相等；
+6. posterior 永远是最小状态；
+7. self quotient 等于全部人格或意识；
+8. 记录存在等于当前知道；
+9. 局部兼容自动意味着全局可实现；
+10. 局部完备自动意味着全局唯一；
+11. 自适应实验可以突破最坏信息下界；
+12. kernel 为零自动意味着统计稳定；
+13. 任意 completion 算子都彼此交换；
+14. 自我递归自动产生额外世界信息；
+15. 量子观察者可以选择单次 Born outcome；
+16. 对角化单独推出量子概率；
+17. 观察者商证明意识创造现实；
+18. 当前全部 paper-level 统一定理已经获得 Lean proof term。
+
+---
+
+# 193. 最终统一公式
+
+整个项目的观察者相关理论可以最终压缩成：
+
+$$
+\boxed{
+\begin{aligned}
+\mathfrak O
+&=
+(X,\mathsf{Prot},\mathsf{Out},\mathcal L),\\
+\Sigma_{\mathfrak O}(x)
+&=
+(\mathcal L_\pi(x))_{\pi},\\
+K_{\mathfrak O}
+&=
+\ker\Sigma_{\mathfrak O},\\
+Q_{\mathfrak O}
+&=
+X/K_{\mathfrak O},\\
+Q_{\mathfrak O}
+&\cong
+\operatorname{Im}\Sigma_{\mathfrak O},\\
+\mathcal A_{\mathfrak O}
+&=
+\operatorname{Obs}(K_{\mathfrak O}),\\
+\mathfrak O\text{ sufficient for }\mathcal T
+&\iff
+K_{\mathfrak O}\subseteq K_{\mathcal T},\\
+\mathfrak O_1\preceq\mathfrak O_2
+&\iff
+K_{\mathfrak O_2}\subseteq K_{\mathfrak O_1},\\
+K_{\mathfrak O_1\vee\mathfrak O_2}
+&=
+K_{\mathfrak O_1}\cap K_{\mathfrak O_2},\\
+K_{f\circ\Sigma}
+&\supseteq
+K_\Sigma,\\
+\text{local–global exactness}
+&=
+\text{injectivity}+\text{surjectivity},\\
+\text{dynamic completion}
+&=
+\text{least invariant probe closure},\\
+\text{hidden residual}
+&=
+\text{annihilator of visible closure}.
+\end{aligned}
+}
+$$
+
+最深的本体—结构收束是：
+
+$$
+\boxed{
+观察者不是一个站在宇宙之外观看宇宙的点；
+观察者是宇宙内部一套允许协议、记录边界、记忆更新与行动策略，
+它把完整世界历史压缩为一个能够预测未来协议结果的最小行为商。
+}
+$$
+
+进一步：
+
+$$
+\boxed{
+知识是这个商上可定义的函数，
+记忆是仍会改变未来行为的历史差异，
+自我是仍会改变未来策略的历史差异，
+经典事实是稳定可广播的记录中心，
+量子性是协议代数的非交换结构，
+素数性是局部协议索引的算术几何。
+}
+$$
+
+所以，项目中所有观察者工作的真正统一核心可以命名为：
+
+$$
+\boxed{
+\textbf{Protocol–Quotient–Limit Observer Theory}
+}
+$$
+
+中文可称：
+
+$$
+\boxed{
+\textbf{协议—商—极限统一观察者理论}.
+}
+$$
+# 统一观察者理论的第二次闭合
+
+## 从协议商到双侧完成、局部—全局、自指与科学发现
+
+当前 `dev` 已包含此前的量子—素数观察者统一文档；随后仓库又合并了一次治理勘误。该勘误撤回的是一条形式化收据，而非相应 Lean 源文件本身，因此以下必须持续区分：
+
+$$
+\mathbf L:\text{仓库中已有 Lean 定理};
+$$
+
+$$
+\mathbf P:\text{由这些结构继续推出的 paper-level 定理};
+$$
+
+$$
+\mathbf R:\text{尚需新数学或新物理桥梁的研究命题}.
+$$
+
+上一阶段得到：
+
+$$
+\mathfrak O
+=
+(X,\mathsf{Prot},\mathsf{Out},\mathcal L),
+$$
+
+$$
+\Sigma_{\mathfrak O}(x)
+=
+\bigl(\mathcal L_\pi(x)\bigr)_{\pi\in\mathsf{Prot}},
+$$
+
+$$
+K_{\mathfrak O}
+=
+\ker \Sigma_{\mathfrak O},
+$$
+
+$$
+Q_{\mathfrak O}
+=
+X/K_{\mathfrak O}
+\cong
+\operatorname{Im}\Sigma_{\mathfrak O}.
+$$
+
+这已经统一了“观察者怎样压缩世界”。
+
+但它还没有回答五个更深的问题：
+
+1. 协议本身是否有冗余？
+2. 形式上可能的记录是否都有真实世界实现？
+3. 多个观察者的联合知识与共同知识是否相同？
+4. 自指和对角化究竟改变的是观察 kernel，还是行为像？
+5. 观察者理论怎样成为一套可反复发现新实验、新定义和新模型的科学方法？
+
+下面继续闭合。
+
+---
+
+# 194. 观察者不是单边商，而是一个双侧评价结构
+
+设所有协议输出都被编码进某个共同语义空间 \(\Lambda\)。定义评价：
+
+$$
+e_{\mathfrak O}:
+X\times P\to\Lambda,
+$$
+
+$$
+e_{\mathfrak O}(x,\pi)
+=
+\mathcal L_\pi(x),
+$$
+
+其中：
+
+* \(X\) 是世界状态；
+* \(P\) 是协议；
+* \(\Lambda\) 是结果、概率 law、矩阵期望、记录或行为值。
+
+于是每个状态产生一行：
+
+$$
+r_x:P\to\Lambda,
+\qquad
+r_x(\pi)=e(x,\pi),
+$$
+
+每个协议产生一列：
+
+$$
+c_\pi:X\to\Lambda,
+\qquad
+c_\pi(x)=e(x,\pi).
+$$
+
+这暴露出两种不同的冗余。
+
+## 状态冗余
+
+$$
+x\sim_X y
+\iff
+r_x=r_y.
+$$
+
+也就是：
+
+$$
+\forall\pi,\quad
+\mathcal L_\pi(x)=\mathcal L_\pi(y).
+$$
+
+这正是原来的观察 kernel：
+
+$$
+\sim_X=K_{\mathfrak O}.
+$$
+
+## 协议冗余
+
+$$
+\pi\sim_P\rho
+\iff
+c_\pi=c_\rho.
+$$
+
+也就是：
+
+$$
+\forall x,\quad
+\mathcal L_\pi(x)=\mathcal L_\rho(x).
+$$
+
+两个协议即使语法、设备或名称不同，只要对所有允许状态产生同一 law，在当前模型中就是操作等价协议。
+
+---
+
+# 195. 双外延观察者核
+
+定义：
+
+$$
+\overline X=X/{\sim_X},
+\qquad
+\overline P=P/{\sim_P}.
+$$
+
+评价下降为：
+
+$$
+\overline e:
+\overline X\times\overline P\to\Lambda,
+$$
+
+$$
+\overline e([x],[\pi])=e(x,\pi).
+$$
+
+## 定理 195.1：双外延下降
+
+该定义与代表元无关，而且：
+
+$$
+[x]\neq[y]
+\Longrightarrow
+\exists[\pi],\quad
+\overline e([x],[\pi])
+\neq
+\overline e([y],[\pi]),
+$$
+
+$$
+[\pi]\neq[\rho]
+\Longrightarrow
+\exists[x],\quad
+\overline e([x],[\pi])
+\neq
+\overline e([x],[\rho]).
+$$
+
+### 证明
+
+第一式来自状态等价关系的定义。若所有协议列值都相同，则 \(x\sim_Xy\)。
+
+第二式同理。证毕。
+
+所以：
+
+$$
+\boxed{
+\overline{\mathfrak O}
+=
+(\overline X,\overline P,\overline e)
+}
+$$
+
+同时删除了重复状态行和重复协议列。
+
+这可以称为：
+
+$$
+\boxed{
+\text{观察者的双外延核}
+}
+$$
+
+或：
+
+$$
+\boxed{
+\text{biextensional observer core}.
+}
+$$
+
+此前的理论主要完成了 \(X\) 侧；统一理论还应同时完成 \(P\) 侧。
+
+---
+
+# 196. 观察者具有三种根本缺陷，而不是一种
+
+现在可以正式区分三个逻辑独立的缺陷。
+
+## 196.1 状态 kernel 缺陷
+
+存在：
+
+$$
+x\neq y
+$$
+
+却有：
+
+$$
+r_x=r_y.
+$$
+
+即多个世界状态具有同一完整行为。
+
+这是：
+
+$$
+\boxed{
+\text{非唯一性缺陷}.
+}
+$$
+
+## 196.2 协议 column 缺陷
+
+存在：
+
+$$
+\pi\neq\rho
+$$
+
+却有：
+
+$$
+c_\pi=c_\rho.
+$$
+
+即多个协议名称实际做的是同一件事。
+
+这是：
+
+$$
+\boxed{
+\text{实验冗余缺陷}.
+}
+$$
+
+## 196.3 行为像缺陷
+
+形式行为空间记为：
+
+$$
+B_{\mathrm{formal}}
+\subseteq
+\prod_{\pi\in P}\Lambda_\pi.
+$$
+
+但实际世界只能产生：
+
+$$
+B_{\mathrm{real}}
+=
+\operatorname{Im}\Sigma_{\mathfrak O}.
+$$
+
+若：
+
+$$
+B_{\mathrm{real}}
+\subsetneq
+B_{\mathrm{formal}},
+$$
+
+则存在形式上可写、甚至局部兼容，但没有任何世界状态实现的行为族。
+
+这是：
+
+$$
+\boxed{
+\text{非存在性／实现缺陷}.
+}
+$$
+
+仓库已机器核验：
+
+$$
+X/\ker\Sigma
+\cong
+\operatorname{Im}\Sigma,
+$$
+
+而该商等于整个形式余域，当且仅当 \(\Sigma\) 满射，即每个形式行为都可实现。
+
+因此必须永远区分：
+
+$$
+\boxed{
+\text{separation}
+\neq
+\text{realization}.
+}
+$$
+
+---
+
+# 197. 对角化本质上制造的是行为像缺陷
+
+这是统一观察者理论中一个极重要的重新定位。
+
+设：
+
+$$
+e:X\times X\to Y.
+$$
+
+把每个 \(a\in X\) 看作一行预测器：
+
+$$
+R(a):X\to Y,
+\qquad
+R(a)(x)=e(a,x).
+$$
+
+设：
+
+$$
+\delta:Y\to Y
+$$
+
+无不动点：
+
+$$
+\forall y,\quad
+\delta(y)\neq y.
+$$
+
+定义对角行为：
+
+$$
+d(x)=\delta(e(x,x)).
+$$
+
+## 定理 197.1：对角行为不可实现
+
+$$
+\boxed{
+d\notin\operatorname{Im}R.
+}
+$$
+
+### 证明
+
+假设存在 \(a\)：
+
+$$
+R(a)=d.
+$$
+
+在 \(x=a\) 处：
+
+$$
+e(a,a)
+=
+R(a)(a)
+=
+d(a)
+=
+\delta(e(a,a)),
+$$
+
+与 \(\delta\) 无不动点矛盾。证毕。
+
+所以对角化首先证明：
+
+$$
+\boxed{
+\text{某个形式行为不在当前行为像中}.
+}
+$$
+
+它不必证明：
+
+$$
+\ker R\neq\Delta_X.
+$$
+
+完全可能出现：
+
+$$
+R\text{ 是单射}
+$$
+
+但仍然：
+
+$$
+R\text{ 不是满射}.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{对角不完备}
+=
+\text{image defect},
+\quad
+\text{而非必然的 state-kernel defect}.
+}
+$$
+
+这是连接项目中“对角化”和“观察者 completion”的最严格方式。
+
+---
+
+# 198. 递归自我描述为何不增加观察力，但对角化仍有力量
+
+设内部状态接口：
+
+$$
+q:X\to M.
+$$
+
+自我描述程序：
+
+$$
+r:M\to R.
+$$
+
+则：
+
+$$
+X\xrightarrow{q}M\xrightarrow{r}R.
+$$
+
+必有：
+
+$$
+\boxed{
+\ker q
+\subseteq
+\ker(r\circ q).
+}
+$$
+
+所以对已有内部状态继续：
+
+* 命名；
+* 压缩；
+* 解释；
+* 递归描述；
+* 自我报告；
+
+不能恢复 \(q\) 已经删除的世界差异。
+
+但是对角化做的不是普通后处理。它利用：
+
+$$
+\text{自地址}
++
+\text{评价}
++
+\text{固定点自由变换}
+$$
+
+构造一个新的形式行为，并证明它不在现有行为像中。
+
+因此：
+
+$$
+\boxed{
+\text{自我报告不能增加 state separation，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{对角化可以证明当前行为模型不具备 realization completeness。}
+}
+$$
+
+递归的力量不是“凭空看见更多世界数据”，而是：
+
+$$
+\boxed{
+\text{暴露模型对自身形式语言的非满射性}.
+}
+$$
+
+---
+
+# 199. 协议不是集合，而应组织成范畴
+
+不同协议之间通常存在：
+
+* 前缀；
+* 截断；
+* 后处理；
+* 串行组合；
+* 并行组合；
+* 精度粗化；
+* 时间限制；
+* 忘记某些输出；
+* 限制到某个观察上下文。
+
+因此协议索引最好组织成范畴：
+
+$$
+\mathcal C_{\mathfrak O}.
+$$
+
+对象 \(c\) 表示一个有限观察上下文。
+
+态射：
+
+$$
+u:c\to d
+$$
+
+表示从较丰富的 \(d\)-记录限制或后处理得到 \(c\)-记录。
+
+令：
+
+$$
+\mathcal B:
+\mathcal C_{\mathfrak O}^{op}\to\mathbf{Set}
+$$
+
+为记录预层：
+
+$$
+c\longmapsto\mathcal B(c).
+$$
+
+其中 \(\mathcal B(c)\) 是上下文 \(c\) 的形式记录空间。
+
+若：
+
+$$
+u:c\to d,
+$$
+
+则：
+
+$$
+\mathcal B(u):
+\mathcal B(d)\to\mathcal B(c)
+$$
+
+是限制映射。
+
+---
+
+# 200. 每个世界状态产生一个兼容记录族
+
+给定状态 \(x\in X\)，每个上下文都产生记录：
+
+$$
+\beta_c(x)\in\mathcal B(c).
+$$
+
+自然性要求：
+
+$$
+\mathcal B(u)(\beta_d(x))
+=
+\beta_c(x).
+$$
+
+因此 \(x\) 产生一个兼容族：
+
+$$
+\beta(x)
+=
+\bigl(\beta_c(x)\bigr)_c
+\in
+\varprojlim_{c\in\mathcal C}\mathcal B(c).
+$$
+
+定义：
+
+$$
+\Gamma(\mathcal B)
+=
+\varprojlim_c\mathcal B(c),
+$$
+
+即所有形式兼容记录族。
+
+于是得到：
+
+$$
+\boxed{
+\beta:
+X\to\Gamma(\mathcal B).
+}
+$$
+
+统一观察者商为：
+
+$$
+X/\ker\beta
+\cong
+\operatorname{Im}\beta.
+$$
+
+而局部—全局 image defect 为：
+
+$$
+\boxed{
+\Gamma(\mathcal B)
+\setminus
+\operatorname{Im}\beta.
+}
+$$
+
+这同时容纳：
+
+* 有限时间前缀；
+* 有限素数集合；
+* 有限 \(p\)-进精度；
+* 有限干预家族；
+* 量子测量上下文；
+* 多观察者局部记录；
+* 有限历史；
+* 有限计算窗口。
+
+---
+
+# 201. 各种观察者只是不同协议 site
+
+## 时间观察者
+
+上下文为：
+
+$$
+\{0,\ldots,n\}.
+$$
+
+限制是截断未来记录。
+
+## 素数观察者
+
+上下文为有限素数集及精度：
+
+$$
+(S,(k_p)_{p\in S}).
+$$
+
+限制是删除素数或降低精度。
+
+## 量子顺序观察者
+
+上下文是有限 instrument word 或协议树。
+
+限制是取前缀或遗忘部分结果。
+
+## 因果观察者
+
+上下文是有限干预族。
+
+限制是删除某些干预 regime。
+
+## 多主体观察者
+
+上下文是有限主体集合及其公开记录。
+
+限制是忘记部分主体消息。
+
+所以：
+
+$$
+\boxed{
+\text{time completion},
+\text{prime completion},
+\text{quantum protocol completion},
+\text{causal completion}
+}
+$$
+
+都可以解释为：
+
+$$
+\boxed{
+\text{在各自协议 site 上研究兼容局部记录的全局截面}.
+}
+$$
+
+---
+
+# 202. 观察紧致性定理
+
+设：
+
+* \(X\) 是紧致空间；
+* 每个有限上下文记录空间 \(\mathcal B(c)\) 是 Hausdorff；
+* 每个：
+
+$$
+\beta_c:X\to\mathcal B(c)
+$$
+
+连续；
+
+* 上下文族对有限 join 封闭。
+
+设给定一个兼容记录族：
+
+$$
+b=(b_c)_c.
+$$
+
+并假设每个有限上下文记录都可实现：
+
+$$
+b_c\in\operatorname{Im}\beta_c
+\qquad
+\forall c.
+$$
+
+## 定理 202.1：有限局部可实现推出全局可实现
+
+存在：
+
+$$
+x\in X
+$$
+
+使：
+
+$$
+\beta_c(x)=b_c
+\qquad
+\forall c.
+$$
+
+### 证明
+
+定义闭集：
+
+$$
+F_c
+=
+\{x\in X:\beta_c(x)=b_c\}.
+$$
+
+每个 \(F_c\) 非空且闭。
+
+对有限上下文：
+
+$$
+c_1,\ldots,c_n,
+$$
+
+取联合上下文：
+
+$$
+d=c_1\vee\cdots\vee c_n.
+$$
+
+因为 \(b_d\) 可实现，存在 \(x_d\)：
+
+$$
+\beta_d(x_d)=b_d.
+$$
+
+由兼容性：
+
+$$
+x_d\in
+F_{c_1}\cap\cdots\cap F_{c_n}.
+$$
+
+所以 \(\{F_c\}\) 具有有限交性质。
+
+由 \(X\) 紧致：
+
+$$
+\bigcap_cF_c\neq\varnothing.
+$$
+
+证毕。
+
+---
+
+# 203. 紧致性解决 existence，但不解决 uniqueness
+
+若再有：
+
+$$
+\ker\beta=\Delta_X,
+$$
+
+则上述实现唯一。
+
+因此：
+
+$$
+\boxed{
+\text{紧致性}
++
+\text{有限局部可实现}
+\Longrightarrow
+\text{全局存在};
+}
+$$
+
+$$
+\boxed{
+\text{观察分离性}
+\Longrightarrow
+\text{全局唯一}.
+}
+$$
+
+最终：
+
+$$
+\boxed{
+\text{局部—全局精确性}
+=
+\text{compact realization}
++
+\text{observational separation}.
+}
+$$
+
+有限状态空间是紧致定理的最简单实例。
+
+仓库的有限 itinerary 工作甚至证明了更强结果：在有限状态系统中，不仅兼容完整前缀族可以实现，而且存在一个有限 completion depth，达到该深度后就已经决定全部未来。
+
+---
+
+# 204. 观察事件代数是世界商的对偶
+
+对确定性接口：
+
+$$
+q:X\to Q,
+$$
+
+定义可观察事件代数：
+
+$$
+\mathcal A_q
+=
+\{A\subseteq X:
+A=q^{-1}(B)
+\text{ for some }B\subseteq Q\}.
+$$
+
+等价地：
+
+$$
+A\in\mathcal A_q
+\iff
+A\text{ 在每个 }q\text{-fiber 上常值}.
+$$
+
+对函数也类似：
+
+$$
+\operatorname{Obs}(K_q)
+=
+\{f:X\to V:
+xK_qy\Rightarrow f(x)=f(y)\}.
+$$
+
+仓库已经证明：
+
+$$
+\boxed{
+q\text{ 精化关系}
+\iff
+\text{反向 kernel 包含}
+\iff
+\text{pullback observable algebra 包含}.
+}
+$$
+
+所以世界商和观察代数是同一结构的两面：
+
+$$
+\boxed{
+\text{状态侧：合并不可区分世界};
+}
+$$
+
+$$
+\boxed{
+\text{命题侧：保留在这些 fiber 上常值的函数}.
+}
+$$
+
+---
+
+# 205. 动态观察的三重对偶
+
+给定：
+
+$$
+T:X\to X
+$$
+
+和初始接口：
+
+$$
+q:X\to Q.
+$$
+
+初始 kernel：
+
+$$
+K_0=\ker q.
+$$
+
+定义完整未来 kernel：
+
+$$
+K_\infty
+=
+\bigcap_{n\ge0}
+(T^n\times T^n)^{-1}(K_0).
+$$
+
+即：
+
+$$
+xK_\infty y
+\iff
+q(T^nx)=q(T^ny)
+\quad
+\forall n.
+$$
+
+仓库已机器核验：该 all-iterate pullback 是 \(K_0\) 内最大的前向 congruence，并且具有单调性、收缩性和幂等性。
+
+定义 observable algebra：
+
+$$
+\mathcal A_0
+=
+\operatorname{Obs}(K_0).
+$$
+
+定义动力闭包：
+
+$$
+\mathcal A_\infty
+=
+\operatorname{Alg}
+\left\{
+f\circ T^n:
+f\in\mathcal A_0,\ n\ge0
+\right\}.
+$$
+
+则：
+
+$$
+\boxed{
+K_\infty
+=
+\operatorname{Ker}(\mathcal A_\infty).
+}
+$$
+
+因此得到：
+
+$$
+\boxed{
+\begin{aligned}
+\text{state side}
+&:\text{最大的稳定 residual};\\
+\text{interface side}
+&:\text{最小的稳定 refinement};\\
+\text{observable side}
+&:\text{最小的 }T^*\text{-不变代数闭包}.
+\end{aligned}
+}
+$$
+
+这三个并不是类比，而是同一个 completion 的三种坐标。
+
+---
+
+# 206. 受控观察的最小行为实现
+
+若动作集合为 \(U\)，每个动作给出：
+
+$$
+T_u:X\to X.
+$$
+
+对有限动作词：
+
+$$
+w=(u_1,\ldots,u_n),
+$$
+
+定义：
+
+$$
+T_w.
+$$
+
+完整受控行为：
+
+$$
+B(x)(w)=q(T_wx).
+$$
+
+行为 kernel：
+
+$$
+x\sim_By
+\iff
+B(x)=B(y).
+$$
+
+商：
+
+$$
+Q_B=X/{\sim_B}.
+$$
+
+仓库已经证明：任何保持全部更新和读出的有限受控实现，都唯一并满射地映到该完整行为商；其状态数不小于完整行为商。
+
+因此：
+
+$$
+\boxed{
+Q_B
+=
+\text{全部受控未来行为的最小状态实现}.
+}
+$$
+
+这实际上统一了：
+
+* 自动机最小化；
+* 预测状态；
+* POMDP belief compression；
+* 量子 instrument-word quotient；
+* 素数—时间协议状态；
+* 策略充分自我。
+
+---
+
+# 207. Completion 是反射，而 kernel completion 是内算子
+
+定义观察者精化序：
+
+$$
+q\preceq r
+\iff
+r\text{ 比 }q\text{ 更细}.
+$$
+
+等价于：
+
+$$
+K_r\subseteq K_q.
+$$
+
+给定目标族 \(\mathcal T\)，定义：
+
+$$
+C_{\mathcal T}(q)
+=
+q\vee\mathcal T.
+$$
+
+即联合记录：
+
+$$
+x\longmapsto
+\bigl(q(x),(T_\alpha(x))_\alpha\bigr).
+$$
+
+对任何已经足以决定 \(\mathcal T\) 的观察者 \(r\)：
+
+$$
+\boxed{
+C_{\mathcal T}(q)\preceq r
+\iff
+q\preceq r.
+}
+$$
+
+所以：
+
+$$
+C_{\mathcal T}
+$$
+
+是从所有观察者到“\(\mathcal T\)-充分观察者”子类的反射。
+
+而状态关系侧：
+
+$$
+R\longmapsto
+\operatorname{CongKernel}_T(R)
+$$
+
+是：
+
+* 单调；
+* 收缩；
+* 幂等；
+
+的 interior operator。
+
+因此：
+
+$$
+\boxed{
+\text{interface completion 是 closure/reflection，}
+}
+$$
+
+$$
+\boxed{
+\text{kernel completion 是 interior/coreflection}.
+}
+$$
+
+它们由反序关系互相转换。
+
+---
+
+# 208. 新协议真正增加信息的充要条件
+
+设当前协议族为 \(P\)，kernel 为：
+
+$$
+K_P.
+$$
+
+加入新协议 \(\pi\)，得到：
+
+$$
+K_{P\cup\{\pi\}}
+=
+K_P\cap\ker\mathcal L_\pi.
+$$
+
+## 定理 208.1：协议创新判据
+
+新协议严格增加观察能力，当且仅当存在：
+
+$$
+x,y\in X
+$$
+
+满足：
+
+$$
+xK_Py
+$$
+
+但：
+
+$$
+\mathcal L_\pi(x)
+\neq
+\mathcal L_\pi(y).
+$$
+
+即：
+
+$$
+\boxed{
+\pi\text{ 有创新}
+\iff
+\exists(x,y)\in
+K_P\setminus\ker\mathcal L_\pi.
+}
+$$
+
+因此一个实验是否“新”，不取决于：
+
+* 名称不同；
+* 设备不同；
+* 公式不同；
+* 计算过程更复杂；
+
+而取决于它是否切开了当前某个 residual fiber。
+
+---
+
+# 209. 旧协议重复不能穿透精确 kernel
+
+若一切新 transcript 都只是完整旧协议 law 画像的函数，则：
+
+$$
+K_{\mathrm{old}}
+\subseteq
+K_{\mathrm{transcript}}.
+$$
+
+所以以下操作不会穿透旧 kernel：
+
+* 无限重复同一实验；
+* 调整采样次数；
+* 自适应重排同一协议族；
+* 对 transcript 做随机后处理；
+* 使用更复杂分类器；
+* 使用量子计算处理已经压缩后的经典标签。
+
+仓库已经对固定干预族形式化了这一点：若两个模型具有相同的整个干预 law 画像，则任意重复次数、样本量、自适应 transcript law 和随机后处理都不能同时恢复它们不同的目标。
+
+但加入真正的新干预可以严格缩小 kernel；仓库也已有一个有限 Boolean SCM 的严格例子：
+
+$$
+K_{\mathrm{intervention}}
+\subsetneq
+K_{\mathrm{observation}}.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{更多计算}
+\neq
+\text{更多观察};
+}
+$$
+
+$$
+\boxed{
+\text{只有新的物理／操作耦合，才能产生新的区分方向}.
+}
+$$
+
+---
+
+# 210. 多观察者的“联合知识”与“共同知识”方向相反
+
+设主体 \(i\) 的观察 kernel 为：
+
+$$
+K_i.
+$$
+
+可观察函数代数为：
+
+$$
+\mathcal A_i=\operatorname{Obs}(K_i).
+$$
+
+## 210.1 联合／分布式知识
+
+所有主体把记录汇集起来：
+
+$$
+K_{\mathrm{pool}}
+=
+\bigcap_iK_i.
+$$
+
+其可观察代数：
+
+$$
+\mathcal A_{\mathrm{pool}}
+=
+\operatorname{Obs}
+\left(
+\bigcap_iK_i
+\right).
+$$
+
+这是联合后能够知道的一切。
+
+## 210.2 共同知识
+
+定义主体可达关系的等价闭包：
+
+$$
+K_{\mathrm{common}}
+=
+\operatorname{EqClosure}
+\left(
+\bigcup_iK_i
+\right).
+$$
+
+共同知识函数必须沿每个主体的不可区分边，以及所有这些边的有限链保持不变：
+
+$$
+\mathcal A_{\mathrm{common}}
+=
+\operatorname{Obs}(K_{\mathrm{common}}).
+$$
+
+有：
+
+$$
+\boxed{
+\mathcal A_{\mathrm{common}}
+=
+\bigcap_i\mathcal A_i.
+}
+$$
+
+### 证明
+
+函数若在每个 \(K_i\) 上常值，就在其并及等价闭包上常值。
+
+反向显然。证毕。
+
+因此：
+
+$$
+\boxed{
+\mathcal A_{\mathrm{common}}
+\subseteq
+\mathcal A_i
+\subseteq
+\mathcal A_{\mathrm{pool}}.
+}
+$$
+
+共同知识是**交**，联合知识是**join**。
+
+---
+
+# 211. 一个极端的共同知识—联合知识分离例子
+
+令：
+
+$$
+X=\{0,1\}^2.
+$$
+
+观察者一只看第一位：
+
+$$
+q_1(x_1,x_2)=x_1.
+$$
+
+观察者二只看第二位：
+
+$$
+q_2(x_1,x_2)=x_2.
+$$
+
+则：
+
+$$
+K_1\cap K_2=\Delta_X.
+$$
+
+所以联合观察完全恢复状态：
+
+$$
+\mathcal A_{\mathrm{pool}}
+=
+\operatorname{Fun}(X).
+$$
+
+但：
+
+* \(K_1\) 允许改变第二位；
+* \(K_2\) 允许改变第一位；
+* 交替沿这些边，可以连接四个状态中的任意两个。
+
+所以：
+
+$$
+K_{\mathrm{common}}
+=
+X\times X.
+$$
+
+因此：
+
+$$
+\mathcal A_{\mathrm{common}}
+=
+\{\text{常值函数}\}.
+$$
+
+即：
+
+$$
+\boxed{
+\text{两个人联合起来什么都能知道，}
+\quad
+\text{但在交流之前，几乎没有非平凡共同知识}.
+}
+$$
+
+仓库目前已有公共公告的一个 Lean 实例：真实命题被公开宣布并据此限制模型后，该命题在所有有限主体可达路径上保持成立，从而成为公告后共同知识。
+
+---
+
+# 212. 通信是否实现完整观察者融合
+
+每个观察者拥有行为：
+
+$$
+\Sigma_i:X\to B_i.
+$$
+
+但实际广播的消息可能是压缩：
+
+$$
+m_i=f_i\circ\Sigma_i.
+$$
+
+联合消息：
+
+$$
+M(x)
+=
+\bigl(m_i(x)\bigr)_i.
+$$
+
+完整联合行为：
+
+$$
+\Sigma(x)
+=
+\bigl(\Sigma_i(x)\bigr)_i.
+$$
+
+显然：
+
+$$
+\ker\Sigma
+\subseteq
+\ker M.
+$$
+
+## 定理 212.1：无损通信判据
+
+$$
+\boxed{
+\ker M=\ker\Sigma
+}
+$$
+
+当且仅当：
+
+$$
+f:
+\operatorname{Im}\Sigma
+\to
+\prod_i\operatorname{Im}m_i
+$$
+
+在实际联合行为像上单射。
+
+也就是说，通信不必传输每个原始数据字节，但必须在**实际可发生的联合记录集合**上无损。
+
+若每个：
+
+$$
+f_i
+$$
+
+在 \(\operatorname{Im}\Sigma_i\) 上单射，则这是一个充分条件，但不是必要条件；不同主体的压缩可能互相补偿。
+
+仓库的 least-common-refinement 定理已经给出了两个 quotient completion 的规范融合：任何兼容且满射覆盖两个 quotient 的实现，都唯一满射地下沉到二者 kernel 交所定义的最小共同 refinement。
+
+---
+
+# 213. 一致记录不等于真实记录
+
+多个主体输出相同消息可能有三种完全不同的原因：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{它们独立观察到同一真实事实};\\
+&\text{它们共享同一个粗 kernel};\\
+&\text{它们复制了同一个上游错误或伪造源}.
+\end{aligned}
+}
+$$
+
+因此记录模型必须加入 provenance：
+
+$$
+r
+=
+(\text{payload},
+\text{source},
+\text{protocol},
+\text{time},
+\text{integrity proof}).
+$$
+
+相对于信任模型 \(\mathcal T\)，一个事实 \(f\) 才能称为受信知识，如果 \(f\) 在所有同时满足：
+
+* 当前记录；
+* provenance；
+* 完整性规则；
+* 信任假设；
+
+的世界状态上常值。
+
+所以：
+
+$$
+\boxed{
+\text{共识是观察现象，}
+\quad
+\text{真实性是模型与 provenance 条件下的目标充分性}.
+}
+$$
+
+---
+
+# 214. 观察、干预和反事实构成严格协议层级
+
+设：
+
+$$
+P_{\mathrm{obs}}
+\subseteq
+P_{\mathrm{int}}
+\subseteq
+P_{\mathrm{cf}}.
+$$
+
+分别为：
+
+* 被动观察协议；
+* 干预协议；
+* 反事实耦合查询。
+
+则：
+
+$$
+\boxed{
+K_{\mathrm{cf}}
+\subseteq
+K_{\mathrm{int}}
+\subseteq
+K_{\mathrm{obs}}.
+}
+$$
+
+第一处严格性可能来自：
+
+不同模型产生同样的每个单独干预分布，但对跨世界反事实变量采用不同 coupling。
+
+第二处严格性已经被仓库的 Boolean SCM 例子证实。
+
+不过必须严格说明：
+
+反事实查询通常不是一个直接可执行的物理实验，而是对结构模型的更强目标语言。因此：
+
+$$
+K_{\mathrm{cf}}
+$$
+
+首先是**模型语义 kernel**，不自动等于物理可操作 kernel。
+
+---
+
+# 215. Posterior 是充分状态，但不必是最小状态
+
+设历史空间：
+
+$$
+H.
+$$
+
+posterior：
+
+$$
+\Pi:H\to\mathsf{Prob}(\Theta).
+$$
+
+有限未来自适应行为：
+
+$$
+B:H\to\mathsf{FutureLaw}.
+$$
+
+仓库已证明，在标准 Bayes update 条件下：
+
+$$
+\Pi(h)=\Pi(h')
+$$
+
+推出所有 belief-adaptive 有限未来输出 law 和递归 Bayes continuation value相同。
+
+因此存在：
+
+$$
+F:
+\operatorname{Im}\Pi
+\to
+\operatorname{Im}B
+$$
+
+使：
+
+$$
+B=F\circ\Pi.
+$$
+
+所以：
+
+$$
+\boxed{
+K_\Pi\subseteq K_B.
+}
+$$
+
+但 posterior 是最小未来行为状态，当且仅当：
+
+$$
+\boxed{
+F\text{ 在 }\operatorname{Im}\Pi\text{ 上单射}.
+}
+$$
+
+若两个不同 posterior 对所有允许实验都产生相同未来 law，则最小行为商还应继续合并它们。
+
+---
+
+# 216. Belief、predictive state 与 self 没有无条件固定顺序
+
+定义策略画像：
+
+$$
+S:H\to\mathsf{PolicyProfile}.
+$$
+
+若策略只依赖 posterior：
+
+$$
+S=G\circ\Pi,
+$$
+
+则：
+
+$$
+K_\Pi\subseteq K_S.
+$$
+
+若策略只依赖最小未来行为：
+
+$$
+S=J\circ B,
+$$
+
+则：
+
+$$
+K_B\subseteq K_S.
+$$
+
+但如果策略使用：
+
+* 身份标签；
+* 历史来源；
+* 道德承诺；
+* 记忆 provenance；
+* 与未来输出 law 无关的偏好；
+
+则 \(S\) 未必通过 \(B\) 因子化。
+
+因此不能无条件写：
+
+$$
+\Pi\to B\to S.
+$$
+
+严格结论是：
+
+$$
+\boxed{
+\text{kernel 包含关系由实际因子化决定，}
+\quad
+\text{不能由概念名称决定}.
+}
+$$
+
+最小 self 定义为：
+
+$$
+\boxed{
+M_{\mathrm{self}}
+=
+H/\ker S.
+}
+$$
+
+即：
+
+> 恰好保留仍会改变未来策略的历史差异。
+
+---
+
+# 217. Reflexive observer：观察者成为世界状态的一部分
+
+设完整世界状态：
+
+$$
+x=(e,m),
+$$
+
+其中：
+
+* \(e\) 是环境；
+* \(m\) 是观察者记忆、自我模型和策略状态。
+
+读出：
+
+$$
+q:X\to M.
+$$
+
+策略：
+
+$$
+\pi:M\to A.
+$$
+
+环境更新：
+
+$$
+F:X\times A\to X.
+$$
+
+闭环动力学：
+
+$$
+T(x)=F(x,\pi(q(x))).
+$$
+
+此时观察者不是外部读取器，而是：
+
+$$
+\boxed{
+\text{世界动力学中的闭环子结构}.
+}
+$$
+
+它的观察会影响记忆，记忆决定行动，行动又改变未来可观察状态。
+
+因此 reflexive observer 的完整行为必须对**策略闭环协议**取 kernel，而不能只对开放环读出取 kernel。
+
+---
+
+# 218. 精确透明自我预测的不可能三角
+
+设动作集合 \(A\) 上存在固定点自由响应：
+
+$$
+\delta:A\to A,
+\qquad
+\delta(a)\neq a.
+$$
+
+预测器：
+
+$$
+P:M\to A.
+$$
+
+观察者读取预测后选择：
+
+$$
+\pi(m)=\delta(P(m)).
+$$
+
+若预测器要求精确：
+
+$$
+P(m)=\pi(m),
+$$
+
+则：
+
+$$
+P(m)=\delta(P(m)),
+$$
+
+矛盾。
+
+所以以下三者不能同时成立：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{预测对主体完全可访问};\\
+&\text{预测要求逐结果精确};\\
+&\text{主体能够执行固定点自由的反预测响应}.
+\end{aligned}
+}
+$$
+
+这可以称为：
+
+$$
+\boxed{
+\text{透明自我预测三难}.
+}
+$$
+
+它不是量子不确定性，也不是证明自由意志，而是一个闭环 fixed-point obstruction。
+
+---
+
+# 219. 三种解除自我预测矛盾的方法
+
+## 限制透明性
+
+主体在行动前看不到完整预测。
+
+## 降低精确性
+
+只预测概率分布而非单次结果。
+
+例如二值翻转对概率：
+
+$$
+p\mapsto1-p
+$$
+
+存在固定分布：
+
+$$
+p=\frac12.
+$$
+
+所以分布级自洽可以存在，但结果级精确预测仍失败。
+
+## 限制响应自由
+
+主体预先承诺不根据预测反向改变行动。
+
+因此：
+
+$$
+\boxed{
+\text{commitment}
+}
+$$
+
+可以把原本没有固定点的闭环改造成有固定点闭环。
+
+这说明 commitment 不是单纯减少自由，它也可以创造：
+
+* 可预测性；
+* 跨时间协调；
+* 可信承诺；
+* 稳定 self-model。
+
+---
+
+# 220. 对角化与自我预测无解都属于 image/dynamic defect
+
+现在可以进一步分类。
+
+## 对角逃逸
+
+产生：
+
+$$
+d\notin\operatorname{Im}\Sigma.
+$$
+
+它是：
+
+$$
+\boxed{
+\text{image defect}.
+}
+$$
+
+## 透明反预测
+
+预测与响应无法共同满足闭环方程：
+
+$$
+p=\delta(p).
+$$
+
+它是：
+
+$$
+\boxed{
+\text{dynamic realization defect}.
+}
+$$
+
+## 状态不可区分
+
+存在：
+
+$$
+x\neq y,
+\qquad
+\Sigma(x)=\Sigma(y).
+$$
+
+它是：
+
+$$
+\boxed{
+\text{kernel defect}.
+}
+$$
+
+三者必须分开：
+
+$$
+\boxed{
+\text{non-uniqueness}
+\neq
+\text{non-existence}
+\neq
+\text{dynamic inconsistency}.
+}
+$$
+
+---
+
+# 221. 抽象观察者与物理观察者之间还缺一层实现态射
+
+一个抽象观察者可以定义任意 law：
+
+$$
+\mathcal L_\pi:X\to\mathsf{Law}(O_\pi).
+$$
+
+但物理实现必须给出：
+
+* 物理状态空间 \(W\)；
+* 状态编码 \(h:W\to X\)；
+* 协议编译器 \(C:P\to P_{\mathrm{phys}}\)；
+* 实际物理 law \(\mathcal L^{\mathrm{phys}}\)。
+
+并满足：
+
+$$
+\boxed{
+\mathcal L^{\mathrm{phys}}_{C(\pi)}(w)
+=
+\mathcal L_\pi(h(w)).
+}
+$$
+
+量子情况下还要满足：
+
+* 完全正性；
+* 迹保持或迹不增；
+* 局域性；
+* no-signalling；
+* 有限能量／有限维近似；
+* 合法记录实现。
+
+因此：
+
+$$
+\boxed{
+\text{abstract semantic completeness}
+\not\Rightarrow
+\text{physical realizability}.
+}
+$$
+
+同理：
+
+$$
+\boxed{
+\text{存在一个区分函数}
+\not\Rightarrow
+\text{存在一个可实施实验}.
+}
+$$
+
+---
+
+# 222. 近似观察者：kernel 应升级为伪度量
+
+精确 kernel 只区分：
+
+$$
+D=0
+\quad\text{与}\quad
+D>0.
+$$
+
+设 \(D\) 是 law 空间上的区分度，例如：
+
+* total variation；
+* Hellinger；
+* trace distance；
+* 某种有界风险差；
+* 可操作判别优势。
+
+定义：
+
+$$
+d_{\mathfrak O}(x,y)
+=
+\sup_{\pi\in P}
+w_\pi
+D\bigl(
+\mathcal L_\pi(x),
+\mathcal L_\pi(y)
+\bigr).
+$$
+
+若：
+
+$$
+D(\mu,\nu)=0\iff\mu=\nu
+$$
+
+且所有 \(w_\pi>0\)，则：
+
+$$
+\boxed{
+d_{\mathfrak O}(x,y)=0
+\iff
+xK_{\mathfrak O}y.
+}
+$$
+
+协议精化使：
+
+$$
+d_{\mathfrak O}
+$$
+
+单调不减。
+
+串行后处理若满足 data processing，则区分度不增。
+
+因此精确 kernel 理论是近似观察几何的零距离骨架。
+
+---
+
+# 223. 目标相对近似充分性
+
+对目标：
+
+$$
+T:X\to Z
+$$
+
+给定目标度量：
+
+$$
+d_Z.
+$$
+
+若存在：
+
+$$
+L<\infty
+$$
+
+使：
+
+$$
+d_Z(Tx,Ty)
+\le
+L\,d_{\mathfrak O}(x,y),
+$$
+
+则观察者对目标具有 Lipschitz 稳健充分性。
+
+这比：
+
+$$
+K_{\mathfrak O}\subseteq K_T
+$$
+
+更强。
+
+后者只说：
+
+$$
+d_{\mathfrak O}=0
+\Longrightarrow
+d_Z=0.
+$$
+
+前者进一步控制：
+
+$$
+\text{小观察误差}
+\Longrightarrow
+\text{小目标误差}.
+$$
+
+因此完整性应分成：
+
+$$
+\boxed{
+\begin{aligned}
+\text{exact sufficiency}
+&:\ker包含;\\
+\text{stable sufficiency}
+&:\text{正分离常数};\\
+\text{statistical sufficiency}
+&:\text{有限样本误差界};\\
+\text{physical sufficiency}
+&:\text{协议可实现}.
+\end{aligned}
+}
+$$
+
+---
+
+# 224. 统一 Gram 定理
+
+设状态差位于有限维内积空间 \(V\)。
+
+每个协议产生线性读出：
+
+$$
+C_\pi:V\to Y_\pi.
+$$
+
+取严格正权重：
+
+$$
+w_\pi>0.
+$$
+
+定义：
+
+$$
+W_{\mathfrak O}
+=
+\sum_\pi
+w_\pi C_\pi^*C_\pi.
+$$
+
+则：
+
+$$
+\langle v,W_{\mathfrak O}v\rangle
+=
+\sum_\pi
+w_\pi\|C_\pi v\|^2.
+$$
+
+因此：
+
+$$
+\boxed{
+\ker W_{\mathfrak O}
+=
+\bigcap_\pi\ker C_\pi.
+}
+$$
+
+所以以下对象都是同一结构的实例：
+
+$$
+\begin{aligned}
+&\text{线性系统 observability Gramian};\\
+&\text{量子 tomography frame operator};\\
+&\text{prime-time weighted Gramian};\\
+&\text{Fisher information};\\
+&\text{局部参数 Jacobian Gram};\\
+&\text{zeta-weighted prime-precision Gramian}.
+\end{aligned}
+$$
+
+最小特征值：
+
+$$
+\lambda_{\min}(W_{\mathfrak O})
+$$
+
+衡量最脆弱可见方向，而条件数衡量噪声放大。
+
+---
+
+# 225. Observer completion 不等于 metric completion
+
+精确行为像：
+
+$$
+B_{\mathrm{real}}
+=
+\operatorname{Im}\Sigma
+$$
+
+可能不是完备空间。
+
+对其度量完成：
+
+$$
+\widehat B
+$$
+
+可能加入一些 ideal behaviors：
+
+$$
+\widehat B\setminus B_{\mathrm{real}}.
+$$
+
+这些 ideal behavior 可以是：
+
+* Cauchy 极限；
+* 无限精度局部记录；
+* profinite 点；
+* 无限时间统计极限；
+* 弱算子极限；
+* 不由任何原始有限状态实现的理想态。
+
+所以必须区分：
+
+$$
+\boxed{
+\text{观测商完成}
+}
+$$
+
+与：
+
+$$
+\boxed{
+\text{拓扑／度量完成}.
+}
+$$
+
+前者删除不可区分状态；后者添加极限点。
+
+两者方向完全不同。
+
+---
+
+# 226. Noetherian 观察者原理
+
+为什么仓库中如此多的有限状态观察过程最终会有限停止？
+
+真正原因不是某个具体公式，而是观察者精化格具有有限高度。
+
+设：
+
+$$
+q_0\preceq q_1\preceq q_2\preceq\cdots
+$$
+
+每一步严格精化都会严格增加：
+
+* partition 类数；
+* 可见子空间维数；
+* 独立效果数；
+* 可区分行为数。
+
+若上界有限，则严格增长次数有限。
+
+因此：
+
+$$
+\boxed{
+\text{有限高度}
+\Longrightarrow
+\text{completion 有限稳定}.
+}
+$$
+
+实例包括：
+
+$$
+|X|<\infty,
+$$
+
+或：
+
+$$
+\dim V<\infty,
+$$
+
+或量子系统：
+
+$$
+\dim\operatorname{Herm}_0(\mathcal H)=d^2-1.
+$$
+
+---
+
+# 227. 开放协议语法会破坏有限稳定
+
+若观察者不仅增加固定语法中的协议，还能扩展协议语言本身：
+
+$$
+P_0
+\subsetneq
+P_1
+\subsetneq
+P_2
+\subsetneq\cdots,
+$$
+
+例如新加入：
+
+* 新定义；
+* 新传感器；
+* 新干预变量；
+* 新量子上下文；
+* 新素数局部数据；
+* 对旧观察器的元观察；
+* 对证明系统的编码；
+
+则没有理由要求 completion 在有限步停止。
+
+定义协议语法生成器：
+
+$$
+G(P)
+=
+P\cup
+\{\text{由 }P\text{ 可构造的新协议}\}.
+$$
+
+统一完成：
+
+$$
+P^*
+=
+\operatorname{lfp}G.
+$$
+
+有限阶段：
+
+$$
+P_{n+1}=G(P_n).
+$$
+
+极限阶段：
+
+$$
+P_\lambda
+=
+\bigcup_{\alpha<\lambda}P_\alpha.
+$$
+
+所以超限 completion 不是神秘递归，而是：
+
+$$
+\boxed{
+\text{在开放协议语法下寻找最小固定点}.
+}
+$$
+
+---
+
+# 228. 所有 completion 算子不一定交换
+
+设：
+
+$$
+C_T
+$$
+
+为时间 completion，
+
+$$
+C_I
+$$
+
+为干预 completion，
+
+$$
+C_P
+$$
+
+为素数 completion，
+
+$$
+C_Q
+$$
+
+为量子上下文 completion，
+
+$$
+C_M
+$$
+
+为记忆 completion。
+
+一般：
+
+$$
+C_iC_j(q)
+\neq
+C_jC_i(q).
+$$
+
+例如：
+
+* 先让动力传播局部信息，再加入跨素数读出；
+* 先把每一步投影到局部代数，再做动力闭包；
+
+可能得到不同可见空间。
+
+统一完成必须取所有 completion 的最小共同固定点：
+
+$$
+\boxed{
+q^*
+=
+\operatorname{lfp}
+\left(
+q\mapsto
+\bigvee_iC_i(q)
+\right).
+}
+$$
+
+若各 completion 两两交换，则一次组合后即可稳定。
+
+若不交换，则必须迭代。
+
+---
+
+# 229. 科学发现有两种完全不同的修复方向
+
+设当前模型为 \(X_n\)，观察者为 \(\mathfrak O_n\)。
+
+## 229.1 Separation repair
+
+找到：
+
+$$
+x\neq y,
+\qquad
+xK_{\mathfrak O_n}y,
+$$
+
+但目标不同：
+
+$$
+T(x)\neq T(y).
+$$
+
+这是 target residual witness。
+
+修复方式是加入新协议 \(\pi\)，使：
+
+$$
+\mathcal L_\pi(x)
+\neq
+\mathcal L_\pi(y).
+$$
+
+这缩小 kernel。
+
+## 229.2 Realization repair
+
+找到一个形式兼容行为：
+
+$$
+b\in B_{\mathrm{formal}}
+$$
+
+但：
+
+$$
+b\notin\operatorname{Im}\Sigma_{\mathfrak O_n}.
+$$
+
+修复方式有两种：
+
+1. 扩大世界／模型类，使 \(b\) 可实现；
+2. 加强 admissibility 条件，证明 \(b\) 根本不是合法形式行为。
+
+这修复 image defect。
+
+因此科学进步不是单轴的“知道更多”。
+
+它同时沿两个方向运动：
+
+$$
+\boxed{
+\text{缩小 observational kernel}
+}
+$$
+
+与：
+
+$$
+\boxed{
+\text{校正 realized image}.
+}
+$$
+
+---
+
+# 230. 对角化是一种 realization audit
+
+在上述科学循环中，对角化不是直接发明一个新世界状态。
+
+它构造一个形式行为：
+
+$$
+d
+$$
+
+并证明：
+
+$$
+d\notin\operatorname{Im}\Sigma.
+$$
+
+因此对角化给出：
+
+$$
+\boxed{
+\text{当前模型行为像不是形式行为域的全部}.
+}
+$$
+
+随后必须作出选择：
+
+* 扩大状态空间；
+* 扩大语法；
+* 限制形式行为域；
+* 放弃固定点自由 twist；
+* 放弃全局自地址；
+* 接受不完备性。
+
+所以对角化在统一观察者理论中的角色是：
+
+$$
+\boxed{
+\text{行为像的内部审计器}.
+}
+$$
+
+---
+
+# 231. 统一观察者的规范化流程
+
+给定任意原始观察者，依次执行：
+
+## 第一步：协议生成闭包
+
+加入所有允许的：
+
+* 组合；
+* 时间演化；
+* 干预；
+* 后处理；
+* 顺序 instrument；
+* 联合观察。
+
+得到：
+
+$$
+P_\infty.
+$$
+
+## 第二步：状态外延化
+
+模去行为相同的状态：
+
+$$
+X\to X/{\sim_X}.
+$$
+
+## 第三步：协议分离化
+
+模去所有状态上行为相同的协议：
+
+$$
+P_\infty\to P_\infty/{\sim_P}.
+$$
+
+## 第四步：行为像化
+
+只保留真实可实现行为：
+
+$$
+B_{\mathrm{real}}
+=
+\operatorname{Im}\Sigma.
+$$
+
+## 第五步：理想极限完成
+
+按需要取：
+
+* 逆极限；
+* 拓扑闭包；
+* 度量完成；
+* 弱／强算子闭包。
+
+得到：
+
+$$
+\widehat B.
+$$
+
+最终结构：
+
+$$
+\boxed{
+\operatorname{Core}(\mathfrak O)
+=
+\left(
+X/{\sim_X},
+P_\infty/{\sim_P},
+B_{\mathrm{real}},
+\widehat B
+\right).
+}
+$$
+
+这四个部分分别回答：
+
+$$
+\begin{aligned}
+&\text{哪些世界状态真正不同？}\\
+&\text{哪些协议真正不同？}\\
+&\text{哪些行为真实发生？}\\
+&\text{哪些理想行为作为极限存在？}
+\end{aligned}
+$$
+
+---
+
+# 232. 观察者的完整分类坐标
+
+任何观察者都可以按以下轴定位。
+
+## 语义轴
+
+$$
+\text{deterministic}
+\to
+\text{probabilistic}
+\to
+\text{quantum}.
+$$
+
+## 协议能力轴
+
+$$
+\text{passive}
+\to
+\text{dynamic}
+\to
+\text{interventional}
+\to
+\text{counterfactual}
+\to
+\text{reflexive}.
+$$
+
+## 局部性轴
+
+$$
+\text{single-site}
+\to
+\text{multi-site}
+\to
+\text{local-global atlas}.
+$$
+
+## 记忆轴
+
+$$
+\text{memoryless}
+\to
+\text{finite memory}
+\to
+\text{predictive state}
+\to
+\text{inverse-limit memory}.
+$$
+
+## 精确度轴
+
+$$
+\text{exact kernel}
+\to
+\text{metric separation}
+\to
+\text{finite-sample inference}.
+$$
+
+## 实现轴
+
+$$
+\text{formal}
+\to
+\text{mathematical realization}
+\to
+\text{physical implementation}
+\to
+\text{auditable record}.
+$$
+
+“素数观察者”“量子观察者”“因果观察者”不是互斥类别，而是在这些轴上的不同坐标组合。
+
+---
+
+# 233. 新的统一观察者总定理
+
+可以把上述结构压缩成如下 paper-level 总定理。
+
+## 统一观察者双完成定理
+
+给定协议评价系统：
+
+$$
+e:X\times P\to\Lambda,
+$$
+
+并给定协议生成闭包 \(\operatorname{Cl}(P)\)，则存在规范结构：
+
+$$
+\mathfrak O^*
+=
+(X^*,P^*,e^*,B_{\mathrm{real}},B_{\mathrm{formal}})
+$$
+
+满足：
+
+$$
+X^*
+=
+X/\!\sim_X,
+$$
+
+$$
+P^*
+=
+\operatorname{Cl}(P)/\!\sim_P,
+$$
+
+$$
+B_{\mathrm{real}}
+=
+\operatorname{Im}
+\left(
+X\to
+\Lambda^{\operatorname{Cl}(P)}
+\right),
+$$
+
+并且：
+
+1. \(e^*\) 没有重复状态行；
+2. \(e^*\) 没有重复协议列；
+3. \(X^*\cong B_{\mathrm{real}}\)；
+4. 任意保持全部协议行为的状态实现都满射到 \(X^*\)；
+5. 任意纯后处理不能缩小 \(X^*\) 的 kernel；
+6. 新协议严格增加能力，当且仅当它切开某个旧 residual fiber；
+7. \(B_{\mathrm{formal}}\setminus B_{\mathrm{real}}\) 精确描述 realization defect；
+8. 对角化在满足自地址和固定点自由条件时构造 realization defect；
+9. 若状态空间紧致且所有有限局部记录连续可实现，则兼容局部记录全局可实现；
+10. 若再有状态分离，则局部记录唯一决定全局状态。
+
+这可以视为此前“协议—商—极限”理论的真正双侧闭合。
+
+---
+
+# 234. 最深的进一步结论
+
+## 第一：观察者理论的基本对象不是“眼睛”，而是评价矩阵
+
+$$
+\boxed{
+\text{state}\times\text{protocol}
+\longrightarrow
+\text{law}.
+}
+$$
+
+## 第二：kernel 和 image 是两种完全不同的不完备
+
+$$
+\boxed{
+\text{kernel defect}=\text{多个状态同一行为};
+}
+$$
+
+$$
+\boxed{
+\text{image defect}=\text{某些形式行为没有状态}.
+}
+$$
+
+## 第三：对角化作用在 image，不必作用在 kernel
+
+这是对角理论与观察者理论最重要的精确桥梁。
+
+## 第四：动态 completion 是三重对偶
+
+$$
+\boxed{
+\text{最大稳定 residual}
+\leftrightarrow
+\text{最小稳定 observer refinement}
+\leftrightarrow
+\text{最小不变 observable closure}.
+}
+$$
+
+## 第五：共同知识和联合知识相反
+
+$$
+\boxed{
+\text{共同知识}
+=
+\text{observable algebra 的交};
+}
+$$
+
+$$
+\boxed{
+\text{联合知识}
+=
+\text{kernel 的交所产生的更大代数}.
+}
+$$
+
+## 第六：posterior 是 sufficient statistic，不自动是 minimal ontology
+
+最小状态由允许协议决定，而不是由“posterior”这个名字决定。
+
+## 第七：自我递归不能恢复被内部接口删除的数据
+
+但它可以通过对角化证明自我模型的形式行为域过大。
+
+## 第八：科学发展需要同时修复 kernel 与 image
+
+实验解决非唯一性，模型修订解决非存在性。
+
+---
+
+# 235. 下一阶段最值得 Lean 化的定理链
+
+```text
+Observer/Unified/Evaluation/
+  StateRowKernel.lean
+  ProtocolColumnKernel.lean
+  BiextensionalCollapse.lean
+
+Observer/Unified/Presheaf/
+  FiniteContextRecords.lean
+  CompatibleRecordFamily.lean
+  ObservationalCompactness.lean
+  SeparationRealizationExactness.lean
+
+Observer/Unified/Diagonal/
+  DiagonalEscapeIsImageDefect.lean
+  SelfReportKernelMonotonicity.lean
+  TransparentPredictionNoFixedPoint.lean
+
+Observer/Unified/MultiAgent/
+  PooledObserverKernel.lean
+  CommonKnowledgeKernel.lean
+  CommonVsDistributedObservableAlgebra.lean
+  LosslessCommunicationOnRealizedRange.lean
+
+Observer/Unified/Dynamics/
+  StateKernelObservableClosureDuality.lean
+  ProtocolNoveltyCriterion.lean
+  CommonCompletionFixedPoint.lean
+
+Observer/Unified/Approximate/
+  ProtocolLawPseudometric.lean
+  TargetLipschitzSufficiency.lean
+  WeightedGramKernel.lean
+```
+
+首要 theorem names 可以是：
+
+```lean
+stateQuotient_equiv_behaviorRange
+
+biextensionalEvaluation_descends
+
+diagonalEscape_mem_imageResidual
+
+selfReport_kernel_mono
+
+compatibleFiniteRecords_realized_of_compact
+
+localGlobalExact_iff_separating_and_surjective
+
+dynamicKernel_eq_kernel_observableClosure
+
+protocol_strictly_innovative_iff_separates_oldFiber
+
+commonObservableAlgebra_eq_iInter
+
+pooledObserver_kernel_eq_iInter
+
+losslessCommunication_iff_injective_on_realizedRange
+
+equalPosterior_factors_futureBehavior
+```
+
+---
+
+# 最终收束
+
+统一观察者理论现在可以写成：
+
+$$
+\boxed{
+\begin{aligned}
+\text{World states}
+&=X,\\
+\text{Protocols}
+&=P,\\
+\text{Evaluation}
+&=e:X\times P\to\Lambda,\\
+\text{State reality}
+&=X/\text{equal rows},\\
+\text{Protocol reality}
+&=P/\text{equal columns},\\
+\text{Real behavior}
+&=\operatorname{Im}\Sigma,\\
+\text{Formal behavior}
+&=\Gamma(\mathcal B),\\
+\text{Hidden residual}
+&=\text{row kernel},\\
+\text{Protocol redundancy}
+&=\text{column kernel},\\
+\text{Realization defect}
+&=\Gamma(\mathcal B)\setminus\operatorname{Im}\Sigma,\\
+\text{Dynamic completion}
+&=\text{least invariant protocol closure},\\
+\text{Knowledge}
+&=\text{functions constant on state fibers},\\
+\text{Self}
+&=\text{histories modulo future policy equality}.
+\end{aligned}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+观察者不是一个“看见世界”的点，
+而是一张世界状态与可执行协议之间的评价网。
+}
+$$
+
+这张网同时决定：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{哪些状态差异真实可操作；}\\
+&\text{哪些实验只是重复命名；}\\
+&\text{哪些记录可以由真实世界实现；}\\
+&\text{哪些局部记录能够胶合为全局事实；}\\
+&\text{哪些历史差异必须保留为记忆与自我；}\\
+&\text{哪些自我描述因为对角化而无法闭合。}
+\end{aligned}
+}
+$$
+
+因此，项目全部观察者工作的更完整名称可以进一步升级为：
+
+$$
+\boxed{
+\textbf{Protocol–Evaluation–Quotient–Image–Limit Theory}
+}
+$$
+
+中文为：
+
+$$
+\boxed{
+\textbf{协议—评价—商—像—极限统一观察者理论}.
+}
+$$
+以下内容可直接承接现有第 203 节。前文已经把统一观察者理论压缩为评价网
+
+$$
+\text{state}\times\text{protocol}
+\longrightarrow
+\text{law},
+$$
+
+并将商、像、局部胶合、自指逃逸、实验精化与极限实现纳入同一结构。
+
+---
+
+# 204. 增订七：二重外延化、协议概念格与观察谱
+
+## 204.1 本增订的核心问题
+
+前文主要从**状态侧**研究观察者：
+
+$$
+x\sim_{\mathfrak O}y
+\iff
+\forall p\in P,\quad
+e(x,p)=e(y,p).
+$$
+
+但评价网还有完全对偶的一侧：
+
+$$
+p\sim_{\mathfrak O}^{\vee}q
+\iff
+\forall x\in X,\quad
+e(x,p)=e(x,q).
+$$
+
+因此，一个完整观察者理论不能只问：
+
+> 哪些状态被现有协议合并？
+
+还必须同时问：
+
+> 哪些协议只是不同名称下的同一问题？
+
+本增订建立以下新层次：
+
+$$
+\boxed{
+\text{状态去重}
++
+\text{协议去重}
++
+\text{二者之间的 Galois 闭包}
++
+\text{线性观察谱}
++
+\text{可实现像证书}.
+}
+$$
+
+为使状态与协议可以严格交换，以下若讨论双侧对偶，暂设所有协议共享同一 law carrier：
+
+$$
+e:X\times P\longrightarrow\Lambda.
+$$
+
+若实际输出依赖协议类型
+
+$$
+e_p:X\to\Lambda_p,
+$$
+
+则状态侧理论仍直接成立；协议侧比较则需要先给出公共比较载体或明确的异构 law 等价。
+
+---
+
+# 205. 状态行、协议列与对偶观察者
+
+## 定义 205.1（状态行为行）
+
+对每个状态 $x\in X$，定义其行为行：
+
+$$
+r_x:P\to\Lambda,
+\qquad
+r_x(p)=e(x,p).
+$$
+
+## 定义 205.2（协议响应列）
+
+对每个协议 $p\in P$，定义其响应列：
+
+$$
+c_p:X\to\Lambda,
+\qquad
+c_p(x)=e(x,p).
+$$
+
+于是评价网可以同时写成：
+
+$$
+\Sigma_X:X\to\Lambda^P,
+\qquad
+\Sigma_X(x)=r_x,
+$$
+
+以及
+
+$$
+\Sigma_P:P\to\Lambda^X,
+\qquad
+\Sigma_P(p)=c_p.
+$$
+
+## 定义 205.3（双侧 kernel）
+
+状态 kernel 为
+
+$$
+K_X
+=
+\ker\Sigma_X
+=
+\{(x,y):r_x=r_y\},
+$$
+
+协议 kernel 为
+
+$$
+K_P
+=
+\ker\Sigma_P
+=
+\{(p,q):c_p=c_q\}.
+$$
+
+## 定义 205.4（行外延与列外延）
+
+观察者称为：
+
+* **状态外延的**，若 $\Sigma_X$ 单射；
+* **协议外延的**，若 $\Sigma_P$ 单射；
+* **双外延的**，若二者均单射。
+
+状态外延表示不存在两个完全不可区分的状态标签；协议外延表示不存在两个在全部状态上完全相同的问题标签。
+
+## 定义 205.5（对偶观察者）
+
+定义
+
+$$
+\mathfrak O^\vee
+=
+(P,X,\Lambda,e^\vee),
+$$
+
+其中
+
+$$
+e^\vee(p,x)=e(x,p).
+$$
+
+于是：
+
+$$
+(\mathfrak O^\vee)^\vee=\mathfrak O,
+$$
+
+并且状态 kernel 与协议 kernel 互换。
+
+## 结论 205.1
+
+观察者不是单向映射
+
+$$
+X\to\text{records},
+$$
+
+而是一张双侧评价矩阵：
+
+$$
+\boxed{
+\begin{array}{c|cccc}
+ & p_1&p_2&\cdots&p_m\\
+\hline
+x_1&e(x_1,p_1)&e(x_1,p_2)&\cdots&e(x_1,p_m)\\
+x_2&e(x_2,p_1)&e(x_2,p_2)&\cdots&e(x_2,p_m)\\
+\vdots&\vdots&\vdots&&\vdots
+\end{array}
+}
+$$
+
+状态完备性研究矩阵行是否不同；协议非冗余性研究矩阵列是否不同。
+
+---
+
+# 206. 双外延坍缩定理
+
+## 定义 206.1（双商）
+
+定义
+
+$$
+\overline X=X/K_X,
+\qquad
+\overline P=P/K_P.
+$$
+
+并令
+
+$$
+\overline e:
+\overline X\times\overline P
+\longrightarrow\Lambda
+$$
+
+由
+
+$$
+\overline e([x],[p])=e(x,p)
+$$
+
+给出。
+
+## 定理 206.1（良定义性）
+
+$\overline e$ 良定义。
+
+### 证明
+
+若
+
+$$
+x\sim_X y,
+\qquad
+p\sim_P q,
+$$
+
+则先由 $x\sim_Xy$ 得
+
+$$
+e(x,p)=e(y,p),
+$$
+
+再由 $p\sim_Pq$ 得
+
+$$
+e(y,p)=e(y,q).
+$$
+
+故
+
+$$
+e(x,p)=e(y,q).
+$$
+
+所以结果与代表元无关。∎
+
+## 定理 206.2（双外延性）
+
+$$
+(\overline X,\overline P,\Lambda,\overline e)
+$$
+
+是双外延观察者。
+
+### 证明
+
+若两个状态类在全部协议类上同值，则其任意代表在全部原协议上同值，故原状态属于同一 $K_X$ 类。协议侧同理。∎
+
+## 定理 206.3（商次序交换）
+
+先商去状态重复，再商去协议重复，与先商协议再商状态，得到规范同构的评价对象：
+
+$$
+(X/K_X)/K_P
+\cong
+(P/K_P)/K_X
+$$
+
+更准确地说，两条路径的最终状态载体、协议载体和评价映射分别规范同构。
+
+### 原因
+
+协议是否重复只取决于其在所有状态行上的值；把相同行合并不会改变两列是否相等。对偶地，把相同列合并也不会改变两行是否相等。
+
+## 定理 206.4（双外延坍缩的普适最小性）
+
+设存在满射
+
+$$
+a:X\twoheadrightarrow X',
+\qquad
+b:P\twoheadrightarrow P',
+$$
+
+以及双外延评价
+
+$$
+e':X'\times P'\to\Lambda
+$$
+
+满足
+
+$$
+e(x,p)=e'(a(x),b(p)).
+$$
+
+则存在唯一双射
+
+$$
+\alpha:\overline X\overset{\sim}{\longrightarrow}X',
+$$
+
+以及唯一双射
+
+$$
+\beta:\overline P\overset{\sim}{\longrightarrow}P'
+$$
+
+使整个评价方块交换。
+
+### 证明
+
+若 $xK_Xy$，则对全部 $p$：
+
+$$
+e'(a(x),b(p))
+=
+e'(a(y),b(p)).
+$$
+
+由于 $b$ 满射，上式对全部 $p'\in P'$ 成立。由 $e'$ 的状态外延性：
+
+$$
+a(x)=a(y).
+$$
+
+反向若 $a(x)=a(y)$，显然 $xK_Xy$。所以
+
+$$
+\ker a=K_X.
+$$
+
+因此 $a$ 在 $\overline X$ 上诱导双射。协议侧同理。∎
+
+## 结论 206.1
+
+双外延坍缩不是任意数据清洗，而是评价网的规范最小表示：
+
+$$
+\boxed{
+\text{删除所有不可操作区分的状态标签}
++
+\text{删除所有不可操作区分的协议标签}.
+}
+$$
+
+---
+
+# 207. 协议—区分关系的 Galois 连接
+
+双外延商只能删除完全重复对象。更深的问题是：一组协议究竟生成了哪些区分？哪些协议已经被这一组协议语义蕴含？
+
+## 定义 207.1（协议族诱导的状态关系）
+
+对任意协议子集
+
+$$
+Q\subseteq P,
+$$
+
+定义
+
+$$
+K(Q)
+=
+\bigcap_{p\in Q}\ker c_p.
+$$
+
+即
+
+$$
+xK(Q)y
+\iff
+\forall p\in Q,\quad e(x,p)=e(y,p).
+$$
+
+## 定义 207.2（关系所允许的协议）
+
+对任意关系
+
+$$
+R\subseteq X\times X,
+$$
+
+定义
+
+$$
+\Pi(R)
+=
+\{p\in P:R\subseteq\ker c_p\}.
+$$
+
+也就是说，$\Pi(R)$ 是全部不能切开 $R$ 中状态对的协议。
+
+## 定理 207.1（反序 Galois 连接）
+
+对任意 $Q\subseteq P$ 与 $R\subseteq X^2$：
+
+$$
+\boxed{
+Q\subseteq\Pi(R)
+\iff
+R\subseteq K(Q).
+}
+$$
+
+### 证明
+
+左侧表示每个 $p\in Q$ 都在每个 $(x,y)\in R$ 上取相同值。这恰好表示每个 $(x,y)\in R$ 属于所有 $\ker c_p$ 的交。∎
+
+## 定义 207.3（协议闭包）
+
+$$
+\operatorname{Cl}_P(Q)
+=
+\Pi(K(Q)).
+$$
+
+## 定义 207.4（关系闭包）
+
+$$
+\operatorname{Cl}_X(R)
+=
+K(\Pi(R)).
+$$
+
+## 定理 207.2（闭包算子）
+
+两个算子均满足：
+
+$$
+Q\subseteq\operatorname{Cl}_P(Q),
+$$
+
+$$
+Q_1\subseteq Q_2
+\Longrightarrow
+\operatorname{Cl}_P(Q_1)
+\subseteq
+\operatorname{Cl}_P(Q_2),
+$$
+
+$$
+\operatorname{Cl}_P^2(Q)
+=
+\operatorname{Cl}_P(Q),
+$$
+
+关系侧同理。
+
+## 解释
+
+$\operatorname{Cl}_P(Q)$ 不只是由 $Q$ 通过语法组合生成的协议，而是：
+
+$$
+\boxed{
+所有在状态区分能力上不超过 $Q$ 的现有协议。
+}
+$$
+
+两个协议可以表达式完全不同、计算复杂度完全不同，却属于同一个观察闭包。
+
+---
+
+# 208. 精确协议新颖性判据
+
+## 定理 208.1（零增益判据）
+
+对任意现有协议族 $Q$ 与候选协议 $p$：
+
+$$
+\boxed{
+p\in\operatorname{Cl}_P(Q)
+\iff
+K(Q\cup\{p\})=K(Q).
+}
+$$
+
+### 证明
+
+若 $p\in\Pi(K(Q))$，则 $p$ 在每个 $K(Q)$ 类上常值，因此加入 $p$ 不会继续切分这些类。
+
+反向，若加入 $p$ 后 kernel 不变，则任意 $(x,y)\in K(Q)$ 仍满足
+
+$$
+e(x,p)=e(y,p),
+$$
+
+所以
+
+$$
+K(Q)\subseteq\ker c_p,
+$$
+
+即
+
+$$
+p\in\Pi(K(Q)).
+$$
+
+∎
+
+## 推论 208.1（严格新颖性）
+
+$$
+\boxed{
+K(Q\cup\{p\})
+\subsetneq
+K(Q)
+\iff
+p\notin\operatorname{Cl}_P(Q).
+}
+$$
+
+因此一个协议是否真正增加认识能力，不由下列因素决定：
+
+* 名称是否新；
+* 公式是否更长；
+* 计算是否更复杂；
+* 输出 bit 数是否更多；
+* 是否使用量子、素数或神经网络术语。
+
+唯一严格标准是：
+
+$$
+\boxed{
+它是否切开了旧协议族尚未切开的状态对。
+}
+$$
+
+## 定义 208.1（闭合观察概念）
+
+称一对
+
+$$
+(R,Q)
+$$
+
+为闭合观察概念，若
+
+$$
+R=K(Q),
+\qquad
+Q=\Pi(R).
+$$
+
+这些闭合对构成一个完整概念格：
+
+* 协议越多，状态关系越细；
+* 状态关系越细，允许常值的协议越少；
+* 两侧以反序方式互相决定。
+
+---
+
+# 209. 有限协议压缩定理
+
+## 定理 209.1（有限商的 $r-1$ 协议证书）
+
+设 $X$ 有限，$Q\subseteq P$，并令
+
+$$
+r
+=
+|X/K(Q)|.
+$$
+
+则存在有限子集
+
+$$
+Q_0\subseteq Q
+$$
+
+满足
+
+$$
+K(Q_0)=K(Q),
+$$
+
+且
+
+$$
+\boxed{
+|Q_0|\le r-1.
+}
+$$
+
+### 证明
+
+从
+
+$$
+Q_0=\varnothing
+$$
+
+开始，此时只有一个观察类。
+
+若当前 $K(Q_0)\neq K(Q)$，则存在 $x,y$：
+
+$$
+xK(Q_0)y,
+\qquad
+\neg xK(Q)y.
+$$
+
+后式保证存在某个 $p\in Q$ 使
+
+$$
+e(x,p)\neq e(y,p).
+$$
+
+加入该协议后，当前分块数至少增加一。由于当前分块始终比目标分块粗，分块数不超过 $r$。从一个块开始，最多经过 $r-1$ 次严格增加即达到目标分块。∎
+
+## 推论 209.1
+
+即使协议全集无限，只要最终操作商只有有限个状态类，就存在有限区分证书。
+
+这里有限性来自目标商的块数，而不是来自原状态类型或协议语法是否有限。
+
+## 定理 209.2（输出容量下界）
+
+设一个协议子集 $S$ 已经分离上述 $r$ 个状态类。令
+
+$$
+m_p
+=
+|\operatorname{Im}(c_p)|
+$$
+
+为协议 $p$ 在目标状态类上的有效输出数，则
+
+$$
+\boxed{
+r\le\prod_{p\in S}m_p.
+}
+$$
+
+因此
+
+$$
+\boxed{
+\log_2r
+\le
+\sum_{p\in S}\log_2m_p.
+}
+$$
+
+若所有协议至多有 $m$ 个结果：
+
+$$
+\boxed{
+|S|
+\ge
+\left\lceil\log_mr\right\rceil.
+}
+$$
+
+## 解释
+
+于是有限观察预算存在两类完全不同的界：
+
+$$
+\left\lceil\log_mr\right\rceil
+\le
+\text{最小协议数}
+\le
+r-1.
+$$
+
+左侧来自单协议输出容量；右侧来自逐步切开观察类。
+
+---
+
+# 210. 自适应区分树
+
+固定目标商
+
+$$
+C=X/K(Q),
+\qquad
+|C|=r.
+$$
+
+由于每个 $p\in Q$ 在每个目标类上常值，可把协议视为函数
+
+$$
+p:C\to\Lambda.
+$$
+
+## 定理 210.1（自适应深度上界）
+
+若 $Q$ 分离 $C$ 中所有不同类，则存在一棵自适应协议树，其最坏深度满足
+
+$$
+\boxed{
+D_{\max}\le r-1.
+}
+$$
+
+### 证明
+
+若当前候选集合 $S\subseteq C$ 有至少两个元素，选取不同的 $a,b\in S$。由分离性，存在协议 $p$ 使
+
+$$
+p(a)\neq p(b).
+$$
+
+执行 $p$ 后，$S$ 被分为至少两个非空子集，因此每个分支的候选数至多为 $|S|-1$。递归即可。∎
+
+## 定理 210.2（有限结果深度下界）
+
+若每个协议至多产生 $m$ 个结果，则任何能够识别全部 $r$ 个类的决策树均满足
+
+$$
+\boxed{
+D_{\max}
+\ge
+\left\lceil\log_mr\right\rceil.
+}
+$$
+
+因为深度 $D$ 的 $m$ 叉树最多有 $m^D$ 个叶。
+
+## 严格边界 210.1
+
+以上是无噪声、协议结果精确可读的组合界。存在：
+
+* 统计误差；
+* 量子测量扰动；
+* 协议成本不同；
+* 结果概率极不均匀；
+* 可执行协议依赖历史
+
+时，最小样本数、最小期望成本与最小最坏深度必须分别定义，不能由同一 $r-1$ 界替代。
+
+---
+
+# 211. 线性观察算子与双 Gram 几何
+
+设状态差异空间为有限维 Hilbert 空间 $V$，协议读出是线性泛函
+
+$$
+\ell_i:V\to\mathbb F,
+\qquad
+1\le i\le m,
+$$
+
+其中 $\mathbb F=\mathbb R$ 或 $\mathbb C$。
+
+定义观察算子
+
+$$
+M:V\to\mathbb F^m,
+$$
+
+$$
+Mv
+=
+\begin{bmatrix}
+\ell_1(v)\\
+\vdots\\
+\ell_m(v)
+\end{bmatrix}.
+$$
+
+## 定义 211.1（状态 Gram 算子）
+
+$$
+\boxed{
+W_X=M^*M.
+}
+$$
+
+## 定义 211.2（协议 Gram 算子）
+
+$$
+\boxed{
+W_P=MM^*.
+}
+$$
+
+## 定理 211.1（双 kernel）
+
+$$
+\boxed{
+\ker W_X=\ker M,
+}
+$$
+
+$$
+\boxed{
+\ker W_P=\ker M^*.
+}
+$$
+
+### 解释
+
+* $\ker M$：全部协议都看不见的状态方向；
+* $\ker M^*$：协议线性组合中的完全冗余方向。
+
+若
+
+$$
+a=(a_1,\ldots,a_m)\in\ker M^*,
+$$
+
+则
+
+$$
+\sum_i a_i\ell_i=0.
+$$
+
+所以协议侧 residual 不是“没有状态”，而是多个协议之间存在不可消去的线性依赖。
+
+## 定理 211.2（双可见空间）
+
+$$
+\operatorname{ran}W_X
+=
+\operatorname{ran}M^*,
+$$
+
+$$
+\operatorname{ran}W_P
+=
+\operatorname{ran}M.
+$$
+
+前者是状态空间中真正被协议张成的方向；后者是协议结果空间中真正可以由状态变化实现的方向。
+
+---
+
+# 212. 观察谱对偶定理
+
+## 定理 212.1（非零谱一致）
+
+$W_X=M^*M$ 与 $W_P=MM^*$ 具有相同的非零特征值，并具有相同代数重数：
+
+$$
+\boxed{
+\operatorname{Spec}_{>0}(M^*M)
+=
+\operatorname{Spec}_{>0}(MM^*).
+}
+$$
+
+### 证明
+
+若
+
+$$
+M^*Mv=\lambda v,
+\qquad
+\lambda>0,
+$$
+
+则 $Mv\neq0$，并且
+
+$$
+MM^*(Mv)
+=
+M(M^*Mv)
+=
+\lambda Mv.
+$$
+
+所以 $Mv$ 是 $MM^*$ 的 $\lambda$-特征向量。反向使用 $M^*$。这两个映射在正特征空间之间互逆至比例，故重数相同。∎
+
+## 推论 212.1（秩一致）
+
+$$
+\boxed{
+\operatorname{rank}W_X
+=
+\operatorname{rank}M
+=
+\operatorname{rank}W_P.
+}
+$$
+
+## 推论 212.2（条件数对偶）
+
+状态重建的非零谱条件数与协议独立化的非零谱条件数完全相同。
+
+因此同一个小奇异值有两种对偶解释：
+
+$$
+\boxed{
+\text{存在一个极难看见的状态方向}
+}
+$$
+
+等价于
+
+$$
+\boxed{
+\text{存在一个近乎线性依赖的协议组合}.
+}
+$$
+
+## 最深解释 212.1
+
+观察困难并不只属于被观察对象，也不只属于仪器；它是状态空间与协议空间耦合后的共同谱性质：
+
+$$
+\boxed{
+\text{weak state mode}
+\Longleftrightarrow
+\text{nearly redundant protocol mode}.
+}
+$$
+
+---
+
+# 213. 平行增加协议与串行后处理
+
+## 213.1 平行观察
+
+设两个观察算子为
+
+$$
+M_1:V\to Y_1,
+\qquad
+M_2:V\to Y_2.
+$$
+
+联合观察为
+
+$$
+M_{\parallel}v
+=
+(M_1v,M_2v).
+$$
+
+则
+
+$$
+\boxed{
+\ker M_{\parallel}
+=
+\ker M_1\cap\ker M_2,
+}
+$$
+
+以及
+
+$$
+\boxed{
+W_{\parallel}
+=
+M_{\parallel}^*M_{\parallel}
+=
+W_1+W_2.
+}
+$$
+
+所以真正增加新实验是把正半定信息算子相加。
+
+## 213.2 串行后处理
+
+设现有观察之后执行线性后处理
+
+$$
+B:Y\to Z.
+$$
+
+新观察为
+
+$$
+M'=BM.
+$$
+
+则
+
+$$
+\boxed{
+\ker M
+\subseteq
+\ker(BM).
+}
+$$
+
+后处理只能保持或扩大不可见 kernel。
+
+其 Gramian 为
+
+$$
+W'
+=
+M^*B^*BM.
+$$
+
+若 $B$ 是 contraction：
+
+$$
+B^*B\le I,
+$$
+
+则
+
+$$
+\boxed{
+W'\le W.
+}
+$$
+
+## 定理 213.1（无损后处理判据）
+
+$$
+\ker(BM)=\ker M
+$$
+
+当且仅当 $B$ 在 $\operatorname{ran}M$ 上单射。
+
+## 统一结论
+
+$$
+\boxed{
+\begin{aligned}
+\text{parallel new evidence}
+&\Rightarrow
+W\text{ 相加，kernel 可缩小};\\
+\text{serial postprocessing}
+&\Rightarrow
+W\text{ 收缩，kernel 不能缩小}.
+\end{aligned}
+}
+$$
+
+这给出了“新实验”和“对旧数据做更复杂计算”的严格分界。
+
+---
+
+# 214. 目标可估计性与最小范数协议合成
+
+设目标是线性泛函
+
+$$
+t:V\to\mathbb F.
+$$
+
+由 Riesz 表示，存在向量 $v_t\in V$ 使
+
+$$
+t(x)=\langle v_t,x\rangle.
+$$
+
+## 定理 214.1（目标可观测性四重等价）
+
+以下条件等价：
+
+$$
+\text{(i)}
+\quad
+t(x)\text{ 由 }Mx\text{ 唯一决定};
+$$
+
+$$
+\text{(ii)}
+\quad
+\ker M\subseteq\ker t;
+$$
+
+$$
+\text{(iii)}
+\quad
+v_t\in\operatorname{ran}M^*;
+$$
+
+$$
+\text{(iv)}
+\quad
+\exists a\in Y,\quad M^*a=v_t.
+$$
+
+此时
+
+$$
+\boxed{
+t(x)=\langle a,Mx\rangle.
+}
+$$
+
+### 证明
+
+目标由观察结果决定，当且仅当它在每个观察 fiber 上常值，即在 $\ker M$ 上为零。有限维正交对偶给出
+
+$$
+(\ker M)^\perp
+=
+\operatorname{ran}M^*.
+$$
+
+其余等价显然。∎
+
+## 定义 214.1（最小范数合成）
+
+在所有满足
+
+$$
+M^*a=v_t
+$$
+
+的系数中，令 $a_*$ 为最小范数解。
+
+则
+
+$$
+a_*
+=
+(M^*)^\dagger v_t
+=
+M(M^*M)^\dagger v_t.
+$$
+
+## 定理 214.2（目标估计成本）
+
+$$
+\boxed{
+\|a_*\|^2
+=
+\left\langle
+v_t,
+W_X^\dagger v_t
+\right\rangle.
+}
+$$
+
+若观察噪声为各向同性：
+
+$$
+y=Mx+\eta,
+\qquad
+\operatorname{Cov}(\eta)=\sigma^2I,
+$$
+
+则所有无偏线性估计器中，最小方差为
+
+$$
+\boxed{
+\sigma^2
+\left\langle
+v_t,W_X^\dagger v_t
+\right\rangle.
+}
+$$
+
+## 推论 214.1
+
+“目标属于可见 span”只回答能否估计；伪逆二次型回答估计有多脆弱：
+
+$$
+\boxed{
+\text{exact target visibility}
++
+\text{target-specific condition cost}.
+}
+$$
+
+---
+
+# 215. 实验选择的体积目标与最弱方向目标
+
+设每个候选协议 $p$ 贡献正半定算子
+
+$$
+G_p\ge0.
+$$
+
+对协议集 $S$ 定义带正则的信息算子：
+
+$$
+W_S
+=
+\lambda I+\sum_{p\in S}G_p,
+\qquad
+\lambda>0.
+$$
+
+## 定义 215.1（对数体积信息）
+
+$$
+F(S)
+=
+\log\det W_S-\log\det(\lambda I).
+$$
+
+## 定理 215.1（单调次模性）
+
+$F$ 是单调次模函数：
+
+$$
+A\subseteq B
+\Longrightarrow
+F(A\cup\{p\})-F(A)
+\ge
+F(B\cup\{p\})-F(B).
+$$
+
+### 证明概要
+
+边际收益可写为
+
+$$
+\log\det
+\left(
+I+
+G_p^{1/2}W_A^{-1}G_p^{1/2}
+\right).
+$$
+
+由
+
+$$
+W_A\le W_B
+$$
+
+得到
+
+$$
+W_A^{-1}\ge W_B^{-1}.
+$$
+
+而 $\log\det(I+X)$ 对正半定序单调，因此边际收益递减。∎
+
+## 解释
+
+$\log\det$ 衡量的是整体可见椭球体积。已有协议越多，一个新协议通常提供的独立体积越少。
+
+## 严格边界 215.1（最小特征值不是一般次模的）
+
+令
+
+$$
+G_1=
+\begin{bmatrix}
+1&0\\
+0&0
+\end{bmatrix},
+\qquad
+G_2=
+\begin{bmatrix}
+0&0\\
+0&1
+\end{bmatrix}.
+$$
+
+定义
+
+$$
+g(S)=
+\lambda_{\min}
+\left(
+\sum_{p\in S}G_p
+\right).
+$$
+
+则
+
+$$
+g(\varnothing)=g(\{1\})=g(\{2\})=0,
+$$
+
+但
+
+$$
+g(\{1,2\})=1.
+$$
+
+因此对
+
+$$
+A=\varnothing,
+\qquad
+B=\{1\},
+\qquad
+p=2,
+$$
+
+边际增益分别为 $0$ 与 $1$，违反次模的边际递减条件。
+
+所以：
+
+$$
+\boxed{
+\text{整体体积优化}
+\neq
+\text{最弱方向优化}.
+}
+$$
+
+针对特定目标 residual，应直接提升投影 Gramian 的最小特征值，而不能只最大化总信息体积。
+
+---
+
+# 216. 度量富化观察者
+
+设 law carrier $\Lambda$ 带有有界度量
+
+$$
+d_\Lambda\le1.
+$$
+
+## 定义 216.1（状态观察伪度量）
+
+$$
+\boxed{
+d_X(x,y)
+=
+\sup_{p\in P}
+d_\Lambda(e(x,p),e(y,p)).
+}
+$$
+
+## 定义 216.2（协议响应伪度量）
+
+$$
+\boxed{
+d_P(p,q)
+=
+\sup_{x\in X}
+d_\Lambda(e(x,p),e(x,q)).
+}
+$$
+
+## 定理 216.1
+
+$d_X$ 与 $d_P$ 均为伪度量。
+
+并且：
+
+$$
+d_X(x,y)=0
+\iff
+xK_Xy,
+$$
+
+$$
+d_P(p,q)=0
+\iff
+pK_Pq.
+$$
+
+所以精确双外延商正是这两个伪度量的零距离商。
+
+## 定理 216.2（最小支配性）
+
+$d_X$ 是使全部协议读出成为 $1$-Lipschitz 映射的最小伪度量。
+
+即若另一个伪度量 $\delta_X$ 满足
+
+$$
+d_\Lambda(e(x,p),e(y,p))
+\le
+\delta_X(x,y)
+$$
+
+对所有 $p$ 成立，则
+
+$$
+\boxed{
+d_X(x,y)\le\delta_X(x,y).
+}
+$$
+
+协议侧同理。
+
+## 结论 216.1
+
+精确 kernel 只保留零与非零。度量富化则保留完整可区分强度：
+
+$$
+\boxed{
+\text{kernel}
+=
+\text{observer metric 的零层}.
+}
+$$
+
+---
+
+# 217. 近似 kernel 与超度量闭包
+
+给定协议族 $Q\subseteq P$，定义
+
+$$
+d_Q(x,y)
+=
+\sup_{p\in Q}
+d_\Lambda(e(x,p),e(y,p)).
+$$
+
+## 定义 217.1（$\varepsilon$-不可区分关系）
+
+$$
+K_Q^\varepsilon
+=
+\{(x,y):d_Q(x,y)\le\varepsilon\}.
+$$
+
+一般度量情形下，$K_Q^\varepsilon$ 未必传递，但满足精确的加法组合律：
+
+## 定理 217.1
+
+$$
+\boxed{
+K_Q^\varepsilon
+\circ
+K_Q^\delta
+\subseteq
+K_Q^{\varepsilon+\delta}.
+}
+$$
+
+### 证明
+
+若
+
+$$
+d_Q(x,y)\le\varepsilon,
+\qquad
+d_Q(y,z)\le\delta,
+$$
+
+则由三角不等式
+
+$$
+d_Q(x,z)
+\le
+d_Q(x,y)+d_Q(y,z)
+\le
+\varepsilon+\delta.
+$$
+
+∎
+
+## 定理 217.2（超度量阈值闭合）
+
+若 $d_\Lambda$ 是超度量：
+
+$$
+d(a,c)
+\le
+\max\{d(a,b),d(b,c)\},
+$$
+
+则 $d_Q$ 也是超度量，并且对每个 $\varepsilon$：
+
+$$
+\boxed{
+K_Q^\varepsilon
+\text{ 是等价关系}.
+}
+$$
+
+### 解释
+
+普通噪声几何产生“容差逐步累积”；超度量几何产生真正的嵌套观察分块：
+
+$$
+\varepsilon_1\le\varepsilon_2
+\Longrightarrow
+K_Q^{\varepsilon_1}
+\subseteq
+K_Q^{\varepsilon_2}.
+$$
+
+这正适合 $p$-进精度观察：同一精度阈值内的不可区分关系天然传递。
+
+---
+
+# 218. 素数观察者的规范加权度量
+
+考虑隐藏素数地址空间
+
+$$
+K_\infty
+=
+\prod_{p\in\mathbb P}\mathbb Z_p.
+$$
+
+在每个坐标上使用标准 $p$-进度量：
+
+$$
+d_p(u_p,v_p)
+=
+p^{-v_p(u_p-v_p)},
+$$
+
+约定
+
+$$
+p^{-\infty}=0.
+$$
+
+令
+
+$$
+Z_{\mathbb P}(s)
+=
+\sum_{p\in\mathbb P}p^{-s},
+\qquad
+s>1.
+$$
+
+## 定义 218.1（zeta 加权素数观察度量）
+
+$$
+\boxed{
+D_s(u,v)
+=
+\frac1{Z_{\mathbb P}(s)}
+\sum_{p\in\mathbb P}
+p^{-s}d_p(u_p,v_p).
+}
+$$
+
+## 定理 218.1
+
+$D_s$ 是 $K_\infty$ 上的度量，并诱导乘积拓扑。
+
+### 证明概要
+
+正定性来自每个权重严格为正。若 $D_s(u_n,u)\to0$，则对任意固定 $p$：
+
+$$
+p^{-s}d_p((u_n)_p,u_p)
+\le
+Z_{\mathbb P}(s)D_s(u_n,u),
+$$
+
+故每个坐标收敛。
+
+反向，给定 $\varepsilon>0$，先选有限素数集 $F$ 使尾权重和小于 $\varepsilon/2$；再令有限多个坐标足够接近，使有限部分小于 $\varepsilon/2$。∎
+
+## 定义 218.2（有限精度局部度量）
+
+只读取模 $p^K$ 时，定义
+
+$$
+d_p^{(K)}(u,v)
+=
+\begin{cases}
+d_p(u,v),&u\not\equiv v\pmod{p^K},\\
+0,&u\equiv v\pmod{p^K}.
+\end{cases}
+$$
+
+则
+
+$$
+0\le
+d_p(u,v)-d_p^{(K)}(u,v)
+\le
+p^{-K}.
+$$
+
+## 定理 218.2（有限 prime–precision 窗口误差）
+
+给定有限素数集 $F$ 和每个 $p\in F$ 的精度 $K_p$，定义
+
+$$
+D_{s,F,K}(u,v)
+=
+\frac1{Z_{\mathbb P}(s)}
+\sum_{p\in F}
+p^{-s}d_p^{(K_p)}(u_p,v_p).
+$$
+
+则一致误差满足：
+
+$$
+\boxed{
+0
+\le
+D_s-D_{s,F,K}
+\le
+\frac{
+\displaystyle
+\sum_{p\notin F}p^{-s}
++
+\sum_{p\in F}p^{-(s+K_p)}
+}{
+Z_{\mathbb P}(s)
+}.
+}
+$$
+
+## 最深解释 218.1
+
+这给出一个严格的有限观察预算：
+
+* 新增素数，减少横向 tail；
+* 增加 $K_p$，减少纵向精度误差；
+* $s$ 决定远素数方向的预算折扣。
+
+这里的 $s$ 是观察度量权重参数；本定理不赋予任何特殊 $s$ 值以 RH 或物理临界意义。
+
+---
+
+# 219. 紧致状态空间的局部—全局实现定理
+
+令
+
+$$
+\Sigma:X\to\prod_{p\in P}\Lambda_p
+$$
+
+为完整行为映射：
+
+$$
+\Sigma(x)_p=e_p(x).
+$$
+
+假设：
+
+1. $X$ 紧致；
+2. 每个 $\Lambda_p$ 是 Hausdorff 空间；
+3. 每个 $e_p$ 连续。
+
+## 定理 219.1（行为像闭性）
+
+$$
+\boxed{
+\Sigma(X)
+\text{ 在 }
+\prod_{p\in P}\Lambda_p
+\text{ 中紧致且闭}.
+}
+$$
+
+### 证明
+
+$\Sigma$ 作为逐坐标连续映射是连续的。紧致空间的连续像紧致；Hausdorff 空间中的紧致子集闭。∎
+
+## 定理 219.2（有限一致性推出全局实现）
+
+给定形式行为签名
+
+$$
+\lambda=(\lambda_p)_{p\in P}.
+$$
+
+若对每个有限协议集
+
+$$
+F\subseteq P
+$$
+
+都存在某个 $x_F\in X$ 满足
+
+$$
+e_p(x_F)=\lambda_p
+\qquad
+\forall p\in F,
+$$
+
+则存在单一全局状态 $x\in X$ 满足
+
+$$
+\boxed{
+e_p(x)=\lambda_p
+\qquad
+\forall p\in P.
+}
+$$
+
+### 证明
+
+对每个 $p$ 定义闭集
+
+$$
+C_p
+=
+\{x\in X:e_p(x)=\lambda_p\}.
+$$
+
+有限一致性正是这些闭集具有有限交性质。由 $X$ 紧致：
+
+$$
+\bigcap_{p\in P}C_p\neq\varnothing.
+$$
+
+∎
+
+## 结论 219.1
+
+在紧致连续模型中：
+
+$$
+\boxed{
+\text{每个有限窗口都可实现}
+\Longrightarrow
+\text{完整无限行为可实现}.
+}
+$$
+
+这为以下对象提供共同实现原则：
+
+* 有限维量子态上的无限效果期望表；
+* profinite／$p$-进逆极限状态；
+* 紧致动力系统的无限时间读出；
+* 紧致参数模型的全部实验协议。
+
+---
+
+# 220. 非紧致条件下的幽灵行为
+
+紧致性不是装饰条件。
+
+令
+
+$$
+X=\mathbb N,
+$$
+
+并定义协议
+
+$$
+p_n(x)
+=
+\mathbf1_{\{x\ge n\}}.
+$$
+
+考虑形式签名
+
+$$
+\lambda_n=1
+\qquad
+\forall n.
+$$
+
+对任意有限协议集
+
+$$
+\{p_{n_1},\ldots,p_{n_k}\},
+$$
+
+取
+
+$$
+x\ge\max_i n_i
+$$
+
+即可实现全部有限约束。
+
+但不存在自然数 $x$ 满足
+
+$$
+x\ge n
+\qquad
+\forall n\in\mathbb N.
+$$
+
+所以完整签名不可实现。
+
+## 结论 220.1
+
+存在：
+
+$$
+\boxed{
+\text{每个有限观察窗口都像真实状态，}
+\quad
+\text{但无限联合后没有任何真实状态实现。}
+}
+$$
+
+称此类对象为**幽灵行为**或**理想边界行为**。
+
+它可能位于：
+
+$$
+\overline{\Sigma(X)}
+\setminus
+\Sigma(X).
+$$
+
+因此必须严格区分：
+
+$$
+\boxed{
+\text{有限可满足}
+\neq
+\text{全局可实现},
+}
+$$
+
+除非存在紧致性、饱和性或其他有限交原理。
+
+---
+
+# 221. 非可实现行为的有限线性见证
+
+现在假设：
+
+* $X$ 是紧致凸集；
+* 每个协议输出为实数；
+* 每个 $e_p:X\to\mathbb R$ 连续且仿射。
+
+则
+
+$$
+\Sigma(X)
+\subseteq
+\mathbb R^P
+$$
+
+是紧致凸集，其中 $\mathbb R^P$ 使用乘积拓扑。
+
+## 定理 221.1（有限 no-go 证书）
+
+若形式签名
+
+$$
+y\in\mathbb R^P
+$$
+
+不属于可实现像：
+
+$$
+y\notin\Sigma(X),
+$$
+
+则存在有限协议
+
+$$
+p_1,\ldots,p_m
+$$
+
+和实系数
+
+$$
+c_1,\ldots,c_m
+$$
+
+使
+
+$$
+\boxed{
+\sum_{i=1}^m c_i y_{p_i}
+>
+\sup_{x\in X}
+\sum_{i=1}^m c_i e_{p_i}(x).
+}
+$$
+
+### 证明
+
+$\Sigma(X)$ 是闭凸集，故可由连续线性泛函与外部点严格分离。乘积拓扑上任意连续线性泛函只依赖有限多个坐标，因此分离泛函必具有上述有限形式。∎
+
+## 解释
+
+无限协议表不真实时，总存在一个有限实验不等式揭示其不真实。
+
+这种证书类型统一了：
+
+* Bell 型线性不等式；
+* 上下文兼容性不等式；
+* 边缘问题的线性 witness；
+* 矩与概率表的不可实现证书；
+* 有限协议组合的 no-go inequality。
+
+这里统一的是**证书结构**，不是说这些理论的物理内容相同。
+
+## 推论 221.1
+
+在有限维量子理论中，若一张完整效果期望表不来自任何密度矩阵，则存在有限个效果和一个线性不等式证明其不可实现。
+
+---
+
+# 222. 可实现像的定量距离
+
+在有限维行为坐标空间中，令
+
+$$
+I=\Sigma(X)
+$$
+
+为非空闭凸可实现像。固定范数 $|\cdot|$，其对偶范数记为 $|\cdot|_*$。
+
+定义支持函数：
+
+$$
+h_I(c)
+=
+\sup_{z\in I}\langle c,z\rangle.
+$$
+
+## 定理 222.1（距离—见证对偶）
+
+对任意形式签名 $y$：
+
+$$
+\boxed{
+\operatorname{dist}(y,I)
+=
+\sup_{\|c\|_*\le1}
+\left[
+\langle c,y\rangle-h_I(c)
+\right].
+}
+$$
+
+## 解释
+
+右侧的最优 $c$ 是归一化 no-go witness；其违反量正好等于 $y$ 到真实行为像的距离。
+
+因此可以定义：
+
+$$
+\boxed{
+\operatorname{RealizationDefect}(y)
+=
+\operatorname{dist}(y,\Sigma(X)).
+}
+$$
+
+它不只回答“是否可实现”，还回答“离最近真实模型有多远”。
+
+## 定理 222.2（后处理收缩）
+
+设线性后处理
+
+$$
+B:Y\to Z.
+$$
+
+则
+
+$$
+\boxed{
+\operatorname{dist}(By,B(I))
+\le
+\|B\|\,
+\operatorname{dist}(y,I).
+}
+$$
+
+特别地，若 $|B|\le1$：
+
+$$
+\operatorname{RealizationDefect}(By)
+\le
+\operatorname{RealizationDefect}(y).
+$$
+
+所以规范化的串行后处理不能增强对上游不一致性的区分能力。
+
+---
+
+# 223. 动力系统的双侧最小实现
+
+设动作字母表为 $A$，每个动作给出
+
+$$
+F_a:X\to X,
+$$
+
+基础读出为
+
+$$
+q:X\to O.
+$$
+
+对词
+
+$$
+w=a_1\cdots a_n
+$$
+
+定义
+
+$$
+F_w
+=
+F_{a_n}\circ\cdots\circ F_{a_1}.
+$$
+
+## 定义 223.1（完整控制行为）
+
+$$
+\beta(x)(w)
+=
+q(F_wx).
+$$
+
+定义最小行为状态空间：
+
+$$
+Q_\infty
+=
+\operatorname{Im}\beta.
+$$
+
+## 定理 223.1（行为更新良定义）
+
+对每个动作 $a$，定义
+
+$$
+\beta(x)\cdot a
+=
+\beta(F_ax).
+$$
+
+该更新只依赖 $\beta(x)$，与代表状态无关。
+
+### 证明
+
+若
+
+$$
+\beta(x)=\beta(y),
+$$
+
+则对任意未来词 $w$：
+
+$$
+q(F_wF_ax)
+=
+\beta(x)(aw)
+=
+\beta(y)(aw)
+=
+q(F_wF_ay).
+$$
+
+故
+
+$$
+\beta(F_ax)=\beta(F_ay).
+$$
+
+∎
+
+因此自由幺半群 $A^*$ 在 $Q_\infty$ 上作用。
+
+## 定义 223.2（协议词同余）
+
+$$
+u\equiv_{\mathrm{act}}v
+\iff
+\forall z\in Q_\infty,
+\quad
+z\cdot u=z\cdot v.
+$$
+
+## 定理 223.2
+
+$\equiv_{\mathrm{act}}$ 是 $A^*$ 上的双边幺半群同余。
+
+因此可定义有效协议作用幺半群：
+
+$$
+\boxed{
+M_{\mathrm{eff}}
+=
+A^*/{\equiv_{\mathrm{act}}}.
+}
+$$
+
+它在 $Q_\infty$ 上忠实作用。
+
+## 最深结构 223.1
+
+动力观察者存在两个规范最小对象：
+
+$$
+\boxed{
+Q_\infty
+=
+\text{最小未来行为状态空间},
+}
+$$
+
+$$
+\boxed{
+M_{\mathrm{eff}}
+=
+\text{最小忠实协议作用幺半群}.
+}
+$$
+
+前者删除重复状态历史；后者删除重复控制词。
+
+---
+
+# 224. 随机 instrument 的预测状态完成
+
+静态协议只给一步 law。若协议会改变状态，则必须研究全部未来 transcript。
+
+设 $\mathcal H$ 为可达历史集合，$W$ 为未来协议词集合。对历史 $h$ 与未来词 $w$，记未来记录 law 为
+
+$$
+\mathsf L(h,w).
+$$
+
+## 定义 224.1（预测等价）
+
+$$
+h\sim_{\mathrm{pred}}h'
+\iff
+\forall w,
+\quad
+\mathsf L(h,w)=\mathsf L(h',w).
+$$
+
+## 定义 224.2（预测状态）
+
+$$
+\Psi(h)
+=
+\bigl(\mathsf L(h,w)\bigr)_{w\in W}.
+$$
+
+定义预测状态空间：
+
+$$
+\boxed{
+S_{\mathrm{pred}}
+=
+\operatorname{Im}\Psi.
+}
+$$
+
+## 定理 224.1（条件更新良定义）
+
+在有限或离散 law 情形，若历史 $h,h'$ 预测等价，并且动作 $a$ 后结果 $y$ 的概率为正，则条件化后的历史
+
+$$
+hay,
+\qquad
+h'ay
+$$
+
+仍具有相同未来预测状态。
+
+### 证明
+
+对任意后续事件 $z$：
+
+$$
+P(z\mid h,a,y,w)
+=
+\frac{
+P(y,z\mid h,a,w)
+}{
+P(y\mid h,a)
+}.
+$$
+
+预测等价保证分子与分母分别相同，所以条件 law 相同。∎
+
+## 定理 224.2（预测状态的普适最小性）
+
+若另一个历史接口
+
+$$
+r:\mathcal H\to R
+$$
+
+能够决定全部未来 transcript law，则存在唯一映射
+
+$$
+\overline r:\operatorname{Im}r\to S_{\mathrm{pred}}
+$$
+
+使
+
+$$
+\Psi=\overline r\circ r.
+$$
+
+所以 $S_{\mathrm{pred}}$ 是全部未来实验预测所需的最粗历史状态。
+
+## 严格结论 224.1
+
+$$
+\boxed{
+\text{相同一步输出 law}
+\not\Rightarrow
+\text{相同顺序协议行为}.
+}
+$$
+
+只有完整 transcript law 相同，才可以安全地把两个 instrument 或历史合并。
+
+---
+
+# 225. 预测商、风险商与决策商
+
+预测状态通常仍比具体任务需要的信息更细。
+
+设 $\mathcal L$ 是损失函数族。对历史 $h$、动作 $a$ 与损失 $\ell$，定义风险
+
+$$
+R_{\ell,a}(h)
+=
+\mathbb E_{\Psi(h)}
+[\ell(a,Y)].
+$$
+
+## 定义 225.1（风险等价）
+
+$$
+h\sim_{\mathrm{risk}}h'
+\iff
+\forall \ell\in\mathcal L,\ \forall a,
+\quad
+R_{\ell,a}(h)=R_{\ell,a}(h').
+$$
+
+## 定义 225.2（最优集合等价）
+
+$$
+h\sim_{\mathrm{opt}}h'
+$$
+
+当且仅当所有任务下的最优动作集合相同。
+
+## 定理 225.1（商层级）
+
+$$
+\boxed{
+K_{\mathrm{pred}}
+\subseteq
+K_{\mathrm{risk}}
+\subseteq
+K_{\mathrm{opt}}.
+}
+$$
+
+### 原因
+
+相同完整预测 law 必然产生相同全部期望损失；相同风险向量必然产生相同最优集合。
+
+反向一般不成立：
+
+* 不同 law 可能对给定损失族具有相同期望；
+* 不同风险数值可能仍具有相同 argmin。
+
+## 定理 225.2（任务族分离判据）
+
+若 $\mathcal L$ 对允许 law 是 measure-determining 的，即任意不同 law 总能被某个损失函数区分，则
+
+$$
+\boxed{
+K_{\mathrm{pred}}
+=
+K_{\mathrm{risk}}.
+}
+$$
+
+有限结果空间中，包含全部事件指示函数的损失族可以分离全部概率 law。
+
+## 结论 225.1
+
+观察者状态不存在脱离任务的唯一“最小充分状态”。存在一条任务相关压缩链：
+
+$$
+\boxed{
+\text{完整历史}
+\longrightarrow
+\text{预测状态}
+\longrightarrow
+\text{风险状态}
+\longrightarrow
+\text{最优行动状态}.
+}
+$$
+
+---
+
+# 226. 双外延不等于自描述完备
+
+双外延只保证：
+
+* 不同状态具有不同响应行；
+* 不同协议具有不同响应列。
+
+它不保证协议空间能够表示任意状态函数。
+
+## 定义 226.1（响应函数完备）
+
+称评价
+
+$$
+e:X\times P\to\Lambda
+$$
+
+在协议侧响应完备，若对每个函数
+
+$$
+f:X\to\Lambda
+$$
+
+都存在协议 $p_f\in P$ 使
+
+$$
+e(x,p_f)=f(x)
+\qquad
+\forall x.
+$$
+
+## 定理 226.1（有限计数障碍）
+
+若
+
+$$
+|X|=n\ge1,
+\qquad
+|\Lambda|=k\ge2,
+$$
+
+则响应完备要求
+
+$$
+\boxed{
+|P/K_P|
+\ge
+k^n.
+}
+$$
+
+### 证明
+
+不同函数 $f:X\to\Lambda$ 必须由扩展上不同的协议列表示，而此类函数共有 $k^n$ 个。∎
+
+## 推论 226.1（有限自容纳不可能）
+
+若协议必须由状态内部索引，并满足
+
+$$
+|P|\le|X|=n,
+$$
+
+则响应完备不可能，因为
+
+$$
+k^n>n
+\qquad
+(k\ge2,n\ge1).
+$$
+
+## 定理 226.2（固定点自由对角障碍）
+
+设
+
+$$
+P=X,
+$$
+
+且存在无不动点函数
+
+$$
+\delta:\Lambda\to\Lambda.
+$$
+
+若评价弱点满射，即每个
+
+$$
+f:X\to\Lambda
+$$
+
+都可写成某一列
+
+$$
+f(x)=e(x,p),
+$$
+
+则产生矛盾。
+
+### 证明
+
+定义
+
+$$
+g(x)
+=
+\delta(e(x,x)).
+$$
+
+由弱点满射，存在 $p$ 使
+
+$$
+e(x,p)=g(x)
+$$
+
+对所有 $x$ 成立。取 $x=p$：
+
+$$
+e(p,p)
+=
+g(p)
+=
+\delta(e(p,p)),
+$$
+
+这与 $\delta$ 无不动点矛盾。∎
+
+## 结论 226.1
+
+必须区分：
+
+$$
+\boxed{
+\text{外延完备}
+=
+\text{现有对象互不重复},
+}
+$$
+
+与
+
+$$
+\boxed{
+\text{表达完备}
+=
+\text{所有可能响应函数均可表示}.
+}
+$$
+
+前者可以成立；后者在自评价和固定点自由反转存在时必然失败。
+
+---
+
+# 227. 四种完成及其非交换性
+
+统一观察者至少包含四种不同操作。
+
+## 227.1 外延完成
+
+$$
+E(\mathfrak O)
+=
+(\overline X,\overline P,\overline e).
+$$
+
+删除重复状态和重复协议。
+
+## 227.2 动力完成
+
+$$
+C_A(P_0)
+=
+\{p\circ F_w:p\in P_0,\ w\in A^*\}.
+$$
+
+加入全部未来或干预上下文。
+
+## 227.3 行为像限制
+
+$$
+I(\mathfrak O)
+=
+\Sigma(X).
+$$
+
+删除不能由任何真实状态实现的形式记录。
+
+## 227.4 极限完成
+
+$$
+L(\mathfrak O)
+=
+\overline{\Sigma(X)}.
+$$
+
+加入可由真实行为逼近、但未必由真实状态实现的理想行为。
+
+## 定理 227.1（连续动力保持行为闭包）
+
+设行为空间 $B$ 上的动作
+
+$$
+S_a:B\to B
+$$
+
+连续，并且
+
+$$
+S_a(\Sigma(X))
+\subseteq
+\Sigma(X).
+$$
+
+则
+
+$$
+\boxed{
+S_a(\overline{\Sigma(X)})
+\subseteq
+\overline{\Sigma(X)}.
+}
+$$
+
+### 证明
+
+连续映射满足
+
+$$
+S_a(\overline I)
+\subseteq
+\overline{S_a(I)}
+\subseteq
+\overline I.
+$$
+
+∎
+
+所以在连续条件下，理想极限行为自动继承动力学。
+
+## 严格边界 227.1
+
+若动作不连续，真实行为像可以动力不变，而其闭包不再不变。
+
+例如令
+
+$$
+I=\{1/n:n\ge1\}\subset\mathbb R,
+$$
+
+定义
+
+$$
+F(1/n)=1,
+\qquad
+F(0)=\sqrt2.
+$$
+
+则
+
+$$
+F(I)\subseteq I,
+$$
+
+但
+
+$$
+0\in\overline I,
+\qquad
+F(0)\notin\overline I.
+$$
+
+## 原理 227.1（静态协议商与顺序完成）
+
+若协议只是固定状态空间上的普通读出函数，则静态相等协议在预复合动力学后仍相等。
+
+但若协议是 instrument，静态结果边缘相同不保证状态干预相同。因此：
+
+$$
+\boxed{
+\text{先按一步 POVM quotient}
+\quad\text{再做顺序 closure}
+}
+$$
+
+可能错误地合并两个顺序行为不同的 instrument。
+
+正确顺序应是：
+
+$$
+\boxed{
+\text{先生成完整 transcript semantics}
+\longrightarrow
+\text{再按完整行为 quotient}.
+}
+$$
+
+---
+
+# 228. 本增订得到的新结构结论
+
+## 结论 228.1（协议新颖性的精确标准）
+
+$$
+\boxed{
+p\text{ 真正新增认识}
+\iff
+p\notin\Pi(K(Q)).
+}
+$$
+
+## 结论 228.2（观察困难的双侧谱来源）
+
+$$
+\boxed{
+\text{难以看见的状态方向}
+\iff
+\text{近乎冗余的协议组合}.
+}
+$$
+
+二者由 $M^*M$ 与 $MM^*$ 的共同非零谱刻画。
+
+## 结论 228.3（目标知识等于协议线性可合成性）
+
+$$
+\boxed{
+t\text{ 在观察商上良定义}
+\iff
+t\in\operatorname{ran}M^*.
+}
+$$
+
+## 结论 228.4（无限不一致具有有限 witness）
+
+在紧致凸仿射模型中：
+
+$$
+\boxed{
+y\notin\Sigma(X)
+\Longrightarrow
+\exists\text{ 有限协议线性不等式证书}.
+}
+$$
+
+## 结论 228.5（素数观察具有统一有限逼近率）
+
+$$
+\boxed{
+\text{全 prime–precision 观察误差}
+\le
+\text{prime tail}
++
+\text{precision tail}.
+}
+$$
+
+## 结论 228.6（动力观察者有两个最小对象）
+
+$$
+\boxed{
+\text{minimal behavior state}
++
+\text{minimal faithful protocol monoid}.
+}
+$$
+
+## 结论 228.7（自描述障碍发生在表达像而非外延 kernel）
+
+一个观察者可以没有重复状态、没有重复协议，却仍不能表示自己的全部可能响应函数。
+
+因此：
+
+$$
+\boxed{
+\text{kernel closure}
+\not\Rightarrow
+\text{image surjectivity}
+\not\Rightarrow
+\text{self-description completeness}.
+}
+$$
+
+---
+
+# 229. 建议 Lean 模块树
+
+```text
+D5/S3/Observer/ProtocolEvaluation/
+  HomogeneousEvaluation.lean
+  StateRowProtocolColumn.lean
+  DualObserver.lean
+  BiextensionalCollapse.lean
+  BiextensionalUniversalProperty.lean
+
+D5/S3/Observer/ProtocolEvaluation/Galois/
+  DistinctionKernel.lean
+  RelationProtocolGalois.lean
+  ProtocolSemanticClosure.lean
+  ProtocolNoveltyCriterion.lean
+  ClosedObserverConcept.lean
+
+D5/S3/Observer/ProtocolEvaluation/Finite/
+  FiniteProtocolCompression.lean
+  OutputCapacityLowerBound.lean
+  AdaptiveSeparationTree.lean
+
+D5/S3/Observer/ProtocolEvaluation/Linear/
+  LinearObservationOperator.lean
+  StateGramOperator.lean
+  ProtocolGramOperator.lean
+  DualNonzeroSpectrum.lean
+  ParallelObservation.lean
+  SerialPostprocessing.lean
+  TargetObservableSynthesis.lean
+  MinimumNormEstimator.lean
+  LogDetSubmodular.lean
+  MinEigenvalueNotSubmodular.lean
+
+D5/S3/Observer/ProtocolEvaluation/Metric/
+  CanonicalStatePseudometric.lean
+  CanonicalProtocolPseudometric.lean
+  ApproximateKernelComposition.lean
+  UltrametricThresholdEquivalence.lean
+
+D5/S3/Observer/PrimeMetric/
+  WeightedPadicObserverMetric.lean
+  ProductTopologyEquivalence.lean
+  FinitePrimeTailBound.lean
+  FinitePrecisionTailBound.lean
+
+D5/S3/Observer/Realization/
+  CompactBehaviorImage.lean
+  FiniteConsistencyRealization.lean
+  NoncompactGhostBehavior.lean
+  FiniteLinearNoGoWitness.lean
+  RealizationDistanceDuality.lean
+  PostprocessingDefectContraction.lean
+
+D5/S3/Observer/DynamicMinimality/
+  ControlledBehaviorImage.lean
+  EffectiveProtocolCongruence.lean
+  FaithfulProtocolMonoid.lean
+  PredictiveStateImage.lean
+  ConditionalPredictiveUpdate.lean
+  TaskRelativeDecisionQuotient.lean
+
+D5/S3/Observer/SelfReference/
+  ResponseCompletenessCardinality.lean
+  FiniteInternalProtocolNoGo.lean
+  FixedPointFreeSelfEvaluation.lean
+  BiextensionalNotSelfComplete.lean
+```
+
+建议优先闭合的低依赖定理：
+
+```text
+protocol_mem_semanticClosure_iff_kernel_unchanged
+finite_protocol_subfamily_card_le_quotientCard_sub_one
+protocol_output_capacity_lower_bound
+dualGram_nonzeroSpectrum_eq
+parallelGram_eq_add
+serialPostprocessing_gram_le
+targetObservable_iff_mem_range_adjoint
+canonicalObserverPseudometric_kernel
+ultrametric_threshold_is_equivalence
+weightedPadicMetric_finiteWindow_error
+compact_finiteConsistency_realizable
+noncompact_finitelyRealizable_not_realizable
+effectiveProtocolWord_setoid
+responseComplete_card_lower_bound
+fixedPointFree_forbids_weakPointSurjective_selfEvaluation
+```
+
+---
+
+# 230. 追加严格非主张
+
+1. 本增订不声称双外延坍缩、Galois 连接、奇异值分解或紧致性原理本身是新数学概念。
+2. 本增订的新内容是把它们组织为同一个 typed observer calculus，并推导其跨算术、动力、量子和策略层后果。
+3. 本增订不声称协议 Galois 闭包可以自动计算；无限协议族的闭包成员问题可能不可判定。
+4. 本增订不声称 $r-1$ 协议上界在噪声、重复采样或物理扰动条件下仍是样本复杂度界。
+5. 本增订不声称输出容量下界自动可达。
+6. 本增订不声称 Gramian 大迹或大行列式保证每个目标方向稳定。
+7. 本增订不声称最小特征值目标一般具有次模性。
+8. 本增订不声称线性协议组合总能作为物理可执行协议实现。
+9. 本增订不声称 Moore–Penrose 合成系数自动满足正性、概率归一化或量子 CP 条件。
+10. 本增订不声称普通度量的 $\varepsilon$-kernel 是等价关系。
+11. 本增订不声称 zeta 加权素数度量选出的 $s$ 具有 RH 临界意义。
+12. 本增订不声称紧致性是有限一致性推出全局实现的唯一可能条件；它是一个清晰充分条件。
+13. 本增订不声称任意非凸行为像外部点都具有分离原像本身的单一线性 witness；有限 witness 定理使用凸性。
+14. 本增订不声称理想闭包中的每个行为都对应物理状态。
+15. 本增订不声称预测状态等于意识、体验或第一人称自我。
+16. 本增订不声称决策商保留所有规范理由；它只保留指定损失族所需的信息。
+17. 本增订不声称有效协议幺半群唯一决定实际 policy。
+18. 本增订不声称静态 POVM 等价足以推出 instrument 等价。
+19. 本增订不声称双外延性等于表达满射性。
+20. 本增订不声称固定点自由自评价障碍证明量子随机性、自由意志或本体非决定论。
+21. 本增订不声称有限自描述计数障碍直接推广到任意无限基数而无需额外集合论分析。
+22. 本增订不修改此前关于 RH、negative-base-$\varphi$、意识坍缩和强本体自由的严格边界。
+
+---
+
+# 231. 最终统一：观察者是状态与协议共同压缩出的评价核心
+
+给定同质评价网
+
+$$
+e:X\times P\to\Lambda,
+$$
+
+存在两个外延 kernel：
+
+$$
+K_X
+=
+\{(x,y):\forall p,\ e(x,p)=e(y,p)\},
+$$
+
+$$
+K_P
+=
+\{(p,q):\forall x,\ e(x,p)=e(x,q)\}.
+$$
+
+其规范双外延核心为
+
+$$
+\boxed{
+\overline e:
+(X/K_X)\times(P/K_P)
+\longrightarrow\Lambda.
+}
+$$
+
+协议子集与状态关系之间存在反序 Galois 连接：
+
+$$
+\boxed{
+Q\subseteq\Pi(R)
+\iff
+R\subseteq K(Q).
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{协议新颖性}
+=
+\text{是否严格缩小状态 kernel}.
+}
+$$
+
+在线性情形中，评价网压缩为观察算子
+
+$$
+M:V\to Y,
+$$
+
+其双 Gram 几何满足
+
+$$
+\boxed{
+W_X=M^*M,
+\qquad
+W_P=MM^*,
+}
+$$
+
+以及
+
+$$
+\boxed{
+\operatorname{Spec}_{>0}(W_X)
+=
+\operatorname{Spec}_{>0}(W_P).
+}
+$$
+
+在度量情形中：
+
+$$
+\boxed{
+d_X(x,y)
+=
+\sup_p d_\Lambda(e(x,p),e(y,p))
+}
+$$
+
+把精确不可区分 kernel 提升为连续可见几何。
+
+在实现层：
+
+$$
+\boxed{
+\mathcal I_{\mathfrak O}
+=
+\Sigma(X)
+\subseteq
+\prod_p\Lambda_p
+}
+$$
+
+记录哪些形式行为真正来自状态；紧致性保证有限一致行为可以胶合，凸性保证非实现行为具有有限线性 witness。
+
+在动力层：
+
+$$
+\boxed{
+Q_\infty
+=
+\operatorname{Im}
+\left[
+x\mapsto(q(F_wx))_{w\in A^*}
+\right]
+}
+$$
+
+是最小未来行为状态，而
+
+$$
+\boxed{
+M_{\mathrm{eff}}
+=
+A^*/{\equiv_{\mathrm{act}}}
+}
+$$
+
+是最小忠实协议作用幺半群。
+
+在决策层：
+
+$$
+\boxed{
+K_{\mathrm{pred}}
+\subseteq
+K_{\mathrm{risk}}
+\subseteq
+K_{\mathrm{opt}}.
+}
+$$
+
+在自指层，双外延只能消除重复行列；它不能使评价网表示所有自身响应函数。若 law carrier 存在无不动点反转，则普遍自评价必遭遇对角逃逸。
+
+因此，统一观察者理论进一步收束为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{State quotient}
+&=
+\text{删除协议无法区分的状态差异},\\
+\text{Protocol quotient}
+&=
+\text{删除状态无法区分的协议差异},\\
+\text{Galois closure}
+&=
+\text{识别已经被当前区分结构语义蕴含的协议},\\
+\text{Observer spectrum}
+&=
+\text{量化状态脆弱方向与协议冗余方向的共同强度},\\
+\text{Behavior image}
+&=
+\text{区分形式记录与真实可实现记录},\\
+\text{Dynamic realization}
+&=
+\text{把未来协议结果闭合为最小预测状态},\\
+\text{Self boundary}
+&=
+\text{标记外延完成仍无法跨越的表达与对角极限}.
+\end{aligned}
+}
+$$
+
+最终的核心公式不再只是
+
+$$
+\text{state}\times\text{protocol}\to\text{law},
+$$
+
+而是：
+
+$$
+\boxed{
+\frac{\text{states}}{\text{identical rows}}
+\;\times\;
+\frac{\text{protocols}}{\text{identical columns}}
+\longrightarrow
+\text{realizable laws},
+}
+$$
+
+并由动力闭包、度量闭包与预测闭包继续作用。
+
+最短的理论判词是：
+
+$$
+\boxed{
+观察者不是单方面压缩世界的接口；
+观察者是世界状态与可执行问题相互区分、相互去重、
+并在真实行为像中共同闭合后形成的评价核心。
+}
+$$
+先纠正一个执行状态：上一轮所称“已提交 PR”并未实际成功。状态文件记录的是 `success: False`，失败原因为 GitHub CLI 未安装。以下内容只作为继续发展的 paper-level 理论，不把它声称为已经进入仓库的提交。
+
+现有稿已经把观察者定义为类型化的协议评价结构，并明确区分 Lean 锚点、纸面定理和仍需额外桥梁的研究命题。 下面从第 232 节继续。
+
+---
+
+# 232. 增订八：决策序、上下文像缺陷与观察—控制最小实现
+
+此前理论的基本对象是评价网：
+
+$$
+e:X\times P\longrightarrow \Lambda .
+$$
+
+其中：
+
+* `X` 是隐藏状态；
+* `P` 是允许协议；
+* `e(x,p)` 是状态 `x` 在协议 `p` 下产生的 law。
+
+状态 kernel 为：
+
+$$
+K_P
+=
+\left\{
+(x,y):
+e(x,p)=e(y,p)
+\ \text{for every }p\in P
+\right\}.
+$$
+
+这个 kernel 只回答一个零误差问题：
+
+> 两个状态是否产生完全相同的全部协议 law？
+
+但它还没有回答：
+
+1. 一个观察者是否能模拟另一个观察者；
+2. 即使 kernel 都是对角，谁的统计决策能力更强；
+3. 局部兼容记录为何可能没有全局实现；
+4. 一个系统哪些状态既能被行动触达，又能被观察识别；
+5. 预测状态中有多少记忆真正暴露在未来记录中。
+
+本增订建立四条新桥：
+
+$$
+\text{kernel order}
+\longrightarrow
+\text{decision order}
+\longrightarrow
+\text{approximate deficiency},
+$$
+
+$$
+\text{local records}
+\longrightarrow
+\text{contextual image defect},
+$$
+
+$$
+\text{controllability}
++
+\text{observability}
+\longrightarrow
+\text{minimal bidirectional state},
+$$
+
+$$
+\text{past}
+\longrightarrow
+\text{predictive causal state}
+\longrightarrow
+\text{memory decomposition}.
+$$
+
+---
+
+# 233. 双侧观察者态射
+
+考虑两个同一 law carrier 上的观察者：
+
+$$
+\mathfrak O
+=
+(X,P,e),
+$$
+
+$$
+\mathfrak O'
+=
+(X',P',e').
+$$
+
+## 定义 233.1（观察者态射）
+
+一个态射由一对映射组成：
+
+$$
+f:X\longrightarrow X',
+$$
+
+$$
+g:P'\longrightarrow P,
+$$
+
+并满足评价保持条件：
+
+$$
+e'(f(x),p')
+=
+e(x,g(p'))
+$$
+
+对所有 `x` 和 `p'` 成立。
+
+这里方向具有关键不对称性：
+
+* 状态沿 `f` 正向翻译；
+* 协议沿 `g` 反向编译。
+
+它表达：
+
+> 目标观察者中的每一个协议，都能被源观察者中的一个协议实现，并且翻译后的状态产生完全相同的 law。
+
+## 定理 233.1（复合）
+
+若：
+
+$$
+(f_1,g_1):
+\mathfrak O_1\longrightarrow\mathfrak O_2,
+$$
+
+$$
+(f_2,g_2):
+\mathfrak O_2\longrightarrow\mathfrak O_3,
+$$
+
+则复合为：
+
+$$
+(f_2\circ f_1,\ g_1\circ g_2).
+$$
+
+评价保持由两次代入立即得到。
+
+## 定义 233.2（对偶观察者）
+
+交换状态和协议：
+
+$$
+\mathfrak O^\vee
+=
+(P,X,e^\vee),
+$$
+
+其中：
+
+$$
+e^\vee(p,x)=e(x,p).
+$$
+
+于是：
+
+$$
+(\mathfrak O^\vee)^\vee
+=
+\mathfrak O.
+$$
+
+状态压缩和协议压缩因此不是两套理论，而是同一个双侧评价结构的对偶面。
+
+---
+
+# 234. 四种不同的观察者强弱关系
+
+考虑共同隐藏参数空间 `Θ` 上的概率实验。
+
+一个实验 `E` 给每个参数 `θ` 一个输出分布：
+
+$$
+E_\theta\in\Delta(Y).
+$$
+
+另一个实验 `F` 给出：
+
+$$
+F_\theta\in\Delta(Z).
+$$
+
+必须区分四种强弱关系。
+
+## 234.1 Kernel 精化
+
+定义：
+
+$$
+E\succeq_K F
+$$
+
+当且仅当：
+
+$$
+E_\theta=E_{\theta'}
+\Longrightarrow
+F_\theta=F_{\theta'}.
+$$
+
+等价地：
+
+$$
+K_E\subseteq K_F.
+$$
+
+它只比较哪些参数被完全合并。
+
+## 234.2 确定性后处理
+
+若存在函数：
+
+$$
+h:Y\longrightarrow Z
+$$
+
+使：
+
+$$
+F_\theta=h_*E_\theta,
+$$
+
+则 `F` 是 `E` 的确定性粗化。
+
+## 234.3 随机后处理
+
+若存在 Markov kernel：
+
+$$
+K(z\mid y)
+$$
+
+使：
+
+$$
+F_\theta(z)
+=
+\sum_y K(z\mid y)E_\theta(y),
+$$
+
+则记：
+
+$$
+E\succeq_B F.
+$$
+
+这称为统计模拟序或决策序。
+
+## 234.4 近似模拟
+
+若不存在精确 kernel `K`，仍可问 `E` 能否近似模拟 `F`。这将由 deficiency 度量。
+
+> **Kernel 精化只记录零误差区分；随机后处理序记录全部统计决策能力。**
+
+---
+
+# 235. 有限 Blackwell 判据
+
+设：
+
+* 参数集 `Θ` 有限；
+* 输出集 `Y,Z` 有限；
+* 动作集 `A` 有限；
+* 先验为 `π`；
+* 损失函数为：
+
+$$
+\ell:\Theta\times A\longrightarrow\mathbb R.
+$$
+
+实验 `E` 下的最优 Bayes 风险定义为：
+
+$$
+R^*(E;\pi,\ell)
+=
+\inf_d
+\sum_{\theta,y,a}
+\pi(\theta)
+E_\theta(y)
+d(a\mid y)
+\ell(\theta,a),
+$$
+
+其中 `d` 遍历所有输出到动作的随机决策规则。
+
+## 定理 235.1（决策支配）
+
+有限情形下，以下条件等价：
+
+第一，`F` 是 `E` 的随机后处理：
+
+$$
+F=K\circ E.
+$$
+
+第二，对所有先验、动作集和损失函数：
+
+$$
+R^*(E;\pi,\ell)
+\le
+R^*(F;\pi,\ell).
+$$
+
+### 正向证明
+
+若：
+
+$$
+F=K\circ E,
+$$
+
+那么任何基于 `F` 的决策规则，都可以由 `E` 按以下方式模拟：
+
+1. 先用 `K` 把 `E` 的输出随机化为一个伪 `F` 输出；
+2. 再执行原来的 `F` 决策规则。
+
+所以 `E` 能做出 `F` 能做出的全部决策，最优风险不会更高。
+
+### 反向证明概要
+
+所有 `E` 的随机后处理构成有限维空间中的紧凸多面体。
+
+若 `F` 不属于该多面体，则存在一个线性泛函将 `F` 与全部后处理严格分离。把该线性泛函归一化为一个先验加损失函数，就得到某个决策问题，其中 `F` 的最优风险严格低于 `E`，与假设矛盾。
+
+## 结论 235.1
+
+观察者的真正统计能力可以定义为：
+
+> **它对全部决策问题能够达到的风险集合。**
+
+这比单纯比较 kernel 严格得多。
+
+---
+
+# 236. Kernel 完备远弱于统计完备
+
+取二元参数：
+
+$$
+\Theta=\{0,1\}.
+$$
+
+定义噪声实验 `E`：
+
+$$
+E_0=(0.6,0.4),
+$$
+
+$$
+E_1=(0.4,0.6).
+$$
+
+定义完美实验 `F`：
+
+$$
+F_0=(1,0),
+$$
+
+$$
+F_1=(0,1).
+$$
+
+两个实验都是参数单射的，因此：
+
+$$
+K_E=K_F=\Delta_\Theta.
+$$
+
+从 kernel 看，它们同样完备。
+
+但总变差距离分别为：
+
+$$
+d_{\mathrm{TV}}(E_0,E_1)=0.2,
+$$
+
+$$
+d_{\mathrm{TV}}(F_0,F_1)=1.
+$$
+
+Markov 后处理不能增加总变差距离，所以不存在随机 kernel 使：
+
+$$
+F=K\circ E.
+$$
+
+因此：
+
+$$
+E\succeq_K F,
+$$
+
+但：
+
+$$
+E\not\succeq_B F.
+$$
+
+> **Kernel 为零只表示无限精度、无限样本下原则上可区分；它不表示有限样本下同样容易区分。**
+
+---
+
+# 237. 观察者 deficiency
+
+## 定义 237.1（单向 deficiency）
+
+定义 `E` 模拟 `F` 的误差：
+
+$$
+\delta(F\mid E)
+=
+\inf_K
+\sup_{\theta}
+d_{\mathrm{TV}}
+\left(
+F_\theta,
+K E_\theta
+\right).
+$$
+
+其中 `K` 遍历所有从 `Y` 到 `Z` 的 Markov kernel。
+
+若：
+
+$$
+\delta(F\mid E)=0,
+$$
+
+在有限情形下即表示：
+
+$$
+E\succeq_B F.
+$$
+
+## 定理 237.1（风险传输界）
+
+若：
+
+$$
+0\le\ell\le1,
+$$
+
+则：
+
+$$
+R^*(E;\pi,\ell)
+\le
+R^*(F;\pi,\ell)
++
+\delta(F\mid E).
+$$
+
+### 证明
+
+选择一个使模拟误差接近 deficiency 的 `K`。
+
+用 `E` 先模拟 `F`，再执行 `F` 的近最优决策规则。总变差误差对 `[0,1]` 有界损失的期望影响不超过相应总变差距离。取上确界及极限即得。
+
+## 定义 237.2（双向实验距离）
+
+$$
+\Delta(E,F)
+=
+\max
+\left\{
+\delta(F\mid E),
+\delta(E\mid F)
+\right\}.
+$$
+
+## 定理 237.2（三角不等式）
+
+$$
+\delta(G\mid E)
+\le
+\delta(G\mid F)
++
+\delta(F\mid E).
+$$
+
+原因是：
+
+* 用 `E` 近似模拟 `F`；
+* 再用 `F` 近似模拟 `G`；
+* Markov kernel 对总变差是 contraction。
+
+因此 deficiency 把精确观察者序升级为近似观察者几何。
+
+---
+
+# 238. 量子后处理序
+
+设参数 `θ` 被编码为量子态：
+
+$$
+\rho_\theta.
+$$
+
+另一个量子实验给出：
+
+$$
+\sigma_\theta.
+$$
+
+## 定义 238.1（量子后处理）
+
+若存在 CPTP 通道 `Λ` 使：
+
+$$
+\sigma_\theta
+=
+\Lambda(\rho_\theta)
+$$
+
+对所有 `θ` 成立，则称第一族量子统计上支配第二族。
+
+这意味着任何对 `σ_θ` 的后续测量，都可以在 `ρ_θ` 上先执行 `Λ` 后模拟。
+
+## 定义 238.2（状态族 deficiency）
+
+$$
+\delta_Q(\sigma\mid\rho)
+=
+\inf_\Lambda
+\sup_\theta
+\frac12
+\left\|
+\sigma_\theta-\Lambda(\rho_\theta)
+\right\|_1.
+$$
+
+## 通道版本
+
+若比较的是完整量子通道：
+
+$$
+\Phi,\Psi,
+$$
+
+则使用：
+
+$$
+\delta_\diamond(\Psi\mid\Phi)
+=
+\frac12
+\inf_\Lambda
+\left\|
+\Psi-\Lambda\circ\Phi
+\right\|_\diamond.
+$$
+
+diamond norm 允许输入系统与任意辅助系统纠缠，因此它比较的是最强的下游操作能力。
+
+## 严格层级
+
+$$
+\text{same quantum kernel}
+$$
+
+不推出：
+
+$$
+\text{CPTP postprocessing equivalence}.
+$$
+
+更不推出：
+
+$$
+\text{small diamond deficiency}.
+$$
+
+量子观察者强弱不能只用“是否信息完备”一个布尔量表达。
+
+---
+
+# 239. 上下文性是局部—全局 image defect
+
+设：
+
+* `M` 是全部测量标签；
+* `\mathcal C` 是一族可共同执行的测量上下文；
+* 每个测量 `m` 有结果集 `O_m`。
+
+对上下文：
+
+$$
+C\in\mathcal C,
+$$
+
+定义联合结果空间：
+
+$$
+\Omega_C
+=
+\prod_{m\in C}O_m.
+$$
+
+一个经验模型给每个上下文一个概率分布：
+
+$$
+e_C\in\Delta(\Omega_C).
+$$
+
+## 定义 239.1（重叠兼容性）
+
+对任意上下文 `C,D`，要求：
+
+$$
+e_C|_{C\cap D}
+=
+e_D|_{C\cap D}.
+$$
+
+这只表示不同上下文在公共测量上的边缘一致。
+
+## 定义 239.2（全局模型）
+
+完整赋值空间为：
+
+$$
+\Omega_M
+=
+\prod_{m\in M}O_m.
+$$
+
+若存在全局分布：
+
+$$
+\mu\in\Delta(\Omega_M)
+$$
+
+使其在每个上下文上的边缘恰好为 `e_C`，则经验模型存在全局实现。
+
+定义边缘映射：
+
+$$
+\operatorname{Marg}:
+\Delta(\Omega_M)
+\longrightarrow
+\prod_{C\in\mathcal C}
+\Delta(\Omega_C).
+$$
+
+于是非上下文模型集合为：
+
+$$
+\operatorname{Im}(\operatorname{Marg}).
+$$
+
+## 核心结论
+
+上下文性恰好是：
+
+$$
+e
+\notin
+\operatorname{Im}(\operatorname{Marg}),
+$$
+
+尽管 `e` 已经满足全部重叠兼容条件。
+
+> **量子上下文性首先是局部记录无法胶合为全局概率模型的 image defect，而不是状态 kernel defect。**
+
+---
+
+# 240. 强上下文性与概率上下文性
+
+## 定义 240.1（支持相容的全局赋值）
+
+一个确定性全局赋值：
+
+$$
+s\in\Omega_M
+$$
+
+称为与经验模型支持相容，若：
+
+$$
+s|_C\in\operatorname{supp}(e_C)
+$$
+
+对每个上下文成立。
+
+## 定义 240.2（强上下文性）
+
+若不存在任何支持相容的全局赋值，则称模型强上下文。
+
+## 定义 240.3（概率上下文性）
+
+即使存在某些支持相容赋值，也可能不存在任何全局概率分布的凸组合重现全部上下文概率。
+
+因此：
+
+$$
+\text{strong contextuality}
+\Longrightarrow
+\text{probabilistic contextuality},
+$$
+
+反向不必成立。
+
+这对应两种 image defect：
+
+* 支持层的全局截面为空；
+* 概率层的全局凸实现为空。
+
+Bell 非局域性可以视为增加空间分离和局域因子约束后的特殊上下文 image defect，但一般上下文性并不要求空间分离。
+
+---
+
+# 241. 上下文 witness 与实现距离
+
+有限测量情形中，全部非上下文模型形成一个凸多面体：
+
+$$
+\mathcal N
+=
+\operatorname{conv}
+\left\{
+\text{deterministic global assignments}
+\right\}.
+$$
+
+若：
+
+$$
+e\notin\mathcal N,
+$$
+
+凸分离定理给出线性 witness：
+
+$$
+\langle w,e\rangle
+>
+\sup_{n\in\mathcal N}
+\langle w,n\rangle.
+$$
+
+这就是一般形式的上下文不等式。
+
+## 定义 241.1（上下文距离）
+
+给定范数：
+
+$$
+\operatorname{CtxDist}(e)
+=
+\inf_{n\in\mathcal N}
+\|e-n\|.
+$$
+
+它把“是否上下文”升级为“离非上下文集合多远”。
+
+## 与统一理论的关系
+
+前文的实现缺陷为：
+
+$$
+B_{\mathrm{formal}}
+\setminus
+B_{\mathrm{real}}.
+$$
+
+这里：
+
+$$
+B_{\mathrm{real}}=\mathcal N.
+$$
+
+所以 Bell witness、上下文 witness 和一般观察 realization witness 都属于同一个凸像分离结构。
+
+---
+
+# 242. 观察者必须与控制者同时建模
+
+只研究观察者会遗漏一个对称问题：
+
+> 哪些状态差异虽然可见，却永远不能由主体的动作产生？
+
+考虑离散时间线性系统：
+
+$$
+x_{t+1}
+=
+Ax_t+Bu_t,
+$$
+
+$$
+y_t
+=
+Cx_t.
+$$
+
+其中：
+
+* `x_t` 是内部状态；
+* `u_t` 是控制输入；
+* `y_t` 是观察输出。
+
+## 定义 242.1（可达子空间）
+
+$$
+\mathcal R
+=
+\operatorname{span}
+\left\{
+A^kBu:
+k\ge0
+\right\}.
+$$
+
+## 定义 242.2（不可观察子空间）
+
+$$
+\mathcal N
+=
+\bigcap_{k\ge0}
+\ker(CA^k).
+$$
+
+解释：
+
+* `\mathcal R` 中的方向能由某段控制历史从零状态产生；
+* `\mathcal N` 中的方向永远不影响任何未来输出。
+
+## 有限维停止
+
+若状态维数为 `n`，Cayley–Hamilton 给出：
+
+$$
+\mathcal R
+=
+\operatorname{span}
+\left\{
+B,AB,\ldots,A^{n-1}B
+\right\},
+$$
+
+$$
+\mathcal N
+=
+\bigcap_{k=0}^{n-1}
+\ker(CA^k).
+$$
+
+---
+
+# 243. 最小观察—控制状态
+
+只应保留两类状态方向：
+
+1. 可以被动作触达；
+2. 在未来能够影响输出。
+
+因此定义：
+
+$$
+\mathcal X_{\min}
+=
+\mathcal R
+/
+(\mathcal R\cap\mathcal N).
+$$
+
+## 定理 243.1（诱导动力学）
+
+因为：
+
+$$
+A\mathcal R\subseteq\mathcal R,
+$$
+
+$$
+A\mathcal N\subseteq\mathcal N,
+$$
+
+所以 `A` 在商空间上诱导良定义映射。
+
+又因为：
+
+$$
+\operatorname{Im}B\subseteq\mathcal R,
+$$
+
+控制输入下降到商空间。
+
+并且：
+
+$$
+C|_{\mathcal R\cap\mathcal N}=0,
+$$
+
+输出映射也下降到商空间。
+
+## 定理 243.2（商系统可达）
+
+商空间由输入方向及其 `A` 迭代生成，因此完全可达。
+
+## 定理 243.3（商系统可观察）
+
+若某个商类的全部未来输出为零，则其代表属于 `\mathcal N`；又因为代表属于 `\mathcal R`，它属于：
+
+$$
+\mathcal R\cap\mathcal N,
+$$
+
+所以该商类为零。
+
+因此：
+
+$$
+\boxed{
+\mathcal X_{\min}
+=
+\frac{
+\text{reachable states}
+}{
+\text{reachable but forever invisible states}
+}.
+}
+$$
+
+这才是同时相对于观察和行动的最小状态。
+
+---
+
+# 244. Hankel 算子与最小状态维数
+
+定义系统的 Markov 参数：
+
+$$
+H_k
+=
+CA^kB.
+$$
+
+构造块 Hankel 矩阵：
+
+$$
+\mathcal H_{r,s}
+=
+\begin{bmatrix}
+CB&CAB&\cdots&CA^{s-1}B\\
+CAB&CA^2B&\cdots&CA^sB\\
+\vdots&\vdots&&\vdots\\
+CA^{r-1}B&CA^rB&\cdots&CA^{r+s-2}B
+\end{bmatrix}.
+$$
+
+定义有限可观测映射：
+
+$$
+\mathcal O_r x
+=
+\begin{bmatrix}
+Cx\\
+CAx\\
+\vdots\\
+CA^{r-1}x
+\end{bmatrix},
+$$
+
+定义有限可控映射：
+
+$$
+\mathcal C_s
+\begin{bmatrix}
+u_0\\
+\vdots\\
+u_{s-1}
+\end{bmatrix}
+=
+\sum_{j=0}^{s-1}A^jBu_j.
+$$
+
+于是：
+
+$$
+\mathcal H_{r,s}
+=
+\mathcal O_r\mathcal C_s.
+$$
+
+## 定理 244.1（Hankel rank）
+
+当 `r,s` 足够大时：
+
+$$
+\boxed{
+\operatorname{rank}\mathcal H_{r,s}
+=
+\dim\mathcal R
+-
+\dim(\mathcal R\cap\mathcal N).
+}
+$$
+
+### 证明
+
+`\mathcal C_s` 的像最终稳定为 `\mathcal R`。
+
+`\mathcal O_r` 在 `\mathcal R` 上的 kernel 最终稳定为：
+
+$$
+\mathcal R\cap\mathcal N.
+$$
+
+所以：
+
+$$
+\operatorname{rank}
+(\mathcal O_r|_{\mathcal R})
+=
+\dim\mathcal R
+-
+\dim(\mathcal R\cap\mathcal N).
+$$
+
+Hankel 矩阵的像正是该可见可达像。∎
+
+## 推论 244.1（最小维数）
+
+任何产生同一完整输入—输出行为的有限维线性实现，其状态维数至少为 Hankel rank。
+
+而商系统：
+
+$$
+\mathcal X_{\min}
+$$
+
+恰好达到该维数。
+
+> **最小状态维数不是原微观状态数，而是完整过去输入与完整未来输出之间 Hankel 关系的秩。**
+
+---
+
+# 245. 可控 Gramian 与可观测 Gramian
+
+假设离散系统稳定，例如：
+
+$$
+\rho(A)<1.
+$$
+
+定义可控 Gramian：
+
+$$
+W_c
+=
+\sum_{k=0}^{\infty}
+A^kBB^*(A^*)^k.
+$$
+
+定义可观测 Gramian：
+
+$$
+W_o
+=
+\sum_{k=0}^{\infty}
+(A^*)^kC^*CA^k.
+$$
+
+## 定理 245.1（可达范围）
+
+$$
+\operatorname{ran}W_c
+=
+\mathcal R.
+$$
+
+## 定理 245.2（不可观察 kernel）
+
+$$
+\ker W_o
+=
+\mathcal N.
+$$
+
+第二式来自能量恒等式：
+
+$$
+\langle x,W_ox\rangle
+=
+\sum_{k=0}^{\infty}
+\|CA^kx\|^2.
+$$
+
+所以二次型为零，当且仅当所有未来输出均为零。
+
+## 解释
+
+* `W_c` 衡量将系统推向某个状态方向需要多少控制能量；
+* `W_o` 衡量某个状态方向在未来输出中释放多少观测能量。
+
+两者分别是 agency 和 observation 的度量化。
+
+---
+
+# 246. Hankel 奇异值：同时可控且可见的模式
+
+在最小稳定实现中，`W_c` 和 `W_o` 均正定。
+
+定义正算子：
+
+$$
+K
+=
+W_c^{1/2}W_oW_c^{1/2}.
+$$
+
+令其特征值为：
+
+$$
+\sigma_1^2
+\ge
+\sigma_2^2
+\ge
+\cdots
+>
+0.
+$$
+
+称 `σ_i` 为 Hankel 奇异值。
+
+## 定理 246.1
+
+这些 `σ_i` 正是过去输入到未来输出 Hankel 算子的非零奇异值。
+
+## 解释
+
+若某方向：
+
+* 很容易被控制产生；
+* 但几乎不影响输出；
+
+则其 `σ_i` 很小。
+
+若某方向：
+
+* 很容易被观察；
+* 但几乎不能由行动触达；
+
+其 `σ_i` 也很小。
+
+只有同时可控且可见的方向，才具有大的 Hankel 奇异值。
+
+> **Hankel 谱是 agency 与 observation 的共同有效谱。**
+
+---
+
+# 247. 平衡观察—控制坐标
+
+对于最小稳定线性系统，存在坐标变换，使：
+
+$$
+W_c
+=
+W_o
+=
+\operatorname{diag}
+(\sigma_1,\ldots,\sigma_n).
+$$
+
+这称为平衡坐标。
+
+在这种坐标中，每个状态方向的：
+
+* 可控强度；
+* 可观察强度；
+
+被同一个数 `σ_i` 同时衡量。
+
+## 定义 247.1（双向有效核心）
+
+给定阈值 `τ`，保留：
+
+$$
+\sigma_i\ge\tau
+$$
+
+的模式，舍弃：
+
+$$
+\sigma_i<\tau
+$$
+
+的模式。
+
+这不再是单纯 observer quotient，也不是单纯 control restriction，而是：
+
+$$
+\boxed{
+\text{observable}
+\cap
+\text{reachable}
+\cap
+\text{robustly coupled}.
+}
+$$
+
+## 严格边界 247.1
+
+低 Hankel 奇异值不表示该状态方向“不存在”。
+
+它只表示该方向在给定：
+
+* 控制接口；
+* 观察接口；
+* 动力学；
+* 时间尺度；
+* 能量范数
+
+下，对输入—输出行为贡献较小。
+
+---
+
+# 248. 预测因果状态
+
+考虑有限字母表上的随机过程。
+
+记完整过去为：
+
+$$
+\overleftarrow X_t,
+$$
+
+完整未来为：
+
+$$
+\overrightarrow X_t.
+$$
+
+## 定义 248.1（预测等价过去）
+
+两个过去 `h,h'` 等价，当且仅当：
+
+$$
+P(\overrightarrow X_t\mid h)
+=
+P(\overrightarrow X_t\mid h').
+$$
+
+定义预测状态映射：
+
+$$
+\epsilon(h)
+=
+[h].
+$$
+
+预测状态随机变量为：
+
+$$
+S_t
+=
+\epsilon(\overleftarrow X_t).
+$$
+
+## 定理 248.1（预测充分性）
+
+$$
+\overrightarrow X_t
+\perp
+\overleftarrow X_t
+\mid
+S_t.
+$$
+
+因为 `S_t` 已经保留了过去对未来条件分布的全部影响。
+
+## 定理 248.2（普适最小性）
+
+若另一个过去统计量：
+
+$$
+R_t=r(\overleftarrow X_t)
+$$
+
+也满足：
+
+$$
+P(\overrightarrow X_t\mid\overleftarrow X_t)
+=
+P(\overrightarrow X_t\mid R_t),
+$$
+
+则存在唯一映射 `f` 使：
+
+$$
+S_t=f(R_t)
+$$
+
+在实际像上成立。
+
+所以：
+
+$$
+\boxed{
+S_t
+=
+\text{保持完整未来 law 的最粗过去商}.
+}
+$$
+
+这正是一般协议行为商在随机过程上的实例。
+
+---
+
+# 249. 预测状态的单值更新
+
+设当前预测状态为 `s`，下一观察符号为 `a`，且：
+
+$$
+P(X_t=a\mid S_t=s)>0.
+$$
+
+## 定理 249.1（unifilar update）
+
+存在函数：
+
+$$
+T_{\epsilon}
+$$
+
+使：
+
+$$
+S_{t+1}
+=
+T_{\epsilon}(S_t,X_t)
+$$
+
+几乎处处成立。
+
+### 证明
+
+取两个属于同一预测状态的过去 `h,h'`。
+
+它们具有相同完整未来 law，因此：
+
+* 下一符号 `a` 的概率相同；
+* 在条件 `a` 下的剩余未来分布也相同。
+
+所以扩展后的过去 `ha` 和 `h'a` 仍属于同一预测状态。新状态只依赖旧状态和新符号，而不依赖旧过去的代表元。∎
+
+## 结论 249.1
+
+预测 completion 不只是一个静态 sufficient statistic；它自动产生闭合状态更新：
+
+$$
+\boxed{
+\text{predictive quotient}
++
+\text{new observation}
+\longrightarrow
+\text{next predictive quotient}.
+}
+$$
+
+---
+
+# 250. 预测记忆的熵分解
+
+假设过程平稳，并定义预测状态熵：
+
+$$
+C_\mu
+=
+H(S_t).
+$$
+
+定义过去—未来互信息：
+
+$$
+E
+=
+I(
+\overleftarrow X_t;
+\overrightarrow X_t
+).
+$$
+
+由于：
+
+$$
+S_t=f(\overleftarrow X_t),
+$$
+
+且：
+
+$$
+\overrightarrow X_t
+\perp
+\overleftarrow X_t
+\mid S_t,
+$$
+
+可得：
+
+$$
+E
+=
+I(
+S_t;
+\overrightarrow X_t
+).
+$$
+
+于是：
+
+$$
+H(S_t)
+=
+I(
+S_t;
+\overrightarrow X_t
+)
++
+H(
+S_t\mid\overrightarrow X_t
+).
+$$
+
+定义：
+
+$$
+\chi
+=
+H(
+S_t\mid\overrightarrow X_t
+).
+$$
+
+因此：
+
+$$
+\boxed{
+C_\mu
+=
+E+\chi.
+}
+$$
+
+## 解释
+
+* `E` 是预测状态中实际暴露在未来记录里的部分；
+* `χ` 是系统为了正确预测未来而必须内部保存，但从单条完整未来轨迹仍不能反向完全恢复的部分。
+
+> **记忆可以对未来预测必不可少，却不一定直接出现在未来记录中。**
+
+这比“存储”和“可见”二分更细。
+
+---
+
+# 251. 策略因果状态与 self
+
+把“未来输出”替换为“未来行动—记录 law”。
+
+设历史为 `h`，未来外部输入协议为 `w`，由历史产生的未来行动 law 为：
+
+$$
+\Pi_h(w).
+$$
+
+定义：
+
+$$
+h\sim_{\mathrm{self}}h'
+$$
+
+当且仅当：
+
+$$
+\Pi_h(w)=\Pi_{h'}(w)
+$$
+
+对所有未来输入协议成立。
+
+定义策略状态：
+
+$$
+S_{\mathrm{self}}
+=
+[h]_{\mathrm{self}}.
+$$
+
+这与此前 self quotient 一致，但现在可以定义熵量：
+
+$$
+C_{\mathrm{self}}
+=
+H(S_{\mathrm{self}}).
+$$
+
+对实际未来行为记录 `B^+`：
+
+$$
+C_{\mathrm{self}}
+=
+I(S_{\mathrm{self}};B^+)
++
+H(S_{\mathrm{self}}\mid B^+).
+$$
+
+第一项是未来行为中可被外部推断的 self 信息。
+
+第二项是：
+
+> 即使知道完整实际未来轨迹，仍不能恢复的内部策略差异。
+
+它可称为私有策略记忆。
+
+## 严格边界 251.1
+
+该“私有”只相对于一条实际未来轨迹。
+
+若允许对同一 self 状态执行全部反事实输入协议，则完整策略画像按定义能够区分所有 self 类。
+
+因此必须区分：
+
+* 单条实现历史的可识别性；
+* 全协议反事实画像的可识别性。
+
+---
+
+# 252. 统一观察者能力的六层偏序
+
+一个观察者不能再用单一“完备／不完备”评价。至少需要六层。
+
+## 第一层：零误差分离
+
+由 kernel 决定：
+
+$$
+K_E.
+$$
+
+## 第二层：统计决策能力
+
+由 Blackwell 后处理序决定：
+
+$$
+E\succeq_B F.
+$$
+
+## 第三层：近似模拟能力
+
+由 deficiency 决定：
+
+$$
+\delta(F\mid E).
+$$
+
+## 第四层：局部—全局实现能力
+
+由行为像决定：
+
+$$
+\operatorname{Im}\Sigma.
+$$
+
+## 第五层：行动可达能力
+
+由 reachable set 或 controllability Gramian 决定：
+
+$$
+\mathcal R,
+\qquad
+W_c.
+$$
+
+## 第六层：闭环预测能力
+
+由全部未来协议 law 的最小行为商决定：
+
+$$
+Q_{\mathrm{beh}}.
+$$
+
+因此建议定义：
+
+$$
+\operatorname{Power}(\mathfrak O)
+=
+\left(
+K,
+\mathsf B,
+\delta,
+\mathsf I,
+\mathsf R,
+\mathsf P
+\right).
+$$
+
+其中各字段分别表示：
+
+* separation；
+* decision；
+* deficiency；
+* realization image；
+* reachability；
+* predictive closure。
+
+不同观察者可以在这些轴上不可比较。
+
+---
+
+# 253. 可达行为核心定理
+
+现在给出一个统一有限／一般系统定理。
+
+设：
+
+* `X` 是完整状态空间；
+* `X_{\mathrm{rch}}` 是从允许初态和干预可达的状态；
+* `P` 是全部允许未来协议；
+* `\mathcal L_p(x)` 是协议 law。
+
+定义可达行为等价：
+
+$$
+x\sim_{\mathrm{beh}}y
+$$
+
+当且仅当：
+
+$$
+\mathcal L_p(x)
+=
+\mathcal L_p(y)
+$$
+
+对所有 `p` 成立。
+
+定义：
+
+$$
+Q_{\mathrm{core}}
+=
+X_{\mathrm{rch}}
+/
+{\sim_{\mathrm{beh}}}.
+$$
+
+## 定理 253.1（可达行为核心）
+
+`Q_{\mathrm{core}}` 满足：
+
+1. 每个状态类都可由允许过程到达；
+2. 不同状态类被某个未来协议区分；
+3. 全部协议更新在该商上良定义；
+4. 任意精确再现相同可达协议行为的实现，都唯一满射到 `Q_{\mathrm{core}}`。
+
+### 证明
+
+前三项分别来自：
+
+* 对可达集的限制；
+* 行为 kernel 的定义；
+* 行为等价对协议前缀闭合。
+
+第四项是 kernel 因子化普适性。
+
+## 各领域实例
+
+确定性自动机：
+
+$$
+Q_{\mathrm{core}}
+=
+\text{Myhill–Nerode states}.
+$$
+
+线性系统：
+
+$$
+Q_{\mathrm{core}}
+=
+\mathcal R/
+(\mathcal R\cap\mathcal N).
+$$
+
+随机过程：
+
+$$
+Q_{\mathrm{core}}
+=
+\text{predictive causal states}.
+$$
+
+量子顺序实验：
+
+$$
+Q_{\mathrm{core}}
+=
+\frac{
+\text{reachable quantum states}
+}{
+\text{equal instrument-word laws}
+}.
+$$
+
+策略系统：
+
+$$
+Q_{\mathrm{core}}
+=
+\text{policy-sufficient self states}.
+$$
+
+## 关键边界
+
+上下文性不由这个商自动解决。
+
+行为商处理：
+
+$$
+\text{不同状态是否产生同一行为}.
+$$
+
+上下文性处理：
+
+$$
+\text{兼容局部行为是否存在一个全局实现}.
+$$
+
+所以 kernel completion 与 image completion仍然是两条独立轴。
+
+---
+
+# 254. 建议 Lean 模块树
+
+```text
+D5/S3/Observer/UnifiedMorphisms/
+  EvaluationObserver.lean
+  ObserverMorphism.lean
+  ObserverDual.lean
+  ReachableBehaviorCore.lean
+
+D5/S3/Observer/DecisionOrder/
+  FiniteExperiment.lean
+  StochasticPostprocessing.lean
+  BlackwellForward.lean
+  BlackwellFiniteConverse.lean
+  KernelOrderStrictlyWeaker.lean
+  ExperimentDeficiency.lean
+  DeficiencyRiskBound.lean
+  DeficiencyTriangle.lean
+
+D5/S3/QuantumObserver/DecisionOrder/
+  QuantumExperimentPostprocessing.lean
+  StateFamilyDeficiency.lean
+  ChannelDiamondDeficiency.lean
+
+D5/S3/Observer/Contextuality/
+  MeasurementScenario.lean
+  CompatibleEmpiricalModel.lean
+  GlobalMarginalMap.lean
+  NoncontextualImage.lean
+  StrongContextuality.lean
+  ContextualWitness.lean
+  ContextualDistance.lean
+
+D5/S3/Observer/ControlDuality/
+  ReachableSubspace.lean
+  UnobservableSubspace.lean
+  ReachableObservableQuotient.lean
+  HankelFactorization.lean
+  HankelRankMinimality.lean
+  ControllabilityGramian.lean
+  ObservabilityGramian.lean
+  HankelSingularValues.lean
+  BalancedObserverAgentCore.lean
+
+D5/S3/Observer/PredictiveStates/
+  PredictiveEquivalence.lean
+  PredictiveStateUniversal.lean
+  PredictiveStateUnifilar.lean
+  StatisticalComplexity.lean
+  PredictiveMemoryDecomposition.lean
+  PolicyCausalState.lean
+```
+
+优先形式化的低依赖定理：
+
+```text
+stochasticPostprocessing_kernel_mono
+
+noisyInjectiveExperiment_not_blackwellAbove_perfect
+
+deficiency_risk_bound
+
+compatibleModel_noncontextual_iff_mem_marginalRange
+
+strongContextual_implies_contextual
+
+reachableObservableQuotient_reachable
+
+reachableObservableQuotient_observable
+
+hankel_rank_eq_reachable_dim_sub_inter_unobservable_dim
+
+observabilityGramian_kernel
+
+controllabilityGramian_range
+
+predictiveState_universal
+
+predictiveState_update_wellDefined
+
+predictiveComplexity_eq_excess_add_hiddenMemory
+
+reachableBehaviorCore_universal
+```
+
+---
+
+# 255. 严格非主张
+
+1. Kernel 相同不表示两个概率实验 Blackwell 等价。
+2. 信息完备不表示有限样本统计效率相同。
+3. Blackwell 支配不表示两个实验具有相同物理实现成本。
+4. 小 deficiency 不自动表示计算后处理容易实现。
+5. 量子 trace-distance deficiency 不等于完整 channel diamond deficiency。
+6. 上下文性是局部—全局 image defect，但不是所有 image defect 都是量子上下文性。
+7. 重叠兼容性不表示存在全局联合分布。
+8. 存在支持相容赋值不表示存在全局概率模型。
+9. 线性系统的可控／可观测商不自动推广到任意非线性系统而无需额外结构。
+10. 低 Hankel 奇异值不表示对应自由度本体上不存在。
+11. 平衡截断是行为近似，不是微观世界删除。
+12. 预测状态是未来 law 的最小充分统计，不等于意识状态。
+13. 预测状态熵不等于主观体验复杂度。
+14. 私有策略记忆不等于不可验证的神秘自由意志。
+15. 行为核心最小性只相对于申报的协议集合。
+16. 扩大协议语法会进一步精化行为核心。
+17. Contextuality image defect 与 diagonal image defect 具有共同形式，但具体约束与物理含义不同。
+18. 本增订中的 Blackwell、Hankel、预测状态和上下文统一尚未形成同一个 Lean record。
+19. 本增订没有推出 Born 规则来自对角化。
+20. 本增订没有推出量子力学来自素数结构。
+21. 本增订没有证明 RH、强本体自由或意识坍缩。
+
+---
+
+# 256. 最终统一：观察者、控制者与预测者是同一个行为核的三个方向
+
+此前的评价网是：
+
+$$
+e:X\times P\longrightarrow\Lambda.
+$$
+
+现在加入动作输入和未来协议后，真正的核心对象成为：
+
+$$
+\mathcal B:
+X_{\mathrm{rch}}
+\longrightarrow
+\prod_{p\in P}
+\mathsf{Law}_p.
+$$
+
+其 kernel 给出：
+
+$$
+K_{\mathrm{beh}}
+=
+\ker\mathcal B.
+$$
+
+规范状态是：
+
+$$
+Q_{\mathrm{core}}
+=
+X_{\mathrm{rch}}/K_{\mathrm{beh}}.
+$$
+
+但完整理论还需要三个互补结构。
+
+统计决策序：
+
+$$
+E\succeq_B F
+$$
+
+回答一个观察者能否模拟另一个观察者的全部决策。
+
+局部—全局像：
+
+$$
+\operatorname{Im}(\operatorname{Marg})
+$$
+
+回答兼容局部 law 是否来自某个全局对象。
+
+观察—控制 Hankel 核：
+
+$$
+\mathcal X_{\min}
+=
+\mathcal R/
+(\mathcal R\cap\mathcal N)
+$$
+
+回答哪些状态方向既能被行动产生，又能在未来被观察。
+
+预测因果状态：
+
+$$
+S
+=
+\frac{
+\text{pasts}
+}{
+\text{equal future laws}
+}
+$$
+
+回答哪些历史差异仍会改变未来概率。
+
+于是统一结构可以写为：
+
+$$
+\begin{aligned}
+\text{Observer}
+&=
+\text{questions that distinguish states},
+\\
+\text{Controller}
+&=
+\text{actions that reach states},
+\\
+\text{Predictor}
+&=
+\text{history quotient that determines future laws},
+\\
+\text{Contextuality}
+&=
+\text{compatible local laws outside the global image},
+\\
+\text{Decision power}
+&=
+\text{downstream tasks simulable by postprocessing},
+\\
+\text{Minimal reality}
+&=
+\text{reachable states modulo complete behavioral equivalence}.
+\end{aligned}
+$$
+
+最深的收束是：
+
+> **世界状态只有在能够被某种允许行动触达、能够通过某种允许协议影响未来记录，并且其局部行为能够进入一个真实全局实现时，才属于观察者—行动者的有效现实核心。**
+
+更短地：
+
+$$
+\boxed{
+Q_{\mathrm{effective}}
+=
+\frac{
+\text{reachable states}
+}{
+\text{indistinguishable under every future protocol}
+}.
+}
+$$
+
+而这个商的强弱，不再只由 kernel 衡量，还必须同时报告：
+
+$$
+\boxed{
+\text{decision order},
+\quad
+\text{deficiency},
+\quad
+\text{realization image},
+\quad
+\text{Hankel spectrum},
+\quad
+\text{predictive memory}.
+}
+$$
