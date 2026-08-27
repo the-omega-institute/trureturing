@@ -26,6 +26,7 @@ public static class LatexWriter
         var builder = new StringBuilder();
         WriteFormula(builder, formula, 0, source);
         ValidateRowBreakContinuations(builder, source);
+        ValidateScriptChains(builder, source);
         return builder.ToString();
     }
 
@@ -383,6 +384,120 @@ public static class LatexWriter
                 + "insert FormulaDsl.Grp() between the row separator and '[' to state the "
                 + "intended boundary.");
         }
+    }
+
+    /// <summary>
+    /// A TeX base carries at most one superscript and one subscript, so a second <c>^</c>
+    /// (or <c>_</c>) on the same base is a parse error (KaTeX: "Double superscript"), not a
+    /// nested script. The structured <see cref="Formula.Power"/> and
+    /// <see cref="Formula.Subscript"/> nodes parenthesize a base that already carries a
+    /// script, but the raw LaTeX escape hatch composes its scripted tail out of nested
+    /// sequences, and that tail is only visible here, in the finished bytes.
+    /// </summary>
+    private static void ValidateScriptChains(StringBuilder builder, string source)
+    {
+        for (var index = 0; index < builder.Length; index++)
+        {
+            var mark = builder[index];
+            if (mark is not ('^' or '_'))
+            {
+                continue;
+            }
+
+            var successor = SkipScriptArgument(builder, index + 1);
+            if (successor >= builder.Length || builder[successor] != mark)
+            {
+                continue;
+            }
+
+            var excerptStart = Math.Max(0, index - 16);
+            var excerptEnd = Math.Min(builder.Length, successor + 17);
+            var excerpt = builder
+                .ToString(excerptStart, excerptEnd - excerptStart)
+                .Replace("\r", "\\r", StringComparison.Ordinal)
+                .Replace("\n", "\\n", StringComparison.Ordinal);
+            var byteOffset = StrictUtf8.GetByteCount(builder.ToString(0, successor));
+            throw new InvalidOperationException(
+                $"Formula emission rejected at {source}: '{mark}' at byte offset {byteOffset} "
+                + $"scripts a base that already carries a '{mark}' script (excerpt "
+                + $"'{excerpt}'). TeX binds one script mark per base and refuses the second; "
+                + "wrap the scripted base in FormulaDsl.Grp() to state the intended nesting.");
+        }
+    }
+
+    /// <summary>
+    /// Advances past the argument a script mark binds, plus the whitespace TeX discards
+    /// around it: a brace group, a control sequence, or a single character.
+    /// </summary>
+    private static int SkipScriptArgument(StringBuilder builder, int index)
+    {
+        index = SkipDiscardedSpace(builder, index);
+        if (index >= builder.Length)
+        {
+            return index;
+        }
+
+        if (builder[index] != '{')
+        {
+            index = builder[index] == '\\'
+                ? SkipControlSequence(builder, index)
+                : index + 1;
+            return SkipDiscardedSpace(builder, index);
+        }
+
+        var depth = 0;
+        while (index < builder.Length)
+        {
+            var value = builder[index];
+            if (value == '\\')
+            {
+                index = SkipControlSequence(builder, index);
+                continue;
+            }
+
+            index++;
+            if (value == '{')
+            {
+                depth++;
+            }
+            else if (value == '}' && --depth == 0)
+            {
+                break;
+            }
+        }
+
+        return SkipDiscardedSpace(builder, index);
+    }
+
+    private static int SkipControlSequence(StringBuilder builder, int index)
+    {
+        var cursor = index + 1;
+        if (cursor >= builder.Length)
+        {
+            return cursor;
+        }
+
+        if (!IsAsciiLetter(builder[cursor]))
+        {
+            return cursor + 1;
+        }
+
+        while (cursor < builder.Length && IsAsciiLetter(builder[cursor]))
+        {
+            cursor++;
+        }
+
+        return cursor;
+    }
+
+    private static int SkipDiscardedSpace(StringBuilder builder, int index)
+    {
+        while (index < builder.Length && builder[index] is ' ' or '\n' or '\r')
+        {
+            index++;
+        }
+
+        return index;
     }
 
     private static bool IsAsciiLetter(char value) =>
