@@ -1,0 +1,10 @@
+ast_path: section/89-1-完成范数不是普通迹范数
+fingerprints:
+  raw_sha256: sha256:cc844ff162c0a9a504634cc050aa6306c4e4b5e072c060f9eb3afa19bc78e2c0
+  normalized_sha256: sha256:cc844ff162c0a9a504634cc050aa6306c4e4b5e072c060f9eb3afa19bc78e2c0
+cas_ref: sha256:cc844ff162c0a9a504634cc050aa6306c4e4b5e072c060f9eb3afa19bc78e2c0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

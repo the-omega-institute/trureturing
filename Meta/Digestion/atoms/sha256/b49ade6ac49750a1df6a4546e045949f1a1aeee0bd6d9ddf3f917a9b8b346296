@@ -1,0 +1,8 @@
+### 命题 43.4（预算与效率，汇编）
+
+对 refinement 塔 \(C_0\prec C_1\prec\cdots\)（\(C_n=q_n(P)\)，\(F\) 为未来）：
+
+1. \(h_n=H(C_{n+1}\mid C_n)\)，\(g_n=I(C_{n+1};F\mid C_n)\)，\(0\le g_n\le h_n\)；效率 \(\eta_n=g_n/h_n\)（\(h_n>0\)），**\(h_n=0\) 时定义 \(\eta_n=0\)**（§38.15）；
+2. \(\sum_n h_n\le H(P)\)，故 \(h_n\ge\varepsilon\) 的层数至多 \(H(P)/\varepsilon\)（§38.17）；
+3. 从当前观察商到完整预测商所需的记忆预算等于二者的对数分辨率差（闭合谱卷 §4）。
+

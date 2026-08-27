@@ -1,0 +1,50 @@
+## 87.1 三维旋转观察丢失了什么
+
+单位四元数群满足：
+
+$$
+\operatorname{Sp}(1)\simeq SU(2).
+$$
+
+它通过共轭作用于纯虚四元数：
+
+$$
+x\longmapsto qxq^{-1},
+$$
+
+从而给出二对一映射：
+
+$$
+\boxed{
+SU(2)\longrightarrow SO(3).
+}
+$$
+
+其核为：
+
+$$
+\{\pm1\}.
+$$
+
+对二十面体旋转群：
+
+$$
+A_5\subset SO(3),
+$$
+
+取其原像得到阶为 \(120\) 的二元二十面体群：
+
+$$
+\boxed{
+1\longrightarrow\{\pm1\}
+\longrightarrow 2.A_5
+\longrightarrow A_5
+\longrightarrow1.
+}
+\tag{87.1}
+$$
+
+该群也常记为 binary icosahedral group；它由 \(120\) 个单位四元数组成，并双覆盖 \(60\) 个二十面体旋转。([arXiv][1])
+
+---
+

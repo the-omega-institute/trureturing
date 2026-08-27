@@ -1,0 +1,10 @@
+ast_path: section/110-2-Leech-层
+fingerprints:
+  raw_sha256: sha256:39510f09ad8cf077f7d72bb804fb4085c2ce1e28b86b0dbc86d0f33b6329ac2e
+  normalized_sha256: sha256:39510f09ad8cf077f7d72bb804fb4085c2ce1e28b86b0dbc86d0f33b6329ac2e
+cas_ref: sha256:39510f09ad8cf077f7d72bb804fb4085c2ce1e28b86b0dbc86d0f33b6329ac2e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,36 @@
+## 139.3 Golden 无理观察
+
+$$
+(m,n)\mapsto m\varphi+n.
+$$
+
+性质：
+
+* 无精确碰撞；
+* 有 \(1/H\) 级稳定间距；
+* 与 Galois 共轭坐标形成 Minkowski 格；
+* 通过 \(t\)-观察族和 Möbius 反演可恢复全部根重数；
+* 乘积存在明确的 \(\pi\)-\(\varphi\) 收敛边界。
+
+所以：
+
+$$
+\boxed{
+\begin{array}{c|c|c}
+\text{观察}&\text{压缩程度}&\text{可恢复性}\\
+\hline
+m+n&\text{最高}&\text{低}\\
+rm+n&\text{高}&\text{部分}\\
+m\varphi+n&\text{一维但无碰撞}&\text{完整}
+\end{array}
+}
+$$
+
+这将 Wang 式“分支／粘滞”变成了一个可解模型：
+
+* rational slope：大量 sticky collision；
+* irrational slope：完全 non-collision；
+* Golden slope：在有限精度下仍有定量 separation。
+
+---
+

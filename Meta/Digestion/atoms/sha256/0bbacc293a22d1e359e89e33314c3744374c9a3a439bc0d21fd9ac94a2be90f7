@@ -1,0 +1,24 @@
+## 定义 113.1（观察者碰撞素数）
+
+设 \(F,G\) 是两个在特征零中不同的结构通道，其 Fourier／Hecke 数据位于某整数环中。
+
+若素数理想 \(\mathfrak l\) 满足：
+
+$$
+F\not=G,
+$$
+
+但：
+
+$$
+\boxed{
+F\equiv G\pmod{\mathfrak l},
+}
+\tag{113.1}
+$$
+
+则称 \(\mathfrak l\) 为 \(F,G\) 的**观察者碰撞素数**。
+
+此时值观察者无法区分两通道；必须加入：
+
+* \(\mathfrak l\)-adic lift；

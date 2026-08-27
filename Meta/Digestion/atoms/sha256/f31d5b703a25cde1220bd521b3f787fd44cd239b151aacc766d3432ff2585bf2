@@ -1,0 +1,24 @@
+* mock theta functions；
+
+不再是四类并列对象。
+
+它们处于同一完成链的不同层：
+
+$$
+\boxed{
+\text{Eisenstein geometry}
+\to
+\text{cusp counterterm}
+\to
+\text{rootless lattice}
+\to
+\text{orbifold}
+\to
+\text{moonshine}
+\to
+\text{mock boundary completion}.
+}
+$$
+
+---
+

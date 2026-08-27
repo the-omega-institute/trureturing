@@ -1,0 +1,18 @@
+### 定义 45.1（带记录的一层观察者与第二层观察者）
+
+**一层观察者（带记录）。** \(O_1\) 的增广状态为 \((x,\lambda)\in X\times\Lambda_1\)，其中 \(\Lambda_1\) 为 append-only 记录（量子卷 §15.1 双列分家：记录列单调不减）；一步演化为
+\[
+(x,\lambda)\longmapsto\bigl(\widetilde T_1(x,z),\ \lambda\cdot q_1(x)\bigr),
+\]
+其中 \(\lambda\cdot q_1(x)\) 表示追加本步读数，\(\widetilde T_1:X\times Y_2\to X\) 是**受控更新**，其第二变元 \(z\in Y_2\) 为可能来自第二层的输入。
+
+**第二层观察者。** \(O_2\) 由读出 \(q_2:\Lambda_1\to Y_2\) 给出：它读的是 \(O_1\) 的记录，不是 \(X\)。
+
+**回合与脱钩。** 把演化分成回合 \(e=1,2,\dots\)，每回合内 \(\widetilde T_1\) 固定。称 \(O_2\) 在回合 \(e\) 内**脱钩**，若
+\[
+\boxed{
+\widetilde T_1(x,z)=\widetilde T_1(x,z')\qquad\forall x,\ z,z'\in Y_2,
+}
+\]
+即回合内 \(O_1\) 的更新不依赖 \(q_2\) 的输出。**回合间**允许把 \(\widetilde T_1\) 换成 \(\widetilde T_1'\)（这正是推论 43.3(b) 的"动作变更"），其选择可以依赖 \(q_2\) 在上一回合的读数。称 \(O_2\) 为 \(O_1\) 的**第二层观察者**，若它在每个回合内脱钩。
+

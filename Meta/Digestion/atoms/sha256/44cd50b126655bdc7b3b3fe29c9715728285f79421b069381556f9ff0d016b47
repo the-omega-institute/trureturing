@@ -1,0 +1,25 @@
+## 137.1 负 Fourier 模式
+
+$$
+n<0.
+$$
+
+它们决定：
+
+* rational quadratic divisors；
+* product 的零点与极点；
+* 可见奇异性；
+* 需要被完成的缺陷源。
+
+所以：
+
+$$
+\boxed{
+c_\mu(n<0)
+=
+\text{divisor/source ledger}.
+}
+$$
+
+---
+
