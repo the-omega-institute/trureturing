@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Analytic/UnitFlow/GaloisReflection
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Galois conjugation gives reflection and faithful infinite-dihedral
-     symmetry of the Golden unit-flow principal zeta. -/
+   digest: Galois conjugation reflects the Golden unit-flow principal zeta -/
 
 import Mathlib.Algebra.Ring.Periodic
 import Mathlib.Analysis.SpecialFunctions.Pow.Complex
