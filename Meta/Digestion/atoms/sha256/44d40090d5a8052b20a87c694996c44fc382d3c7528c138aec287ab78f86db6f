@@ -1,0 +1,20 @@
+## 本地 SpectrumCommitment
+
+本卷独立定义七元记录，不借用母卷的持有链或结算章节：
+
+\[
+\boxed{
+\operatorname{SpectrumCommitment}=
+(\operatorname{atom\_family},\operatorname{scope},\operatorname{baseline},
+\operatorname{weight\_spec},\operatorname{comparator},
+\operatorname{test\_plan},\operatorname{falsifiable\_prediction}).
+}
+\]
+
+冻结
+
+\[A=\{a_1,\ldots,a_5\},\qquad a_i=\texttt{DESC-v1.0/T}i.\]
+
+且 \(a_i\) 分别只对应 T1--T5。各字段取值为：
+
+- `scope`：正文定理只收有限/可数 \(\Gamma\)；T4 边界检查可使用明示的更大构造。

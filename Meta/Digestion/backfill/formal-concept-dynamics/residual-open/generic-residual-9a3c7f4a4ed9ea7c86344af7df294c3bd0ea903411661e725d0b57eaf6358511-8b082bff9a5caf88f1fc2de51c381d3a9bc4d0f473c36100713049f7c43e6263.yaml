@@ -1,0 +1,10 @@
+ast_path: section/366-韧性需要冗余-但冗余不一定提高正常状态效率/clause/1
+fingerprints:
+  raw_sha256: sha256:9a3c7f4a4ed9ea7c86344af7df294c3bd0ea903411661e725d0b57eaf6358511
+  normalized_sha256: sha256:9a3c7f4a4ed9ea7c86344af7df294c3bd0ea903411661e725d0b57eaf6358511
+cas_ref: sha256:9a3c7f4a4ed9ea7c86344af7df294c3bd0ea903411661e725d0b57eaf6358511
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

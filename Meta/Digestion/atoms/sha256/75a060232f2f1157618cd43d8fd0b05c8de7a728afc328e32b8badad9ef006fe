@@ -1,0 +1,13 @@
+## 10.2 观察—干预—反事实层级
+
+仓库 `ObservationInterventionCounterfactualChain` 已机器验证，在有限确定性 Boolean SCM 中：
+
+$$
+R_{CF}\subseteq R_{Int}\subseteq R_{Obs},
+$$
+
+并且两次包含均可严格。
+
+因此定义因果显性深度：
+
+- -1：aa 与 ab 在观察层已不同；

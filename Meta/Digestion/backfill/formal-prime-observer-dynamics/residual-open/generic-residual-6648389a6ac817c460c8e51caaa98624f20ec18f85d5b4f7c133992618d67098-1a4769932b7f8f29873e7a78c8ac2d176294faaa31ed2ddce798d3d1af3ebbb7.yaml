@@ -1,0 +1,10 @@
+ast_path: section/113-3-乘积行为链/clause/2
+fingerprints:
+  raw_sha256: sha256:6648389a6ac817c460c8e51caaa98624f20ec18f85d5b4f7c133992618d67098
+  normalized_sha256: sha256:6648389a6ac817c460c8e51caaa98624f20ec18f85d5b4f7c133992618d67098
+cas_ref: sha256:6648389a6ac817c460c8e51caaa98624f20ec18f85d5b4f7c133992618d67098
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

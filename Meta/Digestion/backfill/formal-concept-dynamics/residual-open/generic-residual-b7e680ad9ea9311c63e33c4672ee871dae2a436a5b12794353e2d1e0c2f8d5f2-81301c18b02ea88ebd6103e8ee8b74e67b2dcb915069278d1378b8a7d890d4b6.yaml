@@ -1,0 +1,10 @@
+ast_path: section/50-数学存在与数学哲学/clause/4
+fingerprints:
+  raw_sha256: sha256:b7e680ad9ea9311c63e33c4672ee871dae2a436a5b12794353e2d1e0c2f8d5f2
+  normalized_sha256: sha256:b7e680ad9ea9311c63e33c4672ee871dae2a436a5b12794353e2d1e0c2f8d5f2
+cas_ref: sha256:b7e680ad9ea9311c63e33c4672ee871dae2a436a5b12794353e2d1e0c2f8d5f2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

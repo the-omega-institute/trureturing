@@ -1,0 +1,25 @@
+# 第三十一部　开放反射完成
+
+定义保持映射 \(i_n:S_n\to S_{n+1}\) 及其相容性。定义开放反射完成：
+
+\[
+\boxed{
+S_\omega:=\varinjlim_{n<\omega}S_n.
+}
+\]
+
+元素由某个有限层对象及其以后层的相容像表示。
+
+定义有限可反射性：任意有限定义子图最终来自某个 \(S_n\)。
+
+定义稳定层：
+
+\[
+\operatorname{StableAt}(N)
+\quad\Longleftrightarrow\quad
+S_{N+1}\simeq S_N.
+\]
+
+定义局部自反、全局封闭与开放反射：
+
+- 局部自反：每个有限子图最终被高层编码；

@@ -1,0 +1,10 @@
+ast_path: section/267-可争议性是-每个错误都有可接受挑战见证/clause/1
+fingerprints:
+  raw_sha256: sha256:8b6d99c64d6fa9eca9f69545aa820550c38e955712889166c31edec574b1f2fb
+  normalized_sha256: sha256:8b6d99c64d6fa9eca9f69545aa820550c38e955712889166c31edec574b1f2fb
+cas_ref: sha256:8b6d99c64d6fa9eca9f69545aa820550c38e955712889166c31edec574b1f2fb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

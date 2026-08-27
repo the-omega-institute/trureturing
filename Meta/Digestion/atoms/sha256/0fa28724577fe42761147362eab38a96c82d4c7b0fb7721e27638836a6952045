@@ -1,0 +1,18 @@
+## 定义 37.1（观察者 policy 的规范类型）
+
+合理的策略接口应至少具有形状
+
+$$
+\bar\Pi_O:
+Q_{\mathrm{ctl}}
+\times
+\mathrm{Goal}
+\times
+\Lambda
+\longrightarrow
+\operatorname{Dist}(G),
+$$
+
+其中：
+
+- $Q_{\mathrm{ctl}}$ 是完整控制画像商；

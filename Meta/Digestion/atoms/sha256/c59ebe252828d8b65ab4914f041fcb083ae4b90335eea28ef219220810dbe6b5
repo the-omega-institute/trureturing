@@ -1,0 +1,1 @@
+- \(\operatorname{SameOut}_{\mathrm{AJ}}\) 另固定同一 \(r\)；两侧证明分别具有 \(\operatorname{ValidTrace}(\mathcal L,K.\operatorname{adjudication})\) 的真类型，不要求证明项字面相等；谓词为 \(\operatorname{AdmissibleJudge}(\mathcal L,K.\operatorname{adjudication},v_K,r)\)。

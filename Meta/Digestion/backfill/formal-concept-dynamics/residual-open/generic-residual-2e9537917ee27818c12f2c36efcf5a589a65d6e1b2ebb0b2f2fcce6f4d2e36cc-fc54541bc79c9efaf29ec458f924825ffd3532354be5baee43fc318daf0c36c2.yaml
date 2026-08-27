@@ -1,0 +1,10 @@
+ast_path: 命题/376.1/clause/5
+fingerprints:
+  raw_sha256: sha256:2e9537917ee27818c12f2c36efcf5a589a65d6e1b2ebb0b2f2fcce6f4d2e36cc
+  normalized_sha256: sha256:2e9537917ee27818c12f2c36efcf5a589a65d6e1b2ebb0b2f2fcce6f4d2e36cc
+cas_ref: sha256:2e9537917ee27818c12f2c36efcf5a589a65d6e1b2ebb0b2f2fcce6f4d2e36cc
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

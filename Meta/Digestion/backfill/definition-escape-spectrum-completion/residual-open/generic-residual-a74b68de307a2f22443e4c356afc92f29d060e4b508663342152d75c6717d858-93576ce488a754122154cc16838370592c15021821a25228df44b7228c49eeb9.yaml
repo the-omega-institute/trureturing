@@ -1,0 +1,10 @@
+ast_path: section/T1-预算包络恒等式/clause/2
+fingerprints:
+  raw_sha256: sha256:a74b68de307a2f22443e4c356afc92f29d060e4b508663342152d75c6717d858
+  normalized_sha256: sha256:a74b68de307a2f22443e4c356afc92f29d060e4b508663342152d75c6717d858
+cas_ref: sha256:a74b68de307a2f22443e4c356afc92f29d060e4b508663342152d75c6717d858
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,54 @@
+## 55.1 最小共用定义
+
+固定第 \(n\) 轮 \(\operatorname{ProspectiveCommitment}\) \(K\)、有限记录集 \(Z\)、有限角色账本 \(\mathcal L\) 与证明
+\[
+v_K:\operatorname{ValidTrace}(\mathcal L,K.\operatorname{adjudication}).
+\]
+第 54.3 部的 \(\operatorname{AdjudicationSnapshot}\) 仍只指 \(K.\operatorname{adjudication}\)。本部唯一新增的派生名为
+\[
+\boxed{
+\begin{aligned}
+&\operatorname{AdjudicationSignature}(K,Z;\mathcal L,v_K)
+:=\Bigl(
+Z\cap K.\operatorname{adjudication}.\operatorname{filtration}.\operatorname{seen}
+  (K.\operatorname{adjudication}.\operatorname{freezeEvent}),\
+Z\cap K.\operatorname{adjudication}.\operatorname{filtration}.\operatorname{seen}
+  (K.\operatorname{adjudication}.\operatorname{decisionEvent}),\
+Z\cap K.\operatorname{adjudication}.\operatorname{evidenceDependencies},
+\\
+&\quad
+\{(e.\operatorname{evidence},e.\operatorname{round},e.\operatorname{role},
+\mathbf 1[e.\operatorname{dependencies}\cap
+K.\operatorname{adjudication}.\operatorname{dependencyClosure}\neq\varnothing]):
+\operatorname{InAdjudicationPrefix}
+(\mathcal L,K.\operatorname{adjudication},v_K,e),\
+e.\operatorname{evidence}\in Z,
+e.\operatorname{role}\in
+\{\mathsf{generate},\mathsf{tune},\mathsf{select},\mathsf{adjudicate}\}\}
+\Bigr).
+\end{aligned}
+}
+\]
+四分量依次为冻结点可见性、裁决点可见性、直接读取 \(\operatorname{evidenceDependencies}\) 的依赖污染，以及**角色存在签名投影**。第四分量只保留消费者所问的角色存在性与“依赖是否触及闭包”这一位；它折叠 \(\operatorname{EventId}\)、\(\operatorname{Time}\)、\(\operatorname{Protocol}\)、具体 \(\operatorname{Deps}\)、事件顺序和重复事件。故它不保存事件多重性，不承载第 48.2、52.5 部 \(\operatorname{ReuseDepth}\) 的复用计数语义，也不得供顺序或复用深度消费者使用。\(\mathsf{replicate}\) 不进入该投影，因为本批四谓词均不读取它。
+
+若 \(S=(S_{\mathrm f},S_{\mathrm d},S_{\mathrm p},S_{\mathrm a})\)，分量遗忘算子只是普通投影：
+\[
+\boxed{
+\pi_{-i}(S):=(S_j)_{j\neq i},
+\qquad
+i\in\{\mathrm f,\mathrm d,\mathrm p,\mathrm a\}.
+}
+\]
+它不补默认值，也不重建被删信息。
+
+第 54.3 部的四个接口都消费单个 \(\operatorname{Evidence}\)，不是记录集。本文统一采用逐点全称提升
+\[
+\boxed{
+\operatorname{Lift}_Z(P):=\forall z\in Z,\ P(z).
+}
+\]
+因此 \(\operatorname{AdmissibleJudge}\) 对每个 \(r\in Z\) 判定；\(\operatorname{NonAnticipating}\) 与 \(\operatorname{ScientificGain}\) 对每个 \(z\in Z\) 判定；\(\operatorname{TargetLaundering}\) 使用显式报告族 \(z\mapsto\operatorname{report}_z\) 后对每个 \(z\in Z\) 判定。以下单点陈述取逐点全称即得到记录集陈述，不把 \(Z\) 偷换成单个证据。
+
+为冻结全部非投影实参，按原接口定义四个 \(\operatorname{SameOut}\) 关系：
+
+- \(\operatorname{SameOut}_{\mathrm{NA}}\) 固定 \(n\)、类型与序结构、同一证据 \(z\)；谓词为 \(\operatorname{NonAnticipating}(K.\operatorname{adjudication},z)\)。

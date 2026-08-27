@@ -1,0 +1,10 @@
+ast_path: section/393-合同-refinement-的方向/clause/2
+fingerprints:
+  raw_sha256: sha256:2c97e43df78e05bf50edc192653b6b25cea8c0a8c16746168335f81b584b2952
+  normalized_sha256: sha256:2c97e43df78e05bf50edc192653b6b25cea8c0a8c16746168335f81b584b2952
+cas_ref: sha256:2c97e43df78e05bf50edc192653b6b25cea8c0a8c16746168335f81b584b2952
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
