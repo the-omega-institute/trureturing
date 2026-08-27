@@ -24,6 +24,8 @@ internal sealed class QualitativeEscapeDocument : IScribeDocumentDefinition
 
         var escaped = Call("IsEscaped", f, g);
 
+        var lawvereCore = new Formula.Logic(
+            fixedPointFree, FormulaLogicOperator.Implies, escaped);
         var lawvere = F.Seq(
             F.Forall, F.Sp, address, F.Comma, F.Sp, alphabet, F.Colon, F.Sp, type,
             F.Comma, F.Sp,
@@ -31,7 +33,7 @@ internal sealed class QualitativeEscapeDocument : IScribeDocumentDefinition
             g, F.Colon, F.Sp,
             new Formula.TypeArrow(address, new Formula.TypeArrow(address, alphabet)),
             F.Comma, F.Sp,
-            new Formula.Logic(fixedPointFree, FormulaLogicOperator.Implies, escaped));
+            lawvereCore);
 
         var captured = new Formula.BindMany(
             FormulaQuantifier.Exists,
@@ -41,9 +43,7 @@ internal sealed class QualitativeEscapeDocument : IScribeDocumentDefinition
             ],
             new Formula.Not(escaped));
 
-        var package = F.Seq(
-            F.Open, lawvere, F.Close, F.Sp, F.Land, F.Sp,
-            F.Open, captured, F.Close);
+        var package = new Formula.Logic(lawvereCore, FormulaLogicOperator.And, captured);
 
         const string declarationPrefix = "D5/S0/Diagonal/Lawvere/QualitativeEscape.";
 
