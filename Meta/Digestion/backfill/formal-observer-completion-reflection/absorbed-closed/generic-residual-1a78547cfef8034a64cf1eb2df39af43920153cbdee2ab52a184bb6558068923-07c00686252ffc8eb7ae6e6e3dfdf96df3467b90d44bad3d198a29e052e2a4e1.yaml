@@ -1,0 +1,17 @@
+ast_path: 命题/76.4/clause/1
+fingerprints:
+  raw_sha256: sha256:1a78547cfef8034a64cf1eb2df39af43920153cbdee2ab52a184bb6558068923
+  normalized_sha256: sha256:1a78547cfef8034a64cf1eb2df39af43920153cbdee2ab52a184bb6558068923
+cas_ref: sha256:1a78547cfef8034a64cf1eb2df39af43920153cbdee2ab52a184bb6558068923
+coverage_gids:
+  - D5/S3/ConceptDynamics/Decision/SafeActionRefinementMonotonicity.safe_action_refinement_monotonicity
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Decision/SafeActionRefinementMonotonicity.safe_action_refinement_monotonicity
+      source_sha256: sha256:1a78547cfef8034a64cf1eb2df39af43920153cbdee2ab52a184bb6558068923
+      target_sha256: sha256:b6a9e00cc32ba1f0364b61dca546b93a56ee93d71bc0b99372c48c2ce013a7ce
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Decision/SafeActionRefinementMonotonicity.safe_action_refinement_monotonicity
+      definition_sha256: sha256:877c3847bff5f7cc20e8ebe3e5944d4e3596cbfdb1001e65f1e9888064548239
+      emission_sha256: sha256:20b6297f850c528ccb0a58315e1b26be63bcd6ab076ae5327208e3a942b3a854
+  unresolved_subitems: []
