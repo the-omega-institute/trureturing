@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Tomography/PovmOutcomeLowerBound
+/- GID: D5/S3/Quantum/Measurement/PovmOutcomeLowerBound
    generality: G
-   mirror-B: D5/B/S3/Quantum/Tomography/PovmOutcomeLowerBound
+   mirror-B: D5/B/S3/Quantum/Measurement/PovmOutcomeLowerBound
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: A normalized finite effect family needs at least d squared outcomes for completeness. -/
@@ -24,7 +24,7 @@ noncomputable section
 
 open scoped BigOperators
 
-namespace D5.S3.Quantum.Tomography.PovmOutcomeLowerBound
+namespace D5.S3.Quantum.Measurement.PovmOutcomeLowerBound
 
 open D5.S3.Quantum.Entanglement.BipartiteSectorDecomposition
 open D5.S3.Quantum.Fibers.ReadoutOrthogonalEquivalence
@@ -97,4 +97,4 @@ theorem povm_outcome_lower_bound
 
 #print axioms povm_outcome_lower_bound
 
-end D5.S3.Quantum.Tomography.PovmOutcomeLowerBound
+end D5.S3.Quantum.Measurement.PovmOutcomeLowerBound

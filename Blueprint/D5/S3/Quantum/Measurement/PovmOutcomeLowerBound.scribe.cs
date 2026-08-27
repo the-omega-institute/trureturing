@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Tomography;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Measurement;
 
 internal sealed class PovmOutcomeLowerBoundDocument : IScribeDocumentDefinition
 {
@@ -13,7 +13,7 @@ internal sealed class PovmOutcomeLowerBoundDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("povm-outcome-lower-bound"),
                 DeclarationHandle.Create(
-                    "D5/S3/Quantum/Tomography/PovmOutcomeLowerBound."
+                    "D5/S3/Quantum/Measurement/PovmOutcomeLowerBound."
                         + "povm_outcome_lower_bound"),
                 H("An informationally complete POVM has at least d squared outcomes"),
                 StatementSource.FromAuthor(OutcomeBoundFormula()),
