@@ -86,7 +86,7 @@ internal static class DescribeContentGovernance
             .Select(static document => document.Header.Gid.Value)
             .ToImmutableHashSet(StringComparer.Ordinal);
         var census = ReceiptFreeDocumentCatalog.Load(repositoryRoot, documents);
-        var receiptBound = BackfillInventoryLoader.LoadRoot(repositoryRoot)
+        var receiptBound = BackfillInventoryLoader.LoadTrustedRoot(repositoryRoot)
             .RequireDigestionEntries()
             .SelectMany(static entry => entry.Receipts.Scribe)
             .Select(static receipt => ScribeEmissionAttestation.DocumentGid(receipt.Gid))

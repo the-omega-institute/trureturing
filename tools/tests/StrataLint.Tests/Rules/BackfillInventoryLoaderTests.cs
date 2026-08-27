@@ -7,30 +7,6 @@ namespace StrataLint.Tests;
 public sealed partial class BackfillInventoryLoaderTests
 {
     [Fact]
-    public void CoverageReceiptRejectsLegacyTargetSha256Field()
-    {
-        var atom = Atom("delta-v0.1", "partial-closed", "delta-atom", "theorem/delta");
-        var legacy = atom.Text
-            .Replace(
-                "coverage_gids: []",
-                "coverage_gids:\n  - D5/S0/Carrier/Probe.target",
-                StringComparison.Ordinal)
-            .Replace(
-                "  coverage: []",
-                "  coverage:\n"
-                + "    - gid: D5/S0/Carrier/Probe.target\n"
-                + "      source_sha256: sha256:1111111111111111111111111111111111111111111111111111111111111111\n"
-                + "      target_sha256: sha256:2222222222222222222222222222222222222222222222222222222222222222",
-                StringComparison.Ordinal);
-
-        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
-            Source("delta-v0.1", "docs/delta.md", "none"),
-            (atom.Path, legacy))));
-
-        Assert.Contains("coverage receipt keys are not canonical", exception.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
     public void LegacySingleFileParserAndPreimageSupportDoNotExist()
     {
         var legacyLoad = typeof(BackfillInventoryLoader)

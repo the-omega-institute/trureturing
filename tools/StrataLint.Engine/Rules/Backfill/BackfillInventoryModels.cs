@@ -9,7 +9,30 @@ internal sealed record DigestionBoundary(string AstPath, int StartByte, int EndB
 internal sealed record DigestionCoverageReceipt(
     string Gid,
     string SourceSha256,
-    string TargetStatementId);
+    string? TargetStatementId)
+{
+    internal string? LegacyTargetSha256 { get; private init; }
+
+    internal static DigestionCoverageReceipt FromLegacyTargetSha256(
+        string gid,
+        string sourceSha256,
+        string legacyTargetSha256) =>
+        new(gid, sourceSha256, TargetStatementId: null)
+        {
+            LegacyTargetSha256 = legacyTargetSha256,
+        };
+
+    internal string RequireStatementBindingForWrite()
+    {
+        if (TargetStatementId is null || LegacyTargetSha256 is not null)
+        {
+            throw new InvalidOperationException(
+                $"legacy coverage receipt for {Gid} cannot be written as a statement-bound receipt");
+        }
+
+        return TargetStatementId;
+    }
+}
 
 internal sealed record DigestionScribeReceipt(
     string Gid,
