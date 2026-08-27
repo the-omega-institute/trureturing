@@ -34,15 +34,19 @@ internal static partial class RepositoryRules
     private static ImmutableArray<RuleFinding> Ledger(RuleEvaluationContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        var replay = ChangedLeanTaskSet(context)
-            || PolicyChanged(context)
-            || RuleDependencyChanged(context)
-            || LedgerArtifactChanged(context);
+        var taskSetChanged = ChangedLeanTaskSet(context);
+        var policyChanged = PolicyChanged(context);
+        var ruleDependencyChanged = RuleDependencyChanged(context);
         HashSet<string>? tasks = null;
         foreach (var (path, file) in context.Current.Files)
         {
             var governed = IsGovernedStructured(path, context.Policy);
             var pathAffected = context.IsBaseFactAffected(path.Value);
+            var ledgerArtifactChanged = LedgerArtifactChanged(context, path.Value);
+            var replay = taskSetChanged
+                || policyChanged
+                || ruleDependencyChanged
+                || ledgerArtifactChanged;
             var anomalyAffected = pathAffected || replay;
             if (governed && pathAffected)
             {
@@ -170,8 +174,8 @@ internal static partial class RepositoryRules
         context.RuleImplementationChanged
         || context.Changes.Paths.Any(path => LedgerRuleDependencyPaths.Contains(path.Value));
 
-    private static bool LedgerArtifactChanged(RuleEvaluationContext context) =>
-        context.Changes.Paths.Any(path => IsStructuredLedgerArtifactPath(path.Value));
+    private static bool LedgerArtifactChanged(RuleEvaluationContext context, string path) =>
+        context.IsBaseFactAffected(path) && IsStructuredLedgerArtifactPath(path);
 
     private static bool IsStructuredLedgerArtifactPath(string path) =>
         path.EndsWith(".json", StringComparison.Ordinal)
