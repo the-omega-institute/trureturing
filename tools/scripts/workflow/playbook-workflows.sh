@@ -14,15 +14,6 @@ BATCH_GIDS=()
 PREPARED_RECEIPT_PATH=""
 PREPARED_RECEIPT_ORIGINAL_PATH=""
 PREPARED_RECEIPT_REPLACES_EXISTING=0
-PERF_ENABLED=0
-PERF_TMP=""
-PERF_EVENT_SPOOL=""
-PERF_WORKLOAD_ID=""
-PERF_BASE="unknown"
-PERF_RUN_ID=""
-PERF_STARTED=0
-PERF_ACTIVE_STAGE=""
-PERF_STAGE_STARTED=0
 
 cleanup_prepared_receipt() {
   [[ -z "$PREPARED_RECEIPT_PATH" ]] || rm -f -- "$PREPARED_RECEIPT_PATH"
@@ -31,20 +22,10 @@ cleanup_prepared_receipt() {
 }
 
 finish_playbook() {
-  local rc=$? finished status="failed"
+  local rc=$?
   trap - EXIT
   set +e
   cleanup_prepared_receipt
-  if [[ "$PERF_ENABLED" -eq 1 ]]; then
-    [[ -z "$PERF_ACTIVE_STAGE" ]] || complete_step failed
-    [[ "$rc" -ne 0 ]] || status="passed"
-    finished="$(date +%s 2>/dev/null || printf '%s' "$PERF_STARTED")"
-    perf_capture_event \
-      "$PERF_EVENT_SPOOL" "$ROOT" "$PERF_RUN_ID" "$PERF_WORKLOAD_ID" "$PERF_BASE" \
-      total "$status" "$((finished-PERF_STARTED))" || true
-    perf_flush_events "$ROOT" "$PERF_EVENT_SPOOL" "$PERF_WORKLOAD_ID" 2>/dev/null || true
-  fi
-  [[ -z "$PERF_TMP" ]] || rm -rf -- "$PERF_TMP"
   exit "$rc"
 }
 trap finish_playbook EXIT
@@ -65,19 +46,10 @@ receipts_stage() {
 begin_step() {
   local label="$1"
   printf 'PLAYBOOK_STEP command=%s detail=%s\n' "$COMMAND" "$label" >&2
-  PERF_ACTIVE_STAGE="$label"
-  PERF_STAGE_STARTED="$(date +%s)"
 }
 
 complete_step() {
-  local status="$1" finished
-  finished="$(date +%s)"
-  if [[ "$PERF_ENABLED" -eq 1 ]]; then
-    perf_capture_event \
-      "$PERF_EVENT_SPOOL" "$ROOT" "$PERF_RUN_ID" "$PERF_WORKLOAD_ID" "$PERF_BASE" \
-      "$PERF_ACTIVE_STAGE" "$status" "$((finished-PERF_STAGE_STARTED))" || true
-  fi
-  PERF_ACTIVE_STAGE=""
+  :
 }
 
 step() {
@@ -620,23 +592,6 @@ cover_batch_row() {
 }
 
 cd "$ROOT"
-case "$COMMAND" in
-  cover|cover-batch) PERF_WORKLOAD_ID="cover" ;;
-  deposit) PERF_WORKLOAD_ID="deposit" ;;
-esac
-if [[ -n "$PERF_WORKLOAD_ID" ]]; then
-  source "$ROOT/tools/scripts/lib/perf-event-lib.sh"
-  PERF_STARTED="$(date +%s)"
-  PERF_TMP="$(perf_make_spool_dir "$ROOT" stratalint-playbook-perf 2>/dev/null || true)"
-  if [[ -n "$PERF_TMP" ]]; then
-    PERF_EVENT_SPOOL="$PERF_TMP/events.jsonl"
-    : > "$PERF_EVENT_SPOOL" || PERF_EVENT_SPOOL=""
-  fi
-  PERF_COMMIT="$(git rev-parse --verify HEAD 2>/dev/null || printf unknown)"
-  PERF_BASE="$(git rev-parse --verify "${BASE}^{commit}" 2>/dev/null || printf unknown)"
-  PERF_RUN_ID="${STRATALINT_PERF_RUN_ID:-${PERF_WORKLOAD_ID}-${PERF_STARTED}-$$-${PERF_COMMIT:0:12}}"
-  PERF_ENABLED=1
-fi
 case "$COMMAND" in
   deliver-check)
     make lean-report

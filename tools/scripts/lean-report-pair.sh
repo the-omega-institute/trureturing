@@ -14,12 +14,6 @@ INPUT_HELPER="$SCRIPT_DIR/report/lean-report-input.sh"
 # the persistent host cache; CI may supply a runner-temporary root containing an
 # attested stale dev report for the producer's existing delta path.
 CACHE_ROOT="${STRATALINT_REPORT_CACHE_ROOT:-}"
-SEGMENT_PERF_ENABLED=0
-SEGMENT_PERF_SPOOL=""
-SEGMENT_PERF_TMP=""
-SEGMENT_PERF_RUN_ID=""
-SEGMENT_PERF_BASE="unknown"
-SEGMENT_PERF_STARTED=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -53,28 +47,6 @@ INSPECTOR="$(dirname "$PRODUCER")/Inspector.lean"
 TMP_ROOT="$(mktemp -d)"
 STAGING_DIRS=()
 
-# The canonical make/local-gate entry points opt in explicitly; GitHub Actions
-# invokes this helper directly, so recognize that production environment too.
-# Other direct script fixtures retain their existing resource-only observation.
-if [[ "${STRATALINT_PERF_SEGMENTS:-0}" == "1" || "${GITHUB_ACTIONS:-}" == "true" ]]; then
-  PERF_LIB="$SCRIPT_DIR/lib/perf-event-lib.sh"
-  if [[ -r "$PERF_LIB" ]]; then
-    source "$PERF_LIB"
-    SEGMENT_PERF_TMP="$(perf_make_spool_dir "$CANDIDATE_ROOT" stratalint-lean-report-perf 2>/dev/null || true)"
-    if [[ -n "$SEGMENT_PERF_TMP" ]]; then
-      SEGMENT_PERF_SPOOL="$SEGMENT_PERF_TMP/events.jsonl"
-      : > "$SEGMENT_PERF_SPOOL" || SEGMENT_PERF_SPOOL=""
-    fi
-    SEGMENT_PERF_BASE_REF="${STRATALINT_PERF_BASE:-origin/dev}"
-    SEGMENT_PERF_BASE="$(git -C "$CANDIDATE_ROOT" rev-parse --verify "${SEGMENT_PERF_BASE_REF}^{commit}" 2>/dev/null || printf unknown)"
-    [[ "$SEGMENT_PERF_BASE" =~ ^[0-9a-fA-F]{40}([0-9a-fA-F]{24})?$ ]] || SEGMENT_PERF_BASE="unknown"
-    SEGMENT_PERF_RUN_ID="${STRATALINT_PERF_RUN_ID:-report-$(date +%s)-$$}"
-    SEGMENT_PERF_STARTED="$(date +%s)"
-    export STRATALINT_PERF_BASE="$SEGMENT_PERF_BASE" STRATALINT_PERF_RUN_ID="$SEGMENT_PERF_RUN_ID"
-    SEGMENT_PERF_ENABLED=1
-  fi
-fi
-
 cleanup() {
   local directory
   if [[ ${#STAGING_DIRS[@]} -gt 0 ]]; then
@@ -86,22 +58,6 @@ finish_pair() {
   local rc=$?
   trap - EXIT HUP INT TERM
   set +e
-  if [[ "$SEGMENT_PERF_ENABLED" -eq 1 && -n "$SEGMENT_PERF_SPOOL" ]]; then
-    finished="$(date +%s)"
-    elapsed=$((finished - SEGMENT_PERF_STARTED))
-    (( elapsed >= 0 )) || elapsed=0
-    status=passed
-    [[ "$rc" -eq 0 ]] || status=failed
-    perf_capture_event \
-      "$SEGMENT_PERF_SPOOL" "$CANDIDATE_ROOT" "$SEGMENT_PERF_RUN_ID" report "$SEGMENT_PERF_BASE" \
-      total "$status" "$elapsed" || true
-    # The pair script lives in the repository checkout, so use that stable root
-    # to resolve the canonical .NET writer while the event context remains bound
-    # to the candidate root above.
-    PERF_FLUSH_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd -P)"
-    perf_flush_events "$PERF_FLUSH_ROOT" "$SEGMENT_PERF_SPOOL" lean-producer >/dev/null 2>&1 || true
-  fi
-  [[ -z "$SEGMENT_PERF_TMP" ]] || rm -rf -- "$SEGMENT_PERF_TMP"
   cleanup
   exit "$rc"
 }
@@ -461,28 +417,6 @@ verify_bundle() {
     || { echo "lean-report-pair: input attestation mismatch: $output" >&2; return 2; }
 }
 
-verify_bundle_timed() {
-  local started finished elapsed rc status
-  if [[ "$SEGMENT_PERF_ENABLED" -ne 1 || -z "$SEGMENT_PERF_SPOOL" ]]; then
-    verify_bundle "$@"
-    return
-  fi
-  started="$(date +%s)"
-  set +e
-  verify_bundle "$@"
-  rc=$?
-  set -e
-  finished="$(date +%s)"
-  elapsed=$((finished - started))
-  (( elapsed >= 0 )) || elapsed=0
-  status=passed
-  [[ "$rc" -eq 0 ]] || status=failed
-  perf_capture_event \
-    "$SEGMENT_PERF_SPOOL" "$CANDIDATE_ROOT" "$SEGMENT_PERF_RUN_ID" report "$SEGMENT_PERF_BASE" \
-    verify "$status" "$elapsed" || true
-  return "$rc"
-}
-
 create_staging_output() {
   local live_output="$1"
   local parent
@@ -520,7 +454,7 @@ prepare_bundle() {
     "$config_sha256" "$report_sha256"
   write_input_attestation \
     "$staged_output" "$repository_sha256" "$producer_sha256" "$report_sha256"
-  verify_bundle_timed \
+  verify_bundle \
     "$root" "$staged_output" "$mode" "$input_address" \
     "$producer_sha256" "$resident_sha256" "$sources_sha256" \
     "$config_sha256" "$repository_sha256" "$report_sha256"

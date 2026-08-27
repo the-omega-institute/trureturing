@@ -60,7 +60,6 @@ public sealed partial class CoverAtomTests
                 CoverWorld.Raw(baselineFiles)),
             new FakeLeanReportSource(inputs.Report),
             new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
-            new NoOpFrozenLedgerAdmissionServices(),
             CoverWorld.TimeProvider);
 
         var result = environment.CoverAtom(

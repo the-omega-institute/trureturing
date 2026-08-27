@@ -1,14 +1,12 @@
 using System.Collections.Immutable;
-using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
-using Xunit.Abstractions;
 
 namespace StrataLint.Tests;
 
-public sealed class FrozenLedgerBaseViewTests(ITestOutputHelper output)
+public sealed class FrozenLedgerBaseViewTests
 {
     private const string ModulePath = "D5/S0/Carrier/Ring.lean";
     private const string FrozenId =
@@ -56,24 +54,12 @@ public sealed class FrozenLedgerBaseViewTests(ITestOutputHelper output)
         var raw = new GitRepositoryGateway(root).ReadCurrent();
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
             SnapshotDecoder.Decode(raw)).Snapshot;
-        var timings = new List<TimeSpan>();
-        FrozenLedgerConsistent? baseline = null;
-        for (var index = 0; index < 3; index++)
-        {
-            var stopwatch = Stopwatch.StartNew();
-            baseline = view.ToWriterBaseline();
-            stopwatch.Stop();
-            timings.Add(stopwatch.Elapsed);
-        }
+        var baseline = view.ToWriterBaseline();
 
         var source = snapshot.Files[RepoPath.CreateKnown(
             "tools/StrataLint.Engine/Ledger/Admission/FrozenLedgerBaseView.cs")].Text;
-        output.WriteLine(
-            "WRITER_BASELINE events={0} elapsed_min_ms={1:F3}",
-            view.EventCount,
-            timings.Min().TotalMilliseconds);
 
-        Assert.Equal(view.EventCount, baseline!.EventCount);
+        Assert.Equal(view.EventCount, baseline.EventCount);
         Assert.Equal(view.ActiveByCase.Keys.Order(), baseline.ActiveEntries.Keys.Order());
         Assert.DoesNotContain("ToWriterSyntax", source, StringComparison.Ordinal);
         Assert.DoesNotContain(

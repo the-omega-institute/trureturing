@@ -5,9 +5,13 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-// Phase 1 cover transaction gate matrix. Cover binds a proven Lean declaration
-// to an open residual atom atomically; rejects leave only a terminal disposition.
-// Envelope, receipt and signature gates live in the partial companion test file.
+// Phase 1 cover transaction gate matrix. cover binds one already-proven Lean
+// declaration to an existing open residual atom by writing coverage_gids +
+// coverage/scribe receipts, all-or-nothing. Precondition and integrity rejects
+// leave the ledger unchanged; a terminal initial-cover failure writes only its
+// disposition. The envelope / pre-committed-receipt /
+// declaration-signature gates (spec §11.21) live in the CoverAtomEnvelopeTests.cs
+// partial (kept there so this file stays under the SL-003 800-line cap).
 public sealed partial class CoverAtomTests
 {
     [Fact]
@@ -284,7 +288,6 @@ public sealed partial class CoverAtomTests
                 CoverWorld.Raw(baselineFiles)),
             new FakeLeanReportSource(inputs.Report),
             new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
-            new NoOpFrozenLedgerAdmissionServices(),
             CoverWorld.TimeProvider);
         var result = environment.CoverAtom(
             ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline",
@@ -320,7 +323,6 @@ public sealed partial class CoverAtomTests
                 CoverWorld.Raw(baselineFiles)),
             new FakeLeanReportSource(inputs.Report),
             new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
-            new NoOpFrozenLedgerAdmissionServices(),
             CoverWorld.TimeProvider);
 
         var result = environment.CoverAtom(
@@ -401,7 +403,6 @@ public sealed partial class CoverAtomTests
                 CoverWorld.Raw(baselineFiles)),
             new FakeLeanReportSource(inputs.Report),
             new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
-            new NoOpFrozenLedgerAdmissionServices(),
             CoverWorld.TimeProvider);
         var effectiveArgs = args
             ?? ["--cover-atom", spec.AtomId, "--gid", inputs.Gid, "--base", "baseline",
@@ -558,7 +559,7 @@ internal sealed record CoverSpec
 internal static partial class CoverWorld
 {
     internal const string DefaultAtomId = "cover-1";
-    internal static readonly DateTimeOffset RecordedAtUtc = new(2026, 8, 26, 4, 3, 2, TimeSpan.Zero);
+    internal static readonly DateTimeOffset RecordedAtUtc = new(2026, 8, 26, 4, 3, 2, TestBudgets.ZeroDuration);
     internal static TimeProvider TimeProvider { get; } = new FixedTimeProvider(RecordedAtUtc);
 
     internal static CoverSpec StaleReceiptSpec() => new()
@@ -585,7 +586,6 @@ internal static partial class CoverWorld
                 Raw(inputs.Baseline)),
             new FakeLeanReportSource(inputs.Report),
             new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
-            new NoOpFrozenLedgerAdmissionServices(),
             TimeProvider);
 
     internal static RawRepositorySnapshot Raw(IReadOnlyDictionary<string, string> files) =>
