@@ -65,10 +65,16 @@ public sealed class ContentsWriteWorkflowClosureTests
         // always runs the DEFAULT-branch workflow definition and carries no source_commit input —
         // so it cannot execute attacker-modified workflow text or select an arbitrary commit; the
         // produce job still walk-backs to the newest gate-verified protected-dev commit.
-        Assert.Equal(["schedule", "repository_dispatch"], TriggerNames(publisher.Content));
+        // TriggerNames sorts ordinally, so the expected order is alphabetical.
+        Assert.Equal(["repository_dispatch", "schedule"], TriggerNames(publisher.Content));
         Assert.Contains("cron: '17 * * * *'", publisher.Content, StringComparison.Ordinal);
         Assert.Contains("types: [publish-truth-release]", publisher.Content, StringComparison.Ordinal);
         Assert.DoesNotContain("workflow_dispatch", publisher.Content, StringComparison.Ordinal);
+        // The repository_dispatch payload must never influence source selection: the produce
+        // job resolves the protected dev tip and walk-backs to a gate-verified commit, so the
+        // workflow must not read the caller-supplied client_payload or any dispatch inputs.
+        Assert.DoesNotContain("client_payload", publisher.Content, StringComparison.Ordinal);
+        Assert.DoesNotContain("github.event.inputs", publisher.Content, StringComparison.Ordinal);
     }
 
     [Fact]
