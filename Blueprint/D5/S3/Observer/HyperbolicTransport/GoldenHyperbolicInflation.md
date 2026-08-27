@@ -6,7 +6,7 @@ Golden inflation expands the visible face and contracts the conjugate residual.
 
 **Theorem 1.1 (Golden visible-hidden hyperbolic transport).**
 
-$$\forall V, H \in \operatorname{Mod}_{\mathbb{R}},\ \forall n \in \mathbb{N},\ \forall x \in V \times H,\ goldenInflation^{n}(x) = (\varphi^{n} \cdot x_{parallel}, \varphi'^{n} \cdot x_{\perp}) \land \left(epsilon_{n} = \varphi^{-n} \land \left(epsilon_{n} = \left|\varphi'\right|^{n} \land \left(0 < epsilon_{1} \land epsilon_{1} < 1\right)\right)\right).$$
+$$\forall Phi, P_{parallel}, P_{\perp} \in \operatorname{End}_{\mathbb{R}}(\mathbb{R}^{6}),\ Phi \circ P_{parallel} = \varphi \cdot P_{parallel} \land Phi \circ P_{\perp} = \varphi' \cdot P_{\perp} \land P_{parallel} \circ P_{parallel} = P_{parallel} \land P_{\perp} \circ P_{\perp} = P_{\perp} \land P_{parallel} \circ P_{\perp} = 0 \land P_{parallel} + P_{\perp} = I \land P_{parallel} \circ Phi = Phi \circ P_{parallel} \land P_{\perp} \circ Phi = Phi \circ P_{\perp} \land \operatorname{finrank}\left(\operatorname{range}\left(P_{parallel}\right)\right) = 3 \land \operatorname{finrank}\left(\operatorname{range}\left(P_{\perp}\right)\right) = 3 \Rightarrow \forall n \in \mathbb{N},\ \forall x \in \mathbb{R}^{6},\ P_{parallel}(Phi^{n}(x)) = \varphi^{n} \cdot P_{parallel}(x) \land \left(P_{\perp}(Phi^{n}(x)) = \varphi'^{n} \cdot P_{\perp}(x) \land \left(epsilon_{n} = \varphi^{-n} \land \left(epsilon_{n} = \left|\varphi'\right|^{n} \land \left(0 < epsilon_{1} \land epsilon_{1} < 1\right)\right)\right)\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/HyperbolicTransport/GoldenHyperbolicInflation.golden_visible_hidden_hyperbolic_transport` (`✓ std3`). ∎
 
@@ -14,11 +14,11 @@ $$\forall V, H \in \operatorname{Mod}_{\mathbb{R}},\ \forall n \in \mathbb{N},\ 
 
 *Commentary.*
 
-Let epsilon_n denote endogenousResidualScale n. For every pair of real visible and hidden modules, the nth inflation step scales the visible coordinate by phi^n and the hidden coordinate by the nth power of the Galois conjugate phi-prime.
+The ambient carrier is the source six-dimensional real space. Phi, P_parallel, and P_perp are supplied operators: the two projections are complementary, commute with Phi, have rank-three images, and satisfy the stated expanding and contracting spectral equations.
 
-The remaining four conjuncts identify epsilon_n with phi^(-n), identify the same value with |phi-prime|^n, and state that the one-step residual scale is positive and strictly below one. Thus the small parameter is the conjugate multiplier itself, not an independently supplied perturbation.
+Writing q_parallel and q_perp for the two projection readouts, induction on n proves that q_parallel(Phi^n x) and q_perp(Phi^n x) acquire the factors phi^n and (phi-prime)^n. The transport law is therefore a consequence of the hypotheses on the given Phi, not the reduction of a coordinatewise-defined inflation function.
 
-At n=0 the scale is one, as required for zero iterations. The strict contraction assertion is attached to the one-step scale, so the zero-iteration case does not hollow out the theorem.
+FibonacciEigen supplies contracting_eigenvalue_eq_goldenConj. Together with the pinned real golden-ratio identities, it identifies epsilon_n with both phi^(-n) and |phi-prime|^n and proves that the one-step scale lies strictly between zero and one.
 
 ## References
 

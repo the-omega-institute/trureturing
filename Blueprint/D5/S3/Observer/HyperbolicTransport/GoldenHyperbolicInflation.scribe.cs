@@ -20,20 +20,21 @@ internal sealed class GoldenHyperbolicInflationDocument : IScribeDocumentDefinit
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Let epsilon_n denote endogenousResidualScale n. For every pair of "
-                            + "real visible and hidden modules, the nth inflation step scales "
-                            + "the visible coordinate by phi^n and the hidden coordinate by "
-                            + "the nth power of the Galois conjugate phi-prime.")),
+                        "The ambient carrier is the source six-dimensional real space. Phi, "
+                            + "P_parallel, and P_perp are supplied operators: the two projections "
+                            + "are complementary, commute with Phi, have rank-three images, and "
+                            + "satisfy the stated expanding and contracting spectral equations.")),
                     Paragraph(Text(
-                        "The remaining four conjuncts identify epsilon_n with phi^(-n), "
-                            + "identify the same value with |phi-prime|^n, and state that the "
-                            + "one-step residual scale is positive and strictly below one. "
-                            + "Thus the small parameter is the conjugate multiplier itself, "
-                            + "not an independently supplied perturbation.")),
+                        "Writing q_parallel and q_perp for the two projection readouts, induction "
+                            + "on n proves that q_parallel(Phi^n x) and q_perp(Phi^n x) acquire "
+                            + "the factors phi^n and (phi-prime)^n. The transport law is therefore "
+                            + "a consequence of the hypotheses on the given Phi, not the reduction "
+                            + "of a coordinatewise-defined inflation function.")),
                     Paragraph(Text(
-                        "At n=0 the scale is one, as required for zero iterations. The strict "
-                            + "contraction assertion is attached to the one-step scale, so the "
-                            + "zero-iteration case does not hollow out the theorem."))),
+                        "FibonacciEigen supplies contracting_eigenvalue_eq_goldenConj. Together "
+                            + "with the pinned real golden-ratio identities, it identifies "
+                            + "epsilon_n with both phi^(-n) and |phi-prime|^n and proves that the "
+                            + "one-step scale lies strictly between zero and one."))),
                 DescribeRole.Theorem)),
         [
             DocumentEdge.Dependency.Create(
@@ -42,27 +43,27 @@ internal sealed class GoldenHyperbolicInflationDocument : IScribeDocumentDefinit
 
     private static Formula TransportFormula()
     {
-        Formula visibleModule = F.Id("V");
-        Formula hiddenModule = F.Id("H");
-        Formula realModule = Seq(Operatorname, Grp(F.Id("Mod")), Underscore, Grp(Mathbb, Grp(F.Id("R"))));
+        Formula real = Seq(Mathbb, Grp(F.Id("R")));
+        Formula ambient = new Formula.Power(real, D(6));
+        Formula endomorphism = Seq(
+            Operatorname, Grp(F.Id("End")), Underscore, Grp(real), Open, ambient, Close);
+        Formula pParallel = new Formula.Subscript(F.Id("P"), F.Id("parallel"));
+        Formula pPerp = new Formula.Subscript(F.Id("P"), Perp);
         Formula n = F.Id("n");
         Formula x = F.Id("x");
+        Formula sourcePhi = F.Id("Phi");
         Formula phi = Varphi;
         Formula phiPrime = Seq(Varphi, Apos);
-        Formula visible = new Formula.Subscript(x, F.Id("parallel"));
-        Formula hidden = new Formula.Subscript(x, Perp);
         Formula epsilon = F.Id("epsilon");
         Formula epsilonN = new Formula.Subscript(epsilon, n);
         Formula epsilonOne = new Formula.Subscript(epsilon, D(1));
-        Formula iterate = new Formula.Power(F.Id("goldenInflation"), n);
-        Formula transported = Seq(iterate, Open, x, Close);
-        Formula coordinatePair = Seq(
-            Open,
-            Multiply(new Formula.Power(phi, n), visible),
-            Comma, Sp,
-            Multiply(new Formula.Power(phiPrime, n), hidden),
-            Close);
-        Formula transport = Equal(transported, coordinatePair);
+        Formula phiIterate = Seq(new Formula.Power(sourcePhi, n), Open, x, Close);
+        Formula parallelTransport = Equal(
+            Seq(pParallel, Open, phiIterate, Close),
+            Multiply(new Formula.Power(phi, n), Seq(pParallel, Open, x, Close)));
+        Formula perpendicularTransport = Equal(
+            Seq(pPerp, Open, phiIterate, Close),
+            Multiply(new Formula.Power(phiPrime, n), Seq(pPerp, Open, x, Close)));
         Formula inverseGolden = Equal(
             epsilonN,
             new Formula.Power(phi, Seq(Minus, n)));
@@ -74,26 +75,47 @@ internal sealed class GoldenHyperbolicInflationDocument : IScribeDocumentDefinit
         Formula strictContraction = new Formula.Relation(
             epsilonOne, FormulaRelationOperator.LessThan, D(1));
 
-        Formula clauses = new Formula.Logic(
-            transport,
+        Formula conclusions = new Formula.Logic(
+            parallelTransport,
             FormulaLogicOperator.And,
             new Formula.Logic(
-                inverseGolden,
+                perpendicularTransport,
                 FormulaLogicOperator.And,
                 new Formula.Logic(
-                    conjugateOrigin,
+                    inverseGolden,
                     FormulaLogicOperator.And,
                     new Formula.Logic(
-                        positiveScale,
+                        conjugateOrigin,
                         FormulaLogicOperator.And,
-                        strictContraction))));
+                        new Formula.Logic(
+                            positiveScale,
+                            FormulaLogicOperator.And,
+                            strictContraction)))));
+
+        Formula hypotheses = Seq(
+            sourcePhi, Sp, Circ, Sp, pParallel, Sp, Eq, Sp,
+              Multiply(phi, pParallel), Sp, Land, Sp,
+            sourcePhi, Sp, Circ, Sp, pPerp, Sp, Eq, Sp,
+              Multiply(phiPrime, pPerp), Sp, Land, Sp,
+            pParallel, Sp, Circ, Sp, pParallel, Sp, Eq, Sp, pParallel, Sp, Land, Sp,
+            pPerp, Sp, Circ, Sp, pPerp, Sp, Eq, Sp, pPerp, Sp, Land, Sp,
+            pParallel, Sp, Circ, Sp, pPerp, Sp, Eq, Sp, D(0), Sp, Land, Sp,
+            pParallel, Sp, Plus, Sp, pPerp, Sp, Eq, Sp, F.Id("I"), Sp, Land, Sp,
+            pParallel, Sp, Circ, Sp, sourcePhi, Sp, Eq, Sp,
+              sourcePhi, Sp, Circ, Sp, pParallel, Sp, Land, Sp,
+            pPerp, Sp, Circ, Sp, sourcePhi, Sp, Eq, Sp,
+              sourcePhi, Sp, Circ, Sp, pPerp, Sp, Land, Sp,
+            Call("finrank", Call("range", pParallel)), Sp, Eq, Sp, D(3), Sp, Land, Sp,
+            Call("finrank", Call("range", pPerp)), Sp, Eq, Sp, D(3));
+
+        Formula quantifiedConclusion = Seq(
+            Forall, Sp, n, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Esc,
+            Forall, Sp, x, Sp, InMacro, Sp, ambient, Comma, Esc,
+            conclusions, Dot);
 
         return Disp(Seq(
-            Forall, Sp, visibleModule, Comma, Sp, hiddenModule,
-            Sp, InMacro, Sp, realModule, Comma, Esc,
-            Forall, Sp, n, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Esc,
-            Forall, Sp, x, Sp, InMacro, Sp,
-            visibleModule, Sp, Times, Sp, hiddenModule, Comma, Esc,
-            clauses, Dot));
+            Forall, Sp, sourcePhi, Comma, Sp, pParallel, Comma, Sp, pPerp,
+            Sp, InMacro, Sp, endomorphism, Comma, Esc,
+            new Formula.Logic(hypotheses, FormulaLogicOperator.Implies, quantifiedConclusion)));
     }
 }
