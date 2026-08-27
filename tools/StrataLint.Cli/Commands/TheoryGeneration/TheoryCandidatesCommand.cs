@@ -115,6 +115,14 @@ internal static class TheoryCandidatesCommand
                 .ToArray();
 
             var document = BackfillInventoryLoader.Load(truth.Snapshot, scope, changes);
+            // A read-only projection of the current tree is its own baseline. Without one the
+            // aligner cannot recognise a prior generation that the ledger has already
+            // acknowledged as superseded, so it classifies that entry `Rejected`, structural
+            // alignment fails, and the entry derives `partial` against a handwritten
+            // `absorbed` -- a disagreement about nothing. Measured on dev 36baebe09: this call
+            // reported 55 such entries while `digest-status --base HEAD`, which differs only by
+            // passing a baseline, reported 0 on the same tree and the same Lean report (#3354).
+            var baselineDocument = BackfillInventoryLoader.LoadBaseline(truth.Snapshot);
             var ruleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes);
             bool IsBaseFactAffected(string path) =>
                 BaseFactImpact.IsAffected(changes, ruleImplementationChanged, path);
@@ -124,6 +132,8 @@ internal static class TheoryCandidatesCommand
                 truth.Snapshot,
                 truth.Lean,
                 scribeEmissionVerifier.Verify(truth.Snapshot, truth.Report),
+                baselineDocument,
+                baselineSnapshot: truth.Snapshot,
                 casEvaluation: DigestionCasStore.Evaluate(
                     document,
                     truth.Snapshot,
