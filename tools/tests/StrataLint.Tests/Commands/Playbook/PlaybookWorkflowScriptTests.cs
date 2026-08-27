@@ -178,7 +178,7 @@ public sealed class PlaybookWorkflowScriptTests
             string baseline,
             string? dotnetFailure = null,
             string? dotnetDiagnostic = null) =>
-            BoundedProcessRunner.Run(
+            TestProcessRunner.Run(
                 "/usr/bin/env",
                 [
                     $"PATH={binPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",

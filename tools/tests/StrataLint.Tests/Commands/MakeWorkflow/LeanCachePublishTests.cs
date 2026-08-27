@@ -301,11 +301,11 @@ public sealed class LeanCachePublishTests
         else assign.Add($"GITHUB_RUN_ID={runId}");
         var environment = new List<string>([.. unset, .. assign]);
 
-        var result = BoundedProcessRunner.Run(
+        var result = TestProcessRunner.Run(
             "/usr/bin/env",
             [.. environment, "/bin/bash", script, "publish"],
             Path.GetDirectoryName(script)!,
-            TimeSpan.FromSeconds(60),
+            TestBudgets.WorkflowProcessHangGuard,
             256 * 1024);
 
         return new PublishAttempt(
@@ -359,7 +359,7 @@ public sealed class LeanCachePublishTests
         // warnaserror 下即编译失败。夹具自己的 WriteExecutable 已是这个写法。
         Assert.Equal(
             0,
-            BoundedProcessRunner.Run(
+            TestProcessRunner.Run(
                 "chmod",
                 ["+x", gh],
                 Path.GetDirectoryName(gh)!,
@@ -577,11 +577,11 @@ public sealed class LeanCachePublishTests
                 Repository,
             ]);
 
-            var result = BoundedProcessRunner.Run(
+            var result = TestProcessRunner.Run(
                 "/usr/bin/env",
                 [.. arguments],
                 Repository,
-                TimeSpan.FromSeconds(60),
+                TestBudgets.WorkflowProcessHangGuard,
                 256 * 1024);
 
             return new PublishAttempt(
@@ -604,7 +604,7 @@ public sealed class LeanCachePublishTests
             File.WriteAllText(path, contents);
             // 走 chmod 而不是 File.SetUnixFileMode：后者带 CA1416（Windows 不支持），
             // 在 warnaserror 下即编译失败。ReportSupervisorFixture 已是这个写法。
-            var chmod = BoundedProcessRunner.Run(
+            var chmod = TestProcessRunner.Run(
                 "chmod",
                 ["+x", path],
                 Path.GetDirectoryName(path)!,
@@ -733,7 +733,7 @@ public sealed class LeanCachePublishTests
 
         internal PublishAttempt RunFetch(string script)
         {
-            var result = BoundedProcessRunner.Run(
+            var result = TestProcessRunner.Run(
                 "/usr/bin/env",
                 [
                     $"PATH={Bin}:{Environment.GetEnvironmentVariable("PATH")}",
@@ -744,7 +744,7 @@ public sealed class LeanCachePublishTests
                     Repository,
                 ],
                 Repository,
-                TimeSpan.FromSeconds(60),
+                TestBudgets.WorkflowProcessHangGuard,
                 256 * 1024);
 
             return new PublishAttempt(
@@ -758,7 +758,7 @@ public sealed class LeanCachePublishTests
         private static void WriteExecutable(string path, string contents)
         {
             File.WriteAllText(path, contents);
-            var chmod = BoundedProcessRunner.Run(
+            var chmod = TestProcessRunner.Run(
                 "chmod",
                 ["+x", path],
                 Path.GetDirectoryName(path)!,

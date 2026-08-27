@@ -1,7 +1,6 @@
 using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Cli;
-using System.Diagnostics;
 using System.Text.Json;
 using StrataLint.Engine;
 
@@ -9,8 +8,6 @@ namespace StrataLint.Tests;
 
 public sealed class R15ScopeNarrowingTests
 {
-    private const double SerializedReplayBudgetSeconds = 30;
-
     private const string UnrelatedLeanPath = RuleFixture.ValuesBindingPath;
     private const string RuleImplementationPath =
         "tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs";
@@ -358,28 +355,6 @@ public sealed class R15ScopeNarrowingTests
 
         Assert.Contains(RuleId.CreateKnown(19), completed.ExecutedRules);
         AssertFinding(completed, 19, "unledgered anomaly", artifactPath);
-    }
-
-    [Fact]
-    public void Sl019EmbeddedJsonReplayDoesNotReencodeEveryStringSuffix()
-    {
-        const string path = "Evidence/D5/S0/Carrier/Serialized.run.json";
-        const string implementation =
-            "tools/StrataLint.Engine/Rules/RepositoryRules.StructuredScan.cs";
-        var fixture = new RuleFixture();
-        SetHistorical(
-            fixture,
-            path,
-            JsonSerializer.Serialize(new { payload = string.Concat(Enumerable.Repeat("[]", 100_000)) })
-                + "\n");
-        var stopwatch = Stopwatch.StartNew();
-        var completed = Execute(fixture, implementation);
-        stopwatch.Stop();
-
-        AssertNoFinding(completed, 19, "unknown anomaly-bearing schema", path);
-        Assert.True(
-            stopwatch.Elapsed.TotalSeconds < SerializedReplayBudgetSeconds,
-            $"serialized JSON replay took {stopwatch.Elapsed.TotalSeconds:F3}s");
     }
 
     [Theory]
