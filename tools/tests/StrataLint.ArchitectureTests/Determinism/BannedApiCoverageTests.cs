@@ -15,6 +15,30 @@ public sealed class BannedApiCoverageTests
 
         Assert.Equal(27, File.ReadLines(path).Count(static line =>
             line.Contains("// banned-api-proof", StringComparison.Ordinal)));
+
+        var repositoryRoot = RepositoryLayout.FindRoot();
+        var projects = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
+            .Where(static file => file.RelativePath.StartsWith("tools/tests/", StringComparison.Ordinal)
+                && file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal))
+            .Select(file => (file.RelativePath, Document: XDocument.Load(file.FullPath, LoadOptions.None)))
+            .Where(static project => project.Document.Descendants()
+                .Any(element => element.Name.LocalName == "IsTestProject" && element.Value == "true"))
+            .Select(project => (project.RelativePath, Content: File.ReadAllText(
+                Path.Combine(repositoryRoot, project.RelativePath))))
+            .ToArray();
+
+        Assert.NotEmpty(projects);
+        Assert.All(projects, project =>
+        {
+            Assert.Contains(
+                "Microsoft.CodeAnalysis.BannedApiAnalyzers",
+                project.Content,
+                StringComparison.Ordinal);
+            Assert.Contains(
+                "BannedSymbols.Determinism.txt",
+                project.Content,
+                StringComparison.Ordinal);
+        });
     }
 
     [Fact]
@@ -39,34 +63,6 @@ public sealed class BannedApiCoverageTests
         Assert.Contains(
             "T:System.Diagnostics.Stopwatch;Do not make test verdicts or diagnostics depend on machine speed.",
             entries);
-    }
-
-    [Fact]
-    public void DeterminismBanIsAttachedToEveryVerdictProject()
-    {
-        var repositoryRoot = RepositoryLayout.FindRoot();
-        var projects = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
-            .Where(static file => file.RelativePath.StartsWith("tools/tests/", StringComparison.Ordinal)
-                && file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal))
-            .Select(file => (file.RelativePath, Document: XDocument.Load(file.FullPath, LoadOptions.None)))
-            .Where(static project => project.Document.Descendants()
-                .Any(element => element.Name.LocalName == "IsTestProject" && element.Value == "true"))
-            .Select(project => (project.RelativePath, Content: File.ReadAllText(
-                Path.Combine(repositoryRoot, project.RelativePath))))
-            .ToArray();
-
-        Assert.NotEmpty(projects);
-        Assert.All(projects, project =>
-        {
-            Assert.Contains(
-                "Microsoft.CodeAnalysis.BannedApiAnalyzers",
-                project.Content,
-                StringComparison.Ordinal);
-            Assert.Contains(
-                "BannedSymbols.Determinism.txt",
-                project.Content,
-                StringComparison.Ordinal);
-        });
     }
 
     [Fact]

@@ -9,7 +9,7 @@ namespace StrataLint.ArchitectureTests;
 public sealed class BoundedProcessRunnerBudgetTests
 {
     [Fact]
-    public void TrackedTestDurationsHaveOneAnnotatedSource()
+    public void ThirtySecondHangBudgetHasNoScatteredRepresentatives()
     {
         var repositoryRoot = RepositoryLayout.FindRoot();
         const string budgetPath = "tools/tests/StrataLint.Tests/TestBudgets.cs";
@@ -28,9 +28,8 @@ public sealed class BoundedProcessRunnerBudgetTests
     public void EveryPublishedTestBudgetHasOneSourceClassification()
     {
         const string budgetPath = "tools/tests/StrataLint.Tests/TestBudgets.cs";
-        var repositoryRoot = RepositoryLayout.FindRoot();
         var tree = CSharpSyntaxTree.ParseText(
-            File.ReadAllText(Path.Combine(repositoryRoot, budgetPath)),
+            TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(budgetPath)),
             new CSharpParseOptions(LanguageVersion.Latest),
             budgetPath);
         var declarations = tree.GetRoot().DescendantNodes()
