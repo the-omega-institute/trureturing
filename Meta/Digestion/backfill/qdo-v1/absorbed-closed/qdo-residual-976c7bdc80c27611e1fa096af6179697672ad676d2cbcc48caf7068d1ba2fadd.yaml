@@ -1,0 +1,17 @@
+ast_path: theorem/41.12
+fingerprints:
+  raw_sha256: sha256:976c7bdc80c27611e1fa096af6179697672ad676d2cbcc48caf7068d1ba2fadd
+  normalized_sha256: sha256:976c7bdc80c27611e1fa096af6179697672ad676d2cbcc48caf7068d1ba2fadd
+cas_ref: sha256:976c7bdc80c27611e1fa096af6179697672ad676d2cbcc48caf7068d1ba2fadd
+coverage_gids:
+  - D5/S3/ObserverMemory/PredictionCertificates/FiniteHistoryPermanentStability.finite_history_relation_stable_forever
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/PredictionCertificates/FiniteHistoryPermanentStability.finite_history_relation_stable_forever
+      source_sha256: sha256:976c7bdc80c27611e1fa096af6179697672ad676d2cbcc48caf7068d1ba2fadd
+      target_sha256: sha256:854b7dd078e7bd5f88cbe035eb2e02f514369a580753988691303bf9dbfa7e8b
+  scribe:
+    - gid: D5/S3/ObserverMemory/PredictionCertificates/FiniteHistoryPermanentStability.finite_history_relation_stable_forever
+      definition_sha256: sha256:5587791e401c96d53630c099b385946a9ab0fb44b7e3acb9e577a072073d934d
+      emission_sha256: sha256:fc394dacff9bd729e25242eb66a2590cb02efe02f8330624cfa4eda4c245de8e
+  unresolved_subitems: []
