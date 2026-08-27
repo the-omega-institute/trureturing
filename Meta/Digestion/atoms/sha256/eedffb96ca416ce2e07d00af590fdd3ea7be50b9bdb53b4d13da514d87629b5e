@@ -1,0 +1,54 @@
+# 179. 简单性和预测充分性是两条独立轴
+
+定义：
+
+[
+\operatorname{Suff}(C;T)
+]
+
+以及复杂度：
+
+[
+K(C).
+]
+
+一种理论选择可以解：
+
+[
+\boxed{
+\min_C K(C)
+\quad
+\text{s.t.}
+\quad
+E_T\preceq C.
+}
+]
+
+也可以允许误差：
+
+[
+\boxed{
+\min_C
+\left[
+K(C)
++
+\lambda,\operatorname{Defect}(C;T)
+\right].
+}
+]
+
+这给出理论选择的 Pareto 边界：
+
+[
+\boxed{
+\text{复杂度}
+\leftrightarrow
+\text{缺陷}.
+}
+]
+
+没有 (\lambda) 或其他 doctrine 时，不存在唯一最优折中。
+
+这与：
+
+* MDL；

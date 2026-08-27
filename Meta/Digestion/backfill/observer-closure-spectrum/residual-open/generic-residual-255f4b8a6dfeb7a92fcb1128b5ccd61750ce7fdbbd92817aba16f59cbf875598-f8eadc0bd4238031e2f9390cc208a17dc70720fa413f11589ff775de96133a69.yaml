@@ -1,0 +1,10 @@
+ast_path: section/10-与当前仓库的连接/clause/2
+fingerprints:
+  raw_sha256: sha256:255f4b8a6dfeb7a92fcb1128b5ccd61750ce7fdbbd92817aba16f59cbf875598
+  normalized_sha256: sha256:255f4b8a6dfeb7a92fcb1128b5ccd61750ce7fdbbd92817aba16f59cbf875598
+cas_ref: sha256:255f4b8a6dfeb7a92fcb1128b5ccd61750ce7fdbbd92817aba16f59cbf875598
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

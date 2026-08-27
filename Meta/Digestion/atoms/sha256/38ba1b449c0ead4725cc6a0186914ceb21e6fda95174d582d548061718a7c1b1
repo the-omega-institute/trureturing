@@ -1,0 +1,32 @@
+## T2. 盲核地板的真刻画
+
+先不预置连续性。共同语义下，下列三项等价：
+
+\[
+\begin{aligned}
+\mathrm{(i)}\quad&\lim_{L\to\infty}\rho_\Gamma(L)=\frac{\nu(B)}{M_0};\\
+\mathrm{(ii)}\quad&\forall\varepsilon>0\ \exists S\Subset\Gamma:
+\nu(E_S\setminus B)<\varepsilon;\\
+\mathrm{(iii)}\quad&\exists(F_n)_{n\ge1},\quad
+F_n\Subset\Gamma,\quad F_n\subseteq F_{n+1},\quad
+\nu(E_{F_n})\downarrow\nu(B).
+\end{aligned}
+\]
+
+证明：T1 与 \(\nu(E_S)=\nu(B)+\nu(E_S\setminus B)\) 给出 \((i)\Leftrightarrow(ii)\)。由 (ii) 为误差 \(1/n\) 选择有限见证 \(S_n\)，再令 \(F_n=\bigcup_{k\le n}S_k\)，单调性给出 (iii)；\((iii)\Rightarrow(ii)\) 直接取充分大的 \(n\)。这是等价引理，不把其中任一项冒充自动成立的前件。
+
+现在枚举 \(\Gamma=(d_n)_{n\ge1}\)；\(\Gamma\) 有限时允许重复。令
+
+\[
+F_n:=\{d_1,\ldots,d_n\},
+\qquad A_n:=E_{F_n}.
+\]
+
+可数性给出 \(A_n\downarrow B\)，且 \((F_n)\) 对所有有限 \(S\Subset\Gamma\) 共尾。因此
+
+\[
+\lim_{L\to\infty}M_\Gamma(L)
+=\inf_n\nu(A_n)
+=\lim_{n\to\infty}\nu(A_n).
+\]
+

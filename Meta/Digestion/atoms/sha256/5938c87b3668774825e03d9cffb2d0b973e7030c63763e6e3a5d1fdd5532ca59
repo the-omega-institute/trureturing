@@ -1,0 +1,13 @@
+- `WindowRegisterCRT`.
+
+先证明：
+
+```lean
+theorem translation_neg_two_period (m : ℕ) (hm : 0 < m) :
+  minimalPeriod (fun z : ZMod m => z - 2) = m / Nat.gcd m 2
+```
+
+再证明素数幂版本、CRT lcm 版本和 crossing phase 半共轭。
+
+---
+

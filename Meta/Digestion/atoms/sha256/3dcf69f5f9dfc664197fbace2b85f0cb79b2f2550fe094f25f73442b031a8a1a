@@ -1,0 +1,1 @@
+- 不设无地址 atom 总数；六个 OP 为预测分母，每个 atom 恰属一个父 OP，并只在全部冻结 atoms 首次全达 proved/refuted/statement-revised 终态的账本前缀上按“至少四个存活且至少三个 kernel/机器反模型结案”结算；

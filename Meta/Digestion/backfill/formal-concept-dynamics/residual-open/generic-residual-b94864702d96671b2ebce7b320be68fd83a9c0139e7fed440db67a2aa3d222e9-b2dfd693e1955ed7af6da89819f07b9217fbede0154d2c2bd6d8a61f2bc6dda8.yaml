@@ -1,0 +1,10 @@
+ast_path: section/集体主体状态/clause/2
+fingerprints:
+  raw_sha256: sha256:b94864702d96671b2ebce7b320be68fd83a9c0139e7fed440db67a2aa3d222e9
+  normalized_sha256: sha256:b94864702d96671b2ebce7b320be68fd83a9c0139e7fed440db67a2aa3d222e9
+cas_ref: sha256:b94864702d96671b2ebce7b320be68fd83a9c0139e7fed440db67a2aa3d222e9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

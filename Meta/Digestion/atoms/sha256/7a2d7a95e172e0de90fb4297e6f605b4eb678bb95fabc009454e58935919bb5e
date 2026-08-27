@@ -1,0 +1,25 @@
+- 在所有满足前两项的概念中最粗；
+
+的概念。
+
+因此可作结构重构：
+
+\[
+\boxed{
+\begin{aligned}
+\text{肯定}
+&=C;\\
+\text{否定}
+&=\text{显式 carry 见证};\\
+\text{扬弃}
+&=\operatorname{Comp}_{K\circ F}(C);\\
+\text{具体普遍性}
+&=\text{该完成的普适最小性}.
+\end{aligned}
+}
+\]
+
+否定不是 \(P\land\neg P\)，而是当前概念的闭合主张被反例击穿。
+
+---
+

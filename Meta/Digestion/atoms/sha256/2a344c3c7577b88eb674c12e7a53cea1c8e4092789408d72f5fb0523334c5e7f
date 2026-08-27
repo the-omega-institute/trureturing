@@ -1,0 +1,9 @@
+## 命题 48.3（观察者策略因子化）
+
+$$
+\Pi
+\text{ 可由 }q\text{ 实现}
+\iff
+K_q\subseteq K_\Pi.
+$$
+

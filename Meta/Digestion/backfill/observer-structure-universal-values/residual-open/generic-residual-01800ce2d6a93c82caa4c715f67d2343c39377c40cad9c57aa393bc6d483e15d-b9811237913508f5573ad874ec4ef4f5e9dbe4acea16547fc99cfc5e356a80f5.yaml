@@ -1,0 +1,10 @@
+ast_path: section/5-3-形态计数-据-5-1-主表-形态-栏-40-行-一行可带多个标记-共-46-个标记/clause/2
+fingerprints:
+  raw_sha256: sha256:01800ce2d6a93c82caa4c715f67d2343c39377c40cad9c57aa393bc6d483e15d
+  normalized_sha256: sha256:01800ce2d6a93c82caa4c715f67d2343c39377c40cad9c57aa393bc6d483e15d
+cas_ref: sha256:01800ce2d6a93c82caa4c715f67d2343c39377c40cad9c57aa393bc6d483e15d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/81-数学哲学-局部-全局问题是观察完备性问题/clause/4
+fingerprints:
+  raw_sha256: sha256:67fe32651c875e00736efc2de4f23f74ca8dc6672acf5b0a3b4f4edcd7abd63a
+  normalized_sha256: sha256:67fe32651c875e00736efc2de4f23f74ca8dc6672acf5b0a3b4f4edcd7abd63a
+cas_ref: sha256:67fe32651c875e00736efc2de4f23f74ca8dc6672acf5b0a3b4f4edcd7abd63a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

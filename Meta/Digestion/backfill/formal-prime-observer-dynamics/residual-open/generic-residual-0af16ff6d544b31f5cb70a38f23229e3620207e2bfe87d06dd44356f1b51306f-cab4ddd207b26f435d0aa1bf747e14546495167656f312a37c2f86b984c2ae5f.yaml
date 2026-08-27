@@ -1,0 +1,10 @@
+ast_path: section/L-3-证明等级说明/clause/5
+fingerprints:
+  raw_sha256: sha256:0af16ff6d544b31f5cb70a38f23229e3620207e2bfe87d06dd44356f1b51306f
+  normalized_sha256: sha256:0af16ff6d544b31f5cb70a38f23229e3620207e2bfe87d06dd44356f1b51306f
+cas_ref: sha256:0af16ff6d544b31f5cb70a38f23229e3620207e2bfe87d06dd44356f1b51306f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

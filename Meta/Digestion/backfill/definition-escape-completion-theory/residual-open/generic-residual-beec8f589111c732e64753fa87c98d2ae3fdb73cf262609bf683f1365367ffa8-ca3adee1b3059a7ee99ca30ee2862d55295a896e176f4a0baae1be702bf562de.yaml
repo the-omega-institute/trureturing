@@ -1,0 +1,10 @@
+ast_path: section/56-6-边界-非冒领与第-55-部保持开放/clause/7
+fingerprints:
+  raw_sha256: sha256:beec8f589111c732e64753fa87c98d2ae3fdb73cf262609bf683f1365367ffa8
+  normalized_sha256: sha256:beec8f589111c732e64753fa87c98d2ae3fdb73cf262609bf683f1365367ffa8
+cas_ref: sha256:beec8f589111c732e64753fa87c98d2ae3fdb73cf262609bf683f1365367ffa8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

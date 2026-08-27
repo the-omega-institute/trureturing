@@ -1,0 +1,10 @@
+ast_path: section/270-举证责任是不可避免错误的规范分配/clause/2
+fingerprints:
+  raw_sha256: sha256:1c819935a81b06c1e82e882397cdab37fd3d8b5eb5a83dce4736b117ed59ef64
+  normalized_sha256: sha256:1c819935a81b06c1e82e882397cdab37fd3d8b5eb5a83dce4736b117ed59ef64
+cas_ref: sha256:1c819935a81b06c1e82e882397cdab37fd3d8b5eb5a83dce4736b117ed59ef64
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,17 @@
+* 只有可达且行为可区分的类进入操作模型。
+
+这给出：
+
+[
+\boxed{
+\text{operational reality}
+==========================
+
+\text{reachable reality}
+/
+\text{behavioral indistinguishability}.
+}
+]
+
+---
+

@@ -1,0 +1,6 @@
+- 用文件名或注释替代 proof term。
+
+推荐顺序：基础接口、反模型、CRT 静态完备性、动态 congruence、三环有限分类、crossing 周期、\(p\)-进几何、genus/class 层。
+
+---
+

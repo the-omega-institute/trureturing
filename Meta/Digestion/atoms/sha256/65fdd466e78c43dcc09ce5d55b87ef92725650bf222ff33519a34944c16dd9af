@@ -1,0 +1,2 @@
+**证明梗概。** (b)⇒(a) 平凡。(a)⇒(b):稳定子 \(\operatorname{Stab}(T)=\{\sigma\mid\sigma\cdot T=T\}\) 是 \(\operatorname{Sym}(I)\) 的子群(群作用的稳定子恒为子群);它包含全部对换;\(I\) 有限时对换生成全群——mathlib `Equiv.Perm.closure_isSwap`(`Mathlib/GroupTheory/Perm/Sign.lean:121`),故 \(\operatorname{Stab}(T)=\operatorname{Sym}(I)\)。(b)⇔(c):\(T\) 对 \(G\) 不变当且仅当 \(T\) 在轨道上常值,当且仅当 \(T\) 通过轨道商 \((X\times U\times I\times I)/G\)(\(G\) 只作用于后两个坐标)因子化。∎
+

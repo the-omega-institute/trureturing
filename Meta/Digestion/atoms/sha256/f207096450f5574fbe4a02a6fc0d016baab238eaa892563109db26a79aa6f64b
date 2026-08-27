@@ -1,0 +1,27 @@
+* 新主体首次出现。
+
+因此不能同时完美实现：
+
+1. 正当声誉迁移；
+2. 防止旧主体通过新身份清零历史。
+
+所以：
+
+[
+\boxed{
+\text{reputation portability}
+}
+]
+
+和：
+
+[
+\boxed{
+\text{whitewashing resistance}
+}
+]
+
+共同依赖身份连续性接口。
+
+---
+

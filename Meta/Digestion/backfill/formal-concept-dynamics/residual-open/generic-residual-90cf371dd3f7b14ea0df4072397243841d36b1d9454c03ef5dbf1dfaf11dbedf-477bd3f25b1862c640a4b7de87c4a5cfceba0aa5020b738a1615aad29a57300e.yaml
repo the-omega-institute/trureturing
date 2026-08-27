@@ -1,0 +1,10 @@
+ast_path: section/59-范畴论定位/clause/5
+fingerprints:
+  raw_sha256: sha256:90cf371dd3f7b14ea0df4072397243841d36b1d9454c03ef5dbf1dfaf11dbedf
+  normalized_sha256: sha256:90cf371dd3f7b14ea0df4072397243841d36b1d9454c03ef5dbf1dfaf11dbedf
+cas_ref: sha256:90cf371dd3f7b14ea0df4072397243841d36b1d9454c03ef5dbf1dfaf11dbedf
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

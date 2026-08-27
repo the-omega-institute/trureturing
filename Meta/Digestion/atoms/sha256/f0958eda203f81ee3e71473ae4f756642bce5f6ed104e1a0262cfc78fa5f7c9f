@@ -1,0 +1,11 @@
+\[
+\operatorname{escTime}_{q,\tau}(x,y)
+=
+\inf\{n\ge0:q(\tau^n x)\neq q(\tau^n y)\},
+\]
+
+若永不分离则取 \(\infty\)。
+
+由此可以研究：
+
+- 第 \(n\) 层新逃逸质量；

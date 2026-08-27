@@ -1,0 +1,10 @@
+ast_path: section/5-4-独立性辨析-ASSUMED-UNVERIFIED-接触史按记忆粗分-未查文献/clause/1
+fingerprints:
+  raw_sha256: sha256:c3396719fe6d7fd6bf9040d7d7db1f690ac660851886bd4d8b81264412facc03
+  normalized_sha256: sha256:c3396719fe6d7fd6bf9040d7d7db1f690ac660851886bd4d8b81264412facc03
+cas_ref: sha256:c3396719fe6d7fd6bf9040d7d7db1f690ac660851886bd4d8b81264412facc03
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

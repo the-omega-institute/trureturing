@@ -8,3 +8,10 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-0ddbd4703d9092ca27d28b2741e465572795cf0ef061e21584eb564be2a2126f-8339088420fb2ce330e644dc8541f85d7efb883bce9ad4a6f7c5512467a052ec
+    - generic-residual-725e4b2fdaaab64b42da2ca0521e19f91d4fd8bd06c2b55d94c3325b87ba4dc5-513b5cff72e0ddd6f830f2efcd121e59eca50844b40cb64f15a91f2284a181a1
+    - generic-residual-3414aea4a8c639d7ab457995e0f237c4e13a2db6740788fd11e4a1557a799f95-bdbbd4bd3c11588b5fd4146cc623da7f5b92c1658f0885449abcacb924fc0378
+    - generic-residual-6f19c0a4e84c6a5edc8f51bbfbcb6e0a9c5e3d9ad640ee617927eec00dfb116f-9fa49f8f3ceda12cfb2e0a60935f2fcb2477bbf39223a5c8406420b23c0e24ec
+    - generic-residual-64a63e02b4794a56570325ce1a1c3d96a68de09e61055440fafe99431bfbd95c-3c907c542736fad6ac6e4899fa670ff5ab9786f97c8e20f74fe8767b925e62a1
+    - generic-residual-d9cd8eb50aa91e50afc277bcff2ebf1d3d4988d40f3ddd8dacd3f4e330728fc9-c4bacb70676cda6606d8dd4e6279a6c0a95bca8bad57bee105e95baf4c4d29e6
