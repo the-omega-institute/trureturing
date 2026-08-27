@@ -1,0 +1,18 @@
+## 假设 OACTC–24B（Moonshine refinement principle）
+
+当标量角色存在大盲核时，能够恢复对象身份的最小自然扩张通常由：
+
+$$
+\boxed{
+\text{twining}
++
+\text{vector-valued modularity}
++
+\text{boundary completion}
+}
+$$
+
+构成。
+
+---
+

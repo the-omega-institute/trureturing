@@ -1,0 +1,20 @@
+## 121.2 Collision prime
+
+两个特征零中的独立通道在模该素数后发生同余。
+
+例：
+
+$$
+691
+$$
+
+使 weight-\(12\) Eisenstein 与 cusp 数据碰撞。
+
+$$
+67
+$$
+
+使 golden level-\(5\)、weight-\(6\) 的 Eisenstein 与 cusp 数据碰撞。([arXiv][4])
+
+---
+

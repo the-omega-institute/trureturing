@@ -1,0 +1,10 @@
+ast_path: section/139-3-Golden-无理观察/clause/7
+fingerprints:
+  raw_sha256: sha256:3692e0be652563e676146ce578c3a9be5936f19abf77d3e4def8d873567db55f
+  normalized_sha256: sha256:3692e0be652563e676146ce578c3a9be5936f19abf77d3e4def8d873567db55f
+cas_ref: sha256:3692e0be652563e676146ce578c3a9be5936f19abf77d3e4def8d873567db55f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

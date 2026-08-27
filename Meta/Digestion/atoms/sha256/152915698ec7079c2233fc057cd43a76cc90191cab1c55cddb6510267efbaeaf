@@ -1,0 +1,78 @@
+## 132.1 一维谱保留二维根重数
+
+因为：
+
+$$
+m\varphi+n
+$$
+
+对 \((m,n)\) 单射，所以乘积中的每个 primitive 因子都具有唯一能量。
+
+定义 primitive Golden Monster 热迹：
+
+$$
+\boxed{
+H_\varphi(t)
+=
+\sum_{m,n\ge1}
+c(mn)e^{-t(m\varphi+n)}.
+}
+\tag{132.3}
+$$
+
+定义：
+
+$$
+L_\varphi(t)
+=
+-\log\mathcal M_\varphi(t).
+$$
+
+则：
+
+$$
+\boxed{
+L_\varphi(t)
+=
+\sum_{k\ge1}
+\frac1kH_\varphi(kt).
+}
+\tag{132.4}
+$$
+
+Möbius 反演给出：
+
+$$
+\boxed{
+H_\varphi(t)
+=
+\sum_{k\ge1}
+\frac{\mu(k)}k
+L_\varphi(kt).
+}
+\tag{132.5}
+$$
+
+也就是：
+
+$$
+\boxed{
+\begin{aligned}
+H_\varphi(t)
+=
+\sum_{k\ge1}\frac{\mu(k)}k
+\Bigg[
+-\log
+\frac{
+J(e^{-\varphi kt})-J(e^{-kt})
+}{
+e^{\varphi kt}-e^{kt}
+}
+\Bigg].
+\end{aligned}
+}
+\tag{132.6}
+$$
+
+---
+

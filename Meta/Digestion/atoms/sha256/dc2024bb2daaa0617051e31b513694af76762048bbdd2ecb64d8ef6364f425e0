@@ -1,0 +1,24 @@
+## Deng 层：primitive residual 收缩
+
+Niemeier 的全部高壳差异由：
+
+$$
+24h\Delta
+$$
+
+一个 primitive cusp mode 生成。
+
+因此：
+
+$$
+\boxed{
+\text{无限高阶修正}
+=
+\text{一个 primitive residual 的重复传播}.
+}
+$$
+
+这是 Yu Deng 式高阶历史压缩的精确可解模型。
+
+---
+

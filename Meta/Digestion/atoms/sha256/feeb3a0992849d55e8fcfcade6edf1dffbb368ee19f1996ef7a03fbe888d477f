@@ -1,0 +1,30 @@
+# 第一百一十八部　二十四个 Niemeier 状态与 \(23+1\) Moonshine 分支
+
+二十四维正定偶自对偶格共有二十四个 Niemeier 类：
+
+* 二十三个具有非平凡根系；
+* 一个无根的 Leech 格。
+
+二十三个有根 Niemeier 格分别对应二十三种 Umbral Moonshine 数据；每个根系配有一个有限 umbral group 和一族 vector-valued mock modular forms，其中许多分量与 Ramanujan mock theta functions 相合。([arXiv][9])
+
+Leech 格作为无根端点，则通向：
+
+* Conway symmetry；
+* Leech orbifolds；
+* Monstrous Moonshine。
+
+因此：
+
+$$
+\boxed{
+24
+=
+23\text{ rootful umbral branches}
++
+1\text{ rootless monstrous endpoint}.
+}
+\tag{118.1}
+$$
+
+---
+
