@@ -1,0 +1,53 @@
+## 定理 127.1（Monster–Ramanujan 对角乘积）
+
+$$
+\boxed{
+\frac{q\,E_4(q)^2E_6(q)}
+{\Delta(q)}
+=
+\prod_{r\ge2}
+(1-q^r)^{
+\sum_{m=1}^{r-1}c(m(r-m))
+}.
+}
+\tag{127.5}
+$$
+
+这是 Monster Lie 二维根乘积在对角观察下的重整化限制。
+
+它把此前两条主链精确接合：
+
+$$
+\boxed{
+\text{Monster root multiplicities}
+\longrightarrow
+\text{Ramanujan }(Q,R,\Delta).
+}
+$$
+
+前几项为：
+
+$$
+\frac{qQ^2R}{\Delta}
+=
+1-196884q^2-42987520q^3-\cdots.
+$$
+
+其中：
+
+$$
+42987520
+=
+2c(2),
+$$
+
+来自根：
+
+$$
+(1,2),\quad(2,1)
+$$
+
+在对角观察中的碰撞。
+
+---
+

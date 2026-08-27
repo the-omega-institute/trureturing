@@ -1,0 +1,39 @@
+# 第九十二部　\(E_8\) 壳层 zeta 的两通道 Euler 分解
+
+定义 normalized Epstein–shell zeta：
+
+$$
+\boxed{
+Z_{E_8}(s)
+=
+\sum_{x\in\mathbb I\setminus\{0\}}
+Q_E(x)^{-s}.
+}
+\tag{92.1}
+$$
+
+由：
+
+$$
+r_{E_8}(n)=240\sigma_3(n),
+$$
+
+得到：
+
+$$
+\boxed{
+Z_{E_8}(s)
+=
+240
+\sum_{n\ge1}
+\frac{\sigma_3(n)}{n^s}
+=
+240\,\zeta(s)\zeta(s-3),
+}
+\qquad
+\Re s>4.
+\tag{92.2}
+$$
+
+---
+

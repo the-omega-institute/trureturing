@@ -1,0 +1,22 @@
+## 定理 109.1（weight-one 消除后的普适角色）
+
+所有二十四维 Niemeier 格顶点代数，在减去其 weight-one 维数以后，具有完全相同的标量角色：
+
+$$
+\boxed{
+J.
+}
+$$
+
+不仅不同根系可能拥有相同 Theta；在振子完成并减去 weight-one 读数之后，所有 Niemeier 格都塌缩到同一个标量函数。
+
+更一般地，central charge \(24\) 的 holomorphic VOA 的标量角色由模性限制为：
+
+$$
+J+\dim V_1.
+$$
+
+因此仅凭 untwined 标量角色，无法恢复其完整乘法、OPE、群作用或 Lie 结构。Central charge \(24\) holomorphic VOA 的结构分类也确实需要 weight-one Lie 代数、orbifold 数据及更精细的结构，而非单一角色。([arXiv][2])
+
+---
+

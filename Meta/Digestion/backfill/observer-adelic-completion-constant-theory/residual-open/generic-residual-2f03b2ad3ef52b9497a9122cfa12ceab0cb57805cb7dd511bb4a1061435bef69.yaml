@@ -1,0 +1,10 @@
+ast_path: section/仍属开放桥梁/occurrence/2
+fingerprints:
+  raw_sha256: sha256:2f03b2ad3ef52b9497a9122cfa12ceab0cb57805cb7dd511bb4a1061435bef69
+  normalized_sha256: sha256:2f03b2ad3ef52b9497a9122cfa12ceab0cb57805cb7dd511bb4a1061435bef69
+cas_ref: sha256:2f03b2ad3ef52b9497a9122cfa12ceab0cb57805cb7dd511bb4a1061435bef69
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

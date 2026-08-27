@@ -1,0 +1,43 @@
+# 第九十三部　Ramanujan \(P,Q,R\) 是 \(E_8\) 观察者微分流
+
+定义：
+
+$$
+P=E_2,
+\qquad
+Q=E_4=\Theta_{E_8},
+\qquad
+R=E_6,
+$$
+
+以及：
+
+$$
+D=q\frac{d}{dq}.
+$$
+
+Ramanujan 微分系统为：
+
+$$
+\boxed{
+DP=\frac{P^2-Q}{12},
+}
+$$
+
+$$
+\boxed{
+DQ=\frac{PQ-R}{3},
+}
+$$
+
+$$
+\boxed{
+DR=\frac{PR-Q^2}{2}.
+}
+\tag{93.1}
+$$
+
+这些是 Ramanujan 对 Eisenstein 系列发现的经典微分闭合关系。([维基百科][6])
+
+---
+

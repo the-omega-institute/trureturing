@@ -1,0 +1,12 @@
+* 得到：
+
+  $$
+  -q^2J'(q)=qE_4^2E_6/\Delta.
+  $$
+
+因此式 (127.5)可视为一个 rank-two Monster denominator 的**对角重整化限制**。
+
+是否能在标准正交 Borcherds quasi-pullback 范畴中逐字识别为同一构造，仍需单独建立范畴桥；当前结论是结构同型，而非已经引用现成定理。
+
+---
+

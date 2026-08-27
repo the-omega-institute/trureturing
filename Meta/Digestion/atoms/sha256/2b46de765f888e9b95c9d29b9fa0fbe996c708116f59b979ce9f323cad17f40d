@@ -1,0 +1,39 @@
+## 92.2 scalar observer 丢失 primitive 标签
+
+标量 Theta 只记录乘积：
+
+$$
+\zeta(s)\zeta(s-3).
+$$
+
+它不再标记某个零点来自：
+
+$$
+\zeta(s)
+$$
+
+还是：
+
+$$
+\zeta(s-3).
+$$
+
+因此：
+
+$$
+\boxed{
+\text{高度对称的标量完成}
+\not\Rightarrow
+\text{primitive 通道已经被保留}.
+}
+$$
+
+这是一个明确的 DECT 逃逸：
+
+* 当前概念 \(q\)：\(E_8\) 壳层总数；
+* 目标 \(T\)：辨认两个 primitive Euler modes；
+* 逃逸：相同乘积值可能对应不同因子读数；
+* 新定义：保留 Tate degree \(0\) 与 \(3\) 的双通道标签。
+
+---
+

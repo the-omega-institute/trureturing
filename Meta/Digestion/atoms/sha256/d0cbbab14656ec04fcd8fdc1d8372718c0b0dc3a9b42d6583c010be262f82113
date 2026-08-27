@@ -1,0 +1,29 @@
+## 110.4 三阶段完成账本
+
+$$
+\boxed{
+\begin{array}{c|c|c}
+\text{对象}&\text{weight-one 维数}&\text{标量角色}\\
+\hline
+E_8^3&744&J+744\\
+\Lambda&24&J+24\\
+V^\natural&0&J
+\end{array}
+}
+\tag{110.6}
+$$
+
+所以：
+
+$$
+\boxed{
+E_8^3
+\xrightarrow{-720\text{ roots}}
+\Lambda
+\xrightarrow{\text{orbifold current completion}}
+V^\natural.
+}
+$$
+
+---
+

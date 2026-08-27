@@ -1,0 +1,39 @@
+## 110.3 Monster 层
+
+Moonshine module \(V^\natural\) 可通过 Leech lattice VOA 的 \(\mathbb Z_2\) orbifold 构造，其 graded character 为：
+
+$$
+\boxed{
+\operatorname{ch}_{V^\natural}=J.
+}
+\tag{110.5}
+$$
+
+因此：
+
+$$
+(V^\natural)_1=0.
+$$
+
+历史上的 FLM 构造正是 Leech 格理论的 \(\mathbb Z_2\) orbifold；后续工作建立了许多更一般的 Leech orbifold 构造。([arXiv][3])
+
+这里必须强调：
+
+$$
+J=(J+24)-24
+$$
+
+只是 graded-dimension 恒等式。
+
+实际 orbifold 不是简单删除二十四个向量，而是：
+
+$$
+\boxed{
+\text{untwisted invariant projection}
++
+\text{twisted sector completion}.
+}
+$$
+
+---
+

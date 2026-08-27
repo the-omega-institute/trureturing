@@ -1,0 +1,33 @@
+* 乘法局部状态数。
+
+所以：
+
+$$
+\boxed{
+c_\mu(n>0)
+=
+\text{primitive multiplicity ledger}.
+}
+$$
+
+这给 OACTC 一个一般系数语义：
+
+$$
+\boxed{
+\text{negative}
+\to
+\text{singularity},
+\qquad
+\text{zero}
+\to
+\text{weight},
+\qquad
+\text{positive}
+\to
+\text{multiplicity}.
+}
+\tag{137.1}
+$$
+
+---
+

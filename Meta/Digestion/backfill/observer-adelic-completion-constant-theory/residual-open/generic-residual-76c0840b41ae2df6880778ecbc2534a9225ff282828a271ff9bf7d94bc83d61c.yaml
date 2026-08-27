@@ -1,0 +1,15 @@
+ast_path: section/第一百四十一部-对-RH-研究的真实意义
+fingerprints:
+  raw_sha256: sha256:76c0840b41ae2df6880778ecbc2534a9225ff282828a271ff9bf7d94bc83d61c
+  normalized_sha256: sha256:76c0840b41ae2df6880778ecbc2534a9225ff282828a271ff9bf7d94bc83d61c
+cas_ref: sha256:76c0840b41ae2df6880778ecbc2534a9225ff282828a271ff9bf7d94bc83d61c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-054fb63d4c40d8277f5ca807fac7d99c78fb1d48c480663a152cd625baf60971-94f19b590fbfc8d0eca1e4af0f2ccea8b80e2ca6de7a818b3642f1e14afabf35
+    - generic-residual-46f67a1f76102f953f67d708938adfb179f0eae85814c5e38b04c12ed02c73c3-ad616f28cf7fac833d7963dc1512bbdb324d46878f48ca3b819d9af338ca7208
+    - generic-residual-132342d5f7cd714726c5e402a30f486d1e5ee033efb2702411eac5e70affbce4-ef375db53b2fdfab7597ca5eceb72afd1e8d3bd028a20a90abb811eb78311305
+    - generic-residual-84cc2161cc9bcf63cb56d5b18ea819c302d01e1a5805962e32f7be4b9a72ad6d-2e890c3046ddb5da47c19dc6162ae1902b591f678f03cba0ab3f071c895b3fd1
