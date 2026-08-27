@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/RefinementAlgebra/ObserverStrategyFactorization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: An effective observer implements a strategy exactly when its kernel
-     is contained in the strategy kernel. -/
+   digest: Observer strategy implementation is equivalent to kernel containment. -/
 
 import D5.S3.ConceptDynamics.ConceptJoinUniversal
 import Mathlib.Data.Setoid.Basic

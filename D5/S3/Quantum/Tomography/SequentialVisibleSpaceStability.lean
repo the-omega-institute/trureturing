@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Tomography/SequentialVisibleSpaceStability
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Equality of consecutive sequential word-effect spans forces every
-     later bounded word-effect span to equal the stable stage. -/
+   digest: A stable sequential word-effect span remains permanently stable. -/
 
 import D5.S3.Quantum.Completion.SequentialWordObservationResidual
 
