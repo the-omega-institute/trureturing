@@ -2,13 +2,13 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.ObserverMemory.PredictionFactors;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ObserverMemory.ContextUpdates;
 
 internal sealed class PredictiveStateUnifilarUpdateDocument
     : IScribeDocumentDefinition
 {
     private const string Declaration =
-        "D5/S3/ObserverMemory/PredictionFactors/PredictiveStateUnifilarUpdate."
+        "D5/S3/ObserverMemory/ContextUpdates/PredictiveStateUnifilarUpdate."
             + "unifilar_predictive_update";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(

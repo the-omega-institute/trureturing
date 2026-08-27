@@ -1,6 +1,6 @@
-/- GID: D5/S3/ObserverMemory/PredictionFactors/PredictiveStateUnifilarUpdate
+/- GID: D5/S3/ObserverMemory/ContextUpdates/PredictiveStateUnifilarUpdate
    generality: G
-   mirror-B: D5/B/S3/ObserverMemory/PredictionFactors/PredictiveStateUnifilarUpdate
+   mirror-B: D5/B/S3/ObserverMemory/ContextUpdates/PredictiveStateUnifilarUpdate
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Complete future laws induce an almost-sure single-valued predictive-state update. -/
@@ -19,7 +19,7 @@ import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
      is applied directly below. No pinned theorem packages the quotient update.
    * External Loogle and LeanSearch executables were unavailable. -/
 
-namespace D5.S3.ObserverMemory.PredictionFactors.PredictiveStateUnifilarUpdate
+namespace D5.S3.ObserverMemory.ContextUpdates.PredictiveStateUnifilarUpdate
 
 open MeasureTheory
 
@@ -146,4 +146,4 @@ theorem unifilar_predictive_update
 
 #print axioms unifilar_predictive_update
 
-end D5.S3.ObserverMemory.PredictionFactors.PredictiveStateUnifilarUpdate
+end D5.S3.ObserverMemory.ContextUpdates.PredictiveStateUnifilarUpdate
