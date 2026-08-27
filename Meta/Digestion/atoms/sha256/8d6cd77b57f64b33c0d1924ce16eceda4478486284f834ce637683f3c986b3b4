@@ -1,0 +1,5 @@
+## 10. 与当前仓库的连接
+
+本文延伸以下已存在的机器真值方向，但不修改它们：
+
+- `D5/S3/ConceptDynamics/Dialectics/ExactDescentNoCarry.lean`：精确下降排除 carry；

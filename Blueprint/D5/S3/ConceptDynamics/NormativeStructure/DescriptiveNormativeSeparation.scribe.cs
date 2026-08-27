@@ -45,52 +45,66 @@ internal sealed class DescriptiveNormativeSeparationDocument : IScribeDocumentDe
     private static Formula Apply(Formula function, Formula argument) =>
         Seq(function, Open, argument, Close);
 
-    private static Formula Named(string name, Formula argument) =>
-        Seq(Operatorname, Grp(F.Id(name)), Open, argument, Close);
+    private static Formula Call(string name, params Formula[] arguments)
+    {
+        var items = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
+        for (var index = 0; index < arguments.Length; index++)
+        {
+            if (index > 0) items.AddRange([Comma, Sp]);
+            items.Add(arguments[index]);
+        }
+
+        items.Add(Close);
+        return Seq([.. items]);
+    }
 
     private static Formula TheoremFormula()
     {
-        Formula states = F.Id("X");
-        Formula actions = F.Id("U");
-        Formula description = F.Id("D");
-        Formula physical = Subscript(F.Id("Adm"), F.Id("phys"));
-        Formula process = F.Id("F");
-        Formula concept = F.Id("C");
-        Formula anchor = F.Id("a");
+        Formula states = F.Id("State");
+        Formula actions = F.Id("Action");
+        Formula description = F.Id("Description");
+        Formula descriptive = F.Id("descriptive");
+        Formula actionWitness = F.Id("action");
         Formula firstModel = Subscript(F.Id("M"), D(1));
         Formula secondModel = Subscript(F.Id("M"), D(2));
-        Formula firstPermitted = Subscript(F.Id("P"), D(1));
-        Formula secondPermitted = Subscript(F.Id("P"), D(2));
+        Formula firstPermitted = Call("Permitted", firstModel);
+        Formula secondPermitted = Call("Permitted", secondModel);
         Formula state = F.Id("x");
         Formula action = F.Id("u");
         Formula infer = F.Id("I");
-        Formula descriptiveTuple = Seq(
-            Open, states, Comma, Sp, physical, Comma, Sp, process, Comma, Sp,
-            concept, Comma, Sp, anchor, Close);
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula prop = Seq(Operatorname, Grp(F.Id("Prop")));
+        Formula descriptiveType = Call("DescriptiveStructure", states, actions, description);
+        Formula normativeType = Call("NormativeExtension", states, actions, description);
         Formula sameFirst = Seq(
-            Named("Desc", firstModel), Sp, Eq, Sp, description);
+            Call("Desc", firstModel), Sp, Eq, Sp, descriptive);
         Formula sameSecond = Seq(
-            Named("Desc", secondModel), Sp, Eq, Sp, description);
+            Call("Desc", secondModel), Sp, Eq, Sp, descriptive);
         Formula allPermitted = Seq(
             Open,
-            Forall, Sp, state, Comma, Sp, action, Comma, Sp,
+            Forall, Sp, state, Colon, Sp, states, Comma, Sp,
+            action, Colon, Sp, actions, Comma, Sp,
             Apply(Apply(firstPermitted, state), action), Close);
         Formula nonePermitted = Seq(
             Open,
-            Forall, Sp, state, Comma, Sp, action, Comma, Sp,
+            Forall, Sp, state, Colon, Sp, states, Comma, Sp,
+            action, Colon, Sp, actions, Comma, Sp,
             Neg, Sp, Apply(Apply(secondPermitted, state), action), Close);
+        Formula inferenceType = new Formula.TypeArrow(
+            descriptiveType,
+            new Formula.TypeArrow(states, new Formula.TypeArrow(actions, prop)));
         Formula noSingleInference = Seq(
-            Forall, Sp, infer, Comma, Sp, Neg, Sp, Open,
-            Apply(infer, description), Sp, Eq, Sp, firstPermitted, Sp, Land, Sp,
-            Apply(infer, description), Sp, Eq, Sp, secondPermitted, Close);
+            Forall, Sp, infer, Colon, Sp, inferenceType, Comma, Sp, Neg, Sp, Open,
+            Apply(infer, descriptive), Sp, Eq, Sp, firstPermitted, Sp, Land, Sp,
+            Apply(infer, descriptive), Sp, Eq, Sp, secondPermitted, Close);
 
         return Disp(Seq(
-            description, Sp, Eq, Sp, descriptiveTuple, Comma, Sp,
-            actions, Sp, Neq, Sp, Emptyset, Comma, RowBreak, Grp(),
-            Exists, Sp, firstModel, Comma, Sp, secondModel, Comma, RowBreak, Grp(),
-            firstPermitted, Sp, Eq, Sp, Named("Permitted", firstModel), Comma, Sp,
-            secondPermitted, Sp, Eq, Sp, Named("Permitted", secondModel), Comma,
-            RowBreak, Grp(),
+            Forall, Sp, states, Comma, Sp, actions, Comma, Sp, description,
+            Colon, Sp, type, Comma, RowBreak, Grp(),
+            descriptive, Colon, Sp, descriptiveType, Comma, Sp,
+            actionWitness, Colon, Sp, actions, Comma, RowBreak, Grp(),
+            Exists, Sp, firstModel, Comma, Sp, secondModel, Colon, Sp, normativeType,
+            Comma, RowBreak, Grp(),
             sameFirst, Sp, Land, Sp, sameSecond, Sp, Land, RowBreak, Grp(),
             allPermitted, Sp, Land, RowBreak, Grp(),
             nonePermitted, Sp, Land, RowBreak, Grp(),

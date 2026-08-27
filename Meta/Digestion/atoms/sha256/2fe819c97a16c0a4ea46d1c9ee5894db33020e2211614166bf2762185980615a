@@ -1,0 +1,12 @@
+**定理 T2（穷举残差链 iff）**。在共同语义下，
+
+\[
+\boxed{
+\lim_{L\to\infty}\rho_\Gamma(L)=\frac{\nu(B)}{M_0}
+\quad\Longleftrightarrow\quad
+\nu(A_n)\downarrow\nu\!\left(\bigcap_nA_n\right)=\nu(B).
+}
+\]
+
+右式恰是 \(\nu\) 沿这条穷举残差链自上连续。全局自上连续蕴含右式，故是充分条件；它不被冒充为必要前件。等价式不依赖枚举选择，因为每条穷举链都与全体有限族共尾。
+

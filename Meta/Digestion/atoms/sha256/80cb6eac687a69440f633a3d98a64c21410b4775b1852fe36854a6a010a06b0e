@@ -1,0 +1,37 @@
+# 386. 可控性与可观察性共同决定操作本体
+
+定义：
+
+[
+R_a=\operatorname{Reach}_M(a).
+]
+
+行为概念：
+
+[
+\beta:R_a\to B_O^M.
+]
+
+操作本体为：
+
+[
+\boxed{
+R_a/{\ker\beta}.
+}
+]
+
+它包含两个步骤：
+
+[
+\boxed{
+\text{全状态空间}
+\longrightarrow
+\text{可达子域}
+\longrightarrow
+\text{可观察商}.
+}
+]
+
+因此：
+
+* 不可达状态是控制余量；

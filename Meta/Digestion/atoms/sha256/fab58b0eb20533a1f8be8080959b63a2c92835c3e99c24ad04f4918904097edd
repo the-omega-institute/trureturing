@@ -1,0 +1,3 @@
+## 1.1 素数、二次型与 crossing 锚点
+
+- `D5/S3/PrimeForms/GoldenPrimeClassification.lean`：判别式五轴上的 split / inert / ramified 分类；

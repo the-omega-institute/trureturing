@@ -1,0 +1,10 @@
+ast_path: section/56-行动顺序改变自由核-与-不同
+fingerprints:
+  raw_sha256: sha256:ebd2869f85dd2bd2dbaa9743d8b5f82f1ae2164fb00dfb3534bb66173fb5b1f0
+  normalized_sha256: sha256:ebd2869f85dd2bd2dbaa9743d8b5f82f1ae2164fb00dfb3534bb66173fb5b1f0
+cas_ref: sha256:ebd2869f85dd2bd2dbaa9743d8b5f82f1ae2164fb00dfb3534bb66173fb5b1f0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

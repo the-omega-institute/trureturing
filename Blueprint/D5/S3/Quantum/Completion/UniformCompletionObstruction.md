@@ -6,7 +6,7 @@ Proper Hilbert-subspace projections remain one operator-norm unit from the ident
 
 **Theorem 1.1 (Proper projection stages stay uniformly separated from identity).**
 
-$$\begin{gathered}\forall K, H, A, L,\\\operatorname{Hilbert}\left(K, H\right), \operatorname{NeBot}\left(L\right), S: A \to \operatorname{ClosedSubspace}\left(H\right),\\(\forall a, S(a) \neq H) \implies \\((\forall a, \left\lVert I - \operatorname{P}\left(S(a)\right) \right\rVert = 1) \land\\\neg (\operatorname{lim}\left(a, L, \left\lVert I - \operatorname{P}\left(S(a)\right) \right\rVert\right) = 0)).\end{gathered}$$
+$$\begin{gathered}\forall K, H, I: Type,\\{}[\operatorname{RCLike}\left(K\right)], [\operatorname{NormedAddCommGroup}\left(H\right)],\\{}[\operatorname{InnerProductSpace}\left(K, H\right)],\\{}S: I \to \operatorname{Submodule}_{K}(H),\\{}[\forall i: I, \operatorname{HasOrthogonalProjection}\left(S(i)\right)],\\{}stageFilter: \operatorname{Filter}\left(I\right), [\operatorname{NeBot}\left(stageFilter\right)],\\hProper: {\forall i: I, S(i) \neq top},\\((\forall i: I, \left\lVert \operatorname{id}\left(K, H\right) - \operatorname{starProjection}\left(S(i)\right) \right\rVert = 1) \land\\\neg \operatorname{Tendsto}\left({\Lambda i: I, \left\lVert \operatorname{id}\left(K, H\right) - \operatorname{starProjection}\left(S(i)\right) \right\rVert}, stageFilter, \operatorname{nhds}\left(0\right)\right)).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Completion/UniformCompletionObstruction.uniform_completion_obstruction` (`✓ std3`). ∎
 

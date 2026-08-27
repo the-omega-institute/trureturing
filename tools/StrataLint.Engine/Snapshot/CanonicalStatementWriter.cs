@@ -15,6 +15,9 @@ internal static class CanonicalStatementWriter
             FrozenHashDomains.Statement,
             Encoding.UTF8.GetBytes(typeRepresentation).AsSpan());
 
+    internal static string StatementTypeAddress(LeanDeclaration declaration) =>
+        declaration.StatementTypeAddress;
+
     internal static ImmutableArray<FrozenDeclarationStatement> DeclarationStatementIds(
         RepoPath path,
         LeanFileReport report) =>
@@ -23,13 +26,17 @@ internal static class CanonicalStatementWriter
             .Select(declaration => new FrozenDeclarationStatement(
                 declaration.NameKey,
                 declaration.Kind,
-                StatementId.Create(FrozenContentHash.Compute(
-                    FrozenHashDomains.Statement,
-                    WriteDeclaration(path, declaration).AsSpan()))))
+                StatementId.Create(DeclarationStatementId(path, declaration))))
             .OrderBy(static declaration => declaration.DeclarationNameKey, StringComparer.Ordinal)
             .ThenBy(static declaration => declaration.Kind, StringComparer.Ordinal)
             .ThenBy(static declaration => declaration.StatementId.Value, StringComparer.Ordinal)
             .ToImmutableArray();
+
+    internal static string DeclarationStatementId(RepoPath path, LeanDeclaration declaration) =>
+        declaration.PrecomputedStatementId
+        ?? FrozenContentHash.Compute(
+            FrozenHashDomains.Statement,
+            WriteDeclaration(path, declaration).AsSpan());
 
     internal static ImmutableArray<byte> WriteModule(
         RepoPath path,
@@ -58,7 +65,7 @@ internal static class CanonicalStatementWriter
             kind = declaration.Kind,
             module_path = path.Value,
             schema = "declaration-statement-v1",
-            statement_material = declaration.TypeRepresentation,
+            statement_material = declaration.LoadTypeRepresentation(),
         });
         return StructuredCanonicalWriter.WriteJson(material);
     }

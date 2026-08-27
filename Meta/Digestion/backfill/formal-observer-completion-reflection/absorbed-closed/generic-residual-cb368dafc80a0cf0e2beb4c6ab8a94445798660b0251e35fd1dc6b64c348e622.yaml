@@ -1,0 +1,17 @@
+ast_path: 推论/22.1
+fingerprints:
+  raw_sha256: sha256:cb368dafc80a0cf0e2beb4c6ab8a94445798660b0251e35fd1dc6b64c348e622
+  normalized_sha256: sha256:cb368dafc80a0cf0e2beb4c6ab8a94445798660b0251e35fd1dc6b64c348e622
+cas_ref: sha256:cb368dafc80a0cf0e2beb4c6ab8a94445798660b0251e35fd1dc6b64c348e622
+coverage_gids:
+  - D5/S3/ObserverMemory/RefinementClosure/BehaviorCompletionFunctoriality.behavior_completion_is_functorial
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/RefinementClosure/BehaviorCompletionFunctoriality.behavior_completion_is_functorial
+      source_sha256: sha256:cb368dafc80a0cf0e2beb4c6ab8a94445798660b0251e35fd1dc6b64c348e622
+      target_sha256: sha256:e5e8928ee81fe4648b4e932770219e768e5b12febe9ee4429bfa806fb9c7136a
+  scribe:
+    - gid: D5/S3/ObserverMemory/RefinementClosure/BehaviorCompletionFunctoriality.behavior_completion_is_functorial
+      definition_sha256: sha256:5f327101aa8bc062be3afe5b56f98c406f0a415758d6291ad7ebb352cebfa77a
+      emission_sha256: sha256:0d774d48368f752a06ecfb4bf40e8a04cbb1da7b810afee49dea4033c8ad7c7f
+  unresolved_subitems: []

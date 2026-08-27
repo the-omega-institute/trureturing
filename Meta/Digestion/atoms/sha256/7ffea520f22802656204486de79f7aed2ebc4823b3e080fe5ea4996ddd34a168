@@ -1,0 +1,46 @@
+# 62. Barrier 与 Lyapunov 证书
+
+完整求解自由保持核或恢复域可能昂贵，可以使用充分证书。
+
+若函数
+
+$$
+B:X\to\mathbb R
+$$
+
+定义区域 $S_B=\{x:B(x)\le0\}$，并且对每个 $x\in S_B$ 存在动作 $a$ 满足
+
+$$
+\forall e,\quad B(F(x,a,e))\le0,
+$$
+
+则
+
+$$
+\boxed{S_B\subseteq\mathsf{FreeKernel}_{\mathrm{rob}}.}
+$$
+
+若 $V:X\to\mathbb R_{\ge0}$ 满足
+
+$$
+V(x)=0\iff x\in K
+$$
+
+并存在 $\delta>0$ 使每个 $x\notin K$ 都有动作满足
+
+$$
+\forall e,\quad V(F(x,a,e))\le V(x)-\delta,
+$$
+
+则进入 $K$ 的时间不超过
+
+$$
+\boxed{
+\left\lceil V(x)/\delta\right\rceil.
+}
+$$
+
+所以主体性可以像控制安全一样具有可审计 barrier 与恢复 Lyapunov 证书。
+
+---
+

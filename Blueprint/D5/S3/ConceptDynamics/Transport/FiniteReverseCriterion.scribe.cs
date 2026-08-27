@@ -74,6 +74,7 @@ internal sealed class FiniteReverseCriterionDocument : IScribeDocumentDefinition
         Formula type = Seq(Operatorname, Grp(F.Id("Type")));
         Formula range = Apply(Seq(Operatorname, Grp(F.Id("range"))), current);
         Formula carry = Apply(Seq(Operatorname, Grp(F.Id("Carry"))), process, current, future);
+        Formula emptyCarry = Call("IsEmpty", carry);
         Formula effectiveValue = Apply(
             Seq(Operatorname, Grp(F.Id("rangeFactorization"))), current, x);
 
@@ -89,7 +90,7 @@ internal sealed class FiniteReverseCriterionDocument : IScribeDocumentDefinition
             process, Colon, Sp, Arrow(state, processState), Comma, Sp,
             current, Colon, Sp, Arrow(state, currentType), Comma, Sp,
             future, Colon, Sp, Arrow(processState, futureType), Comma, Esc,
-            carry, Sp, Eq, Sp, Emptyset, Sp, Rightarrow, Esc,
+            emptyCarry, Sp, Rightarrow, Esc,
             Exists, Bang, Sp, descent, Colon, Sp, Arrow(range, futureType), Comma, Esc,
             Forall, Sp, x, Colon, Sp, state, Comma, Sp,
             Apply(descent, effectiveValue), Sp, Eq, Sp,

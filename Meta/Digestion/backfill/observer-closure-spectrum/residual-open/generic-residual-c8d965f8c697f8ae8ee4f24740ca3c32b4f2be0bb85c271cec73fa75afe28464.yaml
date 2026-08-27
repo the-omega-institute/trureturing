@@ -1,0 +1,10 @@
+ast_path: section/59-长期主体能力由-Bellman-固定点而不是当前按钮数决定
+fingerprints:
+  raw_sha256: sha256:c8d965f8c697f8ae8ee4f24740ca3c32b4f2be0bb85c271cec73fa75afe28464
+  normalized_sha256: sha256:c8d965f8c697f8ae8ee4f24740ca3c32b4f2be0bb85c271cec73fa75afe28464
+cas_ref: sha256:c8d965f8c697f8ae8ee4f24740ca3c32b4f2be0bb85c271cec73fa75afe28464
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

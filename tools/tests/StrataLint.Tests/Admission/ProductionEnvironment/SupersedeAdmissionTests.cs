@@ -23,6 +23,32 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void PinBumpReportsInfrastructureFailureWhenMaterialArchiveIsMissingAndUsed()
+    {
+        using var temporary = new TemporaryDirectory();
+        var fixture = CreatePinBumpFixture([], []);
+        AddSupersedeEvents(fixture);
+        var candidateReport = WriteCandidateReport(temporary, fixture);
+        File.Delete(RawLeanReportArtifact.MaterialsPath(candidateReport));
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            PinBumpGateway(fixture),
+            new FakeLeanReportSource(null));
+        var console = new BufferedConsole();
+
+        var exitCode = CliApplication.Run(
+            ["check", "--candidate-lean-report", candidateReport],
+            environment,
+            console);
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains(
+            "INFRASTRUCTURE_FAILURE Lean statement material archive is missing",
+            console.Error,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void PinBumpWithLargerStandardSupersedeClosureIsAccepted()
     {
         using var temporary = new TemporaryDirectory();

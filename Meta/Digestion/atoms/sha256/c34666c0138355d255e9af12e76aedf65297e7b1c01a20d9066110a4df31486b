@@ -1,0 +1,15 @@
+# 59. 范畴论定位
+
+一个基本哲学方格为：
+
+\[
+\begin{array}{ccc}
+X&\xrightarrow{F}&Y\\
+\downarrow q_C&&\downarrow q_D\\
+B_C&\xrightarrow{\overline F}&B_D.
+\end{array}
+\]
+
+其中：
+
+- 水平箭头是过程；

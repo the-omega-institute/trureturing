@@ -1,0 +1,10 @@
+ast_path: section/57-部分观察必须提升到信念状态
+fingerprints:
+  raw_sha256: sha256:b18ea951f7d0c4bf465b18f67817e0c2591e6dfd49be8525bb2ce1486d689765
+  normalized_sha256: sha256:b18ea951f7d0c4bf465b18f67817e0c2591e6dfd49be8525bb2ce1486d689765
+cas_ref: sha256:b18ea951f7d0c4bf465b18f67817e0c2591e6dfd49be8525bb2ce1486d689765
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

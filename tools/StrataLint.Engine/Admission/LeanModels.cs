@@ -9,12 +9,55 @@ public sealed record LeanDeclaration(
     string TypeRepresentation,
     ImmutableArray<string> Axioms)
 {
+    private readonly string? precomputedStatementTypeAddress;
+    private Lazy<string>? typeMaterial;
+
+    internal LeanDeclaration(
+        string name,
+        string kind,
+        string statementTypeAddress,
+        string statementId,
+        ImmutableArray<string> axioms,
+        Func<string> loadTypeMaterial)
+        : this(name, kind, string.Empty, axioms)
+    {
+        precomputedStatementTypeAddress = statementTypeAddress;
+        PrecomputedStatementId = statementId;
+        typeMaterial = new Lazy<string>(
+            loadTypeMaterial ?? throw new ArgumentNullException(nameof(loadTypeMaterial)),
+            LazyThreadSafetyMode.ExecutionAndPublication);
+    }
+
     public string NameKey { get; init; } = Name;
 
     public bool IncludeInStatement { get; init; } = true;
 
+    public string StatementTypeAddress =>
+        TypeRepresentation.Length > 0
+            ? CanonicalStatementWriter.StatementTypeAddress(TypeRepresentation)
+            : precomputedStatementTypeAddress
+                ?? CanonicalStatementWriter.StatementTypeAddress(TypeRepresentation);
+
+    internal string? PrecomputedStatementId { get; init; }
+
     public (string Name, string Kind, string TypeRepresentation) Signature =>
-        (Name, Kind, TypeRepresentation);
+        (Name, Kind, LoadTypeRepresentation());
+
+    public string LoadTypeRepresentation()
+    {
+        if (TypeRepresentation.Length > 0)
+        {
+            return TypeRepresentation;
+        }
+
+        if (typeMaterial is null)
+        {
+            throw new InvalidDataException(
+                $"Lean declaration {Name} has no statement material source.");
+        }
+
+        return typeMaterial.Value;
+    }
 }
 
 public sealed record LeanFileReport(
@@ -97,7 +140,9 @@ public static class LeanClosureValidator
                     string.IsNullOrWhiteSpace(declaration.Name)
                     || string.IsNullOrWhiteSpace(declaration.NameKey)
                     || string.IsNullOrWhiteSpace(declaration.Kind)
-                    || string.IsNullOrWhiteSpace(declaration.TypeRepresentation)
+                    || !FrozenHashSyntax.IsSha256(declaration.StatementTypeAddress)
+                    || declaration.PrecomputedStatementId is not null
+                        && !FrozenHashSyntax.IsSha256(declaration.PrecomputedStatementId)
                     || declaration.Axioms.Any(string.IsNullOrWhiteSpace)))
             {
                 return new LeanValidationOutcome.InfrastructureFailure(

@@ -46,11 +46,10 @@ public sealed partial class ProductionEnvironmentTests
         Assert.NotEqual(protectedBase, GitText(candidate.Path, "merge-base", protectedBase, "HEAD"));
 
         var candidateReport = Path.Combine(reports.Path, "candidate.json");
-        File.WriteAllBytes(
+        RawLeanReportArtifact.WriteFile(
             candidateReport,
-            RawLeanReportArtifact.Write(
-                Decode(Snapshot(fixture.Files)),
-                LeanAxiomReport.Create(fixture.Reports)).AsSpan());
+            Decode(Snapshot(fixture.Files)),
+            LeanAxiomReport.Create(fixture.Reports));
 
         var environment = new ProductionCliEnvironment(
             candidate.Path,
@@ -123,11 +122,10 @@ public sealed partial class ProductionEnvironmentTests
         ReviewRegressionTests.RunGit(candidate.Path, "checkout", "candidate");
 
         var candidateReport = Path.Combine(reports.Path, "candidate.json");
-        File.WriteAllBytes(
+        RawLeanReportArtifact.WriteFile(
             candidateReport,
-            RawLeanReportArtifact.Write(
-                Decode(Snapshot(fixture.Files)),
-                LeanAxiomReport.Create(fixture.Reports)).AsSpan());
+            Decode(Snapshot(fixture.Files)),
+            LeanAxiomReport.Create(fixture.Reports));
         var environment = new ProductionCliEnvironment(
             candidate.Path,
             new GitRepositoryGateway(candidate.Path),

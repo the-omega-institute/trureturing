@@ -320,8 +320,9 @@ public sealed partial class AdmissionWorkflowTests
             engineering.Children[new YamlScalarNode("steps")]).Children
             .OfType<YamlMappingNode>()
             .ToArray();
-        Assert.True(steps.Length > 3);
-        Assert.Equal("Check out candidate", StepName(steps[0]));
+        Assert.True(steps.Length > 4);
+        Assert.Equal("Wait for the GitHub merge ref", StepName(steps[0]));
+        Assert.Equal("Check out candidate", StepName(steps[1]));
 
         var scopeIndex = Array.FindIndex(
             steps,

@@ -128,7 +128,7 @@ public sealed partial class MakeWorkflowTests
         Directory.CreateDirectory(binDirectory);
         File.WriteAllText(
             report,
-            "{\"modules\":[],\"schema\":\"stratalint-raw-lean-report-v1\"}\n");
+            "{\"modules\":[],\"schema\":\"stratalint-raw-lean-report-v2\"}\n");
         File.WriteAllText(Path.Combine(root, "README.md"), "base\n");
         RunScenarioGit(root, "init", "--initial-branch=dev");
         RunScenarioGit(root, "config", "user.email", "preflight@example.invalid");

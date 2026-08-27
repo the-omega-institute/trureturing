@@ -1,0 +1,10 @@
+ast_path: section/392-循环假设不能自动证明自身/clause/3
+fingerprints:
+  raw_sha256: sha256:440778f2ee51f824c0f3c03c8acc7c16ec52fe2b05b98f90292b3bdc9e9998c5
+  normalized_sha256: sha256:440778f2ee51f824c0f3c03c8acc7c16ec52fe2b05b98f90292b3bdc9e9998c5
+cas_ref: sha256:440778f2ee51f824c0f3c03c8acc7c16ec52fe2b05b98f90292b3bdc9e9998c5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

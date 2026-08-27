@@ -1,0 +1,10 @@
+ast_path: section/493-3-战略扩张/clause/1
+fingerprints:
+  raw_sha256: sha256:902d0b203e16a47602c8a7a88921ebf5f06d59379c900221b0d6425f1d6052c4
+  normalized_sha256: sha256:902d0b203e16a47602c8a7a88921ebf5f06d59379c900221b0d6425f1d6052c4
+cas_ref: sha256:902d0b203e16a47602c8a7a88921ebf5f06d59379c900221b0d6425f1d6052c4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

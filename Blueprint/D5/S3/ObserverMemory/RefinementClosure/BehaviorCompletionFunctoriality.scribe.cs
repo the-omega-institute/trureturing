@@ -48,6 +48,9 @@ internal sealed class BehaviorCompletionFunctorialityDocument
     private static Formula Typed(Formula value, Formula type) =>
         Seq(value, Colon, Sp, type);
 
+    private static Formula Apply(Formula function, params Formula[] arguments) =>
+        new Formula.Apply(function, [.. arguments]);
+
     private static Formula FunctorialityFormula()
     {
         Formula type = Seq(Operatorname, Grp(F.Id("Type")));
@@ -67,19 +70,55 @@ internal sealed class BehaviorCompletionFunctorialityDocument
         Formula secondStateMap = F.Id("k");
         Formula firstReadoutMap = F.Id("eta");
         Formula secondReadoutMap = F.Id("theta");
-        Formula sourceProjection = Call("completionProjection", sourceStep, sourceReadout);
-        Formula middleProjection = Call("completionProjection", middleStep, middleReadout);
+        Formula hstep = F.Id("hstep");
+        Formula kstep = F.Id("kstep");
+        Formula hreadout = F.Id("hreadout");
+        Formula kreadout = F.Id("kreadout");
+        Formula x = F.Id("x");
+        Formula y = F.Id("y");
+        Formula sourceProjection = Call(
+            "rangeFactorization", Call("completeItinerary", sourceStep, sourceReadout));
+        Formula middleProjection = Call(
+            "rangeFactorization", Call("completeItinerary", middleStep, middleReadout));
         Formula sourceCompletion = Call("ItineraryRange", sourceStep, sourceReadout);
         Formula middleCompletion = Call("ItineraryRange", middleStep, middleReadout);
-        Formula firstTransport = Call("completionTransport", firstStateMap, firstReadoutMap);
-        Formula secondTransport = Call("completionTransport", secondStateMap, secondReadoutMap);
+        Formula firstTransport = Call(
+            "completionTransport",
+            sourceStep, sourceReadout, middleStep, middleReadout,
+            firstStateMap, firstReadoutMap, hstep, hreadout);
+        Formula secondTransport = Call(
+            "completionTransport",
+            middleStep, middleReadout, targetStep, targetReadout,
+            secondStateMap, secondReadoutMap, kstep, kreadout);
+        Formula compositeReadoutProof = Grp(
+            Lambda, Sp, x, Colon, Sp, xType, Comma, Sp,
+            Call(
+                "trans",
+                Apply(kreadout, Apply(firstStateMap, x)),
+                Call("congrArg", secondReadoutMap, Apply(hreadout, x))));
         Formula compositeTransport = Call(
             "completionTransport",
+            sourceStep, sourceReadout, targetStep, targetReadout,
             Seq(secondStateMap, Sp, Circ, Sp, firstStateMap),
-            Seq(secondReadoutMap, Sp, Circ, Sp, firstReadoutMap));
+            Seq(secondReadoutMap, Sp, Circ, Sp, firstReadoutMap),
+            Call("trans", hstep, kstep),
+            compositeReadoutProof);
         Formula sourceShift = Call("itineraryUpdate", sourceStep, sourceReadout);
         Formula middleShift = Call("itineraryUpdate", middleStep, middleReadout);
         Formula candidate = Phi;
+        Formula hreadoutLaw = Seq(
+            Forall, Sp, Typed(x, xType), Comma, Sp,
+            Apply(middleReadout, Apply(firstStateMap, x)), Sp, Eq, Sp,
+            Apply(firstReadoutMap, Apply(sourceReadout, x)));
+        Formula kreadoutLaw = Seq(
+            Forall, Sp, Typed(y, yType), Comma, Sp,
+            Apply(targetReadout, Apply(secondStateMap, y)), Sp, Eq, Sp,
+            Apply(secondReadoutMap, Apply(middleReadout, y)));
+        Formula identityTransport = Call(
+            "completionTransport",
+            sourceStep, sourceReadout, sourceStep, sourceReadout,
+            F.Id("id"), F.Id("id"), F.Id("idLeft"),
+            Grp(Lambda, Sp, x, Colon, Sp, xType, Comma, Sp, F.Id("rfl")));
 
         return Disp(new Formula.Aligned([
             Seq(
@@ -103,17 +142,15 @@ internal sealed class BehaviorCompletionFunctorialityDocument
                 Typed(secondStateMap, Arrow(yType, zType)), Comma, Sp,
                 Typed(secondReadoutMap, Arrow(rType, sType)), Comma),
             Seq(
-                firstStateMap, Sp, Circ, Sp, sourceStep, Sp, Eq, Sp,
-                middleStep, Sp, Circ, Sp, firstStateMap, Comma),
+                Typed(hstep, Call(
+                    "Semiconj", firstStateMap, sourceStep, middleStep)), Comma),
             Seq(
-                secondStateMap, Sp, Circ, Sp, middleStep, Sp, Eq, Sp,
-                targetStep, Sp, Circ, Sp, secondStateMap, Comma),
+                Typed(kstep, Call(
+                    "Semiconj", secondStateMap, middleStep, targetStep)), Comma),
             Seq(
-                middleReadout, Sp, Circ, Sp, firstStateMap, Sp, Eq, Sp,
-                firstReadoutMap, Sp, Circ, Sp, sourceReadout, Comma),
+                Typed(hreadout, Grp(hreadoutLaw)), Comma),
             Seq(
-                targetReadout, Sp, Circ, Sp, secondStateMap, Sp, Eq, Sp,
-                secondReadoutMap, Sp, Circ, Sp, middleReadout, Sp, Rightarrow),
+                Typed(kreadout, Grp(kreadoutLaw)), Sp, Rightarrow),
             Seq(
                 middleProjection, Sp, Circ, Sp, firstStateMap, Sp, Eq, Sp,
                 firstTransport, Sp, Circ, Sp, sourceProjection, Sp, Land),
@@ -124,11 +161,9 @@ internal sealed class BehaviorCompletionFunctorialityDocument
                 candidate, Sp, Circ, Sp, sourceProjection, Sp, Rightarrow, Sp,
                 candidate, Sp, Eq, Sp, firstTransport, Close, Sp, Land),
             Seq(
-                firstTransport, Sp, Circ, Sp, sourceShift, Sp, Eq, Sp,
-                middleShift, Sp, Circ, Sp, firstTransport, Sp, Land),
+                Call("Semiconj", firstTransport, sourceShift, middleShift), Sp, Land),
             Seq(
-                Call("completionTransport", Call("id", xType), Call("id", bType)),
-                Sp, Eq, Sp, Call("id", sourceCompletion), Sp, Land),
+                identityTransport, Sp, Eq, Sp, F.Id("id"), Sp, Land),
             Seq(
                 compositeTransport, Sp, Eq, Sp,
                 secondTransport, Sp, Circ, Sp, firstTransport, Dot),

@@ -1,0 +1,10 @@
+ast_path: section/23-1-当前读数相同-下一读数不同/clause/4
+fingerprints:
+  raw_sha256: sha256:549e0a4ab890477bc0564839d5a8e3bc0da6aba0c068b97ec3afd1faccf5f3c5
+  normalized_sha256: sha256:549e0a4ab890477bc0564839d5a8e3bc0da6aba0c068b97ec3afd1faccf5f3c5
+cas_ref: sha256:549e0a4ab890477bc0564839d5a8e3bc0da6aba0c068b97ec3afd1faccf5f3c5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

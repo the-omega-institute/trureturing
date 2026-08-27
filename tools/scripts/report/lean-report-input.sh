@@ -355,6 +355,7 @@ producer_declared_paths() {
     tools/lean-inspector/inspect.sh \
     tools/lean-inspector/Inspector.lean \
     tools/lean-inspector/delta.py \
+    tools/lean-inspector/materials.py \
     tools/scripts/report/lean-report-input.sh \
     tools/scripts/lean-report-pair.sh \
     tools/StrataLint.Engine/packages.lock.json \

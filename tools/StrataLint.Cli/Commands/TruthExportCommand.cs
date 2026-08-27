@@ -29,8 +29,8 @@ internal static class TruthExportCommand
             var identity = DagLedgerCommandPreparation.Ask(repository.ResolveCurrentRevision);
             var snapshot = Decode(DagLedgerCommandPreparation.Ask(
                 () => repository.ReadRevision(identity.Revision)));
-            var reportBytes = File.ReadAllBytes(options.CandidateLeanReport);
-            var preparation = PrepareStrictHistory(repository, snapshot, identity, reportBytes);
+            var report = RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, snapshot);
+            var preparation = PrepareStrictHistory(repository, snapshot, identity, report);
             if (preparation.Outcome is FrozenLedgerValidationOutcome.Rejected rejected)
             {
                 return new ExplicitCommandResult(
@@ -71,12 +71,11 @@ internal static class TruthExportCommand
         IRepositoryGateway repository,
         RepositorySnapshot snapshot,
         FrozenRevisionIdentity identity,
-        ReadOnlySpan<byte> reportBytes)
+        LeanAxiomReport report)
     {
         var ledgerFiles = LedgerFiles(snapshot);
         var baseView = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
             ledgerFiles.ToImmutableDictionary(static file => file.Path)));
-        var report = RawLeanReportArtifact.Read(reportBytes, snapshot);
         var truth = DagLedgerCommandPreparation.BuildTruth(snapshot, report);
         var states = LeanTruthStates.Resolve(truth.Snapshot, truth.Lean);
         var adjacency = LeanImportAdjacency.Build(truth.Snapshot, truth.Lean);

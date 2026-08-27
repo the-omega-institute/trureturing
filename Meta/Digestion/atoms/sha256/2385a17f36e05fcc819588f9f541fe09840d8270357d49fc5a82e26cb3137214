@@ -1,0 +1,21 @@
+## 定义 55.3（自由保持动作）
+
+$$
+\mathcal A_{\mathrm{keep}}(x)
+=
+\{a:\forall e,\ F(x,a,e)\in\mathsf{FreeKernel}_{\mathrm{rob}}\}.
+$$
+
+按完整未来行为等价商掉重复动作后，可定义
+
+$$
+F_{\mathrm{rob}}(x)
+=
+\log_2
+|\mathcal A_{\mathrm{keep}}(x)/{\sim_x}|.
+$$
+
+所以 $x$ 属于保持核只说明至少有一条生存策略；它不保证当前仍有多个行为不同的自由保持动作。
+
+---
+

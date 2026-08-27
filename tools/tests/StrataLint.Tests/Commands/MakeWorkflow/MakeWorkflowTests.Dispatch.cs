@@ -174,6 +174,7 @@ public sealed partial class MakeWorkflowTests
             Recipe(makefile, "preflight"));
         var worktreeRecipe = Recipe(makefile, "worktree");
         Assert.Contains(WorktreeInitScriptPath, worktreeRecipe, StringComparison.Ordinal);
+        Assert.Contains("\"$(KIND)\" \"$(NAME)\"", worktreeRecipe, StringComparison.Ordinal);
         Assert.Contains("\"$(WORKTREE_DEST)\"", worktreeRecipe, StringComparison.Ordinal);
         // 回收**不得**是建树的前置(#2769)。此前它是依赖形式,于是每次 `make worktree`
         // 都无条件回收所有「已合并且干净」的 lane —— 而那正是一条刚建好、worker 尚未落笔

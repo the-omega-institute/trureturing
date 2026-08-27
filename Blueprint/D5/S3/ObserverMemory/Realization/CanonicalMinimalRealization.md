@@ -20,7 +20,7 @@ This closure result defines the reachable update used by the main minimal-realiz
 
 **Theorem 1.2 (Exact realizations factor onto causal itineraries).**
 
-$$\forall X, S, B: \operatorname{Type},\\{}F: X \to X, q: X \to B, R: X \to S,\\{}nu: S \to S, o: S \to B,\\{}(\forall x, R\left(F\left(x\right)\right) = nu\left(R\left(x\right)\right)) \land (\forall x, q\left(x\right) = o\left(R\left(x\right)\right)) \Rightarrow\\{}b_{q} = \operatorname{completeItinerary}\left(F, q\right), Z_{q} = \operatorname{range}\left(b_{q}\right),\\{}\exists! pi: \operatorname{range}\left(R\right) \to Z_{q}, \operatorname{Surjective}\left(pi\right) \land\\{}b_{q} = pi \circ \operatorname{rangeFactorization}\left(R\right) \land\\{}pi \circ \operatorname{reachableUpdate}\left(R, nu\right) = shift \circ pi.$$
+$$\forall X, S, B: \operatorname{Type},\\{}F: X \to X, q: X \to B, R: X \to S,\\{}nu: S \to S, o: S \to B,\\{}hcommute: \forall x: X, R\left(F\left(x\right)\right) = nu\left(R\left(x\right)\right),\\{}hreadout: \forall x: X, q\left(x\right) = o\left(R\left(x\right)\right),\\{}b_{q} = \operatorname{completeItinerary}\left(F, q\right), Z_{q} = \operatorname{range}\left(b_{q}\right),\\{}\exists! pi: \operatorname{range}\left(R\right) \to Z_{q}, \operatorname{Surjective}\left(pi\right) \land\\{}b_{q} = pi \circ \operatorname{rangeFactorization}\left(R\right) \land\\{}pi \circ \operatorname{reachableUpdate}\left(F, R, nu, hcommute\right) = shift \circ pi.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Realization/CanonicalMinimalRealization.canonical_minimal_realization` (`✓ std3`). ∎
 

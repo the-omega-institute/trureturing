@@ -65,7 +65,7 @@ internal sealed class MacroInterventionCarryCharacterizationDocument
             "MacroIntervention", intervention, concept, concept, ambient);
         Formula effectiveLaw = Call(
             "EffectiveImageDescent", intervention, concept, concept, effective);
-        Formula emptyCarry = Seq(carry, Sp, Eq, Sp, Emptyset);
+        Formula emptyCarry = Call("IsEmpty", carry);
         Formula ambientExists = Seq(
             Exists, Sp, ambient, Colon, Sp, Arrow(macroState, macroState), Comma, Sp,
             ambientLaw);

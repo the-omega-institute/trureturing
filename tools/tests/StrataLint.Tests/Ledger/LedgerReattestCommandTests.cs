@@ -482,7 +482,7 @@ public sealed class LedgerReattestCommandTests
                 FrozenLedgerChangeClassifier.AcceptedRoot.Replace('/', Path.DirectorySeparatorChar));
             FrozenLedgerTestData.WriteLedgerDirectory(LedgerPath, BaselineBytes);
             ReportPath = Path.Combine(temporary.Path, "candidate-lean-report.json");
-            File.WriteAllBytes(ReportPath, RawLeanReportArtifact.Write(snapshot, report).AsSpan());
+            RawLeanReportArtifact.WriteFile(ReportPath, snapshot, report);
             var changedPaths = new List<string>();
             if (descriptorDrift)
             {

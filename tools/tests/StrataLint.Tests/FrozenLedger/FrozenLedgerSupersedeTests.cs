@@ -445,20 +445,42 @@ public sealed partial class FrozenLedgerTests
     [Fact]
     public void BranchBRejectsCanonicalTrivialTruthStatementMaterial()
     {
-        var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
+        const string material = "statement-v1(uparams=[],type=ec(ns(n0,4:True),[]))";
+        var inlineReport = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
         {
             [PathFor("A")] = new LeanFileReport(
                 [],
                 [new LeanDeclaration(
                     "a",
                     "theorem",
-                    "statement-v1(uparams=[],type=ec(ns(n0,4:True),[]))",
+                    material,
                     [])]),
+        });
+        var loaded = false;
+        var lazyReport = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
+        {
+            [PathFor("A")] = new LeanFileReport(
+                [],
+                [new LeanDeclaration(
+                    "a",
+                    "theorem",
+                    CanonicalStatementWriter.StatementTypeAddress(material),
+                    "sha256:" + new string('a', 64),
+                    [],
+                    () =>
+                    {
+                        loaded = true;
+                        return material;
+                    })]),
         });
 
         Assert.False(LeanImportClosure.CandidateStatementsAvoidTrivialTruth(
-            report,
+            inlineReport,
             RepoPathFor("A")));
+        Assert.False(LeanImportClosure.CandidateStatementsAvoidTrivialTruth(
+            lazyReport,
+            RepoPathFor("A")));
+        Assert.True(loaded);
     }
 
     [Fact]

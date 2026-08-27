@@ -43,7 +43,7 @@ internal static class DuplicateStatementAdvisory
                     entry.Key,
                     declaration.NameKey,
                     declaration.Name,
-                    CanonicalStatementWriter.StatementTypeAddress(declaration.TypeRepresentation))))
+                    CanonicalStatementWriter.StatementTypeAddress(declaration))))
             .GroupBy(static statement => statement.Address, StringComparer.Ordinal)
             .OrderBy(static group => group.Key, StringComparer.Ordinal);
         foreach (var group in classes)

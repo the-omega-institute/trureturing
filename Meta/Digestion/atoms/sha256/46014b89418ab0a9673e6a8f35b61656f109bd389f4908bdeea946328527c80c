@@ -1,0 +1,1 @@
+- 不把 `NoDominatingCandidate` 的候选集语义偷换成 Stop 的可行集语义；56.3-B 特意令二者相等以排除该平凡差异；

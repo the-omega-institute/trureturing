@@ -60,22 +60,24 @@ internal sealed class BinaryProtocolDepthLowerBoundDocument : IScribeDocumentDef
         Formula target = F.Id("t");
         Formula depth = F.Id("d");
         Formula protocol = F.Id("pi");
+        Formula identifies = F.Id("identifies");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
         Formula naturalNumbers = Seq(Mathbb, Grp(F.Id("N")));
         Formula diversity = Call("worstFiberDiversity", current, target);
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
             Forall, Sp, state, Comma, Sp, currentCarrier, Comma, Sp, targetCarrier,
-            Comma, RowBreak, Grp(),
-            Fintype(state), Sp, Fintype(currentCarrier), Comma, RowBreak, Grp(),
-            current, Colon, Sp, state, Sp, To, Sp, currentCarrier, Comma, Sp,
-            target, Colon, Sp, state, Sp, To, Sp, targetCarrier, Comma,
+            Colon, Sp, type, Comma, RowBreak, Grp(),
+            Fintype(state), Comma, Sp, Fintype(currentCarrier), Comma, RowBreak, Grp(),
+            current, Colon, Sp, Call("Concept", state, currentCarrier), Comma, Sp,
+            target, Colon, Sp, Call("Concept", state, targetCarrier), Comma,
             RowBreak, Grp(),
-            depth, Sp, InMacro, Sp, naturalNumbers, Comma, Sp,
+            depth, Colon, Sp, naturalNumbers, Comma, Sp,
             protocol, Colon, Sp, Call("BinaryProtocol", state, depth), Comma,
             RowBreak, Grp(),
-            Call("IdentifiesGiven", current, target, protocol), Sp, Implies,
-            RowBreak, Grp(),
+            identifies, Colon, Sp, Call("IdentifiesGiven", current, target, protocol),
+            Comma, RowBreak, Grp(),
             Call("clog", D(2), diversity), Sp, Leq, Sp, depth, Dot,
             End, Grp(F.Id("gathered"))));
     }

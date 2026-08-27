@@ -1,0 +1,10 @@
+ast_path: section/已合并案号排除账/clause/2
+fingerprints:
+  raw_sha256: sha256:e3b8a55649ccfdd99738fb996d71230f2d15555c5ba14374eeb64c7ec09d2b2c
+  normalized_sha256: sha256:e3b8a55649ccfdd99738fb996d71230f2d15555c5ba14374eeb64c7ec09d2b2c
+cas_ref: sha256:e3b8a55649ccfdd99738fb996d71230f2d15555c5ba14374eeb64c7ec09d2b2c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

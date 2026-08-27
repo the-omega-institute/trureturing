@@ -337,11 +337,10 @@ public sealed partial class ProductionEnvironmentTests
         var currentRaw = Snapshot(fixture.Files);
         var baselineRaw = Snapshot(fixture.Baseline);
         var candidateReport = Path.Combine(temporary.Path, "candidate.json");
-        File.WriteAllBytes(
+        RawLeanReportArtifact.WriteFile(
             candidateReport,
-            RawLeanReportArtifact.Write(
-                Decode(currentRaw),
-                LeanAxiomReport.Create(fixture.Reports)).AsSpan());
+            Decode(currentRaw),
+            LeanAxiomReport.Create(fixture.Reports));
         var environment = new ProductionCliEnvironment(
             "/repo",
             new FakeRepositoryGateway(
