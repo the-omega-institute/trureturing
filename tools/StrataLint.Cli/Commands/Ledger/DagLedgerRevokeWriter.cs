@@ -39,13 +39,12 @@ internal static class DagLedgerRevokeWriter
                 RevocationPlanOutcome.Accepted accepted => accepted.Capability,
                 RevocationPlanOutcome.Rejected rejected => throw new FormatException(rejected.Message),
             };
-            var candidateBytes = FrozenLedgerGenerator.AppendRevocation(context.Baseline, plan);
-            var candidate = DagLedgerLoader.Load(candidateBytes.AsSpan()) switch
-            {
-                DagLedgerLoadOutcome.Loaded loaded => loaded.Syntax,
-                DagLedgerLoadOutcome.Invalid invalid => throw new FormatException(invalid.Message),
-                _ => throw new InvalidOperationException("unknown ledger load outcome"),
-            };
+            var drafts = FrozenLedgerGenerator.Revocation(context.Baseline, plan);
+            var eventFiles = DagLedgerAppendWriter.BuildNewEventFiles(drafts);
+            var candidate = DagLedgerCommandPreparation.ValidateGeneratedEventFiles(
+                context.BaseView,
+                eventFiles,
+                "generated Revoke suffix");
             var trustedReferences = TrustedFrozenGitReferences.CreateForTrustedAdapter([]);
             _ = FrozenLedger.ValidateCandidate(
                 candidate,
@@ -58,11 +57,6 @@ internal static class DagLedgerRevokeWriter
                 FrozenLedgerValidationOutcome.Rejected rejected => throw new FormatException(rejected.Message),
             };
 
-            var eventFiles = DagLedgerAppendWriter.BuildNewEventFiles(candidate.Lines);
-            _ = DagLedgerCommandPreparation.ValidateGeneratedEventFiles(
-                context.BaseView,
-                eventFiles,
-                "generated Revoke suffix");
             DagLedgerAppendWriter.WriteEventFiles(
                 context.LedgerPath,
                 eventFiles,

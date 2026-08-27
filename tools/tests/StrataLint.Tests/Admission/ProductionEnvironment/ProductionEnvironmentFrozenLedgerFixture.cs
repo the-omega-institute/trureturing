@@ -45,15 +45,10 @@ public sealed partial class ProductionEnvironmentTests
             RevocationEvidenceValidator.Validate(evidence, baselineLedger, receipts)).Capability;
         var plan = Assert.IsType<RevocationPlanOutcome.Accepted>(
             RevocationPlanner.Plan(baselineLedger, [validated])).Capability;
-        var revokedBytes = FrozenLedgerGenerator.AppendRevocation(baselineLedger, plan);
-        var revokeLine = FrozenLedgerTestData.Lines(revokedBytes)[^1];
-        using var revokeDocument = JsonDocument.Parse(
-            revokeLine.AsMemory(0, revokeLine.Length - 1));
-        var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
-            "Revoke",
-            revokeDocument.RootElement.GetProperty("payload"));
-        var path = FrozenLedgerChangeClassifier.AcceptedPath(encoded.Hash);
-        fixture.Files[path] = Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
+        var revokeFile = Assert.Single(DagLedgerAppendWriter.BuildNewEventFiles(
+            FrozenLedgerGenerator.Revocation(baselineLedger, plan)));
+        var path = revokeFile.Path.Value;
+        fixture.Files[path] = revokeFile.Text;
         fixture.Files.Remove(RuleFixture.RingPath);
         fixture.Reports.Remove(RuleFixture.RingPath);
         var environment = new ProductionCliEnvironment(

@@ -86,10 +86,10 @@ internal static class TruthExportCommand
             adjacency,
             baseView,
             identity);
-        var syntax = DagLedgerCommandPreparation.LoadTrustedLedgerFiles(
+        var events = DagLedgerCommandPreparation.LoadTrustedLedgerFiles(
             ledgerFiles,
             "frozen ledger");
-        _ = TrustReferences(repository, syntax);
+        _ = TrustReferences(repository, events);
         var outcome = FrozenLedger.ValidateTrustedHistory(baseView, catalog);
         return new StrictTruthHistoryPreparation(truth, states, baseView, outcome);
     }
@@ -111,9 +111,9 @@ internal static class TruthExportCommand
 
     private static TrustedFrozenGitReferences TrustReferences(
         IRepositoryGateway repository,
-        FrozenLedgerSyntax syntax)
+        ImmutableArray<DagLedgerFileEvent> events)
     {
-        var references = FrozenLedger.ScanReferences(syntax) switch
+        var references = FrozenLedger.ScanReferences(events) switch
         {
             FrozenLedgerReferenceScanOutcome.Accepted accepted => accepted.References,
             FrozenLedgerReferenceScanOutcome.Rejected rejected => throw new InvalidOperationException(

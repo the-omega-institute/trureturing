@@ -1,7 +1,6 @@
 using System.Collections.Immutable;
 using System.Reflection;
 using System.Text.Json;
-using StrataLint.Cli;
 using StrataLint.Engine;
 using static StrataLint.Tests.FrozenLedgerTestData;
 
@@ -13,10 +12,10 @@ public sealed class FrozenLedgerSchemaV4Tests
     public void CurrentFreezeWriterOmitsProjectionAliasesAndUsesTheEventHashAddress()
     {
         var catalog = BuildCatalog(Module("A"));
-        var baselineBytes = FrozenLedgerGenerator.GenerateGenesis(
-            catalog,
-            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
-        var freezePayload = Payload(Lines(baselineBytes)[1]);
+        var freezePayload = FrozenLedgerCanonicalWriter.FreezeElement(
+            FrozenLedgerCanonicalWriter.FreezePayload(
+                catalog.Environment,
+                Assert.Single(catalog.ClosedNodes)));
         var freezeEvent = FrozenLedgerCanonicalWriter.WriteDagEvent("Freeze", freezePayload);
 
         Assert.Equal(4, FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion);
@@ -51,7 +50,7 @@ public sealed class FrozenLedgerSchemaV4Tests
         var freeze = FrozenLedgerCanonicalWriter.WriteDagEvent("Freeze", payload);
         using var document = JsonDocument.Parse(freeze.Bytes.AsSpan()[..^1].ToArray());
         var root = System.Text.Json.Nodes.JsonNode.Parse(document.RootElement.GetRawText())!.AsObject();
-        root["previous_hash"] = FrozenLedgerCanonicalWriter.ZeroHash;
+        root["previous_hash"] = "sha256:" + new string('0', 64);
         root["sequence"] = 1;
         var legacyEnvelope = JsonSerializer.SerializeToElement(root);
 
@@ -86,10 +85,10 @@ public sealed class FrozenLedgerSchemaV4Tests
     public void CurrentFreezeWriterOmitsTheConstantOnlyVerdictFamily()
     {
         var catalog = BuildCatalog(Module("A"));
-        var bytes = FrozenLedgerGenerator.GenerateGenesis(
-            catalog,
-            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
-        var payload = Payload(Lines(bytes)[1]);
+        var payload = FrozenLedgerCanonicalWriter.FreezeElement(
+            FrozenLedgerCanonicalWriter.FreezePayload(
+                catalog.Environment,
+                Assert.Single(catalog.ClosedNodes)));
 
         foreach (var field in new[] { "case_class", "evaluation", "expected", "truth_state" })
         {
@@ -148,12 +147,6 @@ public sealed class FrozenLedgerSchemaV4Tests
         {
             Assert.False(payload.TryGetProperty("node_path", out _));
         }
-    }
-
-    private static JsonElement Payload(byte[] line)
-    {
-        using var document = JsonDocument.Parse(line.AsMemory(0, line.Length - 1));
-        return document.RootElement.GetProperty("payload").Clone();
     }
 
     private static int SchemaVersion(ImmutableArray<byte> bytes)

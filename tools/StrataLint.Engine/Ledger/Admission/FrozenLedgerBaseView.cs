@@ -54,21 +54,6 @@ internal sealed class FrozenLedgerBaseView
 
     internal FrozenLedgerConsistent ToWriterBaseline()
     {
-        var typed = ImmutableArray.CreateBuilder<FrozenLedgerEvent>();
-        foreach (var item in Events)
-        {
-            var projected = ProjectWriterEvent(
-                item,
-                typed.Count,
-                typed.Count == 0
-                    ? FrozenLedgerCanonicalWriter.ZeroHash
-                    : EventHash(typed[^1]));
-            if (projected is not null)
-            {
-                typed.Add(projected);
-            }
-        }
-
         var revoked = Events
             .Where(static item => item.EventType == "Revoke")
             .SelectMany(static item => FrozenLedgerAttestationChain.RequiredStringArray(
@@ -81,8 +66,6 @@ internal sealed class FrozenLedgerBaseView
             .OrderBy(static material => material.RepoPath.Value, StringComparer.Ordinal)
             .ToImmutableArray();
         return FrozenLedgerConsistent.Create(
-            ImmutableArray<byte>.Empty,
-            typed.ToImmutable(),
             activeNodes,
             EventSetRoot(),
             corpusRoot: string.Empty,
@@ -90,63 +73,29 @@ internal sealed class FrozenLedgerBaseView
             ActiveByCase,
             AllCaseIds,
             revoked,
-            eventCount: Events.Length,
-            syntaxLineCount: 0);
+            EventHashes,
+            Events.Length);
     }
 
-    private static FrozenLedgerEvent? ProjectWriterEvent(
-        TrustedFrozenLedgerEvent item,
-        int sequence,
-        string previousHash) => item.EventType switch
-        {
-            "Genesis" => new FrozenLedgerEvent.Genesis(
-                sequence,
-                item.EventHash,
-                previousHash,
-                ReadGenesis(item.Payload)),
-            "Freeze" => new FrozenLedgerEvent.Freeze(
-                sequence,
-                item.EventHash,
-                previousHash,
-                FrozenLedgerBaseViewReader.ReadFreeze(item.Payload, item.EventHash).Payload),
-            "Reattest" => null,
-            "Revoke" => new FrozenLedgerEvent.Revoke(
-                sequence,
-                item.EventHash,
-                previousHash,
-                FrozenLedger.ReadTrustedRevoke(item.Payload)),
-            _ => throw new InvalidOperationException(
-                $"trusted frozen ledger contains unsupported event type {item.EventType}"),
-        };
-
-    private static string EventHash(FrozenLedgerEvent item) => item switch
-    {
-        FrozenLedgerEvent.Genesis genesis => genesis.EventHash,
-        FrozenLedgerEvent.Freeze freeze => freeze.EventHash,
-        FrozenLedgerEvent.Revoke revoke => revoke.EventHash,
-        _ => throw new InvalidOperationException("unknown projected frozen ledger event"),
-    };
-
     internal string EventSetRoot(IEnumerable<string>? suffixEventHashes = null)
+        => FrozenEventSetRoot.Compute(
+            Events.Select(static item => item.EventHash).Concat(suffixEventHashes ?? []));
+
+}
+
+internal static class FrozenEventSetRoot
+{
+    internal static string Compute(IEnumerable<string> eventHashes)
     {
         var material = JsonSerializer.SerializeToElement(new
         {
-            event_hashes = Events.Select(static item => item.EventHash)
-                .Concat(suffixEventHashes ?? [])
-                .Order(StringComparer.Ordinal),
+            event_hashes = eventHashes.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal),
             schema = "frozen-event-set-v1",
         });
         return FrozenContentHash.Compute(
             FrozenHashDomains.FrozenEventSet,
             StructuredCanonicalWriter.WriteJson(material).AsSpan());
     }
-
-    private static FrozenGenesisPayload ReadGenesis(JsonElement payload) => new(
-        FrozenLedgerAttestationChain.RequiredString(payload, "generator_blob_oid"),
-        FrozenLedgerAttestationChain.RequiredString(payload, "origin_commit_oid"),
-        FrozenLedgerAttestationChain.RequiredString(payload, "origin_tree_oid"),
-        FrozenLedgerAttestationChain.RequiredInteger(payload, "protocol_version"),
-        FrozenLedgerAttestationChain.RequiredString(payload, "rule_catalog_root"));
 }
 
 internal static class FrozenLedgerBaseViewReader

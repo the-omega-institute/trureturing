@@ -12,26 +12,6 @@ public static partial class FrozenLedger
         internal ImmutableArray<RepoPath> Paths { get; } = paths;
     }
 
-    public static FrozenLedgerValidationOutcome ValidateHistory(
-        FrozenLedgerSyntax syntax,
-        FrozenMaterialCatalog catalog,
-        TrustedFrozenGitReferences trustedReferences) =>
-        ValidateHistory(
-            syntax,
-            catalog,
-            trustedReferences,
-            requireCompleteCatalog: true);
-
-    internal static FrozenLedgerValidationOutcome ValidateHistoryPrefix(
-        FrozenLedgerSyntax syntax,
-        FrozenMaterialCatalog catalog,
-        TrustedFrozenGitReferences trustedReferences) =>
-        ValidateHistory(
-            syntax,
-            catalog,
-            trustedReferences,
-            requireCompleteCatalog: false);
-
     internal static FrozenLedgerValidationOutcome ValidateTrustedHistory(
         FrozenLedgerBaseView baseView,
         FrozenMaterialCatalog catalog)
@@ -45,162 +25,24 @@ public static partial class FrozenLedger
                 static item => item.Value,
                 StringComparer.Ordinal);
             ReconcileHistoricalActive(active, catalog, requireCompleteCatalog: true);
-            var projected = baseView.ToWriterBaseline();
+            var baseline = baseView.ToWriterBaseline();
             var activeEntries = active.ToImmutableDictionary(StringComparer.Ordinal);
             var activeNodes = activeEntries.Values
                 .Select(static entry => entry.Material)
                 .OrderBy(static node => node.RepoPath.Value, StringComparer.Ordinal)
                 .ToImmutableArray();
             return new FrozenLedgerValidationOutcome.Accepted(FrozenLedgerConsistent.Create(
-                projected.RawBytes,
-                projected.Events,
                 activeNodes,
-                projected.HeadHash,
+                baseline.HeadHash,
                 ComputeCorpusRoot(
-                    projected.HeadHash,
+                    baseline.HeadHash,
                     activeEntries.Values.Select(static entry => entry.Payload).ToImmutableArray()),
                 ComputeFrozenGraphRoot(activeNodes),
                 activeEntries,
                 baseView.AllCaseIds,
-                projected.RevokedFrozenNodeIds,
-                eventCount: baseView.EventCount,
-                syntaxLineCount: 0));
-        }
-        catch (Exception exception) when (
-            exception is FormatException or JsonException or InvalidOperationException or KeyNotFoundException)
-        {
-            var rejected = new FrozenLedgerValidationOutcome.Rejected(exception.Message);
-            return exception is HistoryFinalStateException finalState
-                ? rejected with
-                {
-                    HistoryFailurePaths = finalState.Paths,
-                }
-                : rejected;
-        }
-    }
-
-    private static FrozenLedgerValidationOutcome ValidateHistory(
-        FrozenLedgerSyntax syntax,
-        FrozenMaterialCatalog catalog,
-        TrustedFrozenGitReferences trustedReferences,
-        bool requireCompleteCatalog)
-    {
-        ArgumentNullException.ThrowIfNull(syntax);
-        ArgumentNullException.ThrowIfNull(catalog);
-        ArgumentNullException.ThrowIfNull(trustedReferences);
-        try
-        {
-            ValidateSyntaxEnvelope(syntax);
-            if (syntax.Lines.Length == 0)
-            {
-                throw new FormatException("Frozen ledger is empty.");
-            }
-
-            var events = ImmutableArray.CreateBuilder<FrozenLedgerEvent>(syntax.Lines.Length);
-            var active = new Dictionary<string, FrozenActiveEntry>(StringComparer.Ordinal);
-            var activePaths = new HashSet<RepoPath>();
-            var allCaseIds = new HashSet<string>(StringComparer.Ordinal);
-            var revoked = new HashSet<FrozenNodeId>();
-            var previous = ZeroHash;
-            for (var index = 0; index < syntax.Lines.Length; index++)
-            {
-                var line = syntax.Lines[index];
-                var root = line.Value;
-                RequireObjectFields(
-                    root,
-                    "event envelope",
-                    "event_hash", "event_type", "payload", "previous_hash", "schema_version", "sequence");
-                RequireCanonicalLine(line);
-                var sequence = RequiredNonnegativeInteger(root, "sequence");
-                var previousHash = RequiredString(root, "previous_hash");
-                var eventHash = RequiredString(root, "event_hash");
-                if (sequence != index
-                    || RequiredNonnegativeInteger(root, "schema_version") != 1
-                    || previousHash != previous
-                    || !FrozenHashSyntax.IsSha256(eventHash)
-                    || eventHash != ComputeEventHash(root))
-                {
-                    throw new FormatException("Frozen history has an invalid sequence/hash chain.");
-                }
-
-                var eventType = RequiredString(root, "event_type");
-                var payload = root.GetProperty("payload");
-                if (index == 0)
-                {
-                    if (eventType != "Genesis")
-                    {
-                        throw new FormatException("Sequence zero must be Genesis.");
-                    }
-
-                    events.Add(new FrozenLedgerEvent.Genesis(
-                        sequence,
-                        eventHash,
-                        previousHash,
-                        ParseHistoricalGenesis(payload, catalog)));
-                }
-                else if (eventType == "Freeze")
-                {
-                    var freeze = ParseHistoricalFreeze(payload, trustedReferences);
-                    var freezePath = RepoPath.CreateKnown(freeze.Input.DescriptorSelector);
-                    if (!allCaseIds.Add(freeze.CaseId)
-                        || !activePaths.Add(freezePath))
-                    {
-                        throw new FormatException("Frozen history reused a case ID or active module path.");
-                    }
-
-                    active.Add(
-                        freeze.CaseId,
-                        new FrozenActiveEntry(
-                            HistoricalMaterial(freeze),
-                            freeze,
-                            eventHash,
-                            AxiomClosureKnown: freeze.HasAxiomClosure));
-                    events.Add(new FrozenLedgerEvent.Freeze(sequence, eventHash, previousHash, freeze));
-                }
-                else if (eventType == "Revoke")
-                {
-                    var revoke = ParseHistoricalRevoke(payload, events, active, previous);
-                    foreach (var caseId in revoke.AffectedCaseIds)
-                    {
-                        var entry = active[caseId];
-                        active.Remove(caseId);
-                        activePaths.Remove(entry.Material.RepoPath);
-                        revoked.Add(entry.Material.FrozenNodeId);
-                    }
-
-                    events.Add(new FrozenLedgerEvent.Revoke(
-                        sequence,
-                        eventHash,
-                        previousHash,
-                        revoke));
-                }
-                else
-                {
-                    throw new FormatException($"Unknown frozen event type {eventType}.");
-                }
-
-                previous = eventHash;
-            }
-
-            ReconcileHistoricalActive(active, catalog, requireCompleteCatalog);
-
-            var activeEntries = active.ToImmutableDictionary(StringComparer.Ordinal);
-            var activeNodes = activeEntries.Values
-                .Select(static entry => entry.Material)
-                .OrderBy(static node => node.RepoPath.Value, StringComparer.Ordinal)
-                .ToImmutableArray();
-            return new FrozenLedgerValidationOutcome.Accepted(FrozenLedgerConsistent.Create(
-                syntax.RawBytes,
-                events.MoveToImmutable(),
-                activeNodes,
-                previous,
-                ComputeCorpusRoot(
-                    previous,
-                    activeEntries.Values.Select(static entry => entry.Payload).ToImmutableArray()),
-                ComputeFrozenGraphRoot(activeNodes),
-                activeEntries,
-                allCaseIds.ToImmutableHashSet(StringComparer.Ordinal),
-                revoked.ToImmutableHashSet()));
+                baseline.RevokedFrozenNodeIds,
+                baseline.EventHashes,
+                baseView.EventCount));
         }
         catch (Exception exception) when (
             exception is FormatException or JsonException or InvalidOperationException or KeyNotFoundException)
@@ -261,11 +103,12 @@ public static partial class FrozenLedger
                     $"Active module {material.RepoPath.Value} current axiom closure exceeds the standard axiom allowlist.");
             }
 
-            var materialMatches = HistoricalActiveFreezeMatches(
+            var materialMatches = FrozenLedgerHistoricalFreezeMatcher.HistoricalActiveFreezeMatches(
                 entry.Payload,
                 material,
                 recordedPathsByIdentity,
-                currentPathsByIdentity);
+                currentPathsByIdentity,
+                out _);
             if (materialMatches)
             {
                 active[caseId] = entry with { Material = material };
@@ -304,78 +147,6 @@ public static partial class FrozenLedger
             RequiredStringArray(payload, "root_case_ids"));
     }
 
-    private static FrozenFreezePayload ParseHistoricalFreeze(
-        JsonElement payload,
-        TrustedFrozenGitReferences trustedReferences)
-    {
-        RequireEventPayloadFields(payload, "Freeze");
-        var input = ParseInput(payload.GetProperty("input"));
-        var pathText = input.DescriptorSelector;
-        if (!RepoPath.TryCreate(pathText, out var path))
-        {
-            throw new FormatException($"Freeze has invalid node_path {pathText}.");
-        }
-
-        var statement = ParseStatementId(RequiredString(payload, "statement_id"), "Freeze statement");
-        var witness = ParseWitnessId(RequiredString(payload, "witness_id"), "Freeze witness");
-        var frozen = ParseFrozenNodeId(RequiredString(payload, "frozen_node_id"), "Freeze node");
-        var result = new FrozenFreezePayload(
-            RequiredString(payload, "case_id"),
-            ParseDeclarationStatementIds(payload),
-            frozen,
-            input,
-            ParseFrozenNodeIds(payload, "prerequisite_frozen_node_ids"),
-            statement,
-            witness)
-        {
-            AxiomClosure = ParseOptionalAxiomClosure(payload),
-        };
-        if (!trustedReferences.Covers(result.Input))
-        {
-            throw new FormatException("Historical Freeze input has no validated Git commit/tree/blob capability.");
-        }
-        if (result.CaseId != FrozenLedgerCanonicalWriter.CaseId(frozen)
-            || result.Input.DescriptorSelector != path.Value)
-        {
-            throw new FormatException($"Historical Freeze payload is not a canonical Closed module at {path.Value}.");
-        }
-
-        return result;
-    }
-
-    private static FrozenNodeMaterial HistoricalMaterial(FrozenFreezePayload payload) => new(
-        RepoPath.CreateKnown(payload.Input.DescriptorSelector),
-        payload.DeclarationStatementIds,
-        payload.StatementId,
-        payload.WitnessId,
-        payload.FrozenNodeId,
-        payload.PrerequisiteFrozenNodeIds,
-        payload.HasAxiomClosure ? payload.AxiomClosure : ImmutableArray<string>.Empty,
-        new FrozenModuleAttestation(
-            RepoPath.CreateKnown(payload.Input.DescriptorSelector),
-            payload.Input.DescriptorBlobOid));
-
-    private static bool HistoricalActiveFreezeMatches(
-        FrozenFreezePayload payload,
-        FrozenNodeMaterial material,
-        IReadOnlyDictionary<FrozenNodeId, RepoPath> recordedPathsByIdentity,
-        IReadOnlyDictionary<FrozenNodeId, RepoPath> currentPathsByIdentity) =>
-        payload.DeclarationStatementIds.SequenceEqual(material.DeclarationStatementIds)
-        && payload.StatementId == material.StatementId
-        && material.AxiomClosure.All(LeanAxiomFacts.IsStandard)
-        && TryResolvePrerequisitePaths(
-            material.PrerequisiteFrozenNodeIds,
-            currentPathsByIdentity,
-            out var currentPrerequisitePaths,
-            out _)
-        && (!TryResolvePrerequisitePaths(
-                payload.PrerequisiteFrozenNodeIds,
-                recordedPathsByIdentity,
-                out var recordedPrerequisitePaths,
-                out _)
-            || recordedPrerequisitePaths.SequenceEqual(currentPrerequisitePaths))
-        && payload.Input.DescriptorSelector == material.RepoPath.Value;
-
     private static ImmutableDictionary<FrozenNodeId, RepoPath> FrozenPathsByIdentity(
         params IEnumerable<FrozenNodeMaterial>[] materialGroups)
     {
@@ -394,41 +165,4 @@ public static partial class FrozenLedger
 
         return result.ToImmutable();
     }
-
-    private static bool TryResolvePrerequisitePaths(
-        ImmutableArray<FrozenNodeId> identities,
-        IReadOnlyDictionary<FrozenNodeId, RepoPath> pathsByIdentity,
-        out ImmutableArray<RepoPath> paths,
-        out FrozenNodeId? unresolvedIdentity)
-    {
-        var resolved = ImmutableArray.CreateBuilder<RepoPath>(identities.Length);
-        foreach (var identity in identities)
-        {
-            if (!pathsByIdentity.TryGetValue(identity, out var path))
-            {
-                paths = [];
-                unresolvedIdentity = identity;
-                return false;
-            }
-
-            resolved.Add(path);
-        }
-
-        paths = resolved
-            .Distinct()
-            .OrderBy(static path => path.Value, StringComparer.Ordinal)
-            .ToImmutableArray();
-        unresolvedIdentity = null;
-        return true;
-    }
-
-    private static StatementId ParseStatementId(string value, string label) =>
-        FrozenHashSyntax.IsSha256(value)
-            ? StatementId.Create(value)
-            : throw new FormatException($"{label} is malformed.");
-
-    private static WitnessId ParseWitnessId(string value, string label) =>
-        FrozenHashSyntax.IsSha256(value)
-            ? WitnessId.Create(value)
-            : throw new FormatException($"{label} is malformed.");
 }

@@ -7,77 +7,6 @@ namespace StrataLint.Engine;
 
 public static partial class FrozenLedger
 {
-    private static void ValidateSyntaxEnvelope(FrozenLedgerSyntax syntax)
-    {
-        var concatenated = syntax.Lines.SelectMany(static line => line.RawBytes).ToArray();
-        if (!syntax.RawBytes.AsSpan().SequenceEqual(concatenated))
-        {
-            throw new FormatException("Frozen ledger syntax lines do not reproduce the raw bytes.");
-        }
-    }
-
-    private static void ValidateSuffixSyntaxEnvelope(FrozenLedgerSyntax syntax, int startIndex)
-    {
-        var prefixLength = syntax.Lines.Take(startIndex).Sum(static line => line.RawBytes.Length);
-        var suffix = syntax.Lines.Skip(startIndex).SelectMany(static line => line.RawBytes).ToArray();
-        if (prefixLength > syntax.RawBytes.Length
-            || !syntax.RawBytes.AsSpan()[prefixLength..].SequenceEqual(suffix))
-        {
-            throw new FormatException("Frozen ledger suffix lines do not reproduce the suffix bytes.");
-        }
-    }
-
-    private static void RequireCanonicalLine(FrozenLedgerLineSyntax line)
-    {
-        var canonical = StructuredCanonicalWriter.WriteJson(line.Value);
-        if (!line.RawBytes.AsSpan().SequenceEqual(canonical.AsSpan()))
-        {
-            throw new FormatException("Frozen event bytes are not canonical JSONL.");
-        }
-    }
-
-    private static FrozenGenesisPayload ParseGenesis(
-        JsonElement payload,
-        FrozenMaterialCatalog catalog) =>
-        ParseGenesis(payload, catalog, requireCurrentRuleCatalog: true);
-
-    private static FrozenGenesisPayload ParseHistoricalGenesis(
-        JsonElement payload,
-        FrozenMaterialCatalog catalog) =>
-        ParseGenesis(payload, catalog, requireCurrentRuleCatalog: false);
-
-    private static FrozenGenesisPayload ParseGenesis(
-        JsonElement payload,
-        FrozenMaterialCatalog catalog,
-        bool requireCurrentRuleCatalog)
-    {
-        RequireObjectFields(
-            payload,
-            "Genesis payload",
-            "generator_blob_oid", "origin_commit_oid", "origin_tree_oid", "protocol_version", "rule_catalog_root");
-        var result = new FrozenGenesisPayload(
-            RequiredString(payload, "generator_blob_oid"),
-            RequiredString(payload, "origin_commit_oid"),
-            RequiredString(payload, "origin_tree_oid"),
-            RequiredNonnegativeInteger(payload, "protocol_version"),
-            RequiredString(payload, "rule_catalog_root"));
-        if (!FrozenHashSyntax.IsGitOid(result.GeneratorBlobOid)
-            || !FrozenHashSyntax.IsSha256(result.RuleCatalogRoot)
-            || result.ProtocolVersion != 1
-            || !string.Equals(result.OriginCommitOid, catalog.Environment.OriginCommitOid, StringComparison.Ordinal)
-            || !string.Equals(result.OriginTreeOid, catalog.Environment.OriginTreeOid, StringComparison.Ordinal)
-            || requireCurrentRuleCatalog
-                && !string.Equals(
-                    result.RuleCatalogRoot,
-                    RuleCatalog.Default.RootSha256,
-                    StringComparison.Ordinal))
-        {
-            throw new FormatException("Genesis payload does not bind the validated origin/environment/catalog.");
-        }
-
-        return result;
-    }
-
     private static FrozenFreezePayload ParseFreeze(
         JsonElement payload,
         FrozenMaterialCatalog catalog,
@@ -222,21 +151,6 @@ public static partial class FrozenLedger
         }
 
         return result;
-    }
-
-    private static string ComputeEventHash(JsonElement root)
-    {
-        var material = JsonSerializer.SerializeToElement(new
-        {
-            event_type = RequiredString(root, "event_type"),
-            payload = root.GetProperty("payload"),
-            previous_hash = RequiredString(root, "previous_hash"),
-            schema_version = RequiredNonnegativeInteger(root, "schema_version"),
-            sequence = RequiredNonnegativeInteger(root, "sequence"),
-        });
-        return FrozenContentHash.Compute(
-            FrozenHashDomains.FrozenEvent,
-            StructuredCanonicalWriter.WriteJson(material).AsSpan());
     }
 
     private static string ComputeCorpusRoot(

@@ -1,21 +1,7 @@
-using System.Buffers.Binary;
 using System.Collections.Immutable;
-using System.Text.Json;
 using Dunet;
 
 namespace StrataLint.Engine;
-
-public sealed record FrozenLedgerLineSyntax(
-    ImmutableArray<byte> RawBytes,
-    JsonElement Value,
-    string? SourceDagEventHash = null)
-{
-    internal int? SourceDagSchemaVersion { get; init; }
-}
-
-public sealed record FrozenLedgerSyntax(
-    ImmutableArray<byte> RawBytes,
-    ImmutableArray<FrozenLedgerLineSyntax> Lines);
 
 public sealed record FrozenLedgerInput(
     string BaseCommitOid,
@@ -23,13 +9,6 @@ public sealed record FrozenLedgerInput(
     string DescriptorBlobOid,
     string DescriptorSelector,
     ImmutableArray<string> SupportingBlobOids);
-
-public sealed record FrozenGenesisPayload(
-    string GeneratorBlobOid,
-    string OriginCommitOid,
-    string OriginTreeOid,
-    int ProtocolVersion,
-    string RuleCatalogRoot);
 
 public sealed record FrozenFreezePayload(
     string CaseId,
@@ -53,33 +32,9 @@ public sealed record FrozenRevokePayload(
     string GraphRoot,
     ImmutableArray<string> RootCaseIds);
 
-[Union(EnableImplicitConversions = false)]
-public partial record FrozenLedgerEvent
-{
-    public partial record Genesis(
-        int Sequence,
-        string EventHash,
-        string PreviousHash,
-        FrozenGenesisPayload Payload);
-
-    public partial record Freeze(
-        int Sequence,
-        string EventHash,
-        string PreviousHash,
-        FrozenFreezePayload Payload);
-
-    public partial record Revoke(
-        int Sequence,
-        string EventHash,
-        string PreviousHash,
-        FrozenRevokePayload Payload);
-}
-
 public sealed class FrozenLedgerConsistent
 {
     private FrozenLedgerConsistent(
-        ImmutableArray<byte> rawBytes,
-        ImmutableArray<FrozenLedgerEvent> events,
         ImmutableArray<FrozenNodeMaterial> activeFrozenNodes,
         string headHash,
         string corpusRoot,
@@ -87,11 +42,9 @@ public sealed class FrozenLedgerConsistent
         ImmutableDictionary<string, FrozenActiveEntry> activeEntries,
         ImmutableHashSet<string> allCaseIds,
         ImmutableHashSet<FrozenNodeId> revokedFrozenNodeIds,
-        int eventCount,
-        int syntaxLineCount)
+        ImmutableHashSet<string> eventHashes,
+        int eventCount)
     {
-        RawBytes = rawBytes;
-        Events = events;
         ActiveFrozenNodes = activeFrozenNodes;
         HeadHash = headHash;
         CorpusRoot = corpusRoot;
@@ -99,11 +52,9 @@ public sealed class FrozenLedgerConsistent
         ActiveEntries = activeEntries;
         AllCaseIds = allCaseIds;
         RevokedFrozenNodeIds = revokedFrozenNodeIds;
+        EventHashes = eventHashes;
         EventCount = eventCount;
-        SyntaxLineCount = syntaxLineCount;
     }
-
-    public ImmutableArray<FrozenLedgerEvent> Events { get; }
 
     public ImmutableArray<FrozenNodeMaterial> ActiveFrozenNodes { get; }
 
@@ -115,19 +66,15 @@ public sealed class FrozenLedgerConsistent
 
     public ImmutableHashSet<FrozenNodeId> RevokedFrozenNodeIds { get; }
 
-    internal ImmutableArray<byte> RawBytes { get; }
-
     internal ImmutableDictionary<string, FrozenActiveEntry> ActiveEntries { get; }
 
     internal ImmutableHashSet<string> AllCaseIds { get; }
 
+    internal ImmutableHashSet<string> EventHashes { get; }
+
     internal int EventCount { get; }
 
-    internal int SyntaxLineCount { get; }
-
     internal static FrozenLedgerConsistent Create(
-        ImmutableArray<byte> rawBytes,
-        ImmutableArray<FrozenLedgerEvent> events,
         ImmutableArray<FrozenNodeMaterial> activeFrozenNodes,
         string headHash,
         string corpusRoot,
@@ -135,11 +82,9 @@ public sealed class FrozenLedgerConsistent
         ImmutableDictionary<string, FrozenActiveEntry> activeEntries,
         ImmutableHashSet<string> allCaseIds,
         ImmutableHashSet<FrozenNodeId> revokedFrozenNodeIds,
-        int? eventCount = null,
-        int? syntaxLineCount = null) =>
+        ImmutableHashSet<string> eventHashes,
+        int eventCount) =>
         new(
-            rawBytes,
-            events,
             activeFrozenNodes,
             headHash,
             corpusRoot,
@@ -147,8 +92,8 @@ public sealed class FrozenLedgerConsistent
             activeEntries,
             allCaseIds,
             revokedFrozenNodeIds,
-            eventCount ?? events.Length,
-            syntaxLineCount ?? events.Length);
+            eventHashes,
+            eventCount);
 }
 
 internal sealed record FrozenActiveEntry(

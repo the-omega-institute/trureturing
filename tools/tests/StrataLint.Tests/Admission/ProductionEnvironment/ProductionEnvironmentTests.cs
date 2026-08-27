@@ -512,20 +512,14 @@ public sealed partial class ProductionEnvironmentTests
         };
         var baselineCatalog = Catalog(fixture.Baseline, fixture.BaselineReports, environment);
         var currentCatalog = Catalog(fixture.Files, fixture.Reports, environment);
-        var baselineLedger = FrozenLedgerGenerator.GenerateGenesis(
-            baselineCatalog,
-            new FrozenGenesisDescriptor(
-                FrozenLedgerTestData.GitOid('e'),
-                RuleCatalog.Default.RootSha256));
-        var baselineSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
-            DagLedgerLoader.Load(baselineLedger.AsSpan())).Syntax;
-        var baselineCapability = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            FrozenLedgerTestData.ValidateGenesis(baselineSyntax, baselineCatalog)).Capability;
-        var currentLedger = FrozenLedgerGenerator.AppendMissingFreezes(
+        var baselineEvents = FrozenLedgerTestData.EventFiles(baselineCatalog);
+        var baselineCapability = FrozenLedgerTestData.Baseline(baselineCatalog);
+        var currentEvents = baselineEvents.AddRange(DagLedgerAppendWriter.BuildNewEventFiles(
+            FrozenLedgerGenerator.MissingFreezes(
             baselineCapability,
-            currentCatalog);
-        SetLedger(fixture.Files, Encoding.UTF8.GetString(currentLedger.AsSpan()));
-        SetLedger(fixture.Baseline, Encoding.UTF8.GetString(baselineLedger.AsSpan()));
+            currentCatalog)));
+        SetLedger(fixture.Files, currentEvents);
+        SetLedger(fixture.Baseline, baselineEvents);
         return baselineCapability;
 
         static FrozenMaterialCatalog Catalog(

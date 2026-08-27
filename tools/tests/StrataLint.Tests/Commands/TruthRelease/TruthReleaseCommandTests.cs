@@ -232,10 +232,8 @@ public sealed class TruthReleaseCommandTests
                 adjacency,
                 realEnvironment,
                 realAttestations)).Capability;
-        var ledgerBytes = FrozenLedgerGenerator.GenerateGenesis(
-            realCatalog,
-            new FrozenGenesisDescriptor("git-sha1:" + generatorBlob, Sha256("rule-catalog")));
-        AddLedgerFiles(files, ledgerBytes);
+        var ledgerFiles = EventFiles(realCatalog, "git-sha1:" + generatorBlob);
+        AddLedgerFiles(files, ledgerFiles);
         WriteFiles(
             gitRoot,
             files.Where(static pair => pair.Key.StartsWith(

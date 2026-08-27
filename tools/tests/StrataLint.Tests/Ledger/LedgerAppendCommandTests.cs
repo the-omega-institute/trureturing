@@ -57,27 +57,22 @@ public sealed class LedgerAppendCommandTests
     public void ProductionCommandAppendsEveryMissingFreezeWithoutRewritingTheBaseline()
     {
         using var fixture = new LedgerAppendFixture();
-        var baselineLines = FrozenLedgerTestData.Lines(fixture.BaselineBytes);
+        var baselineFiles = fixture.BaselineFiles;
 
         var result = fixture.Environment.AppendLedger(
             new[] { "--candidate-lean-report", fixture.ReportPath });
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("appended_freezes=2", result.Output, StringComparison.Ordinal);
-        var appendedBytes = FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath);
-        var appendedLines = FrozenLedgerTestData.Lines(ImmutableArray.CreateRange(appendedBytes));
-        Assert.Equal(baselineLines.Length + 2, appendedLines.Length);
-        for (var index = 0; index < baselineLines.Length; index++)
-        {
-            Assert.Equal(baselineLines[index], appendedLines[index]);
-        }
-
-        var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
-            DagLedgerLoader.Load(appendedBytes)).Syntax;
-        var accepted = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            FrozenLedgerTestData.ValidateHistory(syntax, fixture.CandidateCatalog));
-        Assert.Equal(3, accepted.Capability.ActiveFrozenNodes.Length);
         var persistedFiles = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(fixture.LedgerPath);
+        Assert.Equal(baselineFiles.Length + 2, persistedFiles.Length);
+        var persistedByPath = persistedFiles.ToDictionary(static file => file.Path);
+        Assert.All(baselineFiles, file =>
+            Assert.True(file.RawBytes.AsSpan().SequenceEqual(
+                persistedByPath[file.Path].RawBytes.AsSpan())));
+        var accepted = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            FrozenLedgerTestData.ValidateHistory(persistedFiles, fixture.CandidateCatalog));
+        Assert.Equal(3, accepted.Capability.ActiveFrozenNodes.Length);
         var persistedView = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
             persistedFiles.ToImmutableDictionary(static file => file.Path)));
         Assert.Contains($"head={persistedView.EventSetRoot()}", result.Output, StringComparison.Ordinal);
@@ -87,10 +82,10 @@ public sealed class LedgerAppendCommandTests
                 FrozenLedgerTestData.PathFor("B"),
                 FrozenLedgerTestData.PathFor("C"),
             },
-            accepted.Capability.Events
-                .OfType<FrozenLedgerEvent.Freeze>()
-                .Skip(1)
-                .Select(static item => item.Payload.Input.DescriptorSelector)
+            FrozenLedgerTestData.LoadEvents(persistedFiles)
+                .Where(static item => item.EventType == "Freeze")
+                .Select(static item => item.Input!.DescriptorSelector)
+                .Where(static path => path != FrozenLedgerTestData.PathFor("A"))
                 .Order(StringComparer.Ordinal));
     }
 
@@ -250,11 +245,8 @@ public sealed class LedgerAppendCommandTests
     public void PublicHistoryValidationStillRejectsAnIncompleteClosedCatalog()
     {
         using var fixture = new LedgerAppendFixture();
-        var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
-            DagLedgerLoader.Load(fixture.BaselineBytes.AsSpan())).Syntax;
-
         var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
-            FrozenLedgerTestData.ValidateHistory(syntax, fixture.CandidateCatalog));
+            FrozenLedgerTestData.ValidateHistory(fixture.BaselineFiles, fixture.CandidateCatalog));
 
         Assert.Contains("missing Freeze", rejected.Message, StringComparison.Ordinal);
     }
@@ -263,36 +255,30 @@ public sealed class LedgerAppendCommandTests
     public void WriteNewEventsRejectsABaselineChangedAfterTheEarlyRecheckWithoutWriting()
     {
         using var temporary = new TemporaryDirectory();
-        var (baselineBytes, baseline, candidateCatalog) = ReconciliationFixture(includeNewModule: true);
-        var candidateBytes = FrozenLedgerGenerator.AppendMissingFreezes(baseline, candidateCatalog);
-        var candidateSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
-            DagLedgerLoader.Load(candidateBytes.AsSpan())).Syntax;
-        FrozenLedgerTestData.WriteLedgerDirectory(temporary.Path, baselineBytes);
+        var (baselineFiles, baseline, candidateCatalog) = ReconciliationFixture(includeNewModule: true);
+        var candidateFiles = DagLedgerAppendWriter.BuildNewEventFiles(
+            FrozenLedgerGenerator.MissingFreezes(baseline, candidateCatalog));
+        FrozenLedgerTestData.WriteLedgerDirectory(temporary.Path, baselineFiles);
         var expectedBaselineFiles = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(
             temporary.Path);
-        Assert.True(DagLedgerCommandPreparation.LoadLedgerDirectory(
-                temporary.Path,
-                "early baseline recheck").RawBytes.AsSpan().SequenceEqual(baselineBytes.AsSpan()));
+        Assert.Equal(baselineFiles.Length, expectedBaselineFiles.Length);
 
-        const string competing = "-- competing representation\ntheorem a : True := by trivial\n";
         var competingCatalog = FrozenLedgerTestData.BuildCatalog(
-            FrozenLedgerTestData.Module("A", source: competing),
+            FrozenLedgerTestData.Module("A"),
             FrozenLedgerTestData.Module("C", imports: new[] { "A" }));
-        var competingBytes = FrozenLedgerGenerator.AppendMissingFreezes(baseline, competingCatalog);
-        var competingSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
-            DagLedgerLoader.Load(competingBytes.AsSpan())).Syntax;
-        DagLedgerAppendWriter.WriteNewEvents(
+        var competingFiles = DagLedgerAppendWriter.BuildNewEventFiles(
+            FrozenLedgerGenerator.MissingFreezes(baseline, competingCatalog));
+        DagLedgerAppendWriter.WriteEventFiles(
             temporary.Path,
-            competingSyntax.Lines,
-            baseline.Events.Length);
+            competingFiles,
+            expectedBaselineFiles);
         var before = DirectorySnapshot(temporary.Path);
 
         var exception = Assert.Throws<InvalidOperationException>(() =>
-            DagLedgerAppendWriter.WriteNewEvents(
+            DagLedgerAppendWriter.WriteEventFiles(
                 temporary.Path,
-                candidateSyntax.Lines,
-                baseline.Events.Length,
-                expectedBaselineFiles: expectedBaselineFiles));
+                candidateFiles,
+                expectedBaselineFiles));
 
         Assert.Contains("accepted event files changed", exception.Message, StringComparison.Ordinal);
         var after = DirectorySnapshot(temporary.Path);
@@ -312,17 +298,17 @@ public sealed class LedgerAppendCommandTests
 
         using (DagLedgerAppendWriter.AcquirePublicationLock(lockPath))
         {
-            var exception = Assert.Throws<IOException>(() => DagLedgerAppendWriter.WriteNewEvents(
+            var exception = Assert.Throws<IOException>(() => DagLedgerAppendWriter.WriteEventFiles(
                 temporary.Path,
-                Array.Empty<FrozenLedgerLineSyntax>()));
+                Array.Empty<RepositoryFile>()));
 
             Assert.Contains("owns the writer lock", exception.Message, StringComparison.Ordinal);
             Assert.True(Directory.Exists(activeStage));
         }
 
-        DagLedgerAppendWriter.WriteNewEvents(
+        DagLedgerAppendWriter.WriteEventFiles(
             temporary.Path,
-            Array.Empty<FrozenLedgerLineSyntax>());
+            Array.Empty<RepositoryFile>());
 
         Assert.False(Directory.Exists(activeStage));
     }
@@ -335,9 +321,9 @@ public sealed class LedgerAppendCommandTests
         Directory.CreateDirectory(stale);
         File.WriteAllText(Path.Combine(stale, "orphan.json"), "orphan\n");
 
-        DagLedgerAppendWriter.WriteNewEvents(
+        DagLedgerAppendWriter.WriteEventFiles(
             temporary.Path,
-            Array.Empty<FrozenLedgerLineSyntax>());
+            Array.Empty<RepositoryFile>());
 
         Assert.False(Directory.Exists(stale));
     }
@@ -352,7 +338,7 @@ public sealed class LedgerAppendCommandTests
     }
 
     private static (
-        ImmutableArray<byte> BaselineBytes,
+        ImmutableArray<RepositoryFile> BaselineFiles,
         FrozenLedgerConsistent Baseline,
         FrozenMaterialCatalog CandidateCatalog) ReconciliationFixture(bool includeNewModule)
     {
@@ -370,16 +356,9 @@ public sealed class LedgerAppendCommandTests
         }
 
         var candidateCatalog = FrozenLedgerTestData.BuildCatalog(candidateModules.ToArray());
-        var baselineBytes = FrozenLedgerGenerator.GenerateGenesis(
-            baselineCatalog,
-            new FrozenGenesisDescriptor(
-                FrozenLedgerTestData.GitOid('e'),
-                RuleCatalog.Default.RootSha256));
-        var baselineSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
-            DagLedgerLoader.Load(baselineBytes.AsSpan())).Syntax;
-        var baseline = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            FrozenLedgerTestData.ValidateGenesis(baselineSyntax, baselineCatalog)).Capability;
-        return (baselineBytes, baseline, candidateCatalog);
+        var baselineFiles = FrozenLedgerTestData.EventFiles(baselineCatalog);
+        var baseline = FrozenLedgerTestData.Baseline(baselineCatalog);
+        return (baselineFiles, baseline, candidateCatalog);
     }
 
     private static SortedDictionary<string, byte[]> DirectorySnapshot(string directory)
@@ -503,11 +482,7 @@ public sealed class LedgerAppendCommandTests
                     FrozenLedgerTestData.GitOid('b'),
                     candidateA,
                     candidateB);
-            BaselineBytes = FrozenLedgerGenerator.GenerateGenesis(
-                baselineCatalog,
-                new FrozenGenesisDescriptor(
-                    FrozenLedgerTestData.GitOid('e'),
-                    RuleCatalog.Default.RootSha256));
+            BaselineFiles = FrozenLedgerTestData.EventFiles(baselineCatalog);
             var files = new Dictionary<string, string>(StringComparer.Ordinal)
             {
                 ["lean-toolchain"] = currentToolchain,
@@ -520,7 +495,7 @@ public sealed class LedgerAppendCommandTests
             {
                 files.Add(FrozenLedgerTestData.PathFor("C"), c.Source);
             }
-            FrozenLedgerTestData.AddLedgerFiles(files, BaselineBytes);
+            FrozenLedgerTestData.AddLedgerFiles(files, BaselineFiles);
             var baselineFiles = new Dictionary<string, string>(files, StringComparer.Ordinal)
             {
                 ["lean-toolchain"] = baselineToolchain,
@@ -565,7 +540,7 @@ public sealed class LedgerAppendCommandTests
             LedgerPath = Path.Combine(
                 temporary.Path,
                 FrozenLedgerChangeClassifier.AcceptedRoot.Replace('/', Path.DirectorySeparatorChar));
-            FrozenLedgerTestData.WriteLedgerDirectory(LedgerPath, BaselineBytes);
+            FrozenLedgerTestData.WriteLedgerDirectory(LedgerPath, BaselineFiles);
             ReportPath = Path.Combine(temporary.Path, "candidate-lean-report.json");
             RawLeanReportArtifact.WriteFile(ReportPath, snapshot, report);
             Gateway = new FakeRepositoryGateway(
@@ -584,7 +559,7 @@ public sealed class LedgerAppendCommandTests
                 new FakeLeanReportSource(null));
         }
 
-        internal ImmutableArray<byte> BaselineBytes { get; }
+        internal ImmutableArray<RepositoryFile> BaselineFiles { get; }
 
         internal FrozenMaterialCatalog CandidateCatalog { get; }
 

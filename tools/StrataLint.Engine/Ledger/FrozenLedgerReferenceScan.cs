@@ -168,18 +168,17 @@ public static partial class FrozenLedger
         throw new FormatException($"Unknown frozen event type {eventType}.");
     }
 
-    public static FrozenLedgerReferenceScanOutcome ScanReferences(FrozenLedgerSyntax syntax)
+    public static FrozenLedgerReferenceScanOutcome ScanReferences(
+        ImmutableArray<DagLedgerFileEvent> events)
     {
-        ArgumentNullException.ThrowIfNull(syntax);
         try
         {
-            ValidateSyntaxEnvelope(syntax);
-            if (syntax.Lines.Length == 0)
+            if (events.IsDefaultOrEmpty)
             {
                 throw new FormatException("Frozen ledger is empty.");
             }
 
-            return ScanReferenceLines(syntax.Lines);
+            return ScanReferenceEvents(events);
         }
         catch (Exception exception) when (
             exception is FormatException or JsonException or InvalidOperationException or KeyNotFoundException)
@@ -188,70 +187,25 @@ public static partial class FrozenLedger
         }
     }
 
-    internal static FrozenLedgerReferenceScanOutcome ScanSuffixReferences(
-        FrozenLedgerSyntax syntax,
-        int startIndex)
-    {
-        ArgumentNullException.ThrowIfNull(syntax);
-        try
-        {
-            if (startIndex < 0 || startIndex > syntax.Lines.Length)
-            {
-                throw new ArgumentOutOfRangeException(nameof(startIndex));
-            }
-
-            ValidateSuffixSyntaxEnvelope(syntax, startIndex);
-            return ScanReferenceLines(syntax.Lines.Skip(startIndex));
-        }
-        catch (Exception exception) when (
-            exception is ArgumentOutOfRangeException
-                or FormatException
-                or JsonException
-                or InvalidOperationException
-                or KeyNotFoundException)
-        {
-            return new FrozenLedgerReferenceScanOutcome.Rejected(exception.Message);
-        }
-    }
-
-    private static FrozenLedgerReferenceScanOutcome.Accepted ScanReferenceLines(
-        IEnumerable<FrozenLedgerLineSyntax> lines)
+    private static FrozenLedgerReferenceScanOutcome.Accepted ScanReferenceEvents(
+        IEnumerable<DagLedgerFileEvent> events)
     {
         var inputs = ImmutableArray.CreateBuilder<FrozenLedgerInput>();
         var receipts = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         var commits = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         var trees = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         var blobs = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
-        foreach (var line in lines)
+        foreach (var item in events)
         {
-            RequireCanonicalLine(line);
-            var root = line.Value;
-            var eventType = RequiredString(root, "event_type");
-            if (!root.TryGetProperty("payload", out var payload)
-                || payload.ValueKind != JsonValueKind.Object)
-            {
-                throw new FormatException("Frozen event payload must be an object.");
-            }
-
-            var trustedSchemaVersion = line.SourceDagSchemaVersion;
-            if (trustedSchemaVersion is not null)
-            {
-                FrozenLedgerBaseViewReader.ValidateTrustedPayload(
-                    eventType,
-                    trustedSchemaVersion.Value,
-                    payload);
-            }
+            var eventType = item.EventType;
+            var payload = item.Payload;
+            FrozenLedgerBaseViewReader.ValidateTrustedPayload(
+                eventType,
+                item.SchemaVersion,
+                payload);
 
             if (eventType == "Genesis")
             {
-                if (trustedSchemaVersion is null)
-                {
-                    RequireObjectFields(
-                        payload,
-                        "Genesis payload",
-                        FrozenLedgerReferenceProjection.GenesisPayloadFields);
-                }
-
                 AddOid(
                     blobs,
                     RequiredString(payload, FrozenLedgerReferenceProjection.GeneratorBlobOid),
@@ -267,42 +221,23 @@ public static partial class FrozenLedger
             }
             else if (eventType is "Freeze" or "Reattest")
             {
-                FrozenLedgerInput parsed;
-                if (trustedSchemaVersion is null)
-                {
-                    RequireEventPayloadFields(payload, eventType);
-                    parsed = ParseInput(payload.GetProperty("input"));
-                }
-                else
-                {
-                    parsed = FrozenLedgerBaseViewReader.ReadTrustedAcceptedEventInput(
-                            eventType,
-                            payload)
-                        ?? throw new FormatException($"{eventType} payload is missing input fields.");
-                }
+                var parsed = item.Input
+                    ?? throw new FormatException($"{eventType} payload is missing input fields.");
 
                 inputs.Add(parsed);
                 AddInputReferences(parsed, commits, trees, blobs);
             }
             else if (eventType == "Revoke")
             {
-                if (trustedSchemaVersion is null)
-                {
-                    RequireObjectFields(
-                        payload,
-                        "Revoke payload",
-                        FrozenLedgerReferenceProjection.RevokePayloadFields);
-                }
-
                 var evidence = payload.GetProperty("evidence");
                 if (evidence.ValueKind != JsonValueKind.Array)
                 {
                     throw new FormatException("Revoke payload is missing evidence fields.");
                 }
 
-                foreach (var item in evidence.EnumerateArray().Select(ParseEvidence))
+                foreach (var evidenceItem in evidence.EnumerateArray().Select(ParseEvidence))
                 {
-                    var (oid, _) = EvidenceReceipt(item);
+                    var (oid, _) = EvidenceReceipt(evidenceItem);
                     if (!FrozenHashSyntax.IsGitOid(oid))
                     {
                         throw new FormatException(

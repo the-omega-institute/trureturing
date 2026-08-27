@@ -6,12 +6,12 @@ namespace StrataLint.Engine;
 public static partial class FrozenLedger
 {
     public static FrozenLedgerValidationOutcome ValidateCandidate(
-        FrozenLedgerSyntax syntax,
+        ImmutableArray<DagLedgerFileEvent> events,
         FrozenLedgerConsistent baseline,
         FrozenMaterialCatalog catalog,
         TrustedFrozenGitReferences trustedReferences) =>
         ValidateCandidate(
-            syntax,
+            events,
             baseline,
             catalog,
             trustedReferences,
@@ -19,12 +19,12 @@ public static partial class FrozenLedger
             requireCompleteCatalog: true);
 
     internal static FrozenLedgerValidationOutcome ValidateCandidatePrefix(
-        FrozenLedgerSyntax syntax,
+        ImmutableArray<DagLedgerFileEvent> events,
         FrozenLedgerConsistent baseline,
         FrozenMaterialCatalog catalog,
         TrustedFrozenGitReferences trustedReferences) =>
         ValidateCandidate(
-            syntax,
+            events,
             baseline,
             catalog,
             trustedReferences,
@@ -32,13 +32,13 @@ public static partial class FrozenLedger
             requireCompleteCatalog: false);
 
     public static FrozenLedgerValidationOutcome ValidateCandidate(
-        FrozenLedgerSyntax syntax,
+        ImmutableArray<DagLedgerFileEvent> events,
         FrozenLedgerConsistent baseline,
         FrozenMaterialCatalog catalog,
         TrustedFrozenGitReferences trustedReferences,
         TrustedRevocationReceiptStore trustedRevocationReceipts) =>
         ValidateCandidate(
-            syntax,
+            events,
             baseline,
             catalog,
             trustedReferences,
@@ -46,68 +46,46 @@ public static partial class FrozenLedger
             requireCompleteCatalog: true);
 
     private static FrozenLedgerValidationOutcome ValidateCandidate(
-        FrozenLedgerSyntax syntax,
+        ImmutableArray<DagLedgerFileEvent> events,
         FrozenLedgerConsistent baseline,
         FrozenMaterialCatalog catalog,
         TrustedFrozenGitReferences trustedReferences,
         TrustedRevocationReceiptStore trustedRevocationReceipts,
         bool requireCompleteCatalog)
     {
-        ArgumentNullException.ThrowIfNull(syntax);
+        if (events.IsDefault)
+        {
+            throw new ArgumentException("Candidate frozen event set is uninitialized.", nameof(events));
+        }
         ArgumentNullException.ThrowIfNull(baseline);
         ArgumentNullException.ThrowIfNull(catalog);
         ArgumentNullException.ThrowIfNull(trustedReferences);
         ArgumentNullException.ThrowIfNull(trustedRevocationReceipts);
         try
         {
-            if (!syntax.RawBytes.AsSpan().StartsWith(baseline.RawBytes.AsSpan()))
-            {
-                throw new FormatException(
-                    "Candidate frozen ledger does not retain the exact baseline byte prefix.");
-            }
-
-            var baselineLineCount = baseline.SyntaxLineCount;
-            if (syntax.Lines.Length < baselineLineCount)
-            {
-                throw new FormatException("Candidate frozen ledger truncated the baseline event prefix.");
-            }
-
-            ValidateSuffixSyntaxEnvelope(syntax, baselineLineCount);
-
-            var events = baseline.Events.ToBuilder();
             var active = baseline.ActiveEntries.ToDictionary(static item => item.Key, static item => item.Value, StringComparer.Ordinal);
             var allCaseIds = baseline.AllCaseIds.ToHashSet(StringComparer.Ordinal);
             var revoked = baseline.RevokedFrozenNodeIds.ToHashSet();
             var activePathCases = active.Values.ToDictionary(
                 static item => item.Material.RepoPath,
                 static item => item.Payload.CaseId);
-            var previous = baseline.HeadHash;
-            for (var index = baselineLineCount; index < syntax.Lines.Length; index++)
+            var eventHashes = baseline.EventHashes.ToHashSet(StringComparer.Ordinal);
+            foreach (var item in events)
             {
-                var line = syntax.Lines[index];
-                var root = line.Value;
-                RequireObjectFields(
-                    root,
-                    "event envelope",
-                    "event_hash", "event_type", "payload", "previous_hash", "schema_version", "sequence");
-                RequireCanonicalLine(line);
-                var sequence = RequiredNonnegativeInteger(root, "sequence");
-                var previousHash = RequiredString(root, "previous_hash");
-                var eventHash = RequiredString(root, "event_hash");
-                if (sequence != baseline.EventCount + index - baselineLineCount
-                    || RequiredNonnegativeInteger(root, "schema_version") != 1
-                    || !string.Equals(previousHash, previous, StringComparison.Ordinal)
-                    || !FrozenHashSyntax.IsSha256(eventHash)
-                    || !string.Equals(eventHash, ComputeEventHash(root), StringComparison.Ordinal))
+                if (item.SchemaVersion != FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion)
                 {
-                    throw new FormatException("Candidate suffix has an invalid sequence/hash chain.");
+                    throw new FormatException(
+                        $"New accepted event must use schema_version {FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion}.");
                 }
 
-                var eventType = RequiredString(root, "event_type");
-                var payload = root.GetProperty("payload");
-                if (eventType == "Freeze")
+                if (!eventHashes.Add(item.EventHash))
                 {
-                    var freeze = ParseFreeze(payload, catalog, trustedReferences);
+                    throw new FormatException("Candidate frozen event set duplicates an existing event hash.");
+                }
+
+                if (item.EventType == "Freeze")
+                {
+                    var freeze = ParseFreeze(item.Payload, catalog, trustedReferences);
                     var freezePath = RepoPath.CreateKnown(freeze.Input.DescriptorSelector);
                     if (!allCaseIds.Add(freeze.CaseId)
                         || activePathCases.ContainsKey(freezePath))
@@ -119,14 +97,13 @@ public static partial class FrozenLedger
                     var material = catalog.ByPath[freezePath];
                     active.Add(
                         freeze.CaseId,
-                        new FrozenActiveEntry(material, freeze, eventHash));
+                        new FrozenActiveEntry(material, freeze, item.EventHash));
                     activePathCases.Add(freezePath, freeze.CaseId);
-                    events.Add(new FrozenLedgerEvent.Freeze(sequence, eventHash, previousHash, freeze));
                 }
-                else if (eventType == "Revoke")
+                else if (item.EventType == "Revoke")
                 {
                     var revoke = ParseRevoke(
-                        payload,
+                        item.Payload,
                         baseline,
                         active,
                         trustedRevocationReceipts);
@@ -138,18 +115,12 @@ public static partial class FrozenLedger
                         revoked.Add(entry.Material.FrozenNodeId);
                     }
 
-                    events.Add(new FrozenLedgerEvent.Revoke(
-                        sequence,
-                        eventHash,
-                        previousHash,
-                        revoke));
                 }
                 else
                 {
-                    throw new FormatException($"Event type {eventType} is not legal in a candidate suffix.");
+                    throw new FormatException(
+                        $"Event type {item.EventType} is not legal in a candidate event set.");
                 }
-
-                previous = eventHash;
             }
 
             var currentClosedPaths = catalog.States
@@ -166,12 +137,36 @@ public static partial class FrozenLedger
                 throw new FormatException("Closed modules are missing Freeze events: " + string.Join(", ", missing));
             }
 
-            if (actual.Keys.Any(path => !currentClosedPaths.Contains(path))
-                || actual.Any(item => catalog.ByPath.TryGetValue(item.Key, out var candidateMaterial)
-                    && item.Value.Material.FrozenNodeId != candidateMaterial.FrozenNodeId))
+            if (actual.Keys.Any(path => !currentClosedPaths.Contains(path)))
             {
                 throw new FormatException(
                     "Active frozen view does not exactly match the current Closed module identities.");
+            }
+
+            var recordedPathsByIdentity = FrozenPathsByIdentity(
+                active.Values.Select(static entry => entry.Material));
+            var currentPathsByIdentity = FrozenPathsByIdentity(
+                active.Values.Select(static entry => entry.Material),
+                catalog.ClosedNodes);
+            foreach (var (caseId, entry) in active.ToArray())
+            {
+                if (!catalog.ByPath.TryGetValue(entry.Material.RepoPath, out var candidateMaterial))
+                {
+                    continue;
+                }
+
+                if (!FrozenLedgerHistoricalFreezeMatcher.HistoricalActiveFreezeMatches(
+                    entry.Payload,
+                    candidateMaterial,
+                    recordedPathsByIdentity,
+                    currentPathsByIdentity,
+                    out _))
+                {
+                    throw new FormatException(
+                        "Active frozen view does not exactly match the current Closed module identities.");
+                }
+
+                active[caseId] = entry with { Material = candidateMaterial };
             }
 
             var activeNodes = active.Values
@@ -179,21 +174,20 @@ public static partial class FrozenLedger
                 .OrderBy(static node => node.RepoPath.Value, StringComparer.Ordinal)
                 .ToImmutableArray();
             var activeEntries = active.ToImmutableDictionary(StringComparer.Ordinal);
+            var headHash = FrozenEventSetRoot.Compute(eventHashes);
             var corpusRoot = ComputeCorpusRoot(
-                previous,
+                headHash,
                 activeEntries.Values.Select(static entry => entry.Payload).ToImmutableArray());
             return new FrozenLedgerValidationOutcome.Accepted(FrozenLedgerConsistent.Create(
-                syntax.RawBytes,
-                events.ToImmutable(),
                 activeNodes,
-                previous,
+                headHash,
                 corpusRoot,
                 ComputeFrozenGraphRoot(activeNodes),
                 activeEntries,
                 allCaseIds.ToImmutableHashSet(StringComparer.Ordinal),
                 revoked.ToImmutableHashSet(),
-                eventCount: baseline.EventCount + syntax.Lines.Length - baselineLineCount,
-                syntaxLineCount: syntax.Lines.Length));
+                eventHashes.ToImmutableHashSet(StringComparer.Ordinal),
+                baseline.EventCount + events.Length));
         }
         catch (Exception exception) when (exception is FormatException or JsonException or InvalidOperationException)
         {

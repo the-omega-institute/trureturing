@@ -14,20 +14,22 @@ public partial record FrozenCoverageLoadOutcome
 
 public static class FrozenCoverageLedger
 {
-    public static FrozenCoverageLoadOutcome Load(FrozenLedgerSyntax syntax)
+    public static FrozenCoverageLoadOutcome Load(ImmutableArray<DagLedgerFileEvent> events)
     {
-        ArgumentNullException.ThrowIfNull(syntax);
+        if (events.IsDefault)
+        {
+            throw new ArgumentException("Frozen event set is uninitialized.", nameof(events));
+        }
         try
         {
             var active = new Dictionary<string, RepoPath>(StringComparer.Ordinal);
             var activePaths = new HashSet<RepoPath>();
             var sawGenesis = false;
-            foreach (var line in syntax.Lines)
+            foreach (var item in events)
             {
-                var root = line.Value;
-                var eventType = RequiredString(root, "event_type");
-                var payload = RequiredObject(root, "payload");
-                if (!sawGenesis && eventType is "Freeze" or "Revoke")
+                var eventType = item.EventType;
+                var payload = item.Payload;
+                if (!sawGenesis && eventType != "Genesis")
                 {
                     throw new FormatException($"{eventType} event occurs before Genesis");
                 }
@@ -66,6 +68,8 @@ public static class FrozenCoverageLedger
                             activePaths.Remove(revokedPath);
                         }
                         break;
+                    case "Reattest":
+                        break;
                     default:
                         throw new FormatException($"unknown event type {eventType}");
                 }
@@ -83,16 +87,6 @@ public static class FrozenCoverageLedger
         {
             return new FrozenCoverageLoadOutcome.Invalid(exception.Message);
         }
-    }
-
-    private static JsonElement RequiredObject(JsonElement value, string property)
-    {
-        if (!value.TryGetProperty(property, out var result) || result.ValueKind != JsonValueKind.Object)
-        {
-            throw new FormatException($"ledger event {property} must be an object");
-        }
-
-        return result;
     }
 
     private static string RequiredString(JsonElement value, string property)

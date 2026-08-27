@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using StrataLint.Cli;
@@ -10,7 +11,7 @@ namespace StrataLint.Tests;
 public sealed class FrozenContentAddressTests
 {
     [Fact]
-    public void ProofOnlyRewritePreservesWitnessAndFrozenNodeIdentity()
+    public void ProofOnlyRewritePreservesStatementIdAndChangesWitnessAndFrozenNodeIds()
     {
         const string firstSource = "theorem a : True := by trivial\n";
         var secondSource = firstSource;
@@ -22,8 +23,8 @@ public sealed class FrozenContentAddressTests
         var secondNode = Assert.Single(second.ClosedNodes);
         Assert.NotEqual(firstNode.Attestation.SourceBlobOid, secondNode.Attestation.SourceBlobOid);
         Assert.Equal(firstNode.StatementId, secondNode.StatementId);
-        Assert.Equal(firstNode.WitnessId, secondNode.WitnessId);
-        Assert.Equal(firstNode.FrozenNodeId, secondNode.FrozenNodeId);
+        Assert.NotEqual(firstNode.WitnessId, secondNode.WitnessId);
+        Assert.NotEqual(firstNode.FrozenNodeId, secondNode.FrozenNodeId);
 
         const string source = "theorem a : True := by trivial\n";
         var raw = RawRepositorySnapshot.Create([
@@ -63,28 +64,35 @@ public sealed class FrozenContentAddressTests
     }
 
     [Fact]
-    public void WitnessV2PreimageContainsExactlyTheFiveIdentityFields()
+    public void WitnessV1PreimageContainsSourceAndPinnedEnvironmentIdentity()
     {
-        var node = Assert.Single(BuildCatalog(Module(
+        const string source = "theorem a : True := by trivial\n";
+        var catalog = BuildCatalog(Module(
             "A",
-            axioms: new[] { "Classical.choice" })).ClosedNodes);
+            source,
+            axioms: new[] { "Classical.choice" }));
+        var node = Assert.Single(catalog.ClosedNodes);
         var material = JsonSerializer.SerializeToElement(new
         {
             axiom_closure = node.AxiomClosure,
             imports = Array.Empty<string>(),
+            lake_manifest_blob_oid = catalog.Environment.LakeManifestBlobOid,
+            lean_toolchain_blob_oid = catalog.Environment.LeanToolchainBlobOid,
             module_path = node.RepoPath.Value,
-            schema = "witness-v2",
+            schema = "witness-v1",
+            source_blob_oid = node.Attestation.SourceBlobOid,
+            source_sha256 = Sha256(source),
             statement_id = node.StatementId.Value,
         });
 
         Assert.Equal(
-            ["axiom_closure", "imports", "module_path", "schema", "statement_id"],
+            [
+                "axiom_closure", "imports", "lake_manifest_blob_oid",
+                "lean_toolchain_blob_oid", "module_path", "schema", "source_blob_oid",
+                "source_sha256", "statement_id",
+            ],
             material.EnumerateObject().Select(static property => property.Name));
-        Assert.False(material.TryGetProperty("source_blob_oid", out _));
-        Assert.False(material.TryGetProperty("source_sha256", out _));
-        Assert.False(material.TryGetProperty("lean_toolchain_blob_oid", out _));
-        Assert.False(material.TryGetProperty("lake_manifest_blob_oid", out _));
-        Assert.Equal("witness-v2", material.GetProperty("schema").GetString());
+        Assert.Equal("witness-v1", material.GetProperty("schema").GetString());
 
         var expected = FrozenContentHash.Compute(
             FrozenHashDomains.Witness,
@@ -93,7 +101,7 @@ public sealed class FrozenContentAddressTests
     }
 
     [Fact]
-    public void PinBlobOidChangesPreserveWitnessIdentity()
+    public void PinBlobOidChangesChangeWitnessIdentity()
     {
         const string firstToolchain = "leanprover/lean4:v4.24.0\n";
         const string firstManifest = "{}\n";
@@ -126,7 +134,7 @@ public sealed class FrozenContentAddressTests
         Assert.NotEqual(
             first.Environment.LakeManifestBlobOid,
             second.Environment.LakeManifestBlobOid);
-        Assert.Equal(firstNode.WitnessId, secondNode.WitnessId);
+        Assert.NotEqual(firstNode.WitnessId, secondNode.WitnessId);
     }
 
     [Fact]
@@ -165,7 +173,7 @@ public sealed class FrozenContentAddressTests
     [Fact]
     public void ContentAddressBytesArePinnedOnAFixedFixture()
     {
-        // Pin witness-v2 and derived frozen-node bytes for a representative dependency graph.
+        // Pin witness-v1 and derived frozen-node bytes for a representative dependency graph.
         var catalog = BuildCatalog(Module("A"), Module("B", imports: new[] { "A" }));
 
         var nodes = catalog.ClosedNodes
@@ -175,11 +183,11 @@ public sealed class FrozenContentAddressTests
         var a = nodes[0];
         var b = nodes[1];
         Assert.Equal("sha256:2737dabb279d14181efe09f7531e5c4664421bdbc19bbcf8b588f8d71123954c", a.StatementId.Value);
-        Assert.Equal("sha256:bced4890a6a5d0cfce247bb5608fbd2e1fd31a67f286ef45634b13e0bb09116b", a.WitnessId.Value);
-        Assert.Equal("sha256:65ca68f9792e942e51248f5ba3853bf2aa68b2dee1339d705ecfeb72b9074424", a.FrozenNodeId.Value);
+        Assert.Equal("sha256:0d37e262a8c68df2ebd0e192b50b7167e5b697bb36d6f0c02649ede0e9844d9e", a.WitnessId.Value);
+        Assert.Equal("sha256:e6a10a73d813973ee49f0fa6bbb0ae9d2c3b2c7931a283509c1e3e97df05acde", a.FrozenNodeId.Value);
         Assert.Equal("sha256:211af3769c4571cac3b50ccaad89160fef4f94e790bc01fdc890d927c6b63112", b.StatementId.Value);
-        Assert.Equal("sha256:d62be4f4f1020a5327aeee895906604afc45f47aafdf83a304365ddc807d9b0c", b.WitnessId.Value);
-        Assert.Equal("sha256:a4c3e6cec8afccd31005f5e5647c768526ac07455028266264a4b6f16945107d", b.FrozenNodeId.Value);
+        Assert.Equal("sha256:6fbd91738bbd18aeb82433e85e57a82611c1bdf456463a51dbcaedfc483a838f", b.WitnessId.Value);
+        Assert.Equal("sha256:7c7584c4367278ce869226f688f6b67bfc072742811497c19f2d7fb197a8c15e", b.FrozenNodeId.Value);
         var prerequisite = Assert.Single(b.PrerequisiteFrozenNodeIds);
         Assert.Equal(a.FrozenNodeId.Value, prerequisite.Value);
 
@@ -191,13 +199,13 @@ public sealed class FrozenContentAddressTests
             .OrderBy(static node => node.RepoPath.Value, StringComparer.Ordinal)
             .ToArray()[2];
         Assert.Equal("sha256:7fe10a833c778c19c4bf29a36f7a07486253042f63965d955ead898161fe7094", c.StatementId.Value);
-        Assert.Equal("sha256:026d035ace228a479271d344acdf23b6f624a026456b1c135d8fc0243420b47f", c.WitnessId.Value);
-        Assert.Equal("sha256:a921df0b56da97cda70c14f33eea1f5820368c1b8b0de02bbeb91dfa0d3a6ce6", c.FrozenNodeId.Value);
+        Assert.Equal("sha256:bc2cc19c308ddbe355363aafa34dff87472b0f5cd4d35b5fb89f771b3d9c6a4b", c.WitnessId.Value);
+        Assert.Equal("sha256:65df0e281883e52131685be2fe5187a763c89314b8bc3f414e4f29c47cb57585", c.FrozenNodeId.Value);
         Assert.Equal(
             new[]
             {
-                "sha256:65ca68f9792e942e51248f5ba3853bf2aa68b2dee1339d705ecfeb72b9074424",
-                "sha256:a4c3e6cec8afccd31005f5e5647c768526ac07455028266264a4b6f16945107d",
+                "sha256:7c7584c4367278ce869226f688f6b67bfc072742811497c19f2d7fb197a8c15e",
+                "sha256:e6a10a73d813973ee49f0fa6bbb0ae9d2c3b2c7931a283509c1e3e97df05acde",
             },
             c.PrerequisiteFrozenNodeIds.Select(static id => id.Value));
     }
@@ -206,11 +214,10 @@ public sealed class FrozenContentAddressTests
     public void FreezeCarriesDeclarationStatementIdsWithoutCopyingStatementMaterial()
     {
         var catalog = BuildCatalog(Module("A"));
-        var bytes = FrozenLedgerGenerator.GenerateGenesis(
-            catalog,
-            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
-        var line = Lines(bytes)[1];
-        using var document = JsonDocument.Parse(line.AsMemory(0, line.Length - 1));
+        var files = EventFiles(catalog);
+        var freeze = Assert.Single(LoadEvents(files), static item => item.EventType == "Freeze");
+        var file = files.Single(item => item.Path == freeze.SourcePath);
+        using var document = JsonDocument.Parse(file.RawBytes.AsSpan()[..^1].ToArray());
 
         var payload = document.RootElement.GetProperty("payload");
         Assert.True(payload.TryGetProperty("declaration_statement_ids", out var declarationStatementIds));
@@ -227,65 +234,26 @@ public sealed class FrozenContentAddressTests
     [Fact]
     public void ForgedDeclarationStatementIdFailsAfterCanonicalEventRehash()
     {
+        var emptyCatalog = BuildCatalog();
         var catalog = BuildCatalog(Module("A"));
-        var bytes = FrozenLedgerGenerator.GenerateGenesis(
-            catalog,
-            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
-        var lines = Lines(bytes);
-        using var genesisDocument = JsonDocument.Parse(
-            lines[0].AsMemory(0, lines[0].Length - 1));
-        using var freezeDocument = JsonDocument.Parse(
-            lines[1].AsMemory(0, lines[1].Length - 1));
+        var baselineFiles = EventFiles(emptyCatalog);
+        var baseView = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
+            baselineFiles.ToImmutableDictionary(static file => file.Path)));
+        var baseline = baseView.ToWriterBaseline();
+        var draft = Assert.Single(FrozenLedgerGenerator.MissingFreezes(baseline, catalog));
         var payload = JsonNode.Parse(
-            freezeDocument.RootElement.GetProperty("payload").GetRawText())!.AsObject();
+            draft.Payload.GetRawText())!.AsObject();
         payload["declaration_statement_ids"]!.AsArray()[0]!["statement_id"] =
             Sha256("forged-declaration");
-        var forgedLine = FrozenLedgerCanonicalWriter.WriteEvent(
-            "Freeze",
-            JsonSerializer.SerializeToElement(payload),
-            genesisDocument.RootElement.GetProperty("event_hash").GetString()!,
-            1).Bytes;
-        var forged = lines[0].Concat(forgedLine).ToArray();
+        var forgedFile = EventFile("Freeze", JsonSerializer.SerializeToElement(payload));
+        var forged = DagLedgerCommandPreparation.ValidateGeneratedEventFiles(
+            baseView,
+            [forgedFile],
+            "forged test event");
 
         var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
-            ValidateGenesis(
-                Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(forged)).Syntax,
-                catalog));
+            ValidateCandidate(forged, baseline, catalog));
 
         Assert.Contains("recomputed material", rejected.Message, StringComparison.OrdinalIgnoreCase);
-    }
-
-    [Fact]
-    public void RehashedGenesisFreezeReorderingFailsCanonicalEventOrder()
-    {
-        var catalog = BuildCatalog(Module("A"), Module("B"));
-        var bytes = FrozenLedgerGenerator.GenerateGenesis(
-            catalog,
-            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
-        var lines = Lines(bytes);
-        using var genesisDocument = JsonDocument.Parse(
-            lines[0].AsMemory(0, lines[0].Length - 1));
-        using var firstFreezeDocument = JsonDocument.Parse(
-            lines[1].AsMemory(0, lines[1].Length - 1));
-        using var secondFreezeDocument = JsonDocument.Parse(
-            lines[2].AsMemory(0, lines[2].Length - 1));
-        var first = FrozenLedgerCanonicalWriter.WriteEvent(
-            "Freeze",
-            secondFreezeDocument.RootElement.GetProperty("payload"),
-            genesisDocument.RootElement.GetProperty("event_hash").GetString()!,
-            1);
-        var second = FrozenLedgerCanonicalWriter.WriteEvent(
-            "Freeze",
-            firstFreezeDocument.RootElement.GetProperty("payload"),
-            first.Hash,
-            2);
-        var reordered = lines[0].Concat(first.Bytes).Concat(second.Bytes).ToArray();
-
-        var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
-            ValidateGenesis(
-                Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(reordered)).Syntax,
-                catalog));
-
-        Assert.Contains("order", rejected.Message, StringComparison.OrdinalIgnoreCase);
     }
 }

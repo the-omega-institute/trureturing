@@ -191,7 +191,11 @@ public static class FrozenContentAddress
             path,
             statement,
             report.Imports,
-            report.Declarations.SelectMany(static declaration => declaration.Axioms));
+            report.Declarations.SelectMany(static declaration => declaration.Axioms),
+            attestation.SourceBlobOid,
+            "sha256:" + Convert.ToHexStringLower(SHA256.HashData(source.RawBytes.AsSpan())),
+            environment.LeanToolchainBlobOid,
+            environment.LakeManifestBlobOid);
         var axiomClosure = report.Declarations
             .SelectMany(static declaration => declaration.Axioms)
             .Distinct(StringComparer.Ordinal)
@@ -319,14 +323,22 @@ public static class FrozenContentAddress
         RepoPath path,
         StatementId statement,
         IEnumerable<string> imports,
-        IEnumerable<string> axiomClosure)
+        IEnumerable<string> axiomClosure,
+        string sourceBlobOid,
+        string sourceSha256,
+        string leanToolchainBlobOid,
+        string lakeManifestBlobOid)
     {
         var material = JsonSerializer.SerializeToElement(new
         {
             axiom_closure = axiomClosure.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal),
             imports = imports.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal),
+            lake_manifest_blob_oid = lakeManifestBlobOid,
+            lean_toolchain_blob_oid = leanToolchainBlobOid,
             module_path = path.Value,
-            schema = "witness-v2",
+            schema = "witness-v1",
+            source_blob_oid = sourceBlobOid,
+            source_sha256 = sourceSha256,
             statement_id = statement.Value,
         });
         return WitnessId.Create(FrozenContentHash.Compute(

@@ -11,7 +11,6 @@ public sealed record DagLedgerFileEvent(
     string EventType,
     JsonElement Payload,
     int SchemaVersion,
-    FrozenLedgerLineSyntax Syntax,
     FrozenLedgerInput? Input);
 
 public abstract record DagLedgerFilesLoadOutcome
@@ -122,7 +121,6 @@ public static class FrozenAcceptedEventLoader
                     eventType,
                     payload,
                     schemaVersion,
-                    new FrozenLedgerLineSyntax(ImmutableArray.CreateRange(bytes.ToArray()), value),
                     input));
             }
 

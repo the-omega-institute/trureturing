@@ -36,7 +36,7 @@ public sealed class TruthExportCommandTests
         Assert.Equal("TruthExportCommand", model.Producer);
 
         var expected = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateHistory(Load(fixture.LedgerBytes), fixture.FinalCatalog)).Capability.ActiveFrozenNodes;
+            ValidateHistory(fixture.LedgerFiles, fixture.FinalCatalog)).Capability.ActiveFrozenNodes;
 
         Assert.Equal(
             expected.Select(static node => node.RepoPath.Value).Order(StringComparer.Ordinal),
@@ -63,10 +63,8 @@ public sealed class TruthExportCommandTests
     public void ClosedModuleWithoutAFreezeFailsClosedWithNoOutput()
     {
         var genesisCatalog = BuildCatalog(Module("A"));
-        var ledgerBytes = FrozenLedgerGenerator.GenerateGenesis(
-            genesisCatalog,
-            new FrozenGenesisDescriptor(GitOid('e'), Sha256("historical-rule-catalog")));
-        using var fixture = FixtureFromLedger(ledgerBytes, [Module("A"), Module("B")]);
+        var ledgerFiles = EventFiles(genesisCatalog);
+        using var fixture = FixtureFromLedger(ledgerFiles, [Module("A"), Module("B")]);
         using var output = new TemporaryDirectory();
 
         var (exitCode, console) = Run(fixture, output.Path);
@@ -80,10 +78,8 @@ public sealed class TruthExportCommandTests
     public void MissingCandidateLeanReportFileFailsClosedWithNoOutput()
     {
         var genesisCatalog = BuildCatalog(Module("A"));
-        var ledgerBytes = FrozenLedgerGenerator.GenerateGenesis(
-            genesisCatalog,
-            new FrozenGenesisDescriptor(GitOid('e'), Sha256("historical-rule-catalog")));
-        using var fixture = FixtureFromLedger(ledgerBytes, [Module("A")]);
+        var ledgerFiles = EventFiles(genesisCatalog);
+        using var fixture = FixtureFromLedger(ledgerFiles, [Module("A")]);
         using var output = new TemporaryDirectory();
         File.Delete(fixture.ReportPath);
 
@@ -104,11 +100,9 @@ public sealed class TruthExportCommandTests
         var committed = Module("A", source: "theorem a : True := by trivial\n");
         var working = Module("A", source: "-- mutable working bytes\ntheorem a : True := by trivial\n");
         var catalog = BuildCatalog(committed);
-        var ledgerBytes = FrozenLedgerGenerator.GenerateGenesis(
-            catalog,
-            new FrozenGenesisDescriptor(GitOid('e'), Sha256("historical-rule-catalog")));
+        var ledgerFiles = EventFiles(catalog);
         using var fixture = FixtureFromLedger(
-            ledgerBytes,
+            ledgerFiles,
             [committed],
             identity,
             workingModules: [working]);
@@ -182,9 +176,8 @@ public sealed class TruthExportCommandTests
         var moduleC = Module("C");
 
         var genesisCatalog = BuildCatalog(originalA, moduleB, moduleC);
-        var genesis = Baseline(FrozenLedgerGenerator.GenerateGenesis(
-            genesisCatalog,
-            new FrozenGenesisDescriptor(GitOid('e'), Sha256("historical-rule-catalog"))), genesisCatalog);
+        var genesisFiles = EventFiles(genesisCatalog);
+        var genesis = Baseline(genesisCatalog);
 
         var bNode = genesis.ActiveFrozenNodes.Single(node => node.RepoPath.Value == PathFor("B"));
         var (evidence, store) = ReceiptStore(genesis, KernelFailure(bNode));
@@ -192,24 +185,26 @@ public sealed class TruthExportCommandTests
             RevocationEvidenceValidator.Validate(evidence[0], genesis, store)).Capability;
         var plan = Assert.IsType<RevocationPlanOutcome.Accepted>(
             RevocationPlanner.Plan(genesis, [validated])).Capability;
-        var ledgerBytes = FrozenLedgerGenerator.AppendRevocation(genesis, plan);
+        var revokeFiles = DagLedgerAppendWriter.BuildNewEventFiles(
+            FrozenLedgerGenerator.Revocation(genesis, plan));
+        var ledgerFiles = genesisFiles.AddRange(revokeFiles);
 
         var finalCatalog = BuildCatalog(originalA, moduleC);
-        var fixture = FixtureFromLedger(ledgerBytes, [originalA, moduleC]);
-        fixture.LedgerBytes = ledgerBytes;
+        var fixture = FixtureFromLedger(ledgerFiles, [originalA, moduleC]);
+        fixture.LedgerFiles = ledgerFiles;
         fixture.FinalCatalog = finalCatalog;
         return fixture;
     }
 
     private static TruthExportFixture FixtureFromLedger(
-        ImmutableArray<byte> ledgerBytes,
+        ImmutableArray<RepositoryFile> ledgerFiles,
         ModuleSpec[] revisionModules,
         FrozenRevisionIdentity? identity = null,
         ModuleSpec[]? workingModules = null)
     {
         var temporary = new TemporaryDirectory();
         var revisionFiles = RepositoryFiles(revisionModules);
-        AddLedgerFiles(revisionFiles, ledgerBytes);
+        AddLedgerFiles(revisionFiles, ledgerFiles);
         var revisionReports = Reports(revisionModules);
         var immutableRevision = RawSnapshot(revisionFiles);
         var revisionSnapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
@@ -222,7 +217,7 @@ public sealed class TruthExportCommandTests
         WriteStatementMaterials(reportPath, revisionReports);
         var mutableModules = workingModules ?? revisionModules;
         var mutableFiles = RepositoryFiles(mutableModules);
-        AddLedgerFiles(mutableFiles, ledgerBytes);
+        AddLedgerFiles(mutableFiles, ledgerFiles);
         var mutableReports = Reports(mutableModules);
         var mutableWorkingTree = RawSnapshot(mutableFiles);
         var mutableLeanReportSource = new FakeLeanReportSource(LeanAxiomReport.Create(mutableReports));
@@ -285,13 +280,6 @@ public sealed class TruthExportCommandTests
     private static RawRepositorySnapshot RawSnapshot(IEnumerable<KeyValuePair<string, string>> files) =>
         RawRepositorySnapshot.Create(
             files.Select(static pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
-
-    private static FrozenLedgerConsistent Baseline(ImmutableArray<byte> bytes, FrozenMaterialCatalog catalog) =>
-        Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateHistory(Load(bytes), catalog)).Capability;
-
-    private static FrozenLedgerSyntax Load(ImmutableArray<byte> bytes) =>
-        Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes.AsSpan())).Syntax;
 
     private static ParsedExport ParseExport(string path)
     {
@@ -402,7 +390,7 @@ public sealed class TruthExportCommandTests
 
         internal ImmutableArray<byte> ReportBytes { get; } = reportBytes;
 
-        internal ImmutableArray<byte> LedgerBytes { get; set; }
+        internal ImmutableArray<RepositoryFile> LedgerFiles { get; set; }
 
         internal FrozenMaterialCatalog FinalCatalog { get; set; } = null!;
 
