@@ -1,14 +1,14 @@
 ast_path: 定理/279.1
 fingerprints:
-  raw_sha256: sha256:e5332aa5c7097bcd3aacd0e19840a5da1b5803829c8cd57c2fb8b2bd94a0c30e
-  normalized_sha256: sha256:e5332aa5c7097bcd3aacd0e19840a5da1b5803829c8cd57c2fb8b2bd94a0c30e
-cas_ref: sha256:e5332aa5c7097bcd3aacd0e19840a5da1b5803829c8cd57c2fb8b2bd94a0c30e
+  raw_sha256: sha256:68ebcbcc03004f0c712810f7359cd495c18056f166da0d98b1ee669eca71285a
+  normalized_sha256: sha256:68ebcbcc03004f0c712810f7359cd495c18056f166da0d98b1ee669eca71285a
+cas_ref: sha256:68ebcbcc03004f0c712810f7359cd495c18056f166da0d98b1ee669eca71285a
 coverage_gids:
   - D5/S3/ConceptDynamics/DecisionValue/DominantStrategyDirectification.dominant_strategy_directification
 receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/DecisionValue/DominantStrategyDirectification.dominant_strategy_directification
-      source_sha256: sha256:e5332aa5c7097bcd3aacd0e19840a5da1b5803829c8cd57c2fb8b2bd94a0c30e
+      source_sha256: sha256:68ebcbcc03004f0c712810f7359cd495c18056f166da0d98b1ee669eca71285a
       target_sha256: sha256:0a3cc11b1d7ee66bea17f50634c6a9756b2556e49ddc2211972bc578ea8aef69
   scribe:
     - gid: D5/S3/ConceptDynamics/DecisionValue/DominantStrategyDirectification.dominant_strategy_directification

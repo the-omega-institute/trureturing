@@ -6,7 +6,7 @@ Binary posterior loss selects answer zero, abstention, or answer one at the stat
 
 **Theorem 1.1 (Optimal choice).**
 
-$$\begin{gathered}\forall p\in [0, 1], 0 < \lambda < \frac{1}{2},\\{}a^{*}(p, \lambda) = \begin{cases}\text{answer\ 0},&p \leq \lambda\\{}\text{abstain},&\lambda < p < 1 - \lambda\\{}\text{answer\ 1},&p \geq 1 - \lambda\end{cases}.\end{gathered}$$
+$$\begin{gathered}\forall p, \lambda: \mathbb{R},\\{}hP: p\in [0, 1], hLambda: \lambda\in (0, \frac{1}{2}),\\{}\operatorname{preferredBinaryAction}\left(p, \lambda\right) = \begin{cases}\text{answer\ 0},&p \leq \lambda\\{}\text{abstain},&\lambda < p < 1 - \lambda\\{}\text{answer\ 1},&p \geq 1 - \lambda\end{cases}.\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/DecisionValue/OptimalBinaryAbstention.optimal_binary_answer_with_abstention` (`✓ std3`). ∎
 

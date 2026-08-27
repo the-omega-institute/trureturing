@@ -6,7 +6,7 @@ Maximum target diversity in a record fiber is the exact appeal label count.
 
 **Theorem 1.1 (Fiber diversity gives the exact number of appeal labels).**
 
-$$\begin{gathered}\forall X, B, Y,\\{}[\operatorname{Fintype}(X)] [\operatorname{Fintype}(B)],\\{}r: X \to B, t: X \to Y,\\{}d = \operatorname{worstFiberDiversity}(r, t),\\{}(\exists ell_{exact}: X \to \operatorname{Fin}(d), \operatorname{AppealDetermines}(r, t, ell_{exact})) \land \\{}(\forall m \in \mathbb{N}, ell_{candidate}: X \to \operatorname{Fin}(m),\\{}\operatorname{AppealDetermines}(r, t, ell_{candidate}) \Rightarrow d \leq m).\end{gathered}$$
+$$\begin{gathered}\forall X, B, Y: Type,\\{}[\operatorname{Fintype}(X)], [\operatorname{Fintype}(B)],\\{}r: X \to B, t: X \to Y,\\{}(\exists ell_{exact}: X \to \operatorname{Fin}(\operatorname{worstFiberDiversity}(r, t)), \operatorname{AppealDetermines}(r, t, ell_{exact})) \land \\{}(\forall m: \mathbb{N}, ell_{candidate}: X \to \operatorname{Fin}(m),\\{}\operatorname{AppealDetermines}(r, t, ell_{candidate}) \Rightarrow \operatorname{worstFiberDiversity}(r, t) \leq m).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Appeal/MinimalAppealLabelCount.minimal_appeal_label_count` (`✓ std3`). ∎
 
