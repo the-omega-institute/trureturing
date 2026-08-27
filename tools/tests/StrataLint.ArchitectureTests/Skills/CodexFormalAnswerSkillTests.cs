@@ -205,7 +205,7 @@ public sealed class CodexFormalAnswerSkillTests
     {
         var document = Parse(
             """
-            ## 3. Fix the exact statement echo
+            ## 4. Implement the inferential completion
 
             1. `premise-map`: identify premises.
             2. `G`: derive a reusable theorem.
@@ -213,9 +213,9 @@ public sealed class CodexFormalAnswerSkillTests
 
             ## 6. Persist project source and account for the worktree
 
-            1. `reuse-complete`: require `active-frozen` evidence.
+            1. `reuse-complete`: cite `project-source` and require `active-frozen` evidence.
             2. `discard-thin`: discard `run-local` wrappers.
-            3. `persist-synthesis`: invoke `codex-formalize` and `deposit-new`.
+            3. `persist-synthesis`: retain `tracked-lean` with `Describe`, verify `make lean`, and invoke `codex-formalize` and `deposit-new`.
             4. `open-compile`: preserve an `open` compiler failure.
             """);
 
