@@ -156,7 +156,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
     private static void AssertDepositPerformanceEvents(TransactionFixture fixture) =>
         AssertPerformanceEvents(fixture, "deposit",
-            "lean-report:passed", "emit:passed", "stage-phase-a:passed",
+            "lean-report:passed", "deposit-header-check:passed", "emit:passed", "stage-phase-a:passed",
             "validate-formalization-receipt:passed", "ledger-append D5/S0/Carrier/Probe.lean:passed",
             "stage-final-tree:passed", "total:passed");
 

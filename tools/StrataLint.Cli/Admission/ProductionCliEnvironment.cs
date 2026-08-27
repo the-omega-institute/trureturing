@@ -333,6 +333,9 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     public ExplicitCommandResult FileMapConform(IReadOnlyList<string> arguments) =>
         FileMapConformCommand.Run(arguments, repositoryRoot);
 
+    public ExplicitCommandResult DepositHeaderCheck(IReadOnlyList<string> arguments) =>
+        DepositHeaderCheckCommand.Run(repository, leanReportSource, arguments);
+
     public CommandResult Ingest(IReadOnlyList<string> arguments) =>
         scribeEmissionVerifier is null
             ? new CommandResult(

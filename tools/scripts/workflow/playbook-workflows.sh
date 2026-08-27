@@ -739,6 +739,7 @@ case "$COMMAND" in
       [[ "$status" -eq 1 ]] || exit "$status"
       freeze_precheck=0
       step lean-report make lean-report
+      step deposit-header-check run_cli deposit-header-check --target "$MODULE_PATH"
       step emit make emit
       step stage-phase-a commit_phase_a_if_needed
     fi

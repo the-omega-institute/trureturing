@@ -8,7 +8,7 @@ namespace StrataLint.Tests;
 public sealed partial class DepositCoverWorkflowScriptTests
 {
     [Fact]
-    public void DepositRunsPhaseAEmissionWithoutRecomputingAfterFreezeAndReceipt()
+    public void DepositWithExactSixLineHeaderRunsPhaseAEmissionWithoutRecomputingAfterFreezeAndReceipt()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -26,6 +26,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(
             [
                 "make:lean-report",
+                "dotnet:deposit-header-check",
                 "make:emit",
                 "dotnet:emit-formalization-receipt",
                 "dotnet:ledger-append",
@@ -187,7 +188,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         Assert.NotEqual(0, result.ExitCode);
         Assert.Contains("STALE_LEAN_REPORT", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
-        Assert.Equal(["make:lean-report", "make:emit"], fixture.CallKinds());
+        Assert.Equal(
+            ["make:lean-report", "dotnet:deposit-header-check", "make:emit"],
+            fixture.CallKinds());
         Assert.Equal(0, fixture.FreezeCount());
     }
 
@@ -441,7 +444,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             WriteFile(
                 ".gitignore",
                 ".lake/\n.report-source\nbin/\ncalls\nfreeze-probes\nfail-ledger-once\n");
-            WriteFile(LeanPath, "theorem probe : True := by trivial\n");
+            WriteFile(LeanPath, ExactSixLineLean(Gid, "theorem probe : True := by trivial\n"));
             WriteFile(DefinitionPath, "definition baseline\n");
             WriteFile(EmissionPath, "emission: baseline\n");
             Directory.CreateDirectory(Path.Combine(Root, LedgerPath));
@@ -468,13 +471,13 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         internal void ChangeFormalization()
         {
-            WriteFile(LeanPath, "theorem probe : True := by\n  trivial\n");
+            WriteFile(LeanPath, ExactSixLineLean(Gid, "theorem probe : True := by\n  trivial\n"));
             WriteFile(DefinitionPath, "definition deposited\n");
         }
 
         internal void AddNewFormalization(bool withMirror)
         {
-            WriteFile(NewLeanPath, "theorem new_module : True := by trivial\n");
+            WriteFile(NewLeanPath, ExactSixLineLean(NewGid, "theorem new_module : True := by trivial\n"));
             if (withMirror)
             {
                 WriteFile(NewEmissionPath, "emission: new module\n");
@@ -484,7 +487,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
         internal void AddSecondaryFormalization()
         {
             WriteFile(SecondaryLeanPath,
-                "theorem window_register_crt_decomposition : True := by trivial\n");
+                ExactSixLineLean(
+                    SecondaryGid,
+                    "theorem window_register_crt_decomposition : True := by trivial\n"));
             WriteFile(
                 "Blueprint/D5/S3/Observer/WindowRegisterCRT.scribe.cs",
                 "secondary definition\n");
