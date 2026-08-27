@@ -178,18 +178,24 @@ internal static partial class RepositoryRules
         ImmutableArray<RuleFinding>.Builder findings)
     {
         var normalized = value.Replace("\uFEFF", string.Empty, StringComparison.Ordinal).Trim();
-        var opaque = new List<string>();
+        var bytes = Encoding.UTF8.GetBytes(normalized);
+        var opaque = new ArrayBufferWriter<byte>(bytes.Length);
         var cursor = 0;
         var index = 0;
-        while (index < normalized.Length)
+        while (index < bytes.Length)
         {
-            if (normalized[index] is not ('{' or '['))
+            if (bytes[index] is not ((byte)'{' or (byte)'['))
+            {
+                index++;
+                continue;
+            }
+            if (!CanStartNonemptyJsonContainer(bytes, index))
             {
                 index++;
                 continue;
             }
 
-            if (!TryParseEmbeddedJson(normalized, index, out var document, out var consumed)
+            if (!TryParseEmbeddedJson(bytes, index, out var document, out var consumed)
                 || document is null)
             {
                 index++;
@@ -198,7 +204,8 @@ internal static partial class RepositoryRules
 
             using (document)
             {
-                opaque.Add(normalized[cursor..index]);
+                opaque.Write(bytes.AsSpan(cursor, index - cursor));
+                opaque.Write("\n"u8);
                 ScanJson(
                     path,
                     document.RootElement,
@@ -215,10 +222,10 @@ internal static partial class RepositoryRules
             index = cursor;
         }
 
-        opaque.Add(normalized[cursor..]);
+        opaque.Write(bytes.AsSpan(cursor));
 
         var unescaped = Regex.Replace(
-            string.Join('\n', opaque),
+            Encoding.UTF8.GetString(opaque.WrittenSpan),
             "\\\\u([0-9a-fA-F]{4})",
             static match => ((char)Convert.ToInt32(match.Groups[1].Value, 16)).ToString());
         if ((AnomalyBearingPattern.IsMatch(unescaped)
@@ -358,14 +365,35 @@ internal static partial class RepositoryRules
         return declared && DigestionFormalizationReceipt.SelectsDeclaration(residue);
     }
 
+    private static bool CanStartNonemptyJsonContainer(ReadOnlySpan<byte> value, int start)
+    {
+        var index = start + 1;
+        while (index < value.Length && value[index] is (byte)' ' or (byte)'\t' or (byte)'\r' or (byte)'\n')
+        {
+            index++;
+        }
+        if (index >= value.Length || value[index] is (byte)'}' or (byte)']')
+        {
+            return false;
+        }
+
+        if (value[start] == (byte)'{')
+        {
+            return value[index] == (byte)'"';
+        }
+
+        return value[index] is (byte)'"' or (byte)'{' or (byte)'[' or (byte)'-'
+            or (byte)'t' or (byte)'f' or (byte)'n'
+            || value[index] is >= (byte)'0' and <= (byte)'9';
+    }
+
     private static bool TryParseEmbeddedJson(
-        string value,
+        ReadOnlySpan<byte> value,
         int start,
         out JsonDocument? document,
         out int consumedCharacters)
     {
-        var bytes = Encoding.UTF8.GetBytes(value[start..]);
-        var reader = new Utf8JsonReader(bytes, isFinalBlock: true, state: default);
+        var reader = new Utf8JsonReader(value[start..], isFinalBlock: true, state: default);
         try
         {
             document = JsonDocument.ParseValue(ref reader);
@@ -377,7 +405,7 @@ internal static partial class RepositoryRules
                 return false;
             }
 
-            consumedCharacters = Encoding.UTF8.GetCharCount(bytes.AsSpan(0, checked((int)reader.BytesConsumed)));
+            consumedCharacters = checked((int)reader.BytesConsumed);
             return true;
         }
         catch (JsonException)

@@ -49,16 +49,25 @@ internal sealed class InvariantSafetyDocument : IScribeDocumentDefinition
         Formula x0 = F.Id("x0");
         Formula x = F.Id("x");
         Formula y = F.Id("y");
+        Formula state = F.Id("X");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula prop = Seq(Operatorname, Grp(F.Id("Prop")));
+        Formula stateSet = Seq(Operatorname, Grp(F.Id("Set")), Open, state, Close);
+        Formula relationType = new Formula.TypeArrow(
+            state, new Formula.TypeArrow(state, prop));
 
         return Disp(Seq(
-            Forall, Sp, relation, Comma, Sp, initial, Comma, Sp, invariant, Comma, Sp, safe,
+            Forall, Sp, state, Colon, Sp, type, Comma, Sp,
+            relation, Colon, Sp, relationType, Comma, RowBreak,
+            initial, Comma, Sp, invariant, Comma, Sp, safe, Colon, Sp, stateSet,
             Comma, RowBreak,
             initial, Sp, Subseteq, Sp, invariant, Sp, Land, Sp,
             invariant, Sp, Subseteq, Sp, safe, Sp, Land, RowBreak,
-            Open, Forall, Sp, x, Comma, Sp, y, Comma, Sp,
+            Open, Forall, Sp, x, Comma, Sp, y, Colon, Sp, state, Comma, Sp,
             Member(x, invariant), Sp, Land, Sp, Apply2(relation, x, y), Sp,
             Rightarrow, Sp, Member(y, invariant), Close, RowBreak,
-            Rightarrow, Sp, Forall, Sp, x0, Comma, Sp, x, Comma, RowBreak,
+            Rightarrow, Sp, Forall, Sp, x0, Comma, Sp, x, Colon, Sp, state,
+            Comma, RowBreak,
             Member(x0, initial), Sp, Land, Sp,
             Operatorname, Grp(F.Id("ReflTransGen")), Open, relation, Close,
             Open, x0, Comma, Sp, x, Close, Sp, Rightarrow, Sp,

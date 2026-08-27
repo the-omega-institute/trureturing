@@ -12,6 +12,6 @@ receipts:
       target_sha256: sha256:443af1277d6cc40643b4241cd675eabce78aa08fa8145ee8d686629178fc868d
   scribe:
     - gid: D5/S3/ConceptDynamics/Transport/AdmissionValidityPreservation.validity_preserved_by_admission_map
-      definition_sha256: sha256:1b07c0dd6c75d2c92fb4590f4d5446fec7744dacbec7d72293a8631eee2baad0
-      emission_sha256: sha256:559d49dadf46db929a9eb25715bc9f6647d1da4431f79e49becebc5e376e6596
+      definition_sha256: sha256:49225a8bc7b140b2ecaa1212d4b11bf7d27284acd40588c4f9adc03f428e52c1
+      emission_sha256: sha256:dd0940b2be8007477f9884be784204f2eb8af7b73ac09f1320924ff2baec4a0a
   unresolved_subitems: []

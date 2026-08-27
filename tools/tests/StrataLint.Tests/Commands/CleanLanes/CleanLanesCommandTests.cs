@@ -211,15 +211,15 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Fact]
-    public void ForceRemovesEligibleItemsAndProtectsEveryIneligibleClass()
+    public void ForceRemovesEligibleHarnessItemsAndProtectsEveryEnumeratedIneligibleClass()
     {
         using var fixture = new CleanLanesFixture();
         var removable = fixture.AddLandedLane("harness/merged");
         var dirty = fixture.AddLandedLane("harness/dirty", dirty: true);
         var unmerged = fixture.AddUnmergedLane("harness/unmerged");
         fixture.AddOrphan("harness/orphan", merged: true);
+        fixture.AddOrphan("harness/math/nested-orphan", merged: true);
         fixture.AddOrphan("harness/orphan-unmerged", merged: false);
-        fixture.AddOrphan("agent/prover/not-an-init-branch", merged: true);
         var foreign = fixture.AddForeignTempDirectory("trureturing-foreign");
         var attached = fixture.AddAttachedTempDirectory("trureturing-attached");
         fixture.SwitchToManagedBranch("harness/current");
@@ -230,6 +230,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.False(Directory.Exists(removable));
         Assert.False(fixture.BranchExists("harness/merged"));
         Assert.False(fixture.BranchExists("harness/orphan"));
+        Assert.False(fixture.BranchExists("harness/math/nested-orphan"));
         Assert.True(Directory.Exists(dirty));
         Assert.True(Directory.Exists(unmerged));
         Assert.True(Directory.Exists(foreign));
@@ -237,7 +238,6 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(fixture.BranchExists("harness/dirty"));
         Assert.True(fixture.BranchExists("harness/unmerged"));
         Assert.True(fixture.BranchExists("harness/orphan-unmerged"));
-        Assert.True(fixture.BranchExists("agent/prover/not-an-init-branch"));
         var items = ReadItems(result.Output);
         AssertItemProperty(items, "path", dirty, "reason", "dirty");
         AssertItemProperty(items, "path", unmerged, "reason", "pr_not_merged");

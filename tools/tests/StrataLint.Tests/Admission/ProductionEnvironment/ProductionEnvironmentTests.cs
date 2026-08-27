@@ -85,11 +85,10 @@ public sealed partial class ProductionEnvironmentTests
             currentRaw,
             baselineRaw);
         var candidateReport = Path.Combine(temporary.Path, "candidate.json");
-        File.WriteAllBytes(
+        RawLeanReportArtifact.WriteFile(
             candidateReport,
-            RawLeanReportArtifact.Write(
-                Decode(currentRaw),
-                LeanAxiomReport.Create(fixture.Reports)).AsSpan());
+            Decode(currentRaw),
+            LeanAxiomReport.Create(fixture.Reports));
         var source = new FakeLeanReportSource(null);
         var environment = new ProductionCliEnvironment("/repo", gateway, source);
 
@@ -105,7 +104,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CheckPerformsZeroLedgerSemanticCallsForAnUnrelatedChange()
+    public void CheckAdmitsAnUnrelatedChangeWhenMaterialArchiveIsMissingAndUnused()
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
@@ -125,11 +124,11 @@ public sealed partial class ProductionEnvironmentTests
             "/repo",
             ImmutableHashSet<string>.Empty);
         var candidateReport = Path.Combine(temporary.Path, "candidate.json");
-        File.WriteAllBytes(
+        RawLeanReportArtifact.WriteFile(
             candidateReport,
-            RawLeanReportArtifact.Write(
-                Decode(currentRaw),
-                LeanAxiomReport.Create(fixture.Reports)).AsSpan());
+            Decode(currentRaw),
+            LeanAxiomReport.Create(fixture.Reports));
+        File.Delete(RawLeanReportArtifact.MaterialsPath(candidateReport));
         var environment = new ProductionCliEnvironment(
             "/repo",
             gateway,
@@ -165,11 +164,10 @@ public sealed partial class ProductionEnvironmentTests
             "/repo",
             ImmutableHashSet<string>.Empty);
         var candidateReport = Path.Combine(temporary.Path, "candidate.json");
-        File.WriteAllBytes(
+        RawLeanReportArtifact.WriteFile(
             candidateReport,
-            RawLeanReportArtifact.Write(
-                Decode(currentRaw),
-                LeanAxiomReport.Create(fixture.Reports)).AsSpan());
+            Decode(currentRaw),
+            LeanAxiomReport.Create(fixture.Reports));
         var environment = new ProductionCliEnvironment(
             "/repo",
             gateway,
@@ -216,11 +214,10 @@ public sealed partial class ProductionEnvironmentTests
         var currentRaw = Snapshot(fixture.Files);
         var baselineRaw = Snapshot(fixture.Baseline);
         var candidateReport = Path.Combine(temporary.Path, "candidate.json");
-        File.WriteAllBytes(
+        RawLeanReportArtifact.WriteFile(
             candidateReport,
-            RawLeanReportArtifact.Write(
-                Decode(currentRaw),
-                LeanAxiomReport.Create(fixture.Reports)).AsSpan());
+            Decode(currentRaw),
+            LeanAxiomReport.Create(fixture.Reports));
         var environment = new ProductionCliEnvironment(
             "/repo",
             new FakeRepositoryGateway(
@@ -466,11 +463,10 @@ public sealed partial class ProductionEnvironmentTests
     {
         using var temporary = new TemporaryDirectory();
         var candidateReport = Path.Combine(temporary.Path, "candidate.json");
-        File.WriteAllBytes(
+        RawLeanReportArtifact.WriteFile(
             candidateReport,
-            RawLeanReportArtifact.Write(
-                Decode(Snapshot(fixture.Files)),
-                LeanAxiomReport.Create(fixture.Reports)).AsSpan());
+            Decode(Snapshot(fixture.Files)),
+            LeanAxiomReport.Create(fixture.Reports));
         return environment.Check(new[]
         {
             "--candidate-lean-report", candidateReport,

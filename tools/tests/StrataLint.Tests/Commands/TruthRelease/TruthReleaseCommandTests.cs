@@ -253,9 +253,9 @@ public sealed class TruthReleaseCommandTests
             revisionSnapshot.Files.Values
                 .Where(file => file.Path.Value.StartsWith(ledgerPrefix, StringComparison.Ordinal))
                 .ToImmutableDictionary(static file => file.Path)));
-        var reportBytes = RawLeanReportArtifact.Write(revisionSnapshot, report);
         var reportPath = Path.Combine(temporary.Path, "candidate-lean-report.json");
-        File.WriteAllBytes(reportPath, reportBytes.AsSpan());
+        RawLeanReportArtifact.WriteFile(reportPath, revisionSnapshot, report);
+        var reportBytes = ImmutableArray.CreateRange(File.ReadAllBytes(reportPath));
         File.WriteAllText(
             Path.Combine(gitRoot, formalPath),
             "-- mutable working tree bytes must be ignored\n" + files[formalPath],
