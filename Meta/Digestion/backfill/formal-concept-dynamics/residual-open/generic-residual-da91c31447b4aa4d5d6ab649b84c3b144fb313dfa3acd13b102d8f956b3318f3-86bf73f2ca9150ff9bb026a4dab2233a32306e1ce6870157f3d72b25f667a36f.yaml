@@ -1,0 +1,10 @@
+ast_path: section/222-一个定理应被表示为依赖包/clause/4
+fingerprints:
+  raw_sha256: sha256:da91c31447b4aa4d5d6ab649b84c3b144fb313dfa3acd13b102d8f956b3318f3
+  normalized_sha256: sha256:da91c31447b4aa4d5d6ab649b84c3b144fb313dfa3acd13b102d8f956b3318f3
+cas_ref: sha256:da91c31447b4aa4d5d6ab649b84c3b144fb313dfa3acd13b102d8f956b3318f3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

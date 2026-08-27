@@ -1,0 +1,5 @@
+# 1. 仓库锚点与理论边界
+
+本文复用但不冒充已经完全形式化的仓库结构包括：
+
+- `D5/S0/Diagonal/EscapeCount.lean`：有限自应用列表、twisted diagonal 与精确逃逸计数；

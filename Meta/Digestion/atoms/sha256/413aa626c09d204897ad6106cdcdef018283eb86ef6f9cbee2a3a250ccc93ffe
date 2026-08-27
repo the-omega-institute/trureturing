@@ -1,0 +1,16 @@
+* 叶节点给出最终回答。
+
+对每个状态 (x)，协议产生一条完整 transcript：
+
+[
+\boxed{
+\operatorname{Tr}_{\pi}(x).
+}
+]
+
+所以任何自适应协议仍然诱导一个概念：
+
+[
+\operatorname{Tr}*{\pi}:X\to B*{\pi}.
+]
+

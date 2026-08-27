@@ -1,0 +1,10 @@
+ast_path: section/灌输型更新/clause/5
+fingerprints:
+  raw_sha256: sha256:0637d9edabd63a788c18eab287be761d65fcd13807f120e9ad077f591c9330b4
+  normalized_sha256: sha256:0637d9edabd63a788c18eab287be761d65fcd13807f120e9ad077f591c9330b4
+cas_ref: sha256:0637d9edabd63a788c18eab287be761d65fcd13807f120e9ad077f591c9330b4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

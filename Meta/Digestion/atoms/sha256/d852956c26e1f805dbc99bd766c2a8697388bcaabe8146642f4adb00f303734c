@@ -1,0 +1,35 @@
+## 定理 164.1（可信性的二因素分解）
+
+若：
+
+[
+R_{\mathrm{send}}=R_{\mathrm{true}}
+]
+
+且：
+
+[
+T=\overline T\circ R_{\mathrm{true}},
+]
+
+则：
+
+[
+T=\overline T\circ R_{\mathrm{send}}.
+]
+
+但两条件彼此不推出。
+
+因此必须区分：
+
+[
+\boxed{
+\text{诚实}
+\neq
+\text{有能力提供充分信息}.
+}
+]
+
+一个主体可以：
+
+* 完全诚实但观察概念太粗；

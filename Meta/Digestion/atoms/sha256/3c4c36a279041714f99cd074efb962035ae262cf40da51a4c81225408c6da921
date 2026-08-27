@@ -1,0 +1,23 @@
+## 经典定理 181.1（观察正合序列）
+
+存在正合序列：
+
+\[
+\boxed{
+1
+\to
+\mathcal O_K^\times
+\to
+K^\times
+\xrightarrow{\operatorname{div}}
+\operatorname{Div}_f(K)
+\to
+\operatorname{Cl}(K)
+\to
+0.
+}
+\]
+
+其观察含义为：
+
+- kernel \(\mathcal O_K^\times\)：素理想赋值看不见的生成元 gauge；

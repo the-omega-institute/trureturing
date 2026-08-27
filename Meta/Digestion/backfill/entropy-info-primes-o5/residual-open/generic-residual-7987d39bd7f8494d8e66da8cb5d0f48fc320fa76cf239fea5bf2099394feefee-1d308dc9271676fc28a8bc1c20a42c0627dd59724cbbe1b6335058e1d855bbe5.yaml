@@ -1,0 +1,10 @@
+ast_path: section/8-审计记录-r1/clause/1
+fingerprints:
+  raw_sha256: sha256:7987d39bd7f8494d8e66da8cb5d0f48fc320fa76cf239fea5bf2099394feefee
+  normalized_sha256: sha256:7987d39bd7f8494d8e66da8cb5d0f48fc320fa76cf239fea5bf2099394feefee
+cas_ref: sha256:7987d39bd7f8494d8e66da8cb5d0f48fc320fa76cf239fea5bf2099394feefee
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

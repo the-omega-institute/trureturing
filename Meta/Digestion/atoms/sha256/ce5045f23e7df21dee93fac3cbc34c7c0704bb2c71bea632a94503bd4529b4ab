@@ -1,0 +1,18 @@
+### 证据极性与 T4 父聚合
+
+原子研究态为
+
+\[
+Q=\{\mathsf{open},\mathsf{proved},\mathsf{refuted},
+\mathsf{statement\mbox{-}revised},\mathsf{invalid}\}.
+\]
+
+固定证据截止为
+
+\[
+D:=\texttt{2026-09-30T00:00:00Z}.
+\]
+
+只消费规范账本中 `received_at` 不晚于 \(D\) 的有限前缀；\(D\) 与证明进展、成功票数、运输批次和事件顺序无关。证据集合单调追加，各原子在 \(D\) 前保持 open，在 \(D\) 由同一纯函数一次迁移到终态：
+
+- `proved`：存在核验通过的 kernel 定理证明冻结命题；T4 子项还允许机器核验通过的本卷显式构造见证。

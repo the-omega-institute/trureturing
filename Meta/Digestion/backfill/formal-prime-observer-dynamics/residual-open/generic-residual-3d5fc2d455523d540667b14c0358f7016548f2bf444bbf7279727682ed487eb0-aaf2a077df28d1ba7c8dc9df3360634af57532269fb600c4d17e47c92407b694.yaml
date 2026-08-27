@@ -1,0 +1,10 @@
+ast_path: section/53-可审计局部证据/clause/3
+fingerprints:
+  raw_sha256: sha256:3d5fc2d455523d540667b14c0358f7016548f2bf444bbf7279727682ed487eb0
+  normalized_sha256: sha256:3d5fc2d455523d540667b14c0358f7016548f2bf444bbf7279727682ed487eb0
+cas_ref: sha256:3d5fc2d455523d540667b14c0358f7016548f2bf444bbf7279727682ed487eb0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/352-主权可以定义为元控制权/clause/3
+fingerprints:
+  raw_sha256: sha256:1a7f02348a693346aad8efc5f1b0b9701c5f326b25283b5abb4083aae276ee37
+  normalized_sha256: sha256:1a7f02348a693346aad8efc5f1b0b9701c5f326b25283b5abb4083aae276ee37
+cas_ref: sha256:1a7f02348a693346aad8efc5f1b0b9701c5f326b25283b5abb4083aae276ee37
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

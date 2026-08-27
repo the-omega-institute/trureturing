@@ -1,0 +1,14 @@
+## 命题 4.5(对换不变性生成全群不变性)〔`open`;群论核为 mathlib 一行〕
+
+设准入谓词 \(T:X\times U\times I\times I\to\mathsf{Prop}\)(「在 \(x\) 下允许 \(i\) 对 \(j\) 施 \(u\)」)。\(\operatorname{Sym}(I)\) 以 \((\sigma\cdot T)(x,u,i,j):=T(x,u,\sigma^{-1}i,\sigma^{-1}j)\) 作用于谓词空间 \(\mathcal T\)。称 \(T\) 对 \(\sigma\) 不变,若 \(\sigma\cdot T=T\),即
+
+\[
+\forall x,u,i,j:\ T(x,u,\sigma i,\sigma j)\iff T(x,u,i,j).
+\]
+
+则以下等价:
+
+(a) \(T\) 对每一个对换 \((i\ j)\) 不变(**黄金律,逐对量化**);
+(b) \(T\) 对 \(\operatorname{Sym}(I)\) 全体不变(**FCD 定义 41.2 群对称公平在 \(G=\operatorname{Sym}(I)\) 下的实例**;FCD 的 \(G\) 是「道德上无关的身份置换群」,取 \(G=\operatorname{Sym}(I)\) 是**额外假设**「全部身份置换皆道德无关」,见评注 4.6(β));
+(c) \(T\) 通过 \((X\times U\times I\times I)/\operatorname{Sym}(I)\) 因子化(**删除身份坐标后的选择**,即 FCD 哲学对照表「罗尔斯无知之幕」行)。
+

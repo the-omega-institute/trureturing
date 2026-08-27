@@ -1,0 +1,38 @@
+# 50. 数学存在与数学哲学
+
+在依赖类型论中：
+
+\[
+P:\mathsf{Prop}
+\]
+
+是命题，而：
+
+\[
+p:P
+\]
+
+是证明项。
+
+必须区分：
+
+\[
+\begin{aligned}
+\text{语法存在}
+&=\text{表达式可形成};\\
+\text{证明存在}
+&=\text{具有 proof term};\\
+\text{模型存在}
+&=\text{理论有模型};\\
+\text{构造存在}
+&=x:X;\\
+\text{经典存在}
+&=\|X\|\text{ 或经典存在命题};\\
+\text{现实实现}
+&=\operatorname{Realizes}(M,x).
+\end{aligned}
+\]
+
+形式主义、构造主义、结构主义和柏拉图主义可以作为不同的存在准入 doctrine：
+
+- 形式主义强调可推导性；

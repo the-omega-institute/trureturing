@@ -1,0 +1,10 @@
+ast_path: section/346-市场清算不推出分配正义/clause/5
+fingerprints:
+  raw_sha256: sha256:7b32b6f48de67e55523e758e644b775979c51e26f0f312efd3ec11d45d7dd18d
+  normalized_sha256: sha256:7b32b6f48de67e55523e758e644b775979c51e26f0f312efd3ec11d45d7dd18d
+cas_ref: sha256:7b32b6f48de67e55523e758e644b775979c51e26f0f312efd3ec11d45d7dd18d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

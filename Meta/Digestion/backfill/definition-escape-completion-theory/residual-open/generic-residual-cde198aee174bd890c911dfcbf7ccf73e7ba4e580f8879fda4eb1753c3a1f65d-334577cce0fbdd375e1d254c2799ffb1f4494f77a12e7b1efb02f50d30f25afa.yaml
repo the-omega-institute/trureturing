@@ -1,0 +1,10 @@
+ast_path: section/54-1-与既有各部的断链接线/clause/9
+fingerprints:
+  raw_sha256: sha256:cde198aee174bd890c911dfcbf7ccf73e7ba4e580f8879fda4eb1753c3a1f65d
+  normalized_sha256: sha256:cde198aee174bd890c911dfcbf7ccf73e7ba4e580f8879fda4eb1753c3a1f65d
+cas_ref: sha256:cde198aee174bd890c911dfcbf7ccf73e7ba4e580f8879fda4eb1753c3a1f65d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,14 @@
+- defect 可取值于有序幺半对象、距离、正锥或见证类型。
+
+自然容器是：
+
+\[
+\boxed{
+\text{defect-enriched double category of concepts and processes}.
+}
+\]
+
+概念格给出静态语义；双范畴给出概念与过程的交互；fibration 给出依赖余量；completion 给出缺陷修复；observer cone 给出主体；doctrine 给出合法性与规范性。
+
+---
+

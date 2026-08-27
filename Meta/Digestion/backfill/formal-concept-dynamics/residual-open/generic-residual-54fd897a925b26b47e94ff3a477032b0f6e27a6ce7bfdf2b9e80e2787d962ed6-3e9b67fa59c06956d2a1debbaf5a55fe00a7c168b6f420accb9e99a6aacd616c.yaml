@@ -1,0 +1,10 @@
+ast_path: section/406-优化声誉会使原有声誉充分性失效/clause/4
+fingerprints:
+  raw_sha256: sha256:54fd897a925b26b47e94ff3a477032b0f6e27a6ce7bfdf2b9e80e2787d962ed6
+  normalized_sha256: sha256:54fd897a925b26b47e94ff3a477032b0f6e27a6ce7bfdf2b9e80e2787d962ed6
+cas_ref: sha256:54fd897a925b26b47e94ff3a477032b0f6e27a6ce7bfdf2b9e80e2787d962ed6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

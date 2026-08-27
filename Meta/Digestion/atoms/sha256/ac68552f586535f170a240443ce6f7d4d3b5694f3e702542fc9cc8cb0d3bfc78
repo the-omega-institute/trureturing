@@ -1,0 +1,9 @@
+\[
+d_{\min}(\mathcal C_\chi)
+=
+\min\{\operatorname{wt}(c):c\in\mathcal C_\chi,\ c\ne0\}.
+\]
+
+标准编码论给出：
+
+- 可检测至多 \(d_{\min}-1\) 个任意 bit 错误；

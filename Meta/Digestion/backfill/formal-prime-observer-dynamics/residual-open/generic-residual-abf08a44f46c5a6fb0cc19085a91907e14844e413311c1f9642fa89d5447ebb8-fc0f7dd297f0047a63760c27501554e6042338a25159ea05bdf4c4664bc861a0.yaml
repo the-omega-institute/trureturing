@@ -1,0 +1,10 @@
+ast_path: 经典结论/224.1/clause/2
+fingerprints:
+  raw_sha256: sha256:abf08a44f46c5a6fb0cc19085a91907e14844e413311c1f9642fa89d5447ebb8
+  normalized_sha256: sha256:abf08a44f46c5a6fb0cc19085a91907e14844e413311c1f9642fa89d5447ebb8
+cas_ref: sha256:abf08a44f46c5a6fb0cc19085a91907e14844e413311c1f9642fa89d5447ebb8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

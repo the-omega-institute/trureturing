@@ -1,0 +1,10 @@
+ast_path: section/10-2-观察-干预-反事实层级/clause/1
+fingerprints:
+  raw_sha256: sha256:75a060232f2f1157618cd43d8fd0b05c8de7a728afc328e32b8badad9ef006fe
+  normalized_sha256: sha256:75a060232f2f1157618cd43d8fd0b05c8de7a728afc328e32b8badad9ef006fe
+cas_ref: sha256:75a060232f2f1157618cd43d8fd0b05c8de7a728afc328e32b8badad9ef006fe
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

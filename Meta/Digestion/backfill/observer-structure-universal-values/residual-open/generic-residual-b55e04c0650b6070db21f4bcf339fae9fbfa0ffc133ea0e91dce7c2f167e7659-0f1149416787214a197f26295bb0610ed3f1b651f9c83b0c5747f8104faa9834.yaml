@@ -1,0 +1,10 @@
+ast_path: section/5-2-已知疑点-全部主表条目均为-ASSUMED-UNVERIFIED-本节只列已知具体疑点/clause/2
+fingerprints:
+  raw_sha256: sha256:b55e04c0650b6070db21f4bcf339fae9fbfa0ffc133ea0e91dce7c2f167e7659
+  normalized_sha256: sha256:b55e04c0650b6070db21f4bcf339fae9fbfa0ffc133ea0e91dce7c2f167e7659
+cas_ref: sha256:b55e04c0650b6070db21f4bcf339fae9fbfa0ffc133ea0e91dce7c2f167e7659
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

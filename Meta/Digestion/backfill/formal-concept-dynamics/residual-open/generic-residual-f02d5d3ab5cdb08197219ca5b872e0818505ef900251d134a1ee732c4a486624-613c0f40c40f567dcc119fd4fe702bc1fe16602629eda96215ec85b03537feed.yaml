@@ -1,0 +1,10 @@
+ast_path: section/244-同意是有类型的行动授权-而不是一个裸-yes/clause/3
+fingerprints:
+  raw_sha256: sha256:f02d5d3ab5cdb08197219ca5b872e0818505ef900251d134a1ee732c4a486624
+  normalized_sha256: sha256:f02d5d3ab5cdb08197219ca5b872e0818505ef900251d134a1ee732c4a486624
+cas_ref: sha256:f02d5d3ab5cdb08197219ca5b872e0818505ef900251d134a1ee732c4a486624
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

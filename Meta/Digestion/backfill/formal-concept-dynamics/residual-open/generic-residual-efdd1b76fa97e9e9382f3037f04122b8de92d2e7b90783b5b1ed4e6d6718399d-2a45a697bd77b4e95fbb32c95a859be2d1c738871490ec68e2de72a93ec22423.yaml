@@ -1,0 +1,10 @@
+ast_path: section/165-可审计信任必须携带-provenance/clause/6
+fingerprints:
+  raw_sha256: sha256:efdd1b76fa97e9e9382f3037f04122b8de92d2e7b90783b5b1ed4e6d6718399d
+  normalized_sha256: sha256:efdd1b76fa97e9e9382f3037f04122b8de92d2e7b90783b5b1ed4e6d6718399d
+cas_ref: sha256:efdd1b76fa97e9e9382f3037f04122b8de92d2e7b90783b5b1ed4e6d6718399d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
