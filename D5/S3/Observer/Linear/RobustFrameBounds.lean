@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Observer/Linear/RobustFrameBounds
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Weighted finite quantum readouts satisfy sharp Gram frame bounds,
-   with completeness and conditioning determined by their spectral endpoints. -/
+   digest: Weighted readouts satisfy sharp frame bounds and spectral conditioning. -/
 
 import D5.S3.Quantum.Tomography.InformationalCompletenessEquivalence
 import Mathlib.Analysis.InnerProductSpace.SingularValues
