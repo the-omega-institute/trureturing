@@ -87,6 +87,18 @@ public sealed partial class DepositCoverWorkflowScriptTests
             printf 'dotnet:%s\n' "$command" >> "$PLAYBOOK_TEST_CALLS"
             read -r -a parts <<< "$command"
             case "${parts[0]:-}" in
+              deposit-header-check)
+                if [[ ${parts[1]:-} != --target \
+                    || ${parts[2]:-} != "${PLAYBOOK_TARGET_MODULE:-}" ]]; then
+                  echo 'DEPOSIT_HEADER_CHECK_INVALID synthetic target transport mismatch' >&2
+                  exit 96
+                fi
+                if [[ ${PLAYBOOK_REJECT_DEPOSIT_HEADER:-0} == 1 ]]; then
+                  printf 'SL-012 %s: expected the exact six-line header at byte zero\n' \
+                    "${parts[2]}"
+                  exit 1
+                fi
+                ;;
               ledger-append)
                 target_module=${PLAYBOOK_TARGET_MODULE:-D5/S0/Carrier/Probe.lean}
                 descriptor_blob_oid="git-sha1:$(PLAYBOOK_INSIDE_LEDGER_STUB=1 git hash-object -- "$target_module")"
@@ -246,7 +258,8 @@ public sealed partial class DepositCoverWorkflowScriptTests
             bool coverDispositionFailure = false,
             string? mutateReceiptAfterPrepare = null,
             TimeSpan? timeout = null,
-            string? baseRevision = null) =>
+            string? baseRevision = null,
+            bool rejectDepositHeader = false) =>
             TestProcessRunner.Run(
                 "/usr/bin/env",
                 [
@@ -258,6 +271,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     $"PLAYBOOK_COVER_DISPOSITION_FAILURE={(coverDispositionFailure ? "1" : "0")}",
                     $"PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE={mutateReceiptAfterPrepare ?? string.Empty}",
                     $"PLAYBOOK_TARGET_MODULE={(gid == SecondaryGid ? SecondaryLeanPath : gid == NewGid ? NewLeanPath : LeanPath)}",
+                    $"PLAYBOOK_REJECT_DEPOSIT_HEADER={(rejectDepositHeader ? "1" : "0")}",
                     "/bin/bash",
                     Path.Combine(Root, ScriptPath),
                     command,

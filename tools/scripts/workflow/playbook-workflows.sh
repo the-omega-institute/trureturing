@@ -689,11 +689,13 @@ case "$COMMAND" in
       freeze_precheck=1
       printf 'PLAYBOOK_SKIP command=deposit detail=phase-a-already-committed path=%s\n' \
         "$MODULE_PATH" >&2
+      step deposit-header-check run_cli deposit-header-check --target "$MODULE_PATH"
     else
       status=$?
       [[ "$status" -eq 1 ]] || exit "$status"
       freeze_precheck=0
       step lean-report make lean-report
+      step deposit-header-check run_cli deposit-header-check --target "$MODULE_PATH"
       step emit make emit
       step stage-phase-a commit_phase_a_if_needed
     fi
