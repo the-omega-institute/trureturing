@@ -1,0 +1,21 @@
+# 72. 一步安全选择的最低观察信息
+
+完整状态 $x$ 的安全动作集为 $\mathcal A_X(x)$。称块 $C\subseteq X$ **安全兼容**，若
+
+$$
+\boxed{
+\bigcap_{x\in C}\mathcal A_X(x)\ne\varnothing.
+}
+$$
+
+定义安全分区数
+
+$$
+\boxed{
+\chi_{\mathrm{safe}}
+=
+\min\{k:X=C_1\dot\cup\cdots\dot\cup C_k,
+\ C_i\text{ 均安全兼容}\}.
+}
+$$
+

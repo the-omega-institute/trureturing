@@ -1,0 +1,12 @@
+# 82. 模型不确定性扩大时自由保持核只会缩小
+
+设可能的动力模型族为 $\mathfrak F_\delta$，满足
+
+$$
+\delta_1\le\delta_2
+\Rightarrow
+\mathfrak F_{\delta_1}\subseteq\mathfrak F_{\delta_2}.
+$$
+
+鲁棒前驱要求对所有 $F\in\mathfrak F_\delta$ 均保持安全，记对应自由保持核为 $\mathsf{FreeKernel}_\delta$。
+

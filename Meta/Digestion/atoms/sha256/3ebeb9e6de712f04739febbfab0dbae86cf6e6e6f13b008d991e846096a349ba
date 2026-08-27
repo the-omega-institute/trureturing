@@ -1,0 +1,18 @@
+## 定义 61.1（鲁棒恢复域）
+
+$$
+\boxed{
+\mathsf{Recover}(K;D)
+=
+\bigcup_{n\ge0}R_n.
+}
+$$
+
+定义最小恢复层级
+
+$$
+\boxed{
+\tau_{\mathrm{rec}}(x)=\min\{n:x\in R_n\}.
+}
+$$
+

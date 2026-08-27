@@ -1,0 +1,29 @@
+## 定义 57.2（信念鲁棒前驱）
+
+对信念集合族 $\mathcal Z$，定义
+
+$$
+\begin{aligned}
+\operatorname{Pre}_B(\mathcal Z)
+=
+\{B:\;&B\subseteq S_{\mathrm{ag}},\
+\exists a\text{ 对全部 }x\in B\text{ 合法},\\
+&\forall o',\ 
+\operatorname{Post}(B,a,o')\ne\varnothing
+\Rightarrow
+\operatorname{Post}(B,a,o')\in\mathcal Z\}.
+\end{aligned}
+$$
+
+其最大固定点
+
+$$
+\boxed{
+\mathsf{BeliefFreeKernel}
+=
+\nu\mathcal Z.\operatorname{Pre}_B(\mathcal Z)
+}
+$$
+
+才是有限观察者真正能够保证的主体保持域。
+

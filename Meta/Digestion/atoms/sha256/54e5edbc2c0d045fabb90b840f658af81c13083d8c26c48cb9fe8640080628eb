@@ -1,0 +1,20 @@
+# 71. 安全不等于活性：主体性 Büchi 核
+
+自由保持核允许退化成永远安全但策略冻结的“frozen survivor”。因此另取主体性更新集合
+
+$$
+L_{\mathrm{renew}}\subseteq S_{\mathrm{ag}},
+$$
+
+要求其中例如满足：策略仍可修订、代理储备不低于阈值、账本可访问，或存在至少两个行为不同的自由保持动作。
+
+对 $Q\subseteq Z$ 定义区域内鲁棒吸引子
+
+$$
+\boxed{
+\operatorname{Attr}_Z(Q)
+=
+\mu Y\,[Q\cup(Z\cap\operatorname{Pre}_{\exists\forall}(Y))].
+}
+$$
+

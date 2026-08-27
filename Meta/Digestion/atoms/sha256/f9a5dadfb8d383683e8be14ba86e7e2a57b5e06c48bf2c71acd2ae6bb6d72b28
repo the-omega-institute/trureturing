@@ -1,0 +1,20 @@
+## 本文定理 55.1（无记忆鲁棒保持策略）
+
+在有限、完全观察模型中，每个
+
+$$
+x\in\mathsf{FreeKernel}_{\mathrm{rob}}
+$$
+
+都有某个动作 $a_x$ 满足
+
+$$
+\forall e\in\mathcal E(x,a_x),
+\quad
+F(x,a_x,e)
+\in
+\mathsf{FreeKernel}_{\mathrm{rob}}.
+$$
+
+逐状态选择这些见证动作，即得到永久保持主体性的无记忆策略。∎
+
