@@ -1,0 +1,10 @@
+## 定义 225.1（风险等价）
+
+$$
+h\sim_{\mathrm{risk}}h'
+\iff
+\forall \ell\in\mathcal L,\ \forall a,
+\quad
+R_{\ell,a}(h)=R_{\ell,a}(h').
+$$
+

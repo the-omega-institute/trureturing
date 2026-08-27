@@ -1,0 +1,25 @@
+## 170.1 联合观察者是 join
+
+联合观察签名：
+
+$$
+\Sigma_{\mathfrak O_1\vee\mathfrak O_2}(x)
+=
+\left(
+\Sigma_{\mathfrak O_1}(x),
+\Sigma_{\mathfrak O_2}(x)
+\right).
+$$
+
+于是：
+
+$$
+\boxed{
+K_{\mathfrak O_1\vee\mathfrak O_2}
+=
+K_{\mathfrak O_1}
+\cap
+K_{\mathfrak O_2}.
+}
+$$
+

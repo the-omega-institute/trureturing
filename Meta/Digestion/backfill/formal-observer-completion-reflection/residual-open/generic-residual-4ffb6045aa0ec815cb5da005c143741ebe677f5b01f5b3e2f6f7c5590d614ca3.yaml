@@ -1,0 +1,13 @@
+ast_path: section/226-双外延不等于自描述完备
+fingerprints:
+  raw_sha256: sha256:4ffb6045aa0ec815cb5da005c143741ebe677f5b01f5b3e2f6f7c5590d614ca3
+  normalized_sha256: sha256:4ffb6045aa0ec815cb5da005c143741ebe677f5b01f5b3e2f6f7c5590d614ca3
+cas_ref: sha256:4ffb6045aa0ec815cb5da005c143741ebe677f5b01f5b3e2f6f7c5590d614ca3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-57b60bd7dc217c2aa753d15b3cb0ad1a2902fc61dd1dcb987b6945e0276eb85b-2c20e1c0861bf511c162c40c5627225f381a449ea86e852749a1ea673ddfd169
+    - generic-residual-2019c7f3c159baed3a6292d15c2be574245fd2e4cf44546d8b87c5ddee799acd-e430296f986083105054d07b09dc7041cb7bf4f0034b4777d9a38c628cc6b791

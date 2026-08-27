@@ -1,0 +1,14 @@
+ast_path: section/232-增订八-决策序-上下文像缺陷与观察-控制最小实现
+fingerprints:
+  raw_sha256: sha256:ae259df6d36a7c3d7053c9d000ce276685046a48cb44ade987f77e81f4340c6d
+  normalized_sha256: sha256:ae259df6d36a7c3d7053c9d000ce276685046a48cb44ade987f77e81f4340c6d
+cas_ref: sha256:ae259df6d36a7c3d7053c9d000ce276685046a48cb44ade987f77e81f4340c6d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-56db1a2bf6946efe7ffcd0d3fb91aa127d6ee1783c0598a727931145957393d3-6ca5a7968ae4f12c2d52c99add13260bcf59a612e521044fbee99777b199cc8b
+    - generic-residual-fcb28448dbd37e9a0775503d48eec8be532de46f16d3813e143a2a8e4975ce3c-703d6b77fe0687544efe31b6d6ef89c2a8a79b04e8217a23b7b3f6fa9a97f9ad
+    - generic-residual-e8dce553e12be9ad9daa72ce6c1002f01542fefddff94a0273cef1bef84aa2ab-ce79586ee410a763a71e6167196eccac3b7cee131cdebb99cda45c1516e7c96e

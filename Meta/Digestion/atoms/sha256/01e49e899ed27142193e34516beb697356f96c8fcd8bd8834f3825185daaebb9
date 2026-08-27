@@ -1,0 +1,32 @@
+## 3.1 完成问题同构
+
+设两个完成问题：
+
+$$
+\mathfrak C,\qquad \mathfrak C'
+$$
+
+之间存在参数双射：
+
+$$
+\alpha:A\to A'
+$$
+
+满足：
+
+$$
+a\in\mathcal N
+\iff
+\alpha(a)\in\mathcal N',
+$$
+
+以及：
+
+$$
+\Delta(a)=0
+\iff
+\Delta'(\alpha(a))=0.
+$$
+
+---
+

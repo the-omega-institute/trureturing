@@ -1,0 +1,10 @@
+ast_path: section/与统一理论的关系
+fingerprints:
+  raw_sha256: sha256:eb826d81e79ad7b08275cfd7acb4fa19af2eab127f18c5184aff862e1753524f
+  normalized_sha256: sha256:eb826d81e79ad7b08275cfd7acb4fa19af2eab127f18c5184aff862e1753524f
+cas_ref: sha256:eb826d81e79ad7b08275cfd7acb4fa19af2eab127f18c5184aff862e1753524f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

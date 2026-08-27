@@ -1,0 +1,10 @@
+ast_path: section/第八十二部-边界-Epstein-packet
+fingerprints:
+  raw_sha256: sha256:e527f974e295952d372d43ed9d52ad6c8a3e00c00d182bbbb0c144a7b6824e9d
+  normalized_sha256: sha256:e527f974e295952d372d43ed9d52ad6c8a3e00c00d182bbbb0c144a7b6824e9d
+cas_ref: sha256:e527f974e295952d372d43ed9d52ad6c8a3e00c00d182bbbb0c144a7b6824e9d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/时间观察者
+fingerprints:
+  raw_sha256: sha256:81e64c0428a516dd513bb8dc31a28b0a3f7d9965aac53e8595b9f42ed11f2cf1
+  normalized_sha256: sha256:81e64c0428a516dd513bb8dc31a28b0a3f7d9965aac53e8595b9f42ed11f2cf1
+cas_ref: sha256:81e64c0428a516dd513bb8dc31a28b0a3f7d9965aac53e8595b9f42ed11f2cf1
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

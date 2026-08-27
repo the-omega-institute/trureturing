@@ -1,0 +1,89 @@
+# 第八十二部　边界 Epstein packet
+
+对每个边界轨道定义 partial Epstein zeta：
+
+$$
+\boxed{
+E_\alpha(s)
+=
+\sum_{\substack{x\in L\setminus\{0\}\\
+\rho_5(x)\in O_\alpha}}
+\langle x,x\rangle^{-s}.
+}
+\tag{82.1}
+$$
+
+它是：
+
+$$
+\Theta_\alpha(t)-\delta_{\alpha,O_0}
+$$
+
+的 Mellin 变换。
+
+把六个独立分量组成：
+
+$$
+\boxed{
+\mathbf E_L(s)
+=
+\left(
+E_{O_0},
+E_I,
+E_{Q_2},
+E_{Q_4},
+E_{Q_1},
+E_{Q_3}
+\right)^T.
+}
+\tag{82.2}
+$$
+
+有限 Fourier／Poisson 完成给出一个耦合函数方程：
+
+$$
+\boxed{
+\widehat{\mathbf E}_L(s)
+=
+\mathcal S_5
+\widehat{\mathbf E}_L(3-s),
+}
+\tag{82.3}
+$$
+
+其中 \(\mathcal S_5\) 是五进有限 Weil \(S\)-矩阵与二进完成因子的组合。
+
+投影到两个黄金三维分量：
+
+$$
+\mathbf E_3=P_3\mathbf E_L,
+$$
+
+$$
+\mathbf E_{3'}=P_{3'}\mathbf E_L,
+$$
+
+得到：
+
+$$
+\boxed{
+\mathbf E_3
+\quad\text{与}\quad
+\mathbf E_{3'}
+}
+$$
+
+两个 Galois 共轭的 completed zeta triplets。
+
+这给出了新的“主函数家族”定义：
+
+$$
+\boxed{
+\textbf{Icosahedral Epstein Genome}
+=
+\text{六维格点 zeta 按五进二十面体边界分解后的两个三维谱包}.
+}
+$$
+
+---
+

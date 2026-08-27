@@ -1,0 +1,65 @@
+# 第七十七部　黄金类差算子再次出现
+
+令：
+
+$$
+K_{5A}
+=
+\sum_{g\in5A}\rho(g),
+$$
+
+$$
+K_{5B}
+=
+\sum_{g\in5B}\rho(g).
+$$
+
+定义中心算子：
+
+$$
+\boxed{
+J_{\mathrm{mod}}
+=
+\frac14
+\left(
+K_{5A}-K_{5B}
+\right).
+}
+\tag{77.1}
+$$
+
+在 \(V_3\) 上：
+
+$$
+J_{\mathrm{mod}}
+=
++\sqrt5\,I,
+$$
+
+而在 \(V_3'\) 上：
+
+$$
+J_{\mathrm{mod}}
+=
+-\sqrt5\,I.
+$$
+
+因此在六维 Theta 状态空间上：
+
+$$
+\boxed{
+J_{\mathrm{mod}}^2=5I.
+}
+\tag{77.2}
+$$
+
+这与六维格上的整数 Hodge 算子：
+
+$$
+J_{\mathrm{lat}}^2=5I
+$$
+
+完全同型。
+
+---
+

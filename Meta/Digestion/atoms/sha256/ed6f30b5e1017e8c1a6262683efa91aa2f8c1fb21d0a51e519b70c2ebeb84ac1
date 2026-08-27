@@ -1,0 +1,16 @@
+## 透明反预测
+
+预测与响应无法共同满足闭环方程：
+
+$$
+p=\delta(p).
+$$
+
+它是：
+
+$$
+\boxed{
+\text{dynamic realization defect}.
+}
+$$
+

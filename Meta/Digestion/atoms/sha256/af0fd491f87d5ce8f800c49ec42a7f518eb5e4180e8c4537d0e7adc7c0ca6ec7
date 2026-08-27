@@ -1,0 +1,42 @@
+## 45.1 单位轨道的双曲余弦形式
+
+将非零代数整数按单位群分轨。
+
+由于类数为 \(1\)，每个非零理想可以选一个生成元 \(\alpha_{\mathfrak a}\)。
+
+令：
+
+$$
+a_{\mathfrak a}
+=
+|\sigma_+(\alpha_{\mathfrak a})|^2,
+$$
+
+$$
+b_{\mathfrak a}
+=
+|\sigma_-(\alpha_{\mathfrak a})|^2,
+$$
+
+$$
+\delta_{\mathfrak a}
+=
+\frac12
+\log\frac{a_{\mathfrak a}}{b_{\mathfrak a}}.
+$$
+
+则：
+
+$$
+Q_\eta(\varphi^n\alpha_{\mathfrak a})
+=
+2\sqrt{a_{\mathfrak a}b_{\mathfrak a}}\,
+\cosh
+\left(
+\eta+\delta_{\mathfrak a}
++2n\log\varphi
+\right).
+$$
+
+---
+

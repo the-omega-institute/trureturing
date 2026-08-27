@@ -1,0 +1,39 @@
+## 69.2 Isotropic conic
+
+非零 isotropic 条件为：
+
+$$
+b^2=ac.
+$$
+
+它具有 Veronese 参数化：
+
+$$
+\boxed{
+[u:v]
+\longmapsto
+[u^2:uv:v^2].
+}
+\tag{69.4}
+$$
+
+所以射影 isotropic conic 满足：
+
+$$
+\boxed{
+\mathcal C_5
+\simeq
+\mathbb P^1(\mathbb F_5).
+}
+$$
+
+并且：
+
+$$
+|\mathcal C_5|=5+1=6.
+$$
+
+这六个点就是前文二十面体的六条五重旋转轴。
+
+---
+

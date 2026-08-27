@@ -1,0 +1,14 @@
+ast_path: section/78-1-二维到三维
+fingerprints:
+  raw_sha256: sha256:b77aaf2d0b10c7b1f7d49d8dc0e38fb63768322d3b68d3b9663d7a196fdd98ee
+  normalized_sha256: sha256:b77aaf2d0b10c7b1f7d49d8dc0e38fb63768322d3b68d3b9663d7a196fdd98ee
+cas_ref: sha256:b77aaf2d0b10c7b1f7d49d8dc0e38fb63768322d3b68d3b9663d7a196fdd98ee
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-30fefb086454b82ab7d8d6b7decbf8ddacda0c491059cd6efe2bb3b578905b08-96e9295090709da09c54f7187afcdf27d82c431a1232445bdb629ad9bac33613
+    - generic-residual-c8b39e084e4342dcb837abbb1a73e20510e03e6db7343b8609ccead5a2407239-5e4d313346b69c9a0830fd2a11d4eb150cc6b6939c63791a8fb2dbff274ef4fe
+    - generic-residual-403f05eb7c73c3d9a5331caf430531b4dd2b21ab9f0baa5032727f5d0863bc80-ec87f29e53c0460955b70409d1b6ba8494911c48d754d36327a8aa4145220bd6

@@ -1,0 +1,56 @@
+## 定理 13.1：线性密度热迹
+
+$$
+\boxed{
+\Theta(t)
+=
+\frac ct+O(1),
+\qquad
+t\downarrow0.
+}
+$$
+
+### 证明
+
+写成 Stieltjes 积分：
+
+$$
+\Theta(t)
+=
+\int_0^\infty e^{-tu}\,dN(u).
+$$
+
+分部积分：
+
+$$
+\Theta(t)
+=
+t\int_0^\infty N(u)e^{-tu}\,du.
+$$
+
+代入：
+
+$$
+N(u)=cu+O(1).
+$$
+
+主项：
+
+$$
+ct\int_0^\infty ue^{-tu}\,du
+=
+\frac ct.
+$$
+
+误差：
+
+$$
+t\int_0^\infty O(1)e^{-tu}\,du
+=
+O(1).
+$$
+
+∎
+
+---
+

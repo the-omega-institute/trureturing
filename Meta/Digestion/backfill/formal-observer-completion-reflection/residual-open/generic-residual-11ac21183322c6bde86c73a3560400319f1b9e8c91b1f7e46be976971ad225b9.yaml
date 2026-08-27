@@ -1,0 +1,14 @@
+ast_path: 最深解释/218.1
+fingerprints:
+  raw_sha256: sha256:11ac21183322c6bde86c73a3560400319f1b9e8c91b1f7e46be976971ad225b9
+  normalized_sha256: sha256:11ac21183322c6bde86c73a3560400319f1b9e8c91b1f7e46be976971ad225b9
+cas_ref: sha256:11ac21183322c6bde86c73a3560400319f1b9e8c91b1f7e46be976971ad225b9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-e783d1582646a810e27acdb9955aef98295946255c1ee8887f25169698cc12cc-70d27d9df5c1dde054d00e5b52475c30621107b3aed0d84b5f6e955dffbf6eaa
+    - generic-residual-0e2119c5d8ba08750866fa54fc71e123daff4b73d9f00e4bcb2ad8d0f3fcb6b3-6714f469248ad6ed574055ed868f5102c1ee349cda281ebc6daf93aa1e367c0d
+    - generic-residual-77d43a2cf7c79fc3c0f70aa6a7f8f073c6f96fb7f53be7017bbc747f49b922db-3140480fef485e712df698330efee77f8d2496ff67fa265dbe60a1b402d01dbd

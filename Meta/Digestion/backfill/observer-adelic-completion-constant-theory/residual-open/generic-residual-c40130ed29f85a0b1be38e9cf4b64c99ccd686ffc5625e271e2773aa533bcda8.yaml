@@ -1,0 +1,10 @@
+ast_path: section/60-2-七状态压缩链
+fingerprints:
+  raw_sha256: sha256:c40130ed29f85a0b1be38e9cf4b64c99ccd686ffc5625e271e2773aa533bcda8
+  normalized_sha256: sha256:c40130ed29f85a0b1be38e9cf4b64c99ccd686ffc5625e271e2773aa533bcda8
+cas_ref: sha256:c40130ed29f85a0b1be38e9cf4b64c99ccd686ffc5625e271e2773aa533bcda8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

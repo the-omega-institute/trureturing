@@ -1,0 +1,15 @@
+ast_path: section/84-3-尚缺失的中心桥
+fingerprints:
+  raw_sha256: sha256:9314ff762e95c7c222e7eec23ddfdb1721790b386fcff74463787fbd4a6add89
+  normalized_sha256: sha256:9314ff762e95c7c222e7eec23ddfdb1721790b386fcff74463787fbd4a6add89
+cas_ref: sha256:9314ff762e95c7c222e7eec23ddfdb1721790b386fcff74463787fbd4a6add89
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-f02bbc50e6c73e4d5bc78e1e8192e23a620521d0e303baefb9a59624ee33eefb-a5930c95fdc1f0631224c38901bc394240750787aed7b73fab3a2dca798b61de
+    - generic-residual-507c26f3cde8a16341987235ef4f9cfeb442c49ed20c510fb4990219536b5c0a-41623906a1553ccffc73593a9bc62f3931e9faaaa4b559e65bbddb941e7fc73c
+    - generic-residual-961bf48eb561cd0b210c04445a3deaff3c42097b841b5e1f285a3d550dff4273-13cde8cbc28957ae6a8c0593583e870fc9080523804bce99c8200c6669f0e84f
+    - generic-residual-23eefcaf32f5d1935e565c70559a6ffd0b275e0ca22cddea5959c79d4f0df5f4-60002c296b6debc0176d037e22e95ba2f07f65832fe54223fd07d1eeb3009afa

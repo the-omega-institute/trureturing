@@ -1,0 +1,54 @@
+## 29.1 谱投影
+
+定义：
+
+$$
+\boxed{
+P_\parallel
+=
+\frac12
+\left(
+I+\frac{J}{\sqrt5}
+\right),
+}
+$$
+
+$$
+\boxed{
+P_\perp
+=
+\frac12
+\left(
+I-\frac{J}{\sqrt5}
+\right).
+}
+$$
+
+则：
+
+$$
+P_\parallel^2=P_\parallel,
+\qquad
+P_\perp^2=P_\perp,
+$$
+
+$$
+P_\parallel P_\perp=0,
+\qquad
+P_\parallel+P_\perp=I.
+$$
+
+并且：
+
+$$
+E_\parallel=P_\parallel W_\mathbb R,
+\qquad
+E_\perp=P_\perp W_\mathbb R
+$$
+
+均为三维 \(A_5\)-不变空间。
+
+已有晶体学理论表明，二十面体旋转群的最小 crystallographic representation 是六维的，并分解为两个三维不可约表示；这一六维表示正是构造三维二十面体准晶体的 cut-and-project 起点。([国际晶体学期刊][2])
+
+---
+

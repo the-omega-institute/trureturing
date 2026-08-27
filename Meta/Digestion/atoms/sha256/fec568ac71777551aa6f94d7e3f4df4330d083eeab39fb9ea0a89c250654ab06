@@ -1,0 +1,42 @@
+## 43.2 Archimedean 完成
+
+\(K\) 有两个实嵌入，所以完成函数为：
+
+$$
+\boxed{
+\Lambda_K(s)
+=
+5^{s/2}
+\pi^{-s}
+\Gamma\left(\frac s2\right)^2
+\zeta_K(s).
+}
+$$
+
+并满足：
+
+$$
+\boxed{
+\Lambda_K(s)=\Lambda_K(1-s).
+}
+$$
+
+每个常数均有独立角色：
+
+$$
+\boxed{
+\begin{aligned}
+5^{s/2}
+&:\text{数域判别式完成};\\
+\pi^{-s}
+&:\text{两个实无穷位的 Gaussian 规范};\\
+\Gamma(s/2)^2
+&:\text{两个实嵌入的 Mellin 因子};\\
+\zeta_K
+&:\text{全部有限素理想通道}.
+\end{aligned}
+}
+$$
+
+---
+

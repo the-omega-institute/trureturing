@@ -1,0 +1,10 @@
+ast_path: section/230-对角化是一种-realization-audit/clause/4
+fingerprints:
+  raw_sha256: sha256:5ea643a471cb1b8516eaa0352790c6a58f54bad637ea72509b9906dce3d20543
+  normalized_sha256: sha256:5ea643a471cb1b8516eaa0352790c6a58f54bad637ea72509b9906dce3d20543
+cas_ref: sha256:5ea643a471cb1b8516eaa0352790c6a58f54bad637ea72509b9906dce3d20543
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

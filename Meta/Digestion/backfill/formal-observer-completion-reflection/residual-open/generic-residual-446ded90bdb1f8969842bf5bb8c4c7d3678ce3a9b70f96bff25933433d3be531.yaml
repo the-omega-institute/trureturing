@@ -1,0 +1,16 @@
+ast_path: section/精确无损判据
+fingerprints:
+  raw_sha256: sha256:446ded90bdb1f8969842bf5bb8c4c7d3678ce3a9b70f96bff25933433d3be531
+  normalized_sha256: sha256:446ded90bdb1f8969842bf5bb8c4c7d3678ce3a9b70f96bff25933433d3be531
+cas_ref: sha256:446ded90bdb1f8969842bf5bb8c4c7d3678ce3a9b70f96bff25933433d3be531
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-83e2ec2cdd659c39a53230ab22ff0e2df19a796f5a9ebddea0b84c3c21794937-7c2aa284f0696ace687631b2d11f9701cae32fa4f1b915c362539d801b47f9d2
+    - generic-residual-5b0e03736ce86e66010b8c4e9438db04f8c2a93f79beb0edba965d3c39041236-2f69b29b3c03736925499bca717dc4b92d384c489dd80db288406db2c193b478
+    - generic-residual-004a1082ab34a4fb3ff08a7e743b41dff1a84ed7104c677bba1bed9cfb030634-9190265abe1ed0fab9b24d9f18708888c6f54e49962144c43636acc24959dc31
+    - generic-residual-3675f25fce40ab647463fa31ffb90a6e7202a316720ac6412deaf26834acb2f4-6b313a0fdc8c270ff80940dec1fe696ff74bbf651eb8a16b2a4f874b59a33aea
+    - generic-residual-d87bdf630a571350401ecf17b3be8bb5ae79a8a90cb6c044534360e8ccde2398-84a697650bcfde0e5156aadb1cfe52ae49d7c8820666d4ea75b595a320033045

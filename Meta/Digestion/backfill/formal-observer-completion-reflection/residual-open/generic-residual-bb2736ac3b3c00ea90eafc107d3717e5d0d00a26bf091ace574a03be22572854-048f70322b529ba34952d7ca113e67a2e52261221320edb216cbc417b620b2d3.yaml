@@ -1,0 +1,10 @@
+ast_path: section/214-观察-干预和反事实构成严格协议层级/clause/1
+fingerprints:
+  raw_sha256: sha256:bb2736ac3b3c00ea90eafc107d3717e5d0d00a26bf091ace574a03be22572854
+  normalized_sha256: sha256:bb2736ac3b3c00ea90eafc107d3717e5d0d00a26bf091ace574a03be22572854
+cas_ref: sha256:bb2736ac3b3c00ea90eafc107d3717e5d0d00a26bf091ace574a03be22572854
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

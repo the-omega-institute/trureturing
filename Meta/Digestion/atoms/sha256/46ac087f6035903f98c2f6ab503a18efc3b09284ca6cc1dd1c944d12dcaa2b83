@@ -1,0 +1,18 @@
+## 定义 224.2（预测状态）
+
+$$
+\Psi(h)
+=
+\bigl(\mathsf L(h,w)\bigr)_{w\in W}.
+$$
+
+定义预测状态空间：
+
+$$
+\boxed{
+S_{\mathrm{pred}}
+=
+\operatorname{Im}\Psi.
+}
+$$
+

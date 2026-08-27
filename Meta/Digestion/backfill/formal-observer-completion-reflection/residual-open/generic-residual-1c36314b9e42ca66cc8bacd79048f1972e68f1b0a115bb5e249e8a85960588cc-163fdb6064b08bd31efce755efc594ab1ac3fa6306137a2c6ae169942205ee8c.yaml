@@ -1,0 +1,10 @@
+ast_path: section/180-Prime-observer-是一个多轴观察-atlas/clause/4
+fingerprints:
+  raw_sha256: sha256:1c36314b9e42ca66cc8bacd79048f1972e68f1b0a115bb5e249e8a85960588cc
+  normalized_sha256: sha256:1c36314b9e42ca66cc8bacd79048f1972e68f1b0a115bb5e249e8a85960588cc
+cas_ref: sha256:1c36314b9e42ca66cc8bacd79048f1972e68f1b0a115bb5e249e8a85960588cc
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,16 @@
+## 有强文献支撑，但需与项目对象桥接
+
+$$
+\boxed{
+\text{Klein 二十面体不变量}
+\longleftrightarrow
+\mathbb Q(\sqrt5)\text{ Hilbert 模形式}.
+}
+$$
+
+相关周期映射与 Theta 表达已经存在于 Hilbert 模曲面文献中。([numdam.org][3])
+
+需要证明的是项目具体六维格 Theta 与这些标准生成元的关系。
+
+---
+

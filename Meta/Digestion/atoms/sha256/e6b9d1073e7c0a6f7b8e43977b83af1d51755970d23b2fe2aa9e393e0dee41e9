@@ -1,0 +1,12 @@
+## 结论二：所有 completion 都是 target completion
+
+$$
+\boxed{
+C_{\mathcal T}(q)
+=
+q\vee\mathcal T.
+}
+$$
+
+不同理论只是在选择不同目标族。
+

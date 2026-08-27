@@ -1,0 +1,36 @@
+## 定理 18.1：连接系数乘法
+
+若：
+
+$$
+Y=aX,
+\qquad
+Z=bY,
+$$
+
+则：
+
+$$
+\boxed{
+Z=(ab)X.
+}
+$$
+
+因此复合常数必须按完成路径分解，而不能被视为单一原语。
+
+Ramanujan 541 中：
+
+$$
+\sqrt{\frac{\pi e^x}{2x}}
+=
+\underbrace{\sqrt{\frac\pi2}}_{\text{Gaussian 总质量}}
+\cdot
+\underbrace{e^{x/2}}_{\text{指数流}}
+\cdot
+\underbrace{x^{-1/2}}_{\text{尺度 Jacobian}}.
+$$
+
+这就是一个结构常数复合证书。
+
+---
+

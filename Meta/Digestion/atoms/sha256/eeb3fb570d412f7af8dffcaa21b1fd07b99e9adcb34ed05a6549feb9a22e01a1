@@ -1,0 +1,35 @@
+# 216. Belief、predictive state 与 self 没有无条件固定顺序
+
+定义策略画像：
+
+$$
+S:H\to\mathsf{PolicyProfile}.
+$$
+
+若策略只依赖 posterior：
+
+$$
+S=G\circ\Pi,
+$$
+
+则：
+
+$$
+K_\Pi\subseteq K_S.
+$$
+
+若策略只依赖最小未来行为：
+
+$$
+S=J\circ B,
+$$
+
+则：
+
+$$
+K_B\subseteq K_S.
+$$
+
+但如果策略使用：
+
+* 身份标签；

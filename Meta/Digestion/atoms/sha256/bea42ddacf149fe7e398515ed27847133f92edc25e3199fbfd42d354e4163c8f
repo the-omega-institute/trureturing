@@ -1,0 +1,22 @@
+## 通道版本
+
+若比较的是完整量子通道：
+
+$$
+\Phi,\Psi,
+$$
+
+则使用：
+
+$$
+\delta_\diamond(\Psi\mid\Phi)
+=
+\frac12
+\inf_\Lambda
+\left\|
+\Psi-\Lambda\circ\Phi
+\right\|_\diamond.
+$$
+
+diamond norm 允许输入系统与任意辅助系统纠缠，因此它比较的是最强的下游操作能力。
+

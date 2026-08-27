@@ -1,0 +1,56 @@
+# 第七十部　十二 cusp states 与二十面体顶点
+
+考虑：
+
+$$
+\boxed{
+\widetilde{\mathcal C}_5
+=
+\left(
+\mathbb F_5^2\setminus\{0\}
+\right)/\{\pm1\}.
+}
+\tag{70.1}
+$$
+
+其大小为：
+
+$$
+\frac{25-1}{2}=12.
+$$
+
+定义：
+
+$$
+\nu:
+\widetilde{\mathcal C}_5
+\longrightarrow R,
+$$
+
+$$
+\boxed{
+\nu([u,v]_{\pm})
+=
+T(u^2,uv,v^2).
+}
+\tag{70.2}
+$$
+
+因为 \((-u,-v)\) 具有同一平方像，该映射良定义。
+
+其像恰好是两个非零 isotropic \(12\)-轨道之一，记为：
+
+$$
+I_+.
+$$
+
+另一个轨道为某个非平方数倍：
+
+$$
+I_-=\lambda I_+,
+\qquad
+\left(\frac{\lambda}{5}\right)=-1.
+$$
+
+---
+

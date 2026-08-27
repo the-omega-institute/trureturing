@@ -1,0 +1,10 @@
+ast_path: section/184-完整性不应再使用单一布尔值
+fingerprints:
+  raw_sha256: sha256:3d267285b5b84901a612919e7c40fd15e282d6d79be9a66dd1ec9911954e474d
+  normalized_sha256: sha256:3d267285b5b84901a612919e7c40fd15e282d6d79be9a66dd1ec9911954e474d
+cas_ref: sha256:3d267285b5b84901a612919e7c40fd15e282d6d79be9a66dd1ec9911954e474d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,15 @@
+ast_path: section/第八十四部-与-Wang-Deng-RH-路线的重新连接
+fingerprints:
+  raw_sha256: sha256:dd1c42dd7b29a4a1ba4baae612770532a637a1e59086581755e48f2206248788
+  normalized_sha256: sha256:dd1c42dd7b29a4a1ba4baae612770532a637a1e59086581755e48f2206248788
+cas_ref: sha256:dd1c42dd7b29a4a1ba4baae612770532a637a1e59086581755e48f2206248788
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-999cd675fb74246ae9dd4921fdfca049cd65bc6280332396f4d4b09b0ffd773f-ba6ecc87f1f0144e30595c88894e4f01f1be9c098227ac773fa8b35bcf247dfe
+    - generic-residual-c4d41d4aefd68f416d8cc5985b00372886a9ca73c9297d2f1f9575eeb62d42ca-e318d877141ab21705aa472c8960ff336bdf66a740577f513d60b2fe103c8f84
+    - generic-residual-ad12b6ca2d51539e318e1336948e97f7ec0a0fd36865730dc2c45c6f4034cdd7-9415f5d5ed28c9e7f24b01e93d365fc231686e11d5f1b55081b0f76990f951db
+    - generic-residual-0205994c75af9b898edd05d1f2c26fe840e3934f34a7fa3601b55ef61b7c70db-84e65a6a9f4cdc00a784b52dccad8cf94d20d4f3f7aac9162c6fbb1a56d5af25

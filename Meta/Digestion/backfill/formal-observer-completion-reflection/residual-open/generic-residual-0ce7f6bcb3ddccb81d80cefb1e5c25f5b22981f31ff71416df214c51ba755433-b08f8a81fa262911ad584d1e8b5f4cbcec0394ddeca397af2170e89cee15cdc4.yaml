@@ -1,0 +1,10 @@
+ast_path: section/第五步-理想极限完成/clause/4
+fingerprints:
+  raw_sha256: sha256:0ce7f6bcb3ddccb81d80cefb1e5c25f5b22981f31ff71416df214c51ba755433
+  normalized_sha256: sha256:0ce7f6bcb3ddccb81d80cefb1e5c25f5b22981f31ff71416df214c51ba755433
+cas_ref: sha256:0ce7f6bcb3ddccb81d80cefb1e5c25f5b22981f31ff71416df214c51ba755433
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

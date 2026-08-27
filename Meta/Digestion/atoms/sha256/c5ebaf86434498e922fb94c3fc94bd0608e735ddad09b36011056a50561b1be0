@@ -1,0 +1,60 @@
+## 定理 195.1：双外延下降
+
+该定义与代表元无关，而且：
+
+$$
+[x]\neq[y]
+\Longrightarrow
+\exists[\pi],\quad
+\overline e([x],[\pi])
+\neq
+\overline e([y],[\pi]),
+$$
+
+$$
+[\pi]\neq[\rho]
+\Longrightarrow
+\exists[x],\quad
+\overline e([x],[\pi])
+\neq
+\overline e([x],[\rho]).
+$$
+
+### 证明
+
+第一式来自状态等价关系的定义。若所有协议列值都相同，则 \(x\sim_Xy\)。
+
+第二式同理。证毕。
+
+所以：
+
+$$
+\boxed{
+\overline{\mathfrak O}
+=
+(\overline X,\overline P,\overline e)
+}
+$$
+
+同时删除了重复状态行和重复协议列。
+
+这可以称为：
+
+$$
+\boxed{
+\text{观察者的双外延核}
+}
+$$
+
+或：
+
+$$
+\boxed{
+\text{biextensional observer core}.
+}
+$$
+
+此前的理论主要完成了 \(X\) 侧；统一理论还应同时完成 \(P\) 侧。
+
+---
+

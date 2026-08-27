@@ -1,0 +1,10 @@
+ast_path: section/206-受控观察的最小行为实现/clause/3
+fingerprints:
+  raw_sha256: sha256:bf90c9973d42ef913e2816ddec6b75b30db723b5b431a26864e2008ef5a9647b
+  normalized_sha256: sha256:bf90c9973d42ef913e2816ddec6b75b30db723b5b431a26864e2008ef5a9647b
+cas_ref: sha256:bf90c9973d42ef913e2816ddec6b75b30db723b5b431a26864e2008ef5a9647b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

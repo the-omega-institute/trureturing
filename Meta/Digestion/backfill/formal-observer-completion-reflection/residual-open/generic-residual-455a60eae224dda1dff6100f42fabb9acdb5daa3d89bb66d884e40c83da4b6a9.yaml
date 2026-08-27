@@ -1,0 +1,10 @@
+ast_path: section/215-实验选择的体积目标与最弱方向目标
+fingerprints:
+  raw_sha256: sha256:455a60eae224dda1dff6100f42fabb9acdb5daa3d89bb66d884e40c83da4b6a9
+  normalized_sha256: sha256:455a60eae224dda1dff6100f42fabb9acdb5daa3d89bb66d884e40c83da4b6a9
+cas_ref: sha256:455a60eae224dda1dff6100f42fabb9acdb5daa3d89bb66d884e40c83da4b6a9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

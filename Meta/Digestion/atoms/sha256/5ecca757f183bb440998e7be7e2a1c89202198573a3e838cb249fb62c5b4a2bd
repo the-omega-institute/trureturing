@@ -1,0 +1,32 @@
+## 定义 63.1（观察者碰撞阶）
+
+设两个读数 \(a,b\) 在素数 \(\mathfrak p\) 下满足：
+
+$$
+a\equiv b\pmod{\mathfrak p^r},
+$$
+
+但：
+
+$$
+a\not\equiv b\pmod{\mathfrak p^{r+1}}.
+$$
+
+定义其碰撞深度：
+
+$$
+\boxed{
+\operatorname{CollDepth}_{\mathfrak p}(a,b)=r.
+}
+$$
+
+黄金情形中：
+
+$$
+\varphi-\varphi'=\sqrt5
+$$
+
+正由唯一分歧素数 \(5\) 控制。
+
+---
+

@@ -1,0 +1,73 @@
+## 45.3 零频模式就是 Dedekind zeta
+
+当 \(m=0\) 时：
+
+$$
+\chi_0=1,
+$$
+
+所以：
+
+$$
+L(s,\chi_0)=\zeta_K(s).
+$$
+
+从而：
+
+$$
+\boxed{
+\frac1{2\log\varphi}
+\int_0^{2\log\varphi}
+\mathfrak Z_\varphi(s,\eta)\,d\eta
+=
+\frac{
+\Gamma(s/2)^2
+}{
+2\log\varphi\,\Gamma(s)
+}
+\zeta_K(s).
+}
+\tag{45.4}
+$$
+
+反过来：
+
+$$
+\boxed{
+\zeta_K(s)
+=
+\frac{
+2\log\varphi\,\Gamma(s)
+}{
+\Gamma(s/2)^2
+}
+\operatorname{Avg}_\eta
+\mathfrak Z_\varphi(s,\eta).
+}
+\tag{45.5}
+$$
+
+这给出本理论迄今最清晰的“主函数—基因组”关系：
+
+$$
+\boxed{
+\text{Dedekind zeta}
+=
+\text{Golden 单位流主 zeta 的零频观察模式}.
+}
+$$
+
+而：
+
+$$
+\boxed{
+L(s,\chi_m)
+=
+\text{同一主函数的第 }m\text{ 个调节子 Fourier 基因}.
+}
+$$
+
+所以大量不同的 Hecke \(L\)-函数并不是互不相关的对象；它们是同一个几何—算术母函数在单位流方向上的不同观察频率。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/209-旧协议重复不能穿透精确-kernel/clause/6
+fingerprints:
+  raw_sha256: sha256:e48082c6fd6109ec70413b6de13582230c29630beea82a23afb76fb2e7e3e515
+  normalized_sha256: sha256:e48082c6fd6109ec70413b6de13582230c29630beea82a23afb76fb2e7e3e515
+cas_ref: sha256:e48082c6fd6109ec70413b6de13582230c29630beea82a23afb76fb2e7e3e515
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

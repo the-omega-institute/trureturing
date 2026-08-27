@@ -1,0 +1,57 @@
+# 244. Hankel 算子与最小状态维数
+
+定义系统的 Markov 参数：
+
+$$
+H_k
+=
+CA^kB.
+$$
+
+构造块 Hankel 矩阵：
+
+$$
+\mathcal H_{r,s}
+=
+\begin{bmatrix}
+CB&CAB&\cdots&CA^{s-1}B\\
+CAB&CA^2B&\cdots&CA^sB\\
+\vdots&\vdots&&\vdots\\
+CA^{r-1}B&CA^rB&\cdots&CA^{r+s-2}B
+\end{bmatrix}.
+$$
+
+定义有限可观测映射：
+
+$$
+\mathcal O_r x
+=
+\begin{bmatrix}
+Cx\\
+CAx\\
+\vdots\\
+CA^{r-1}x
+\end{bmatrix},
+$$
+
+定义有限可控映射：
+
+$$
+\mathcal C_s
+\begin{bmatrix}
+u_0\\
+\vdots\\
+u_{s-1}
+\end{bmatrix}
+=
+\sum_{j=0}^{s-1}A^jBu_j.
+$$
+
+于是：
+
+$$
+\mathcal H_{r,s}
+=
+\mathcal O_r\mathcal C_s.
+$$
+

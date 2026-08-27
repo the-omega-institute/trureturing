@@ -1,0 +1,28 @@
+* `\mathcal L_p(x)` 是协议 law。
+
+定义可达行为等价：
+
+$$
+x\sim_{\mathrm{beh}}y
+$$
+
+当且仅当：
+
+$$
+\mathcal L_p(x)
+=
+\mathcal L_p(y)
+$$
+
+对所有 `p` 成立。
+
+定义：
+
+$$
+Q_{\mathrm{core}}
+=
+X_{\mathrm{rch}}
+/
+{\sim_{\mathrm{beh}}}.
+$$
+

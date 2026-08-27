@@ -1,0 +1,75 @@
+# 第四十一部　六维二十面体 Epstein zeta
+
+定义：
+
+$$
+\boxed{
+E_L(s)
+=
+\sum_{x\in L\setminus\{0\}}
+\langle x,x\rangle^{-s},
+\qquad
+\Re(s)>3.
+}
+$$
+
+由 Mellin 变换：
+
+$$
+\boxed{
+\pi^{-s}\Gamma(s)E_L(s)
+=
+\int_0^\infty
+\left(\Theta_L(t)-1\right)t^{s-1}\,dt.
+}
+$$
+
+利用 Theta 变换式，得到亚纯延拓以及：
+
+$$
+\boxed{
+\pi^{-s}\Gamma(s)E_L(s)
+=
+5^{3/2-s}
+\pi^{-(3-s)}
+\Gamma(3-s)E_L(3-s).
+}
+$$
+
+定义：
+
+$$
+\boxed{
+\Lambda_L(s)
+=
+5^{s/2}\pi^{-s}\Gamma(s)E_L(s).
+}
+$$
+
+则：
+
+$$
+\boxed{
+\Lambda_L(s)=\Lambda_L(3-s).
+}
+\tag{41.1}
+$$
+
+去掉 \(s=0,3\) 的标准极点后，可定义：
+
+$$
+\Xi_L(s)
+=
+s(3-s)\Lambda_L(s),
+$$
+
+满足：
+
+$$
+\boxed{
+\Xi_L(s)=\Xi_L(3-s).
+}
+$$
+
+---
+

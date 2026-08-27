@@ -1,0 +1,34 @@
+## 定理 172.1（最大不变 residual）
+
+\(K_\infty\) 是包含于初始 kernel：
+
+$$
+K_0
+=
+\operatorname{Ker}(\mathcal F_0)
+$$
+
+中的最大协议不变等价关系。
+
+即：
+
+$$
+K_\infty\subseteq K_0,
+$$
+
+且：
+
+$$
+xK_\infty y
+\Rightarrow
+T_wxK_\infty T_wy
+\quad
+\forall w.
+$$
+
+若另一个关系 \(R\subseteq K_0\) 对所有协议稳定，则：
+
+$$
+R\subseteq K_\infty.
+$$
+

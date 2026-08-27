@@ -1,0 +1,22 @@
+## 有限维停止
+
+若状态维数为 `n`，Cayley–Hamilton 给出：
+
+$$
+\mathcal R
+=
+\operatorname{span}
+\left\{
+B,AB,\ldots,A^{n-1}B
+\right\},
+$$
+
+$$
+\mathcal N
+=
+\bigcap_{k=0}^{n-1}
+\ker(CA^k).
+$$
+
+---
+

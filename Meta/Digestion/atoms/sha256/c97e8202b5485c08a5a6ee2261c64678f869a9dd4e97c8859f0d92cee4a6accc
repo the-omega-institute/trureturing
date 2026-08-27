@@ -1,0 +1,43 @@
+## 77.1 外部奇置换与 Galois 共轭
+
+奇置换诱导 \(A_5\) 的外自同构，并交换两个五阶共轭类：
+
+$$
+5A\longleftrightarrow5B.
+$$
+
+因此：
+
+$$
+J_{\mathrm{mod}}
+\longmapsto
+-J_{\mathrm{mod}}.
+$$
+
+另一方面，在格上：
+
+$$
+cJ_{\mathrm{lat}}c^{-1}
+=
+-J_{\mathrm{lat}}.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{空间方向反转}
+=
+\text{五阶共轭类交换}
+=
+\sqrt5\mapsto-\sqrt5
+=
+V_3\leftrightarrow V_3'.
+}
+\tag{77.3}
+$$
+
+这把几何 chirality、Galois 共轭与模表示外自同构统一成同一个操作。
+
+---
+

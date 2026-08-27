@@ -1,0 +1,45 @@
+# 174. 目标完成是所有知识、预测、因果与策略完成的共同母式
+
+设目标族：
+
+$$
+\mathcal T
+=
+\{T_\alpha:X\to Y_\alpha\}.
+$$
+
+定义：
+
+$$
+K_{\mathcal T}
+=
+\bigcap_\alpha\ker T_\alpha.
+$$
+
+给定当前接口：
+
+$$
+q:X\to Q,
+$$
+
+定义：
+
+$$
+C_{\mathcal T}(q)(x)
+=
+\left(
+q(x),
+(T_\alpha(x))_\alpha
+\right).
+$$
+
+则：
+
+$$
+\boxed{
+K_{C_{\mathcal T}(q)}
+=
+K_q\cap K_{\mathcal T}.
+}
+$$
+

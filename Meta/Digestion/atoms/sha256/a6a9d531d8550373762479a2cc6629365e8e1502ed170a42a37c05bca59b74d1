@@ -1,0 +1,17 @@
+## 定义 240.3（概率上下文性）
+
+即使存在某些支持相容赋值，也可能不存在任何全局概率分布的凸组合重现全部上下文概率。
+
+因此：
+
+$$
+\text{strong contextuality}
+\Longrightarrow
+\text{probabilistic contextuality},
+$$
+
+反向不必成立。
+
+这对应两种 image defect：
+
+* 支持层的全局截面为空；

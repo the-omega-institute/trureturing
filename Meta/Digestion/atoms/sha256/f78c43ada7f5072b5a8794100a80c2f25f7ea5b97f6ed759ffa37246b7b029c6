@@ -1,0 +1,58 @@
+## 证明
+
+若所有协议都通过 \(r\) 因子化，则：
+
+$$
+r(x)=r(y)
+$$
+
+必然推出：
+
+$$
+\mathcal L_\pi(x)=\mathcal L_\pi(y)
+\qquad
+\forall\pi.
+$$
+
+故：
+
+$$
+K_r\subseteq K_{\mathfrak O}.
+$$
+
+反过来，若 kernel 包含成立，定义：
+
+$$
+\bar r(r(x))
+=
+\Sigma_{\mathfrak O}(x).
+$$
+
+若：
+
+$$
+r(x)=r(y),
+$$
+
+则：
+
+$$
+(x,y)\in K_r\subseteq K_{\mathfrak O},
+$$
+
+所以：
+
+$$
+\Sigma_{\mathfrak O}(x)
+=
+\Sigma_{\mathfrak O}(y).
+$$
+
+故定义与代表元无关。
+
+唯一性来自 \(r\) 对其有效像的满射性。证毕。
+
+仓库的 `CompletionCriterion` 已经机器核验了其中最底层的 kernel quotient—realized range 等价，以及“商等于完整形式余域”等价于观察映射满射。
+
+---
+

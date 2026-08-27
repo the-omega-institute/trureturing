@@ -1,0 +1,16 @@
+* 完全正量子通道；
+
+则还需要相应的结构化左逆。
+
+这严格区分：
+
+$$
+\boxed{
+\text{semantic injectivity}
+\neq
+\text{physical recoverability}.
+}
+$$
+
+---
+

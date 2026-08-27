@@ -1,0 +1,10 @@
+ast_path: section/42-1-几何完成
+fingerprints:
+  raw_sha256: sha256:d2450b7b25eba3f8ded6a6c2225c95c56cb7939a80ee791383787cd089d1c49a
+  normalized_sha256: sha256:d2450b7b25eba3f8ded6a6c2225c95c56cb7939a80ee791383787cd089d1c49a
+cas_ref: sha256:d2450b7b25eba3f8ded6a6c2225c95c56cb7939a80ee791383787cd089d1c49a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

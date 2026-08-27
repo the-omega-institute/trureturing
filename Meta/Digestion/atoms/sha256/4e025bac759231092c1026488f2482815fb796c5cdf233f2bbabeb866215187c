@@ -1,0 +1,13 @@
+## 64.2 新的 sticky 定义
+
+若负质量沿嵌套链：
+
+$$
+(p_j,m_j,t_j,\alpha_j)
+$$
+
+持续集中，则定义为 Icosahedral sticky history。
+
+此时：
+
+* \(p\)-方向用 Euler/Hecke primitive decomposition；

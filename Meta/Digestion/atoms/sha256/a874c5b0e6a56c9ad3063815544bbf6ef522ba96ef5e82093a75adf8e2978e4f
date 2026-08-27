@@ -1,0 +1,19 @@
+## 统一结论
+
+$$
+\boxed{
+\begin{aligned}
+\text{parallel new evidence}
+&\Rightarrow
+W\text{ 相加，kernel 可缩小};\\
+\text{serial postprocessing}
+&\Rightarrow
+W\text{ 收缩，kernel 不能缩小}.
+\end{aligned}
+}
+$$
+
+这给出了“新实验”和“对旧数据做更复杂计算”的严格分界。
+
+---
+

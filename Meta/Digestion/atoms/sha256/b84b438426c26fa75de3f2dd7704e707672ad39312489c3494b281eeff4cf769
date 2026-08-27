@@ -1,0 +1,16 @@
+## 核心结论
+
+上下文性恰好是：
+
+$$
+e
+\notin
+\operatorname{Im}(\operatorname{Marg}),
+$$
+
+尽管 `e` 已经满足全部重叠兼容条件。
+
+> **量子上下文性首先是局部记录无法胶合为全局概率模型的 image defect，而不是状态 kernel defect。**
+
+---
+

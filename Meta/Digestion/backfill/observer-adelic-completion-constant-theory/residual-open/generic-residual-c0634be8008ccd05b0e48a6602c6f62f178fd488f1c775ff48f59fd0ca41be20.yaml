@@ -1,0 +1,13 @@
+ast_path: section/25-1-可见与共轭空间
+fingerprints:
+  raw_sha256: sha256:c0634be8008ccd05b0e48a6602c6f62f178fd488f1c775ff48f59fd0ca41be20
+  normalized_sha256: sha256:c0634be8008ccd05b0e48a6602c6f62f178fd488f1c775ff48f59fd0ca41be20
+cas_ref: sha256:c0634be8008ccd05b0e48a6602c6f62f178fd488f1c775ff48f59fd0ca41be20
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-f5f804e9610b45e7dc59bf87e22de229b851c4d68ac54003ebb32bf7fbf4fdc7-48a7a131b3095496875d86f564993af5d4c5f29fd55b5c6341e4789ba9e61386
+    - generic-residual-9ae44fb220f59ccb1b4bc5f9c465bae856fe7f996ecea1f2f8de71f1c0a3dbd5-3beb2c7a7426e526370fc58093322977590a9bcc5209067bad360522b4ed95ba

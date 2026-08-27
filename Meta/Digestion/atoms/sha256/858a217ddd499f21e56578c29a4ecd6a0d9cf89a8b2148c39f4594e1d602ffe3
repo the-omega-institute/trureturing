@@ -1,0 +1,63 @@
+# 204. 观察事件代数是世界商的对偶
+
+对确定性接口：
+
+$$
+q:X\to Q,
+$$
+
+定义可观察事件代数：
+
+$$
+\mathcal A_q
+=
+\{A\subseteq X:
+A=q^{-1}(B)
+\text{ for some }B\subseteq Q\}.
+$$
+
+等价地：
+
+$$
+A\in\mathcal A_q
+\iff
+A\text{ 在每个 }q\text{-fiber 上常值}.
+$$
+
+对函数也类似：
+
+$$
+\operatorname{Obs}(K_q)
+=
+\{f:X\to V:
+xK_qy\Rightarrow f(x)=f(y)\}.
+$$
+
+仓库已经证明：
+
+$$
+\boxed{
+q\text{ 精化关系}
+\iff
+\text{反向 kernel 包含}
+\iff
+\text{pullback observable algebra 包含}.
+}
+$$
+
+所以世界商和观察代数是同一结构的两面：
+
+$$
+\boxed{
+\text{状态侧：合并不可区分世界};
+}
+$$
+
+$$
+\boxed{
+\text{命题侧：保留在这些 fiber 上常值的函数}.
+}
+$$
+
+---
+

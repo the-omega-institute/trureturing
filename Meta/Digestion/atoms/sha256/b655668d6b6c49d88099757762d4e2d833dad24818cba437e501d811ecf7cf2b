@@ -1,0 +1,27 @@
+## 4.5 极值常数
+
+给定成本函数：
+
+$$
+J:A\to\mathbb R,
+$$
+
+若：
+
+$$
+\kappa=\operatorname*{arg\,min}J
+$$
+
+唯一，则为极值常数。
+
+典型：
+
+$$
+e
+=
+\operatorname*{arg\,min}_{\beta>1}
+\frac{\beta}{\log\beta}.
+$$
+
+---
+

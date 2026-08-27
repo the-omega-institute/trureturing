@@ -1,0 +1,13 @@
+ast_path: section/247-平衡观察-控制坐标
+fingerprints:
+  raw_sha256: sha256:15ea25819bd4a86e00621dc2e2937dfa31b5252e26db3cec5422ff7d1fd725ed
+  normalized_sha256: sha256:15ea25819bd4a86e00621dc2e2937dfa31b5252e26db3cec5422ff7d1fd725ed
+cas_ref: sha256:15ea25819bd4a86e00621dc2e2937dfa31b5252e26db3cec5422ff7d1fd725ed
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-aa281698fbe38434564483ce3d786c4252052c0dac5f8e80bad6da5159a09b6a-44ab78c0b7bbab9dce6bfb3db6b2e17503d47a145d492f9bb81a5a30401a081d
+    - generic-residual-0432670d572041aba97fc0a965c6520f87c0bd11994e051a2348471d4375f93b-b125ff1a10025ad101e63b6f451fc0faccaf807a2e14ea5986d7018d6a86bc43

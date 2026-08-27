@@ -1,0 +1,78 @@
+## 本轮精确有限计算得到
+
+$$
+\boxed{
+\operatorname{SNF}(G)
+=
+(1,1,1,5,5,5).
+}
+$$
+
+$$
+\boxed{
+D_L\simeq(\mathbb Z/5)^3.
+}
+$$
+
+$$
+\boxed{
+\overline J^2=0,
+\qquad
+\operatorname{im}\overline J
+=
+\ker\overline J
+=
+\operatorname{rad}(\overline G).
+}
+$$
+
+$$
+\boxed{
+0\to R_3\to\overline L_6\to R_3\to0.
+}
+$$
+
+$$
+\boxed{
+\mathbb P(R_3)
+=
+6+10+15.
+}
+$$
+
+$$
+\boxed{
+\mathbb C[R_3]^{A_5}
+\text{ 为七维}.
+}
+$$
+
+$$
+\boxed{
+M^2=125I_7.
+}
+$$
+
+$$
+\boxed{
+M
+\simeq
+M_{\mathrm{coarse}}
+\oplus
+\operatorname{diag}
+(-5\sqrt5,5\sqrt5,5\sqrt5).
+}
+$$
+
+$$
+\boxed{
+\langle S,T\rangle\simeq A_5,
+\qquad
+\mathbb C^7\simeq1\oplus3\oplus3'.
+}
+$$
+
+这些结果尚未进入仓库 Lean 真源，但都属于有限矩阵和有限集合计算，形式化风险较低。
+
+---
+

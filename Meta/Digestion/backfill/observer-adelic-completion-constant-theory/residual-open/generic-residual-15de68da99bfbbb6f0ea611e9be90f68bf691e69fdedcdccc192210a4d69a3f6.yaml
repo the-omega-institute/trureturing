@@ -1,0 +1,15 @@
+ast_path: section/32-2-素数-5-判别式与分歧
+fingerprints:
+  raw_sha256: sha256:15de68da99bfbbb6f0ea611e9be90f68bf691e69fdedcdccc192210a4d69a3f6
+  normalized_sha256: sha256:15de68da99bfbbb6f0ea611e9be90f68bf691e69fdedcdccc192210a4d69a3f6
+cas_ref: sha256:15de68da99bfbbb6f0ea611e9be90f68bf691e69fdedcdccc192210a4d69a3f6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-5894d931bea36e3ac1dcd7e7386884a9193f21b70e06cb127419a0c7c2cb710a-284767438c320afb3d246a9e087fec15d1bd952cb1c7a96562ecc460fc172913
+    - generic-residual-f97206c56dbae47acfdbda5c5d70a1857e90042ff953e4191f448374180a89fb-16bce0d96c3bc2934d44c6a11fda4c5018d0b4f771c05a1e9f30dd75eed682cd
+    - generic-residual-b55fe4d528b29415dd4580bdb913d11a3c8b13cb09e959d4ebfd13297e7697c2-de9d15f7110282b11c5b27df8638db407a46dfd724e5271f6ce125e76947e541
+    - generic-residual-8f35c83ff05d26b87f09283c2b8061340d671186dc6ec06c351b23dbbc441c94-ed1f37fc6e231df4430ecd942e8c0fdfa8f343cc2801c64eed63b530c4785f95

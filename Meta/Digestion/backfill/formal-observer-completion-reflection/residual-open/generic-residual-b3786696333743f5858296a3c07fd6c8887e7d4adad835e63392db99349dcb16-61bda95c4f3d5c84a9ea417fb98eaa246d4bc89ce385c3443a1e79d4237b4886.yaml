@@ -1,0 +1,10 @@
+ast_path: 严格边界/247.1/clause/4
+fingerprints:
+  raw_sha256: sha256:b3786696333743f5858296a3c07fd6c8887e7d4adad835e63392db99349dcb16
+  normalized_sha256: sha256:b3786696333743f5858296a3c07fd6c8887e7d4adad835e63392db99349dcb16
+cas_ref: sha256:b3786696333743f5858296a3c07fd6c8887e7d4adad835e63392db99349dcb16
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

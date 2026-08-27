@@ -1,0 +1,43 @@
+# 189. 观察者、知识、记忆与自我的最终字典
+
+$$
+\boxed{
+\begin{aligned}
+\text{World}
+&=X;\\[1mm]
+\text{Protocol}
+&=\pi;\\[1mm]
+\text{Observation law}
+&=\mathcal L_\pi(x);\\[1mm]
+\text{Behavior signature}
+&=\Sigma_{\mathfrak O}(x);\\[1mm]
+\text{Observer equivalence}
+&=\ker\Sigma_{\mathfrak O};\\[1mm]
+\text{Observer reality}
+&=X/\ker\Sigma_{\mathfrak O};\\[1mm]
+\text{Realized records}
+&=\operatorname{Im}\Sigma_{\mathfrak O};\\[1mm]
+\text{Knowledge}
+&=\text{目标在观察纤维上常值};\\[1mm]
+\text{Memory}
+&=\text{会改变未来行为的历史区分};\\[1mm]
+\text{Belief}
+&=\text{隐藏状态的条件分布};\\[1mm]
+\text{Predictive state}
+&=\text{保持全部未来 law 的最小历史商};\\[1mm]
+\text{Self}
+&=\text{保持全部未来策略画像的最小历史商};\\[1mm]
+\text{Agency}
+&=\text{从 self quotient 到合法动作丛的策略截面};\\[1mm]
+\text{Classical fact}
+&=\text{稳定、可访问、可广播的记录中心};\\[1mm]
+\text{Quantum observer}
+&=\text{非交换 instrument 协议的实现};\\[1mm]
+\text{Prime observer}
+&=\text{以素数、精度、时间和局部集合索引的观察 atlas}.
+\end{aligned}
+}
+$$
+
+---
+

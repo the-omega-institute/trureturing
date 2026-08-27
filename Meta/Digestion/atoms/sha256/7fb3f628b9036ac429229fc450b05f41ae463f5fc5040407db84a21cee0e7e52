@@ -1,0 +1,18 @@
+* 不同高度窗口的平均抵消。
+
+若它沿一条嵌套链集中，则成为 sticky 模式，再使用 primitive Hecke 通道与高阶重整化分析。
+
+但真正完成 RH 仍需要：
+
+$$
+\boxed{
+\text{off-line zero}
+\Longrightarrow
+\text{某个 }(p,m,t)\text{ 通道中的不可消除负见证}.
+}
+$$
+
+这条桥目前尚未证明。
+
+---
+

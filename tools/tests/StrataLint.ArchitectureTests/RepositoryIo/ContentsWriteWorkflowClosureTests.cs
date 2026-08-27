@@ -10,7 +10,7 @@ namespace StrataLint.ArchitectureTests;
 /// its own check. The boundary has to be the trigger set itself.
 ///
 /// This pins the closure rather than any single file: the two explicitly authorized writers
-/// are the scheduled Lean cache publisher and the dev-only truth-release publisher. A third
+/// are the scheduled Lean cache publisher and the protected-dev truth-release publisher. A third
 /// writable workflow, or an unapproved trigger added to either one, turns this red instead of
 /// relying on a reviewer remembering why it mattered.
 /// </summary>
@@ -54,15 +54,17 @@ public sealed class ContentsWriteWorkflowClosureTests
     }
 
     [Fact]
-    public void TheTruthReleasePublisherRunsOnlyOnDevPush()
+    public void TheTruthReleasePublisherRunsOnlyOnASchedule()
     {
         var publisher = Workflows.SingleOrDefault(static source => source.Path == TruthReleasePublisher);
         Assert.NotNull(publisher);
 
-        Assert.Equal(["push"], TriggerNames(publisher.Content));
-        Assert.Contains("branches: [dev]", publisher.Content, StringComparison.Ordinal);
+        // Schedule-only: no workflow_dispatch. GitHub's dispatch `ref` selector would let a caller
+        // run a modified workflow definition (holding publication write credentials) from an
+        // arbitrary ref, so the publisher must not expose workflow_dispatch at all.
+        Assert.Equal(["schedule"], TriggerNames(publisher.Content));
+        Assert.Contains("cron: '17 * * * *'", publisher.Content, StringComparison.Ordinal);
         Assert.DoesNotContain("workflow_dispatch", publisher.Content, StringComparison.Ordinal);
-        Assert.DoesNotContain("inputs.source_commit", publisher.Content, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -72,7 +74,15 @@ public sealed class ContentsWriteWorkflowClosureTests
 
         Assert.Contains("repos/${GITHUB_REPOSITORY}/branches/dev", content, StringComparison.Ordinal);
         Assert.Contains(".protected", content, StringComparison.Ordinal);
-        Assert.Contains("the push SHA is no longer the current protected dev tip", content, StringComparison.Ordinal);
+        Assert.DoesNotContain("$GITHUB_SHA", content, StringComparison.Ordinal);
+        Assert.Contains("commits?sha=dev&per_page=40", content, StringComparison.Ordinal);
+        Assert.Contains("check-runs?per_page=100", content, StringComparison.Ordinal);
+        Assert.Contains("publish_ready=false", content, StringComparison.Ordinal);
+        Assert.Contains("git symbolic-ref -q HEAD", content, StringComparison.Ordinal);
+        Assert.Contains(
+            "REQUIRED_CHECKS: 'Candidate harness engineering checks|Canonical Lean report production|Content-addressed dev baseline admission'",
+            content,
+            StringComparison.Ordinal);
         Assert.Contains(".merge_base_commit.sha", content, StringComparison.Ordinal);
         Assert.Contains("commit_on_protected_dev=true", content, StringComparison.Ordinal);
         Assert.Contains("--commit-on-protected-dev \"$COMMIT_ON_PROTECTED_DEV\"", content, StringComparison.Ordinal);
@@ -84,12 +94,13 @@ public sealed class ContentsWriteWorkflowClosureTests
     [Fact]
     public void TheTruthReleasePublisherSerializesAndBindsImmutableDigestPublications()
     {
+        var root = WorkflowRoot(TruthReleaseWorkflow());
         var content = TruthReleaseWorkflow().Content;
+        var concurrency = Assert.IsType<YamlMappingNode>(MappingValue(root, "concurrency"));
 
-        Assert.Contains(
-            "group: truth-release-publish-${{ needs.produce.outputs.release_digest }}",
-            content,
-            StringComparison.Ordinal);
+        Assert.Equal("truth-release-publish-dev", Assert.IsType<YamlScalarNode>(MappingValue(concurrency, "group")).Value);
+        Assert.Equal("false", Assert.IsType<YamlScalarNode>(MappingValue(concurrency, "cancel-in-progress")).Value);
+        Assert.False(TryMappingValue(Job(root, "publish"), "concurrency", out _));
         Assert.Contains("produced_at=\"$(date -u --date=\"@${commit_epoch}\"", content, StringComparison.Ordinal);
         Assert.Contains("--sort=name", content, StringComparison.Ordinal);
         Assert.Contains("gzip -n", content, StringComparison.Ordinal);
@@ -312,9 +323,9 @@ public sealed class ContentsWriteWorkflowClosureTests
         Assert.Contains("count=\"$(jq --arg name", content, StringComparison.Ordinal);
         Assert.Contains("(.assets | length) == ($expected | length)", content, StringComparison.Ordinal);
         Assert.Contains("([.assets[].name] | sort) == $expected", content, StringComparison.Ordinal);
-        Assert.Contains("protected dev moved before GitHub Release publication", content, StringComparison.Ordinal);
+        Assert.Contains("source commit is no longer an ancestor of protected dev before GitHub Release publication", content, StringComparison.Ordinal);
         Assert.Contains("verify_protected_dev_tip\n            if gh release create", content, StringComparison.Ordinal);
-        Assert.DoesNotContain("verify_protected_dev_tip\n              gh release upload", content, StringComparison.Ordinal);
+        Assert.Contains("verify_protected_dev_tip\n              gh release upload", content, StringComparison.Ordinal);
         Assert.Contains("assets=verified", content, StringComparison.Ordinal);
         Assert.DoesNotContain("release_collection_api=", content, StringComparison.Ordinal);
     }

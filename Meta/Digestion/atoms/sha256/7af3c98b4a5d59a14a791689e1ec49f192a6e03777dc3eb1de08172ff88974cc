@@ -1,0 +1,13 @@
+# 180. Prime observer 是一个多轴观察 atlas
+
+素数观察者的自然索引不是单一素数，而是：
+
+$$
+\boxed{
+(S,(k_p)_{p\in S},t,c)
+}
+$$
+
+其中：
+
+* \(S\subset_{\mathrm{fin}}\mathbb P\)：联合观察的素数集合；

@@ -1,0 +1,22 @@
+## 定义 218.2（有限精度局部度量）
+
+只读取模 $p^K$ 时，定义
+
+$$
+d_p^{(K)}(u,v)
+=
+\begin{cases}
+d_p(u,v),&u\not\equiv v\pmod{p^K},\\
+0,&u\equiv v\pmod{p^K}.
+\end{cases}
+$$
+
+则
+
+$$
+0\le
+d_p(u,v)-d_p^{(K)}(u,v)
+\le
+p^{-K}.
+$$
+

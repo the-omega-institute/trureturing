@@ -1,0 +1,30 @@
+## 定理 243.1（诱导动力学）
+
+因为：
+
+$$
+A\mathcal R\subseteq\mathcal R,
+$$
+
+$$
+A\mathcal N\subseteq\mathcal N,
+$$
+
+所以 `A` 在商空间上诱导良定义映射。
+
+又因为：
+
+$$
+\operatorname{Im}B\subseteq\mathcal R,
+$$
+
+控制输入下降到商空间。
+
+并且：
+
+$$
+C|_{\mathcal R\cap\mathcal N}=0,
+$$
+
+输出映射也下降到商空间。
+

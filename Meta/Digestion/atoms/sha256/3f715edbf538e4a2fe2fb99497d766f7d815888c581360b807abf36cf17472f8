@@ -1,0 +1,109 @@
+# 第五十四部　分歧素数是共轭观察者碰撞点
+
+沿用：
+
+$$
+L=\Lambda^2A_4,
+$$
+
+以及整数算子：
+
+$$
+J^2=5I,
+\qquad
+J^TG=GJ.
+$$
+
+令：
+
+$$
+\overline L=L/5L,
+\qquad
+\overline J=J\bmod5.
+$$
+
+由于：
+
+$$
+J^2=5I,
+$$
+
+模 \(5\) 后立即得到：
+
+$$
+\boxed{
+\overline J^2=0.
+}
+\tag{54.1}
+$$
+
+对前文给出的显式 \(6\times6\) 矩阵做有限域行约化可得：
+
+$$
+\boxed{
+\operatorname{rank}_{\mathbb F_5}\overline J=3.
+}
+\tag{54.2}
+$$
+
+因此：
+
+$$
+\dim\ker\overline J=3.
+$$
+
+又因为：
+
+$$
+\operatorname{im}\overline J
+\subseteq
+\ker\overline J
+$$
+
+且二者维数均为 \(3\)，所以：
+
+$$
+\boxed{
+\operatorname{im}\overline J
+=
+\ker\overline J.
+}
+\tag{54.3}
+$$
+
+定义：
+
+$$
+\boxed{
+R:=\operatorname{im}\overline J
+=\ker\overline J.
+}
+$$
+
+于是存在一个 \(A_5\)-等变正合列：
+
+$$
+\boxed{
+0
+\longrightarrow
+R
+\longrightarrow
+\overline L
+\xrightarrow{\ \overline J\ }
+R
+\longrightarrow
+0.
+}
+\tag{54.4}
+$$
+
+这里：
+
+$$
+\dim_{\mathbb F_5}R=3,
+\qquad
+\dim_{\mathbb F_5}\overline L=6.
+$$
+
+---
+

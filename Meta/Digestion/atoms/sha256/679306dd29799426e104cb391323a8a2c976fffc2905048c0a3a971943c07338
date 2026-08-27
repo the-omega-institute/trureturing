@@ -1,0 +1,12 @@
+## 定义 242.1（可达子空间）
+
+$$
+\mathcal R
+=
+\operatorname{span}
+\left\{
+A^kBu:
+k\ge0
+\right\}.
+$$
+

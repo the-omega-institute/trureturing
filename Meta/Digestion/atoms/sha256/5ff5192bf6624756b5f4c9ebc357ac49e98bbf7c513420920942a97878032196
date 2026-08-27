@@ -1,0 +1,62 @@
+# 180. Prime observer 是一个多轴观察 atlas
+
+素数观察者的自然索引不是单一素数，而是：
+
+$$
+\boxed{
+(S,(k_p)_{p\in S},t,c)
+}
+$$
+
+其中：
+
+* \(S\subset_{\mathrm{fin}}\mathbb P\)：联合观察的素数集合；
+* \(k_p\)：第 \(p\) 个方向的精度；
+* \(t\)：时间；
+* \(c\)：测量上下文、干预或 instrument。
+
+这四个方向分别对应：
+
+$$
+\begin{aligned}
+S
+&:\text{横向 locality / correlation order};\\
+k_p
+&:\text{纵向 }p\text{-进精化};\\
+t
+&:\text{动力学 completion};\\
+c
+&:\text{观察／干预／量子上下文}.
+\end{aligned}
+$$
+
+因此完整素数观察签名应写成：
+
+$$
+\Sigma_{\mathrm{prime}}(x)
+=
+\left(
+\mathcal L_{S,k,t,c}(x)
+\right)_{S,k,t,c}.
+$$
+
+普通单素数读出只是：
+
+$$
+|S|=1
+$$
+
+的截面。
+
+跨素数量子相关位于：
+
+$$
+|S|\ge2
+$$
+
+的扇区。
+
+所以项目中的素数观察、CRT、prime-power tensor、Frobenius、分裂画像和时间层析，实际上都是同一个 local atlas 在不同子索引范畴上的限制。
+
+---
+

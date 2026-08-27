@@ -1,0 +1,10 @@
+ast_path: section/动力完备
+fingerprints:
+  raw_sha256: sha256:0c0aa348f8bd478e3b9d7b9e5606787d0c7a2bcdcc0438f07fc8737014e29e66
+  normalized_sha256: sha256:0c0aa348f8bd478e3b9d7b9e5606787d0c7a2bcdcc0438f07fc8737014e29e66
+cas_ref: sha256:0c0aa348f8bd478e3b9d7b9e5606787d0c7a2bcdcc0438f07fc8737014e29e66
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

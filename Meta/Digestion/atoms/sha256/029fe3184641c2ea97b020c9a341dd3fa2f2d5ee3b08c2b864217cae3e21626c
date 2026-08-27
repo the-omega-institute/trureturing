@@ -1,0 +1,12 @@
+## 结论 228.4（无限不一致具有有限 witness）
+
+在紧致凸仿射模型中：
+
+$$
+\boxed{
+y\notin\Sigma(X)
+\Longrightarrow
+\exists\text{ 有限协议线性不等式证书}.
+}
+$$
+

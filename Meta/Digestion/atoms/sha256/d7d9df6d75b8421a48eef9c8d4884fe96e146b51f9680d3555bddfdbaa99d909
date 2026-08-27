@@ -1,0 +1,63 @@
+# 215. Posterior 是充分状态，但不必是最小状态
+
+设历史空间：
+
+$$
+H.
+$$
+
+posterior：
+
+$$
+\Pi:H\to\mathsf{Prob}(\Theta).
+$$
+
+有限未来自适应行为：
+
+$$
+B:H\to\mathsf{FutureLaw}.
+$$
+
+仓库已证明，在标准 Bayes update 条件下：
+
+$$
+\Pi(h)=\Pi(h')
+$$
+
+推出所有 belief-adaptive 有限未来输出 law 和递归 Bayes continuation value相同。
+
+因此存在：
+
+$$
+F:
+\operatorname{Im}\Pi
+\to
+\operatorname{Im}B
+$$
+
+使：
+
+$$
+B=F\circ\Pi.
+$$
+
+所以：
+
+$$
+\boxed{
+K_\Pi\subseteq K_B.
+}
+$$
+
+但 posterior 是最小未来行为状态，当且仅当：
+
+$$
+\boxed{
+F\text{ 在 }\operatorname{Im}\Pi\text{ 上单射}.
+}
+$$
+
+若两个不同 posterior 对所有允许实验都产生相同未来 law，则最小行为商还应继续合并它们。
+
+---
+

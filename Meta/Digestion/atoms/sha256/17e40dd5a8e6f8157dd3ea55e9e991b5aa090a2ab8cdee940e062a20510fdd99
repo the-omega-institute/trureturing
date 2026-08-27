@@ -1,0 +1,44 @@
+## 75.1 边界提升能
+
+定义边界轨道的最小提升能：
+
+$$
+\boxed{
+\varepsilon(O_\alpha)
+=
+\min
+\left\{
+\langle x,x\rangle:
+\rho_5(x)\in O_\alpha
+\right\}.
+}
+$$
+
+得到：
+
+$$
+\begin{array}{c|c}
+O_\alpha&\varepsilon(O_\alpha)\\
+\hline
+O_0&0\quad(\text{首个非零提升为 }15)\\
+Q_1&3\\
+Q_3&4\\
+I_\pm&5\\
+Q_2&6\\
+Q_4&7
+\end{array}
+\tag{75.2}
+$$
+
+这组数：
+
+$$
+0,3,4,5,5,6,7
+$$
+
+构成七边界状态的低能谱。
+
+它不是任意赋权，而是边界状态在六维 bulk 中显现所需的最小能量成本。
+
+---
+

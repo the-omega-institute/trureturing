@@ -1,0 +1,10 @@
+ast_path: section/43-1-素数局部因子/clause/3
+fingerprints:
+  raw_sha256: sha256:e0248e19dd2fa25d276f1a7d44b3f3dd686cb094f6c5ec92f2caac3e1822c2d6
+  normalized_sha256: sha256:e0248e19dd2fa25d276f1a7d44b3f3dd686cb094f6c5ec92f2caac3e1822c2d6
+cas_ref: sha256:e0248e19dd2fa25d276f1a7d44b3f3dd686cb094f6c5ec92f2caac3e1822c2d6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
