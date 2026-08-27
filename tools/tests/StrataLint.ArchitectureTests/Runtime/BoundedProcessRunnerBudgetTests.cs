@@ -9,11 +9,10 @@ namespace StrataLint.ArchitectureTests;
 public sealed class BoundedProcessRunnerBudgetTests
 {
     [Fact]
-    public void ThirtySecondHangBudgetHasNoScatteredRepresentatives()
+    public void TrackedTestDurationsHaveOneAnnotatedSource()
     {
-        var repositoryRoot = RepositoryLayout.FindRoot();
         const string budgetPath = "tools/tests/StrataLint.Tests/TestBudgets.cs";
-        var sources = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
+        var sources = GitIndexRepositoryFiles.Enumerate(RepositoryLayout.FindRoot())
             .Where(static file => file.RelativePath.StartsWith("tools/tests/", StringComparison.Ordinal)
                 && file.RelativePath.EndsWith(".cs", StringComparison.Ordinal)
                 && !file.RelativePath.StartsWith("tools/tests/BannedApiCompileFailProof/", StringComparison.Ordinal))

@@ -15,9 +15,12 @@ public sealed class BannedApiCoverageTests
 
         Assert.Equal(27, File.ReadLines(path).Count(static line =>
             line.Contains("// banned-api-proof", StringComparison.Ordinal)));
+    }
 
-        var repositoryRoot = RepositoryLayout.FindRoot();
-        var projects = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
+    [Fact]
+    public void DeterminismBanIsAttachedToEveryVerdictProject()
+    {
+        var projects = GitIndexRepositoryFiles.Enumerate(RepositoryLayout.FindRoot())
             .Where(static file => file.RelativePath.StartsWith("tools/tests/", StringComparison.Ordinal)
                 && file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal))
             .Select(file => (file.RelativePath, Document: XDocument.Load(file.FullPath, LoadOptions.None)))

@@ -421,7 +421,7 @@ public sealed class ReportSupervisorScriptTests
                 () => fixture.HasRecordedProcessCandidate(detached.Value),
                 "supervisor did not record the session-changing descendant");
 
-            File.WriteAllText(fixture.DetachedRelease, string.Empty, new UTF8Encoding(false));
+            File.WriteAllText(fixture.DetachedParentRelease, string.Empty, new UTF8Encoding(false));
             fixture.WaitUntil(
                 () => !ProcessExists(detachedParent) && ProcessExists(detached.Value),
                 "detached child did not outlive its helper parent");

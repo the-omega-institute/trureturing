@@ -25,12 +25,26 @@ internal sealed class ReportSupervisorFixture : IDisposable
             set -euo pipefail
             printf '%s\n' "$TMPDIR" >> "$1"
             """);
+        _ = WriteExecutable("mkdir", """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            event_fifo="${STRATALINT_TEST_SLOT_EVENT_FIFO:-}"
+            if [[ -n "$event_fifo" && "$#" == "1" && "$1" == */slot-*.lock ]]; then
+              set +e
+              /bin/mkdir "$@"
+              rc=$?
+              set -e
+              if (( rc == 0 )); then state=acquired; else state=blocked; fi
+              printf '%s:%s\n' "$state" "${1##*/}" > "$event_fifo"
+              exit "$rc"
+            fi
+            exec /bin/mkdir "$@"
+            """);
         ProducerWorker = WriteExecutable("producer-worker.sh", """
             #!/usr/bin/env bash
             set -euo pipefail
-            if ! mkdir "$1" 2>/dev/null; then touch "$2"; fi
-            sleep 1
-            rmdir "$1" 2>/dev/null || true
+            printf 'acquired\n' > "$1"
+            IFS= read -r _ < "$2"
             """);
         ConcurrentDriver = WriteExecutable("concurrent-driver.sh", """
             #!/usr/bin/env bash
@@ -38,19 +52,69 @@ internal sealed class ReportSupervisorFixture : IDisposable
             supervisor="$1"
             worker="$2"
             state="$3"
-            active="$4"
             overlap="$5"
             slots="${6:-}"
+            fixture_bin="$(cd "$(dirname "$worker")" && pwd -P)"
+            run="$state/concurrency-$$"
+            first_acquired="$run/first-acquired.fifo"
+            second_acquired="$run/second-acquired.fifo"
+            second_acquisition="$run/second-acquisition.fifo"
+            first_release="$run/first-release.fifo"
+            second_release="$run/second-release.fifo"
+            mkdir -p "$run"
+            mkfifo "$first_acquired" "$second_acquired" "$second_acquisition" \
+              "$first_release" "$second_release"
+            first=""
+            second=""
+            cleanup() {
+              [[ -z "$first" ]] || kill "$first" 2>/dev/null || true
+              [[ -z "$second" ]] || kill "$second" 2>/dev/null || true
+            }
+            read_acquisition() {
+              while ! IFS= read -r acquisition_event < "$second_acquisition"; do :; done
+            }
+            trap cleanup EXIT
             env STRATALINT_SUPERVISOR_ROOT="$state" \
+              PATH="$fixture_bin:$PATH" \
               ${slots:+STRATALINT_LEAN_MAX_CONCURRENCY="$slots"} \
-              "$supervisor" --role lean-producer --lean-slot -- "$worker" "$active" "$overlap" &
+              "$supervisor" --role lean-producer --lean-slot -- \
+              "$worker" "$first_acquired" "$first_release" &
             first=$!
+            IFS= read -r _ < "$first_acquired"
             env STRATALINT_SUPERVISOR_ROOT="$state" \
+              STRATALINT_TEST_SLOT_EVENT_FIFO="$second_acquisition" \
+              PATH="$fixture_bin:$PATH" \
               ${slots:+STRATALINT_LEAN_MAX_CONCURRENCY="$slots"} \
-              "$supervisor" --role lean-producer --lean-slot -- "$worker" "$active" "$overlap" &
+              "$supervisor" --role lean-producer --lean-slot -- \
+              "$worker" "$second_acquired" "$second_release" &
             second=$!
+            read_acquisition
+            first_event="$acquisition_event"
+            [[ "$first_event" == "blocked:slot-1.lock" ]]
+            if [[ "$slots" == "1" ]]; then
+              printf 'release\n' > "$first_release"
+              while true; do
+                read_acquisition
+                second_event="$acquisition_event"
+                [[ "$second_event" == "blocked:slot-1.lock" ]] && continue
+                [[ "$second_event" == "acquired:slot-1.lock" ]]
+                break
+              done
+              IFS= read -r _ < "$second_acquired"
+              printf 'release\n' > "$second_release"
+            else
+              read_acquisition
+              second_event="$acquisition_event"
+              [[ "$second_event" == "acquired:slot-2.lock" ]]
+              IFS= read -r _ < "$second_acquired"
+              kill -0 "$first"
+              : > "$overlap"
+              printf 'release\n' > "$first_release"
+              printf 'release\n' > "$second_release"
+            fi
             wait "$first"
             wait "$second"
+            trap - EXIT
             """);
         LongRunningWorker = WriteExecutable("long-running-worker.sh", """
             #!/usr/bin/env bash
@@ -165,9 +229,9 @@ internal sealed class ReportSupervisorFixture : IDisposable
             #!/usr/bin/env bash
             set -euo pipefail
             printf '%s\n' "$$" > "$1"
+            mkfifo "$4" "$5" "$6"
             perl -MPOSIX -e '
-              my ($pid_path, $parent_path, $release) = @ARGV;
-              my $deadline = time() + 20;
+              my ($pid_path, $parent_path, $parent_release, $child_release) = @ARGV;
               my $child = fork();
               die "fork failed" unless defined $child;
               if ($child == 0) {
@@ -178,28 +242,26 @@ internal sealed class ReportSupervisorFixture : IDisposable
                 close STDOUT;
                 close STDERR;
                 POSIX::close(9);
-                while (!-e $release && time() < $deadline) {
-                  select undef, undef, undef, 0.02;
-                }
-                exit 2 unless -e $release;
-                exec "sleep", "60";
+                open my $hold, "<", $child_release or die $!;
+                <$hold>;
+                exit 0;
               }
               open my $parent, ">", $parent_path or die $!;
               print {$parent} "$$\n";
               close $parent or die $!;
-              while (!-e $release && time() < $deadline) {
-                select undef, undef, undef, 0.02;
-              }
-              exit 2 unless -e $release;
-            ' "$2" "$3" "$4" &
+              open my $release, "<", $parent_release or die $!;
+              <$release>;
+            ' "$2" "$3" "$4" "$5" &
             wait "$!"
-            sleep 60
+            IFS= read -r _ < "$6"
             """);
         DoubleForkWorker = WriteExecutable("double-fork-worker.sh", """
             #!/usr/bin/env bash
             set -euo pipefail
+            release="$PWD/double-fork-release.fifo"
+            mkfifo "$release"
             perl -MPOSIX -e '
-              my $path = shift;
+              my ($path, $release) = @ARGV;
               my $first = fork();
               die "first fork failed" unless defined $first;
               if ($first == 0) {
@@ -210,7 +272,9 @@ internal sealed class ReportSupervisorFixture : IDisposable
                   $^F = 9;
                   open STDOUT, ">", "/dev/null" or die $!;
                   open STDERR, ">", "/dev/null" or die $!;
-                  exec "sleep", "60";
+                  open my $hold, "<", $release or die $!;
+                  <$hold>;
+                  exit 0;
                 }
                 open my $out, ">", $path or die $!;
                 print {$out} "$second\n";
@@ -218,7 +282,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
                 exit 0;
               }
               waitpid($first, 0);
-            ' "$1"
+            ' "$1" "$release"
             """);
     }
 
@@ -236,7 +300,9 @@ internal sealed class ReportSupervisorFixture : IDisposable
     internal string DetachedPid => Path.Combine(Root, "detached.pid");
     internal string DetachedWorkerPid => Path.Combine(Root, "detached-worker.pid");
     internal string DetachedParentPid => Path.Combine(Root, "detached-parent.pid");
-    internal string DetachedRelease => Path.Combine(Root, "detached.release");
+    internal string DetachedParentRelease => Path.Combine(Root, "detached-parent-release.fifo");
+    internal string DetachedChildRelease => Path.Combine(Root, "detached-child-release.fifo");
+    internal string DetachedWorkerRelease => Path.Combine(Root, "detached-worker-release.fifo");
     internal string DoubleForkPid => ScratchRecord;
     internal string FailingLsofInvocation => Path.Combine(Root, "lsof-invocations.txt");
     internal string ClockEnvironment => $"STRATALINT_SUPERVISOR_CLOCK={StepClock}";
@@ -389,7 +455,8 @@ internal sealed class ReportSupervisorFixture : IDisposable
             "STRATALINT_LOCK_TIMEOUT_SECONDS=86400",
             Supervisor,
             "--role", "lean-producer", "--lean-slot", "--",
-            DetachedWorker, DetachedWorkerPid, DetachedPid, DetachedParentPid, DetachedRelease,
+            DetachedWorker, DetachedWorkerPid, DetachedPid, DetachedParentPid,
+            DetachedParentRelease, DetachedChildRelease, DetachedWorkerRelease,
         }) info.ArgumentList.Add(argument);
         var process = new Process { StartInfo = info };
         Assert.True(process.Start());

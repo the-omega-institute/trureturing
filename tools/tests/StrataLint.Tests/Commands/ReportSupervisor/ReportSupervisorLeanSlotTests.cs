@@ -7,6 +7,20 @@ namespace StrataLint.Tests;
 // 而重写时,原文件已 790 行、逼近 SL-003 的 800 硬线,顺势按第8条裂到既有子目录。
 public sealed class ReportSupervisorLeanSlotTests
 {
+    [Fact]
+    public void ConcurrencyFixtureUsesReleaseSignalsInsteadOfElapsedWindows()
+    {
+        var source = TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+            "tools/tests/StrataLint.Tests/Commands/ReportSupervisorFixture.cs"));
+
+        Assert.DoesNotContain("sleep 1", source, StringComparison.Ordinal);
+        Assert.DoesNotContain("sleep 60", source, StringComparison.Ordinal);
+        Assert.DoesNotContain("exec \"sleep\", \"60\"", source, StringComparison.Ordinal);
+        Assert.Contains("second-acquisition", source, StringComparison.Ordinal);
+        Assert.Contains("release.fifo", source, StringComparison.Ordinal);
+        Assert.Contains("IFS= read -r _ < \"$2\"", source, StringComparison.Ordinal);
+    }
+
     // 2026-08-15 用户裁决:默认槽数 1 -> 5(同日先定 3,再定 5)。命题因此换了,不是删掉——
     // "槽机制会封顶"仍受钉,
     // 只是封顶值由默认值给出。两条一起看才完整:显式设 1 时仍然串行(机制还在),用默认值时
