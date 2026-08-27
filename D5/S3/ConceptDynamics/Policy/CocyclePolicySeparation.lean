@@ -1,5 +1,5 @@
 /- GID: D5/S3/ConceptDynamics/Policy/CocyclePolicySeparation
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/ConceptDynamics/Policy/CocyclePolicySeparation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
