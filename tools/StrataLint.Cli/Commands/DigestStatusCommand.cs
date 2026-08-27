@@ -41,8 +41,6 @@ internal static class DigestStatusCommand
             {
                 var formalizeLeanReport = leanReportSource.Load(snapshot);
                 var formalizeDocument = BackfillInventoryLoader.Load(snapshot, scope, changes);
-                // Same contract as the main path below: no --base means the current tree is its
-                // own baseline, never a null one (#3354).
                 RepositorySnapshot? formalizeBaselineSnapshot = snapshot;
                 var formalizeBaselineDocument = BackfillInventoryLoader.LoadBaseline(snapshot);
                 if (options.BaselineRevision is not null)
@@ -101,10 +99,7 @@ internal static class DigestStatusCommand
             var lean = ValidateLean(snapshot, leanReport);
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(snapshot, leanReport, changes);
             var document = BackfillInventoryLoader.Load(snapshot, scope, changes);
-            // No --base means the current tree is its own baseline. A null baseline is not a
-            // mode: without one the aligner cannot recognise a prior generation the ledger has
-            // already acknowledged as superseded, and the caller silently gets a different
-            // verdict instead of a refusal (#3354).
+            // No --base means the current tree is its own baseline, never a null one (#3354).
             RepositorySnapshot? baselineSnapshot = snapshot;
             var baselineDocument = BackfillInventoryLoader.LoadBaseline(snapshot);
             if (options.BaselineRevision is not null)
