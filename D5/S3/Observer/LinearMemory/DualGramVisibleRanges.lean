@@ -1,6 +1,6 @@
-/- GID: D5/S3/Observer/Linear/DualGramVisibleRanges
+/- GID: D5/S3/Observer/LinearMemory/DualGramVisibleRanges
    generality: G
-   mirror-B: D5/B/S3/Observer/Linear/DualGramVisibleRanges
+   mirror-B: D5/B/S3/Observer/LinearMemory/DualGramVisibleRanges
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Dual Gram operators expose exactly the state and protocol visible ranges. -/
@@ -19,7 +19,7 @@ import Mathlib.Analysis.InnerProductSpace.Adjoint
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.LinearAlgebra.Pi
 
-namespace D5.S3.Observer.Linear.DualGramVisibleRanges
+namespace D5.S3.Observer.LinearMemory.DualGramVisibleRanges
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -43,4 +43,4 @@ theorem dual_gram_visible_ranges
 
 #print axioms dual_gram_visible_ranges
 
-end D5.S3.Observer.Linear.DualGramVisibleRanges
+end D5.S3.Observer.LinearMemory.DualGramVisibleRanges

@@ -2,13 +2,13 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.Linear;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.LinearMemory;
 
 internal sealed class DualGramVisibleRangesDocument
     : IScribeDocumentDefinition
 {
     private const string Declaration =
-        "D5/S3/Observer/Linear/DualGramVisibleRanges.dual_gram_visible_ranges";
+        "D5/S3/Observer/LinearMemory/DualGramVisibleRanges.dual_gram_visible_ranges";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The two Gram operators of a finite protocol family expose its two visible ranges.",
