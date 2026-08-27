@@ -8,11 +8,9 @@ internal static class DepositHeaderCheckCommand
 
     internal static ExplicitCommandResult Run(
         IRepositoryGateway repository,
-        ILeanReportSource leanReportSource,
         IReadOnlyList<string> arguments)
     {
         ArgumentNullException.ThrowIfNull(repository);
-        ArgumentNullException.ThrowIfNull(leanReportSource);
         ArgumentNullException.ThrowIfNull(arguments);
         if (!TryParseTarget(arguments, out var target))
         {
@@ -37,12 +35,6 @@ internal static class DepositHeaderCheckCommand
                     $"deposit target is outside the registered SL-012 scope: {target}");
             }
 
-            var lean = LeanClosureValidator.Validate(current, leanReportSource.Load(current)) switch
-            {
-                LeanValidationOutcome.Accepted accepted => accepted.Capability,
-                LeanValidationOutcome.InfrastructureFailure failure =>
-                    throw new InvalidOperationException(failure.Message),
-            };
             var changes = RawChangeSet.Create([target]);
             var metaClear = BootstrapGate.Evaluate(changes) switch
             {
@@ -56,7 +48,7 @@ internal static class DepositHeaderCheckCommand
                 current,
                 current,
                 policy,
-                lean,
+                AcceptedLeanClosure.CreateWithoutReport(),
                 changes,
                 metaClear);
             var evaluation = RuleCatalog.Default.EvaluateSingle(HeaderRuleId, context);

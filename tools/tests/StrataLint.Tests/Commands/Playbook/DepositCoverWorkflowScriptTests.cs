@@ -49,7 +49,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
     }
 
     [Fact]
-    public void DepositReentryAfterInterruptedFreezeDoesNotAppendASecondFreeze()
+    public void DepositReentryWithExistingFreezeAndMissingReceiptRecoversWithoutLeanReport()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -71,7 +71,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(1, fixture.FreezeCount());
         Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
         Assert.Equal(
-            ["make:lean-report", "dotnet:deposit-header-check", "dotnet:emit-formalization-receipt"],
+            ["dotnet:deposit-header-check", "dotnet:emit-formalization-receipt"],
             fixture.CallKinds());
         Assert.True(File.Exists(fixture.ReceiptPath));
         Assert.Empty(fixture.Status());
@@ -96,7 +96,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(1, fixture.FreezeCount());
         Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
         Assert.Equal(
-            ["make:lean-report", "dotnet:deposit-header-check", "dotnet:emit-formalization-receipt"],
+            ["dotnet:deposit-header-check", "dotnet:emit-formalization-receipt"],
             fixture.CallKinds());
         Assert.Empty(fixture.Status());
     }

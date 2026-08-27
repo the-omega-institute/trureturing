@@ -10,7 +10,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         "expected the exact six-line header at byte zero";
 
     [Fact]
-    public void DepositHeaderCommandAcceptsExactSixLineHeader()
+    public void DepositHeaderCommandEvaluatesRegisteredSl012WithoutLoadingLeanReport()
     {
         var fixture = new RuleFixture();
         fixture.Files[RuleFixture.RingPath] = TransactionFixture.ExactSixLineLean(
@@ -25,7 +25,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var environment = new ProductionCliEnvironment(
             "/repo",
             repository,
-            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)));
+            new FakeLeanReportSource(null));
         var console = new BufferedConsole();
 
         var exitCode = CliApplication.Run(
@@ -88,7 +88,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(ledgerBefore, fixture.LedgerState());
         Assert.Empty(fixture.ReceiptArtifacts());
         Assert.Equal(
-            ["make:lean-report", "dotnet:deposit-header-check"],
+            ["dotnet:deposit-header-check"],
             fixture.CallKinds());
         Assert.DoesNotContain("make:emit", fixture.CallKinds());
         Assert.DoesNotContain("dotnet:emit-formalization-receipt", fixture.CallKinds());
@@ -111,7 +111,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var environment = new ProductionCliEnvironment(
             "/repo",
             repository,
-            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)));
+            new FakeLeanReportSource(null));
         var console = new BufferedConsole();
 
         var exitCode = CliApplication.Run(
