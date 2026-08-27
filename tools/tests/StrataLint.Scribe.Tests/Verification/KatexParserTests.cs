@@ -5,8 +5,7 @@ public sealed class KatexParserTests
     [Fact]
     public void ParsesWithThePinnedVendoredKatex()
     {
-        using var temporary = new TemporaryRoot();
-        var parser = LoadVendoredKatex(temporary);
+        var parser = KatexParser.Create();
 
         // The version is pinned by the vendored bytes; tools/vendor/katex/README.md
         // records where they came from, and raising it is a deliberate act.
@@ -18,8 +17,7 @@ public sealed class KatexParserTests
     [Fact]
     public void RejectsTheShapesThatReachedTheSiteUnrendered()
     {
-        using var temporary = new TemporaryRoot();
-        var parser = LoadVendoredKatex(temporary);
+        var parser = KatexParser.Create();
 
         Assert.Contains(
             "Double superscript",
@@ -41,31 +39,20 @@ public sealed class KatexParserTests
         // The corpus emits `\\{}` line breaks in display mode by the thousand. KaTeX's
         // strict mode warns about them; the site renders them, so the gate must not
         // manufacture a verdict the site does not act on.
-        using var temporary = new TemporaryRoot();
-        var parser = LoadVendoredKatex(temporary);
+        var parser = KatexParser.Create();
 
         Assert.Null(parser.Reject(@"a = b,\\{}c = d", displayMode: true));
     }
 
     [Fact]
-    public void FailsClosedWhenTheVendoredParserIsAbsent()
+    public void CarriesTheVendoredBundleInTheAssemblyThatRunsIt()
     {
-        using var temporary = new TemporaryRoot();
+        // Embedded rather than read from the tree: the parser is a program the harness
+        // executes, and nothing about judging a formula should depend on a file path.
+        using var bundle = typeof(KatexParser).Assembly
+            .GetManifestResourceStream(KatexParser.ResourceName);
 
-        var absent = Assert.Throws<InvalidOperationException>(() => KatexParser.Load(temporary.Path));
-
-        Assert.Contains(KatexParser.VendorRelativePath, absent.Message, StringComparison.Ordinal);
-    }
-
-    /// <summary>Loads the repository's own vendored bytes from a copy of them.</summary>
-    private static KatexParser LoadVendoredKatex(TemporaryRoot temporary)
-    {
-        RepositoryAccessor
-            .Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound)
-            .CopyTo(
-                RepositoryRelativePath.Create("tools/vendor/katex/katex.min.js"),
-                temporary.Resolve("tools/vendor/katex/katex.min.js"),
-                overwrite: true);
-        return KatexParser.Load(temporary.Path);
+        Assert.NotNull(bundle);
+        Assert.True(bundle.Length > 100_000);
     }
 }

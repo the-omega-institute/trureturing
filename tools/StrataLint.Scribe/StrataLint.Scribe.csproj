@@ -9,6 +9,7 @@
     <ProjectReference Include="../StrataLint.Engine/StrataLint.Engine.csproj" />
     <ProjectReference Include="../Trureturing.Truth/Trureturing.Truth.csproj" />
     <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
+    <EmbeddedResource Include="Vendor/Katex/katex.min.js" LogicalName="katex.min.js" />
     <PackageReference Include="Jint" />
     <PackageReference Include="QuestPDF" />
     <PackageReference Include="Tomlyn" />

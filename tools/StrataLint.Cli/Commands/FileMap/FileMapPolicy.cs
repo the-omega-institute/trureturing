@@ -18,8 +18,6 @@ internal static class FileMapPolicy
         "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryLoader.cs";
     private const string FileMapLoaderPath =
         "tools/StrataLint.Scribe/FileMap/FileMapManifest.cs";
-    private const string KatexParserPath =
-        "tools/StrataLint.Scribe/Verification/KatexParser.cs";
     private const string LibraryNoteCatalogPath =
         "tools/StrataLint.Scribe/Library/LibraryNoteCatalog.cs";
     private const string MissionFileLoaderPath =
@@ -57,7 +55,6 @@ internal static class FileMapPolicy
             ["BackfillInventoryLoader"] = BackfillLoaderPath,
             ["FileMapLoader"] = FileMapLoaderPath,
             ["GateAuthorityRootCatalogLoader"] = GateAuthorityRootCatalogLoaderPath,
-            ["KatexParser"] = KatexParserPath,
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
             [nameof(MissionFileLoader)] = MissionFileLoaderPath,
             ["ProblemCandidateCatalog"] = ProblemCandidateCatalogPath,

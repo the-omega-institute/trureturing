@@ -111,7 +111,6 @@ public static class ScribeEmitter
             return run.ExitCode;
         }
 
-        scope.Close();
         foreach (var finding in scope.Findings)
         {
             error.WriteLine($"markdown red {finding}");
@@ -249,9 +248,22 @@ public static class ScribeEmitter
                 + $"truth-anchor={graphEdges.OfType<DocumentEdge.TruthAnchor>().Count()} "
                 + $"dependency={graphEdges.OfType<DocumentEdge.Dependency>().Count()} "
                 + $"narrative={graphEdges.OfType<DocumentEdge.NarrativeReference>().Count()}");
+            if (markdownScope is not null)
+            {
+                var citations = LibraryNoteCatalog.Load(repositoryRoot).Citations;
+                markdownScope.Judge(
+                    definitions,
+                    definition => CanonicalMarkdownWriter.Write(
+                        definition.Document,
+                        declarationCatalog,
+                        citations,
+                        graph).AsMemory());
+                return new ScribeEmissionRun(0, null);
+            }
+
             return EmitVerified(
                 repositoryRoot, check, output, error,
-                declarationCatalog, definitions, graph, markdownScope);
+                declarationCatalog, definitions, graph);
         }
         catch (Exception exception) when (
             exception is InvalidOperationException
@@ -272,8 +284,7 @@ public static class ScribeEmitter
         TextWriter error,
         DeclarationCatalog declarationCatalog,
         IReadOnlyList<DocumentDefinition> definitions,
-        DocumentGraph graph,
-        MarkdownFormulaScope? markdownScope)
+        DocumentGraph graph)
     {
         var rendered = new List<(DocumentDefinition Definition, byte[] Bytes)>();
         var attestations = new List<ScribeEmissionRecord>();
@@ -289,7 +300,6 @@ public static class ScribeEmitter
                 graph).ToArray();
 
             rendered.Add((definition, bytes));
-            markdownScope?.Inspect(definition, bytes);
             var gid = definition.Document.Header.Gid.Value;
             var definitionPath = ScribeEmissionAttestation.DefinitionPath(gid);
             var source = File.ReadAllBytes(Path.Combine(repositoryRoot, definitionPath));

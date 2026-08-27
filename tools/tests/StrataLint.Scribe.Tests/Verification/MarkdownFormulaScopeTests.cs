@@ -15,8 +15,7 @@ public sealed class MarkdownFormulaScopeTests
                 "Blueprint/D5/S0/Other.md",
                 "D5/S0/Probe.lean",
                 "tools/StrataLint.Scribe/Emission/ScribeCli.cs",
-            ],
-            Parser);
+            ]);
 
         Assert.Equal(
             ["Blueprint/D5/S0/Other.md", "Blueprint/D5/S0/Probe.md"],
@@ -28,7 +27,7 @@ public sealed class MarkdownFormulaScopeTests
     {
         using var temporary = new TemporaryRoot();
         var definition = SyntheticDefinition();
-        var scope = new MarkdownFormulaScope(temporary.Path, ["Blueprint/D5/S0/Elsewhere.md"], Parser);
+        var scope = new MarkdownFormulaScope(temporary.Path, ["Blueprint/D5/S0/Elsewhere.md"]);
 
         scope.Inspect(definition, Utf8(Markdown(@"T^{*}^{k}")));
         scope.Close();
@@ -43,7 +42,7 @@ public sealed class MarkdownFormulaScopeTests
     {
         using var temporary = new TemporaryRoot();
         var definition = SyntheticDefinition();
-        var scope = new MarkdownFormulaScope(temporary.Path, [definition.RelativePath.Value], Parser);
+        var scope = new MarkdownFormulaScope(temporary.Path, [definition.RelativePath.Value]);
 
         scope.Inspect(definition, Utf8(Markdown(@"T^{*}^{k}")));
         scope.Close();
@@ -68,7 +67,7 @@ public sealed class MarkdownFormulaScopeTests
             committed,
             Markdown("u_{n}_{i}"),
             new UTF8Encoding(false, true));
-        var scope = new MarkdownFormulaScope(temporary.Path, [definition.RelativePath.Value], Parser);
+        var scope = new MarkdownFormulaScope(temporary.Path, [definition.RelativePath.Value]);
 
         scope.Inspect(definition, Utf8(Markdown(@"{T^{*}}^{k}")));
         scope.Close();
@@ -88,7 +87,7 @@ public sealed class MarkdownFormulaScopeTests
         var path = Path.Combine(temporary.Path, orphan);
         TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(path)!);
         TemporaryFileSystem.File.WriteAllText(path, Markdown("x"), new UTF8Encoding(false, true));
-        var scope = new MarkdownFormulaScope(temporary.Path, [orphan], Parser);
+        var scope = new MarkdownFormulaScope(temporary.Path, [orphan]);
 
         scope.Close();
 
@@ -99,7 +98,7 @@ public sealed class MarkdownFormulaScopeTests
     public void ADeletedProjectionLeavesNothingToJudge()
     {
         using var temporary = new TemporaryRoot();
-        var scope = new MarkdownFormulaScope(temporary.Path, ["Blueprint/D5/S0/Deleted.md"], Parser);
+        var scope = new MarkdownFormulaScope(temporary.Path, ["Blueprint/D5/S0/Deleted.md"]);
 
         scope.Close();
 
@@ -114,7 +113,6 @@ public sealed class MarkdownFormulaScopeTests
             FormulaDsl.Id("x"), FormulaDsl.Caret, FormulaDsl.Grp(FormulaDsl.D(2))));
         DocumentDefinition[] definitions = [definition];
         SyntheticScribeRepository.WriteInputs(temporary.Path, definition);
-        SyntheticScribeRepository.WriteVendoredKatex(temporary.Path);
         var report = LeanReportFixture.ForDocuments([definition.Document]);
         var error = new StringWriter();
         Assert.Equal(
@@ -154,17 +152,6 @@ public sealed class MarkdownFormulaScopeTests
         Assert.Equal(1, redExit);
         Assert.Contains("markdown red", redError.ToString(), StringComparison.Ordinal);
         Assert.Contains("Double subscript", redError.ToString(), StringComparison.Ordinal);
-    }
-
-    /// <summary>A parser built from a copy of the vendored bytes under a throwaway root.</summary>
-    private static Func<KatexParser> Parser
-    {
-        get
-        {
-            var temporary = new TemporaryRoot();
-            SyntheticScribeRepository.WriteVendoredKatex(temporary.Path);
-            return () => KatexParser.Load(temporary.Path);
-        }
     }
 
     private static byte[] Utf8(string text) => new UTF8Encoding(false, true).GetBytes(text);

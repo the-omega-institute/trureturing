@@ -1,8 +1,9 @@
 # Vendored KaTeX
 
-`katex.min.js` is the renderer the published site runs on, kept in-tree so the Blueprint
-markdown gate parses formulas with the real parser instead of a hand-maintained
-approximation of it, offline and at a version pinned by these bytes.
+`katex.min.js` is the renderer the published site runs on. It is kept in-tree and embedded
+into StrataLint.Scribe so the Blueprint markdown gate parses formulas with the real parser
+instead of a hand-maintained approximation of it — offline, at a version pinned by these
+bytes, and without the gate reading anything from the tree to do it.
 
 | | |
 | --- | --- |
@@ -18,6 +19,9 @@ browser bundle are therefore not vendored.
 
 The gate itself runs on the change: `make test` routes a Blueprint delta through
 `scribe-content-checks.sh`, which hands `markdown-check` the paths the change touched.
+
+The bundle is a program this assembly executes, not declarative data, which is why it
+lives inside the project that runs it rather than in a data residence.
 
 Raising the version means replacing both files, updating the table above, and running the
 gate over the whole corpus once — a stricter KaTeX release can turn formulas red that the

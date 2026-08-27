@@ -38,20 +38,4 @@ internal static class SyntheticScribeRepository
             """ + "\n",
             new UTF8Encoding(false, true));
     }
-
-    /// <summary>Copies the repository's vendored KaTeX into the tree under test.</summary>
-    internal static void WriteVendoredKatex(string root)
-    {
-        ArgumentException.ThrowIfNullOrWhiteSpace(root);
-        var destination = Path.Combine(
-            root,
-            KatexParser.VendorRelativePath.Replace('/', Path.DirectorySeparatorChar));
-        TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-        RepositoryAccessor
-            .Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound)
-            .CopyTo(
-                RepositoryRelativePath.Create("tools/vendor/katex/katex.min.js"),
-                destination,
-                overwrite: true);
-    }
 }

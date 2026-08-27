@@ -38,7 +38,7 @@ internal sealed class MarkdownFormulaScope
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(changedPaths);
         this.repositoryRoot = repositoryRoot;
-        this.loadParser = loadParser ?? (() => KatexParser.Load(repositoryRoot));
+        this.loadParser = loadParser ?? KatexParser.Create;
         paths = changedPaths
             .Select(MarkdownPathOf)
             .OfType<string>()
@@ -71,6 +71,25 @@ internal sealed class MarkdownFormulaScope
     internal int Formulas { get; private set; }
 
     internal ImmutableArray<string> Findings => findings.ToImmutable();
+
+    /// <summary>
+    /// Judges the scoped documents, rendering those and only those: a render costs real
+    /// time per document and the verdict has to stay proportional to the change.
+    /// </summary>
+    internal void Judge(
+        IEnumerable<DocumentDefinition> definitions,
+        Func<DocumentDefinition, ReadOnlyMemory<byte>> render)
+    {
+        ArgumentNullException.ThrowIfNull(definitions);
+        ArgumentNullException.ThrowIfNull(render);
+        foreach (var definition in definitions.Where(
+            definition => paths.Contains(definition.RelativePath.Value)))
+        {
+            Inspect(definition, render(definition).Span);
+        }
+
+        Close();
+    }
 
     internal void Inspect(DocumentDefinition definition, ReadOnlySpan<byte> rendered)
     {

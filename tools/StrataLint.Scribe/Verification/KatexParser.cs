@@ -7,13 +7,14 @@ using JintEngine = Jint.Engine;
 namespace StrataLint.Scribe;
 
 /// <summary>
-/// The published site's own parser, run in-process over the vendored
-/// <c>tools/vendor/katex/katex.min.js</c>. A hand-maintained approximation of KaTeX's
-/// grammar is what let `T^{*}^{k}` reach the site, so the gate asks KaTeX itself.
+/// The published site's own parser, run in-process over the KaTeX bundle embedded in this
+/// assembly from <c>Vendor/Katex/</c>. A hand-maintained approximation of KaTeX's grammar
+/// is what let <c>T^{*}^{k}</c> reach the site, so the gate asks KaTeX itself.
 /// </summary>
 internal sealed class KatexParser
 {
-    internal const string VendorRelativePath = "tools/vendor/katex/katex.min.js";
+    /// <summary>The vendored bundle, embedded under this name.</summary>
+    internal const string ResourceName = "katex.min.js";
 
     // Parsing is the whole job, so the harness never touches KaTeX's HTML: `verdict`
     // returns the parse error or an empty string. `strict` stays off because it turns
@@ -46,22 +47,18 @@ internal sealed class KatexParser
     /// <summary>The pinned KaTeX version, as the bundle itself reports it.</summary>
     internal string Version { get; }
 
-    internal static KatexParser Load(string repositoryRoot)
+    internal static KatexParser Create()
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
-        var path = Path.Combine(repositoryRoot, VendorRelativePath);
-        if (!File.Exists(path))
-        {
-            throw new InvalidOperationException(
-                $"vendored KaTeX is missing at {VendorRelativePath}");
-        }
-
+        using var bundle = typeof(KatexParser).Assembly.GetManifestResourceStream(ResourceName)
+            ?? throw new InvalidOperationException(
+                $"the KaTeX bundle is not embedded under {ResourceName}");
+        using var reader = new StreamReader(bundle);
         var engine = new JintEngine(options => options
             .LimitRecursion(4096)
             .TimeoutInterval(TimeSpan.FromMinutes(1)));
         try
         {
-            engine.Execute(File.ReadAllText(path));
+            engine.Execute(reader.ReadToEnd());
             engine.Execute(VerdictFunction);
             var version = engine.Evaluate("katex.version").AsString();
             return new KatexParser(engine, version);
