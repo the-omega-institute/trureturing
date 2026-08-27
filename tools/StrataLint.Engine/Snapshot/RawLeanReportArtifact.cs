@@ -19,17 +19,16 @@ internal static class RawLeanReportArtifact
         ArgumentException.ThrowIfNullOrWhiteSpace(path);
         var fullPath = Path.GetFullPath(path);
         var bytes = File.ReadAllBytes(fullPath);
-        var materials = StatementMaterialArchive.Open(MaterialsPath(fullPath));
-        return Read(bytes, snapshot, materials);
+        return Read(bytes, snapshot, MaterialsPath(fullPath));
     }
 
     internal static LeanAxiomReport Read(ReadOnlySpan<byte> bytes, RepositorySnapshot snapshot)
-        => Read(bytes, snapshot, materialArchive: null);
+        => Read(bytes, snapshot, materialPath: null);
 
     private static LeanAxiomReport Read(
         ReadOnlySpan<byte> bytes,
         RepositorySnapshot snapshot,
-        StatementMaterialArchive? materialArchive)
+        string? materialPath)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         var text = StrictUtf8.GetString(bytes);
@@ -62,6 +61,13 @@ internal static class RawLeanReportArtifact
 
         var expected = ExpectedModules(snapshot);
         var reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal);
+        var materialArchive = materialPath is null
+            ? null
+            : StatementMaterialArchive.Open(
+                materialPath,
+                () => reports.Values
+                    .SelectMany(static report => report.Declarations)
+                    .Select(static declaration => declaration.StatementTypeAddress));
         string? previousModule = null;
         foreach (var moduleElement in RequiredArray(root, "modules").EnumerateArray())
         {
@@ -110,10 +116,6 @@ internal static class RawLeanReportArtifact
             throw new FormatException(
                 "Raw Lean report is missing modules: " + string.Join(", ", missing));
         }
-
-        materialArchive?.ValidateAddresses(reports.Values
-            .SelectMany(static report => report.Declarations)
-            .Select(static declaration => declaration.StatementTypeAddress));
 
         return LeanAxiomReport.Create(reports);
     }
@@ -244,8 +246,7 @@ internal static class RawLeanReportArtifact
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(reportPath);
         ArgumentNullException.ThrowIfNull(addresses);
-        var archive = StatementMaterialArchive.Open(MaterialsPath(reportPath));
-        archive.ValidateAddresses(addresses);
+        var archive = StatementMaterialArchive.Open(MaterialsPath(reportPath), addresses);
         return archive.Read;
     }
 
@@ -298,16 +299,52 @@ internal static class RawLeanReportArtifact
     private sealed class StatementMaterialArchive
     {
         private const string EntryPrefix = "sha256/";
-        private readonly object archiveGate = new();
-        private readonly ZipArchive archive;
-        private readonly ImmutableDictionary<string, ZipArchiveEntry> entries;
+        private readonly Lazy<ArchiveContents> contents;
+        private readonly Lazy<bool> addressesValidated;
         private readonly ConcurrentDictionary<string, Lazy<string>> material = new(StringComparer.Ordinal);
 
-        private StatementMaterialArchive(byte[] bytes, string path)
+        private StatementMaterialArchive(string path, Func<IEnumerable<string>> expectedAddresses)
         {
+            ArgumentException.ThrowIfNullOrWhiteSpace(path);
+            ArgumentNullException.ThrowIfNull(expectedAddresses);
+            var fullPath = Path.GetFullPath(path);
+            contents = new Lazy<ArchiveContents>(
+                () => Load(fullPath),
+                LazyThreadSafetyMode.ExecutionAndPublication);
+            addressesValidated = new Lazy<bool>(
+                () =>
+                {
+                    ValidateAddresses(expectedAddresses(), contents.Value);
+                    return true;
+                },
+                LazyThreadSafetyMode.ExecutionAndPublication);
+        }
+
+        internal static DateTimeOffset CanonicalTimestamp { get; } =
+            new(1980, 1, 1, 0, 0, 0, TimeSpan.Zero);
+
+        internal static StatementMaterialArchive Open(
+            string path,
+            IEnumerable<string> expectedAddresses) =>
+            new(path, () => expectedAddresses);
+
+        internal static StatementMaterialArchive Open(
+            string path,
+            Func<IEnumerable<string>> expectedAddresses) =>
+            new(path, expectedAddresses);
+
+        private static ArchiveContents Load(string path)
+        {
+            if (!File.Exists(path))
+            {
+                throw new InvalidDataException($"Lean statement material archive is missing: {path}");
+            }
+
             try
             {
-                archive = new ZipArchive(new MemoryStream(bytes, writable: false), ZipArchiveMode.Read);
+                var archive = new ZipArchive(
+                    new MemoryStream(File.ReadAllBytes(path), writable: false),
+                    ZipArchiveMode.Read);
                 var builder = ImmutableDictionary.CreateBuilder<string, ZipArchiveEntry>(StringComparer.Ordinal);
                 foreach (var entry in archive.Entries)
                 {
@@ -319,28 +356,13 @@ internal static class RawLeanReportArtifact
                             $"Lean statement material archive has a malformed or duplicate entry: {path}");
                     }
                 }
-                entries = builder.ToImmutable();
+
+                return new ArchiveContents(archive, builder.ToImmutable());
             }
             catch (InvalidDataException exception)
             {
                 throw new InvalidDataException(
                     $"Lean statement material archive is invalid: {path}", exception);
-            }
-        }
-
-        internal static DateTimeOffset CanonicalTimestamp { get; } =
-            new(1980, 1, 1, 0, 0, 0, TimeSpan.Zero);
-
-        internal static StatementMaterialArchive Open(string path)
-        {
-            if (!File.Exists(path))
-            {
-                throw new InvalidDataException($"Lean statement material archive is missing: {path}");
-            }
-
-            try
-            {
-                return new StatementMaterialArchive(File.ReadAllBytes(path), path);
             }
             catch (IOException exception)
             {
@@ -351,19 +373,27 @@ internal static class RawLeanReportArtifact
 
         internal static string EntryName(string address) => EntryPrefix + address[7..];
 
-        internal void ValidateAddresses(IEnumerable<string> addresses)
+        private static void ValidateAddresses(
+            IEnumerable<string> addresses,
+            ArchiveContents archive)
         {
             var expected = addresses
                 .Select(EntryName)
                 .ToImmutableHashSet(StringComparer.Ordinal);
-            var missing = expected.Except(entries.Keys, StringComparer.Ordinal).Order(StringComparer.Ordinal).FirstOrDefault();
+            var missing = expected
+                .Except(archive.Entries.Keys, StringComparer.Ordinal)
+                .Order(StringComparer.Ordinal)
+                .FirstOrDefault();
             if (missing is not null)
             {
                 throw new InvalidDataException(
                     $"Lean statement material archive is missing {missing}.");
             }
 
-            var extra = entries.Keys.Except(expected, StringComparer.Ordinal).Order(StringComparer.Ordinal).FirstOrDefault();
+            var extra = archive.Entries.Keys
+                .Except(expected, StringComparer.Ordinal)
+                .Order(StringComparer.Ordinal)
+                .FirstOrDefault();
             if (extra is not null)
             {
                 throw new InvalidDataException(
@@ -378,6 +408,7 @@ internal static class RawLeanReportArtifact
                 throw new InvalidDataException("Lean statement material address is malformed.");
             }
 
+            _ = addressesValidated.Value;
             return material.GetOrAdd(
                 address,
                 value => new Lazy<string>(
@@ -387,7 +418,8 @@ internal static class RawLeanReportArtifact
 
         private string ReadCore(string address)
         {
-            if (!entries.TryGetValue(EntryName(address), out var entry))
+            var archive = contents.Value;
+            if (!archive.Entries.TryGetValue(EntryName(address), out var entry))
             {
                 throw new InvalidDataException($"Lean statement material is missing for {address}.");
             }
@@ -397,7 +429,7 @@ internal static class RawLeanReportArtifact
             }
 
             var bytes = new byte[(int)entry.Length];
-            lock (archiveGate)
+            lock (archive.Gate)
             {
                 using var stream = entry.Open();
                 stream.ReadExactly(bytes);
@@ -423,6 +455,15 @@ internal static class RawLeanReportArtifact
             }
 
             return value;
+        }
+
+        private sealed class ArchiveContents(ZipArchive archive, ImmutableDictionary<string, ZipArchiveEntry> entries)
+        {
+            internal object Gate { get; } = new();
+
+            internal ZipArchive Archive { get; } = archive;
+
+            internal ImmutableDictionary<string, ZipArchiveEntry> Entries { get; } = entries;
         }
     }
 

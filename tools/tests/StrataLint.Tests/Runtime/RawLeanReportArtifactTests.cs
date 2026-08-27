@@ -98,14 +98,16 @@ public sealed class RawLeanReportArtifactTests
         {
             Assert.Single(archive.Entries).Delete();
         }
+        var missingReport = RawLeanReportArtifact.ReadFile(path, snapshot);
+        var missingMaterial = missingReport.Files.Single().Value.Declarations.Single();
         Assert.Contains(
             "missing",
-            Assert.Throws<InvalidDataException>(() => RawLeanReportArtifact.ReadFile(path, snapshot)).Message,
+            Assert.Throws<InvalidDataException>(() => missingMaterial.LoadTypeRepresentation()).Message,
             StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
-    public void MaterialBundleIsOneArchiveAndItsAbsenceFailsAtReportLoad()
+    public void MaterialBundleIsOneArchiveAndItsAbsenceFailsOnFirstMaterialUse()
     {
         using var temporary = new TemporaryDirectory();
         var path = Path.Combine(temporary.Path, "raw-lean-report.json");
@@ -126,9 +128,11 @@ public sealed class RawLeanReportArtifactTests
         Assert.True(File.Exists(archive), $"material archive is absent: {archive}");
         Assert.False(Directory.Exists(archive), $"material bundle is still a directory: {archive}");
         File.Delete(archive);
-        var exception = Assert.Throws<InvalidDataException>(() =>
-            RawLeanReportArtifact.ReadFile(path, snapshot));
+        var reportFromMissingArchive = RawLeanReportArtifact.ReadFile(path, snapshot);
+        var declaration = reportFromMissingArchive.Files.Single().Value.Declarations.Single();
+        var exception = Assert.Throws<InvalidDataException>(() => declaration.LoadTypeRepresentation());
         Assert.Contains("material archive", exception.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("missing", exception.Message, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]

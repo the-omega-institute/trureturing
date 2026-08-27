@@ -104,7 +104,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CheckPerformsZeroLedgerSemanticCallsForAnUnrelatedChange()
+    public void CheckAdmitsAnUnrelatedChangeWhenMaterialArchiveIsMissingAndUnused()
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
@@ -128,6 +128,7 @@ public sealed partial class ProductionEnvironmentTests
             candidateReport,
             Decode(currentRaw),
             LeanAxiomReport.Create(fixture.Reports));
+        File.Delete(RawLeanReportArtifact.MaterialsPath(candidateReport));
         var environment = new ProductionCliEnvironment(
             "/repo",
             gateway,
