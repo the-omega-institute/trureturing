@@ -65,7 +65,8 @@ internal static partial class RepositoryRules
             || path.EndsWith(".yml", StringComparison.Ordinal)
             || path.StartsWith("Chronicle/", StringComparison.Ordinal)
             || IsManagedLeanPath(path)
-            || path is "Meta/domains.yaml" or "Meta/registry.yaml");
+            || path is DomainsPolicyPath or RegistryPolicyPath)
+        || HasExternalLedgerDependencyChange(context.Changes);
 
     private static bool InstantiationAffected(RuleEvaluationContext context) =>
         Changed(context, static path =>

@@ -9,17 +9,41 @@ namespace StrataLint.Engine;
 internal static partial class RepositoryRules
 {
     internal const string TowerManifestPath = "tools/TOWER.yaml";
+    internal const string RegistryPolicyPath = "Meta/registry.yaml";
+    internal const string DomainsPolicyPath = "Meta/domains.yaml";
+    internal const string TaskBlockReferenceSyntaxPath =
+        "tools/StrataLint.Engine/TaskBlockReferenceSyntax.cs";
+    internal const string YamlSubsetParserPath =
+        "tools/Trureturing.Truth/YamlSubsetParser.cs";
+
+    // These are the non-snapshot inputs that can change how SL-019 classifies or parses
+    // every structured artifact. Keep the list beside the replay predicate so a new input
+    // cannot be added to the rule without also being added to its wake-up closure.
+    private static readonly ImmutableHashSet<string> LedgerPolicySourcePaths =
+        ImmutableHashSet.Create(
+            StringComparer.Ordinal,
+            RegistryPolicyPath,
+            DomainsPolicyPath);
+
+    private static readonly ImmutableHashSet<string> LedgerRuleDependencyPaths =
+        ImmutableHashSet.Create(
+            StringComparer.Ordinal,
+            TaskBlockReferenceSyntaxPath,
+            YamlSubsetParserPath);
 
     private static ImmutableArray<RuleFinding> Ledger(RuleEvaluationContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        var taskSetChanged = !context.RuleImplementationChanged && ChangedLeanTaskSet(context);
+        var replay = ChangedLeanTaskSet(context)
+            || PolicyChanged(context)
+            || RuleDependencyChanged(context)
+            || LedgerArtifactChanged(context);
         HashSet<string>? tasks = null;
         foreach (var (path, file) in context.Current.Files)
         {
             var governed = IsGovernedStructured(path, context.Policy);
             var pathAffected = context.IsBaseFactAffected(path.Value);
-            var anomalyAffected = pathAffected || taskSetChanged;
+            var anomalyAffected = pathAffected || replay;
             if (governed && pathAffected)
             {
                 if (file.HasBom)
@@ -138,6 +162,29 @@ internal static partial class RepositoryRules
             .Select(static item => item.Value));
         return !currentTasks.SetEquals(forkPointTasks);
     }
+
+    private static bool PolicyChanged(RuleEvaluationContext context) =>
+        context.Changes.Paths.Any(path => LedgerPolicySourcePaths.Contains(path.Value));
+
+    private static bool RuleDependencyChanged(RuleEvaluationContext context) =>
+        context.RuleImplementationChanged
+        || context.Changes.Paths.Any(path => LedgerRuleDependencyPaths.Contains(path.Value));
+
+    private static bool LedgerArtifactChanged(RuleEvaluationContext context) =>
+        context.Changes.Paths.Any(path => IsStructuredLedgerArtifactPath(path.Value));
+
+    private static bool IsStructuredLedgerArtifactPath(string path) =>
+        path.EndsWith(".json", StringComparison.Ordinal)
+        || path.EndsWith(".yaml", StringComparison.Ordinal)
+        || path.EndsWith(".yml", StringComparison.Ordinal)
+        || path.StartsWith("Chronicle/", StringComparison.Ordinal);
+
+    internal static bool HasExternalLedgerDependencyChange(RawChangeSet changes) =>
+        changes.Paths.Any(path => LedgerRuleDependencyPaths.Contains(path.Value));
+
+    internal static bool IsLedgerRuleDependencyPath(string path) =>
+        LedgerRuleDependencyPaths.Contains(path);
+
 
     private static void ValidateAcceptedEventFilesAfterImplementationChange(
         RuleEvaluationContext context,

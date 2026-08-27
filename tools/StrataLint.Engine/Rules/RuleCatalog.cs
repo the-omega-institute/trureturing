@@ -138,21 +138,30 @@ public sealed class RuleCatalog
                 }
 
                 executed.Add(descriptor.Id);
-                if (descriptor.Id == RuleId.CreateKnown(15))
+                var phaseDiagnostics = ImmutableArray<Diagnostic>.Empty;
+                ImmutableArray<RuleFinding> EvaluatePhase()
                 {
-                    diagnostics.AddRange(RepositoryPathPolicy.Evaluate(
-                        context.Current,
-                        context.Policy,
-                        descriptor,
-                        context.IsBaseFactAffected));
+                    // SL-015 has a pre-body path-policy pass. Keep it in the same callback as
+                    // the rule body so one timing event covers the complete executable phase.
+                    if (descriptor.Id == RuleId.CreateKnown(15))
+                    {
+                        phaseDiagnostics = RepositoryPathPolicy.Evaluate(
+                            context.Current,
+                            context.Policy,
+                            descriptor,
+                            context.IsBaseFactAffected);
+                    }
+
+                    return registration.Rule.EvaluateCandidateDelta(context);
                 }
 
                 var findings = measureRule is null
-                    ? registration.Rule.EvaluateCandidateDelta(context)
+                    ? EvaluatePhase()
                     : measureRule(
                         descriptor.Id,
                         descriptor.AdmissionEffect,
-                        () => registration.Rule.EvaluateCandidateDelta(context));
+                        EvaluatePhase);
+                diagnostics.AddRange(phaseDiagnostics);
                 diagnostics.AddRange(Stamp(descriptor, findings));
             }
 

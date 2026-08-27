@@ -15,7 +15,6 @@ internal static class StrataLintEngineBuildInputs
         ProjectDirectory + "/Coordinates/RepositoryPathPolicy.cs";
     private const string RepositoryPathPolicyPathsPath =
         ProjectDirectory + "/Coordinates/RepositoryPathPolicy.Paths.cs";
-
     internal static bool Contains(string path)
     {
         if (path == ProjectPath
@@ -39,7 +38,8 @@ internal static class StrataLintEngineBuildInputs
             || path == FrozenAcceptedEventLoaderPath
             || path == TrustedRevocationReceiptsPath
             || path == RepositoryPathPolicyPath
-            || path == RepositoryPathPolicyPathsPath)
+            || path == RepositoryPathPolicyPathsPath
+            || RepositoryRules.IsLedgerRuleDependencyPath(path))
         {
             return true;
         }
