@@ -85,7 +85,7 @@ public sealed class LedgerRevokeCommandTests
                 FrozenLedgerChangeClassifier.AcceptedRoot.Replace('/', Path.DirectorySeparatorChar));
             WriteLedgerDirectory(LedgerPath, baselineBytes);
             ReportPath = Path.Combine(temporary.Path, "candidate-lean-report.json");
-            File.WriteAllBytes(ReportPath, RawLeanReportArtifact.Write(snapshot, report).AsSpan());
+            RawLeanReportArtifact.WriteFile(ReportPath, snapshot, report);
             Environment = new ProductionCliEnvironment(
                 temporary.Path,
                 new FakeRepositoryGateway(RawChangeSet.Create([]), raw, null),

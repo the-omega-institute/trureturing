@@ -317,7 +317,7 @@ internal static partial class TheoristFrontierContractValidator
 
         if (!TryString(exact, "statement_sha256", out var statementSha256)
             || !string.Equals(
-                CanonicalStatementWriter.StatementTypeAddress(declaration.TypeRepresentation),
+                CanonicalStatementWriter.StatementTypeAddress(declaration),
                 statementSha256,
                 StringComparison.Ordinal))
         {
