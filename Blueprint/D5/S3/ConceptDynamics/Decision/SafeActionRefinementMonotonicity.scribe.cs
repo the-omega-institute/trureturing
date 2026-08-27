@@ -42,7 +42,6 @@ internal sealed class SafeActionRefinementMonotonicityDocument
 
     private static Formula SafeActions(
         Formula stateType,
-        Formula actionType,
         Formula readout,
         Formula legal,
         Formula current)
@@ -63,7 +62,14 @@ internal sealed class SafeActionRefinementMonotonicityDocument
                 FormulaLogicOperator.Implies,
                 legalAtState));
 
-        return new Formula.SetBuilder(safeAtEveryFiberState, action, actionType);
+        return Seq(
+            OpenBrace,
+            action,
+            Sp,
+            Mid,
+            Sp,
+            safeAtEveryFiberState,
+            CloseBrace);
     }
 
     private static Formula TheoremFormula()
@@ -84,11 +90,11 @@ internal sealed class SafeActionRefinementMonotonicityDocument
             FormulaRelationOperator.Equal,
             Seq(factor, Sp, Circ, Sp, fine));
         Formula inclusion = Seq(
-            SafeActions(stateType, actionType, coarse, legal, current),
+            SafeActions(stateType, coarse, legal, current),
             Sp,
             Subseteq,
             Sp,
-            SafeActions(stateType, actionType, fine, legal, current));
+            SafeActions(stateType, fine, legal, current));
 
         return Disp(new Formula.BindMany(
             FormulaQuantifier.ForAll,

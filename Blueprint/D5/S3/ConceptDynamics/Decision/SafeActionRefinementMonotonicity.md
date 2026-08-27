@@ -6,7 +6,7 @@ A finer readout enlarges the action set safe throughout the current fiber.
 
 **Theorem 1.1 (Refinement enlarges the fiber-safe action set).**
 
-$$\forall X \in \operatorname{Type}, Q \in \operatorname{Type}, R \in \operatorname{Type}, A \in \operatorname{Type}, q \in X \to Q, r \in X \to R, Legal \in X \to \left(A \to Prop\right), f \in R \to Q, x \in X,\; q = f \circ r \Rightarrow \left\{\forall y \in X,\; q\left(y\right) = q\left(x\right) \Rightarrow Legal\left(y\right)\left(a\right) \mid a \in A\right\} \subseteq \left\{\forall y \in X,\; r\left(y\right) = r\left(x\right) \Rightarrow Legal\left(y\right)\left(a\right) \mid a \in A\right\}$$
+$$\forall X \in \operatorname{Type}, Q \in \operatorname{Type}, R \in \operatorname{Type}, A \in \operatorname{Type}, q \in X \to Q, r \in X \to R, Legal \in X \to \left(A \to Prop\right), f \in R \to Q, x \in X,\; q = f \circ r \Rightarrow \{a \mid \forall y \in X,\; q\left(y\right) = q\left(x\right) \Rightarrow Legal\left(y\right)\left(a\right)\} \subseteq \{a \mid \forall y \in X,\; r\left(y\right) = r\left(x\right) \Rightarrow Legal\left(y\right)\left(a\right)\}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Decision/SafeActionRefinementMonotonicity.safe_action_refinement_monotonicity` (`✓ std3`). ∎
 
