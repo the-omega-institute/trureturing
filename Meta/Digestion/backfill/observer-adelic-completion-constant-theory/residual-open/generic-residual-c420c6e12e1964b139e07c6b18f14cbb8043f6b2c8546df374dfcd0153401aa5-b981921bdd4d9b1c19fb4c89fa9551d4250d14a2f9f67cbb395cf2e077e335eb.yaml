@@ -1,0 +1,10 @@
+ast_path: section/90-1-完成范数的意义/clause/2
+fingerprints:
+  raw_sha256: sha256:c420c6e12e1964b139e07c6b18f14cbb8043f6b2c8546df374dfcd0153401aa5
+  normalized_sha256: sha256:c420c6e12e1964b139e07c6b18f14cbb8043f6b2c8546df374dfcd0153401aa5
+cas_ref: sha256:c420c6e12e1964b139e07c6b18f14cbb8043f6b2c8546df374dfcd0153401aa5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

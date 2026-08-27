@@ -1,0 +1,24 @@
+## 142.3 Primitive recovery
+
+从加法表达：
+
+$$
+\mathcal M_\varphi(t)
+$$
+
+数值生成 \(L_\varphi(t)\)，再以 Möbius 反演恢复：
+
+$$
+H_\varphi(t).
+$$
+
+随后从指数尾部逐层恢复：
+
+$$
+c(1),c(2),c(3),\ldots.
+$$
+
+这将直接检验“一维连续观察恢复二维 root ledger”。
+
+---
+

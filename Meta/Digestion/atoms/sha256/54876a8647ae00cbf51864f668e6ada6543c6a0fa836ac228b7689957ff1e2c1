@@ -1,0 +1,63 @@
+## 93.1 \(P\) 是连接，\(R\) 是协变导数
+
+对 weight-\(k\) 模形式定义 Serre 导数：
+
+$$
+\mathcal D_kf
+=
+Df-\frac{k}{12}Pf.
+$$
+
+对：
+
+$$
+Q=E_4,
+$$
+
+有：
+
+$$
+\boxed{
+\mathcal D_4Q
+=
+DQ-\frac13PQ
+=
+-\frac13R.
+}
+\tag{93.2}
+$$
+
+因此：
+
+$$
+\boxed{
+R=-3\mathcal D_4\Theta_{E_8}.
+}
+$$
+
+于是三个状态的结构角色为：
+
+$$
+\boxed{
+\begin{aligned}
+Q&=\text{\(E_8\) 几何配分函数};\\
+P&=\text{尺度微分的 quasimodular 连接};\\
+R&=\text{\(E_8\) 配分函数的第一协变导数状态}.
+\end{aligned}
+}
+$$
+
+Ramanujan 的三元系统因此可以重解释为：
+
+$$
+\boxed{
+\text{\(E_8\) Theta}
++
+\text{观察者连接}
++
+\text{协变残余}.
+}
+$$
+
+---
+

@@ -1,0 +1,37 @@
+# 第八十九部　Icosian ring 是 \(H_4\) 的算术闭包
+
+令：
+
+$$
+\Gamma=2.A_5=\Delta_{H_4}.
+$$
+
+定义 icosian ring：
+
+$$
+\boxed{
+\mathbb I
+=
+\operatorname{Span}_{\mathbb Z}\Gamma
+\subset
+\mathbb H\otimes_{\mathbb Q}\mathbb Q(\sqrt5).
+}
+\tag{89.1}
+$$
+
+更精确地，\(\mathbb I\) 是秩 \(4\) 的：
+
+$$
+\mathbb Z[\varphi]
+$$
+
+模，因此作为 \(\mathbb Z\)-模具有秩：
+
+$$
+4\cdot2=8.
+$$
+
+在单个实嵌入中，\(\mathbb Z[\varphi]\) 在 \(\mathbb R\) 内稠密，所以 \(\mathbb I\) 作为普通四元数子集不是四维格；但把黄金系数拆成两个有理坐标以后，它成为八维离散格。Icosian ring 与 \(E_8\) 格之间的标准对应正是沿此路线建立的。([arXiv][1])
+
+---
+

@@ -1,0 +1,63 @@
+# 第一百二十八部　有理斜率观察与碰撞纤维
+
+对整数 \(r>1\)，令：
+
+$$
+p=q^r.
+$$
+
+定义：
+
+$$
+\boxed{
+\mathcal D_r(q)
+=
+\frac{J(q^r)-J(q)}
+{q^{-r}-q^{-1}}.
+}
+\tag{128.1}
+$$
+
+分母公式给出：
+
+$$
+\boxed{
+\mathcal D_r(q)
+=
+\prod_{m,n\ge1}
+(1-q^{rm+n})^{c(mn)}.
+}
+\tag{128.2}
+$$
+
+定义斜率能量：
+
+$$
+E_r(m,n)=rm+n.
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal D_r(q)
+=
+\prod_{k\ge r+1}
+(1-q^k)^{A_r(k)},
+}
+$$
+
+其中：
+
+$$
+\boxed{
+A_r(k)
+=
+\sum_{m=1}^{\lfloor(k-1)/r\rfloor}
+c\bigl(m(k-rm)\bigr).
+}
+\tag{128.3}
+$$
+
+---
+

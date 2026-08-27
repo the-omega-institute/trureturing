@@ -1,0 +1,33 @@
+## 95.1 维数向量是零模
+
+令：
+
+$$
+d=(d_i),
+\qquad
+d_i=\dim\rho_i.
+$$
+
+取维数得到：
+
+$$
+2d_i
+=
+\sum_jA_{ij}d_j.
+$$
+
+所以：
+
+$$
+\boxed{
+(2I-A)d=0.
+}
+\tag{95.3}
+$$
+
+即 \(d\) 是 affine \(E_8\) Cartan 矩阵的正零向量。
+
+这些 \(d_i\) 正是 affine \(E_8\) 的 Coxeter marks。([Pasayten Institute][3])
+
+---
+

@@ -1,0 +1,20 @@
+## 假设 OACTC–24D（Ramanujan–Moonshine genome）
+
+Ramanujan 的 Eisenstein、\(\Delta\)、\(\tau\)、continued fractions 与 mock theta families，可以被压缩为：
+
+$$
+\boxed{
+\text{lattice completion}
++
+\text{root residual}
++
+\text{orbifold refinement}
++
+\text{boundary mock completion}
+}
+$$
+
+的有限操作基因组。
+
+---
+

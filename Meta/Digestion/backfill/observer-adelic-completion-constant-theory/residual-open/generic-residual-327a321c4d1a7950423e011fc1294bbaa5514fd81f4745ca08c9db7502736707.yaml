@@ -1,0 +1,10 @@
+ast_path: section/128-1-有理观察必然产生碰撞
+fingerprints:
+  raw_sha256: sha256:327a321c4d1a7950423e011fc1294bbaa5514fd81f4745ca08c9db7502736707
+  normalized_sha256: sha256:327a321c4d1a7950423e011fc1294bbaa5514fd81f4745ca08c9db7502736707
+cas_ref: sha256:327a321c4d1a7950423e011fc1294bbaa5514fd81f4745ca08c9db7502736707
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

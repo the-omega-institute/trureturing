@@ -1,0 +1,10 @@
+ast_path: section/Deng-层-primitive-residual-收缩
+fingerprints:
+  raw_sha256: sha256:dc2024bb2daaa0617051e31b513694af76762048bbdd2ecb64d8ef6364f425e0
+  normalized_sha256: sha256:dc2024bb2daaa0617051e31b513694af76762048bbdd2ecb64d8ef6364f425e0
+cas_ref: sha256:dc2024bb2daaa0617051e31b513694af76762048bbdd2ecb64d8ef6364f425e0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,42 @@
+## 定理 132.1（Golden Monster 一维层析）
+
+在乘积收敛域中，完整的一变量函数：
+
+$$
+t\longmapsto\mathcal M_\varphi(t)
+$$
+
+通过对数和 Möbius 反演，唯一确定全部二维 Monster 根重数：
+
+$$
+c(mn).
+$$
+
+原因是：
+
+1. Möbius 反演恢复 primitive heat trace；
+2. Golden 能量无碰撞；
+3. 离散 Laplace 谱具有唯一性。
+
+因此：
+
+$$
+\boxed{
+\text{一个连续的一维 Golden 观察族，
+可以忠实重构二维 Monster root ledger。}
+}
+$$
+
+这给项目观察者理论一个非常强的例子：
+
+$$
+\boxed{
+\text{输出维数低}
+\not\Rightarrow
+\text{观察不完备};
+}
+$$
+
+关键在于：
+
+* 是否使用整族探针 \(t\)；
