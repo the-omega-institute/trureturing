@@ -8,12 +8,6 @@ namespace StrataLint.Tests;
 
 public sealed class LedgerSupersedeCommandTests
 {
-    private static readonly string[] RealFreezeFixtures =
-    [
-        "Golden/Frozen/accepted/7b1891a1e3b89ad03abf0b55d5b46bc1a4c61b5d593133ef6e92e31ef27b7d3d.json",
-        "Golden/Frozen/accepted/6480513c972db6515b4fa8d19bd6778cf05e255a47df5de8b348d31526f26716.json",
-        "Golden/Frozen/accepted/451af39dac628e16c4040114872b4f607f7fe80e05d60fcec89b65e88dbbad6f.json",
-    ];
     private static readonly ImmutableArray<string> RealSupportingBlobOids =
     [
         "git-sha1:1123096aedfa69a2db94d58b957a45f8dc0cc006",
@@ -214,7 +208,7 @@ public sealed class LedgerSupersedeCommandTests
             currentBStatementMaterial: "Int",
             pinBump: true,
             aImportsB: true);
-        RewriteFreezeInputs(
+        LedgerSupersedeFixtureFiles.RewriteFreezeInputs(
             fixture.LedgerPath,
             static (input, index) => input["base_commit_oid"] = FrozenLedgerTestData.GitOid(
                 index == 0 ? '1' : '2'));
@@ -230,13 +224,10 @@ public sealed class LedgerSupersedeCommandTests
     [Fact]
     public void SupportingBlobPinSnapshotsMatchWholeProtectedTreeSemanticsForRealLedgerEntries()
     {
-        var repositoryRoot = TestRepositoryLayout.FindRoot();
         using var repository = new SyntheticPinRepository();
-        foreach (var relativePath in RealFreezeFixtures)
+        foreach (var fixtureContents in ReadRealFreezeFixtures())
         {
-            using var document = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(
-                repositoryRoot,
-                relativePath.Replace('/', Path.DirectorySeparatorChar))));
+            using var document = JsonDocument.Parse(fixtureContents);
             var root = document.RootElement;
             var entry = FrozenLedgerBaseViewReader.ReadFreeze(
                 root.GetProperty("payload"),
@@ -289,11 +280,8 @@ public sealed class LedgerSupersedeCommandTests
     [Fact]
     public void EnvironmentPinBlobReadFailsClosedWhenRecordedOidDoesNotNameAPinFile()
     {
-        var repositoryRoot = TestRepositoryLayout.FindRoot();
         using var repository = new SyntheticPinRepository();
-        using var document = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(
-            repositoryRoot,
-            RealFreezeFixtures[0].Replace('/', Path.DirectorySeparatorChar))));
+        using var document = JsonDocument.Parse(ReadPrimaryRealFreezeFixture());
         var payload = document.RootElement.GetProperty("payload");
         var entry = FrozenLedgerBaseViewReader.ReadFreeze(
             payload,
@@ -322,17 +310,17 @@ public sealed class LedgerSupersedeCommandTests
         using var fixture = new LedgerAppendCommandTests.LedgerAppendFixture(
             currentAStatementMaterial: "Int",
             pinBump: true);
-        RewriteFreezeInputs(
+        LedgerSupersedeFixtureFiles.RewriteFreezeInputs(
             fixture.LedgerPath,
             static (input, _) => input.Remove("supporting_blob_oids"));
-        var before = ReadRawLedgerDirectory(fixture.LedgerPath);
+        var before = LedgerSupersedeFixtureFiles.ReadRawLedgerDirectory(fixture.LedgerPath);
 
         var result = fixture.Environment.SupersedeLedger(
             ["--candidate-lean-report", fixture.ReportPath]);
 
         Assert.False(result.Success, result.Output);
         Assert.Contains("supporting_blob_oids is not an array", result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, ReadRawLedgerDirectory(fixture.LedgerPath));
+        Assert.Equal(before, LedgerSupersedeFixtureFiles.ReadRawLedgerDirectory(fixture.LedgerPath));
     }
 
     [Fact]
@@ -365,11 +353,11 @@ public sealed class LedgerSupersedeCommandTests
         using var fixture = new LedgerAppendCommandTests.LedgerAppendFixture(
             currentAStatementMaterial: "Int",
             pinBump: true);
-        RewriteFreezeInputs(
+        LedgerSupersedeFixtureFiles.RewriteFreezeInputs(
             fixture.LedgerPath,
             (input, _) => input["supporting_blob_oids"] = new JsonArray(
                 supportingBlobOids.Select(static oid => JsonValue.Create(oid)).ToArray()));
-        var before = ReadRawLedgerDirectory(fixture.LedgerPath);
+        var before = LedgerSupersedeFixtureFiles.ReadRawLedgerDirectory(fixture.LedgerPath);
 
         var result = fixture.Environment.SupersedeLedger(
             ["--candidate-lean-report", fixture.ReportPath]);
@@ -377,7 +365,7 @@ public sealed class LedgerSupersedeCommandTests
         Assert.False(result.Success, result.Output);
         Assert.Contains(expectedError, result.Error, StringComparison.OrdinalIgnoreCase);
         Assert.Equal(supportingBlobOids.Length == 2 ? 1 : 0, fixture.Gateway.EnvironmentPinBlobReads.Count);
-        Assert.Equal(before, ReadRawLedgerDirectory(fixture.LedgerPath));
+        Assert.Equal(before, LedgerSupersedeFixtureFiles.ReadRawLedgerDirectory(fixture.LedgerPath));
     }
 
     public static TheoryData<string[], string> InvalidProtectedSupportingBlobOids => new()
@@ -398,40 +386,18 @@ public sealed class LedgerSupersedeCommandTests
         },
     };
 
-    private static void RewriteFreezeInputs(
-        string ledgerPath,
-        Action<JsonObject, int> rewrite)
-    {
-        var index = 0;
-        foreach (var path in Directory.EnumerateFiles(ledgerPath, "*.json")
-                     .Order(StringComparer.Ordinal))
-        {
-            var root = JsonNode.Parse(File.ReadAllText(path))?.AsObject()
-                ?? throw new InvalidOperationException("ledger fixture event is not a JSON object");
-            if (root["event_type"]?.GetValue<string>() != "Freeze")
-            {
-                continue;
-            }
+    private static IReadOnlyList<string> ReadRealFreezeFixtures() =>
+    [
+        ReadPrimaryRealFreezeFixture(),
+        TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+            "Golden/Frozen/accepted/6480513c972db6515b4fa8d19bd6778cf05e255a47df5de8b348d31526f26716.json")),
+        TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+            "Golden/Frozen/accepted/451af39dac628e16c4040114872b4f607f7fe80e05d60fcec89b65e88dbbad6f.json")),
+    ];
 
-            var input = root["payload"]?["input"]?.AsObject()
-                ?? throw new InvalidOperationException("ledger fixture Freeze input is absent");
-            rewrite(input, index++);
-            File.WriteAllText(path, root.ToJsonString(new JsonSerializerOptions
-            {
-                WriteIndented = false,
-            }) + "\n");
-        }
-
-        Assert.True(index > 0, "ledger fixture contains no Freeze event");
-    }
-
-    private static IReadOnlyDictionary<string, byte[]> ReadRawLedgerDirectory(string ledgerPath) =>
-        Directory.EnumerateFiles(ledgerPath, "*.json")
-            .Order(StringComparer.Ordinal)
-            .ToDictionary(
-                static path => Path.GetFileName(path),
-                File.ReadAllBytes,
-                StringComparer.Ordinal);
+    private static string ReadPrimaryRealFreezeFixture() =>
+        TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+            "Golden/Frozen/accepted/7b1891a1e3b89ad03abf0b55d5b46bc1a4c61b5d593133ef6e92e31ef27b7d3d.json"));
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
@@ -503,4 +469,42 @@ public sealed class LedgerSupersedeCommandTests
 
         public void Dispose() => temporary.Dispose();
     }
+}
+
+internal static class LedgerSupersedeFixtureFiles
+{
+    internal static void RewriteFreezeInputs(
+        string ledgerPath,
+        Action<JsonObject, int> rewrite)
+    {
+        var index = 0;
+        foreach (var path in Directory.EnumerateFiles(ledgerPath, "*.json")
+                     .Order(StringComparer.Ordinal))
+        {
+            var root = JsonNode.Parse(File.ReadAllText(path))?.AsObject()
+                ?? throw new InvalidOperationException("ledger fixture event is not a JSON object");
+            if (root["event_type"]?.GetValue<string>() != "Freeze")
+            {
+                continue;
+            }
+
+            var input = root["payload"]?["input"]?.AsObject()
+                ?? throw new InvalidOperationException("ledger fixture Freeze input is absent");
+            rewrite(input, index++);
+            File.WriteAllText(path, root.ToJsonString(new JsonSerializerOptions
+            {
+                WriteIndented = false,
+            }) + "\n");
+        }
+
+        Assert.True(index > 0, "ledger fixture contains no Freeze event");
+    }
+
+    internal static IReadOnlyDictionary<string, byte[]> ReadRawLedgerDirectory(string ledgerPath) =>
+        Directory.EnumerateFiles(ledgerPath, "*.json")
+            .Order(StringComparer.Ordinal)
+            .ToDictionary(
+                static path => Path.GetFileName(path),
+                File.ReadAllBytes,
+                StringComparer.Ordinal);
 }

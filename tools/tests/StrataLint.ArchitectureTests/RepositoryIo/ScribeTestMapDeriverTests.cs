@@ -14,11 +14,21 @@ public sealed class ScribeTestMapDeriverTests
     [Fact]
     public void RepositoryMapHasNoUnknownGrowthAndEveryPathIsDeclared()
     {
+        const string ledgerSupersedeTests =
+            "tools/tests/StrataLint.Tests/Ledger/LedgerSupersedeCommandTests.cs";
         var map = ScribeTestMapDeriver.DeriveRepository(RepositoryLayout.FindRoot());
+        var unknownLedgerSupersedeMethods = map.Methods
+            .Where(method => method.SourcePath == ledgerSupersedeTests && method.IsUnknown)
+            .Select(method => $"{method.Id}: {string.Join(", ", method.UnknownReasons)}")
+            .ToArray();
 
         Assert.Equal(280, ScribeUnknownDebtPolicy.UnknownDebtLimit);
         Assert.Equal(281, ScribeUnknownDebtPolicy.UnknownDebtToleranceLimit);
         Assert.Empty(ScribeUnknownDebtPolicy.InspectCurrent(map));
+        Assert.True(
+            unknownLedgerSupersedeMethods.Length == 0,
+            "conservative unknown ledger-supersede methods:\n"
+                + string.Join('\n', unknownLedgerSupersedeMethods));
         Assert.All(
             map.Methods.SelectMany(static method => method.Paths),
             path => Assert.True(
