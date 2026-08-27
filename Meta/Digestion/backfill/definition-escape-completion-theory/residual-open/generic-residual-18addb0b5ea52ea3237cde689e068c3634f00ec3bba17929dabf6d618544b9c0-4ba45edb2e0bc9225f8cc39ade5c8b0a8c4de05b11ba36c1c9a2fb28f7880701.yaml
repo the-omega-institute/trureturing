@@ -1,0 +1,10 @@
+ast_path: section/14-5-稳定性与自然性/clause/3
+fingerprints:
+  raw_sha256: sha256:18addb0b5ea52ea3237cde689e068c3634f00ec3bba17929dabf6d618544b9c0
+  normalized_sha256: sha256:18addb0b5ea52ea3237cde689e068c3634f00ec3bba17929dabf6d618544b9c0
+cas_ref: sha256:18addb0b5ea52ea3237cde689e068c3634f00ec3bba17929dabf6d618544b9c0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

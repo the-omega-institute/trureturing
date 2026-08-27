@@ -1,0 +1,16 @@
+- 若声称来自全局状态，则有胶合见证或证明。
+
+必须把：
+
+\[
+\operatorname{ArithmeticConsistent},
+\quad
+\operatorname{ProvenanceValid},
+\quad
+\operatorname{RealityFaithful}
+\]
+
+作为不同谓词。
+
+---
+

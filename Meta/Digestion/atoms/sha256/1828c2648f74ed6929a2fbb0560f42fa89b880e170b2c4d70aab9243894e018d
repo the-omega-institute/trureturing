@@ -1,0 +1,41 @@
+# 340. 名义所有权不推出实际控制
+
+设名义产权概念：
+
+[
+O:X\to B_O.
+]
+
+实际控制能力：
+
+[
+K:X\to\mathcal P(U).
+]
+
+如果存在：
+
+[
+O(x)=O(y)
+]
+
+但：
+
+[
+K(x)\neq K(y),
+]
+
+则名义所有权不能决定真实控制能力。
+
+所以：
+
+[
+\boxed{
+\text{legal title}
+\neq
+\text{effective control}.
+}
+]
+
+这可以对应：
+
+* 托管；

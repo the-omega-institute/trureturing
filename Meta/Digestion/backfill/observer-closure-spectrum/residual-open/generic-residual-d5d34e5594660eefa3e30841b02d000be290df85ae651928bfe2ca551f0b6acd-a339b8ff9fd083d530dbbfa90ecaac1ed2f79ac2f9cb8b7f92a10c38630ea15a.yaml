@@ -1,0 +1,10 @@
+ast_path: section/最小预测商-记忆预算-受控完成与量子可观测闭包/clause/2
+fingerprints:
+  raw_sha256: sha256:d5d34e5594660eefa3e30841b02d000be290df85ae651928bfe2ca551f0b6acd
+  normalized_sha256: sha256:d5d34e5594660eefa3e30841b02d000be290df85ae651928bfe2ca551f0b6acd
+cas_ref: sha256:d5d34e5594660eefa3e30841b02d000be290df85ae651928bfe2ca551f0b6acd
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

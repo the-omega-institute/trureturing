@@ -1,0 +1,4 @@
+- **#3039**：`D5/S3/ConceptDynamics/Sufficiency/FiniteWindowMinimalSufficiency.{finite_window_minimal_sufficiency,descent_composes}`。
+
+地址交集可机械判为 \(\varnothing\)。语义差分逐项为：T1 是无限预算实值下确界/极限，不是有限加权覆盖或 Galois 闭包；T2 是 charge 地板、有限逼近与链连续刻画，不是盲核因子化阻断；T3 是拓扑紧致有限子覆盖，不是 finite snapshot exact cover 或有限窗最小充分性；T4 是不可数/Lebesgue 与自由超滤的测度边界构造，排除模块无此反模型；T5 是母卷三分型的精确适用域与“取到/趋近”分离，不是 refinement geometry、promotion receipt 或 descent composition。
+

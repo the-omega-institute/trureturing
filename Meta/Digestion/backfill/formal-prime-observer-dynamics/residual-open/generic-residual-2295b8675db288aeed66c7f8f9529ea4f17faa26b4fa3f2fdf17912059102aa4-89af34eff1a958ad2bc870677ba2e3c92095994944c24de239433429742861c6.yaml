@@ -1,0 +1,10 @@
+ast_path: section/149-6-有限数值检查/clause/4
+fingerprints:
+  raw_sha256: sha256:2295b8675db288aeed66c7f8f9529ea4f17faa26b4fa3f2fdf17912059102aa4
+  normalized_sha256: sha256:2295b8675db288aeed66c7f8f9529ea4f17faa26b4fa3f2fdf17912059102aa4
+cas_ref: sha256:2295b8675db288aeed66c7f8f9529ea4f17faa26b4fa3f2fdf17912059102aa4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

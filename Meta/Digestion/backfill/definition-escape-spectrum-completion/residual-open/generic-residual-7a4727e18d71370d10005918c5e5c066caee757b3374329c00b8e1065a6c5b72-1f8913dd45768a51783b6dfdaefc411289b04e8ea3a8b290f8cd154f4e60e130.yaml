@@ -1,0 +1,10 @@
+ast_path: section/T5-母卷三分型及其适用域/clause/2
+fingerprints:
+  raw_sha256: sha256:7a4727e18d71370d10005918c5e5c066caee757b3374329c00b8e1065a6c5b72
+  normalized_sha256: sha256:7a4727e18d71370d10005918c5e5c066caee757b3374329c00b8e1065a6c5b72
+cas_ref: sha256:7a4727e18d71370d10005918c5e5c066caee757b3374329c00b8e1065a6c5b72
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

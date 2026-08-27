@@ -1,0 +1,13 @@
+## 16.2 第二层：有限覆盖与计数
+
+```text
+D5/S3/DefinitionEscape/Finite/
+  ResidualGraph.lean
+  DefinitionCover.lean
+  BlindKernelCompactness.lean
+  EscapeCountMeasure.lean
+```
+
+证明：
+
+- 定义集充分当且仅当切集覆盖全部残差；

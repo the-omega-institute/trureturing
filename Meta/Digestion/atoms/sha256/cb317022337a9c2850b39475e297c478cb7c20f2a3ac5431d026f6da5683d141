@@ -1,0 +1,32 @@
+# 290. 第七层统一：合法治理是可逆、可争议、激励相容且能力受限的过程
+
+经过 §263–§289，形式概念动力学进一步出现一个比“正确决策”更强的治理概念。
+
+一项制度决定至少可以沿七个方向审计：
+
+[
+\boxed{
+\begin{aligned}
+\textbf{Recoverability}
+&:\text{错误发生后能否恢复相关目标};\
+\textbf{Contestability}
+&:\text{每个错误是否有可接受挑战见证};\
+\textbf{Due Process}
+&:\text{决定是否携带规则、授权和 provenance};\
+\textbf{Rule Constraint}
+&:\text{决定是否只依赖公开授权区别};\
+\textbf{Non-domination}
+&:\text{制度是否被限制为只能实施授权政策};\
+\textbf{Incentive Compatibility}
+&:\text{主体是否有理由真实提供制度所需信息};\
+\textbf{Corrigibility}
+&:\text{已验证缺陷是否能被保守修复}.
+\end{aligned}
+}
+]
+
+这七项彼此不等价。
+
+一个制度可以：
+
+* 决策准确但不可申诉；

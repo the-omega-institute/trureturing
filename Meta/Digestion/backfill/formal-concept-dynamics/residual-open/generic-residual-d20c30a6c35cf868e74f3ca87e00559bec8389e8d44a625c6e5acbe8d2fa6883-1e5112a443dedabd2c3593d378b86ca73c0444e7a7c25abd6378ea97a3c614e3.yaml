@@ -1,0 +1,10 @@
+ast_path: section/311-权利执行与隐私可能存在不可消除的共同核心/clause/2
+fingerprints:
+  raw_sha256: sha256:d20c30a6c35cf868e74f3ca87e00559bec8389e8d44a625c6e5acbe8d2fa6883
+  normalized_sha256: sha256:d20c30a6c35cf868e74f3ca87e00559bec8389e8d44a625c6e5acbe8d2fa6883
+cas_ref: sha256:d20c30a6c35cf868e74f3ca87e00559bec8389e8d44a625c6e5acbe8d2fa6883
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

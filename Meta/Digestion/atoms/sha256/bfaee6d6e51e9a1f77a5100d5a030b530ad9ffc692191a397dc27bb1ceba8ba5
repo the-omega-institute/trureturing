@@ -1,0 +1,26 @@
+* (L)：新增审计信息。
+
+完美执行要求：
+
+[
+\boxed{
+E_V\preceq P\vee L.
+}
+]
+
+无新增敏感泄漏要求：
+
+[
+\boxed{
+(P\vee L)\wedge S
+\simeq
+P\wedge S.
+}
+]
+
+令违法目标与敏感概念的共同核心为：
+
+[
+K=E_V\wedge S.
+]
+

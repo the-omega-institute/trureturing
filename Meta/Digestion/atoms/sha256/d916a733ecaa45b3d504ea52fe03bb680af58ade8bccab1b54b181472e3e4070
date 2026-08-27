@@ -1,0 +1,14 @@
+- 局部化为 DVR 的既有接口。
+
+目标：
+
+```lean
+theorem principal_iff_class_eq_one
+
+theorem locally_principal_everywhere
+
+theorem sqrt_neg_five_ideal_not_principal
+
+theorem local_principal_profile_not_target_faithful
+```
+

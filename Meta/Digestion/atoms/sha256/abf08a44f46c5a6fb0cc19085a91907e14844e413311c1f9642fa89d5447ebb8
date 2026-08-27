@@ -1,0 +1,6 @@
+- 在 product-singular 区域，按适当方向有 \(L_m\to0\) 几乎处处。
+
+该结论需要 product measure 与鞅收敛接口，尚不由当前有限 Lean 文件自动给出。
+
+---
+

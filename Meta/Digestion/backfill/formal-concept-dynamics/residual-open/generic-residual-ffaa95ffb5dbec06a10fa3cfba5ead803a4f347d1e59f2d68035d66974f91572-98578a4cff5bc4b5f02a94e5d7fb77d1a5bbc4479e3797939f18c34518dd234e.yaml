@@ -1,0 +1,10 @@
+ast_path: section/166-委托链中的信任可以组合-但错误预算也组合/clause/5
+fingerprints:
+  raw_sha256: sha256:ffaa95ffb5dbec06a10fa3cfba5ead803a4f347d1e59f2d68035d66974f91572
+  normalized_sha256: sha256:ffaa95ffb5dbec06a10fa3cfba5ead803a4f347d1e59f2d68035d66974f91572
+cas_ref: sha256:ffaa95ffb5dbec06a10fa3cfba5ead803a4f347d1e59f2d68035d66974f91572
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

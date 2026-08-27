@@ -1,0 +1,10 @@
+ast_path: section/2-门卫手册-素性三级判据/clause/2
+fingerprints:
+  raw_sha256: sha256:5c89be9edcf9ccd2f76608b48fa852b23ab9a5a46bddb83b1e7de77f0ac8cd97
+  normalized_sha256: sha256:5c89be9edcf9ccd2f76608b48fa852b23ab9a5a46bddb83b1e7de77f0ac8cd97
+cas_ref: sha256:5c89be9edcf9ccd2f76608b48fa852b23ab9a5a46bddb83b1e7de77f0ac8cd97
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,1 @@
+- 只扫描有限可行集的 `stopCheck`/`settleStop`，以及空可行集、缺失 current 和 current 不可行时必不停止的边界律；

@@ -1,0 +1,10 @@
+ast_path: section/Q-5-第四优先-图形与纵向桥/clause/4
+fingerprints:
+  raw_sha256: sha256:cd94afd1dbe218c5ad84c0f630544542b8f843fd12b2eacd974246a805a80b26
+  normalized_sha256: sha256:cd94afd1dbe218c5ad84c0f630544542b8f843fd12b2eacd974246a805a80b26
+cas_ref: sha256:cd94afd1dbe218c5ad84c0f630544542b8f843fd12b2eacd974246a805a80b26
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/1-3-CRT-素数幂张量与-solenoid-锚点/clause/1
+fingerprints:
+  raw_sha256: sha256:332a447007d8dc15f6447918f1ad4669f5d6b01b0eeca8ca0c2c2e3faae06233
+  normalized_sha256: sha256:332a447007d8dc15f6447918f1ad4669f5d6b01b0eeca8ca0c2c2e3faae06233
+cas_ref: sha256:332a447007d8dc15f6447918f1ad4669f5d6b01b0eeca8ca0c2c2e3faae06233
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

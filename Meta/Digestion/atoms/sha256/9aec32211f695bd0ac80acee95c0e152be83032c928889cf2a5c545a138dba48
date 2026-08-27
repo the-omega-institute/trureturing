@@ -1,0 +1,6 @@
+- robust policy 与 posterior stopping
+
+仍须按各自依赖建立独立 proof term，不因相邻有限定理已经闭合而自动升级为 `Closed`。
+
+---
+

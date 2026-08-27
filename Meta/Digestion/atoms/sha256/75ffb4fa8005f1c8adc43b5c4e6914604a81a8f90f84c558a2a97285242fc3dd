@@ -1,0 +1,17 @@
+* (f_P=1)：存在对 (\neg P) 的支持。
+
+于是有四种状态：
+
+[
+\begin{array}{c|c|c}
+\text{名称}&t_P&f_P\
+\hline
+\mathbf N&0&0\
+\mathbf T&1&0\
+\mathbf F&0&1\
+\mathbf B&1&1
+\end{array}
+]
+
+其中：
+
