@@ -208,6 +208,25 @@ public sealed class R13ScopeNarrowingTests
     }
 
     [Fact]
+    public void Sl019DoesNotReplayOldJsonWhenLeanDeltaPreservesTaskSet()
+    {
+        var fixture = new RuleFixture();
+        const string task = "D5-T0099";
+        fixture.Files[RuleFixture.RingPath] += "\n-- theorem-only candidate delta\n";
+        fixture.Files[OldMalformedJson] = $"{{\"anomaly\":\"open\",\"case_id\":\"{task}\"}}\n";
+        fixture.Baseline[OldMalformedJson] = fixture.Files[OldMalformedJson];
+        fixture.ForkPoint[OldMalformedJson] = fixture.Files[OldMalformedJson];
+
+        var result = Execute(fixture, RuleFixture.RingPath);
+
+        Assert.DoesNotContain(
+            result.Diagnostics,
+            diagnostic => diagnostic.RuleId == RuleId.CreateKnown(19)
+                && diagnostic.Path == OldMalformedJson
+                && diagnostic.Message.Contains("unledgered anomaly", StringComparison.Ordinal));
+    }
+
+    [Fact]
     public void HeartsLedgerParserRevalidatesStoredLedgerWhenItsImplementationChanges()
     {
         var fixture = new RuleFixture();

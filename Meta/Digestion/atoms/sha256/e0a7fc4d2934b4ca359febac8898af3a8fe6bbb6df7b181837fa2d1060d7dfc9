@@ -1,0 +1,27 @@
+# 31. 喉部、可见相位与路径分量
+
+设 universal solenoid 具有正合列
+
+$$
+0
+\longrightarrow
+K_\infty
+\xrightarrow{\iota}
+\Sigma_\infty
+\xrightarrow{\pi}
+\mathbb T
+\longrightarrow
+0,
+$$
+
+其中
+
+$$
+K_\infty
+\cong
+\prod_{p\in\mathbb P}\mathbb Z_p.
+$$
+
+这里：
+
+- $\Sigma_\infty$ 是完整状态空间；

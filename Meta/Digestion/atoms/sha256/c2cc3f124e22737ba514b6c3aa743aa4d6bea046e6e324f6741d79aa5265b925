@@ -1,0 +1,14 @@
+- 在两者中，联合像都是直积中的兼容子对象，而非自由组合。
+
+因此：
+
+\[
+\boxed{
+\text{local factorization}
+\ne
+\text{realization independence}.
+}
+\]
+
+---
+

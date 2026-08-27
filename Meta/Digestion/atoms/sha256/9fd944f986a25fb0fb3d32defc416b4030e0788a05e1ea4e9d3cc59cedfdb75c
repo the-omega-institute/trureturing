@@ -1,0 +1,87 @@
+# 86. 建议追加 Lean 模块树
+
+```text
+D5/S3/Observer/Agency/Game/
+  RobustAgencyPredecessor.lean
+  RobustFreedomKernel.lean
+  MoveOrderAgency.lean
+  FreedomPreservingActions.lean
+  AgencyBellmanValue.lean
+
+D5/S3/Observer/Agency/Belief/
+  BeliefState.lean
+  BeliefPost.lean
+  BeliefAgencyPredecessor.lean
+  BeliefFreedomKernel.lean
+  BeliefPolicySufficiency.lean
+
+D5/S3/Observer/Agency/FreeSelf/
+  WinningPolicyProfile.lean
+  FreedomSufficientSelf.lean
+  FreedomSelfUniversal.lean
+
+D5/S3/Observer/Agency/Recovery/
+  AgencyRecoveryLayers.lean
+  RecoveryTime.lean
+  AgencyBarrierCertificate.lean
+  AgencyRecoveryLyapunov.lean
+
+D5/S3/Observer/Agency/InformationRate/
+  SafeCompatibleBlock.lean
+  SafePartitionNumber.lean
+  SafeObservationAlphabetLowerBound.lean
+  AgencyScenarioPartition.lean
+  AgencyMaintenanceRate.lean
+  AgencyFanoLowerBound.lean
+
+D5/S3/Observer/Agency/Identity/
+  IdentityPreservingUpdate.lean
+  IdentityErasureResidual.lean
+  IdentityInformationLoss.lean
+  LedgerCodeDistance.lean
+  IdentityErrorCorrection.lean
+
+D5/S3/Observer/Agency/Delegation/
+  RobustRevocableDelegation.lean
+  CoalitionFreedomKernel.lean
+  MinimalViabilityCoalition.lean
+  QuorumIntersectionIdentity.lean
+
+D5/S3/Observer/Agency/Distributed/
+  HistoryJoinSemilattice.lean
+  LosslessHistoryMerge.lean
+  ConflictingCommitmentFork.lean
+
+D5/S3/Observer/Agency/Governance/
+  ModelUncertaintyFreedomKernel.lean
+  AgencyRobustnessRadius.lean
+  FreedomKernelUndecidable.lean
+  ProofCarryingSelfModification.lean
+  AgencySurvivalLivenessIdentity.lean
+
+D5/S3/Observer/Agency/Privacy/
+  ProvenanceReasonLeakage.lean
+  InformationSovereigntyMonotonicity.lean
+  PrivateRandomizationValue.lean
+```
+
+建议优先形式化低依赖结果：
+
+```text
+robust_predecessor_mono
+robust_freedom_kernel_greatest
+act_first_le_observe_first
+belief_post_refines_history
+safe_partition_min_alphabet
+maintenance_word_count_lower_bound
+identity_preserving_iff_kernel_le
+recovery_layers_rank_decrease
+principal_angle_provenance_bound
+ledger_unique_decode_iff_distance
+quorum_no_conflicting_certificate
+uncertainty_free_kernel_antitone
+proof_carrying_updates_preserve_invariant
+```
+
+---
+

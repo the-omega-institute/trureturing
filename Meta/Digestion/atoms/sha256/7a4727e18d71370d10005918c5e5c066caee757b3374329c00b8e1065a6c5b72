@@ -1,0 +1,27 @@
+**定理 T5（三分穷尽，带链连续前件）**。在共同语义并且
+
+\[
+\lim_{L\to\infty}\rho_\Gamma(L)=\rho_\Gamma^\infty
+\]
+
+成立时，上述三类两两互斥且穷尽。证明：若 \(\rho_\Gamma^\infty>0\)，单调非负谱不可能在有限预算为零，故只有结构不完备型；若 \(\rho_\Gamma^\infty=0\)，经典排中把“某个有限预算为零”与“每个有限预算严格为正”分开，分别得到有限闭合型与渐近闭合型。
+
+这里选择保留母卷分类而不另造同名严格变体，理由是 `StructurallyIncomplete` 的语义应由盲核 \(B\) 决定。T4(b) 中 \(B=\varnothing\) 而 \(\lim_L\rho_\Gamma(L)=1\)：它故意违反链连续前件，不属于本定理的穷尽域，也不被冒充为母卷的结构不完备。
+
+另记不参与母卷三分型的严格见证谓词
+
+\[
+\mathsf{WitnessFiniteClosed}
+:\Longleftrightarrow
+\exists S\Subset\Gamma,\ \nu(E_S)=0.
+\]
+
+它推出 \(\mathsf{FiniteClosed}\)，但一般不等价。分离例：令 \(E\cong\mathbb N_{\ge1}\times\{+,-\}\)，每条符号边质量为 \(2^{-k-1}\)，\(d_n\) 切掉 \(k\le n\)，且 \(c(d_n)=1\)。则
+
+\[
+\nu(E_{\{d_n\}})=2^{-n},
+\qquad \rho_\Gamma(1)=\inf_n2^{-n}=0,
+\]
+
+但任何有限族仍留下正质量尾集。因此 `FiniteClosed` 真而 `WitnessFiniteClosed` 假；只有零下确界预算层取到最优值时，反向蕴含才成立。
+

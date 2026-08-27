@@ -1,0 +1,10 @@
+ast_path: section/本地-SpectrumCommitment/clause/2
+fingerprints:
+  raw_sha256: sha256:5d4908f6392d414a13f3587c0a23f5f659faf7bc4df0642e05eb7b6ffd81ce2b
+  normalized_sha256: sha256:5d4908f6392d414a13f3587c0a23f5f659faf7bc4df0642e05eb7b6ffd81ce2b
+cas_ref: sha256:5d4908f6392d414a13f3587c0a23f5f659faf7bc4df0642e05eb7b6ffd81ce2b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

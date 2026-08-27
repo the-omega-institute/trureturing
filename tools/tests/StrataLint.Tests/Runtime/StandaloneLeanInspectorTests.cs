@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Security.Cryptography;
 using System.Text;
 using StrataLint.Cli;
@@ -104,8 +105,8 @@ public sealed class StandaloneLeanInspectorTests
         var declarations = report.Files.Single().Value.Declarations;
         var proofA = declarations.Single(static item => item.Name == "proofA");
         var proofB = declarations.Single(static item => item.Name == "proofB");
-        Assert.StartsWith("statement-v1(", proofA.TypeRepresentation, StringComparison.Ordinal);
-        Assert.Equal(proofA.TypeRepresentation, proofB.TypeRepresentation);
+        Assert.StartsWith("statement-v1(", proofA.LoadTypeRepresentation(), StringComparison.Ordinal);
+        Assert.Equal(proofA.LoadTypeRepresentation(), proofB.LoadTypeRepresentation());
     }
 
     [Fact]
@@ -133,8 +134,10 @@ public sealed class StandaloneLeanInspectorTests
         var second = InspectSingleModule("def same : Nat := 2\n");
 
         Assert.NotEqual(
-            first.Declarations.Single(static declaration => declaration.Name == "same").TypeRepresentation,
-            second.Declarations.Single(static declaration => declaration.Name == "same").TypeRepresentation);
+            first.Declarations.Single(static declaration => declaration.Name == "same")
+                .LoadTypeRepresentation(),
+            second.Declarations.Single(static declaration => declaration.Name == "same")
+                .LoadTypeRepresentation());
     }
 
     [Fact]
@@ -227,7 +230,7 @@ public sealed class StandaloneLeanInspectorTests
         var firstFileReport = firstReport.Files[RepoPath.CreateKnown(path)];
         var firstStatementAddress = CanonicalStatementWriter.StatementTypeAddress(
             firstFileReport.Declarations.Single(static item =>
-                item.Name == "D5.X_Frontier.ElaborationProbe.generated_open").TypeRepresentation);
+                item.Name == "D5.X_Frontier.ElaborationProbe.generated_open"));
         var finalSource = source.Replace(
             statementPlaceholder,
             firstStatementAddress,
@@ -240,7 +243,7 @@ public sealed class StandaloneLeanInspectorTests
         Assert.Contains("sorryAx", declaration.Axioms);
         Assert.Equal(
             firstStatementAddress,
-            CanonicalStatementWriter.StatementTypeAddress(declaration.TypeRepresentation));
+            CanonicalStatementWriter.StatementTypeAddress(declaration));
 
         var fixture = new RuleFixture();
         fixture.AddElaboratedTheoristTarget(finalSource, finalFileReport);
@@ -289,7 +292,19 @@ public sealed class StandaloneLeanInspectorTests
             RawRepositoryEntry.FromText("Trureturing.lean", source),
         });
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
-        return new TestLeanReportProducer(repository.Path).Inspect(snapshot).Files.Single().Value;
+        var report = new TestLeanReportProducer(repository.Path).Inspect(snapshot).Files.Single().Value;
+        return new LeanFileReport(
+            report.Imports,
+            report.Declarations.Select(declaration => new LeanDeclaration(
+                declaration.Name,
+                declaration.Kind,
+                declaration.LoadTypeRepresentation(),
+                declaration.Axioms)
+            {
+                IncludeInStatement = declaration.IncludeInStatement,
+                NameKey = declaration.NameKey,
+            }).ToImmutableArray(),
+            report.Error);
     }
 
     private sealed class TestLeanReportProducer(string repositoryRoot)
@@ -315,6 +330,8 @@ public sealed class StandaloneLeanInspectorTests
                 Encoding.UTF8.GetString(build.StandardOutput) + Encoding.UTF8.GetString(build.StandardError));
 
             var output = Path.Combine(repositoryRoot, "raw-lean-report.json");
+            var spoolReport = output + ".spool.json";
+            var spoolMaterials = output + ".spool-materials";
             var arguments = new List<string>
             {
                 "env",
@@ -325,7 +342,9 @@ public sealed class StandaloneLeanInspectorTests
                     "tools", "lean-inspector",
                     "Inspector.lean"),
                 "--output",
-                output,
+                spoolReport,
+                "--material-spool",
+                spoolMaterials,
             };
             foreach (var (path, file) in snapshot.Files
                          .Where(static item => LeanClosureValidator.IsManagedLean(item.Key.Value))
@@ -348,6 +367,21 @@ public sealed class StandaloneLeanInspectorTests
                 inspection.ExitCode == 0,
                 Encoding.UTF8.GetString(inspection.StandardOutput)
                     + Encoding.UTF8.GetString(inspection.StandardError));
+            var compacted = BoundedProcessRunner.Run(
+                "python3",
+                [
+                    Path.Combine(
+                        TestRepositoryLayout.FindRoot(),
+                        "tools", "lean-inspector", "materials.py"),
+                    "compact", spoolReport, spoolMaterials, output,
+                ],
+                repositoryRoot,
+                TimeSpan.FromSeconds(120),
+                8 * 1024 * 1024);
+            Assert.True(
+                compacted.ExitCode == 0,
+                Encoding.UTF8.GetString(compacted.StandardOutput)
+                    + Encoding.UTF8.GetString(compacted.StandardError));
             return RawLeanReportArtifact.ReadFile(output, snapshot);
         }
     }

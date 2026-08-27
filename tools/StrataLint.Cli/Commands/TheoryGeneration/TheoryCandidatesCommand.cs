@@ -289,8 +289,7 @@ internal static class TheoryCandidatesCommand
                     statementId,
                     "prover",
                     null,
-                    CanonicalStatementWriter.StatementTypeAddress(
-                        declaration.TypeRepresentation));
+                    CanonicalStatementWriter.StatementTypeAddress(declaration));
             })
             .OrderBy(static candidate => candidate.CandidateId, StringComparer.Ordinal)
             .ToArray();
@@ -316,7 +315,7 @@ internal static class TheoryCandidatesCommand
         }
 
         return string.Equals(declaration.Kind, "def", StringComparison.Ordinal)
-            && StatementV1Decoder.Decode(declaration.TypeRepresentation).Type
+            && StatementV1Decoder.Decode(declaration.LoadTypeRepresentation()).Type
                 is LeanExpr.Sort { Level: LeanLevel.Zero };
     }
 

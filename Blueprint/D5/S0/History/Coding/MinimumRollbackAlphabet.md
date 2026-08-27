@@ -6,7 +6,7 @@ Exact finite rollback logs need as many labels as the largest process fiber.
 
 **Theorem 1.1 (The largest process fiber is the minimum rollback alphabet).**
 
-$$\forall X, Y,\ [\operatorname{Finite} X] [\operatorname{Fintype} Y],\ U: X \to Y,\\m_{U} = \max_{y\in Y} \Vert \{x: X \mid U(x) = y\} \Vert,\\(\forall M, [\operatorname{Finite} M], L: X \to M,\\\operatorname{Injective}(x \mapsto (U(x), L(x))) \Rightarrow m_{U} \leq \Vert M \Vert) \land\\\exists L: X \to \operatorname{Fin}(m_{U}), \operatorname{Injective}(x \mapsto (U(x), L(x))).$$
+$$\forall X, Y: \operatorname{Type},\ [\operatorname{Finite} X] [\operatorname{Fintype} Y],\ U: X \to Y,\\m_{U} = \max_{y\in Y} \Vert \{x: X \mid U(x) = y\} \Vert,\\(\forall M: \operatorname{Type}, [\operatorname{Finite} M], L: X \to M,\\\operatorname{Injective}(x \mapsto (U(x), L(x))) \Rightarrow m_{U} \leq \Vert M \Vert) \land\\\exists L: X \to \operatorname{Fin}(m_{U}), \operatorname{Injective}(x \mapsto (U(x), L(x))).$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/History/Coding/MinimumRollbackAlphabet.minimum_rollback_alphabet` (`✓ std3`). ∎
 

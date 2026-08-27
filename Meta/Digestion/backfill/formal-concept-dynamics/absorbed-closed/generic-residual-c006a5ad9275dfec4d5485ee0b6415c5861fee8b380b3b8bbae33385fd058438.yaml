@@ -12,6 +12,6 @@ receipts:
       target_statement_id: sha256:1c376a51829e0c0aa8a81317806d7eb5010e961db630295ccdc095607a410581
   scribe:
     - gid: D5/S3/ConceptDynamics/Transport/DefinitionalConservativity.definitional_conservativity
-      definition_sha256: sha256:74ef22db9a68417efe2ac0664d46cda19d2287ab4354195bea4102ebb3447cde
-      emission_sha256: sha256:0381cf6216bfcebd79fd0741f2003c9751d7bd7899b3446026fc268a0775652a
+      definition_sha256: sha256:979c88dbcd7e38a2406a17d7b62dbc374440d5b50f2ff197c7ee5f00992f965d
+      emission_sha256: sha256:f6c866943926138c877c1e4455be1c4b88f572cde269ae0862d6908c20af15bf
   unresolved_subitems: []

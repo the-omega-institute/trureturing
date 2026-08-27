@@ -49,17 +49,47 @@ internal sealed class ResourceRefinementCompositionDocument : IScribeDocumentDef
     private static Formula Apply(string name, params Formula[] arguments) =>
         Call(name, arguments);
 
+    private static Formula Arrow(Formula domain, Formula codomain) =>
+        new Formula.TypeArrow(domain, codomain);
+
     private static Formula CompositionFormula()
     {
+        Formula state = F.Id("X");
+        Formula coarseType = F.Id("C");
+        Formula middleType = F.Id("D");
+        Formula fineType = F.Id("E");
         Formula cost = F.Id("cost");
         Formula combine = F.Id("combine");
+        Formula compositionBound = F.Id("compositionBound");
+        Formula combineMono = F.Id("combineMono");
         Formula qC = F.Id("qC");
         Formula qD = F.Id("qD");
         Formula qE = F.Id("qE");
         Formula r = F.Id("r");
         Formula s = F.Id("s");
-        Formula compositionBound = F.Id("compositionBound");
-        Formula combineMono = F.Id("combineMono");
+        Formula hCDName = F.Id("hCD");
+        Formula hDEName = F.Id("hDE");
+        Formula type = F.Id("Type");
+        Formula naturalNumbers = Seq(Mathbb, Grp(F.Id("N")));
+        Formula lawA = F.Id("A");
+        Formula lawB = F.Id("B");
+        Formula lawC = F.Id("C");
+        Formula p = F.Id("p");
+        Formula q = F.Id("q");
+        Formula rPrime = Seq(r, Apos);
+        Formula sPrime = Seq(s, Apos);
+        Formula compositionBoundLaw = Seq(
+            Forall, Sp, lawA, Comma, Sp, lawB, Comma, Sp, lawC, Colon, Sp, type,
+            Comma, Sp, p, Colon, Sp, Arrow(lawB, lawC), Comma, Sp,
+            q, Colon, Sp, Arrow(lawA, lawB), Comma, Sp,
+            Apply("cost", Seq(p, Sp, Circ, Sp, q)), Sp, Leq, Sp,
+            Apply("combine", Apply("cost", p), Apply("cost", q)));
+        Formula combineMonoLaw = Seq(
+            Forall, Sp, r, Comma, Sp, rPrime, Comma, Sp, s, Comma, Sp, sPrime,
+            Colon, Sp, naturalNumbers, Comma, Sp,
+            r, Sp, Leq, Sp, rPrime, Sp, Rightarrow, Sp,
+            s, Sp, Leq, Sp, sPrime, Sp, Rightarrow, Sp,
+            Apply("combine", r, s), Sp, Leq, Sp, Apply("combine", rPrime, sPrime));
         Formula hCD = Apply("ResourceRefines", cost, r, qC, qD);
         Formula hDE = Apply("ResourceRefines", cost, s, qD, qE);
         Formula composed = Apply("ResourceRefines", cost,
@@ -68,19 +98,20 @@ internal sealed class ResourceRefinementCompositionDocument : IScribeDocumentDef
             Open, Apply("combine", r, s), Sp, Eq, Sp, r, Plus, s,
             Sp, Rightarrow, Sp,
             Apply("ResourceRefines", cost, Seq(r, Plus, s), qC, qE), Close);
-        Formula hypotheses = Seq(
-            compositionBound, Sp, Land, Sp, combineMono, Sp, Land, Sp,
-            hCD, Sp, Land, Sp, hDE);
-
         return Disp(Seq(
-            Forall, Sp, cost, Comma, Sp,
-            Forall, Sp, combine, Comma, Sp,
-            Forall, Sp, qC, Comma, Sp,
-            Forall, Sp, qD, Comma, Sp,
-            Forall, Sp, qE, Comma, Sp,
-            Forall, Sp, r, Comma, Sp,
-            Forall, Sp, s, Comma, Sp,
-            hypotheses, Sp, Rightarrow, Sp,
+            Forall, Sp, state, Comma, Sp, coarseType, Comma, Sp, middleType,
+            Comma, Sp, fineType, Colon, Sp, type, Comma, Esc,
+            cost, Colon, Sp, F.Id("ResourceCost"), Comma, Sp,
+            combine, Colon, Sp, Arrow(naturalNumbers, Arrow(naturalNumbers, naturalNumbers)),
+            Comma, Esc,
+            compositionBound, Colon, Sp, Grp(compositionBoundLaw), Comma, Esc,
+            combineMono, Colon, Sp, Grp(combineMonoLaw), Comma, Esc,
+            qC, Colon, Sp, Apply("Concept", state, coarseType), Comma, Sp,
+            qD, Colon, Sp, Apply("Concept", state, middleType), Comma, Sp,
+            qE, Colon, Sp, Apply("Concept", state, fineType), Comma, Esc,
+            r, Comma, Sp, s, Colon, Sp, naturalNumbers, Comma, Esc,
+            hCDName, Colon, Sp, hCD, Comma, Sp,
+            hDEName, Colon, Sp, hDE, Comma, Esc,
             Open, composed, Sp, Land, Sp, additive, Close, Dot));
     }
 }

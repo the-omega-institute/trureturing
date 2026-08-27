@@ -12,6 +12,6 @@ receipts:
       target_statement_id: sha256:0956495380cde436243e40902dcd1796a487eabecd2788ea13d802d681c91471
   scribe:
     - gid: D5/S3/ConceptDynamics/DecisionValue/DominantStrategyDirectification.dominant_strategy_directification
-      definition_sha256: sha256:d529935b4f2a9a4afac1b3b93f5e614cebf30c76754d61bf8e842a1f130f6189
-      emission_sha256: sha256:0de670a2bc9432118ccae1d06c52e78d492d809fa79e4fab21c556c8e98b8c8a
+      definition_sha256: sha256:ecd26e931b76fcc163ca7392fcd7bb7e20a33b4686e8de2cdfb259c9eb53c38d
+      emission_sha256: sha256:3b93686b200b59a03f99cfde95ada2fd5812017f8eb6d74010c1c9356bdd1f1a
   unresolved_subitems: []

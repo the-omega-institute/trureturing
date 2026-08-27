@@ -59,27 +59,29 @@ internal sealed class StrongLumpabilityDescentDocument : IScribeDocumentDefiniti
         Formula y = F.Id("y");
         Formula type = Seq(Operatorname, Grp(F.Id("Type")));
         Formula pmf = Seq(Operatorname, Grp(F.Id("PMF")));
-        Formula image = Apply(Operatorname, F.Id("range"), readout);
+        Formula pmfMap = Seq(F.Id("PMF"), Dot, F.Id("map"));
+        Formula image = Apply(Seq(Operatorname, Grp(F.Id("range"))), readout);
         Formula imagePmf = Apply(pmf, image);
+        Formula statePmf = Apply(pmf, state);
         Formula canonical = Apply(F.Id("realizedReadout"), readout);
-        Formula pushed = Apply(F.Id("map"), Apply(rows, x), canonical);
+        Formula pushed = Apply(pmfMap, canonical, Apply(rows, x));
         Formula kernel = F.Id("kernel");
         Formula descended = Seq(
             Exists, Sp, kernel, Colon, Sp, Arrow(image, imagePmf), Comma, Sp,
-            Forall, Sp, x, Comma, Sp,
-            Apply(F.Id("map"), Apply(rows, x), canonical), Sp, Eq, Sp,
+            Forall, Sp, x, Colon, Sp, state, Comma, Sp,
+            Apply(pmfMap, canonical, Apply(rows, x)), Sp, Eq, Sp,
             Apply(kernel, Apply(canonical, x)));
         Formula qFiber = Seq(readout, Open, x, Close, Sp, Eq, Sp,
             readout, Open, y, Close);
         Formula imageFiber = Seq(canonical, Open, x, Close, Sp, Eq, Sp,
             canonical, Open, y, Close);
         Formula law = Seq(pushed, Sp, Eq, Sp,
-            Apply(F.Id("map"), Apply(rows, y), canonical));
+            Apply(pmfMap, canonical, Apply(rows, y)));
         Formula clauses = Grp(OpenBracket,
             descended, Comma, Sp,
-            Forall, Sp, x, Comma, Sp, y, Comma, Sp,
+            Forall, Sp, x, Comma, Sp, y, Colon, Sp, state, Comma, Sp,
             qFiber, Sp, Rightarrow, Sp, law, Comma, Sp,
-            Forall, Sp, x, Comma, Sp, y, Comma, Sp,
+            Forall, Sp, x, Comma, Sp, y, Colon, Sp, state, Comma, Sp,
             imageFiber, Sp, Rightarrow, Sp, law,
             CloseBracket);
 
@@ -87,7 +89,7 @@ internal sealed class StrongLumpabilityDescentDocument : IScribeDocumentDefiniti
             Begin, Grp(F.Id("gathered")),
             Forall, Sp, state, Comma, Sp, output, Colon, Sp, type, Comma, RowBreak, Grp(),
             readout, Colon, Sp, Arrow(state, output), Comma, Sp,
-            rows, Colon, Sp, Arrow(state, pmf), Comma, RowBreak, Grp(),
+            rows, Colon, Sp, Arrow(state, statePmf), Comma, RowBreak, Grp(),
             Call("ListTFAE", clauses), Dot,
             End, Grp(F.Id("gathered"))));
     }

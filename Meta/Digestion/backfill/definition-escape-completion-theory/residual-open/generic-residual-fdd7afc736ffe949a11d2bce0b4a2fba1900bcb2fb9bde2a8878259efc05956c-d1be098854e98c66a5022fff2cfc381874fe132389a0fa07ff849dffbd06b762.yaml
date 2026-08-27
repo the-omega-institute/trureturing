@@ -1,0 +1,10 @@
+ast_path: section/17-1-已直接证明或一行可证/clause/8
+fingerprints:
+  raw_sha256: sha256:fdd7afc736ffe949a11d2bce0b4a2fba1900bcb2fb9bde2a8878259efc05956c
+  normalized_sha256: sha256:fdd7afc736ffe949a11d2bce0b4a2fba1900bcb2fb9bde2a8878259efc05956c
+cas_ref: sha256:fdd7afc736ffe949a11d2bce0b4a2fba1900bcb2fb9bde2a8878259efc05956c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

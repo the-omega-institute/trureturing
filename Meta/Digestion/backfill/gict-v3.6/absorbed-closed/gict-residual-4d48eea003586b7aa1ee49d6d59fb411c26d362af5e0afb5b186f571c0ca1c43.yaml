@@ -12,6 +12,6 @@ receipts:
       target_statement_id: sha256:607af35898f9c3c798eed2bb530aefa73431817477cbe4207b7feb8490a8053f
   scribe:
     - gid: D5/S1/FixedPoints/KleeneStageLimit.inductive_definition_is_supremum_of_stages
-      definition_sha256: sha256:4f52b0b6d8a83f366da8efa16151cfdaf5ecad274de07c47d5bcafe48d5bf0f6
-      emission_sha256: sha256:1133866506300410e526a94ee82d395938b29411c6f4eb2d14aec236940c68e5
+      definition_sha256: sha256:11a9b4bfce83d86c65beb9379826ec276021a4d6742de2097d4cf76b2045d3e5
+      emission_sha256: sha256:453c6262ab2ee09a6e1d6560e9f63eac525d626dbe8e79bb2eea50c45ff72d97
   unresolved_subitems: []

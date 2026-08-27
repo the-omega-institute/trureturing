@@ -6,7 +6,7 @@ Definitional extensions obtained by expanding every axiom and rule are conservat
 
 **Theorem 1.1 (Definitional conservativity).**
 
-$$\begin{gathered}B, E, \\{}C: \operatorname{Calculus}(B), e: E \to B, i: B \to E,\\{}\forall phi, e(i(phi)) = phi,\\{}(\operatorname{Derivation}(\operatorname{pullbackCalculus}(C, e), \operatorname{i}(phi))) \Rightarrow \operatorname{Derivation}(C, phi).\end{gathered}$$
+$$\begin{gathered}\forall B, E: \operatorname{Type}, \\{}C: \operatorname{Calculus}(B), e: E \to B, i: B \to E,\\{}{(\forall phi: B, e(i(phi)) = phi)},\\{}phi: B,\\{}(\operatorname{Derivation}(\operatorname{pullbackCalculus}(C, e), \operatorname{i}(phi))) \Rightarrow \operatorname{Derivation}(C, phi).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Transport/DefinitionalConservativity.definitional_conservativity` (`✓ std3`). ∎
 

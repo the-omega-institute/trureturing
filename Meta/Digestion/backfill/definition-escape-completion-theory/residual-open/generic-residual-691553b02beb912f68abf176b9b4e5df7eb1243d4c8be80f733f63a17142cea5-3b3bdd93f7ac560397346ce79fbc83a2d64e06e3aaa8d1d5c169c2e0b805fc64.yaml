@@ -1,0 +1,10 @@
+ast_path: section/13-5-常见定义算子/clause/3
+fingerprints:
+  raw_sha256: sha256:691553b02beb912f68abf176b9b4e5df7eb1243d4c8be80f733f63a17142cea5
+  normalized_sha256: sha256:691553b02beb912f68abf176b9b4e5df7eb1243d4c8be80f733f63a17142cea5
+cas_ref: sha256:691553b02beb912f68abf176b9b4e5df7eb1243d4c8be80f733f63a17142cea5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

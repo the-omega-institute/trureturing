@@ -12,6 +12,6 @@ receipts:
       target_statement_id: sha256:2bcbacbcd6199ea2f4d768a2d61a63bda1e001fac7d7709a750d61351999dc0a
   scribe:
     - gid: D5/S3/ConceptDynamics/NormativeStructure/DescriptiveNormativeSeparation.descriptive_structure_does_not_uniquely_determine_norms
-      definition_sha256: sha256:abe29c18d96d2e48955d0775c0b1c4f218d9bf3bca90b24c95e757928a514408
-      emission_sha256: sha256:11a0fc175a0577b04986a8de23cf8a95c98459b1baffbce125ffbaa0de7e7c92
+      definition_sha256: sha256:825cba335a68fdd4cc18eabcaf615ad609195bc4d836bc0a57b221c101764b75
+      emission_sha256: sha256:61684fc73ff2d8a73f5754429f487ac50589efa4eb7251ad2c121736f7fe76c2
   unresolved_subitems: []

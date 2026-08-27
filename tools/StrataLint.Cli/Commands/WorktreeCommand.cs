@@ -14,11 +14,17 @@ internal sealed record WorktreeOptions(
 internal static class WorktreeCommand
 {
     internal const string SolutionPath = "tools/StrataLint.sln";
-    internal const string Usage =
+    internal static IReadOnlyList<string> CreationKinds { get; } =
+        ["math", "governance", "theory"];
+
+    private static string CreationKindList => string.Join(", ", CreationKinds);
+
+    internal static string Usage { get; } =
         "USAGE: StrataLint worktree ensure-cache [--path DIR] | "
         + "StrataLint worktree with-cache-writer [--path DIR] -- COMMAND [ARG ...] | "
         + "StrataLint worktree --branch NAME --path DIR "
         + "[--base REV] [--source REPO_ROOT] [--skip-restore]. "
+        + $"Allowed worktree kinds: {CreationKindList}. "
         + "The .lake cache is materialized by the first Lean command; symlink sharing is forbidden.";
 
     private static readonly string[] ReviewScaffoldIgnorePatterns =
@@ -27,18 +33,6 @@ internal static class WorktreeCommand
         ".echo-review.md",
         ".sshx-*",
     ];
-
-    private static readonly HashSet<string> OfficialRoles = new(StringComparer.Ordinal)
-    {
-        "adversary",
-        "gate",
-        "librarian",
-        "numericist",
-        "prover",
-        "scout",
-        "scribe",
-        "theorist",
-    };
 
     internal static CommandResult Run(string repositoryRoot, IReadOnlyList<string> arguments) =>
         Run(repositoryRoot, arguments, new ProductionWorktreeProcessRunner());
@@ -334,26 +328,27 @@ internal static class WorktreeCommand
         return arguments[index];
     }
 
-    internal static bool IsManagedBranch(string branch)
-    {
-        if (branch.StartsWith("harness/", StringComparison.Ordinal)
-            && branch.Length > "harness/".Length)
-        {
-            return true;
-        }
+    internal static bool IsManagedBranch(string branch) =>
+        branch.StartsWith("harness/", StringComparison.Ordinal)
+        && branch.Length > "harness/".Length;
 
+    private static bool IsValidCreationBranch(string branch)
+    {
         var fields = branch.Split('/');
         return fields.Length == 3
-            && fields[0] == "agent"
-            && OfficialRoles.Contains(fields[1])
+            && fields[0] == "harness"
+            && CreationKinds.Contains(fields[1], StringComparer.Ordinal)
             && fields[2].Length > 0;
     }
 
+    private static string CreationGrammarError(string prefix) =>
+        $"{prefix}; kind must be one of: {CreationKindList}";
+
     private static void ValidateBranchGrammar(string branch)
     {
-        if (!IsManagedBranch(branch))
+        if (!IsValidCreationBranch(branch))
             throw new InvalidOperationException(
-                "branch must match harness/* or agent/<official>/<task-code>");
+                CreationGrammarError("branch must match harness/<kind>/<task-code>"));
     }
 
     private static bool ValidatePreflight(WorktreeOptions options, IWorktreeProcessRunner runner)
@@ -378,7 +373,8 @@ internal static class WorktreeCommand
         if (branchFormat.ExitCode != 0)
         {
             throw new InvalidOperationException(
-                "branch must be a valid git ref matching harness/* or agent/<official>/<task-code>");
+                CreationGrammarError(
+                    "branch must be a valid git ref matching harness/<kind>/<task-code>"));
         }
 
         var existingBranch = RunProcess(

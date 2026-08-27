@@ -320,8 +320,9 @@ public sealed partial class AdmissionWorkflowTests
             engineering.Children[new YamlScalarNode("steps")]).Children
             .OfType<YamlMappingNode>()
             .ToArray();
-        Assert.True(steps.Length > 3);
-        Assert.Equal("Check out candidate", StepName(steps[0]));
+        Assert.True(steps.Length > 4);
+        Assert.Equal("Wait for the GitHub merge ref", StepName(steps[0]));
+        Assert.Equal("Check out candidate", StepName(steps[1]));
 
         var scopeIndex = Array.FindIndex(
             steps,
@@ -760,7 +761,7 @@ public sealed partial class AdmissionWorkflowTests
         var workflow = AdmissionWorkflow();
         var cacheKeyLines = workflow.Split('\n')
             .Where(static line => line.TrimStart().StartsWith(
-                "key: stratalint-judge-binaries-v1-",
+                "key: stratalint-judge-binaries-v2-",
                 StringComparison.Ordinal))
             .Select(static line => line.Trim())
             .Distinct(StringComparer.Ordinal)

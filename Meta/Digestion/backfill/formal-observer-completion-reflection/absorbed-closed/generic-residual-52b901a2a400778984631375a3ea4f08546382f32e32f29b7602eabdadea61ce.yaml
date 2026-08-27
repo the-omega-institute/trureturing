@@ -1,0 +1,17 @@
+ast_path: 定理/18.1
+fingerprints:
+  raw_sha256: sha256:52b901a2a400778984631375a3ea4f08546382f32e32f29b7602eabdadea61ce
+  normalized_sha256: sha256:52b901a2a400778984631375a3ea4f08546382f32e32f29b7602eabdadea61ce
+cas_ref: sha256:52b901a2a400778984631375a3ea4f08546382f32e32f29b7602eabdadea61ce
+coverage_gids:
+  - D5/S3/Quantum/Fibers/FutureStatisticsEquivalence.future_statistics_iff_annihilates_infinite_system
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Fibers/FutureStatisticsEquivalence.future_statistics_iff_annihilates_infinite_system
+      source_sha256: sha256:52b901a2a400778984631375a3ea4f08546382f32e32f29b7602eabdadea61ce
+      target_sha256: sha256:50a76a583bca19377a2e99a71637d4f6bb24de1a4bf0165cbb6105ed6d09d4bd
+  scribe:
+    - gid: D5/S3/Quantum/Fibers/FutureStatisticsEquivalence.future_statistics_iff_annihilates_infinite_system
+      definition_sha256: sha256:60febd278b8a2c11df8bfe1cb92f0b4130e583dd60e7bf22c6fc6186fbffadde
+      emission_sha256: sha256:afc5ce51bb82a6fe9a5e360a9752f75aaa3ed02eaf4c3da5cf5c3d39d0c1f786
+  unresolved_subitems: []

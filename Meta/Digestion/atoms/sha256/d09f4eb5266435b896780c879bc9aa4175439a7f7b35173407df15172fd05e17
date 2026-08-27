@@ -1,0 +1,4 @@
+- `comparator` 与 `falsifiable_prediction`：由下述固定截止纯函数给出。
+
+基线内容地址固定为：在提交 `f2d87fdc0506c31e787eb7b771c240d54c705de9`，母卷文件 SHA-256 为 `ff23c648ecc88dc128b084e6b5bbd3d6e9510f7f634ab5ceca6cc88641f780b7`。本地记录已经写全，且不引用母卷其他章节。
+

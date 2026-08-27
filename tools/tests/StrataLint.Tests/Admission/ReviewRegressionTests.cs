@@ -539,12 +539,11 @@ public sealed partial class ReviewRegressionTests
             gateway,
             new FakeLeanReportSource(null));
         var candidateReportPath = Path.Combine(temporary.Path, "candidate.json");
-        File.WriteAllBytes(
+        RawLeanReportArtifact.WriteFile(
             candidateReportPath,
-            RawLeanReportArtifact.Write(
-                Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-                    SnapshotDecoder.Decode(Snapshot(fixture.Files))).Snapshot,
-                currentReport).AsSpan());
+            Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+                SnapshotDecoder.Decode(Snapshot(fixture.Files))).Snapshot,
+            currentReport);
         var outcome = environment.Check(new[]
         {
             "--candidate-lean-report", candidateReportPath,

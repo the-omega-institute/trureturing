@@ -1,0 +1,50 @@
+### T4(b) 删除链连续性：完整自由超滤 charge
+
+假设布尔素理想定理 BPI，取 \(\mathbb N\) 上自由超滤 \(\mathcal U\)。令 \(X=\mathbb N\times\{0,1\}\)、\(q(n,i)=n\)、\(T(n,i)=i\)，写 \(e_n^\pm\) 为两条有向残差边，并定义
+
+\[
+d_n(k,i):=
+\begin{cases}
+i,&k\le n,\\
+0,&k>n.
+\end{cases}
+\]
+
+取 \(\Gamma=\{d_n:n\ge1\}\)、\(c(d_n)=1\)、\(\mathfrak E=\mathcal P(E)\)。对 \(A\subseteq\mathbb N\)，令
+
+\[
+\mu_\mathcal U(A):=
+\begin{cases}
+1,&A\in\mathcal U,\\
+0,&A\notin\mathcal U,
+\end{cases}
+\]
+
+并对每个 \(C\subseteq E\) 定义
+
+\[
+\nu(C):=\tfrac12\mu_\mathcal U(\{k:e_k^+\in C\})
++\tfrac12\mu_\mathcal U(\{k:e_k^-\in C\}).
+\]
+
+若 \(C,D\) 不交，则两个符号上的指标集分别不交；超滤素性给出 \(\mu_\mathcal U(A\sqcup D)=\mu_\mathcal U(A)+\mu_\mathcal U(D)\)。因此 \(\nu\) 在整个 \(\mathcal P(E)\) 上有限可加、非负、单调，且 \(\nu(E)=1\)。又有
+
+\[
+E_{\{d_1,\ldots,d_n\}}=\{e_k^+,e_k^-:k>n\},
+\qquad
+\bigcap_{n\ge1}E_{\{d_1,\ldots,d_n\}}=\varnothing.
+\]
+
+任一有限 \(S\) 留下某个余有限尾集；余有限集属于自由超滤，故
+
+\[
+B=\varnothing,
+\qquad \nu(E_S)=1\quad(S\Subset\Gamma),
+\qquad \rho_\Gamma(L)=1\quad(L<\infty),
+\qquad \nu(\varnothing)=0.
+\]
+
+它满足共同 charge 语义，但不沿穷举残差链自上连续，因而不与 T2 冲突。
+
+> **现役接口边界**：`EscapeWeight` 只有 `empty_mass` 与 `mass_nonnegative`；它还缺有限可加律，故不能把“补链连续性”缩写成现役接口的唯一缺口。
+

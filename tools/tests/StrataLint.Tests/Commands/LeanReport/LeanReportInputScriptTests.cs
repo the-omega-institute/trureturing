@@ -19,10 +19,14 @@ public sealed class LeanReportInputScriptTests
     private static readonly string PairScriptPath = string.Join(
         '/', "tools", "scripts", "lean-report-pair.sh");
     private const string SupervisorScriptPath = "tools/scripts/report/report-supervisor.sh";
+    private const string CiBaselineScriptPath =
+        "tools/scripts/report/lean-report-ci-baseline.sh";
     private const string CacheEnsureScriptPath =
         "tools/scripts/worktree/lean-cache-ensure.sh";
     private const string PerformanceLibraryPath = "tools/scripts/lib/perf-event-lib.sh";
     private const string ToolchainInstallerPath = "tools/scripts/workflow/install-lean-toolchain.sh";
+    private const string JudgeContentAddressPath =
+        "tools/scripts/workflow/judge-content-address.sh";
     private const string WorkflowPath = ".github/workflows/ci.yml";
     private static readonly string CliProjectPath = string.Join(
         '/', "tools", "StrataLint.Cli", "StrataLint.Cli.csproj");
@@ -102,9 +106,11 @@ public sealed class LeanReportInputScriptTests
         Assert.Contains(RawReportPath, paths);
         Assert.Contains(LeanModelsPath, paths);
         Assert.Contains(SupervisorScriptPath, paths);
+        Assert.Contains(CiBaselineScriptPath, paths);
         Assert.Contains(CacheEnsureScriptPath, paths);
         Assert.Contains(PerformanceLibraryPath, paths);
         Assert.Contains(ToolchainInstallerPath, paths);
+        Assert.Contains(JudgeContentAddressPath, paths);
         Assert.Contains(WorkflowPath, paths);
         Assert.Contains(derivedProbe, paths);
         Assert.DoesNotContain(TestSourcePath, paths);
@@ -125,6 +131,7 @@ public sealed class LeanReportInputScriptTests
         Assert.Contains(RawReportPath, paths);
         Assert.Contains(LeanModelsPath, paths);
         Assert.Contains(CacheEnsureScriptPath, paths);
+        Assert.Contains(JudgeContentAddressPath, paths);
         Assert.DoesNotContain(TestSourcePath, paths);
         Assert.DoesNotContain(BlueprintSourcePath, paths);
     }
@@ -148,6 +155,7 @@ public sealed class LeanReportInputScriptTests
         Assert.Contains(LeanModelsPath, paths);
         Assert.Contains(ScribeProjectPath, paths);
         Assert.Contains(ScribeContentChecksPath, paths);
+        Assert.Contains(JudgeContentAddressPath, paths);
         Assert.Contains(derivedProbe, paths);
         Assert.DoesNotContain(TestSourcePath, paths);
     }
@@ -278,9 +286,15 @@ public sealed class LeanReportInputScriptTests
             Write(
                 SupervisorScriptPath,
                 File.ReadAllText(Path.Combine(root, SupervisorScriptPath), Encoding.UTF8));
+            Write(
+                CiBaselineScriptPath,
+                File.ReadAllText(Path.Combine(root, CiBaselineScriptPath), Encoding.UTF8));
             Write(CacheEnsureScriptPath, "#!/usr/bin/env bash\n");
             Write(PerformanceLibraryPath, "#!/usr/bin/env bash\n");
             Write(ToolchainInstallerPath, "#!/usr/bin/env bash\n");
+            Write(
+                JudgeContentAddressPath,
+                File.ReadAllText(Path.Combine(root, JudgeContentAddressPath), Encoding.UTF8));
             Write(ScribeContentChecksPath, "#!/usr/bin/env bash\n");
             Write(
                 WorkflowPath,

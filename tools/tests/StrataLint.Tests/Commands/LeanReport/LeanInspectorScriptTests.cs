@@ -7,6 +7,7 @@ public sealed class LeanInspectorScriptTests
 {
     private const string InspectorScript = "tools/lean-inspector/inspect.sh";
     private const string InspectorSource = "tools/lean-inspector/Inspector.lean";
+    private const string MaterialCompactor = "tools/lean-inspector/materials.py";
     private const string InputScript = "tools/scripts/report/lean-report-input.sh";
     private const string CacheRunScript = "tools/scripts/worktree/lean-cache-run.sh";
 
@@ -22,13 +23,16 @@ public sealed class LeanInspectorScriptTests
         Directory.CreateDirectory(Path.Combine(repository, "tools", "scripts", "report"));
         Write(repository, "Trureturing.lean", "import D5.Probe\n");
         Write(repository, "D5/Probe.lean", "def probe : Nat := 1\n");
-        foreach (var relative in new[] { InspectorScript, InspectorSource, InputScript })
+        foreach (var relative in new[]
+                 {
+                     InspectorScript, InspectorSource, MaterialCompactor, InputScript,
+                 })
         {
             File.Copy(Path.Combine(root, relative), Path.Combine(repository, relative));
         }
         InstallCacheRun(repository);
         var lake = Path.Combine(temporary.Path, "lake");
-        File.WriteAllText(lake, "#!/usr/bin/env bash\nprintf '%s\\n' \"$*\" >> \"$STUB_LOG\"\nif [[ \"$*\" == *' --output '* ]]; then while [[ $# -gt 0 ]]; do [[ $1 == --output ]] && { printf '{\"modules\": [], \"schema\": \"stratalint-raw-lean-report-v1\"}\\n' > \"$2\"; break; }; shift; done; fi\n", new UTF8Encoding(false));
+        File.WriteAllText(lake, "#!/usr/bin/env bash\nprintf '%s\\n' \"$*\" >> \"$STUB_LOG\"\nif [[ \"$*\" == *' --output '* ]]; then while [[ $# -gt 0 ]]; do [[ $1 == --output ]] && { printf '{\"modules\": [], \"schema\": \"stratalint-lean-inspector-spool-v1\"}\\n' > \"$2\"; break; }; shift; done; fi\n", new UTF8Encoding(false));
         File.SetUnixFileMode(lake, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         var log = Path.Combine(temporary.Path, "lake.log");
         var output = Path.Combine(temporary.Path, "report.json");
@@ -60,7 +64,7 @@ public sealed class LeanInspectorScriptTests
         File.SetUnixFileMode(poisoned, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         InstallCacheRun(repository);
         var lake = Path.Combine(temporary.Path, "lake");
-        File.WriteAllText(lake, "#!/usr/bin/env bash\nif [[ \"$*\" == *' --output '* ]]; then while [[ $# -gt 0 ]]; do [[ $1 == --output ]] && { printf '{\"modules\": [], \"schema\": \"stratalint-raw-lean-report-v1\"}\\n' > \"$2\"; break; }; shift; done; fi\n", new UTF8Encoding(false));
+        File.WriteAllText(lake, "#!/usr/bin/env bash\nif [[ \"$*\" == *' --output '* ]]; then while [[ $# -gt 0 ]]; do [[ $1 == --output ]] && { printf '{\"modules\": [], \"schema\": \"stratalint-lean-inspector-spool-v1\"}\\n' > \"$2\"; break; }; shift; done; fi\n", new UTF8Encoding(false));
         File.SetUnixFileMode(lake, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
 
         var result = Run("env", [$"LAKE_BIN={lake}", Path.Combine(root, InspectorScript), "--repository", repository, "--output", Path.Combine(temporary.Path, "report.json")], repository);

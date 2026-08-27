@@ -1,0 +1,15 @@
+* 新的对象域不会继续扩张。
+
+因此：
+
+[
+\boxed{
+\text{反例驱动概念发展在逻辑上可终止，
+但可能遭遇表示与计算复杂度爆炸。}
+}
+]
+
+这把辩证 completion 与抽象解释中的 counterexample-guided refinement 连接起来。
+
+---
+

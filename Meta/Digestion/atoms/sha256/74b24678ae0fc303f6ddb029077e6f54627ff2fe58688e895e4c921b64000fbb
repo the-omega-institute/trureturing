@@ -1,0 +1,6 @@
+## 命题 2.2(概念与观察者结构的读数部分互相对应)〔`open`〕
+
+(i) **嵌入。** 给定概念 \(C=(B_C,q_C)\) 与任一锚点 \(a:X\),\(\mathfrak O_C:=(X,\{q_C\},\top,a)\) 是观察者结构(准入恒真,故锚点条件平凡成立)。
+(ii) **遗忘。** 给定观察者结构 \(\mathfrak O\),\(C_{\mathfrak O}:=(X/N_{\mathfrak O},\ \pi)\)(\(\pi\) 为商投影)是概念。此映射**只保留读数部分**,丢弃 \(\operatorname{Adm}\)、\(a\) 与读数族的分解。
+(iii) **相对同一性保持。** \(x\sim_{C_{\mathfrak O}}y\iff x\sim_{\mathfrak O}y\)(定义),且 \(x\sim_{C_{\mathfrak O_C}}y\iff x\sim_Cy\)。
+

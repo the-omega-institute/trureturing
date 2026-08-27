@@ -1,0 +1,26 @@
+# 284. 个体偏好传递不保证多数关系传递
+
+有三个候选项：
+
+[
+a,b,c.
+]
+
+三个选民具有传递偏好：
+
+[
+\begin{aligned}
+1:&\quad a\succ b\succ c;\
+2:&\quad b\succ c\succ a;\
+3:&\quad c\succ a\succ b.
+\end{aligned}
+]
+
+按两两多数比较：
+
+* (a) 对 (b)：选民 (1,3) 支持 (a)，所以
+
+[
+a\succ_M b;
+]
+

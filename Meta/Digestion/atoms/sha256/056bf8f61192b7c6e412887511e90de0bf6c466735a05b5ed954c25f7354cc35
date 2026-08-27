@@ -1,0 +1,35 @@
+## 最小反例
+
+令：
+
+[
+X={\text{original},\text{replacement}}.
+]
+
+身份概念区分二者：
+
+[
+I(\text{original})\neq I(\text{replacement}),
+]
+
+但功能价值相同：
+
+[
+V(\text{original})=V(\text{replacement}).
+]
+
+用替代品补偿可以恢复价值，却没有恢复原物身份。
+
+因此：
+
+[
+\boxed{
+\text{等值赔偿}
+\neq
+\text{原状恢复}.
+}
+]
+
+这适用于：
+
+* 财产；

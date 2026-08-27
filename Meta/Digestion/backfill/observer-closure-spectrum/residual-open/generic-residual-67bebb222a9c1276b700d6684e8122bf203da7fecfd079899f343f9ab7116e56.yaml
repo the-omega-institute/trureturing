@@ -1,0 +1,10 @@
+ast_path: section/87-追加严格非断言
+fingerprints:
+  raw_sha256: sha256:67bebb222a9c1276b700d6684e8122bf203da7fecfd079899f343f9ab7116e56
+  normalized_sha256: sha256:67bebb222a9c1276b700d6684e8122bf203da7fecfd079899f343f9ab7116e56
+cas_ref: sha256:67bebb222a9c1276b700d6684e8122bf203da7fecfd079899f343f9ab7116e56
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

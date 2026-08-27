@@ -1,0 +1,8 @@
+## 定义 3.2(角色置换与两种交换)
+
+\(\sigma\in\operatorname{Sym}(I)\) 作用于角色。对一次行动 \((x,u,i\!\to\! j)\):
+
+- **位置交换** \(\sigma_{\mathrm{pos}}\):只交换施受位置,评价仍用施行者自己的欲:
+  \[
+  \sigma_{\mathrm{pos}}(x,u,i\!\to\! j)=(x,u,j\!\to\! i),\qquad \text{评价谓词 } W_i.
+  \]

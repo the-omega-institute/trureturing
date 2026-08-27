@@ -12,6 +12,6 @@ receipts:
       target_statement_id: sha256:958b7c222eb4efb95a227e16cb96e054764a059f862c3f399bbe2e10ac0b227d
   scribe:
     - gid: D5/S3/ConceptDynamics/InstitutionalCapture/KnowledgePolicyThreshold.knowledge_policy_threshold_consistent
-      definition_sha256: sha256:267bede864e146a51c0f31501fe2d2ede7589c1032b9cb52917fa3a0d456704d
-      emission_sha256: sha256:1a9a1407944b592e7170d61f7a90f8dda910fc9d4078a8cfeea69608c892079a
+      definition_sha256: sha256:68a47b8c53a0b0c16b77badde07a5fb2601b1e9fc22255dd890b872ce41ffb9e
+      emission_sha256: sha256:f0f975aa795e3f2201e0b796f00a2e62f779cb12cf7a6de1fbdb27c465509ec7
   unresolved_subitems: []

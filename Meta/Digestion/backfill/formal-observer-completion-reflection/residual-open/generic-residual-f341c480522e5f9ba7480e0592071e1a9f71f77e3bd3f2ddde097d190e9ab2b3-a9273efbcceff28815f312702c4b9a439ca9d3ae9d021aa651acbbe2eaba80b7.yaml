@@ -1,0 +1,10 @@
+ast_path: 命题/76.2/clause/1
+fingerprints:
+  raw_sha256: sha256:f341c480522e5f9ba7480e0592071e1a9f71f77e3bd3f2ddde097d190e9ab2b3
+  normalized_sha256: sha256:f341c480522e5f9ba7480e0592071e1a9f71f77e3bd3f2ddde097d190e9ab2b3
+cas_ref: sha256:f341c480522e5f9ba7480e0592071e1a9f71f77e3bd3f2ddde097d190e9ab2b3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

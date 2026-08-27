@@ -38,14 +38,18 @@ internal sealed class KernelTranscriptInvarianceDocument : IScribeDocumentDefini
             Begin, Grp(F.Id("gathered")),
             Forall, Sp, state, Comma, Sp, observation, Comma, Sp, transcript,
             Comma, Sp, decision, Colon, Sp, type, Comma, RowBreak, Grp(),
+            Typeclass("MeasurableSpace", state), Comma, Sp,
+            Typeclass("MeasurableSpace", observation), Comma, Sp,
+            Typeclass("MeasurableSpace", transcript), Comma, Sp,
+            Typeclass("MeasurableSpace", decision), Comma, RowBreak, Grp(),
             channel, Colon, Sp, channelType, Comma, Sp,
             Call("Markov", channel), Comma, RowBreak, Grp(),
             first, Comma, Sp, second, Colon, Sp, state, Comma, Sp,
             lawAtFirst, Sp, Eq, Sp, lawAtSecond, Sp, Rightarrow, RowBreak, Grp(),
             Forall, Sp, sampleCount, InMacro, Sp, naturals, Comma, Sp,
             postprocess, Colon, Sp, postprocessType, Comma, Sp,
-            decide, Colon, Sp, decisionType, Comma, RowBreak, Grp(),
-            Call("Markov", postprocess), Comma, Sp, Call("Markov", decide),
+            Call("Markov", postprocess), Comma, RowBreak, Grp(),
+            decide, Colon, Sp, decisionType, Comma, Sp, Call("Markov", decide),
             Comma, RowBreak, Grp(),
             transcriptAtFirst, Sp, Eq, Sp, transcriptAtSecond, Dot,
             End, Grp(F.Id("gathered"))));
@@ -85,4 +89,7 @@ internal sealed class KernelTranscriptInvarianceDocument : IScribeDocumentDefini
 
     private static Formula Arrow(Formula source, Formula target) =>
         Seq(source, Sp, To, Sp, target);
+
+    private static Formula Typeclass(string name, Formula argument) =>
+        Seq(OpenBracket, Operatorname, Grp(F.Id(name)), Open, argument, Close, CloseBracket);
 }

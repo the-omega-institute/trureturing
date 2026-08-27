@@ -1,0 +1,23 @@
+# 61. 主体受损后的鲁棒恢复域
+
+令
+
+$$
+K=\mathsf{FreeKernel}_{\mathrm{rob}}
+$$
+
+为可永久保持主体性的核心，允许暂时处于更大的可接受区域 $D\supseteq K$。定义
+
+$$
+R_0=K,
+$$
+
+$$
+\boxed{
+R_{n+1}
+=
+R_n\cup
+\{x\in D:\exists a\ \forall e,\ F(x,a,e)\in R_n\}.
+}
+$$
+

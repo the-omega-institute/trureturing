@@ -12,6 +12,6 @@ receipts:
       target_statement_id: sha256:c9afe530004cfd58fa589bf7515bb20606381d233226a26a43b08300081a2dd9
   scribe:
     - gid: D5/S3/ConceptDynamics/Refinement/ResourceRefinementComposition.resource_refinement_compose
-      definition_sha256: sha256:24fd3ea5037ec1b3bbc8304ed9a19faee0ed02bd7510d17e0b83562db3312eed
-      emission_sha256: sha256:34886c6aa6b6530f356cc6ab7dc861b285ce0a2506c70c7f3f1368f9a6b252e1
+      definition_sha256: sha256:0dad086e57acfe73e9bc86af6dc2c08d0e936f75b6b6fb4a9a2c7bc56ce8a96e
+      emission_sha256: sha256:faccbbac9a9d1a15d3e967b4fb33ca03ea39a314ff3f6436bb3723bf0577e585
   unresolved_subitems: []

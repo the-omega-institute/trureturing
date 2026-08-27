@@ -1,0 +1,10 @@
+ast_path: section/1-仓库锚点与理论边界/clause/5
+fingerprints:
+  raw_sha256: sha256:75acb18e625da2c94c347920f04ef6c134e8fb8cc003f5ae0da816d053f41838
+  normalized_sha256: sha256:75acb18e625da2c94c347920f04ef6c134e8fb8cc003f5ae0da816d053f41838
+cas_ref: sha256:75acb18e625da2c94c347920f04ef6c134e8fb8cc003f5ae0da816d053f41838
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

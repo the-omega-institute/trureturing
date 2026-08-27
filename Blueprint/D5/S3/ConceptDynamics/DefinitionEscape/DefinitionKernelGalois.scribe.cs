@@ -41,18 +41,29 @@ internal sealed class DefinitionKernelGaloisDocument : IScribeDocumentDefinition
 
     private static Formula KernelWitnessFormula()
     {
+        Formula state = F.Id("X");
+        Formula inputOutput = F.Id("InputOutput");
+        Formula output = F.Id("Output");
         Formula gamma = F.Id("Gamma");
+        Formula target = F.Id("target");
         Formula left = F.Id("left");
         Formula right = F.Id("right");
         Formula definition = F.Id("definition");
-        Formula outside = Seq(Neg, Open, F.Id("target"), Sp, InMacro, Sp,
+        Formula outside = Seq(Neg, Open, target, Sp, InMacro, Sp,
             Call("SemanticClosure", gamma), Close);
-        Formula fibersAgree = Seq(Forall, Sp, definition, Sp, InMacro, Sp, gamma, Comma, Sp,
+        Formula fibersAgree = Seq(Forall, Sp, definition, Colon, Sp, gamma, Comma, Sp,
             Call("definition", left), Sp, Eq, Sp, Call("definition", right));
         Formula targetSeparates = Seq(
             Call("target", left), Sp, Neq, Sp, Call("target", right));
-        Formula witness = Seq(Exists, Sp, left, Comma, Sp, right, Comma, Sp,
+        Formula witness = Seq(Exists, Sp, left, Comma, Sp, right, Colon, Sp, state,
+            Comma, Sp,
             Open, fibersAgree, Close, Sp, Land, Sp, targetSeparates);
-        return Disp(Seq(outside, Sp, Iff, Sp, witness, Dot));
+        return Disp(Seq(
+            Forall, Sp, state, Comma, Sp, inputOutput, Comma, Sp, output,
+            Colon, Sp, F.Id("Type"), Comma, Esc,
+            gamma, Colon, Sp, Call("Set", Call("Concept", state, inputOutput)),
+            Comma, Sp,
+            target, Colon, Sp, Call("Concept", state, output), Comma, Esc,
+            outside, Sp, Iff, Sp, witness, Dot));
     }
 }

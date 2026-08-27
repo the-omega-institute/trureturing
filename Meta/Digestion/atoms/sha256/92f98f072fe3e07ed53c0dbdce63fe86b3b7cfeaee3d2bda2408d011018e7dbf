@@ -1,0 +1,23 @@
+## T5. 母卷三分型及其适用域
+
+采用母卷 §6.1 的不可消除逃逸率
+
+\[\rho_\Gamma^\infty:=\frac{\nu(B)}{M_0}.\]
+
+并忠实保留母卷 §6.2 的三类：
+
+\[
+\begin{aligned}
+\mathsf{FiniteClosed}
+&:\Longleftrightarrow
+\exists L\ge0,\ \rho_\Gamma(L)=0;\\
+\mathsf{AsymptoticClosed}
+&:\Longleftrightarrow
+(\forall L\ge0,\ \rho_\Gamma(L)>0)
+\ \wedge\ \lim_{L\to\infty}\rho_\Gamma(L)=0;\\
+\mathsf{StructurallyIncomplete}
+&:\Longleftrightarrow
+\rho_\Gamma^\infty>0.
+\end{aligned}
+\]
+

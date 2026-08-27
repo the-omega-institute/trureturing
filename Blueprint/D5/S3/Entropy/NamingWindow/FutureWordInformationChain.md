@@ -82,7 +82,7 @@ Thus increasing the word depth by one extends the accumulated prefix information
 
 **Theorem 1.7 (Future-word entropy obeys the full information chain).**
 
-$$H(p) = H(\operatorname{firstReadoutMarginal}\left(p\right)) + \sum_{j < n} \operatorname{prefixConditionalEntropy}\left(p, j\right).$$
+$$\begin{gathered}\forall O: \operatorname{Type}, [\operatorname{Fintype}\left(O\right)],\\{}n: \mathbb{N}, p: \operatorname{FutureWord}\left(O, n\right) \to \mathbb{R},\\{}(\forall w: \operatorname{FutureWord}\left(O, n\right), 0 \leq \operatorname{p}\left(w\right)) \longrightarrow H(p) = H(\operatorname{firstReadoutMarginal}\left(p\right)) + \sum_{j < n} \operatorname{prefixConditionalEntropy}\left(p, j\right).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Entropy/NamingWindow/FutureWordInformationChain.future_word_information_chain` (`✓ std3`). ∎
 

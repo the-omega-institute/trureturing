@@ -1,0 +1,13 @@
+- **条件命题／路线**：仍依赖额外完备性、收敛性或实现桥。
+
+本文不主张：
+
+1. 可观测 Gramian 是新概念；新内容是把它嵌入仓库的 interface–remainder–observer 结构；
+2. 所有非 Markov 性都由有限维线性模型完全描述；
+3. Hilbert–Schmidt 几何替代 PSD、CP 或 complete positivity；
+4. 非交换 closure residual 自动具有群或普通上同调结构；
+5. 动力学反射解决表示满射、自描述或对角逃逸；
+6. 本文证明了 negative-base-φ 主定理、RH 或其他公开难题。
+
+---
+

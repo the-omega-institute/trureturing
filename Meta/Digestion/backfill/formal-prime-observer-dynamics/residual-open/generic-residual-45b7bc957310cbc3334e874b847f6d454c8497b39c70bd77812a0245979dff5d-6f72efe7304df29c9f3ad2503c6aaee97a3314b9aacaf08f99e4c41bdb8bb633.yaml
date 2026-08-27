@@ -1,0 +1,10 @@
+ast_path: section/122-仓库中新闭合的概率锚点/clause/4
+fingerprints:
+  raw_sha256: sha256:45b7bc957310cbc3334e874b847f6d454c8497b39c70bd77812a0245979dff5d
+  normalized_sha256: sha256:45b7bc957310cbc3334e874b847f6d454c8497b39c70bd77812a0245979dff5d
+cas_ref: sha256:45b7bc957310cbc3334e874b847f6d454c8497b39c70bd77812a0245979dff5d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -6,7 +6,7 @@ Admission-preserving transport pulls target validity back to the source.
 
 **Theorem 1.1 (Validity is preserved by an admission map).**
 
-$$(\forall y, \operatorname{Adm}_{Y}(y) \Rightarrow P(y)),\\{}(\forall x, \operatorname{Adm}_{X}(x) \Rightarrow \operatorname{Adm}_{Y}(h(x)))\\{}\Rightarrow \forall x, \operatorname{Adm}_{X}(x) \Rightarrow (P \circ h)(x).$$
+$$\forall X, Y: Type,\\{}sourceAdmissible: X \to Prop, targetAdmissible: Y \to Prop,\\{}h: \operatorname{Concept}\left(X, Y\right), P: Y \to Prop,\\{}targetValid: {\forall y: Y, targetAdmissible(y) \Rightarrow P(y)},\\{}admissionPreserving: \operatorname{MapsTo}\left(h, \{x: X \mid sourceAdmissible(x)\}, \{y: Y \mid targetAdmissible(y)\}\right),\\{}\forall x: X, sourceAdmissible(x) \Rightarrow (P \circ h)(x).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Transport/AdmissionValidityPreservation.validity_preserved_by_admission_map` (`✓ std3`). ∎
 

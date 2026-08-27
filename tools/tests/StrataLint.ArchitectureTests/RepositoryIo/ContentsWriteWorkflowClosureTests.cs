@@ -9,10 +9,10 @@ namespace StrataLint.ArchitectureTests;
 /// run --ref` selects the workflow version from that branch, so a non-base version can delete
 /// its own check. The boundary has to be the trigger set itself.
 ///
-/// This pins the closure rather than any single file: exactly one workflow may hold
-/// `contents: write`, and that workflow may only run on a schedule. A second writable
-/// workflow, or a manual trigger added back to this one, turns this red instead of relying
-/// on a reviewer remembering why it mattered.
+/// This pins the closure rather than any single file: the two explicitly authorized writers
+/// are the scheduled Lean cache publisher and the dev-only truth-release publisher. A third
+/// writable workflow, or an unapproved trigger added to either one, turns this red instead of
+/// relying on a reviewer remembering why it mattered.
 /// </summary>
 public sealed class ContentsWriteWorkflowClosureTests
 {
@@ -28,16 +28,20 @@ public sealed class ContentsWriteWorkflowClosureTests
             .ToArray();
 
     private const string ArchivePublisher = ".github/workflows/lean-cache-publish.yml";
+    private const string TruthReleasePublisher = RepositoryPathPolicy.TruthReleasePublicationWorkflowPath;
+
+    private static readonly IReadOnlySet<string> PublicationWriteScopes =
+        new HashSet<string>(["contents", "packages", "id-token", "attestations"], StringComparer.Ordinal);
 
     [Fact]
-    public void OnlyTheArchivePublisherMayWriteRepositoryContents()
+    public void OnlyTheAuthorizedPublishersMayWriteRepositoryContents()
     {
         var writers = Workflows
             .Where(static source => DeclaresContentsWrite(source.Content))
             .Select(static source => source.Path)
             .ToArray();
 
-        Assert.Equal([ArchivePublisher], writers);
+        Assert.Equal([ArchivePublisher, TruthReleasePublisher], writers);
     }
 
     [Fact]
@@ -47,6 +51,272 @@ public sealed class ContentsWriteWorkflowClosureTests
         Assert.NotNull(publisher);
 
         Assert.Equal(["schedule"], TriggerNames(publisher.Content));
+    }
+
+    [Fact]
+    public void TheTruthReleasePublisherRunsOnlyOnDevPush()
+    {
+        var publisher = Workflows.SingleOrDefault(static source => source.Path == TruthReleasePublisher);
+        Assert.NotNull(publisher);
+
+        Assert.Equal(["push"], TriggerNames(publisher.Content));
+        Assert.Contains("branches: [dev]", publisher.Content, StringComparison.Ordinal);
+        Assert.DoesNotContain("workflow_dispatch", publisher.Content, StringComparison.Ordinal);
+        Assert.DoesNotContain("inputs.source_commit", publisher.Content, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void TheTruthReleasePublisherDerivesTrustOnlyFromTheProtectedDevTip()
+    {
+        var content = TruthReleaseWorkflow().Content;
+
+        Assert.Contains("repos/${GITHUB_REPOSITORY}/branches/dev", content, StringComparison.Ordinal);
+        Assert.Contains(".protected", content, StringComparison.Ordinal);
+        Assert.Contains("the push SHA is no longer the current protected dev tip", content, StringComparison.Ordinal);
+        Assert.Contains(".merge_base_commit.sha", content, StringComparison.Ordinal);
+        Assert.Contains("commit_on_protected_dev=true", content, StringComparison.Ordinal);
+        Assert.Contains("--commit-on-protected-dev \"$COMMIT_ON_PROTECTED_DEV\"", content, StringComparison.Ordinal);
+        Assert.DoesNotContain("--commit-on-protected-dev true", content, StringComparison.Ordinal);
+        Assert.Contains("COMMIT_ON_PROTECTED_DEV: ${{ steps.identity.outputs.commit_on_protected_dev }}", content, StringComparison.Ordinal);
+        Assert.Contains("git show -s --format=%ct HEAD", content, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void TheTruthReleasePublisherSerializesAndBindsImmutableDigestPublications()
+    {
+        var content = TruthReleaseWorkflow().Content;
+
+        Assert.Contains(
+            "group: truth-release-publish-${{ needs.produce.outputs.release_digest }}",
+            content,
+            StringComparison.Ordinal);
+        Assert.Contains("produced_at=\"$(date -u --date=\"@${commit_epoch}\"", content, StringComparison.Ordinal);
+        Assert.Contains("--sort=name", content, StringComparison.Ordinal);
+        Assert.Contains("gzip -n", content, StringComparison.Ordinal);
+        Assert.Contains("oras pull \"$reference\"", content, StringComparison.Ordinal);
+        Assert.Contains("cmp -s \"$ARCHIVE\"", content, StringComparison.Ordinal);
+        Assert.Contains("immutable_reference=\"$OCI_REPOSITORY@$oci_digest\"", content, StringComparison.Ordinal);
+        Assert.Contains("verify_pinned_oci_artifact \"$immutable_reference\"", content, StringComparison.Ordinal);
+        Assert.Contains("[[ \"${reference##*@}\" =~ ^sha256:[0-9a-f]{64}$ ]]", content, StringComparison.Ordinal);
+        Assert.Contains("reference=%s\\n' \"$immutable_reference\"", content, StringComparison.Ordinal);
+        Assert.Contains("OCI lookup failed without a definitive not-found response", content, StringComparison.Ordinal);
+        Assert.Contains("OCI digest tag moved during immutable verification", content, StringComparison.Ordinal);
+        Assert.Contains(
+            "source_url=\"https://github.com/${GITHUB_REPOSITORY}/commit/${SOURCE_COMMIT}\"",
+            content,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain(
+            "org.opencontainers.image.source=https://github.com/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}",
+            content,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void TheTruthReleaseProducerCannotPublishOrMintOidcCredentials()
+    {
+        var root = WorkflowRoot(TruthReleaseWorkflow());
+
+        Assert.Empty(Permissions(root));
+        Assert.Equal(
+            new Dictionary<string, string>(StringComparer.Ordinal) { ["contents"] = "read" },
+            Permissions(Job(root, "produce")));
+        Assert.Equal(
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                ["contents"] = "write",
+                ["packages"] = "write",
+                ["id-token"] = "write",
+                ["attestations"] = "write",
+            },
+            Permissions(Job(root, "publish")));
+    }
+
+    [Fact]
+    public void NoTruthReleaseJobMaterializesOrExecutesRepositorySourceWithPublicationWriteAuthority() =>
+        AssertWriteJobsAreRepositorySourceIsolated(TruthReleaseWorkflow());
+
+    [Fact]
+    public void AHostileWriteJobThatRunsDotnetMakesTheClosureGuardRed()
+    {
+        const string hostileWorkflow = """
+            permissions: {}
+            jobs:
+              producer:
+                permissions:
+                  contents: read
+                steps:
+                  - run: dotnet test harmless.csproj
+              hostile:
+                permissions:
+                  contents: write
+                steps:
+                  - name: Execute repository code while holding write authority
+                    run: dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj
+                  - run: lake build
+                  - run: make lean-report
+            """;
+
+        var failure = Record.Exception(() =>
+            AssertWriteJobsAreRepositorySourceIsolated(new WorkflowSource("hostile-fixture.yml", hostileWorkflow)));
+
+        Assert.NotNull(failure);
+        Assert.Contains(
+            "Jobs with publication/OIDC write authority may not execute repository code: hostile",
+            failure.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void AHostileWriteJobThatCallsALocalReusableWorkflowMakesTheClosureGuardRed()
+    {
+        const string hostileWorkflow = """
+            permissions: {}
+            jobs:
+              hostile:
+                permissions:
+                  contents: write
+                steps:
+                  - name: Execute a local reusable workflow while holding write authority
+                    uses: ./.github/workflows/anything.yml
+            """;
+
+        var failure = Record.Exception(() =>
+            AssertWriteJobsAreRepositorySourceIsolated(new WorkflowSource("hostile-local-workflow.yml", hostileWorkflow)));
+
+        Assert.NotNull(failure);
+        Assert.Contains(
+            "Jobs with publication/OIDC write authority may not materialize repository source: hostile",
+            failure.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void AHostileWriteJobThatChecksOutRepositorySourceMakesTheClosureGuardRed()
+    {
+        const string hostileWorkflow = """
+            permissions: {}
+            jobs:
+              hostile:
+                permissions:
+                  id-token: write
+                steps:
+                  - name: Materialize repository source while holding OIDC authority
+                    uses: actions/checkout@v4
+            """;
+
+        var failure = Record.Exception(() =>
+            AssertWriteJobsAreRepositorySourceIsolated(new WorkflowSource("hostile-checkout.yml", hostileWorkflow)));
+
+        Assert.NotNull(failure);
+        Assert.Contains(
+            "Jobs with publication/OIDC write authority may not materialize repository source: hostile",
+            failure.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void AHostileWriteJobThatCallsSelfRepositorySourceMakesTheClosureGuardRed()
+    {
+        const string hostileWorkflow = """
+            permissions: {}
+            jobs:
+              hostile:
+                permissions:
+                  attestations: write
+                steps:
+                  - name: Materialize a self-repository action while holding write authority
+                    uses: the-omega-institute/trureturing/publish/action@dev
+            """;
+
+        var failure = Record.Exception(() =>
+            AssertWriteJobsAreRepositorySourceIsolated(new WorkflowSource("hostile-self-source.yml", hostileWorkflow)));
+
+        Assert.NotNull(failure);
+        Assert.Contains(
+            "Jobs with publication/OIDC write authority may not materialize repository source: hostile",
+            failure.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void AHostileWriteJobThatRunsARepositoryScriptMakesTheClosureGuardRed()
+    {
+        const string hostileWorkflow = """
+            permissions: {}
+            jobs:
+              hostile:
+                permissions:
+                  packages: write
+                steps:
+                  - name: Execute a repository script while holding write authority
+                    run: bash scripts/publish.sh
+            """;
+
+        var failure = Record.Exception(() =>
+            AssertWriteJobsAreRepositorySourceIsolated(new WorkflowSource("hostile-script.yml", hostileWorkflow)));
+
+        Assert.NotNull(failure);
+        Assert.Contains(
+            "Jobs with publication/OIDC write authority may not execute repository code: hostile",
+            failure.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void TheTruthReleasePublisherConsumesOnlyTheRunBoundTransfer()
+    {
+        var content = TruthReleaseWorkflow().Content;
+        var publisherScalars = ScalarValues(Job(WorkflowRoot(TruthReleaseWorkflow()), "publish"));
+
+        Assert.Contains("artifact-ids: ${{ needs.produce.outputs.artifact_id }}", content, StringComparison.Ordinal);
+        Assert.Contains("truth-release-transfer.v1", content, StringComparison.Ordinal);
+        Assert.Contains(".run_id == $ENV.GITHUB_RUN_ID", content, StringComparison.Ordinal);
+        Assert.Contains(".run_attempt == $ENV.PRODUCE_RUN_ATTEMPT", content, StringComparison.Ordinal);
+        Assert.Contains(".release_digest == $ENV.RELEASE_DIGEST", content, StringComparison.Ordinal);
+        Assert.Contains("retention-days: 7", content, StringComparison.Ordinal);
+        Assert.Contains("Re-run failed jobs", content, StringComparison.Ordinal);
+        Assert.Contains("full re-run", content, StringComparison.Ordinal);
+        Assert.DoesNotContain(publisherScalars, static value => value.Contains("actions/checkout", StringComparison.Ordinal));
+        Assert.DoesNotContain(publisherScalars, static value => value.Contains("actions/setup-dotnet", StringComparison.Ordinal));
+        Assert.DoesNotContain(publisherScalars, static value => value.Contains("dotnet ", StringComparison.Ordinal));
+        Assert.DoesNotContain(publisherScalars, static value => value.Contains("lake ", StringComparison.Ordinal));
+        Assert.DoesNotContain(publisherScalars, static value => value.Contains("make ", StringComparison.Ordinal));
+        Assert.DoesNotContain(publisherScalars, static value => value.Contains("tools/", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void TheTruthReleasePublisherRepairsAndVerifiesProvenanceOnEveryRun()
+    {
+        var content = TruthReleaseWorkflow().Content;
+
+        Assert.DoesNotContain("steps.oci.outputs.pushed", content, StringComparison.Ordinal);
+        Assert.Contains("attestations/${encoded_digest}", content, StringComparison.Ordinal);
+        Assert.Contains("gh attestation verify \"oci://${SUBJECT_REFERENCE}\"", content, StringComparison.Ordinal);
+        Assert.Contains("SUBJECT_REFERENCE: ${{ steps.oci.outputs.reference }}", content, StringComparison.Ordinal);
+        Assert.Contains("subject-digest: ${{ steps.oci.outputs.digest }}", content, StringComparison.Ordinal);
+        Assert.Contains("--signer-workflow \"$GITHUB_REPOSITORY/.github/workflows/truth-release-publish.yml\"", content, StringComparison.Ordinal);
+        Assert.Contains("--source-digest \"$SOURCE_COMMIT\"", content, StringComparison.Ordinal);
+        Assert.Contains("--source-ref 'refs/heads/dev'", content, StringComparison.Ordinal);
+        Assert.Contains("GHCR provenance did not become verifiable", content, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void TheTruthReleasePublisherCreatesAndRepairsOneImmutableRelease()
+    {
+        var content = TruthReleaseWorkflow().Content;
+
+        Assert.Contains("gh release create", content, StringComparison.Ordinal);
+        Assert.Contains("gh release upload", content, StringComparison.Ordinal);
+        Assert.Contains("gh release download", content, StringComparison.Ordinal);
+        Assert.Contains("cmp -s \"$asset\" \"$verify_dir/$name\"", content, StringComparison.Ordinal);
+        Assert.Contains("count=\"$(jq --arg name", content, StringComparison.Ordinal);
+        Assert.Contains("(.assets | length) == ($expected | length)", content, StringComparison.Ordinal);
+        Assert.Contains("([.assets[].name] | sort) == $expected", content, StringComparison.Ordinal);
+        Assert.Contains("protected dev moved before GitHub Release publication", content, StringComparison.Ordinal);
+        Assert.Contains("verify_protected_dev_tip\n            if gh release create", content, StringComparison.Ordinal);
+        Assert.DoesNotContain("verify_protected_dev_tip\n              gh release upload", content, StringComparison.Ordinal);
+        Assert.Contains("assets=verified", content, StringComparison.Ordinal);
+        Assert.DoesNotContain("release_collection_api=", content, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -66,6 +336,167 @@ public sealed class ContentsWriteWorkflowClosureTests
 
     private static bool DeclaresContentsWrite(string content) =>
         ContentsValues(content).Contains("write", StringComparer.Ordinal);
+
+    private static WorkflowSource TruthReleaseWorkflow() =>
+        Workflows.Single(static source => source.Path == TruthReleasePublisher);
+
+    private static YamlMappingNode WorkflowRoot(WorkflowSource workflow) =>
+        Assert.IsType<YamlMappingNode>(Assert.Single(Documents(workflow.Content)));
+
+    private static YamlMappingNode Job(YamlMappingNode root, string name)
+    {
+        var jobs = Assert.IsType<YamlMappingNode>(MappingValue(root, "jobs"));
+        return Assert.IsType<YamlMappingNode>(MappingValue(jobs, name));
+    }
+
+    private static void AssertWriteJobsAreRepositorySourceIsolated(WorkflowSource workflow)
+    {
+        var root = WorkflowRoot(workflow);
+        var authoritativeJobs = Jobs(root)
+            .Where(pair => HoldsPublicationWriteScope(root, pair.Value))
+            .ToArray();
+        var materializers = authoritativeJobs
+            .Where(static pair => MaterializesRepositorySource(pair.Value))
+            .Select(static pair => pair.Key)
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+        var executors = authoritativeJobs
+            .Where(static pair => ExecutesRepositoryCode(pair.Value))
+            .Select(static pair => pair.Key)
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+
+        Assert.True(
+            materializers.Length == 0,
+            $"Jobs with publication/OIDC write authority may not materialize repository source: {string.Join(", ", materializers)}");
+        Assert.True(
+            executors.Length == 0,
+            $"Jobs with publication/OIDC write authority may not execute repository code: {string.Join(", ", executors)}");
+    }
+
+    private static IReadOnlyDictionary<string, YamlMappingNode> Jobs(YamlMappingNode root)
+    {
+        var jobs = Assert.IsType<YamlMappingNode>(MappingValue(root, "jobs"));
+        return jobs.Children.ToDictionary(
+            static pair => Assert.IsType<YamlScalarNode>(pair.Key).Value ?? string.Empty,
+            static pair => Assert.IsType<YamlMappingNode>(pair.Value),
+            StringComparer.Ordinal);
+    }
+
+    private static bool HoldsPublicationWriteScope(YamlMappingNode root, YamlMappingNode job)
+    {
+        var permissions = TryMappingValue(job, "permissions", out var jobPermissions)
+            ? jobPermissions
+            : TryMappingValue(root, "permissions", out var workflowPermissions)
+                ? workflowPermissions
+                : null;
+
+        return permissions switch
+        {
+            YamlScalarNode { Value: "write-all" } => true,
+            YamlMappingNode mapping => mapping.Children.Any(pair =>
+                pair.Key is YamlScalarNode { Value: { } name }
+                && PublicationWriteScopes.Contains(name)
+                && pair.Value is YamlScalarNode { Value: "write" }),
+            _ => false,
+        };
+    }
+
+    private static bool ExecutesRepositoryCode(YamlMappingNode job)
+    {
+        if (!TryMappingValue(job, "steps", out var stepsNode)
+            || stepsNode is not YamlSequenceNode steps)
+        {
+            return false;
+        }
+
+        return steps.Children.OfType<YamlMappingNode>().Any(step =>
+            TryMappingValue(step, "run", out var run)
+                && run is YamlScalarNode { Value: { } command }
+                && RepositoryPathPolicy.ContainsRepositorySourceExecutionIndicator(command));
+    }
+
+    private static bool MaterializesRepositorySource(YamlMappingNode job)
+    {
+        if (TryMappingValue(job, "uses", out var reusableWorkflow)
+            && reusableWorkflow is YamlScalarNode { Value: { } workflow }
+            && RepositoryPathPolicy.ContainsRepositorySourceMaterializationIndicator(workflow))
+        {
+            return true;
+        }
+
+        if (!TryMappingValue(job, "steps", out var stepsNode)
+            || stepsNode is not YamlSequenceNode steps)
+        {
+            return false;
+        }
+
+        return steps.Children.OfType<YamlMappingNode>().Any(step =>
+            (TryMappingValue(step, "uses", out var uses)
+                && uses is YamlScalarNode { Value: { } action }
+                && RepositoryPathPolicy.ContainsRepositorySourceMaterializationIndicator(action))
+            || (TryMappingValue(step, "run", out var run)
+                && run is YamlScalarNode { Value: { } command }
+                && RepositoryPathPolicy.ContainsRepositorySourceMaterializationIndicator(command)));
+    }
+
+    private static IReadOnlyDictionary<string, string> Permissions(YamlMappingNode mapping)
+    {
+        var permissions = Assert.IsType<YamlMappingNode>(MappingValue(mapping, "permissions"));
+        return permissions.Children
+            .ToDictionary(
+                static pair => Assert.IsType<YamlScalarNode>(pair.Key).Value ?? string.Empty,
+                static pair => Assert.IsType<YamlScalarNode>(pair.Value).Value ?? string.Empty,
+                StringComparer.Ordinal);
+    }
+
+    private static YamlNode MappingValue(YamlMappingNode mapping, string key) =>
+        mapping.Children.Single(pair =>
+            pair.Key is YamlScalarNode scalar && string.Equals(scalar.Value, key, StringComparison.Ordinal)).Value;
+
+    private static bool TryMappingValue(YamlMappingNode mapping, string key, out YamlNode value)
+    {
+        foreach (var pair in mapping.Children)
+        {
+            if (pair.Key is YamlScalarNode scalar
+                && string.Equals(scalar.Value, key, StringComparison.Ordinal))
+            {
+                value = pair.Value;
+                return true;
+            }
+        }
+
+        value = null!;
+        return false;
+    }
+
+    private static IReadOnlyList<string> ScalarValues(YamlNode root)
+    {
+        var values = new List<string>();
+        Visit(root);
+        return values;
+
+        void Visit(YamlNode node)
+        {
+            switch (node)
+            {
+                case YamlScalarNode { Value: { } value }:
+                    values.Add(value);
+                    break;
+                case YamlMappingNode mapping:
+                    foreach (var (key, value) in mapping.Children)
+                    {
+                        Visit(key);
+                        Visit(value);
+                    }
+
+                    break;
+                case YamlSequenceNode sequence:
+                    foreach (var item in sequence.Children) Visit(item);
+                    break;
+            }
+        }
+    }
 
     private static bool DeclaresAnyContentsPermission(string content) =>
         ContentsValues(content).Count > 0;

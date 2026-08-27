@@ -1,0 +1,12 @@
+## 定义 57.1（信念后继）
+
+执行动作 $a$ 并看到新观察 $o'$ 后：
+
+$$
+\boxed{
+\operatorname{Post}(B,a,o')
+=
+\{F(x,a,e):x\in B,\ e\in\mathcal E(x,a),\ q(F(x,a,e))=o'\}.
+}
+$$
+

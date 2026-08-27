@@ -1,0 +1,17 @@
+ast_path: section/0-共同语义
+fingerprints:
+  raw_sha256: sha256:b9acdacf0a74192371794cd19a874d025e3e118398b8ac94798f5a19c13f59fd
+  normalized_sha256: sha256:b9acdacf0a74192371794cd19a874d025e3e118398b8ac94798f5a19c13f59fd
+cas_ref: sha256:b9acdacf0a74192371794cd19a874d025e3e118398b8ac94798f5a19c13f59fd
+coverage_gids:
+  - D5/S3/ConceptDynamics/EscapeSpectrum/BlindResidualChargeDecomposition.blind_residual_charge_decomposition
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/EscapeSpectrum/BlindResidualChargeDecomposition.blind_residual_charge_decomposition
+      source_sha256: sha256:b9acdacf0a74192371794cd19a874d025e3e118398b8ac94798f5a19c13f59fd
+      target_sha256: sha256:0547c4e6c9f9b7294f56bf453866c88ca84485876185bde08a9a36a25dae0a9a
+  scribe:
+    - gid: D5/S3/ConceptDynamics/EscapeSpectrum/BlindResidualChargeDecomposition.blind_residual_charge_decomposition
+      definition_sha256: sha256:9a66670698a65199e78882c33fa5a13e3267c2d24f4906ae39a5a4fe32a4d018
+      emission_sha256: sha256:6769db3eadbd89080853b3b629162b7b4551e3e82cef5b80d20e6eaa1bd0decc
+  unresolved_subitems: []

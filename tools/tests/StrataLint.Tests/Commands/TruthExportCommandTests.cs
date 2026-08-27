@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.IO.Compression;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -218,6 +219,7 @@ public sealed class TruthExportCommandTests
             LeanAxiomReport.Create(revisionReports));
         var reportPath = Path.Combine(temporary.Path, "candidate-lean-report.json");
         File.WriteAllBytes(reportPath, reportBytes.AsSpan());
+        WriteStatementMaterials(reportPath, revisionReports);
         var mutableModules = workingModules ?? revisionModules;
         var mutableFiles = RepositoryFiles(mutableModules);
         AddLedgerFiles(mutableFiles, ledgerBytes);
@@ -240,6 +242,22 @@ public sealed class TruthExportCommandTests
             mutableLeanReportSource,
             reportPath,
             reportBytes);
+    }
+
+    private static void WriteStatementMaterials(
+        string reportPath,
+        IReadOnlyDictionary<string, LeanFileReport> reports)
+    {
+        using var stream = File.Create(RawLeanReportArtifact.MaterialsPath(reportPath));
+        using var archive = new ZipArchive(stream, ZipArchiveMode.Create);
+        foreach (var declaration in reports.Values
+                     .SelectMany(static report => report.Declarations)
+                     .DistinctBy(static declaration => declaration.StatementTypeAddress))
+        {
+            var entry = archive.CreateEntry("sha256/" + declaration.StatementTypeAddress[7..]);
+            using var destination = entry.Open();
+            destination.Write(Encoding.UTF8.GetBytes(declaration.TypeRepresentation));
+        }
     }
 
     private static Dictionary<string, string> RepositoryFiles(IEnumerable<ModuleSpec> modules)

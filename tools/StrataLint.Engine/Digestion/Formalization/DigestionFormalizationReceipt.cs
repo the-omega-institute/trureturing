@@ -251,7 +251,7 @@ internal sealed record DigestionFormalizationReceipt(
         return new DigestionFormalizationSignature(
             declaration.NameKey,
             declaration.Kind,
-            declaration.TypeRepresentation);
+            declaration.LoadTypeRepresentation());
     }
 
     private static void Validate(DigestionFormalizationReceipt receipt)

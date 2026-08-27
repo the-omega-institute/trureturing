@@ -567,7 +567,7 @@ public sealed class LedgerAppendCommandTests
                 FrozenLedgerChangeClassifier.AcceptedRoot.Replace('/', Path.DirectorySeparatorChar));
             FrozenLedgerTestData.WriteLedgerDirectory(LedgerPath, BaselineBytes);
             ReportPath = Path.Combine(temporary.Path, "candidate-lean-report.json");
-            File.WriteAllBytes(ReportPath, RawLeanReportArtifact.Write(snapshot, report).AsSpan());
+            RawLeanReportArtifact.WriteFile(ReportPath, snapshot, report);
             Gateway = new FakeRepositoryGateway(
                 RawChangeSet.Create(
                     (reportADriftInChangeSet

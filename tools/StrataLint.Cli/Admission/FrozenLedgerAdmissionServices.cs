@@ -99,7 +99,8 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
                 baseView,
                 ImmutableArray<DagLedgerFileEvent>.Empty,
                 producerPaths.Value,
-                TrustedFrozenGitReferences.CreateForTrustedAdapter([]));
+                TrustedFrozenGitReferences.CreateForTrustedAdapter([], []),
+                ProtectedBaseSnapshot: protectedBase);
         }
 
         var deltaFiles = deltaPaths.Select(path => current.TryGetFile(path.Value, out var file)
@@ -130,13 +131,22 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
         }
 
         var inputs = ImmutableArray.CreateBuilder<FrozenLedgerInput>();
+        var environmentReferences = ImmutableArray.CreateBuilder<FrozenEnvironmentReference>();
         var receiptOids = ImmutableArray.CreateBuilder<string>();
         var requiredAncestorCommitOids = ImmutableArray.CreateBuilder<string>();
         foreach (var item in loaded)
         {
             try
             {
-                if (item.Input is { } input)
+                if (item.EventType == FrozenLedger.SupersedeEventType)
+                {
+                    var payload = FrozenLedger.ParseSupersede(item.Payload);
+                    inputs.Add(payload.Input);
+                    environmentReferences.Add(new FrozenEnvironmentReference(
+                        payload.Input,
+                        payload.Environment));
+                }
+                else if (item.Input is { } input)
                 {
                     inputs.Add(input);
                     if (item.EventType == "Freeze")
@@ -162,13 +172,14 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
 
         var references = FrozenLedgerReferenceSet.Create(
             inputs.ToImmutable(),
+            environmentReferences.ToImmutable(),
             receiptOids.ToImmutable(),
             requiredAncestorCommitOids);
         TrustedFrozenGitReferences trusted;
         try
         {
-            trusted = inputs.Count == 0 && receiptOids.Count == 0
-                ? TrustedFrozenGitReferences.CreateForTrustedAdapter([])
+            trusted = inputs.Count == 0 && environmentReferences.Count == 0 && receiptOids.Count == 0
+                ? TrustedFrozenGitReferences.CreateForTrustedAdapter([], [])
                 : validateReferences(references);
         }
         catch (FrozenReferenceRejectionException exception)
@@ -214,7 +225,8 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
             producerPaths.Value,
             trusted,
             revocationBaseline,
-            revocationReceipts);
+            revocationReceipts,
+            protectedBase);
     }
 
     private static void RejectClosurelessAddedFreezes(
@@ -284,32 +296,49 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
         AcceptedLeanClosure lean,
         LeanAxiomReport report,
         RawChangeSet changes,
-        FrozenRevisionIdentity currentIdentity)
+        FrozenRevisionIdentity currentIdentity,
+        AdmissionCheckTiming timing)
     {
-        var states = LeanTruthStates.Resolve(current, lean);
-        var adjacency = LeanImportAdjacency.Build(current, lean);
-        var scope = FrozenLedgerAdmissionScope.Create(changes, preparation, states, adjacency);
+        var scoped = timing.Measure(
+            "frozen-ledger-scope",
+            () =>
+            {
+                var states = LeanTruthStates.Resolve(current, lean);
+                var adjacency = LeanImportAdjacency.Build(current, lean);
+                var scope = FrozenLedgerAdmissionScope.Create(
+                    changes,
+                    preparation,
+                    states,
+                    adjacency);
+                return (States: states, Adjacency: adjacency, Scope: scope);
+            });
         FrozenMaterialCatalog catalog;
         try
         {
-            AdmissionCatalogBuildCount++;
-            catalog = DagLedgerCommandPreparation.BuildAdmissionCatalog(
-                current,
-                lean,
-                states,
-                adjacency,
-                preparation.BaseView,
-                scope,
-                currentIdentity);
+            catalog = timing.Measure(
+                "frozen-ledger-catalog",
+                () =>
+                {
+                    AdmissionCatalogBuildCount++;
+                    return DagLedgerCommandPreparation.BuildAdmissionCatalog(
+                        current,
+                        lean,
+                        scoped.States,
+                        scoped.Adjacency,
+                        preparation.BaseView,
+                        scoped.Scope,
+                        currentIdentity);
+                });
         }
         catch (Exception exception) when (exception is ArgumentException
             or FormatException
             or InvalidOperationException
             or KeyNotFoundException)
         {
-            var affected = scope.Paths.OrderBy(static path => path.Value, StringComparer.Ordinal)
+            var affected = scoped.Scope.Paths
+                .OrderBy(static path => path.Value, StringComparer.Ordinal)
                 .ToImmutableArray();
-            var witnesses = affected.SelectMany(path => scope.WitnessesFor(path))
+            var witnesses = affected.SelectMany(path => scoped.Scope.WitnessesFor(path))
                 .Distinct()
                 .ToImmutableArray();
             return RuleRejection(
@@ -319,11 +348,17 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
         }
 
         IncrementalValidationCount++;
-        var failure = FrozenLedger.ValidateAdmissionDelta(
-            preparation,
-            scope,
-            catalog,
-            preparation.TrustedDeltaReferences);
+        var failure = timing.Measure(
+            "frozen-ledger-delta",
+            () => FrozenLedger.ValidateAdmissionDelta(
+                preparation,
+                scoped.Scope,
+                catalog,
+                changes,
+                preparation.TrustedDeltaReferences,
+                report,
+                current),
+            static result => result is not null);
         return failure is null
             ? null
             : RuleRejection(failure.AffectedPaths, failure.Message);

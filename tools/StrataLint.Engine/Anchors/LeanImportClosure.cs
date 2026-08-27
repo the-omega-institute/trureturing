@@ -167,7 +167,7 @@ internal static class LeanImportClosure
         return report.Files.TryGetValue(path, out var file)
             && file.Declarations
                 .Where(static declaration => declaration.IncludeInStatement)
-                .All(static declaration => !IsTrivialTruth(declaration.TypeRepresentation));
+                .All(static declaration => !IsTrivialTruth(declaration.LoadTypeRepresentation()));
     }
 
     private static ImmutableHashSet<string> ExternalImports(
