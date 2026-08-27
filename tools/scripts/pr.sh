@@ -9,7 +9,7 @@ PR_WATCH_MAX_FAILURES=3
 BOUNDED_OUTPUT=""
 receipt() { printf '%s\n' "$*" >&2; }
 positive_integer() { [[ "$1" =~ ^[1-9][0-9]*$ ]]; }
-usage_open() { receipt "usage: pr.sh open --head HEAD --message-file FILE [--timeout-seconds S] [--interval-seconds S]"; }
+usage_open() { receipt "usage: pr.sh open --head HEAD --message-file FILE [--auto-merge] [--timeout-seconds S] [--interval-seconds S]"; }
 usage_watch() { receipt "usage: pr.sh watch --pr NUMBER [--timeout-seconds S] [--interval-seconds S]"; }
 run_bounded_capture() {
   local step="$1" timeout_seconds="$2"; shift 2
@@ -154,12 +154,13 @@ pr_watch_main() {
   done
 }
 pr_open_main() {
-  local head="" message_file="" title="" body_file="" url number rc=0
+  local head="" message_file="" title="" body_file="" url number rc=0 auto_merge=0
   local timeout_seconds="$PR_WATCH_TIMEOUT_SECONDS" interval_seconds="$PR_WATCH_INTERVAL_SECONDS"
   while [[ $# -gt 0 ]]; do
     case "$1" in
       --head) [[ $# -ge 2 ]] || { usage_open; return 2; }; head="$2"; shift 2 ;;
       --message-file) [[ $# -ge 2 ]] || { usage_open; return 2; }; message_file="$2"; shift 2 ;;
+      --auto-merge) auto_merge=1; shift ;;
       --timeout-seconds) [[ $# -ge 2 ]] || { usage_open; return 2; }; timeout_seconds="$2"; shift 2 ;;
       --interval-seconds) [[ $# -ge 2 ]] || { usage_open; return 2; }; interval_seconds="$2"; shift 2 ;;
       *) usage_open; return 2 ;;
@@ -180,7 +181,9 @@ pr_open_main() {
   (( rc == 0 )) || return "$rc"
   url="$(printf '%s\n' "$BOUNDED_OUTPUT" | tail -n 1)"; number="${url##*/}"
   if ! positive_integer "$number"; then receipt "pr.sh open: create returned no pull request number"; return 1; fi
-  gh_local auto-merge "$PR_OPEN_TIMEOUT_SECONDS" pr merge "$number" --repo "$PR_REPO" --auto --merge || return $?
+  if (( auto_merge == 1 )); then
+    gh_local auto-merge "$PR_OPEN_TIMEOUT_SECONDS" pr merge "$number" --repo "$PR_REPO" --auto --merge || return $?
+  fi
   printf '%s\n' "$number"
   pr_watch_main --pr "$number" --timeout-seconds "$timeout_seconds" --interval-seconds "$interval_seconds" || return $?
 }
