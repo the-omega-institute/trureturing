@@ -13,8 +13,9 @@ internal static partial class RepositoryRules
     internal const string DomainsPolicyPath = "Meta/domains.yaml";
     internal const string FileMapPolicyPath = "Meta/FILEMAP.toml";
 
-    // Registry and domain bytes compile ValidatedPolicy; FILEMAP declares repository path
-    // classifications. This policy data has a bounded schema-owned inventory, unlike judge code.
+    // Registry and domain bytes compile ValidatedPolicy. FILEMAP is a conservative wake path:
+    // SL-019 does not read FileMapManifest, but replaying on its change is intentionally harmless.
+    // This bounded schema-owned inventory is unlike the structurally defined judge-code closure.
     private static readonly ImmutableHashSet<string> LedgerPolicyDataPaths =
         ImmutableHashSet.Create(
             StringComparer.Ordinal,
@@ -145,20 +146,8 @@ internal static partial class RepositoryRules
 
     private static bool ChangedLeanTaskSet(RuleEvaluationContext context)
     {
-        var changedPaths = context.Changes.Paths
-            .Where(static path => IsManagedLeanPath(path.Value))
-            .ToHashSet();
-        if (changedPaths.Count == 0)
-        {
-            return false;
-        }
-
-        var currentTasks = CollectTaskCodes(context.Current.Files
-            .Where(item => changedPaths.Contains(item.Key))
-            .Select(static item => item.Value));
-        var forkPointTasks = CollectTaskCodes(context.ForkPoint.Files
-            .Where(item => changedPaths.Contains(item.Key))
-            .Select(static item => item.Value));
+        var currentTasks = CollectTaskCodes(context.Current);
+        var forkPointTasks = CollectTaskCodes(context.ForkPoint);
         return !currentTasks.SetEquals(forkPointTasks);
     }
 
@@ -173,10 +162,11 @@ internal static partial class RepositoryRules
     /// <summary>
     /// SL-019 may skip a stored artifact only when all four replay-contract conditions hold:
     /// (a) the complete judge source closure is unchanged (<c>tools/</c>, excluding
-    /// <c>tools/tests/</c>, plus inherited build inputs); (b) none of the closed policy-data inputs
-    /// changed; (c) the managed-Lean TASK-code set is unchanged; and (d) this artifact is not an
-    /// affected JSON, YAML, or Chronicle ledger path. Conditions (a)-(c) replay the full corpus;
-    /// condition (d) preserves the per-artifact scan for affected paths.
+    /// <c>tools/tests/</c>, Blueprint scribe compile inputs, plus inherited build inputs); (b) none
+    /// of the closed policy or conservative wake paths changed; (c) the formal-file TASK-code set
+    /// is unchanged; and (d) this artifact is not an affected JSON, YAML, or Chronicle ledger path.
+    /// Conditions (a)-(c) replay the full corpus; condition (d) preserves the per-artifact scan for
+    /// affected paths.
     /// </summary>
     private static bool ShouldReplayLedgerArtifact(
         RuleEvaluationContext context,
