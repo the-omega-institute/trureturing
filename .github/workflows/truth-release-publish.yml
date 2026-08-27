@@ -588,6 +588,7 @@ jobs:
             verify_release_metadata
             count="$(jq --arg name "$name" '[.assets[] | select(.name == $name)] | length' "$release_json")"
             if [[ "$count" == '0' ]]; then
+              verify_protected_dev_tip
               gh release upload "$tag" "$asset" --repo "$GITHUB_REPOSITORY" \
                 || printf '%s\n' "asset upload raced or failed; verifying remote asset before deciding"
             elif [[ "$count" != '1' ]]; then

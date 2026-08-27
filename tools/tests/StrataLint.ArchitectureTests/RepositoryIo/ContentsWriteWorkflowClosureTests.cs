@@ -75,7 +75,8 @@ public sealed class ContentsWriteWorkflowClosureTests
         Assert.Contains("repos/${GITHUB_REPOSITORY}/branches/dev", content, StringComparison.Ordinal);
         Assert.Contains(".protected", content, StringComparison.Ordinal);
         Assert.DoesNotContain("$GITHUB_SHA", content, StringComparison.Ordinal);
-        Assert.Contains("for attempt in $(seq 1 30)", content, StringComparison.Ordinal);
+        Assert.Contains("commits?sha=dev&per_page=40", content, StringComparison.Ordinal);
+        Assert.Contains("check-runs?per_page=100", content, StringComparison.Ordinal);
         Assert.Contains("publish_ready=false", content, StringComparison.Ordinal);
         Assert.Contains("git symbolic-ref -q HEAD", content, StringComparison.Ordinal);
         Assert.Contains(
@@ -324,7 +325,7 @@ public sealed class ContentsWriteWorkflowClosureTests
         Assert.Contains("([.assets[].name] | sort) == $expected", content, StringComparison.Ordinal);
         Assert.Contains("source commit is no longer an ancestor of protected dev before GitHub Release publication", content, StringComparison.Ordinal);
         Assert.Contains("verify_protected_dev_tip\n            if gh release create", content, StringComparison.Ordinal);
-        Assert.DoesNotContain("verify_protected_dev_tip\n              gh release upload", content, StringComparison.Ordinal);
+        Assert.Contains("verify_protected_dev_tip\n              gh release upload", content, StringComparison.Ordinal);
         Assert.Contains("assets=verified", content, StringComparison.Ordinal);
         Assert.DoesNotContain("release_collection_api=", content, StringComparison.Ordinal);
     }
