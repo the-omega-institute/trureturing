@@ -1,0 +1,26 @@
+## 定义 206.1（双商）
+
+定义
+
+$$
+\overline X=X/K_X,
+\qquad
+\overline P=P/K_P.
+$$
+
+并令
+
+$$
+\overline e:
+\overline X\times\overline P
+\longrightarrow\Lambda
+$$
+
+由
+
+$$
+\overline e([x],[p])=e(x,p)
+$$
+
+给出。
+

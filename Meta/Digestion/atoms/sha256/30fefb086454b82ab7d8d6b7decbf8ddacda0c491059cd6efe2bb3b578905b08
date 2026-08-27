@@ -1,0 +1,62 @@
+## 78.1 二维到三维
+
+令 \(U_{\mathrm{RR}}\) 是 \(\mathbf R\) 所承载的二维线性提升。
+
+其射影像为：
+
+$$
+A_5,
+$$
+
+线性像则是二元二十面体扩张。
+
+对称平方：
+
+$$
+\operatorname{Sym}^2U_{\mathrm{RR}}
+$$
+
+维数为 \(3\)，中心 \(-I\) 在对称平方上作用平凡，因此它下降为 \(A_5\) 的三维表示：
+
+$$
+\boxed{
+\operatorname{Sym}^2U_{\mathrm{RR}}
+\simeq
+V_3.
+}
+\tag{78.2}
+$$
+
+对系数域作黄金 Galois 共轭：
+
+$$
+\sqrt5\mapsto-\sqrt5,
+$$
+
+得到：
+
+$$
+\boxed{
+\operatorname{Sym}^2U_{\mathrm{RR}}^\sigma
+\simeq
+V_3'.
+}
+\tag{78.3}
+$$
+
+因此在表示层上：
+
+$$
+\boxed{
+V_3\oplus V_3'
+\simeq
+\operatorname{Sym}^2U_{\mathrm{RR}}
+\oplus
+\operatorname{Sym}^2U_{\mathrm{RR}}^\sigma.
+}
+\tag{78.4}
+$$
+
+这解释：
+
+* Rogers–Ramanujan 主对象为什么是二维双态；

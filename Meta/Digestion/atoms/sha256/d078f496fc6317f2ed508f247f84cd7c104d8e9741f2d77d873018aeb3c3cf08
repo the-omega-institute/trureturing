@@ -1,0 +1,8 @@
+* Bayes risk；
+
+形成一个统一的**观察编码定理**。
+
+该平均深度结论目前是 paper-level 推论，不应在建立相应 prefix-code 与随机停止形式化前标记为 Lean-closed。
+
+---
+

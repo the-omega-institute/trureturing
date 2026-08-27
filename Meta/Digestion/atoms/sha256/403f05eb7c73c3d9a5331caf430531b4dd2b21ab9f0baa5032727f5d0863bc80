@@ -1,0 +1,17 @@
+* Galois 完成后为什么得到六维准晶体表示。
+
+完整维数链为：
+
+$$
+\boxed{
+2
+\xrightarrow{\operatorname{Sym}^2}
+3
+\xrightarrow{\text{Galois completion}}
+3+3=6.
+}
+\tag{78.5}
+$$
+
+---
+

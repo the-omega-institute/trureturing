@@ -1,0 +1,24 @@
+* 先把每一步投影到局部代数，再做动力闭包；
+
+可能得到不同可见空间。
+
+统一完成必须取所有 completion 的最小共同固定点：
+
+$$
+\boxed{
+q^*
+=
+\operatorname{lfp}
+\left(
+q\mapsto
+\bigvee_iC_i(q)
+\right).
+}
+$$
+
+若各 completion 两两交换，则一次组合后即可稳定。
+
+若不交换，则必须迭代。
+
+---
+

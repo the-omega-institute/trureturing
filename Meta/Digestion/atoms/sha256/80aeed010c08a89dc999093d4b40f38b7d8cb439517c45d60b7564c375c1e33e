@@ -1,0 +1,73 @@
+# 第三十八部　总原理
+
+本增订最终得到一个新的 OACTC 主定理模式：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{非有理局部对称}
+\\
+&\quad+
+\text{全部 Galois 共轭观察}
+\\
+&\quad+
+\text{有限位最大阶饱和}
+\\
+&\quad+
+\text{显—隐窗口选择}
+\\
+&=
+\text{整数闭合的全局观察对象}.
+\end{aligned}
+}
+$$
+
+在黄金二十面体实例中：
+
+$$
+\boxed{
+\begin{aligned}
+\text{非有理局部对称}
+&=V_3\text{ 中的 }\varphi;\\
+\text{共轭观察}
+&=V_3';\\
+\text{联合载体}
+&=V_3\oplus V_3'\simeq\Lambda^2V_4;\\
+\text{有限位饱和}
+&=\mathbb Z[\sqrt5]\subset\mathbb Z[\varphi];\\
+\text{显空间}
+&=E_\parallel;\\
+\text{隐空间}
+&=E_\perp;\\
+\text{显现规则}
+&=q_\perp(x)\in\Omega;\\
+\text{全局表型}
+&=\text{三维二十面体准晶体}.
+\end{aligned}
+}
+$$
+
+因此，最凝练的结论是：
+
+$$
+\boxed{
+\text{六维准晶体不是黄金比例在三维中的装饰，}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{五次根的非阿贝尔二阶对称，
+在加入黄金 Galois 共轭和最大整数阶修复后，
+所形成的第一个整数闭合观察空间。}
+}
+$$
+
+今后的 Ramanujan、\(p\)-adic、Golden Euler、Weil/RH 与准晶体推理，都应从这条 OACTC 主链继续追加，而不是再建立互相竞争的理论根。
+
+[1]: https://arxiv.org/abs/2006.01876?utm_source=chatgpt.com "Completely solving the quintic by iteration"
+[2]: https://journals.iucr.org/a/issues/2014/05/00/eo5032/?utm_source=chatgpt.com "(IUCr) On the subgroup structure of the hyperoctahedral group in six dimensions"
+[3]: https://journals.iucr.org/a/issues/2026/05/00/nv5031/index.html?utm_source=chatgpt.com "(IUCr) A parsimonious structure model for the icosahedral quasicrystal Cd5.7Yb"
+[4]: https://portal.mardi4nfdi.de/wiki/Continued_fractions_and_modular_functions?utm_source=chatgpt.com "Continued fractions and modular functions - MaRDI portal"

@@ -1,0 +1,27 @@
+## 原理 227.1（静态协议商与顺序完成）
+
+若协议只是固定状态空间上的普通读出函数，则静态相等协议在预复合动力学后仍相等。
+
+但若协议是 instrument，静态结果边缘相同不保证状态干预相同。因此：
+
+$$
+\boxed{
+\text{先按一步 POVM quotient}
+\quad\text{再做顺序 closure}
+}
+$$
+
+可能错误地合并两个顺序行为不同的 instrument。
+
+正确顺序应是：
+
+$$
+\boxed{
+\text{先生成完整 transcript semantics}
+\longrightarrow
+\text{再按完整行为 quotient}.
+}
+$$
+
+---
+

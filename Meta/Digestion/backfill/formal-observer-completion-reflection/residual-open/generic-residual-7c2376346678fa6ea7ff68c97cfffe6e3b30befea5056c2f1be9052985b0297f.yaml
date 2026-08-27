@@ -1,0 +1,10 @@
+ast_path: section/结论八-递归描述不会自动增加观察力
+fingerprints:
+  raw_sha256: sha256:7c2376346678fa6ea7ff68c97cfffe6e3b30befea5056c2f1be9052985b0297f
+  normalized_sha256: sha256:7c2376346678fa6ea7ff68c97cfffe6e3b30befea5056c2f1be9052985b0297f
+cas_ref: sha256:7c2376346678fa6ea7ff68c97cfffe6e3b30befea5056c2f1be9052985b0297f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

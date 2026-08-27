@@ -1,0 +1,15 @@
+ast_path: section/84-1-Non-sticky-分支
+fingerprints:
+  raw_sha256: sha256:e51bb23113cad38ae139e928569e1dc3b4527d8bfda9ffd298cf09f91bfd3131
+  normalized_sha256: sha256:e51bb23113cad38ae139e928569e1dc3b4527d8bfda9ffd298cf09f91bfd3131
+cas_ref: sha256:e51bb23113cad38ae139e928569e1dc3b4527d8bfda9ffd298cf09f91bfd3131
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-7faa8b40d8f7317fc093fc51a5f75fa746485698d22ef6b5a298c13bf9e6f324-fb50947e3039be3f91f1d3463827c54b4a257e9d5ce68dae124ffed209615040
+    - generic-residual-ba23b73b2bcb88df8940bd19740cb72cde390f2311aa1f784fb1d649e5f727b8-3e752fe42c7d7e94e68d0e2c3cdd5eae02a9b420f5d44f347a86c26f80350623
+    - generic-residual-0948d37aeaae54ede6585dd75a7422a9a349aaec70533f59a0f28ffc59f20dc4-23c01b4d043638d7d132431d7157c2d434aad1c6daf3faf5e923977d59161d7a
+    - generic-residual-b9c8d26455bfcb902a4f44d275c07e610fd1a2050f599805e93cc4edb69420cb-83a3a6f7ea7b099be2b63c03a08b8283868866c4b2c4687abd4793dfc4ee5b45

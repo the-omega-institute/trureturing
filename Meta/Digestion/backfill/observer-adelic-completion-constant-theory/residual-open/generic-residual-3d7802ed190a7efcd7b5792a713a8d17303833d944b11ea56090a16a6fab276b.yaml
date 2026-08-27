@@ -1,0 +1,10 @@
+ast_path: section/5-2-Mellin-影像
+fingerprints:
+  raw_sha256: sha256:3d7802ed190a7efcd7b5792a713a8d17303833d944b11ea56090a16a6fab276b
+  normalized_sha256: sha256:3d7802ed190a7efcd7b5792a713a8d17303833d944b11ea56090a16a6fab276b
+cas_ref: sha256:3d7802ed190a7efcd7b5792a713a8d17303833d944b11ea56090a16a6fab276b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

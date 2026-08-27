@@ -1,0 +1,33 @@
+## 定理 212.1：无损通信判据
+
+$$
+\boxed{
+\ker M=\ker\Sigma
+}
+$$
+
+当且仅当：
+
+$$
+f:
+\operatorname{Im}\Sigma
+\to
+\prod_i\operatorname{Im}m_i
+$$
+
+在实际联合行为像上单射。
+
+也就是说，通信不必传输每个原始数据字节，但必须在**实际可发生的联合记录集合**上无损。
+
+若每个：
+
+$$
+f_i
+$$
+
+在 \(\operatorname{Im}\Sigma_i\) 上单射，则这是一个充分条件，但不是必要条件；不同主体的压缩可能互相补偿。
+
+仓库的 least-common-refinement 定理已经给出了两个 quotient completion 的规范融合：任何兼容且满射覆盖两个 quotient 的实现，都唯一满射地下沉到二者 kernel 交所定义的最小共同 refinement。
+
+---
+

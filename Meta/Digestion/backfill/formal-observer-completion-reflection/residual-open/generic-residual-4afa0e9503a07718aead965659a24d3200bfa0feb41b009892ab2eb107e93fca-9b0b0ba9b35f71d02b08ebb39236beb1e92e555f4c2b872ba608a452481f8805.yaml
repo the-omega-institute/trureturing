@@ -1,0 +1,10 @@
+ast_path: section/177-自我报告不能放大内部观察能力/clause/6
+fingerprints:
+  raw_sha256: sha256:4afa0e9503a07718aead965659a24d3200bfa0feb41b009892ab2eb107e93fca
+  normalized_sha256: sha256:4afa0e9503a07718aead965659a24d3200bfa0feb41b009892ab2eb107e93fca
+cas_ref: sha256:4afa0e9503a07718aead965659a24d3200bfa0feb41b009892ab2eb107e93fca
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

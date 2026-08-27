@@ -1,0 +1,30 @@
+# 摘要
+
+一个裸常数
+
+$$
+\kappa\in\mathbb R\ \text{或}\ \mathbb C
+$$
+
+没有独立的数学“意义”。它的意义来自一个有类型的结构记录：
+
+$$
+\boxed{
+\operatorname{Role}(\kappa)
+=
+(
+\text{对象族},
+\text{变换},
+\text{观察者},
+\text{缺陷},
+\text{规范},
+\text{局部位置},
+\text{唯一性证明},
+\text{来源}
+).
+}
+$$
+
+例如，\(\pi\) 可以作为：
+
+* 圆周周期；

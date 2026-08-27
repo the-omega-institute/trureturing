@@ -1,0 +1,91 @@
+# 229. 建议 Lean 模块树
+
+```text
+D5/S3/Observer/ProtocolEvaluation/
+  HomogeneousEvaluation.lean
+  StateRowProtocolColumn.lean
+  DualObserver.lean
+  BiextensionalCollapse.lean
+  BiextensionalUniversalProperty.lean
+
+D5/S3/Observer/ProtocolEvaluation/Galois/
+  DistinctionKernel.lean
+  RelationProtocolGalois.lean
+  ProtocolSemanticClosure.lean
+  ProtocolNoveltyCriterion.lean
+  ClosedObserverConcept.lean
+
+D5/S3/Observer/ProtocolEvaluation/Finite/
+  FiniteProtocolCompression.lean
+  OutputCapacityLowerBound.lean
+  AdaptiveSeparationTree.lean
+
+D5/S3/Observer/ProtocolEvaluation/Linear/
+  LinearObservationOperator.lean
+  StateGramOperator.lean
+  ProtocolGramOperator.lean
+  DualNonzeroSpectrum.lean
+  ParallelObservation.lean
+  SerialPostprocessing.lean
+  TargetObservableSynthesis.lean
+  MinimumNormEstimator.lean
+  LogDetSubmodular.lean
+  MinEigenvalueNotSubmodular.lean
+
+D5/S3/Observer/ProtocolEvaluation/Metric/
+  CanonicalStatePseudometric.lean
+  CanonicalProtocolPseudometric.lean
+  ApproximateKernelComposition.lean
+  UltrametricThresholdEquivalence.lean
+
+D5/S3/Observer/PrimeMetric/
+  WeightedPadicObserverMetric.lean
+  ProductTopologyEquivalence.lean
+  FinitePrimeTailBound.lean
+  FinitePrecisionTailBound.lean
+
+D5/S3/Observer/Realization/
+  CompactBehaviorImage.lean
+  FiniteConsistencyRealization.lean
+  NoncompactGhostBehavior.lean
+  FiniteLinearNoGoWitness.lean
+  RealizationDistanceDuality.lean
+  PostprocessingDefectContraction.lean
+
+D5/S3/Observer/DynamicMinimality/
+  ControlledBehaviorImage.lean
+  EffectiveProtocolCongruence.lean
+  FaithfulProtocolMonoid.lean
+  PredictiveStateImage.lean
+  ConditionalPredictiveUpdate.lean
+  TaskRelativeDecisionQuotient.lean
+
+D5/S3/Observer/SelfReference/
+  ResponseCompletenessCardinality.lean
+  FiniteInternalProtocolNoGo.lean
+  FixedPointFreeSelfEvaluation.lean
+  BiextensionalNotSelfComplete.lean
+```
+
+建议优先闭合的低依赖定理：
+
+```text
+protocol_mem_semanticClosure_iff_kernel_unchanged
+finite_protocol_subfamily_card_le_quotientCard_sub_one
+protocol_output_capacity_lower_bound
+dualGram_nonzeroSpectrum_eq
+parallelGram_eq_add
+serialPostprocessing_gram_le
+targetObservable_iff_mem_range_adjoint
+canonicalObserverPseudometric_kernel
+ultrametric_threshold_is_equivalence
+weightedPadicMetric_finiteWindow_error
+compact_finiteConsistency_realizable
+noncompact_finitelyRealizable_not_realizable
+effectiveProtocolWord_setoid
+responseComplete_card_lower_bound
+fixedPointFree_forbids_weakPointSurjective_selfEvaluation
+```
+
+---
+

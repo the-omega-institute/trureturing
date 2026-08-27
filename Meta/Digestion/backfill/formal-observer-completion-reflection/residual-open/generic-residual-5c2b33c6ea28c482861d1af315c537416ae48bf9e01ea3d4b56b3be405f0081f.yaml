@@ -1,0 +1,10 @@
+ast_path: section/227-四种完成及其非交换性
+fingerprints:
+  raw_sha256: sha256:5c2b33c6ea28c482861d1af315c537416ae48bf9e01ea3d4b56b3be405f0081f
+  normalized_sha256: sha256:5c2b33c6ea28c482861d1af315c537416ae48bf9e01ea3d4b56b3be405f0081f
+cas_ref: sha256:5c2b33c6ea28c482861d1af315c537416ae48bf9e01ea3d4b56b3be405f0081f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,47 @@
+## 62.1 与 Rogers–Ramanujan 的关系应怎样科学检验
+
+目前已经闭合的是：
+
+$$
+\boxed{
+\text{有限 level-5 表示骨架}.
+}
+$$
+
+尚未闭合的是：
+
+$$
+\boxed{
+\text{其具体解析 Theta 坐标是否等于
+Rogers--Ramanujan／Klein 坐标}.
+}
+$$
+
+正确实验程序是：
+
+1. 对 \(D_L\) 的各 coset 构造 theta 分量；
+2. 按七个 \(A_5^{\mathrm{geo}}\) 轨道求和；
+3. 用投影算子提取：
+
+   $$
+   \mathbf1,\ V_3,\ V_3'
+   $$
+
+   三个模分量；
+4. 计算其 \(q\)-展开；
+5. 形成 projective ratios；
+6. 与 Rogers–Ramanujan \(G,H,R\) 及 Klein 二十面体不变量比较；
+7. 若权、level、乘子与有限个 Fourier 系数一致，再使用 Sturm 型界证明恒等。
+
+只有完成这一步，才能正式写下：
+
+$$
+\text{六维准晶体 theta}
+=
+\text{Ramanujan level-5 主函数}.
+$$
+
+目前不能提前把它当作已证结论。
+
+---
+

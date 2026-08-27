@@ -1,0 +1,10 @@
+ast_path: section/4-1-固定点常数
+fingerprints:
+  raw_sha256: sha256:65ca41836853a0d01232f5320b2d6b838562149cfcb2c073ef0b523b7451baaf
+  normalized_sha256: sha256:65ca41836853a0d01232f5320b2d6b838562149cfcb2c073ef0b523b7451baaf
+cas_ref: sha256:65ca41836853a0d01232f5320b2d6b838562149cfcb2c073ef0b523b7451baaf
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,31 @@
+## 47.1 一个 \(K\)-值二次型
+
+令 \(B(x,y)\) 为原六维实内积。
+
+定义：
+
+$$
+\boxed{
+\mathcal H(x,y)
+=
+\frac12B(x,y)
++
+\frac{\sqrt5}{10}B(Jx,y).
+}
+\tag{47.1}
+$$
+
+则：
+
+$$
+\sigma_+\bigl(\mathcal H(x,y)\bigr)
+=
+B(P_\parallel x,P_\parallel y),
+$$
+
+$$
+\sigma_-\bigl(\mathcal H(x,y)\bigr)
+=
+B(P_\perp x,P_\perp y).
+$$
+

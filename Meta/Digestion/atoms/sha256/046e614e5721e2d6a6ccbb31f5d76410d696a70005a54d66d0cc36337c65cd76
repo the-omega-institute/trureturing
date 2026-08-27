@@ -1,0 +1,71 @@
+# 第五十三部　首批形式化顺序
+
+建议继续归入 OACTC，按以下依赖顺序形式化：
+
+```text
+D5/S3/Geometry/GoldenCompletion/
+  ExteriorA4Gram.lean
+  IntegralHodgeOperator.lean
+  ExteriorA4FiveModular.lean
+  DualLatticeSimilarity.lean
+
+D5/S3/Analytic/GoldenCompletion/
+  FiveModularTheta.lean
+  FiveModularPoissonEquation.lean
+  SelfDualHeatPoint.lean
+  IcosahedralEpsteinCompletion.lean
+
+D5/S3/NumberField/GoldenCompletion/
+  GoldenDedekindEulerFactors.lean
+  GoldenRegulator.lean
+  GoldenDedekindResidue.lean
+
+D5/S3/Analytic/GoldenUnitFlow/
+  AnisotropicQuadraticForm.lean
+  RegulatorPeriodicity.lean
+  CoshOrbitDecomposition.lean
+  RegulatorFourierTransform.lean
+  HeckeModeExtraction.lean
+  ZeroModeDedekindBridge.lean
+
+D5/S3/Analytic/HilbertGolden/
+  GoldenModuleRankThree.lean
+  GoldenValuedQuadraticForm.lean
+  HilbertThetaObserver.lean
+  IcosahedralInvariantBridge.lean
+
+D5/S3/Observer/ArithmeticTomography/
+  PrimeRegulatorTimeObserver.lean
+  RegulatorModeRefinement.lean
+```
+
+最优先闭合的核心链是：
+
+$$
+\boxed{
+\Lambda^2A_4
+\to
+5\text{-模格}
+\to
+\Theta\text{ 自对偶}
+\to
+\text{Epstein 完成}
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\mathbb Q(\sqrt5)\text{ 单位流}
+\to
+\eta\text{ 周期}
+\to
+\omega_m=\frac{\pi m}{\log\varphi}
+\to
+L(s,\chi_m).
+}
+$$
+
+---
+

@@ -1,0 +1,11 @@
+## 84.1 Non-sticky 分支
+
+如果潜在负 Weil 模式分散于多个：
+
+$$
+(p,m,t,\alpha)
+$$
+
+通道，则可以同时利用：
+
+* prime-channel 正交；

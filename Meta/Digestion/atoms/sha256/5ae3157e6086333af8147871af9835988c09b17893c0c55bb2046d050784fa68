@@ -1,0 +1,73 @@
+# 223. 目标相对近似充分性
+
+对目标：
+
+$$
+T:X\to Z
+$$
+
+给定目标度量：
+
+$$
+d_Z.
+$$
+
+若存在：
+
+$$
+L<\infty
+$$
+
+使：
+
+$$
+d_Z(Tx,Ty)
+\le
+L\,d_{\mathfrak O}(x,y),
+$$
+
+则观察者对目标具有 Lipschitz 稳健充分性。
+
+这比：
+
+$$
+K_{\mathfrak O}\subseteq K_T
+$$
+
+更强。
+
+后者只说：
+
+$$
+d_{\mathfrak O}=0
+\Longrightarrow
+d_Z=0.
+$$
+
+前者进一步控制：
+
+$$
+\text{小观察误差}
+\Longrightarrow
+\text{小目标误差}.
+$$
+
+因此完整性应分成：
+
+$$
+\boxed{
+\begin{aligned}
+\text{exact sufficiency}
+&:\ker包含;\\
+\text{stable sufficiency}
+&:\text{正分离常数};\\
+\text{statistical sufficiency}
+&:\text{有限样本误差界};\\
+\text{physical sufficiency}
+&:\text{协议可实现}.
+\end{aligned}
+}
+$$
+
+---
+

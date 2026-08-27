@@ -1,0 +1,15 @@
+## 定理 222.1（距离—见证对偶）
+
+对任意形式签名 $y$：
+
+$$
+\boxed{
+\operatorname{dist}(y,I)
+=
+\sup_{\|c\|_*\le1}
+\left[
+\langle c,y\rangle-h_I(c)
+\right].
+}
+$$
+

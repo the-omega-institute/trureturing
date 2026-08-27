@@ -1,0 +1,14 @@
+ast_path: section/第四十部-pi-与-sqrt5-的-Poisson-完成
+fingerprints:
+  raw_sha256: sha256:9fd6b3ca186762920c34facd4837e6719eb6e1750b77a89cd2360834af8a804b
+  normalized_sha256: sha256:9fd6b3ca186762920c34facd4837e6719eb6e1750b77a89cd2360834af8a804b
+cas_ref: sha256:9fd6b3ca186762920c34facd4837e6719eb6e1750b77a89cd2360834af8a804b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-288715562a72b9a5c79aa2a30172c86b1721631d3bc930b88d633fc11cf363a6-8c907358956caf30a16352e90da34a67eaec293b6955b27cb0235763f57b9efb
+    - generic-residual-092bf0859913318bc5e3bede3123e07c0549d1695fa3ce9b8d3178395355f060-afe357da43f06792667b2a79e8b281d8dae07bedc42fea26f6098cbb9696cd8c
+    - generic-residual-c4b3997283b49194c92955cc4367b657c25b51e9eeca738d07db0a886899520b-0141bec85d264d39b71d82a4061276d9341f1c135f7897f73141d7b8dae43d37

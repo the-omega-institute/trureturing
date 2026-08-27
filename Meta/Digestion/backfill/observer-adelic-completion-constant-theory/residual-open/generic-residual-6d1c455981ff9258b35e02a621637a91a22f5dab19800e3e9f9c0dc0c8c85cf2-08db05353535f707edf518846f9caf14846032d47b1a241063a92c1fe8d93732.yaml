@@ -1,0 +1,10 @@
+ast_path: section/1-2-常数角色证书/clause/2
+fingerprints:
+  raw_sha256: sha256:6d1c455981ff9258b35e02a621637a91a22f5dab19800e3e9f9c0dc0c8c85cf2
+  normalized_sha256: sha256:6d1c455981ff9258b35e02a621637a91a22f5dab19800e3e9f9c0dc0c8c85cf2
+cas_ref: sha256:6d1c455981ff9258b35e02a621637a91a22f5dab19800e3e9f9c0dc0c8c85cf2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

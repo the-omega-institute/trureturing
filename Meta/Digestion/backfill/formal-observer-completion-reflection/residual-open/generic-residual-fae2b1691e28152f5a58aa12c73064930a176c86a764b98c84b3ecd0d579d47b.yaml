@@ -1,0 +1,10 @@
+ast_path: section/有限集合实例
+fingerprints:
+  raw_sha256: sha256:fae2b1691e28152f5a58aa12c73064930a176c86a764b98c84b3ecd0d579d47b
+  normalized_sha256: sha256:fae2b1691e28152f5a58aa12c73064930a176c86a764b98c84b3ecd0d579d47b
+cas_ref: sha256:fae2b1691e28152f5a58aa12c73064930a176c86a764b98c84b3ecd0d579d47b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

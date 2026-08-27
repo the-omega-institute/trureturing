@@ -1,0 +1,13 @@
+ast_path: 定理/249.1
+fingerprints:
+  raw_sha256: sha256:e47a96662303318baeba910148f617eeb27762451e9af5c070bae5193df4b275
+  normalized_sha256: sha256:e47a96662303318baeba910148f617eeb27762451e9af5c070bae5193df4b275
+cas_ref: sha256:e47a96662303318baeba910148f617eeb27762451e9af5c070bae5193df4b275
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-35aac6cf30946d33cbb2f58c2bc077deed1888908755ad7e779aeda21e87e33d-89f6f50b0de1af8cc3321ade8905893b6f5e327fc0a7cb81c1d01c906b6114bb
+    - generic-residual-fb744eb26242de4a598006c34662c5a0a1d2fcd3aebe2b31f28eaa7456e2342b-09d17651e7001d8f0eaf3a80f18a43de43917523d10ec9630f2bcea5ace15b6a

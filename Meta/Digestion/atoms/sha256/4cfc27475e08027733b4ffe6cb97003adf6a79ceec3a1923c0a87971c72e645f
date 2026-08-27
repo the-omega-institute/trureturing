@@ -1,0 +1,82 @@
+# 207. Completion 是反射，而 kernel completion 是内算子
+
+定义观察者精化序：
+
+$$
+q\preceq r
+\iff
+r\text{ 比 }q\text{ 更细}.
+$$
+
+等价于：
+
+$$
+K_r\subseteq K_q.
+$$
+
+给定目标族 \(\mathcal T\)，定义：
+
+$$
+C_{\mathcal T}(q)
+=
+q\vee\mathcal T.
+$$
+
+即联合记录：
+
+$$
+x\longmapsto
+\bigl(q(x),(T_\alpha(x))_\alpha\bigr).
+$$
+
+对任何已经足以决定 \(\mathcal T\) 的观察者 \(r\)：
+
+$$
+\boxed{
+C_{\mathcal T}(q)\preceq r
+\iff
+q\preceq r.
+}
+$$
+
+所以：
+
+$$
+C_{\mathcal T}
+$$
+
+是从所有观察者到“\(\mathcal T\)-充分观察者”子类的反射。
+
+而状态关系侧：
+
+$$
+R\longmapsto
+\operatorname{CongKernel}_T(R)
+$$
+
+是：
+
+* 单调；
+* 收缩；
+* 幂等；
+
+的 interior operator。
+
+因此：
+
+$$
+\boxed{
+\text{interface completion 是 closure/reflection，}
+}
+$$
+
+$$
+\boxed{
+\text{kernel completion 是 interior/coreflection}.
+}
+$$
+
+它们由反序关系互相转换。
+
+---
+

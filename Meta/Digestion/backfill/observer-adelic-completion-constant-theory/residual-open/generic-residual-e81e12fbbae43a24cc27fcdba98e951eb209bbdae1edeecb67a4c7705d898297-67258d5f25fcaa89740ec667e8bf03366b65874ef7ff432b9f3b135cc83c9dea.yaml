@@ -1,0 +1,10 @@
+ast_path: section/79-1-为什么需要-order-10/clause/2
+fingerprints:
+  raw_sha256: sha256:e81e12fbbae43a24cc27fcdba98e951eb209bbdae1edeecb67a4c7705d898297
+  normalized_sha256: sha256:e81e12fbbae43a24cc27fcdba98e951eb209bbdae1edeecb67a4c7705d898297
+cas_ref: sha256:e81e12fbbae43a24cc27fcdba98e951eb209bbdae1edeecb67a4c7705d898297
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

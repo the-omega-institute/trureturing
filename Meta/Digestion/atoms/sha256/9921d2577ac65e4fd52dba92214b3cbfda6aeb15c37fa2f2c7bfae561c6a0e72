@@ -1,0 +1,72 @@
+# 第三十三部　结构常数角色的连续谱系
+
+在这一统一结构中，各常数承担不同类型的完成任务：
+
+$$
+\boxed{
+\begin{array}{c|l}
+5&
+\text{五阶对称、数域判别式与 level}\\
+\sqrt5&
+\text{Hodge 对偶的积分化因子}\\
+\varphi&
+\text{最大整数阶的正特征值与 inflation}\\
+\varphi'&
+\text{内部残差的共轭收缩率}\\
+2&
+\text{非最大阶到最大阶的 conductor 修复}\\
+6&
+\text{二阶观察维数及限制标量维数}\\
+e&
+\text{模参数 }q=e^{2\pi i\tau}\text{ 的指数流}\\
+\pi&
+\text{level-5 模对象进入 Fourier--Mellin 无穷位时的规范}
+\end{array}
+}
+$$
+
+这说明特殊常数共同出现时，不能简单写成：
+
+$$
+\pi,e,\varphi,5,6
+\text{ 彼此神秘相关}.
+$$
+
+科学的表达应是：
+
+$$
+\boxed{
+\text{它们分别记录同一完成路径中的不同步骤。}
+}
+$$
+
+完整路径为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{五根}
+&\to
+V_4\\
+&\to
+\Lambda^2V_4\\
+&\to
+J=\sqrt5*\\
+&\to
+\Phi=(I+J)/2\\
+&\to
+E_\parallel\oplus E_\perp\\
+&\to
+W_{\max}\\
+&\to
+\text{cut-and-project}\\
+&\to
+\text{level-5 模图表}\\
+&\to
+\text{Fourier--Mellin 完成}.
+\end{aligned}
+}
+$$
+
+---
+

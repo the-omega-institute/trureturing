@@ -1,0 +1,25 @@
+* 无法保持普通整数晶格的对称。
+
+因此，单一嵌入不是错误，而是**尚未完成**。
+
+定义全部 Archimedean 嵌入的联合观察：
+
+$$
+\boxed{
+\iota_\Sigma:
+V
+\longrightarrow
+\prod_{\sigma\in\Sigma_\infty}V_\sigma.
+}
+$$
+
+如果 \(M\subset V\) 是秩 \(r\) 的 \(\mathcal O_K\)-模，则 \(\iota_\Sigma(M)\) 是实维数
+
+$$
+r[K:\mathbb Q]
+$$
+
+的格。
+
+---
+

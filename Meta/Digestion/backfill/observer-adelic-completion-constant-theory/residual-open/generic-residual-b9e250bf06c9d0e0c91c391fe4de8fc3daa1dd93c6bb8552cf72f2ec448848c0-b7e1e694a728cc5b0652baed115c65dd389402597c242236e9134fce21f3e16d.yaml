@@ -1,0 +1,10 @@
+ast_path: section/43-3-密度-调节子留数/clause/5
+fingerprints:
+  raw_sha256: sha256:b9e250bf06c9d0e0c91c391fe4de8fc3daa1dd93c6bb8552cf72f2ec448848c0
+  normalized_sha256: sha256:b9e250bf06c9d0e0c91c391fe4de8fc3daa1dd93c6bb8552cf72f2ec448848c0
+cas_ref: sha256:b9e250bf06c9d0e0c91c391fe4de8fc3daa1dd93c6bb8552cf72f2ec448848c0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

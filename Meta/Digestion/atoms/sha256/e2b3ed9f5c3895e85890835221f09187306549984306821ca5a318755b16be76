@@ -1,0 +1,37 @@
+# 第三十部　黄金 inflation 是显—隐残差运输
+
+由：
+
+$$
+\Phi P_\parallel
+=
+\varphi P_\parallel,
+$$
+
+$$
+\Phi P_\perp
+=
+\varphi'P_\perp,
+$$
+
+得到：
+
+$$
+\boxed{
+q_\parallel(\Phi x)
+=
+\varphi q_\parallel(x),
+}
+$$
+
+$$
+\boxed{
+q_\perp(\Phi x)
+=
+\varphi' q_\perp(x).
+}
+$$
+
+所以每次 inflation：
+
+* 可见物理尺度扩大 \(\varphi\)；

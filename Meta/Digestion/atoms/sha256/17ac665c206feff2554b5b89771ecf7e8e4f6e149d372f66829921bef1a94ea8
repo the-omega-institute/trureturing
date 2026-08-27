@@ -1,0 +1,46 @@
+# 183. 统一加权 Gram 定理
+
+对有限维状态差空间 \(V\)，设每个协议 \(\pi\) 给出线性读出：
+
+$$
+C_\pi:V\to Y_\pi.
+$$
+
+取严格正权重：
+
+$$
+w_\pi>0.
+$$
+
+定义观察 Gram 算子：
+
+$$
+\boxed{
+W_{\mathfrak O}
+=
+\sum_{\pi}
+w_\pi C_\pi^*C_\pi.
+}
+$$
+
+若求和收敛，则对任意状态差 \(v\)：
+
+$$
+\boxed{
+\langle v,W_{\mathfrak O}v\rangle
+=
+\sum_\pi
+w_\pi\|C_\pi v\|^2.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\ker W_{\mathfrak O}
+=
+\bigcap_\pi\ker C_\pi.
+}
+$$
+

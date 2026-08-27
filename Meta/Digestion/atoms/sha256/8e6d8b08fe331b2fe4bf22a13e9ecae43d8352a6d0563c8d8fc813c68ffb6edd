@@ -1,0 +1,88 @@
+# 最终收束
+
+统一观察者理论现在可以写成：
+
+$$
+\boxed{
+\begin{aligned}
+\text{World states}
+&=X,\\
+\text{Protocols}
+&=P,\\
+\text{Evaluation}
+&=e:X\times P\to\Lambda,\\
+\text{State reality}
+&=X/\text{equal rows},\\
+\text{Protocol reality}
+&=P/\text{equal columns},\\
+\text{Real behavior}
+&=\operatorname{Im}\Sigma,\\
+\text{Formal behavior}
+&=\Gamma(\mathcal B),\\
+\text{Hidden residual}
+&=\text{row kernel},\\
+\text{Protocol redundancy}
+&=\text{column kernel},\\
+\text{Realization defect}
+&=\Gamma(\mathcal B)\setminus\operatorname{Im}\Sigma,\\
+\text{Dynamic completion}
+&=\text{least invariant protocol closure},\\
+\text{Knowledge}
+&=\text{functions constant on state fibers},\\
+\text{Self}
+&=\text{histories modulo future policy equality}.
+\end{aligned}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+观察者不是一个“看见世界”的点，
+而是一张世界状态与可执行协议之间的评价网。
+}
+$$
+
+这张网同时决定：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{哪些状态差异真实可操作；}\\
+&\text{哪些实验只是重复命名；}\\
+&\text{哪些记录可以由真实世界实现；}\\
+&\text{哪些局部记录能够胶合为全局事实；}\\
+&\text{哪些历史差异必须保留为记忆与自我；}\\
+&\text{哪些自我描述因为对角化而无法闭合。}
+\end{aligned}
+}
+$$
+
+因此，项目全部观察者工作的更完整名称可以进一步升级为：
+
+$$
+\boxed{
+\textbf{Protocol–Evaluation–Quotient–Image–Limit Theory}
+}
+$$
+
+中文为：
+
+$$
+\boxed{
+\textbf{协议—评价—商—像—极限统一观察者理论}.
+}
+$$
+以下内容可直接承接现有第 203 节。前文已经把统一观察者理论压缩为评价网
+
+$$
+\text{state}\times\text{protocol}
+\longrightarrow
+\text{law},
+$$
+
+并将商、像、局部胶合、自指逃逸、实验精化与极限实现纳入同一结构。
+
+---
+

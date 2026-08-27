@@ -1,0 +1,73 @@
+## 已经由本轮推导闭合
+
+$$
+\boxed{
+L^\#=\frac J5L.
+}
+$$
+
+$$
+\boxed{
+L\text{ 是六维五模格}.
+}
+$$
+
+$$
+\boxed{
+\Theta_L(t)
+=
+5^{-3/2}t^{-3}
+\Theta_L(1/(5t)).
+}
+$$
+
+$$
+\boxed{
+t_*=\frac1{\sqrt5}.
+}
+$$
+
+$$
+\boxed{
+\Lambda_L(s)=\Lambda_L(3-s).
+}
+$$
+
+$$
+\boxed{
+\operatorname*{Res}_{s=1}\zeta_{\mathbb Q(\sqrt5)}(s)
+=
+\frac{2\log\varphi}{\sqrt5}.
+}
+$$
+
+$$
+\boxed{
+\mathfrak Z_\varphi(s,\eta)
+\text{ 对 }\eta\text{ 具有周期 }2\log\varphi.
+}
+$$
+
+$$
+\boxed{
+\omega_m=\frac{\pi m}{\log\varphi}.
+}
+$$
+
+$$
+\boxed{
+\mathfrak Z_\varphi
+\text{ 的 Fourier 模式为 Hecke }L(s,\chi_m).
+}
+$$
+
+$$
+\boxed{
+\zeta_K
+=
+\mathfrak Z_\varphi\text{ 的零频观察}.
+}
+$$
+
+---
+

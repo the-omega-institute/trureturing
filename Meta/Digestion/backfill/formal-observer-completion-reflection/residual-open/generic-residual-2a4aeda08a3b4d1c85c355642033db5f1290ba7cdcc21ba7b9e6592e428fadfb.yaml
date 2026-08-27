@@ -1,0 +1,10 @@
+ast_path: section/第一层-零误差分离
+fingerprints:
+  raw_sha256: sha256:2a4aeda08a3b4d1c85c355642033db5f1290ba7cdcc21ba7b9e6592e428fadfb
+  normalized_sha256: sha256:2a4aeda08a3b4d1c85c355642033db5f1290ba7cdcc21ba7b9e6592e428fadfb
+cas_ref: sha256:2a4aeda08a3b4d1c85c355642033db5f1290ba7cdcc21ba7b9e6592e428fadfb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

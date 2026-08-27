@@ -1,0 +1,10 @@
+ast_path: section/199-协议不是集合-而应组织成范畴/clause/2
+fingerprints:
+  raw_sha256: sha256:abd0652f8337fff1619eddff5acf078b1c21f760454971941a2d6e431f193e22
+  normalized_sha256: sha256:abd0652f8337fff1619eddff5acf078b1c21f760454971941a2d6e431f193e22
+cas_ref: sha256:abd0652f8337fff1619eddff5acf078b1c21f760454971941a2d6e431f193e22
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

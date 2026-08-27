@@ -1,0 +1,10 @@
+ast_path: section/196-1-状态-kernel-缺陷
+fingerprints:
+  raw_sha256: sha256:aff8162601f8446dfcfeef35a54ee6e9808fb5e2aa6f6033bac443113237ce39
+  normalized_sha256: sha256:aff8162601f8446dfcfeef35a54ee6e9808fb5e2aa6f6033bac443113237ce39
+cas_ref: sha256:aff8162601f8446dfcfeef35a54ee6e9808fb5e2aa6f6033bac443113237ce39
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

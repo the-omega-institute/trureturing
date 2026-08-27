@@ -1,0 +1,10 @@
+## 定义 223.2（协议词同余）
+
+$$
+u\equiv_{\mathrm{act}}v
+\iff
+\forall z\in Q_\infty,
+\quad
+z\cdot u=z\cdot v.
+$$
+

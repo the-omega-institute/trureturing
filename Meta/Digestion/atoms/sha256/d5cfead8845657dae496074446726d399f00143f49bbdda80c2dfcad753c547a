@@ -1,0 +1,38 @@
+# 212. 通信是否实现完整观察者融合
+
+每个观察者拥有行为：
+
+$$
+\Sigma_i:X\to B_i.
+$$
+
+但实际广播的消息可能是压缩：
+
+$$
+m_i=f_i\circ\Sigma_i.
+$$
+
+联合消息：
+
+$$
+M(x)
+=
+\bigl(m_i(x)\bigr)_i.
+$$
+
+完整联合行为：
+
+$$
+\Sigma(x)
+=
+\bigl(\Sigma_i(x)\bigr)_i.
+$$
+
+显然：
+
+$$
+\ker\Sigma
+\subseteq
+\ker M.
+$$
+

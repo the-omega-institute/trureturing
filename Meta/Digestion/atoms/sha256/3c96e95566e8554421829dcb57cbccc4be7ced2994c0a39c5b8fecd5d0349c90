@@ -1,0 +1,42 @@
+## 定理 227.1（连续动力保持行为闭包）
+
+设行为空间 $B$ 上的动作
+
+$$
+S_a:B\to B
+$$
+
+连续，并且
+
+$$
+S_a(\Sigma(X))
+\subseteq
+\Sigma(X).
+$$
+
+则
+
+$$
+\boxed{
+S_a(\overline{\Sigma(X)})
+\subseteq
+\overline{\Sigma(X)}.
+}
+$$
+
+### 证明
+
+连续映射满足
+
+$$
+S_a(\overline I)
+\subseteq
+\overline{S_a(I)}
+\subseteq
+\overline I.
+$$
+
+∎
+
+所以在连续条件下，理想极限行为自动继承动力学。
+

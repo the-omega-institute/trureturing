@@ -1,0 +1,15 @@
+## 推论 208.1（严格新颖性）
+
+$$
+\boxed{
+K(Q\cup\{p\})
+\subsetneq
+K(Q)
+\iff
+p\notin\operatorname{Cl}_P(Q).
+}
+$$
+
+因此一个协议是否真正增加认识能力，不由下列因素决定：
+
+* 名称是否新；

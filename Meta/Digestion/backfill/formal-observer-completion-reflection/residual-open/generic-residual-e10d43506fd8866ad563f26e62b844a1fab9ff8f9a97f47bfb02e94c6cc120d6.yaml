@@ -1,0 +1,15 @@
+ast_path: section/继续-统一观察者演算的闭合形式
+fingerprints:
+  raw_sha256: sha256:e10d43506fd8866ad563f26e62b844a1fab9ff8f9a97f47bfb02e94c6cc120d6
+  normalized_sha256: sha256:e10d43506fd8866ad563f26e62b844a1fab9ff8f9a97f47bfb02e94c6cc120d6
+cas_ref: sha256:e10d43506fd8866ad563f26e62b844a1fab9ff8f9a97f47bfb02e94c6cc120d6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-5c0498ba1b3f698a007bfe0b398a86484294569f3018e1788844019acfa986af-6aef61f50a4d1767f7e56da4ae7b719dc3a25631d5f6daa1ae51d8f9255b07b0
+    - generic-residual-5f72124fc10220db6ee0aefdf58e23d3ae4a6ea0a1e15b044a983fe77362eae1-48fdb3f3b62237defbac0190762dc95d79ddb6ab932bd7ee0c5df034d0c74128
+    - generic-residual-c96b38741811013b58051f7de251a1885b3c993a482aacc5ea32a4fe5d8d7216-1cf492adc701df607606def6e6ef347ef1d0d09c3d3b7e4bed4a6897cd545394
+    - generic-residual-d43be5996c6f9538267cf0b6f2c95ea22b29d5b1e43839d9ae79e99f22d19c8b-da12f1ef59b096620c15a7d3b49b89507b70bef1b47c4f67598cd5923f4b9bbd

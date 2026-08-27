@@ -1,0 +1,53 @@
+## 40.3 自对偶 Gibbs 能量恒等式
+
+定义自对偶温度下的概率分布：
+
+$$
+\mathbb P_*(x)
+=
+\frac{
+e^{-\pi\langle x,x\rangle/\sqrt5}
+}{
+\Theta_L(1/\sqrt5)
+}.
+$$
+
+由
+
+$$
+\frac{d}{dx}H_L(x)\Big|_{x=0}=0
+$$
+
+得到：
+
+$$
+\boxed{
+\frac{\pi}{\sqrt5}
+\mathbb E_*
+\bigl[\langle x,x\rangle\bigr]
+=
+\frac32.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathbb E_*
+\bigl[\langle x,x\rangle\bigr]
+=
+\frac{3\sqrt5}{2\pi}.
+}
+\tag{40.3}
+$$
+
+这是一条真正把
+
+$$
+\pi,\qquad \sqrt5,\qquad \frac32
+$$
+
+放入同一结构中的恒等式：
+
+* \(\pi\)：Fourier 完成；

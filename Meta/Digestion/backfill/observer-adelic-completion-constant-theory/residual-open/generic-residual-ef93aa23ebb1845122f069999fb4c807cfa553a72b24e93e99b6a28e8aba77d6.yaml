@@ -1,0 +1,15 @@
+ast_path: section/36-4-RH-桥仍然开放
+fingerprints:
+  raw_sha256: sha256:ef93aa23ebb1845122f069999fb4c807cfa553a72b24e93e99b6a28e8aba77d6
+  normalized_sha256: sha256:ef93aa23ebb1845122f069999fb4c807cfa553a72b24e93e99b6a28e8aba77d6
+cas_ref: sha256:ef93aa23ebb1845122f069999fb4c807cfa553a72b24e93e99b6a28e8aba77d6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-34c11702d78ee83d5ad08c984c41cc442ede0e315317da05efa9f991703e1817-9bf2d59f79d111b8409b6ed3265f9e53148edc7510de326bd511ea8e91f38c1d
+    - generic-residual-68bdae0ee0e9a76dcebb53141ed3cad3888b81e7186d3d73ff56638c0593dfc9-40a69d64ecc2f4de7e17f12c0131196a85f418e89725e386d2ba9c48feac61f8
+    - generic-residual-23915160ba3202afbff1b9f1494045836bae4534374ca0ba1a99671d4f76a2ac-3f29f07bac51b1aafa6bbd7603a31015ebee2f670fdf3b48c44313c6da799d29
+    - generic-residual-13f5276ab4faaff274ab38faea439197fe305a49b0268f7240e761a60fc15ae7-b6628baefe4dc170e4a3868f85af3d1072417711a6fd5d640d4971c1a88c2b99

@@ -1,0 +1,89 @@
+## 定理 11.1：可见 Gaussian 质量
+
+$$
+\boxed{
+S(x)
+=
+\frac{e^{x/2}}{\sqrt x}
+\int_0^{\sqrt x}e^{-t^2/2}\,dt.
+}
+$$
+
+### 证明
+
+右侧在 \(x=0\) 附近展开，或验证其满足：
+
+$$
+2xS'(x)+(1-x)S(x)=1,
+$$
+
+且 \(S(0)=1\)。该方程的解析解唯一，而左侧级数也满足同一方程与初值。∎
+
+定义尾部：
+
+$$
+T(x)
+=
+\frac{e^{x/2}}{\sqrt x}
+\int_{\sqrt x}^{\infty}e^{-t^2/2}\,dt.
+$$
+
+于是：
+
+$$
+S(x)+T(x)
+=
+\frac{e^{x/2}}{\sqrt x}
+\int_0^\infty e^{-t^2/2}\,dt.
+$$
+
+而：
+
+$$
+\int_0^\infty e^{-t^2/2}\,dt
+=
+\sqrt{\frac\pi2}.
+$$
+
+所以：
+
+$$
+\boxed{
+S(x)+T(x)
+=
+\sqrt{\frac{\pi e^x}{2x}}.
+}
+\tag{RGC}
+$$
+
+Ramanujan 第 541 题将这个尾部 \(T(x)\) 表示为 Legendre 型连分数；该恒等式是其第二本笔记第 12 章 Entry 43 的特例，并可由不完全 Gamma 恒等式与 Legendre 连分数推导。([dokumen.pub][2])
+
+因此：
+
+$$
+\boxed{
+\text{级数}
++
+\text{连分数尾部}
+=
+\text{Gaussian 积分完成}.
+}
+$$
+
+这里每个常数的角色独立：
+
+$$
+\boxed{
+\begin{aligned}
+\pi&:\text{Gaussian 总质量};\\
+e^{x/2}&:\text{指数流标准化};\\
+x^{-1/2}&:\text{尺度变换 Jacobian};\\
+\text{连分数}&:\text{无限尾部的递归压缩器}.
+\end{aligned}
+}
+$$
+
+所以 \(\sqrt{\pi e/2}\) 不是一个单一角色的常数，而是多个完成步骤的复合连接系数。
+
+---
+

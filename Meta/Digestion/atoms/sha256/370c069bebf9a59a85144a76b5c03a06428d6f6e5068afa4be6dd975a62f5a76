@@ -1,0 +1,47 @@
+## 各领域实例
+
+确定性自动机：
+
+$$
+Q_{\mathrm{core}}
+=
+\text{Myhill–Nerode states}.
+$$
+
+线性系统：
+
+$$
+Q_{\mathrm{core}}
+=
+\mathcal R/
+(\mathcal R\cap\mathcal N).
+$$
+
+随机过程：
+
+$$
+Q_{\mathrm{core}}
+=
+\text{predictive causal states}.
+$$
+
+量子顺序实验：
+
+$$
+Q_{\mathrm{core}}
+=
+\frac{
+\text{reachable quantum states}
+}{
+\text{equal instrument-word laws}
+}.
+$$
+
+策略系统：
+
+$$
+Q_{\mathrm{core}}
+=
+\text{policy-sufficient self states}.
+$$
+

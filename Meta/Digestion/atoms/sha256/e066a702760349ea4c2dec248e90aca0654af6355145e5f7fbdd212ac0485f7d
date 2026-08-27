@@ -1,0 +1,14 @@
+## 推论 214.1
+
+“目标属于可见 span”只回答能否估计；伪逆二次型回答估计有多脆弱：
+
+$$
+\boxed{
+\text{exact target visibility}
++
+\text{target-specific condition cost}.
+}
+$$
+
+---
+

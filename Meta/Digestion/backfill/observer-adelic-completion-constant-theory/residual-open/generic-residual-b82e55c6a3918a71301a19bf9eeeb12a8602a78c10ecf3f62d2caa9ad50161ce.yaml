@@ -1,0 +1,10 @@
+ast_path: section/74-1-奇置换交换两个-isotropic-通道
+fingerprints:
+  raw_sha256: sha256:b82e55c6a3918a71301a19bf9eeeb12a8602a78c10ecf3f62d2caa9ad50161ce
+  normalized_sha256: sha256:b82e55c6a3918a71301a19bf9eeeb12a8602a78c10ecf3f62d2caa9ad50161ce
+cas_ref: sha256:b82e55c6a3918a71301a19bf9eeeb12a8602a78c10ecf3f62d2caa9ad50161ce
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

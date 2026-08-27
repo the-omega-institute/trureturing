@@ -1,0 +1,18 @@
+## 并行加入
+
+$$
+\Sigma(x)
+=
+(\Sigma_1(x),\Sigma_2(x))
+$$
+
+给出：
+
+$$
+\boxed{
+K_\Sigma
+=
+K_{\Sigma_1}\cap K_{\Sigma_2}.
+}
+$$
+

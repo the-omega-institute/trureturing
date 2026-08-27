@@ -1,0 +1,65 @@
+* Klein 的二十面体不变量可给出该域上的 Hilbert 模形式坐标。([numdam.org][3])
+
+因此可以定义四图表：
+
+$$
+\boxed{
+\mathfrak A_{\mathrm{gold}}
+=
+\left(
+\mathcal A_{\mathrm{lattice}},
+\mathcal A_{\mathrm{Hilbert}},
+\mathcal A_{\mathrm{Klein}},
+\mathcal A_{\mathrm{Ramanujan}}
+\right).
+}
+$$
+
+其中：
+
+$$
+\mathcal A_{\mathrm{lattice}}
+=
+\text{六维 Minkowski/准晶体图表},
+$$
+
+$$
+\mathcal A_{\mathrm{Hilbert}}
+=
+\text{两实嵌入 Hilbert 模图表},
+$$
+
+$$
+\mathcal A_{\mathrm{Klein}}
+=
+\text{二十面体不变量图表},
+$$
+
+$$
+\mathcal A_{\mathrm{Ramanujan}}
+=
+\text{level-5 }q\text{-级数、乘积与连分数图表}.
+$$
+
+已知 Klein 二十面体不变量确实能够生成 \(\mathbb Q(\sqrt5)\) 的 Hilbert 模形式，这表明“二十面体—黄金域—两变量模形式”不是比喻。([numdam.org][3])
+
+仍待建立的具体桥是：
+
+$$
+\boxed{
+\text{项目所构造的 }\Theta_{\mathcal H}
+\quad\longrightarrow\quad
+\text{已知 Klein/Hilbert 生成元}.
+}
+$$
+
+科学检验方式是：
+
+1. 计算若干 Hilbert \(q\)-展开；
+2. 比较权、特征与对称性；
+3. 在对角或 Humbert/Hirzebruch–Zagier 曲线上限制；
+4. 检验是否出现 Rogers–Ramanujan 或其他 level-5 函数；
+5. 用 Sturm 型有限系数判据证明相等，而不是数值拟合。
+
+---
+

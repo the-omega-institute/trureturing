@@ -1,0 +1,64 @@
+# 第七十四部　Ramified 5-dissection：为什么恰好出现六状态
+
+定义七个形式 Theta 分量：
+
+$$
+\boxed{
+\Theta_\alpha(X)
+=
+\sum_{\substack{x\in L\\\rho_5(x)\in O_\alpha}}
+X^{\langle x,x\rangle}.
+}
+\tag{74.1}
+$$
+
+由能量—边界选择律：
+
+$$
+q_R(\rho_5(x))
+\equiv2\langle x,x\rangle\pmod5,
+$$
+
+所以每个非零边界轨道只允许一个固定的模 \(5\) 能量余数：
+
+$$
+\begin{array}{c|c}
+\text{轨道}&n\bmod5\\
+\hline
+O_0,I_+,I_-&0\\
+Q_2&1\\
+Q_4&2\\
+Q_1&3\\
+Q_3&4
+\end{array}
+\tag{74.2}
+$$
+
+因此：
+
+$$
+\Theta_{Q_2}(X)=X\,F_1(X^5),
+$$
+
+$$
+\Theta_{Q_4}(X)=X^2F_2(X^5),
+$$
+
+$$
+\Theta_{Q_1}(X)=X^3F_3(X^5),
+$$
+
+$$
+\Theta_{Q_3}(X)=X^4F_4(X^5).
+$$
+
+而：
+
+$$
+\Theta_{O_0},\Theta_{I_+},\Theta_{I_-}
+$$
+
+都只含 \(X^{5n}\)。
+
+---
+

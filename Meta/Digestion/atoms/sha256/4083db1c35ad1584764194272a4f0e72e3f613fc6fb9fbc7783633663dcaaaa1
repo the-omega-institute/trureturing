@@ -1,0 +1,41 @@
+## 229.2 Realization repair
+
+找到一个形式兼容行为：
+
+$$
+b\in B_{\mathrm{formal}}
+$$
+
+但：
+
+$$
+b\notin\operatorname{Im}\Sigma_{\mathfrak O_n}.
+$$
+
+修复方式有两种：
+
+1. 扩大世界／模型类，使 \(b\) 可实现；
+2. 加强 admissibility 条件，证明 \(b\) 根本不是合法形式行为。
+
+这修复 image defect。
+
+因此科学进步不是单轴的“知道更多”。
+
+它同时沿两个方向运动：
+
+$$
+\boxed{
+\text{缩小 observational kernel}
+}
+$$
+
+与：
+
+$$
+\boxed{
+\text{校正 realized image}.
+}
+$$
+
+---
+

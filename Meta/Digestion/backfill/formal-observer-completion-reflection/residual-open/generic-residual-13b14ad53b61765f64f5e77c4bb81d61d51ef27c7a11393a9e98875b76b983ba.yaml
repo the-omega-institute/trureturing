@@ -1,0 +1,10 @@
+ast_path: section/230-追加严格非主张
+fingerprints:
+  raw_sha256: sha256:13b14ad53b61765f64f5e77c4bb81d61d51ef27c7a11393a9e98875b76b983ba
+  normalized_sha256: sha256:13b14ad53b61765f64f5e77c4bb81d61d51ef27c7a11393a9e98875b76b983ba
+cas_ref: sha256:13b14ad53b61765f64f5e77c4bb81d61d51ef27c7a11393a9e98875b76b983ba
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

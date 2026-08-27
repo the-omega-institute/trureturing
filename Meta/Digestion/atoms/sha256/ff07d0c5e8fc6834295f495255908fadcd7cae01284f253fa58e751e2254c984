@@ -1,0 +1,30 @@
+* \(\tfrac12\) 是完成对偶 \(s\mapsto1-s\) 的固定中点。
+
+随后建立：
+
+$$
+\boxed{
+\text{级数图表}
++
+\text{连分数残余图表}
+=
+\text{积分完成}
+}
+$$
+
+的 Ramanujan 模型，以及：
+
+$$
+\boxed{
+\text{局部 }p\text{-进数据}
++
+\text{Archimedean Mellin 数据}
+=
+\text{阿代尔完成观察}
+}
+$$
+
+的 ζ 模型。
+
+---
+

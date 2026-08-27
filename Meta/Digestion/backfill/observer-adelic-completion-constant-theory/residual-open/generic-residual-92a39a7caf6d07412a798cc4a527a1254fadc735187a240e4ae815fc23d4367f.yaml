@@ -1,0 +1,10 @@
+ast_path: section/第四十三部-真正-canonical-的黄金-zeta
+fingerprints:
+  raw_sha256: sha256:92a39a7caf6d07412a798cc4a527a1254fadc735187a240e4ae815fc23d4367f
+  normalized_sha256: sha256:92a39a7caf6d07412a798cc4a527a1254fadc735187a240e4ae815fc23d4367f
+cas_ref: sha256:92a39a7caf6d07412a798cc4a527a1254fadc735187a240e4ae815fc23d4367f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,18 @@
+# 第四十部　\(\pi\) 与 \(\sqrt5\) 的 Poisson 完成
+
+定义格 Theta 热迹：
+
+$$
+\boxed{
+\Theta_L(t)
+=
+\sum_{x\in L}
+e^{-\pi t\langle x,x\rangle},
+\qquad
+t>0.
+}
+$$
+
+这里：
+
+* \(\pi\) 来自标准 Fourier 自对偶 Gaussian；

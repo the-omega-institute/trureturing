@@ -1,0 +1,10 @@
+ast_path: section/状态冗余
+fingerprints:
+  raw_sha256: sha256:ede0c7e417b6ad8cdf1b67b4674d3575f42c6e765712b938d96a7f70e99b0fe9
+  normalized_sha256: sha256:ede0c7e417b6ad8cdf1b67b4674d3575f42c6e765712b938d96a7f70e99b0fe9
+cas_ref: sha256:ede0c7e417b6ad8cdf1b67b4674d3575f42c6e765712b938d96a7f70e99b0fe9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

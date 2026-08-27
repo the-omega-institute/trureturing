@@ -1,0 +1,10 @@
+ast_path: section/75-1-边界提升能
+fingerprints:
+  raw_sha256: sha256:17e40dd5a8e6f8157dd3ea55e9e991b5aa090a2ab8cdee940e062a20510fdd99
+  normalized_sha256: sha256:17e40dd5a8e6f8157dd3ea55e9e991b5aa090a2ab8cdee940e062a20510fdd99
+cas_ref: sha256:17e40dd5a8e6f8157dd3ea55e9e991b5aa090a2ab8cdee940e062a20510fdd99
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

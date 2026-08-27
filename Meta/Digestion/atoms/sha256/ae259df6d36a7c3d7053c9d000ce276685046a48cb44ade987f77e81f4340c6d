@@ -1,0 +1,72 @@
+# 232. 增订八：决策序、上下文像缺陷与观察—控制最小实现
+
+此前理论的基本对象是评价网：
+
+$$
+e:X\times P\longrightarrow \Lambda .
+$$
+
+其中：
+
+* `X` 是隐藏状态；
+* `P` 是允许协议；
+* `e(x,p)` 是状态 `x` 在协议 `p` 下产生的 law。
+
+状态 kernel 为：
+
+$$
+K_P
+=
+\left\{
+(x,y):
+e(x,p)=e(y,p)
+\ \text{for every }p\in P
+\right\}.
+$$
+
+这个 kernel 只回答一个零误差问题：
+
+> 两个状态是否产生完全相同的全部协议 law？
+
+但它还没有回答：
+
+1. 一个观察者是否能模拟另一个观察者；
+2. 即使 kernel 都是对角，谁的统计决策能力更强；
+3. 局部兼容记录为何可能没有全局实现；
+4. 一个系统哪些状态既能被行动触达，又能被观察识别；
+5. 预测状态中有多少记忆真正暴露在未来记录中。
+
+本增订建立四条新桥：
+
+$$
+\text{kernel order}
+\longrightarrow
+\text{decision order}
+\longrightarrow
+\text{approximate deficiency},
+$$
+
+$$
+\text{local records}
+\longrightarrow
+\text{contextual image defect},
+$$
+
+$$
+\text{controllability}
++
+\text{observability}
+\longrightarrow
+\text{minimal bidirectional state},
+$$
+
+$$
+\text{past}
+\longrightarrow
+\text{predictive causal state}
+\longrightarrow
+\text{memory decomposition}.
+$$
+
+---
+

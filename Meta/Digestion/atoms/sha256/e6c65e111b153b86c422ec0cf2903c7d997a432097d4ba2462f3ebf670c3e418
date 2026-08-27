@@ -1,0 +1,26 @@
+## 定义 205.2（协议响应列）
+
+对每个协议 $p\in P$，定义其响应列：
+
+$$
+c_p:X\to\Lambda,
+\qquad
+c_p(x)=e(x,p).
+$$
+
+于是评价网可以同时写成：
+
+$$
+\Sigma_X:X\to\Lambda^P,
+\qquad
+\Sigma_X(x)=r_x,
+$$
+
+以及
+
+$$
+\Sigma_P:P\to\Lambda^X,
+\qquad
+\Sigma_P(p)=c_p.
+$$
+
