@@ -27,6 +27,8 @@ internal interface ICliEnvironment
 
     ExplicitCommandResult FileMapConform(IReadOnlyList<string> arguments);
 
+    ExplicitCommandResult DepositHeaderCheck(IReadOnlyList<string> arguments);
+
     CommandResult Ingest(IReadOnlyList<string> arguments);
 
     CommandResult CoverAtom(IReadOnlyList<string> arguments);
@@ -101,6 +103,8 @@ internal static class CliApplication
                 RenderCommand(environment.CoverAtom(tail), console),
             ["dag-render"] = static (environment, tail, console) =>
                 RenderCommand(environment.RenderDag(tail), console),
+            ["deposit-header-check"] = static (environment, tail, console) =>
+                RenderExplicit(environment.DepositHeaderCheck(tail), console),
             ["digest-status"] = static (environment, tail, console) =>
                 RenderCommand(environment.DigestStatus(tail), console),
             ["echo-verify"] = static (environment, tail, console) =>
