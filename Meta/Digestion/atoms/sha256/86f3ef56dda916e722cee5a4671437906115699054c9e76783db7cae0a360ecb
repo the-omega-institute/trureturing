@@ -1,0 +1,52 @@
+# 60. 保守动作扩张单调，但承诺可以改写整个博弈
+
+若只扩充动作集合
+
+$$
+\mathcal A(x)\subseteq\mathcal A'(x)
+$$
+
+且旧动作、环境响应与转移语义保持不变，则
+
+$$
+\operatorname{Pre}_{\mathcal A}(Z)
+\subseteq
+\operatorname{Pre}_{\mathcal A'}(Z),
+$$
+
+从而
+
+$$
+\boxed{
+\mathsf{FreeKernel}_{\mathcal A}
+\subseteq
+\mathsf{FreeKernel}_{\mathcal A'}.
+}
+$$
+
+但承诺往往不只是删去动作标签，而会改变契约、信任、环境响应、资源和账本状态，因此把游戏 $\mathcal G$ 改写为 $\mathcal G_c$。此时即便
+
+$$
+|\mathcal A_c(x)|<|\mathcal A(x)|,
+$$
+
+也可能有
+
+$$
+\mathsf{FreeKernel}(\mathcal G_c)
+\supsetneq
+\mathsf{FreeKernel}(\mathcal G).
+$$
+
+可信承诺可删除短期动作，却约束对手并扩大长期保证域。
+
+因此：
+
+$$
+\boxed{
+\text{瞬时选项数量不是战略自由的单调指标。}
+}
+$$
+
+---
+

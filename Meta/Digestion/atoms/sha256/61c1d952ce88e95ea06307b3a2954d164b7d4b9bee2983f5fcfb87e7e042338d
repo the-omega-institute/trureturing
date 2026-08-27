@@ -1,0 +1,39 @@
+# 77. 信息主权：给自己的信息与给对手的信息方向相反
+
+设观察者获得信息接口 $q_{\mathrm{self}}$，环境获得关于观察者策略或内部状态的接口 $q_{\mathrm{adv}}$，零和博弈最大最小值为
+
+$$
+V(q_{\mathrm{self}},q_{\mathrm{adv}}).
+$$
+
+若 $q'_{\mathrm{self}}$ 精化 $q_{\mathrm{self}}$ 且观察者可以忽略额外信息，则策略集合只会扩大：
+
+$$
+\boxed{
+V(q'_{\mathrm{self}},q_{\mathrm{adv}})
+\ge
+V(q_{\mathrm{self}},q_{\mathrm{adv}}).
+}
+$$
+
+若 $q'_{\mathrm{adv}}$ 精化 $q_{\mathrm{adv}}$，环境可条件化的响应集合扩大，因此
+
+$$
+\boxed{
+V(q_{\mathrm{self}},q'_{\mathrm{adv}})
+\le
+V(q_{\mathrm{self}},q_{\mathrm{adv}}).
+}
+$$
+
+因此信息的价值必须标明读取者：
+
+```text
+给主体自己的信息通常扩大可行策略；
+给对抗环境的信息通常压缩鲁棒价值。
+```
+
+定义“谁能读取哪些接口”的治理能力为 information sovereignty，它与纯观察容量不同。
+
+---
+
