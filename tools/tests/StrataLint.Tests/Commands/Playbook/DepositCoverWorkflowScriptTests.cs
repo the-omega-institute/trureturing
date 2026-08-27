@@ -8,7 +8,7 @@ namespace StrataLint.Tests;
 public sealed partial class DepositCoverWorkflowScriptTests
 {
     [Fact]
-    public void DepositRunsPhaseAEmissionWithoutRecomputingAfterFreezeAndReceipt()
+    public void DepositWithExactSixLineHeaderRunsPhaseAEmissionWithoutRecomputingAfterFreezeAndReceipt()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -26,12 +26,12 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(
             [
                 "make:lean-report",
+                "dotnet:deposit-header-check",
                 "make:emit",
                 "dotnet:emit-formalization-receipt",
                 "dotnet:ledger-append",
             ],
             fixture.CallKinds());
-        AssertDepositPerformanceEvents(fixture);
 
         var phaseA = fixture.CommitPaths("HEAD~1");
         Assert.Contains(TransactionFixture.LeanPath, phaseA);
@@ -48,7 +48,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
     }
 
     [Fact]
-    public void DepositReentryAfterInterruptedFreezeDoesNotAppendASecondFreeze()
+    public void DepositReentryWithExistingFreezeAndMissingReceiptRecoversWithoutLeanReport()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -61,13 +61,17 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(before + 1, fixture.CommitCount());
         Assert.Equal(1, fixture.FreezeCount());
         Assert.False(File.Exists(fixture.ReceiptPath));
+        fixture.ClearCalls();
 
         var resumed = fixture.Run("deposit");
 
         Assert.True(resumed.ExitCode == 0, Diagnostics(resumed));
         Assert.Equal(before + 2, fixture.CommitCount());
         Assert.Equal(1, fixture.FreezeCount());
-        Assert.Equal(1, fixture.CallKinds().Count(call => call == "dotnet:ledger-append"));
+        Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
+        Assert.Equal(
+            ["dotnet:deposit-header-check", "dotnet:emit-formalization-receipt"],
+            fixture.CallKinds());
         Assert.True(File.Exists(fixture.ReceiptPath));
         Assert.Empty(fixture.Status());
     }
@@ -82,13 +86,17 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var before = fixture.CommitCount();
         Assert.NotEqual(0, fixture.Run("deposit").ExitCode);
         fixture.WriteAlignedReceipt();
+        fixture.ClearCalls();
 
         var resumed = fixture.Run("deposit");
 
         Assert.True(resumed.ExitCode == 0, Diagnostics(resumed));
         Assert.Equal(before + 2, fixture.CommitCount());
         Assert.Equal(1, fixture.FreezeCount());
-        Assert.Equal(1, fixture.CallKinds().Count(call => call == "dotnet:ledger-append"));
+        Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
+        Assert.Equal(
+            ["dotnet:deposit-header-check", "dotnet:emit-formalization-receipt"],
+            fixture.CallKinds());
         Assert.Empty(fixture.Status());
     }
 
@@ -187,7 +195,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         Assert.NotEqual(0, result.ExitCode);
         Assert.Contains("STALE_LEAN_REPORT", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
-        Assert.Equal(["make:lean-report", "make:emit"], fixture.CallKinds());
+        Assert.Equal(
+            ["make:lean-report", "dotnet:deposit-header-check", "make:emit"],
+            fixture.CallKinds());
         Assert.Equal(0, fixture.FreezeCount());
     }
 
@@ -334,7 +344,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var deposit = fixture.Run("deposit");
         Assert.True(deposit.ExitCode == 0, Diagnostics(deposit));
         fixture.ClearCalls();
-        fixture.ClearPerformanceEvents();
         var before = fixture.CommitCount();
 
         var result = fixture.Run("cover");
@@ -349,7 +358,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "make:emit",
             ],
             fixture.CallKinds());
-        AssertCoverPerformanceEvents(fixture);
         Assert.Contains("aligned: covered", fixture.BackfillContents(), StringComparison.Ordinal);
         Assert.Equal("emission: covered\n", fixture.EmissionContents());
         Assert.Empty(fixture.Status());
@@ -372,25 +380,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(before + 1, fixture.CommitCount());
         Assert.Contains("cover_disposition:", fixture.BackfillContents(), StringComparison.Ordinal);
         Assert.Equal(["make:lean-report", "dotnet:cover-atom"], fixture.CallKinds());
-        AssertFailedCoverPerformanceEvents(fixture);
         Assert.Empty(fixture.Status());
-
-        using var probeFailureFixture = new TransactionFixture();
-        var probeFailure = probeFailureFixture.Run(
-            "cover",
-            coverDispositionFailure: true,
-            usePerformanceProbeOverrides: false,
-            failPerformanceCommitProbe: true);
-        Assert.NotEqual(0, probeFailure.ExitCode);
-        var degradedEvents = probeFailureFixture.PerformanceEvents()
-            .Select(PerfEventCodec.ParseLine)
-            .ToArray();
-        Assert.NotEmpty(degradedEvents);
-        Assert.All(degradedEvents, item =>
-        {
-            Assert.Equal("unknown", item.Context.Commit);
-            Assert.Equal("observation", item.Status);
-        });
     }
 
     private static string Diagnostics(ProcessOutput result) =>
@@ -416,9 +406,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
         internal const string ReceiptRelativePath = "Meta/Digestion/formalizations/atom-1.v1.json";
         internal const string SecondaryReceiptRelativePath =
             "Meta/Digestion/formalizations/atom-2.v1.json";
-        internal const string PerformanceCommit = "0123456789abcdef0123456789abcdef01234567";
-        internal const string PerformanceLoadavg = "0.25";
-        internal const string PerformanceHostConcurrency = "3";
 
         private const string ScriptPath = "tools/scripts/workflow/playbook-workflows.sh";
         private readonly TemporaryDirectory temporary = new();
@@ -432,7 +419,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
             binPath = Path.Combine(Root, "bin");
             callsPath = Path.Combine(Root, "calls");
             freezeProbePath = Path.Combine(Root, "freeze-probes");
-            performanceLedgerPath = Path.Combine(performance.Path, "events.jsonl");
             Directory.CreateDirectory(binPath);
             CopyScript();
             File.Copy(
@@ -441,7 +427,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             WriteFile(
                 ".gitignore",
                 ".lake/\n.report-source\nbin/\ncalls\nfreeze-probes\nfail-ledger-once\n");
-            WriteFile(LeanPath, "theorem probe : True := by trivial\n");
+            WriteFile(LeanPath, ExactSixLineLean(Gid, "theorem probe : True := by trivial\n"));
             WriteFile(DefinitionPath, "definition baseline\n");
             WriteFile(EmissionPath, "emission: baseline\n");
             Directory.CreateDirectory(Path.Combine(Root, LedgerPath));
@@ -468,13 +454,13 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         internal void ChangeFormalization()
         {
-            WriteFile(LeanPath, "theorem probe : True := by\n  trivial\n");
+            WriteFile(LeanPath, ExactSixLineLean(Gid, "theorem probe : True := by\n  trivial\n"));
             WriteFile(DefinitionPath, "definition deposited\n");
         }
 
         internal void AddNewFormalization(bool withMirror)
         {
-            WriteFile(NewLeanPath, "theorem new_module : True := by trivial\n");
+            WriteFile(NewLeanPath, ExactSixLineLean(NewGid, "theorem new_module : True := by trivial\n"));
             if (withMirror)
             {
                 WriteFile(NewEmissionPath, "emission: new module\n");
@@ -484,7 +470,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
         internal void AddSecondaryFormalization()
         {
             WriteFile(SecondaryLeanPath,
-                "theorem window_register_crt_decomposition : True := by trivial\n");
+                ExactSixLineLean(
+                    SecondaryGid,
+                    "theorem window_register_crt_decomposition : True := by trivial\n"));
             WriteFile(
                 "Blueprint/D5/S3/Observer/WindowRegisterCRT.scribe.cs",
                 "secondary definition\n");
@@ -722,6 +710,12 @@ public sealed partial class DepositCoverWorkflowScriptTests
         internal string[] TrackedPaths() => Git("ls-files")
             .Split('\n', StringSplitOptions.RemoveEmptyEntries);
 
+        internal string[] LedgerState() =>
+            Directory.EnumerateFiles(Path.Combine(Root, LedgerPath), "*.json")
+                .Order(StringComparer.Ordinal)
+                .Select(path => Path.GetRelativePath(Root, path) + "\n" + File.ReadAllText(path))
+                .ToArray();
+
         internal string[] CallKinds() => !File.Exists(callsPath)
             ? []
             : File.ReadAllLines(callsPath).Select(static call =>
@@ -741,11 +735,11 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         private string Git(params string[] arguments)
         {
-            var result = BoundedProcessRunner.Run(
+            var result = TestProcessRunner.Run(
                 "/usr/bin/git",
                 arguments,
                 Root,
-                TimeSpan.FromSeconds(15),
+                TestBudgets.PlaybookProcessHangGuard,
                 128 * 1024);
             if (result.ExitCode != 0)
             {

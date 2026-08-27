@@ -522,7 +522,7 @@ Push the already reviewed and admitted commit, then use the repository door:
 
 ```sh
 git push -u origin <branch>
-make pr-open HEAD=<branch> MESSAGE=<message-file>
+make pr-open HEAD=<branch> MESSAGE=<message-file> AUTO_MERGE=1
 # The message file's first line is the PR title; the rest is the PR body.
 ```
 

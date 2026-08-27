@@ -22,7 +22,7 @@ public sealed class LeanCacheEnsureScriptTests
             dotnet,
             UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
 
-        var result = BoundedProcessRunner.Run(
+        var result = TestProcessRunner.Run(
             "/bin/bash",
             [
                 "-c",
@@ -34,17 +34,17 @@ public sealed class LeanCacheEnsureScriptTests
                 installed.Script,
             ],
             installed.Caller,
-            TimeSpan.FromSeconds(10),
+            TestBudgets.ScriptProcessHangGuard,
             64 * 1024);
 
         Assert.Equal(0, result.ExitCode);
         Assert.Equal("delegated\n", Encoding.UTF8.GetString(result.StandardOutput));
         Assert.Empty(result.StandardError);
-        var canonicalRoot = BoundedProcessRunner.Run(
+        var canonicalRoot = TestProcessRunner.Run(
             "/bin/pwd",
             ["-P"],
             installed.Repository,
-            TimeSpan.FromSeconds(10),
+            TestBudgets.ScriptProcessHangGuard,
             4096);
         Assert.Equal(0, canonicalRoot.ExitCode);
         var canonicalRepository = Encoding.UTF8.GetString(canonicalRoot.StandardOutput).TrimEnd('\n');
@@ -140,11 +140,11 @@ public sealed class LeanCacheEnsureScriptTests
         File.SetUnixFileMode(
             dotnet,
             UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-        return BoundedProcessRunner.Run(
+        return TestProcessRunner.Run(
             "/bin/bash",
             ["-c", "PATH=\"$1:$PATH\" DOTNET_MARKER=\"$2\" exec /bin/bash \"$3\"", "lean-cache-test", bin, marker, script],
             workingDirectory,
-            TimeSpan.FromSeconds(10),
+            TestBudgets.ScriptProcessHangGuard,
             64 * 1024);
     }
 

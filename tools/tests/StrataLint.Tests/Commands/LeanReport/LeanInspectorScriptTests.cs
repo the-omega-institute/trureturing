@@ -9,6 +9,7 @@ public sealed class LeanInspectorScriptTests
     private const string InspectorSource = "tools/lean-inspector/Inspector.lean";
     private const string MaterialCompactor = "tools/lean-inspector/materials.py";
     private const string InputScript = "tools/scripts/report/lean-report-input.sh";
+    private const string ResourceObservationLibrary = "tools/scripts/lib/resource-observation-lib.sh";
     private const string CacheRunScript = "tools/scripts/worktree/lean-cache-run.sh";
 
     [Fact]
@@ -24,10 +25,15 @@ public sealed class LeanInspectorScriptTests
         Write(repository, "Trureturing.lean", "import D5.Probe\n");
         Write(repository, "D5/Probe.lean", "def probe : Nat := 1\n");
         foreach (var relative in new[]
-                 {
-                     InspectorScript, InspectorSource, MaterialCompactor, InputScript,
-                 })
         {
+            InspectorScript,
+            InspectorSource,
+            MaterialCompactor,
+            InputScript,
+            ResourceObservationLibrary,
+        })
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(repository, relative))!);
             File.Copy(Path.Combine(root, relative), Path.Combine(repository, relative));
         }
         InstallCacheRun(repository);
@@ -74,7 +80,7 @@ public sealed class LeanInspectorScriptTests
     }
 
     private static ProcessOutput Run(string command, IReadOnlyList<string> arguments, string cwd) =>
-        BoundedProcessRunner.Run(command, arguments, cwd, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+        TestProcessRunner.Run(command, arguments, cwd, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
 
     private static void Write(string root, string relative, string contents)
     {

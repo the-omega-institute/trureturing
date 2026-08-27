@@ -185,11 +185,11 @@ After `make deposit` and `make preflight` both exit 0 and Step 7 completes, push
 
 ```sh
 git push -u origin <branch>
-make pr-open HEAD=<branch> MESSAGE=<message-file>
+make pr-open HEAD=<branch> MESSAGE=<message-file> AUTO_MERGE=1
 # The message file's first line is the PR title; the rest is the PR body.
 ```
 
-The door arms auto-merge. After it opens the pull request, do not push further changes to that branch: the pull request may already have merged, in which case a later successful push does not put that commit on `dev`. Any further change requires a new branch and a new pull request.
+`AUTO_MERGE=1` explicitly opts this invocation into auto-merge; without that option, the door does not arm auto-merge. After it opens the pull request, do not push further changes to that branch: the pull request may already have merged, in which case a later successful push does not put that commit on `dev`. Any further change requires a new branch and a new pull request.
 
 If the dispatched sandbox forbids git writes, state that constraint explicitly and hand the exact `git push` and `make pr-open` invocations above, with substituted arguments, to the caller; do not report `success` as though the work landed. Otherwise report `success` only with the opened pull request, touched paths, door-produced commit subjects, every relevant exit code, and completed fidelity-gate evidence. Or report `open`, naming the stopping step and carrying every evidence class reached; mark each unreached class not run and explain why. There is no third outcome.
 

@@ -1,4 +1,5 @@
 using System.Text;
+using System.Collections.Immutable;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -67,7 +68,7 @@ internal static class LeanCacheProvisioner
     /// </summary>
     internal const int MaxProvisionBudgetSeconds = LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds;
     private const int MissingOleanSampleLimit = 5;
-    private static readonly TimeSpan[] CloneRetryBackoffs =
+    internal static ImmutableArray<TimeSpan> CloneRetryBackoffs { get; } =
         [TimeSpan.FromMilliseconds(250), TimeSpan.FromMilliseconds(500),
          TimeSpan.FromMilliseconds(1000), TimeSpan.FromMilliseconds(2000)];
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
@@ -210,7 +211,7 @@ internal static class LeanCacheProvisioner
         ArgumentNullException.ThrowIfNull(cloner);
         ArgumentNullException.ThrowIfNull(publisher);
         ArgumentNullException.ThrowIfNull(removePartial);
-        wait ??= Thread.Sleep;
+        wait ??= WaitForRetry;
         ArgumentNullException.ThrowIfNull(writerGuard);
         var target = Path.Combine(worktreeRoot, ".lake");
         writerGuard.RequireOwnershipOf(target);
@@ -704,6 +705,12 @@ internal static class LeanCacheProvisioner
     {
         if (Directory.Exists(target)) Directory.Delete(target, recursive: true);
         else if (File.Exists(target)) File.Delete(target);
+    }
+
+    internal static void WaitForRetry(TimeSpan delay)
+    {
+        using var retrySignal = new ManualResetEventSlim(initialState: false);
+        retrySignal.Wait(delay);
     }
 
     internal static string Error(ProcessOutput output, string fallback)

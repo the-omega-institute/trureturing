@@ -123,7 +123,7 @@ public sealed partial class AdmissionWorkflowTests
             Path.Combine(stubBin, "sleep"),
             UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
 
-        var result = BoundedProcessRunner.Run(
+        var result = TestProcessRunner.Run(
             "env",
             [
                 $"HOME={home}",
@@ -368,6 +368,7 @@ public sealed partial class AdmissionWorkflowTests
         var executeScript = StepScript(steps, "Run candidate golden and integration tests");
         Assert.Contains("if [[ \"$BASE_FULL_REQUIRED\" == \"true\" ]]", executeScript, StringComparison.Ordinal);
         Assert.Contains("dotnet test \"$project\"", executeScript, StringComparison.Ordinal);
+        Assert.Contains("verify-trx --results-directory \"$assembly_results\"", executeScript, StringComparison.Ordinal);
         Assert.DoesNotContain("ENGINEERING_TEST_TARGET", executeScript, StringComparison.Ordinal);
         Assert.Contains("make -C candidate/tools engineering-tests MODE=execute", executeScript, StringComparison.Ordinal);
         Assert.Equal(
@@ -465,7 +466,7 @@ public sealed partial class AdmissionWorkflowTests
             DotnetHost(root),
             ["build", project, "--configuration", "Release", "--nologo"],
             repository,
-            TimeSpan.FromMinutes(3),
+            TestBudgets.LongWorkflowProcessHangGuard,
             1024 * 1024);
         Assert.True(
             probeBuild.ExitCode == 0,
@@ -630,6 +631,7 @@ public sealed partial class AdmissionWorkflowTests
         WriteFloorProject(candidate, "StrataLint.Tests", "StrataLintTestsFloorProbe");
         WriteFloorProject(candidate, "StrataLint.Scribe.Tests", "StrataLintScribeTestsFloorProbe");
         WriteFloorProject(candidate, "StrataLint.ArchitectureTests", "StrataLintArchitectureTestsFloorProbe");
+        WriteEngineeringScopeVerifierStub(candidate);
         File.WriteAllText(
             Path.Combine(candidate, "tools", "StrataLint.sln"),
             "Microsoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio Version 17\nGlobal\nEndGlobal\n");
@@ -703,7 +705,7 @@ public sealed partial class AdmissionWorkflowTests
                 executeScript,
             ],
             fixture.Path,
-            TimeSpan.FromMinutes(5),
+            TestBudgets.ReportSupervisorHangGuard,
             2 * 1024 * 1024);
 
         var executeOutput = System.Text.Encoding.UTF8.GetString(execute.StandardOutput)

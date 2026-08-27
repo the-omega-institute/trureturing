@@ -29,7 +29,7 @@ public sealed class LeanCacheProvisionerTests
         // 承重点即活性上限本身。上一版这里断言的是「模块数算出来的派生值」,
         // 而那个派生每次都被 clamp 压回上限 —— 断言恒真,「派生」二字不承重。
         Assert.Equal(
-            TimeSpan.FromSeconds(LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds),
+            TestBudgets.LeanCacheProvisionBudget,
             lean);
 
         // 另两者继承它。分叉须走注释所述的收口 + 新案号,不得静默发生。
@@ -50,7 +50,7 @@ public sealed class LeanCacheProvisionerTests
         {
             // 300..7200 之外的值须被 clamp;取一个远超上界的数,三者都应落到 7200。
             Environment.SetEnvironmentVariable(BudgetVariable, "99999");
-            var clamped = TimeSpan.FromSeconds(7200);
+            var clamped = TestBudgets.LeanCacheProvisionCeiling;
             Assert.Equal(clamped, LeanCacheProvisioner.LeanCommandBudget);
             Assert.Equal(clamped, LeanCacheProvisioner.DirectoryCopyBudget);
             Assert.Equal(clamped, LeanCacheProvisioner.DependencyFetchBudget);
@@ -186,7 +186,7 @@ public sealed class LeanCacheProvisionerTests
     {
         WithBudget("invalid", () =>
             Assert.Equal(
-                TimeSpan.FromSeconds(LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds),
+                TestBudgets.LeanCacheProvisionBudget,
                 LeanCacheProvisioner.LeanCommandBudget));
     }
 
@@ -459,12 +459,17 @@ public sealed class LeanCacheProvisionerTests
         Assert.Equal(5, cleanupCalls);
         Assert.Equal(
             [
-                TimeSpan.FromMilliseconds(250),
-                TimeSpan.FromMilliseconds(500),
-                TimeSpan.FromMilliseconds(1000),
-                TimeSpan.FromMilliseconds(2000),
+                TestBudgets.LeanCacheRetryOne,
+                TestBudgets.LeanCacheRetryTwo,
+                TestBudgets.LeanCacheRetryThree,
+                TestBudgets.LeanCacheRetryFour,
             ],
             waits);
+        Assert.Equal(4, waits.Count);
+        for (var index = 1; index < waits.Count; index++)
+        {
+            Assert.Equal(waits[index - 1] + waits[index - 1], waits[index]);
+        }
         var copy = Assert.Single(runner.Invocations, static call => call.FileName == "cp");
         Assert.Equal("-R", copy.Arguments[0]);
         Assert.Equal(5, result.Clonefile.Attempts);

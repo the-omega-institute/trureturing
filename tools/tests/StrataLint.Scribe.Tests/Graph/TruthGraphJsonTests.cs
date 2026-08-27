@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Diagnostics;
 using System.Text;
 using StrataLint.Engine;
 using Trureturing.Truth;
@@ -61,9 +60,7 @@ public sealed class TruthGraphJsonTests
             });
         var model = TruthGraphModelBuilder.Create(dag, Provenance);
 
-        var stopwatch = Stopwatch.StartNew();
         var first = TruthGraphJsonWriter.Write(model);
-        stopwatch.Stop();
         var second = TruthGraphJsonWriter.Write(model);
 
         Assert.True(first.AsSpan().SequenceEqual(second.AsSpan()));
@@ -98,7 +95,6 @@ public sealed class TruthGraphJsonTests
         Assert.Equal(dag.RootSha256, model.Provenance.TruthRootSha256);
         Assert.Equal("module-import", model.Provenance.DependencyGranularity);
         Assert.Equal(dag.Nodes.Length, model.Truth.StateCounts.Total);
-        Console.WriteLine($"truth-graph baseline: bytes={first.Length}; writer_elapsed_ticks={stopwatch.ElapsedTicks}");
     }
 
     [Fact]
@@ -113,14 +109,23 @@ public sealed class TruthGraphJsonTests
             index => index == 0 ? Report() : Report($"D5.S0.Carrier.M{index - 1}"),
             StringComparer.Ordinal);
         var outputs = new HashSet<string>(StringComparer.Ordinal);
-        for (var seed = 0; seed < 20; seed++)
+        var inputs = new HashSet<string>(StringComparer.Ordinal);
+        int[] multipliers = [1, 2, 4, 5];
+        for (var permutation = 0; permutation < 20; permutation++)
         {
-            var random = new Random(seed);
-            var shuffled = modules.OrderBy(_ => random.Next()).ToArray();
+            var multiplier = multipliers[permutation % multipliers.Length];
+            var offset = permutation / 4;
+            var shuffled = modules
+                .Select((module, index) => (Module: module, Key: (index * multiplier + offset) % modules.Length))
+                .OrderBy(static item => item.Key)
+                .Select(static item => item.Module)
+                .ToArray();
+            inputs.Add(string.Join('\n', shuffled.Select(static module => module.Key)));
             var dag = BuildFromEntries(shuffled, reports);
             outputs.Add(Convert.ToBase64String(TruthGraphJsonWriter.Write(TruthGraphModelBuilder.Create(dag, Provenance)).AsSpan()));
         }
 
+        Assert.Equal(20, inputs.Count);
         Assert.Single(outputs);
     }
 

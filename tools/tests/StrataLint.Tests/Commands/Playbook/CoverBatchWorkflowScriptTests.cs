@@ -1,4 +1,3 @@
-using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -20,7 +19,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
             TransactionFixture.SecondaryAtomId);
         Assert.True(secondaryDeposit.ExitCode == 0, Diagnostics(secondaryDeposit));
         fixture.ClearCalls();
-        fixture.ClearPerformanceEvents();
         var atoms = fixture.WriteBatchFile(
             $"{TransactionFixture.AtomId}\t{TransactionFixture.Gid}\n"
             + $"{TransactionFixture.SecondaryAtomId}\t{TransactionFixture.SecondaryGid}\n");
@@ -39,7 +37,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
             ],
             fixture.CallKinds());
         Assert.Equal("emission: covered\n", fixture.EmissionContents());
-        AssertCoverBatchPerformanceEvents(fixture);
         Assert.Contains(
             "dotnet:cover-atom"
                 + $" --cover-atom {TransactionFixture.AtomId}"
@@ -69,7 +66,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(
             ["make:lean-report", "dotnet:cover-atom"],
             failedFixture.CallKinds());
-        AssertFailedCoverBatchPerformanceEvents(failedFixture);
         Assert.Empty(failedFixture.Status());
     }
 
@@ -128,7 +124,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         }
 
         internal ProcessOutput RunBatch(string atomsFile, bool coverDispositionFailure = false) =>
-            BoundedProcessRunner.Run(
+            TestProcessRunner.Run(
                 "/usr/bin/env",
                 [
                     $"PATH={binPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
@@ -137,12 +133,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     "PLAYBOOK_INVALID_RECEIPT=0",
                     $"PLAYBOOK_COVER_DISPOSITION_FAILURE={(coverDispositionFailure ? "1" : "0")}",
                     "PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE=",
-                    $"PLAYBOOK_TEST_PERF_TARGET={Path.Combine(binPath, "StrataLint.Cli.dll")}",
-                    $"STRATALINT_PERF_LEDGER={performanceLedgerPath}",
-                    $"STRATALINT_PERF_COMMIT={PerformanceCommit}",
-                    $"STRATALINT_PERF_LOADAVG={PerformanceLoadavg}",
-                    $"STRATALINT_PERF_HOST_CONCURRENCY={PerformanceHostConcurrency}",
-                    "PLAYBOOK_FAIL_PERF_COMMIT_PROBE=0",
                     "/bin/bash",
                     Path.Combine(Root, ScriptPath),
                     "cover-batch",
@@ -154,48 +144,4 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 128 * 1024);
     }
 
-    private static void AssertDepositPerformanceEvents(TransactionFixture fixture) =>
-        AssertPerformanceEvents(fixture, "deposit",
-            "lean-report:passed", "emit:passed", "stage-phase-a:passed",
-            "validate-formalization-receipt:passed", "ledger-append D5/S0/Carrier/Probe.lean:passed",
-            "stage-final-tree:passed", "total:passed");
-
-    private static void AssertCoverPerformanceEvents(TransactionFixture fixture) =>
-        AssertPerformanceEvents(fixture, "cover",
-            "lean-report:passed", "cover-atom:passed", "align-scribe-receipt:passed",
-            "emit-post-alignment:passed", "stage-final-tree:passed", "total:passed");
-
-    private static void AssertFailedCoverPerformanceEvents(TransactionFixture fixture) =>
-        AssertPerformanceEvents(fixture, "cover",
-            "lean-report:passed", "cover-atom:failed", "stage-final-tree:passed", "total:failed");
-
-    private static void AssertCoverBatchPerformanceEvents(TransactionFixture fixture) =>
-        AssertPerformanceEvents(fixture, "cover",
-            "lean-report:passed", "cover-atom-aligned:passed",
-            "stage-final-tree:passed", "cover-atom-aligned:passed",
-            "stage-final-tree:passed", "emit-post-alignment:passed", "stage-final-tree:passed",
-            "total:passed");
-
-    private static void AssertFailedCoverBatchPerformanceEvents(TransactionFixture fixture) =>
-        AssertPerformanceEvents(fixture, "cover",
-            "lean-report:passed", "cover-atom-aligned:failed", "stage-final-tree:passed",
-            "total:failed");
-
-    private static void AssertPerformanceEvents(
-        TransactionFixture fixture,
-        string workloadId,
-        params string[] expected)
-    {
-        var events = fixture.PerformanceEvents().Select(PerfEventCodec.ParseLine).ToArray();
-        Assert.Equal(expected, events.Select(static item => $"{item.Stage}:{item.Status}"));
-        Assert.All(events, item =>
-        {
-            Assert.Equal(PerfEventCodec.Schema, item.Schema);
-            Assert.Equal(workloadId, item.Context.WorkloadId);
-            Assert.Equal(TransactionFixture.PerformanceCommit, item.Context.Commit);
-            Assert.Equal(0.25, item.Context.LoadavgPerCpu);
-            Assert.Equal(3, item.Context.HostConcurrency);
-        });
-        Assert.Single(events.Select(static item => item.RunId).Distinct(StringComparer.Ordinal));
-    }
 }

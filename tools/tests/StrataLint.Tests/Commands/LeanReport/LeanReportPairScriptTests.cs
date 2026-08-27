@@ -56,33 +56,6 @@ public sealed class LeanReportPairScriptTests
     }
 
     [Fact]
-    public void RunPassesCurrentPerformanceConfigurationToChildProcess()
-    {
-        using var fixture = new LeanReportPairFixture();
-
-        var result = fixture.Run();
-
-        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
-        Assert.Equal(
-            ReportSupervisorFixture.FindPerformanceConfiguration(),
-            fixture.ProducerPerformanceConfiguration);
-    }
-
-    [Fact]
-    public void ProductionWritesMeasurementsToCallerHeldLog()
-    {
-        using var fixture = new LeanReportPairFixture();
-
-        var result = fixture.Run();
-
-        Assert.Equal(0, result.ExitCode);
-        var metrics = fixture.ReadMetrics();
-        var metric = Assert.Single(metrics);
-        Assert.Equal("resource", metric.GetProperty("kind").GetString());
-        Assert.Equal("lean-producer", metric.GetProperty("role").GetString());
-    }
-
-    [Fact]
     public void CacheEnsureRunsBeforeTheCandidateLakeTreeExists()
     {
         using var fixture = new LeanReportPairFixture();
@@ -197,8 +170,6 @@ public sealed class LeanReportPairScriptTests
         private readonly string producer;
         private readonly string invocationCount;
         private readonly string candidateReport;
-        private readonly string metricsLog;
-        private readonly string producerPerformanceConfigurationLog;
         private readonly string cacheEnsureLog;
         private readonly string canonicalCandidateRoot;
 
@@ -210,12 +181,9 @@ public sealed class LeanReportPairScriptTests
             invocationCount = Path.Combine(producerDirectory, "invocations.txt");
             candidateReport = Path.Combine(
                 candidateRoot, ".lake", "build", "stratalint", "candidate.json");
-            metricsLog = Path.Combine(temporary.Path, "measurements.jsonl");
-            producerPerformanceConfigurationLog = Path.Combine(
-                temporary.Path, "producer-performance-configuration.txt");
             cacheEnsureLog = Path.Combine(temporary.Path, "cache-ensure.log");
             InitializeRepository(candidateRoot);
-            var physicalRoot = BoundedProcessRunner.Run(
+            var physicalRoot = TestProcessRunner.Run(
                 "pwd",
                 ["-P"],
                 candidateRoot,
@@ -235,7 +203,7 @@ public sealed class LeanReportPairScriptTests
                 "def producerFixture : True := by trivial\n",
                 new UTF8Encoding(false));
             File.WriteAllText(CacheEnsurePath, FakeCacheEnsure, new UTF8Encoding(false));
-            var chmod = BoundedProcessRunner.Run(
+            var chmod = TestProcessRunner.Run(
                 "chmod",
                 ["+x", producer],
                 temporary.Path,
@@ -267,22 +235,15 @@ public sealed class LeanReportPairScriptTests
         internal bool CandidateLegacyMaterialsExist =>
             Directory.Exists(candidateReport + ".materials");
 
-        internal string ProducerPerformanceConfiguration =>
-            File.ReadAllText(producerPerformanceConfigurationLog).Trim();
-
         internal ProcessOutput Run(
             int cacheEnsureExitCode = 0,
             bool signalPairAfterReceipt = false)
         {
             var script = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "lean-report-pair.sh");
-            return BoundedProcessRunner.Run(
+            return TestProcessRunner.Run(
                 "env",
                 [
-                    "-u", "STRATALINT_PERF_CONFIGURATION",
-                    $"STRATALINT_REPORT_METRICS_LOG={metricsLog}",
                     $"STRATALINT_SUPERVISOR_ROOT={Path.Combine(temporary.Path, "supervisor")}",
-                    $"STRATALINT_PERF_CONFIGURATION={ReportSupervisorFixture.FindPerformanceConfiguration()}",
-                    $"STUB_PERF_CONFIGURATION_LOG={producerPerformanceConfigurationLog}",
                     $"STUB_LEAN_CACHE_ENSURE_LOG={cacheEnsureLog}",
                     $"STUB_LEAN_CACHE_ENSURE_EXIT_CODE={cacheEnsureExitCode}",
                     $"STUB_LEAN_CACHE_ENSURE_SIGNAL_PARENT={(signalPairAfterReceipt ? 1 : 0)}",
@@ -308,10 +269,6 @@ public sealed class LeanReportPairScriptTests
 
         internal JsonDocument ReadCandidateProvenance() =>
             JsonDocument.Parse(File.ReadAllBytes(candidateReport + ".provenance.json"));
-
-        internal IReadOnlyList<JsonElement> ReadMetrics() => File.ReadAllLines(metricsLog)
-            .Select(line => JsonDocument.Parse(line).RootElement.Clone())
-            .ToArray();
 
         internal string ReadCandidateLogText() => string.Join(
             '\n',
@@ -410,7 +367,6 @@ public sealed class LeanReportPairScriptTests
             count=0
             if [[ -f "$count_file" ]]; then read -r count < "$count_file"; fi
             printf '%s\n' "$((count + 1))" > "$count_file"
-            printf '%s\n' "${STRATALINT_PERF_CONFIGURATION-}" > "$STUB_PERF_CONFIGURATION_LOG"
             mkdir -p "$(dirname "$output")"
             printf '%s\n' 'stub material archive' > "${output}.materials.zip"
             source_hash="$(openssl dgst -sha256 "$repository/Trureturing.lean" | awk '{print $NF}')"

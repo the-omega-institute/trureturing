@@ -51,6 +51,14 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
     internal GitRepositoryGateway(
         string root,
         IGitProcessRunner processRunner,
+        string gitExecutable)
+        : this(root, processRunner, gitExecutable, TimeSpan.FromSeconds(120))
+    {
+    }
+
+    internal GitRepositoryGateway(
+        string root,
+        IGitProcessRunner processRunner,
         string gitExecutable,
         TimeSpan gitTimeout)
     {

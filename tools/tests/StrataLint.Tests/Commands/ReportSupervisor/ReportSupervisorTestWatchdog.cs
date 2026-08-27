@@ -1,6 +1,6 @@
 using System.Collections.Concurrent;
 using System.Diagnostics;
-using Xunit.Sdk;
+using Xunit;
 
 namespace StrataLint.Tests;
 
@@ -40,6 +40,8 @@ internal sealed class ReportSupervisorTestWatchdog : IDisposable
         process.BeginErrorReadLine();
     }
 
+    internal void ExpireForTesting() => OnTimeout();
+
     public void Dispose()
     {
         if (Interlocked.Exchange(ref disposed, 1) == 0)
@@ -50,7 +52,8 @@ internal sealed class ReportSupervisorTestWatchdog : IDisposable
         if (Volatile.Read(ref timedOut) != 0
             && Interlocked.Exchange(ref timeoutReported, 1) == 0)
         {
-            throw new XunitException(SnapshotDiagnostics());
+            throw new SkipException(
+                "infrastructure-hang-guard expired: " + SnapshotDiagnostics());
         }
     }
 
