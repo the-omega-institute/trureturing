@@ -41,8 +41,10 @@ internal static class DigestStatusCommand
             {
                 var formalizeLeanReport = leanReportSource.Load(snapshot);
                 var formalizeDocument = BackfillInventoryLoader.Load(snapshot, scope, changes);
-                BackfillInventoryDocument? formalizeBaselineDocument = null;
-                RepositorySnapshot? formalizeBaselineSnapshot = null;
+                // Same contract as the main path below: no --base means the current tree is its
+                // own baseline, never a null one (#3354).
+                RepositorySnapshot? formalizeBaselineSnapshot = snapshot;
+                var formalizeBaselineDocument = BackfillInventoryLoader.LoadBaseline(snapshot);
                 if (options.BaselineRevision is not null)
                 {
                     formalizeBaselineSnapshot = Decode(
