@@ -1,0 +1,100 @@
+# 第九十四部　\(E_8\) 配分函数的精确 cumulant closure
+
+令：
+
+$$
+0<q<1.
+$$
+
+定义 \(E_8\) Gibbs 分布：
+
+$$
+\boxed{
+\mu_q(x)
+=
+\frac{q^{Q_E(x)}}{Q(q)},
+\qquad
+Q(q)=E_4(q).
+}
+\tag{94.1}
+$$
+
+令随机能量：
+
+$$
+\mathcal E(x)=Q_E(x).
+$$
+
+则第一 cumulant 为：
+
+$$
+\kappa_1
+=
+\mathbb E_q[\mathcal E]
+=
+D\log Q.
+$$
+
+由 Ramanujan 方程：
+
+$$
+\boxed{
+\kappa_1
+=
+\frac{PQ-R}{3Q}.
+}
+\tag{94.2}
+$$
+
+第二 cumulant 即方差：
+
+$$
+\kappa_2
+=
+D^2\log Q.
+$$
+
+直接代入 Ramanujan 微分系统得到：
+
+$$
+\boxed{
+\kappa_2
+=
+\frac{
+P^2Q^2-2PQR+5Q^3-4R^2
+}{
+36Q^2
+}.
+}
+\tag{94.3}
+$$
+
+将分子改写为：
+
+$$
+(PQ-R)^2+5(Q^3-R^2),
+$$
+
+得到：
+
+$$
+\boxed{
+\kappa_2
+=
+\frac{(PQ-R)^2}{36Q^2}
++
+240\,\frac{\Delta}{Q^2}.
+}
+\tag{94.4}
+$$
+
+这里系数：
+
+$$
+240
+$$
+
+正是 \(E_8\) 根数。
+
+---
+

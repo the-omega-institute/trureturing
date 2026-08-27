@@ -1,0 +1,10 @@
+ast_path: section/95-2-三个计数恒等式/clause/3
+fingerprints:
+  raw_sha256: sha256:d7ab2ec88e204d322278b4e6ed9140ed029c75ccb3cb23df8abc99a56432cadc
+  normalized_sha256: sha256:d7ab2ec88e204d322278b4e6ed9140ed029c75ccb3cb23df8abc99a56432cadc
+cas_ref: sha256:d7ab2ec88e204d322278b4e6ed9140ed029c75ccb3cb23df8abc99a56432cadc
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

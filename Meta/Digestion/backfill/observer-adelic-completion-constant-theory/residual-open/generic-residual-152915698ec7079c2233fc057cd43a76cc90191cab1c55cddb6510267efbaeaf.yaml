@@ -1,0 +1,10 @@
+ast_path: section/132-1-一维谱保留二维根重数
+fingerprints:
+  raw_sha256: sha256:152915698ec7079c2233fc057cd43a76cc90191cab1c55cddb6510267efbaeaf
+  normalized_sha256: sha256:152915698ec7079c2233fc057cd43a76cc90191cab1c55cddb6510267efbaeaf
+cas_ref: sha256:152915698ec7079c2233fc057cd43a76cc90191cab1c55cddb6510267efbaeaf
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

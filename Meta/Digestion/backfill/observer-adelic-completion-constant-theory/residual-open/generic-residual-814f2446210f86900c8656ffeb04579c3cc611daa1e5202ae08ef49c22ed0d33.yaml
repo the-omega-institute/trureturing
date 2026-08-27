@@ -1,0 +1,10 @@
+ast_path: section/假设-OACTC-24A-Root-residual-rank-one-principle
+fingerprints:
+  raw_sha256: sha256:814f2446210f86900c8656ffeb04579c3cc611daa1e5202ae08ef49c22ed0d33
+  normalized_sha256: sha256:814f2446210f86900c8656ffeb04579c3cc611daa1e5202ae08ef49c22ed0d33
+cas_ref: sha256:814f2446210f86900c8656ffeb04579c3cc611daa1e5202ae08ef49c22ed0d33
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

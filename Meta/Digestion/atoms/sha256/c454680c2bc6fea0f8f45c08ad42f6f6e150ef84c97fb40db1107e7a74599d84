@@ -1,0 +1,49 @@
+## 133.2 三个观察相
+
+$$
+\boxed{
+\begin{array}{c|c|c}
+\text{斜率}&\text{温度}&\text{状态}\\
+\hline
+\alpha\in\mathbb Q
+&\text{任意}
+&\text{根标签发生精确碰撞}\\
+\alpha\notin\mathbb Q
+&t>2\pi/\sqrt\alpha
+&\text{忠实且乘积绝对收敛}\\
+\alpha\notin\mathbb Q
+&t<2\pi/\sqrt\alpha
+&\text{标签仍忠实，但 primitive product 发散}
+\end{array}
+}
+\tag{133.4}
+$$
+
+在第三相中，加法图表：
+
+$$
+\frac{
+J(e^{-\alpha t})-J(e^{-t})
+}{
+e^{\alpha t}-e^t
+}
+$$
+
+仍对任意 \(t>0\) 有定义。
+
+因此它充当乘积图表越过收敛边界后的解析完成。
+
+这与 Ramanujan 541 的：
+
+$$
+\text{级数可见部分}
++
+\text{连分数尾部}
+=
+\text{积分完成}
+$$
+
+完全同型。
+
+---
+

@@ -1,0 +1,31 @@
+# 第一百三十五部　Genus zero 是一坐标观察者完备
+
+设 \(\Gamma\) 是某离散模群，\(X_\Gamma\) 是其紧化模曲线。
+
+若：
+
+$$
+X_\Gamma
+$$
+
+的 genus 为零，则存在 Hauptmodul \(f\)，使：
+
+$$
+\boxed{
+\mathbb C(X_\Gamma)=\mathbb C(f).
+}
+\tag{135.1}
+$$
+
+即所有模函数都可写成 \(f\) 的有理函数。
+
+因此 \(f\) 是一个一坐标几何观察者：
+
+$$
+q_f:X_\Gamma\dashrightarrow\mathbb P^1.
+$$
+
+它在函数域层面是完备的。
+
+---
+

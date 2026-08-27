@@ -1,0 +1,89 @@
+# 第一百二十四部　建议形式化顺序
+
+```text
+D5/S3/Geometry/NiemeierCompletion/
+  RankTwentyFourThetaPlane.lean
+  RootResidualCoefficient.lean
+  CoxeterThetaFormula.lean
+  ScalarThetaBlindPairs.lean
+
+D5/S3/Geometry/LeechCompletion/
+  LeechRootCounterterm.lean
+  LeechThetaEisensteinCusp.lean
+  LeechShellRamanujanFormula.lean
+  Ramanujan691Congruence.lean
+
+D5/S3/Analytic/VOACompletion/
+  NiemeierLatticeCharacter.lean
+  WeightOneCharacterResidual.lean
+  E8CubedLeechMonsterLedger.lean
+
+D5/S3/Analytic/MoonshineGenome/
+  ColoredPartitionTwentyFour.lean
+  LeechOscillatorConvolution.lean
+  FirstMoonshineDoubleDecomposition.lean
+  RamanujanLeechMonsterConvolution.lean
+
+D5/S3/ConceptDynamics/ConstantSemantics/
+  CompletionPrime.lean
+  CollisionPrime.lean
+  EisensteinCuspCollision.lean
+  AdicJetRefinement.lean
+
+D5/S3/Observer/Moonshine/
+  ScalarCharacterBlindness.lean
+  TwinedCharacterRefinement.lean
+  UmbralObserverCompletion.lean
+```
+
+首批最适合闭合的链为：
+
+$$
+\boxed{
+\Theta_N
+=
+E_4^3+(r_N-720)\Delta
+}
+$$
+
+$$
+\boxed{
+\Theta_{N^X}
+=
+\Theta_\Lambda+24h_X\Delta
+}
+$$
+
+$$
+\boxed{
+Z_{N^X}
+=
+J+24(h_X+1)
+}
+$$
+
+$$
+\boxed{
+r_\Lambda(n)
+=
+\frac{65520}{691}
+\left(
+\sigma_{11}(n)-\tau(n)
+\right)
+}
+$$
+
+以及：
+
+$$
+\boxed{
+196884
+=
+196560+324
+=
+1+196883.
+}
+$$
+
+---
+

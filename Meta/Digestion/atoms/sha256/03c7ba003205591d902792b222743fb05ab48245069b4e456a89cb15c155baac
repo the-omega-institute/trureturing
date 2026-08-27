@@ -1,0 +1,69 @@
+# 第一百一十一部　Ramanujan \(\tau\) 是 Niemeier 根残差的传播核
+
+从：
+
+$$
+\Theta_{N^X}
+=
+\Theta_\Lambda+24h_X\Delta
+$$
+
+比较 \(q^n\) 系数。
+
+令：
+
+$$
+r_X(n)
+=
+\#\{x\in N^X:(x,x)=2n\},
+$$
+
+而：
+
+$$
+\Delta(q)
+=
+\sum_{n\ge1}\tau(n)q^n.
+$$
+
+则：
+
+$$
+\boxed{
+r_X(n)-r_\Lambda(n)
+=
+24h_X\,\tau(n).
+}
+\tag{111.1}
+$$
+
+所以 Ramanujan \(\tau(n)\) 的新结构角色为：
+
+$$
+\boxed{
+\tau(n)
+=
+\text{二十四维 Niemeier 根残差从第一壳向第 }n\text{ 壳传播的普适核。}
+}
+$$
+
+给定根数 \(24h\)，不是每个高能壳独立改变，而是全部变化由唯一 cusp eigenmode：
+
+$$
+\Delta
+$$
+
+同步运输。
+
+这是 Yu Deng 式 primitive-history 的一个精确、有限状态原型：
+
+$$
+\boxed{
+\text{所有 root-history corrections}
+=
+\text{一个 primitive cusp mode}\times24h.
+}
+$$
+
+---
+

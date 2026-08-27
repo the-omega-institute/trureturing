@@ -1,0 +1,10 @@
+ast_path: section/97-1-Orbit-stabilizer-完成律
+fingerprints:
+  raw_sha256: sha256:7676c91d03b5465b3fc2b673a1699e8c621250535ffb91568367025ab0928547
+  normalized_sha256: sha256:7676c91d03b5465b3fc2b673a1699e8c621250535ffb91568367025ab0928547
+cas_ref: sha256:7676c91d03b5465b3fc2b673a1699e8c621250535ffb91568367025ab0928547
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,43 @@
+# 第一百零八部　Coxeter 数是标量 Theta 的唯一根系读数
+
+Niemeier 根系是秩 \(24\) 的 simply-laced 根系，各不可约分量具有相同 Coxeter 数 \(h\)。
+
+对秩 \(r\)、Coxeter 数 \(h\) 的 simply-laced 根系：
+
+$$
+\#\Phi=rh.
+$$
+
+所以总根数为：
+
+$$
+\boxed{
+r_N=24h.
+}
+\tag{108.1}
+$$
+
+代入式 (107.3)：
+
+$$
+\boxed{
+\Theta_{N^X}
+=
+E_4^3+(24h_X-720)\Delta.
+}
+\tag{108.2}
+$$
+
+令 \(\Lambda\) 表示 Leech 格，其根数为零。则：
+
+$$
+\boxed{
+\Theta_{N^X}
+=
+\Theta_\Lambda+24h_X\Delta.
+}
+\tag{108.3}
+$$
+
+---
+

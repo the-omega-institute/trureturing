@@ -1,0 +1,57 @@
+# 第一百三十八部　Quasi-pullback 是带反项的观察者限制
+
+设：
+
+$$
+\Psi
+$$
+
+是高维正交对称域上的 Borcherds product，希望限制到一个低维子域。
+
+若 \(\Psi\) 沿该子域恒等消失，直接限制得到零，无法读取任何结构。
+
+quasi-pullback 的操作是：
+
+1. 识别沿子域必然消失的根因子；
+2. 除掉这些因子；
+3. 再进行限制；
+4. 得到低维的非平凡 Borcherds product。
+
+文献明确把 quasi-pullback 描述为一种 **renormalized restriction**，并证明所得对象仍然是 Borcherds product。([London Mathematical Society (LMS)][7])
+
+因此：
+
+$$
+\boxed{
+\text{quasi-pullback}
+=
+\text{observer restriction}
++
+\text{vanishing counterterms}.
+}
+$$
+
+本轮的对角极限：
+
+$$
+p\to q
+$$
+
+具有完全相同的结构：
+
+* \(J(p)-J(q)\to0\)；
+* \(p^{-1}-q^{-1}\to0\)；
+* 先除掉 Weyl 零因子；
+* 再限制到对角；
+* 得到：
+
+  $$
+  -q^2J'(q)=qE_4^2E_6/\Delta.
+  $$
+
+因此式 (127.5)可视为一个 rank-two Monster denominator 的**对角重整化限制**。
+
+是否能在标准正交 Borcherds quasi-pullback 范畴中逐字识别为同一构造，仍需单独建立范畴桥；当前结论是结构同型，而非已经引用现成定理。
+
+---
+

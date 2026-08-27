@@ -1,0 +1,50 @@
+# 第一百二十六部　对数把 primitive roots 展开成复合历史
+
+定义 primitive root heat series：
+
+$$
+\boxed{
+H(p,q)
+=
+\sum_{m,n\ge1}
+c(mn)p^mq^n.
+}
+\tag{126.1}
+$$
+
+对乘积取负对数：
+
+$$
+\begin{aligned}
+-\log\mathcal D(p,q)
+&=
+-\sum_{m,n\ge1}
+c(mn)\log(1-p^mq^n)\\
+&=
+\sum_{m,n\ge1}\sum_{k\ge1}
+\frac{c(mn)}k
+p^{mk}q^{nk}.
+\end{aligned}
+$$
+
+所以：
+
+$$
+\boxed{
+-\log\mathcal D(p,q)
+=
+\sum_{k\ge1}
+\frac1k
+H(p^k,q^k).
+}
+\tag{126.2}
+$$
+
+这里：
+
+* \((m,n)\) 是 primitive root label；
+* \(k\) 是对该根的重复占据或复合历史；
+* \(1/k\) 是对数／循环对称因子。
+
+---
+
