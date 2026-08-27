@@ -92,9 +92,11 @@ internal sealed class DominantStrategyDirectificationDocument : IScribeDocumentD
             Apply(utility, agent, trueType, originalTruthfulOutcome), Sp, Geq, Sp,
             Apply(utility, agent, trueType, originalAlternativeOutcome));
         Formula directDefinition = Seq(
-            Apply(directMechanism, reports), Sp, Colon, Eq, Sp,
+            directMechanism, Colon, Sp, Arrow(typeProfile, outcome), Comma, Sp,
+            Apply(directMechanism, Seq(reports, Colon, Sp, typeProfile)),
+            Sp, Colon, Eq, Sp,
             Apply(mechanism, Seq(
-                LambdaLower, Sp, otherAgent, Sp, Mapsto, Sp,
+                LambdaLower, Sp, otherAgent, Colon, Sp, finAgents, Sp, Mapsto, Sp,
                 Apply(strategy, otherAgent, Apply(reports, otherAgent)))));
         Formula directTruthfulOutcome = Apply(directMechanism,
             Call("update", reports, agent, trueType));

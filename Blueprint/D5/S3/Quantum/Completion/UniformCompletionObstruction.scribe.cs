@@ -35,27 +35,52 @@ internal sealed class UniformCompletionObstructionDocument : IScribeDocumentDefi
     private static Formula Apply(Formula function, Formula argument) =>
         Seq(function, Open, argument, Close);
 
+    private static Formula Typeclass(Formula proposition) =>
+        Seq(OpenBracket, proposition, CloseBracket);
+
     private static Formula ObstructionFormula()
     {
-        Formula scalar = F.Id("K"), space = F.Id("H"), index = F.Id("A");
-        Formula filter = F.Id("L"), stages = F.Id("S"), stage = F.Id("a");
+        Formula scalar = F.Id("K"), space = F.Id("H"), index = F.Id("I");
+        Formula filter = F.Id("stageFilter"), stages = F.Id("S"), stage = F.Id("i");
+        Formula proper = F.Id("hProper");
         Formula stageSpace = Apply(stages, stage);
-        Formula residualOperator = Seq(F.Id("I"), Sp, Minus, Sp, Call("P", stageSpace));
+        Formula submodule = Seq(
+            Operatorname, Grp(F.Id("Submodule")), Underscore, Grp(scalar),
+            Open, space, Close);
+        Formula residualOperator = Seq(
+            Call("id", scalar, space), Sp, Minus, Sp, Call("starProjection", stageSpace));
         Formula residualNorm = new Formula.Norm(residualOperator);
+        Formula stagewiseProjection = Seq(
+            Forall, Sp, stage, Colon, Sp, index, Comma, Sp,
+            Call("HasOrthogonalProjection", stageSpace));
+        Formula properLaw = Seq(
+            Forall, Sp, stage, Colon, Sp, index, Comma, Sp,
+            stageSpace, Sp, Neq, Sp, F.Id("top"));
+        Formula residualFunction = Grp(
+            Lambda, Sp, stage, Colon, Sp, index, Comma, Sp, residualNorm);
+        Formula nonconvergence = Seq(
+            Neg, Sp, Call(
+                "Tendsto", residualFunction, filter, Call("nhds", D(0))));
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, scalar, Comma, Sp, space, Comma, Sp, index, Comma, Sp, filter, Comma,
-            RowBreak,
-            Call("Hilbert", scalar, space), Comma, Sp, Call("NeBot", filter), Comma, Sp,
-            stages, Colon, Sp, index, Sp, To, Sp, Call("ClosedSubspace", space), Comma,
-            RowBreak,
-            Open, Forall, Sp, stage, Comma, Sp, stageSpace, Sp, Neq, Sp, space, Close,
-            Sp, Implies, Sp, RowBreak,
+            Forall, Sp, scalar, Comma, Sp, space, Comma, Sp, index,
+            Colon, Sp, F.Id("Type"), Comma,
+            RowBreak, Grp(),
+            Typeclass(Call("RCLike", scalar)), Comma, Sp,
+            Typeclass(Call("NormedAddCommGroup", space)), Comma, RowBreak, Grp(),
+            Typeclass(Call("InnerProductSpace", scalar, space)), Comma, RowBreak, Grp(),
+            stages, Colon, Sp, index, Sp, To, Sp, submodule, Comma,
+            RowBreak, Grp(),
+            Typeclass(stagewiseProjection), Comma, RowBreak, Grp(),
+            filter, Colon, Sp, Call("Filter", index), Comma, Sp,
+            Typeclass(Call("NeBot", filter)), Comma, RowBreak,
+            proper, Colon, Sp, Grp(properLaw), Comma, RowBreak,
             Open,
-            Open, Forall, Sp, stage, Comma, Sp, residualNorm, Sp, Eq, Sp, D(1), Close,
+            Open, Forall, Sp, stage, Colon, Sp, index, Comma, Sp,
+            residualNorm, Sp, Eq, Sp, D(1), Close,
             Sp, Land, RowBreak,
-            Neg, Sp, Open, Call("lim", stage, filter, residualNorm), Sp, Eq, Sp, D(0), Close,
+            nonconvergence,
             Close, Dot,
             End, Grp(F.Id("gathered"))));
     }

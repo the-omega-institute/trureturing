@@ -82,7 +82,8 @@ internal sealed class MacroInterventionCriterionDocument : IScribeDocumentDefini
             process, current, future, effectiveIntervention);
         Formula range = Apply(
             Seq(Operatorname, Grp(F.Id("range"))), current);
-        Formula emptyCarry = Seq(carry, Sp, Eq, Sp, Emptyset);
+        Formula emptyCarry = Apply(
+            Seq(Operatorname, Grp(F.Id("IsEmpty"))), carry);
         Formula forward = Grp(
             Open,
             Open,
