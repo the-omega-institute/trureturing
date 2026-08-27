@@ -1,0 +1,63 @@
+## 定理 39.1（精确对偶格公式）
+
+$$
+\boxed{
+L^\#
+=
+\frac{J}{5}L.
+}
+$$
+
+其中
+
+$$
+L^\#
+=
+\{y\in L\otimes\mathbb R:
+\langle y,L\rangle\subseteq\mathbb Z\}.
+$$
+
+### 证明
+
+在所选基下：
+
+$$
+L^\#=G^{-1}\mathbb Z^6.
+$$
+
+而
+
+$$
+\frac{GJ}{5}=U
+$$
+
+等价于
+
+$$
+\frac J5=G^{-1}U.
+$$
+
+由于
+
+$$
+U\mathbb Z^6=\mathbb Z^6,
+$$
+
+故
+
+$$
+\frac J5\mathbb Z^6
+=
+G^{-1}\mathbb Z^6.
+$$
+
+即：
+
+$$
+L^\#=\frac J5L.
+$$
+
+∎
+
+---
+

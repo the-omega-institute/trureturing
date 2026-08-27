@@ -1,0 +1,34 @@
+## 定义 239.2（全局模型）
+
+完整赋值空间为：
+
+$$
+\Omega_M
+=
+\prod_{m\in M}O_m.
+$$
+
+若存在全局分布：
+
+$$
+\mu\in\Delta(\Omega_M)
+$$
+
+使其在每个上下文上的边缘恰好为 `e_C`，则经验模型存在全局实现。
+
+定义边缘映射：
+
+$$
+\operatorname{Marg}:
+\Delta(\Omega_M)
+\longrightarrow
+\prod_{C\in\mathcal C}
+\Delta(\Omega_C).
+$$
+
+于是非上下文模型集合为：
+
+$$
+\operatorname{Im}(\operatorname{Marg}).
+$$
+

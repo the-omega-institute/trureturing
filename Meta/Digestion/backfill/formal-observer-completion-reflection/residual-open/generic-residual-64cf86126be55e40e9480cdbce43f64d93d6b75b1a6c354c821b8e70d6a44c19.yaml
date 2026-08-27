@@ -1,0 +1,10 @@
+ast_path: section/234-四种不同的观察者强弱关系
+fingerprints:
+  raw_sha256: sha256:64cf86126be55e40e9480cdbce43f64d93d6b75b1a6c354c821b8e70d6a44c19
+  normalized_sha256: sha256:64cf86126be55e40e9480cdbce43f64d93d6b75b1a6c354c821b8e70d6a44c19
+cas_ref: sha256:64cf86126be55e40e9480cdbce43f64d93d6b75b1a6c354c821b8e70d6a44c19
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

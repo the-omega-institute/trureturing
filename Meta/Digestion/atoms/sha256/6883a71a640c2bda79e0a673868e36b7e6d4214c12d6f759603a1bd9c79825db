@@ -1,0 +1,57 @@
+# 第五十八部　局部商观察失明，但 residue-linear 观察忠实
+
+项目已经机器证明：
+
+$$
+\boxed{
+\text{所有有限 }p\text{-群商观察者在 }A_5\text{ 上可以完全失明。}
+}
+$$
+
+即全部 prime-power quotient residual 仍然是整个 \(A_5\)。
+
+但现在得到另一个观察者：
+
+$$
+\boxed{
+\rho_5:
+A_5
+\longrightarrow
+GL_3(\mathbb F_5),
+}
+$$
+
+而且：
+
+$$
+\ker\rho_5=\{1\}.
+$$
+
+这两件事不矛盾，因为：
+
+$$
+GL_3(\mathbb F_5)
+$$
+
+不是 \(5\)-群。
+
+因此应当严格区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{prime-power quotient observer}
+&:\quad
+G\to P,\ P\text{ 为 }p\text{-群};\\
+\text{residue-linear observer}
+&:\quad
+G\to GL(V_{\mathbb F_p});\\
+\text{ramified jet observer}
+&:\quad
+G\to GL(V_{\mathbb F_p}[\varepsilon]/\varepsilon^2).
+\end{aligned}
+}
+$$
+
+---
+

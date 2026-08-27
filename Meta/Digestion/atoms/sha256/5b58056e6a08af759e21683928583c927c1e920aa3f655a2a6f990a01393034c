@@ -1,0 +1,18 @@
+## 定理 211.2（双可见空间）
+
+$$
+\operatorname{ran}W_X
+=
+\operatorname{ran}M^*,
+$$
+
+$$
+\operatorname{ran}W_P
+=
+\operatorname{ran}M.
+$$
+
+前者是状态空间中真正被协议张成的方向；后者是协议结果空间中真正可以由状态变化实现的方向。
+
+---
+

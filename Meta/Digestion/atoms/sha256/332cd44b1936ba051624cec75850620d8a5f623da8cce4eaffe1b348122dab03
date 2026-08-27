@@ -1,0 +1,55 @@
+# 第四十四部　Golden 单位流主 zeta
+
+这一部分给出本轮最重要的新母函数。
+
+令：
+
+$$
+\sigma_+,\sigma_-:
+K\hookrightarrow\mathbb R
+$$
+
+为两个实嵌入。
+
+对：
+
+$$
+\alpha\in\mathcal O_K\setminus\{0\}
+$$
+
+定义：
+
+$$
+a_\alpha=|\sigma_+(\alpha)|^2,
+\qquad
+b_\alpha=|\sigma_-(\alpha)|^2.
+$$
+
+定义各向异性二次型：
+
+$$
+\boxed{
+Q_\eta(\alpha)
+=
+e^\eta a_\alpha
++
+e^{-\eta}b_\alpha.
+}
+$$
+
+定义 Golden 单位流主 zeta：
+
+$$
+\boxed{
+\mathfrak Z_\varphi(s,\eta)
+=
+\sum_{\alpha\in\mathcal O_K\setminus\{0\}}
+Q_\eta(\alpha)^{-s},
+\qquad
+\Re(s)>1.
+}
+\tag{44.1}
+$$
+
+---
+

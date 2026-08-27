@@ -1,0 +1,10 @@
+ast_path: section/协议冗余
+fingerprints:
+  raw_sha256: sha256:d2f29d2d8517092533b3435991d38549f62c6ed33cbccdf8d781940d4ca8822b
+  normalized_sha256: sha256:d2f29d2d8517092533b3435991d38549f62c6ed33cbccdf8d781940d4ca8822b
+cas_ref: sha256:d2f29d2d8517092533b3435991d38549f62c6ed33cbccdf8d781940d4ca8822b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

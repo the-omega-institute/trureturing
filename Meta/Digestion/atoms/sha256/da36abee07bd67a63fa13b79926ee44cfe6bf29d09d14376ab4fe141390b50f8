@@ -1,0 +1,26 @@
+# 245. 可控 Gramian 与可观测 Gramian
+
+假设离散系统稳定，例如：
+
+$$
+\rho(A)<1.
+$$
+
+定义可控 Gramian：
+
+$$
+W_c
+=
+\sum_{k=0}^{\infty}
+A^kBB^*(A^*)^k.
+$$
+
+定义可观测 Gramian：
+
+$$
+W_o
+=
+\sum_{k=0}^{\infty}
+(A^*)^kC^*CA^k.
+$$
+

@@ -1,0 +1,10 @@
+ast_path: section/结论六-局部-全局必须同时审计-kernel-与-image
+fingerprints:
+  raw_sha256: sha256:981b9af0913daa810b201fecd4b33d955fc13724195b0e40bf9ece6673ed8202
+  normalized_sha256: sha256:981b9af0913daa810b201fecd4b33d955fc13724195b0e40bf9ece6673ed8202
+cas_ref: sha256:981b9af0913daa810b201fecd4b33d955fc13724195b0e40bf9ece6673ed8202
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

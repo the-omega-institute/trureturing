@@ -1,0 +1,34 @@
+* 可区分行为数。
+
+若上界有限，则严格增长次数有限。
+
+因此：
+
+$$
+\boxed{
+\text{有限高度}
+\Longrightarrow
+\text{completion 有限稳定}.
+}
+$$
+
+实例包括：
+
+$$
+|X|<\infty,
+$$
+
+或：
+
+$$
+\dim V<\infty,
+$$
+
+或量子系统：
+
+$$
+\dim\operatorname{Herm}_0(\mathcal H)=d^2-1.
+$$
+
+---
+

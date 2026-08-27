@@ -1,0 +1,38 @@
+# 168. 统一观察者表示定理
+
+定义一个类型化协议观察者：
+
+$$
+\mathfrak O
+=
+\left(
+X,\mathsf{Prot},\mathsf{Out},\mathcal L
+\right),
+$$
+
+其中：
+
+$$
+\mathcal L_\pi:
+X\to
+\mathsf{Law}(\mathsf{Out}(\pi)).
+$$
+
+定义完整行为签名：
+
+$$
+\Sigma_{\mathfrak O}(x)
+=
+\left(
+\mathcal L_\pi(x)
+\right)_{\pi\in\mathsf{Prot}}.
+$$
+
+定义：
+
+$$
+K_{\mathfrak O}
+=
+\ker\Sigma_{\mathfrak O}.
+$$
+

@@ -1,0 +1,10 @@
+ast_path: section/181-观察深度的目标相对信息下界
+fingerprints:
+  raw_sha256: sha256:b6b0bd49d830c976712a78182e6a8bcc8e5aedebcc68bce83d48e086c84ad5a4
+  normalized_sha256: sha256:b6b0bd49d830c976712a78182e6a8bcc8e5aedebcc68bce83d48e086c84ad5a4
+cas_ref: sha256:b6b0bd49d830c976712a78182e6a8bcc8e5aedebcc68bce83d48e086c84ad5a4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/31-1-模群商/clause/3
+fingerprints:
+  raw_sha256: sha256:fb059ec8564f3b34063c222cf8f5d9b40f41b91480429110aae1326cff0870c5
+  normalized_sha256: sha256:fb059ec8564f3b34063c222cf8f5d9b40f41b91480429110aae1326cff0870c5
+cas_ref: sha256:fb059ec8564f3b34063c222cf8f5d9b40f41b91480429110aae1326cff0870c5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

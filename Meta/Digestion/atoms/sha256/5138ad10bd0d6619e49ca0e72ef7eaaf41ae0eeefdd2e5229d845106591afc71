@@ -1,0 +1,39 @@
+# 194. 观察者不是单边商，而是一个双侧评价结构
+
+设所有协议输出都被编码进某个共同语义空间 \(\Lambda\)。定义评价：
+
+$$
+e_{\mathfrak O}:
+X\times P\to\Lambda,
+$$
+
+$$
+e_{\mathfrak O}(x,\pi)
+=
+\mathcal L_\pi(x),
+$$
+
+其中：
+
+* \(X\) 是世界状态；
+* \(P\) 是协议；
+* \(\Lambda\) 是结果、概率 law、矩阵期望、记录或行为值。
+
+于是每个状态产生一行：
+
+$$
+r_x:P\to\Lambda,
+\qquad
+r_x(\pi)=e(x,\pi),
+$$
+
+每个协议产生一列：
+
+$$
+c_\pi:X\to\Lambda,
+\qquad
+c_\pi(x)=e(x,\pi).
+$$
+
+这暴露出两种不同的冗余。
+

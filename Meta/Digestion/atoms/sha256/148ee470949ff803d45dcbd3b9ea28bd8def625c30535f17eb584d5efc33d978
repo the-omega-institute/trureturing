@@ -1,0 +1,24 @@
+* \(\Phi\) 满足：
+
+$$
+\Phi^2-\Phi-I=0.
+$$
+
+因此 \(W_{\max}\) 是秩三的 \(\mathcal O_K\)-模。
+
+由于：
+
+$$
+K=\mathbb Q(\sqrt5)
+$$
+
+类数为 \(1\)，有限生成无挠 \(\mathcal O_K\)-模为自由模，所以非规范地：
+
+$$
+\boxed{
+W_{\max}\simeq\mathcal O_K^3.
+}
+$$
+
+---
+

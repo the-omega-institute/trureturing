@@ -1,0 +1,28 @@
+## 定义 247.1（双向有效核心）
+
+给定阈值 `τ`，保留：
+
+$$
+\sigma_i\ge\tau
+$$
+
+的模式，舍弃：
+
+$$
+\sigma_i<\tau
+$$
+
+的模式。
+
+这不再是单纯 observer quotient，也不是单纯 control restriction，而是：
+
+$$
+\boxed{
+\text{observable}
+\cap
+\text{reachable}
+\cap
+\text{robustly coupled}.
+}
+$$
+

@@ -1,0 +1,24 @@
+## 31.1 模群商
+
+主同余子群的 level-5 商满足：
+
+$$
+\boxed{
+PSL_2(\mathbb Z)/\overline{\Gamma(5)}
+\simeq
+PSL_2(\mathbb F_5)
+\simeq
+A_5.
+}
+$$
+
+所以同一个 \(A_5\) 同时出现于：
+
+* 五次根的偶置换；
+* 二十面体旋转；
+* level-5 模函数的有限单值化群。
+
+Rogers–Ramanujan 连分数是 level-5 模函数体系中的核心坐标；它与 \(j\)-不变量之间由 Klein 二十面体不变量关系连接。Duke 的工作系统解释了 Ramanujan 连分数、模函数和二十面体结构之间的关系。([MaRDI Portal][4])
+
+---
+

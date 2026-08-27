@@ -1,0 +1,16 @@
+## 对角逃逸
+
+产生：
+
+$$
+d\notin\operatorname{Im}\Sigma.
+$$
+
+它是：
+
+$$
+\boxed{
+\text{image defect}.
+}
+$$
+

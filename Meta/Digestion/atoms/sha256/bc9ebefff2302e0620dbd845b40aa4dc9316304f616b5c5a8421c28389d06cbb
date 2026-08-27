@@ -1,0 +1,18 @@
+## 1.2 常数角色证书
+
+定义：
+
+$$
+\boxed{
+\operatorname{ConstCert}(\kappa)
+=
+(\mathfrak C,\kappa,h_{\mathrm{zero}},
+h_{\mathrm{unique}},
+h_{\mathrm{gauge}},
+h_{\mathrm{source}}).
+}
+$$
+
+分别记录：
+
+* \(\kappa\) 确实使缺陷为零；

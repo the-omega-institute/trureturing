@@ -1,0 +1,36 @@
+# 第十二部　Mellin 反项完备化定理
+
+设热迹：
+
+$$
+\Theta(t)
+$$
+
+在 \(t\to0^+\) 时满足：
+
+$$
+\Theta(t)
+=
+\sum_{j=0}^{m-1}a_jt^{-\alpha_j}
++
+O(t^{-\alpha_m}),
+$$
+
+其中：
+
+$$
+\alpha_0>\alpha_1>\cdots>\alpha_m,
+$$
+
+并且 \(\Theta(t)\) 在 \(t\to\infty\) 足够快衰减。
+
+定义初始 Mellin 观察：
+
+$$
+M(s)
+=
+\int_0^\infty t^{s-1}\Theta(t)\,dt.
+$$
+
+---
+

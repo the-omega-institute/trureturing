@@ -1,0 +1,32 @@
+## 定理 214.2（目标估计成本）
+
+$$
+\boxed{
+\|a_*\|^2
+=
+\left\langle
+v_t,
+W_X^\dagger v_t
+\right\rangle.
+}
+$$
+
+若观察噪声为各向同性：
+
+$$
+y=Mx+\eta,
+\qquad
+\operatorname{Cov}(\eta)=\sigma^2I,
+$$
+
+则所有无偏线性估计器中，最小方差为
+
+$$
+\boxed{
+\sigma^2
+\left\langle
+v_t,W_X^\dagger v_t
+\right\rangle.
+}
+$$
+

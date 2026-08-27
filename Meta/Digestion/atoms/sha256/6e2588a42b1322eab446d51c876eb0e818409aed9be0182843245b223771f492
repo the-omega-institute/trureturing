@@ -1,0 +1,50 @@
+# 第十五部　阿代尔完成账本
+
+设 \(V\) 是全部局部位置的集合：
+
+$$
+V=V_f\sqcup V_\infty.
+$$
+
+每个位置 \(v\) 提供局部贡献：
+
+$$
+L_v.
+$$
+
+定义全局加法缺陷：
+
+$$
+\boxed{
+\Delta_{\mathrm{glob}}
+=
+\sum_{v\in V}L_v.
+}
+$$
+
+或乘法形式：
+
+$$
+\boxed{
+D_{\mathrm{glob}}
+=
+\prod_{v\in V}C_v.
+}
+$$
+
+当：
+
+$$
+\Delta_{\mathrm{glob}}=0
+$$
+
+或：
+
+$$
+D_{\mathrm{glob}}=1
+$$
+
+时，全局对象闭合。
+
+---
+

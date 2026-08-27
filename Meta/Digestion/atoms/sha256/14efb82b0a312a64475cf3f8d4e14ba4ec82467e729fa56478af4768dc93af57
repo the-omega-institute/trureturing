@@ -1,0 +1,51 @@
+# 226. Noetherian 观察者原理
+
+为什么仓库中如此多的有限状态观察过程最终会有限停止？
+
+真正原因不是某个具体公式，而是观察者精化格具有有限高度。
+
+设：
+
+$$
+q_0\preceq q_1\preceq q_2\preceq\cdots
+$$
+
+每一步严格精化都会严格增加：
+
+* partition 类数；
+* 可见子空间维数；
+* 独立效果数；
+* 可区分行为数。
+
+若上界有限，则严格增长次数有限。
+
+因此：
+
+$$
+\boxed{
+\text{有限高度}
+\Longrightarrow
+\text{completion 有限稳定}.
+}
+$$
+
+实例包括：
+
+$$
+|X|<\infty,
+$$
+
+或：
+
+$$
+\dim V<\infty,
+$$
+
+或量子系统：
+
+$$
+\dim\operatorname{Herm}_0(\mathcal H)=d^2-1.
+$$
+
+---
+

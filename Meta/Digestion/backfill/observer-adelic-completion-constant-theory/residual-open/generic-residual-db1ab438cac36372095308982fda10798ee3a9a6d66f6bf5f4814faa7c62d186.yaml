@@ -1,0 +1,14 @@
+ast_path: section/27-4-sqrt5-的结构角色
+fingerprints:
+  raw_sha256: sha256:db1ab438cac36372095308982fda10798ee3a9a6d66f6bf5f4814faa7c62d186
+  normalized_sha256: sha256:db1ab438cac36372095308982fda10798ee3a9a6d66f6bf5f4814faa7c62d186
+cas_ref: sha256:db1ab438cac36372095308982fda10798ee3a9a6d66f6bf5f4814faa7c62d186
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-3bdc48d6c336c2f8f2320b635f805c897a5135843af57765529354ba300875da-16c57bf65f9b735b25ed7f6bcb3c4401bc5608a53952e8579540e2c430f68261
+    - generic-residual-d44d4235e458fb0959e41833a298b277ffcc8aec2a9e2c16a3fca30e61651334-730a2b1c1eddbf19c81c1f7e96b1a993eb0df2e70230b086bb304674f2f1e7ca
+    - generic-residual-2258751738fc0f324aa9f47da79fe070b7211b3bb2152dda1534d947ca7b3bcc-e9cd63ce5afd36e2cbddce9ca6d753f86beec6de7a0119f8411c21af90510b19

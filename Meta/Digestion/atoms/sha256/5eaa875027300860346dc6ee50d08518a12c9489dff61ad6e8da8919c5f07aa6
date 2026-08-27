@@ -1,0 +1,33 @@
+## 当前最重要的开放桥
+
+$$
+\boxed{
+P_3\boldsymbol\Theta_L
+\stackrel{?}{=}
+F_+\operatorname{Sym}^2\mathbf R,
+}
+$$
+
+$$
+\boxed{
+P_{3'}\boldsymbol\Theta_L
+\stackrel{?}{=}
+F_-\operatorname{Sym}^2\mathbf R^\sigma.
+}
+$$
+
+以及识别：
+
+$$
+F_\pm
+$$
+
+究竟是：
+
+* Eisenstein 因子；
+* level-\(20\) CM newform；
+* eta product；
+* 还是多个标量模形式的线性组合。
+
+---
+

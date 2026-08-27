@@ -1,0 +1,13 @@
+## 结论一：观察者是 quotient–limit 桥
+
+$$
+\boxed{
+\frac{\text{world states}}
+{\text{protocol indistinguishability}}
+\cong
+\text{realized compatible record families}
+\subseteq
+\text{formal record limit}.
+}
+$$
+

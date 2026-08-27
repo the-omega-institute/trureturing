@@ -1,0 +1,41 @@
+## 定理 28.1（黄金最大阶完成）
+
+$$
+\boxed{
+W_{\max}
+=
+W_{\mathbb Z}+\Phi W_{\mathbb Z}
+}
+$$
+
+是最小的、包含 \(W_{\mathbb Z}\) 且被 \(\mathcal O_K=\mathbb Z[\varphi]\) 保持的满秩格。
+
+所以黄金完成经历：
+
+$$
+\boxed{
+\mathbb Z[\sqrt5]
+\overset{\text{指数 }2}{\subset}
+\mathbb Z[\varphi].
+}
+$$
+
+这揭示一个非常重要的阿代尔分工：
+
+$$
+\boxed{
+\begin{aligned}
+5&:\text{产生数域判别式与五阶对称};\\
+2&:\text{修复非最大整数阶的奇偶缺陷}.
+\end{aligned}
+}
+$$
+
+换言之：
+
+> 黄金域由 \(5\) 定义，但黄金最大阶的完成发生在 \(2\)-进奇偶通道上。
+
+这是 OACTC 中一个非常纯粹的有限位完成实例。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/第三十二部-黄金阿代尔完成签名
+fingerprints:
+  raw_sha256: sha256:d48336c03ef79b68cf8695b8657146d56bf9a232826cbcc67e8d97cdc19e464d
+  normalized_sha256: sha256:d48336c03ef79b68cf8695b8657146d56bf9a232826cbcc67e8d97cdc19e464d
+cas_ref: sha256:d48336c03ef79b68cf8695b8657146d56bf9a232826cbcc67e8d97cdc19e464d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,58 @@
+## 定理 34.1（特征域限制标量完成）
+
+设有限群 \(G\) 的一个不可约实表示 \(V\) 的特征标域为：
+
+$$
+K\neq\mathbb Q.
+$$
+
+若 \(V^\sigma\) 遍历 \(K/\mathbb Q\) 的 Galois 共轭表示，则：
+
+$$
+\boxed{
+\bigoplus_{\sigma:K\hookrightarrow\mathbb C}V^\sigma
+}
+$$
+
+具有有理特征标，并在适当条件下存在 \(G\)-稳定整数格。
+
+其维数为：
+
+$$
+\dim_KV\,[K:\mathbb Q].
+$$
+
+在黄金二十面体情形：
+
+$$
+K=\mathbb Q(\sqrt5),
+$$
+
+$$
+\dim_KV=3,
+$$
+
+所以：
+
+$$
+\boxed{
+\dim_\mathbb Q\operatorname{Res}_{K/\mathbb Q}V=6.
+}
+$$
+
+因此可以提出 OACTC 的一般性原则：
+
+$$
+\boxed{
+\textbf{共轭观察者限制标量原则}
+}
+$$
+
+即：
+
+> 一个非有理局部观察表示，只有在加入全部 Galois 共轭通道后，才可能成为有理、整数和晶格保持的全局观察者。
+
+黄金六维准晶体是该原则的三维—二次域实例。
+
+---
+

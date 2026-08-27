@@ -1,0 +1,10 @@
+ast_path: section/51-3-Wang-式多尺度结构/clause/2
+fingerprints:
+  raw_sha256: sha256:9bce54a5099080ca26383cbb91403fd2e0891c968407a73959f65a9e7d2f4b30
+  normalized_sha256: sha256:9bce54a5099080ca26383cbb91403fd2e0891c968407a73959f65a9e7d2f4b30
+cas_ref: sha256:9bce54a5099080ca26383cbb91403fd2e0891c968407a73959f65a9e7d2f4b30
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

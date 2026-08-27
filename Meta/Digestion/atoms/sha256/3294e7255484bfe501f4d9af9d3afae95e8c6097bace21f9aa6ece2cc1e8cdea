@@ -1,0 +1,45 @@
+# 228. 所有 completion 算子不一定交换
+
+设：
+
+$$
+C_T
+$$
+
+为时间 completion，
+
+$$
+C_I
+$$
+
+为干预 completion，
+
+$$
+C_P
+$$
+
+为素数 completion，
+
+$$
+C_Q
+$$
+
+为量子上下文 completion，
+
+$$
+C_M
+$$
+
+为记忆 completion。
+
+一般：
+
+$$
+C_iC_j(q)
+\neq
+C_jC_i(q).
+$$
+
+例如：
+
+* 先让动力传播局部信息，再加入跨素数读出；

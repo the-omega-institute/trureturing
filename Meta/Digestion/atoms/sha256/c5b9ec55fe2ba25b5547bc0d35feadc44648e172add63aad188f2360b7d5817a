@@ -1,0 +1,90 @@
+# 205. 动态观察的三重对偶
+
+给定：
+
+$$
+T:X\to X
+$$
+
+和初始接口：
+
+$$
+q:X\to Q.
+$$
+
+初始 kernel：
+
+$$
+K_0=\ker q.
+$$
+
+定义完整未来 kernel：
+
+$$
+K_\infty
+=
+\bigcap_{n\ge0}
+(T^n\times T^n)^{-1}(K_0).
+$$
+
+即：
+
+$$
+xK_\infty y
+\iff
+q(T^nx)=q(T^ny)
+\quad
+\forall n.
+$$
+
+仓库已机器核验：该 all-iterate pullback 是 \(K_0\) 内最大的前向 congruence，并且具有单调性、收缩性和幂等性。
+
+定义 observable algebra：
+
+$$
+\mathcal A_0
+=
+\operatorname{Obs}(K_0).
+$$
+
+定义动力闭包：
+
+$$
+\mathcal A_\infty
+=
+\operatorname{Alg}
+\left\{
+f\circ T^n:
+f\in\mathcal A_0,\ n\ge0
+\right\}.
+$$
+
+则：
+
+$$
+\boxed{
+K_\infty
+=
+\operatorname{Ker}(\mathcal A_\infty).
+}
+$$
+
+因此得到：
+
+$$
+\boxed{
+\begin{aligned}
+\text{state side}
+&:\text{最大的稳定 residual};\\
+\text{interface side}
+&:\text{最小的稳定 refinement};\\
+\text{observable side}
+&:\text{最小的 }T^*\text{-不变代数闭包}.
+\end{aligned}
+}
+$$
+
+这三个并不是类比，而是同一个 completion 的三种坐标。
+
+---
+

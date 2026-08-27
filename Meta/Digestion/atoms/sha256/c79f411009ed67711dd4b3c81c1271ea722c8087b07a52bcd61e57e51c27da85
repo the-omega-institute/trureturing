@@ -1,0 +1,38 @@
+* \(t\)：谱高度、时间或 Mellin 频率。
+
+定义：
+
+$$
+\boxed{
+q_{p,m,t}:X\to O_{p,m,t}.
+}
+$$
+
+这可以称为：
+
+$$
+\boxed{
+\textbf{Prime–Regulator–Time Observer}.
+}
+$$
+
+其三个方向分别读取：
+
+$$
+\begin{aligned}
+p&:\text{局部乘法结构};\\
+m&:\text{两个实嵌入之间的相对相位};\\
+t&:\text{解析演化与零点高度}.
+\end{aligned}
+$$
+
+项目现有 Golden prime classification 已经闭合 \(p\)-轴。
+
+Golden 单位流分解提供 \(m\)-轴。
+
+Weil 显式公式与 prime-time tomography 提供 \(t\)-轴。
+
+这比将 \(\varphi\) 直接塞入 Riemann zeta 更科学，因为 \(\varphi\) 不是改变 ζ 定义，而是提供一个新的、来源明确的观察坐标。
+
+---
+

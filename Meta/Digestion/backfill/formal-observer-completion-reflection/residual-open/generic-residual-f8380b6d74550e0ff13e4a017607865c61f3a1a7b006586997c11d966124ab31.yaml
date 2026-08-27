@@ -1,0 +1,10 @@
+ast_path: section/第三步-协议分离化
+fingerprints:
+  raw_sha256: sha256:f8380b6d74550e0ff13e4a017607865c61f3a1a7b006586997c11d966124ab31
+  normalized_sha256: sha256:f8380b6d74550e0ff13e4a017607865c61f3a1a7b006586997c11d966124ab31
+cas_ref: sha256:f8380b6d74550e0ff13e4a017607865c61f3a1a7b006586997c11d966124ab31
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,38 @@
+## 定理 209.2（输出容量下界）
+
+设一个协议子集 $S$ 已经分离上述 $r$ 个状态类。令
+
+$$
+m_p
+=
+|\operatorname{Im}(c_p)|
+$$
+
+为协议 $p$ 在目标状态类上的有效输出数，则
+
+$$
+\boxed{
+r\le\prod_{p\in S}m_p.
+}
+$$
+
+因此
+
+$$
+\boxed{
+\log_2r
+\le
+\sum_{p\in S}\log_2m_p.
+}
+$$
+
+若所有协议至多有 $m$ 个结果：
+
+$$
+\boxed{
+|S|
+\ge
+\left\lceil\log_mr\right\rceil.
+}
+$$
+

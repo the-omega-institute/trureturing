@@ -1,0 +1,36 @@
+## 第六层：闭环预测能力
+
+由全部未来协议 law 的最小行为商决定：
+
+$$
+Q_{\mathrm{beh}}.
+$$
+
+因此建议定义：
+
+$$
+\operatorname{Power}(\mathfrak O)
+=
+\left(
+K,
+\mathsf B,
+\delta,
+\mathsf I,
+\mathsf R,
+\mathsf P
+\right).
+$$
+
+其中各字段分别表示：
+
+* separation；
+* decision；
+* deficiency；
+* realization image；
+* reachability；
+* predictive closure。
+
+不同观察者可以在这些轴上不可比较。
+
+---
+

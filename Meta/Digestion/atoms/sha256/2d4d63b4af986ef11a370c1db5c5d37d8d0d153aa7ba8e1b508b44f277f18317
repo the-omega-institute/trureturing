@@ -1,0 +1,28 @@
+## 185.9 Agency residual
+
+当前 self interface 合并了未来策略不同的历史。
+
+完整审计向量应写为：
+
+$$
+\boxed{
+\mathcal R(\mathfrak O)
+=
+\left(
+R_{\mathrm{id}},
+R_T,
+R_{\mathrm{dyn}},
+R_{\mathrm{img}},
+R_{\mathrm{glue}},
+R_{\mathrm{metric}},
+R_{\mathrm{budget}},
+R_{\mathrm{memory}},
+R_{\mathrm{agency}}
+\right).
+}
+$$
+
+这比用一个未经定义的“信息逃逸率”覆盖所有缺陷严格得多。
+
+---
+

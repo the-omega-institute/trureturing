@@ -1,0 +1,10 @@
+ast_path: section/178-并行-串行二元律
+fingerprints:
+  raw_sha256: sha256:4c799135184d818db667123f83b5f22fdd9c81012ff9adfe5c64747e826b08de
+  normalized_sha256: sha256:4c799135184d818db667123f83b5f22fdd9c81012ff9adfe5c64747e826b08de
+cas_ref: sha256:4c799135184d818db667123f83b5f22fdd9c81012ff9adfe5c64747e826b08de
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

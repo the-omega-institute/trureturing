@@ -1,0 +1,10 @@
+ast_path: section/208-新协议真正增加信息的充要条件
+fingerprints:
+  raw_sha256: sha256:6b645651fbe9d8419725f78f7278d09546d4fb16deb629103f3993d1d7635748
+  normalized_sha256: sha256:6b645651fbe9d8419725f78f7278d09546d4fb16deb629103f3993d1d7635748
+cas_ref: sha256:6b645651fbe9d8419725f78f7278d09546d4fb16deb629103f3993d1d7635748
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,76 @@
+# 200. 每个世界状态产生一个兼容记录族
+
+给定状态 \(x\in X\)，每个上下文都产生记录：
+
+$$
+\beta_c(x)\in\mathcal B(c).
+$$
+
+自然性要求：
+
+$$
+\mathcal B(u)(\beta_d(x))
+=
+\beta_c(x).
+$$
+
+因此 \(x\) 产生一个兼容族：
+
+$$
+\beta(x)
+=
+\bigl(\beta_c(x)\bigr)_c
+\in
+\varprojlim_{c\in\mathcal C}\mathcal B(c).
+$$
+
+定义：
+
+$$
+\Gamma(\mathcal B)
+=
+\varprojlim_c\mathcal B(c),
+$$
+
+即所有形式兼容记录族。
+
+于是得到：
+
+$$
+\boxed{
+\beta:
+X\to\Gamma(\mathcal B).
+}
+$$
+
+统一观察者商为：
+
+$$
+X/\ker\beta
+\cong
+\operatorname{Im}\beta.
+$$
+
+而局部—全局 image defect 为：
+
+$$
+\boxed{
+\Gamma(\mathcal B)
+\setminus
+\operatorname{Im}\beta.
+}
+$$
+
+这同时容纳：
+
+* 有限时间前缀；
+* 有限素数集合；
+* 有限 \(p\)-进精度；
+* 有限干预家族；
+* 量子测量上下文；
+* 多观察者局部记录；
+* 有限历史；
+* 有限计算窗口。
+
+---
+

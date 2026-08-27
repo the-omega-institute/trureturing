@@ -1,0 +1,10 @@
+ast_path: section/64-1-新的-non-sticky-定义/clause/4
+fingerprints:
+  raw_sha256: sha256:a4970d1353a0a5ea5c744c641bedaef940052c2fda4d3882223effac2cd9fef7
+  normalized_sha256: sha256:a4970d1353a0a5ea5c744c641bedaef940052c2fda4d3882223effac2cd9fef7
+cas_ref: sha256:a4970d1353a0a5ea5c744c641bedaef940052c2fda4d3882223effac2cd9fef7
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

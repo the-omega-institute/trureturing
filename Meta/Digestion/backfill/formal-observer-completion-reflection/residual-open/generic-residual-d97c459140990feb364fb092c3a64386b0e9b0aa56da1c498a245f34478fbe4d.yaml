@@ -1,0 +1,10 @@
+ast_path: section/185-7-Budget-residual
+fingerprints:
+  raw_sha256: sha256:d97c459140990feb364fb092c3a64386b0e9b0aa56da1c498a245f34478fbe4d
+  normalized_sha256: sha256:d97c459140990feb364fb092c3a64386b0e9b0aa56da1c498a245f34478fbe4d
+cas_ref: sha256:d97c459140990feb364fb092c3a64386b0e9b0aa56da1c498a245f34478fbe4d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,16 @@
+* 定义和证明来自何处。
+
+两个数值相等的常数记录不一定角色相同。
+
+定义角色等价：
+
+$$
+\operatorname{ConstCert}(\kappa_1)
+\simeq
+\operatorname{ConstCert}(\kappa_2)
+$$
+
+当且仅当两个完成问题之间存在保持候选族、缺陷、规范和观察结果的同构。
+
+---
+

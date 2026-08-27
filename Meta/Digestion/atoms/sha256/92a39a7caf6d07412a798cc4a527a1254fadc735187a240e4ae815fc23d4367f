@@ -1,0 +1,22 @@
+# 第四十三部　真正 canonical 的黄金 zeta
+
+此前项目的 Golden Euler germ 是一个重要的重整化实验对象，仓库已证明可以抽取首个
+
+$$
+\zeta(\varphi^2s)
+$$
+
+主因子并改善余乘积的收敛区域。
+
+但从阿代尔与数域角度看，最 canonical 的黄金全局对象首先应是：
+
+$$
+\boxed{
+\zeta_K(s),
+\qquad
+K=\mathbb Q(\sqrt5).
+}
+$$
+
+---
+

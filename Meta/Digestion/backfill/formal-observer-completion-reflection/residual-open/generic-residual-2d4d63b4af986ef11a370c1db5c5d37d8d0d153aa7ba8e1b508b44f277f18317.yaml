@@ -1,0 +1,10 @@
+ast_path: section/185-9-Agency-residual
+fingerprints:
+  raw_sha256: sha256:2d4d63b4af986ef11a370c1db5c5d37d8d0d153aa7ba8e1b508b44f277f18317
+  normalized_sha256: sha256:2d4d63b4af986ef11a370c1db5c5d37d8d0d153aa7ba8e1b508b44f277f18317
+cas_ref: sha256:2d4d63b4af986ef11a370c1db5c5d37d8d0d153aa7ba8e1b508b44f277f18317
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

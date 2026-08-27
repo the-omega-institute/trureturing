@@ -1,0 +1,36 @@
+# 第十四部　Golden 谱完成定理
+
+项目的 Golden 指数满足：
+
+$$
+\beta(n)
+=
+\sqrt5\,n+\frac1\varphi-\{(n+1)\varphi\}.
+$$
+
+因此：
+
+$$
+\beta(n)=\sqrt5\,n+O(1).
+$$
+
+故计数函数：
+
+$$
+N_\varphi(u)
+=
+\#\{n\ge1:\beta(n)\le u\}
+$$
+
+满足：
+
+$$
+\boxed{
+N_\varphi(u)
+=
+\frac{u}{\sqrt5}+O(1).
+}
+$$
+
+由前述一般定理：
+

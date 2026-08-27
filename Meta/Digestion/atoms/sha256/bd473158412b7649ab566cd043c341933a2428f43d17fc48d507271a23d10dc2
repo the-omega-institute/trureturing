@@ -1,0 +1,18 @@
+## 结论 228.7（自描述障碍发生在表达像而非外延 kernel）
+
+一个观察者可以没有重复状态、没有重复协议，却仍不能表示自己的全部可能响应函数。
+
+因此：
+
+$$
+\boxed{
+\text{kernel closure}
+\not\Rightarrow
+\text{image surjectivity}
+\not\Rightarrow
+\text{self-description completeness}.
+}
+$$
+
+---
+

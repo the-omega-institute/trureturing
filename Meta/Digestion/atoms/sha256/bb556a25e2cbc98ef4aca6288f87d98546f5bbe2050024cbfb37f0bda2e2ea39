@@ -1,0 +1,42 @@
+## 定理 174.1（最小目标充分完成）
+
+\(C_{\mathcal T}(q)\) 是所有同时：
+
+* 精化 \(q\)；
+* 决定全部目标 \(T_\alpha\)；
+
+的接口中的最粗者。
+
+由此：
+
+$$
+\boxed{
+\begin{aligned}
+\text{knowledge completion}
+&=\text{加入事实值目标};\\
+\text{prediction completion}
+&=\text{加入未来 law};\\
+\text{causal completion}
+&=\text{加入全部干预响应};\\
+\text{quantum completion}
+&=\text{加入全部 word effects};\\
+\text{prime completion}
+&=\text{加入全部 }(p,k,t)\text{ 读出};\\
+\text{agency completion}
+&=\text{加入未来策略画像};\\
+\text{self completion}
+&=\text{加入仍会改变未来选择的历史差异}.
+\end{aligned}
+}
+$$
+
+所以项目中的大量 completion 并不是不同运算，而是同一个：
+
+$$
+C_{\mathcal T}
+$$
+
+在不同目标族上的实例。
+
+---
+

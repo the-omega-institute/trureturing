@@ -1,0 +1,10 @@
+ast_path: section/45-3-零频模式就是-Dedekind-zeta
+fingerprints:
+  raw_sha256: sha256:5969c02b7bb2e9f87c5371b2bc2d28966e785bbd6033a1a168be709d0499308d
+  normalized_sha256: sha256:5969c02b7bb2e9f87c5371b2bc2d28966e785bbd6033a1a168be709d0499308d
+cas_ref: sha256:5969c02b7bb2e9f87c5371b2bc2d28966e785bbd6033a1a168be709d0499308d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

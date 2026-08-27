@@ -1,0 +1,48 @@
+## 定理 214.1（目标可观测性四重等价）
+
+以下条件等价：
+
+$$
+\text{(i)}
+\quad
+t(x)\text{ 由 }Mx\text{ 唯一决定};
+$$
+
+$$
+\text{(ii)}
+\quad
+\ker M\subseteq\ker t;
+$$
+
+$$
+\text{(iii)}
+\quad
+v_t\in\operatorname{ran}M^*;
+$$
+
+$$
+\text{(iv)}
+\quad
+\exists a\in Y,\quad M^*a=v_t.
+$$
+
+此时
+
+$$
+\boxed{
+t(x)=\langle a,Mx\rangle.
+}
+$$
+
+### 证明
+
+目标由观察结果决定，当且仅当它在每个观察 fiber 上常值，即在 $\ker M$ 上为零。有限维正交对偶给出
+
+$$
+(\ker M)^\perp
+=
+\operatorname{ran}M^*.
+$$
+
+其余等价显然。∎
+

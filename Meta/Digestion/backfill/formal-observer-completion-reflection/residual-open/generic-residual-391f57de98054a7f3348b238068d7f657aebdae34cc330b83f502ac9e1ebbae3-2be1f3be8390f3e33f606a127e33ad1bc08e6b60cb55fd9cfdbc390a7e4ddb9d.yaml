@@ -1,0 +1,10 @@
+ast_path: section/第一步-协议生成闭包/clause/5
+fingerprints:
+  raw_sha256: sha256:391f57de98054a7f3348b238068d7f657aebdae34cc330b83f502ac9e1ebbae3
+  normalized_sha256: sha256:391f57de98054a7f3348b238068d7f657aebdae34cc330b83f502ac9e1ebbae3
+cas_ref: sha256:391f57de98054a7f3348b238068d7f657aebdae34cc330b83f502ac9e1ebbae3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

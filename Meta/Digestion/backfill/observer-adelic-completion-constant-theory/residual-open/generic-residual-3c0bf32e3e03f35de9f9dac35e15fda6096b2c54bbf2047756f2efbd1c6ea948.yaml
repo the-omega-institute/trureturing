@@ -1,0 +1,10 @@
+ast_path: section/69-1-对称平方解释
+fingerprints:
+  raw_sha256: sha256:3c0bf32e3e03f35de9f9dac35e15fda6096b2c54bbf2047756f2efbd1c6ea948
+  normalized_sha256: sha256:3c0bf32e3e03f35de9f9dac35e15fda6096b2c54bbf2047756f2efbd1c6ea948
+cas_ref: sha256:3c0bf32e3e03f35de9f9dac35e15fda6096b2c54bbf2047756f2efbd1c6ea948
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,29 @@
+# 213. 一致记录不等于真实记录
+
+多个主体输出相同消息可能有三种完全不同的原因：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{它们独立观察到同一真实事实};\\
+&\text{它们共享同一个粗 kernel};\\
+&\text{它们复制了同一个上游错误或伪造源}.
+\end{aligned}
+}
+$$
+
+因此记录模型必须加入 provenance：
+
+$$
+r
+=
+(\text{payload},
+\text{source},
+\text{protocol},
+\text{time},
+\text{integrity proof}).
+$$
+
+相对于信任模型 \(\mathcal T\)，一个事实 \(f\) 才能称为受信知识，如果 \(f\) 在所有同时满足：
+
+* 当前记录；

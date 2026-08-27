@@ -1,0 +1,20 @@
+## 定理 237.2（三角不等式）
+
+$$
+\delta(G\mid E)
+\le
+\delta(G\mid F)
++
+\delta(F\mid E).
+$$
+
+原因是：
+
+* 用 `E` 近似模拟 `F`；
+* 再用 `F` 近似模拟 `G`；
+* Markov kernel 对总变差是 contraction。
+
+因此 deficiency 把精确观察者序升级为近似观察者几何。
+
+---
+

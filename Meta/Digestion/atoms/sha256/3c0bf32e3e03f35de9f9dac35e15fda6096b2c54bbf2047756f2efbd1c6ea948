@@ -1,0 +1,41 @@
+## 69.1 对称平方解释
+
+令：
+
+$$
+U=\mathbb F_5^2.
+$$
+
+把三维空间识别为：
+
+$$
+\operatorname{Sym}^2U
+=
+\left\{
+au^2+2buv+cv^2
+\right\}.
+$$
+
+那么：
+
+$$
+b^2-ac
+$$
+
+正是二元二次型的判别式。
+
+因此：
+
+$$
+\boxed{
+R
+\simeq
+\operatorname{Sym}^2(\mathbb F_5^2),
+}
+\tag{69.3}
+$$
+
+而 \(A_5\simeq PSL_2(\mathbb F_5)\) 的三维表示就是二元二次型的对称平方／伴随表示。
+
+---
+

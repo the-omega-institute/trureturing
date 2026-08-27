@@ -1,0 +1,39 @@
+## 24.2 共轭逃逸残差
+
+设当前只观察一个嵌入 \(\sigma_0\)。定义共轭残差：
+
+$$
+\boxed{
+\operatorname{ConjRes}_{\sigma_0}(x)
+=
+\bigl(\sigma(x)\bigr)_{\sigma\neq\sigma_0}.
+}
+$$
+
+于是完整对象具有分解：
+
+$$
+\boxed{
+\iota_\Sigma(x)
+=
+\left(
+\sigma_0(x),
+\operatorname{ConjRes}_{\sigma_0}(x)
+\right).
+}
+$$
+
+这与 OACTC 的一般结构一致：
+
+$$
+\text{完整对象}
+=
+\text{当前可见读数}
++
+\text{共轭隐藏读数}.
+$$
+
+但这里的“隐藏”不是主观不可知，而是被单一嵌入主动省略的代数信息。
+
+---
+

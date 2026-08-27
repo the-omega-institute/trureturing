@@ -1,0 +1,16 @@
+ast_path: section/63-2-对科学定义理论的意义
+fingerprints:
+  raw_sha256: sha256:ed0c958453c3a8992ad53d9e887bd90fdae43afb3485f4dfe4be44034933e279
+  normalized_sha256: sha256:ed0c958453c3a8992ad53d9e887bd90fdae43afb3485f4dfe4be44034933e279
+cas_ref: sha256:ed0c958453c3a8992ad53d9e887bd90fdae43afb3485f4dfe4be44034933e279
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-29b15a94657d72bf9fe03e936444ae8b762b54debf4b4e3166976bb7e71968e2-1990fddeb8ee22c08bb28ecdf19717b4f207c7f5fa864a03d0c62bdba9192522
+    - generic-residual-a2b33ba5e0e339bd0ab7ac09fea901cf5cabd1c7b7738d7d8b88e37c285a237b-3d702e88b7abec37b46f9dde2e4bb51ae24424f5b913bd60c628644adeb7ee82
+    - generic-residual-fce579fb2e9ef9ba9a5253db29a05f33bc1a2785ca1e678bf9ffd0df0ffbfeee-53e60520ce7a63969cab35be4eaed23b9ca534c50e0bab70faa46301576ed7d5
+    - generic-residual-4dd3ef445ab899770ced1dcd010d9778c07dc38a73a6c151771f4155ef3f74c7-fc0e05e992e850ca87126bf424c8bbaaa01838146a2e27f5e760c4cdb3895816
+    - generic-residual-9ce0460772d88507748f743e54dcfb723cce00657792212542fe57426f6b8f32-0ab361672aa3be0153eafe236782686551bd0581f30e33efa9700da3be245f77

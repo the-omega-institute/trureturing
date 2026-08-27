@@ -1,0 +1,67 @@
+# 224. 统一 Gram 定理
+
+设状态差位于有限维内积空间 \(V\)。
+
+每个协议产生线性读出：
+
+$$
+C_\pi:V\to Y_\pi.
+$$
+
+取严格正权重：
+
+$$
+w_\pi>0.
+$$
+
+定义：
+
+$$
+W_{\mathfrak O}
+=
+\sum_\pi
+w_\pi C_\pi^*C_\pi.
+$$
+
+则：
+
+$$
+\langle v,W_{\mathfrak O}v\rangle
+=
+\sum_\pi
+w_\pi\|C_\pi v\|^2.
+$$
+
+因此：
+
+$$
+\boxed{
+\ker W_{\mathfrak O}
+=
+\bigcap_\pi\ker C_\pi.
+}
+$$
+
+所以以下对象都是同一结构的实例：
+
+$$
+\begin{aligned}
+&\text{线性系统 observability Gramian};\\
+&\text{量子 tomography frame operator};\\
+&\text{prime-time weighted Gramian};\\
+&\text{Fisher information};\\
+&\text{局部参数 Jacobian Gram};\\
+&\text{zeta-weighted prime-precision Gramian}.
+\end{aligned}
+$$
+
+最小特征值：
+
+$$
+\lambda_{\min}(W_{\mathfrak O})
+$$
+
+衡量最脆弱可见方向，而条件数衡量噪声放大。
+
+---
+

@@ -1,0 +1,84 @@
+# 本轮最终结论
+
+此前我们得到：
+
+$$
+\boxed{
+\text{六维准晶体是两个黄金共轭三维观察的整数完成。}
+}
+$$
+
+现在可以进一步加强为：
+
+$$
+\boxed{
+\text{在分歧素数 }5\text{ 上，
+这两个三维观察者并不会简单消失，}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{碰撞成一个三维模及其一阶 nilpotent 自扩张。}
+}
+$$
+
+这个三维模的射影方向精确编码：
+
+$$
+\boxed{
+6\text{ 条五重轴}
++
+10\text{ 条三重轴}
++
+15\text{ 条二重轴}.
+}
+$$
+
+而对它进行有限 Fourier 完成，又得到：
+
+$$
+\boxed{
+1\oplus3\oplus3',
+}
+$$
+
+即 level-5 模群中的黄金共轭三维表示。
+
+最凝练的结论是：
+
+$$
+\boxed{
+\text{黄金二十面体结构在实无穷位以“共轭分裂”存在，}
+\newline
+\text{在素数 }5\text{ 处以“ramified jet”存在，}
+\newline
+\text{在模函数世界中以“finite Fourier }1+3+3'\text{”重新出现。}
+}
+$$
+
+这给出了目前 OACTC 中最完整的一次：
+
+$$
+\boxed{
+\text{常数}
+\to
+\text{数域}
+\to
+\text{格}
+\to
+\text{局部退化}
+\to
+\text{观察者补全}
+\to
+\text{模函数基因组}
+}
+$$
+
+的闭环。
+
+[1]: https://doi.org/10.1112/jlms/s2-44.2.270 "https://doi.org/10.1112/jlms/s2-44.2.270"
+[2]: https://www.sciencedirect.com/science/article/abs/pii/S0022404923002451 "https://www.sciencedirect.com/science/article/abs/pii/S0022404923002451"
+[3]: https://arxiv.org/abs/1208.2570 "https://arxiv.org/abs/1208.2570"

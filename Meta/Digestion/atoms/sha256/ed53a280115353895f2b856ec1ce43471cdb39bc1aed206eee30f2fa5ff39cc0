@@ -1,0 +1,16 @@
+## 解释
+
+右侧的最优 $c$ 是归一化 no-go witness；其违反量正好等于 $y$ 到真实行为像的距离。
+
+因此可以定义：
+
+$$
+\boxed{
+\operatorname{RealizationDefect}(y)
+=
+\operatorname{dist}(y,\Sigma(X)).
+}
+$$
+
+它不只回答“是否可实现”，还回答“离最近真实模型有多远”。
+

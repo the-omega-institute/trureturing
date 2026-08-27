@@ -1,0 +1,24 @@
+## 定理 30.1（黄金显—隐双曲运输）
+
+$$
+\boxed{
+\text{Golden inflation}
+=
+\text{可见尺度放大}
++
+\text{共轭残差等比收缩}.
+}
+$$
+
+这为此前 Wang–Deng 路线提供一个真正内生的小参数：
+
+$$
+\boxed{
+\varepsilon_n=\varphi^{-n}.
+}
+$$
+
+它不是人为加入的微扰参数，而是 Galois 共轭嵌入自身产生的收缩率。
+
+---
+

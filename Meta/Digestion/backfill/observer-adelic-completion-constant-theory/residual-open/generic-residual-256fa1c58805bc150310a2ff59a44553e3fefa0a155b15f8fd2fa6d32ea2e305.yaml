@@ -1,0 +1,17 @@
+ast_path: section/第七十九部-Ramanujan-Theta-因子化猜想
+fingerprints:
+  raw_sha256: sha256:256fa1c58805bc150310a2ff59a44553e3fefa0a155b15f8fd2fa6d32ea2e305
+  normalized_sha256: sha256:256fa1c58805bc150310a2ff59a44553e3fefa0a155b15f8fd2fa6d32ea2e305
+cas_ref: sha256:256fa1c58805bc150310a2ff59a44553e3fefa0a155b15f8fd2fa6d32ea2e305
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-d6e28c73482abd942789309a2cddb7f43fff64708aa4c34c78674f04c76b04aa-8fbc895e6d662df706d82a9d72db9cc334ca17035d9ca7321be0256aebf63c89
+    - generic-residual-31eb0c62f955c321edd0d4cdc99bca008e7e65b9da73a8758dd5bd227f380ada-5a1d9d25215adf2313ed313f0d9e3dc32dfacd4b68479fabcd0cf94148cd5b5a
+    - generic-residual-d7a3f00f7b51c37939f41031edc059a6c8814dc2c0e1fb319fd91ab96b105224-c16e582ba40a9396f1fc7799944fb2195a23c2bc15b49d52f4985b8921f5c14a
+    - generic-residual-1f8aa59000a8b84b15fd320701faea518be948fbcf9ebf273af91a9ad169cb72-92371fa02c5bcf4b85229f268044d5da37179d3624434ab84630e3121dd34c27
+    - generic-residual-e30cf8137c1fbfd7e4b477344842bc08f04abde774901fdb6b97b545171b071e-57ba81e20b985c7cd597e42aa0df32a694bd6b631c3bca926635705cdfff5402
+    - generic-residual-607f9777c11b622d368af48c632f103ddbdc13deccb8adf31db586c4ba36be9d-bcb5ef28af9bc7410bae92e5808a813d857f820ff617e7b05541cdc308a232c9

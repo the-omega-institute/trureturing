@@ -1,0 +1,10 @@
+ast_path: section/4-3-局部尺度常数
+fingerprints:
+  raw_sha256: sha256:fe44500f3e1aa1c059f99a6b76e8e810d8914e97a1d23d6091cfe4e18f02cb52
+  normalized_sha256: sha256:fe44500f3e1aa1c059f99a6b76e8e810d8914e97a1d23d6091cfe4e18f02cb52
+cas_ref: sha256:fe44500f3e1aa1c059f99a6b76e8e810d8914e97a1d23d6091cfe4e18f02cb52
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
