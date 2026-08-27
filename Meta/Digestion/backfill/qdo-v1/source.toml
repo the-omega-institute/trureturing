@@ -2,5 +2,5 @@ source_id = "qdo-v1"
 path = "docs/develop/theory/QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION.md"
 atomizer = "dialect:qdo"
 genre_registry_check = "collected"
-unregistered_genres = ["评注"]
+unregistered_genres = ["规则", "评注"]
 acknowledged_stale = ["qdo-coarse-9d85df6c50cd5b09eaecf0d573f2a522bae2c8d49f4658e63944e8334524fa7c"]
