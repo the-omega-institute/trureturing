@@ -54,6 +54,7 @@ jobs:
     timeout-minutes: 350
     steps:
       - name: Check out the pushed integration commit
+        id: checkout-pushed
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -61,6 +62,7 @@ jobs:
           path: candidate
 
       - name: Strip checkout remote state
+        if: steps.checkout-pushed.outcome == 'success'
         shell: bash
         env:
           CHECKOUT_PATH: candidate
@@ -69,9 +71,16 @@ jobs:
           git -C "$CHECKOUT_PATH" remote remove origin
           git -C "$CHECKOUT_PATH" for-each-ref --format='delete %(refname)' refs/remotes/ |
             git -C "$CHECKOUT_PATH" update-ref --stdin
-          test "$(git -C "$CHECKOUT_PATH" remote | wc -l)" -eq 0
-          test "$(git -C "$CHECKOUT_PATH" for-each-ref --format='%(refname)' refs/remotes/ | wc -l)" -eq 0
-          test -n "$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
+          remote_count="$(git -C "$CHECKOUT_PATH" remote | wc -l)"
+          remote_ref_count="$(git -C "$CHECKOUT_PATH" for-each-ref --format='%(refname)' refs/remotes/ | wc -l)"
+          if [[ "$remote_count" -ne 0 || "$remote_ref_count" -ne 0 ]]; then
+            printf '%s\n' "checkout still exposes remotes or remote-tracking refs" >&2
+            exit 1
+          fi
+          head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
+          base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
+          test -n "$head_sha"
+          test -n "$base_sha"
 
       - name: Install pinned Lean toolchain
         shell: bash
