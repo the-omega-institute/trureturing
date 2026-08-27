@@ -1,0 +1,10 @@
+ast_path: section/商下降-carry-交换子流-预测闭包-记忆与因果查询的统一形式理论/clause/1
+fingerprints:
+  raw_sha256: sha256:2038bc89f6f8ca363fbe80315fc2affcecf6cf04c63771fe8bb27cfbaecd1c49
+  normalized_sha256: sha256:2038bc89f6f8ca363fbe80315fc2affcecf6cf04c63771fe8bb27cfbaecd1c49
+cas_ref: sha256:2038bc89f6f8ca363fbe80315fc2affcecf6cf04c63771fe8bb27cfbaecd1c49
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

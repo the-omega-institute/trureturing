@@ -1,0 +1,10 @@
+ast_path: section/哲学解释/occurrence/3/clause/3
+fingerprints:
+  raw_sha256: sha256:9b933becb6664535b1263f3e544c70a5dd01b10f8749eb7a84ec00785fb706ab
+  normalized_sha256: sha256:9b933becb6664535b1263f3e544c70a5dd01b10f8749eb7a84ec00785fb706ab
+cas_ref: sha256:9b933becb6664535b1263f3e544c70a5dd01b10f8749eb7a84ec00785fb706ab
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

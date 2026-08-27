@@ -1,0 +1,10 @@
+ast_path: section/T3-紧致残差有限完备化/clause/3
+fingerprints:
+  raw_sha256: sha256:eb989313272b6f6e395618bdbbc497f3f48bf6e6b9ced379e2bfb12310260669
+  normalized_sha256: sha256:eb989313272b6f6e395618bdbbc497f3f48bf6e6b9ced379e2bfb12310260669
+cas_ref: sha256:eb989313272b6f6e395618bdbbc497f3f48bf6e6b9ced379e2bfb12310260669
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

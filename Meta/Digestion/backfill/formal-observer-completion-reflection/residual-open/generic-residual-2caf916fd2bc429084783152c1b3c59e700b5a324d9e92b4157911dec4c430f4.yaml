@@ -8,3 +8,6 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-2b4ca577a9bf301342e2060fc68e8a4b4fa70e7a58bb9576a2b912b3ef6781ae-a178c6698b9e0d2430ccd20821ed150a76fcb16801d58975a957a78935ba25b2
+    - generic-residual-a8f87e73a11fd6b585ec84b91717eba6dd3418cf3a2ee145a26f709524961054-3bfdf5456a4d000d7a5f8a7d2b5cf2e6e761d10d5b1050f703089ba1a07d815a

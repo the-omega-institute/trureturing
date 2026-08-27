@@ -1,0 +1,10 @@
+ast_path: section/340-名义所有权不推出实际控制/clause/1
+fingerprints:
+  raw_sha256: sha256:1828c2648f74ed6929a2fbb0560f42fa89b880e170b2c4d70aab9243894e018d
+  normalized_sha256: sha256:1828c2648f74ed6929a2fbb0560f42fa89b880e170b2c4d70aab9243894e018d
+cas_ref: sha256:1828c2648f74ed6929a2fbb0560f42fa89b880e170b2c4d70aab9243894e018d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

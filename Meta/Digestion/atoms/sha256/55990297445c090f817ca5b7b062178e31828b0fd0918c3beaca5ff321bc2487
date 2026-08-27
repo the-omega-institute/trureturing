@@ -1,0 +1,24 @@
+* 成员变化。
+
+其规范集体状态可以取为这些目标的动态完成：
+
+[
+\boxed{
+C_{\mathrm{collective}}
+=======================
+
+\operatorname{Dyn}*{\mathcal F}
+\left(
+\operatorname{Tr}
+\vee
+E*{\mathrm{commitments}}
+\vee
+E_{\mathrm{rules}}
+\right).
+}
+]
+
+集体代理因此不是成员个体的简单并集，而是一个能够跨时间承载联合行动和承诺的闭合状态。
+
+---
+

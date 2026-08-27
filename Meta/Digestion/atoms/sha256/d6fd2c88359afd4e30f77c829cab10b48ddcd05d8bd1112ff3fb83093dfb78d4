@@ -1,0 +1,31 @@
+- \(\operatorname{SameOut}_{\mathrm{SG}}\) 固定同一 \(\operatorname{evaluate}\)、行动身份 \(a,b\)，并逐字段固定 adjudication 之外的同一组 commitment 字段，特别是 \(K.\operatorname{committedArtifacts}\)、\(K.\operatorname{baselineArtifacts}\) 与 \(K.\operatorname{comparator}\)；谓词为 \(\operatorname{ScientificGain}(\operatorname{evaluate},K,z,a,b)\)。
+
+所有 \(\operatorname{SameOut}\) 还固定共同的 \(Z\) 和元素身份。允许变化的历史数据只在 adjudication 与账本内，并受相等的完整 \(\operatorname{AdjudicationSignature}\) 约束；若后续接口增加非历史实参，必须显式加入相应 \(\operatorname{SameOut}\)。
+
+再固定第 53.4 部的非空有限可行集 \(F\)、Action 载体上的完整外生规范 \(O_G\)，并要求
+\[
+\forall a\in F,\quad a\in\operatorname{AdmTarget}(O_G.\operatorname{goal})
+\ \wedge\ \operatorname{InScope}(O_G.\operatorname{scope},a).
+\]
+令 \(a\sim_Gb\Longleftrightarrow O_G.\operatorname{relation}(a,b)\wedge O_G.\operatorname{relation}(b,a)\)，在 \(F/{\sim_G}\) 上取延伸原商偏序的线性序 \(\leq_\lambda\)，并回拉到 Action：
+\[
+a\leq^F_\lambda b
+\Longleftrightarrow
+a\in F\wedge b\in F\wedge[a]\leq_\lambda[b].
+\]
+令派生范围为 \(\operatorname{scope}_F=(O_G.\operatorname{scope},F)\)，且 \(\operatorname{InScope}_F(\operatorname{scope}_F,a)\Longleftrightarrow\operatorname{InScope}(O_G.\operatorname{scope},a)\wedge a\in F\)。把回拉关系连同
+\[
+\operatorname{goal}=O_G.\operatorname{goal},\quad
+\operatorname{source}=O_G.\operatorname{source},\quad
+\operatorname{version}=O_G.\operatorname{version},\quad
+\operatorname{scope}=\operatorname{scope}_F
+\]
+及第 54.3 部要求的域、反身与传递见证打包为完整 \(\operatorname{OrientationSpec}\)，记作 \(O^F_\lambda\)。定义
+\[
+\boxed{
+\operatorname{LinExt}_F(O_G):=\{O^F_\lambda:\leq_\lambda
+\text{ 是 }F/{\sim_G}\text{ 上延伸原商偏序的线性序}\}.
+}
+\]
+其元素不是裸关系；来源、版本和原范围由 \(O_G\) 复制，有限范围收窄显式保存在 \(\operatorname{scope}_F\)，观察记录不生成任何定向。
+

@@ -1,0 +1,10 @@
+ast_path: section/本体实在论/clause/1
+fingerprints:
+  raw_sha256: sha256:2df71cacbf8cfaf729933caa3a51603a15bcccd1aaae67071653ac3db75904c3
+  normalized_sha256: sha256:2df71cacbf8cfaf729933caa3a51603a15bcccd1aaae67071653ac3db75904c3
+cas_ref: sha256:2df71cacbf8cfaf729933caa3a51603a15bcccd1aaae67071653ac3db75904c3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

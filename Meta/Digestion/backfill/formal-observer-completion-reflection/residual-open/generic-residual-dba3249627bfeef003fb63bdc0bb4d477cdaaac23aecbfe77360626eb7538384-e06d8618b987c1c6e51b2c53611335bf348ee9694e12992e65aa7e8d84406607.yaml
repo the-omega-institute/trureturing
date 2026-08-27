@@ -1,0 +1,10 @@
+ast_path: section/69-选择信息-结果信息与作者信息的链式分解/clause/4
+fingerprints:
+  raw_sha256: sha256:dba3249627bfeef003fb63bdc0bb4d477cdaaac23aecbfe77360626eb7538384
+  normalized_sha256: sha256:dba3249627bfeef003fb63bdc0bb4d477cdaaac23aecbfe77360626eb7538384
+cas_ref: sha256:dba3249627bfeef003fb63bdc0bb4d477cdaaac23aecbfe77360626eb7538384
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

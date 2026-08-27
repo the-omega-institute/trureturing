@@ -1,0 +1,10 @@
+ast_path: section/179-简单性和预测充分性是两条独立轴/clause/2
+fingerprints:
+  raw_sha256: sha256:2f3dafca39c00c9176ea8681b9e585d769e525e92e8922004d233a8f7886c0ac
+  normalized_sha256: sha256:2f3dafca39c00c9176ea8681b9e585d769e525e92e8922004d233a8f7886c0ac
+cas_ref: sha256:2f3dafca39c00c9176ea8681b9e585d769e525e92e8922004d233a8f7886c0ac
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

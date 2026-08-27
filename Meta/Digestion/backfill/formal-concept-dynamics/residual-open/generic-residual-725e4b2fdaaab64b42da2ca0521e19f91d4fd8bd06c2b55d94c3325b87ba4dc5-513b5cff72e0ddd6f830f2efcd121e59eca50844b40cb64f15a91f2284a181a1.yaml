@@ -1,0 +1,10 @@
+ast_path: section/66-8-最终命题/clause/2
+fingerprints:
+  raw_sha256: sha256:725e4b2fdaaab64b42da2ca0521e19f91d4fd8bd06c2b55d94c3325b87ba4dc5
+  normalized_sha256: sha256:725e4b2fdaaab64b42da2ca0521e19f91d4fd8bd06c2b55d94c3325b87ba4dc5
+cas_ref: sha256:725e4b2fdaaab64b42da2ca0521e19f91d4fd8bd06c2b55d94c3325b87ba4dc5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,1 @@
+- 总编码长度 \(N\) 的 word-RAM/查询模型、显式闭包与 ValidTrace 核验，以及对冻结 `ClosureUndecidable.closure_reading_unreachable` 的复用边界；

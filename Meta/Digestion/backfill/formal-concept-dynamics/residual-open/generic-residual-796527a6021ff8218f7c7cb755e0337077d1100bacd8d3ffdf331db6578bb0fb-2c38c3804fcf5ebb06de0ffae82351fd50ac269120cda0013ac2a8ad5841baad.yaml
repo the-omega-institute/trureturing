@@ -1,0 +1,10 @@
+ast_path: section/6-修复保守性/clause/2
+fingerprints:
+  raw_sha256: sha256:796527a6021ff8218f7c7cb755e0337077d1100bacd8d3ffdf331db6578bb0fb
+  normalized_sha256: sha256:796527a6021ff8218f7c7cb755e0337077d1100bacd8d3ffdf331db6578bb0fb
+cas_ref: sha256:796527a6021ff8218f7c7cb755e0337077d1100bacd8d3ffdf331db6578bb0fb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,17 @@
+# 第五十六部　54.3 三处源缺口的有限闭合
+
+## 56.1 增订目的、继承接口与收窄纪律
+
+本部是 v1.4 的追加式增订，只精确化第 54.3 部证明义务 9 的商序半条、证明义务 10 的 Stop 半条，以及证明义务 12 的时域投影半条。第 1—55 部的定义、开放问题、冻结结算与已形式化定理均不回写、不删除，也不因本部而改变原地址。
+
+本部预期进入既有 canonical 命名空间
+
+`D5.S3.ConceptDynamics.DefinitionEscape.Adjudication`
+
+并直接复用其中已经给出的
+
+`GainVector`、`ParetoWeak`、`ParetoStrict`、`NoDominatingCandidate`、`DecisionSet`、`OrientationSpec`、`ProspectiveCommitment`、`OrientedStopOnDecisionSet`、`OrientedStop` 与 `ExpansionEscape`。
+
+本部只使用以下初等构件：
+
+- 有限集、有限子类型与有限过滤；

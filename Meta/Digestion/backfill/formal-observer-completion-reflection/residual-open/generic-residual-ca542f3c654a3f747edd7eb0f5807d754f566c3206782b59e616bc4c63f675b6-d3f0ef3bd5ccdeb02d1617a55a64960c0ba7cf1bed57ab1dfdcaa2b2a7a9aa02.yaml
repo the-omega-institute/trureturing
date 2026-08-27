@@ -1,0 +1,10 @@
+ast_path: section/31-喉部-可见相位与路径分量/clause/4
+fingerprints:
+  raw_sha256: sha256:ca542f3c654a3f747edd7eb0f5807d754f566c3206782b59e616bc4c63f675b6
+  normalized_sha256: sha256:ca542f3c654a3f747edd7eb0f5807d754f566c3206782b59e616bc4c63f675b6
+cas_ref: sha256:ca542f3c654a3f747edd7eb0f5807d754f566c3206782b59e616bc4c63f675b6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

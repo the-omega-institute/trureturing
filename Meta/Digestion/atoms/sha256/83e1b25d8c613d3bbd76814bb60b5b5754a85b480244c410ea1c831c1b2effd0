@@ -1,0 +1,6 @@
+## T1. 预算包络恒等式
+
+定义未归一化预算包络与逃逸谱
+
+\[M_\Gamma(L):=\inf_{S\in\mathscr F_L}\nu(E_S),\qquad \rho_\Gamma(L):=\frac{M_\Gamma(L)}{M_0}.\]
+

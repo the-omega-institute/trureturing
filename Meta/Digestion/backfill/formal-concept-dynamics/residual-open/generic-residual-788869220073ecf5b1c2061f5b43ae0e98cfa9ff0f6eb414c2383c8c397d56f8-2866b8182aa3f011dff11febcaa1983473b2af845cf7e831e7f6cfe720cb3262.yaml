@@ -1,0 +1,10 @@
+ast_path: 推论/296.2/clause/5
+fingerprints:
+  raw_sha256: sha256:788869220073ecf5b1c2061f5b43ae0e98cfa9ff0f6eb414c2383c8c397d56f8
+  normalized_sha256: sha256:788869220073ecf5b1c2061f5b43ae0e98cfa9ff0f6eb414c2383c8c397d56f8
+cas_ref: sha256:788869220073ecf5b1c2061f5b43ae0e98cfa9ff0f6eb414c2383c8c397d56f8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
