@@ -26,6 +26,7 @@ internal static partial class RepositoryRules
         HostedExtensionGid,
         Signature,
         SignatureNameKey,
+        SignatureType,
         PrimaryGid,
         CoverageGids,
         CoverageGid,
@@ -64,7 +65,14 @@ internal static partial class RepositoryRules
                 return;
             }
 
-            var classification = scanAnomalies ? ClassifyAnomaly(element) : null;
+            // canonical receipt 的 precommitted_signature 是封闭的类型化机器记录(kind/name_key/type
+            // 各有专属权威校验);其 type 为 statement-v1 编码,天然含定理自身的内容词(如判决枚举
+            // 构造子 failure),对象级异常分类在此只会误报——同类判例:a94991935/0d51e2b5f/#3291/#3340。
+            var signatureRecordExempt = slot == AddressSlot.Signature
+                && DigestionFormalizationReceipt.IsCanonicalPath(path);
+            var classification = scanAnomalies && !signatureRecordExempt
+                ? ClassifyAnomaly(element)
+                : null;
             if (classification is "unknown")
             {
                 findings.Add(new RuleFinding(path, $"unknown anomaly-bearing schema at {location}"));
@@ -231,7 +239,8 @@ internal static partial class RepositoryRules
         if ((AnomalyBearingPattern.IsMatch(unescaped)
                 && !IsAddressShapedResidueAtDeclaredSlot(path, slot, unescaped)
                 && !IsSignatureNameKeyResidueAtDeclaredSlot(path, slot, unescaped)
-                && !IsDeclarationGidResidueAtDeclaredSlot(path, slot, unescaped))
+                && !IsDeclarationGidResidueAtDeclaredSlot(path, slot, unescaped)
+                && !IsStatementEncodingResidueAtDeclaredSlot(path, slot, unescaped))
             || Regex.IsMatch(unescaped, "\\\"(?:kind|type|category|record_type)\\\"\\s*:"))
         {
             findings.Add(new RuleFinding(path, $"unknown anomaly-bearing schema at {location}"));
@@ -260,6 +269,7 @@ internal static partial class RepositoryRules
         (AddressSlot.HostedExtension, "precommitted_signature") => AddressSlot.Signature,
         (AddressSlot.HostedExtension, "gid") => AddressSlot.HostedExtensionGid,
         (AddressSlot.Signature, "name_key") => AddressSlot.SignatureNameKey,
+        (AddressSlot.Signature, "type") => AddressSlot.SignatureType,
         _ => AddressSlot.None,
     };
 
@@ -349,6 +359,27 @@ internal static partial class RepositoryRules
     /// Without the parse, prose or a serialized record placed in the legitimate GID slot would be.
     /// Embedded-record detection remains a separate disjunct and is unaffected.
     /// </summary>
+    /// <summary>
+    /// Tests whether the residue matches the statement-encoding exemption: the path is a canonical
+    /// formalization receipt, structural descent reached a signature's <c>type</c>, and the value
+    /// carries the canonical <c>statement-v1(</c> encoding prefix. The prefix is the shape the
+    /// producer emits and the receipt loader consumes; like the address exemption, this asserts
+    /// the on-record shape rather than a second grammar — a full decode here would duplicate the
+    /// Scribe-side StatementV1Decoder for no additional exclusion, since prose placed in this slot
+    /// lacks the prefix and stays flagged. Without the path, any <c>type</c> key would be exempt;
+    /// without the slot, a nested key would be; without the prefix, anomaly prose in the legitimate
+    /// slot would be.
+    /// </summary>
+    private static bool IsStatementEncodingResidueAtDeclaredSlot(
+        string path,
+        AddressSlot slot,
+        string residue)
+    {
+        if (!DigestionFormalizationReceipt.IsCanonicalPath(path)) return false;
+        if (slot != AddressSlot.SignatureType) return false;
+        return residue.StartsWith("statement-v1(", StringComparison.Ordinal);
+    }
+
     private static bool IsDeclarationGidResidueAtDeclaredSlot(
         string path,
         AddressSlot slot,
