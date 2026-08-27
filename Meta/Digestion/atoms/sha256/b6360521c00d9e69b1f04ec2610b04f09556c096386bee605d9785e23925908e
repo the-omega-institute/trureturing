@@ -1,0 +1,83 @@
+# 第一百三十三部　\(\pi\) 与 \(\varphi\) 决定乘积收敛边界
+
+Rademacher 理论给出 \(J\) 系数的主增长：
+
+$$
+\boxed{
+c(N)
+=
+\exp\left(
+4\pi\sqrt N+O(\log N)
+\right).
+}
+\tag{133.1}
+$$
+
+更精确地：
+
+$$
+c(N)
+\sim
+\frac{
+e^{4\pi\sqrt N}
+}{
+\sqrt2\,N^{3/4}
+}.
+$$
+
+这来自模函数 \(J\) 的 Rademacher 展开。([MaRDI Portal][2])
+
+考虑乘积绝对收敛所需的一级和：
+
+$$
+\sum_{m,n\ge1}
+c(mn)e^{-t(\alpha m+n)}.
+$$
+
+由 AM–GM：
+
+$$
+\alpha m+n
+\ge
+2\sqrt{\alpha mn}.
+$$
+
+所以指数主项满足：
+
+$$
+4\pi\sqrt{mn}
+-
+t(\alpha m+n)
+\le
+-\left(
+2t\sqrt\alpha-4\pi
+\right)\sqrt{mn}.
+$$
+
+因此：
+
+$$
+\boxed{
+t>\frac{2\pi}{\sqrt\alpha}
+}
+\tag{133.2}
+$$
+
+给出绝对收敛。
+
+反之，当：
+
+$$
+t<\frac{2\pi}{\sqrt\alpha},
+$$
+
+选择：
+
+$$
+n\approx\alpha m
+$$
+
+即可使单项不趋于零，因此 primitive 一级和发散。
+
+---
+

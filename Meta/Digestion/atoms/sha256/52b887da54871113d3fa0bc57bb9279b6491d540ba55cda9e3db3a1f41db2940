@@ -1,0 +1,23 @@
+### Golden level-5 modular collision
+
+近期工作发现，模 \(5\) 二次特征 \(\chi_5\) 的 normalized 特殊值
+
+$$
+\frac{L(6,\chi_5)}
+{\pi^6\sqrt5}
+$$
+
+的分子中出现素数 \(67\)，并由此得到 weight \(6\)、level \(5\)、nebentypus \(\chi_5\) 的 Eisenstein–cusp congruence。([arXiv][4])
+
+所以：
+
+$$
+\boxed{
+67
+=
+\text{Golden level-5 模图表中的一个 Eisenstein–cusp collision prime}.
+}
+$$
+
+---
+

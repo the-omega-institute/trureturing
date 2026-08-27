@@ -1,0 +1,10 @@
+ast_path: section/第一百零三部-E-8-给-RH-的精确但有限的帮助
+fingerprints:
+  raw_sha256: sha256:7b38df052f27ca831e228d34878252f21938ce3c48bd6298beb48ba3fa1203d8
+  normalized_sha256: sha256:7b38df052f27ca831e228d34878252f21938ce3c48bd6298beb48ba3fa1203d8
+cas_ref: sha256:7b38df052f27ca831e228d34878252f21938ce3c48bd6298beb48ba3fa1203d8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

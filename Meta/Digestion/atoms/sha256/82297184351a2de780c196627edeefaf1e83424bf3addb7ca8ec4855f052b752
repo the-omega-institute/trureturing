@@ -1,0 +1,20 @@
+## 137.2 零模式
+
+$$
+n=0.
+$$
+
+它决定 automorphic product 的 weight 与归一化。
+
+所以：
+
+$$
+\boxed{
+c_0(0)
+=
+\text{global weight/completion constant}.
+}
+$$
+
+---
+

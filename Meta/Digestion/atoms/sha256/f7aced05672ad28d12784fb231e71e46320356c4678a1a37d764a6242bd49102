@@ -1,0 +1,31 @@
+# 第一百三十部　黄金斜率是阶数量级最优的一维编码
+
+令：
+
+$$
+\varphi=\frac{1+\sqrt5}{2},
+\qquad
+\varphi'=-\frac1\varphi.
+$$
+
+定义有限根窗口：
+
+$$
+\mathcal R_H
+=
+\{1,\ldots,H\}^2,
+\qquad
+H\ge2.
+$$
+
+定义最小谱间距：
+
+$$
+\delta_\varphi(H)
+=
+\min_{\substack{x,y\in\mathcal R_H\\x\neq y}}
+|E_\varphi(x)-E_\varphi(y)|.
+$$
+
+---
+
