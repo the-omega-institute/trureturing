@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/DecisionValueScale/PublicGoodsDominanceWelfareContrast
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Private noncontribution dominance contrasts with maximal
-     unanimous-contribution welfare. -/
+   digest: Noncontribution strictly dominates while full contribution maximizes welfare. -/
 
 import D5.S3.ConceptDynamics.DecisionValue.ContributionIncentiveThreshold
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
