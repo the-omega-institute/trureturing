@@ -431,6 +431,7 @@ public sealed partial class MakeWorkflowTests
         var binDirectory = Path.Combine(homeDirectory, ".dotnet");
         Directory.CreateDirectory(binDirectory);
         CopyAdmissionBaseLibraryIfPresent(candidateRoot);
+        CopyResourceObservationLibrary(candidateRoot);
         WriteInvalidMergeBaseGitShim(binDirectory, candidateRoot);
         WriteExecutable(
             Path.Combine(binDirectory, "dotnet"),
@@ -671,6 +672,7 @@ public sealed partial class MakeWorkflowTests
     private static void WriteHarnessGateChainReportPair(string candidateRoot)
     {
         CopyAdmissionBaseLibraryIfPresent(candidateRoot);
+        CopyResourceObservationLibrary(candidateRoot);
         CopyBannedApiCompileFailProof(candidateRoot);
         var gateDirectory = Path.Combine(candidateRoot, ".github", "scripts");
         Directory.CreateDirectory(gateDirectory);
@@ -713,6 +715,15 @@ public sealed partial class MakeWorkflowTests
         if (!File.Exists(source)) return;
 
         var target = Path.Combine(candidateRoot, AdmissionBaseScriptPath);
+        Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+        File.Copy(source, target, overwrite: true);
+    }
+
+    private static void CopyResourceObservationLibrary(string candidateRoot)
+    {
+        const string relativePath = "tools/scripts/lib/resource-observation-lib.sh";
+        var source = Path.Combine(TestRepositoryLayout.FindRoot(), relativePath);
+        var target = Path.Combine(candidateRoot, relativePath);
         Directory.CreateDirectory(Path.GetDirectoryName(target)!);
         File.Copy(source, target, overwrite: true);
     }

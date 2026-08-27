@@ -21,6 +21,8 @@ public sealed class LeanReportInputScriptTests
     private const string SupervisorScriptPath = "tools/scripts/report/report-supervisor.sh";
     private const string CacheEnsureScriptPath =
         "tools/scripts/worktree/lean-cache-ensure.sh";
+    private const string ResourceObservationLibraryPath =
+        "tools/scripts/lib/resource-observation-lib.sh";
     private const string ToolchainInstallerPath = "tools/scripts/workflow/install-lean-toolchain.sh";
     private const string WorkflowPath = ".github/workflows/ci.yml";
     private static readonly string CliProjectPath = string.Join(
@@ -102,6 +104,7 @@ public sealed class LeanReportInputScriptTests
         Assert.Contains(LeanModelsPath, paths);
         Assert.Contains(SupervisorScriptPath, paths);
         Assert.Contains(CacheEnsureScriptPath, paths);
+        Assert.Contains(ResourceObservationLibraryPath, paths);
         Assert.Contains(ToolchainInstallerPath, paths);
         Assert.Contains(WorkflowPath, paths);
         Assert.Contains(derivedProbe, paths);
@@ -123,6 +126,7 @@ public sealed class LeanReportInputScriptTests
         Assert.Contains(RawReportPath, paths);
         Assert.Contains(LeanModelsPath, paths);
         Assert.Contains(CacheEnsureScriptPath, paths);
+        Assert.Contains(ResourceObservationLibraryPath, paths);
         Assert.DoesNotContain(TestSourcePath, paths);
         Assert.DoesNotContain(BlueprintSourcePath, paths);
     }
@@ -277,6 +281,9 @@ public sealed class LeanReportInputScriptTests
                 SupervisorScriptPath,
                 File.ReadAllText(Path.Combine(root, SupervisorScriptPath), Encoding.UTF8));
             Write(CacheEnsureScriptPath, "#!/usr/bin/env bash\n");
+            Write(
+                ResourceObservationLibraryPath,
+                File.ReadAllText(Path.Combine(root, ResourceObservationLibraryPath), Encoding.UTF8));
             Write(ToolchainInstallerPath, "#!/usr/bin/env bash\n");
             Write(ScribeContentChecksPath, "#!/usr/bin/env bash\n");
             Write(

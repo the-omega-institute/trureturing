@@ -8,6 +8,7 @@ public sealed class LeanInspectorScriptTests
     private const string InspectorScript = "tools/lean-inspector/inspect.sh";
     private const string InspectorSource = "tools/lean-inspector/Inspector.lean";
     private const string InputScript = "tools/scripts/report/lean-report-input.sh";
+    private const string ResourceObservationLibrary = "tools/scripts/lib/resource-observation-lib.sh";
     private const string CacheRunScript = "tools/scripts/worktree/lean-cache-run.sh";
 
     [Fact]
@@ -22,8 +23,15 @@ public sealed class LeanInspectorScriptTests
         Directory.CreateDirectory(Path.Combine(repository, "tools", "scripts", "report"));
         Write(repository, "Trureturing.lean", "import D5.Probe\n");
         Write(repository, "D5/Probe.lean", "def probe : Nat := 1\n");
-        foreach (var relative in new[] { InspectorScript, InspectorSource, InputScript })
+        foreach (var relative in new[]
         {
+            InspectorScript,
+            InspectorSource,
+            InputScript,
+            ResourceObservationLibrary,
+        })
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(repository, relative))!);
             File.Copy(Path.Combine(root, relative), Path.Combine(repository, relative));
         }
         InstallCacheRun(repository);

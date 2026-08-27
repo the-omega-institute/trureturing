@@ -630,6 +630,7 @@ public sealed partial class AdmissionWorkflowTests
         WriteFloorProject(candidate, "StrataLint.Tests", "StrataLintTestsFloorProbe");
         WriteFloorProject(candidate, "StrataLint.Scribe.Tests", "StrataLintScribeTestsFloorProbe");
         WriteFloorProject(candidate, "StrataLint.ArchitectureTests", "StrataLintArchitectureTestsFloorProbe");
+        WriteEngineeringScopeVerifierStub(candidate);
         File.WriteAllText(
             Path.Combine(candidate, "tools", "StrataLint.sln"),
             "Microsoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio Version 17\nGlobal\nEndGlobal\n");
