@@ -62,13 +62,17 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(before + 1, fixture.CommitCount());
         Assert.Equal(1, fixture.FreezeCount());
         Assert.False(File.Exists(fixture.ReceiptPath));
+        fixture.ClearCalls();
 
         var resumed = fixture.Run("deposit");
 
         Assert.True(resumed.ExitCode == 0, Diagnostics(resumed));
         Assert.Equal(before + 2, fixture.CommitCount());
         Assert.Equal(1, fixture.FreezeCount());
-        Assert.Equal(1, fixture.CallKinds().Count(call => call == "dotnet:ledger-append"));
+        Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
+        Assert.Equal(
+            ["make:lean-report", "dotnet:deposit-header-check", "dotnet:emit-formalization-receipt"],
+            fixture.CallKinds());
         Assert.True(File.Exists(fixture.ReceiptPath));
         Assert.Empty(fixture.Status());
     }
@@ -83,13 +87,17 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var before = fixture.CommitCount();
         Assert.NotEqual(0, fixture.Run("deposit").ExitCode);
         fixture.WriteAlignedReceipt();
+        fixture.ClearCalls();
 
         var resumed = fixture.Run("deposit");
 
         Assert.True(resumed.ExitCode == 0, Diagnostics(resumed));
         Assert.Equal(before + 2, fixture.CommitCount());
         Assert.Equal(1, fixture.FreezeCount());
-        Assert.Equal(1, fixture.CallKinds().Count(call => call == "dotnet:ledger-append"));
+        Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
+        Assert.Equal(
+            ["make:lean-report", "dotnet:deposit-header-check", "dotnet:emit-formalization-receipt"],
+            fixture.CallKinds());
         Assert.Empty(fixture.Status());
     }
 
@@ -726,6 +734,12 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         internal string[] TrackedPaths() => Git("ls-files")
             .Split('\n', StringSplitOptions.RemoveEmptyEntries);
+
+        internal string[] LedgerState() =>
+            Directory.EnumerateFiles(Path.Combine(Root, LedgerPath), "*.json")
+                .Order(StringComparer.Ordinal)
+                .Select(path => Path.GetRelativePath(Root, path) + "\n" + File.ReadAllText(path))
+                .ToArray();
 
         internal string[] CallKinds() => !File.Exists(callsPath)
             ? []

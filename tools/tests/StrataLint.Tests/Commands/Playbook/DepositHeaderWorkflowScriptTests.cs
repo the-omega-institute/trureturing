@@ -66,6 +66,36 @@ public sealed partial class DepositCoverWorkflowScriptTests
     }
 
     [Fact]
+    public void DepositRejectsSevenLineWrappedDigestWithExistingFreezeBeforeReceiptWrite()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        fixture.ChangeFormalizationToSevenLineWrappedDigest();
+        fixture.WriteActiveFreezeForCurrentModule();
+        var commitsBefore = fixture.CommitCount();
+        var blueprintBefore = fixture.BlueprintState();
+        var ledgerBefore = fixture.LedgerState();
+
+        var result = fixture.Run("deposit", rejectDepositHeader: true);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Contains(
+            $"SL-012 {TransactionFixture.LeanPath}: {CanonicalHeaderFinding}",
+            Diagnostics(result),
+            StringComparison.Ordinal);
+        Assert.Equal(commitsBefore, fixture.CommitCount());
+        Assert.Equal(blueprintBefore, fixture.BlueprintState());
+        Assert.Equal(ledgerBefore, fixture.LedgerState());
+        Assert.Empty(fixture.ReceiptArtifacts());
+        Assert.Equal(
+            ["make:lean-report", "dotnet:deposit-header-check"],
+            fixture.CallKinds());
+        Assert.DoesNotContain("make:emit", fixture.CallKinds());
+        Assert.DoesNotContain("dotnet:emit-formalization-receipt", fixture.CallKinds());
+        Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
+    }
+
+    [Fact]
     public void DepositHeaderCommandUsesRegisteredSl012ForSevenLineWrappedDigest()
     {
         var fixture = new RuleFixture();
