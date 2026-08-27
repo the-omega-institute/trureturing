@@ -1,0 +1,49 @@
+# 第一百二十五部　Monster 分母公式是加法—乘法完成
+
+定义：
+
+$$
+\boxed{
+J(q)=j(q)-744
+=
+q^{-1}+\sum_{n\ge1}c(n)q^n.
+}
+\tag{125.1}
+$$
+
+前几个系数为：
+
+$$
+c(1)=196884,
+\qquad
+c(2)=21493760,
+\qquad
+c(3)=864299970.
+$$
+
+Monster Lie 代数是一个以双曲格 \(II_{1,1}\) 为根格的广义 Kac–Moody 代数，其根空间 \((m,n)\) 的重数为：
+
+$$
+\boxed{
+\operatorname{mult}(m,n)=c(mn).
+}
+\tag{125.2}
+$$
+
+其分母公式即 Koike–Norton–Zagier 乘积：
+
+$$
+\boxed{
+J(p)-J(q)
+=
+\left(p^{-1}-q^{-1}\right)
+\prod_{m,n\ge1}
+\left(1-p^mq^n\right)^{c(mn)}.
+}
+\tag{125.3}
+$$
+
+Borcherds 通过 Monster VOA、no-ghost theorem 与广义 Kac–Moody 代数证明了 Monstrous Moonshine；分母恒等式把 \(J\) 的 Fourier 系数同时解释为 Monster Lie 根重数，并产生 Conway–Norton 所需的 replication relations。([DOI][1])
+
+---
+

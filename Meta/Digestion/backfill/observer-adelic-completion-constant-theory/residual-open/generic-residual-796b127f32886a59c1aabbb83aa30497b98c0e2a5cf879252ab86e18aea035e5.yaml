@@ -1,0 +1,10 @@
+ast_path: section/135-1-三种完备性
+fingerprints:
+  raw_sha256: sha256:796b127f32886a59c1aabbb83aa30497b98c0e2a5cf879252ab86e18aea035e5
+  normalized_sha256: sha256:796b127f32886a59c1aabbb83aa30497b98c0e2a5cf879252ab86e18aea035e5
+cas_ref: sha256:796b127f32886a59c1aabbb83aa30497b98c0e2a5cf879252ab86e18aea035e5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,8 @@
+### 推论 43.3（读数精化的上界与动作变更的效果）
+
+在置换模型中，对固定 \(\tau\)：
+
+（a）**读数精化不越轨道上界，也不缩小既有视界。** 对任意读出子族 \(\mathcal A\subseteq\{\tau\text{-边可容许}\}\)（同一 \(L_\tau\)），\(\mathcal H_{\mathcal A}(o)\subseteq I\setminus\operatorname{Orb}_\tau(o)\)；随 \(\mathcal A\) 增大，\(\mathcal H_{\mathcal A}(o)\) 单调不减（命题 42.6），并在全族处达到上界 \(I\setminus\operatorname{Orb}_\tau(o)\)。**读数精化可以扩大视界**（例：常值子族 \(\mathcal H=\varnothing\)；加入一个轨道指示函数后其余轨道全部变为无穷远），但**永远不能把不同轨道的点拉回有限距离**。
+
+（b）**动作变更移动上界。** 将更新换为 \(\tau'\)，全族视界变为 \(I\setminus\operatorname{Orb}_{\tau'}(o)\)；若 \(\operatorname{Orb}_{\tau'}(o)\supsetneq\operatorname{Orb}_\tau(o)\)，则 \(\operatorname{Orb}_{\tau'}(o)\setminus\operatorname{Orb}_\tau(o)\) 中的点由不可达变为动作可达（在 \(\tau'\) 的全族下距离有限）。
+
