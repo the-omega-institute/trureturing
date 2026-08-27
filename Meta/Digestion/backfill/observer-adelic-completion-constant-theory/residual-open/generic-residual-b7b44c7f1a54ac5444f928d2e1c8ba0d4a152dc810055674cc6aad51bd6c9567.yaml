@@ -1,0 +1,13 @@
+ast_path: section/第一百零一部-H-4-不变量是-E-8-不变量的一半
+fingerprints:
+  raw_sha256: sha256:b7b44c7f1a54ac5444f928d2e1c8ba0d4a152dc810055674cc6aad51bd6c9567
+  normalized_sha256: sha256:b7b44c7f1a54ac5444f928d2e1c8ba0d4a152dc810055674cc6aad51bd6c9567
+cas_ref: sha256:b7b44c7f1a54ac5444f928d2e1c8ba0d4a152dc810055674cc6aad51bd6c9567
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-5700b7b5f4e8f843bf7e76e7f2745a1e8199b5a917d25dd79da9a0ad55372d33-76cbfea06231d2c9b5b24aaa25d3d558810b039fddfe123905a9df30cb6bc351
+    - generic-residual-e60af0c08eddc6a60951bfd602317fd5c18dfde3c3cd1f9c5e172f209e5af0af-92f8a0b65673c302e6e35100d4fbb9efdf390f8f5b9da3eb741c3fce3f879424

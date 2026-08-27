@@ -1,0 +1,28 @@
+## Wang 层：近极值结构分类
+
+Niemeier 格的 root residual 先被压缩成：
+
+$$
+h.
+$$
+
+但仅靠 \(h\) 无法恢复完整根系。
+
+所以必须区分：
+
+$$
+\text{coarse extremal statistic}
+\quad\text{与}\quad
+\text{structural refinement}.
+$$
+
+这正对应 Wang 式：
+
+$$
+\text{near-extremal}
+\to
+\text{sticky/non-sticky classification}.
+$$
+
+---
+

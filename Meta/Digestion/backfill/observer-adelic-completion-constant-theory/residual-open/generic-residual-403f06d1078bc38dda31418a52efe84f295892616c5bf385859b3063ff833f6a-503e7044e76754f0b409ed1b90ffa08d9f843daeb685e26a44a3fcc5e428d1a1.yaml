@@ -1,0 +1,10 @@
+ast_path: section/104-1-Wang-层/clause/4
+fingerprints:
+  raw_sha256: sha256:403f06d1078bc38dda31418a52efe84f295892616c5bf385859b3063ff833f6a
+  normalized_sha256: sha256:403f06d1078bc38dda31418a52efe84f295892616c5bf385859b3063ff833f6a
+cas_ref: sha256:403f06d1078bc38dda31418a52efe84f295892616c5bf385859b3063ff833f6a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

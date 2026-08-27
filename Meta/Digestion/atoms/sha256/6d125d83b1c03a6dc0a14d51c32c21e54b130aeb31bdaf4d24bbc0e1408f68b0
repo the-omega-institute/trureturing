@@ -1,0 +1,40 @@
+## 88.2 \(H_4\) 不是外加对象
+
+定义：
+
+$$
+\Delta_{H_4}:=2.A_5\subset\mathbb H.
+$$
+
+在普通四元数内积下：
+
+$$
+\|u\|_{\mathbb H}^{2}=1,
+\qquad
+u\in\Delta_{H_4}.
+$$
+
+所以 \(H_4\) 的 \(120\) 个根，就是三维二十面体所有旋转的 Spin 完整状态。
+
+这给出新的 OACTC 原则：
+
+$$
+\boxed{
+\textbf{Spinor State Completion Principle}
+}
+$$
+
+即：
+
+> 当一个低维对象的对称由旋转群描述时，其中央相位完成往往自然生活在高一维的 Clifford 偶代数中。
+
+这里：
+
+$$
+3\text{D rotation}
+\longrightarrow
+4\text{D spinor state}.
+$$
+
+---
+
