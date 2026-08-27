@@ -376,7 +376,7 @@ public sealed class StandaloneLeanInspectorTests
                     "compact", spoolReport, spoolMaterials, output,
                 ],
                 repositoryRoot,
-                TimeSpan.FromSeconds(120),
+                TestBudgets.LeanProcessHangGuard,
                 8 * 1024 * 1024);
             Assert.True(
                 compacted.ExitCode == 0,
