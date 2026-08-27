@@ -11,42 +11,34 @@ internal static partial class RepositoryRules
     internal const string TowerManifestPath = "tools/TOWER.yaml";
     internal const string RegistryPolicyPath = "Meta/registry.yaml";
     internal const string DomainsPolicyPath = "Meta/domains.yaml";
-    internal const string TaskBlockReferenceSyntaxPath =
-        "tools/StrataLint.Engine/TaskBlockReferenceSyntax.cs";
-    internal const string YamlSubsetParserPath =
-        "tools/Trureturing.Truth/YamlSubsetParser.cs";
+    internal const string FileMapPolicyPath = "Meta/FILEMAP.toml";
 
-    // These are the non-snapshot inputs that can change how SL-019 classifies or parses
-    // every structured artifact. Keep the list beside the replay predicate so a new input
-    // cannot be added to the rule without also being added to its wake-up closure.
-    private static readonly ImmutableHashSet<string> LedgerPolicySourcePaths =
+    // Registry and domain bytes compile ValidatedPolicy; FILEMAP declares repository path
+    // classifications. This policy data has a bounded schema-owned inventory, unlike judge code.
+    private static readonly ImmutableHashSet<string> LedgerPolicyDataPaths =
         ImmutableHashSet.Create(
             StringComparer.Ordinal,
             RegistryPolicyPath,
-            DomainsPolicyPath);
-
-    private static readonly ImmutableHashSet<string> LedgerRuleDependencyPaths =
-        ImmutableHashSet.Create(
-            StringComparer.Ordinal,
-            TaskBlockReferenceSyntaxPath,
-            YamlSubsetParserPath);
+            DomainsPolicyPath,
+            FileMapPolicyPath);
 
     private static ImmutableArray<RuleFinding> Ledger(RuleEvaluationContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        var judgeSourceChanged = JudgeSourceChanged(context);
         var taskSetChanged = ChangedLeanTaskSet(context);
-        var policyChanged = PolicyChanged(context);
-        var ruleDependencyChanged = RuleDependencyChanged(context);
+        var policyDataChanged = PolicyDataChanged(context);
         HashSet<string>? tasks = null;
         foreach (var (path, file) in context.Current.Files)
         {
             var governed = IsGovernedStructured(path, context.Policy);
             var pathAffected = context.IsBaseFactAffected(path.Value);
-            var ledgerArtifactChanged = LedgerArtifactChanged(context, path.Value);
-            var replay = taskSetChanged
-                || policyChanged
-                || ruleDependencyChanged
-                || ledgerArtifactChanged;
+            var replay = ShouldReplayLedgerArtifact(
+                context,
+                path.Value,
+                judgeSourceChanged,
+                taskSetChanged,
+                policyDataChanged);
             var anomalyAffected = pathAffected || replay;
             if (governed && pathAffected)
             {
@@ -142,7 +134,10 @@ internal static partial class RepositoryRules
             }
         }
 
-        ValidateAcceptedEventFilesAfterImplementationChange(context, findings);
+        ValidateAcceptedEventFilesAfterJudgeSourceChange(
+            context,
+            findings,
+            judgeSourceChanged);
         ValidateCandidateRevocationReceipts(context, findings);
 
         return findings.ToImmutable();
@@ -167,12 +162,32 @@ internal static partial class RepositoryRules
         return !currentTasks.SetEquals(forkPointTasks);
     }
 
-    private static bool PolicyChanged(RuleEvaluationContext context) =>
-        context.Changes.Paths.Any(path => LedgerPolicySourcePaths.Contains(path.Value));
+    private static bool PolicyDataChanged(RuleEvaluationContext context) =>
+        context.Changes.Paths.Any(path => IsLedgerPolicyDataPath(path.Value));
 
-    private static bool RuleDependencyChanged(RuleEvaluationContext context) =>
+    private static bool JudgeSourceChanged(RuleEvaluationContext context) =>
         context.RuleImplementationChanged
-        || context.Changes.Paths.Any(path => LedgerRuleDependencyPaths.Contains(path.Value));
+        || context.Changes.Paths.Any(path =>
+            StrataLintEngineBuildInputs.ContainsJudgeSource(path.Value));
+
+    /// <summary>
+    /// SL-019 may skip a stored artifact only when all four replay-contract conditions hold:
+    /// (a) the complete judge source closure is unchanged (<c>tools/</c>, excluding
+    /// <c>tools/tests/</c>, plus inherited build inputs); (b) none of the closed policy-data inputs
+    /// changed; (c) the managed-Lean TASK-code set is unchanged; and (d) this artifact is not an
+    /// affected JSON, YAML, or Chronicle ledger path. Conditions (a)-(c) replay the full corpus;
+    /// condition (d) preserves the per-artifact scan for affected paths.
+    /// </summary>
+    private static bool ShouldReplayLedgerArtifact(
+        RuleEvaluationContext context,
+        string path,
+        bool judgeSourceChanged,
+        bool taskSetChanged,
+        bool policyDataChanged) =>
+        judgeSourceChanged
+        || policyDataChanged
+        || taskSetChanged
+        || LedgerArtifactChanged(context, path);
 
     private static bool LedgerArtifactChanged(RuleEvaluationContext context, string path) =>
         context.IsBaseFactAffected(path) && IsStructuredLedgerArtifactPath(path);
@@ -183,18 +198,15 @@ internal static partial class RepositoryRules
         || path.EndsWith(".yml", StringComparison.Ordinal)
         || path.StartsWith("Chronicle/", StringComparison.Ordinal);
 
-    internal static bool HasExternalLedgerDependencyChange(RawChangeSet changes) =>
-        changes.Paths.Any(path => LedgerRuleDependencyPaths.Contains(path.Value));
+    internal static bool IsLedgerPolicyDataPath(string path) =>
+        LedgerPolicyDataPaths.Contains(path);
 
-    internal static bool IsLedgerRuleDependencyPath(string path) =>
-        LedgerRuleDependencyPaths.Contains(path);
-
-
-    private static void ValidateAcceptedEventFilesAfterImplementationChange(
+    private static void ValidateAcceptedEventFilesAfterJudgeSourceChange(
         RuleEvaluationContext context,
-        ImmutableArray<RuleFinding>.Builder findings)
+        ImmutableArray<RuleFinding>.Builder findings,
+        bool judgeSourceChanged)
     {
-        if (!context.RuleImplementationChanged)
+        if (!judgeSourceChanged)
         {
             return;
         }

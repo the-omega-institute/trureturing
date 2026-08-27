@@ -38,8 +38,7 @@ internal static class StrataLintEngineBuildInputs
             || path == FrozenAcceptedEventLoaderPath
             || path == TrustedRevocationReceiptsPath
             || path == RepositoryPathPolicyPath
-            || path == RepositoryPathPolicyPathsPath
-            || RepositoryRules.IsLedgerRuleDependencyPath(path))
+            || path == RepositoryPathPolicyPathsPath)
         {
             return true;
         }
@@ -51,6 +50,15 @@ internal static class StrataLintEngineBuildInputs
         path == ProjectPath
         || path.StartsWith(RulesDirectory + "/", StringComparison.Ordinal)
             && path.EndsWith(".cs", StringComparison.Ordinal);
+
+    /// <summary>
+    /// The judge-source side of the CI judge content address. Every non-test path under
+    /// <c>tools/</c> can change the program that interprets repository facts, so membership is
+    /// structural rather than a list of today's transitive helpers.
+    /// </summary>
+    internal static bool ContainsJudgeSource(string path) =>
+        path.StartsWith("tools/", StringComparison.Ordinal)
+        && !path.StartsWith("tools/tests/", StringComparison.Ordinal);
 
     private static bool IsInheritedBuildInput(string path)
     {
