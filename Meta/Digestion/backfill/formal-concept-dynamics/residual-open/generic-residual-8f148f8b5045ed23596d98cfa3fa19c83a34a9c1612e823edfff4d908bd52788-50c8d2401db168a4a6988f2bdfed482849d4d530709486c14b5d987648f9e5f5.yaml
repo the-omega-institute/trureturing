@@ -1,0 +1,10 @@
+ast_path: section/287-集体决策的-provenance-不能由最终结果恢复/clause/2
+fingerprints:
+  raw_sha256: sha256:8f148f8b5045ed23596d98cfa3fa19c83a34a9c1612e823edfff4d908bd52788
+  normalized_sha256: sha256:8f148f8b5045ed23596d98cfa3fa19c83a34a9c1612e823edfff4d908bd52788
+cas_ref: sha256:8f148f8b5045ed23596d98cfa3fa19c83a34a9c1612e823edfff4d908bd52788
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

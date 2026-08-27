@@ -1,0 +1,10 @@
+ast_path: section/226-理论-revision-一般不交换/clause/2
+fingerprints:
+  raw_sha256: sha256:49aa241e2688da2baa81b16d2d6909db93d780e1acf23c38dc129f09e59ff1b0
+  normalized_sha256: sha256:49aa241e2688da2baa81b16d2d6909db93d780e1acf23c38dc129f09e59ff1b0
+cas_ref: sha256:49aa241e2688da2baa81b16d2d6909db93d780e1acf23c38dc129f09e59ff1b0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

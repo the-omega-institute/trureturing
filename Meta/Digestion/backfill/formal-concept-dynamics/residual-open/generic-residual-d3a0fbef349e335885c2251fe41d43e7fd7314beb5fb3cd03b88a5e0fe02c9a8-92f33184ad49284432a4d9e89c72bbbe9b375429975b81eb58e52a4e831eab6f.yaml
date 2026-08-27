@@ -1,0 +1,10 @@
+ast_path: section/认识价值/clause/2
+fingerprints:
+  raw_sha256: sha256:d3a0fbef349e335885c2251fe41d43e7fd7314beb5fb3cd03b88a5e0fe02c9a8
+  normalized_sha256: sha256:d3a0fbef349e335885c2251fe41d43e7fd7314beb5fb3cd03b88a5e0fe02c9a8
+cas_ref: sha256:d3a0fbef349e335885c2251fe41d43e7fd7314beb5fb3cd03b88a5e0fe02c9a8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/17-2-可形式化但需要基础设施/clause/2
+fingerprints:
+  raw_sha256: sha256:06996918bedc3a8477fe1c6126344d0a56e908de1c5acc466760fbb8dddefc25
+  normalized_sha256: sha256:06996918bedc3a8477fe1c6126344d0a56e908de1c5acc466760fbb8dddefc25
+cas_ref: sha256:06996918bedc3a8477fe1c6126344d0a56e908de1c5acc466760fbb8dddefc25
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/16-2-第二层-有限覆盖与计数/clause/3
+fingerprints:
+  raw_sha256: sha256:6092aa5a6b8f52b5f9151d85ba5abfbf07be4e3e3198fe5ee7515524694c5b32
+  normalized_sha256: sha256:6092aa5a6b8f52b5f9151d85ba5abfbf07be4e3e3198fe5ee7515524694c5b32
+cas_ref: sha256:6092aa5a6b8f52b5f9151d85ba5abfbf07be4e3e3198fe5ee7515524694c5b32
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

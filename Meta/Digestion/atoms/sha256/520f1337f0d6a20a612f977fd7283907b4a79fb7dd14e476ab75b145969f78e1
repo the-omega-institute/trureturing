@@ -1,0 +1,8 @@
+# Part XXII：与仓库现有形式化的连接
+
+以下是本理论的主要 Lean 锚点。它们提供抽象基础，但不等于基因专用结论已经自动闭合。
+
+1. `D5/S0/Conventions/AmbientComplementDependence`
+   - 环境相对补。
+2. `D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois`
+   

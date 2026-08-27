@@ -1,0 +1,10 @@
+ast_path: section/Part-XXII-与仓库现有形式化的连接/clause/6
+fingerprints:
+  raw_sha256: sha256:1667ef131c428992550c3e5803a923c260bfc94756124b3b310bebbfa1087b2b
+  normalized_sha256: sha256:1667ef131c428992550c3e5803a923c260bfc94756124b3b310bebbfa1087b2b
+cas_ref: sha256:1667ef131c428992550c3e5803a923c260bfc94756124b3b310bebbfa1087b2b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
