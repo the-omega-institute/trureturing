@@ -1,0 +1,10 @@
+ast_path: section/17-3-研究纲领或解析接口/clause/4
+fingerprints:
+  raw_sha256: sha256:7cb0914ae66928dc065682c107e9ba986540292cab7c092485b1ea98248da88e
+  normalized_sha256: sha256:7cb0914ae66928dc065682c107e9ba986540292cab7c092485b1ea98248da88e
+cas_ref: sha256:7cb0914ae66928dc065682c107e9ba986540292cab7c092485b1ea98248da88e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

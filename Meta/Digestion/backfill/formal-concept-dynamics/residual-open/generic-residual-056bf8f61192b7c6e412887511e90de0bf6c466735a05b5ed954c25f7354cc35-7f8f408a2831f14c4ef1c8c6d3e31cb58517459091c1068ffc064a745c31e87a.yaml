@@ -1,0 +1,10 @@
+ast_path: section/最小反例/clause/1
+fingerprints:
+  raw_sha256: sha256:056bf8f61192b7c6e412887511e90de0bf6c466735a05b5ed954c25f7354cc35
+  normalized_sha256: sha256:056bf8f61192b7c6e412887511e90de0bf6c466735a05b5ed954c25f7354cc35
+cas_ref: sha256:056bf8f61192b7c6e412887511e90de0bf6c466735a05b5ed954c25f7354cc35
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

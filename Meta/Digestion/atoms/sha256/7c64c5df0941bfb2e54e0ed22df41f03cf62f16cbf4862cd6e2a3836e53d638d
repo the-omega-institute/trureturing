@@ -1,0 +1,16 @@
+- `D5/S3/Quantum/Completion/IncreasingProjectionStrongLimit.lean` 与相关完成文件：强完成、范数分离与残余塔。
+
+建议新增的形式化目标：
+
+1. `FutureKernelMaximality`：K∞ 的最大前向不变性；
+2. `CoarsestPredictiveCompletion`：规范未来接口的泛性质；
+3. `FiniteClosureDepth`：有限核塔稳定与类数界；
+4. `ClosureSpectrumBudget`：组合与概率加权记忆预算；
+5. `ControlledFutureCongruence`：行动词共同核；
+6. `DiscountedFuturePseudoMetric`：折扣未来伪度量；
+7. `IteratedObservableClosure`：线性与量子生成闭包。
+
+最小依赖顺序为：纯集合核理论 → 有限稳定 → 受控词闭包 → 伪度量 → 线性对偶 → 量子交换子实例 → 因果查询实例。
+
+---
+

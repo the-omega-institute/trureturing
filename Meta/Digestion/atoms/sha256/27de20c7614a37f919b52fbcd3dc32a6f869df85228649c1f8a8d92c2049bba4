@@ -1,0 +1,16 @@
+## 两种推理方向
+
+[
+\boxed{
+\begin{aligned}
+\operatorname{sp}
+&:\text{从已知前提向前计算可能后果};\
+\operatorname{wp}
+&:\text{从目标向后计算所需前件}.
+\end{aligned}
+}
+]
+
+这统一了：
+
+* 预测；

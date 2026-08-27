@@ -1,0 +1,14 @@
+- quotient / product setoid 基础。
+
+优先证明：
+
+```lean
+theorem product_trace_eq
+
+theorem product_behavior_relation_iff
+
+theorem product_behavior_quotient_equiv
+
+theorem product_completion_depth_eq_max
+```
+

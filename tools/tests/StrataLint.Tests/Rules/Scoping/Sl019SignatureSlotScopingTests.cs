@@ -161,6 +161,45 @@ public sealed class Sl019SignatureSlotScopingTests
         AssertSl019Finding(Evaluate(ReceiptPath, text));
     }
 
+    private const string FailureBearingStatementType =
+        "statement-v1(uparams=[],type=ec(ns(ns(n0,17:CommitmentVerdict),7:failure),[]))";
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void Sl019AcceptsFailureAsMathematicalContentInAReceiptStatementType(
+        bool hostedExtension)
+    {
+        var evaluation = Evaluate(
+            ReceiptPath,
+            ReceiptText(
+                "ns(n0,13:primary_probe)",
+                hostedExtension,
+                statementType: FailureBearingStatementType));
+
+        Assert.Empty(evaluation.Diagnostics);
+    }
+
+    [Fact]
+    public void Sl019RejectsAFailureBearingStatementTypeOutsideAFormalizationReceiptPath()
+    {
+        const string path = "Evidence/D5/S0/Carrier/Signature.run.json";
+        var text = "{\"precommitted_signature\":{\"kind\":\"theorem\",\"name_key\":\"k\","
+            + "\"type\":\"" + FailureBearingStatementType + "\"}}\n";
+
+        AssertSl019Finding(Evaluate(path, text));
+    }
+
+    [Fact]
+    public void Sl019RejectsAnAnomalyProseValuePlacedInAReceiptStatementType()
+    {
+        AssertSl019Finding(Evaluate(
+            ReceiptPath,
+            ReceiptText(
+                "ns(n0,13:primary_probe)",
+                statementType: "unresolved failure without case")));
+    }
+
     private static SingleRuleEvaluation Evaluate(string path, string text)
     {
         var fixture = new RuleFixture();
@@ -182,12 +221,13 @@ public sealed class Sl019SignatureSlotScopingTests
         string nameKey,
         bool hostedExtension = false,
         string? primaryGid = null,
-        string? extensionGid = null)
+        string? extensionGid = null,
+        string? statementType = null)
     {
         var signature = new DigestionFormalizationSignature(
             nameKey,
             "theorem",
-            "statement-v1(uparams=[],type=ec(ns(n0,4:True),[]))");
+            statementType ?? "statement-v1(uparams=[],type=ec(ns(n0,4:True),[]))");
         var extensions = hostedExtension
             ? ImmutableArray.Create(new DigestionFormalizationExtension(
                 extensionGid ?? "D5/S0/Carrier/SignatureSlot.secondary_probe",

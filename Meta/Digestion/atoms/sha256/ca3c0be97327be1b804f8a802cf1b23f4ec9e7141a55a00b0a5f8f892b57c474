@@ -1,0 +1,4 @@
+- `D5/S3/AnalyticClosure/PrimeSpectrumBoundaryDivergent.lean`：把素数倒数级数的边界发散接入一般线性素谱热迹。
+
+以下公式以：
+

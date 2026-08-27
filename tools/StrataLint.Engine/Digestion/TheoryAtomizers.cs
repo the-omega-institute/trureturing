@@ -484,7 +484,9 @@ internal static class PzgAtomizer
             document.GenreRegistryCheck);
     }
 
-    private static DigestionClausePlan? PlanClauses(DigestionAtom parent)
+    // generic-v1 复用同一分解(GenericAtomizer.Atomize):子句语义跨方言一致,
+    // 执法侧(RequireDecompositionBeforeNewAbsorption)对全部方言生效,生产侧也必须。
+    internal static DigestionClausePlan? PlanClauses(DigestionAtom parent)
     {
         var text = Encoding.UTF8.GetString(parent.RawBytes.AsSpan());
         var lines = SourceLines(text);

@@ -1,0 +1,10 @@
+ast_path: section/0-真值层级与严格边界/clause/3
+fingerprints:
+  raw_sha256: sha256:77ca51c5cce62e12af2a12c7559b8046b7af3cdec6958bbae3f5e8266ea3f77b
+  normalized_sha256: sha256:77ca51c5cce62e12af2a12c7559b8046b7af3cdec6958bbae3f5e8266ea3f77b
+cas_ref: sha256:77ca51c5cce62e12af2a12c7559b8046b7af3cdec6958bbae3f5e8266ea3f77b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

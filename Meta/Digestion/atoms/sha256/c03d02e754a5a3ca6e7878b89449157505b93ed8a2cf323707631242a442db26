@@ -1,0 +1,33 @@
+# 244. 同意是有类型的行动授权，而不是一个裸 `yes`
+
+设行动类型为：
+
+[
+U.
+]
+
+候选行动为：
+
+[
+u:U.
+]
+
+一种形式同意 doctrine 可以定义为：
+
+[
+\boxed{
+\begin{aligned}
+\operatorname{ValidConsent}(x,u)
+\iff{}&
+\operatorname{Yes}(x,u)\
+&\land\operatorname{Competent}(x)\
+&\land\operatorname{Voluntary}(x,u)\
+&\land\operatorname{Informed}(x,u)\
+&\land\operatorname{Specific}(x,u).
+\end{aligned}
+}
+]
+
+其中：
+
+* `Yes` 是明确授权；

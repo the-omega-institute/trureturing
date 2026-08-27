@@ -10,8 +10,9 @@ CANDIDATE_OUTPUT=""
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 SUPERVISOR="$SCRIPT_DIR/report/report-supervisor.sh"
 INPUT_HELPER="$SCRIPT_DIR/report/lean-report-input.sh"
-# Local opt-in only: a host/UID-scoped content-addressed report cache.
-# Never set in CI, so CI behaviour is byte-for-byte unchanged.
+# Opt-in host/UID-scoped content-addressed report cache. Local entry points use
+# the persistent host cache; CI may supply a runner-temporary root containing an
+# attested stale dev report for the producer's existing delta path.
 CACHE_ROOT="${STRATALINT_REPORT_CACHE_ROOT:-}"
 SEGMENT_PERF_ENABLED=0
 SEGMENT_PERF_SPOOL=""
@@ -168,8 +169,8 @@ verify_report() {
 
 # --- Content-addressed canonical-report cache (local opt-in) -----------
 # Ported from CI (.github/workflows/ci.yml, key
-# stratalint-canonical-lean-report-v1-<address>). Enabled only when
-# STRATALINT_REPORT_CACHE_ROOT is set; CI never sets it. A cache entry is a
+# stratalint-canonical-lean-report-v2-<address>). Enabled only when
+# STRATALINT_REPORT_CACHE_ROOT is set. A cache entry is a
 # directory named by the report's full content address holding the complete
 # bundle (report + three validation sidecars + producer logs).
 #

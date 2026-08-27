@@ -1,0 +1,106 @@
+# 88. 最终统一：主体自主性是未来可作者化控制能力的动态编码不变量
+
+把前文全部结构合并，主体运行闭环可以写成
+
+$$
+X_t
+\longrightarrow
+B_t
+\longrightarrow
+M_t
+\longrightarrow
+D_t
+\longrightarrow
+U_t
+\longrightarrow
+Y_t
+\longrightarrow
+\Lambda_{t+1}
+\longrightarrow
+M_{t+1}.
+$$
+
+其中：
+
+```text
+X→B：世界经有限观察压成信念；
+B→M：信念、历史、价值与承诺形成自由充分／策略充分自我；
+M→D：内部理由形成决定；
+D→U：决定穿过执行接口成为真实控制；
+U→Y：控制进入世界并产生可见后果；
+Y→Λ：后果、动作来源和授权被编码到账本；
+Λ→M：过去选择继续塑造未来的自我与策略。
+```
+
+喉部分量更新仍发生在行动之后：
+
+$$
+\boxed{
+\kappa_{t+1}
+=
+\kappa_t+\bar c(U_t,x_t,e_t).
+}
+$$
+
+所以喉部 cocycle 运输已选择行动的隐藏后果，却不能替代观察、选择、作者性、来源与账本闭环。
+
+动态主体至少需要同时维护：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Viability}
+&=\text{未来仍存在属于自己的安全策略},\\
+\text{Liveness}
+&=\text{策略修订与有效分岔能够反复恢复},\\
+\text{Recoverability}
+&=\text{主体受损后能够返回自由核心},\\
+\text{Observation rate}
+&=R\ge h_{\mathrm{maint}},\\
+\text{Causal control}
+&=C_{\mathrm{aut}}>0\text{ 或其相应结构见证},\\
+\text{Provenance}
+&=\text{自身行为与外部伪装具有可审计分离},\\
+\text{Identity correction}
+&=\text{账本具有足够距离与身份保持因子化},\\
+\text{Revision governance}
+&=\text{自我修改经过可审计安全边界},\\
+\text{Expandability}
+&=\text{能够产生旧行为商中不存在的新有效控制}.
+\end{aligned}
+}
+$$
+
+因此最完整的操作性自由不是“当前有几个按钮”，而是：
+
+$$
+\boxed{
+\text{观察者能否在一个不完全可知、可能对抗且持续变化的世界中，}
+\text{保持、恢复并扩展未来仍由自身历史与理由来形成控制的能力。}
+}
+$$
+
+进一步，主体性不是无成本的形而上空位。它必须持续对抗：
+
+```text
+观察信息不足；
+执行瓶颈；
+环境噪声与伪装；
+来源不可识别；
+账本篡改；
+身份遗忘；
+自我修改失控；
+委托不可撤销；
+分布式历史冲突；
+模型不确定性。
+```
+
+强 libertarian freedom 仍是另一层独立命题：即使给定完整宇宙状态，是否仍有未被任何隐藏变量预选的真实分岔。本文不偷渡这一结论。
+
+兼容决定论但可操作、可审计、可形式化的最强收束是：
+
+$$
+\boxed{
+\text{主体自主性，是未来可作者化控制能力在观察、行动、记录、自我修改与环境扰动下的动态不变量。}
+}
+$$

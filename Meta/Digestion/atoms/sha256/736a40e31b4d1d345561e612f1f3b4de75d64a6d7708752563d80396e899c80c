@@ -1,0 +1,37 @@
+# 81. 分布式自我何时能无损合并
+
+设分布式历史形成偏序 $(L,\le)$。若对每对历史 $\lambda_1,\lambda_2$ 都存在唯一最小共同上界
+
+$$
+\lambda_1\vee\lambda_2,
+$$
+
+则 $L$ 是 join-semilattice，并有
+
+$$
+\lambda\vee\lambda=\lambda,
+\qquad
+\lambda_1\vee\lambda_2=\lambda_2\vee\lambda_1,
+$$
+
+$$
+(\lambda_1\vee\lambda_2)\vee\lambda_3
+=
+\lambda_1\vee(\lambda_2\vee\lambda_3).
+$$
+
+因此并发副本可以按任意顺序合并并最终收敛。
+
+反之，若两条分支分别携带互斥的不可撤销承诺，它们可能没有一致共同上界。此时只能：
+
+```text
+显式保留冲突状态；
+拒绝合并；
+继续作为两个分叉主体；
+引入更高层裁决历史。
+```
+
+所以共享过去不意味着分叉后的身份必然可以无损重新合并。
+
+---
+

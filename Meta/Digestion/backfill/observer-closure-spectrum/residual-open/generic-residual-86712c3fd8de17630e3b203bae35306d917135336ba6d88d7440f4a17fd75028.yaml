@@ -1,0 +1,10 @@
+ast_path: section/80-集体主体的-quorum-交集条件
+fingerprints:
+  raw_sha256: sha256:86712c3fd8de17630e3b203bae35306d917135336ba6d88d7440f4a17fd75028
+  normalized_sha256: sha256:86712c3fd8de17630e3b203bae35306d917135336ba6d88d7440f4a17fd75028
+cas_ref: sha256:86712c3fd8de17630e3b203bae35306d917135336ba6d88d7440f4a17fd75028
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

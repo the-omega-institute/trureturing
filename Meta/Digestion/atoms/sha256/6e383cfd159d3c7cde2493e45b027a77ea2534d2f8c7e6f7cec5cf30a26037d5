@@ -1,0 +1,26 @@
+## 认识价值
+
+若行动后产生观察 (O(F_uX))，定义：
+
+[
+\boxed{
+V_{\mathrm{epi}}(u)
+===================
+
+I(T(X);O(F_uX)\mid C(X)).
+}
+]
+
+或者使用结构版本：
+
+[
+\operatorname{Gain}
+\left(
+O\circ F_u;
+C,T
+\right).
+]
+
+一个行动可以：
+
+* 工具价值高、认识价值低；

@@ -1,0 +1,10 @@
+ast_path: section/模型-B/clause/3
+fingerprints:
+  raw_sha256: sha256:a64a442c847c230d82c189a87de53f26f43c7af8e2a2ac547e65823a86ff5a3b
+  normalized_sha256: sha256:a64a442c847c230d82c189a87de53f26f43c7af8e2a2ac547e65823a86ff5a3b
+cas_ref: sha256:a64a442c847c230d82c189a87de53f26f43c7af8e2a2ac547e65823a86ff5a3b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

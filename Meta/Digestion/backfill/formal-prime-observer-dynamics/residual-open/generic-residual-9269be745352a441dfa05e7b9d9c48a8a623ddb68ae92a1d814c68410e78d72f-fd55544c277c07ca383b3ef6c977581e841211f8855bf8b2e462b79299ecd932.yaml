@@ -1,0 +1,10 @@
+ast_path: section/69-Crossing-相位-CRT-周期形式化/clause/1
+fingerprints:
+  raw_sha256: sha256:9269be745352a441dfa05e7b9d9c48a8a623ddb68ae92a1d814c68410e78d72f
+  normalized_sha256: sha256:9269be745352a441dfa05e7b9d9c48a8a623ddb68ae92a1d814c68410e78d72f
+cas_ref: sha256:9269be745352a441dfa05e7b9d9c48a8a623ddb68ae92a1d814c68410e78d72f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,22 @@
+## 本文定理 71.1
+
+有限博弈中，
+
+$$
+\mathsf{LiveAgency}
+\subseteq
+\mathsf{FreeKernel}_{\mathrm{rob}},
+$$
+
+且从核内任意状态存在策略，使轨迹永久安全并无限多次进入 $L_{\mathrm{renew}}$。内层最小固定点提供每轮有限到达秩，外层最大固定点保证每次更新后仍能继续下一轮。∎
+
+由此区分：
+
+```text
+dead：不能保持最低主体性；
+frozen survivor：可以安全存在但永远不再开放；
+live agent：能够反复恢复分岔、修订和学习能力。
+```
+
+---
+

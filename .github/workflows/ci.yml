@@ -448,20 +448,17 @@ jobs:
           # project/build/lock/global 输入 + inspector)、Lean 源(Trureturing.lean +
           # D5/**/*.lean)与 config(toolchain/lake-manifest/lakefile)三者的清单哈希。
 
-      # 一事不再理:报告是其输入闭包的纯函数,而该闭包已被内容寻址(上一步)。
-      # dev push 早已把结果按同一 key 存下(下方 Save 步);
-      # 只有 CI 自己的关键路径从不读 —— 于是每个 PR 重付一次 lake 恢复 + 报告生产
-      # (2026-08-11 实测 92s + 83s),哪怕闭包逐字节未变。
-      #
-      # 安全性不靠这一步:下游 `RawLeanReportArtifact.ReadFile` 会把报告里每个模块的
-      # source_sha256 与树逐一对账,不符即抛 INFRASTRUCTURE_FAILURE。一份错的或陈旧的
-      # 报告不可能被静默接受,最坏是红,不是假绿。
+      # 精确 key 命中仍直接复用;prefix restore 只提供陈旧 delta 基线,不算 cache hit。
+      # adapter 与现行 delta 机器重验报告、provenance、materials 与 producer logs;
+      # 任一项不可信就不给 cache root,沿原路径全量生产。下游仍逐模块核对
+      # source_sha256,故陈旧报告不能被静默接受。
       - name: Restore canonical Lean report by input address
         id: report-cache
         uses: actions/cache/restore@v4
         with:
           path: .canonical-lean-report-cache
           key: stratalint-canonical-lean-report-v2-${{ steps.lean-report-input.outputs.address }}
+          restore-keys: stratalint-canonical-lean-report-v2-
 
       - name: Serve candidate canonical Lean report from the cached address
         id: report-reuse
@@ -554,6 +551,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          export STRATALINT_REPORT_CACHE_ROOT="$("$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-ci-baseline.sh" \
+            --bundle "$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json" --cache-root "$RUNNER_TEMP/canonical-lean-report-delta-cache" || true)"
           producer="$GITHUB_WORKSPACE/candidate/tools/lean-inspector/inspect.sh"
           pair_producer="$GITHUB_WORKSPACE/candidate/tools/scripts/lean-report-pair.sh"
           test -x "$producer"
@@ -597,6 +596,7 @@ jobs:
           test "$declaredSha256" = "$reportSha256"
           test "$declaredName" = "$(basename "$source")"
           printf '%s  %s\n' "$reportSha256" "$(basename "$target")" > "${target}.sha256"
+          cp -R "${source}.logs" "${target}.logs" 2>/dev/null || true
           "$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh" verify \
             --repository "$GITHUB_WORKSPACE/candidate" \
             --report "$target"

@@ -1,0 +1,10 @@
+ast_path: section/54-v1-3-增订-动态自由保持-信息率与分布式主体治理/clause/1
+fingerprints:
+  raw_sha256: sha256:f068fd5fadd3d8537259c3915bdad7c26106c5dce2b7f99e5fea7f333c30669f
+  normalized_sha256: sha256:f068fd5fadd3d8537259c3915bdad7c26106c5dce2b7f99e5fea7f333c30669f
+cas_ref: sha256:f068fd5fadd3d8537259c3915bdad7c26106c5dce2b7f99e5fea7f333c30669f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

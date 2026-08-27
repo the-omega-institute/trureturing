@@ -1,0 +1,6 @@
+- 一个现实实现桥梁。
+
+定义 `Soul`、`FreeAgent`、`JustWorld`、`NecessaryBeing`、`ConsciousState` 或 `ObjectiveValue` 只构造候选类型，不证明其中有项。
+
+---
+

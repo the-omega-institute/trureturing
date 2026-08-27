@@ -1,0 +1,10 @@
+ast_path: section/488-证据状态应同时记录正支持和反支持/clause/6
+fingerprints:
+  raw_sha256: sha256:fabdc379f426785e18820e97526a2c591628b914f6c850f82038ac9c0e15edc5
+  normalized_sha256: sha256:fabdc379f426785e18820e97526a2c591628b914f6c850f82038ac9c0e15edc5
+cas_ref: sha256:fabdc379f426785e18820e97526a2c591628b914f6c850f82038ac9c0e15edc5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

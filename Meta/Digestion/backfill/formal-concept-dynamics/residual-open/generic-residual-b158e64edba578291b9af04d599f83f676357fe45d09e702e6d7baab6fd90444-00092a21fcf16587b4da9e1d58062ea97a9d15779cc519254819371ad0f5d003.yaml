@@ -1,0 +1,10 @@
+ast_path: section/29-3-概念论模型/clause/4
+fingerprints:
+  raw_sha256: sha256:b158e64edba578291b9af04d599f83f676357fe45d09e702e6d7baab6fd90444
+  normalized_sha256: sha256:b158e64edba578291b9af04d599f83f676357fe45d09e702e6d7baab6fd90444
+cas_ref: sha256:b158e64edba578291b9af04d599f83f676357fe45d09e702e6d7baab6fd90444
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

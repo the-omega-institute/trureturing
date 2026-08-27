@@ -1,0 +1,10 @@
+ast_path: 定理/447.1/clause/3
+fingerprints:
+  raw_sha256: sha256:3c06131574f6d11ae47d4ac4a417d0bfc7059251e7d8f527c05ebf5de8cf3ef6
+  normalized_sha256: sha256:3c06131574f6d11ae47d4ac4a417d0bfc7059251e7d8f527c05ebf5de8cf3ef6
+cas_ref: sha256:3c06131574f6d11ae47d4ac4a417d0bfc7059251e7d8f527c05ebf5de8cf3ef6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,25 @@
+# 165. 可审计信任必须携带 provenance
+
+报告：
+
+[
+m:M
+]
+
+本身不足以说明它是怎么产生的。
+
+定义证明携带报告：
+
+[
+\boxed{
+\operatorname{CertifiedReport}(m)
+=================================
+
+\sum_{\pi:\Pi}
+\operatorname{Valid}(\pi,m).
+}
+]
+
+其中 (\pi) 可以包括：
+
+* 数据来源；

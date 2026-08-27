@@ -1,0 +1,22 @@
+**定理 T1（下确界包络）**。\(L\mapsto M_\Gamma(L)\) 非增且取值于 \([0,M_0]\)，并且
+
+\[
+\boxed{
+\inf_{L\ge0}M_\Gamma(L)
+=\lim_{L\to\infty}M_\Gamma(L)
+=\inf_{S\Subset\Gamma}\nu(E_S)
+}
+\]
+
+以及
+
+\[
+\boxed{
+\inf_{L\ge0}\rho_\Gamma(L)
+=\lim_{L\to\infty}\rho_\Gamma(L)
+=\frac1{M_0}\inf_{S\Subset\Gamma}\nu(E_S).
+}
+\]
+
+证明：预算增大只会扩大 \(\mathscr F_L\)，故包络非增且有下界；每个有限 \(S\) 都落入预算 \(C(S)\)，而每个预算层只含有限族候选，故两重下确界相等。第二式由 \(M_0>0\) 归一化得到。
+
