@@ -106,8 +106,7 @@ public sealed class DeclarationCatalog
     {
         if (string.IsNullOrWhiteSpace(declaration.Name)
             || string.IsNullOrWhiteSpace(declaration.Kind)
-            || string.IsNullOrWhiteSpace(declaration.TypeRepresentation)
-            || declaration.TypeRepresentation.IndexOfAny(['\r', '\n', '`']) >= 0
+            || !FrozenHashSyntax.IsSha256(declaration.StatementTypeAddress)
             || declaration.Axioms.Any(string.IsNullOrWhiteSpace))
         {
             throw new InvalidOperationException(

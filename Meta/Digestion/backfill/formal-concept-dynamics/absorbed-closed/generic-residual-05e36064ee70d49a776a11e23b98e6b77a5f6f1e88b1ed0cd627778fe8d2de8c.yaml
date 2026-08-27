@@ -12,6 +12,6 @@ receipts:
       target_sha256: sha256:a2bb93cea0d70f018e1137cbceb61d7a3be72be86be99f21e28baa9259fb5f17
   scribe:
     - gid: D5/S0/Rewriting/Safety/InvariantSafety.invariant_safety
-      definition_sha256: sha256:9136e47a7cfd5cc3edb2ecbc1daa3e5af1a5a346739cac6a442646833a99cb81
-      emission_sha256: sha256:0bacb971180723f1871d0c12f32c514d68c69efb31fd4347a95fc2d914dddd6d
+      definition_sha256: sha256:c2111dfaf000d95be9900daa6d90da4d6fcc412f5ec03b97e22fdacb5d1cf325
+      emission_sha256: sha256:e2ad29f5cf67de6dcc53198293d7e3e63fad090e2e1a178763d21f67df81856d
   unresolved_subitems: []

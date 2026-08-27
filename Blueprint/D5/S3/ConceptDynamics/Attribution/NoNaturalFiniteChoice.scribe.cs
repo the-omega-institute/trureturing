@@ -35,24 +35,32 @@ internal sealed class NoNaturalFiniteChoiceDocument : IScribeDocumentDefinition
         Formula type = F.Id("Type");
         Formula carrier = F.Id("alpha");
         Formula target = F.Id("beta");
-        Formula finite = F.Id("Fintype");
-        Formula nonempty = F.Id("Nonempty");
         Formula element = F.Id("choice");
+        Formula finiteWitness = F.Id("f");
+        Formula nonemptyWitness = F.Id("h");
+        Formula finiteCarrier = F.Id("fAlpha");
+        Formula finiteTarget = F.Id("fBeta");
+        Formula nonemptyCarrier = F.Id("hAlpha");
+        Formula nonemptyTarget = F.Id("hBeta");
         Formula bijection = F.Id("e");
 
         Formula choiceType = Seq(
             Forall, Sp, carrier, Colon, Sp, type, Comma, Sp,
-            Open, finite, Sp, carrier, Close, Sp,
-            Open, nonempty, Sp, carrier, Close, Sp, Mapsto, Sp, carrier);
+            finiteWitness, Colon, Sp, Call("Fintype", carrier), Comma, Sp,
+            nonemptyWitness, Colon, Sp, Call("Nonempty", carrier), Comma, Sp,
+            carrier);
         Formula naturality = Seq(
-            Forall, Sp, carrier, Sp, target, Colon, Sp, type, Comma, Sp,
-            Open, finite, Sp, carrier, Close, Sp,
-            Open, finite, Sp, target, Close, Sp,
-            Open, nonempty, Sp, carrier, Close, Sp,
-            Open, nonempty, Sp, target, Close, Sp,
+            Forall, Sp, carrier, Comma, Sp, target, Colon, Sp, type, Comma, Sp,
+            finiteCarrier, Colon, Sp, Call("Fintype", carrier), Comma, Sp,
+            finiteTarget, Colon, Sp, Call("Fintype", target), Comma, Sp,
+            nonemptyCarrier, Colon, Sp, Call("Nonempty", carrier), Comma, Sp,
+            nonemptyTarget, Colon, Sp, Call("Nonempty", target), Comma, Sp,
             bijection, Colon, Sp, Call("Equiv", carrier, target), Comma, Sp,
-            EqualTo(Apply(bijection, Apply(element, carrier)),
-                Apply(element, target)));
+            EqualTo(
+                Apply(
+                    bijection,
+                    Apply(element, carrier, finiteCarrier, nonemptyCarrier)),
+                Apply(element, target, finiteTarget, nonemptyTarget)));
 
         return Disp(Seq(
             Neg, Sp, Exists, Sp, element, Colon, Sp, choiceType, Comma, Sp,

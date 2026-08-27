@@ -18,7 +18,7 @@ A coalition readout exposes a participant's share exactly when its label belongs
 
 **Theorem 1.2 (Knowledge and policy thresholds agree).**
 
-$$\forall share, \forall secret, \forall policy, policyFactor \land fullRecovery \Rightarrow \operatorname{minimumCoalitionSize}\left(\operatorname{Refines}\left(policy, \operatorname{coalitionReadout}\left(share, coalition\right)\right)\right) = \operatorname{minimumCoalitionSize}\left(\operatorname{Refines}\left(secret, \operatorname{coalitionReadout}\left(share, coalition\right)\right)\right).$$
+$$\forall I, X, V, B, U: Type,\ [\operatorname{Fintype}(I)], [\operatorname{DecidableEq}(I)], [\operatorname{Nonempty}(B)],\ share: I \to \left(X \to V\right), secret: \operatorname{Concept}\left(X, B\right), policy: \operatorname{Concept}\left(X, U\right),\ policyFactor: {\exists policyMap: B \to U, policy = policyMap \circ secret \land \operatorname{InjOn}\left(policyMap, \operatorname{range}\left(secret\right)\right)},\ fullRecovery: \operatorname{Refines}\left(secret, \operatorname{coalitionReadout}\left(share, (univ: \operatorname{Finset}\left(I\right))\right)\right),\ \operatorname{minimumCoalitionSize}\left({\Lambda K: \operatorname{Finset}\left(I\right), \operatorname{Refines}\left(policy, \operatorname{coalitionReadout}\left(share, K\right)\right)}\right) = \operatorname{minimumCoalitionSize}\left({\Lambda K: \operatorname{Finset}\left(I\right), \operatorname{Refines}\left(secret, \operatorname{coalitionReadout}\left(share, K\right)\right)}\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InstitutionalCapture/KnowledgePolicyThreshold.knowledge_policy_threshold_consistent` (`✓ std3`). ∎
 

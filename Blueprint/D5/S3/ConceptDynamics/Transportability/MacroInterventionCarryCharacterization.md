@@ -6,7 +6,7 @@ Intervention carry characterizes effective-image macro descent.
 
 **Theorem 1.1 (Carry emptiness and macro-intervention existence constrain each other).**
 
-$$\begin{gathered}\forall X, Z: \operatorname{Type},\\{}F: X \to X, C: X \to Z,\\{}((\exists G: Z \to Z, \operatorname{MacroIntervention}(F, C, C, G)) \Rightarrow \operatorname{Carry}(F, C, C) = \emptyset) \land\\{}(\operatorname{Carry}(F, C, C) = \emptyset \Rightarrow \exists! Gbar: \operatorname{range}(C) \to Z, \operatorname{EffectiveImageDescent}(F, C, C, Gbar)) \land\\{}(\forall kappa: \operatorname{Carry}(F, C, C), \neg(\exists G: Z \to Z, \operatorname{MacroIntervention}(F, C, C, G))).\end{gathered}$$
+$$\begin{gathered}\forall X, Z: \operatorname{Type},\\{}F: X \to X, C: X \to Z,\\{}((\exists G: Z \to Z, \operatorname{MacroIntervention}(F, C, C, G)) \Rightarrow \operatorname{IsEmpty}(\operatorname{Carry}(F, C, C))) \land\\{}(\operatorname{IsEmpty}(\operatorname{Carry}(F, C, C)) \Rightarrow \exists! Gbar: \operatorname{range}(C) \to Z, \operatorname{EffectiveImageDescent}(F, C, C, Gbar)) \land\\{}(\forall kappa: \operatorname{Carry}(F, C, C), \neg(\exists G: Z \to Z, \operatorname{MacroIntervention}(F, C, C, G))).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Transportability/MacroInterventionCarryCharacterization.macro_intervention_carry_characterization` (`✓ std3`). ∎
 

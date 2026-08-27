@@ -373,6 +373,7 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("mktemp", producer, StringComparison.Ordinal);
         Assert.Contains("mktemp", consumer, StringComparison.Ordinal);
         Assert.Contains("STRATALINT_LEAN_REPORT", consumer, StringComparison.Ordinal);
+        Assert.Contains(".materials.zip", consumer, StringComparison.Ordinal);
         Assert.DoesNotContain("may be stale", consumer, StringComparison.Ordinal);
     }
 
