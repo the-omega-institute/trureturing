@@ -5,6 +5,35 @@ namespace StrataLint.Tests;
 public sealed partial class AdmissionWorkflowTests
 {
     [Fact]
+    public void EveryMergeRefWaitIsTokenFree()
+    {
+        var waitCount = 0;
+
+        foreach (var jobNode in Jobs(SharedAdmissionWorkflow).Children.Values.OfType<YamlMappingNode>())
+        {
+            if (!jobNode.Children.TryGetValue(new YamlScalarNode("steps"), out var stepsNode)
+                || stepsNode is not YamlSequenceNode stepSequence)
+                continue;
+
+            foreach (var wait in stepSequence.Children.OfType<YamlMappingNode>()
+                         .Where(step => StepName(step) == "Wait for the GitHub merge ref"))
+            {
+                waitCount++;
+                Assert.False(
+                    wait.Children.ContainsKey(new YamlScalarNode("env")),
+                    "merge-ref wait must not declare an env block");
+
+                var script = Assert.IsType<YamlScalarNode>(
+                    wait.Children[new YamlScalarNode("run")]).Value ?? string.Empty;
+                foreach (var token in new[] { "GH_TOKEN", "GITHUB_TOKEN", "github.token", "gh api" })
+                    Assert.DoesNotContain(token, script, StringComparison.Ordinal);
+            }
+        }
+
+        Assert.Equal(3, waitCount);
+    }
+
+    [Fact]
     public void EveryPullRequestMergeCheckoutIsImmediatelyPrecededByMergeRefWait()
     {
         const string mergeRefExpression = "format('refs/pull/{0}/merge', github.event.pull_request.number)";
