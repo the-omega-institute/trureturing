@@ -187,8 +187,10 @@ public sealed class DocumentDiscoveryTests
         {
             var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound);
             var requireLiveReport = Environment.GetEnvironmentVariable("STRATALINT_REQUIRE_LIVE_REPORT") == "1";
-            if (!requireLiveReport && !repository.FileExists(RepositoryRelativePath.Create(
-                    ".lake/build/stratalint/raw-lean-report.json")))
+            if (!requireLiveReport && (!repository.FileExists(RepositoryRelativePath.Create(
+                    ".lake/build/stratalint/raw-lean-report.json"))
+                || !repository.FileExists(RepositoryRelativePath.Create(
+                    ".lake/build/stratalint/raw-lean-report.json.materials.zip"))))
                 Skip = "Live raw Lean report is absent; document graph verification requires that report.";
         }
     }

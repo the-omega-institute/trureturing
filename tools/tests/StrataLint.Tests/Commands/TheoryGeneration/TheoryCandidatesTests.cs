@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -264,14 +265,43 @@ public sealed partial class TheoryCandidatesTests
     {
         var fixture = CandidateFixture();
         var report = fixture.Reports[DeclarationReadyFrontierPath];
-        var statements = CanonicalStatementWriter.DeclarationStatementIds(
-                RepoPath.CreateKnown(DeclarationReadyFrontierPath),
-                report)
+        var path = RepoPath.CreateKnown(DeclarationReadyFrontierPath);
+        var statements = CanonicalStatementWriter.DeclarationStatementIds(path, report)
             .ToDictionary(static statement => statement.DeclarationNameKey, StringComparer.Ordinal);
+        var lazyFixture = CandidateFixture();
+        var loaded = 0;
+        lazyFixture.Reports[DeclarationReadyFrontierPath] = new LeanFileReport(
+            report.Imports,
+            report.Declarations.Select(declaration =>
+            {
+                var material = declaration.TypeRepresentation;
+                return new LeanDeclaration(
+                    declaration.Name,
+                    declaration.Kind,
+                    CanonicalStatementWriter.StatementTypeAddress(declaration),
+                    CanonicalStatementWriter.DeclarationStatementId(path, declaration),
+                    declaration.Axioms,
+                    () =>
+                    {
+                        loaded++;
+                        return material;
+                    })
+                {
+                    IncludeInStatement = declaration.IncludeInStatement,
+                    NameKey = declaration.NameKey,
+                };
+            }).ToImmutableArray());
 
         var result = Run(fixture);
+        var lazyResult = Run(lazyFixture);
 
         Assert.True(result.Success, result.Error);
+        Assert.True(lazyResult.Success, lazyResult.Error);
+        Assert.Equal(result.Output, lazyResult.Output);
+        Assert.Equal(2, loaded);
+        Assert.Equal(
+            "4a773e87383d5af09fba0685c8c3d57f7f39fb0579a19be7267ba346681882a9",
+            Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(result.Output))));
         using var json = JsonDocument.Parse(result.Output);
         var candidates = json.RootElement.GetProperty("candidates").EnumerateArray()
             .Where(static candidate => candidate.GetProperty("downstream_lane").GetString() == "prover")
@@ -767,26 +797,4 @@ public sealed partial class TheoryCandidatesTests
 
     private static LeanFileReport EmptyReport() => new([], []);
 
-    private static string CandidateInventory(IEnumerable<JsonElement> candidates) =>
-        string.Join(
-            ", ",
-            candidates
-                .Select(static candidate => (
-                    SourceRef: candidate.GetProperty("source_ref").GetString() ?? "<null>",
-                    SourceKind: candidate.GetProperty("source_kind").GetString() ?? "<null>",
-                    DownstreamLane: candidate.GetProperty("downstream_lane").GetString() ?? "<null>"))
-                .OrderBy(static candidate => candidate.SourceRef, StringComparer.Ordinal)
-                .ThenBy(static candidate => candidate.SourceKind, StringComparer.Ordinal)
-                .ThenBy(static candidate => candidate.DownstreamLane, StringComparer.Ordinal)
-                .Select(static candidate =>
-                    $"[source_ref={candidate.SourceRef}; source_kind={candidate.SourceKind}; "
-                    + $"downstream_lane={candidate.DownstreamLane}]"));
-
-    private static string CandidateSetSha256(JsonElement candidates)
-    {
-        var canonical = StructuredCanonicalWriter.WriteJson(candidates);
-        var prefix = Encoding.UTF8.GetBytes("theory-candidate-set-v1\0");
-        return "sha256:" + Convert.ToHexStringLower(SHA256.HashData(
-            prefix.Concat(canonical).ToArray()));
-    }
 }
