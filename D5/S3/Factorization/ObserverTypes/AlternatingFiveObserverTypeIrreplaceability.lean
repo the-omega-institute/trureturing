@@ -33,6 +33,42 @@ open D5.S3.Factorization.PrimePowers.SimpleToPGroupTrivial
 
 universe u v
 
+/-- The two observer kinds compared at a fixed prime. -/
+inductive LocalObserverKind where
+  | primePowerQuotient
+  | residueLinear
+  deriving DecidableEq
+
+/-- A common category for the two notions of observation at the same prime:
+an object is either a homomorphism to a finite p-group or a residue-linear
+representation over `ZMod p`. The constructors retain the target data that
+certifies membership in the corresponding observer kind. -/
+inductive LocalObserverAtPrime (p : Nat) (G : Type) [Group G] where
+  | primePowerQuotient (P : Type) [Group P] [Finite P]
+      (hP : IsPGroup p P) (observer : G →* P)
+  | residueLinear (V : Type) [AddCommGroup V] [Module (ZMod p) V]
+      (observer : G →* (V ≃ₗ[ZMod p] V))
+
+namespace LocalObserverAtPrime
+
+/-- Which of the two fixed-prime observer constructions produced an object. -/
+def kind {p : Nat} {G : Type} [Group G] :
+    LocalObserverAtPrime p G → LocalObserverKind
+  | @LocalObserverAtPrime.primePowerQuotient _ _ _ _ _ _ _ _ =>
+      .primePowerQuotient
+  | @LocalObserverAtPrime.residueLinear _ _ _ _ _ _ _ => .residueLinear
+
+/-- Faithfulness is injectivity of the underlying observer, uniformly across
+the two constructors of `LocalObserverAtPrime`. -/
+def Faithful {p : Nat} {G : Type} [Group G] :
+    LocalObserverAtPrime p G → Prop
+  | @LocalObserverAtPrime.primePowerQuotient _ _ _ _ _ _ _ observer =>
+      Function.Injective observer
+  | @LocalObserverAtPrime.residueLinear _ _ _ _ _ _ observer =>
+      Function.Injective observer
+
+end LocalObserverAtPrime
+
 /-- The left regular representation, promoted through the units of the linear
 endomorphism monoid to an observer valued in the general linear group. -/
 noncomputable def leftRegularLinearObserver
@@ -72,8 +108,10 @@ theorem alternating_five_prime_power_observer_not_injective
 
 /-- Observer type irreplaceability for `A5`: every observer landing in any
 finite p-group is nonfaithful, while a characteristic-five residue-linear
-observer is faithful. The coefficient type `ZMod 5` records the characteristic,
-and linear equivalences are the general linear group of the displayed module. -/
+observer is faithful. Moreover, both are exhibited inside the common category
+`LocalObserverAtPrime 5 G`, with distinct kinds and opposite fidelity. The
+coefficient type `ZMod 5` records the characteristic, and linear equivalences
+are the general linear group of the displayed module. -/
 theorem alternating_five_observer_type_irreplaceability :
     ∃ (G : Type) (_ : Group G) (_ : Finite G),
       Nonempty (G ≃* alternatingGroup (Fin 5)) ∧
@@ -81,19 +119,45 @@ theorem alternating_five_observer_type_irreplaceability :
           ∀ (P : Type) (_ : Group P) (_ : Finite P),
             IsPGroup p P →
               ∀ observer : G →* P, ¬Function.Injective observer) ∧
-        ∃ (V : Type) (_ : AddCommGroup V) (_ : Module (ZMod 5) V),
+        (∃ (V : Type) (_ : AddCommGroup V) (_ : Module (ZMod 5) V),
           ∃ observer : G →* (V ≃ₗ[ZMod 5] V),
-            Function.Injective observer := by
-  refine ⟨alternatingGroup (Fin 5), inferInstance, inferInstance,
-    ⟨MulEquiv.refl _⟩, ?_, ?_⟩
-  · intro p hp P groupP finiteP hP observer
+            Function.Injective observer) ∧
+        ∃ blind faithful : LocalObserverAtPrime 5 G,
+          blind.kind = .primePowerQuotient ∧
+            faithful.kind = .residueLinear ∧
+            blind.kind ≠ faithful.kind ∧
+            ¬blind.Faithful ∧ faithful.Faithful := by
+  letI : Fact (1 < (5 : Nat)) := ⟨by norm_num⟩
+  let residueObserver :=
+    leftRegularLinearObserver (ZMod 5) (alternatingGroup (Fin 5))
+  have residueFaithful : Function.Injective residueObserver :=
+    leftRegularLinearObserver_injective (ZMod 5) (alternatingGroup (Fin 5))
+  have allPrimePowerBlind :
+      ∀ (p : Nat), p.Prime →
+        ∀ (P : Type) (_ : Group P) (_ : Finite P),
+          IsPGroup p P →
+            ∀ observer : alternatingGroup (Fin 5) →* P,
+              ¬Function.Injective observer := by
+    intro p hp P groupP finiteP hP observer
     letI : Group P := groupP
     letI : Finite P := finiteP
     exact alternating_five_prime_power_observer_not_injective hp hP observer
-  · letI : Fact (1 < (5 : Nat)) := ⟨by norm_num⟩
-    refine ⟨alternatingGroup (Fin 5) →₀ ZMod 5, inferInstance,
-      inferInstance, leftRegularLinearObserver (ZMod 5) (alternatingGroup (Fin 5)), ?_⟩
-    exact leftRegularLinearObserver_injective (ZMod 5) (alternatingGroup (Fin 5))
+  refine ⟨alternatingGroup (Fin 5), inferInstance, inferInstance,
+    ⟨MulEquiv.refl _⟩, allPrimePowerBlind, ?_, ?_⟩
+  · exact ⟨alternatingGroup (Fin 5) →₀ ZMod 5, inferInstance,
+      inferInstance, residueObserver, residueFaithful⟩
+  · let blind : LocalObserverAtPrime 5 (alternatingGroup (Fin 5)) :=
+      .primePowerQuotient (⊥ : Subgroup (alternatingGroup (Fin 5)))
+        IsPGroup.of_bot 1
+    let faithful : LocalObserverAtPrime 5 (alternatingGroup (Fin 5)) :=
+      .residueLinear (alternatingGroup (Fin 5) →₀ ZMod 5) residueObserver
+    refine ⟨blind, faithful, rfl, rfl, ?_, ?_, ?_⟩
+    · simp [blind, faithful, LocalObserverAtPrime.kind]
+    · simpa [blind, LocalObserverAtPrime.Faithful] using
+        allPrimePowerBlind 5 Nat.prime_five
+          (⊥ : Subgroup (alternatingGroup (Fin 5))) inferInstance inferInstance
+          IsPGroup.of_bot 1
+    · simpa [faithful, LocalObserverAtPrime.Faithful] using residueFaithful
 
 /- Reverse probe: the public theorem alone yields a concrete nonfaithful
 prime-power observer and, simultaneously, a faithful characteristic-five
@@ -106,13 +170,14 @@ example :
           ∃ observer : G →* (V ≃ₗ[ZMod 5] V),
             Function.Injective observer := by
   rcases alternating_five_observer_type_irreplaceability with
-    ⟨G, groupG, finiteG, identified, allPrimePowerBlind, V, addV, moduleV,
-      residueObserver, residueFaithful⟩
+    ⟨G, groupG, finiteG, identified, allPrimePowerBlind,
+      ⟨V, addV, moduleV, residueObserver, residueFaithful⟩,
+      _localObservationNotSingle⟩
   letI : Group G := groupG
   letI : Finite G := finiteG
   refine ⟨G, groupG, finiteG, identified, ?_, V, addV, moduleV,
     residueObserver, residueFaithful⟩
-  exact allPrimePowerBlind 2 Nat.prime_two (⊥ : Subgroup G) inferInstance
+  exact allPrimePowerBlind 5 (by decide) (⊥ : Subgroup G) inferInstance
     inferInstance IsPGroup.of_bot 1
 
 /- Trivialization probe: a one-element group cannot replace the existential
