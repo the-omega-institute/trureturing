@@ -24,6 +24,8 @@ public sealed class BannedApiCoverageTests
             .Where(static file => file.RelativePath.StartsWith("tools/tests/", StringComparison.Ordinal)
                 && file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal))
             .Select(file => (file.RelativePath, Document: XDocument.Load(file.FullPath, LoadOptions.None)))
+            .ToArray();
+        projects = projects
             .Where(static project => project.Document.Descendants()
                 .Any(element => element.Name.LocalName == "IsTestProject" && element.Value == "true"))
             .ToArray();

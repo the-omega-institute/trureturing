@@ -13,10 +13,10 @@ public sealed class BoundedProcessRunnerBudgetTests
     {
         const string budgetPath = "tools/tests/StrataLint.Tests/TestBudgets.cs";
         var sources = GitIndexRepositoryFiles.Enumerate(RepositoryLayout.FindRoot())
-            .Where(static file => file.RelativePath.StartsWith("tools/tests/", StringComparison.Ordinal)
+            .Where(file => file.RelativePath.StartsWith("tools/tests/", StringComparison.Ordinal)
                 && file.RelativePath.EndsWith(".cs", StringComparison.Ordinal)
-                && !file.RelativePath.StartsWith("tools/tests/BannedApiCompileFailProof/", StringComparison.Ordinal))
-            .Where(file => file.RelativePath != budgetPath)
+                && !file.RelativePath.StartsWith("tools/tests/BannedApiCompileFailProof/", StringComparison.Ordinal)
+                && file.RelativePath != budgetPath)
             .Select(file => (file.RelativePath, Content: string.Join('\n', File.ReadLines(file.FullPath))))
             .ToArray();
 
