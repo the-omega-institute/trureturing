@@ -1,0 +1,10 @@
+ast_path: section/92-2-scalar-observer-丢失-primitive-标签/clause/3
+fingerprints:
+  raw_sha256: sha256:4bcbb5cbd0e2ca962250bba19f815199ab308d3730aff3b51e5e9e07545d2bfe
+  normalized_sha256: sha256:4bcbb5cbd0e2ca962250bba19f815199ab308d3730aff3b51e5e9e07545d2bfe
+cas_ref: sha256:4bcbb5cbd0e2ca962250bba19f815199ab308d3730aff3b51e5e9e07545d2bfe
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

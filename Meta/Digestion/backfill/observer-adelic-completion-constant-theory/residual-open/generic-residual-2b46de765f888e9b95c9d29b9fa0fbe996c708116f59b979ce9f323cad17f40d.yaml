@@ -1,0 +1,15 @@
+ast_path: section/92-2-scalar-observer-丢失-primitive-标签
+fingerprints:
+  raw_sha256: sha256:2b46de765f888e9b95c9d29b9fa0fbe996c708116f59b979ce9f323cad17f40d
+  normalized_sha256: sha256:2b46de765f888e9b95c9d29b9fa0fbe996c708116f59b979ce9f323cad17f40d
+cas_ref: sha256:2b46de765f888e9b95c9d29b9fa0fbe996c708116f59b979ce9f323cad17f40d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-5320938772032985d5d758ea8f5df7349d1acfcbb0b028a439754da60f797cb3-f259998ae726abc023a2244380fd98a403c9c2bc5b9a813cd4ab8d8629d9ebc9
+    - generic-residual-c92c44a32a328eaa77c9844922e1a3d0b8641292c2006ec9bdd41f110849ad32-f494ff5c3da476ccca3cc2f51587d8a68538e36f90721939129afb452c3c32fc
+    - generic-residual-4bcbb5cbd0e2ca962250bba19f815199ab308d3730aff3b51e5e9e07545d2bfe-d30d4dca74880e8980f0021802ac7369648525fa37bf1dd4ea2078b077ee0bcb
+    - generic-residual-e182134e9bbbdc605d9a60d18db64410bdabbfc73c8ee799de3c8e83c8d26b08-d93c8000f7b479f223f3f8ce3794ff04cf5b2cd22203f950467ab71599929f4b

@@ -1,0 +1,32 @@
+## 134.1 Hecke 形式
+
+采用 weight-zero Hecke 算子规范：
+
+$$
+\boxed{
+(T_rf)(\tau)
+=
+\frac1r
+\sum_{\substack{ad=r\\0\le b<d}}
+f\left(\frac{a\tau+b}{d}\right).
+}
+\tag{134.3}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal P_r(J)
+=
+rT_rJ.
+}
+\tag{134.4}
+$$
+
+这就是 \(J\) 的 Hecke-monic／replicability 关系。
+
+Borcherds 的 twisted denominator identities 正是通过这类 replication relations 完成 Monstrous Moonshine 证明；replicable functions、Hauptmodul 与 genus-zero 模函数之间的关系也已形成系统理论。([SciSpace][3])
+
+---
+

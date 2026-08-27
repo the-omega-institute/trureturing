@@ -1,0 +1,24 @@
+## 142.1 斜率负对照
+
+比较：
+
+$$
+\varphi,\quad
+\sqrt2,\quad
+1+\sqrt2,\quad
+\pi,\quad
+\text{随机无理数}.
+$$
+
+测量：
+
+$$
+\delta_\alpha(H)
+=
+\min
+|\alpha(m-m')+(n-n')|.
+$$
+
+应区分：
+
+* 所有无理数的精确单射性；

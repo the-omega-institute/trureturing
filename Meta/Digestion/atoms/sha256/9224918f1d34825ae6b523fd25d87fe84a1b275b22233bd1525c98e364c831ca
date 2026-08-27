@@ -1,0 +1,15 @@
+## 139.1 对角观察
+
+$$
+(m,n)\mapsto m+n.
+$$
+
+性质：
+
+* 极强碰撞；
+* 输出是 Ramanujan 微分乘积；
+* 适合获得高度压缩的 closed formula；
+* 不适合恢复 primitive root labels。
+
+---
+

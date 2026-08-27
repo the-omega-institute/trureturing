@@ -1,0 +1,10 @@
+ast_path: section/137-1-负-Fourier-模式/clause/1
+fingerprints:
+  raw_sha256: sha256:b7b6ba01dbe6752a123eaab46daa92edfe394a715c5340bef57e2b9035a5c175
+  normalized_sha256: sha256:b7b6ba01dbe6752a123eaab46daa92edfe394a715c5340bef57e2b9035a5c175
+cas_ref: sha256:b7b6ba01dbe6752a123eaab46daa92edfe394a715c5340bef57e2b9035a5c175
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

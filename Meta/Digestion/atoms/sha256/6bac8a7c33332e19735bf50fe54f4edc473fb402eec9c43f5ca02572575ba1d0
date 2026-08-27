@@ -1,0 +1,22 @@
+# 第一百三十七部　一般 Borcherds Lift 的三类系数角色
+
+Borcherds 的一般乘法提升从允许 cusp 极点的矢量值模形式：
+
+$$
+f(\tau)
+=
+\sum_{\mu}
+\sum_n
+c_\mu(n)q^n\mathbf e_\mu
+$$
+
+构造正交型对称域上的 automorphic product：
+
+$$
+\Psi(f).
+$$
+
+其系数自然分成三类。([arXiv][6])
+
+---
+

@@ -1,0 +1,38 @@
+* 完整函数方程。
+
+但这些仍没有自动证明 RH。
+
+原因是标量 \(E_8\) 观察将两个 primitive 因子：
+
+$$
+\zeta(s),
+\qquad
+\zeta(s-3)
+$$
+
+合并成了一个乘积。
+
+所以真正缺少的是：
+
+$$
+\boxed{
+\text{primitive-factor positivity，}
+}
+$$
+
+而不是更多完成对称。
+
+这再次验证 OACTC 的核心禁令：
+
+$$
+\boxed{
+\text{几何完成}
+\neq
+\text{观察完备}
+\neq
+\text{零点正性完成}.
+}
+$$
+
+---
+

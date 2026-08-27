@@ -1,0 +1,61 @@
+# 第一百三十四部　Faber 多项式与 Hecke 自复制
+
+定义 \(J\) 的 Faber 多项式 \(\mathcal P_r(X)\)：
+
+$$
+\boxed{
+-\log\left[
+p(J(p)-X)
+\right]
+=
+\sum_{r\ge1}
+\frac{\mathcal P_r(X)}r
+p^r.
+}
+\tag{134.1}
+$$
+
+由于：
+
+$$
+J(p)=p^{-1}+O(p),
+$$
+
+每个 \(\mathcal P_r\) 是首项为 \(X^r\) 的唯一多项式，使：
+
+$$
+\mathcal P_r(J(q))
+=
+q^{-r}+O(q).
+$$
+
+将 \(X=J(q)\)，并使用 Monster denominator：
+
+$$
+\begin{aligned}
+-\log[p(J(p)-J(q))]
+={}&
+-\log(1-p/q)\\
+&-
+\sum_{m,n\ge1}
+c(mn)\log(1-p^mq^n).
+\end{aligned}
+$$
+
+比较 \(p^r\) 系数，得到：
+
+$$
+\boxed{
+\mathcal P_r(J(q))
+=
+q^{-r}
++
+\sum_{d\mid r}
+d\sum_{n\ge1}
+c(dn)q^{(r/d)n}.
+}
+\tag{134.2}
+$$
+
+---
+

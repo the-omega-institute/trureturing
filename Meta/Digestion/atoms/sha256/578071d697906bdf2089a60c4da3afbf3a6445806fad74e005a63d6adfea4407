@@ -1,0 +1,30 @@
+## 121.3 二者可能耦合
+
+在更深系统中，一个素数可能同时控制：
+
+* 数域分歧；
+* 模形式同余；
+* Galois representation reducibility；
+* \(p\)-adic zeta 零点；
+* observer jet depth。
+
+所以 OACTC 应记录：
+
+$$
+\boxed{
+\operatorname{PrimeRole}(\ell)
+=
+(
+\text{ramification},
+\text{conductor},
+\text{congruence},
+\text{extension},
+\text{jet depth}
+).
+}
+$$
+
+不能只记录“公式中出现了素数 \(\ell\)”。
+
+---
+
