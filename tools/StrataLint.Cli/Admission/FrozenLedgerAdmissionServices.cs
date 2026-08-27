@@ -296,32 +296,49 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
         AcceptedLeanClosure lean,
         LeanAxiomReport report,
         RawChangeSet changes,
-        FrozenRevisionIdentity currentIdentity)
+        FrozenRevisionIdentity currentIdentity,
+        AdmissionCheckTiming timing)
     {
-        var states = LeanTruthStates.Resolve(current, lean);
-        var adjacency = LeanImportAdjacency.Build(current, lean);
-        var scope = FrozenLedgerAdmissionScope.Create(changes, preparation, states, adjacency);
+        var scoped = timing.Measure(
+            "frozen-ledger-scope",
+            () =>
+            {
+                var states = LeanTruthStates.Resolve(current, lean);
+                var adjacency = LeanImportAdjacency.Build(current, lean);
+                var scope = FrozenLedgerAdmissionScope.Create(
+                    changes,
+                    preparation,
+                    states,
+                    adjacency);
+                return (States: states, Adjacency: adjacency, Scope: scope);
+            });
         FrozenMaterialCatalog catalog;
         try
         {
-            AdmissionCatalogBuildCount++;
-            catalog = DagLedgerCommandPreparation.BuildAdmissionCatalog(
-                current,
-                lean,
-                states,
-                adjacency,
-                preparation.BaseView,
-                scope,
-                currentIdentity);
+            catalog = timing.Measure(
+                "frozen-ledger-catalog",
+                () =>
+                {
+                    AdmissionCatalogBuildCount++;
+                    return DagLedgerCommandPreparation.BuildAdmissionCatalog(
+                        current,
+                        lean,
+                        scoped.States,
+                        scoped.Adjacency,
+                        preparation.BaseView,
+                        scoped.Scope,
+                        currentIdentity);
+                });
         }
         catch (Exception exception) when (exception is ArgumentException
             or FormatException
             or InvalidOperationException
             or KeyNotFoundException)
         {
-            var affected = scope.Paths.OrderBy(static path => path.Value, StringComparer.Ordinal)
+            var affected = scoped.Scope.Paths
+                .OrderBy(static path => path.Value, StringComparer.Ordinal)
                 .ToImmutableArray();
-            var witnesses = affected.SelectMany(path => scope.WitnessesFor(path))
+            var witnesses = affected.SelectMany(path => scoped.Scope.WitnessesFor(path))
                 .Distinct()
                 .ToImmutableArray();
             return RuleRejection(
@@ -331,14 +348,17 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
         }
 
         IncrementalValidationCount++;
-        var failure = FrozenLedger.ValidateAdmissionDelta(
-            preparation,
-            scope,
-            catalog,
-            changes,
-            preparation.TrustedDeltaReferences,
-            report,
-            current);
+        var failure = timing.Measure(
+            "frozen-ledger-delta",
+            () => FrozenLedger.ValidateAdmissionDelta(
+                preparation,
+                scoped.Scope,
+                catalog,
+                changes,
+                preparation.TrustedDeltaReferences,
+                report,
+                current),
+            static result => result is not null);
         return failure is null
             ? null
             : RuleRejection(failure.AffectedPaths, failure.Message);
