@@ -230,7 +230,7 @@ ordered pull requests even while its former machine enforcement is deferred.
 **Registration PR:** On a dedicated branch, add only the future volume path to
 `Meta/registry.yaml` under `governance_documents`, preserving canonical ordering.
 Do not add the volume or digestion data. Commit, run `make preflight`, push, and
-run `make pr-open`; every command must exit 0. After `make pr-open`, do not push
+run `make pr-open AUTO_MERGE=1`; every command must exit 0. After `make pr-open`, do not push
 further changes to that branch. Apply the bounded pull-request observation
 protocol. Only its REST-confirmed `MERGED` verdict advances to the theory PR; all
 of its `open` successors use the fixed evidence schema. A green or merely open PR
@@ -347,7 +347,7 @@ Commit the theory volume and writer-produced digestion data, then run:
 ```sh
 make preflight BASE=$(git merge-base origin/dev HEAD)
 git push -u origin <branch>
-make pr-open HEAD=<branch> MESSAGE=<message-file>
+make pr-open HEAD=<branch> MESSAGE=<message-file> AUTO_MERGE=1
 # The message file's first line is the PR title; the rest is the PR body.
 ```
 
