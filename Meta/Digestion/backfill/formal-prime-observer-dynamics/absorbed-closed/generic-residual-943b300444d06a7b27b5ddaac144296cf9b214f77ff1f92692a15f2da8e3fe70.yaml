@@ -1,0 +1,17 @@
+ast_path: 定理/288.1
+fingerprints:
+  raw_sha256: sha256:943b300444d06a7b27b5ddaac144296cf9b214f77ff1f92692a15f2da8e3fe70
+  normalized_sha256: sha256:943b300444d06a7b27b5ddaac144296cf9b214f77ff1f92692a15f2da8e3fe70
+cas_ref: sha256:943b300444d06a7b27b5ddaac144296cf9b214f77ff1f92692a15f2da8e3fe70
+coverage_gids:
+  - D5/S3/ConceptDynamics/Causal/BenefitProbabilityBounds.benefit_probability_bounds
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Causal/BenefitProbabilityBounds.benefit_probability_bounds
+      source_sha256: sha256:943b300444d06a7b27b5ddaac144296cf9b214f77ff1f92692a15f2da8e3fe70
+      target_sha256: sha256:66e02cb8d749684c2732b2033d2fb8fd2493a5b8413bc1ddd4a1a86e1a363963
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Causal/BenefitProbabilityBounds.benefit_probability_bounds
+      definition_sha256: sha256:f146fdf2193b55b619d0f1fce9e0136d0195de11a37b9e397193c79a38cde4ac
+      emission_sha256: sha256:fae9dc7134d2957a995673ec95ea7a7419ccc23bf4315c522a736caffdd938de
+  unresolved_subitems: []
