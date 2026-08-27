@@ -54,7 +54,10 @@ tracked 文件数 29,407 属于 `94f64f416`;`25c3a9716` 的实测值为 29,469,�
 其余情况 `I_prod,R(x)` 未定义并记 `open`,不得用于投影分类。对每个判者域 `K` 另记定型读集
 `JudgeReads_R^K:K→2^A(R)`;`K=A(R)` 时它就是 `I_run,R`,actor 域不得用空集冒充。
 
-**互逆律(公理 0,工件定型子域)**:`∀ x,y ∈ A(R). y ∈ C(x) ⟺ x ∈ I_run(y)`。
+**定义(消费边,工件定型子域)**:`C := I_run⁻¹`,即 `∀ x,y ∈ A(R). y ∈ C(x) ⟺ x ∈ I_run(y)`。
+**这一行按定义恒真,不含内容**,不是可以假设或违反的东西。有内容的是它的**一致性谓词**:
+`ConsumerConform(R) := (FILEMAP.consumed_by(x) ∩ A(R)) = I_run⁻¹(x)` ——
+登记表**声明**的消费边是否等于从 `I_run` **派生**的消费边。那是**可查的**,可以为假;为假即仓库的缺陷。
 `C` 与 `I_run` 在该子域上是同一条**消费边**的两个方向;落在 `ProgramActorWords` 上的消费边属于
 另一个对象域,不参与互逆律,因而不会要求无类型的 `I_run(agent)`。`I_prod` 只在上述 `resolve_R` 有定义处组合;
 `J_{D,K}` 是按两端对象域定型的**判定边**,与消费边不同型。下文抽象地写 `J_{D,K}` 时一次只取一个载体;
@@ -67,6 +70,24 @@ tracked 文件数 29,407 属于 `94f64f416`;`25c3a9716` 的实测值为 29,469,�
 另有实现层类型差距:`Meta/FILEMAP.toml` 当前 `consumed_by` 的元素常是仓外 actor,
 并非 `A(R)` 中的工件;例如 `docs/reports/**` 明写 `agent`。因此该字段当前实际近似为
 `A(R) → 2^(A(R) ∪ ProgramActorWords)`,不能未经分域就当作 `A(R)` 上的自关系。
+
+
+**本模型零公理。** 上面全部内容穷尽于三类,没有第四类:
+
+| 类 | 是什么 | 它的义务 |
+|---|---|---|
+| **定义** | `C := I_run⁻¹`、`I_prod := I_run ∘ resolve_R ∘ π`、`τ := height(J_component)` | 无义务,只要前后一致 |
+| **谓词** | `WellGoverned` / `Registered` / `RefIntegrity` / `ConsumerConform` | 义务是**去查**;可以为假,为假即仓库的缺陷 |
+| **定理** | 2.1 塔必有顶、5.1 增量可靠性、5.2 三种修法、6.1/6.2 判者两重义务 | 义务是**在写明的假设下成立** |
+
+**为什么这个区分承重,而不只是命名洁癖**:把一个**可查的谓词**写成公理,等于
+**把一个本该红的检查藏成一个前提**。本文 v0.2 就犯过这个错——原文写「本仓不满足公理 2」,
+而**一个不被满足的公理是矛盾**;真实情况只是准入实现与其签名不符,是符合性缺口。
+措辞错了,连带把「该去修实现」误导成「该去论证前提」。
+
+**唯一像公理的东西**是 §1 开头那条 git 性质(未被 δ 触碰的路径,其字节在 `R` 与 `R⊕δ` 中逐字节相同)。
+它是关于外部世界的假设,不在模型内可证。但即便它,在形式化落地时也**不该写成 `axiom`**,
+而应是 `GitTree` 结构体的一个**字段**——由构造者提供并承担,而不是被全局假设。
 
 ---
 
@@ -81,20 +102,24 @@ tracked 文件数 29,407 属于 `94f64f416`;`25c3a9716` 的实测值为 29,469,�
 > **变异证明不是纪律,是本模型的强制推论**:`test ∈ J_{A,A}(impl)` 一旦成立,`J_{A,A}(test)` 就必须非空,
 > 否则 test 是一个无人判定的判者(§6)。变异运行器是 `J_{A,A}(test)` 的规范居民。
 
-**公理 1(治理无环,按域定型)**:在任一共同对象域 `D` 内,`J_{D,D} ∪ Π_D` 无环,其中
+**谓词(治理无环,按域定型)**:`WellGoverned_D(R) := Acyclic(J_{D,D} ∪ Π_D)`,其中
 `Π_D = {(π(x),x) : x,π(x) ∈ D, π(x) ≠ ⊥}`。不同载体未经定型注入不得作无类型的并集;
-特别地,本仓 `V_path` 不与 `J_component` 相并。等价说法:没有工件参与决定它自己的准入。**这不是洁癖**——`J_{D,D}` 中一个环使准入方程
+特别地,本仓 `V_path` 不与 `J_component` 相并。等价说法:没有工件参与决定它自己的准入。
+**这是一个谓词,不是公理**:某个具体的 `J` 有没有这性质是事实问题,须去查。
+`τ` 正是**在该谓词成立的前提下**由良基递归定义;谓词不成立时 `τ` 未定义,而不是「公理被违反」。**这不是洁癖**——`J_{D,D}` 中一个环使准入方程
 `H = F(H)` 有多个不动点,其中恒含平凡解「全部 admit」。恶意或失手的候选提交 `return Accepted`
 就是在选那个不动点。CLAUDE.md 已记 2026-07-20 判例(候选驱动证书)。
 
-**公理 2(信任定向)**:判定候选 `R'` 相对基线 `R` 时,**每个判者必须在 `R` 中解析**。
-公理 1 是树内的无环,公理 2 是跨版本的无环。只有前者成立时,候选仍可用「自己带来的判者」
+**签名(信任定向)**:准入函数的型即 `H : (base : R) → (δ : Delta) → Verdict` ——
+判定候选 `R'` 时,**每个判者在 `R` 中解析**是这个型的内容,不是附加的假设。
+上一条谓词是树内的无环,这个签名是跨版本的无环。只有前者成立时,候选仍可用「自己带来的判者」
 判自己——图上无环,历史上有环。
 
 > **本仓实测**:`.github/workflows/ci.yml:749` 的步骤名即 `Run the harness gate with the candidate's own judge`;
 > 同 job 的 `:715 Resolve judge binary content address before build outputs exist` + `:724 Restore judge binaries`
 > 表明判者二进制按**候选源码的内容地址**取缓存,未命中即由候选自行构建。
-> CLAUDE.md 第 19 条明记 base「不 checkout、不编译」。**故本仓满足公理 1,不满足公理 2**;
+> CLAUDE.md 第 19 条明记 base「不 checkout、不编译」。**故本仓的 `J_component` 满足 `WellGoverned`,而其准入实现与上述签名不符**
+(一个「不被满足的公理」是矛盾;这里的真实情况是实现与型不符,即符合性缺口);
 > 缺口当前由 `pull_request_target` 的 workflow 文本取自 base 侧 + rc=3 元层脚手架承担,
 > CLAUDE.md 自己称其为「记录在案的 bootstrap 脚手架」。本模型的立场:这是**已知负债**,不是设计,记 `open`(§10-a)。
 
@@ -181,14 +206,14 @@ tracked 文件数 29,407 属于 `94f64f416`;`25c3a9716` 的实测值为 29,469,�
 
 ## §4 登记律 —— 「不会莫名其妙多出来没有消费者的东西」
 
-**公理 3(全量登记 / 双射)**:登记表 `Reg` 本身是工件,且 `dom(Reg) ≅ tracked(R)` 在 selector 粒度上双射,两向 fail-closed。
+**谓词(全量登记 / 双射)**:`Registered(R) := dom(Reg) ≃ tracked(R)`(selector 粒度双射,两向 fail-closed)。登记表 `Reg` 本身是工件。
 
 > **本仓实测:已满足。** `tools/StrataLint.Cli/Commands/FileMap/FileMapPolicy.cs:520`
 > `"tracked repository file matches no FILEMAP pattern"`,`:548`
 > `"non-run-local FILEMAP pattern matches no tracked repository path"`。两个方向都红。
 > **这是本仓最强的一件机器**,用户想要的「出现即登记」在文件粒度上已经成立。
 
-**公理 4(按域的引用完整性:全称,不是存在)**:`π` 的非 `⊥` 名须解析到 `ProducerActor`,使用 `I_prod` 时还须有
+**谓词(按域的引用完整性:全称,不是存在)**:`RefIntegrity(R) := ∀ n ∈ names(Reg), resolves(n)`,逐项展开为——`π` 的非 `⊥` 名须解析到 `ProducerActor`,使用 `I_prod` 时还须有
 `resolve_R(π(x))∈A(R)`;`I_run` 的参数和值须在 `A(R)`;每个 `J_{D,K}` 的对象与判者须分别解析到 `D` 与 `K`;
 `C` 的工件引用须解析到 `A(R)`,仓外消费 actor 则须属于闭字母表 `ProgramActorWords`。逐名检查,不得对条目做存在量化。
 
@@ -360,17 +385,17 @@ harness 真正声称的东西是 `∀i. P(Rᵢ)`,`P` 是若干谓词的合取。
 
 | # | 律 | 现状 | 读数 |
 |---|---|---|---|
-| 0 | 公理 3 全量登记双射 | **已满足** | `FileMapPolicy.cs:520,548` 两向 fail-closed |
-| 0 | 公理 4 引用完整性逐名 | **已满足** | 同文件 #1116 注记;`.Any` 已改逐名 |
+| 0 | 谓词 `Registered` | **已满足** | `FileMapPolicy.cs:520,548` 两向 fail-closed |
+| 0 | 谓词 `RefIntegrity`(逐名) | **已满足** | 同文件 #1116 注记;`.Any` 已改逐名 |
 | 0 | 粒度律(定理 2.2) | **已满足** | TOWER 16 组件细在 harness;FILEMAP 63 pattern 覆盖 29,469 文件 |
 | 0 | 塔顶诚实标 open | **已满足** | `TOWER.yaml` bootstrap `judge: open` |
 | 0 | 增量须证明 disjoint | **fail-closed 形已满足;证书义务待核** | `ci.yml:91`,七种回落全量;成功派生的 `dep̂` 仍须证明跨步覆盖候选态实际读集 |
-| 1 | 公理 0 分型互逆律 | **无完整对侧可核** | FILEMAP 无 `I_run`;`consumed_by` 还含不在 `A(R)` 内的仓外 actor |
+| 1 | 谓词 `ConsumerConform` | **无完整对侧可核** | FILEMAP 无 `I_run`;`consumed_by` 还含不在 `A(R)` 内的仓外 actor |
 | 2 | FILEMAP / TOWER 所有权 | **对象域不同,非差距** | `verified_by` 35、`judged_by` 10、交集 1/35;该交集不证明双真源 |
 | 3 | TOWER `repository-files` 成员 | **advisory,不作为合并依据** | 10 个组件,38 行成员、31 条去重实路径;全部五种 kind 合计才是 82 行 |
 | 4 | GC 消费可达性 | **advisory,未采纳** | 18/63 使用合法 `ProgramActorWords`;当前值为非缺陷 |
 | 5 | 投影四项分类 + 成本政策 | **政策依据是成本,不是定理** | 重算只验第三项且不设门;producer 语义另判 |
-| 6 | 公理 2 信任定向 | **未满足** | `ci.yml:749` 候选自带判官;由 rc=3 脚手架承担,CLAUDE.md 自记为 bootstrap |
+| 6 | 准入签名 `H : base → δ → Verdict` | **未满足** | `ci.yml:749` 候选自带判官;由 rc=3 脚手架承担,CLAUDE.md 自记为 bootstrap |
 
 **撤回原先的「最高价值项」及合并处方。** 两表的天然对象域和消费者不同:
 
@@ -415,7 +440,7 @@ rule-catalog / ci-jobs / bootstrap 信任链;TOWER 也不能替代 FILEMAP 的�
 3. **补判者**:每个 `source` 必须按两端对象域点名 `J_{D,K}(x)`。无判者的 source 三选一——加判者、降为 projection、删。
 4. **核消费者域**:每条目点名 `C(x)`;工件引用与合法 `ProgramActorWords` 按各自对象域解析。
    只有另案采纳 GC 可达性时,才需要进一步区分 `deliverable` 与死工件。
-5. **算 τ**:仅由 `J_component` 求高度;查组件判定边无环(公理 1);查判者在 base 侧解析(公理 2)。
+5. **算 τ**:仅由 `J_component` 求高度;查组件判定边无环(谓词 `WellGoverned`);查判者在 base 侧解析(准入签名)。
    `V_path` 不参与 τ,且 τ 永不手写。
 6. **审门**:每个门查两态局部性,且 `dep̂` 必须持有覆盖
    全部判者域(含 `V_path`)之 `ActualReads_R ∪ ActualReads_{R⊕δ}` 的跨步可靠上近似证书。
@@ -454,10 +479,10 @@ hermetic 且 deterministic 的 judge 与 producer、可证明的依赖上近似�
 
 诚实分栏。以下为本轮**没有测**的,及其测法:
 
-- **(a) 公理 2 缺口的实际可利用性**`open`。本轮只读了 `ci.yml` 的步骤名与 CLAUDE.md 的记载,
+- **(a) 准入签名缺口的实际可利用性**`open`。本轮只读了 `ci.yml` 的步骤名与 CLAUDE.md 的记载,
   **未构造**「候选提交一个恒 admit 的判者」的实验。测法:在集成分支上把判者的 admit 路径变异为恒真,
   看三条 required check 是否仍全绿。**在做这个实验之前,不得声称本仓可被此路径攻破**——
-  当前只能说「公理 2 在文本上未被满足」。
+  当前只能说「准入实现在文本上与该签名不符」。
 - **(b) 无判者的 source 数量**`open`。需要先按修正后的投影前提分类 source,再从各定型关系 `J_{D,K}` 计算;
   本轮未作该全量分类。
 - **(c) 合并并发宽度 `w`**`open`。定理 5.2 的容差带尺寸依赖它。
@@ -522,7 +547,7 @@ hermetic 且 deterministic 的 judge 与 producer、可证明的依赖上近似�
 (增量可靠性 ← 定理 5.1 的跨步上近似证书;投影分类 ← 四项合取、不设投影门 ← CLAUDE.md 成本政策;
 变异证明 ← 定理 6.1/6.2;
 全量充分触发 ← 命题 5.3);
-② 区分 FILEMAP 与 TOWER 的对象域,并保留 §4 公理 4 的逐名量词检查,不再用词表交集诊断双真源;
+② 区分 FILEMAP 与 TOWER 的对象域,并保留 §4 谓词 `RefIntegrity` 的逐名量词检查,不再用词表交集诊断双真源;
 ③ 给出本仓已验的七步形状;跨仓推广只对满足 §8 前提的仓库成立为待验证条件命题。
 
 凡本文件与 spec / CLAUDE.md 冲突,以后二者为准;凡本文件的读数与实测冲突,以实测为准并勘正本文件。
