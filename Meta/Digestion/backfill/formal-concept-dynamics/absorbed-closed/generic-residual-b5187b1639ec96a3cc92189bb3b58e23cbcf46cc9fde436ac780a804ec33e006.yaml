@@ -1,0 +1,17 @@
+ast_path: 定理/260.1
+fingerprints:
+  raw_sha256: sha256:b5187b1639ec96a3cc92189bb3b58e23cbcf46cc9fde436ac780a804ec33e006
+  normalized_sha256: sha256:b5187b1639ec96a3cc92189bb3b58e23cbcf46cc9fde436ac780a804ec33e006
+cas_ref: sha256:b5187b1639ec96a3cc92189bb3b58e23cbcf46cc9fde436ac780a804ec33e006
+coverage_gids:
+  - D5/S3/ConceptDynamics/Answering/AnswerableTargetMonotonicity.answerable_target_monotone
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Answering/AnswerableTargetMonotonicity.answerable_target_monotone
+      source_sha256: sha256:b5187b1639ec96a3cc92189bb3b58e23cbcf46cc9fde436ac780a804ec33e006
+      target_sha256: sha256:86498d28d5ad45953e10650fffee17cea22f38cdd8c706fe7eed66a915b20cb2
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Answering/AnswerableTargetMonotonicity.answerable_target_monotone
+      definition_sha256: sha256:fb95e94cba0119c273b359c9b85535f7bd6b1fa2f3bdbf933ad7d6aa12e8a53a
+      emission_sha256: sha256:c09e9cdab2b60f8e487fa0f87fdcb5515cf4966cf6a1d04756316a336754fa08
+  unresolved_subitems: []
