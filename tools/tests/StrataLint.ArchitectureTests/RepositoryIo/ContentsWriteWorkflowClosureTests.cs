@@ -322,7 +322,7 @@ public sealed class ContentsWriteWorkflowClosureTests
         Assert.Contains("count=\"$(jq --arg name", content, StringComparison.Ordinal);
         Assert.Contains("(.assets | length) == ($expected | length)", content, StringComparison.Ordinal);
         Assert.Contains("([.assets[].name] | sort) == $expected", content, StringComparison.Ordinal);
-        Assert.Contains("protected dev moved before GitHub Release publication", content, StringComparison.Ordinal);
+        Assert.Contains("source commit is no longer an ancestor of protected dev before GitHub Release publication", content, StringComparison.Ordinal);
         Assert.Contains("verify_protected_dev_tip\n            if gh release create", content, StringComparison.Ordinal);
         Assert.DoesNotContain("verify_protected_dev_tip\n              gh release upload", content, StringComparison.Ordinal);
         Assert.Contains("assets=verified", content, StringComparison.Ordinal);
