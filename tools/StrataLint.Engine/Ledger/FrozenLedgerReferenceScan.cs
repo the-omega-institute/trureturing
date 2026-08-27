@@ -233,12 +233,25 @@ public static partial class FrozenLedger
                 throw new FormatException("Frozen event payload must be an object.");
             }
 
+            var trustedSchemaVersion = line.SourceDagSchemaVersion;
+            if (trustedSchemaVersion is not null)
+            {
+                FrozenLedgerBaseViewReader.ValidateTrustedPayload(
+                    eventType,
+                    trustedSchemaVersion.Value,
+                    payload);
+            }
+
             if (eventType == "Genesis")
             {
-                RequireObjectFields(
-                    payload,
-                    "Genesis payload",
-                    FrozenLedgerReferenceProjection.GenesisPayloadFields);
+                if (trustedSchemaVersion is null)
+                {
+                    RequireObjectFields(
+                        payload,
+                        "Genesis payload",
+                        FrozenLedgerReferenceProjection.GenesisPayloadFields);
+                }
+
                 AddOid(
                     blobs,
                     RequiredString(payload, FrozenLedgerReferenceProjection.GeneratorBlobOid),
@@ -252,19 +265,35 @@ public static partial class FrozenLedger
                     RequiredString(payload, FrozenLedgerReferenceProjection.OriginTreeOid),
                     "Genesis origin tree");
             }
-            else if (eventType == "Freeze")
+            else if (eventType is "Freeze" or "Reattest")
             {
-                RequireEventPayloadFields(payload, eventType);
-                var parsed = ParseInput(payload.GetProperty("input"));
+                FrozenLedgerInput parsed;
+                if (trustedSchemaVersion is null)
+                {
+                    RequireEventPayloadFields(payload, eventType);
+                    parsed = ParseInput(payload.GetProperty("input"));
+                }
+                else
+                {
+                    parsed = FrozenLedgerBaseViewReader.ReadTrustedAcceptedEventInput(
+                            eventType,
+                            payload)
+                        ?? throw new FormatException($"{eventType} payload is missing input fields.");
+                }
+
                 inputs.Add(parsed);
                 AddInputReferences(parsed, commits, trees, blobs);
             }
             else if (eventType == "Revoke")
             {
-                RequireObjectFields(
-                    payload,
-                    "Revoke payload",
-                    FrozenLedgerReferenceProjection.RevokePayloadFields);
+                if (trustedSchemaVersion is null)
+                {
+                    RequireObjectFields(
+                        payload,
+                        "Revoke payload",
+                        FrozenLedgerReferenceProjection.RevokePayloadFields);
+                }
+
                 var evidence = payload.GetProperty("evidence");
                 if (evidence.ValueKind != JsonValueKind.Array)
                 {

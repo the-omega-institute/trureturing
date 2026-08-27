@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using StrataLint.Cli;
 using StrataLint.Engine;
 using static StrataLint.Tests.FrozenLedgerTestData;
@@ -149,6 +150,103 @@ public sealed class FrozenTrustedHistoryDecoderTests
     }
 
     [Fact]
+    public void TrustedReferenceScanAcceptsFreezeV2AndV3PayloadShapes()
+    {
+        foreach (var historical in new[]
+        {
+            FreezeV2('1', TargetCase, TargetPath, 'a', 'b', []),
+            FreezeV3('2', TargetCase, TargetPath, 'a', 'b', []),
+        })
+        {
+            var accepted = Assert.IsType<FrozenLedgerReferenceScanOutcome.Accepted>(
+                ScanTrustedReferences(historical));
+
+            Assert.Equal(TargetPath, Assert.Single(accepted.References.Inputs).DescriptorSelector);
+        }
+    }
+
+    [Fact]
+    public void TrustedReferenceScanAcceptsHistoricalInputMaterializer()
+    {
+        var accepted = Assert.IsType<FrozenLedgerReferenceScanOutcome.Accepted>(
+            ScanTrustedReferences(
+                FreezeV4('1', TargetCase, TargetPath, 'a', 'b', historicalInput: true)));
+
+        Assert.Equal(TargetPath, Assert.Single(accepted.References.Inputs).DescriptorSelector);
+    }
+
+    [Fact]
+    public void TrustedReferenceScanConsumesLegacyFreezeProjectionFields()
+    {
+        var historical = FreezeV2('1', TargetCase, TargetPath, 'a', 'b', []);
+        Assert.IsType<FrozenLedgerReferenceScanOutcome.Accepted>(
+            ScanTrustedReferences(historical));
+        var mutations = new (string Field, Action<JsonObject> Apply)[]
+        {
+            ("case_class", payload => { payload["case_class"] = 7; }),
+            ("evaluation", payload => { payload["evaluation"] = 7; }),
+            ("allowed_dispositions", payload =>
+            {
+                payload["expected"]!.AsObject()["allowed_dispositions"] = "admit";
+            }),
+            ("diagnostic_match", payload =>
+            {
+                payload["expected"]!.AsObject()["diagnostic_match"] = new JsonArray();
+            }),
+            ("required_diagnostics", payload =>
+            {
+                payload["expected"]!.AsObject()["required_diagnostics"] = "none";
+            }),
+            ("input_fingerprint", payload => { payload["input_fingerprint"] = 7; }),
+            ("node_path", payload => { payload["node_path"] = 7; }),
+            ("semantic_receipt", payload => { payload["semantic_receipt"] = 7; }),
+            ("truth_state", payload => { payload["truth_state"] = 7; }),
+        };
+
+        foreach (var (field, mutate) in mutations)
+        {
+            var invalid = Assert.IsType<DagLedgerFilesLoadOutcome.Invalid>(
+                LoadTrusted(MutatePayload(historical, mutate)));
+            Assert.Contains(field, invalid.Message, StringComparison.Ordinal);
+        }
+    }
+
+    [Fact]
+    public void TrustedReferenceScanConsumesLegacyReattestPayloadFields()
+    {
+        foreach (var historical in new[]
+        {
+            ReattestV2Extended('2', '1', TargetCase, TargetPath, 'c', 'd', []),
+            ReattestV3Closure('3', '2', TargetCase, TargetPath, Hash('d')),
+        })
+        {
+            var accepted = Assert.IsType<FrozenLedgerReferenceScanOutcome.Accepted>(
+                ScanTrustedReferences(historical));
+            Assert.Equal(TargetPath, Assert.Single(accepted.References.Inputs).DescriptorSelector);
+
+            var invalid = Assert.IsType<DagLedgerFilesLoadOutcome.Invalid>(LoadTrusted(
+                MutatePayload(historical, payload =>
+                {
+                    payload["previous_attestation_event_hash"] = 7;
+                })));
+            Assert.Contains("previous_attestation_event_hash", invalid.Message, StringComparison.Ordinal);
+        }
+    }
+
+    [Fact]
+    public void CandidateLoaderStillRejectsLegacyAcceptedEventShapes()
+    {
+        var historicalSchema = Assert.IsType<DagLedgerFilesLoadOutcome.Invalid>(
+            LoadCandidate(FreezeV2('1', TargetCase, TargetPath, 'a', 'b', [])));
+        Assert.Contains("schema_version must be 4", historicalSchema.Message, StringComparison.Ordinal);
+
+        var historicalInput = Assert.IsType<DagLedgerFilesLoadOutcome.Invalid>(LoadCandidate(
+            CanonicalDagEvent(
+                FreezeV4('2', TargetCase, TargetPath, 'a', 'b', historicalInput: true))));
+        Assert.Contains("unknown, missing, or duplicate fields", historicalInput.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void EveryAcceptedHeadEventHasATrustedHistoryDecoder()
     {
         var root = TestRepositoryLayout.FindRoot();
@@ -201,6 +299,28 @@ public sealed class FrozenTrustedHistoryDecoderTests
             static item => item.Json,
             StringComparer.Ordinal)));
 
+    private static FrozenLedgerReferenceScanOutcome ScanTrustedReferences(EventFixture item)
+    {
+        var loaded = Assert.IsType<DagLedgerFilesLoadOutcome.Loaded>(LoadTrusted(item));
+        return FrozenLedger.ScanReferences(DagLedgerLoader.ToLinearSyntax(loaded.Events));
+    }
+
+    private static DagLedgerFilesLoadOutcome LoadTrusted(EventFixture item) =>
+        FrozenAcceptedEventLoader.LoadTrustedFiles(EventFiles(item));
+
+    private static DagLedgerFilesLoadOutcome LoadCandidate(EventFixture item) =>
+        FrozenAcceptedEventLoader.LoadFiles(EventFiles(item));
+
+    private static IEnumerable<RepositoryFile> EventFiles(EventFixture item)
+    {
+        using var document = JsonDocument.Parse(item.Json);
+        var eventHash = document.RootElement.GetProperty("event_hash").GetString()!;
+        return Snapshot(new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            [FrozenLedgerChangeClassifier.AcceptedPath(eventHash)] = item.Json,
+        }).Files.Values;
+    }
+
     private static RepositorySnapshot Snapshot(IReadOnlyDictionary<string, string> files) =>
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
             RawRepositorySnapshot.Create(files.Select(static pair =>
@@ -249,6 +369,45 @@ public sealed class FrozenTrustedHistoryDecoderTests
                 ["semantic_receipt"] = Hash(frozen),
                 ["statement_id"] = Hash(statement),
                 ["truth_state"] = "Closed",
+                ["witness_id"] = Hash(frozen),
+            });
+
+    private static EventFixture FreezeV3(
+        char eventHash,
+        string caseId,
+        string path,
+        char statement,
+        char frozen,
+        string[] prerequisites)
+    {
+        var v2 = FreezeV2(eventHash, caseId, path, statement, frozen, prerequisites);
+        var root = JsonNode.Parse(v2.Json)!.AsObject();
+        root["schema_version"] = 3;
+        root["payload"]!.AsObject()["axiom_closure"] = new JsonArray("Classical.choice", "propext");
+        return new EventFixture(eventHash, root.ToJsonString() + "\n");
+    }
+
+    private static EventFixture FreezeV4(
+        char eventHash,
+        string caseId,
+        string path,
+        char statement,
+        char frozen,
+        bool historicalInput) => Event(
+            eventHash,
+            "Freeze",
+            4,
+            new Dictionary<string, object?>(StringComparer.Ordinal)
+            {
+                ["axiom_closure"] = new[] { "Classical.choice", "propext" },
+                ["case_id"] = caseId,
+                ["declaration_statement_ids"] = Declarations(statement),
+                ["frozen_node_id"] = Hash(frozen),
+                ["input"] = historicalInput
+                    ? HistoricalInput(path, eventHash)
+                    : CurrentInput(path, eventHash),
+                ["prerequisite_frozen_node_ids"] = Array.Empty<string>(),
+                ["statement_id"] = Hash(statement),
                 ["witness_id"] = Hash(frozen),
             });
 
@@ -386,6 +545,26 @@ public sealed class FrozenTrustedHistoryDecoderTests
                 payload,
                 schema_version = schemaVersion,
             }) + "\n");
+
+    private static EventFixture MutatePayload(
+        EventFixture item,
+        Action<JsonObject> mutation)
+    {
+        var root = JsonNode.Parse(item.Json)!.AsObject();
+        mutation(root["payload"]!.AsObject());
+        return item with { Json = root.ToJsonString() + "\n" };
+    }
+
+    private static EventFixture CanonicalDagEvent(EventFixture item)
+    {
+        using var document = JsonDocument.Parse(item.Json);
+        var root = document.RootElement;
+        var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
+            root.GetProperty("event_type").GetString()!,
+            root.GetProperty("payload"),
+            root.GetProperty("schema_version").GetInt32());
+        return item with { Json = Encoding.UTF8.GetString(encoded.Bytes.AsSpan()) };
+    }
 
     private static string Hash(char digit) => $"sha256:{new string(digit, 64)}";
 

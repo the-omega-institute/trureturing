@@ -87,13 +87,11 @@ internal static class TruthExportCommand
             adjacency,
             baseView,
             identity);
-        var syntax = DagLedgerCommandPreparation.LoadLedgerFiles(
+        var syntax = DagLedgerCommandPreparation.LoadTrustedLedgerFiles(
             ledgerFiles,
             "frozen ledger");
-        var outcome = FrozenLedger.ValidateHistory(
-            syntax,
-            catalog,
-            TrustReferences(repository, syntax));
+        _ = TrustReferences(repository, syntax);
+        var outcome = FrozenLedger.ValidateTrustedHistory(baseView, catalog);
         return new StrictTruthHistoryPreparation(truth, states, baseView, outcome);
     }
 

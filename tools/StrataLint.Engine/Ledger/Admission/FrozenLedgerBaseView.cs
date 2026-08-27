@@ -373,7 +373,7 @@ internal static class FrozenLedgerBaseViewReader
             AxiomClosureKnown: axiomSource is not null);
     }
 
-    private static TrustedFrozenLedgerEvent ReadEvent(RepositoryFile file)
+    internal static TrustedFrozenLedgerEvent ReadEvent(RepositoryFile file)
     {
         using var document = JsonDocument.Parse(file.RawBytes.ToArray());
         var root = document.RootElement;
@@ -386,7 +386,7 @@ internal static class FrozenLedgerBaseViewReader
             throw new FormatException("trusted frozen ledger payload is not an object");
         }
 
-        DispatchTrustedPayload(eventType, schemaVersion, payload);
+        ValidateTrustedPayload(eventType, schemaVersion, payload);
         return new TrustedFrozenLedgerEvent(
             file.Path,
             eventType,
@@ -398,7 +398,7 @@ internal static class FrozenLedgerBaseViewReader
             root.Clone());
     }
 
-    private static void DispatchTrustedPayload(
+    internal static void ValidateTrustedPayload(
         string eventType,
         int schemaVersion,
         JsonElement payload)
@@ -656,6 +656,15 @@ internal static class FrozenLedgerBaseViewReader
             WitnessId.Create(FrozenLedgerAttestationChain.RequiredString(payload, "witness_id")),
             ReadOptionalAxiomClosure(payload));
     }
+
+    internal static FrozenLedgerInput? ReadTrustedAcceptedEventInput(
+        string eventType,
+        JsonElement payload) => eventType switch
+        {
+            "Genesis" or "Revoke" => null,
+            "Freeze" or "Reattest" => ReadInput(payload.GetProperty("input")),
+            _ => throw new FormatException($"Unknown trusted frozen event type {eventType}."),
+        };
 
     private static FrozenLedgerInput ReadInput(JsonElement value) => new(
         FrozenLedgerAttestationChain.RequiredString(value, "base_commit_oid"),

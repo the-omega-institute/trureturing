@@ -234,7 +234,10 @@ public static class DagLedgerLoader
             var line = new FrozenLedgerLineSyntax(
                 encoded.Bytes,
                 document.RootElement.Clone(),
-                item.EventHash);
+                item.EventHash)
+            {
+                SourceDagSchemaVersion = item.SchemaVersion,
+            };
             raw.AddRange(encoded.Bytes);
             lines.Add(line);
             previous = encoded.Hash;

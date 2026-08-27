@@ -52,6 +52,9 @@ public static class FrozenAcceptedEventLoader
             foreach (var file in files.OrderBy(static file => file.Path.Value, StringComparer.Ordinal))
             {
                 var bytes = file.RawBytes.AsSpan();
+                JsonElement value;
+                string identity;
+                string eventHash;
                 if (validationMode is ValidationMode.Candidate)
                 {
                     _ = StrictUtf8.GetString(bytes);
@@ -63,24 +66,25 @@ public static class FrozenAcceptedEventLoader
                         throw new FormatException(
                             "Content-addressed frozen event file must contain exactly one LF-terminated JSON object.");
                     }
-                }
 
-                var jsonBytes = validationMode is ValidationMode.Candidate ? bytes[..^1] : bytes;
-                using var document = JsonDocument.Parse(jsonBytes.ToArray());
-                var valid = validationMode is ValidationMode.Candidate
-                    ? FrozenLedgerCanonicalWriter.ValidateDagEvent(
-                        document.RootElement,
-                        out var identity,
-                        out var eventHash,
-                        out var validationMessage)
-                    : FrozenLedgerCanonicalWriter.ReadTrustedDagEvent(
+                    using var document = JsonDocument.Parse(bytes[..^1].ToArray());
+                    if (!FrozenLedgerCanonicalWriter.ValidateDagEvent(
                         document.RootElement,
                         out identity,
                         out eventHash,
-                        out validationMessage);
-                if (!valid)
+                        out var validationMessage))
+                    {
+                        throw new FormatException(validationMessage);
+                    }
+
+                    value = document.RootElement.Clone();
+                }
+                else
                 {
-                    throw new FormatException(validationMessage);
+                    var trusted = FrozenLedgerBaseViewReader.ReadEvent(file);
+                    identity = trusted.Identity;
+                    eventHash = trusted.EventHash;
+                    value = trusted.Root;
                 }
 
                 if (validationMode is ValidationMode.Candidate && !hashes.Add(eventHash))
@@ -104,13 +108,12 @@ public static class FrozenAcceptedEventLoader
                         "Content-addressed frozen event file name does not match event identity.");
                 }
 
-                var value = document.RootElement.Clone();
                 var eventType = value.GetProperty("event_type").GetString()!;
                 var payload = value.GetProperty("payload").Clone();
                 var schemaVersion = value.GetProperty("schema_version").GetInt32();
-                var input = FrozenLedger.ParseAcceptedEventInput(
-                    eventType,
-                    payload);
+                var input = validationMode is ValidationMode.Candidate
+                    ? FrozenLedger.ParseAcceptedEventInput(eventType, payload)
+                    : FrozenLedgerBaseViewReader.ReadTrustedAcceptedEventInput(eventType, payload);
 
                 events.Add(new DagLedgerFileEvent(
                     file.Path,

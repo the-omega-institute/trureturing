@@ -112,11 +112,6 @@ public static class TruthExportValidation
             }
 
             RequireStrictOrder(node.NodeAxiomClosure, "node axiom closure");
-            if (node.Declarations.IsEmpty)
-            {
-                throw new FormatException("Truth export node has no declarations.");
-            }
-
             TruthExportDeclaration? previousDeclaration = null;
             foreach (var declaration in node.Declarations)
             {

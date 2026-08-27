@@ -8,7 +8,10 @@ namespace StrataLint.Engine;
 public sealed record FrozenLedgerLineSyntax(
     ImmutableArray<byte> RawBytes,
     JsonElement Value,
-    string? SourceDagEventHash = null);
+    string? SourceDagEventHash = null)
+{
+    internal int? SourceDagSchemaVersion { get; init; }
+}
 
 public sealed record FrozenLedgerSyntax(
     ImmutableArray<byte> RawBytes,

@@ -27,7 +27,7 @@ public sealed class FrozenLedgerSchemaV4Tests
     }
 
     [Fact]
-    public void DagSchemaVersionIsPinnedByEventType()
+    public void CurrentDagWriterAndCandidateReaderPinSchemaVersionByEventType()
     {
         var payload = JsonSerializer.SerializeToElement(new { });
         var genesis = FrozenLedgerCanonicalWriter.WriteDagEvent("Genesis", payload);
@@ -40,12 +40,12 @@ public sealed class FrozenLedgerSchemaV4Tests
         Assert.Throws<ArgumentOutOfRangeException>(() =>
             FrozenLedgerCanonicalWriter.WriteDagEvent("Freeze", payload, 2));
 
-        AssertRejectedByBothReaders(WithSchemaVersion(genesis.Bytes, 4), "Genesis", 2);
-        AssertRejectedByBothReaders(WithSchemaVersion(freeze.Bytes, 2), "Freeze", 4);
+        AssertRejectedByCandidateReader(WithSchemaVersion(genesis.Bytes, 4), "Genesis", 2);
+        AssertRejectedByCandidateReader(WithSchemaVersion(freeze.Bytes, 2), "Freeze", 4);
     }
 
     [Fact]
-    public void DagReaderRejectsRetiredV1EnvelopeFields()
+    public void CurrentCandidateDagReaderRejectsRetiredV1EnvelopeFields()
     {
         var payload = JsonSerializer.SerializeToElement(new { });
         var freeze = FrozenLedgerCanonicalWriter.WriteDagEvent("Freeze", payload);
@@ -60,17 +60,11 @@ public sealed class FrozenLedgerSchemaV4Tests
             out _,
             out _,
             out var validationMessage));
-        Assert.False(FrozenLedgerCanonicalWriter.ReadTrustedDagEvent(
-            legacyEnvelope,
-            out _,
-            out _,
-            out var trustedMessage));
         Assert.Contains("unknown, missing, or duplicate fields", validationMessage, StringComparison.Ordinal);
-        Assert.Equal(validationMessage, trustedMessage);
     }
 
     [Fact]
-    public void FreezeInputRejectsRetiredMaterializerField()
+    public void CurrentCandidateFreezeInputRejectsHistoricalMaterializerField()
     {
         var catalog = BuildCatalog(Module("A"));
         var payload = FrozenLedgerCanonicalWriter.FreezeElement(
@@ -176,7 +170,7 @@ public sealed class FrozenLedgerSchemaV4Tests
         return JsonSerializer.SerializeToElement(root);
     }
 
-    private static void AssertRejectedByBothReaders(
+    private static void AssertRejectedByCandidateReader(
         JsonElement value,
         string eventType,
         int expectedVersion)
@@ -186,14 +180,8 @@ public sealed class FrozenLedgerSchemaV4Tests
             out _,
             out _,
             out var validationMessage));
-        Assert.False(FrozenLedgerCanonicalWriter.ReadTrustedDagEvent(
-            value,
-            out _,
-            out _,
-            out var trustedMessage));
         var expected = $"content-addressed {eventType} schema_version must be {expectedVersion}.";
         Assert.Equal(expected, validationMessage);
-        Assert.Equal(expected, trustedMessage);
     }
 
 }
