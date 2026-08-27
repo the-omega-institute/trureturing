@@ -1,0 +1,17 @@
+ast_path: 推论/94.1
+fingerprints:
+  raw_sha256: sha256:09ae85610d2f7409f2a560804f67e18eb1e38cc914510dfb459fd578472a2874
+  normalized_sha256: sha256:09ae85610d2f7409f2a560804f67e18eb1e38cc914510dfb459fd578472a2874
+cas_ref: sha256:09ae85610d2f7409f2a560804f67e18eb1e38cc914510dfb459fd578472a2874
+coverage_gids:
+  - D5/S3/ConceptDynamics/LinearSufficiency/BinaryRoleMinimumCardinality.binary_role_minimum_cardinality
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/LinearSufficiency/BinaryRoleMinimumCardinality.binary_role_minimum_cardinality
+      source_sha256: sha256:09ae85610d2f7409f2a560804f67e18eb1e38cc914510dfb459fd578472a2874
+      target_sha256: sha256:038446c21e3fe53873e65d4a8b8688daee4799c8dc140ec885e418909689acf6
+  scribe:
+    - gid: D5/S3/ConceptDynamics/LinearSufficiency/BinaryRoleMinimumCardinality.binary_role_minimum_cardinality
+      definition_sha256: sha256:c934acfe0b38a421d1a0c42a89ff24ea19bf77e0f29de996476d12162f4e9082
+      emission_sha256: sha256:62b858433199bd292152e73b48706848f3d6d553979d2bec53b48328be423cbd
+  unresolved_subitems: []
