@@ -87,6 +87,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
             printf 'dotnet:%s\n' "$command" >> "$PLAYBOOK_TEST_CALLS"
             read -r -a parts <<< "$command"
             case "${parts[0]:-}" in
+              freeze-status)
+                "$PLAYBOOK_REAL_DOTNET" "$PLAYBOOK_CLI_ASSEMBLY" "${parts[@]}"
+                ;;
               deposit-header-check)
                 if [[ ${parts[1]:-} != --target \
                     || ${parts[2]:-} != "${PLAYBOOK_TARGET_MODULE:-}" ]]; then
@@ -108,9 +111,12 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 else
                   event_id=3333333333333333333333333333333333333333333333333333333333333333
                 fi
-                printf '{"event_type": "Freeze", "payload": {"case_id": "active-frozen/%s", "frozen_node_id": "sha256:%s", "input": {"base_commit_oid": "%s", "descriptor_blob_oid": "%s", "descriptor_selector": "%s"}}, "schema_version": 4}\n' \
-                  "$event_id" "$event_id" "$base_commit_oid" "$descriptor_blob_oid" "$target_module" \
+                printf '{"event_hash":"sha256:%s","event_type":"Freeze","payload":{"axiom_closure":[],"case_id":"active-frozen/%s","declaration_statement_ids":[{"declaration_name_key":"probe","kind":"theorem","statement_id":"sha256:5555555555555555555555555555555555555555555555555555555555555555"}],"frozen_node_id":"sha256:%s","input":{"base_commit_oid":"%s","base_tree_oid":"%s","descriptor_blob_oid":"%s","descriptor_selector":"%s","supporting_blob_oids":[]},"prerequisite_frozen_node_ids":[],"statement_id":"sha256:5555555555555555555555555555555555555555555555555555555555555555","witness_id":"sha256:8888888888888888888888888888888888888888888888888888888888888888"},"schema_version":4}\n' \
+                  "$event_id" "$event_id" "$event_id" "$base_commit_oid" "$base_commit_oid" "$descriptor_blob_oid" "$target_module" \
                   > "Golden/Frozen/accepted/${event_id}.json"
+                if [[ ${PLAYBOOK_REMOVE_FROZEN_LEDGER_AFTER_APPEND:-0} == 1 ]]; then
+                  rm -rf -- Golden/Frozen/accepted
+                fi
                 if [[ -n ${PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE:-} ]]; then
                   printf '%s' "$PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE" \
                     > Meta/Digestion/formalizations/atom-1.v1.json
@@ -259,12 +265,15 @@ public sealed partial class DepositCoverWorkflowScriptTests
             string? mutateReceiptAfterPrepare = null,
             TimeSpan? timeout = null,
             string? baseRevision = null,
-            bool rejectDepositHeader = false) =>
+            bool rejectDepositHeader = false,
+            bool removeFrozenLedgerAfterAppend = false) =>
             TestProcessRunner.Run(
                 "/usr/bin/env",
                 [
                     $"PATH={binPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
                     $"PLAYBOOK_TEST_CALLS={callsPath}",
+                    $"PLAYBOOK_REAL_DOTNET={DotnetHostPath()}",
+                    $"PLAYBOOK_CLI_ASSEMBLY={typeof(StrataLint.Cli.Program).Assembly.Location}",
                     $"PLAYBOOK_TEST_FREEZE_PROBES={freezeProbePath}",
                     $"PLAYBOOK_STALE_REPORT={(staleReport ? "1" : "0")}",
                     $"PLAYBOOK_INVALID_RECEIPT={(invalidReceipt ? "1" : "0")}",
@@ -272,6 +281,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     $"PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE={mutateReceiptAfterPrepare ?? string.Empty}",
                     $"PLAYBOOK_TARGET_MODULE={(gid == SecondaryGid ? SecondaryLeanPath : gid == NewGid ? NewLeanPath : LeanPath)}",
                     $"PLAYBOOK_REJECT_DEPOSIT_HEADER={(rejectDepositHeader ? "1" : "0")}",
+                    $"PLAYBOOK_REMOVE_FROZEN_LEDGER_AFTER_APPEND={(removeFrozenLedgerAfterAppend ? "1" : "0")}",
                     "/bin/bash",
                     Path.Combine(Root, ScriptPath),
                     command,
@@ -282,6 +292,26 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 Root,
                 timeout ?? BoundedProcessRunner.HangDetectionBudget,
                 128 * 1024);
+
+        internal ProcessOutput RunFreezeStatus(string path) => TestProcessRunner.Run(
+            DotnetHostPath(),
+            [typeof(StrataLint.Cli.Program).Assembly.Location, "freeze-status", "--path", path],
+            Root,
+            TestBudgets.PlaybookProcessHangGuard,
+            128 * 1024);
+
+        private static string DotnetHostPath()
+        {
+            var executable = OperatingSystem.IsWindows() ? "dotnet.exe" : "dotnet";
+            foreach (var directory in (Environment.GetEnvironmentVariable("PATH") ?? string.Empty)
+                .Split(Path.PathSeparator, StringSplitOptions.RemoveEmptyEntries))
+            {
+                var candidate = Path.Combine(directory, executable);
+                if (File.Exists(candidate)) return candidate;
+            }
+
+            throw new InvalidOperationException("dotnet host is absent from PATH");
+        }
 
         public void Dispose()
         {

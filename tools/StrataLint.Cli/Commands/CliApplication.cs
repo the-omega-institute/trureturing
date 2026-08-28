@@ -27,6 +27,8 @@ internal interface ICliEnvironment
 
     ExplicitCommandResult FileMapConform(IReadOnlyList<string> arguments);
 
+    ExplicitCommandResult FreezeStatus(IReadOnlyList<string> arguments);
+
     ExplicitCommandResult DepositHeaderCheck(IReadOnlyList<string> arguments);
 
     CommandResult Ingest(IReadOnlyList<string> arguments);
@@ -105,6 +107,8 @@ internal static class CliApplication
                 RenderExplicit(environment.GateAuthority(tail), console),
             ["filemap-conform"] = static (environment, tail, console) =>
                 RenderExplicit(environment.FileMapConform(tail), console),
+            ["freeze-status"] = static (environment, tail, console) =>
+                RenderExplicit(environment.FreezeStatus(tail), console),
             ["ingest"] = static (environment, tail, console) =>
                 RenderCommand(environment.Ingest(tail), console),
             ["ledger-append"] = static (environment, tail, console) =>

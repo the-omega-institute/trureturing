@@ -1,5 +1,7 @@
+using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -25,11 +27,13 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Empty(fixture.Status());
         Assert.Equal(
             [
+                "dotnet:freeze-status",
                 "make:lean-report",
                 "dotnet:deposit-header-check",
                 "make:emit",
                 "dotnet:emit-formalization-receipt",
                 "dotnet:ledger-append",
+                "dotnet:freeze-status",
             ],
             fixture.CallKinds());
 
@@ -70,7 +74,11 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(1, fixture.FreezeCount());
         Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
         Assert.Equal(
-            ["dotnet:deposit-header-check", "dotnet:emit-formalization-receipt"],
+            [
+                "dotnet:freeze-status",
+                "dotnet:deposit-header-check",
+                "dotnet:emit-formalization-receipt",
+            ],
             fixture.CallKinds());
         Assert.True(File.Exists(fixture.ReceiptPath));
         Assert.Empty(fixture.Status());
@@ -95,7 +103,11 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(1, fixture.FreezeCount());
         Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
         Assert.Equal(
-            ["dotnet:deposit-header-check", "dotnet:emit-formalization-receipt"],
+            [
+                "dotnet:freeze-status",
+                "dotnet:deposit-header-check",
+                "dotnet:emit-formalization-receipt",
+            ],
             fixture.CallKinds());
         Assert.Empty(fixture.Status());
     }
@@ -159,7 +171,12 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.NotEqual(0, result.ExitCode);
         Assert.Contains("STALE_LEAN_REPORT", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
         Assert.Equal(
-            ["make:lean-report", "dotnet:deposit-header-check", "make:emit"],
+            [
+                "dotnet:freeze-status",
+                "make:lean-report",
+                "dotnet:deposit-header-check",
+                "make:emit",
+            ],
             fixture.CallKinds());
         Assert.Equal(0, fixture.FreezeCount());
     }
@@ -394,7 +411,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             WriteFile(DefinitionPath, "definition baseline\n");
             WriteFile(EmissionPath, "emission: baseline\n");
             Directory.CreateDirectory(Path.Combine(Root, LedgerPath));
-            File.WriteAllBytes(Path.Combine(binPath, "StrataLint.Cli.dll"), []);
+            WriteGenesis();
             WriteFile(BackfillPath, $"atom_id: {AtomId}\ncoverage: false\naligned: false\n");
             WriteMakeStub();
             WriteDotnetStub();
@@ -460,53 +477,16 @@ public sealed partial class DepositCoverWorkflowScriptTests
             const string frozenNodeId =
                 "sha256:1111111111111111111111111111111111111111111111111111111111111111";
             var descriptorBlobOid = "git-sha1:" + Git("hash-object", "--", LeanPath).Trim();
-            var freeze = JsonSerializer.Serialize(new
-            {
-                event_type = "Freeze",
-                payload = new
-                {
-                    case_id = caseId,
-                    frozen_node_id = frozenNodeId,
-                    input = new
-                    {
-                        descriptor_blob_oid = descriptorBlobOid,
-                        descriptor_selector = LeanPath,
-                    },
-                    node_path = LeanPath,
-                },
-            });
-            var revoke = JsonSerializer.Serialize(new
-            {
-                event_type = "Revoke",
-                payload = new
-                {
-                    affected_case_ids = new[] { caseId },
-                    affected_frozen_node_ids = new[] { frozenNodeId },
-                },
-            });
-            WriteLedger(freeze, revoke);
+            WriteLedger(
+                Freeze(caseId, frozenNodeId, descriptorBlobOid, LeanPath),
+                Revoke([caseId], [frozenNodeId]));
         }
 
-        internal void WriteActiveFreeze(string descriptorBlobOid)
-        {
-            var freeze = JsonSerializer.Serialize(new
-            {
-                event_type = "Freeze",
-                payload = new
-                {
-                    case_id = "active-frozen/stale-probe",
-                    frozen_node_id =
-                        "sha256:3333333333333333333333333333333333333333333333333333333333333333",
-                    input = new
-                    {
-                        descriptor_blob_oid = descriptorBlobOid,
-                        descriptor_selector = LeanPath,
-                    },
-                    node_path = LeanPath,
-                },
-            });
-            WriteLedger(freeze);
-        }
+        internal void WriteActiveFreeze(string descriptorBlobOid) => WriteLedger(Freeze(
+            "active-frozen/stale-probe",
+            FixtureHash('3'),
+            descriptorBlobOid,
+            LeanPath));
 
         internal void LeaveInterruptedTemporaryFiles(
             string receiptRelativePath = ReceiptRelativePath)
@@ -536,23 +516,117 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 return selector == leanPath;
             });
 
-        private void WriteLedger(params string[] events)
-        {
-            WriteLedger(events.Select(static (json, index) => ($"fixture-{index}.json", json)).ToArray());
-        }
-
-        private void WriteLedger(params (string FileName, string Json)[] events)
+        private void WriteLedger(params FrozenFixtureEvent[] events)
         {
             var directory = Path.Combine(Root, LedgerPath);
             foreach (var path in Directory.EnumerateFiles(directory, "*.json")) File.Delete(path);
-            foreach (var (fileName, json) in events)
+            WriteGenesis();
+            var hashes = new List<string>();
+            foreach (var item in events)
             {
-                File.WriteAllText(
-                    Path.Combine(directory, fileName),
-                    json + "\n",
-                    new UTF8Encoding(false));
+                var previous = item.PreviousIndex is int index ? hashes[index] : null;
+                var payload = item.EventType == "Revoke"
+                    ? RevokePayload(item)
+                    : AttestationPayload(item, previous);
+                var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(item.EventType, payload);
+                WriteEvent(encoded);
+                hashes.Add(encoded.Hash);
             }
         }
+
+        private void WriteGenesis()
+        {
+            WriteEvent(FrozenLedgerCanonicalWriter.WriteDagEvent(
+                "Genesis",
+                JsonSerializer.SerializeToElement(new
+                {
+                    generator_blob_oid = FixtureGitOid('1'),
+                    origin_commit_oid = FixtureGitOid('2'),
+                    origin_tree_oid = FixtureGitOid('3'),
+                    protocol_version = 1,
+                    rule_catalog_root = FixtureHash('4'),
+                })));
+        }
+
+        private void WriteEvent((ImmutableArray<byte> Bytes, string Hash) encoded) => WriteFile(
+            FrozenLedgerChangeClassifier.AcceptedPath(encoded.Hash),
+            Encoding.UTF8.GetString(encoded.Bytes.AsSpan()));
+
+        private static JsonElement AttestationPayload(
+            FrozenFixtureEvent item,
+            string? previous)
+        {
+            var statement = StatementId.Create(FixtureHash('5'));
+            var payload = new FrozenFreezePayload(
+                item.CaseId!,
+                ImmutableArray.Create(new FrozenDeclarationStatement(
+                    "probe",
+                    "theorem",
+                    statement)),
+                FrozenNodeId.Create(item.FrozenNodeId!),
+                new FrozenLedgerInput(
+                    FixtureGitOid('6'),
+                    FixtureGitOid('7'),
+                    item.DescriptorBlobOid!,
+                    item.DescriptorSelector!,
+                    ImmutableArray<string>.Empty),
+                ImmutableArray<FrozenNodeId>.Empty,
+                statement,
+                WitnessId.Create(FixtureHash('8')))
+            {
+                AxiomClosure = ImmutableArray<string>.Empty,
+            };
+            var element = FrozenLedgerCanonicalWriter.FreezeElement(payload);
+            if (previous is null) return element;
+            var reattest = JsonNode.Parse(element.GetRawText())!.AsObject();
+            reattest["previous_attestation_event_hash"] = previous;
+            return JsonSerializer.SerializeToElement(reattest);
+        }
+
+        private static JsonElement RevokePayload(FrozenFixtureEvent item) =>
+            FrozenLedgerCanonicalWriter.RevokeElement(new FrozenRevokePayload(
+                item.AffectedCaseIds!.ToImmutableArray(),
+                item.AffectedFrozenNodeIds!.Select(FrozenNodeId.Create).ToImmutableArray(),
+                FixtureHash('9'),
+                ImmutableArray<RevocationEvidence>.Empty,
+                FixtureHash('a'),
+                ImmutableArray<string>.Empty));
+
+        private static FrozenFixtureEvent Freeze(
+            string caseId,
+            string frozenNodeId,
+            string descriptorBlobOid,
+            string descriptorSelector) =>
+            new("Freeze", caseId, frozenNodeId, descriptorBlobOid, descriptorSelector);
+
+        private static FrozenFixtureEvent Reattest(
+            string caseId,
+            string frozenNodeId,
+            string descriptorBlobOid,
+            string descriptorSelector,
+            int previousIndex) =>
+            new("Reattest", caseId, frozenNodeId, descriptorBlobOid, descriptorSelector, previousIndex);
+
+        private static FrozenFixtureEvent Revoke(
+            string[] affectedCaseIds,
+            string[] affectedFrozenNodeIds) =>
+            new("Revoke", AffectedCaseIds: affectedCaseIds, AffectedFrozenNodeIds: affectedFrozenNodeIds);
+
+        private sealed record FrozenFixtureEvent(
+            string EventType,
+            string? CaseId = null,
+            string? FrozenNodeId = null,
+            string? DescriptorBlobOid = null,
+            string? DescriptorSelector = null,
+            int? PreviousIndex = null,
+            string[]? AffectedCaseIds = null,
+            string[]? AffectedFrozenNodeIds = null);
+
+        private static string FixtureHash(char digit) =>
+            $"sha256:{new string(digit, 64)}";
+
+        private static string FixtureGitOid(char digit) =>
+            $"git-sha1:{new string(digit, 40)}";
 
         internal string[] Status() => Git("status", "--porcelain=v1")
             .Split('\n', StringSplitOptions.RemoveEmptyEntries);

@@ -38,5 +38,8 @@ public sealed partial class MakeWorkflowTests
 
         Assert.Contains("ledger-append --candidate-lean-report", script, StringComparison.Ordinal);
         Assert.Contains("digest-status --base", script, StringComparison.Ordinal);
+        Assert.Contains("run_cli freeze-status --path \"$MODULE_PATH\"", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("replay_reattests", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("jq -rsc", script, StringComparison.Ordinal);
     }
 }

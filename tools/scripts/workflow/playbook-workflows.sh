@@ -176,204 +176,7 @@ commit_all_if_needed() {
 }
 
 freeze_exists() {
-  local active_state freeze_case_ids grep_output grep_status
-  local ledger_file target_case_id
-  local git_grep_arguments=() module_ledger_files=() related_ledger_files=()
-  local target_case_ids=()
-  if ! command -v jq >/dev/null 2>&1; then
-    echo "PLAYBOOK_INVALID jq is required to inspect $FROZEN_LEDGER" >&2
-    return 2
-  fi
-  if [[ ! -d "$FROZEN_LEDGER" ]]; then
-    echo "PLAYBOOK_INVALID frozen ledger is missing: $FROZEN_LEDGER" >&2
-    return 2
-  fi
-
-  if grep_output="$(git grep --untracked -l -F -e "$MODULE_PATH" \
-      -- "$FROZEN_LEDGER/*.json" 2>&1)"; then
-    while IFS= read -r ledger_file; do
-      [[ -z "$ledger_file" ]] || module_ledger_files+=("$ledger_file")
-    done <<< "$grep_output"
-  else
-    grep_status=$?
-    if [[ "$grep_status" -eq 1 ]]; then
-      return 1
-    fi
-    echo "PLAYBOOK_INVALID failed to locate target module ledger shards: $grep_output" >&2
-    return 2
-  fi
-
-  if ! freeze_case_ids="$(jq -rsc --arg node "$MODULE_PATH" '
-      map(select(.event_type == "Freeze" and .payload.input.descriptor_selector == $node))
-      | map(
-          (.payload.case_id // null) as $case
-          | if (($case | type) == "string") then
-              $case
-            else
-              error("Freeze is missing its case identity")
-            end)
-      | unique[]
-    ' "${module_ledger_files[@]}" 2>&1)"; then
-    echo "PLAYBOOK_INVALID failed to inspect target module ledger shards: $freeze_case_ids" >&2
-    return 2
-  fi
-  [[ -n "$freeze_case_ids" ]] || return 1
-
-  while IFS= read -r target_case_id; do
-    [[ -z "$target_case_id" ]] || target_case_ids+=("$target_case_id")
-  done <<< "$freeze_case_ids"
-  git_grep_arguments=(grep --untracked -l -F)
-  for target_case_id in "${target_case_ids[@]}"; do
-    git_grep_arguments+=(-e "$target_case_id")
-  done
-  git_grep_arguments+=(-- "$FROZEN_LEDGER/*.json")
-  if grep_output="$(git "${git_grep_arguments[@]}" 2>&1)"; then
-    while IFS= read -r ledger_file; do
-      [[ -z "$ledger_file" ]] || related_ledger_files+=("$ledger_file")
-    done <<< "$grep_output"
-  else
-    grep_status=$?
-    if [[ "$grep_status" -eq 1 ]]; then
-      echo "PLAYBOOK_INVALID target Freeze case has no ledger shards" >&2
-    else
-      echo "PLAYBOOK_INVALID failed to locate target case ledger shards: $grep_output" >&2
-    fi
-    return 2
-  fi
-
-  if ! active_state="$(jq -sc \
-      --arg node "$MODULE_PATH" \
-      --arg target_cases "$freeze_case_ids" '
-      ($target_cases | split("\n")) as $target_case_ids
-      | [.[]
-        | select(
-            if .event_type == "Freeze" then
-              (.payload.case_id // null) as $case
-              | (($case | type) == "string"
-                  and (($target_case_ids | index($case)) != null))
-            elif .event_type == "Reattest" then
-              (.payload.case_id // null) as $case
-              | (($case | type) == "string"
-                  and (($target_case_ids | index($case)) != null))
-            elif .event_type == "Revoke" then
-              (.payload.affected_case_ids // null) as $cases
-              | if (($cases | type) != "array") then
-                  error("Revoke is missing affected active identities")
-                else
-                  any($cases[];
-                    . as $case | (($target_case_ids | index($case)) != null))
-                end
-            else
-              false
-            end)] as $events
-      | def replay_reattests($pending):
-          if ($pending | length) == 0 then
-            .
-          else
-            . as $active
-            | [$pending[]
-              | select(
-                  (.payload.case_id // null) as $case
-                  | (.payload.previous_attestation_event_hash // null) as $previous
-                  | (($case | type) == "string"
-                      and ($previous | type) == "string"
-                      and ($active | has($case))
-                      and $active[$case].attestation_event_hash == $previous))] as $ready
-            | if ($ready | length) == 0 then
-                error("Reattest chain has no active predecessor")
-              else
-                reduce $ready[] as $event (.;
-                  ($event.payload.case_id // null) as $case
-                  | ($event.payload.frozen_node_id // null) as $frozen_id
-                  | ($event.payload.previous_attestation_event_hash // null) as $previous
-                  | ($event.payload.input.descriptor_selector // null) as $path
-                  | ($event.payload.input.descriptor_blob_oid // null) as $blob
-                  | ($event.event_hash // null) as $event_hash
-                  | if (($case | type) != "string"
-                      or (($frozen_id | type) != "null"
-                        and ($frozen_id | type) != "string")
-                      or ($previous | type) != "string"
-                      or ($path | type) != "string"
-                      or ($blob | type) != "string"
-                      or ($event_hash | type) != "string") then
-                      error("Reattest is missing replay identity fields")
-                    elif (has($case) | not) then
-                      error("Reattest targets an inactive case")
-                    elif .[$case].attestation_event_hash != $previous then
-                      error("Reattest branches from a stale attestation")
-                    elif .[$case].node_path != $path then
-                      error("Reattest changes the active module path")
-                    else
-                      .[$case].frozen_node_id as $current_id
-                      | .[$case] = {
-                          frozen_node_id: ($frozen_id // $current_id),
-                          node_path: $path,
-                          descriptor_blob_oid: $blob,
-                          attestation_event_hash: $event_hash
-                        }
-                    end)
-                | replay_reattests($pending - $ready)
-              end
-          end;
-      ($events | map(select(.event_type == "Freeze"))) as $freezes
-      | ($events | map(select(.event_type == "Reattest"))) as $reattests
-      | ($events | map(select(.event_type == "Revoke"))) as $revokes
-      | reduce $freezes[] as $event ({};
-          ($event.payload.case_id // null) as $case
-          | ($event.payload.frozen_node_id // null) as $frozen_id
-          | ($event.payload.input.descriptor_selector // null) as $path
-          | ($event.payload.input.descriptor_blob_oid // null) as $blob
-          | ($event.event_hash // null) as $event_hash
-          | if (($case | type) != "string"
-              or ($frozen_id | type) != "string"
-              or ($path | type) != "string"
-              or ($blob | type) != "string"
-              or (($event_hash | type) != "null"
-                and ($event_hash | type) != "string")) then
-              error("Freeze is missing replay identity fields")
-            elif has($case) then
-              error("Freeze reuses an active case")
-            else
-              .[$case] = {
-                frozen_node_id: $frozen_id,
-                node_path: $path,
-                descriptor_blob_oid: $blob,
-                attestation_event_hash: $event_hash
-              }
-            end)
-      | replay_reattests($reattests)
-      | reduce $revokes[] as $event (.;
-          ($event.payload.affected_case_ids // null) as $cases
-          | ($event.payload.affected_frozen_node_ids // null) as $frozen_ids
-          | if (($cases | type) != "array" or ($frozen_ids | type) != "array") then
-              error("Revoke is missing affected active identities")
-            else
-              reduce ($cases[]
-                | . as $case
-                | select(($target_case_ids | index($case)) != null)) as $case (.;
-                if (has($case) | not) then
-                  error("Revoke targets an inactive frozen case")
-                elif (.[$case].frozen_node_id as $id
-                    | ($frozen_ids | index($id)) == null) then
-                  error("Revoke targets a stale frozen node identity")
-                else
-                  del(.[$case])
-                end)
-            end)
-      | any(.[]; .node_path == $node)
-    ' "${related_ledger_files[@]}" 2>&1)"; then
-    echo "PLAYBOOK_INVALID failed to replay target module frozen ledger shards: $active_state" >&2
-    return 2
-  fi
-
-  case "$active_state" in
-    true) return 0 ;;
-    false) return 1 ;;
-    *)
-      echo "PLAYBOOK_INVALID frozen ledger replay returned an invalid state: $active_state" >&2
-      return 2
-      ;;
-  esac
+  run_cli freeze-status --path "$MODULE_PATH"
 }
 
 freeze_module_if_needed() {
@@ -386,10 +189,16 @@ freeze_module_if_needed() {
 
   step "ledger-append $MODULE_PATH" run_cli \
     ledger-append --candidate-lean-report "$REPORT"
-  if ! freeze_exists; then
+  if freeze_exists; then
+    return
+  else
+    status=$?
+  fi
+  if [[ "$status" -eq 1 ]]; then
     echo "PLAYBOOK_INVALID ledger append did not freeze target module: $MODULE_PATH" >&2
     return 1
   fi
+  return "$status"
 }
 
 verify_added_frozen_event_ancestor() {

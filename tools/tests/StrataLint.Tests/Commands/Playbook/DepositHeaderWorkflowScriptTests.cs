@@ -88,7 +88,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(ledgerBefore, fixture.LedgerState());
         Assert.Empty(fixture.ReceiptArtifacts());
         Assert.Equal(
-            ["dotnet:deposit-header-check"],
+            ["dotnet:freeze-status", "dotnet:deposit-header-check"],
             fixture.CallKinds());
         Assert.DoesNotContain("make:emit", fixture.CallKinds());
         Assert.DoesNotContain("dotnet:emit-formalization-receipt", fixture.CallKinds());
