@@ -1,0 +1,5 @@
+## v1.5 — 2026-08-28
+
+追加存入：
+
+- 七个既有保护坐标的有限标签 `ProtectedCoordinateTag`、依值类型 `ProtectedCoordinateValue` 与唯一投影 `protectedCoordinateAt`；

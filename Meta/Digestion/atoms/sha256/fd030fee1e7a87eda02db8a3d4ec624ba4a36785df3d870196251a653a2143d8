@@ -1,0 +1,9 @@
+**证明义务 57.3-A（严格扩域产生新域差见证，预期为定理）。** 对任意 `S J J'` 证明
+
+```lean
+SemanticStrictSubset S J J' →
+  ∃ z, SemanticNewOnly S z J J'
+```
+
+该命题由严格扩域的第二分量得到，不要求域类型或证据类型有限、非空或可判等。
+
