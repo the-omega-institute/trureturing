@@ -55,6 +55,7 @@ public static class FrozenAcceptedEventLoader
                 JsonElement value;
                 string identity;
                 string eventHash;
+                FrozenFreezePayload? freezePayload = null;
                 if (validationMode is ValidationMode.Candidate)
                 {
                     _ = StrictUtf8.GetString(bytes);
@@ -85,6 +86,7 @@ public static class FrozenAcceptedEventLoader
                     identity = trusted.Identity;
                     eventHash = trusted.EventHash;
                     value = trusted.Root;
+                    freezePayload = trusted.FreezePayload;
                 }
 
                 if (validationMode is ValidationMode.Candidate && !hashes.Add(eventHash))
@@ -111,14 +113,10 @@ public static class FrozenAcceptedEventLoader
                 var eventType = value.GetProperty("event_type").GetString()!;
                 var payload = value.GetProperty("payload").Clone();
                 var schemaVersion = value.GetProperty("schema_version").GetInt32();
-                var descriptorPath = FrozenLedger.ParseAcceptedEventDescriptorPath(eventType, payload);
-                var statement = StatementId.Create(
-                    FrozenLedgerAttestationChain.RequiredString(payload, "statement_id"));
-                var prerequisites = FrozenLedgerAttestationChain.RequiredStringArray(
-                        payload,
-                        "prerequisite_frozen_node_ids")
-                    .Select(FrozenNodeId.Create)
-                    .ToImmutableArray();
+                freezePayload ??= FrozenLedgerBaseViewReader.DecodeFreezePayload(
+                    payload,
+                    schemaVersion);
+                var descriptorPath = RepoPath.CreateKnown(freezePayload.DescriptorSelector);
 
                 events.Add(new DagLedgerFileEvent(
                     file.Path,
@@ -130,8 +128,8 @@ public static class FrozenAcceptedEventLoader
                     descriptorPath,
                     FrozenContentAddress.ComputeFrozenNodeId(
                         descriptorPath,
-                        statement,
-                        prerequisites)));
+                        freezePayload.StatementId,
+                        freezePayload.PrerequisiteFrozenNodeIds)));
             }
 
             return new DagLedgerFilesLoadOutcome.Loaded(events.ToImmutable());

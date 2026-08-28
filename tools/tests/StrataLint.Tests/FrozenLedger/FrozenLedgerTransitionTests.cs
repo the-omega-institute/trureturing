@@ -10,12 +10,14 @@ namespace StrataLint.Tests;
 public sealed partial class FrozenLedgerTests
 {
     [Fact]
-    public void HistoricalV4FreezeWithMatchingStatementIdentityIsAccepted()
+    public void HistoricalV4FreezeLoadedThroughAcceptedEventLoaderWithMatchingStatementIdentityIsAccepted()
     {
         var catalog = BuildCatalog(Module("A"));
 
         var accepted = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateHistory(LegacyEventFiles(catalog, schemaVersion: 4), catalog));
+            ValidateHistoryAfterTrustedAcceptedEventLoad(
+                LegacyEventFiles(catalog, schemaVersion: 4),
+                catalog));
 
         Assert.Single(accepted.Capability.ActiveFrozenNodes);
     }
@@ -23,18 +25,20 @@ public sealed partial class FrozenLedgerTests
     [Theory]
     [InlineData(2)]
     [InlineData(3)]
-    public void HistoricalV2AndV3FreezesWithCompleteCoordinatesAreAccepted(int schemaVersion)
+    public void HistoricalV2AndV3FreezesLoadedThroughAcceptedEventLoaderAreAccepted(int schemaVersion)
     {
         var catalog = BuildCatalog(Module("A"));
 
         var accepted = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateHistory(LegacyEventFiles(catalog, schemaVersion), catalog));
+            ValidateHistoryAfterTrustedAcceptedEventLoad(
+                LegacyEventFiles(catalog, schemaVersion),
+                catalog));
 
         Assert.Single(accepted.Capability.ActiveFrozenNodes);
     }
 
     [Fact]
-    public void HistoricalV4FreezeWithChangedStatementIdentityReportsStatementIdentityChanged()
+    public void HistoricalV4FreezeLoadedThroughAcceptedEventLoaderWithChangedStatementReportsStatementIdentityChanged()
     {
         var recordedCatalog = BuildCatalog(Module("A"));
         var recordedMaterial = Assert.Single(recordedCatalog.ClosedNodes);
@@ -46,14 +50,16 @@ public sealed partial class FrozenLedgerTests
             });
 
         var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
-            ValidateHistory(LegacyEventFiles(recordedCatalog, schemaVersion: 4), currentCatalog));
+            ValidateHistoryAfterTrustedAcceptedEventLoad(
+                LegacyEventFiles(recordedCatalog, schemaVersion: 4),
+                currentCatalog));
 
         Assert.Contains(PathFor("A"), rejected.Message, StringComparison.Ordinal);
         Assert.Contains("statement identity changed", rejected.Message, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void HistoricalV4FreezeWithChangedDeclarationIdentityReportsStatementIdentityChanged()
+    public void HistoricalV4FreezeLoadedThroughAcceptedEventLoaderWithChangedDeclarationReportsStatementIdentityChanged()
     {
         var recordedCatalog = BuildCatalog(Module("A"));
         var recordedMaterial = Assert.Single(recordedCatalog.ClosedNodes);
@@ -70,7 +76,9 @@ public sealed partial class FrozenLedgerTests
             });
 
         var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
-            ValidateHistory(LegacyEventFiles(recordedCatalog, schemaVersion: 4), currentCatalog));
+            ValidateHistoryAfterTrustedAcceptedEventLoad(
+                LegacyEventFiles(recordedCatalog, schemaVersion: 4),
+                currentCatalog));
 
         Assert.Contains(PathFor("A"), rejected.Message, StringComparison.Ordinal);
         Assert.Contains("statement identity changed", rejected.Message, StringComparison.Ordinal);
@@ -91,6 +99,41 @@ public sealed partial class FrozenLedgerTests
             $"trusted Reattest schema_version {schemaVersion} cannot construct a v5 base view",
             exception.Message,
             StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void TrustedAcceptedEventLoaderLoadsEveryAcceptedEventInMixedRepositoryLedger()
+    {
+        var repositoryRoot = TestRepositoryLayout.FindRoot();
+        var acceptedDirectory = Path.Combine(
+            repositoryRoot,
+            FrozenLedgerChangeClassifier.AcceptedRoot.Replace('/', Path.DirectorySeparatorChar));
+        var files = Directory.EnumerateFiles(
+                acceptedDirectory,
+                "*.json",
+                SearchOption.TopDirectoryOnly)
+            .Order(StringComparer.Ordinal)
+            .Select(path =>
+            {
+                var bytes = File.ReadAllBytes(path);
+                var relativePath = Path.GetRelativePath(repositoryRoot, path)
+                    .Replace(Path.DirectorySeparatorChar, '/');
+                return new RepositoryFile(
+                    RepoPath.CreateKnown(relativePath),
+                    ImmutableArray.CreateRange(bytes),
+                    Encoding.UTF8.GetString(bytes));
+            })
+            .ToImmutableArray();
+
+        var loaded = Assert.IsType<DagLedgerFilesLoadOutcome.Loaded>(
+            FrozenAcceptedEventLoader.LoadTrustedFiles(files));
+
+        Assert.Equal(files.Length, loaded.Events.Length);
+        Assert.Contains(loaded.Events, static item => item.SchemaVersion == 4);
+        Assert.Contains(loaded.Events, static item =>
+            item.SchemaVersion == FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion);
+        Assert.All(loaded.Events, static item =>
+            Assert.True(item.SchemaVersion is 4 or FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion));
     }
 
     [Fact]
@@ -176,6 +219,15 @@ public sealed partial class FrozenLedgerTests
             catalog.OpenCases,
             catalog.TailRegistrations,
             catalog.Adjacency);
+
+    private static FrozenLedgerValidationOutcome ValidateHistoryAfterTrustedAcceptedEventLoad(
+        ImmutableArray<RepositoryFile> files,
+        FrozenMaterialCatalog catalog)
+    {
+        _ = Assert.IsType<DagLedgerFilesLoadOutcome.Loaded>(
+            FrozenAcceptedEventLoader.LoadTrustedFiles(files));
+        return ValidateHistory(files, catalog);
+    }
 
     private static ImmutableArray<RepositoryFile> LegacyEventFiles(
         FrozenMaterialCatalog catalog,

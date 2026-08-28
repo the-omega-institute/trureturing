@@ -11,6 +11,7 @@ internal sealed record TrustedFrozenLedgerEvent(
     string Identity,
     JsonElement Payload,
     int SchemaVersion,
+    FrozenFreezePayload FreezePayload,
     ImmutableArray<byte> RawBytes = default,
     JsonElement Root = default);
 
@@ -170,7 +171,7 @@ internal static class FrozenLedgerBaseViewReader
             throw new FormatException("trusted frozen ledger payload is not an object");
         }
 
-        ValidateTrustedPayload(eventType, schemaVersion, payload);
+        var freezePayload = ValidateTrustedPayload(eventType, schemaVersion, payload);
         if (!FrozenHashSyntax.IsSha256(eventHash))
         {
             throw new FormatException("trusted frozen ledger event_hash is malformed");
@@ -183,11 +184,12 @@ internal static class FrozenLedgerBaseViewReader
             FrozenLedgerCanonicalWriter.EventIdentity(eventHash),
             payload.Clone(),
             schemaVersion,
+            freezePayload,
             file.RawBytes,
             root.Clone());
     }
 
-    internal static void ValidateTrustedPayload(
+    internal static FrozenFreezePayload ValidateTrustedPayload(
         string eventType,
         int schemaVersion,
         JsonElement payload)
@@ -224,47 +226,57 @@ internal static class FrozenLedgerBaseViewReader
                     $"trusted history has no decoder for {eventType} schema_version {schemaVersion}");
         }
 
-        _ = ReadDescriptorPath(payload, schemaVersion);
-        _ = ReadDeclarations(payload.GetProperty("declaration_statement_ids"));
-        var statement = FrozenLedgerAttestationChain.RequiredString(payload, "statement_id");
-        if (!FrozenHashSyntax.IsSha256(statement))
+        return DecodeFreezePayload(payload, schemaVersion);
+    }
+
+    internal static FrozenFreezePayload DecodeFreezePayload(
+        JsonElement payload,
+        int schemaVersion)
+    {
+        var path = ReadDescriptorPath(payload, schemaVersion);
+        var declarations = ReadDeclarations(payload.GetProperty("declaration_statement_ids"));
+        var statementValue = FrozenLedgerAttestationChain.RequiredString(payload, "statement_id");
+        if (!FrozenHashSyntax.IsSha256(statementValue))
         {
             throw new FormatException("trusted Freeze statement_id is malformed");
         }
 
-        foreach (var prerequisite in FrozenLedgerAttestationChain.RequiredStringArray(
+        var prerequisiteValues = FrozenLedgerAttestationChain.RequiredStringArray(
             payload,
-            "prerequisite_frozen_node_ids"))
+            "prerequisite_frozen_node_ids");
+        foreach (var prerequisite in prerequisiteValues)
         {
             if (!FrozenHashSyntax.IsSha256(prerequisite))
             {
                 throw new FormatException("trusted Freeze prerequisite identity is malformed");
             }
         }
+
+        return new FrozenFreezePayload(
+            path.Value,
+            declarations,
+            prerequisiteValues.Select(FrozenNodeId.Create).ToImmutableArray(),
+            StatementId.Create(statementValue));
     }
 
     internal static FrozenActiveEntry ReadFreeze(TrustedFrozenLedgerEvent item)
     {
-        var path = ReadDescriptorPath(item.Payload, item.SchemaVersion);
-        var declarations = ReadDeclarations(item.Payload.GetProperty("declaration_statement_ids"));
-        var statement = StatementId.Create(
-            FrozenLedgerAttestationChain.RequiredString(item.Payload, "statement_id"));
-        var prerequisites = FrozenLedgerAttestationChain.RequiredStringArray(
-                item.Payload,
-                "prerequisite_frozen_node_ids")
-            .Select(FrozenNodeId.Create)
-            .ToImmutableArray();
-        var frozenNodeId = FrozenContentAddress.ComputeFrozenNodeId(path, statement, prerequisites);
+        var freeze = item.FreezePayload;
+        var path = RepoPath.CreateKnown(freeze.DescriptorSelector);
+        var frozenNodeId = FrozenContentAddress.ComputeFrozenNodeId(
+            path,
+            freeze.StatementId,
+            freeze.PrerequisiteFrozenNodeIds);
         var material = new FrozenNodeMaterial(
             path,
-            declarations,
-            statement,
+            freeze.DeclarationStatementIds,
+            freeze.StatementId,
             frozenNodeId,
-            prerequisites,
+            freeze.PrerequisiteFrozenNodeIds,
             ImmutableArray<string>.Empty);
         return new FrozenActiveEntry(
             material,
-            new FrozenFreezePayload(path.Value, declarations, prerequisites, statement),
+            freeze,
             item.EventHash);
     }
 
