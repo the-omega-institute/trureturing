@@ -1,0 +1,17 @@
+ast_path: 定理/6.1
+fingerprints:
+  raw_sha256: sha256:83533456e79d898c00a5b7536946728aff8102d2cb712bdf400e07f3f1a8329f
+  normalized_sha256: sha256:83533456e79d898c00a5b7536946728aff8102d2cb712bdf400e07f3f1a8329f
+cas_ref: sha256:83533456e79d898c00a5b7536946728aff8102d2cb712bdf400e07f3f1a8329f
+coverage_gids:
+  - D5/S3/ObserverMemory/RefinementClosure/BehaviorCompletionReflection.behavior_completion_reflection
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/RefinementClosure/BehaviorCompletionReflection.behavior_completion_reflection
+      source_sha256: sha256:83533456e79d898c00a5b7536946728aff8102d2cb712bdf400e07f3f1a8329f
+      target_statement_id: sha256:8f6ac09b7f87cb9fa45b8a877e953439f01238fd7abc1b9beba0b7bfe2a87aaf
+  scribe:
+    - gid: D5/S3/ObserverMemory/RefinementClosure/BehaviorCompletionReflection.behavior_completion_reflection
+      definition_sha256: sha256:ac9d43c9eac46f497ba6a9bbe3247af99084df3c55c0c8567768a022ae10bed5
+      emission_sha256: sha256:f6064fd2ffa5562a4c324f29c2cb577a32b0f326d12067a74d7efe1cb8b75ced
+  unresolved_subitems: []

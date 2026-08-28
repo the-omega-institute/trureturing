@@ -1,0 +1,17 @@
+ast_path: 定理/1.1
+fingerprints:
+  raw_sha256: sha256:3e0cd8a38c40cde650d57dc9f5acb0b8207e6ef227f2bab7ff6da05c5624589d
+  normalized_sha256: sha256:3e0cd8a38c40cde650d57dc9f5acb0b8207e6ef227f2bab7ff6da05c5624589d
+cas_ref: sha256:3e0cd8a38c40cde650d57dc9f5acb0b8207e6ef227f2bab7ff6da05c5624589d
+coverage_gids:
+  - D5/S3/ObserverMemory/Refinement/EffectiveImageKernelCriterion.refinement_iff_kernel_inclusion_on_effective_images
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/Refinement/EffectiveImageKernelCriterion.refinement_iff_kernel_inclusion_on_effective_images
+      source_sha256: sha256:3e0cd8a38c40cde650d57dc9f5acb0b8207e6ef227f2bab7ff6da05c5624589d
+      target_statement_id: sha256:193d220cc6a5d27164608f594fb595513c2d11228a0cd00502a9141b88531525
+  scribe:
+    - gid: D5/S3/ObserverMemory/Refinement/EffectiveImageKernelCriterion.refinement_iff_kernel_inclusion_on_effective_images
+      definition_sha256: sha256:e9360e5d03109c0bfad8651c982e1a4557894635587ed95e04e2af30fa4d1774
+      emission_sha256: sha256:d80c1bceb326f03abc88f64c2e437ccc10fafd53892a074096897410bc71a965
+  unresolved_subitems: []
