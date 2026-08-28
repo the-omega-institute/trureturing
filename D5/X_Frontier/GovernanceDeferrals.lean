@@ -338,3 +338,53 @@ def goldenUnitsPrincipalIdealDelivery : Unit := ()
     它提高验收门槛,不改写该单的建议〕。
     依据:issue #3157;实施 codex-cli 三轮,评审每轮 arch/tests = codex-cli、quality = nyxid-oracle;
     停止判据写于第三轮结果返回之前(`g2-stopping-rule-r3.md`)。 -/
+
+/- TASK D5-T0058
+    **忠实性零机器兜底所生的一整类账目缺陷,及其两个尚不存在的动词。**
+    〔本条合并 issue #2647 与 #3066 两个立类单;其实例侧登记在 #3774(六个实例)。〕
+
+    **根因(一句)**:`make cover` 判的是 scribe 缺失与 GID 存在性,**不判忠实性**。
+    一个只覆盖 CAS 一半的承载与一个完整覆盖的承载,在 cover 眼里没有区别;
+    写「不 claim」无奖励,写「claim」无惩罚。故账面可以高估,而无任何机器会红。
+
+    **两个缺失的动词**(它们是同一堵墙的两面,不是两件事):
+    ① **退回**(#2647):一次已被吸收的覆盖事后被证明过强时,没有 canonical writer
+       能把 atom 从 `absorbed-closed` 退回 open/partial,也不能写入具名
+       `receipts.unresolved_subitems`。逐条读码已确认:`cover-atom` 只追加;
+       `align-scribe-receipt` 只替换 scribe 收据;`ingest` 只继承已有未决值、
+       建 clause chain 时反而清空;`BackfillInventoryWriter.WriteAtom` 只是字节序列化器。
+       隔离区路径亦被 `BackfillInventoryLoader.Quarantine` 对「已有匹配 formalization
+       receipt 的原子」无条件抛出所堵死。手工改 YAML 会使 `localComplete=false`
+       而路径仍在 `absorbed-closed/`,`DigestionStatusEvaluator` 随即产生
+       projected-vs-derived 不一致并被 `BackfillInventoryRule` 升为 blocking SL-016。
+    ② **部分登记**(#3066):多子句 atom 只有部分子句可忠实形式化时没有中间态。
+       实施席把该子句移出打包定理并在信封/模块注释里声明「CAS 缺口」,
+       **在机器层面等于什么都没做** —— atom 仍是 `coverage_gids=[]` 与
+       `unresolved_subitems=[]`,`make show-atom` 报 `self-without-receipt`。
+       `DigestionIngestor` **只能继承未解决项,无法派生**。
+
+    **为什么本条不要求建一个自动忠实性检测器**:#2647 上三席并发盲评一致认为
+    该谓词即「一条 Lean 定理是否忠实覆盖某自然语言 atom 的全部主张」,
+    在当前表示层**没有可判模型**;三种代理(atomization 分割 / coverage 关系 /
+    receipt 信封)各自都已有实测反例,继续建 detector 即以 proxy 冒充 truth。
+    故本条分类为 `godel` —— **形式不可判,非「等人裁决」**(不可判对任何 judge 等价)。
+
+    **在此之前的合法处置,只有一条**:已知实例只接受 τ=0 或评审 attestation 驱动的
+    **typed correction**;已冻结者不得就地改(SL-008 判红),唯一出路是新增模块写勘误
+    (#3774 的实例 1 已按此走通:新模块承载存在性 + π,两族认证,三次独立复算类型哈希一致)。
+
+    **关闭条件(二选一,不得以「已记录」代替)**:
+    ① 出现一个**可机械核验的 claim partition 表示层** ——
+       把「原子的每条主张」变成可比较的 typed claim 而非自然语言;或
+    ② τ=0 owner 把这条不可判边界定为**永久治理案**,并逐条勘正已知实例。
+    **在此之前本条不得关闭**;逐个实例的勘正**不构成**本条的关闭。
+
+    **一条本类此前未写出的属性**(2026-08-29 由 #3320 补上):
+    跨线情形下「**谁来勘正**」没有默认答案 —— 该收据可以不属于发现它的那条产线
+    (#3320 即此:发现方的重复 deposit 已因收敛丢弃),发现者无权勘正,
+    承载者不知情。近亲先例 `D5-T0032` 早已逐项记录 whole-atom receipt 只覆盖一部分、
+    coverage 为空、hosted extension 不可用,并要求 receipt-correction door 或新 CAS ——
+    **规则在案,机器不在**,至今未变。
+
+    依据:issue #2647(三席并发盲评,判 `godel`;同族,不构成多样性共识)、
+    #3066(第七轮 arch 席 blocking,orchestrator 独立复算)、#3774(六个实例)、#3320。 -/
