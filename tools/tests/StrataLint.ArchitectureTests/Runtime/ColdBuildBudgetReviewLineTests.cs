@@ -47,10 +47,17 @@ public sealed class ColdBuildBudgetReviewLineTests
     /// PR 全部变红**,直到有人收口。这**不是** advisory —— 触发线取 80% 而非 100% 只意味着
     /// 「红出现时预算本身仍够用,收口有时间做」,**不意味着红是软的**。
     ///
-    /// **它守不住什么(第五轮评审收窄)**:若 Engine 的枚举静默漏掉若干 `.lean`,
-    /// 本测试的计数偏小而**假绿** —— 即越线可能发生而它看不见。
-    /// 该前提由 issue #3833 追踪。**本测试的声称仅限于「按 Engine 的枚举,计数未越线」**,
-    /// 不是「D5 模块数未越线」。
+    /// **它守不住什么(第五轮收窄,第六轮勘正措辞)**:若枚举静默漏掉若干 `.lean`,
+    /// 本测试的计数偏小而**假绿** —— 即越线可能发生而它看不见。该前提由 issue #3833 追踪。
+    ///
+    /// 此处原先写「本测试的声称**仅限于**计数未越线」,**那是过度自贬**:
+    /// 它还断言 `d5Files` 非空、且结果**包含 `Hearts.lean`** —— 两条各自都是可失败的命题。
+    /// (只有 `leanFiles.Length &lt;= d5Files.Count` 那条由构造恒真,不承载。)
+    ///
+    /// **另一处措辞也不准**:本测试直接调用的是 `EnumerateDeclared`,**不是** `Enumerate`;
+    /// 把它的计数称作「按 Engine 的枚举」,依赖的是
+    /// <see cref="EnumerateDeclaredReturnsEveryTrackedFileUnderThePrefix"/>
+    /// 在**当前 D5 路径投影上**建立的那个相等关系 —— 那是另一条测试的结论,不是本条自明的。
     /// (此段是对一条评审判词的更正:此前这里写「那条红是提醒,不是事故」,与真实门语义相反。)
     /// </summary>
     [Fact]
@@ -132,8 +139,16 @@ public sealed class ColdBuildBudgetReviewLineTests
     ///
     /// **修法不是给消费者加更多断言,是给这个包装它自己的红。**
     /// 本测试独立跑一次全量 <see cref="GitIndexRepositoryFiles.Enumerate"/> 并自行过滤,
-    /// 与 <see cref="GitIndexRepositoryFiles.EnumerateDeclared"/> 的结果**逐项比对**;
-    /// 任何截断、重排丢项或前缀语义漂移都会在这里红。
+    /// 与 <see cref="GitIndexRepositoryFiles.EnumerateDeclared"/> 的结果**逐项比对**。
+    ///
+    /// **它到底证明了什么(第六轮评审逐句核过的表述)**:
+    /// **在本次仓库快照上、限于 `D5` 前缀、以 `RelativePath` 为观察量时,
+    /// 包装的输出序列与 Engine 输出经显式前缀过滤后的序列相等。**
+    ///
+    /// 此处原先写的是「任何截断、重排丢项或前缀语义漂移都会在这里红」,**那句比实际保证强**:
+    /// * 若 Engine 层把**两边共同重排**,两个数组仍相等 —— 不红;
+    /// * 若两个前缀谓词只在**当前数据里没有出现的路径形状**上语义不同,也仍全绿;
+    /// * 其他前缀、以及 `RepositoryFile` 的**非 `RelativePath` 字段**完全未被覆盖。
     ///
     /// **保证边界(第五轮评审实测收窄,原文写错了)**:本测试**不证明**
     /// `StrataLint.Engine.GitIndexRepositoryFiles.Enumerate` 自身完整。
@@ -145,14 +160,28 @@ public sealed class ColdBuildBudgetReviewLineTests
     /// 而那 14 条守的是别的不变量,只是碰巧连带失败。
     ///
     /// 故准确的表述是:**Engine 的枚举在单文件粒度上无任何钉子**,已立 issue #3833。
-    /// 本测试证明的是**这个包装没有在 Engine 之上再丢东西**——仅此而已。
-    /// 它与它的消费者 `ColdBuildBudgetReviewLineHasNotBeenCrossed` 一样,
-    /// **都以「Engine 枚举完整」为未经证明的前提**;那个前提由 #3833 追踪,不在本文件内解决。
+    ///
+    /// **但「本测试以 Engine 完整为前提」这句话是错的**(第六轮评审勘正):
+    /// 本测试证的是一个**相对命题** —— 即使 Engine 同时漏掉一个文件,
+    /// 只要包装没有再漏,两个序列**仍然相等,该相对命题仍为真**。
+    /// **Engine 完整性只在把结论提升为「每一个 tracked 文件都在」这一绝对命题时才成为前提。**
+    ///
+    /// 同一句里的「仅此而已」则**比断言更弱**:`Assert.Equal` 是序列相等,
+    /// 它同时排除了**包装独有的新增、重复计数变化与顺序变化**,不只是「没有再丢东西」。
+    ///
+    /// **若要主张绝对的 tracked-file 完整性**,除 Engine 完整外还依赖:
+    /// 手写的 `StartsWith` 谓词代表正确的前缀语义、`RelativePath` 足以代表被比较的对象、
+    /// 两次枚举观察的是同一稳定快照。这几条此前一条都没列出来。
     ///
     /// **为什么不在这里解决**:任何住在 `tools/tests/**` 的独立比对若也调 `Enumerate`,
-    /// 就与被测对象同源;改用目录遍历则撞 `TestMapUnknownReason.DirectoryEnumeration`
+    /// 就与被测对象同源;改用**目录遍历**则撞 `TestMapUnknownReason.DirectoryEnumeration`
     /// 的 unknown 棘轮(对每个新增 unknown identity 直接 Block)。
-    /// 需要的是给 Engine 自己一个钉子,而不是让它的某个消费者去证明它。
+    ///
+    /// **但这两条不构成穷尽论证**(第六轮评审补正):还有第三条路 ——
+    /// **用已知 tracked 条目的合成 git fixture 直接钉住 Engine 的单文件行为**,
+    /// 或使用独立的 git-index oracle,两者都不需要目录遍历。
+    /// 故「不在本文件解决」是一个**测试归属选择**,不是由 unknown 棘轮推出的技术必然。
+    /// 那条路记在 #3833 的候选修法里。
     ///
     /// **为什么单独一条测试而不并进上面那条**:本测试调无前缀的 `Enumerate`,
     /// deriver 因此把它归因为**整仓**;而上面那条必须保持 `D5` 归因,
