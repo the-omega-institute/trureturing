@@ -171,6 +171,50 @@ internal static class ScribeTestMapDeriver
         .Order(StringComparer.Ordinal)
         .ToArray();
 
+    // #3649: the determinism ban is only as strong as the set of projects it is attached to.
+    // PR #3612 withdrew a failed content-scanning criterion and, in the same change, removed the
+    // meta-test that guarded *project-set completeness*. Those are two different things; this is
+    // the second one, restored on its own terms.
+    //
+    // What this decides: every xUnit verdict project under tools/tests/ must carry BOTH the
+    // BannedApiAnalyzers package reference AND the BannedSymbols.Determinism.txt AdditionalFiles
+    // entry, and must not suppress RS0030 via NoWarn. Non-xUnit projects are out of scope; the two
+    // compile-fail-proof projects have their own governed class (CompileFailProofProjectExemptions).
+    //
+    // What this does NOT decide (the reflexive half of the reject-set, stated because a guard that
+    // does not name its own gaps is worse than none):
+    //   * `#pragma warning disable RS0030` inside a source file — that is a per-file suppression
+    //     this predicate cannot see; it reads project files only.
+    //   * `.editorconfig` severity downgrades.
+    //   * a `PackageReference` or `AdditionalFiles` made inert by a false `Condition`.
+    // Those three are the "can the check itself be skipped" dimension; they remain review-guarded.
+    internal static IReadOnlyList<string> FindVerdictProjectsMissingDeterminismBan(
+        IEnumerable<(string Path, string Content)> projectFiles) => projectFiles
+        .Where(static project => project.Path.StartsWith(ManagedTestProjectPrefix, StringComparison.Ordinal))
+        .Where(static project => IsXunitProject(project.Content))
+        .Where(static project => !HasDeterminismBanWiring(project.Content))
+        .Select(static project => project.Path)
+        .Order(StringComparer.Ordinal)
+        .ToArray();
+
+    internal static IReadOnlyList<string> FindVerdictProjectsMissingDeterminismBan(
+        string repositoryRoot) =>
+        FindVerdictProjectsMissingDeterminismBan(
+            GitIndexRepositoryFiles.Enumerate(repositoryRoot)
+                .Where(static file => file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal))
+                .Select(static file => (file.RelativePath, File.ReadAllText(file.FullPath))));
+
+    private static bool HasDeterminismBanWiring(string projectContent) =>
+        projectContent.Contains("BannedSymbols.Determinism", StringComparison.Ordinal)
+        && projectContent.Contains("BannedApiAnalyzers", StringComparison.Ordinal)
+        && !SuppressesDeterminismDiagnostic(projectContent);
+
+    private static bool SuppressesDeterminismDiagnostic(string projectContent) =>
+        projectContent
+            .Split('\n')
+            .Where(static line => line.Contains("NoWarn", StringComparison.Ordinal))
+            .Any(static line => line.Contains("RS0030", StringComparison.Ordinal));
+
     internal static IReadOnlyList<string> FindOrphanManagedSources(
         IEnumerable<string> sourcePaths,
         IReadOnlyDictionary<string, string> projectBySourcePath) => sourcePaths
