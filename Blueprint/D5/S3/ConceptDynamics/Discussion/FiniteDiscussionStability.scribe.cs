@@ -45,9 +45,6 @@ internal sealed class FiniteDiscussionStabilityDocument : IScribeDocumentDefinit
                             + "declaration packages the arbitrary-discussion bound."))),
                 DescribeRole.Theorem))));
 
-    private static Formula Sub(Formula value, Formula index) =>
-        new Formula.Subscript(value, index);
-
     private static Formula Call(string name, params Formula[] arguments)
     {
         var content = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
@@ -70,29 +67,34 @@ internal sealed class FiniteDiscussionStabilityDocument : IScribeDocumentDefinit
     private static Formula StabilityFormula()
     {
         Formula state = F.Id("X");
-        Formula stepCount = F.Id("n");
+        Formula stepCount = F.Id("steps");
         Formula index = F.Id("i");
-        Formula coordinate = Sub(F.Id("C"), index);
-        Formula readout = Sub(F.Id("q"), index);
-        Formula nextReadout = Sub(F.Id("q"), Seq(index, Plus, D(1)));
-        Formula initialReadout = Sub(F.Id("q"), D(0));
-        Formula range = Call("Im", initialReadout);
+        Formula coordinate = F.Id("Coordinate");
+        Formula concept = F.Id("concept");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")), Caret, Grp(Star));
+        Formula indexType = Call("Fin", Seq(stepCount, Plus, D(1)));
+        Formula coordinateAtIndex = Call("Coordinate", index);
+        Formula conceptAtIndex = Call("concept", index);
+        Formula initialReadout = Call("concept", D(0));
+        Formula range = Call("range", initialReadout);
+        Formula castSucc = Seq(index, Dot, F.Id("castSucc"));
+        Formula succ = Seq(index, Dot, F.Id("succ"));
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, state, Comma, Sp,
+            Forall, Sp, state, Colon, Sp, type, Comma, Sp,
             OpenBracket, Operatorname, Grp(F.Id("Fintype")), Open, state, Close,
             CloseBracket, Comma, Sp,
-            stepCount, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, RowBreak,
-            Open, Forall, Sp, index, Comma, Sp,
-            D(0), Sp, Leq, Sp, index, Sp, Leq, Sp, stepCount, Comma, Sp,
-            coordinate, Colon, Sp, Operatorname, Grp(F.Id("Type")), Comma, Sp,
-            readout, Colon, Sp, state, Sp, To, Sp, coordinate, Comma, Sp,
-            Call("Surjective", readout), Close, Sp, Land, RowBreak,
-            Open, Forall, Sp, index, Comma, Sp,
-            D(0), Sp, Leq, Sp, index, Sp, Lt, Sp, stepCount, Comma, Sp,
-            Call("StrictRefinement", readout, nextReadout), Close, Sp,
-            Rightarrow, RowBreak,
+            stepCount, Colon, Sp, Mathbb, Grp(F.Id("N")), Comma, RowBreak, Grp(),
+            coordinate, Colon, Sp, indexType, Sp, To, Sp, type, Comma, RowBreak, Grp(),
+            concept, Colon, Sp,
+            Open, index, Colon, Sp, indexType, Close, Sp, To, Sp,
+            Call("Concept", state, coordinateAtIndex), Comma, RowBreak, Grp(),
+            Open, Forall, Sp, index, Colon, Sp, indexType, Comma, Sp,
+            Call("Surjective", conceptAtIndex), Close, Comma, RowBreak, Grp(),
+            Open, Forall, Sp, index, Colon, Sp, Call("Fin", stepCount), Comma, Sp,
+            Call("StrictRefinement", Call("concept", castSucc),
+                Call("concept", succ)), Close, Comma, RowBreak, Grp(),
             stepCount, Sp, Leq, Sp, Cardinality(state), Sp, Minus, Sp,
             Cardinality(range), Dot,
             End, Grp(F.Id("gathered"))));

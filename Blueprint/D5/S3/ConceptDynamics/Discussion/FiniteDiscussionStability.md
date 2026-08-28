@@ -6,7 +6,7 @@ A finite discussion admits at most the initially unresolved number of strict ref
 
 **Theorem 1.1 (Finite discussions have a sharp strict-refinement budget).**
 
-$$\begin{gathered}\forall X, [\operatorname{Fintype}(X)], n \in \mathbb{N},\\(\forall i, 0 \leq i \leq n, C_{i}: \operatorname{Type}, q_{i}: X \to C_{i}, \operatorname{Surjective}(q_{i})) \land\\(\forall i, 0 \leq i < n, \operatorname{StrictRefinement}(q_{i}, q_{i+1})) \Rightarrow\\n \leq \lvert X \rvert - \lvert \operatorname{Im}(q_{0}) \rvert.\end{gathered}$$
+$$\begin{gathered}\forall X: \operatorname{Type}^{*}, [\operatorname{Fintype}(X)], steps: \mathbb{N},\\{}Coordinate: \operatorname{Fin}(steps+1) \to \operatorname{Type}^{*},\\{}concept: (i: \operatorname{Fin}(steps+1)) \to \operatorname{Concept}(X, \operatorname{Coordinate}(i)),\\{}(\forall i: \operatorname{Fin}(steps+1), \operatorname{Surjective}(\operatorname{concept}(i))),\\{}(\forall i: \operatorname{Fin}(steps), \operatorname{StrictRefinement}(\operatorname{concept}(i.castSucc), \operatorname{concept}(i.succ))),\\{}steps \leq \lvert X \rvert - \lvert \operatorname{range}(\operatorname{concept}(0)) \rvert.\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Discussion/FiniteDiscussionStability.finite_discussion_stability` (`✓ std3`). ∎
 
