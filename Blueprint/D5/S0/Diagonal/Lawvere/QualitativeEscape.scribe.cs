@@ -12,7 +12,9 @@ internal sealed class QualitativeEscapeDocument : IScribeDocumentDefinition
         var f = Id("f");
         var g = Id("g");
         var y = Id("y");
+        var address = Id("A");
         var alphabet = Id("Y");
+        var type = Id("Type");
 
         var fixedPointFree = new Formula.BindMany(
             FormulaQuantifier.ForAll,
@@ -21,7 +23,24 @@ internal sealed class QualitativeEscapeDocument : IScribeDocumentDefinition
 
         var escaped = Call("IsEscaped", f, g);
 
-        var lawvere = new Formula.Logic(fixedPointFree, FormulaLogicOperator.Implies, escaped);
+        var lawvere = new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [
+                new Formula.BoundVariable(FormulaIdentifier.Create("A"), type),
+                new Formula.BoundVariable(FormulaIdentifier.Create("Y"), type),
+                new Formula.BoundVariable(
+                    FormulaIdentifier.Create("f"),
+                    new Formula.TypeArrow(alphabet, alphabet)),
+                new Formula.BoundVariable(
+                    FormulaIdentifier.Create("g"),
+                    new Formula.TypeArrow(
+                        address,
+                        new Formula.TypeArrow(address, alphabet))),
+            ],
+            new Formula.Logic(
+                fixedPointFree,
+                FormulaLogicOperator.Implies,
+                escaped));
 
         var captured = new Formula.BindMany(
             FormulaQuantifier.Exists,

@@ -12,7 +12,7 @@ The hypothesis is not decorative. On the two-symbol alphabet the identity twist 
 
 **Theorem 1.1 (A fixed-point-free twist escapes every listing).**
 
-$$\left(\forall y \in Y,\; \operatorname{f}\left(y\right) \ne y\right) \Rightarrow \operatorname{IsEscaped}\left(f, g\right)$$
+$$\forall A \in \mathit{Type}, Y \in \mathit{Type}, f \in Y \to Y, g \in A \to \left(A \to Y\right),\; \left(\forall y \in Y,\; \operatorname{f}\left(y\right) \ne y\right) \Rightarrow \operatorname{IsEscaped}\left(f, g\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Diagonal/Lawvere/QualitativeEscape.escaped_of_fixedPointFree` (`✓ std3`). ∎
 
@@ -48,7 +48,7 @@ The negation twist has no fixed point, so the constant listing on a one-point ad
 
 **Theorem 1.4 (The self-application fragment packaged).**
 
-$$\left(\left(\forall y \in Y,\; \operatorname{f}\left(y\right) \ne y\right) \Rightarrow \operatorname{IsEscaped}\left(f, g\right)\right) \land \left(\exists f \in \mathit{Y0}, g \in \mathit{L0},\; \neg \operatorname{IsEscaped}\left(f, g\right)\right)$$
+$$\left(\forall A \in \mathit{Type}, Y \in \mathit{Type}, f \in Y \to Y, g \in A \to \left(A \to Y\right),\; \left(\forall y \in Y,\; \operatorname{f}\left(y\right) \ne y\right) \Rightarrow \operatorname{IsEscaped}\left(f, g\right)\right) \land \left(\exists f \in \mathit{Y0}, g \in \mathit{L0},\; \neg \operatorname{IsEscaped}\left(f, g\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Diagonal/Lawvere/QualitativeEscape.self_application_fragment_package` (`✓ std3`). ∎
 
