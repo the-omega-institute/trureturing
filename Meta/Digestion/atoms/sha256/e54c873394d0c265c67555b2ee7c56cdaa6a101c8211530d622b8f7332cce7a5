@@ -1,0 +1,86 @@
+# 第二百三十九部　正 Fredholm 完成
+
+令：
+
+$$
+\Xi(z)=\xi\left(\frac12-iz\right).
+$$
+
+若 RH 成立，其非零零点为：
+
+$$
+\pm\gamma_1,\pm\gamma_2,\ldots
+$$
+
+并按重数 \(m_\gamma\) 计。
+
+平方折叠函数满足：
+
+$$
+\boxed{
+\mathscr F(x)
+=
+\prod_{\gamma>0}
+\left(
+1+\frac{x}{\gamma^2}
+\right)^{m_\gamma}.
+}
+\tag{239.1}
+$$
+
+由于：
+
+$$
+\sum_{\gamma>0}
+\frac{m_\gamma}{\gamma^2}<\infty,
+$$
+
+定义 Hilbert 空间：
+
+$$
+\mathcal H_\Xi
+=
+\bigoplus_{\gamma>0}
+\mathbb C^{m_\gamma},
+$$
+
+以及正对角算子：
+
+$$
+\boxed{
+U_\Xi
+=
+\bigoplus_{\gamma>0}
+\gamma^{-2} I_{m_\gamma}.
+}
+\tag{239.2}
+$$
+
+则：
+
+$$
+U_\Xi\ge0,
+\qquad
+\operatorname{Tr}U_\Xi<\infty.
+$$
+
+所以 \(U_\Xi\) 是正 trace-class 算子。
+
+Fredholm determinant 给出：
+
+$$
+\boxed{
+\det(I+xU_\Xi)
+=
+\prod_{\gamma>0}
+\left(
+1+\frac{x}{\gamma^2}
+\right)^{m_\gamma}
+=
+\mathscr F(x).
+}
+\tag{239.3}
+$$
+
+---
+

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Computability/DescriptionComplexity/LevinUpperBound.levin_upper_bound
       source_sha256: sha256:315208d1c68a2bd5585a4bc164071011887308e32c90f0d31f764fc719aa035e
-      target_sha256: sha256:f3149606447e8630f6bc363c8d7f00afe530e510428b034ac422c6de14f78dd2
+      target_statement_id: sha256:4f555dfa9d11d2025c287016c5884e49c212501132f3603f838ad452aab5a350
   scribe:
     - gid: D5/S0/Computability/DescriptionComplexity/LevinUpperBound.levin_upper_bound
       definition_sha256: sha256:97485bcaa9c39bce720e1cccd24658713dd13d4058e7cd6c6a6777f80ddac217

@@ -1,0 +1,10 @@
+ast_path: section/依赖经典理论的等价
+fingerprints:
+  raw_sha256: sha256:f0ba6caa0006f642f651c16412c0e89c15fb993adda0861a2beb23ec7cdde462
+  normalized_sha256: sha256:f0ba6caa0006f642f651c16412c0e89c15fb993adda0861a2beb23ec7cdde462
+cas_ref: sha256:f0ba6caa0006f642f651c16412c0e89c15fb993adda0861a2beb23ec7cdde462
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

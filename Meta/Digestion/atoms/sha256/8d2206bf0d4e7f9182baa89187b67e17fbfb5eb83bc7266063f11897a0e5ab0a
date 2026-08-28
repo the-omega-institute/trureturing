@@ -1,0 +1,25 @@
+## 159.1 标量 determinant 盲性
+
+Fredholm determinant 只记录算子特征值乘积：
+
+$$
+\det(1-\mathcal L_s)
+=
+\prod_j(1-\lambda_j(s)).
+$$
+
+不同算子可以具有相同 determinant。
+
+因此：
+
+$$
+\boxed{
+\text{Selberg scalar zeta}
+\not\Rightarrow
+\text{transfer operator 已被完整恢复}.
+}
+$$
+
+这与此前：
+
+* 标量 Theta 无法恢复 Niemeier 根系；

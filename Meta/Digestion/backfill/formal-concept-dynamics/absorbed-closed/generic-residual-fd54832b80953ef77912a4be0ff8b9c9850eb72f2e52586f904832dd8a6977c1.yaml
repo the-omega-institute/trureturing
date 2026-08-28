@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Interventions/AttackSurfaceMonotonicity.reach_monotone_in_permissions
       source_sha256: sha256:fd54832b80953ef77912a4be0ff8b9c9850eb72f2e52586f904832dd8a6977c1
-      target_sha256: sha256:6f9fcec288d131ecdda7e221cb62eb96c11b643a8f661c79f973eb4709bc7a18
+      target_statement_id: sha256:127554f694bcd45db334cbc530f6364b89bf985304157abf3296459107028451
   scribe:
     - gid: D5/S3/ConceptDynamics/Interventions/AttackSurfaceMonotonicity.reach_monotone_in_permissions
       definition_sha256: sha256:bd410b9b975ea02255cbfa4890eb33209ef528338f18191e76c5a79865e7bd43

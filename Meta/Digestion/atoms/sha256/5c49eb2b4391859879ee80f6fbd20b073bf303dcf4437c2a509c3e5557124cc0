@@ -1,0 +1,44 @@
+## 定理 320.1（Finite observability identity）
+
+$$
+\boxed{
+I-
+A_\omega^{*N}A_\omega^N
+=
+\sum_{k=0}^{N-1}
+A_\omega^{*k}
+C_\omega^*C_\omega
+A_\omega^k.
+}
+\tag{320.2}
+$$
+
+右侧是有限可观测 Gramian：
+
+$$
+\boxed{
+\mathfrak O_{\omega,N}
+=
+\sum_{k=0}^{N-1}
+A_\omega^{*k}
+C_\omega^*C_\omega
+A_\omega^k
+\succeq0.
+}
+\tag{320.3}
+$$
+
+对状态 \(x\)：
+
+$$
+\boxed{
+\|x\|^2-\|A_\omega^Nx\|^2
+=
+\sum_{k=0}^{N-1}
+\|C_\omega A_\omega^kx\|^2.
+}
+\tag{320.4}
+$$
+
+---
+

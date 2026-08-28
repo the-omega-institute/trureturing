@@ -1,0 +1,90 @@
+# 第一百八十七部　环面谱图册
+
+设 \(\xi(s)\) 为 Riemann 的整个完成函数，其零点恰为 ζ 的非平凡零点。
+
+对每个二次判别式 \(D\)，令：
+
+$$
+\chi_D
+$$
+
+为对应二次特征。
+
+Hecke 环面周期公式及其阿代尔推广表明，在固定规范、固定 test vector 后，可把相应 Eisenstein 环面周期写成：
+
+$$
+\boxed{
+\mathcal P_D(s)
+=
+\xi(s)\,\mathcal T_D(s),
+}
+\tag{187.1}
+$$
+
+其中：
+
+$$
+\mathcal T_D(s)
+=
+\Lambda(s,\chi_D)\,e_D(s)
+$$
+
+是二次 twist 与局部 period factor 的乘积。
+
+这里 \(e_D\) 在所研究局部图表中可被选择为非零；Cornelissen–Lorscheid 由 Hecke 恒等式、Waldspurger 周期及二次 twist 非消失，证明了 Eisenstein 导数塔与 \(L\)-零点重数之间的精确对应。([arXiv][1])
+
+定义局部可用域：
+
+$$
+\boxed{
+U_D
+=
+\{s:\mathcal T_D(s)\neq0\}.
+}
+\tag{187.2}
+$$
+
+在 \(U_D\) 上定义局部重构：
+
+$$
+\boxed{
+\xi_D(s)
+=
+\frac{\mathcal P_D(s)}
+{\mathcal T_D(s)}.
+}
+\tag{187.3}
+$$
+
+显然：
+
+$$
+\xi_D(s)=\xi(s).
+$$
+
+若：
+
+$$
+s\in U_D\cap U_E,
+$$
+
+则：
+
+$$
+\xi_D(s)=\xi_E(s).
+$$
+
+所以全部二次环面观察形成一个谱图册：
+
+$$
+\boxed{
+\left\{
+(U_D,\xi_D)
+\right\}_D,
+}
+$$
+
+而 \(\xi\) 是这些局部读数的唯一胶合对象。
+
+---
+

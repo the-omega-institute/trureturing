@@ -1,0 +1,16 @@
+## 当前真正开放的桥
+
+$$
+\boxed{
+\begin{aligned}
+&\text{从 toric relative trace 直接构造正 trace-class }U_{\mathrm{tor}};\\
+&\text{从 prime／twist 数据直接证明中心系数为 }PF_\infty;\\
+&\text{在 Newman folded PDE 上直接证明 }t=0\text{ 已进入正锥};\\
+&\text{建立 Newman flow 与 Jacobi/Toda 参数之间的实际变换};\\
+&\text{给线外零点对应的最低 Toeplitz/Hankel 失败阶定量上界}.
+\end{aligned}
+}
+$$
+
+---
+

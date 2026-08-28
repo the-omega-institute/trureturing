@@ -1,0 +1,10 @@
+ast_path: 假设/157.1
+fingerprints:
+  raw_sha256: sha256:1a9c314f065af0f78cbd18ced8f0a89a6ea9f0e3596aa1e402c2304165d38be5
+  normalized_sha256: sha256:1a9c314f065af0f78cbd18ced8f0a89a6ea9f0e3596aa1e402c2304165d38be5
+cas_ref: sha256:1a9c314f065af0f78cbd18ced8f0a89a6ea9f0e3596aa1e402c2304165d38be5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

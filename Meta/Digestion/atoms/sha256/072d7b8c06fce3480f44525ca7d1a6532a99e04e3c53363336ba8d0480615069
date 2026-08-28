@@ -1,0 +1,29 @@
+## 定理 319.1（Conservative-system RH criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{对每个 }\omega>0，
+\Theta_\omega
+\text{ 存在一个 conservative realization}.
+}
+\tag{319.7}
+$$
+
+这把 Hilbert–Pólya 问题从：
+
+$$
+\text{“找一个神秘自伴算子”}
+$$
+
+改写成：
+
+$$
+\boxed{
+\text{“从自动形式数据构造一个能量守恒的开放系统”。}
+}
+$$
+
+---
+

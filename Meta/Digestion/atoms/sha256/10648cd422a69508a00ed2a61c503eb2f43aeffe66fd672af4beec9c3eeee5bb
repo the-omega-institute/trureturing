@@ -1,0 +1,28 @@
+* cusp/scattering 通道标记 \(b\)。
+
+因此完整候选索引为：
+
+$$
+\boxed{
+q_{p,k,\omega,t,\epsilon,b}.
+}
+\tag{161.1}
+$$
+
+其中：
+
+$$
+\begin{aligned}
+p&:\text{有限素数／素理想通道};\\
+k&:\text{完整有向 regulator harmonic};\\
+\omega&:\text{primitive closed-geodesic word};\\
+t&:\text{Mellin／spectral height};\\
+\epsilon&:\text{方向／spin parity};\\
+b&:\text{bulk closed orbit 或 cusp scattering}.
+\end{aligned}
+$$
+
+这不是建议一次性把所有索引塞入最终证明，而是建立一个**完整候选观察空间**。
+
+DECT 的工作将是逐步测量：
+

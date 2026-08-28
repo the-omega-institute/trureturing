@@ -56,8 +56,8 @@ internal sealed class ConceptJoinUniversalDocument : IScribeDocumentDefinition
             readoutE, Colon, Sp, readout(common), Comma, Esc,
             Refines(readoutC, join), Sp, Land, Sp,
             Refines(readoutD, join), Sp, Land, Sp,
-            Open, Refines(readoutC, readoutE), Sp, Land, Sp,
-            Refines(readoutD, readoutE), Close, Sp, Rightarrow, Sp,
+            Refines(readoutC, readoutE), Sp, Rightarrow, Sp,
+            Refines(readoutD, readoutE), Sp, Rightarrow, Sp,
             Refines(join, readoutE), Dot));
     }
 

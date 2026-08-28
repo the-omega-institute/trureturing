@@ -1,0 +1,60 @@
+## 定理 305.2（Riemann 零点采样公式）
+
+对任意：
+
+$$
+f\in K_{\vartheta_\xi},
+$$
+
+有：
+
+$$
+\boxed{
+\|f\|^2
+=
+\sum_\rho
+w_\rho
+|f(u_\rho)|^2.
+}
+\tag{305.9}
+$$
+
+并且：
+
+$$
+\boxed{
+f(z)
+=
+\left(
+1-\vartheta_\xi(z)
+\right)
+\sum_\rho
+\frac{
+w_\rho f(u_\rho)
+}{
+1-\overline{u_\rho}z
+}.
+}
+\tag{305.10}
+$$
+
+级数在 model-space norm 中收敛，并在紧子圆盘上局部一致收敛。
+
+因此：
+
+$$
+\boxed{
+\text{Riemann 零点不是只决定一个函数的零点集，}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{构成一个自然 Hilbert 函数空间的完整正交传感器阵列。}
+}
+$$
+
+---
+

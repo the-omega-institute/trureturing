@@ -1,0 +1,60 @@
+## 定理 246.1（Newman determinant threshold）
+
+$$
+\boxed{
+\Lambda_{\mathrm N}
+=
+\inf
+\left\{
+t:
+\exists\,U_t\ge0,\ U_t\text{ trace-class},
+\quad
+\mathscr F_t(x)=\det(I+xU_t)
+\right\}.
+}
+\tag{246.2}
+$$
+
+同样：
+
+$$
+\boxed{
+\Lambda_{\mathrm N}
+=
+\inf
+\left\{
+t:
+[x^n]\mathscr F_t
+\text{ 形成 }PF_\infty\text{ 序列}
+\right\}.
+}
+\tag{246.3}
+$$
+
+以及：
+
+$$
+\boxed{
+\Lambda_{\mathrm N}
+=
+\inf
+\left\{
+t:
+\text{相应 reciprocal-zero moments 为 Stieltjes moments}
+\right\}.
+}
+\tag{246.4}
+$$
+
+所以 Newman 常数的 OACTC 角色为：
+
+$$
+\boxed{
+\Lambda_{\mathrm N}
+=
+\text{Riemann heat family进入正 Fredholm／总正性完成锥的临界时间}.
+}
+$$
+
+---
+

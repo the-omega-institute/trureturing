@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/DefinitionEscape/BlindKernelReductionMeasure.blind_kernel_reduction_measure
       source_sha256: sha256:3ea01c1697fe3358c37b97c1ea4dcad7aed568a49f9ce0b494d7cc5a4414db53
-      target_sha256: sha256:12ed89f28e951b472a506a5e8c1d9fa8eb443b03367c16efa3729b2023a65330
+      target_statement_id: sha256:cc369cfb31ba44643eb67636bbaca146deda64e899a96fcb00a3754f341a90aa
   scribe:
     - gid: D5/S3/ConceptDynamics/DefinitionEscape/BlindKernelReductionMeasure.blind_kernel_reduction_measure
       definition_sha256: sha256:baf85a82a1e9caf9ad16bac58d338d6031783a275009fc45f6737b020b3b82d0

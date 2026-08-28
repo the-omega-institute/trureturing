@@ -10,7 +10,10 @@ public sealed class ScribeCliCommandSetTests
     [Fact]
     public void ImplementedCommandsMatchTheLinkagePinnedSet()
     {
-        var pinned = new[] { "describe-report", "emit", "emit-values", "filemap", "projections" };
+        var pinned = new[]
+        {
+            "describe-report", "emit", "emit-values", "filemap", "markdown-check", "projections",
+        };
 
         Assert.Equal(
             pinned.OrderBy(static v => v, StringComparer.Ordinal),

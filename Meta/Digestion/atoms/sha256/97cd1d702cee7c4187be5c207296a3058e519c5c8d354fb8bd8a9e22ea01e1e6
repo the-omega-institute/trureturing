@@ -1,0 +1,34 @@
+### Schur–创新坐标
+
+$$
+\chi_n.
+$$
+
+在该基中，同一个 unitary 由 CMV 五对角矩阵表示。
+
+所以：
+
+$$
+\boxed{
+\text{CMV recursion}
+\quad\longleftrightarrow\quad
+\text{Riemann zero spectral coordinates}
+}
+$$
+
+之间的换基矩阵就是：
+
+$$
+\mathcal U_{n,\rho}.
+$$
+
+这可以称为：
+
+$$
+\boxed{
+\textbf{Riemann–Clark transform}.
+}
+$$
+
+---
+

@@ -1,0 +1,63 @@
+# 第二百三十八部　建议形式化顺序
+
+```text
+D5/S3/Analytic/XiSquareFold/
+  XiEvenSquareFactor.lean
+  FoldedXiEntire.lean
+  FoldedZeroRHCriterion.lean
+  FoldedLogDerivative.lean
+  HerglotzStieltjesFold.lean
+
+D5/S3/Analytic/XiMoments/
+  ReciprocalZeroMoment.lean
+  CentralDerivativeMoments.lean
+  StieltjesMomentRHCriterion.lean
+  HankelPairPositivity.lean
+  VandermondeHankelExpansion.lean
+
+D5/S3/Analytic/XiContinuedFraction/
+  XiStieltjesFraction.lean
+  NonnegativeFractionRHCriterion.lean
+  GoldenStationaryTail.lean
+  XiJacobiOperator.lean
+  FinitePadeObserver.lean
+
+D5/S3/Observer/ToroidalMoments/
+  ToroidalCentralJet.lean
+  ToroidalMomentReconstruction.lean
+  ToroidalHankelCriterion.lean
+  ToroidalStieltjesGramTarget.lean
+
+D5/S3/Analytic/RHTargets/
+  FoldedHilbertPolyaOperator.lean
+  ZeroAtomDeflation.lean
+  HankelSelfImprovement.lean
+  PrimitiveMomentRenormalization.lean
+```
+
+优先级最高且最独立的链是：
+
+$$
+\boxed{
+\text{Xi even}
+\to
+\text{square fold}
+\to
+\text{negative-real-zero RH criterion}.
+}
+$$
+
+其次是：
+
+$$
+\boxed{
+\text{Stieltjes moments}
+\to
+\text{Hankel pair positivity}
+\to
+\text{positive operator representation}.
+}
+$$
+
+---
+

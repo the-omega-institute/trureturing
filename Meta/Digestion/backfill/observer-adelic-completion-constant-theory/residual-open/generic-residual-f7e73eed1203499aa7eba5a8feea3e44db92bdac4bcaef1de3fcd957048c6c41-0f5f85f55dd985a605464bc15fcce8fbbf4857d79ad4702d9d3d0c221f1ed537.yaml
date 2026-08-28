@@ -1,0 +1,10 @@
+ast_path: section/与既有理论相邻-但本文给出不同封装/clause/6
+fingerprints:
+  raw_sha256: sha256:f7e73eed1203499aa7eba5a8feea3e44db92bdac4bcaef1de3fcd957048c6c41
+  normalized_sha256: sha256:f7e73eed1203499aa7eba5a8feea3e44db92bdac4bcaef1de3fcd957048c6c41
+cas_ref: sha256:f7e73eed1203499aa7eba5a8feea3e44db92bdac4bcaef1de3fcd957048c6c41
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

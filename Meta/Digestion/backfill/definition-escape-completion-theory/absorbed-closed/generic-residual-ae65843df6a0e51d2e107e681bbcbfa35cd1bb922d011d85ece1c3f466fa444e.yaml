@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RoleLedgerPrefixStability.append_only_adjudication_role_prefix_unchanged
       source_sha256: sha256:ae65843df6a0e51d2e107e681bbcbfa35cd1bb922d011d85ece1c3f466fa444e
-      target_sha256: sha256:c0f8838ce24ec2723889bcf95d56eaa1060994750e21665af79fae7d19ebecd3
+      target_statement_id: sha256:85bcc84a32253949ef55d9a9b6c05fd2c7cf9b78618f05579954155f22dcd98e
   scribe:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RoleLedgerPrefixStability.append_only_adjudication_role_prefix_unchanged
       definition_sha256: sha256:b86d9db3e81f30084547ab770975a36ded7766fb0d1d00dfb0427a3f61f1a8cc

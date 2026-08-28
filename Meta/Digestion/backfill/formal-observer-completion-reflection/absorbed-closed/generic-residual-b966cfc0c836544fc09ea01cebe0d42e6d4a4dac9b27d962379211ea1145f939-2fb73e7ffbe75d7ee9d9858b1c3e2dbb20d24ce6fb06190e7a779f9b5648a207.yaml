@@ -1,0 +1,17 @@
+ast_path: 命题/76.7/clause/1
+fingerprints:
+  raw_sha256: sha256:b966cfc0c836544fc09ea01cebe0d42e6d4a4dac9b27d962379211ea1145f939
+  normalized_sha256: sha256:b966cfc0c836544fc09ea01cebe0d42e6d4a4dac9b27d962379211ea1145f939
+cas_ref: sha256:b966cfc0c836544fc09ea01cebe0d42e6d4a4dac9b27d962379211ea1145f939
+coverage_gids:
+  - D5/S3/ConceptDynamics/Information/MarginalActionEntropyCausalContrast.marginal_action_entropy_causal_contrast
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Information/MarginalActionEntropyCausalContrast.marginal_action_entropy_causal_contrast
+      source_sha256: sha256:b966cfc0c836544fc09ea01cebe0d42e6d4a4dac9b27d962379211ea1145f939
+      target_statement_id: sha256:542764660b5a9aa8a3064f96df65c0fb96065377e9a4d203bd746f0f546976e3
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Information/MarginalActionEntropyCausalContrast.marginal_action_entropy_causal_contrast
+      definition_sha256: sha256:0227280312a9a0006becdb1eca809618c25be488e7208866fac0ed8382d724c1
+      emission_sha256: sha256:911fa0318e33ab537b34fd30de42691b009e442f0e36d0bbb2f42f0c22b5c78e
+  unresolved_subitems: []

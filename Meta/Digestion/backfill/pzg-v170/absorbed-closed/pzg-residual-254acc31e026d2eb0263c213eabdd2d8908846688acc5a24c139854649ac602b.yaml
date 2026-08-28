@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Phase/AlternatingGoldenContraction.alternating_golden_contraction_tendsto
       source_sha256: sha256:254acc31e026d2eb0263c213eabdd2d8908846688acc5a24c139854649ac602b
-      target_sha256: sha256:6b401cae68f9c89be035b0a4635f34a585fe31e879e3b4a168f72dd738d05704
+      target_statement_id: sha256:dffc89c6febce74174d0dafc5242b7a93fbd0eeb1bda6aa631825134c8366f51
   scribe:
     - gid: D5/S1/Phase/AlternatingGoldenContraction.alternating_golden_contraction_tendsto
       definition_sha256: sha256:3d693cedecfbe36a029114569faf80a7d5ba69cf2beb55440d8b07c37294b99c

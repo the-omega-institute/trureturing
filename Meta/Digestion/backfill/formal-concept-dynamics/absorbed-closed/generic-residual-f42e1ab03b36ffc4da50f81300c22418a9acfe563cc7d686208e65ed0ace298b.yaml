@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Coding/LosslessEncodingCriterion.lossless_iff_injective_on_image
       source_sha256: sha256:f42e1ab03b36ffc4da50f81300c22418a9acfe563cc7d686208e65ed0ace298b
-      target_sha256: sha256:ecb92da663405a4c4f663fbcdc8bdfb1522f5a1380300bef295036319ffb6272
+      target_statement_id: sha256:98ff6b7e40ae1c4235adb6c3953efc7de3dd2f035d4cdc78e7ca15ffde1222d1
   scribe:
     - gid: D5/S3/ConceptDynamics/Coding/LosslessEncodingCriterion.lossless_iff_injective_on_image
       definition_sha256: sha256:23827de79636e25fcc25921f41a2465e374f7ce5bdd06067d2a3d64a02af24e8

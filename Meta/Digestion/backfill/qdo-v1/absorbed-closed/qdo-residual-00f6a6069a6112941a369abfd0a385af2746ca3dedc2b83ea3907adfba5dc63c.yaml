@@ -1,0 +1,17 @@
+ast_path: theorem/41.18
+fingerprints:
+  raw_sha256: sha256:00f6a6069a6112941a369abfd0a385af2746ca3dedc2b83ea3907adfba5dc63c
+  normalized_sha256: sha256:00f6a6069a6112941a369abfd0a385af2746ca3dedc2b83ea3907adfba5dc63c
+cas_ref: sha256:00f6a6069a6112941a369abfd0a385af2746ca3dedc2b83ea3907adfba5dc63c
+coverage_gids:
+  - D5/S3/Observer/VisibleDescent/LinearDescentCriterion.linear_descent_criterion
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/VisibleDescent/LinearDescentCriterion.linear_descent_criterion
+      source_sha256: sha256:00f6a6069a6112941a369abfd0a385af2746ca3dedc2b83ea3907adfba5dc63c
+      target_statement_id: sha256:d02e3d6aa8f35551451a1c75711f4df0140bff29b36276820c41a42445ff757e
+  scribe:
+    - gid: D5/S3/Observer/VisibleDescent/LinearDescentCriterion.linear_descent_criterion
+      definition_sha256: sha256:24eb287ee8255b3c865de94dea27c5f383a59160faade9fd4d17046e8a403829
+      emission_sha256: sha256:ab1e39e482f535ed6b94470774f512f0d4299d05224a8d0a9d4527f87c9200c0
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/第二百一十一部-有限环面重构-m-omega
+fingerprints:
+  raw_sha256: sha256:50ba840e27a5ee2f6926b32cdc8a9268bad12ae98dd641d8a287ea59dff87ed0
+  normalized_sha256: sha256:50ba840e27a5ee2f6926b32cdc8a9268bad12ae98dd641d8a287ea59dff87ed0
+cas_ref: sha256:50ba840e27a5ee2f6926b32cdc8a9268bad12ae98dd641d8a287ea59dff87ed0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

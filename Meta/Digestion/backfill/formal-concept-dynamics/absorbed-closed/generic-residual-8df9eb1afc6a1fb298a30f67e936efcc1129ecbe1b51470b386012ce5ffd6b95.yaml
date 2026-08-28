@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Interventions/CommonCoreForgettingObstruction.common_core_obstructs_complete_forgetting
       source_sha256: sha256:8df9eb1afc6a1fb298a30f67e936efcc1129ecbe1b51470b386012ce5ffd6b95
-      target_sha256: sha256:e385b8491b1552690ec9a285f93e2ebbd3ef9e8eb83fb61a3d339bcee78cd51c
+      target_statement_id: sha256:86721fb922814ff442757524d908957f15ad2be01139e6fbc6f44a2f2642784d
   scribe:
     - gid: D5/S3/ConceptDynamics/Interventions/CommonCoreForgettingObstruction.common_core_obstructs_complete_forgetting
       definition_sha256: sha256:6b3c7538d601a5e70f61ce64d484cb65e07aedf3d96d29633dfbaea3fbd39973

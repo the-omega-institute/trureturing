@@ -1,0 +1,28 @@
+# 第一百九十九部　环面 stickiness
+
+定义某点 \(s\) 的载体质量分布：
+
+$$
+\boxed{
+\mu_D(s)
+=
+\frac{
+w_D|\mathcal T_D(s)|^2
+}{
+\sum_Ew_E|\mathcal T_E(s)|^2
+}.
+}
+\tag{199.1}
+$$
+
+定义最大集中度：
+
+$$
+\boxed{
+\operatorname{Stick}_{\mathrm{tor}}(s)
+=
+\max_D\mu_D(s).
+}
+\tag{199.2}
+$$
+

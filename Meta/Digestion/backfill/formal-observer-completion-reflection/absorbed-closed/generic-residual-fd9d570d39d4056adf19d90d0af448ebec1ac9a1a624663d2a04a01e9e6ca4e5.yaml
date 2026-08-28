@@ -1,0 +1,17 @@
+ast_path: 定理/9.1
+fingerprints:
+  raw_sha256: sha256:fd9d570d39d4056adf19d90d0af448ebec1ac9a1a624663d2a04a01e9e6ca4e5
+  normalized_sha256: sha256:fd9d570d39d4056adf19d90d0af448ebec1ac9a1a624663d2a04a01e9e6ca4e5
+cas_ref: sha256:fd9d570d39d4056adf19d90d0af448ebec1ac9a1a624663d2a04a01e9e6ca4e5
+coverage_gids:
+  - D5/S3/ConceptDynamics/Completion/CommutingCompletionExchange.commuting_completion_exchange
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Completion/CommutingCompletionExchange.commuting_completion_exchange
+      source_sha256: sha256:fd9d570d39d4056adf19d90d0af448ebec1ac9a1a624663d2a04a01e9e6ca4e5
+      target_statement_id: sha256:b5e269296ba4b09a4453104a096c84ecd7cf578186a631ce0af22251ec8f8a31
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Completion/CommutingCompletionExchange.commuting_completion_exchange
+      definition_sha256: sha256:0ce6e0fa708c81077b573a8da12dd820f76bd07f3a1c8fadf7edadc99f3d9ef0
+      emission_sha256: sha256:acd065f26c7edd72e04c9eb81573df15c886d68880e0435bce1d2c76657fc18e
+  unresolved_subitems: []

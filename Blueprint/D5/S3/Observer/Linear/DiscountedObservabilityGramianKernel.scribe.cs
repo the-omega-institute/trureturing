@@ -51,9 +51,13 @@ internal sealed class DiscountedObservabilityGramianKernelDocument
         Formula readout = F.Id("C");
         Formula discount = Beta;
         Formula index = F.Id("n");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula real = Seq(Mathbb, Grp(F.Id("R")));
+        Formula mapState = Call("LinearMap", scalar, state, state);
+        Formula mapOutput = Call("LinearMap", scalar, state, output);
         Formula gramian = new Formula.Subscript(F.Id("W"), discount);
         Formula hidden = new Formula.Subscript(F.Id("N"), Infty);
-        Formula evolutionAdjoint = Seq(evolution, Caret, Grp(Star));
+        Formula evolutionAdjoint = Grp(evolution, Caret, Grp(Star));
         Formula readoutAdjoint = Seq(readout, Caret, Grp(Star));
         Formula summand = Seq(
             discount, Caret, Grp(index), Sp,
@@ -66,14 +70,24 @@ internal sealed class DiscountedObservabilityGramianKernelDocument
         Formula convergence = Seq(
             D(0), Sp, Lt, Sp, discount, Sp, Lt, Sp, D(1), Sp, Land, Sp,
             Sqrt, Grp(discount), Sp, new Formula.Norm(evolution), Sp, Lt, Sp, D(1));
+        Formula hiddenDefinition = Seq(
+            hidden, Sp, Eq, Sp, Call("iInf", index,
+                Call("ker", Seq(readout, Sp, Circ, Sp,
+                    evolution, Caret, Grp(index)))));
 
         return Disp(Seq(
-            Forall, Sp, scalar, Comma, Sp, state, Comma, Sp, output, Comma, Sp,
-            evolution, Comma, Sp, readout, Comma, Sp, discount, Comma,
-            RowBreak, Grp(),
-            Call("RCLike", scalar), Sp, Land, Sp,
-            Call("FiniteDimensional", scalar, state), Sp, Land, Sp,
-            Call("FiniteDimensional", scalar, output), Sp, Land,
+            Forall, Sp, scalar, Comma, Sp, state, Comma, Sp, output, Colon, Sp, type,
+            Comma, Sp, OpenBracket, Call("RCLike", scalar), CloseBracket, Comma, Sp,
+            OpenBracket, Call("NormedAddCommGroup", state), CloseBracket, Comma, Sp,
+            OpenBracket, Call("InnerProductSpace", scalar, state), CloseBracket, Comma, Sp,
+            OpenBracket, Call("FiniteDimensional", scalar, state), CloseBracket, Comma, Sp,
+            OpenBracket, Call("NormedAddCommGroup", output), CloseBracket, Comma, Sp,
+            OpenBracket, Call("InnerProductSpace", scalar, output), CloseBracket, Comma, Sp,
+            OpenBracket, Call("FiniteDimensional", scalar, output), CloseBracket, RowBreak, Grp(),
+            evolution, Colon, Sp, mapState, Comma, Sp,
+            readout, Colon, Sp, mapOutput, Comma, Sp,
+            discount, Colon, Sp, real, Comma, RowBreak, Grp(),
+            hiddenDefinition, Comma, RowBreak, Grp(),
             RowBreak, Grp(),
             convergence, Sp, Rightarrow,
             RowBreak, Grp(),

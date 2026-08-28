@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/TimeProjection/FiniteTimeProjectionRestrictionLaws.finite_time_projection_expansion_and_restriction_laws
       source_sha256: sha256:936177d0c73fc67c02f2c62f05a2a5140ee7361220d20c2d7064a9d1718dada3
-      target_sha256: sha256:1cf78b839394c1537a99df57c51cc2332d7de5cc19c99998d7673625b9e3bbef
+      target_statement_id: sha256:b761682c244d8cd5d0d0c5db4ec8c76582acf183dd69e421c9e7279cc929d1eb
   scribe:
     - gid: D5/S3/ConceptDynamics/TimeProjection/FiniteTimeProjectionRestrictionLaws.finite_time_projection_expansion_and_restriction_laws
       definition_sha256: sha256:3cb96b0e88adca420e5ca4f9429b12799fcabd9cc5fb9e68a3a0eaaa6b7244f2

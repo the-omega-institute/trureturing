@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.dynamic_closure_is_least
       source_sha256: sha256:673b2a06fe3b68aa77ee03acfe19acfd02444036360808ae10720635054d8523
-      target_sha256: sha256:9d389d8a1d81cc26936bd4c5b8be8e4887e0a274394e42e7973809f8adb13798
+      target_statement_id: sha256:acc56dac1a926b4ff9b5ef32d7babaa2f7574b9aa0a0ce4ec577abb2d576c9f8
   scribe:
     - gid: D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.dynamic_closure_is_least
       definition_sha256: sha256:1fa026f38741deb6094246860c4301343c0da6066c37fa00e9abe39ca8479fb9

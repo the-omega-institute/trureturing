@@ -1,0 +1,26 @@
+# 第三百一十六部　有限环面帧的商连接
+
+在紧谱窗口 \(K\) 中，选择有限二次环面族：
+
+$$
+\mathcal D_K
+=
+\{D_1,\ldots,D_r\},
+$$
+
+以及正权 \(w_j>0\)。
+
+冻结局部规范，使每个 toric period 写成：
+
+$$
+\boxed{
+\mathcal P_j(s)
+=
+\xi(s)\mathcal T_j(s),
+}
+\tag{316.1}
+$$
+
+其中：
+
+* \(\mathcal P_j\)：完整 Eisenstein toric period；

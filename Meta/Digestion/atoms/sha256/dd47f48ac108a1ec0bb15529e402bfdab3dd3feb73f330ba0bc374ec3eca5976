@@ -1,0 +1,84 @@
+## 223.1 Stieltjes–Loewner 核
+
+定义：
+
+$$
+\boxed{
+\mathcal L_{\mathscr S}(x,y)
+=
+\frac{
+\mathscr S(x)-\mathscr S(y)
+}{
+y-x
+},
+\qquad
+x,y>0.
+}
+\tag{223.2}
+$$
+
+对 \(x=y\)，定义：
+
+$$
+\mathcal L_{\mathscr S}(x,x)
+=
+-\mathscr S'(x).
+$$
+
+由式 (222.5)：
+
+$$
+\boxed{
+\mathcal L_{\mathscr S}(x,y)
+=
+\sum_{\gamma>0}
+\frac{
+m_\gamma
+}{
+(x+\gamma^2)(y+\gamma^2)
+}.
+}
+\tag{223.3}
+$$
+
+令：
+
+$$
+v_x(\gamma)
+=
+\frac{\sqrt{m_\gamma}}{x+\gamma^2}.
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal L_{\mathscr S}(x,y)
+=
+\langle v_x,v_y\rangle_{\ell^2}.
+}
+\tag{223.4}
+$$
+
+因此任意有限点集：
+
+$$
+x_1,\ldots,x_N>0
+$$
+
+对应的 Loewner 矩阵：
+
+$$
+\boxed{
+\left[
+\mathcal L_{\mathscr S}(x_i,x_j)
+\right]_{i,j=1}^{N}
+}
+$$
+
+在 RH 下正半定。
+
+它是前文 Nevanlinna/Pick 核在平方折叠后的正实轴版本。
+
+---
+

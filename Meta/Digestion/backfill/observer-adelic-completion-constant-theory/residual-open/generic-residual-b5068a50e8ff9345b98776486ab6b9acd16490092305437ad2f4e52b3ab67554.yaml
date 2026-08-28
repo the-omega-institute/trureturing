@@ -1,0 +1,14 @@
+ast_path: section/192-1-环面帧形式
+fingerprints:
+  raw_sha256: sha256:b5068a50e8ff9345b98776486ab6b9acd16490092305437ad2f4e52b3ab67554
+  normalized_sha256: sha256:b5068a50e8ff9345b98776486ab6b9acd16490092305437ad2f4e52b3ab67554
+cas_ref: sha256:b5068a50e8ff9345b98776486ab6b9acd16490092305437ad2f4e52b3ab67554
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-c68082c14fce85e0d7454fe4ba8dd381202914a6dcabe77ccd945a4134b16edb-3b8bd89597a09bb0e96352cf93e36d7d44b3caaed8a1ab0816f248bbd0db7a3f
+    - generic-residual-b0db9af7f1b4a9623398536c371f33118fd879d822e1e834df8caa31a62adf40-9ac62a70d45778a9161b069447f21ab08a982d56794a9c4485c17135c7dfbc19
+    - generic-residual-5d67b51ac734f123595dc94ea8c45100db0768e0dd63177e3d27affe0d23aacd-6f9b4a3a5b927cb9d5ef48eb41d75187d454fb05c0deeb2c8a788481bc6759a4

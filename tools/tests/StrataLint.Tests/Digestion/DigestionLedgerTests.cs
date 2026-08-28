@@ -226,7 +226,7 @@ public sealed partial class DigestionLedgerTests
             new DigestionCoverageReceipt(
                 gid,
                 atom.Fingerprints.RawSha256,
-                DigestionFingerprint.Compute(target).RawSha256),
+                TestModuleStatementId),
             new DigestionScribeReceipt(gid, definitionHash, emissionHash),
             atomizer: AtomizerRegistry.NoAtomizerId);
         var source = Assert.Single(template.RequireDigestionSources());
@@ -257,16 +257,18 @@ public sealed partial class DigestionLedgerTests
             definitionHash,
             ScribeEmissionAttestation.EmissionPath(gid),
             emissionHash);
-        var rawSnapshot = RawRepositorySnapshot.Create(
-        [
-            new RawRepositoryEntry("docs/source.md", ImmutableArray.CreateRange(sourceBytes)),
-            new RawRepositoryEntry(CasFile(atom).Path, ImmutableArray.CreateRange(CasFile(atom).Bytes)),
-            new RawRepositoryEntry(targetPath, ImmutableArray.CreateRange(target)),
-            new RawRepositoryEntry(record.DefinitionPath, ImmutableArray.CreateRange(definition)),
-            new RawRepositoryEntry(record.EmissionPath, ImmutableArray.CreateRange(emission)),
-        ]);
+        var rawEntries = new List<RawRepositoryEntry>
+        {
+            new("docs/source.md", ImmutableArray.CreateRange(sourceBytes)),
+            new(CasFile(atom).Path, ImmutableArray.CreateRange(CasFile(atom).Bytes)),
+            new(targetPath, ImmutableArray.CreateRange(target)),
+            new(record.DefinitionPath, ImmutableArray.CreateRange(definition)),
+            new(record.EmissionPath, ImmutableArray.CreateRange(emission)),
+        };
+        rawEntries.AddRange(FrozenLedgerFiles(targetPath, "probe").Select(static file =>
+            new RawRepositoryEntry(file.Path, ImmutableArray.CreateRange(file.Bytes))));
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-            SnapshotDecoder.Decode(rawSnapshot)).Snapshot;
+            SnapshotDecoder.Decode(RawRepositorySnapshot.Create(rawEntries))).Snapshot;
 
         var evaluation = DigestionStatusEvaluator.Evaluate(
             DigestionEvaluationScope.FullScan,
@@ -277,6 +279,9 @@ public sealed partial class DigestionLedgerTests
             baselineDocument: chained);
 
         Assert.Equal(3, evaluation.Entries.Length);
+        Assert.DoesNotContain(
+            evaluation.Entries.SelectMany(static item => item.Gaps),
+            static gap => gap.Code == "coverage-receipt-mismatch");
         Assert.All(evaluation.Entries, static item => Assert.Equal(
             DigestionMigrationState.Absorbed,
             item.DerivedStatus.Migration));
@@ -408,7 +413,7 @@ public sealed partial class DigestionLedgerTests
             new DigestionCoverageReceipt(
                 gid,
                 atom.Fingerprints.RawSha256,
-                DigestionFingerprint.Compute(target).RawSha256),
+                TestModuleStatementId),
             new DigestionScribeReceipt(gid, definitionHash, emissionHash),
             atomizer: AtomizerRegistry.ObserverId);
         var document = loaded.WithDigestionSources(
@@ -419,12 +424,14 @@ public sealed partial class DigestionLedgerTests
                     GenreRegistryCheck.Collected([token])),
             },
         ]);
-        var snapshot = Snapshot(
+        var snapshot = Snapshot([
             ("docs/source.md", source),
             CasFile(atom),
             (targetPath, target),
             (record.DefinitionPath, definition),
-            (record.EmissionPath, emission));
+            (record.EmissionPath, emission),
+            .. FrozenLedgerFiles(targetPath, "probe"),
+        ]);
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
             DigestionEvaluationScope.FullScan,
@@ -511,7 +518,7 @@ public sealed partial class DigestionLedgerTests
             new DigestionCoverageReceipt(
                 declarationGid,
                 atom.Fingerprints.RawSha256,
-                DigestionFingerprint.Compute(target).RawSha256),
+                TestDeclarationStatementId),
             new DigestionScribeReceipt(declarationGid, definitionHash, emissionHash));
         var snapshotFiles = new List<(string Path, byte[] Bytes)>
         {
@@ -524,6 +531,9 @@ public sealed partial class DigestionLedgerTests
         {
             snapshotFiles.Add((ScribeEmissionAttestation.EmissionPath(moduleGid), emission));
         }
+        snapshotFiles.AddRange(FrozenLedgerFiles(
+            targetPath,
+            declarationGid[(declarationGid.LastIndexOf('.') + 1)..]));
         var snapshot = Snapshot([.. snapshotFiles]);
 
         return Assert.Single(DigestionStatusEvaluator.Evaluate(
@@ -557,7 +567,7 @@ public sealed partial class DigestionLedgerTests
             new DigestionCoverageReceipt(
                 gid,
                 atom.Fingerprints.RawSha256,
-                DigestionFingerprint.Compute(target).RawSha256),
+                TestModuleStatementId),
             new DigestionScribeReceipt(gid, definitionHash, emissionHash),
             tailAuthorization: new DigestionExternalReceipt(
                 authorizationPath,
@@ -574,14 +584,16 @@ public sealed partial class DigestionLedgerTests
         var report = new LeanFileReport(
             ImmutableArray<string>.Empty,
             [new LeanDeclaration("tailProbe", "axiom", "True", ["tailProbe"])]);
-        var snapshot = Snapshot(
+        var snapshot = Snapshot([
             ("docs/source.md", source),
             CasFile(atom),
             (targetPath, target),
             (ScribeEmissionAttestation.DefinitionPath(gid), definition),
             (ScribeEmissionAttestation.EmissionPath(gid), emission),
             (ScribeEmissionAttestation.RelativePath, attestation),
-            (authorizationPath, authorization));
+            (authorizationPath, authorization),
+            .. FrozenLedgerFiles(targetPath, "tailProbe"),
+        ]);
 
         var verifiedEmissions = VerifiedScribeEmissions.Create(
         [
@@ -636,6 +648,25 @@ public sealed partial class DigestionLedgerTests
             [entry],
             AtomizerRegistry.GictId);
     }
+
+    private static readonly string TestModuleStatementId =
+        FrozenStatementReceiptTestData.Id('a');
+
+    private static readonly string TestDeclarationStatementId =
+        FrozenStatementReceiptTestData.Id('b');
+
+    private static (string Path, byte[] Bytes)[] FrozenLedgerFiles(
+        string modulePath,
+        params string[] declarationSelectors) =>
+        FrozenStatementReceiptTestData.LedgerFiles(
+            new FrozenStatementReceiptTestData.Module(
+                modulePath,
+                TestModuleStatementId,
+                declarationSelectors.Select(selector =>
+                    new FrozenStatementReceiptTestData.Declaration(
+                        selector,
+                        TestDeclarationStatementId))
+                    .ToImmutableArray()));
 
     private static BackfillInventoryDocument StructuralLedger(DigestionAtom atom)
     {

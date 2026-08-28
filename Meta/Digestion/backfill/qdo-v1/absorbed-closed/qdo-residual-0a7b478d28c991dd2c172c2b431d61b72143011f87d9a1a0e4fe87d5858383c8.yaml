@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/InverseLimits/FiniteCofilteredLimit.finite_cofiltered_limit_nonempty
       source_sha256: sha256:0a7b478d28c991dd2c172c2b431d61b72143011f87d9a1a0e4fe87d5858383c8
-      target_sha256: sha256:f77461284f261405b6c33c94ec609cad647701dab0c628205a1b8ece584e8325
+      target_statement_id: sha256:469bbcf6b74214f920f6b8355e8e333fc9a28b0094320c599ede19d0233530fe
   scribe:
     - gid: D5/S3/ObserverMemory/InverseLimits/FiniteCofilteredLimit.finite_cofiltered_limit_nonempty
       definition_sha256: sha256:3a8151e57420ea7e179fde20f8bb4e0b031a44dbdb403fd870d4d1f4f8d875d2

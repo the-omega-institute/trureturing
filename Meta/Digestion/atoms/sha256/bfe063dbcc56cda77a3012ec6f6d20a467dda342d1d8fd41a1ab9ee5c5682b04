@@ -1,0 +1,25 @@
+## 235.1 与上一轮核目标的关系
+
+上一轮的目标是构造：
+
+$$
+\mathcal N_\omega(z,w)
+=
+\langle
+\mathscr V_{\omega,z},
+\mathscr V_{\omega,w}
+\rangle.
+$$
+
+当前目标是其中心化、平方折叠、moment 版本：
+
+$$
+\mu_{i+j}
+=
+\langle
+U^iv,U^jv
+\rangle.
+$$
+
+所以有两种证明入口：
+

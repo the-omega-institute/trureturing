@@ -1,0 +1,41 @@
+## 定理 209.1（Shifted Herglotz criterion）
+
+对固定 \(\omega>0\)：
+
+$$
+\boxed{
+m_\omega
+\text{ 是 Herglotz}
+\iff
+\Theta_\omega
+\text{ 是 Schur／inner}.
+}
+\tag{209.4}
+$$
+
+### 证明
+
+变换：
+
+$$
+u\mapsto
+i\frac{1-u}{1+u}
+$$
+
+把单位圆盘映到上半平面。
+
+正标量 \(1/\omega\) 不改变 Herglotz 性。∎
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+m_\omega\text{ 对每个 }\omega>0\text{ 都是 Herglotz}.
+}
+\tag{209.5}
+$$
+
+---
+

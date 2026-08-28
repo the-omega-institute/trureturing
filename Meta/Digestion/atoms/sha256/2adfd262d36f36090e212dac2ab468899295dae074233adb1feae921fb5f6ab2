@@ -1,0 +1,47 @@
+## v2.2：平方折叠、Stieltjes 正完成、Hankel 层级与 Ramanujan 连分数谱
+
+以下从前文**第二百二十部之后**继续追加。
+
+上一轮将 RH 压缩成 Herglotz 正性：
+
+$$
+\mathrm{RH}
+\iff
+m_0(z):=-\frac{\Xi'(z)}{\Xi(z)}
+\text{ 是上半平面的 Herglotz 函数}.
+$$
+
+本轮利用 \(\Xi\) 的偶对称，将上下对称的零点谱进一步折叠为一个正半轴 moment problem，得到新的完整链：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&\iff
+\text{平方折叠后的 }\xi\text{ 函数只有负实零点}\\
+&\iff
+\text{其对数导数是 Stieltjes 函数}\\
+&\iff
+\text{全部中心 reciprocal-zero moments 构成 Stieltjes moment sequence}\\
+&\iff
+\text{两族 Hankel 矩阵全部正半定}\\
+&\iff
+\text{存在非负系数的 Stieltjes 连分数}\\
+&\iff
+\text{存在一个正 Jacobi 算子，其谱为 }\gamma^{-2}.
+\end{aligned}
+}
+$$
+
+这把此前的：
+
+* Herglotz；
+* de Branges；
+* Ramanujan 连分数；
+* moment matrices；
+* Hilbert–Pólya；
+
+压缩成同一个对象的五张图表。
+
+---
+

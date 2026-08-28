@@ -1,0 +1,10 @@
+ast_path: section/271-2-二阶差分的正规化作用
+fingerprints:
+  raw_sha256: sha256:caa40e498737325daebbc0729d07c13d10f1b2c17591c82130b651134cdfdc2b
+  normalized_sha256: sha256:caa40e498737325daebbc0729d07c13d10f1b2c17591c82130b651134cdfdc2b
+cas_ref: sha256:caa40e498737325daebbc0729d07c13d10f1b2c17591c82130b651134cdfdc2b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

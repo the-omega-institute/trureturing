@@ -1,0 +1,25 @@
+## 251.1 人工零点注入预测
+
+向 \(\mathscr F\) 注入一对非实共轭零点：
+
+$$
+\left(
+1-\frac{x}{\lambda}
+\right)
+\left(
+1-\frac{x}{\overline\lambda}
+\right).
+$$
+
+测量：
+
+* \(N_T\)；
+* \(N_H\)；
+* Pick 一点负证书；
+* S-fraction 首个负系数；
+* Newman 正锥退出时间。
+
+不同观察图表对同一逃逸的响应速度可以被严格比较。
+
+---
+

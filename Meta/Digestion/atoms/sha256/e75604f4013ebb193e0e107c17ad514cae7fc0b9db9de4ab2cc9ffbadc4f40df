@@ -1,0 +1,21 @@
+## 定理 256.1（Li–Fredholm determinant）
+
+$$
+\boxed{
+\frac{
+\xi(\frac1{1-z})
+}{
+\xi(1)
+}
+=
+\det
+\left(
+I+
+\frac{4z}{(1-z)^2}X_\Xi
+\right).
+}
+\tag{256.3}
+$$
+
+---
+

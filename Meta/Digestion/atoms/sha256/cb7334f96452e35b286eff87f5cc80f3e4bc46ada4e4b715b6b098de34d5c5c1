@@ -1,0 +1,47 @@
+## 188.2 观测稳定性
+
+若观测存在误差：
+
+$$
+\widetilde{\mathbf P}_K
+=
+\mathbf P_K+\varepsilon,
+$$
+
+定义重构值：
+
+$$
+\widetilde\xi
+=
+\frac{
+\langle
+\widetilde{\mathbf P}_K,
+\mathbf T_K
+\rangle
+}{
+\|\mathbf T_K\|^2
+}.
+$$
+
+则：
+
+$$
+\boxed{
+|\widetilde\xi(s)-\xi(s)|
+\le
+\frac{\|\varepsilon(s)\|}
+{\sqrt{A_K}}.
+}
+\tag{188.7}
+$$
+
+所以：
+
+$$
+A_K
+$$
+
+是环面观察者的稳定容量。
+
+---
+

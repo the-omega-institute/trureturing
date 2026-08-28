@@ -1,0 +1,10 @@
+ast_path: section/307-2-一阶位移尾矩
+fingerprints:
+  raw_sha256: sha256:a8f521d568e84d40b894a600ab930bb6da0066f118d0a9d86402f42f7fddbd6a
+  normalized_sha256: sha256:a8f521d568e84d40b894a600ab930bb6da0066f118d0a9d86402f42f7fddbd6a
+cas_ref: sha256:a8f521d568e84d40b894a600ab930bb6da0066f118d0a9d86402f42f7fddbd6a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

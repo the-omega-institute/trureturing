@@ -1,0 +1,42 @@
+## 255.2 Hilbert–Schmidt 扰动
+
+有：
+
+$$
+\boxed{
+\frac{2I-C_\Xi-C_\Xi^*}{4}
+=
+X_\Xi.
+}
+\tag{255.5}
+$$
+
+因此：
+
+$$
+\begin{aligned}
+\|I-C_\Xi\|_{\mathrm{HS}}^2
+&=
+\operatorname{Tr}
+\left(
+2I-C_\Xi-C_\Xi^*
+\right)\\
+&=
+4\operatorname{Tr}X_\Xi
+<\infty.
+\end{aligned}
+$$
+
+所以：
+
+$$
+\boxed{
+C_\Xi-I
+\text{ 是 Hilbert–Schmidt 扰动。}
+}
+$$
+
+这比 \(C_\Xi-I\) trace-class 更弱，但恰好足以使 Li 位移能量有限。
+
+---
+

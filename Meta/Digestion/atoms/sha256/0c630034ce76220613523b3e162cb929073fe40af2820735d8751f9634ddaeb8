@@ -1,0 +1,47 @@
+## 221.1 零点映射
+
+若：
+
+$$
+\rho
+$$
+
+是 \(\xi\) 的零点，令：
+
+$$
+z_\rho=\rho-\frac12.
+$$
+
+那么 \(\mathscr F\) 的相应零点是：
+
+$$
+\boxed{
+\lambda_\rho
+=
+z_\rho^2
+=
+\left(\rho-\frac12\right)^2.
+}
+\tag{221.3}
+$$
+
+由于：
+
+$$
+\rho
+\longleftrightarrow
+1-\rho
+$$
+
+对应：
+
+$$
+z_\rho
+\longleftrightarrow
+-z_\rho,
+$$
+
+两个函数方程对称零点在平方图表中合并为一个零点。
+
+---
+

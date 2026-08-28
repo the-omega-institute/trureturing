@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/PrimeForms/ThreeModFourDescent.prime_dvd_dvd_of_dvd_sq_add_sq
       source_sha256: sha256:04b9d7a92102a4d1b437b29ee7a326c7da4f16a52e3fc70663fab125873b4c69
-      target_sha256: sha256:8354dfd0a4b65ef87ad8d89c3061a56fcf98cde5b69c9af596eb474572332d5a
+      target_statement_id: sha256:a2a68719d0324258e64f8cf2ea715b22cdaf2e48ff60c46cc3de33b2f67ff02e
   scribe:
     - gid: D5/S3/PrimeForms/ThreeModFourDescent.prime_dvd_dvd_of_dvd_sq_add_sq
       definition_sha256: sha256:ebb2ce58c621f85f0f5411fdef3793620f63bf1283a9aef9eb190ac8cd40ad57

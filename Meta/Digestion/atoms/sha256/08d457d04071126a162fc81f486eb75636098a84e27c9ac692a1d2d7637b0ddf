@@ -1,0 +1,26 @@
+## 定理 170.1（零点重数—反射 jet 等价）
+
+$$
+\boxed{
+d_{\mathrm{tor}}(s)
+=
+\operatorname{ord}_s\Lambda.
+}
+\tag{170.2}
+$$
+
+Cornelissen–Lorscheid 的结果正是：若对应 \(L\)-function 在 \(s\) 有 \(m\) 重零点，则 Eisenstein series 的前 \(m\) 层导数形成 toroidal derivative tower。([arXiv][1])
+
+这与此前黄金分歧中的：
+
+$$
+\text{值碰撞}
+\longrightarrow
+\text{nilpotent jet}
+$$
+
+完全同型。
+
+区别是：
+
+* 黄金分歧 jet 记录两个 Galois 共轭值在模 \(5\) 后的碰撞阶；

@@ -1,0 +1,45 @@
+# 第二百四十六部　de Bruijn–Newman 常数的正 determinant 含义
+
+Rodgers–Tao 研究的 Newman family 为：
+
+$$
+H_t(z)
+=
+\int_0^\infty
+e^{tu^2}\Phi(u)\cos(zu)\,du.
+$$
+
+存在唯一常数 \(\Lambda_{\mathrm N}\)，使：
+
+$$
+H_t
+$$
+
+的全部零点为实数，当且仅当：
+
+$$
+t\ge\Lambda_{\mathrm N}.
+$$
+
+RH 等价于：
+
+$$
+\Lambda_{\mathrm N}\le0,
+$$
+
+而 Rodgers–Tao 证明：
+
+$$
+\Lambda_{\mathrm N}\ge0.
+$$
+
+所以 RH 等价于：
+
+$$
+\Lambda_{\mathrm N}=0.
+$$
+
+([arXiv][3])
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/第二百二十五部-Hankel-半正定层级
+fingerprints:
+  raw_sha256: sha256:9d5030a4892a2f37fefb690109e3120ba1d0c037f6384dcfe48d231f8711f409
+  normalized_sha256: sha256:9d5030a4892a2f37fefb690109e3120ba1d0c037f6384dcfe48d231f8711f409
+cas_ref: sha256:9d5030a4892a2f37fefb690109e3120ba1d0c037f6384dcfe48d231f8711f409
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

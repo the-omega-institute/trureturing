@@ -1,0 +1,17 @@
+ast_path: 定理/5.2
+fingerprints:
+  raw_sha256: sha256:f58957df29eb659911be7b16a934deb31952b0a57653f01afbb8f2ae99987a45
+  normalized_sha256: sha256:f58957df29eb659911be7b16a934deb31952b0a57653f01afbb8f2ae99987a45
+cas_ref: sha256:f58957df29eb659911be7b16a934deb31952b0a57653f01afbb8f2ae99987a45
+coverage_gids:
+  - D5/S3/Observer/VisibleDescent/LinearDescentCriterion.linear_descent_criterion
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/VisibleDescent/LinearDescentCriterion.linear_descent_criterion
+      source_sha256: sha256:f58957df29eb659911be7b16a934deb31952b0a57653f01afbb8f2ae99987a45
+      target_statement_id: sha256:d02e3d6aa8f35551451a1c75711f4df0140bff29b36276820c41a42445ff757e
+  scribe:
+    - gid: D5/S3/Observer/VisibleDescent/LinearDescentCriterion.linear_descent_criterion
+      definition_sha256: sha256:24eb287ee8255b3c865de94dea27c5f383a59160faade9fd4d17046e8a403829
+      emission_sha256: sha256:ab1e39e482f535ed6b94470774f512f0d4299d05224a8d0a9d4527f87c9200c0
+  unresolved_subitems: []

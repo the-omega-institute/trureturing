@@ -1,0 +1,20 @@
+## 190.1 零点计数是超额 holonomy
+
+设 \(\Omega\) 是边界不含 \(\xi\)-零点的有界区域，则由辩值原理：
+
+$$
+\boxed{
+\frac{1}{2\pi i}
+\oint_{\partial\Omega}
+\mathcal A_{\mathrm{exc}}
+=
+\sum_{\rho\in\Omega}
+m_\rho.
+}
+\tag{190.3}
+$$
+
+所以 Riemann 零点数可以由有限环面周期帧的连接差完整恢复。
+
+---
+

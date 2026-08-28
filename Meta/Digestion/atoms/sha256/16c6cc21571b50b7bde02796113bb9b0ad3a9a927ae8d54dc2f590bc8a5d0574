@@ -1,0 +1,77 @@
+## 261.1 Li Markov 生成元
+
+在 \(L^2(\mathbb T)\) 上定义：
+
+$$
+\boxed{
+\widehat{\mathcal A_\lambda f}(n)
+=
+\lambda_{|n|}
+\widehat f(n).
+}
+\tag{261.5}
+$$
+
+RH 下：
+
+$$
+e^{-t\mathcal A_\lambda}
+$$
+
+是 positivity-preserving、mass-preserving 的圆周卷积半群。
+
+对应 Dirichlet form：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal E_\lambda(f)
+=
+\frac12
+\int_{\mathbb T}
+\int_{\mathbb T}
+|f(x+\theta)-f(x)|^2
+\frac{dx}{2\pi}
+\,d\nu_\Xi(\theta).
+\end{aligned}
+}
+\tag{261.6}
+$$
+
+对 Fourier 模式：
+
+$$
+e_n(x)=e^{inx},
+$$
+
+有：
+
+$$
+\boxed{
+\mathcal E_\lambda(e_n)
+=
+\lambda_n.
+}
+\tag{261.7}
+$$
+
+所以 Li 系数还可以解释为：
+
+$$
+\boxed{
+\text{Riemann 零点角 Lévy 过程对第 }n\text{ 个 Fourier 模式施加的耗散能量}.
+}
+$$
+
+这里 \(e^{-t\lambda_n}\) 中的 \(e\) 具有明确角色：
+
+$$
+\boxed{
+e
+=
+\text{把加法观察时间转化为乘法 Fourier 衰减的半群接口}.
+}
+$$
+
+---
+

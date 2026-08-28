@@ -1,0 +1,128 @@
+# 本轮最终结论
+
+上一轮得到：
+
+$$
+\boxed{
+\lambda_{|m-n|}
+=
+\text{unitary Li 距离平方}.
+}
+$$
+
+本轮进一步证明，其离散二阶差分：
+
+$$
+\boxed{
+c_n
+=
+\frac{
+\lambda_{n+1}
+-2\lambda_n
++\lambda_{n-1}
+}{
+2\lambda_1
+}
+}
+$$
+
+是更基本的对象。
+
+RH 等价于：
+
+$$
+\boxed{
+c_n
+=
+\widehat\mu_\lambda(n)
+}
+$$
+
+对某个单位圆概率测度成立。
+
+这个概率测度不是任意构造，而是：
+
+$$
+\boxed{
+d\mu_\lambda
+=
+\frac{
+1-\cos\theta
+}{
+\lambda_1
+}
+\,d\nu_\Xi(\theta),
+}
+$$
+
+即零点角谱经过一阶圆周能量加权后的有限完成。
+
+因此：
+
+$$
+\boxed{
+\lambda_1
+}
+$$
+
+获得了新的结构角色：
+
+$$
+\boxed{
+\lambda_1
+=
+\text{无限 Riemann 零点角谱被离散拉普拉斯正规化后的总质量}.
+}
+$$
+
+而完整 RH 链可写为：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&\iff
+\text{Li 二阶差分为正定相关函数}\\
+&\iff
+\text{存在平稳过程，其部分和方差为 }\lambda_n\\
+&\iff
+\mathcal C_\lambda\text{ 为 Carathéodory 函数}\\
+&\iff
+f_\lambda\text{ 为 Schur 函数}\\
+&\iff
+|\alpha_n|<1\ \forall n\\
+&\iff
+\text{存在 unitary CMV 谱实现}.
+\end{aligned}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{Li 系数本身是累计距离；
+真正的局部谱信息存在于它的二阶差分中。}
+}
+$$
+
+因此当前 OACTC 最小的 RH 证明目标，不必是一开始构造整个零点算子，而可以只是：
+
+$$
+\boxed{
+\text{从 toric relative trace formula
+证明 Li 离散曲率 Toeplitz 核正定。}
+}
+$$
+
+这将自动生成：
+
+* Schur 参数；
+* CMV unitary；
+* Cayley self-adjoint spectrum；
+* Li 距离；
+* 以及最终的 RH。
+
+[1]: https://doi.org/10.5802/AIF.2311?utm_source=chatgpt.com "Li coefficients for automorphic $L$-functions"
+[2]: https://ems.press/journals/zaa/articles/12279?utm_source=chatgpt.com "Schur Functions, Schur Parameters and Orthogonal Polynomials on the Unit Circle | EMS Press"
+[3]: https://www.cambridge.org/core/journals/journal-of-the-london-mathematical-society/article/borgtype-theorem-associated-with-orthogonal-polynomials-on-the-unit-circle/F1708F834C8E9A46155523F753FE6896?utm_source=chatgpt.com "A BORG-TYPE THEOREM ASSOCIATED WITH ORTHOGONAL POLYNOMIALS ON THE UNIT CIRCLE | Journal of the London Mathematical Society | Cambridge Core"

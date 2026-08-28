@@ -83,7 +83,8 @@ internal sealed class BackfillInventoryDocument
         string sourceId,
         string sourcePath,
         string atomizer,
-        object? rawEntry)
+        object? rawEntry,
+        bool projectBaselineCoverage = false)
     {
         var entry = Mapping(rawEntry, $"source {sourceId} entries must be mappings");
         var hasBoundary = entry.ContainsKey("boundary");
@@ -127,7 +128,10 @@ internal sealed class BackfillInventoryDocument
         var coverageGids = Strings(
             List(entry, "coverage_gids", $"entry {atomId} coverage_gids must be a list"),
             $"entry {atomId} coverage_gids");
-        var receipts = ParseReceipts(atomId, entry.GetValueOrDefault("receipts"));
+        var receipts = ParseReceipts(
+            atomId,
+            entry.GetValueOrDefault("receipts"),
+            projectBaselineCoverage);
         if (receipts.Quarantine is not null && coverageGids.Length > 0)
         {
             throw new FormatException(
@@ -165,7 +169,10 @@ internal sealed class BackfillInventoryDocument
             Scalar(entry, "cas_ref", $"entry {atomId} cas_ref"));
     }
 
-    private static DigestionReceipts ParseReceipts(string atomId, object? rawReceipts)
+    private static DigestionReceipts ParseReceipts(
+        string atomId,
+        object? rawReceipts,
+        bool projectBaselineCoverage)
     {
         var receipts = Mapping(rawReceipts, $"entry {atomId} receipts must be a mapping");
 
@@ -179,15 +186,28 @@ internal sealed class BackfillInventoryDocument
             ["coverage", "scribe", "unresolved_subitems"],
             ["chain_atoms", "tail_authorization", "quarantine", "cover_disposition"],
             $"entry {atomId} receipts");
+        var rawCoverageReceipts = List(
+            receipts,
+            "coverage",
+            $"entry {atomId} coverage receipts must be a list");
         var coverage = ImmutableArray.CreateBuilder<DigestionCoverageReceipt>();
-        foreach (var rawCoverage in List(receipts, "coverage", $"entry {atomId} coverage receipts must be a list"))
+        // Baseline coverage receipts are projected away: admission only needs their
+        // coverage_gids and entry fingerprint to identify pre-existing edges. In
+        // particular, this path neither names nor interprets any historical target field.
+        foreach (var rawCoverage in projectBaselineCoverage ? [] : rawCoverageReceipts)
         {
             var item = Mapping(rawCoverage, $"entry {atomId} coverage receipt must be a mapping");
-            ExactKeys(item, ["gid", "source_sha256", "target_sha256"], $"entry {atomId} coverage receipt");
+            ExactKeys(
+                item,
+                ["gid", "source_sha256", "target_statement_id"],
+                $"entry {atomId} coverage receipt");
             coverage.Add(new DigestionCoverageReceipt(
                 Scalar(item, "gid", $"entry {atomId} coverage gid"),
                 Scalar(item, "source_sha256", $"entry {atomId} coverage source_sha256"),
-                Scalar(item, "target_sha256", $"entry {atomId} coverage target_sha256")));
+                Scalar(
+                    item,
+                    "target_statement_id",
+                    $"entry {atomId} coverage target_statement_id")));
         }
 
         var scribe = ImmutableArray.CreateBuilder<DigestionScribeReceipt>();
@@ -634,11 +654,15 @@ internal static partial class BackfillInventoryLoader
 
     private static BackfillInventoryDocument LoadBaselineDirectorySnapshot(
         RepositorySnapshot snapshot) =>
-        LoadDirectorySnapshot(snapshot, ParseBaselineSourceMetadata);
+        LoadDirectorySnapshot(
+            snapshot,
+            ParseBaselineSourceMetadata,
+            projectBaselineCoverage: true);
 
     private static BackfillInventoryDocument LoadDirectorySnapshot(
         RepositorySnapshot snapshot,
-        Func<string, string, ParsedSourceMetadata> parseSourceMetadata)
+        Func<string, string, ParsedSourceMetadata> parseSourceMetadata,
+        bool projectBaselineCoverage = false)
     {
         var metadata = snapshot.Files
             .Where(static pair => pair.Key.Value.StartsWith(RootPath, StringComparison.Ordinal)
@@ -692,7 +716,8 @@ internal static partial class BackfillInventoryLoader
                     sourceId,
                     fields["path"].Single(),
                     fields["atomizer"].Single(),
-                    entry);
+                    entry,
+                    projectBaselineCoverage);
                 entries.Add(parsedEntry);
             }
 

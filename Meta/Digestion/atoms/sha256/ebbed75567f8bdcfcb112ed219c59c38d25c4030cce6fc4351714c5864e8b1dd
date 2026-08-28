@@ -1,0 +1,31 @@
+## 假设 299.1（Toroidal Clark realization）
+
+从二次环面 period frame 和 relative trace formula 直接构造一个内函数：
+
+$$
+\boxed{
+\vartheta_{\mathrm{tor}}
+}
+$$
+
+使：
+
+$$
+\boxed{
+\frac{1+\vartheta_{\mathrm{tor}}(z)}
+{1-\vartheta_{\mathrm{tor}}(z)}
+=
+\frac{1}{\lambda_1}
+\frac{
+\xi'(\frac1{1-z})
+}{
+\xi(\frac1{1-z})
+}.
+}
+\tag{299.1}
+$$
+
+若能证明 \(\vartheta_{\mathrm{tor}}\) 为内函数，则 RH 立即成立。
+
+---
+

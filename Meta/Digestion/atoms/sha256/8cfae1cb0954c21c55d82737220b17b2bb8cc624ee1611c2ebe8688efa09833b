@@ -1,0 +1,77 @@
+# 第二百零四部　建议形式化顺序
+
+```text
+D5/S3/Observer/ToroidalFrame/
+  ToroidalCarrier.lean
+  ToroidalPeriodVector.lean
+  CompactFiniteFrame.lean
+  FrameLowerBound.lean
+  StableScalarReconstruction.lean
+  ProjectiveBlindness.lean
+
+D5/S3/Analytic/ToroidalConnection/
+  ExcessConnection.lean
+  ExcessConnectionEqualsXiLogDerivative.lean
+  ToroidalArgumentPrinciple.lean
+  RelativeCurvatureCurrent.lean
+  OffLineZeroAmplification.lean
+
+D5/S3/Analytic/ToroidalDeBranges/
+  ShiftedToroidalFrame.lean
+  ToroidalHermiteBiehlerDefect.lean
+  ToroidalDiagonalKernel.lean
+  FiniteToroidalPickMatrix.lean
+  ToroidalMonotonicityCriterion.lean
+
+D5/S3/Observer/ToroidalOptimization/
+  ToroidalFrameCapacity.lean
+  ToroidalConditionNumber.lean
+  ToroidalStickiness.lean
+  WeightedTorusDesign.lean
+
+D5/S3/Analytic/RHTargets/
+  ToroidalExcessPositivity.lean
+  ZeroFreeStripDescent.lean
+  WangToroidalDichotomy.lean
+  DengTwistRenormalization.lean
+```
+
+优先级最高、完全独立可闭合的定理链是：
+
+$$
+\boxed{
+\text{有限 cover}
+\to
+\text{frame lower bound}
+\to
+\text{stable }\xi\text{ reconstruction}.
+}
+$$
+
+其次是：
+
+$$
+\boxed{
+\mathbf P=\xi\mathbf T
+\to
+\mathcal A_{\mathbf P}-\mathcal A_{\mathbf T}
+=d\log\xi
+\to
+\text{zero holonomy}.
+}
+$$
+
+再之后是：
+
+$$
+\boxed{
+\text{off-line zero}
+\to
+\Re(\xi'/\xi)\to-\infty
+\to
+\text{finite toroidal negative witness}.
+}
+$$
+
+---
+

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/RefinementFactorization/SufficiencyEscapeEquivalence.sufficiency_escape_equivalence_tfae
       source_sha256: sha256:14170bc49729e6ead8f0f733ccbfb4dd92782dbb2448935daa5701d8efc203e1
-      target_sha256: sha256:5e5e0a5fd18b14e948b4323b94b0df7db1051b7ef614374fa66b73bdd1a012fa
+      target_statement_id: sha256:99bb4a2706dfd9a112dfc0dd3a452050f6200870e9f648756362d6b8ab7b1411
   scribe:
     - gid: D5/S3/ConceptDynamics/RefinementFactorization/SufficiencyEscapeEquivalence.sufficiency_escape_equivalence_tfae
       definition_sha256: sha256:1ff7a5084fd847c67fb1a86befcd15a4df2c77152abd93969dce7faab41fe0f0

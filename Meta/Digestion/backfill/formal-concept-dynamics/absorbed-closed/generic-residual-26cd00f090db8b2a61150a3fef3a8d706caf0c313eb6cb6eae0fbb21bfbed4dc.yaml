@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Rewriting/Quotients/EffectiveImageUniqueness.effective_image_uniqueness
       source_sha256: sha256:26cd00f090db8b2a61150a3fef3a8d706caf0c313eb6cb6eae0fbb21bfbed4dc
-      target_sha256: sha256:1a6faf431257e8eb971d0700251db8e551674bbd4046d1988b948cd1cd0d77c1
+      target_statement_id: sha256:ab41c634d3790c8cb156624f39a74b83602d3f4c310872cd6b7759f515efa4e0
   scribe:
     - gid: D5/S0/Rewriting/Quotients/EffectiveImageUniqueness.effective_image_uniqueness
       definition_sha256: sha256:34a6639c69a7698d17d85c3cd0043bfbdcb4d04085afe1586a19d3e2f6e12e28

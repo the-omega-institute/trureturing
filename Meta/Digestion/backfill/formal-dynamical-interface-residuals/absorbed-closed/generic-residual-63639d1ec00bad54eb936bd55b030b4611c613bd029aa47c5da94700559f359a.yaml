@@ -1,0 +1,17 @@
+ast_path: 定理/7.1
+fingerprints:
+  raw_sha256: sha256:63639d1ec00bad54eb936bd55b030b4611c613bd029aa47c5da94700559f359a
+  normalized_sha256: sha256:63639d1ec00bad54eb936bd55b030b4611c613bd029aa47c5da94700559f359a
+cas_ref: sha256:63639d1ec00bad54eb936bd55b030b4611c613bd029aa47c5da94700559f359a
+coverage_gids:
+  - D5/S3/Observer/HiddenFlow/InfinitesimalReducingCriterion.infinitesimal_reducing_criterion
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/HiddenFlow/InfinitesimalReducingCriterion.infinitesimal_reducing_criterion
+      source_sha256: sha256:63639d1ec00bad54eb936bd55b030b4611c613bd029aa47c5da94700559f359a
+      target_statement_id: sha256:ad766b9b243c036167342689080dd5ce3ba7d86441b0dd6db8cd7229754b9eff
+  scribe:
+    - gid: D5/S3/Observer/HiddenFlow/InfinitesimalReducingCriterion.infinitesimal_reducing_criterion
+      definition_sha256: sha256:b55e7240c7c48b81f7f57389ee761648bfcc66105a92b09da7237ce987f92238
+      emission_sha256: sha256:e505bba1d08f3fed3b6077d7609c61f0f89d34bf3e1a3d90197d172dd9a55a7c
+  unresolved_subitems: []

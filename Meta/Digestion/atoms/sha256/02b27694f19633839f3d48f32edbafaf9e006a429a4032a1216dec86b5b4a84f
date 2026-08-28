@@ -1,0 +1,60 @@
+# 第一百八十二部　Deng 式 canonical-system 重整化
+
+Suzuki 已在一定参数范围内通过 Fredholm integral operators 构造与 \(\Theta_\omega\) 对应的 canonical system，并指出若能无条件延伸到所有 \(\omega>0\)，就会把 RH 表达为一族 Hamiltonian 的正半定性。([arXiv][5])
+
+因此需要研究：
+
+$$
+H_\omega(a)
+=
+\begin{pmatrix}
+\alpha_\omega(a)&\beta_\omega(a)\\
+\beta_\omega(a)&\gamma_\omega(a)
+\end{pmatrix}.
+$$
+
+定义负性缺陷：
+
+$$
+\boxed{
+\Delta_H(\omega)
+=
+\int
+\operatorname{tr}
+\left(
+H_\omega(a)
+\right)_{-}\,da.
+}
+\tag{182.1}
+$$
+
+理想目标：
+
+$$
+\boxed{
+\Delta_H(\omega)=0
+\quad
+\forall\omega>0.
+}
+$$
+
+Yu Deng 式程序应当是：
+
+1. 对 Fredholm/Hankel kernel 展开高阶历史；
+2. 将闭合子历史收缩成 counterterms；
+3. 保留 primitive kernel；
+4. 选择随 \(\omega\downarrow0\) 增长的展开阶数；
+5. 证明 remainder 小于已有正性 margin。
+
+这条路线目前是开放的，但目标对象已经明确：
+
+$$
+\boxed{
+\text{不是直接估计 ζ 零点，}
+\quad
+\text{而是证明 canonical Hamiltonian 在全部 }\omega>0\text{ 上正半定}.
+}
+$$
+
+---
+

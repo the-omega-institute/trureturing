@@ -1,0 +1,98 @@
+## 定理 225.1（Hankel–RH criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+H_N^{(0)}\succeq0
+\text{ 且 }
+H_N^{(1)}\succeq0
+\quad
+\forall N\ge0.
+}
+\tag{225.3}
+$$
+
+### 证明：RH \(\Rightarrow\) Hankel 正性
+
+由式 (224.4)：
+
+$$
+\begin{aligned}
+\sum_{i,j=0}^{N}
+c_i\overline{c_j}\mu_{i+j}
+&=
+\int
+\left|
+\sum_{i=0}^{N}c_iu^i
+\right|^2d\nu(u)
+\ge0,
+\end{aligned}
+$$
+
+所以：
+
+$$
+H_N^{(0)}\succeq0.
+$$
+
+同理：
+
+$$
+\sum c_i\overline{c_j}\mu_{i+j+1}
+=
+\int
+u
+\left|
+\sum c_iu^i
+\right|^2d\nu(u)
+\ge0.
+$$
+
+---
+
+### 证明：Hankel 正性 \(\Rightarrow\) RH
+
+由 Stieltjes moment theorem，存在正测度 \(\nu\) 使：
+
+$$
+\mu_n=\int u^n\,d\nu(u).
+$$
+
+由于 \(\mathscr S\) 在原点解析，其 Taylor 系数具有有限指数增长：
+
+$$
+\limsup_{n\to\infty}\mu_n^{1/n}<\infty.
+$$
+
+这迫使任意正表示测度 \(\nu\) 具有紧支撑；否则高阶 moments 会增长得更快。
+
+于是：
+
+$$
+\widetilde{\mathscr S}(x)
+=
+\int
+\frac{d\nu(u)}{1+ux}
+$$
+
+在负实割线以外解析，并且其原点 Taylor 级数为：
+
+$$
+\sum(-1)^n\mu_nx^n.
+$$
+
+所以：
+
+$$
+\widetilde{\mathscr S}
+=
+\mathscr S
+$$
+
+在原点邻域相等，并由解析延拓在共同定义域中相等。
+
+因此 \(\mathscr S\) 的全部极点位于负实轴，故 \(\mathscr F\) 的全部零点位于负实轴。由定理 221.1，RH 成立。∎
+
+---
+

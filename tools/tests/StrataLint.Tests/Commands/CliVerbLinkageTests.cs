@@ -53,7 +53,8 @@ public sealed class CliVerbLinkageTests
             // 一致,漂移时两侧必有一红。
             [CommandProgram.Scribe] = new HashSet<string>(StringComparer.Ordinal)
             {
-                "emit", "emit-values", "filemap", "describe-report", "projections",
+                "emit", "emit-values", "filemap", "describe-report", "markdown-check",
+                "projections",
             },
         };
         var dangling = invocations

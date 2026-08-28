@@ -1,0 +1,46 @@
+## 249.1 Darboux deflation
+
+识别 \((\alpha_1,m_1)\) 后，定义：
+
+$$
+d\nu^{[1]}
+=
+d\nu-m_1\alpha_1\,\delta_{\alpha_1}.
+$$
+
+对剩余测度重新进行 Toda 倾斜，极限将集中于 \(\alpha_2\)。
+
+所以得到递归：
+
+$$
+\boxed{
+\text{tilt}
+\to
+\text{isolate largest atom}
+\to
+\text{deflate}
+\to
+\text{repeat}.
+}
+\tag{249.3}
+$$
+
+它与此前 Wang–Deng 语言精确对应：
+
+$$
+\boxed{
+\begin{aligned}
+\text{sticky state}
+&=\text{当前最大谱原子};\\
+\text{counterterm}
+&=\text{其 rank-one measure};\\
+\text{renormalized residual}
+&=\text{deflated measure};\\
+\text{self-improvement}
+&=\text{下一原子成为新主导}.
+\end{aligned}
+}
+$$
+
+---
+

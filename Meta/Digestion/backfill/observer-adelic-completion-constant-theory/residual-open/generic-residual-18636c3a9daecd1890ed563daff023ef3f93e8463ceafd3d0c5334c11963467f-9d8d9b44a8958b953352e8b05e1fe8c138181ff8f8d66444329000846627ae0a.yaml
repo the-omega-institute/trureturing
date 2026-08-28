@@ -1,0 +1,10 @@
+ast_path: section/282-1-Non-sticky-谱测度分散/clause/4
+fingerprints:
+  raw_sha256: sha256:18636c3a9daecd1890ed563daff023ef3f93e8463ceafd3d0c5334c11963467f
+  normalized_sha256: sha256:18636c3a9daecd1890ed563daff023ef3f93e8463ceafd3d0c5334c11963467f
+cas_ref: sha256:18636c3a9daecd1890ed563daff023ef3f93e8463ceafd3d0c5334c11963467f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

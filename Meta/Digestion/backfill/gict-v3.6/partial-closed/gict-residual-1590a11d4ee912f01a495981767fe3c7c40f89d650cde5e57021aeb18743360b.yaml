@@ -9,6 +9,6 @@ receipts:
   coverage:
     - gid: D5/S0/Carrier/AlgebraicModel.golden_algebraic_model_spec
       source_sha256: sha256:1590a11d4ee912f01a495981767fe3c7c40f89d650cde5e57021aeb18743360b
-      target_sha256: sha256:7fb489a1140934f9aae18903fd316321504018f40616777a7ca249793910b6f1
+      target_statement_id: sha256:bae734af1cb3b1a650afb1633b6375c67d805480297d5398dd8608c8c07e9784
   scribe: []
   unresolved_subitems: []

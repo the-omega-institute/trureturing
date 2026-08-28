@@ -53,10 +53,11 @@ internal sealed class SemanticResourceSeparationDocument : IScribeDocumentDefini
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
             Forall, Sp, x, Comma, Sp, b, Comma, Sp, y, Colon, Sp, type,
-            Comma, Sp, Call("Finite", y), Comma, Sp, Call("Nonempty", y),
+            Comma, Sp, OpenBracket, Call("Fintype", y), CloseBracket,
+            Comma, Sp, OpenBracket, Call("Nonempty", y), CloseBracket,
             Comma, RowBreak, Grp(),
             readout, Colon, Sp, x, Sp, To, Sp, b, Comma, Sp,
-            Call("Finite", range), Comma, Sp,
+            OpenBracket, Call("Fintype", range), CloseBracket, Comma, Sp,
             cost, Colon, Sp, F.Id("ResourceCost"), Comma, Sp,
             budget, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, RowBreak, Grp(),
             allowed, Colon, Sp, Call("Finset", functionType), Comma, RowBreak, Grp(),

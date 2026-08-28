@@ -1,0 +1,78 @@
+# 第三百一十三部　建议形式化顺序
+
+```text
+D5/S3/Analytic/XiHalfPlaneKernel/
+  XiLogDerivativeKernel.lean
+  RHImpliesZeroResolventGram.lean
+  PositiveKernelImpliesRH.lean
+  FiniteGramDeterminantExpansion.lean
+
+D5/S3/Analytic/RiemannClark/
+  RiemannCayleyZero.lean
+  RiemannClarkWeight.lean
+  RiemannClarkMeasure.lean
+  ClarkOrthogonalZeroBasis.lean
+  RiemannClarkSampling.lean
+
+D5/S3/Analytic/RiemannClarkApprox/
+  ClarkTailMass.lean
+  StickyInfinityCounterterm.lean
+  FiniteAtomicCaratheodory.lean
+  RationalInnerApproximant.lean
+  StickyTailErrorBound.lean
+
+D5/S3/Analytic/XiDeBranges/
+  XiHermiteBiehlerFunction.lean
+  XiDeBrangesKernel.lean
+  SimpleZeroSamplingFormula.lean
+  MultipleZeroClarkFallback.lean
+
+D5/S3/Analytic/RiemannClarkCMV/
+  RiemannClarkTransform.lean
+  ClarkCMVDiagonalization.lean
+  InverseCayleyOrdinateOperator.lean
+
+D5/S3/Observer/ToroidalKernel/
+  ToroidalExcessKernel.lean
+  RelativeTraceGramTarget.lean
+  ToroidalClarkIntertwiner.lean
+```
+
+首个最值得闭合的核心链是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal K_\xi\succeq0.
+}
+$$
+
+随后是：
+
+$$
+\boxed{
+\mathcal K_\xi
+\to
+K_{\vartheta_\xi}
+\to
+\text{Clark zero sampling}.
+}
+$$
+
+第三条是新的高价值近似链：
+
+$$
+\boxed{
+\text{finite zeros}
++
+M(T)\delta_1
+\to
+\vartheta_T
+\to
+O(\log T/T^2)\text{ 正完成}.
+}
+$$
+
+---
+

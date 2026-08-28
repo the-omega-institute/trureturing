@@ -1,0 +1,37 @@
+## 299.2 最强的 Clark family 目标
+
+构造 rank-one unitary family：
+
+$$
+\boxed{
+\{U_\alpha^{\mathrm{tor}}\}_{\alpha\in\mathbb T}
+}
+$$
+
+满足：
+
+$$
+\operatorname{spec}
+U_1^{\mathrm{tor}}
+=
+\left\{
+1-\frac1\rho:
+\xi(\rho)=0
+\right\},
+$$
+
+以及：
+
+$$
+\operatorname{spec}
+U_{-1}^{\mathrm{tor}}
+=
+\left\{
+1-\frac1s:
+\xi'(s)=0
+\right\}.
+$$
+
+这会一次性建立：
+
+* Hilbert–Pólya；

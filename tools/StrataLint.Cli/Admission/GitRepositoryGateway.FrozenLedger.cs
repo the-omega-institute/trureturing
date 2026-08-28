@@ -102,20 +102,11 @@ internal sealed partial class GitRepositoryGateway
                 ["rev-parse", "--show-object-format"],
                 detail: $"unsupported Git object format {objectFormat}"),
         };
-        foreach (var oid in references.CommitOids)
-        {
-            RequireTaggedObjectType(oid, prefix, "commit");
-        }
-
-        foreach (var oid in references.TreeOids)
-        {
-            RequireTaggedObjectType(oid, prefix, "tree");
-        }
-
-        foreach (var oid in references.BlobOids)
-        {
-            RequireTaggedObjectType(oid, prefix, "blob");
-        }
+        RequireTaggedObjectTypes(
+            prefix,
+            (references.CommitOids, "commit"),
+            (references.TreeOids, "tree"),
+            (references.BlobOids, "blob"));
 
         if (!references.RequiredAncestorCommitOids.IsEmpty)
         {
@@ -206,43 +197,53 @@ internal sealed partial class GitRepositoryGateway
         return TrustedFrozenGitReferences.CreateForTrustedAdapter(references.Inputs);
     }
 
-    private void RequireTaggedObjectType(string oid, string repositoryPrefix, string expected)
+    // Validate the existence and type of every referenced object in a single
+    // `git cat-file --batch-check` invocation. The prior implementation spawned one
+    // `git cat-file -t` process per object id; a frozen ledger with tens of thousands
+    // of references then paid tens of thousands of sequential process spawns (minutes
+    // of wall clock, growing with every freeze). Batching feeds all ids on stdin and
+    // reads one strictly-parsed header line per id. The admission verdict is preserved:
+    // a `<oid> missing` line is a MissingObject rejection (the object the old exit-128
+    // path rejected), a type mismatch is a WrongObjectType rejection with the same
+    // message, and any output that is not exactly a missing or `<oid> <type> <size>`
+    // frame is rejected as an infrastructure error. One diagnostic detail changes: a
+    // missing object arrives on a zero-exit `missing` line, so its rejection carries no
+    // GitCommandFailure (parity with WrongObjectType, which never carried one); a real
+    // git fault still exits non-zero and surfaces as GitInfrastructureException. No
+    // caller reads the rejection's GitFailure — the sole catch site reads only Message.
+    private void RequireTaggedObjectTypes(
+        string repositoryPrefix,
+        params (ImmutableArray<string> Oids, string Expected)[] groups)
     {
-        if (!oid.StartsWith(repositoryPrefix, StringComparison.Ordinal))
+        var expectations = new List<(string ObjectId, string Expected, string Display)>();
+        foreach (var (oids, expected) in groups)
         {
-            throw SemanticRejection(
-                $"frozen Git object {oid} does not use repository object format {repositoryPrefix[..^1]}");
-        }
-
-        RequireObjectType(Untag(oid), expected, oid);
-    }
-
-    private void RequireObjectType(string objectId, string expected, string? display = null)
-    {
-        var arguments = new[] { "cat-file", "-t", objectId };
-        var result = GitRaw(arguments, allowNonzero: true);
-        if (result.ExitCode != 0)
-        {
-            var infrastructure = InfrastructureFailure(
-                GitCommandFailureKind.NonzeroExit,
-                arguments,
-                exitCode: result.ExitCode,
-                standardError: DecodeFailureText(result.StandardError));
-            if (result.ExitCode == 128)
+            foreach (var oid in oids)
             {
-                throw new FrozenReferenceRejectionException(
-                    FrozenReferenceRejectionKind.MissingObject,
-                    $"frozen Git object {display ?? objectId} is not a reachable {expected}",
-                    infrastructure.Failure);
-            }
+                if (!oid.StartsWith(repositoryPrefix, StringComparison.Ordinal))
+                {
+                    throw SemanticRejection(
+                        $"frozen Git object {oid} does not use repository object format {repositoryPrefix[..^1]}");
+                }
 
-            throw infrastructure;
+                expectations.Add((Untag(oid), expected, oid));
+            }
         }
 
-        string actual;
+        if (expectations.Count == 0)
+        {
+            return;
+        }
+
+        var arguments = new[] { "cat-file", "--batch-check" };
+        var standardInput = StrictUtf8.GetBytes(
+            string.Concat(expectations.Select(static expectation => expectation.ObjectId + "\n")));
+        var result = GitRaw(arguments, allowNonzero: false, standardInput: standardInput);
+
+        string text;
         try
         {
-            actual = StrictUtf8.GetString(result.StandardOutput).Trim();
+            text = StrictUtf8.GetString(result.StandardOutput);
         }
         catch (System.Text.DecoderFallbackException exception)
         {
@@ -253,11 +254,72 @@ internal sealed partial class GitRepositoryGateway
                 exception: exception);
         }
 
-        if (actual != expected)
+        // `git cat-file --batch-check` emits exactly one newline-terminated line per input
+        // id, in input order. Splitting on '\n' yields those lines plus a trailing empty
+        // element after the final newline.
+        var lines = text.Split('\n');
+        if (lines.Length != expectations.Count + 1 || lines[^1].Length != 0)
         {
-            throw new FrozenReferenceRejectionException(
-                FrozenReferenceRejectionKind.WrongObjectType,
-                $"frozen Git object {display ?? objectId} has type {actual}; expected {expected}");
+            throw InfrastructureFailure(
+                GitCommandFailureKind.InvalidOutput,
+                arguments,
+                detail: "git cat-file --batch-check emitted an unexpected line count");
+        }
+
+        for (var index = 0; index < expectations.Count; index++)
+        {
+            var (objectId, expected, display) = expectations[index];
+            // Split on single spaces without collapsing: git emits exactly one SP
+            // between fields, so leading, trailing, or repeated spaces produce empty
+            // fields that fail the field-count checks below rather than being tolerated.
+            var fields = lines[index].Split(' ');
+            if (fields.Length < 2 || !string.Equals(fields[0], objectId, StringComparison.Ordinal))
+            {
+                throw InfrastructureFailure(
+                    GitCommandFailureKind.InvalidOutput,
+                    arguments,
+                    detail: $"git cat-file --batch-check emitted invalid data for object {objectId}");
+            }
+
+            if (string.Equals(fields[1], "missing", StringComparison.Ordinal))
+            {
+                // A missing frame is strictly `<oid> missing`; any extra token is malformed.
+                if (fields.Length != 2)
+                {
+                    throw InfrastructureFailure(
+                        GitCommandFailureKind.InvalidOutput,
+                        arguments,
+                        detail: $"git cat-file --batch-check emitted invalid data for object {objectId}");
+                }
+
+                throw new FrozenReferenceRejectionException(
+                    FrozenReferenceRejectionKind.MissingObject,
+                    $"frozen Git object {display} is not a reachable {expected}");
+            }
+
+            // A present frame is strictly `<oid> <type> <size>`, where size is a
+            // non-negative decimal object size. Validating the size token keeps the
+            // trust boundary fully fail-closed: any output that is not exactly this
+            // shape is rejected as infrastructure error rather than silently accepted.
+            if (fields.Length != 3
+                || !long.TryParse(
+                    fields[2],
+                    System.Globalization.NumberStyles.None,
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    out _))
+            {
+                throw InfrastructureFailure(
+                    GitCommandFailureKind.InvalidOutput,
+                    arguments,
+                    detail: $"git cat-file --batch-check emitted invalid data for object {objectId}");
+            }
+
+            if (!string.Equals(fields[1], expected, StringComparison.Ordinal))
+            {
+                throw new FrozenReferenceRejectionException(
+                    FrozenReferenceRejectionKind.WrongObjectType,
+                    $"frozen Git object {display} has type {fields[1]}; expected {expected}");
+            }
         }
     }
 

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Quantum/Decoherence/NonselectiveMarginalization.nonselective_recording_marginal
       source_sha256: sha256:2ceefdf80a83c3ee0bcaa5e5318d20188d7ff1b375bc77aa499b35ea43996ec3
-      target_sha256: sha256:f3da2ab64094185fa5cce6fd94ba5c9941e0f74b09edc159bc1b567f5ec65eef
+      target_statement_id: sha256:4cbdd507954b1fe4f2ad7a2d93381d145d4d698f35494183a94fa471ec593dc1
   scribe:
     - gid: D5/S3/Quantum/Decoherence/NonselectiveMarginalization.nonselective_recording_marginal
       definition_sha256: sha256:35b67056d7c6498b26c34811eecaa21ffc4ba3a8de7233e697ae591a4edac42a

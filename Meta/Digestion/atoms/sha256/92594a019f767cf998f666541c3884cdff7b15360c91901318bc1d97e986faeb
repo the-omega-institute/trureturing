@@ -1,0 +1,68 @@
+# 第一百九十部　超额连接
+
+设 \(s\) 处：
+
+$$
+\xi(s)\neq0.
+$$
+
+对一个非零向量值函数 \(\mathbf U(s)\)，定义连接一形式：
+
+$$
+\boxed{
+\mathcal A_{\mathbf U}
+=
+\frac{
+\langle d\mathbf U,\mathbf U\rangle
+}{
+\|\mathbf U\|^2
+}.
+}
+\tag{190.1}
+$$
+
+由：
+
+$$
+\mathbf P_K=\xi\mathbf T_K,
+$$
+
+直接得到：
+
+$$
+\boxed{
+\mathcal A_{\mathbf P_K}
+-
+\mathcal A_{\mathbf T_K}
+=
+\frac{d\xi}{\xi}.
+}
+\tag{190.2}
+$$
+
+这一定义与选取的有限环面帧无关。
+
+称：
+
+$$
+\boxed{
+\mathcal A_{\mathrm{exc}}
+:=
+\mathcal A_{\mathbf P_K}
+-
+\mathcal A_{\mathbf T_K}
+}
+$$
+
+为**环面超额连接**。
+
+它记录：
+
+$$
+\text{完整周期变化}
+-
+\text{twist 载体自身变化}.
+$$
+
+---
+

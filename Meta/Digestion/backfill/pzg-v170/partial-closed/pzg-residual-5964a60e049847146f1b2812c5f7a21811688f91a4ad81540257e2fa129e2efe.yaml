@@ -9,6 +9,6 @@ receipts:
   coverage:
     - gid: D5/S3/PrimeForms/QuadraticResidues.square_residues_and_sum_obstruction
       source_sha256: sha256:5964a60e049847146f1b2812c5f7a21811688f91a4ad81540257e2fa129e2efe
-      target_sha256: sha256:4b9afbb9c5483978e38297e36b4661e32126832d27b1c6722f16a0b11bd44cdc
+      target_statement_id: sha256:42ca3de3d3e40942b86f158c7940c324c4e3b2c3280a38b07f50915cb9ddf676
   scribe: []
   unresolved_subitems: []

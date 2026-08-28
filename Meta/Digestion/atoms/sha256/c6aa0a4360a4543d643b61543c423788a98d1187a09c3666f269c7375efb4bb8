@@ -1,0 +1,38 @@
+## 194.1 de Branges 对角核
+
+de Branges 核在对角线上为：
+
+$$
+\boxed{
+K_\omega(z,z)
+=
+\frac{
+|E_\omega^+(z)|^2
+-
+|E_\omega^-(z)|^2
+}{
+4\pi\Im z
+}.
+}
+\tag{194.3}
+$$
+
+所以：
+
+$$
+\boxed{
+K_\omega(z,z)
+=
+\frac{
+\mathscr H_\omega(z)
+}{
+4\pi\Im z
+}.
+}
+\tag{194.4}
+$$
+
+因此 RH 等价于全部有限环面重构的 de Branges 对角核严格为正。
+
+---
+

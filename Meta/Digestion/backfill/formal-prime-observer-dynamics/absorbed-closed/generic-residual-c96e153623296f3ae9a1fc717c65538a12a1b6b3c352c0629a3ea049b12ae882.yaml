@@ -1,0 +1,17 @@
+ast_path: 定理/25.1
+fingerprints:
+  raw_sha256: sha256:c96e153623296f3ae9a1fc717c65538a12a1b6b3c352c0629a3ea049b12ae882
+  normalized_sha256: sha256:c96e153623296f3ae9a1fc717c65538a12a1b6b3c352c0629a3ea049b12ae882
+cas_ref: sha256:c96e153623296f3ae9a1fc717c65538a12a1b6b3c352c0629a3ea049b12ae882
+coverage_gids:
+  - D5/S3/ObserverMemory/Prediction/PredictionPartitionStability.prediction_partition_stable_forever
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/Prediction/PredictionPartitionStability.prediction_partition_stable_forever
+      source_sha256: sha256:c96e153623296f3ae9a1fc717c65538a12a1b6b3c352c0629a3ea049b12ae882
+      target_statement_id: sha256:c498ce334f5af0ba9a5cd81b123cdaa8b00d4d9e8bfcee88c07df958c7dad7fc
+  scribe:
+    - gid: D5/S3/ObserverMemory/Prediction/PredictionPartitionStability.prediction_partition_stable_forever
+      definition_sha256: sha256:7851f01a6ac288e88b548c43fc4a259bac4b88e535244f13f2458505a6c16209
+      emission_sha256: sha256:0044ead74d2adccbed6ffd54595d8df658ea47044914983ef04f5e42a864c33c
+  unresolved_subitems: []

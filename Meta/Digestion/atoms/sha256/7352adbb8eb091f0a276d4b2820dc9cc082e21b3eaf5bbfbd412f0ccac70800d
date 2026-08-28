@@ -1,0 +1,57 @@
+# 第三百二十三部　函数域中的闭合模型
+
+设 \(C/\mathbb F_q\) 是 genus \(g\) 的光滑射影曲线。
+
+其 zeta 分子可以写成 normalized Frobenius unitary class 的特征多项式：
+
+$$
+\boxed{
+P_C(u)
+=
+\det
+\left(
+I-uq^{1/2}\Theta_C
+\right),
+}
+\tag{323.1}
+$$
+
+其中：
+
+$$
+\Theta_C
+$$
+
+可视为 \(2g\) 维 unitary/symplectic 共轭类；曲线 zeta 的这一 unitary-matrix 表达是有限域随机矩阵与 Frobenius 理论中的标准形式。([arxiv.org][5])
+
+令：
+
+$$
+z=q^{1/2}u.
+$$
+
+则：
+
+$$
+\boxed{
+P_C(q^{-1/2}z)
+=
+\det(I-z\Theta_C).
+}
+\tag{323.2}
+$$
+
+由于 \(\Theta_C\) unitary，全部零点位于：
+
+$$
+|z|=1,
+$$
+
+即：
+
+$$
+|u|=q^{-1/2}.
+$$
+
+---
+

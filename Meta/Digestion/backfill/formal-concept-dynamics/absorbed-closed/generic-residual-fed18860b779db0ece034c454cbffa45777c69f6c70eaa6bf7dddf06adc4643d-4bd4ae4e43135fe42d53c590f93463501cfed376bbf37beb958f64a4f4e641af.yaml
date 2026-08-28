@@ -1,0 +1,17 @@
+ast_path: 定理/164.1/clause/2
+fingerprints:
+  raw_sha256: sha256:fed18860b779db0ece034c454cbffa45777c69f6c70eaa6bf7dddf06adc4643d
+  normalized_sha256: sha256:fed18860b779db0ece034c454cbffa45777c69f6c70eaa6bf7dddf06adc4643d
+cas_ref: sha256:fed18860b779db0ece034c454cbffa45777c69f6c70eaa6bf7dddf06adc4643d
+coverage_gids:
+  - D5/S3/ConceptDynamics/Communication/TruthfulnessSufficiencyIndependence.truthfulness_sufficiency_independence
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Communication/TruthfulnessSufficiencyIndependence.truthfulness_sufficiency_independence
+      source_sha256: sha256:fed18860b779db0ece034c454cbffa45777c69f6c70eaa6bf7dddf06adc4643d
+      target_statement_id: sha256:5ce7a8a061e548d14a516171ebf8ea1e15680ad653a1f68f7a4394f07a7354a4
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Communication/TruthfulnessSufficiencyIndependence.truthfulness_sufficiency_independence
+      definition_sha256: sha256:1eb11f36563144df7c434f25e1ad7aa192468201d119bfc0b9746e8e87a2c4c5
+      emission_sha256: sha256:19f6afb08fa303e7f0e2faf019ed8ab5e9a11efd0c0ccfbb511124fad081307d
+  unresolved_subitems: []

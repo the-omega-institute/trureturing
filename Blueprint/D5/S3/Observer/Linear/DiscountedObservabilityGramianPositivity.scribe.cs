@@ -50,7 +50,7 @@ internal sealed class DiscountedObservabilityGramianPositivityDocument
         Formula discount = Beta;
         Formula index = F.Id("n");
         Formula gramian = new Formula.Subscript(F.Id("W"), discount);
-        Formula evolutionAdjoint = Seq(evolution, Caret, Grp(Star));
+        Formula evolutionAdjoint = Grp(evolution, Caret, Grp(Star));
         Formula readoutAdjoint = Seq(readout, Caret, Grp(Star));
         Formula summand = Seq(
             discount, Caret, Grp(index), Sp,

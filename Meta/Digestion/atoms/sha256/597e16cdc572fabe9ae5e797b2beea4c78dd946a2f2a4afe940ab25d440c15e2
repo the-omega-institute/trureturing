@@ -1,0 +1,65 @@
+# 第一百八十六部　建议形式化顺序
+
+```text
+D5/S3/Observer/Toroidal/
+  QuadraticTorusIndex.lean
+  ToroidalPeriod.lean
+  JointToroidalObserver.lean
+  ToroidalKernel.lean
+
+D5/S3/Analytic/ToroidalEisenstein/
+  HeckeToroidalFactorization.lean
+  QuadraticTwistNonvanishingInterface.lean
+  UniversalToroidalZeroKernel.lean
+  ToroidalDivisorGCD.lean
+  CompactWindowFiniteTomography.lean
+  ToroidalJetMultiplicity.lean
+
+D5/S3/Analytic/ToroidalPositivity/
+  FiniteToroidalEnergy.lean
+  EnergyZeroSet.lean
+  EnergyVanishingOrder.lean
+  WeightedTorusCover.lean
+
+D5/S3/Analytic/ToroidalCuspidal/
+  WaldspurgerPeriodInterface.lean
+  CuspidalToroidalKernel.lean
+  AutomorphicNullSpectrum.lean
+
+D5/S3/Analytic/DeBrangesCompletion/
+  XiRatioInnerFunction.lean
+  ToroidalEscapeRadius.lean
+  InnernessThresholdEquality.lean
+  WangInnernessSelfImprovement.lean
+  CanonicalHamiltonianDefect.lean
+
+D5/S3/Analytic/ToroidalAverage/
+  PositiveTorusCarrierCriterion.lean
+  QuadraticTwistAverage.lean
+  SquareHistoryLimit.lean
+```
+
+优先级最高、且能独立闭合的抽象定理是：
+
+$$
+\boxed{
+\text{pointwise twist nonvanishing}
++
+\text{compactness}
+\Longrightarrow
+\text{finite torus tomography}.
+}
+$$
+
+其次是：
+
+$$
+\boxed{
+\text{joint period zero divisor}
+=
+\text{base }L\text{-function zero divisor}.
+}
+$$
+
+---
+

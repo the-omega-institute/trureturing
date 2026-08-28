@@ -1,0 +1,24 @@
+## 202.2 添加更多环面不自动改变公共因子
+
+所有周期都有：
+
+$$
+\mathcal P_D=\xi\mathcal T_D.
+$$
+
+无论加入多少环面，公共 \(\xi\)-因子始终存在。
+
+增加环面解决的是：
+
+$$
+\text{twist-specific blind spots},
+$$
+
+而不是自动解决：
+
+$$
+\text{base amplitude positivity}.
+$$
+
+---
+

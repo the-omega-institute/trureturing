@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/InstitutionalCapture/CommonSourceCaptureCollapse.common_source_capture_number_eq_one
       source_sha256: sha256:31e64c94766a9f7610d1e017a88f4e0d80f018300aab182662a86cc4e9378854
-      target_sha256: sha256:227e2c544e16caba56ee81f9c4981c6067255edec3240b314629e2444b394e4a
+      target_statement_id: sha256:1d09f27ab48a5fd2efc1e4a22c7018bb51d203e8830cb2ecbc79fc384bef117f
   scribe:
     - gid: D5/S3/ConceptDynamics/InstitutionalCapture/CommonSourceCaptureCollapse.common_source_capture_number_eq_one
       definition_sha256: sha256:4f44fcd25a460d477907b72f0f1e59986a38a364d38934daa227b97cc2bd13e4

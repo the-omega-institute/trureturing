@@ -1,0 +1,10 @@
+ast_path: section/第一百四十五部-黄金传递三角
+fingerprints:
+  raw_sha256: sha256:0b974e17cff238699f7d6cb18b7dded7340ba5c03321ccea57bf02cab5f60b63
+  normalized_sha256: sha256:0b974e17cff238699f7d6cb18b7dded7340ba5c03321ccea57bf02cab5f60b63
+cas_ref: sha256:0b974e17cff238699f7d6cb18b7dded7340ba5c03321ccea57bf02cab5f60b63
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

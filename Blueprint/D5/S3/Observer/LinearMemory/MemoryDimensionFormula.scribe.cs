@@ -43,7 +43,7 @@ internal sealed class MemoryDimensionFormulaDocument : IScribeDocumentDefinition
         Formula readout = F.Id("C");
         Formula index = F.Id("k");
         Formula value = F.Id("y");
-        Formula adjointEvolution = Seq(evolution, Caret, Grp(Star));
+        Formula adjointEvolution = Grp(evolution, Caret, Grp(Star));
         Formula adjointReadout = Seq(readout, Caret, Grp(Star));
         Formula generator = Seq(
             adjointEvolution, Caret, Grp(index), Open,

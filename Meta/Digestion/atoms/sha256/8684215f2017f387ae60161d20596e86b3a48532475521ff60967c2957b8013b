@@ -1,0 +1,26 @@
+## 定理 257.1（Li displacement formula）
+
+$$
+\boxed{
+\lambda_n
+=
+\|I-C_\Xi^n\|_{\mathrm{HS}}^2.
+}
+\tag{257.1}
+$$
+
+这给 Li 系数一个严格结构角色：
+
+$$
+\boxed{
+\lambda_n
+=
+\text{unitary 零点观察者演化 }n\text{ 步后，
+相对于初始状态的总平方位移。}
+}
+$$
+
+Suzuki 已证明 RH 等价于 Li 系数成为某些具体 model-space 函数的 \(L^2\)-范数；Bombieri–Lagarias 则把 Li 系数写成 Weil quadratic functional 在特定测试函数上的值。当前公式是同一正性结构的一个零点谱／unitary 实现。([arXiv][2])
+
+---
+

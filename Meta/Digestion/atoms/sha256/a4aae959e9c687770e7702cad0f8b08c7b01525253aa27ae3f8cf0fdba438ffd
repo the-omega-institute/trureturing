@@ -1,0 +1,33 @@
+## 320.2 Sticky state
+
+若存在单位向量 \(x_N\)，使：
+
+$$
+\langle
+\mathfrak O_{\omega,N}x_N,x_N
+\rangle
+\ll1,
+$$
+
+则：
+
+$$
+\|A_\omega^Nx_N\|
+\approx1,
+$$
+
+且：
+
+$$
+\|C_\omega A_\omega^kx_N\|
+\approx0
+$$
+
+在多数 \(k<N\) 上成立。
+
+该状态几乎不向观察通道泄露能量，是一个 near-unitary internal mode。
+
+这就是系统论中的 sticky state。
+
+---
+

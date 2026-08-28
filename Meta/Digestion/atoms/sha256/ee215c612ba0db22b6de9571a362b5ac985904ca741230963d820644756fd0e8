@@ -1,0 +1,64 @@
+# 第二百零一部　Wang 式零区下降
+
+定义命题：
+
+$$
+\boxed{
+\mathsf T(a):
+\quad
+\mathfrak M_K(s)>0
+\quad
+\text{对所有 }\Re s>\frac12+a.
+}
+\tag{201.1}
+$$
+
+无条件已知：
+
+$$
+\mathsf T(\tfrac12),
+$$
+
+因为：
+
+$$
+\Re s>1
+$$
+
+是 ζ 的 Euler-product 无零区域，且 \(|\xi|\) 在无零右半平面沿水平线严格增长。([arXiv][3])
+
+RH 等价于：
+
+$$
+\mathsf T(0).
+$$
+
+因此最清楚的 Wang 式研究命题是：
+
+$$
+\boxed{
+\mathsf T(a)
+\Longrightarrow
+\mathsf T(F(a)),
+\qquad
+F(a)<a
+\quad(a>0).
+}
+\tag{201.2}
+$$
+
+可能的机制是：
+
+$$
+\begin{cases}
+\text{non-sticky torus frame}
+&\Rightarrow
+\text{正交平均产生严格增益};\\
+\text{sticky torus frame}
+&\Rightarrow
+\text{jet／primitive twist 重整化}.
+\end{cases}
+$$
+
+---
+

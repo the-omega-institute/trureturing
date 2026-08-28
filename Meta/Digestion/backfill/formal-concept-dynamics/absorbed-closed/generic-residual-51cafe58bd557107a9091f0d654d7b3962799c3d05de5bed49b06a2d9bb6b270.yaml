@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Governance/JudgmentRelativeAnalogyCriterion.judgment_relative_analogy_criterion
       source_sha256: sha256:51cafe58bd557107a9091f0d654d7b3962799c3d05de5bed49b06a2d9bb6b270
-      target_sha256: sha256:ee9b2490103e31718f4ed51ef890ddf21057ecc0d7e9706e72b551373df17f33
+      target_statement_id: sha256:ebe72e598eb26bd48f9ee5f4c8d181848a2fa087634fbb75661dd64e9e529cc1
   scribe:
     - gid: D5/S3/ConceptDynamics/Governance/JudgmentRelativeAnalogyCriterion.judgment_relative_analogy_criterion
       definition_sha256: sha256:776605020c0ecb01a4596080adc53f06f7d3d78856c865581d196e552a011c80

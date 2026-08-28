@@ -8,3 +8,11 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-28T00:25:33.3027870+00:00
+    gids:
+      - D5/S3/ObserverMemory/Refinement/CanonicalCompletionIdempotence.canonical_completion_idempotence
+    gaps:
+      - code: structural-alignment-rejected
+        detail: 定理/5.3

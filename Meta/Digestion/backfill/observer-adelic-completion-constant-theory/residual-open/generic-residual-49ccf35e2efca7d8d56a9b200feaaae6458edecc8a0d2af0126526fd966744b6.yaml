@@ -1,0 +1,10 @@
+ast_path: section/171-1-局部零点形状
+fingerprints:
+  raw_sha256: sha256:49ccf35e2efca7d8d56a9b200feaaae6458edecc8a0d2af0126526fd966744b6
+  normalized_sha256: sha256:49ccf35e2efca7d8d56a9b200feaaae6458edecc8a0d2af0126526fd966744b6
+cas_ref: sha256:49ccf35e2efca7d8d56a9b200feaaae6458edecc8a0d2af0126526fd966744b6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

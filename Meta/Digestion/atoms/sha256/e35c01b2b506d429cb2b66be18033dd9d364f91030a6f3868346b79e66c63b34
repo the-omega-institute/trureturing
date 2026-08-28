@@ -1,0 +1,48 @@
+### 目标 C：Cayley–Fredholm 算子
+
+构造：
+
+$$
+0\le X_{\mathrm{tor}}\le I,
+\qquad
+X_{\mathrm{tor}}\in\mathcal S_1,
+$$
+
+满足：
+
+$$
+\boxed{
+\frac{
+\xi(\frac1{1-z})
+}{
+\xi(1)
+}
+=
+\det
+\left(
+I+
+\frac{4z}{(1-z)^2}
+X_{\mathrm{tor}}
+\right).
+}
+\tag{264.5}
+$$
+
+强度关系为：
+
+$$
+\boxed{
+\text{Cayley--Fredholm}
+\Longrightarrow
+\text{unitary displacement}
+\Longrightarrow
+\text{conditional negative definiteness}
+\Longrightarrow
+\text{Li positivity}.
+}
+$$
+
+其中最后一步已经足以推出 RH。
+
+---
+

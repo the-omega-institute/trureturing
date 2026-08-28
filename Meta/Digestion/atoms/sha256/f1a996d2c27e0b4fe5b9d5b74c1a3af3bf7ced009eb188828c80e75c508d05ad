@@ -1,0 +1,44 @@
+## 152.1 散射函数方程
+
+由：
+
+$$
+\zeta^*(u)=\zeta^*(1-u)
+$$
+
+得到：
+
+$$
+\boxed{
+\Phi(s)\Phi(1-s)=1.
+}
+\tag{152.4}
+$$
+
+在：
+
+$$
+s=\frac12+it
+$$
+
+上：
+
+$$
+1-s=\overline s,
+$$
+
+而 \(\Phi(\overline s)=\overline{\Phi(s)}\)，故：
+
+$$
+\boxed{
+|\Phi(\tfrac12+it)|=1.
+}
+\tag{152.5}
+$$
+
+所以散射在连续谱轴上是单位模的。
+
+但这只是边界酉性，并不决定左半条带中所有 resonance poles 的位置。
+
+---
+

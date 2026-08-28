@@ -1,0 +1,30 @@
+## 217.1 为什么普通周期平方还不够
+
+每个单独周期都含公共因子：
+
+$$
+\mathcal P_D=\xi\mathcal T_D.
+$$
+
+其平方只给出：
+
+$$
+|\xi|^2|\mathcal T_D|^2.
+$$
+
+这可以定位零点，却无法决定左右平移间的 Hermite–Biehler 不等式。
+
+所需几何量必须比较：
+
+$$
+s+\omega
+\quad\text{与}\quad
+s-\omega,
+$$
+
+并在减去 carrier 变化后保持正性。
+
+所以 relative trace kernel 必须是**差分化、归一化和 carrier-subtracted** 的，而不是普通的 period second moment。
+
+---
+

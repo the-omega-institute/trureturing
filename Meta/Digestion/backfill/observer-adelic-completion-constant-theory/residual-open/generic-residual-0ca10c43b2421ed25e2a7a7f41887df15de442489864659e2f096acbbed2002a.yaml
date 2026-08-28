@@ -1,0 +1,10 @@
+ast_path: section/282-3-Schur-参数是-primitive-innovations
+fingerprints:
+  raw_sha256: sha256:0ca10c43b2421ed25e2a7a7f41887df15de442489864659e2f096acbbed2002a
+  normalized_sha256: sha256:0ca10c43b2421ed25e2a7a7f41887df15de442489864659e2f096acbbed2002a
+cas_ref: sha256:0ca10c43b2421ed25e2a7a7f41887df15de442489864659e2f096acbbed2002a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

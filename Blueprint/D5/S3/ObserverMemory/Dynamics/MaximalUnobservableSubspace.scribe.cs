@@ -56,15 +56,25 @@ internal sealed class MaximalUnobservableSubspaceDocument : IScribeDocumentDefin
         Formula invariant = Call("MapsTo", evolution, hidden, hidden);
         Formula candidateInvariant = Call("MapsTo", evolution, candidate, candidate);
         Formula maximal = Seq(
-            Forall, Sp, candidate, Comma, Sp,
+            Forall, Sp, candidate, Colon, Sp, Call("Submodule", scalar, state), Comma, Sp,
             Open, candidate, Sp, Subseteq, Sp, currentKernel, Sp, Land, Sp,
             candidateInvariant, Close, Sp, Rightarrow, Sp,
             candidate, Sp, Subseteq, Sp, hidden);
 
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula stateMap = Call("LinearMap", scalar, state, state);
+        Formula readoutMap = Call("LinearMap", scalar, state, output);
         return Disp(Seq(
-            Forall, Sp, scalar, Comma, Sp, state, Comma, Sp, output,
-            Comma, Sp, evolution, Comma, Sp, readout, Comma,
-            RowBreak, Grp(), hidden, Sp, Colon, Eq, Sp, construction, Semi,
+            Forall, Sp, scalar, Comma, Sp, state, Comma, Sp, output, Colon, Sp, type,
+            Comma, Sp, OpenBracket, Call("RCLike", scalar), CloseBracket, Comma, Sp,
+            OpenBracket, Call("NormedAddCommGroup", state), CloseBracket, Comma, Sp,
+            OpenBracket, Call("InnerProductSpace", scalar, state), CloseBracket, Comma, Sp,
+            OpenBracket, Call("FiniteDimensional", scalar, state), CloseBracket, Comma, Sp,
+            OpenBracket, Call("NormedAddCommGroup", output), CloseBracket, Comma, Sp,
+            OpenBracket, Call("InnerProductSpace", scalar, output), CloseBracket, Comma, Sp,
+            OpenBracket, Call("FiniteDimensional", scalar, output), CloseBracket, RowBreak, Grp(),
+            evolution, Colon, Sp, stateMap, Comma, Sp, readout, Colon, Sp, readoutMap,
+            Comma, RowBreak, Grp(), hidden, Sp, Colon, Eq, Sp, construction, Semi,
             RowBreak, Grp(), contained, Sp, Land, Sp, invariant, Sp, Land,
             RowBreak, Grp(), maximal, Dot));
     }

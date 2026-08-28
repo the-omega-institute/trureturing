@@ -1,0 +1,44 @@
+## 257.2 Hilbert 距离不等式
+
+由 unitary 不变性：
+
+$$
+\begin{aligned}
+\|I-C^{m+n}\|_{\mathrm{HS}}
+&=
+\|(I-C^m)+C^m(I-C^n)\|_{\mathrm{HS}}\\
+&\le
+\|I-C^m\|_{\mathrm{HS}}
++
+\|I-C^n\|_{\mathrm{HS}}.
+\end{aligned}
+$$
+
+因此 RH 推出：
+
+$$
+\boxed{
+\sqrt{\lambda_{m+n}}
+\le
+\sqrt{\lambda_m}
++
+\sqrt{\lambda_n}.
+}
+\tag{257.4}
+$$
+
+特别地：
+
+$$
+\boxed{
+\lambda_{kn}
+\le
+k^2\lambda_n.
+}
+\tag{257.5}
+$$
+
+这些只是 RH 的必要推论，不构成单独充分判据。
+
+---
+

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/DivergenceSupport/Garbling/DeterministicGarbling.deterministic_forgetting_kl_loss_nonnegative
       source_sha256: sha256:2ffce60a012ce99a41eb5b32dd3cba3651e491cc18bab490155831d90d9bee6e
-      target_sha256: sha256:8c936b71b814786fba7c08f919769c0b26a233e90ce69ea861c021ea1b88e19a
+      target_statement_id: sha256:4025db8a1fbf462751f2df1202cc19e24ab1ebed33b0746c9397dac9c3307d40
   scribe:
     - gid: D5/S3/DivergenceSupport/Garbling/DeterministicGarbling.deterministic_forgetting_kl_loss_nonnegative
       definition_sha256: sha256:17a25ee59a60df2ec861b50cdaf3f46a9fa8a19dc827d739df74b7e40e0ee517

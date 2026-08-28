@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoEqOnVectorEquality.pareto_eq_on_iff_vector_eq
       source_sha256: sha256:a4b5308e355a87ce5a91fbdecde256daf661a02b9c19a4a9e7663f8b72da7c45
-      target_sha256: sha256:6983e323315b1007d387219155d4c106a9024f2165e7eeb0a22699afb3a27bdf
+      target_statement_id: sha256:d94565213c09b79170bb1a6d68de8c00265f20c11380d3dc6f2df86b2c6b0db2
   scribe:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoEqOnVectorEquality.pareto_eq_on_iff_vector_eq
       definition_sha256: sha256:36e8aadd44f72f144cd76c87eb86ec3790501cf3338cfc50055e2275df9d653b

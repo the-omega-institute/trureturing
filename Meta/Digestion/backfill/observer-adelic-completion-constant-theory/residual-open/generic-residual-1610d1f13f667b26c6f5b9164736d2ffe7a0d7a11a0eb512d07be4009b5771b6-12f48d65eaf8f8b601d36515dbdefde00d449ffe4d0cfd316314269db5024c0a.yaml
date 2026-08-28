@@ -1,0 +1,10 @@
+ast_path: section/287-1-结构意义/clause/3
+fingerprints:
+  raw_sha256: sha256:1610d1f13f667b26c6f5b9164736d2ffe7a0d7a11a0eb512d07be4009b5771b6
+  normalized_sha256: sha256:1610d1f13f667b26c6f5b9164736d2ffe7a0d7a11a0eb512d07be4009b5771b6
+cas_ref: sha256:1610d1f13f667b26c6f5b9164736d2ffe7a0d7a11a0eb512d07be4009b5771b6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

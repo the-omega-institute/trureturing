@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Transport/EffectiveImageNaturality.effective_image_naturality
       source_sha256: sha256:42629f24b9e9e0de1e312049d348dac72a417e4ca7dc38fd09aec6cd8c85f279
-      target_sha256: sha256:524fb41fd3288e595e2a357123f5c72745129ac2f7e39f57b36881bd19870b25
+      target_statement_id: sha256:cb67c09738c0dc4345766177a4f36703d5298330bf9d8c2288e5f10b721df606
   scribe:
     - gid: D5/S3/ConceptDynamics/Transport/EffectiveImageNaturality.effective_image_naturality
       definition_sha256: sha256:1655130f38bb8f2cb4c26e0b8fc399b2458fc02fb8258c09bb6cd3d5033c6b94

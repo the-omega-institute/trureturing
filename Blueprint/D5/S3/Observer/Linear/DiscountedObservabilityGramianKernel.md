@@ -6,7 +6,7 @@ The discounted observability Gramian kernel is the all-future readout kernel.
 
 **Theorem 1.1 (The Gramian kernel is the all-future readout kernel).**
 
-$$\forall K, V, Y, T, C, \beta,\\{}\operatorname{RCLike}(K) \land \operatorname{FiniteDimensional}(K, V) \land \operatorname{FiniteDimensional}(K, Y) \land\\{}0 < \beta < 1 \land \sqrt{\beta} \left\lVert T \right\rVert < 1 \Rightarrow\\{}W_{\beta} = \sum_{n=0}^{\infty} \beta^{n} T^{*}^{n} C^{*} C T^{n} \land \operatorname{ker}(W_{\beta}) = N_{\infty}.$$
+$$\forall K, V, Y: \operatorname{Type}, [\operatorname{RCLike}(K)], [\operatorname{NormedAddCommGroup}(V)], [\operatorname{InnerProductSpace}(K, V)], [\operatorname{FiniteDimensional}(K, V)], [\operatorname{NormedAddCommGroup}(Y)], [\operatorname{InnerProductSpace}(K, Y)], [\operatorname{FiniteDimensional}(K, Y)]\\{}T: \operatorname{LinearMap}(K, V, V), C: \operatorname{LinearMap}(K, V, Y), \beta: \mathbb{R},\\{}N_{\infty} = \operatorname{iInf}(n, \operatorname{ker}(C \circ T^{n})),\\{}\\{}0 < \beta < 1 \land \sqrt{\beta} \left\lVert T \right\rVert < 1 \Rightarrow\\{}W_{\beta} = \sum_{n=0}^{\infty} \beta^{n} {T^{*}}^{n} C^{*} C T^{n} \land \operatorname{ker}(W_{\beta}) = N_{\infty}.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/Linear/DiscountedObservabilityGramianKernel.discounted_observability_gramian_kernel` (`✓ std3`). ∎
 

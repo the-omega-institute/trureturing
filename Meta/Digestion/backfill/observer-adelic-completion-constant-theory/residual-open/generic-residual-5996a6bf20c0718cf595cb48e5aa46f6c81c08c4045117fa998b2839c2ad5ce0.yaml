@@ -1,0 +1,15 @@
+ast_path: section/315-1-对-xi-xi-的解释
+fingerprints:
+  raw_sha256: sha256:5996a6bf20c0718cf595cb48e5aa46f6c81c08c4045117fa998b2839c2ad5ce0
+  normalized_sha256: sha256:5996a6bf20c0718cf595cb48e5aa46f6c81c08c4045117fa998b2839c2ad5ce0
+cas_ref: sha256:5996a6bf20c0718cf595cb48e5aa46f6c81c08c4045117fa998b2839c2ad5ce0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-f2df1f8a4f6ea5ac37f81d221a459370ded372eaf6ab4bc98f4bdd95ef99c151-88ba4d448d52a5827d30341c7184615f425f0852df9d52bed6c4e85bc65fb655
+    - generic-residual-0611119d0195e2147cdd33dbd2ecbb313e220b2e1a26e22b9ad86a75b3ed6e5c-dece5b8efc9aadc657722d870d399ff75d9c4750f0287e42e22ba937299edcf9
+    - generic-residual-6e06154a28e7d63114c271a339cf4ebf6221adb087cdee575818c7c4be104e3c-5c81b736a676d1df0d43da7c633b055ed0735dfea9259fa994a041273d2d4628
+    - generic-residual-822a263368c030d25f9510bda304ff51161cee5f58d0a2146eb64cb536714a66-5192307f6d7f947f783132da6b35f358a78f6dae00f9d0e5abcea91feac1e5fa

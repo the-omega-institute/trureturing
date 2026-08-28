@@ -1,0 +1,21 @@
+## 300.1 Clark 角导数检验
+
+使用高精度零点 \(\rho_\gamma\)，直接计算：
+
+$$
+\vartheta_\xi'(u_\gamma)
+$$
+
+并验证：
+
+$$
+u_\gamma\vartheta_\xi'(u_\gamma)
+=
+\frac{\lambda_1(4\gamma^2+1)}
+{2m_\gamma}.
+$$
+
+这是最直接的局部闭环检验。
+
+---
+

@@ -17,25 +17,25 @@ receipts:
   coverage:
     - gid: D5/S3/Quantum/PointerBasis.fourier_phase_damping_fixed_iff
       source_sha256: sha256:39801f81b23d4fe1d4823f4470f961be3f2fc21445bfec13de1574cb9fd368bc
-      target_sha256: sha256:8b9cf024458502300d5a19eff202f94bd5116ae5b8b4b54557761867961f5d9d
+      target_statement_id: sha256:92cfa50eec06cc5a81360a4face2c67470cc34188c59eb2579a861a0cb9d80c0
     - gid: D5/S3/Quantum/Decoherence.phase_damping_composition
       source_sha256: sha256:39801f81b23d4fe1d4823f4470f961be3f2fc21445bfec13de1574cb9fd368bc
-      target_sha256: sha256:b8f188e3e53e0ca825a4d035a59fe18039015498f5a456e9cf56d6b372cfcf02
+      target_statement_id: sha256:d389bb6a248ba44043d4faa27d88c615aa79fea0c88d1edc4faff02cddd4d3e5
     - gid: D5/S3/Quantum/Decoherence.phase_damping_fixed_iff_diagonal
       source_sha256: sha256:39801f81b23d4fe1d4823f4470f961be3f2fc21445bfec13de1574cb9fd368bc
-      target_sha256: sha256:b8f188e3e53e0ca825a4d035a59fe18039015498f5a456e9cf56d6b372cfcf02
+      target_statement_id: sha256:cabddb0f194df8ca556e0e1526aec0d3d63b148416f7a5b1cc7a6f82d31d9999
     - gid: D5/S3/Quantum/PointerBasis.phase_damping_in_basis_fixed_iff
       source_sha256: sha256:39801f81b23d4fe1d4823f4470f961be3f2fc21445bfec13de1574cb9fd368bc
-      target_sha256: sha256:8b9cf024458502300d5a19eff202f94bd5116ae5b8b4b54557761867961f5d9d
+      target_statement_id: sha256:ef9894d27e409099ecdfdaf45f9052b405cd7f87c2cab817b66736d97ad806b7
     - gid: D5/S3/Quantum/QubitWitnesses.equal_superposition_phase_damping_certificate
       source_sha256: sha256:39801f81b23d4fe1d4823f4470f961be3f2fc21445bfec13de1574cb9fd368bc
-      target_sha256: sha256:89457799a8e0362f3113889e39ef6eeadabe40f2c9e3228af2bffe7d66acda31
+      target_statement_id: sha256:c8327bd4d719d03c216741b02421949a14b7f4c95bd352a557b422a648da4dd5
     - gid: D5/S3/Quantum/EnvironmentRecords.trace_environment_controlled_record_eq_phase_damping
       source_sha256: sha256:39801f81b23d4fe1d4823f4470f961be3f2fc21445bfec13de1574cb9fd368bc
-      target_sha256: sha256:544d2a1d743de8b8a88243ad4a2779a6f2861f11fa9d1107f331aeecc845e25c
+      target_statement_id: sha256:538b2139f42013c11b481364cd5c830484adb9ec81ac3d2070fcc9ca99aca26a
     - gid: D5/S3/Quantum/EnvironmentRecords.record_channel_fixed_iff_selected_blocks
       source_sha256: sha256:39801f81b23d4fe1d4823f4470f961be3f2fc21445bfec13de1574cb9fd368bc
-      target_sha256: sha256:544d2a1d743de8b8a88243ad4a2779a6f2861f11fa9d1107f331aeecc845e25c
+      target_statement_id: sha256:cb1a2c544822cfe3b147a5538b1124b53c1e065831b714878588d57d341446df
   scribe: []
   unresolved_subitems:
     - ledger-is-environment-identification
