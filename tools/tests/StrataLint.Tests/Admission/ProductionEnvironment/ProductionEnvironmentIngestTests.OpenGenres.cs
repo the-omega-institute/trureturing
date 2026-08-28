@@ -32,7 +32,7 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
-        var result = environment.Ingest(["--base", "baseline"]);
+        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("residual_open_added=2", result.Output, StringComparison.Ordinal);
@@ -78,7 +78,7 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
-        var result = environment.Ingest(["--base", "baseline"]);
+        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
         var source = Assert.Single(BackfillInventoryLoader.LoadRoot(temporary.Path)

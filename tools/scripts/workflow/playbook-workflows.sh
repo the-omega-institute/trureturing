@@ -39,7 +39,7 @@ run_digest_status() {
 }
 
 receipts_stage() {
-  make ingest BASE="$BASE"
+  make align-digestion-status BASE="$BASE"
   run_digest_status
 }
 

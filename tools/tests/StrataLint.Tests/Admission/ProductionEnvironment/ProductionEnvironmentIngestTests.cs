@@ -36,7 +36,7 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
-        var result = environment.Ingest(["--base", "baseline"]);
+        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("ledger_changed=false", result.Output, StringComparison.Ordinal);
@@ -89,7 +89,7 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
-        var result = environment.Ingest(["--base", "baseline"]);
+        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
         var newPath = DirectoryAtomPath("old-receipt", "partial-closed");
@@ -140,7 +140,7 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
-        var result = environment.Ingest(["--base", "baseline"]);
+        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("residual_open_added=2", result.Output, StringComparison.Ordinal);
@@ -224,7 +224,7 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
-        var result = environment.Ingest(["--base", "baseline"]);
+        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("stale_acknowledged=0", result.Output, StringComparison.Ordinal);
@@ -295,7 +295,7 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
-        var result = environment.Ingest(["--base", "baseline"]);
+        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.False(result.Success);
         Assert.Contains("invalid source_id: INVALID", result.Error, StringComparison.Ordinal);
@@ -318,7 +318,7 @@ public sealed partial class ProductionEnvironmentTests
         var before = DirectoryLedgerTestSupport.Image(temporary.Path);
         var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
 
-        var result = environment.Ingest(["--base", "baseline"]);
+        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.False(result.Success);
         Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
@@ -346,7 +346,7 @@ public sealed partial class ProductionEnvironmentTests
         var before = DirectoryLedgerTestSupport.Image(temporary.Path);
         var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
 
-        var result = environment.Ingest(["--base", "baseline"]);
+        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.False(result.Success);
         Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
@@ -379,7 +379,7 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
-        var result = environment.Ingest(["--base", "baseline"]);
+        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
         var written = BackfillInventoryLoader.LoadRoot(temporary.Path);
@@ -411,7 +411,7 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
-        var result = environment.Ingest(["--base", "baseline"]);
+        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
         Assert.Contains(
@@ -450,7 +450,7 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
-        var result = environment.Ingest(["--base", "baseline"]);
+        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("coarse_fallbacks=1", result.Output, StringComparison.Ordinal);
@@ -506,7 +506,7 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
-        var result = environment.Ingest(["--base", "baseline"]);
+        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.False(result.Success);
         Assert.Contains("INGEST_INVALID", result.Error, StringComparison.Ordinal);
@@ -551,7 +551,7 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
-        var result = environment.Ingest(["--base", "baseline"]);
+        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
         Assert.Contains(
@@ -584,7 +584,7 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
-        var first = firstEnvironment.Ingest(["--base", "baseline"]);
+        var first = firstEnvironment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(first.Success, first.Error);
         Assert.Contains("stale_acknowledged=0", first.Output, StringComparison.Ordinal);
@@ -613,7 +613,7 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
-        var second = secondEnvironment.Ingest(["--base", "baseline"]);
+        var second = secondEnvironment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(second.Success, second.Error);
         Assert.Contains("stale_acknowledged=0", second.Output, StringComparison.Ordinal);
@@ -674,7 +674,7 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
-        var result = environment.Ingest(["--base", "baseline"]);
+        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("residual_open_added=0", result.Output, StringComparison.Ordinal);
