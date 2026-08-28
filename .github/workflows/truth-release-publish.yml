@@ -161,6 +161,18 @@ jobs:
           set -euo pipefail
           helper="$GITHUB_WORKSPACE/tools/scripts/report/lean-report-input.sh"
           test -x "$helper"
+          # Only reuse the cached report when the producer closure is COMPLETELY
+          # discovered. If discovery degrades (the address then embeds an
+          # `unavailable:candidate` marker over a declared-only producer set), a
+          # changed-but-omitted producer source could retain the cache key, so we
+          # refuse reuse and fall through to full production. The producer-paths and
+          # scribe-producer-paths subcommands exit non-zero when the closure is
+          # incomplete, giving us a fail-closed gate on the reuse path.
+          closure_complete=true
+          "$helper" producer-paths --repository "$GITHUB_WORKSPACE" >/dev/null 2>&1 \
+            && "$helper" scribe-producer-paths --repository "$GITHUB_WORKSPACE" >/dev/null 2>&1 \
+            || closure_complete=false
+          echo "closure_complete=$closure_complete" >> "$GITHUB_OUTPUT"
           read -r address producer_sha256 sources_sha256 config_sha256 \
             <<< "$("$helper" address --repository "$GITHUB_WORKSPACE")"
           [[ "$address" =~ ^[0-9a-f]{64}$ ]]
@@ -168,7 +180,7 @@ jobs:
 
       - name: Restore canonical Lean report by input address
         id: report-cache
-        if: steps.source.outputs.publish_ready == 'true'
+        if: steps.source.outputs.publish_ready == 'true' && steps.lean-report-input.outputs.closure_complete == 'true'
         uses: actions/cache/restore@v4
         with:
           path: .canonical-lean-report-cache
@@ -177,7 +189,7 @@ jobs:
 
       - name: Serve the canonical Lean report from the cached address
         id: report-reuse
-        if: steps.source.outputs.publish_ready == 'true' && steps.report-cache.outputs.cache-hit == 'true'
+        if: steps.source.outputs.publish_ready == 'true' && steps.lean-report-input.outputs.closure_complete == 'true' && steps.report-cache.outputs.cache-hit == 'true'
         # A cache serve failure must fall back to full production, not fail the job.
         continue-on-error: true
         shell: bash
