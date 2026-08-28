@@ -63,8 +63,10 @@ def stateOf (d : RamifiedFiveDissectionData) (x : d.L) : RamifiedFiveState :=
   if hEnergy : d.energy x % 5 = 0 then
     if hBoundary : d.rho5 x = 0 then
       .ordinary ⟨0, by norm_num⟩
-    else
+    else if hIsotropic : qR (d.rho5 x) = 0 then
       .ramificationResidual
+    else
+      .ordinary ⟨0, by norm_num⟩
   else
     .ordinary (ordinaryResidue (d.energy x))
 
@@ -103,7 +105,7 @@ theorem six_state_ramified_five_dissection (d : RamifiedFiveDissectionData) :
     have hResidual : stateOf d d.residualWitness =
         .ramificationResidual := by
       simp [stateOf, d.residual_energy_mod_five,
-        d.residual_boundary_ne_zero]
+        d.residual_boundary_ne_zero, hResidualIsotropic]
     rw [hZero, hResidual] at hStates
     cases hStates
   · intro hRange
