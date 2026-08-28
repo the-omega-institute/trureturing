@@ -1,14 +1,14 @@
-ast_path: theorem/21.3
+ast_path: theorem/19.2
 fingerprints:
-  raw_sha256: sha256:de354aa6965e624c640df6fbdf6582e25a04d5f8393b4d26d521d9de5a060ed1
-  normalized_sha256: sha256:de354aa6965e624c640df6fbdf6582e25a04d5f8393b4d26d521d9de5a060ed1
-cas_ref: sha256:de354aa6965e624c640df6fbdf6582e25a04d5f8393b4d26d521d9de5a060ed1
+  raw_sha256: sha256:9c67de024886bd8c49ebce1d3ded4349b727b35a2ba8e7b51fada0b1c87e8926
+  normalized_sha256: sha256:9c67de024886bd8c49ebce1d3ded4349b727b35a2ba8e7b51fada0b1c87e8926
+cas_ref: sha256:9c67de024886bd8c49ebce1d3ded4349b727b35a2ba8e7b51fada0b1c87e8926
 coverage_gids:
   - D5/S3/ObserverMemory/Prediction/PredictionPartitionStability.prediction_partition_stable_forever
 receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/Prediction/PredictionPartitionStability.prediction_partition_stable_forever
-      source_sha256: sha256:de354aa6965e624c640df6fbdf6582e25a04d5f8393b4d26d521d9de5a060ed1
+      source_sha256: sha256:9c67de024886bd8c49ebce1d3ded4349b727b35a2ba8e7b51fada0b1c87e8926
       target_sha256: sha256:62bea7a16c348bbdc032fee360ade24fcb0f7e415eb4c5f33c6eeb0ad19a55ed
   scribe:
     - gid: D5/S3/ObserverMemory/Prediction/PredictionPartitionStability.prediction_partition_stable_forever

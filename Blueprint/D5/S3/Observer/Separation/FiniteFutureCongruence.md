@@ -6,7 +6,7 @@ Finite future refinement stabilizes at the maximal invariant observation congrue
 
 **Theorem 1.1 (Finite future refinement is the maximal invariant congruence).**
 
-$$\begin{gathered}\forall Y, O,\\{}[\operatorname{Fintype}(Y)], \tau: Y \to Y, q: Y \to O,\\\forall m\in \mathbb{N}, E_{m+1} = \operatorname{Phi}(E_{m}) \land E_{0} = \ker q,\\E_{\infty} = \operatorname{Inf}_{m \geq 0} E_{m} = E_{m_{*}},\\\operatorname{Equivalence}\left(E_{\infty}\right) \land E_{\infty} \subseteq \ker q \land \forall y, z, (y, z) \in E_{\infty} \Rightarrow (\tau(y), \tau(z)) \in E_{\infty},\\\forall R, R \subseteq \ker q \land (\forall y, z, (y, z) \in R \Rightarrow (\tau(y), \tau(z)) \in R) \Rightarrow R \subseteq E_{\infty},\\E_{\infty} = \nu R. \operatorname{Phi}(R).\end{gathered}$$
+$$\begin{gathered}\forall Y, O: \operatorname{Type},\\{}[\operatorname{Fintype}(Y)], \tau: Y \to Y, q: Y \to O,\\\forall m\in \mathbb{N}, E_{m+1} = \operatorname{Phi}(E_{m}) \land E_{0} = \ker q,\\E_{\infty} = \operatorname{Inf}_{m \geq 0} E_{m} = \operatorname{finiteFutureRelation}\left(\tau, q, \operatorname{stabilizationIndex}\left(\tau, q\right)\right),\\\operatorname{Equivalence}\left(E_{\infty}\right) \land E_{\infty} \subseteq \ker q \land \forall y, z, (y, z) \in E_{\infty} \Rightarrow (\tau(y), \tau(z)) \in E_{\infty},\\\forall R, R \subseteq \ker q \land (\forall y, z, (y, z) \in R \Rightarrow (\tau(y), \tau(z)) \in R) \Rightarrow R \subseteq E_{\infty},\\E_{\infty} = \nu R. \operatorname{Phi}(R).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/Separation/FiniteFutureCongruence.finite_future_maximal_congruence` (`✓ std3`). ∎
 
