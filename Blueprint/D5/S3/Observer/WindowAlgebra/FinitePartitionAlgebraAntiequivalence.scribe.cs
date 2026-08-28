@@ -53,6 +53,28 @@ internal sealed class FinitePartitionAlgebraAntiequivalenceDocument : IScribeDoc
     private static Formula Subscript(Formula value, Formula index) =>
         Seq(value, Underscore, Grp(index));
 
+    private static Formula Arrow(Formula domain, Formula codomain) =>
+        Seq(domain, Sp, To, Sp, codomain);
+
+    private static Formula Typed(Formula value, Formula type) =>
+        Seq(value, Colon, Sp, type);
+
+    private static Formula Typeclass(string name, Formula argument) =>
+        Seq(OpenBracket, Call(name, argument), CloseBracket);
+
+    private static Formula Apply(Formula function, params Formula[] arguments)
+    {
+        var items = new List<Formula> { function, Open };
+        for (var index = 0; index < arguments.Length; index++)
+        {
+            if (index > 0) items.AddRange([Comma, Sp]);
+            items.Add(arguments[index]);
+        }
+
+        items.Add(Close);
+        return Seq([.. items]);
+    }
+
     private static Formula AntiequivalenceFormula()
     {
         Formula state = F.Id("X");
@@ -65,14 +87,33 @@ internal sealed class FinitePartitionAlgebraAntiequivalenceDocument : IScribeDoc
             Subscript(relation, algebraOfRelation), Sp, Eq, Sp, relation);
         Formula algebraReconstruction = Seq(
             Subscript(algebra, relationOfAlgebra), Sp, Eq, Sp, algebra);
+        Formula stateToReal = Arrow(state, real);
+        Formula relationDefinition = Seq(
+            OpenBrace, Typed(F.Id("f"), stateToReal), Sp, Mid, Sp,
+            Forall, Sp, Typed(Seq(F.Id("a"), Comma, Sp, F.Id("b")), state), Comma, Sp,
+            Apply(relation, F.Id("a"), F.Id("b")), Sp, Rightarrow, Sp,
+            Apply(F.Id("f"), F.Id("a")), Sp, Eq, Sp,
+            Apply(F.Id("f"), F.Id("b")), CloseBrace);
+        Formula algebraDefinition = Seq(
+            Open, F.Id("x"), Comma, Sp, F.Id("y"), Close, Sp, Mapsto, Sp,
+            Forall, Sp, Typed(F.Id("g"), stateToReal), Comma, Sp,
+            F.Id("g"), Sp, InMacro, Sp, algebra, Sp, Rightarrow, Sp,
+            Apply(F.Id("g"), F.Id("x")), Sp, Eq, Sp,
+            Apply(F.Id("g"), F.Id("y")));
 
-        return Disp(Seq(
-            Forall, Sp, state, Comma, Sp, relation, Comma, Sp, algebra, Comma, Esc,
-            Call("Finite", state), Sp, Land, Sp,
-            Call("Equivalence", relation), Sp, Land, Esc,
-            algebra, Sp, InMacro, Sp,
-            Call("Subalgebra", real, Seq(state, Sp, To, Sp, real)), Sp,
-            Rightarrow, Esc,
-            relationReconstruction, Sp, Land, Sp, algebraReconstruction, Dot));
+        return Disp(new Formula.Aligned([
+            Seq(Forall, Sp, Typed(state, Seq(Operatorname, Grp(F.Id("Type")))), Comma, Sp,
+                Typeclass("Finite", state), Comma),
+            Seq(Grp(), Forall, Sp,
+                Typed(relation, Arrow(state, Arrow(state, F.Id("Prop")))), Comma, Sp,
+                Typed(F.Id("hR"), Call("Equivalence", relation)), Comma),
+            Seq(Grp(), Forall, Sp,
+                Typed(algebra, Call("Subalgebra", real, stateToReal)), Comma),
+            Seq(Grp(), Operatorname, Grp(F.Id("let")), Sp, algebraOfRelation,
+                Sp, Colon, Eq, Sp, relationDefinition, Comma),
+            Seq(Grp(), Operatorname, Grp(F.Id("let")), Sp, relationOfAlgebra,
+                Sp, Colon, Eq, Sp, algebraDefinition, Comma),
+            Seq(Grp(), relationReconstruction, Sp, Land, Sp, algebraReconstruction, Dot),
+        ]));
     }
 }
