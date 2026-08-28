@@ -427,3 +427,73 @@ def goldenUnitsPrincipalIdealDelivery : Unit := ()
 
     依据:issue #3757(三案,ElonSG/Fable-5 读数在案,orchestrator 未独立复跑);
     第四案 #3579 由本条作者实测(claude 主循环,`macstudio-4`,零席位,单点)。 -/
+
+/- TASK D5-T0060
+    **投影重算谓词(§12.4.1 草案)在当前基础设施下无法达到「总函数 + fail-closed」。**
+    〔本条承接 issue #3127;该单是 7 轮双席盲评 + 6 轮修复后的**停止决定**,
+     入账目的是**避免后来者重走**(第 12 条:失败须留战史,不重走死路)。〕
+
+    **循环的形状**:要让谓词 total,必须逐层给出 `Known | Unknown(reason)`。七轮逐层补进 ——
+    ④ 最终判值、③ 操作数求值、② `Delta(q)` 求值、① scope 枚举 **均已补成总函数**;
+    而 ⓪ 两层**补不上**:
+    * **声明的语义真实性** —— 关节 ID 集全等**不证明** step-effect / phase-ownership 声明的**值**
+      等于实现的真实读写副作用;SPEC 亦未定义可判的 `stale` 谓词
+      (ARCH-SCOPE-EFFECT-SEMANTICS / T-SCOPE-EFFECT-DOMAIN-001);
+    * **canonical workflow 集本身** —— 未定义
+      `Workflows(snapshot) = Known(set) | Unknown(reason)`;每个 W 内的完整图解析
+      证明不了没有整个 W 被调用方漏掉(ARCH-WORKFLOW-DOMAIN-UNKNOWN)。
+
+    **循环在此闭合**:证明「声明 ≡ 实现副作用」所需的正是
+    `FILEMAP-ACTOR-PATTERN-SEMANTICS`(actor 名存在 ≠ 该 actor 读该 pattern,
+    `FileMapPolicy.cs` 自记为 open)——**而它正是该 SPEC 自己列为现役化前置的四项 open 之一**。
+    即:**SPEC 要 total,需要它自己的前置条件先成立。**
+
+    **两席(architecture / tests,均 codex-cli)独立收敛到同一结构**;同族,不构成多样性共识。
+    分支 `harness/emitspec-spec` 保留,最终 commit `d1e33a995`(未推送,`make preflight` exit 0)。
+
+    **关闭条件(按依赖序,第一条不成立则其余无从谈起)**:
+    ① `FILEMAP-ACTOR-PATTERN-SEMANTICS` 落地 —— 每个 canonical producer 暴露唯一 typed input
+      declaration,实现/actor 绑定与 FILEMAP 候选集**机器证明全等**,缺失/多余输入的变异产生具名红;
+    ② 在①之上定义可判的 `Workflows(snapshot)` 域与 `stale` 谓词。
+    **不得以「再补一轮 fix」代替** —— 七轮已证明补的是错的那一层。
+
+    依据:issue #3127。 -/
+
+/- TASK D5-T0061
+    **元层自改的 D(保守扩展证明)未付,且本仓无通用机器 —— 这是被钉死的,不是碰巧缺失。**
+    〔本条承接 issue #3648。它记的是一笔**账**(第 1 条:异常必须入账或显式标记),
+     不是一件待办 —— 因为付 D 所需的机器本身不存在。〕
+
+    **事实**:`c5f142118`(PR #3612)与 `c3ad174b8`(PR #3601)均属元层自改,
+    前者 SL-022 保护面 **105 处**,改动面含编译期 analyzer 接线与禁令表、CI 与 preflight 的
+    `RS0030` marker 对齐投影、TRX `INFRASTRUCTURE_UNRESOLVED` fail-closed 投影、
+    engineering/preflight predicate 与路由,以及 `CLAUDE.md` 的准入契约。
+
+    按第 21 条,元层自改须付 **W(多模型独立验证)+ D(保守扩展证明)+ E(可审计论证)**。实付:
+    * **W:部分,且已如实声明** —— 六轮实施 + 五轮对抗评审,但**全程无 gpt-pro 席**
+      (nyxid-oracle 多次 `extraction_failure` 与一次 `HTTP 502`);
+      `codex-cli` 与 `nyxid-oracle` 是否属不同模型族为 `ASSUMED-UNVERIFIED`,
+      故两 PR 均**未声称** model-diverse consensus。
+    * **D:未付。**
+    * **E:未单独出具。**
+
+    **D 无机器是被现役测试钉死的**:
+    ```
+    tools/tests/StrataLint.Tests/Admission/ReviewRegressionTests.cs:729
+      Assert.DoesNotContain("verify-conservative", gate, StringComparison.Ordinal);
+    tools/tests/StrataLint.Tests/Commands/MakeWorkflowTests.cs:240
+      Assert.DoesNotContain("verify-conservative", sharedGate, StringComparison.Ordinal);
+    ```
+    ⟹ gate 内无该命令,且**有两条现役测试主动断言它不该在**
+    (保守扩展重放机器 2026-08-12 退役,与审计报告记载一致)。
+
+    **为什么这条必须留着而不是「已知即可」**:第 21 条把 D 列为元层自改的**承重梁**
+    (`∀a, τ(a)≥τ: H(a)=admit ⟹ H′(a)=admit`),而它现在**对每一次元层自改都未被验证**。
+    这不是某一个 PR 的疏漏,是**成本塔在 τ 靠近核心处的那一格是空的**。
+
+    **关闭条件**:①重建可跑的保守扩展验证机器(并撤掉那两条断言它不该在的测试),
+    或 ②τ=0 明确裁定 D 在当前阶段以何物替代,**并说明替代物如何满足
+    `H(a)=admit ⟹ H′(a)=admit`**。
+    **「以后每次元层自改都多派几席」不构成②** —— 那是 W,不是 D;第 21 条把它们列为并列三项。
+
+    依据:issue #3648。 -/
