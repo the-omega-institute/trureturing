@@ -29,7 +29,13 @@ internal static partial class IngestCommand
                 return TruthAlignmentRequired(classification);
             }
 
-            var prepared = Prepare(repository, options.BaselineRevision, inputs);
+            var repositoryChanges = repository.ReadChanges(options.BaselineRevision);
+            RequireCurrentCasAppendOnly(inputs, repositoryChanges);
+            var prepared = Prepare(
+                repository,
+                options.BaselineRevision,
+                inputs,
+                repositoryChanges);
             classification = IngestTruthAlignmentClassifier.ClassifyPlanned(
                 prepared.CurrentDocument,
                 prepared.BaselineDocument,
@@ -86,6 +92,22 @@ internal static partial class IngestCommand
             throw new InvalidOperationException(
                 "report-free digest status is invalid: "
                 + string.Join("; ", evaluation.Findings));
+        }
+    }
+
+    private static void RequireCurrentCasAppendOnly(
+        IngestInputs inputs,
+        RawChangeSet repositoryChanges)
+    {
+        var findings = DigestionCasStore.ValidateAppendOnly(
+            inputs.Current,
+            inputs.Baseline,
+            repositoryChanges);
+        if (findings.Length > 0)
+        {
+            throw new InvalidOperationException(
+                "report-free CAS append-only validation is invalid: "
+                + string.Join("; ", findings));
         }
     }
 
