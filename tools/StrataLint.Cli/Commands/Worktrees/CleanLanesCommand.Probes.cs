@@ -62,7 +62,11 @@ internal static partial class CleanLanesCommand
             var line = File.ReadLines(path, StrictUtf8).FirstOrDefault();
             if (string.IsNullOrEmpty(line)) return default;
             var tab = line.IndexOf('\t');
-            if (tab == 0 || tab == line.Length - 1) return default;
+            // `tab == 0` 才是畸形(记录部分为空)。**行末制表符只是空 reflog message**,
+            // 而 message 根本不参与下面的解析 —— `record` 只取制表符**之前**的部分。
+            // 把它当畸形会让整棵 lane 被判 `creation_unknown` 而永远无法回收(#3459)。
+            // 实测本机 127 棵有 `logs/HEAD` 的 worktree:**114 棵**(89.8%)首行的制表符在行末。
+            if (tab == 0) return default;
             var record = tab < 0 ? line : line[..tab];
             var fields = record.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             if (fields.Length < 6
