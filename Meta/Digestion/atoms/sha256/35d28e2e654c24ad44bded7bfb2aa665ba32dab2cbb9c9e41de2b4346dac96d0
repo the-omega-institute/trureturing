@@ -1,0 +1,32 @@
+## 定理 353.1（有限 shifted 共振完整层析）
+
+联合观察：
+
+$$
+\boxed{
+q_T(B_T)
+=
+\left(
+d_{1/2,T},
+\mathfrak A_T
+\right)
+}
+\tag{353.1}
+$$
+
+在有限 Blaschke 共振多重集上忠实，至多遗漏一个全局 unimodular 常数。
+
+所以：
+
+$$
+\boxed{
+\text{边界相位}
++
+\text{垂直衰减}
+=
+\text{完整有限共振状态}.
+}
+$$
+
+---
+

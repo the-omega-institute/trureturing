@@ -1,0 +1,63 @@
+# 第三百七十三部　科学剪枝：什么才算继续推进
+
+由定理 372.1，下面的工作不再构成实质推进：
+
+1. 再寻找一个由零点谱显然构造出的正核；
+2. 再把 RH 改写成另一个 Gram determinant；
+3. 再把同一正测度推到另一个坐标；
+4. 在假设 RH 后构造更多自伴算子。
+
+这些都属于：
+
+$$
+\boxed{
+\text{Weil 正谱存在以后的表型展开}.
+}
+$$
+
+真正的非循环进展只能发生在：
+
+$$
+\boxed{
+\text{Prime–Archimedean source identity 的几何侧}.
+}
+$$
+
+即直接证明：
+
+$$
+\boxed{
+\begin{aligned}
+&
+\left\langle
+\mathfrak A_\infty,
+\psi*\widetilde\psi
+\right\rangle
+\\
+&\qquad\ge
+\sum_p
+\log p\,
+\left\langle
+\psi,
+\left[
+\mathsf P_{p^{-1/2}}(U_p)-I
+\right]
+\psi
+\right\rangle
+\end{aligned}
+}
+\tag{373.1}
+$$
+
+对全部：
+
+$$
+\psi\in C_c^\infty(\mathbb R)
+$$
+
+成立。
+
+这一个不等式就是 RH。
+
+---
+

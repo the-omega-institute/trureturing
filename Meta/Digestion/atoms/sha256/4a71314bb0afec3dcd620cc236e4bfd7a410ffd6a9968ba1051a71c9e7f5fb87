@@ -1,0 +1,46 @@
+# 第三百九十一部　加权乘子正性证书
+
+令 \(M(\xi)\) 为实乘子，并假设存在可测集合 \(B\) 与常数：
+
+$$
+a>0,\qquad b\ge0
+$$
+
+使：
+
+$$
+\boxed{
+M(\xi)\ge a
+\quad
+(\xi\notin B),
+}
+\tag{391.1}
+$$
+
+$$
+\boxed{
+M(\xi)\ge-b
+\quad
+(\xi\in B).
+}
+\tag{391.2}
+$$
+
+对：
+
+$$
+\operatorname{supp}f\subset[-L,L],
+$$
+
+定义：
+
+$$
+Q_M(f)
+=
+\frac1{2\pi}
+\int_{\mathbb R}
+M(\xi)|\widehat f(\xi)|^2d\xi.
+$$
+
+---
+

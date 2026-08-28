@@ -1,0 +1,59 @@
+# 第三百六十四部　有限算术可证伪性
+
+设：
+
+$$
+\operatorname{supp}\psi
+\subset[-L,L].
+$$
+
+则：
+
+$$
+\operatorname{supp}
+(\psi*\widetilde\psi)
+\subset[-2L,2L].
+$$
+
+因此在式 (363.4) 中，只有满足：
+
+$$
+|\log n|\le2L
+$$
+
+的 prime-power 原子能够被读到，即：
+
+$$
+\boxed{
+n\le e^{2L}.
+}
+\tag{364.1}
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal Q_W(\psi)
+={}&
+\left\langle
+\mathfrak A_\infty,
+\psi*\widetilde\psi
+\right\rangle
+\\
+&-
+\sum_{2\le n\le e^{2L}}
+\frac{\Lambda(n)}{\sqrt n}
+\left[
+(\psi*\widetilde\psi)(\log n)
++
+(\psi*\widetilde\psi)(-\log n)
+\right].
+\end{aligned}
+}
+\tag{364.2}
+$$
+
+---
+

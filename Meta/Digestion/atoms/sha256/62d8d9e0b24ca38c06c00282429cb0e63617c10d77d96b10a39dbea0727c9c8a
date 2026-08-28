@@ -1,0 +1,30 @@
+## 371.3 Li 距离
+
+取特征：
+
+$$
+\boxed{
+\Phi_n(\gamma)
+=
+1-u_\gamma^n.
+}
+\tag{371.4}
+$$
+
+则：
+
+$$
+\boxed{
+\lambda_n
+=
+\sum_{\gamma>0}
+m_\gamma
+|\Phi_n(\gamma)|^2.
+}
+\tag{371.5}
+$$
+
+所以 Li 系数是同一 Weil 谱测度上的特征距离平方。
+
+---
+

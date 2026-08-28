@@ -1,0 +1,36 @@
+## 定理 362.1（母正性判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal Q_W(\psi)\ge0
+\quad
+\forall
+\psi\in C_c^\infty(\mathbb R).
+}
+\tag{362.4}
+$$
+
+等价地：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathfrak W_\xi
+\text{ 是正定分布}.
+}
+\tag{362.5}
+$$
+
+这说明当前理论真正需要证明的并不是几十个相互独立的正性命题，而只有一个：
+
+$$
+\boxed{
+\mathfrak W_\xi\succeq0.
+}
+$$
+
+---
+

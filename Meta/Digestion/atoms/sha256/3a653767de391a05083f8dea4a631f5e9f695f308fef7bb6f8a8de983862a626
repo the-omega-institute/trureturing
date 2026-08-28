@@ -1,0 +1,27 @@
+## 392.1 重要限制
+
+Bernstein 大偏差只控制危险集合的**平均密度**。
+
+而 Logvinenko–Sereda 需要的是**每个局部区间中的厚度**。
+
+所以：
+
+$$
+\boxed{
+\text{低自然密度}
+\not\Rightarrow
+\text{thick complement}.
+}
+$$
+
+从 Bohr–Gaussian 统计到 thick-set 几何，仍需要：
+
+* 定量 Kronecker recurrence；
+* 相干峰曲率；
+* 峰间距控制；
+* 或线性形式对数的 Diophantine 下界。
+
+这一桥仍然开放，不能用概率尾界直接替代。
+
+---
+

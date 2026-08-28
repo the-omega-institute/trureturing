@@ -1,0 +1,23 @@
+## 定理 363.1（Prime–Archimedean source identity）
+
+$$
+\boxed{
+\mathfrak W_\xi
+=
+\mathfrak A_\infty
+-
+\sum_{n=2}^{\infty}
+\frac{\Lambda(n)}{\sqrt n}
+\left(
+\delta_{\log n}
++
+\delta_{-\log n}
+\right).
+}
+\tag{363.4}
+$$
+
+这就是显式公式的临界源版本。
+
+---
+

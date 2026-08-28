@@ -1,0 +1,17 @@
+## 假设 354.1（Prime–Poisson positive source）
+
+从 Euler／explicit-formula 数据直接证明：
+
+$$
+\boxed{
+e^{\frac12|D_x|}
+d_{1/2}
+}
+$$
+
+在对称谱截断极限中是一个正的局部有限测度。
+
+若该命题成立，则由有限窗定理 348.1，RH 成立。
+
+---
+

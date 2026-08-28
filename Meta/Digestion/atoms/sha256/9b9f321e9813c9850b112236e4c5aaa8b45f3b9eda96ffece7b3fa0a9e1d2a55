@@ -1,0 +1,70 @@
+# 第三百二十九部　无条件的临界平移模型
+
+定义 Riemann 完成函数：
+
+$$
+\xi(s)
+=
+\frac12s(s-1)
+\pi^{-s/2}
+\Gamma\!\left(\frac s2\right)
+\zeta(s).
+$$
+
+定义：
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+\frac{
+\xi(\frac12-\omega-iz)
+}{
+\xi(\frac12+\omega-iz)
+},
+\qquad
+\omega>0.
+}
+\tag{329.1}
+$$
+
+由函数方程和实结构：
+
+$$
+\Theta_\omega(z)\Theta_\omega(-z)=1,
+$$
+
+并且：
+
+$$
+|\Theta_\omega(x)|=1
+\qquad
+(x\in\mathbb R).
+$$
+
+Suzuki 的 shifted-\(\xi\) 理论证明：
+
+* 当 \(\omega\ge\tfrac12\) 时，\(\Theta_\omega\) 无条件是上半平面的 meromorphic inner function；
+* 更一般地，固定 \(\omega_0\ge0\)，ζ 在
+
+  $$
+  \Re s>\frac12+\omega_0
+  $$
+
+  无零点，当且仅当所有 \(\omega>\omega_0\) 的 \(\Theta_\omega\) 都是 meromorphic inner；
+* 由此可构造对应的 model space 和 de Branges 空间。([arXiv][1])
+
+因此：
+
+$$
+\boxed{
+\Theta_{1/2}
+}
+$$
+
+是一个无条件存在的临界 shifted-\(\xi\) inner system。
+
+这非常重要：RH 的困难已经不再是构造第一个 inner function，而是理解它的内部共振几何。
+
+---
+

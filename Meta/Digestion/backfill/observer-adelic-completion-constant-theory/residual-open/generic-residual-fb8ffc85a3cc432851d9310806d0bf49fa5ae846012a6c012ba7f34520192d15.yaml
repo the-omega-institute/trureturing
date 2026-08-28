@@ -1,0 +1,10 @@
+ast_path: section/356-2-Deng-宽度簇的-primitive-压缩
+fingerprints:
+  raw_sha256: sha256:fb8ffc85a3cc432851d9310806d0bf49fa5ae846012a6c012ba7f34520192d15
+  normalized_sha256: sha256:fb8ffc85a3cc432851d9310806d0bf49fa5ae846012a6c012ba7f34520192d15
+cas_ref: sha256:fb8ffc85a3cc432851d9310806d0bf49fa5ae846012a6c012ba7f34520192d15
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

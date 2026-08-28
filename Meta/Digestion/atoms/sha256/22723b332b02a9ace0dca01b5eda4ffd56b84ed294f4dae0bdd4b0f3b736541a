@@ -1,0 +1,49 @@
+## 374.2 Deng 层：不可避免的 recurrence blocks
+
+定理 367.1 表明，有限 prime channels 必然存在近完全相干时间。
+
+所以 sticky 分支必须被正面处理。
+
+局部 prime-power 历史已经由：
+
+$$
+\mathsf P_{p^{-1/2}}(U_p)
+$$
+
+完全重求和。
+
+剩余 sticky 对象不是 \(p^k\) 的重复，而是：
+
+$$
+\boxed{
+\text{多个不同素数平移在同一频率附近的联合相位锁定}.
+}
+$$
+
+需要研究的 primitive history 因而是：
+
+$$
+\boxed{
+\left(
+p_1,\ldots,p_r;
+k_1,\ldots,k_r
+\right)
+}
+$$
+
+满足：
+
+$$
+\xi\log p_j\approx2\pi k_j.
+$$
+
+Deng 式操作应为：
+
+1. 将同一 prime 的全部重复先收缩为 \(\mathsf P_{r_p}\)；
+2. 将联合相干 prime set 组织为 cluster；
+3. 提取 cluster 的有效低秩 transfer block；
+4. 计算其对 Archimedean barrier 的最大消耗；
+5. 对 residual prime network 再做尺度分解。
+
+---
+

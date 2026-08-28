@@ -1,0 +1,10 @@
+ast_path: section/335-1-尺度方向的非对称性/clause/1
+fingerprints:
+  raw_sha256: sha256:e80cc667c38776b0479bf7dfe516a4b07934b827821bf6fae5a5f580a87c9d2e
+  normalized_sha256: sha256:e80cc667c38776b0479bf7dfe516a4b07934b827821bf6fae5a5f580a87c9d2e
+cas_ref: sha256:e80cc667c38776b0479bf7dfe516a4b07934b827821bf6fae5a5f580a87c9d2e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

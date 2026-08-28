@@ -1,0 +1,66 @@
+# 第四百零二部　Feshbach–Schur 精确消元
+
+将 Hilbert 空间分解为：
+
+$$
+\mathcal H_L
+=
+P\mathcal H_L
+\oplus
+Q\mathcal H_L.
+$$
+
+相应地，将 \(A_L\) 写成块矩阵：
+
+$$
+\boxed{
+A_L
+=
+\begin{pmatrix}
+A_{PP}&A_{PQ}\\
+A_{QP}&A_{QQ}
+\end{pmatrix}.
+}
+\tag{402.1}
+$$
+
+定理 400.1 保证：
+
+$$
+\boxed{
+A_{QQ}\ge\delta I,
+}
+\tag{402.2}
+$$
+
+所以：
+
+$$
+A_{QQ}^{-1}
+$$
+
+存在且：
+
+$$
+0<A_{QQ}^{-1}\le\delta^{-1}I.
+$$
+
+定义有限维 Feshbach–Schur operator：
+
+$$
+\boxed{
+F_L
+=
+A_{PP}
+-
+A_{PQ}
+A_{QQ}^{-1}
+A_{QP}.
+}
+\tag{402.3}
+$$
+
+Feshbach–Schur 方法正是利用这一 Schur complement 精确消除补空间，并将谱问题压缩到选定有限子空间；其优势包括显式估计和可迭代的降维。([arXiv][2])
+
+---
+

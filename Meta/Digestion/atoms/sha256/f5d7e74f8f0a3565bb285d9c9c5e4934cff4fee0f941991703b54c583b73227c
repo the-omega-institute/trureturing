@@ -1,0 +1,92 @@
+# 第三百六十五部　Prime-power 历史的精确 Poisson 重求和
+
+将 von Mangoldt 和写成：
+
+$$
+n=p^k.
+$$
+
+令：
+
+$$
+\ell_p=\log p,
+\qquad
+r_p=p^{-1/2}=e^{-\ell_p/2}.
+$$
+
+定义平移 unitary：
+
+$$
+\boxed{
+(U_p\psi)(x)
+=
+\psi(x-\ell_p).
+}
+\tag{365.1}
+$$
+
+令：
+
+$$
+g=\psi*\widetilde\psi.
+$$
+
+则：
+
+$$
+g(k\ell_p)
+=
+\langle
+\psi,U_p^k\psi
+\rangle.
+$$
+
+素数 \(p\) 的全部 prime-power contribution 为：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal P_p(\psi)
+=
+-\log p
+\sum_{k=1}^{\infty}
+r_p^k
+\left[
+g(k\ell_p)+g(-k\ell_p)
+\right].
+\end{aligned}
+}
+\tag{365.2}
+$$
+
+定义 unitary Poisson 算子：
+
+$$
+\boxed{
+\mathsf P_r(U)
+=
+(1-r^2)
+(I-rU)^{-1}
+(I-rU^*)^{-1}.
+}
+\tag{365.3}
+$$
+
+由于 \(U\) unitary：
+
+$$
+\boxed{
+\mathsf P_r(U)
+=
+I+
+\sum_{k=1}^{\infty}
+r^k
+\left(
+U^k+U^{*k}
+\right).
+}
+\tag{365.4}
+$$
+
+因此：
+

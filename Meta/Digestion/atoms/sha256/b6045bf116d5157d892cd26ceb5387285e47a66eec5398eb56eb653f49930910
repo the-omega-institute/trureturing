@@ -1,0 +1,52 @@
+# 第三百三十九部　Lax–Phillips 共振解释
+
+Lax–Phillips scattering theory 中，标量 inner scattering matrix 对应一个 translation-invariant scattering system；其内函数零点或下半平面极点编码共振与衰减半群。([arXiv][4])
+
+因此对：
+
+$$
+\omega\ge\frac12,
+$$
+
+\(\Theta_\omega\) 已经无条件定义一个抽象 Lax–Phillips/model-space 型散射系统。
+
+其共振生成元的半单谱为：
+
+$$
+\boxed{
+-\left(
+\omega+\beta-\frac12
+\right)
++i\gamma.
+}
+\tag{339.1}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{所有 Lax--Phillips 共振都具有统一衰减 }
+\omega.
+}
+\tag{339.2}
+$$
+
+在最小模型：
+
+$$
+\omega=\frac12,
+$$
+
+这就是：
+
+$$
+\boxed{
+\text{全部共振的 decay width 都等于 }\frac12.
+}
+$$
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/第四百零三部-可计算的有限充分证书
+fingerprints:
+  raw_sha256: sha256:bc6e1476c151581788bbf2b66b635c9c37f3f0a11ff1f9a943177195eaa6f05c
+  normalized_sha256: sha256:bc6e1476c151581788bbf2b66b635c9c37f3f0a11ff1f9a943177195eaa6f05c
+cas_ref: sha256:bc6e1476c151581788bbf2b66b635c9c37f3f0a11ff1f9a943177195eaa6f05c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,17 @@
+ast_path: 定理/15.1
+fingerprints:
+  raw_sha256: sha256:d1b5c00539938905a2a2c4fdb003ea147f4544c24cb2e5f0bd546d8c7fa06c29
+  normalized_sha256: sha256:d1b5c00539938905a2a2c4fdb003ea147f4544c24cb2e5f0bd546d8c7fa06c29
+cas_ref: sha256:d1b5c00539938905a2a2c4fdb003ea147f4544c24cb2e5f0bd546d8c7fa06c29
+coverage_gids:
+  - D5/S3/AnalyticClosure/ZeroSumGaugeInvariance.zero_sum_gauge_invariance
+receipts:
+  coverage:
+    - gid: D5/S3/AnalyticClosure/ZeroSumGaugeInvariance.zero_sum_gauge_invariance
+      source_sha256: sha256:d1b5c00539938905a2a2c4fdb003ea147f4544c24cb2e5f0bd546d8c7fa06c29
+      target_sha256: sha256:fcdf4d4d9c68efd170b1629d3b1e277f29311fef02b455cae129572cba4e7288
+  scribe:
+    - gid: D5/S3/AnalyticClosure/ZeroSumGaugeInvariance.zero_sum_gauge_invariance
+      definition_sha256: sha256:8fe0bdb4375318966a9a7e8979d83cd22ce448c3c591bf029873c9c745d4935f
+      emission_sha256: sha256:b88d0aee2720a25200943c00075b1c3b8edb4ef802d3b41a2150e599ab79fb25
+  unresolved_subitems: []

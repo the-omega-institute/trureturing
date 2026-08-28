@@ -1,0 +1,87 @@
+# 第三百七十八部　建议形式化顺序
+
+```text
+D5/S3/Analytic/WeilCriticalSource/
+  CoarseXiPoissonDensity.lean
+  CoarsePoissonSemigroup.lean
+  CriticalInversePoissonSource.lean
+  ObservationLineInvariant.lean
+  FunctionalPairCoshContribution.lean
+
+D5/S3/Weil/PrimeArchimedeanSource/
+  CompletedLogDerivativeSplit.lean
+  ArchimedeanCriticalDistribution.lean
+  PrimeAtomicCriticalDistribution.lean
+  CriticalSourceExplicitFormula.lean
+  FiniteSupportPrimeCutoff.lean
+
+D5/S3/Weil/PrimePoissonChannel/
+  LogPrimeTranslation.lean
+  UnitaryPoissonOperator.lean
+  PrimePowerPoissonResummation.lean
+  PrimeCaratheodoryChannel.lean
+  PrimeDangerPhase.lean
+  PrimeChannelExtrema.lean
+
+D5/S3/Weil/FiniteArithmeticWitness/
+  CompactSupportWeilMatrix.lean
+  FinitePrimeWitness.lean
+  PrimeArchimedeanGramDecomposition.lean
+  RHFalseFiniteCertificate.lean
+
+D5/S3/Weil/MasterCompression/
+  WeilGNSFeatureKernel.lean
+  HalfPlaneLaplaceCompression.lean
+  StieltjesPushforward.lean
+  ClarkCayleyPushforward.lean
+  LiFeatureCompression.lean
+  FredholmSpectralFunctor.lean
+  PositivityChartCollapse.lean
+
+D5/S3/Weil/WangDengPrime/
+  FinitePrimeRecurrence.lean
+  PrimeCoherenceProfile.lean
+  NonStickyArchimedeanGain.lean
+  StickyPrimeCluster.lean
+  MultiPrimeTransferBlock.lean
+  PrimeArchimedeanPositivityTarget.lean
+```
+
+最优先、风险最低的形式化链是：
+
+$$
+\boxed{
+\text{prime powers}
+\to
+\text{translation unitary}
+\to
+\text{Poisson operator resummation}.
+}
+$$
+
+其次是：
+
+$$
+\boxed{
+\text{compact support}
+\to
+\text{finite prime cutoff}
+\to
+\text{finite arithmetic witness}.
+}
+$$
+
+第三条是母结构链：
+
+$$
+\boxed{
+\text{coarse Poisson density}
+\to
+\text{critical source invariance}
+\to
+\text{Weil positivity}.
+}
+$$
+
+---
+

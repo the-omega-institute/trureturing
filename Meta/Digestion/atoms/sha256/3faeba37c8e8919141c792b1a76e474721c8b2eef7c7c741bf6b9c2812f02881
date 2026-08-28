@@ -1,0 +1,123 @@
+# 第三百九十七部　固定支撑尺度的精确 Weil 算子
+
+固定：
+
+$$
+L>0.
+$$
+
+令：
+
+$$
+\boxed{
+\mathcal H_L
+=
+L^2_{\mathrm{even}}([-L,L])
+}
+\tag{397.1}
+$$
+
+并将其元素在区间外作零延拓。
+
+采用仓库冻结的角频率 Fourier 变换：
+
+$$
+\widehat f(\xi)
+=
+\int_{\mathbb R}
+f(x)e^{-i\xi x}\,dx,
+$$
+
+所以：
+
+$$
+\boxed{
+\|f\|_2^2
+=
+\frac1{2\pi}
+\int_{\mathbb R}
+|\widehat f(\xi)|^2\,d\xi.
+}
+\tag{397.2}
+$$
+
+定义 Archimedean multiplier：
+
+$$
+\boxed{
+a_\infty(\xi)
+=
+\Re\psi
+\left(
+\frac14+\frac{i\xi}{2}
+\right)
+-
+\log\pi.
+}
+\tag{397.3}
+$$
+
+定义在支撑尺度 \(L\) 下可能出现的 prime-power multiplier：
+
+$$
+\boxed{
+p_L(\xi)
+=
+2
+\sum_{\substack{n\ge2\\\log n\le2L}}
+\frac{\Lambda(n)}{\sqrt n}
+\cos(\xi\log n).
+}
+\tag{397.4}
+$$
+
+由于：
+
+$$
+\operatorname{supp}(f*\widetilde f)
+\subset[-2L,2L],
+$$
+
+所有：
+
+$$
+\log n>2L
+$$
+
+的 prime-power 项严格消失；这正是仓库 `primeSummand_hasFiniteSupport` 所冻结的事实。
+
+定义完成 multiplier：
+
+$$
+\boxed{
+m_L(\xi)
+=
+a_\infty(\xi)-p_L(\xi).
+}
+\tag{397.5}
+$$
+
+再定义 pole observation vector：
+
+$$
+\boxed{
+v_L(x)
+=
+\mathbf1_{[-L,L]}(x)
+\cosh\frac x2.
+}
+\tag{397.6}
+$$
+
+因为 \(f\) 为偶函数：
+
+$$
+\int e^{x/2}f(x)\,dx
+=
+\int \cosh(x/2)f(x)\,dx
+=
+\langle f,v_L\rangle.
+$$
+
+---
+

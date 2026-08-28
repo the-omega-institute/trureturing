@@ -1,0 +1,31 @@
+## 393.2 Deng：有限 Slepian block 抽取
+
+对仍可承载显著质量的危险集合：
+
+1. 构造 \(\mathcal C_{L,B}\)；
+2. 提取所有：
+
+   $$
+   \lambda_j\ge\eta
+   $$
+
+   的 eigenmodes；
+3. 得到有限维 sticky block；
+4. 在该 block 上使用完整 prime-power Poisson resummation；
+5. 加入 pole 与 Archimedean jump energy；
+6. 对 residual complement 使用统一 concentration bound。
+
+输出：
+
+$$
+\boxed{
+\text{无限 prime histories}
+\longrightarrow
+\text{有限 sticky state matrix}
++
+\text{统一正 residual}.
+}
+$$
+
+---
+

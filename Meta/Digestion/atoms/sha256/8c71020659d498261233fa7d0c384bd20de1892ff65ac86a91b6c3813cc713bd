@@ -1,0 +1,108 @@
+# 本轮最终结论
+
+此前我们把 RH 的困难压缩为：
+
+$$
+\boxed{
+\text{无限多个 prime channels
+是否被 Archimedean 完成完全支配。}
+}
+$$
+
+本轮进一步揭示：这个问题本身已经具有一个几乎标准的能量形式。
+
+对卷积平方测试：
+
+$$
+g=f*\widetilde f,
+$$
+
+Weil 显式公式精确变成：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal Q_W(f)
+={}&
+\underbrace{
+2|\ell_{1/2}(f)|^2
+}_{\text{pole rank-one energy}}
++
+\underbrace{
+\int_0^\infty
+\kappa_\infty(a)
+\|f-U_af\|^2da
+}_{\text{continuous Archimedean jumps}}
+\\
+&+
+\underbrace{
+\sum_n
+\frac{\Lambda(n)}{\sqrt n}
+\|f-U_{\log n}f\|^2
+}_{\text{discrete arithmetic jumps}}
+-
+\underbrace{
+(2W_L-a_\infty)\|f\|^2
+}_{\text{coherent mass}}.
+\end{aligned}
+}
+$$
+
+所以 multi-prime sticky cluster 的本体不是“许多素数相位神秘共振”，而是：
+
+$$
+\boxed{
+\text{对数素数跳跃图的低能状态。}
+}
+$$
+
+有限 prime cluster 在典型频率下满足高斯律，方差只有：
+
+$$
+V_Y\asymp(\log Y)^2,
+$$
+
+而极端相干值可达：
+
+$$
+M_Y\asymp\sqrt Y.
+$$
+
+这意味着 sticky 状态非常稀少，却不能被忽略。
+
+Slepian concentration theory 随后给出关键有限化：
+
+$$
+\boxed{
+\#\{\text{强 sticky modes}\}
+\le
+\frac{L|B|}{\pi\eta}.
+}
+$$
+
+即任何有限测度危险频率集，只能承载有限多个强集中模式。
+
+因此当前最真实、最非循环的研究路线已经变成：
+
+$$
+\boxed{
+\text{先用 Wang 型 Bohr 几何证明危险集稀薄，}
+}
+$$
+
+再：
+
+$$
+\boxed{
+\text{用 Deng 型 Slepian 分解抽出有限 sticky block，}
+}
+$$
+
+最后在该有限 block 上精确计算 prime、pole 与 Archimedean 能量，并对其正交补证明统一谱隙。
+
+这比继续增加 RH 等价表述前进了一步：它第一次把剩余问题压缩成了一个**有限 sticky matrix + 正 residual operator** 的可计算证明架构。
+
+[1]: https://dlmf.nist.gov/5.9?utm_source=chatgpt.com "DLMF: §5.9 Integral Representations ‣ Properties ‣ Chapter 5 Gamma Function"
+[2]: https://arxiv.org/abs/1703.08032?utm_source=chatgpt.com "New estimates for some functions defined over primes"
+[3]: https://arxiv.org/abs/2312.04492 "https://arxiv.org/abs/2312.04492"
+[4]: https://arxiv.org/abs/2010.11901 "https://arxiv.org/abs/2010.11901"

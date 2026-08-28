@@ -1,0 +1,19 @@
+## 409.2 Slepian 证书
+
+构造多频带 concentration operator：
+
+$$
+\mathsf C_{L,B_{L,a}}.
+$$
+
+严格证明：
+
+$$
+\lambda_{N+1}
+\le\eta.
+$$
+
+于是前 \(N\) 个 eigenmodes 加 pole vector 就构成完整 sticky space。
+
+---
+

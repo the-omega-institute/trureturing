@@ -1,0 +1,29 @@
+## 366.2 常数角色
+
+每个 prime channel 中：
+
+$$
+\boxed{
+\begin{aligned}
+\log p
+&=\text{平移距离／局部能量单位};\\
+e
+&=\text{把平移长度转成衰减};\\
+p^{-1/2}=e^{-(\log p)/2}
+&=\text{临界 Schur 参数};\\
+\mathsf C_p
+&=\text{局部正实部 transfer function}.
+\end{aligned}
+}
+$$
+
+因此单个 Euler factor并不神秘：
+
+$$
+\boxed{
+\text{它是一个一状态被动系统。}
+}
+$$
+
+---
+

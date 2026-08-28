@@ -1,0 +1,58 @@
+# 第四百零四部　Pole rank-one 的有限修复能力
+
+将 \(A_L\) 分解为：
+
+$$
+\boxed{
+A_L
+=
+A_L^{(0)}
++
+2|v_L\rangle\langle v_L|,
+}
+\tag{404.1}
+$$
+
+其中 \(A_L^{(0)}\) 只含 prime 与 Archimedean multiplier。
+
+由于我们已经把：
+
+$$
+v_L
+$$
+
+加入 \(P\)，所以：
+
+$$
+Qv_L=0.
+$$
+
+因此 pole 项不进入：
+
+* \(A_{QQ}\)；
+* \(A_{PQ}\)；
+* self-energy \(\Sigma_L\)。
+
+定义 pole-free Feshbach matrix：
+
+$$
+F_L^{(0)}.
+$$
+
+则精确有：
+
+$$
+\boxed{
+F_L
+=
+F_L^{(0)}
++
+2|p_L\rangle\langle p_L|,
+}
+\tag{404.2}
+$$
+
+其中 \(p_L\) 是 \(v_L\) 在有限 sticky 基中的坐标向量。
+
+---
+

@@ -1,0 +1,69 @@
+## v3.1：Weil 母分布、临界源不变量、Prime–Poisson 通道与全部正性图表的统一压缩
+
+以下从前文**第三百五十九部之后**继续追加。
+
+经过 Pick、Hankel、Li、Clark、CMV、Fredholm、de Branges、环面周期、shifted-\(\xi\) 与散射等多条路线后，现在应停止继续横向增加等价判据，把它们全部 collapse 回唯一承重对象：
+
+$$
+\boxed{
+\textbf{Weil 临界源分布}
+}
+$$
+
+本轮得到的统一链为：
+
+$$
+\boxed{
+\begin{aligned}
+\Re\frac{\xi'}{\xi}(\sigma-ix)
+&\xrightarrow{\text{逆 Poisson}}
+\mathfrak W_\xi\\
+&=
+\mathfrak A_\infty
+-
+\sum_{n\ge2}
+\frac{\Lambda(n)}{\sqrt n}
+\bigl(
+\delta_{\log n}+\delta_{-\log n}
+\bigr)\\
+&\xrightarrow{\text{正定性}}
+\mathrm{RH}.
+\end{aligned}}
+$$
+
+而此前出现的所有正性对象：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{半平面 Pick 核};\\
+&\text{de Branges 核};\\
+&\text{Stieltjes/Hankel moments};\\
+&\text{Li–Clark Toeplitz 核};\\
+&\text{CMV unitary};\\
+&\text{Fredholm determinant}
+\end{aligned}}
+$$
+
+都只是这个母分布经过不同的：
+
+* Laplace 压缩；
+* Möbius 推送；
+* 平方折叠；
+* 谱重加权；
+* exterior/determinant 函子；
+
+得到的观察图表。
+
+项目已经固定角频率 Fourier 规范
+
+$$
+\widehat f(\xi)
+=
+\int_{\mathbb R}f(x)e^{-i\xi x}\,dx,
+$$
+
+并已经把无假设 Weil 显式公式登记为 `proven`；登记文件也明确区分了“显式公式成立”与“正性/RH 成立”。
+
+---
+

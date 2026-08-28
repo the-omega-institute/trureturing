@@ -1,0 +1,16 @@
+* exterior/determinant 函子；
+
+得到的观察图表。
+
+项目已经固定角频率 Fourier 规范
+
+$$
+\widehat f(\xi)
+=
+\int_{\mathbb R}f(x)e^{-i\xi x}\,dx,
+$$
+
+并已经把无假设 Weil 显式公式登记为 `proven`；登记文件也明确区分了“显式公式成立”与“正性/RH 成立”。
+
+---
+

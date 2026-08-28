@@ -1,0 +1,63 @@
+## 定理 388.1（Prime-cluster central limit law）
+
+对任意实数 \(u\)：
+
+$$
+\boxed{
+\begin{aligned}
+\lim_{Y\to\infty}
+\lim_{X\to\infty}
+\frac1{2X}
+\operatorname{meas}
+\left\{
+x\in[-X,X]:
+\frac{\mathcal C_Y(x)}{\sqrt{V_Y}}\le u
+\right\}
+=
+\Phi(u),
+\end{aligned}
+}
+\tag{388.1}
+$$
+
+其中 \(\Phi\) 为标准高斯分布函数。
+
+由素数定理偏分求和：
+
+$$
+\boxed{
+V_Y\sim(\log Y)^2.
+}
+\tag{388.2}
+$$
+
+而全部通道同时达到局部最大时的代数上界为：
+
+$$
+\boxed{
+M_Y
+=
+\sum_{p\le Y}
+\frac{2\log p}{\sqrt p-1}
+\sim4\sqrt Y.
+}
+\tag{388.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\text{典型 prime coherence}
+&\asymp\log Y;\\
+\text{极端 sticky coherence}
+&\asymp\sqrt Y.
+\end{aligned}
+}
+$$
+
+两者相差指数级别的状态体积。
+
+---
+

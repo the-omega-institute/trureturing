@@ -8,6 +8,16 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-28T09:28:11.8171280+00:00
+    gids:
+      - D5/S3/AnalyticClosure/LocalPrecisionUnit.local_precision_unit
+    gaps:
+      - code: chain-migration-incomplete
+        detail: generic-residual-0234f4d16b150ebc12b6174f36ded36b4b747f62763e6435a1c4692b10f4d5d7-0549c085cbef4481615077f6e8926ec640cd7ff28803adf715e33b715ebf4353
+      - code: chain-migration-incomplete
+        detail: generic-residual-a0962c31130b58df39a6dfae06ea14f768b3871198857fe006fff0076240716b-a2be5dc1dfa0db2b9a01c6b8bb741acb60ed0afedc1a41e8d934e497985f1c74
   chain_atoms:
     - generic-residual-665905877ba7e0deb7d3b7cb896d5f5854d39bd4ae848540f736544b39b782f5-f62696bb18825c586d7fd3815b5dc84888808d8bc36743b3132fdcf97c01183f
     - generic-residual-0234f4d16b150ebc12b6174f36ded36b4b747f62763e6435a1c4692b10f4d5d7-0549c085cbef4481615077f6e8926ec640cd7ff28803adf715e33b715ebf4353

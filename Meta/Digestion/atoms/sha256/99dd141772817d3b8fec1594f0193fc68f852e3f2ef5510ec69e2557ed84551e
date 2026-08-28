@@ -1,0 +1,49 @@
+## 386.1 Prime logs 的独立性
+
+若：
+
+$$
+\sum_{p\in\mathcal P}
+k_p\log p=0,
+\qquad
+k_p\in\mathbb Z,
+$$
+
+指数化得到：
+
+$$
+\prod_pp^{k_p}=1.
+$$
+
+由整数唯一分解：
+
+$$
+k_p=0
+$$
+
+对全部 \(p\) 成立。
+
+所以有限频率族：
+
+$$
+(\log p)_{p\in\mathcal P}
+$$
+
+在 \(\mathbb Q\) 上线性无关。
+
+由 Kronecker–Weyl 理论，流：
+
+$$
+x
+\longmapsto
+\left(
+e^{ix\log p}
+\right)_{p\in\mathcal P}
+$$
+
+在有限环面上唯一遍历；有限维 Kronecker 流的非共振、极小性和唯一遍历性是标准结构。([arXiv][3])
+
+因此长频率平均等于独立 Haar 相位平均。
+
+---
+

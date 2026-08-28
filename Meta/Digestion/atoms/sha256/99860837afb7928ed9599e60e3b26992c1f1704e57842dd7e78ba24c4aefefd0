@@ -1,0 +1,32 @@
+# 第四百零四部　Pole rank-one 的有限修复能力
+
+将 \(A_L\) 分解为：
+
+$$
+\boxed{
+A_L
+=
+A_L^{(0)}
++
+2|v_L\rangle\langle v_L|,
+}
+\tag{404.1}
+$$
+
+其中 \(A_L^{(0)}\) 只含 prime 与 Archimedean multiplier。
+
+由于我们已经把：
+
+$$
+v_L
+$$
+
+加入 \(P\)，所以：
+
+$$
+Qv_L=0.
+$$
+
+因此 pole 项不进入：
+
+* \(A_{QQ}\)；

@@ -1,0 +1,13 @@
+## 337.2 \(\omega\) 作为 prime activation scale
+
+增加 \(\omega\) 相当于将每个素数幂模式乘上：
+
+$$
+n^{-\omega}
+=
+e^{-\omega\log n}.
+$$
+
+所以：
+
+* 大 \(\omega\)：高 prime modes 被强烈压制；

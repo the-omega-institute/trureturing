@@ -1,0 +1,42 @@
+# 第三百八十九部　Sticky recurrence 仍然不可避免
+
+Kronecker–Weyl 同时说明：对任意有限素数集 \(\mathcal P\) 和任意 \(\varepsilon>0\)，存在任意大的 \(x\)，使：
+
+$$
+\boxed{
+|e^{ix\log p}-1|<\varepsilon
+\qquad
+\forall p\in\mathcal P.
+}
+\tag{389.1}
+$$
+
+所以：
+
+$$
+\mathcal C_{\mathcal P}(x)
+$$
+
+可以任意接近其最大值：
+
+$$
+\boxed{
+M_{\mathcal P}
+=
+\sum_{p\in\mathcal P}
+\frac{2\log p}{\sqrt p-1}.
+}
+\tag{389.2}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{“有限素数永远不会同时对齐”是错误的。}
+}
+$$
+
+正确结构是：
+
+* 对齐状态必然存在；

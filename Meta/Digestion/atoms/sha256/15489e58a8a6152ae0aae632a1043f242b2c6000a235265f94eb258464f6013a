@@ -1,0 +1,67 @@
+## 定理 385.1（Support-geometric prime bound）
+
+$$
+\boxed{
+\|\mathcal A_L\|
+\le
+M_L
+:=
+\sup_{|x|\le L}
+\left[
+S(L-x)+S(L+x)
+\right].
+}
+\tag{385.4}
+$$
+
+因此：
+
+$$
+\boxed{
+\operatorname{Prime}(g)
+\le
+M_L\|f\|_2^2.
+}
+\tag{385.5}
+$$
+
+这一上界已经包含了 multi-prime 不兼容性：同一空间点不可能同时与所有对数平移保持重叠。
+
+由素数定理对 Chebyshev 函数的估计与偏分求和：
+
+$$
+S(y)\sim2e^{y/2}.
+$$
+
+([arXiv][2])
+
+于是：
+
+$$
+\boxed{
+M_L\sim2e^L,
+\qquad
+W_L=S(2L)\sim2e^L.
+}
+\tag{385.6}
+$$
+
+相比之下，完全忽略支撑几何的代数上界为：
+
+$$
+2W_L\sim4e^L.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{仅靠支撑几何，
+已经渐近消除了约一半的最大相干质量。}
+}
+$$
+
+真正剩余的是相关算子 \(\mathcal A_L\) 的精确主特征态，而不是所有素数逐项最大值的简单相加。
+
+---
+
