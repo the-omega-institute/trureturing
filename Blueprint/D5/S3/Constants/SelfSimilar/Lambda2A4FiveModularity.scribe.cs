@@ -7,8 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Constants.SelfSimilar;
 internal sealed class Lambda2A4FiveModularityDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The source Gram and Hodge certificates force both five-modular similarities, rank six, "
-            + "the two recorded discriminant identities, and their structural forcing certificate.",
+        "The source Hodge and unimodular-pairing data force both five-modular similarities, "
+            + "rank six, and the two recorded discriminant identities.",
         H("Five-Modularity of the Lambda-Squared A4 Lattice"),
         Blocks(
             Describe.Lean(
@@ -24,22 +24,24 @@ internal sealed class Lambda2A4FiveModularityDocument : IScribeDocumentDefinitio
                         "Let L be any integral lattice realization carrying the six-element basis, "
                             + "the displayed Lambda-squared A4 Gram matrix, the integral Hodge "
                             + "operator, and the exact identification of its bilinear dual with "
-                            + "the image of J divided by five.")),
+                            + "the image of J divided by five. The source and transported-dual "
+                            + "integral bases are also identified with real bases of the ambient "
+                            + "space.")),
                     Paragraph(Text(
                         "The Hodge similitude equation makes that dual identification scale the "
                             + "bilinear form by one fifth. It therefore gives similarity ratio "
                             + "one over square root five; the inverse equivalence gives ratio square "
                             + "root five in the other direction.")),
                     Paragraph(Text(
-                        "The six-element integral basis supplies rank six. The determinant of its "
-                            + "fixed Gram matrix is 125, yielding separately the source identities "
-                            + "five cubed and five raised to six divided by two.")),
+                        "The six-element integral basis supplies rank six. The pairing matrix of "
+                            + "the transported dual basis against the source basis is the source's "
+                            + "unimodular matrix U, whose determinant is minus one.")),
                     Paragraph(Text(
-                        "The structural certificate transports that same basis through e onto the "
-                            + "actual dualSubmodule. Its Gram matrix is one fifth of the source "
-                            + "Gram matrix, so Matrix.det_smul gives the sixth-power determinant "
-                            + "scale. Dual/source reciprocity and positivity then force the positive "
-                            + "value five raised to six divided by two."))),
+                        "Changing between the two real bases turns unimodularity into reciprocal "
+                            + "source and dual discriminants. Exact five-modular scaling gives the "
+                            + "sixth-power determinant scale; reciprocity and positivity then force "
+                            + "five raised to six divided by two, hence also five cubed. No "
+                            + "precomputed determinant of the fixed Gram matrix enters this chain."))),
                 DescribeRole.Theorem))));
 
     private static Formula FiveModularityFormula()
@@ -50,17 +52,24 @@ internal sealed class Lambda2A4FiveModularityDocument : IScribeDocumentDefinitio
         Formula basis = F.Id("b");
         Formula hodge = F.Id("J");
         Formula dualEquiv = F.Id("e");
+        Formula sourceRealBasis = F.Id("s");
+        Formula dualRealBasis = F.Id("t");
+        Formula index = F.Id("i");
         Formula x = F.Id("x");
         Formula y = F.Id("y");
         Formula dual = Call("dualSubmodule", form, lattice);
         Formula smallScale = Seq(Frac, Grp(D(1)), Grp(Sqrt, Grp(D(5))));
         Formula largeScale = Seq(Sqrt, Grp(D(5)));
         Formula discriminant = Call("latticeDiscriminant", form, lattice, basis);
+        Formula forcedDiscriminant = Seq(
+            discriminant, Sp, Eq, Sp, D(5), Caret,
+            Grp(Frac, Grp(D(6)), Grp(D(2))));
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
             Forall, Sp, ambient, Comma, Sp, form, Comma, Sp, lattice, Comma, Sp,
-            basis, Comma, Sp, hodge, Comma, Sp, dualEquiv, Comma, RowBreak, Grp(),
+            basis, Comma, Sp, hodge, Comma, Sp, dualEquiv, Comma, Sp,
+            sourceRealBasis, Comma, Sp, dualRealBasis, Comma, RowBreak, Grp(),
             Call("IntegralRealBilinearLattice", ambient, form, lattice), Sp, Land, Sp,
             Call("BasisFin6Z", basis, lattice), Sp, Land, RowBreak, Grp(),
             Call("latticeGram", form, lattice, basis), Sp, Eq, Sp,
@@ -73,6 +82,19 @@ internal sealed class Lambda2A4FiveModularityDocument : IScribeDocumentDefinitio
             Open, Forall, Sp, x, Comma, Sp, y, Sp, InMacro, Sp, ambient, Comma, Sp,
             Apply(form, Apply(hodge, x), Apply(hodge, y)), Sp, Eq, Sp,
             D(5), Sp, Cdot, Sp, Apply(form, x, y), Close,
+            Sp, Land, RowBreak, Grp(),
+            Call("BasisFin6R", sourceRealBasis, ambient), Sp, Land, Sp,
+            Call("BasisFin6R", dualRealBasis, ambient), Sp, Land, RowBreak, Grp(),
+            Open, Forall, Sp, index, Comma, Sp,
+            Apply(sourceRealBasis, index), Sp, Eq, Sp, Apply(basis, index), Close,
+            Sp, Land, RowBreak, Grp(),
+            Open, Forall, Sp, index, Comma, Sp,
+            Apply(dualRealBasis, index), Sp, Eq, Sp,
+            Apply(dualEquiv, Apply(basis, index)), Close,
+            Sp, Land, RowBreak, Grp(),
+            Call("det", Call("latticePairingMatrix", form, lattice, basis, dualEquiv)),
+            Sp, Eq, Sp, Minus, D(1), Sp, Land, RowBreak, Grp(),
+            D(0), Sp, Lt, Sp, discriminant,
             Sp, Rightarrow, RowBreak, Grp(),
             Call("LatticeSimilarity", form, smallScale, lattice, dual),
             Sp, Land, RowBreak, Grp(),
@@ -85,7 +107,11 @@ internal sealed class Lambda2A4FiveModularityDocument : IScribeDocumentDefinitio
             discriminant, Sp, Eq, Sp, D(5), Caret,
             Grp(Frac, Grp(D(6)), Grp(D(2))),
             Sp, Land, RowBreak, Grp(),
-            Call("FiveModularDiscriminantCertificate", form, lattice, basis, dualEquiv), Dot,
+            Open,
+            Open, Forall, Sp, x, Comma, Sp, y, Sp, InMacro, Sp, lattice, Comma, Sp,
+            Apply(form, Apply(dualEquiv, x), Apply(dualEquiv, y)), Sp, Eq, Sp,
+            Frac, Grp(D(1)), Grp(D(5)), Sp, Cdot, Sp, Apply(form, x, y), Close,
+            Sp, Rightarrow, Sp, forcedDiscriminant, Close, Dot,
             End, Grp(F.Id("gathered"))));
     }
 

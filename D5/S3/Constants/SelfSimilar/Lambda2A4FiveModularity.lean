@@ -59,26 +59,95 @@ def LatticeSimilarity {E : Type*} [AddCommGroup E] [Module ℝ E]
   ∃ e : L1 ≃ₗ[ℤ] L2, ∀ x y : L1,
     B (e x : E) (e y : E) = r ^ 2 * B (x : E) (y : E)
 
-/-- The determinant-level data carried by five-modularity.  The basis is not an
-unrelated enumeration: it is the source integral basis transported through the
-specified equivalence onto the actual bilinear dual submodule. -/
-structure FiveModularDiscriminantCertificate
+/-- The integral pairing matrix between the transported dual basis and the
+source basis. In the source this is the unimodular matrix `U = GJ/5`. -/
+noncomputable def latticePairingMatrix
     {E : Type*} [AddCommGroup E] [Module ℝ E]
     (B : LinearMap.BilinForm ℝ E) (L : Submodule ℤ E)
     (b : Module.Basis (Fin 6) ℤ L)
-    (dualEquiv : L ≃ₗ[ℤ] B.dualSubmodule L) : Prop where
-  dualGram_scaling :
-    latticeGram B (B.dualSubmodule L) (b.map dualEquiv) =
-      (1 / 5 : ℝ) • latticeGram B L b
-  dualDiscriminant_scaling :
-    latticeDiscriminant B (B.dualSubmodule L) (b.map dualEquiv) =
-      (1 / 5 : ℝ) ^ 6 * latticeDiscriminant B L b
-  dual_discriminant_mul_source :
-    latticeDiscriminant B (B.dualSubmodule L) (b.map dualEquiv) *
-      latticeDiscriminant B L b = 1
-  source_discriminant_pos : 0 < latticeDiscriminant B L b
-  forced_source_discriminant :
+    (dualEquiv : L ≃ₗ[ℤ] B.dualSubmodule L) : Matrix (Fin 6) (Fin 6) ℝ :=
+  fun i j => B (dualEquiv (b i) : E) (b j : E)
+
+/-- The source's forcing sentence as one assertion: exact five-modular scaling
+through the specified equivalence with the actual dual lattice forces the
+rank-six discriminant. -/
+def FiveModularityForcesDiscriminant
+    {E : Type*} [AddCommGroup E] [Module ℝ E]
+    (B : LinearMap.BilinForm ℝ E) (L : Submodule ℤ E)
+    (b : Module.Basis (Fin 6) ℤ L)
+    (dualEquiv : L ≃ₗ[ℤ] B.dualSubmodule L) : Prop :=
+  (∀ x y : L,
+      B (dualEquiv x : E) (dualEquiv y : E) = (1 / 5 : ℝ) * B x y) →
     latticeDiscriminant B L b = (5 : ℝ) ^ (6 / 2)
+
+/-- Change of real basis identifies dual/source discriminant reciprocity with
+the square of the integral pairing determinant. -/
+theorem dual_discriminant_mul_source_eq_pairing_det_sq
+    {E : Type*} [AddCommGroup E] [Module ℝ E]
+    (B : LinearMap.BilinForm ℝ E) (L : Submodule ℤ E)
+    (b : Module.Basis (Fin 6) ℤ L)
+    (dualEquiv : L ≃ₗ[ℤ] B.dualSubmodule L)
+    (sourceRealBasis dualRealBasis : Module.Basis (Fin 6) ℝ E)
+    (sourceRealBasis_apply : ∀ i, sourceRealBasis i = (b i : E))
+    (dualRealBasis_apply : ∀ i,
+      dualRealBasis i = (dualEquiv (b i) : E)) :
+    latticeDiscriminant B (B.dualSubmodule L) (b.map dualEquiv) *
+        latticeDiscriminant B L b =
+      (latticePairingMatrix B L b dualEquiv).det ^ 2 := by
+  classical
+  have hsourceGram :
+      latticeGram B L b = LinearMap.BilinForm.toMatrix sourceRealBasis B := by
+    ext i j
+    simp only [latticeGram, LinearMap.BilinForm.toMatrix_apply]
+    rw [sourceRealBasis_apply i, sourceRealBasis_apply j]
+  have hdualGram :
+      latticeGram B (B.dualSubmodule L) (b.map dualEquiv) =
+        LinearMap.BilinForm.toMatrix dualRealBasis B := by
+    ext i j
+    simp only [latticeGram, Module.Basis.map_apply,
+      LinearMap.BilinForm.toMatrix_apply]
+    rw [dualRealBasis_apply i, dualRealBasis_apply j]
+  have hpairingMatrix :
+      latticePairingMatrix B L b dualEquiv =
+        Matrix.transpose (sourceRealBasis.toMatrix dualRealBasis) *
+          LinearMap.BilinForm.toMatrix sourceRealBasis B := by
+    ext i j
+    simp only [latticePairingMatrix, Matrix.mul_apply, Matrix.transpose_apply,
+      LinearMap.BilinForm.toMatrix_apply]
+    rw [← sourceRealBasis_apply j, ← dualRealBasis_apply i]
+    calc
+      B (dualRealBasis i) (sourceRealBasis j) =
+          B (∑ k, sourceRealBasis.toMatrix dualRealBasis k i •
+            sourceRealBasis k) (sourceRealBasis j) := by
+        rw [sourceRealBasis.sum_toMatrix_smul_self dualRealBasis i]
+      _ = ∑ k, sourceRealBasis.toMatrix dualRealBasis k i *
+          B (sourceRealBasis k) (sourceRealBasis j) := by
+        simp only [map_sum, LinearMap.sum_apply, map_smul,
+          LinearMap.smul_apply, smul_eq_mul]
+  have hdualChange :
+      Matrix.transpose (sourceRealBasis.toMatrix dualRealBasis) *
+          LinearMap.BilinForm.toMatrix sourceRealBasis B *
+          sourceRealBasis.toMatrix dualRealBasis =
+        LinearMap.BilinForm.toMatrix dualRealBasis B :=
+    LinearMap.BilinForm.toMatrix_mul_basis_toMatrix
+      sourceRealBasis dualRealBasis B
+  have hdualDet :
+      (LinearMap.BilinForm.toMatrix dualRealBasis B).det =
+        (sourceRealBasis.toMatrix dualRealBasis).det ^ 2 *
+          (LinearMap.BilinForm.toMatrix sourceRealBasis B).det := by
+    rw [← hdualChange, Matrix.det_mul, Matrix.det_mul, Matrix.det_transpose]
+    ring
+  have hpairingDet :
+      (latticePairingMatrix B L b dualEquiv).det =
+        (sourceRealBasis.toMatrix dualRealBasis).det *
+          (LinearMap.BilinForm.toMatrix sourceRealBasis B).det := by
+    rw [hpairingMatrix, Matrix.det_mul, Matrix.det_transpose]
+  change
+    (latticeGram B (B.dualSubmodule L) (b.map dualEquiv)).det *
+        (latticeGram B L b).det =
+      (latticePairingMatrix B L b dualEquiv).det ^ 2
+  rw [hdualGram, hsourceGram, hdualDet, hpairingDet]
+  ring
 
 /-- Rank-six scaling by `1/5`, dual reciprocity, and positivity select the
 positive discriminant `5^(6/2)`. -/
@@ -91,36 +160,13 @@ theorem rankSixFiveModular_discriminant_forced
   rw [hscale] at hreciprocal
   nlinarith [sq_nonneg (source - 125)]
 
-private theorem lambda2A4GramInt_det : lambda2A4GramInt.det = 125 := by
-  set_option maxRecDepth 100000 in
-    decide
-
-private theorem lambda2A4Gram_det : lambda2A4Gram.det = (5 : ℝ) ^ 3 := by
-  rw [lambda2A4Gram, ← Int.cast_det, lambda2A4GramInt_det]
-  norm_num
-
-/- Nyxid counterexample probe: the old fifth conjunct follows from the fixed
-Gram certificate alone, without the dual equivalence or Hodge similitude. -/
-example
-    {E : Type*} [AddCommGroup E] [Module ℝ E]
-    (B : LinearMap.BilinForm ℝ E) (L : Submodule ℤ E)
-    (b : Module.Basis (Fin 6) ℤ L)
-    (hGram : latticeGram B L b = lambda2A4Gram) :
-    latticeDiscriminant B L b = (5 : ℝ) ^ (6 / 2) := by
-  have hdisc : latticeDiscriminant B L b = (5 : ℝ) ^ 3 := by
-    rw [latticeDiscriminant, hGram, lambda2A4Gram_det]
-  norm_num at hdisc ⊢
-  exact hdisc
-
 /-- OACTC five-modularity for `Lambda^2 A4`.
 
-The hypotheses are precisely the data fixed immediately before the source
-theorem: its six-element integral basis and Gram matrix, the integral Hodge
-operator, the exact formula `L# = (J/5)L`, and `J^T G J = 5G`. The conclusion
-keeps both displayed similarities, the six-dimensional assertion, and both
-displayed forms of the discriminant identity as separate conjuncts.  Its final
-certificate records the transported dual basis, Gram and determinant scaling,
-dual reciprocity, and the resulting structural forcing law. -/
+The hypotheses are the data fixed immediately before the source theorem: its
+integral and real bases, Gram matrix, integral Hodge operator, exact formula
+`L# = (J/5)L`, unimodular pairing matrix `U`, and `J^T G J = 5G`. The six
+conclusions retain both similarities, rank, both discriminant displays, and the
+forcing implication. -/
 theorem lambda2A4_five_modularity
     {E : Type*} [AddCommGroup E] [Module ℝ E]
     (B : LinearMap.BilinForm ℝ E) (L : Submodule ℤ E)
@@ -130,13 +176,20 @@ theorem lambda2A4_five_modularity
     (dualEquiv : L ≃ₗ[ℤ] B.dualSubmodule L)
     (dualEquiv_apply : ∀ x : L,
       (dualEquiv x : E) = (5 : ℝ)⁻¹ • J (x : E))
-    (hodge_similitude : ∀ x y : E, B (J x) (J y) = 5 * B x y) :
+    (hodge_similitude : ∀ x y : E, B (J x) (J y) = 5 * B x y)
+    (sourceRealBasis dualRealBasis : Module.Basis (Fin 6) ℝ E)
+    (sourceRealBasis_apply : ∀ i, sourceRealBasis i = (b i : E))
+    (dualRealBasis_apply : ∀ i,
+      dualRealBasis i = (dualEquiv (b i) : E))
+    (dualPairing_det :
+      (latticePairingMatrix B L b dualEquiv).det = (-1 : ℝ))
+    (source_discriminant_pos : 0 < latticeDiscriminant B L b) :
     LatticeSimilarity B (1 / Real.sqrt 5) L (B.dualSubmodule L) ∧
       Module.finrank ℤ L = 6 ∧
       LatticeSimilarity B (Real.sqrt 5) (B.dualSubmodule L) L ∧
       latticeDiscriminant B L b = (5 : ℝ) ^ 3 ∧
       latticeDiscriminant B L b = (5 : ℝ) ^ (6 / 2) ∧
-      FiveModularDiscriminantCertificate B L b dualEquiv := by
+      FiveModularityForcesDiscriminant B L b dualEquiv := by
   have hsqrt_sq : (Real.sqrt 5) ^ 2 = (5 : ℝ) := Real.sq_sqrt (by norm_num)
   have hsmall_sq : (1 / Real.sqrt 5) ^ 2 = (1 / 5 : ℝ) := by
     rw [div_pow, one_pow, hsqrt_sq]
@@ -163,44 +216,44 @@ theorem lambda2A4_five_modularity
   have hrank : Module.finrank ℤ L = 6 := by
     rw [Module.finrank_eq_card_basis b]
     norm_num
-  have hdisc : latticeDiscriminant B L b = (5 : ℝ) ^ 3 := by
-    rw [latticeDiscriminant, hGram, lambda2A4Gram_det]
-  have hdualGram :
-      latticeGram B (B.dualSubmodule L) (b.map dualEquiv) =
-        (1 / 5 : ℝ) • latticeGram B L b := by
-    ext i j
-    simp only [latticeGram, Module.Basis.map_apply, Matrix.smul_apply, smul_eq_mul]
-    rw [hforward_apply, hsmall_sq]
-  have hdualDiscriminant :
-      latticeDiscriminant B (B.dualSubmodule L) (b.map dualEquiv) =
-        (1 / 5 : ℝ) ^ 6 * latticeDiscriminant B L b := by
-    change (latticeGram B (B.dualSubmodule L) (b.map dualEquiv)).det =
-      (1 / 5 : ℝ) ^ 6 * (latticeGram B L b).det
-    rw [hdualGram, Matrix.det_smul]
-    norm_num
   have hdualReciprocal :
       latticeDiscriminant B (B.dualSubmodule L) (b.map dualEquiv) *
         latticeDiscriminant B L b = 1 := by
-    rw [hdualDiscriminant, hdisc]
+    rw [dual_discriminant_mul_source_eq_pairing_det_sq B L b dualEquiv
+      sourceRealBasis dualRealBasis sourceRealBasis_apply dualRealBasis_apply,
+      dualPairing_det]
     norm_num
-  have hdiscPos : 0 < latticeDiscriminant B L b := by
-    rw [hdisc]
-    norm_num
-  have hforced : latticeDiscriminant B L b = (5 : ℝ) ^ (6 / 2) :=
-    rankSixFiveModular_discriminant_forced
+  have hforcing : FiveModularityForcesDiscriminant B L b dualEquiv := by
+    intro hfiveScaling
+    have hdualGram :
+        latticeGram B (B.dualSubmodule L) (b.map dualEquiv) =
+          (1 / 5 : ℝ) • latticeGram B L b := by
+      ext i j
+      simp only [latticeGram, Module.Basis.map_apply, Matrix.smul_apply, smul_eq_mul]
+      rw [hfiveScaling]
+    have hdualDiscriminant :
+        latticeDiscriminant B (B.dualSubmodule L) (b.map dualEquiv) =
+          (1 / 5 : ℝ) ^ 6 * latticeDiscriminant B L b := by
+      change (latticeGram B (B.dualSubmodule L) (b.map dualEquiv)).det =
+        (1 / 5 : ℝ) ^ 6 * (latticeGram B L b).det
+      rw [hdualGram, Matrix.det_smul]
+      norm_num
+    exact rankSixFiveModular_discriminant_forced
       (latticeDiscriminant B L b)
       (latticeDiscriminant B (B.dualSubmodule L) (b.map dualEquiv))
-      hdiscPos hdualDiscriminant hdualReciprocal
-  refine ⟨hforward, hrank, hreverse, hdisc, hforced, ?_⟩
-  exact
-    { dualGram_scaling := hdualGram
-      dualDiscriminant_scaling := hdualDiscriminant
-      dual_discriminant_mul_source := hdualReciprocal
-      source_discriminant_pos := hdiscPos
-      forced_source_discriminant := hforced }
+      source_discriminant_pos hdualDiscriminant hdualReciprocal
+  have hfiveScaling : ∀ x y : L,
+      B (dualEquiv x : E) (dualEquiv y : E) = (1 / 5 : ℝ) * B x y := by
+    intro x y
+    rw [hforward_apply, hsmall_sq]
+  have hforced := hforcing hfiveScaling
+  have hdisc : latticeDiscriminant B L b = (5 : ℝ) ^ 3 := by
+    norm_num at hforced ⊢
+    exact hforced
+  exact ⟨hforward, hrank, hreverse, hdisc, hforced, hforcing⟩
 
-/- Reverse probe: the public proposition recovers both the non-numerical
-dual-lattice similarity and the non-unit discriminant. -/
+/- Reverse probe (CAS-A1/A4/A6): the public proposition projects the actual
+dual-lattice similarity, non-unit discriminant, and forcing implication. -/
 example
     {E : Type*} [AddCommGroup E] [Module ℝ E]
     (B : LinearMap.BilinForm ℝ E) (L : Submodule ℤ E)
@@ -212,35 +265,14 @@ example
         LatticeSimilarity B (Real.sqrt 5) (B.dualSubmodule L) L ∧
         latticeDiscriminant B L b = (5 : ℝ) ^ 3 ∧
         latticeDiscriminant B L b = (5 : ℝ) ^ (6 / 2) ∧
-        FiveModularDiscriminantCertificate B L b dualEquiv) :
+        FiveModularityForcesDiscriminant B L b dualEquiv) :
     LatticeSimilarity B (1 / Real.sqrt 5) L (B.dualSubmodule L) ∧
-      latticeDiscriminant B L b = 125 := by
-  refine ⟨conclusion.1, ?_⟩
+      latticeDiscriminant B L b = 125 ∧
+      FiveModularityForcesDiscriminant B L b dualEquiv := by
+  refine ⟨conclusion.1, ?_, conclusion.2.2.2.2.2⟩
   have hdisc := conclusion.2.2.2.1
   norm_num at hdisc ⊢
   exact hdisc
-
-/- Structural reverse probe: the public proposition exposes the transported
-dual basis' Gram scaling and the dual/source discriminant reciprocity. -/
-example
-    {E : Type*} [AddCommGroup E] [Module ℝ E]
-    (B : LinearMap.BilinForm ℝ E) (L : Submodule ℤ E)
-    (b : Module.Basis (Fin 6) ℤ L)
-    (dualEquiv : L ≃ₗ[ℤ] B.dualSubmodule L)
-    (conclusion :
-      LatticeSimilarity B (1 / Real.sqrt 5) L (B.dualSubmodule L) ∧
-        Module.finrank ℤ L = 6 ∧
-        LatticeSimilarity B (Real.sqrt 5) (B.dualSubmodule L) L ∧
-        latticeDiscriminant B L b = (5 : ℝ) ^ 3 ∧
-        latticeDiscriminant B L b = (5 : ℝ) ^ (6 / 2) ∧
-        FiveModularDiscriminantCertificate B L b dualEquiv) :
-    latticeGram B (B.dualSubmodule L) (b.map dualEquiv) =
-        (1 / 5 : ℝ) • latticeGram B L b ∧
-      latticeDiscriminant B (B.dualSubmodule L) (b.map dualEquiv) *
-        latticeDiscriminant B L b = 1 := by
-  exact
-    ⟨conclusion.2.2.2.2.2.dualGram_scaling,
-      conclusion.2.2.2.2.2.dual_discriminant_mul_source⟩
 
 /- Trivialization probe: replacing the source Gram form by zero contradicts
 the displayed Gram certificate, so the zero pairing cannot inhabit the type. -/
@@ -251,6 +283,49 @@ example
   intro h
   have h00 := congrFun (congrFun h (0 : Fin 6)) (0 : Fin 6)
   norm_num [latticeGram, lambda2A4Gram, lambda2A4GramInt] at h00
+
+/- Direction probe (CAS-A6 -> CAS-A5): exact modular scaling, the two real
+bases, unimodular pairing, and positivity force the final discriminant. There
+is deliberately no fixed Gram matrix or precomputed determinant premise. -/
+example
+    {E : Type*} [AddCommGroup E] [Module ℝ E]
+    (B : LinearMap.BilinForm ℝ E) (L : Submodule ℤ E)
+    (b : Module.Basis (Fin 6) ℤ L)
+    (dualEquiv : L ≃ₗ[ℤ] B.dualSubmodule L)
+    (sourceRealBasis dualRealBasis : Module.Basis (Fin 6) ℝ E)
+    (sourceRealBasis_apply : ∀ i, sourceRealBasis i = (b i : E))
+    (dualRealBasis_apply : ∀ i,
+      dualRealBasis i = (dualEquiv (b i) : E))
+    (dualPairing_det :
+      (latticePairingMatrix B L b dualEquiv).det = (-1 : ℝ))
+    (source_discriminant_pos : 0 < latticeDiscriminant B L b)
+    (hscale : ∀ x y : L,
+      B (dualEquiv x : E) (dualEquiv y : E) = (1 / 5 : ℝ) * B x y) :
+    latticeDiscriminant B L b = (5 : ℝ) ^ (6 / 2) := by
+  have hreciprocal :
+      latticeDiscriminant B (B.dualSubmodule L) (b.map dualEquiv) *
+        latticeDiscriminant B L b = 1 := by
+    rw [dual_discriminant_mul_source_eq_pairing_det_sq B L b dualEquiv
+      sourceRealBasis dualRealBasis sourceRealBasis_apply dualRealBasis_apply,
+      dualPairing_det]
+    norm_num
+  have hdualGram :
+      latticeGram B (B.dualSubmodule L) (b.map dualEquiv) =
+        (1 / 5 : ℝ) • latticeGram B L b := by
+    ext i j
+    simp only [latticeGram, Module.Basis.map_apply, Matrix.smul_apply, smul_eq_mul]
+    rw [hscale]
+  have hdualDiscriminant :
+      latticeDiscriminant B (B.dualSubmodule L) (b.map dualEquiv) =
+        (1 / 5 : ℝ) ^ 6 * latticeDiscriminant B L b := by
+    change (latticeGram B (B.dualSubmodule L) (b.map dualEquiv)).det =
+      (1 / 5 : ℝ) ^ 6 * (latticeGram B L b).det
+    rw [hdualGram, Matrix.det_smul]
+    norm_num
+  exact rankSixFiveModular_discriminant_forced
+    (latticeDiscriminant B L b)
+    (latticeDiscriminant B (B.dualSubmodule L) (b.map dualEquiv))
+    source_discriminant_pos hdualDiscriminant hreciprocal
 
 #print axioms lambda2A4_five_modularity
 
