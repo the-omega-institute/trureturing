@@ -64,6 +64,41 @@ internal sealed class SoundnessLivenessShapeOnlyIndependenceDocument
             IffFormula(Apply(test, item), Apply(live, item)));
     }
 
+    private static Formula GeneralShapeSplitLaw()
+    {
+        Formula otherJudge = F.Id("OtherJudge");
+        Formula otherShapeType = F.Id("OtherShape");
+        Formula otherShape = F.Id("otherShape");
+        Formula otherLive = F.Id("otherLive");
+        Formula first = F.Id("first");
+        Formula second = F.Id("second");
+        Formula test = F.Id("test");
+        Formula judge = F.Id("judge");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula witness = Seq(
+            Exists, Sp, first, Comma, Sp, second, Colon, Sp, otherJudge, Comma, Sp,
+            Apply(otherShape, first), Sp, Eq, Sp, Apply(otherShape, second), Sp,
+            Land, Sp, Neg, IffFormula(Apply(otherLive, first), Apply(otherLive, second)));
+        Formula shapeInvariant = Seq(
+            Forall, Sp, first, Comma, Sp, second, Colon, Sp, otherJudge, Comma, Sp,
+            Apply(otherShape, first), Sp, Eq, Sp, Apply(otherShape, second), Sp,
+            Rightarrow, Sp, IffFormula(Apply(test, first), Apply(test, second)));
+        Formula characterizesLiveness = Seq(
+            Forall, Sp, judge, Colon, Sp, otherJudge, Comma, Sp,
+            IffFormula(Apply(test, judge), Apply(otherLive, judge)));
+
+        return Seq(
+            Forall, Sp, otherJudge, Comma, Sp, otherShapeType, Colon, Sp, type, Comma, Sp,
+            otherShape, Colon, Sp, otherJudge, Sp, To, Sp, otherShapeType, Comma, Sp,
+            otherLive, Colon, Sp, otherJudge, Sp, To, Sp, F.Id("Prop"), Comma,
+            RowBreak, Grp(),
+            Grp(witness), Sp, Rightarrow, Sp,
+            Forall, Sp, test, Colon, Sp, otherJudge, Sp, To, Sp, F.Id("Prop"), Comma,
+            RowBreak, Grp(),
+            Grp(shapeInvariant), Sp, Rightarrow, Sp,
+            Neg, Grp(characterizesLiveness));
+    }
+
     private static Formula TheoremFormula()
     {
         Formula judge = F.Id("Judge");
@@ -98,7 +133,7 @@ internal sealed class SoundnessLivenessShapeOnlyIndependenceDocument
                 Apply(sound, F.Id("j"))), Sp, Land,
             RowBreak, Grp(),
             Grp(concreteStrong), Sp, Land, Sp,
-            Operatorname, Grp(F.Id("GeneralSameShapeLivenessSplitLaw")), Dot,
+            Grp(GeneralShapeSplitLaw()), Dot,
             End, Grp(F.Id("gathered"))));
     }
 }

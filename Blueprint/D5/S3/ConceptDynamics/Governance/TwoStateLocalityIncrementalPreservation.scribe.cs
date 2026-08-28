@@ -66,6 +66,8 @@ internal sealed class TwoStateLocalityIncrementalPreservationDocument
         Formula changed = Apply(F.Id("Changed"), bytes, first, second);
         Formula readUnion = Call(
             "union", Apply(reads, first, x), Apply(reads, second, x));
+        Formula unchanged = new Formula.Not(new Formula.Relation(
+            x, FormulaRelationOperator.MemberOf, changed));
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
@@ -83,7 +85,8 @@ internal sealed class TwoStateLocalityIncrementalPreservationDocument
             Grp(Forall, Sp, x, Colon, Sp, artifact, Comma, Sp,
                 readUnion, Sp, Subseteq, Sp, Apply(dep, x)), Sp, Rightarrow,
             RowBreak, Grp(),
-            x, Sp, Neg, InMacro, Sp, changed, Sp, Rightarrow, Sp,
+            Forall, Sp, x, Colon, Sp, artifact, Comma, Sp,
+            unchanged, Sp, Rightarrow, Sp,
             Call("Disjoint", Apply(dep, x), changed), Sp, Rightarrow,
             RowBreak, Grp(),
             Open, Apply(property, first, x), Sp, Leftrightarrow, Sp,
