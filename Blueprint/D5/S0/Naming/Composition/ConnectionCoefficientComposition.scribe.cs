@@ -11,7 +11,7 @@ internal sealed class ConnectionCoefficientCompositionDocument : IScribeDocument
         var statement = AndAll(
             CoefficientBearingChainComposition(),
             RamanujanFactorization(),
-            RamanujanPathWeightCertificate());
+            RamanujanRoleCertificate());
 
         return DocumentDefinition.Create(ScribeNode.Create(
             "Typed completion paths retain coefficient order, factor roles, and certificate status.",
@@ -43,9 +43,9 @@ internal sealed class ConnectionCoefficientCompositionDocument : IScribeDocument
                                 + "scale-Jacobian factors.")),
                         Paragraph(Text(
                             "The fifth semantic conjunct is the structural-composition certificate: "
-                                + "on the same positive-real domain, the radical equals the weight "
-                                + "of the named typed Ramanujan completion path. No custom conclusion "
-                                + "predicate contains additional propositions."))),
+                                + "the named typed Ramanujan completion path has, in order, the "
+                                + "Gaussian-total-mass, exponential-flow, and scale-Jacobian roles. "
+                                + "Swapping Gaussian and flow roles falsifies this public conjunct."))),
                     DescribeRole.Theorem)),
             []));
     }
@@ -118,14 +118,21 @@ internal sealed class ConnectionCoefficientCompositionDocument : IScribeDocument
                 Call("scaleJacobianFactor", x))));
     }
 
-    private static Formula RamanujanPathWeightCertificate()
+    private static Formula RamanujanRoleCertificate()
     {
-        var x = F.Id("x");
-        return PositiveRealStatement(Equal(
-            Call("ramanujanRadical", x),
-            Call(
-                "pathWeight",
-                Call("ramanujanStepWeight", x),
-                F.Id("ramanujanCompletionPath"))));
+        var orderedRoles = Seq(
+            OpenBracket,
+            F.Id("gaussianTotalMass"),
+            Comma,
+            Sp,
+            F.Id("exponentialFlow"),
+            Comma,
+            Sp,
+            F.Id("scaleJacobian"),
+            CloseBracket);
+
+        return Equal(
+            Call("ramanujanPathRoles", F.Id("ramanujanCompletionPath")),
+            orderedRoles);
     }
 }

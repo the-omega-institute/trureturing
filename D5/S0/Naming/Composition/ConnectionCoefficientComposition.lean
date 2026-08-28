@@ -144,9 +144,8 @@ theorem connection_coefficient_multiplication :
     (∀ (x : ℝ), 0 < x →
       ramanujanRadical x =
         gaussianMassFactor * exponentialFlowFactor x * scaleJacobianFactor x) ∧
-    (∀ (x : ℝ), 0 < x →
-      ramanujanRadical x =
-        Path.weight (ramanujanStepWeight x) ramanujanCompletionPath) := by
+    ramanujanPathRoles ramanujanCompletionPath =
+      [.gaussianTotalMass, .exponentialFlow, .scaleJacobian] := by
   fail_if_success rfl
   have hfactor : ∀ (x : ℝ), 0 < x →
       ramanujanRadical x =
@@ -193,9 +192,8 @@ theorem connection_coefficient_multiplication :
         Quiver.Hom.toPath]
     · simp [IsPrimitiveConnectionPath, completionChainPath, completedPath,
         firstCompletionStep, secondCompletionStep]
-  · intro x hx
-    simpa [ramanujanCompletionPath, ramanujanStepWeight, Quiver.Hom.toPath,
-      Path.weight] using hfactor x hx
+  · simp [ramanujanCompletionPath, ramanujanPathRoles, ramanujanStepRole,
+      Quiver.Hom.toPath]
 
 -- Probe R1 (CAS-A1): the shared bridge recovers the boxed scalar conclusion.
 example : (6 : ℝ) = (2 * 3) * 1 := by
@@ -220,11 +218,23 @@ example :
       gaussianMassFactor * exponentialFlowFactor 1 * scaleJacobianFactor 1 :=
   connection_coefficient_multiplication.2.1 1 (by norm_num)
 
--- Probe R5 (CAS-A5): the certificate is radical/path-weight agreement.
+-- Probe R5 (CAS-A5): the certificate exposes the fixed role order.
 example :
-    ramanujanRadical 1 =
-      Path.weight (ramanujanStepWeight 1) ramanujanCompletionPath :=
-  connection_coefficient_multiplication.2.2 1 (by norm_num)
+    ramanujanPathRoles ramanujanCompletionPath =
+      [.gaussianTotalMass, .exponentialFlow, .scaleJacobian] :=
+  connection_coefficient_multiplication.2.2
+
+-- Role-permutation probe (CAS-A5): swapping Gaussian and flow roles is rejected.
+example :
+    ramanujanPathRoles ramanujanCompletionPath ≠
+      [.exponentialFlow, .gaussianTotalMass, .scaleJacobian] := by
+  intro hpermuted
+  have hordered :
+      ramanujanPathRoles ramanujanCompletionPath =
+        [.gaussianTotalMass, .exponentialFlow, .scaleJacobian] :=
+    connection_coefficient_multiplication.2.2
+  rw [hordered] at hpermuted
+  simp at hpermuted
 
 -- Probe T1 (CAS-A4/A5): zero cannot enter either positive-real branch.
 example : ¬ (0 : ℝ) > 0 := by
