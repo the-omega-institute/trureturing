@@ -8,7 +8,7 @@ namespace StrataLint.Tests;
 public sealed class FrozenLedgerRejectFixtureTests
 {
     [Fact]
-    public void MissingObjectIsATypedSemanticRejectionWithGitExitDetails()
+    public void MissingObjectIsATypedSemanticRejectionDistinctFromWrongType()
     {
         using var repository = new TemporaryDirectory();
         ReviewRegressionTests.RunGit(repository.Path, "init", "--object-format=sha1");
@@ -18,12 +18,13 @@ public sealed class FrozenLedgerRejectFixtureTests
             new GitRepositoryGateway(repository.Path).ValidateFrozenReferences(
                 OnlyCommit(missing)));
 
+        // `git cat-file --batch-check` reports an absent object as a `<oid> missing`
+        // line and exits zero, so a legitimately-missing anchor is a pure semantic
+        // rejection carrying no Git command failure (parity with WrongObjectType).
+        // A genuine Git infrastructure fault still surfaces as GitInfrastructureException.
         Assert.Equal(FrozenReferenceRejectionKind.MissingObject, exception.Kind);
-        var failure = Assert.IsType<GitCommandFailure>(exception.GitFailure);
-        Assert.Equal(GitCommandFailureKind.NonzeroExit, failure.Kind);
-        Assert.Equal(128, failure.ExitCode);
-        Assert.Contains("cat-file", failure.Arguments);
-        Assert.NotEmpty(failure.StandardError);
+        Assert.Null(exception.GitFailure);
+        Assert.Contains("is not a reachable commit", exception.Message, StringComparison.Ordinal);
     }
 
     [Fact]
