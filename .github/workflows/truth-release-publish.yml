@@ -256,6 +256,18 @@ jobs:
           commit_epoch="$(git show -s --format=%ct HEAD)"
           [[ "$commit_epoch" =~ ^[0-9]+$ ]]
           produced_at="$(date -u --date="@${commit_epoch}" +%Y-%m-%dT%H:%M:%SZ)"
+          # PROBE: TRDIAG showed the producer exhausts memory (MemAvailable 9GB -> ~176MB,
+          # swap 100%) while the dotnet RSS stays <200MB, so the memory sink is outside the
+          # managed heap. truth-release materializes the whole repo and re-runs the full
+          # Scribe emit under Path.GetTempPath(); if that path is a RAM-backed tmpfs the
+          # temp writes consume RAM. Redirect .NET's temp dir to the large real-disk
+          # RUNNER_TEMP, and sample /tmp + /dev/shm so this run confirms whether the
+          # default temp was tmpfs and whether the redirect stops the collapse.
+          export TMPDIR="$RUNNER_TEMP"
+          printf 'TRDIAG tmp_mounts /tmp=[%s] shm=[%s] RUNNER_TEMP=[%s]\n' \
+            "$(df -h /tmp 2>/dev/null | awk 'NR==2{print $1" size="$2" avail="$4}')" \
+            "$(df -h /dev/shm 2>/dev/null | awk 'NR==2{print $1" size="$2" avail="$4}')" \
+            "$(df -h "$RUNNER_TEMP" 2>/dev/null | awk 'NR==2{print $1" size="$2" avail="$4}')"
           # TRDIAG (temporary): the producer is silently cancelled a few minutes into
           # this run with no workflow timeout; local measurement has refuted host-level
           # OOM (~1GB RSS) and disk exhaustion (~342MB materialized snapshot). Stream a
