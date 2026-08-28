@@ -131,6 +131,19 @@ internal sealed class EscapeZeroCompletionPointDocument : IScribeDocumentDefinit
             Exists, Bang, Sp, Typed(Kappa, parameterType), Comma, Sp,
             Audit(baseline, definitions, target, weight, cost, lambda, Kappa));
 
+        Formula auditedConclusions = Seq(
+            Begin, Grp(F.Id("gathered")),
+            Call("IsMinOn", objective, Call("SetUniv", parameterType), kappa),
+            Sp, Land, RowBreak, Grp(),
+            DeltaAt(baseline, definitions, target, weight, kappa),
+            Sp, Eq, Sp, D(0), Sp, Land, RowBreak, Grp(),
+            Determines(baseline, definitions, target, kappa),
+            Sp, Land, RowBreak, Grp(),
+            Forall, Sp, Typed(candidate, parameterType), Comma, Sp,
+            Audit(baseline, definitions, target, weight, cost, lambda, candidate),
+            Sp, Rightarrow, Sp, candidate, Sp, Eq, Sp, kappa,
+            End, Grp(F.Id("gathered")));
+
         Formula conclusions = Seq(
             Begin, Grp(F.Id("gathered")),
             Open,
@@ -144,15 +157,10 @@ internal sealed class EscapeZeroCompletionPointDocument : IScribeDocumentDefinit
             DeltaAt(baseline, definitions, target, weight, parameter),
             Sp, Eq, Sp, D(0),
             Close, Sp, Land, RowBreak, Grp(),
-            Call("IsMinOn", objective, Call("SetUniv", parameterType), kappa),
-            Sp, Land, RowBreak, Grp(),
-            DeltaAt(baseline, definitions, target, weight, kappa),
-            Sp, Eq, Sp, D(0), Sp, Land, RowBreak, Grp(),
-            Determines(baseline, definitions, target, kappa),
-            Sp, Land, RowBreak, Grp(),
-            Forall, Sp, Typed(candidate, parameterType), Comma, Sp,
-            Audit(baseline, definitions, target, weight, cost, lambda, candidate),
-            Sp, Rightarrow, Sp, candidate, Sp, Eq, Sp, kappa,
+            Open,
+            Open, Typed(unique, uniqueAudit), Close, Sp, Rightarrow, RowBreak, Grp(),
+            auditedConclusions,
+            Close,
             End, Grp(F.Id("gathered")));
 
         return Disp(Seq(
@@ -181,7 +189,6 @@ internal sealed class EscapeZeroCompletionPointDocument : IScribeDocumentDefinit
             Comma, Sp, Typed(lambda, real), Comma, Sp,
             Typed(parameter, parameterType), Comma, RowBreak, Grp(),
             Open, faithful, Close, Sp, Rightarrow, Sp,
-            Open, Typed(unique, uniqueAudit), Close, Sp, Rightarrow, RowBreak, Grp(),
             conclusions,
             End, Grp(F.Id("gathered"))));
     }

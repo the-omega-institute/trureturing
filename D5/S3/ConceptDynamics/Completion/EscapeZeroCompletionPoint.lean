@@ -91,25 +91,24 @@ theorem escape_zero_iff_determined_with_audited_minimizer
     (target : Concept X Target) (weight : EscapeWeight (X × X))
     (definitionCost : forall a, Concept X (DefinitionCoordinate a) -> Real)
     (lambda : Real) (a : A)
-    (faithfulWeight : forall set, weight.mass set = 0 <-> set = ∅)
-    (uniqueCompletion : ∃! kappa,
-      IsAuditedCompletionParameter q definitions target weight
-        definitionCost lambda kappa) :
-    let kappa := uniqueCompletion.choose
+    (faithfulWeight : forall set, weight.mass set = 0 <-> set = ∅) :
     (parameterEscapeDefect q definitions target weight a = 0 ->
       Function.FactorsThrough target (conceptJoin q (definitions a))) ∧
     (Function.FactorsThrough target (conceptJoin q (definitions a)) ->
       parameterEscapeDefect q definitions target weight a = 0) ∧
-    IsMinOn
-      (regularizedCompletionObjective q definitions target weight
-        definitionCost lambda) Set.univ kappa ∧
-    parameterEscapeDefect q definitions target weight kappa = 0 ∧
-    Function.FactorsThrough target (conceptJoin q (definitions kappa)) ∧
-    forall candidate,
+    ((uniqueCompletion : ∃! kappa,
       IsAuditedCompletionParameter q definitions target weight
-        definitionCost lambda candidate ->
-      candidate = kappa := by
-  let kappa := uniqueCompletion.choose
+        definitionCost lambda kappa) ->
+      let kappa := uniqueCompletion.choose
+      IsMinOn
+        (regularizedCompletionObjective q definitions target weight
+          definitionCost lambda) Set.univ kappa ∧
+      parameterEscapeDefect q definitions target weight kappa = 0 ∧
+      Function.FactorsThrough target (conceptJoin q (definitions kappa)) ∧
+      forall candidate,
+        IsAuditedCompletionParameter q definitions target weight
+          definitionCost lambda candidate ->
+        candidate = kappa) := by
   have equivalence (parameter : A) :=
     sufficiency_escape_equivalence_tfae
       (conceptJoin q (definitions parameter)) target
@@ -129,12 +128,14 @@ theorem escape_zero_iff_determined_with_audited_minimizer
         defectRelation (conceptJoin q (definitions a)) target = ∅ :=
       (equivalence a).out 0 2 |>.mpr determined
     exact (faithfulWeight _).mpr emptyEscape
+  refine ⟨zeroImpliesDetermined, determinedImpliesZero, ?_⟩
+  intro uniqueCompletion
+  let kappa := uniqueCompletion.choose
   have selected :
       IsAuditedCompletionParameter q definitions target weight
         definitionCost lambda kappa :=
     uniqueCompletion.choose_spec.1
-  exact ⟨zeroImpliesDetermined, determinedImpliesZero, selected.1,
-    selected.2.2, selected.2.1, fun candidate candidateAudit =>
+  exact ⟨selected.1, selected.2.2, selected.2.1, fun candidate candidateAudit =>
       uniqueCompletion.choose_spec.2 candidate candidateAudit⟩
 
 -- Reverse probe for CAS-A2: the public reverse leaf recovers zero escape from
@@ -148,14 +149,11 @@ example
     (definitionCost : forall a, Concept X (DefinitionCoordinate a) -> Real)
     (lambda : Real) (a : A)
     (faithfulWeight : forall set, weight.mass set = 0 <-> set = ∅)
-    (uniqueCompletion : ∃! kappa,
-      IsAuditedCompletionParameter q definitions target weight
-        definitionCost lambda kappa)
     (determined : Function.FactorsThrough target
       (conceptJoin q (definitions a))) :
     parameterEscapeDefect q definitions target weight a = 0 := by
   exact (escape_zero_iff_determined_with_audited_minimizer q definitions
-    target weight definitionCost lambda a faithfulWeight uniqueCompletion).2.1
+    target weight definitionCost lambda a faithfulWeight).2.1
       determined
 
 -- Uniqueness probe for CAS-A6: every second audited completion parameter is
@@ -176,8 +174,8 @@ example
       definitionCost lambda candidate) :
     candidate = uniqueCompletion.choose := by
   exact (escape_zero_iff_determined_with_audited_minimizer q definitions
-    target weight definitionCost lambda a faithfulWeight uniqueCompletion).2.2.2.2.2
-      candidate candidateAudit
+    target weight definitionCost lambda a faithfulWeight).2.2 uniqueCompletion
+      |>.2.2.2 candidate candidateAudit
 
 private noncomputable def boolCountingWeight : EscapeWeight (Bool × Bool) where
   mass := fun set => (set.ncard : Real)
