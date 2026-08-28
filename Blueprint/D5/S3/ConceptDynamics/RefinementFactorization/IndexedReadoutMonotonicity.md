@@ -6,7 +6,7 @@ Enlarging a finite index set refines its dependent joint readout and shrinks its
 
 **Theorem 1.1 (Larger index sets refine joint readouts).**
 
-$$J, K \in \operatorname{Finset}\left(I\right), J \subseteq K \Rightarrow \operatorname{Refines}\left(q_{J}, q_{K}\right) \land \operatorname{ker}\left(q_{K}\right) \subseteq \operatorname{ker}\left(q_{J}\right).$$
+$$\forall I, X: \operatorname{Type}, O: I \to \operatorname{Type}, q: \forall i: I, X \to O(i), J, K: \operatorname{Finset}\left(I\right), hJK: J \subseteq K, \operatorname{Refines}\left(q_{J}, q_{K}\right) \land \operatorname{ker}\left(q_{K}\right) \subseteq \operatorname{ker}\left(q_{J}\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/RefinementFactorization/IndexedReadoutMonotonicity.indexed_readout_monotonicity` (`✓ std3`). ∎
 

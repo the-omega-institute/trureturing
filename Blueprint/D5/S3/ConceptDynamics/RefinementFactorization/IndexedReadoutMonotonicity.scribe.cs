@@ -35,18 +35,35 @@ internal sealed class IndexedReadoutMonotonicityDocument : IScribeDocumentDefini
 
     private static Formula MonotonicityFormula()
     {
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
         Formula indexType = F.Id("I");
+        Formula stateType = F.Id("X");
+        Formula outputFamily = F.Id("O");
+        Formula readout = F.Id("q");
+        Formula index = F.Id("i");
         Formula smaller = F.Id("J");
         Formula larger = F.Id("K");
+        Formula inclusion = F.Id("hJK");
         Formula smallerReadout = new Formula.Subscript(F.Id("q"), smaller);
         Formula largerReadout = new Formula.Subscript(F.Id("q"), larger);
 
         return Disp(Seq(
-            smaller, Comma, Sp, larger, Sp, InMacro, Sp,
+            Forall, Sp, indexType, Comma, Sp, stateType, Colon, Sp, type, Comma, Sp,
+            outputFamily, Colon, Sp, Arrow(indexType, type), Comma, Sp,
+            readout, Colon, Sp,
+            Forall, Sp, index, Colon, Sp, indexType, Comma, Sp,
+            Arrow(stateType, Apply(outputFamily, index)), Comma, Sp,
+            smaller, Comma, Sp, larger, Colon, Sp,
             Call("Finset", indexType), Comma, Sp,
-            smaller, Sp, Subseteq, Sp, larger, Sp, Rightarrow, Sp,
+            inclusion, Colon, Sp, smaller, Sp, Subseteq, Sp, larger, Comma, Sp,
             Call("Refines", smallerReadout, largerReadout), Sp, Land, Sp,
             Call("ker", largerReadout), Sp, Subseteq, Sp,
             Call("ker", smallerReadout), Dot));
     }
+
+    private static Formula Apply(Formula function, Formula argument) =>
+        Seq(function, Open, argument, Close);
+
+    private static Formula Arrow(Formula domain, Formula codomain) =>
+        Seq(domain, Sp, To, Sp, codomain);
 }
