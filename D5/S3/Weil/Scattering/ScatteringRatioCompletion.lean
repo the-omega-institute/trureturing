@@ -48,11 +48,12 @@ noncomputable def gaugeRatio (f g : ℂ → ℂ) : ℂ → ℂ :=
 def RightNormalized (f g : ℂ → ℂ) : Prop :=
   ∀ z, Tendsto (fun n : ℕ => gaugeRatio f g (z + n)) atTop (𝓝 1)
 
--- Candidates with the same local scattering reading and the prescribed gauge normalization.
-def RecoveryFiber (f candidate : ℂ → ℂ) : Prop :=
+-- Candidates realizing a local scattering reading and an independent normalization datum.
+def RecoveryFiber (reading : ℂ → ℂ) (normalization : (ℂ → ℂ) → Prop)
+    (candidate : ℂ → ℂ) : Prop :=
   NonzeroMeromorphic candidate ∧
-    scatteringRatio f = scatteringRatio candidate ∧
-    RightNormalized f candidate
+    scatteringRatio candidate = reading ∧
+    normalization candidate
 
 private lemma normalizedQuotient_meromorphicNFOn (f g : ℂ → ℂ) :
     MeromorphicNFOn (normalizedQuotient f g) Set.univ := by
@@ -286,20 +287,31 @@ private lemma scattering_ratio_unique {f g : ℂ → ℂ}
       _ = 1 := congrFun hgauge z
   exact (div_eq_one_iff_eq hGz).mp hquotient
 
-private lemma recovery_exists (f : ℂ → ℂ) (hf : NonzeroMeromorphic f) :
-    ∃ candidate, RecoveryFiber f candidate := by
-  refine ⟨f, hf, rfl, ?_⟩
+private lemma recovery_exists (g : ℂ → ℂ) (hg : NonzeroMeromorphic g) :
+    ∃ candidate,
+      RecoveryFiber (scatteringRatio g) (fun candidate ↦ RightNormalized candidate g)
+        candidate := by
+  refine ⟨g, hg, rfl, ?_⟩
   intro z
-  rw [gaugeRatio_self_eq_one hf]
+  rw [gaugeRatio_self_eq_one hg]
   exact tendsto_const_nhds
 
--- The global object selected from the completed scattering-data fiber.
-noncomputable def gaugeCompletion (f : ℂ → ℂ) (hf : NonzeroMeromorphic f) : ℂ → ℂ :=
-  Classical.choose (recovery_exists f hf)
+-- The global object selected using only a local reading and its normalization datum.
+noncomputable def gaugeCompletion (reading : ℂ → ℂ)
+    (normalization : (ℂ → ℂ) → Prop) : ℂ → ℂ := by
+  classical
+  exact if hrecoverable : ∃ candidate, RecoveryFiber reading normalization candidate then
+      Classical.choose hrecoverable
+    else
+      0
 
-private lemma gaugeCompletion_spec (f : ℂ → ℂ) (hf : NonzeroMeromorphic f) :
-    RecoveryFiber f (gaugeCompletion f hf) :=
-  Classical.choose_spec (recovery_exists f hf)
+private lemma gaugeCompletion_spec (reading : ℂ → ℂ)
+    (normalization : (ℂ → ℂ) → Prop)
+    (hrecoverable : ∃ candidate, RecoveryFiber reading normalization candidate) :
+    RecoveryFiber reading normalization (gaugeCompletion reading normalization) := by
+  classical
+  simp only [gaugeCompletion, dif_pos hrecoverable]
+  exact Classical.choose_spec hrecoverable
 
 -- Equal scattering readings and right-half-plane normalization recover the original
 -- nonzero meromorphic function, its unique recovery fiber, and its gauge completion.
@@ -308,15 +320,30 @@ theorem scattering_ratio_completion (f g : ℂ → ℂ)
     (hreading : scatteringRatio f = scatteringRatio g)
     (hright : RightNormalized f g) :
     f = g ∧
-      (∃ candidate, RecoveryFiber f candidate) ∧
-      (∀ candidate, RecoveryFiber f candidate → candidate = f) ∧
-      gaugeCompletion f hf = f := by
+      (∃ candidate,
+        RecoveryFiber (scatteringRatio g) (fun candidate ↦ RightNormalized candidate g)
+          candidate) ∧
+      (∀ candidate,
+        RecoveryFiber (scatteringRatio g) (fun candidate ↦ RightNormalized candidate g)
+            candidate →
+          candidate = f) ∧
+      gaugeCompletion (scatteringRatio g) (fun candidate ↦ RightNormalized candidate g) = f := by
   have heq : f = g := scattering_ratio_unique hf hg hreading hright
-  have hexists : ∃ candidate, RecoveryFiber f candidate := recovery_exists f hf
-  have hunique : ∀ candidate, RecoveryFiber f candidate → candidate = f := by
+  have hexists :
+      ∃ candidate,
+        RecoveryFiber (scatteringRatio g) (fun candidate ↦ RightNormalized candidate g)
+          candidate :=
+    recovery_exists g hg
+  have hunique :
+      ∀ candidate,
+        RecoveryFiber (scatteringRatio g) (fun candidate ↦ RightNormalized candidate g)
+            candidate →
+          candidate = f := by
     intro candidate hcandidate
-    exact (scattering_ratio_unique hf hcandidate.1 hcandidate.2.1 hcandidate.2.2).symm
-  exact ⟨heq, hexists, hunique, hunique _ (gaugeCompletion_spec f hf)⟩
+    exact (scattering_ratio_unique hcandidate.1 hg hcandidate.2.1 hcandidate.2.2).trans
+      heq.symm
+  exact ⟨heq, hexists, hunique,
+    hunique _ (gaugeCompletion_spec _ _ hexists)⟩
 
 -- Reverse probe (CAS-A1): the public first leaf recovers equality at every complex point.
 example (f g : ℂ → ℂ)
@@ -331,9 +358,14 @@ example (f g : ℂ → ℂ)
     (hf : NonzeroMeromorphic f) (hg : NonzeroMeromorphic g)
     (hreading : scatteringRatio f = scatteringRatio g)
     (hright : RightNormalized f g) :
-    (∃ candidate, RecoveryFiber f candidate) ∧
-      (∀ candidate, RecoveryFiber f candidate → candidate = f) ∧
-      gaugeCompletion f hf = f := by
+    (∃ candidate,
+      RecoveryFiber (scatteringRatio g) (fun candidate ↦ RightNormalized candidate g)
+        candidate) ∧
+      (∀ candidate,
+        RecoveryFiber (scatteringRatio g) (fun candidate ↦ RightNormalized candidate g)
+            candidate →
+          candidate = f) ∧
+      gaugeCompletion (scatteringRatio g) (fun candidate ↦ RightNormalized candidate g) = f := by
   exact (scattering_ratio_completion f g hf hg hreading hright).2
 
 -- Trivialization probe (CAS-A2): the zero function is outside the stated nonzero carrier.

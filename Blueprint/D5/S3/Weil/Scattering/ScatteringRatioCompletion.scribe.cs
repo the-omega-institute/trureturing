@@ -28,11 +28,15 @@ internal sealed class ScatteringRatioCompletionDocument : IScribeDocumentDefinit
                             + "RightNormalized(F,G) is exactly convergence of F/G to one along "
                             + "every sequence z+n.")),
                     Paragraph(Text(
-                        "The displayed conclusion has four separate leaves. It proves F=G, "
-                            + "existence of a candidate in the recovery fiber, uniqueness of "
-                            + "every such candidate, and equality of the selected gauge "
-                            + "completion with F. Thus the existence and uniqueness content of "
-                            + "unique recovery is not compressed into uniqueness alone.")),
+                        "Write N_G(Q) for RightNormalized(Q,G). The completion operator receives "
+                            + "only the local reading R[G] and this normalization predicate. Its "
+                            + "recovery fiber is inhabited by G, while the target F occurs only "
+                            + "as the recovered output after the two source hypotheses prove F=G.")),
+                    Paragraph(Text(
+                        "The displayed conclusion has four separate leaves: F=G, existence in "
+                            + "the data-indexed recovery fiber, uniqueness there, and equality of "
+                            + "the selected gauge completion with F. Thus unique recovery is not "
+                            + "compressed into uniqueness alone.")),
                     Paragraph(Text(
                         "The proof first converts equality of scattering readings into "
                             + "one-periodicity of the normal-form gauge F/G away from the "
@@ -49,11 +53,13 @@ internal sealed class ScatteringRatioCompletionDocument : IScribeDocumentDefinit
         Formula original = F.Id("F");
         Formula candidate = F.Id("G");
         Formula recovered = F.Id("Q");
+        Formula normalization = Seq(F.Id("N"), Underscore, Grp(candidate));
         Formula readingEquality = Seq(
             Call("scatteringRatio", original), Sp, Eq, Sp,
             Call("scatteringRatio", candidate));
         Formula normalized = Call("RightNormalized", original, candidate);
-        Formula recovery = Call("RecoveryFiber", original, recovered);
+        Formula recovery = Call(
+            "RecoveryFiber", Call("scatteringRatio", candidate), normalization, recovered);
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
@@ -62,13 +68,16 @@ internal sealed class ScatteringRatioCompletionDocument : IScribeDocumentDefinit
             Call("NonzeroMeromorphic", original), Sp, Land, Sp,
             Call("NonzeroMeromorphic", candidate), Sp, Land, RowBreak, Grp(),
             readingEquality, Sp, Land, Sp, normalized, Sp, Rightarrow, RowBreak, Grp(),
+            normalization, Open, recovered, Close, Sp, Colon, Eq, Sp,
+            Call("RightNormalized", recovered, candidate), Comma, RowBreak, Grp(),
             Open, original, Sp, Eq, Sp, candidate, Close, Sp, Land, RowBreak, Grp(),
             Open, Exists, Sp, recovered, Colon, Sp, functionSpace, Comma, Sp,
             recovery, Close, Sp, Land, RowBreak, Grp(),
             Open, Forall, Sp, recovered, Colon, Sp, functionSpace, Comma, Sp,
             recovery, Sp, Rightarrow, Sp, recovered, Sp, Eq, Sp, original, Close,
             Sp, Land, RowBreak, Grp(),
-            Open, Call("gaugeCompletion", original), Sp, Eq, Sp, original, Close, Dot,
+            Open, Call("gaugeCompletion", Call("scatteringRatio", candidate), normalization),
+            Sp, Eq, Sp, original, Close, Dot,
             End, Grp(F.Id("gathered"))));
     }
 }
