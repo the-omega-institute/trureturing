@@ -1,0 +1,15 @@
+ast_path: section/406-1-全局矩阵塔
+fingerprints:
+  raw_sha256: sha256:4c7a5f380c84b34da9541285edbe03047ce2561f4351653580b0a475c75b09cd
+  normalized_sha256: sha256:4c7a5f380c84b34da9541285edbe03047ce2561f4351653580b0a475c75b09cd
+cas_ref: sha256:4c7a5f380c84b34da9541285edbe03047ce2561f4351653580b0a475c75b09cd
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-9d3b0e50aa95134900d6e507fa237e773723d8f67c3251cb8f1f069b2926f255-f227cb582627f061c68f5e88c72cf020aa4df98f86a2ea6f79f5e807887a4868
+    - generic-residual-f885b27f2b28cb45d41a5ed88f7d6b8f3eb29131a094283fb89e40bb99b3ab89-2c0d90ad1afffe4af1547399f527a5f5ee9ae8c342a02d2e6f69f152676fba34
+    - generic-residual-4af85c2ea89a1902421a2677fc7dfb5cf3b11239f2dc38f9eb0f8b52df64f61c-0bbbd3c151f9192ad8c4fff66a79664e118eb7cb11304ff14aa52d4a797a3fc8
+    - generic-residual-dc4637953c6d3a4abf7907dc989a72484bdd0a99b2ef38a373351fba3a145c76-e14264f60bcde760bb0d2c51cd9c70090354b8c92ce491311a8bdbbcb10fddd0

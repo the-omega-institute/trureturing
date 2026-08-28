@@ -1,0 +1,55 @@
+## 定理 397.1（固定尺度 Weil 二次型）
+
+对：
+
+$$
+f\in C_c^\infty(-L,L),
+\qquad
+f(-x)=f(x),
+$$
+
+令：
+
+$$
+g=f*\widetilde f.
+$$
+
+则仓库所冻结的 Weil 显式公式精确等价于：
+
+$$
+\boxed{
+\mathfrak q_L[f]
+=
+2|\langle f,v_L\rangle|^2
++
+\frac1{2\pi}
+\int_{\mathbb R}
+m_L(\xi)
+|\widehat f(\xi)|^2\,d\xi.
+}
+\tag{397.7}
+$$
+
+这里：
+
+$$
+\mathfrak q_L[f]
+$$
+
+就是零点侧在 convolution square 测试 \(g\) 上的值。
+
+因此支撑尺度 \(L\) 上的 Weil 正性问题是：
+
+$$
+\boxed{
+\mathsf{WP}(L):
+\qquad
+\mathfrak q_L[f]\ge0
+\quad
+\forall f\in C_c^\infty(-L,L)_{\mathrm{even}}.
+}
+\tag{397.8}
+$$
+
+---
+

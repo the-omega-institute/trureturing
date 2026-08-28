@@ -1,0 +1,28 @@
+## 定理 405.1（Schur complement associativity）
+
+在所有相关逆算子存在时：
+
+$$
+\boxed{
+\operatorname{Schur}_{\mathcal H_0}
+\left(
+\operatorname{Schur}_{\mathcal H_0\oplus\mathcal H_1}(A)
+\right)
+=
+\operatorname{Schur}_{\mathcal H_0}(A).
+}
+\tag{405.1}
+$$
+
+它可由三块 Gaussian elimination 直接验证。
+
+因此：
+
+$$
+\boxed{
+\text{多尺度 Feshbach 重整化是精确的，而非近似叙事。}
+}
+$$
+
+---
+

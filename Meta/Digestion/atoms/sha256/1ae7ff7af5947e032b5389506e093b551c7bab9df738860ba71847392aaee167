@@ -1,0 +1,60 @@
+# 第三百六十二部　Weil 正定性就是 RH
+
+定义反射共轭：
+
+$$
+\boxed{
+\widetilde\psi(t)
+=
+\overline{\psi(-t)}.
+}
+\tag{362.1}
+$$
+
+对：
+
+$$
+\psi\in C_c^\infty(\mathbb R),
+$$
+
+定义 Weil Hermitian 形式：
+
+$$
+\boxed{
+\mathcal Q_W(\psi)
+=
+\left\langle
+\mathfrak W_\xi,
+\psi*\widetilde\psi
+\right\rangle.
+}
+\tag{362.2}
+$$
+
+若 RH 成立，则：
+
+$$
+\mathfrak W_\xi(t)
+=
+\sum_{\gamma\in\mathbb R}
+m_\gamma e^{i\gamma t},
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal Q_W(\psi)
+=
+\sum_\gamma
+m_\gamma
+|\widehat\psi(\gamma)|^2
+\ge0.
+}
+\tag{362.3}
+$$
+
+Weil 的经典判据正是：RH 当且仅当该分布非负定；Suzuki 进一步研究了由这一 Hermitian 形式完成出的 Hilbert 空间，并证明在 RH 下它与一个 de Branges 空间自然同构。([arXiv][1])
+
+---
+

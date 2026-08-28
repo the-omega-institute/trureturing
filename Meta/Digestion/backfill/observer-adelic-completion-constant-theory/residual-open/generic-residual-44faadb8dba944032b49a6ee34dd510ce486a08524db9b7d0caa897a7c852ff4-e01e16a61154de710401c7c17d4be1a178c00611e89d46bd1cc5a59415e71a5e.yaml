@@ -1,0 +1,10 @@
+ast_path: section/397-1-算子形式/clause/2
+fingerprints:
+  raw_sha256: sha256:44faadb8dba944032b49a6ee34dd510ce486a08524db9b7d0caa897a7c852ff4
+  normalized_sha256: sha256:44faadb8dba944032b49a6ee34dd510ce486a08524db9b7d0caa897a7c852ff4
+cas_ref: sha256:44faadb8dba944032b49a6ee34dd510ce486a08524db9b7d0caa897a7c852ff4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

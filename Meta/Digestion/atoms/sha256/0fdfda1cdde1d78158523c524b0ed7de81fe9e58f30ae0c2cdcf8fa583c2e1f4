@@ -1,0 +1,14 @@
+## 禁令三（第 395 部）
+
+$$
+\boxed{
+\text{危险集合测度小}
+\neq
+\text{Paley--Wiener 浓缩率小}.
+}
+$$
+
+必须估计 Slepian operator norm，而不只是集合测度。
+
+---
+

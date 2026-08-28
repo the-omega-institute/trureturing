@@ -1,0 +1,10 @@
+ast_path: section/336-1-线外零点的局部负见证
+fingerprints:
+  raw_sha256: sha256:83625a4c09433c37db6d4cb699f905e2521ded1e0e5188e0e8daadc51ae01774
+  normalized_sha256: sha256:83625a4c09433c37db6d4cb699f905e2521ded1e0e5188e0e8daadc51ae01774
+cas_ref: sha256:83625a4c09433c37db6d4cb699f905e2521ded1e0e5188e0e8daadc51ae01774
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

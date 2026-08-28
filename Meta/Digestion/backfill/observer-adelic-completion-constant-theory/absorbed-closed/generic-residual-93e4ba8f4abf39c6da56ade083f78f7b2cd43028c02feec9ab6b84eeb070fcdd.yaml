@@ -1,0 +1,17 @@
+ast_path: 定理/30.1
+fingerprints:
+  raw_sha256: sha256:93e4ba8f4abf39c6da56ade083f78f7b2cd43028c02feec9ab6b84eeb070fcdd
+  normalized_sha256: sha256:93e4ba8f4abf39c6da56ade083f78f7b2cd43028c02feec9ab6b84eeb070fcdd
+cas_ref: sha256:93e4ba8f4abf39c6da56ade083f78f7b2cd43028c02feec9ab6b84eeb070fcdd
+coverage_gids:
+  - D5/S3/Observer/HyperbolicTransport/GoldenHyperbolicInflation.golden_visible_hidden_hyperbolic_transport
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/HyperbolicTransport/GoldenHyperbolicInflation.golden_visible_hidden_hyperbolic_transport
+      source_sha256: sha256:93e4ba8f4abf39c6da56ade083f78f7b2cd43028c02feec9ab6b84eeb070fcdd
+      target_statement_id: sha256:ccfd60e69734fc1ece2b0092a65e07a3a23c87e5ed2e058fb02582c726a53388
+  scribe:
+    - gid: D5/S3/Observer/HyperbolicTransport/GoldenHyperbolicInflation.golden_visible_hidden_hyperbolic_transport
+      definition_sha256: sha256:41dfdee50cafb685507a1cd7e51fad32dcc4534d6b62da1b59ef4c19fa0c93c9
+      emission_sha256: sha256:7c65f727e648570a8fcfc92f872571d1d6aa513e66c54c4b4de6f10cbe4b0023
+  unresolved_subitems: []

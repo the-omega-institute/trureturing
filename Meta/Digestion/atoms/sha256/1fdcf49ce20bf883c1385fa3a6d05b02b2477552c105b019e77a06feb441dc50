@@ -1,0 +1,55 @@
+## 389.1 相干峰曲率
+
+在精确相干点附近定义相位偏移：
+
+$$
+\theta_p=h\log p.
+$$
+
+则：
+
+$$
+\boxed{
+M_{\mathcal P}
+-
+\mathcal C_{\mathcal P}(h)
+=
+K_{\mathcal P}h^2
++
+O(h^4R_{\mathcal P}),
+}
+\tag{389.3}
+$$
+
+其中：
+
+$$
+\boxed{
+K_{\mathcal P}
+=
+\sum_{p\in\mathcal P}
+\frac{
+p^{-1/2}(1+p^{-1/2})
+}{
+(1-p^{-1/2})^3
+}
+(\log p)^3.
+}
+\tag{389.4}
+$$
+
+所以距离峰顶不超过 \(\varepsilon\) 的局部宽度约为：
+
+$$
+\boxed{
+|h|
+\lesssim
+\sqrt{\frac{\varepsilon}{K_{\mathcal P}}}.
+}
+\tag{389.5}
+$$
+
+这为 sticky cluster 提供了一个明确的局部尺度，而不是只知道它“很少”。
+
+---
+

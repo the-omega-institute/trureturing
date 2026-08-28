@@ -1,0 +1,10 @@
+ast_path: section/390-1-Sticky-modes-的有限秩定理
+fingerprints:
+  raw_sha256: sha256:d7782e5b927f60ac9e089516c97200c24ece20bdb0a1a7b629deaa8b48cf2863
+  normalized_sha256: sha256:d7782e5b927f60ac9e089516c97200c24ece20bdb0a1a7b629deaa8b48cf2863
+cas_ref: sha256:d7782e5b927f60ac9e089516c97200c24ece20bdb0a1a7b629deaa8b48cf2863
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,56 @@
+## 355.1 最小 doubled-trace 目标
+
+定义热正则化临界宽度算子：
+
+$$
+\boxed{
+\mathfrak V(u)
+=
+\sum_{\Im\rho>0}
+m_\rho
+e^{-u(\Im\rho)^2}
+\left(
+\Re\rho-\frac12
+\right)^2.
+}
+$$
+
+可写成形式上的 Hilbert–Schmidt 范数：
+
+$$
+\boxed{
+\mathfrak V(u)
+=
+\left\|
+\left(
+\mathsf B-\frac12I
+\right)
+e^{-u\mathsf H^2/2}
+\right\|_{\mathrm{HS}}^2,
+}
+\tag{355.1}
+$$
+
+其中：
+
+* \(\mathsf H\) 记录 ordinates；
+* \(\mathsf B\) 记录 damping widths。
+
+RH 等价于：
+
+$$
+\boxed{
+\mathfrak V(u)=0.
+}
+$$
+
+真正需要从 arithmetic relative trace 导出的，不只是：
+
+$$
+\mathfrak V(u)\ge0,
+$$
+
+因为这已经显然；而是一个迫使其达到最小值零的守恒恒等式或反向上界。
+
+---
+

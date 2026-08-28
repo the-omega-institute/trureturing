@@ -1,0 +1,15 @@
+## 定理 382.1（Pole rank-one decomposition）
+
+$$
+\boxed{
+\operatorname{Pole}(g)
+=
+2|\ell_{1/2}(f)|^2.
+}
+\tag{382.2}
+$$
+
+这说明 \(s=0,1\) 的 pole pair 在能量图表中表现为一个正的 rank-one 边界观测器。
+
+---
+

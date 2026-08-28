@@ -1,0 +1,50 @@
+## 338.1 最小临界级联
+
+当：
+
+$$
+N=1,
+\qquad
+\omega=\frac12,
+$$
+
+有：
+
+$$
+a=-iz.
+$$
+
+因此：
+
+$$
+\boxed{
+\Theta_{1/2}(z)
+=
+\frac{a-1}{a+1}
+\,
+\Phi_{\mathrm{mod}}
+\left(
+\frac{a+1}{2}
+\right),
+\qquad
+a=-iz.
+}
+\tag{338.4}
+$$
+
+所以无条件临界 inner system \(\Theta_{1/2}\) 正好由：
+
+$$
+\boxed{
+\text{一个模曲面 cusp scattering stage}
++
+\text{一个显式有理 endpoint corrector}
+}
+$$
+
+组成。
+
+这不是类比，而是精确乘法级联。
+
+---
+

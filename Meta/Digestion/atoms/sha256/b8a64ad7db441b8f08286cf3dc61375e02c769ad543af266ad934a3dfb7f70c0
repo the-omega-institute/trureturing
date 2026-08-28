@@ -1,0 +1,107 @@
+# 第三百四十七部　边界相位密度与无条件 Poisson 半群
+
+定义半平面 Poisson 核：
+
+$$
+\boxed{
+P_y(x)
+=
+\frac1\pi
+\frac{y}{x^2+y^2},
+\qquad
+y>0.
+}
+\tag{347.1}
+$$
+
+对单个 Blaschke 因子：
+
+$$
+b_a(z)=\frac{z-a}{z-\overline a},
+\qquad
+a=x_a+iy_a,
+$$
+
+在实轴上：
+
+$$
+\boxed{
+\frac1{2\pi}
+\frac{d}{dx}\arg b_a(x)
+=
+P_{y_a}(x-x_a).
+}
+\tag{347.2}
+$$
+
+因此定义有限相位密度：
+
+$$
+\boxed{
+d_{\omega,T}(x)
+=
+\frac1{2\pi}
+\frac{d}{dx}
+\arg B_{\omega,T}(x),
+}
+\tag{347.3}
+$$
+
+得到：
+
+$$
+\boxed{
+d_{\omega,T}(x)
+=
+\sum_{\rho\in\mathcal Z_T^+}
+P_{\omega+\delta_\rho}(x+\gamma).
+}
+\tag{347.4}
+$$
+
+采用 Fourier 规范：
+
+$$
+\widehat f(t)
+=
+\int_{\mathbb R}
+f(x)e^{-itx}\,dx.
+$$
+
+由于：
+
+$$
+\widehat{P_y(\cdot+\gamma)}(t)
+=
+e^{-y|t|}e^{i\gamma t},
+$$
+
+可得：
+
+$$
+\boxed{
+\widehat d_{\omega,T}(t)
+=
+e^{-\omega|t|}
+Q_T(t),
+}
+\tag{347.5}
+$$
+
+其中：
+
+$$
+\boxed{
+Q_T(t)
+=
+\sum_{\rho\in\mathcal Z_T^+}
+e^{-\delta_\rho|t|}
+e^{i\gamma t}.
+}
+\tag{347.6}
+$$
+
+特别地，\(Q_T\) 与 \(\omega\) 无关。
+
+因此：
+

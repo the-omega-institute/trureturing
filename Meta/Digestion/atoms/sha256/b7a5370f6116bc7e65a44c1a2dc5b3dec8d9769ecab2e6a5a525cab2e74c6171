@@ -1,0 +1,21 @@
+## 410.5 不应继续制造新的 RH 等价判据
+
+本轮以后，真正的新进展应当表现为以下至少一项：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{严格缩小 }|B_{L,a}|;\\
+&\text{严格降低 sticky rank};\\
+&\text{证明 residual gap};\\
+&\text{计算 Feshbach self-energy};\\
+&\text{证明有限 sticky matrix PSD};\\
+&\text{控制这些证书随 }L\to\infty\text{ 的增长}.
+\end{aligned}
+}
+$$
+
+再构造一个新的 Pick、Hankel、Clark 或 Fredholm 等价形式，不再减少中心困难。
+
+---
+

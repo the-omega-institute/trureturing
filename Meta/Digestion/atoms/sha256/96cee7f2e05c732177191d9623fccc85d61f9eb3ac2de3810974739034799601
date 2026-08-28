@@ -1,0 +1,20 @@
+* \(\mathsf B\) 记录 damping widths。
+
+RH 等价于：
+
+$$
+\boxed{
+\mathfrak V(u)=0.
+}
+$$
+
+真正需要从 arithmetic relative trace 导出的，不只是：
+
+$$
+\mathfrak V(u)\ge0,
+$$
+
+因为这已经显然；而是一个迫使其达到最小值零的守恒恒等式或反向上界。
+
+---
+

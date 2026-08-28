@@ -1,0 +1,47 @@
+## 364.1 有限 Gram 层级
+
+取有限测试函数族：
+
+$$
+\psi_1,\ldots,\psi_N
+\subset C_c^\infty([-L,L]).
+$$
+
+定义矩阵：
+
+$$
+\boxed{
+M_{ij}^{(L)}
+=
+\left\langle
+\mathfrak W_\xi,
+\psi_i*\widetilde{\psi_j}
+\right\rangle.
+}
+\tag{364.4}
+$$
+
+每个矩阵元都只涉及：
+
+$$
+n\le e^{2L}
+$$
+
+的有限 prime powers。
+
+于是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+M^{(L)}\succeq0
+}
+$$
+
+对所有 \(L,N\) 和所有有限测试族成立。
+
+这就是项目此前有限 Weil Gram observer 的母形式。
+
+---
+

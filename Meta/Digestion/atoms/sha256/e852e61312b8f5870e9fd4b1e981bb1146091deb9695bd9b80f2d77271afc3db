@@ -1,0 +1,96 @@
+## 定理 348.1（有限窗逆 Poisson RH 判据）
+
+下列条件等价：
+
+$$
+\boxed{
+\begin{aligned}
+&(1)\quad
+\Re\rho=\frac12
+\quad
+\forall\rho\in\mathcal Z_T^+;\\
+&(2)\quad
+Q_T
+\text{ 是正定函数};\\
+&(3)\quad
+Q_T
+\text{ 在 }\mathbb R\text{ 上有界}.
+\end{aligned}
+}
+\tag{348.2}
+$$
+
+### 证明：\((1)\Rightarrow(2)\)
+
+若所有 \(\delta_\rho=0\)，则：
+
+$$
+Q_T(t)
+=
+\sum_{\rho\in\mathcal Z_T^+}
+e^{i\gamma t}.
+$$
+
+这是有限正测度：
+
+$$
+\sum_{\rho\in\mathcal Z_T^+}
+\delta_{-\gamma}
+$$
+
+的 Fourier 变换，故正定。
+
+---
+
+### \((2)\Rightarrow(3)\)
+
+正定函数满足：
+
+$$
+|Q_T(t)|\le Q_T(0).
+$$
+
+---
+
+### \((3)\Rightarrow(1)\)
+
+若存在离线零点，函数方程给出同一 \(\gamma\) 上的一对：
+
+$$
+\delta,\qquad-\delta,
+\qquad
+\delta>0.
+$$
+
+它们对 \(Q_T\) 的贡献为：
+
+$$
+2\cosh(\delta|t|)e^{i\gamma t}.
+$$
+
+取所有离线零点中最大的偏移量：
+
+$$
+\delta_*=
+\max_{\rho\in\mathcal Z_T^+}|\delta_\rho|>0.
+$$
+
+则：
+
+$$
+Q_T(t)
+=
+e^{\delta_*|t|}
+p(t)
++
+O(e^{\delta'|t|}),
+\qquad
+\delta'<\delta_*,
+$$
+
+其中 \(p(t)\) 是非零有限三角多项式。
+
+非零三角多项式在某个趋于无穷的序列上绝对值有正下界，因此 \(Q_T\) 无界，矛盾。∎
+
+---
+

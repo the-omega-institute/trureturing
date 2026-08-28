@@ -1,0 +1,43 @@
+# 第四百零八部　Bohr-to-thick 桥不再是逻辑必需
+
+上一轮仍有一个开放桥：
+
+$$
+\text{Bohr 危险集低密度}
+\overset{?}{\Longrightarrow}
+\text{thick good set}
+\overset{?}{\Longrightarrow}
+\text{Paley--Wiener 正性}.
+$$
+
+本轮表明：
+
+$$
+\boxed{
+\text{这一桥可以完全绕过。}
+}
+$$
+
+原因是：
+
+1. \(B_{L,a}\) 由完整 multiplier \(m_L\) 直接定义；
+2. \(B_{L,a}\) 有限测度且有界；
+3. Slepian operator 精确测量测试函数可集中多少能量于 \(B_{L,a}\)；
+4. 全部高浓缩状态组成有限子空间；
+5. 其正交补自动具有严格正 gap；
+6. 有限子空间由 Feshbach matrix 精确处理。
+
+所以：
+
+$$
+\boxed{
+\text{低密度}
+\to
+\text{thickness}
+}
+$$
+
+只是一种改善 sticky rank 的估计工具，而不再是证明架构的逻辑支柱。
+
+---
+

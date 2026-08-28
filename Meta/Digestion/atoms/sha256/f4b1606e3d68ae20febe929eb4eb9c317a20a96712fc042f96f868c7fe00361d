@@ -1,0 +1,62 @@
+## 399.2 Sticky spectral projection
+
+给定：
+
+$$
+0<\eta<1,
+$$
+
+定义：
+
+$$
+\boxed{
+P_{L,B,\eta}
+=
+\mathbf1_{(\eta,1]}
+(\mathsf C_{L,B}).
+}
+\tag{399.5}
+$$
+
+它选出全部在危险频率集 \(B\) 中具有超过 \(\eta\) 能量比例的状态。
+
+称其为：
+
+$$
+\boxed{
+\textbf{Slepian sticky space}.
+}
+$$
+
+其秩满足：
+
+$$
+\boxed{
+\operatorname{rank}P_{L,B,\eta}
+\le
+\frac{\operatorname{Tr}\mathsf C_{L,B}}{\eta}
+\le
+\frac{L|B|}{\pi\eta}.
+}
+\tag{399.6}
+$$
+
+若只使用粗 confinement interval：
+
+$$
+B\subset[-R,R],
+$$
+
+则：
+
+$$
+\boxed{
+\operatorname{rank}P_{L,B,\eta}
+\le
+\frac{2LR}{\pi\eta}.
+}
+\tag{399.7}
+$$
+
+---
+

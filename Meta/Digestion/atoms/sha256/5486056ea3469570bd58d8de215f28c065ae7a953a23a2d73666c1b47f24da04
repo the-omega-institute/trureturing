@@ -1,0 +1,87 @@
+# 第三百七十部　半平面核是 Weil 母空间的 Laplace 压缩
+
+对：
+
+$$
+\Re s>\frac12,
+$$
+
+定义半轴 Laplace 特征：
+
+$$
+\boxed{
+h_s(u)
+=
+\mathbf 1_{u\ge0}
+e^{-(s-\frac12)u}.
+}
+\tag{370.1}
+$$
+
+在适当紧支撑截断后取 Weil 完成极限。
+
+其 Fourier 读数为：
+
+$$
+\widehat h_s(-\gamma)
+=
+\frac1{s-\frac12-i\gamma}
+=
+\frac1{s-\rho_\gamma}.
+$$
+
+因此：
+
+$$
+\boxed{
+\langle h_s,h_t\rangle_W
+=
+\sum_\rho
+\frac{m_\rho}
+{(s-\rho)(\overline t-\overline\rho)}.
+}
+\tag{370.2}
+$$
+
+而前文半平面核为：
+
+$$
+\mathcal K_\xi(s,t)
+=
+\frac{
+\frac{\xi'(s)}{\xi(s)}
++
+\overline{\frac{\xi'(t)}{\xi(t)}}
+}{
+\lambda_1(s+\overline t-1)
+}.
+$$
+
+RH 下：
+
+$$
+\boxed{
+\mathcal K_\xi(s,t)
+=
+\frac1{\lambda_1}
+\langle
+h_s,h_t
+\rangle_W.
+}
+\tag{370.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{Pick/de Branges 半平面正核}
+=
+\text{Weil 母内积在 Laplace 特征族上的压缩}.
+}
+$$
+
+它不是独立于 Weil 正性的第二个问题。
+
+---
+

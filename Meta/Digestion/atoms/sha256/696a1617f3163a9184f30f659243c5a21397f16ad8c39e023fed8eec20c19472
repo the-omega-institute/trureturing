@@ -1,0 +1,7 @@
+* 更一般地，固定 \(\omega_0\ge0\)，ζ 在
+
+  $$
+  \Re s>\frac12+\omega_0
+  $$
+
+  无零点，当且仅当所有 \(\omega>\omega_0\) 的 \(\Theta_\omega\) 都是 meromorphic inner；

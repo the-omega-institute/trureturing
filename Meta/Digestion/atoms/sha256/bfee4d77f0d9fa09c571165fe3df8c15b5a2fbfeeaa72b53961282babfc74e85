@@ -1,0 +1,52 @@
+# 第三百四十五部　科学修正：Poisson 流不是 RH 特有结构
+
+定义：
+
+$$
+\Theta_\omega(z)
+=
+\frac{
+\xi(\frac12-\omega-iz)
+}{
+\xi(\frac12+\omega-iz)
+},
+\qquad
+\omega>0.
+$$
+
+Suzuki 的理论明确区分了两个层次：
+
+1. 对所有
+
+   $$
+   \omega\ge\frac12,
+   $$
+
+   Hermite–Biehler 不等式以及 \(\Theta_\omega\) 的 meromorphic-inner 性无条件成立；
+
+2. 论文中通过 Fredholm 积分算子显式构造 canonical system 的无条件范围更窄，为
+
+   $$
+   \omega>1.
+   $$
+
+因此此前将“Poisson 正流”表述为 RH 下才出现，需要修正：在 \(\omega\ge\tfrac12\) 的无条件 inner 区域，\(\Theta_\omega\) 已经拥有 model-space 和 Blaschke 零点描述。RH 真正要求的是把该结构一直反演到 \(\omega=0\)，而不是仅仅证明向更大 \(\omega\) 的平滑演化。([arXiv][1])
+
+准确地说：
+
+$$
+\boxed{
+\text{Poisson 前向半群是无条件的；}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{逆 Poisson 后仍为正实轴测度，才等价于 RH。}
+}
+$$
+
+---
+

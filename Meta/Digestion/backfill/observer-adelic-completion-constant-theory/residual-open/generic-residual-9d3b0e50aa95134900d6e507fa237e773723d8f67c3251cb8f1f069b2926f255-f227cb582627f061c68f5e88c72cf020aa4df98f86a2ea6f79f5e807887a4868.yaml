@@ -1,0 +1,10 @@
+ast_path: section/406-1-全局矩阵塔/clause/1
+fingerprints:
+  raw_sha256: sha256:9d3b0e50aa95134900d6e507fa237e773723d8f67c3251cb8f1f069b2926f255
+  normalized_sha256: sha256:9d3b0e50aa95134900d6e507fa237e773723d8f67c3251cb8f1f069b2926f255
+cas_ref: sha256:9d3b0e50aa95134900d6e507fa237e773723d8f67c3251cb8f1f069b2926f255
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

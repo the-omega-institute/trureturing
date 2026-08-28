@@ -1,0 +1,70 @@
+# 第三百六十六部　每个素数都是一个 Carathéodory 被动通道
+
+定义标量函数：
+
+$$
+\boxed{
+\mathsf C_p(z)
+=
+\frac{1+r_pz}{1-r_pz},
+\qquad
+|z|<1.
+}
+\tag{366.1}
+$$
+
+因为：
+
+$$
+0<r_p<1,
+$$
+
+有：
+
+$$
+\boxed{
+\Re\mathsf C_p(z)>0.
+}
+\tag{366.2}
+$$
+
+其 Schur 函数为：
+
+$$
+\boxed{
+\mathsf S_p(z)=r_pz.
+}
+\tag{366.3}
+$$
+
+也就是说，每个素数局部通道只含一个非零 Schur 参数：
+
+$$
+\boxed{
+r_p=p^{-1/2}.
+}
+$$
+
+在边界：
+
+$$
+z=e^{-i\xi\ell_p},
+$$
+
+有：
+
+$$
+\boxed{
+\Re
+\mathsf C_p(e^{-i\xi\ell_p})
+=
+\frac{1-r_p^2}
+{1-2r_p\cos(\xi\ell_p)+r_p^2}.
+}
+\tag{366.4}
+$$
+
+这正是 \(\mathsf P_{r_p}(U_p)\) 的 Fourier multiplier。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/尚未闭合的中心桥
+fingerprints:
+  raw_sha256: sha256:12d7a845f79a3419ed839254daf88e72de10b381482fb19bb80489b8e75436fc
+  normalized_sha256: sha256:12d7a845f79a3419ed839254daf88e72de10b381482fb19bb80489b8e75436fc
+cas_ref: sha256:12d7a845f79a3419ed839254daf88e72de10b381482fb19bb80489b8e75436fc
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

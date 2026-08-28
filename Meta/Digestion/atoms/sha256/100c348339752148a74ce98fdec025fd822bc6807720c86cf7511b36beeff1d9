@@ -1,0 +1,50 @@
+# 第三百四十四部　建议形式化顺序
+
+```text
+D5/S3/Analytic/ShiftedXiResonance/
+  ShiftedXiZeroTransport.lean
+  CriticalHalfShiftModel.lean
+  HorizontalResonanceRHCriterion.lean
+  SemisimpleDampingGenerator.lean
+  UniformDampingRHCriterion.lean
+
+D5/S3/Analytic/XiModelSemigroup/
+  ModelSpaceTranslationSemigroup.lean
+  ZeroKernelEigenmode.lean
+  ResonanceDecayFormula.lean
+  CriticalDampingSemigroup.lean
+
+D5/S3/Analytic/XiPoissonFlow/
+  ShiftedXiBlaschkeProduct.lean
+  BoundaryPhaseDerivative.lean
+  ZeroPoissonDensity.lean
+  PoissonSemigroupFlow.lean
+  BoundaryZeroRecovery.lean
+
+D5/S3/Analytic/XiRieszCurvature/
+  XiUpperHalfPlanePotential.lean
+  InteriorZeroRieszMeasure.lean
+  OffLineDipoleWitness.lean
+  InteriorCurvatureRHCriterion.lean
+
+D5/S3/Analytic/PrimeArchimedean/
+  XiLogDerivativeDecomposition.lean
+  ArchimedeanBarrier.lean
+  PrimeCoherenceSeries.lean
+  PrimePassivityCriterion.lean
+  RenormalizedCriticalStripTarget.lean
+
+D5/S3/Analytic/EisensteinCascade/
+  ModularScatteringCoefficient.lean
+  HalfIntegerShiftCascade.lean
+  CriticalHalfShiftScattering.lean
+  LaxPhillipsDampingTarget.lean
+
+D5/S3/Analytic/RHTargets/
+  InnerScaleDescent.lean
+  PrimeStickyNonStickyDichotomy.lean
+  InteriorSourceExclusion.lean
+```
+
+---
+
