@@ -24,7 +24,8 @@ internal sealed record ScribeTestMethod(
     string SourcePath,
     string Id,
     IReadOnlyList<string> Paths,
-    IReadOnlyList<TestMapUnknownReason> UnknownReasons)
+    IReadOnlyList<TestMapUnknownReason> UnknownReasons,
+    bool IsStaticallySkipped = false)
 {
     internal bool IsUnknown => UnknownReasons.Count != 0;
 
@@ -392,7 +393,8 @@ internal static class ScribeTestMapDeriver
                 test.Path,
                 $"{test.TypeName}.{test.Name}",
                 paths.Order(StringComparer.Ordinal).ToArray(),
-                reasons.Order().ToArray()));
+                reasons.Order().ToArray(),
+                test.IsStaticallySkipped));
         }
 
         return new ScribeTestMap(
@@ -629,14 +631,23 @@ internal static class ScribeTestMapDeriver
                 source.PartitionKey,
                 type.Identifier.ValueText,
                 method.Identifier.ValueText,
-                method.AttributeLists.SelectMany(static list => list.Attributes)
-                    .Any(static attribute => attribute.Name.ToString() is "Fact" or "FactAttribute" or "Theory" or "TheoryAttribute"),
+                method.AttributeLists.SelectMany(static list => list.Attributes).Any(IsTestAttribute),
+                method.AttributeLists.SelectMany(static list => list.Attributes).Any(IsStaticallySkippedTestAttribute),
                 span.StartLinePosition.Line + 1,
                 span.EndLinePosition.Line + 1,
                 method);
         }).ToArray();
         return new ParsedSource(root, methods);
     }
+
+    private static bool IsTestAttribute(AttributeSyntax attribute) =>
+        attribute.Name.ToString() is "Fact" or "FactAttribute" or "Theory" or "TheoryAttribute";
+
+    private static bool IsStaticallySkippedTestAttribute(AttributeSyntax attribute) =>
+        IsTestAttribute(attribute)
+        && attribute.ArgumentList?.Arguments.Any(static argument =>
+            argument.NameEquals?.Name.Identifier.ValueText == "Skip"
+            && !argument.Expression.IsKind(SyntaxKind.NullLiteralExpression)) == true;
 
     private sealed record ParsedSource(SyntaxNode Root, IReadOnlyList<ParsedMethod> Methods);
     private sealed record ParsedMethod(
@@ -645,6 +656,7 @@ internal static class ScribeTestMapDeriver
         string TypeName,
         string Name,
         bool IsTest,
+        bool IsStaticallySkipped,
         int StartLine,
         int EndLine,
         MethodDeclarationSyntax Syntax);

@@ -7,7 +7,7 @@ namespace StrataLint.Tests;
 public sealed partial class MakeWorkflowTests
 {
     [Fact]
-    public void EngineeringCheckUsesScopedExecutionAndABaseOwnedRequiredProjectFloor()
+    public void EngineeringCheckUsesBaseOwnedIdentityPlanWithoutProjectRepresentatives()
     {
         var makefile = TestRepositoryLayout.ReadAllText(
             RepositoryRelativePath.Create("tools/Makefile"));
@@ -24,20 +24,9 @@ public sealed partial class MakeWorkflowTests
         var recipe = Recipe(makefile, target);
         Assert.Contains("StrataLint.EngineeringScope.csproj", recipe, StringComparison.Ordinal);
         Assert.Contains("--head \"$(HEAD)\" --base \"$(BASE)\"", recipe, StringComparison.Ordinal);
-        foreach (var project in new[]
-        {
-            "candidate/tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
-            "candidate/tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
-            "candidate/tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
-        })
-        {
-            Assert.Contains(project, engineeringStep, StringComparison.Ordinal);
-        }
-        Assert.Contains("dotnet test \"$project\"", engineeringStep, StringComparison.Ordinal);
-        Assert.Contains(
-            "verify-trx --results-directory \"$assembly_results\" --required-assembly \"$assembly\"",
-            engineeringStep,
-            StringComparison.Ordinal);
+        Assert.Contains("MODE=execute", engineeringStep, StringComparison.Ordinal);
+        Assert.DoesNotContain("required_test_projects", engineeringStep, StringComparison.Ordinal);
+        Assert.DoesNotContain("--required-assembly", engineeringStep, StringComparison.Ordinal);
         Assert.DoesNotContain("--filter", engineeringStep, StringComparison.Ordinal);
         Assert.DoesNotContain("git diff", engineeringStep, StringComparison.Ordinal);
     }
@@ -293,7 +282,7 @@ public sealed partial class MakeWorkflowTests
         var step = steps.Children.OfType<YamlMappingNode>().Single(candidate =>
             candidate.Children.TryGetValue(new YamlScalarNode("name"), out var name)
             && name is YamlScalarNode scalar
-            && scalar.Value == "Run candidate golden and integration tests");
+            && scalar.Value == "Run candidate tests against base-owned identities");
         return Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("run")]).Value!;
     }
 
