@@ -1,0 +1,65 @@
+## 定理 207.1（有限零点 Gram 层级）
+
+对任意：
+
+$$
+z_1,\ldots,z_n\in\mathbb C^+,
+$$
+
+矩阵：
+
+$$
+\boxed{
+\mathbf N_0
+=
+\left[
+\mathcal N_0(z_a,z_b)
+\right]_{a,b=1}^n
+}
+\tag{207.6}
+$$
+
+正半定。
+
+其行列式具有 Cauchy–Binet 展开：
+
+$$
+\boxed{
+\begin{aligned}
+\det\mathbf N_0
+={}&
+\sum_{\gamma_1<\cdots<\gamma_n}
+\left(
+\prod_{k=1}^n m_{\gamma_k}
+\right)
+\\
+&\times
+\left|
+\det
+\left[
+\frac1{\gamma_k-z_a}
+\right]_{a,k=1}^n
+\right|^2
+\ge0.
+\end{aligned}
+}
+\tag{207.7}
+$$
+
+因此每一级 Pick 行列式都是零点子集贡献的非负平方和。
+
+这给 RH 一个新的有限层级：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathbf N_0(z_1,\ldots,z_n)\succeq0
+\quad
+\forall n,\ \forall z_a\in\mathbb C^+.
+}
+\tag{207.8}
+$$
+
+---
+

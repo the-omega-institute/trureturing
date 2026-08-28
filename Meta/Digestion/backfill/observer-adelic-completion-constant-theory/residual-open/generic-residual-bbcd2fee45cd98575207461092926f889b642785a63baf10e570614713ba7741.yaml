@@ -1,0 +1,10 @@
+ast_path: section/第一百四十九部-黄金局部因子的严格零点边界
+fingerprints:
+  raw_sha256: sha256:bbcd2fee45cd98575207461092926f889b642785a63baf10e570614713ba7741
+  normalized_sha256: sha256:bbcd2fee45cd98575207461092926f889b642785a63baf10e570614713ba7741
+cas_ref: sha256:bbcd2fee45cd98575207461092926f889b642785a63baf10e570614713ba7741
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

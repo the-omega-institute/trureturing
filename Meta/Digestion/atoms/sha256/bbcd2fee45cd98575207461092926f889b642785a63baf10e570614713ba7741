@@ -1,0 +1,65 @@
+# 第一百四十九部　黄金局部因子的严格零点边界
+
+由：
+
+$$
+1-q_\varphi^{s+k}=0
+$$
+
+得到：
+
+$$
+-4\log\varphi\,(s+k)=2\pi in.
+$$
+
+所以全部零点为：
+
+$$
+\boxed{
+s
+=
+-k+
+\frac{\pi in}{2\log\varphi},
+\qquad
+k\in\mathbb N_0,\ n\in\mathbb Z.
+}
+\tag{149.1}
+$$
+
+因此：
+
+$$
+\boxed{
+Z_\varphi^{\mathrm{geo}}(s)\neq0
+\qquad
+\text{当 }\Re(s)>0.
+}
+\tag{149.2}
+$$
+
+这给出一个重要负结论：
+
+> 黄金最短闭测地线本身不会产生 Selberg zeta 在正半平面的非平凡谱零点。
+
+因此：
+
+$$
+\boxed{
+\text{抽取 Golden local factor}
+}
+$$
+
+可以改善低长度展开和数值收敛，但不能单独解释或证明全局临界线性质。
+
+这再次说明：
+
+$$
+\boxed{
+\text{一个最自然的 primitive factor}
+\neq
+\text{完整全局正性}.
+}
+$$
+
+---
+

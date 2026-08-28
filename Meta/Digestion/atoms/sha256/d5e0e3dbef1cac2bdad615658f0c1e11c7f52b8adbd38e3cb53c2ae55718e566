@@ -1,0 +1,36 @@
+# 第三百零三部　半平面 Riemann 正核
+
+令：
+
+$$
+\mathbb H_{1/2}
+=
+\left\{
+s\in\mathbb C:
+\Re s>\frac12
+\right\}.
+$$
+
+定义：
+
+$$
+\boxed{
+\mathcal K_\xi(s,t)
+=
+\frac{
+\displaystyle
+\frac{\xi'(s)}{\xi(s)}
++
+\overline{
+\frac{\xi'(t)}{\xi(t)}
+}
+}{
+\lambda_1\,
+(s+\overline t-1)
+}.
+}
+\tag{303.1}
+$$
+
+---
+

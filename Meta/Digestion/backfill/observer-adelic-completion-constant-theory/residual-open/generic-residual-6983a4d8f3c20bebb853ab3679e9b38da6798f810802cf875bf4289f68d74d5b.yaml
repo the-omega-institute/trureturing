@@ -1,0 +1,10 @@
+ast_path: section/312-3-Sticky-infinity-approximant
+fingerprints:
+  raw_sha256: sha256:6983a4d8f3c20bebb853ab3679e9b38da6798f810802cf875bf4289f68d74d5b
+  normalized_sha256: sha256:6983a4d8f3c20bebb853ab3679e9b38da6798f810802cf875bf4289f68d74d5b
+cas_ref: sha256:6983a4d8f3c20bebb853ab3679e9b38da6798f810802cf875bf4289f68d74d5b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,74 @@
+# 第二百五十四部　临界半平面的 Möbius 观察
+
+定义 Möbius 变换：
+
+$$
+\boxed{
+\mathfrak c(s)
+=
+1-\frac1s
+=
+\frac{s-1}{s}.
+}
+\tag{254.1}
+$$
+
+令：
+
+$$
+s=\sigma+it.
+$$
+
+则：
+
+$$
+|\mathfrak c(s)|^2
+=
+\frac{(\sigma-1)^2+t^2}{\sigma^2+t^2}.
+$$
+
+分母减分子为：
+
+$$
+2\sigma-1.
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\Re s>\frac12
+&\iff
+|\mathfrak c(s)|<1,\\
+\Re s=\frac12
+&\iff
+|\mathfrak c(s)|=1,\\
+\Re s<\frac12
+&\iff
+|\mathfrak c(s)|>1.
+\end{aligned}
+}
+\tag{254.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathfrak c
+\text{ 把临界右半平面送入单位圆盘，
+把临界线送到单位圆。}
+}
+$$
+
+同时：
+
+$$
+\mathfrak c(1)=0.
+$$
+
+这解释了 Li 判据为何自然在 \(s=1\) 处展开。
+
+---
+

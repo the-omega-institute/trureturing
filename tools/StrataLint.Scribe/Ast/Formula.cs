@@ -100,7 +100,9 @@ public abstract record Formula
     public sealed record LatexSequence : Formula
     {
         public LatexSequence(ImmutableArray<Formula> items) =>
-            Items = RequireBoundScripts(RequireValues(items, nameof(items)), nameof(items));
+            Items = FormulaLatexRules.RequireItems(
+                RequireValues(items, nameof(items)),
+                nameof(items));
 
         public ImmutableArray<Formula> Items { get; }
     }
@@ -108,7 +110,9 @@ public abstract record Formula
     public sealed record LatexGroup : Formula
     {
         public LatexGroup(ImmutableArray<Formula> items) =>
-            Items = RequireBoundScripts(RequireValues(items, nameof(items)), nameof(items));
+            Items = FormulaLatexRules.RequireItems(
+                RequireValues(items, nameof(items)),
+                nameof(items));
 
         public ImmutableArray<Formula> Items { get; }
     }
@@ -366,7 +370,7 @@ public abstract record Formula
     {
         public Apply(Formula function, ImmutableArray<Formula> arguments)
         {
-            Function = function ?? throw new ArgumentNullException(nameof(function));
+            Function = FormulaLatexRules.RequireApplicableFunction(function, nameof(function));
             Arguments = RequireValues(arguments, nameof(arguments));
         }
 
@@ -512,45 +516,6 @@ public abstract record Formula
         public ImmutableArray<BoundVariable> Variables { get; }
 
         public Formula Body { get; }
-    }
-
-    /// <summary>
-    /// A raw <c>^</c> or <c>_</c> binds exactly one following token, so its argument must
-    /// emit exactly one. A wider argument either strands the macro that follows it
-    /// (KaTeX: "Got function ... with no arguments as superscript") or silently drops its
-    /// tail out of the script, and neither is detectable downstream of this constructor.
-    /// </summary>
-    private static ImmutableArray<Formula> RequireBoundScripts(
-        ImmutableArray<Formula> items,
-        string parameterName)
-    {
-        for (var index = 0; index < items.Length; index++)
-        {
-            if (items[index] is not LatexSymbol
-                {
-                    Value: FormulaLatexSymbol.Caret or FormulaLatexSymbol.Underscore,
-                })
-            {
-                continue;
-            }
-
-            // TeX discards whitespace between a script mark and its argument.
-            var argument = index + 1;
-            while (argument < items.Length && items[argument] is LatexSpace or LatexNewline)
-            {
-                argument++;
-            }
-
-            if (argument >= items.Length || !FormulaScriptAtom.IsScriptArgument(items[argument]))
-            {
-                throw new ArgumentException(
-                    "A LaTeX '^' or '_' binds exactly one token; wrap a wider script "
-                        + "argument in a group.",
-                    parameterName);
-            }
-        }
-
-        return items;
     }
 
     private static ImmutableArray<Formula> RequireValues(

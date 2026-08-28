@@ -1,0 +1,57 @@
+# 第三百零五部　Riemann–Clark 正交采样定理
+
+RH 下，对每个不同的临界线零点 \(\rho\)，定义：
+
+$$
+\boxed{
+u_\rho
+=
+1-\frac1\rho
+\in\mathbb T.
+}
+\tag{305.1}
+$$
+
+定义原子质量：
+
+$$
+\boxed{
+w_\rho
+=
+\frac{m_\rho}
+{2\lambda_1|\rho|^2}.
+}
+\tag{305.2}
+$$
+
+若：
+
+$$
+\rho=\frac12+i\gamma,
+$$
+
+则：
+
+$$
+\boxed{
+w_\rho
+=
+\frac{2m_\rho}
+{\lambda_1(4\gamma^2+1)}.
+}
+\tag{305.3}
+$$
+
+这些质量满足：
+
+$$
+\boxed{
+\sum_\rho w_\rho=1.
+}
+\tag{305.4}
+$$
+
+Clark 理论把内函数的 Clark 测度与 model space \(K_\vartheta=H^2\ominus\vartheta H^2\) 联系起来；在原子测度情形，边界 reproducing kernels 给出正交坐标和 unitary spectral representation。([剑桥大学出版社][2])
+
+---
+

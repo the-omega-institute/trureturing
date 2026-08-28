@@ -1,0 +1,85 @@
+## 定理 307.1（Sticky-tail 正完成误差）
+
+对：
+
+$$
+|z|\le r<1,
+$$
+
+有：
+
+$$
+\boxed{
+|\mathfrak C_\xi(z)-\mathfrak C_T(z)|
+\le
+\frac{2r}{(1-r)^2}
+D(T).
+}
+\tag{307.6}
+$$
+
+### 证明
+
+令：
+
+$$
+h_z(\zeta)=\frac{\zeta+z}{\zeta-z}.
+$$
+
+在单位圆上：
+
+$$
+\left|
+\partial_\zeta h_z(\zeta)
+\right|
+=
+\frac{2|z|}{|\zeta-z|^2}
+\le
+\frac{2r}{(1-r)^2}.
+$$
+
+把每个高谱原子由 \(u_\rho\) 运输到 \(1\)，再求和即可。∎
+
+又因为正实部保证：
+
+$$
+|\mathfrak C_\xi+1|\ge1,
+\qquad
+|\mathfrak C_T+1|\ge1,
+$$
+
+所以：
+
+$$
+\boxed{
+|\vartheta_\xi(z)-\vartheta_T(z)|
+\le
+2|\mathfrak C_\xi(z)-\mathfrak C_T(z)|.
+}
+\tag{307.7}
+$$
+
+因此：
+
+$$
+\boxed{
+\sup_{|z|\le r}
+|\vartheta_\xi(z)-\vartheta_T(z)|
+=
+O_r\left(
+\frac{\log T}{T^2}
+\right).
+}
+\tag{307.8}
+$$
+
+这比直接丢弃高零点所得的：
+
+$$
+O\left(\frac{\log T}{T}\right)
+$$
+
+提高了一个完整 \(T^{-1}\) 阶。
+
+---
+

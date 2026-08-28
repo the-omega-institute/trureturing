@@ -1,0 +1,42 @@
+## 276.1 第一层不等式
+
+$$
+D_1
+=
+1-c_1^2
+\ge0.
+$$
+
+即：
+
+$$
+\left|
+\lambda_2-2\lambda_1
+\right|
+\le
+2\lambda_1.
+$$
+
+等价于：
+
+$$
+\boxed{
+0\le\lambda_2\le4\lambda_1.
+}
+\tag{276.3}
+$$
+
+Li 判据只直接要求：
+
+$$
+\lambda_2\ge0.
+$$
+
+Toeplitz 曲率判据还给出上界：
+
+$$
+\lambda_2\le4\lambda_1.
+$$
+
+---
+

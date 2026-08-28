@@ -1,0 +1,58 @@
+## 192.1 环面帧形式
+
+由：
+
+$$
+\mathcal U_K=\log|\xi|^2,
+$$
+
+有：
+
+$$
+\boxed{
+\frac12
+\frac{\partial}{\partial\sigma}
+\log
+\frac{
+\|\mathbf P_K(\sigma+it)\|^2
+}{
+\|\mathbf T_K(\sigma+it)\|^2
+}
+=
+\Re
+\frac{\xi'(\sigma+it)}
+{\xi(\sigma+it)}.
+}
+\tag{192.3}
+$$
+
+所以线外零点强迫：
+
+$$
+\boxed{
+\frac{\partial}{\partial\sigma}
+\log
+\frac{
+\|\mathbf P_K(s_\varepsilon)\|^2
+}{
+\|\mathbf T_K(s_\varepsilon)\|^2
+}
+\longrightarrow-\infty.
+}
+\tag{192.4}
+$$
+
+这说明：
+
+> 在线外零点附近，完整周期能量相对于 twist 载体能量会出现任意强的反向增长。
+
+因此线外零点的负见证：
+
+* 不是指数微小；
+* 不是可能被高阶余项轻易吞没；
+* 而是一个极点型、无界负信号。
+
+这解决了此前 Wang–Deng 路线中的一个关键逻辑困难。
+
+---
+

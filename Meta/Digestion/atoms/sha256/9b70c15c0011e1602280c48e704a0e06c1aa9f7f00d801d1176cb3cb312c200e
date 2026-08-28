@@ -1,0 +1,16 @@
+## 定理 305.1（Riemann–Clark measure）
+
+$$
+\boxed{
+\sigma_1[\vartheta_\xi]
+=
+\sum_\rho
+w_\rho\,\delta_{u_\rho}.
+}
+\tag{305.5}
+$$
+
+这里对每个不同零点只取一个圆周点，而零点重数包含在 \(w_\rho\) 中。
+
+---
+

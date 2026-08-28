@@ -1,0 +1,15 @@
+## 311.3 Fredholm/Hankel 接口
+
+$$
+\boxed{
+\frac{\xi(\frac12+\sqrt x)}{\xi(\frac12)}
+=
+\det(I+xU),
+\qquad
+U\ge0.
+}
+$$
+
+优点：
+
+* 直接产生正算子；

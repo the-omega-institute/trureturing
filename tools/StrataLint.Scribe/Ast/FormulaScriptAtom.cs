@@ -31,6 +31,31 @@ internal static class FormulaScriptAtom
         _ => false,
     };
 
+    /// <summary>
+    /// Whether <paramref name="macro"/> binds exactly one following argument token.
+    /// <c>\frac</c> is deliberately absent: it binds two, and <c>\frac12</c> spends a
+    /// single digit pair on both, so a one-token rule would misjudge it.
+    /// </summary>
+    internal static bool TakesArgument(FormulaLatexMacro macro) => macro switch
+    {
+        FormulaLatexMacro.Begin
+            or FormulaLatexMacro.End
+            or FormulaLatexMacro.Mathbb
+            or FormulaLatexMacro.Mathbf
+            or FormulaLatexMacro.Mathcal
+            or FormulaLatexMacro.Mathrm
+            or FormulaLatexMacro.Operatorname
+            or FormulaLatexMacro.Overline
+            or FormulaLatexMacro.Sqrt
+            or FormulaLatexMacro.Text
+            or FormulaLatexMacro.Widehat
+            or FormulaLatexMacro.Widetilde => true,
+
+        // Every other macro is a symbol, an operator name, a delimiter mark or spacing:
+        // it stands complete on its own and binds nothing.
+        _ => false,
+    };
+
     private static bool IsScriptArgument(FormulaLatexSymbol symbol) => symbol switch
     {
         // `&` is an alignment tab, `'` is a prime, and a script mark cannot carry

@@ -1,0 +1,16 @@
+ast_path: section/本轮最终结论/occurrence/14
+fingerprints:
+  raw_sha256: sha256:44a59d8095a791d6144f1351492543e2fffaa38141e4b5da9aae32619ad45aab
+  normalized_sha256: sha256:44a59d8095a791d6144f1351492543e2fffaa38141e4b5da9aae32619ad45aab
+cas_ref: sha256:44a59d8095a791d6144f1351492543e2fffaa38141e4b5da9aae32619ad45aab
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-6d11b3fa7f0171f9b78c85f49ca52abcdaf56c2c716892970c60a6798b1686c7-bf0c1c8aa1de9f1754cea7fea0d0558a540232ece702697e64548442e6b72b89
+    - generic-residual-add933c5e0885d41423d33aed22b5d0487580ec9214286d1d6c9207db9767c5a-4af2c6efac193e4eb353444008e68fc1a2517a40f82bea0a596edbbfe8033e9d
+    - generic-residual-5e432ee7a65da0ced6d2053a1cd12d13ad7894d6e5c400bfacc2b3591e36d01a-f09f3325f3cdf1468aa8a9028fcbcf83597cb6fb676a661ecbb4b5c8cad38e04
+    - generic-residual-941c562c0166c408838509203d151497ca1ab40c043871d18b94d11ae1eb244e-895b20e27c91625bfe38a336a4f24d4c54fda9fc7f960a6fa7ea09dc77983f60
+    - generic-residual-8a889f446a693b5843023d5dd610bb8203357e1b4ad89d1f35aaed04ddf62f4b-8cfcf5cb85cd83ea03cdafefb6b4dee452704809f343422f83574281b464a055

@@ -1,0 +1,90 @@
+# 第二百一十一部　有限环面重构 \(m_\omega\)
+
+固定：
+
+$$
+\omega>0
+$$
+
+以及紧集：
+
+$$
+Z\subset\mathbb C^+.
+$$
+
+对应两个紧谱窗：
+
+$$
+K_\pm
+=
+\left\{
+\frac12\pm\omega-iz:
+z\in Z
+\right\}.
+$$
+
+由有限环面层析，分别选择有限环面帧：
+
+$$
+\left(
+\mathbf P_\pm(z),
+\mathbf T_\pm(z)
+\right)
+$$
+
+使：
+
+$$
+\mathbf P_\pm(z)
+=
+E_\omega^\pm(z)\mathbf T_\pm(z).
+$$
+
+于是：
+
+$$
+\boxed{
+\widehat E_\omega^\pm(z)
+=
+\frac{
+\langle
+\mathbf P_\pm(z),\mathbf T_\pm(z)
+\rangle
+}{
+\|\mathbf T_\pm(z)\|^2
+}
+=
+E_\omega^\pm(z).
+}
+\tag{211.1}
+$$
+
+定义有限环面 Weyl observer：
+
+$$
+\boxed{
+m_{\omega,\mathrm{tor}}(z)
+=
+\frac{i}{\omega}
+\frac{
+\widehat E_\omega^+(z)-\widehat E_\omega^-(z)
+}{
+\widehat E_\omega^+(z)+\widehat E_\omega^-(z)
+}.
+}
+\tag{211.2}
+$$
+
+则：
+
+$$
+\boxed{
+m_{\omega,\mathrm{tor}}=m_\omega.
+}
+\tag{211.3}
+$$
+
+所以 \(m_\omega\) 的全部 Herglotz/Pick 正性，可以仅由有限个二次环面周期读数表达。
+
+---
+

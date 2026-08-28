@@ -1,0 +1,22 @@
+## 218.2 Sticky 分支
+
+若负候选长期集中于：
+
+* 单一判别式；
+* 单一 twist family；
+* 单一 geodesic branch；
+* 单一尺度链；
+
+则：
+
+1. 提取主导 primitive twist；
+2. 将重复 character histories 组织为 double Dirichlet series；
+3. 收缩闭合子历史；
+4. 对 ramified/diagonal histories 加入 counterterms；
+5. 选择随 \(\omega\downarrow0\) 增长的展开深度；
+6. 控制剩余 Pick 缺陷。
+
+这就是 Yu Deng 式重整化在 Herglotz kernel 上的具体目标。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/144-2-测地线长度
+fingerprints:
+  raw_sha256: sha256:20d9ebe7e474d278d55f05cf1e7f67912030abe4117c9aa1baab6774e4246022
+  normalized_sha256: sha256:20d9ebe7e474d278d55f05cf1e7f67912030abe4117c9aa1baab6774e4246022
+cas_ref: sha256:20d9ebe7e474d278d55f05cf1e7f67912030abe4117c9aa1baab6774e4246022
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

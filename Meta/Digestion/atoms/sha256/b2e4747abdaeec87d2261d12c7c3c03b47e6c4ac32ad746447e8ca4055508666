@@ -1,0 +1,36 @@
+## 147.2 最粘滞的黄金 word
+
+最简单周期 word 是：
+
+$$
+\boxed{
+\overline{1}
+=
+(1,1,1,\ldots).
+}
+$$
+
+它对应：
+
+$$
+x_*=[0;\overline1]=\varphi^{-1},
+$$
+
+以及最短闭测地线。
+
+因此它可以被定义为转移系统中的**基础 sticky orbit**：
+
+$$
+\boxed{
+\text{所有尺度都停留在同一最小 digit 分支。}
+}
+$$
+
+这给 Wang–Deng 方法一个精确动力学原型：
+
+* Wang 层：区分 continued-fraction word 是否长期集中于少数 digit；
+* Deng 层：将重复周期 word 收缩为 primitive orbit 及其重复次数；
+* determinant：自动完成全部 primitive orbit 的重求和。
+
+---
+

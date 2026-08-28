@@ -1,0 +1,40 @@
+# 第二百七十七部　Li–CMV unitary
+
+Verblunsky 系数：
+
+$$
+\alpha_0,\alpha_1,\ldots
+$$
+
+唯一决定一个 CMV unitary：
+
+$$
+\boxed{
+\mathcal C_\lambda.
+}
+\tag{277.1}
+$$
+
+其相对于循环向量 \(e_0\) 的谱测度恰为：
+
+$$
+\mu_\lambda.
+$$
+
+因此：
+
+$$
+\boxed{
+\langle
+\mathcal C_\lambda^ne_0,e_0
+\rangle
+=
+c_n.
+}
+\tag{277.2}
+$$
+
+CMV 是单位圆正交多项式的标准五对角 unitary 矩阵实现；其谱理论与 Verblunsky 系数一一对应。([剑桥大学出版社][3])
+
+---
+

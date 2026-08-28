@@ -1,0 +1,56 @@
+## Toroidal excess-connection positivity
+
+对：
+
+$$
+\Re s>\frac12,
+$$
+
+需要证明：
+
+$$
+\boxed{
+\Re
+\left[
+\frac{
+\langle
+\partial_\sigma\mathbf P_K(s),
+\mathbf P_K(s)
+\rangle
+}{
+\|\mathbf P_K(s)\|^2
+}
+-
+\frac{
+\langle
+\partial_\sigma\mathbf T_K(s),
+\mathbf T_K(s)
+\rangle
+}{
+\|\mathbf T_K(s)\|^2
+}
+\right]
+>0.
+}
+\tag{200.1}
+$$
+
+由式 (190.2)，左侧恰为：
+
+$$
+\Re\frac{\xi'(s)}{\xi(s)}.
+$$
+
+因此该不等式与 RH 等价，但它把问题放入了两个几何可观测对象之间：
+
+$$
+\boxed{
+\text{Eisenstein period line}
+\quad\text{与}\quad
+\text{twist carrier line}.
+}
+$$
+
+证明不应通过重新代回 \(\xi'/\xi\)，而应从：
+
+* 环面测度正性；

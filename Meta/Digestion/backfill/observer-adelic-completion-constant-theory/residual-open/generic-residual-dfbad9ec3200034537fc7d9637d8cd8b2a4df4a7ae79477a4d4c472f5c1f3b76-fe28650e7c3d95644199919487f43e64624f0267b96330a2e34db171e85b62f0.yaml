@@ -1,0 +1,10 @@
+ast_path: section/依赖成熟理论/clause/5
+fingerprints:
+  raw_sha256: sha256:dfbad9ec3200034537fc7d9637d8cd8b2a4df4a7ae79477a4d4c472f5c1f3b76
+  normalized_sha256: sha256:dfbad9ec3200034537fc7d9637d8cd8b2a4df4a7ae79477a4d4c472f5c1f3b76
+cas_ref: sha256:dfbad9ec3200034537fc7d9637d8cd8b2a4df4a7ae79477a4d4c472f5c1f3b76
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

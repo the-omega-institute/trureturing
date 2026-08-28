@@ -1,0 +1,79 @@
+# 第二百四十一部　Bosonic 与 Fermionic 两张图表
+
+定义 fermionic 配分函数：
+
+$$
+\boxed{
+Z_F(x)
+=
+\det(I+xU_\Xi)
+=
+\mathscr F(x).
+}
+\tag{241.1}
+$$
+
+每个谱原子最多被选择一次，所以系数为外幂迹。
+
+再定义 bosonic 配分函数：
+
+$$
+\boxed{
+Z_B(x)
+=
+\det(I-xU_\Xi)^{-1},
+\qquad
+|x|<\gamma_1^2.
+}
+\tag{241.2}
+$$
+
+展开：
+
+$$
+\boxed{
+Z_B(x)
+=
+\sum_{n=0}^{\infty}h_nx^n,
+}
+$$
+
+其中：
+
+$$
+\boxed{
+h_n
+=
+\operatorname{Tr}
+\left(
+\operatorname{Sym}^nU_\Xi
+\right).
+}
+\tag{241.3}
+$$
+
+因此同一个 Riemann 零点谱同时产生：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{图表}&\text{状态规则}\\
+\hline
+\det(I+xU)&\text{每个谱原子最多占据一次}\\
+\det(I-xU)^{-1}&\text{每个谱原子可重复占据}\\
+\operatorname{Tr}U^n&\text{primitive 单原子幂读数}
+\end{array}
+}
+$$
+
+这正把此前 Ramanujan 基因组中的：
+
+* 乘积；
+* 分拆；
+* exterior powers；
+* occupation numbers；
+
+接入 Riemann 零点谱。
+
+---
+

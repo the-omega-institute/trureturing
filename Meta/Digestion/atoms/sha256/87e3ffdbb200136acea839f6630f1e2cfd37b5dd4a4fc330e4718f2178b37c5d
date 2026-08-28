@@ -1,0 +1,33 @@
+## 假设 217.1（Relative-trace Herglotz realization）
+
+存在一族 Hilbert 空间向量：
+
+$$
+\mathscr V_{\omega,z}
+$$
+
+由：
+
+* 环面周期；
+* Eisenstein 变形；
+* relative trace kernel；
+* twist normalization；
+
+自然构造，使：
+
+$$
+\boxed{
+\mathcal N_\omega(z,w)
+=
+\langle
+\mathscr V_{\omega,z},
+\mathscr V_{\omega,w}
+\rangle.
+}
+\tag{217.2}
+$$
+
+若该表示对全部 \(\omega>0\) 成立，则立即推出 RH。
+
+---
+

@@ -31,11 +31,18 @@ public sealed class DependencyDirectionTests
             AssemblyReferencePolicy.NonPlatformReferences(typeof(StrataLint.Cli.Program).Assembly));
     }
 
+    /// <summary>
+    /// Jint runs the vendored KaTeX so the markdown gate parses formulas with the site's
+    /// own parser rather than a second reading of its grammar. It is BSD-2-Clause pure
+    /// managed code and brings one name beneath it, Acornima (BSD-3-Clause), its
+    /// JavaScript parser; nothing it runs is trusted, because the gate keeps the parse
+    /// verdict and discards the rendered HTML.
+    /// </summary>
     [Fact]
-    public void ScribeReferencesExactlyEngineQuestPdfTomlynAndTruth()
+    public void ScribeReferencesExactlyEngineJintQuestPdfTomlynAndTruth()
     {
         Assert.Equal(
-            ["QuestPDF", "StrataLint.Engine", "Tomlyn", "Trureturing.Truth"],
+            ["Jint", "QuestPDF", "StrataLint.Engine", "Tomlyn", "Trureturing.Truth"],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(ScribeEmitter).Assembly));
     }
 

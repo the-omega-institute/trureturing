@@ -1,0 +1,46 @@
+# 第二百七十五部　Schur 算法是最小创新分解
+
+定义 Schur 函数：
+
+$$
+\boxed{
+f_\lambda(z)
+=
+\frac1z
+\frac{
+\mathcal C_\lambda(z)-1
+}{
+\mathcal C_\lambda(z)+1
+},
+}
+\tag{275.1}
+$$
+
+其中 \(z=0\) 处取可去延拓。
+
+Carathéodory–Schur 变换说明：
+
+$$
+\Re\mathcal C_\lambda>0
+\iff
+|f_\lambda(z)|\le1
+\quad
+(|z|<1).
+$$
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+f_\lambda
+\text{ 是 Schur 函数}.
+}
+\tag{275.2}
+$$
+
+Schur 函数、Schur 参数、Verblunsky 系数及单位圆正交多项式之间的对应是 OPUC 理论的基本结构；CMV 矩阵提供其标准 unitary 实现。([EMS Press][2])
+
+---
+

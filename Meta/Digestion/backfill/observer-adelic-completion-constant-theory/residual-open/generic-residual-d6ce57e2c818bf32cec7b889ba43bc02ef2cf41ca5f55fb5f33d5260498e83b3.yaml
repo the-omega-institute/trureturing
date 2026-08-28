@@ -1,0 +1,14 @@
+ast_path: section/第二百九十四部-对前文-non-sticky-假设的必要修正
+fingerprints:
+  raw_sha256: sha256:d6ce57e2c818bf32cec7b889ba43bc02ef2cf41ca5f55fb5f33d5260498e83b3
+  normalized_sha256: sha256:d6ce57e2c818bf32cec7b889ba43bc02ef2cf41ca5f55fb5f33d5260498e83b3
+cas_ref: sha256:d6ce57e2c818bf32cec7b889ba43bc02ef2cf41ca5f55fb5f33d5260498e83b3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-8b14e3f185e0f512566d3d3581190b46c8c6df23999406e22138002f12633a70-8f7fd5d3405922cdcac7db8d04a045f9e0f18966df354afc38f3b2546cb42ee3
+    - generic-residual-a41eb6f45e6f20f9db76fb9a75286d5ac753da72a5baf3c3df5ee4d70d66077f-4e53b1f1bcb17e7f7d665cd0e79bc33aa03c88ab2fe237d19822ae640f1b0c45
+    - generic-residual-e317a37669a6cc4e22c535d93c35b7bfc29682e073075afaa6dad0bcac6e7a5d-52d2f51c3ff3cc8f3c0a5e270d1f6b236a7de9687433797eda6a150c20c80483

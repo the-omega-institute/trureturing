@@ -1,0 +1,10 @@
+ast_path: section/263-1-四元组贡献/clause/1
+fingerprints:
+  raw_sha256: sha256:da7d54803f3d46b5250afeff8cbbff510b5858c813a8fe087a9734e25ababd6d
+  normalized_sha256: sha256:da7d54803f3d46b5250afeff8cbbff510b5858c813a8fe087a9734e25ababd6d
+cas_ref: sha256:da7d54803f3d46b5250afeff8cbbff510b5858c813a8fe087a9734e25ababd6d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

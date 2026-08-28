@@ -1,0 +1,36 @@
+## 242.1 Schur 正性
+
+RH 下：
+
+$$
+a_n=e_n(\alpha_1,\alpha_2,\ldots)
+$$
+
+是谱变量的 elementary symmetric functions。
+
+Toeplitz minors由 Jacobi–Trudi 对偶公式变成 skew Schur functions：
+
+$$
+s_{\lambda/\mu}(\alpha_1,\alpha_2,\ldots).
+$$
+
+由于：
+
+$$
+\alpha_j\ge0,
+$$
+
+全部这些 Schur 读数非负。
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{Riemann reciprocal-zero alphabet 的全部 skew-Schur observables 非负}.
+}
+$$
+
+---
+

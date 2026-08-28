@@ -1,0 +1,40 @@
+## 定理 315.1（Jet resolvent semisimplification）
+
+$$
+\boxed{
+\operatorname{Tr}
+\mathsf A_\rho(s)^{-1}
+=
+\frac{m}{s-\rho}.
+}
+\tag{315.4}
+$$
+
+同时：
+
+$$
+\boxed{
+\frac{d}{ds}
+\log\det\mathsf A_\rho(s)
+=
+\frac{m}{s-\rho}.
+}
+\tag{315.5}
+$$
+
+这条恒等式非常重要。
+
+它说明：
+
+$$
+\boxed{
+\text{长度为 }m\text{ 的 nilpotent jet chain}
+\quad
+\xrightarrow{\operatorname{Tr\,resolvent}}
+\quad
+\text{权重为 }m\text{ 的 simple spectral atom}.
+}
+$$
+
+---
+

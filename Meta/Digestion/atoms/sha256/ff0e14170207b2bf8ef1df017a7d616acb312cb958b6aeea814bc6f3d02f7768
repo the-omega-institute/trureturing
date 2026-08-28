@@ -1,0 +1,69 @@
+# 第二百四十七部　平方折叠后的 Newman 偏微分方程
+
+Newman family 满足：
+
+$$
+\frac{\partial H_t}{\partial t}
+=
+-\frac{\partial^2H_t}{\partial z^2}.
+$$
+
+定义未归一化平方折叠：
+
+$$
+G_t(x)=H_t(i\sqrt x).
+$$
+
+由于：
+
+$$
+x=-z^2,
+$$
+
+链式法则给出：
+
+$$
+\boxed{
+\frac{\partial G_t}{\partial t}
+=
+4x\frac{\partial^2G_t}{\partial x^2}
++
+2\frac{\partial G_t}{\partial x}.
+}
+\tag{247.1}
+$$
+
+若：
+
+$$
+\mathscr F_t(x)
+=
+G_t(x)/G_t(0),
+$$
+
+则：
+
+$$
+\boxed{
+\partial_t\mathscr F_t
+=
+4x\partial_x^2\mathscr F_t
++
+2\partial_x\mathscr F_t
+-
+2\partial_x\mathscr F_t(0)\,
+\mathscr F_t.
+}
+\tag{247.2}
+$$
+
+最后一项是保持：
+
+$$
+\mathscr F_t(0)=1
+$$
+
+的归一化 counterterm。
+
+---
+

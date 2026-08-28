@@ -1,0 +1,23 @@
+## 206.1 新的完成链
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&\iff
+\Xi\text{ 的零点全实}\\
+&\iff
+-\Xi'/\Xi\text{ 是 Herglotz}\\
+&\iff
+m_0\text{ 是某个正谱测度的 Cauchy 变换}\\
+&\iff
+m_0\text{ 是一个正 canonical system 的 Weyl 函数}.
+\end{aligned}
+}
+\tag{206.3}
+$$
+
+de Branges/canonical-system 理论正是把 meromorphic inner functions、Herglotz functions 与正半定 Hamiltonian 联系起来；Suzuki 对 \(\xi\) 构造的 shifted family 给出了这一接口的具体版本。([arXiv][1])
+
+---
+

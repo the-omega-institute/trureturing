@@ -1,0 +1,17 @@
+ast_path: section/第二百六十五部-Toroidal-relative-trace-的新最小目标
+fingerprints:
+  raw_sha256: sha256:eb0caaf0bbb229654f9a80f54d596a324b1d464a55d5a53161f5794d8278ece9
+  normalized_sha256: sha256:eb0caaf0bbb229654f9a80f54d596a324b1d464a55d5a53161f5794d8278ece9
+cas_ref: sha256:eb0caaf0bbb229654f9a80f54d596a324b1d464a55d5a53161f5794d8278ece9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-b9a682ca01e141ad199d785bd40b4aa8e85ef557e11b0ee0c3d83acb4b5f5e84-73b6c5aa85930c4d2e56aea3457cfcae1b552b19c539f9f8e263fb1ce1b499e3
+    - generic-residual-2cf3d501ffabe5f18715a15f4bc79fb8ad1ff664f357a7b6affadf357c90ad13-c87874f2384e176cdbcd7aebbf99f71288820b4cd0a3c4c573e179e13ff5d856
+    - generic-residual-cfe66850425cf204bff88ca9c4f9012a1d38eea0db41107bd755f3215e98b7c2-2d167ab77b850ff6a641610997432d180727588d53a10e98ce5fa1e0e3df7a8b
+    - generic-residual-216221898894c4f36a9614b243c03ebeddcd34c300d67db7cdeafe24e307116e-2ac28b186d2d981eeb325cae5156a9f7ed28821cc9c83420d0778f3fafb0e633
+    - generic-residual-a075474b13e1811359a312de1098a12ab463a7148aa86d56f1d82cfb2feb2c80-5abe254e64f17a70904a7291d6e71350e9618b3a0962ffb0abd3de31007c48a7
+    - generic-residual-8657683bb439ddc45d2154b4200df8e2ea3391e0f2db8b08766a57b0f3a4da29-94770e939f824de8311a6a360fe524faf905c073c7db99e4dd9a0495ef6abb2b

@@ -1,0 +1,79 @@
+# 第二百五十三部　建议形式化顺序
+
+```text
+D5/S3/Analytic/XiFredholm/
+  XiPositiveTraceClassOperator.lean
+  XiFredholmDeterminant.lean
+  FredholmRHCriterion.lean
+  XiResolventTrace.lean
+
+D5/S3/Analytic/XiSymmetricFunctions/
+  ExteriorTraceCoefficient.lean
+  SymmetricPowerCoefficient.lean
+  PowerTraceMoment.lean
+  NewtonObserverTransform.lean
+  PlethysticXiGenome.lean
+
+D5/S3/Analytic/XiTotalPositivity/
+  XiToeplitzMatrix.lean
+  PolyaFrequencyRHCriterion.lean
+  XiHankelMatrix.lean
+  DualTotalPositivitySquare.lean
+  SchurObservablePositivity.lean
+
+D5/S3/Analytic/XiSpectralTomography/
+  FirstZeroMomentBounds.lean
+  ReciprocalZeroRatioLimit.lean
+  ZeroMultiplicityRecovery.lean
+  RecursiveAtomDeflation.lean
+  HankelGeneralizedEigenvalue.lean
+
+D5/S3/Analytic/NewmanCompletion/
+  FoldedNewmanFamily.lean
+  FoldedNewmanPDE.lean
+  PositiveDeterminantCone.lean
+  NewmanCompletionThreshold.lean
+
+D5/S3/Analytic/XiToda/
+  ExponentialMomentTilt.lean
+  HankelTauFunction.lean
+  JacobiTodaFlow.lean
+  StickyAtomLimit.lean
+  TodaDarbouxDeflation.lean
+
+D5/S3/Observer/ToroidalFredholm/
+  ToroidalPowerTraceTarget.lean
+  ToroidalFredholmTarget.lean
+  ToroidalPositiveOperatorCompletion.lean
+```
+
+最优先、风险最低的闭合链为：
+
+$$
+\boxed{
+\text{RH}
+\to
+U_\Xi
+\to
+\det(I+xU_\Xi)
+=
+\mathscr F(x).
+}
+$$
+
+随后是完全代数性的：
+
+$$
+\boxed{
+\det
+\to
+\Lambda^n\text{ traces}
+\to
+\text{power traces}
+\to
+\text{Newton identities}.
+}
+$$
+
+---
+

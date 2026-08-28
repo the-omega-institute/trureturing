@@ -1,0 +1,77 @@
+# 第一百八十四部　二次 twist 平均与平方历史
+
+定义截断环面平均：
+
+$$
+\boxed{
+F_X(s)
+=
+\frac1{W_X}
+\sum_D
+w(D/X)\,
+P_D(s).
+}
+\tag{184.1}
+$$
+
+则：
+
+$$
+F_X(s)
+=
+\Lambda(s)G_X(s),
+$$
+
+其中：
+
+$$
+G_X(s)
+=
+\frac1{W_X}
+\sum_D
+w(D/X)\Lambda(s,\chi_D).
+$$
+
+展开：
+
+$$
+L(s,\chi_D)
+=
+\sum_{n\ge1}
+\frac{\chi_D(n)}{n^s}.
+$$
+
+对 \(D\) 平均时，非平方 \(n\) 的二次 character 通常产生显著抵消，而平方：
+
+$$
+n=m^2
+$$
+
+形成稳定主项。
+
+因此预期：
+
+$$
+\boxed{
+G_X(s)
+\longrightarrow
+G_\square(s)
+=
+\sum_{m\ge1}
+\frac{a(m)}{m^{2s}},
+}
+\tag{184.2}
+$$
+
+其中 \(a(m)\ge0\) 是局部平方密度。
+
+在：
+
+$$
+\Re s>\frac12
+$$
+
+内，该平方 Dirichlet series 有可能绝对收敛并形成无零 Euler product。
+
+这是一个精确的 Wang–Deng 结构：
+

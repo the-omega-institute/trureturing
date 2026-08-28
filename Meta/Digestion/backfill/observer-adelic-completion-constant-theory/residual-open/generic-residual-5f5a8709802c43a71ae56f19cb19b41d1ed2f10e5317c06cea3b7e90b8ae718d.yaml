@@ -1,0 +1,10 @@
+ast_path: section/325-2-Deng-的任务
+fingerprints:
+  raw_sha256: sha256:5f5a8709802c43a71ae56f19cb19b41d1ed2f10e5317c06cea3b7e90b8ae718d
+  normalized_sha256: sha256:5f5a8709802c43a71ae56f19cb19b41d1ed2f10e5317c06cea3b7e90b8ae718d
+cas_ref: sha256:5f5a8709802c43a71ae56f19cb19b41d1ed2f10e5317c06cea3b7e90b8ae718d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,52 @@
+## 171.1 局部零点形状
+
+若 \(\rho\) 是 \(\Lambda\) 的 \(m\) 重零点，则：
+
+$$
+\Lambda(s)
+=
+a_m(s-\rho)^m
++
+O((s-\rho)^{m+1}),
+\qquad
+a_m\neq0.
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\mathscr E_K(s)
+={}&
+|a_m|^2
+\left(
+\sum_{i=1}^r
+w_i
+|\Lambda(\rho,\chi_{D_i})|^2
+\right)
+|s-\rho|^{2m}\\
+&+
+o(|s-\rho|^{2m}).
+\end{aligned}
+}
+\tag{171.3}
+$$
+
+有限覆盖保证括号内严格为正。
+
+所以：
+
+$$
+\boxed{
+\operatorname{ord}^{\mathbb R}_\rho\mathscr E_K
+=
+2\,\operatorname{ord}_\rho\Lambda.
+}
+\tag{171.4}
+$$
+
+若零点为单零点，\(\rho\) 是 \(\mathscr E_K\) 的非退化二维局部极小点。
+
+---
+

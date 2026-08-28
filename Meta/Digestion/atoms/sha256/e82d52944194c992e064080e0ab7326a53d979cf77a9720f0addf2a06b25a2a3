@@ -1,0 +1,26 @@
+## 定理 191.1（RH 的曲率支撑形式）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\operatorname{supp}
+\left(
+\frac{i}{2\pi}
+\partial\bar\partial
+\mathcal U_K
+\right)
+\cap
+\{0<\Re s<1\}
+\subseteq
+\left\{\Re s=\frac12\right\}.
+}
+\tag{191.4}
+$$
+
+这给“零点在线”一个几何化表述：
+
+> 全部相对曲率原子是否集中在完成对偶的固定中线。
+
+---
+

@@ -1,0 +1,20 @@
+## 假设 158.1（Transfer self-improvement dichotomy）
+
+存在某个坏度泛函 \(\mathfrak B_s(w)\)，使每个近极值 word 满足：
+
+$$
+\boxed{
+\begin{cases}
+\text{non-sticky}
+&\Rightarrow
+\mathfrak B_s\text{ 严格改善};\\
+\text{sticky}
+&\Rightarrow
+\text{由有限个 primitive periodic blocks 重整化}.
+\end{cases}
+}
+$$
+
+Mayer determinant 是检验这一假设的理想实验场，因为它同时具有：
+
+* 精确 symbolic dynamics；

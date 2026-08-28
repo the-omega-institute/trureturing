@@ -1,0 +1,53 @@
+# 第三百零四部　圆盘、Clark 与 de Branges 核是同一个核的规范变换
+
+令：
+
+$$
+z=1-\frac1s,
+\qquad
+w=1-\frac1t.
+$$
+
+则：
+
+$$
+\boxed{
+1-z\overline w
+=
+\frac{s+\overline t-1}
+{s\overline t}.
+}
+\tag{304.1}
+$$
+
+并且：
+
+$$
+\mathfrak C_\xi(z)
+=
+\frac1{\lambda_1}
+\frac{\xi'(s)}{\xi(s)}.
+$$
+
+所以：
+
+$$
+\boxed{
+\frac{
+\mathfrak C_\xi(z)
++
+\overline{\mathfrak C_\xi(w)}
+}{
+1-z\overline w
+}
+=
+s\overline t\,
+\mathcal K_\xi(s,t).
+}
+\tag{304.2}
+$$
+
+乘以非零 gauge \(s\overline t\) 不改变核正定性。
+
+---
+

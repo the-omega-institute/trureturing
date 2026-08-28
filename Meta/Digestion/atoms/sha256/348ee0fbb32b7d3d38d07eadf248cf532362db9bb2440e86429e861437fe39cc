@@ -1,0 +1,46 @@
+## 210.1 对角公式
+
+令：
+
+$$
+A=E_\omega^+(z),
+\qquad
+B=E_\omega^-(z).
+$$
+
+则：
+
+$$
+\boxed{
+\Im m_\omega(z)
+=
+\frac{
+|A|^2-|B|^2
+}{
+\omega|A+B|^2
+}.
+}
+\tag{210.5}
+$$
+
+所以：
+
+$$
+\Im m_\omega(z)>0
+$$
+
+严格等价于 Hermite–Biehler 不等式：
+
+$$
+\boxed{
+|E_\omega^+(z)|
+>
+|E_\omega^-(z)|.
+}
+\tag{210.6}
+$$
+
+这与前文的 toroidal normalized energy defect 完全相同。
+
+---
+

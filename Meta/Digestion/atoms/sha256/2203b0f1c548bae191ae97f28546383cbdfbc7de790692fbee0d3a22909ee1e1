@@ -1,0 +1,84 @@
+# 第一百五十一部　调节子频率的方向修正
+
+完整有向闭测地线长度为：
+
+$$
+\ell_\varphi=4\log\varphi.
+$$
+
+因此其自然 Fourier 频率为：
+
+$$
+\boxed{
+\Omega_k
+=
+\frac{2\pi k}{\ell_\varphi}
+=
+\frac{\pi k}{2\log\varphi},
+\qquad
+k\in\mathbb Z.
+}
+\tag{151.1}
+$$
+
+此前单位流使用的频率为：
+
+$$
+\omega_m
+=
+\frac{\pi m}{\log\varphi}.
+$$
+
+二者满足：
+
+$$
+\boxed{
+\omega_m=\Omega_{2m}.
+}
+\tag{151.2}
+$$
+
+所以此前的 regulator Fourier genome 实际只读取了闭测地线上的**偶数谐波**。
+
+原因是其能量定义使用：
+
+$$
+|\sigma_\pm(\alpha)|^2,
+$$
+
+已经遗忘了：
+
+* 单位 \(\varphi\) 的负范数符号；
+* 测地线方向；
+* 二重覆盖中的奇模式。
+
+因此完整观察者还需加入：
+
+$$
+\boxed{
+\epsilon\in\mathbb Z/2\mathbb Z
+}
+$$
+
+作为方向残余。
+
+这修正了此前 Prime–Regulator–Time Observer：
+
+$$
+q_{p,m,t}
+$$
+
+的 regulator 轴，应升级为：
+
+$$
+\boxed{
+q_{p,k,t},
+\qquad
+k\in\mathbb Z,
+}
+$$
+
+其中偶 \(k\) 是绝对值／无向模式，奇 \(k\) 是方向完成模式。
+
+---
+

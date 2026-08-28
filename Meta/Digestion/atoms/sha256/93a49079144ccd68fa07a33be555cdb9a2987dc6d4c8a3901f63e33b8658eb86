@@ -1,0 +1,29 @@
+# 第一百七十七部　函数域中的实验性闭合
+
+在函数域情形，toroidal automorphic programme 可以真正闭合。
+
+相关工作证明，在若干函数域上：
+
+* toroidal automorphic space 可以明确计算；
+* 它是 admissible representation；
+* 不可约 subquotients 是 tempered；
+* 从而得到相应曲线 zeta 的自动形式 RH 证明。([arXiv][3])
+
+这提供一个科学上的强正对照：
+
+$$
+\boxed{
+\text{Toroidal invisibility}
++
+\text{representation temperedness}
+\Longrightarrow
+\text{RH}
+}
+$$
+
+并非仅仅形式重述；在函数域中，它确实能成为证明机制。
+
+数域困难并不是逻辑链错误，而是尚无法证明 toroidal Eisenstein kernel 的 temperedness。
+
+---
+

@@ -1,0 +1,52 @@
+## 定理 212.1（Finite toroidal Pick criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Pi_{\omega,Z}^{\mathrm{tor}}
+\succeq0
+}
+$$
+
+对所有：
+
+$$
+\omega>0,
+\quad
+n\ge1,
+\quad
+z_1,\ldots,z_n\in\mathbb C^+
+$$
+
+成立，并且所有矩阵元均有定义。
+
+### 证明
+
+有限环面重构给出：
+
+$$
+m_{\omega,\mathrm{tor}}=m_\omega.
+$$
+
+由定理 209.1、210.4 及 Suzuki 的 shifted inner criterion：
+
+$$
+\mathrm{RH}
+\iff
+m_\omega
+\text{ 对全部 }\omega>0\text{ 是 Herglotz}.
+$$
+
+Herglotz 性等价于全部有限 Nevanlinna 矩阵正半定。∎
+
+这给 RH 一个真正的：
+
+$$
+\boxed{
+\text{有限矩阵、有限环面、有限点集证书层级}.
+}
+$$
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/第二百九十九部-最小的新-RH-目标/clause/5
+fingerprints:
+  raw_sha256: sha256:46b8a7ddcc1d92bfbcfe35bd1ee2c237fb125ad9ff9a5d8f0a0c6b7b8e961787
+  normalized_sha256: sha256:46b8a7ddcc1d92bfbcfe35bd1ee2c237fb125ad9ff9a5d8f0a0c6b7b8e961787
+cas_ref: sha256:46b8a7ddcc1d92bfbcfe35bd1ee2c237fb125ad9ff9a5d8f0a0c6b7b8e961787
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

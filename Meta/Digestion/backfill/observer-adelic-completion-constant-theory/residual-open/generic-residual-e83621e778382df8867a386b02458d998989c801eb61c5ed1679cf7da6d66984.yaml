@@ -1,0 +1,10 @@
+ast_path: section/325-1-Wang-的任务
+fingerprints:
+  raw_sha256: sha256:e83621e778382df8867a386b02458d998989c801eb61c5ed1679cf7da6d66984
+  normalized_sha256: sha256:e83621e778382df8867a386b02458d998989c801eb61c5ed1679cf7da6d66984
+cas_ref: sha256:e83621e778382df8867a386b02458d998989c801eb61c5ed1679cf7da6d66984
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

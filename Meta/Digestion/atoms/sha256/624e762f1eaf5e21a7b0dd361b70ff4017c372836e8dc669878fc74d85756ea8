@@ -1,0 +1,44 @@
+# 第一百七十六部　RH 的精确 observer-temperedness 形式
+
+考虑 spherical Eisenstein principal series：
+
+$$
+\Pi_s
+=
+\operatorname{Ind}
+\left(
+|\cdot|^{s-\frac12},
+|\cdot|^{\frac12-s}
+\right).
+$$
+
+其归一化谱参数为：
+
+$$
+\nu=s-\frac12.
+$$
+
+该表示 tempered 的条件为：
+
+$$
+\Re\nu=0,
+$$
+
+即：
+
+$$
+\boxed{
+\Re s=\frac12.
+}
+$$
+
+而前文已经证明：
+
+$$
+\Lambda(s)=0
+\iff
+E_s\in\mathcal A_{\mathrm{tor}}.
+$$
+
+所以：
+

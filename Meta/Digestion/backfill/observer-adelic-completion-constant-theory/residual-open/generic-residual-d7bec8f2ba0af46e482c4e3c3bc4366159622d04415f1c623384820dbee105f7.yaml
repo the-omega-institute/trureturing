@@ -1,0 +1,16 @@
+ast_path: section/251-1-人工零点注入预测
+fingerprints:
+  raw_sha256: sha256:d7bec8f2ba0af46e482c4e3c3bc4366159622d04415f1c623384820dbee105f7
+  normalized_sha256: sha256:d7bec8f2ba0af46e482c4e3c3bc4366159622d04415f1c623384820dbee105f7
+cas_ref: sha256:d7bec8f2ba0af46e482c4e3c3bc4366159622d04415f1c623384820dbee105f7
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-c726bdeb71b7cf0fa20fb7dc3863ebc93839dd6d9fae21bcaea9191cebea6dba-9d32e1d33552738fc9ec9075b759d8ab45b1a2348ff1ad6ecbe4573d596a96ba
+    - generic-residual-bf1ecbddf702dd8c502e3671cdf03f9369e4a743bc2123db158cd999e4a249a5-e9b2d2d6115c8e5b8767afc6ebd05facbe787f00205bf221452d7f93429581a6
+    - generic-residual-ac05bca1709ed33b83df27a2a5067bfdc9299e3bb59f10d54437f3e283994bb0-d4a9a4703fec6648a3f25e23c161b94e513dae9efc18f9647310ad9732566bc3
+    - generic-residual-c84a8d136251888964777afe05eeb3e14cde090c958bf0323c5e000469392c8b-fcd53efdfaeb41b2cbdf944bc1537cbe0ba6c36d3d639e90f5fde7685598b842
+    - generic-residual-85ab602feb8ec09a30db2d2eab00ec46dae8704773050f5b987bb30060fb211d-1030686fe069ce2071a1a9739376b183afecac1da772bb15b191c0ab4f060d88

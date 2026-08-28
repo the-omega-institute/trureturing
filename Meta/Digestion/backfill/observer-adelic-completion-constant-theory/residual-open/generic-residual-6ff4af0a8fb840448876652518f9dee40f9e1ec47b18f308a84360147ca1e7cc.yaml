@@ -1,0 +1,10 @@
+ast_path: section/Deng-primitive-survival
+fingerprints:
+  raw_sha256: sha256:6ff4af0a8fb840448876652518f9dee40f9e1ec47b18f308a84360147ca1e7cc
+  normalized_sha256: sha256:6ff4af0a8fb840448876652518f9dee40f9e1ec47b18f308a84360147ca1e7cc
+cas_ref: sha256:6ff4af0a8fb840448876652518f9dee40f9e1ec47b18f308a84360147ca1e7cc
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

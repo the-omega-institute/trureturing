@@ -1,0 +1,40 @@
+## 定理 227.1（Ramanujan–Stieltjes RH criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathscr S
+\text{ 具有与其 Taylor 系数一致的、全部系数非负的 Stieltjes 连分数}.
+}
+\tag{227.4}
+$$
+
+最初两个系数为：
+
+$$
+\boxed{
+\alpha_1
+=
+\frac{\mu_1}{\mu_0},
+}
+\tag{227.5}
+$$
+
+$$
+\boxed{
+\alpha_2
+=
+\frac{
+\mu_0\mu_2-\mu_1^2
+}{
+\mu_0\mu_1
+}.
+}
+\tag{227.6}
+$$
+
+所以每一项连分数系数的正性，都是某个 Hankel determinant ratio 的正性。
+
+---
+

@@ -1,0 +1,46 @@
+## 307.1 有限 rational inner approximant
+
+定义：
+
+$$
+\boxed{
+\mathfrak C_T(z)
+=
+\int_{\mathbb T}
+\frac{\zeta+z}{\zeta-z}
+\,d\mu_T(\zeta),
+}
+\tag{307.2}
+$$
+
+以及：
+
+$$
+\boxed{
+\vartheta_T(z)
+=
+\frac{\mathfrak C_T(z)-1}
+{\mathfrak C_T(z)+1}.
+}
+\tag{307.3}
+$$
+
+由于 \(\mu_T\) 是有限正原子测度：
+
+$$
+\boxed{
+\vartheta_T
+}
+$$
+
+是有限维 rational inner function，其 \(\alpha=1\) Clark 谱精确为：
+
+$$
+\{u_\rho:|\Im\rho|\le T\}
+\cup\{1\}.
+$$
+
+这里 \(1\) 是“所有遗漏高谱”的有效无限能级。
+
+---
+

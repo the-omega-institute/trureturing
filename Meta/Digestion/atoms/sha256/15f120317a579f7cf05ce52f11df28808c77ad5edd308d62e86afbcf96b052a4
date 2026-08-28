@@ -1,0 +1,106 @@
+# 本轮最终结论
+
+上一轮得到：
+
+$$
+\boxed{
+\frac{
+\xi(\frac12+\sqrt x)
+}{
+\xi(\frac12)
+}
+=
+\det(I+xA_\Xi).
+}
+$$
+
+本轮证明它经 Möbius 变换等价于：
+
+$$
+\boxed{
+\frac{
+\xi(\frac1{1-z})
+}{
+\xi(1)
+}
+=
+\det
+\left(
+I+\frac{4z}{(1-z)^2}X_\Xi
+\right),
+\qquad
+0\le X_\Xi\le I.
+}
+$$
+
+其中：
+
+$$
+\boxed{
+C_\Xi
+=
+I-2X_\Xi
++
+2i\sqrt{X_\Xi(I-X_\Xi)}
+}
+$$
+
+是 unitary 零点观察者。
+
+Li 系数随即获得四个完全兼容的角色：
+
+$$
+\boxed{
+\begin{aligned}
+\lambda_n
+&=\text{Cayley logarithmic cumulant};\\
+&=\text{unitary }n\text{ 步 Hilbert--Schmidt 位移};\\
+&=\text{圆周 Lévy 过程的 Fourier 耗散率};\\
+&=\text{条件负定 Hilbert 距离的平方}.
+\end{aligned}
+}
+$$
+
+所以 RH 可以进一步压缩成：
+
+$$
+\boxed{
+\text{Li 系数是否定义了 }\mathbb Z
+\text{ 上一个平移不变的 Hilbertian squared distance？}
+}
+$$
+
+或者等价地：
+
+$$
+\boxed{
+\text{是否存在一个圆周 Markov 半群，
+其 Fourier multiplier 为 }
+e^{-t\lambda_{|n|}}？
+}
+$$
+
+这使当前最小的 relative-trace 目标不再必须一步构造完整 Hilbert–Pólya 算子。
+
+只需构造一个 Gram 表示：
+
+$$
+\boxed{
+\frac{
+\lambda_m+\lambda_n-\lambda_{|m-n|}
+}{2}
+=
+\langle
+\mathscr V_m,\mathscr V_n
+\rangle.
+}
+$$
+
+一旦该式能由二次环面周期或 Weil relative trace 直接推出，全部 Li 系数自动非负，RH 立即成立。
+
+[1]: https://www.sciencedirect.com/science/article/pii/S0022314X97921375 "https://www.sciencedirect.com/science/article/pii/S0022314X97921375"
+[2]: https://arxiv.org/abs/2301.05779 "Li coefficients as norms of functions in a model space"
+[3]: https://link.springer.com/article/10.1007/s00209-025-03829-0 "https://link.springer.com/article/10.1007/s00209-025-03829-0"
+[4]: https://www.mathnet.ru/eng/mzm13758 "https://www.mathnet.ru/eng/mzm13758"
+[5]: https://doi.org/10.5802/AIF.2311 "https://doi.org/10.5802/AIF.2311"
+[6]: https://www.sciencedirect.com/science/article/pii/S0022314X99923922 "https://www.sciencedirect.com/science/article/pii/S0022314X99923922"

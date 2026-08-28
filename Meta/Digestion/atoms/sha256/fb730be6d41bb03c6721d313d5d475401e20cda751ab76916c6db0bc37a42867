@@ -1,0 +1,54 @@
+## 239.1 Hilbert–Pólya 的折叠形式
+
+定义：
+
+$$
+\boxed{
+H_\Xi=U_\Xi^{-1/2}
+}
+$$
+
+于 \(U_\Xi\) 的非零谱子空间上。
+
+则：
+
+$$
+\operatorname{spec}(H_\Xi)
+=
+\{\gamma:\Xi(\gamma)=0,\ \gamma>0\}.
+$$
+
+并且：
+
+$$
+\boxed{
+\frac{\Xi(z)}{\Xi(0)}
+=
+\det
+\left(
+I-z^2H_\Xi^{-2}
+\right).
+}
+\tag{239.5}
+$$
+
+所以 Hilbert–Pólya 不必从一个未知微分算子开始猜测。它可以分两步生成：
+
+$$
+\boxed{
+\text{先构造正 trace-class }U_\Xi,
+\qquad
+\text{再令 }H_\Xi=U_\Xi^{-1/2}.
+}
+$$
+
+真正承重的对象可能不是无界的 \(H_\Xi\)，而是有界紧算子：
+
+$$
+\boxed{
+U_\Xi=H_\Xi^{-2}.
+}
+$$
+
+---
+

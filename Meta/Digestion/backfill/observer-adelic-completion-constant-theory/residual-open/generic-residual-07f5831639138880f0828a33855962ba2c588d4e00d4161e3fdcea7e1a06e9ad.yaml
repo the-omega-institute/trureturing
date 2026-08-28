@@ -1,0 +1,10 @@
+ast_path: 假设/281.1
+fingerprints:
+  raw_sha256: sha256:07f5831639138880f0828a33855962ba2c588d4e00d4161e3fdcea7e1a06e9ad
+  normalized_sha256: sha256:07f5831639138880f0828a33855962ba2c588d4e00d4161e3fdcea7e1a06e9ad
+cas_ref: sha256:07f5831639138880f0828a33855962ba2c588d4e00d4161e3fdcea7e1a06e9ad
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

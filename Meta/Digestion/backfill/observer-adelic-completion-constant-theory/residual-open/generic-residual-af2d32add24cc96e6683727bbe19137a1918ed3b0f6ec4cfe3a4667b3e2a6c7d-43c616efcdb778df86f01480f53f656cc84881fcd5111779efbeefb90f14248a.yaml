@@ -1,0 +1,10 @@
+ast_path: section/300-5-线外零点注入负对照/clause/4
+fingerprints:
+  raw_sha256: sha256:af2d32add24cc96e6683727bbe19137a1918ed3b0f6ec4cfe3a4667b3e2a6c7d
+  normalized_sha256: sha256:af2d32add24cc96e6683727bbe19137a1918ed3b0f6ec4cfe3a4667b3e2a6c7d
+cas_ref: sha256:af2d32add24cc96e6683727bbe19137a1918ed3b0f6ec4cfe3a4667b3e2a6c7d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

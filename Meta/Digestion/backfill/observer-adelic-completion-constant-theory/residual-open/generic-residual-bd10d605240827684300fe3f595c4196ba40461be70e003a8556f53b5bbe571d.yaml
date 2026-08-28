@@ -1,0 +1,14 @@
+ast_path: section/第二百三十六部-Jensen-与-Hankel-的科学负对照
+fingerprints:
+  raw_sha256: sha256:bd10d605240827684300fe3f595c4196ba40461be70e003a8556f53b5bbe571d
+  normalized_sha256: sha256:bd10d605240827684300fe3f595c4196ba40461be70e003a8556f53b5bbe571d
+cas_ref: sha256:bd10d605240827684300fe3f595c4196ba40461be70e003a8556f53b5bbe571d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-e2ae0e2a4b26b39aeaff1d5c23e7985479f1720b247af228995cb66dbcc5fa84-10f7589b3085d34d5ce1273140f67d4e6e866a1352ee8d7e68e83f579efa4f3a
+    - generic-residual-5039f075b9f0de542dcc11d6ac05793cbcbd0182668120d0e88f579d7505d98e-45aae9daa3bf3b120a1f5f63735e4574bca54751ef7cb0a54340dfebbdca3bbf
+    - generic-residual-bdfab7f609db9267a694e7d52c146b74ec90cd2412cecea7156c30e963034229-d50e610d11a1daa4bb67f473fd4673f569487d28b7e088a8716d70ee454d1d6b

@@ -1,0 +1,34 @@
+# 第二百一十八部　Wang–Deng 在 Pick 核上的具体分工
+
+令：
+
+$$
+\mathbf z=(z_1,\ldots,z_n),
+\qquad
+\mathbf c=(c_1,\ldots,c_n).
+$$
+
+定义坏度：
+
+$$
+\boxed{
+\mathfrak B_\omega(\mathbf z,\mathbf c)
+=
+-
+\sum_{a,b}
+c_a\overline{c_b}
+\mathcal N_\omega(z_a,z_b).
+}
+\tag{218.1}
+$$
+
+RH 等价于：
+
+$$
+\mathfrak B_\omega\le0
+$$
+
+对全部数据成立。
+
+---
+

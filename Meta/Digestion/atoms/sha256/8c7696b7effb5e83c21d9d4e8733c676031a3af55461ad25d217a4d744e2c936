@@ -1,0 +1,51 @@
+## 定理 261.1（Li convolution semigroup criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\left(
+e^{-t\lambda_{|n|}}
+\right)_{n\in\mathbb Z}
+\text{ 对每个 }t\ge0\text{ 都是正定序列}.
+}
+\tag{261.3}
+$$
+
+Schoenberg 定理说明，Hermitian kernel \(\psi\) 条件负定，当且仅当：
+
+$$
+e^{-t\psi}
+$$
+
+对全部 \(t>0\) 正定。([数学网][4])
+
+因此存在唯一圆周概率测度半群：
+
+$$
+\boxed{
+(\mu_t)_{t\ge0},
+}
+$$
+
+满足：
+
+$$
+\boxed{
+\widehat\mu_t(n)
+=
+e^{-t\lambda_{|n|}}.
+}
+\tag{261.4}
+$$
+
+并且：
+
+$$
+\mu_{t+s}
+=
+\mu_t*\mu_s.
+$$
+
+---
+

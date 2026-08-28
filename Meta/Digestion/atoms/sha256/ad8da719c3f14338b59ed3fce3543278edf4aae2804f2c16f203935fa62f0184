@@ -1,0 +1,97 @@
+# 第二百七十八部　与前文 Cayley unitary 的关系
+
+前文在正 ordinates 空间上定义：
+
+$$
+C_\Xi
+=
+I-2X_\Xi
++
+2i\sqrt{X_\Xi(I-X_\Xi)}.
+$$
+
+其特征值为：
+
+$$
+u_\gamma=e^{i\theta_\gamma}.
+$$
+
+定义双倍 unitary：
+
+$$
+\boxed{
+\widetilde C_\Xi
+=
+C_\Xi\oplus C_\Xi^*,
+}
+\tag{278.1}
+$$
+
+以及：
+
+$$
+\boxed{
+\widetilde X_\Xi
+=
+X_\Xi\oplus X_\Xi.
+}
+\tag{278.2}
+$$
+
+定义加权迹状态：
+
+$$
+\boxed{
+\omega_\Xi(T)
+=
+\frac{
+\operatorname{Tr}
+(\widetilde X_\Xi T)
+}{
+\operatorname{Tr}
+\widetilde X_\Xi
+}.
+}
+\tag{278.3}
+$$
+
+则：
+
+$$
+\boxed{
+c_n
+=
+\omega_\Xi
+\left(
+\widetilde C_\Xi^n
+\right).
+}
+\tag{278.4}
+$$
+
+并且：
+
+$$
+\boxed{
+\mathcal C_\lambda(z)
+=
+\omega_\Xi
+\left[
+(I+z\widetilde C_\Xi)
+(I-z\widetilde C_\Xi)^{-1}
+\right].
+}
+\tag{278.5}
+$$
+
+所以：
+
+* \(\widetilde C_\Xi\) 是零点角的对角 unitary；
+* \(\widetilde X_\Xi\) 给出能量偏置；
+* \(\mathcal C_\lambda\) 是其加权 resolvent 观察；
+* CMV 矩阵是该状态的循环最小实现。
+
+这把前文的 trace-class/Fredholm 图表和当前 OPUC 图表精确连接起来。
+
+---
+

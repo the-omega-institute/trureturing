@@ -1,0 +1,46 @@
+# 第一百八十三部　正环面载体判据
+
+取非负环面测度组合：
+
+$$
+\mu
+=
+\sum_Da_D\mu_D,
+\qquad
+a_D\ge0,
+$$
+
+其中 \(\mu_D\) 是对应二次环面的归一化周期测度。
+
+定义 Eisenstein period：
+
+$$
+\boxed{
+F_\mu(s)
+=
+\int E^*(z,s)\,d\mu(z).
+}
+\tag{183.1}
+$$
+
+由 Hecke factorization：
+
+$$
+\boxed{
+F_\mu(s)
+=
+\Lambda(s)G_\mu(s),
+}
+\tag{183.2}
+$$
+
+其中：
+
+$$
+G_\mu(s)
+=
+\sum_Da_D\,e_D(s)\Lambda(s,\chi_D).
+$$
+
+于是：
+

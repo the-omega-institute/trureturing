@@ -1,0 +1,74 @@
+* 至少一个 \(\mathcal T_j(s)\neq0\) 对每个 \(s\in K\)。
+
+定义 sesquiholomorphic Gram kernels：
+
+$$
+\boxed{
+\mathcal G_{\mathcal P}(s,t)
+=
+\sum_{j=1}^{r}
+w_j\,
+\mathcal P_j(s)
+\overline{\mathcal P_j(t)},
+}
+\tag{316.2}
+$$
+
+$$
+\boxed{
+\mathcal G_{\mathcal T}(s,t)
+=
+\sum_{j=1}^{r}
+w_j\,
+\mathcal T_j(s)
+\overline{\mathcal T_j(t)}.
+}
+\tag{316.3}
+$$
+
+由式 (316.1)：
+
+$$
+\boxed{
+\mathcal G_{\mathcal P}(s,t)
+=
+\xi(s)\overline{\xi(t)}
+\mathcal G_{\mathcal T}(s,t).
+}
+\tag{316.4}
+$$
+
+在对角附近：
+
+$$
+\mathcal G_{\mathcal T}(s,t)\neq0.
+$$
+
+定义局部商核：
+
+$$
+\boxed{
+\mathcal R_K(s,t)
+=
+\frac{
+\mathcal G_{\mathcal P}(s,t)
+}{
+\mathcal G_{\mathcal T}(s,t)
+}.
+}
+\tag{316.5}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal R_K(s,t)
+=
+\xi(s)\overline{\xi(t)}.
+}
+\tag{316.6}
+$$
+
+---
+

@@ -1,0 +1,23 @@
+## 307.3 Wang–Deng 解释
+
+$$
+\boxed{
+\begin{aligned}
+\text{低零点}
+&=\text{精确 primitive atoms};\\
+\text{高零点尾}
+&=\text{集中在 }1\text{ 的 sticky history};\\
+M(T)\delta_1
+&=\text{有效 counterterm};\\
+\mu_T
+&=\text{有限正完成};\\
+O(\log T/T^2)
+&=\text{renormalized residual}.
+\end{aligned}
+}
+$$
+
+这是一条真正完成的高阶尾部压缩定理。
+
+---
+

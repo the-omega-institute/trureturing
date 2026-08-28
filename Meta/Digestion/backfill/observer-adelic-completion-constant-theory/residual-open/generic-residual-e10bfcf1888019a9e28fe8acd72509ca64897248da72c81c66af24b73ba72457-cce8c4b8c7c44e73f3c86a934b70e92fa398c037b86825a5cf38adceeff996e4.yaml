@@ -1,0 +1,10 @@
+ast_path: section/282-2-Sticky-谱质量集中/clause/1
+fingerprints:
+  raw_sha256: sha256:e10bfcf1888019a9e28fe8acd72509ca64897248da72c81c66af24b73ba72457
+  normalized_sha256: sha256:e10bfcf1888019a9e28fe8acd72509ca64897248da72c81c66af24b73ba72457
+cas_ref: sha256:e10bfcf1888019a9e28fe8acd72509ca64897248da72c81c66af24b73ba72457
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

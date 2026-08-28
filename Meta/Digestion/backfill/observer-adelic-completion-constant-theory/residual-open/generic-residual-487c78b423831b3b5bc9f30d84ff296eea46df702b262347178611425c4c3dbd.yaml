@@ -1,0 +1,15 @@
+ast_path: section/282-2-Sticky-谱质量集中
+fingerprints:
+  raw_sha256: sha256:487c78b423831b3b5bc9f30d84ff296eea46df702b262347178611425c4c3dbd
+  normalized_sha256: sha256:487c78b423831b3b5bc9f30d84ff296eea46df702b262347178611425c4c3dbd
+cas_ref: sha256:487c78b423831b3b5bc9f30d84ff296eea46df702b262347178611425c4c3dbd
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-e10bfcf1888019a9e28fe8acd72509ca64897248da72c81c66af24b73ba72457-cce8c4b8c7c44e73f3c86a934b70e92fa398c037b86825a5cf38adceeff996e4
+    - generic-residual-e8a3c1f60336723dbd6c195fe1cf8e745e29eab03d63c9fee79fe0f120a610ad-08cf967df3a67701e0338ccb386caeb52f7218ddd331ab4af175aee785483a64
+    - generic-residual-8a878acfeef52e2cd8442b73c60e41959bb76ca053cdbda0cbb8e8ec49f68bc3-b2fb4522b9a73af0f2aaf15d5178929b0406fd1e77ed7d526534ccb28e2dd05f
+    - generic-residual-ab030a63d644b244a6bc023190b0834190bbb066a5c7ac21328616a6526efb3e-41e8a51de86dedc32c8cb8156bf0b504ffb0487f53a638b9272531d499a27a2e

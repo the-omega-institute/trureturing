@@ -1,0 +1,10 @@
+ast_path: section/第三百零一部-建议形式化顺序
+fingerprints:
+  raw_sha256: sha256:2d17865f9e8193d51f09c794b2a827aee1ad9f8c5247bead3f79b2645f5caa16
+  normalized_sha256: sha256:2d17865f9e8193d51f09c794b2a827aee1ad9f8c5247bead3f79b2645f5caa16
+cas_ref: sha256:2d17865f9e8193d51f09c794b2a827aee1ad9f8c5247bead3f79b2645f5caa16
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/218-1-Non-sticky-分支/clause/3
+fingerprints:
+  raw_sha256: sha256:078bc0e02e49262585e8a3fca636497aebbd9324b72614560f857a04cf0f8be4
+  normalized_sha256: sha256:078bc0e02e49262585e8a3fca636497aebbd9324b72614560f857a04cf0f8be4
+cas_ref: sha256:078bc0e02e49262585e8a3fca636497aebbd9324b72614560f857a04cf0f8be4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

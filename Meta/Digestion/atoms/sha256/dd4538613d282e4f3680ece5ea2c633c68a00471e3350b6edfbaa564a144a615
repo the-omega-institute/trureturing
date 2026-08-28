@@ -1,0 +1,33 @@
+# 第三百二十一部　相对迹公式真正需要证明的被动性
+
+Toric relative trace formula 的 spectral side 天然包含 period products，其 geometric side由相对 orbital integrals 构成。([arxiv.org][2])
+
+但普通公式只自然给出：
+
+$$
+\sum_D
+\mathcal P_D(s)
+\overline{\mathcal P_D(t)}.
+$$
+
+真正需要的是 shifted、carrier-subtracted energy identity。
+
+定义：
+
+$$
+\boxed{
+\mathscr B_{\omega}(z,w)
+=
+\frac{
+1-
+\Theta_\omega(z)
+\overline{\Theta_\omega(w)}
+}{
+1-z\overline w
+}.
+}
+\tag{321.1}
+$$
+
+---
+

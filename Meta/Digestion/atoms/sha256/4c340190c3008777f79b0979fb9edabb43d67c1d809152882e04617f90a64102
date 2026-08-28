@@ -1,0 +1,33 @@
+## 320.1 Non-sticky state
+
+若存在 \(\eta>0\)，使：
+
+$$
+\boxed{
+\mathfrak O_{\omega,N}\succeq\eta I,
+}
+\tag{320.5}
+$$
+
+则：
+
+$$
+\|A_\omega^Nx\|^2
+\le
+(1-\eta)\|x\|^2.
+$$
+
+所有内部状态在有限时间内至少泄露固定比例能量。
+
+这就是 Wang 式 strict gain：
+
+$$
+\boxed{
+\text{多通道可见}
+\Longrightarrow
+\text{内部残余严格收缩}.
+}
+$$
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/Wang-层-265-1/clause/1
+fingerprints:
+  raw_sha256: sha256:ac9bb922722ae009e9a0fa255a30c2a96350f7150d66d440287b134060cd95e2
+  normalized_sha256: sha256:ac9bb922722ae009e9a0fa255a30c2a96350f7150d66d440287b134060cd95e2
+cas_ref: sha256:ac9bb922722ae009e9a0fa255a30c2a96350f7150d66d440287b134060cd95e2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

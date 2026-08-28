@@ -1,0 +1,31 @@
+# 第二百六十二部　Li 系数是多尺度零点滤波器
+
+由：
+
+$$
+\theta_\gamma
+=
+2\arctan\frac1{2\gamma},
+$$
+
+得到：
+
+$$
+\boxed{
+\lambda_n
+=
+4
+\sum_{\gamma>0}
+m_\gamma
+\sin^2
+\left(
+n\arctan\frac1{2\gamma}
+\right).
+}
+\tag{262.1}
+$$
+
+所以索引 \(n\) 不是任意计数，而是一个频率／分辨率参数。
+
+---
+

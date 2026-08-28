@@ -1,0 +1,42 @@
+# 第二百五十八部　Li 系数与正幂迹的三角变换
+
+定义：
+
+$$
+\boxed{
+p_k
+=
+\operatorname{Tr}X_\Xi^k,
+\qquad
+k\ge1.
+}
+\tag{258.1}
+$$
+
+由 Fredholm 对数：
+
+$$
+\begin{aligned}
+\log G_\xi(z)
+&=
+\sum_{k=1}^{\infty}
+\frac{(-1)^{k+1}}{k}
+\left(
+\frac{4z}{(1-z)^2}
+\right)^k
+p_k.
+\end{aligned}
+$$
+
+而：
+
+$$
+\left(
+\frac{4z}{(1-z)^2}
+\right)^k
+=
+4^k z^k(1-z)^{-2k}.
+$$
+
+比较 \(z^n\) 系数得到：
+

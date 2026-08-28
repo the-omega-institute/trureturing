@@ -1,0 +1,12 @@
+### Deng 层（199.1）
+
+sticky 区域中：
+
+1. 识别主导 twist；
+2. 保留其零点／导数历史；
+3. 加入新的环面通道；
+4. 用 double Dirichlet series 重求和复合 twist histories；
+5. 将仅依赖个别 twist 的部分收缩为 counterterm。
+
+---
+

@@ -1,0 +1,43 @@
+## 定理 274.2（Carathéodory RH criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Re\mathcal C_\lambda(z)>0
+\quad
+(|z|<1).
+}
+\tag{274.6}
+$$
+
+### 证明
+
+RH 下：
+
+$$
+\mathcal C_\lambda(z)
+=
+\int_{\mathbb T}
+\frac{\zeta+z}{\zeta-z}
+\,d\mu_\lambda(\zeta),
+$$
+
+所以其实部严格为正。
+
+反之，若 \(\mathcal C_\lambda\) 在圆盘内全纯且实部非负，则：
+
+$$
+\frac{\xi'}{\xi}(s)
+$$
+
+在：
+
+$$
+\Re s>\frac12
+$$
+
+无极点，所以 \(\xi\) 在该半平面无零点。由函数方程，全部非平凡零点只能位于临界线。∎
+
+---
+

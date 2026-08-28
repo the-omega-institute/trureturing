@@ -1,0 +1,13 @@
+ast_path: section/第一百七十二部-黄金环面是最低成本通道-但不是完备通道
+fingerprints:
+  raw_sha256: sha256:11b933c3da1029b827df3d5138ef9df682aa60afa3d67c112388d8a8e9f8bba5
+  normalized_sha256: sha256:11b933c3da1029b827df3d5138ef9df682aa60afa3d67c112388d8a8e9f8bba5
+cas_ref: sha256:11b933c3da1029b827df3d5138ef9df682aa60afa3d67c112388d8a8e9f8bba5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-bd66e2ef087039f9b1f4fe7a2771bfa65fdd261af9943f1782828bfd65717fe3-f1b68cc47b1c126644e5a85c2ce4d0f87bf7b0c4fc2622b1ea58aca4709867e5
+    - generic-residual-572a70bd1ba90b45fe9a0b50576c85565c9519387394d15cf90f03f8fbd8f39d-516fe8ebd7fa736c7fd57fa9522c854086bf787fe4f692af18298c8630bed0ad
