@@ -91,12 +91,7 @@ internal static partial class DigestionLedgerAligner
             DigestionMigrationState.Residual,
             DigestionTruthState.Open)
         && entry.CoverageGids.IsEmpty
-        && entry.Receipts.Coverage.IsEmpty
-        && entry.Receipts.Scribe.IsEmpty
-        && entry.Receipts.UnresolvedSubitems.IsEmpty
-        && entry.Receipts.ChainAtoms.IsEmpty
-        && entry.Receipts.TailAuthorization is null
-        && entry.Receipts.Quarantine is null
+        && entry.Receipts.IsEmptyForSourceRevision
         && !ownedAtomIds.Contains(entry.AtomId);
 
     private static bool CanAcknowledgeSupersededGeneration(
@@ -107,12 +102,6 @@ internal static partial class DigestionLedgerAligner
         && (alignment == DigestionReceiptAlignment.Seen
                 && IsUnownedResidualOpen(entry, ownedAtomIds)
             || entry.CoverageGids.Length > 0
-            || entry.Receipts.Coverage.Length > 0
-            || entry.Receipts.Scribe.Length > 0
-            || entry.Receipts.UnresolvedSubitems.Length > 0
-            || entry.Receipts.ChainAtoms.Length > 0
-            || entry.Receipts.TailAuthorization is not null
-            || entry.Receipts.Quarantine is not null
-            || entry.Receipts.CoverDisposition is not null
+            || !entry.Receipts.IsEmpty
             || ownedAtomIds.Contains(entry.AtomId));
 }
