@@ -710,4 +710,51 @@ public sealed class ScribeTestMapDeriverTests
             sources.Append(new("Support/RepositoryAccessor.cs", accessorSource)),
             []);
     }
+
+    /// <summary>
+    /// `EnumerateDeclared(root, "<字面量>")` 必须把该前缀登记为 declared input。
+    /// 没有这条,`EngineeringTestPlanDeriver` 就选不中调用它的测试(第二轮评审实测的缺口)。
+    /// **可达性契约只查测试 ID、不查 `Reason`**,故这一侧必须在这里单独钉住。
+    /// </summary>
+    [Fact]
+    public void EnumerateDeclaredLiteralPrefixBecomesADeclaredPath()
+    {
+        const string source = """
+            class DeclaredTests {
+              [Fact] public void ReadsPrefix() {
+                GitIndexRepositoryFiles.EnumerateDeclared(RepositoryLayout.FindRoot(), "D5");
+              }
+            }
+            """;
+
+        var method = Assert.Single(DeriveSources([new("DeclaredTests.cs", source)]).Methods);
+
+        Assert.Contains("D5", method.Paths);
+        Assert.False(method.IsUnknown);
+    }
+
+    /// <summary>
+    /// **放行侧的对偶**:前缀是变量时必须 fail-closed 记 `VariablePath`。
+    ///
+    /// 第四轮评审实测:单独删掉 `reasons.Add(TestMapUnknownReason.VariablePath);`
+    /// 后整个 `StrataLint.ArchitectureTests` **229/229 全过、exit 0** —— 空钉子。
+    /// 那条分支在没有它时会把一个来路不明的前缀**静默当成已知输入**。
+    /// </summary>
+    [Fact]
+    public void EnumerateDeclaredVariablePrefixIsUnknown()
+    {
+        const string source = """
+            class VariablePrefixTests {
+              [Fact] public void ReadsPrefix() {
+                var prefix = Pick();
+                GitIndexRepositoryFiles.EnumerateDeclared(RepositoryLayout.FindRoot(), prefix);
+              }
+              private string Pick() => "D5";
+            }
+            """;
+
+        var method = Assert.Single(DeriveSources([new("VariablePrefixTests.cs", source)]).Methods);
+
+        Assert.Equal(TestMapUnknownReason.VariablePath, Assert.Single(method.UnknownReasons));
+    }
 }

@@ -14,6 +14,14 @@ internal sealed record WorktreeOptions(
 internal static class WorktreeCommand
 {
     internal const string SolutionPath = "tools/StrataLint.sln";
+    internal const string CreationNamespace = "lane";
+    internal const string HistoricalLifecycleNamespace = "harness";
+    internal const int BranchGrammarNonconformingExitCode = 1;
+    internal const int UsageExitCode = 64;
+
+    internal static IReadOnlyList<string> LifecycleNamespaces { get; } =
+        [CreationNamespace, HistoricalLifecycleNamespace];
+
     internal static IReadOnlyList<string> CreationKinds { get; } =
         ["math", "governance", "theory"];
 
@@ -22,7 +30,8 @@ internal static class WorktreeCommand
     internal static string Usage { get; } =
         "USAGE: StrataLint worktree ensure-cache [--path DIR] | "
         + "StrataLint worktree with-cache-writer [--path DIR] -- COMMAND [ARG ...] | "
-        + "StrataLint worktree --branch NAME --path DIR "
+        + "StrataLint worktree validate-branch --branch NAME | "
+        + "StrataLint worktree --kind KIND --name TASK_CODE --path DIR "
         + "[--base REV] [--source REPO_ROOT] [--skip-restore]. "
         + $"Allowed worktree kinds: {CreationKindList}. "
         + "The .lake cache is materialized by the first Lean command; symlink sharing is forbidden.";
@@ -69,6 +78,11 @@ internal static class WorktreeCommand
                 arguments.Skip(1).ToArray(),
                 runner,
                 cloner);
+        }
+        if (arguments.Count > 0
+            && string.Equals(arguments[0], "validate-branch", StringComparison.Ordinal))
+        {
+            return ValidateBranch(arguments.Skip(1).ToArray());
         }
 
         WorktreeOptions? options = null;
@@ -269,7 +283,8 @@ internal static class WorktreeCommand
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(arguments);
-        string? branch = null;
+        string? kind = null;
+        string? name = null;
         string? path = null;
         var baseRevision = "origin/dev";
         var source = repositoryRoot;
@@ -282,8 +297,11 @@ internal static class WorktreeCommand
                 case "--skip-restore" when !skipRestore:
                     skipRestore = true;
                     break;
-                case "--branch" when branch is null:
-                    branch = ReadValue(arguments, ref index);
+                case "--kind" when kind is null:
+                    kind = ReadValue(arguments, ref index, allowEmpty: true);
+                    break;
+                case "--name" when name is null:
+                    name = ReadValue(arguments, ref index, allowEmpty: true);
                     break;
                 case "--path" when path is null:
                     path = ReadValue(arguments, ref index);
@@ -299,11 +317,12 @@ internal static class WorktreeCommand
             }
         }
 
-        if (branch is null || path is null)
+        if (kind is null || name is null || path is null)
         {
             throw new InvalidOperationException(Usage);
         }
 
+        var branch = $"{CreationNamespace}/{kind}/{name}";
         ValidateBranchGrammar(branch);
         return new WorktreeOptions(
             branch,
@@ -313,9 +332,12 @@ internal static class WorktreeCommand
             skipRestore);
     }
 
-    private static string ReadValue(IReadOnlyList<string> arguments, ref int index)
+    private static string ReadValue(
+        IReadOnlyList<string> arguments,
+        ref int index,
+        bool allowEmpty = false)
     {
-        if (++index >= arguments.Count || arguments[index].Length == 0)
+        if (++index >= arguments.Count || (!allowEmpty && arguments[index].Length == 0))
         {
             throw new InvalidOperationException(Usage);
         }
@@ -324,26 +346,77 @@ internal static class WorktreeCommand
     }
 
     internal static bool IsManagedBranch(string branch) =>
-        branch.StartsWith("harness/", StringComparison.Ordinal)
-        && branch.Length > "harness/".Length;
+        LifecycleNamespaces.Any(candidate => HasNonEmptyNamespacePath(branch, candidate));
 
-    private static bool IsValidCreationBranch(string branch)
+    internal static bool IsValidCreationBranch(string branch, out string reason)
     {
+        var historicalNamespace = LifecycleNamespaces.FirstOrDefault(candidate =>
+            !string.Equals(candidate, CreationNamespace, StringComparison.Ordinal)
+            && HasNonEmptyNamespacePath(branch, candidate));
+        if (historicalNamespace is not null)
+        {
+            reason = $"namespace '{historicalNamespace}' is a historical lifecycle namespace "
+                + "managed only for cleanup and is not a creation alias; "
+                + $"branch must match {CreationNamespace}/<kind>/<task-code>";
+            return false;
+        }
+
         var fields = branch.Split('/');
-        return fields.Length == 3
-            && fields[0] == "harness"
+        var valid = fields.Length == 3
+            && fields[0] == CreationNamespace
             && CreationKinds.Contains(fields[1], StringComparer.Ordinal)
             && fields[2].Length > 0;
+        reason = valid
+            ? string.Empty
+            : CreationGrammarError(
+                $"branch must match {CreationNamespace}/<kind>/<task-code>");
+        return valid;
     }
+
+    private static bool HasNonEmptyNamespacePath(string branch, string candidate) =>
+        branch.StartsWith(candidate + "/", StringComparison.Ordinal)
+        && branch.Length > candidate.Length + 1;
 
     private static string CreationGrammarError(string prefix) =>
         $"{prefix}; kind must be one of: {CreationKindList}";
 
     private static void ValidateBranchGrammar(string branch)
     {
-        if (!IsValidCreationBranch(branch))
-            throw new InvalidOperationException(
-                CreationGrammarError("branch must match harness/<kind>/<task-code>"));
+        if (!IsValidCreationBranch(branch, out var reason))
+        {
+            throw new InvalidOperationException(reason);
+        }
+    }
+
+    private static CommandResult ValidateBranch(IReadOnlyList<string> arguments)
+    {
+        if (arguments.Count != 2
+            || !string.Equals(arguments[0], "--branch", StringComparison.Ordinal)
+            || arguments[1].Length == 0)
+        {
+            return new CommandResult(
+                false,
+                string.Empty,
+                "USAGE: StrataLint worktree validate-branch --branch NAME\n",
+                UsageExitCode);
+        }
+
+        var branch = arguments[1];
+        var canonical = IsValidCreationBranch(branch, out var reason);
+        var output = JsonSerializer.Serialize(new
+        {
+            @event = "branch_validation",
+            status = canonical ? "canonical" : "BRANCH_GRAMMAR_NONCONFORMING",
+            branch,
+            canonical,
+            lifecycle_managed = IsManagedBranch(branch),
+            reason = canonical ? null : reason,
+        }) + "\n";
+        return new CommandResult(
+            canonical,
+            output,
+            string.Empty,
+            canonical ? 0 : BranchGrammarNonconformingExitCode);
     }
 
     private static bool ValidatePreflight(WorktreeOptions options, IWorktreeProcessRunner runner)
@@ -369,7 +442,8 @@ internal static class WorktreeCommand
         {
             throw new InvalidOperationException(
                 CreationGrammarError(
-                    "branch must be a valid git ref matching harness/<kind>/<task-code>"));
+                    $"branch must be a valid git ref matching "
+                    + $"{CreationNamespace}/<kind>/<task-code>"));
         }
 
         var existingBranch = RunProcess(

@@ -11,7 +11,7 @@ public sealed partial class WorktreeCommandTests
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
-        const string branch = "harness/math/signal-retry";
+        var branch = $"{WorktreeCommand.CreationNamespace}/math/signal-retry";
         var target = Path.Combine(repository.Path, "signal-retry");
         var missingMetadata = WorktreeMetadataPath(repository.Path, target);
         ReviewRegressionTests.RunGit(repository.Path, "branch", branch, "HEAD");
@@ -25,7 +25,8 @@ public sealed partial class WorktreeCommandTests
         var result = WorktreeCommand.Run(
             repository.Path,
             [
-                "--branch", branch,
+                "--kind", "math",
+                "--name", "signal-retry",
                 "--path", target,
                 "--base", "HEAD",
                 "--skip-restore",
@@ -41,7 +42,7 @@ public sealed partial class WorktreeCommandTests
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
-        const string branch = "harness/math/postcondition-failure";
+        var branch = $"{WorktreeCommand.CreationNamespace}/math/postcondition-failure";
         var target = Path.Combine(repository.Path, "postcondition-failure");
         var missingMetadata = WorktreeMetadataPath(repository.Path, target);
         var runner = new RecordingWorktreeProcessRunner
@@ -52,7 +53,8 @@ public sealed partial class WorktreeCommandTests
         var result = WorktreeCommand.Run(
             repository.Path,
             [
-                "--branch", branch,
+                "--kind", "math",
+                "--name", "postcondition-failure",
                 "--path", target,
                 "--base", "HEAD",
                 "--skip-restore",
@@ -70,7 +72,7 @@ public sealed partial class WorktreeCommandTests
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
-        const string branch = "harness/math/unusable-postcondition";
+        var branch = $"{WorktreeCommand.CreationNamespace}/math/unusable-postcondition";
         var target = Path.Combine(repository.Path, "unusable-postcondition");
         var runner = new RecordingWorktreeProcessRunner
         {
@@ -82,7 +84,8 @@ public sealed partial class WorktreeCommandTests
         var result = WorktreeCommand.Run(
             repository.Path,
             [
-                "--branch", branch,
+                "--kind", "math",
+                "--name", "unusable-postcondition",
                 "--path", target,
                 "--base", "HEAD",
                 "--skip-restore",
@@ -99,13 +102,14 @@ public sealed partial class WorktreeCommandTests
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
-        const string branch = "harness/math/postcondition-success";
+        var branch = $"{WorktreeCommand.CreationNamespace}/math/postcondition-success";
         var target = Path.Combine(repository.Path, "postcondition-success");
 
         var result = WorktreeCommand.Run(
             repository.Path,
             [
-                "--branch", branch,
+                "--kind", "math",
+                "--name", "postcondition-success",
                 "--path", target,
                 "--base", "HEAD",
                 "--skip-restore",
@@ -132,7 +136,8 @@ public sealed partial class WorktreeCommandTests
         var result = WorktreeCommand.Run(
             repository.Path,
             [
-                "--branch", "harness/math/foreign-metadata",
+                "--kind", "math",
+                "--name", "foreign-metadata",
                 "--path", target,
                 "--base", "HEAD",
                 "--skip-restore",

@@ -1,0 +1,17 @@
+ast_path: section/57-2-2-坐标见证束及其封闭条件
+fingerprints:
+  raw_sha256: sha256:c24a3df5a89107e9fd22271c27f738374e44a779af6c0e07117779b22b940bb5
+  normalized_sha256: sha256:c24a3df5a89107e9fd22271c27f738374e44a779af6c0e07117779b22b940bb5
+cas_ref: sha256:c24a3df5a89107e9fd22271c27f738374e44a779af6c0e07117779b22b940bb5
+coverage_gids:
+  - D5/S3/ConceptDynamics/DefinitionEscapeRegrade/CoordinateWitnessBundle.has_closed_coordinate_witness_bundle_iff_ne
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeRegrade/CoordinateWitnessBundle.has_closed_coordinate_witness_bundle_iff_ne
+      source_sha256: sha256:c24a3df5a89107e9fd22271c27f738374e44a779af6c0e07117779b22b940bb5
+      target_statement_id: sha256:3c580375ed500e478cfd0537e2db0c8d65af959b181b219cd201a59b3f8a104a
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeRegrade/CoordinateWitnessBundle.has_closed_coordinate_witness_bundle_iff_ne
+      definition_sha256: sha256:2893e266ef97ba1370f44e9cf469b76cfba243fc97795466ad829125cd385e7e
+      emission_sha256: sha256:eb9755021766a4dcc473b5faddd36dd4b26ab1d0b572efa959202a5bf1663045
+  unresolved_subitems: []

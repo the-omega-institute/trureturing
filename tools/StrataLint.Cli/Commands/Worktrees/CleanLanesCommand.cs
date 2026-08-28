@@ -430,7 +430,7 @@ internal static partial class CleanLanesCommand
             [
                 "for-each-ref",
                 "--format=%(refname:short)",
-                "refs/heads/harness",
+                "refs/heads",
             ],
             runner,
             "could not enumerate managed branches");
