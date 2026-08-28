@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/AnalyticClosure/ZeroSumGaugeInvariance.zero_sum_gauge_invariance
       source_sha256: sha256:d1b5c00539938905a2a2c4fdb003ea147f4544c24cb2e5f0bd546d8c7fa06c29
-      target_sha256: sha256:fcdf4d4d9c68efd170b1629d3b1e277f29311fef02b455cae129572cba4e7288
+      target_statement_id: sha256:e4446fbce56b563c22683e259ba3cfd8cf324e882ab6552bbf75799c5b5cbbd5
   scribe:
     - gid: D5/S3/AnalyticClosure/ZeroSumGaugeInvariance.zero_sum_gauge_invariance
       definition_sha256: sha256:8fe0bdb4375318966a9a7e8979d83cd22ce448c3c591bf029873c9c745d4935f

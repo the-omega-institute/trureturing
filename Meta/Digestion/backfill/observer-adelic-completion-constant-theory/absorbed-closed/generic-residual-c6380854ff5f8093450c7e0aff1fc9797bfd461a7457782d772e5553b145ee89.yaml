@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/FixedPoints/Algebraic/GoldenFixedPoint.golden_fixed_point_unique
       source_sha256: sha256:c6380854ff5f8093450c7e0aff1fc9797bfd461a7457782d772e5553b145ee89
-      target_sha256: sha256:4071c52d9f314845ab6f122e7c06f53278249c7bc2f01301ed1e4c24c8454197
+      target_statement_id: sha256:771aee0dba83a9ce3372477e12c888e107eba4084f286c96b7b01362ddf3e60f
   scribe:
     - gid: D5/S1/FixedPoints/Algebraic/GoldenFixedPoint.golden_fixed_point_unique
       definition_sha256: sha256:bda08199f1e8febd30347a1ecc8a03e786924516f7c2733bae1266279e1a1229

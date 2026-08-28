@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Constants/Limits/EulerCountertermUniqueness.euler_counterterm_unique
       source_sha256: sha256:5f37b3dbd39da9a5431aaad5b452f4dd9dc08cb299e3e76d3efc9ebaeb0ad0e1
-      target_sha256: sha256:8582307594e06156fcfa60f765b081095bb954ea03f1c32836b1f6bac565f4af
+      target_statement_id: sha256:4074e863f6025552eef1f301c1cec2c69259d45da3557005da221905c923e86c
   scribe:
     - gid: D5/S3/Constants/Limits/EulerCountertermUniqueness.euler_counterterm_unique
       definition_sha256: sha256:045aa0341937127c33d79d1e2b9b74d8fd2be92c117f739c451fc99bd1474c8c
