@@ -4,6 +4,17 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
+public sealed class LeanReportCiBaselineScriptTests
+{
+    [Fact]
+    public void DeltaBaselineWithDanglingLogsSymlinkIsRejected() =>
+        LeanReportCiBaselineScriptContract.AssertDeltaBaselineWithDanglingLogsSymlinkIsRejected();
+
+    [Fact]
+    public void CiBaselineAdapterDoesNotCopyProducerLogsIntoDeltaCache() =>
+        LeanReportCiBaselineScriptContract.AssertAdapterDoesNotCopyProducerLogsIntoDeltaCache();
+}
+
 internal static class LeanReportCiBaselineScriptContract
 {
     private const string ScriptPath = "tools/scripts/report/lean-report-ci-baseline.sh";
@@ -26,6 +37,7 @@ internal static class LeanReportCiBaselineScriptContract
 
     private static void DeltaBaselineWithLegacyLogsIsRejected()
     {
+        if (OperatingSystem.IsWindows()) return;
         using var temporary = new TemporaryDirectory();
         var bundle = Path.Combine(temporary.Path, "bundle", "raw-lean-report.json");
         var cache = Path.Combine(temporary.Path, "cache");
@@ -43,8 +55,51 @@ internal static class LeanReportCiBaselineScriptContract
         Assert.Contains("\"status\": \"fallback\"", File.ReadAllText(plan), StringComparison.Ordinal);
     }
 
+    internal static void AssertDeltaBaselineWithDanglingLogsSymlinkIsRejected()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var temporary = new TemporaryDirectory();
+        var bundle = Path.Combine(temporary.Path, "bundle", "raw-lean-report.json");
+        var cache = Path.Combine(temporary.Path, "cache");
+        WriteBundle(bundle);
+        Assert.Equal(0, Run(bundle, cache).ExitCode);
+        var entry = Path.Combine(cache, Address, "raw-lean-report.json");
+        File.CreateSymbolicLink(
+            entry + ".logs",
+            Path.Combine(cache, Address, "missing-producer-logs"));
+
+        var plan = RunDeltaPlan(temporary.Path, cache);
+
+        Assert.Contains("\"status\": \"fallback\"", File.ReadAllText(plan), StringComparison.Ordinal);
+    }
+
+    internal static void AssertAdapterDoesNotCopyProducerLogsIntoDeltaCache()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var temporary = new TemporaryDirectory();
+        var bundle = Path.Combine(temporary.Path, "bundle", "raw-lean-report.json");
+        var cache = Path.Combine(temporary.Path, "cache");
+        WriteBundle(bundle);
+        Directory.CreateDirectory(bundle + ".logs");
+        File.WriteAllText(
+            Path.Combine(bundle + ".logs", "producer.log"),
+            "producer diagnostics\n",
+            new UTF8Encoding(false));
+
+        var result = Run(bundle, cache);
+
+        Assert.Equal(0, result.ExitCode);
+        var entry = Path.Combine(cache, Address, "raw-lean-report.json");
+        Assert.False(Directory.Exists(entry + ".logs"));
+        Assert.Contains(
+            "LEAN_REPORT_CI_BASELINE status=ready",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
+    }
+
     private static void CompleteFlatBundleBecomesAContentAddressedDeltaEntry()
     {
+        if (OperatingSystem.IsWindows()) return;
         using var temporary = new TemporaryDirectory();
         var bundle = Path.Combine(temporary.Path, "bundle", "raw-lean-report.json");
         var cache = Path.Combine(temporary.Path, "cache");
@@ -83,6 +138,7 @@ internal static class LeanReportCiBaselineScriptContract
 
     private static void UntrustedBundleIsANonFatalBaselineMiss(string damage)
     {
+        if (OperatingSystem.IsWindows()) return;
         using var temporary = new TemporaryDirectory();
         var bundle = Path.Combine(temporary.Path, "bundle", "raw-lean-report.json");
         var cache = Path.Combine(temporary.Path, "cache");
