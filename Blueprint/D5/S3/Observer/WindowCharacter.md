@@ -6,7 +6,7 @@ Nontrivial finite window matrix algebras have no complex-algebra character.
 
 **Theorem 1.1 (Nontrivial finite window algebras have no character).**
 
-$$\forall M \in \mathbb{N}_{>1},\ \operatorname{IsEmpty}(M_{M}(\mathbb{C})\to_{\mathbb{C}\text{-alg}}\mathbb{C})$$
+$$\forall M \in \mathbb{N}_{>1},\ [\operatorname{NeZero}(M)],\ \operatorname{IsEmpty}(M_{M}(\mathbb{C})\to_{\mathbb{C}\text{-alg}}\mathbb{C})$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/WindowCharacter.window_algebra_has_no_character` (`✓ std3`). ∎
 

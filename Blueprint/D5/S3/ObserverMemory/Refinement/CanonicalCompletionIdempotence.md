@@ -6,7 +6,7 @@ Predictive completion is canonically idempotent.
 
 **Definition 1.1 (The second completion is canonically equivalent to the first).**
 
-$$\operatorname{C}\left(\operatorname{C}\left(q\right)\right) \equiv \operatorname{C}\left(q\right).$$
+$$\forall Y \in \operatorname{Type}, O \in \operatorname{Type}, update \in Y \to Y, readout \in Y \to O,\; \operatorname{Quotient}(\operatorname{secondStageRelation}(update, readout, id)) \equiv \operatorname{CompletedState}(update, readout).$$
 
 *Formalization.* `D5/S3/ObserverMemory/Refinement/CanonicalCompletionIdempotence.canonical_completion_idempotence` (`✓ std3`).
 
