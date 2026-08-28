@@ -8,6 +8,16 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-28T08:40:50.0168270+00:00
+    gids:
+      - D5/S3/Constants/Limits/EulerCountertermUniqueness.euler_counterterm_unique
+    gaps:
+      - code: chain-migration-incomplete
+        detail: generic-residual-5f37b3dbd39da9a5431aaad5b452f4dd9dc08cb299e3e76d3efc9ebaeb0ad0e1-9075c86a7ed7baf6f8d129c76ab03c2ef47dd1bb091f3b7db04e25166bf18c0c
+      - code: chain-migration-incomplete
+        detail: generic-residual-e2b691b398439cf6854586d9da79630d80d59de9985c959d15916afadc2ac8a3-a0c1aa398de1eb5c450627b8a9443b8d1d35448bccca0ff69514a9e9a04ea2d0
   chain_atoms:
     - generic-residual-5f37b3dbd39da9a5431aaad5b452f4dd9dc08cb299e3e76d3efc9ebaeb0ad0e1-9075c86a7ed7baf6f8d129c76ab03c2ef47dd1bb091f3b7db04e25166bf18c0c
     - generic-residual-e2b691b398439cf6854586d9da79630d80d59de9985c959d15916afadc2ac8a3-a0c1aa398de1eb5c450627b8a9443b8d1d35448bccca0ff69514a9e9a04ea2d0
