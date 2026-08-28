@@ -1,0 +1,55 @@
+## Definition 1. Typed producer resolution
+
+Let `Artifact` and `ProducerActor` be arbitrary types with no coercion between
+them. A producer assignment and an actor resolver have types
+
+\[
+\mathsf{producer}:\mathsf{Artifact}\to\mathsf{Option}\;\mathsf{ProducerActor},
+\qquad
+\mathsf{resolve}:\mathsf{ProducerActor}\to\mathsf{Option}\;\mathsf{Artifact}.
+\]
+
+Define the artifact-to-artifact producer-edge relation by
+
+\[
+\mathsf{ProducerEdge}(a,x)
+\quad\Longleftrightarrow\quad
+\exists q,\;
+  \mathsf{producer}(x)=\mathsf{some}(q)
+  \land
+  \mathsf{resolve}(q)=\mathsf{some}(a).
+\]
+
+Define resolution completeness by
+
+\[
+\mathsf{ResolutionComplete}
+\quad\Longleftrightarrow\quad
+\forall x\;q,\;
+  \mathsf{producer}(x)=\mathsf{some}(q)
+  \to \exists a,\;\mathsf{resolve}(q)=\mathsf{some}(a).
+\]
+
+An artifact relation `E` is an admissible producer graph exactly when
+`ResolutionComplete` holds and
+
+\[
+\forall a\;x,\;E(a,x)\leftrightarrow\mathsf{ProducerEdge}(a,x).
+\]
+
+Thus every producer edge is witnessed by a resolved artifact. In particular,
+for every `x` and `q`,
+
+\[
+\mathsf{producer}(x)=\mathsf{some}(q)
+\land
+\mathsf{resolve}(q)=\mathsf{none}
+\quad\Longrightarrow\quad
+\forall a,\;\neg\mathsf{ProducerEdge}(a,x).
+\]
+
+The same premises refute `ResolutionComplete`, so no relation `E` is an
+admissible producer graph. An unresolved producer actor therefore produces no
+artifact edge, but it also makes the graph fail closed; it cannot be accepted
+as an empty family of edges whose source silently disappeared.
+
