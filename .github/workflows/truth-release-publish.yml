@@ -3,6 +3,14 @@ name: truth-release-publish
 on:
   schedule:
     - cron: '17 * * * *'
+  # repository_dispatch always runs the workflow definition from the DEFAULT branch and
+  # carries no ref selector, so a caller cannot execute a modified workflow definition
+  # from an attacker-controlled ref. It carries no source_commit input either:
+  # the produce job still resolves the current protected dev tip and walk-backs to the
+  # newest gate-verified commit, identical to the scheduled path. It exists only so an
+  # operator can force a publish when GitHub's scheduler is delayed.
+  repository_dispatch:
+    types: [publish-truth-release]
 permissions: {}
 concurrency:
   group: truth-release-publish-dev
