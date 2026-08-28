@@ -17,6 +17,17 @@ while [ $# -gt 0 ]; do case "$1" in
 TAG=$(basename "$MSG" .msg)
 [ -d "$LANE/.git" ] || [ -f "$LANE/.git" ] || { echo "BAD_LANE=$LANE"; exit 88; }
 [ -r "$MSG" ] && [ -s "$MSG" ] || { echo "BAD_MSG=$MSG"; exit 89; }
+dotnet run \
+  --project "$LANE/tools/StrataLint.Cli/StrataLint.Cli.csproj" \
+  --configuration Release \
+  --no-launch-profile \
+  -- \
+  worktree validate-branch --branch "$BRANCH"
+BRANCH_VALIDATION_EXIT=$?
+[ "$BRANCH_VALIDATION_EXIT" -eq 0 ] || {
+  echo "BAD_BRANCH=$BRANCH validation_exit=$BRANCH_VALIDATION_EXIT"
+  exit 87
+}
 if [ -n "$WAITPR" ]; then
   until [ "$(gh api repos/the-omega-institute/trureturing/pulls/$WAITPR --jq '.merged')" = "true" ]; do sleep 30; done
   echo "WAITED_PR=$WAITPR"
