@@ -1,0 +1,53 @@
+## 349.1 二阶宽度方差
+
+$$
+\boxed{
+\mathfrak R_T''(0)
+=
+\operatorname{Tr}\mathsf D_T^2
+=
+\sum_{\rho\in\mathcal Z_T^+}
+\left(
+\Re\rho-\frac12
+\right)^2.
+}
+\tag{349.8}
+$$
+
+所以 RH 等价于所有 heat-regularized 宽度方差消失。
+
+定义全局热方差：
+
+$$
+\boxed{
+\mathfrak V(u)
+=
+\sum_{\substack{\xi(\rho)=0\\\Im\rho>0}}
+m_\rho
+e^{-u(\Im\rho)^2}
+\left(
+\Re\rho-\frac12
+\right)^2,
+\qquad
+u>0.
+}
+\tag{349.9}
+$$
+
+该和绝对收敛，并且：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathfrak V(u)=0
+}
+\tag{349.10}
+$$
+
+对某个——等价地，对每个——\(u>0\) 成立。
+
+这是一个无相消、严格非负的全局 RH 缺陷。
+
+---
+

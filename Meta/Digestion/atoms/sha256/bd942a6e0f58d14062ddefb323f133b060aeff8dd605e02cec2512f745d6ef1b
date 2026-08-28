@@ -1,0 +1,63 @@
+## 304.1 Model-space 核
+
+由：
+
+$$
+\vartheta_\xi
+=
+\frac{\mathfrak C_\xi-1}
+{\mathfrak C_\xi+1},
+$$
+
+得到：
+
+$$
+\boxed{
+\begin{aligned}
+K_{\vartheta_\xi}(z,w)
+&=
+\frac{
+1-
+\vartheta_\xi(z)
+\overline{\vartheta_\xi(w)}
+}{
+1-z\overline w
+}
+\\
+&=
+\frac{
+2\left[
+\mathfrak C_\xi(z)
++
+\overline{\mathfrak C_\xi(w)}
+\right]
+}{
+\left[
+\mathfrak C_\xi(z)+1
+\right]
+\left[
+\overline{\mathfrak C_\xi(w)}+1
+\right]
+(1-z\overline w)
+}.
+\end{aligned}
+}
+\tag{304.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal K_\xi
+\quad\longleftrightarrow\quad
+\text{Carathéodory kernel}
+\quad\longleftrightarrow\quad
+K_{\vartheta_\xi}
+}
+$$
+
+只是三个不同规范下的同一个正核。
+
+---
+

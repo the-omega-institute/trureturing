@@ -54,9 +54,11 @@ internal sealed class TruthfulnessSufficiencyIndependenceDocument : IScribeDocum
     {
         Formula state = F.Id("State"), message = F.Id("Message"),
             targetType = F.Id("Target");
-        Formula target = F.Id("T"), decoder = OverlineTarget();
-        Formula sent = Sub(F.Id("R"), F.Id("send"));
-        Formula truthful = Sub(F.Id("R"), F.Id("true"));
+        Formula profile = F.Id("profile");
+        Formula target = Sup(F.Id("T"), profile);
+        Formula decoder = Sup(OverlineTarget(), profile);
+        Formula sent = Sup(Sub(F.Id("R"), F.Id("send")), profile);
+        Formula truthful = Sup(Sub(F.Id("R"), F.Id("true")), profile);
         Formula type = Seq(Operatorname, Grp(F.Id("Type")), Caret, Grp(Star));
         Formula honest = Seq(sent, Sp, Eq, Sp, truthful);
         Formula sufficient = Seq(target, Sp, Eq, Sp, Composition(decoder, truthful));
@@ -70,10 +72,9 @@ internal sealed class TruthfulnessSufficiencyIndependenceDocument : IScribeDocum
             Begin, Grp(F.Id("gathered")),
             Forall, Sp, state, Comma, Sp, message, Comma, Sp, targetType,
             Colon, Sp, type, Comma, RowBreak, Grp(),
-            target, Colon, Sp, state, Sp, To, Sp, targetType, Comma, Sp,
-            truthful, Comma, Sp, sent, Colon, Sp, state, Sp, To, Sp, message, Comma, Sp,
-            decoder, Colon, Sp, message, Sp, To, Sp, targetType, Comma, RowBreak, Grp(),
-            Open, Open, honest, Sp, Land, Sp, sufficient, Close, Sp, Rightarrow, Sp,
+            profile, Colon, Sp, Call("ReportProfile", state, message, targetType),
+            Comma, RowBreak, Grp(),
+            Open, honest, Sp, Rightarrow, Sp, sufficient, Sp, Rightarrow, Sp,
             sentSufficient, Close, Sp, Land, RowBreak, Grp(),
             Open, honestOnly, Close, Sp, Land, RowBreak, Grp(),
             Open, sufficientOnly, Close, Sp, Land, RowBreak, Grp(),

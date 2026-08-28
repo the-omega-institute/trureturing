@@ -1,0 +1,75 @@
+# 第二百二十六部　Hankel 行列式是 Vandermonde 平方和
+
+RH 下，令：
+
+$$
+u_\gamma=\gamma^{-2},
+\qquad
+w_\gamma=\frac{m_\gamma}{\gamma^2}.
+$$
+
+则：
+
+$$
+\mu_n=\sum_{\gamma>0}w_\gamma u_\gamma^n.
+$$
+
+Cauchy–Binet 给出：
+
+$$
+\boxed{
+\begin{aligned}
+\det H_N^{(0)}
+={}&
+\sum_{\gamma_0<\cdots<\gamma_N}
+\left(
+\prod_{k=0}^{N}w_{\gamma_k}
+\right)
+\\
+&\times
+\prod_{0\le i<j\le N}
+\left(
+u_{\gamma_i}-u_{\gamma_j}
+\right)^2.
+\end{aligned}
+}
+\tag{226.1}
+$$
+
+同理：
+
+$$
+\boxed{
+\begin{aligned}
+\det H_N^{(1)}
+={}&
+\sum_{\gamma_0<\cdots<\gamma_N}
+\left(
+\prod_{k=0}^{N}w_{\gamma_k}u_{\gamma_k}
+\right)
+\\
+&\times
+\prod_{i<j}
+\left(
+u_{\gamma_i}-u_{\gamma_j}
+\right)^2.
+\end{aligned}
+}
+\tag{226.2}
+$$
+
+因此每一个 Hankel 行列式都是有限零点子集贡献的非负平方和。
+
+这与前文 Pick/Gram determinant 的结构完全一致：
+
+$$
+\boxed{
+\text{Pick positivity}
+\quad\text{与}\quad
+\text{Hankel positivity}
+}
+$$
+
+只是同一正谱测度在：
+
+* resolvent basis；

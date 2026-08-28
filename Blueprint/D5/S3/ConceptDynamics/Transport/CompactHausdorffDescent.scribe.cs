@@ -19,8 +19,13 @@ internal sealed class CompactHausdorffDescentDocument : IScribeDocumentDefinitio
         Formula factorType = Call("ContinuousMap", quotient, target);
         Formula statement = Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Call("CompactSpace", source), Comma, Sp,
-            Call("HausdorffSpace", quotient), Comma, RowBreak, Grp(),
+            Forall, Sp, source, Comma, Sp, quotient, Comma, Sp, target,
+            Colon, Sp, Operatorname, Grp(F.Id("Type")), Comma, RowBreak, Grp(),
+            OpenBracket, Call("TopologicalSpace", source), CloseBracket, Comma, Sp,
+            OpenBracket, Call("TopologicalSpace", quotient), CloseBracket, Comma, Sp,
+            OpenBracket, Call("TopologicalSpace", target), CloseBracket, Comma, RowBreak, Grp(),
+            OpenBracket, Call("CompactSpace", source), CloseBracket, Comma, Sp,
+            OpenBracket, Call("T2Space", quotient), CloseBracket, Comma, RowBreak, Grp(),
             map, Colon, Sp, mapType, Comma, Sp,
             Call("Surjective", map), Comma, RowBreak, Grp(),
             observable, Colon, Sp, observableType, Comma, Sp,

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Depth/ContinuedFractions/PeriodicImpliesQuadratic.eventually_periodic_cf_implies_quadratic_irrational
       source_sha256: sha256:3c40371e7e00b8445c9cea8b06d27b98d5c11bca0bca94b88c0416b3be07c5d1
-      target_sha256: sha256:e77adb287bcbcc4c822bbd46ac1582a741d22027e4ed1c32b7fa35e91c93647a
+      target_statement_id: sha256:ebcd16b3032e2192b70241eb79e40888cda5d5133d54340377f6c21b5b1700a0
   scribe:
     - gid: D5/S1/Depth/ContinuedFractions/PeriodicImpliesQuadratic.eventually_periodic_cf_implies_quadratic_irrational
       definition_sha256: sha256:371ce31dd0b1278495eff5090aa3f0650acf671768481db0352f85f499a3e500

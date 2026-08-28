@@ -1,0 +1,35 @@
+# 第二百三十六部　Jensen 与 Hankel 的科学负对照
+
+Pólya 已将 RH 等价地写成 \(\Xi\) 的全部 Jensen polynomials 双曲；现代工作证明，对每个固定次数，足够高 shift 的 Jensen polynomials 无条件双曲。([arXiv][3])
+
+这提供一个重要警告：
+
+$$
+\boxed{
+\text{固定复杂度下的渐近正确}
+\not\Rightarrow
+\text{全局 RH}.
+}
+$$
+
+同样地，在 Hankel 路线中：
+
+* 前若干个 Hankel 矩阵正定；
+* 高阶数值近似表现良好；
+* 前若干 S-fraction 系数为正；
+
+都不能单独证明 RH。
+
+真正需要的是：
+
+$$
+\boxed{
+\forall N,\quad
+H_N^{(0)},H_N^{(1)}\succeq0,
+}
+$$
+
+或一个能一次性生成全部 \(N\) 的正算子／Gram 表示。
+
+---
+

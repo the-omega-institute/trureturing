@@ -1,0 +1,75 @@
+# 第二百二十部　建议形式化顺序
+
+```text
+D5/S3/Analytic/XiHerglotz/
+  XiSpectralVariable.lean
+  XiLogarithmicWeyl.lean
+  RHImpliesHerglotz.lean
+  HerglotzImpliesRH.lean
+  ZeroResolventKernel.lean
+  FiniteZeroGramDeterminant.lean
+
+D5/S3/Analytic/ShiftedDeBranges/
+  ShiftedXiPair.lean
+  ShiftedCayleyWeyl.lean
+  ShiftedWeylLimit.lean
+  DeBrangesNevanlinnaKernelBridge.lean
+  HerglotzEscapeRadius.lean
+
+D5/S3/Observer/ToroidalWeyl/
+  ShiftedToroidalFrame.lean
+  ToroidalWeylReconstruction.lean
+  FiniteToroidalPickMatrix.lean
+  FrameIndependence.lean
+  OffLineOnePointWitness.lean
+
+D5/S3/Analytic/CanonicalCompletion/
+  HerglotzSpectralMeasure.lean
+  ToroidalWeylSelfAdjointRealization.lean
+  HilbertPolyaAsOutput.lean
+
+D5/S3/Analytic/RHTargets/
+  RelativeTraceHerglotzTarget.lean
+  PickKernelStickyDichotomy.lean
+  NonStickyRelativeTraceGain.lean
+  StickyTwistRenormalization.lean
+```
+
+最优先且可独立闭合的链是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+-\Xi'/\Xi\text{ Herglotz}.
+}
+$$
+
+其次是纯代数链：
+
+$$
+\boxed{
+\Theta_\omega
+\to
+m_\omega
+\to
+\mathcal N_\omega
+\to
+K_{\Theta_\omega}.
+}
+$$
+
+第三条是本轮最关键的反例链：
+
+$$
+\boxed{
+\text{off-line zero}
+\to
+m_\omega(z_\rho)=-i/\omega
+\to
+\mathcal N_\omega(z_\rho,z_\rho)<0.
+}
+$$
+
+---
+

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/EscapeSpectrum/SpectrumCommitmentSettlement.spectrum_commitment_local_settlement
       source_sha256: sha256:1544671a0e7c203ca10f1f64c801625765da9a8868306c7885de0cb30f94c157
-      target_sha256: sha256:ad08b3094dfac47813dc404613aa475e1ec85b27bf8f63c3dacd254e94a5526b
+      target_statement_id: sha256:f3fe6d01461511a5d6d83c82065dfd3051e113433a79121392c545f6d0bbb0be
   scribe:
     - gid: D5/S3/ConceptDynamics/EscapeSpectrum/SpectrumCommitmentSettlement.spectrum_commitment_local_settlement
       definition_sha256: sha256:f99da557be57aeabc5249eea32d441fcc5b968bbe5fc59c23e53361f5ff1e5bc

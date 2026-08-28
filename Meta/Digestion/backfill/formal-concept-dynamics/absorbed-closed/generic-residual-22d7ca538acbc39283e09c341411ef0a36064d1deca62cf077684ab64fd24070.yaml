@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/InstitutionalCapture/CredentialMultiplicityCountermodel.credential_transcript_cannot_recover_person_vote_count
       source_sha256: sha256:22d7ca538acbc39283e09c341411ef0a36064d1deca62cf077684ab64fd24070
-      target_sha256: sha256:5d09c8c03f68142e3d2fceac501e845e4d602fedacbc2e709574ad632ed03895
+      target_statement_id: sha256:32b53c6c18e38243c80cd138f3c9caabb1dd2142f74c068188efca133b29142e
   scribe:
     - gid: D5/S3/ConceptDynamics/InstitutionalCapture/CredentialMultiplicityCountermodel.credential_transcript_cannot_recover_person_vote_count
       definition_sha256: sha256:d7e2b66913e8441adc973fceb5fc1bd8aa0b95c04fc294ac93df7dbbc34aa6e8

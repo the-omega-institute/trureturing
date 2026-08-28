@@ -1,0 +1,68 @@
+# 第三百八十五部　算术相关算子的 Schur 上界
+
+定义累积 prime-power 质量：
+
+$$
+\boxed{
+S(y)
+=
+\sum_{\substack{n\ge2\\\log n\le y}}
+\frac{\Lambda(n)}{\sqrt n},
+\qquad
+y\ge0.
+}
+\tag{385.1}
+$$
+
+定义 prime correlation operator：
+
+$$
+\boxed{
+\mathcal A_L
+=
+\sum_{n\in\mathscr H_L}
+w_n
+\left(
+U_{\log n}+U_{-\log n}
+\right)
+}
+\tag{385.2}
+$$
+
+作用于支撑在 \([-L,L]\) 的函数，区间外作零延拓。
+
+则：
+
+$$
+\operatorname{Prime}(g)
+=
+\langle f,\mathcal A_Lf\rangle.
+$$
+
+对：
+
+$$
+x\in[-L,L],
+$$
+
+可达的右、左平移总权分别为：
+
+$$
+S(L-x),
+\qquad
+S(L+x).
+$$
+
+所以 Schur 行和为：
+
+$$
+\boxed{
+R_L(x)
+=
+S(L-x)+S(L+x).
+}
+\tag{385.3}
+$$
+
+---
+

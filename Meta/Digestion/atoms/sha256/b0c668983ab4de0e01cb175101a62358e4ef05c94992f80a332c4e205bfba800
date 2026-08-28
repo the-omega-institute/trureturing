@@ -1,0 +1,26 @@
+## 定理 390.1（Finite-rank sticky bound）
+
+$$
+\boxed{
+N_\eta(L,B)
+\le
+\frac{L|B|}
+{\pi\eta}.
+}
+\tag{390.5}
+$$
+
+所以任何有限测度的危险频率集合，只能支撑有限多个强 sticky Paley–Wiener modes。
+
+这就是之前一直寻找的“有限秩 cluster”：
+
+$$
+\boxed{
+\text{危险频率集}
+\quad\longrightarrow\quad
+\text{有限个需显式抽取的 Slepian states}.
+}
+$$
+
+---
+

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/Dynamics/InterventionNaturalityMinimality.intervention_naturality_minimality
       source_sha256: sha256:0e122aff306c779d48d49faf438e10e9e4719502e55fc2738f02fc7c0799c452
-      target_sha256: sha256:f1b653e350b1bca9d3a4672fd1ca177a2f6a86ee5047aee139bc4cafc88359cd
+      target_statement_id: sha256:29ae7ac9eb6414cd024577f86be861c8ada024fd1763d38318eb0ea09fa02255
   scribe:
     - gid: D5/S3/ObserverMemory/Dynamics/InterventionNaturalityMinimality.intervention_naturality_minimality
       definition_sha256: sha256:0d54c8049ce9d7aaf721d3bafb6d5618159732c90917b115a3618d80ac5e2580

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Deficit/GoldenFiberFirstIndex.golden_fiber_first_index_forms_eq
       source_sha256: sha256:cf9baaa31ab25595123db0ce7a726abe57bd6a78608026f9da57dd5ce7b0468c
-      target_sha256: sha256:cc2721cfb42d6ca38dc4ef1e01bbd6eab23b697f6766bdcab260e77855a5aeed
+      target_statement_id: sha256:319d9682aae7dafe4733cc289e14183b91b6ae0842e0227466bcc3a299f954c0
   scribe:
     - gid: D5/S1/Deficit/GoldenFiberFirstIndex.golden_fiber_first_index_forms_eq
       definition_sha256: sha256:13d23b645c314615f068ef0102ec6fe755a5ad5d966dc6d75443f2d0b5957467

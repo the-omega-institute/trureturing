@@ -1,0 +1,51 @@
+## v2.6：Li–Clark 内函数、边界条件谱、Szegő 创新塌缩与零点角拥挤律
+
+以下从前文**第二百八十六部之后**继续追加。
+
+上一轮得到：
+
+$$
+\mathrm{RH}
+\iff
+c_n=
+\frac{\lambda_{n+1}-2\lambda_n+\lambda_{n-1}}{2\lambda_1}
+$$
+
+是单位圆概率测度的 Fourier 系数，并进一步构造了 Carathéodory、Schur 与 CMV 图表。
+
+本轮发现，这个概率测度不是任意的 OPUC 谱测度，而是一个由 \(\xi\) 显式定义的内函数的 **Aleksandrov–Clark 测度**。由此出现一条更规范的闭环：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&\iff
+\text{一个显式 }\xi\text{-内函数存在}\\
+&\iff
+\text{Riemann 零点角构成其 }\alpha=1\text{ Clark 谱}\\
+&\iff
+\xi'\text{ 的临界点构成其 }\alpha=-1\text{ Clark 谱}\\
+&\iff
+\text{全部边界条件谱形成 rank-one unitary family}\\
+&\iff
+\text{Li–CMV 算子是该 Clark family 的一个矩阵图表}.
+\end{aligned}
+}
+$$
+
+与此同时，Szegő 理论给出一个必须纳入主理论的修正：
+
+$$
+\boxed{
+\text{RH 下的 Li 曲率测度是纯点奇异测度，}
+}
+$$
+
+因此其无限预测创新误差必然塌缩为零。正确的证明目标不是让无限深度观察保持随机性，而是解释：
+
+> 一个零创新、完全确定的谱过程，为什么仍然只能由临界线上的实谱原子生成？
+
+Aleksandrov–Clark 测度把内函数、正调和函数、model spaces 与 rank-one unitary perturbations 统一起来；原子与有限角导数之间存在精确对应。([London Mathematical Society (LMS)][1])
+
+---
+

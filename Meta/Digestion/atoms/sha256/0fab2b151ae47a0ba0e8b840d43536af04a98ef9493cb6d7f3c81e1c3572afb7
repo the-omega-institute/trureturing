@@ -1,0 +1,48 @@
+## 定理 347.1（无条件 shifted-Poisson flow）
+
+对任意：
+
+$$
+\omega\ge\frac12,
+\qquad
+\eta\ge0,
+$$
+
+有：
+
+$$
+\boxed{
+d_{\omega+\eta,T}
+=
+P_\eta*d_{\omega,T}.
+}
+\tag{347.7}
+$$
+
+### 证明
+
+Fourier 变换后：
+
+$$
+\widehat d_{\omega+\eta,T}
+=
+e^{-(\omega+\eta)|t|}Q_T
+=
+e^{-\eta|t|}
+\widehat d_{\omega,T}.
+$$
+
+∎
+
+所以：
+
+$$
+\boxed{
+\text{向更大 }\omega\text{ 推进，仅仅是 Poisson 平滑。}
+}
+$$
+
+这在有无 RH 两种情况下都成立。
+
+---
+

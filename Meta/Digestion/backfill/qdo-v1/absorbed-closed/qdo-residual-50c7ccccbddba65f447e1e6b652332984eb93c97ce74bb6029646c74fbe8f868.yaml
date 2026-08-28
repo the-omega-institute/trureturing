@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/Prediction/ItineraryCompletion.itinerary_completion
       source_sha256: sha256:50c7ccccbddba65f447e1e6b652332984eb93c97ce74bb6029646c74fbe8f868
-      target_sha256: sha256:7b93dda3e32693ac29bf55fbbe3e957049e0875d690cdecf7a8ddc017bc46ea8
+      target_statement_id: sha256:828e6c3358a7d880f831dbf4009a7d199d556b40422c852ee524723e2a9e6439
   scribe:
     - gid: D5/S3/ObserverMemory/Prediction/ItineraryCompletion.itinerary_completion
       definition_sha256: sha256:2b74133c899631c4b940773237c89079c941d408322ee3b9c86b020d9941d2e8

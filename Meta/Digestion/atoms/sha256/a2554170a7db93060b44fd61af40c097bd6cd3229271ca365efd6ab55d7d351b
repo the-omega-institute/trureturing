@@ -1,0 +1,27 @@
+# 第二百九十二部　Aleksandrov 分解：离散谱平均为连续背景
+
+由于：
+
+$$
+\vartheta_\xi(0)=0,
+$$
+
+每个 Clark 测度 \(\sigma_\alpha\) 都是概率测度。
+
+Aleksandrov disintegration theorem 给出：
+
+$$
+\boxed{
+\int_{\mathbb T}
+\sigma_\alpha
+\,dm(\alpha)
+=
+m,
+}
+\tag{292.1}
+$$
+
+其中 \(m\) 是单位圆上的归一化 Lebesgue 测度。Clark 测度关于边界参数的平均恢复背景 Lebesgue 测度，是 Aleksandrov 分解定理的核心内容。([arXiv][3])
+
+---
+

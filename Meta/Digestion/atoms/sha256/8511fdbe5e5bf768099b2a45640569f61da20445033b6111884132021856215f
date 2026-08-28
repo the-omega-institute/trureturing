@@ -1,0 +1,51 @@
+* RH 的有限 Pick 正性证书。
+
+最重要的是：
+
+$$
+\boxed{
+\rho=\frac12+\delta+i\gamma
+\text{ 为线外零点}
+}
+$$
+
+必然导致：
+
+$$
+\boxed{
+\exists\,\omega,z_\rho:
+\quad
+\mathcal N_\omega(z_\rho,z_\rho)
+\le
+-\frac4{\delta^2}.
+}
+$$
+
+因此线外零点不是藏在高阶余项中的微弱异常，而是会在一个一阶 Pick 矩阵中产生定量、放大的负性。
+
+至此，OACTC 的 RH 中心桥已经被压缩到最明确的形式：
+
+$$
+\boxed{
+\text{能否从 toric relative trace formula
+直接构造 }
+\mathcal N_\omega
+\text{ 的 Gram 表示？}
+}
+$$
+
+一旦证明：
+
+$$
+\mathcal N_\omega(z,w)
+=
+\langle
+\mathscr V_{\omega,z},
+\mathscr V_{\omega,w}
+\rangle
+$$
+
+对所有 \(\omega>0\) 成立，RH 将立即随之成立。
+
+[1]: https://arxiv.org/abs/1204.1827?utm_source=chatgpt.com "A canonical system of differential equations arising from the Riemann zeta-function"
+[2]: https://arxiv.org/abs/1402.3524?utm_source=chatgpt.com "Beyond Endoscopy for the relative trace formula II: global theory"

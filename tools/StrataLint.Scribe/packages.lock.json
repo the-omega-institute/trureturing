@@ -2,6 +2,15 @@
   "version": 2,
   "dependencies": {
     "net10.0": {
+      "Jint": {
+        "type": "Direct",
+        "requested": "[4.4.2, )",
+        "resolved": "4.4.2",
+        "contentHash": "+2G0SkWWYiHjvCWFYgWgLUDVvemMxjgmlnT3X4p8cllSt1SX3jgO7PSqxenTW4yDE4dOQ8BLRmbuiC8ANp1trw==",
+        "dependencies": {
+          "Acornima": "1.2.0"
+        }
+      },
       "Microsoft.CodeAnalysis.BannedApiAnalyzers": {
         "type": "Direct",
         "requested": "[5.6.0, )",
@@ -19,6 +28,11 @@
         "requested": "[2.10.1, )",
         "resolved": "2.10.1",
         "contentHash": "ykjOY3IpYmC4SpPcAZRTl/w2jTmhPMDydHq8xcV7tTBAQ22nKBsOkPqauIrZlMjHm03cmKfV23UOPscKp+J4Og=="
+      },
+      "Acornima": {
+        "type": "Transitive",
+        "resolved": "1.2.0",
+        "contentHash": "pT3kn/WrVzz4NmrzN5zOAVDOK2VuQFJ7VivKviKmKbbzppMVEToEvnAaVhxerXclptvjpBUudhOwUtDsRjrMYQ=="
       },
       "Microsoft.CodeAnalysis.Analyzers": {
         "type": "Transitive",

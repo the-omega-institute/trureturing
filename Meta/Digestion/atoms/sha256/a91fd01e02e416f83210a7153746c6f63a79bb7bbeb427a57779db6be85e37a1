@@ -1,0 +1,41 @@
+## 227.1 黄金固定尾是最简单的正完成模型
+
+考虑最简单的 stationary positive tail：
+
+$$
+Y
+=
+\cfrac1{
+1+\cfrac1{
+1+\cfrac1{1+\ddots}}}.
+$$
+
+它满足：
+
+$$
+Y=\frac1{1+Y}.
+$$
+
+唯一正解为：
+
+$$
+\boxed{
+Y=\frac1\varphi.
+}
+\tag{227.7}
+$$
+
+这说明 \(\varphi^{-1}\) 是**常系数正 Stieltjes 尾部的固定点**。
+
+但必须严格限定：
+
+$$
+\boxed{
+\text{这并不意味着 }\xi\text{ 的 Stieltjes 系数 }\alpha_n\text{ 恒等于 }1.
+}
+$$
+
+其意义只是：黄金比例再次作为最简单的正递归 tail completion 出现，和 Ramanujan 第 541 号恒等式中“连分数压缩无限尾部”的角色一致。
+
+---
+

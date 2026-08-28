@@ -1,0 +1,58 @@
+# 第一百九十七部　从零点场到 Poisson 场
+
+定义：
+
+$$
+u(\sigma,t)
+=
+\log|\xi(\sigma+it)|.
+$$
+
+则：
+
+$$
+\partial_\sigma u
+=
+\Re\frac{\xi'}{\xi}.
+$$
+
+在 RH 成立时，全部零点位于：
+
+$$
+\Re\rho=\frac12.
+$$
+
+以对称收敛理解 Hadamard 乘积后，水平导数具有 Poisson 核结构：
+
+$$
+\boxed{
+\partial_\sigma u(\sigma,t)
+=
+\sum_{\rho=\frac12+i\gamma}
+m_\rho
+\frac{
+\sigma-\frac12
+}{
+(\sigma-\frac12)^2+(t-\gamma)^2
+}.
+}
+\tag{197.1}
+$$
+
+每项均为正。
+
+所以 RH 下：
+
+$$
+\boxed{
+\mathfrak M_K
+=
+\text{临界线零点测度的 Poisson 延拓}.
+}
+$$
+
+若出现线外零点，它成为右半平面内部的对数曲率原子，并在其左侧产生式 (192.2) 的负极点。
+
+这给 Wang 式结构一个极具体的几何图像：
+
+* RH：全部源位于边界；

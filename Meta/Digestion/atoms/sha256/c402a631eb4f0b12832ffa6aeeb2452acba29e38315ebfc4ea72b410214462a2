@@ -1,0 +1,63 @@
+## 定理 402.1（Exact sticky reduction）
+
+$$
+\boxed{
+A_L\ge0
+\iff
+F_L\ge0.
+}
+\tag{402.4}
+$$
+
+并且：
+
+$$
+\boxed{
+n_-(A_L)=n_-(F_L).
+}
+\tag{402.5}
+$$
+
+### 证明
+
+对：
+
+$$
+p\in P\mathcal H_L,
+\qquad
+q\in Q\mathcal H_L,
+$$
+
+令：
+
+$$
+r=A_{QQ}^{-1}A_{QP}p.
+$$
+
+直接完成平方：
+
+$$
+\boxed{
+\begin{aligned}
+\langle p+q,A_L(p+q)\rangle
+={}&
+\langle q+r,A_{QQ}(q+r)\rangle\\
+&+
+\langle p,F_Lp\rangle.
+\end{aligned}
+}
+\tag{402.6}
+$$
+
+第一项非负且可通过取：
+
+$$
+q=-r
+$$
+
+使其为零。
+
+所以二次型的全部负性恰由 \(F_L\) 决定，负惯性指标也保持。∎
+
+---
+

@@ -1,0 +1,44 @@
+# 第一百七十部　零点重数等于环面 jet 深度
+
+令：
+
+$$
+E_s^{(j)}
+=
+\left.
+\frac{\partial^j}{\partial u^j}
+E_u
+\right|_{u=s}.
+$$
+
+定义全环面不可见 jet 深度：
+
+$$
+\boxed{
+d_{\mathrm{tor}}(s)
+=
+\min
+\left\{
+j\ge0:
+\mathcal P_{\mathrm{tor}}(E_s^{(j)})\neq0
+\right\}.
+}
+\tag{170.1}
+$$
+
+若 \(\Lambda\) 在 \(s\) 处有 \(m\) 重零点，则 period factorization 和 Leibniz 公式给出：
+
+$$
+\mathcal P_{\mathrm{tor}}(E_s^{(j)})=0
+\qquad
+(0\le j<m),
+$$
+
+而在适当 twist 非零的环面方向上：
+
+$$
+\mathcal P_{\mathrm{tor}}(E_s^{(m)})\neq0.
+$$
+
+所以：
+

@@ -1,0 +1,10 @@
+ast_path: section/218-2-Sticky-分支/clause/2
+fingerprints:
+  raw_sha256: sha256:1e26d8046f3078ad963aef3dcc337540b9cc05753f748527d66f72d2ed6f5afa
+  normalized_sha256: sha256:1e26d8046f3078ad963aef3dcc337540b9cc05753f748527d66f72d2ed6f5afa
+cas_ref: sha256:1e26d8046f3078ad963aef3dcc337540b9cc05753f748527d66f72d2ed6f5afa
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

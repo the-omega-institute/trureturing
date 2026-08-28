@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Dynamics/CodeLedgerIdentity.same_state_iff_same_code_and_ledger
       source_sha256: sha256:204035dcd38f9b00bd478263a9729a788a651a547a60abc2f1ef9893830b03e3
-      target_sha256: sha256:7a1874ae710a688793803501d25faf56534785a0804502fd59d87e8eeb4a6b70
+      target_statement_id: sha256:e1f90fa7f1f402d13131c59157f2505b4d3469e1dff1f1f6fc02cca0f4127d10
   scribe:
     - gid: D5/S1/Dynamics/CodeLedgerIdentity.same_state_iff_same_code_and_ledger
       definition_sha256: sha256:97398cdfac5b55c7a02e76f6d619998399444aa798a9ccc88b4c869d63cd634d

@@ -1,0 +1,78 @@
+# 第二百二十二部　Herglotz 到 Stieltjes 的平方折叠
+
+定义：
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\frac{\mathscr F'(x)}{\mathscr F(x)}.
+}
+\tag{222.1}
+$$
+
+由链式法则：
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\frac{1}{2\sqrt{x}}
+\frac{
+\xi'(\frac12+\sqrt{x})
+}{
+\xi(\frac12+\sqrt{x})
+}.
+}
+\tag{222.2}
+$$
+
+上一轮定义：
+
+$$
+m_0(z)
+=
+-\frac{\Xi'(z)}{\Xi(z)}
+=
+i\frac{
+\xi'(\frac12-iz)
+}{
+\xi(\frac12-iz)
+}.
+$$
+
+取：
+
+$$
+z=i\sqrt{x},
+$$
+
+得到精确折叠关系：
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\frac{
+m_0(i\sqrt{x})
+}{
+2i\sqrt{x}
+}.
+}
+\tag{222.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{Stieltjes observer}
+=
+\text{Herglotz Weyl observer 沿虚轴取值后再除去奇对称尺度}.
+}
+$$
+
+Suzuki 的 shifted-\(\xi\) 模型将 RH 与 meromorphic inner functions、de Branges spaces 及正 canonical Hamiltonians 联系起来；这里的平方折叠是该 Herglotz 图表在偶对称下的一维正半轴版本。([arXiv][1])
+
+---
+

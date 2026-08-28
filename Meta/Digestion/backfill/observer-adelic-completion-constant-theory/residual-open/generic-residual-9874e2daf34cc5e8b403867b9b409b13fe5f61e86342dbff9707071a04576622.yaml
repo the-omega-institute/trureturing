@@ -1,0 +1,10 @@
+ast_path: section/Bohr-Slepian-Prime-Archimedean-Gap-Conjecture
+fingerprints:
+  raw_sha256: sha256:9874e2daf34cc5e8b403867b9b409b13fe5f61e86342dbff9707071a04576622
+  normalized_sha256: sha256:9874e2daf34cc5e8b403867b9b409b13fe5f61e86342dbff9707071a04576622
+cas_ref: sha256:9874e2daf34cc5e8b403867b9b409b13fe5f61e86342dbff9707071a04576622
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

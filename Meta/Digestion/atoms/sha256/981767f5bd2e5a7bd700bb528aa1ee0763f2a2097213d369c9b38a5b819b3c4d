@@ -1,0 +1,70 @@
+# 第二百八十三部　Li 渐近与相关临界性
+
+Lagarias 证明，在 RH 条件下，Riemann zeta 的 Li 系数具有：
+
+$$
+\boxed{
+\lambda_n
+=
+\frac12n\log n
++
+C_\xi n
++
+O(\sqrt n\log n).
+}
+\tag{283.1}
+$$
+
+更一般的 automorphic \(L\)-functions 主项为：
+
+$$
+\frac{N}{2}n\log n.
+$$
+
+([数字对象标识符][1])
+
+因此在平稳过程图表中：
+
+$$
+\operatorname{Var}
+\left(
+Y_0+\cdots+Y_{n-1}
+\right)
+\asymp
+n\log n.
+$$
+
+这属于介于：
+
+* 短程相关的 \(O(n)\)；
+* 完全相干的 \(O(n^2)\)；
+
+之间的临界增长。
+
+但必须谨慎：
+
+$$
+O(\sqrt n\log n)
+$$
+
+的粗误差不能直接逐项二阶差分，从而推出：
+
+$$
+c_n\sim\frac{\text{常数}}n.
+$$
+
+要获得 \(c_n\) 的精确渐近，需要对 Li 余项的离散正则性建立额外估计。
+
+因此当前只能严格说：
+
+$$
+\boxed{
+n\log n
+\text{ 是 Li 平稳过程部分和方差的全局尺度；}
+}
+$$
+
+不能仅凭现有粗渐近断言局部相关系数的精确衰减律。
+
+---
+

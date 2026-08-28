@@ -1,0 +1,55 @@
+## 定理 213.1（Off-line one-point Pick witness）
+
+对应的一阶 Nevanlinna 矩阵为：
+
+$$
+\boxed{
+\mathcal N_\omega(z_\rho,z_\rho)
+=
+\frac{
+\Im m_\omega(z_\rho)
+}{
+\Im z_\rho
+}
+=
+-\frac1{
+\omega(\delta-\omega)
+}
+<0.
+}
+\tag{213.4}
+$$
+
+又因为：
+
+$$
+\omega(\delta-\omega)
+\le
+\frac{\delta^2}{4},
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal N_\omega(z_\rho,z_\rho)
+\le
+-\frac4{\delta^2}.
+}
+\tag{213.5}
+$$
+
+这说明：
+
+> 任意线外零点都会产生一个仅需一个测试点、一个 \(\omega\) 和有限个环面周期的严格负证书。
+
+负性不是微小量，而具有至少：
+
+$$
+4/\delta^2
+$$
+
+级别的放大。
+
+---
+

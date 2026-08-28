@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Midline/DualCharacterization.midline_dual_characterization
       source_sha256: sha256:c2b458c0ec6e7494ffe7b15cc71ca9aa7afd5559254301851904c9c91c88d13f
-      target_sha256: sha256:97286e68157f65215652699b481a20f1ce74e14f1f84d564c1568fcf0ca5c93c
+      target_statement_id: sha256:b4ee7a9ddaee3358530315bb12c4eef18234e7f245d84f7409eec98ae007f3e5
   scribe:
     - gid: D5/S3/Midline/DualCharacterization.midline_dual_characterization
       definition_sha256: sha256:dac3c5083673aa0c186b3ae47161b9ecf254bdb028827d8753cec9588d488ce5

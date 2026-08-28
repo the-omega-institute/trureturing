@@ -9,9 +9,9 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/DecisionValue/FreeInformationValue.free_ignorable_information_value_nonnegative
       source_sha256: sha256:49798cca486175d8435bcf3c569c22820d9d5b3302d62d5bb0542c11e51dd0cc
-      target_sha256: sha256:10e850cef308c9dc388a9666c1a0c747726372766c30821c1d6a7d9eb2867539
+      target_statement_id: sha256:233a78a93695077b7b347bded3e916e5d2ebe92f059686eaf01b5ecac3b2179e
   scribe:
     - gid: D5/S3/ConceptDynamics/DecisionValue/FreeInformationValue.free_ignorable_information_value_nonnegative
-      definition_sha256: sha256:598cc6eb3118588e986d99c99e6416d40520e47e838b818c10a795f104c3d9b8
-      emission_sha256: sha256:9b3e302e7e280a2376b9dfed173a455d3e090c030a3640e23f8552f51bfef88d
+      definition_sha256: sha256:5839559e6a166aba07e2ba7a5016fc65e65ca9f2baa4caa9860a7cbf6080c3cb
+      emission_sha256: sha256:877d538bb2790572dafde5235116ed25fd8da172a19d031ab6b1450d324ba182
   unresolved_subitems: []

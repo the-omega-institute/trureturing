@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Diagonal/EscapeCount.escaped_listing_card
       source_sha256: sha256:c0a63f4cbbe848e456ae1f847150de6bf63e59a5295bf711230af4bbb4860cab
-      target_sha256: sha256:12db89f8d0e76b5857f06cc48954e934cfb9c73d81e021f5d0be397beb553720
+      target_statement_id: sha256:b4d548046ce3a6763e385219696fcbcb37e891ce73554894d89e387f04a527ca
   scribe:
     - gid: D5/S0/Diagonal/EscapeCount.escaped_listing_card
       definition_sha256: sha256:64bdf339da61fa22cfad20a745fe5e8c9e7852f17d51545b073a413c2941784b

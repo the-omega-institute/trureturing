@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/Conditioning/FiniteRecordPinchingIdempotence.finite_record_pinching_idempotent
       source_sha256: sha256:49d69d38125d71178997d3cc5ddcfe11e731c2ae45f0bc7d9d909d97fad1ea21
-      target_sha256: sha256:6fed8906fceb8af4d5548b9da69e90875ae827d81295440569ad6dfae4d3c775
+      target_statement_id: sha256:1333ff59bf49be1b8f8a43946c3440c0afec8e06d8231d37a499ad60df699e49
   scribe:
     - gid: D5/S3/Observer/Conditioning/FiniteRecordPinchingIdempotence.finite_record_pinching_idempotent
       definition_sha256: sha256:f8ef72040fd52a820ce690e3832a50e0f9c6a147473afe138ff935298e98a22b

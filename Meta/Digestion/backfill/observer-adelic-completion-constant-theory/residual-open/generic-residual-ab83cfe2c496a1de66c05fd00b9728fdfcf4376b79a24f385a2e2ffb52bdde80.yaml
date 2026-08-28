@@ -1,0 +1,15 @@
+ast_path: section/依赖成熟理论的接口
+fingerprints:
+  raw_sha256: sha256:ab83cfe2c496a1de66c05fd00b9728fdfcf4376b79a24f385a2e2ffb52bdde80
+  normalized_sha256: sha256:ab83cfe2c496a1de66c05fd00b9728fdfcf4376b79a24f385a2e2ffb52bdde80
+cas_ref: sha256:ab83cfe2c496a1de66c05fd00b9728fdfcf4376b79a24f385a2e2ffb52bdde80
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-22c76c9415cbb219d74907f615616c542a318079d08ed6c49b2b268caf12dc28-a71026a30cfb1efe1883f5e2fb8b8e4796186c1820b98837b7004b86a35d22cf
+    - generic-residual-5f4ee016e1422cb2e367f22c2097efe9c5e4c39fab5592a51786e4d80a66e386-764dff3e33f30fb5f786a0f0712156e2ca179cdc889952d4ddd0e09d37df12c9
+    - generic-residual-d1bc868b154f38be36e9156a2fd6314ab2c5eb1e91a16881ae9cbb205a15eb51-0f495a6cd95a932fd52efc0dbfb9c994e4877803337baf48b5cd850aba9b769a
+    - generic-residual-152465a76c54672032d47583b513f84bac99362e54552ce196af771116484091-2a5b8a37e9d52046cb5e3c83cd2114266a16920814e12572208002e7c6838707

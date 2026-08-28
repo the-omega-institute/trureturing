@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/AnalyticClosure/Budget/BudgetedEscapeRateAntitone.budgeted_escape_rate_bounds_and_antitone
       source_sha256: sha256:079309255ac4fa4a938e4981121759b048c745e0571a5ba0793ea32c1794ab35
-      target_sha256: sha256:4af2b9b453f754f97e188501fff8f63ab8a2329ec5ab4b1632591e26b959456d
+      target_statement_id: sha256:c2e59452cd74c1d0989a0e177b917b903da82225e9953f92d95149e6ea93a76f
   scribe:
     - gid: D5/S3/AnalyticClosure/Budget/BudgetedEscapeRateAntitone.budgeted_escape_rate_bounds_and_antitone
       definition_sha256: sha256:18281661aa9086cb0cc0897dc1fcf8a70ce26e1199956ddfcb2d9f2b8bf77bfd

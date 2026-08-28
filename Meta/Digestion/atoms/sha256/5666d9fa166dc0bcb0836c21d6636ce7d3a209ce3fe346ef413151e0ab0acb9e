@@ -1,0 +1,44 @@
+* twist normalization；
+
+自然构造的 Hilbert 空间 \(\mathcal H_{\mathrm{tor}}\)、正算子 \(U_{\mathrm{tor}}\) 和向量 \(v_{\mathrm{tor}}\)，使：
+
+$$
+\boxed{
+\mu_n
+=
+\langle
+U_{\mathrm{tor}}^n
+v_{\mathrm{tor}},
+v_{\mathrm{tor}}
+\rangle.
+}
+\tag{235.1}
+$$
+
+若该表示成立，则所有 Hankel 矩阵自动为 Gram 矩阵：
+
+$$
+\boxed{
+\mu_{i+j}
+=
+\langle
+U^iv,U^jv
+\rangle,
+}
+$$
+
+$$
+\boxed{
+\mu_{i+j+1}
+=
+\langle
+U^{i+\frac12}v,
+U^{j+\frac12}v
+\rangle.
+}
+$$
+
+因此 RH 立即成立。
+
+---
+

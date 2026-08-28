@@ -1,0 +1,37 @@
+## 定理 391.1（Slepian positivity certificate）
+
+$$
+\boxed{
+Q_M(f)
+\ge
+\left[
+a-(a+b)\Lambda_L(B)
+\right]
+\|f\|_2^2.
+}
+\tag{391.3}
+$$
+
+因此只要：
+
+$$
+\boxed{
+\Lambda_L(B)
+<
+\frac{a}{a+b},
+}
+\tag{391.4}
+$$
+
+就有：
+
+$$
+Q_M(f)>0
+$$
+
+对所有非零 \(f\) 成立。
+
+这给出了把“危险频率稀少”转换为“所有紧支撑测试都无法集中在那里”的精确桥梁。
+
+---
+

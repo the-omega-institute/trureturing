@@ -1,0 +1,5 @@
+## 282.1 Non-sticky：谱测度分散
+
+若 \(\mu_\lambda\) 在单位圆上分散于多个角区间，则：
+
+* Toeplitz matrices 条件数改善；

@@ -1,0 +1,14 @@
+ast_path: section/第一百四十六部-方向翻转与长度加倍
+fingerprints:
+  raw_sha256: sha256:ea14b1e21bacca0168c4320a94b649d1e8ebfed58ab6ee85d8510a673ff37cff
+  normalized_sha256: sha256:ea14b1e21bacca0168c4320a94b649d1e8ebfed58ab6ee85d8510a673ff37cff
+cas_ref: sha256:ea14b1e21bacca0168c4320a94b649d1e8ebfed58ab6ee85d8510a673ff37cff
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-60592b5ce223c759018a19c262fcecc29ea77b36afa77b3820c68cd3f7d4520d-8b5c26b9b3076ed8e9be1e6dee96458dfbdd061c7433e410443b426b92494a02
+    - generic-residual-f074a6f01b80d3c3e9e2c9f7bdb28e1949e8fcc217e4980fce5f6bc198121653-eeb8c8920705046382f20331050354fa8985ad06affc40407903bd20fe0a6dd5
+    - generic-residual-53aee69679555d23aa9c9f756516ace372d1fc4386d94aefbb2c7bea23bbfee4-f9910aa2e44d6960e9c3d04eb8265fd2884b0d6519cb33469264d62748ec8f11

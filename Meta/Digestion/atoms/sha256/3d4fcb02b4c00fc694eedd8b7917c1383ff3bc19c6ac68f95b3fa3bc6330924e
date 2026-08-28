@@ -1,0 +1,40 @@
+## 321.1 等价 Gram 目标
+
+不必一次构造全部四个 blocks。
+
+只需从 relative trace formula 直接构造向量：
+
+$$
+\mathscr X_{\omega,z}^{\mathrm{tor}}
+$$
+
+使：
+
+$$
+\boxed{
+\mathscr B_{\omega}(z,w)
+=
+\left\langle
+\mathscr X_{\omega,z}^{\mathrm{tor}},
+\mathscr X_{\omega,w}^{\mathrm{tor}}
+\right\rangle.
+}
+\tag{321.3}
+$$
+
+这就是上一轮最小 Gram 目标的 finite-shift 版本。
+
+令：
+
+$$
+\omega\downarrow0,
+$$
+
+即可恢复：
+
+$$
+\mathcal K_\xi.
+$$
+
+---
+

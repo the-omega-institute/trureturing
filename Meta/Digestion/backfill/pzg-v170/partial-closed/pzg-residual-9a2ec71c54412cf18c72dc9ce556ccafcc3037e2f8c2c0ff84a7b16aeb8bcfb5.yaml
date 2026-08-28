@@ -9,6 +9,6 @@ receipts:
   coverage:
     - gid: D5/S3/Weil/SpectralDynamics
       source_sha256: sha256:9a2ec71c54412cf18c72dc9ce556ccafcc3037e2f8c2c0ff84a7b16aeb8bcfb5
-      target_sha256: sha256:e5f92d4916205485ea789f89371c05116711359cfb58561e3a65a39561657036
+      target_statement_id: sha256:ec884a3dd8186e92c407d15c9d8822382e2fefe26702f0b829dbfe865573c061
   scribe: []
   unresolved_subitems: []

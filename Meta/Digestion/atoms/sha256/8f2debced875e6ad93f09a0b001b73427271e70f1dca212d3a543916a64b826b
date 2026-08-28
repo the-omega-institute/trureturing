@@ -1,0 +1,46 @@
+## 363.1 Archimedean 源在原点之外的密度
+
+利用：
+
+$$
+\frac12\psi(s/2)
+=
+\text{常数}
+-
+\sum_{k=0}^{\infty}\frac1{s+2k},
+$$
+
+并与 \(1/s\) 抵消，可得在：
+
+$$
+t\neq0
+$$
+
+处：
+
+$$
+\boxed{
+\begin{aligned}
+\mathfrak A_\infty(t)
+={}&
+e^{|t|/2}
++
+e^{-|t|/2}
+-
+\frac{e^{-|t|/2}}
+{1-e^{-2|t|}}
+\\
+={}&
+e^{|t|/2}
+-
+\frac{e^{-5|t|/2}}
+{1-e^{-2|t|}}.
+\end{aligned}
+}
+\tag{363.5}
+$$
+
+在 \(t=0\) 处，它不是普通函数值，而需要有限部与 \(\delta_0\) 正规化；具体常数由仓库冻结的 `logTwoPi` 和 Weil 显式公式 convention 唯一决定，不应在理论文档中重新猜测。
+
+---
+

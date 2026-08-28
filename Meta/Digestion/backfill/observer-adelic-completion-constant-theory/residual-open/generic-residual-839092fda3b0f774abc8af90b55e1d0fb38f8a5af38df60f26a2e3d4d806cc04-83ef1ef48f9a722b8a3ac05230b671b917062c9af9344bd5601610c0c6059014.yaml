@@ -1,0 +1,10 @@
+ast_path: section/311-1-半平面核接口/clause/1
+fingerprints:
+  raw_sha256: sha256:839092fda3b0f774abc8af90b55e1d0fb38f8a5af38df60f26a2e3d4d806cc04
+  normalized_sha256: sha256:839092fda3b0f774abc8af90b55e1d0fb38f8a5af38df60f26a2e3d4d806cc04
+cas_ref: sha256:839092fda3b0f774abc8af90b55e1d0fb38f8a5af38df60f26a2e3d4d806cc04
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

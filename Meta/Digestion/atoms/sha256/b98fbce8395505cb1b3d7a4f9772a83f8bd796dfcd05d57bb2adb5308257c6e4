@@ -1,0 +1,23 @@
+## 定理 403.1（Finite certified lower matrix）
+
+$$
+\boxed{
+G_L\ge0
+\Longrightarrow
+F_L\ge0
+\Longrightarrow
+A_L\ge0.
+}
+\tag{403.2}
+$$
+
+所以只需证明一个显式有限 Hermitian matrix：
+
+$$
+G_L
+$$
+
+正半定，就能严格证明支撑尺度 \(L\) 上的全部 Weil 测试正性。
+
+---
+

@@ -170,7 +170,7 @@ internal static class BackfillInventoryWriter
         {
             Line(builder, $"            - gid: {Scalar(receipt.Gid)}");
             Line(builder, $"              source_sha256: {Scalar(receipt.SourceSha256)}");
-            Line(builder, $"              target_sha256: {Scalar(receipt.TargetSha256)}");
+            Line(builder, $"              target_statement_id: {Scalar(receipt.TargetStatementId)}");
         }
     }
 
@@ -208,7 +208,7 @@ internal static class BackfillInventoryWriter
         {
             Line(builder, $"    - gid: {Scalar(receipt.Gid)}");
             Line(builder, $"      source_sha256: {Scalar(receipt.SourceSha256)}");
-            Line(builder, $"      target_sha256: {Scalar(receipt.TargetSha256)}");
+            Line(builder, $"      target_statement_id: {Scalar(receipt.TargetStatementId)}");
         }
     }
 

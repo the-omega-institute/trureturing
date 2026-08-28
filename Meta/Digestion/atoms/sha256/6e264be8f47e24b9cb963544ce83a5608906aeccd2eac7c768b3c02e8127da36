@@ -1,0 +1,47 @@
+# 第三百二十九部　无条件的临界平移模型
+
+定义 Riemann 完成函数：
+
+$$
+\xi(s)
+=
+\frac12s(s-1)
+\pi^{-s/2}
+\Gamma\!\left(\frac s2\right)
+\zeta(s).
+$$
+
+定义：
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+\frac{
+\xi(\frac12-\omega-iz)
+}{
+\xi(\frac12+\omega-iz)
+},
+\qquad
+\omega>0.
+}
+\tag{329.1}
+$$
+
+由函数方程和实结构：
+
+$$
+\Theta_\omega(z)\Theta_\omega(-z)=1,
+$$
+
+并且：
+
+$$
+|\Theta_\omega(x)|=1
+\qquad
+(x\in\mathbb R).
+$$
+
+Suzuki 的 shifted-\(\xi\) 理论证明：
+
+* 当 \(\omega\ge\tfrac12\) 时，\(\Theta_\omega\) 无条件是上半平面的 meromorphic inner function；

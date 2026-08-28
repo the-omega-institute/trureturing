@@ -1,0 +1,26 @@
+## 定理 234.1（Positive moment operator criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\exists\,
+(\mathcal H,U,v),
+\quad
+U\ge0,
+\quad
+\mu_n=\langle U^nv,v\rangle
+\ \forall n.
+}
+\tag{234.2}
+$$
+
+这是一个比直接寻找 Hilbert–Pólya 算子更弱、也更具体的目标：
+
+* 不必首先构造 ordinates \(\gamma\) 本身；
+* 只需构造其倒平方 moments 的正算子模型；
+* 谱定理会自动恢复正测度；
+* 然后 \(U^{-1/2}\) 才产生 ordinates。
+
+---
+

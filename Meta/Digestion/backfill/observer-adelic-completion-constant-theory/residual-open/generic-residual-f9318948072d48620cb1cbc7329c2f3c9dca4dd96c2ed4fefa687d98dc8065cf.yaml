@@ -1,0 +1,15 @@
+ast_path: 假设/158.1
+fingerprints:
+  raw_sha256: sha256:f9318948072d48620cb1cbc7329c2f3c9dca4dd96c2ed4fefa687d98dc8065cf
+  normalized_sha256: sha256:f9318948072d48620cb1cbc7329c2f3c9dca4dd96c2ed4fefa687d98dc8065cf
+cas_ref: sha256:f9318948072d48620cb1cbc7329c2f3c9dca4dd96c2ed4fefa687d98dc8065cf
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-66a10ecc4223f865d8ef636d3c26f9d512b5b4912009ad52bee66e4b7be97fcb-46118528936ef77dbf19d7ca9a9ce182dd4c77eeea76514bb86f3857a474655e
+    - generic-residual-f011df1e129d7910bc35c7fb677c9fee1d552da1b37ca41430378f4a4394c571-f29d47b67d98b81ae139daef457cc3ce35218cb9b80418aac0af0213578e2640
+    - generic-residual-ccaf2bf2cb1cf06cf9e31bbb3e333e81d20f84ffe277e3cbfca756cde1dcc65b-55a87e7b12b4f43a9ed1ac943b65309659b4dfc3354d621787e0e00b8196c7a2
+    - generic-residual-52532d5503f22f385e6fe009ddc9fb83c1c7213369e3efa4ce2cc8e1e615e6d9-91a3937b787ce09528be7f9164a05b4e9c4e34440de5cf1f26f5aaa0fa70eb1e

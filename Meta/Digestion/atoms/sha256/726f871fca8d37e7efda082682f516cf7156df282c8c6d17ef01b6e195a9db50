@@ -1,0 +1,66 @@
+## 308.2 简单零点采样公式
+
+进一步假设全部 \(\Xi\)-零点简单。
+
+若：
+
+$$
+\Xi(\gamma)=0,
+$$
+
+则：
+
+$$
+\boxed{
+K_\xi(\gamma,\gamma)
+=
+\frac{
+\lambda_1|\Xi'(\gamma)|^2
+}{\pi}.
+}
+\tag{308.7}
+$$
+
+对相应 de Branges 空间中的任意 \(F\)：
+
+$$
+\boxed{
+F(z)
+=
+\sum_{\Xi(\gamma)=0}
+F(\gamma)
+\frac{
+\Xi(z)
+}{
+(z-\gamma)\Xi'(\gamma)
+}.
+}
+\tag{308.8}
+$$
+
+并且：
+
+$$
+\boxed{
+\|F\|^2
+=
+\frac{\pi}{\lambda_1}
+\sum_{\Xi(\gamma)=0}
+\frac{
+|F(\gamma)|^2
+}{
+|\Xi'(\gamma)|^2
+}.
+}
+\tag{308.9}
+$$
+
+这是一个以 Riemann 零点为节点的正交 Lagrange 采样定理。
+
+若存在多重零点，式 (308.8) 必须替换为：
+
+* Clark 原子公式；或
+* 包含导数数据的 Hermite 插值。
+
+---
+

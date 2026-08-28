@@ -1,0 +1,65 @@
+## 298.3 原子消去后的 Clark 重整化
+
+验证前 \(M\) 个零点后，定义剩余质量：
+
+$$
+r_M
+=
+1-
+2\sum_{j=1}^{M}w_{\gamma_j}.
+$$
+
+定义归一化剩余测度：
+
+$$
+\boxed{
+\mu_\lambda^{[M]}
+=
+\frac{1}{r_M}
+\left[
+\mu_\lambda
+-
+\sum_{j=1}^{M}
+w_{\gamma_j}
+\left(
+\delta_{u_{\gamma_j}}
++
+\delta_{\overline{u_{\gamma_j}}}
+\right)
+\right].
+}
+\tag{298.1}
+$$
+
+它仍是概率测度。
+
+由 Herglotz 与 Schur 算法生成新的：
+
+$$
+\mathfrak C_\xi^{[M]},
+\qquad
+\vartheta_\xi^{[M]},
+\qquad
+\beta_n^{[M]}.
+$$
+
+随着 \(M\) 增加：
+
+* 低谱 sticky 原子被移除；
+* 剩余测度进一步集中到 \(1\)；
+* 新 Schur tail 直接读取高零点残余。
+
+这给出一个严格的：
+
+$$
+\boxed{
+\text{Clark atom deflation}
+\to
+\text{renormalized boundary observer}
+}
+$$
+
+程序。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/第二百四十二部-Toeplitz-总正性
+fingerprints:
+  raw_sha256: sha256:80d0dce301bf5ab26adb2b47eeb065e01fdd863fa658ef00c3bd98656a643d3d
+  normalized_sha256: sha256:80d0dce301bf5ab26adb2b47eeb065e01fdd863fa658ef00c3bd98656a643d3d
+cas_ref: sha256:80d0dce301bf5ab26adb2b47eeb065e01fdd863fa658ef00c3bd98656a643d3d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

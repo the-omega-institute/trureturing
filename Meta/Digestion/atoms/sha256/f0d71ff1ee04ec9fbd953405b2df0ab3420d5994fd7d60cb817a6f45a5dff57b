@@ -1,0 +1,38 @@
+## 393.1 Wang：Bohr 非粘滞与厚度
+
+输入 finite prime cluster symbol：
+
+$$
+\mathcal C_Y(\xi).
+$$
+
+证明危险集合：
+
+$$
+B_{Y,\tau}
+=
+\left\{
+\xi:
+\mathcal C_Y(\xi)
+\ge\tau
+\right\}
+$$
+
+具有以下至少一种性质：
+
+1. 总测度足够小；
+2. complement 足够 thick；
+3. 每个相干峰有足够大的曲率；
+4. 峰之间具有足够的分离；
+5. Archimedean margin 在 recurrence 高度处已经增长。
+
+输出：
+
+$$
+\boxed{
+\text{危险频率不能承载大部分 Paley--Wiener 质量。}
+}
+$$
+
+---
+

@@ -1,0 +1,50 @@
+# 第三百八十六部　有限 prime Bohr 环面
+
+对每个素数 \(p\)，令：
+
+$$
+r_p=p^{-1/2}.
+$$
+
+定义 centered local Poisson symbol：
+
+$$
+\boxed{
+D_p(\theta)
+=
+\frac{1-r_p^2}
+{1-2r_p\cos\theta+r_p^2}
+-1.
+}
+\tag{386.1}
+$$
+
+它具有 Fourier 展开：
+
+$$
+\boxed{
+D_p(\theta)
+=
+2\sum_{k=1}^{\infty}
+r_p^k\cos(k\theta).
+}
+\tag{386.2}
+$$
+
+这正是一个素数的全部 \(p^k\) history 在相位图表中的精确重求和。
+
+对有限素数集 \(\mathcal P\)，定义 cluster coherence：
+
+$$
+\boxed{
+\mathcal C_{\mathcal P}(x)
+=
+\sum_{p\in\mathcal P}
+(\log p)\,
+D_p(x\log p).
+}
+\tag{386.3}
+$$
+
+---
+

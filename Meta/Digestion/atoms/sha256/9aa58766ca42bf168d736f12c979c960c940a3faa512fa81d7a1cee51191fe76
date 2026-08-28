@@ -1,0 +1,25 @@
+## 与既有理论相邻、但本文给出不同封装
+
+* Li 非负判据；
+* Bombieri–Lagarias 的 Weil functional 表达；
+* Suzuki 的 model-space norm 表达；
+* Lagarias 的 automorphic Li 系数；
+* Schoenberg 的条件负定—正定半群对偶；
+* Hausdorff moment theorem。([科学直通车][1])
+
+本文的新贡献目前应谨慎表述为：
+
+$$
+\boxed{
+\text{把这些已知判据系统地连接到
+一个正 trace-class contraction、
+其 Cayley unitary、
+Hilbert--Schmidt 位移、
+Hausdorff moments 与圆周 Lévy 半群。}
+}
+$$
+
+其中各单项公式的文献新颖性仍需专门审计。
+
+---
+

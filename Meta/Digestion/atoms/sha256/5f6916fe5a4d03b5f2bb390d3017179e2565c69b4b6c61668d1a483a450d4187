@@ -1,0 +1,39 @@
+## 定理 365.1（Prime Poisson resummation）
+
+$$
+\boxed{
+\mathcal P_p(\psi)
+=
+-\log p\,
+\left\langle
+\psi,
+\left[
+\mathsf P_{r_p}(U_p)-I
+\right]
+\psi
+\right\rangle.
+}
+\tag{365.5}
+$$
+
+这是一条精确、无余项的 primitive-history 收缩：
+
+$$
+\boxed{
+\begin{aligned}
+\text{primitive state}
+&=p;\\
+\text{repetition history}
+&=p^k;\\
+\text{history weight}
+&=r_p^k;\\
+\text{all-order resummation}
+&=\mathsf P_{r_p}(U_p).
+\end{aligned}
+}
+$$
+
+所以 prime powers 本身已经不再构成高阶组合困难；它们是一条可以完全求和的局部历史链。
+
+---
+

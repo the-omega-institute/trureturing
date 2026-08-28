@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Solenoid/PathOrbitClassification.path_joined_iff_real_flow_orbit
       source_sha256: sha256:c010210a53d52ed01f82330e4328828a578bfc6ec2ea58031e4dabb6f9e412b8
-      target_sha256: sha256:ad17752f5e2ee7b523689112a1fb84b49a713432be75e067c34aefe807931c29
+      target_statement_id: sha256:7c770ef63ce5d24504147a7b9b86f0ccda08a52565c1024dcb460491d9bd8aec
   scribe:
     - gid: D5/S1/Solenoid/PathOrbitClassification.path_joined_iff_real_flow_orbit
       definition_sha256: sha256:3afdfe47ace3402df019c70cbb6ecaf1ccd1f60b22c8c0b1b81f0d4e738d1807

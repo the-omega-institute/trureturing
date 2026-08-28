@@ -1,0 +1,84 @@
+# 第二百七十四部　Li–Carathéodory 函数
+
+定义 Li 生成函数：
+
+$$
+\boxed{
+G_\xi(z)
+=
+\frac{
+\xi(\frac1{1-z})
+}{
+\xi(1)
+}.
+}
+\tag{274.1}
+$$
+
+标准 Li 展开为：
+
+$$
+\boxed{
+\log G_\xi(z)
+=
+\sum_{n=1}^{\infty}
+\frac{\lambda_n}{n}z^n.
+}
+\tag{274.2}
+$$
+
+定义 Li 曲率 Carathéodory 函数：
+
+$$
+\boxed{
+\mathcal C_\lambda(z)
+=
+1+
+2\sum_{n=1}^{\infty}c_nz^n.
+}
+\tag{274.3}
+$$
+
+由：
+
+$$
+c_n
+=
+\frac{
+\lambda_{n+1}
+-2\lambda_n
++\lambda_{n-1}
+}{
+2\lambda_1
+},
+$$
+
+直接求和得到：
+
+$$
+\boxed{
+\mathcal C_\lambda(z)
+=
+\frac{(1-z)^2}{\lambda_1}
+\frac{d}{dz}
+\log G_\xi(z).
+}
+\tag{274.4}
+$$
+
+而：
+
+$$
+\frac{d}{dz}
+\log G_\xi(z)
+=
+\frac1{(1-z)^2}
+\frac{
+\xi'(\frac1{1-z})
+}{
+\xi(\frac1{1-z})
+}.
+$$
+
+所以：
+

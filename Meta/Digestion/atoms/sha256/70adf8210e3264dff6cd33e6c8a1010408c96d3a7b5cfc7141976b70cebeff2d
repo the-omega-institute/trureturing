@@ -1,0 +1,38 @@
+## 318.1 环面图表中的 transfer function
+
+分别选择覆盖谱窗 \(s_z\pm\omega\) 的有限环面帧：
+
+$$
+\mathbf P_\pm(z)
+=
+\xi(s_z\pm\omega)\mathbf T_\pm(z).
+$$
+
+重构：
+
+$$
+E_\pm(z)
+=
+\frac{
+\langle\mathbf P_\pm(z),\mathbf T_\pm(z)\rangle
+}{
+\|\mathbf T_\pm(z)\|^2
+}
+=
+\xi(s_z\pm\omega).
+$$
+
+于是：
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+\frac{E_-(z)}{E_+(z)}.
+}
+\tag{318.3}
+$$
+
+所以 \(\Theta_\omega\) 是一个真正的环面输入—输出 transfer ratio：
+
+* \(E_+\)：右移、较稳定的 carrier-normalized input；

@@ -1,0 +1,10 @@
+ast_path: section/225-1-第一非平凡-Hankel-不等式
+fingerprints:
+  raw_sha256: sha256:58fe43465d6e919a07fb91870adec676a67e329f6449f5522d00494c3cdffdb9
+  normalized_sha256: sha256:58fe43465d6e919a07fb91870adec676a67e329f6449f5522d00494c3cdffdb9
+cas_ref: sha256:58fe43465d6e919a07fb91870adec676a67e329f6449f5522d00494c3cdffdb9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

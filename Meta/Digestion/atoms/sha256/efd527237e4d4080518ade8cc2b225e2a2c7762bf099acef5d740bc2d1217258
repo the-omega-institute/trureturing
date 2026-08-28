@@ -1,0 +1,31 @@
+# 第二百一十二部　有限环面 Pick 判据
+
+取：
+
+$$
+z_1,\ldots,z_n\in Z.
+$$
+
+定义有限环面 Nevanlinna 矩阵：
+
+$$
+\boxed{
+\Pi_{\omega,Z}^{\mathrm{tor}}
+=
+\left[
+\frac{
+m_{\omega,\mathrm{tor}}(z_a)
+-
+\overline{
+m_{\omega,\mathrm{tor}}(z_b)
+}
+}{
+z_a-\overline{z_b}
+}
+\right]_{a,b=1}^n.
+}
+\tag{212.1}
+$$
+
+---
+

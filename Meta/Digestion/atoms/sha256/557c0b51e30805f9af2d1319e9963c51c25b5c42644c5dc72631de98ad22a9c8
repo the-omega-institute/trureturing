@@ -1,0 +1,20 @@
+* 正性由能量守恒产生。
+
+因此正确的 OACTC 路线是：
+
+$$
+\boxed{
+\text{jet}
+\to
+\text{log-residue semisimplification}
+\to
+\text{conservative realization}
+\to
+\text{self-adjoint spectrum}.
+}
+$$
+
+跳过第二步，直接把 jet tower 当作自伴状态空间，会撞上 Jordan obstruction。
+
+---
+

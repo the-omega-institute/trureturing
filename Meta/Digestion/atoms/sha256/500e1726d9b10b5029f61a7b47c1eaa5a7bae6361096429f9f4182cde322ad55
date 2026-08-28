@@ -1,0 +1,49 @@
+# 第一百七十五部　Toroidal automorphic null spectrum
+
+自动形式空间分为：
+
+$$
+\mathcal A
+=
+\mathcal E
+\oplus
+\mathcal A_0
+\oplus
+\mathcal R,
+$$
+
+其中：
+
+* \(\mathcal E\)：Eisenstein 及导数；
+* \(\mathcal A_0\)：cusp forms；
+* \(\mathcal R\)：Eisenstein residues。
+
+全环面核满足：
+
+$$
+\boxed{
+\mathcal A_{\mathrm{tor}}
+=
+\mathcal E_{\mathrm{zero}}
+\oplus
+\mathcal A_{0,\mathrm{central\ zero}},
+}
+\tag{175.1}
+$$
+
+并且没有非平凡 Eisenstein residue 落入 toroidal kernel。([arXiv][1])
+
+所以全环面观察者不是只检测 Riemann ζ，而是一个统一的自动 \(L\)-值零点过滤器：
+
+$$
+\boxed{
+\text{Toroidal kernel}
+=
+\text{连续谱 }L\text{-零点}
++
+\text{离散谱中心值零点}.
+}
+$$
+
+---
+

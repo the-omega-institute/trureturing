@@ -1,0 +1,17 @@
+ast_path: 命题/76.6/clause/1
+fingerprints:
+  raw_sha256: sha256:2e5d9803683cc7f33cf4aa5783ab42207867ebb6f89c01750eb5d87850baa477
+  normalized_sha256: sha256:2e5d9803683cc7f33cf4aa5783ab42207867ebb6f89c01750eb5d87850baa477
+cas_ref: sha256:2e5d9803683cc7f33cf4aa5783ab42207867ebb6f89c01750eb5d87850baa477
+coverage_gids:
+  - D5/S3/Observer/ProbabilisticClosure/TransitiveInvariantDistribution.transitive_invariant_distribution_unique_uniform
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/ProbabilisticClosure/TransitiveInvariantDistribution.transitive_invariant_distribution_unique_uniform
+      source_sha256: sha256:2e5d9803683cc7f33cf4aa5783ab42207867ebb6f89c01750eb5d87850baa477
+      target_statement_id: sha256:86b2e73c1679b7a87ea68ef153c655e5588da74bea663139c23f1ef714e1fa19
+  scribe:
+    - gid: D5/S3/Observer/ProbabilisticClosure/TransitiveInvariantDistribution.transitive_invariant_distribution_unique_uniform
+      definition_sha256: sha256:b018b53596a8088965a05bd6cdfe68a9e6468db5f3a6fe1cdb583f28d7041d5f
+      emission_sha256: sha256:4917096ddddd1ccbba92d407517693ee682cecc8aedb6ad34c5610642471cb96
+  unresolved_subitems: []

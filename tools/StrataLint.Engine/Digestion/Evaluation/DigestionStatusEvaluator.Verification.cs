@@ -192,6 +192,7 @@ internal static partial class DigestionStatusEvaluator
     private static bool VerifyCoverageReceipts(
         DigestionLedgerEntry entry,
         IReadOnlyDictionary<string, RepositoryFile> targets,
+        Lazy<FrozenStatementIndex> frozenStatements,
         RawChangeSet? changes,
         ICollection<DigestionGap> gaps,
         ImmutableArray<string>.Builder findings)
@@ -212,19 +213,25 @@ internal static partial class DigestionStatusEvaluator
 
             var targetChanged = Gid.TryParse(gid, out var parsedGid)
                 && PathChanged(changes, parsedGid.Path.Value);
+            var frozenLedgerChanged = changes is not null
+                && changes.Paths.Any(path =>
+                    FrozenLedgerChangeClassifier.IsAcceptedEventPath(path.Value));
             if (changes is not null
                 && !DigestionCasStore.EntryChanged(entry, changes)
-                && !targetChanged)
+                && !targetChanged
+                && !frozenLedgerChanged)
             {
                 continue;
             }
 
             // Binds coverage.source_sha256 to the atom raw fingerprint and
-            // coverage.target_sha256 to the current GID target bytes. This guard does not bind
-            // either Scribe hash or projected_status.
+            // coverage.target_statement_id to the active frozen proposition selected by the
+            // GID. This guard does not bind either Scribe hash or projected_status.
             if (!targets.TryGetValue(gid, out var target)
                 || receipt.SourceSha256 != entry.Fingerprints.RawSha256
-                || receipt.TargetSha256 != DigestionFingerprint.Compute(target.RawBytes.AsSpan()).RawSha256)
+                || parsedGid is null
+                || !TryResolveFrozenStatement(frozenStatements, parsedGid, out var statementId)
+                || receipt.TargetStatementId != statementId)
             {
                 gaps.Add(new DigestionGap(
                     "coverage-receipt-mismatch",
@@ -241,6 +248,27 @@ internal static partial class DigestionStatusEvaluator
         }
 
         return complete;
+    }
+
+    private static bool TryResolveFrozenStatement(
+        Lazy<FrozenStatementIndex> frozenStatements,
+        Gid gid,
+        out string statementId)
+    {
+        try
+        {
+            if (frozenStatements.Value.TryResolve(gid, out var resolved, out _))
+            {
+                statementId = resolved!.Value;
+                return true;
+            }
+        }
+        catch (Exception exception) when (exception is FormatException or InvalidOperationException)
+        {
+        }
+
+        statementId = string.Empty;
+        return false;
     }
 
     private static bool VerifyScribeReceipts(

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Phase/SelfReference/GoldenShellRecurrence.golden_shell_recurrence
       source_sha256: sha256:395d5b8c28bba1a10a65be0503a4e6c540f017649333ebbf3fb0e5e0cc504547
-      target_sha256: sha256:378d9e72d9899fb9c4ec0618c7c90eaff81e38e22ff9a37de94d46d43bc42c40
+      target_statement_id: sha256:91c021350aa39e5db444b7b72fcb1bfa830ea92dc3b66347f07c1d546c95c726
   scribe:
     - gid: D5/S1/Phase/SelfReference/GoldenShellRecurrence.golden_shell_recurrence
       definition_sha256: sha256:0e5f7dddd3d74bd576241d057d32f810ded228862aa92f21f65f7b38c7981add

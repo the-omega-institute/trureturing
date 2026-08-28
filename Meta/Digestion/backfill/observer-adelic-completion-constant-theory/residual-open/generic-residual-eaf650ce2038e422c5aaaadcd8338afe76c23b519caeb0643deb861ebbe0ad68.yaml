@@ -1,0 +1,14 @@
+ast_path: section/402-1-Deng-self-energy
+fingerprints:
+  raw_sha256: sha256:eaf650ce2038e422c5aaaadcd8338afe76c23b519caeb0643deb861ebbe0ad68
+  normalized_sha256: sha256:eaf650ce2038e422c5aaaadcd8338afe76c23b519caeb0643deb861ebbe0ad68
+cas_ref: sha256:eaf650ce2038e422c5aaaadcd8338afe76c23b519caeb0643deb861ebbe0ad68
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-b5fe4fd4bcc48d47aad08dac2e2e4ef2257b975c1b78c1ce58f0b2c5856f171c-76036d2c4e7f6be181f493c9d64405abad577204ea206aef31c18854fa053c0a
+    - generic-residual-65b8d9b8415368142b252873dd2ce738cc8140452409b005cf2ff3d3cadb5a75-b227499c0817216e1dd0e47f38b149a393d8978c53fd071f494a48d99c17c126
+    - generic-residual-abcedd863d73d294adcad5ac1190d24ea7bad55840c3529259e961851237d177-3de7ee1e9ce42dc761c81602ada4841192c4da9b43cff678dcd8129c3ba23082

@@ -1,0 +1,90 @@
+# 第二百七十一部　零点角的能量加权概率测度
+
+假设 RH。
+
+将正 ordinates 写为：
+
+$$
+\rho_\gamma=\frac12+i\gamma,
+\qquad
+\gamma>0,
+$$
+
+重数为 \(m_\gamma\)。
+
+定义 Cayley 相位：
+
+$$
+\boxed{
+u_\gamma
+=
+1-\frac1{\rho_\gamma}
+=
+\frac{\gamma+i/2}{\gamma-i/2}
+=
+e^{i\theta_\gamma}.
+}
+\tag{271.1}
+$$
+
+再定义：
+
+$$
+\boxed{
+x_\gamma
+=
+\frac1{4\gamma^2+1}.
+}
+\tag{271.2}
+$$
+
+由于：
+
+$$
+\cos\theta_\gamma
+=
+\frac{4\gamma^2-1}{4\gamma^2+1},
+$$
+
+所以：
+
+$$
+\boxed{
+1-\cos\theta_\gamma
+=
+2x_\gamma.
+}
+\tag{271.3}
+$$
+
+RH 下 Li 系数可成对写为：
+
+$$
+\boxed{
+\lambda_n
+=
+\sum_{\gamma>0}
+m_\gamma
+|1-u_\gamma^n|^2
+=
+2\sum_{\gamma>0}
+m_\gamma
+\left(1-\cos n\theta_\gamma\right).
+}
+\tag{271.4}
+$$
+
+在 \(n=1\) 时：
+
+$$
+\boxed{
+\lambda_1
+=
+4\sum_{\gamma>0}
+m_\gamma x_\gamma.
+}
+\tag{271.5}
+$$
+
+---
+

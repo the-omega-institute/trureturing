@@ -6,7 +6,7 @@ Each finite readout kernel is the orthogonal complement of its observable Krylov
 
 **Theorem 1.1 (Finite hidden and observable spaces are orthogonal duals).**
 
-$$\forall K, V, Y, T, C, m,\\{}\operatorname{RCLike}(K) \land \operatorname{NormedAddCommGroup}(V) \land \operatorname{InnerProductSpace}(K, V) \land \operatorname{FiniteDimensional}(K, V) \land\\{}\operatorname{NormedAddCommGroup}(Y) \land \operatorname{InnerProductSpace}(K, Y) \land \operatorname{FiniteDimensional}(K, Y) \land\\{}T \in \operatorname{LinearMap}(K, V, V) \land C \in \operatorname{LinearMap}(K, V, Y) \land m \in N \Rightarrow\\{}N_{m} := \operatorname{iInf}(0 \le k \le m, \operatorname{ker}(C \circ T^{k})); O_{m} := \operatorname{span}(K, \{T^{*}^{k}(C^{*}(y)) \mid 0 \le k \le m, y \in Y\});\\{}N_{m} = O_{m}^{\perp}.$$
+$$\forall K, V, Y, T, C, m,\\{}\operatorname{RCLike}(K) \land \operatorname{NormedAddCommGroup}(V) \land \operatorname{InnerProductSpace}(K, V) \land \operatorname{FiniteDimensional}(K, V) \land\\{}\operatorname{NormedAddCommGroup}(Y) \land \operatorname{InnerProductSpace}(K, Y) \land \operatorname{FiniteDimensional}(K, Y) \land\\{}T \in \operatorname{LinearMap}(K, V, V) \land C \in \operatorname{LinearMap}(K, V, Y) \land m \in N \Rightarrow\\{}N_{m} := \operatorname{iInf}(0 \le k \le m, \operatorname{ker}(C \circ T^{k})); O_{m} := \operatorname{span}(K, \{{T^{*}}^{k}(C^{*}(y)) \mid 0 \le k \le m, y \in Y\});\\{}N_{m} = O_{m}^{\perp}.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Dynamics/FiniteObservabilityOrthogonalDuality.finite_unobservable_eq_observable_orthogonal` (`✓ std3`). ∎
 

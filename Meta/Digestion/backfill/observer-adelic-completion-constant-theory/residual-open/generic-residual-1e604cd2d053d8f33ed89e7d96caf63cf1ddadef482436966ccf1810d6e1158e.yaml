@@ -1,0 +1,10 @@
+ast_path: section/第三百五十一部-零点实部分布的完整恢复
+fingerprints:
+  raw_sha256: sha256:1e604cd2d053d8f33ed89e7d96caf63cf1ddadef482436966ccf1810d6e1158e
+  normalized_sha256: sha256:1e604cd2d053d8f33ed89e7d96caf63cf1ddadef482436966ccf1810d6e1158e
+cas_ref: sha256:1e604cd2d053d8f33ed89e7d96caf63cf1ddadef482436966ccf1810d6e1158e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

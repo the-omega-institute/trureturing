@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Recurrence/CarryCancellation.recurrence_carry_preserves_weight
       source_sha256: sha256:1277b0530d1df95ed96dfdefb1f1111fdb201fc5153066b04b6c64b7021706bd
-      target_sha256: sha256:400db53a7b39383102c796ea06a1095b0c38fab45bde41e1b2d28ff60fa8bf88
+      target_statement_id: sha256:a54bad07ea708879cafff842d5de514598b00354fb080bdfe82958f568c5a7c2
   scribe:
     - gid: D5/S1/Recurrence/CarryCancellation.recurrence_carry_preserves_weight
       definition_sha256: sha256:e8e1587f52d86fd1e36877379ac9809f7763f54fe177237ebe301a3fe1231470

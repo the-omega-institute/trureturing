@@ -1,0 +1,10 @@
+ast_path: section/第三百九十八部-Archimedean-囚禁定理
+fingerprints:
+  raw_sha256: sha256:74ff7adbe968dbef79342c0b1e4333ed3e81e25f034ee110662e6093cbf8a081
+  normalized_sha256: sha256:74ff7adbe968dbef79342c0b1e4333ed3e81e25f034ee110662e6093cbf8a081
+cas_ref: sha256:74ff7adbe968dbef79342c0b1e4333ed3e81e25f034ee110662e6093cbf8a081
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

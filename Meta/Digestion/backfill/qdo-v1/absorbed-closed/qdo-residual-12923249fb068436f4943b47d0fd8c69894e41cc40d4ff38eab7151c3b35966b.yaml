@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/Separation/FiniteObservationRefinementBound.finite_observation_refinement_and_stability_bound
       source_sha256: sha256:12923249fb068436f4943b47d0fd8c69894e41cc40d4ff38eab7151c3b35966b
-      target_sha256: sha256:eae0a62c836e5b9675b6561db748cbd4ffa988d4d0ed99b787f54f4d4e3be346
+      target_statement_id: sha256:d575e66c715d45b2e72ad8b247eb8a6e4a9814c618fd59150e3fe5eb76ba588d
   scribe:
     - gid: D5/S3/Observer/Separation/FiniteObservationRefinementBound.finite_observation_refinement_and_stability_bound
       definition_sha256: sha256:6693801f1f705830978b13058b204185045ba1859a516dd0cb412c522a9c3d86

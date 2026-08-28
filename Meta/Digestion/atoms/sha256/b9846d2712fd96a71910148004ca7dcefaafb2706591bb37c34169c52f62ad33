@@ -1,0 +1,64 @@
+## 定理 352.1（Bode–width RH criterion）
+
+下列条件等价：
+
+$$
+\boxed{
+\begin{aligned}
+&(1)\quad
+\mathrm{RH}
+\text{ 在高度 }T\text{ 以下成立};\\
+&(2)\quad
+\mathfrak W_T(y)=0
+\quad\forall y>0;\\
+&(3)\quad
+\int_0^\infty
+\mathfrak W_T(y)\,dy=0.
+\end{aligned}
+}
+\tag{352.5}
+$$
+
+更精确地：
+
+$$
+\boxed{
+\int_0^\infty
+\mathfrak W_T(y)\,dy
+=
+\frac12
+\sum_{\rho\in\mathcal Z_T^+}
+\left(
+\Re\rho-\frac12
+\right)^2.
+}
+\tag{352.6}
+$$
+
+结合式 (349.8)：
+
+$$
+\boxed{
+\int_0^\infty
+\mathfrak W_T(y)\,dy
+=
+\frac12
+\mathfrak R_T''(0).
+}
+\tag{352.7}
+$$
+
+因此三种看似不同的缺陷完全相同：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{共振衰减率方差};\\
+&\text{阻尼配分函数曲率};\\
+&\text{Blaschke 垂直衰减面积}.
+\end{aligned}
+}
+$$
+
+---
+

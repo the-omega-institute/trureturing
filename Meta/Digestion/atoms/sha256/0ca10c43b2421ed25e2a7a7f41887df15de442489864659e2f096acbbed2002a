@@ -1,0 +1,32 @@
+## 282.3 Schur 参数是 primitive innovations
+
+moments：
+
+$$
+c_1,c_2,\ldots
+$$
+
+包含大量复合信息。
+
+Verblunsky 参数：
+
+$$
+\alpha_0,\alpha_1,\ldots
+$$
+
+则是逐层条件化以后留下的最小创新数据。
+
+因此：
+
+$$
+\boxed{
+\text{Schur algorithm}
+=
+\text{圆周 moment histories 的 primitive decomposition}.
+}
+$$
+
+这为 Yu Deng 的“primitive history”提供了另一个完全闭合的一维模型。
+
+---
+

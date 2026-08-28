@@ -1,0 +1,10 @@
+ast_path: section/350-1-单零点-Bode-恒等式
+fingerprints:
+  raw_sha256: sha256:3e078d8e182067f18e23c9294ad91c4f88609451ca789e37cfcf579793f2a957
+  normalized_sha256: sha256:3e078d8e182067f18e23c9294ad91c4f88609451ca789e37cfcf579793f2a957
+cas_ref: sha256:3e078d8e182067f18e23c9294ad91c4f88609451ca789e37cfcf579793f2a957
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

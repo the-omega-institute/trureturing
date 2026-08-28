@@ -1,0 +1,8 @@
+## 410.3 Pole 不能修复多维负谱
+
+pole 项只有 rank one。
+
+若 pole-free effective matrix 有两个或更多负方向，则最终正性不可能由 pole 单独恢复。
+
+---
+

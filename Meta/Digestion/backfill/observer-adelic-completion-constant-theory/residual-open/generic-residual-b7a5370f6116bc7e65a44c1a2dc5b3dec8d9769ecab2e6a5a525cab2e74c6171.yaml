@@ -1,0 +1,10 @@
+ast_path: section/410-5-不应继续制造新的-RH-等价判据
+fingerprints:
+  raw_sha256: sha256:b7a5370f6116bc7e65a44c1a2dc5b3dec8d9769ecab2e6a5a525cab2e74c6171
+  normalized_sha256: sha256:b7a5370f6116bc7e65a44c1a2dc5b3dec8d9769ecab2e6a5a525cab2e74c6171
+cas_ref: sha256:b7a5370f6116bc7e65a44c1a2dc5b3dec8d9769ecab2e6a5a525cab2e74c6171
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

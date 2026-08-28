@@ -1,0 +1,59 @@
+# 第二百一十五部　无穷小 de Branges 极限
+
+有限差分 observer 满足：
+
+$$
+m_\omega\longrightarrow m_0.
+$$
+
+其 Nevanlinna 核同样满足：
+
+$$
+\boxed{
+\mathcal N_\omega(z,w)
+\longrightarrow
+\mathcal N_0(z,w)
+}
+\tag{215.1}
+$$
+
+在避开零点的紧集上局部一致。
+
+所以：
+
+$$
+\boxed{
+\text{de Branges shifted kernel}
+\quad
+\xrightarrow{\omega\downarrow0}
+\quad
+\text{零点 resolvent Gram kernel}.
+}
+$$
+
+更具体地：
+
+$$
+\boxed{
+\frac{i}{\omega}
+\frac{
+1-\Theta_\omega
+}{
+1+\Theta_\omega
+}
+\longrightarrow
+-\frac{\Xi'}{\Xi}.
+}
+\tag{215.2}
+$$
+
+因此 logarithmic derivative 不是与 de Branges ratio 并列的另一个判据，而是：
+
+$$
+\boxed{
+\text{de Branges inner observer 的 infinitesimal Cayley connection}.
+}
+$$
+
+---
+

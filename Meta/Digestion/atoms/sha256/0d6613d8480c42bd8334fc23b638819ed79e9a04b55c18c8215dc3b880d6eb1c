@@ -1,0 +1,95 @@
+# 第三百三十七部　Prime–Archimedean 被动性
+
+令：
+
+$$
+s=\sigma-ix,
+\qquad
+\sigma=\frac12+\omega.
+$$
+
+由 \(\xi\) 的定义：
+
+$$
+\boxed{
+\frac{\xi'(s)}{\xi(s)}
+=
+\frac1s
++
+\frac1{s-1}
+-
+\frac12\log\pi
++
+\frac12\psi\!\left(\frac s2\right)
++
+\frac{\zeta'(s)}{\zeta(s)},
+}
+\tag{337.1}
+$$
+
+其中 \(\psi=\Gamma'/\Gamma\)。
+
+当：
+
+$$
+\sigma>1,
+$$
+
+Euler 对数导数绝对收敛：
+
+$$
+\frac{\zeta'(s)}{\zeta(s)}
+=
+-
+\sum_{n=2}^{\infty}
+\frac{\Lambda(n)}{n^s}.
+$$
+
+定义 Archimedean 屏障：
+
+$$
+\boxed{
+\mathfrak A_\infty(\sigma,x)
+=
+\Re
+\left[
+\frac1s
++
+\frac1{s-1}
+-
+\frac12\log\pi
++
+\frac12\psi\!\left(\frac s2\right)
+\right].
+}
+\tag{337.2}
+$$
+
+定义素数相干项：
+
+$$
+\boxed{
+\mathfrak C_{\mathrm{prime}}(\sigma,x)
+=
+\sum_{n=2}^{\infty}
+\Lambda(n)n^{-\sigma}
+\cos(x\log n).
+}
+\tag{337.3}
+$$
+
+则：
+
+$$
+\boxed{
+\Re\frac{\xi'(s)}{\xi(s)}
+=
+\mathfrak A_\infty(\sigma,x)
+-
+\mathfrak C_{\mathrm{prime}}(\sigma,x).
+}
+\tag{337.4}
+$$
+
+---
+

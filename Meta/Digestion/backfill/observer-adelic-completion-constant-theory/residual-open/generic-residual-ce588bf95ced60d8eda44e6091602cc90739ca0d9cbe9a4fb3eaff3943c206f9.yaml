@@ -1,0 +1,16 @@
+ast_path: Level/5
+fingerprints:
+  raw_sha256: sha256:ce588bf95ced60d8eda44e6091602cc90739ca0d9cbe9a4fb3eaff3943c206f9
+  normalized_sha256: sha256:ce588bf95ced60d8eda44e6091602cc90739ca0d9cbe9a4fb3eaff3943c206f9
+cas_ref: sha256:ce588bf95ced60d8eda44e6091602cc90739ca0d9cbe9a4fb3eaff3943c206f9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-ebe373f1a12d52912423ed39acab00ee76359efef1aee67f69aab61b48757b49-d2abcee43aefed1258d498fc54a3f6e23590015c81a19b69d8fb06e784c3e323
+    - generic-residual-a28b3141e64afa004e9040d3b8c840ce16c5e347282730ef7b9599c352085c9e-c531572fbe6a85b52170ac8e13f7b26cefe4666d40addda98b2dca850a4c934c
+    - generic-residual-add933c5e0885d41423d33aed22b5d0487580ec9214286d1d6c9207db9767c5a-dbcc477d37599fb2310f72f04eb88d9fd04654d39094ab7ecb9d4dd4eab2b8f5
+    - generic-residual-098c25a1a8f0cd2e73b5dbf84f98b104b54fe06ba4a7c843308ac21dde675456-2218b4105aa5a9d07fa88a45eaed719d45ced7bb2a9f8786e57b5da2c84110f5
+    - generic-residual-b2d18cb0ca3ae50e677e2b7a1318704cca17db141fabf76b82ca5d9f89d390a7-589bad25c6653f776a5a19c1630b13b2137d46fba8e932c19c0fd6e8deb593d4

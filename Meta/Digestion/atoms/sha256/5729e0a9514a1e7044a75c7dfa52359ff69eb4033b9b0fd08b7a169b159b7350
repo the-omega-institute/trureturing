@@ -1,0 +1,66 @@
+## 定理 242.1（Toeplitz total-positivity RH criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+(a_n)_{n\ge0}\in PF_\infty.
+}
+\tag{242.2}
+$$
+
+### 证明：RH \(\Rightarrow\)（第 242 部）
+
+RH 下：
+
+$$
+\mathscr F(x)
+=
+\prod_j(1+\alpha_jx),
+\qquad
+\alpha_j\ge0,
+\quad
+\sum_j\alpha_j<\infty.
+$$
+
+每个有限截断：
+
+$$
+\prod_{j=1}^{M}(1+\alpha_jx)
+$$
+
+的系数形成完全全正序列；取系数极限保持所有有限 minors 非负。
+
+---
+
+### 证明：PF\(_\infty\Rightarrow\) RH
+
+Edrei 型表示给出：
+
+$$
+\mathscr F(x)
+=
+e^{cx}
+\frac{
+\prod_j(1+\alpha_jx)
+}{
+\prod_k(1-\beta_kx)
+},
+\qquad
+c,\alpha_j,\beta_k\ge0.
+$$
+
+由于 \(\mathscr F\) 是整函数，不能存在 \(\beta_k>0\)。
+
+又因为 \(\mathscr F\) 的整函数阶为 \(1/2\)，不能含 \(e^{cx}\) 的非平凡指数因子，所以 \(c=0\)。
+
+因此：
+
+$$
+\mathscr F(x)=\prod_j(1+\alpha_jx),
+$$
+
+全部零点为负实数。由平方折叠判据，RH 成立。∎
+
+---
+

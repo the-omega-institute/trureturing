@@ -1,0 +1,10 @@
+ast_path: section/300-3-创新误差塌缩
+fingerprints:
+  raw_sha256: sha256:6f0549a8e037e480ea46e507c3aa533762f5a41355516ebd9743f26ff2c1bafc
+  normalized_sha256: sha256:6f0549a8e037e480ea46e507c3aa533762f5a41355516ebd9743f26ff2c1bafc
+cas_ref: sha256:6f0549a8e037e480ea46e507c3aa533762f5a41355516ebd9743f26ff2c1bafc
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

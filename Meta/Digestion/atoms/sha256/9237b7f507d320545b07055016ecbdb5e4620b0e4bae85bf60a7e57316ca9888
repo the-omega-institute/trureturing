@@ -1,0 +1,59 @@
+## 291.1 自伴逆 Cayley family
+
+定义：
+
+$$
+\boxed{
+H_\alpha
+=
+\frac{i}{2}
+(U_\alpha+I)
+(U_\alpha-I)^{-1}.
+}
+\tag{291.2}
+$$
+
+则 \(H_\alpha\) 为自伴算子。
+
+其谱由：
+
+$$
+\vartheta_\xi(e^{i\theta})=\alpha
+$$
+
+的解经：
+
+$$
+\gamma
+=
+\frac12\cot\frac{\theta}{2}
+$$
+
+得到。
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+H_1
+&=\text{Riemann 零点 ordinate 算子};\\
+H_{-1}
+&=\text{完成函数临界点 ordinate 算子};\\
+H_\alpha
+&=\text{一般 }\xi'/\xi\text{ 边界条件算子}.
+\end{aligned}
+}
+\tag{291.3}
+$$
+
+这比单独构造一个 Hilbert–Pólya 算子更完整：
+
+$$
+\boxed{
+\text{Riemann 零点谱只是整个自伴扩张族中的一个边界条件。}
+}
+$$
+
+---
+

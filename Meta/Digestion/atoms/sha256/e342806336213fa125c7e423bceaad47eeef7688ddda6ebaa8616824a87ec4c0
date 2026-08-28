@@ -1,0 +1,32 @@
+## 380.1 Sticky 的精确定义
+
+$$
+\mathcal E_{\mathrm{arith},L}(f)
+$$
+
+小，等价于：
+
+$$
+f\approx U_{\log n}f
+$$
+
+对大量活跃 prime powers 同时成立。
+
+所以 multi-prime sticky cluster 不再是模糊的“相位似乎对齐”，而是：
+
+$$
+\boxed{
+\text{测试状态接近对数素数平移图的低能特征态。}
+}
+$$
+
+Non-sticky 则意味着至少若干主要平移产生显著位移：
+
+$$
+\|f-U_{\log n}f\|_2^2
+$$
+
+较大，从而自动产生正能量。
+
+---
+

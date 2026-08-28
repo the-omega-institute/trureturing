@@ -1,0 +1,15 @@
+* 优化后的有限帧；
+
+比较：
+
+$$
+A_K,\quad
+\kappa_{\mathrm{tor}},
+\quad
+\operatorname{Stick}_{\mathrm{tor}}.
+$$
+
+若 \(D=5\) 并未显著改善容量，应保留它作为最低成本结构通道，而不是宣称其普遍最优。
+
+---
+

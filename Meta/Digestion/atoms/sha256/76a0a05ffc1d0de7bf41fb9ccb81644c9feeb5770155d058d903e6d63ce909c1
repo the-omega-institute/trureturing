@@ -1,0 +1,43 @@
+## 299.1 更弱的 Gram 目标
+
+甚至不必直接构造 \(\vartheta_{\mathrm{tor}}\)。
+
+只需构造一族向量：
+
+$$
+Y_n
+$$
+
+使：
+
+$$
+\boxed{
+\left\langle Y_m,Y_n\right\rangle
+=
+\frac{
+\lambda_{m-n+1}
+-2\lambda_{m-n}
++\lambda_{m-n-1}
+}{
+2\lambda_1
+}.
+}
+\tag{299.2}
+$$
+
+则 Li 曲率 Toeplitz 核正定，从而：
+
+$$
+\mathfrak C_\xi
+$$
+
+为 Carathéodory 函数，
+
+$$
+\vartheta_\xi
+$$
+
+为 Schur 函数，最终得到 RH。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/322-3-Conservative-system-category/clause/4
+fingerprints:
+  raw_sha256: sha256:06672455256bbc7490ee7510eb57a2ee8a00308470dcb8160afd4bc4d9de74b3
+  normalized_sha256: sha256:06672455256bbc7490ee7510eb57a2ee8a00308470dcb8160afd4bc4d9de74b3
+cas_ref: sha256:06672455256bbc7490ee7510eb57a2ee8a00308470dcb8160afd4bc4d9de74b3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

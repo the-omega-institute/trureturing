@@ -1,0 +1,51 @@
+# 第一百七十八部　标准 \(L^2\) 正性为什么不足
+
+模曲面的标准 \(L^2\) 连续谱由：
+
+$$
+s=\frac12+it
+$$
+
+参数化。
+
+而一个假想线外 ζ 零点：
+
+$$
+s=\frac12+\delta+i\gamma,
+\qquad
+\delta\neq0,
+$$
+
+对应的是 Eisenstein family 的 meromorphic continuation／resonant state，不是标准 unitary \(L^2\) 连续谱中的普通向量。
+
+因此：
+
+$$
+\boxed{
+\text{任何只在标准 }L^2\text{ 谱上成立的正算子，
+不能直接把线外零点作为 Hilbert 向量排除。}
+}
+$$
+
+闭测地线 relative trace formula 确实产生非负 period squares，并把 period spectrum 与 ortholength spectrum 联系起来；它还可给出若干 simultaneous nonvanishing 结果。([arXiv][4])
+
+但其正性首先作用于 unitary Laplace spectrum。
+
+所以真正需要的是：
+
+$$
+\boxed{
+\text{一个包含 meromorphic Eisenstein jets 的正完成空间，}
+}
+$$
+
+例如：
+
+* rigged Hilbert space；
+* Pontryagin space；
+* de Branges space；
+* canonical system；
+* positive reproducing kernel completion。
+
+---
+

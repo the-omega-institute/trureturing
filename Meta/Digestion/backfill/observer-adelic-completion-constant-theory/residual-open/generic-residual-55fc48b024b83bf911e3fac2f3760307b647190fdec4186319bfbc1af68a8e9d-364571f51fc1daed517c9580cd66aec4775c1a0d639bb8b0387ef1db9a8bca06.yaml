@@ -1,0 +1,10 @@
+ast_path: section/第三百七十五部-一个新的负结论/clause/3
+fingerprints:
+  raw_sha256: sha256:55fc48b024b83bf911e3fac2f3760307b647190fdec4186319bfbc1af68a8e9d
+  normalized_sha256: sha256:55fc48b024b83bf911e3fac2f3760307b647190fdec4186319bfbc1af68a8e9d
+cas_ref: sha256:55fc48b024b83bf911e3fac2f3760307b647190fdec4186319bfbc1af68a8e9d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

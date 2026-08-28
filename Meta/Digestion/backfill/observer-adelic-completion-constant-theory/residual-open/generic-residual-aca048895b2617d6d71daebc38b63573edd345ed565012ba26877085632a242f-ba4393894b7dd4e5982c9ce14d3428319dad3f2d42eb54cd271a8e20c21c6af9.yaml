@@ -1,0 +1,10 @@
+ast_path: section/第二百八十五部-本轮最小-RH-核/clause/2
+fingerprints:
+  raw_sha256: sha256:aca048895b2617d6d71daebc38b63573edd345ed565012ba26877085632a242f
+  normalized_sha256: sha256:aca048895b2617d6d71daebc38b63573edd345ed565012ba26877085632a242f
+cas_ref: sha256:aca048895b2617d6d71daebc38b63573edd345ed565012ba26877085632a242f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

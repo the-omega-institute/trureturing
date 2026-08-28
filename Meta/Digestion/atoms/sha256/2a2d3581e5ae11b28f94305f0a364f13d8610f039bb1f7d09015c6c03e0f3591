@@ -1,0 +1,23 @@
+## 定理 317.1（Raw period-square no-go）
+
+仅仅证明所有 toric period squares 或它们的 Gram matrices 非负，不能推出 RH。
+
+因为这种正性对公共标量因子 \(\xi\) 的零点位置完全不敏感。
+
+真正承重的不是：
+
+$$
+\mathcal G_{\mathcal P}\succeq0,
+$$
+
+而是：
+
+$$
+\boxed{
+\text{carrier-subtracted quotient connection }
+\mathcal K_\xi\succeq0.
+}
+$$
+
+---
+

@@ -1,0 +1,85 @@
+# 第三百三十五部　Poisson–Markov 零点流
+
+Poisson 核满足：
+
+$$
+\boxed{
+P_{\omega+\eta}
+=
+P_\omega*P_\eta.
+}
+\tag{335.1}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathfrak d_{\omega+\eta}
+=
+P_\eta*\mathfrak d_\omega.
+}
+\tag{335.2}
+$$
+
+在 Fourier 空间中：
+
+$$
+\widehat P_\omega(\xi)
+=
+e^{-\omega|\xi|}.
+$$
+
+所以：
+
+$$
+\boxed{
+\partial_\omega
+\mathfrak d_\omega
+=
+-|D_x|\mathfrak d_\omega.
+}
+\tag{335.3}
+$$
+
+同时：
+
+$$
+\boxed{
+\left(
+\partial_\omega^2+\partial_x^2
+\right)
+\mathfrak d_\omega
+=
+0.
+}
+\tag{335.4}
+$$
+
+并且：
+
+$$
+\boxed{
+\mathfrak d_\omega(x)\,dx
+\overset{\omega\downarrow0}{\longrightarrow}
+\nu_\Xi
+}
+\tag{335.5}
+$$
+
+以局部弱测度或 tempered-distribution 意义成立。
+
+所以：
+
+$$
+\boxed{
+\text{Riemann 零点测度}
+\longrightarrow
+\text{Poisson Markov 半群}
+\longrightarrow
+\text{shifted-\(\xi\) 相位密度}.
+}
+$$
+
+---
+

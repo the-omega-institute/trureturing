@@ -1,0 +1,40 @@
+# 第三百五十九部　建议形式化顺序
+
+```text
+D5/S3/Analytic/ShiftedXiPoisson/
+  FiniteShiftedZero.lean
+  FiniteBlaschkePhaseDensity.lean
+  ShiftedPoissonSemigroup.lean
+  BackwardPoissonSource.lean
+  FiniteSourcePositiveDefiniteRH.lean
+
+D5/S3/Analytic/XiDamping/
+  FiniteDampingOperator.lean
+  FunctionalPairCenteredSpectrum.lean
+  CriticalDampingPartition.lean
+  DampingVarianceRHCriterion.lean
+  HeatRegularizedWidthVariance.lean
+
+D5/S3/Analytic/XiBode/
+  SingleBlaschkeVerticalIntegral.lean
+  FiniteBodeAttenuation.lean
+  RealPartDistributionRecovery.lean
+  CriticalAttenuationDefect.lean
+  TriangularOffLineFingerprint.lean
+  AttenuationAreaVarianceIdentity.lean
+
+D5/S3/Observer/ShiftedXiTomography/
+  HorizontalPhaseObserver.lean
+  VerticalAttenuationObserver.lean
+  FiniteResonanceTomography.lean
+  WidthCenterJointRecovery.lean
+
+D5/S3/Analytic/RHTargets/
+  PrimeBackwardPoissonPositivity.lean
+  RelativeTraceWidthVariance.lean
+  CriticalDampingConservation.lean
+  WidthStickyNonStickyDichotomy.lean
+```
+
+---
+

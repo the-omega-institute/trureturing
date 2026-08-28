@@ -1,0 +1,10 @@
+ast_path: section/331-1-临界阻尼判据
+fingerprints:
+  raw_sha256: sha256:5767c518fe0655ac01b5144f0ac90aeb8123960ed52be91a6a9b3d6cfee75c85
+  normalized_sha256: sha256:5767c518fe0655ac01b5144f0ac90aeb8123960ed52be91a6a9b3d6cfee75c85
+cas_ref: sha256:5767c518fe0655ac01b5144f0ac90aeb8123960ed52be91a6a9b3d6cfee75c85
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,36 @@
+## 388.1 Bernstein 密度界
+
+定义：
+
+$$
+B_Y
+=
+\max_{p\le Y}
+\frac{2\log p}{\sqrt p-1}.
+$$
+
+独立相位 Bernstein 不等式给出：
+
+$$
+\boxed{
+\overline{\operatorname{dens}}
+\left\{
+x:
+\mathcal C_Y(x)\ge u
+\right\}
+\le
+\exp
+\left[
+-\frac{u^2}
+{2(V_Y+B_Yu/3)}
+\right].
+}
+\tag{388.4}
+$$
+
+所以高相干频率在长时间平均意义下极其稀少。
+
+但“稀少”并不等于“不能被某个 Paley–Wiener 测试函数集中捕获”。后者正是下一层不确定性问题。
+
+---
+

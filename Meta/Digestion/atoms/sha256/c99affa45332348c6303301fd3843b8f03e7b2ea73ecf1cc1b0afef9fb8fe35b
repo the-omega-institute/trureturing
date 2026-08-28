@@ -1,0 +1,54 @@
+## 147.1 determinant 的历史展开
+
+一般核型算子满足：
+
+$$
+\boxed{
+-\log\det(1-\mathcal L)
+=
+\sum_{r\ge1}
+\frac1r
+\operatorname{Tr}\mathcal L^r.
+}
+\tag{147.3}
+$$
+
+\(\operatorname{Tr}\mathcal L_s^r\) 的每一项由长度为 \(r\) 的 continued-fraction word：
+
+$$
+(a_1,\ldots,a_r),
+\qquad
+a_i\ge1
+$$
+
+给出。
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\text{raw histories}
+&=\text{continued-fraction words};\\
+\text{closed histories}
+&=\text{periodic words};\\
+\text{primitive histories}
+&=\text{primitive closed geodesics};\\
+1/r
+&=\text{循环重标号的对称因子}.
+\end{aligned}
+}
+$$
+
+这与此前 Monster denominator 中：
+
+$$
+-\log\mathcal D
+=
+\sum_{r\ge1}\frac1r H(p^r,q^r)
+$$
+
+具有完全相同的组合骨架。
+
+---
+

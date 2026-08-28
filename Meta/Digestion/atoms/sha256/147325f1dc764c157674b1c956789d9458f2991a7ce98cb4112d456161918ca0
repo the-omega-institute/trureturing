@@ -1,0 +1,39 @@
+* 正谱中的半单重数 fiber。
+
+令：
+
+$$
+\mathcal H_{\mathrm{res}}
+=
+\bigoplus_{\rho}
+\mathbb C^{m_\rho}.
+$$
+
+定义半单化共振生成元：
+
+$$
+\boxed{
+\mathsf G_\omega
+=
+\bigoplus_\rho
+\left[
+-\left(
+\omega+\beta-\frac12
+\right)
++i\gamma
+\right]
+I_{m_\rho}.
+}
+\tag{332.1}
+$$
+
+那么：
+
+$$
+e^{t\mathsf G_\omega}
+$$
+
+的每个 mode 正好具有式 (331.3) 的衰减和振荡。
+
+---
+

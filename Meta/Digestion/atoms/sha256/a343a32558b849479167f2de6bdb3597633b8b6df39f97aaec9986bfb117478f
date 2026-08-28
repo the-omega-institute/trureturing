@@ -1,0 +1,10 @@
+* 多个 canonical-system 尺度。
+
+目标：
+
+$$
+\text{orthogonality}
+\Longrightarrow
+\text{strict kernel gain}.
+$$
+

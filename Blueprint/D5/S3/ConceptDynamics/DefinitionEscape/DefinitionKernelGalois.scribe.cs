@@ -30,13 +30,22 @@ internal sealed class DefinitionKernelGaloisDocument : IScribeDocumentDefinition
 
     private static Formula Formula()
     {
+        Formula state = F.Id("X");
+        Formula output = F.Id("Output");
         Formula gamma = F.Id("Gamma");
         Formula relation = F.Id("relation");
-        return Disp(Seq(
-            Call("Subset", gamma, Call("RelationInvariantReadouts", relation)),
-            Sp, Iff, Sp,
-            Call("Subset", relation,
-                Call("jointKernel", Call("definitionReadout", gamma))), Dot));
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        return Disp(new Formula.Aligned([
+            Seq(Forall, Sp, state, Comma, Sp, output, Colon, Sp, type, Comma),
+            Seq(Grp(), Forall, Sp, gamma, Colon, Sp,
+                Call("Set", Call("Concept", state, output)), Comma),
+            Seq(Grp(), Forall, Sp, relation, Colon, Sp,
+                Call("Set", Seq(state, Sp, Times, Sp, state)), Comma),
+            Seq(Grp(), Call("Subset", gamma, Call("RelationInvariantReadouts", relation)),
+                Sp, Iff, Sp,
+                Call("Subset", relation,
+                    Call("jointKernel", Call("definitionReadout", gamma))), Dot),
+        ]));
     }
 
     private static Formula KernelWitnessFormula()

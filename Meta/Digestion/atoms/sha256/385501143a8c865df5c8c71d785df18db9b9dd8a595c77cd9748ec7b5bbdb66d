@@ -1,0 +1,10 @@
+# 第一百六十七部　全部环面共同核就是 Riemann 零点
+
+Cornelissen–Lorscheid 使用二次 twist 的非消失定理证明：对任意给定的 \(s\)，存在某个二次扩张 \(K_D\)，使：
+
+$$
+\Lambda(s,\chi_D)\neq0.
+$$
+
+因此：
+

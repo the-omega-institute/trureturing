@@ -1,0 +1,46 @@
+# 第二百九十一部　Clark rank-one unitary family
+
+令：
+
+$$
+K_{\vartheta_\xi}
+=
+H^2\ominus\vartheta_\xi H^2
+$$
+
+为 model space。
+
+压缩移位：
+
+$$
+S_{\vartheta_\xi}
+=
+P_{K_{\vartheta_\xi}}M_z
+\big|_{K_{\vartheta_\xi}}
+$$
+
+具有一族由：
+
+$$
+\alpha\in\mathbb T
+$$
+
+参数化的 rank-one unitary perturbations：
+
+$$
+\boxed{
+U_\alpha.
+}
+\tag{291.1}
+$$
+
+其相对于自然循环向量的谱测度正是：
+
+$$
+\sigma_\alpha[\vartheta_\xi].
+$$
+
+Clark 理论正是从 restricted shift 的一维 unitary perturbations 出发建立这族谱测度；相关 unitary model-space 实现是该理论的基础。([维基百科][2])
+
+---
+

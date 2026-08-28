@@ -1,0 +1,56 @@
+## 160.2 Scattering observer
+
+$$
+\Phi(s)
+=
+\frac{\zeta^*(2s-1)}{\zeta^*(2s)}
+$$
+
+读取：
+
+* cusp incoming/outgoing ratio；
+* Riemann zeros对应的 resonances；
+* 连续谱单位模边界；
+* ζ 的平移比值。
+
+二者分别对应：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal L_s&:\text{closed-orbit／内部动力观察};\\
+\Phi(s)&:\text{cusp／开放边界观察}.
+\end{aligned}
+}
+$$
+
+完整模曲面谱必须同时包含：
+
+* 离散 closed dynamics；
+* 连续 scattering dynamics。
+
+所以定义联合观察：
+
+$$
+\boxed{
+\mathfrak O_{\mathrm{mod}}(s)
+=
+\left(
+\mathcal L_s,\Phi(s)
+\right).
+}
+\tag{160.1}
+$$
+
+这比单独使用：
+
+$$
+Z_{\mathrm{Sel}}(s)
+\quad\text{或}\quad
+\xi(s)
+$$
+
+保留更多 primitive 信息。
+
+---
+

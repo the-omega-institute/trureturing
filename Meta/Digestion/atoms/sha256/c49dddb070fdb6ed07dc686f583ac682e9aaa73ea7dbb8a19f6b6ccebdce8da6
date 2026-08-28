@@ -1,0 +1,24 @@
+## 定理 222.1（Stieltjes RH 判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathscr S
+\text{ 是一个正测度的 meromorphic Stieltjes transform}.
+}
+\tag{222.8}
+$$
+
+### 证明
+
+正向已由式 (222.7) 得到。
+
+反向若 \(\mathscr S=\mathscr F'/\mathscr F\) 是 Stieltjes 函数，则其全部极点只能位于负实轴，且留数非负。
+
+而 \(\mathscr F'/\mathscr F\) 的极点恰是 \(\mathscr F\) 的零点，留数为零点重数。
+
+所以 \(\mathscr F\) 的全部零点均位于负实轴。由定理 221.1，RH 成立。∎
+
+---
+

@@ -1,0 +1,53 @@
+# 第二百六十七部　常数角色审计
+
+本轮结构自然选择了：
+
+$$
+\boxed{
+\frac12,\quad1,\quad4,\quad i,\quad e.
+}
+$$
+
+它们的角色分别为：
+
+$$
+\boxed{
+\begin{aligned}
+\frac12
+&=\text{临界半平面边界};\\
+1
+&=\text{Li 展开的归一化基点};\\
+4
+&=\text{平方折叠与 Cayley/Joukowski 变换的尺度因子};\\
+i/2
+&=\text{自伴 ordinate 到 unitary 圆周的 Cayley 尺度};\\
+e
+&=\text{条件负定能量到 Markov 半群衰减的指数接口}.
+\end{aligned}
+}
+$$
+
+值得强调：
+
+$$
+\boxed{
+\varphi
+\text{ 在本分支中没有被结构方程选出。}
+}
+$$
+
+黄金比例在此前承担：
+
+* 无碰撞斜率；
+* Galois 双曲单位；
+* 最短闭测地线；
+* 准晶体显隐尺度。
+
+但 Li–Cayley completion 自身选择的是 unit circle Möbius 几何，而不是 Golden 几何。
+
+这是一个重要的科学负结论：
+
+> 不能因为 \(\varphi\) 在其他完成分支中承重，就预设每个 RH 等价结构都必须出现 \(\varphi\)。
+
+---
+

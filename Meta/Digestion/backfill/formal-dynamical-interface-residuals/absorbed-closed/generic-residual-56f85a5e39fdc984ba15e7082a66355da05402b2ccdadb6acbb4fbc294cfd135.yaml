@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/Prediction/FiniteStabilityClassBound.finite_stability_class_bound
       source_sha256: sha256:56f85a5e39fdc984ba15e7082a66355da05402b2ccdadb6acbb4fbc294cfd135
-      target_sha256: sha256:4528f3797c835d35454ed3492dd5aa3d364bb74a2591df1f00c456592c7f2357
+      target_statement_id: sha256:ef27e4d1a40b26067f87a5d8e9c6ace544bd92451471dbead609cc873e47a204
   scribe:
     - gid: D5/S3/Observer/Prediction/FiniteStabilityClassBound.finite_stability_class_bound
       definition_sha256: sha256:bb2a80fe10f53fe8cfe8b9aa019f0442f5a505a415c50266b62dfd7c2c513027

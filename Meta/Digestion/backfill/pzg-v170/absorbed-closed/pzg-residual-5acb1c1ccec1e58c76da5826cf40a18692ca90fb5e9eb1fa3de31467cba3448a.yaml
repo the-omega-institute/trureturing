@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/History/ReferencedReversal.group_ledger_reversal_spec
       source_sha256: sha256:5acb1c1ccec1e58c76da5826cf40a18692ca90fb5e9eb1fa3de31467cba3448a
-      target_sha256: sha256:f98daa437f4133f06bd1f611a0237a617a10ce602c1c6772a23aa7c77f674c64
+      target_statement_id: sha256:7003f6f0275d08d81e0d2e3c2131e5c8618cb010abeffc027cbedee1cbbcd048
   scribe:
     - gid: D5/S0/History/ReferencedReversal.group_ledger_reversal_spec
       definition_sha256: sha256:651bde1b63cde3d3485f56b7f21ad5b87a516eb43f320240f683597f404a30b7

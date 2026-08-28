@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Recurrence/Invariants/CassiniFrickeSpecializations.cassini_fricke_log_coordinate_identity
       source_sha256: sha256:f8066143a308833d76fc0020e3f6dcc13c9c4baaf8312f5607ccf9df26783c69
-      target_sha256: sha256:f320d2a9e4dc45a58763002266b851a19344604cd2e62cebaadde6d4ad5ef9e9
+      target_statement_id: sha256:b5e1502bcf3dec6b5dc4984005877362c957ff5c1190e6473beae95588b7c2fe
   scribe:
     - gid: D5/S1/Recurrence/Invariants/CassiniFrickeSpecializations.cassini_fricke_log_coordinate_identity
       definition_sha256: sha256:a581f8ac56cc529d71ce99d19aa71dec0d1d2b4bcadde5c5bbe4b8311c468116

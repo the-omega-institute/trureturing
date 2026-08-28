@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Asymptotics/PoissonWeightDecay.poisson_weight_tendsto_zero
       source_sha256: sha256:2379464543b02049d1785573d14b77030754b1f8bb7d58ac189cd47da698763e
-      target_sha256: sha256:6fb5459c27855717edeed3edf24dc55819ec3264cec54e60bfce203484bb575b
+      target_statement_id: sha256:096040e0533bf41ce1b2d359b8cba6b6ce881c5c5340d5f2fc7b3fac003fd1ea
   scribe:
     - gid: D5/S0/Asymptotics/PoissonWeightDecay.poisson_weight_tendsto_zero
       definition_sha256: sha256:b788f74589740c1af6beb51b6347715c904b8dcf0b798cdf4e5a2d0ffe0e652f

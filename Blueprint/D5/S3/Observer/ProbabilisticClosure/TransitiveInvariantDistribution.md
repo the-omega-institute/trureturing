@@ -6,7 +6,7 @@ A transitive action admits exactly the uniform invariant probability mass functi
 
 **Theorem 1.1 (The invariant law is uniquely uniform).**
 
-$$\begin{gathered}\forall G: \operatorname{Type}, A: \operatorname{Type},\\{}\operatorname{Group}(G) \land \operatorname{Fintype}(A) \land \operatorname{Nonempty}(A) \land\\{}\operatorname{MulAction}(G, A) \land \operatorname{IsPretransitive}(G, A) \Rightarrow\\{}{\exists ! mu: \operatorname{PMF}(A), \forall g: G, a: A, mu(g smul a) = mu(a)} \land\\{}{\forall mu: \operatorname{PMF}(A), \forall g: G, a: A, mu(g smul a) = mu(a) \Rightarrow \forall a: A, mu(a) = \operatorname{card}(A)^{-1}}.\end{gathered}$$
+$$\begin{gathered}\forall G: \operatorname{Type}, A: \operatorname{Type},\\{}\operatorname{Group}(G) \land \operatorname{Fintype}(A) \land \operatorname{Nonempty}(A) \land\\{}\operatorname{MulAction}(G, A) \land \operatorname{IsPretransitive}(G, A) \Rightarrow\\{}{\exists ! mu: \operatorname{PMF}(A), \forall g: G, a: A, mu(g smul a) = mu(a)} \land\\{}{\forall mu: \operatorname{PMF}(A), (\forall g: G, a: A, mu(g smul a) = mu(a)) \Rightarrow \forall a: A, mu(a) = \operatorname{card}(A)^{-1}}.\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TransitiveInvariantDistribution.transitive_invariant_distribution_unique_uniform` (`✓ std3`). ∎
 

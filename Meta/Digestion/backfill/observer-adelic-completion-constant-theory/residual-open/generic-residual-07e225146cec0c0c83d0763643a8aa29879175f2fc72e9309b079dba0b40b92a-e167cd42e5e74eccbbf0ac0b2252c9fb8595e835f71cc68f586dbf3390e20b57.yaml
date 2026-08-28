@@ -1,0 +1,10 @@
+ast_path: section/299-2-最强的-Clark-family-目标/clause/5
+fingerprints:
+  raw_sha256: sha256:07e225146cec0c0c83d0763643a8aa29879175f2fc72e9309b079dba0b40b92a
+  normalized_sha256: sha256:07e225146cec0c0c83d0763643a8aa29879175f2fc72e9309b079dba0b40b92a
+cas_ref: sha256:07e225146cec0c0c83d0763643a8aa29879175f2fc72e9309b079dba0b40b92a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

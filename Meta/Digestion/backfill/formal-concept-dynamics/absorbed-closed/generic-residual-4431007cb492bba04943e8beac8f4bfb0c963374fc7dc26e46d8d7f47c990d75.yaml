@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Contracts/ContractRefinement.strong_contract_refines_weak
       source_sha256: sha256:4431007cb492bba04943e8beac8f4bfb0c963374fc7dc26e46d8d7f47c990d75
-      target_sha256: sha256:20430e37c9da899a326e64b791096a46d53f16381966db51afcba7f004f5093c
+      target_statement_id: sha256:6c125f636f1b5b5c1516d5729d98da2f1368de6dbdf7a51dddd298ba8c003459
   scribe:
     - gid: D5/S3/ConceptDynamics/Contracts/ContractRefinement.strong_contract_refines_weak
       definition_sha256: sha256:d8b659f8fef9e7d5fbb43eb109ca7fe1002a714c3ca5fdacf82e9e680bda968e

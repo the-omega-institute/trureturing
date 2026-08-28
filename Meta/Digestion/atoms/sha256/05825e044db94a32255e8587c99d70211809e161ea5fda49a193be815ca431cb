@@ -1,0 +1,17 @@
+## 定理 334.1（Riemann Poisson-density theorem）
+
+RH 下：
+
+$$
+\boxed{
+\mathfrak d_\omega
+=
+P_\omega*\nu_\Xi.
+}
+\tag{334.6}
+$$
+
+所以 shifted-\(\xi\) 相位的局部转速，就是零点计数测度在尺度 \(\omega\) 下的 Poisson 平滑。
+
+---
+

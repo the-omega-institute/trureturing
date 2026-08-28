@@ -1,0 +1,15 @@
+ast_path: section/第二百四十一部-Bosonic-与-Fermionic-两张图表
+fingerprints:
+  raw_sha256: sha256:dbb9765a39bcca031e2c06075a236e9ef9fad7cf485effd3f5bca75e0976be8f
+  normalized_sha256: sha256:dbb9765a39bcca031e2c06075a236e9ef9fad7cf485effd3f5bca75e0976be8f
+cas_ref: sha256:dbb9765a39bcca031e2c06075a236e9ef9fad7cf485effd3f5bca75e0976be8f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-1fd06329e93b5c5444661b8a12377c7f01095356ed892743014784baf57481bc-1b62be49b285b475fc5aa9dc18f803606caa5fbd25042f226935a5bfad20cf1f
+    - generic-residual-3854a43e3bce14b87c704b55683ec314ff482b2f49483cbaff26acfabd690997-032ebc7ab59dc522c820bf9da518e3c2f60fe41f30ccd00c73ef7d0faf3ff7c8
+    - generic-residual-16e743fea4b2122698b2e77dfc69f6cc5f35af0aa2f670f7d276eba20b77b87c-2227630f5405ad2831163f678303c477dbcfaf20a39cb24680bc62afc0877171
+    - generic-residual-f6e825c2417857058eda2541e3fda7e8977a1f86da237357bf698cc8da67f817-d5325de769b462d1925b2c3747242af0b89711e36548310d81caa8d964ed202d

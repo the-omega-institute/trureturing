@@ -1,0 +1,10 @@
+ast_path: section/第二百七十三部-Li-系数是平稳过程部分和的方差
+fingerprints:
+  raw_sha256: sha256:7760901a1d9aa8ba22a7407052d7fd35ff4f3d1db51ea7779878b64afc98cf9a
+  normalized_sha256: sha256:7760901a1d9aa8ba22a7407052d7fd35ff4f3d1db51ea7779878b64afc98cf9a
+cas_ref: sha256:7760901a1d9aa8ba22a7407052d7fd35ff4f3d1db51ea7779878b64afc98cf9a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

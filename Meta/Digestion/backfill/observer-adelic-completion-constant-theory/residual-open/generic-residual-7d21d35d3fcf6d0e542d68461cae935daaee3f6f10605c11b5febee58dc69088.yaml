@@ -1,0 +1,10 @@
+ast_path: section/323-1-Toroidal-temperedness
+fingerprints:
+  raw_sha256: sha256:7d21d35d3fcf6d0e542d68461cae935daaee3f6f10605c11b5febee58dc69088
+  normalized_sha256: sha256:7d21d35d3fcf6d0e542d68461cae935daaee3f6f10605c11b5febee58dc69088
+cas_ref: sha256:7d21d35d3fcf6d0e542d68461cae935daaee3f6f10605c11b5febee58dc69088
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

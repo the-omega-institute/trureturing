@@ -1,0 +1,10 @@
+ast_path: section/第一百六十一部-更新后的算术观察索引/clause/4
+fingerprints:
+  raw_sha256: sha256:5b789d35e2047555a13045ee21e308f4740ed275cafd91b04cf04943e2557807
+  normalized_sha256: sha256:5b789d35e2047555a13045ee21e308f4740ed275cafd91b04cf04943e2557807
+cas_ref: sha256:5b789d35e2047555a13045ee21e308f4740ed275cafd91b04cf04943e2557807
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

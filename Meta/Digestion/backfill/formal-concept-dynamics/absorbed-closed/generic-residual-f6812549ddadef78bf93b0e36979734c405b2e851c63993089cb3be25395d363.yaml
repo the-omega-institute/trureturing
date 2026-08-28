@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Coding/TargetRelevantOmission.omission_iff_witness_exists
       source_sha256: sha256:f6812549ddadef78bf93b0e36979734c405b2e851c63993089cb3be25395d363
-      target_sha256: sha256:cea45ceeb64351a3ec50832cd18c9e4d70c7c481f87203c901aa93bb6015582c
+      target_statement_id: sha256:4dac82fe1b4d0aa5fdba47f4ea1260af543199b97be0a3880a468706ed9fca27
   scribe:
     - gid: D5/S3/ConceptDynamics/Coding/TargetRelevantOmission.omission_iff_witness_exists
       definition_sha256: sha256:7e73a696af748b81c46a9246e8e541ea62612032178a270d950141e465a79e89

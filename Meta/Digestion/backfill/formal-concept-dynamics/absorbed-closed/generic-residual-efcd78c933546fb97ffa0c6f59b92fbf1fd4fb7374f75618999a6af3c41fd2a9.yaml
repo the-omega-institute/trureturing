@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/DecisionValue/IncomparableRepairCosts.incomparable_repairs_no_unique_choice
       source_sha256: sha256:efcd78c933546fb97ffa0c6f59b92fbf1fd4fb7374f75618999a6af3c41fd2a9
-      target_sha256: sha256:6488657d7da6920607ddac0220c168bd591ac52071791698bc7ff19b8a278cf2
+      target_statement_id: sha256:273c0fb610b34b19dd9e909f6a60095856cc54b16e0823731f9db3247a2d54e2
   scribe:
     - gid: D5/S3/ConceptDynamics/DecisionValue/IncomparableRepairCosts.incomparable_repairs_no_unique_choice
       definition_sha256: sha256:37e822b383c5141eb68496acbe2c2d4217b194c81fcd35c3af9870a1a07d2d4d

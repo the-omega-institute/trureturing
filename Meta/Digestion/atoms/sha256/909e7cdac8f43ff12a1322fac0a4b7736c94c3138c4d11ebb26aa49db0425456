@@ -1,0 +1,17 @@
+* finite-frame lower bound；
+
+证明：
+
+$$
+\boxed{
+\mathfrak B_\omega
+\le
+(1-\eta)\,
+\mathfrak B_\omega^{\mathrm{coarse}}
+}
+$$
+
+或直接得到正增益。
+
+---
+

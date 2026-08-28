@@ -1,0 +1,24 @@
+## 定理 331.1（Uniform-damping RH criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Theta_{1/2}
+\text{ 的全部共振模式具有相同衰减率 }\frac12.
+}
+\tag{331.5}
+$$
+
+也就是说：
+
+$$
+\boxed{
+\text{Riemann 临界线}
+=
+\text{共振系统中的等阻尼面}.
+}
+$$
+
+---
+
