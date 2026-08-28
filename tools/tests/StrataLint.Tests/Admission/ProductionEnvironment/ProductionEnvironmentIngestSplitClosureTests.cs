@@ -59,6 +59,16 @@ public sealed partial class ProductionEnvironmentTests
             SyntheticNumberedAtomizer.Id,
             Encoding.UTF8.GetBytes(oldText),
             DigestionTestSupport.Rules).Claims);
+        var currentOldAtom = Assert.Single(AtomizerRegistry.Atomize(
+            SyntheticNumberedAtomizer.Id,
+            Encoding.UTF8.GetBytes(currentText),
+            DigestionTestSupport.Rules).Claims,
+            static atom => atom.AstPath == "theorem/1.1");
+        Assert.Equal(oldAtom.AstPath, currentOldAtom.AstPath);
+        Assert.Equal(oldAtom.StartByte, currentOldAtom.StartByte);
+        Assert.Equal(oldAtom.EndByte, currentOldAtom.EndByte);
+        Assert.Equal(oldAtom.RawBytes.ToArray(), currentOldAtom.RawBytes.ToArray());
+        Assert.Equal(oldAtom.Fingerprints, currentOldAtom.Fingerprints);
         fixture.Files[RuleFixture.FixtureDigestionSourcePath] = currentText;
         fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = oldText;
         InstallProjectedLedger(
@@ -125,7 +135,6 @@ public sealed partial class ProductionEnvironmentTests
     [Theory]
     [InlineData("entry")]
     [InlineData("source-metadata")]
-    [InlineData("source-non-seen")]
     [InlineData("accepted-event")]
     [InlineData("atomizer-data")]
     [InlineData("cas")]
@@ -142,7 +151,6 @@ public sealed partial class ProductionEnvironmentTests
         {
             "entry" => DirectoryAtomPath(entry.AtomId, "residual-open"),
             "source-metadata" => DirectorySourceMetadataPath(),
-            "source-non-seen" => entry.SourcePath,
             "accepted-event" => FrozenLedgerChangeClassifier.AcceptedRoot + "/changed.json",
             "atomizer-data" => TheoryAtomizerDataLoader.DataPath,
             "cas" => DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..],
@@ -155,12 +163,66 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.True(DigestionStatusEvaluator.StatusAuthorityClosureChanged(
             entry,
-            inputKind == "source-non-seen"
-                ? DigestionReceiptAlignment.Rejected
-                : DigestionReceiptAlignment.Seen,
+            DigestionReceiptAlignment.Seen,
             DigestionMigrationState.Residual,
             RawChangeSet.Create([changedPath]),
             isBaseFactAffected: null));
+    }
+
+    [Theory]
+    [InlineData("legacy-boundary")]
+    [InlineData("stale")]
+    [InlineData("rejected")]
+    public void StatusAuthorityClosureRejectsSourcePathForEachNonSeenAlignment(
+        string alignmentName)
+    {
+        var entry = StatusAuthorityClosureEntry();
+        var alignment = alignmentName switch
+        {
+            "legacy-boundary" => DigestionReceiptAlignment.LegacyBoundary,
+            "stale" => DigestionReceiptAlignment.Stale,
+            "rejected" => DigestionReceiptAlignment.Rejected,
+            _ => throw new ArgumentOutOfRangeException(nameof(alignmentName)),
+        };
+
+        Assert.True(DigestionStatusEvaluator.StatusAuthorityClosureChanged(
+            entry,
+            alignment,
+            DigestionMigrationState.Residual,
+            RawChangeSet.Create([entry.SourcePath]),
+            isBaseFactAffected: null));
+    }
+
+    [Fact]
+    public void StatusAuthorityClosureMissingAlignmentFailsClosed()
+    {
+        var entry = StatusAuthorityClosureEntry();
+        var document = DigestionTestSupport.Document(
+            entry.Atomizer,
+            [entry],
+            sourceId: entry.SourceId,
+            sourcePath: entry.SourcePath);
+        var alignment = new DigestionLedgerAlignment(
+            ImmutableDictionary<string, DigestionReceiptAlignment>.Empty,
+            ImmutableDictionary<string, DigestionAtom>.Empty,
+            ImmutableDictionary<string, ImmutableHashSet<string>>.Empty,
+            ImmutableDictionary<string, GenreRegistryCheck>.Empty,
+            [],
+            [],
+            [],
+            ImmutableHashSet<string>.Empty,
+            ImmutableHashSet<string>.Empty,
+            [],
+            [],
+            []);
+
+        var changed = DigestionStatusEvaluator.StatusAuthorityChangedAtomIds(
+            document,
+            document,
+            RawChangeSet.Create([entry.SourcePath]),
+            alignment);
+
+        Assert.Contains(entry.AtomId, changed);
     }
 
     [Fact]
