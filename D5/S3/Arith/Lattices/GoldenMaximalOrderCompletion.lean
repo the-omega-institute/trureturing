@@ -15,6 +15,7 @@ import Mathlib.GroupTheory.OrderOfElement
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.NumberTheory.NumberField.Discriminant.Defs
 import Mathlib.RingTheory.Ideal.Int
+import Mathlib.Topology.Algebra.Module.Basic
 
 -- Library-search audit trail (2026-08-28):
 -- Repository search found the exact golden ring in `D5.S0.Carrier.Ring`, the golden
@@ -542,17 +543,22 @@ noncomputable def goldenTwoFinitePlace :
 -- The concluding finite-place completion in theorem 28.1.
 abbrev GoldenTwoAdicCompletion :=
   goldenTwoFinitePlace.adicCompletion GoldenNumberField
-
--- The canonical embedding of the golden number field into its completion above 2.
+abbrev GoldenTwoAdicSpace := LatticeIndex → GoldenTwoAdicCompletion
 noncomputable def goldenTwoAdicEmbedding :
     GoldenNumberField →+* GoldenTwoAdicCompletion :=
   NumberField.FinitePlace.embedding goldenTwoFinitePlace
-
+noncomputable def goldenSpaceTwoAdicEmbeddingInt :
+    GoldenSpace →ₗ[ℤ] GoldenTwoAdicSpace :=
+  (LinearMap.pi fun i => (Algebra.linearMap ℚ GoldenTwoAdicCompletion).comp
+    (LinearMap.proj i : GoldenSpace →ₗ[ℚ] ℚ)).restrictScalars ℤ
+noncomputable def integerLatticeTwoAdicCompletion : Submodule ℤ GoldenTwoAdicSpace :=
+  (integerLattice.map goldenSpaceTwoAdicEmbeddingInt).topologicalClosure
+noncomputable def maximalOrderLatticeTwoAdicCompletion : Submodule ℤ GoldenTwoAdicSpace :=
+  (maximalOrderLattice.map goldenSpaceTwoAdicEmbeddingInt).topologicalClosure
 -- The golden integers inside the same named 2-adic finite-place completion.
 noncomputable def goldenIntegerTwoAdicEmbedding :
     GoldenInt →+* GoldenTwoAdicCompletion :=
   goldenTwoAdicEmbedding.comp goldenIntegerEmbedding
-
 private theorem goldenIntegerTwoAdicEmbedding_injective :
     Function.Injective goldenIntegerTwoAdicEmbedding :=
   goldenTwoAdicEmbedding.injective.comp goldenIntegerEmbedding_injective
@@ -568,7 +574,28 @@ private theorem two_repairs_order_parity_in_completion :
   change ∃ y, y ∈ sqrtFiveOrder ∧
     goldenIntegerTwoAdicEmbedding y = goldenIntegerTwoAdicEmbedding ((2 : ℤ) • x)
   exact ⟨(2 : ℤ) • x, two_repairs_order_parity x, rfl⟩
-
+private theorem two_smul_maximal_mem_integer (x : GoldenSpace) (hx : x ∈ maximalOrderLattice) :
+    (2 : ℤ) • x ∈ integerLattice := by
+  rw [maximal_eq_integer_sup_half] at hx
+  rcases Submodule.mem_sup.mp hx with ⟨a, ha, b, hb, rfl⟩
+  obtain ⟨n, rfl⟩ := Submodule.mem_span_singleton.mp hb
+  have haTwo : (2 : ℤ) • a ∈ integerLattice := Submodule.smul_mem integerLattice 2 ha
+  have hhalfTwo : n • ((2 : ℤ) • parityHalfClass) ∈ integerLattice :=
+    Submodule.smul_mem integerLattice n two_parityHalf_mem
+  convert Submodule.add_mem integerLattice haTwo hhalfTwo using 1 <;> module
+private theorem two_repairs_lattice_parity_in_completion :
+    ∀ x : maximalOrderLatticeTwoAdicCompletion,
+      (2 : ℤ) • (x : GoldenTwoAdicSpace) ∈ integerLatticeTwoAdicCompletion := by
+  intro x
+  have hMaps : Set.MapsTo (fun y : GoldenTwoAdicSpace => (2 : ℤ) • y)
+      (maximalOrderLattice.map goldenSpaceTwoAdicEmbeddingInt : Set GoldenTwoAdicSpace)
+      (integerLattice.map goldenSpaceTwoAdicEmbeddingInt : Set GoldenTwoAdicSpace) := by
+    rintro _ ⟨y, hy, rfl⟩
+    exact Submodule.mem_map.mpr ⟨(2 : ℤ) • y, two_smul_maximal_mem_integer y hy,
+      goldenSpaceTwoAdicEmbeddingInt.map_smul (2 : ℤ) y⟩
+  change (2 : ℤ) • (x : GoldenTwoAdicSpace) ∈ closure
+    (integerLattice.map goldenSpaceTwoAdicEmbeddingInt : Set GoldenTwoAdicSpace)
+  exact hMaps.closure (continuous_const_smul (2 : ℤ)) x.property
 -- The exterior-square matrix induced by the even five-cycle
 -- `(1 2 3 4 5)` on the `A4` root coordinates.
 def fiveCycleMatrix : Matrix LatticeIndex LatticeIndex ℤ :=
@@ -734,13 +761,12 @@ theorem golden_maximal_order_completion :
         (⊤ : Subring GoldenInt).toAddSubgroup = 2 ∧
       NumberField.discr GoldenNumberField = 5 ∧
       orderOf fiveCycleOnCompletion = 5 ∧
-      (∀ x : GoldenInt,
-        (goldenIntegerTwoAdicEmbedding ((2 : ℤ) • x) : GoldenTwoAdicCompletion) ∈
-          completedSqrtFiveOrder) := by
+      (∀ x : maximalOrderLatticeTwoAdicCompletion,
+        (2 : ℤ) • (x : GoldenTwoAdicSpace) ∈ integerLatticeTwoAdicCompletion) := by
   refine ⟨rfl, maximal_full_rank, integer_le_maximal,
     golden_ring_preserves_maximal, maximal_minimal, strict_sqrtFiveOrder,
     sqrtFiveOrder_index_two, golden_numberField_discr, fiveCycleOnCompletion_order,
-    two_repairs_order_parity_in_completion⟩
+    two_repairs_lattice_parity_in_completion⟩
 
 -- Reverse probe: the public statement exposes the strict index-two order inclusion and symmetry.
 example :
@@ -752,17 +778,16 @@ example :
     ⟨_, _, _, _, _, hstrict, hindex, _, horder, _⟩
   exact ⟨hstrict, hindex, horder⟩
 
--- Reverse probe for the two repaired carriers: field discriminant and completion above 2.
+-- Reverse probe for the repaired carriers: field discriminant and the lattice completion above 2.
 example :
     NumberField.discr GoldenNumberField = 5 ∧
-      ∀ x : GoldenInt, (2 : ℤ) • x ∈ sqrtFiveOrder := by
+      ∀ x : maximalOrderLatticeTwoAdicCompletion,
+        (2 : ℤ) • (x : GoldenTwoAdicSpace) ∈ integerLatticeTwoAdicCompletion := by
   rcases golden_maximal_order_completion with
     ⟨_, _, _, _, _, _, _, hdisc, _, hcompletion⟩
-  refine ⟨hdisc, fun x => ?_⟩
-  rcases hcompletion x with ⟨y, hy, heq⟩
-  have hxy : y = (2 : ℤ) • x := goldenIntegerTwoAdicEmbedding_injective heq
-  rwa [← hxy]
-
+  exact ⟨hdisc, hcompletion⟩
+example : CompleteSpace maximalOrderLatticeTwoAdicCompletion := by
+  unfold maximalOrderLatticeTwoAdicCompletion; infer_instance
 -- Trivialization probe: the added class is genuinely absent from the original lattice.
 example : parityHalfClass ∈ maximalOrderLattice ∧ parityHalfClass ∉ integerLattice := by
   constructor

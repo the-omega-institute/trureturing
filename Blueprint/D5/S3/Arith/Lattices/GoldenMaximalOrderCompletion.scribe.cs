@@ -42,8 +42,10 @@ internal sealed class GoldenMaximalOrderCompletionDocument : IScribeDocumentDefi
                         "The final three clauses identify the number-field discriminant of the "
                             + "named golden field Q(sqrt(5)) as five, give exact order five for the "
                             + "explicit exterior-square five-cycle on the completed lattice, and "
-                            + "place the image of twice every GoldenInt element in the image of "
-                            + "sqrtFiveOrder inside the finite-place completion above two. No "
+                            + "state that multiplication by two sends every point of the completed "
+                            + "maximal-order lattice into the completed integer lattice. Both "
+                            + "lattice completions are closures in the six-coordinate Hodge space "
+                            + "over the named finite-place completion above two. No "
                             + "hypothesis, uniqueness claim, or stronger ring-of-integers "
                             + "identification is added here."))),
                 DescribeRole.Theorem))));
@@ -56,8 +58,8 @@ internal sealed class GoldenMaximalOrderCompletionDocument : IScribeDocumentDefi
         Formula sqrtOrder = F.Id("sqrtFiveOrder");
         Formula goldenInt = F.Id("GoldenInt");
         Formula goldenField = F.Id("GoldenNumberField");
-        Formula goldenCompletion = F.Id("GoldenTwoAdicCompletion");
-        Formula completedSqrtOrder = F.Id("completedSqrtFiveOrder");
+        Formula integerCompletion = F.Id("integerLatticeTwoAdicCompletion");
+        Formula maximalCompletion = F.Id("maximalOrderLatticeTwoAdicCompletion");
         Formula candidate = F.Id("M");
 
         Formula stableWmax = Call("IsGoldenStable", wmax);
@@ -82,10 +84,8 @@ internal sealed class GoldenMaximalOrderCompletionDocument : IScribeDocumentDefi
             Seq(Call("orderOf", F.Id("fiveCycleOnCompletion")),
                 Sp, Eq, Sp, D(5), Sp, Land),
             Seq(
-                Forall, Sp, F.Id("x"), Colon, Sp, goldenInt, Comma, Sp,
-                Call("goldenIntegerTwoAdicEmbedding",
-                    Seq(D(2), Cdot, Sp, F.Id("x"))),
-                Colon, Sp, goldenCompletion, Sp, InMacro, Sp, completedSqrtOrder, Dot),
+                Forall, Sp, F.Id("x"), Colon, Sp, maximalCompletion, Comma, Sp,
+                D(2), Cdot, Sp, F.Id("x"), Sp, InMacro, Sp, integerCompletion, Dot),
         ]));
     }
 
