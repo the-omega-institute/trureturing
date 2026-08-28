@@ -1,0 +1,5 @@
+source_id = "typed-governance-admission"
+path = "docs/develop/theory/TYPED_GOVERNANCE_ADMISSION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
