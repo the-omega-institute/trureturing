@@ -1,0 +1,17 @@
+ast_path: theorem/36.16
+fingerprints:
+  raw_sha256: sha256:b03368821c154acee67be0b2a9eb9f809b90e61ccee1ff8098505df862beaf44
+  normalized_sha256: sha256:b03368821c154acee67be0b2a9eb9f809b90e61ccee1ff8098505df862beaf44
+cas_ref: sha256:b03368821c154acee67be0b2a9eb9f809b90e61ccee1ff8098505df862beaf44
+coverage_gids:
+  - D5/S3/ObserverMemory/InverseLimits/CompletionIsomorphismCriterion.completion_map_equiv_iff
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/InverseLimits/CompletionIsomorphismCriterion.completion_map_equiv_iff
+      source_sha256: sha256:b03368821c154acee67be0b2a9eb9f809b90e61ccee1ff8098505df862beaf44
+      target_statement_id: sha256:091956630b34334b5a72852cbd27b7e45156f8977c7a790b2454fa7ae288e75f
+  scribe:
+    - gid: D5/S3/ObserverMemory/InverseLimits/CompletionIsomorphismCriterion.completion_map_equiv_iff
+      definition_sha256: sha256:c0816954944a18bd4265bb792419053158a9c74f8d3add392eded30ed5383a3d
+      emission_sha256: sha256:94febd52996df5c509b8bfcc9fd66c976b6f2314d1d71d2bc3f0fa631a1eb189
+  unresolved_subitems: []

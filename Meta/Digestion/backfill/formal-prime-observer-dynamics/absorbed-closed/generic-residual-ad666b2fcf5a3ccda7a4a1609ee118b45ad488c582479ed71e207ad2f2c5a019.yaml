@@ -1,0 +1,17 @@
+ast_path: 定理/285.1
+fingerprints:
+  raw_sha256: sha256:ad666b2fcf5a3ccda7a4a1609ee118b45ad488c582479ed71e207ad2f2c5a019
+  normalized_sha256: sha256:ad666b2fcf5a3ccda7a4a1609ee118b45ad488c582479ed71e207ad2f2c5a019
+cas_ref: sha256:ad666b2fcf5a3ccda7a4a1609ee118b45ad488c582479ed71e207ad2f2c5a019
+coverage_gids:
+  - D5/S3/ConceptDynamics/InterventionLaws/StableFlipObservationalLaw.stable_and_flip_observational_laws_are_uniform_independent
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/InterventionLaws/StableFlipObservationalLaw.stable_and_flip_observational_laws_are_uniform_independent
+      source_sha256: sha256:ad666b2fcf5a3ccda7a4a1609ee118b45ad488c582479ed71e207ad2f2c5a019
+      target_statement_id: sha256:bc647496ec05d1e905c8ffa97490057e784bbb7ddcf9701b2a26e490ae65974e
+  scribe:
+    - gid: D5/S3/ConceptDynamics/InterventionLaws/StableFlipObservationalLaw.stable_and_flip_observational_laws_are_uniform_independent
+      definition_sha256: sha256:c7d13b71cf8ae5327c06d71407acfb4caafab11ba075517b6e72a2af5527f8e0
+      emission_sha256: sha256:972b957437cfe27cd1737cfd6d67aa77af777a01c2de333a0cad255d303c765a
+  unresolved_subitems: []

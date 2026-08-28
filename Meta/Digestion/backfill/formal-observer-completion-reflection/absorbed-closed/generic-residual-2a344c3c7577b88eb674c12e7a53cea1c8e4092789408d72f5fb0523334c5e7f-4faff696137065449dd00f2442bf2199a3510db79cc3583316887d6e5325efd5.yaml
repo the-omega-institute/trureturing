@@ -1,0 +1,17 @@
+ast_path: 命题/48.3/clause/1
+fingerprints:
+  raw_sha256: sha256:2a344c3c7577b88eb674c12e7a53cea1c8e4092789408d72f5fb0523334c5e7f
+  normalized_sha256: sha256:2a344c3c7577b88eb674c12e7a53cea1c8e4092789408d72f5fb0523334c5e7f
+cas_ref: sha256:2a344c3c7577b88eb674c12e7a53cea1c8e4092789408d72f5fb0523334c5e7f
+coverage_gids:
+  - D5/S3/ConceptDynamics/RefinementAlgebra/ObserverStrategyFactorization.observer_strategy_factorization
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/RefinementAlgebra/ObserverStrategyFactorization.observer_strategy_factorization
+      source_sha256: sha256:2a344c3c7577b88eb674c12e7a53cea1c8e4092789408d72f5fb0523334c5e7f
+      target_statement_id: sha256:4a612c38e9cc181797382c91b3a729accbc9e0f7817bbd7e84798fdbeca9d1c3
+  scribe:
+    - gid: D5/S3/ConceptDynamics/RefinementAlgebra/ObserverStrategyFactorization.observer_strategy_factorization
+      definition_sha256: sha256:0927d8b37e22004e0278549a54b73f8fea9cec1272610d519b32ccc574469439
+      emission_sha256: sha256:99d580e1116ac70dd7f778d669b1fcc483a4ccf83e2a00ad60be96da9b6a4c93
+  unresolved_subitems: []
