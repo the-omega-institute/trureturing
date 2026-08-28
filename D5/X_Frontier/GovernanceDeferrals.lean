@@ -263,7 +263,9 @@ def goldenUnitsPrincipalIdealDelivery : Unit := ()
     DECT §48.3 的三个设计题未答,`harness/dect-g1` 因此停止迭代,原子
     `generic-residual-661d307df0f3…` 保持 `residual-open`。
     **地址关系(先读这句)**:分支 `harness/dect-g1` 上已有 `TASK D5-T0050` 承载同一 issue 的
-    方向设计缺口,且 #3218 的评论正在引用那一条;该分支**未合入 dev 且已停止迭代**。
+    方向设计缺口,且 #3218 的评论正在引用那一条;该分支**未合入 dev 且已停止迭代**,
+    故 **dev 上 `D5-T0050` 的本体并不存在** —— 本句是 dev 上唯一提到该号的地方,
+    **它是引用,不是定义**(实测 `git grep '/- TASK D5-T0050' origin/dev` 零命中)。
     本条是 **dev 侧**的记录;两者若日后同处一树,须合并为一条,**不得同址异义**。
     总账:**7 轮评审、7 次修复、零交付**;其中**四轮**出现方向类缺陷,每轮位置不同
     (`Contam` 特化 → `Dep*` 方向 → `commitmentClosureVisibleAtFreeze` → `artifactDependsOn`)。
@@ -296,8 +298,13 @@ def goldenUnitsPrincipalIdealDelivery : Unit := ()
     ②三次域「一实二复」签名、二次侧嵌入族与穷尽定理、`Algebra.trace` 载体 —— 词汇表里都没有;
     ③扫描窗口 `1 ≤ v₁ ≤ v₂ ≤ 200`、`8934/20100`、两个取整不等式与八点像等式 ——
       CAS 的定量断言**没有给出它自己的量化域**,故这些是受限形式而非源文所述,已移出对源的声明面。
-    关闭条件:上列三类收窄中的任一类被真正承载(需先有对应词汇表:lattice/trace 载体、
-    数域嵌入族、或源侧对量化域的裁决),或理论侧裁定该 remark 的定量部分不可形式化。
+    关闭条件〔**本 TASK 新增的判断,#2446 原文未写出单一关闭条件**;
+    该单最后一条评论给的是「还需要什么」三项清单,第二轮评审另判 `still_a_coverage = No`〕:
+    **上列三类收窄必须全部落定**——每一类要么被真正承载(需先有对应词汇表:lattice/trace 载体、
+    数域嵌入族、或源侧对量化域的裁决),要么由理论侧逐类裁定不可形式化并给出理由。
+    **任一类未落定即不得关闭本条** —— 否则未承载的断言会随本条关闭而失去载体,
+    那正是本条存在的理由。另:#2446 评论所列第三项(独立核实另一 subitem
+    `cubic-field-conjugate-trace-explanation` 的状态)至今**无人做过**,一并计入。
     依据:issue #2446;实施 codex-cli 两轮,评审 codex-cli 两席(第一轮 `reject` 五条 blocking,
     第二轮 `comment` 零 blocking 且明判 `still_a_coverage = No`)。同族,不构成多样性共识。 -/
 
@@ -324,6 +331,8 @@ def goldenUnitsPrincipalIdealDelivery : Unit := ()
       这是**卷的缺口**还是**读法问题**?**需 τ=0 裁决或卷内勘误。**
     ③「持续变化」的节律:`∀ stage` 还是 `∃ᶠ atTop`?源文 `:3289` 无节律条款;
       若取最弱读法,分离见证须真正分离两者。
-    关闭条件:三题各有答案(其中②须 τ=0 裁决或卷内勘误),两个构造据此重做并通过评审。
+    关闭条件:三题各有答案(其中②须 τ=0 裁决或卷内勘误),两个构造据此重做
+    〔**「并通过评审」是本 TASK 新增的仓库治理派生,#3157 原文只写到「先答设计题,再开 lane」**;
+    它提高验收门槛,不改写该单的建议〕。
     依据:issue #3157;实施 codex-cli 三轮,评审每轮 arch/tests = codex-cli、quality = nyxid-oracle;
     停止判据写于第三轮结果返回之前(`g2-stopping-rule-r3.md`)。 -/
