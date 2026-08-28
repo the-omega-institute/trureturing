@@ -1,0 +1,64 @@
+# 第一百四十六部　方向翻转与长度加倍
+
+Gauss 分支 \(\psi_1\) 对应一个行列式为 \(-1\) 的矩阵。
+
+一次作用会翻转方向标记；Mayer 对模群测地流的编码中，离散动力显式带有：
+
+$$
+\epsilon\mapsto-\epsilon.
+$$
+
+因此需要两次迭代，才返回原方向。Mayer 的测地流编码和转移算子正保留了这一 \(\mathbb Z_2\) 方向状态。([arXiv][1])
+
+于是出现三个不同但兼容的长度：
+
+$$
+\boxed{
+\begin{array}{c|l}
+\log\varphi&
+\text{单一实嵌入的单位增长}\\
+2\log\varphi&
+\text{一次 Gauss 分支／无向单位流尺度}\\
+4\log\varphi&
+\text{方向完成后的 PSL}_2(\mathbb Z)\text{ 闭测地线}
+\end{array}
+}
+\tag{146.1}
+$$
+
+因此此前单位流中出现的周期：
+
+$$
+2\log\varphi
+$$
+
+与闭测地线长度：
+
+$$
+4\log\varphi
+$$
+
+并不矛盾。
+
+它们之间的关系是：
+
+$$
+\boxed{
+\text{无向／绝对值观察}
+\quad\longrightarrow\quad
+\text{有向测地线完成}
+}
+$$
+
+所产生的二重覆盖。
+
+这与此前 OACTC 中的：
+
+* 六条无向轴 \(\to\) 十二个有向顶点；
+* \(SO(3)\to SU(2)\)；
+* \(A_5\to2.A_5\)；
+
+属于同一个**方向完成原理**。
+
+---
+

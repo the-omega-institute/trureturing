@@ -1,0 +1,10 @@
+ast_path: section/321-1-等价-Gram-目标
+fingerprints:
+  raw_sha256: sha256:3d4fcb02b4c00fc694eedd8b7917c1383ff3bc19c6ac68f95b3fa3bc6330924e
+  normalized_sha256: sha256:3d4fcb02b4c00fc694eedd8b7917c1383ff3bc19c6ac68f95b3fa3bc6330924e
+cas_ref: sha256:3d4fcb02b4c00fc694eedd8b7917c1383ff3bc19c6ac68f95b3fa3bc6330924e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

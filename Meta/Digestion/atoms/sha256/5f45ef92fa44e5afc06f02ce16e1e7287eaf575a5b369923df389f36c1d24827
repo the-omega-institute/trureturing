@@ -1,0 +1,66 @@
+# 第一百六十四部　建议形式化顺序
+
+```text
+D5/S3/Geometry/GoldenGeodesic/
+  GoldenHyperbolicMatrix.lean
+  DiscriminantFiveAxis.lean
+  GoldenTranslationLength.lean
+  ShortestIntegralHyperbolicTrace.lean
+  OrientationDoubleCover.lean
+
+D5/S3/Analytic/MayerGolden/
+  GaussBranchGoldenFixedPoint.lean
+  GoldenDerivativeMultiplier.lean
+  GoldenInvariantDiscRadius.lean
+  ContinuedFractionWord.lean
+  StickyGoldenOrbit.lean
+
+D5/S3/Analytic/SelbergGolden/
+  PrimitiveGeodesicLocalFactor.lean
+  GoldenQPochhammerFactor.lean
+  GoldenQGammaChart.lean
+  GoldenLocalZeroSet.lean
+  RepetitionHistoryLog.lean
+
+D5/S3/Analytic/EisensteinScattering/
+  ModularScatteringCoefficient.lean
+  ScatteringFunctionalEquation.lean
+  ScatteringPeriodicGauge.lean
+  ScatteringZetaReconstruction.lean
+  ScatteringQuarterLineRH.lean
+
+D5/S3/Observer/AutomorphicTomography/
+  TransferScatteringJointObserver.lean
+  RegulatorOrientationCompletion.lean
+  PrimeRegulatorGeodesicTimeObserver.lean
+  PositiveEisensteinPeriodProgram.lean
+```
+
+优先级最高且形式化风险最低的链是：
+
+$$
+\boxed{
+\text{Golden matrix}
+\to
+\text{length }4\log\varphi
+\to
+q_\varphi=\varphi^{-4}
+\to
+q\text{-Pochhammer zeros}.
+}
+$$
+
+其次是纯代数 telescoping 链：
+
+$$
+\boxed{
+\Phi(s)
+\to
+R(s)=\zeta(2s-1)/\zeta(2s)
+\to
+\zeta(z)\text{ 重构}.
+}
+$$
+
+---
+

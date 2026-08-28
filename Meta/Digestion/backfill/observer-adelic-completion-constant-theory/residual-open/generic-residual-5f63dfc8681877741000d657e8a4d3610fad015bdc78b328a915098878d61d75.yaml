@@ -1,0 +1,14 @@
+ast_path: section/302-1-必须修正的重数解释
+fingerprints:
+  raw_sha256: sha256:5f63dfc8681877741000d657e8a4d3610fad015bdc78b328a915098878d61d75
+  normalized_sha256: sha256:5f63dfc8681877741000d657e8a4d3610fad015bdc78b328a915098878d61d75
+cas_ref: sha256:5f63dfc8681877741000d657e8a4d3610fad015bdc78b328a915098878d61d75
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-598663b740aa6022dc8b3776e53b750712c305c00b5a3487e83b9f5d9866bd72-a08217d966ec2a90bb32aba0013284104ae1e80a1ab89b116a0ea7abc53b3755
+    - generic-residual-65a3cc282ac25781a52dcfb0013316034d1d0a801e298d00087eac19a25c7f8d-6aafa9dd8e782da974f8361cd136e95dbf920a7824014ea5da9ffec56420b6a2
+    - generic-residual-2dd76cbd2f2684a9a1d7b27b557d87f7bddbcf3fca962df221279073da9d1e83-5b623210d3fc5b0a3b8a8b5441be62cc6cb5fd2c74edf4922d3141ed6c44a63a

@@ -1,0 +1,10 @@
+ast_path: section/第一百五十七部-Golden-Eisenstein-周期实验/clause/2
+fingerprints:
+  raw_sha256: sha256:2c8750a13e272794025538a2f9ceff7fdd2e5f83f3361ce1dec09751dc303c95
+  normalized_sha256: sha256:2c8750a13e272794025538a2f9ceff7fdd2e5f83f3361ce1dec09751dc303c95
+cas_ref: sha256:2c8750a13e272794025538a2f9ceff7fdd2e5f83f3361ce1dec09751dc303c95
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+### 连续 Szegő 熵
+
+$$
+\int\log w(\theta)\,\frac{d\theta}{2\pi}
+=
+-\infty,
+$$
+
+因为 absolutely continuous density 为零。
+

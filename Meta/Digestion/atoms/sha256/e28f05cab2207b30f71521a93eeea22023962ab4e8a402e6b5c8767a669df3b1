@@ -1,0 +1,89 @@
+# 第三百一十四部　Toroidal derivative tower 的 Jordan 结构
+
+设：
+
+$$
+E(s)
+$$
+
+是一族 Eisenstein states，并且对某个 Hecke 算子 \(T\)：
+
+$$
+\boxed{
+T E(s)=a_T(s)E(s).
+}
+\tag{314.1}
+$$
+
+若基础 \(L\)-函数在：
+
+$$
+s=\rho
+$$
+
+具有 \(m\) 重零点，则相应 toroidal space 包含：
+
+$$
+E(\rho),\ E'(\rho),\ldots,E^{(m-1)}(\rho).
+$$
+
+这一“零点阶数＝Eisenstein derivative tower 深度”的结构，是 toroidal automorphic forms 理论中的已知定理。([arxiv.org][1])
+
+定义正规化 jet 基：
+
+$$
+\boxed{
+e_j
+=
+\frac{1}{j!}E^{(j)}(\rho),
+\qquad
+0\le j<m.
+}
+\tag{314.2}
+$$
+
+对式 (314.1) 求 \(j\) 阶导数：
+
+$$
+\boxed{
+T e_j
+=
+\sum_{k=0}^{j}
+\frac{
+a_T^{(j-k)}(\rho)
+}{
+(j-k)!
+}
+e_k.
+}
+\tag{314.3}
+$$
+
+所以 \(T\) 在 jet 基中的矩阵为三角 Toeplitz 形式：
+
+$$
+\boxed{
+T|_{\mathcal J_\rho}
+=
+\begin{pmatrix}
+a_T(\rho) & 0 & 0 & \cdots\\
+a_T'(\rho) & a_T(\rho) & 0 & \cdots\\
+a_T''(\rho)/2! & a_T'(\rho) & a_T(\rho)&\cdots\\
+\vdots&\vdots&\vdots&\ddots
+\end{pmatrix}.
+}
+\tag{314.4}
+$$
+
+若：
+
+$$
+m\ge2,
+\qquad
+a_T'(\rho)\neq0,
+$$
+
+则该矩阵含非平凡 Jordan 部分。
+
+---
+

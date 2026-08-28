@@ -1,0 +1,10 @@
+ast_path: section/276-1-第一层不等式
+fingerprints:
+  raw_sha256: sha256:b592af6f0e6a658099d044289044b1410524eb1f8e96a92d527a998cc7f02226
+  normalized_sha256: sha256:b592af6f0e6a658099d044289044b1410524eb1f8e96a92d527a998cc7f02226
+cas_ref: sha256:b592af6f0e6a658099d044289044b1410524eb1f8e96a92d527a998cc7f02226
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

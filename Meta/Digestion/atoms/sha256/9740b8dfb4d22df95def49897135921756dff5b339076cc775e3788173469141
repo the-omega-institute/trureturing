@@ -1,0 +1,36 @@
+# 第二百八十部　Schur 连分数作为 Ramanujan 式尾部压缩
+
+Schur 递推可反写为：
+
+$$
+\boxed{
+f_n(z)
+=
+\frac{
+\alpha_n+zf_{n+1}(z)
+}{
+1+\alpha_nzf_{n+1}(z)
+},
+}
+\tag{280.1}
+$$
+
+因为本例 \(\alpha_n\in\mathbb R\)。
+
+不断代入，得到一个 Wall–Schur 连分式。
+
+因此：
+
+$$
+\boxed{
+\mathcal C_\lambda
+\longleftrightarrow
+f_\lambda
+\longleftrightarrow
+(\alpha_0,\alpha_1,\ldots)
+}
+$$
+
+是同一个对象的：
+
+* 正实部函数图表；

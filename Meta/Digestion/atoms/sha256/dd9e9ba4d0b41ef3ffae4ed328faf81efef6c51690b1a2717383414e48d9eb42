@@ -1,0 +1,18 @@
+# 第二百八十一部　最小 toroidal 证明目标
+
+此前最强的目标是直接构造：
+
+$$
+X_{\mathrm{tor}}\ge0
+$$
+
+或：
+
+$$
+U_{\mathrm{tor}}\ge0
+$$
+
+使 \(\xi\) 成为 Fredholm determinant。
+
+当前得到一个更弱、可能更适合 relative trace 的目标。
+

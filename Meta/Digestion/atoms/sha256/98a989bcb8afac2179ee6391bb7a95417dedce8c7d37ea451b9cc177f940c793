@@ -1,0 +1,47 @@
+## 275.1 Schur 参数
+
+令：
+
+$$
+f_0=f_\lambda.
+$$
+
+递归定义：
+
+$$
+\boxed{
+\alpha_n=f_n(0),
+}
+\tag{275.3}
+$$
+
+$$
+\boxed{
+f_{n+1}(z)
+=
+\frac{
+f_n(z)-\alpha_n
+}{
+z\left(1-\overline{\alpha_n}f_n(z)\right)
+}.
+}
+\tag{275.4}
+$$
+
+因为 \(\mu_\lambda\) 关于复共轭对称，全部 \(\alpha_n\) 为实数。
+
+RH 等价于：
+
+$$
+\boxed{
+|\alpha_n|<1
+\quad
+\forall n\ge0.
+}
+\tag{275.5}
+$$
+
+严格不等号来自 \(\mu_\lambda\) 具有无限支撑。
+
+---
+

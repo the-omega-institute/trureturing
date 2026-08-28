@@ -1,0 +1,10 @@
+ast_path: section/240-1-Primitive-power-sums/clause/2
+fingerprints:
+  raw_sha256: sha256:614d723c9dfb83e3354c124c4b4554b534fe1fab7090e6679cbc727a44371021
+  normalized_sha256: sha256:614d723c9dfb83e3354c124c4b4554b534fe1fab7090e6679cbc727a44371021
+cas_ref: sha256:614d723c9dfb83e3354c124c4b4554b534fe1fab7090e6679cbc727a44371021
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

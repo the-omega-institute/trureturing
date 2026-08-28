@@ -1,0 +1,48 @@
+## 定理 169.1（有限环面谱层析）
+
+对任意紧谱窗口 \(K\)，存在有限环面集：
+
+$$
+\mathcal D_K=\{D_1,\ldots,D_r\},
+$$
+
+使：
+
+$$
+\boxed{
+\bigcap_{D\in\mathcal D_K}
+Z(P_D)\cap K
+=
+Z(\Lambda)\cap K.
+}
+\tag{169.1}
+$$
+
+并且对每个 \(\rho\in K\)：
+
+$$
+\boxed{
+\operatorname{ord}_\rho\Lambda
+=
+\min_{D\in\mathcal D_K}
+\operatorname{ord}_\rho P_D.
+}
+\tag{169.2}
+$$
+
+这是项目现有 finite prime-time tomography 的解析版本：
+
+$$
+\boxed{
+\text{无限完备环面观察族}
+\quad
+\xrightarrow{\text{固定紧窗口}}
+\quad
+\text{有限见证族}.
+}
+$$
+
+需要注意：上述精确定理使用全部非分裂二次环面。若只允许实二次闭测地线，则还需要“固定符号的二次 twist 非消失”作为单独输入，不能自动从全二次扩张版本推出。
+
+---
+

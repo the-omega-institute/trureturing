@@ -1,0 +1,129 @@
+# 本轮最终结论
+
+此前 OACTC 将 RH 研究写成：
+
+$$
+\text{局部素数}
++
+\text{调节子模式}
++
+\text{闭测地动力}
++
+\text{散射}.
+$$
+
+本轮找到了一个比这些候选索引更直接的共同对象：
+
+$$
+\boxed{
+\text{全部非分裂二次环面周期}.
+}
+$$
+
+它具有三个精确性质：
+
+$$
+\boxed{
+\begin{aligned}
+\text{零点识别}
+&:\quad
+\Lambda(s)=0
+\iff
+E_s\text{ 对所有环面不可见};\\
+\text{重数识别}
+&:\quad
+\operatorname{ord}_s\Lambda
+=
+\text{toroidal derivative depth};\\
+\text{有限层析}
+&:\quad
+\text{每个紧谱窗口只需有限个环面}.
+\end{aligned}
+}
+$$
+
+因此最深的新表述是：
+
+$$
+\boxed{
+\text{Riemann 零点并不是某个观察器看到的异常峰，}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{一个 Eisenstein 状态在所有二次局部—全局周期观察中
+同时消失的普遍不可见点。}
+}
+$$
+
+RH 则进一步问：
+
+$$
+\boxed{
+\text{为什么这些普遍不可见状态仍然全部是 tempered 的？}
+}
+$$
+
+de Branges 理论把同一个问题编码成：
+
+$$
+\boxed{
+\Theta_\omega
+\text{ 是否对全部 }\omega>0
+\text{为 meromorphic inner},
+}
+$$
+
+而二者的临界阈值严格相等：
+
+$$
+\boxed{
+\omega_{\mathrm{tor}}
+=
+\omega_{\mathrm{in}}.
+}
+$$
+
+所以 Wang–Deng–OACTC 路线现在拥有一个明确的可改善量：
+
+$$
+\boxed{
+\omega_*.
+}
+$$
+
+真正可能闭合 RH 的下一条核心桥不再模糊：
+
+$$
+\boxed{
+\mathsf I(a)
+\Longrightarrow
+\mathsf I(F(a)),
+\qquad
+F(a)<a,
+}
+$$
+
+或者等价地：
+
+$$
+\boxed{
+\text{全环面不可见}
+\Longrightarrow
+\text{canonical Hamiltonian 正半定}
+\Longrightarrow
+\text{tempered}.
+}
+$$
+
+这才是当前理论最值得继续攻击的中心命题。
+
+[1]: https://arxiv.org/abs/0906.5284 "https://arxiv.org/abs/0906.5284"
+[2]: https://arxiv.org/abs/1310.1765 "https://arxiv.org/abs/1310.1765"
+[3]: https://arxiv.org/abs/1012.3223 "https://arxiv.org/abs/1012.3223"
+[4]: https://arxiv.org/abs/1504.05684 "https://arxiv.org/abs/1504.05684"
+[5]: https://arxiv.org/abs/1204.1827 "https://arxiv.org/abs/1204.1827"
+[6]: https://arxiv.org/abs/math/0412039 "https://arxiv.org/abs/math/0412039"

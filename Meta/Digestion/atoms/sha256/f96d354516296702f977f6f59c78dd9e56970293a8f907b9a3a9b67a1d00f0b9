@@ -1,0 +1,68 @@
+## 本轮独立推导得到（第 237 部）
+
+$$
+\boxed{
+\mathscr F(x)
+=
+\xi(\frac12+\sqrt{x})/\xi(\frac12)
+}
+$$
+
+是整函数，且：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+Z(\mathscr F)\subset(-\infty,0).
+}
+$$
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\frac{\mathscr F'}{\mathscr F}
+=
+\frac{m_0(i\sqrt{x})}{2i\sqrt{x}}.
+}
+$$
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathscr S\text{ 是 Stieltjes 函数}.
+}
+$$
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+H_N^{(0)},H_N^{(1)}\succeq0
+\quad
+\forall N.
+}
+$$
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathscr S
+\text{ 具有非负 S-fraction}.
+}
+$$
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mu_n=\langle U^nv,v\rangle
+\text{ 对某正算子 }U.
+}
+$$
+
+---
+

@@ -1,0 +1,47 @@
+## 定理 154.1（散射—zeta 重构）
+
+$$
+\boxed{
+\zeta(z)
+=
+\prod_{j=0}^{\infty}
+R\left(\frac{z+j+1}{2}\right),
+\qquad
+\Re z>1.
+}
+\tag{154.3}
+$$
+
+即：
+
+$$
+\boxed{
+\zeta(z)
+=
+\prod_{j=0}^{\infty}
+\left[
+\Phi\left(\frac{z+j+1}{2}\right)
+\frac{
+\Gamma\left(\frac{z+j+1}{2}\right)
+}{
+\sqrt\pi\,
+\Gamma\left(\frac{z+j}{2}\right)
+}
+\right].
+}
+\tag{154.4}
+$$
+
+这说明：
+
+$$
+\boxed{
+\text{模曲面散射系数的全部平移读数，
+可以完整重构 Riemann zeta。}
+}
+$$
+
+因此 Eisenstein scattering 不是 ζ 的某个粗略影子，而是一个带有明确周期 gauge 的完整观察接口。
+
+---
+

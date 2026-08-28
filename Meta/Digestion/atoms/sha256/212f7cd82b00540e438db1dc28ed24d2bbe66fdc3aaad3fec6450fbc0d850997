@@ -1,0 +1,13 @@
+# 第二百九十九部　最小的新 RH 目标
+
+前文已经提出多种越来越强的证明目标：
+
+* 正 Pick 核；
+* 正 Hankel moments；
+* 正 trace-class Fredholm 算子；
+* Li 条件负定核；
+* 正 Li 曲率 Toeplitz 核；
+* CMV unitary。
+
+本轮又给出一个更规范的目标。
+

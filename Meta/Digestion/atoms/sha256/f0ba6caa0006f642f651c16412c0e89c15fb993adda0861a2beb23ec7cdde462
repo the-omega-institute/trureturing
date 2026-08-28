@@ -1,0 +1,35 @@
+## 依赖经典理论的等价
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+(a_n)\in PF_\infty.
+}
+$$
+
+依赖 Aissen–Schoenberg–Whitney–Edrei 的全正序列生成函数理论。([PubMed][1])
+
+$$
+\boxed{
+\Lambda_{\mathrm N}
+=
+\text{正 Fredholm／PF}_\infty
+\text{ 完成阈值}.
+}
+$$
+
+依赖 de Bruijn–Newman family 及 Rodgers–Tao 的 \(\Lambda_{\mathrm N}\ge0\)。([arXiv][3])
+
+$$
+\boxed{
+\text{指数倾斜 moment flow}
+\longrightarrow
+\text{Toda lattice}.
+}
+$$
+
+依赖正交多项式和 Hankel tau-function 的标准可积系统理论。([arXiv][4])
+
+---
+

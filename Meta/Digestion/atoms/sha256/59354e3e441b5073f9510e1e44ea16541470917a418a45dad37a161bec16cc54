@@ -1,0 +1,20 @@
+## 322.2 Semisimple spectral category
+
+对象：
+
+$$
+\mathbb C^{m_\rho}
+$$
+
+上的特征值：
+
+$$
+\gamma I_{m_\rho}.
+$$
+
+作用：
+
+* self-adjoint；
+* 无 Jordan；
+* 记录位置和谱重数。
+

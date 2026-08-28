@@ -1,0 +1,22 @@
+## 150.1 Hecke 积分接口
+
+Hecke 的积分公式将实二次扩张的部分 zeta 函数表示为 Eisenstein series 在相应二次周期上的积分；现代一般化仍以“二次扩张的部分 zeta 等于 Eisenstein 周期”为核心。([arXiv][5])
+
+所以对 \(K=\mathbb Q(\sqrt5)\)，黄金闭测地线不是仅仅一个双曲几何对象，而是：
+
+$$
+\boxed{
+\text{实二次 zeta／Hecke 数据的 Archimedean 周期观察器。}
+}
+$$
+
+这与前文单位流 Fourier 模式：
+
+$$
+L(s,\chi_m)
+$$
+
+的构造完全一致：对黄金测地线方向作 Fourier 分解，产生调节子字符与 Hecke 型模式。
+
+---
+

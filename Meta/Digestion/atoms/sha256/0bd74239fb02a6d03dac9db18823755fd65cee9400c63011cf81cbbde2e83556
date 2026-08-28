@@ -1,0 +1,28 @@
+# 第二百五十七部　Li 系数是 unitary 位移能量
+
+由：
+
+$$
+u_\gamma=e^{i\theta_\gamma},
+$$
+
+RH 下：
+
+$$
+\begin{aligned}
+\lambda_n
+&=
+\sum_{\gamma>0}
+m_\gamma
+\left[
+2-u_\gamma^n-\overline{u_\gamma}^n
+\right]\\
+&=
+\sum_{\gamma>0}
+m_\gamma
+|1-u_\gamma^n|^2.
+\end{aligned}
+$$
+
+所以：
+

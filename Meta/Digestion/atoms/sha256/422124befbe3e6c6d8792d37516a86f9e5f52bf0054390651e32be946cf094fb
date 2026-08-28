@@ -1,0 +1,45 @@
+## 148.1 \(q\)-Gamma 图表
+
+标准 \(q\)-Gamma 函数满足：
+
+$$
+\Gamma_q(s)
+=
+\frac{(q;q)_\infty(1-q)^{1-s}}
+{(q^s;q)_\infty}.
+$$
+
+因此：
+
+$$
+\boxed{
+Z_\varphi^{\mathrm{geo}}(s)
+=
+\frac{
+(q_\varphi;q_\varphi)_\infty
+(1-q_\varphi)^{1-s}
+}{
+\Gamma_{q_\varphi}(s)
+}.
+}
+\tag{148.4}
+$$
+
+\(q\)-Gamma 与 \(q\)-Pochhammer 的这一关系是标准定义。([DLMF][3])
+
+所以黄金闭测地线局部因子具有三种图表：
+
+$$
+\boxed{
+\text{Selberg product}
+\leftrightarrow
+q\text{-Pochhammer}
+\leftrightarrow
+q\text{-Gamma}.
+}
+$$
+
+这使 Ramanujan 的 \(q\)-级数方法与双曲闭轨道乘积产生了一个严格接口。
+
+---
+

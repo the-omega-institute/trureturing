@@ -1,0 +1,66 @@
+## 275.2 最初两个创新参数
+
+令：
+
+$$
+c_1
+=
+\frac{
+\lambda_2-2\lambda_1
+}{
+2\lambda_1
+},
+$$
+
+$$
+c_2
+=
+\frac{
+\lambda_3-2\lambda_2+\lambda_1
+}{
+2\lambda_1
+}.
+$$
+
+则：
+
+$$
+\boxed{
+\alpha_0=c_1,
+}
+\tag{275.6}
+$$
+
+$$
+\boxed{
+\alpha_1
+=
+\frac{
+c_2-c_1^2
+}{
+1-c_1^2
+}.
+}
+\tag{275.7}
+$$
+
+每个 \(\alpha_n\) 都表示：
+
+> 已知前 \(n\) 阶相关以后，第 \(n+1\) 阶相关仍不能由旧数据预测的最小新信息。
+
+因此 Schur 算法正是 RDS/DECT 意义上的**递归定义生成器**：
+
+$$
+\boxed{
+\text{当前 moments}
+\to
+\text{预测 residual}
+\to
+\alpha_n
+\to
+\text{下一层完成}.
+}
+$$
+
+---
+

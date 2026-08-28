@@ -1,0 +1,43 @@
+## 定理 194.1（有限环面 Hermite–Biehler 判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathscr H_\omega(z)>0
+}
+$$
+
+对所有：
+
+$$
+\omega>0,
+\qquad
+z\in\mathbb C^+
+$$
+
+成立。
+
+展开为环面周期：
+
+$$
+\boxed{
+\frac{
+\|\mathbf P_\omega^+(z)\|^2
+}{
+\|\mathbf T_\omega^+(z)\|^2
+}
+>
+\frac{
+\|\mathbf P_\omega^-(z)\|^2
+}{
+\|\mathbf T_\omega^-(z)\|^2
+}.
+}
+\tag{194.2}
+$$
+
+这就是 RH 的**有限环面归一能量形式**。
+
+---
+

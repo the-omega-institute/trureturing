@@ -1,0 +1,10 @@
+ast_path: section/185-2-Golden-首通道检验
+fingerprints:
+  raw_sha256: sha256:21ab36bce2ac55c9255d64fc3675c2f1e58c3f0d544df3c19e7867671b53f176
+  normalized_sha256: sha256:21ab36bce2ac55c9255d64fc3675c2f1e58c3f0d544df3c19e7867671b53f176
+cas_ref: sha256:21ab36bce2ac55c9255d64fc3675c2f1e58c3f0d544df3c19e7867671b53f176
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

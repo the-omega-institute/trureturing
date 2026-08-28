@@ -1,0 +1,14 @@
+## 300.5 线外零点注入负对照
+
+向 \(\xi\) 注入保持函数方程的线外零点四元组。
+
+预期出现：
+
+* \(\mathfrak C_\xi\) 在单位圆盘内出现极点；
+* \(\vartheta_\xi\) 不再是 Schur 函数；
+* 某有限 Li 曲率 Toeplitz 矩阵失去正性；
+* Clark 原子权重不再形成正概率测度；
+* rank-one unitary family 无法完成。
+
+---
+

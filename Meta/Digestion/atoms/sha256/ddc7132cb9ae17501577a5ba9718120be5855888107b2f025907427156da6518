@@ -1,0 +1,75 @@
+## 306.1 Clark 尾质量
+
+定义：
+
+$$
+\boxed{
+M(T)
+=
+\sum_{|\Im\rho|>T}w_\rho.
+}
+\tag{306.3}
+$$
+
+令 \(N(T)\) 是 \(0<\Im\rho\le T\) 的非平凡零点计数，按重数计。
+
+由 Riemann–von Mangoldt 公式：
+
+$$
+N(T)
+=
+\frac{T}{2\pi}
+\log\frac{T}{2\pi}
+-
+\frac{T}{2\pi}
++
+O(\log T),
+$$
+
+可得：
+
+$$
+\boxed{
+M(T)
+=
+\frac{
+\log(T/2\pi)+1
+}{
+2\pi\lambda_1T
+}
++
+O\left(
+\frac{\log T}{T^2}
+\right).
+}
+\tag{306.4}
+$$
+
+Riemann–von Mangoldt 的标准零点计数见 DLMF 的 ζ 零点分布部分。([DLMF][3])
+
+若：
+
+$$
+f\in K_{\vartheta_\xi}\cap H^\infty,
+$$
+
+则：
+
+$$
+\boxed{
+\|f-P_Tf\|^2
+\le
+\|f\|_\infty^2
+M(T).
+}
+\tag{306.5}
+$$
+
+所以有限零点层析的平方误差至多为：
+
+$$
+O\left(\frac{\log T}{T}\right).
+$$
+
+---
+

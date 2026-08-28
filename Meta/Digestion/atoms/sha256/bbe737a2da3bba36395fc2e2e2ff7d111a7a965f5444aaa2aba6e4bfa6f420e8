@@ -1,0 +1,78 @@
+# 本轮最终结论
+
+此前 OACTC 的中心问题是：
+
+$$
+\boxed{
+\text{能否从 toric relative trace formula
+证明 }\mathcal K_\xi\text{ 为 Gram 核？}
+}
+$$
+
+本轮对这个问题作了两个关键修正。
+
+第一，toroidal derivative tower 不是应当直接正化的谱空间。它包含由零点重数产生的 nilpotent Jordan 信息。
+
+正确处理是：
+
+$$
+\boxed{
+\text{jet}
+\longrightarrow
+\operatorname{Tr\,resolvent}
+\longrightarrow
+m_\rho\delta_\rho
+\longrightarrow
+\text{semisimple spectral fiber}.
+}
+$$
+
+第二，普通 toric period-square positivity 对 RH 没有区分力，因为：
+
+$$
+\mathcal G_{\mathcal P}
+=
+\xi\bar\xi\,
+\mathcal G_{\mathcal T}
+$$
+
+对任何 \(\xi\) 都保持 Gram 正性。
+
+真正需要证明的是商连接或 shifted transfer 的**被动性**：
+
+$$
+\boxed{
+\frac{
+1-
+\Theta_\omega(z)\overline{\Theta_\omega(w)}
+}{
+1-z\overline w
+}
+\succeq0.
+}
+$$
+
+因此当前最小、最精确的 RH 构造目标已经变成：
+
+$$
+\boxed{
+\text{从二次环面、Hecke 动力与 cusp scattering
+构造一个 unitary colligation，}
+}
+$$
+
+使：
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+D_\omega
++
+zC_\omega(I-zA_\omega)^{-1}B_\omega.
+}
+$$
+
+一旦该 conservative realization 对全部 \(\omega>0\) 成立：
+
+* de Branges kernel 自动正定；

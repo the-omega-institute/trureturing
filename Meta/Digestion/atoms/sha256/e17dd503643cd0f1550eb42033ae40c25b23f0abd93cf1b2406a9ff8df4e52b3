@@ -1,0 +1,22 @@
+## 290.2 谱交错
+
+RH 下 \(\vartheta_\xi\) 是内函数。在其边界相位可微且无多重点的区间上，边界相位单调增加。
+
+因此不同 \(\alpha\) 的 Clark 谱局部交错。
+
+特别地，在简单零点假设下：
+
+$$
+\boxed{
+\xi\text{ 的临界线零点}
+\quad\text{与}\quad
+\xi'\text{ 的临界线零点}
+}
+$$
+
+按高度交错。
+
+这不仅是 Rolle 定理的实函数版本，还被提升为一个 rank-one unitary boundary-condition family 的谱交错。
+
+---
+

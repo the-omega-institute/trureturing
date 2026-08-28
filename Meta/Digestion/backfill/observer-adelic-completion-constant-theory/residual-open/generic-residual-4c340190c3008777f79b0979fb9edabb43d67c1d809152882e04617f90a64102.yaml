@@ -1,0 +1,10 @@
+ast_path: section/320-1-Non-sticky-state
+fingerprints:
+  raw_sha256: sha256:4c340190c3008777f79b0979fb9edabb43d67c1d809152882e04617f90a64102
+  normalized_sha256: sha256:4c340190c3008777f79b0979fb9edabb43d67c1d809152882e04617f90a64102
+cas_ref: sha256:4c340190c3008777f79b0979fb9edabb43d67c1d809152882e04617f90a64102
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

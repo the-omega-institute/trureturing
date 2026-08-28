@@ -1,0 +1,17 @@
+### Non-sticky defect
+
+负核方向分散于：
+
+* 多个二次环面；
+* 多个 twist；
+* 多个高度窗口；
+* 多个 canonical-system 尺度。
+
+目标：
+
+$$
+\text{orthogonality}
+\Longrightarrow
+\text{strict kernel gain}.
+$$
+

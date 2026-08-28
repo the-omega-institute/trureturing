@@ -1,0 +1,50 @@
+## 定理 221.1（平方折叠 RH 判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathscr F
+\text{ 的全部零点属于 }(-\infty,0).
+}
+\tag{221.4}
+$$
+
+### 证明
+
+若 RH 成立，则：
+
+$$
+\rho=\frac12+i\gamma,
+$$
+
+所以：
+
+$$
+\lambda_\rho=(i\gamma)^2=-\gamma^2<0.
+$$
+
+反之，若：
+
+$$
+(\rho-\tfrac12)^2<0,
+$$
+
+则：
+
+$$
+\rho-\frac12
+$$
+
+为纯虚数，因此：
+
+$$
+\Re\rho=\frac12.
+$$
+
+∎
+
+由于 \(\xi\) 是一阶整函数，而平方折叠将变量阶数减半，\(\mathscr F\) 的整函数阶为 \(1/2\)。因此其 Hadamard 乘积属于 genus zero；不需要额外的指数因子。
+
+---
+

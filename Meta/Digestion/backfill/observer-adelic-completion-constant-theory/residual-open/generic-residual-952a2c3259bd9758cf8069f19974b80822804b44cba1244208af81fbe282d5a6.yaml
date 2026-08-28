@@ -1,0 +1,10 @@
+ast_path: section/319-1-能量核恒等式
+fingerprints:
+  raw_sha256: sha256:952a2c3259bd9758cf8069f19974b80822804b44cba1244208af81fbe282d5a6
+  normalized_sha256: sha256:952a2c3259bd9758cf8069f19974b80822804b44cba1244208af81fbe282d5a6
+cas_ref: sha256:952a2c3259bd9758cf8069f19974b80822804b44cba1244208af81fbe282d5a6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

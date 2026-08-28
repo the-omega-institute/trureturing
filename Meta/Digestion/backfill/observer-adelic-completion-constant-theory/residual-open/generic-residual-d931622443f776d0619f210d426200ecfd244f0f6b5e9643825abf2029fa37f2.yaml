@@ -1,0 +1,10 @@
+ast_path: section/309-2-逆-Cayley-ordinate-算子
+fingerprints:
+  raw_sha256: sha256:d931622443f776d0619f210d426200ecfd244f0f6b5e9643825abf2029fa37f2
+  normalized_sha256: sha256:d931622443f776d0619f210d426200ecfd244f0f6b5e9643825abf2029fa37f2
+cas_ref: sha256:d931622443f776d0619f210d426200ecfd244f0f6b5e9643825abf2029fa37f2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

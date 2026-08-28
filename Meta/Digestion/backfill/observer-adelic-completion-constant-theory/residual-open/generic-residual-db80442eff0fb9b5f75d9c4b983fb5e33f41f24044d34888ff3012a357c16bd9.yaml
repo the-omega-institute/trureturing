@@ -1,0 +1,13 @@
+ast_path: section/297-2-Aleksandrov-平均的反向解释
+fingerprints:
+  raw_sha256: sha256:db80442eff0fb9b5f75d9c4b983fb5e33f41f24044d34888ff3012a357c16bd9
+  normalized_sha256: sha256:db80442eff0fb9b5f75d9c4b983fb5e33f41f24044d34888ff3012a357c16bd9
+cas_ref: sha256:db80442eff0fb9b5f75d9c4b983fb5e33f41f24044d34888ff3012a357c16bd9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-02f3eabe7e28975c1ea936febeffc8b12a0a05fd77735528d648a7b065d47499-bf7870a6a72bade710444bafb84c46dae2917647e822edfe81b4c59a61c356e2
+    - generic-residual-35de28998a586a53cb33a49a70c47b481964ddfeafac9d372ee17912720abb76-06b5657f36b2948139fdde94508c2fa1fb312230649b00a9c251d6fc61c31278

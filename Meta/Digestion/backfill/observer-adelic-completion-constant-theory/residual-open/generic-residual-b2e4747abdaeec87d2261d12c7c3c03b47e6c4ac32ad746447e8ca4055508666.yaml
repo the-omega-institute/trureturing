@@ -1,0 +1,14 @@
+ast_path: section/147-2-最粘滞的黄金-word
+fingerprints:
+  raw_sha256: sha256:b2e4747abdaeec87d2261d12c7c3c03b47e6c4ac32ad746447e8ca4055508666
+  normalized_sha256: sha256:b2e4747abdaeec87d2261d12c7c3c03b47e6c4ac32ad746447e8ca4055508666
+cas_ref: sha256:b2e4747abdaeec87d2261d12c7c3c03b47e6c4ac32ad746447e8ca4055508666
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-e0c89e6b7c5af94f048ddee43508bac53f95ecc2612d82c1ffa0e78202eed94a-40a651ee1b4ee82cb3ea50cab341a3f1446a5bda3cfbbdac4856bab042e6d575
+    - generic-residual-e8202c06eace73516603893310f640a8bf7d59756586afcef593b9400fc61b5a-225f2c51be456675c3d137452e79a6320f4965ff2a0430ca7ad6b715aed60f91
+    - generic-residual-4ea44e7ef5205d652e4efb922599162825490d2ccab065b797ac85f3d135bd03-33caa106d4becc31946446f45b566d19c4042ba7e903a3b902184c08f69ba41d

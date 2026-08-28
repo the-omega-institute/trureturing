@@ -1,0 +1,14 @@
+ast_path: section/311-2-Clark-model-space-接口
+fingerprints:
+  raw_sha256: sha256:a20d1c8855b18a43483ddfee5ffcdca1489a1c84cfef10db1b6c7cc6a9e7e336
+  normalized_sha256: sha256:a20d1c8855b18a43483ddfee5ffcdca1489a1c84cfef10db1b6c7cc6a9e7e336
+cas_ref: sha256:a20d1c8855b18a43483ddfee5ffcdca1489a1c84cfef10db1b6c7cc6a9e7e336
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-1c77b752ddaee996ac999549c8b34c66910936ecde9dcbd5602928306f642468-94f7ff34e0be5c3663ce4e5854f4123fa976c3ec47fb92026a96228f49c89bef
+    - generic-residual-5a541e5fe586daf7d49761ed6aa1d21aa720a440316af85fd826982faeada769-8da5cf7327528c17976fe845a6fda8970010662d50cb69ee6cf4926f12960f47
+    - generic-residual-b78a4f3763bf237aa7817fc059d4a09d964b46078950ad7ee2f568522ad3a587-3439e14c6f7bd08d875f4d1de1a1f1bf79ed1ee8db14ae3b4c540a4f5873fa62

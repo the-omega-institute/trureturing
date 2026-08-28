@@ -1,0 +1,15 @@
+ast_path: section/311-1-半平面核接口
+fingerprints:
+  raw_sha256: sha256:37a2620e9af631d9dcbef63d56fadb717b253a5e7dda0d9013f236d748de8ef9
+  normalized_sha256: sha256:37a2620e9af631d9dcbef63d56fadb717b253a5e7dda0d9013f236d748de8ef9
+cas_ref: sha256:37a2620e9af631d9dcbef63d56fadb717b253a5e7dda0d9013f236d748de8ef9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-839092fda3b0f774abc8af90b55e1d0fb38f8a5af38df60f26a2e3d4d806cc04-83ef1ef48f9a722b8a3ac05230b671b917062c9af9344bd5601610c0c6059014
+    - generic-residual-f75eff3f82ccf4435c9e4a48a41e5cb7398799a6304e16b5c9fb87a290ce738d-cc2770c9065151a4a2bc6fa75c5a0166c8340d85f436e2b3cc123b879c8985bc
+    - generic-residual-1daa3dc760fd0b89ee490172cf22a7bca29b349a0a3eaa7beb9aceac6ca8566b-1532e1e62244bfbb11b0059266b12097cd1f5703016ed9d257acfff0824766eb
+    - generic-residual-1d08b662351a30b0dcbd56d3b39c91f18fc8145a190ea71bcaf8abab02fa665d-8721fada835643de1e7e70e96249e0e4349528a583617ab095fdee325d1abaeb

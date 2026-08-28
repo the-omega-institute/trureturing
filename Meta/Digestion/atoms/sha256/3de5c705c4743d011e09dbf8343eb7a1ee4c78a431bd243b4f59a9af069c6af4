@@ -1,0 +1,54 @@
+## 定理 256.2（Cayley–Fredholm RH 判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\exists\,X\ge0,\ X\le I,\ X\text{ trace-class},
+}
+$$
+
+使：
+
+$$
+\boxed{
+\frac{
+\xi(\frac1{1-z})
+}{
+\xi(1)
+}
+=
+\det
+\left(
+I+\frac{4z}{(1-z)^2}X
+\right)
+}
+\tag{256.5}
+$$
+
+在单位圆盘中成立。
+
+### 反向证明（第 256 部）
+
+对 \(X\) 的任意谱值 \(x\in[0,1]\)，式 (256.4) 的零点位于单位圆。
+
+所以 Fredholm determinant 在：
+
+$$
+|z|<1
+$$
+
+内无零点。
+
+由式 (254.2)，这排除了：
+
+$$
+\Re\rho>\frac12
+$$
+
+的 ξ 零点；函数方程继而排除左侧零点。
+
+故 RH 成立。∎
+
+---
+

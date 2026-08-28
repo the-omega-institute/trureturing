@@ -1,0 +1,27 @@
+## 219.2 内函数—Herglotz 双实现
+
+分别计算：
+
+$$
+\Theta_\omega
+$$
+
+和：
+
+$$
+m_\omega.
+$$
+
+验证：
+
+$$
+m_\omega
+=
+\frac{i}{\omega}
+\frac{1-\Theta_\omega}{1+\Theta_\omega},
+$$
+
+以及核恒等式 (210.3)。
+
+---
+

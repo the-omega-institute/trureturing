@@ -1,0 +1,31 @@
+## 228.1 折叠 Hilbert–Pólya 算子
+
+在 \(U\) 的正谱子空间上定义：
+
+$$
+\boxed{
+\mathcal H_\Xi
+=
+U^{-1/2}.
+}
+\tag{228.3}
+$$
+
+则其谱集合为：
+
+$$
+\boxed{
+\operatorname{spec}(\mathcal H_\Xi)
+=
+\{\gamma:\Xi(\gamma)=0,\ \gamma>0\}.
+}
+\tag{228.4}
+$$
+
+因此：
+
+> 一旦 Hankel 正性成立，Hilbert–Pólya 型自伴算子无需另外猜测；它由中心导数 moments 的 GNS/Jacobi 构造自动产生。
+
+需要保留一个限制：
+
+* 标量 moment measure 的原子权重记录零点重数；

@@ -1,0 +1,47 @@
+## 281.1 Relative-trace Gram 形式
+
+更直接地，若能构造向量：
+
+$$
+Y_n
+$$
+
+使：
+
+$$
+\boxed{
+\langle Y_m,Y_n\rangle
+=
+c_{m-n},
+}
+\tag{281.2}
+$$
+
+则：
+
+$$
+T_N(c)
+$$
+
+自动为 Gram 矩阵。
+
+这个目标比：
+
+$$
+K_\lambda(m,n)
+=
+\frac{
+\lambda_m+\lambda_n-\lambda_{|m-n|}
+}{2}
+$$
+
+的 Gram 实现更局部，因为：
+
+$$
+c_n
+$$
+
+只是 Li 度量的离散二阶曲率。
+
+---
+

@@ -1,0 +1,33 @@
+# 第一百五十八部　Wang–Deng 转移树
+
+continued-fraction 周期 word：
+
+$$
+w=(a_1,\ldots,a_r)
+$$
+
+对应一个 primitive closed geodesic。
+
+定义 digit complexity：
+
+$$
+\boxed{
+\operatorname{Br}(w)
+=
+\#\{j:a_{j+1}\neq a_j\}.
+}
+$$
+
+定义最长常值块：
+
+$$
+\boxed{
+\operatorname{Stick}(w)
+=
+\max
+\{\text{连续相同 digit 的长度}\}.
+}
+$$
+
+---
+

@@ -1,0 +1,59 @@
+## 定理 259.1（Li–Hausdorff RH 判据）
+
+先由 Li 系数通过式 (258.2) 逆向定义 \(p_k\)，再令：
+
+$$
+h_n=p_{n+1}.
+$$
+
+则：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+(-1)^r\Delta^rh_n\ge0
+\quad
+\forall n,r\ge0.
+}
+\tag{259.5}
+$$
+
+### 反向证明（第 259 部）
+
+若 \((h_n)\) 完全单调，则存在正测度 \(\eta\) 于 \([0,1]\)，使：
+
+$$
+h_n=\int x^n\,d\eta.
+$$
+
+由 Chebyshev 展开及三角变换：
+
+$$
+\boxed{
+\lambda_n
+=
+4
+\int_0^1
+U_{n-1}(\sqrt{1-x})^2
+\,d\eta(x)
+\ge0.
+}
+\tag{259.6}
+$$
+
+所以全部 Li 系数非负，由 Li 判据得到 RH。∎
+
+这给出了一个纯有限差分版本：
+
+$$
+\boxed{
+\text{RH}
+=
+\text{Li 累积量经过 Möbius–Fredholm 反演后，
+形成单位区间正 moment sequence}.
+}
+$$
+
+---
+

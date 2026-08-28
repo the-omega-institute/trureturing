@@ -1,0 +1,17 @@
+* \(E_-\)：左移、较接近临界带的 output。
+
+RH 要求：
+
+$$
+\boxed{
+|E_-(z)|
+\le
+|E_+(z)|
+\qquad
+(z\in\mathbb C^+,\ \omega>0).
+}
+\tag{318.4}
+$$
+
+---
+

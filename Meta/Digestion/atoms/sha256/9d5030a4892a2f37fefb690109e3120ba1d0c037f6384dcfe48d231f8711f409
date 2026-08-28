@@ -1,0 +1,45 @@
+# 第二百二十五部　Hankel 半正定层级
+
+定义两族 Hankel 矩阵：
+
+$$
+\boxed{
+H_N^{(0)}
+=
+\left[
+\mu_{i+j}
+\right]_{i,j=0}^{N},
+}
+\tag{225.1}
+$$
+
+$$
+\boxed{
+H_N^{(1)}
+=
+\left[
+\mu_{i+j+1}
+\right]_{i,j=0}^{N}.
+}
+\tag{225.2}
+$$
+
+Stieltjes moment problem 的标准判据是：
+
+$$
+(\mu_n)
+\text{ 为 Stieltjes moment sequence}
+$$
+
+当且仅当：
+
+$$
+H_N^{(0)}\succeq0,
+\qquad
+H_N^{(1)}\succeq0
+$$
+
+对全部 \(N\) 成立。该 moment–continued-fraction 等价源于 Stieltjes 理论；现代工作仍以 Hankel positivity 和非负 S-fraction 作为核心刻画。([arXiv][2])
+
+---
+

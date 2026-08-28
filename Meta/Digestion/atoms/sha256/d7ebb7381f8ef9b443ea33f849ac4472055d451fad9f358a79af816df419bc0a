@@ -1,0 +1,76 @@
+# 第一百八十一部　Wang 式 innerness 自改善
+
+定义性质：
+
+$$
+\boxed{
+\mathsf I(a):
+\quad
+\Theta_\omega
+\text{ 对所有 }\omega>a
+\text{ 是 meromorphic inner}.
+}
+\tag{181.1}
+$$
+
+无条件已知：
+
+$$
+\mathsf I(\tfrac12).
+$$
+
+RH 等价于：
+
+$$
+\mathsf I(0).
+$$
+
+因此一种真正的 Wang 式证明路线是寻找函数：
+
+$$
+F:(0,\tfrac12]\to[0,\tfrac12)
+$$
+
+满足：
+
+$$
+F(a)<a
+\qquad(a>0),
+$$
+
+并证明：
+
+$$
+\boxed{
+\mathsf I(a)
+\Longrightarrow
+\mathsf I(F(a)).
+}
+\tag{181.2}
+$$
+
+迭代得到：
+
+$$
+a>F(a)>F^2(a)>\cdots\to0,
+$$
+
+从而：
+
+$$
+\mathsf I(0).
+$$
+
+这比笼统说“自改善可能证明 RH”精确得多：
+
+$$
+\boxed{
+\text{需要改善的量就是 }
+\omega_{\mathrm{in}}
+=
+\omega_{\mathrm{tor}}.
+}
+$$
+
+---
+

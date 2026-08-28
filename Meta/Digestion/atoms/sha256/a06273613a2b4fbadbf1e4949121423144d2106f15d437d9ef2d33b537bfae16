@@ -1,0 +1,27 @@
+## 300.4 小弧质量律
+
+计算：
+
+$$
+\mu_\lambda(I_\varepsilon)
+$$
+
+并与：
+
+$$
+\frac{
+\varepsilon
+}{
+2\pi\lambda_1
+}
+\left[
+\log\frac1{2\pi\varepsilon}+1
+\right]
+$$
+
+比较。
+
+这会直接检验零点计数与 Clark 边界谱之间的转换。
+
+---
+

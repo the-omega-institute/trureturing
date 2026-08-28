@@ -1,0 +1,10 @@
+ast_path: section/第三百零四部-圆盘-Clark-与-de-Branges-核是同一个核的规范变换
+fingerprints:
+  raw_sha256: sha256:87b12871dd4512e48180e97a94232cde6e0169ec38bcc03236c952db013aafa1
+  normalized_sha256: sha256:87b12871dd4512e48180e97a94232cde6e0169ec38bcc03236c952db013aafa1
+cas_ref: sha256:87b12871dd4512e48180e97a94232cde6e0169ec38bcc03236c952db013aafa1
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

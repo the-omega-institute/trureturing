@@ -1,0 +1,45 @@
+## 260.1 Li Gram 核
+
+定义：
+
+$$
+\boxed{
+K_\lambda(m,n)
+=
+\frac{
+\lambda_m+\lambda_n-\lambda_{|m-n|}
+}{2}.
+}
+\tag{260.5}
+$$
+
+RH 下：
+
+$$
+K_\lambda
+$$
+
+是 Hilbert 空间中向量：
+
+$$
+I-C_\Xi^n
+$$
+
+的实 Gram 核。
+
+因此：
+
+$$
+\boxed{
+[K_\lambda(n_i,n_j)]_{i,j}
+\succeq0
+}
+\tag{260.6}
+$$
+
+对任意有限整数集合成立。
+
+这提供一个新的有限矩阵 RH 层级。
+
+---
+

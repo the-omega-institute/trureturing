@@ -1,0 +1,51 @@
+## 316.1 超额连接
+
+在避开零点处：
+
+$$
+\boxed{
+\partial_s
+\log\mathcal R_K(s,t)
+=
+\frac{\xi'(s)}{\xi(s)},
+}
+\tag{316.7}
+$$
+
+$$
+\boxed{
+\partial_{\overline t}
+\log\mathcal R_K(s,t)
+=
+\overline{
+\frac{\xi'(t)}{\xi(t)}
+}.
+}
+\tag{316.8}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal K_\xi(s,t)
+=
+\frac{
+\partial_s\log\mathcal R_K(s,t)
++
+\partial_{\overline t}\log\mathcal R_K(s,t)
+}{
+\lambda_1(s+\overline t-1)
+}.
+}
+\tag{316.9}
+$$
+
+这说明：
+
+> 半平面 RH 核完全可以由有限环面 period Gram kernel 与 carrier Gram kernel 的商连接重构。
+
+它不依赖具体选了哪一组合法有限环面图表。
+
+---
+
