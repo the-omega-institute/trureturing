@@ -1,0 +1,17 @@
+ast_path: 定理/246.1
+fingerprints:
+  raw_sha256: sha256:ab5bdfb93efb563863a7f11c52a06ab31fafa20844c6ccd3d6416a36bb02acf6
+  normalized_sha256: sha256:ab5bdfb93efb563863a7f11c52a06ab31fafa20844c6ccd3d6416a36bb02acf6
+cas_ref: sha256:ab5bdfb93efb563863a7f11c52a06ab31fafa20844c6ccd3d6416a36bb02acf6
+coverage_gids:
+  - D5/S3/Observer/LinearMemory/HankelGramianSingularValues.hankel_gramian_singular_values
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/LinearMemory/HankelGramianSingularValues.hankel_gramian_singular_values
+      source_sha256: sha256:ab5bdfb93efb563863a7f11c52a06ab31fafa20844c6ccd3d6416a36bb02acf6
+      target_statement_id: sha256:f9b9fbc7253269fb0d020f402626ae03eb4ac244fa8eb2386c4c988efb0823a1
+  scribe:
+    - gid: D5/S3/Observer/LinearMemory/HankelGramianSingularValues.hankel_gramian_singular_values
+      definition_sha256: sha256:c986cadf51941db5bd71fdfaae1ce1c76f428cd2b30cf8c7ea11e74027a7edfb
+      emission_sha256: sha256:068f0ecdbf2ecaf81238e6741a235e38c8f6f5e017c70405353a83325877c9e9
+  unresolved_subitems: []
