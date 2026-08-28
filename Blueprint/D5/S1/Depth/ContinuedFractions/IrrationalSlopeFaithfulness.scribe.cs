@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Depth.ContinuedFractions;
 internal sealed class IrrationalSlopeFaithfulnessDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Irrational slopes faithfully encode integer pairs; the golden encoding also separates bounded-denominator labels by an effective finite-precision gap.",
+        "Irrational slopes faithfully encode integer pairs; the golden encoding also separates distinct labels within a finite horizontal precision budget.",
         H("Irrational Slope Faithfulness"),
         Blocks(
             Describe.Lean(
@@ -24,19 +24,6 @@ internal sealed class IrrationalSlopeFaithfulnessDocument : IScribeDocumentDefin
                         + "enumeration or an abstract replacement."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("rational-approximation-label"),
-                DeclarationHandle.Create(
-                    "D5/S1/Depth/ContinuedFractions/IrrationalSlopeFaithfulness."
-                    + "rationalApproximationLabel"),
-                H("Rational approximations as integer labels"),
-                StatementSource.FromAuthor(RationalApproximationLabelDefinition()),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "A reduced rational q supplies the primitive integer label "
-                        + "(den(q), -num(q)). Its golden slope encoding is the unnormalized "
-                        + "separation den(q) times (phi - q)."))),
-                DescribeRole.Definition),
-            Describe.Lean(
                 DescribeId.Create("finite-precision-gap"),
                 DeclarationHandle.Create(
                     "D5/S1/Depth/ContinuedFractions/IrrationalSlopeFaithfulness."
@@ -46,7 +33,7 @@ internal sealed class IrrationalSlopeFaithfulnessDocument : IScribeDocumentDefin
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "At precision P, the visible separation threshold is "
-                        + "1/(sqrt(5) P + 1). It decreases as the denominator budget grows."))),
+                        + "1/(sqrt(5) P + 1). It decreases as the horizontal budget grows."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("finite-precision-stability"),
@@ -57,22 +44,10 @@ internal sealed class IrrationalSlopeFaithfulnessDocument : IScribeDocumentDefin
                 StatementSource.FromAuthor(FinitePrecisionStableDefinition()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For every positive precision P and rational q with denominator at most P, "
-                        + "the actual encoded primitive label must remain farther from zero than "
-                        + "the precision-dependent gap. A constant encoding fails this property."))),
-                DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("golden-finite-precision-stability"),
-                DeclarationHandle.Create(
-                    "D5/S1/Depth/ContinuedFractions/IrrationalSlopeFaithfulness."
-                    + "GoldenFinitePrecisionStability"),
-                H("The golden Hurwitz certificate is tied to the golden encoding"),
-                StatementSource.FromAuthor(GoldenFinitePrecisionStabilityDefinition()),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "This package preserves the prior rational Hurwitz bound and also carries "
-                        + "its finite-precision interpretation for the actual map E_phi. The "
-                        + "second field is the separation bridge absent from the earlier type."))),
+                    "At every positive precision P, any two distinct integer-pair labels whose "
+                        + "first-coordinate displacement is at most P must have encoded outputs "
+                        + "separated by more than the precision-dependent gap. Thus even a "
+                        + "nonzero constant encoding fails this property."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("irrational-slope-faithfulness"),
@@ -89,17 +64,17 @@ internal sealed class IrrationalSlopeFaithfulnessDocument : IScribeDocumentDefin
                             + "second quantifies the same faithfulness over every irrational "
                             + "slope. The third supplies a faithful irrational slope distinct "
                             + "from the golden ratio, so golden faithfulness is not unique. The "
-                            + "fourth is the golden finite-precision package: it preserves the "
-                            + "Hurwitz inequality and applies it to encoded labels at every "
-                            + "explicit denominator precision.")),
+                            + "fourth directly asserts pairwise finite-precision stability of "
+                            + "the golden encoding; it contains no additional public Hurwitz "
+                            + "assertion.")),
                     Paragraph(Text(
                         "For injectivity, equality of two encoded labels gives alpha times the "
                             + "difference of their first coordinates equal to an integer. A "
                             + "nonzero first-coordinate difference would make that product "
                             + "irrational, a contradiction. The remaining integer coordinates "
                             + "then agree. The golden conjugate is the distinct faithful witness, "
-                            + "and the existing golden Hurwitz theorem yields a positive encoded "
-                            + "separation after scaling by each rational denominator."))),
+                            + "and the existing golden Hurwitz theorem supplies the arithmetic "
+                            + "estimate used internally to prove the pairwise output gap."))),
                 DescribeRole.Theorem)),
         [
             DocumentEdge.Dependency.Create(GidRef.Create(
@@ -118,14 +93,6 @@ internal sealed class IrrationalSlopeFaithfulnessDocument : IScribeDocumentDefin
             alpha, Sp, Cdot, Sp, m, Sp, Plus, Sp, n));
     }
 
-    private static Formula RationalApproximationLabelDefinition()
-    {
-        Formula q = F.Id("q");
-        return Disp(Seq(
-            ApproximationLabel(q), Sp, Eq, Sp, Open,
-            Denominator(q), Comma, Sp, Minus, Numerator(q), Close));
-    }
-
     private static Formula FinitePrecisionGapDefinition()
     {
         Formula precision = F.Id("P");
@@ -139,28 +106,22 @@ internal sealed class IrrationalSlopeFaithfulnessDocument : IScribeDocumentDefin
     {
         Formula encoding = F.Id("F");
         Formula precision = F.Id("P");
-        Formula q = F.Id("q");
+        Formula left = F.Id("x");
+        Formula right = F.Id("y");
+        Formula leftFirst = Seq(left, Underscore, Grp(D(1)));
+        Formula rightFirst = Seq(right, Underscore, Grp(D(1)));
         return Disp(Seq(
             FiniteStable(encoding), Sp, Iff, Sp,
             Forall, Sp, precision, Sp, InMacro, Sp, Naturals(), Comma, Esc,
             D(0), Sp, Lt, Sp, precision, Sp, Rightarrow, Sp,
-            Forall, Sp, q, Sp, InMacro, Sp, Rationals(), Comma, Esc,
-            Denominator(q), Sp, Leq, Sp, precision, Sp, Rightarrow, Sp,
+            Forall, Sp, left, Comma, Sp, right, Sp, InMacro, Sp,
+            Integers(), Caret, Grp(D(2)), Comma, Esc,
+            Bar, leftFirst, Sp, Minus, Sp, rightFirst, Bar,
+            Sp, Leq, Sp, precision, Sp, Rightarrow, Sp,
+            left, Sp, Neq, Sp, right, Sp, Rightarrow, Sp,
             PrecisionGap(precision), Sp, Lt, Sp,
-            Bar, encoding, Open, ApproximationLabel(q), Close, Bar));
-    }
-
-    private static Formula GoldenFinitePrecisionStabilityDefinition()
-    {
-        Formula q = F.Id("q");
-        return Disp(Seq(
-            GoldenStability(), Sp, Iff, Sp, Open,
-            Open, Forall, Sp, q, Sp, InMacro, Sp, Rationals(), Comma, Esc,
-              Frac, Grp(D(1)), Grp(
-                Sqrt, Grp(D(5)), Thin, Denominator(q), Caret, Grp(D(2)),
-                Sp, Plus, Sp, Denominator(q)),
-              Sp, Lt, Sp, Bar, Varphi, Sp, Minus, Sp, q, Bar, Close,
-            Sp, Land, Sp, FiniteStable(Encoding(Varphi)), Close));
+            Bar, encoding, Open, left, Close, Sp, Minus, Sp,
+            encoding, Open, right, Close, Bar));
     }
 
     private static Formula FaithfulnessStatement()
@@ -176,7 +137,7 @@ internal sealed class IrrationalSlopeFaithfulnessDocument : IScribeDocumentDefin
             Land, Sp, Open, Exists, Sp, beta, Sp, InMacro, Sp, Reals(), Comma, Esc,
               beta, Sp, Neq, Sp, Varphi, Sp, Land, Sp,
               Irrational(beta), Sp, Land, Sp, Injective(beta), Close, Sp,
-            Land, Sp, GoldenStability(),
+            Land, Sp, FiniteStable(Encoding(Varphi)),
             Close));
     }
 
@@ -189,29 +150,15 @@ internal sealed class IrrationalSlopeFaithfulnessDocument : IScribeDocumentDefin
     private static Formula Injective(Formula slope) =>
         Seq(Operatorname, Grp(F.Id("Injective")), Open, Encoding(slope), Close);
 
-    private static Formula Denominator(Formula q) =>
-        Seq(Operatorname, Grp(F.Id("den")), Open, q, Close);
-
-    private static Formula Numerator(Formula q) =>
-        Seq(Operatorname, Grp(F.Id("num")), Open, q, Close);
-
-    private static Formula ApproximationLabel(Formula q) =>
-        Seq(F.Id("ell"), Underscore, Grp(q));
-
     private static Formula PrecisionGap(Formula precision) =>
         Seq(F.Id("g"), Open, precision, Close);
 
     private static Formula FiniteStable(Formula encoding) =>
         Seq(Operatorname, Grp(F.Id("FinitePrecisionStable")), Open, encoding, Close);
 
-    private static Formula GoldenStability() =>
-        Seq(Operatorname, Grp(F.Id("GoldenFinitePrecisionStability")));
-
     private static Formula Reals() => Seq(Mathbb, Grp(F.Id("R")));
 
     private static Formula Integers() => Seq(Mathbb, Grp(F.Id("Z")));
-
-    private static Formula Rationals() => Seq(Mathbb, Grp(F.Id("Q")));
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
 }

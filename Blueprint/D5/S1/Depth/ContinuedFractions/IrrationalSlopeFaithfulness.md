@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Irrational slopes faithfully encode integer pairs; the golden encoding also separates bounded-denominator labels by an effective finite-precision gap.
+Irrational slopes faithfully encode integer pairs; the golden encoding also separates distinct labels within a finite horizontal precision budget.
 
 **Definition 1.1 (The slope encoding).**
 
@@ -16,19 +16,7 @@ $$E_{\alpha} : \mathbb{Z}^{2} \to \mathbb{R},\ E_{\alpha}(m,n) = \alpha \cdot m 
 
 For a real slope alpha, the encoding sends the integer label (m,n) to alpha times m plus n. This is the E_alpha used in the theorem; its carrier is the actual product of two integer copies, not a finite enumeration or an abstract replacement.
 
-**Definition 1.2 (Rational approximations as integer labels).**
-
-$$ell_{q} = (\operatorname{den}(q), -\operatorname{num}(q))$$
-
-*Formalization.* `D5/S1/Depth/ContinuedFractions/IrrationalSlopeFaithfulness.rationalApproximationLabel` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-A reduced rational q supplies the primitive integer label (den(q), -num(q)). Its golden slope encoding is the unnormalized separation den(q) times (phi - q).
-
-**Definition 1.3 (The effective finite-precision gap).**
+**Definition 1.2 (The effective finite-precision gap).**
 
 $$g(P) = \frac{1}{\sqrt{5} P + 1}$$
 
@@ -38,11 +26,11 @@ $$g(P) = \frac{1}{\sqrt{5} P + 1}$$
 
 *Commentary.*
 
-At precision P, the visible separation threshold is 1/(sqrt(5) P + 1). It decreases as the denominator budget grows.
+At precision P, the visible separation threshold is 1/(sqrt(5) P + 1). It decreases as the horizontal budget grows.
 
-**Definition 1.4 (Finite-precision stability observes the encoding).**
+**Definition 1.3 (Finite-precision stability observes the encoding).**
 
-$$\operatorname{FinitePrecisionStable}(F) \iff \forall P \in \mathbb{N},\ 0 < P \Rightarrow \forall q \in \mathbb{Q},\ \operatorname{den}(q) \leq P \Rightarrow g(P) < |F(ell_{q})|$$
+$$\operatorname{FinitePrecisionStable}(F) \iff \forall P \in \mathbb{N},\ 0 < P \Rightarrow \forall x, y \in \mathbb{Z}^{2},\ |x_{1} - y_{1}| \leq P \Rightarrow x \neq y \Rightarrow g(P) < |F(x) - F(y)|$$
 
 *Formalization.* `D5/S1/Depth/ContinuedFractions/IrrationalSlopeFaithfulness.FinitePrecisionStable` (`✓ std3`).
 
@@ -50,23 +38,11 @@ $$\operatorname{FinitePrecisionStable}(F) \iff \forall P \in \mathbb{N},\ 0 < P 
 
 *Commentary.*
 
-For every positive precision P and rational q with denominator at most P, the actual encoded primitive label must remain farther from zero than the precision-dependent gap. A constant encoding fails this property.
+At every positive precision P, any two distinct integer-pair labels whose first-coordinate displacement is at most P must have encoded outputs separated by more than the precision-dependent gap. Thus even a nonzero constant encoding fails this property.
 
-**Definition 1.5 (The golden Hurwitz certificate is tied to the golden encoding).**
+**Theorem 1.4 (Every irrational slope is faithful).**
 
-$$\operatorname{GoldenFinitePrecisionStability} \iff ((\forall q \in \mathbb{Q},\ \frac{1}{\sqrt{5}\,\operatorname{den}(q)^{2} + \operatorname{den}(q)} < |\varphi - q|) \land \operatorname{FinitePrecisionStable}(E_{\varphi}))$$
-
-*Formalization.* `D5/S1/Depth/ContinuedFractions/IrrationalSlopeFaithfulness.GoldenFinitePrecisionStability` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-This package preserves the prior rational Hurwitz bound and also carries its finite-precision interpretation for the actual map E_phi. The second field is the separation bridge absent from the earlier type.
-
-**Theorem 1.6 (Every irrational slope is faithful).**
-
-$$\forall \alpha \in \mathbb{R},\ \operatorname{Irrational}(\alpha) \Rightarrow (\operatorname{Injective}(E_{\alpha}) \land (\forall \beta \in \mathbb{R},\ \operatorname{Irrational}(\beta) \Rightarrow \operatorname{Injective}(E_{\beta})) \land (\exists \beta \in \mathbb{R},\ \beta \neq \varphi \land \operatorname{Irrational}(\beta) \land \operatorname{Injective}(E_{\beta})) \land \operatorname{GoldenFinitePrecisionStability})$$
+$$\forall \alpha \in \mathbb{R},\ \operatorname{Irrational}(\alpha) \Rightarrow (\operatorname{Injective}(E_{\alpha}) \land (\forall \beta \in \mathbb{R},\ \operatorname{Irrational}(\beta) \Rightarrow \operatorname{Injective}(E_{\beta})) \land (\exists \beta \in \mathbb{R},\ \beta \neq \varphi \land \operatorname{Irrational}(\beta) \land \operatorname{Injective}(E_{\beta})) \land \operatorname{FinitePrecisionStable}(E_{\varphi}))$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Depth/ContinuedFractions/IrrationalSlopeFaithfulness.irrational_slope_faithfulness` (`✓ std3`). ∎
 
@@ -74,16 +50,14 @@ $$\forall \alpha \in \mathbb{R},\ \operatorname{Irrational}(\alpha) \Rightarrow 
 
 *Commentary.*
 
-The four displayed clauses mirror the four statement-level claims. The first gives injectivity at the fixed irrational slope. The second quantifies the same faithfulness over every irrational slope. The third supplies a faithful irrational slope distinct from the golden ratio, so golden faithfulness is not unique. The fourth is the golden finite-precision package: it preserves the Hurwitz inequality and applies it to encoded labels at every explicit denominator precision.
+The four displayed clauses mirror the four statement-level claims. The first gives injectivity at the fixed irrational slope. The second quantifies the same faithfulness over every irrational slope. The third supplies a faithful irrational slope distinct from the golden ratio, so golden faithfulness is not unique. The fourth directly asserts pairwise finite-precision stability of the golden encoding; it contains no additional public Hurwitz assertion.
 
-For injectivity, equality of two encoded labels gives alpha times the difference of their first coordinates equal to an integer. A nonzero first-coordinate difference would make that product irrational, a contradiction. The remaining integer coordinates then agree. The golden conjugate is the distinct faithful witness, and the existing golden Hurwitz theorem yields a positive encoded separation after scaling by each rational denominator.
+For injectivity, equality of two encoded labels gives alpha times the difference of their first coordinates equal to an integer. A nonzero first-coordinate difference would make that product irrational, a contradiction. The remaining integer coordinates then agree. The golden conjugate is the distinct faithful witness, and the existing golden Hurwitz theorem supplies the arithmetic estimate used internally to prove the pairwise output gap.
 
 ## References
 
 - Truth anchor: `D5/S1/Depth/ContinuedFractions/IrrationalSlopeFaithfulness.FinitePrecisionStable`
-- Truth anchor: `D5/S1/Depth/ContinuedFractions/IrrationalSlopeFaithfulness.GoldenFinitePrecisionStability`
 - Truth anchor: `D5/S1/Depth/ContinuedFractions/IrrationalSlopeFaithfulness.finitePrecisionGap`
 - Truth anchor: `D5/S1/Depth/ContinuedFractions/IrrationalSlopeFaithfulness.irrational_slope_faithfulness`
-- Truth anchor: `D5/S1/Depth/ContinuedFractions/IrrationalSlopeFaithfulness.rationalApproximationLabel`
 - Truth anchor: `D5/S1/Depth/ContinuedFractions/IrrationalSlopeFaithfulness.slopeEncoding`
 - Dependency: [D5/S1/Depth/GoldenHurwitzBound](../GoldenHurwitzBound.md)
