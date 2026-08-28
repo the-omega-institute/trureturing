@@ -1,0 +1,49 @@
+# 第三百八十二部　Pole 项是一个 rank-one 边界能量
+
+定义 Fourier–Laplace 读数：
+
+$$
+\boxed{
+\ell_{1/2}(f)
+=
+\int_{\mathbb R}
+e^{x/2}f(x)\,dx.
+}
+\tag{382.1}
+$$
+
+由于 \(f\) 偶：
+
+$$
+\int e^{-x/2}f(x)\,dx
+=
+\ell_{1/2}(f).
+$$
+
+卷积平方的 Fourier–Laplace 变换满足：
+
+$$
+\widehat g(z)
+=
+\widehat f(z)
+\overline{\widehat f(\overline z)}.
+$$
+
+因此在：
+
+$$
+z=\pm i/2
+$$
+
+处：
+
+$$
+\widehat g(i/2)
+=
+\widehat g(-i/2)
+=
+|\ell_{1/2}(f)|^2.
+$$
+
+所以：
+

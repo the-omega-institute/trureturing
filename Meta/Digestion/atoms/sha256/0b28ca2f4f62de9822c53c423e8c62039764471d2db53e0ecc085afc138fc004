@@ -1,0 +1,37 @@
+## 403.2 精确反例重构
+
+若精确 Feshbach matrix \(F_L\) 有负向量：
+
+$$
+p\neq0,
+\qquad
+\langle p,F_Lp\rangle<0,
+$$
+
+则定义：
+
+$$
+\boxed{
+f_p
+=
+p-
+A_{QQ}^{-1}A_{QP}p.
+}
+\tag{403.4}
+$$
+
+由式 (402.6)：
+
+$$
+\boxed{
+\langle f_p,A_Lf_p\rangle
+=
+\langle p,F_Lp\rangle<0.
+}
+\tag{403.5}
+$$
+
+所以有限矩阵的负 eigenvector 可以显式提升为原始 Weil 测试空间中的负见证。
+
+---
+

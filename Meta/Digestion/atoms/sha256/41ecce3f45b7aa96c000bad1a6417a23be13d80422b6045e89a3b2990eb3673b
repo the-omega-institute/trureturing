@@ -1,0 +1,55 @@
+# 第三百四十部　Wang 式尺度下降
+
+定义性质：
+
+$$
+\boxed{
+\mathsf I(a):
+\quad
+\Theta_\omega
+\text{ 对所有 }\omega>a
+\text{ 为 meromorphic inner}.
+}
+\tag{340.1}
+$$
+
+Suzuki 的等价定理给出：
+
+$$
+\boxed{
+\mathsf I(a)
+\iff
+\zeta(s)\neq0
+\quad
+\text{当 }\Re s>\frac12+a.
+}
+\tag{340.2}
+$$
+
+无条件已知：
+
+$$
+\mathsf I\left(\frac12\right).
+$$
+
+RH 等价于：
+
+$$
+\mathsf I(0).
+$$
+
+因此真正的 Wang 式自改善应当是：
+
+$$
+\boxed{
+\mathsf I(a)
+\Longrightarrow
+\mathsf I(F(a)),
+\qquad
+F(a)<a.
+}
+\tag{340.3}
+$$
+
+---
+

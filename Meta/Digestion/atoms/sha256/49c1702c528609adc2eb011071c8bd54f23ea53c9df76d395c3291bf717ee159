@@ -1,0 +1,45 @@
+## 387.1 Cluster 均值与方差
+
+由 Kronecker–Weyl：
+
+$$
+\boxed{
+\lim_{X\to\infty}
+\frac1{2X}
+\int_{-X}^{X}
+\mathcal C_{\mathcal P}(x)\,dx
+=
+0.
+}
+\tag{387.6}
+$$
+
+并且不同素数通道交叉项平均为零，所以：
+
+$$
+\boxed{
+V_{\mathcal P}
+:=
+\lim_{X\to\infty}
+\frac1{2X}
+\int_{-X}^{X}
+\mathcal C_{\mathcal P}(x)^2dx
+=
+2
+\sum_{p\in\mathcal P}
+\frac{(\log p)^2}{p-1}.
+}
+\tag{387.7}
+$$
+
+这给出一个严格结论：
+
+$$
+\boxed{
+\text{Prime cluster 在典型频率下是零均值波动，
+而不是持续保持同号的负源。}
+}
+$$
+
+---
+

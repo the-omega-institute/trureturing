@@ -1,0 +1,80 @@
+## v3.3：Archimedean 囚禁、Slepian 危险观察者、Feshbach 有限重整化与 RH 的有限 Sticky 矩阵塔
+
+以下从前文**第三百九十六部之后**继续追加。
+
+上一轮已把 Weil 显式公式改写为：
+
+$$
+\boxed{
+\text{pole rank-one energy}
++
+\text{Archimedean continuous jump energy}
++
+\text{arithmetic discrete jump energy}
+-
+\text{coherent mass}.
+}
+$$
+
+但仍留下一个关键缺口：
+
+> 即使危险频率集合很稀少，紧支撑测试函数仍可能高度集中于该集合；
+> 怎样把这种可能性严格压缩成有限维问题？
+
+本轮闭合这一缺口。核心结果是：
+
+$$
+\boxed{
+\text{对每个固定支撑尺度 }L，
+\text{全部可能负性都能被精确压缩到一个有限维矩阵。}
+}
+$$
+
+完整链为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Weil 显式公式}
+&\longrightarrow
+\text{实频率乘子 }m_L\\
+&\longrightarrow
+\text{紧致危险频率集 }B_{L,a}\\
+&\longrightarrow
+\text{Slepian 高浓缩有限子空间 }P_{L,a,\eta}\\
+&\longrightarrow
+\text{正谱隙残余 }Q_{L,a,\eta}\\
+&\longrightarrow
+\text{Feshbach--Schur 有限矩阵}\\
+&\longrightarrow
+\text{精确有限 RH 证书}.
+\end{aligned}
+}
+$$
+
+这意味着此前仍开放的：
+
+$$
+\text{Bohr 危险集}
+\longrightarrow
+\text{thick-set 不确定性}
+$$
+
+并不是逻辑上必须先解决的桥。
+
+它可以被更直接的：
+
+$$
+\boxed{
+\text{Slepian 集中谱}
++
+\text{Feshbach 精确消元}
+}
+$$
+
+替代。
+
+仓库当前已经冻结角频率 Fourier 规范、prime/pole/Archimedean 项和无假设 Weil 显式公式；compact support 也已被机器证明会使 prime-power summand 有限支撑。仓库现有卷积平方文件只证明临界线零点贡献非负，并明确没有宣称 RH 或全局正性。
+
+---
+

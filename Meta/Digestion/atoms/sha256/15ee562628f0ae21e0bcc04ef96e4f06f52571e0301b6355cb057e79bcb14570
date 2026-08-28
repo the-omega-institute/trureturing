@@ -1,0 +1,80 @@
+## 定理 330.1（水平共振线 RH 判据）
+
+对任意固定：
+
+$$
+\omega_0\ge\frac12,
+$$
+
+有：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+Z(\Theta_{\omega_0})\cap\mathbb C^+
+\subset
+\left\{
+z:\Im z=\omega_0
+\right\}.
+}
+\tag{330.2}
+$$
+
+### 证明
+
+由式 (330.1)：
+
+$$
+\Im a_{\rho,\omega_0}
+=
+\omega_0+\beta-\frac12.
+$$
+
+全部零点位于高度 \(\omega_0\)，当且仅当：
+
+$$
+\beta=\frac12
+$$
+
+对全部 \(\rho\) 成立。∎
+
+特别地，在最小无条件模型：
+
+$$
+\omega_0=\frac12
+$$
+
+中：
+
+$$
+\boxed{
+a_{\rho,1/2}
+=
+-\gamma+i\beta.
+}
+\tag{330.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{ζ 零点的实部 }\beta
+=
+\Theta_{1/2}\text{ 共振在上半平面的高度}.
+}
+$$
+
+RH 因而等价于：
+
+$$
+\boxed{
+\Theta_{1/2}
+\text{ 的全部共振恰好位于水平线 }
+\Im z=\frac12.
+}
+$$
+
+---
+

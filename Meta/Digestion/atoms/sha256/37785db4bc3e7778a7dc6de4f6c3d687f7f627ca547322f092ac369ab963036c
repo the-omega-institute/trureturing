@@ -1,0 +1,58 @@
+# 第三百五十二部　临界基线与三角缺陷
+
+若高度 \(T\) 以下全部零点均在临界线，则：
+
+$$
+\boxed{
+\mathfrak A_T^{\mathrm{crit}}(y)
+=
+N(T)
+\min
+\left(
+y,\frac12
+\right).
+}
+\tag{352.1}
+$$
+
+定义宽度衰减缺陷：
+
+$$
+\boxed{
+\mathfrak W_T(y)
+=
+N(T)\min
+\left(
+y,\frac12
+\right)
+-
+\mathfrak A_T(y).
+}
+\tag{352.2}
+$$
+
+对固定 \(y\)，函数：
+
+$$
+\beta\longmapsto\min(y,\beta)
+$$
+
+是凹函数。
+
+由于零点实部按：
+
+$$
+\beta,\quad1-\beta
+$$
+
+配对，且均值为 \(1/2\)，Jensen 不等式给出：
+
+$$
+\boxed{
+\mathfrak W_T(y)\ge0.
+}
+\tag{352.3}
+$$
+
+---
+

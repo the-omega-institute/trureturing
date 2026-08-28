@@ -1,0 +1,10 @@
+ast_path: section/371-4-Fredholm
+fingerprints:
+  raw_sha256: sha256:3151cfd878ba6d35b0cbfb726b577565ba817dfabd23fdc549ef3a0ff001bdc2
+  normalized_sha256: sha256:3151cfd878ba6d35b0cbfb726b577565ba817dfabd23fdc549ef3a0ff001bdc2
+cas_ref: sha256:3151cfd878ba6d35b0cbfb726b577565ba817dfabd23fdc549ef3a0ff001bdc2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

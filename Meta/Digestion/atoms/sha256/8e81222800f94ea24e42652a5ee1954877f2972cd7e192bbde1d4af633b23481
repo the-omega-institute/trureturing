@@ -1,0 +1,85 @@
+# 第三百九十六部　建议形式化顺序
+
+```text
+D5/S3/Weil/EnergyDecomposition/
+  CorrelationShiftIdentity.lean
+  PrimeJumpDecomposition.lean
+  DigammaJumpKernel.lean
+  ArchimedeanJumpDecomposition.lean
+  PoleRankOneEnergy.lean
+  WeilPrimeArchimedeanEnergy.lean
+
+D5/S3/Weil/ShiftPoincare/
+  FiberSequenceDecomposition.lean
+  FinitePathDirichletGap.lean
+  CompactSupportShiftGap.lean
+  ArchimedeanScalarGap.lean
+  ArithmeticScalarGap.lean
+
+D5/S3/Weil/PrimeCorrelation/
+  ActivePrimePowerHistory.lean
+  PrimeCorrelationOperator.lean
+  PrimeCumulativeMass.lean
+  SchurRowBound.lean
+  SupportGeometricPrimeBound.lean
+
+D5/S3/Weil/BohrPrime/
+  PrimeLogRationalIndependence.lean
+  PrimeBohrFlow.lean
+  LocalPoissonMeanVariance.lean
+  ClusterVariance.lean
+  ClusterGaussianLimit.lean
+  ClusterBernsteinBound.lean
+  CoherencePeakCurvature.lean
+
+D5/S3/Weil/SlepianCluster/
+  TimeFrequencyConcentration.lean
+  ConcentrationTrace.lean
+  StickyModeCount.lean
+  WeightedMultiplierCertificate.lean
+  FiniteStickyBlockExtraction.lean
+
+D5/S3/Weil/WangDengGap/
+  PrimeDangerSet.lean
+  ThickGoodSetTarget.lean
+  BohrSlepianBridge.lean
+  StickyBlockCounterterm.lean
+  PrimeArchimedeanGapTarget.lean
+```
+
+最优先、且不依赖 RH 的闭合链为：
+
+$$
+\boxed{
+\text{prime term}
+\to
+\text{shift correlation}
+\to
+\text{positive arithmetic jump energy}.
+}
+$$
+
+第二条是：
+
+$$
+\boxed{
+\text{digamma integral}
+\to
+\text{positive continuous jump energy}.
+}
+$$
+
+第三条才是研究性核心：
+
+$$
+\boxed{
+\text{Bohr danger geometry}
+\to
+\text{Slepian finite-rank extraction}
+\to
+\text{global spectral gap}.
+}
+$$
+
+---
+

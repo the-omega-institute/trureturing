@@ -1,0 +1,10 @@
+ast_path: section/353-1-水平相位读数/clause/2
+fingerprints:
+  raw_sha256: sha256:a644a17dd3eee890ea31099108716466d76c276ef60a0d45bdfd90dd5d5ae749
+  normalized_sha256: sha256:a644a17dd3eee890ea31099108716466d76c276ef60a0d45bdfd90dd5d5ae749
+cas_ref: sha256:a644a17dd3eee890ea31099108716466d76c276ef60a0d45bdfd90dd5d5ae749
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

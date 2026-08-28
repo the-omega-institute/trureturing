@@ -1,0 +1,52 @@
+### 证明
+
+对 \(f\in K_\omega\)：
+
+$$
+\begin{aligned}
+\langle f,S_\omega(t)^*k_a\rangle
+&=
+(S_\omega(t)f)(a)\\
+&=
+e^{ita}f(a),
+\end{aligned}
+$$
+
+因为 \(V_tf-P_{K_\omega}V_tf\in\Theta_\omega H^2\)，在 \(a\) 处消失。∎
+
+对：
+
+$$
+a=a_{\rho,\omega}
+=
+-\gamma+i\left(\omega+\beta-\frac12\right),
+$$
+
+有：
+
+$$
+\boxed{
+S_\omega(t)^*k_{a_{\rho,\omega}}
+=
+e^{-\left(\omega+\beta-\frac12\right)t}
+e^{i\gamma t}
+k_{a_{\rho,\omega}}.
+}
+\tag{331.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\gamma
+&=\text{共振振荡频率};\\
+\omega+\beta-\frac12
+&=\text{共振衰减率}.
+\end{aligned}
+}
+$$
+
+---
+

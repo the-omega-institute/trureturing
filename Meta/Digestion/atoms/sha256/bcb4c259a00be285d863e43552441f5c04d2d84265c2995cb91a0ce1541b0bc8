@@ -1,0 +1,92 @@
+# 本轮最终结论
+
+此前数百条推理产生了大量看似不同的 RH 正性对象。
+
+本轮确认，它们并不是很多个独立理论，而是一个母对象的不同观察图表：
+
+$$
+\boxed{
+\mathfrak W_\xi
+=
+\mathfrak A_\infty
+-
+\sum_{n\ge2}
+\frac{\Lambda(n)}{\sqrt n}
+\left(
+\delta_{\log n}
++
+\delta_{-\log n}
+\right).
+}
+$$
+
+RH 等价于：
+
+$$
+\boxed{
+\mathfrak W_\xi
+\text{ 正定}.
+}
+$$
+
+所有其余对象均由它生成：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Laplace 压缩}
+&\to
+\text{半平面 Pick/de Branges 核};\\
+\text{平方推送}
+&\to
+\text{Stieltjes/Hankel};\\
+\text{Cayley 推送}
+&\to
+\text{Li/Clark/CMV};\\
+\text{外幂与行列式}
+&\to
+\text{Fredholm/Hilbert--Pólya}.
+\end{aligned}
+}
+$$
+
+更关键的是，prime powers 已经可以被精确重整化：
+
+$$
+\boxed{
+\sum_{k\ge1}
+p^{-k/2}
+\left(
+U_p^k+U_p^{*k}
+\right)
+=
+\mathsf P_{p^{-1/2}}(U_p)-I.
+}
+$$
+
+因此每个素数只是一个一状态 Carathéodory 被动通道。
+
+真正困难的从来不是单个素数，也不是单个 \(p^k\)，而是：
+
+$$
+\boxed{
+\text{无限多个局部被动 prime channels，
+经过全局解析完成后，
+是否仍被 Archimedean 通道完全支配。}
+}
+$$
+
+而有限 prime recurrence 定理又说明：多素数相位锁定不可避免，不能被简单排除。
+
+所以 Wang–Deng–OACTC 路线现在终于只剩一个非冗余问题：
+
+$$
+\boxed{
+\text{如何对不可避免的 multi-prime sticky clusters
+建立一个保持 Archimedean 正余量的有限秩重整化？}
+}
+$$
+
+一旦式 (377.1) 能从该 cluster 分解直接证明，Weil、de Branges、Clark、Li、Fredholm、Hilbert–Pólya 与 RH 将不再分别需要证明，而会同时作为同一母正性的输出。
+
+[1]: https://arxiv.org/abs/2301.00421 "https://arxiv.org/abs/2301.00421"

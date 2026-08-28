@@ -1,0 +1,10 @@
+ast_path: section/341-2-Sticky-prime-histories
+fingerprints:
+  raw_sha256: sha256:f837a2f3f76f898dcd1a9545fba938c86fd49040c9974942f6ad38cd69a4cba0
+  normalized_sha256: sha256:f837a2f3f76f898dcd1a9545fba938c86fd49040c9974942f6ad38cd69a4cba0
+cas_ref: sha256:f837a2f3f76f898dcd1a9545fba938c86fd49040c9974942f6ad38cd69a4cba0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

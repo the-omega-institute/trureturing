@@ -1,0 +1,23 @@
+## 332.1 函数域类比
+
+有限域曲线的 zeta 分子可由归一化 Frobenius 共轭类的特征多项式表示；Weil RH 等价于归一化 Frobenius 特征值全部位于单位圆，即所有未归一化特征值具有共同模长 \(q^{1/2}\)。([arXiv][2])
+
+因此：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{函数域}&\text{数域 shifted model}\\
+\hline
+|\alpha_j|=q^{1/2}
+&\text{decay rate}=\frac12\\
+\text{normalized Frobenius unitary}
+&\mathsf G_{1/2}+\frac12I\text{ skew-adjoint}
+\end{array}
+}
+$$
+
+两者共享同一个“统一模长／统一阻尼”结构。
+
+---
+

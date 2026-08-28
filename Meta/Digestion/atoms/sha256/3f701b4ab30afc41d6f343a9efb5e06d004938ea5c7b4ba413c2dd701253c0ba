@@ -1,0 +1,39 @@
+## Prime–Archimedean Positivity Conjecture
+
+对每个：
+
+$$
+\psi\in C_c^\infty(\mathbb R),
+$$
+
+都有：
+
+$$
+\boxed{
+\begin{aligned}
+&
+\left\langle
+\mathfrak A_\infty,
+\psi*\widetilde\psi
+\right\rangle
+\\
+&\quad-
+\sum_p
+\log p\,
+\left\langle
+\psi,
+\left[
+\mathsf P_{p^{-1/2}}(U_p)-I
+\right]
+\psi
+\right\rangle
+\ge0.
+\end{aligned}
+}
+\tag{377.1}
+$$
+
+其中对每个紧支撑 \(\psi\)，prime sum 实际是有限的。
+
+---
+

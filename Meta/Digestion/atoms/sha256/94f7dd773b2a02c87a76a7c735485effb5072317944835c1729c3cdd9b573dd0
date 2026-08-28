@@ -1,0 +1,65 @@
+# 第三百九十九部　Slepian 危险观察者
+
+令：
+
+$$
+\mathscr F
+=
+(2\pi)^{-1/2}\widehat{\phantom f}
+$$
+
+为 unitary Fourier transform。
+
+对任意有限测度频率集合：
+
+$$
+B\subset\mathbb R,
+$$
+
+定义 band projection：
+
+$$
+\boxed{
+\mathsf B_B
+=
+\mathscr F^{-1}
+1_B
+\mathscr F.
+}
+\tag{399.1}
+$$
+
+定义 time projection：
+
+$$
+\boxed{
+\mathsf T_Lf
+=
+\mathbf1_{[-L,L]}f.
+}
+\tag{399.2}
+$$
+
+定义 Slepian concentration operator：
+
+$$
+\boxed{
+\mathsf C_{L,B}
+=
+\mathsf T_L
+\mathsf B_B
+\mathsf T_L.
+}
+\tag{399.3}
+$$
+
+它是正、紧、自伴、trace-class contraction，谱位于：
+
+$$
+[0,1].
+$$
+
+其特征值测量一个支撑在 \([-L,L]\) 的状态能有多少 Fourier 能量集中在 \(B\) 中。经典 Slepian–Landau–Pollak 理论正是把时频浓缩转化成这类紧自伴算子的谱问题；现代定量结果继续证明其特征值集中在 \(0\) 与 \(1\) 附近，有效维数由时频相空间体积控制。([arXiv][1])
+
+---
+

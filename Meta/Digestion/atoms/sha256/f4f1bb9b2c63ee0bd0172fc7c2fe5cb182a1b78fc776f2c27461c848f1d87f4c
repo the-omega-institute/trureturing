@@ -1,0 +1,61 @@
+# 第三百九十二部　Thick-set 不确定性桥
+
+有限测度不是唯一可用情形。
+
+称集合 \(G\subset\mathbb R\) 为 \((\gamma,a)\)-thick，若每个长度 \(a\) 的区间都满足：
+
+$$
+\boxed{
+|G\cap[x,x+a]|
+\ge
+\gamma a.
+}
+\tag{392.1}
+$$
+
+Logvinenko–Sereda 型定理说明：对 Fourier 支撑受限或等价的 Paley–Wiener/spectral subspace，函数在 thick set 上的 \(L^2\) 质量具有显式下界；现代版本给出了依赖几何厚度和谱尺度的定量常数。([arXiv][4])
+
+若 \(G\) 是 multiplier 的正余量区域，并有：
+
+$$
+\int_G|\widehat f|^2
+\ge
+\eta_{\mathrm{LS}}
+\int_{\mathbb R}|\widehat f|^2,
+$$
+
+则在：
+
+$$
+M\ge a>0\quad\text{于 }G,
+\qquad
+M\ge-b\quad\text{全局}
+$$
+
+条件下：
+
+$$
+\boxed{
+Q_M(f)
+\ge
+\left[
+(a+b)\eta_{\mathrm{LS}}-b
+\right]
+\|f\|_2^2.
+}
+\tag{392.2}
+$$
+
+因此充分条件为：
+
+$$
+\boxed{
+\eta_{\mathrm{LS}}
+>
+\frac{b}{a+b}.
+}
+\tag{392.3}
+$$
+
+---
+

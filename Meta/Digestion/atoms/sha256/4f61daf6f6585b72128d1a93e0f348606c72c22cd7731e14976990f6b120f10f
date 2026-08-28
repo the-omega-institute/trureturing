@@ -1,0 +1,50 @@
+## v3.0：逆 Poisson 源、临界阻尼方差、Bode–Blaschke 宽度层析与 RH 的有限共振证书
+
+以下从前文**第三百四十四部之后**继续追加。
+
+本轮首先修正上一轮的一处归因，然后给出三组新的精确结果：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{Shifted 共振相位在 }\omega\text{ 方向满足 Poisson 半群，}\\
+&\text{这一点在无条件 inner 区域已经成立，并不等价于 RH；}\\[1mm]
+&\mathrm{RH}
+\iff
+\text{其逆 Poisson 源是正的实轴谱测度；}\\[1mm]
+&\mathrm{RH}
+\iff
+\text{所有共振衰减率的热正则化方差为零；}\\[1mm]
+&\mathrm{RH}
+\iff
+\text{临界 Blaschke 传递函数不存在任何垂直衰减缺陷。}
+\end{aligned}
+}
+$$
+
+其中最具体的新恒等式是：
+
+$$
+\boxed{
+\int_0^\infty
+\left[
+N(T)\min\!\left(y,\frac12\right)
+-
+\frac1{4\pi}
+\int_{\mathbb R}
+-\log|B_T(x+iy)|^2\,dx
+\right]dy
+=
+\frac12
+\sum_{\substack{\xi(\rho)=0\\0<\Im\rho\le T}}
+m_\rho
+\left(
+\Re\rho-\frac12
+\right)^2.
+}
+$$
+
+它把零点离开临界线的平方距离，精确变成一个可见传递函数的垂直衰减面积。
+
+---
+

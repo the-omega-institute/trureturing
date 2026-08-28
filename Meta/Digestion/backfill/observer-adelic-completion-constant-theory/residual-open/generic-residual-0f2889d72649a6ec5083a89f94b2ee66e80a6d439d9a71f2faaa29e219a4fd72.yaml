@@ -1,0 +1,13 @@
+ast_path: section/353-1-水平相位读数
+fingerprints:
+  raw_sha256: sha256:0f2889d72649a6ec5083a89f94b2ee66e80a6d439d9a71f2faaa29e219a4fd72
+  normalized_sha256: sha256:0f2889d72649a6ec5083a89f94b2ee66e80a6d439d9a71f2faaa29e219a4fd72
+cas_ref: sha256:0f2889d72649a6ec5083a89f94b2ee66e80a6d439d9a71f2faaa29e219a4fd72
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-004ed5fb4cbae5e0d61c8249ac9a8f092ef41c0ee34ce8127567a7179f9f2918-5ae2cdde283600108dde3c6e77f4dadae263d6a76df11c5ba76b58fda249812a
+    - generic-residual-a644a17dd3eee890ea31099108716466d76c276ef60a0d45bdfd90dd5d5ae749-e412f6161422c598fb67dbac39312d2823d710c91fbfee7c9a89bc0c6875b83d

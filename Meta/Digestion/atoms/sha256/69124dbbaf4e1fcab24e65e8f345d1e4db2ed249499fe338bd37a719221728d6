@@ -1,0 +1,76 @@
+## 定理 400.1（Safe-complement gap）
+
+对所有：
+
+$$
+f\in Q\mathcal H_L,
+$$
+
+有：
+
+$$
+\boxed{
+\mathfrak q_L[f]
+\ge
+\delta_{L,a,\eta}\|f\|_2^2,
+}
+\tag{400.6}
+$$
+
+其中：
+
+$$
+\boxed{
+\delta_{L,a,\eta}
+=
+a-(a+b_{L,a})\eta
+>0.
+}
+\tag{400.7}
+$$
+
+### 证明
+
+由于：
+
+$$
+f\perp P_{\mathrm{Sl}},
+$$
+
+Slepian spectral theorem 给出：
+
+$$
+\frac1{2\pi}
+\int_{B_{L,a}}
+|\widehat f(\xi)|^2\,d\xi
+=
+\langle f,\mathsf C_{L,B_{L,a}}f\rangle
+\le
+\eta\|f\|_2^2.
+$$
+
+所以：
+
+$$
+\begin{aligned}
+\frac1{2\pi}
+\int m_L|\widehat f|^2
+&\ge
+a(1-\eta)\|f\|^2
+-
+b_{L,a}\eta\|f\|^2\\
+&=
+\delta_{L,a,\eta}\|f\|^2.
+\end{aligned}
+$$
+
+又因为：
+
+$$
+f\perp v_L,
+$$
+
+pole 项为零。∎
+
+---
+

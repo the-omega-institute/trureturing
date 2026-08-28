@@ -1,0 +1,10 @@
+ast_path: section/409-5-输出
+fingerprints:
+  raw_sha256: sha256:7cfd96283c76609b1ce3ab373c1ff8ff29ac7c7e038fbabb9283cfff5b1c4fca
+  normalized_sha256: sha256:7cfd96283c76609b1ce3ab373c1ff8ff29ac7c7e038fbabb9283cfff5b1c4fca
+cas_ref: sha256:7cfd96283c76609b1ce3ab373c1ff8ff29ac7c7e038fbabb9283cfff5b1c4fca
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

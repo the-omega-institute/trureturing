@@ -1,0 +1,35 @@
+## 定理 361.1（观察线不变量）
+
+对任意：
+
+$$
+\sigma_1,\sigma_2>1,
+$$
+
+有：
+
+$$
+\boxed{
+e^{(\sigma_1-\frac12)|D|}
+d_{\sigma_1}
+=
+e^{(\sigma_2-\frac12)|D|}
+d_{\sigma_2}
+=
+\mathfrak W_\xi.
+}
+\tag{361.4}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathfrak W_\xi
+}
+$$
+
+是所有粗观察线共同携带、但被不同 Poisson 尺度遮蔽的临界源。
+
+---
+

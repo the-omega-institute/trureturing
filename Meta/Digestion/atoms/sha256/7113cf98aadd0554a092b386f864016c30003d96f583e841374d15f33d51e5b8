@@ -1,0 +1,84 @@
+# 第三百八十七部　局部 prime channel 的精确统计
+
+对均匀相位：
+
+$$
+\theta\sim\operatorname{Unif}[0,2\pi],
+$$
+
+有：
+
+$$
+\boxed{
+\mathbb E D_p(\theta)=0.
+}
+\tag{387.1}
+$$
+
+由 Fourier 正交性：
+
+$$
+\boxed{
+\mathbb E D_p(\theta)^2
+=
+2\sum_{k=1}^{\infty}r_p^{2k}
+=
+\frac{2}{p-1}.
+}
+\tag{387.2}
+$$
+
+极值为：
+
+$$
+\boxed{
+\max_\theta D_p(\theta)
+=
+\frac{2}{\sqrt p-1},
+}
+\tag{387.3}
+$$
+
+$$
+\boxed{
+\min_\theta D_p(\theta)
+=
+-\frac{2}{\sqrt p+1}.
+}
+\tag{387.4}
+$$
+
+在最大相干点 \(\theta=0\)：
+
+$$
+\boxed{
+D_p''(0)
+=
+-\frac{
+2r_p(1+r_p)
+}{
+(1-r_p)^3
+}.
+}
+\tag{387.5}
+$$
+
+所以：
+
+$$
+D_p(\theta)
+=
+\frac{2}{\sqrt p-1}
+-
+\frac{
+r_p(1+r_p)
+}{
+(1-r_p)^3
+}
+\theta^2
++
+O(\theta^4).
+$$
+
+---
+

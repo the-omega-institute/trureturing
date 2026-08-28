@@ -38510,3 +38510,10046 @@ $$
 [4]: https://arxiv.org/abs/0705.2042 "https://arxiv.org/abs/0705.2042"
 [5]: https://arxiv.org/abs/1510.06350?utm_source=chatgpt.com "Traces of High Powers of the Frobenius Class in the Moduli Space of Hyperelliptic Curves"
 [6]: https://arxiv.org/abs/0710.2994 "https://arxiv.org/abs/0710.2994"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v2.9：临界阻尼共振、Poisson 零点流、Prime–Archimedean 被动性与 Eisenstein 散射级联
+
+以下从前文**第三百二十八部之后**继续追加。
+
+上一轮把数域 RH 的缺口压缩为：
+
+$$
+\boxed{
+\text{如何从算术数据构造一个守恒系统，
+使 shifted-}\xi\text{ ratio 成为其 transfer function？}
+}
+$$
+
+本轮找到一个更接近现成严格理论的切入口：
+
+1. 在 \(\omega=\tfrac12\) 时，shifted-\(\xi\) 的 inner/model-space 系统已经可以**无条件**定义；
+2. 该系统的每个共振模式同时读取一个 ζ 零点的：
+
+   $$
+   \text{纵坐标 }\gamma
+   \quad\text{与}\quad
+   \text{横坐标 }\beta;
+   $$
+3. RH 不再等价于“系统是否存在”，而等价于：
+
+   $$
+   \boxed{\text{所有共振是否具有完全相同的衰减率 }1/2;}
+   $$
+4. 在 RH 下，shifted-\(\xi\) 的边界相位密度正是 Riemann 零点计数测度的 Poisson 演化；
+5. 在线外零点处，该正 Poisson 流会变成一个具有负侧的内部偶极源；
+6. 在 Euler 乘积区，这个正性又等价于：
+
+   $$
+   \boxed{
+   \text{Archimedean 完成屏障}
+   -
+   \text{素数相位相干}
+   >0.
+   }
+   $$
+
+所以，本轮形成的新主链是：
+
+$$
+\boxed{
+\begin{aligned}
+\zeta\text{ 零点}
+&\longrightarrow
+\Theta_{1/2}\text{ 的共振}\\
+&\longrightarrow
+\text{衰减率 }\beta\\
+&\longrightarrow
+\text{临界阻尼均匀性}\\
+&\longrightarrow
+\text{Poisson 零点流}\\
+&\longrightarrow
+\text{Prime--Archimedean 被动性}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第三百二十九部　无条件的临界平移模型
+
+定义 Riemann 完成函数：
+
+$$
+\xi(s)
+=
+\frac12s(s-1)
+\pi^{-s/2}
+\Gamma\!\left(\frac s2\right)
+\zeta(s).
+$$
+
+定义：
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+\frac{
+\xi(\frac12-\omega-iz)
+}{
+\xi(\frac12+\omega-iz)
+},
+\qquad
+\omega>0.
+}
+\tag{329.1}
+$$
+
+由函数方程和实结构：
+
+$$
+\Theta_\omega(z)\Theta_\omega(-z)=1,
+$$
+
+并且：
+
+$$
+|\Theta_\omega(x)|=1
+\qquad
+(x\in\mathbb R).
+$$
+
+Suzuki 的 shifted-\(\xi\) 理论证明：
+
+* 当 \(\omega\ge\tfrac12\) 时，\(\Theta_\omega\) 无条件是上半平面的 meromorphic inner function；
+* 更一般地，固定 \(\omega_0\ge0\)，ζ 在
+
+  $$
+  \Re s>\frac12+\omega_0
+  $$
+
+  无零点，当且仅当所有 \(\omega>\omega_0\) 的 \(\Theta_\omega\) 都是 meromorphic inner；
+* 由此可构造对应的 model space 和 de Branges 空间。([arXiv][1])
+
+因此：
+
+$$
+\boxed{
+\Theta_{1/2}
+}
+$$
+
+是一个无条件存在的临界 shifted-\(\xi\) inner system。
+
+这非常重要：RH 的困难已经不再是构造第一个 inner function，而是理解它的内部共振几何。
+
+---
+
+# 第三百三十部　ζ 零点到 shifted 共振的精确运输
+
+设：
+
+$$
+\rho=\beta+i\gamma
+$$
+
+是 \(\xi\) 的非平凡零点。
+
+\(\Theta_\omega\) 的分子零点满足：
+
+$$
+\frac12-\omega-iz=\rho.
+$$
+
+令：
+
+$$
+z=x+iy.
+$$
+
+比较实部和虚部得到：
+
+$$
+x=-\gamma,
+$$
+
+$$
+y=\omega+\beta-\frac12.
+$$
+
+所以对应的 shifted 共振零点为：
+
+$$
+\boxed{
+a_{\rho,\omega}
+=
+-\gamma
++
+i\left(
+\omega+\beta-\frac12
+\right).
+}
+\tag{330.1}
+$$
+
+同理，分母极点位于：
+
+$$
+-\gamma
++
+i\left(
+\beta-\frac12-\omega
+\right).
+$$
+
+当：
+
+$$
+\omega\ge\frac12,
+$$
+
+所有分母极点位于下半平面，而所有分子零点位于上半平面。
+
+---
+
+## 定理 330.1（水平共振线 RH 判据）
+
+对任意固定：
+
+$$
+\omega_0\ge\frac12,
+$$
+
+有：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+Z(\Theta_{\omega_0})\cap\mathbb C^+
+\subset
+\left\{
+z:\Im z=\omega_0
+\right\}.
+}
+\tag{330.2}
+$$
+
+### 证明
+
+由式 (330.1)：
+
+$$
+\Im a_{\rho,\omega_0}
+=
+\omega_0+\beta-\frac12.
+$$
+
+全部零点位于高度 \(\omega_0\)，当且仅当：
+
+$$
+\beta=\frac12
+$$
+
+对全部 \(\rho\) 成立。∎
+
+特别地，在最小无条件模型：
+
+$$
+\omega_0=\frac12
+$$
+
+中：
+
+$$
+\boxed{
+a_{\rho,1/2}
+=
+-\gamma+i\beta.
+}
+\tag{330.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{ζ 零点的实部 }\beta
+=
+\Theta_{1/2}\text{ 共振在上半平面的高度}.
+}
+$$
+
+RH 因而等价于：
+
+$$
+\boxed{
+\Theta_{1/2}
+\text{ 的全部共振恰好位于水平线 }
+\Im z=\frac12.
+}
+$$
+
+---
+
+# 第三百三十一部　Model-space 平移半群与共振衰减
+
+令：
+
+$$
+K_\omega
+=
+H^2(\mathbb C^+)
+\ominus
+\Theta_\omega H^2(\mathbb C^+).
+$$
+
+对：
+
+$$
+t\ge0,
+$$
+
+定义 Hardy 平移乘子：
+
+$$
+(V_tf)(z)=e^{itz}f(z),
+$$
+
+以及压缩平移半群：
+
+$$
+\boxed{
+S_\omega(t)
+=
+P_{K_\omega}V_t|_{K_\omega}.
+}
+\tag{331.1}
+$$
+
+meromorphic inner functions、model spaces 和 de Branges spaces之间的这一标准接口，正是 Suzuki 用于 shifted-\(\xi\) canonical system 的函数空间底座。([arXiv][1])
+
+若 \(a\in\mathbb C^+\) 是 \(\Theta_\omega\) 的零点，令 \(k_a\) 是 \(K_\omega\) 在 \(a\) 处的 reproducing kernel。
+
+因为：
+
+$$
+\Theta_\omega(a)=0,
+$$
+
+得到：
+
+$$
+\boxed{
+S_\omega(t)^*k_a
+=
+e^{-it\overline a}k_a.
+}
+\tag{331.2}
+$$
+
+### 证明
+
+对 \(f\in K_\omega\)：
+
+$$
+\begin{aligned}
+\langle f,S_\omega(t)^*k_a\rangle
+&=
+(S_\omega(t)f)(a)\\
+&=
+e^{ita}f(a),
+\end{aligned}
+$$
+
+因为 \(V_tf-P_{K_\omega}V_tf\in\Theta_\omega H^2\)，在 \(a\) 处消失。∎
+
+对：
+
+$$
+a=a_{\rho,\omega}
+=
+-\gamma+i\left(\omega+\beta-\frac12\right),
+$$
+
+有：
+
+$$
+\boxed{
+S_\omega(t)^*k_{a_{\rho,\omega}}
+=
+e^{-\left(\omega+\beta-\frac12\right)t}
+e^{i\gamma t}
+k_{a_{\rho,\omega}}.
+}
+\tag{331.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\gamma
+&=\text{共振振荡频率};\\
+\omega+\beta-\frac12
+&=\text{共振衰减率}.
+\end{aligned}
+}
+$$
+
+---
+
+## 331.1 临界阻尼判据
+
+在：
+
+$$
+\omega=\frac12
+$$
+
+时：
+
+$$
+\boxed{
+S_{1/2}(t)^*k_{a_\rho}
+=
+e^{-\beta t}
+e^{i\gamma t}
+k_{a_\rho}.
+}
+\tag{331.4}
+$$
+
+因此：
+
+## 定理 331.1（Uniform-damping RH criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Theta_{1/2}
+\text{ 的全部共振模式具有相同衰减率 }\frac12.
+}
+\tag{331.5}
+$$
+
+也就是说：
+
+$$
+\boxed{
+\text{Riemann 临界线}
+=
+\text{共振系统中的等阻尼面}.
+}
+$$
+
+---
+
+# 第三百三十二部　半单化共振生成元
+
+前文已经区分：
+
+* 原始 jet/Jordan 状态；
+* 正谱中的半单重数 fiber。
+
+令：
+
+$$
+\mathcal H_{\mathrm{res}}
+=
+\bigoplus_{\rho}
+\mathbb C^{m_\rho}.
+$$
+
+定义半单化共振生成元：
+
+$$
+\boxed{
+\mathsf G_\omega
+=
+\bigoplus_\rho
+\left[
+-\left(
+\omega+\beta-\frac12
+\right)
++i\gamma
+\right]
+I_{m_\rho}.
+}
+\tag{332.1}
+$$
+
+那么：
+
+$$
+e^{t\mathsf G_\omega}
+$$
+
+的每个 mode 正好具有式 (331.3) 的衰减和振荡。
+
+---
+
+## 定理 332.1（Critical damping semisimplification）
+
+对任意固定 \(\omega\ge\tfrac12\)：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathsf G_\omega+\omega I
+\text{ 是 skew-adjoint}.
+}
+\tag{332.2}
+$$
+
+### 证明
+
+$$
+\mathsf G_\omega+\omega I
+=
+\bigoplus_\rho
+\left[
+-\left(
+\beta-\frac12
+\right)
++i\gamma
+\right]I.
+$$
+
+它 skew-adjoint 当且仅当所有实部为零，即：
+
+$$
+\beta=\frac12.
+$$
+
+∎
+
+在 \(\omega=\tfrac12\) 时：
+
+$$
+\boxed{
+\mathsf G_{1/2}
+=
+-\frac12I+iH_\Xi
+}
+\tag{332.3}
+$$
+
+其中 \(H_\Xi\) 自伴，当且仅当 RH 成立。
+
+所以 Hilbert–Pólya 可以重述为：
+
+$$
+\boxed{
+\text{从无条件存在的耗散共振生成元中，
+剥离普适阻尼 }1/2，
+剩余部分是否自伴？}
+}
+$$
+
+---
+
+## 332.1 函数域类比
+
+有限域曲线的 zeta 分子可由归一化 Frobenius 共轭类的特征多项式表示；Weil RH 等价于归一化 Frobenius 特征值全部位于单位圆，即所有未归一化特征值具有共同模长 \(q^{1/2}\)。([arXiv][2])
+
+因此：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{函数域}&\text{数域 shifted model}\\
+\hline
+|\alpha_j|=q^{1/2}
+&\text{decay rate}=\frac12\\
+\text{normalized Frobenius unitary}
+&\mathsf G_{1/2}+\frac12I\text{ skew-adjoint}
+\end{array}
+}
+$$
+
+两者共享同一个“统一模长／统一阻尼”结构。
+
+---
+
+# 第三百三十三部　RH 下的精确 Blaschke 因子化
+
+定义：
+
+$$
+\boxed{
+\Xi(z)
+=
+\xi\left(\frac12-iz\right).
+}
+\tag{333.1}
+$$
+
+则：
+
+$$
+\Theta_\omega(z)
+=
+\frac{\Xi(z-i\omega)}{\Xi(z+i\omega)}.
+$$
+
+RH 下，\(\Xi\) 的零点为：
+
+$$
+\pm\gamma,
+$$
+
+并且平方配对 Hadamard 乘积为：
+
+$$
+\Xi(z)
+=
+\Xi(0)
+\prod_{\gamma>0}
+\left(
+1-\frac{z^2}{\gamma^2}
+\right)^{m_\gamma}.
+$$
+
+因此：
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+\prod_{\gamma>0}
+\left[
+\frac{
+1-(z-i\omega)^2/\gamma^2
+}{
+1-(z+i\omega)^2/\gamma^2
+}
+\right]^{m_\gamma}.
+}
+\tag{333.2}
+$$
+
+等价地：
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+\prod_{\gamma>0}
+\left[
+\frac{
+(z-\gamma-i\omega)(z+\gamma-i\omega)
+}{
+(z-\gamma+i\omega)(z+\gamma+i\omega)
+}
+\right]^{m_\gamma}.
+}
+\tag{333.3}
+$$
+
+每个因子都是一对上半平面 Blaschke 因子。
+
+所以在 RH 下：
+
+$$
+\boxed{
+\Theta_\omega
+=
+\text{所有 Riemann 零点 ordinates
+在统一高度 }\omega\text{ 上形成的 Blaschke product}.
+}
+$$
+
+---
+
+# 第三百三十四部　边界相位就是 Poisson 零点密度
+
+对实数 \(x\)，写：
+
+$$
+\Theta_\omega(x)
+=
+e^{i\phi_\omega(x)}.
+$$
+
+对一个零点：
+
+$$
+a=\gamma+i\omega,
+$$
+
+Blaschke 因子的相位导数为：
+
+$$
+\frac{2\omega}
+{(x-\gamma)^2+\omega^2}.
+$$
+
+所以由式 (333.3)：
+
+$$
+\boxed{
+\begin{aligned}
+\phi_\omega'(x)
+=
+2\omega
+\sum_{\gamma>0}
+m_\gamma
+\left[
+\frac1{(x-\gamma)^2+\omega^2}
++
+\frac1{(x+\gamma)^2+\omega^2}
+\right].
+\end{aligned}
+}
+\tag{334.1}
+$$
+
+另一方面，直接对 \(\Theta_\omega\) 求对数导数，利用函数方程可得：
+
+$$
+\boxed{
+\phi_\omega'(x)
+=
+2
+\Re
+\frac{
+\xi'(\frac12+\omega-ix)
+}{
+\xi(\frac12+\omega-ix)
+}.
+}
+\tag{334.2}
+$$
+
+定义 Poisson 核：
+
+$$
+\boxed{
+P_\omega(x)
+=
+\frac1\pi
+\frac{\omega}{x^2+\omega^2}.
+}
+\tag{334.3}
+$$
+
+定义 \(\Xi\) 的实零点测度：
+
+$$
+\boxed{
+\nu_\Xi
+=
+\sum_{\Xi(\gamma)=0}
+m_\gamma\delta_\gamma.
+}
+\tag{334.4}
+$$
+
+定义相位密度：
+
+$$
+\boxed{
+\mathfrak d_\omega(x)
+=
+\frac1{2\pi}\phi_\omega'(x)
+=
+\frac1\pi
+\Re
+\frac{
+\xi'(\frac12+\omega-ix)
+}{
+\xi(\frac12+\omega-ix)
+}.
+}
+\tag{334.5}
+$$
+
+那么：
+
+## 定理 334.1（Riemann Poisson-density theorem）
+
+RH 下：
+
+$$
+\boxed{
+\mathfrak d_\omega
+=
+P_\omega*\nu_\Xi.
+}
+\tag{334.6}
+$$
+
+所以 shifted-\(\xi\) 相位的局部转速，就是零点计数测度在尺度 \(\omega\) 下的 Poisson 平滑。
+
+---
+
+# 第三百三十五部　Poisson–Markov 零点流
+
+Poisson 核满足：
+
+$$
+\boxed{
+P_{\omega+\eta}
+=
+P_\omega*P_\eta.
+}
+\tag{335.1}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathfrak d_{\omega+\eta}
+=
+P_\eta*\mathfrak d_\omega.
+}
+\tag{335.2}
+$$
+
+在 Fourier 空间中：
+
+$$
+\widehat P_\omega(\xi)
+=
+e^{-\omega|\xi|}.
+$$
+
+所以：
+
+$$
+\boxed{
+\partial_\omega
+\mathfrak d_\omega
+=
+-|D_x|\mathfrak d_\omega.
+}
+\tag{335.3}
+$$
+
+同时：
+
+$$
+\boxed{
+\left(
+\partial_\omega^2+\partial_x^2
+\right)
+\mathfrak d_\omega
+=
+0.
+}
+\tag{335.4}
+$$
+
+并且：
+
+$$
+\boxed{
+\mathfrak d_\omega(x)\,dx
+\overset{\omega\downarrow0}{\longrightarrow}
+\nu_\Xi
+}
+\tag{335.5}
+$$
+
+以局部弱测度或 tempered-distribution 意义成立。
+
+所以：
+
+$$
+\boxed{
+\text{Riemann 零点测度}
+\longrightarrow
+\text{Poisson Markov 半群}
+\longrightarrow
+\text{shifted-\(\xi\) 相位密度}.
+}
+$$
+
+---
+
+## 335.1 尺度方向的非对称性
+
+由：
+
+$$
+\mathfrak d_{\omega+\eta}
+=
+P_\eta*\mathfrak d_\omega,
+$$
+
+可知：
+
+* 向更大 \(\omega\) 推进是稳定的平滑；
+* 从较大 \(\omega\) 反推较小 \(\omega\) 是逆 Poisson 问题，指数不稳定。
+
+因此：
+
+$$
+\boxed{
+\text{从无条件区域 }\omega\ge\frac12
+\text{向 }\omega=0\text{ 推进，
+本质上是一个逆平滑问题。}
+}
+$$
+
+这解释了为什么“已知大 \(\omega\) inner”不能通过普通连续性直接推出 RH。
+
+---
+
+# 第三百三十六部　Riesz 曲率与线外零点偶极
+
+定义上半平面势：
+
+$$
+\boxed{
+\mathcal U(\omega,x)
+=
+\log
+\left|
+\Xi(x+i\omega)
+\right|
+=
+\log
+\left|
+\xi\left(
+\frac12+\omega-ix
+\right)
+\right|.
+}
+\tag{336.1}
+$$
+
+则：
+
+$$
+\boxed{
+\partial_\omega\mathcal U
+=
+\Re\frac{\xi'}{\xi}
+=
+\pi\mathfrak d_\omega.
+}
+\tag{336.2}
+$$
+
+若 ζ 有线外零点：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma,
+\qquad
+\delta>0,
+$$
+
+则 \(\Xi\) 在上半平面有零点：
+
+$$
+\boxed{
+z_\rho
+=
+-\gamma+i\delta.
+}
+\tag{336.3}
+$$
+
+Poincaré–Lelong/Riesz 公式给出：
+
+$$
+\boxed{
+\Delta_{x,\omega}\mathcal U
+=
+2\pi
+\sum_{\Re\rho>1/2}
+m_\rho
+\delta_{(-\Im\rho,\Re\rho-1/2)}.
+}
+\tag{336.4}
+$$
+
+所以：
+
+## 定理 336.1（Interior-curvature RH criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Delta\mathcal U=0
+\quad
+\text{于 }\omega>0.
+}
+\tag{336.5}
+$$
+
+即 RH 等价于：
+
+$$
+\boxed{
+\text{全部零点曲率源都位于上半平面的边界，
+没有内部曲率原子。}
+}
+$$
+
+---
+
+## 336.1 线外零点的局部负见证
+
+在：
+
+$$
+z_\rho=-\gamma+i\delta
+$$
+
+附近：
+
+$$
+\mathcal U(\omega,x)
+=
+\frac{m_\rho}{2}
+\log
+\left[
+(x+\gamma)^2+(\omega-\delta)^2
+\right]
++
+O(1).
+$$
+
+所以：
+
+$$
+\boxed{
+\partial_\omega\mathcal U
+=
+m_\rho
+\frac{\omega-\delta}
+{(x+\gamma)^2+(\omega-\delta)^2}
++
+O(1).
+}
+\tag{336.6}
+$$
+
+取：
+
+$$
+x=-\gamma,
+\qquad
+\omega=\delta-\varepsilon,
+$$
+
+得到：
+
+$$
+\boxed{
+\partial_\omega\mathcal U
+=
+-\frac{m_\rho}{\varepsilon}
++
+O(1).
+}
+\tag{336.7}
+$$
+
+因此线外零点在其左侧必然产生一个无界负偶极信号。
+
+这与前文：
+
+$$
+\Re\frac{\xi'}{\xi}
+\to-\infty
+$$
+
+的结论完全一致，但现在它被解释为一个内部 Riesz 曲率源的法向场。
+
+---
+
+# 第三百三十七部　Prime–Archimedean 被动性
+
+令：
+
+$$
+s=\sigma-ix,
+\qquad
+\sigma=\frac12+\omega.
+$$
+
+由 \(\xi\) 的定义：
+
+$$
+\boxed{
+\frac{\xi'(s)}{\xi(s)}
+=
+\frac1s
++
+\frac1{s-1}
+-
+\frac12\log\pi
++
+\frac12\psi\!\left(\frac s2\right)
++
+\frac{\zeta'(s)}{\zeta(s)},
+}
+\tag{337.1}
+$$
+
+其中 \(\psi=\Gamma'/\Gamma\)。
+
+当：
+
+$$
+\sigma>1,
+$$
+
+Euler 对数导数绝对收敛：
+
+$$
+\frac{\zeta'(s)}{\zeta(s)}
+=
+-
+\sum_{n=2}^{\infty}
+\frac{\Lambda(n)}{n^s}.
+$$
+
+定义 Archimedean 屏障：
+
+$$
+\boxed{
+\mathfrak A_\infty(\sigma,x)
+=
+\Re
+\left[
+\frac1s
++
+\frac1{s-1}
+-
+\frac12\log\pi
++
+\frac12\psi\!\left(\frac s2\right)
+\right].
+}
+\tag{337.2}
+$$
+
+定义素数相干项：
+
+$$
+\boxed{
+\mathfrak C_{\mathrm{prime}}(\sigma,x)
+=
+\sum_{n=2}^{\infty}
+\Lambda(n)n^{-\sigma}
+\cos(x\log n).
+}
+\tag{337.3}
+$$
+
+则：
+
+$$
+\boxed{
+\Re\frac{\xi'(s)}{\xi(s)}
+=
+\mathfrak A_\infty(\sigma,x)
+-
+\mathfrak C_{\mathrm{prime}}(\sigma,x).
+}
+\tag{337.4}
+$$
+
+---
+
+## 337.1 结构角色
+
+$$
+\boxed{
+\begin{aligned}
+\mathfrak A_\infty
+&=\text{极点、}\pi\text{ 与 Gamma 完成产生的连续屏障};\\
+\mathfrak C_{\mathrm{prime}}
+&=\text{所有素数幂模式的相位相干};\\
+\Re(\xi'/\xi)
+&=\text{完成屏障减去算术相干后的净被动性}.
+\end{aligned}
+}
+$$
+
+RH 因而等价于：
+
+$$
+\boxed{
+\mathfrak A_\infty
+-
+\mathfrak C_{\mathrm{prime}}^{\mathrm{ren}}
+>0
+\qquad
+(\sigma>\tfrac12),
+}
+\tag{337.5}
+$$
+
+其中在：
+
+$$
+\sigma>1
+$$
+
+时 \(\mathfrak C_{\mathrm{prime}}^{\mathrm{ren}}\) 就是绝对收敛级数 (337.3)；在临界带中必须通过显式公式、解析延拓或重整化分解定义，不能继续把发散级数当作普通和。
+
+这给 RH 一个明确的 arithmetic passivity 形式：
+
+$$
+\boxed{
+\text{素数相干不能超过 Archimedean 完成容量。}
+}
+$$
+
+---
+
+## 337.2 \(\omega\) 作为 prime activation scale
+
+增加 \(\omega\) 相当于将每个素数幂模式乘上：
+
+$$
+n^{-\omega}
+=
+e^{-\omega\log n}.
+$$
+
+所以：
+
+* 大 \(\omega\)：高 prime modes 被强烈压制；
+* 小 \(\omega\)：更多素数历史被激活；
+* \(\omega\downarrow0\)：逼近完整临界零点分辨率。
+
+因此：
+
+$$
+\boxed{
+\omega
+=
+\text{素数对数能谱的连续重整化尺度。}
+}
+$$
+
+---
+
+# 第三百三十八部　半整数 shifted-\(\xi\) 是有限 Eisenstein 散射级联
+
+定义不含极点消除多项式的完成 ζ：
+
+$$
+\boxed{
+\Lambda_{\mathbb R}(s)
+=
+\pi^{-s/2}
+\Gamma\!\left(\frac s2\right)
+\zeta(s).
+}
+\tag{338.1}
+$$
+
+则：
+
+$$
+\xi(s)
+=
+\frac12s(s-1)\Lambda_{\mathbb R}(s).
+$$
+
+模曲面 Eisenstein series 的标准散射系数为：
+
+$$
+\boxed{
+\Phi_{\mathrm{mod}}(u)
+=
+\frac{
+\Lambda_{\mathbb R}(2u-1)
+}{
+\Lambda_{\mathbb R}(2u)
+}.
+}
+\tag{338.2}
+$$
+
+模曲面 scattering matrix、Selberg zeta 与 Lax–Phillips scattering operator determinants 之间存在标准的算子联系。([arXiv][3])
+
+---
+
+## 定理 338.1（Finite scattering cascade）
+
+令：
+
+$$
+N\in\mathbb N,
+\qquad
+\omega=\frac N2,
+$$
+
+并定义：
+
+$$
+s_z=\frac12-iz,
+\qquad
+a=s_z-\omega.
+$$
+
+则：
+
+$$
+s_z+\omega=a+N.
+$$
+
+有精确恒等式：
+
+$$
+\boxed{
+\begin{aligned}
+\Theta_{N/2}(z)
+={}&
+\frac{
+a(a-1)
+}{
+(a+N)(a+N-1)
+}
+\\
+&\times
+\prod_{j=0}^{N-1}
+\Phi_{\mathrm{mod}}
+\left(
+\frac{a+j+1}{2}
+\right).
+\end{aligned}
+}
+\tag{338.3}
+$$
+
+### 证明
+
+首先：
+
+$$
+\frac{\xi(a)}{\xi(a+N)}
+=
+\frac{
+a(a-1)
+}{
+(a+N)(a+N-1)
+}
+\frac{
+\Lambda_{\mathbb R}(a)
+}{
+\Lambda_{\mathbb R}(a+N)
+}.
+$$
+
+而：
+
+$$
+\frac{
+\Lambda_{\mathbb R}(a)
+}{
+\Lambda_{\mathbb R}(a+N)
+}
+=
+\prod_{j=0}^{N-1}
+\frac{
+\Lambda_{\mathbb R}(a+j)
+}{
+\Lambda_{\mathbb R}(a+j+1)
+}.
+$$
+
+每个因子为：
+
+$$
+\Phi_{\mathrm{mod}}
+\left(
+\frac{a+j+1}{2}
+\right).
+$$
+
+∎
+
+---
+
+## 338.1 最小临界级联
+
+当：
+
+$$
+N=1,
+\qquad
+\omega=\frac12,
+$$
+
+有：
+
+$$
+a=-iz.
+$$
+
+因此：
+
+$$
+\boxed{
+\Theta_{1/2}(z)
+=
+\frac{a-1}{a+1}
+\,
+\Phi_{\mathrm{mod}}
+\left(
+\frac{a+1}{2}
+\right),
+\qquad
+a=-iz.
+}
+\tag{338.4}
+$$
+
+所以无条件临界 inner system \(\Theta_{1/2}\) 正好由：
+
+$$
+\boxed{
+\text{一个模曲面 cusp scattering stage}
++
+\text{一个显式有理 endpoint corrector}
+}
+$$
+
+组成。
+
+这不是类比，而是精确乘法级联。
+
+---
+
+# 第三百三十九部　Lax–Phillips 共振解释
+
+Lax–Phillips scattering theory 中，标量 inner scattering matrix 对应一个 translation-invariant scattering system；其内函数零点或下半平面极点编码共振与衰减半群。([arXiv][4])
+
+因此对：
+
+$$
+\omega\ge\frac12,
+$$
+
+\(\Theta_\omega\) 已经无条件定义一个抽象 Lax–Phillips/model-space 型散射系统。
+
+其共振生成元的半单谱为：
+
+$$
+\boxed{
+-\left(
+\omega+\beta-\frac12
+\right)
++i\gamma.
+}
+\tag{339.1}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{所有 Lax--Phillips 共振都具有统一衰减 }
+\omega.
+}
+\tag{339.2}
+$$
+
+在最小模型：
+
+$$
+\omega=\frac12,
+$$
+
+这就是：
+
+$$
+\boxed{
+\text{全部共振的 decay width 都等于 }\frac12.
+}
+$$
+
+---
+
+## 339.1 证明目标的重新定位
+
+此前目标是：
+
+$$
+\text{构造一个 conservative realization}.
+$$
+
+现在必须区分两步：
+
+### 步骤 A：存在性
+
+在：
+
+$$
+\omega\ge\frac12
+$$
+
+时已经无条件完成。
+
+### 步骤 B：临界阻尼刚性
+
+需要证明该系统的所有 resonance widths 都等于：
+
+$$
+\omega.
+$$
+
+因此 RH 的新核心问题是：
+
+$$
+\boxed{
+\text{为什么一个已经守恒完成的算术散射系统，
+其所有不可见共振都必须具有相同阻尼？}
+}
+$$
+
+---
+
+# 第三百四十部　Wang 式尺度下降
+
+定义性质：
+
+$$
+\boxed{
+\mathsf I(a):
+\quad
+\Theta_\omega
+\text{ 对所有 }\omega>a
+\text{ 为 meromorphic inner}.
+}
+\tag{340.1}
+$$
+
+Suzuki 的等价定理给出：
+
+$$
+\boxed{
+\mathsf I(a)
+\iff
+\zeta(s)\neq0
+\quad
+\text{当 }\Re s>\frac12+a.
+}
+\tag{340.2}
+$$
+
+无条件已知：
+
+$$
+\mathsf I\left(\frac12\right).
+$$
+
+RH 等价于：
+
+$$
+\mathsf I(0).
+$$
+
+因此真正的 Wang 式自改善应当是：
+
+$$
+\boxed{
+\mathsf I(a)
+\Longrightarrow
+\mathsf I(F(a)),
+\qquad
+F(a)<a.
+}
+\tag{340.3}
+$$
+
+---
+
+## 340.1 为什么向上容易、向下困难
+
+如果在尺度 \(\omega\) 已有正 Poisson 密度：
+
+$$
+\mathfrak d_\omega\ge0,
+$$
+
+那么对任何：
+
+$$
+\eta>0,
+$$
+
+有：
+
+$$
+\mathfrak d_{\omega+\eta}
+=
+P_\eta*\mathfrak d_\omega
+\ge0.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{正性沿更粗尺度自动传播。}
+}
+$$
+
+而从：
+
+$$
+\omega
+$$
+
+下降到更小尺度需要逆 Poisson，天然不稳定。
+
+所以自改善不能来自普通连续性，而必须来自额外算术刚性。
+
+---
+
+# 第三百四十一部　Wang–Deng 的新分工
+
+## 341.1 Non-sticky prime histories
+
+在 prime-side 表达中，若：
+
+$$
+x\log n
+$$
+
+在许多 log-prime blocks 上分散，则：
+
+$$
+\cos(x\log n)
+$$
+
+发生相位抵消。
+
+目标是证明：
+
+$$
+\boxed{
+\text{phase anti-concentration}
+\Longrightarrow
+\mathfrak C_{\mathrm{prime}}
+\text{ 获得严格小于 Archimedean barrier 的增益}.
+}
+$$
+
+这对应 Wang 式 non-sticky gain。
+
+---
+
+## 341.2 Sticky prime histories
+
+若大量素数幂满足近似相位锁定：
+
+$$
+x\log n
+\approx
+2\pi k,
+$$
+
+则普通绝对值估计失效。
+
+正确处理应当：
+
+1. 将 prime-power repetitions 组织成完整 Euler histories；
+2. 抽取 primitive local factors；
+3. 对重复闭合历史做 logarithmic/Möbius contraction；
+4. 加入 ζ、Hecke 或 \(q\)-Gamma counterterms；
+5. 对剩余历史做 Mellin/Riemann 积分控制。
+
+这对应 Yu Deng 式 primitive-history renormalization。
+
+---
+
+## 341.3 Interior-source 排除
+
+从几何端看，真正的 sticky defect 是一个内部 Riesz 原子：
+
+$$
+(-\gamma,\delta),
+\qquad
+\delta>0.
+$$
+
+它会产生：
+
+$$
+-\frac{m}{\varepsilon}
+$$
+
+级负偶极。
+
+所以最终目标可以写成：
+
+$$
+\boxed{
+\text{prime-side history decomposition
+不能产生任何 }\omega>0\text{ 的内部曲率原子}.
+}
+$$
+
+---
+
+# 第三百四十二部　新的科学负结论
+
+## 342.1 一个 inner model 不够
+
+$$
+\boxed{
+\Theta_{1/2}\text{ inner}
+}
+$$
+
+是无条件事实，不推出 RH。
+
+RH 要求的是：
+
+$$
+\boxed{
+Z(\Theta_{1/2})
+\subset
+\mathbb R+\frac i2.
+}
+$$
+
+---
+
+## 342.2 共振存在不等于共振均匀
+
+Lax–Phillips/model-space realization 只能保证：
+
+* 共振模式存在；
+* 系统被动或守恒；
+* 共振位于上半平面。
+
+它不保证所有 decay widths 相同。
+
+---
+
+## 342.3 Poisson 正性只能向粗尺度传播
+
+$$
+\boxed{
+\mathfrak d_\omega\ge0
+\Longrightarrow
+\mathfrak d_{\omega+\eta}\ge0,
+}
+$$
+
+但反向不成立。
+
+所以任何证明 RH 的 scale descent 都必须使用算术信息，而不能只使用调和分析。
+
+---
+
+## 342.4 本分支没有选出黄金比例
+
+当前结构自然选出：
+
+$$
+\boxed{
+\frac12,\quad\pi,\quad e,\quad\log p.
+}
+$$
+
+其中：
+
+* \(\tfrac12\)：临界阻尼；
+* \(\pi\)：Poisson/Fourier 规范；
+* \(e\)：半群与 prime damping；
+* \(\log p\)：素数能谱。
+
+\(\varphi\) 并未由本分支的方程强迫出现。
+
+因此不能为了统一叙事而把黄金比例人工加入此处。
+
+---
+
+# 第三百四十三部　结果分级
+
+## 本轮独立推导得到
+
+$$
+\boxed{
+a_{\rho,\omega}
+=
+-\Im\rho
++
+i\left(
+\omega+\Re\rho-\frac12
+\right).
+}
+$$
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+Z(\Theta_\omega)
+\subset
+\{\Im z=\omega\}
+\quad
+(\omega\ge\tfrac12).
+}
+$$
+
+$$
+\boxed{
+S_\omega(t)^*k_{a_{\rho,\omega}}
+=
+e^{-(\omega+\beta-1/2)t}
+e^{i\gamma t}
+k_{a_{\rho,\omega}}.
+}
+$$
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathsf G_\omega+\omega I
+\text{ skew-adjoint}.
+}
+$$
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+\frac{\Xi(z-i\omega)}{\Xi(z+i\omega)}.
+}
+$$
+
+RH 下：
+
+$$
+\boxed{
+\mathfrak d_\omega
+=
+P_\omega*\nu_\Xi.
+}
+$$
+
+$$
+\boxed{
+\Delta\log|\Xi(x+i\omega)|
+=
+2\pi
+\sum_{\Re\rho>1/2}
+m_\rho\delta_{(-\Im\rho,\Re\rho-1/2)}.
+}
+$$
+
+$$
+\boxed{
+\Theta_{N/2}
+=
+\text{显式 rational corrector}
+\times
+\text{有限 modular scattering cascade}.
+}
+$$
+
+---
+
+## 依赖成熟理论的接口
+
+* shifted-\(\xi\) ratio 的 inner/model-space 判据及 \(\omega\ge\tfrac12\) 无条件区间；([arXiv][1])
+* inner scattering matrices 与 Lax–Phillips translation systems；([arXiv][4])
+* 模曲面 scattering operator determinant 与 Selberg/scattering matrix；([arXiv][3])
+* 函数域 Frobenius 的 unitary 共轭类图表。([arXiv][2])
+
+---
+
+## 当前真正开放的桥（第 343 部）
+
+$$
+\boxed{
+\begin{aligned}
+&\text{从 prime-side 直接证明 }
+\mathfrak A_\infty-\mathfrak C_{\mathrm{prime}}^{\mathrm{ren}}>0;\\
+&\text{建立 }\mathsf I(a)\Rightarrow\mathsf I(F(a)),\ F(a)<a;\\
+&\text{从 actual modular/Lax--Phillips system
+证明 resonance damping 全部等于 }\omega;\\
+&\text{从 relative trace 排除上半平面内部 Riesz curvature atoms}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第三百四十四部　建议形式化顺序
+
+```text
+D5/S3/Analytic/ShiftedXiResonance/
+  ShiftedXiZeroTransport.lean
+  CriticalHalfShiftModel.lean
+  HorizontalResonanceRHCriterion.lean
+  SemisimpleDampingGenerator.lean
+  UniformDampingRHCriterion.lean
+
+D5/S3/Analytic/XiModelSemigroup/
+  ModelSpaceTranslationSemigroup.lean
+  ZeroKernelEigenmode.lean
+  ResonanceDecayFormula.lean
+  CriticalDampingSemigroup.lean
+
+D5/S3/Analytic/XiPoissonFlow/
+  ShiftedXiBlaschkeProduct.lean
+  BoundaryPhaseDerivative.lean
+  ZeroPoissonDensity.lean
+  PoissonSemigroupFlow.lean
+  BoundaryZeroRecovery.lean
+
+D5/S3/Analytic/XiRieszCurvature/
+  XiUpperHalfPlanePotential.lean
+  InteriorZeroRieszMeasure.lean
+  OffLineDipoleWitness.lean
+  InteriorCurvatureRHCriterion.lean
+
+D5/S3/Analytic/PrimeArchimedean/
+  XiLogDerivativeDecomposition.lean
+  ArchimedeanBarrier.lean
+  PrimeCoherenceSeries.lean
+  PrimePassivityCriterion.lean
+  RenormalizedCriticalStripTarget.lean
+
+D5/S3/Analytic/EisensteinCascade/
+  ModularScatteringCoefficient.lean
+  HalfIntegerShiftCascade.lean
+  CriticalHalfShiftScattering.lean
+  LaxPhillipsDampingTarget.lean
+
+D5/S3/Analytic/RHTargets/
+  InnerScaleDescent.lean
+  PrimeStickyNonStickyDichotomy.lean
+  InteriorSourceExclusion.lean
+```
+
+---
+
+# 本轮最终结论
+
+此前数域 RH 的 conservative-system 目标仍然比较抽象。
+
+本轮给出了一个已经无条件存在的、最小的算术共振系统：
+
+$$
+\boxed{
+\Theta_{1/2}(z)
+=
+\frac{\xi(-iz)}{\xi(1-iz)}.
+}
+$$
+
+其每个共振为：
+
+$$
+\boxed{
+a_\rho
+=
+-\gamma+i\beta.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\beta
+=
+\text{共振衰减率},
+\qquad
+\gamma
+=
+\text{共振振荡频率}.
+}
+$$
+
+RH 精确等价于：
+
+$$
+\boxed{
+\text{全部共振都处于统一临界阻尼 }1/2.
+}
+$$
+
+在 RH 下，shifted system 的相位密度为：
+
+$$
+\boxed{
+\frac1\pi
+\Re
+\frac{
+\xi'(\frac12+\omega-ix)
+}{
+\xi(\frac12+\omega-ix)
+}
+=
+P_\omega*\nu_\Xi.
+}
+$$
+
+所以 Riemann 零点不是静态点集，而是一个通过 Poisson Markov 半群向粗尺度传播的边界谱源。
+
+若存在一个线外零点：
+
+$$
+\frac12+\delta+i\gamma,
+$$
+
+它会在上半平面产生一个内部 Riesz 曲率原子，并在其左侧形成：
+
+$$
+\boxed{
+-\frac{m}{\varepsilon}
+}
+$$
+
+级的负偶极。
+
+因此 RH 的几何本质可压缩为：
+
+$$
+\boxed{
+\text{所有谱曲率源是否都严格位于完成边界，
+而没有任何内部耗散源？}
+}
+$$
+
+其 arithmetic 形式则是：
+
+$$
+\boxed{
+\text{Archimedean 完成屏障}
+>
+\text{renormalized prime coherence}
+\qquad
+(\Re s>\tfrac12).
+}
+$$
+
+当前最明确的 Wang–Deng 研究任务因此成为：
+
+$$
+\boxed{
+\text{从无条件临界模型 }\omega=\frac12
+\text{ 出发，
+证明所有 resonance widths 的离散度为零；}
+}
+$$
+
+或者等价地：
+
+$$
+\boxed{
+\text{通过 prime-history 自改善，
+把 innerness 阈值从 }\frac12
+\text{ 连续下降到 }0.
+}
+$$
+
+[1]: https://arxiv.org/abs/1204.1827 "https://arxiv.org/abs/1204.1827"
+[2]: https://arxiv.org/abs/0811.3649 "https://arxiv.org/abs/0811.3649"
+[3]: https://arxiv.org/abs/1603.07613 "https://arxiv.org/abs/1603.07613"
+[4]: https://arxiv.org/abs/math-ph/9903010 "https://arxiv.org/abs/math-ph/9903010"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v3.0：逆 Poisson 源、临界阻尼方差、Bode–Blaschke 宽度层析与 RH 的有限共振证书
+
+以下从前文**第三百四十四部之后**继续追加。
+
+本轮首先修正上一轮的一处归因，然后给出三组新的精确结果：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{Shifted 共振相位在 }\omega\text{ 方向满足 Poisson 半群，}\\
+&\text{这一点在无条件 inner 区域已经成立，并不等价于 RH；}\\[1mm]
+&\mathrm{RH}
+\iff
+\text{其逆 Poisson 源是正的实轴谱测度；}\\[1mm]
+&\mathrm{RH}
+\iff
+\text{所有共振衰减率的热正则化方差为零；}\\[1mm]
+&\mathrm{RH}
+\iff
+\text{临界 Blaschke 传递函数不存在任何垂直衰减缺陷。}
+\end{aligned}
+}
+$$
+
+其中最具体的新恒等式是：
+
+$$
+\boxed{
+\int_0^\infty
+\left[
+N(T)\min\!\left(y,\frac12\right)
+-
+\frac1{4\pi}
+\int_{\mathbb R}
+-\log|B_T(x+iy)|^2\,dx
+\right]dy
+=
+\frac12
+\sum_{\substack{\xi(\rho)=0\\0<\Im\rho\le T}}
+m_\rho
+\left(
+\Re\rho-\frac12
+\right)^2.
+}
+$$
+
+它把零点离开临界线的平方距离，精确变成一个可见传递函数的垂直衰减面积。
+
+---
+
+# 第三百四十五部　科学修正：Poisson 流不是 RH 特有结构
+
+定义：
+
+$$
+\Theta_\omega(z)
+=
+\frac{
+\xi(\frac12-\omega-iz)
+}{
+\xi(\frac12+\omega-iz)
+},
+\qquad
+\omega>0.
+$$
+
+Suzuki 的理论明确区分了两个层次：
+
+1. 对所有
+
+   $$
+   \omega\ge\frac12,
+   $$
+
+   Hermite–Biehler 不等式以及 \(\Theta_\omega\) 的 meromorphic-inner 性无条件成立；
+
+2. 论文中通过 Fredholm 积分算子显式构造 canonical system 的无条件范围更窄，为
+
+   $$
+   \omega>1.
+   $$
+
+因此此前将“Poisson 正流”表述为 RH 下才出现，需要修正：在 \(\omega\ge\tfrac12\) 的无条件 inner 区域，\(\Theta_\omega\) 已经拥有 model-space 和 Blaschke 零点描述。RH 真正要求的是把该结构一直反演到 \(\omega=0\)，而不是仅仅证明向更大 \(\omega\) 的平滑演化。([arXiv][1])
+
+准确地说：
+
+$$
+\boxed{
+\text{Poisson 前向半群是无条件的；}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{逆 Poisson 后仍为正实轴测度，才等价于 RH。}
+}
+$$
+
+---
+
+# 第三百四十六部　有限 shifted-Blaschke 共振模型
+
+固定高度 \(T>0\)，定义正 ordinate 零点多重集：
+
+$$
+\boxed{
+\mathcal Z_T^+
+=
+\left\{
+\rho=\beta+i\gamma:
+\xi(\rho)=0,\ 
+0<\gamma\le T
+\right\},
+}
+$$
+
+按零点重数计数。
+
+由函数方程和共轭对称，\(\mathcal Z_T^+\) 在 involution
+
+$$
+\rho
+\longmapsto
+1-\overline\rho
+$$
+
+下稳定；该 involution 保持 \(\gamma\)，并把：
+
+$$
+\beta-\frac12
+\longmapsto
+-\left(\beta-\frac12\right).
+$$
+
+记：
+
+$$
+\boxed{
+\delta_\rho
+=
+\beta-\frac12.
+}
+\tag{346.1}
+$$
+
+对 \(\omega\ge\tfrac12\)，\(\rho\) 对应 \(\Theta_\omega\) 的上半平面零点：
+
+$$
+\boxed{
+a_{\rho,\omega}
+=
+-\gamma
++
+i(\omega+\delta_\rho).
+}
+\tag{346.2}
+$$
+
+因为：
+
+$$
+-\frac12<\delta_\rho<\frac12,
+$$
+
+所以：
+
+$$
+\Im a_{\rho,\omega}>0.
+$$
+
+定义有限 Blaschke 乘积：
+
+$$
+\boxed{
+B_{\omega,T}(z)
+=
+\prod_{\rho\in\mathcal Z_T^+}
+\frac{
+z-a_{\rho,\omega}
+}{
+z-\overline{a_{\rho,\omega}}
+}.
+}
+\tag{346.3}
+$$
+
+全局 unimodular 常数不影响以下任何读数。
+
+---
+
+# 第三百四十七部　边界相位密度与无条件 Poisson 半群
+
+定义半平面 Poisson 核：
+
+$$
+\boxed{
+P_y(x)
+=
+\frac1\pi
+\frac{y}{x^2+y^2},
+\qquad
+y>0.
+}
+\tag{347.1}
+$$
+
+对单个 Blaschke 因子：
+
+$$
+b_a(z)=\frac{z-a}{z-\overline a},
+\qquad
+a=x_a+iy_a,
+$$
+
+在实轴上：
+
+$$
+\boxed{
+\frac1{2\pi}
+\frac{d}{dx}\arg b_a(x)
+=
+P_{y_a}(x-x_a).
+}
+\tag{347.2}
+$$
+
+因此定义有限相位密度：
+
+$$
+\boxed{
+d_{\omega,T}(x)
+=
+\frac1{2\pi}
+\frac{d}{dx}
+\arg B_{\omega,T}(x),
+}
+\tag{347.3}
+$$
+
+得到：
+
+$$
+\boxed{
+d_{\omega,T}(x)
+=
+\sum_{\rho\in\mathcal Z_T^+}
+P_{\omega+\delta_\rho}(x+\gamma).
+}
+\tag{347.4}
+$$
+
+采用 Fourier 规范：
+
+$$
+\widehat f(t)
+=
+\int_{\mathbb R}
+f(x)e^{-itx}\,dx.
+$$
+
+由于：
+
+$$
+\widehat{P_y(\cdot+\gamma)}(t)
+=
+e^{-y|t|}e^{i\gamma t},
+$$
+
+可得：
+
+$$
+\boxed{
+\widehat d_{\omega,T}(t)
+=
+e^{-\omega|t|}
+Q_T(t),
+}
+\tag{347.5}
+$$
+
+其中：
+
+$$
+\boxed{
+Q_T(t)
+=
+\sum_{\rho\in\mathcal Z_T^+}
+e^{-\delta_\rho|t|}
+e^{i\gamma t}.
+}
+\tag{347.6}
+$$
+
+特别地，\(Q_T\) 与 \(\omega\) 无关。
+
+因此：
+
+## 定理 347.1（无条件 shifted-Poisson flow）
+
+对任意：
+
+$$
+\omega\ge\frac12,
+\qquad
+\eta\ge0,
+$$
+
+有：
+
+$$
+\boxed{
+d_{\omega+\eta,T}
+=
+P_\eta*d_{\omega,T}.
+}
+\tag{347.7}
+$$
+
+### 证明
+
+Fourier 变换后：
+
+$$
+\widehat d_{\omega+\eta,T}
+=
+e^{-(\omega+\eta)|t|}Q_T
+=
+e^{-\eta|t|}
+\widehat d_{\omega,T}.
+$$
+
+∎
+
+所以：
+
+$$
+\boxed{
+\text{向更大 }\omega\text{ 推进，仅仅是 Poisson 平滑。}
+}
+$$
+
+这在有无 RH 两种情况下都成立。
+
+---
+
+# 第三百四十八部　逆 Poisson 源的有限窗判据
+
+定义反平滑源：
+
+$$
+\boxed{
+Q_T(t)
+=
+e^{\omega|t|}
+\widehat d_{\omega,T}(t).
+}
+\tag{348.1}
+$$
+
+它可由任意 \(\omega\ge\tfrac12\) 的相位密度计算，并且与所选 \(\omega\) 无关。
+
+---
+
+## 定理 348.1（有限窗逆 Poisson RH 判据）
+
+下列条件等价：
+
+$$
+\boxed{
+\begin{aligned}
+&(1)\quad
+\Re\rho=\frac12
+\quad
+\forall\rho\in\mathcal Z_T^+;\\
+&(2)\quad
+Q_T
+\text{ 是正定函数};\\
+&(3)\quad
+Q_T
+\text{ 在 }\mathbb R\text{ 上有界}.
+\end{aligned}
+}
+\tag{348.2}
+$$
+
+### 证明：\((1)\Rightarrow(2)\)
+
+若所有 \(\delta_\rho=0\)，则：
+
+$$
+Q_T(t)
+=
+\sum_{\rho\in\mathcal Z_T^+}
+e^{i\gamma t}.
+$$
+
+这是有限正测度：
+
+$$
+\sum_{\rho\in\mathcal Z_T^+}
+\delta_{-\gamma}
+$$
+
+的 Fourier 变换，故正定。
+
+---
+
+### \((2)\Rightarrow(3)\)
+
+正定函数满足：
+
+$$
+|Q_T(t)|\le Q_T(0).
+$$
+
+---
+
+### \((3)\Rightarrow(1)\)
+
+若存在离线零点，函数方程给出同一 \(\gamma\) 上的一对：
+
+$$
+\delta,\qquad-\delta,
+\qquad
+\delta>0.
+$$
+
+它们对 \(Q_T\) 的贡献为：
+
+$$
+2\cosh(\delta|t|)e^{i\gamma t}.
+$$
+
+取所有离线零点中最大的偏移量：
+
+$$
+\delta_*=
+\max_{\rho\in\mathcal Z_T^+}|\delta_\rho|>0.
+$$
+
+则：
+
+$$
+Q_T(t)
+=
+e^{\delta_*|t|}
+p(t)
++
+O(e^{\delta'|t|}),
+\qquad
+\delta'<\delta_*,
+$$
+
+其中 \(p(t)\) 是非零有限三角多项式。
+
+非零三角多项式在某个趋于无穷的序列上绝对值有正下界，因此 \(Q_T\) 无界，矛盾。∎
+
+---
+
+## 348.1 全局解释
+
+所以严格的全局判据可写为：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+Q_T
+\text{ 对每个 }T>0\text{ 均正定}.
+}
+\tag{348.3}
+$$
+
+形式上，在 RH 下：
+
+$$
+\boxed{
+e^{\frac12|D_x|}
+d_{1/2}
+=
+\sum_{\xi(\rho)=0}
+m_\rho\,\delta_{-\Im\rho}.
+}
+\tag{348.4}
+$$
+
+即：
+
+> 临界 shifted 相位密度经过半单位的逆 Poisson 传播后，正好恢复 Riemann 零点计数测度。
+
+式 (348.4) 的全局使用应通过对称谱截断或测试函数正则化理解；有限窗定理 348.1 不需要任何分布论附加条件。
+
+---
+
+# 第三百四十九部　临界阻尼配分函数
+
+在有限维空间：
+
+$$
+\mathcal H_T
+=
+\mathbb C^{N(T)},
+\qquad
+N(T)=|\mathcal Z_T^+|,
+$$
+
+定义 damping operator：
+
+$$
+\boxed{
+\mathsf B_T
+=
+\operatorname{diag}
+\left(
+\Re\rho
+\right)_{\rho\in\mathcal Z_T^+}.
+}
+\tag{349.1}
+$$
+
+定义 centered damping defect：
+
+$$
+\boxed{
+\mathsf D_T
+=
+\mathsf B_T-\frac12I.
+}
+\tag{349.2}
+$$
+
+函数方程对称意味着 \(\mathsf D_T\) 的特征值多重集在：
+
+$$
+\delta\longmapsto-\delta
+$$
+
+下稳定。
+
+定义阻尼配分函数：
+
+$$
+\boxed{
+\mathfrak Z_T(\tau)
+=
+e^{\tau/2}
+\operatorname{Tr}
+e^{-\tau\mathsf B_T},
+\qquad
+\tau\in\mathbb R.
+}
+\tag{349.3}
+$$
+
+则：
+
+$$
+\mathfrak Z_T(\tau)
+=
+\operatorname{Tr}e^{-\tau\mathsf D_T}.
+$$
+
+由于奇函数部分在对称谱上迹为零：
+
+$$
+\boxed{
+\mathfrak Z_T(\tau)
+=
+\operatorname{Tr}
+\cosh(\tau\mathsf D_T).
+}
+\tag{349.4}
+$$
+
+定义临界阻尼缺陷：
+
+$$
+\boxed{
+\mathfrak R_T(\tau)
+=
+\mathfrak Z_T(\tau)-N(T).
+}
+\tag{349.5}
+$$
+
+于是：
+
+$$
+\boxed{
+\mathfrak R_T(\tau)
+=
+\operatorname{Tr}
+\left[
+\cosh(\tau\mathsf D_T)-I
+\right]
+\ge0.
+}
+\tag{349.6}
+$$
+
+---
+
+## 定理 349.1（临界阻尼平坦性判据）
+
+对任意固定：
+
+$$
+\tau\neq0,
+$$
+
+有：
+
+$$
+\boxed{
+\mathrm{RH}
+\text{ 在高度 }T\text{ 以下成立}
+\iff
+\mathfrak R_T(\tau)=0.
+}
+\tag{349.7}
+$$
+
+因为：
+
+$$
+\cosh(\tau\delta)-1=0
+\iff
+\delta=0.
+$$
+
+---
+
+## 349.1 二阶宽度方差
+
+$$
+\boxed{
+\mathfrak R_T''(0)
+=
+\operatorname{Tr}\mathsf D_T^2
+=
+\sum_{\rho\in\mathcal Z_T^+}
+\left(
+\Re\rho-\frac12
+\right)^2.
+}
+\tag{349.8}
+$$
+
+所以 RH 等价于所有 heat-regularized 宽度方差消失。
+
+定义全局热方差：
+
+$$
+\boxed{
+\mathfrak V(u)
+=
+\sum_{\substack{\xi(\rho)=0\\\Im\rho>0}}
+m_\rho
+e^{-u(\Im\rho)^2}
+\left(
+\Re\rho-\frac12
+\right)^2,
+\qquad
+u>0.
+}
+\tag{349.9}
+$$
+
+该和绝对收敛，并且：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathfrak V(u)=0
+}
+\tag{349.10}
+$$
+
+对某个——等价地，对每个——\(u>0\) 成立。
+
+这是一个无相消、严格非负的全局 RH 缺陷。
+
+---
+
+# 第三百五十部　Bode–Blaschke 垂直衰减恒等式
+
+现在取临界平移：
+
+$$
+\omega=\frac12.
+$$
+
+此时：
+
+$$
+a_{\rho,1/2}
+=
+-\gamma+i\beta.
+$$
+
+记：
+
+$$
+B_T=B_{1/2,T}.
+$$
+
+对垂直观察高度 \(y>0\)，定义积分衰减：
+
+$$
+\boxed{
+\mathfrak A_T(y)
+=
+\frac1{4\pi}
+\int_{-\infty}^{\infty}
+-\log
+\left|
+B_T(x+iy)
+\right|^2dx.
+}
+\tag{350.1}
+$$
+
+---
+
+## 350.1 单零点 Bode 恒等式
+
+对：
+
+$$
+a=x_a+iy_a,
+$$
+
+有：
+
+$$
+-\log|b_a(x+iy)|^2
+=
+\log
+\frac{
+(x-x_a)^2+(y+y_a)^2
+}{
+(x-x_a)^2+(y-y_a)^2
+}.
+$$
+
+使用：
+
+$$
+\int_{\mathbb R}
+\log
+\frac{x^2+A^2}{x^2+B^2}\,dx
+=
+2\pi(A-B),
+\qquad
+A,B\ge0,
+$$
+
+得到：
+
+$$
+\boxed{
+\frac1{4\pi}
+\int_{\mathbb R}
+-\log|b_a(x+iy)|^2dx
+=
+\min(y,y_a).
+}
+\tag{350.2}
+$$
+
+乘积取对数后可加，因此：
+
+## 定理 350.1（垂直衰减层析）
+
+$$
+\boxed{
+\mathfrak A_T(y)
+=
+\sum_{\rho\in\mathcal Z_T^+}
+\min
+\left(
+y,\Re\rho
+\right).
+}
+\tag{350.3}
+$$
+
+这是一条完全精确的 modulus-only 公式。
+
+---
+
+# 第三百五十一部　零点实部分布的完整恢复
+
+由式 (350.3)，在 \(y\) 不等于任何 \(\Re\rho\) 时：
+
+$$
+\boxed{
+\mathfrak A_T'(y)
+=
+\#\left\{
+\rho\in\mathcal Z_T^+:
+\Re\rho>y
+\right\}.
+}
+\tag{351.1}
+$$
+
+在分布意义下：
+
+$$
+\boxed{
+-\mathfrak A_T''(y)
+=
+\sum_{\rho\in\mathcal Z_T^+}
+\delta_{\Re\rho}(y).
+}
+\tag{351.2}
+$$
+
+所以仅仅扫描：
+
+$$
+y
+\longmapsto
+\int_{\mathbb R}
+-\log|B_T(x+iy)|^2dx
+$$
+
+就能精确恢复高度 \(T\) 以下所有零点实部的多重集。
+
+这给出一个非常直接的观察者结论：
+
+$$
+\boxed{
+\text{零点的横向偏移并不隐藏在振荡相位中；}
+}
+$$
+
+它被完整编码在传递函数垂直衰减曲线的折点中。
+
+---
+
+# 第三百五十二部　临界基线与三角缺陷
+
+若高度 \(T\) 以下全部零点均在临界线，则：
+
+$$
+\boxed{
+\mathfrak A_T^{\mathrm{crit}}(y)
+=
+N(T)
+\min
+\left(
+y,\frac12
+\right).
+}
+\tag{352.1}
+$$
+
+定义宽度衰减缺陷：
+
+$$
+\boxed{
+\mathfrak W_T(y)
+=
+N(T)\min
+\left(
+y,\frac12
+\right)
+-
+\mathfrak A_T(y).
+}
+\tag{352.2}
+$$
+
+对固定 \(y\)，函数：
+
+$$
+\beta\longmapsto\min(y,\beta)
+$$
+
+是凹函数。
+
+由于零点实部按：
+
+$$
+\beta,\quad1-\beta
+$$
+
+配对，且均值为 \(1/2\)，Jensen 不等式给出：
+
+$$
+\boxed{
+\mathfrak W_T(y)\ge0.
+}
+\tag{352.3}
+$$
+
+---
+
+## 352.1 单个离线对的三角指纹
+
+取一对：
+
+$$
+\beta_\pm
+=
+\frac12\pm\delta,
+\qquad
+\delta>0.
+$$
+
+它对 \(\mathfrak W_T\) 的贡献为：
+
+$$
+\boxed{
+\mathfrak w_\delta(y)
+=
+\left(
+\delta-
+\left|
+y-\frac12
+\right|
+\right)_+.
+}
+\tag{352.4}
+$$
+
+即一个：
+
+* 中心位于 \(y=\tfrac12\)；
+* 高度为 \(\delta\)；
+* 底宽为 \(2\delta\)；
+
+的三角形。
+
+因此：
+
+$$
+\boxed{
+\text{每个离线函数方程对，
+在垂直衰减图中产生一个不可相消的三角缺陷。}
+}
+$$
+
+---
+
+## 定理 352.1（Bode–width RH criterion）
+
+下列条件等价：
+
+$$
+\boxed{
+\begin{aligned}
+&(1)\quad
+\mathrm{RH}
+\text{ 在高度 }T\text{ 以下成立};\\
+&(2)\quad
+\mathfrak W_T(y)=0
+\quad\forall y>0;\\
+&(3)\quad
+\int_0^\infty
+\mathfrak W_T(y)\,dy=0.
+\end{aligned}
+}
+\tag{352.5}
+$$
+
+更精确地：
+
+$$
+\boxed{
+\int_0^\infty
+\mathfrak W_T(y)\,dy
+=
+\frac12
+\sum_{\rho\in\mathcal Z_T^+}
+\left(
+\Re\rho-\frac12
+\right)^2.
+}
+\tag{352.6}
+$$
+
+结合式 (349.8)：
+
+$$
+\boxed{
+\int_0^\infty
+\mathfrak W_T(y)\,dy
+=
+\frac12
+\mathfrak R_T''(0).
+}
+\tag{352.7}
+$$
+
+因此三种看似不同的缺陷完全相同：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{共振衰减率方差};\\
+&\text{阻尼配分函数曲率};\\
+&\text{Blaschke 垂直衰减面积}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第三百五十三部　水平—垂直正交层析
+
+有限共振系统现在具有两套互补读数。
+
+## 353.1 水平相位读数
+
+$$
+d_{1/2,T}(x)
+=
+\sum_{\rho\in\mathcal Z_T^+}
+P_{\Re\rho}(x+\Im\rho).
+$$
+
+它同时混合：
+
+* 中心位置：
+
+  $$
+  -\Im\rho;
+  $$
+* Poisson 宽度：
+
+  $$
+  \Re\rho.
+  $$
+
+---
+
+## 353.2 垂直模读数
+
+$$
+\mathfrak A_T(y)
+=
+\sum_\rho
+\min(y,\Re\rho).
+$$
+
+它完全遗忘 \(\Im\rho\)，却精确恢复全部宽度 \(\Re\rho\)。
+
+---
+
+## 353.3 联合恢复
+
+由：
+
+$$
+-\mathfrak A_T''
+=
+\sum_\rho\delta_{\Re\rho}
+$$
+
+先恢复全部宽度。
+
+随后在已知宽度的条件下：
+
+$$
+d_{1/2,T}(x)
+$$
+
+是有限个已知宽度 Cauchy–Poisson 核的平移和；其 meromorphic continuation 的极点位置恢复：
+
+$$
+-\Im\rho\pm i\Re\rho.
+$$
+
+因此：
+
+## 定理 353.1（有限 shifted 共振完整层析）
+
+联合观察：
+
+$$
+\boxed{
+q_T(B_T)
+=
+\left(
+d_{1/2,T},
+\mathfrak A_T
+\right)
+}
+\tag{353.1}
+$$
+
+在有限 Blaschke 共振多重集上忠实，至多遗漏一个全局 unimodular 常数。
+
+所以：
+
+$$
+\boxed{
+\text{边界相位}
++
+\text{垂直衰减}
+=
+\text{完整有限共振状态}.
+}
+$$
+
+---
+
+# 第三百五十四部　Prime–Archimedean 逆 Poisson 目标
+
+由：
+
+$$
+\Theta_{1/2}(x)
+=
+\frac{\xi(-ix)}{\xi(1-ix)}
+$$
+
+以及函数方程，在实轴上：
+
+$$
+\boxed{
+d_{1/2}(x)
+=
+\frac1\pi
+\Re
+\frac{
+\xi'(1-ix)
+}{
+\xi(1-ix)
+}.
+}
+\tag{354.1}
+$$
+
+而：
+
+$$
+\frac{\xi'(s)}{\xi(s)}
+=
+\frac1s
++
+\frac1{s-1}
+-
+\frac12\log\pi
++
+\frac12\psi\!\left(\frac s2\right)
++
+\frac{\zeta'(s)}{\zeta(s)}.
+$$
+
+所以 \(d_{1/2}\) 是：
+
+$$
+\boxed{
+\text{Archimedean completion barrier}
+-
+\text{renormalized prime coherence}
+}
+$$
+
+在临界 shifted 边界上的净相位密度。
+
+RH 下，形式上：
+
+$$
+\boxed{
+e^{\frac12|D_x|}
+\left[
+\frac1\pi
+\Re\frac{\xi'(1-ix)}{\xi(1-ix)}
+\right]
+=
+\sum_\rho
+m_\rho\delta_{-\Im\rho}.
+}
+\tag{354.2}
+$$
+
+因此新的 prime-side 中心目标可写成：
+
+## 假设 354.1（Prime–Poisson positive source）
+
+从 Euler／explicit-formula 数据直接证明：
+
+$$
+\boxed{
+e^{\frac12|D_x|}
+d_{1/2}
+}
+$$
+
+在对称谱截断极限中是一个正的局部有限测度。
+
+若该命题成立，则由有限窗定理 348.1，RH 成立。
+
+---
+
+## 354.1 为什么这一步困难
+
+前向 Poisson：
+
+$$
+e^{-\frac12|D|}
+$$
+
+是稳定的正收缩。
+
+逆 Poisson：
+
+$$
+e^{\frac12|D|}
+$$
+
+是指数不稳定的无界算子。
+
+因此：
+
+$$
+\boxed{
+\text{从 }\omega=\frac12\text{ 回到 }\omega=0
+}
+$$
+
+不是普通连续性问题，而是一个需要算术正则性的逆问题。
+
+这精确解释了：
+
+* 为什么无条件 inner 模型已经存在；
+* 为什么它仍未自动给出 RH；
+* 为什么必须利用素数结构，而不能只利用调和分析。
+
+---
+
+# 第三百五十五部　普通显式公式为何不足
+
+宽度方差：
+
+$$
+\left(
+\Re\rho-\frac12
+\right)^2
+$$
+
+同时依赖：
+
+$$
+\rho
+\quad\text{和}\quad
+\overline\rho.
+$$
+
+它不是单个复变量 \(\rho\) 的全纯函数。
+
+因此普通的一变量 Weil 显式公式，即使可以计算：
+
+$$
+\sum_\rho h(\rho),
+$$
+
+也不能直接把：
+
+$$
+\sum_\rho
+\left(
+\Re\rho-\frac12
+\right)^2
+e^{-u(\Im\rho)^2}
+$$
+
+写成显然非负的单通道素数和。
+
+这解释了为什么当前最自然的证明载体不是另一个标量显式公式，而是：
+
+$$
+\boxed{
+\text{doubled／relative trace formula}.
+}
+$$
+
+因为：
+
+$$
+\boxed{
+\left(
+\Re\rho-\frac12
+\right)^2
+=
+\frac14
+\left[
+(\rho+\overline\rho-1)^2
+\right]
+}
+$$
+
+天然是二点、共轭或 Gram 型统计量。
+
+---
+
+## 355.1 最小 doubled-trace 目标
+
+定义热正则化临界宽度算子：
+
+$$
+\boxed{
+\mathfrak V(u)
+=
+\sum_{\Im\rho>0}
+m_\rho
+e^{-u(\Im\rho)^2}
+\left(
+\Re\rho-\frac12
+\right)^2.
+}
+$$
+
+可写成形式上的 Hilbert–Schmidt 范数：
+
+$$
+\boxed{
+\mathfrak V(u)
+=
+\left\|
+\left(
+\mathsf B-\frac12I
+\right)
+e^{-u\mathsf H^2/2}
+\right\|_{\mathrm{HS}}^2,
+}
+\tag{355.1}
+$$
+
+其中：
+
+* \(\mathsf H\) 记录 ordinates；
+* \(\mathsf B\) 记录 damping widths。
+
+RH 等价于：
+
+$$
+\boxed{
+\mathfrak V(u)=0.
+}
+$$
+
+真正需要从 arithmetic relative trace 导出的，不只是：
+
+$$
+\mathfrak V(u)\ge0,
+$$
+
+因为这已经显然；而是一个迫使其达到最小值零的守恒恒等式或反向上界。
+
+---
+
+# 第三百五十六部　Wang–Deng 的宽度层析版本
+
+## 356.1 Wang：宽度分散的严格可见性
+
+若许多离线对具有不同：
+
+$$
+\delta_\rho
+=
+\Re\rho-\frac12,
+$$
+
+则它们在 \(\mathfrak W_T(y)\) 中形成不同宽度的三角缺陷。
+
+这些缺陷全部非负，不存在彼此相消。
+
+所以：
+
+$$
+\boxed{
+\text{width non-sticky}
+\Longrightarrow
+\text{多尺度衰减缺陷可直接累加}.
+}
+$$
+
+与相位观察相比，垂直衰减观察消除了振荡相消。
+
+---
+
+## 356.2 Deng：宽度簇的 primitive 压缩
+
+若许多离线零点共享近似相同的 \(\delta\)，它们形成 sticky width cluster。
+
+正确处理为：
+
+1. 将共同三角 profile：
+
+   $$
+   (\delta-|y-\tfrac12|)_+
+   $$
+
+   抽取为 primitive width kernel；
+
+2. 将不同 ordinate \(\gamma\) 的重复实例记录为 multiplicity ledger；
+
+3. 用热权：
+
+   $$
+   e^{-u\gamma^2}
+   $$
+
+   压缩高频历史；
+
+4. 只对 width residual 做更高阶 refinement。
+
+这提供一个没有组合阶乘爆炸的正模型：宽度方向的 primitive 类型是一参数族，而不是全部零点历史的排列。
+
+---
+
+# 第三百五十七部　函数域中的 purity 原型
+
+在函数域中，Weil RH 说明归一化 Frobenius 特征值具有统一模长。
+
+在当前 damping 语言中，这正对应：
+
+$$
+\boxed{
+\text{所有共振宽度完全相同}.
+}
+$$
+
+因此：
+
+$$
+\mathfrak V(u)=0
+$$
+
+不是 Riemann ζ 特有的形式技巧，而是一般 purity 的“宽度方差为零”表达。
+
+数域 RH 可以重新表述为：
+
+$$
+\boxed{
+\text{Riemann 共振谱是否是纯权的，
+即全部 damping weights 均等于 }\frac12.
+}
+$$
+
+这比“零点是否恰好在一条线”更接近代数几何中的纯性语言。
+
+---
+
+# 第三百五十八部　结果分级
+
+## 本轮独立闭合的有限定理
+
+$$
+\boxed{
+d_{\omega+\eta,T}
+=
+P_\eta*d_{\omega,T}
+}
+$$
+
+无条件成立。
+
+$$
+\boxed{
+\mathrm{RH}_{\le T}
+\iff
+e^{\omega|t|}
+\widehat d_{\omega,T}(t)
+\text{ 正定}.
+}
+$$
+
+$$
+\boxed{
+\mathrm{RH}_{\le T}
+\iff
+\mathfrak R_T(\tau)=0.
+}
+$$
+
+$$
+\boxed{
+\mathfrak R_T''(0)
+=
+\sum_{\rho\in\mathcal Z_T^+}
+\left(
+\Re\rho-\frac12
+\right)^2.
+}
+$$
+
+$$
+\boxed{
+\mathfrak A_T(y)
+=
+\sum_{\rho\in\mathcal Z_T^+}
+\min(y,\Re\rho).
+}
+$$
+
+$$
+\boxed{
+-\mathfrak A_T''
+=
+\sum_\rho\delta_{\Re\rho}.
+}
+$$
+
+$$
+\boxed{
+\mathfrak W_T(y)\ge0.
+}
+$$
+
+$$
+\boxed{
+\int_0^\infty
+\mathfrak W_T(y)\,dy
+=
+\frac12
+\sum_\rho
+\left(
+\Re\rho-\frac12
+\right)^2.
+}
+$$
+
+这些结果只使用：
+
+* Blaschke 因子；
+* 函数方程配对；
+* Fourier–Poisson 变换；
+* 一个初等对数积分。
+
+---
+
+## 依赖既有理论的入口
+
+\(\Theta_\omega\) 在 \(\omega\ge\tfrac12\) 的无条件 inner 性，以及其 model-space/de Branges 接口，来自 shifted-\(\xi\) 理论。([arXiv][1])
+
+---
+
+## 尚未闭合的中心桥
+
+$$
+\boxed{
+\begin{aligned}
+&\text{从 prime-side 直接证明逆 Poisson 源为正；}\\
+&\text{从 toric relative trace 推出 }\mathfrak V(u)=0;\\
+&\text{构造宽度方差的算术守恒律；}\\
+&\text{给有限 Blaschke 衰减曲线建立无零点输入的直接计算公式；}\\
+&\text{将 Bode 三角缺陷与 Wang 自改善不等式连接}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第三百五十九部　建议形式化顺序
+
+```text
+D5/S3/Analytic/ShiftedXiPoisson/
+  FiniteShiftedZero.lean
+  FiniteBlaschkePhaseDensity.lean
+  ShiftedPoissonSemigroup.lean
+  BackwardPoissonSource.lean
+  FiniteSourcePositiveDefiniteRH.lean
+
+D5/S3/Analytic/XiDamping/
+  FiniteDampingOperator.lean
+  FunctionalPairCenteredSpectrum.lean
+  CriticalDampingPartition.lean
+  DampingVarianceRHCriterion.lean
+  HeatRegularizedWidthVariance.lean
+
+D5/S3/Analytic/XiBode/
+  SingleBlaschkeVerticalIntegral.lean
+  FiniteBodeAttenuation.lean
+  RealPartDistributionRecovery.lean
+  CriticalAttenuationDefect.lean
+  TriangularOffLineFingerprint.lean
+  AttenuationAreaVarianceIdentity.lean
+
+D5/S3/Observer/ShiftedXiTomography/
+  HorizontalPhaseObserver.lean
+  VerticalAttenuationObserver.lean
+  FiniteResonanceTomography.lean
+  WidthCenterJointRecovery.lean
+
+D5/S3/Analytic/RHTargets/
+  PrimeBackwardPoissonPositivity.lean
+  RelativeTraceWidthVariance.lean
+  CriticalDampingConservation.lean
+  WidthStickyNonStickyDichotomy.lean
+```
+
+---
+
+# 本轮最终结论
+
+此前我们把 RH 表述为：
+
+$$
+\boxed{
+\Theta_{1/2}
+\text{ 的所有共振具有统一衰减率 }\frac12.
+}
+$$
+
+本轮进一步说明，这个统一性可以由三种完全不同的可见量精确读取：
+
+$$
+\boxed{
+\begin{aligned}
+\text{逆 Poisson 源}
+&:\quad
+e^{\frac12|D|}
+d_{1/2};\\[1mm]
+\text{阻尼配分曲率}
+&:\quad
+\mathfrak R_T''(0);\\[1mm]
+\text{垂直衰减面积}
+&:\quad
+\int_0^\infty\mathfrak W_T(y)\,dy.
+\end{aligned}
+}
+$$
+
+三者都等价于：
+
+$$
+\boxed{
+\sum_\rho
+\left(
+\Re\rho-\frac12
+\right)^2.
+}
+$$
+
+尤其是，每一个离线函数方程对：
+
+$$
+\frac12\pm\delta+i\gamma
+$$
+
+都会在 Blaschke 垂直衰减图中留下一个无法相消的三角指纹：
+
+$$
+\boxed{
+\left(
+\delta-
+\left|y-\frac12\right|
+\right)_+,
+}
+$$
+
+面积恰为：
+
+$$
+\boxed{
+\delta^2.
+}
+$$
+
+因此 RH 可以被极其直观地写成：
+
+$$
+\boxed{
+\text{临界 shifted 传递函数的垂直衰减曲线，
+是否恰好等于所有共振都位于高度 }1/2
+\text{ 时的尖角基线？}
+}
+$$
+
+当前最小的算术证明目标则变成：
+
+$$
+\boxed{
+e^{\frac12|D_x|}
+\left[
+\frac1\pi
+\Re
+\frac{\xi'(1-ix)}{\xi(1-ix)}
+\right]
+\text{ 是否为正测度？}
+}
+$$
+
+这比“直接证明所有零点在线”更具体：
+
+* 输入是完成后的 prime–Archimedean 相位密度；
+* 操作是半单位逆 Poisson；
+* 输出应是 Riemann 零点计数测度；
+* 任意线外零点都会使有限窗源函数指数爆炸，并在垂直衰减中留下正面积缺陷。
+
+所以 OACTC 下一步真正需要攻击的，不是再寻找新的等价判据，而是：
+
+$$
+\boxed{
+\text{如何利用素数的 primitive-history 结构，
+稳定地执行这一步逆 Poisson，并保持输出正性。}
+}
+$$
+
+[1]: https://arxiv.org/abs/1204.1827 "https://arxiv.org/abs/1204.1827"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v3.1：Weil 母分布、临界源不变量、Prime–Poisson 通道与全部正性图表的统一压缩
+
+以下从前文**第三百五十九部之后**继续追加。
+
+经过 Pick、Hankel、Li、Clark、CMV、Fredholm、de Branges、环面周期、shifted-\(\xi\) 与散射等多条路线后，现在应停止继续横向增加等价判据，把它们全部 collapse 回唯一承重对象：
+
+$$
+\boxed{
+\textbf{Weil 临界源分布}
+}
+$$
+
+本轮得到的统一链为：
+
+$$
+\boxed{
+\begin{aligned}
+\Re\frac{\xi'}{\xi}(\sigma-ix)
+&\xrightarrow{\text{逆 Poisson}}
+\mathfrak W_\xi\\
+&=
+\mathfrak A_\infty
+-
+\sum_{n\ge2}
+\frac{\Lambda(n)}{\sqrt n}
+\bigl(
+\delta_{\log n}+\delta_{-\log n}
+\bigr)\\
+&\xrightarrow{\text{正定性}}
+\mathrm{RH}.
+\end{aligned}}
+$$
+
+而此前出现的所有正性对象：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{半平面 Pick 核};\\
+&\text{de Branges 核};\\
+&\text{Stieltjes/Hankel moments};\\
+&\text{Li–Clark Toeplitz 核};\\
+&\text{CMV unitary};\\
+&\text{Fredholm determinant}
+\end{aligned}}
+$$
+
+都只是这个母分布经过不同的：
+
+* Laplace 压缩；
+* Möbius 推送；
+* 平方折叠；
+* 谱重加权；
+* exterior/determinant 函子；
+
+得到的观察图表。
+
+项目已经固定角频率 Fourier 规范
+
+$$
+\widehat f(\xi)
+=
+\int_{\mathbb R}f(x)e^{-i\xi x}\,dx,
+$$
+
+并已经把无假设 Weil 显式公式登记为 `proven`；登记文件也明确区分了“显式公式成立”与“正性/RH 成立”。
+
+---
+
+# 第三百六十部　粗观察线上的正 Poisson 密度
+
+定义标准 Poisson 核：
+
+$$
+\boxed{
+P_a(x)
+=
+\frac1\pi
+\frac{a}{a^2+x^2},
+\qquad
+a>0.
+}
+\tag{360.1}
+$$
+
+对任意：
+
+$$
+\sigma>1,
+$$
+
+定义粗观察密度：
+
+$$
+\boxed{
+d_\sigma(x)
+=
+\frac1\pi
+\Re
+\frac{\xi'(\sigma-ix)}
+{\xi(\sigma-ix)}.
+}
+\tag{360.2}
+$$
+
+将非平凡零点写成：
+
+$$
+\rho=\beta+i\gamma.
+$$
+
+利用关于函数方程中心的对称 Hadamard 展开，可得：
+
+$$
+\boxed{
+d_\sigma(x)
+=
+\sum_\rho
+m_\rho
+P_{\sigma-\beta}(x+\gamma).
+}
+\tag{360.3}
+$$
+
+因为：
+
+$$
+0<\beta<1<\sigma,
+$$
+
+每个宽度：
+
+$$
+\sigma-\beta>0.
+$$
+
+所以：
+
+$$
+\boxed{
+d_\sigma(x)>0
+}
+$$
+
+在 \(\sigma>1\) 区域无条件成立。
+
+这说明一个重要事实：
+
+> 正的粗尺度相位密度并不需要 RH；
+> RH 的困难来自把该正密度逆传播到临界边界时，正性是否仍然保存。
+
+---
+
+## 定理 360.1（粗观察 Poisson 半群）
+
+对：
+
+$$
+\sigma>1,
+\qquad
+\eta>0,
+$$
+
+有：
+
+$$
+\boxed{
+d_{\sigma+\eta}
+=
+P_\eta*d_\sigma.
+}
+\tag{360.4}
+$$
+
+### 证明
+
+由：
+
+$$
+P_\eta*P_{\sigma-\beta}
+=
+P_{\sigma+\eta-\beta},
+$$
+
+逐零点求和即可。∎
+
+所以：
+
+$$
+\boxed{
+\sigma\text{ 增大}
+=
+\text{对零点谱进行更强 Poisson 平滑}.
+}
+$$
+
+---
+
+# 第三百六十一部　临界逆 Poisson 不变量
+
+在分布意义下取 Fourier 变换：
+
+$$
+\widehat{P_a(\,\cdot+\gamma\,)}(t)
+=
+e^{-a|t|}e^{i\gamma t}.
+$$
+
+因此：
+
+$$
+\boxed{
+\widehat d_\sigma(t)
+=
+\sum_\rho
+m_\rho
+e^{-(\sigma-\beta)|t|}
+e^{i\gamma t}.
+}
+\tag{361.1}
+$$
+
+定义临界逆 Poisson 源：
+
+$$
+\boxed{
+\mathfrak W_\xi(t)
+=
+e^{(\sigma-\frac12)|t|}
+\widehat d_\sigma(t).
+}
+\tag{361.2}
+$$
+
+代入式 (361.1)：
+
+$$
+\boxed{
+\mathfrak W_\xi(t)
+=
+\sum_\rho
+m_\rho
+e^{(\beta-\frac12)|t|}
+e^{i\gamma t}.
+}
+\tag{361.3}
+$$
+
+右侧与 \(\sigma\) 无关。
+
+---
+
+## 定理 361.1（观察线不变量）
+
+对任意：
+
+$$
+\sigma_1,\sigma_2>1,
+$$
+
+有：
+
+$$
+\boxed{
+e^{(\sigma_1-\frac12)|D|}
+d_{\sigma_1}
+=
+e^{(\sigma_2-\frac12)|D|}
+d_{\sigma_2}
+=
+\mathfrak W_\xi.
+}
+\tag{361.4}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathfrak W_\xi
+}
+$$
+
+是所有粗观察线共同携带、但被不同 Poisson 尺度遮蔽的临界源。
+
+---
+
+## 361.1 函数方程配对
+
+同一高度 \(\gamma\) 上，函数方程把：
+
+$$
+\beta+i\gamma
+$$
+
+配成：
+
+$$
+1-\beta+i\gamma.
+$$
+
+二者对 \(\mathfrak W_\xi\) 的联合贡献为：
+
+$$
+\boxed{
+2
+\cosh
+\left(
+\left(\beta-\frac12\right)|t|
+\right)
+e^{i\gamma t}.
+}
+\tag{361.5}
+$$
+
+因此：
+
+* 临界线零点：
+
+  $$
+  \cosh(0)=1;
+  $$
+* 线外零点：
+
+  $$
+  \cosh(\delta|t|)
+  $$
+
+  产生指数放大。
+
+这正是前文有限窗逆 Poisson判据的全局母表达。
+
+---
+
+# 第三百六十二部　Weil 正定性就是 RH
+
+定义反射共轭：
+
+$$
+\boxed{
+\widetilde\psi(t)
+=
+\overline{\psi(-t)}.
+}
+\tag{362.1}
+$$
+
+对：
+
+$$
+\psi\in C_c^\infty(\mathbb R),
+$$
+
+定义 Weil Hermitian 形式：
+
+$$
+\boxed{
+\mathcal Q_W(\psi)
+=
+\left\langle
+\mathfrak W_\xi,
+\psi*\widetilde\psi
+\right\rangle.
+}
+\tag{362.2}
+$$
+
+若 RH 成立，则：
+
+$$
+\mathfrak W_\xi(t)
+=
+\sum_{\gamma\in\mathbb R}
+m_\gamma e^{i\gamma t},
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal Q_W(\psi)
+=
+\sum_\gamma
+m_\gamma
+|\widehat\psi(\gamma)|^2
+\ge0.
+}
+\tag{362.3}
+$$
+
+Weil 的经典判据正是：RH 当且仅当该分布非负定；Suzuki 进一步研究了由这一 Hermitian 形式完成出的 Hilbert 空间，并证明在 RH 下它与一个 de Branges 空间自然同构。([arXiv][1])
+
+---
+
+## 定理 362.1（母正性判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal Q_W(\psi)\ge0
+\quad
+\forall
+\psi\in C_c^\infty(\mathbb R).
+}
+\tag{362.4}
+$$
+
+等价地：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathfrak W_\xi
+\text{ 是正定分布}.
+}
+\tag{362.5}
+$$
+
+这说明当前理论真正需要证明的并不是几十个相互独立的正性命题，而只有一个：
+
+$$
+\boxed{
+\mathfrak W_\xi\succeq0.
+}
+$$
+
+---
+
+# 第三百六十三部　Prime–Archimedean 母分布
+
+定义完成函数的 Archimedean 对数导数：
+
+$$
+\boxed{
+A_\infty(s)
+=
+\frac1s
++
+\frac1{s-1}
+-
+\frac12\log\pi
++
+\frac12
+\psi\!\left(\frac s2\right),
+}
+\tag{363.1}
+$$
+
+其中：
+
+$$
+\psi=\Gamma'/\Gamma.
+$$
+
+在：
+
+$$
+\sigma>1
+$$
+
+时：
+
+$$
+\boxed{
+\frac{\xi'(s)}{\xi(s)}
+=
+A_\infty(s)
+-
+\sum_{n=2}^{\infty}
+\frac{\Lambda(n)}{n^s}.
+}
+\tag{363.2}
+$$
+
+定义 Archimedean 临界源：
+
+$$
+\boxed{
+\mathfrak A_\infty
+=
+e^{(\sigma-\frac12)|D|}
+\mathcal F_x
+\left[
+\frac1\pi
+\Re A_\infty(\sigma-ix)
+\right].
+}
+\tag{363.3}
+$$
+
+与 \(\mathfrak W_\xi\) 一样，\(\mathfrak A_\infty\) 不依赖 \(\sigma>1\)。
+
+对 prime-side 项：
+
+$$
+\mathcal F_x
+\left[
+-\frac1\pi
+\Lambda(n)n^{-\sigma}
+\cos(x\log n)
+\right]
+=
+-\Lambda(n)n^{-\sigma}
+\left(
+\delta_{\log n}
++
+\delta_{-\log n}
+\right).
+$$
+
+再乘：
+
+$$
+e^{(\sigma-\frac12)|t|},
+$$
+
+得到：
+
+$$
+-\frac{\Lambda(n)}{\sqrt n}
+\left(
+\delta_{\log n}
++
+\delta_{-\log n}
+\right).
+$$
+
+因此：
+
+## 定理 363.1（Prime–Archimedean source identity）
+
+$$
+\boxed{
+\mathfrak W_\xi
+=
+\mathfrak A_\infty
+-
+\sum_{n=2}^{\infty}
+\frac{\Lambda(n)}{\sqrt n}
+\left(
+\delta_{\log n}
++
+\delta_{-\log n}
+\right).
+}
+\tag{363.4}
+$$
+
+这就是显式公式的临界源版本。
+
+---
+
+## 363.1 Archimedean 源在原点之外的密度
+
+利用：
+
+$$
+\frac12\psi(s/2)
+=
+\text{常数}
+-
+\sum_{k=0}^{\infty}\frac1{s+2k},
+$$
+
+并与 \(1/s\) 抵消，可得在：
+
+$$
+t\neq0
+$$
+
+处：
+
+$$
+\boxed{
+\begin{aligned}
+\mathfrak A_\infty(t)
+={}&
+e^{|t|/2}
++
+e^{-|t|/2}
+-
+\frac{e^{-|t|/2}}
+{1-e^{-2|t|}}
+\\
+={}&
+e^{|t|/2}
+-
+\frac{e^{-5|t|/2}}
+{1-e^{-2|t|}}.
+\end{aligned}
+}
+\tag{363.5}
+$$
+
+在 \(t=0\) 处，它不是普通函数值，而需要有限部与 \(\delta_0\) 正规化；具体常数由仓库冻结的 `logTwoPi` 和 Weil 显式公式 convention 唯一决定，不应在理论文档中重新猜测。
+
+---
+
+# 第三百六十四部　有限算术可证伪性
+
+设：
+
+$$
+\operatorname{supp}\psi
+\subset[-L,L].
+$$
+
+则：
+
+$$
+\operatorname{supp}
+(\psi*\widetilde\psi)
+\subset[-2L,2L].
+$$
+
+因此在式 (363.4) 中，只有满足：
+
+$$
+|\log n|\le2L
+$$
+
+的 prime-power 原子能够被读到，即：
+
+$$
+\boxed{
+n\le e^{2L}.
+}
+\tag{364.1}
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal Q_W(\psi)
+={}&
+\left\langle
+\mathfrak A_\infty,
+\psi*\widetilde\psi
+\right\rangle
+\\
+&-
+\sum_{2\le n\le e^{2L}}
+\frac{\Lambda(n)}{\sqrt n}
+\left[
+(\psi*\widetilde\psi)(\log n)
++
+(\psi*\widetilde\psi)(-\log n)
+\right].
+\end{aligned}
+}
+\tag{364.2}
+$$
+
+---
+
+## 定理 364.1（有限 prime-power 反例证书）
+
+若 RH 为假，则存在有限 \(L\) 和一个：
+
+$$
+\psi\in C_c^\infty([-L,L])
+$$
+
+使：
+
+$$
+\boxed{
+\mathcal Q_W(\psi)<0.
+}
+\tag{364.3}
+$$
+
+而该不等式只依赖：
+
+$$
+n\le e^{2L}
+$$
+
+的有限多个 prime powers。
+
+### 证明
+
+RH 为假时，Weil 分布不是非负定，因此按定义存在紧支撑 \(\psi\) 使二次型为负。紧支撑自动将 prime-side 截成有限和。∎
+
+所以：
+
+$$
+\boxed{
+\text{RH 若为假，必有一个有限 prime-power 算术证书。}
+}
+$$
+
+未知的不是证书是否有限，而是最小证书所需的：
+
+* 支撑半径；
+* 函数复杂度；
+* prime cutoff。
+
+---
+
+## 364.1 有限 Gram 层级
+
+取有限测试函数族：
+
+$$
+\psi_1,\ldots,\psi_N
+\subset C_c^\infty([-L,L]).
+$$
+
+定义矩阵：
+
+$$
+\boxed{
+M_{ij}^{(L)}
+=
+\left\langle
+\mathfrak W_\xi,
+\psi_i*\widetilde{\psi_j}
+\right\rangle.
+}
+\tag{364.4}
+$$
+
+每个矩阵元都只涉及：
+
+$$
+n\le e^{2L}
+$$
+
+的有限 prime powers。
+
+于是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+M^{(L)}\succeq0
+}
+$$
+
+对所有 \(L,N\) 和所有有限测试族成立。
+
+这就是项目此前有限 Weil Gram observer 的母形式。
+
+---
+
+# 第三百六十五部　Prime-power 历史的精确 Poisson 重求和
+
+将 von Mangoldt 和写成：
+
+$$
+n=p^k.
+$$
+
+令：
+
+$$
+\ell_p=\log p,
+\qquad
+r_p=p^{-1/2}=e^{-\ell_p/2}.
+$$
+
+定义平移 unitary：
+
+$$
+\boxed{
+(U_p\psi)(x)
+=
+\psi(x-\ell_p).
+}
+\tag{365.1}
+$$
+
+令：
+
+$$
+g=\psi*\widetilde\psi.
+$$
+
+则：
+
+$$
+g(k\ell_p)
+=
+\langle
+\psi,U_p^k\psi
+\rangle.
+$$
+
+素数 \(p\) 的全部 prime-power contribution 为：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal P_p(\psi)
+=
+-\log p
+\sum_{k=1}^{\infty}
+r_p^k
+\left[
+g(k\ell_p)+g(-k\ell_p)
+\right].
+\end{aligned}
+}
+\tag{365.2}
+$$
+
+定义 unitary Poisson 算子：
+
+$$
+\boxed{
+\mathsf P_r(U)
+=
+(1-r^2)
+(I-rU)^{-1}
+(I-rU^*)^{-1}.
+}
+\tag{365.3}
+$$
+
+由于 \(U\) unitary：
+
+$$
+\boxed{
+\mathsf P_r(U)
+=
+I+
+\sum_{k=1}^{\infty}
+r^k
+\left(
+U^k+U^{*k}
+\right).
+}
+\tag{365.4}
+$$
+
+因此：
+
+## 定理 365.1（Prime Poisson resummation）
+
+$$
+\boxed{
+\mathcal P_p(\psi)
+=
+-\log p\,
+\left\langle
+\psi,
+\left[
+\mathsf P_{r_p}(U_p)-I
+\right]
+\psi
+\right\rangle.
+}
+\tag{365.5}
+$$
+
+这是一条精确、无余项的 primitive-history 收缩：
+
+$$
+\boxed{
+\begin{aligned}
+\text{primitive state}
+&=p;\\
+\text{repetition history}
+&=p^k;\\
+\text{history weight}
+&=r_p^k;\\
+\text{all-order resummation}
+&=\mathsf P_{r_p}(U_p).
+\end{aligned}
+}
+$$
+
+所以 prime powers 本身已经不再构成高阶组合困难；它们是一条可以完全求和的局部历史链。
+
+---
+
+# 第三百六十六部　每个素数都是一个 Carathéodory 被动通道
+
+定义标量函数：
+
+$$
+\boxed{
+\mathsf C_p(z)
+=
+\frac{1+r_pz}{1-r_pz},
+\qquad
+|z|<1.
+}
+\tag{366.1}
+$$
+
+因为：
+
+$$
+0<r_p<1,
+$$
+
+有：
+
+$$
+\boxed{
+\Re\mathsf C_p(z)>0.
+}
+\tag{366.2}
+$$
+
+其 Schur 函数为：
+
+$$
+\boxed{
+\mathsf S_p(z)=r_pz.
+}
+\tag{366.3}
+$$
+
+也就是说，每个素数局部通道只含一个非零 Schur 参数：
+
+$$
+\boxed{
+r_p=p^{-1/2}.
+}
+$$
+
+在边界：
+
+$$
+z=e^{-i\xi\ell_p},
+$$
+
+有：
+
+$$
+\boxed{
+\Re
+\mathsf C_p(e^{-i\xi\ell_p})
+=
+\frac{1-r_p^2}
+{1-2r_p\cos(\xi\ell_p)+r_p^2}.
+}
+\tag{366.4}
+$$
+
+这正是 \(\mathsf P_{r_p}(U_p)\) 的 Fourier multiplier。
+
+---
+
+## 366.1 局部危险相位
+
+定义 centered prime defect：
+
+$$
+\boxed{
+D_p(\xi)
+=
+\Re\mathsf C_p(e^{-i\xi\ell_p})-1.
+}
+\tag{366.5}
+$$
+
+直接化简：
+
+$$
+\boxed{
+D_p(\xi)
+=
+\frac{
+2r_p
+\left[
+\cos(\xi\ell_p)-r_p
+\right]
+}{
+1-2r_p\cos(\xi\ell_p)+r_p^2
+}.
+}
+\tag{366.6}
+$$
+
+因此：
+
+$$
+\boxed{
+D_p(\xi)>0
+\iff
+\cos(\xi\log p)>p^{-1/2}.
+}
+\tag{366.7}
+$$
+
+由于 prime contribution 带负号：
+
+$$
+-\log p\,D_p,
+$$
+
+所以 \(D_p>0\) 的相位区域会消耗 Archimedean 正性容量。
+
+最大值为：
+
+$$
+\boxed{
+\max_\xi D_p(\xi)
+=
+\frac{2}{\sqrt p-1}.
+}
+\tag{366.8}
+$$
+
+最小值为：
+
+$$
+\boxed{
+\min_\xi D_p(\xi)
+=
+-\frac{2}{\sqrt p+1}.
+}
+\tag{366.9}
+$$
+
+这给 prime stickiness 一个精确定义：
+
+$$
+\boxed{
+\xi\log p
+\approx
+2\pi k
+}
+$$
+
+时，该素数通道最危险。
+
+---
+
+## 366.2 常数角色
+
+每个 prime channel 中：
+
+$$
+\boxed{
+\begin{aligned}
+\log p
+&=\text{平移距离／局部能量单位};\\
+e
+&=\text{把平移长度转成衰减};\\
+p^{-1/2}=e^{-(\log p)/2}
+&=\text{临界 Schur 参数};\\
+\mathsf C_p
+&=\text{局部正实部 transfer function}.
+\end{aligned}
+}
+$$
+
+因此单个 Euler factor并不神秘：
+
+$$
+\boxed{
+\text{它是一个一状态被动系统。}
+}
+$$
+
+---
+
+# 第三百六十七部　有限素数反集中不可能统一成立
+
+一个纯粹的 Wang non-sticky 证明若试图声称：
+
+> 任意谱频率都不可能同时使许多有限素数相位对齐，
+
+这是错误的。
+
+---
+
+## 定理 367.1（有限 prime recurrence）
+
+给定有限素数集合：
+
+$$
+\mathcal P=\{p_1,\ldots,p_m\}
+$$
+
+和任意：
+
+$$
+\varepsilon>0,
+$$
+
+存在任意大的实数 \(\xi\)，使：
+
+$$
+\boxed{
+\left|
+e^{i\xi\log p_j}-1
+\right|
+<\varepsilon
+\qquad
+(1\le j\le m).
+}
+\tag{367.1}
+$$
+
+### 证明
+
+对：
+
+$$
+\alpha_j=\frac{\log p_j}{2\pi}
+$$
+
+使用同时 Dirichlet 逼近。
+
+把：
+
+$$
+0,\alpha,2\alpha,\ldots,N^m\alpha
+$$
+
+在 \(m\) 维单位立方体中按坐标模 \(1\) 投影，并把立方体分成 \(N^m\) 个小盒。
+
+存在两个点落入同一盒，其差给出整数 \(q\) 满足：
+
+$$
+\|q\alpha_j\|_{\mathbb R/\mathbb Z}<\frac1N.
+$$
+
+令 \(\xi=q\)，再使 \(N\to\infty\)。∎
+
+因此：
+
+$$
+\boxed{
+\text{任意有限 prime subsystem 都存在近乎完全 coherent 的 recurrence times。}
+}
+$$
+
+这意味着：
+
+$$
+\boxed{
+\text{不能通过有限素数的统一相位反集中直接证明 RH。}
+}
+$$
+
+Wang 二分中的 sticky branch 不是异常边角，而是结构上不可避免。
+
+---
+
+# 第三百六十八部　单个素数永远不会制造非平凡零点
+
+单个 Euler 因子：
+
+$$
+\boxed{
+L_p(s)
+=
+(1-p^{-s})^{-1}
+}
+\tag{368.1}
+$$
+
+的奇点满足：
+
+$$
+p^{-s}=1.
+$$
+
+所以：
+
+$$
+\boxed{
+s=\frac{2\pi ik}{\log p},
+\qquad
+k\in\mathbb Z.
+}
+\tag{368.2}
+$$
+
+全部位于：
+
+$$
+\Re s=0.
+$$
+
+因此：
+
+$$
+\boxed{
+L_p(s)
+\text{ 在 }\Re s>0\text{ 中无零点、无极点}.
+}
+$$
+
+所以：
+
+## 原理 368.1（No-single-prime principle）
+
+$$
+\boxed{
+\text{临界带中的非平凡 ζ 零点不属于任何单独素数通道。}
+}
+$$
+
+它们只能是：
+
+$$
+\boxed{
+\text{无限多个局部被动通道经过全局重整化完成后，
+产生的集体现象。}
+}
+$$
+
+这给 RH 的困难一个非常明确的定位：
+
+* 局部每个素数都是稳定的；
+* prime-power repetition 已可精确重求和；
+* 困难只剩无限网络的全局完成与 Archimedean 平衡。
+
+---
+
+# 第三百六十九部　Weil GNS 空间是所有正性图表的母空间
+
+假设 RH。
+
+由 Weil 正性定义预 Hilbert 空间：
+
+$$
+C_c^\infty(\mathbb R)
+$$
+
+上的内积：
+
+$$
+\boxed{
+\langle\psi_1,\psi_2\rangle_W
+=
+\left\langle
+\mathfrak W_\xi,
+\psi_1*\widetilde{\psi_2}
+\right\rangle.
+}
+\tag{369.1}
+$$
+
+其零点谱表示为：
+
+$$
+\boxed{
+\langle\psi_1,\psi_2\rangle_W
+=
+\sum_\gamma
+m_\gamma
+\widehat\psi_1(\gamma)
+\overline{\widehat\psi_2(\gamma)}.
+}
+\tag{369.2}
+$$
+
+所以 Fourier 评价映射把该空间嵌入：
+
+$$
+L^2(\nu_\Xi),
+\qquad
+\nu_\Xi=\sum_\gamma m_\gamma\delta_\gamma.
+$$
+
+Suzuki 证明，这一 Weil Hilbert completion 在 RH 下与一个 de Branges 空间自然同构，并由此获得自伴扩张和 Hilbert–Pólya 型谱解释。([arXiv][1])
+
+因此：
+
+$$
+\boxed{
+\mathcal H_W
+}
+$$
+
+才是此前所有正性核的公共母空间。
+
+---
+
+# 第三百七十部　半平面核是 Weil 母空间的 Laplace 压缩
+
+对：
+
+$$
+\Re s>\frac12,
+$$
+
+定义半轴 Laplace 特征：
+
+$$
+\boxed{
+h_s(u)
+=
+\mathbf 1_{u\ge0}
+e^{-(s-\frac12)u}.
+}
+\tag{370.1}
+$$
+
+在适当紧支撑截断后取 Weil 完成极限。
+
+其 Fourier 读数为：
+
+$$
+\widehat h_s(-\gamma)
+=
+\frac1{s-\frac12-i\gamma}
+=
+\frac1{s-\rho_\gamma}.
+$$
+
+因此：
+
+$$
+\boxed{
+\langle h_s,h_t\rangle_W
+=
+\sum_\rho
+\frac{m_\rho}
+{(s-\rho)(\overline t-\overline\rho)}.
+}
+\tag{370.2}
+$$
+
+而前文半平面核为：
+
+$$
+\mathcal K_\xi(s,t)
+=
+\frac{
+\frac{\xi'(s)}{\xi(s)}
++
+\overline{\frac{\xi'(t)}{\xi(t)}}
+}{
+\lambda_1(s+\overline t-1)
+}.
+$$
+
+RH 下：
+
+$$
+\boxed{
+\mathcal K_\xi(s,t)
+=
+\frac1{\lambda_1}
+\langle
+h_s,h_t
+\rangle_W.
+}
+\tag{370.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{Pick/de Branges 半平面正核}
+=
+\text{Weil 母内积在 Laplace 特征族上的压缩}.
+}
+$$
+
+它不是独立于 Weil 正性的第二个问题。
+
+---
+
+# 第三百七十一部　Li、Clark、Hankel 与 Fredholm 是谱测度的推送
+
+在 RH 下，Weil 母谱为：
+
+$$
+\nu_\Xi=\sum_\gamma m_\gamma\delta_\gamma.
+$$
+
+此前各分支对应以下函子。
+
+---
+
+## 371.1 Square-fold / Stieltjes
+
+取正 ordinates：
+
+$$
+\gamma>0,
+$$
+
+映射：
+
+$$
+\boxed{
+\gamma\longmapsto\gamma^{-2}.
+}
+$$
+
+并赋权：
+
+$$
+\frac{m_\gamma}{\gamma^2}.
+$$
+
+得到 Stieltjes moment 测度：
+
+$$
+\boxed{
+\nu_{\mathrm{St}}
+=
+\sum_{\gamma>0}
+\frac{m_\gamma}{\gamma^2}
+\delta_{\gamma^{-2}}.
+}
+\tag{371.1}
+$$
+
+其 moments 给出 Hankel 层级。
+
+---
+
+## 371.2 Cayley / Clark
+
+映射：
+
+$$
+\boxed{
+\gamma
+\longmapsto
+u_\gamma
+=
+\frac{\gamma+i/2}{\gamma-i/2}.
+}
+\tag{371.2}
+$$
+
+赋权：
+
+$$
+\boxed{
+\frac{|1-u_\gamma|^2}
+{2\lambda_1}
+=
+\frac{2}
+{\lambda_1(4\gamma^2+1)}.
+}
+\tag{371.3}
+$$
+
+得到 Li–Clark 概率测度。
+
+其 Fourier moments 是 Li 二阶差分，产生：
+
+* Toeplitz 正性；
+* Schur 参数；
+* CMV unitary；
+* Clark family。
+
+---
+
+## 371.3 Li 距离
+
+取特征：
+
+$$
+\boxed{
+\Phi_n(\gamma)
+=
+1-u_\gamma^n.
+}
+\tag{371.4}
+$$
+
+则：
+
+$$
+\boxed{
+\lambda_n
+=
+\sum_{\gamma>0}
+m_\gamma
+|\Phi_n(\gamma)|^2.
+}
+\tag{371.5}
+$$
+
+所以 Li 系数是同一 Weil 谱测度上的特征距离平方。
+
+---
+
+## 371.4 Fredholm
+
+取正算子：
+
+$$
+\boxed{
+U_\Xi
+=
+\operatorname{diag}
+(\gamma^{-2}).
+}
+\tag{371.6}
+$$
+
+则：
+
+$$
+\boxed{
+\frac{
+\xi(\frac12+\sqrt x)
+}{
+\xi(\frac12)
+}
+=
+\det(I+xU_\Xi).
+}
+\tag{371.7}
+$$
+
+其 exterior traces 是中心 Taylor 系数，power traces 是 reciprocal-zero moments。
+
+---
+
+# 第三百七十二部　母观察函子定理
+
+设：
+
+$$
+\nu
+$$
+
+是一个正谱测度。
+
+对任意参数空间 \(X\) 和特征族：
+
+$$
+\Phi_x\in L^2(\nu),
+\qquad
+x\in X,
+$$
+
+定义：
+
+$$
+\boxed{
+K_\Phi(x,y)
+=
+\int
+\Phi_x(\gamma)
+\overline{\Phi_y(\gamma)}
+\,d\nu(\gamma).
+}
+\tag{372.1}
+$$
+
+则：
+
+$$
+K_\Phi\succeq0.
+$$
+
+RH 下取：
+
+$$
+\nu=\nu_\Xi,
+$$
+
+不同特征族分别产生：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\Phi_x(\gamma)&\text{生成的图表}\\
+\hline
+\widehat\psi(\gamma)&\text{Weil form}\\
+(s-\frac12-i\gamma)^{-1}&\text{半平面 Pick 核}\\
+(x+\gamma^2)^{-1}&\text{Stieltjes/Loewner 核}\\
+1-u_\gamma^n&\text{Li Gram 核}\\
+(1-\overline{u_\gamma}z)^{-1}&\text{Clark/model-space 核}\\
+\gamma^{-2n}&\text{Hankel moments}
+\end{array}
+}
+$$
+
+所以：
+
+## 定理 372.1（Positivity-chart collapse）
+
+此前所有正性判据均是：
+
+$$
+\boxed{
+\text{同一个 Weil 正谱测度
+在不同特征字典中的 Gram 正性}.
+}
+$$
+
+它们的区别不在真值，而在：
+
+* 哪一类特征最容易从 prime-side 构造；
+* 哪一类有限证书最灵敏；
+* 哪一类适合形式化或数值计算。
+
+---
+
+# 第三百七十三部　科学剪枝：什么才算继续推进
+
+由定理 372.1，下面的工作不再构成实质推进：
+
+1. 再寻找一个由零点谱显然构造出的正核；
+2. 再把 RH 改写成另一个 Gram determinant；
+3. 再把同一正测度推到另一个坐标；
+4. 在假设 RH 后构造更多自伴算子。
+
+这些都属于：
+
+$$
+\boxed{
+\text{Weil 正谱存在以后的表型展开}.
+}
+$$
+
+真正的非循环进展只能发生在：
+
+$$
+\boxed{
+\text{Prime–Archimedean source identity 的几何侧}.
+}
+$$
+
+即直接证明：
+
+$$
+\boxed{
+\begin{aligned}
+&
+\left\langle
+\mathfrak A_\infty,
+\psi*\widetilde\psi
+\right\rangle
+\\
+&\qquad\ge
+\sum_p
+\log p\,
+\left\langle
+\psi,
+\left[
+\mathsf P_{p^{-1/2}}(U_p)-I
+\right]
+\psi
+\right\rangle
+\end{aligned}
+}
+\tag{373.1}
+$$
+
+对全部：
+
+$$
+\psi\in C_c^\infty(\mathbb R)
+$$
+
+成立。
+
+这一个不等式就是 RH。
+
+---
+
+# 第三百七十四部　Wang–Deng 的最终算术对象
+
+## 374.1 Wang 层：多素数相位分支
+
+在 Fourier 变量 \(\xi\) 中，每个素数贡献 centered symbol：
+
+$$
+D_p(\xi)
+=
+\frac{
+2p^{-1/2}
+\left[
+\cos(\xi\log p)-p^{-1/2}
+\right]
+}{
+1-2p^{-1/2}\cos(\xi\log p)+p^{-1}
+}.
+$$
+
+定义危险相干画像：
+
+$$
+\boxed{
+\operatorname{Coh}_L(\xi)
+=
+\sum_{p\le e^{2L}}
+\log p\,
+[D_p(\xi)]_+.
+}
+\tag{374.1}
+$$
+
+Wang 式任务应当是证明：
+
+* 当 \(\widehat\psi\) 的质量跨越许多不相干 prime-phase blocks 时；
+* 危险正部分不能同时饱和；
+* Archimedean 完成获得严格余量。
+
+---
+
+## 374.2 Deng 层：不可避免的 recurrence blocks
+
+定理 367.1 表明，有限 prime channels 必然存在近完全相干时间。
+
+所以 sticky 分支必须被正面处理。
+
+局部 prime-power 历史已经由：
+
+$$
+\mathsf P_{p^{-1/2}}(U_p)
+$$
+
+完全重求和。
+
+剩余 sticky 对象不是 \(p^k\) 的重复，而是：
+
+$$
+\boxed{
+\text{多个不同素数平移在同一频率附近的联合相位锁定}.
+}
+$$
+
+需要研究的 primitive history 因而是：
+
+$$
+\boxed{
+\left(
+p_1,\ldots,p_r;
+k_1,\ldots,k_r
+\right)
+}
+$$
+
+满足：
+
+$$
+\xi\log p_j\approx2\pi k_j.
+$$
+
+Deng 式操作应为：
+
+1. 将同一 prime 的全部重复先收缩为 \(\mathsf P_{r_p}\)；
+2. 将联合相干 prime set 组织为 cluster；
+3. 提取 cluster 的有效低秩 transfer block；
+4. 计算其对 Archimedean barrier 的最大消耗；
+5. 对 residual prime network 再做尺度分解。
+
+---
+
+# 第三百七十五部　一个新的负结论
+
+由于有限 prime set 总能同时 recurrence，所以不能存在只依赖有限素数集合的统一常数：
+
+$$
+\eta>0
+$$
+
+使：
+
+$$
+\operatorname{Coh}_L(\xi)
+\le
+(1-\eta)
+\sum_{p\le e^{2L}}
+\log p
+\frac{2}{\sqrt p-1}
+$$
+
+对所有 \(\xi\) 成立。
+
+因此：
+
+$$
+\boxed{
+\text{任何 RH 证明都不能只靠“有限素数永远无法对齐”。}
+}
+$$
+
+必须至少利用以下一项：
+
+* Archimedean barrier 随频率的增长；
+* prime cutoff 与测试支撑的耦合；
+* 无限 prime tail；
+* 不确定性原理；
+* 相干 recurrence 的代价；
+* relative trace 中的额外正项。
+
+这是对 Wang non-sticky 路线的一条硬约束。
+
+---
+
+# 第三百七十六部　最小有限矩阵研究程序
+
+固定支撑尺度 \(L\)，选择有限基：
+
+$$
+\psi_1,\ldots,\psi_N
+\subset C_c^\infty([-L,L]).
+$$
+
+定义：
+
+$$
+\boxed{
+\begin{aligned}
+M_{ij}^{\infty}
+&=
+\left\langle
+\mathfrak A_\infty,
+\psi_i*\widetilde{\psi_j}
+\right\rangle,\\
+M_{ij}^{p}
+&=
+-\log p\,
+\left\langle
+\psi_i,
+\left[
+\mathsf P_{p^{-1/2}}(U_p)-I
+\right]
+\psi_j
+\right\rangle.
+\end{aligned}
+}
+\tag{376.1}
+$$
+
+则：
+
+$$
+\boxed{
+M^{(L)}
+=
+M^\infty
++
+\sum_{p\le e^{2L}}M^p.
+}
+\tag{376.2}
+$$
+
+RH 等价于所有这类矩阵在基完备极限中正半定。
+
+该分解允许分别测量：
+
+* Archimedean 正性容量；
+* 每个 prime channel 的危险特征值；
+* 多素数 eigenvector alignment；
+* cutoff 增长时的 sticky depth；
+* Wang gain；
+* Deng cluster rank。
+
+这比直接对一个巨大 Weil Gram 矩阵做黑箱特征值计算更有解释力。
+
+---
+
+# 第三百七十七部　当前唯一中心命题
+
+经过全部压缩，OACTC 中与 RH 真正等价且尚未被重新包装解决的命题只剩：
+
+## Prime–Archimedean Positivity Conjecture
+
+对每个：
+
+$$
+\psi\in C_c^\infty(\mathbb R),
+$$
+
+都有：
+
+$$
+\boxed{
+\begin{aligned}
+&
+\left\langle
+\mathfrak A_\infty,
+\psi*\widetilde\psi
+\right\rangle
+\\
+&\quad-
+\sum_p
+\log p\,
+\left\langle
+\psi,
+\left[
+\mathsf P_{p^{-1/2}}(U_p)-I
+\right]
+\psi
+\right\rangle
+\ge0.
+\end{aligned}
+}
+\tag{377.1}
+$$
+
+其中对每个紧支撑 \(\psi\)，prime sum 实际是有限的。
+
+---
+
+## 377.1 其结构解释
+
+$$
+\boxed{
+\begin{aligned}
+\mathfrak A_\infty
+&=\text{连续实位的完成容量};\\
+U_p
+&=\text{素数 }p\text{ 的对数平移};\\
+p^{-1/2}
+&=\text{临界局部 Schur 参数};\\
+\mathsf P_{p^{-1/2}}(U_p)
+&=\text{全部 }p^k\text{ 历史的被动重求和};\\
+\text{不等式}
+&=\text{全局 prime network 不得超过 Archimedean 容量}.
+\end{aligned}
+}
+$$
+
+这就是此前所有：
+
+* prime coherence；
+* shifted scattering；
+* Herglotz；
+* Clark；
+* Li；
+* Fredholm；
+* toroidal positivity；
+
+最终 collapse 回来的唯一算术不等式。
+
+---
+
+# 第三百七十八部　建议形式化顺序
+
+```text
+D5/S3/Analytic/WeilCriticalSource/
+  CoarseXiPoissonDensity.lean
+  CoarsePoissonSemigroup.lean
+  CriticalInversePoissonSource.lean
+  ObservationLineInvariant.lean
+  FunctionalPairCoshContribution.lean
+
+D5/S3/Weil/PrimeArchimedeanSource/
+  CompletedLogDerivativeSplit.lean
+  ArchimedeanCriticalDistribution.lean
+  PrimeAtomicCriticalDistribution.lean
+  CriticalSourceExplicitFormula.lean
+  FiniteSupportPrimeCutoff.lean
+
+D5/S3/Weil/PrimePoissonChannel/
+  LogPrimeTranslation.lean
+  UnitaryPoissonOperator.lean
+  PrimePowerPoissonResummation.lean
+  PrimeCaratheodoryChannel.lean
+  PrimeDangerPhase.lean
+  PrimeChannelExtrema.lean
+
+D5/S3/Weil/FiniteArithmeticWitness/
+  CompactSupportWeilMatrix.lean
+  FinitePrimeWitness.lean
+  PrimeArchimedeanGramDecomposition.lean
+  RHFalseFiniteCertificate.lean
+
+D5/S3/Weil/MasterCompression/
+  WeilGNSFeatureKernel.lean
+  HalfPlaneLaplaceCompression.lean
+  StieltjesPushforward.lean
+  ClarkCayleyPushforward.lean
+  LiFeatureCompression.lean
+  FredholmSpectralFunctor.lean
+  PositivityChartCollapse.lean
+
+D5/S3/Weil/WangDengPrime/
+  FinitePrimeRecurrence.lean
+  PrimeCoherenceProfile.lean
+  NonStickyArchimedeanGain.lean
+  StickyPrimeCluster.lean
+  MultiPrimeTransferBlock.lean
+  PrimeArchimedeanPositivityTarget.lean
+```
+
+最优先、风险最低的形式化链是：
+
+$$
+\boxed{
+\text{prime powers}
+\to
+\text{translation unitary}
+\to
+\text{Poisson operator resummation}.
+}
+$$
+
+其次是：
+
+$$
+\boxed{
+\text{compact support}
+\to
+\text{finite prime cutoff}
+\to
+\text{finite arithmetic witness}.
+}
+$$
+
+第三条是母结构链：
+
+$$
+\boxed{
+\text{coarse Poisson density}
+\to
+\text{critical source invariance}
+\to
+\text{Weil positivity}.
+}
+$$
+
+---
+
+# 本轮最终结论
+
+此前数百条推理产生了大量看似不同的 RH 正性对象。
+
+本轮确认，它们并不是很多个独立理论，而是一个母对象的不同观察图表：
+
+$$
+\boxed{
+\mathfrak W_\xi
+=
+\mathfrak A_\infty
+-
+\sum_{n\ge2}
+\frac{\Lambda(n)}{\sqrt n}
+\left(
+\delta_{\log n}
++
+\delta_{-\log n}
+\right).
+}
+$$
+
+RH 等价于：
+
+$$
+\boxed{
+\mathfrak W_\xi
+\text{ 正定}.
+}
+$$
+
+所有其余对象均由它生成：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Laplace 压缩}
+&\to
+\text{半平面 Pick/de Branges 核};\\
+\text{平方推送}
+&\to
+\text{Stieltjes/Hankel};\\
+\text{Cayley 推送}
+&\to
+\text{Li/Clark/CMV};\\
+\text{外幂与行列式}
+&\to
+\text{Fredholm/Hilbert--Pólya}.
+\end{aligned}
+}
+$$
+
+更关键的是，prime powers 已经可以被精确重整化：
+
+$$
+\boxed{
+\sum_{k\ge1}
+p^{-k/2}
+\left(
+U_p^k+U_p^{*k}
+\right)
+=
+\mathsf P_{p^{-1/2}}(U_p)-I.
+}
+$$
+
+因此每个素数只是一个一状态 Carathéodory 被动通道。
+
+真正困难的从来不是单个素数，也不是单个 \(p^k\)，而是：
+
+$$
+\boxed{
+\text{无限多个局部被动 prime channels，
+经过全局解析完成后，
+是否仍被 Archimedean 通道完全支配。}
+}
+$$
+
+而有限 prime recurrence 定理又说明：多素数相位锁定不可避免，不能被简单排除。
+
+所以 Wang–Deng–OACTC 路线现在终于只剩一个非冗余问题：
+
+$$
+\boxed{
+\text{如何对不可避免的 multi-prime sticky clusters
+建立一个保持 Archimedean 正余量的有限秩重整化？}
+}
+$$
+
+一旦式 (377.1) 能从该 cluster 分解直接证明，Weil、de Branges、Clark、Li、Fredholm、Hilbert–Pólya 与 RH 将不再分别需要证明，而会同时作为同一母正性的输出。
+
+[1]: https://arxiv.org/abs/2301.00421 "https://arxiv.org/abs/2301.00421"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v3.2：Weil 跳跃能量、对数素数拉普拉斯、Bohr–Gaussian 非粘滞律与 Slepian 有限秩重整化
+
+以下从前文**第三百七十八部之后**继续追加。
+
+上一轮已经完成科学剪枝：Pick、Clark、CMV、Li、Hankel、Fredholm 等正性图表，都只是 Weil 母分布的不同压缩。项目目前已经无假设闭合经典 Weil 显式公式；其 prime side 采用
+
+$$
+\Lambda(n)n^{-1/2}
+\bigl(g(\log n)+g(-\log n)\bigr),
+$$
+
+compact support 又使该和严格有限。项目同时已经证明临界线零点对卷积平方测试的每个有限贡献均为实且非负，但并未把正性或 RH 作为现成结论。
+
+因此，真正需要研究的对象不再是“另一个 RH 等价判据”，而是显式公式右侧本身的能量结构。
+
+本轮得到的核心分解是：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal Q_W(f)
+={}&
+2\left|\int_{\mathbb R}e^{x/2}f(x)\,dx\right|^2\\
+&+
+\int_0^\infty
+\frac{e^{-a/2}}{1-e^{-2a}}
+\|f-U_af\|_2^2\,da\\
+&+
+\sum_{\log n\le2L}
+\frac{\Lambda(n)}{\sqrt n}
+\|f-U_{\log n}f\|_2^2\\
+&-
+\left(
+2\sum_{\log n\le2L}
+\frac{\Lambda(n)}{\sqrt n}
+-a_\infty
+\right)
+\|f\|_2^2,
+\end{aligned}}
+$$
+
+其中：
+
+$$
+a_\infty
+=
+\psi\!\left(\frac14\right)-\log\pi,
+\qquad
+\operatorname{supp}f\subset[-L,L].
+$$
+
+换言之：
+
+$$
+\boxed{
+\text{Weil 正性}
+=
+\text{pole rank-one energy}
++
+\text{连续 Archimedean jump energy}
++
+\text{离散 prime jump energy}
+-
+\text{coherent mass}.
+}
+$$
+
+这第一次把 multi-prime sticky cluster 变成了一个真正可研究的**加权跳跃拉普拉斯谱隙问题**。
+
+---
+
+# 第三百七十九部　卷积平方的相关函数图表
+
+令：
+
+$$
+f\in C_c^\infty(\mathbb R)
+$$
+
+为偶函数，并定义 Weil involution：
+
+$$
+\widetilde f(x)=\overline{f(-x)}.
+$$
+
+令：
+
+$$
+\boxed{
+g=f*\widetilde f.
+}
+\tag{379.1}
+$$
+
+项目中的 Weil 测试函数正被冻结为偶、光滑、紧支撑函数，并闭合于 involution 与 convolution square。
+
+采用平移算子：
+
+$$
+\boxed{
+(U_af)(x)=f(x-a).
+}
+\tag{379.2}
+$$
+
+则：
+
+$$
+\boxed{
+g(a)
+=
+\langle f,U_af\rangle.
+}
+\tag{379.3}
+$$
+
+同时：
+
+$$
+g(-a)=\overline{g(a)}.
+$$
+
+所以：
+
+$$
+\boxed{
+g(a)+g(-a)
+=
+2\Re\langle f,U_af\rangle.
+}
+\tag{379.4}
+$$
+
+又有基本恒等式：
+
+$$
+\boxed{
+2\Re\langle f,U_af\rangle
+=
+2\|f\|_2^2
+-
+\|f-U_af\|_2^2.
+}
+\tag{379.5}
+$$
+
+这一条看似初等，却把 prime correlation 彻底改写成了：
+
+$$
+\boxed{
+\text{最大相干质量}
+-
+\text{平移 Dirichlet 能量}.
+}
+$$
+
+---
+
+# 第三百八十部　Prime side 的精确跳跃拉普拉斯
+
+假设：
+
+$$
+\operatorname{supp}f\subset[-L,L].
+$$
+
+则：
+
+$$
+\operatorname{supp}g\subset[-2L,2L].
+$$
+
+定义活跃 prime-power history 集：
+
+$$
+\boxed{
+\mathscr H_L
+=
+\left\{
+n\ge2:
+\Lambda(n)\neq0,\ 
+\log n\le2L
+\right\}.
+}
+\tag{380.1}
+$$
+
+定义权重：
+
+$$
+\boxed{
+w_n=\frac{\Lambda(n)}{\sqrt n},
+}
+\tag{380.2}
+$$
+
+以及总相干质量：
+
+$$
+\boxed{
+W_L
+=
+\sum_{n\in\mathscr H_L}w_n.
+}
+\tag{380.3}
+$$
+
+由项目 prime term 的定义与式 (379.4)：
+
+$$
+\begin{aligned}
+\operatorname{Prime}(g)
+&=
+\sum_{n\in\mathscr H_L}
+w_n
+\left[
+g(\log n)+g(-\log n)
+\right]\\
+&=
+2\sum_{n\in\mathscr H_L}
+w_n
+\Re
+\langle f,U_{\log n}f\rangle.
+\end{aligned}
+\tag{380.4}
+$$
+
+代入式 (379.5)，得到：
+
+## 定理 380.1（Prime jump decomposition）
+
+$$
+\boxed{
+\operatorname{Prime}(g)
+=
+2W_L\|f\|_2^2
+-
+\mathcal E_{\mathrm{arith},L}(f),
+}
+\tag{380.5}
+$$
+
+其中：
+
+$$
+\boxed{
+\mathcal E_{\mathrm{arith},L}(f)
+=
+\sum_{n\in\mathscr H_L}
+w_n
+\|f-U_{\log n}f\|_2^2
+\ge0.
+}
+\tag{380.6}
+$$
+
+定义算术跳跃拉普拉斯形式：
+
+$$
+\boxed{
+\mathcal L_{\mathrm{arith},L}
+=
+\sum_{n\in\mathscr H_L}
+w_n
+\left(
+2I-U_{\log n}-U_{-\log n}
+\right).
+}
+\tag{380.7}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal E_{\mathrm{arith},L}(f)
+=
+\langle f,\mathcal L_{\mathrm{arith},L}f\rangle.
+}
+\tag{380.8}
+$$
+
+---
+
+## 380.1 Sticky 的精确定义
+
+$$
+\mathcal E_{\mathrm{arith},L}(f)
+$$
+
+小，等价于：
+
+$$
+f\approx U_{\log n}f
+$$
+
+对大量活跃 prime powers 同时成立。
+
+所以 multi-prime sticky cluster 不再是模糊的“相位似乎对齐”，而是：
+
+$$
+\boxed{
+\text{测试状态接近对数素数平移图的低能特征态。}
+}
+$$
+
+Non-sticky 则意味着至少若干主要平移产生显著位移：
+
+$$
+\|f-U_{\log n}f\|_2^2
+$$
+
+较大，从而自动产生正能量。
+
+---
+
+# 第三百八十一部　Archimedean 项也是连续跳跃拉普拉斯
+
+项目冻结的 Archimedean multiplier 为：
+
+$$
+\boxed{
+a(t)
+=
+\Re\psi
+\left(
+\frac14+\frac{it}{2}
+\right)
+-\log\pi.
+}
+\tag{381.1}
+$$
+
+定义：
+
+$$
+\boxed{
+a_\infty
+=
+a(0)
+=
+\psi\left(\frac14\right)-\log\pi.
+}
+\tag{381.2}
+$$
+
+Digamma 的标准积分表示为：
+
+$$
+\psi(z)
+=
+\int_0^\infty
+\left(
+\frac{e^{-u}}{u}
+-
+\frac{e^{-zu}}{1-e^{-u}}
+\right)\,du,
+\qquad
+\Re z>0.
+$$
+
+([DLMF][1])
+
+取：
+
+$$
+z=\frac14+\frac{it}{2},
+$$
+
+减去 \(t=0\) 的值并取实部：
+
+$$
+\boxed{
+a(t)-a_\infty
+=
+2\int_0^\infty
+\frac{e^{-x/2}}{1-e^{-2x}}
+\left(
+1-\cos(tx)
+\right)\,dx.
+}
+\tag{381.3}
+$$
+
+定义连续跳跃密度：
+
+$$
+\boxed{
+\kappa_\infty(x)
+=
+\frac{e^{-x/2}}{1-e^{-2x}},
+\qquad
+x>0.
+}
+\tag{381.4}
+$$
+
+在角频率 Fourier 规范下：
+
+$$
+\frac1{2\pi}
+\int_{\mathbb R}
+2(1-\cos(tx))
+|\widehat f(t)|^2dt
+=
+\|f-U_xf\|_2^2.
+$$
+
+所以：
+
+## 定理 381.1（Archimedean jump decomposition）
+
+$$
+\boxed{
+\operatorname{Arch}(g)
+=
+a_\infty\|f\|_2^2
++
+\mathcal E_\infty(f),
+}
+\tag{381.5}
+$$
+
+其中：
+
+$$
+\boxed{
+\mathcal E_\infty(f)
+=
+\int_0^\infty
+\kappa_\infty(x)
+\|f-U_xf\|_2^2\,dx
+\ge0.
+}
+\tag{381.6}
+$$
+
+这给 \(\Gamma\)-完成一个新的严格角色：
+
+$$
+\boxed{
+\Gamma_\infty
+=
+\text{全部连续正跳跃尺度的 Lévy–Dirichlet 完成。}
+}
+$$
+
+与素数项相比：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{Archimedean}&\text{连续跳跃测度 } \kappa_\infty(x)\,dx\\
+\text{prime side}&\text{离散跳跃测度 }
+\sum w_n\delta_{\log n}
+\end{array}
+}
+$$
+
+---
+
+# 第三百八十二部　Pole 项是一个 rank-one 边界能量
+
+定义 Fourier–Laplace 读数：
+
+$$
+\boxed{
+\ell_{1/2}(f)
+=
+\int_{\mathbb R}
+e^{x/2}f(x)\,dx.
+}
+\tag{382.1}
+$$
+
+由于 \(f\) 偶：
+
+$$
+\int e^{-x/2}f(x)\,dx
+=
+\ell_{1/2}(f).
+$$
+
+卷积平方的 Fourier–Laplace 变换满足：
+
+$$
+\widehat g(z)
+=
+\widehat f(z)
+\overline{\widehat f(\overline z)}.
+$$
+
+因此在：
+
+$$
+z=\pm i/2
+$$
+
+处：
+
+$$
+\widehat g(i/2)
+=
+\widehat g(-i/2)
+=
+|\ell_{1/2}(f)|^2.
+$$
+
+所以：
+
+## 定理 382.1（Pole rank-one decomposition）
+
+$$
+\boxed{
+\operatorname{Pole}(g)
+=
+2|\ell_{1/2}(f)|^2.
+}
+\tag{382.2}
+$$
+
+这说明 \(s=0,1\) 的 pole pair 在能量图表中表现为一个正的 rank-one 边界观测器。
+
+---
+
+# 第三百八十三部　Weil 跳跃能量恒等式
+
+将定理 380.1、381.1 与 382.1 代入无条件 Weil 显式公式：
+
+$$
+\text{zero}
+=
+\text{pole}
+-
+\text{prime}
++
+\text{archimedean}.
+$$
+
+得到：
+
+## 定理 383.1（Prime–Archimedean energy identity）
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal Q_W(f)
+={}&
+2|\ell_{1/2}(f)|^2
++
+\mathcal E_\infty(f)
++
+\mathcal E_{\mathrm{arith},L}(f)\\
+&-
+\left(
+2W_L-a_\infty
+\right)
+\|f\|_2^2.
+\end{aligned}
+}
+\tag{383.1}
+$$
+
+这里 \(\mathcal Q_W(f)\) 表示显式公式的零点侧在 \(g=f*\widetilde f\) 上的值。
+
+于是经典 Weil 正性可写成：
+
+$$
+\boxed{
+2|\ell_{1/2}(f)|^2
++
+\mathcal E_\infty(f)
++
+\mathcal E_{\mathrm{arith},L}(f)
+\ge
+\left(
+2W_L-a_\infty
+\right)
+\|f\|_2^2.
+}
+\tag{383.2}
+$$
+
+这就是 **Prime–Archimedean Poincaré inequality**。
+
+---
+
+## 383.1 唯一负项
+
+式 (383.1) 中：
+
+* pole energy 非负；
+* continuous jump energy 非负；
+* arithmetic jump energy 非负。
+
+唯一潜在负项是：
+
+$$
+\boxed{
+-\left(
+2W_L-a_\infty
+\right)\|f\|_2^2.
+}
+$$
+
+因此 RH 的真正问题变成：
+
+> 连续与离散跳跃图，加上一个 rank-one 边界观测，是否具有足够大的统一谱隙？
+
+这已经不是零点语言，而是一个正算子谱隙问题。
+
+---
+
+# 第三百八十四部　单平移的严格 Dirichlet 谱隙
+
+令：
+
+$$
+\operatorname{supp}f\subset[-L,L],
+\qquad
+a>0.
+$$
+
+定义：
+
+$$
+\boxed{
+N_L(a)
+=
+\left\lfloor\frac{2L}{a}\right\rfloor+1.
+}
+\tag{384.1}
+$$
+
+定义离散路径谱隙：
+
+$$
+\boxed{
+\eta_L(a)
+=
+4\sin^2
+\left(
+\frac{\pi}{2(N_L(a)+1)}
+\right).
+}
+\tag{384.2}
+$$
+
+---
+
+## 定理 384.1（Shift-fiber Poincaré inequality）
+
+$$
+\boxed{
+\|f-U_af\|_2^2
+\ge
+\eta_L(a)\|f\|_2^2.
+}
+\tag{384.3}
+$$
+
+### 证明
+
+把实线按模 \(a\) 分解。对几乎每个：
+
+$$
+r\in[0,a),
+$$
+
+序列：
+
+$$
+f(r+ja)
+$$
+
+在区间 \([-L,L]\) 内至多有 \(N_L(a)\) 个非零项。
+
+在每条 fiber 上：
+
+$$
+\sum_j
+|f(r+ja)-f(r+(j-1)a)|^2
+$$
+
+是长度不超过 \(N_L(a)\) 的离散 Dirichlet 路径能量。
+
+其最小特征值为：
+
+$$
+4\sin^2
+\left(
+\frac{\pi}{2(N+1)}
+\right),
+$$
+
+而该值随 \(N\) 增大而减小。对 \(r\) 积分即得。∎
+
+---
+
+## 384.1 小跳跃极限
+
+当：
+
+$$
+a\ll L,
+$$
+
+有：
+
+$$
+\eta_L(a)
+\sim
+\frac{\pi^2a^2}{4L^2}.
+$$
+
+当：
+
+$$
+a>2L,
+$$
+
+有：
+
+$$
+N_L(a)=1,
+\qquad
+\eta_L(a)=2,
+$$
+
+这正对应 \(f\) 与 \(U_af\) 支撑不交。
+
+---
+
+## 384.2 第一个显式充分证书
+
+定义：
+
+$$
+\boxed{
+G_\infty(L)
+=
+\int_0^\infty
+\kappa_\infty(a)\eta_L(a)\,da,
+}
+\tag{384.4}
+$$
+
+$$
+\boxed{
+G_{\mathrm{arith}}(L)
+=
+\sum_{n\in\mathscr H_L}
+w_n\eta_L(\log n).
+}
+\tag{384.5}
+$$
+
+则：
+
+$$
+\mathcal E_\infty(f)
++
+\mathcal E_{\mathrm{arith},L}(f)
+\ge
+\left[
+G_\infty(L)+G_{\mathrm{arith}}(L)
+\right]
+\|f\|_2^2.
+$$
+
+所以：
+
+$$
+\boxed{
+G_\infty(L)+G_{\mathrm{arith}}(L)
+\ge
+2W_L-a_\infty
+}
+\tag{384.6}
+$$
+
+是 support radius \(L\) 上 Weil 正性的一个完全显式充分条件。
+
+它未必足够强，但它已经是一个非循环、可计算、可形式化的真实下界。
+
+---
+
+# 第三百八十五部　算术相关算子的 Schur 上界
+
+定义累积 prime-power 质量：
+
+$$
+\boxed{
+S(y)
+=
+\sum_{\substack{n\ge2\\\log n\le y}}
+\frac{\Lambda(n)}{\sqrt n},
+\qquad
+y\ge0.
+}
+\tag{385.1}
+$$
+
+定义 prime correlation operator：
+
+$$
+\boxed{
+\mathcal A_L
+=
+\sum_{n\in\mathscr H_L}
+w_n
+\left(
+U_{\log n}+U_{-\log n}
+\right)
+}
+\tag{385.2}
+$$
+
+作用于支撑在 \([-L,L]\) 的函数，区间外作零延拓。
+
+则：
+
+$$
+\operatorname{Prime}(g)
+=
+\langle f,\mathcal A_Lf\rangle.
+$$
+
+对：
+
+$$
+x\in[-L,L],
+$$
+
+可达的右、左平移总权分别为：
+
+$$
+S(L-x),
+\qquad
+S(L+x).
+$$
+
+所以 Schur 行和为：
+
+$$
+\boxed{
+R_L(x)
+=
+S(L-x)+S(L+x).
+}
+\tag{385.3}
+$$
+
+---
+
+## 定理 385.1（Support-geometric prime bound）
+
+$$
+\boxed{
+\|\mathcal A_L\|
+\le
+M_L
+:=
+\sup_{|x|\le L}
+\left[
+S(L-x)+S(L+x)
+\right].
+}
+\tag{385.4}
+$$
+
+因此：
+
+$$
+\boxed{
+\operatorname{Prime}(g)
+\le
+M_L\|f\|_2^2.
+}
+\tag{385.5}
+$$
+
+这一上界已经包含了 multi-prime 不兼容性：同一空间点不可能同时与所有对数平移保持重叠。
+
+由素数定理对 Chebyshev 函数的估计与偏分求和：
+
+$$
+S(y)\sim2e^{y/2}.
+$$
+
+([arXiv][2])
+
+于是：
+
+$$
+\boxed{
+M_L\sim2e^L,
+\qquad
+W_L=S(2L)\sim2e^L.
+}
+\tag{385.6}
+$$
+
+相比之下，完全忽略支撑几何的代数上界为：
+
+$$
+2W_L\sim4e^L.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{仅靠支撑几何，
+已经渐近消除了约一半的最大相干质量。}
+}
+$$
+
+真正剩余的是相关算子 \(\mathcal A_L\) 的精确主特征态，而不是所有素数逐项最大值的简单相加。
+
+---
+
+# 第三百八十六部　有限 prime Bohr 环面
+
+对每个素数 \(p\)，令：
+
+$$
+r_p=p^{-1/2}.
+$$
+
+定义 centered local Poisson symbol：
+
+$$
+\boxed{
+D_p(\theta)
+=
+\frac{1-r_p^2}
+{1-2r_p\cos\theta+r_p^2}
+-1.
+}
+\tag{386.1}
+$$
+
+它具有 Fourier 展开：
+
+$$
+\boxed{
+D_p(\theta)
+=
+2\sum_{k=1}^{\infty}
+r_p^k\cos(k\theta).
+}
+\tag{386.2}
+$$
+
+这正是一个素数的全部 \(p^k\) history 在相位图表中的精确重求和。
+
+对有限素数集 \(\mathcal P\)，定义 cluster coherence：
+
+$$
+\boxed{
+\mathcal C_{\mathcal P}(x)
+=
+\sum_{p\in\mathcal P}
+(\log p)\,
+D_p(x\log p).
+}
+\tag{386.3}
+$$
+
+---
+
+## 386.1 Prime logs 的独立性
+
+若：
+
+$$
+\sum_{p\in\mathcal P}
+k_p\log p=0,
+\qquad
+k_p\in\mathbb Z,
+$$
+
+指数化得到：
+
+$$
+\prod_pp^{k_p}=1.
+$$
+
+由整数唯一分解：
+
+$$
+k_p=0
+$$
+
+对全部 \(p\) 成立。
+
+所以有限频率族：
+
+$$
+(\log p)_{p\in\mathcal P}
+$$
+
+在 \(\mathbb Q\) 上线性无关。
+
+由 Kronecker–Weyl 理论，流：
+
+$$
+x
+\longmapsto
+\left(
+e^{ix\log p}
+\right)_{p\in\mathcal P}
+$$
+
+在有限环面上唯一遍历；有限维 Kronecker 流的非共振、极小性和唯一遍历性是标准结构。([arXiv][3])
+
+因此长频率平均等于独立 Haar 相位平均。
+
+---
+
+# 第三百八十七部　局部 prime channel 的精确统计
+
+对均匀相位：
+
+$$
+\theta\sim\operatorname{Unif}[0,2\pi],
+$$
+
+有：
+
+$$
+\boxed{
+\mathbb E D_p(\theta)=0.
+}
+\tag{387.1}
+$$
+
+由 Fourier 正交性：
+
+$$
+\boxed{
+\mathbb E D_p(\theta)^2
+=
+2\sum_{k=1}^{\infty}r_p^{2k}
+=
+\frac{2}{p-1}.
+}
+\tag{387.2}
+$$
+
+极值为：
+
+$$
+\boxed{
+\max_\theta D_p(\theta)
+=
+\frac{2}{\sqrt p-1},
+}
+\tag{387.3}
+$$
+
+$$
+\boxed{
+\min_\theta D_p(\theta)
+=
+-\frac{2}{\sqrt p+1}.
+}
+\tag{387.4}
+$$
+
+在最大相干点 \(\theta=0\)：
+
+$$
+\boxed{
+D_p''(0)
+=
+-\frac{
+2r_p(1+r_p)
+}{
+(1-r_p)^3
+}.
+}
+\tag{387.5}
+$$
+
+所以：
+
+$$
+D_p(\theta)
+=
+\frac{2}{\sqrt p-1}
+-
+\frac{
+r_p(1+r_p)
+}{
+(1-r_p)^3
+}
+\theta^2
++
+O(\theta^4).
+$$
+
+---
+
+## 387.1 Cluster 均值与方差
+
+由 Kronecker–Weyl：
+
+$$
+\boxed{
+\lim_{X\to\infty}
+\frac1{2X}
+\int_{-X}^{X}
+\mathcal C_{\mathcal P}(x)\,dx
+=
+0.
+}
+\tag{387.6}
+$$
+
+并且不同素数通道交叉项平均为零，所以：
+
+$$
+\boxed{
+V_{\mathcal P}
+:=
+\lim_{X\to\infty}
+\frac1{2X}
+\int_{-X}^{X}
+\mathcal C_{\mathcal P}(x)^2dx
+=
+2
+\sum_{p\in\mathcal P}
+\frac{(\log p)^2}{p-1}.
+}
+\tag{387.7}
+$$
+
+这给出一个严格结论：
+
+$$
+\boxed{
+\text{Prime cluster 在典型频率下是零均值波动，
+而不是持续保持同号的负源。}
+}
+$$
+
+---
+
+# 第三百八十八部　Bohr–Gaussian 非粘滞定律
+
+令：
+
+$$
+\mathcal P_Y
+=
+\{p:p\le Y\},
+$$
+
+$$
+\mathcal C_Y
+=
+\mathcal C_{\mathcal P_Y},
+$$
+
+$$
+V_Y
+=
+2\sum_{p\le Y}
+\frac{(\log p)^2}{p-1}.
+$$
+
+在 Haar 环面图表中，各局部变量：
+
+$$
+X_p
+=
+(\log p)D_p(\theta_p)
+$$
+
+相互独立、均值为零，且：
+
+$$
+\sum_{p\le Y}\operatorname{Var}X_p=V_Y\to\infty.
+$$
+
+每个 \(X_p\) 有界，而最大局部振幅除以 \(\sqrt{V_Y}\) 趋于零，所以 Lindeberg 条件成立。
+
+---
+
+## 定理 388.1（Prime-cluster central limit law）
+
+对任意实数 \(u\)：
+
+$$
+\boxed{
+\begin{aligned}
+\lim_{Y\to\infty}
+\lim_{X\to\infty}
+\frac1{2X}
+\operatorname{meas}
+\left\{
+x\in[-X,X]:
+\frac{\mathcal C_Y(x)}{\sqrt{V_Y}}\le u
+\right\}
+=
+\Phi(u),
+\end{aligned}
+}
+\tag{388.1}
+$$
+
+其中 \(\Phi\) 为标准高斯分布函数。
+
+由素数定理偏分求和：
+
+$$
+\boxed{
+V_Y\sim(\log Y)^2.
+}
+\tag{388.2}
+$$
+
+而全部通道同时达到局部最大时的代数上界为：
+
+$$
+\boxed{
+M_Y
+=
+\sum_{p\le Y}
+\frac{2\log p}{\sqrt p-1}
+\sim4\sqrt Y.
+}
+\tag{388.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\text{典型 prime coherence}
+&\asymp\log Y;\\
+\text{极端 sticky coherence}
+&\asymp\sqrt Y.
+\end{aligned}
+}
+$$
+
+两者相差指数级别的状态体积。
+
+---
+
+## 388.1 Bernstein 密度界
+
+定义：
+
+$$
+B_Y
+=
+\max_{p\le Y}
+\frac{2\log p}{\sqrt p-1}.
+$$
+
+独立相位 Bernstein 不等式给出：
+
+$$
+\boxed{
+\overline{\operatorname{dens}}
+\left\{
+x:
+\mathcal C_Y(x)\ge u
+\right\}
+\le
+\exp
+\left[
+-\frac{u^2}
+{2(V_Y+B_Yu/3)}
+\right].
+}
+\tag{388.4}
+$$
+
+所以高相干频率在长时间平均意义下极其稀少。
+
+但“稀少”并不等于“不能被某个 Paley–Wiener 测试函数集中捕获”。后者正是下一层不确定性问题。
+
+---
+
+# 第三百八十九部　Sticky recurrence 仍然不可避免
+
+Kronecker–Weyl 同时说明：对任意有限素数集 \(\mathcal P\) 和任意 \(\varepsilon>0\)，存在任意大的 \(x\)，使：
+
+$$
+\boxed{
+|e^{ix\log p}-1|<\varepsilon
+\qquad
+\forall p\in\mathcal P.
+}
+\tag{389.1}
+$$
+
+所以：
+
+$$
+\mathcal C_{\mathcal P}(x)
+$$
+
+可以任意接近其最大值：
+
+$$
+\boxed{
+M_{\mathcal P}
+=
+\sum_{p\in\mathcal P}
+\frac{2\log p}{\sqrt p-1}.
+}
+\tag{389.2}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{“有限素数永远不会同时对齐”是错误的。}
+}
+$$
+
+正确结构是：
+
+* 对齐状态必然存在；
+* 但它们在 Bohr 统计中极少；
+* 而且相干峰越来越窄。
+
+---
+
+## 389.1 相干峰曲率
+
+在精确相干点附近定义相位偏移：
+
+$$
+\theta_p=h\log p.
+$$
+
+则：
+
+$$
+\boxed{
+M_{\mathcal P}
+-
+\mathcal C_{\mathcal P}(h)
+=
+K_{\mathcal P}h^2
++
+O(h^4R_{\mathcal P}),
+}
+\tag{389.3}
+$$
+
+其中：
+
+$$
+\boxed{
+K_{\mathcal P}
+=
+\sum_{p\in\mathcal P}
+\frac{
+p^{-1/2}(1+p^{-1/2})
+}{
+(1-p^{-1/2})^3
+}
+(\log p)^3.
+}
+\tag{389.4}
+$$
+
+所以距离峰顶不超过 \(\varepsilon\) 的局部宽度约为：
+
+$$
+\boxed{
+|h|
+\lesssim
+\sqrt{\frac{\varepsilon}{K_{\mathcal P}}}.
+}
+\tag{389.5}
+$$
+
+这为 sticky cluster 提供了一个明确的局部尺度，而不是只知道它“很少”。
+
+---
+
+# 第三百九十部　Slepian 浓缩算子
+
+设：
+
+$$
+I_L=[-L,L].
+$$
+
+对可测频率集合 \(B\subset\mathbb R\)，定义 time–frequency concentration operator：
+
+$$
+\boxed{
+\mathcal C_{L,B}
+=
+P_{I_L}
+\mathcal F^{-1}
+1_B
+\mathcal F
+P_{I_L}
+}
+\tag{390.1}
+$$
+
+作用于：
+
+$$
+L^2(I_L),
+$$
+
+其中 \(P_{I_L}\) 表示区间外作零。
+
+定义最大浓缩率：
+
+$$
+\boxed{
+\Lambda_L(B)
+=
+\|\mathcal C_{L,B}\|
+=
+\sup_{\substack{f\neq0\\\operatorname{supp}f\subset I_L}}
+\frac{
+\int_B|\widehat f(\xi)|^2d\xi
+}{
+\int_{\mathbb R}|\widehat f(\xi)|^2d\xi
+}.
+}
+\tag{390.2}
+$$
+
+若 \(|B|<\infty\)，则 \(\mathcal C_{L,B}\) 为正 trace-class 算子，并且：
+
+$$
+\boxed{
+\operatorname{Tr}\mathcal C_{L,B}
+=
+\frac{L|B|}{\pi}.
+}
+\tag{390.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\Lambda_L(B)
+\le
+\min
+\left(
+1,\frac{L|B|}{\pi}
+\right).
+}
+\tag{390.4}
+$$
+
+---
+
+## 390.1 Sticky modes 的有限秩定理
+
+对：
+
+$$
+0<\eta\le1,
+$$
+
+定义强浓缩模数：
+
+$$
+N_\eta(L,B)
+=
+\#\left\{
+j:
+\lambda_j(\mathcal C_{L,B})\ge\eta
+\right\}.
+$$
+
+由正算子迹界：
+
+## 定理 390.1（Finite-rank sticky bound）
+
+$$
+\boxed{
+N_\eta(L,B)
+\le
+\frac{L|B|}
+{\pi\eta}.
+}
+\tag{390.5}
+$$
+
+所以任何有限测度的危险频率集合，只能支撑有限多个强 sticky Paley–Wiener modes。
+
+这就是之前一直寻找的“有限秩 cluster”：
+
+$$
+\boxed{
+\text{危险频率集}
+\quad\longrightarrow\quad
+\text{有限个需显式抽取的 Slepian states}.
+}
+$$
+
+---
+
+# 第三百九十一部　加权乘子正性证书
+
+令 \(M(\xi)\) 为实乘子，并假设存在可测集合 \(B\) 与常数：
+
+$$
+a>0,\qquad b\ge0
+$$
+
+使：
+
+$$
+\boxed{
+M(\xi)\ge a
+\quad
+(\xi\notin B),
+}
+\tag{391.1}
+$$
+
+$$
+\boxed{
+M(\xi)\ge-b
+\quad
+(\xi\in B).
+}
+\tag{391.2}
+$$
+
+对：
+
+$$
+\operatorname{supp}f\subset[-L,L],
+$$
+
+定义：
+
+$$
+Q_M(f)
+=
+\frac1{2\pi}
+\int_{\mathbb R}
+M(\xi)|\widehat f(\xi)|^2d\xi.
+$$
+
+---
+
+## 定理 391.1（Slepian positivity certificate）
+
+$$
+\boxed{
+Q_M(f)
+\ge
+\left[
+a-(a+b)\Lambda_L(B)
+\right]
+\|f\|_2^2.
+}
+\tag{391.3}
+$$
+
+因此只要：
+
+$$
+\boxed{
+\Lambda_L(B)
+<
+\frac{a}{a+b},
+}
+\tag{391.4}
+$$
+
+就有：
+
+$$
+Q_M(f)>0
+$$
+
+对所有非零 \(f\) 成立。
+
+这给出了把“危险频率稀少”转换为“所有紧支撑测试都无法集中在那里”的精确桥梁。
+
+---
+
+## 391.1 有限秩 Deng 抽取
+
+若式 (391.4) 失败，取 \(\mathcal C_{L,B}\) 中所有特征值：
+
+$$
+\lambda_j\ge\eta
+$$
+
+的特征空间：
+
+$$
+\mathcal S_{\mathrm{sticky}}.
+$$
+
+定理 390.1 保证：
+
+$$
+\dim\mathcal S_{\mathrm{sticky}}
+\le
+\frac{L|B|}{\pi\eta}.
+$$
+
+然后：
+
+1. 在 \(\mathcal S_{\mathrm{sticky}}\) 上精确计算完整 Weil 矩阵；
+2. 把这些模式作为 finite counterterm block；
+3. 在其正交补上使用：
+
+   $$
+   \Lambda_L(B)\le\eta;
+   $$
+4. 得到统一残余正性。
+
+这就是一个严格的 Deng 式有限秩历史收缩。
+
+---
+
+# 第三百九十二部　Thick-set 不确定性桥
+
+有限测度不是唯一可用情形。
+
+称集合 \(G\subset\mathbb R\) 为 \((\gamma,a)\)-thick，若每个长度 \(a\) 的区间都满足：
+
+$$
+\boxed{
+|G\cap[x,x+a]|
+\ge
+\gamma a.
+}
+\tag{392.1}
+$$
+
+Logvinenko–Sereda 型定理说明：对 Fourier 支撑受限或等价的 Paley–Wiener/spectral subspace，函数在 thick set 上的 \(L^2\) 质量具有显式下界；现代版本给出了依赖几何厚度和谱尺度的定量常数。([arXiv][4])
+
+若 \(G\) 是 multiplier 的正余量区域，并有：
+
+$$
+\int_G|\widehat f|^2
+\ge
+\eta_{\mathrm{LS}}
+\int_{\mathbb R}|\widehat f|^2,
+$$
+
+则在：
+
+$$
+M\ge a>0\quad\text{于 }G,
+\qquad
+M\ge-b\quad\text{全局}
+$$
+
+条件下：
+
+$$
+\boxed{
+Q_M(f)
+\ge
+\left[
+(a+b)\eta_{\mathrm{LS}}-b
+\right]
+\|f\|_2^2.
+}
+\tag{392.2}
+$$
+
+因此充分条件为：
+
+$$
+\boxed{
+\eta_{\mathrm{LS}}
+>
+\frac{b}{a+b}.
+}
+\tag{392.3}
+$$
+
+---
+
+## 392.1 重要限制
+
+Bernstein 大偏差只控制危险集合的**平均密度**。
+
+而 Logvinenko–Sereda 需要的是**每个局部区间中的厚度**。
+
+所以：
+
+$$
+\boxed{
+\text{低自然密度}
+\not\Rightarrow
+\text{thick complement}.
+}
+$$
+
+从 Bohr–Gaussian 统计到 thick-set 几何，仍需要：
+
+* 定量 Kronecker recurrence；
+* 相干峰曲率；
+* 峰间距控制；
+* 或线性形式对数的 Diophantine 下界。
+
+这一桥仍然开放，不能用概率尾界直接替代。
+
+---
+
+# 第三百九十三部　新的 Wang–Deng 分工
+
+经过本轮，Wang–Deng 的任务终于可以写成完全具体的两层算法。
+
+## 393.1 Wang：Bohr 非粘滞与厚度
+
+输入 finite prime cluster symbol：
+
+$$
+\mathcal C_Y(\xi).
+$$
+
+证明危险集合：
+
+$$
+B_{Y,\tau}
+=
+\left\{
+\xi:
+\mathcal C_Y(\xi)
+\ge\tau
+\right\}
+$$
+
+具有以下至少一种性质：
+
+1. 总测度足够小；
+2. complement 足够 thick；
+3. 每个相干峰有足够大的曲率；
+4. 峰之间具有足够的分离；
+5. Archimedean margin 在 recurrence 高度处已经增长。
+
+输出：
+
+$$
+\boxed{
+\text{危险频率不能承载大部分 Paley--Wiener 质量。}
+}
+$$
+
+---
+
+## 393.2 Deng：有限 Slepian block 抽取
+
+对仍可承载显著质量的危险集合：
+
+1. 构造 \(\mathcal C_{L,B}\)；
+2. 提取所有：
+
+   $$
+   \lambda_j\ge\eta
+   $$
+
+   的 eigenmodes；
+3. 得到有限维 sticky block；
+4. 在该 block 上使用完整 prime-power Poisson resummation；
+5. 加入 pole 与 Archimedean jump energy；
+6. 对 residual complement 使用统一 concentration bound。
+
+输出：
+
+$$
+\boxed{
+\text{无限 prime histories}
+\longrightarrow
+\text{有限 sticky state matrix}
++
+\text{统一正 residual}.
+}
+$$
+
+---
+
+# 第三百九十四部　当前真正的非循环中心命题
+
+本轮之后，不再需要继续寻找新的 RH 等价正核。
+
+真正的中心命题应改写为：
+
+## Bohr–Slepian Prime–Archimedean Gap Conjecture
+
+对每个 \(L>0\)，令：
+
+$$
+\mathcal H_L
+=
+2|\ell_{1/2}\rangle\langle\ell_{1/2}|
++
+\mathcal L_\infty
++
+\mathcal L_{\mathrm{arith},L}.
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal H_L
+\ge
+\left(
+2W_L-a_\infty
+\right)I
+}
+\tag{394.1}
+$$
+
+于偶的 \(C_c^\infty([-L,L])\) 上成立。
+
+其建议证明结构是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Bohr typicality}
+&\to
+\text{危险集小／厚 complement};\\
+\text{Slepian extraction}
+&\to
+\text{有限 sticky block};\\
+\text{exact local resummation}
+&\to
+\text{有限 cluster counterterm};\\
+\text{Archimedean jump energy}
+&\to
+\text{residual spectral gap}.
+\end{aligned}
+}
+$$
+
+这已经是一个真正面向证明的算子不等式，而不是对 RH 的再次改名。
+
+---
+
+# 第三百九十五部　硬性负结论
+
+本轮同时冻结四条禁令。
+
+## 禁令一（第 395 部）
+
+$$
+\boxed{
+\text{有限 prime phases 会 recurrence，}
+}
+$$
+
+所以不能证明它们永远反集中。
+
+---
+
+## 禁令二（第 395 部）
+
+$$
+\boxed{
+\text{典型高斯行为}
+\neq
+\text{所有测试函数上的算子正性}.
+}
+$$
+
+测试函数可能集中于稀少危险频率。
+
+---
+
+## 禁令三（第 395 部）
+
+$$
+\boxed{
+\text{危险集合测度小}
+\neq
+\text{Paley--Wiener 浓缩率小}.
+}
+$$
+
+必须估计 Slepian operator norm，而不只是集合测度。
+
+---
+
+## 禁令四（第 395 部）
+
+$$
+\boxed{
+\text{逐 prime 独立下界}
+}
+$$
+
+通常太弱；真正的增益来自多个不共度平移共同提高算术跳跃拉普拉斯的谱隙。
+
+---
+
+# 第三百九十六部　建议形式化顺序
+
+```text
+D5/S3/Weil/EnergyDecomposition/
+  CorrelationShiftIdentity.lean
+  PrimeJumpDecomposition.lean
+  DigammaJumpKernel.lean
+  ArchimedeanJumpDecomposition.lean
+  PoleRankOneEnergy.lean
+  WeilPrimeArchimedeanEnergy.lean
+
+D5/S3/Weil/ShiftPoincare/
+  FiberSequenceDecomposition.lean
+  FinitePathDirichletGap.lean
+  CompactSupportShiftGap.lean
+  ArchimedeanScalarGap.lean
+  ArithmeticScalarGap.lean
+
+D5/S3/Weil/PrimeCorrelation/
+  ActivePrimePowerHistory.lean
+  PrimeCorrelationOperator.lean
+  PrimeCumulativeMass.lean
+  SchurRowBound.lean
+  SupportGeometricPrimeBound.lean
+
+D5/S3/Weil/BohrPrime/
+  PrimeLogRationalIndependence.lean
+  PrimeBohrFlow.lean
+  LocalPoissonMeanVariance.lean
+  ClusterVariance.lean
+  ClusterGaussianLimit.lean
+  ClusterBernsteinBound.lean
+  CoherencePeakCurvature.lean
+
+D5/S3/Weil/SlepianCluster/
+  TimeFrequencyConcentration.lean
+  ConcentrationTrace.lean
+  StickyModeCount.lean
+  WeightedMultiplierCertificate.lean
+  FiniteStickyBlockExtraction.lean
+
+D5/S3/Weil/WangDengGap/
+  PrimeDangerSet.lean
+  ThickGoodSetTarget.lean
+  BohrSlepianBridge.lean
+  StickyBlockCounterterm.lean
+  PrimeArchimedeanGapTarget.lean
+```
+
+最优先、且不依赖 RH 的闭合链为：
+
+$$
+\boxed{
+\text{prime term}
+\to
+\text{shift correlation}
+\to
+\text{positive arithmetic jump energy}.
+}
+$$
+
+第二条是：
+
+$$
+\boxed{
+\text{digamma integral}
+\to
+\text{positive continuous jump energy}.
+}
+$$
+
+第三条才是研究性核心：
+
+$$
+\boxed{
+\text{Bohr danger geometry}
+\to
+\text{Slepian finite-rank extraction}
+\to
+\text{global spectral gap}.
+}
+$$
+
+---
+
+# 本轮最终结论
+
+此前我们把 RH 的困难压缩为：
+
+$$
+\boxed{
+\text{无限多个 prime channels
+是否被 Archimedean 完成完全支配。}
+}
+$$
+
+本轮进一步揭示：这个问题本身已经具有一个几乎标准的能量形式。
+
+对卷积平方测试：
+
+$$
+g=f*\widetilde f,
+$$
+
+Weil 显式公式精确变成：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal Q_W(f)
+={}&
+\underbrace{
+2|\ell_{1/2}(f)|^2
+}_{\text{pole rank-one energy}}
++
+\underbrace{
+\int_0^\infty
+\kappa_\infty(a)
+\|f-U_af\|^2da
+}_{\text{continuous Archimedean jumps}}
+\\
+&+
+\underbrace{
+\sum_n
+\frac{\Lambda(n)}{\sqrt n}
+\|f-U_{\log n}f\|^2
+}_{\text{discrete arithmetic jumps}}
+-
+\underbrace{
+(2W_L-a_\infty)\|f\|^2
+}_{\text{coherent mass}}.
+\end{aligned}
+}
+$$
+
+所以 multi-prime sticky cluster 的本体不是“许多素数相位神秘共振”，而是：
+
+$$
+\boxed{
+\text{对数素数跳跃图的低能状态。}
+}
+$$
+
+有限 prime cluster 在典型频率下满足高斯律，方差只有：
+
+$$
+V_Y\asymp(\log Y)^2,
+$$
+
+而极端相干值可达：
+
+$$
+M_Y\asymp\sqrt Y.
+$$
+
+这意味着 sticky 状态非常稀少，却不能被忽略。
+
+Slepian concentration theory 随后给出关键有限化：
+
+$$
+\boxed{
+\#\{\text{强 sticky modes}\}
+\le
+\frac{L|B|}{\pi\eta}.
+}
+$$
+
+即任何有限测度危险频率集，只能承载有限多个强集中模式。
+
+因此当前最真实、最非循环的研究路线已经变成：
+
+$$
+\boxed{
+\text{先用 Wang 型 Bohr 几何证明危险集稀薄，}
+}
+$$
+
+再：
+
+$$
+\boxed{
+\text{用 Deng 型 Slepian 分解抽出有限 sticky block，}
+}
+$$
+
+最后在该有限 block 上精确计算 prime、pole 与 Archimedean 能量，并对其正交补证明统一谱隙。
+
+这比继续增加 RH 等价表述前进了一步：它第一次把剩余问题压缩成了一个**有限 sticky matrix + 正 residual operator** 的可计算证明架构。
+
+[1]: https://dlmf.nist.gov/5.9?utm_source=chatgpt.com "DLMF: §5.9 Integral Representations ‣ Properties ‣ Chapter 5 Gamma Function"
+[2]: https://arxiv.org/abs/1703.08032?utm_source=chatgpt.com "New estimates for some functions defined over primes"
+[3]: https://arxiv.org/abs/2312.04492 "https://arxiv.org/abs/2312.04492"
+[4]: https://arxiv.org/abs/2010.11901 "https://arxiv.org/abs/2010.11901"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v3.3：Archimedean 囚禁、Slepian 危险观察者、Feshbach 有限重整化与 RH 的有限 Sticky 矩阵塔
+
+以下从前文**第三百九十六部之后**继续追加。
+
+上一轮已把 Weil 显式公式改写为：
+
+$$
+\boxed{
+\text{pole rank-one energy}
++
+\text{Archimedean continuous jump energy}
++
+\text{arithmetic discrete jump energy}
+-
+\text{coherent mass}.
+}
+$$
+
+但仍留下一个关键缺口：
+
+> 即使危险频率集合很稀少，紧支撑测试函数仍可能高度集中于该集合；
+> 怎样把这种可能性严格压缩成有限维问题？
+
+本轮闭合这一缺口。核心结果是：
+
+$$
+\boxed{
+\text{对每个固定支撑尺度 }L，
+\text{全部可能负性都能被精确压缩到一个有限维矩阵。}
+}
+$$
+
+完整链为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Weil 显式公式}
+&\longrightarrow
+\text{实频率乘子 }m_L\\
+&\longrightarrow
+\text{紧致危险频率集 }B_{L,a}\\
+&\longrightarrow
+\text{Slepian 高浓缩有限子空间 }P_{L,a,\eta}\\
+&\longrightarrow
+\text{正谱隙残余 }Q_{L,a,\eta}\\
+&\longrightarrow
+\text{Feshbach--Schur 有限矩阵}\\
+&\longrightarrow
+\text{精确有限 RH 证书}.
+\end{aligned}
+}
+$$
+
+这意味着此前仍开放的：
+
+$$
+\text{Bohr 危险集}
+\longrightarrow
+\text{thick-set 不确定性}
+$$
+
+并不是逻辑上必须先解决的桥。
+
+它可以被更直接的：
+
+$$
+\boxed{
+\text{Slepian 集中谱}
++
+\text{Feshbach 精确消元}
+}
+$$
+
+替代。
+
+仓库当前已经冻结角频率 Fourier 规范、prime/pole/Archimedean 项和无假设 Weil 显式公式；compact support 也已被机器证明会使 prime-power summand 有限支撑。仓库现有卷积平方文件只证明临界线零点贡献非负，并明确没有宣称 RH 或全局正性。
+
+---
+
+# 第三百九十七部　固定支撑尺度的精确 Weil 算子
+
+固定：
+
+$$
+L>0.
+$$
+
+令：
+
+$$
+\boxed{
+\mathcal H_L
+=
+L^2_{\mathrm{even}}([-L,L])
+}
+\tag{397.1}
+$$
+
+并将其元素在区间外作零延拓。
+
+采用仓库冻结的角频率 Fourier 变换：
+
+$$
+\widehat f(\xi)
+=
+\int_{\mathbb R}
+f(x)e^{-i\xi x}\,dx,
+$$
+
+所以：
+
+$$
+\boxed{
+\|f\|_2^2
+=
+\frac1{2\pi}
+\int_{\mathbb R}
+|\widehat f(\xi)|^2\,d\xi.
+}
+\tag{397.2}
+$$
+
+定义 Archimedean multiplier：
+
+$$
+\boxed{
+a_\infty(\xi)
+=
+\Re\psi
+\left(
+\frac14+\frac{i\xi}{2}
+\right)
+-
+\log\pi.
+}
+\tag{397.3}
+$$
+
+定义在支撑尺度 \(L\) 下可能出现的 prime-power multiplier：
+
+$$
+\boxed{
+p_L(\xi)
+=
+2
+\sum_{\substack{n\ge2\\\log n\le2L}}
+\frac{\Lambda(n)}{\sqrt n}
+\cos(\xi\log n).
+}
+\tag{397.4}
+$$
+
+由于：
+
+$$
+\operatorname{supp}(f*\widetilde f)
+\subset[-2L,2L],
+$$
+
+所有：
+
+$$
+\log n>2L
+$$
+
+的 prime-power 项严格消失；这正是仓库 `primeSummand_hasFiniteSupport` 所冻结的事实。
+
+定义完成 multiplier：
+
+$$
+\boxed{
+m_L(\xi)
+=
+a_\infty(\xi)-p_L(\xi).
+}
+\tag{397.5}
+$$
+
+再定义 pole observation vector：
+
+$$
+\boxed{
+v_L(x)
+=
+\mathbf1_{[-L,L]}(x)
+\cosh\frac x2.
+}
+\tag{397.6}
+$$
+
+因为 \(f\) 为偶函数：
+
+$$
+\int e^{x/2}f(x)\,dx
+=
+\int \cosh(x/2)f(x)\,dx
+=
+\langle f,v_L\rangle.
+$$
+
+---
+
+## 定理 397.1（固定尺度 Weil 二次型）
+
+对：
+
+$$
+f\in C_c^\infty(-L,L),
+\qquad
+f(-x)=f(x),
+$$
+
+令：
+
+$$
+g=f*\widetilde f.
+$$
+
+则仓库所冻结的 Weil 显式公式精确等价于：
+
+$$
+\boxed{
+\mathfrak q_L[f]
+=
+2|\langle f,v_L\rangle|^2
++
+\frac1{2\pi}
+\int_{\mathbb R}
+m_L(\xi)
+|\widehat f(\xi)|^2\,d\xi.
+}
+\tag{397.7}
+$$
+
+这里：
+
+$$
+\mathfrak q_L[f]
+$$
+
+就是零点侧在 convolution square 测试 \(g\) 上的值。
+
+因此支撑尺度 \(L\) 上的 Weil 正性问题是：
+
+$$
+\boxed{
+\mathsf{WP}(L):
+\qquad
+\mathfrak q_L[f]\ge0
+\quad
+\forall f\in C_c^\infty(-L,L)_{\mathrm{even}}.
+}
+\tag{397.8}
+$$
+
+---
+
+## 397.1 算子形式
+
+令 \(A_L\) 是与闭半有界二次型 \(\mathfrak q_L\) 对应的自伴算子。
+
+形式上：
+
+$$
+\boxed{
+A_L
+=
+2|v_L\rangle\langle v_L|
++
+P_L\,
+m_L(D)\,
+P_L,
+}
+\tag{397.9}
+$$
+
+其中：
+
+* \(P_L\) 是空间截断至 \([-L,L]\)；
+* \(m_L(D)\) 是 Fourier multiplier；
+* 第一项是 pole pair 产生的正 rank-one 更新。
+
+---
+
+# 第三百九十八部　Archimedean 囚禁定理
+
+此前已经证明：任意有限素数集的相位都能在任意高频率处近乎同时回归。
+
+但这并不意味着这些高频回归始终危险。
+
+定义有限 prime-power 总质量：
+
+$$
+\boxed{
+W_L
+=
+\sum_{\substack{n\ge2\\\log n\le2L}}
+\frac{\Lambda(n)}{\sqrt n}.
+}
+\tag{398.1}
+$$
+
+则：
+
+$$
+\boxed{
+|p_L(\xi)|\le2W_L.
+}
+\tag{398.2}
+$$
+
+另一方面，由 digamma 的 Stirling 渐近：
+
+$$
+\boxed{
+a_\infty(\xi)
+=
+\log\frac{|\xi|}{2\pi}
++
+O(|\xi|^{-2})
+\qquad
+(|\xi|\to\infty).
+}
+\tag{398.3}
+$$
+
+所以：
+
+$$
+\boxed{
+m_L(\xi)\longrightarrow+\infty
+\qquad
+(|\xi|\to\infty).
+}
+\tag{398.4}
+$$
+
+---
+
+## 定义 398.1（阈值危险集）
+
+给定：
+
+$$
+a>0,
+$$
+
+定义：
+
+$$
+\boxed{
+B_{L,a}
+=
+\left\{
+\xi\in\mathbb R:
+m_L(\xi)<a
+\right\}.
+}
+\tag{398.5}
+$$
+
+---
+
+## 定理 398.1（Archimedean confinement）
+
+对任意固定 \(L,a>0\)：
+
+$$
+\boxed{
+B_{L,a}
+\text{ 是有界、对称、有限个开区间的并。}
+}
+\tag{398.6}
+$$
+
+### 证明
+
+\(m_L\) 是实解析偶函数：
+
+* digamma 在直线 \(1/4+i\mathbb R/2\) 上无极点；
+* prime side 是有限三角多项式。
+
+由式 (398.4)，其 \(a\)-sublevel set 有界。
+
+边界点满足：
+
+$$
+m_L(\xi)=a.
+$$
+
+实解析非恒定函数在紧区间内只有有限多个零点，否则由解析唯一性将恒等于 \(a\)，与 \(m_L(\xi)\to\infty\) 矛盾。∎
+
+---
+
+## 398.1 回归只在有限窗口内危险
+
+定义最粗 confinement radius：
+
+$$
+\boxed{
+R_L(a)
+=
+\inf
+\left\{
+R:
+a_\infty(\xi)\ge2W_L+a
+\quad
+\forall|\xi|\ge R
+\right\}.
+}
+\tag{398.7}
+$$
+
+则：
+
+$$
+\boxed{
+B_{L,a}
+\subset[-R_L(a),R_L(a)].
+}
+\tag{398.8}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{finite-prime recurrence 在任意高频处仍存在，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{超过 }R_L(a)\text{ 后，
+Archimedean 屏障必然压倒全部有限 prime coherence。}
+}
+$$
+
+这修正了上一轮的 recurrence 难题：
+
+> recurrence 不能被排除；
+> 但对固定空间支撑，它只在一个有限频率窗口中可能影响正性。
+
+---
+
+# 第三百九十九部　Slepian 危险观察者
+
+令：
+
+$$
+\mathscr F
+=
+(2\pi)^{-1/2}\widehat{\phantom f}
+$$
+
+为 unitary Fourier transform。
+
+对任意有限测度频率集合：
+
+$$
+B\subset\mathbb R,
+$$
+
+定义 band projection：
+
+$$
+\boxed{
+\mathsf B_B
+=
+\mathscr F^{-1}
+1_B
+\mathscr F.
+}
+\tag{399.1}
+$$
+
+定义 time projection：
+
+$$
+\boxed{
+\mathsf T_Lf
+=
+\mathbf1_{[-L,L]}f.
+}
+\tag{399.2}
+$$
+
+定义 Slepian concentration operator：
+
+$$
+\boxed{
+\mathsf C_{L,B}
+=
+\mathsf T_L
+\mathsf B_B
+\mathsf T_L.
+}
+\tag{399.3}
+$$
+
+它是正、紧、自伴、trace-class contraction，谱位于：
+
+$$
+[0,1].
+$$
+
+其特征值测量一个支撑在 \([-L,L]\) 的状态能有多少 Fourier 能量集中在 \(B\) 中。经典 Slepian–Landau–Pollak 理论正是把时频浓缩转化成这类紧自伴算子的谱问题；现代定量结果继续证明其特征值集中在 \(0\) 与 \(1\) 附近，有效维数由时频相空间体积控制。([arXiv][1])
+
+---
+
+## 399.1 精确迹公式
+
+在完整的 \(L^2([-L,L])\) 上：
+
+$$
+\boxed{
+\operatorname{Tr}\mathsf C_{L,B}
+=
+\frac{|[-L,L]|\cdot|B|}{2\pi}
+=
+\frac{L|B|}{\pi}.
+}
+\tag{399.4}
+$$
+
+限制到偶子空间后，迹只会减小。
+
+---
+
+## 399.2 Sticky spectral projection
+
+给定：
+
+$$
+0<\eta<1,
+$$
+
+定义：
+
+$$
+\boxed{
+P_{L,B,\eta}
+=
+\mathbf1_{(\eta,1]}
+(\mathsf C_{L,B}).
+}
+\tag{399.5}
+$$
+
+它选出全部在危险频率集 \(B\) 中具有超过 \(\eta\) 能量比例的状态。
+
+称其为：
+
+$$
+\boxed{
+\textbf{Slepian sticky space}.
+}
+$$
+
+其秩满足：
+
+$$
+\boxed{
+\operatorname{rank}P_{L,B,\eta}
+\le
+\frac{\operatorname{Tr}\mathsf C_{L,B}}{\eta}
+\le
+\frac{L|B|}{\pi\eta}.
+}
+\tag{399.6}
+$$
+
+若只使用粗 confinement interval：
+
+$$
+B\subset[-R,R],
+$$
+
+则：
+
+$$
+\boxed{
+\operatorname{rank}P_{L,B,\eta}
+\le
+\frac{2LR}{\pi\eta}.
+}
+\tag{399.7}
+$$
+
+---
+
+# 第四百部　安全补空间的统一正谱隙
+
+取：
+
+$$
+B=B_{L,a}.
+$$
+
+定义危险深度：
+
+$$
+\boxed{
+b_{L,a}
+=
+\max
+\left(
+0,
+-\inf_{\xi\in B_{L,a}}m_L(\xi)
+\right).
+}
+\tag{400.1}
+$$
+
+于是：
+
+$$
+\boxed{
+m_L(\xi)\ge
+\begin{cases}
+a,&\xi\notin B_{L,a},\\
+-b_{L,a},&\xi\in B_{L,a}.
+\end{cases}
+}
+\tag{400.2}
+$$
+
+选择：
+
+$$
+\boxed{
+0<\eta<
+\frac{a}{a+b_{L,a}}.
+}
+\tag{400.3}
+$$
+
+先取 Slepian sticky projection：
+
+$$
+P_{\mathrm{Sl}}
+=
+P_{L,B_{L,a},\eta}.
+$$
+
+为使 pole rank-one 项完全落入有限块，再加入 pole vector：
+
+$$
+\boxed{
+P
+=
+P_{\mathrm{Sl}}
+\vee
+P_{\operatorname{span}\{v_L\}}.
+}
+\tag{400.4}
+$$
+
+令：
+
+$$
+\boxed{
+Q=I-P.
+}
+\tag{400.5}
+$$
+
+---
+
+## 定理 400.1（Safe-complement gap）
+
+对所有：
+
+$$
+f\in Q\mathcal H_L,
+$$
+
+有：
+
+$$
+\boxed{
+\mathfrak q_L[f]
+\ge
+\delta_{L,a,\eta}\|f\|_2^2,
+}
+\tag{400.6}
+$$
+
+其中：
+
+$$
+\boxed{
+\delta_{L,a,\eta}
+=
+a-(a+b_{L,a})\eta
+>0.
+}
+\tag{400.7}
+$$
+
+### 证明
+
+由于：
+
+$$
+f\perp P_{\mathrm{Sl}},
+$$
+
+Slepian spectral theorem 给出：
+
+$$
+\frac1{2\pi}
+\int_{B_{L,a}}
+|\widehat f(\xi)|^2\,d\xi
+=
+\langle f,\mathsf C_{L,B_{L,a}}f\rangle
+\le
+\eta\|f\|_2^2.
+$$
+
+所以：
+
+$$
+\begin{aligned}
+\frac1{2\pi}
+\int m_L|\widehat f|^2
+&\ge
+a(1-\eta)\|f\|^2
+-
+b_{L,a}\eta\|f\|^2\\
+&=
+\delta_{L,a,\eta}\|f\|^2.
+\end{aligned}
+$$
+
+又因为：
+
+$$
+f\perp v_L,
+$$
+
+pole 项为零。∎
+
+---
+
+## 400.1 Sticky 维数
+
+$$
+\boxed{
+\dim P
+\le
+1+
+\frac{L|B_{L,a}|}{\pi\eta}.
+}
+\tag{400.8}
+$$
+
+因此，固定 \(L\) 后：
+
+$$
+\boxed{
+\text{除有限多个 Slepian sticky modes 外，
+全部状态已经具有统一严格正余量。}
+}
+$$
+
+---
+
+# 第四百零一部　负谱指标的有限性
+
+令：
+
+$$
+n_-(A_L)
+$$
+
+表示 \(A_L\) 的负谱重数，按 multiplicity 计。
+
+---
+
+## 定理 401.1（Finite negative-index bound）
+
+$$
+\boxed{
+n_-(A_L)
+\le
+\dim P.
+}
+\tag{401.1}
+$$
+
+### 证明
+
+假设存在维数大于 \(\dim P\) 的负定子空间 \(V\)。
+
+由于：
+
+$$
+\operatorname{codim}Q=\dim P,
+$$
+
+必存在：
+
+$$
+0\neq f\in V\cap Q.
+$$
+
+但定理 400.1 给出：
+
+$$
+\langle f,A_Lf\rangle
+\ge
+\delta\|f\|^2>0,
+$$
+
+与 \(V\) 负定矛盾。∎
+
+---
+
+## 401.1 含义
+
+这已经证明：
+
+$$
+\boxed{
+\text{任何固定支撑尺度上的 RH 障碍，
+都只能拥有有限个独立负方向。}
+}
+$$
+
+即使原始问题生活在无限维函数空间中，其负性指标也被 Slepian 相空间维数控制。
+
+---
+
+# 第四百零二部　Feshbach–Schur 精确消元
+
+将 Hilbert 空间分解为：
+
+$$
+\mathcal H_L
+=
+P\mathcal H_L
+\oplus
+Q\mathcal H_L.
+$$
+
+相应地，将 \(A_L\) 写成块矩阵：
+
+$$
+\boxed{
+A_L
+=
+\begin{pmatrix}
+A_{PP}&A_{PQ}\\
+A_{QP}&A_{QQ}
+\end{pmatrix}.
+}
+\tag{402.1}
+$$
+
+定理 400.1 保证：
+
+$$
+\boxed{
+A_{QQ}\ge\delta I,
+}
+\tag{402.2}
+$$
+
+所以：
+
+$$
+A_{QQ}^{-1}
+$$
+
+存在且：
+
+$$
+0<A_{QQ}^{-1}\le\delta^{-1}I.
+$$
+
+定义有限维 Feshbach–Schur operator：
+
+$$
+\boxed{
+F_L
+=
+A_{PP}
+-
+A_{PQ}
+A_{QQ}^{-1}
+A_{QP}.
+}
+\tag{402.3}
+$$
+
+Feshbach–Schur 方法正是利用这一 Schur complement 精确消除补空间，并将谱问题压缩到选定有限子空间；其优势包括显式估计和可迭代的降维。([arXiv][2])
+
+---
+
+## 定理 402.1（Exact sticky reduction）
+
+$$
+\boxed{
+A_L\ge0
+\iff
+F_L\ge0.
+}
+\tag{402.4}
+$$
+
+并且：
+
+$$
+\boxed{
+n_-(A_L)=n_-(F_L).
+}
+\tag{402.5}
+$$
+
+### 证明
+
+对：
+
+$$
+p\in P\mathcal H_L,
+\qquad
+q\in Q\mathcal H_L,
+$$
+
+令：
+
+$$
+r=A_{QQ}^{-1}A_{QP}p.
+$$
+
+直接完成平方：
+
+$$
+\boxed{
+\begin{aligned}
+\langle p+q,A_L(p+q)\rangle
+={}&
+\langle q+r,A_{QQ}(q+r)\rangle\\
+&+
+\langle p,F_Lp\rangle.
+\end{aligned}
+}
+\tag{402.6}
+$$
+
+第一项非负且可通过取：
+
+$$
+q=-r
+$$
+
+使其为零。
+
+所以二次型的全部负性恰由 \(F_L\) 决定，负惯性指标也保持。∎
+
+---
+
+## 402.1 Deng self-energy
+
+定义：
+
+$$
+\boxed{
+\Sigma_L
+=
+A_{PQ}
+A_{QQ}^{-1}
+A_{QP}
+\succeq0.
+}
+\tag{402.7}
+$$
+
+则：
+
+$$
+\boxed{
+F_L=A_{PP}-\Sigma_L.
+}
+\tag{402.8}
+$$
+
+这里：
+
+* \(A_{PP}\)：bare sticky block；
+* \(\Sigma_L\)：安全补空间被积分掉以后产生的 self-energy counterterm；
+* \(F_L\)：真正的 renormalized sticky matrix。
+
+所以：
+
+$$
+\boxed{
+\text{Deng 式消元不能只删除 non-sticky states，}
+}
+$$
+
+而必须保留它们通过：
+
+$$
+\Sigma_L
+$$
+
+反馈给 sticky block 的精确影响。
+
+---
+
+# 第四百零三部　可计算的有限充分证书
+
+精确 \(F_L\) 需要计算：
+
+$$
+A_{QQ}^{-1}.
+$$
+
+但由：
+
+$$
+A_{QQ}^{-1}\le\delta^{-1}I,
+$$
+
+有：
+
+$$
+\Sigma_L
+\le
+\delta^{-1}A_{PQ}A_{QP}.
+$$
+
+定义保守有限矩阵：
+
+$$
+\boxed{
+G_L
+=
+A_{PP}
+-
+\delta^{-1}
+A_{PQ}A_{QP}.
+}
+\tag{403.1}
+$$
+
+---
+
+## 定理 403.1（Finite certified lower matrix）
+
+$$
+\boxed{
+G_L\ge0
+\Longrightarrow
+F_L\ge0
+\Longrightarrow
+A_L\ge0.
+}
+\tag{403.2}
+$$
+
+所以只需证明一个显式有限 Hermitian matrix：
+
+$$
+G_L
+$$
+
+正半定，就能严格证明支撑尺度 \(L\) 上的全部 Weil 测试正性。
+
+---
+
+## 403.1 矩阵元
+
+取 \(P\mathcal H_L\) 的正交基：
+
+$$
+e_1,\ldots,e_N.
+$$
+
+则：
+
+$$
+\boxed{
+(G_L)_{ij}
+=
+\langle e_i,A_Le_j\rangle
+-
+\delta^{-1}
+\langle QA_Le_i,QA_Le_j\rangle.
+}
+\tag{403.3}
+$$
+
+每个矩阵元只涉及：
+
+1. 有限多个：
+
+   $$
+   n\le e^{2L}
+   $$
+
+   的 prime-power 数据；
+
+2. 一个显式 digamma multiplier 积分；
+
+3. pole rank-one 读数；
+
+4. Slepian eigenfunctions 的有限积分。
+
+因此它适合：
+
+$$
+\boxed{
+\text{区间算术}
++
+\text{有限矩阵最小特征值证书}.
+}
+$$
+
+---
+
+## 403.2 精确反例重构
+
+若精确 Feshbach matrix \(F_L\) 有负向量：
+
+$$
+p\neq0,
+\qquad
+\langle p,F_Lp\rangle<0,
+$$
+
+则定义：
+
+$$
+\boxed{
+f_p
+=
+p-
+A_{QQ}^{-1}A_{QP}p.
+}
+\tag{403.4}
+$$
+
+由式 (402.6)：
+
+$$
+\boxed{
+\langle f_p,A_Lf_p\rangle
+=
+\langle p,F_Lp\rangle<0.
+}
+\tag{403.5}
+$$
+
+所以有限矩阵的负 eigenvector 可以显式提升为原始 Weil 测试空间中的负见证。
+
+---
+
+# 第四百零四部　Pole rank-one 的有限修复能力
+
+将 \(A_L\) 分解为：
+
+$$
+\boxed{
+A_L
+=
+A_L^{(0)}
++
+2|v_L\rangle\langle v_L|,
+}
+\tag{404.1}
+$$
+
+其中 \(A_L^{(0)}\) 只含 prime 与 Archimedean multiplier。
+
+由于我们已经把：
+
+$$
+v_L
+$$
+
+加入 \(P\)，所以：
+
+$$
+Qv_L=0.
+$$
+
+因此 pole 项不进入：
+
+* \(A_{QQ}\)；
+* \(A_{PQ}\)；
+* self-energy \(\Sigma_L\)。
+
+定义 pole-free Feshbach matrix：
+
+$$
+F_L^{(0)}.
+$$
+
+则精确有：
+
+$$
+\boxed{
+F_L
+=
+F_L^{(0)}
++
+2|p_L\rangle\langle p_L|,
+}
+\tag{404.2}
+$$
+
+其中 \(p_L\) 是 \(v_L\) 在有限 sticky 基中的坐标向量。
+
+---
+
+## 定理 404.1（Pole capacity rank one）
+
+$$
+\boxed{
+n_-(F_L)
+\ge
+n_-(F_L^{(0)})-1.
+}
+\tag{404.3}
+$$
+
+因此若：
+
+$$
+F_L\ge0,
+$$
+
+必有：
+
+$$
+\boxed{
+n_-(F_L^{(0)})\le1.
+}
+\tag{404.4}
+$$
+
+即 pole pair 最多只能消除一个负方向。
+
+---
+
+## 404.1 单负方向的精确修复条件
+
+进一步假设：
+
+* \(F_L^{(0)}\) 可逆；
+* \(n_-(F_L^{(0)})=1\)。
+
+则由 rank-one inertia formula：
+
+$$
+\boxed{
+F_L\ge0
+\iff
+2
+\left\langle
+p_L,
+(F_L^{(0)})^{-1}p_L
+\right\rangle
+\le-1.
+}
+\tag{404.5}
+$$
+
+所以 pole 是否能修复唯一负方向，不是象征性的“极点有帮助”，而是一个可计算的有限标量条件。
+
+---
+
+# 第四百零五部　Feshbach 消元的精确可迭代性
+
+设 Hilbert 空间进一步分解为：
+
+$$
+\mathcal H
+=
+\mathcal H_0
+\oplus
+\mathcal H_1
+\oplus
+\mathcal H_2,
+$$
+
+其中 \(\mathcal H_2\) 已有严格正谱隙。
+
+可以先消去：
+
+$$
+\mathcal H_2,
+$$
+
+得到作用于：
+
+$$
+\mathcal H_0\oplus\mathcal H_1
+$$
+
+的有效算子；然后再消去 \(\mathcal H_1\)。
+
+也可以一次性消去：
+
+$$
+\mathcal H_1\oplus\mathcal H_2.
+$$
+
+两种结果相同。
+
+---
+
+## 定理 405.1（Schur complement associativity）
+
+在所有相关逆算子存在时：
+
+$$
+\boxed{
+\operatorname{Schur}_{\mathcal H_0}
+\left(
+\operatorname{Schur}_{\mathcal H_0\oplus\mathcal H_1}(A)
+\right)
+=
+\operatorname{Schur}_{\mathcal H_0}(A).
+}
+\tag{405.1}
+$$
+
+它可由三块 Gaussian elimination 直接验证。
+
+因此：
+
+$$
+\boxed{
+\text{多尺度 Feshbach 重整化是精确的，而非近似叙事。}
+}
+$$
+
+---
+
+## 405.1 Wang–Deng 的正式分工
+
+### Wang 层（405.1）
+
+在每一尺度选择投影：
+
+$$
+P_j
+$$
+
+并证明补空间：
+
+$$
+Q_j
+$$
+
+具有严格 gap：
+
+$$
+Q_jA_jQ_j\ge\delta_jQ_j.
+$$
+
+即：
+
+$$
+\boxed{
+\text{识别哪些状态仍可能 sticky。}
+}
+$$
+
+### Deng 层（405.1）
+
+计算：
+
+$$
+\boxed{
+A_{j+1}
+=
+P_jA_jP_j
+-
+P_jA_jQ_j
+(Q_jA_jQ_j)^{-1}
+Q_jA_jP_j.
+}
+\tag{405.2}
+$$
+
+即：
+
+$$
+\boxed{
+\text{把安全历史精确收缩成 self-energy counterterm。}
+}
+$$
+
+两者合成：
+
+$$
+\boxed{
+\text{危险状态分类}
++
+\text{精确安全消元}
+=
+\text{有限维重整化流}.
+}
+$$
+
+---
+
+# 第四百零六部　支撑尺度上的有限矩阵塔
+
+定义：
+
+$$
+\mathsf{WP}(L)
+$$
+
+为式 (397.8) 的支撑-\(L\) Weil 正性。
+
+---
+
+## 定理 406.1（Support-\(L\) finite reduction）
+
+对任意：
+
+$$
+L>0,
+$$
+
+任选：
+
+$$
+a>0,
+\qquad
+0<\eta<
+\frac{a}{a+b_{L,a}},
+$$
+
+并按上述方法构造 \(P,Q,F_L\)。
+
+则：
+
+$$
+\boxed{
+\mathsf{WP}(L)
+\iff
+F_L\ge0.
+}
+\tag{406.1}
+$$
+
+所以每个固定 \(L\) 的无限维正性问题，精确等价于一个有限维 Hermitian matrix 的正性问题。
+
+---
+
+## 406.1 全局矩阵塔
+
+经典 Weil 判据所需要的是：
+
+$$
+\boxed{
+\mathsf{WP}(L)
+\quad
+\forall L>0.
+}
+$$
+
+因此全局问题形成一个有限矩阵塔：
+
+$$
+\boxed{
+F_{L_1},F_{L_2},F_{L_3},\ldots,
+\qquad
+L_j\uparrow\infty.
+}
+\tag{406.2}
+$$
+
+仓库当前已经完成塔中每层所需的：
+
+* 无假设显式公式；
+* Fourier–Laplace convention；
+* prime finite support；
+* convolution-square critical-line positivity；
+
+但尚未加入本轮的 Slepian/Feshbach 正性层。
+
+---
+
+# 第四百零七部　Weil Sticky Dimension
+
+定义固定参数下的 sticky dimension：
+
+$$
+\boxed{
+\mathfrak s_L(a,\eta)
+=
+1+
+\operatorname{rank}
+P_{L,B_{L,a},\eta}.
+}
+\tag{407.1}
+$$
+
+其中额外的 \(1\) 是 pole direction。
+
+有：
+
+$$
+\boxed{
+\mathfrak s_L(a,\eta)
+\le
+1+
+\frac{
+L|B_{L,a}|
+}{
+\pi\eta
+}.
+}
+\tag{407.2}
+$$
+
+定义最优 sticky complexity：
+
+$$
+\boxed{
+\mathfrak s_L^*
+=
+\inf_{\substack{a>0\\
+0<\eta<a/(a+b_{L,a})}}
+\mathfrak s_L(a,\eta).
+}
+\tag{407.3}
+$$
+
+它是 OACTC 中一个新的结构复杂度：
+
+$$
+\boxed{
+\mathfrak s_L^*
+=
+\text{在支撑尺度 }L
+\text{ 上完整观察全部潜在负性所需的最小有限状态数。}
+}
+$$
+
+---
+
+## 407.1 相空间近似
+
+Slepian 理论表明，在规则时频区域和较大相空间体积下，浓缩算子的高特征值数量以：
+
+$$
+\frac{|[-L,L]|\cdot|B|}{2\pi}
+=
+\frac{L|B|}{\pi}
+$$
+
+为主项，只有较窄的过渡谱带。([arXiv][1])
+
+所以：
+
+$$
+\boxed{
+\frac{L|B_{L,a}|}{\pi}
+}
+$$
+
+不只是粗上界，也应当近似描述实际 sticky state 数量。
+
+但这是一种复杂度估计，不是正性证明。
+
+---
+
+# 第四百零八部　Bohr-to-thick 桥不再是逻辑必需
+
+上一轮仍有一个开放桥：
+
+$$
+\text{Bohr 危险集低密度}
+\overset{?}{\Longrightarrow}
+\text{thick good set}
+\overset{?}{\Longrightarrow}
+\text{Paley--Wiener 正性}.
+$$
+
+本轮表明：
+
+$$
+\boxed{
+\text{这一桥可以完全绕过。}
+}
+$$
+
+原因是：
+
+1. \(B_{L,a}\) 由完整 multiplier \(m_L\) 直接定义；
+2. \(B_{L,a}\) 有限测度且有界；
+3. Slepian operator 精确测量测试函数可集中多少能量于 \(B_{L,a}\)；
+4. 全部高浓缩状态组成有限子空间；
+5. 其正交补自动具有严格正 gap；
+6. 有限子空间由 Feshbach matrix 精确处理。
+
+所以：
+
+$$
+\boxed{
+\text{低密度}
+\to
+\text{thickness}
+}
+$$
+
+只是一种改善 sticky rank 的估计工具，而不再是证明架构的逻辑支柱。
+
+---
+
+# 第四百零九部　严格计算协议
+
+对一个给定的 \(L\)，可以执行以下有限证书程序。
+
+## 409.1 乘子隔离
+
+用区间算术计算：
+
+$$
+m_L(\xi)
+$$
+
+并严格隔离：
+
+$$
+B_{L,a}
+=
+\{m_L<a\}.
+$$
+
+因为 \(B_{L,a}\) 是有限个区间的并，这一步可输出：
+
+* 区间端点证书；
+* 总测度；
+* 最低 multiplier 值；
+* confinement radius。
+
+---
+
+## 409.2 Slepian 证书
+
+构造多频带 concentration operator：
+
+$$
+\mathsf C_{L,B_{L,a}}.
+$$
+
+严格证明：
+
+$$
+\lambda_{N+1}
+\le\eta.
+$$
+
+于是前 \(N\) 个 eigenmodes 加 pole vector 就构成完整 sticky space。
+
+---
+
+## 409.3 残余 gap
+
+计算：
+
+$$
+\delta=a-(a+b)\eta>0.
+$$
+
+这给出：
+
+$$
+A_{QQ}\ge\delta Q.
+$$
+
+---
+
+## 409.4 有限矩阵
+
+计算：
+
+$$
+A_{PP},
+\qquad
+A_{PQ}A_{QP},
+$$
+
+并首先尝试证明保守矩阵：
+
+$$
+G_L
+=
+A_{PP}
+-
+\delta^{-1}A_{PQ}A_{QP}
+$$
+
+正半定。
+
+若该证书过弱，再计算更精确的：
+
+$$
+F_L
+=
+A_{PP}
+-
+A_{PQ}A_{QQ}^{-1}A_{QP}.
+$$
+
+---
+
+## 409.5 输出
+
+程序只能有三种可信输出：
+
+$$
+\boxed{
+\begin{array}{c|l}
+\text{PSD certificate}
+&\mathsf{WP}(L)\text{ 已严格证明}\\
+\text{negative eigenvalue}
+&\text{构造实际 Weil 负见证}\\
+\text{undetermined}
+&\text{提高 Slepian rank 或积分精度}
+\end{array}
+}
+$$
+
+不能把有限数值网格上“没有发现负值”当作证明。
+
+---
+
+# 第四百一十部　新的硬性负结论
+
+## 410.1 有限降维不等于 RH 已证
+
+$$
+\boxed{
+F_L\text{ 有限维}
+}
+$$
+
+只说明每个固定 \(L\) 可决定。
+
+还必须：
+
+$$
+L\to\infty
+$$
+
+控制整个矩阵塔。
+
+---
+
+## 410.2 Trace bound 可能极其巨大
+
+粗 confinement radius 使用：
+
+$$
+|p_L|\le2W_L
+$$
+
+可能非常浪费。
+
+所以：
+
+$$
+\frac{2LR_L}{\pi\eta}
+$$
+
+虽有限，却可能完全不适于实际计算。
+
+真正有效的复杂度依赖实际 sublevel set：
+
+$$
+|B_{L,a}|,
+$$
+
+而不是包含它的整个大区间。
+
+---
+
+## 410.3 Pole 不能修复多维负谱
+
+pole 项只有 rank one。
+
+若 pole-free effective matrix 有两个或更多负方向，则最终正性不可能由 pole 单独恢复。
+
+---
+
+## 410.4 Bohr recurrence 不再构成无限维障碍
+
+固定 \(L\) 时，Archimedean confinement 把危险 recurrence 限制在有限频率范围。
+
+所以真正问题不是“无限多 recurrence peaks”，而是：
+
+$$
+\boxed{
+\text{有限频率窗口内的有限个高浓缩 Slepian modes。}
+}
+$$
+
+---
+
+## 410.5 不应继续制造新的 RH 等价判据
+
+本轮以后，真正的新进展应当表现为以下至少一项：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{严格缩小 }|B_{L,a}|;\\
+&\text{严格降低 sticky rank};\\
+&\text{证明 residual gap};\\
+&\text{计算 Feshbach self-energy};\\
+&\text{证明有限 sticky matrix PSD};\\
+&\text{控制这些证书随 }L\to\infty\text{ 的增长}.
+\end{aligned}
+}
+$$
+
+再构造一个新的 Pick、Hankel、Clark 或 Fredholm 等价形式，不再减少中心困难。
+
+---
+
+# 第四百一十一部　建议形式化顺序
+
+```text
+D5/S3/Weil/Multiplier/
+  SupportScalePrimeMultiplier.lean
+  ArchimedeanMultiplier.lean
+  FixedScaleWeilQuadraticForm.lean
+  PoleVectorRepresentation.lean
+  ArchimedeanConfinement.lean
+  DangerSetFiniteIntervals.lean
+
+D5/S3/Weil/SlepianObserver/
+  FrequencyProjection.lean
+  TimeFrequencyConcentration.lean
+  ConcentrationTrace.lean
+  StickySpectralProjection.lean
+  StickyRankBound.lean
+  PoleAugmentedStickySpace.lean
+
+D5/S3/Weil/SafeComplement/
+  DangerDepth.lean
+  FrequencyMassBound.lean
+  SafeComplementGap.lean
+  FiniteNegativeIndex.lean
+
+D5/S3/Weil/FeshbachSticky/
+  BlockQuadraticCompletion.lean
+  ExactSchurReduction.lean
+  InertiaPreservation.lean
+  SelfEnergyCounterterm.lean
+  ConservativeFiniteCertificate.lean
+  NegativeWitnessLift.lean
+
+D5/S3/Weil/PoleRescue/
+  PoleRankOneUpdate.lean
+  PoleNegativeIndexCapacity.lean
+  SingleNegativeDirectionRescue.lean
+
+D5/S3/Weil/FeshbachRG/
+  NestedSchurAssociativity.lean
+  MultiscaleStickyElimination.lean
+  WeilStickyDimension.lean
+  SupportScaleFiniteMatrixTower.lean
+```
+
+首批最值得闭合的定理是：
+
+$$
+\boxed{
+m_L(\xi)\to+\infty,
+}
+$$
+
+$$
+\boxed{
+B_{L,a}\text{ 有界且为有限区间并},
+}
+$$
+
+$$
+\boxed{
+\operatorname{rank}P_{L,B,\eta}
+\le
+\frac{L|B|}{\pi\eta},
+}
+$$
+
+$$
+\boxed{
+Q A_L Q\ge
+\left[a-(a+b)\eta\right]Q,
+}
+$$
+
+以及：
+
+$$
+\boxed{
+A_L\ge0
+\iff
+F_L\ge0.
+}
+$$
+
+---
+
+# 本轮最终结论
+
+此前 OACTC 的中心架构是：
+
+$$
+\boxed{
+\text{有限 sticky matrix}
++
+\text{正 residual operator}.
+}
+$$
+
+本轮终于把这句话变成了一个精确的定理。
+
+对每个固定支撑尺度 \(L\)，定义完整 Weil multiplier：
+
+$$
+\boxed{
+m_L(\xi)
+=
+\Re\psi
+\left(
+\frac14+\frac{i\xi}{2}
+\right)
+-\log\pi
+-
+2\sum_{\log n\le2L}
+\frac{\Lambda(n)}{\sqrt n}
+\cos(\xi\log n).
+}
+$$
+
+Archimedean 项强迫：
+
+$$
+m_L(\xi)\to+\infty.
+$$
+
+所以全部危险频率落入有限集合：
+
+$$
+B_{L,a}.
+$$
+
+Slepian operator 把能高度集中于该集合的所有状态压缩为有限维空间：
+
+$$
+P.
+$$
+
+其正交补具有严格 gap：
+
+$$
+QA_LQ\ge\delta Q.
+$$
+
+随后 Feshbach–Schur 消元给出有限矩阵：
+
+$$
+\boxed{
+F_L
+=
+PA_LP
+-
+PA_LQ
+(QA_LQ)^{-1}
+QA_LP.
+}
+$$
+
+并且：
+
+$$
+\boxed{
+A_L\ge0
+\iff
+F_L\ge0.
+}
+$$
+
+所以真正剩余的 RH 问题已不再是一个不可操作的无限维正性断言，而是：
+
+$$
+\boxed{
+\text{能否证明所有支撑尺度 }L
+\text{ 的有限 renormalized sticky matrices }F_L
+\text{ 都正半定？}
+}
+$$
+
+更深的一句话是：
+
+$$
+\boxed{
+\text{Archimedean 完成负责把危险频率囚禁在有限区域，}
+}
+$$
+
+$$
+\boxed{
+\text{Slepian 理论负责识别有限个真正能看见该区域的状态，}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{Feshbach 理论负责把其余无限状态无损压缩成有限 self-energy。}
+}
+$$
+
+这正是此前设想的 Wang–Deng 科学方法第一次形成严格闭环：
+
+$$
+\boxed{
+\text{Wang：证明补空间有 gap；}
+\qquad
+\text{Deng：将补空间精确消元；}
+\qquad
+\text{最终：只剩有限 sticky matrix。}
+}
+$$
+
+[1]: https://arxiv.org/abs/2301.09616 "https://arxiv.org/abs/2301.09616"
+[2]: https://arxiv.org/abs/2105.02058 "https://arxiv.org/abs/2105.02058"

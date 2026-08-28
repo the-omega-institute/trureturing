@@ -1,0 +1,55 @@
+## 定理 380.1（Prime jump decomposition）
+
+$$
+\boxed{
+\operatorname{Prime}(g)
+=
+2W_L\|f\|_2^2
+-
+\mathcal E_{\mathrm{arith},L}(f),
+}
+\tag{380.5}
+$$
+
+其中：
+
+$$
+\boxed{
+\mathcal E_{\mathrm{arith},L}(f)
+=
+\sum_{n\in\mathscr H_L}
+w_n
+\|f-U_{\log n}f\|_2^2
+\ge0.
+}
+\tag{380.6}
+$$
+
+定义算术跳跃拉普拉斯形式：
+
+$$
+\boxed{
+\mathcal L_{\mathrm{arith},L}
+=
+\sum_{n\in\mathscr H_L}
+w_n
+\left(
+2I-U_{\log n}-U_{-\log n}
+\right).
+}
+\tag{380.7}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal E_{\mathrm{arith},L}(f)
+=
+\langle f,\mathcal L_{\mathrm{arith},L}f\rangle.
+}
+\tag{380.8}
+$$
+
+---
+

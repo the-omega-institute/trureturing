@@ -1,0 +1,22 @@
+* \(n_-(F_L^{(0)})=1\)。
+
+则由 rank-one inertia formula：
+
+$$
+\boxed{
+F_L\ge0
+\iff
+2
+\left\langle
+p_L,
+(F_L^{(0)})^{-1}p_L
+\right\rangle
+\le-1.
+}
+\tag{404.5}
+$$
+
+所以 pole 是否能修复唯一负方向，不是象征性的“极点有帮助”，而是一个可计算的有限标量条件。
+
+---
+

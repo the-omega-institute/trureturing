@@ -1,0 +1,30 @@
+## 定理 349.1（临界阻尼平坦性判据）
+
+对任意固定：
+
+$$
+\tau\neq0,
+$$
+
+有：
+
+$$
+\boxed{
+\mathrm{RH}
+\text{ 在高度 }T\text{ 以下成立}
+\iff
+\mathfrak R_T(\tau)=0.
+}
+\tag{349.7}
+$$
+
+因为：
+
+$$
+\cosh(\tau\delta)-1=0
+\iff
+\delta=0.
+$$
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/388-1-Bernstein-密度界
+fingerprints:
+  raw_sha256: sha256:04c002c6d5f9db0cb6dc9be421a706db54c5eb7ff25e3e81d048f80aa79f645b
+  normalized_sha256: sha256:04c002c6d5f9db0cb6dc9be421a706db54c5eb7ff25e3e81d048f80aa79f645b
+cas_ref: sha256:04c002c6d5f9db0cb6dc9be421a706db54c5eb7ff25e3e81d048f80aa79f645b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

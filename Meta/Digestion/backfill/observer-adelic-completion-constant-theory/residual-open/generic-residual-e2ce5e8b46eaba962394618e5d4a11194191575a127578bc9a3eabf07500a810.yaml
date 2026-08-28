@@ -1,0 +1,14 @@
+ast_path: section/第四百零四部-Pole-rank-one-的有限修复能力
+fingerprints:
+  raw_sha256: sha256:e2ce5e8b46eaba962394618e5d4a11194191575a127578bc9a3eabf07500a810
+  normalized_sha256: sha256:e2ce5e8b46eaba962394618e5d4a11194191575a127578bc9a3eabf07500a810
+cas_ref: sha256:e2ce5e8b46eaba962394618e5d4a11194191575a127578bc9a3eabf07500a810
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-99860837afb7928ed9599e60e3b26992c1f1704e57842dd7e78ba24c4aefefd0-d358832733eb1a70d3972c799ee2e5f9b716555a4fa3b00447bb16e97cc58831
+    - generic-residual-cf162529024883bcf6abde557c5e4474e726c21f9558dce1b0108fd42c24866b-8e58582e49ea7a4f4ae88a3038534ca61b2a8cb098dd3064d7128ad579a633bd
+    - generic-residual-c428bddfcd105da1b27aa43c18730fa208555deb1919dea123b8fd1b95625f3a-0854c84392ba068f33e636000ac2ca34e1dec9c0945b8b3f35370075dec32ce7

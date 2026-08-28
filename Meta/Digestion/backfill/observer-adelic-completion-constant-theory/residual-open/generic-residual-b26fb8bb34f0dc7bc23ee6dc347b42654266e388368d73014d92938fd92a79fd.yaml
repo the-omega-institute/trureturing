@@ -1,0 +1,10 @@
+ast_path: section/本轮独立推导得到
+fingerprints:
+  raw_sha256: sha256:b26fb8bb34f0dc7bc23ee6dc347b42654266e388368d73014d92938fd92a79fd
+  normalized_sha256: sha256:b26fb8bb34f0dc7bc23ee6dc347b42654266e388368d73014d92938fd92a79fd
+cas_ref: sha256:b26fb8bb34f0dc7bc23ee6dc347b42654266e388368d73014d92938fd92a79fd
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
