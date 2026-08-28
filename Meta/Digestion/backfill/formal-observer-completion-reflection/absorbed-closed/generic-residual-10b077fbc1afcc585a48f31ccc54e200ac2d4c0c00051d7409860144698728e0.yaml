@@ -12,6 +12,6 @@ receipts:
       target_sha256: sha256:0045d52a98f5fb9da086f5825d35666e1f028190d3c884a916fc56f61090caae
   scribe:
     - gid: D5/S3/Observer/Linear/DiscountedObservabilityGramianPositivity.discounted_observability_gramian_nonnegative
-      definition_sha256: sha256:7cf921ac80024588bb5b37907eec27990651a37427b674498ab85dee0ac78355
-      emission_sha256: sha256:d3f9b4d9f7577772913bfa3660147ea3e341bbfc8dab7a181b3ea61afec90673
+      definition_sha256: sha256:f93998975183e9fcba7194b77635971c0070b76bd85ac60ec61cc3c93041ea00
+      emission_sha256: sha256:a9675bb063365c14608d98cf35c71eb7659d0f1c95f324246f14a3356c8d3f61
   unresolved_subitems: []
