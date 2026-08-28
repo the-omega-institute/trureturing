@@ -59,22 +59,22 @@ internal sealed class FreeInformationValueDocument : IScribeDocumentDefinition
 
     private static Formula TheoremFormula()
     {
-        Formula state = F.Id("State");
-        Formula evidence = F.Id("Evidence");
-        Formula action = F.Id("Action");
-        Formula expectation = F.Id("expectation");
+        Formula state = F.Id("X");
+        Formula evidence = F.Id("E");
+        Formula action = F.Id("U");
+        Formula expectation = Seq(Mathbb, Grp(F.Id("E")));
         Formula observe = F.Id("observe");
         Formula transition = F.Id("worldAfterObservation");
-        Formula utility = F.Id("utility");
+        Formula utility = F.Id("V");
         Formula cost = F.Id("informationCost");
-        Formula actionsBefore = F.Id("actionsBeforeObservation");
-        Formula actionsAfter = F.Id("actionsAfterObservation");
-        Formula policies = F.Id("candidatePolicies");
-        Formula uninformed = F.Id("uninformedValue");
-        Formula informed = F.Id("informedValue");
-        Formula selectedAction = F.Id("action");
-        Formula observedValue = F.Id("evidence");
-        Formula currentState = F.Id("state");
+        Formula actionsBefore = F.Id("A0");
+        Formula actionsAfter = F.Id("A1");
+        Formula policies = F.Id("P");
+        Formula uninformed = Subscript(F.Id("W"), D(0));
+        Formula informed = Subscript(F.Id("W"), evidence);
+        Formula selectedAction = F.Id("u");
+        Formula observedValue = F.Id("e");
+        Formula currentState = F.Id("x");
         Formula type = Seq(Operatorname, Grp(F.Id("Type")));
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
         Formula policyType = Arrow(evidence, action);
@@ -131,4 +131,7 @@ internal sealed class FreeInformationValueDocument : IScribeDocumentDefinition
             Seq(Grp(), uninformed, Sp, Leq, Sp, informed, Dot),
         ]));
     }
+
+    private static Formula Subscript(Formula value, Formula index) =>
+        Seq(value, Underscore, Grp(index));
 }

@@ -77,14 +77,31 @@ internal sealed class TraceZeroReadoutOrthogonalEquivalenceDocument : IScribeDoc
             Seq(F.Id("V"), Underscore, Grp(D(0)))));
         Formula projectionRho = Seq(projection, Open, xRho, Close);
         Formula projectionSigma = Seq(projection, Open, xSigma, Close);
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula fin = Seq(Operatorname, Grp(F.Id("Fin")), Open,
+            Seq(m, Plus, D(1)), Close);
+        Formula effectType = new Formula.TypeArrow(fin, matrix);
+        Formula stateHypothesis = Seq(
+            Rho, Sp, Operatorname, Grp(F.Id("PosSemidef")), Sp, Land, Sp,
+            Call("trace", Rho), Sp, Eq, Sp, D(1));
+        Formula sigmaHypothesis = Seq(
+            SigmaLower, Sp, Operatorname, Grp(F.Id("PosSemidef")), Sp, Land, Sp,
+            Call("trace", SigmaLower), Sp, Eq, Sp, D(1));
+        Formula effectHypothesis = Seq(
+            Forall, Sp, F.Id("i"), Colon, Sp, fin, Comma, Sp,
+            Open, indexedEffect, Sp, Operatorname, Grp(F.Id("PosSemidef")), Sp,
+            Land, Sp, Open, D(1), Sp, Minus, Sp, indexedEffect, Close, Sp,
+            Operatorname, Grp(F.Id("PosSemidef")), Close);
 
         return Disp(Seq(
-            Forall, Sp, d, Comma, Sp, m, Comma, Sp,
-            effect, Colon, Sp, Operatorname, Grp(F.Id("Fin")), Open,
-            m, Plus, D(1), Close, To, matrix, Comma, Sp,
+            Forall, Sp, d, Colon, Sp, type, Comma, Sp, m, Colon, Sp, F.Id("Nat"),
+            Comma, Sp, OpenBracket, Call("Fintype", d), CloseBracket, Comma, Sp,
+            OpenBracket, Call("Nonempty", d), CloseBracket, Comma, Sp,
+            OpenBracket, Call("DecidableEq", d), CloseBracket, RowBreak, Grp(),
+            effect, Colon, Sp, effectType, Comma, Sp,
             Rho, Comma, Sp, SigmaLower, Colon, Sp, matrix, Comma, Sp,
-            Call("Density", Rho), Sp, Land, Sp, Call("Density", SigmaLower), Sp,
-            Land, Sp, Call("EffectFamily", effect), Sp, Rightarrow, RowBreak, Grp(),
+            stateHypothesis, Comma, Sp, sigmaHypothesis, Comma, RowBreak, Grp(),
+            effectHypothesis, Sp, Rightarrow, RowBreak, Grp(),
             carrier, Sp, Eq, Sp, carrierType, Comma, Sp,
             Call("V0", carrier, effect), Sp, Eq, Sp, visible, Comma, Sp,
             Call("R0", carrier, effect), Sp, Eq, Sp,

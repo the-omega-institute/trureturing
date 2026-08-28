@@ -6,7 +6,7 @@ The product readout is the universal join of two concept readouts.
 
 **Theorem 1.1 (The product readout is the universal join).**
 
-$$\forall X, C, D, E: \operatorname{Type}, q_{C}: X \to C, q_{D}: X \to D, q_{E}: X \to E,\ \operatorname{Refines}\left(q_{C}, \operatorname{conceptJoin}\left(q_{C}, q_{D}\right)\right) \land \operatorname{Refines}\left(q_{D}, \operatorname{conceptJoin}\left(q_{C}, q_{D}\right)\right) \land (\operatorname{Refines}\left(q_{C}, q_{E}\right) \land \operatorname{Refines}\left(q_{D}, q_{E}\right)) \Rightarrow \operatorname{Refines}\left(\operatorname{conceptJoin}\left(q_{C}, q_{D}\right), q_{E}\right).$$
+$$\forall X, C, D, E: \operatorname{Type}, q_{C}: X \to C, q_{D}: X \to D, q_{E}: X \to E,\ \operatorname{Refines}\left(q_{C}, \operatorname{conceptJoin}\left(q_{C}, q_{D}\right)\right) \land \operatorname{Refines}\left(q_{D}, \operatorname{conceptJoin}\left(q_{C}, q_{D}\right)\right) \land \operatorname{Refines}\left(q_{C}, q_{E}\right) \Rightarrow \operatorname{Refines}\left(q_{D}, q_{E}\right) \Rightarrow \operatorname{Refines}\left(\operatorname{conceptJoin}\left(q_{C}, q_{D}\right), q_{E}\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ConceptJoinUniversal.concept_join_universal` (`✓ std3`). ∎
 

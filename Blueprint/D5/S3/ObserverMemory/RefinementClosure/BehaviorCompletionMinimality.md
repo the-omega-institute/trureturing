@@ -6,7 +6,7 @@ Behavior completion is the least stable refinement of a readout interface.
 
 **Theorem 1.1 (Behavior completion is the least stable refinement).**
 
-$$\begin{gathered}\forall X, B, R,\\F: X \to X, q: X \to B, r: X \to R,\\\operatorname{Surjective}(q) \land \operatorname{Surjective}(r) \land\\(\exists G: R \to R, r \circ F = G \circ r) \land\\(\exists! \pi: R \to B, q = \pi \circ r) \Rightarrow\\\exists! Phi: R \to \operatorname{ItineraryRange}(F, q), \operatorname{rangeFactorization}(\operatorname{completeItinerary}(F, q)) = Phi \circ r.\end{gathered}$$
+$$\begin{gathered}\forall X, B, R: \operatorname{Type},\\F: X \to X, q: X \to B, r: X \to R,\\\operatorname{Surjective}(q) \land \operatorname{Surjective}(r) \land\\(\exists G: R \to R, r \circ F = G \circ r) \land\\(\exists! \pi: R \to B, q = \pi \circ r) \Rightarrow\\\exists! Phi: R \to \operatorname{ItineraryRange}(F, q), \operatorname{rangeFactorization}(\operatorname{completeItinerary}(F, q)) = Phi \circ r.\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/RefinementClosure/BehaviorCompletionMinimality.behavior_completion_is_least_stable_refinement` (`✓ std3`). ∎
 

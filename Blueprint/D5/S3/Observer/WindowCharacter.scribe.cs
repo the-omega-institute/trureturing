@@ -32,9 +32,23 @@ internal sealed class WindowCharacterDocument : IScribeDocumentDefinition
                         "a one-address window or for matrix algebras with unrelated index sets."))),
                 DescribeRole.Theorem))));
 
+    private static Formula Call(string name, params Formula[] arguments)
+    {
+        var items = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
+        for (var index = 0; index < arguments.Length; index++)
+        {
+            if (index > 0) items.AddRange([Comma, Sp]);
+            items.Add(arguments[index]);
+        }
+
+        items.Add(Close);
+        return Seq([.. items]);
+    }
+
     private static Formula NoCharacterFormula() => Disp(Seq(
         Forall, Sp, F.Id("M"), Sp, InMacro, Sp,
         Mathbb, Grp(F.Id("N")), Underscore, Grp(Gt, D(1)), Comma, Esc,
+        OpenBracket, Call("NeZero", F.Id("M")), CloseBracket, Comma, Esc,
         Operatorname, Grp(F.Id("IsEmpty")), Open,
         F.Id("M"), Underscore, Grp(F.Id("M")), Open,
         Mathbb, Grp(F.Id("C")), Close,

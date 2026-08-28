@@ -1,0 +1,17 @@
+ast_path: 证明义务/56.4/occurrence/5
+fingerprints:
+  raw_sha256: sha256:cc209de3487fd41f8806c926ba51f9753902425b236757c6993ebf34e10accdc
+  normalized_sha256: sha256:cc209de3487fd41f8806c926ba51f9753902425b236757c6993ebf34e10accdc
+cas_ref: sha256:cc209de3487fd41f8806c926ba51f9753902425b236757c6993ebf34e10accdc
+coverage_gids:
+  - D5/S3/ConceptDynamics/TimeProjection/FiniteTimeEscapeDecidability.finite_time_escape_decidability
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/TimeProjection/FiniteTimeEscapeDecidability.finite_time_escape_decidability
+      source_sha256: sha256:cc209de3487fd41f8806c926ba51f9753902425b236757c6993ebf34e10accdc
+      target_sha256: sha256:0a7099dff992c71558d62aa85fa7e807eddf321bcb487fe772ea01693f187d20
+  scribe:
+    - gid: D5/S3/ConceptDynamics/TimeProjection/FiniteTimeEscapeDecidability.finite_time_escape_decidability
+      definition_sha256: sha256:8c019d0957bfcac77277840e172ba14f4dcc714f0151f038cbddf401cfe8f473
+      emission_sha256: sha256:5860caba33d68e5dfd5e1a5db7f41aa9b05b8b6a2dc17db42b9ca987b51c969e
+  unresolved_subitems: []
