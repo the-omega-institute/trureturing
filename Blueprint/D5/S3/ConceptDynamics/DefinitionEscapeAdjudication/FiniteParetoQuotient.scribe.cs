@@ -123,7 +123,7 @@ internal sealed class FiniteParetoQuotientDocument : IScribeDocumentDefinition
             _ => throw new ArgumentOutOfRangeException(nameof(orderClass)),
         };
 
-    private static Formula Header(OrderClass orderClass)
+    private static Formula OrderHeader(OrderClass orderClass)
     {
         Formula action = F.Id("Action");
         Formula information = F.Id("Information");
@@ -163,7 +163,7 @@ internal sealed class FiniteParetoQuotientDocument : IScribeDocumentDefinition
             LambdaLower, Sp, y, Comma, Sp, Kernel(value, finiteCarrier, y, x));
 
         return Disp(Seq(
-            Begin, Grp(F.Id("gathered")), Header(OrderClass.LessOrEqual),
+            Begin, Grp(F.Id("gathered")), OrderHeader(OrderClass.LessOrEqual),
             x, Colon, Sp, Carrier(finiteCarrier), Comma, RowBreak, Grp(),
             ClassOf(value, finiteCarrier, x), Sp, Eq, Sp,
             Call("filter", Call("carrierEnum", finiteCarrier), filterPredicate), Dot,
@@ -176,7 +176,7 @@ internal sealed class FiniteParetoQuotientDocument : IScribeDocumentDefinition
         Formula finiteCarrier = F.Id("F");
 
         return Disp(Seq(
-            Begin, Grp(F.Id("gathered")), Header(OrderClass.LessOrEqual),
+            Begin, Grp(F.Id("gathered")), OrderHeader(OrderClass.LessOrEqual),
             ClassImage(value, finiteCarrier), Sp, Eq, Sp,
             Call("image", Call("carrierEnum", finiteCarrier),
                 Call("paretoClass", value, finiteCarrier)), Dot,
@@ -194,7 +194,7 @@ internal sealed class FiniteParetoQuotientDocument : IScribeDocumentDefinition
             candidate, Sp, InMacro, Sp, ClassImage(value, finiteCarrier), CloseBrace);
 
         return Disp(Seq(
-            Begin, Grp(F.Id("gathered")), Header(OrderClass.LessOrEqual),
+            Begin, Grp(F.Id("gathered")), OrderHeader(OrderClass.LessOrEqual),
             Quotient(value, finiteCarrier), Sp, Eq, Sp, classSubtype, Dot,
             End, Grp(F.Id("gathered"))));
     }
@@ -205,7 +205,7 @@ internal sealed class FiniteParetoQuotientDocument : IScribeDocumentDefinition
         Formula finiteCarrier = F.Id("F");
 
         return Disp(Seq(
-            Begin, Grp(F.Id("gathered")), Header(OrderClass.LessOrEqual),
+            Begin, Grp(F.Id("gathered")), OrderHeader(OrderClass.LessOrEqual),
             Call("quotientEnum", value, finiteCarrier), Sp, Eq, Sp,
             Call("attach", ClassImage(value, finiteCarrier)), Dot,
             End, Grp(F.Id("gathered"))));
@@ -217,7 +217,7 @@ internal sealed class FiniteParetoQuotientDocument : IScribeDocumentDefinition
         Formula finiteCarrier = F.Id("F");
 
         return Disp(Seq(
-            Begin, Grp(F.Id("gathered")), Header(OrderClass.LessOrEqual),
+            Begin, Grp(F.Id("gathered")), OrderHeader(OrderClass.LessOrEqual),
             Call("finiteParetoQuotientFintype", value, finiteCarrier), Colon, Sp,
             Call("Fintype", Quotient(value, finiteCarrier)), Dot,
             End, Grp(F.Id("gathered"))));
@@ -270,7 +270,7 @@ internal sealed class FiniteParetoQuotientDocument : IScribeDocumentDefinition
             Forall, Sp, d, Colon, Sp, quotient, Comma, Sp, d, Sp, Eq, Sp, c);
 
         return Disp(Seq(
-            Begin, Grp(F.Id("gathered")), Header(OrderClass.Preorder),
+            Begin, Grp(F.Id("gathered")), OrderHeader(OrderClass.Preorder),
             Open, carrierComplete, Close, Sp, Land, RowBreak, Grp(),
             Open, membershipExact, Close, Sp, Land, RowBreak, Grp(),
             Open, selfMember, Close, Sp, Land, RowBreak, Grp(),
