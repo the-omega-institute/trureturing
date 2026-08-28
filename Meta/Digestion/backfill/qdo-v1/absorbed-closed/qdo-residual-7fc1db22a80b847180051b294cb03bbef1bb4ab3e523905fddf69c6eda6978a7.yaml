@@ -1,0 +1,17 @@
+ast_path: corollary/37.13
+fingerprints:
+  raw_sha256: sha256:7fc1db22a80b847180051b294cb03bbef1bb4ab3e523905fddf69c6eda6978a7
+  normalized_sha256: sha256:7fc1db22a80b847180051b294cb03bbef1bb4ab3e523905fddf69c6eda6978a7
+cas_ref: sha256:7fc1db22a80b847180051b294cb03bbef1bb4ab3e523905fddf69c6eda6978a7
+coverage_gids:
+  - D5/S3/QuantumStates/UnitWeightSupport.unit_weight_support_face
+receipts:
+  coverage:
+    - gid: D5/S3/QuantumStates/UnitWeightSupport.unit_weight_support_face
+      source_sha256: sha256:7fc1db22a80b847180051b294cb03bbef1bb4ab3e523905fddf69c6eda6978a7
+      target_statement_id: sha256:be291005007676f104bf572cd71715885a42c9ea855bd376d422d86203dd26de
+  scribe:
+    - gid: D5/S3/QuantumStates/UnitWeightSupport.unit_weight_support_face
+      definition_sha256: sha256:3fbd8c0155c20b06e39b9b7b385473b59b6efcad414ec0c0644354591f44f236
+      emission_sha256: sha256:6949e75ad4d812c88acb7b05b4a9291b022a6956ab61fffc6ce26163319c2278
+  unresolved_subitems: []

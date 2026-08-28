@@ -1,0 +1,17 @@
+ast_path: 命题/48.5/clause/1
+fingerprints:
+  raw_sha256: sha256:2387722de0c533f00662bd865976bef92345b744eb48a09f46cf3bd5ac168b2e
+  normalized_sha256: sha256:2387722de0c533f00662bd865976bef92345b744eb48a09f46cf3bd5ac168b2e
+cas_ref: sha256:2387722de0c533f00662bd865976bef92345b744eb48a09f46cf3bd5ac168b2e
+coverage_gids:
+  - D5/S3/ConceptDynamics/Agency/SelfConstraintMonotonicity.appended_record_shrinks_consistent_actions
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Agency/SelfConstraintMonotonicity.appended_record_shrinks_consistent_actions
+      source_sha256: sha256:2387722de0c533f00662bd865976bef92345b744eb48a09f46cf3bd5ac168b2e
+      target_statement_id: sha256:350db5c18cb80746c9e165340a5c2fd2ce4881ecf81532f17cffa5df9f9b9468
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Agency/SelfConstraintMonotonicity.appended_record_shrinks_consistent_actions
+      definition_sha256: sha256:4befac6360191b3f10b83d1b140b8c52ce380ab1470f4b60e908e03ede97b765
+      emission_sha256: sha256:8a5307f6b08149494f5c987b32441a98ae868572e03d28c87879a3a1eb05d61f
+  unresolved_subitems: []
