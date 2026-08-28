@@ -1,0 +1,17 @@
+ast_path: 命题/20.1/clause/2
+fingerprints:
+  raw_sha256: sha256:fc091f9b2d7e9af1335c70ad287b08c6dc5abd6a8a9da836d190b576c8ac3d47
+  normalized_sha256: sha256:fc091f9b2d7e9af1335c70ad287b08c6dc5abd6a8a9da836d190b576c8ac3d47
+cas_ref: sha256:fc091f9b2d7e9af1335c70ad287b08c6dc5abd6a8a9da836d190b576c8ac3d47
+coverage_gids:
+  - D5/S3/Quantum/Decoherence/StaticLossVersusReturnFlow.static_loss_and_return_flow_are_logically_independent
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Decoherence/StaticLossVersusReturnFlow.static_loss_and_return_flow_are_logically_independent
+      source_sha256: sha256:fc091f9b2d7e9af1335c70ad287b08c6dc5abd6a8a9da836d190b576c8ac3d47
+      target_sha256: sha256:bd3b4dcfb925fbde4bd1e075908271fd7f1ad5b638d9d1e800b36b16d07d5ba5
+  scribe:
+    - gid: D5/S3/Quantum/Decoherence/StaticLossVersusReturnFlow.static_loss_and_return_flow_are_logically_independent
+      definition_sha256: sha256:08e8f2b756238d0ee9dfe1ea5e91ff65deeff51df0212e4321993f1d06660905
+      emission_sha256: sha256:f264fec4da2dfd2ac63999c36ef1742d56868451347af1d47cbb14ce55d50c76
+  unresolved_subitems: []

@@ -1,0 +1,17 @@
+ast_path: 证明义务/56.3/occurrence/1
+fingerprints:
+  raw_sha256: sha256:bc451a1494bab461392eda21969996ada4a5f5962727eb0d55bfa114f6bf7ae0
+  normalized_sha256: sha256:bc451a1494bab461392eda21969996ada4a5f5962727eb0d55bfa114f6bf7ae0
+cas_ref: sha256:bc451a1494bab461392eda21969996ada4a5f5962727eb0d55bfa114f6bf7ae0
+coverage_gids:
+  - D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/AdjudicationStopTargetCorrectness.adjudication_stop_target_correctness
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/AdjudicationStopTargetCorrectness.adjudication_stop_target_correctness
+      source_sha256: sha256:bc451a1494bab461392eda21969996ada4a5f5962727eb0d55bfa114f6bf7ae0
+      target_sha256: sha256:d9066be6ea93b1aa9fadf9dbbe322ac008460b70750cec47b9ba1bbae977af58
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/AdjudicationStopTargetCorrectness.adjudication_stop_target_correctness
+      definition_sha256: sha256:74d422cf24d5bddfc971cedd5c121fea31e1fad734e955affe903d881036c240
+      emission_sha256: sha256:2c8bb658bd7334047a544f087e6eeca7ef482935fd06c7f24bb09e370f2fe505
+  unresolved_subitems: []

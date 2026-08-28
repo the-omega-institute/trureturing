@@ -1,4 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S0.Diagonal.Lawvere;
 
@@ -12,7 +13,9 @@ internal sealed class QualitativeEscapeDocument : IScribeDocumentDefinition
         var f = Id("f");
         var g = Id("g");
         var y = Id("y");
+        var address = Id("A");
         var alphabet = Id("Y");
+        var type = F.Seq(F.Operatorname, F.Grp(Id("Type")));
 
         var fixedPointFree = new Formula.BindMany(
             FormulaQuantifier.ForAll,
@@ -21,7 +24,16 @@ internal sealed class QualitativeEscapeDocument : IScribeDocumentDefinition
 
         var escaped = Call("IsEscaped", f, g);
 
-        var lawvere = new Formula.Logic(fixedPointFree, FormulaLogicOperator.Implies, escaped);
+        var lawvereCore = new Formula.Logic(
+            fixedPointFree, FormulaLogicOperator.Implies, escaped);
+        var lawvere = F.Seq(
+            F.Forall, F.Sp, address, F.Comma, F.Sp, alphabet, F.Colon, F.Sp, type,
+            F.Comma, F.Sp,
+            f, F.Colon, F.Sp, new Formula.TypeArrow(alphabet, alphabet), F.Comma, F.Sp,
+            g, F.Colon, F.Sp,
+            new Formula.TypeArrow(address, new Formula.TypeArrow(address, alphabet)),
+            F.Comma, F.Sp,
+            lawvereCore);
 
         var captured = new Formula.BindMany(
             FormulaQuantifier.Exists,
@@ -31,7 +43,7 @@ internal sealed class QualitativeEscapeDocument : IScribeDocumentDefinition
             ],
             new Formula.Not(escaped));
 
-        var package = new Formula.Logic(lawvere, FormulaLogicOperator.And, captured);
+        var package = new Formula.Logic(lawvereCore, FormulaLogicOperator.And, captured);
 
         const string declarationPrefix = "D5/S0/Diagonal/Lawvere/QualitativeEscape.";
 
