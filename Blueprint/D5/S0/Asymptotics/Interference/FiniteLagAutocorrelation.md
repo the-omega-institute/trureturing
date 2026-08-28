@@ -6,7 +6,7 @@ A finite real signal has its exact lag autocorrelation as the Fourier coefficien
 
 **Theorem 1.1 (Finite signals expand by lag autocorrelation).**
 
-$$\forall T \in \mathbb{N}, f: \operatorname{Fin}\left(T + 1\right) \Rightarrow \mathbb{R}, theta \in \mathbb{R},\ \text{let p : \mathbb{C}[X, X^{-1}] = \sum_{0 \leq n \leq T} f_{n} X^{n}, A = \operatorname{invert}\left(p\right) \times p},\ (\forall m \in \mathbb{Z}, A_{m} = \sum_{n \in \operatorname{Fin}\left(T + 1\right)} f_{n} p_{n + m}) \land\\{}(\operatorname{normSq}\left(\operatorname{finiteSignal}\left(f, \operatorname{exp}\left(i\,theta\right)\right)\right) = \sum_{-T \leq m \leq T} A_{m} \operatorname{exp}\left(i\,theta\right)^{m}).$$
+$$\forall T \in \mathbb{N}, f: \operatorname{Fin}\left(T + 1\right) \Rightarrow \mathbb{R}, theta \in \mathbb{R}, \text{let } p : \mathbb{C}[X, X^{-1}] = \sum_{0 \leq n \leq T} f_{n} X^{n}, A = \operatorname{invert}\left(p\right) \times p, (\forall m \in \mathbb{Z}, A_{m} = \sum_{n \in \operatorname{Fin}\left(T + 1\right)} f_{n} p_{n + m}) \land\\{}(\operatorname{normSq}\left(\operatorname{finiteSignal}\left(f, \operatorname{exp}\left(i\,theta\right)\right)\right) = \sum_{-T \leq m \leq T} A_{m} \operatorname{exp}\left(i\,theta\right)^{m}).$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Asymptotics/Interference/FiniteLagAutocorrelation.finite_lag_autocorrelation_expansion` (`✓ std3`). ∎
 

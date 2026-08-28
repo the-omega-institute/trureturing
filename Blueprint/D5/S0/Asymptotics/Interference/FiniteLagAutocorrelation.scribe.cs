@@ -82,8 +82,9 @@ internal sealed class FiniteLagAutocorrelationDocument : IScribeDocumentDefiniti
         return Seq(
             Forall, Sp, t, Sp, InMacro, Sp, naturals, Comma, Sp,
             f, Colon, Sp, signalType, Comma, Sp,
-            theta, Sp, InMacro, Sp, reals, Comma, Esc,
-            F.Text, Grp(F.Id("let"), Sp, pDefinition, Comma, Sp, aDefinition), Comma, Esc,
+            theta, Sp, InMacro, Sp, reals, Comma, Sp,
+            F.Text, Grp(F.Id("let"), Sp), Sp,
+            pDefinition, Comma, Sp, aDefinition, Comma, Sp,
             Open, coefficientClause, Close, Sp, Land, RowBreak, Grp(),
             Open, fourierClause, Close, Dot);
     }
