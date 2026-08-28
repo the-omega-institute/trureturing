@@ -77,7 +77,7 @@ internal sealed class MarginalActionEntropyCausalContrastDocument : IScribeDocum
             Apply(noiseLaw, noise), Sp, Eq, Sp, new Formula.Fraction(one, two),
             Comma, RowBreak, Grp(),
             intervention, Sp, Colon, Sp,
-            new Formula.TypeArrow(modelFunction,
+            new Formula.TypeArrow(Seq(Open, modelFunction, Close),
                 new Formula.TypeArrow(boolType, noiseFunction)), Comma, Sp,
             Apply(intervention, model, bit, output), Sp, Eq, Sp,
             Call("pushforward", Seq(
