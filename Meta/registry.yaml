@@ -14,6 +14,7 @@ root_files:
   - "lakefile.toml"
   - "lean-toolchain"
 governance_documents:
+  - docs/develop/theory/OBSERVER_TOPOLOGICAL_SPECTRAL_ACTION_COMPLETION.md
   - "D5/X_Frontier/HeartsAuthorizations.md"
   - "Golden/gate-authority-roots.toml"
   - "Meta/Digestion/atomizers.toml"
