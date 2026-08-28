@@ -1,0 +1,23 @@
+## 定理 420.1（Support monotonicity）
+
+$$
+\boxed{
+\lambda_{\min}(L_2)
+\le
+\lambda_{\min}(L_1).
+}
+\tag{420.2}
+$$
+
+因此：
+
+$$
+\boxed{
+L\longmapsto\lambda_{\min}(L)
+}
+$$
+
+是一条单调不增的 support spectral flow。
+
+---
+

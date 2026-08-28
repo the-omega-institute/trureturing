@@ -1,0 +1,51 @@
+## 定理 631.1（Orbit-variance RH criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal V_J(T)=0
+\quad
+\forall T>0.
+}
+\tag{631.2}
+$$
+
+### 证明
+
+若 RH 成立，每项均为零。
+
+反之，若任一零点满足：
+
+$$
+\Re\rho\neq\frac12,
+$$
+
+取：
+
+$$
+T>\Im\rho,
+$$
+
+则相应正项使：
+
+$$
+\mathcal V_J(T)>0.
+$$
+
+∎
+
+因此：
+
+$$
+\boxed{
+\text{离线零点}
+=
+\text{极限完成态的非零横向轨道方差}.
+}
+$$
+
+这比说“破坏了对称”更准确，因为整体对称并未破坏。
+
+---
+

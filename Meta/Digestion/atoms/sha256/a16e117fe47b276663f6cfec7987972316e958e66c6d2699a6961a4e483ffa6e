@@ -1,0 +1,46 @@
+## 467.1 乘法型观察不确定性
+
+因为：
+
+$$
+\tanh^2(aL)
+=
+\coth^{-2}(aL),
+$$
+
+所以：
+
+$$
+\boxed{
+\left|
+\log\frac R{R_*}
+\right|
+\le
+2\log\coth(aL).
+}
+\tag{467.4}
+$$
+
+当 \(L\to\infty\)：
+
+$$
+2\log\coth(aL)
+=
+4e^{-2aL}
++
+O(e^{-4aL}).
+$$
+
+因此：
+
+$$
+\boxed{
+\text{局部 completion budget
+以指数速度被强迫接近全局预算。}
+}
+$$
+
+这不是某个 maximum-entropy 选择的性质，而是**所有**真实正谱完成的共同性质。
+
+---
+

@@ -1,0 +1,62 @@
+## 定理 505.1（White-to-Haar identity）
+
+$$
+\boxed{
+\mathcal C_a[m_0]
+=
+\frac1{2a}\,m_{\mathbb T}.
+}
+\tag{505.1}
+$$
+
+更一般地：
+
+$$
+\boxed{
+\mathcal C_a[\lambda m_0]
+=
+\frac{\lambda}{2a}\,m_{\mathbb T}.
+}
+\tag{505.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\nu\ge\lambda m_0
+\iff
+\mathcal C_a[\nu]
+\ge
+\frac{\lambda}{2a}m_{\mathbb T}.
+}
+\tag{505.3}
+$$
+
+因此实轴上的 white spectral floor，在圆周图表中就是 Haar floor。
+
+在自然尺度：
+
+$$
+\boxed{
+a=\frac12,
+}
+$$
+
+该关系进一步简化为：
+
+$$
+\boxed{
+\lambda m_0
+\longleftrightarrow
+\lambda m_{\mathbb T}.
+}
+\tag{505.4}
+$$
+
+自然尺度 \(1/2\) 的特殊性由此再次出现：
+
+> 它使实轴白谱强度与圆周 Haar 谱强度完全同值，不需要额外缩放。
+
+---
+

@@ -1,0 +1,13 @@
+## 定理 549.1（One-scale informational completeness）
+
+$$
+\boxed{
+\text{一个完整 Cayley scale 已经唯一决定实轴谱。}
+}
+\tag{549.2}
+$$
+
+所以多尺度 observer bank 并不增加理想无限精度下的信息量。
+
+---
+

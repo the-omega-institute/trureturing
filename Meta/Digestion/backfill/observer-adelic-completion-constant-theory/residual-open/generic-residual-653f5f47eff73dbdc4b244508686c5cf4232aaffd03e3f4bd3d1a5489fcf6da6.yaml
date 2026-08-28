@@ -1,0 +1,10 @@
+ast_path: row/T-F-n-I-1-n-1-varphi-n
+fingerprints:
+  raw_sha256: sha256:653f5f47eff73dbdc4b244508686c5cf4232aaffd03e3f4bd3d1a5489fcf6da6
+  normalized_sha256: sha256:653f5f47eff73dbdc4b244508686c5cf4232aaffd03e3f4bd3d1a5489fcf6da6
+cas_ref: sha256:653f5f47eff73dbdc4b244508686c5cf4232aaffd03e3f4bd3d1a5489fcf6da6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

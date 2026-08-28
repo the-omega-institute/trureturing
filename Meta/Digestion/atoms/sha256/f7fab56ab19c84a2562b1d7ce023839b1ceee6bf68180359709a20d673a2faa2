@@ -1,0 +1,23 @@
+## 440.4 第四阶段：Primal–Dual gap
+
+若 primal 给出正完成，dual 不得产生负向量。
+
+若 dual 给出严格负 eigenvalue，则 primal 不可行。
+
+数值实现必须输出：
+
+$$
+\boxed{
+\begin{array}{c|l}
+\text{positive extension certificate}
+&\mathsf{WP}(L)\text{ 成立}\\
+\text{negative Weil witness}
+&\mathsf{WP}(L)\text{ 失败}\\
+\text{gap 未闭合}
+&\text{增加 moments／sticky rank／精度}
+\end{array}
+}
+$$
+
+---
+

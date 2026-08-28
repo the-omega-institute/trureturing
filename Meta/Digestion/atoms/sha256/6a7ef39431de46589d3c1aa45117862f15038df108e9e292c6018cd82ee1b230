@@ -1,0 +1,32 @@
+# 第五百零五部　白谱精确变成 Haar 谱
+
+令：
+
+$$
+m_0(d\xi)=\frac{d\xi}{2\pi}
+$$
+
+为实轴归一化 Lebesgue 谱，令：
+
+$$
+m_{\mathbb T}(d\theta)=\frac{d\theta}{2\pi}
+$$
+
+为单位圆归一化 Haar 测度。
+
+由：
+
+$$
+\xi=a\cot\frac{\theta}{2}
+$$
+
+可得：
+
+$$
+\frac{d\xi}{\xi^2+a^2}
+=
+-\frac{d\theta}{2a}.
+$$
+
+忽略方向并取正推送：
+

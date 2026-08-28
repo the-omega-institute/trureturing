@@ -1,0 +1,13 @@
+## 518.3 有限 contact atoms 不是先验 ζ 零点
+
+它们依赖：
+
+* 当前窗口 \(L\)；
+* 当前预算 \(C\)；
+* 当前有限 observer；
+* 当前 dual slack。
+
+只有在完成测度收敛到 \(\widehat\mu_\Xi\) 后，它们才被迫向 Riemann zero angles 聚集。
+
+---
+

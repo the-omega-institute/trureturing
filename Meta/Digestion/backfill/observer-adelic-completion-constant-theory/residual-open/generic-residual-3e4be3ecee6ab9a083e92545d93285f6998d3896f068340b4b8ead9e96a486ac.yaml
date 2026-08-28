@@ -1,0 +1,10 @@
+ast_path: section/543-1-Toeplitz-matrix-是-rational-Gram-matrix
+fingerprints:
+  raw_sha256: sha256:3e4be3ecee6ab9a083e92545d93285f6998d3896f068340b4b8ead9e96a486ac
+  normalized_sha256: sha256:3e4be3ecee6ab9a083e92545d93285f6998d3896f068340b4b8ead9e96a486ac
+cas_ref: sha256:3e4be3ecee6ab9a083e92545d93285f6998d3896f068340b4b8ead9e96a486ac
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

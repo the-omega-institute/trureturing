@@ -1,0 +1,12 @@
+### 完成 forcing
+
+$$
+\boxed{
+\varepsilon_n
+=
+\delta_{n+1}
++
+\varphi^{-1}\delta_n.
+}
+$$
+

@@ -1,0 +1,55 @@
+## Theorem 4. Two-state locality yields incremental preservation
+
+Let `State`, `Artifact`, and `Value` be types. Fix
+
+\[
+\mathsf{bytes}:\mathsf{State}\to\mathsf{Artifact}\to\mathsf{Value},
+\quad
+\mathsf{reads}:\mathsf{State}\to\mathsf{Artifact}\to
+  \mathcal P(\mathsf{Artifact}),
+\quad
+P:\mathsf{State}\to\mathsf{Artifact}\to\mathsf{Prop}.
+\]
+
+For states `s` and `t`, define
+
+\[
+\mathsf{Changed}(s,t)=
+\{a\mid\mathsf{bytes}(s,a)\ne\mathsf{bytes}(t,a)\}.
+\]
+
+The required locality hypothesis is universally quantified over both states:
+
+\[
+\begin{aligned}
+\mathsf{Local}(P,\mathsf{reads})\;:\!\!\Longleftrightarrow\;
+\forall s\;t\;x,\;&
+\Bigl(\forall a\in
+  \{x\}\cup\mathsf{reads}(s,x)\cup\mathsf{reads}(t,x),\\
+&\mathsf{bytes}(s,a)=\mathsf{bytes}(t,a)\Bigr)
+\to\bigl(P(s,x)\leftrightarrow P(t,x)\bigr).
+\end{aligned}
+\]
+
+For fixed states `s` and `t`, let
+`dep : Artifact \to \mathcal P(Artifact)` be a cross-state over-approximation:
+
+\[
+\forall x,\;
+\mathsf{reads}(s,x)\cup\mathsf{reads}(t,x)
+\subseteq\mathsf{dep}(x).
+\]
+
+If `Local(P,reads)` holds, `x` is unchanged, and no artifact in `dep(x)` is
+changed, then
+
+\[
+P(s,x)\leftrightarrow P(t,x).
+\]
+
+Indeed, `x` is byte-equal in the two states by the unchanged premise. Every
+artifact in either actual-read set is byte-equal because both read sets lie in
+`dep(x)` and `dep(x)` is disjoint from `Changed(s,t)`. The two-state locality
+hypothesis then applies. The conclusion is not assumed: it is obtained by
+combining locality with the cross-state over-approximation and disjointness.
+

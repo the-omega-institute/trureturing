@@ -1,0 +1,68 @@
+## 定理 544.2（Exponential finite-moment transfer）
+
+若：
+
+$$
+1<\rho<|r|^{-1},
+$$
+
+定义：
+
+$$
+\boxed{
+\mathcal M_{n,r}(\rho)
+=
+\frac{
+(1+|r|)^2
+\rho(\rho+|r|)^{n-1}
+}{
+(1-|r|\rho)^{n+1}
+}.
+}
+\tag{544.7}
+$$
+
+则：
+
+$$
+\boxed{
+\begin{aligned}
+\left|
+m_n(b)
+-
+\sum_{k=0}^{M}
+c_{n,k}(r)m_k(a)
+\right|
+\le
+R_a
+\frac{
+\mathcal M_{n,r}(\rho)
+\rho^{-(M+1)}
+}{
+1-\rho^{-1}
+}.
+\end{aligned}
+}
+\tag{544.8}
+$$
+
+### 证明
+
+由 Cauchy 估计：
+
+$$
+|c_{n,k}(r)|
+\le
+\mathcal M_{n,r}(\rho)\rho^{-k}.
+$$
+
+再用：
+
+$$
+|m_k(a)|\le R_a.
+$$
+
+∎
+
+---
+

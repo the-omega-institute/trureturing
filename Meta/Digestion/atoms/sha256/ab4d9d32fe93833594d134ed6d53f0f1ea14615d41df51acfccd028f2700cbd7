@@ -1,0 +1,63 @@
+# 第六百五十一部　反射伙伴看到的是镜像同构世界
+
+令：
+
+$$
+\boxed{
+\rho^\sharp=J\rho=1-\overline\rho.
+}
+\tag{651.1}
+$$
+
+completed \(\xi\) 的函数方程和实结构给出：
+
+$$
+\boxed{
+\xi
+\left(
+\rho^\sharp-\overline z
+\right)
+=
+\overline{
+\xi(\rho+z)
+}.
+}
+\tag{651.2}
+$$
+
+若：
+
+$$
+a_k(\rho)
+=
+\frac{\xi^{(k)}(\rho)}{k!},
+$$
+
+则：
+
+$$
+\boxed{
+a_k(\rho^\sharp)
+=
+(-1)^k
+\overline{a_k(\rho)}.
+}
+\tag{651.3}
+$$
+
+所以归一化局部世界满足：
+
+$$
+\boxed{
+\mathcal G_{\rho^\sharp}
+(-\overline z)
+=
+\overline{
+\mathcal G_\rho(z)
+}.
+}
+\tag{651.4}
+$$
+
+---
+

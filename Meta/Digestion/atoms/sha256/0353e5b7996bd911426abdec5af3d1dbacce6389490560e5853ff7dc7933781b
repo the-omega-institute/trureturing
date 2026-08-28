@@ -1,0 +1,78 @@
+## 本轮独立推导得到（第 473 部）
+
+$$
+\boxed{
+H_{\nu,a}-H_{\mu,a}
+=
+(R_\nu-R_\mu)\cosh(at).
+}
+$$
+
+$$
+\boxed{
+\langle
+\cosh(a\,\cdot),
+f*\widetilde h
+\rangle
+=
+\mathcal C_a(f)\overline{\mathcal C_a(h)}
+-
+\mathcal S_a(f)\overline{\mathcal S_a(h)}.
+}
+$$
+
+$$
+\boxed{
+\text{偶通道产生预算下界，
+奇通道产生预算上界。}
+}
+$$
+
+$$
+\boxed{
+\mathbb I_L(a)
+=
+[\underline R_L(a),\overline R_L(a)].
+}
+$$
+
+$$
+\boxed{
+R_*\tanh^2(aL)
+\le R\le
+R_*\coth^2(aL).
+}
+$$
+
+$$
+\boxed{
+\left|
+\log\frac R{R_*}
+\right|
+\le
+2\log\coth(aL).
+}
+$$
+
+RH 下：
+
+$$
+\boxed{
+2\lambda_1\tanh^2\frac L2
+\le
+R_{1/2}(\nu)
+\le
+2\lambda_1\coth^2\frac L2.
+}
+$$
+
+以及所有局部真实正谱完成以：
+
+$$
+O(e^{-L})
+$$
+
+速度 collapse 到真实 Riemann resolvent correlation。
+
+---
+

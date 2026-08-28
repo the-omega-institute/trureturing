@@ -1,0 +1,128 @@
+## 定理 554.1（共同分母多项式基）
+
+集合：
+
+$$
+\boxed{
+\mathcal P
+=
+\left\{
+p_{\ell,j}:
+0\le\ell\le M,\ 
+0\le j<n_\ell
+\right\}
+}
+\tag{554.7}
+$$
+
+构成多项式空间：
+
+$$
+\boxed{
+\mathbb C[z]_{\le d}
+}
+$$
+
+的一组基。
+
+### 证明
+
+先考虑非参考特征。
+
+对固定 \(\ell\ge1\)，因为：
+
+$$
+z+r_\ell
+=
+\frac1{r_\ell}(1+r_\ell z)
++
+\left(
+r_\ell-\frac1{r_\ell}
+\right),
+$$
+
+所以：
+
+$$
+\frac{(z+r_\ell)^j}
+{(1+r_\ell z)^{j+1}}
+$$
+
+可展开为：
+
+$$
+\sum_{k=1}^{j+1}
+\frac{c_{\ell,j,k}}
+{(1+r_\ell z)^k},
+$$
+
+且最高阶分母项系数非零，因为：
+
+$$
+|r_\ell|<1,\qquad r_\ell\ne0.
+$$
+
+因此，对固定 \(\ell\)，特征：
+
+$$
+\psi_{\ell,0},\ldots,\psi_{\ell,n_\ell-1}
+$$
+
+与标准 partial-fraction 基：
+
+$$
+\frac1{1+r_\ell z},
+\ldots,
+\frac1{(1+r_\ell z)^{n_\ell}}
+$$
+
+之间存在可逆三角变换。
+
+不同 \(r_\ell\) 给出不同极点：
+
+$$
+-\frac1{r_\ell}.
+$$
+
+所以全部非参考特征构成所有真分式：
+
+$$
+\frac{P(z)}{D(z)},
+\qquad
+\deg P<q
+$$
+
+的一组基。
+
+乘以 \(D\) 后，全部 \(p_{\ell,j}\)、\(\ell\ge1\)，构成：
+
+$$
+\mathbb C[z]_{\le q-1}
+$$
+
+的一组基。
+
+最后，参考尺度多项式：
+
+$$
+D,\ zD,\ldots,z^{N_0}D
+$$
+
+的最高次数分别为：
+
+$$
+q,q+1,\ldots,q+N_0=d.
+$$
+
+它们模 \(\mathbb C[z]_{\le q-1}\) 后构成三角独立族。
+
+总元素数为：
+
+$$
+q+(N_0+1)=d+1=n.
+$$
+
+故 \(\mathcal P\) 是 \(\mathbb C[z]_{\le d}\) 的基。∎
+
+---
+

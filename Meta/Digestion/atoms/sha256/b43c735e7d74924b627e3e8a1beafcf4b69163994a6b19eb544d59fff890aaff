@@ -1,0 +1,65 @@
+## 571.3 Galois 完成黄金观察者
+
+定义共轭双通道：
+
+$$
+\boxed{
+\mathcal O_{\mathrm{Gal}}
+=
+\left(
+\mathcal O_\varphi,
+\mathcal O_{\varphi'}
+\right).
+}
+\tag{571.4}
+$$
+
+令反射算子交换两个分量：
+
+$$
+J(u,v)=(\tau(v),\tau(u)).
+$$
+
+完整输出应满足：
+
+$$
+\boxed{
+J\mathcal O_{\mathrm{Gal}}
+=
+\mathcal O_{\mathrm{Gal}}.
+}
+$$
+
+此时可分解为：
+
+$$
+\boxed{
+\mathcal O_{\mathrm{even}}
+=
+\frac{
+\mathcal O_\varphi+
+\tau\mathcal O_{\varphi'}
+}{2},
+}
+\tag{571.5}
+$$
+
+$$
+\boxed{
+\mathcal O_{\mathrm{odd}}
+=
+\frac{
+\mathcal O_\varphi-
+\tau\mathcal O_{\varphi'}
+}{2}.
+}
+\tag{571.6}
+$$
+
+其中：
+
+* even channel 是完成不变量；
+* odd channel 是嵌入选择或不完整性的破缺读数。
+
+---
+

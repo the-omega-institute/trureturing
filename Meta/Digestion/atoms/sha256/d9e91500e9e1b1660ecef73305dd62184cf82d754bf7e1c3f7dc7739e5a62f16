@@ -1,0 +1,153 @@
+# 本轮最终结论
+
+上一轮得到：
+
+$$
+\boxed{
+\text{Archimedean confinement}
++
+\text{Slepian finite rank}
++
+\text{Feshbach exact elimination}.
+}
+$$
+
+本轮进一步揭示，在执行这套有限化之前，还可以先完成一次更深的解析重整化：
+
+$$
+\boxed{
+\text{pole pair}
++
+\text{prime PNT continuum}
+=
+\left(
+-\partial_x^2+\frac14
+\right)^{-1}.
+}
+$$
+
+在 Fourier 图表中：
+
+$$
+\boxed{
+\text{pole}
+-
+2\int_0^\infty
+e^{u/2}
+\Re\langle f,U_uf\rangle du
+=
+\frac1{2\pi}
+\int
+\frac{|\widehat f(\xi)|^2}
+{\xi^2+\frac14}\,d\xi.
+}
+$$
+
+这一步又把原来的 Archimedean 参数：
+
+$$
+\frac14
+$$
+
+精确推进为：
+
+$$
+\boxed{
+\frac54.
+}
+$$
+
+因此完整 Weil form 变成纯乘子：
+
+$$
+\boxed{
+\mathfrak q_L[f]
+=
+\frac1{2\pi}
+\int
+\left[
+\Re\psi
+\left(
+\frac54+\frac{i\xi}{2}
+\right)
+-\log\pi
+-r_L(\xi)
+\right]
+|\widehat f(\xi)|^2d\xi.
+}
+$$
+
+其中：
+
+$$
+\boxed{
+r_L(\xi)
+=
+2\int_{[0,2L]}
+\cos(\xi u)\,
+d\left[
+\sum_n\frac{\Lambda(n)}{\sqrt n}\delta_{\log n}
+-
+e^{u/2}du
+\right].
+}
+$$
+
+也就是说：
+
+$$
+\boxed{
+\text{真正的 arithmetic obstruction}
+=
+\text{素数离散测度相对于 PNT 连续密度的偏差。}
+}
+$$
+
+更深的一句话是：
+
+$$
+\boxed{
+\text{pole 并不是一个额外补丁；}
+}
+$$
+
+它正是使素数连续主密度从增长型观察核：
+
+$$
+e^{|x-y|/2}
+$$
+
+collapse 为衰减型完成核：
+
+$$
+e^{-|x-y|/2}
+$$
+
+所必需的边界反项。
+
+因此当前 OACTC 的最小中心目标已经进一步收敛为：
+
+$$
+\boxed{
+\text{如何证明 weighted PNT discrepancy }E(u)
+\text{ 不能击穿 }
+\Re\psi\left(\frac54+\frac{i\xi}{2}\right)-\log\pi
+\text{ 所生成的完成谱隙？}
+}
+$$
+
+这比直接处理无限 prime powers 更接近一个可计算理论：
+
+$$
+\boxed{
+\text{固定 Archimedean baseline}
++
+\text{单一 discrepancy history}
++
+\text{有限 Slepian sticky matrix tower}.
+}
+$$
+
+[1]: https://dlmf.nist.gov/25.16?utm_source=chatgpt.com "DLMF: §25.16 Mathematical Applications ‣ Applications ‣ Chapter 25 Zeta and Related Functions"
+[2]: https://dlmf.nist.gov/5.5?utm_source=chatgpt.com "DLMF: §5.5 Functional Relations ‣ Properties ‣ Chapter 5 Gamma Function"
+[3]: https://dlmf.nist.gov/5.11?utm_source=chatgpt.com "DLMF: §5.11 Asymptotic Expansions ‣ Properties ‣ Chapter 5 Gamma Function"

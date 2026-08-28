@@ -1,0 +1,10 @@
+ast_path: section/第四百九十二部-有限预算自动紧化并保证极值存在
+fingerprints:
+  raw_sha256: sha256:22718d4cd5a66d54153ca2f307863064ebd0602f468f8b001a489ed240442ede
+  normalized_sha256: sha256:22718d4cd5a66d54153ca2f307863064ebd0602f468f8b001a489ed240442ede
+cas_ref: sha256:22718d4cd5a66d54153ca2f307863064ebd0602f468f8b001a489ed240442ede
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

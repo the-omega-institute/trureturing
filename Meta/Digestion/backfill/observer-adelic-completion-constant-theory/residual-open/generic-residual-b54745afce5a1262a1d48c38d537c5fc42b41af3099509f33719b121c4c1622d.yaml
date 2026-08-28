@@ -1,0 +1,10 @@
+ast_path: section/661-6-Forcing-反演
+fingerprints:
+  raw_sha256: sha256:b54745afce5a1262a1d48c38d537c5fc42b41af3099509f33719b121c4c1622d
+  normalized_sha256: sha256:b54745afce5a1262a1d48c38d537c5fc42b41af3099509f33719b121c4c1622d
+cas_ref: sha256:b54745afce5a1262a1d48c38d537c5fc42b41af3099509f33719b121c4c1622d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

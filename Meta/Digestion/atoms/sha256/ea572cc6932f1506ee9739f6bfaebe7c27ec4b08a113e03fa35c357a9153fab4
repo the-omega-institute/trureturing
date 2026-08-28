@@ -1,0 +1,30 @@
+## 519.4 Schur innovation flow
+
+计算 Verblunsky 系数：
+
+$$
+\beta_{n,L}
+$$
+
+并验证：
+
+$$
+\prod_n
+(1-|\beta_{n,L}|^2)
+=
+\omega_L.
+$$
+
+跟踪：
+
+$$
+\omega_L,\quad
+\theta_L,\quad
+M_L,\quad
+\beta_{n,L}
+$$
+
+随 \(L\) 的变化。
+
+---
+

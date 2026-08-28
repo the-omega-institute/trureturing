@@ -1,0 +1,78 @@
+# 第五百零四部　Resolvent–Cayley 紧化
+
+固定：
+
+$$
+a>0.
+$$
+
+定义实轴到单位圆的 Cayley 映射：
+
+$$
+\boxed{
+\mathfrak c_a(\xi)
+=
+\frac{\xi+ia}{\xi-ia},
+\qquad
+\xi\in\mathbb R.
+}
+\tag{504.1}
+$$
+
+其像为：
+
+$$
+\mathbb T\setminus\{1\},
+$$
+
+而：
+
+$$
+|\xi|\to\infty
+\quad\Longrightarrow\quad
+\mathfrak c_a(\xi)\to1.
+$$
+
+逆映射为：
+
+$$
+\boxed{
+\xi_a(z)
+=
+ia\,\frac{z+1}{z-1}.
+}
+\tag{504.2}
+$$
+
+若：
+
+$$
+z=e^{i\theta},
+$$
+
+则：
+
+$$
+\boxed{
+\xi_a(e^{i\theta})
+=
+a\cot\frac{\theta}{2}.
+}
+\tag{504.3}
+$$
+
+并且：
+
+$$
+\boxed{
+|1-\mathfrak c_a(\xi)|^2
+=
+\frac{4a^2}{\xi^2+a^2}.
+}
+\tag{504.4}
+$$
+
+所以 resolvent 权重正是 Cayley 边界距离的平方。
+
+---
+

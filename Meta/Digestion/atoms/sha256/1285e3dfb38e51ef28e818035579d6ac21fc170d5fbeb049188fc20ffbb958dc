@@ -1,0 +1,37 @@
+## 417.1 边界项在测试空间上消失
+
+由于：
+
+$$
+\operatorname{supp}f\subset(-L,L),
+$$
+
+有：
+
+$$
+g(\pm2L)=0.
+$$
+
+所以 multiplier：
+
+$$
+2E(2L)\cos(2L\xi)
+$$
+
+在当前 Paley–Wiener 测试空间上的二次型严格为零。
+
+因此真正有效的 discrepancy multiplier 为：
+
+$$
+\boxed{
+r_L^{\mathrm{eff}}(\xi)
+=
+2\xi
+\int_0^{2L}
+E(u)\sin(\xi u)\,du.
+}
+\tag{417.4}
+$$
+
+---
+

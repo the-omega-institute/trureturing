@@ -1,0 +1,35 @@
+## 564.1 一致性拒绝证书
+
+令：
+
+$$
+\Pi_{\mathrm{Toep}}
+$$
+
+为 Hermitian Toeplitz 子空间的正交投影。
+
+若：
+
+$$
+\boxed{
+\left\|
+\widetilde T
+-
+\Pi_{\mathrm{Toep}}\widetilde T
+\right\|
+>
+\varepsilon_T,
+}
+\tag{564.3}
+$$
+
+其中：
+
+$$
+\widetilde T=A^{-1}\widetilde G A^{-*},
+$$
+
+则不存在任何位于误差球内的精确共同谱 Gram matrix。
+
+---
+

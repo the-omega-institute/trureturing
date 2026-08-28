@@ -1,0 +1,33 @@
+## 507.2 可去除的 infinity ledger
+
+若某个可行测度具有：
+
+$$
+\mu(\{1\})>0,
+$$
+
+定义：
+
+$$
+\mu'=\mu-\mu(\{1\})\delta_1.
+$$
+
+则：
+
+* 所有 moment constraints 不变；
+* Haar floor 不变，因为 \(m_{\mathbb T}(\{1\})=0\)；
+* budget 严格减小。
+
+所以：
+
+$$
+\boxed{
+\text{总可选择一个无 }z=1\text{ 原子的 optimizer}.
+}
+\tag{507.7}
+$$
+
+这给出了一个规范的 **no-escape optimizer**。
+
+---
+

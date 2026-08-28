@@ -1,0 +1,15 @@
+ast_path: section/415-1-Archimedean-正-ladder
+fingerprints:
+  raw_sha256: sha256:1b28f63f876d9cfb4121a03fcdc605a18d6f865f9731886fab8d632268abe479
+  normalized_sha256: sha256:1b28f63f876d9cfb4121a03fcdc605a18d6f865f9731886fab8d632268abe479
+cas_ref: sha256:1b28f63f876d9cfb4121a03fcdc605a18d6f865f9731886fab8d632268abe479
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-cc17326affa0c1255da2a602fc97eafb08d541afad98703b56fd2b651878a573-db333b497755e1a02d79b269758066b4d19b3fe0d94ab7461cb95497350b5894
+    - generic-residual-3ddc58b5f59c17220b1f1d912532ed9672274e0ceff593a964077b7bb8cc4af7-c39170fede83a9ec773f3868bef763cdf6d0f6e095579a60e88f3e5d2b791586
+    - generic-residual-1e1a6d19af3436493102261a5923bd027d0101fd3f675f15c5ddfe02cca3e191-0cc428860aeb7b911b0efeba462ee816f51bb871f6935344b39ed0d3179460b7
+    - generic-residual-cbb11bd1f2e1821313d97d8f584154635b9960553462a6a9b46f10d45a803f44-b4135930e48aeecccbcf14ea15d25139e319e056d07583eb59acaf936ff82acf

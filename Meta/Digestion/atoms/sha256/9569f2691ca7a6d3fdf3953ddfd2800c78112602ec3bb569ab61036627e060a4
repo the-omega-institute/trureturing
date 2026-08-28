@@ -1,0 +1,66 @@
+## 667.1 正交维度本身没有先后
+
+可定义 Hilbert 空间：
+
+$$
+\boxed{
+\mathcal H_{\mathbb P}
+=
+\ell^2(\mathbb P),
+}
+\tag{667.4}
+$$
+
+其标准基：
+
+$$
+\{e_p\}_{p\in\mathbb P}
+$$
+
+彼此正交：
+
+$$
+\langle e_p,e_q\rangle=\delta_{pq}.
+$$
+
+正交基是一个集合，不天然携带时间顺序。
+
+一个排列：
+
+$$
+\pi:\mathbb N\to\mathbb P
+$$
+
+只是额外选择了一条旗标：
+
+$$
+\boxed{
+0
+\subset
+\operatorname{span}(e_{\pi(1)})
+\subset
+\operatorname{span}(e_{\pi(1)},e_{\pi(2)})
+\subset\cdots.
+}
+\tag{667.5}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{质数维度没有先后，
+质数观察过程才有先后。}
+}
+$$
+
+通常的：
+
+$$
+2<3<5<7<\cdots
+$$
+
+并不是“正交素数轴的因果顺序”，而是由实数大小——也就是 Archimedean 坐标——选出的一个排序。
+
+---
+

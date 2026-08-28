@@ -1,0 +1,14 @@
+### 交换完成误差
+
+$$
+\boxed{
+\Delta_n
+=
+\Theta_n^{(\varphi)}
+-
+\Theta_n^{\mathrm{comm}}.
+}
+$$
+
+---
+

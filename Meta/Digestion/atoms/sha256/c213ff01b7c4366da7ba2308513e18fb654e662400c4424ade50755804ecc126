@@ -1,0 +1,20 @@
+## 659.1 条件普适，而非绝对普适
+
+所有满足以下结构的概念形成黄金 universality class：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{二通道};\\
+&\text{整数 primitive mixing};\\
+&\text{unimodular 信息账本};\\
+&\text{一步方向翻转};\\
+&\text{最小非平凡扩张};\\
+&\text{递归自相似}.
+\end{aligned}
+}
+$$
+
+但若概念需要：
+
+* 三个或更多通道；

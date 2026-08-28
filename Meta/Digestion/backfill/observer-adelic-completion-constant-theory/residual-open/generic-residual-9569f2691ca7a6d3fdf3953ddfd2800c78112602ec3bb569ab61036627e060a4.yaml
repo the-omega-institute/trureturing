@@ -1,0 +1,10 @@
+ast_path: section/667-1-正交维度本身没有先后
+fingerprints:
+  raw_sha256: sha256:9569f2691ca7a6d3fdf3953ddfd2800c78112602ec3bb569ab61036627e060a4
+  normalized_sha256: sha256:9569f2691ca7a6d3fdf3953ddfd2800c78112602ec3bb569ab61036627e060a4
+cas_ref: sha256:9569f2691ca7a6d3fdf3953ddfd2800c78112602ec3bb569ab61036627e060a4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

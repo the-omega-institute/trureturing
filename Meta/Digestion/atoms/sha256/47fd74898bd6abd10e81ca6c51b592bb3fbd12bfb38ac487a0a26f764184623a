@@ -1,0 +1,57 @@
+# 第五百部　与有限窗口 dual 证书的真正互补
+
+最新紧窗口结果研究的是：
+
+$$
+\lambda_{\mathrm{full}}(L)
+=
+\inf
+\frac{Q_L(f)}{\|f\|^2}
+$$
+
+及其有限矩阵 dual 证书，并已在 \(L=0.8\) 给出严格正下界；其研究重点是 quadratic-form profile、有限矩阵 reduction、Rayleigh upper bounds 和 Landau–Widom 衰减。([arXiv][1])
+
+本轮的预算化 primal 则研究：
+
+$$
+\boxed{
+\text{在固定 resolvent 预算内，
+局部 Weil 数据允许多大的白连续谱底座。}
+}
+$$
+
+二者关系为：
+
+$$
+\boxed{
+\Lambda_{L,a}(C)
+\le
+\lambda_{\mathrm{full}}(L).
+}
+\tag{500.1}
+$$
+
+当预算足够大并且 finite-budget saturation 成立时：
+
+$$
+\Lambda_{L,a}(C)
+\uparrow
+\lambda_{\mathrm{full}}(L).
+$$
+
+但预算化问题具有无预算 profile 不自动拥有的三个优点：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{极值必定取到};\\
+&\text{统一预算给出局部到全局紧性};\\
+&\text{active dual budget 强迫 residual spectrum 有限原子化}.
+\end{aligned}
+}
+$$
+
+这使它更适合成为 primal 谱构造路线。
+
+---
+

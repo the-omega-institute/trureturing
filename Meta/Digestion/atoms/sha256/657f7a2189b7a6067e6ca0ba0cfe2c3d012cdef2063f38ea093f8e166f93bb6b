@@ -1,0 +1,51 @@
+# 第四百七十五部　局部正锥中的白噪声裕量
+
+令：
+
+$$
+I_L=(-2L,2L),
+$$
+
+并记 Weil source 在该窗口中的限制为：
+
+$$
+\mathfrak W_L.
+$$
+
+定义局部正定锥：
+
+$$
+\boxed{
+\mathcal P_L
+=
+\left\{
+T:
+\left\langle
+T,f*\widetilde f
+\right\rangle
+\ge0
+\quad
+\forall f\in C_c^\infty((-L,L))
+\right\}.
+}
+\tag{475.1}
+$$
+
+Dirac 原子满足：
+
+$$
+\boxed{
+\left\langle
+\delta_0,
+f*\widetilde f
+\right\rangle
+=
+(f*\widetilde f)(0)
+=
+\|f\|_2^2.
+}
+\tag{475.2}
+$$
+
+因此：
+

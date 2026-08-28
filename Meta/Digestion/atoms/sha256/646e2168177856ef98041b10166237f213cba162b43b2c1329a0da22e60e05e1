@@ -1,0 +1,51 @@
+# 第四百三十八部　Gauge-optimized Slepian 复杂度
+
+给定一个 coercive multiplier representative \(m\)，定义：
+
+$$
+B_{L,a}(m)
+=
+\{\xi:m(\xi)<a\}.
+$$
+
+定义其 Slepian sticky rank：
+
+$$
+s_L(m;a,\eta)
+=
+\operatorname{rank}
+\mathbf1_{(\eta,1]}
+\left(
+\mathsf C_{L,B_{L,a}(m)}
+\right).
+$$
+
+由于它依赖 gauge，定义规范化版本：
+
+$$
+\boxed{
+s_L^{\mathrm{opt}}(a,\eta)
+=
+\inf_{\kappa\in\mathcal G_L^{\mathrm{Schw}}}
+s_L(m+\widehat\kappa;a,\eta),
+}
+\tag{438.1}
+$$
+
+其中：
+
+$$
+\mathcal G_L^{\mathrm{Schw}}
+=
+\left\{
+\kappa\in C_c^\infty:
+\operatorname{supp}\kappa
+\subset
+\mathbb R\setminus[-2L,2L]
+\right\}.
+$$
+
+这一量才是“使用平滑不可见 gauge 后所需的最小 sticky state 数”的候选不变量。
+
+---
+

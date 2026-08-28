@@ -1,0 +1,64 @@
+* \(\widetilde m_L(\xi)\to+\infty\)；
+
+所以：
+
+$$
+\widetilde B_{L,a}
+$$
+
+是有界的有限区间并。
+
+定义负深度：
+
+$$
+\boxed{
+\widetilde b_{L,a}
+=
+\max
+\left(
+0,
+-\inf_{\xi\in\widetilde B_{L,a}}
+\widetilde m_L(\xi)
+\right).
+}
+\tag{421.2}
+$$
+
+选择：
+
+$$
+\boxed{
+0<\eta<
+\frac{a}{a+\widetilde b_{L,a}}.
+}
+\tag{421.3}
+$$
+
+令：
+
+$$
+P^{\mathrm{ren}}_{L,a,\eta}
+$$
+
+为 \(\widetilde B_{L,a}\) 对应 Slepian concentration operator 中特征值大于 \(\eta\) 的谱投影。
+
+则：
+
+$$
+\boxed{
+\operatorname{rank}
+P^{\mathrm{ren}}_{L,a,\eta}
+\le
+\frac{
+L|\widetilde B_{L,a}|
+}{
+\pi\eta
+}.
+}
+\tag{421.4}
+$$
+
+与前文直接图表不同，这里**不再需要额外加入 pole direction**。
+
+---
+

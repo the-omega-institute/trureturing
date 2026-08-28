@@ -1,0 +1,38 @@
+# 第四百九十一部　预算前沿的凸几何
+
+定义最小预算成本：
+
+$$
+\boxed{
+\mathcal C_{L,a}(\lambda)
+=
+\inf
+\left\{
+\mathcal R_a(\nu):
+\begin{array}{l}
+\nu\ge\lambda m_0,\\
+\check\nu=\mathfrak W_L
+\text{ 于 }(-2L,2L)
+\end{array}
+\right\}.
+}
+\tag{491.1}
+$$
+
+则：
+
+$$
+\boxed{
+\Lambda_{L,a}(C)
+=
+\sup
+\left\{
+\lambda:
+\mathcal C_{L,a}(\lambda)\le C
+\right\}.
+}
+\tag{491.2}
+$$
+
+---
+

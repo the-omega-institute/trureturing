@@ -1,0 +1,92 @@
+## v4.1：Laguerre–Cayley 矩层析、有限窗口指数恢复、Toeplitz 接触谱与多尺度预算曲线
+
+以下从前文**第五百二十部**继续追加。
+
+仓库回填元数据仍将本理论的主源文件登记为：
+
+$$
+\texttt{docs/develop/theory/OBSERVER\_ADELIC\_COMPLETION\_CONSTANT\_THEORY.md}.
+$$
+
+上一轮已经把实轴 resolvent completion 经 Cayley 映射压缩到单位圆，并得到：
+
+$$
+\boxed{
+\text{white Lebesgue spectrum}
+\longleftrightarrow
+\text{Haar spectrum},
+}
+$$
+
+$$
+\boxed{
+\text{Riemann zero spectrum}
+\longleftrightarrow
+\text{Li--Clark measure}.
+}
+$$
+
+但仍有一个核心计算缺口：
+
+> 有限相关窗口只知道 Weil source 在
+>
+> $$
+> (-2L,2L)
+> $$
+>
+> 内的值；如何从这些局部数据，实际恢复 Cayley 圆上的 Fourier moments、Toeplitz 矩阵、Haar floor 与 contact atoms？
+
+本轮得到一条精确的新桥：
+
+$$
+\boxed{
+\text{Cayley Fourier moments}
+=
+\text{resolvent correlation 的 Laguerre 变换}.
+}
+$$
+
+更具体地：
+
+$$
+\boxed{
+\left(
+\frac{\xi+ia}{\xi-ia}
+\right)^n
+=
+1-
+2a
+\int_0^\infty
+e^{-at}
+L_{n-1}^{(1)}(2at)
+e^{-i\xi t}\,dt.
+}
+$$
+
+因此，每个圆周 moment 都可以由一个单边、指数衰减的 associated-Laguerre kernel 读取。
+
+这使有限窗口产生一个严格的矩层析程序：
+
+$$
+\boxed{
+\begin{aligned}
+\text{局部 Weil source}
++\text{resolvent budget}
+&\longrightarrow
+H_a(t)\text{ 于 }|t|<2L\\
+&\longrightarrow
+\text{有限 Cayley moment tubes}\\
+&\longrightarrow
+\text{Toeplitz PSD 层级}\\
+&\longrightarrow
+\text{Haar floor 区间}\\
+&\longrightarrow
+\text{有限 contact atoms}.
+\end{aligned}
+}
+$$
+
+连续时间 Laguerre 函数作为 Cayley/all-pass 坐标与 Hardy 空间有理正交基，是系统理论中的标准结构；本轮的新增部分，是将这一结构精确接到 Weil 局部正谱完成与 Li–Clark moments 上。([SIAM][1])
+
+---
+

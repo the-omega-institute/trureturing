@@ -1,0 +1,19 @@
+## 546.1 与 Toeplitz 约束的分工
+
+$$
+\boxed{
+\begin{aligned}
+\text{Loewner matrix}
+&:\text{检查不同尺度是否来自同一 Stieltjes 谱};\\
+\text{Toeplitz matrix}
+&:\text{检查单一 Cayley 镜头的圆周 moment 正性};\\
+\text{Crofoot block Gram}
+&:\text{检查不同圆周镜头之间的 rational consistency}.
+\end{aligned}
+}
+$$
+
+三者是互补约束，不应互相替代。
+
+---
+

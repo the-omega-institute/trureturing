@@ -1,0 +1,36 @@
+# 第五百六十三部　部分观察与 Glue Dimension
+
+若只知道部分数据，定义线性 measurement map：
+
+$$
+\boxed{
+\mathcal M:
+\operatorname{Toeplitz}_n
+\longrightarrow
+\mathbb R^s.
+}
+\tag{563.1}
+$$
+
+例如 \(\mathcal M\) 可只读取：
+
+* 每个尺度的 diagonal Toeplitz block；
+* 各尺度 budget；
+* 若干 Loewner entries；
+* 少量 cross-scale pairings。
+
+定义：
+
+$$
+\boxed{
+\operatorname{GlueDim}
+=
+\dim\ker\mathcal M.
+}
+\tag{563.2}
+$$
+
+它是使所有局部图表真正胶合为共同谱，仍然缺少的实参数数量。
+
+---
+

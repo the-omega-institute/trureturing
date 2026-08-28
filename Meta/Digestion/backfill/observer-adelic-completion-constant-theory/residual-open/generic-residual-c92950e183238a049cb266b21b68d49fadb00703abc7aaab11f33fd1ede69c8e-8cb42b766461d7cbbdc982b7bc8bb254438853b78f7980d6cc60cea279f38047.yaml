@@ -1,0 +1,10 @@
+ast_path: section/518-3-有限-contact-atoms-不是先验-ζ-零点/clause/2
+fingerprints:
+  raw_sha256: sha256:c92950e183238a049cb266b21b68d49fadb00703abc7aaab11f33fd1ede69c8e
+  normalized_sha256: sha256:c92950e183238a049cb266b21b68d49fadb00703abc7aaab11f33fd1ede69c8e
+cas_ref: sha256:c92950e183238a049cb266b21b68d49fadb00703abc7aaab11f33fd1ede69c8e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

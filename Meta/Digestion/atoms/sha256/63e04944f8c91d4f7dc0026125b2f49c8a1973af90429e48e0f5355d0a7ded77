@@ -1,0 +1,18 @@
+## 440.1 第一阶段：冻结局部对象
+
+不从 multiplier 出发，而从：
+
+$$
+\boxed{
+\mathfrak W_L
+=
+\left.
+\mathfrak W
+\right|_{(-2L,2L)}
+}
+$$
+
+出发。
+
+---
+

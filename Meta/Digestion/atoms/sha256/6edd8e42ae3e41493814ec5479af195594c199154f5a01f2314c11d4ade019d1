@@ -1,0 +1,19 @@
+## 440.2 第二阶段：构造平滑 moment-flat gauge
+
+计算 weighted prime discrepancy 的前若干 moments，构造：
+
+$$
+\kappa_{L,K}
+$$
+
+并验证：
+
+$$
+\operatorname{supp}\kappa_{L,K}
+\cap[-2L,2L]
+=
+\varnothing.
+$$
+
+---
+

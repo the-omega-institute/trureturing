@@ -1,0 +1,32 @@
+# 第四百九十七部　有限原子层级的收敛
+
+令：
+
+$$
+V_1\subset V_2\subset\cdots
+$$
+
+为递增有限维测试空间，并假设：
+
+$$
+\bigcup_NV_N
+$$
+
+在局部测试拓扑中是 determining family：若两个 tempered distributions 在所有 \(V_N\) 上取值相同，则它们在 \((-2L,2L)\) 上相同。
+
+由于约束逐步增加：
+
+$$
+\boxed{
+\Lambda_{L,a}^{(1)}(C)
+\ge
+\Lambda_{L,a}^{(2)}(C)
+\ge\cdots
+\ge
+\Lambda_{L,a}(C).
+}
+\tag{497.1}
+$$
+
+---
+

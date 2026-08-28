@@ -1,0 +1,159 @@
+# 本轮最终结论
+
+上一轮提出：
+
+$$
+\boxed{
+\text{构造多尺度 Cayley--Laguerre observer bank。}
+}
+$$
+
+本轮证明，这个 bank 并不是多个任意镜头的并列组合。
+
+两个尺度：
+
+$$
+a,b>0
+$$
+
+之间由唯一双曲参数：
+
+$$
+\boxed{
+r_{a,b}
+=
+\tanh
+\left(
+\frac{\log a-\log b}{2}
+\right)
+}
+$$
+
+连接，并满足：
+
+$$
+\boxed{
+\mathfrak c_b
+=
+\Phi_{r_{a,b}}
+\circ
+\mathfrak c_a.
+}
+$$
+
+其谱测度则满足：
+
+$$
+\boxed{
+\mu_b
+=
+(\Phi_r)_*
+\left[
+\frac{(1+r)^2}{|1+rz|^2}
+\mu_a
+\right].
+}
+$$
+
+因此尺度变化本身就是：
+
+$$
+\boxed{
+\text{Möbius transport}
++
+\text{Poisson renormalization}.
+}
+$$
+
+在函数层：
+
+$$
+\boxed{
+\partial_{\log a}F_a
+=
+\frac{1-w^2}{2}\partial_wF_a-F_a.
+}
+$$
+
+在 moment 层：
+
+$$
+\boxed{
+a\partial_am_n
+=
+\frac{n+1}{2}m_{n+1}
++
+\frac{1-n}{2}m_{n-1}
+-
+m_n.
+}
+$$
+
+在 Stieltjes 层：
+
+$$
+\boxed{
+\text{全部 Cayley moments}
+=
+\text{单一 budget curve }B(u)
+\text{ 的 Chebyshev derivative jet}.
+}
+$$
+
+在 Hardy–Gram 层：
+
+$$
+\boxed{
+\text{不同尺度 Toeplitz matrices}
+=
+\text{同一谱测度在不同 Crofoot--Malmquist bases 下的 Gram matrices}.
+}
+$$
+
+所以真正的多尺度一致性，不是：
+
+$$
+\boxed{
+T_N^{(a_\ell)}\succeq0
+\quad
+\text{分别成立},
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{这些矩阵必须能嵌入同一个 rational block Gram。}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{完整的一尺度观察已经知道全部谱；
+多尺度观察的意义是让“知道”变得稳定、局部且可证伪。}
+}
+$$
+
+因此下一步最值得推进的对象，不是再增加新的尺度，而是：
+
+$$
+\boxed{
+\text{把 Loewner、Toeplitz 与 Crofoot block Gram
+合并成一个带严格传输误差的联合 SDP，}
+}
+$$
+
+并研究：
+
+$$
+\boxed{
+\text{它是否能以远低于单尺度高阶 moment 的复杂度，
+排除不存在共同实轴正谱的伪 Li–Clark 数据。}
+}
+$$
+
+[1]: https://dlmf.nist.gov/18.3 "https://dlmf.nist.gov/18.3"
+[2]: https://arxiv.org/abs/0910.1259 "https://arxiv.org/abs/0910.1259"

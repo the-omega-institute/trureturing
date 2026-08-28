@@ -1,0 +1,43 @@
+# 第四百三十五部　正完成集合的嵌套塔
+
+若：
+
+$$
+0<L_1<L_2,
+$$
+
+则：
+
+$$
+(-2L_1,2L_1)
+\subset
+(-2L_2,2L_2).
+$$
+
+所以：
+
+$$
+\boxed{
+\mathfrak E_{L_2}
+\subseteq
+\mathfrak E_{L_1}.
+}
+\tag{435.1}
+$$
+
+形成一个递减完成塔：
+
+$$
+\boxed{
+\mathfrak E_{L_1}
+\supseteq
+\mathfrak E_{L_2}
+\supseteq
+\mathfrak E_{L_3}
+\supseteq\cdots.
+}
+\tag{435.2}
+$$
+
+---
+

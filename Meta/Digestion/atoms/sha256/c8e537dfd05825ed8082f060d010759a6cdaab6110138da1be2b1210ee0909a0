@@ -1,0 +1,35 @@
+## 定理 555.1（Rational–Toeplitz collapse）
+
+$$
+\boxed{
+G
+=
+A\,T_d(\sigma)\,A^*.
+}
+\tag{555.8}
+$$
+
+### 证明
+
+直接代入：
+
+$$
+\begin{aligned}
+G
+&=
+\int
+\frac{Av_dv_d^*A^*}
+{|D|^2}\,d\mu\\
+&=
+A
+\left[
+\int v_dv_d^*\,d\sigma
+\right]
+A^*.
+\end{aligned}
+$$
+
+∎
+
+---
+

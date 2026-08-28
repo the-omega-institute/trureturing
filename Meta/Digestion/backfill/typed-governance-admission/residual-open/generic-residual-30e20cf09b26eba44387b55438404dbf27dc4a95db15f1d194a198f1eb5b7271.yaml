@@ -1,0 +1,10 @@
+ast_path: section/Theorem-3-A-finite-acyclic-judging-graph-has-a-r-d96fb46a
+fingerprints:
+  raw_sha256: sha256:30e20cf09b26eba44387b55438404dbf27dc4a95db15f1d194a198f1eb5b7271
+  normalized_sha256: sha256:30e20cf09b26eba44387b55438404dbf27dc4a95db15f1d194a198f1eb5b7271
+cas_ref: sha256:30e20cf09b26eba44387b55438404dbf27dc4a95db15f1d194a198f1eb5b7271
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

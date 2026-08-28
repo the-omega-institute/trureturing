@@ -1,0 +1,15 @@
+### Primal 路线
+
+求正谱完成：
+
+$$
+\nu_L\ge0.
+$$
+
+优先测试：
+
+* maximum entropy；
+* rational covariance extension；
+* finite atomic completion；
+* positivity-preserving continuation。
+

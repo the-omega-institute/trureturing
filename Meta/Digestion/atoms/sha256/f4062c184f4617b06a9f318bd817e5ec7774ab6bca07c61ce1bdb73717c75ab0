@@ -1,0 +1,27 @@
+## 661.2 配对观察器
+
+同时构造：
+
+$$
+\mathcal O_\varphi,
+\qquad
+\mathcal O_{\varphi'}.
+$$
+
+区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{单通道零点}
+&:\quad
+\text{observer-specific defect};\\
+\text{trace/norm 零点}
+&:\quad
+\text{paired completion defect}.
+\end{aligned}
+}
+$$
+
+---
+

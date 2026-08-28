@@ -1,0 +1,73 @@
+# 第五百六十一部　观察者创新的 Feshbach 递推
+
+选择一个全局 Haar-orthonormal rational basis：
+
+$$
+\boxed{
+b_0,b_1,b_2,\ldots
+}
+$$
+
+例如按选定 pole sequence 构造的 Malmquist–Takenaka 系统。
+
+令前 \(n\) 个特征的未知谱 Gram matrix为：
+
+$$
+\boxed{
+G_n
+=
+\left[
+\int b_j\overline{b_k}\,d\mu
+\right]_{j,k=0}^{n-1}.
+}
+\tag{561.1}
+$$
+
+定义当前 observer floor：
+
+$$
+\boxed{
+\alpha_n
+=
+\lambda_{\min}(G_n).
+}
+\tag{561.2}
+$$
+
+加入一个新特征 \(b_n\) 后：
+
+$$
+\boxed{
+G_{n+1}
+=
+\begin{pmatrix}
+G_n&g_n\\
+g_n^*&\gamma_n
+\end{pmatrix}.
+}
+\tag{561.3}
+$$
+
+对：
+
+$$
+\alpha<\alpha_n,
+$$
+
+定义创新 Schur 函数：
+
+$$
+\boxed{
+s_n(\alpha)
+=
+\gamma_n-\alpha
+-
+g_n^*
+(G_n-\alpha I)^{-1}
+g_n.
+}
+\tag{561.4}
+$$
+
+---
+

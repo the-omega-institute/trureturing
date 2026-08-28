@@ -1,0 +1,59 @@
+## 512.1 RH 下的极限
+
+前文的统一预算紧性说明：若自然预算完成对所有 \(L\) 可行，则 RH 成立，而且任意 optimizer 序列满足：
+
+$$
+\boxed{
+p_L
+\longrightarrow
+\widehat\mu_\Xi
+}
+\tag{512.6}
+$$
+
+以弱测度意义成立。
+
+同时：
+
+$$
+\boxed{
+\omega_L\downarrow0.
+}
+\tag{512.7}
+$$
+
+所以完成流为：
+
+$$
+\boxed{
+\omega_Lm_{\mathbb T}
++
+p_L^{\mathrm{res}}
+\quad
+\longrightarrow
+\quad
+\sigma_1[\vartheta_\xi].
+}
+\tag{512.8}
+$$
+
+即：
+
+$$
+\boxed{
+\text{Haar continuum}
+\longrightarrow
+\text{Riemann--Clark atomic spectrum}.
+}
+$$
+
+圆周点：
+
+$$
+z=1
+$$
+
+是全部高 ordinate 的唯一积聚点，因此这一流同时保留了前文的 sticky-infinity 结构。
+
+---
+

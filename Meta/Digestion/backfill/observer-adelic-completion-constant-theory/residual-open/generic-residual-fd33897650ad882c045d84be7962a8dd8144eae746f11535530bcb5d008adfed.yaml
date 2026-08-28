@@ -1,0 +1,14 @@
+ast_path: section/第六百六十四部-自身与整体自相似-严格强迫黄金比例
+fingerprints:
+  raw_sha256: sha256:fd33897650ad882c045d84be7962a8dd8144eae746f11535530bcb5d008adfed
+  normalized_sha256: sha256:fd33897650ad882c045d84be7962a8dd8144eae746f11535530bcb5d008adfed
+cas_ref: sha256:fd33897650ad882c045d84be7962a8dd8144eae746f11535530bcb5d008adfed
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-3d138846214cf9538cc61a74b3f51fe45473a12bea9b06030ea3238122f4350a-3ba10d82fffacdb7cc28f18e5142f321e3ffaa30cb0af6731dde9060234ed44e
+    - generic-residual-98589bed285526b3b172d80a1b9351c9ad635681a6551b325af20fac3c2be72d-6e70a28a33bfeb2db433c3428e538fd564d14c8005ef89fa468845540646a226
+    - generic-residual-9e73e19647fe6bd08e6202f1296d8f8c7023c9014e2841ea92805137bc06fca6-e4f3e213d31cf7db0b308f19ede6e1663ea371fa67703047453042438f09b24c

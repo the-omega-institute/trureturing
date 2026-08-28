@@ -1,0 +1,10 @@
+ast_path: section/第五百七十八部-黄金幂本身携带奇偶-ledger
+fingerprints:
+  raw_sha256: sha256:0feea1282633a88c223f1fc47199e17cf506915945e6b12a079b6627e5049f8a
+  normalized_sha256: sha256:0feea1282633a88c223f1fc47199e17cf506915945e6b12a079b6627e5049f8a
+cas_ref: sha256:0feea1282633a88c223f1fc47199e17cf506915945e6b12a079b6627e5049f8a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

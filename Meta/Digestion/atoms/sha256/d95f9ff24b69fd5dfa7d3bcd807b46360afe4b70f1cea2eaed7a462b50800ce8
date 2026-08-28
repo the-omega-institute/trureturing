@@ -1,0 +1,71 @@
+# 第五百二十部　建议形式化顺序
+
+```text
+D5/S3/Weil/CayleyCompactification/
+  SpectralCayleyMap.lean
+  SpectralCayleyInverse.lean
+  ResolventBoundaryDistance.lean
+  ResolventWeightedPushforward.lean
+  ResolventBudgetEqualsCircleMass.lean
+
+D5/S3/Weil/HaarSpectrum/
+  CircleNormalizedHaar.lean
+  WhiteSpectrumPushesToHaar.lean
+  WhiteFloorCayleyEquivalence.lean
+  NaturalHalfScaleNormalization.lean
+
+D5/S3/Weil/CircleMoments/
+  CayleyMomentFunction.lean
+  CayleyMomentFlatAtInfinity.lean
+  LocalMomentTransport.lean
+  HaarMomentValue.lean
+  InfinityAtomInvisible.lean
+
+D5/S3/Weil/CirclePrimal/
+  CircleBudgetedCompletion.lean
+  CircleHaarFloor.lean
+  RealCirclePrimalEquivalence.lean
+  CirclePrimalCompact.lean
+  CircleOptimizerExists.lean
+  InfinityMassRemoval.lean
+
+D5/S3/Weil/CircleDual/
+  FiniteObserverMomentMap.lean
+  CircleDualSlack.lean
+  FiniteCircleStrongDuality.lean
+  CircleComplementarySlackness.lean
+  ActivePressureFiniteContact.lean
+  FiniteAtomicResidual.lean
+
+D5/S3/Weil/ProjectiveDual/
+  DeterminingObserverTower.lean
+  FinitePrimalValuesMonotone.lean
+  ProjectivePrimalConvergence.lean
+  ProjectiveStrongDuality.lean
+  FullDualAttainmentTarget.lean
+
+D5/S3/Weil/CayleyClark/
+  ZeroSpectrumCayleyMeasure.lean
+  LiOneTotalMass.lean
+  ResolventClarkIdentity.lean
+  NaturalHaarClarkFlow.lean
+  ContactAtomsLocalizeClarkSpectrum.lean
+
+D5/S3/Weil/HaarToeplitz/
+  HaarFloorToeplitzBound.lean
+  AtomicToeplitzRankUpdate.lean
+  FlatFloorMultiplicity.lean
+  ToeplitzPrimalCertificate.lean
+
+D5/S3/Weil/HaarSchur/
+  NormalizedCompletionProbability.lean
+  ConstantDensitySingularResidual.lean
+  SzegoWhiteFloorIdentity.lean
+  ObserverInnovationAction.lean
+  InnovationCollapseToClark.lean
+```
+
+finite moment atomic representation 可通过 Richter–Tchakaloff 外部接口先行接入；完整 full-dual attainment 应单独标记 closure/relative-interior 义务，而不能混入有限层定理。([arXiv][2])
+
+---
+

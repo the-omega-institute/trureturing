@@ -1,0 +1,74 @@
+# 第四百三十四部　局部 Hilbert–Pólya 不是唯一算子
+
+定义正完成集合：
+
+$$
+\boxed{
+\mathfrak E_L
+=
+\left\{
+\nu\ge0:
+\check\nu
+=
+\mathfrak W_L
+\text{ on }(-2L,2L)
+\right\}.
+}
+\tag{434.1}
+$$
+
+通常：
+
+$$
+|\mathfrak E_L|>1.
+$$
+
+对每个：
+
+$$
+\nu\in\mathfrak E_L,
+$$
+
+可在：
+
+$$
+L^2(\nu)
+$$
+
+上定义自伴乘法算子：
+
+$$
+\boxed{
+(H_\nu F)(\xi)=\xi F(\xi).
+}
+\tag{434.2}
+$$
+
+它生成 unitary translation group：
+
+$$
+e^{iuH_\nu}.
+$$
+
+不同正定扩张对应不同 unitary representations；在一维区间问题中，这种扩张与局部 RKHS 中对称微分算子的自伴扩张相关。([arXiv][1])
+
+所以固定 \(L\) 时不存在唯一 Hilbert–Pólya 算子，而存在：
+
+$$
+\boxed{
+\{H_\nu:\nu\in\mathfrak E_L\}
+}
+$$
+
+一整族局部自伴完成。
+
+它们在可见时间窗：
+
+$$
+|u|<2L
+$$
+
+内具有相同的相关读数，却可在更长时间尺度上拥有完全不同的谱。
+
+---
+

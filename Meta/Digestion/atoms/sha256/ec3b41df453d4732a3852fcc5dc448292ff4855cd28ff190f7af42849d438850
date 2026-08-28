@@ -1,0 +1,45 @@
+## 定理 482.1（Extremal spectral complementarity）
+
+$$
+\boxed{
+\operatorname{supp}\mu_L^*
+\subseteq
+Z_{\mathbb R}(F_L^*).
+}
+\tag{482.3}
+$$
+
+由于 \(F_L^*\) 是非零的指数型 \(L\) 整函数，其实零点集是离散集。所以：
+
+$$
+\boxed{
+\mu_L^*
+=
+\sum_{\tau\in Z_{\mathbb R}(F_L^*)}
+a_{\tau,L}\delta_\tau,
+\qquad
+a_{\tau,L}\ge0.
+}
+\tag{482.4}
+$$
+
+从而最优完成必具有结构：
+
+$$
+\boxed{
+\nu_L^*
+=
+\underbrace{
+\frac{\lambda_{\mathrm{full}}(L)}{2\pi}d\xi
+}_{\text{未分辨白连续谱}}
++
+\underbrace{
+\sum_{\tau\in Z(F_L^*)}
+a_{\tau,L}\delta_\tau
+}_{\text{已分辨原子谱}}.
+}
+\tag{482.5}
+$$
+
+这可以称为：
+

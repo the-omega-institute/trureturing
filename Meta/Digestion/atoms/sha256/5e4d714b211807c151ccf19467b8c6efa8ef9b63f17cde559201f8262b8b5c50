@@ -1,0 +1,60 @@
+# 第五百零三部　建议形式化顺序
+
+```text
+D5/S3/Weil/BudgetedFloor/
+  NormalizedLebesgueSpectrum.lean
+  ResolventBudget.lean
+  WhiteSpectralFloor.lean
+  BudgetedCompletion.lean
+  BudgetedFloorFrontier.lean
+  MinimalBudgetCost.lean
+  FrontierConcavity.lean
+
+D5/S3/Weil/BudgetCompactness/
+  WeightedCompletionMeasure.lean
+  UniformMassWeakCompactness.lean
+  LocalMomentLimit.lean
+  FloorClosedUnderLimit.lean
+  BudgetedOptimizerExistence.lean
+
+D5/S3/Weil/BudgetDual/
+  ResolventFourierMajorant.lean
+  BudgetedWeakDuality.lean
+  StrongDualityInterface.lean
+  BudgetShadowPrice.lean
+  FrontierSupergradient.lean
+
+D5/S3/Weil/ContactSpectrum/
+  ContactSlackFunction.lean
+  ContactEntireFunction.lean
+  ComplementarySupport.lean
+  PositivePressureFiniteZeros.lean
+  WhitePlusFiniteAtomicCompletion.lean
+  ZeroPressureCountableAtoms.lean
+
+D5/S3/Weil/FiniteAtomicPrimal/
+  FiniteMomentObserver.lean
+  WeightedResidualMomentSpace.lean
+  TchakaloffAtomicInterface.lean
+  EvenAtomicSymmetrization.lean
+  AtomicOptimizerBound.lean
+  FiniteHierarchyConvergence.lean
+
+D5/S3/Weil/NaturalLiBudget/
+  LiOneGlobalBudget.lean
+  NaturalBudgetFeasibilityRH.lean
+  NaturalWhiteFloorMonotone.lean
+  NaturalWhiteFloorVanishes.lean
+  OptimizerConvergesZeroSpectrum.lean
+  ContactAtomsLocalizeZeros.lean
+
+D5/S3/Weil/BudgetEntropy/
+  BudgetMinimizerFace.lean
+  EntropyWithinOptimalFace.lean
+  RationalCovarianceCompletionInterface.lean
+```
+
+当前仓库中的 `PrimePoleTerms`、`WeilIdentity` 和 convolution-square Fourier positivity 已经提供 local moment functional 的算术真源；下一步需要补充 full Hermitian test interface 与正谱 measure optimization，而不是改动现有冻结链。
+
+---
+

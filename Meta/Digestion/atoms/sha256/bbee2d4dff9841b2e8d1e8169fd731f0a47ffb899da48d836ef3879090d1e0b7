@@ -1,0 +1,8 @@
+## 534.2 Toeplitz PSD 是 moment 必要条件，不是完整局部完成
+
+有限 moment cone 只观察圆周有限维投影。
+
+不同全局谱可以共享任意有限 moments。
+
+---
+

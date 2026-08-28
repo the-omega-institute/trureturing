@@ -1,0 +1,10 @@
+ast_path: section/588-4-黄金-germ-共轭实验
+fingerprints:
+  raw_sha256: sha256:ad6cff86f4177bea2ce546846492c9c62ef5f5712799c04d58a4050c073629fb
+  normalized_sha256: sha256:ad6cff86f4177bea2ce546846492c9c62ef5f5712799c04d58a4050c073629fb
+cas_ref: sha256:ad6cff86f4177bea2ce546846492c9c62ef5f5712799c04d58a4050c073629fb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

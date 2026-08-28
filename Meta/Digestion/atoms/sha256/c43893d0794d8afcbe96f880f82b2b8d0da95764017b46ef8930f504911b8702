@@ -1,0 +1,9 @@
+## 科学修正 429.1
+
+前文的 Slepian–Feshbach reduction 本身仍然正确：
+
+> 固定一个 coercive multiplier representative 后，它可以把该 representative 的危险区域压缩为有限 sticky matrix。
+
+但该有限矩阵不是规范对象。不同 gauge 会给出：
+
+* 不同危险频带；

@@ -1,0 +1,41 @@
+## 615.2 需要构造的 twisted ζ
+
+正确的新对象不是把负共轭指数直接塞入 Dirichlet series，而是构造一个带方向字符的格点／轨道和：
+
+$$
+\boxed{
+Z_{\mathrm{or}}(s,\eta)
+}
+$$
+
+使：
+
+$$
+\boxed{
+Z_{\mathrm{or}}(s,\eta+P)
+=
+-Z_{\mathrm{or}}(s,\eta).
+}
+\tag{615.4}
+$$
+
+它应当是 \(\mathscr L_-\) 的截面，而不是普通标量函数。
+
+需要验证：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{绝对或条件收敛域};\\
+&\text{反射变换};\\
+&\text{是否与 even ζ 正交};\\
+&\text{odd residual 是否决定新的零点或边界项};\\
+&\text{其平方或双覆盖是否回到已有 scalar ζ}.
+\end{aligned}
+}
+$$
+
+只有当该 twisted channel 带来新的非消失、收敛或谱信息时，它才构成新的逃逸层。
+
+---
+

@@ -1,0 +1,85 @@
+# 第四百六十四部　Weyl resolvent 预算区间
+
+选择一个连续偶的局部 particular solution：
+
+$$
+H_{0,a}
+$$
+
+满足：
+
+$$
+\left(
+-\partial_t^2+a^2
+\right)H_{0,a}
+=
+\mathfrak W_L
+\quad
+\text{于 }(-2L,2L).
+$$
+
+记：
+
+$$
+R_0=H_{0,a}(0).
+$$
+
+所有其他偶解均为：
+
+$$
+\boxed{
+H_{R,a}(t)
+=
+H_{0,a}(t)
++
+(R-R_0)\cosh(at).
+}
+\tag{464.1}
+$$
+
+定义其局部 Hermitian form：
+
+$$
+\boxed{
+\mathfrak b_R(f,h)
+=
+\left\langle
+H_{R,a},
+f*\widetilde h
+\right\rangle.
+}
+\tag{464.2}
+$$
+
+由于 \(H_{0,a}\) 为偶分布，奇偶交叉项消失：
+
+$$
+\mathfrak b_R(f_+,f_-)=0.
+$$
+
+由定理 462.1：
+
+$$
+\boxed{
+\mathfrak b_R^+(f)
+=
+\mathfrak b_0^+(f)
++
+(R-R_0)|\mathcal C_a(f)|^2,
+}
+\tag{464.3}
+$$
+
+$$
+\boxed{
+\mathfrak b_R^-(f)
+=
+\mathfrak b_0^-(f)
+-
+(R-R_0)|\mathcal S_a(f)|^2.
+}
+\tag{464.4}
+$$
+
+---
+

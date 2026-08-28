@@ -1,0 +1,10 @@
+ast_path: section/第六百七十七部-真正离线零点不能仅由质数重排产生
+fingerprints:
+  raw_sha256: sha256:237531e728233ecf2a52b76f7eedde8cb9d7b9e3915b8ec88314ad7f80689c42
+  normalized_sha256: sha256:237531e728233ecf2a52b76f7eedde8cb9d7b9e3915b8ec88314ad7f80689c42
+cas_ref: sha256:237531e728233ecf2a52b76f7eedde8cb9d7b9e3915b8ec88314ad7f80689c42
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

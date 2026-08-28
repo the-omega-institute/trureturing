@@ -1,0 +1,62 @@
+## 定理 476.1（Maximum spectral-floor completion）
+
+$$
+\boxed{
+\begin{aligned}
+\lambda_{\mathrm{full}}(L)
+=
+\sup
+\Bigg\{
+\lambda:\ 
+&\exists\,\nu_L\ge0,\\
+&\check\nu_L=\mathfrak W_L
+\text{ 于 }I_L,\\
+&\nu_L
+\ge
+\frac{\lambda}{2\pi}\,d\xi
+\Bigg\}.
+\end{aligned}
+}
+\tag{476.2}
+$$
+
+### 证明
+
+若：
+
+$$
+\mathfrak W_L-\lambda\delta_0
+$$
+
+局部正定，则取其正谱扩张 \(\mu_L\ge0\)，并令：
+
+$$
+\nu_L
+=
+\mu_L
++
+\frac{\lambda}{2\pi}d\xi.
+$$
+
+反之，若：
+
+$$
+\nu_L
+=
+\mu_L+\frac{\lambda}{2\pi}d\xi,
+\qquad
+\mu_L\ge0,
+$$
+
+则：
+
+$$
+\mathfrak W_L-\lambda\delta_0
+=
+\check\mu_L
+$$
+
+在窗口内正定。∎
+
+---
+

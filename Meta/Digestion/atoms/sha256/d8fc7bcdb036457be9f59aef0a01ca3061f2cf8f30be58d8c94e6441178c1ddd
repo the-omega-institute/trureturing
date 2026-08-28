@@ -1,0 +1,18 @@
+## 533.2 Laguerre moment intervals
+
+计算：
+
+$$
+\widehat m_{n,L}^{(a)}(R)
+$$
+
+与严格 tail：
+
+$$
+R\tau_{n,a}(L).
+$$
+
+输出前 \(N\) 个 moment intervals。
+
+---
+

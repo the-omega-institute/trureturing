@@ -1,0 +1,14 @@
+* state-dependent operator norms；
+
+应当进入的位置。
+
+Primal 与 dual 的共同最优值就是：
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L).
+}
+$$
+
+---
+

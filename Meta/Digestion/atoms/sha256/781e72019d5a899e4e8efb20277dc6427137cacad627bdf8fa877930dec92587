@@ -1,0 +1,33 @@
+## 495.2 谱生成 homotopy
+
+随着 \(C\) 增加，凹函数的 supergradient 单调不增。
+
+因此存在一个自然谱生成过程：
+
+$$
+\boxed{
+\begin{aligned}
+\text{小预算}
+&\longrightarrow
+\text{少量 contact atoms};\\
+\text{预算增加}
+&\longrightarrow
+\text{更多 contact roots 被激活};\\
+\theta\downarrow0
+&\longrightarrow
+\text{有限原子 ledger 延伸为完整 Paley--Wiener 零点 ledger}.
+\end{aligned}
+}
+$$
+
+这不是把连续谱“凭空离散化”，而是：
+
+$$
+\boxed{
+\text{resolvent budget 的影子价格
+控制原子谱的分辨深度。}
+}
+$$
+
+---
+
