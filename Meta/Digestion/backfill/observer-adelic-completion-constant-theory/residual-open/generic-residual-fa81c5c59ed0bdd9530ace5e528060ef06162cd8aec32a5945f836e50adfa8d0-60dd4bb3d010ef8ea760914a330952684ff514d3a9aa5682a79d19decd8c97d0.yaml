@@ -1,0 +1,10 @@
+ast_path: section/651-2-自盲性/clause/3
+fingerprints:
+  raw_sha256: sha256:fa81c5c59ed0bdd9530ace5e528060ef06162cd8aec32a5945f836e50adfa8d0
+  normalized_sha256: sha256:fa81c5c59ed0bdd9530ace5e528060ef06162cd8aec32a5945f836e50adfa8d0
+cas_ref: sha256:fa81c5c59ed0bdd9530ace5e528060ef06162cd8aec32a5945f836e50adfa8d0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

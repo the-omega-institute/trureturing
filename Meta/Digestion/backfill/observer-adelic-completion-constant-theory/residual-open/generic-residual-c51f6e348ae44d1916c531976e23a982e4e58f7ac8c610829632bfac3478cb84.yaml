@@ -1,0 +1,15 @@
+ast_path: section/第五百六十三部-部分观察与-Glue-Dimension
+fingerprints:
+  raw_sha256: sha256:c51f6e348ae44d1916c531976e23a982e4e58f7ac8c610829632bfac3478cb84
+  normalized_sha256: sha256:c51f6e348ae44d1916c531976e23a982e4e58f7ac8c610829632bfac3478cb84
+cas_ref: sha256:c51f6e348ae44d1916c531976e23a982e4e58f7ac8c610829632bfac3478cb84
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-cb5b7f3c55a7fbca2cb297f64dc93c0839038ed7dee2aba06d89c12538dd2a86-7b5b1551ea60f3c3e25ea8c1705383f72f49d7f2e5a7bdb75b40aba25907cd88
+    - generic-residual-af0d8db7cfc56edb58d391e04b9d28a5daec94f61c0aed279cdd368e4c2f2f91-2b2ebe442a63ed92ef2ca39699a568c80537d79e6c53f7d4f38aeec9568b895d
+    - generic-residual-fa1c63f208861919075aacff6ba4483dfcb38a421d255beb5a389cdaf6c3410d-586d0deb0b1620438e21dd6eeb123d9766d542e87fa0edb3ed52a40d5555ae95
+    - generic-residual-426aa4622e6a78483cdf0a74e29c3b18bafbfaceccc65ce268373d5f4dc388d4-a974c4f9068c21d8eb022f8b5ed86275e12fad7620e179af0b8808ba52addb46

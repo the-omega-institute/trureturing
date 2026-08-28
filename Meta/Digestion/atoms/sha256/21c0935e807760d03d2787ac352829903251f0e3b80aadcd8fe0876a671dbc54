@@ -1,0 +1,75 @@
+## 本轮直接推出
+
+$$
+\boxed{
+\operatorname{span}
+\left\{
+\psi_{\ell,j}
+\right\}
+=
+\left\{
+P/D:\deg P\le n-1
+\right\}.
+}
+$$
+
+$$
+\boxed{
+G
+=
+A\,T_d(\sigma)\,A^*.
+}
+$$
+
+$$
+\boxed{
+G\text{ 有共同正谱}
+\iff
+A^{-1}GA^{-*}
+\text{ 是 PSD Toeplitz}.
+}
+$$
+
+$$
+\boxed{
+\alpha_*(G)
+=
+\lambda_{\min}
+\left(
+B^{-1/2}GB^{-1/2}
+\right).
+}
+$$
+
+$$
+\boxed{
+\text{最优 residual spectrum
+是唯一有限原子测度}.
+}
+$$
+
+$$
+\boxed{
+\#\text{atoms}
+=
+\operatorname{rank}
+\left(
+T-\alpha_*H_D
+\right)
+\le n-1.
+}
+$$
+
+$$
+\boxed{
+s_n(\alpha)
+=
+\gamma_n-\alpha
+-g_n^*(G_n-\alpha I)^{-1}g_n
+}
+$$
+
+给出逐 observer floor 更新。
+
+---
+

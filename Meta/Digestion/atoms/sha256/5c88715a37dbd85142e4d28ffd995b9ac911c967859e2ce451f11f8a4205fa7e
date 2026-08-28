@@ -1,0 +1,55 @@
+## 定理 435.1（RH 的正完成塔形式）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathfrak E_L\neq\varnothing
+\quad
+\forall L>0.
+}
+\tag{435.3}
+$$
+
+若 RH 成立，则：
+
+$$
+\boxed{
+\bigcap_{L>0}
+\mathfrak E_L
+=
+\{\nu_\Xi\},
+}
+\tag{435.4}
+$$
+
+其中：
+
+$$
+\boxed{
+\nu_\Xi
+=
+\sum_{\gamma}
+m_\gamma\delta_\gamma
+}
+\tag{435.5}
+$$
+
+是 Riemann 零点 ordinate 的正谱测度。
+
+### 证明
+
+RH 成立时，Weil source 全局等于：
+
+$$
+\check\nu_\Xi,
+$$
+
+所以 \(\nu_\Xi\in\mathfrak E_L\) 对所有 \(L\) 成立。
+
+反之，如果每个 \(L\) 都有正完成，则所有紧支撑 convolution-square tests 均非负；由 Weil 判据得到 RH。
+
+若某两个正测度属于所有 \(\mathfrak E_L\)，其 inverse Fourier transforms 在每个有限开区间上一致，故作为 distributions 在整条实线上一致，测度相同。∎
+
+---
+

@@ -1,0 +1,18 @@
+## 580.2 当前明确未闭合的边界
+
+仓库的 boundary theorem 已经把：
+
+$$
+s=\frac1{\varphi^2}
+$$
+
+处 transported zeta residue 与 \(G_1\) 分离，并明确指出：
+
+* 实轴 pointwise positivity 已有；
+* 但复邻域 nonvanishing／continuity 尚未完成；
+* 不能据此声称该边界已被证明为真实奇点。
+
+这正是科学残差，而不是模糊的“还差一点”。
+
+---
+

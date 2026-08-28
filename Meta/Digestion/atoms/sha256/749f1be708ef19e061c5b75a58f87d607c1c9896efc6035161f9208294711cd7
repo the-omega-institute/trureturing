@@ -1,0 +1,52 @@
+## 514.2 Observer innovation action
+
+定义：
+
+$$
+\boxed{
+\mathcal I_L
+=
+-\log\omega_L.
+}
+\tag{514.6}
+$$
+
+在 \(\omega_L>0\) 时：
+
+$$
+\boxed{
+\mathcal I_L
+=
+\sum_{n=0}^{\infty}
+-\log
+\left(
+1-|\beta_{n,L}|^2
+\right).
+}
+\tag{514.7}
+$$
+
+RH 下：
+
+$$
+\omega_L\downarrow0,
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal I_L\longrightarrow+\infty.
+}
+\tag{514.8}
+$$
+
+其含义不是系统变得更随机，而恰好相反：
+
+> 随着观察深度增加，白色不可预测部分被持续消除；
+> 要把最终创新误差压到零，需要累积无限总量的 Schur 创新信息。
+
+这与前文纯点 Clark 谱的 Szegő 创新塌缩完全一致。
+
+---
+

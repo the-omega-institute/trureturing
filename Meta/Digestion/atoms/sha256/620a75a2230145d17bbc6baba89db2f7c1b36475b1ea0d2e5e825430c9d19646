@@ -1,0 +1,78 @@
+## 定理 465.1（Finite Weyl budget bounds）
+
+若：
+
+$$
+B_+\succeq0
+\quad
+\text{于 }\ker c^*,
+$$
+
+$$
+B_-\succeq0
+\quad
+\text{于 }\ker s^*,
+$$
+
+则有限测试族允许的预算区间为：
+
+$$
+\boxed{
+R\ge
+R_0+
+\sup_{x:c^*x\ne0}
+\frac{-x^*B_+x}{|c^*x|^2},
+}
+\tag{465.6}
+$$
+
+以及：
+
+$$
+\boxed{
+R\le
+R_0+
+\inf_{y:s^*y\ne0}
+\frac{y^*B_-y}{|s^*y|^2}.
+}
+\tag{465.7}
+$$
+
+这是一维 generalized Rayleigh quotient 问题。
+
+随着测试族增大：
+
+$$
+\boxed{
+\underline R_{L,N}(a)
+\uparrow
+\underline R_L(a),
+}
+\tag{465.8}
+$$
+
+$$
+\boxed{
+\overline R_{L,N}(a)
+\downarrow
+\overline R_L(a),
+}
+\tag{465.9}
+$$
+
+对任意在对应 form domain 中稠密的 Galerkin 塔成立。
+
+因此每个尺度 \(L\) 的实谱完成问题，可由一列有限 Hermitian matrix pencils 从两侧夹逼。
+
+若某一有限阶段已经出现：
+
+$$
+\boxed{
+\underline R_{L,N}>
+\overline R_{L,N},
+}
+$$
+
+则得到一个严格有限的不可完成证书：
+
+* 一个偶测试要求预算至少为 \(\underline R\)；

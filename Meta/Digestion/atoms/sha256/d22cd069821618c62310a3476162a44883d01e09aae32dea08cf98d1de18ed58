@@ -1,0 +1,17 @@
+## 567.4 Atomic extraction
+
+对最优 residual：
+
+$$
+T_*=T_d(y_*)-\alpha_*H_D
+$$
+
+执行 Vandermonde decomposition，恢复：
+
+$$
+\zeta_j,\quad w_j.
+$$
+
+再映回：
+
+* 每个 Cayley scale；

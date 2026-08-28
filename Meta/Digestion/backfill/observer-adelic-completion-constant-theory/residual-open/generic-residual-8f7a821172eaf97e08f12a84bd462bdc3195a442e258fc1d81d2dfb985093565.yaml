@@ -1,0 +1,10 @@
+ast_path: row/prime-order-commutator
+fingerprints:
+  raw_sha256: sha256:8f7a821172eaf97e08f12a84bd462bdc3195a442e258fc1d81d2dfb985093565
+  normalized_sha256: sha256:8f7a821172eaf97e08f12a84bd462bdc3195a442e258fc1d81d2dfb985093565
+cas_ref: sha256:8f7a821172eaf97e08f12a84bd462bdc3195a442e258fc1d81d2dfb985093565
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

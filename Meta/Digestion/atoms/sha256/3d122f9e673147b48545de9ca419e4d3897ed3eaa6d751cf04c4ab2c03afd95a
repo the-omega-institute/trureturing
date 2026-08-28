@@ -1,0 +1,37 @@
+## 461.1 局部 Green 方程
+
+在分布意义下：
+
+$$
+\begin{aligned}
+\left(
+-\partial_t^2+a^2
+\right)
+H_{\nu,a}(t)
+&=
+\int_{\mathbb R}
+\frac{\xi^2+a^2}{\xi^2+a^2}
+e^{it\xi}\,d\nu(\xi)\\
+&=
+\check\nu(t).
+\end{aligned}
+$$
+
+所以在可见窗口内：
+
+$$
+\boxed{
+\left(
+-\partial_t^2+a^2
+\right)
+H_{\nu,a}
+=
+\mathfrak W_L.
+}
+\tag{461.4}
+$$
+
+这说明每个正谱完成，经过 resolvent observer 后，都成为同一个非齐次二阶方程的正定解。
+
+---
+

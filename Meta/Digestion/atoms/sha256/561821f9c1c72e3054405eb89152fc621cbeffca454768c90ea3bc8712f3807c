@@ -1,0 +1,28 @@
+## 534.3 Finite moment Haar floor 不等于窗口 Weil profile
+
+$$
+\lambda_{\min}T_N(c)
+$$
+
+是：
+
+$$
+\text{某个 Cayley completion 的有限 moment Haar floor}.
+$$
+
+而：
+
+$$
+\lambda_{\mathrm{full}}(L)
+$$
+
+是：
+
+$$
+\text{全部支撑-\(L\) Weil 测试的白谱裕量}.
+$$
+
+二者属于不同 observer，不能直接等同。
+
+---
+

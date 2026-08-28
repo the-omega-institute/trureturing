@@ -1,0 +1,73 @@
+# 第四百一十四部　Pole–PNT Green 完成定理
+
+令：
+
+$$
+f\in C_c^\infty(\mathbb R),
+\qquad
+f(-x)=f(x),
+$$
+
+并定义：
+
+$$
+\widetilde f(x)=\overline{f(-x)},
+$$
+
+$$
+\boxed{
+g=f*\widetilde f.
+}
+\tag{414.1}
+$$
+
+于是：
+
+$$
+g(u)
+=
+\int_{\mathbb R}
+f(x)\overline{f(x-u)}\,dx.
+$$
+
+定义连续 prime 主项：
+
+$$
+\boxed{
+\mathsf M_0(f)
+=
+\int_0^\infty
+e^{u/2}
+\bigl(g(u)+g(-u)\bigr)\,du.
+}
+\tag{414.2}
+$$
+
+定义 pole pair：
+
+$$
+\boxed{
+\mathsf P(f)
+=
+\widehat g(-i/2)+\widehat g(i/2).
+}
+\tag{414.3}
+$$
+
+由于 \(f\) 为偶函数：
+
+$$
+\boxed{
+\mathsf P(f)
+=
+2
+\left|
+\int_{\mathbb R}
+e^{x/2}f(x)\,dx
+\right|^2.
+}
+\tag{414.4}
+$$
+
+---
+

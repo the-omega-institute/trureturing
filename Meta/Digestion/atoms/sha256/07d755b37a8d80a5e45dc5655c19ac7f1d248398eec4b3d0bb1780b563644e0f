@@ -1,0 +1,25 @@
+## 567.1 Common-denominator compiler
+
+输入：
+
+$$
+(a_\ell,N_\ell)_{\ell=0}^{M}.
+$$
+
+自动生成：
+
+$$
+r_\ell,\quad
+D(z),\quad
+A,\quad
+H_D.
+$$
+
+严格验证：
+
+$$
+\det A\ne0.
+$$
+
+---
+

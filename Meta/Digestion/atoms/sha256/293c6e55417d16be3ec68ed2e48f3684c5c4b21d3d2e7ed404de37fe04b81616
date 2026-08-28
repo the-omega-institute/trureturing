@@ -1,0 +1,42 @@
+## 定理 630.1（Barycenter–defect decomposition）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+a(\rho)=0
+\quad
+\forall\rho.
+}
+\tag{630.5}
+$$
+
+离线零点对：
+
+$$
+\frac12\pm\delta+i\gamma
+$$
+
+具有相同的完成重心：
+
+$$
+\frac12+i\gamma,
+$$
+
+但具有相反的 anti-coordinate：
+
+$$
+\pm\delta.
+$$
+
+所以离线零点不是把完成中心移动了，而是：
+
+$$
+\boxed{
+\text{把一个固定点裂变成一个半径为 }|\delta|
+\text{ 的二元素轨道}.
+}
+$$
+
+---
+

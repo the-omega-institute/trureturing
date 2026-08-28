@@ -1,0 +1,26 @@
+## 533.3 Toeplitz floor certificate
+
+构造：
+
+$$
+\widehat T_{N,L}
+$$
+
+并验证：
+
+$$
+\lambda_{\min}
+(\widehat T_{N,L})
+\pm
+\Delta_{N,a}(L).
+$$
+
+输出：
+
+* finite Haar floor 区间；
+* contact eigenpolynomial；
+* candidate contact atoms；
+* moment PSD 或 infeasibility certificate。
+
+---
+

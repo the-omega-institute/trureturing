@@ -1,0 +1,10 @@
+ast_path: section/620-3-第三阶解析推进
+fingerprints:
+  raw_sha256: sha256:d8b92320703773b91283c57786b17227bf4b23d26797c41b422b25d4e0236ff3
+  normalized_sha256: sha256:d8b92320703773b91283c57786b17227bf4b23d26797c41b422b25d4e0236ff3
+cas_ref: sha256:d8b92320703773b91283c57786b17227bf4b23d26797c41b422b25d4e0236ff3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

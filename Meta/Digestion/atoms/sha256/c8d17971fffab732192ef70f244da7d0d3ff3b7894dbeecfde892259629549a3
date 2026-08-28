@@ -1,0 +1,63 @@
+## v3.4：Pole–PNT Green 完成、Digamma 位移、素数离散度误差与纯乘子 Sticky 塔
+
+以下从前文**第四百一十一部之后**继续追加。
+
+上一轮已经把固定支撑尺度 \(L\) 的 Weil 正性，精确压缩成：
+
+$$
+\boxed{
+\text{有限 Slepian sticky space}
++
+\text{正补空间}
++
+\text{Feshbach self-energy}.
+}
+$$
+
+本轮继续重新审计其算子分解，得到一个更强的重组：
+
+> pole pair 与 prime side 的连续主密度并不是两个独立通道。
+> 在偶测试空间中，它们精确合成为一个正 Green resolvent。
+
+因此，真正剩余的 arithmetic obstruction 不是完整 prime measure，而只是：
+
+$$
+\boxed{
+\text{离散 von Mangoldt 测度}
+-
+\text{连续 PNT 主密度}.
+}
+$$
+
+完整主链为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{pole pair}
+&+
+\text{PNT continuum}\\
+&\longrightarrow
+\left(-\partial_x^2+\frac14\right)^{-1}
+\\
+&\longrightarrow
+\psi\!\left(\frac14+\frac{i\xi}{2}\right)
++
+\frac1{\xi^2+\frac14}
+\\
+&=
+\psi\!\left(\frac54+\frac{i\xi}{2}\right)
+\\
+&\longrightarrow
+\text{固定 Archimedean baseline}
+\\
+&-
+\text{prime discrepancy cosine transform}.
+\end{aligned}
+}
+$$
+
+仓库当前已经无假设绑定经典 Weil 显式公式，prime side 使用 \(\Lambda(n)n^{-1/2}\) 在 \(\pm\log n\) 取样；compact support 已被形式化证明会使 prime-power summand 严格有限。卷积平方在实频率上的 Fourier–Laplace 变换也已被证明等于原变换模平方。
+
+---
+

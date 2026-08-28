@@ -1,0 +1,38 @@
+## 656.1 离线零点的新解释
+
+在这一模型中，真实离线零点不是“从无到有的第一自由破缺点”，而是：
+
+$$
+\boxed{
+\text{一个始终未被更高完成层消除的持续源}.
+}
+$$
+
+它可以代表：
+
+* prime–Archimedean balance 中的非零 residual；
+* 一个未被观察器配对消掉的外部输入；
+* inverse-limit realization 中的非零 obstruction class；
+* 某个非线性重整化的破缺稳定相；
+* 观察层级中持续注入的新信息。
+
+所以真正需要寻找的不是：
+
+$$
+\boxed{
+\delta_*
+\text{ 是否直接等于 }\varphi^{-k},
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{是否存在一个 forcing class，
+使黄金收缩后仍留下 }\delta_*\neq0.
+}
+$$
+
+---
+

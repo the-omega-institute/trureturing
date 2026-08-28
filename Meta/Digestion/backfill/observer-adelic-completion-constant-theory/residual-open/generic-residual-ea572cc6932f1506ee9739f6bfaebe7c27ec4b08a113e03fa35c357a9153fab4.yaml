@@ -1,0 +1,10 @@
+ast_path: section/519-4-Schur-innovation-flow
+fingerprints:
+  raw_sha256: sha256:ea572cc6932f1506ee9739f6bfaebe7c27ec4b08a113e03fa35c357a9153fab4
+  normalized_sha256: sha256:ea572cc6932f1506ee9739f6bfaebe7c27ec4b08a113e03fa35c357a9153fab4
+cas_ref: sha256:ea572cc6932f1506ee9739f6bfaebe7c27ec4b08a113e03fa35c357a9153fab4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

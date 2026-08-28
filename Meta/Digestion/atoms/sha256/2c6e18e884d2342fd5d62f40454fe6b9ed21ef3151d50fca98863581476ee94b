@@ -1,0 +1,22 @@
+### 观察完成深度
+
+定义观察器协变缺陷：
+
+$$
+\boxed{
+\epsilon_{\mathrm{obs}}(q_k)
+=
+\operatorname{rank}
+\left(
+J_Yq_k-q_kJ_X
+\right)
+}
+\tag{583.3}
+$$
+
+或相应算子范数、kernel codimension。
+
+它减少时，说明观察器偏置被校准。
+
+---
+

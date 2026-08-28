@@ -1,0 +1,62 @@
+# 第四百七十七部　RH 下的零点采样帧
+
+假设 RH。
+
+令：
+
+$$
+\nu_\Xi
+=
+\sum_{\gamma\in\mathbb R}
+m_\gamma\delta_\gamma
+$$
+
+为完成 ζ 的零点 ordinate 测度。
+
+对于：
+
+$$
+F(\xi)=\widehat f(\xi),
+$$
+
+Weil 零点侧成为：
+
+$$
+\boxed{
+Q_L(f)
+=
+\int_{\mathbb R}
+|F(\xi)|^2\,d\nu_\Xi(\xi)
+=
+\sum_{\gamma\in\mathbb R}
+m_\gamma|F(\gamma)|^2.
+}
+\tag{477.1}
+$$
+
+定义采样分析算子：
+
+$$
+\boxed{
+\mathcal S_Lf
+=
+\left(
+\sqrt{m_\gamma}\,F(\gamma)
+\right)_{\gamma\in\mathbb R}.
+}
+\tag{477.2}
+$$
+
+则：
+
+$$
+\boxed{
+Q_L(f)
+=
+\|\mathcal S_Lf\|_{\ell^2}^2.
+}
+\tag{477.3}
+$$
+
+因此：
+

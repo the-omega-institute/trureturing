@@ -1,0 +1,26 @@
+## 527.1 与前文 dual contact function 的同一性
+
+前文预算化 dual 中，contact atoms 位于 slack function 的零点。
+
+当前标准 Toeplitz moment 图表中，该 slack function直接退化为：
+
+$$
+\boxed{
+|q_v(z)|^2.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{最小 Toeplitz eigenvector}
+=
+\text{finite observer 的 dual contact polynomial}.
+}
+$$
+
+这给有限 contact spectrum 一个无需抽象 KKT 变量的直接构造。
+
+---
+

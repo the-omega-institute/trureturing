@@ -1,0 +1,10 @@
+ast_path: section/瞬态观察缺陷
+fingerprints:
+  raw_sha256: sha256:c1f602207f6882e446c23fb045e8c9b52e217f80492047084ab2109871a918fc
+  normalized_sha256: sha256:c1f602207f6882e446c23fb045e8c9b52e217f80492047084ab2109871a918fc
+cas_ref: sha256:c1f602207f6882e446c23fb045e8c9b52e217f80492047084ab2109871a918fc
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,23 @@
+## 567.3 Floor optimization
+
+求：
+
+$$
+\boxed{
+\max\alpha
+}
+$$
+
+满足：
+
+$$
+\boxed{
+T_d(y)-\alpha H_D\succeq0.
+}
+\tag{567.1}
+$$
+
+若数据完整，则退化为 generalized eigenvalue。
+
+---
+

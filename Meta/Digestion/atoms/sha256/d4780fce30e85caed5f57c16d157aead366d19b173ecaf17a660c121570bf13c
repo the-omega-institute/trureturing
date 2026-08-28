@@ -1,0 +1,29 @@
+## 定理 644.1（No canonical self-axis）
+
+不存在 \(G\)-等变的确定性坐标选择器：
+
+$$
+\boxed{
+\sigma:\{\Omega\}\to\mathcal A.
+}
+\tag{644.3}
+$$
+
+### 证明
+
+若 \(\sigma\) 等变，则对任意 \(g\in G\)：
+
+$$
+\begin{aligned}
+\sigma(\Omega)
+&=\sigma(g\Omega)\\
+&=g\sigma(\Omega).
+\end{aligned}
+$$
+
+所以 \(\sigma(\Omega)\) 必须被整个 \(G\) 固定。
+
+这与 \(\mathcal A=G/H\) 没有全局固定点矛盾。∎
+
+---
+

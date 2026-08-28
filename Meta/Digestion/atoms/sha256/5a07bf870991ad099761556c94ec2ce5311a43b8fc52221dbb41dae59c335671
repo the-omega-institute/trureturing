@@ -1,0 +1,24 @@
+## 定义 631.1（有限高度 completion variance）
+
+对 \(T>0\)，定义：
+
+$$
+\boxed{
+\mathcal V_J(T)
+=
+\sum_{\substack{
+\xi(\rho)=0\\
+0<\Im\rho\le T
+}}
+m_\rho
+\left(
+\Re\rho-\frac12
+\right)^2.
+}
+\tag{631.1}
+$$
+
+每项均非负。
+
+---
+

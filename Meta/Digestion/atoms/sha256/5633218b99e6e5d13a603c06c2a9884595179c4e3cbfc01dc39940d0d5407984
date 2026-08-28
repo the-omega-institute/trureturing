@@ -1,0 +1,56 @@
+# 第六百一十五部　黄金方向局部系统
+
+令：
+
+$$
+P=2\log\varphi.
+$$
+
+仓库黄金单位 ζ 是周期函数：
+
+$$
+Z(s,\eta+P)=Z(s,\eta),
+$$
+
+且满足反射：
+
+$$
+Z(s,-\eta)=Z(s,\eta).
+$$
+
+该对象使用两个嵌入的平方，因此属于方向不敏感的 even sector。
+
+定义平坦实线丛：
+
+$$
+\boxed{
+\mathscr L_-
+=
+(\mathbb R\times\mathbb R)/
+\bigl[
+(\eta,u)\sim(\eta+P,-u)
+\bigr].
+}
+\tag{615.1}
+$$
+
+其截面可由反周期函数表示：
+
+$$
+\boxed{
+\Psi(\eta+P)=-\Psi(\eta).
+}
+\tag{615.2}
+$$
+
+并满足：
+
+$$
+\boxed{
+\Psi(\eta+2P)=\Psi(\eta).
+}
+\tag{615.3}
+$$
+
+---
+

@@ -1,0 +1,15 @@
+* \(2\varphi^2\)：由 \(1+x=(1-x^2)/(1-x)\) 一类 signed Euler 重组产生的补偿尺度。
+
+这不能直接解释为已完成的 Galois 奇偶理论，但它已经显示：
+
+$$
+\boxed{
+\text{第二阶 local cancellation
+开始同时携带 even mode、odd mode 与 reciprocal correction。}
+}
+$$
+
+这是值得继续形式化的真实残差。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/本轮独立推导得到-第-489-部
+fingerprints:
+  raw_sha256: sha256:0b5dfe4a4cdde0ac94783dbf4b5c0232efc5bfef141fa92609ea9cdce621acac
+  normalized_sha256: sha256:0b5dfe4a4cdde0ac94783dbf4b5c0232efc5bfef141fa92609ea9cdce621acac
+cas_ref: sha256:0b5dfe4a4cdde0ac94783dbf4b5c0232efc5bfef141fa92609ea9cdce621acac
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,25 @@
+### 奇观察任务
+
+证明：
+
+$$
+\mathfrak b_0^-(f)
+-
+(R-R_0)|\mathcal S_a(f)|^2
+\ge0
+$$
+
+在同一 \(R\) 下仍成立。
+
+这是 hyperbolic-ghost exclusion problem。
+
+因此真正的观察者闭合条件不是“更多正性”，而是：
+
+$$
+\boxed{
+\text{同一个预算同时满足偶下界和奇上界。}
+}
+$$
+
+---
+

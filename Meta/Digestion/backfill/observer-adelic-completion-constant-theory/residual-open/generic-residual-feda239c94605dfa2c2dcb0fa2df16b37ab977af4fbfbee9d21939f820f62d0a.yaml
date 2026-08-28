@@ -1,0 +1,15 @@
+ast_path: section/439-3-最大熵扩张本身不证明-RH
+fingerprints:
+  raw_sha256: sha256:feda239c94605dfa2c2dcb0fa2df16b37ab977af4fbfbee9d21939f820f62d0a
+  normalized_sha256: sha256:feda239c94605dfa2c2dcb0fa2df16b37ab977af4fbfbee9d21939f820f62d0a
+cas_ref: sha256:feda239c94605dfa2c2dcb0fa2df16b37ab977af4fbfbee9d21939f820f62d0a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-9dfea970e94a35526f96dd2c56f6ea9c923d35c9f9ef177cc96cfaaecf55f12d-15aa3d54ec634f5625b65fcae0a559e549fb95ae4caf323957d064dab11c44de
+    - generic-residual-a7c4c28ff8d9343c250138a440c22c7c50ca2e77080025a5dc2596366e37abbe-ca2f5c3c55c3ce6587925e7990c43d8733760370a6d12316b4cb2a34c627d9b0
+    - generic-residual-adf380704aa768b9b3283b712938d8479c6ef11298244cecade5ddfdcf15de76-dfb15e38298ac0c4c807c9933f804a818459aa20ce561a551cb4fc51e011b787
+    - generic-residual-a177332580a4e9b31dba5f2c4577c28509169418565d02fd3df37d85758737da-e47593cd4bf69bdd30c2a32f15f7c37173bd76ad12c393929c5de96f7d193433

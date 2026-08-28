@@ -1,0 +1,25 @@
+### 逃逸深度
+
+令：
+
+$$
+\mathcal E_k
+=
+\mathcal E(q_k;T).
+$$
+
+若：
+
+$$
+\boxed{
+\mathcal E_{k+1}
+\subsetneq
+\mathcal E_k,
+}
+\tag{583.2}
+$$
+
+且能给出被新定义切开的明确 witness pair，则逃逸深度增加。
+
+---
+

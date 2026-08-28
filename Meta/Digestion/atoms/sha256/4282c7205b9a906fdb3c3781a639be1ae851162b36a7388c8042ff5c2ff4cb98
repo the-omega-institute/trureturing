@@ -1,0 +1,26 @@
+## 502.3 Atomic contact solver
+
+在：
+
+$$
+\theta>0
+$$
+
+时求解有限接触系统：
+
+$$
+\boxed{
+\left(\tau_j^2+\frac14\right)
+\widehat\phi(\tau_j)+\theta=0,
+}
+\tag{502.3}
+$$
+
+再由局部 moment constraints 求出：
+
+$$
+c_j\ge0.
+$$
+
+---
+

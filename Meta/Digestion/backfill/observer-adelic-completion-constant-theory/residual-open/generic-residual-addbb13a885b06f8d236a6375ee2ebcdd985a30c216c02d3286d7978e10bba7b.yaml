@@ -1,0 +1,15 @@
+ast_path: section/第六百三十八部-xi-不是所有完成的终点
+fingerprints:
+  raw_sha256: sha256:addbb13a885b06f8d236a6375ee2ebcdd985a30c216c02d3286d7978e10bba7b
+  normalized_sha256: sha256:addbb13a885b06f8d236a6375ee2ebcdd985a30c216c02d3286d7978e10bba7b
+cas_ref: sha256:addbb13a885b06f8d236a6375ee2ebcdd985a30c216c02d3286d7978e10bba7b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-4da0163bd18938e24d5e20548c8903726328c70d8d3230f77a3640d0fb676bd6-3ef3c3d0c3b119a4bfcf154ed5ab6d1be85e34f7df12e914bb20ddbd044797f6
+    - generic-residual-8c0a89f0533b35931b86cda46aada08cf0ea0febffea9bba6166ae1535a31f09-02d68a93ccc29f4ffe7e996388214498e1964b07dd762657834d31ec86273c5b
+    - generic-residual-d0acb17742a5e2842aff5f56a3b9af6fea0808899e76e9e398adcb33ed3e9014-dfc0cc38dc255c4a23bbde04edb1cb91e095618391fcebb334f9eb499c1243b9
+    - generic-residual-863b7a8e04855fe146af126ec0a6d73aef83819d68dd4c145675ae5bfc679c54-d690e585e3f4d9c2fdb01f20334c62cf5ac291c184f69e522583d477466aa905

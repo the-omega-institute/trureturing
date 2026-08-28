@@ -1,0 +1,8 @@
+## 501.1 Strong duality 不能省略
+
+接触零点和有限原子结论依赖 dual attainment。
+
+在无限维 moment problem 中，约束空间选择不当可能产生 duality gap，甚至需要奇异 dual functional。([arXiv][3])
+
+---
+

@@ -1,0 +1,60 @@
+# 第六百五十七部　每个零点都“认为自己完成”的严格模型
+
+定义零点观察者只保留以下信息：
+
+$$
+\boxed{
+\mathscr W_\rho^{(0)}
+=
+\left[
+\frac mz
+\right].
+}
+\tag{657.1}
+$$
+
+则所有同重数零点世界完全相同。
+
+加入第一正规系数：
+
+$$
+\boxed{
+\mathscr W_\rho^{(1)}
+=
+\left[
+\frac mz+h_\rho(0)
+\right].
+}
+\tag{657.2}
+$$
+
+加入完整 jet：
+
+$$
+\boxed{
+\mathscr W_\rho^{(\infty)}
+=
+\operatorname{germ}_0
+\left(
+\frac{\xi'}{\xi}(\rho+\cdot)-\frac m{\cdot}
+\right).
+}
+\tag{657.3}
+$$
+
+于是出现严格层级：
+
+$$
+\boxed{
+\mathscr W_\rho^{(0)}
+\prec
+\mathscr W_\rho^{(1)}
+\prec
+\cdots
+\prec
+\mathscr W_\rho^{(\infty)}.
+}
+$$
+
+---
+

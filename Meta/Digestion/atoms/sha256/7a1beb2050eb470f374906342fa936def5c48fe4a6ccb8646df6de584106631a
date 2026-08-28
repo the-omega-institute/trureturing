@@ -1,0 +1,40 @@
+## 487.1 RH 的新完成表述
+
+RH 可以写成以下动态完成命题：
+
+$$
+\boxed{
+\begin{aligned}
+&\forall L<\infty,\quad
+\lambda_{\mathrm{full}}(L)>0;\\
+&\lambda_{\mathrm{full}}(L)\downarrow0;\\
+&\text{极值 atomic completions}
+\longrightarrow
+\nu_\Xi.
+\end{aligned}
+}
+\tag{487.1}
+$$
+
+第一行表示：
+
+$$
+\text{每个有限观察者仍有严格白噪声容忍度};
+$$
+
+第二行表示：
+
+$$
+\text{无限观察者排除全部连续背景};
+$$
+
+第三行表示：
+
+$$
+\text{剩余离散谱唯一 collapse 为 Riemann 零点}.
+$$
+
+严格地说，前两行在 RH 下成立；第三行仍需要极值 completion 的存在、规范选择与紧性证明。
+
+---
+

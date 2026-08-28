@@ -1,0 +1,43 @@
+## 定理 497.1（Atomic hierarchy convergence）
+
+$$
+\boxed{
+\Lambda_{L,a}^{(N)}(C)
+\downarrow
+\Lambda_{L,a}(C).
+}
+\tag{497.2}
+$$
+
+### 证明
+
+令：
+
+$$
+\lambda_N=\Lambda_{L,a}^{(N)}(C).
+$$
+
+单调极限记为 \(\lambda_\infty\)。
+
+取有限原子 optimizer \(\nu_N\)，并定义：
+
+$$
+d\rho_N=\frac{d\nu_N}{\xi^2+a^2}.
+$$
+
+其总质量不超过 \(C\)，故可取 weak-* 收敛子列。
+
+对任意固定 \(\phi\in\bigcup_NV_N\)，当 \(N\) 足够大时，相应 moment constraint 已被加入；因此极限测度满足全部 determining constraints。
+
+所以极限是完整局部问题的可行完成，white floor 至少为 \(\lambda_\infty\)。
+
+因此：
+
+$$
+\lambda_\infty\le\Lambda_{L,a}(C).
+$$
+
+结合反向不等式即得。∎
+
+---
+

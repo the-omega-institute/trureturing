@@ -1,0 +1,37 @@
+## 547.5 强度层级
+
+有严格蕴含：
+
+$$
+\boxed{
+\text{共同正谱}
+\Longrightarrow
+\text{联合 block Gram}
+\Longrightarrow
+\text{各尺度 Toeplitz PSD}.
+}
+\tag{547.5}
+$$
+
+反向在有限阶均不成立。
+
+但当：
+
+* moment order \(N\to\infty\)；
+* scale bank 稠密；
+* transport errors \(\to0\)；
+
+并对由 rational functions 生成的整个 \(*\)-algebra建立正性时，Riesz–Markov 表示可恢复共同圆周测度，进而恢复唯一实轴谱。
+
+所以：
+
+$$
+\boxed{
+\text{联合多尺度 SDP}
+}
+$$
+
+是 common-spectrum problem 的有限投影，而不只是多个独立 SDP 的集合。
+
+---
+

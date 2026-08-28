@@ -1,0 +1,19 @@
+## 661.5 局部世界 jet
+
+对每个候选零点计算：
+
+$$
+\boxed{
+h_\rho(0),
+\quad
+h_\rho'(0),
+\quad
+h_\rho''(0),\ldots
+}
+$$
+
+并定义第一差异深度。
+
+检验：
+
+* 反射伙伴的 jet mirror identity；

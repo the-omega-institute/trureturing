@@ -1,0 +1,72 @@
+## 定理 496.1（Finite atomic primal optimizer）
+
+若有限 moment 问题可行，则存在一个最优完成：
+
+$$
+\boxed{
+\nu_N^*
+=
+\frac{\lambda_N^*}{2\pi}d\xi
++
+\sum_{r=1}^{J}
+c_r
+\left(
+\delta_{\tau_r}
++
+\delta_{-\tau_r}
+\right)
++
+c_0\delta_0,
+}
+\tag{496.3}
+$$
+
+其中可取：
+
+$$
+\boxed{
+J\le d+1
+}
+\tag{496.4}
+$$
+
+个非负频率轨道。
+
+### 证明
+
+令：
+
+$$
+d\sigma(\xi)
+=
+\frac{
+d\left(
+\nu_N^*-\lambda_N^*m_0
+\right)(\xi)
+}{
+\xi^2+a^2
+}.
+$$
+
+它是有限正测度。
+
+需保留的有限函数为：
+
+$$
+1,
+\qquad
+A_j(\xi)
+=
+(\xi^2+a^2)\widehat\phi_j(\xi),
+\quad
+1\le j\le d.
+$$
+
+这些函数均对 \(\sigma\) 可积。
+
+有限维正函数离散化定理保证存在不超过 \(d+1\) 个原子的正测度，精确保持这些积分。再作偶对称化即可。∎
+
+Tchakaloff–Richter 类型结果保证有限维可积函数空间上的正泛函存在有限原子表示；近期工作进一步把这一结论扩展到复线性泛函、frame 离散化和正 quadrature widths。([arXiv][4])
+
+---
+

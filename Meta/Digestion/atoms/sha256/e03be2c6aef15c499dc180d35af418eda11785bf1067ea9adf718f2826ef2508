@@ -1,0 +1,37 @@
+## 612.1 为什么 \(\varphi^4\) 没有成为独立 ζ 因子
+
+虽然：
+
+$$
+\beta_3=\varphi^4,
+$$
+
+但：
+
+$$
+\boxed{
+\varphi^4
+=
+\varphi^2+\varphi^3.
+}
+\tag{612.2}
+$$
+
+所以该模态已经是两个更低 primitive histories 的复合。
+
+在 logarithmic／plethystic 账本中，它被自动消去。
+
+这给出一个重要原则：
+
+$$
+\boxed{
+\text{原始谱中出现的模态}
+\neq
+\text{primitive ζ 因子}.
+}
+$$
+
+理论深度不能按原始模态编号计算，必须先商去由低层历史解释的复合项。
+
+---
+

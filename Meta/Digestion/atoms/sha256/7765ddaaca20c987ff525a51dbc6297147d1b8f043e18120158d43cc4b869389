@@ -1,0 +1,143 @@
+# 本轮最终结论
+
+上一轮把 RH 的固定支撑问题压缩成：
+
+$$
+\boxed{
+\text{有限 sticky matrix}
++
+\text{正 residual operator}.
+}
+$$
+
+本轮进一步揭示：
+
+$$
+\boxed{
+\text{sticky matrix 本身仍依赖于 multiplier gauge。}
+}
+$$
+
+固定支撑 observer 只读取：
+
+$$
+(-2L,2L)
+$$
+
+内的相关分布；所有外部相关数据都是隐藏 completion freedom。
+
+因此：
+
+$$
+\boxed{
+m_L
+\sim_L
+m_L+\widehat\kappa,
+\qquad
+\operatorname{supp}\kappa
+\cap(-2L,2L)=\varnothing.
+}
+$$
+
+这种 freedom 足够强，可以在不改变 Weil form 的情况下：
+
+$$
+\boxed{
+\text{消去 discrepancy 的任意有限数量低频 moments。}
+}
+$$
+
+所以某个 multiplier 的低频负带不是本体。
+
+真正的固定尺度命题是：
+
+$$
+\boxed{
+\mathsf{WP}(L)
+\iff
+\text{局部 Weil distribution 可被补全为全局正谱测度。}
+}
+$$
+
+所有这样的正谱组成：
+
+$$
+\boxed{
+\mathfrak E_L.
+}
+$$
+
+它们形成递减塔：
+
+$$
+\mathfrak E_{L_1}
+\supseteq
+\mathfrak E_{L_2}
+\supseteq\cdots.
+$$
+
+RH 等价于：
+
+$$
+\boxed{
+\mathfrak E_L\neq\varnothing
+\quad
+\forall L>0,
+}
+$$
+
+而在 RH 下：
+
+$$
+\boxed{
+\bigcap_{L>0}\mathfrak E_L
+=
+\{\nu_\Xi\}.
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{Hilbert--Pólya 谱不是在一开始就唯一存在；}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{随着 observer 的相关窗口不断扩大，
+一族可能的正自伴完成逐步收缩，
+最终 collapse 成唯一的 Riemann 零点谱。}
+}
+$$
+
+因此 OACTC 当前真正值得推进的方向，不再只是证明某个固定 multiplier 的 Feshbach matrix 正定，而是同时研究：
+
+$$
+\boxed{
+\text{局部正定核的 Kreĭn 扩张}
++
+\text{最大熵规范选择}
++
+\text{gauge-optimized Slepian reduction}
++
+\text{完成塔的尺度一致性}.
+}
+$$
+
+这把 RH 的中心困难进一步改写为一个非常纯粹的观察者问题：
+
+$$
+\boxed{
+\text{每个有限观察窗口中的局部相关数据，
+是否始终允许一个正的全局谱完成，
+并且这些完成能否在无限分辨率极限中胶合为同一个谱？}
+}
+$$
+
+[1]: https://arxiv.org/abs/1212.3047 "https://arxiv.org/abs/1212.3047"
+[2]: https://bookstore.ams.org/MEMO/102/489 "https://bookstore.ams.org/MEMO/102/489"
+[3]: https://epubs.siam.org/doi/10.1137/S0363012997321553 "https://epubs.siam.org/doi/10.1137/S0363012997321553"

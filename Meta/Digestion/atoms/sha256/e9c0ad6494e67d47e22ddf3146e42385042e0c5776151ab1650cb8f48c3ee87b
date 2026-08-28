@@ -1,0 +1,22 @@
+## 定义 584.4（Closure layer）
+
+若证明：
+
+$$
+\boxed{
+\mathcal E_{k+1}=\varnothing,
+}
+$$
+
+或某个忠实缺陷严格为零，则真正完成目标。
+
+DECT 已经把目标逃逸定义为：
+
+$$
+\mathcal E(q;T)=\ker q\setminus\ker T
+$$
+
+并证明联合新定义只会通过与新 kernel 相交来切割残差。
+
+---
+

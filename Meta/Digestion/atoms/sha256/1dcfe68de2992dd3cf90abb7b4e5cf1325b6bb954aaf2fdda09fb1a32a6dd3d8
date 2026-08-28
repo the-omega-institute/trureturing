@@ -1,0 +1,42 @@
+## v3.8：白噪声完成裕量、零点采样帧、极值谱互补与观察者饱和
+
+以下从前文**第四百七十三部**继续追加。
+
+本轮首先进行一次必要的科学审计。
+
+2026 年 8 月 25 日出现的预印本 *Weil positivity in compact windows: certified two-sided bounds and a Landau–Widom decay law*，已经把紧支撑窗口上的 Weil 正性转化为有限矩阵证书，并在 \(L=0.8\) 时无条件证明了对全部复测试函数
+
+$$
+Q(f)\ge 8.9\times10^{-18}\|f\|_2^2.
+$$
+
+该工作还显式处理了奇偶分解：偶通道的 pole 项为正 rank-one 项，奇通道的 pole 项变号；其计算证明 \(L=0.8\) 的地态简单且属于偶通道。因而，前文提出的“奇观察者补全”和“有限矩阵化”方向是正确的，但后者本身已经成为公开结果，不能再作为 OACTC 的新颖性主张。([arXiv][1])
+
+仓库当前的 Lean 真源仍以偶、光滑、紧支撑测试函数为基础；它已经冻结 convolution square、实频 Fourier 非负性、prime/pole/Archimedean 项以及无假设显式公式，但尚未形式化完整的窗口谱轮廓、奇通道与下述谱完成问题。
+
+本轮真正向前推进的对象是：
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)
+=
+\text{有限观察窗口中仍可隐藏的最大均匀白噪声谱密度}.
+}
+$$
+
+并进一步得到：
+
+$$
+\boxed{
+\text{极值正谱完成}
+=
+\text{均匀白连续谱}
++
+\text{支撑于地态 Fourier 零点上的原子谱}.
+}
+$$
+
+这将紧窗口 Weil 正性、Paley–Wiener 采样、Slepian 饱和和“地态零点逼近 ζ 零点”连接为同一个 primal–dual 结构。
+
+---
+

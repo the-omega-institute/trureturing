@@ -1,0 +1,70 @@
+# 第四百二十三部　低算术精确、高算术连续的混合图表
+
+选择中间尺度：
+
+$$
+0<R_0<2L.
+$$
+
+定义低层精确 multiplier：
+
+$$
+\boxed{
+m_{R_0}(\xi)
+=
+b_\infty(\xi)
+-
+2
+\int_{[0,R_0]}
+\cos(\xi u)\,d\varepsilon(u).
+}
+\tag{423.1}
+$$
+
+剩余高层 discrepancy 为：
+
+$$
+\boxed{
+\mathcal R_{R_0,2L}(\xi)
+=
+2
+\int_{(R_0,2L]}
+\cos(\xi u)\,d\varepsilon(u).
+}
+\tag{423.2}
+$$
+
+于是：
+
+$$
+\boxed{
+\widetilde m_L
+=
+m_{R_0}
+-
+\mathcal R_{R_0,2L}.
+}
+\tag{423.3}
+$$
+
+该图表具有明确分工：
+
+$$
+\boxed{
+\begin{aligned}
+u\le R_0
+&:\text{低 prime powers 全部精确保留};\\
+u>R_0
+&:\text{只处理相对 PNT continuum 的尾偏差}.
+\end{aligned}
+}
+$$
+
+研究目标不再是直接控制完整素数和，而是寻找 \(R_0(L)\)，使：
+
+1. \(m_{R_0}\) 的危险空间足够小；
+2. 高层 discrepancy 可由 PNT error、Slepian 浓缩或 Feshbach self-energy 控制；
+3. 该控制在 \(L\to\infty\) 时仍可迭代。
+
+---
+

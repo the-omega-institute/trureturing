@@ -1,0 +1,35 @@
+## PNT-discrepancy domination problem
+
+对任意偶的紧支撑测试 \(f\)，是否有：
+
+$$
+\boxed{
+\begin{aligned}
+&
+\frac1{2\pi}
+\int_{\mathbb R}
+\left[
+\Re\psi
+\left(
+\frac54+\frac{i\xi}{2}
+\right)
+-\log\pi
+\right]
+|\widehat f(\xi)|^2d\xi
+\\
+&\quad+
+\int_0^{2L}
+E(u)C_f'(u)\,du
+\ge0?
+\end{aligned}
+}
+\tag{425.1}
+$$
+
+这与 Weil 正性等价，但已经完成了两个非平凡压缩：
+
+1. pole 与 PNT continuum 已被正 Green completion 消去；
+2. 全部 prime powers 已被压缩成单一 discrepancy history \(E(u)\)。
+
+---
+

@@ -1,0 +1,16 @@
+ast_path: section/518-1-Cayley-紧化不等于-RH-证明
+fingerprints:
+  raw_sha256: sha256:3c21b83c56be26b9922d0865efb8c8eceaf3c6ea8ca488a7d08ce90018d9ec99
+  normalized_sha256: sha256:3c21b83c56be26b9922d0865efb8c8eceaf3c6ea8ca488a7d08ce90018d9ec99
+cas_ref: sha256:3c21b83c56be26b9922d0865efb8c8eceaf3c6ea8ca488a7d08ce90018d9ec99
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-d19c3910844ba790511dca407d8668af5fbc1205882a2c6d17cd88571071a7ae-90a9b25784322c90046fdea43f04d3f44815117b87e50f4dd7a03f3e13e57e73
+    - generic-residual-b7fa0aab9a73783feb49f7b6a435487530caa3c5930db5e6c3e2bb2a8a139aea-afe7fd7ac644838d263629144593a8396600c513cfe1f582d6e3251440933c99
+    - generic-residual-84931e7f76f9d3cfc5c964e923483abd22f3f8ea60b21ad1f082441ff12dfe95-9ec958156a668b65b3b4ea8d430c77ca45a5a7dda590ed4354d78b44db5ed508
+    - generic-residual-ffcde2dbdffc213bc78fa7cbd11451e2be767abde6f620e88dce755d42f608ca-383359765f68c0da4b33b78cb8aeb1446c3c4678d9fabcaf96deb4040b91052b
+    - generic-residual-f28b8d2946d4af1e43fc2eb0ac24c5561862fcc9fc5667bd5d424e2858ec611b-bdad17a237aac73f69b07a9fd9027ced60017190e9ec9903908ed240b202564a

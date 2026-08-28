@@ -1,0 +1,56 @@
+# 第五百二十一部　Cayley character 的 Laguerre 脉冲响应
+
+固定：
+
+$$
+a>0.
+$$
+
+定义 Cayley character：
+
+$$
+\boxed{
+\chi_a(\xi)
+=
+\frac{\xi+ia}{\xi-ia},
+\qquad
+\xi\in\mathbb R.
+}
+\tag{521.1}
+$$
+
+显然：
+
+$$
+|\chi_a(\xi)|=1.
+$$
+
+令：
+
+$$
+L_n^{(\alpha)}
+$$
+
+表示 generalized Laguerre polynomial。
+
+对整数：
+
+$$
+n\ge1,
+$$
+
+定义 Laguerre 观察核：
+
+$$
+\boxed{
+K_{n,a}(t)
+=
+2a\,e^{-at}
+L_{n-1}^{(1)}(2at)
+\mathbf 1_{t\ge0}.
+}
+\tag{521.2}
+$$
+
+---
+

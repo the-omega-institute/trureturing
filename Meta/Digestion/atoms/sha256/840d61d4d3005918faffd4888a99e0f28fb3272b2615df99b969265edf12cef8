@@ -1,0 +1,39 @@
+## 416.1 结构改进
+
+原图表为：
+
+$$
+\boxed{
+\text{rank-one pole}
++
+\text{compressed multiplier}.
+}
+$$
+
+新图表为：
+
+$$
+\boxed{
+\text{单一 compressed multiplier } \widetilde m_L.
+}
+$$
+
+因此固定 \(L\) 的 Weil operator 可以直接写为：
+
+$$
+\boxed{
+\widetilde A_L
+=
+P_L\,
+\widetilde m_L(D)\,
+P_L
+}
+\tag{416.5}
+$$
+
+于偶子空间上，且与原来的 pole–prime–Archimedean 算子具有完全相同的二次型。
+
+这会直接减少 sticky reduction 的维数：不再需要额外人为加入 pole vector。
+
+---
+

@@ -1,0 +1,53 @@
+## 557.1 先前三类 PSD 条件的压缩
+
+任取有限 rational feature family：
+
+$$
+h(z)=C\frac{v_d(z)}{D(z)}.
+$$
+
+其 Gram matrix为：
+
+$$
+\boxed{
+G_h
+=
+C\,T_d(y)\,C^*.
+}
+\tag{557.4}
+$$
+
+因此，只要主矩阵：
+
+$$
+T_d(y)\succeq0,
+$$
+
+以下对象均自动正半定：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{每个单尺度 Toeplitz block};\\
+&\text{Crofoot 跨尺度 block Gram};\\
+&\text{有限 budget Loewner Gram};\\
+&\text{任意 rational Krylov compression}.
+\end{aligned}
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{Loewner、Toeplitz 与 Crofoot
+不是三个独立正性条件；}
+}
+$$
+
+它们是同一个主 Toeplitz matrix 的不同压缩。
+
+反过来，各压缩分别 PSD 并不足以保证存在共同的 \(T_d(y)\)。
+
+---
+

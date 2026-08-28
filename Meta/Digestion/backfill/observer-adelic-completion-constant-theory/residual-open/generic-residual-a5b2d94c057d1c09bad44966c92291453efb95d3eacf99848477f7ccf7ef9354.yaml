@@ -1,0 +1,10 @@
+ast_path: section/第五百七十三部-完成圆上的奇向平衡场
+fingerprints:
+  raw_sha256: sha256:a5b2d94c057d1c09bad44966c92291453efb95d3eacf99848477f7ccf7ef9354
+  normalized_sha256: sha256:a5b2d94c057d1c09bad44966c92291453efb95d3eacf99848477f7ccf7ef9354
+cas_ref: sha256:a5b2d94c057d1c09bad44966c92291453efb95d3eacf99848477f7ccf7ef9354
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

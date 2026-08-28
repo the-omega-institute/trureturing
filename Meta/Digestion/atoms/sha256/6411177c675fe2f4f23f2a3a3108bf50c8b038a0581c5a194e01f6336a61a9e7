@@ -1,0 +1,18 @@
+## 576.2 物理空间与内部空间
+
+可写：
+
+$$
+\boxed{
+\mathbb R^6
+=
+E_{\parallel}
+\oplus
+E_{\perp},
+}
+\tag{576.4}
+$$
+
+其中：
+
+* \(E_\parallel\)：物理三维观察空间；

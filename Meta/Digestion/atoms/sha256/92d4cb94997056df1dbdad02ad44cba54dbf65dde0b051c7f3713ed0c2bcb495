@@ -1,0 +1,33 @@
+## 491.1 有限预算饱和值
+
+定义：
+
+$$
+\boxed{
+\lambda_{\mathrm{fb}}(L,a)
+=
+\sup_{C<\infty}
+\Lambda_{L,a}(C).
+}
+\tag{491.4}
+$$
+
+总有：
+
+$$
+\boxed{
+\lambda_{\mathrm{fb}}(L,a)
+\le
+\lambda_{\mathrm{full}}(L).
+}
+\tag{491.5}
+$$
+
+二者相等需要额外证明：
+
+> 接近无预算 white-floor 极值的局部正谱完成，可以选择为有限 resolvent budget。
+
+这不是形式上的自动结论，必须作为独立的 finite-budget saturation 条件处理。
+
+---
+

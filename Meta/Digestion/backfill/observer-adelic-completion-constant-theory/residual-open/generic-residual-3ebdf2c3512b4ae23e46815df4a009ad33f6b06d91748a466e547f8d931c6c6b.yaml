@@ -1,0 +1,10 @@
+ast_path: row/Cayley-Laguerre-多尺度-Toeplitz
+fingerprints:
+  raw_sha256: sha256:3ebdf2c3512b4ae23e46815df4a009ad33f6b06d91748a466e547f8d931c6c6b
+  normalized_sha256: sha256:3ebdf2c3512b4ae23e46815df4a009ad33f6b06d91748a466e547f8d931c6c6b
+cas_ref: sha256:3ebdf2c3512b4ae23e46815df4a009ad33f6b06d91748a466e547f8d931c6c6b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
