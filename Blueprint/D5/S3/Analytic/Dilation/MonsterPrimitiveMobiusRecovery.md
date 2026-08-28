@@ -2,11 +2,11 @@
 
 ## Abstract
 
-Mobius inversion recovers primitive coefficients from logarithmic histories.
+Mobius inversion recovers the full bivariate Monster primitive heat series.
 
-**Theorem 1.1 (Logarithmic histories determine every primitive coefficient).**
+**Theorem 1.1 (Bivariate formal Mobius recovery).**
 
-$$\forall I \in Type, H \in I \to \left(\mathbb{N} \to \mathbb{Q}\right), L \in I \to \left(\mathbb{N} \to \mathbb{Q}\right),\; \left(\forall ray \in I, n \in \mathbb{N},\; n > 0 \Rightarrow \sum_{d \mid n} d \cdot H\left(ray, d\right) = n \cdot L\left(ray, n\right)\right) \Rightarrow \left(\forall ray \in I, n \in \mathbb{N},\; n > 0 \Rightarrow H\left(ray, n\right) = \sum_{k \cdot r = n} \frac{\mu(k)}{k} \cdot L\left(ray, r\right)\right)$$
+$$\begin{aligned}\left(H_{c}\right)\left(p, q\right) := \sum_{m, n \ge 1} \operatorname{c}(mn) p^{m} q^{n},\\\left(L_{D}\right)\left(p, q\right) := -\log(\operatorname{D}(p, q)),\\\forall c \in \mathbb{N} \to \mathbb{Z}, D \in \{F \in \mathbb{Q}[[p, q]] \mid [p^{0}q^{0}]F = 1\},\; \left(L_{D}\right)\left(p, q\right) = \sum_{k\ge1} \frac{1}{k} \cdot \left(H_{c}\right)\left(p^{k}, q^{k}\right) \Rightarrow \left(H_{c}\right)\left(p, q\right) = \sum_{k\ge1} \frac{\mu(k)}{k} \cdot \left(L_{D}\right)\left(p^{k}, q^{k}\right)\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Dilation/MonsterPrimitiveMobiusRecovery.monster_primitive_mobius_recovery` (`✓ std3`). ∎
 
@@ -14,11 +14,11 @@ $$\forall I \in Type, H \in I \to \left(\mathbb{N} \to \mathbb{Q}\right), L \in 
 
 *Commentary.*
 
-Let I index the primitive root rays. The functions H and L record the rational coefficients at positive multiples of every ray in the primitive heat series and the negative logarithmic denominator.
+Let c be the Monster coefficient function and let D be a bivariate formal power series over the rationals with constant coefficient one. The series H_c has coefficient c(mn) at p^m q^n for positive m and n, and L_D is the formal series -log D.
 
-The hypothesis is the coefficient form of the logarithmic expansion: multiplying degree n by the source factor 1/k turns it into the displayed divisor sum.
+The hypothesis is the full bivariate formal-series identity (126.2), using simultaneous substitution of p^k and q^k. The conclusion is the boxed full-series identity (126.3), not a coefficient-family surrogate.
 
-Pinned Mathlib supplies divisor-sum Mobius inversion. Applying it to the degree-scaled coefficients and cancelling positive n gives exactly the factor mu(k)/k in the recovery formula.
+Positive exponent pairs are canonically equivalent to a primitive coprime ray and a positive dilation degree. Pinned Mathlib then supplies scalar divisor-sum Mobius inversion on every ray; formal power-series extensionality reassembles the bivariate equality.
 
 ## References
 
