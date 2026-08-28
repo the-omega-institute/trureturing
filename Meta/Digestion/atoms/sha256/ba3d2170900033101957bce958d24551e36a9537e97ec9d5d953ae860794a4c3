@@ -1,0 +1,56 @@
+## 定理 507.1（Circle primal equivalence）
+
+$$
+\boxed{
+\Lambda_{L,a}(C)
+=
+2a
+\max_{\mu\in\mathscr M_{L,a}(C)}
+\operatorname{hfloor}(\mu).
+}
+\tag{507.3}
+$$
+
+等价地，引入：
+
+$$
+\mu=\alpha m_{\mathbb T}+\sigma,
+\qquad
+\alpha\ge0,\quad\sigma\ge0,
+$$
+
+则：
+
+$$
+\boxed{
+\frac{\Lambda_{L,a}(C)}{2a}
+=
+\max\alpha
+}
+\tag{507.4}
+$$
+
+满足：
+
+$$
+\boxed{
+\alpha+\sigma(\mathbb T)\le C,
+}
+\tag{507.5}
+$$
+
+$$
+\boxed{
+2a\alpha\,\phi(0)
++
+\int\Gamma_{a,\phi}\,d\sigma
+=
+\langle\mathfrak W_L,\phi\rangle
+}
+\tag{507.6}
+$$
+
+对全部局部测试成立。
+
+---
+

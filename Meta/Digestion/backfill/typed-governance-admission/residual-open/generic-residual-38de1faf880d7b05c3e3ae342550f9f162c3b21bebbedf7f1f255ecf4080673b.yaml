@@ -1,0 +1,10 @@
+ast_path: section/Theorem-4-Two-state-locality-yields-incremental-6f94bbc4
+fingerprints:
+  raw_sha256: sha256:38de1faf880d7b05c3e3ae342550f9f162c3b21bebbedf7f1f255ecf4080673b
+  normalized_sha256: sha256:38de1faf880d7b05c3e3ae342550f9f162c3b21bebbedf7f1f255ecf4080673b
+cas_ref: sha256:38de1faf880d7b05c3e3ae342550f9f162c3b21bebbedf7f1f255ecf4080673b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

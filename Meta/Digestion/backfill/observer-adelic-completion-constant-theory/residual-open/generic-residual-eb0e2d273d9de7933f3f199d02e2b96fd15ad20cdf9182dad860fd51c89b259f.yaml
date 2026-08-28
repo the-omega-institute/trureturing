@@ -1,0 +1,10 @@
+ast_path: section/第六百五十九部-所有概念都有黄金影子-的正确版本
+fingerprints:
+  raw_sha256: sha256:eb0e2d273d9de7933f3f199d02e2b96fd15ad20cdf9182dad860fd51c89b259f
+  normalized_sha256: sha256:eb0e2d273d9de7933f3f199d02e2b96fd15ad20cdf9182dad860fd51c89b259f
+cas_ref: sha256:eb0e2d273d9de7933f3f199d02e2b96fd15ad20cdf9182dad860fd51c89b259f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

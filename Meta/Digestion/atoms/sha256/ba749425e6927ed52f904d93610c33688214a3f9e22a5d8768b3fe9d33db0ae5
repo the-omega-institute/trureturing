@@ -1,0 +1,13 @@
+## 493.1 对偶解释
+
+$$
+\boxed{
+\widehat\phi+\theta w_a
+}
+$$
+
+是一个非负 Fourier majorant。
+
+其中：
+
+* \(\phi\) 读取局部 Weil source；

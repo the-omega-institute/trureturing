@@ -1,0 +1,37 @@
+# 第六百七十九部　“唯一不同是质数”的严格边界
+
+在正整数的乘法世界中，这一判断非常接近正确：
+
+$$
+\boxed{
+\text{所有 primitive 乘法差异均由素数生成}.
+}
+$$
+
+合数只记录多个 prime axes 的 occupation。
+
+但在完整 adelic／completed-\(\zeta\) 世界中，还存在：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{实 Archimedean place};\\
+&\text{符号与方向};\\
+&\Gamma\text{ 完成};\\
+&\text{局部域的 residue characteristic};\\
+&\text{prime 与 infinity 之间的胶合}.
+\end{aligned}
+}
+$$
+
+因此更准确的是：
+
+$$
+\boxed{
+\text{有限离散差异由素数轴生成；
+连续秩序与整体完成由实 place 提供}.
+}
+$$
+
+---
+

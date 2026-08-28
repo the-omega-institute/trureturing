@@ -1,0 +1,10 @@
+ast_path: section/564-3-Contact-atom-稳定性
+fingerprints:
+  raw_sha256: sha256:ed4d72abd791b1088e2ed296ad1dc8b7d2a38f3cdd927eac5e7e3170716f0753
+  normalized_sha256: sha256:ed4d72abd791b1088e2ed296ad1dc8b7d2a38f3cdd927eac5e7e3170716f0753
+cas_ref: sha256:ed4d72abd791b1088e2ed296ad1dc8b7d2a38f3cdd927eac5e7e3170716f0753
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

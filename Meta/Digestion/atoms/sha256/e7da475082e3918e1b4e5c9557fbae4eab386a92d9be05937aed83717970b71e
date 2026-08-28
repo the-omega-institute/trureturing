@@ -1,0 +1,57 @@
+# 第六百七十一部　“无纤维离散态”与“有纤维连续态”
+
+定义 Archimedean 能量映射：
+
+$$
+\boxed{
+\ell:
+\Lambda_{\mathbb P}\to\mathbb R,
+\qquad
+\ell(v)
+=
+\sum_pv_p\log p.
+}
+\tag{671.1}
+$$
+
+由唯一分解：
+
+$$
+\boxed{
+\ell
+\text{ 在整数 occupation lattice 上单射}.
+}
+\tag{671.2}
+$$
+
+因为：
+
+$$
+\ell(v)=\ell(w)
+$$
+
+意味着：
+
+$$
+\prod_pp^{v_p}
+=
+\prod_pp^{w_p},
+$$
+
+故：
+
+$$
+v=w.
+$$
+
+所以离散 prime lattice 确实具有你说的“无纤维”性质：
+
+$$
+\boxed{
+\text{一个实数 }\log n
+\text{ 唯一编码一个离散 prime occupation state}.
+}
+$$
+
+---
+

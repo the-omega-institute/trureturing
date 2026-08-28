@@ -1,0 +1,57 @@
+# 第四百八十部　Paley–Wiener 观察容量与 \(T^*(L)\)
+
+一个支撑在：
+
+$$
+[-L,L]
+$$
+
+内的函数，其 Fourier transform 属于指数型 \(L\) 的 Paley–Wiener 空间。
+
+正频率上的独立零点插值容量约为：
+
+$$
+\boxed{
+D_{\mathrm{PW}}=\frac{L}{\pi}
+}
+\tag{480.1}
+$$
+
+每单位频率。
+
+另一方面，Riemann 零点在高度 \(T\) 附近的平均密度为：
+
+$$
+\boxed{
+D_\zeta(T)
+\sim
+\frac1{2\pi}
+\log\frac{T}{2\pi}.
+}
+\tag{480.2}
+$$
+
+令二者相等：
+
+$$
+\frac1{2\pi}
+\log\frac{T^*}{2\pi}
+=
+\frac{L}{\pi},
+$$
+
+得到：
+
+$$
+\boxed{
+T^*(L)
+=
+2\pi e^{2L}.
+}
+\tag{480.3}
+$$
+
+这一尺度由最新预印本识别为窗口观察者的零点分辨饱和高度。([arXiv][1])
+
+---
+

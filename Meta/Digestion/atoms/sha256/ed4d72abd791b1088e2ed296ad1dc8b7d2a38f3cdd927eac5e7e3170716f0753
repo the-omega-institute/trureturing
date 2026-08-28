@@ -1,0 +1,40 @@
+## 564.3 Contact atom 稳定性
+
+若最小 generalized eigenvalue 与下一 eigenvalue 的 gap 为：
+
+$$
+\boxed{
+\mathrm{gap}
+=
+\alpha_2-\alpha_1>0,
+}
+$$
+
+则接触 eigenspace 的角度误差受 Davis–Kahan 型比例控制：
+
+$$
+\boxed{
+\sin\angle
+(\widetilde c_*,c_*)
+\lesssim
+\frac{
+\|B^{-1/2}EB^{-1/2}\|
+}{
+\mathrm{gap}
+}.
+}
+\tag{564.5}
+$$
+
+因此 contact atoms 的数值不稳定通常来自：
+
+$$
+\boxed{
+\text{最低 floor 近简并},
+}
+$$
+
+而不是单纯来自 moment 数量不足。
+
+---
+

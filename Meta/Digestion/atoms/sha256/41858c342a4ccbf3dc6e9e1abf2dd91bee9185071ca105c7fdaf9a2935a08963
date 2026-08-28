@@ -1,0 +1,32 @@
+## 493.1 对偶解释
+
+$$
+\boxed{
+\widehat\phi+\theta w_a
+}
+$$
+
+是一个非负 Fourier majorant。
+
+其中：
+
+* \(\phi\) 读取局部 Weil source；
+* \(\theta\) 是 resolvent budget 的影子价格；
+* \(\theta w_a\) 是为保持 Fourier 非负而加入的 resolvent counterterm。
+
+当：
+
+$$
+\theta=0,
+$$
+
+dual 退化为通常的：
+
+$$
+\widehat\phi\ge0,\qquad \phi(0)\ge1,
+$$
+
+即 convolution-square/Rayleigh 图表。
+
+---
+

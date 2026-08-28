@@ -1,0 +1,44 @@
+## 624.1 经典全含—无分别态
+
+定义：
+
+$$
+\boxed{
+\mathfrak U_\infty
+=
+(X_\infty,\Omega_\infty,G_\infty),
+}
+\tag{624.2}
+$$
+
+满足：
+
+$$
+\boxed{
+\operatorname{supp}\Omega_\infty
+=
+X_\infty,
+}
+\tag{624.3}
+$$
+
+以及：
+
+$$
+\boxed{
+g_*\Omega_\infty
+=
+\Omega_\infty
+\qquad
+\forall g\in G_\infty.
+}
+\tag{624.4}
+$$
+
+其中：
+
+* 全支撑表示所有状态都被包含；
+* 不变性表示没有状态因坐标选择而被优先。
+
+---
+

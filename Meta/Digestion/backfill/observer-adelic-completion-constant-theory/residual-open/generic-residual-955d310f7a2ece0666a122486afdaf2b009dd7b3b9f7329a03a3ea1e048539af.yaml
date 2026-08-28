@@ -1,0 +1,10 @@
+ast_path: section/671-1-连续完成后纤维立即出现
+fingerprints:
+  raw_sha256: sha256:955d310f7a2ece0666a122486afdaf2b009dd7b3b9f7329a03a3ea1e048539af
+  normalized_sha256: sha256:955d310f7a2ece0666a122486afdaf2b009dd7b3b9f7329a03a3ea1e048539af
+cas_ref: sha256:955d310f7a2ece0666a122486afdaf2b009dd7b3b9f7329a03a3ea1e048539af
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

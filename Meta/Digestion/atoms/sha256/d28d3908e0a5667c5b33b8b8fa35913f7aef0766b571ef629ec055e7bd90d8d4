@@ -1,0 +1,94 @@
+## 定理 468.1（Riemann budget tube）
+
+RH 成立时，对任意尺度 \(L\) 和任意真实局部正谱完成：
+
+$$
+\boxed{
+2\lambda_1
+\tanh^2\frac L2
+\le
+R_{1/2}(\nu)
+\le
+2\lambda_1
+\coth^2\frac L2.
+}
+\tag{468.4}
+$$
+
+所以：
+
+$$
+\boxed{
+0
+\le
+2\lambda_1-\underline R_L(1/2)
+\le
+2\lambda_1
+\operatorname{sech}^2\frac L2,
+}
+\tag{468.5}
+$$
+
+$$
+\boxed{
+0
+\le
+\overline R_L(1/2)-2\lambda_1
+\le
+2\lambda_1
+\operatorname{csch}^2\frac L2.
+}
+\tag{468.6}
+$$
+
+当 \(L\to\infty\)：
+
+$$
+2\lambda_1-\underline R_L
+=
+O(e^{-L}),
+$$
+
+$$
+\overline R_L-2\lambda_1
+=
+O(e^{-L}),
+$$
+
+$$
+\boxed{
+\Delta_L(1/2)
+=
+O(e^{-L}).
+}
+\tag{468.7}
+$$
+
+更精确地：
+
+$$
+2\lambda_1-\underline R_L
+\le
+8\lambda_1e^{-L}
++
+O(e^{-2L}),
+$$
+
+$$
+\overline R_L-2\lambda_1
+\le
+8\lambda_1e^{-L}
++
+O(e^{-2L}),
+$$
+
+$$
+\Delta_L
+\le
+16\lambda_1e^{-L}
++
+O(e^{-2L}).
+$$
+
+---
+

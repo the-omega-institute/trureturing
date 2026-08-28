@@ -1,0 +1,10 @@
+ast_path: section/516-1-Pressure-phase/clause/5
+fingerprints:
+  raw_sha256: sha256:d502d0d12a1b1bcba99f5a69441633866e9f294121e4807c459ee354965b8186
+  normalized_sha256: sha256:d502d0d12a1b1bcba99f5a69441633866e9f294121e4807c459ee354965b8186
+cas_ref: sha256:d502d0d12a1b1bcba99f5a69441633866e9f294121e4807c459ee354965b8186
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

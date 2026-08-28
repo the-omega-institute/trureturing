@@ -1,0 +1,25 @@
+## 命题 B：黄金奇向残差
+
+定义：
+
+$$
+\boxed{
+\Delta_\varphi
+=
+\mathcal O_\varphi
+-
+\tau\mathcal O_{\varphi'}.
+}
+\tag{587.2}
+$$
+
+测量其：
+
+* Euler local coefficients；
+* convergence abscissa；
+* prime-factor support；
+* zero set；
+* functional symmetry。
+
+---
+

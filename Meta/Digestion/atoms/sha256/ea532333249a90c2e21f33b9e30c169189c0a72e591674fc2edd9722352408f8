@@ -1,0 +1,11 @@
+## 580.2 当前明确未闭合的边界
+
+仓库的 boundary theorem 已经把：
+
+$$
+s=\frac1{\varphi^2}
+$$
+
+处 transported zeta residue 与 \(G_1\) 分离，并明确指出：
+
+* 实轴 pointwise positivity 已有；

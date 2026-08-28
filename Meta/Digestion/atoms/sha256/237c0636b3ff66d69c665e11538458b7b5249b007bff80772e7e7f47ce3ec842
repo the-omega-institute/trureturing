@@ -1,0 +1,44 @@
+# 第五百六十六部　与紧窗口有限矩阵工作的关系
+
+最新紧窗口工作已经把支撑窗口内的 Weil 正性从 dual/Rayleigh 方向压缩成有限矩阵证书，并在 \(L=0.8\) 给出严格正下界；它同时揭示点态 prime-envelope 方法的双指数障碍。([arXiv][4])
+
+本轮得到的主 Toeplitz 塌缩与之不同：
+
+$$
+\boxed{
+\begin{aligned}
+\text{紧窗口有限矩阵}
+&:\quad
+\text{直接证明 Weil quadratic form 正性};\\
+\text{本轮主 Toeplitz}
+&:\quad
+\text{证明多个 Cayley/resolvent observer
+是否来自同一个正谱}.
+\end{aligned}
+}
+$$
+
+前者偏向 dual coercivity；
+
+后者偏向 primal spectral completion。
+
+二者可以在同一数值程序中配对：
+
+$$
+\boxed{
+\begin{aligned}
+\text{dual}
+&:\quad
+\text{有限 Weil matrix 下界};\\
+\text{primal}
+&:\quad
+\text{主 Toeplitz moment + 原子谱完成};\\
+\text{gap}
+&:\quad
+\text{尚未认证的正性余量}.
+\end{aligned}
+}
+$$
+
+---
+

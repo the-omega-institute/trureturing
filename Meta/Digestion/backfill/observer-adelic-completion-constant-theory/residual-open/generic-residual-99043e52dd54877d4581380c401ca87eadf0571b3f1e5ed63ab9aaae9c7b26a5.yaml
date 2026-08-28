@@ -1,0 +1,14 @@
+ast_path: section/434-1-边界条件的观察者语义
+fingerprints:
+  raw_sha256: sha256:99043e52dd54877d4581380c401ca87eadf0571b3f1e5ed63ab9aaae9c7b26a5
+  normalized_sha256: sha256:99043e52dd54877d4581380c401ca87eadf0571b3f1e5ed63ab9aaae9c7b26a5
+cas_ref: sha256:99043e52dd54877d4581380c401ca87eadf0571b3f1e5ed63ab9aaae9c7b26a5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-6ad02d8cae238b3cda9d3d82eae63d25c02fb1d05f74534bd46ec1897574ef12-5c5ecfdf30c24b8ab95cb4428877ec9d326e354d37db4dd28aa557832ef7ebf1
+    - generic-residual-2ec6a5c915426c0f755fda908327a89815273471f3f5a5201f3d67d31c445f43-e425cf288f051643ff43bd5cf0333ef82aa0f8cc5478df38b743843e0d27b979
+    - generic-residual-16b55b13967bf786bb9868f946c62d55cad3ed146cfdfef3b71148d2046ee836-ffd6a094a83668ebfa700cda4217decc91023ddbf5b9d0cdb6ba01856c20fa79

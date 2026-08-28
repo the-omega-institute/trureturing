@@ -1,0 +1,32 @@
+## 588.2 切口实验
+
+对：
+
+$$
+W_\epsilon
+=
+[0,2\log\varphi-\epsilon]
+$$
+
+计算：
+
+$$
+\mathfrak D_{W_\epsilon}(s).
+$$
+
+检验：
+
+$$
+\mathfrak D_{W_\epsilon}
+$$
+
+是否严格由 cut endpoints 决定，以及：
+
+$$
+\epsilon\downarrow0
+$$
+
+时的首阶系数。
+
+---
+

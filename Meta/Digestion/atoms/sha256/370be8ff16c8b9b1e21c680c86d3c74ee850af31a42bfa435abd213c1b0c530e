@@ -1,0 +1,72 @@
+## 定理 478.1（Finite-interior / global-boundary principle）
+
+假设 RH。则：
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)>0
+\qquad
+\forall L<\infty,
+}
+\tag{478.2}
+$$
+
+但：
+
+$$
+\boxed{
+\lim_{L\to\infty}
+\lambda_{\mathrm{full}}(L)
+=
+0.
+}
+\tag{478.3}
+$$
+
+### 证明第二式
+
+假设存在：
+
+$$
+\lambda_\infty>0
+$$
+
+使所有紧支撑测试均满足：
+
+$$
+Q(f)\ge\lambda_\infty\|f\|_2^2.
+$$
+
+则：
+
+$$
+\mathfrak W-\lambda_\infty\delta_0
+$$
+
+在整条实线上正定。
+
+RH 下 \(\mathfrak W\) 的正谱为纯点测度 \(\nu_\Xi\)，所以必须有：
+
+$$
+\nu_\Xi
+-
+\frac{\lambda_\infty}{2\pi}d\xi
+\ge0.
+$$
+
+选择一个不含零点 ordinate 的小开区间 \(J\)，则：
+
+$$
+\nu_\Xi(J)=0,
+$$
+
+但：
+
+$$
+\frac{\lambda_\infty}{2\pi}|J|>0,
+$$
+
+矛盾。∎
+
+---
+

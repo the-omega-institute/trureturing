@@ -1,0 +1,38 @@
+## 513.1 有限接触谱的平底结构
+
+若：
+
+$$
+p
+=
+\omega m_{\mathbb T}
++
+\sum_{r=1}^{M}q_r\delta_{z_r},
+$$
+
+定义：
+
+$$
+v_N(z)
+=
+(1,z,\ldots,z^N)^T.
+$$
+
+则：
+
+$$
+\boxed{
+T_N(p)
+=
+\omega I
++
+\sum_{r=1}^{M}
+q_r\,v_N(z_r)v_N(z_r)^*.
+}
+\tag{513.3}
+$$
+
+右侧 residual update 的秩至多 \(M\)。
+
+因此：
+

@@ -1,0 +1,54 @@
+# 第五百一十三部　Toeplitz 平底定理
+
+对单位圆概率测度 \(p\)，定义 \(N\) 阶 Toeplitz covariance matrix：
+
+$$
+\boxed{
+T_N(p)
+=
+\left[
+\int_{\mathbb T}
+z^{j-k}\,dp(z)
+\right]_{j,k=0}^{N}.
+}
+\tag{513.1}
+$$
+
+若：
+
+$$
+p\ge\omega m_{\mathbb T},
+$$
+
+则对任意 \(c=(c_0,\ldots,c_N)\)：
+
+$$
+\begin{aligned}
+c^*T_N(p)c
+&=
+\int_{\mathbb T}
+\left|
+\sum_{j=0}^{N}c_jz^j
+\right|^2dp(z)\\
+&\ge
+\omega
+\int_{\mathbb T}
+\left|
+\sum_{j=0}^{N}c_jz^j
+\right|^2dm_{\mathbb T}(z)\\
+&=
+\omega\|c\|^2.
+\end{aligned}
+$$
+
+所以：
+
+$$
+\boxed{
+T_N(p)\succeq\omega I.
+}
+\tag{513.2}
+$$
+
+---
+

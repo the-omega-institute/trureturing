@@ -1,0 +1,77 @@
+# 第五百四十六部　多尺度预算的 Loewner 正性
+
+定义：
+
+$$
+u=a^2,
+$$
+
+以及 Stieltjes budget curve：
+
+$$
+B(u)
+=
+\int
+\frac{d\nu(\xi)}
+{\xi^2+u}.
+$$
+
+对：
+
+$$
+u_i,u_j>0,
+$$
+
+定义 kernel：
+
+$$
+\boxed{
+\mathcal L_B(u_i,u_j)
+=
+\int_{\mathbb R}
+\frac{d\nu(\xi)}
+{
+(\xi^2+u_i)(\xi^2+u_j)
+}.
+}
+\tag{546.1}
+$$
+
+显然它是 Gram kernel：
+
+$$
+\boxed{
+[\mathcal L_B(u_i,u_j)]_{i,j}
+\succeq0.
+}
+\tag{546.2}
+$$
+
+而：
+
+$$
+\boxed{
+\mathcal L_B(u_i,u_j)
+=
+\frac{
+B(u_i)-B(u_j)
+}{
+u_j-u_i
+},
+\qquad
+i\ne j,
+}
+\tag{546.3}
+$$
+
+$$
+\boxed{
+\mathcal L_B(u_i,u_i)
+=
+-B'(u_i).
+}
+\tag{546.4}
+$$
+
+所以：
+

@@ -1,0 +1,215 @@
+# 本轮最终结论
+
+上一轮的中心对象是：
+
+$$
+\boxed{
+\text{resolvent-budgeted white spectral completion}.
+}
+$$
+
+本轮证明，resolvent 权重本身就是一个几何紧化坐标：
+
+$$
+\boxed{
+\mathfrak c_a(\xi)
+=
+\frac{\xi+ia}{\xi-ia}.
+}
+$$
+
+它把：
+
+$$
+\boxed{
+\frac{d\nu(\xi)}{\xi^2+a^2}
+}
+$$
+
+变成单位圆上的有限正测度，并使：
+
+$$
+\boxed{
+\mathcal R_a(\nu)
+=
+\text{圆周总质量}.
+}
+$$
+
+更关键的是：
+
+$$
+\boxed{
+\frac{d\xi}{2\pi}
+\quad
+\xrightarrow{\text{resolvent--Cayley}}
+\quad
+\frac1{2a}m_{\mathbb T}.
+}
+$$
+
+所以白谱精确变成 Haar 谱。
+
+在自然尺度：
+
+$$
+a=\frac12,
+$$
+
+真实 Riemann 零点谱则满足：
+
+$$
+\boxed{
+\frac1{2\lambda_1}
+\mathcal C_{1/2}[\nu_\Xi]
+=
+\sigma_1[\vartheta_\xi],
+}
+$$
+
+即它精确变成 Li–Clark 概率测度。
+
+因此自然预算 completion flow 是：
+
+$$
+\boxed{
+p_L
+=
+\omega_Lm_{\mathbb T}
++
+p_L^{\mathrm{res}}
+\quad
+\longrightarrow
+\quad
+\sigma_1[\vartheta_\xi],
+}
+$$
+
+其中：
+
+$$
+\boxed{
+\omega_L
+=
+\frac{\Lambda_L^\Xi}{2\lambda_1}.
+}
+$$
+
+在 active finite-contact 阶段：
+
+$$
+\boxed{
+p_L^{\mathrm{res}}
+=
+\text{finite contact atoms},
+}
+$$
+
+其 Toeplitz covariance 具有精确结构：
+
+$$
+\boxed{
+T_N
+=
+\omega_LI
++
+\text{finite-rank positive update}.
+}
+$$
+
+只要 \(N\) 超过接触原子数：
+
+$$
+\boxed{
+\lambda_{\min}(T_N)=\omega_L.
+}
+$$
+
+而 Szegő 理论进一步给出：
+
+$$
+\boxed{
+\omega_L
+=
+\prod_{n=0}^{\infty}
+\left(
+1-|\beta_{n,L}|^2
+\right).
+}
+$$
+
+所以同一个量同时是：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{最大 white spectral floor fraction};\\
+&\text{Toeplitz covariance 的平坦底部};\\
+&\text{无限深度 Schur 预测创新误差};\\
+&\text{有限 observer 尚未解析出的 Haar 连续背景}.
+\end{aligned}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{resolvent budget 并不是把谱“模糊化”；}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{把非紧实轴谱转换成一个紧的圆周观察问题，
+使未分辨谱成为 Haar 背景，
+使已分辨谱成为有限接触原子。}
+}
+$$
+
+随着观察窗口扩大：
+
+$$
+\boxed{
+\text{Haar floor}\downarrow0,
+}
+$$
+
+$$
+\boxed{
+\text{contact atoms 增殖},
+}
+$$
+
+$$
+\boxed{
+\text{Schur innovation product}\downarrow0,
+}
+$$
+
+最终：
+
+$$
+\boxed{
+\text{整个圆周谱 collapse 为 Li--Clark 的 Riemann 零点原子测度。}
+}
+$$
+
+因此下一条真正承重的中心桥已经非常明确：
+
+$$
+\boxed{
+\text{证明自然预算圆周问题在所有 }L
+\text{ 可行，
+并证明其 finite contact dual tower
+具有可认证的 projective strong duality 与 Clark 极限。}
+}
+$$
+
+[1]: https://arxiv.org/abs/2608.24827 "https://arxiv.org/abs/2608.24827"
+[2]: https://arxiv.org/abs/2511.15425 "https://arxiv.org/abs/2511.15425"
+[3]: https://arxiv.org/abs/2604.15072 "https://arxiv.org/abs/2604.15072"
+[4]: https://londmathsoc.onlinelibrary.wiley.com/doi/full/10.1112/plms.70001 "https://londmathsoc.onlinelibrary.wiley.com/doi/full/10.1112/plms.70001"
+[5]: https://dlmf.nist.gov/18.33 "https://dlmf.nist.gov/18.33"

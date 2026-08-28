@@ -1,0 +1,82 @@
+# 第四百一十三部　对数素数测度与连续主密度
+
+定义 arithmetic log-prime measure：
+
+$$
+\boxed{
+d\mu_{\Lambda}(u)
+=
+\sum_{n\ge2}
+\frac{\Lambda(n)}{\sqrt n}
+\,
+\delta_{\log n}(du),
+\qquad
+u>0.
+}
+\tag{413.1}
+$$
+
+它的累积分布为：
+
+$$
+\mu_\Lambda([0,u])
+=
+\sum_{n\le e^u}
+\frac{\Lambda(n)}{\sqrt n}.
+$$
+
+定义连续参考测度：
+
+$$
+\boxed{
+d\mu_0(u)
+=
+e^{u/2}\,du.
+}
+\tag{413.2}
+$$
+
+其累积分布为：
+
+$$
+\boxed{
+\mu_0([0,u])
+=
+2(e^{u/2}-1).
+}
+\tag{413.3}
+$$
+
+其来源是：PNT 给出 Chebyshev 函数
+
+$$
+\psi(x)=\sum_{n\le x}\Lambda(n)=x+o(x),
+$$
+
+把原子测度 \(d\psi(x)\) 替换为连续主项 \(dx\)，再乘权 \(x^{-1/2}\) 并令 \(x=e^u\)，就得到 \(e^{u/2}du\)。([dlmf.nist.gov][1])
+
+定义 prime discrepancy measure：
+
+$$
+\boxed{
+d\varepsilon(u)
+=
+d\mu_\Lambda(u)-d\mu_0(u).
+}
+\tag{413.4}
+$$
+
+这一定义是**精确分解**：
+
+$$
+\boxed{
+d\mu_\Lambda
+=
+e^{u/2}du+d\varepsilon.
+}
+$$
+
+PNT 只负责说明 \(d\varepsilon\) 在累积意义下相对主项较小；后续的所有恒等式并不假设 PNT 误差界。
+
+---
+

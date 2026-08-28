@@ -1,0 +1,10 @@
+ast_path: section/478-2-RH-失败的有限尺度
+fingerprints:
+  raw_sha256: sha256:fd133ff80d32c8efe30564d3e03fad98a5521349f81935bc976be5f534b11b12
+  normalized_sha256: sha256:fd133ff80d32c8efe30564d3e03fad98a5521349f81935bc976be5f534b11b12
+cas_ref: sha256:fd133ff80d32c8efe30564d3e03fad98a5521349f81935bc976be5f534b11b12
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

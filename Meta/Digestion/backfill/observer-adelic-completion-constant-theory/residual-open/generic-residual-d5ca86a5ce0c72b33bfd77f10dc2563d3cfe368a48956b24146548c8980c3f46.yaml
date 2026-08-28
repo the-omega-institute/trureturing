@@ -1,0 +1,10 @@
+ast_path: section/第六百五十部-每个零点的局部世界在最低阶完全相同
+fingerprints:
+  raw_sha256: sha256:d5ca86a5ce0c72b33bfd77f10dc2563d3cfe368a48956b24146548c8980c3f46
+  normalized_sha256: sha256:d5ca86a5ce0c72b33bfd77f10dc2563d3cfe368a48956b24146548c8980c3f46
+cas_ref: sha256:d5ca86a5ce0c72b33bfd77f10dc2563d3cfe368a48956b24146548c8980c3f46
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

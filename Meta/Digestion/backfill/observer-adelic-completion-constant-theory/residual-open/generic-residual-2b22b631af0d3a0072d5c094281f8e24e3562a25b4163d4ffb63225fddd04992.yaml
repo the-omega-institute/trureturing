@@ -1,0 +1,14 @@
+ast_path: section/本轮最终结论/occurrence/27
+fingerprints:
+  raw_sha256: sha256:2b22b631af0d3a0072d5c094281f8e24e3562a25b4163d4ffb63225fddd04992
+  normalized_sha256: sha256:2b22b631af0d3a0072d5c094281f8e24e3562a25b4163d4ffb63225fddd04992
+cas_ref: sha256:2b22b631af0d3a0072d5c094281f8e24e3562a25b4163d4ffb63225fddd04992
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-f9f6c93e762797ee68eae4e31bf0c95fa407121f8f37fe1dc681e9cbd9a9a2b0-2e8984a2e3d7692201d2daaf8ef32da6f371fef6ce43f2995ad137d6261bc42f
+    - generic-residual-78e37e32c6c4d3e6bea886e5e2f0df59a8ec622cff1cf82496873070a5fe0b0a-7d79bd950a77bec1fedbcacf852a30e82d096ea5e1a4ff568e0bf695e9e04d29
+    - generic-residual-62dc50805f13fe35ad72f84874a260729500406cf980b9ea5bb00c1bb76c26ee-a2eb067ea922ae1ec46358f46a7cf41b7d3a812d5a62afbd21dd888c07b80c8e

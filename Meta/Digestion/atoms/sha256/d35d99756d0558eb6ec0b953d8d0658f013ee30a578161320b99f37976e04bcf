@@ -1,0 +1,32 @@
+## 564.2 Floor 稳定性
+
+定义：
+
+$$
+\widetilde\alpha
+=
+\lambda_{\min}
+\left(
+B^{-1/2}
+\widetilde G
+B^{-1/2}
+\right).
+$$
+
+则：
+
+$$
+\boxed{
+|\widetilde\alpha-\alpha_*|
+\le
+\left\|
+B^{-1/2}EB^{-1/2}
+\right\|.
+}
+\tag{564.4}
+$$
+
+所以 Haar floor 具有标准 Hermitian eigenvalue 的 Lipschitz 稳定性。
+
+---
+

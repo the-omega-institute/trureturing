@@ -1,0 +1,13 @@
+ast_path: section/第六百六十七部-素数是乘法世界的正交-primitive-轴
+fingerprints:
+  raw_sha256: sha256:1cb54802702ae46c5af2c983b77c35ac6169634a2e04d9bf9ab9d1b9d2759778
+  normalized_sha256: sha256:1cb54802702ae46c5af2c983b77c35ac6169634a2e04d9bf9ab9d1b9d2759778
+cas_ref: sha256:1cb54802702ae46c5af2c983b77c35ac6169634a2e04d9bf9ab9d1b9d2759778
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-1ad0b4b4a21f396087a9deaa0353f60e294b0e88d33f2d9d6030ceb11a9ff838-a0932a3dd0e3b5fdce9c063eda2d59f0138f206adf34d3251eb459a19b45c5a6
+    - generic-residual-c3a26e8300f8f4ea58dbf49025fb9d702e509b123a0e81ba558e5125c50da150-b6aa2a4890f16a29eafe1f58e41ca85e559242b93b1f4d4f77ee7f3c87d4bea8

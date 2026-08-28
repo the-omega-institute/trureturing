@@ -1,0 +1,26 @@
+## 528.1 正证书
+
+若：
+
+$$
+\boxed{
+\lambda_{\min}
+(\widehat T_{N,L})
+>
+\Delta_{N,a}(L),
+}
+\tag{528.6}
+$$
+
+则：
+
+$$
+\boxed{
+T_N\succ0.
+}
+$$
+
+所以前 \(N\) 阶 Cayley moment observer 严格处于圆周正 moment cone 的内部。
+
+---
+

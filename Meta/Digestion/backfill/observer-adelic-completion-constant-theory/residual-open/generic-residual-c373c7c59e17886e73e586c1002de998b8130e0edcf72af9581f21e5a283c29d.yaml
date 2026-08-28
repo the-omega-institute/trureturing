@@ -1,0 +1,14 @@
+ast_path: section/567-5-Innovation-flow
+fingerprints:
+  raw_sha256: sha256:c373c7c59e17886e73e586c1002de998b8130e0edcf72af9581f21e5a283c29d
+  normalized_sha256: sha256:c373c7c59e17886e73e586c1002de998b8130e0edcf72af9581f21e5a283c29d
+cas_ref: sha256:c373c7c59e17886e73e586c1002de998b8130e0edcf72af9581f21e5a283c29d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-48112fadf6af78629c1ec1cbe881a52188293de1c9d3cbe9e66fd3a0f4984567-70edb576f818c0fde5fb5bbc2120ae552b352b7ecfe6ff5bb285c7619a650f4b
+    - generic-residual-e3b3ef5109a0413f6176c4b1395d9338742e1fe74df2df8fe45b49b96ea6c868-0abc9312ba24bac1cbc797b14531146a0979c4e4c8660da526b56d1bbc964948
+    - generic-residual-e91c9b5d08c3ff8fca35a354b521e83e4908daf653c3fd4576e1fe91aa2cf7af-3ddb82a1c76eeb7f6ad4085c0db5eff233a391aded7c5e594e205b8f9797a2a2

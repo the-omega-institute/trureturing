@@ -1,0 +1,10 @@
+ast_path: section/480-2-Landau-Widom-轮廓
+fingerprints:
+  raw_sha256: sha256:04707664f5289fd4eef77af763a2ca01aac2ee1d140fdc0e7c8edf280a5cbad6
+  normalized_sha256: sha256:04707664f5289fd4eef77af763a2ca01aac2ee1d140fdc0e7c8edf280a5cbad6
+cas_ref: sha256:04707664f5289fd4eef77af763a2ca01aac2ee1d140fdc0e7c8edf280a5cbad6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

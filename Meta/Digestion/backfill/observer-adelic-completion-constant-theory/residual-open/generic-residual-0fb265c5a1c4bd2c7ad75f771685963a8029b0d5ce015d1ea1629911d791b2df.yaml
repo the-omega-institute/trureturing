@@ -1,0 +1,10 @@
+ast_path: row/有序词到交换-occupation-的商
+fingerprints:
+  raw_sha256: sha256:0fb265c5a1c4bd2c7ad75f771685963a8029b0d5ce015d1ea1629911d791b2df
+  normalized_sha256: sha256:0fb265c5a1c4bd2c7ad75f771685963a8029b0d5ce015d1ea1629911d791b2df
+cas_ref: sha256:0fb265c5a1c4bd2c7ad75f771685963a8029b0d5ce015d1ea1629911d791b2df
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

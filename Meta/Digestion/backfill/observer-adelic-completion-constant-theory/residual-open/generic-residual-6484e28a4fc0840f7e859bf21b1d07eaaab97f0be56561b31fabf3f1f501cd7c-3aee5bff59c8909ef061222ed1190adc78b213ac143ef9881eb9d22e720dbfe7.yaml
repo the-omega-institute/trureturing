@@ -1,0 +1,10 @@
+ast_path: section/588-3-六维表示实验/clause/3
+fingerprints:
+  raw_sha256: sha256:6484e28a4fc0840f7e859bf21b1d07eaaab97f0be56561b31fabf3f1f501cd7c
+  normalized_sha256: sha256:6484e28a4fc0840f7e859bf21b1d07eaaab97f0be56561b31fabf3f1f501cd7c
+cas_ref: sha256:6484e28a4fc0840f7e859bf21b1d07eaaab97f0be56561b31fabf3f1f501cd7c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

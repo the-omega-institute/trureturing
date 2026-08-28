@@ -1,0 +1,76 @@
+# 第五百八十部　黄金 Euler germ 是一个规范未完成态
+
+项目黄金 germ 定义了一个局部黄金指数 Euler product。
+
+机器证明的第一阶分解为：
+
+$$
+\boxed{
+Z_\varphi(s)
+=
+\zeta(\varphi^2s)\,G_1(s),
+}
+\tag{580.1}
+$$
+
+其中原始 germ 在：
+
+$$
+\Re s>\frac1{\varphi^2}
+$$
+
+解释，而 normalized residual \(G_1\) 的 prime deviations 已在更大区域：
+
+$$
+\boxed{
+\Re s>\frac1{\varphi^3}
+}
+\tag{580.2}
+$$
+
+绝对可和，并在实轴上保持正。
+
+由此又得到规范延拓：
+
+$$
+\boxed{
+Z_\varphi^{(1)}(s)
+=
+\zeta(\varphi^2s)G_1(s)
+}
+$$
+
+到：
+
+$$
+\Re s>\frac1{\varphi^3}.
+$$
+
+第二阶因子化继续得到：
+
+$$
+\boxed{
+Z_\varphi^{(2)}(s)
+=
+\zeta(\varphi^2s)
+\zeta(\varphi^3s)
+\zeta(2\varphi^2s)^{-1}
+G_2(s),
+}
+\tag{580.3}
+$$
+
+且：
+
+$$
+\boxed{
+G_2
+\text{ 的局部 deviations 在 }
+\Re s>\frac1{\varphi^4}
+\text{ 绝对可和}.
+}
+\tag{580.4}
+$$
+
+---
+

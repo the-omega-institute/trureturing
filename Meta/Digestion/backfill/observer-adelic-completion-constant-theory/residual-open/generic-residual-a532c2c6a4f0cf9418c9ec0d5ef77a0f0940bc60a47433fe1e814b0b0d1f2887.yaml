@@ -1,0 +1,15 @@
+ast_path: section/545-1-为什么不能直接跨越巨大尺度比
+fingerprints:
+  raw_sha256: sha256:a532c2c6a4f0cf9418c9ec0d5ef77a0f0940bc60a47433fe1e814b0b0d1f2887
+  normalized_sha256: sha256:a532c2c6a4f0cf9418c9ec0d5ef77a0f0940bc60a47433fe1e814b0b0d1f2887
+cas_ref: sha256:a532c2c6a4f0cf9418c9ec0d5ef77a0f0940bc60a47433fe1e814b0b0d1f2887
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-dd0ce98cc17a123ca7c5983429141570252eb2cc8b2bf586848ecbe5ed31175f-f70d4f636f25016e221bdab0887f594ec0b10c89bad8939bc5d1072f4201b7f7
+    - generic-residual-d25117ebc211527511818f6d7196dc4f047573f21a787e5c03db13695080d316-5802682116bd40c06bb84dca8026b517ab8a9decfca64b10485b031e5f928126
+    - generic-residual-fcc25be2285384fd711b25c4972cf5fe9dbdba949d0505b062f973482782ed3b-834483da391dac3fb3b0aaec08fd59533529ed1e50069bcaca80de2784fa00ca
+    - generic-residual-8350580a5b5b54f3d7ce33f53df327077e1b0a57bb26d6302cfe0c804d5248bd-2241ace48c86783c72d0e1f7819a69f4d8cdaf95ad819fd32b8398476222e83e

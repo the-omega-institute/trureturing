@@ -1,0 +1,35 @@
+## 620.5 理论深度自动审计
+
+每个新增层记录：
+
+```text
+representation_invertible:
+old_residual:
+new_residual:
+strict_residual_bound:
+old_abscissa:
+new_abscissa:
+observer_bias_before:
+observer_bias_after:
+formal_or_analytic:
+lean_status:
+```
+
+若只有：
+
+```text
+representation_invertible: true
+```
+
+而没有任何严格 residual 改善，则归类为：
+
+$$
+\boxed{
+\text{chart depth},
+}
+$$
+
+不得计入证明深度。
+
+---
+

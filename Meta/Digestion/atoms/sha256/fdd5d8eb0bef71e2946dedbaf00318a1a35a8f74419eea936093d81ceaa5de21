@@ -1,0 +1,60 @@
+## 定理 536.1（Cayley scale-change law）
+
+$$
+\boxed{
+\mathfrak c_b(\xi)
+=
+\Phi_{r_{a,b}}
+\left(
+\mathfrak c_a(\xi)
+\right).
+}
+\tag{536.4}
+$$
+
+### 证明
+
+令：
+
+$$
+z=\mathfrak c_a(\xi).
+$$
+
+则：
+
+$$
+\xi
+=
+ia\frac{z+1}{z-1}.
+$$
+
+代入 \(\mathfrak c_b\)：
+
+$$
+\begin{aligned}
+\mathfrak c_b(\xi)
+&=
+\frac{
+a(z+1)+b(z-1)
+}{
+a(z+1)-b(z-1)
+}\\
+&=
+\frac{
+(a+b)z+(a-b)
+}{
+(a-b)z+(a+b)
+}\\
+&=
+\frac{
+z+r_{a,b}
+}{
+1+r_{a,b}z
+}.
+\end{aligned}
+$$
+
+∎
+
+---
+

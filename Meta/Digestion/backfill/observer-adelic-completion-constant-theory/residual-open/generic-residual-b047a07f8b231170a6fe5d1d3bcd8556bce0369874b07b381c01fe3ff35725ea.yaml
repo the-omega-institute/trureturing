@@ -1,0 +1,10 @@
+ast_path: section/627-1-蕴含一切且无分别-的谱版本
+fingerprints:
+  raw_sha256: sha256:b047a07f8b231170a6fe5d1d3bcd8556bce0369874b07b381c01fe3ff35725ea
+  normalized_sha256: sha256:b047a07f8b231170a6fe5d1d3bcd8556bce0369874b07b381c01fe3ff35725ea
+cas_ref: sha256:b047a07f8b231170a6fe5d1d3bcd8556bce0369874b07b381c01fe3ff35725ea
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

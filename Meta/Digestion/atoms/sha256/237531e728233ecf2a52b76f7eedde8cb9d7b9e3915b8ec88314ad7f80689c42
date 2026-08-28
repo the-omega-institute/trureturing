@@ -1,0 +1,44 @@
+# 第六百七十七部　真正离线零点不能仅由质数重排产生
+
+标量 Euler factors：
+
+$$
+(1-p^{-s})^{-1}
+$$
+
+彼此交换。
+
+因此，仅仅重排这些标量因子：
+
+$$
+\boxed{
+\text{不可能改变绝对收敛区中的 }\zeta(s).
+}
+$$
+
+所以一个真实离线零点若存在，不可能仅由：
+
+$$
+\boxed{
+\text{“先观察哪个素数”}
+}
+$$
+
+这一标量顺序产生。
+
+它必须对应更强的结构，例如：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{非交换 observer state 的残余 holonomy};\\
+&\text{prime 与 Archimedean completion 的不兼容};\\
+&\text{analytic continuation 中未消除的 forcing};\\
+&\text{不能下降到交换完成的 inverse-limit obstruction};\\
+&\text{完成读数没有完全杀死的奇向通道}.
+\end{aligned}
+}
+$$
+
+---
+

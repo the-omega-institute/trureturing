@@ -1,0 +1,52 @@
+## 523.2 归一化 moments
+
+若：
+
+$$
+R>0,
+$$
+
+定义概率测度：
+
+$$
+p_a=\frac{\mu_a}{R}
+$$
+
+及归一化 moments：
+
+$$
+\boxed{
+c_n^{(a)}
+=
+\frac{m_n^{(a)}}R.
+}
+\tag{523.7}
+$$
+
+定义：
+
+$$
+\widehat c_{n,L}^{(a)}
+=
+\frac{\widehat m_{n,L}^{(a)}}R.
+$$
+
+则：
+
+$$
+\boxed{
+\left|
+c_n^{(a)}
+-
+\widehat c_{n,L}^{(a)}
+\right|
+\le
+\tau_{n,a}(L).
+}
+\tag{523.8}
+$$
+
+该误差不再依赖谱总质量。
+
+---
+

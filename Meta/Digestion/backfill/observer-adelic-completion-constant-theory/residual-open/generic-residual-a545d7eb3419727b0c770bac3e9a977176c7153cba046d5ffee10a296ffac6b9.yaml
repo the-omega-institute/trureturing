@@ -1,0 +1,10 @@
+ast_path: row/离散无纤维-连续有纤维
+fingerprints:
+  raw_sha256: sha256:a545d7eb3419727b0c770bac3e9a977176c7153cba046d5ffee10a296ffac6b9
+  normalized_sha256: sha256:a545d7eb3419727b0c770bac3e9a977176c7153cba046d5ffee10a296ffac6b9
+cas_ref: sha256:a545d7eb3419727b0c770bac3e9a977176c7153cba046d5ffee10a296ffac6b9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

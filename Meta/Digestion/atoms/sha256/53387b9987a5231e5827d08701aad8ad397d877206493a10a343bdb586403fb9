@@ -1,0 +1,64 @@
+# 第四百二十八部　固定支撑观察只读取局部相关核
+
+定义：
+
+$$
+\mathcal D_L
+=
+C_c^\infty((-L,L)).
+$$
+
+对：
+
+$$
+f,h\in\mathcal D_L,
+$$
+
+定义互相关：
+
+$$
+\boxed{
+C_{f,h}(u)
+=
+(f*\widetilde h)(u),
+\qquad
+\widetilde h(x)=\overline{h(-x)}.
+}
+\tag{428.1}
+$$
+
+则：
+
+$$
+\boxed{
+\operatorname{supp}C_{f,h}
+\Subset
+(-2L,2L).
+}
+\tag{428.2}
+$$
+
+这里不仅是支撑包含于闭区间；由于 \(f,h\) 的支撑紧包含在开区间中，\(C_{f,h}\) 在 \(\pm2L\) 的某邻域内恒等为零。
+
+令：
+
+$$
+\mathfrak W
+$$
+
+为 Weil 临界源分布，定义 sesquilinear form：
+
+$$
+\boxed{
+\mathfrak q_L(f,h)
+=
+\left\langle
+\mathfrak W,
+C_{f,h}
+\right\rangle.
+}
+\tag{428.3}
+$$
+
+---
+

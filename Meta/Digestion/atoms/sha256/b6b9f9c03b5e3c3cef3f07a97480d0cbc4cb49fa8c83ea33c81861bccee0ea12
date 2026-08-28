@@ -1,0 +1,89 @@
+## 576.1 二个三维 Galois 共轭块
+
+正二十面体旋转群同构于：
+
+$$
+A_5.
+$$
+
+其标准三维表示可定义在：
+
+$$
+K=\mathbb Q(\sqrt5)
+$$
+
+上；两个三维不可约表示在五循环共轭类上的特征标值分别为：
+
+$$
+\varphi,
+\qquad
+\varphi'.
+$$
+
+将三维 \(K\)-表示限制标量到 \(\mathbb Q\)：
+
+$$
+\boxed{
+V_6
+=
+\operatorname{Res}_{K/\mathbb Q}V_3,
+}
+\tag{576.1}
+$$
+
+得到：
+
+$$
+\dim_{\mathbb Q}V_6
+=
+3[K:\mathbb Q]
+=
+6.
+$$
+
+在实数上：
+
+$$
+\boxed{
+V_6\otimes_{\mathbb Q}\mathbb R
+\simeq
+V_\varphi
+\oplus
+V_{\varphi'}.
+}
+\tag{576.2}
+$$
+
+五循环 \(g_5\) 的完整迹为：
+
+$$
+\boxed{
+\operatorname{tr}_{V_6}(g_5)
+=
+\varphi+\varphi'
+=
+1.
+}
+\tag{576.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{单个三维块看到裸 }\varphi;
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{六维 Galois 完成只看到有理迹 }1.
+}
+$$
+
+正二十面体群的显式三维表示及其黄金比例特征标是标准 \(A_5\) 表示结构；在准晶体几何中，\(D_6\) 格点投影到三维会产生具有五重对称、Fibonacci 膨胀和黄金长度的二十面体结构。([arXiv][1])
+
+---
+

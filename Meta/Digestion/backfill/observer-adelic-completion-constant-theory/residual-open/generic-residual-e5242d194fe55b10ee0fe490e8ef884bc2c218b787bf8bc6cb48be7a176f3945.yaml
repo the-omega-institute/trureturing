@@ -1,0 +1,10 @@
+ast_path: section/PNT-discrepancy-domination-problem
+fingerprints:
+  raw_sha256: sha256:e5242d194fe55b10ee0fe490e8ef884bc2c218b787bf8bc6cb48be7a176f3945
+  normalized_sha256: sha256:e5242d194fe55b10ee0fe490e8ef884bc2c218b787bf8bc6cb48be7a176f3945
+cas_ref: sha256:e5242d194fe55b10ee0fe490e8ef884bc2c218b787bf8bc6cb48be7a176f3945
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

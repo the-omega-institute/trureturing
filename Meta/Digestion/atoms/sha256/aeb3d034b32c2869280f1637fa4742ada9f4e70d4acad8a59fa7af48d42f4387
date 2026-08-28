@@ -1,0 +1,53 @@
+## 537.1 Poisson 核图表
+
+定义圆盘 Poisson 核：
+
+$$
+\boxed{
+P_\rho(z)
+=
+\frac{1-\rho^2}
+{|z-\rho|^2},
+\qquad
+\rho\in(-1,1),
+\quad
+z\in\mathbb T.
+}
+\tag{537.5}
+$$
+
+由于：
+
+$$
+\frac{1+r}{1-r}
+=
+\frac ab,
+$$
+
+所以：
+
+$$
+\boxed{
+q_{a,b}(z)
+=
+\frac ab
+P_{-r}(z).
+}
+\tag{537.6}
+$$
+
+因此尺度改变由两部分组成：
+
+$$
+\boxed{
+\begin{aligned}
+z&\mapsto\Phi_r(z)
+&&\text{双曲坐标改变};\\
+d\mu&\mapsto P_{-r}(z)d\mu
+&&\text{Poisson 重要性重加权}.
+\end{aligned}
+}
+$$
+
+---
+

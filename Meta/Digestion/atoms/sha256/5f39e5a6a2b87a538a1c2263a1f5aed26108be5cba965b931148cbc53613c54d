@@ -1,0 +1,21 @@
+## Proposition 2. Consumption is not inverse to production input
+
+There exists a finite artifact model with distinct artifacts `x` and `y`, a
+runtime-consumer relation `consumers`, and a partial production-input map
+`prodInputs` such that
+
+\[
+y\in\mathsf{consumers}(x),
+\qquad
+\mathsf{prodInputs}(y)=\mathsf{some}(\varnothing),
+\qquad
+x\notin\varnothing.
+\]
+
+A concrete witness uses the two-element type with elements `x` and `y`, sets
+`consumers(x)={y}`, and sets `prodInputs(y)=some(\varnothing)`. The consumer
+edge records that the executable artifact `y` reads `x` at runtime, while the
+production-input value records that `y` itself was produced without artifact
+inputs. Hence runtime consumption and production input are different
+relations and need not be mutual inverses.
+

@@ -1,0 +1,53 @@
+* \(\operatorname{Status}_k\)：定义、定理、条件命题或 Lean 锚点。
+
+定义逃逸收益：
+
+$$
+\boxed{
+G_k
+=
+\nu
+\left(
+\mathcal E_{k-1}
+\setminus
+\mathcal E_k
+\right).
+}
+\tag{585.2}
+$$
+
+定义效率：
+
+$$
+\boxed{
+\eta_k
+=
+\frac{
+G_k
+}{
+\operatorname{Cost}_k
++
+\operatorname{Leak}_k
+}.
+}
+\tag{585.3}
+$$
+
+若：
+
+$$
+G_k=0,
+$$
+
+应标记为：
+
+$$
+\boxed{
+\text{chart / compression / tomography},
+}
+$$
+
+而不是“理论又深了一层”。
+
+---
+

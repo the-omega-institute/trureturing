@@ -1,0 +1,57 @@
+# 第五百三十七部　正谱测度的 Poisson–Möbius 协变
+
+令 \(\nu\) 是实轴上的偶正 Borel 测度，并假设：
+
+$$
+R_a(\nu)
+=
+\int_{\mathbb R}
+\frac{d\nu(\xi)}
+{\xi^2+a^2}
+<\infty.
+$$
+
+定义尺度 \(a\) 的圆周测度：
+
+$$
+\boxed{
+\mu_a
+=
+(\mathfrak c_a)_*
+\left(
+\frac{d\nu(\xi)}
+{\xi^2+a^2}
+\right).
+}
+\tag{537.1}
+$$
+
+其总质量为：
+
+$$
+\boxed{
+\mu_a(\mathbb T)=R_a(\nu).
+}
+\tag{537.2}
+$$
+
+令：
+
+$$
+r=r_{a,b}.
+$$
+
+定义权重：
+
+$$
+\boxed{
+q_{a,b}(z)
+=
+\frac{(1+r)^2}
+{|1+rz|^2}.
+}
+\tag{537.3}
+$$
+
+---
+

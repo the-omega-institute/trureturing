@@ -1,0 +1,116 @@
+## 定理 646.1（Minimal binary unimodular break）
+
+设 \(\lambda(M)>1\) 为 Perron 根。
+
+若：
+
+$$
+\det M=-1,
+$$
+
+则：
+
+$$
+\boxed{
+\lambda(M)\ge\varphi.
+}
+\tag{646.1}
+$$
+
+等号由 Fibonacci 矩阵实现：
+
+$$
+\boxed{
+F=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+}
+\tag{646.2}
+$$
+
+若：
+
+$$
+\det M=1,
+$$
+
+则：
+
+$$
+\boxed{
+\lambda(M)\ge\varphi^2.
+}
+\tag{646.3}
+$$
+
+等号由：
+
+$$
+\boxed{
+F^2=
+\begin{pmatrix}
+2&1\\
+1&1
+\end{pmatrix}
+}
+\tag{646.4}
+$$
+
+实现。
+
+### 证明
+
+若 \(\det M=-1\)，特征多项式为：
+
+$$
+x^2-tx-1,
+$$
+
+其中：
+
+$$
+t=\operatorname{tr}M\in\mathbb Z_{\ge0}.
+$$
+
+\(t=0\) 只能给出二交换矩阵，不 primitive，所以：
+
+$$
+t\ge1.
+$$
+
+于是：
+
+$$
+\lambda(M)
+=
+\frac{t+\sqrt{t^2+4}}2
+\ge
+\frac{1+\sqrt5}2
+=
+\varphi.
+$$
+
+若 \(\det M=1\) 且 \(\lambda>1\)，则整数迹满足：
+
+$$
+t\ge3.
+$$
+
+所以：
+
+$$
+\lambda(M)
+=
+\frac{t+\sqrt{t^2-4}}2
+\ge
+\frac{3+\sqrt5}2
+=
+\varphi^2.
+$$
+
+∎
+
+---
+

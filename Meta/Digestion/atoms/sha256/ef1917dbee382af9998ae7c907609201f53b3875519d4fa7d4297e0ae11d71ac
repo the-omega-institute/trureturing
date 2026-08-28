@@ -1,0 +1,48 @@
+## 575.1 黄金观察者校准原则
+
+如果对象已经完成：
+
+$$
+J_Xx=x,
+$$
+
+但只使用一个 \(\varphi\)-嵌入观察：
+
+$$
+\Delta_{\mathcal O}\neq0,
+$$
+
+仍然可能观察到黄金不对称。
+
+所以：
+
+$$
+\boxed{
+\text{看到 }\varphi
+\neq
+\text{证明对象内含 }\varphi.
+}
+$$
+
+正确的实验必须同时使用：
+
+$$
+\mathcal O_\varphi,
+\qquad
+\mathcal O_{\varphi'}.
+$$
+
+由二者构造：
+
+$$
+\mathcal O_{\mathrm{even}},
+\qquad
+\mathcal O_{\mathrm{odd}}.
+$$
+
+若破缺在 paired completion 后消失，它是观察器偏置。
+
+若 paired observer 已经严格协变而破缺仍存在，它才是对象层残差。
+
+---
+

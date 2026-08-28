@@ -1,0 +1,13 @@
+ast_path: section/437-3-有限-Galerkin-版本
+fingerprints:
+  raw_sha256: sha256:93712c89210af0756993f731103fca7b6e79e4e8e113307fe47cfa8d488250b8
+  normalized_sha256: sha256:93712c89210af0756993f731103fca7b6e79e4e8e113307fe47cfa8d488250b8
+cas_ref: sha256:93712c89210af0756993f731103fca7b6e79e4e8e113307fe47cfa8d488250b8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-cd81dd06919f5c830ab205b02aed95d399c81f884dd06e74355b09b3e0d72add-991e10909032f391908fea7c5480fdf8a1f1161eb68ab8cc8e9d6688797fd7cb
+    - generic-residual-6bc183056f6567a203f49930278bbc6933aaa428f3d87bf66a6883f266b56115-3400a6d8c5abe7c334e59667fb57dff5b5fb1426e077d08e93dd959a8aab070d

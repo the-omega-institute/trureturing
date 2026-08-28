@@ -1,0 +1,19 @@
+## 426.4 不应继续增加新 RH 判据
+
+本轮以后，只有以下进展才真正减少中心困难：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{证明 }E(u)\text{ 对相关导数的统一控制};\\
+&\text{缩小 renormalized danger set};\\
+&\text{降低 sticky rank};\\
+&\text{控制 discrepancy flow 的 eigenvalue crossings};\\
+&\text{证明 finite Feshbach matrices PSD};\\
+&\text{控制这些证书随 }L\to\infty.
+\end{aligned}
+}
+$$
+
+---
+

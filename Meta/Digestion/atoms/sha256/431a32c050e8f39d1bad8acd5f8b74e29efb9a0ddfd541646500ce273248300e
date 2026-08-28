@@ -1,0 +1,44 @@
+## 定理 428.1（外部支撑不可见性）
+
+若：
+
+$$
+\boxed{
+\operatorname{supp}\kappa
+\subset
+\mathbb R\setminus(-2L,2L),
+}
+\tag{428.5}
+$$
+
+则：
+
+$$
+\boxed{
+\left\langle
+\mathfrak W+\kappa,
+C_{f,h}
+\right\rangle
+=
+\left\langle
+\mathfrak W,
+C_{f,h}
+\right\rangle
+}
+\tag{428.6}
+$$
+
+对全部 \(f,h\in\mathcal D_L\) 成立。
+
+### 证明
+
+\(C_{f,h}\) 的支撑紧包含于 \((-2L,2L)\)，与 \(\kappa\) 的支撑不交，所以：
+
+$$
+\langle\kappa,C_{f,h}\rangle=0.
+$$
+
+∎
+
+---
+

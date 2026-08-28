@@ -1,0 +1,47 @@
+# 第四百一十六部　纯乘子 Weil 正规形
+
+固定：
+
+$$
+\operatorname{supp}f\subset(-L,L).
+$$
+
+定义有限 discrepancy measure：
+
+$$
+\boxed{
+d\varepsilon_L(u)
+=
+\sum_{\substack{n\ge2\\\log n\le2L}}
+\frac{\Lambda(n)}{\sqrt n}
+\delta_{\log n}(du)
+-
+\mathbf1_{[0,2L]}(u)e^{u/2}\,du.
+}
+\tag{416.1}
+$$
+
+定义其 cosine transform：
+
+$$
+\boxed{
+r_L(\xi)
+=
+2
+\int_{[0,2L]}
+\cos(\xi u)\,
+d\varepsilon_L(u).
+}
+\tag{416.2}
+$$
+
+因为 \(\varepsilon_L\) 是有限 signed measure：
+
+$$
+r_L
+$$
+
+是有界、实解析、偶函数。
+
+---
+

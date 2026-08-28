@@ -1,0 +1,10 @@
+ast_path: section/565-1-全局-MT-预条件
+fingerprints:
+  raw_sha256: sha256:75b237c086f326fd6e46dadbac3dface38b4dcc69983cd650b790b1a7cf8ea64
+  normalized_sha256: sha256:75b237c086f326fd6e46dadbac3dface38b4dcc69983cd650b790b1a7cf8ea64
+cas_ref: sha256:75b237c086f326fd6e46dadbac3dface38b4dcc69983cd650b790b1a7cf8ea64
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,67 @@
+## 定理 430.1（有限矩完全消除）
+
+对所有次数不超过 \(K\) 的多项式 \(p\)：
+
+$$
+\boxed{
+\langle
+\varepsilon_L^{[K]},p
+\rangle
+=0.
+}
+\tag{430.7}
+$$
+
+### 证明
+
+在 \(b\) 处写 Taylor 展开：
+
+$$
+p(u)
+=
+\sum_{j=0}^{K}
+\frac{p^{(j)}(b)}{j!}
+(u-b)^j.
+$$
+
+所以：
+
+$$
+\langle\varepsilon_L,p\rangle
+=
+\sum_{j=0}^{K}
+\frac{\mu_j^{(L)}}{j!}
+p^{(j)}(b).
+$$
+
+另一方面：
+
+$$
+\delta_b^{(j)}(p)
+=
+(-1)^jp^{(j)}(b),
+$$
+
+故 \(J_{L,K}\) 的贡献正好是其负值。∎
+
+同时：
+
+$$
+\boxed{
+\langle
+\varepsilon_L^{[K]},
+C_{f,h}
+\rangle
+=
+\langle
+\varepsilon_L,
+C_{f,h}
+\rangle.
+}
+\tag{430.8}
+$$
+
+所以这一有限矩消除完全不改变 Weil form。
+
+---
+
