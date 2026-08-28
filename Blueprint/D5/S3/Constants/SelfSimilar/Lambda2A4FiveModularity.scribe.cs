@@ -8,7 +8,7 @@ internal sealed class Lambda2A4FiveModularityDocument : IScribeDocumentDefinitio
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The source Gram and Hodge certificates force both five-modular similarities, rank six, "
-            + "and the two recorded discriminant identities.",
+            + "the two recorded discriminant identities, and their structural forcing certificate.",
         H("Five-Modularity of the Lambda-Squared A4 Lattice"),
         Blocks(
             Describe.Lean(
@@ -33,7 +33,13 @@ internal sealed class Lambda2A4FiveModularityDocument : IScribeDocumentDefinitio
                     Paragraph(Text(
                         "The six-element integral basis supplies rank six. The determinant of its "
                             + "fixed Gram matrix is 125, yielding separately the source identities "
-                            + "five cubed and five raised to six divided by two."))),
+                            + "five cubed and five raised to six divided by two.")),
+                    Paragraph(Text(
+                        "The structural certificate transports that same basis through e onto the "
+                            + "actual dualSubmodule. Its Gram matrix is one fifth of the source "
+                            + "Gram matrix, so Matrix.det_smul gives the sixth-power determinant "
+                            + "scale. Dual/source reciprocity and positivity then force the positive "
+                            + "value five raised to six divided by two."))),
                 DescribeRole.Theorem))));
 
     private static Formula FiveModularityFormula()
@@ -77,7 +83,9 @@ internal sealed class Lambda2A4FiveModularityDocument : IScribeDocumentDefinitio
             discriminant, Sp, Eq, Sp, D(5), Caret, Grp(D(3)),
             Sp, Land, RowBreak, Grp(),
             discriminant, Sp, Eq, Sp, D(5), Caret,
-            Grp(Frac, Grp(D(6)), Grp(D(2))), Dot,
+            Grp(Frac, Grp(D(6)), Grp(D(2))),
+            Sp, Land, RowBreak, Grp(),
+            Call("FiveModularDiscriminantCertificate", form, lattice, basis, dualEquiv), Dot,
             End, Grp(F.Id("gathered"))));
     }
 
