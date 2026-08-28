@@ -1,0 +1,17 @@
+ast_path: 证明义务/56.2/occurrence/2
+fingerprints:
+  raw_sha256: sha256:d602e70c7f817ce2d6c319ff867436428788da8a2fffecbe92bd433e966c1cd5
+  normalized_sha256: sha256:d602e70c7f817ce2d6c319ff867436428788da8a2fffecbe92bd433e966c1cd5
+cas_ref: sha256:d602e70c7f817ce2d6c319ff867436428788da8a2fffecbe92bd433e966c1cd5
+coverage_gids:
+  - D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/FiniteParetoQuotient.finite_pareto_quotient_exact_and_complete
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/FiniteParetoQuotient.finite_pareto_quotient_exact_and_complete
+      source_sha256: sha256:d602e70c7f817ce2d6c319ff867436428788da8a2fffecbe92bd433e966c1cd5
+      target_sha256: sha256:f489818de69a44f081777c7fd521501a9a2fb4d04d79e2b7e207a65b36eca394
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/FiniteParetoQuotient.finite_pareto_quotient_exact_and_complete
+      definition_sha256: sha256:e0bfa82cd917bdca5c5eb2dbc24c60a08e2bca04e8c28c24a440fdd2774fce31
+      emission_sha256: sha256:2dc9057df5b698f7bef9369607053a33d7fac9b03154cae0b8229f7fc6e9be66
+  unresolved_subitems: []
