@@ -265,7 +265,9 @@ def goldenUnitsPrincipalIdealDelivery : Unit := ()
     **地址关系(先读这句)**:分支 `harness/dect-g1` 上已有 `TASK D5-T0050` 承载同一 issue 的
     方向设计缺口,且 #3218 的评论正在引用那一条;该分支**未合入 dev 且已停止迭代**,
     故 **dev 上 `D5-T0050` 的本体并不存在** —— 本句是 dev 上唯一提到该号的地方,
-    **它是引用,不是定义**(实测 `git grep '/- TASK D5-T0050' origin/dev` 零命中)。
+    **它是引用,不是定义**(实测:在 `origin/dev` 上按 TASK 定义式搜该号,零命中;
+    **注意本行不能写出那个定义式的字面前缀 —— Lean 的块注释支持嵌套,
+    写进来会开启新层级并导致 `unterminated comment`。这是本文件上实际发生过的一次构建失败。**)。
     本条是 **dev 侧**的记录;两者若日后同处一树,须合并为一条,**不得同址异义**。
     总账:**7 轮评审、7 次修复、零交付**;其中**四轮**出现方向类缺陷,每轮位置不同
     (`Contam` 特化 → `Dep*` 方向 → `commitmentClosureVisibleAtFreeze` → `artifactDependsOn`)。
