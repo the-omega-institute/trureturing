@@ -59,6 +59,16 @@ internal static class IngestTruthAlignmentClassifier
             }
         }
 
+        var removedEntry = baselineEntries.Keys
+            .Except(currentEntries.Keys, StringComparer.Ordinal)
+            .Order(StringComparer.Ordinal)
+            .FirstOrDefault();
+        if (removedEntry is not null)
+        {
+            return IngestTruthAlignmentClassification.TruthAlignmentRequired(
+                $"existing entry {removedEntry} removed");
+        }
+
         return IngestTruthAlignmentClassification.UncoveredOnly;
     }
 

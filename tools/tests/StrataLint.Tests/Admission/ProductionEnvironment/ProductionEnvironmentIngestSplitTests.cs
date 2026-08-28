@@ -154,6 +154,31 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void IngestRejectsRemovedExistingReceiptedEntryBeforeLoadingTruthOrWriting()
+    {
+        const string coverageGid = "D5/S0/Carrier/Ring.goldenRing";
+        var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
+        var atomPath = DirectoryAtomPath("old-receipt", "residual-open");
+        fixture.Baseline[atomPath] = fixture.Baseline[atomPath]
+            .Replace(
+                "coverage_gids: []",
+                $"coverage_gids:\n  - {coverageGid}",
+                StringComparison.Ordinal)
+            .Replace(
+                "  unresolved_subitems: []",
+                "  unresolved_subitems:\n    - inherited-open-clause",
+                StringComparison.Ordinal);
+        Assert.True(fixture.Files.Remove(atomPath));
+        var casPath = Assert.Single(fixture.Files.Keys, DigestionCasStore.IsCanonicalPath);
+        Assert.True(fixture.Files.Remove(casPath));
+
+        AssertReportFreeTruthAlignmentRequiredWithoutTruthOrWrites(
+            fixture,
+            RawChangeSet.Create([atomPath, casPath]),
+            "existing entry old-receipt removed");
+    }
+
+    [Fact]
     public void IngestRejectsExistingSourcePathAuthorityDeltaBeforeLoadingTruthOrWriting()
     {
         const string alternateSourcePath = "docs/GOVERNANCE-copy.md";

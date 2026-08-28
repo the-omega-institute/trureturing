@@ -79,6 +79,49 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
+    public void FineGenerationRetirementTreatsScribeReceiptAsOwnership()
+    {
+        const string gid = "D5/S0/Synthetic/Receipt.owned_generation";
+        var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
+        var currentBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。current。\n");
+        var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes, DigestionTestSupport.Rules).Claims);
+        var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
+        var baseline = Ledger(
+            [],
+            CasEntry("scribe-receipt", oldAtom, oldCapture.Reference));
+        var source = Assert.Single(baseline.RequireDigestionSources());
+        var candidate = baseline.WithDigestionSources(
+        [
+            source with
+            {
+                Entries = source.Entries.Select(entry => entry with
+                {
+                    Receipts = entry.Receipts with
+                    {
+                        Scribe =
+                        [
+                            new DigestionScribeReceipt(
+                                gid,
+                                "sha256:" + new string('a', 64),
+                                "sha256:" + new string('b', 64)),
+                        ],
+                    },
+                }).ToImmutableArray(),
+            },
+        ]);
+
+        var plan = DigestionIngestor.Plan(
+            candidate,
+            Snapshot(currentBytes, [oldCapture]),
+            baseline);
+
+        Assert.Equal(1, plan.StaleAcknowledged);
+        Assert.Equal(
+            ["scribe-receipt"],
+            Assert.Single(plan.Document.RequireDigestionSources()).AcknowledgedStale.ToArray());
+    }
+
+    [Fact]
     public void FineGenerationRetirementPreservesEveryOwnershipForm()
     {
         static (DigestionAtom Atom, DigestionCasObject Capture) Generation(string body)
