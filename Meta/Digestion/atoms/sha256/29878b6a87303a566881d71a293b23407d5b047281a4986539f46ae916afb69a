@@ -1,0 +1,22 @@
+## 57.1 拒因分析、继承接口与收窄纪律
+
+本部是 v1.5 的追加式增订，只精确化第 54.3 部证明义务 5 的保护坐标—目标洗白半条，以及证明义务 6 的输运证书—越界收口半条。第 1—56 部的定义、开放问题、冻结结算、既有 Lean 载体与已证定理均不回写、不删除，也不因本部改变原地址。
+
+本部预期进入既有 canonical 命名空间
+
+`D5.S3.ConceptDynamics.DefinitionEscape.Adjudication`
+
+并直接复用第 54.3 部已经给出的
+
+`ProtectedCoordinates`、`protectedCoordinates`、`RegradeReport`、`TransportCert`、`TransportReport`、`TransportSemantics`、`ValidTransportCert`、`HasValidTransportCert` 与 `Overreach`。
+
+本部只使用以下初等构件：
+
+- 七元有限标签、依值类型与 `Finset`；
+- 结构投影、函数外延、等式与不等式；
+- `Option` 表示的部分运行结果；
+- 合取、存在、否定与带证明的布尔判定；
+- 对既有载体的语义解释器及其遗忘映射。
+
+不引入测度、概率、拓扑、统计显著性、任意选择、商代表、外生许可证布尔门或新的目标成功标准。除明确写出的可判等号与可判关系外，不暗加 `Fintype`、`Nonempty` 或有限状态前件。
+

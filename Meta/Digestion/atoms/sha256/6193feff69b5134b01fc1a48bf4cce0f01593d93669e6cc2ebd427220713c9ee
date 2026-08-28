@@ -1,0 +1,17 @@
+### 57.5.1 保护坐标侧的直接复用
+
+57.2 直接消费既有 `ProtectedCoordinates` 与 `protectedCoordinates`。七标签只是该记录的有限索引，不得重新声明第二个七字段结构。义务 57.2-A—57.2-B 只证明“整体不等”与“封闭非空变化标签束”之间的等价。
+
+既有冻结定理
+
+`regrade_report_carries_actual_evaluation`
+
+继续唯一承担“报告判词确为修订承诺对报告证据的实际评价”。`RegradeSemantics.reportVerdictCorrect` 的标准实例必须直接填入该证明字段或其定义相同的投影；不得重建一个独立的评价正确性公理。
+
+既有冻结定理
+
+`target_laundering_criterion`
+
+继续唯一承担正文级三合取：
+
+- 严格到达后的保护坐标改变；

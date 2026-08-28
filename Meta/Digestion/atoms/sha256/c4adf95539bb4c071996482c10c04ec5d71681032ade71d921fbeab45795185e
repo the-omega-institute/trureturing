@@ -1,0 +1,24 @@
+**证明义务 57.2-E（洗白判定证书，预期为可判定性）。** 若有
+
+```lean
+DecidableEq Commitment
+DecidableEq Evidence
+DecidableEq TargetChain
+DecidableEq Domain
+DecidableEq Epsilon
+DecidableEq Condition
+DecidableEq Comparator
+DecidableEq Baseline
+DecidableEq WeightSpec
+DecidableRel (fun a b : Time => a < b)
+```
+
+则对任意 `S oldK newK Z regrade` 构造
+
+```lean
+Nonempty
+  (TargetLaunderingDecision S oldK newK Z regrade)
+```
+
+该构造不得要求 `Fintype Commitment`、`Fintype Evidence`、`DecidableEq Verdict`、`Nonempty Commitment` 或原判词与修订判词不同。
+

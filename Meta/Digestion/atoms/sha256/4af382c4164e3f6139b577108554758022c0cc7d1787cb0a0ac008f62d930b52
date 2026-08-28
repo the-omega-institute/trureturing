@@ -1,0 +1,12 @@
+**证明义务 57.2-C（正文级洗白的束消去判据，预期为定理）。** 在 57.2-B 的可判等号前件下，对任意 `S oldK newK Z regrade` 证明
+
+```lean
+SemanticTargetLaunderingAt S oldK newK Z regrade ↔
+  SemanticRegradeAt regrade oldK newK Z ∧
+    PostArrivalSemanticRegrade S regrade ∧
+    S.reportAttributedTo regrade.report = oldK ∧
+    S.protected oldK ≠ S.protected newK
+```
+
+该命题只把完整坐标见证束消去为既有整体不等式，不得删除报告身份、严格时间或归因条件。
+

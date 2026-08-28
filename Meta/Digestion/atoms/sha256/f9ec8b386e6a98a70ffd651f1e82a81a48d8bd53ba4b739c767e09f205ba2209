@@ -1,0 +1,57 @@
+### 57.5.1 保护坐标侧的直接复用
+
+57.2 直接消费既有 `ProtectedCoordinates` 与 `protectedCoordinates`。七标签只是该记录的有限索引，不得重新声明第二个七字段结构。义务 57.2-A—57.2-B 只证明“整体不等”与“封闭非空变化标签束”之间的等价。
+
+既有冻结定理
+
+`regrade_report_carries_actual_evaluation`
+
+继续唯一承担“报告判词确为修订承诺对报告证据的实际评价”。`RegradeSemantics.reportVerdictCorrect` 的标准实例必须直接填入该证明字段或其定义相同的投影；不得重建一个独立的评价正确性公理。
+
+既有冻结定理
+
+`target_laundering_criterion`
+
+继续唯一承担正文级三合取：
+
+- 严格到达后的保护坐标改变；
+- 对旧证据的实际重评；
+- 把修订评价归因于原承诺。
+
+57.2-C 只把其中的保护坐标整体不等式细化为坐标见证束。以冻结载体实例化 `RegradeSemantics` 后，57.2-C 与 `target_laundering_criterion` 合成的桥应作为推论导出；不得在新模块中复制正文级 `TargetLaundering` 定义。
+
+既有冻结定理
+
+`target_laundering_sketch_criterion`
+
+继续唯一承担后置草图的冻结可见性与额外报告时间戳。57.2-D 只说明在显式 `RegradeTemporalBridge` 下，草图语义等于正文语义再合取该时间戳条件。
+
+既有冻结定理
+
+`freeze_visible_iff_post_arrival_under_exact_bridge`
+
+可直接为 57.2-D 提供保护变化部分的转换。其桥前件不得从名称、单调性或首次可达约定中删除。
+
+既有冻结定理
+
+`post_arrival_protected_change_criterion`
+
+可直接用于展开正文级时间条件与保护坐标整体不等式；57.2 不重新证明其时间部分。
+
+既有有限见证定理
+
+`same_verdict_target_laundering`
+
+与
+
+`report_timestamp_not_required_by_boxed_criterion`
+
+是本部定义的强制边界：
+
+- `SemanticTargetLaunderingAt` 不得增加原判词与修订判词不等前件；
+- `SemanticTargetLaunderingAt` 不得增加报告时间戳等于冻结时刻前件；
+- 时间戳等式只属于 `SemanticSketchTargetLaunderingAt`；
+- 任一新增义务若排除上述两个冻结见证，即为 statement-revise，而不是证明失败。
+
+旧轮结算守恒仍由既有冻结的目标变更—结算守恒定理承担。`SemanticRegrade` 是一份带来源的重评对象，不修改原承诺、原报告或原结算值。
+
