@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Constants/Irrationality/TribonacciTraceLattice
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: On 1 <= v1 <= v2 <= 200, the deficit spectrum is a conjugate-pair trace lattice. -/
+   digest: Nonintegrality separates the Tribonacci deficit from the two-faced Fibonacci case. -/
 
 import Mathlib.Analysis.RCLike.Lemmas
 import D5.S3.Constants.Irrationality.TribonacciDeficitScanCertificate
@@ -21,6 +21,22 @@ open D5.S3.Constants.Irrationality.TribonacciDeficitScan
 open D5.S3.Constants.Irrationality.TwoFacedPrivilege
 
 local notation "t" => tribonacciConstant
+
+/- The two concrete encodings compared in PZG Remark 6.27. This is not an
+arbitrary family: its branches are the repository's Fibonacci and Tribonacci
+deficit functions. -/
+inductive ComparedDeficitEncoding
+  | fibonacci
+  | tribonacci
+  deriving DecidableEq
+
+noncomputable def comparedDeficit : ComparedDeficitEncoding → Nat → Nat → Real
+  | .fibonacci => D5.S1.Deficit.deficit
+  | .tribonacci => tribonacciDeficit
+
+/- Integrality of every value of the selected concrete deficit. -/
+def HasIntegralDeficit (encoding : ComparedDeficitEncoding) : Prop :=
+  ∀ v1 v2 : Nat, ∃ z : Int, comparedDeficit encoding v1 v2 = (z : Real)
 
 /- The positive quantity whose square root is the imaginary separation of the
 two non-Perron roots. -/
@@ -232,12 +248,13 @@ theorem tribonacci_nonintegral_deficit_mod_integer_eq_neg_trace :
   rw [hvalue]
   exact (eq_sub_iff_add_eq).2 hk
 
-/- PZG Remark 6.27, with its finite-window clauses explicitly scoped to
-`1 <= v1 <= v2 <= 200`. The seven source clauses expand to thirteen
-independently projectable proposition leaves. -/
+/- The complete exact implementation certificate from the first formalization
+round. It remains public so that no previously proved scan or structural fact
+is lost, but its source-specific window, counts, rounding interval, code image,
+and supporting root facts are not presented as clauses of PZG Remark 6.27. -/
 set_option maxHeartbeats 750000 in
 -- Elaborating the seven imported certificate branches exceeds the default.
-theorem pzg_remark_6_27_tribonacci_trace_lattice :
+theorem tribonacci_trace_lattice_window_certificate :
     (∀ v1 v2 : Nat, 1 ≤ v1 → v1 ≤ v2 → v2 ≤ 200 →
       |tribonacciDeficit v1 v2| < (955 : Real) / 1000) ∧
     (tribonacciNonintegralScanPairs.card = 8934 ∧
@@ -273,14 +290,93 @@ theorem pzg_remark_6_27_tribonacci_trace_lattice :
   · exact ⟨tribonacci_nonintegral_scan_count,
       tribonacci_nonintegral_scan_percentage_rounds_to_44_4⟩
 
-/- Reverse probe for the new trace-lattice clause: the packed public theorem
-projects the nontrivial integer-congruence witness for every nonintegral pair. -/
+/- A certified scan member supplies a witness for the source's unrestricted
+negative assertion: the Tribonacci deficit is not always integral. The scan
+window is used only to prove the existential and is absent from its type. -/
+set_option maxHeartbeats 750000 in
+-- Reducing certified scan membership at the concrete witness exceeds the default.
+theorem tribonacci_deficit_not_always_integral :
+    ∃ v1 v2 : Nat, ¬ ∃ z : Int, tribonacciDeficit v1 v2 = (z : Real) := by
+  refine ⟨1, 1, tribonacci_nonintegral_of_mem_scan (pair := (1, 1)) ?_⟩
+  decide
+
+/- Within the two concrete encodings compared by the source, always-integral
+deficit is exclusive to the Fibonacci encoding. Both directions carry content:
+the forward direction rules out replacing Fibonacci by Tribonacci, while the
+reverse direction is the two-faced integrality theorem. -/
+theorem compared_deficit_has_integral_deficit_iff
+    (encoding : ComparedDeficitEncoding) :
+    HasIntegralDeficit encoding ↔ encoding = .fibonacci := by
+  constructor
+  · intro hintegral
+    cases encoding with
+    | fibonacci => rfl
+    | tribonacci =>
+        exfalso
+        obtain ⟨v1, v2, hnot⟩ := tribonacci_deficit_not_always_integral
+        exact hnot (hintegral v1 v2)
+  · rintro rfl v1 v2
+    exact (quadratic_deficit_is_integral v1 v2).2
+
+/- CAS-A10 as a relation rather than a repeated pair of facts: the two-faced
+Fibonacci integrality proposition differs from its Tribonacci replacement. -/
+theorem fibonacci_integrality_is_privileged :
+    HasIntegralDeficit .fibonacci ≠ HasIntegralDeficit .tribonacci := by
+  intro hsame
+  have hfibonacci : HasIntegralDeficit .fibonacci :=
+    (compared_deficit_has_integral_deficit_iff .fibonacci).2 rfl
+  have htribonacci : HasIntegralDeficit .tribonacci := hsame ▸ hfibonacci
+  have hcollapse :=
+    (compared_deficit_has_integral_deficit_iff .tribonacci).1 htribonacci
+  cases hcollapse
+
+/- CAS-A11: substituting the concrete Tribonacci encoding destroys the
+always-integral property. -/
+theorem fibonacci_two_is_not_replaceable :
+    ¬ HasIntegralDeficit .tribonacci := by
+  intro htribonacci
+  have hcollapse :=
+    (compared_deficit_has_integral_deficit_iff .tribonacci).1 htribonacci
+  cases hcollapse
+
+/-- PZG Remark 6.27, restricted to the clauses that the current vocabulary can
+state without replacing a structural object by a computational surrogate.
+The three leaves are respectively CAS-A2, the concrete privilege relation
+CAS-A10, and the nonreplaceability assertion CAS-A11.
+
+**What this does not claim.** CAS-A1 and CAS-A3 are not claimed here: the source
+reports an output interval and 44.4 percent but supplies no input scan domain,
+sample count, denominator, or rounding convention. CAS-A4 is not claimed: the
+source supplies neither the nonintegral value set nor the topology in which it
+is discrete; the existing eight-code scan spectrum includes zero. CAS-A5 is
+not claimed: the current pointwise congruence modulo integers is not equality
+with a named additive subgroup or lattice, and a nontrivial additive subgroup
+of `Complex` cannot have the finite scan spectrum as its carrier. CAS-A6 and
+CAS-A7 are not
+claimed: `conjEquiv` exists on `GoldenInt`, but no public family of quadratic
+field embeddings or exhaustion theorem connects it to the deficit. CAS-A8 is
+not claimed: there is no Tribonacci number-field carrier with a proved
+one-real/two-complex embedding count. CAS-A9 is not claimed: the root-sum
+calculation in this module is not `Algebra.trace` on such a field. The separate
+`tribonacci_trace_lattice_window_certificate` retains every exact finite-window
+fact used by the prior implementation without assigning those facts to the
+withdrawn source clauses. -/
+theorem pzg_remark_6_27_tribonacci_trace_lattice :
+    (∃ v1 v2 : Nat, ¬ ∃ z : Int, tribonacciDeficit v1 v2 = (z : Real)) ∧
+      (HasIntegralDeficit .fibonacci ≠ HasIntegralDeficit .tribonacci) ∧
+      ¬ HasIntegralDeficit .tribonacci :=
+  ⟨tribonacci_deficit_not_always_integral,
+    fibonacci_integrality_is_privileged,
+    fibonacci_two_is_not_replaceable⟩
+
+/- Preservation probe for the old trace congruence: it remains projectable from
+the separately named exact window certificate. -/
 example {pair : Nat × Nat} (hpair : pair ∈ tribonacciNonintegralScanPairs) :
     ∃ k : Int,
       ((tribonacciDeficit pair.1 pair.2 : Real) : Complex) =
         (k : Complex) - tribonacciConjugatePairTrace
           (tribonacciDeficitCodeAt 10 pair.1 pair.2) := by
-  exact pzg_remark_6_27_tribonacci_trace_lattice.2.2.2.1 pair hpair
+  exact tribonacci_trace_lattice_window_certificate.2.2.2.1 pair hpair
 
 /- Trivialization probe for the same clause: positive imaginary part forces
 the two named non-Perron embeddings to be a genuinely distinct conjugate pair. -/
@@ -289,5 +385,25 @@ example : conj tribonacciSecondaryRoot.1 ≠ tribonacciSecondaryRoot.1 := by
   have him := congrArg Complex.im h
   simp only [Complex.conj_im] at him
   nlinarith [tribonacciSecondaryRoot.property.2.2]
+
+/- Reverse probe for CAS-A2: the public result yields a genuine nonintegral
+deficit without exposing the implementation scan as a source restriction. -/
+example : ∃ v1 v2 : Nat, ¬ ∃ z : Int,
+    tribonacciDeficit v1 v2 = (z : Real) :=
+  pzg_remark_6_27_tribonacci_trace_lattice.1
+
+/- Collapse probe for CAS-A10/A11: the public classifier distinguishes the two
+concrete encodings, giving integrality on Fibonacci and its negation on
+Tribonacci. Replacing either branch by a constant function breaks this result. -/
+example : HasIntegralDeficit .fibonacci ∧ ¬ HasIntegralDeficit .tribonacci := by
+  constructor
+  · by_contra hfibonacci
+    apply pzg_remark_6_27_tribonacci_trace_lattice.2.1
+    apply propext
+    exact iff_of_false hfibonacci pzg_remark_6_27_tribonacci_trace_lattice.2.2
+  · exact pzg_remark_6_27_tribonacci_trace_lattice.2.2
+
+/- The classifier's carrier itself has not collapsed to one point. -/
+example : ComparedDeficitEncoding.fibonacci ≠ .tribonacci := by decide
 
 end D5.S3.Constants.Irrationality.TribonacciTraceLattice
