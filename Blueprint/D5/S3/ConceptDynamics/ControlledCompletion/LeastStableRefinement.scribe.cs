@@ -64,26 +64,32 @@ internal sealed class LeastStableRefinementDocument : IScribeDocumentDefinition
         Formula candidate = F.Id("candidate");
         Formula closure = DynamicClosure(concept, intervene);
 
+        Formula candidateMinimality = new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [
+                Bound("B", TypeUniverse()),
+                Bound("candidate", Arrow(state, candidateValue)),
+            ],
+            Implies(
+                And(
+                    Refines(concept, candidate),
+                    Closed(candidate, intervene)),
+                Refines(closure, candidate)));
+
         return F.Disp(new Formula.BindMany(
             FormulaQuantifier.ForAll,
             [
                 Bound("X", TypeUniverse()),
                 Bound("A", TypeUniverse()),
                 Bound("U", TypeUniverse()),
-                Bound("B", TypeUniverse()),
                 Bound("q", Arrow(state, value)),
                 Bound("intervene", Arrow(intervention, Arrow(state, state))),
-                Bound("candidate", Arrow(state, candidateValue)),
             ],
             And(
                 Refines(concept, closure),
                 And(
                     Closed(closure, intervene),
-                    Implies(
-                        And(
-                            Refines(concept, candidate),
-                            Closed(candidate, intervene)),
-                        Refines(closure, candidate))))));
+                    candidateMinimality))));
     }
 
     private static Formula.BoundVariable Bound(string name, Formula domain) =>

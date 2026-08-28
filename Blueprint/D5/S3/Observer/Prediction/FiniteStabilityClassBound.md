@@ -6,7 +6,7 @@ The least finite-future stability depth obeys the exact quotient-class bound.
 
 **Theorem 1.1 (Least finite-future stability depth).**
 
-$$\begin{gathered}\forall X, Q, [\operatorname{Fintype}(X)],\\{}F: X \to X, q: X \to Q,\\{}m_{*} = \operatorname{sInf} \{n\in\mathbb{N} \mid K_{n} = K_{n+1}\},\\{}K_{m_{*}} = K_{m_{*}+1} = K_{\infty} \land \\{}(\forall n, K_{n} = K_{n+1} \Rightarrow m_{*} \leq n) \land \\{}m_{*} \leq \lvert X/K_{\infty} \rvert - \lvert X/K_{q} \rvert \leq \lvert X \rvert - \lvert \operatorname{Im}(q) \rvert.\end{gathered}$$
+$$\begin{gathered}\forall X, Q: \operatorname{Type}, [\operatorname{Fintype}(X)],\\{}F: X \to X, q: X \to Q,\\{}m_{*} = \operatorname{sInf} \{n\in\mathbb{N} \mid K_{n} = K_{n+1}\},\\{}K_{m_{*}} = K_{m_{*}+1} = K_{\infty} \land \\{}(\forall n, K_{n} = K_{n+1} \Rightarrow m_{*} \leq n) \land \\{}m_{*} \leq \lvert X/K_{\infty} \rvert - \lvert X/K_{q} \rvert \leq \lvert X \rvert - \lvert \operatorname{Im}(q) \rvert.\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/Prediction/FiniteStabilityClassBound.finite_stability_class_bound` (`✓ std3`). ∎
 

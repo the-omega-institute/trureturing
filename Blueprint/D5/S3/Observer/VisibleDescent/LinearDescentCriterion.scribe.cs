@@ -76,14 +76,25 @@ internal sealed class LinearDescentCriterionDocument
             Open, crossBlock, Close, Sp, Rightarrow, Sp,
             Open, canonicalCommutes, Sp, Land, Sp, uniqueness, Close);
 
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula submodule = Call("Submodule", scalar, space);
+        Formula continuousMap = Call("ContinuousLinearMap", scalar, space, space);
+        Formula setup = Seq(
+            OpenBracket, Call("RCLike", scalar), CloseBracket, Comma, Sp,
+            OpenBracket, Call("NormedAddCommGroup", space), CloseBracket, Comma, Sp,
+            OpenBracket, Call("InnerProductSpace", scalar, space), CloseBracket, Comma, Sp,
+            visible, Colon, Sp, submodule, Comma, Sp,
+            OpenBracket, Call("HasOrthogonalProjection", visible), CloseBracket, Comma, Sp,
+            dynamics, Colon, Sp, continuousMap, Comma, Sp,
+            projection, Colon, Sp, continuousMap, Comma, Sp,
+            hiddenProjection, Colon, Sp, continuousMap, Comma, RowBreak, Grp(),
+            projection, Sp, Eq, Sp, Call("orthogonalProjectionOnto", visible), Comma, Sp,
+            hiddenProjection, Sp, Eq, Sp, Call("starProjection", Seq(visible, Caret, Grp(Perp))));
+
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, scalar, Comma, Sp, space, Comma, Sp, visible, Comma, Sp,
-            projection, Comma, Sp, hiddenProjection, Comma, Sp, dynamics, Comma,
-            RowBreak, Grp(),
-            Open, Call("HilbertSetup", scalar, space, visible, projection,
-              hiddenProjection, dynamics), Close, Sp, Rightarrow,
-            RowBreak, Grp(),
+            Forall, Sp, scalar, Comma, Sp, space, Colon, Sp, type, Comma, RowBreak, Grp(),
+            setup, Sp, Rightarrow, RowBreak, Grp(),
             Open, equivalence, Close, Sp, Land,
             RowBreak, Grp(),
             Open, computedUniqueDescent, Close, Dot,

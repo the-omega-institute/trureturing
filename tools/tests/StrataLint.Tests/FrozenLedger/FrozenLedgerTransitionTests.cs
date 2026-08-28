@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
-using StrataLint.Cli;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using StrataLint.Engine;
 using static StrataLint.Tests.FrozenLedgerTestData;
 
@@ -8,123 +9,147 @@ namespace StrataLint.Tests;
 public sealed partial class FrozenLedgerTests
 {
     [Fact]
-    public void ReorderingAnyBaselineLineFailsTheExactCandidatePrefix()
+    public void HistoricalComparisonAllowsProofBodyChange()
     {
-        var catalog = BuildCatalog(Module("A"), Module("B"));
-        var bytes = FrozenLedgerGenerator.GenerateGenesis(
-            catalog,
-            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
-        var baseline = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateGenesis(
-                Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes.AsSpan())).Syntax,
-                catalog)).Capability;
-        var lines = Lines(bytes);
-        (lines[1], lines[2]) = (lines[2], lines[1]);
-        var reordered = lines.SelectMany(static line => line).ToArray();
+        var recordedCatalog = BuildCatalog(Module(
+            "A",
+            source: "theorem a : True := by trivial\n"));
+        var currentCatalog = BuildCatalog(Module(
+            "A",
+            source: "theorem a : True := by exact True.intro\n"));
 
-        var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
-            ValidateCandidate(
-                Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(reordered)).Syntax,
-                baseline,
-                catalog));
+        var accepted = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateHistory(EventFiles(recordedCatalog), currentCatalog));
 
-        Assert.Contains("prefix", rejected.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Single(accepted.Capability.ActiveFrozenNodes);
     }
 
     [Fact]
-    public void FreezeOfAnOpenNodeFailsEvenWithAValidCaseAndEventHash()
+    public void HistoricalComparisonRejectsRewrittenStatementAndNamesModulePath()
     {
-        const string pathText = "D5/X_Frontier/OpenCase.lean";
-        const string source = "-- D5-T0042\ntheorem openCase : True := by sorry\n";
-        var catalog = Assert.IsType<FrozenMaterialOutcome.Accepted>(BuildCatalogOutcome(
-            pathText,
-            source,
-            new LeanFileReport(
-                ImmutableArray<string>.Empty,
-                ImmutableArray.Create(new LeanDeclaration(
-                    "openCase",
-                    "theorem",
-                    "True",
-                    ImmutableArray.Create("sorryAx")))))).Capability;
-        var genesisBytes = FrozenLedgerGenerator.GenerateGenesis(
-            catalog,
-            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
-        var genesis = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateGenesis(
-                Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(genesisBytes.AsSpan())).Syntax,
-                catalog)).Capability;
-        Assert.True(RepoPath.TryCreate(pathText, out var path));
-        var statement = StatementId.Create(Sha256("statement"));
-        var witness = WitnessId.Create(Sha256("witness"));
-        var frozen = FrozenNodeId.Create(Sha256("frozen"));
-        var payload = new FrozenFreezePayload(
-            "active-frozen",
-            ImmutableArray<FrozenDeclarationStatement>.Empty,
-            frozen,
-            new FrozenLedgerInput(
-                catalog.Environment.OriginCommitOid,
-                catalog.Environment.OriginTreeOid,
-                GitBlobOid(source),
-                pathText,
-                "repository-snapshot-v1",
-                new[]
-                {
-                    catalog.Environment.LakeManifestBlobOid,
-                    catalog.Environment.LeanToolchainBlobOid,
-                }.Order(StringComparer.Ordinal).ToImmutableArray()),
-            ImmutableArray<FrozenNodeId>.Empty,
-            statement,
-            witness)
-        {
-            AxiomClosure = ImmutableArray<string>.Empty,
-        };
-        var line = FrozenLedgerCanonicalWriter.WriteEvent(
-            "Freeze",
-            FrozenLedgerCanonicalWriter.FreezeElement(payload),
-            genesis.HeadHash,
-            1).Bytes;
-        var forged = genesisBytes.Concat(line).ToArray();
+        var recordedCatalog = BuildCatalog(Module("A"));
+        var recordedMaterial = Assert.Single(recordedCatalog.ClosedNodes);
+        var currentCatalog = ReplaceMaterial(
+            recordedCatalog,
+            recordedMaterial with
+            {
+                StatementId = StatementId.Create(Sha256("rewritten statement")),
+            });
 
         var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
-            ValidateGenesis(
-                Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(forged)).Syntax,
-                catalog));
+            ValidateHistory(EventFiles(recordedCatalog), currentCatalog));
 
-        Assert.Contains("non-Closed", rejected.Message, StringComparison.Ordinal);
+        Assert.Contains(PathFor("A"), rejected.Message, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void ReattestCannotSwapDescriptorBytes()
+    public void HistoricalComparisonRejectsAddedDeclaration()
+    {
+        var recordedCatalog = BuildCatalog(Module("A"));
+        var recordedMaterial = Assert.Single(recordedCatalog.ClosedNodes);
+        var currentCatalog = ReplaceMaterial(
+            recordedCatalog,
+            recordedMaterial with
+            {
+                DeclarationStatementIds = recordedMaterial.DeclarationStatementIds.Add(
+                    new FrozenDeclarationStatement(
+                        "ns(n0,5:extra)",
+                        "theorem",
+                        StatementId.Create(Sha256("added declaration")))),
+            });
+
+        var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
+            ValidateHistory(EventFiles(recordedCatalog), currentCatalog));
+
+        Assert.Contains("statement identity changed", rejected.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void HistoricalComparisonAllowsDifferentRecordedAxiomClosureWhenCurrentClosureIsStandard()
+    {
+        var recordedCatalog = BuildCatalog(Module("A"));
+        var currentCatalog = BuildCatalog(Module("A", axioms: ["propext"]));
+
+        var accepted = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateHistory(EventFiles(recordedCatalog), currentCatalog));
+
+        Assert.Single(accepted.Capability.ActiveFrozenNodes);
+    }
+
+    [Fact]
+    public void HistoricalComparisonRejectsCurrentAxiomClosureOutsideStandardAllowlist()
     {
         var catalog = BuildCatalog(Module("A"));
-        var bytes = FrozenLedgerGenerator.GenerateGenesis(
-            catalog,
-            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
-        var baseline = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateGenesis(
-                Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes.AsSpan())).Syntax,
-                catalog)).Capability;
-        var freeze = Assert.IsType<FrozenLedgerEvent.Freeze>(baseline.Events[1]);
-        var forged = new FrozenReattestPayload(
-            freeze.Payload.CaseId,
-            freeze.Payload.Input with { DescriptorBlobOid = GitOid('f') },
-            freeze.EventHash)
+        var material = Assert.Single(catalog.ClosedNodes) with
         {
-            AxiomClosure = freeze.Payload.AxiomClosure,
+            AxiomClosure = ["Nonstandard.axiom"],
         };
-        var line = FrozenLedgerCanonicalWriter.WriteEvent(
-            "Reattest",
-            FrozenLedgerCanonicalWriter.ReattestElement(forged),
-            baseline.HeadHash,
-            baseline.Events.Length).Bytes;
+        var recordedCatalog = ReplaceMaterial(catalog, material);
+        var currentCatalog = ReplaceMaterial(catalog, material);
 
         var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
-            ValidateCandidate(
-                Assert.IsType<DagLedgerLoadOutcome.Loaded>(
-                    DagLedgerLoader.Load(bytes.Concat(line).ToArray())).Syntax,
-                baseline,
-                catalog));
+            ValidateHistory(EventFiles(recordedCatalog), currentCatalog));
 
-        Assert.Contains("attestation", rejected.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("standard axiom allowlist", rejected.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void HistoricalComparisonAllowsRecordedContentAddressesToDiffer()
+    {
+        var catalog = BuildCatalog(Module("A"));
+        var history = RewriteFreezePayload(EventFiles(catalog), payload =>
+        {
+            var recordedFrozen = FrozenNodeId.Create(Sha256("recorded frozen identity"));
+            payload["case_id"] = FrozenLedgerCanonicalWriter.CaseId(recordedFrozen);
+            payload["frozen_node_id"] = recordedFrozen.Value;
+            payload["prerequisite_frozen_node_ids"] = new JsonArray(
+                Sha256("unresolvable recorded prerequisite identity"));
+            payload["witness_id"] = Sha256("recorded witness identity");
+        });
+
+        var accepted = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateHistory(history, catalog));
+
+        Assert.Single(accepted.Capability.ActiveFrozenNodes);
+    }
+
+    [Fact]
+    public void HistoricalComparisonRejectsPrerequisitePathDrift()
+    {
+        var recordedCatalog = BuildCatalog(Module("A"), Module("B"));
+        var currentCatalog = BuildCatalog(
+            Module("A"),
+            Module("B", imports: new[] { "A" }));
+
+        var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
+            ValidateHistory(EventFiles(recordedCatalog), currentCatalog));
+
+        Assert.Contains(PathFor("B"), rejected.Message, StringComparison.Ordinal);
+    }
+
+    private static FrozenMaterialCatalog ReplaceMaterial(
+        FrozenMaterialCatalog catalog,
+        FrozenNodeMaterial material) =>
+        FrozenMaterialCatalog.Create(
+            catalog.Environment,
+            catalog.States,
+            [material],
+            catalog.OpenCases,
+            catalog.TailRegistrations,
+            catalog.Adjacency);
+
+    private static ImmutableArray<RepositoryFile> RewriteFreezePayload(
+        ImmutableArray<RepositoryFile> history,
+        Action<JsonObject> rewrite)
+    {
+        var freeze = Assert.Single(LoadEvents(history), static item => item.EventType == "Freeze");
+        var freezeFile = history.Single(item => item.Path == freeze.SourcePath);
+        using var document = JsonDocument.Parse(freezeFile.RawBytes.AsSpan()[..^1].ToArray());
+        var payload = JsonNode.Parse(
+            document.RootElement.GetProperty("payload").GetRawText())!.AsObject();
+        rewrite(payload);
+        return history.Replace(
+            freezeFile,
+            EventFile("Freeze", JsonSerializer.SerializeToElement(payload)));
     }
 }

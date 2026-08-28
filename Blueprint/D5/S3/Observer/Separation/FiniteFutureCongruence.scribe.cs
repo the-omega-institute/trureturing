@@ -65,6 +65,7 @@ internal sealed class FiniteFutureCongruenceDocument : IScribeDocumentDefinition
     {
         Formula state = F.Id("Y");
         Formula output = F.Id("O");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
         Formula observation = F.Id("q");
         Formula index = F.Id("m");
         Formula relation = F.Id("R");
@@ -74,7 +75,11 @@ internal sealed class FiniteFutureCongruenceDocument : IScribeDocumentDefinition
         Formula finiteRelation = RelationAt(index);
         Formula successorRelation = RelationAt(Seq(index, Plus, D(1)));
         Formula infiniteRelation = RelationAt(Infty);
-        Formula stableRelation = RelationAt(new Formula.Subscript(F.Id("m"), Star));
+        Formula stableRelation = Call(
+            "finiteFutureRelation",
+            Tau,
+            observation,
+            Call("stabilizationIndex", Tau, observation));
         Formula kernel = Seq(Ker, Sp, observation);
         Formula refinement = Seq(Operatorname, Grp(F.Id("Phi")));
         Formula updateLeft = Apply(Tau, left);
@@ -105,7 +110,7 @@ internal sealed class FiniteFutureCongruenceDocument : IScribeDocumentDefinition
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, state, Comma, Sp, output, Comma, RowBreak, Grp(),
+            Forall, Sp, state, Comma, Sp, output, Colon, Sp, type, Comma, RowBreak, Grp(),
             OpenBracket, Operatorname, Grp(F.Id("Fintype")),
             Open, state, Close, CloseBracket, Comma, Sp,
             Tau, Colon, Sp, state, Sp, To, Sp, state, Comma, Sp,

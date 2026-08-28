@@ -8,3 +8,11 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-28T01:16:47.9399950+00:00
+    gids:
+      - D5/S3/ConceptDynamics/Completion/CommutingCompletionExchange.commuting_completion_exchange
+    gaps:
+      - code: structural-alignment-rejected
+        detail: 定理/9.1

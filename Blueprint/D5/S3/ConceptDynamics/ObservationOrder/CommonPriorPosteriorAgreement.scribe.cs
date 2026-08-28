@@ -88,6 +88,7 @@ internal sealed class CommonPriorPosteriorAgreementDocument : IScribeDocumentDef
 
         return Disp(Seq(
             Call("Finite", worlds), Comma, Sp,
+            OpenBracket, Call("DecidableEq", worlds), CloseBracket, Comma, Sp,
             prior, Colon, Sp, worlds, Sp, To, Sp, Mathbb, Grp(F.Id("R")),
             Comma, RowBreak, Grp(),
             Open, Forall, Sp, world, Sp, InMacro, Sp, worlds, Comma, Sp,

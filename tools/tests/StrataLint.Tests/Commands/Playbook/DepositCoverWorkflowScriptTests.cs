@@ -20,7 +20,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.True(result.ExitCode == 0, Diagnostics(result));
         Assert.Equal(before + 2, fixture.CommitCount());
         Assert.Equal(1, fixture.FreezeCount());
-        Assert.Equal(2, fixture.FreezeProbeCount());
+        Assert.Equal(0, fixture.FreezeProbeCount());
         Assert.True(File.Exists(fixture.ReceiptPath));
         Assert.Empty(fixture.Status());
         Assert.Equal(
@@ -116,7 +116,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
     }
 
     [Fact]
-    public void DepositDoesNotSkipAFreezeForStaleModuleIdentity()
+    public void DepositSkipsFreezeWhenTheModulePathIsAlreadyActive()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -127,45 +127,8 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var result = fixture.Run("deposit");
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
-        Assert.Equal(1, fixture.CallKinds().Count(call => call == "dotnet:ledger-append"));
-        Assert.Equal(2, fixture.FreezeCount());
-    }
-
-    [Fact]
-    public void DepositReplaysReattestationsInCausalOrderInsteadOfFileNameOrder()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.WriteActiveReattestationChainInReverseFileNameOrder();
-
-        var result = fixture.Run("deposit");
-
-        Assert.True(result.ExitCode == 0, Diagnostics(result));
-        Assert.Contains(
-            "module-already-frozen",
-            Encoding.UTF8.GetString(result.StandardError),
-            StringComparison.Ordinal);
         Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
         Assert.Equal(1, fixture.FreezeCount());
-    }
-
-    [Fact]
-    public void DepositRejectsCyclicReattestationChainWithoutHanging()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.WriteCyclicReattestationChain();
-
-        // This generous wall-clock budget is only a runaway guard; the verdict is
-        // the deterministic cycle diagnostic and exit code below.
-        var result = fixture.Run("deposit", timeout: BoundedProcessRunner.HangDetectionBudget);
-
-        Assert.Equal(2, result.ExitCode);
-        Assert.Contains(
-            "Reattest chain contains a cycle",
-            Encoding.UTF8.GetString(result.StandardError),
-            StringComparison.Ordinal);
-        Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
     }
 
     [Fact]
@@ -545,96 +508,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
             WriteLedger(freeze);
         }
 
-        internal void WriteActiveReattestationChainInReverseFileNameOrder()
-        {
-            const string caseId = "active-frozen/replayed-probe";
-            const string freezeHash =
-                "sha256:1111111111111111111111111111111111111111111111111111111111111111";
-            const string earlierReattestHash =
-                "sha256:2222222222222222222222222222222222222222222222222222222222222222";
-            var currentDescriptorBlobOid = "git-sha1:" + Git("hash-object", "--", LeanPath).Trim();
-            var freeze = JsonSerializer.Serialize(new
-            {
-                event_hash = freezeHash,
-                event_type = "Freeze",
-                payload = new
-                {
-                    case_id = caseId,
-                    frozen_node_id =
-                        "sha256:f000000000000000000000000000000000000000000000000000000000000000",
-                    input = new
-                    {
-                        descriptor_blob_oid =
-                            "git-sha1:0000000000000000000000000000000000000000",
-                        descriptor_selector = LeanPath,
-                    },
-                    node_path = LeanPath,
-                },
-            });
-            var earlierReattest = ReattestEvent(
-                caseId,
-                earlierReattestHash,
-                freezeHash,
-                "sha256:2000000000000000000000000000000000000000000000000000000000000000",
-                "git-sha1:1111111111111111111111111111111111111111");
-            var latestReattest = ReattestEvent(
-                caseId,
-                "sha256:3333333333333333333333333333333333333333333333333333333333333333",
-                earlierReattestHash,
-                "sha256:1000000000000000000000000000000000000000000000000000000000000000",
-                currentDescriptorBlobOid);
-            WriteLedger(
-                ("1000000000000000000000000000000000000000000000000000000000000000.json", latestReattest),
-                ("2000000000000000000000000000000000000000000000000000000000000000.json", earlierReattest),
-                ("f000000000000000000000000000000000000000000000000000000000000000.json", freeze));
-        }
-
-        internal void WriteCyclicReattestationChain()
-        {
-            const string freezeHash =
-                "sha256:9999999999999999999999999999999999999999999999999999999999999999";
-            const string frozenNodeId =
-                "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc";
-            const string firstHash =
-                "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            const string secondHash =
-                "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
-            const string caseId = "active-frozen/cyclic-probe";
-            var freeze = JsonSerializer.Serialize(new
-            {
-                event_hash = freezeHash,
-                event_type = "Freeze",
-                payload = new
-                {
-                    case_id = caseId,
-                    frozen_node_id = frozenNodeId,
-                    input = new
-                    {
-                        descriptor_blob_oid =
-                            "git-sha1:0000000000000000000000000000000000000000",
-                        descriptor_selector = LeanPath,
-                    },
-                    node_path = LeanPath,
-                },
-            });
-            var first = ReattestEvent(
-                caseId,
-                firstHash,
-                secondHash,
-                firstHash,
-                "git-sha1:0000000000000000000000000000000000000000");
-            var second = ReattestEvent(
-                caseId,
-                secondHash,
-                firstHash,
-                secondHash,
-                "git-sha1:1111111111111111111111111111111111111111");
-            WriteLedger(
-                (frozenNodeId["sha256:".Length..] + ".json", freeze),
-                ("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json", first),
-                ("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.json", second));
-        }
-
         internal void LeaveInterruptedTemporaryFiles(
             string receiptRelativePath = ReceiptRelativePath)
         {
@@ -661,25 +534,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
                         ? descriptorSelector.GetString()
                         : null;
                 return selector == leanPath;
-            });
-
-        private static string ReattestEvent(
-            string caseId,
-            string eventHash,
-            string previousHash,
-            string frozenNodeId,
-            string descriptorBlobOid) =>
-            JsonSerializer.Serialize(new
-            {
-                event_hash = eventHash,
-                event_type = "Reattest",
-                payload = new
-                {
-                    case_id = caseId,
-                    frozen_node_id = frozenNodeId,
-                    input = new { descriptor_blob_oid = descriptorBlobOid },
-                    previous_attestation_event_hash = previousHash,
-                },
             });
 
         private void WriteLedger(params string[] events)

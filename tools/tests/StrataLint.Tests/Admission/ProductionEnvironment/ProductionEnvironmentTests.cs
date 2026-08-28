@@ -473,18 +473,6 @@ public sealed partial class ProductionEnvironmentTests
         });
     }
 
-    private static (RepositorySnapshot Snapshot, AcceptedLeanClosure Lean, TruthDagProjection Dag) BuildState(
-        IReadOnlyDictionary<string, string> files,
-        IReadOnlyDictionary<string, LeanFileReport> reports)
-    {
-        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-            SnapshotDecoder.Decode(Snapshot(files))).Snapshot;
-        var lean = Assert.IsType<LeanValidationOutcome.Accepted>(
-            LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
-        var dag = TruthDagProjectionAssembler.Build(snapshot, lean);
-        return (snapshot, lean, dag);
-    }
-
     private static void AssertCompleteRuleDisposition(AdmissionCertificate certificate)
     {
         var deferred = certificate.DeferredRules.Select(static item => item.RuleId).ToImmutableArray();
@@ -524,20 +512,14 @@ public sealed partial class ProductionEnvironmentTests
         };
         var baselineCatalog = Catalog(fixture.Baseline, fixture.BaselineReports, environment);
         var currentCatalog = Catalog(fixture.Files, fixture.Reports, environment);
-        var baselineLedger = FrozenLedgerGenerator.GenerateGenesis(
-            baselineCatalog,
-            new FrozenGenesisDescriptor(
-                FrozenLedgerTestData.GitOid('e'),
-                RuleCatalog.Default.RootSha256));
-        var baselineSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
-            DagLedgerLoader.Load(baselineLedger.AsSpan())).Syntax;
-        var baselineCapability = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            FrozenLedgerTestData.ValidateGenesis(baselineSyntax, baselineCatalog)).Capability;
-        var currentLedger = FrozenLedgerGenerator.AppendSynchronization(
+        var baselineEvents = FrozenLedgerTestData.EventFiles(baselineCatalog);
+        var baselineCapability = FrozenLedgerTestData.Baseline(baselineCatalog);
+        var currentEvents = baselineEvents.AddRange(DagLedgerAppendWriter.BuildNewEventFiles(
+            FrozenLedgerGenerator.MissingFreezes(
             baselineCapability,
-            currentCatalog);
-        SetLedger(fixture.Files, Encoding.UTF8.GetString(currentLedger.AsSpan()));
-        SetLedger(fixture.Baseline, Encoding.UTF8.GetString(baselineLedger.AsSpan()));
+            currentCatalog)));
+        SetLedger(fixture.Files, currentEvents);
+        SetLedger(fixture.Baseline, baselineEvents);
         return baselineCapability;
 
         static FrozenMaterialCatalog Catalog(
@@ -648,9 +630,7 @@ internal sealed class FakeRepositoryGateway(
     {
         FrozenReferenceValidations.Add(references);
         return frozenReferenceValidator?.Invoke(references)
-            ?? TrustedFrozenGitReferences.CreateForTrustedAdapter(
-                references.Inputs,
-                references.EnvironmentReferences);
+            ?? TrustedFrozenGitReferences.CreateForTrustedAdapter(references.Inputs);
     }
 
     private static RawRepositorySnapshot WithAtomizerData(RawRepositorySnapshot snapshot) =>

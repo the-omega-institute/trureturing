@@ -6,7 +6,7 @@ Commonly known posteriors from a positive finite common prior agree.
 
 **Theorem 1.1 (Commonly known posterior values agree).**
 
-$$\operatorname{Finite}(\omega), \mu: \omega \to \mathbb{R},\\{}(\forall w \in \omega, 0 < \operatorname{apply}(\mu, w)), \sum_{w \in \omega} \operatorname{apply}(\mu, w) = 1,\\{}E, K \subseteq \omega, K \neq \emptyset,\\{}\pi_{1}, \pi_{2} \in \operatorname{Finpartition}(K),\\{}\operatorname{mass}(C) = \sum_{w \in C} \operatorname{apply}(\mu, w), \operatorname{eventMass}(E, C) = \sum_{w \in C, w \in E} \operatorname{apply}(\mu, w), \operatorname{post}(E, C) = \frac{\operatorname{eventMass}(E, C)}{\operatorname{mass}(C)},\\{}\forall C \in \operatorname{parts}(\pi_{1}), \operatorname{post}(E, C) = a,\\{}\forall C \in \operatorname{parts}(\pi_{2}), \operatorname{post}(E, C) = b\\{}\Rightarrow a = b.$$
+$$\operatorname{Finite}(\omega), [\operatorname{DecidableEq}(\omega)], \mu: \omega \to \mathbb{R},\\{}(\forall w \in \omega, 0 < \operatorname{apply}(\mu, w)), \sum_{w \in \omega} \operatorname{apply}(\mu, w) = 1,\\{}E, K \subseteq \omega, K \neq \emptyset,\\{}\pi_{1}, \pi_{2} \in \operatorname{Finpartition}(K),\\{}\operatorname{mass}(C) = \sum_{w \in C} \operatorname{apply}(\mu, w), \operatorname{eventMass}(E, C) = \sum_{w \in C, w \in E} \operatorname{apply}(\mu, w), \operatorname{post}(E, C) = \frac{\operatorname{eventMass}(E, C)}{\operatorname{mass}(C)},\\{}\forall C \in \operatorname{parts}(\pi_{1}), \operatorname{post}(E, C) = a,\\{}\forall C \in \operatorname{parts}(\pi_{2}), \operatorname{post}(E, C) = b\\{}\Rightarrow a = b.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ObservationOrder/CommonPriorPosteriorAgreement.common_knowledge_posteriors_agree` (`✓ std3`). ∎
 

@@ -6,7 +6,7 @@ Effective strict refinement creates a new question and a new differentiating pol
 
 **Theorem 1.1 (Strict refinement yields question and policy capability).**
 
-$$\forall X, C, D, U,\ q_{C}: X \to C, q_{D}: X \to D, \operatorname{Surjective}\left(q_{C}\right) \land \operatorname{Surjective}\left(q_{D}\right) \land \operatorname{StrictRefinement}\left(q_{C}, q_{D}\right) \land \exists u_{0}: U, u_{1}: U, u_{0} \neq u_{1} \Rightarrow ((\exists Q: X \to Bool, ((\exists! a: D \to Bool, Q = a \circ q_{D}) \land \neg(\exists b: C \to Bool, Q = b \circ q_{C}))) \land (\exists Pi: X \to U, ((\exists! p: D \to U, Pi = p \circ q_{D}) \land \neg(\exists c: C \to U, Pi = c \circ q_{C})))).$$
+$$\forall X, C, D, U: Type,\ q_{C}: X \to C, q_{D}: X \to D, \operatorname{Surjective}\left(q_{C}\right) \land \operatorname{Surjective}\left(q_{D}\right) \land \operatorname{StrictRefinement}\left(q_{C}, q_{D}\right) \land \exists u_{0}: U, u_{1}: U, u_{0} \neq u_{1} \Rightarrow ((\exists Q: X \to Bool, ((\exists! a: D \to Bool, Q = a \circ q_{D}) \land \neg(\exists b: C \to Bool, Q = b \circ q_{C}))) \land (\exists Pi: X \to U, ((\exists! p: D \to U, Pi = p \circ q_{D}) \land \neg(\exists c: C \to U, Pi = c \circ q_{C})))).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/StrictRefinementCapability.strict_refinement_capability` (`✓ std3`). ∎
 

@@ -12,6 +12,6 @@ receipts:
       target_sha256: sha256:07069fa41072b7b124329290d5b1eb64e5d4875acbdb7c5954b799f60bc2818f
   scribe:
     - gid: D5/S3/ConceptDynamics/ConceptJoinUniversal.concept_join_universal
-      definition_sha256: sha256:e98a240be20c04485b0a8c24c382c16634158e82c9facf5c10add16cf607b437
-      emission_sha256: sha256:fd5d2d21f29920a13049700ea1efa9150dbef608a308ddcf66fa998488414611
+      definition_sha256: sha256:46682f25629d83436050a044df143dc982bfd68938fbae67a1a74c80687283bc
+      emission_sha256: sha256:76c1b3c14cd89a5cc23e315964b95a98c5f269b8179d90c48863f5db80a72dda
   unresolved_subitems: []
