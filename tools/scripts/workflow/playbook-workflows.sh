@@ -176,7 +176,7 @@ commit_all_if_needed() {
 }
 
 freeze_exists() {
-  local active_state current_blob current_identity freeze_case_ids grep_output grep_status
+  local active_state freeze_case_ids grep_output grep_status
   local ledger_file target_case_id
   local git_grep_arguments=() module_ledger_files=() related_ledger_files=()
   local target_case_ids=()
@@ -188,19 +188,6 @@ freeze_exists() {
     echo "PLAYBOOK_INVALID frozen ledger is missing: $FROZEN_LEDGER" >&2
     return 2
   fi
-
-  if ! current_blob="$(git hash-object -- "$MODULE_PATH")"; then
-    echo "PLAYBOOK_INVALID failed to identify current module: $MODULE_PATH" >&2
-    return 2
-  fi
-  case "${#current_blob}" in
-    40) current_identity="git-sha1:$current_blob" ;;
-    64) current_identity="git-sha256:$current_blob" ;;
-    *)
-      echo "PLAYBOOK_INVALID git returned a malformed module identity: $current_blob" >&2
-      return 2
-      ;;
-  esac
 
   if grep_output="$(git grep --untracked -l -F -e "$MODULE_PATH" \
       -- "$FROZEN_LEDGER/*.json" 2>&1)"; then
@@ -256,14 +243,11 @@ freeze_exists() {
 
   if ! active_state="$(jq -sc \
       --arg node "$MODULE_PATH" \
-      --arg identity "$current_identity" \
       --arg target_cases "$freeze_case_ids" '
       ($target_cases | split("\n")) as $target_case_ids
       | [.[]
         | select(
-            if (.event_type == "Freeze"
-                or .event_type == "Reattest"
-                or .event_type == "Supersede") then
+            if .event_type == "Freeze" then
               (.payload.case_id // null) as $case
               | (($case | type) == "string"
                   and (($target_case_ids | index($case)) != null))
@@ -281,48 +265,15 @@ freeze_exists() {
       | ([$events[]
         | select(.event_type == "Revoke")
         | .payload.affected_frozen_node_ids[]] | unique) as $revoked_ids
-      | (reduce $events[] as $event ({};
-          ($event.event_hash // null) as $event_hash
-          | if (($event_hash | type) == "string") then .[$event_hash] = $event else . end
-        )) as $events_by_hash
       | def replay_rank:
           if . == "Genesis" then 0
           elif . == "Freeze" then 1
-          elif . == "Reattest" then 2
-          elif . == "Supersede" then 2
-          elif . == "Revoke" then 3
-          else 4
-          end;
-      def attestation_depth($event; $visited):
-          if $event.event_type == "Freeze" then
-            0
-          elif ($event.event_type == "Reattest" or $event.event_type == "Supersede") then
-            ($event.event_hash // null) as $event_hash
-            | if (($event_hash | type) != "string") then
-                error("Reattest is missing its event hash")
-              elif ($visited[$event_hash] // false) then
-                error("Reattest chain contains a cycle")
-              else
-                ($event.payload.previous_attestation_event_hash // null) as $previous_hash
-                | if (($previous_hash | type) != "string") then
-                    error("Reattest references an unknown previous attestation")
-                  else
-                    ($events_by_hash[$previous_hash] // null) as $previous
-                    | if (($previous | type) != "object") then
-                        error("Reattest references an unknown previous attestation")
-                      else
-                        1 + attestation_depth($previous; $visited + {($event_hash): true})
-                      end
-                  end
-              end
-          else
-            error("Reattest chain does not terminate at Freeze")
+          elif . == "Revoke" then 2
+          else 3
           end;
       to_entries
       | sort_by([
           (.value.event_type | replay_rank),
-          (if (.value.event_type == "Reattest" or .value.event_type == "Supersede")
-            then attestation_depth(.value; {}) else 0 end),
           .key
         ])
       | map(.value)
@@ -348,30 +299,6 @@ freeze_exists() {
                 descriptor_blob_oid: $blob
               }
             end
-        elif $event.event_type == "Reattest" then
-          ($event.payload.case_id // null) as $case
-          | ($event.payload.input.descriptor_blob_oid // null) as $blob
-          | if (($case | type) != "string" or ($blob | type) != "string" or (has($case) | not)) then
-              error("Reattest targets no active case or lacks module identity")
-            else
-              .[$case].descriptor_blob_oid = $blob
-              | if (($event.payload.frozen_node_id? // null) | type) == "string" then
-                  .[$case].frozen_node_id = $event.payload.frozen_node_id
-                else . end
-            end
-        elif $event.event_type == "Supersede" then
-          ($event.payload.case_id // null) as $case
-          | ($event.payload.input.descriptor_blob_oid // null) as $blob
-          | ($event.payload.frozen_node_id // null) as $frozen_id
-          | if (($case | type) != "string"
-              or ($blob | type) != "string"
-              or ($frozen_id | type) != "string"
-              or (has($case) | not)) then
-              error("Supersede targets no active case or lacks module identity")
-            else
-              .[$case].descriptor_blob_oid = $blob
-              | .[$case].frozen_node_id = $frozen_id
-            end
         elif $event.event_type == "Revoke" then
           ($event.payload.affected_case_ids // null) as $cases
           | ($event.payload.affected_frozen_node_ids // null) as $frozen_ids
@@ -385,7 +312,7 @@ freeze_exists() {
         end)
       | with_entries(
           select(.value.frozen_node_id as $id | ($revoked_ids | index($id) | not)))
-      | any(.[]; .node_path == $node and .descriptor_blob_oid == $identity)
+      | any(.[]; .node_path == $node)
     ' "${related_ledger_files[@]}" 2>&1)"; then
     echo "PLAYBOOK_INVALID failed to replay target module frozen ledger shards: $active_state" >&2
     return 2
@@ -425,8 +352,7 @@ verify_added_frozen_event_ancestor() {
   fi
 
   case "$event_type" in
-    Freeze|Reattest) input_selector='.payload.input.base_commit_oid' ;;
-    Supersede) input_selector='.payload.input.base_commit_oid' ;;
+    Freeze) input_selector='.payload.input.base_commit_oid' ;;
     Genesis|Revoke) return 0 ;;
     *)
       echo "PLAYBOOK_INVALID added frozen event has unsupported event_type $event_type: $path" >&2

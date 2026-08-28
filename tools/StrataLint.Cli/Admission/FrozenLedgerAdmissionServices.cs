@@ -99,8 +99,7 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
                 baseView,
                 ImmutableArray<DagLedgerFileEvent>.Empty,
                 producerPaths.Value,
-                TrustedFrozenGitReferences.CreateForTrustedAdapter([], []),
-                ProtectedBaseSnapshot: protectedBase);
+                TrustedFrozenGitReferences.CreateForTrustedAdapter([]));
         }
 
         var deltaFiles = deltaPaths.Select(path => current.TryGetFile(path.Value, out var file)
@@ -131,22 +130,13 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
         }
 
         var inputs = ImmutableArray.CreateBuilder<FrozenLedgerInput>();
-        var environmentReferences = ImmutableArray.CreateBuilder<FrozenEnvironmentReference>();
         var receiptOids = ImmutableArray.CreateBuilder<string>();
         var requiredAncestorCommitOids = ImmutableArray.CreateBuilder<string>();
         foreach (var item in loaded)
         {
             try
             {
-                if (item.EventType == FrozenLedger.SupersedeEventType)
-                {
-                    var payload = FrozenLedger.ParseSupersede(item.Payload);
-                    inputs.Add(payload.Input);
-                    environmentReferences.Add(new FrozenEnvironmentReference(
-                        payload.Input,
-                        payload.Environment));
-                }
-                else if (item.Input is { } input)
+                if (item.Input is { } input)
                 {
                     inputs.Add(input);
                     if (item.EventType == "Freeze")
@@ -172,14 +162,13 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
 
         var references = FrozenLedgerReferenceSet.Create(
             inputs.ToImmutable(),
-            environmentReferences.ToImmutable(),
             receiptOids.ToImmutable(),
             requiredAncestorCommitOids);
         TrustedFrozenGitReferences trusted;
         try
         {
-            trusted = inputs.Count == 0 && environmentReferences.Count == 0 && receiptOids.Count == 0
-                ? TrustedFrozenGitReferences.CreateForTrustedAdapter([], [])
+            trusted = inputs.Count == 0 && receiptOids.Count == 0
+                ? TrustedFrozenGitReferences.CreateForTrustedAdapter([])
                 : validateReferences(references);
         }
         catch (FrozenReferenceRejectionException exception)
@@ -225,8 +214,7 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
             producerPaths.Value,
             trusted,
             revocationBaseline,
-            revocationReceipts,
-            protectedBase);
+            revocationReceipts);
     }
 
     private static void RejectClosurelessAddedFreezes(
@@ -354,10 +342,7 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
                 preparation,
                 scoped.Scope,
                 catalog,
-                changes,
-                preparation.TrustedDeltaReferences,
-                report,
-                current),
+                preparation.TrustedDeltaReferences),
             static result => result is not null);
         return failure is null
             ? null
