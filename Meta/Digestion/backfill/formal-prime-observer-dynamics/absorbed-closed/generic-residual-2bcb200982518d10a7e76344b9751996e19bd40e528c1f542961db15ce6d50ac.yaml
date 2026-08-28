@@ -1,0 +1,17 @@
+ast_path: 推论/214.1
+fingerprints:
+  raw_sha256: sha256:2bcb200982518d10a7e76344b9751996e19bd40e528c1f542961db15ce6d50ac
+  normalized_sha256: sha256:2bcb200982518d10a7e76344b9751996e19bd40e528c1f542961db15ce6d50ac
+cas_ref: sha256:2bcb200982518d10a7e76344b9751996e19bd40e528c1f542961db15ce6d50ac
+coverage_gids:
+  - D5/S3/Estimation/ErrorExponents/ChernoffInformationZeroCriterion.same_law_iff_chernoff_information_zero
+receipts:
+  coverage:
+    - gid: D5/S3/Estimation/ErrorExponents/ChernoffInformationZeroCriterion.same_law_iff_chernoff_information_zero
+      source_sha256: sha256:2bcb200982518d10a7e76344b9751996e19bd40e528c1f542961db15ce6d50ac
+      target_statement_id: sha256:d4fc15b7533570c283d45058af68d752ebc9f87ddcb6a85915b8bbb91ea26cc3
+  scribe:
+    - gid: D5/S3/Estimation/ErrorExponents/ChernoffInformationZeroCriterion.same_law_iff_chernoff_information_zero
+      definition_sha256: sha256:48513ba799eee709eb372b11e611611e5f379b12c79d1c33530f169acdb2deee
+      emission_sha256: sha256:0129936e6156cb4eeaf4dd9c364b25d80f937a3ae0cb983b0e4cf78c1e6614d3
+  unresolved_subitems: []
