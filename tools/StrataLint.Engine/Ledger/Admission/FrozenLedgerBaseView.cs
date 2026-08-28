@@ -95,6 +95,40 @@ internal static class FrozenLedgerBaseViewReader
         "prerequisite_frozen_node_ids", "statement_id",
     ];
 
+    private static readonly string[] FreezeV2Fields =
+    [
+        "case_class", "case_id", "declaration_statement_ids", "evaluation", "expected",
+        "frozen_node_id", "input", "input_fingerprint", "node_path",
+        "prerequisite_frozen_node_ids", "semantic_receipt", "statement_id", "truth_state",
+        "witness_id",
+    ];
+
+    private static readonly string[] FreezeV3Fields =
+    [
+        "axiom_closure", "case_class", "case_id", "declaration_statement_ids", "evaluation",
+        "expected", "frozen_node_id", "input", "input_fingerprint", "node_path",
+        "prerequisite_frozen_node_ids", "semantic_receipt", "statement_id", "truth_state",
+        "witness_id",
+    ];
+
+    private static readonly string[] FreezeV4Fields =
+    [
+        "axiom_closure", "case_id", "declaration_statement_ids", "frozen_node_id", "input",
+        "prerequisite_frozen_node_ids", "statement_id", "witness_id",
+    ];
+
+    private static readonly string[] HistoricalInputFields =
+    [
+        "base_commit_oid", "base_tree_oid", "descriptor_blob_oid", "descriptor_selector",
+        "materializer", "supporting_blob_oids",
+    ];
+
+    private static readonly string[] CurrentInputFields =
+    [
+        "base_commit_oid", "base_tree_oid", "descriptor_blob_oid", "descriptor_selector",
+        "supporting_blob_oids",
+    ];
+
     internal static FrozenLedgerBaseView Read(RepositorySnapshot protectedBase)
     {
         ArgumentNullException.ThrowIfNull(protectedBase);
@@ -158,14 +192,39 @@ internal static class FrozenLedgerBaseViewReader
         int schemaVersion,
         JsonElement payload)
     {
-        if (eventType != "Freeze" || schemaVersion != FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion)
+        if (eventType != "Freeze")
         {
+            if (schemaVersion is >= 2 and <= 4)
+            {
+                throw new FormatException(
+                    $"trusted {eventType} schema_version {schemaVersion} cannot construct "
+                    + "a v5 base view: legacy event is not a standalone Freeze snapshot");
+            }
+
             throw new FormatException(
                 $"trusted history has no decoder for {eventType} schema_version {schemaVersion}");
         }
 
-        RequireExactFields(payload, "trusted Freeze v5 payload", FreezeV5Fields);
-        _ = ReadDescriptorPath(payload);
+        switch (schemaVersion)
+        {
+            case FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion:
+                RequireExactFields(payload, "trusted Freeze v5 payload", FreezeV5Fields);
+                break;
+            case 4:
+                ConsumeLegacyFreeze(payload, schemaVersion, FreezeV4Fields, hasRetiredFields: false);
+                break;
+            case 3:
+                ConsumeLegacyFreeze(payload, schemaVersion, FreezeV3Fields, hasRetiredFields: true);
+                break;
+            case 2:
+                ConsumeLegacyFreeze(payload, schemaVersion, FreezeV2Fields, hasRetiredFields: true);
+                break;
+            default:
+                throw new FormatException(
+                    $"trusted history has no decoder for {eventType} schema_version {schemaVersion}");
+        }
+
+        _ = ReadDescriptorPath(payload, schemaVersion);
         _ = ReadDeclarations(payload.GetProperty("declaration_statement_ids"));
         var statement = FrozenLedgerAttestationChain.RequiredString(payload, "statement_id");
         if (!FrozenHashSyntax.IsSha256(statement))
@@ -186,7 +245,7 @@ internal static class FrozenLedgerBaseViewReader
 
     internal static FrozenActiveEntry ReadFreeze(TrustedFrozenLedgerEvent item)
     {
-        var path = ReadDescriptorPath(item.Payload);
+        var path = ReadDescriptorPath(item.Payload, item.SchemaVersion);
         var declarations = ReadDeclarations(item.Payload.GetProperty("declaration_statement_ids"));
         var statement = StatementId.Create(
             FrozenLedgerAttestationChain.RequiredString(item.Payload, "statement_id"));
@@ -209,9 +268,92 @@ internal static class FrozenLedgerBaseViewReader
             item.EventHash);
     }
 
-    private static RepoPath ReadDescriptorPath(JsonElement payload)
+    private static void ConsumeLegacyFreeze(
+        JsonElement payload,
+        int schemaVersion,
+        string[] fields,
+        bool hasRetiredFields)
     {
-        var value = FrozenLedgerAttestationChain.RequiredString(payload, "descriptor_selector");
+        RequireExactFields(payload, $"trusted Freeze v{schemaVersion} payload", fields);
+        _ = FrozenLedgerAttestationChain.RequiredString(payload, "case_id");
+        RequireSha256(payload, "frozen_node_id", "trusted Freeze frozen_node_id is malformed");
+        ConsumeHistoricalInput(payload.GetProperty("input"));
+        RequireSha256(payload, "witness_id", "trusted Freeze witness_id is malformed");
+        if (schemaVersion >= 3)
+        {
+            _ = FrozenLedgerAttestationChain.RequiredStringArray(payload, "axiom_closure");
+        }
+
+        if (!hasRetiredFields)
+        {
+            return;
+        }
+
+        _ = FrozenLedgerAttestationChain.RequiredString(payload, "case_class");
+        _ = FrozenLedgerAttestationChain.RequiredString(payload, "evaluation");
+        ConsumeLegacyExpected(payload.GetProperty("expected"));
+        RequireSha256(
+            payload,
+            "input_fingerprint",
+            "trusted Freeze input_fingerprint is malformed");
+        _ = FrozenLedgerAttestationChain.RequiredString(payload, "node_path");
+        RequireSha256(
+            payload,
+            "semantic_receipt",
+            "trusted Freeze semantic_receipt is malformed");
+        _ = FrozenLedgerAttestationChain.RequiredString(payload, "truth_state");
+    }
+
+    private static void ConsumeHistoricalInput(JsonElement input)
+    {
+        var fields = input.ValueKind == JsonValueKind.Object
+            ? input.EnumerateObject().Select(static property => property.Name).ToArray()
+            : [];
+        if (MatchesExactFields(fields, HistoricalInputFields))
+        {
+            _ = FrozenLedgerAttestationChain.RequiredString(input, "materializer");
+        }
+        else if (!MatchesExactFields(fields, CurrentInputFields))
+        {
+            throw new FormatException(
+                "trusted historical input has unknown, missing, or duplicate fields");
+        }
+
+        _ = FrozenLedgerAttestationChain.RequiredString(input, "base_commit_oid");
+        _ = FrozenLedgerAttestationChain.RequiredString(input, "base_tree_oid");
+        _ = FrozenLedgerAttestationChain.RequiredString(input, "descriptor_blob_oid");
+        _ = FrozenLedgerAttestationChain.RequiredString(input, "descriptor_selector");
+        _ = FrozenLedgerAttestationChain.RequiredStringArray(input, "supporting_blob_oids");
+    }
+
+    private static void ConsumeLegacyExpected(JsonElement expected)
+    {
+        RequireExactFields(
+            expected,
+            "trusted legacy expected result",
+            ["allowed_dispositions", "diagnostic_match", "required_diagnostics"]);
+        _ = FrozenLedgerAttestationChain.RequiredStringArray(expected, "allowed_dispositions");
+        _ = FrozenLedgerAttestationChain.RequiredString(expected, "diagnostic_match");
+        _ = FrozenLedgerAttestationChain.RequiredStringArray(expected, "required_diagnostics");
+    }
+
+    private static void RequireSha256(JsonElement payload, string property, string message)
+    {
+        if (!FrozenHashSyntax.IsSha256(
+                FrozenLedgerAttestationChain.RequiredString(payload, property)))
+        {
+            throw new FormatException(message);
+        }
+    }
+
+    private static RepoPath ReadDescriptorPath(JsonElement payload, int schemaVersion)
+    {
+        var descriptorContainer = schemaVersion == FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion
+            ? payload
+            : payload.GetProperty("input");
+        var value = FrozenLedgerAttestationChain.RequiredString(
+            descriptorContainer,
+            "descriptor_selector");
         return RepoPath.TryCreate(value, out var path)
             ? path
             : throw new FormatException("trusted Freeze descriptor_selector is not a canonical path");
@@ -275,12 +417,17 @@ internal static class FrozenLedgerBaseViewReader
         }
 
         var actual = value.EnumerateObject().Select(static property => property.Name).ToArray();
-        if (actual.Length != actual.Distinct(StringComparer.Ordinal).Count()
-            || !actual.Order(StringComparer.Ordinal).SequenceEqual(
-                expected.Order(StringComparer.Ordinal),
-                StringComparer.Ordinal))
+        if (!MatchesExactFields(actual, expected))
         {
             throw new FormatException($"{label} has unknown, missing, or duplicate fields");
         }
     }
+
+    private static bool MatchesExactFields(
+        IReadOnlyCollection<string> actual,
+        IEnumerable<string> expected) =>
+        actual.Count == actual.Distinct(StringComparer.Ordinal).Count()
+        && actual.Order(StringComparer.Ordinal).SequenceEqual(
+            expected.Order(StringComparer.Ordinal),
+            StringComparer.Ordinal);
 }
