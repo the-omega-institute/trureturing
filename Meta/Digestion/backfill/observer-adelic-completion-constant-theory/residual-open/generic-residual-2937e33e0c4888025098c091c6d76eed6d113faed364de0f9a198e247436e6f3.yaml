@@ -1,0 +1,10 @@
+ast_path: section/第四百二十五部-新的中心命题
+fingerprints:
+  raw_sha256: sha256:2937e33e0c4888025098c091c6d76eed6d113faed364de0f9a198e247436e6f3
+  normalized_sha256: sha256:2937e33e0c4888025098c091c6d76eed6d113faed364de0f9a198e247436e6f3
+cas_ref: sha256:2937e33e0c4888025098c091c6d76eed6d113faed364de0f9a198e247436e6f3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

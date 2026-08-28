@@ -1,0 +1,35 @@
+# 第五百一十部　完整问题的投影式强对偶
+
+对固定 \(L\)，选择递增有限维测试塔：
+
+$$
+V_1\subset V_2\subset\cdots
+$$
+
+使：
+
+$$
+\bigcup_NV_N
+$$
+
+在局部测试拓扑中 determining。
+
+记：
+
+$$
+\Lambda_N
+=
+\Lambda_{L,a}^{V_N}(C).
+$$
+
+约束随 \(N\) 增加，所以：
+
+$$
+\boxed{
+\Lambda_1\ge\Lambda_2\ge\cdots.
+}
+\tag{510.1}
+$$
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/第五百八十三部-理论深度不能只用一个编号表示
+fingerprints:
+  raw_sha256: sha256:1409a734645cd3e503601d771b6f402581d828830f075c7d0317bc384caa0c37
+  normalized_sha256: sha256:1409a734645cd3e503601d771b6f402581d828830f075c7d0317bc384caa0c37
+cas_ref: sha256:1409a734645cd3e503601d771b6f402581d828830f075c7d0317bc384caa0c37
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: row/轨道方差-delta-2
+fingerprints:
+  raw_sha256: sha256:2c64c0fc497114f089bc55ce9ba7e9f14b95073bcd1524841c0bf2fa0fb7e852
+  normalized_sha256: sha256:2c64c0fc497114f089bc55ce9ba7e9f14b95073bcd1524841c0bf2fa0fb7e852
+cas_ref: sha256:2c64c0fc497114f089bc55ce9ba7e9f14b95073bcd1524841c0bf2fa0fb7e852
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

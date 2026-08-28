@@ -1,0 +1,18 @@
+ast_path: section/618-1-表示层
+fingerprints:
+  raw_sha256: sha256:2b0ce789d4a55f4a8e5b91b24446c367639c4f3fc77a4fa1e0bcce36d850d8df
+  normalized_sha256: sha256:2b0ce789d4a55f4a8e5b91b24446c367639c4f3fc77a4fa1e0bcce36d850d8df
+cas_ref: sha256:2b0ce789d4a55f4a8e5b91b24446c367639c4f3fc77a4fa1e0bcce36d850d8df
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-afed52a0a0c94b99eca1bf28253f793755442a7062ddf4c60685cd3063fc373c-28ddf1e5783281b51179722f996194de371b82aef0fa8a6603d129e7f8bd773a
+    - generic-residual-8cdc8ba2e5932a2427b1f6e2ceb3870856596652c5addb87e849d8fb1b44ace6-af00cca5df7b1c253893eecc479871b40c1e8fec66d96db85d5ef039fadeda35
+    - generic-residual-bd0bc31aafd22d0e17ff39f1e854b813bc94de0101559f0a70fdfba0c8289ecd-a82618c1161d75c116bf17909290d037b9db6daa0c0b7f22527aec4c4437a508
+    - generic-residual-64b7632b57a9075f03b6f5e7cbad612a430143d12dc6513f0b52fe35d6c6b9fc-668b45b4524e2880a30f61100c82e4089fd8849e5702e3bafb00066404d77d26
+    - generic-residual-9c051a0baa46721254c7559b6626bb7ac18fa6333b21707d3eb4bdf964a1910c-24386e3c7cea5ff90dfe37cfadf74668c4b2a9b122c68ce55796b74daa206d58
+    - generic-residual-18e11cea0848054ec1c661e6ac81cfeafb339e6aef5ba8cfd51bbbfa2aa07acd-1df36ec34a1a9ca4f7cf56df052e2e0259d28b13f4ef8441bbeb1efdcf12493b
+    - generic-residual-4f50dd80dd8d5d22e214d1dae80ef5908a269fd81722938e03f8240cbb656bc9-1ff1dc8b9220f8ca67b70596d98a546bad429fe259785a253b11c1978ed0b43f

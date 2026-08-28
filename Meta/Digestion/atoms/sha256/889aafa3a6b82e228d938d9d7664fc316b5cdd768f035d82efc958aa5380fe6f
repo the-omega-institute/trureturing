@@ -1,0 +1,69 @@
+## 477.1 奇偶 frame operators
+
+在偶通道：
+
+$$
+F(\gamma)
+=
+\langle
+f,\cos(\gamma\,\cdot)
+\rangle,
+$$
+
+所以：
+
+$$
+\boxed{
+A_{\mathrm e,L}
+=
+2
+\sum_{\gamma>0}
+m_\gamma
+|\cos(\gamma\,\cdot)\rangle
+\langle\cos(\gamma\,\cdot)|.
+}
+\tag{477.5}
+$$
+
+在奇通道：
+
+$$
+F(\gamma)
+=
+-i
+\langle
+f,\sin(\gamma\,\cdot)
+\rangle,
+$$
+
+所以：
+
+$$
+\boxed{
+A_{\mathrm o,L}
+=
+2
+\sum_{\gamma>0}
+m_\gamma
+|\sin(\gamma\,\cdot)\rangle
+\langle\sin(\gamma\,\cdot)|.
+}
+\tag{477.6}
+$$
+
+由此：
+
+$$
+\lambda_{\mathrm e}(L)
+=
+\inf\sigma(A_{\mathrm e,L}),
+\qquad
+\lambda_{\mathrm o}(L)
+=
+\inf\sigma(A_{\mathrm o,L}).
+$$
+
+最新预印本正是利用 Paley–Wiener 采样解释，证明在 RH 下每个有限 \(L\) 的窗口轮廓严格为正，而不是仅仅非负。([arXiv][1])
+
+---
+

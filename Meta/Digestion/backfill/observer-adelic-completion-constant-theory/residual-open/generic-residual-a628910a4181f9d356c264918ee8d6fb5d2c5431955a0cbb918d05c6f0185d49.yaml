@@ -1,0 +1,10 @@
+ast_path: section/494-2-Inactive-budget-情形
+fingerprints:
+  raw_sha256: sha256:a628910a4181f9d356c264918ee8d6fb5d2c5431955a0cbb918d05c6f0185d49
+  normalized_sha256: sha256:a628910a4181f9d356c264918ee8d6fb5d2c5431955a0cbb918d05c6f0185d49
+cas_ref: sha256:a628910a4181f9d356c264918ee8d6fb5d2c5431955a0cbb918d05c6f0185d49
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

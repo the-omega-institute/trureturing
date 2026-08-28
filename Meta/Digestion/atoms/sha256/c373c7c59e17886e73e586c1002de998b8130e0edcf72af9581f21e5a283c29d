@@ -1,0 +1,34 @@
+## 567.5 Innovation flow
+
+逐个增加：
+
+* moment depth；
+* 新尺度；
+* 新 cross-scale observer。
+
+使用：
+
+$$
+s_n(\alpha)
+=
+\gamma_n-\alpha
+-g_n^*(G_n-\alpha I)^{-1}g_n
+$$
+
+记录每个新定义是否真正降低 floor。
+
+输出：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{floor decrement};\\
+&\text{self-energy};\\
+&\text{新 contact function};\\
+&\text{GlueDim decrement}.
+\end{aligned}
+}
+$$
+
+---
+

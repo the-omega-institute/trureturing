@@ -1,0 +1,22 @@
+## 486.1 Primal：正谱完成路线
+
+直接构造：
+
+$$
+\boxed{
+\nu_L
+=
+\frac{\lambda_L}{2\pi}d\xi+\mu_L
+\ge0
+}
+$$
+
+并最大化：
+
+$$
+\lambda_L.
+$$
+
+目标是：
+
+* 得到匹配 \(\lambda_{\mathrm{full}}(L)\) 的 primal 证书；

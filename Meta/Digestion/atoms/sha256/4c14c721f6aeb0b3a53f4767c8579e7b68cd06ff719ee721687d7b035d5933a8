@@ -1,0 +1,67 @@
+# 第六百四十三部　建议形式化顺序
+
+```text
+D5/S3/CompletionTower/Inverse/
+  CompletionStage.lean
+  CompletionBondingMap.lean
+  CompletionThread.lean
+  LimitStageCompletion.lean
+  RealizedThread.lean
+  PhantomCompletion.lean
+
+D5/S3/CompletionTower/Dual/
+  InformationCompletion.lean
+  SymmetryCompletion.lean
+  CompletionOrderDefect.lean
+  FullSupportInvariantState.lean
+  FaithfulInvariantState.lean
+  DimensionCompatibleState.lean
+
+D5/S3/CompletionTower/Constants/
+  CompletionFiber.lean
+  CompletionScalarInvariant.lean
+  CompletionConstantRole.lean
+  LayerSpectralMeasure.lean
+  LayerZetaTransform.lean
+  LayerHeatTraceMellin.lean
+
+D5/S3/CompletionTower/InfiniteDepth/
+  LayerDefect.lean
+  InfiniteCompletionDefect.lean
+  CompletionDepth.lean
+  LimitEscapeRelation.lean
+  TransfiniteCompletionStage.lean
+  CompletionRank.lean
+
+D5/S3/Analytic/Zeta/AtomwiseCompletion/
+  SpectralReflection.lean
+  CriticalFixedLocus.lean
+  CompletionBarycenter.lean
+  AntiCompletionCoordinate.lean
+  SetwiseCompletion.lean
+  AtomwiseCompletion.lean
+
+D5/S3/Analytic/Zeta/OrbitVariance/
+  ZeroOrbitRadius.lean
+  FiniteHeightCompletionVariance.lean
+  OrbitVarianceRHCriterion.lean
+  MeanCompletionVarianceFailure.lean
+  CompletionDescentObstruction.lean
+
+D5/S3/ConceptDynamics/ZetaEscape/
+  BarycenterObserver.lean
+  CriticalityTarget.lean
+  OffLineEscapePair.lean
+  OrbitEnergyDefinition.lean
+  OrbitEnergyCutsEscape.lean
+
+D5/S3/CompletionTower/Omnicompletion/
+  OmnicompleteState.lean
+  FullSupportCondition.lean
+  SymmetryInvariantCondition.lean
+  CylindricalCompatibility.lean
+  AllDefectsZero.lean
+```
+
+---
+

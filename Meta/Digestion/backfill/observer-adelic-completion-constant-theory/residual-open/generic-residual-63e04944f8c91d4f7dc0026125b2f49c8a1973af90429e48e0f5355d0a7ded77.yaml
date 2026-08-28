@@ -1,0 +1,10 @@
+ast_path: section/440-1-第一阶段-冻结局部对象
+fingerprints:
+  raw_sha256: sha256:63e04944f8c91d4f7dc0026125b2f49c8a1973af90429e48e0f5355d0a7ded77
+  normalized_sha256: sha256:63e04944f8c91d4f7dc0026125b2f49c8a1973af90429e48e0f5355d0a7ded77
+cas_ref: sha256:63e04944f8c91d4f7dc0026125b2f49c8a1973af90429e48e0f5355d0a7ded77
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

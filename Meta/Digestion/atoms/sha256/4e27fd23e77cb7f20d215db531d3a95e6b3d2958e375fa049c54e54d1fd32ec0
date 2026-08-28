@@ -1,0 +1,54 @@
+## 474.1 Pole 的 Lorentz 签名
+
+令：
+
+$$
+c_L(x)=\cosh(x/2),
+\qquad
+s_L(x)=\sinh(x/2).
+$$
+
+若把共同的 prime–Archimedean multiplier operator 记为 \(M_L\)，则两个通道具有结构：
+
+$$
+\boxed{
+A_{\mathrm e,L}
+=
+M_L|_{\mathcal H_L^{\mathrm e}}
++
+2|c_L\rangle\langle c_L|,
+}
+\tag{474.6}
+$$
+
+$$
+\boxed{
+A_{\mathrm o,L}
+=
+M_L|_{\mathcal H_L^{\mathrm o}}
+-
+2|s_L\rangle\langle s_L|.
+}
+\tag{474.7}
+$$
+
+所以前文的双曲签名：
+
+$$
+(+1,-1)
+$$
+
+并非纯形式类比，而是紧窗口 Weil 算子的真实奇偶结构。最新预印本独立给出了这一分解，并在 \(L=0.8\) 时证明负 rank-one pole 项并未使奇通道成为地态；真正的最低态仍在偶通道。([arXiv][1])
+
+需要修正前文的一处表述：
+
+$$
+\boxed{
+\text{经典 RH 判据可以在偶测试图表中表达；}
+}
+$$
+
+但若要把局部正性解释成完整 Hermitian 正定核、Kreĭn 扩张或实轴正谱测度，则仍需奇通道，或者必须另行证明专门的 cosine-algebra 表示定理。
+
+---
+

@@ -1,0 +1,25 @@
+## 629.2 第二层：测度完成
+
+若零点测度记为：
+
+$$
+\nu_{\mathcal Z}
+=
+\sum_\rho m_\rho\delta_\rho,
+$$
+
+则：
+
+$$
+\boxed{
+J_*\nu_{\mathcal Z}
+=
+\nu_{\mathcal Z}.
+}
+\tag{629.5}
+$$
+
+这仍然允许离线零点成对存在。
+
+---
+

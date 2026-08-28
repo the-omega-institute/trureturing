@@ -1,0 +1,10 @@
+ast_path: section/440-4-第四阶段-Primal-Dual-gap
+fingerprints:
+  raw_sha256: sha256:f7fab56ab19c84a2562b1d7ce023839b1ceee6bf68180359709a20d673a2faa2
+  normalized_sha256: sha256:f7fab56ab19c84a2562b1d7ce023839b1ceee6bf68180359709a20d673a2faa2
+cas_ref: sha256:f7fab56ab19c84a2562b1d7ce023839b1ceee6bf68180359709a20d673a2faa2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

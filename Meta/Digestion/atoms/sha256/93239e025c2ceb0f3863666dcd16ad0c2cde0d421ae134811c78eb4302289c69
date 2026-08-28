@@ -1,0 +1,37 @@
+# 第四百九十六部　有限测试层的 Tchakaloff 原子化
+
+选择一个有限维实偶测试空间：
+
+$$
+\boxed{
+V_N
+=
+\operatorname{span}
+\{\phi_1,\ldots,\phi_d\}
+\subset
+C_c^\infty((-2L,2L)).
+}
+\tag{496.1}
+$$
+
+只要求：
+
+$$
+\boxed{
+\int\widehat\phi_j\,d\nu
+=
+\langle\mathfrak W_L,\phi_j\rangle,
+\qquad
+1\le j\le d.
+}
+\tag{496.2}
+$$
+
+定义对应有限 moment 前沿：
+
+$$
+\Lambda_{L,a}^{(N)}(C).
+$$
+
+---
+

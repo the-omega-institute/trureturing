@@ -1,0 +1,10 @@
+ast_path: section/485-1-真正剩余的桥
+fingerprints:
+  raw_sha256: sha256:f60f00cf087ff6df053fbfba783d011b58fbdf10ff3145b408021f1dea121200
+  normalized_sha256: sha256:f60f00cf087ff6df053fbfba783d011b58fbdf10ff3145b408021f1dea121200
+cas_ref: sha256:f60f00cf087ff6df053fbfba783d011b58fbdf10ff3145b408021f1dea121200
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

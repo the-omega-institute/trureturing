@@ -1,0 +1,10 @@
+ast_path: section/第四百七十五部-局部正锥中的白噪声裕量
+fingerprints:
+  raw_sha256: sha256:657f7a2189b7a6067e6ca0ba0cfe2c3d012cdef2063f38ea093f8e166f93bb6b
+  normalized_sha256: sha256:657f7a2189b7a6067e6ca0ba0cfe2c3d012cdef2063f38ea093f8e166f93bb6b
+cas_ref: sha256:657f7a2189b7a6067e6ca0ba0cfe2c3d012cdef2063f38ea093f8e166f93bb6b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

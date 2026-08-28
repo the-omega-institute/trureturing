@@ -1,0 +1,25 @@
+* 通过 Stieltjes curve 联合恢复谱。
+
+因此更合理的高分辨率程序不是：
+
+$$
+\boxed{
+\text{只在 }a=\tfrac12
+\text{ 无限增加 moment order},
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{适度 moment depth}
++
+\text{多尺度 }a\text{-bank}.
+}
+$$
+
+这与连续时间系统理论中的多极点 Kautz/Laguerre basis bank 同构，但其数论最优尺度选择仍属开放问题。
+
+---
+

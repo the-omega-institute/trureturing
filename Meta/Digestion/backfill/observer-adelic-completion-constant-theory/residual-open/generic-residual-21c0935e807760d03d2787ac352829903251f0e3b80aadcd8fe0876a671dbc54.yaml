@@ -1,0 +1,10 @@
+ast_path: section/本轮直接推出
+fingerprints:
+  raw_sha256: sha256:21c0935e807760d03d2787ac352829903251f0e3b80aadcd8fe0876a671dbc54
+  normalized_sha256: sha256:21c0935e807760d03d2787ac352829903251f0e3b80aadcd8fe0876a671dbc54
+cas_ref: sha256:21c0935e807760d03d2787ac352829903251f0e3b80aadcd8fe0876a671dbc54
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

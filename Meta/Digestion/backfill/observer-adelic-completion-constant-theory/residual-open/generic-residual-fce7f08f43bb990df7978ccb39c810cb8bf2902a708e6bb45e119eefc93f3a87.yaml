@@ -1,0 +1,10 @@
+ast_path: row/黄金-unit-reflection-与-period
+fingerprints:
+  raw_sha256: sha256:fce7f08f43bb990df7978ccb39c810cb8bf2902a708e6bb45e119eefc93f3a87
+  normalized_sha256: sha256:fce7f08f43bb990df7978ccb39c810cb8bf2902a708e6bb45e119eefc93f3a87
+cas_ref: sha256:fce7f08f43bb990df7978ccb39c810cb8bf2902a708e6bb45e119eefc93f3a87
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

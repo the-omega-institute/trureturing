@@ -1,0 +1,35 @@
+# 第四百二十二部　Prime-discrepancy 重整化流
+
+定义截断 discrepancy flow：
+
+$$
+\boxed{
+m_R(\xi)
+=
+b_\infty(\xi)
+-
+2
+\int_{[0,R]}
+\cos(\xi u)\,d\varepsilon(u),
+\qquad
+0\le R\le2L.
+}
+\tag{422.1}
+$$
+
+则：
+
+$$
+\boxed{
+m_0=b_\infty,
+}
+$$
+
+$$
+\boxed{
+m_{2L}=\widetilde m_L.
+}
+$$
+
+---
+

@@ -1,0 +1,29 @@
+# 第四百一十九部　固定支撑谱的离散性
+
+因为：
+
+$$
+r_L
+$$
+
+有界，而：
+
+$$
+b_\infty(\xi)\to+\infty,
+$$
+
+所以：
+
+$$
+\boxed{
+\widetilde m_L(\xi)\to+\infty
+\qquad
+(|\xi|\to\infty).
+}
+\tag{419.1}
+$$
+
+因此 \(\widetilde A_L\) 下有界。
+
+---
+

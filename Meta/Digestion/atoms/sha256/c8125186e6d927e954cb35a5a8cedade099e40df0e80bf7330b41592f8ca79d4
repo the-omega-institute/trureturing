@@ -1,0 +1,37 @@
+## 560.1 简单最低特征值
+
+若 generalized 最低特征值简单，则：
+
+$$
+\dim\ker(G-\alpha_*B)=1.
+$$
+
+取生成向量 \(c_*\)，则单个接触函数：
+
+$$
+\boxed{
+q_*(z)=c_*^*\Psi(z)
+}
+\tag{560.3}
+$$
+
+已经包含全部 residual atoms。
+
+若其单位圆零点均简单且数量等于 \(r\)，则这些零点恰好就是：
+
+$$
+\boxed{
+\zeta_1,\ldots,\zeta_r.
+}
+$$
+
+这把前文单尺度 contact polynomial 推广为：
+
+$$
+\boxed{
+\text{多尺度 rational contact function}.
+}
+$$
+
+---
+

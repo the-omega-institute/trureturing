@@ -1,0 +1,10 @@
+ast_path: section/556-2-共同谱缺陷
+fingerprints:
+  raw_sha256: sha256:de13c4619ef81479035a3bce1791624c85a89f63f7d0355ca4ad33c74f96018b
+  normalized_sha256: sha256:de13c4619ef81479035a3bce1791624c85a89f63f7d0355ca4ad33c74f96018b
+cas_ref: sha256:de13c4619ef81479035a3bce1791624c85a89f63f7d0355ca4ad33c74f96018b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

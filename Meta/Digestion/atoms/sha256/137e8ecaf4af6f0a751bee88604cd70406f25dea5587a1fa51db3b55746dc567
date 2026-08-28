@@ -1,0 +1,66 @@
+## v4.4：黄金观察者、Galois 奇偶完成、五阶—六维限制标量与逃逸深度谱
+
+以下从前文**第五百六十九部**继续追加。
+
+先给出本轮的核心判断：
+
+$$
+\boxed{
+\varphi\text{ 不必是 Riemann }\zeta\text{ 的内禀常数，}
+}
+$$
+
+但它完全可能是某个**观察 \(\zeta\) 的算术接口的内禀常数**。
+
+更准确地说，应区分三件事：
+
+$$
+\boxed{
+\begin{aligned}
+\text{对象内禀}
+&:\quad \varphi\text{ 由 }\zeta\text{ 本身规范地选出};\\
+\text{观察者内禀}
+&:\quad \varphi\text{ 由观察器的几何、嵌入或局部指数律选出};\\
+\text{坐标注入}
+&:\quad \text{仅仅把 }s\mapsto\varphi^2s\text{ 人为代入}.
+\end{aligned}
+}
+$$
+
+项目当前的黄金—\(\zeta\) 工作已经超过第三种情形：黄金指数账本先独立定义，再从相应 Euler germ 中抽出
+
+$$
+\zeta(\varphi^2s)
+$$
+
+及更高阶的 signed zeta factors；这说明 \(\varphi\) 确实是该**观察器家族**的结构常数。但这还不等价于证明 \(\varphi\) 是裸 Riemann \(\zeta\) 或 RH 的内禀常数。
+
+本轮建立的新主链为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{黄金单嵌入观察}
+&\longrightarrow
+\text{裸 }\varphi\text{ 与奇向破缺};\\
+\text{Galois 共轭配对}
+&\longrightarrow
+\text{六维有理完成};\\
+\text{完整 regulator 圆}
+&\longrightarrow
+\text{反射与周期闭合};\\
+\text{截断圆弧／单通道}
+&\longrightarrow
+\text{边界破缺};\\
+\text{黄金 Euler germ}
+&\longrightarrow
+\text{逐阶 ζ 因子抽取};\\
+\text{每一新定义}
+&\longrightarrow
+\text{可审计的逃逸深度变化}.
+\end{aligned}
+}
+$$
+
+---
+

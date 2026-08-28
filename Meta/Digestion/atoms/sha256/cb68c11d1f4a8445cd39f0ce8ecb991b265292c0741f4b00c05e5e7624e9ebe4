@@ -1,0 +1,49 @@
+## 530.1 重要负结论
+
+在自然尺度：
+
+$$
+a=\frac12,
+$$
+
+直接 Laguerre 截断稳定恢复的 moment 深度大约只有：
+
+$$
+\boxed{
+N=O(L).
+}
+$$
+
+而 Paley–Wiener 窗口对 Riemann zeros 的理论饱和高度为：
+
+$$
+T^*(L)=2\pi e^{2L},
+$$
+
+其零点约束数呈指数增长。最新紧窗口研究正是从 time–band limiting 与零点密度比较中得到这一尺度。([arXiv][5])
+
+所以：
+
+$$
+\boxed{
+\text{固定 }a=\frac12\text{ 的 Cayley moment observer
+并不是高零点层析的容量最优坐标。}
+}
+$$
+
+它的优势是：
+
+* 正性结构透明；
+* 误差严格；
+* Toeplitz/CMV/Clark 接口直接；
+* 适合低阶有限证书。
+
+它不能替代：
+
+* Slepian；
+* Paley–Wiener；
+* ground-state zeros；
+* 高度 \(T^*(L)\) 的指数容量机制。
+
+---
+

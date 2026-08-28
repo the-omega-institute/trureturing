@@ -14,11 +14,13 @@ public sealed class WorktreeCacheStrategyTests
         InitializeRepository(repository.Path);
         var target = Path.Combine(repository.Path, "failed-restore");
         var runner = new RecordingWorktreeProcessRunner { FailDotnet = true };
+        var branch = $"{WorktreeCommand.CreationNamespace}/math/failed-restore";
 
         var result = WorktreeCommand.Run(
             repository.Path,
             [
-                "--branch", "harness/math/failed-restore",
+                "--kind", "math",
+                "--name", "failed-restore",
                 "--path", target,
                 "--base", "HEAD",
             ],
@@ -32,7 +34,7 @@ public sealed class WorktreeCacheStrategyTests
                 && call.Arguments.SequenceEqual(
                     ["restore", WorktreeCommand.SolutionPath, "--locked-mode"]));
         Assert.False(Directory.Exists(target));
-        AssertBranchMissing(repository.Path, "harness/math/failed-restore");
+        AssertBranchMissing(repository.Path, branch);
     }
 
     [Fact]
@@ -46,7 +48,8 @@ public sealed class WorktreeCacheStrategyTests
         var result = WorktreeCommand.Run(
             repository.Path,
             [
-                "--branch", "harness/math/concurrent-add",
+                "--kind", "math",
+                "--name", "concurrent-add",
                 "--path", target,
                 "--base", "HEAD",
                 "--skip-restore",
@@ -78,7 +81,8 @@ public sealed class WorktreeCacheStrategyTests
         var result = WorktreeCommand.Run(
             repository.Path,
             [
-                "--branch", "harness/math/fetched-default",
+                "--kind", "math",
+                "--name", "fetched-default",
                 "--path", target,
                 "--skip-restore",
             ],
@@ -105,7 +109,9 @@ public sealed class WorktreeCacheStrategyTests
         Assert.Contains("[DEST=DIR]", makefile, StringComparison.Ordinal);
         Assert.Contains("\"$(KIND)\" \"$(NAME)\"", makefile, StringComparison.Ordinal);
         Assert.DoesNotContain("$(origin PATH)", makefile, StringComparison.Ordinal);
-        Assert.Contains("harness/$KIND/$NAME", init, StringComparison.Ordinal);
+        Assert.DoesNotContain("BRANCH=", init, StringComparison.Ordinal);
+        Assert.Contains("--kind \"$KIND\"", init, StringComparison.Ordinal);
+        Assert.Contains("--name \"$NAME\"", init, StringComparison.Ordinal);
         Assert.Contains("exec dotnet run", init, StringComparison.Ordinal);
         Assert.DoesNotContain("case \"$KIND\" in", init, StringComparison.Ordinal);
         Assert.DoesNotContain("NAME must be", init, StringComparison.Ordinal);

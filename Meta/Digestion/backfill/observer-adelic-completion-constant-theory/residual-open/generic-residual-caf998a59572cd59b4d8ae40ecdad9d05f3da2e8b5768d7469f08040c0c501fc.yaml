@@ -1,0 +1,10 @@
+ast_path: section/饱和相
+fingerprints:
+  raw_sha256: sha256:caf998a59572cd59b4d8ae40ecdad9d05f3da2e8b5768d7469f08040c0c501fc
+  normalized_sha256: sha256:caf998a59572cd59b4d8ae40ecdad9d05f3da2e8b5768d7469f08040c0c501fc
+cas_ref: sha256:caf998a59572cd59b4d8ae40ecdad9d05f3da2e8b5768d7469f08040c0c501fc
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

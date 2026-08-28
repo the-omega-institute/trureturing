@@ -1,0 +1,39 @@
+## 558.1 Malmquist–Takenaka 图表
+
+把 pole multiset：
+
+$$
+-r_\ell
+$$
+
+按各自 multiplicity \(n_\ell\) 排列，并加入 \(0\) 的 \(n_0\) 重数，可以构造同一 rational space 的全局 Malmquist–Takenaka 正交基。
+
+该基在 \(H^2(\mathbb T)\) 的 Haar 内积下正交归一；MT 系统是 Hardy 空间中由圆盘内 pole sequence 生成的经典有理正交系统。([arXiv][3])
+
+在该基中：
+
+$$
+\boxed{
+B=I,
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\alpha_*(G)=\lambda_{\min}(G_{\mathrm{MT}}).
+}
+\tag{558.9}
+$$
+
+因此共同谱 floor 的最自然有限坐标并不是多个 scale blocks，而是：
+
+$$
+\boxed{
+\text{一个全局 Haar-orthonormal rational basis}.
+}
+$$
+
+---
+

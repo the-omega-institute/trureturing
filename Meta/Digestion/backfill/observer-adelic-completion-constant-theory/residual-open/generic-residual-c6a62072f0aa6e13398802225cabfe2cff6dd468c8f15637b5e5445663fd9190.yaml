@@ -1,0 +1,10 @@
+ast_path: section/580-1-这正是-几乎完成-的严格版本
+fingerprints:
+  raw_sha256: sha256:c6a62072f0aa6e13398802225cabfe2cff6dd468c8f15637b5e5445663fd9190
+  normalized_sha256: sha256:c6a62072f0aa6e13398802225cabfe2cff6dd468c8f15637b5e5445663fd9190
+cas_ref: sha256:c6a62072f0aa6e13398802225cabfe2cff6dd468c8f15637b5e5445663fd9190
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

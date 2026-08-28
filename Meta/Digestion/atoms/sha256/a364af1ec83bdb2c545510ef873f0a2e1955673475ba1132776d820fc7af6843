@@ -1,0 +1,27 @@
+## 507.1 极值自动存在
+
+单位圆是紧空间。
+
+集合：
+
+$$
+\left\{
+(\alpha,\mu):
+0\le\alpha\le C,\ 
+\mu(\mathbb T)\le C,\ 
+\mu\ge\alpha m_{\mathbb T}
+\right\}
+$$
+
+在：
+
+$$
+[0,C]\times\mathcal M_+(\mathbb T)
+$$
+
+的弱-* 拓扑中紧。
+
+各 moment constraint 由连续函数 \(\Gamma_{a,\phi}\) 给出，所以是闭条件。
+
+因此：
+

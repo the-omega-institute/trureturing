@@ -1,0 +1,32 @@
+# 第五百四十九部　信息完备性与计算稳定性的严格区分
+
+一个完整尺度 \(a\) 的全部 moments：
+
+$$
+\{m_n(a)\}_{n\in\mathbb Z}
+$$
+
+唯一决定圆周测度 \(\mu_a\)。
+
+又因为：
+
+$$
+\mathfrak c_a:\mathbb R\to\mathbb T\setminus\{1\}
+$$
+
+可逆，所以：
+
+$$
+\boxed{
+d\nu(\xi)
+=
+(\xi^2+a^2)
+\,d\left[
+(\mathfrak c_a^{-1})_*\mu_a
+\right](\xi).
+}
+\tag{549.1}
+$$
+
+因此：
+

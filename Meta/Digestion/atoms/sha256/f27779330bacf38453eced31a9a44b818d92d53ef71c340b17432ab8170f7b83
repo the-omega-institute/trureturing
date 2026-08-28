@@ -1,0 +1,81 @@
+# 第五百六十二部　主 Toeplitz 参数压缩率
+
+令总 observer 数为：
+
+$$
+n.
+$$
+
+若直接保留完整跨尺度 Gram matrix，需要：
+
+$$
+\boxed{
+n^2
+}
+$$
+
+个实 Hermitian 参数。
+
+共同谱主 Toeplitz 只需要：
+
+$$
+\boxed{
+2n-1
+}
+$$
+
+个实参数。
+
+所以参数压缩比渐近为：
+
+$$
+\boxed{
+\frac{2n-1}{n^2}
+\sim
+\frac2n.
+}
+\tag{562.1}
+$$
+
+在 Riemann 偶对称分支中，只需：
+
+$$
+\boxed{
+n
+}
+$$
+
+个实 moments，压缩比进一步为：
+
+$$
+\boxed{
+\frac{n}{n(n+1)/2}
+=
+\frac2{n+1}.
+}
+\tag{562.2}
+$$
+
+更重要的是，最大 floor optimizer 的 residual 原子数至多：
+
+$$
+\boxed{
+n-1.
+}
+\tag{562.3}
+$$
+
+因此有限多尺度 observer 的共同谱复杂度是线性的：
+
+$$
+\boxed{
+\text{moment variables }O(n),
+\qquad
+\text{contact atoms }O(n),
+}
+$$
+
+而不是 block Gram 的 \(O(n^2)\) 自由度。
+
+---
+

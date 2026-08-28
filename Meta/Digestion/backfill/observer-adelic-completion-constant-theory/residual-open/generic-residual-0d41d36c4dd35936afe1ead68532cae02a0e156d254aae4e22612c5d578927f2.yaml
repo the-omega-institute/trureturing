@@ -1,0 +1,10 @@
+ast_path: section/426-2-PNT-相对误差小不足
+fingerprints:
+  raw_sha256: sha256:0d41d36c4dd35936afe1ead68532cae02a0e156d254aae4e22612c5d578927f2
+  normalized_sha256: sha256:0d41d36c4dd35936afe1ead68532cae02a0e156d254aae4e22612c5d578927f2
+cas_ref: sha256:0d41d36c4dd35936afe1ead68532cae02a0e156d254aae4e22612c5d578927f2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

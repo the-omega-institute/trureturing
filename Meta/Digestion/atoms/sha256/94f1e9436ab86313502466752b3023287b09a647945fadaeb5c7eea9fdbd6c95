@@ -1,0 +1,22 @@
+## 486.2 Dual：状态依赖的 prime-concentration 路线
+
+最新预印本证明，任何只使用 prime comb 点态上界的方法都面临：
+
+$$
+T_1(L)=2\pi e^{A_L}
+$$
+
+的双指数障碍。([arXiv][1])
+
+因此真正的新 dual 方法必须利用：
+
+$$
+\boxed{
+\widehat f
+\text{ 不能在所有极窄 recurrence peaks 上同时集中}.
+}
+$$
+
+这正是：
+
+* Slepian concentration；

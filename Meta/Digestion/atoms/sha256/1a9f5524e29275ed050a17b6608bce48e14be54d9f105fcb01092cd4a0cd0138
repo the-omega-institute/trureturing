@@ -1,0 +1,31 @@
+## 519.2 Finite exact dual
+
+在递增测试塔 \(V_N\) 上求解：
+
+$$
+\min
+\left[
+\langle\mathfrak W_L,\phi\rangle+\theta C
+\right]
+$$
+
+满足：
+
+$$
+\Gamma_{a,\phi}+\theta\ge0,
+$$
+
+$$
+2a\phi(0)+\theta\ge2a.
+$$
+
+输出：
+
+* white floor；
+* shadow price；
+* contact set；
+* finite atomic residual；
+* primal–dual gap certificate。
+
+---
+

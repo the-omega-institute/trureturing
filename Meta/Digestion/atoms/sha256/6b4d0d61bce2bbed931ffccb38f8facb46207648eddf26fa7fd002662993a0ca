@@ -1,0 +1,16 @@
+# 第四百三十二部　平滑外部 Gauge：压平 moments 而不破坏 coercivity
+
+端点 jets 的 Fourier 变换是：
+
+$$
+e^{-ib\xi}
+\times
+\text{polynomial in }\xi.
+$$
+
+它们可能破坏 multiplier 在高频的 coercive asymptotic。
+
+因此计算上更有价值的是**平滑外部 gauge**。
+
+---
+

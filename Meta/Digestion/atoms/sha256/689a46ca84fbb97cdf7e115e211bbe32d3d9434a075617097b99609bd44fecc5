@@ -1,0 +1,35 @@
+# 第六百八十部　新的统一对象：Prime–Frame Observer
+
+定义：
+
+$$
+\boxed{
+\mathfrak{PFO}
+=
+\left(
+\mathbb P^*,
+\Lambda_{\mathbb P},
+\mathcal H_{\mathbb P},
+\ell,
+\pi,
+U,
+q
+\right).
+}
+\tag{680.1}
+$$
+
+其中：
+
+* \(\mathbb P^*\)：有序观察历史；
+* \(\Lambda_{\mathbb P}\)：交换 occupation state；
+* \(\mathcal H_{\mathbb P}\)：正交 prime mode space；
+* \(\ell(v)=\sum v_p\log p\)：Archimedean 线坐标；
+* \(\pi\)：观察顺序／旗标；
+* \(U_p\)：带记忆更新；
+* \(q\)：完成标量读数。
+
+其中有三类不同纤维。
+
+---
+

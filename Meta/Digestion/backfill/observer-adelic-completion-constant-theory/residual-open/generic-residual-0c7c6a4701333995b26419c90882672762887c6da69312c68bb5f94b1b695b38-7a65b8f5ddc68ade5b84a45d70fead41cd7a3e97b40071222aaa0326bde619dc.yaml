@@ -1,0 +1,10 @@
+ast_path: section/439-4-Scale-by-scale-任意扩张不能直接胶合/clause/1
+fingerprints:
+  raw_sha256: sha256:0c7c6a4701333995b26419c90882672762887c6da69312c68bb5f94b1b695b38
+  normalized_sha256: sha256:0c7c6a4701333995b26419c90882672762887c6da69312c68bb5f94b1b695b38
+cas_ref: sha256:0c7c6a4701333995b26419c90882672762887c6da69312c68bb5f94b1b695b38
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

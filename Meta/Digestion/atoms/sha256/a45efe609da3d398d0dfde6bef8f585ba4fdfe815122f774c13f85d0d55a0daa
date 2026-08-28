@@ -1,0 +1,14 @@
+## 501.4 Budgeted profile 不自动等于 window profile
+
+必须证明 finite-budget saturation：
+
+$$
+\lambda_{\mathrm{fb}}(L,a)
+=
+\lambda_{\mathrm{full}}(L).
+$$
+
+否则二者是不同的局部复杂度指标。
+
+---
+

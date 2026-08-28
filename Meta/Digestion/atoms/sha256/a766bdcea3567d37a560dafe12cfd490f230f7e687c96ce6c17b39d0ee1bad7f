@@ -1,0 +1,60 @@
+## 531.1 Riemann budget curve
+
+RH 下：
+
+$$
+\nu=\nu_\Xi
+=
+\sum_{\gamma\in\mathbb R}
+m_\gamma\delta_\gamma.
+$$
+
+于是：
+
+$$
+\boxed{
+\mathcal B_\Xi(u)
+=
+\sum_{\gamma\in\mathbb R}
+\frac{m_\gamma}{\gamma^2+u}.
+}
+\tag{531.4}
+$$
+
+由中心化 Hadamard 乘积：
+
+$$
+\boxed{
+\mathcal B_\Xi(u)
+=
+\frac1{\sqrt u}
+\frac{
+\xi'(\frac12+\sqrt u)
+}{
+\xi(\frac12+\sqrt u)
+}.
+}
+\tag{531.5}
+$$
+
+在：
+
+$$
+u=\frac14
+$$
+
+处：
+
+$$
+\boxed{
+\mathcal B_\Xi(\tfrac14)
+=
+2\lambda_1.
+}
+\tag{531.6}
+$$
+
+所以第一 Li 系数只是完整 resolvent budget curve 在自然点 \(u=1/4\) 的一个取值。
+
+---
+

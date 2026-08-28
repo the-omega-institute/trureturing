@@ -1,0 +1,10 @@
+ast_path: section/Primal-路线/clause/1
+fingerprints:
+  raw_sha256: sha256:ed40befafbf338d7f2c2292eaaa6f19fa7208ca4eddab55cd8966943c3f35f36
+  normalized_sha256: sha256:ed40befafbf338d7f2c2292eaaa6f19fa7208ca4eddab55cd8966943c3f35f36
+cas_ref: sha256:ed40befafbf338d7f2c2292eaaa6f19fa7208ca4eddab55cd8966943c3f35f36
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

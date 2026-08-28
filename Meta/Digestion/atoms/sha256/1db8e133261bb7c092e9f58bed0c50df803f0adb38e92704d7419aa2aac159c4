@@ -1,0 +1,50 @@
+## 定理 531.1（Budget complete monotonicity）
+
+对每个：
+
+$$
+k\ge0,
+$$
+
+有：
+
+$$
+\boxed{
+(-1)^k
+\mathcal B_\nu^{(k)}(u)
+=
+k!
+\int_{\mathbb R}
+\frac{d\nu(\xi)}
+{(\xi^2+u)^{k+1}}
+\ge0.
+}
+\tag{531.3}
+$$
+
+完整曲线：
+
+$$
+u\longmapsto\mathcal B_\nu(u)
+$$
+
+唯一决定偶谱测度 \(\nu\)，可由 Stieltjes inversion 恢复。
+
+所以：
+
+$$
+\boxed{
+\text{单一 }a
+\text{ 给一个圆周图表；}
+}
+$$
+
+$$
+\boxed{
+\text{全部 }a>0
+\text{ 给出完整的多尺度谱层析。}
+}
+$$
+
+---
+

@@ -1,0 +1,57 @@
+## 561.1 新接触向量
+
+在根：
+
+$$
+\alpha=\alpha_{n+1}
+$$
+
+处，定义：
+
+$$
+\boxed{
+x_n
+=
+-
+(G_n-\alpha I)^{-1}g_n.
+}
+\tag{561.7}
+$$
+
+则：
+
+$$
+\boxed{
+\begin{pmatrix}
+x_n\\1
+\end{pmatrix}
+\in
+\ker(G_{n+1}-\alpha I).
+}
+\tag{561.8}
+$$
+
+因此新 contact rational function为：
+
+$$
+\boxed{
+q_{n+1}(z)
+=
+b_n(z)
++
+\sum_{j=0}^{n-1}
+(x_n)_j b_j(z).
+}
+\tag{561.9}
+$$
+
+其 residual 谱支撑必须落在：
+
+$$
+q_{n+1}(z)=0
+$$
+
+上。
+
+---
+

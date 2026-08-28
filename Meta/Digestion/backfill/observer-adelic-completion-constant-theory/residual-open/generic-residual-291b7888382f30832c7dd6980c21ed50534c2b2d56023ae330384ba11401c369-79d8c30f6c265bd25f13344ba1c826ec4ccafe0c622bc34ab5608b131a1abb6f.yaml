@@ -1,0 +1,10 @@
+ast_path: section/571-3-Galois-完成黄金观察者/clause/1
+fingerprints:
+  raw_sha256: sha256:291b7888382f30832c7dd6980c21ed50534c2b2d56023ae330384ba11401c369
+  normalized_sha256: sha256:291b7888382f30832c7dd6980c21ed50534c2b2d56023ae330384ba11401c369
+cas_ref: sha256:291b7888382f30832c7dd6980c21ed50534c2b2d56023ae330384ba11401c369
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

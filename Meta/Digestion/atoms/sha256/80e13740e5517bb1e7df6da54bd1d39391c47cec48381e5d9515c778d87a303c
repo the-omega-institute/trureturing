@@ -1,0 +1,43 @@
+## 610.2 这一层具有真正深度
+
+定义动态完成残差：
+
+$$
+\boxed{
+\mathcal R_n=T^{F_n}-I.
+}
+$$
+
+在圆周提升坐标中：
+
+$$
+\|\mathcal R_n\|=\varphi^{-n}.
+$$
+
+所以：
+
+$$
+\boxed{
+\|\mathcal R_{n+1}\|
+=
+\varphi^{-1}\|\mathcal R_n\|.
+}
+\tag{610.8}
+$$
+
+这不是新坐标而已，而是一条严格收缩的残差链：
+
+$$
+\boxed{
+\mathcal R_n\longrightarrow0.
+}
+$$
+
+因此它可以合法计入：
+
+$$
+d_{\mathrm{completion}}=n.
+$$
+
+---
+

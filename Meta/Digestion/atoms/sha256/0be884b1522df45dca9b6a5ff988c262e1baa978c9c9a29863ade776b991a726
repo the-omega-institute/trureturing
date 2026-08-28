@@ -1,0 +1,57 @@
+# 第四百八十四部　观察容量为何产生 white floor
+
+极值 residual atoms 被限制在：
+
+$$
+Z(F_L^*).
+$$
+
+但 \(F_L^*\in PW_L\) 的实零点密度受指数型 \(L\) 限制。最新紧窗口工作正是通过这一 Paley–Wiener 零点预算解释：
+
+$$
+T^*(L)=2\pi e^{2L}.
+$$
+
+([arXiv][1])
+
+因此，至少在简单零点或按独立插值条件计数的图表中：
+
+$$
+\boxed{
+\text{有限 }L\text{ 的 atomic completion
+无法逐个编码无限增长密度的 Riemann 零点。}
+}
+$$
+
+多出的谱信息必须进入：
+
+$$
+\boxed{
+\text{连续 white floor}
+}
+$$
+
+或被推送到当前窗口不可见的长程相关自由度中。
+
+这给 \(T^*(L)\) 一个更深的谱完成解释：
+
+$$
+\boxed{
+T^*
+=
+\text{极值 atomic ledger 的插值容量
+与 Riemann 零点约束密度相等的尺度}.
+}
+$$
+
+Landau–Widom plunge 则描述：
+
+$$
+\boxed{
+\text{当 atomic ledger 接近饱和后，
+剩余 white floor 如何突然塌缩。}
+}
+$$
+
+---
+

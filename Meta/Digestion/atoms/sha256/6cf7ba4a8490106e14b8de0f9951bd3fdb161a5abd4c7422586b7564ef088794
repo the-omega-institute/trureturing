@@ -1,0 +1,90 @@
+# 第四百二十七部　建议形式化顺序
+
+```text
+D5/S3/Weil/PNTCompletion/
+  LogPrimeMeasure.lean
+  PNTContinuumMeasure.lean
+  PrimeDiscrepancyMeasure.lean
+  PoleContinuumGreenIdentity.lean
+  YukawaResolventFourier.lean
+
+D5/S3/Weil/ArchimedeanShift/
+  DigammaQuarterToFiveQuarter.lean
+  RenormalizedArchimedeanMultiplier.lean
+  ArchimedeanPositiveLadder.lean
+  UniqueBaselineDangerBand.lean
+
+D5/S3/Weil/RenormalizedMultiplier/
+  DiscrepancyCosineTransform.lean
+  PureMultiplierWeilForm.lean
+  PoleAbsorbedOperator.lean
+  CompactResolvent.lean
+
+D5/S3/Weil/PNTDiscrepancy/
+  WeightedChebyshevDiscrepancy.lean
+  DiscrepancyStieltjesIntegration.lean
+  BoundaryCosineNullForm.lean
+  CorrelationDerivativeNormalForm.lean
+
+D5/S3/Weil/SupportSpectralFlow/
+  SupportFormConsistency.lean
+  LowestEigenvalueMonotone.lean
+  FiniteFirstFailureScale.lean
+  SupportScaleCompactSpectrum.lean
+
+D5/S3/Weil/RenormalizedSlepian/
+  RenormalizedDangerSet.lean
+  PoleFreeStickyProjection.lean
+  RenormalizedSafeGap.lean
+  RenormalizedFeshbachMatrix.lean
+
+D5/S3/Weil/PrimeDiscrepancyRG/
+  DiscrepancyScaleFlow.lean
+  ContinuousPNTDrift.lean
+  PrimePowerKick.lean
+  LowExactHighContinuumSplit.lean
+  PNTDiscrepancyDominationTarget.lean
+```
+
+最优先、风险最低的闭合链是：
+
+$$
+\boxed{
+\text{pole}
++
+e^{u/2}du
+\longrightarrow
+e^{-|x-y|/2}
+\longrightarrow
+\frac1{\xi^2+\frac14}.
+}
+$$
+
+第二条是：
+
+$$
+\boxed{
+\psi(\tfrac14+i\xi/2)
++
+\frac1{\xi^2+\frac14}
+=
+\psi(\tfrac54+i\xi/2).
+}
+$$
+
+第三条是完整算术压缩：
+
+$$
+\boxed{
+\text{prime measure}
+-
+e^{u/2}du
+\longrightarrow
+E(u)
+\longrightarrow
+\int E(u)C_f'(u)\,du.
+}
+$$
+
+---
+

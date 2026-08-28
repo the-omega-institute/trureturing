@@ -1,0 +1,29 @@
+# 第四百七十六部　正谱完成中的最大白色底座
+
+采用 Fourier 规范：
+
+$$
+\widehat f(\xi)
+=
+\int_{\mathbb R}
+f(x)e^{-ix\xi}\,dx,
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal F^{-1}
+\left(
+\frac{d\xi}{2\pi}
+\right)
+=
+\delta_0.
+}
+\tag{476.1}
+$$
+
+在一维正定分布扩张理论适用的标准条件下，局部正定分布可以扩张成全实轴上的正定分布，并由正谱测度表示；不同扩张对应不同 unitary representations 或自伴完成。([arXiv][2])
+
+由定理 475.1 得到：
+

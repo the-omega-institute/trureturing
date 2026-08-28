@@ -1,0 +1,33 @@
+## 定理 675.1（Order descent criterion）
+
+更新族 \(U_p\) 能通过交换化映射：
+
+$$
+\mathbb P^*\to\Lambda_{\mathbb P}
+$$
+
+下降为 occupation-state 动力学，当且仅当：
+
+$$
+\boxed{
+U_pU_q=U_qU_p
+\qquad
+\forall p,q.
+}
+\tag{675.4}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{质数顺序差异}
+=
+\text{观察更新连接的曲率}.
+}
+$$
+
+项目的行为完成理论也强调：对非交换多动力学，分别闭合每个生成元不足，真正的完成必须读取全部自由词；稳定接口是通过全部未来动作词构造的最小反射闭包。
+
+---
+

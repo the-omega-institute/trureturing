@@ -1,0 +1,49 @@
+# 第四百一十五部　Digamma 位移完成
+
+仓库冻结的 Archimedean multiplier 为：
+
+$$
+\boxed{
+a_{1/4}(\xi)
+=
+\Re
+\psi\left(
+\frac14+\frac{i\xi}{2}
+\right)
+-\log\pi.
+}
+\tag{415.1}
+$$
+
+将 Green multiplier 加入：
+
+$$
+\boxed{
+b_\infty(\xi)
+=
+a_{1/4}(\xi)
++
+\frac1{\xi^2+\frac14}.
+}
+\tag{415.2}
+$$
+
+Digamma recurrence 为：
+
+$$
+\psi(z+1)=\psi(z)+\frac1z.
+$$
+
+([dlmf.nist.gov][2])
+
+而：
+
+$$
+\Re
+\frac1{\frac14+i\xi/2}
+=
+\frac1{\xi^2+\frac14}.
+$$
+
+因此：
+

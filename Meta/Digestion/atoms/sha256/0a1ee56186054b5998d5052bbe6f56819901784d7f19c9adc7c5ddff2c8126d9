@@ -1,0 +1,29 @@
+* 消除了多少 GlueDim。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{多尺度共同谱不是多个局部正矩阵的交集；}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{一个隐藏 Toeplitz moment object
+在多个有理坐标图表中的共同显影。}
+}
+$$
+
+因此下一步不应继续扩大 block SDP，而应直接实现：
+
+$$
+\boxed{
+\textbf{Rational Toeplitz Master SDP},
+}
+$$
+
+并将：
+

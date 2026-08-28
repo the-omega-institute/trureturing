@@ -1,0 +1,77 @@
+# 第六百一十六部　六维完成中的奇偶行列式
+
+设黄金三维物理表示及其共轭内部表示构成：
+
+$$
+V_6=V_\parallel\oplus V_\perp.
+$$
+
+黄金膨胀作用为：
+
+$$
+\boxed{
+M_6
+=
+\varphi I_3
+\oplus
+\varphi'I_3.
+}
+\tag{616.1}
+$$
+
+于是：
+
+$$
+\boxed{
+\chi_{M_6}(x)
+=
+(x^2-x-1)^3,
+}
+\tag{616.2}
+$$
+
+$$
+\boxed{
+\det M_6=-1,
+}
+\tag{616.3}
+$$
+
+$$
+\boxed{
+\det M_6^n=(-1)^n.
+}
+\tag{616.4}
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+n\text{ 奇}
+&\Rightarrow
+\text{六维方向翻转};\\
+n\text{ 偶}
+&\Rightarrow
+\text{六维方向恢复}.
+\end{aligned}
+}
+$$
+
+但所有迹均为整数：
+
+$$
+\boxed{
+\operatorname{tr}M_6^n
+=
+3\bigl(\varphi^n+(\varphi')^n\bigr)
+=
+3L_n.
+}
+\tag{616.5}
+$$
+
+这说明：
+
+* 方向字符保留奇偶；

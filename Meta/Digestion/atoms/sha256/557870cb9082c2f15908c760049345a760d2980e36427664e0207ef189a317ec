@@ -1,0 +1,72 @@
+## 定理 493.1（Weak duality）
+
+对任意 primal 可行 \((\lambda,\mu)\) 和 dual 可行 \((\phi,\theta)\)：
+
+$$
+\boxed{
+\lambda
+\le
+\langle\mathfrak W_L,\phi\rangle
++\theta C.
+}
+\tag{493.4}
+$$
+
+### 证明
+
+由局部匹配：
+
+$$
+\begin{aligned}
+\langle\mathfrak W_L,\phi\rangle
+&=
+\lambda\phi(0)
++
+\int\widehat\phi\,d\mu.
+\end{aligned}
+$$
+
+利用：
+
+$$
+\widehat\phi\ge-\theta w_a
+$$
+
+以及 primal budget：
+
+$$
+C
+\ge
+\frac{\lambda}{2a}
++
+\int w_a\,d\mu,
+$$
+
+得到：
+
+$$
+\begin{aligned}
+\langle\mathfrak W_L,\phi\rangle+\theta C
+&\ge
+\lambda\phi(0)
+-\theta\int w_a\,d\mu\\
+&\quad+
+\theta
+\left[
+\frac{\lambda}{2a}
++
+\int w_a\,d\mu
+\right]\\
+&=
+\lambda
+\left[
+\phi(0)+\frac{\theta}{2a}
+\right]\\
+&\ge\lambda.
+\end{aligned}
+$$
+
+∎
+
+---
+

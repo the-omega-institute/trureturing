@@ -1,0 +1,22 @@
+## 519.1 Compact primal solver
+
+直接在单位圆上求解：
+
+$$
+\max 2a\alpha
+$$
+
+满足：
+
+$$
+\mu=\alpha m_{\mathbb T}+\sigma,
+\qquad
+\mu(\mathbb T)\le C,
+$$
+
+以及有限或完整 local moments。
+
+圆周紧性使 optimizer 存在，无需额外 tail cutoff。
+
+---
+

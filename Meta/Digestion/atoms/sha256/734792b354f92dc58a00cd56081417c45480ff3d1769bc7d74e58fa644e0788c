@@ -1,0 +1,38 @@
+# 第四百七十一部　真正剩余的非循环命题
+
+本轮以后，当前中心任务不再是构造更多 RH 等价判据，而是证明：
+
+$$
+\boxed{
+\underline R_L(1/2)
+\le
+\overline R_L(1/2)
+\qquad
+\forall L>0.
+}
+\tag{471.1}
+$$
+
+更强的定量目标为：
+
+$$
+\boxed{
+\begin{aligned}
+2\lambda_1\tanh^2\frac L2
+&\le
+\underline R_L(1/2)
+\\
+&\le
+\overline R_L(1/2)
+\\
+&\le
+2\lambda_1\coth^2\frac L2.
+\end{aligned}
+}
+\tag{471.2}
+$$
+
+其中外侧双曲界在 RH 下自动成立；真正需要从 prime–Archimedean 数据证明的是中间的非空性与适当预算控制。
+
+---
+

@@ -1,0 +1,31 @@
+## 假设 436.1（Maximum-entropy zero-spectrum flow）
+
+若 RH 成立，则适当规范化的最大熵扩张满足：
+
+$$
+\boxed{
+\nu_L^{\mathrm{ME}}
+\overset{L\to\infty}{\longrightarrow}
+\nu_\Xi
+}
+\tag{436.2}
+$$
+
+以 vague 或 distributional topology 收敛。
+
+该命题目前是新的研究目标，不是既有定理。
+
+若成立，它将提供一个从有限相关数据逐步恢复 Riemann 零点谱的正算法：
+
+$$
+\boxed{
+\text{local Weil data}
+\to
+\text{maximum-entropy positive spectrum}
+\to
+\text{zero measure}.
+}
+$$
+
+---
+

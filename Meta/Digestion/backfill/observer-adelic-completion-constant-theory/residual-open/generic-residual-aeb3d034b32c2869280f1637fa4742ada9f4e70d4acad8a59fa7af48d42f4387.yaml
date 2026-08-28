@@ -1,0 +1,10 @@
+ast_path: section/537-1-Poisson-核图表
+fingerprints:
+  raw_sha256: sha256:aeb3d034b32c2869280f1637fa4742ada9f4e70d4acad8a59fa7af48d42f4387
+  normalized_sha256: sha256:aeb3d034b32c2869280f1637fa4742ada9f4e70d4acad8a59fa7af48d42f4387
+cas_ref: sha256:aeb3d034b32c2869280f1637fa4742ada9f4e70d4acad8a59fa7af48d42f4387
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

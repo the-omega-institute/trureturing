@@ -1,0 +1,84 @@
+## 定理 433.1（局部正谱完成）
+
+在一维正定分布扩张定理的标准 finite-order/tempered hypotheses 下，下列条件等价：
+
+$$
+\boxed{
+\begin{aligned}
+&(1)\quad \mathsf{WP}(L);\\
+&(2)\quad
+\exists\text{ positive tempered measure }\nu_L
+\text{ on }\mathbb R,\\
+&\qquad\quad
+\check\nu_L
+=
+\mathfrak W_L
+\text{ on }(-2L,2L);\\
+&(3)\quad
+\exists\kappa_L,\ 
+\operatorname{supp}\kappa_L
+\subset
+\mathbb R\setminus(-2L,2L),\\
+&\qquad\quad
+\mathcal F(\mathfrak W+\kappa_L)
+\text{ is a positive tempered measure}.
+\end{aligned}
+}
+\tag{433.3}
+$$
+
+这里定义：
+
+$$
+\check\nu_L(u)
+=
+\int_{\mathbb R}
+e^{i\xi u}\,d\nu_L(\xi)
+$$
+
+为 distributional inverse Fourier transform。
+
+---
+
+### 证明结构（第 433 部）
+
+$$
+(2)\Rightarrow(1)
+$$
+
+直接由：
+
+$$
+\begin{aligned}
+\left\langle
+\check\nu_L,
+f*\widetilde f
+\right\rangle
+&=
+\int_{\mathbb R}
+|\widehat f(\xi)|^2
+\,d\nu_L(\xi)
+\ge0.
+\end{aligned}
+$$
+
+$$
+(1)\Rightarrow(2)
+$$
+
+是区间正定分布扩张定理。
+
+$$
+(2)\Leftrightarrow(3)
+$$
+
+来自：
+
+$$
+\check\nu_L-\mathfrak W
+$$
+
+在 \((-2L,2L)\) 内为零，所以其支撑位于不可见区域。∎
+
+---
+

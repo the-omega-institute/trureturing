@@ -1,0 +1,112 @@
+# 第五百五十五部　有理 Gram 到主 Toeplitz 的精确塌缩
+
+令：
+
+$$
+\mu\ge0
+$$
+
+为单位圆上的有限正测度。
+
+将全部 \(\psi_{\ell,j}\) 按某个固定顺序组成向量：
+
+$$
+\boxed{
+\Psi(z)
+=
+\begin{pmatrix}
+\psi_1(z)\\
+\vdots\\
+\psi_n(z)
+\end{pmatrix}.
+}
+\tag{555.1}
+$$
+
+定义多尺度 rational Gram matrix：
+
+$$
+\boxed{
+G
+=
+\int_{\mathbb T}
+\Psi(z)\Psi(z)^*\,d\mu(z).
+}
+\tag{555.2}
+$$
+
+令：
+
+$$
+v_d(z)
+=
+(1,z,\ldots,z^d)^T.
+$$
+
+由定理 554.1，存在唯一可逆矩阵：
+
+$$
+\boxed{
+A\in GL_n(\mathbb C)
+}
+\tag{555.3}
+$$
+
+使：
+
+$$
+\boxed{
+\Psi(z)
+=
+\frac1{D(z)}Av_d(z).
+}
+\tag{555.4}
+$$
+
+定义加权正测度：
+
+$$
+\boxed{
+d\sigma(z)
+=
+\frac{d\mu(z)}
+{|D(z)|^2}.
+}
+\tag{555.5}
+$$
+
+由于 \(D\) 在单位圆上无零点，\(\sigma\) 有限且正。
+
+定义主 moment matrix：
+
+$$
+\boxed{
+T_d(\sigma)
+=
+\int_{\mathbb T}
+v_d(z)v_d(z)^*\,d\sigma(z).
+}
+\tag{555.6}
+$$
+
+它是 Hermitian Toeplitz matrix：
+
+$$
+\boxed{
+T_d(\sigma)
+=
+[y_{j-k}]_{j,k=0}^{d},
+}
+\tag{555.7}
+$$
+
+其中：
+
+$$
+y_k
+=
+\int_{\mathbb T}z^k\,d\sigma(z).
+$$
+
+---
+
