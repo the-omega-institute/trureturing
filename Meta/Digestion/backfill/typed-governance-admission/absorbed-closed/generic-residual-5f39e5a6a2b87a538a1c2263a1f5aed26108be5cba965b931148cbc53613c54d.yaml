@@ -1,0 +1,17 @@
+ast_path: section/Proposition-2-Consumption-is-not-inverse-to-prod-e3810b11
+fingerprints:
+  raw_sha256: sha256:5f39e5a6a2b87a538a1c2263a1f5aed26108be5cba965b931148cbc53613c54d
+  normalized_sha256: sha256:5f39e5a6a2b87a538a1c2263a1f5aed26108be5cba965b931148cbc53613c54d
+cas_ref: sha256:5f39e5a6a2b87a538a1c2263a1f5aed26108be5cba965b931148cbc53613c54d
+coverage_gids:
+  - D5/S3/ConceptDynamics/Governance/ConsumptionProductionInputSeparation.consumption_not_inverse_to_production_input
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Governance/ConsumptionProductionInputSeparation.consumption_not_inverse_to_production_input
+      source_sha256: sha256:5f39e5a6a2b87a538a1c2263a1f5aed26108be5cba965b931148cbc53613c54d
+      target_statement_id: sha256:605833835264132c96db696158066d7fbdf3b97528110161983bcd206c81c960
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Governance/ConsumptionProductionInputSeparation.consumption_not_inverse_to_production_input
+      definition_sha256: sha256:0a6ba1fe5c7350279a6c86e36926ce3ae0c717ace0adc86567ad47c145572da0
+      emission_sha256: sha256:74fe5657ee9c4722a6a64cdcf19495013c9d69d0ce596f3bfb04393421ba38cf
+  unresolved_subitems: []
