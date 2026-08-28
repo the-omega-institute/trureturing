@@ -73,7 +73,7 @@ internal sealed class StrictRefinementCapabilityDocument : IScribeDocumentDefini
 
         return Disp(Seq(
             Forall, Sp, source, Comma, Sp, coarseType, Comma, Sp, fineType, Comma, Sp,
-            actionType, Comma, Esc,
+            actionType, Colon, Sp, F.Id("Type"), Comma, Esc,
             coarse, Colon, Sp, Arrow(source, coarseType), Comma, Sp,
             fine, Colon, Sp, Arrow(source, fineType), Comma, Sp,
             Call("Surjective", coarse), Sp, Land, Sp,

@@ -88,11 +88,10 @@ internal sealed partial class GitRepositoryGateway
         var trees = new Dictionary<string, ImmutableArray<TreeEntry>>(StringComparer.Ordinal);
         foreach (var input in references.Inputs)
         {
-            if (input.Materializer != "repository-snapshot-v1"
-                || !RepoPath.TryCreate(input.DescriptorSelector, out var descriptorPath))
+            if (!RepoPath.TryCreate(input.DescriptorSelector, out var descriptorPath))
             {
                 throw SemanticRejection(
-                    "unsupported frozen Git materializer or descriptor selector");
+                    "unsupported frozen Git descriptor selector");
             }
 
             var inputPrefix = input.BaseCommitOid.StartsWith("git-sha1:", StringComparison.Ordinal)
@@ -145,51 +144,7 @@ internal sealed partial class GitRepositoryGateway
             }
         }
 
-        foreach (var reference in references.EnvironmentReferences)
-        {
-            var tree = Untag(reference.Input.BaseTreeOid);
-            if (!trees.TryGetValue(tree, out var entries))
-            {
-                entries = ParseTree(GitBytes("ls-tree", "-r", "-z", tree)).ToImmutableArray();
-                trees.Add(tree, entries);
-            }
-
-            RequireTreeBlob(
-                entries,
-                "lean-toolchain",
-                reference.Environment.LeanToolchainBlobOid,
-                "Supersede lean-toolchain pin");
-            RequireTreeBlob(
-                entries,
-                reference.Environment.LakefilePath.Value,
-                reference.Environment.LakefileBlobOid,
-                "Supersede lakefile pin");
-            RequireTreeBlob(
-                entries,
-                "lake-manifest.json",
-                reference.Environment.LakeManifestBlobOid,
-                "Supersede lake-manifest pin");
-        }
-
-        return TrustedFrozenGitReferences.CreateForTrustedAdapter(
-            references.Inputs,
-            references.EnvironmentReferences);
-    }
-
-    private static void RequireTreeBlob(
-        ImmutableArray<TreeEntry> entries,
-        string path,
-        string taggedOid,
-        string label)
-    {
-        var entry = entries.SingleOrDefault(item => item.Path == path);
-        if (entry is null
-            || entry.ObjectType != "blob"
-            || entry.Mode is not ("100644" or "100755")
-            || entry.ObjectId != Untag(taggedOid))
-        {
-            throw SemanticRejection($"{label} does not resolve to its named path");
-        }
+        return TrustedFrozenGitReferences.CreateForTrustedAdapter(references.Inputs);
     }
 
     private void RequireTaggedObjectType(string oid, string repositoryPrefix, string expected)

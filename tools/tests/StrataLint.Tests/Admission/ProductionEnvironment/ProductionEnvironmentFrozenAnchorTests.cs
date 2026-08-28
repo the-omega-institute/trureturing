@@ -76,98 +76,9 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void IncrementalValidationRetainsEnvironmentIdentityDetection()
-    {
-        var fixture = TrustedFrozenFixture();
-        var (snapshot, lean, dag) = BuildState(fixture.Files, fixture.Reports);
-        var baseView = FrozenLedgerBaseViewReader.Read(Decode(Snapshot(fixture.Baseline)));
-        var activeByCase = baseView.ActiveByCase.ToImmutableDictionary(
-            static item => item.Key,
-            item => item.Value.Material.RepoPath.Value == RuleFixture.RingPath
-                ? item.Value with
-                {
-                    Environment = new FrozenEnvironmentPins(
-                        FrozenLedgerTestData.GitOid('1'),
-                        FrozenLedgerTestData.GitOid('2'),
-                        RepoPath.CreateKnown("lakefile.toml"),
-                        FrozenLedgerTestData.GitOid('3')),
-                }
-                : item.Value,
-            StringComparer.Ordinal);
-        var persistedView = new FrozenLedgerBaseView(
-            baseView.Origin,
-            baseView.Events,
-            activeByCase,
-            baseView.AllCaseIds,
-            baseView.EventHashes,
-            baseView.EventIdentities);
-        var preparation = new FrozenLedgerAdmissionPreparation(
-            persistedView,
-            [],
-            ImmutableHashSet<string>.Empty,
-            TrustedFrozenGitReferences.CreateForTrustedAdapter([], []));
-        var changes = RawChangeSet.CreateWithKinds([("lean-toolchain", RawChangeKind.Modified)]);
-        var states = LeanTruthStates.Resolve(snapshot, lean);
-        var adjacency = LeanImportAdjacency.Build(snapshot, lean);
-        var scope = FrozenLedgerAdmissionScope.Create(
-            changes,
-            preparation,
-            states,
-            adjacency);
-        var catalog = DagLedgerCommandPreparation.BuildAdmissionCatalog(
-            snapshot,
-            lean,
-            states,
-            adjacency,
-            persistedView,
-            scope,
-            new FrozenRevisionIdentity(
-                "candidate",
-                FrozenLedgerTestData.GitOid('a'),
-                FrozenLedgerTestData.GitOid('b')));
-
-        var failure = Assert.IsType<FrozenLedgerAdmissionFailure>(
-            FrozenLedger.ValidateAdmissionDelta(
-                preparation,
-                scope,
-                catalog,
-                changes,
-                preparation.TrustedDeltaReferences));
-
-        Assert.Equal(
-            FrozenLedgerTestData.PathFor("BackfillTarget"),
-            Assert.Single(failure.AffectedPaths).Value);
-        Assert.Equal("lean-toolchain", Assert.Single(failure.DeltaWitnessPaths).Value);
-        Assert.Contains("missing a Supersede event", failure.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void Sl008RejectsIncompleteAddedReattestPayload()
+    public void Sl008RejectsEmptyAddedRevokePayload()
     {
         using var temporary = new TemporaryDirectory();
-        var incompleteFixture = TrustedFrozenFixtureWithLedger(out _);
-        var incompletePath = AddIncompleteReattest(incompleteFixture);
-        var incompleteEnvironment = new ProductionCliEnvironment(
-            "/repo",
-            new FakeRepositoryGateway(
-                RawChangeSet.CreateWithKinds([
-                    (RuleFixture.RingPath, RawChangeKind.Modified),
-                    (incompletePath, RawChangeKind.Added),
-                ]),
-                Snapshot(incompleteFixture.Files),
-                Snapshot(incompleteFixture.Baseline)),
-            new FakeLeanReportSource(null));
-
-        var incompleteOutcome = incompleteEnvironment.Check(
-            ["--candidate-lean-report", WriteCandidateReport(temporary, incompleteFixture)]);
-
-        var incompleteRejection = Assert.IsType<AdmissionOutcome.RuleRejected>(incompleteOutcome);
-        var incompleteDiagnostic = Assert.Single(
-            incompleteRejection.Diagnostics.Where(static item => item.RuleId == RuleId.CreateKnown(8)));
-        Assert.Equal(incompletePath, incompleteDiagnostic.Path);
-        Assert.Contains("delta is invalid", incompleteDiagnostic.Message, StringComparison.Ordinal);
-
-        // An empty Revoke is parsed by incremental admission and rejected by the shared planner.
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
@@ -279,44 +190,6 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void Sl008AllowsModifiedFrozenModuleWithMatchingAddedReattest()
-    {
-        using var temporary = new TemporaryDirectory();
-        var fixture = TrustedFrozenFixtureWithLedger(out var baselineLedger);
-        fixture.Files[RuleFixture.RingPath] += "\n-- matching reattestation\n";
-        var reattestPath = AddMatchingReattest(fixture, baselineLedger, out _);
-        var gateway = new FakeRepositoryGateway(
-            RawChangeSet.CreateWithKinds(
-                [
-                    (RuleFixture.RingPath, RawChangeKind.Modified),
-                    (reattestPath, RawChangeKind.Added),
-                ]),
-            Snapshot(fixture.Files),
-            Snapshot(fixture.Baseline));
-        var ledger = new ProductionFrozenLedgerAdmissionServices(
-            "/repo",
-            ImmutableHashSet<string>.Empty);
-        var environment = new ProductionCliEnvironment(
-            "/repo",
-            gateway,
-            new FakeLeanReportSource(null),
-            scribeEmissionVerifier: null,
-            ledger);
-
-        var outcome = environment.Check(
-            ["--candidate-lean-report", WriteCandidateReport(temporary, fixture)]);
-
-        Assert.IsType<AdmissionOutcome.Admitted>(outcome);
-        Assert.Equal(1, ledger.BaseViewReadCount);
-        Assert.Equal(1, ledger.DeltaEventLoadCount);
-        Assert.Equal(1, ledger.AdmissionCatalogBuildCount);
-        Assert.Equal(1, ledger.IncrementalValidationCount);
-        var deltaReferences = Assert.Single(gateway.FrozenReferenceValidations);
-        Assert.Contains(FrozenLedgerTestData.GitOid('a'), deltaReferences.CommitOids);
-        Assert.Empty(deltaReferences.RequiredAncestorCommitOids);
-    }
-
-    [Fact]
     public void CheckRejectsAddedModuleWhoseFreezeCapturedAnEarlierBranchBlob()
     {
         using var temporary = new TemporaryDirectory();
@@ -352,72 +225,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("does not match recomputed material", diagnostic.Message, StringComparison.Ordinal);
         Assert.Contains(
             AddedFreezePathFor(fixture, RuleFixture.RingPath),
-            diagnostic.Message,
-            StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void Sl008DoesNotTreatAnExistingReattestAsAuthorizationForANewModification()
-    {
-        using var temporary = new TemporaryDirectory();
-        var fixture = TrustedFrozenFixtureWithLedger(out var baselineLedger);
-        fixture.Files[RuleFixture.RingPath] += "\n-- first attested representation change\n";
-        _ = AddMatchingReattest(fixture, baselineLedger, out var reattestedLedger);
-        fixture.Baseline[RuleFixture.RingPath] = fixture.Files[RuleFixture.RingPath];
-        SetLedger(fixture.Baseline, Encoding.UTF8.GetString(reattestedLedger.AsSpan()));
-        fixture.Files[RuleFixture.RingPath] += "\n-- new unauthorized representation change\n";
-        var environment = new ProductionCliEnvironment(
-            "/repo",
-            new FakeRepositoryGateway(
-                RawChangeSet.CreateWithKinds([(RuleFixture.RingPath, RawChangeKind.Modified)]),
-                Snapshot(fixture.Files),
-                Snapshot(fixture.Baseline)),
-            new FakeLeanReportSource(null));
-
-        var outcome = environment.Check(
-            ["--candidate-lean-report", WriteCandidateReport(temporary, fixture)]);
-
-        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
-        var diagnostic = Assert.Single(
-            rejected.Diagnostics.Where(static item => item.RuleId == RuleId.CreateKnown(8)));
-        Assert.Equal(RuleFixture.RingPath, diagnostic.Path);
-        Assert.Contains("material/blob drift", diagnostic.Message, StringComparison.Ordinal);
-        Assert.Contains(
-            "delta witness: " + RuleFixture.RingPath,
-            diagnostic.Message,
-            StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void Sl008RejectsDeletedFrozenModuleEvenWithMatchingAddedReattest()
-    {
-        using var temporary = new TemporaryDirectory();
-        var fixture = TrustedFrozenFixtureWithLedger(out var baselineLedger);
-        fixture.Files[RuleFixture.RingPath] += "\n-- representation prepared for reattestation\n";
-        var reattestPath = AddMatchingReattest(fixture, baselineLedger, out _);
-        fixture.Files.Remove(RuleFixture.RingPath);
-        fixture.Reports.Remove(RuleFixture.RingPath);
-        var environment = new ProductionCliEnvironment(
-            "/repo",
-            new FakeRepositoryGateway(
-                RawChangeSet.CreateWithKinds([
-                    (RuleFixture.RingPath, RawChangeKind.Deleted),
-                    (reattestPath, RawChangeKind.Added),
-                ]),
-                Snapshot(fixture.Files),
-                Snapshot(fixture.Baseline)),
-            new FakeLeanReportSource(null));
-
-        var outcome = environment.Check(
-            ["--candidate-lean-report", WriteCandidateReport(temporary, fixture)]);
-
-        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
-        var diagnostic = Assert.Single(
-            rejected.Diagnostics.Where(static item => item.RuleId == RuleId.CreateKnown(8)));
-        Assert.Equal(RuleFixture.RingPath, diagnostic.Path);
-        Assert.Contains("is not Closed", diagnostic.Message, StringComparison.Ordinal);
-        Assert.Contains(
-            reattestPath,
             diagnostic.Message,
             StringComparison.Ordinal);
     }
@@ -481,7 +288,7 @@ public sealed partial class ProductionEnvironmentTests
             rejected.Diagnostics.Where(static item => item.RuleId == RuleId.CreateKnown(8)));
         Assert.Equal(RuleFixture.RingPath, diagnostic.Path);
         Assert.Contains("missing a Freeze event", diagnostic.Message, StringComparison.Ordinal);
-        Assert.Contains("ledger-sync", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains("ledger-append", diagnostic.Message, StringComparison.Ordinal);
         Assert.Contains("delta witness: " + RuleFixture.RingPath, diagnostic.Message, StringComparison.Ordinal);
     }
 
