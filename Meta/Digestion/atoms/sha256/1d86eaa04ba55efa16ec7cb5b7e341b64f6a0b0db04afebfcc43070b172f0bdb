@@ -1,0 +1,53 @@
+## 414.1 Fourier 图表
+
+在仓库固定的角频率规范中：
+
+$$
+\boxed{
+\mathcal F
+\left[e^{-|x|/2}\right](\xi)
+=
+\frac1{\xi^2+\frac14}.
+}
+\tag{414.6}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathsf P(f)-\mathsf M_0(f)
+=
+\frac1{2\pi}
+\int_{\mathbb R}
+\frac{|\widehat f(\xi)|^2}
+{\xi^2+\frac14}
+\,d\xi.
+}
+\tag{414.7}
+$$
+
+即：
+
+$$
+\boxed{
+\mathsf P-\mathsf M_0
+=
+\left\langle
+f,
+\left(-\partial_x^2+\frac14\right)^{-1}f
+\right\rangle.
+}
+\tag{414.8}
+$$
+
+因此 pole pair 与 PNT continuum 合成为正 resolvent：
+
+$$
+\boxed{
+\left(-\partial_x^2+\frac14\right)^{-1}\ge0.
+}
+$$
+
+---
+

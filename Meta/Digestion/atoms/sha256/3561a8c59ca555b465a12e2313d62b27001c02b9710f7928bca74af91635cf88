@@ -1,0 +1,57 @@
+# 第四百七十二部　形式化优先级
+
+建议新增：
+
+```text
+D5/S3/Weil/HermitianTests/
+  HermitianTestFunction.lean
+  EvenOddDecomposition.lean
+  PolarizedConvolution.lean
+  EvenOddCrossVanishing.lean
+
+D5/S3/Weil/ResolventLocal/
+  ResolventSmoothedCorrelation.lean
+  LocalResolventEquation.lean
+  CompletionDifferenceCosh.lean
+  PositiveDefiniteBound.lean
+
+D5/S3/Weil/ParityBoundary/
+  CoshBoundaryFunctional.lean
+  SinhBoundaryFunctional.lean
+  CoshCorrelationLorentzIdentity.lean
+  EvenPositiveOddNegative.lean
+  HyperbolicGhostCharacter.lean
+
+D5/S3/Weil/WeylBudget/
+  ReferenceResolventForm.lean
+  EvenBudgetLowerBound.lean
+  OddBudgetUpperBound.lean
+  WeylBudgetInterval.lean
+  BudgetIntervalReferenceIndependent.lean
+
+D5/S3/Weil/WeylGalerkin/
+  FiniteEvenBudgetMatrix.lean
+  FiniteOddBudgetMatrix.lean
+  RankTwoCoshKernelPencil.lean
+  GeneralizedRayleighEndpoints.lean
+  GalerkinBudgetSqueeze.lean
+  FiniteBudgetConflictWitness.lean
+
+D5/S3/Weil/HyperbolicCollapse/
+  TwoPointPositiveDefiniteBound.lean
+  GlobalLocalBudgetTube.lean
+  MultiplicativeBudgetUncertainty.lean
+  RiemannLiOneBudgetTube.lean
+  ExponentialCompletionCollapse.lean
+  ArbitraryCompletionLocalConvergence.lean
+
+D5/S3/Weil/WeylSlepianBridge/
+  GaugeIndependentBudgetInterval.lean
+  GaugeDependentFeshbachAudit.lean
+  WeylFeshbachConsistency.lean
+```
+
+仓库现有 even `WeilTestFunction` 应保留，作为 classical-even route；新增的 Hermitian bundle 应当是独立上层接口，避免破坏已经冻结的显式公式链。现有有限维 `LogDerivTrace` 可复用于 rank-one/rank-two resolvent matrix 的部分线性代数，但不能代替局部正谱扩张。
+
+---
+

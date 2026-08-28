@@ -1,0 +1,10 @@
+ast_path: 科学修正/429.1/clause/4
+fingerprints:
+  raw_sha256: sha256:e22a82b5bfb7136bcd9f7e059761468658f0cf092394bd107ac4710060a80390
+  normalized_sha256: sha256:e22a82b5bfb7136bcd9f7e059761468658f0cf092394bd107ac4710060a80390
+cas_ref: sha256:e22a82b5bfb7136bcd9f7e059761468658f0cf092394bd107ac4710060a80390
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

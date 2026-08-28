@@ -1,0 +1,64 @@
+## 573.1 圆上的两个完成固定点
+
+反射：
+
+$$
+\eta\mapsto-\eta
+$$
+
+在周期圆上有两个固定点：
+
+$$
+\boxed{
+\eta=0,
+\qquad
+\eta=\log\varphi
+\pmod{2\log\varphi}.
+}
+\tag{573.5}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathfrak B_\varphi(s,0)=0,
+}
+\tag{573.6}
+$$
+
+$$
+\boxed{
+\mathfrak B_\varphi
+(s,\log\varphi)=0.
+}
+\tag{573.7}
+$$
+
+这两个点是真正的：
+
+$$
+\boxed{
+\text{even completion points}.
+}
+$$
+
+而固定在一般：
+
+$$
+\eta\neq0,\log\varphi
+$$
+
+的单点观察者，会读到非零：
+
+$$
+\mathfrak B_\varphi.
+$$
+
+这正是你描述的：
+
+> 从完成圆整体看，处处闭合；
+> 从一个尚未到达反射固定点的状态看，始终存在破缺。
+
+---
+

@@ -1,0 +1,15 @@
+ast_path: section/533-3-Toeplitz-floor-certificate
+fingerprints:
+  raw_sha256: sha256:d554b6cd99c8cd47e6f185b9b80f7f03c9263651198b37f667691c316dd391b6
+  normalized_sha256: sha256:d554b6cd99c8cd47e6f185b9b80f7f03c9263651198b37f667691c316dd391b6
+cas_ref: sha256:d554b6cd99c8cd47e6f185b9b80f7f03c9263651198b37f667691c316dd391b6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-13ce8d085feec1679aae49af9bf5ddba935775348f431ca8600feae57b17c7df-fce83f50b1c7eb26e67c869bb088d7edd3918124f2738aa2946f8be2246a3a94
+    - generic-residual-7032f401588b156919a56ceb986b4f4c40c0706db3632185e10150acefc0ba26-2249023ce9ccbeb5b3d2560cf3030d491d0c0546f48d522b0be84b4c98e99520
+    - generic-residual-12e8bebcb7a9c4fac9379eec79f5896d5dd0af6ce0acb817e42ab6ce18899c20-360e748563bcd9691c8fe2a78dcf605711b976f63fa84e4ebf6dbedd7dfbd194
+    - generic-residual-43c84b3515b862412bab84613e76d5055e59fe049354ae416760c97076d1c2ca-18fadbcd232eec89e6e64edbbbea95ed8d5cd5a5c5a64f95fe0c81199b516d4f

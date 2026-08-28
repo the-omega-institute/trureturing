@@ -1,0 +1,45 @@
+## 464.1 偶通道下界
+
+定义：
+
+$$
+\boxed{
+\underline R_L(a)
+=
+R_0+
+\sup_{\substack{
+f\in\mathcal D_L^+\\
+\mathcal C_a(f)\ne0
+}}
+\frac{
+-\mathfrak b_0^+(f)
+}{
+|\mathcal C_a(f)|^2
+}.
+}
+\tag{464.5}
+$$
+
+若：
+
+$$
+\mathfrak b_0^+(f)\ge0
+\qquad
+\forall f\in\ker\mathcal C_a,
+$$
+
+则：
+
+$$
+\boxed{
+\mathfrak b_R^+\ge0
+\iff
+R\ge\underline R_L(a).
+}
+\tag{464.6}
+$$
+
+因此偶观察者只产生一个向上的预算射线。
+
+---
+

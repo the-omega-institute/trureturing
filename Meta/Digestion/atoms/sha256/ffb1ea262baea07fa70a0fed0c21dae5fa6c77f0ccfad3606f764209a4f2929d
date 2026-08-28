@@ -1,0 +1,54 @@
+# 第五百八十九部　建议形式化顺序
+
+```text
+D5/S3/GoldenObserver/Galois/
+  GoldenConjugate.lean
+  GoldenPowerParity.lean
+  GoldenTraceNorm.lean
+  GoldenObserverPair.lean
+  GoldenObserverEvenOdd.lean
+
+D5/S3/GoldenObserver/UnitCircle/
+  GoldenRegulatorCircle.lean
+  GoldenBalanceField.lean
+  GoldenBalanceOdd.lean
+  GoldenReflectionFixedPoints.lean
+  PartialCircleBoundaryDefect.lean
+
+D5/S3/GoldenObserver/Icosahedral/
+  A5GoldenCharacterInterface.lean
+  GoldenThreeDimensionalPair.lean
+  RestrictionOfScalarsSixDimensional.lean
+  FiveCycleRationalTrace.lean
+  PhysicalInternalProjection.lean
+
+D5/S3/GoldenObserver/EulerGerm/
+  ConjugateExponentLedger.lean
+  SignedGoldenExponent.lean
+  GoldenLocalEvenOddLog.lean
+  GoldenGaloisPairedLocalFactor.lean
+  GoldenTraceNormEulerProduct.lean
+  GoldenOddResidual.lean
+
+D5/S3/GoldenObserver/ExtractionDepth/
+  GeneralizedLocalExponentSemigroup.lean
+  SignedZetaLedger.lean
+  LocalModeCancellation.lean
+  ResidualAbscissaGain.lean
+  GoldenExtractionDepth.lean
+  GoldenAllOrderExtractionTarget.lean
+
+D5/S3/ConceptDynamics/TheoryDepth/
+  ChartLayer.lean
+  DiagnosticLayer.lean
+  EscapeLayer.lean
+  EscapeWitness.lean
+  ObserverCovarianceDefect.lean
+  AnalyticFrontierGain.lean
+  LayerDepthCertificate.lean
+  StrictTheoryDepth.lean
+```
+
+其中需要外部接口的部分主要是：
+
+* \(A_5\) 的标准黄金三维表示；

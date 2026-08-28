@@ -1,0 +1,10 @@
+ast_path: section/第六百六十六部-关系性-无克隆-原理
+fingerprints:
+  raw_sha256: sha256:53647761d668f660c89f9e9dc23a33194721221a9c92b8a9a2f4d2e416925620
+  normalized_sha256: sha256:53647761d668f660c89f9e9dc23a33194721221a9c92b8a9a2f4d2e416925620
+cas_ref: sha256:53647761d668f660c89f9e9dc23a33194721221a9c92b8a9a2f4d2e416925620
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

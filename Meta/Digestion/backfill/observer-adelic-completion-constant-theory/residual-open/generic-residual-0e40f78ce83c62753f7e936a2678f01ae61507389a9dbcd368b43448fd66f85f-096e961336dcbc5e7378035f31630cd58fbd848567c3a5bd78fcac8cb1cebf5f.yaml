@@ -1,0 +1,10 @@
+ast_path: section/519-3-Toeplitz-primal-certificate/clause/2
+fingerprints:
+  raw_sha256: sha256:0e40f78ce83c62753f7e936a2678f01ae61507389a9dbcd368b43448fd66f85f
+  normalized_sha256: sha256:0e40f78ce83c62753f7e936a2678f01ae61507389a9dbcd368b43448fd66f85f
+cas_ref: sha256:0e40f78ce83c62753f7e936a2678f01ae61507389a9dbcd368b43448fd66f85f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

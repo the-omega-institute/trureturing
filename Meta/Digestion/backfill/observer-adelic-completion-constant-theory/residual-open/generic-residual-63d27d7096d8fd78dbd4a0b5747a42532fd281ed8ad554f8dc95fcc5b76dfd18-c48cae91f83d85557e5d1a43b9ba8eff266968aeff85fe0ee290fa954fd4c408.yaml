@@ -1,0 +1,10 @@
+ast_path: section/本轮最终结论/occurrence/31/clause/8
+fingerprints:
+  raw_sha256: sha256:63d27d7096d8fd78dbd4a0b5747a42532fd281ed8ad554f8dc95fcc5b76dfd18
+  normalized_sha256: sha256:63d27d7096d8fd78dbd4a0b5747a42532fd281ed8ad554f8dc95fcc5b76dfd18
+cas_ref: sha256:63d27d7096d8fd78dbd4a0b5747a42532fd281ed8ad554f8dc95fcc5b76dfd18
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

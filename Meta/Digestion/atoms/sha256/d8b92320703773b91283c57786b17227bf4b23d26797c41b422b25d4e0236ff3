@@ -1,0 +1,25 @@
+## 620.3 第三阶解析推进
+
+形式化：
+
+```text
+GoldenModesThroughFive
+GoldenSecondResidualBelowPhiFive
+GoldenTwoPhiCubeReciprocal
+GoldenDiscriminantDirectFactor
+GoldenPhiFiveResidualMajorant
+GoldenThirdOrderContinuation
+```
+
+最关键的分析义务为：
+
+$$
+\boxed{
+|H_{5,p}(s)-1|
+\le
+C_Kp^{-\varphi^5\Re s}.
+}
+$$
+
+---
+

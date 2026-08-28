@@ -1,0 +1,10 @@
+ast_path: section/533-3-Toeplitz-floor-certificate/clause/3
+fingerprints:
+  raw_sha256: sha256:12e8bebcb7a9c4fac9379eec79f5896d5dd0af6ce0acb817e42ab6ce18899c20
+  normalized_sha256: sha256:12e8bebcb7a9c4fac9379eec79f5896d5dd0af6ce0acb817e42ab6ce18899c20
+cas_ref: sha256:12e8bebcb7a9c4fac9379eec79f5896d5dd0af6ce0acb817e42ab6ce18899c20
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

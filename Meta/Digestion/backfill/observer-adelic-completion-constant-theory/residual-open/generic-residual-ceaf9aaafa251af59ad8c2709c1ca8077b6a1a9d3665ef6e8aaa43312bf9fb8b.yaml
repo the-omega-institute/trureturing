@@ -1,0 +1,15 @@
+ast_path: section/第五百五十三部-有限多尺度有理观察者
+fingerprints:
+  raw_sha256: sha256:ceaf9aaafa251af59ad8c2709c1ca8077b6a1a9d3665ef6e8aaa43312bf9fb8b
+  normalized_sha256: sha256:ceaf9aaafa251af59ad8c2709c1ca8077b6a1a9d3665ef6e8aaa43312bf9fb8b
+cas_ref: sha256:ceaf9aaafa251af59ad8c2709c1ca8077b6a1a9d3665ef6e8aaa43312bf9fb8b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-5c4d7c0ddc24957da14c2f7a9fbb53060828b5b9489bdc02dad40f429ab4d3e4-52efe59836bb3359d758e76131a7455a6d002b97326c02c7549d6562322d25fd
+    - generic-residual-605217940f83b61eb2492238da6ccc79851e4c954b32aaa6053a8fadc83f4458-82b3529aa80cad899c07a73437cc9c0e84dac4ca17daaad58dfb2c7fdbf493c5
+    - generic-residual-96d60bf4d57d0eae0a2b30bc74201bc0666f2f537ee62a7116792d02b7a49230-85c6266fa6e84590ef58df7513a1efe2483ed99cb864fe79584787e2c0d1bf61
+    - generic-residual-3dec0028e5664854f3791e480bd9b5d9a75d778dde6684ef3ff2c12d629129e8-4f3e8a46e647b052c0d81d45f8505ae1300261565d829b70306dde840a2758f1

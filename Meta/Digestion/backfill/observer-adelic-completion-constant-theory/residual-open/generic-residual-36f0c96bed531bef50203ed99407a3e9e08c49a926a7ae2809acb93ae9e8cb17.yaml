@@ -1,0 +1,15 @@
+ast_path: section/532-1-可行性并非充分
+fingerprints:
+  raw_sha256: sha256:36f0c96bed531bef50203ed99407a3e9e08c49a926a7ae2809acb93ae9e8cb17
+  normalized_sha256: sha256:36f0c96bed531bef50203ed99407a3e9e08c49a926a7ae2809acb93ae9e8cb17
+cas_ref: sha256:36f0c96bed531bef50203ed99407a3e9e08c49a926a7ae2809acb93ae9e8cb17
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-dbdd5d2d6ced1c0d6ac223972c6b203b147f9a44f9ab845fc2be17eebaaabe4b-b71c1d77124e4056390e33a4c2b7b668cb0c994fb983e74ce3416c9dd46ffc7c
+    - generic-residual-af3ce59d8b16a92ad019775765c9cd5983fbbc475e784d586d34d98d8eaa9d3f-ad7299fc0b0a2866259f1956a787fd8d3773c05ff361da8599b2b3c1d65075de
+    - generic-residual-b2a9cfca5ee190718fd32b07ced54bd912256a7640d0fc24fecca5c0f8f9b354-3a6b2c802ec99dac1f09eef28be04b5d8d40fa6f3004ef0281ffa8eb65f23ae0
+    - generic-residual-37c41d6f913b54bf9364809141d20159e818557084a313d684ba2367fafc94c1-8945f7ca9e41b8c4b5dd9d14c3366a086307e51566b96b89d40c7a49d2a8d449

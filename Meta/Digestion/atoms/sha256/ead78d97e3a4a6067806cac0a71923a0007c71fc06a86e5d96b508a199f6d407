@@ -1,0 +1,60 @@
+# 第六百四十五部　全局无分别与局部有坐标可以同时成立
+
+定义轴空间上的 \(G\)-不变概率测度：
+
+$$
+\boxed{
+m_{\mathcal A}.
+}
+\tag{645.1}
+$$
+
+完整观察者系综为：
+
+$$
+\boxed{
+\Omega_{\mathrm{obs}}
+=
+\int_{\mathcal A}
+(\Omega,a)\,dm_{\mathcal A}(a).
+}
+\tag{645.2}
+$$
+
+它在整体上不偏好任何轴：
+
+$$
+g_*\Omega_{\mathrm{obs}}
+=
+\Omega_{\mathrm{obs}}.
+$$
+
+但每一个条件化实现：
+
+$$
+\boxed{
+\Omega_{\mathrm{obs}}\mid a
+}
+$$
+
+都有确定坐标轴。
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\text{全局状态}
+&=\text{所有轴等价、无偏};\\
+\text{局部观察者}
+&=\text{拥有一个确定起点与方向}.
+\end{aligned}
+}
+$$
+
+这正是你描述的：
+
+> 不同观察者拥有不同起点，但每个观察者看到的连续统可以完全同构。
+
+---
+

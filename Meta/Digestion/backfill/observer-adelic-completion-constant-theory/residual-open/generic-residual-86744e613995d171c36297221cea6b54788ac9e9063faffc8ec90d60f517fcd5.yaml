@@ -1,0 +1,10 @@
+ast_path: section/真实完成缺陷候选
+fingerprints:
+  raw_sha256: sha256:86744e613995d171c36297221cea6b54788ac9e9063faffc8ec90d60f517fcd5
+  normalized_sha256: sha256:86744e613995d171c36297221cea6b54788ac9e9063faffc8ec90d60f517fcd5
+cas_ref: sha256:86744e613995d171c36297221cea6b54788ac9e9063faffc8ec90d60f517fcd5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

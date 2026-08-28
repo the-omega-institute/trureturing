@@ -1,0 +1,25 @@
+## 620.1 Fibonacci completion kernel
+
+证明：
+
+```text
+GoldenBetaBeattyForm
+GoldenInternalCoordinate
+GoldenRotationReturn
+GoldenFibonacciPowerSkeleton
+GoldenBestReturnFrontier
+GoldenUnitModeIffFibonacci
+```
+
+核心目标：
+
+$$
+\boxed{
+T^{F_n}-I
+=
+(-1)^{n-1}\varphi^{-n}.
+}
+$$
+
+---
+

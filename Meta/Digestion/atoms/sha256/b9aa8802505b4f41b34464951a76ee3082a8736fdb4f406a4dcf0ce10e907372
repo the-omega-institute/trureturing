@@ -1,0 +1,52 @@
+# 第四百九十八部　自然 Li 预算完成流
+
+取自然尺度：
+
+$$
+\boxed{
+a=\frac12.
+}
+$$
+
+第一 Li 系数为：
+
+$$
+\lambda_1
+=
+1+\frac{\gamma_E}{2}
+-\log(2\sqrt\pi).
+$$
+
+真实 Riemann 零点谱在 RH 下满足：
+
+$$
+\boxed{
+\mathcal R_{1/2}(\nu_\Xi)
+=
+2\lambda_1.
+}
+\tag{498.1}
+$$
+
+定义自然预算：
+
+$$
+\boxed{
+C_\Xi=2\lambda_1.
+}
+\tag{498.2}
+$$
+
+定义 canonical budgeted white-floor profile：
+
+$$
+\boxed{
+\Lambda_L^\Xi
+=
+\Lambda_{L,1/2}(2\lambda_1).
+}
+\tag{498.3}
+$$
+
+---
+

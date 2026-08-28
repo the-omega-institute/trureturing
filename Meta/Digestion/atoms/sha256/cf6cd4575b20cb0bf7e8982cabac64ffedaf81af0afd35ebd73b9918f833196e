@@ -1,0 +1,58 @@
+## 627.2 热核图表
+
+定义：
+
+$$
+\boxed{
+\Theta_{\mathcal C}(t)
+=
+\sum_nw_ne^{-tc_n}.
+}
+\tag{627.4}
+$$
+
+在绝对收敛区域，由：
+
+$$
+\int_0^\infty
+t^{s-1}e^{-tc}\,dt
+=
+\Gamma(s)c^{-s}
+$$
+
+得到：
+
+$$
+\boxed{
+Z_{\mathcal C}(s)
+=
+\frac1{\Gamma(s)}
+\int_0^\infty
+t^{s-1}
+\Theta_{\mathcal C}(t)\,dt.
+}
+\tag{627.5}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{无限完成层级}
+\longrightarrow
+\text{热迹}
+\longrightarrow
+\text{谱 ζ}.
+}
+$$
+
+此时 \(\zeta\) 不再是“层级中的最后一个常数”，而是：
+
+$$
+\boxed{
+\text{观察整个无限层级的生成函数}.
+}
+$$
+
+---
+

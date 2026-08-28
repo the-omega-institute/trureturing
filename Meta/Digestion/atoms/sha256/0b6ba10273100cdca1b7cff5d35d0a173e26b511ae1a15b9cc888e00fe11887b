@@ -1,0 +1,44 @@
+# 第五百七十九部　\(\zeta\) 的完成态与未完成态
+
+定义 completed Riemann function：
+
+$$
+\boxed{
+\xi(s)
+=
+\frac12
+s(s-1)
+\pi^{-s/2}
+\Gamma(s/2)
+\zeta(s).
+}
+\tag{579.1}
+$$
+
+它满足：
+
+$$
+\boxed{
+\xi(s)=\xi(1-s).
+}
+\tag{579.2}
+$$
+
+令：
+
+$$
+(JF)(s)=F(1-s).
+$$
+
+则：
+
+$$
+\boxed{
+J\xi=\xi.
+}
+$$
+
+这的确使 \(\xi\) 成为一个反射完成态。
+
+---
+

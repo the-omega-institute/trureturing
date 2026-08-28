@@ -1,0 +1,53 @@
+## 524.1 Budget interval 到 moment tube
+
+若奇偶观察者给出 Weyl budget interval：
+
+$$
+\boxed{
+R\in
+[\underline R_L(a),\overline R_L(a)],
+}
+\tag{524.7}
+$$
+
+则所有正谱完成的第 \(n\) 个 moment 必属于：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal M_{n,L}^{(a)}
+=
+\bigcup_{R\in[\underline R_L,\overline R_L]}
+\Big[
+&
+\widehat m_{n,L}^{(a)}(R)-R\tau_{n,a}(L),\\
+&
+\widehat m_{n,L}^{(a)}(R)+R\tau_{n,a}(L)
+\Big].
+\end{aligned}
+}
+\tag{524.8}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{一个预算标量区间}
+}
+$$
+
+经 Laguerre observer 后，产生有限维 moment uncertainty region。
+
+在 RH 下，前文的双曲预算管道给出：
+
+$$
+\overline R_L-\underline R_L
+=
+O(e^{-2aL}),
+$$
+
+因此对固定 \(n\)，budget uncertainty 与 Laguerre tail uncertainty 都指数消失。
+
+---
+

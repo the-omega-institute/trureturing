@@ -1,0 +1,10 @@
+ast_path: section/573-1-圆上的两个完成固定点
+fingerprints:
+  raw_sha256: sha256:3267d56c3406db0e64ce7f6422bafcee6489a72757a32bacfc8bc9ef43b34ea0
+  normalized_sha256: sha256:3267d56c3406db0e64ce7f6422bafcee6489a72757a32bacfc8bc9ef43b34ea0
+cas_ref: sha256:3267d56c3406db0e64ce7f6422bafcee6489a72757a32bacfc8bc9ef43b34ea0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

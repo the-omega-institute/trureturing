@@ -1,0 +1,10 @@
+ast_path: section/第五百二十三部-有限窗口的指数尾误差
+fingerprints:
+  raw_sha256: sha256:9e3f2203b6b21871e1fb4d4daab1fa4e0469ed43eb6748b85b91bc63ae3927d0
+  normalized_sha256: sha256:9e3f2203b6b21871e1fb4d4daab1fa4e0469ed43eb6748b85b91bc63ae3927d0
+cas_ref: sha256:9e3f2203b6b21871e1fb4d4daab1fa4e0469ed43eb6748b85b91bc63ae3927d0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

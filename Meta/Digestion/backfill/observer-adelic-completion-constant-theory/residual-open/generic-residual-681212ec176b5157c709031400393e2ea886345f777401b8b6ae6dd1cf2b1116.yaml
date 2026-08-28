@@ -1,0 +1,10 @@
+ast_path: section/476-1-观察者解释
+fingerprints:
+  raw_sha256: sha256:681212ec176b5157c709031400393e2ea886345f777401b8b6ae6dd1cf2b1116
+  normalized_sha256: sha256:681212ec176b5157c709031400393e2ea886345f777401b8b6ae6dd1cf2b1116
+cas_ref: sha256:681212ec176b5157c709031400393e2ea886345f777401b8b6ae6dd1cf2b1116
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,51 @@
+## 定理 555.2（有限共同谱判据）
+
+给定 Hermitian matrix \(G\)，定义：
+
+$$
+\boxed{
+T_G
+=
+A^{-1}G\,A^{-*}.
+}
+\tag{555.9}
+$$
+
+则下列条件等价：
+
+$$
+\boxed{
+\begin{aligned}
+&(1)\quad
+\exists\,\mu\ge0:
+G=\int\Psi\Psi^*\,d\mu;\\
+&(2)\quad
+T_G
+\text{ 是正半定 Hermitian Toeplitz matrix}.
+\end{aligned}
+}
+\tag{555.10}
+$$
+
+### 证明
+
+\((1)\Rightarrow(2)\) 由定理 555.1。
+
+反之，若 \(T_G\succeq0\) 且 Toeplitz，则截断三角 moment theorem 给出正测度 \(\sigma\)，使：
+
+$$
+T_G=T_d(\sigma).
+$$
+
+定义：
+
+$$
+d\mu=|D|^2d\sigma.
+$$
+
+则定理 555.1 恢复 \(G\)。∎
+
+截断 Toeplitz moment problem 与 rational covariance extension 都可视为正定 Toeplitz 完成问题；这里使用的是其有限维、无需指定 rational density 的基础版本。([arXiv][2])
+
+---
+

@@ -1,0 +1,82 @@
+# 第六百七十四部　黄金比例是正交维度的最小自相似线性化
+
+现在考虑两个无序正交通道：
+
+$$
+A,\quad B.
+$$
+
+观察者必须把它们线性扫描成一个时间词。
+
+采用最简单的 primitive substitution：
+
+$$
+\boxed{
+A\mapsto AB,
+\qquad
+B\mapsto A.
+}
+\tag{674.1}
+$$
+
+其 incidence matrix 为：
+
+$$
+\boxed{
+F=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+}
+\tag{674.2}
+$$
+
+Perron 根为：
+
+$$
+\varphi,
+$$
+
+稳定共轭根为：
+
+$$
+-\varphi^{-1}.
+$$
+
+其固定词为 Fibonacci word：
+
+$$
+A,\ AB,\ ABA,\ ABAAB,\ldots
+$$
+
+长期频率满足：
+
+$$
+\boxed{
+\operatorname{freq}(A)=\frac1\varphi,
+\qquad
+\operatorname{freq}(B)=\frac1{\varphi^2}.
+}
+\tag{674.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\varphi
+}
+$$
+
+可以被理解为：
+
+$$
+\boxed{
+\text{把两个无先后正交维度变成一条
+最简单递归自相似观察线的尺度常数}.
+}
+$$
+
+---
+

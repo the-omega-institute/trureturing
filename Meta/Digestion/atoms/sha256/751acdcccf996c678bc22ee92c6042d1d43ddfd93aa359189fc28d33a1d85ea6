@@ -1,0 +1,47 @@
+## 556.1 Riemann 偶对称分支
+
+若 \(\mu\) 在复共轭下不变：
+
+$$
+\mu(E)=\mu(\overline E),
+$$
+
+并且所有 \(r_\ell\) 为实数，则：
+
+$$
+G
+$$
+
+为实对称矩阵，而：
+
+$$
+T_G
+$$
+
+为实对称 Toeplitz matrix。
+
+实对称 \(n\times n\) matrix 的维数为：
+
+$$
+\frac{n(n+1)}2,
+$$
+
+实对称 Toeplitz matrix 的维数为：
+
+$$
+n.
+$$
+
+所以余维为：
+
+$$
+\boxed{
+\frac{n(n-1)}2.
+}
+\tag{556.2}
+$$
+
+这说明 Riemann 偶谱对称虽然减少了 moment 变量，却仍保留大量跨尺度一致性方程。
+
+---
+

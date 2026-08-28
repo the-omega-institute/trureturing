@@ -1,0 +1,65 @@
+## 定义 635.1（Omnicomplete indifferent state）
+
+$$
+\boxed{
+\mathfrak U_\infty
+=
+(X_\infty,\mathcal A_\infty,G_\infty,\Omega_\infty)
+}
+$$
+
+称为全含—无分别完成，如果：
+
+$$
+\boxed{
+\operatorname{supp}\Omega_\infty=X_\infty,
+}
+\tag{635.1}
+$$
+
+$$
+\boxed{
+g_*\Omega_\infty=\Omega_\infty
+\quad
+\forall g\in G_\infty,
+}
+\tag{635.2}
+$$
+
+$$
+\boxed{
+(p_n)_*\Omega_\infty=\Omega_n
+\quad
+\forall n,
+}
+\tag{635.3}
+$$
+
+并且全部完成缺陷满足：
+
+$$
+\boxed{
+D_n(\Omega_\infty)=0.
+}
+\tag{635.4}
+$$
+
+这四条分别表示：
+
+$$
+\boxed{
+\begin{aligned}
+\text{全含}
+&:\quad\text{全支撑};\\
+\text{无分别}
+&:\quad\text{对称不变};\\
+\text{跨维一致}
+&:\quad\text{投影兼容};\\
+\text{真正完成}
+&:\quad\text{全部残差为零}.
+\end{aligned}
+}
+$$
+
+---
+

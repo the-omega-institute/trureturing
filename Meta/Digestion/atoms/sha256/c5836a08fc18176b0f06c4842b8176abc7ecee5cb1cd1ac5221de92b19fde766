@@ -1,0 +1,102 @@
+# 第五百二十二部　正谱完成的 Laguerre moment 公式
+
+令 \(\nu\) 是实轴上的偶正谱测度，并假设：
+
+$$
+\boxed{
+R_a(\nu)
+=
+\int_{\mathbb R}
+\frac{d\nu(\xi)}{\xi^2+a^2}
+<\infty.
+}
+\tag{522.1}
+$$
+
+定义有限正测度：
+
+$$
+\boxed{
+d\rho_a(\xi)
+=
+\frac{d\nu(\xi)}{\xi^2+a^2}.
+}
+\tag{522.2}
+$$
+
+其总质量为：
+
+$$
+\boxed{
+R=R_a(\nu).
+}
+\tag{522.3}
+$$
+
+定义 resolvent correlation：
+
+$$
+\boxed{
+H_a(t)
+=
+\int_{\mathbb R}
+e^{it\xi}\,d\rho_a(\xi).
+}
+\tag{522.4}
+$$
+
+由于 \(\rho_a\) 为偶正测度：
+
+$$
+H_a(t)\in\mathbb R,
+\qquad
+H_a(-t)=H_a(t),
+$$
+
+并且由正定函数的基本界：
+
+$$
+\boxed{
+|H_a(t)|\le H_a(0)=R.
+}
+\tag{522.5}
+$$
+
+将 \(\rho_a\) 经 Cayley 映射推到圆周：
+
+$$
+\boxed{
+\mu_a
+=
+(\chi_a)_*\rho_a.
+}
+\tag{522.6}
+$$
+
+定义其 Fourier moments：
+
+$$
+\boxed{
+m_n^{(a)}
+=
+\int_{\mathbb T}
+z^n\,d\mu_a(z)
+=
+\int_{\mathbb R}
+\chi_a(\xi)^n\,d\rho_a(\xi).
+}
+\tag{522.7}
+$$
+
+其中：
+
+$$
+m_0^{(a)}=R,
+\qquad
+m_{-n}^{(a)}=\overline{m_n^{(a)}}.
+$$
+
+偶对称下 \(m_n^{(a)}\) 全为实数。
+
+---
+

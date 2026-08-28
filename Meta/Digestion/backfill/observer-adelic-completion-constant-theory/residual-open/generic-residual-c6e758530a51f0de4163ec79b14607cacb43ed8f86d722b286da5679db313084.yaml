@@ -1,0 +1,10 @@
+ast_path: section/519-1-Compact-primal-solver
+fingerprints:
+  raw_sha256: sha256:c6e758530a51f0de4163ec79b14607cacb43ed8f86d722b286da5679db313084
+  normalized_sha256: sha256:c6e758530a51f0de4163ec79b14607cacb43ed8f86d722b286da5679db313084
+cas_ref: sha256:c6e758530a51f0de4163ec79b14607cacb43ed8f86d722b286da5679db313084
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

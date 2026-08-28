@@ -1,0 +1,26 @@
+## 588.1 黄金单位平衡场
+
+形式化：
+
+$$
+\partial_\eta Z_{\mathrm{unit}}.
+$$
+
+验证：
+
+$$
+\mathfrak B_\varphi(s,0)=0,
+$$
+
+$$
+\mathfrak B_\varphi(s,\log\varphi)=0.
+$$
+
+数值绘制完整 regulator circle 上的：
+
+$$
+\mathfrak B_\varphi(s,\eta).
+$$
+
+---
+

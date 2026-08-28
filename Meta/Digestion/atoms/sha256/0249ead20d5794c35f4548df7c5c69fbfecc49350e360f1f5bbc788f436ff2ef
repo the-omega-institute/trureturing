@@ -1,0 +1,42 @@
+## 421.1 安全补空间
+
+令：
+
+$$
+P=P^{\mathrm{ren}}_{L,a,\eta},
+\qquad
+Q=I-P.
+$$
+
+则对：
+
+$$
+f\in Q\mathcal H_L,
+$$
+
+有：
+
+$$
+\boxed{
+\langle f,\widetilde A_Lf\rangle
+\ge
+\widetilde\delta_{L,a,\eta}
+\|f\|^2,
+}
+\tag{421.5}
+$$
+
+其中：
+
+$$
+\boxed{
+\widetilde\delta_{L,a,\eta}
+=
+a-(a+\widetilde b_{L,a})\eta
+>0.
+}
+\tag{421.6}
+$$
+
+---
+

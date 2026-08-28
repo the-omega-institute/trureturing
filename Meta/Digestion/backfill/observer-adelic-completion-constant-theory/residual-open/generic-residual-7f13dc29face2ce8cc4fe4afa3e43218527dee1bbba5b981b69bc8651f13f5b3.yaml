@@ -1,0 +1,15 @@
+ast_path: section/516-2-Saturated-phase
+fingerprints:
+  raw_sha256: sha256:7f13dc29face2ce8cc4fe4afa3e43218527dee1bbba5b981b69bc8651f13f5b3
+  normalized_sha256: sha256:7f13dc29face2ce8cc4fe4afa3e43218527dee1bbba5b981b69bc8651f13f5b3
+cas_ref: sha256:7f13dc29face2ce8cc4fe4afa3e43218527dee1bbba5b981b69bc8651f13f5b3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-b5a6a4023d8b6384c1779f0f2e289a406ffe09b2049d51ce5530ae5474c012bd-146c564f9fdd2a4756a15d26ac964bf7ec2da4cae3e3e2fe0f98421604096cf3
+    - generic-residual-ee6b70f62d08c4dd2ba4d35dd12565d570b0cec2ed85abfb68f58f14085d5b44-2554c5149ffe96220bfa63b08cafc6e6604f760b034209202c7628c8f76beb95
+    - generic-residual-e861e460a48e7baf7db3867df7903818ef686bb055f7419aecae7aeab416561f-4bd1a372696ce33810fb1df7c5480a140d72b1a655bfc923146e0121ffe66edd
+    - generic-residual-29c1315b563fe949355782b5fb98ab102841d4ba0cd8a775e3ed2dc12df37482-bd68c4311f3a14aba08d3412ebe97bc920b827f040733f2cb261437b989fbf02

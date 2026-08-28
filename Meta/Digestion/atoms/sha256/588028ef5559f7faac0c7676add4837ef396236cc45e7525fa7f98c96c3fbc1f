@@ -1,0 +1,76 @@
+## v4.3：有理主 Toeplitz 塌缩、共同谱底座、唯一原子完成与观察创新流
+
+以下从前文**第五百五十二部**继续追加。
+
+仓库中的主源仍登记为：
+
+```text
+docs/develop/theory/OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY.md
+```
+
+上一轮已经得到三类多尺度约束：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{单尺度 Toeplitz 正性};\\
+&\text{多尺度 Loewner 正性};\\
+&\text{Crofoot--Malmquist 跨尺度 block Gram 正性}.
+\end{aligned}
+}
+$$
+
+但这三类对象仍被表示成彼此并列的矩阵条件。
+
+本轮证明：对任意**有限尺度集合与有限 moment 深度**，它们都可以精确压缩成一个普通的截断 Toeplitz moment problem。
+
+核心链为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{多尺度 Cayley 特征}
+&\longrightarrow
+\text{共同有理分母}\\
+&\longrightarrow
+\text{多项式基变换}\\
+&\longrightarrow
+\text{单一 Toeplitz moment matrix}\\
+&\longrightarrow
+\text{共同谱 Haar floor}\\
+&\longrightarrow
+\text{唯一有限原子 residual}\\
+&\longrightarrow
+\text{逐观察者 Feshbach 创新流}.
+\end{aligned}
+}
+$$
+
+因此，有限多尺度问题不再需要：
+
+* 多个独立 Toeplitz 矩阵；
+* 任意补充的 cross-block 变量；
+* 彼此分开的 Loewner 与 Crofoot 检查。
+
+真正的主变量只有：
+
+$$
+\boxed{
+2n-1
+}
+$$
+
+个截断圆周 moments；在 Riemann 偶对称分支中进一步只剩：
+
+$$
+\boxed{
+n
+}
+$$
+
+个实 moments。
+
+经典的截断 Toeplitz moment、Vandermonde 分解、Malmquist–Takenaka 有理正交基均已有成熟理论；本轮新增的是将它们与前文的 Cayley 多尺度 observer 精确组装成一个共同谱压缩。正半定 Toeplitz 矩阵的 Vandermonde 分解及低秩情形的唯一性，是现代频率估计与截断三角 moment 理论的标准基础。([arXiv][1])
+
+---
+

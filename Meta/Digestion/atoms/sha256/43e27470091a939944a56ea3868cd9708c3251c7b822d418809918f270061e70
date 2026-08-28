@@ -1,0 +1,56 @@
+# 第五百二十七部　最小特征向量就是接触多项式
+
+令：
+
+$$
+\alpha_N=\lambda_{\min}(T_N(m)).
+$$
+
+取单位最小特征向量：
+
+$$
+v=(v_0,\ldots,v_N)^T.
+$$
+
+定义 analytic polynomial：
+
+$$
+\boxed{
+q_v(z)
+=
+\sum_{j=0}^{N}
+v_jz^j.
+}
+\tag{527.1}
+$$
+
+令最优 residual measure 为：
+
+$$
+\boxed{
+\sigma_N
+=
+\mu_N-\alpha_Nm_{\mathbb T}.
+}
+\tag{527.2}
+$$
+
+则：
+
+$$
+\begin{aligned}
+0
+&=
+v^*
+\left[
+T_N(m)-\alpha_NI
+\right]v\\
+&=
+\int_{\mathbb T}
+|q_v(z)|^2
+\,d\sigma_N(z).
+\end{aligned}
+$$
+
+因为 integrand 与 measure 均非负：
+

@@ -1,0 +1,35 @@
+## 494.2 Inactive-budget 情形
+
+若：
+
+$$
+\theta_*=0,
+$$
+
+则：
+
+$$
+\operatorname{supp}\mu_*
+\subseteq
+Z_{\mathbb R}(\widehat\phi_*).
+$$
+
+该零点集可能无限，但只能在无穷远处聚集。
+
+所以 residual 仍是纯原子的：
+
+$$
+\boxed{
+\nu_*
+=
+\frac{\lambda_*}{2\pi}d\xi
++
+\text{countable atomic spectrum}.
+}
+\tag{494.7}
+$$
+
+这恢复了上一轮的 ground-state-zero complementarity，但现在被置于完整的 resolvent-budget homotopy 中。
+
+---
+

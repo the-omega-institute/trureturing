@@ -1,0 +1,29 @@
+## 推论 510.1（Projective strong duality）
+
+$$
+\boxed{
+\Lambda_{L,a}(C)
+=
+\inf_N
+\min_{\phi\in V_N,\theta\ge0}
+\left[
+\langle\mathfrak W_L,\phi\rangle+\theta C
+\right]
+}
+\tag{510.3}
+$$
+
+满足式 (508.2)、(508.3)。
+
+这给出：
+
+$$
+\boxed{
+\text{无 full dual optimizer 假设的零间隙强对偶塔}.
+}
+$$
+
+完整无限维 dual 是否由单个 \((\phi,\theta)\) 取到，仍取决于变换后 moment graph 的闭性与相对内点条件。即使支撑空间紧，广义 moment problem 的 dual attainment 仍需要额外的严格可行性或闭性假设。([arXiv][3])
+
+---
+

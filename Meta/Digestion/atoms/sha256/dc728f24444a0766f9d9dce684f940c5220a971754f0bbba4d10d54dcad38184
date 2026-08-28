@@ -1,0 +1,29 @@
+## 588.5 自动深度审计
+
+每个新 Markdown／Lean theorem 自动登记：
+
+```text
+kind:
+  chart | diagnostic | escape | closure | formalization
+
+old_escape:
+new_escape:
+witness:
+analytic_frontier_before:
+analytic_frontier_after:
+observer_bias_before:
+observer_bias_after:
+target_leakage:
+proof_status:
+```
+
+没有：
+
+$$
+\texttt{witness}
+$$
+
+或 frontier 改善的层，不得自动计为新的证明深度。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/422-1-连续段
+fingerprints:
+  raw_sha256: sha256:a39569a0abaa0e67c98ae5764258929b191a2b90f91d0da407339afd41c4d784
+  normalized_sha256: sha256:a39569a0abaa0e67c98ae5764258929b191a2b90f91d0da407339afd41c4d784
+cas_ref: sha256:a39569a0abaa0e67c98ae5764258929b191a2b90f91d0da407339afd41c4d784
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

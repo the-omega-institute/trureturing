@@ -1,0 +1,80 @@
+# 第五百一十二部　Haar–Clark 完成流
+
+取自然预算：
+
+$$
+\boxed{
+C_\Xi=2\lambda_1.
+}
+\tag{512.1}
+$$
+
+令 \(\mu_L^*\) 是尺度 \(L\) 上的一个自然预算 optimizer。
+
+当预算约束 active 时：
+
+$$
+\mu_L^*(\mathbb T)=2\lambda_1.
+$$
+
+定义概率测度：
+
+$$
+\boxed{
+p_L
+=
+\frac{\mu_L^*}{2\lambda_1}.
+}
+\tag{512.2}
+$$
+
+定义归一化 Haar floor fraction：
+
+$$
+\boxed{
+\omega_L
+=
+\frac{
+\Lambda_L^\Xi
+}{
+2\lambda_1
+}.
+}
+\tag{512.3}
+$$
+
+则：
+
+$$
+\boxed{
+p_L
+=
+\omega_Lm_{\mathbb T}
++
+p_L^{\mathrm{res}},
+}
+\tag{512.4}
+$$
+
+其中：
+
+$$
+p_L^{\mathrm{res}}\ge0,
+\qquad
+p_L^{\mathrm{res}}(\mathbb T)=1-\omega_L.
+$$
+
+在 active finite-contact 情形：
+
+$$
+\boxed{
+p_L^{\mathrm{res}}
+=
+\sum_{r=1}^{M_L}
+q_{r,L}\delta_{z_{r,L}}.
+}
+\tag{512.5}
+$$
+
+---
+

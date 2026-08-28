@@ -1,0 +1,15 @@
+ast_path: section/486-1-Primal-正谱完成路线
+fingerprints:
+  raw_sha256: sha256:1fd1cf749c662cd966f46230f5d9268a4c8514196d5fd74a5da37b3cbd4ff0fc
+  normalized_sha256: sha256:1fd1cf749c662cd966f46230f5d9268a4c8514196d5fd74a5da37b3cbd4ff0fc
+cas_ref: sha256:1fd1cf749c662cd966f46230f5d9268a4c8514196d5fd74a5da37b3cbd4ff0fc
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-163b334959d3c1383565a8c83cea4ab567710ce9f4c7644c7f33f6851b5a2f2f-a4228c0f8be1a270254c6da738b9538f60cc376f0af54ff4b5c83ad0531ff956
+    - generic-residual-4df0f35c060b0bb39c9bf9cc13032ae52ba716014010bb3b12504367a96cf694-c8c269dde152b963a19fde9f84952dde4727b97dfd6750e656b82c9c717b92b4
+    - generic-residual-90372af68e9691ecceff40ee5a089ad4f0726cccb6c14d7c8df4db837d7c75be-8da7ecbc60f6c976609bdb3f47412dd0a4df370eb22316b9d4a08edc85453095
+    - generic-residual-6ae8ec4b2fc01c390432ba8d25c5f2fb7156d1947f99ecc2eaaf6f96fe5074ef-779b23e7f0c027a8ac347eead25deeff0ea3426869d522b5388f719c2ec2df67

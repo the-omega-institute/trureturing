@@ -1,0 +1,54 @@
+## 514.1 有限预测误差
+
+定义 \(N\) 阶创新误差：
+
+$$
+\boxed{
+\varepsilon_{N,L}
+=
+\prod_{n=0}^{N-1}
+\left(
+1-|\beta_{n,L}|^2
+\right).
+}
+\tag{514.4}
+$$
+
+则：
+
+$$
+\boxed{
+\varepsilon_{N,L}
+\downarrow
+\omega_L.
+}
+\tag{514.5}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{最大 Haar floor fraction}
+=
+\text{无限深度线性预测的不可消除创新误差}.
+}
+$$
+
+这把两种此前分离的语言完全统一：
+
+$$
+\boxed{
+\begin{aligned}
+\text{spectral completion}
+&:\quad
+\omega_L=\text{最大白谱底座};\\
+\text{Schur/CMV}
+&:\quad
+\omega_L=\text{最终创新误差}.
+\end{aligned}
+}
+$$
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/522-1-结构意义
+fingerprints:
+  raw_sha256: sha256:2508c1ee267d88657167fb6970d9eef9759c18b9d298cd4813d3d7e642f1a417
+  normalized_sha256: sha256:2508c1ee267d88657167fb6970d9eef9759c18b9d298cd4813d3d7e642f1a417
+cas_ref: sha256:2508c1ee267d88657167fb6970d9eef9759c18b9d298cd4813d3d7e642f1a417
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

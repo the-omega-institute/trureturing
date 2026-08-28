@@ -1,0 +1,10 @@
+ast_path: section/665-1-所有观察者可以完全同构-但不等同
+fingerprints:
+  raw_sha256: sha256:8831b5c24f8103abd6b3a955a585c70c14b29cd84d8cd1e77dcf15cc6fa56131
+  normalized_sha256: sha256:8831b5c24f8103abd6b3a955a585c70c14b29cd84d8cd1e77dcf15cc6fa56131
+cas_ref: sha256:8831b5c24f8103abd6b3a955a585c70c14b29cd84d8cd1e77dcf15cc6fa56131
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

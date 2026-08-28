@@ -1,0 +1,10 @@
+ast_path: section/571-2-结构黄金观察者/clause/1
+fingerprints:
+  raw_sha256: sha256:33d1164fc7631206427c3e2e31c712d725cf78c93e2c0b881ec6f51b05c25553
+  normalized_sha256: sha256:33d1164fc7631206427c3e2e31c712d725cf78c93e2c0b881ec6f51b05c25553
+cas_ref: sha256:33d1164fc7631206427c3e2e31c712d725cf78c93e2c0b881ec6f51b05c25553
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

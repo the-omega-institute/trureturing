@@ -1,0 +1,56 @@
+# 第四百八十八部　建议形式化顺序
+
+```text
+D5/S3/Weil/WindowProfile/
+  FullHermitianWeilForm.lean
+  EvenOddFormSplit.lean
+  EvenWindowProfile.lean
+  OddWindowProfile.lean
+  FullWindowProfile.lean
+  WindowProfileMonotone.lean
+
+D5/S3/Weil/WhiteNoiseMargin/
+  DeltaZeroNormForm.lean
+  LocalPositiveCone.lean
+  WhiteNoiseConeMargin.lean
+  WhiteSpectralFloor.lean
+  SpectralFloorPrimal.lean
+
+D5/S3/Weil/ZeroSamplingFrame/
+  RHZeroSamplingOperator.lean
+  EvenCosineFrame.lean
+  OddSineFrame.lean
+  WindowProfileEqualsFrameBound.lean
+  FiniteWindowStrictFrameBound.lean
+
+D5/S3/Weil/ExtremalCompletion/
+  SpectralFloorOptimizer.lean
+  GroundStateOptimizer.lean
+  CompletionComplementarySlackness.lean
+  WhitePlusAtomicCompletion.lean
+  ApproximateSpectralConcentration.lean
+
+D5/S3/Weil/ObserverSaturation/
+  PaleyWienerZeroCapacity.lean
+  RiemannLocalZeroDensity.lean
+  ObserverSaturationHeight.lean
+  WhiteFloorCollapse.lean
+  GlobalBoundaryNoWhiteFloor.lean
+
+D5/S3/Weil/GroundStateZeros/
+  ExtremalCompletionTightness.lean
+  AtomicSupportVagueLimit.lean
+  GroundStateZeroLocalization.lean
+  ZeroConvergenceTarget.lean
+
+D5/S3/Weil/CompactWindowCertificate/
+  RecentWindowCertificateInterface.lean
+  SupportPointEightLowerBound.lean
+  EvenGroundStateInterface.lean
+  PointwiseEnvelopeBarrier.lean
+```
+
+仓库现有的 `WeilTestFunction`、`PrimePoleTerms`、`WeilIdentity` 和 `ConvolutionSquarePositivity` 可以直接作为前四层基础；最新 \(L=0.8\) 区间算术证书若要进入真源，应作为独立外部证书接口，而不能仅根据预印本文字登记为 Lean 定理。
+
+---
+

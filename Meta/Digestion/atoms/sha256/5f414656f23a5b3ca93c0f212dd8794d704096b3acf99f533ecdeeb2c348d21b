@@ -1,0 +1,65 @@
+## 定理 462.1（Cosh–correlation signature）
+
+对任意 \(f,h\in C_c^\infty((-L,L))\)：
+
+$$
+\boxed{
+\begin{aligned}
+\left\langle
+\cosh(a\,\cdot),
+f*\widetilde h
+\right\rangle
+={}&
+\mathcal C_a(f)
+\overline{\mathcal C_a(h)}
+\\
+&-
+\mathcal S_a(f)
+\overline{\mathcal S_a(h)}.
+\end{aligned}
+}
+\tag{462.3}
+$$
+
+### 证明
+
+令：
+
+$$
+L_{\pm a}(f)
+=
+\int e^{\pm ax}f(x)\,dx.
+$$
+
+卷积的双边 Laplace 变换给出：
+
+$$
+\left\langle
+e^{a\,\cdot},
+f*\widetilde h
+\right\rangle
+=
+L_a(f)\overline{L_{-a}(h)},
+$$
+
+$$
+\left\langle
+e^{-a\,\cdot},
+f*\widetilde h
+\right\rangle
+=
+L_{-a}(f)\overline{L_a(h)}.
+$$
+
+又：
+
+$$
+L_a=\mathcal C_a+\mathcal S_a,
+\qquad
+L_{-a}=\mathcal C_a-\mathcal S_a.
+$$
+
+将两式取平均，交叉项精确抵消，即得式 (462.3)。∎
+
+---
+

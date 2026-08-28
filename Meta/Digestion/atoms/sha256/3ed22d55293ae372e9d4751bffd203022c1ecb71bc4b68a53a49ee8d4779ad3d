@@ -1,0 +1,44 @@
+# 第五百七十五部　对象破缺与观察者破缺必须分离
+
+令：
+
+$$
+J_X:X\to X,
+\qquad
+J_Y:Y\to Y
+$$
+
+为对象空间和输出空间上的反射。
+
+令：
+
+$$
+\mathcal O:X\to Y
+$$
+
+为观察器。
+
+定义对象缺陷：
+
+$$
+\boxed{
+\Delta_X(x)
+=
+J_Xx-x.
+}
+\tag{575.1}
+$$
+
+定义观察器协变缺陷：
+
+$$
+\boxed{
+\Delta_{\mathcal O}
+=
+J_Y\mathcal O-\mathcal OJ_X.
+}
+\tag{575.2}
+$$
+
+则观测到的反射残差满足：
+

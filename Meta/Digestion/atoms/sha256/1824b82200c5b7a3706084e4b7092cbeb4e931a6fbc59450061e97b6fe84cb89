@@ -1,0 +1,79 @@
+## 658.1 完成会消去观察器的裸坐标
+
+若黄金观察器有共轭双通道：
+
+$$
+F_\varphi,
+\qquad
+F_{\varphi'},
+$$
+
+Galois 完成可能读取：
+
+$$
+\boxed{
+F_\varphi+F_{\varphi'},
+}
+$$
+
+或者：
+
+$$
+\boxed{
+F_\varphi F_{\varphi'}.
+}
+$$
+
+此时裸的 \(\varphi\) 与 \(\varphi'\) 被压缩为：
+
+$$
+\boxed{
+\varphi+\varphi'=1,
+}
+$$
+
+$$
+\boxed{
+\varphi\varphi'=-1,
+}
+$$
+
+$$
+\boxed{
+(\varphi-\varphi')^2=5.
+}
+$$
+
+所以 completed invariant 中更可能保留：
+
+$$
+\boxed{
+1,\quad -1,\quad5,\quad\log\varphi,
+}
+$$
+
+而不是裸 \(\varphi\)。
+
+这解释了：
+
+$$
+\boxed{
+\text{直接观察 }\xi
+\text{ 看不到黄金比例，}
+}
+$$
+
+并不自动否定黄金观察器。
+
+它可能说明：
+
+$$
+\boxed{
+\varphi
+\text{ 位于 observer chart，
+完成后只留下 Galois 不变量}.
+}
+$$
+
+---
+

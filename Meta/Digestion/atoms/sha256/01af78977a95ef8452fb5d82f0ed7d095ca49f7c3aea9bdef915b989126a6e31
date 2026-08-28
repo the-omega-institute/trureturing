@@ -1,0 +1,25 @@
+## 661.3 追踪横向缺陷
+
+对每一层记录：
+
+$$
+\boxed{
+\delta_{n,k}
+=
+\Re\rho_{n,k}-\frac12.
+}
+$$
+
+检验：
+
+$$
+\boxed{
+-\frac{\delta_{n+1,k}}
+{\delta_{n,k}}
+\stackrel{?}{\longrightarrow}
+\varphi^{-1}.
+}
+$$
+
+---
+

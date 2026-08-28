@@ -1,0 +1,40 @@
+# 第四百三十三部　Kreĭn–Weil 局部正谱完成
+
+定义局部 Weil distribution：
+
+$$
+\boxed{
+\mathfrak W_L
+=
+\left.
+\mathfrak W
+\right|_{(-2L,2L)}.
+}
+\tag{433.1}
+$$
+
+称其在尺度 \(L\) 上正定，若：
+
+$$
+\boxed{
+\left\langle
+\mathfrak W_L,
+f*\widetilde f
+\right\rangle
+\ge0
+\qquad
+\forall f\in C_c^\infty((-L,L)).
+}
+\tag{433.2}
+$$
+
+这正是：
+
+$$
+\mathsf{WP}(L).
+$$
+
+在一维区间上，Kreĭn 的经典结果保证连续局部正定函数可以扩张为整条实线上的正定函数；现代 RKHS 表述还将不同扩张与不同自伴扩张／unitary translation representations 对应起来。正定分布版本及其最大熵扩张由 Gabardo 系统研究。([arXiv][1])
+
+---
+

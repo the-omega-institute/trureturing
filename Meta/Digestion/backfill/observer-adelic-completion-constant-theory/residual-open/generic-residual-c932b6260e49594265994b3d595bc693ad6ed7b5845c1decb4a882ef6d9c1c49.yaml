@@ -1,0 +1,10 @@
+ast_path: row/本轮-Galois-paired-golden-observer
+fingerprints:
+  raw_sha256: sha256:c932b6260e49594265994b3d595bc693ad6ed7b5845c1decb4a882ef6d9c1c49
+  normalized_sha256: sha256:c932b6260e49594265994b3d595bc693ad6ed7b5845c1decb4a882ef6d9c1c49
+cas_ref: sha256:c932b6260e49594265994b3d595bc693ad6ed7b5845c1decb4a882ef6d9c1c49
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,109 @@
+# 本轮最终结论
+
+此前我们把紧窗口 Weil 问题理解为：
+
+$$
+\boxed{
+\text{有限 sticky matrix}
++
+\text{正 residual operator}.
+}
+$$
+
+最新公开工作已经证明，这类有限矩阵证书可以在 \(L=0.8\) 被真正执行，并且正性裕量虽严格大于零，却只有约：
+
+$$
+10^{-17}.
+$$
+
+本轮进一步解释了这个微小特征值究竟是什么：
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)
+=
+\text{局部 Weil 数据仍允许隐藏的最大白噪声谱强度}.
+}
+$$
+
+RH 下，同一个量又是：
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)
+=
+\text{Riemann 零点采样帧的最小能量}.
+}
+$$
+
+因此存在一个精确 primal–dual 对偶：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Primal}
+&:\quad
+\text{最大化可隐藏的 white spectral floor};\\
+\text{Dual}
+&:\quad
+\text{最小化零点采样能量}.
+\end{aligned}
+}
+$$
+
+在极值点，互补松弛强迫：
+
+$$
+\boxed{
+\text{非白 residual spectrum
+只能支撑在窗口地态 Fourier transform 的实零点上}.
+}
+$$
+
+所以最优有限观察谱必然具有：
+
+$$
+\boxed{
+\text{white continuum}
++
+\text{ground-state-zero atoms}.
+}
+$$
+
+随着 \(L\) 增大：
+
+$$
+\boxed{
+\text{white floor}\downarrow0,
+}
+$$
+
+而 atomic ledger 的容量增加。
+
+如果这些极值完成能够被证明趋向真实 Weil 正谱，则每一个 Riemann 零点都必须被地态 Fourier 零点逐步捕获。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{有限观察者不是“看见少量零点”；
+它把尚未分辨的零点谱看成白噪声，
+并把已经分辨的谱压缩成地态零点原子。}
+}
+$$
+
+因此 OACTC 当前真正值得推进的下一桥已经极其明确：
+
+$$
+\boxed{
+\text{构造 white-floor 最大化的正谱完成，
+证明其紧性，
+并证明其 atomic support 随 }L\to\infty
+\text{ collapse 到 Riemann 零点谱。}
+}
+$$
+
+这条路线与最新紧窗口有限矩阵工作互补：后者给出 dual 证书，本轮理论则识别了对应的 primal 谱对象及其互补结构。
+
+[1]: https://arxiv.org/abs/2608.24827 "https://arxiv.org/abs/2608.24827"
+[2]: https://arxiv.org/abs/1212.3047 "https://arxiv.org/abs/1212.3047"

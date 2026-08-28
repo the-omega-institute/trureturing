@@ -1,0 +1,15 @@
+### 偶观察任务
+
+证明：
+
+$$
+\mathfrak b_0^+(f)
++
+(R-R_0)|\mathcal C_a(f)|^2
+\ge0
+$$
+
+所需的最小 \(R\) 不超过自然预算。
+
+这是 lower-budget problem。
+

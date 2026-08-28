@@ -1,0 +1,10 @@
+ast_path: section/第四百九十四部-接触零点互补定理
+fingerprints:
+  raw_sha256: sha256:126bf2d405f4d1cdad44ed22722f2ef21962a922bd49adc3cc205efc9083e8c0
+  normalized_sha256: sha256:126bf2d405f4d1cdad44ed22722f2ef21962a922bd49adc3cc205efc9083e8c0
+cas_ref: sha256:126bf2d405f4d1cdad44ed22722f2ef21962a922bd49adc3cc205efc9083e8c0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

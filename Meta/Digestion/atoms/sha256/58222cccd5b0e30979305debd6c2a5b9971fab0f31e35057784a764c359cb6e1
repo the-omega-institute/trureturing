@@ -1,0 +1,19 @@
+## 493.2 Strong duality 的位置
+
+完整无限维问题要得到：
+
+$$
+\boxed{
+\Lambda_{L,a}(C)
+=
+\inf_{\phi,\theta}
+\left[
+\langle\mathfrak W_L,\phi\rangle+\theta C
+\right]
+}
+\tag{493.5}
+$$
+
+仍需证明：
+
+* moment cone 闭性；

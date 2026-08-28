@@ -1,0 +1,67 @@
+## 定理 561.1（Observer innovation equation）
+
+若：
+
+$$
+\alpha_{n+1}<\alpha_n,
+$$
+
+则 \(\alpha_{n+1}\) 是区间：
+
+$$
+(-\infty,\alpha_n)
+$$
+
+内方程：
+
+$$
+\boxed{
+s_n(\alpha)=0
+}
+\tag{561.5}
+$$
+
+的唯一解。
+
+### 证明
+
+由 Schur complement：
+
+$$
+G_{n+1}-\alpha I\succeq0
+$$
+
+当且仅当：
+
+$$
+G_n-\alpha I\succ0
+$$
+
+且：
+
+$$
+s_n(\alpha)\ge0.
+$$
+
+同时：
+
+$$
+\boxed{
+s_n'(\alpha)
+=
+-1
+-
+g_n^*
+(G_n-\alpha I)^{-2}
+g_n
+<0.
+}
+\tag{561.6}
+$$
+
+所以 \(s_n\) 严格递减，至多有一个根。
+
+最小特征值正是正半定性第一次失效的边界。∎
+
+---
+

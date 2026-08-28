@@ -1,0 +1,24 @@
+## 620.2 Generalized Euler–Witt ledger
+
+建立局部有限指数半群上的形式环：
+
+```text
+GoldenExponentMonoid
+LocallyFiniteHahnSeries
+PrimitiveEulerLedger
+PrimitiveLedgerUnique
+PrimitiveResidualLeadingExponent
+```
+
+核心定理：
+
+$$
+\boxed{
+\mathcal L(X)
+=
+\prod_\alpha(1-X^\alpha)^{-c_\alpha}.
+}
+$$
+
+---
+

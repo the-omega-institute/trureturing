@@ -1,0 +1,22 @@
+## 437.1 Primal：正谱完成
+
+寻找：
+
+$$
+\boxed{
+\nu_L\ge0
+}
+$$
+
+使：
+
+$$
+\check\nu_L
+=
+\mathfrak W_L
+\quad
+\text{on }(-2L,2L).
+$$
+
+---
+
