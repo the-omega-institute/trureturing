@@ -271,7 +271,8 @@ freeze_exists() {
           elif . == "Revoke" then 2
           else 3
           end;
-      to_entries
+      $events
+      | to_entries
       | sort_by([
           (.value.event_type | replay_rank),
           .key
