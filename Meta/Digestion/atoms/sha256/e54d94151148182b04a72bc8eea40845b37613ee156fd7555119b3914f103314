@@ -1,0 +1,22 @@
+## 148.2 级数图表
+
+Euler 的 \(q\)-二项式展开给出：
+
+$$
+\boxed{
+(q_\varphi^s;q_\varphi)_\infty
+=
+\sum_{n=0}^{\infty}
+\frac{
+(-1)^n
+q_\varphi^{n(n-1)/2+sn}
+}{
+(q_\varphi;q_\varphi)_n
+}.
+}
+\tag{148.5}
+$$
+
+所以同一局部闭轨道可以被读取为：
+
+* 无限乘积；

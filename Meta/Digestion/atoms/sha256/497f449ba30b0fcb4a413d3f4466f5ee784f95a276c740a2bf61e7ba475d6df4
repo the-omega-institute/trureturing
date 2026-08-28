@@ -1,0 +1,101 @@
+## 定理 272.1（Li curvature criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+T_N(c)\succeq0
+\quad
+\forall N\ge0.
+}
+\tag{272.2}
+$$
+
+### 证明：RH \(\Rightarrow\)（第 272 部）
+
+由定理 271.1：
+
+$$
+c_n=\widehat\mu_\lambda(n)
+$$
+
+且 \(\mu_\lambda\) 为概率测度。
+
+因此对任意 \(a_0,\ldots,a_N\)：
+
+$$
+\begin{aligned}
+\sum_{j,k=0}^{N}
+a_j\overline{a_k}c_{j-k}
+&=
+\int_{\mathbb T}
+\left|
+\sum_{j=0}^{N}a_j\zeta^j
+\right|^2
+d\mu_\lambda(\zeta)\\
+&\ge0.
+\end{aligned}
+$$
+
+---
+
+### 证明：Toeplitz 正性 \(\Rightarrow\) RH
+
+若全部 \(T_N(c)\) 正半定，由圆周 Herglotz 定理，存在概率测度 \(\mu\)，使：
+
+$$
+c_n=\widehat\mu(n).
+$$
+
+定义：
+
+$$
+\widetilde\lambda_n
+=
+\lambda_1
+\int_{\mathbb T}
+\left|
+1+\zeta+\cdots+\zeta^{n-1}
+\right|^2
+d\mu(\zeta).
+\tag{272.3}
+$$
+
+则：
+
+$$
+\widetilde\lambda_0=0,
+\qquad
+\widetilde\lambda_1=\lambda_1.
+$$
+
+并且：
+
+$$
+\widetilde\lambda_{n+1}
+-2\widetilde\lambda_n
++\widetilde\lambda_{n-1}
+=
+2\lambda_1c_n
+=
+\kappa_n.
+$$
+
+二阶递推加上前两个初值唯一决定序列，所以：
+
+$$
+\widetilde\lambda_n=\lambda_n.
+$$
+
+因此：
+
+$$
+\lambda_n\ge0
+\qquad
+\forall n.
+$$
+
+由 Li 判据，RH 成立。∎
+
+---
+

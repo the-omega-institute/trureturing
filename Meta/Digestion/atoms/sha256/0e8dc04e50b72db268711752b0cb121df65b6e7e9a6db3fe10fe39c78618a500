@@ -1,0 +1,115 @@
+# 第一百九十三部　对称位移的环面 Hermite–Biehler 缺陷
+
+令：
+
+$$
+z\in\mathbb C^+,
+$$
+
+并定义：
+
+$$
+s_z
+=
+\frac12-iz.
+$$
+
+因为：
+
+$$
+\Im z>0,
+$$
+
+所以：
+
+$$
+\Re s_z>\frac12.
+$$
+
+对：
+
+$$
+\omega>0,
+$$
+
+定义：
+
+$$
+\boxed{
+E_\omega^+(z)
+=
+\xi(s_z+\omega),
+}
+$$
+
+$$
+\boxed{
+E_\omega^-(z)
+=
+\xi(s_z-\omega).
+}
+\tag{193.1}
+$$
+
+由 \(\xi\) 的函数方程和实结构：
+
+$$
+E_\omega^-
+=
+(E_\omega^+)^\#.
+$$
+
+在包含两个移位谱窗的有限环面帧中，定义：
+
+$$
+\mathbf P_\omega^\pm(z)
+=
+E_\omega^\pm(z)\,
+\mathbf T_\omega^\pm(z).
+$$
+
+于是：
+
+$$
+\boxed{
+\mathscr N_\omega^\pm(z)
+=
+\frac{
+\|\mathbf P_\omega^\pm(z)\|^2
+}{
+\|\mathbf T_\omega^\pm(z)\|^2
+}
+=
+|E_\omega^\pm(z)|^2.
+}
+\tag{193.2}
+$$
+
+定义环面 Hermite–Biehler 缺陷：
+
+$$
+\boxed{
+\mathscr H_\omega(z)
+=
+\mathscr N_\omega^+(z)
+-
+\mathscr N_\omega^-(z).
+}
+\tag{193.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathscr H_\omega(z)
+=
+|\xi(s_z+\omega)|^2
+-
+|\xi(s_z-\omega)|^2.
+}
+\tag{193.4}
+$$
+
+---
+

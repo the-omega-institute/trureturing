@@ -1,0 +1,12 @@
+## 185.3 Jet 重数检验
+
+在人为构造的多重零点模型中，验证：
+
+$$
+\text{period derivative tower depth}
+=
+\text{基础因子零点重数}.
+$$
+
+---
+

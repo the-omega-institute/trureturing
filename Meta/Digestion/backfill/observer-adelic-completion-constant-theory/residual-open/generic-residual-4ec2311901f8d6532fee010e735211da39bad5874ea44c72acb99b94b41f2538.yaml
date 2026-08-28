@@ -1,0 +1,15 @@
+ast_path: section/203-1-有限谱帧证书
+fingerprints:
+  raw_sha256: sha256:4ec2311901f8d6532fee010e735211da39bad5874ea44c72acb99b94b41f2538
+  normalized_sha256: sha256:4ec2311901f8d6532fee010e735211da39bad5874ea44c72acb99b94b41f2538
+cas_ref: sha256:4ec2311901f8d6532fee010e735211da39bad5874ea44c72acb99b94b41f2538
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-a00cace2a76a1dcc68f077d3afde04e61b088d476dcb6c25132df6d5ddbe17ac-17ee75d12c0992a37f52f1dbc2d06f9073867cd989d03afa3a401a498f2f68ec
+    - generic-residual-889ff372f2da31a983556f62ba5f67e3d4d81c9d19ed2acdae6100b33f5bd2b4-7c2dfae760522b9aa92955b419000a740f6751d76a6b3e70a3f3f7247d0d8e15
+    - generic-residual-4cbba7a64f1dc0ccf20f6e55e3abf32bec80f339a6bbd37bb44fe1c6aa24dc63-efdcccf740d8002e254c9bd584f351dc243a028a07bca85b7d6fbadfd903c33e
+    - generic-residual-26a2b98a1b6b4c97fc41c21c21b096aa2e47751f0397a67cd589917d06adec7b-ebf3c7e3ed969da976c1eb39adae273c46243b1db0be6a2cf42006023c7fc267

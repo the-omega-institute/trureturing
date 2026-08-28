@@ -1,0 +1,29 @@
+## 317.1 相对迹公式必须产生什么
+
+Toric relative trace formula 的标准结构，是把含 period products 的 spectral distributions 与相对 orbital integrals 的 geometric distributions相比较；这类比较可恢复 Waldspurger 型周期公式及 \(L\)-值信息。([arxiv.org][2])
+
+但若只停留在：
+
+$$
+\sum_D
+|\mathcal P_D(s)|^2,
+$$
+
+公共 \(|\xi(s)|^2\) 仍然只是一个正标量。
+
+所需的新对象必须包含至少一种操作：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{carrier normalization};\\
+&\text{谱参数差分};\\
+&\text{logarithmic connection};\\
+&\text{shifted input/output comparison};\\
+&\text{相对散射或 passivity balance}.
+\end{aligned}
+}
+$$
+
+---
+

@@ -1,0 +1,30 @@
+# 第一百九十四部　有限环面 de Branges 判据
+
+Suzuki 定义：
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+\frac{
+\xi(\frac12-\omega-iz)
+}{
+\xi(\frac12+\omega-iz)
+}
+=
+\frac{E_\omega^-(z)}
+{E_\omega^+(z)}.
+}
+\tag{194.1}
+$$
+
+他证明：给定 \(\omega_0\ge0\)，ζ 在
+
+$$
+\Re s>\frac12+\omega_0
+$$
+
+无零，当且仅当对每个 \(\omega>\omega_0\)，\(\Theta_\omega\) 是上半平面的 meromorphic inner function；其 de Branges/model-space 核为标准 Pick 核。([arXiv][2])
+
+因此：
+

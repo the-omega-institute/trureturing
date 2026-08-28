@@ -1,0 +1,66 @@
+## 277.1 逆 Cayley 谱算子
+
+在 \(\mathcal C_\lambda\) 的谱表示中定义：
+
+$$
+\boxed{
+H_\lambda
+=
+\frac{i}{2}
+\left(
+\mathcal C_\lambda+I
+\right)
+\left(
+\mathcal C_\lambda-I
+\right)^{-1}.
+}
+\tag{277.3}
+$$
+
+它是一个稠密定义的自伴算子。
+
+若：
+
+$$
+\mathcal C_\lambda
+$$
+
+的谱点为：
+
+$$
+e^{i\theta_\gamma},
+$$
+
+则：
+
+$$
+H_\lambda
+$$
+
+的对应谱值为：
+
+$$
+\boxed{
+\frac12\cot\frac{\theta_\gamma}{2}
+=
+\gamma.
+}
+\tag{277.4}
+$$
+
+因此：
+
+$$
+\boxed{
+\operatorname{supp}
+\operatorname{spec}(H_\lambda)
+=
+\{\pm\gamma:\Xi(\gamma)=0\}.
+}
+$$
+
+这给出一个**循环 CMV–Hilbert–Pólya 实现**。
+
+需要保留限制：
+
+* 不同零点位置被恢复为谱支撑；

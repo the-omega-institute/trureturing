@@ -1,0 +1,15 @@
+* ζ 的平移比值。
+
+二者分别对应：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal L_s&:\text{closed-orbit／内部动力观察};\\
+\Phi(s)&:\text{cusp／开放边界观察}.
+\end{aligned}
+}
+$$
+
+完整模曲面谱必须同时包含：
+

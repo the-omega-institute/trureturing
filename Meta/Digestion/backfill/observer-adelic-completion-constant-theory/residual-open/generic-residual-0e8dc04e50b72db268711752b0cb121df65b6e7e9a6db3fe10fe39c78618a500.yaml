@@ -1,0 +1,10 @@
+ast_path: section/第一百九十三部-对称位移的环面-Hermite-Biehler-缺陷
+fingerprints:
+  raw_sha256: sha256:0e8dc04e50b72db268711752b0cb121df65b6e7e9a6db3fe10fe39c78618a500
+  normalized_sha256: sha256:0e8dc04e50b72db268711752b0cb121df65b6e7e9a6db3fe10fe39c78618a500
+cas_ref: sha256:0e8dc04e50b72db268711752b0cb121df65b6e7e9a6db3fe10fe39c78618a500
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

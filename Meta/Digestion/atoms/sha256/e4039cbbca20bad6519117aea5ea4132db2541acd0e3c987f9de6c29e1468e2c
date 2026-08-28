@@ -1,0 +1,53 @@
+## 254.1 零点的 Cayley 坐标
+
+对每个非平凡零点 \(\rho\)，定义：
+
+$$
+\boxed{
+u_\rho
+=
+1-\frac1\rho.
+}
+\tag{254.3}
+$$
+
+若 RH 成立：
+
+$$
+\rho=\frac12+i\gamma,
+$$
+
+则：
+
+$$
+\boxed{
+u_\rho
+=
+\frac{\gamma+i/2}{\gamma-i/2}
+=
+e^{i\theta_\gamma},
+}
+\tag{254.4}
+$$
+
+其中：
+
+$$
+\boxed{
+\theta_\gamma
+=
+2\arctan\frac1{2\gamma}.
+}
+\tag{254.5}
+$$
+
+所以 Riemann 零点 ordinates 经 Cayley 观察后，成为一列单位圆上的相位，并在：
+
+$$
+1\in\mathbb T
+$$
+
+附近聚集。
+
+---
+

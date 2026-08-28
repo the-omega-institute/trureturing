@@ -1,0 +1,24 @@
+### Fredholm 目标
+
+$$
+\mathscr F(x)=\det(I+xU).
+$$
+
+它一次性恢复整个平方折叠 \(\xi\)-函数。
+
+因此：
+
+$$
+\boxed{
+\text{Moment}
+\subset
+\text{Trace}
+\subset
+\text{Fredholm}
+}
+$$
+
+是三种强度递增的证明目标。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/Sticky-carrier
+fingerprints:
+  raw_sha256: sha256:15e8d7a0018e95ff9e7c98e5ab3274ded807d9e4bc828536677b3e288d5adfac
+  normalized_sha256: sha256:15e8d7a0018e95ff9e7c98e5ab3274ded807d9e4bc828536677b3e288d5adfac
+cas_ref: sha256:15e8d7a0018e95ff9e7c98e5ab3274ded807d9e4bc828536677b3e288d5adfac
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

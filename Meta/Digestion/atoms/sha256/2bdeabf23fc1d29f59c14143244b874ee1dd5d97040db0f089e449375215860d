@@ -1,0 +1,26 @@
+# 第二百一十七部　相对迹公式的真正目标
+
+Toric relative trace formula 比较环面周期平方与自动谱数据，并可重新证明 Waldspurger 型公式。([arXiv][2])
+
+本理论需要的并不是再次证明：
+
+$$
+|\mathcal P_D|^2\ge0,
+$$
+
+而是构造一个几何表达，使：
+
+$$
+\boxed{
+\sum_{a,b}
+c_a\overline{c_b}
+\,
+\mathcal N_\omega(z_a,z_b)
+}
+\tag{217.1}
+$$
+
+等于某个显式非负的几何量。
+
+换言之，真正目标是：
+

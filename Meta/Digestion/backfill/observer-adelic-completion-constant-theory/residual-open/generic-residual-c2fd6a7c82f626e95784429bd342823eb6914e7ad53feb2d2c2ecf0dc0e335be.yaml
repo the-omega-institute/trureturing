@@ -1,0 +1,10 @@
+ast_path: section/271-1-Li-曲率测度
+fingerprints:
+  raw_sha256: sha256:c2fd6a7c82f626e95784429bd342823eb6914e7ad53feb2d2c2ecf0dc0e335be
+  normalized_sha256: sha256:c2fd6a7c82f626e95784429bd342823eb6914e7ad53feb2d2c2ecf0dc0e335be
+cas_ref: sha256:c2fd6a7c82f626e95784429bd342823eb6914e7ad53feb2d2c2ecf0dc0e335be
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

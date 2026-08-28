@@ -1,0 +1,30 @@
+## 有成熟理论支持
+
+$$
+\boxed{
+Z_{\mathrm{Sel}}
+=
+\det(1-\mathcal L_s)\det(1+\mathcal L_s).
+}
+$$
+
+$$
+\boxed{
+\text{闭测地线 Eisenstein 周期}
+\longleftrightarrow
+\text{实二次 partial zeta}.
+}
+$$
+
+$$
+\boxed{
+\Phi(s)
+=
+\zeta^*(2s-1)/\zeta^*(2s).
+}
+$$
+
+这些均为经典 Selberg–Mayer–Hecke–Eisenstein 理论的一部分。([arXiv][5])
+
+---
+

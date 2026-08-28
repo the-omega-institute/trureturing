@@ -1,0 +1,120 @@
+# 第二百八十八部　Riemann 零点角就是 Clark 谱
+
+RH 下，令：
+
+$$
+\rho_\gamma=\frac12+i\gamma,
+\qquad
+\gamma>0,
+$$
+
+零点重数为 \(m_\gamma\)。
+
+定义其 Cayley 角坐标：
+
+$$
+\boxed{
+u_\gamma
+=
+1-\frac{1}{\rho_\gamma}
+=
+\frac{\gamma+i/2}{\gamma-i/2}
+=
+e^{i\theta_\gamma}.
+}
+\tag{288.1}
+$$
+
+其中：
+
+$$
+\theta_\gamma
+=
+2\arctan\frac{1}{2\gamma}.
+$$
+
+再令：
+
+$$
+\boxed{
+x_\gamma
+=
+\frac{1}{4\gamma^2+1}.
+}
+\tag{288.2}
+$$
+
+定义每个有向零点角的权重：
+
+$$
+\boxed{
+w_\gamma
+=
+\frac{2m_\gamma}
+{\lambda_1(4\gamma^2+1)}
+=
+\frac{2m_\gamma x_\gamma}{\lambda_1}.
+}
+\tag{288.3}
+$$
+
+则 Li 曲率测度为：
+
+$$
+\boxed{
+\mu_\lambda
+=
+\sum_{\gamma>0}
+w_\gamma
+\left(
+\delta_{u_\gamma}
++
+\delta_{\overline{u_\gamma}}
+\right).
+}
+\tag{288.4}
+$$
+
+并且：
+
+$$
+\mu_\lambda(\mathbb T)=1.
+$$
+
+等价地：
+
+$$
+\boxed{
+\lambda_1
+=
+4
+\sum_{\gamma>0}
+\frac{m_\gamma}{4\gamma^2+1}.
+}
+\tag{288.5}
+$$
+
+其 Carathéodory 表示为：
+
+$$
+\boxed{
+\mathfrak C_\xi(z)
+=
+\int_{\mathbb T}
+\frac{\zeta+z}{\zeta-z}
+\,d\mu_\lambda(\zeta).
+}
+\tag{288.6}
+$$
+
+由于：
+
+$$
+\frac{1+\vartheta_\xi}
+{1-\vartheta_\xi}
+=
+\mathfrak C_\xi,
+$$
+
+所以：
+

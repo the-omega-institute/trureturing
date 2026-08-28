@@ -1,0 +1,23 @@
+## Level 3：Jet-to-mass 半单化
+
+$$
+\mathcal J_\rho^{(m)}
+\longmapsto
+m\,\delta_\rho.
+$$
+
+由：
+
+$$
+\operatorname{Tr}
+\left[
+(s-\rho-N_m)^{-1}
+\right]
+=
+\frac{m}{s-\rho}
+$$
+
+完成。
+
+---
+

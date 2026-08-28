@@ -1,0 +1,38 @@
+## 298.2 Sticky 的真正来源
+
+Clark crowding law 表明，唯一不可避免的全局 sticky 位置是：
+
+$$
+z=1,
+$$
+
+即高零点聚集点。
+
+因此 sticky 分支应研究：
+
+$$
+\boxed{
+\text{单位圆上靠近 }1\text{ 的微观缩放极限}.
+}
+$$
+
+可用变量：
+
+$$
+\gamma
+=
+\frac12\cot\frac{\theta}{2}
+$$
+
+把边界小弧重新展开为高零点高度轴。
+
+Deng 式重整化应当：
+
+1. 分离有限低零点原子；
+2. 对 \(z=1\) 附近的高零点尾部做尺度缩放；
+3. 使用 Riemann–von Mangoldt 主密度作为连续 counterterm；
+4. 将零点密度振荡保留为 primitive residual；
+5. 对 Schur tail 或 Clark phase 建立统一余项界。
+
+---
+

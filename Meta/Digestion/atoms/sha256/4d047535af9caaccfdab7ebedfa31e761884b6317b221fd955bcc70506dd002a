@@ -1,0 +1,16 @@
+## 定理 231.1（Toroidal Hankel RH criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{由任意合法局部环面图表重构出的全部 Hankel 矩阵正半定}.
+}
+\tag{231.2}
+$$
+
+这给出 RH 的第二类有限环面证书：
+
+### 先前 Pick 证书
+
+* 依赖谱点 \(z\) 和 shift \(\omega\)；

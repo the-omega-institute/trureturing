@@ -1,0 +1,13 @@
+## Level 0：共同零点检测
+
+$$
+\xi(\rho)=0
+\iff
+E_\rho
+\text{ 对全部二次环面不可见}.
+$$
+
+该层已有 toroidal period 理论支持。([arxiv.org][1])
+
+---
+

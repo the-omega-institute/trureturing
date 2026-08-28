@@ -1,0 +1,24 @@
+## 311.1 半平面核接口
+
+$$
+\boxed{
+\frac{
+\xi'/\xi(s)
++
+\overline{\xi'/\xi(t)}
+}{
+s+\overline t-1
+}
+\succeq0.
+}
+$$
+
+优点：
+
+* 直接；
+* 不需平方折叠；
+* 线外零点直接产生极点；
+* 最适合 relative trace。
+
+---
+

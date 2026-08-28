@@ -1,0 +1,10 @@
+ast_path: section/276-3-三类有限失败证书
+fingerprints:
+  raw_sha256: sha256:b6b640d067b85c6484c58fec6c6f1e912ce1a9ec3a6fe90ace5a14a660f49a1f
+  normalized_sha256: sha256:b6b640d067b85c6484c58fec6c6f1e912ce1a9ec3a6fe90ace5a14a660f49a1f
+cas_ref: sha256:b6b640d067b85c6484c58fec6c6f1e912ce1a9ec3a6fe90ace5a14a660f49a1f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -57,6 +57,8 @@ internal sealed class CanonicalDependentFiberEquivalenceDocument : IScribeDocume
             Forall, Sp, source, Comma, Sp, coordinateType, Colon, Sp,
             Operatorname, Grp(F.Id("Type")), Comma, Sp,
             readout, Colon, Sp, source, Sp, To, Sp, coordinateType, Comma, Sp,
+            Operatorname, Grp(F.Id("let")), Sp, Apply(fiber, coordinate),
+            Sp, Colon, Eq, Sp, Call("ConceptFiber", readout, coordinate), Comma, Sp,
             equivalence, Sp, Colon, Eq, Sp,
             Operatorname, Grp(F.Id("canonical")), Open, readout, Close,
             Colon, Sp, source, Sp, Equiv, Sp, sigma, Comma, Sp,

@@ -1,0 +1,10 @@
+ast_path: section/第一百六十五部-非分裂环面观察者/clause/2
+fingerprints:
+  raw_sha256: sha256:f9007e628e34c619f27311f3ee6fca80b636393f2034445ea4e0139abf36d034
+  normalized_sha256: sha256:f9007e628e34c619f27311f3ee6fca80b636393f2034445ea4e0139abf36d034
+cas_ref: sha256:f9007e628e34c619f27311f3ee6fca80b636393f2034445ea4e0139abf36d034
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

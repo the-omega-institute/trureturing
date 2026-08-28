@@ -1,0 +1,112 @@
+# 本轮最终结论
+
+上一轮把 RH 写成：
+
+$$
+\boxed{
+\text{中心 reciprocal-zero moments
+是否来自正测度。}
+}
+$$
+
+本轮进一步说明，这个正测度并非只能抽象存在。
+
+它应当来自一个正 trace-class 算子：
+
+$$
+\boxed{
+U_\Xi
+=
+\operatorname{diag}
+\left(
+\gamma_1^{-2},
+\gamma_2^{-2},
+\ldots
+\right).
+}
+$$
+
+而整个 Riemann 完成函数可以写成：
+
+$$
+\boxed{
+\frac{
+\xi(\frac12+\sqrt x)
+}{
+\xi(\frac12)
+}
+=
+\det(I+xU_\Xi).
+}
+$$
+
+由此：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Taylor coefficients}
+&=\text{外幂迹};\\
+\text{logarithmic coefficients}
+&=\text{幂迹};\\
+\text{Stieltjes function}
+&=\text{resolvent trace};\\
+\text{Hankel positivity}
+&=\text{moment Gram positivity};\\
+\text{Toeplitz positivity}
+&=\text{exterior-state total positivity};\\
+\text{continued fraction}
+&=\text{Jacobi resolvent};\\
+\text{Hilbert--Pólya}
+&=U_\Xi^{-1/2}.
+\end{aligned}
+}
+$$
+
+而 de Bruijn–Newman 常数获得了一个极其自然的结构意义：
+
+$$
+\boxed{
+\Lambda_{\mathrm N}
+=
+\text{Riemann heat family第一次进入正 Fredholm／总正性完成锥的时间}.
+}
+$$
+
+Rodgers–Tao 的结果说明：
+
+$$
+\Lambda_{\mathrm N}\ge0.
+$$
+
+RH 则要求：
+
+$$
+\Lambda_{\mathrm N}=0.
+$$
+
+所以当前 OACTC 最小、最强的中心目标可以最终写成：
+
+$$
+\boxed{
+\text{从二次环面 relative trace 数据直接构造一个正 trace-class 算子 }
+U_{\mathrm{tor}},
+}
+$$
+
+使：
+
+$$
+\boxed{
+\det(I+xU_{\mathrm{tor}})
+=
+\frac{\xi(\frac12+\sqrt x)}{\xi(\frac12)}.
+}
+$$
+
+一旦这一 Fredholm completion 被建立，RH、Herglotz、de Branges、Hankel、Toeplitz、Stieltjes 连分数与 Hilbert–Pólya 将同时闭合。
+
+[1]: https://pubmed.ncbi.nlm.nih.gov/16589009/?utm_source=chatgpt.com "On the Generating Functions of Totally Positive Sequences."
+[2]: https://arxiv.org/abs/2006.16213?utm_source=chatgpt.com "Totally positive kernels, Polya frequency functions, and their transforms"
+[3]: https://arxiv.org/abs/1801.05914?utm_source=chatgpt.com "The De Bruijn-Newman constant is non-negative"
+[4]: https://arxiv.org/abs/1612.01933?utm_source=chatgpt.com "Extended relativistic Toda lattice, L-orthogonal polynomials and associated Lax pair"

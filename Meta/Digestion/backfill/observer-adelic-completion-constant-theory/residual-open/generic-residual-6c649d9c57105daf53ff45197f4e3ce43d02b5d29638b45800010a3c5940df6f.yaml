@@ -1,0 +1,10 @@
+ast_path: section/144-1-固定点与判别式
+fingerprints:
+  raw_sha256: sha256:6c649d9c57105daf53ff45197f4e3ce43d02b5d29638b45800010a3c5940df6f
+  normalized_sha256: sha256:6c649d9c57105daf53ff45197f4e3ce43d02b5d29638b45800010a3c5940df6f
+cas_ref: sha256:6c649d9c57105daf53ff45197f4e3ce43d02b5d29638b45800010a3c5940df6f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

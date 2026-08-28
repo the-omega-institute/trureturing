@@ -1,0 +1,20 @@
+## 243.2 Hankel 图表
+
+$$
+H(\mu)=[\mu_{i+j}],
+\qquad
+H^+(\mu)=[\mu_{i+j+1}].
+$$
+
+它读取：
+
+$$
+\mu_n=\operatorname{Tr}U_\Xi^{n+1}.
+$$
+
+这是 primitive/moment 图表。
+
+Stieltjes moment sequence 与 Hankel total positivity 是同一经典正性结构；相关总正性理论也把 Pólya-frequency、Toeplitz 与 Hankel 核置于统一框架中。([arXiv][2])
+
+---
+

@@ -1,0 +1,47 @@
+## 定理 155.1（RH 的散射共振形式）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{全部非平凡散射极点 }
+s_\rho
+\text{ 位于 }
+\Re(s)=\frac14.
+}
+\tag{155.2}
+$$
+
+由：
+
+$$
+\Phi(s)\Phi(1-s)=1,
+$$
+
+对应的散射零点位于：
+
+$$
+1-s_\rho,
+$$
+
+所以 RH 等价于这些零点位于：
+
+$$
+\boxed{
+\Re(s)=\frac34.
+}
+\tag{155.3}
+$$
+
+于是 Riemann 临界线在散射坐标中裂成：
+
+$$
+\boxed{
+\text{resonance line } \frac14
+\quad+\quad
+\text{antiresonance line } \frac34.
+}
+$$
+
+---
+

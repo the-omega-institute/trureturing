@@ -45,9 +45,6 @@ internal sealed class FiniteDiscussionStabilityDocument : IScribeDocumentDefinit
                             + "declaration packages the arbitrary-discussion bound."))),
                 DescribeRole.Theorem))));
 
-    private static Formula Sub(Formula value, Formula index) =>
-        new Formula.Subscript(value, index);
-
     private static Formula Call(string name, params Formula[] arguments)
     {
         var content = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
@@ -67,34 +64,58 @@ internal sealed class FiniteDiscussionStabilityDocument : IScribeDocumentDefinit
     private static Formula Cardinality(Formula value) =>
         Seq(Lvert, Sp, value, Sp, Rvert);
 
+    private static Formula Apply(Formula function, params Formula[] arguments)
+    {
+        var content = new List<Formula> { function, Open };
+        for (var index = 0; index < arguments.Length; index++)
+        {
+            if (index > 0) content.AddRange([Comma, Sp]);
+            content.Add(arguments[index]);
+        }
+        content.Add(Close);
+        return Seq([.. content]);
+    }
+
+    private static Formula Arrow(Formula domain, Formula codomain) =>
+        Seq(domain, Sp, To, Sp, codomain);
+
+    private static Formula Typed(Formula value, Formula type) =>
+        Seq(value, Colon, Sp, type);
+
     private static Formula StabilityFormula()
     {
         Formula state = F.Id("X");
-        Formula stepCount = F.Id("n");
+        Formula stepCount = F.Id("steps");
         Formula index = F.Id("i");
-        Formula coordinate = Sub(F.Id("C"), index);
-        Formula readout = Sub(F.Id("q"), index);
-        Formula nextReadout = Sub(F.Id("q"), Seq(index, Plus, D(1)));
-        Formula initialReadout = Sub(F.Id("q"), D(0));
+        Formula coordinate = F.Id("Coordinate");
+        Formula concept = F.Id("concept");
+        Formula indexType = Call("Fin", Seq(stepCount, Sp, Plus, Sp, D(1)));
+        Formula coordinateAtIndex = Apply(coordinate, index);
+        Formula readout = Apply(concept, index);
+        Formula nextReadout = Apply(concept, Call("succ", index));
+        Formula initialReadout = Apply(concept, D(0));
         Formula range = Call("Im", initialReadout);
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
 
-        return Disp(Seq(
-            Begin, Grp(F.Id("gathered")),
-            Forall, Sp, state, Comma, Sp,
-            OpenBracket, Operatorname, Grp(F.Id("Fintype")), Open, state, Close,
-            CloseBracket, Comma, Sp,
-            stepCount, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, RowBreak,
-            Open, Forall, Sp, index, Comma, Sp,
-            D(0), Sp, Leq, Sp, index, Sp, Leq, Sp, stepCount, Comma, Sp,
-            coordinate, Colon, Sp, Operatorname, Grp(F.Id("Type")), Comma, Sp,
-            readout, Colon, Sp, state, Sp, To, Sp, coordinate, Comma, Sp,
-            Call("Surjective", readout), Close, Sp, Land, RowBreak,
-            Open, Forall, Sp, index, Comma, Sp,
-            D(0), Sp, Leq, Sp, index, Sp, Lt, Sp, stepCount, Comma, Sp,
-            Call("StrictRefinement", readout, nextReadout), Close, Sp,
-            Rightarrow, RowBreak,
-            stepCount, Sp, Leq, Sp, Cardinality(state), Sp, Minus, Sp,
-            Cardinality(range), Dot,
-            End, Grp(F.Id("gathered"))));
+        return Disp(new Formula.Aligned([
+            Seq(Forall, Sp, Typed(state, type), Comma, Sp,
+                OpenBracket, Call("Fintype", state), CloseBracket, Comma, Sp,
+                Typed(stepCount, Seq(Mathbb, Grp(F.Id("N")))), Comma),
+            Seq(Grp(), Forall, Sp,
+                Typed(coordinate, Arrow(indexType, type)), Comma),
+            Seq(Grp(), Forall, Sp,
+                Typed(concept, Seq(Forall, Sp, Typed(index, indexType), Comma, Sp,
+                    Call("Concept", state, coordinateAtIndex))), Comma),
+            Seq(Grp(), Forall, Sp,
+                Typed(F.Id("effective"), Seq(Forall, Sp, Typed(index, indexType), Comma, Sp,
+                    Call("Surjective", readout))), Comma),
+            Seq(Grp(), Forall, Sp,
+                Typed(F.Id("strict"), Seq(
+                    Forall, Sp, Typed(index, Call("Fin", stepCount)), Comma, Sp,
+                    Call("StrictRefinement", Apply(concept, Call("castSucc", index)), nextReadout))),
+                Comma),
+            Seq(Grp(), stepCount, Sp, Leq, Sp, Cardinality(state), Sp, Minus, Sp,
+                Cardinality(range), Dot),
+        ]));
     }
 }

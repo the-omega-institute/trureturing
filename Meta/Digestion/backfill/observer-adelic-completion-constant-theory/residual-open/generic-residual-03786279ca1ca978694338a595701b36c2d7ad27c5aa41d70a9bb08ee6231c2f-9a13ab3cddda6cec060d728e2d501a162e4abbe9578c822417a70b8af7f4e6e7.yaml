@@ -1,0 +1,10 @@
+ast_path: section/298-1-Non-sticky-的正确含义/clause/4
+fingerprints:
+  raw_sha256: sha256:03786279ca1ca978694338a595701b36c2d7ad27c5aa41d70a9bb08ee6231c2f
+  normalized_sha256: sha256:03786279ca1ca978694338a595701b36c2d7ad27c5aa41d70a9bb08ee6231c2f
+cas_ref: sha256:03786279ca1ca978694338a595701b36c2d7ad27c5aa41d70a9bb08ee6231c2f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,44 @@
+## 定理 188.1（有限环面帧重构）
+
+对任意 \(s\in K\)：
+
+$$
+\boxed{
+\xi(s)
+=
+\frac{
+\langle
+\mathbf P_K(s),
+\mathbf T_K(s)
+\rangle
+}{
+\|\mathbf T_K(s)\|^2
+}.
+}
+\tag{188.6}
+$$
+
+### 证明
+
+由：
+
+$$
+\mathbf P_K=\xi\mathbf T_K,
+$$
+
+有：
+
+$$
+\langle\mathbf P_K,\mathbf T_K\rangle
+=
+\xi\|\mathbf T_K\|^2.
+$$
+
+∎
+
+因此：
+
+> 在任意固定紧谱窗内，不需要无限多个环面；有限个二次环面周期已经足以重构完整的 \(\xi\)-值。
+
+---
+

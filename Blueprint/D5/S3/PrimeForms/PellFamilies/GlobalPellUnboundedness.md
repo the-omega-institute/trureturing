@@ -6,7 +6,7 @@ A concrete Pell orbit is globally unbounded and locally pure-periodic.
 
 **Theorem 1.1 (A concrete Pell orbit is globally unbounded).**
 
-$$u = \operatorname{PellOrbit}\left(3, 2, 1, (1, 0)\right), \forall N \in \mathbb{N}, \exists n \in \mathbb{N}, \exists i \in \operatorname{Fin}\left(2\right), N < u_{n}_{i}.$$
+$$u = \operatorname{PellOrbit}\left(3, 2, 1, (1, 0)\right), \forall N \in \mathbb{N}, \exists n \in \mathbb{N}, \exists i \in \operatorname{Fin}\left(2\right), N < {u_{n}}_{i}.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/PrimeForms/PellFamilies/GlobalPellUnboundedness.sqrt_three_pell_orbit_is_unbounded` (`✓ std3`). ∎
 
@@ -32,7 +32,7 @@ For unit coordinates (1, 0), the Pell multiplication matrix is the identity. Sta
 
 **Theorem 1.3 (Global growth and local cycles coexist).**
 
-$$u = \operatorname{PellOrbit}\left(3, 2, 1, (1, 0)\right), \operatorname{OrbitUnbounded}\left(u\right) \land \forall p, k \in \mathbb{N}, \operatorname{Prime}\left(p\right) \Rightarrow \exists T \in \mathbb{N}, 0 < T \land \forall n \in \mathbb{N}, \forall i \in \operatorname{Fin}\left(2\right), \operatorname{mod}\left(u_{n + T}_{i}, p^{k}\right) = \operatorname{mod}\left(u_{n}_{i}, p^{k}\right).$$
+$$u = \operatorname{PellOrbit}\left(3, 2, 1, (1, 0)\right), \operatorname{OrbitUnbounded}\left(u\right) \land \forall p, k \in \mathbb{N}, \operatorname{Prime}\left(p\right) \Rightarrow \exists T \in \mathbb{N}, 0 < T \land \forall n \in \mathbb{N}, \forall i \in \operatorname{Fin}\left(2\right), \operatorname{mod}\left({u_{n + T}}_{i}, p^{k}\right) = \operatorname{mod}\left({u_{n}}_{i}, p^{k}\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/PrimeForms/PellFamilies/GlobalPellUnboundedness.global_unboundedness_and_prime_power_local_periodicity` (`✓ std3`). ∎
 

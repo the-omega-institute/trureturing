@@ -1,0 +1,12 @@
+# 第二百零六部　RH 与 Herglotz 性的直接等价
+
+称一个在上半平面全纯的函数 \(m\) 为 Herglotz–Nevanlinna 函数，若：
+
+$$
+\Im m(z)\ge0
+\qquad
+(z\in\mathbb C^+).
+$$
+
+---
+

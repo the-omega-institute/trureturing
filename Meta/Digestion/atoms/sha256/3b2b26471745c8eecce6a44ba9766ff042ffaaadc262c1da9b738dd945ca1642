@@ -1,0 +1,23 @@
+## 203.2 超额连接数值检验
+
+计算：
+
+$$
+\mathfrak M_K(s)
+=
+\frac12\partial_\sigma
+\log
+\frac{\|\mathbf P_K(s)\|^2}
+{\|\mathbf T_K(s)\|^2}.
+$$
+
+与直接计算：
+
+$$
+\Re\frac{\xi'(s)}{\xi(s)}
+$$
+
+交叉验证。
+
+---
+

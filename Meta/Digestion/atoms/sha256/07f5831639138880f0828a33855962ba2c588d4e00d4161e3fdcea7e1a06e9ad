@@ -1,0 +1,44 @@
+## 假设 281.1（Toroidal covariance realization）
+
+存在 Hilbert 空间 \(\mathcal H_{\mathrm{tor}}\)、unitary \(V\) 和单位向量 \(v\)，使：
+
+$$
+\boxed{
+\frac{
+\lambda_{n+1}-2\lambda_n+\lambda_{n-1}
+}{
+2\lambda_1
+}
+=
+\langle V^nv,v\rangle.
+}
+\tag{281.1}
+$$
+
+若成立，则：
+
+$$
+c_n
+$$
+
+正定，故 RH 成立。
+
+进一步定义：
+
+$$
+B_n
+=
+\sqrt{\lambda_1}
+\sum_{k=0}^{n-1}V^kv.
+$$
+
+立即得到：
+
+$$
+\lambda_n=\|B_n\|^2.
+$$
+
+所以 relative trace formula 不必一步构造全部零点算子；只需把 Li 二阶差分实现为一个平稳相关核。
+
+---
+

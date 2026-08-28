@@ -1,0 +1,70 @@
+# 本轮最终结论
+
+上一轮已经得到：
+
+$$
+\boxed{
+\text{Riemann 零点}
+=
+\text{全部二次环面观察者的共同不可见点}.
+}
+$$
+
+本轮进一步得到：
+
+$$
+\boxed{
+\text{Riemann 零点的 ordinates}
+=
+\text{toroidal excess connection 的谱测度原子}.
+}
+$$
+
+关键函数为：
+
+$$
+\boxed{
+m_0(z)
+=
+-\frac{\Xi'(z)}{\Xi(z)}
+=
+i\frac{
+\xi'(\frac12-iz)
+}{
+\xi(\frac12-iz)
+}.
+}
+$$
+
+而：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+m_0\text{ 是 Herglotz}.
+}
+$$
+
+其 shifted 正则化为：
+
+$$
+\boxed{
+m_\omega(z)
+=
+\frac{i}{\omega}
+\frac{
+\xi(\frac12+\omega-iz)
+-
+\xi(\frac12-\omega-iz)
+}{
+\xi(\frac12+\omega-iz)
++
+\xi(\frac12-\omega-iz)
+}.
+}
+$$
+
+它同时是：
+
+* de Branges inner ratio 的 Cayley 变换；

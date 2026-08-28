@@ -1,0 +1,122 @@
+# 本轮最终结论
+
+上一轮把 Riemann 零点定义成：
+
+$$
+\boxed{
+\text{所有二次环面观察者的共同不可见点}.
+}
+$$
+
+本轮进一步证明，这些环面观察不仅能判断“是否不可见”，还可以在任何紧谱窗内组成一个稳定的有限帧，并完整恢复：
+
+$$
+\xi(s),
+\qquad
+\frac{\xi'(s)}{\xi(s)},
+\qquad
+\operatorname{div}(\xi).
+$$
+
+其核心公式是：
+
+$$
+\boxed{
+\mathbf P_K(s)
+=
+\xi(s)\mathbf T_K(s).
+}
+$$
+
+由此同时得到：
+
+$$
+\boxed{
+\xi(s)
+=
+\frac{
+\langle\mathbf P_K,\mathbf T_K\rangle
+}{
+\|\mathbf T_K\|^2
+},
+}
+$$
+
+$$
+\boxed{
+\frac{d\xi}{\xi}
+=
+\mathcal A_{\mathbf P_K}
+-
+\mathcal A_{\mathbf T_K},
+}
+$$
+
+$$
+\boxed{
+\frac{i}{2\pi}\partial\bar\partial
+\log
+\frac{\|\mathbf P_K\|^2}
+{\|\mathbf T_K\|^2}
+=
+\sum_\rho m_\rho\delta_\rho.
+}
+$$
+
+最关键的是：
+
+$$
+\boxed{
+\rho\text{ 为线外零点}
+\Longrightarrow
+\Re\frac{\xi'(s)}{\xi(s)}
+\longrightarrow-\infty
+}
+$$
+
+当 \(s\) 从左侧逼近 \(\rho\)。
+
+所以线外零点一定产生一个强烈、局部、有限环面可观测的负信号。
+
+至此，Wang–Deng–OACTC 路线的中心目标可以极精确地写成：
+
+$$
+\boxed{
+\Re
+\left(
+\mathcal A_{\mathbf P_K}
+-
+\mathcal A_{\mathbf T_K}
+\right)
+>0
+\qquad
+(\Re s>\tfrac12).
+}
+$$
+
+也就是：
+
+$$
+\boxed{
+\text{完整 Eisenstein 环面周期的水平增长，
+是否始终超过所有 twist 载体自身的水平增长？}
+}
+$$
+
+如果这条不等式能够通过：
+
+$$
+\text{环面正测度}
++
+\text{twist 正交}
++
+\text{non-sticky gain}
++
+\text{sticky primitive renormalization}
+$$
+
+直接证明，那么 RH 将随之成立。
+
+[1]: https://arxiv.org/abs/0906.5284?utm_source=chatgpt.com "Toroidal automorphic forms, Waldspurger periods and double Dirichlet series"
+[2]: https://arxiv.org/abs/1204.1827 "A canonical system of differential equations arising from the Riemann zeta-function"
+[3]: https://arxiv.org/abs/1005.1104 "A monotonicity property of Riemann's xi function and a reformulation of the Riemann Hypothesis"

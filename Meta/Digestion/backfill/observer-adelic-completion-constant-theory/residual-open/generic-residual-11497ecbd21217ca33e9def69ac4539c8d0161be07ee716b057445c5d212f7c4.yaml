@@ -1,0 +1,10 @@
+ast_path: section/320-3-Deng-式处理
+fingerprints:
+  raw_sha256: sha256:11497ecbd21217ca33e9def69ac4539c8d0161be07ee716b057445c5d212f7c4
+  normalized_sha256: sha256:11497ecbd21217ca33e9def69ac4539c8d0161be07ee716b057445c5d212f7c4
+cas_ref: sha256:11497ecbd21217ca33e9def69ac4539c8d0161be07ee716b057445c5d212f7c4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

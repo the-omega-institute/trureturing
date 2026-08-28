@@ -1,0 +1,70 @@
+## 本轮独立推导得到（第 327 部）
+
+$$
+\boxed{
+T e_j
+=
+\sum_{k=0}^{j}
+\frac{a_T^{(j-k)}(\rho)}{(j-k)!}
+e_k.
+}
+$$
+
+$$
+\boxed{
+\text{非平凡 toroidal Jordan block
+不能在正内积下 normal/self-adjoint}.
+}
+$$
+
+$$
+\boxed{
+\operatorname{Tr}
+\left[
+((s-\rho)I-N_m)^{-1}
+\right]
+=
+\frac{m}{s-\rho}.
+}
+$$
+
+$$
+\boxed{
+\mathcal G_{\mathcal P}
+=
+\xi(s)\overline{\xi(t)}
+\mathcal G_{\mathcal T}.
+}
+$$
+
+$$
+\boxed{
+\mathcal K_\xi
+=
+\frac{
+\partial_s\log(\mathcal G_{\mathcal P}/\mathcal G_{\mathcal T})
++
+\partial_{\bar t}\log(\mathcal G_{\mathcal P}/\mathcal G_{\mathcal T})
+}{
+\lambda_1(s+\bar t-1)
+}.
+}
+$$
+
+$$
+\boxed{
+\text{raw period Gram positivity 对 RH 不敏感}.
+}
+$$
+
+$$
+\boxed{
+I-A^{*N}A^N
+=
+\sum_{k<N}
+A^{*k}C^*CA^k.
+}
+$$
+
+---
+

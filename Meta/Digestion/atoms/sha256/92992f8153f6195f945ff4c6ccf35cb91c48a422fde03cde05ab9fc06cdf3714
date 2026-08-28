@@ -1,0 +1,30 @@
+## v1.9：全环面零点观察、有限谱层析、Toroidal Temperedness 与 de Branges 正完成
+
+以下从前文**第一百六十四部之后**继续追加。
+
+本轮找到了一条比“黄金闭测地线可能帮助 RH”更精确的既有数学接口：
+
+$$
+\boxed{
+\text{Riemann ζ 零点}
+=
+\text{Eisenstein 状态对全部非分裂环面观察者同时不可见的参数}.
+}
+$$
+
+这不是类比。
+
+Hecke–Zagier 的环面周期公式把 Eisenstein series 沿二次环面的积分写成两个 \(L\)-函数之积；Cornelissen–Lorscheid 再结合二次 twist 非消失，证明一个 Eisenstein 状态对**所有**二次环面周期都为零，当且仅当它的基础 \(L\)-函数为零。其导数塔还精确记录零点重数。([arXiv][1])
+
+由此，OACTC 的 RH 主问题可以第一次严格改写成：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{全部“普遍环面不可见”的非平凡 Eisenstein 状态都是 tempered 的}.
+}
+$$
+
+---
+

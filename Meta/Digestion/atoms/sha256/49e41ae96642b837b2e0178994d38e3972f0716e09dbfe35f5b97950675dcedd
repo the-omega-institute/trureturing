@@ -1,0 +1,34 @@
+## 218.1 Non-sticky 分支
+
+将 period carriers 按：
+
+* 判别式；
+* conductor；
+* Archimedean geodesic length；
+* spectral height；
+* regulator mode；
+
+分块。
+
+若负候选向量分散于许多互相弱相关的块，则目标是利用：
+
+* quadratic-character large sieve；
+* relative trace formula 正交；
+* 高度窗口分离；
+* finite-frame lower bound；
+
+证明：
+
+$$
+\boxed{
+\mathfrak B_\omega
+\le
+(1-\eta)\,
+\mathfrak B_\omega^{\mathrm{coarse}}
+}
+$$
+
+或直接得到正增益。
+
+---
+

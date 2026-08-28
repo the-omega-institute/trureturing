@@ -22,7 +22,7 @@ concurrency:
 jobs:
   produce:
     name: produce verified truth-release inputs
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
     timeout-minutes: 150
     permissions:
       contents: read
@@ -248,11 +248,16 @@ jobs:
           [[ "$COMMIT_ON_PROTECTED_DEV" == 'true' ]] \
             || { printf '%s\n' 'protected-dev provenance was not established' >&2; exit 1; }
           dotnet restore tools/StrataLint.Cli/StrataLint.Cli.csproj --locked-mode
+          # Build the producer explicitly (visible progress) so a slow/hanging build target is
+          # diagnosable, then run without rebuilding. `dotnet run` was building this from scratch
+          # inside the step and being killed silently after a few minutes.
+          dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj \
+            --configuration Release --no-restore -v minimal
           commit_epoch="$(git show -s --format=%ct HEAD)"
           [[ "$commit_epoch" =~ ^[0-9]+$ ]]
           produced_at="$(date -u --date="@${commit_epoch}" +%Y-%m-%dT%H:%M:%SZ)"
           dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj \
-            --configuration Release --no-restore -- \
+            --configuration Release --no-restore --no-build -- \
             truth-release \
             --out "$bundle" \
             --candidate-lean-report "$REPORT_PATH" \
@@ -315,7 +320,7 @@ jobs:
     name: publish persistent verified truth-release
     needs: produce
     if: needs.produce.outputs.publish_ready == 'true'
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
       contents: write

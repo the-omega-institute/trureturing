@@ -1,0 +1,15 @@
+ast_path: section/第二百六十七部-常数角色审计
+fingerprints:
+  raw_sha256: sha256:5eb3285f2fa5ea39cd8f75dc899e93b51a131dbc148050fbb7709ab175a2ead0
+  normalized_sha256: sha256:5eb3285f2fa5ea39cd8f75dc899e93b51a131dbc148050fbb7709ab175a2ead0
+cas_ref: sha256:5eb3285f2fa5ea39cd8f75dc899e93b51a131dbc148050fbb7709ab175a2ead0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-3cc56dfa23ff79edba02388dab9e2a796b5d7188f6923c80949a68662ea2c080-09c260495aea6a97b934c63ef67f335108713c1faf52267de385ede962120ea8
+    - generic-residual-c56ddb363943c69e072e57615ad05d690c3e61cd9df28d5b186933e691f971fa-34b5b86ca9cfb3545bcbc7c1e899af7346f6d06c7af20c7247103bd2fb5f1af8
+    - generic-residual-196eca79c440373fdc66a165e7f606e3ca2b4f723bbd9ac4886ba2d738b22df9-e6c88942da66336ff004fb1f02b7fe663c0ddbad2696d93e0a7e3fbfb3d12a01
+    - generic-residual-f683428e92ea45b38a9721b4d4444725159aedf6bf06119a67b3752e57bee7d9-99b8f324c1e6855bd7e6789d61ac0f51337f77c48076b9bd6c197bd0b9f2f66b

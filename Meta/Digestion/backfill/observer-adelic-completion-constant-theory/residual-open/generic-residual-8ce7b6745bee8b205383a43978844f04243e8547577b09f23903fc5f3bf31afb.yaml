@@ -1,0 +1,10 @@
+ast_path: section/150-1-Hecke-积分接口
+fingerprints:
+  raw_sha256: sha256:8ce7b6745bee8b205383a43978844f04243e8547577b09f23903fc5f3bf31afb
+  normalized_sha256: sha256:8ce7b6745bee8b205383a43978844f04243e8547577b09f23903fc5f3bf31afb
+cas_ref: sha256:8ce7b6745bee8b205383a43978844f04243e8547577b09f23903fc5f3bf31afb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

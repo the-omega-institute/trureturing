@@ -1,0 +1,10 @@
+ast_path: section/第二百七十六部-Toeplitz-行列式与有限证书
+fingerprints:
+  raw_sha256: sha256:f1ab9cafd5676e241d8d6ea8d8e049636a3fcd507b84fc526baa648ee90cc1ae
+  normalized_sha256: sha256:f1ab9cafd5676e241d8d6ea8d8e049636a3fcd507b84fc526baa648ee90cc1ae
+cas_ref: sha256:f1ab9cafd5676e241d8d6ea8d8e049636a3fcd507b84fc526baa648ee90cc1ae
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

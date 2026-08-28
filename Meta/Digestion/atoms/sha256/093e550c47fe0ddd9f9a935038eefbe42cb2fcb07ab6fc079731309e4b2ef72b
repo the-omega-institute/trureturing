@@ -1,0 +1,74 @@
+# 第一百八十八部　有限环面谱帧
+
+设：
+
+$$
+K\subset\{0<\Re s<1\}
+$$
+
+为紧集。
+
+前文已由二次 twist 的逐点非消失和紧致性得到：存在有限判别式集合
+
+$$
+\mathcal D_K
+=
+\{D_1,\ldots,D_r\},
+$$
+
+使对每个 \(s\in K\)，至少有一个：
+
+$$
+\mathcal T_{D_j}(s)\neq0.
+$$
+
+取正权：
+
+$$
+w_j>0.
+$$
+
+定义载体向量：
+
+$$
+\boxed{
+\mathbf T_K(s)
+=
+\left(
+\sqrt{w_1}\mathcal T_{D_1}(s),
+\ldots,
+\sqrt{w_r}\mathcal T_{D_r}(s)
+\right)
+\in\mathbb C^r.
+}
+\tag{188.1}
+$$
+
+定义观测周期向量：
+
+$$
+\boxed{
+\mathbf P_K(s)
+=
+\left(
+\sqrt{w_1}\mathcal P_{D_1}(s),
+\ldots,
+\sqrt{w_r}\mathcal P_{D_r}(s)
+\right).
+}
+\tag{188.2}
+$$
+
+由式 (187.1)：
+
+$$
+\boxed{
+\mathbf P_K(s)
+=
+\xi(s)\mathbf T_K(s).
+}
+\tag{188.3}
+$$
+
+---
+

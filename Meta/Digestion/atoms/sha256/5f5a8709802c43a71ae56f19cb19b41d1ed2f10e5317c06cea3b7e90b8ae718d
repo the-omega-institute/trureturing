@@ -1,0 +1,22 @@
+## 325.2 Deng 的任务
+
+对 sticky block：
+
+1. 识别其 primitive automorphic mode；
+2. 将重复 history 重求和为 inner/Blaschke factor；
+3. 从系统中实施 conservative state elimination；
+4. 重新计算 residual colligation；
+5. 证明剩余可观测性严格改善。
+
+因此真正的 Wang–Deng 合成形式是：
+
+$$
+\boxed{
+\text{Wang 负责发现近不可观测块，}
+\qquad
+\text{Deng 负责把该块无损收缩成有限 conservative factor}.
+}
+$$
+
+---
+

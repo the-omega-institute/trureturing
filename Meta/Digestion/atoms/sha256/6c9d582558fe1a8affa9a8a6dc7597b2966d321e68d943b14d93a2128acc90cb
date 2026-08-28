@@ -1,0 +1,56 @@
+## v2.5：Li 离散曲率、Carathéodory–Schur 完成、CMV 谱算子与平稳过程
+
+以下从前文**第二百六十九部之后**继续追加。
+
+上一轮已经得到：
+
+$$
+\mathrm{RH}
+\iff
+\lambda_{|m-n|}
+\text{ 是 }\mathbb Z\text{ 上的条件负定距离平方},
+$$
+
+以及：
+
+$$
+\lambda_n
+=
+\|I-C_\Xi^n\|_{\mathrm{HS}}^2.
+$$
+
+本轮不再直接观察 Li 系数 \(\lambda_n\)，而观察它的**离散二阶差分**。结果是：二阶差分会自动消除 Li 度量中的线性累计部分，把无限零点角测度正规化为一个有限概率测度，并产生：
+
+$$
+\boxed{
+\text{正定 Toeplitz 核}
+\longleftrightarrow
+\text{Carathéodory 函数}
+\longleftrightarrow
+\text{Schur 参数}
+\longleftrightarrow
+\text{CMV unitary}
+\longleftrightarrow
+\text{平稳过程}.
+}
+$$
+
+最终得到一个比“全部 Li 系数非负”更具内部结构的等价判据：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\left[
+\lambda_{j-k+1}
+-2\lambda_{j-k}
++\lambda_{j-k-1}
+\right]_{j,k}
+\text{ 形成正定 Toeplitz 层级}.
+}
+$$
+
+Li 判据本身以及其与 Weil 二次型、automorphic \(L\)-functions 的推广和 RH 条件下的渐近结构，已有成熟理论。([数字对象标识符][1])
+
+---
+

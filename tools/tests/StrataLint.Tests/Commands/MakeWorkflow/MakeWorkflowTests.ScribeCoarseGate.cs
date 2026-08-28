@@ -51,7 +51,6 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Theory]
-    [InlineData("Blueprint/D5/Probe.scribe.cs")]
     [InlineData("D5/Probe.lean")]
     [InlineData("Trureturing.lean")]
     [InlineData("lean-toolchain")]
@@ -96,7 +95,6 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Theory]
-    [InlineData("Blueprint/D5/Probe.md")]
     [InlineData("Golden/values-kernels.toml")]
     [InlineData("Evidence/D5/values.json")]
     [InlineData("notes/r15-unrelated.txt")]
@@ -112,6 +110,45 @@ public sealed partial class MakeWorkflowTests
 
         Assert.Equal(0, result.ExitCode);
         Assert.Empty(fixture.Invocations());
+    }
+
+    [Fact]
+    [UnsupportedOSPlatform("windows")]
+    public void MarkdownFormulaGateRunsForABlueprintProjectionDelta()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        using var fixture = new ScribeCoarseGateFixture();
+        fixture.Change("Blueprint/D5/Probe.md");
+
+        var result = fixture.Run();
+
+        // Freshness still does not enter the gate; the formulas the projection carries do,
+        // and nothing else about a markdown-only delta does.
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(
+            [$"{fixture.ScribeDll} markdown-check --report {fixture.Report} --paths-from -"],
+            fixture.Invocations());
+    }
+
+    [Fact]
+    [UnsupportedOSPlatform("windows")]
+    public void BlueprintSourceDeltaRunsDescribeAndTheMarkdownFormulaGate()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        using var fixture = new ScribeCoarseGateFixture();
+        fixture.Change("Blueprint/D5/Probe.scribe.cs");
+
+        var result = fixture.Run();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(
+            [
+                $"{fixture.ScribeDll} describe-report --check",
+                $"{fixture.ScribeDll} markdown-check --report {fixture.Report} --paths-from -",
+            ],
+            fixture.Invocations());
     }
 
     [Fact]

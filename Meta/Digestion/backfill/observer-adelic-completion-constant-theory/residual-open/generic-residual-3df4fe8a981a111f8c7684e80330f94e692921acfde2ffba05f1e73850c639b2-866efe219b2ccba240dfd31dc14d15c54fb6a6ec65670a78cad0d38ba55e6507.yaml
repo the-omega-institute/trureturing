@@ -1,0 +1,10 @@
+ast_path: section/277-1-逆-Cayley-谱算子/clause/2
+fingerprints:
+  raw_sha256: sha256:3df4fe8a981a111f8c7684e80330f94e692921acfde2ffba05f1e73850c639b2
+  normalized_sha256: sha256:3df4fe8a981a111f8c7684e80330f94e692921acfde2ffba05f1e73850c639b2
+cas_ref: sha256:3df4fe8a981a111f8c7684e80330f94e692921acfde2ffba05f1e73850c639b2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

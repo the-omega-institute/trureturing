@@ -1,0 +1,63 @@
+# 第二百四十八部　辅助 Toda 观察流
+
+Newman flow 直接移动整个函数及其零点。
+
+现在定义另一个不同的流：在 RH 已成立的正谱测度上改变观察权重。
+
+令：
+
+$$
+d\nu(u)
+=
+\sum_jm_j\alpha_j\,\delta_{\alpha_j}(du).
+$$
+
+定义指数倾斜：
+
+$$
+\boxed{
+d\nu_\tau(u)
+=
+e^{\tau u}\,d\nu(u).
+}
+\tag{248.1}
+$$
+
+其 moments 为：
+
+$$
+\boxed{
+\mu_n(\tau)
+=
+\int u^ne^{\tau u}\,d\nu(u).
+}
+\tag{248.2}
+$$
+
+显然：
+
+$$
+\boxed{
+\partial_\tau\mu_n(\tau)
+=
+\mu_{n+1}(\tau).
+}
+\tag{248.3}
+$$
+
+定义 Hankel tau-functions：
+
+$$
+\boxed{
+D_N(\tau)
+=
+\det
+[\mu_{i+j}(\tau)]_{i,j=0}^{N-1}.
+}
+\tag{248.4}
+$$
+
+对指数变形测度，正交多项式的递推系数满足 Toda lattice；moment-matrix、Gauss–Borel 分解与 Toda hierarchy 的联系是正交多项式理论中的标准结构。([arXiv][4])
+
+---
+

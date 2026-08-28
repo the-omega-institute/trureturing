@@ -1,0 +1,47 @@
+## 240.2 Fredholm 对数
+
+Fredholm determinant 的对数展开为：
+
+$$
+\boxed{
+\log\mathscr F(x)
+=
+\sum_{r=1}^{\infty}
+\frac{(-1)^{r+1}}{r}
+\mu_{r-1}x^r.
+}
+\tag{240.4}
+$$
+
+微分后：
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\frac{\mathscr F'(x)}{\mathscr F(x)}
+=
+\sum_{r=0}^{\infty}
+(-1)^r\mu_rx^r.
+}
+\tag{240.5}
+$$
+
+也可直接写成 resolvent trace：
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\operatorname{Tr}
+\left[
+U_\Xi(I+xU_\Xi)^{-1}
+\right].
+}
+\tag{240.6}
+$$
+
+因此 Stieltjes observer 就是正算子的 resolvent trace。
+
+---
+
