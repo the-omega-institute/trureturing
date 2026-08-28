@@ -1,0 +1,10 @@
+ast_path: section/57-1-拒因分析-继承接口与收窄纪律/clause/1
+fingerprints:
+  raw_sha256: sha256:a6d87f13b43af200ebe772402120fccdd8cfdd8ce472193640387c5ae54daa57
+  normalized_sha256: sha256:a6d87f13b43af200ebe772402120fccdd8cfdd8ce472193640387c5ae54daa57
+cas_ref: sha256:a6d87f13b43af200ebe772402120fccdd8cfdd8ce472193640387c5ae54daa57
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

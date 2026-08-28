@@ -1,0 +1,10 @@
+ast_path: section/57-5-1-保护坐标侧的直接复用/clause/1
+fingerprints:
+  raw_sha256: sha256:6193feff69b5134b01fc1a48bf4cce0f01593d93669e6cc2ebd427220713c9ee
+  normalized_sha256: sha256:6193feff69b5134b01fc1a48bf4cce0f01593d93669e6cc2ebd427220713c9ee
+cas_ref: sha256:6193feff69b5134b01fc1a48bf4cce0f01593d93669e6cc2ebd427220713c9ee
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

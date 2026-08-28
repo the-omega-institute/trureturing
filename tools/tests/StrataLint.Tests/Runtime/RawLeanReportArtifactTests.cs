@@ -243,7 +243,7 @@ public sealed class RawLeanReportArtifactTests
             inspected.ExitCode == 0,
             Encoding.UTF8.GetString(inspected.StandardOutput)
                 + Encoding.UTF8.GetString(inspected.StandardError));
-        var compacted = BoundedProcessRunner.Run(
+        var compacted = TestProcessRunner.Run(
             "python3",
             [
                 Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "lean-inspector", "materials.py"),

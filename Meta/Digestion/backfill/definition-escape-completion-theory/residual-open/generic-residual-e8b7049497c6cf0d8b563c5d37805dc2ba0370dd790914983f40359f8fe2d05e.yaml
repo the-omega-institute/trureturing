@@ -1,0 +1,10 @@
+ast_path: section/57-3-1-带运行结果的输运语义
+fingerprints:
+  raw_sha256: sha256:e8b7049497c6cf0d8b563c5d37805dc2ba0370dd790914983f40359f8fe2d05e
+  normalized_sha256: sha256:e8b7049497c6cf0d8b563c5d37805dc2ba0370dd790914983f40359f8fe2d05e
+cas_ref: sha256:e8b7049497c6cf0d8b563c5d37805dc2ba0370dd790914983f40359f8fe2d05e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

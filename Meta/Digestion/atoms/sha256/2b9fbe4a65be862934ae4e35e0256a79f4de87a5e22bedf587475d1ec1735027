@@ -1,0 +1,40 @@
+### 57.5.2 输运侧的直接复用
+
+57.3 不重声明 `TransportCert`、`TransportReport` 或 `TransportSemantics`。`TransportSemanticFrame` 只为既有预测字段提供运行结果解释，`toLegacy` 是回到原 Prop 级接口的唯一出口。
+
+既有冻结定理
+
+`receipt_matches_original_coordinates`
+
+继续唯一承担收据对原记录、原域、版本、误差与主张地址的锁定。57.3 的 `receiptBound` 不得用一组较弱的字段等式替换该收据谓词。
+
+既有冻结定理
+
+`valid_transport_cert_criterion`
+
+继续唯一承担原 `ValidTransportCert` 的公开合取展开。57.3-C 的目标是证明类型化证书经遗忘后恰为该谓词；不得把 `SemanticTransportCertificate` 的字段再平铺成另一个永久有效性定义并让下游自行选择。
+
+既有冻结定理
+
+`valid_transport_cert_fails_if_any_clause_fails`
+
+可直接用于证明：收据、条件输运、全定义或失败—反驳见证任一缺失时，57.3-C 右侧不成立，因而左侧也不成立。本部不重证四项删除失败律。
+
+既有冻结定理
+
+`falsifiable_prediction_failure_is_not_const_false`
+
+继续排除冻结载体中恒假失败谓词。57.3 的类型化失败见证提供更细的运行结果，但不把该非退化定理改写成新的全局存在公理。
+
+既有冻结定理
+
+`overreach_without_license`
+
+继续唯一承担许可证、条件保留、越界与扩域重开的组合结论。57.3-D—57.3-E 只给出新语义层的收口与遗忘桥，不复制该组合包。
+
+既有冻结定理
+
+`domain_expansion_reopens_completion`
+
+继续提供“旧域闭合不推出扩域闭合”的有限反例。故 `SemanticStrictSubset` 不能被弱化为普通包含，`OverreachClosure` 也不能从旧域局部闭合自动构造。
+

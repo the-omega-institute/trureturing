@@ -1,0 +1,10 @@
+ast_path: section/57-5-4-唯一真源纪律/clause/7
+fingerprints:
+  raw_sha256: sha256:f2ad83f0e62e64fc30e018c64707e0ff5bb6261c17f05262809f62967a2c434d
+  normalized_sha256: sha256:f2ad83f0e62e64fc30e018c64707e0ff5bb6261c17f05262809f62967a2c434d
+cas_ref: sha256:f2ad83f0e62e64fc30e018c64707e0ff5bb6261c17f05262809f62967a2c434d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

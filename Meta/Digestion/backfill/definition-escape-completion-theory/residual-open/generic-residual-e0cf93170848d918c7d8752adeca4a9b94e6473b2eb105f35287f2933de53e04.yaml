@@ -1,0 +1,13 @@
+ast_path: section/57-1-1-第-54-3-5-条拒因-直接投影不等式不是完整洗白语义
+fingerprints:
+  raw_sha256: sha256:e0cf93170848d918c7d8752adeca4a9b94e6473b2eb105f35287f2933de53e04
+  normalized_sha256: sha256:e0cf93170848d918c7d8752adeca4a9b94e6473b2eb105f35287f2933de53e04
+cas_ref: sha256:e0cf93170848d918c7d8752adeca4a9b94e6473b2eb105f35287f2933de53e04
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-a141a93ededb3da4e9f201af3ea789709ebf00d088f6cc66717a5c5ea6187d90-c49c785185b8b1e136d376bfea9b18ba74cd4d13f8d4f2949559d5bbd5e5f8cd
+    - generic-residual-f6e9b319503e870e7aaa1cb0e8c4d3be068390d53347916daf5ad731c1141b8e-f06af7d7ea28b70a0ce35cc9a27abc8211a941b34e4aa974ea77c94a60969dea

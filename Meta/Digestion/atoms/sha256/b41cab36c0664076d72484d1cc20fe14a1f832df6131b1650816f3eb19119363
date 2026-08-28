@@ -1,0 +1,95 @@
+### 57.2.3 语义重评框架
+
+```lean
+structure RegradeSemantics
+    (Commitment Evidence Verdict Time Coordinate : Type u)
+    (Report : Type v) where
+  protected : Commitment → Coordinate
+  evaluate : Commitment → Evidence → Verdict
+  arrival : Evidence → Time
+  freezeTime : Commitment → Time
+  visibleAtFreeze : Commitment → Evidence → Prop
+  reportOriginal : Report → Commitment
+  reportRevised : Report → Commitment
+  reportEvidence : Report → Evidence
+  reportVerdict : Report → Verdict
+  reportAttributedTo : Report → Commitment
+  reportOccurredAt : Report → Time
+  reportVerdictCorrect :
+    ∀ report,
+      reportVerdict report =
+        evaluate (reportRevised report) (reportEvidence report)
+```
+
+`RegradeSemantics` 是对既有承诺与报告载体的解释器。它不新建承诺或报告字段，而是说明如何从已有载体读取保护坐标、评价、到达时间、冻结时间、冻结可见性及报告各项。最后一项把“报告判词确为修订承诺对旧证据的实际评价”提升为解释器定律，禁止调用方另传一个不受约束的成功布尔值。
+
+```lean
+structure SemanticRegrade
+    {Commitment Evidence Verdict Time Coordinate : Type u}
+    {Report : Type v}
+    (S : RegradeSemantics Commitment Evidence Verdict Time Coordinate Report)
+    where
+  report : Report
+  originalVerdict : Verdict
+  originalVerdictCorrect :
+    originalVerdict =
+      S.evaluate (S.reportOriginal report) (S.reportEvidence report)
+```
+
+`SemanticRegrade` 在既有报告之外只增加原承诺对同一证据的实际判词及其正确性证明。修订判词仍唯一来自报告和 `S.reportVerdictCorrect`。该结构不要求两个判词不同；“重评”表示评价坐标发生切换，不表示评价值必然变化。
+
+```lean
+def SemanticRegradeAt
+    {Commitment Evidence Verdict Time Coordinate : Type u}
+    {Report : Type v}
+    {S : RegradeSemantics Commitment Evidence Verdict Time Coordinate Report}
+    (regrade : SemanticRegrade S)
+    (oldK newK : Commitment)
+    (Z : Evidence) : Prop :=
+  S.reportOriginal regrade.report = oldK ∧
+    S.reportRevised regrade.report = newK ∧
+    S.reportEvidence regrade.report = Z
+```
+
+`SemanticRegradeAt` 把语义重评定位到显式的原承诺、修订承诺与证据。它只表达报告身份，不把时间条件、坐标改变或归因条件重复塞入同一谓词。
+
+```lean
+def PostArrivalSemanticRegrade
+    {Commitment Evidence Verdict Time Coordinate : Type u}
+    {Report : Type v}
+    [LT Time]
+    (S : RegradeSemantics Commitment Evidence Verdict Time Coordinate Report)
+    (regrade : SemanticRegrade S) : Prop :=
+  S.arrival (S.reportEvidence regrade.report) <
+    S.freezeTime (S.reportRevised regrade.report)
+```
+
+`PostArrivalSemanticRegrade` 对应正文级严格时间口径：证据的首次到达时刻严格早于修订承诺的冻结时刻。它不提报告时间戳，也不把事件编号与时钟值视为同一类型。
+
+```lean
+def FreezeVisibleSemanticRegrade
+    {Commitment Evidence Verdict Time Coordinate : Type u}
+    {Report : Type v}
+    (S : RegradeSemantics Commitment Evidence Verdict Time Coordinate Report)
+    (regrade : SemanticRegrade S) : Prop :=
+  S.visibleAtFreeze
+    (S.reportRevised regrade.report)
+    (S.reportEvidence regrade.report)
+```
+
+`FreezeVisibleSemanticRegrade` 对应第 54.3 部后置 Lean 草图的冻结可见口径。它与严格到达后谓词分别命名，因而滤过可见性不能在没有桥的情况下冒充时钟不等式。
+
+```lean
+structure RegradeTemporalBridge
+    {Commitment Evidence Verdict Time Coordinate : Type u}
+    {Report : Type v}
+    [LT Time]
+    (S : RegradeSemantics Commitment Evidence Verdict Time Coordinate Report) :
+    Prop where
+  visibility_iff_arrival :
+    ∀ K Z,
+      S.visibleAtFreeze K Z ↔ S.arrival Z < S.freezeTime K
+```
+
+`RegradeTemporalBridge` 是两种时间口径之间唯一允许的转换接口。它必须对相关承诺与证据给出精确双向关系；事件滤过单调、时钟单调或“首次可见”名称本身均不自动生成该结构。
+

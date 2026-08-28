@@ -1,0 +1,21 @@
+## v1.5 — 2026-08-28
+
+追加存入：
+
+- 七个既有保护坐标的有限标签 `ProtectedCoordinateTag`、依值类型 `ProtectedCoordinateValue` 与唯一投影 `protectedCoordinateAt`；
+- 可靠坐标见证束 `CoordinateWitnessBundle`、完备条件 `Closed` 及封闭非空存在谓词；
+- 对既有承诺与报告载体的宇宙多态解释器 `RegradeSemantics`；
+- 同时携带原评价证明并复用报告修订评价证明的 `SemanticRegrade`；
+- 正文级严格到达、草图级冻结可见及显式 `RegradeTemporalBridge`；
+- 不要求判词改变或报告时间戳等于冻结时刻的正文级 `SemanticTargetLaunderingAt`；
+- 保留草图额外时间戳条件的 `SemanticSketchTargetLaunderingAt`；
+- 带正确性证明的 `TargetLaunderingDecision`；
+- 带 `Option` 运行结果、域成员、失败关系与反驳关系的 `TransportSemanticFrame`；
+- 由成员关系定义的新域差与严格扩域；
+- 同一次运行上的 `TransportFailureWitness` 与 `TransportRefutationWitness`；
+- 五项合法性条件组成的 `SemanticTransportCertificate` 及其 Prop 闭包；
+- 精确保留报告条件的 `LicensedSemanticTransportReport`、`OverreachClosure` 与 `SemanticOverreach`；
+- 回降到第 54.3 部 `TransportSemantics`、`ValidTransportCert` 与 `Overreach` 的唯一遗忘映射及双向桥；
+- 五条 57.2 义务与五条 57.3 义务，共十条 elementary 证明目标；
+- 第 56 部十二条已证义务零重证，第 55 部开放问题零结算；
+- 零新增首创声明，零既有段落回写，零第二真源。

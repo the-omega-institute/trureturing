@@ -214,6 +214,102 @@ internal static class ScribeTestMapDeriver
             .Split('\n')
             .Where(static line => line.Contains("NoWarn", StringComparison.Ordinal))
             .Any(static line => line.Contains("RS0030", StringComparison.Ordinal));
+    // #3670:hang-guard 预算的声明写着「never bears a test verdict」,但那只是**声明** ——
+    // 只有走 `TestProcessRunner` 时超时才变成 `SkipException`;走 `BoundedProcessRunner`
+    // 时它抛 `TimeoutException`,于是**恰好承担了判词**。本判据把声明与路由钉在一起。
+    //
+    // **归因的诚实交代(一轮评审在同族改动上判过这一点)**:本方法自己读 `tools/tests/**`,
+    // 而 `ScribeTestMapDeriver` 的 declared/unknown 账**看不见**这次读取 ——
+    // 调用方的方法体里只有一个它不识别的名字。当前它仍可达,**理由是
+    // `EngineeringTestPlanPolicy.IsFullSurface` 把 `tools/` 下任何改动转 Full**,
+    // 不是因为归因成立。**不得把「住在 Engine、受 SL-022 保护」冒充为「I/O 已归因」。**
+    // 正确收口是让这类 repository query 成为映射器可归因的 governed read;那是一条独立的工作。
+    //
+    // **判据的已知反例集合(不完整,逐条写出来)**:本方法按 XML 结构判 `PackageReference` /
+    // `AdditionalFiles` / `NoWarn`,故比子串强;但它**看不见**:
+    // ① 观察者本身被删除或从 `Compile` 排除(#3416 的 test-identity gap);
+    // ② `IncludeAssets`/`ExcludeAssets` 排除 analyzers;
+    // ③ `Directory.Build.props` 等继承来的 `NoWarn` / `WarningsNotAsErrors` / ruleset / globalconfig;
+    // ④ 经 MSBuild 属性或 import 间接给出的 `Include` 值;
+    // ⑤ 源文件内的 `#pragma warning disable RS0030` 与 `.editorconfig` 严重性降级。
+    internal static IReadOnlyList<string> FindUnroutedHangGuardCalls(string repositoryRoot)
+    {
+        var offenders = new List<string>();
+        foreach (var file in GitIndexRepositoryFiles.Enumerate(repositoryRoot))
+        {
+            if (!file.RelativePath.StartsWith(ManagedTestProjectPrefix, StringComparison.Ordinal)
+                || !file.RelativePath.EndsWith(".cs", StringComparison.Ordinal)
+                || file.RelativePath.EndsWith("/TestProcessRunner.cs", StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            var source = File.ReadAllText(file.FullPath);
+            offenders.AddRange(UnroutedHangGuardCalls(file.RelativePath, source));
+        }
+
+        return offenders.Order(StringComparer.Ordinal).ToArray();
+    }
+
+    private static IEnumerable<string> UnroutedHangGuardCalls(string path, string source)
+    {
+        const string Call = "BoundedProcessRunner.Run(";
+        for (var index = source.IndexOf(Call, StringComparison.Ordinal);
+             index >= 0;
+             index = source.IndexOf(Call, index + Call.Length, StringComparison.Ordinal))
+        {
+            // raw-string literal 里的示例代码不是真调用。
+            if (CountText(source[..index], "\"\"\"") % 2 == 1)
+            {
+                continue;
+            }
+
+            // 取**该调用自己的实参列表**(括号平衡)。固定窗口会跨进相邻调用:
+            // 第一版正因此把一处**故意**用 `ZeroDuration` 的调用误报为违规。
+            var arguments = BalancedArguments(source, index + Call.Length);
+            if (arguments.Contains("HangGuard", StringComparison.Ordinal)
+                || arguments.Contains("HangDetectionBudget", StringComparison.Ordinal))
+            {
+                yield return $"{path}:{CountText(source[..index], "\n") + 1}";
+            }
+        }
+    }
+
+    private static string BalancedArguments(string source, int start)
+    {
+        var depth = 0;
+        for (var index = start; index < source.Length; index++)
+        {
+            if (source[index] == '(')
+            {
+                depth++;
+            }
+            else if (source[index] == ')')
+            {
+                if (depth == 0)
+                {
+                    return source[start..index];
+                }
+
+                depth--;
+            }
+        }
+
+        return source[start..];
+    }
+
+    private static int CountText(string text, string needle)
+    {
+        var count = 0;
+        var index = text.IndexOf(needle, StringComparison.Ordinal);
+        while (index >= 0)
+        {
+            count++;
+            index = text.IndexOf(needle, index + needle.Length, StringComparison.Ordinal);
+        }
+
+        return count;
+    }
 
     internal static IReadOnlyList<string> FindOrphanManagedSources(
         IEnumerable<string> sourcePaths,
