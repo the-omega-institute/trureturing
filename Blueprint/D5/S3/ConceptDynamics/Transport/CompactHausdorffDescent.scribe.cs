@@ -17,10 +17,16 @@ internal sealed class CompactHausdorffDescentDocument : IScribeDocumentDefinitio
         Formula mapType = Call("ContinuousMap", source, quotient);
         Formula observableType = Call("ContinuousMap", source, target);
         Formula factorType = Call("ContinuousMap", quotient, target);
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
         Formula statement = Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Call("CompactSpace", source), Comma, Sp,
-            Call("HausdorffSpace", quotient), Comma, RowBreak, Grp(),
+            Forall, Sp, source, Comma, Sp, quotient, Comma, Sp, target,
+            Colon, Sp, type, Comma, RowBreak, Grp(),
+            Typeclass("TopologicalSpace", source), Comma, Sp,
+            Typeclass("TopologicalSpace", quotient), Comma, Sp,
+            Typeclass("TopologicalSpace", target), Comma, RowBreak, Grp(),
+            Typeclass("CompactSpace", source), Comma, Sp,
+            Typeclass("T2Space", quotient), Comma, RowBreak, Grp(),
             map, Colon, Sp, mapType, Comma, Sp,
             Call("Surjective", map), Comma, RowBreak, Grp(),
             observable, Colon, Sp, observableType, Comma, Sp,
@@ -54,4 +60,7 @@ internal sealed class CompactHausdorffDescentDocument : IScribeDocumentDefinitio
                                 + "continuous factor through q."))),
                     DescribeRole.Theorem))));
     }
+
+    private static Formula Typeclass(string name, Formula type) =>
+        Seq(OpenBracket, Call(name, type), CloseBracket);
 }
