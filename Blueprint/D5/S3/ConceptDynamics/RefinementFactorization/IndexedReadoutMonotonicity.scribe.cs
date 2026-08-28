@@ -36,17 +36,38 @@ internal sealed class IndexedReadoutMonotonicityDocument : IScribeDocumentDefini
     private static Formula MonotonicityFormula()
     {
         Formula indexType = F.Id("I");
+        Formula state = F.Id("X");
+        Formula output = F.Id("O");
+        Formula readout = F.Id("q");
+        Formula index = F.Id("i");
         Formula smaller = F.Id("J");
         Formula larger = F.Id("K");
-        Formula smallerReadout = new Formula.Subscript(F.Id("q"), smaller);
-        Formula largerReadout = new Formula.Subscript(F.Id("q"), larger);
+        Formula smallerReadout = new Formula.Subscript(readout, smaller);
+        Formula largerReadout = new Formula.Subscript(readout, larger);
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
 
-        return Disp(Seq(
-            smaller, Comma, Sp, larger, Sp, InMacro, Sp,
-            Call("Finset", indexType), Comma, Sp,
+        return Disp(new Formula.Aligned([
+            Seq(Forall, Sp, Typed(Seq(indexType, Comma, Sp, state), type), Comma),
+            Seq(Grp(), Forall, Sp,
+                Typed(output, Arrow(indexType, type)), Comma),
+            Seq(Grp(), Forall, Sp,
+                Typed(readout, Seq(Forall, Sp, Typed(index, indexType), Comma, Sp,
+                    Arrow(state, Apply(output, index)))), Comma),
+            Seq(Grp(), Forall, Sp,
+                Typed(Seq(smaller, Comma, Sp, larger), Call("Finset", indexType)), Comma, Sp,
             smaller, Sp, Subseteq, Sp, larger, Sp, Rightarrow, Sp,
             Call("Refines", smallerReadout, largerReadout), Sp, Land, Sp,
             Call("ker", largerReadout), Sp, Subseteq, Sp,
-            Call("ker", smallerReadout), Dot));
+                Call("ker", smallerReadout), Dot),
+        ]));
     }
+
+    private static Formula Arrow(Formula domain, Formula codomain) =>
+        Seq(domain, Sp, To, Sp, codomain);
+
+    private static Formula Typed(Formula value, Formula type) =>
+        Seq(value, Colon, Sp, type);
+
+    private static Formula Apply(Formula function, Formula argument) =>
+        Seq(function, Open, argument, Close);
 }

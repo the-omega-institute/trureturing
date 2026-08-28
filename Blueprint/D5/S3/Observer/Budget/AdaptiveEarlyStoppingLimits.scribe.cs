@@ -129,20 +129,36 @@ internal sealed class AdaptiveEarlyStoppingLimitsDocument
     private static Formula Outputs(Formula question) =>
         Call("singleExperimentOutputs", question);
 
-    private static Formula AdaptiveDepth(Formula state, Formula readout) =>
-        Call("adaptiveIdentificationDepth", state, readout);
+    private static Formula AdaptiveDepth(Formula readout, Formula identifiable) =>
+        Call("adaptiveIdentificationDepth", readout, identifiable);
 
     private static Formula TranscriptSpace(Formula branching, Formula depth) =>
         Call("TranscriptSpace", branching, depth);
 
     private static Formula WorstCaseFormula()
     {
+        Formula question = F.Id("Question");
         Formula state = F.Id("X");
         Formula readout = F.Id("q");
         Formula branching = F.Id("B");
-        return Disp(Seq(
-            Call("clog", branching, Card(state)), Sp, Leq, Sp,
-            AdaptiveDepth(state, readout), Dot));
+        Formula identifiable = F.Id("identifiable");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
+        Formula readoutType = new Formula.TypeArrow(question,
+            new Formula.TypeArrow(state, Call("Fin", branching)));
+        Formula identifiableType = Seq(
+            Exists, Sp, F.Id("depth"), Colon, Sp, naturals, Comma, Sp,
+            Call("ExactAtDepth", readout, F.Id("depth")));
+
+        return Disp(new Formula.Aligned([
+            Seq(Forall, Sp, question, Comma, Sp, state, Colon, Sp, type, Comma, Sp,
+                OpenBracket, Call("Fintype", state), CloseBracket, Comma),
+            Seq(Grp(), Forall, Sp, branching, Colon, Sp, naturals, Comma),
+            Seq(Grp(), Forall, Sp, readout, Colon, Sp, readoutType, Comma),
+            Seq(Grp(), Forall, Sp, identifiable, Colon, Sp, identifiableType, Comma),
+            Seq(Grp(), Call("clog", branching, Card(state)), Sp, Leq, Sp,
+                AdaptiveDepth(readout, identifiable), Dot),
+        ]));
     }
 
     private static Formula TightFormula()

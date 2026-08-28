@@ -6,7 +6,7 @@ A finite discussion admits at most the initially unresolved number of strict ref
 
 **Theorem 1.1 (Finite discussions have a sharp strict-refinement budget).**
 
-$$\begin{gathered}\forall X, [\operatorname{Fintype}(X)], n \in \mathbb{N},\\(\forall i, 0 \leq i \leq n, C_{i}: \operatorname{Type}, q_{i}: X \to C_{i}, \operatorname{Surjective}(q_{i})) \land\\(\forall i, 0 \leq i < n, \operatorname{StrictRefinement}(q_{i}, q_{i+1})) \Rightarrow\\n \leq \lvert X \rvert - \lvert \operatorname{Im}(q_{0}) \rvert.\end{gathered}$$
+$$\begin{aligned}\forall X: \operatorname{Type}, [\operatorname{Fintype}(X)], steps: \mathbb{N},\\{}\forall Coordinate: \operatorname{Fin}(steps + 1) \to \operatorname{Type},\\{}\forall concept: \forall i: \operatorname{Fin}(steps + 1), \operatorname{Concept}(X, Coordinate(i)),\\{}\forall effective: \forall i: \operatorname{Fin}(steps + 1), \operatorname{Surjective}(concept(i)),\\{}\forall strict: \forall i: \operatorname{Fin}(steps), \operatorname{StrictRefinement}(concept(\operatorname{castSucc}(i)), concept(\operatorname{succ}(i))),\\{}steps \leq \lvert X \rvert - \lvert \operatorname{Im}(concept(0)) \rvert.\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Discussion/FiniteDiscussionStability.finite_discussion_stability` (`✓ std3`). ∎
 
