@@ -52,6 +52,12 @@ theorem finite_future_split_budget
       simp [stepsZero]
   | inr nonemptyX =>
       letI : Nonempty X := nonemptyX
+      letI : Finite (Set.range (readout 0)) :=
+        Finite.of_surjective
+          (fun x : X => (⟨readout 0 x, ⟨x, rfl⟩⟩ : Set.range (readout 0)))
+          (by
+            rintro ⟨_, x, rfl⟩
+            exact ⟨x, rfl⟩)
       letI : Nonempty (Set.range (readout 0)) :=
         (Set.range_nonempty (readout 0)).to_subtype
       have initialPositive : 1 <= Nat.card (Set.range (readout 0)) :=

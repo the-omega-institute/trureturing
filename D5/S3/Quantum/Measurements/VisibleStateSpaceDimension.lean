@@ -43,11 +43,15 @@ local instance systemCarrierFiniteDimensional (d : Nat) (system : MatrixOperator
       system.carrier.subtype Subtype.val_injective
 private theorem cstar_trace_add {d : Type*} [Fintype d] (first second : MatrixAlgebra d) :
     Matrix.trace (first + second) = Matrix.trace first + Matrix.trace second := by
-  simp [Matrix.trace, Finset.sum_add_distrib]
+  change Matrix.trace ((first : Matrix d d ℂ) + (second : Matrix d d ℂ)) =
+    Matrix.trace (first : Matrix d d ℂ) + Matrix.trace (second : Matrix d d ℂ)
+  exact Matrix.trace_add _ _
 private theorem cstar_trace_real_smul {d : Type*} [Fintype d] (scalar : ℝ)
     (matrix : MatrixAlgebra d) :
     Matrix.trace (scalar • matrix) = scalar • Matrix.trace matrix := by
-  simp [Matrix.trace, Finset.mul_sum]
+  change Matrix.trace ((scalar : ℂ) • (matrix : Matrix d d ℂ)) =
+    (scalar : ℂ) • Matrix.trace (matrix : Matrix d d ℂ)
+  exact Matrix.trace_smul _ _
 private noncomputable def ambientStateReadout (d : Nat) (system : MatrixOperatorSystem (Fin d)) :
     Matrix (Fin d) (Fin d) ℂ →ₗ[ℝ] (system.carrier →L[ℝ] ℝ) where
   toFun matrix := LinearMap.toContinuousLinearMap {

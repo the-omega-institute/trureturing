@@ -255,17 +255,17 @@ private theorem rayCoefficient_dilationSum (weight : ℕ → ℚ) (F : Bivariate
     (ray : PrimitiveRay) (n : ℕ) (hn : 0 < n) :
     rayCoefficient (dilationSum weight F) ray n =
       ∑ kr ∈ n.divisorsAntidiagonal, weight kr.1 * rayCoefficient F ray kr.2 := by
-  rw [rayCoefficient_pos _ _ _ hn, coeff_dilationSum_ray]
+  refine (rayCoefficient_pos (dilationSum weight F) ray n hn).trans
+    ((coeff_dilationSum_ray weight F ray (⟨n, hn⟩ : ℕ+)).trans ?_)
   apply Finset.sum_congr rfl
   intro kr hkr
   have hr : 0 < kr.2 :=
     Nat.pos_of_ne_zero (Nat.right_ne_zero_of_mem_divisorsAntidiagonal hkr)
-  rw [rayCoefficient_pos _ _ _ hr]
   have hpnat : Nat.toPNat' kr.2 = (⟨kr.2, hr⟩ : ℕ+) := by
     apply PNat.eq
     rw [Nat.toPNat'_coe, if_pos hr]
     rfl
-  rw [hpnat]
+  rw [hpnat, rayCoefficient_pos _ _ _ hr]
 
 private theorem logarithmicHistory_ray_expansion (H : BivariateSeries)
     (ray : PrimitiveRay) (n : ℕ) (hn : 0 < n) :

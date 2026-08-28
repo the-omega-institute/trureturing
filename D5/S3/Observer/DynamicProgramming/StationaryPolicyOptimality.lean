@@ -298,7 +298,8 @@ theorem reachable_only_greed_does_not_imply_global_optimality :
           if nextState = state then 1 else 0) (1 / 2) (fun _ => false)) policyValue := by
     apply BoundedContinuousFunction.ext
     intro state
-    rw [stationaryPolicyBellmanOperator, discounted_loss_bellman_operator_apply]
+    unfold stationaryPolicyBellmanOperator
+    rw [discounted_loss_bellman_operator_apply]
     fin_cases state <;> norm_num [policyValue]
   refine ⟨stochastic, optimalFixed, policyFixed, ?_, ?_⟩
   · intro state reachable
@@ -313,7 +314,8 @@ theorem reachable_only_greed_does_not_imply_global_optimality :
       | tail path step ih =>
           exact (stepEq step).trans ih
     subst state
-    rw [stationaryPolicyBellmanOperator, discounted_loss_bellman_operator_apply,
+    unfold stationaryPolicyBellmanOperator
+    rw [discounted_loss_bellman_operator_apply,
       discounted_loss_bellman_operator_apply]
     norm_num
   · intro valuesEqual
@@ -346,10 +348,12 @@ theorem discount_factor_lt_one_is_necessary :
     simp
   · apply BoundedContinuousFunction.ext
     intro state
-    rw [stationaryPolicyBellmanOperator, discounted_loss_bellman_operator_apply]
+    unfold stationaryPolicyBellmanOperator
+    rw [discounted_loss_bellman_operator_apply]
     simp
   · intro state
-    rw [stationaryPolicyBellmanOperator, discounted_loss_bellman_operator_apply]
+    unfold stationaryPolicyBellmanOperator
+    rw [discounted_loss_bellman_operator_apply]
   · intro valuesEqual
     change (1 : Unit →ᵇ Real) = 0 at valuesEqual
     have atUnit := congrArg (fun value : Unit →ᵇ Real => value ()) valuesEqual
@@ -376,7 +380,8 @@ theorem singleton_action_policy_is_automatically_greedy
     (gamma : NNReal) (value : State →ᵇ Real) :
     IsBellmanGreedy loss transition gamma (fun _ => ()) value := by
   intro state
-  rw [stationaryPolicyBellmanOperator, discounted_loss_bellman_operator_apply]
+  unfold stationaryPolicyBellmanOperator
+  rw [discounted_loss_bellman_operator_apply]
 #print axioms singleton_action_policy_is_automatically_greedy
 
 /-- In the one-state self-loop model with constant loss three and half discount,

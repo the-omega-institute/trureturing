@@ -282,21 +282,19 @@ private theorem xy_projection_refinement_law
         exact hfine (congrArg Prod.snd hpair)
       simp [hfine, hpair_ne]
   · simp only [if_neg hforget]
-    calc
-      (∑ _ : F, (0 : Real)) = 0 := by simp
-      _ = ∑ x, if (forget (fine x), fine x) = z then ∑ j, p (x, j) else 0 := by
-        apply Eq.symm
-        apply Finset.sum_eq_zero
-        intro x _
-        by_cases hpair : (forget (fine x), fine x) = z
-        · have hsecond : fine x = z.2 := congrArg Prod.snd hpair
-          have hfirst : forget (fine x) = z.1 := congrArg Prod.fst hpair
-          have : forget z.2 = z.1 := by
-            calc
-              forget z.2 = forget (fine x) := congrArg forget hsecond.symm
-              _ = z.1 := hfirst
-          exact (hforget this).elim
-        · simp [hpair]
+    rw [Finset.sum_const_zero]
+    apply Eq.symm
+    apply Finset.sum_eq_zero
+    intro x _
+    by_cases hpair : (forget (fine x), fine x) = z
+    · have hsecond : fine x = z.2 := congrArg Prod.snd hpair
+      have hfirst : forget (fine x) = z.1 := congrArg Prod.fst hpair
+      have : forget z.2 = z.1 := by
+        calc
+          forget z.2 = forget (fine x) := congrArg forget hsecond.symm
+          _ = z.1 := hfirst
+      exact (hforget this).elim
+    · simp [hpair]
 
 private theorem pushforward_entropy_le
     {X Y : Type*} [Fintype X] [Fintype Y]
