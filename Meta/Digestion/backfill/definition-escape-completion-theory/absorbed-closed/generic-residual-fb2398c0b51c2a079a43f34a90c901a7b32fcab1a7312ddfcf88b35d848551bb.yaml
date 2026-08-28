@@ -1,0 +1,17 @@
+ast_path: section/57-2-1-七个保护坐标的有限标签与依值投影
+fingerprints:
+  raw_sha256: sha256:fb2398c0b51c2a079a43f34a90c901a7b32fcab1a7312ddfcf88b35d848551bb
+  normalized_sha256: sha256:fb2398c0b51c2a079a43f34a90c901a7b32fcab1a7312ddfcf88b35d848551bb
+cas_ref: sha256:fb2398c0b51c2a079a43f34a90c901a7b32fcab1a7312ddfcf88b35d848551bb
+coverage_gids:
+  - D5/S3/ConceptDynamics/DefinitionEscapeRegrade/ProtectedCoordinateExtensionality.protected_coordinate_dependent_extensionality
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeRegrade/ProtectedCoordinateExtensionality.protected_coordinate_dependent_extensionality
+      source_sha256: sha256:fb2398c0b51c2a079a43f34a90c901a7b32fcab1a7312ddfcf88b35d848551bb
+      target_statement_id: sha256:e485e871b38271562607aad0dfd4f99b7ff2dec4d0b622141e2a2194f6887908
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeRegrade/ProtectedCoordinateExtensionality.protected_coordinate_dependent_extensionality
+      definition_sha256: sha256:0ad695d9b299c351f600e75109e292a00e5fbcc71290818591ad8540fd587300
+      emission_sha256: sha256:18f4837786123d8259c9a9171a664f619ee2e2553771f6466f8a3c36771eaddc
+  unresolved_subitems: []

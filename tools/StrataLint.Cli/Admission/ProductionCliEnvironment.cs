@@ -457,11 +457,17 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         DepositHeaderCheckCommand.Run(repository, arguments);
 
     public CommandResult Ingest(IReadOnlyList<string> arguments) =>
+        IngestCommand.RunReportFree(
+            repositoryRoot,
+            repository,
+            arguments);
+
+    public CommandResult AlignDigestionStatus(IReadOnlyList<string> arguments) =>
         scribeEmissionVerifier is null
             ? new CommandResult(
                 false,
                 string.Empty,
-                "INGEST_INVALID Scribe emission verifier is unavailable\n")
+                "ALIGN_DIGESTION_STATUS_INVALID Scribe emission verifier is unavailable\n")
             : IngestCommand.Run(
                 repositoryRoot,
                 repository,
