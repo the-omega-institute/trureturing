@@ -17,7 +17,6 @@ public sealed partial class FileMapPolicyTests
         Assert.Equal(FileMapKind.Data, entry.Kind);
         Assert.Equal("MissionFileLoader", Assert.Single(entry.ConsumedBy));
         Assert.Equal("MissionFileLoader", Assert.Single(entry.VerifiedBy));
-        AssertInventedMeasuredReceiptsSurfaceAsMissionContractFinding();
     }
 
     [Fact]

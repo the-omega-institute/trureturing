@@ -283,6 +283,20 @@ public sealed partial class TheoristFrontierContractTests
     }
 
     [Fact]
+    public void DeletedBaselineGovernanceCarrierWithoutContractOrOwnerIsAccepted()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddHistoricalTheoristTarget(
+            "prime-norm-irreducibility",
+            includeContract: false,
+            baselineOwnerKind: "governance",
+            baselineIncludeContract: false);
+        fixture.DeleteTheoristTargetAndOwner();
+
+        Assert.Empty(Evaluate(fixture));
+    }
+
+    [Fact]
     public void LiteralMigratedV2BaselineContractWithFixedMatchingHashIsAcceptedByFullActiveCatalog()
     {
         var fixture = BaselineContractCarrier();

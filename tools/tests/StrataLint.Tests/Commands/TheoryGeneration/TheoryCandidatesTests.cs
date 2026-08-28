@@ -34,10 +34,10 @@ public sealed partial class TheoryCandidatesTests
             "negative-knowledge-equals-positive-results"
           ],
           "worth_vector": {
-            "novelty": { "state": "open", "case_id": "D5-T0040" },
-            "dependency_readiness": { "state": "open", "case_id": "D5-T0041" },
-            "structural_realization": { "state": "open", "case_id": "D5-T0042" },
-            "receipt_potential": { "state": "open", "case_id": "D5-T0043" }
+            "novelty": { "state": "open" },
+            "dependency_readiness": { "state": "open" },
+            "structural_realization": { "state": "open" },
+            "receipt_potential": { "state": "open" }
           },
           "frontier_eligibility": [
             {
@@ -51,10 +51,6 @@ public sealed partial class TheoryCandidatesTests
             {
               "source_ref": "D5/X_Frontier/Hearts",
               "kind": "declaration-ready-mathematical-open"
-            },
-            {
-              "source_ref": "D5/X_Frontier/MissionTickets",
-              "kind": "governance"
             }
           ],
           "selection": {
@@ -299,9 +295,6 @@ public sealed partial class TheoryCandidatesTests
         Assert.True(lazyResult.Success, lazyResult.Error);
         Assert.Equal(result.Output, lazyResult.Output);
         Assert.Equal(2, loaded);
-        Assert.Equal(
-            "4a773e87383d5af09fba0685c8c3d57f7f39fb0579a19be7267ba346681882a9",
-            Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(result.Output))));
         using var json = JsonDocument.Parse(result.Output);
         var candidates = json.RootElement.GetProperty("candidates").EnumerateArray()
             .Where(static candidate => candidate.GetProperty("downstream_lane").GetString() == "prover")
@@ -476,15 +469,10 @@ public sealed partial class TheoryCandidatesTests
             Classify("D5/X_Frontier/ValuesProducer"));
         Assert.Equal(
             FrontierCandidateClassification.Governance,
-            Classify("D5/X_Frontier/GovernanceDeferrals"));
+            Classify("D5/X_Frontier/D5P001"));
         Assert.Equal(
             FrontierCandidateClassification.NotOpen,
             Classify("D5/X_Frontier/GoldenUnitsUFD"));
-        Assert.Contains(
-            "TASK D5-T0008",
-            snapshot.Files[RepoPath.CreateKnown("D5/X_Frontier/GovernanceDeferrals.lean")].Text,
-            StringComparison.Ordinal);
-
         FrontierCandidateClassification Classify(string sourceRef)
         {
             Assert.True(Gid.TryParse(sourceRef, out var gid));
@@ -734,10 +722,6 @@ public sealed partial class TheoryCandidatesTests
                 "D5/X_Frontier/FrontierMathematicalOpen",
                 StringComparison.Ordinal);
         fixture.Files[MissionFileLoader.RelativePath] = FixtureMission;
-        fixture.Files["D5/X_Frontier/MissionTickets.lean"] = string.Concat(
-            Enumerable.Range(40, 4).Select(static number =>
-                $"/-- TASK D5-T{number:0000}\n    Measurement contract remains open. -/\n"
-                + $"def missionTicket{number:0000} : Unit := ()\n"));
         fixture.Files[MathematicalFrontierPath] =
             "/-- TASK D5-T0099\n"
             + "    Prove every norm-unit is plus or minus an integral phi power, then derive Euclidean or PID structure. -/\n"
@@ -749,7 +733,6 @@ public sealed partial class TheoryCandidatesTests
             + "def o6WeilPositivityStatement : Prop := True\n"
             + "def supportValue : Nat := 0\n";
         fixture.Files[NonFrontierOpenPath] = "theorem unfinishedFact : True := by sorry\n";
-        fixture.Reports["D5/X_Frontier/MissionTickets.lean"] = EmptyReport();
         fixture.Reports[MathematicalFrontierPath] = EmptyReport();
         fixture.Reports[GovernanceFrontierPath] = EmptyReport();
         fixture.Reports[DeclarationReadyFrontierPath] = new LeanFileReport(

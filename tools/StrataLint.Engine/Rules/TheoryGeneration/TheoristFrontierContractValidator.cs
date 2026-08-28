@@ -33,7 +33,9 @@ internal static partial class TheoristFrontierContractValidator
         {
             return [];
         }
-        var baselineMission = LoadMission(context.Baseline);
+        // Baseline ownership is read through the typed frontier projection only. The protected
+        // baseline may still carry the retired worth-vector case_id payload.
+        var baselineMission = LoadBaselineMission(context.Baseline);
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         FrozenLedgerBaseView? frozen = null;
         foreach (var path in targets)
@@ -65,7 +67,14 @@ internal static partial class TheoristFrontierContractValidator
                 && baselineOwner is not FrontierEligibilityKind.DeclarationReadyMathematicalOpen;
 
             var isDeletedBaselineSource = baselineFile is not null && !hasCurrentSource;
+            var isGovernanceDeletionExempt = isDeletedBaselineSource
+                && baselineOwner is FrontierEligibilityKind.Governance
+                && !baselineHadContract
+                && !baselineHadLegacyContract
+                && currentMission.UnreadableReason is null
+                && currentOwner is null;
             if (isDeletedBaselineSource
+                && !isGovernanceDeletionExempt
                 && currentOwner is not FrontierEligibilityKind.Retired)
             {
                 findings.Add(new RuleFinding(
@@ -73,6 +82,11 @@ internal static partial class TheoristFrontierContractValidator
                     currentMission.UnreadableReason is { } retirementOwnerReason
                         ? Undecidable("deleted Frontier source retirement ownership", retirementOwnerReason)
                         : "deleted Frontier source requires a retired owner with delivery evidence"));
+                continue;
+            }
+
+            if (isGovernanceDeletionExempt)
+            {
                 continue;
             }
 
@@ -580,28 +594,40 @@ internal static partial class TheoristFrontierContractValidator
     private static MissionOwners LoadMission(RepositorySnapshot snapshot) =>
         MissionFileLoader.Load(snapshot) switch
         {
-            MissionLoadOutcome.Loaded loaded => new MissionOwners(
-                loaded.Policy.FrontierEligibility.ToImmutableDictionary(
-                    static entry => Gid.TryParse(entry.SourceRef, out var gid)
-                        ? gid.Path
-                        : throw new InvalidOperationException(
-                            $"MISSION owner has invalid GID {entry.SourceRef}"),
-                    static entry => entry.Kind),
-                loaded.Policy.FrontierEligibility
-                    .Where(static entry => entry.Kind is FrontierEligibilityKind.Retired)
-                    .ToImmutableDictionary(
-                        static entry => Gid.TryParse(entry.SourceRef, out var gid)
-                            ? gid.Path
-                            : throw new InvalidOperationException(
-                                $"MISSION retirement has invalid GID {entry.SourceRef}"),
-                        static entry => entry.DeliveryGids),
-                null),
+            MissionLoadOutcome.Loaded loaded => BuildMissionOwners(loaded.Policy.FrontierEligibility),
             MissionLoadOutcome.Invalid invalid => new MissionOwners(
                 ImmutableDictionary<RepoPath, FrontierEligibilityKind>.Empty,
                 ImmutableDictionary<RepoPath, ImmutableArray<string>>.Empty,
                 invalid.Error.Message),
             _ => throw new InvalidOperationException("unknown MISSION load outcome"),
         };
+
+    private static MissionOwners LoadBaselineMission(RepositorySnapshot snapshot) =>
+        MissionFileLoader.TryLoadFrontierEligibility(snapshot, out var entries, out var error)
+            ? BuildMissionOwners(entries)
+            : new MissionOwners(
+                ImmutableDictionary<RepoPath, FrontierEligibilityKind>.Empty,
+                ImmutableDictionary<RepoPath, ImmutableArray<string>>.Empty,
+                error ?? "unknown MISSION projection failure");
+
+    private static MissionOwners BuildMissionOwners(
+        ImmutableArray<FrontierEligibilityEntry> entries) =>
+        new(
+            entries.ToImmutableDictionary(
+                static entry => Gid.TryParse(entry.SourceRef, out var gid)
+                    ? gid.Path
+                    : throw new InvalidOperationException(
+                        $"MISSION owner has invalid GID {entry.SourceRef}"),
+                static entry => entry.Kind),
+            entries
+                .Where(static entry => entry.Kind is FrontierEligibilityKind.Retired)
+                .ToImmutableDictionary(
+                    static entry => Gid.TryParse(entry.SourceRef, out var gid)
+                        ? gid.Path
+                        : throw new InvalidOperationException(
+                            $"MISSION retirement has invalid GID {entry.SourceRef}"),
+                    static entry => entry.DeliveryGids),
+            null);
 
     private static string Undecidable(string subject, string reason) =>
         $"{subject} is undecidable because {MissionFileLoader.RelativePath} does not load: {reason}";
@@ -683,6 +709,11 @@ internal static partial class TheoristFrontierContractValidator
 
         return count;
     }
+
+    private static bool HasContractMarker(RepositorySnapshot snapshot, RepoPath path) =>
+        snapshot.TryGetFile(path.Value, out var file)
+        && (CountOccurrences(file.Text, Marker) > 0
+            || CountOccurrences(file.Text, LegacyMarker) > 0);
 
     private sealed record MissionOwners(
         ImmutableDictionary<RepoPath, FrontierEligibilityKind> Entries,
