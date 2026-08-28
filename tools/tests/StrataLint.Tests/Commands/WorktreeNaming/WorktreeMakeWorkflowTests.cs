@@ -99,7 +99,7 @@ public sealed class WorktreeMakeWorkflowTests
             marker,
         };
         commandArguments.AddRange(arguments);
-        return BoundedProcessRunner.Run(
+        return TestProcessRunner.Run(
             "/bin/bash",
             commandArguments,
             fixtureRoot,
@@ -113,7 +113,7 @@ public sealed class WorktreeMakeWorkflowTests
         string error)
     {
         var binDirectory = Path.Combine(fixtureRoot, "bin");
-        return BoundedProcessRunner.Run(
+        return TestProcessRunner.Run(
             "/bin/bash",
             [
                 "-c",
