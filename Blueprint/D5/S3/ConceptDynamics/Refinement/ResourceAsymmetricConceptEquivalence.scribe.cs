@@ -72,10 +72,12 @@ internal sealed class ResourceAsymmetricConceptEquivalenceDocument
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, carrier, Colon, Sp, Operatorname, Grp(F.Id("FiniteType")),
+            Forall, Sp, carrier, Colon, Sp, Operatorname, Grp(F.Id("Type")),
+            Comma, Sp, OpenBracket, Call("Finite", carrier), CloseBracket,
             Comma, RowBreak, Grp(),
             Forall, Sp, permutation, Colon, Sp, carrier, Sp, Equiv, Sp, carrier,
-            Comma, Sp, Forall, Sp, cost, Comma, Sp, Forall, Sp, budget,
+            Comma, Sp, Forall, Sp, cost, Colon, Sp, F.Id("ResourceCost"),
+            Comma, Sp, Forall, Sp, budget,
             Colon, Sp, Mathbb, Grp(F.Id("N")), Comma, RowBreak, Grp(),
             Open, forwardCost, Sp, Leq, Sp, budget, Sp, Land, Sp,
             Neg, Open, inverseCost, Sp, Leq, Sp, budget, Close,

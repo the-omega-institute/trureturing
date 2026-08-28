@@ -59,25 +59,26 @@ internal sealed class AlternatingFiveObserverTypeIrreplaceabilityDocument
         Formula quotientObserver = F.Id("q");
         Formula module = F.Id("V");
         Formula residueField = Call("ZMod", D(5));
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
         Formula linearObserver = Rho;
         Formula blindLocalObserver = new Formula.Subscript(F.Id("o"), F.Id("q"));
         Formula faithfulLocalObserver = new Formula.Subscript(F.Id("o"), Rho);
 
         Formula primePowerClause = Seq(
-            Forall, Sp, prime, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
+            Forall, Sp, prime, Colon, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
             Call("Prime", prime), Sp, Rightarrow, Sp,
-            Forall, Sp, target, Comma, Sp,
-            Open,
-            Call("FiniteGroup", target), Sp, Land, Sp,
-            Call("IsPGroup", prime, target),
-            Close, Sp, Rightarrow, Sp,
+            Forall, Sp, target, Colon, Sp, type, Comma, Sp,
+            OpenBracket, Call("Group", target), CloseBracket, Comma, Sp,
+            OpenBracket, Call("Finite", target), CloseBracket, Comma, Sp,
+            Call("IsPGroup", prime, target), Sp, Rightarrow, Sp,
             Forall, Sp, quotientObserver, Sp, InMacro, Sp,
             Call("Hom", group, target), Comma, Sp,
             Neg, Call("Injective", quotientObserver));
 
         Formula residueLinearClause = Seq(
-            Exists, Sp, module, Comma, Sp,
-            Call("Module", residueField, module), Sp, Land, Sp,
+            Exists, Sp, module, Colon, Sp, type, Comma, Sp,
+            OpenBracket, Call("AddCommGroup", module), CloseBracket, Comma, Sp,
+            OpenBracket, Call("Module", residueField, module), CloseBracket, Comma, Sp,
             Exists, Sp, linearObserver, Sp, InMacro, Sp,
             Call("Hom", group, Call("GL", residueField, module)), Comma, Sp,
             Call("Injective", linearObserver));
@@ -95,9 +96,11 @@ internal sealed class AlternatingFiveObserverTypeIrreplaceabilityDocument
             Call("Faithful", faithfulLocalObserver));
 
         return Disp(Seq(
-            Exists, Sp, group, Comma, Sp,
-            Call("FiniteGroup", group), Sp, Land, Sp,
-            Call("GroupIso", group, alternatingFive), Sp, Land, RowBreak, Grp(),
+            Exists, Sp, group, Colon, Sp, type, Comma, Sp,
+            OpenBracket, Call("Group", group), CloseBracket, Comma, Sp,
+            OpenBracket, Call("Finite", group), CloseBracket, Comma, Sp,
+            Call("Nonempty", Call("GroupIso", group, alternatingFive)),
+            Sp, Land, RowBreak, Grp(),
             Open, primePowerClause, Close, Sp, Land, RowBreak, Grp(),
             Open, residueLinearClause, Close, Sp, Land, RowBreak, Grp(),
             Open, notSingleLocalNotionClause, Close, Dot));

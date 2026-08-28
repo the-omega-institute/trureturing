@@ -56,6 +56,9 @@ internal sealed class FiniteMonotoneTerminationDocument : IScribeDocumentDefinit
         Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
         Formula orbitAtStep = Apply("iterate", update, step, initial);
         Formula orbitLater = Apply("iterate", update, later, initial);
+        Formula first = F.Id("x");
+        Formula second = F.Id("y");
+        Formula identity = F.Id("id");
         Formula termination = Seq(
             Forall, Sp, carrier, Colon, Sp, Operatorname, Grp(F.Id("Type")), Comma, Sp,
             Typeclass("Finite", carrier), Comma, Sp, Typeclass("PartialOrder", carrier), Comma, Esc,
@@ -69,10 +72,16 @@ internal sealed class FiniteMonotoneTerminationDocument : IScribeDocumentDefinit
             step, Sp, Leq, Sp, later, Sp, Rightarrow, Sp,
             orbitLater, Sp, Eq, Sp, orbitAtStep);
         Formula nonunique = Seq(
-            Exists, Sp, F.Id("x"), Comma, Sp, F.Id("y"), Colon, Sp, F.Id("Bool"), Comma, Sp,
-            F.Id("x"), Sp, Neq, Sp, F.Id("y"), Sp, Land, Sp,
-            Apply("IsFixedPt", F.Id("id"), F.Id("x")), Sp, Land, Sp,
-            Apply("IsFixedPt", F.Id("id"), F.Id("y")));
+            Exists, Sp, first, Comma, Sp, second, Colon, Sp, F.Id("Bool"), Comma, Sp,
+            first, Sp, Neq, Sp, second, Sp, Land, Sp,
+            Open, Forall, Sp, later, InMacro, Sp, naturals, Comma, Sp,
+            Apply("iterate", identity, later, first), Sp, Eq, Sp, first, Close,
+            Sp, Land, Sp,
+            Open, Forall, Sp, later, InMacro, Sp, naturals, Comma, Sp,
+            Apply("iterate", identity, later, second), Sp, Eq, Sp, second, Close,
+            Sp, Land, Sp,
+            Apply("IsFixedPt", identity, first), Sp, Land, Sp,
+            Apply("IsFixedPt", identity, second));
 
         return Disp(Seq(Open, termination, Close, Sp, Land, RowBreak, Open, nonunique, Close, Dot));
     }
