@@ -93,6 +93,10 @@ internal sealed class InfinitesimalReducingCriterionDocument : IScribeDocumentDe
 
     private static Formula InfinitesimalCriterionFormula()
     {
+        Formula index = F.Id("n");
+        Formula complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula vector = new Formula.TypeArrow(index, complex);
+        Formula matrix = Call("Matrix", index, index, complex);
         Formula visible = F.Id("V");
         Formula hidden = F.Id("R");
         Formula witness = F.Id("h");
@@ -103,9 +107,13 @@ internal sealed class InfinitesimalReducingCriterionDocument : IScribeDocumentDe
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, visible, Comma, Sp, hidden, Comma, Sp,
+            Forall, Sp, index, Colon, Sp, Operatorname, Grp(F.Id("Type")), Comma, Sp,
+            OpenBracket, Call("Fintype", index), CloseBracket, Comma, Sp,
+            OpenBracket, Call("DecidableEq", index), CloseBracket, Comma, RowBreak, Grp(),
+            visible, Colon, Sp, Call("Submodule", complex, vector), Comma, Sp,
+            hidden, Colon, Sp, Call("Submodule", complex, vector), Comma, Sp,
             witness, Colon, Sp, IsCompl(visible, hidden), Comma, Sp,
-            hamiltonian, Comma, RowBreak, Grp(),
+            hamiltonian, Colon, Sp, matrix, Comma, RowBreak, Grp(),
             hamiltonian, Sp, projection, Sp, Eq, Sp, projection, Sp, hamiltonian,
             Sp, Iff, Sp, RowBreak, Grp(),
             Open, Forall, Sp, time, Colon, Sp, Mathbb, Grp(F.Id("R")), Comma, Sp,

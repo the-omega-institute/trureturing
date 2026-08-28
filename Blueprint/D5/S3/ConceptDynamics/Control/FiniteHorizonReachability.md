@@ -6,7 +6,7 @@ Finite winning stages exactly characterize strategies that force the goal within
 
 **Theorem 1.1 (Winning-stage membership is bounded strategic reachability).**
 
-$$\forall X: Type, U: X \to Type,\\{}R: \forall x, U(x) \to \operatorname{Set}\left(X\right), \forall x, u \in U(x), R_{u} \neq \emptyset,\\{}\operatorname{CPre}\left(S\right) = \{x : \exists u \in U(x), R_{u} \subseteq S\},\\{}W_{0} = G, W_{n+1} = \operatorname{union}\left(W_{n}, \operatorname{CPre}\left(W_{n}\right)\right),\\{}\forall n, x, x \in W_{n} \iff \operatorname{BoundedReachStrategy}\left(R, G, n, x\right).$$
+$$\forall X: Type, U: X \to Type,\\{}G: \operatorname{Set}\left(X\right), W: Nat \to \operatorname{Set}\left(X\right),\\{}R: \forall x, U(x) \to \operatorname{Set}\left(X\right), \forall x, u \in U(x), R_{u} \neq \emptyset,\\{}\operatorname{CPre}\left(S\right) = \{x : \exists u \in U(x), R_{u} \subseteq S\},\\{}W_{0} = G, W_{n+1} = \operatorname{union}\left(W_{n}, \operatorname{CPre}\left(W_{n}\right)\right),\\{}\forall n, x, x \in W_{n} \iff \operatorname{BoundedReachStrategy}\left(R, G, n, x\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Control/FiniteHorizonReachability.finite_horizon_reachability` (`✓ std3`). ∎
 

@@ -1,7 +1,6 @@
 using System.Collections.Immutable;
 using System.Reflection;
 using System.Text.Json;
-using StrataLint.Cli;
 using StrataLint.Engine;
 using static StrataLint.Tests.FrozenLedgerTestData;
 
@@ -10,38 +9,86 @@ namespace StrataLint.Tests;
 public sealed class FrozenLedgerSchemaV4Tests
 {
     [Fact]
-    public void CurrentAttestationWritersOmitProjectionAliasesAndUseTheEventHashAddress()
+    public void CurrentFreezeWriterOmitsProjectionAliasesAndUsesTheEventHashAddress()
     {
         var catalog = BuildCatalog(Module("A"));
-        var baselineBytes = FrozenLedgerGenerator.GenerateGenesis(
-            catalog,
-            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
-        var baseline = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateGenesis(Load(baselineBytes), catalog)).Capability;
-        var freezePayload = Payload(Lines(baselineBytes)[1]);
+        var freezePayload = FrozenLedgerCanonicalWriter.FreezeElement(
+            FrozenLedgerCanonicalWriter.FreezePayload(
+                catalog.Environment,
+                Assert.Single(catalog.ClosedNodes)));
         var freezeEvent = FrozenLedgerCanonicalWriter.WriteDagEvent("Freeze", freezePayload);
-        var reattestedBytes = FrozenLedgerGenerator.AppendReattestation(
-            baseline,
-            Assert.Single(baseline.ActiveEntries).Key,
-            Assert.Single(baseline.ActiveEntries).Value.Payload.Input);
-        var reattestPayload = Payload(Lines(reattestedBytes)[^1]);
 
         Assert.Equal(4, FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion);
         AssertProjectionAliasesAbsent(freezePayload, includesNodePath: true);
-        AssertProjectionAliasesAbsent(reattestPayload, includesNodePath: false);
         Assert.Equal(
             freezeEvent.Hash,
-            FrozenLedgerCanonicalWriter.EventIdentity("Freeze", freezePayload, freezeEvent.Hash));
+            FrozenLedgerCanonicalWriter.EventIdentity(freezeEvent.Hash));
+    }
+
+    [Fact]
+    public void CurrentDagWriterAndCandidateReaderPinSchemaVersionByEventType()
+    {
+        var payload = JsonSerializer.SerializeToElement(new { });
+        var genesis = FrozenLedgerCanonicalWriter.WriteDagEvent("Genesis", payload);
+        var freeze = FrozenLedgerCanonicalWriter.WriteDagEvent("Freeze", payload);
+
+        Assert.Equal(2, SchemaVersion(genesis.Bytes));
+        Assert.Equal(4, SchemaVersion(freeze.Bytes));
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            FrozenLedgerCanonicalWriter.WriteDagEvent("Genesis", payload, 4));
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            FrozenLedgerCanonicalWriter.WriteDagEvent("Freeze", payload, 2));
+
+        AssertRejectedByCandidateReader(WithSchemaVersion(genesis.Bytes, 4), "Genesis", 2);
+        AssertRejectedByCandidateReader(WithSchemaVersion(freeze.Bytes, 2), "Freeze", 4);
+    }
+
+    [Fact]
+    public void CurrentCandidateDagReaderRejectsRetiredV1EnvelopeFields()
+    {
+        var payload = JsonSerializer.SerializeToElement(new { });
+        var freeze = FrozenLedgerCanonicalWriter.WriteDagEvent("Freeze", payload);
+        using var document = JsonDocument.Parse(freeze.Bytes.AsSpan()[..^1].ToArray());
+        var root = System.Text.Json.Nodes.JsonNode.Parse(document.RootElement.GetRawText())!.AsObject();
+        root["previous_hash"] = "sha256:" + new string('0', 64);
+        root["sequence"] = 1;
+        var legacyEnvelope = JsonSerializer.SerializeToElement(root);
+
+        Assert.False(FrozenLedgerCanonicalWriter.ValidateDagEvent(
+            legacyEnvelope,
+            out _,
+            out _,
+            out var validationMessage));
+        Assert.Contains("unknown, missing, or duplicate fields", validationMessage, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void CurrentCandidateFreezeInputRejectsHistoricalMaterializerField()
+    {
+        var catalog = BuildCatalog(Module("A"));
+        var payload = FrozenLedgerCanonicalWriter.FreezeElement(
+            FrozenLedgerCanonicalWriter.FreezePayload(
+                catalog.Environment,
+                Assert.Single(catalog.ClosedNodes)));
+        var withMaterializer = System.Text.Json.Nodes.JsonNode.Parse(payload.GetRawText())!.AsObject();
+        withMaterializer["input"]!.AsObject()["materializer"] = "repository-snapshot-v1";
+
+        var exception = Assert.Throws<FormatException>(() =>
+            FrozenLedger.ParseAcceptedEventInput(
+                "Freeze",
+                JsonSerializer.SerializeToElement(withMaterializer)));
+
+        Assert.Contains("unknown, missing, or duplicate fields", exception.Message, StringComparison.Ordinal);
     }
 
     [Fact]
     public void CurrentFreezeWriterOmitsTheConstantOnlyVerdictFamily()
     {
         var catalog = BuildCatalog(Module("A"));
-        var bytes = FrozenLedgerGenerator.GenerateGenesis(
-            catalog,
-            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
-        var payload = Payload(Lines(bytes)[1]);
+        var payload = FrozenLedgerCanonicalWriter.FreezeElement(
+            FrozenLedgerCanonicalWriter.FreezePayload(
+                catalog.Environment,
+                Assert.Single(catalog.ClosedNodes)));
 
         foreach (var field in new[] { "case_class", "evaluation", "expected", "truth_state" })
         {
@@ -56,11 +103,6 @@ public sealed class FrozenLedgerSchemaV4Tests
             .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly)
             .Select(static property => property.Name)
             .ToHashSet(StringComparer.Ordinal);
-        var reattestFields = typeof(FrozenReattestPayload)
-            .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly)
-            .Select(static property => property.Name)
-            .ToHashSet(StringComparer.Ordinal);
-
         Assert.Empty(freezeFields.Intersect(
         [
             "CaseClass",
@@ -71,7 +113,6 @@ public sealed class FrozenLedgerSchemaV4Tests
             "SemanticReceipt",
             "TruthState",
         ]));
-        Assert.Empty(reattestFields.Intersect(["InputFingerprint", "SemanticReceipt"]));
     }
 
     [Fact]
@@ -108,15 +149,32 @@ public sealed class FrozenLedgerSchemaV4Tests
         }
     }
 
-    private static JsonElement Payload(byte[] line)
+    private static int SchemaVersion(ImmutableArray<byte> bytes)
     {
-        using var document = JsonDocument.Parse(line.AsMemory(0, line.Length - 1));
-        return document.RootElement.GetProperty("payload").Clone();
+        using var document = JsonDocument.Parse(bytes.AsSpan()[..^1].ToArray());
+        return document.RootElement.GetProperty("schema_version").GetInt32();
     }
 
-    private static FrozenLedgerSyntax Load(IEnumerable<byte> bytes)
+    private static JsonElement WithSchemaVersion(ImmutableArray<byte> bytes, int schemaVersion)
     {
-        var loaded = Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes.ToArray()));
-        return loaded.Syntax;
+        using var document = JsonDocument.Parse(bytes.AsSpan()[..^1].ToArray());
+        var root = System.Text.Json.Nodes.JsonNode.Parse(document.RootElement.GetRawText())!.AsObject();
+        root["schema_version"] = schemaVersion;
+        return JsonSerializer.SerializeToElement(root);
     }
+
+    private static void AssertRejectedByCandidateReader(
+        JsonElement value,
+        string eventType,
+        int expectedVersion)
+    {
+        Assert.False(FrozenLedgerCanonicalWriter.ValidateDagEvent(
+            value,
+            out _,
+            out _,
+            out var validationMessage));
+        var expected = $"content-addressed {eventType} schema_version must be {expectedVersion}.";
+        Assert.Equal(expected, validationMessage);
+    }
+
 }
