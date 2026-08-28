@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/QuantumContext/FourierMatrixDefect.fourier_defect_factor_supply
       source_sha256: sha256:52d7db8feb91b7289153275590ebb71a7ed3b348a4db610baf4560778020ea20
-      target_sha256: sha256:31a2bf90de0e4babb70e9ec3a77bfb985bbcdba86efbdec9a5cafd4241ebaedd
+      target_statement_id: sha256:cefd939e8804c672d9f21215c725129f97ce5c91d7eacd537d166b7d5344a146
   scribe:
     - gid: D5/S3/QuantumContext/FourierMatrixDefect.fourier_defect_factor_supply
       definition_sha256: sha256:e8ef0aaf7e4be64de1b9c1d11608709ce7808c971e75402488e9a189ed09ef0b

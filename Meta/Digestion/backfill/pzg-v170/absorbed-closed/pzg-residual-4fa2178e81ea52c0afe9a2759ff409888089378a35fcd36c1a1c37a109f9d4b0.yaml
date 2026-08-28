@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Factorization/PrimeLogIndependence.prime_log_indep
       source_sha256: sha256:4fa2178e81ea52c0afe9a2759ff409888089378a35fcd36c1a1c37a109f9d4b0
-      target_sha256: sha256:e26bad82566079b73221c3b46bcf4d33f0529dc325093b6513c93afb45c90ea9
+      target_statement_id: sha256:366db20aa72f96a99551b7c9454ec3da58afe689a712f11a6bc53972e20ec151
   scribe:
     - gid: D5/S3/Factorization/PrimeLogIndependence.prime_log_indep
       definition_sha256: sha256:a8cfe06df2efe52477d5753774663fa2c1301210888e18b4cbbbdcec925bc2e9

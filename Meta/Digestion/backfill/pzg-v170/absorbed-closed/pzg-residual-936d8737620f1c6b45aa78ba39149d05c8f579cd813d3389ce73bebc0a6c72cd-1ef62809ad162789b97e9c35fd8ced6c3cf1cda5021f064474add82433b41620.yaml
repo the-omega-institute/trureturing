@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Eigenstructure/GoldenFiberCapacityPairs.golden_fiber_capacity_pairs
       source_sha256: sha256:936d8737620f1c6b45aa78ba39149d05c8f579cd813d3389ce73bebc0a6c72cd
-      target_sha256: sha256:8cc038701dfca71ba93c8a6b92dd30a7bc7f120a3af5c53341067674d84142bd
+      target_statement_id: sha256:4640a2c00f4859a428b591863319fc18426167ac360d143ee50a90f78f3095d9
   scribe:
     - gid: D5/S1/Eigenstructure/GoldenFiberCapacityPairs.golden_fiber_capacity_pairs
       definition_sha256: sha256:6540845384d6cceb86009384324cb1a53a953f694d298eee70a2b5ea0ef63c01

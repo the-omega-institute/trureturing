@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/History/HistoryCarrier.marker_splice_laws
       source_sha256: sha256:9769fc54da16892ce6652a0bcfe9659d50422cd45cca32673c3f455dd7bf316e
-      target_sha256: sha256:1158e48c098329d06465176eaf843401f50b10e92b05d648012fd831736768b1
+      target_statement_id: sha256:e153e99d1603a504e1b65fc991bde7759f30a0419184935473ffa09d5b1b6164
   scribe:
     - gid: D5/S0/History/HistoryCarrier.marker_splice_laws
       definition_sha256: sha256:2d3336e1cd67466054ad9d17416488e8ab0bf300aa2aa0de874a96b5a0be0e80

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ArithUnits/Thue.thue_small_representatives
       source_sha256: sha256:6d92f72dfd249f90f883b88c5fdbff27134bff1467624688e82ad7a225f75e82
-      target_sha256: sha256:5e2fe17b38c6567408e5f5a6957c68e96bfb072b76803ffd8fafae7e66d6645a
+      target_statement_id: sha256:368fb808d6df79e2ba6388aeb906a9ed5bf0449a070c9ebe26993c657ef054ff
   scribe:
     - gid: D5/S3/ArithUnits/Thue.thue_small_representatives
       definition_sha256: sha256:ccf70dcbef0df197d4689177915ec689ebb8ab455a3cb9c96bf4a988705b7475

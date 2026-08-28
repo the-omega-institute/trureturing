@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Zeros/Symmetry/OrbitStabilizerMultiplicity.orbit_card_eq_four_div_stabilizer_card
       source_sha256: sha256:832afd880f92bc34b0f9887811b09391db2f547eb59fedb185908551ad601f02
-      target_sha256: sha256:73f2255c58b0554a281c1de4b902d9d3bd1247fec36c4d4a405d94eb22180099
+      target_statement_id: sha256:12e669a0b4cfee9078d942e6535dce6616ece816b30c1de923da90e79d54a485
   scribe:
     - gid: D5/S3/Zeros/Symmetry/OrbitStabilizerMultiplicity.orbit_card_eq_four_div_stabilizer_card
       definition_sha256: sha256:de25fb96f5d8cb1a74c34abf8bf86de6675718846af0aa4327ce642e290fc087

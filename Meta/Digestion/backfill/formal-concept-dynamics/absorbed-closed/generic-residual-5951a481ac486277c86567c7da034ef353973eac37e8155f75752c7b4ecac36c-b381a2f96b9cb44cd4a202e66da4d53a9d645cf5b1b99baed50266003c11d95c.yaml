@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Communication/TruthfulnessSufficiencyIndependence.truthfulness_sufficiency_independence
       source_sha256: sha256:5951a481ac486277c86567c7da034ef353973eac37e8155f75752c7b4ecac36c
-      target_sha256: sha256:dc8725c35d84484be38a7a76dee9c7dc2d8fc00226d82b891abdb63198b813a1
+      target_statement_id: sha256:5ce7a8a061e548d14a516171ebf8ea1e15680ad653a1f68f7a4394f07a7354a4
   scribe:
     - gid: D5/S3/ConceptDynamics/Communication/TruthfulnessSufficiencyIndependence.truthfulness_sufficiency_independence
       definition_sha256: sha256:1eb11f36563144df7c434f25e1ad7aa192468201d119bfc0b9746e8e87a2c4c5

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/ProbabilisticClosure/KernelTranscriptInvariance.statistical_kernel_transcript_law_invariant
       source_sha256: sha256:2c1ebbce6a4226ea1e6cbff44477c84cc88dac52e544e689fbbb872ae41f7732
-      target_sha256: sha256:c79b99a7cf46775a6a27a970a1155eae8dfe4be439e098c7cad544c2c4502907
+      target_statement_id: sha256:0a1691b73e2b9e2705605eafa74a8c263ba3fbfd70fd99e4c1d2ef858e9a52ea
   scribe:
     - gid: D5/S3/Observer/ProbabilisticClosure/KernelTranscriptInvariance.statistical_kernel_transcript_law_invariant
       definition_sha256: sha256:bdd24624d7adc78c4572ef73aeeece42ce21d9127ea46ba92189099102ce2f3b

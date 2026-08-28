@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/PrimeForms/Crossing/ThirdOrderReciprocity.k_reversal_iff
       source_sha256: sha256:5a1dc8841764563f7d7c0dafa39d253a90085c4253c3bffc3081c279584ef787
-      target_sha256: sha256:940a22abfcec6c28ff3b5282939e40d7565df656e50492ef0caa17fdcf54964d
+      target_statement_id: sha256:a0310b83aa26de13cadc6273d302e643af5437ca920e99895c62c61c847af5d6
   scribe:
     - gid: D5/S3/PrimeForms/Crossing/ThirdOrderReciprocity.k_reversal_iff
       definition_sha256: sha256:87e965deee8c3e56e21195622c3e3898115b83faa1b671f8055632540070ed69

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/Fusion/CompatibleFusionEmbedding.compatible_fusion_embedding
       source_sha256: sha256:1c3a819efbaf31462202ea37649b9c7940e6d3131548e5c9080458aa4233aedb
-      target_sha256: sha256:71cf4324c66d160342032d3a468d25e12547446034cf7f3434d0897f1c12239d
+      target_statement_id: sha256:7511c35550e8c469e90d189a29b131265ef3ac526f35f19a7f3fc5b58d9002fc
   scribe:
     - gid: D5/S3/ObserverMemory/Fusion/CompatibleFusionEmbedding.compatible_fusion_embedding
       definition_sha256: sha256:9c937616026bb46f1a3f501ac75bb634be05c74ca3c20ed2b4a7e544bbb0a76b

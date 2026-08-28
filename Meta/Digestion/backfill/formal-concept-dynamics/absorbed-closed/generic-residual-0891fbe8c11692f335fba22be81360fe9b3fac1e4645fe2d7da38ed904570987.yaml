@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/EmpiricalIdentifiability.empirical_identifiability
       source_sha256: sha256:0891fbe8c11692f335fba22be81360fe9b3fac1e4645fe2d7da38ed904570987
-      target_sha256: sha256:702c476d2531a533887675971c7316c475d9da75069c41d1f7e26857256c71ec
+      target_statement_id: sha256:f08089e066fb60e78bcbbd9dfc41da3811c21d328de39d6215d588099e1654da
   scribe:
     - gid: D5/S3/ConceptDynamics/EmpiricalIdentifiability.empirical_identifiability
       definition_sha256: sha256:6c51f7b7aecbfab3a690cebb73ae62dfe2ddbd72414f8aed14d5854342b9ca62

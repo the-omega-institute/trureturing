@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/DivergenceSupport/LandauerIdentity.landauer_identity_from_balances
       source_sha256: sha256:b17e30b52a3577b72e9dd3fa29764d7951a9b00f65afe90686cc728061d271f4
-      target_sha256: sha256:aee52f38e2377b5e547299d4f16c8fcd9cd611aa7091bd034b9367a08a517468
+      target_statement_id: sha256:228d3f8961a93f0d2c981c70bb301d2cbf49372fca35898bd481a936cafa522b
   scribe:
     - gid: D5/S3/DivergenceSupport/LandauerIdentity.landauer_identity_from_balances
       definition_sha256: sha256:400048090265b71df5eef398b4f74fda0e12ad76598d5e3d0d36b97cfbc0ec2a

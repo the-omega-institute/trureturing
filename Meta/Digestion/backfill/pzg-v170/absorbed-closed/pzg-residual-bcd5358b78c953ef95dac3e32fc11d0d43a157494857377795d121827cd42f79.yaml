@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Zeros/ToySpectrum/TwoBodyHeatSeparation.two_body_heat_real_root_separation
       source_sha256: sha256:bcd5358b78c953ef95dac3e32fc11d0d43a157494857377795d121827cd42f79
-      target_sha256: sha256:20b4160ae206ec7c6b3911f54ae237f954322d27e036a553203ec8d2869e4934
+      target_statement_id: sha256:904fc5f0fed6b98a913512d86c5e1d595b6853e2bf42d3ebe3108d23918c7a13
   scribe:
     - gid: D5/S3/Zeros/ToySpectrum/TwoBodyHeatSeparation.two_body_heat_real_root_separation
       definition_sha256: sha256:29aef44ae090a101e7857b515ed8ff955e4408e9edf9a1dd12078c7666bf1906

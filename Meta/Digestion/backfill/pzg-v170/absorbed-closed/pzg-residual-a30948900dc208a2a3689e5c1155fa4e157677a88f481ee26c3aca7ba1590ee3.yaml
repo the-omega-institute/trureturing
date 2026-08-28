@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Factorization/FreeCommMonoid.pnat_free_comm_monoid_on_primes
       source_sha256: sha256:a30948900dc208a2a3689e5c1155fa4e157677a88f481ee26c3aca7ba1590ee3
-      target_sha256: sha256:f31eba4c056b8faf416d7ca63947b7298151495d3473fc2163683eac06d70d8c
+      target_statement_id: sha256:cb80fb5140cb6fdba5350cf5ee1fea447acf9c6c2580be6625900403da5fc76e
   scribe:
     - gid: D5/S3/Factorization/FreeCommMonoid.pnat_free_comm_monoid_on_primes
       definition_sha256: sha256:7cb07a2a16c4e40c72059338fdbc938c02cfd204a84aedc68c95e3f98d1cca84

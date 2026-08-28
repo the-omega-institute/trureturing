@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/MeasurableRefinement/MeasurableFactorInformationInclusion.measurable_factorization_generated_information_inclusion
       source_sha256: sha256:ef51f41c3f173a4e6a29ada379d2ab9a5d94dc0d2a3a37adc0bf05e3232f966f
-      target_sha256: sha256:149a27497159952c5bbc809d924d09bf244cd9e231d4085a66ad0969f19a6cf6
+      target_statement_id: sha256:cb730e6fd9385c6e326ad05e5a9161b5ad75cd17320bb5d7a2aa27204f17c07c
   scribe:
     - gid: D5/S3/ConceptDynamics/MeasurableRefinement/MeasurableFactorInformationInclusion.measurable_factorization_generated_information_inclusion
       definition_sha256: sha256:461f5648964ed7ab9eaba52e7c2406d56bbe469abfcc690bc01e53de9b218d9c
