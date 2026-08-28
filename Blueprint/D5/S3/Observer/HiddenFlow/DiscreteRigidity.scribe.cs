@@ -16,23 +16,7 @@ internal sealed class DiscreteRigidityDocument : IScribeDocumentDefinition
                     "D5/S3/Observer/HiddenFlow/DiscreteRigidity."
                         + "nonzero_integer_action_has_no_continuous_real_extension"),
                 H("Nonzero integer actions have no continuous real extension"),
-                StatementSource.FromAuthor(Disp(Seq(
-                    Forall, Sp, F.Id("jump"), Sp,
-                    InMacro, Sp, Operatorname, Grp(F.Id("AddHom")), Open,
-                    Mathbb, Grp(F.Id("Z")), Comma, Sp,
-                    Prod, Underscore,
-                    Grp(F.Id("p"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("P"))), Sp,
-                    Mathbb, Grp(F.Id("Z")), Underscore, Grp(F.Id("p")), Close,
-                    Comma, Sp, F.Id("jump"), Sp, Neq, Sp, D(0), Sp,
-                    Rightarrow, Sp, Neg, Sp, Exists, Sp, F.Id("flow"), Sp,
-                    InMacro, Sp, Operatorname, Grp(F.Id("CAddHom")), Open,
-                    Mathbb, Grp(F.Id("R")), Comma, Sp,
-                    Prod, Underscore,
-                    Grp(F.Id("p"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("P"))), Sp,
-                    Mathbb, Grp(F.Id("Z")), Underscore, Grp(F.Id("p")), Close,
-                    Comma, Sp,
-                    F.Id("flow"), Sp, Circ, Sp, F.Id("cast"), Underscore,
-                    Grp(Mathbb, Grp(F.Id("Z"))), Sp, Eq, Sp, F.Id("jump"), Dot))),
+                StatementSource.FromAuthor(ObstructionFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -79,4 +63,29 @@ internal sealed class DiscreteRigidityDocument : IScribeDocumentDefinition
                             + "crossed-product universal-property claim and no classification "
                             + "claim for other actions."))),
                 DescribeRole.Theorem))));
+
+    private static Formula ObstructionFormula()
+    {
+        Formula hiddenAddress = F.Id("HiddenAddress");
+        Formula hiddenAddressDefinition = Seq(
+            Prod, Underscore,
+            Grp(F.Id("p"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("P"))), Sp,
+            Mathbb, Grp(F.Id("Z")), Underscore, Grp(F.Id("p")));
+
+        return Disp(Seq(
+                    hiddenAddress, Sp, Colon, Eq, Sp, hiddenAddressDefinition,
+                    Semi, Esc,
+                    Forall, Sp, F.Id("jump"), Sp,
+                    InMacro, Sp, Operatorname, Grp(F.Id("AddHom")), Open,
+                    Mathbb, Grp(F.Id("Z")), Comma, Sp,
+                    hiddenAddress, Close,
+                    Comma, Sp, F.Id("jump"), Sp, Neq, Sp, D(0), Sp,
+                    Rightarrow, Sp, Neg, Sp, Exists, Sp, F.Id("flow"), Sp,
+                    InMacro, Sp, Operatorname, Grp(F.Id("CAddHom")), Open,
+                    Mathbb, Grp(F.Id("R")), Comma, Sp,
+                    hiddenAddress, Close,
+                    Comma, Sp,
+                    F.Id("flow"), Sp, Circ, Sp, F.Id("cast"), Underscore,
+                    Grp(Mathbb, Grp(F.Id("Z"))), Sp, Eq, Sp, F.Id("jump"), Dot));
+    }
 }
