@@ -6,7 +6,7 @@ A free ignorable observation cannot lower optimal expected value.
 
 **Theorem 1.1 (Free ignorable information has nonnegative value).**
 
-$$\pi_{adm} = \{p \in \pi \mid \forall e, p(e) \in U_{e}\},\\{}W_{0} = \max_{u \in U_{0}} \mathbb{E}(V(X)(u)),\\{}W_{E} = \max_{p \in \pi_{adm}} (\mathbb{E}(V(T(E)(X))(p(E))) - c_{E}),\\{}c_{E} = 0, \forall e, x, T(e)(x) = x,\\{}\forall u \in U_{0}, \operatorname{const}(u) \in \pi,\\{}\forall e, U_{0} \subseteq U_{e}\\{}\Rightarrow W_{E} \geq W_{0}.$$
+$$\forall X, E, U: \operatorname{Type},\\{}\mathbb{E}: \operatorname{Concept}\left(X \to \mathbb{R}, \mathbb{R}\right), observe: \operatorname{Concept}\left(X, E\right), worldAfterObservation: E \to \left(X \to X\right), V: \operatorname{Concept}\left(X, U \to \mathbb{R}\right), informationCost: \mathbb{R}, A0: \operatorname{Set}\left(U\right), A1: E \to \operatorname{Set}\left(U\right), P: \operatorname{Set}\left(E \to U\right), W_{0}, W_{E}: \mathbb{R},\\{}\pi_{adm} = \{p \in \pi \mid \forall e, p(e) \in U_{e}\},\\{}W_{0} = \max_{u \in U_{0}} \mathbb{E}(V(X)(u)),\\{}W_{E} = \max_{p \in \pi_{adm}} (\mathbb{E}(V(T(E)(X))(p(E))) - c_{E}),\\{}\operatorname{IsGreatest}\left(\operatorname{Image}\left(\mathbb{E}, V, A0\right), W_{0}\right), \operatorname{IsGreatest}\left(\operatorname{Image}\left(\mathbb{E}, V, \pi_{adm}\right), W_{E}\right),\\{}c_{E} = 0, \forall e, x, worldAfterObservation(e)(x) = x,\\{}\forall u \in U_{0}, \operatorname{const}(u) \in \pi,\\{}\forall e, U_{0} \subseteq U_{e}\\{}\Rightarrow W_{E} \geq W_{0}.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/DecisionValue/FreeInformationValue.free_ignorable_information_value_nonnegative` (`✓ std3`). ∎
 

@@ -61,7 +61,8 @@ internal sealed class BehaviorCompletionMinimalityDocument
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, stateType, Comma, Sp, outputType, Comma, Sp, refinedType, Comma,
+            Forall, Sp, stateType, Comma, Sp, outputType, Comma, Sp, refinedType,
+            Colon, Sp, F.Seq(F.Operatorname, F.Grp(F.Id("Type"))), Comma,
             RowBreak,
             Typed("F", new Formula.TypeArrow(stateType, stateType)), Comma, Sp,
             Typed("q", new Formula.TypeArrow(stateType, outputType)), Comma, Sp,

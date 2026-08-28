@@ -9,7 +9,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed partial class FormulaCorpusInventoryTests
 {
     private const string CanonicalRendererSha256 =
-        "41ce717abc2f85d0199851522063211fb581d07d7672e0b99b54dfd17790e625";
+        "c983a9cf224d1869ac98c5525dd0e52fc9e15869cc01751e62af2127e14fb5fc";
     private const string UpdateCommand = "make -C tools update-renderer-contract";
 
     [Fact]
@@ -387,6 +387,8 @@ public sealed partial class FormulaCorpusInventoryTests
         var group = new Formula.LatexGroup([x]);
         var sequence = new Formula.LatexSequence([x]);
         var word = new Formula.LatexWord(FormulaIdentifier.Create("word"));
+        // Repository formulas apply subscripted functions such as H_c(p, q).
+        formulas.Add(new Formula.Apply(subscript, [x]));
         formulas.Add(new Formula.Power(additive, x));
         formulas.Add(new Formula.Power(multiplicative, x));
         formulas.Add(new Formula.Power(script, function));
@@ -406,10 +408,20 @@ public sealed partial class FormulaCorpusInventoryTests
         formulas.Add(new Formula.Power(digits, group));
         formulas.Add(new Formula.Power(digits, sequence));
         formulas.Add(new Formula.Power(digits, word));
+        formulas.Add(new Formula.Power(new Formula.Absolute(x), word));
+        formulas.Add(new Formula.Power(
+            new Formula.LatexMacro(FormulaLatexMacro.Phi),
+            sequence));
+        formulas.Add(new Formula.Power(
+            new Formula.LatexMacro(FormulaLatexMacro.Phi),
+            word));
         formulas.Add(new Formula.Power(sequence, group));
+        formulas.Add(new Formula.Power(sequence, digits));
         formulas.Add(new Formula.Power(sequence, sequence));
+        formulas.Add(new Formula.Power(sequence, word));
         formulas.Add(new Formula.Power(word, digits));
         formulas.Add(new Formula.Power(word, group));
+        formulas.Add(new Formula.Power(word, word));
         formulas.Add(new Formula.Power(one, x));
         formulas.Add(new Formula.Power(new Formula.Phi(), one));
         formulas.Add(new Formula.Power(new Formula.Phi(), x));

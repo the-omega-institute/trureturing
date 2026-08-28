@@ -47,6 +47,14 @@ internal sealed class FreeInformationValueDocument : IScribeDocumentDefinition
         Formula state = F.Id("X");
         Formula evidence = F.Id("E");
         Formula action = F.Id("U");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula real = Seq(Mathbb, Grp(F.Id("R")));
+        Formula observe = F.Id("observe");
+        Formula worldAfterObservation = F.Id("worldAfterObservation");
+        Formula informationCost = F.Id("informationCost");
+        Formula actionsBeforeSet = F.Id("A0");
+        Formula actionsAfterSet = F.Id("A1");
+        Formula candidatePoliciesSet = F.Id("P");
         Formula expectation = Seq(Mathbb, Grp(F.Id("E")));
         Formula utility = F.Id("V");
         Formula transition = F.Id("T");
@@ -83,17 +91,38 @@ internal sealed class FreeInformationValueDocument : IScribeDocumentDefinition
         Formula safeguards = Seq(
             cost, Sp, Eq, Sp, D(0), Comma, Sp,
             Forall, Sp, observedValue, Comma, Sp, currentState, Comma, Sp,
-            Apply(Apply(transition, observedValue), currentState), Sp, Eq, Sp,
+            Apply(Apply(worldAfterObservation, observedValue), currentState), Sp, Eq, Sp,
             currentState, Comma, RowBreak, Grp(),
             Forall, Sp, selectedAction, Sp, InMacro, Sp, actionsBefore, Comma, Sp,
             constantPolicy, Sp, InMacro, Sp, policies, Comma, RowBreak, Grp(),
             Forall, Sp, observedValue, Comma, Sp, actionsBefore, Sp,
             Subseteq, Sp, Subscript(action, observedValue));
 
+        Formula uninformedGreatest = Call(
+            "IsGreatest", Call("Image", expectation, utility, actionsBeforeSet), uninformed);
+        Formula informedGreatest = Call(
+            "IsGreatest", Call("Image", expectation, utility, admissiblePolicies), informed);
+
         return Disp(Seq(
+            Forall, Sp, state, Comma, Sp, evidence, Comma, Sp, action, Colon, Sp, type,
+            Comma, RowBreak, Grp(),
+            expectation, Colon, Sp,
+            Call("Concept", new Formula.TypeArrow(state, real), real), Comma, Sp,
+            observe, Colon, Sp, Call("Concept", state, evidence), Comma, Sp,
+            worldAfterObservation, Colon, Sp,
+            new Formula.TypeArrow(evidence, new Formula.TypeArrow(state, state)), Comma, Sp,
+            utility, Colon, Sp,
+            Call("Concept", state, new Formula.TypeArrow(action, real)), Comma, Sp,
+            informationCost, Colon, Sp, real, Comma, Sp,
+            actionsBeforeSet, Colon, Sp, Call("Set", action), Comma, Sp,
+            actionsAfterSet, Colon, Sp, new Formula.TypeArrow(evidence, Call("Set", action)),
+            Comma, Sp, candidatePoliciesSet, Colon, Sp,
+            Call("Set", new Formula.TypeArrow(evidence, action)), Comma, Sp,
+            uninformed, Comma, Sp, informed, Colon, Sp, real, Comma, RowBreak, Grp(),
             admissiblePolicyDefinition, Comma, RowBreak, Grp(),
             uninformed, Sp, Eq, Sp, beforeMaximum, Comma, RowBreak, Grp(),
             informed, Sp, Eq, Sp, afterMaximum, Comma, RowBreak, Grp(),
+            uninformedGreatest, Comma, Sp, informedGreatest, Comma, RowBreak, Grp(),
             safeguards, RowBreak, Grp(),
             Rightarrow, Sp, informed, Sp, Geq, Sp, uninformed, Dot));
     }

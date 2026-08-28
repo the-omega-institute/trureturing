@@ -1,0 +1,17 @@
+ast_path: 定理/516.1
+fingerprints:
+  raw_sha256: sha256:d27813635d63c00acc5d5a61a2c5d9945c0cfef194cb7380b0ea7af54d547cfa
+  normalized_sha256: sha256:d27813635d63c00acc5d5a61a2c5d9945c0cfef194cb7380b0ea7af54d547cfa
+cas_ref: sha256:d27813635d63c00acc5d5a61a2c5d9945c0cfef194cb7380b0ea7af54d547cfa
+coverage_gids:
+  - D5/S3/ConceptDynamics/Control/FiniteHorizonReachability.finite_horizon_reachability
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Control/FiniteHorizonReachability.finite_horizon_reachability
+      source_sha256: sha256:d27813635d63c00acc5d5a61a2c5d9945c0cfef194cb7380b0ea7af54d547cfa
+      target_sha256: sha256:c7267ee9059bee8049682c197fbf604e3d2978bc05b5cd61e4527973565c7ce0
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Control/FiniteHorizonReachability.finite_horizon_reachability
+      definition_sha256: sha256:31f474263686eeabad36ce88c1b37caee087442c4b9d7177a1e54628ec94977c
+      emission_sha256: sha256:6720110d2b86d693f8370046cdfce4de8826c79d54c3b63a11c039a4d5798e68
+  unresolved_subitems: []

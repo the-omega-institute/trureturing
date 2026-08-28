@@ -214,7 +214,6 @@ public static class RevocationPlanner
         ArgumentNullException.ThrowIfNull(ledger);
         ArgumentNullException.ThrowIfNull(evidence);
         return Plan(
-            ledger.Events,
             ledger.ActiveEntries,
             ledger.HeadHash,
             ledger.GraphRoot,
@@ -222,7 +221,6 @@ public static class RevocationPlanner
     }
 
     internal static RevocationPlanOutcome Plan(
-        IEnumerable<FrozenLedgerEvent> events,
         IReadOnlyDictionary<string, FrozenActiveEntry> activeEntries,
         string baselineHeadHash,
         string graphRoot,
@@ -244,7 +242,7 @@ public static class RevocationPlanner
             }
 
             var roots = validated.Select(static item => item.RootFrozenNodeId).ToImmutableArray();
-            var closure = ComputeClosure(events, activeEntries, roots);
+            var closure = ComputeClosure(activeEntries, roots);
             return new RevocationPlanOutcome.Accepted(RevocationPlan.Create(
                 closure.RootFrozenNodeIds,
                 closure.AffectedFrozenNodeIds,
@@ -261,7 +259,6 @@ public static class RevocationPlanner
     }
 
     internal static RevocationClosure ComputeClosure(
-        IEnumerable<FrozenLedgerEvent> events,
         IReadOnlyDictionary<string, FrozenActiveEntry> activeEntries,
         IEnumerable<FrozenNodeId> roots)
     {
@@ -278,15 +275,9 @@ public static class RevocationPlanner
         }
 
         var reverse = new Dictionary<FrozenNodeId, HashSet<FrozenNodeId>>();
-        var eventArray = events.ToImmutableArray();
-        var currentEdges = eventArray.Any(static item =>
-                item is FrozenLedgerEvent.Supersede)
-            ? activeEntries.Values.Select(static entry => (
-                Node: entry.Material.FrozenNodeId,
-                Prerequisites: entry.Material.PrerequisiteFrozenNodeIds))
-            : eventArray.OfType<FrozenLedgerEvent.Freeze>().Select(static freeze => (
-                Node: freeze.Payload.FrozenNodeId,
-                Prerequisites: freeze.Payload.PrerequisiteFrozenNodeIds));
+        var currentEdges = activeEntries.Values.Select(static entry => (
+            Node: entry.Material.FrozenNodeId,
+            Prerequisites: entry.Material.PrerequisiteFrozenNodeIds));
         foreach (var (node, prerequisites) in currentEdges)
         {
             foreach (var prerequisite in prerequisites)
