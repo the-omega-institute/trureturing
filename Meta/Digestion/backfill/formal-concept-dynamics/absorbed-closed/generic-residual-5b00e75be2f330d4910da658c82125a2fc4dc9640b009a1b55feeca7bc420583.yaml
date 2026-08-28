@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Epistemic/KnowledgeClosureUnderFiberImplication.knowledge_closure_under_fiber_implication
       source_sha256: sha256:5b00e75be2f330d4910da658c82125a2fc4dc9640b009a1b55feeca7bc420583
-      target_sha256: sha256:d1108826509316b04c451713110da2e027fd1c8668360f3e1777936e64ed7d7d
+      target_statement_id: sha256:4a859c7510f3fc2edef6d8f54957dd2812a4973950e874f86b615b0fe0599fe7
   scribe:
     - gid: D5/S3/ConceptDynamics/Epistemic/KnowledgeClosureUnderFiberImplication.knowledge_closure_under_fiber_implication
       definition_sha256: sha256:bbfa3fd3994fca1a21168e7fcac1154dc3176b915964e80fc17074f6b53a3999

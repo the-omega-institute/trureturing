@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Recurrence/CassiniFricke.cassini_fricke
       source_sha256: sha256:9946cf5142288c99aeae55ae9336a4fe248674def753ca0e148276c1715b42ba
-      target_sha256: sha256:cb60539f80c35f5000805dd7c12e4dc394ae391940d5818fd5763fd0595618e0
+      target_statement_id: sha256:97cd2933011fe88f1166f1238f0179f13a8515e6f49f065b8c6851479ef3298a
   scribe:
     - gid: D5/S1/Recurrence/CassiniFricke.cassini_fricke
       definition_sha256: sha256:e636a31c63f9e9842aeb244646a7cfd827d058cb8ba07838c69abec96b415ae8

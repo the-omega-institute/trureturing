@@ -23,6 +23,56 @@ public sealed partial class BackfillInventoryLoaderTests
     }
 
     [Fact]
+    public void LegacyCoverageTargetSha256KeyIsRejected()
+    {
+        var atom = Atom("delta-v0.1", "partial-open", "delta-atom", "manual/delta");
+        var legacy = atom.Text
+            .Replace(
+                "coverage_gids: []",
+                "coverage_gids:\n  - D5/S0/Carrier/Probe.probe",
+                StringComparison.Ordinal)
+            .Replace(
+                "  coverage: []",
+                "  coverage:\n"
+                + "    - gid: D5/S0/Carrier/Probe.probe\n"
+                + "      source_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000\n"
+                + "      target_sha256: sha256:1111111111111111111111111111111111111111111111111111111111111111",
+                StringComparison.Ordinal);
+
+        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            (atom.Path, legacy))));
+
+        Assert.Contains("coverage receipt keys are not canonical", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void BaselineCoverageProjectionDoesNotInterpretHistoricalTargetField()
+    {
+        var atom = Atom("delta-v0.1", "partial-open", "delta-atom", "manual/delta");
+        var historical = atom.Text
+            .Replace(
+                "coverage_gids: []",
+                "coverage_gids:\n  - D5/S0/Carrier/Probe.probe",
+                StringComparison.Ordinal)
+            .Replace(
+                "  coverage: []",
+                "  coverage:\n"
+                + "    - gid: D5/S0/Carrier/Probe.probe\n"
+                + "      source_sha256: not-a-fingerprint\n"
+                + "      historical_target_field: not-a-statement-identity",
+                StringComparison.Ordinal);
+
+        var inventory = BackfillInventoryLoader.LoadBaseline(Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            (atom.Path, historical)));
+        var entry = Assert.Single(inventory.RequireDigestionEntries());
+
+        Assert.Equal(["D5/S0/Carrier/Probe.probe"], entry.CoverageGids.ToArray());
+        Assert.Empty(entry.Receipts.Coverage);
+    }
+
+    [Fact]
     public void DirectorySourceProjectsIdentityAndStaleAcknowledgments()
     {
         var source = Source("delta-v0.1", "docs/delta.md", "pzg-v1");

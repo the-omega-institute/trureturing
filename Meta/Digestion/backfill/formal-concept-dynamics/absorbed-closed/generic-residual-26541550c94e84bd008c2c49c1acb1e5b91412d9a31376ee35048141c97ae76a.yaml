@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/History/Coding/MinimumRollbackAlphabet.minimum_rollback_alphabet
       source_sha256: sha256:26541550c94e84bd008c2c49c1acb1e5b91412d9a31376ee35048141c97ae76a
-      target_sha256: sha256:87aa426eaddad53abdb7284b010df131626751377c5e9fa9d71e22961060df7b
+      target_statement_id: sha256:c6078eaca6bdd8f6f43bde40a4477f0ffc1efcc9c0c82b24c40fa8316e1b3c04
   scribe:
     - gid: D5/S0/History/Coding/MinimumRollbackAlphabet.minimum_rollback_alphabet
       definition_sha256: sha256:b24ef73b84824a36683d9348a7d1ab37b27af61baead8733520b31c0057b4d7c

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Divergence/LogDerivTrace.trace_mul_logDeriv
       source_sha256: sha256:47149cfc3c2543c7733665caa94334f69dbaf73aeb75ab6dd856834cd6b562e2
-      target_sha256: sha256:746c7b5cb09872d72c261cd8d3455dd7257cd3c910287d7595ba654e81ac5f4e
+      target_statement_id: sha256:f6fc2b2f36fe0ff12234183b5817929ace3e6949f49b2e10b7bf0f4ab5c1bbd5
   scribe:
     - gid: D5/S3/Divergence/LogDerivTrace.trace_mul_logDeriv
       definition_sha256: sha256:146004421936cb2a3f36e68c995f893fbc16e64fb0fb8783f515cc3de9d6babb

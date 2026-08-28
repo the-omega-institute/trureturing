@@ -37,8 +37,7 @@ public sealed partial class ProductionEnvironmentTests
             .CoverageGids.Single();
         var documentGid = ScribeEmissionAttestation.DocumentGid(siblingGid);
         Assert.True(inputs.VerifiedEmissions!.TryGet(documentGid, out var baselineVerified));
-        var targetSha256 = DigestionFingerprint.Compute(
-            Encoding.UTF8.GetBytes(inputs.Files[documentGid + ".lean"])).RawSha256;
+        var targetStatementId = FrozenStatementReceiptTestData.Resolve(inputs.Files, siblingGid);
         var document = inputs.Document.WithDigestionSources(
             inputs.Document.RequireDigestionSources()
                 .Select(source => source with
@@ -53,7 +52,7 @@ public sealed partial class ProductionEnvironmentTests
                                     new DigestionCoverageReceipt(
                                         siblingGid,
                                         entry.Fingerprints.RawSha256,
-                                        targetSha256),
+                                        targetStatementId),
                                 ],
                                 Scribe =
                                 [

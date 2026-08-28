@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/QuantumStates/ReadoutFiberCompactConvex.readout_fiber_compact_convex
       source_sha256: sha256:de23b1d4c82f8fa2136d4b6bf8258f95cfd80d50c86907f5dfd696aa6453a7cc
-      target_sha256: sha256:df697305b84f0dc1a2ee1aa54c3a5bbc0b104b8f9d2c469f4a18f303e949f3a3
+      target_statement_id: sha256:6171d31efd3d908a8c65f35dad14a85d93a697b56d99e6db4a92bd1b4f6d5a6a
   scribe:
     - gid: D5/S3/QuantumStates/ReadoutFiberCompactConvex.readout_fiber_compact_convex
       definition_sha256: sha256:e65c4be404f894a37d73c48c1cfd0d88d7ab7e2bd1560193e7b002662f615b43

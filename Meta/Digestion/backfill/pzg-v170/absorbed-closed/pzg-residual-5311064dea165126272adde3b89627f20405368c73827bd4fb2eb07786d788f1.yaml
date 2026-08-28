@@ -10,10 +10,10 @@ receipts:
   coverage:
     - gid: D5/S0/Computability/TotalOrbitEvaluator.no_computable_total_orbit_evaluator
       source_sha256: sha256:5311064dea165126272adde3b89627f20405368c73827bd4fb2eb07786d788f1
-      target_sha256: sha256:235378d0b338715dc0b3284434a72748eca35d95b6ba445314e6b14b531f7075
+      target_statement_id: sha256:90dab0b7a5b6bd662c43c75a05ec827caad59ad3e3fc96b82f3d3e1beac29e19
     - gid: D5/S0/Computability/Diagonalization/BooleanStreamDiagonal.boolean_stream_diagonal_exceeds_every_history
       source_sha256: sha256:5311064dea165126272adde3b89627f20405368c73827bd4fb2eb07786d788f1
-      target_sha256: sha256:d3de74e948cb907fa15635dc3555fe172bdcd9bdb19321b2604137c1d8a7de77
+      target_statement_id: sha256:d51820748441919ccb445a7f5c453e40530b2043886dac7664bad4d6892fd30e
   scribe:
     - gid: D5/S0/Computability/TotalOrbitEvaluator.no_computable_total_orbit_evaluator
       definition_sha256: sha256:85b06bea0b4adeb931ed476eacc734e59e48b5d5bae19a2fc3ad83405498a905

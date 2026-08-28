@@ -10,7 +10,7 @@ receipts:
   coverage:
     - gid: D5/S1/Deficit/DeficitInteger.deficit_integer
       source_sha256: sha256:227d06253ab1ea9dc06f8121378fb433b01737466585e507f09608027a2b61ae
-      target_sha256: sha256:cb940eeeffa60a0409c89b80b03f9ac2d9a48746d92cb4bf5a8176802309e75f
+      target_statement_id: sha256:fa66e85a348f23b3e95c35b61e84d1a3379e7a9074ba0e8f082578d367cada60
   scribe:
     - gid: D5/S1/Deficit/DeficitInteger.deficit_integer
       definition_sha256: sha256:97052fc405f600b8cc09509006996e7dd82a2279b7ebafa0fccb526f34ca00e6

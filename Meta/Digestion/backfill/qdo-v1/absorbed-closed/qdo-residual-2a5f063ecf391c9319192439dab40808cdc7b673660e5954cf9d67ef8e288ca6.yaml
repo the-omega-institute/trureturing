@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/Thresholds/PeriodicThresholdKernel.eventual_threshold_iff_reachable_periodic
       source_sha256: sha256:2a5f063ecf391c9319192439dab40808cdc7b673660e5954cf9d67ef8e288ca6
-      target_sha256: sha256:8875c67697ae5f99bfce747eed8640462ff749c14283ee11b39c36077d39f15a
+      target_statement_id: sha256:5faa75c1dbc3b0f843dd86fc14c1d60580a3f67cd5b3de52798d3bf5f5f9ed61
   scribe:
     - gid: D5/S3/ObserverMemory/Thresholds/PeriodicThresholdKernel.eventual_threshold_iff_reachable_periodic
       definition_sha256: sha256:673d6a143f2e4a3809e4e8152dc448ce672bf6725ea76626651501c33e4616bc

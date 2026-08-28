@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/PrimeForms/CrossingPeriodicity/PhaseObserverMinimalPeriod.phaseObserver
       source_sha256: sha256:1636548f2b6f62ca7513689e862a2c868179b485085fbefec04ea87555f59604
-      target_sha256: sha256:1228e24ccb53d9c89edc46248daf622b5e3029d7ddf651b81739d5da4269d2a2
+      target_statement_id: sha256:82df8e9145ab650f5596e9a6676c23c2409fa4380d47bd254d090ac4e66d5ac1
   scribe:
     - gid: D5/S3/PrimeForms/CrossingPeriodicity/PhaseObserverMinimalPeriod.phaseObserver
       definition_sha256: sha256:6379ee43ebf3cf93eeff28b306623a75f8b72937b4756bf745b0e3d75dac87e5

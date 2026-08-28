@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Transport/TransportCertificateValidity.valid_transport_cert_criterion
       source_sha256: sha256:1e2a241367ada0b7e8670ff4fdba1b0b420500208eb80369635bd5c9bfdb2ff3
-      target_sha256: sha256:99a500fffdca6c59c0a03c393b58654396366d1f3e6f0879c7c68f542fe177a8
+      target_statement_id: sha256:f6e284c62c2da0016f8a6ff4ea58b9c8844ee37ed981117150b609276d01508a
   scribe:
     - gid: D5/S3/ConceptDynamics/Transport/TransportCertificateValidity.valid_transport_cert_criterion
       definition_sha256: sha256:c66ea9ae09edf14449d4038cad1b0f51d7a582154a6912a496e67fafa9c1f783

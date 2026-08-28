@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/Approximation/IntertwiningDefectPropagation.intertwining_defect_telescope
       source_sha256: sha256:7ca02cf6848537ded147a6520a3aeb07cbea7862b11de29d055612971e3630c0
-      target_sha256: sha256:13d4ce8a7e66010435ed8093b5ec2efab249b88a12667f3ff7763ddd784c45fc
+      target_statement_id: sha256:12e5f5de1b99a31c124613e0f368d7d82011c018d667cedc827c4c169f8dad9b
   scribe:
     - gid: D5/S3/Observer/Approximation/IntertwiningDefectPropagation.intertwining_defect_telescope
       definition_sha256: sha256:d4a1b208b778015406401557e4820046fa98ec419479d18d84e73871da472012

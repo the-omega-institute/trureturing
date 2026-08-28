@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/FixedPoints/KleeneStageLimit.inductive_definition_is_supremum_of_stages
       source_sha256: sha256:c361822582aeade3b6009278af970be04844d193ffb5f29ff63d2a61d417e615
-      target_sha256: sha256:9781347a1c3e8c440563190c5e49d7609102e0be28e2d072ccc0031a889e8c4a
+      target_statement_id: sha256:607af35898f9c3c798eed2bb530aefa73431817477cbe4207b7feb8490a8053f
   scribe:
     - gid: D5/S1/FixedPoints/KleeneStageLimit.inductive_definition_is_supremum_of_stages
       definition_sha256: sha256:11a9b4bfce83d86c65beb9379826ec276021a4d6742de2097d4cf76b2045d3e5

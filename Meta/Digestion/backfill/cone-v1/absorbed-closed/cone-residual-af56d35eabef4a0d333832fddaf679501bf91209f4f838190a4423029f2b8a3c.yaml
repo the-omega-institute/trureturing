@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/QuantumChannels/DecoherenceFreeze.decoherence_freeze_iff_above_critical
       source_sha256: sha256:af56d35eabef4a0d333832fddaf679501bf91209f4f838190a4423029f2b8a3c
-      target_sha256: sha256:96af79a5a6438bfbcb39c176ffdb36fa0d14119203778485746542f0c270979f
+      target_statement_id: sha256:e8db3395491b00180f43cef330eafa14c7b5098adc29c89311ce3f5a3a74ac23
   scribe:
     - gid: D5/S3/QuantumChannels/DecoherenceFreeze.decoherence_freeze_iff_above_critical
       definition_sha256: sha256:8b9c4b28754dca72c7bb5f5b48ac93730256eca5ad5d05747b330fc4dc48ec54

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/ConceptJoinUniversal.concept_join_universal
       source_sha256: sha256:67b6ff8de7e2b73d0de64a21a0a53494488304f14d7be41119d8ad5d2f60d8d6
-      target_sha256: sha256:07069fa41072b7b124329290d5b1eb64e5d4875acbdb7c5954b799f60bc2818f
+      target_statement_id: sha256:2afbda65f17a35ad2947adecb5293994f6d73774dd6d5ac532d5552d67f8340c
   scribe:
     - gid: D5/S3/ConceptDynamics/ConceptJoinUniversal.concept_join_universal
       definition_sha256: sha256:46682f25629d83436050a044df143dc982bfd68938fbae67a1a74c80687283bc
