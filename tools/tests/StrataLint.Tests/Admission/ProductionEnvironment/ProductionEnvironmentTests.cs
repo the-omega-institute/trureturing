@@ -655,10 +655,15 @@ internal sealed class FakeLeanReportSource(LeanAxiomReport? report) : ILeanRepor
 internal sealed class FakeScribeEmissionVerifier(VerifiedScribeEmissions? verification)
     : IScribeEmissionVerifier
 {
+    internal int CallCount { get; private set; }
+
     public VerifiedScribeEmissions Verify(
         RepositorySnapshot snapshot,
         LeanAxiomReport report,
-        RawChangeSet? changes = null) =>
-        verification
-        ?? throw new InvalidOperationException("Scribe emission verification failed: synthetic");
+        RawChangeSet? changes = null)
+    {
+        CallCount++;
+        return verification
+            ?? throw new InvalidOperationException("Scribe emission verification failed: synthetic");
+    }
 }

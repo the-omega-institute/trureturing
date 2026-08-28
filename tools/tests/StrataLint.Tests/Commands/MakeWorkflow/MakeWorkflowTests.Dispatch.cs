@@ -153,6 +153,10 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("[[ -d", cacheEnsure, StringComparison.Ordinal);
         Assert.Contains(ScribeScriptPath + " emit", Recipe(makefile, "emit"), StringComparison.Ordinal);
         Assert.Contains(IngestScriptPath, Recipe(makefile, "ingest"), StringComparison.Ordinal);
+        Assert.Contains(
+            IngestScriptPath + " align-digestion-status",
+            Recipe(makefile, "align-digestion-status"),
+            StringComparison.Ordinal);
         var showAtomRecipe = Recipe(makefile, "show-atom");
         Assert.Contains("dotnet run --no-build --project", showAtomRecipe, StringComparison.Ordinal);
         Assert.Contains(" show-atom --atom-id \"$(ATOM_ID)\"", showAtomRecipe, StringComparison.Ordinal);

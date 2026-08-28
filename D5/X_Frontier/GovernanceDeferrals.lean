@@ -263,7 +263,11 @@ def goldenUnitsPrincipalIdealDelivery : Unit := ()
     DECT §48.3 的三个设计题未答,`harness/dect-g1` 因此停止迭代,原子
     `generic-residual-661d307df0f3…` 保持 `residual-open`。
     **地址关系(先读这句)**:分支 `harness/dect-g1` 上已有 `TASK D5-T0050` 承载同一 issue 的
-    方向设计缺口,且 #3218 的评论正在引用那一条;该分支**未合入 dev 且已停止迭代**。
+    方向设计缺口,且 #3218 的评论正在引用那一条;该分支**未合入 dev 且已停止迭代**,
+    故 **dev 上 `D5-T0050` 的本体并不存在** —— 本句是 dev 上唯一提到该号的地方,
+    **它是引用,不是定义**(实测:在 `origin/dev` 上按 TASK 定义式搜该号,零命中;
+    **注意本行不能写出那个定义式的字面前缀 —— Lean 的块注释支持嵌套,
+    写进来会开启新层级并导致 `unterminated comment`。这是本文件上实际发生过的一次构建失败。**)。
     本条是 **dev 侧**的记录;两者若日后同处一树,须合并为一条,**不得同址异义**。
     总账:**7 轮评审、7 次修复、零交付**;其中**四轮**出现方向类缺陷,每轮位置不同
     (`Contam` 特化 → `Dep*` 方向 → `commitmentClosureVisibleAtFreeze` → `artifactDependsOn`)。
@@ -281,3 +285,106 @@ def goldenUnitsPrincipalIdealDelivery : Unit := ()
     关闭条件(该单终句原文):**建议先答那三个设计题,再开 lane。**
     〔此处刻意保留「建议」二字:该单写的是建议,把它升级为「不得续开修复轮」会替 owner 预先裁定
     后续工作方式 —— 一轮评审判此为越权,已改回。〕 -/
+
+/- TASK D5-T0056
+    PZG `remark/6.27` 的原子 `pzg-residual-b9b6b0a6…` 保持 `residual-open`:
+    11 条语义断言中 **8 条未承载**,故 `D5/S3/Constants/Irrationality/TribonacciTraceLattice`
+    是**部分/支撑覆盖,不是整原子覆盖**;该模块已冻结,但**刻意未 deposit 收据**
+    ——`cover` 不判忠实性,发一份收据不会有机器惩罚,而它会 claim 超出已证的东西。
+    已承载:①存在一个 Tribonacci 亏空**不存在整数代表**(公开叶,非仅集合基数);
+    ②`HasIntegralDeficit .fibonacci ≠ HasIntegralDeficit .tribonacci`(整性是双面结构的特权,
+    评审判据:取 P=Q 则 P≠Q 因自反性不可能,故非任意 P∧Q 模板);③`¬ HasIntegralDeficit .tribonacci`。
+    已诚实收窄并在模块 docstring 逐条声明(349-360 行):
+    ①「非整值离散谱**即**复共轭对之迹格」—— 无具名 lattice / 加法子群载体,现有的是
+      逐点模整数同余与含零的八点码谱,二者合起来**不是**那句话;
+    ②三次域「一实二复」签名、二次侧嵌入族与穷尽定理、`Algebra.trace` 载体 —— 词汇表里都没有;
+    ③扫描窗口 `1 ≤ v₁ ≤ v₂ ≤ 200`、`8934/20100`、两个取整不等式与八点像等式 ——
+      CAS 的定量断言**没有给出它自己的量化域**,故这些是受限形式而非源文所述,已移出对源的声明面。
+    关闭条件〔**本 TASK 新增的判断,#2446 原文未写出单一关闭条件**;
+    该单最后一条评论给的是「还需要什么」三项清单,第二轮评审另判 `still_a_coverage = No`〕:
+    **上列三类收窄必须全部落定**——每一类要么被真正承载(需先有对应词汇表:lattice/trace 载体、
+    数域嵌入族、或源侧对量化域的裁决),要么由理论侧逐类裁定不可形式化并给出理由。
+    **任一类未落定即不得关闭本条** —— 否则未承载的断言会随本条关闭而失去载体,
+    那正是本条存在的理由。另:#2446 评论所列第三项(独立核实另一 subitem
+    `cubic-field-conjugate-trace-explanation` 的状态)至今**无人做过**,一并计入。
+    依据:issue #2446;实施 codex-cli 两轮,评审 codex-cli 两席(第一轮 `reject` 五条 blocking,
+    第二轮 `comment` 零 blocking 且明判 `still_a_coverage = No`)。同族,不构成多样性共识。 -/
+
+/- TASK D5-T0057
+    DECT §43 的 `BudgetStop` 与 `OpenWorldSequence` 两个构造因**连续两轮忠实性缺陷**
+    被移出 `harness/dect-g2` 交付面,原子 `generic-residual-8f069bfad7d5…` 保持 `residual-open`。
+    〔与 `D5-T0054` 的分工:那一条只登记**承重命题** `stagewise_completion_with_infinite_reopening`
+    未形式化;本条登记这两个构造的缺陷与其待答设计题。两条同源于 issue #3157。〕
+    缺陷(每条两席一致):
+    A-1 `BudgetStop` 未编码 §53.4 的前提 —— §53.4 要求具名 Current 行动存在且可行,
+        Lean 只要求「存在某个可行决策」,四参数接口无 Current/Option 输入;
+        编译探针 `cost = gain = budget = threshold = 0` 且 Current 为 none 时 `BudgetStop` 成立,
+        而 Scribe 写着「requires a feasible action」——**掩盖了一个实质不同的谓词**。
+    A-2 `ENNReal` 除法发明了源文未定义的语义:`(1:ENNReal)/0 = ⊤`、`(0:ENNReal)/0 = 0`,
+        而源文只给 `c(γ) ≥ 0`(允许零成本)并写普通分式,**从未选择 0/0 约定**。
+        (背景:第二轮已判过 `Real.sSup` 把空集与向上无界集都映到 0;改用 `ENNReal` 解决了那一个,
+        **换来了 0/0 这一个**。)
+    B-3 `AlternatingOpenWorldReadingsControl` 的分离见证不分离 —— 其陈述里显式包含
+        `∀ stage, LocalParametersChanged …`,**正是它声称要与之分离的那个相邻阶段条件**。
+    待答的三个设计题(逐字取自 #3157):
+    ①§53.4 的 Current 行动如何进入 `Stop_L` 的类型?它是 `Option`,而 `:4534` 说没有当前行动是
+      **合法轮次** —— 那么 `Stop_L` 在该轮次取什么值?
+    ②源文既允许 `c(γ) = 0` 又写普通分式,**0/0 在源文里是未定义还是隐含排除**?
+      这是**卷的缺口**还是**读法问题**?**需 τ=0 裁决或卷内勘误。**
+    ③「持续变化」的节律:`∀ stage` 还是 `∃ᶠ atTop`?源文 `:3289` 无节律条款;
+      若取最弱读法,分离见证须真正分离两者。
+    关闭条件:三题各有答案(其中②须 τ=0 裁决或卷内勘误),两个构造据此重做
+    〔**「并通过评审」是本 TASK 新增的仓库治理派生,#3157 原文只写到「先答设计题,再开 lane」**;
+    它提高验收门槛,不改写该单的建议〕。
+    依据:issue #3157;实施 codex-cli 三轮,评审每轮 arch/tests = codex-cli、quality = nyxid-oracle;
+    停止判据写于第三轮结果返回之前(`g2-stopping-rule-r3.md`)。 -/
+
+/- TASK D5-T0058
+    **忠实性零机器兜底所生的一整类账目缺陷,及其两个尚不存在的动词。**
+    〔本条合并 issue #2647 与 #3066 两个立类单;其实例侧登记在 #3774(六个实例)。〕
+
+    **根因(一句)**:`make cover` 判的是 scribe 缺失与 GID 存在性,**不判忠实性**。
+    一个只覆盖 CAS 一半的承载与一个完整覆盖的承载,在 cover 眼里没有区别;
+    写「不 claim」无奖励,写「claim」无惩罚。故账面可以高估,而无任何机器会红。
+
+    **两个缺失的动词**(它们是同一堵墙的两面,不是两件事):
+    ① **退回**(#2647):一次已被吸收的覆盖事后被证明过强时,没有 canonical writer
+       能把 atom 从 `absorbed-closed` 退回 open/partial,也不能写入具名
+       `receipts.unresolved_subitems`。逐条读码已确认:`cover-atom` 只追加;
+       `align-scribe-receipt` 只替换 scribe 收据;`ingest` 只继承已有未决值、
+       建 clause chain 时反而清空;`BackfillInventoryWriter.WriteAtom` 只是字节序列化器。
+       隔离区路径亦被 `BackfillInventoryLoader.Quarantine` 对「已有匹配 formalization
+       receipt 的原子」无条件抛出所堵死。手工改 YAML 会使 `localComplete=false`
+       而路径仍在 `absorbed-closed/`,`DigestionStatusEvaluator` 随即产生
+       projected-vs-derived 不一致并被 `BackfillInventoryRule` 升为 blocking SL-016。
+    ② **部分登记**(#3066):多子句 atom 只有部分子句可忠实形式化时没有中间态。
+       实施席把该子句移出打包定理并在信封/模块注释里声明「CAS 缺口」,
+       **在机器层面等于什么都没做** —— atom 仍是 `coverage_gids=[]` 与
+       `unresolved_subitems=[]`,`make show-atom` 报 `self-without-receipt`。
+       `DigestionIngestor` **只能继承未解决项,无法派生**。
+
+    **为什么本条不要求建一个自动忠实性检测器**:#2647 上三席并发盲评一致认为
+    该谓词即「一条 Lean 定理是否忠实覆盖某自然语言 atom 的全部主张」,
+    在当前表示层**没有可判模型**;三种代理(atomization 分割 / coverage 关系 /
+    receipt 信封)各自都已有实测反例,继续建 detector 即以 proxy 冒充 truth。
+    故本条分类为 `godel` —— **形式不可判,非「等人裁决」**(不可判对任何 judge 等价)。
+
+    **在此之前的合法处置,只有一条**:已知实例只接受 τ=0 或评审 attestation 驱动的
+    **typed correction**;已冻结者不得就地改(SL-008 判红),唯一出路是新增模块写勘误
+    (#3774 的实例 1 已按此走通:新模块承载存在性 + π,两族认证,三次独立复算类型哈希一致)。
+
+    **关闭条件(二选一,不得以「已记录」代替)**:
+    ① 出现一个**可机械核验的 claim partition 表示层** ——
+       把「原子的每条主张」变成可比较的 typed claim 而非自然语言;或
+    ② τ=0 owner 把这条不可判边界定为**永久治理案**,并逐条勘正已知实例。
+    **在此之前本条不得关闭**;逐个实例的勘正**不构成**本条的关闭。
+
+    **一条本类此前未写出的属性**(2026-08-29 由 #3320 补上):
+    跨线情形下「**谁来勘正**」没有默认答案 —— 该收据可以不属于发现它的那条产线
+    (#3320 即此:发现方的重复 deposit 已因收敛丢弃),发现者无权勘正,
+    承载者不知情。近亲先例 `D5-T0032` 早已逐项记录 whole-atom receipt 只覆盖一部分、
+    coverage 为空、hosted extension 不可用,并要求 receipt-correction door 或新 CAS ——
+    **规则在案,机器不在**,至今未变。
+
+    依据:issue #2647(三席并发盲评,判 `godel`;同族,不构成多样性共识)、
+    #3066(第七轮 arch 席 blocking,orchestrator 独立复算)、#3774(六个实例)、#3320。 -/
