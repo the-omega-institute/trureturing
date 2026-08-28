@@ -1,0 +1,17 @@
+ast_path: 定理/187.1
+fingerprints:
+  raw_sha256: sha256:996d53ae886cfe264815e20d07340ed88f3974420d652537b6c68ea25aeffb73
+  normalized_sha256: sha256:996d53ae886cfe264815e20d07340ed88f3974420d652537b6c68ea25aeffb73
+cas_ref: sha256:996d53ae886cfe264815e20d07340ed88f3974420d652537b6c68ea25aeffb73
+coverage_gids:
+  - D5/S3/Analytic/Adelic/ToroidalCechCompletion.toroidal_cech_completion
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/Adelic/ToroidalCechCompletion.toroidal_cech_completion
+      source_sha256: sha256:996d53ae886cfe264815e20d07340ed88f3974420d652537b6c68ea25aeffb73
+      target_statement_id: sha256:74925ff1239baf709c3c46725c3e270cd2dd9ed8b66f913a136d9cf9b3781ed7
+  scribe:
+    - gid: D5/S3/Analytic/Adelic/ToroidalCechCompletion.toroidal_cech_completion
+      definition_sha256: sha256:3806b039d93f73efa64e6b25d3b6e6931769e14b77244f4ecae360110c6f3c0e
+      emission_sha256: sha256:3c391f1deff93d749699792d647324b7a211d2cd227dec5d9ecc300005657039
+  unresolved_subitems: []

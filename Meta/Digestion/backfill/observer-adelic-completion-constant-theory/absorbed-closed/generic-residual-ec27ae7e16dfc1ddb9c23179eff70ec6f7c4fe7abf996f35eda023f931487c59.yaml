@@ -1,0 +1,17 @@
+ast_path: 定理/2.1
+fingerprints:
+  raw_sha256: sha256:ec27ae7e16dfc1ddb9c23179eff70ec6f7c4fe7abf996f35eda023f931487c59
+  normalized_sha256: sha256:ec27ae7e16dfc1ddb9c23179eff70ec6f7c4fe7abf996f35eda023f931487c59
+cas_ref: sha256:ec27ae7e16dfc1ddb9c23179eff70ec6f7c4fe7abf996f35eda023f931487c59
+coverage_gids:
+  - D5/S3/ConceptDynamics/Completion/EscapeZeroCompletionPoint.escape_zero_iff_determined_with_audited_minimizer
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Completion/EscapeZeroCompletionPoint.escape_zero_iff_determined_with_audited_minimizer
+      source_sha256: sha256:ec27ae7e16dfc1ddb9c23179eff70ec6f7c4fe7abf996f35eda023f931487c59
+      target_statement_id: sha256:2bd261723b370183c846872317f171dbae397d6914687ce4fda9a71550ce6ed8
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Completion/EscapeZeroCompletionPoint.escape_zero_iff_determined_with_audited_minimizer
+      definition_sha256: sha256:1d739adde9daa315eb32fee9536bb581160d35417326869b2db574a7cd16813b
+      emission_sha256: sha256:5c2bab54bbefdef510b6eb7870f7ac1ddffd382df2dbc2cf6aaa031a02903fea
+  unresolved_subitems: []

@@ -1,0 +1,17 @@
+ast_path: 定理/188.1
+fingerprints:
+  raw_sha256: sha256:7559f3ebadb207653c9f8584ce57a9ed1c6c251bf65a6625dacf58a4ba45aa3d
+  normalized_sha256: sha256:7559f3ebadb207653c9f8584ce57a9ed1c6c251bf65a6625dacf58a4ba45aa3d
+cas_ref: sha256:7559f3ebadb207653c9f8584ce57a9ed1c6c251bf65a6625dacf58a4ba45aa3d
+coverage_gids:
+  - D5/S3/Analytic/Adelic/FiniteToroidalFrameReconstruction.finite_toroidal_frame_reconstruction
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/Adelic/FiniteToroidalFrameReconstruction.finite_toroidal_frame_reconstruction
+      source_sha256: sha256:7559f3ebadb207653c9f8584ce57a9ed1c6c251bf65a6625dacf58a4ba45aa3d
+      target_statement_id: sha256:1d33a3e98febcc57d58d78368c7150eb1bbdddad359efc0ad55a35c51df02a8e
+  scribe:
+    - gid: D5/S3/Analytic/Adelic/FiniteToroidalFrameReconstruction.finite_toroidal_frame_reconstruction
+      definition_sha256: sha256:3e41b9d319a8ec6331e10156c5e6a76f8bb13b63087220ac29ffed2be96c1c44
+      emission_sha256: sha256:d170c83d1b7e9bbeeb3cf1417b4daf89d123374312b547d05397ee0dae95d02f
+  unresolved_subitems: []
