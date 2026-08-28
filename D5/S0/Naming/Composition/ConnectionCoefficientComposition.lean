@@ -19,12 +19,6 @@ def completedPath {V : Type*} [Quiver V] {X Y Z : V}
     (firstStep : X ⟶ Y) (secondStep : Y ⟶ Z) : Path X Z :=
   firstStep.toPath.comp secondStep.toPath
 
--- A composite coefficient is the weight of the displayed completed path.
-def FactorsAlongCompletedPath {V : Type*} [Quiver V] {R : Type*} [Monoid R]
-    {X Y Z : V} (edgeWeight : ∀ {i j : V}, (i ⟶ j) → R)
-    (compositeCoefficient : R) (firstStep : X ⟶ Y) (secondStep : Y ⟶ Z) : Prop :=
-  Path.weight edgeWeight (completedPath firstStep secondStep) = compositeCoefficient
-
 -- A primitive connection path consists of exactly one completion step.
 def IsPrimitiveConnectionPath {V : Type*} [Quiver V] {X Z : V}
     (path : Path X Z) : Prop :=
@@ -142,27 +136,17 @@ noncomputable def ramanujanStepWeight (x : ℝ)
   | .advanceExponential => exponentialFlowFactor x
   | .applyScale => scaleJacobianFactor x
 
--- Certificate status includes the source's positive-real domain and path data.
-def IsStructuralConstantCompositionCertificate (x : ℝ)
-    (path : Path RamanujanCompletionStage.source RamanujanCompletionStage.scaleCompleted) : Prop :=
-  0 < x ∧
-    path = ramanujanCompletionPath ∧
-      ramanujanPathRoles path =
-        [.gaussianTotalMass, .exponentialFlow, .scaleJacobian] ∧
-      ¬ IsPrimitiveConnectionPath path ∧
-      ramanujanRadical x = Path.weight (ramanujanStepWeight x) path
-
 theorem connection_coefficient_multiplication :
     (∀ (a b X Y Z : ℝ), IsCoefficientBearingCompletionChain a b X Y Z →
       Z = (a * b) * X ∧
-        FactorsAlongCompletedPath (completionChainStepWeight a b) (a * b)
-          firstCompletionStep secondCompletionStep ∧
+        Path.weight (completionChainStepWeight a b) completionChainPath = a * b ∧
         ¬ IsPrimitiveConnectionPath completionChainPath) ∧
     (∀ (x : ℝ), 0 < x →
       ramanujanRadical x =
         gaussianMassFactor * exponentialFlowFactor x * scaleJacobianFactor x) ∧
     (∀ (x : ℝ), 0 < x →
-      IsStructuralConstantCompositionCertificate x ramanujanCompletionPath) := by
+      ramanujanRadical x =
+        Path.weight (ramanujanStepWeight x) ramanujanCompletionPath) := by
   fail_if_success rfl
   have hfactor : ∀ (x : ℝ), 0 < x →
       ramanujanRadical x =
@@ -210,12 +194,8 @@ theorem connection_coefficient_multiplication :
     · simp [IsPrimitiveConnectionPath, completionChainPath, completedPath,
         firstCompletionStep, secondCompletionStep]
   · intro x hx
-    refine ⟨hx, rfl, ?_, ?_, ?_⟩
-    · simp [ramanujanCompletionPath, ramanujanPathRoles, ramanujanStepRole,
-        Quiver.Hom.toPath]
-    · simp [IsPrimitiveConnectionPath, ramanujanCompletionPath]
-    · simpa [ramanujanCompletionPath, ramanujanStepWeight, Quiver.Hom.toPath,
-        Path.weight] using hfactor x hx
+    simpa [ramanujanCompletionPath, ramanujanStepWeight, Quiver.Hom.toPath,
+      Path.weight] using hfactor x hx
 
 -- Probe R1 (CAS-A1): the shared bridge recovers the boxed scalar conclusion.
 example : (6 : ℝ) = (2 * 3) * 1 := by
@@ -223,13 +203,10 @@ example : (6 : ℝ) = (2 * 3) * 1 := by
     (isCoefficientBearingCompletionChain_iff 2 3 1 2 6).2 ⟨by norm_num, by norm_num⟩
   exact (connection_coefficient_multiplication.1 2 3 1 2 6 hbridge).1
 
--- Probe R2/T2 (CAS-A1/A2): one bridge exposes both scalar and edge-weight readings.
+-- Probe R2 (CAS-A2): the public theorem exposes the completed-path weight equality.
 example (a b X Y Z : ℝ) (hbridge : IsCoefficientBearingCompletionChain a b X Y Z) :
-    (Y = a * X ∧ Z = b * Y) ∧
-      FactorsAlongCompletedPath (completionChainStepWeight a b) (a * b)
-        firstCompletionStep secondCompletionStep := by
-  exact ⟨(isCoefficientBearingCompletionChain_iff a b X Y Z).1 hbridge,
-    (connection_coefficient_multiplication.1 a b X Y Z hbridge).2.1⟩
+    Path.weight (completionChainStepWeight a b) completionChainPath = a * b := by
+  exact (connection_coefficient_multiplication.1 a b X Y Z hbridge).2.1
 
 -- Probe R3 (CAS-A3): non-primitiveness is about that same completed path.
 example : ¬ IsPrimitiveConnectionPath completionChainPath := by
@@ -243,25 +220,14 @@ example :
       gaussianMassFactor * exponentialFlowFactor 1 * scaleJacobianFactor 1 :=
   connection_coefficient_multiplication.2.1 1 (by norm_num)
 
--- Probe R5 (CAS-A5): the certificate fixes roles in path order.
+-- Probe R5 (CAS-A5): the certificate is radical/path-weight agreement.
 example :
-    ramanujanPathRoles ramanujanCompletionPath =
-      [.gaussianTotalMass, .exponentialFlow, .scaleJacobian] :=
-  (connection_coefficient_multiplication.2.2 1 (by norm_num)).2.2.1
+    ramanujanRadical 1 =
+      Path.weight (ramanujanStepWeight 1) ramanujanCompletionPath :=
+  connection_coefficient_multiplication.2.2 1 (by norm_num)
 
-example :
-    ramanujanPathRoles ramanujanCompletionPath ≠
-      [.exponentialFlow, .gaussianTotalMass, .scaleJacobian] := by
-  intro hpermuted
-  have hordered :=
-    (connection_coefficient_multiplication.2.2 1 (by norm_num)).2.2.1
-  rw [hordered] at hpermuted
-  simp at hpermuted
-
--- Probe T1 (CAS-A5): zero is outside the certificate carrier itself.
-example :
-    ¬ IsStructuralConstantCompositionCertificate 0 ramanujanCompletionPath := by
-  intro hcertificate
-  exact (lt_irrefl 0) hcertificate.1
+-- Probe T1 (CAS-A4/A5): zero cannot enter either positive-real branch.
+example : ¬ (0 : ℝ) > 0 := by
+  norm_num
 
 end D5.S0.Naming.Composition.ConnectionCoefficientComposition

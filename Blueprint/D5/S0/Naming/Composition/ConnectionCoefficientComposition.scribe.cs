@@ -11,7 +11,7 @@ internal sealed class ConnectionCoefficientCompositionDocument : IScribeDocument
         var statement = AndAll(
             CoefficientBearingChainComposition(),
             RamanujanFactorization(),
-            RamanujanCertificateStatus());
+            RamanujanPathWeightCertificate());
 
         return DocumentDefinition.Create(ScribeNode.Create(
             "Typed completion paths retain coefficient order, factor roles, and certificate status.",
@@ -33,21 +33,19 @@ internal sealed class ConnectionCoefficientCompositionDocument : IScribeDocument
                                 + "that a and b are the weights of its first and second edges.")),
                         Paragraph(Text(
                             "Under that one bridge, the first three semantic conjuncts are the "
-                                + "boxed scalar conclusion Z equals (ab)X, one completed-path "
-                                + "factorization, and non-primitiveness of that same two-edge path. "
-                                + "The factorization applies the pinned Mathlib theorem "
-                                + "Quiver.Path.weight_comp; there is no duplicate raw weight clause.")),
+                                + "boxed scalar conclusion Z equals (ab)X, the explicit equality "
+                                + "between the completed-path weight and ab, and non-primitiveness "
+                                + "of that same two-edge path. The weight equality applies the "
+                                + "pinned Mathlib theorem Quiver.Path.weight_comp.")),
                         Paragraph(Text(
                             "The fourth semantic conjunct is the positive-real Ramanujan 541 identity in "
                                 + "the named Gaussian-total-mass, exponential-flow, and "
                                 + "scale-Jacobian factors.")),
                         Paragraph(Text(
-                            "The fifth semantic conjunct gives the structural-composition certificate "
-                                + "status. The predicate itself includes x positive, the exact "
-                                + "three-edge Ramanujan path, the ordered role list, "
-                                + "non-primitiveness, and agreement of the radical with the path "
-                                + "weight. Thus x equals zero is not a certificate, and permuting "
-                                + "the roles changes the certified statement."))),
+                            "The fifth semantic conjunct is the structural-composition certificate: "
+                                + "on the same positive-real domain, the radical equals the weight "
+                                + "of the named typed Ramanujan completion path. No custom conclusion "
+                                + "predicate contains additional propositions."))),
                     DescribeRole.Theorem)),
             []));
     }
@@ -60,16 +58,14 @@ internal sealed class ConnectionCoefficientCompositionDocument : IScribeDocument
         var X = F.Id("X");
         var Y = F.Id("Y");
         var Z = F.Id("Z");
-        var firstStep = F.Id("firstCompletionStep");
-        var secondStep = F.Id("secondCompletionStep");
         var bridge = Call("IsCoefficientBearingCompletionChain", a, b, X, Y, Z);
         var scalarConclusion = Equal(Z, Multiply(Seq(Open, Multiply(a, b), Close), X));
-        var pathFactorization = Call(
-            "FactorsAlongCompletedPath",
-            Call("completionChainStepWeight", a, b),
-            Multiply(a, b),
-            firstStep,
-            secondStep);
+        var pathFactorization = Equal(
+            Call(
+                "pathWeight",
+                Call("completionChainStepWeight", a, b),
+                F.Id("completionChainPath")),
+            Multiply(a, b));
         var nonPrimitive = new Formula.Not(Call(
             "IsPrimitiveConnectionPath",
             F.Id("completionChainPath")));
@@ -122,12 +118,14 @@ internal sealed class ConnectionCoefficientCompositionDocument : IScribeDocument
                 Call("scaleJacobianFactor", x))));
     }
 
-    private static Formula RamanujanCertificateStatus()
+    private static Formula RamanujanPathWeightCertificate()
     {
         var x = F.Id("x");
-        return PositiveRealStatement(Call(
-            "IsStructuralConstantCompositionCertificate",
-            x,
-            F.Id("ramanujanCompletionPath")));
+        return PositiveRealStatement(Equal(
+            Call("ramanujanRadical", x),
+            Call(
+                "pathWeight",
+                Call("ramanujanStepWeight", x),
+                F.Id("ramanujanCompletionPath"))));
     }
 }
