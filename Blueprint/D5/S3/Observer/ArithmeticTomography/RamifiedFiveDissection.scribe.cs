@@ -10,7 +10,7 @@ internal sealed class RamifiedFiveDissectionDocument : IScribeDocumentDefinition
         "D5/S3/Observer/ArithmeticTomography/RamifiedFiveDissection.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Six observable states arise from five ordinary residues and one ramification residual.",
+        "The fixed Lambda-square A4 lattice realizes five residue states and one ramified jet state.",
         H("Six-State Ramified Five-Dissection"),
         Blocks(
             Describe.Lean(
@@ -22,52 +22,62 @@ internal sealed class RamifiedFiveDissectionDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "The state carrier is built from five ordinary residue labels and a "
-                            + "separate ramificationResidual label, so its cardinality is exactly "
-                            + "6 = 5 + 1. For every nonzero energy residue, the observer label is "
-                            + "the residue n mod 5.")),
+                        "ExteriorSquareA4 is the source's six-integer coordinate lattice with its "
+                            + "displayed Gram matrix G. The boundary map uses the displayed fixed "
+                            + "matrix R_5, and q_R uses the displayed matrix H. The first conjunct "
+                            + "equates the cardinality of the actual stateOf image with the "
+                            + "RamifiedFiveState carrier; ramified_state_card computes that carrier "
+                            + "as the five ordinary constructors plus one residual constructor. "
+                            + "For nonzero energy residue, stateOf returns that residue.")),
                     Paragraph(Text(
-                        "At zero residue, the supplied source witnesses distinguish a zero "
-                            + "boundary from a nonzero boundary. The energy-boundary congruence "
-                            + "forces the latter boundary to be q_R-isotropic, and the two labels "
-                            + "are unequal.")),
+                        "The theorem uses fixed lattice points, not caller-supplied witnesses. The "
+                            + "zero point has zero R_5 boundary. The fixed residual point has "
+                            + "a nonzero q_R-isotropic boundary, and stateOf assigns the two points "
+                            + "different labels.")),
                     Paragraph(Text(
-                        "The residual constructor is outside the range of ordinary labels. This "
-                            + "is the extra first-order jet channel left by the ramified prime 5; "
-                            + "the theorem assumes the source lattice data and does not replace it "
-                            + "with an enumerated Fin carrier."))),
+                        "RamifiedFiveRoot carries the repository theorem 5 = (-1 + 2 phi)^2. Its "
+                            + "class in the named first-order neighborhood GoldenInt/(5) is the "
+                            + "residual jet. Ordinary state observations are zero in this quotient, "
+                            + "while the final non-membership says the residual jet observation is "
+                            + "not among them."))),
                 DescribeRole.Theorem))));
 
     private static Formula MainFormula()
     {
-        Formula data = F.Id("D");
         Formula x = F.Id("x");
-        Formula energy = Call("energy", data, x);
-        Formula residue = Call("ordinaryResidue", energy);
-        Formula state = Call("stateOf", data, x);
-        Formula zeroState = Call("stateOf", data, Call("zeroWitness", data));
-        Formula residualState = Call("stateOf", data, Call("residualWitness", data));
-        Formula rhoZero = Call("rho5", data, Call("zeroWitness", data));
-        Formula rhoResidual = Call("rho5", data, Call("residualWitness", data));
+        Formula r = F.Id("r");
+        Formula energy = Call("energyResidue", x);
+        Formula residue = Call("ordinaryResidue", x);
+        Formula state = Call("stateOf", x);
+        Formula zeroState = Call("stateOf", F.Id("zeroWitness"));
+        Formula residualState = Call("stateOf", F.Id("residualWitness"));
+        Formula rhoZero = Call("rho5", F.Id("zeroWitness"));
+        Formula rhoResidual = Call("rho5", F.Id("residualWitness"));
         Formula qResidual = Call("qR", rhoResidual);
         Formula ordinary = Call("ordinary", residue);
+        Formula ordinaryJetMap = Seq(
+            Open, r, Sp, Mapsto, Sp,
+            Call("firstOrderJetObservation", Call("ordinary", r)), Close);
         Formula residual = F.Id("ramificationResidual");
-        Formula ordinaryLabels = Call("range", F.Id("ordinary"));
-        Formula residualOutsideOrdinary = new Formula.Not(
+        Formula stateRangeCard = Call("ncard", Call("range", F.Id("stateOf")));
+        Formula stateCarrierCard = Call("card", F.Id("RamifiedFiveState"));
+        Formula residualJet = Call("firstOrderJetObservation", residual);
+        Formula ordinaryJetRange = Call("range", ordinaryJetMap);
+        Formula residualJetOutsideOrdinary = new Formula.Not(
             new Formula.Relation(
-                residual,
+                residualJet,
                 FormulaRelationOperator.MemberOf,
-                ordinaryLabels));
+                ordinaryJetRange));
 
         return Disp(Seq(
-            D(6), Sp, Eq, Sp, D(5), Plus, Sp, D(1), Sp, Land, Sp,
-            Open, Forall, Sp, x, Sp, InMacro, Sp, Call("L", data), Comma, Sp,
-            new Formula.Modulo(energy, D(5)), Sp, Neq, Sp, D(0),
+            stateRangeCard, Sp, Eq, Sp, stateCarrierCard, Sp, Land, Sp,
+            Open, Forall, Sp, x, Sp, InMacro, Sp, F.Id("ExteriorSquareA4"), Comma, Sp,
+            energy, Sp, Neq, Sp, D(0),
             Sp, Rightarrow, Sp, state, Sp, Eq, Sp, ordinary, Close, Sp, Land, Sp,
             rhoZero, Sp, Eq, Sp, D(0), Sp, Land, Sp,
             rhoResidual, Sp, Neq, Sp, D(0), Sp, Land, Sp,
             qResidual, Sp, Eq, Sp, D(0), Sp, Land, Sp,
             zeroState, Sp, Neq, Sp, residualState, Sp, Land, Sp,
-            residualOutsideOrdinary, Dot));
+            residualJetOutsideOrdinary, Dot));
     }
 }

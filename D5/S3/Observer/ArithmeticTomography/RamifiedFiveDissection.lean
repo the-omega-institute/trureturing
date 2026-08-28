@@ -3,34 +3,62 @@
    mirror-B: D5/B/S3/Observer/ArithmeticTomography/RamifiedFiveDissection
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Six-state 5-dissection with a nonzero isotropic residual channel. -/
+   digest: Concrete Lambda-square A4 five-dissection with a ramified jet channel. -/
 
+import D5.S3.Arith.GoldenPrimeSplitting
 import Mathlib
-
-/- Library-search audit trail (2026-08-28):
-   * Repository searches found no existing OACTC declaration for the lattice map rho_5,
-     the quadratic form q_R, or the six-state 5-dissection.
-   * Pinned Mathlib supplies finite inductive cardinality and ZMod/matrix primitives, but
-     no theorem packaging this dissection; the proof below uses those primitives directly.
-   * The source objects and the energy congruence are the definitions and result in §§68,
-     73, and 74 of OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY.md.
--/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S3.Observer.ArithmeticTomography.RamifiedFiveDissection
 
-/-- The three-dimensional boundary carrier over the ramified residue field. -/
-abbrev RamifiedBoundary := Fin 3 → ZMod 5
+open D5.S0.Carrier
 
-/-- The symmetric matrix H used by the source's boundary quadratic form q_R. -/
+/-- The source's coordinate realization of the lattice `Lambda^2 A4` in its fixed
+six-vector basis. -/
+@[ext]
+structure ExteriorSquareA4 where
+  coordinates : Fin 6 -> Int
+  deriving DecidableEq
+
+/-- The Gram matrix `G` displayed for `Lambda^2 A4` in source section 68. -/
+def exteriorSquareA4Gram : Matrix (Fin 6) (Fin 6) Int :=
+  !![3, 1, 1, -1, -1, 0;
+     1, 3, 1, 1, 0, -1;
+     1, 1, 3, 0, 1, 1;
+     -1, 1, 0, 3, 1, -1;
+     -1, 0, 1, 1, 3, 1;
+     0, -1, 1, -1, 1, 3]
+
+/-- The source energy `x^T G x` on the concrete `Lambda^2 A4` lattice. -/
+def latticeEnergy (x : ExteriorSquareA4) : Int :=
+  ∑ i, x.coordinates i * ∑ j, exteriorSquareA4Gram i j * x.coordinates j
+
+/-- The three-dimensional boundary carrier over the ramified residue field. -/
+abbrev RamifiedBoundary := Fin 3 -> ZMod 5
+
+/-- The fixed matrix `R_5` of the source boundary map. -/
+def rhoFiveMatrix : Matrix (Fin 3) (Fin 6) (ZMod 5) :=
+  !![1, 0, 4, 0, 1, 0;
+     0, 1, 4, 0, 0, 1;
+     0, 0, 0, 1, 4, 1]
+
+/-- The source's fixed boundary map `rho_5 : Lambda^2 A4 -> F_5^3`. -/
+def rho5 (x : ExteriorSquareA4) : RamifiedBoundary := fun i =>
+  ∑ j, rhoFiveMatrix i j * (x.coordinates j : ZMod 5)
+
+/-- The symmetric matrix `H` used by the source boundary quadratic form. -/
 def ramifiedFormMatrix : Matrix (Fin 3) (Fin 3) (ZMod 5) :=
   !![1, 2, 3; 2, 1, 2; 3, 2, 1]
 
-/-- The source quadratic form q_R(v) = vᵀHv, written with finite sums. -/
+/-- The source quadratic form `q_R(v) = v^T H v`. -/
 def qR (v : RamifiedBoundary) : ZMod 5 :=
   ∑ i, v i * ∑ j, ramifiedFormMatrix i j * v j
+
+/-- The fixed energy residue of a lattice point modulo five. -/
+def energyResidue (x : ExteriorSquareA4) : ZMod 5 :=
+  (latticeEnergy x : ZMod 5)
 
 /-- Five ordinary energy residues together with one extra ramification channel. -/
 inductive RamifiedFiveState where
@@ -38,89 +66,157 @@ inductive RamifiedFiveState where
   | ramificationResidual
   deriving DecidableEq, Fintype
 
-/-- The ordinary residue observation n mod 5, represented in Fin 5. -/
-def ordinaryResidue (n : ℕ) : Fin 5 :=
-  ⟨n % 5, Nat.mod_lt _ (by norm_num)⟩
+/-- The ordinary energy residue, represented in `Fin 5`. -/
+def ordinaryResidue (x : ExteriorSquareA4) : Fin 5 :=
+  ⟨(energyResidue x).val, ZMod.val_lt _⟩
 
-/-- Existing OACTC data: a lattice carrier, its energy, the fixed rho_5 map, the
-energy-boundary congruence, and witnesses for the zero and nonzero isotropic branches.
-The witnesses encode the nonempty O_0 and isotropic boundary orbits from source §73. -/
-structure RamifiedFiveDissectionData where
-  L : Type*
-  energy : L → ℕ
-  rho5 : L → RamifiedBoundary
-  energy_boundary : ∀ x,
-    qR (rho5 x) = (2 : ZMod 5) * ((energy x % 5 : ℕ) : ZMod 5)
-  zeroWitness : L
-  zero_energy_mod_five : energy zeroWitness % 5 = 0
-  zero_boundary : rho5 zeroWitness = 0
-  residualWitness : L
-  residual_energy_mod_five : energy residualWitness % 5 = 0
-  residual_boundary_ne_zero : rho5 residualWitness ≠ 0
+/-- A point of the fixed coordinate lattice. -/
+def latticePoint (coordinates : Fin 6 -> Int) : ExteriorSquareA4 :=
+  ⟨coordinates⟩
 
-/-- The six-state observer label attached to an energy/boundary pair. -/
-def stateOf (d : RamifiedFiveDissectionData) (x : d.L) : RamifiedFiveState :=
-  if hEnergy : d.energy x % 5 = 0 then
-    if hBoundary : d.rho5 x = 0 then
+/-- Concrete representatives of the five ordinary observable states. -/
+def ordinaryWitness : Fin 5 -> ExteriorSquareA4 :=
+  ![latticePoint ![0, 0, 0, 0, 0, 0],
+    latticePoint ![-1, 0, 0, 0, 0, -1],
+    latticePoint ![-1, -1, 1, 0, 0, 0],
+    latticePoint ![-1, 0, 0, 0, 0, 0],
+    latticePoint ![-1, 0, 0, -1, 0, 0]]
+
+/-- The zero lattice point occupying the ordinary zero-boundary state. -/
+def zeroWitness : ExteriorSquareA4 := ordinaryWitness 0
+
+/-- The fixed lattice point representing the nonzero isotropic `R_5` branch. -/
+def residualWitness : ExteriorSquareA4 :=
+  latticePoint ![-1, 0, 0, -1, 0, -1]
+
+/-- The six-state observer label attached to the source's fixed energy and boundary maps. -/
+def stateOf (x : ExteriorSquareA4) : RamifiedFiveState :=
+  if hEnergy : energyResidue x = 0 then
+    if hBoundary : rho5 x = 0 then
       .ordinary ⟨0, by norm_num⟩
-    else if hIsotropic : qR (d.rho5 x) = 0 then
+    else if hIsotropic : qR (rho5 x) = 0 then
       .ramificationResidual
     else
       .ordinary ⟨0, by norm_num⟩
   else
-    .ordinary (ordinaryResidue (d.energy x))
+    .ordinary (ordinaryResidue x)
 
 /-- The six labels are exactly the five ordinary residues plus one residual label. -/
 theorem ramified_state_card : Fintype.card RamifiedFiveState = 6 := by
   decide
 
+private theorem stateOf_ordinaryWitness (r : Fin 5) :
+    stateOf (ordinaryWitness r) = .ordinary r := by
+  fin_cases r <;> decide
+
+private theorem stateOf_residualWitness :
+    stateOf residualWitness = .ramificationResidual := by
+  decide
+
+private theorem stateOf_surjective : Function.Surjective stateOf := by
+  intro state
+  cases state with
+  | ordinary r => exact ⟨ordinaryWitness r, stateOf_ordinaryWitness r⟩
+  | ramificationResidual => exact ⟨residualWitness, stateOf_residualWitness⟩
+
+/-- Square roots of five in the concrete golden integer ring. Membership carries the
+ramification certificate rather than accepting it as a theorem premise. -/
+def RamifiedFiveRoot :=
+  {root : GoldenInt // (5 : GoldenInt) = root ^ 2}
+
+/-- The source ramifying element `-1 + 2 phi`, using the repository's exact certificate. -/
+def ramifiedFiveRoot : RamifiedFiveRoot :=
+  ⟨⟨-1, 2⟩, D5.S3.Arith.GoldenPrimeSplitting.golden_five_eq_ramified_square⟩
+
+/-- The ideal `(5)` defining the first-order ramified fiber. -/
+def goldenFiveIdeal : Ideal GoldenInt :=
+  Ideal.span {(5 : GoldenInt)}
+
+/-- Since `5 = ramifiedFiveRoot^2`, this quotient is the first-order neighborhood
+of the ramified golden prime. -/
+abbrev GoldenFirstOrderNeighborhoodAtFive :=
+  GoldenInt ⧸ goldenFiveIdeal
+
+/-- The first-order jet left by a certified ramifying square root of five. -/
+def firstOrderJetAtFive (root : RamifiedFiveRoot) :
+    GoldenFirstOrderNeighborhoodAtFive :=
+  Ideal.Quotient.mk goldenFiveIdeal root.1
+
+theorem ramified_five_first_order_jet_ne_zero :
+    firstOrderJetAtFive ramifiedFiveRoot ≠ 0 := by
+  intro hZero
+  change Ideal.Quotient.mk goldenFiveIdeal ramifiedFiveRoot.1 = 0 at hZero
+  have hMem : ramifiedFiveRoot.1 ∈ goldenFiveIdeal :=
+    Ideal.Quotient.eq_zero_iff_mem.mp hZero
+  rw [goldenFiveIdeal, Ideal.mem_span_singleton] at hMem
+  rcases hMem with ⟨y, hy⟩
+  have hb := congrArg GoldenInt.b hy
+  have hRootB : ramifiedFiveRoot.1.b = 2 := rfl
+  have hFiveA : (5 : GoldenInt).a = 5 := rfl
+  have hFiveB : (5 : GoldenInt).b = 0 := rfl
+  rw [hRootB, b_mul, hFiveA, hFiveB] at hb
+  omega
+
+/-- Ordinary states have zero first-order jet; the residual state retains the
+nonzero jet of the certified ramifying root. -/
+def firstOrderJetObservation : RamifiedFiveState ->
+    GoldenFirstOrderNeighborhoodAtFive
+  | .ordinary _ => 0
+  | .ramificationResidual => firstOrderJetAtFive ramifiedFiveRoot
+
 /--
-The ramified five-dissection has six observable states.  The ordinary branch records
-the residue modulo five; at zero residue the supplied source witnesses occupy the
-zero and nonzero isotropic branches, whose labels are distinct.  The final clause
-records that the residual label is an additional channel rather than an ordinary
-residue label.
+The concrete ramified five-dissection observes all six labels of `Lambda^2 A4`.
+Its ordinary branch records the energy residue, the two fixed witnesses occupy
+the two isotropic zero-residue branches, and the last clause
+identifies their separation with the nonzero first-order jet of the ramified
+golden prime.
 -/
-theorem six_state_ramified_five_dissection (d : RamifiedFiveDissectionData) :
-    6 = 5 + 1 ∧
-      (∀ x : d.L, d.energy x % 5 ≠ 0 →
-        stateOf d x = .ordinary (ordinaryResidue (d.energy x))) ∧
-      d.rho5 d.zeroWitness = 0 ∧
-      d.rho5 d.residualWitness ≠ 0 ∧
-      qR (d.rho5 d.residualWitness) = 0 ∧
-      stateOf d d.zeroWitness ≠ stateOf d d.residualWitness ∧
-      RamifiedFiveState.ramificationResidual ∉
-        Set.range (fun r : Fin 5 => RamifiedFiveState.ordinary r) := by
-  have hResidualIsotropic : qR (d.rho5 d.residualWitness) = 0 := by
-    simpa [d.residual_energy_mod_five] using
-      d.energy_boundary d.residualWitness
-  refine ⟨by norm_num, ?_, d.zero_boundary, d.residual_boundary_ne_zero,
-    hResidualIsotropic, ?_, ?_⟩
+theorem six_state_ramified_five_dissection :
+    (Set.range stateOf).ncard = Fintype.card RamifiedFiveState ∧
+      (∀ x : ExteriorSquareA4, energyResidue x ≠ 0 ->
+        stateOf x = .ordinary (ordinaryResidue x)) ∧
+      rho5 zeroWitness = 0 ∧
+      rho5 residualWitness ≠ 0 ∧
+      qR (rho5 residualWitness) = 0 ∧
+      stateOf zeroWitness ≠ stateOf residualWitness ∧
+      firstOrderJetObservation .ramificationResidual ∉
+        Set.range (fun r : Fin 5 => firstOrderJetObservation (.ordinary r)) := by
+  refine ⟨?_, ?_, by decide, by decide, by decide, by decide, ?_⟩
+  · rw [stateOf_surjective.range_eq]
+    simp [Nat.card_eq_fintype_card]
   · intro x hx
     simp [stateOf, hx]
-  · intro hStates
-    have hZero : stateOf d d.zeroWitness =
-        .ordinary ⟨0, by norm_num⟩ := by
-      simp [stateOf, d.zero_energy_mod_five, d.zero_boundary]
-    have hResidual : stateOf d d.residualWitness =
-        .ramificationResidual := by
-      simp [stateOf, d.residual_energy_mod_five,
-        d.residual_boundary_ne_zero, hResidualIsotropic]
-    rw [hZero, hResidual] at hStates
-    cases hStates
   · intro hRange
     rcases hRange with ⟨r, hEq⟩
-    cases hEq
+    apply ramified_five_first_order_jet_ne_zero
+    simpa [firstOrderJetObservation] using hEq.symm
 
-/- Reverse probe: the public theorem yields the nontrivial state separation. -/
-example (d : RamifiedFiveDissectionData) :
-    stateOf d d.zeroWitness ≠ stateOf d d.residualWitness := by
-  exact (six_state_ramified_five_dissection d).2.2.2.2.2.1
+/- Reverse probe for A1: the public cardinality equality forces full observability. -/
+example : Set.range stateOf = Set.univ := by
+  apply (Set.eq_univ_iff_ncard _).2
+  simpa [Nat.card_eq_fintype_card] using
+    six_state_ramified_five_dissection.1
 
-/- Trivialization probe: a Unit boundary has no possible nonzero residual witness. -/
-example (rho : Unit → Unit) (w : Unit) : ¬rho w ≠ () := by
-  intro h
-  exact h rfl
+/- Reverse probe for A6: the public theorem separates the fixed zero and residual points. -/
+example : stateOf zeroWitness ≠ stateOf residualWitness := by
+  exact six_state_ramified_five_dissection.2.2.2.2.2.1
+
+/- Reverse probe for A7: jet separation implies the old constructor-level separation. -/
+example : RamifiedFiveState.ramificationResidual ∉
+    Set.range (fun r : Fin 5 => RamifiedFiveState.ordinary r) := by
+  intro hRange
+  rcases hRange with ⟨r, hEq⟩
+  apply six_state_ramified_five_dissection.2.2.2.2.2.2
+  exact ⟨r, congrArg firstOrderJetObservation hEq⟩
+
+/- Trivialization probe for A7: a zero jet makes the public separation false. -/
+example (hZero : firstOrderJetAtFive ramifiedFiveRoot = 0) :
+    ¬firstOrderJetObservation .ramificationResidual ∉
+      Set.range (fun r : Fin 5 => firstOrderJetObservation (.ordinary r)) := by
+  intro hOutside
+  apply hOutside
+  refine ⟨0, ?_⟩
+  simp [firstOrderJetObservation, hZero]
 
 #print axioms six_state_ramified_five_dissection
 

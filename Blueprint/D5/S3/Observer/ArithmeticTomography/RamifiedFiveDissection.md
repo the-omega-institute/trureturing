@@ -2,11 +2,11 @@
 
 ## Abstract
 
-Six observable states arise from five ordinary residues and one ramification residual.
+The fixed Lambda-square A4 lattice realizes five residue states and one ramified jet state.
 
 **Theorem 1.1 (Five residues acquire one additional isotropic residual channel).**
 
-$$6 = 5+ 1 \land (\forall x \in \operatorname{L}\left(D\right), \operatorname{energy}\left(D, x\right) \bmod 5 \neq 0 \Rightarrow \operatorname{stateOf}\left(D, x\right) = \operatorname{ordinary}\left(\operatorname{ordinaryResidue}\left(\operatorname{energy}\left(D, x\right)\right)\right)) \land \operatorname{rho5}\left(D, \operatorname{zeroWitness}\left(D\right)\right) = 0 \land \operatorname{rho5}\left(D, \operatorname{residualWitness}\left(D\right)\right) \neq 0 \land \operatorname{qR}\left(\operatorname{rho5}\left(D, \operatorname{residualWitness}\left(D\right)\right)\right) = 0 \land \operatorname{stateOf}\left(D, \operatorname{zeroWitness}\left(D\right)\right) \neq \operatorname{stateOf}\left(D, \operatorname{residualWitness}\left(D\right)\right) \land \neg ramificationResidual \in \operatorname{range}\left(ordinary\right).$$
+$$\operatorname{ncard}\left(\operatorname{range}\left(stateOf\right)\right) = \operatorname{card}\left(RamifiedFiveState\right) \land (\forall x \in ExteriorSquareA4, \operatorname{energyResidue}\left(x\right) \neq 0 \Rightarrow \operatorname{stateOf}\left(x\right) = \operatorname{ordinary}\left(\operatorname{ordinaryResidue}\left(x\right)\right)) \land \operatorname{rho5}\left(zeroWitness\right) = 0 \land \operatorname{rho5}\left(residualWitness\right) \neq 0 \land \operatorname{qR}\left(\operatorname{rho5}\left(residualWitness\right)\right) = 0 \land \operatorname{stateOf}\left(zeroWitness\right) \neq \operatorname{stateOf}\left(residualWitness\right) \land \neg \operatorname{firstOrderJetObservation}\left(ramificationResidual\right) \in \operatorname{range}\left((r \mapsto \operatorname{firstOrderJetObservation}\left(\operatorname{ordinary}\left(r\right)\right))\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/ArithmeticTomography/RamifiedFiveDissection.six_state_ramified_five_dissection` (`✓ std3`). ∎
 
@@ -14,11 +14,11 @@ $$6 = 5+ 1 \land (\forall x \in \operatorname{L}\left(D\right), \operatorname{en
 
 *Commentary.*
 
-The state carrier is built from five ordinary residue labels and a separate ramificationResidual label, so its cardinality is exactly 6 = 5 + 1. For every nonzero energy residue, the observer label is the residue n mod 5.
+ExteriorSquareA4 is the source's six-integer coordinate lattice with its displayed Gram matrix G. The boundary map uses the displayed fixed matrix R_5, and q_R uses the displayed matrix H. The first conjunct equates the cardinality of the actual stateOf image with the RamifiedFiveState carrier; ramified_state_card computes that carrier as the five ordinary constructors plus one residual constructor. For nonzero energy residue, stateOf returns that residue.
 
-At zero residue, the supplied source witnesses distinguish a zero boundary from a nonzero boundary. The energy-boundary congruence forces the latter boundary to be q_R-isotropic, and the two labels are unequal.
+The theorem uses fixed lattice points, not caller-supplied witnesses. The zero point has zero R_5 boundary. The fixed residual point has a nonzero q_R-isotropic boundary, and stateOf assigns the two points different labels.
 
-The residual constructor is outside the range of ordinary labels. This is the extra first-order jet channel left by the ramified prime 5; the theorem assumes the source lattice data and does not replace it with an enumerated Fin carrier.
+RamifiedFiveRoot carries the repository theorem 5 = (-1 + 2 phi)^2. Its class in the named first-order neighborhood GoldenInt/(5) is the residual jet. Ordinary state observations are zero in this quotient, while the final non-membership says the residual jet observation is not among them.
 
 ## References
 
