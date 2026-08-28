@@ -554,6 +554,60 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void IngestReportFreeRejectsDeletedBaselineCasBlobBeforeTruthOrWrites()
+    {
+        var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
+        var casPath = Assert.Single(fixture.Files.Keys, DigestionCasStore.IsCanonicalPath);
+        Assert.True(fixture.Files.Remove(casPath));
+
+        AssertReportFreeRejectedWithoutTruthOrWrites(
+            fixture,
+            RawChangeSet.Create([casPath]),
+            "INGEST_INVALID",
+            $"baseline CAS blob was deleted: {casPath}");
+    }
+
+    [Fact]
+    public void IngestReportFreeRejectsHashMismatchedCasBlobBeforeTruthOrWrites()
+    {
+        var fixture = UncoveredOnlyIngestFixture();
+        var atomizerId = SyntheticNumberedAtomizer.Id;
+        var currentBytes = Encoding.UTF8.GetBytes(fixture.Files[RuleFixture.FixtureDigestionSourcePath]);
+        var atoms = AtomizerRegistry.Atomize(
+            atomizerId,
+            currentBytes,
+            DigestionTestSupport.Rules).Claims;
+        Assert.Equal(2, atoms.Length);
+        var newAtom = atoms[1];
+        var entry = DigestionTestSupport.Entry(
+            newAtom,
+            "gict-residual-" + newAtom.Fingerprints.RawSha256["sha256:".Length..],
+            atomizerId,
+            sourceId: "fixture-source",
+            sourcePath: RuleFixture.FixtureDigestionSourcePath);
+        var currentDocument = BackfillInventoryLoader.Load(Decode(Snapshot(fixture.Files)));
+        var currentSource = Assert.Single(currentDocument.RequireDigestionSources());
+        DirectoryLedgerTestSupport.ReplaceWithProjection(
+            fixture.Files,
+            currentDocument.WithDigestionSources(
+            [
+                currentSource with { Entries = currentSource.Entries.Add(entry) },
+            ]));
+        var capture = DigestionCasStore.Capture(newAtom.RawBytes.AsSpan());
+        fixture.Files[capture.RelativePath] = "tampered atom bytes\n";
+
+        AssertReportFreeRejectedWithoutTruthOrWrites(
+            fixture,
+            RawChangeSet.Create([
+                RuleFixture.FixtureDigestionSourcePath,
+                DirectoryAtomPath(entry.AtomId, "residual-open"),
+                capture.RelativePath,
+            ]),
+            "INGEST_INVALID",
+            "CAS blob hash mismatch");
+    }
+
+    [Fact]
     public void IngestReportFreeRejectsChangedStatusAuthorityWhenProjectedStatusWouldDrift()
     {
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
@@ -616,6 +670,17 @@ public sealed partial class ProductionEnvironmentTests
     private static void AssertReportFreeTruthAlignmentRequiredWithoutTruthOrWrites(
         RuleFixture fixture,
         RawChangeSet changes,
+        string witness) =>
+        AssertReportFreeRejectedWithoutTruthOrWrites(
+            fixture,
+            changes,
+            "INGEST_TRUTH_ALIGNMENT_REQUIRED",
+            witness);
+
+    private static void AssertReportFreeRejectedWithoutTruthOrWrites(
+        RuleFixture fixture,
+        RawChangeSet changes,
+        string errorCode,
         string witness)
     {
         using var temporary = new TemporaryDirectory();
@@ -635,7 +700,7 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.Ingest(ReportInputUnchangedArguments);
 
         Assert.False(result.Success);
-        Assert.Contains("INGEST_TRUTH_ALIGNMENT_REQUIRED", result.Error, StringComparison.Ordinal);
+        Assert.Contains(errorCode, result.Error, StringComparison.Ordinal);
         Assert.Contains(witness, result.Error, StringComparison.Ordinal);
         Assert.Equal(0, reportSource.CallCount);
         Assert.Equal(0, scribeVerifier.CallCount);
