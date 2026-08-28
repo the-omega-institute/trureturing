@@ -7,7 +7,7 @@ public sealed class WorktreeMakeWorkflowTests
     private const string WorktreeInitScriptPath = "tools/scripts/worktree-init.sh";
 
     [Fact]
-    public void MakePassesRequestedBranchToCanonicalCli()
+    public void MakePassesStructuredCreationInputsToCanonicalCli()
     {
         if (OperatingSystem.IsWindows()) return;
 
@@ -29,9 +29,13 @@ public sealed class WorktreeMakeWorkflowTests
         Assert.False(Directory.Exists(target));
         var arguments = System.Text.Encoding.UTF8.GetString(result.StandardOutput)
             .Split('\n', StringSplitOptions.RemoveEmptyEntries);
-        var branchFlag = Array.IndexOf(arguments, "--branch");
-        Assert.True(branchFlag >= 0, "worktree adapter must pass --branch");
-        Assert.Equal("harness/sentinel-kind/w99-foo", arguments[branchFlag + 1]);
+        var kindFlag = Array.IndexOf(arguments, "--kind");
+        Assert.True(kindFlag >= 0, "worktree adapter must pass --kind");
+        Assert.Equal("sentinel-kind", arguments[kindFlag + 1]);
+        var nameFlag = Array.IndexOf(arguments, "--name");
+        Assert.True(nameFlag >= 0, "worktree adapter must pass --name");
+        Assert.Equal("w99-foo", arguments[nameFlag + 1]);
+        Assert.DoesNotContain("--branch", arguments);
         var pathFlag = Array.IndexOf(arguments, "--path");
         Assert.True(pathFlag >= 0, "worktree adapter must pass --path");
         Assert.Equal(target, arguments[pathFlag + 1]);
