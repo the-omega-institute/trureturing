@@ -6,7 +6,7 @@ A nonnegative row-stochastic finite channel contracts total variation for arbitr
 
 **Theorem 1.1 (Stochastic channels contract total variation).**
 
-$$\begin{gathered}\forall X, Y\ [\operatorname{Fintype}(X)] [\operatorname{Fintype}(Y)],\\\forall p, q: X\to \mathbb{R}, W: X\to Y\to \mathbb{R},\\((\forall x, y, 0\le W(x, y)) \land (\forall x, \sum_{y}W(x, y)=1)) \Rightarrow\\\operatorname{TV}(\operatorname{channelOutput}(W, p), \operatorname{channelOutput}(W, q))\le \operatorname{TV}(p, q).\end{gathered}$$
+$$\begin{gathered}\forall X, Y: \operatorname{Type},\ [\operatorname{Fintype}(X)] [\operatorname{Fintype}(Y)],\\\forall p, q: X\to \mathbb{R}, W: X\to Y\to \mathbb{R},\\((\forall x, y, 0\le W(x, y)) \land (\forall x, \sum_{y}W(x, y)=1)) \Rightarrow\\\operatorname{TV}(\operatorname{channelOutput}(W, p), \operatorname{channelOutput}(W, q))\le \operatorname{TV}(p, q).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/TotalVariation/DataProcessing.total_variation_channel_le` (`✓ std3`). ∎
 
