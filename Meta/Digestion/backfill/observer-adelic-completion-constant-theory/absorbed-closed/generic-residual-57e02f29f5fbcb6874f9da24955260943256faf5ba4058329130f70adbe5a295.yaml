@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Arith/Lattices/ExactDualLatticeFormula.dual_lattice_eq_one_fifth_hodge_lattice
       source_sha256: sha256:57e02f29f5fbcb6874f9da24955260943256faf5ba4058329130f70adbe5a295
-      target_sha256: sha256:475ea94b51babf615bf4944790a0a795241d5576616ac6735c78227be3d206b5
+      target_statement_id: sha256:e25181e6e16bb0a441944f1d42aa674911d01c23e8453e20348a1c0e84bd228b
   scribe:
     - gid: D5/S3/Arith/Lattices/ExactDualLatticeFormula.dual_lattice_eq_one_fifth_hodge_lattice
       definition_sha256: sha256:0ee4a4c9ac40a11806f005a747fb70a5132c87ee3b962df2b0808423a958352c

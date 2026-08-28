@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/Completion/CompletionPointCovariance.completion_point_covariance
       source_sha256: sha256:25ef3e2fd34118347b4065e1ae9e4b2d35dd0e6a3da2fbbaa58867392e0e504a
-      target_sha256: sha256:d07478402f1d46e3e006c05df38244ed9453458e6eb1d76e58e6634437fb727f
+      target_statement_id: sha256:f60f138c736ff54100eb4e92f1caaa65b68fe08a7c5774e9fc4b87880070b278
   scribe:
     - gid: D5/S3/Observer/Completion/CompletionPointCovariance.completion_point_covariance
       definition_sha256: sha256:2c1d3373a2f3e6e73d6f57feb0c97be613062523ddfe13fb952798497ad07f05

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/HyperbolicTransport/GoldenHyperbolicInflation.golden_visible_hidden_hyperbolic_transport
       source_sha256: sha256:93e4ba8f4abf39c6da56ade083f78f7b2cd43028c02feec9ab6b84eeb070fcdd
-      target_sha256: sha256:803243db938aa88eb7990895e5be811c264775af7881744fad417e6384811084
+      target_statement_id: sha256:ccfd60e69734fc1ece2b0092a65e07a3a23c87e5ed2e058fb02582c726a53388
   scribe:
     - gid: D5/S3/Observer/HyperbolicTransport/GoldenHyperbolicInflation.golden_visible_hidden_hyperbolic_transport
       definition_sha256: sha256:41dfdee50cafb685507a1cd7e51fad32dcc4534d6b62da1b59ef4c19fa0c93c9
