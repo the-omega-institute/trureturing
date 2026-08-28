@@ -1,0 +1,17 @@
+ast_path: 定理/13.1
+fingerprints:
+  raw_sha256: sha256:bb0d9ca298be3f69a754bf262836596105ad49dc6ae99793bdc4ff1992690fd1
+  normalized_sha256: sha256:bb0d9ca298be3f69a754bf262836596105ad49dc6ae99793bdc4ff1992690fd1
+cas_ref: sha256:bb0d9ca298be3f69a754bf262836596105ad49dc6ae99793bdc4ff1992690fd1
+coverage_gids:
+  - D5/S3/Analytic/Asymptotics/LinearDensityHeatTrace.linear_density_heat_trace
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/Asymptotics/LinearDensityHeatTrace.linear_density_heat_trace
+      source_sha256: sha256:bb0d9ca298be3f69a754bf262836596105ad49dc6ae99793bdc4ff1992690fd1
+      target_sha256: sha256:d902ab965a7efec107bd587bafee78ebf6cc9944d8ac2723411fbffb53b4c530
+  scribe:
+    - gid: D5/S3/Analytic/Asymptotics/LinearDensityHeatTrace.linear_density_heat_trace
+      definition_sha256: sha256:76c8a60c6e75884cb633c3e80a3fe8e7a3e65ddd655443299483ed92f68a8957
+      emission_sha256: sha256:b34f2c650396ae01df3eeb9304eff93191af1bf04fb48777cb133ec4fbd65818
+  unresolved_subitems: []
