@@ -12,6 +12,6 @@ receipts:
       target_sha256: sha256:13459be4f4c34a8631e41aef3f4caa23f3b531e9baff4b2ce11d8bdfab0f7985
   scribe:
     - gid: D5/S0/Diagonal/Lawvere/QualitativeEscape.self_application_fragment_package
-      definition_sha256: sha256:3a2d75d6279322b3a1079534fa03fb3a4c3cf1efdf19eaf581a7e012398a08bf
-      emission_sha256: sha256:425192f491526fad3fdd0ac91b30f2c7d85987e4d34067fdae998f3cca9cdfb5
+      definition_sha256: sha256:32a052fbc6140500315c74c50fbcaeb1afc4a884f71c1374766f2bad77fdf1fa
+      emission_sha256: sha256:44b9cf458d081342ace3e73fd0195ae369213ab320972cb6df2e67e1cebf5e47
   unresolved_subitems: []
