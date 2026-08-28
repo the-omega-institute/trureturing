@@ -8,6 +8,22 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-28T06:09:47.3146060+00:00
+    gids:
+      - D5/S3/ConceptDynamics/Refinement/ResourceAsymmetricConceptEquivalence.ordinary_equivalence_does_not_imply_resource_equivalence
+    gaps:
+      - code: chain-migration-incomplete
+        detail: generic-residual-23d502836cc665ec1aa17de1343b9b9a22d3e8fd8cc15e90ae42c752aad2b0c9-5fbce953e26ebd4ebefb704b7bf3e322f9eba04e7de70a3ff2a0c5b035eca9d6
+      - code: chain-migration-incomplete
+        detail: generic-residual-2e9537917ee27818c12f2c36efcf5a589a65d6e1b2ebb0b2f2fcce6f4d2e36cc-fc54541bc79c9efaf29ec458f924825ffd3532354be5baee43fc318daf0c36c2
+      - code: chain-migration-incomplete
+        detail: generic-residual-a462a841d38425e042e28f95aae8a0cdd3983356bb03d67a7731b860c1484031-0912f383998ce9fc025ae5a009eb110ce240ae171efef6f34e61893c65e4e986
+      - code: chain-migration-incomplete
+        detail: generic-residual-a55815c4b9f5170efd0b66ffa723ba3982589ad84f9b1c48bd0b7aa80a784cbf-d7cbcd5d4150936618355d1080158941aa1e2120e0d277bfcda5308caa980026
+      - code: chain-migration-incomplete
+        detail: generic-residual-e8d75089bd43f5b30369b7a139e3c829ad1fe1d60de7c4ef567f6c2f66a6adc4-f9a6b0dfcc038adca12186370365bccd4b3704b9fddf7cec65c99ce607a505e3
   chain_atoms:
     - generic-residual-23d502836cc665ec1aa17de1343b9b9a22d3e8fd8cc15e90ae42c752aad2b0c9-5fbce953e26ebd4ebefb704b7bf3e322f9eba04e7de70a3ff2a0c5b035eca9d6
     - generic-residual-e8d75089bd43f5b30369b7a139e3c829ad1fe1d60de7c4ef567f6c2f66a6adc4-f9a6b0dfcc038adca12186370365bccd4b3704b9fddf7cec65c99ce607a505e3

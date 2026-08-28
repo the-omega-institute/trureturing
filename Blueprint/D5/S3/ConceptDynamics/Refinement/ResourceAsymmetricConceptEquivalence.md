@@ -6,7 +6,7 @@ A finite permutation can be concept-equivalent but resource-asymmetric.
 
 **Theorem 1.1 (Ordinary concept equivalence need not be resource equivalence).**
 
-$$\begin{gathered}\forall X: \operatorname{FiniteType},\\{}\forall pi: X \equiv X, \forall cost, \forall r: \mathbb{N},\\{}(\operatorname{cost}(pi) \leq r \land \neg(\operatorname{cost}(pi^{-1}) \leq r)) \Rightarrow \\{}(\operatorname{ConceptEquivalent}(id, pi) \land\\{}\operatorname{ResourceRefines}(cost, r, pi, id) \land\\{}\neg(\operatorname{ResourceRefines}(cost, r, id, pi))).\end{gathered}$$
+$$\begin{gathered}\forall X: \operatorname{Type}, [\operatorname{Finite}(X)],\\{}\forall pi: X \equiv X, cost: ResourceCost, r: \mathbb{N},\\{}(\operatorname{cost}(pi) \leq r \land \neg(\operatorname{cost}(pi^{-1}) \leq r)) \Rightarrow \\{}(\operatorname{ConceptEquivalent}(id, pi) \land\\{}\operatorname{ResourceRefines}(cost, r, pi, id) \land\\{}\neg(\operatorname{ResourceRefines}(cost, r, id, pi))).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Refinement/ResourceAsymmetricConceptEquivalence.ordinary_equivalence_does_not_imply_resource_equivalence` (`✓ std3`). ∎
 
