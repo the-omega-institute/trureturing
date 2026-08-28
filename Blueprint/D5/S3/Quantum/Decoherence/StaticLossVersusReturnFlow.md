@@ -34,7 +34,7 @@ Take one off-diagonal entry equal to one half. Its squared static loss is one qu
 
 **Theorem 1.3 (Static loss and return flow are logically independent).**
 
-$$(\neg\forall X, D, T, D = \operatorname{diag} \Rightarrow 1 \leq \Vert (I-D)X\Vert^2 \Rightarrow \Vert D(T((I-D)X))\Vert^2 \neq 0) \land (\neg\forall X, D, T, D = \operatorname{diag} \Rightarrow \Vert D(T((I-D)X))\Vert^2 \neq 0 \Rightarrow 1 \leq \Vert (I-D)X\Vert^2)$$
+$$(\neg\forall X: QubitMatrix, D, T: Dynamics, D = \operatorname{diag} \Rightarrow 1 \leq \Vert (I-D)X\Vert^2 \Rightarrow \Vert D(T((I-D)X))\Vert^2 \neq 0) \land (\neg\forall X: QubitMatrix, D, T: Dynamics, D = \operatorname{diag} \Rightarrow \Vert D(T((I-D)X))\Vert^2 \neq 0 \Rightarrow 1 \leq \Vert (I-D)X\Vert^2)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Decoherence/StaticLossVersusReturnFlow.static_loss_and_return_flow_are_logically_independent` (`✓ std3`). ∎
 
