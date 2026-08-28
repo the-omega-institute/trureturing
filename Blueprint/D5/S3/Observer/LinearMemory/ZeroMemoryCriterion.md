@@ -54,7 +54,7 @@ The memory object is the quotient of the current kernel by the eventual kernel p
 
 **Theorem 1.5 (Zero memory, kernel invariance, and exact descent).**
 
-$$\operatorname{TFAE}\left(\operatorname{Subsingleton}\left(N_{0}/N_{\infty}\right), \operatorname{map}\left(T, \operatorname{ker}\left(C\right)\right) \subseteq \operatorname{ker}\left(C\right), \exists Tbar: W \to W, \forall x, C\left(T\left(x\right)\right) = Tbar\left(C\left(x\right)\right)\right).$$
+$$\forall K, V, W: \operatorname{Type}, [\operatorname{DivisionRing}\left(K\right)], [\operatorname{AddCommGroup}\left(V\right)], [\operatorname{Module}\left(K, V\right)], [\operatorname{AddCommGroup}\left(W\right)], [\operatorname{Module}\left(K, W\right)]\\{}C: \operatorname{LinearMap}\left(K, V, W\right), T: \operatorname{LinearMap}\left(K, V, V\right),\\{}\operatorname{TFAE}\left(\operatorname{Subsingleton}\left(N_{0}/N_{\infty}\right), \operatorname{map}\left(T, \operatorname{ker}\left(C\right)\right) \subseteq \operatorname{ker}\left(C\right), \exists Tbar: \operatorname{LinearMap}\left(K, W, W\right) , \forall x, C\left(T\left(x\right)\right) = Tbar\left(C\left(x\right)\right)\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/LinearMemory/ZeroMemoryCriterion.zero_memory_criterion` (`✓ std3`). ∎
 
