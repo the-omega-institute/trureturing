@@ -1,0 +1,17 @@
+ast_path: 定理/58.1/clause/1
+fingerprints:
+  raw_sha256: sha256:bc4e244f7a2260c9fc9d2f07a00d03e52f8a0f797ebf9a71febcb1aad9518a48
+  normalized_sha256: sha256:bc4e244f7a2260c9fc9d2f07a00d03e52f8a0f797ebf9a71febcb1aad9518a48
+cas_ref: sha256:bc4e244f7a2260c9fc9d2f07a00d03e52f8a0f797ebf9a71febcb1aad9518a48
+coverage_gids:
+  - D5/S3/Factorization/ObserverTypes/AlternatingFiveObserverTypeIrreplaceability.alternating_five_observer_type_irreplaceability
+receipts:
+  coverage:
+    - gid: D5/S3/Factorization/ObserverTypes/AlternatingFiveObserverTypeIrreplaceability.alternating_five_observer_type_irreplaceability
+      source_sha256: sha256:bc4e244f7a2260c9fc9d2f07a00d03e52f8a0f797ebf9a71febcb1aad9518a48
+      target_sha256: sha256:45dc824e27e1f52716a3704c1bea663f0a8abffd2826edf74a1da10ce4b49eeb
+  scribe:
+    - gid: D5/S3/Factorization/ObserverTypes/AlternatingFiveObserverTypeIrreplaceability.alternating_five_observer_type_irreplaceability
+      definition_sha256: sha256:ad8dbd20d2d7d399b1213eef371f298305a0d6301aff75e1ad4e875f220f7476
+      emission_sha256: sha256:0bdd49b15b8957930a736b511f11b224fc90a6fc590f3292c43ed32e513bd217
+  unresolved_subitems: []
