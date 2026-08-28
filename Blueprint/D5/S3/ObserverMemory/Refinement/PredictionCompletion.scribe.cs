@@ -36,42 +36,77 @@ internal sealed class PredictionCompletionDocument : IScribeDocumentDefinition
                         + "intertwining equations."))),
                 DescribeRole.Theorem))));
 
-    private static Formula Subscript(Formula value, Formula index) =>
-        Seq(value, Underscore, Grp(index));
-
-    private static Formula BarredSubscript(Formula value, Formula index) =>
-        Seq(Overline, Grp(value), Underscore, Grp(index));
-
-    private static Formula Barred(Formula value) => Seq(Overline, Grp(value));
-
     private static Formula RefinementFormula()
     {
-        Formula q = F.Id("q");
-        Formula r = F.Id("r");
-        Formula h = F.Id("h");
-        Formula kappa = F.Id("kappa");
-        Formula relationQ = Subscript(F.Id("R"), q);
-        Formula relationR = Subscript(F.Id("R"), r);
-        Formula stateQ = Subscript(F.Id("Z"), q);
-        Formula stateR = Subscript(F.Id("Z"), r);
-        Formula projectionQ = Subscript(Pi, q);
-        Formula projectionR = Subscript(Pi, r);
-        Formula updateQ = BarredSubscript(Tau, q);
-        Formula updateR = BarredSubscript(Tau, r);
-        Formula readoutQ = Barred(q);
-        Formula readoutR = Barred(r);
+        Formula state = F.Id("Y");
+        Formula fineOutput = F.Id("O");
+        Formula coarseOutput = F.Id("P");
+        Formula update = F.Id("update");
+        Formula fine = F.Id("fine");
+        Formula coarse = F.Id("coarse");
+        Formula forget = F.Id("forget");
+        Formula hfactor = F.Id("hfactor");
+        Formula fineItinerary = Call("completeItinerary", update, fine);
+        Formula coarseItinerary = Call("completeItinerary", update, coarse);
+        Formula fineKernel = Call("ker", fineItinerary);
+        Formula coarseKernel = Call("ker", coarseItinerary);
+        Formula projectionFine = Call("completionProjection", update, fine);
+        Formula projectionCoarse = Call("completionProjection", update, coarse);
+        Formula updateFine = Call("completionUpdate", update, fine);
+        Formula updateCoarse = Call("completionUpdate", update, coarse);
+        Formula readoutFine = Call("completionReadout", update, fine);
+        Formula readoutCoarse = Call("completionReadout", update, coarse);
+        Formula descend = F.Id("descend");
+        Formula completedFine = Call("CompletedState", update, fine);
+        Formula completedCoarse = Call("CompletedState", update, coarse);
+        Formula descendType = Call("Function", completedFine, completedCoarse);
+        Formula descendClauses = new Formula.Logic(
+            Call("Surjective", descend),
+            FormulaLogicOperator.And,
+            new Formula.Logic(
+                Seq(projectionCoarse, Sp, Eq, Sp, descend, Sp, Circ, Sp, projectionFine),
+                FormulaLogicOperator.And,
+                new Formula.Logic(
+                    Seq(descend, Sp, Circ, Sp, updateFine, Sp, Eq, Sp,
+                        updateCoarse, Sp, Circ, Sp, descend),
+                    FormulaLogicOperator.And,
+                    Seq(readoutCoarse, Sp, Circ, Sp, descend, Sp, Eq, Sp,
+                        forget, Sp, Circ, Sp, readoutFine))));
+        Formula conclusion = new Formula.Logic(
+            Seq(fineKernel, Sp, Subseteq, Sp, coarseKernel),
+            FormulaLogicOperator.And,
+            Seq(Exists, Bang, Sp, descend, Colon, Sp, descendType, Comma, Sp, descendClauses));
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
 
-        return Disp(Seq(
-            r, Sp, Eq, Sp, h, Sp, Circ, Sp, q, Sp, Rightarrow, Esc,
-            relationQ, Sp, Subseteq, Sp, relationR, Sp, Land, Esc,
-            Exists, Bang, Sp, kappa, Colon, Sp, stateQ, Sp, To, Sp, stateR,
-            Comma, Esc,
-            Call("Surjective", kappa), Sp, Land, Esc,
-            projectionR, Sp, Eq, Sp, kappa, Sp, Circ, Sp, projectionQ,
-            Sp, Land, Esc,
-            kappa, Sp, Circ, Sp, updateQ, Sp, Eq, Sp,
-            updateR, Sp, Circ, Sp, kappa, Sp, Land, Esc,
-            readoutR, Sp, Circ, Sp, kappa, Sp, Eq, Sp,
-            h, Sp, Circ, Sp, readoutQ, Dot));
+        return Disp(new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [
+                Bound("Y", type), Bound("O", type), Bound("P", type),
+                Bound("update", Arrow(state, state)),
+                Bound("fine", Arrow(state, fineOutput)),
+                Bound("coarse", Arrow(state, coarseOutput)),
+                Bound("forget", Arrow(fineOutput, coarseOutput)),
+                Bound("hfactor", Seq(coarse, Sp, Eq, Sp, forget, Sp, Circ, Sp, fine)),
+            ],
+            conclusion));
     }
+
+    private static Formula Arrow(Formula domain, Formula codomain) =>
+        new Formula.TypeArrow(domain, codomain);
+
+    private static Formula Call(string name, params Formula[] arguments)
+    {
+        var items = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
+        for (var index = 0; index < arguments.Length; index++)
+        {
+            if (index > 0) items.AddRange([Comma, Sp]);
+            items.Add(arguments[index]);
+        }
+
+        items.Add(Close);
+        return Seq([.. items]);
+    }
+
+    private static Formula.BoundVariable Bound(string name, Formula domain) =>
+        new(FormulaIdentifier.Create(name), domain);
 }
