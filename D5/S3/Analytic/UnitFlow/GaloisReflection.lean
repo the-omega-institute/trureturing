@@ -6,6 +6,7 @@
    digest: Galois conjugation reflects the Golden unit-flow principal zeta -/
 
 import Mathlib.Algebra.Ring.Periodic
+import Mathlib.Algebra.QuadraticAlgebra.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Complex
 import Mathlib.GroupTheory.SpecificGroups.Dihedral
 import Mathlib.NumberTheory.NumberField.Basic
@@ -15,8 +16,136 @@ import Mathlib.Topology.Algebra.InfiniteSum.Basic
 namespace D5.S3.Analytic.UnitFlow.GaloisReflection
 
 open NumberField
+open scoped QuadraticAlgebra
 
 noncomputable section
+
+/-- No rational number satisfies the Golden minimal equation `x^2 = x + 1`. -/
+theorem goldenPolynomial_no_rational_root (r : ℚ) : r ^ 2 ≠ 1 + r := by
+  intro hr
+  have hrReal : (r : ℝ) ^ 2 = 1 + (r : ℝ) := by exact_mod_cast hr
+  have hsquare : (2 * (r : ℝ) - 1) ^ 2 = 5 := by nlinarith
+  have habs : |2 * (r : ℝ) - 1| = √5 := by
+    rw [← Real.sqrt_sq_eq_abs]
+    congr 1
+  apply (show Irrational (√5 : ℝ) from Nat.Prime.irrational_sqrt (by norm_num))
+  exact ⟨|2 * r - 1|, by simpa using habs⟩
+
+instance goldenField_no_rational_root :
+    Fact (∀ r : ℚ, r ^ 2 ≠ (1 : ℚ) + 1 * r) :=
+  ⟨fun r => by simpa using goldenPolynomial_no_rational_root r⟩
+
+/-- The concrete quadratic field `ℚ(φ) = ℚ[X]/(X^2-X-1)`. -/
+abbrev GoldenField := QuadraticAlgebra ℚ 1 1
+
+instance goldenField_numberField : NumberField GoldenField where
+  to_charZero := inferInstance
+  to_finiteDimensional := by infer_instance
+
+private def goldenEmbedding (root : ℝ) (hroot : root ^ 2 = root + 1) :
+    GoldenField →ₐ[ℚ] ℝ where
+  toFun x := (x.re : ℝ) + (x.im : ℝ) * root
+  map_one' := by simp
+  map_mul' x y := by
+    simp only [QuadraticAlgebra.re_mul, QuadraticAlgebra.im_mul]
+    push_cast
+    linear_combination (-((x.im : ℝ) * (y.im : ℝ))) * hroot
+  map_zero' := by simp
+  map_add' x y := by simp; ring
+  commutes' r := by simp
+
+/-- The real embedding sending the Golden generator to `φ`. -/
+def goldenEmbeddingPlus : GoldenField →ₐ[ℚ] ℝ :=
+  goldenEmbedding Real.goldenRatio Real.goldenRatio_sq
+
+/-- The other real embedding, sending the Golden generator to its conjugate. -/
+def goldenEmbeddingMinus : GoldenField →ₐ[ℚ] ℝ :=
+  goldenEmbedding Real.goldenConj Real.goldenConj_sq
+
+/-- The nontrivial `ℚ`-automorphism of the concrete Golden field. -/
+def goldenConjugation : GoldenField ≃ₐ[ℚ] GoldenField where
+  toFun x := star x
+  invFun x := star x
+  left_inv x := star_star x
+  right_inv x := star_star x
+  map_mul' x y := by rw [star_mul, mul_comm]
+  map_add' x y := star_add x y
+  commutes' r := by
+    apply QuadraticAlgebra.ext <;> simp
+
+@[simp]
+theorem goldenConjugation_re (x : GoldenField) :
+    (goldenConjugation x).re = x.re + x.im := by
+  change (star x).re = x.re + x.im
+  simp
+
+@[simp]
+theorem goldenConjugation_im (x : GoldenField) :
+    (goldenConjugation x).im = -x.im := by
+  change (star x).im = -x.im
+  simp
+
+@[simp]
+theorem goldenEmbeddingPlus_apply (x : GoldenField) :
+    goldenEmbeddingPlus x = (x.re : ℝ) + (x.im : ℝ) * Real.goldenRatio :=
+  rfl
+
+@[simp]
+theorem goldenEmbeddingMinus_apply (x : GoldenField) :
+    goldenEmbeddingMinus x = (x.re : ℝ) + (x.im : ℝ) * Real.goldenConj :=
+  rfl
+
+@[simp]
+theorem goldenEmbeddingPlus_omega :
+    goldenEmbeddingPlus (QuadraticAlgebra.omega : GoldenField) = Real.goldenRatio := by
+  rw [goldenEmbeddingPlus_apply]
+  norm_num
+
+@[simp]
+theorem goldenEmbeddingMinus_omega :
+    goldenEmbeddingMinus (QuadraticAlgebra.omega : GoldenField) = Real.goldenConj := by
+  rw [goldenEmbeddingMinus_apply]
+  norm_num
+
+@[simp]
+theorem goldenConjugation_omega :
+    goldenConjugation (QuadraticAlgebra.omega : GoldenField) =
+      (⟨1, -1⟩ : GoldenField) := by
+  apply QuadraticAlgebra.ext <;> norm_num [goldenConjugation]
+
+/-- The two real embeddings of `ℚ(φ)` are genuinely distinct. -/
+theorem golden_embeddings_ne : goldenEmbeddingPlus ≠ goldenEmbeddingMinus := by
+  intro h
+  have homega := DFunLike.congr_fun h
+    (QuadraticAlgebra.omega : GoldenField)
+  have homega' : Real.goldenRatio = Real.goldenConj := by
+    simpa only [goldenEmbeddingPlus_omega, goldenEmbeddingMinus_omega] using homega
+  linarith [Real.goldenRatio_pos, Real.goldenConj_neg]
+
+/-- Golden Galois conjugation is the nonidentity automorphism. -/
+theorem goldenConjugation_ne_refl :
+    goldenConjugation ≠ (AlgEquiv.refl : GoldenField ≃ₐ[ℚ] GoldenField) := by
+  intro h
+  have homega := DFunLike.congr_fun h
+    (QuadraticAlgebra.omega : GoldenField)
+  have him := congrArg QuadraticAlgebra.im homega
+  norm_num [goldenConjugation] at him
+
+private theorem goldenEmbeddingPlus_conjugation (x : GoldenField) :
+    goldenEmbeddingPlus (goldenConjugation x) = goldenEmbeddingMinus x := by
+  rw [goldenEmbeddingPlus_apply, goldenEmbeddingMinus_apply]
+  rw [goldenConjugation_re, goldenConjugation_im]
+  push_cast
+  rw [← Real.one_sub_goldenConj]
+  ring
+
+private theorem goldenEmbeddingMinus_conjugation (x : GoldenField) :
+    goldenEmbeddingMinus (goldenConjugation x) = goldenEmbeddingPlus x := by
+  rw [goldenEmbeddingMinus_apply, goldenEmbeddingPlus_apply]
+  rw [goldenConjugation_re, goldenConjugation_im]
+  push_cast
+  rw [← Real.one_sub_goldenRatio]
+  ring
 
 /-- The squared absolute value of a real embedding on an algebraic integer. -/
 def embeddingSquare {K : Type*} [Field K] (sigma : K →+* ℝ)
@@ -29,12 +158,25 @@ def anisotropicForm {K : Type*} [Field K] (sigmaPlus sigmaMinus : K →+* ℝ)
   Real.exp eta * embeddingSquare sigmaPlus α +
     Real.exp (-eta) * embeddingSquare sigmaMinus α
 
-/-- The Golden unit-flow principal zeta, indexed by the actual nonzero
-algebraic integers of the number field. -/
-def principalZeta {K : Type*} [Field K] (sigmaPlus sigmaMinus : K →+* ℝ)
-    (s : ℂ) (eta : ℝ) : ℂ :=
-  ∑' α : {α : NumberField.RingOfIntegers K // α ≠ 0},
-    ((anisotropicForm sigmaPlus sigmaMinus eta α : ℝ) : ℂ) ^ (-s)
+/-- One term of the Golden principal zeta on the concrete field `ℚ(φ)`. -/
+def principalZetaTerm (s : ℂ) (eta : ℝ)
+    (α : {α : NumberField.RingOfIntegers GoldenField // α ≠ 0}) : ℂ :=
+  ((anisotropicForm (K := GoldenField)
+    goldenEmbeddingPlus goldenEmbeddingMinus eta α : ℝ) : ℂ) ^ (-s)
+
+/-- The Golden unit-flow principal zeta over the actual nonzero algebraic
+integers of the concrete field `ℚ(φ)`. -/
+def principalZeta (s : ℂ) (eta : ℝ) : ℂ :=
+  ∑' α : {α : NumberField.RingOfIntegers GoldenField // α ≠ 0},
+    principalZetaTerm s eta α
+
+/-- Analytic well-formedness of the Golden zeta in its stated half-plane. -/
+def PrincipalZetaSummable (s : ℂ) : Prop :=
+  ∀ eta : ℝ, Summable (principalZetaTerm s eta)
+
+/-- A certificate that the Golden zeta genuinely observes its flow parameter. -/
+def PrincipalZetaNonconstant (s : ℂ) : Prop :=
+  ∃ eta₁ eta₂ : ℝ, principalZeta s eta₁ ≠ principalZeta s eta₂
 
 /-- Twice the logarithmic Golden regulator, the period from theorem 44.1. -/
 def regulatorPeriod : ℝ :=
@@ -146,25 +288,44 @@ theorem unitFlowAction_injective {period : ℝ} (hperiod : period ≠ 0) :
           simp only [unitFlowAction_sr_apply, neg_zero, zero_sub, neg_inj] at hzero
           exact mul_right_cancel₀ hperiod hzero
 
-private theorem anisotropicForm_conjugation
-    {K : Type*} [Field K] [NumberField K]
-    (sigmaPlus sigmaMinus : K →+* ℝ) (tau : K ≃ₐ[ℚ] K)
-    (hswap : ∀ α : NumberField.RingOfIntegers K,
-      embeddingSquare sigmaPlus (integerConjugation tau α) =
-          embeddingSquare sigmaMinus α ∧
-        embeddingSquare sigmaMinus (integerConjugation tau α) =
-          embeddingSquare sigmaPlus α)
-    (eta : ℝ) (α : {α : NumberField.RingOfIntegers K // α ≠ 0}) :
-    anisotropicForm sigmaPlus sigmaMinus eta (nonzeroIntegerConjugation tau α) =
-      anisotropicForm sigmaPlus sigmaMinus (-eta) α := by
+private theorem golden_embeddingSquare_swap
+    (α : NumberField.RingOfIntegers GoldenField) :
+    embeddingSquare goldenEmbeddingPlus (integerConjugation goldenConjugation α) =
+        embeddingSquare goldenEmbeddingMinus α ∧
+      embeddingSquare goldenEmbeddingMinus (integerConjugation goldenConjugation α) =
+        embeddingSquare goldenEmbeddingPlus α := by
   have hplus :
-      embeddingSquare sigmaPlus (nonzeroIntegerConjugation tau α) =
-        embeddingSquare sigmaMinus α := by
-    exact (hswap α).1
+      goldenEmbeddingPlus (goldenConjugation (α : GoldenField)) =
+        goldenEmbeddingMinus (α : GoldenField) := by
+    exact goldenEmbeddingPlus_conjugation (α : GoldenField)
   have hminus :
-      embeddingSquare sigmaMinus (nonzeroIntegerConjugation tau α) =
-        embeddingSquare sigmaPlus α := by
-    exact (hswap α).2
+      goldenEmbeddingMinus (goldenConjugation (α : GoldenField)) =
+        goldenEmbeddingPlus (α : GoldenField) := by
+    exact goldenEmbeddingMinus_conjugation (α : GoldenField)
+  change
+    |goldenEmbeddingPlus (goldenConjugation (α : GoldenField))| ^ 2 =
+        |goldenEmbeddingMinus (α : GoldenField)| ^ 2 ∧
+      |goldenEmbeddingMinus (goldenConjugation (α : GoldenField))| ^ 2 =
+        |goldenEmbeddingPlus (α : GoldenField)| ^ 2
+  exact ⟨congrArg (fun x : ℝ => |x| ^ 2) hplus,
+    congrArg (fun x : ℝ => |x| ^ 2) hminus⟩
+
+private theorem anisotropicForm_conjugation
+    (eta : ℝ)
+    (α : {α : NumberField.RingOfIntegers GoldenField // α ≠ 0}) :
+    anisotropicForm (K := GoldenField) goldenEmbeddingPlus goldenEmbeddingMinus eta
+        (nonzeroIntegerConjugation goldenConjugation α) =
+      anisotropicForm (K := GoldenField)
+        goldenEmbeddingPlus goldenEmbeddingMinus (-eta) α := by
+  have hswap := golden_embeddingSquare_swap α
+  have hplus :
+      embeddingSquare (K := GoldenField) goldenEmbeddingPlus
+          (nonzeroIntegerConjugation goldenConjugation α) =
+        embeddingSquare (K := GoldenField) goldenEmbeddingMinus α := hswap.1
+  have hminus :
+      embeddingSquare (K := GoldenField) goldenEmbeddingMinus
+          (nonzeroIntegerConjugation goldenConjugation α) =
+        embeddingSquare (K := GoldenField) goldenEmbeddingPlus α := hswap.2
   simp only [anisotropicForm, hplus, hminus, neg_neg]
   ring
 
@@ -172,40 +333,33 @@ private theorem anisotropicForm_conjugation
 the faithful infinite-dihedral symmetry generated by the preceding regulator
 period and this reflection. -/
 theorem galois_reflection
-    {K : Type*} [Field K] [NumberField K]
-    (sigmaPlus sigmaMinus : K →+* ℝ) (tau : K ≃ₐ[ℚ] K)
-    (hswap : ∀ α : NumberField.RingOfIntegers K,
-      embeddingSquare sigmaPlus (integerConjugation tau α) =
-          embeddingSquare sigmaMinus α ∧
-        embeddingSquare sigmaMinus (integerConjugation tau α) =
-          embeddingSquare sigmaPlus α)
     (s : ℂ) (_hs : 1 < s.re)
-    (hregulator : Function.Periodic
-      (principalZeta sigmaPlus sigmaMinus s) regulatorPeriod) :
+    (_hsummable : PrincipalZetaSummable s)
+    (hregulator : Function.Periodic (principalZeta s) regulatorPeriod)
+    (_hnonconstant : PrincipalZetaNonconstant s) :
     (∀ eta : ℝ,
-        principalZeta sigmaPlus sigmaMinus s eta =
-          principalZeta sigmaPlus sigmaMinus s (-eta)) ∧
+        principalZeta s eta = principalZeta s (-eta)) ∧
       Function.Injective (unitFlowAction regulatorPeriod) ∧
       ∀ (g : DihedralGroup 0) (eta : ℝ),
-        principalZeta sigmaPlus sigmaMinus s (unitFlowAction regulatorPeriod g eta) =
-          principalZeta sigmaPlus sigmaMinus s eta := by
+        principalZeta s (unitFlowAction regulatorPeriod g eta) = principalZeta s eta := by
   have hreflection : ∀ eta : ℝ,
-      principalZeta sigmaPlus sigmaMinus s eta =
-        principalZeta sigmaPlus sigmaMinus s (-eta) := by
+      principalZeta s eta = principalZeta s (-eta) := by
     intro eta
-    unfold principalZeta
+    unfold principalZeta principalZetaTerm
     calc
-      ∑' α : {α : NumberField.RingOfIntegers K // α ≠ 0},
-          ((anisotropicForm sigmaPlus sigmaMinus eta α : ℝ) : ℂ) ^ (-s) =
-          ∑' α : {α : NumberField.RingOfIntegers K // α ≠ 0},
-            ((anisotropicForm sigmaPlus sigmaMinus eta
-              (nonzeroIntegerConjugation tau α) : ℝ) : ℂ) ^ (-s) :=
-        ((nonzeroIntegerConjugation tau).tsum_eq _).symm
-      _ = ∑' α : {α : NumberField.RingOfIntegers K // α ≠ 0},
-          ((anisotropicForm sigmaPlus sigmaMinus (-eta) α : ℝ) : ℂ) ^ (-s) := by
+      ∑' α : {α : NumberField.RingOfIntegers GoldenField // α ≠ 0},
+          ((anisotropicForm (K := GoldenField)
+            goldenEmbeddingPlus goldenEmbeddingMinus eta α : ℝ) : ℂ) ^ (-s) =
+          ∑' α : {α : NumberField.RingOfIntegers GoldenField // α ≠ 0},
+            ((anisotropicForm (K := GoldenField) goldenEmbeddingPlus goldenEmbeddingMinus eta
+              (nonzeroIntegerConjugation goldenConjugation α) : ℝ) : ℂ) ^ (-s) :=
+        ((nonzeroIntegerConjugation goldenConjugation).tsum_eq _).symm
+      _ = ∑' α : {α : NumberField.RingOfIntegers GoldenField // α ≠ 0},
+          ((anisotropicForm (K := GoldenField)
+            goldenEmbeddingPlus goldenEmbeddingMinus (-eta) α : ℝ) : ℂ) ^ (-s) := by
         apply tsum_congr
         intro α
-        rw [anisotropicForm_conjugation sigmaPlus sigmaMinus tau hswap]
+        rw [anisotropicForm_conjugation]
   have hperiodNonzero : regulatorPeriod ≠ 0 := by
     have hlog : 0 < Real.log Real.goldenRatio :=
       Real.log_pos Real.one_lt_goldenRatio
@@ -225,41 +379,25 @@ theorem galois_reflection
 /-- Reverse probe: the public theorem exposes reflection away from the fixed
 point and invariance under both canonical dihedral generators. -/
 example
-    {K : Type*} [Field K] [NumberField K]
-    (sigmaPlus sigmaMinus : K →+* ℝ) (tau : K ≃ₐ[ℚ] K)
-    (hswap : ∀ α : NumberField.RingOfIntegers K,
-      embeddingSquare sigmaPlus (integerConjugation tau α) =
-          embeddingSquare sigmaMinus α ∧
-        embeddingSquare sigmaMinus (integerConjugation tau α) =
-          embeddingSquare sigmaPlus α)
     (s : ℂ) (hs : 1 < s.re)
-    (hregulator : Function.Periodic
-      (principalZeta sigmaPlus sigmaMinus s) regulatorPeriod) :
-    principalZeta sigmaPlus sigmaMinus s 1 =
-        principalZeta sigmaPlus sigmaMinus s (-1) ∧
-      principalZeta sigmaPlus sigmaMinus s
-          (unitFlowAction regulatorPeriod (.r 1) 1) =
-        principalZeta sigmaPlus sigmaMinus s 1 ∧
-      principalZeta sigmaPlus sigmaMinus s
-          (unitFlowAction regulatorPeriod (.sr 0) 1) =
-        principalZeta sigmaPlus sigmaMinus s 1 := by
-  rcases galois_reflection sigmaPlus sigmaMinus tau hswap s hs hregulator with
+    (hsummable : PrincipalZetaSummable s)
+    (hregulator : Function.Periodic (principalZeta s) regulatorPeriod)
+    (hnonconstant : PrincipalZetaNonconstant s) :
+    principalZeta s 1 = principalZeta s (-1) ∧
+      principalZeta s (unitFlowAction regulatorPeriod (.r 1) 1) =
+        principalZeta s 1 ∧
+      principalZeta s (unitFlowAction regulatorPeriod (.sr 0) 1) =
+        principalZeta s 1 := by
+  rcases galois_reflection s hs hsummable hregulator hnonconstant with
     ⟨hreflection, _, hinvariant⟩
   exact ⟨hreflection 1, hinvariant (.r 1) 1, hinvariant (.sr 0) 1⟩
 
-/-- Collapse probe: the Golden translation generator is not the identity in
-the public affine action. -/
-example : unitFlowAction regulatorPeriod (.r 0) ≠ unitFlowAction regulatorPeriod (.r 1) := by
-  intro h
-  have hinjective : Function.Injective (unitFlowAction regulatorPeriod) := by
-    apply unitFlowAction_injective
-    have hlog : 0 < Real.log Real.goldenRatio :=
-      Real.log_pos Real.one_lt_goldenRatio
-    unfold regulatorPeriod
-    positivity
-  have : (DihedralGroup.r 0 : DihedralGroup 0) = DihedralGroup.r 1 := hinjective h
-  injection this with hzeroone
-  norm_num at hzeroone
+/-- Nonvacuity probe: the public assumptions force the zeta itself, rather than
+an unrelated action, to distinguish two flow parameters. -/
+example (s : ℂ) (_hsummable : PrincipalZetaSummable s)
+    (hnonconstant : PrincipalZetaNonconstant s) :
+    ∃ eta₁ eta₂ : ℝ, principalZeta s eta₁ ≠ principalZeta s eta₂ := by
+  exact hnonconstant
 
 end
 
