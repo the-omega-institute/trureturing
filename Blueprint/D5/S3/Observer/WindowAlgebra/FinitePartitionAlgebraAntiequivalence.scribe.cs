@@ -58,21 +58,46 @@ internal sealed class FinitePartitionAlgebraAntiequivalenceDocument : IScribeDoc
         Formula state = F.Id("X");
         Formula relation = F.Id("R");
         Formula algebra = F.Id("A");
+        Formula function = F.Id("f");
+        Formula otherFunction = F.Id("g");
+        Formula left = F.Id("x");
+        Formula right = F.Id("y");
+        Formula a = F.Id("a");
+        Formula b = F.Id("b");
+        Formula type = F.Id("Type");
+        Formula prop = F.Id("Prop");
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
+        Formula realFunction = new Formula.TypeArrow(state, real);
         Formula algebraOfRelation = Subscript(algebra, relation);
         Formula relationOfAlgebra = Subscript(relation, algebra);
         Formula relationReconstruction = Seq(
             Subscript(relation, algebraOfRelation), Sp, Eq, Sp, relation);
         Formula algebraReconstruction = Seq(
             Subscript(algebra, relationOfAlgebra), Sp, Eq, Sp, algebra);
+        Formula algebraDefinition = Seq(
+            algebraOfRelation, Sp, Colon, Eq, Sp, OpenBrace,
+            function, Colon, Sp, realFunction, Sp, Mid, Sp,
+            Forall, Sp, a, Comma, Sp, b, Colon, Sp, state, Comma, Sp,
+            Call("R", a, b), Sp, Rightarrow, Sp,
+            Call("f", a), Sp, Eq, Sp, Call("f", b), CloseBrace);
+        Formula relationDefinition = Seq(
+            relationOfAlgebra, Open, left, Comma, Sp, right, Close,
+            Sp, Colon, Eq, Sp,
+            Forall, Sp, otherFunction, Colon, Sp, realFunction, Comma, Sp,
+            otherFunction, Sp, InMacro, Sp, algebra, Sp, Rightarrow, Sp,
+            Call("g", left), Sp, Eq, Sp, Call("g", right));
 
         return Disp(Seq(
-            Forall, Sp, state, Comma, Sp, relation, Comma, Sp, algebra, Comma, Esc,
-            Call("Finite", state), Sp, Land, Sp,
-            Call("Equivalence", relation), Sp, Land, Esc,
-            algebra, Sp, InMacro, Sp,
-            Call("Subalgebra", real, Seq(state, Sp, To, Sp, real)), Sp,
-            Rightarrow, Esc,
-            relationReconstruction, Sp, Land, Sp, algebraReconstruction, Dot));
+            Begin, Grp(F.Id("gathered")),
+            Forall, Sp, state, Colon, Sp, type, Comma, Sp,
+            OpenBracket, Call("Finite", state), CloseBracket, Comma, RowBreak, Grp(),
+            relation, Colon, Sp,
+            new Formula.TypeArrow(state, new Formula.TypeArrow(state, prop)), Comma, Sp,
+            F.Id("hR"), Colon, Sp, Call("Equivalence", relation), Comma, RowBreak, Grp(),
+            algebra, Colon, Sp, Call("Subalgebra", real, realFunction), Comma, RowBreak, Grp(),
+            algebraDefinition, Semi, RowBreak, Grp(),
+            relationDefinition, Semi, RowBreak, Grp(),
+            relationReconstruction, Sp, Land, Sp, algebraReconstruction, Dot,
+            End, Grp(F.Id("gathered"))));
     }
 }
