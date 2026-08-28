@@ -114,4 +114,45 @@ public sealed class ColdBuildBudgetReviewLineTests
                 nameof(ColdBuildBudgetReviewLineHasNotBeenCrossed),
                 StringComparison.Ordinal));
     }
+
+    /// <summary>
+    /// **`EnumerateDeclared` 自己的钉子** —— 它必须返回该前缀下的**每一个** tracked 文件。
+    ///
+    /// 这条是第四轮评审用实测买来的。此前 `ColdBuildBudgetReviewLineHasNotBeenCrossed`
+    /// 想靠「与同一次枚举的上游集合做关系断言 + 一个 sentinel」自证枚举完整,
+    /// 评审席实测证伪:子集断言 `leanFiles.Length &lt;= d5Files.Count` **由构造恒真**
+    /// (`leanFiles` 就是从 `d5Files` 过滤来的),而单个 sentinel **可以被保留后任意截断** ——
+    /// 它在 `EnumerateDeclared` 里加 `OrderByDescending(...).Take(n)` 并保留 `Hearts.lean`,
+    /// 那一条与另外三条断言**全部照绿**,观察者从此永远看不到越线。
+    ///
+    /// **修法不是给消费者加更多断言,是给这个包装它自己的红。**
+    /// 本测试独立跑一次全量 <see cref="GitIndexRepositoryFiles.Enumerate"/> 并自行过滤,
+    /// 与 <see cref="GitIndexRepositoryFiles.EnumerateDeclared"/> 的结果**逐项比对**;
+    /// 任何截断、重排丢项或前缀语义漂移都会在这里红。
+    ///
+    /// **保证边界(照实写)**:本测试**不证明** `StrataLint.Engine.GitIndexRepositoryFiles.Enumerate`
+    /// 自身完整 —— 那是它的义务,由它众多的消费者共同承担(变异它会红一大片)。
+    /// 本测试证明的是**包装没有在它之上再丢东西**。
+    ///
+    /// **为什么单独一条测试而不并进上面那条**:本测试调无前缀的 `Enumerate`,
+    /// deriver 因此把它归因为**整仓**;而上面那条必须保持 `D5` 归因,
+    /// 否则它对 D5-only 变更的可达性就没了(那是第二轮评审实测过的缺口)。
+    /// 两条各自归因,互不污染。
+    /// </summary>
+    [Fact]
+    public void EnumerateDeclaredReturnsEveryTrackedFileUnderThePrefix()
+    {
+        var root = RepositoryLayout.FindRoot();
+
+        var independent = GitIndexRepositoryFiles.Enumerate(root)
+            .Where(static file => file.RelativePath.StartsWith("D5/", StringComparison.Ordinal))
+            .Select(static file => file.RelativePath)
+            .ToArray();
+        var declared = GitIndexRepositoryFiles.EnumerateDeclared(root, "D5")
+            .Select(static file => file.RelativePath)
+            .ToArray();
+
+        Assert.NotEmpty(independent);
+        Assert.Equal(independent, declared);
+    }
 }
