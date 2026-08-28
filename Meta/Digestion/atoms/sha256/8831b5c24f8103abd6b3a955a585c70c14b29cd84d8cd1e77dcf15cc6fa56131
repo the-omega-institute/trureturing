@@ -1,0 +1,70 @@
+## 665.1 所有观察者可以完全同构，但不等同
+
+设 \(G\) 在 \(\mathcal A\) 上传递。
+
+任意两个起点：
+
+$$
+a,b\in\mathcal A
+$$
+
+之间存在 \(g\in G\) 使：
+
+$$
+ga=b.
+$$
+
+若局部观察世界满足协变：
+
+$$
+\boxed{
+\mathcal O_{ga}(gx)
+=
+U_g\mathcal O_a(x),
+}
+\tag{665.3}
+$$
+
+则：
+
+$$
+\mathcal W_a\simeq\mathcal W_b.
+$$
+
+所以每一个观察者都可以看到完全同构的世界。
+
+区别不在局部世界内部，而在观察者之间的转换：
+
+$$
+\boxed{
+U_{b\leftarrow a}.
+}
+$$
+
+它们满足 cocycle：
+
+$$
+\boxed{
+U_{c\leftarrow b}
+U_{b\leftarrow a}
+=
+U_{c\leftarrow a}.
+}
+\tag{665.4}
+$$
+
+于是：
+
+$$
+\boxed{
+\text{观察者内部无绝对区别，
+观察者之间有关系区别。}
+}
+$$
+
+这正是你所说：
+
+> 每个观察者看起来都一样，但起点实际上不同，而且自己看不出来。
+
+---
+

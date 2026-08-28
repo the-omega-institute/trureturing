@@ -1,0 +1,10 @@
+ast_path: section/第六百三十五部-极限完成态的严格候选
+fingerprints:
+  raw_sha256: sha256:31c86a3e97c176b2d112262d7f97085afd63fd444da5b44b60058f13b5496602
+  normalized_sha256: sha256:31c86a3e97c176b2d112262d7f97085afd63fd444da5b44b60058f13b5496602
+cas_ref: sha256:31c86a3e97c176b2d112262d7f97085afd63fd444da5b44b60058f13b5496602
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

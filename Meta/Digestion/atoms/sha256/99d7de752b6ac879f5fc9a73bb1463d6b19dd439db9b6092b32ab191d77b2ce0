@@ -1,0 +1,19 @@
+## 534.5 Laguerre bridge 没有证明 RH
+
+它解决的是：
+
+$$
+\boxed{
+\text{如何从局部相关数据读取圆周 moments。}
+}
+$$
+
+它没有证明：
+
+* 自然预算完成对全部 \(L\) 可行；
+* 全部 Toeplitz 层级正定；
+* white/Haar floor 必然消失；
+* contact atoms 必然趋向 Riemann zeros。
+
+---
+

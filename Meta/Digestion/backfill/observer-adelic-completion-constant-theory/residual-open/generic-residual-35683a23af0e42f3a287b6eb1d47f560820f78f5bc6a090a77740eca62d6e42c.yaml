@@ -1,0 +1,16 @@
+ast_path: section/570-1-外部无法出现-的正确含义
+fingerprints:
+  raw_sha256: sha256:35683a23af0e42f3a287b6eb1d47f560820f78f5bc6a090a77740eca62d6e42c
+  normalized_sha256: sha256:35683a23af0e42f3a287b6eb1d47f560820f78f5bc6a090a77740eca62d6e42c
+cas_ref: sha256:35683a23af0e42f3a287b6eb1d47f560820f78f5bc6a090a77740eca62d6e42c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-5c754aa5f7345ca8c18a388e43ac9d770bef120ab923863fd9ceb1b0bf8700ad-975b74a6704e3eaf4e235937fb4854fcd83bdfc303d226a7b046e439fa1b3d7b
+    - generic-residual-9609445d9748ebac8a72ef999a366a92a3f7f662f4bef845dd6ee0ce32bcd604-77ab1aa99cc5ac9e55fad3f83dd4ac0371de2ffaba0decf01039efd82d793a2c
+    - generic-residual-2fb4cac6073db3b4b094c4a0609a3403712eba679dc0f6442ed9f369a2e4f0e2-e8502ed3e6b816d33208b4aa5cd6d0bfbb5168cde55d02aed7669eb4652c7ce3
+    - generic-residual-36762c27e01955974cab1177efc3e69ef111a9912e8f7fa11b447d19f6e56965-d8113929bed421e3766339b657826c0410a9c1b2d5586932d4566e466d14a9b6
+    - generic-residual-c511fb2971cc6277a025aafc2d4cce270f970aa8811f08fc335a8941d17d3ac9-f8ceb6e904585de3bf4bccbcd945b0b3c474c3abc94067baee0d222e325333a7

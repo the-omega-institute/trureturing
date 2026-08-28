@@ -1,0 +1,36 @@
+## 猜想 660.1（Golden finite-observer origin）
+
+存在一族由黄金观察器产生的有限完成对象：
+
+$$
+\Xi_n^{(\varphi)}
+$$
+
+或 transfer functions：
+
+$$
+\Theta_n^{(\varphi)},
+$$
+
+具有横向谱缺陷：
+
+$$
+\delta_{n,k},
+$$
+
+使：
+
+$$
+\boxed{
+\frac{\delta_{n+1,k}}
+{\delta_{n,k}}
+\to
+-\varphi^{-1}.
+}
+\tag{660.1}
+$$
+
+该猜想不要求真实 \(\xi\) 存在离线零点。
+
+---
+

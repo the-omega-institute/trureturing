@@ -1,0 +1,10 @@
+### Dual 路线
+
+对 preconditioned multiplier 做：
+
+* Slepian sticky extraction；
+* Feshbach exact elimination；
+* finite negative witness search。
+
+---
+

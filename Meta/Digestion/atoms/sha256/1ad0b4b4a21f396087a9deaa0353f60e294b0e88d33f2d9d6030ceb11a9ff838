@@ -1,0 +1,63 @@
+# 第六百六十七部　素数是乘法世界的正交 primitive 轴
+
+令：
+
+$$
+\mathbb P
+$$
+
+为素数集合。
+
+定义有限支撑素数指数格：
+
+$$
+\boxed{
+\Lambda_{\mathbb P}
+=
+\bigoplus_{p\in\mathbb P}
+\mathbb N e_p.
+}
+\tag{667.1}
+$$
+
+其中：
+
+$$
+e_p
+$$
+
+表示素数 \(p\) 的一个独立坐标轴。
+
+唯一分解定理给出自由交换幺半群同构：
+
+$$
+\boxed{
+\Pi:
+\Lambda_{\mathbb P}
+\overset{\sim}{\longrightarrow}
+\mathbb N_{>0},
+}
+\tag{667.2}
+$$
+
+$$
+\boxed{
+\Pi((v_p)_p)
+=
+\prod_pp^{v_p}.
+}
+\tag{667.3}
+$$
+
+所以，在正整数的乘法本体中：
+
+$$
+\boxed{
+\text{素数是 primitive 坐标，
+合数不是新维度，而是占据向量。}
+}
+$$
+
+项目的素数观察者理论也明确区分了两种方向：
+
+* 不同素数之间是横向独立联合；

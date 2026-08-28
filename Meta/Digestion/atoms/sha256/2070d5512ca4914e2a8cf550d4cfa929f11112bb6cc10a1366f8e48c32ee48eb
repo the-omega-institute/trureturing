@@ -1,0 +1,24 @@
+## 定理 514.1（White-floor / innovation identity）
+
+$$
+\boxed{
+\prod_{n=0}^{\infty}
+\left(
+1-|\beta_{n,L}|^2
+\right)
+=
+\omega_L
+=
+\frac{
+\Lambda_L^\Xi
+}{
+2\lambda_1
+}.
+}
+\tag{514.3}
+$$
+
+Szegő 定理将绝对连续谱密度的对数积分与 Verblunsky 系数乘积精确联系起来。([DLMF][5])
+
+---
+

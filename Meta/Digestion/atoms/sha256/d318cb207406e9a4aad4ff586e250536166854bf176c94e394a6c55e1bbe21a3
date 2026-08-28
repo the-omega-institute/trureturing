@@ -1,0 +1,32 @@
+## 466.1 对前文预算判据的修正
+
+前文得到的“统一 resolvent 预算产生全局正谱”结论，必须在以下范畴中理解：
+
+$$
+\boxed{
+\text{full Hermitian local positivity}
++
+\text{real-axis positive spectral completion}.
+}
+$$
+
+若只使用当前偶测试束，则可得到：
+
+$$
+R\ge\underline R_L(a),
+$$
+
+却没有内在上界；任意额外的 \(\cosh\)-ghost mass 都保持偶通道正性。
+
+因此，从现有 Lean 文件直接跨到 Kreĭn real-spectrum completion，仍缺少：
+
+$$
+\boxed{
+\text{odd/Hermitian observer interface}.
+}
+$$
+
+仓库中的 `LogDerivTrace` 已经提供了有限维正矩阵 resolvent 积分与 trace 恒等式，但它并未覆盖这一无限维局部正谱扩张问题。
+
+---
+

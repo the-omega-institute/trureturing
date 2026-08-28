@@ -1,0 +1,52 @@
+# 第四百六十六部　支撑尺度上的嵌套 Weyl 区间
+
+若：
+
+$$
+0<L_1<L_2,
+$$
+
+则 \(L_2\) 暴露更多相关数据，因此允许的正谱完成减少：
+
+$$
+\boxed{
+\mathbb I_{L_2}(a)
+\subseteq
+\mathbb I_{L_1}(a).
+}
+\tag{466.1}
+$$
+
+所以：
+
+$$
+\boxed{
+\underline R_L(a)
+\text{ 单调不减},
+}
+\tag{466.2}
+$$
+
+$$
+\boxed{
+\overline R_L(a)
+\text{ 单调不增}.
+}
+\tag{466.3}
+$$
+
+区间宽度：
+
+$$
+\boxed{
+\Delta_L(a)
+=
+\overline R_L(a)-\underline R_L(a)
+}
+\tag{466.4}
+$$
+
+测量尺度 \(L\) 上尚未被观察数据消除的实谱 completion freedom。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/第四百一十六部-纯乘子-Weil-正规形
+fingerprints:
+  raw_sha256: sha256:6b16eb54b9d6fc694c64ef20541cdf004ee4c729023ebfc573d850c63de849bf
+  normalized_sha256: sha256:6b16eb54b9d6fc694c64ef20541cdf004ee4c729023ebfc573d850c63de849bf
+cas_ref: sha256:6b16eb54b9d6fc694c64ef20541cdf004ee4c729023ebfc573d850c63de849bf
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

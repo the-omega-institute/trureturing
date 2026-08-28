@@ -1,0 +1,10 @@
+ast_path: row/黄金-forcing-方程
+fingerprints:
+  raw_sha256: sha256:f3d0eeb5b28a17020caa2cc617769a38fc789071cee02094ae01f1ab0f9bbf86
+  normalized_sha256: sha256:f3d0eeb5b28a17020caa2cc617769a38fc789071cee02094ae01f1ab0f9bbf86
+cas_ref: sha256:f3d0eeb5b28a17020caa2cc617769a38fc789071cee02094ae01f1ab0f9bbf86
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

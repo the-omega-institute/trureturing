@@ -1,0 +1,40 @@
+# 第五百零七部　预算化问题的紧圆周形式
+
+定义圆周可行集：
+
+$$
+\boxed{
+\mathscr M_{L,a}(C)
+=
+\left\{
+\mu\ge0:
+\begin{array}{l}
+\mu(\mathbb T)\le C,\\
+\displaystyle
+\int\Gamma_{a,\phi}\,d\mu
+=
+\langle\mathfrak W_L,\phi\rangle\\
+\forall\phi\in C_c^\infty((-2L,2L))
+\end{array}
+\right\}.
+}
+\tag{507.1}
+$$
+
+定义 Haar floor：
+
+$$
+\boxed{
+\operatorname{hfloor}(\mu)
+=
+\sup
+\left\{
+\alpha\ge0:
+\mu\ge\alpha m_{\mathbb T}
+\right\}.
+}
+\tag{507.2}
+$$
+
+---
+

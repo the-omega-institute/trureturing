@@ -1,0 +1,28 @@
+## 618.4 闭合层
+
+证明残差：
+
+$$
+\boxed{
+R_k=0
+}
+$$
+
+或目标逃逸集合：
+
+$$
+\boxed{
+\mathcal E_k=\varnothing.
+}
+$$
+
+DECT 已经把定义作用精确写成：
+
+$$
+\mathcal E(q\vee d;T)
+=
+\mathcal E(q;T)\cap\ker d.
+$$
+
+---
+

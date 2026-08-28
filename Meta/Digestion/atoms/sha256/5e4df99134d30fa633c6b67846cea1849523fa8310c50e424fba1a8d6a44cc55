@@ -1,0 +1,37 @@
+## 定理 529.1（Fixed-depth exponential recovery）
+
+对每个固定 \(N\)：
+
+$$
+\boxed{
+\left\|
+T_N^{\mathrm{LC}}
+-
+\widehat T_{N,L}^{\mathrm{LC}}
+\right\|_{\mathrm{op}}
+=
+O_N(e^{-L}L^{N-1}).
+}
+\tag{529.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\lambda_{\min}
+\left(
+\widehat T_{N,L}^{\mathrm{LC}}
+\right)
+\longrightarrow
+\lambda_{\min}
+\left(
+T_N^{\mathrm{LC}}
+\right)
+}
+$$
+
+以指数速度成立。
+
+---
+

@@ -1,0 +1,6 @@
+* 或一个完整的 positive-definite extension certificate。
+
+这与最新紧窗口工作从 dual 侧给出的有限矩阵严格下界互补：有限 primal moments 自然给上界和候选谱，dual 区间矩阵给下界和正性证书。([arXiv][1])
+
+---
+

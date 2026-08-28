@@ -1,0 +1,10 @@
+ast_path: section/518-5-当前-Lean-真源尚未覆盖本轮圆周问题/clause/4
+fingerprints:
+  raw_sha256: sha256:69dccc77ed5a96ede22358e35bf2842c3b3a3d18898858ed046c0478be331ad7
+  normalized_sha256: sha256:69dccc77ed5a96ede22358e35bf2842c3b3a3d18898858ed046c0478be331ad7
+cas_ref: sha256:69dccc77ed5a96ede22358e35bf2842c3b3a3d18898858ed046c0478be331ad7
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

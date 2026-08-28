@@ -1,0 +1,25 @@
+## 定义 428.1（Paley–Wiener \(L\)-gauge）
+
+若两个 tempered distributions \(\mathfrak W_1,\mathfrak W_2\) 满足：
+
+$$
+\boxed{
+\left.
+\mathfrak W_1
+\right|_{(-2L,2L)}
+=
+\left.
+\mathfrak W_2
+\right|_{(-2L,2L)},
+}
+\tag{428.4}
+$$
+
+则记：
+
+$$
+\mathfrak W_1\sim_L\mathfrak W_2.
+$$
+
+---
+

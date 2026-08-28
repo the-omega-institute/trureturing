@@ -1,0 +1,37 @@
+## 定理 539.1（Linear Cayley scale PDE）
+
+$$
+\boxed{
+\partial_\tau F_\tau(w)
+=
+\frac{1-w^2}{2}
+\partial_wF_\tau(w)
+-
+F_\tau(w).
+}
+\tag{539.1}
+$$
+
+这是一个一阶双曲输运—衰减方程。
+
+其特征线满足：
+
+$$
+\boxed{
+\partial_\tau w
+=
+-\frac{1-w^2}{2}.
+}
+\tag{539.2}
+$$
+
+所以：
+
+$$
+\operatorname{artanh}w+\frac{\tau}{2}
+$$
+
+沿特征保持不变。
+
+---
+

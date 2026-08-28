@@ -1,0 +1,43 @@
+# 第五百六十部　接触有理函数
+
+取：
+
+$$
+c\in
+\ker
+\left(
+G-\alpha_*B
+\right).
+$$
+
+定义接触有理函数：
+
+$$
+\boxed{
+q_c(z)
+=
+c^*\Psi(z)
+=
+\frac{P_c(z)}{D(z)}.
+}
+\tag{560.1}
+$$
+
+则：
+
+$$
+\begin{aligned}
+0
+&=
+c^*(G-\alpha_*B)c\\
+&=
+\int_{\mathbb T}
+|q_c(z)|^2
+\,d\left(
+\mu_*-\alpha_*m_{\mathbb T}
+\right)(z).
+\end{aligned}
+$$
+
+由于 integrand 与 residual measure 均非负：
+

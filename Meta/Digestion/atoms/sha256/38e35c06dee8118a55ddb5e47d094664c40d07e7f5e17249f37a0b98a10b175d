@@ -1,0 +1,17 @@
+## 567.2 Master moment solver
+
+使用未知 moments：
+
+$$
+y_0,\ldots,y_d
+$$
+
+构造：
+
+$$
+T_d(y).
+$$
+
+加入：
+
+* Laguerre moment intervals；

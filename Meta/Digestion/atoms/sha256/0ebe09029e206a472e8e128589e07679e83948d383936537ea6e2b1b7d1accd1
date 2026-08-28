@@ -1,0 +1,21 @@
+## 439.1 Pointwise danger band 不是本体
+
+$$
+\boxed{
+\{m_L<0\}
+}
+$$
+
+不是固定支撑观察的不变量。
+
+真正不变量是：
+
+$$
+\boxed{
+\mathfrak W_L
+\text{ 的局部正定性}.
+}
+$$
+
+---
+

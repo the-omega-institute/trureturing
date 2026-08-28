@@ -1,0 +1,100 @@
+# 第五百二十五部　自然尺度上的 Li–Laguerre 恒等式
+
+现在取：
+
+$$
+\boxed{
+a=\frac12.
+}
+$$
+
+假设 RH，并令：
+
+$$
+\nu_\Xi
+=
+\sum_{\gamma\in\mathbb R}
+m_\gamma\delta_\gamma
+$$
+
+为双边零点 ordinate 测度。
+
+定义：
+
+$$
+\boxed{
+H_\Xi(t)
+=
+\sum_{\gamma\in\mathbb R}
+\frac{m_\gamma e^{it\gamma}}
+{\gamma^2+\frac14}.
+}
+\tag{525.1}
+$$
+
+其预算为：
+
+$$
+\boxed{
+H_\Xi(0)
+=
+2\lambda_1.
+}
+\tag{525.2}
+$$
+
+Cayley 点为：
+
+$$
+\boxed{
+u_\gamma
+=
+\frac{\gamma+i/2}
+{\gamma-i/2}.
+}
+\tag{525.3}
+$$
+
+定义 Li 系数的离散曲率：
+
+$$
+\boxed{
+\kappa_n
+=
+\lambda_{|n+1|}
+-
+2\lambda_{|n|}
++
+\lambda_{|n-1|},
+\qquad
+n\in\mathbb Z.
+}
+\tag{525.4}
+$$
+
+特别地：
+
+$$
+\boxed{
+\kappa_0=2\lambda_1.
+}
+$$
+
+由前文 Li–Clark 计算：
+
+$$
+\boxed{
+\kappa_n
+=
+\int_{\mathbb R}
+u_\gamma^n
+\frac{d\nu_\Xi(\gamma)}
+{\gamma^2+\frac14}.
+}
+\tag{525.5}
+$$
+
+所以 \(\kappa_n\) 正是未归一化 Li–Clark measure 的 Fourier moments。
+
+---
+

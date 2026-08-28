@@ -1,0 +1,10 @@
+ast_path: section/第五百七十二部-项目已有的黄金完成圆
+fingerprints:
+  raw_sha256: sha256:5f29a663b8191324e40d0af3cc2a9f9d5f6d2194ae92bb8ae88d0174f7451bc3
+  normalized_sha256: sha256:5f29a663b8191324e40d0af3cc2a9f9d5f6d2194ae92bb8ae88d0174f7451bc3
+cas_ref: sha256:5f29a663b8191324e40d0af3cc2a9f9d5f6d2194ae92bb8ae88d0174f7451bc3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

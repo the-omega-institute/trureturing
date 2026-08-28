@@ -1,0 +1,77 @@
+# 第五百五十八部　共同谱 Haar floor
+
+定义单位圆 Haar 测度：
+
+$$
+m_{\mathbb T}(d\theta)=\frac{d\theta}{2\pi}.
+$$
+
+定义 rational observer 的 Haar Gram matrix：
+
+$$
+\boxed{
+B
+=
+\int_{\mathbb T}
+\Psi(z)\Psi(z)^*\,dm_{\mathbb T}(z).
+}
+\tag{558.1}
+$$
+
+由定理 555.1：
+
+$$
+\boxed{
+B
+=
+A\,H_D\,A^*,
+}
+\tag{558.2}
+$$
+
+其中：
+
+$$
+\boxed{
+H_D
+=
+\int_{\mathbb T}
+v_d(z)v_d(z)^*
+\frac{dm_{\mathbb T}(z)}
+{|D(z)|^2}.
+}
+\tag{558.3}
+$$
+
+因为 \(|D|^{-2}>0\) 于单位圆：
+
+$$
+\boxed{
+H_D\succ0,
+\qquad
+B\succ0.
+}
+\tag{558.4}
+$$
+
+给定一个精确共同谱 Gram matrix \(G\)，定义其最大共同 Haar floor：
+
+$$
+\boxed{
+\alpha_*(G)
+=
+\sup
+\left\{
+\alpha\ge0:
+\begin{array}{l}
+\exists\,\mu'\ge\alpha m_{\mathbb T},\\
+\displaystyle
+G=\int\Psi\Psi^*\,d\mu'
+\end{array}
+\right\}.
+}
+\tag{558.5}
+$$
+
+---
+

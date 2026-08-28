@@ -1,0 +1,80 @@
+## v4.0：Cayley 预算紧化、Haar–Clark 塌缩、圆周强对偶塔与 Schur 创新前沿
+
+以下从前文**第五百零三部**继续追加。
+
+上一轮已经把问题压缩为预算化正谱完成：
+
+$$
+\Lambda_{L,a}(C)
+=
+\sup
+\left\{
+\lambda:
+\begin{array}{l}
+\nu\ge \lambda\,\dfrac{d\xi}{2\pi},\\
+\check\nu=\mathfrak W_L
+\text{ 于 }(-2L,2L),\\
+\displaystyle
+\int_{\mathbb R}
+\frac{d\nu(\xi)}{\xi^2+a^2}\le C
+\end{array}
+\right\}.
+$$
+
+本轮发现：
+
+$$
+\boxed{
+\frac{d\nu(\xi)}{\xi^2+a^2}
+}
+$$
+
+并不只是为了紧性而引入的技术权重。它正是把实谱轴 Cayley 紧化到单位圆所需的自然 Jacobian 权重。
+
+这一变换同时完成四件事：
+
+$$
+\boxed{
+\begin{aligned}
+\text{无界实轴谱}
+&\longrightarrow
+\text{紧单位圆谱};\\
+\text{resolvent budget}
+&\longrightarrow
+\text{圆周测度总质量};\\
+\text{Lebesgue 白谱}
+&\longrightarrow
+\text{Haar 均匀谱};\\
+\text{Riemann 零点谱}
+&\longrightarrow
+\text{Li--Clark 概率测度}.
+\end{aligned}
+}
+$$
+
+因此本轮得到新的主链：
+
+$$
+\boxed{
+\begin{aligned}
+\text{budgeted Weil completion}
+&\longrightarrow
+\text{compact circle moment problem}\\
+&\longrightarrow
+\text{finite-dimensional exact duality}\\
+&\longrightarrow
+\text{Haar floor + contact atoms}\\
+&\longrightarrow
+\text{Toeplitz flat spectral floor}\\
+&\longrightarrow
+\text{Szegő innovation product}\\
+&\longrightarrow
+\text{Haar--Clark collapse}.
+\end{aligned}
+}
+$$
+
+当前公开的紧窗口研究已经从 Rayleigh／dual 方向给出有限矩阵证书与 \(L=0.8\) 的严格正下界；本轮处理的是与之互补的 **primal 正谱完成对象**，尤其是其紧化、原子化和 OPUC 表示。([arXiv][1])
+
+---
+

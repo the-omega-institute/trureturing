@@ -1,0 +1,28 @@
+# 第六百四十一部　理论深度的无限层审计
+
+定义第 \(n\) 层逃逸关系：
+
+$$
+\mathcal E_n.
+$$
+
+要求：
+
+$$
+\mathcal E_{n+1}\subseteq\mathcal E_n.
+$$
+
+定义极限逃逸：
+
+$$
+\boxed{
+\mathcal E_\omega
+=
+\bigcap_{n<\omega}
+\mathcal E_n.
+}
+\tag{641.1}
+$$
+
+---
+

@@ -1,0 +1,16 @@
+ast_path: section/567-2-Master-moment-solver
+fingerprints:
+  raw_sha256: sha256:db8c8e09685ddf6c4251dcade2bff6c2c359e4fc2a5cb2fad4deaa317ba48297
+  normalized_sha256: sha256:db8c8e09685ddf6c4251dcade2bff6c2c359e4fc2a5cb2fad4deaa317ba48297
+cas_ref: sha256:db8c8e09685ddf6c4251dcade2bff6c2c359e4fc2a5cb2fad4deaa317ba48297
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-38e35c06dee8118a55ddb5e47d094664c40d07e7f5e17249f37a0b98a10b175d-3379b2f0caed15050497aa3f4e1f75aae4653e2579489115d7ee10e30c45f60a
+    - generic-residual-4a4cc2c15f99f5610ed9a527fdcf041ea8c38b7632aabbfbdf69a0b15a50d49d-a6f41512781369e4cdd7ed32c82b444d769895112f3c298a1b13862f9718f6d4
+    - generic-residual-a83bb0bede868e602db0ac171fc1955a40331fdb78dc226645e17ade6121b7a2-8b6cc50e97843001e606389cf602acc5da6124d6f3e3f39c36a0a70f51b1d389
+    - generic-residual-6dfda469b66f045b91cc982a3312063c5645ae4fbc07e26f16fd8a0e56dc2112-d0d15e95ae31e5c267d38c8665c522020220f7ca4b7965d95404fe33fda8df14
+    - generic-residual-c9561c942420b1e147afe57f71b0520cc53e98a8f895a4758be3b231edf95d69-165e341622962ccd9232111f84ba169117bb59b445addbd7dfa95c4e876d16c1

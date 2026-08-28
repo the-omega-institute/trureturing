@@ -1,0 +1,10 @@
+ast_path: section/655-1-关键结论
+fingerprints:
+  raw_sha256: sha256:fce0fcb317243a2a335333e8cfbe367f673f33279440a5422b37a15385a7dfd4
+  normalized_sha256: sha256:fce0fcb317243a2a335333e8cfbe367f673f33279440a5422b37a15385a7dfd4
+cas_ref: sha256:fce0fcb317243a2a335333e8cfbe367f673f33279440a5422b37a15385a7dfd4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

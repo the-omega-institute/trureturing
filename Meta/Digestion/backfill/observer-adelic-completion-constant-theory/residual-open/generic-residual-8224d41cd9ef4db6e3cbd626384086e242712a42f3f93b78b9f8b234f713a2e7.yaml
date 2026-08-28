@@ -1,0 +1,10 @@
+ast_path: section/548-2-新的必要一致性测试
+fingerprints:
+  raw_sha256: sha256:8224d41cd9ef4db6e3cbd626384086e242712a42f3f93b78b9f8b234f713a2e7
+  normalized_sha256: sha256:8224d41cd9ef4db6e3cbd626384086e242712a42f3f93b78b9f8b234f713a2e7
+cas_ref: sha256:8224d41cd9ef4db6e3cbd626384086e242712a42f3f93b78b9f8b234f713a2e7
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

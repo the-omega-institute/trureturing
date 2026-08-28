@@ -1,0 +1,14 @@
+* 非有限密度。
+
+所以：
+
+$$
+\boxed{
+\text{正完成存在}
+\not\Rightarrow
+\text{存在一个处处非负的光滑 multiplier representative}.
+}
+$$
+
+这就是为什么：
+

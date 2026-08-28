@@ -1,0 +1,65 @@
+## 定理 522.1（Laguerre moment tomography）
+
+对每个：
+
+$$
+n\ge1,
+$$
+
+有：
+
+$$
+\boxed{
+m_n^{(a)}
+=
+R-
+\int_0^\infty
+K_{n,a}(t)H_a(t)\,dt.
+}
+\tag{522.8}
+$$
+
+即：
+
+$$
+\boxed{
+m_n^{(a)}
+=
+R-
+2a
+\int_0^\infty
+e^{-at}
+L_{n-1}^{(1)}(2at)
+H_a(t)\,dt.
+}
+\tag{522.9}
+$$
+
+### 证明
+
+将定理 521.1 对 \(\rho_a\) 积分：
+
+$$
+\begin{aligned}
+m_n^{(a)}
+&=
+\int 1\,d\rho_a
+-
+\int_0^\infty
+K_{n,a}(t)
+\left[
+\int e^{-it\xi}\,d\rho_a(\xi)
+\right]dt.
+\end{aligned}
+$$
+
+由偶性：
+
+$$
+\int e^{-it\xi}\,d\rho_a(\xi)=H_a(t).
+$$
+
+又因 \(|H_a|\le R\)，指数衰减保证 Fubini 合法。∎
+
+---
+

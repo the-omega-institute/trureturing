@@ -1,0 +1,10 @@
+ast_path: section/656-1-离线零点的新解释/clause/5
+fingerprints:
+  raw_sha256: sha256:8b1e1406191232fa86e488753c077eade0ee6db9687e9128ae4859501f9cfab9
+  normalized_sha256: sha256:8b1e1406191232fa86e488753c077eade0ee6db9687e9128ae4859501f9cfab9
+cas_ref: sha256:8b1e1406191232fa86e488753c077eade0ee6db9687e9128ae4859501f9cfab9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

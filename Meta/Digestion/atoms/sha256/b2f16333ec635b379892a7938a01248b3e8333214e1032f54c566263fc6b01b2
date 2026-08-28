@@ -1,0 +1,62 @@
+## 422.2 Prime-power 跳跃
+
+当：
+
+$$
+R=\log n,
+\qquad
+\Lambda(n)\neq0,
+$$
+
+有：
+
+$$
+\boxed{
+m_{R+}(\xi)-m_{R-}(\xi)
+=
+-
+2\frac{\Lambda(n)}{\sqrt n}
+\cos(\xi\log n).
+}
+\tag{422.3}
+$$
+
+因此这是一个精确的 hybrid flow：
+
+$$
+\boxed{
+\text{连续 PNT drift}
++
+\text{离散 prime-power kicks}.
+}
+$$
+
+在 operator 图表中：
+
+$$
+\boxed{
+\begin{aligned}
+\text{continuous drift}
+&:
+\quad
+e^{R/2}
+\left(
+U_R+U_{-R}
+\right)dR;
+\\
+\text{prime kick}
+&:
+\quad
+-\frac{\Lambda(n)}{\sqrt n}
+\left(
+U_{\log n}+U_{-\log n}
+\right).
+\end{aligned}
+}
+\tag{422.4}
+$$
+
+这是一条真正的 arithmetic renormalization flow，而不是把所有 prime powers 一次性放入最终矩阵。
+
+---
+

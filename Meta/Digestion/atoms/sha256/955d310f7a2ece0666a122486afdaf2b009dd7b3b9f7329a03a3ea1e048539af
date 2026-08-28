@@ -1,0 +1,76 @@
+## 671.1 连续完成后纤维立即出现
+
+将系数从 \(\mathbb N\) 扩张到 \(\mathbb R\)：
+
+$$
+\boxed{
+V_{\mathbb P}
+=
+\bigoplus_p
+\mathbb R e_p.
+}
+\tag{671.3}
+$$
+
+同一线性泛函：
+
+$$
+\ell_{\mathbb R}(x)
+=
+\sum_px_p\log p
+$$
+
+不再单射。
+
+在两个素数 \(p,q\) 的平面上：
+
+$$
+\boxed{
+\ker\ell_{\mathbb R}
+=
+\mathbb R
+\left(
+(\log q)e_p-(\log p)e_q
+\right).
+}
+\tag{671.4}
+$$
+
+因此：
+
+$$
+(\log q)e_p
+$$
+
+和：
+
+$$
+(\log p)e_q
+$$
+
+是不同连续状态，却具有完全相同的 Archimedean 读数：
+
+$$
+\log p\log q.
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\text{离散格点}
+&:\quad\text{无纤维};\\
+\text{连续完成}
+&:\quad\text{出现无限隐藏纤维}.
+\end{aligned}
+}
+$$
+
+这正好连接了你说的：
+
+> 离散质数之间都有区别；
+> 连续统观察却可能把这些区别压到同一条线上。
+
+---
+

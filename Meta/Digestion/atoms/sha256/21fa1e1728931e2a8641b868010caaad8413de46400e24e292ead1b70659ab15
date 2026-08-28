@@ -1,0 +1,39 @@
+## 438.2 与正完成的关系
+
+若存在绝对连续的正完成：
+
+$$
+d\nu_L(\xi)=w_L(\xi)d\xi,
+\qquad
+w_L\ge0,
+$$
+
+则存在一个 gauge representative，其 multiplier 已经非负。
+
+此时理论上的最优 danger set 可以为空。
+
+但一般 Kreĭn 正完成可能含：
+
+* 纯点部分；
+* 奇异连续部分；
+* 非有限密度。
+
+所以：
+
+$$
+\boxed{
+\text{正完成存在}
+\not\Rightarrow
+\text{存在一个处处非负的光滑 multiplier representative}.
+}
+$$
+
+这就是为什么：
+
+* Kreĭn extension 是内在存在理论；
+* Slepian–Feshbach 是选定坐标后的计算理论；
+
+二者不能直接互相替代。
+
+---
+

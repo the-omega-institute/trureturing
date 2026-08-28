@@ -1,0 +1,7 @@
+# 第五百五十七部　主 Toeplitz SDP
+
+实际应用中通常不会预先知道完整 cross-scale Gram matrix。
+
+我们可能只知道：
+
+* 每个尺度内部的 moments；

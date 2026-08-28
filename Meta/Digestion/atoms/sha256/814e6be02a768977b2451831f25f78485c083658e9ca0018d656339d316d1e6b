@@ -1,0 +1,44 @@
+## 定理 513.1（Toeplitz flat-floor multiplicity）
+
+若：
+
+$$
+N+1>M,
+$$
+
+则：
+
+$$
+\boxed{
+\lambda_{\min}
+\left(
+T_N(p)
+\right)
+=
+\omega,
+}
+\tag{513.4}
+$$
+
+而且特征值 \(\omega\) 的重数至少为：
+
+$$
+\boxed{
+N+1-M.
+}
+\tag{513.5}
+$$
+
+所以 active finite-contact primal completion 在有限矩阵中表现为：
+
+$$
+\boxed{
+\text{精确平坦白谱底座}
++
+\text{有限秩原子凸起}.
+}
+$$
+
+这提供了一个直接的 primal 数值审计：
+
+* 最小 Toeplitz 特征值读取 Haar floor；

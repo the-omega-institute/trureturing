@@ -1,0 +1,15 @@
+ast_path: section/482-1-结构意义
+fingerprints:
+  raw_sha256: sha256:11a8377f2157ce9ec8af08b0f5e26ce894bf5ecd0d8e9c0bac1910f511e12330
+  normalized_sha256: sha256:11a8377f2157ce9ec8af08b0f5e26ce894bf5ecd0d8e9c0bac1910f511e12330
+cas_ref: sha256:11a8377f2157ce9ec8af08b0f5e26ce894bf5ecd0d8e9c0bac1910f511e12330
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-332bd7c8e61e8fbc5c5c728ba0bf21ee247b90148d409437005f45e42e4de255-ebebf33f287f09236d8a0aa6414461259d330fc3bbab53fd27eb1e154e884a76
+    - generic-residual-47a947b172bff256d0a963470e4a54138f52ad0a424bc9f68aca83546311802a-9ba1fa919c72482f3b1a537001817d65f327cd6a2ff28296080e5f04c29be03b
+    - generic-residual-fd41597b12e3c9acc15a59754ba97fbf8ec2826a39d3ceb77ede3f588c904cbb-d4985cde0134b0f71727194eb7ee773140b547c408b05f28d9ccb29fae2dcdae
+    - generic-residual-0a5a165cecbe1cbb5d6ae6b7d1dcac32b0a5b4b7267a43ab7b241d867810267f-dd09bc5abf04d11058ad5389e62a4f2f9809f2d5625b2bde7c63b7f62479abd2

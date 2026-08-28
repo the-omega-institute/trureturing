@@ -1,0 +1,10 @@
+ast_path: section/第五百零八部-有限观察者的精确强对偶
+fingerprints:
+  raw_sha256: sha256:62f4ead6f22f7e24e134d6373828e92525c6e2fb80d3bf1c4a7d67d2753bbbba
+  normalized_sha256: sha256:62f4ead6f22f7e24e134d6373828e92525c6e2fb80d3bf1c4a7d67d2753bbbba
+cas_ref: sha256:62f4ead6f22f7e24e134d6373828e92525c6e2fb80d3bf1c4a7d67d2753bbbba
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

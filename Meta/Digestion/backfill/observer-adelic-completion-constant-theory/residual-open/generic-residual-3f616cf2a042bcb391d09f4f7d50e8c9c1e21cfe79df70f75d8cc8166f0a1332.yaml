@@ -1,0 +1,10 @@
+ast_path: section/第四百三十一部-低频-discrepancy-可被压平到任意有限阶
+fingerprints:
+  raw_sha256: sha256:3f616cf2a042bcb391d09f4f7d50e8c9c1e21cfe79df70f75d8cc8166f0a1332
+  normalized_sha256: sha256:3f616cf2a042bcb391d09f4f7d50e8c9c1e21cfe79df70f75d8cc8166f0a1332
+cas_ref: sha256:3f616cf2a042bcb391d09f4f7d50e8c9c1e21cfe79df70f75d8cc8166f0a1332
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

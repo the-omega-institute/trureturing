@@ -1,0 +1,24 @@
+## 定理 654.1（Pair-coalescence multiplicity obstruction）
+
+一个简单临界零点一般不能由一对真实、对称、解析近似零点直接合并产生。
+
+因此，当我们把“有限观察者的离线起点”解释为向临界零点收敛的缺陷时，更合理的候选通常是：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{单通道 observer zero};\\
+&\text{transfer-function resonance};\\
+&\text{pseudoeigenvalue};\\
+&\text{未完成局部因子的零点};\\
+&\text{坐标原点或 gauge defect};
+\end{aligned}
+}
+$$
+
+而不一定是每一有限层完整 entire function 的真实对称零点对。
+
+这是一个重要科学限制。
+
+---
+

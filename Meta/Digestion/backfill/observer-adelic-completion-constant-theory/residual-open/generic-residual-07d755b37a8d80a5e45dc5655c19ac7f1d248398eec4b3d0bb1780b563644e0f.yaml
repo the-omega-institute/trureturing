@@ -1,0 +1,10 @@
+ast_path: section/567-1-Common-denominator-compiler
+fingerprints:
+  raw_sha256: sha256:07d755b37a8d80a5e45dc5655c19ac7f1d248398eec4b3d0bb1780b563644e0f
+  normalized_sha256: sha256:07d755b37a8d80a5e45dc5655c19ac7f1d248398eec4b3d0bb1780b563644e0f
+cas_ref: sha256:07d755b37a8d80a5e45dc5655c19ac7f1d248398eec4b3d0bb1780b563644e0f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

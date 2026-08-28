@@ -1,0 +1,33 @@
+# 第五百二十九部　Li–Clark Toeplitz 的指数可恢复性
+
+在 RH 和自然尺度下，令：
+
+$$
+\boxed{
+c_n
+=
+\frac{
+\lambda_{|n+1|}
+-
+2\lambda_{|n|}
++
+\lambda_{|n-1|}
+}{
+2\lambda_1}.
+}
+\tag{529.1}
+$$
+
+定义 Li–Clark Toeplitz matrix：
+
+$$
+\boxed{
+T_N^{\mathrm{LC}}
+=
+[c_{j-k}]_{j,k=0}^{N}.
+}
+\tag{529.2}
+$$
+
+由定理 525.1 与 528.1：
+

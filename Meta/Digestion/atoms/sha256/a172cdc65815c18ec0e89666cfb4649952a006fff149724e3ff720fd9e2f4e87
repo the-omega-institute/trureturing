@@ -1,0 +1,62 @@
+## v3.9：Resolvent 正则化白谱前沿、有限原子 Primal、接触零点互补与自然预算谱流
+
+以下从前文**第四百八十九部**继续追加。
+
+上一轮已经把紧窗口 Weil 正性解释为：
+
+$$
+\lambda_{\mathrm{full}}(L)
+=
+\text{局部相关数据允许隐藏的最大均匀白谱密度},
+$$
+
+并将其与 Riemann 零点采样帧的下界对应起来。最新紧窗口工作已经从 dual/Rayleigh 方向把 \(\lambda_{\mathrm{full}}(L)\) 化成有限矩阵问题，并在 \(L=0.8\) 给出严格双边证书；但该工作并未解决与之互补的正谱完成对象如何存在、如何原子化，以及这些 primal 完成如何随 \(L\) 收敛到真实零点谱。([arXiv][1])
+
+本轮引入一个额外参数：
+
+$$
+\boxed{
+C=\text{允许正谱完成使用的 resolvent budget}.
+}
+$$
+
+它把此前可能不取到的无预算 white-floor 极值，正则化为一个自动紧化、必定取到的凸优化问题。
+
+本轮主链为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{局部 Weil source}
+&\longrightarrow
+\text{resolvent-budgeted white floor}\\
+&\longrightarrow
+\text{紧的正测度优化}\\
+&\longrightarrow
+\text{Fourier majorant dual}\\
+&\longrightarrow
+\text{Paley--Wiener contact equation}\\
+&\longrightarrow
+\text{white continuum + finite atoms}\\
+&\longrightarrow
+\text{有限 Tchakaloff 原子层级}\\
+&\longrightarrow
+\text{自然 Li 预算下的零点谱极限}.
+\end{aligned}
+}
+$$
+
+最重要的新结论是：
+
+$$
+\boxed{
+\text{一旦 resolvent budget 的对偶影子价格严格为正，}
+}
+$$
+
+则最优正谱完成的非白部分**必然只有有限多个原子**。
+
+这些原子不是任意选取，而必须位于一个 Paley–Wiener 接触函数的实零点上。
+
+---
+

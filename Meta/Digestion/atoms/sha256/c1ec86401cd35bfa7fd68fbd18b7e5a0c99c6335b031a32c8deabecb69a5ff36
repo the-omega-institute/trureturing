@@ -1,0 +1,72 @@
+## v3.5：Paley–Wiener Gauge、边界 Jet 重整化、Kreĭn 正谱完成与最大熵观察流
+
+以下从前文**第四百二十七部之后**继续追加。
+
+上一轮将固定支撑尺度 \(L\) 的 Weil 正性压缩为纯 multiplier：
+
+$$
+\mathfrak q_L[f]
+=
+\frac1{2\pi}
+\int_{\mathbb R}
+\widetilde m_L(\xi)
+|\widehat f(\xi)|^2\,d\xi,
+\qquad
+\operatorname{supp}f\subset(-L,L),
+$$
+
+其中：
+
+$$
+\widetilde m_L
+=
+\text{Archimedean baseline}
+-
+\text{weighted PNT discrepancy}.
+$$
+
+继续分析以后，出现一个必须首先冻结的修正：
+
+$$
+\boxed{
+\widetilde m_L(\xi)
+\text{ 并不是固定支撑 Weil 观察的内在对象。}
+}
+$$
+
+支撑于 \((-L,L)\) 的测试函数，其自相关仅能读取位移窗口：
+
+$$
+(-2L,2L).
+$$
+
+因此，任何支撑在该窗口之外的分布，都可以被加入 Weil kernel 而完全不改变二次型。它们在 Fourier 图表中会改变 multiplier、负频带、Slepian sticky rank，甚至全部低频 Taylor 系数。
+
+所以真正的不变量不是某一个 multiplier，而是一个 **Paley–Wiener gauge 等价类**。
+
+仓库目前已经无假设闭合 Weil 显式公式、prime/pole/Archimedean 项以及 convolution-square 的实频谱非负性；compact support 使 prime-power side 严格有限，但现有文件并未声称全局 Weil 正性或 RH。
+
+本轮得到的新主链是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{固定支撑 Weil observer}
+&\longrightarrow
+\text{局部相关分布}\\
+&\longrightarrow
+\text{外部不可见 gauge}\\
+&\longrightarrow
+\text{有限矩 moment flattening}\\
+&\longrightarrow
+\text{Kreĭn 正定扩张}\\
+&\longrightarrow
+\text{正谱测度／自伴边界条件}\\
+&\longrightarrow
+\text{最大熵 completion flow}.
+\end{aligned}
+}
+$$
+
+---
+

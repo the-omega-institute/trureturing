@@ -1,0 +1,20 @@
+## 502.4 Finite hierarchy
+
+用递增测试空间 \(V_N\) 构造：
+
+$$
+\Lambda_{L,N}^\Xi
+\downarrow
+\Lambda_L^\Xi,
+$$
+
+每层只需不超过：
+
+$$
+\dim V_N+1
+$$
+
+个原子轨道。
+
+---
+

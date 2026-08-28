@@ -1,0 +1,29 @@
+## 496.1 复杂度结论
+
+有限 primal 原子数由：
+
+$$
+\boxed{
+\dim V_N
+}
+$$
+
+控制，而不是由：
+
+* \(n\le e^{2L}\) 的 prime-power 数量；
+* 使用的 Fourier 网格大小；
+* 零点高度 cutoff；
+
+直接控制。
+
+所以：
+
+$$
+\boxed{
+\text{有限正谱 completion 的自然复杂度
+是 observer constraint rank。}
+}
+$$
+
+---
+

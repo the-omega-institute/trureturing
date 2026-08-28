@@ -1,0 +1,33 @@
+## 502.2 Full dual
+
+证明强对偶：
+
+$$
+\boxed{
+\Lambda_L^\Xi
+=
+\inf_{\phi,\theta\ge0}
+\left[
+\langle\mathfrak W_L,\phi\rangle
++
+2\lambda_1\theta
+\right]
+}
+\tag{502.2}
+$$
+
+满足：
+
+$$
+\widehat\phi(\xi)
++
+\frac{\theta}{\xi^2+\frac14}
+\ge0,
+$$
+
+$$
+\phi(0)+\theta\ge1.
+$$
+
+---
+

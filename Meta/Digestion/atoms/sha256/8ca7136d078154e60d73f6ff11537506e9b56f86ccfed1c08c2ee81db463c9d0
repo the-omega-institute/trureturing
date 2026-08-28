@@ -1,0 +1,21 @@
+# 第四百二十一部　Renormalized Slepian–Feshbach 塔
+
+定义：
+
+$$
+\boxed{
+\widetilde B_{L,a}
+=
+\left\{
+\xi:
+\widetilde m_L(\xi)<a
+\right\},
+\qquad
+a>0.
+}
+\tag{421.1}
+$$
+
+由于：
+
+* \(\widetilde m_L\) 实解析；

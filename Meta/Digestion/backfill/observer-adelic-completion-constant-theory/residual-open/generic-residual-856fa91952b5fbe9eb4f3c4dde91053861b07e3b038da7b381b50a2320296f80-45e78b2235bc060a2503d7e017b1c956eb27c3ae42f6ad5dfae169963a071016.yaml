@@ -1,0 +1,10 @@
+ast_path: section/506-1-无穷远原子的不可见性/clause/2
+fingerprints:
+  raw_sha256: sha256:856fa91952b5fbe9eb4f3c4dde91053861b07e3b038da7b381b50a2320296f80
+  normalized_sha256: sha256:856fa91952b5fbe9eb4f3c4dde91053861b07e3b038da7b381b50a2320296f80
+cas_ref: sha256:856fa91952b5fbe9eb4f3c4dde91053861b07e3b038da7b381b50a2320296f80
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

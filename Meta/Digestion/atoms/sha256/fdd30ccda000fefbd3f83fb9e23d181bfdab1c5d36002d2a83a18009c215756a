@@ -1,0 +1,29 @@
+# 第六百五十八部　为什么 completed \(\xi\) 直接看不到 \(\varphi\)
+
+项目的黄金 Euler germ 明确选择了：
+
+* 黄金指数；
+* 黄金单位；
+* \(\mathbb Q(\sqrt5)\) 嵌入；
+* Fibonacci/Beatty 账本。
+
+所以 \(\varphi\) 会直接出现。
+
+而 completed \(\xi\) 的标准定义选择的是：
+
+$$
+\boxed{
+\mathbb Q,
+\quad
+\mathbb R,
+\quad
+\Gamma\text{ 因子},
+\quad
+s\leftrightarrow1-s.
+}
+$$
+
+它没有预先选择 \(\mathbb Q(\sqrt5)\) 的某一嵌入。
+
+---
+

@@ -1,0 +1,108 @@
+## 定理 492.1（Budgeted optimizer existence）
+
+若：
+
+$$
+\mathfrak E_{L,a}(C)\neq\varnothing,
+$$
+
+则 supremum：
+
+$$
+\Lambda_{L,a}(C)
+$$
+
+必定取到。
+
+### 证明
+
+取极大化序列：
+
+$$
+\nu_n=\lambda_n m_0+\mu_n,
+\qquad
+\lambda_n\to\Lambda_{L,a}(C).
+$$
+
+由：
+
+$$
+\lambda_n\le2aC,
+$$
+
+可取子列使：
+
+$$
+\lambda_n\to\lambda_*.
+$$
+
+定义有限正测度：
+
+$$
+\boxed{
+d\rho_n(\xi)
+=
+\frac{d\nu_n(\xi)}{\xi^2+a^2}.
+}
+\tag{492.1}
+$$
+
+则：
+
+$$
+\rho_n(\mathbb R)\le C.
+$$
+
+由于 \(C_0(\mathbb R)\) 可分，有限正测度的有界集在 weak-* 拓扑中序列相对紧。取子列：
+
+$$
+\rho_n
+\overset{*}{\rightharpoonup}
+\rho_*.
+$$
+
+定义：
+
+$$
+\boxed{
+d\nu_*(\xi)
+=
+(\xi^2+a^2)d\rho_*(\xi).
+}
+\tag{492.2}
+$$
+
+对任意局部测试函数 \(\phi\)：
+
+$$
+(\xi^2+a^2)\widehat\phi(\xi)
+$$
+
+是 Schwartz 函数，故属于 \(C_0(\mathbb R)\)，所以局部 Fourier 约束可以通过极限。
+
+又因为：
+
+$$
+\rho_n
+-
+\lambda_n
+\frac{m_0}{\xi^2+a^2}
+\ge0,
+$$
+
+取极限得到：
+
+$$
+\nu_*\ge\lambda_*m_0.
+$$
+
+并且：
+
+$$
+\mathcal R_a(\nu_*)\le C.
+$$
+
+所以 \(\nu_*\) 达到最优值。∎
+
+---
+

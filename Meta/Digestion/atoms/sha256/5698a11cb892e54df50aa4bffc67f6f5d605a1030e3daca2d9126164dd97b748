@@ -1,0 +1,44 @@
+## 468.1 带自然指数松弛的 RH 判据
+
+在 full Hermitian/Kreĭn 正谱接口下：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\forall L>0,\ 
+\exists\nu_L\ge0
+}
+$$
+
+满足：
+
+$$
+\check\nu_L=\mathfrak W_L
+$$
+
+以及：
+
+$$
+\boxed{
+R_{1/2}(\nu_L)
+\le
+2\lambda_1\coth^2\frac L2.
+}
+\tag{468.8}
+$$
+
+正向取真实零点谱即可。
+
+反向时，右侧在 \(L\ge1\) 上给出统一预算界；由前文的 resolvent-budget 紧性可抽取全局正谱，进而由 Weil 判据得到 RH。
+
+相比此前要求：
+
+$$
+R_{1/2}(\nu_L)\le2\lambda_1,
+$$
+
+式 (468.8) 允许一个由观察窗口几何自然决定、并以 \(e^{-L}\) 消失的松弛量。
+
+---
+

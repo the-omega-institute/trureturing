@@ -1,0 +1,60 @@
+## 定理 526.1（Exact truncated Haar-floor theorem）
+
+$$
+\boxed{
+\alpha_N(m)
+=
+\lambda_{\min}
+\left(
+T_N(m)
+\right).
+}
+\tag{526.4}
+$$
+
+### 证明
+
+若：
+
+$$
+\mu=\alpha m_{\mathbb T}+\sigma,
+\qquad
+\sigma\ge0,
+$$
+
+则 \(\sigma\) 的 truncated Toeplitz matrix 为：
+
+$$
+T_N(m)-\alpha I.
+$$
+
+正测度必给出正半定 Toeplitz matrix，所以：
+
+$$
+\alpha\le\lambda_{\min}(T_N(m)).
+$$
+
+反之，令：
+
+$$
+\alpha=\lambda_{\min}(T_N(m)).
+$$
+
+则：
+
+$$
+T_N(m)-\alpha I\succeq0.
+$$
+
+由 truncated trigonometric moment theorem，存在正测度 \(\sigma\)，其 moments 等于该 residual Toeplitz 数据。于是：
+
+$$
+\mu=\alpha m_{\mathbb T}+\sigma
+$$
+
+满足全部要求。∎
+
+正半定有限 moment functional 存在有限原子表示，是 truncated moment 与 Richter–Tchakaloff 理论的标准结论。([arXiv][2])
+
+---
+

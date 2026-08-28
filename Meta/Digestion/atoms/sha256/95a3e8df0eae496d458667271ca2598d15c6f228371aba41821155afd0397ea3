@@ -1,0 +1,37 @@
+## 674.1 为什么完成后的 \(\zeta\) 看不到它
+
+若 \(A,B\) 只是标量 Euler factors，则：
+
+$$
+A B=B A.
+$$
+
+不同 Fibonacci 扫描、反向扫描或其他排列，最终有限乘积只取决于使用了哪些因子及其次数。
+
+在全素数完成后：
+
+$$
+\boxed{
+\text{扫描词}
+\longmapsto
+\text{occupation vector}
+\longmapsto
+\zeta
+}
+$$
+
+时，Fibonacci 顺序已被交换化映射删除。
+
+所以：
+
+$$
+\boxed{
+\text{黄金比例存在于“如何观察”，
+而不一定存在于“完成后观察到了什么”.}
+}
+$$
+
+这正是直接 \(\zeta\) 推导中 \(\varphi\) 消失的原因之一。
+
+---
+

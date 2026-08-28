@@ -1,0 +1,18 @@
+### Feshbach 负证书
+
+在某个 gauge 中，若有限 Feshbach matrix 有负特征值，则可提升为原 Weil 测试空间中的负见证。
+
+两者必须相容：
+
+$$
+\boxed{
+\text{Feshbach 负性}
+\Longrightarrow
+\text{最终 Weyl interval 为空}.
+}
+$$
+
+Weyl interval 是 gauge-independent 审计层；Feshbach matrix 是高效计算层。
+
+---
+

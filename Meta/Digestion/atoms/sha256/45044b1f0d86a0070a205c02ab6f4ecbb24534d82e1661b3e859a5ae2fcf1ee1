@@ -1,0 +1,82 @@
+# 第六百六十八部　\(\zeta\) 是素数正交模态的对称 Fock 完成
+
+在单粒子素数空间上定义能量算子：
+
+$$
+\boxed{
+He_p=(\log p)e_p.
+}
+\tag{668.1}
+$$
+
+构造对称 Fock 空间：
+
+$$
+\boxed{
+\mathcal F_{\mathrm{sym}}
+(\mathcal H_{\mathbb P}).
+}
+\tag{668.2}
+$$
+
+其自然基由 occupation vector：
+
+$$
+v=(v_p)_p\in\Lambda_{\mathbb P}
+$$
+
+标记。
+
+对应总能量为：
+
+$$
+\boxed{
+E(v)
+=
+\sum_pv_p\log p
+=
+\log\Pi(v).
+}
+\tag{668.3}
+$$
+
+因此，在：
+
+$$
+\Re s>1
+$$
+
+的绝对收敛区：
+
+$$
+\begin{aligned}
+\operatorname{Tr}_{\mathcal F_{\mathrm{sym}}}
+e^{-s\,d\Gamma(H)}
+&=
+\sum_{v\in\Lambda_{\mathbb P}}
+e^{-sE(v)}\\
+&=
+\sum_{n\ge1}n^{-s}\\
+&=
+\boxed{\zeta(s)}.
+\end{aligned}
+\tag{668.4}
+$$
+
+也可逐模态分解：
+
+$$
+\boxed{
+\zeta(s)
+=
+\prod_p
+\frac1{1-e^{-s\log p}}
+=
+\prod_p
+\frac1{1-p^{-s}}.
+}
+\tag{668.5}
+$$
+
+---
+

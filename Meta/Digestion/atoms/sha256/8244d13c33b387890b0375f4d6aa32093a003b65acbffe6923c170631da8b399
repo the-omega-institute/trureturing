@@ -1,0 +1,71 @@
+# 第四百八十七部　观察者语言中的最终解释
+
+有限窗口 \(L\) 给定以后，观察者只能读取：
+
+$$
+|x-y|<2L
+$$
+
+内的相关。
+
+在这些数据下，最优谱完成具有：
+
+$$
+\boxed{
+\nu_L^*
+=
+\text{white continuum}
++
+\text{resolved atoms}.
+}
+$$
+
+其中：
+
+$$
+\boxed{
+\frac{\lambda_{\mathrm{full}}(L)}{2\pi}
+}
+$$
+
+是未分辨连续背景的最大密度。
+
+而：
+
+$$
+\boxed{
+Z(\widehat f_L^*)
+}
+$$
+
+是当前 observer 能够稳定命名的原子谱坐标。
+
+因此：
+
+$$
+\boxed{
+\text{定义深度 }L
+\text{ 增加}
+}
+$$
+
+对应：
+
+$$
+\boxed{
+\text{白连续谱逐步 collapse 成离散原子谱}.
+}
+$$
+
+这正是：
+
+$$
+\boxed{
+\text{observer refinement}
+=
+\text{continuum-to-atom spectral collapse}.
+}
+$$
+
+---
+

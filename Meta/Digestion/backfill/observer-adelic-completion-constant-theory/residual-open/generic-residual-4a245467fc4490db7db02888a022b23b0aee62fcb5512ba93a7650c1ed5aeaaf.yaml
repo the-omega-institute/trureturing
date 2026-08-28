@@ -1,0 +1,10 @@
+ast_path: section/第五百四十二部-Laguerre-Chebyshev-双层析恒等式
+fingerprints:
+  raw_sha256: sha256:4a245467fc4490db7db02888a022b23b0aee62fcb5512ba93a7650c1ed5aeaaf
+  normalized_sha256: sha256:4a245467fc4490db7db02888a022b23b0aee62fcb5512ba93a7650c1ed5aeaaf
+cas_ref: sha256:4a245467fc4490db7db02888a022b23b0aee62fcb5512ba93a7650c1ed5aeaaf
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

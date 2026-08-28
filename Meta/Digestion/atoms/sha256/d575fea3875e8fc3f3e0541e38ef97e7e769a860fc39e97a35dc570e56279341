@@ -1,0 +1,29 @@
+## 定理 415.1（Archimedean shift completion）
+
+$$
+\boxed{
+b_\infty(\xi)
+=
+\Re
+\psi\left(
+\frac54+\frac{i\xi}{2}
+\right)
+-\log\pi.
+}
+\tag{415.3}
+$$
+
+所以 pole–PNT Green completion 在 Gamma 图表中的作用，正是把：
+
+$$
+\boxed{
+\frac14
+\longmapsto
+\frac54.
+}
+$$
+
+这不是记号变化，而是一整次 digamma recurrence。
+
+---
+

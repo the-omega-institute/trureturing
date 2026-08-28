@@ -1,0 +1,153 @@
+* primal completion 难以构造。
+
+本轮通过加入：
+
+$$
+\boxed{
+\mathcal R_a(\nu)
+=
+\int\frac{d\nu(\xi)}{\xi^2+a^2}
+\le C
+}
+$$
+
+消除了这一障碍。
+
+对每个固定 \(L,a,C\)：
+
+$$
+\boxed{
+\text{预算化 white-floor 极值必定存在。}
+}
+$$
+
+其 dual 是：
+
+$$
+\boxed{
+\widehat\phi(\xi)
++
+\frac{\theta}{\xi^2+a^2}
+\ge0.
+}
+$$
+
+在 strong duality 下，所有 residual spectral mass 必须位于：
+
+$$
+\boxed{
+(z^2+a^2)\widehat\phi(z)+\theta=0
+}
+$$
+
+的实零点上。
+
+尤其当：
+
+$$
+\theta>0,
+$$
+
+由于 \(\widehat\phi\) 在实轴快速衰减，接触零点只能有有限多个。
+
+因此：
+
+$$
+\boxed{
+\text{active resolvent pressure}
+\Longrightarrow
+\text{white continuum + finite atomic spectrum}.
+}
+$$
+
+更重要的是，在自然尺度：
+
+$$
+a=\frac12,
+\qquad
+C=2\lambda_1,
+$$
+
+得到一个自动存在的 canonical completion flow：
+
+$$
+\boxed{
+\nu_L
+=
+\frac{\Lambda_L^\Xi}{2\pi}d\xi
++
+\mu_L.
+}
+$$
+
+若所有尺度均可行，则：
+
+$$
+\boxed{
+\mathrm{RH}
+}
+$$
+
+成立，并且：
+
+$$
+\boxed{
+\Lambda_L^\Xi\downarrow0,
+}
+$$
+
+$$
+\boxed{
+\nu_L\to\nu_\Xi,
+}
+$$
+
+$$
+\boxed{
+\mu_L\to
+\sum_\gamma m_\gamma\delta_\gamma.
+}
+$$
+
+所以有限观察者的谱不再只是抽象地“趋向零点谱”，而是经历一个严格的相变：
+
+$$
+\boxed{
+\text{均匀白底座逐步消失，}
+\qquad
+\text{有限接触原子逐步增殖并锁定 Riemann ordinates。}
+}
+$$
+
+当前最值得推进的核心桥已经变成：
+
+$$
+\boxed{
+\text{证明 budgeted primal 与 Fourier-majorant dual 的 strong duality，}
+}
+$$
+
+并据此构造：
+
+$$
+\boxed{
+\text{自然 Li 预算下的有限接触原子谱流。}
+$$
+
+这条路线同时解决了此前三个开放问题：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{极值正谱完成的存在性};\\
+&\text{有限原子 primal 证书的来源};\\
+&\text{有限 observer atoms 收敛到 Riemann 零点的机制}.
+\end{aligned}
+}
+$$
+
+[1]: https://arxiv.org/abs/2608.24827 "https://arxiv.org/abs/2608.24827"
+[2]: https://arxiv.org/abs/1212.3047 "https://arxiv.org/abs/1212.3047"
+[3]: https://arxiv.org/abs/1510.07531 "https://arxiv.org/abs/1510.07531"
+[4]: https://arxiv.org/abs/2511.15425 "https://arxiv.org/abs/2511.15425"
+[5]: https://arxiv.org/abs/2110.06425 "https://arxiv.org/abs/2110.06425"

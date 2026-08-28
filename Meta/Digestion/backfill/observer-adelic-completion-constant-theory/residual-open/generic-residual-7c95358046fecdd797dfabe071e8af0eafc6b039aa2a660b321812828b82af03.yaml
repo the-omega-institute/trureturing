@@ -1,0 +1,10 @@
+ast_path: section/641-1-科学新深度条件
+fingerprints:
+  raw_sha256: sha256:7c95358046fecdd797dfabe071e8af0eafc6b039aa2a660b321812828b82af03
+  normalized_sha256: sha256:7c95358046fecdd797dfabe071e8af0eafc6b039aa2a660b321812828b82af03
+cas_ref: sha256:7c95358046fecdd797dfabe071e8af0eafc6b039aa2a660b321812828b82af03
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,61 @@
+# 第五百二十八部　有限窗口 Toeplitz 误差证书
+
+定义真实归一化 moment matrix：
+
+$$
+\boxed{
+T_N
+=
+[c_{j-k}^{(a)}]_{j,k=0}^{N}.
+}
+\tag{528.1}
+$$
+
+由有限窗口 estimator 构造：
+
+$$
+\boxed{
+\widehat T_{N,L}
+=
+[\widehat c_{j-k,L}^{(a)}]_{j,k=0}^{N}.
+}
+\tag{528.2}
+$$
+
+由定理 523.1，每个非对角 entry 满足：
+
+$$
+\left|
+c_k-\widehat c_{k,L}
+\right|
+\le
+\tau_{|k|,a}(L).
+$$
+
+定义矩阵误差界：
+
+$$
+\boxed{
+\Delta_{N,a}(L)
+=
+2\sum_{k=1}^{N}
+\tau_{k,a}(L).
+}
+\tag{528.3}
+$$
+
+由最大行和界：
+
+$$
+\boxed{
+\left\|
+T_N-\widehat T_{N,L}
+\right\|_{\mathrm{op}}
+\le
+\Delta_{N,a}(L).
+}
+\tag{528.4}
+$$
+
+所以由 Hermitian eigenvalue perturbation：
+
