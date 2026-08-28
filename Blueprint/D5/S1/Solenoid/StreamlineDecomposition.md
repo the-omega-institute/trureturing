@@ -18,7 +18,7 @@ The definition chooses the unique real representative in the half-open interval 
 
 **Theorem 1.2 (Every solenoid path has a unique normalized streamline).**
 
-$$\forall \gamma\in C(\mathbb{R}, \mathcal S),\ \exists! r, k,\ r(0)= rep(\gamma) \land k\in \ker(\pi) \land \forall t,\ \gamma(t)= realFlow(r(t))+ k.$$
+$$\forall \gamma: C(\mathbb{R}, \mathcal S), t0: \mathbb{R},,\ \exists! r, k,\ r(0)= rep(\gamma) \land k\in \ker(\pi) \land \forall t,\ \gamma(t)= realFlow(r(t))+ k.$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Solenoid/StreamlineDecomposition.existsUnique_normalized_streamline` (`✓ std3`). ∎
 

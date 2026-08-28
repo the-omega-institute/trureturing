@@ -48,7 +48,7 @@ Induction on a word counts its two kinds of letters implicitly. A first letter e
 
 **Theorem 1.4 (Commuting completions exchange and equal all words).**
 
-$$Commute(F, G) \Rightarrow KernelEquivalent(C(F, C(G, q)), C(G, C(F, q))) \land\\{}KernelEquivalent(C(G, C(F, q)), C(Generated(F, G), q)).$$
+$$\forall X \in \operatorname{Type}, O \in \operatorname{Type}, F \in X \to X, G \in X \to X, q \in X \to O,\; Commute(F, G) \Rightarrow \left(KernelEquivalent(C(F, C(G, q)), C(G, C(F, q))) \land KernelEquivalent(C(G, C(F, q)), C(Generated(F, G), q))\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Completion/CommutingCompletionExchange.commuting_completion_exchange` (`✓ std3`). ∎
 

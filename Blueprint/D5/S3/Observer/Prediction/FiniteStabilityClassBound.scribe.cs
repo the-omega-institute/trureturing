@@ -31,7 +31,8 @@ internal sealed class FiniteStabilityClassBoundDocument : IScribeDocumentDefinit
 
         Formula statement = Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, state, Comma, Sp, output, Comma, Sp,
+            Forall, Sp, state, Comma, Sp, output, Colon, Sp,
+            Operatorname, Grp(F.Id("Type")), Comma, Sp,
             OpenBracket, Operatorname, Grp(F.Id("Fintype")), Open, state, Close,
             CloseBracket, Comma, RowBreak, Grp(),
             update, Colon, Sp, state, Sp, To, Sp, state, Comma, Sp,

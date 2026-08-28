@@ -1,0 +1,17 @@
+ast_path: 定理/5.3
+fingerprints:
+  raw_sha256: sha256:202ef3b99c23d5814e9db8673ec118f0229412ba6f8d866456da568f9b195e84
+  normalized_sha256: sha256:202ef3b99c23d5814e9db8673ec118f0229412ba6f8d866456da568f9b195e84
+cas_ref: sha256:202ef3b99c23d5814e9db8673ec118f0229412ba6f8d866456da568f9b195e84
+coverage_gids:
+  - D5/S3/ObserverMemory/Refinement/CascadeCompletion.cascadeCompletionEquiv
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/Refinement/CascadeCompletion.cascadeCompletionEquiv
+      source_sha256: sha256:202ef3b99c23d5814e9db8673ec118f0229412ba6f8d866456da568f9b195e84
+      target_sha256: sha256:1f9badbefa61cbe91877e2ad191a33df35d7786d1692675253c3c4067b7478a9
+  scribe:
+    - gid: D5/S3/ObserverMemory/Refinement/CascadeCompletion.cascadeCompletionEquiv
+      definition_sha256: sha256:eb1c42ca596457df1bbd27496622d25f7441fbe4ba7aa8090b317b98a418f17e
+      emission_sha256: sha256:463fcd5b17a3e15d4c62ea84dd02834ea09961787c0d52257e3026efdce31c23
+  unresolved_subitems: []
