@@ -9,7 +9,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed partial class FormulaCorpusInventoryTests
 {
     private const string CanonicalRendererSha256 =
-        "ef2afd944cd029f6c7c740a813207e98a43787aecec9c22bc36cfb7c0e2b7882";
+        "c983a9cf224d1869ac98c5525dd0e52fc9e15869cc01751e62af2127e14fb5fc";
     private const string UpdateCommand = "make -C tools update-renderer-contract";
 
     [Fact]
@@ -387,6 +387,8 @@ public sealed partial class FormulaCorpusInventoryTests
         var group = new Formula.LatexGroup([x]);
         var sequence = new Formula.LatexSequence([x]);
         var word = new Formula.LatexWord(FormulaIdentifier.Create("word"));
+        // Repository formulas apply subscripted functions such as H_c(p, q).
+        formulas.Add(new Formula.Apply(subscript, [x]));
         formulas.Add(new Formula.Power(additive, x));
         formulas.Add(new Formula.Power(multiplicative, x));
         formulas.Add(new Formula.Power(script, function));
