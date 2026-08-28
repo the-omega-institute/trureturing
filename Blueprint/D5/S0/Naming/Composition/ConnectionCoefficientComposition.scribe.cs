@@ -8,70 +8,212 @@ internal sealed class ConnectionCoefficientCompositionDocument : IScribeDocument
 {
     public DocumentDefinition Create()
     {
-        var reals = Seq(Mathbb, Grp(F.Id("R")));
-        var a = F.Id("a");
-        var b = F.Id("b");
-        var X = F.Id("X");
-        var Y = F.Id("Y");
-        var Z = F.Id("Z");
-        var first = new Formula.BindMany(
-            FormulaQuantifier.ForAll,
-            [
-                new Formula.BoundVariable(FormulaIdentifier.Create("a"), reals),
-                new Formula.BoundVariable(FormulaIdentifier.Create("b"), reals),
-                new Formula.BoundVariable(FormulaIdentifier.Create("X"), reals),
-                new Formula.BoundVariable(FormulaIdentifier.Create("Y"), reals),
-                new Formula.BoundVariable(FormulaIdentifier.Create("Z"), reals),
-            ],
-            new Formula.Logic(
-                Equal(Y, Multiply(a, X)),
-                FormulaLogicOperator.Implies,
-                new Formula.Logic(
-                    Equal(Z, Multiply(b, Y)),
-                    FormulaLogicOperator.Implies,
-                    Equal(Z, Multiply(Seq(Open, Multiply(a, b), Close), X)))));
-
-        var x = F.Id("x");
-        var radicand = new Formula.Fraction(
-            Multiply(Pi, Call("exp", x)),
-            Multiply(Num(2), x));
-        var gaussian = new Formula.Fraction(Pi, Num(2));
-        var exponential = new Formula.Fraction(x, Num(2));
-        var scaleExponent = new Formula.Fraction(new Formula.Negate(Num(1)), Num(2));
-        var second = new Formula.Bind(
-            FormulaQuantifier.ForAll,
-            FormulaIdentifier.Create("x"),
-            reals,
-            new Formula.Logic(
-                new Formula.Relation(Num(0), FormulaRelationOperator.LessThan, x),
-                FormulaLogicOperator.Implies,
-                Equal(
-                    Call("sqrt", radicand),
-                    Multiply(
-                        Multiply(Call("sqrt", gaussian), Call("exp", exponential)),
-                        new Formula.Power(x, scaleExponent)))));
-
-        var statement = new Formula.Logic(first, FormulaLogicOperator.And, second);
+        var statement = AndAll(
+            PathWeightMultiplication(),
+            CompletedPathFactorization(),
+            CompletedPathIsNotPrimitive(),
+            RamanujanFactorization(),
+            RamanujanCertificateStatus());
 
         return DocumentDefinition.Create(ScribeNode.Create(
-            "Connection coefficients multiply along a two-step completion path, with the Ramanujan 541 radical split into Gaussian, exponential, and scale factors.",
+            "Typed completion paths retain coefficient order, factor roles, and certificate status.",
             H("Connection Coefficient Multiplication"),
             Blocks(
                 Describe.Lean(
                     DescribeId.Create("connection-coefficient-multiplication"),
                     DeclarationHandle.Create(
-                        "D5/S0/Naming/Composition/ConnectionCoefficientComposition.connection_coefficient_multiplication"),
-                    H("Connection coefficients multiply along completion paths"),
+                        "D5/S0/Naming/Composition/ConnectionCoefficientComposition."
+                            + "connection_coefficient_multiplication"),
+                    H("Connection coefficients multiply along typed completion paths"),
                     StatementSource.FromAuthor(Disp(statement)),
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text(
-                            "The first conjunct formalizes the two-step scalar path: if Y is aX and Z is bY, then Z is (ab)X. The real field supplies the commutative rearrangement used by the Lean proof.")),
+                            "The first three conjuncts quantify typed Quiver edges X to Y and "
+                                + "Y to Z. Path weight multiplication is the pinned Mathlib "
+                                + "theorem Quiver.Path.weight_comp; the same path is explicitly "
+                                + "identified as the completed factorization and has length two, "
+                                + "so it is not a one-edge primitive.")),
                         Paragraph(Text(
-                            "The second conjunct records the Ramanujan 541 factorization on the positive real domain. It separates the Gaussian total mass, exponential flow, and scale Jacobian exactly as displayed in the source.")),
+                            "The fourth conjunct is the positive-real Ramanujan 541 identity in "
+                                + "the named Gaussian-total-mass, exponential-flow, and "
+                                + "scale-Jacobian factors.")),
                         Paragraph(Text(
-                            "The first conjunct is discharged by elementary ring normalization. The second is assembled from pinned Mathlib square-root, exponential, and real-power identities; no unproved hypothesis or replacement object is introduced."))),
+                            "The fifth conjunct gives the factorization structural-composition "
+                                + "certificate status. Its predicate checks the exact three-edge "
+                                + "Ramanujan path, the ordered role list, non-primitiveness, and "
+                                + "agreement of the radical with the path weight. Permuting the "
+                                + "roles therefore changes the certified statement even though "
+                                + "real multiplication is commutative."))),
                     DescribeRole.Theorem)),
             []));
+    }
+
+    private static Formula AndAll(params Formula[] items)
+    {
+        Formula result = items[^1];
+        for (var index = items.Length - 2; index >= 0; index--)
+        {
+            result = new Formula.Logic(items[index], FormulaLogicOperator.And, result);
+        }
+        return result;
+    }
+
+    private static Formula PathWeightMultiplication()
+    {
+        var V = F.Id("V");
+        var R = F.Id("R");
+        var X = F.Id("X");
+        var Y = F.Id("Y");
+        var Z = F.Id("Z");
+        var edgeWeight = F.Id("edgeWeight");
+        var firstStep = F.Id("firstStep");
+        var secondStep = F.Id("secondStep");
+        var completed = Call("completedPath", firstStep, secondStep);
+        var assumptions = new Formula.Logic(
+            Call("Quiver", V),
+            FormulaLogicOperator.And,
+            Call("Monoid", R));
+        var equality = Equal(
+            Call("pathWeight", edgeWeight, completed),
+            Multiply(
+                new Formula.Apply(edgeWeight, [firstStep]),
+                new Formula.Apply(edgeWeight, [secondStep])));
+
+        return new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [
+                new Formula.BoundVariable(FormulaIdentifier.Create("V"), F.Id("Type")),
+                new Formula.BoundVariable(FormulaIdentifier.Create("R"), F.Id("Type")),
+                new Formula.BoundVariable(FormulaIdentifier.Create("X"), V),
+                new Formula.BoundVariable(FormulaIdentifier.Create("Y"), V),
+                new Formula.BoundVariable(FormulaIdentifier.Create("Z"), V),
+                new Formula.BoundVariable(
+                    FormulaIdentifier.Create("edgeWeight"), Call("EdgeWeight", V, R)),
+                new Formula.BoundVariable(
+                    FormulaIdentifier.Create("firstStep"), Call("Hom", X, Y)),
+                new Formula.BoundVariable(
+                    FormulaIdentifier.Create("secondStep"), Call("Hom", Y, Z)),
+            ],
+            new Formula.Logic(assumptions, FormulaLogicOperator.Implies, equality));
+    }
+
+    private static Formula CompletedPathFactorization()
+    {
+        var V = F.Id("V");
+        var R = F.Id("R");
+        var X = F.Id("X");
+        var Y = F.Id("Y");
+        var Z = F.Id("Z");
+        var edgeWeight = F.Id("edgeWeight");
+        var firstStep = F.Id("firstStep");
+        var secondStep = F.Id("secondStep");
+        var conclusion = Call(
+            "FactorsAlongCompletedPath",
+            edgeWeight,
+            Multiply(
+                new Formula.Apply(edgeWeight, [firstStep]),
+                new Formula.Apply(edgeWeight, [secondStep])),
+            Call("completedPath", firstStep, secondStep),
+            firstStep,
+            secondStep);
+        var assumptions = new Formula.Logic(
+            Call("Quiver", V),
+            FormulaLogicOperator.And,
+            Call("Monoid", R));
+
+        return new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [
+                new Formula.BoundVariable(FormulaIdentifier.Create("V"), F.Id("Type")),
+                new Formula.BoundVariable(FormulaIdentifier.Create("R"), F.Id("Type")),
+                new Formula.BoundVariable(FormulaIdentifier.Create("X"), V),
+                new Formula.BoundVariable(FormulaIdentifier.Create("Y"), V),
+                new Formula.BoundVariable(FormulaIdentifier.Create("Z"), V),
+                new Formula.BoundVariable(
+                    FormulaIdentifier.Create("edgeWeight"), Call("EdgeWeight", V, R)),
+                new Formula.BoundVariable(
+                    FormulaIdentifier.Create("firstStep"), Call("Hom", X, Y)),
+                new Formula.BoundVariable(
+                    FormulaIdentifier.Create("secondStep"), Call("Hom", Y, Z)),
+            ],
+            new Formula.Logic(assumptions, FormulaLogicOperator.Implies, conclusion));
+    }
+
+    private static Formula CompletedPathIsNotPrimitive()
+    {
+        var V = F.Id("V");
+        var X = F.Id("X");
+        var Y = F.Id("Y");
+        var Z = F.Id("Z");
+        var firstStep = F.Id("firstStep");
+        var secondStep = F.Id("secondStep");
+        var conclusion = new Formula.Not(Call(
+            "IsPrimitiveConnectionPath",
+            Call("completedPath", firstStep, secondStep)));
+
+        return BindPathData(
+            V,
+            X,
+            Y,
+            Z,
+            firstStep,
+            secondStep,
+            new Formula.Logic(
+                Call("Quiver", V), FormulaLogicOperator.Implies, conclusion));
+    }
+
+    private static Formula BindPathData(
+        Formula V,
+        Formula X,
+        Formula Y,
+        Formula Z,
+        Formula firstStep,
+        Formula secondStep,
+        Formula body) =>
+        new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [
+                new Formula.BoundVariable(FormulaIdentifier.Create("V"), F.Id("Type")),
+                new Formula.BoundVariable(FormulaIdentifier.Create("X"), V),
+                new Formula.BoundVariable(FormulaIdentifier.Create("Y"), V),
+                new Formula.BoundVariable(FormulaIdentifier.Create("Z"), V),
+                new Formula.BoundVariable(
+                    FormulaIdentifier.Create("firstStep"), Call("Hom", X, Y)),
+                new Formula.BoundVariable(
+                    FormulaIdentifier.Create("secondStep"), Call("Hom", Y, Z)),
+            ],
+            body);
+
+    private static Formula PositiveRealStatement(Formula conclusion)
+    {
+        var x = F.Id("x");
+        return new Formula.Bind(
+            FormulaQuantifier.ForAll,
+            FormulaIdentifier.Create("x"),
+            Seq(Mathbb, Grp(F.Id("R"))),
+            new Formula.Logic(
+                new Formula.Relation(Num(0), FormulaRelationOperator.LessThan, x),
+                FormulaLogicOperator.Implies,
+                conclusion));
+    }
+
+    private static Formula RamanujanFactorization()
+    {
+        var x = F.Id("x");
+        return PositiveRealStatement(Equal(
+            Call("ramanujanRadical", x),
+            Multiply(
+                Multiply(F.Id("gaussianMassFactor"), Call("exponentialFlowFactor", x)),
+                Call("scaleJacobianFactor", x))));
+    }
+
+    private static Formula RamanujanCertificateStatus()
+    {
+        var x = F.Id("x");
+        return PositiveRealStatement(Call(
+            "IsStructuralConstantCompositionCertificate",
+            x,
+            F.Id("ramanujanCompletionPath")));
     }
 }
