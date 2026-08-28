@@ -128,7 +128,7 @@ verify_report() {
 # stratalint-canonical-lean-report-v2-<address>). Enabled only when
 # STRATALINT_REPORT_CACHE_ROOT is set. A cache entry is a
 # directory named by the report's full content address holding the complete
-# bundle (report + three validation sidecars + producer logs).
+# bundle (report + three validation sidecars + material archive).
 #
 # SECURITY MODEL (honest): the re-verification below anchors only PUBLIC
 # repository-tree inputs (Trureturing.lean, D5, toolchain, manifest) — it is NOT a
@@ -223,7 +223,7 @@ cache_try_restore() {
   # Completeness: the whole stored bundle must be present before we trust it.
   [[ -s "$report" && -s "${report}.sha256" \
     && -s "${report}.input.attestation" && -s "${report}.provenance.json" \
-    && -d "${report}.logs" && -s "${report}.materials.zip" ]] \
+    && -s "${report}.materials.zip" ]] \
     || { cache_evict "$address"; return 1; }
   local declared="" declared_name=""
   read -r declared declared_name < "${report}.sha256" || true
@@ -232,15 +232,14 @@ cache_try_restore() {
     && "$(awk 'END {print NR}' "${report}.sha256")" == "1" ]] \
     || { cache_evict "$address"; return 1; }
   rm -rf -- "$output" "${output}.sha256" "${output}.provenance.json" \
-    "${output}.input.attestation" "${output}.logs" "${output}.materials.zip"
+    "${output}.input.attestation" "${output}.materials.zip"
   mkdir -p "$(dirname "$output")"
   if ! { cp "$report" "$output" \
     && cp "${report}.input.attestation" "${output}.input.attestation" \
     && cp "${report}.provenance.json" "${output}.provenance.json" \
-    && cp -R "${report}.logs" "${output}.logs" \
     && cp "${report}.materials.zip" "${output}.materials.zip"; }; then
     rm -rf -- "$output" "${output}.sha256" "${output}.provenance.json" \
-      "${output}.input.attestation" "${output}.logs" "${output}.materials.zip"
+      "${output}.input.attestation" "${output}.materials.zip"
     return 2
   fi
   local actual
@@ -248,7 +247,7 @@ cache_try_restore() {
   if [[ "$actual" != "$declared" ]]; then
     cache_evict "$address"
     rm -rf -- "$output" "${output}.provenance.json" \
-      "${output}.input.attestation" "${output}.logs" "${output}.materials.zip"
+      "${output}.input.attestation" "${output}.materials.zip"
     return 1
   fi
   # Validate the stored provenance before treating an exact-address hit as
@@ -258,7 +257,7 @@ cache_try_restore() {
     cache_evict "$address"
     rm -rf -- "$output" "${output}.sha256" \
       "${output}.input.attestation" "${output}.provenance.json" \
-      "${output}.logs" "${output}.materials.zip"
+      "${output}.materials.zip"
     return 1
   fi
   # Re-stamp the sidecar for this output's basename so it is self-consistent.
@@ -269,7 +268,7 @@ cache_try_restore() {
     --producer "$PRODUCER" --inspector "$INSPECTOR" >/dev/null 2>&1; then
     cache_evict "$address"
     rm -rf -- "$output" "${output}.sha256" "${output}.provenance.json" \
-      "${output}.input.attestation" "${output}.logs" "${output}.materials.zip"
+      "${output}.input.attestation" "${output}.materials.zip"
     return 1
   fi
   LAST_REPORT_SHA256="$actual"
@@ -285,7 +284,7 @@ cache_store() {
   [[ -n "$CACHE_ROOT" && "$address" =~ ^[0-9a-f]{64}$ ]] || return 0
   [[ -s "$output" && -s "${output}.sha256" \
     && -s "${output}.input.attestation" && -s "${output}.provenance.json" \
-    && -d "${output}.logs" && -s "${output}.materials.zip" ]] \
+    && -s "${output}.materials.zip" ]] \
     || return 0
   local entry="$CACHE_ROOT/$address"
   [[ -e "$entry" ]] && return 0
@@ -303,7 +302,6 @@ cache_store() {
   if ! { cp "$output" "$report" \
     && cp "${output}.input.attestation" "${report}.input.attestation" \
     && cp "${output}.provenance.json" "${report}.provenance.json" \
-    && cp -R "${output}.logs" "${report}.logs" \
     && cp "${output}.materials.zip" "${report}.materials.zip" \
     && printf '%s  raw-lean-report.json\n' "$(hash_file "$report")" > "${report}.sha256"; }; then
     rm -rf -- "$tmp"
@@ -394,8 +392,6 @@ verify_bundle() {
   local expected_provenance="$TMP_ROOT/expected.provenance.json"
   local expected_attestation="$TMP_ROOT/expected.input.attestation"
 
-  [[ -d "${output}.logs" && -n "$(find "${output}.logs" -type f -print -quit)" ]] \
-    || { echo "lean-report-pair: producer left no log sidecar: $output" >&2; return 2; }
   [[ -s "${output}.materials.zip" ]] \
     || { echo "lean-report-pair: producer left no material archive: $output" >&2; return 2; }
   "$INPUT_HELPER" verify --repository "$root" --report "$output" \
@@ -467,11 +463,13 @@ publish_bundle() {
   local staged="$1"
   local live="$2"
   local suffix
-  rm -rf -- "${live}.materials"
-  for suffix in "" ".sha256" ".input.attestation" ".provenance.json" ".logs" ".materials.zip"; do
-    [[ "$suffix" != ".logs" ]] || rm -rf -- "${live}${suffix}"
+  rm -rf -- "${live}.materials" "${live}.logs"
+  for suffix in "" ".sha256" ".input.attestation" ".provenance.json" ".materials.zip"; do
     mv -f "${staged}${suffix}" "${live}${suffix}"
   done
+  if [[ -d "${staged}.logs" ]]; then
+    mv "${staged}.logs" "${live}.logs"
+  fi
 }
 
 emit_provenance_receipt() {

@@ -5,16 +5,9 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-// Contract for the content-addressed canonical-Lean-report cache ported from CI
-// (.github/workflows/ci.yml, key stratalint-canonical-lean-report-v1-<address>)
-// into the local run path. The cache is opt-in via STRATALINT_REPORT_CACHE_ROOT
-// (never set in CI) and MUST be fail-closed: a hit is only served after the stored
-// bundle re-verifies against the current tree; any anomaly evicts and reproduces.
-//
-// These tests never touch Mathlib, the real Lean slot, or the real report
-// supervisor (the #452 tar pit). They drive the real lean-report-pair.sh and the
-// real lean-report-input.sh against a stub producer + stub supervisor so the cache
-// logic is exercised in isolation and in well under a second.
+// Contract for the opt-in content-addressed report cache. Hits re-verify against
+// the current tree; anomalies evict and reproduce. Stubs drive the real cache and
+// input scripts without Mathlib, the Lean slot, or the report supervisor.
 public sealed class LeanReportCacheTests
 {
     private const string RawReportPath = "tools/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
@@ -34,6 +27,8 @@ public sealed class LeanReportCacheTests
         var address = world.AddressFrom(first);
         Assert.Matches("^[0-9a-f]{64}$", address);
         Assert.True(Directory.Exists(Path.Combine(world.CacheRoot, address)));
+        Assert.False(Directory.Exists(Path.Combine(
+            world.CacheRoot, address, "raw-lean-report.json.logs")));
 
         var second = world.RunPair();
         Assert.Equal(0, second.ExitCode);
@@ -48,6 +43,7 @@ public sealed class LeanReportCacheTests
             "\"mode\":\"cached\"",
             File.ReadAllText(world.Output + ".provenance.json"),
             StringComparison.Ordinal);
+        Assert.False(Directory.Exists(world.Output + ".logs"));
     }
 
     [Fact]

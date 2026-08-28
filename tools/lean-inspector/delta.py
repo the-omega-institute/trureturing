@@ -106,10 +106,7 @@ def valid_baseline(
     provenance = pathlib.Path(str(report) + ".provenance.json")
     if not (report.is_file() and sidecar_path(report).is_file()
             and materials_path(report).is_file()
-            and attestation.is_file() and provenance.is_file()
-            and (report.parent / "raw-lean-report.json.logs").is_dir()
-            and any(path.is_file() for path in
-                    (report.parent / "raw-lean-report.json.logs").rglob("*"))):
+            and attestation.is_file() and provenance.is_file()):
         return None
     try:
         modules, report_sha = parse_json_modules(report)
