@@ -31,6 +31,8 @@ internal interface ICliEnvironment
 
     CommandResult Ingest(IReadOnlyList<string> arguments);
 
+    CommandResult AlignDigestionStatus(IReadOnlyList<string> arguments);
+
     CommandResult CoverAtom(IReadOnlyList<string> arguments);
 
     CommandResult AlignScribeReceipt(IReadOnlyList<string> arguments);
@@ -81,6 +83,8 @@ internal static class CliApplication
         Func<ICliEnvironment, string[], ICliConsole, int>> Handlers =
         new Dictionary<string, Func<ICliEnvironment, string[], ICliConsole, int>>(StringComparer.Ordinal)
         {
+            ["align-digestion-status"] = static (environment, tail, console) =>
+                RenderCommand(environment.AlignDigestionStatus(tail), console),
             ["align-scribe-receipt"] = static (environment, tail, console) =>
                 RenderCommand(environment.AlignScribeReceipt(tail), console),
             ["check"] = static (environment, tail, console) =>

@@ -19,7 +19,7 @@ public sealed partial class ProductionEnvironmentTests
             temporary.Path,
             includeInputMismatch: true);
 
-        var result = environment.Ingest(["--base", "baseline"]);
+        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.False(result.Success);
         Assert.StartsWith(
@@ -44,7 +44,7 @@ public sealed partial class ProductionEnvironmentTests
             temporary.Path,
             includeInputMismatch: false);
 
-        var result = environment.Ingest(["--base", "baseline"]);
+        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.False(result.Success);
         // This prefix binds the postwrite receipt-integrity gate: deleting that call falls
