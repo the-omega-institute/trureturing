@@ -6,7 +6,7 @@ A convergent discounted observability Gramian is positive semidefinite.
 
 **Theorem 1.1 (The discounted observability Gramian is positive semidefinite).**
 
-$$\forall K, V, Y, T, C, \beta,\\{}\operatorname{RCLike}(K) \land \operatorname{FiniteDimensional}(K, V) \land \operatorname{FiniteDimensional}(K, Y) \land\\{}0 < \beta < 1 \land \sqrt{\beta} \left\lVert T \right\rVert < 1 \Rightarrow\\{}W_{\beta} = \sum_{n=0}^{\infty} \beta^{n} T^{*}^{n} C^{*} C T^{n} \land 0 \le W_{\beta}.$$
+$$\forall K, V, Y, T, C, \beta,\\{}\operatorname{RCLike}(K) \land \operatorname{FiniteDimensional}(K, V) \land \operatorname{FiniteDimensional}(K, Y) \land\\{}0 < \beta < 1 \land \sqrt{\beta} \left\lVert T \right\rVert < 1 \Rightarrow\\{}W_{\beta} = \sum_{n=0}^{\infty} \beta^{n} {T^{*}}^{n} C^{*} C T^{n} \land 0 \le W_{\beta}.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/Linear/DiscountedObservabilityGramianPositivity.discounted_observability_gramian_nonnegative` (`✓ std3`). ∎
 

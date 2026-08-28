@@ -52,7 +52,7 @@ internal sealed class FiniteObservabilityOrthogonalDualityDocument
         Formula hidden = new Formula.Subscript(F.Id("N"), depth);
         Formula observable = new Formula.Subscript(F.Id("O"), depth);
         Formula iterate = Seq(evolution, Caret, Grp(index));
-        Formula adjointEvolution = Seq(evolution, Caret, Grp(Star));
+        Formula adjointEvolution = Grp(evolution, Caret, Grp(Star));
         Formula adjointReadout = Seq(readout, Caret, Grp(Star));
         Formula futureReadout = Seq(readout, Sp, Circ, Sp, iterate);
         Formula hiddenConstruction = Call(
