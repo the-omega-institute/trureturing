@@ -53,10 +53,11 @@ internal sealed class SemanticResourceSeparationDocument : IScribeDocumentDefini
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
             Forall, Sp, x, Comma, Sp, b, Comma, Sp, y, Colon, Sp, type,
-            Comma, Sp, Call("Finite", y), Comma, Sp, Call("Nonempty", y),
+            Comma, Sp, Typeclass("Fintype", y), Comma, Sp,
+            Typeclass("Nonempty", y),
             Comma, RowBreak, Grp(),
             readout, Colon, Sp, x, Sp, To, Sp, b, Comma, Sp,
-            Call("Finite", range), Comma, Sp,
+            Typeclass("Fintype", range), Comma, Sp,
             cost, Colon, Sp, F.Id("ResourceCost"), Comma, Sp,
             budget, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, RowBreak, Grp(),
             allowed, Colon, Sp, Call("Finset", functionType), Comma, RowBreak, Grp(),
@@ -71,6 +72,9 @@ internal sealed class SemanticResourceSeparationDocument : IScribeDocumentDefini
             Call("ResourceRefines", cost, budget, target, readout), Dot,
             End, Grp(F.Id("gathered"))));
     }
+
+    private static Formula Typeclass(string name, Formula argument) =>
+        Seq(OpenBracket, Call(name, argument), CloseBracket);
 
     private static Formula Subscript(Formula value, Formula index) =>
         Seq(value, Underscore, Grp(index));
