@@ -1,0 +1,75 @@
+# 第三百二十八部　建议形式化顺序
+
+```text
+D5/S3/Analytic/ToroidalJets/
+  EisensteinEigenfamilyJet.lean
+  HeckeJetTriangularAction.lean
+  JordanPositiveInnerProductObstruction.lean
+  ToroidalJetDepth.lean
+
+D5/S3/Analytic/JetSemisimplification/
+  NilpotentSpectralPencil.lean
+  JetResolventTrace.lean
+  LogDetJetMultiplicity.lean
+  JetToSpectralMass.lean
+
+D5/S3/Observer/ToroidalQuotient/
+  PeriodCarrierGram.lean
+  FiniteFrameGramFactorization.lean
+  QuotientConnection.lean
+  RawPeriodPositivityNoGo.lean
+  ToroidalXiKernelReconstruction.lean
+
+D5/S3/Analytic/ToroidalColligation/
+  ShiftedXiTransfer.lean
+  ConservativeColligation.lean
+  TransferKernelEnergyIdentity.lean
+  ObservabilityGramian.lean
+  StickyNearUnitaryBlock.lean
+
+D5/S3/Analytic/RHTargets/
+  ToroidalConservativeRealization.lean
+  RelativeTracePassivityTarget.lean
+  AutomorphicStateElimination.lean
+  FunctionFieldClosedModel.lean
+```
+
+优先级最高、风险最低的链是：
+
+$$
+\boxed{
+\text{Eisenstein eigenfamily}
+\to
+\text{jet triangular action}
+\to
+\text{Jordan obstruction}.
+}
+$$
+
+第二条是完全有限维的：
+
+$$
+\boxed{
+\text{nilpotent jet}
+\to
+\text{resolvent trace}
+\to
+\text{positive multiplicity}.
+}
+$$
+
+第三条是有限环面恒等式：
+
+$$
+\boxed{
+\mathcal G_{\mathcal P}
+=
+\xi\bar\xi\,
+\mathcal G_{\mathcal T}
+\to
+\mathcal K_\xi.
+}
+$$
+
+---
+

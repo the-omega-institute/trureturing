@@ -1,0 +1,34 @@
+## 303.2 Gram 行列式展开
+
+RH 下，由 Cauchy–Binet：
+
+$$
+\boxed{
+\begin{aligned}
+&
+\det
+\left[
+\mathcal K_\xi(s_i,s_j)
+\right]_{i,j=1}^{N}
+\\
+&=
+\sum_{\rho_1<\cdots<\rho_N}
+\left(
+\prod_{k=1}^{N}
+\frac{m_{\rho_k}}{\lambda_1}
+\right)
+\left|
+\det
+\left[
+\frac1{s_i-\rho_k}
+\right]_{i,k=1}^{N}
+\right|^2.
+\end{aligned}
+}
+\tag{303.8}
+$$
+
+所以每个有限 Pick/Gram 行列式都是有限零点子集贡献的非负平方和。
+
+---
+

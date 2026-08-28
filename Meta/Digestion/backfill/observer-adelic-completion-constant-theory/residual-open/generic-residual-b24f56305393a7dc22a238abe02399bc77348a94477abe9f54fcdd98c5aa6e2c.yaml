@@ -1,0 +1,10 @@
+ast_path: section/257-1-Chebyshev-正算子形式
+fingerprints:
+  raw_sha256: sha256:b24f56305393a7dc22a238abe02399bc77348a94477abe9f54fcdd98c5aa6e2c
+  normalized_sha256: sha256:b24f56305393a7dc22a238abe02399bc77348a94477abe9f54fcdd98c5aa6e2c
+cas_ref: sha256:b24f56305393a7dc22a238abe02399bc77348a94477abe9f54fcdd98c5aa6e2c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

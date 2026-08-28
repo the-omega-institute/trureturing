@@ -1,0 +1,10 @@
+ast_path: section/308-2-简单零点采样公式/clause/2
+fingerprints:
+  raw_sha256: sha256:ecee90481f8cdc13597c42ec32571175e020b1c3493a4966282cae260a2a7392
+  normalized_sha256: sha256:ecee90481f8cdc13597c42ec32571175e020b1c3493a4966282cae260a2a7392
+cas_ref: sha256:ecee90481f8cdc13597c42ec32571175e020b1c3493a4966282cae260a2a7392
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

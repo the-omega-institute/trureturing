@@ -1,0 +1,23 @@
+## 158.1 Non-sticky words
+
+若 word 在许多尺度上不断切换 digit，则：
+
+* 不同逆分支产生较强几何分离；
+* 导数乘积更均匀；
+* periodic points 反集中；
+* trace contribution 更可能产生严格估计增益。
+
+研究目标应是：
+
+$$
+\boxed{
+\operatorname{Br}(w)\text{ 大}
+\Longrightarrow
+\text{trace contribution 获得额外衰减}.
+}
+$$
+
+这对应 Wang 式 non-sticky gain。
+
+---
+

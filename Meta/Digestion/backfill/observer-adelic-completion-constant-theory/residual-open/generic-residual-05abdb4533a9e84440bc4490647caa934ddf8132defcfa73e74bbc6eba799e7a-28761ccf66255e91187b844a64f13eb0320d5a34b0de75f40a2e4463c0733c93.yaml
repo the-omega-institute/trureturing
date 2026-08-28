@@ -1,0 +1,10 @@
+ast_path: section/160-1-Transfer-observer/clause/4
+fingerprints:
+  raw_sha256: sha256:05abdb4533a9e84440bc4490647caa934ddf8132defcfa73e74bbc6eba799e7a
+  normalized_sha256: sha256:05abdb4533a9e84440bc4490647caa934ddf8132defcfa73e74bbc6eba799e7a
+cas_ref: sha256:05abdb4533a9e84440bc4490647caa934ddf8132defcfa73e74bbc6eba799e7a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

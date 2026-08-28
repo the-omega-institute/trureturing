@@ -1,0 +1,17 @@
+* 不同相位产生相关抵消。
+
+研究目标可写为：
+
+$$
+\boxed{
+\text{phase anti-concentration}
+\Longrightarrow
+1-\alpha_n^2\ge\eta_n>0.
+}
+\tag{282.1}
+$$
+
+这就是 Wang 式 strict gain。
+
+---
+

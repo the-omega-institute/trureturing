@@ -1,0 +1,35 @@
+# 第一百四十七部　Mayer 转移算子与 primitive-history determinant
+
+定义 Mayer 转移算子：
+
+$$
+\boxed{
+(\mathcal L_sf)(z)
+=
+\sum_{n=1}^{\infty}
+(z+n)^{-2s}
+f\left(\frac1{z+n}\right).
+}
+\tag{147.1}
+$$
+
+在适当全纯 Banach 空间上，它是核型算子，并可定义 Fredholm determinant。
+
+在常用规范下，模群 Selberg zeta 满足：
+
+$$
+\boxed{
+Z_{\mathrm{Sel}}(s)
+=
+\det(1-\mathcal L_s)
+\det(1+\mathcal L_s)
+=
+\det(1-\mathcal L_s^2).
+}
+\tag{147.2}
+$$
+
+这正是 Mayer–Lewis–Zagier 转移算子理论的核心关系：Selberg zeta 被表示为 Gauss 动力转移算子的 Fredholm determinant。([arXiv][1])
+
+---
+

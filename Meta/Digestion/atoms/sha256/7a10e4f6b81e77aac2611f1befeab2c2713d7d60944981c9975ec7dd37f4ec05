@@ -1,0 +1,37 @@
+# 第一百七十四部　Cuspidal Waldspurger 观察者
+
+令 \(\Pi\) 是 cuspidal automorphic representation，\(\phi\in\Pi\) 是适当 test vector。
+
+Waldspurger 公式在适当局部规范下具有结构：
+
+$$
+\boxed{
+|\mathcal P_D(\phi)|^2
+=
+C_D(\phi)
+\frac{
+L(\frac12,\Pi)
+L(\frac12,\Pi\otimes\chi_D)
+}{
+L(1,\Pi,\operatorname{Ad})
+},
+}
+\tag{174.1}
+$$
+
+其中 \(C_D(\phi)\) 是显式局部因子。显式 test-vector 版本及相应非消失结论已有成熟理论。([arXiv][2])
+
+因此：
+
+$$
+L(\tfrac12,\Pi)=0
+\Longrightarrow
+\mathcal P_D(\phi)=0
+\quad
+\text{对全部 }D.
+$$
+
+反过来，二次 twist 非消失保证：若基础中心值非零，则存在某个 \(D\) 和适当 test vector 使 toric period 非零。
+
+所以：
+

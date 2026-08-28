@@ -1,0 +1,61 @@
+# 第一百五十九部　Riemann ζ 已经写在转移算子矩阵中
+
+Mayer 算子在自然全纯基中的矩阵元可写成 Gamma 比值与 Riemann zeta 值。
+
+在一种标准基下：
+
+$$
+\boxed{
+a_{mk}(s)
+=
+\frac{(-1)^m}{m!}
+\frac{
+\Gamma(2s+k+m)
+}{
+\Gamma(2s+k)
+}
+\zeta(2s+k+m).
+}
+\tag{159.1}
+$$
+
+另一种 Taylor 基中则出现：
+
+$$
+\zeta(2s+j+m)-1
+$$
+
+的有限组合。Mayer 转移算子的这些矩阵表示在文献中被明确写出。([arXiv][1])
+
+因此：
+
+$$
+\boxed{
+\text{Riemann zeta 值}
+=
+\text{经典 Gauss 动力转移算子的矩阵坐标}.
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{Selberg zeta}
+=
+\text{该无限矩阵的 Fredholm determinant}.
+}
+$$
+
+这给出又一种观察压缩：
+
+$$
+\boxed{
+\text{全部 }\zeta(2s+n)\text{ 坐标}
+\longrightarrow
+\det(1-\mathcal L_s^2).
+}
+$$
+
+---
+

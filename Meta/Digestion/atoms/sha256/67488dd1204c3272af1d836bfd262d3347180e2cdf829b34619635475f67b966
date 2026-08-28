@@ -1,0 +1,80 @@
+# 第一百九十六部　无穷小环面单调性
+
+令：
+
+$$
+s=s_z.
+$$
+
+当：
+
+$$
+\omega\downarrow0
+$$
+
+时：
+
+$$
+\begin{aligned}
+|\xi(s+\omega)|^2
+-
+|\xi(s-\omega)|^2
+=
+4\omega
+|\xi(s)|^2
+\Re\frac{\xi'(s)}{\xi(s)}
++
+O(\omega^3).
+\end{aligned}
+$$
+
+因此：
+
+$$
+\boxed{
+\lim_{\omega\downarrow0}
+\frac{
+\mathscr H_\omega(z)
+}{
+4\omega
+\mathscr N_0(z)
+}
+=
+\Re\frac{\xi'(s_z)}{\xi(s_z)}.
+}
+\tag{196.1}
+$$
+
+定义环面单调性评分：
+
+$$
+\boxed{
+\mathfrak M_K(s)
+=
+\frac12
+\frac{\partial}{\partial\sigma}
+\log
+\frac{
+\|\mathbf P_K(s)\|^2
+}{
+\|\mathbf T_K(s)\|^2
+}.
+}
+\tag{196.2}
+$$
+
+则：
+
+$$
+\boxed{
+\mathfrak M_K(s)
+=
+\Re\frac{\xi'(s)}{\xi(s)}.
+}
+\tag{196.3}
+$$
+
+Sondow–Dumitrescu 证明，\(|\xi(s)|\) 在每个无零右半平面内沿水平半线严格递增，并由此得到 RH 的等价单调性表述。([arXiv][3])
+
+所以：
+

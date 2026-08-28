@@ -1,0 +1,31 @@
+## 240.3 Newton 变换
+
+外幂迹 \(a_n\) 与幂迹 \(\mu_n\) 满足 Newton 恒等式：
+
+$$
+\boxed{
+n a_n
+=
+\sum_{r=1}^{n}
+(-1)^{r-1}
+a_{n-r}\mu_{r-1}.
+}
+\tag{240.7}
+$$
+
+反过来，\(\mu_n\) 可递归由 \(a_1,\ldots,a_{n+1}\) 恢复。
+
+所以有一个精确的定义变换：
+
+$$
+\boxed{
+\text{Taylor／exterior observer}
+\quad
+\longleftrightarrow
+\quad
+\text{logarithmic／primitive observer}.
+}
+$$
+
+---
+

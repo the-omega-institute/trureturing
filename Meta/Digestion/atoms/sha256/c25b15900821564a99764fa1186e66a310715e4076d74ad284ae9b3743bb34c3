@@ -1,0 +1,44 @@
+## 定理 180.1（Toroidal–de Branges 阈值同一）
+
+$$
+\boxed{
+\omega_{\mathrm{tor}}
+=
+\omega_{\mathrm{in}}.
+}
+\tag{180.4}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\omega_{\mathrm{tor}}=0
+\iff
+\omega_{\mathrm{in}}=0.
+}
+\tag{180.5}
+$$
+
+这给出了 OACTC 中一个新的结构常数：
+
+$$
+\boxed{
+\omega_*
+=
+\text{普遍不可见谱偏离 tempered 轴的最大距离}
+}
+$$
+
+同时也是：
+
+$$
+\boxed{
+\text{de Branges inner completion 开始失效的临界宽度}.
+}
+$$
+
+---
+

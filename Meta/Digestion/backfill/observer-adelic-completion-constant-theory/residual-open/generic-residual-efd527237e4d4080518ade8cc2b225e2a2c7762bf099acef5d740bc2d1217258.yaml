@@ -1,0 +1,10 @@
+ast_path: section/第二百一十二部-有限环面-Pick-判据
+fingerprints:
+  raw_sha256: sha256:efd527237e4d4080518ade8cc2b225e2a2c7762bf099acef5d740bc2d1217258
+  normalized_sha256: sha256:efd527237e4d4080518ade8cc2b225e2a2c7762bf099acef5d740bc2d1217258
+cas_ref: sha256:efd527237e4d4080518ade8cc2b225e2a2c7762bf099acef5d740bc2d1217258
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

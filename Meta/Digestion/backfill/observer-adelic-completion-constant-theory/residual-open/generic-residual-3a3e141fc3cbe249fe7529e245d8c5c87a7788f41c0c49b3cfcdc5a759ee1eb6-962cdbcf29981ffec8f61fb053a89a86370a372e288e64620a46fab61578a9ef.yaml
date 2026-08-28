@@ -1,0 +1,10 @@
+ast_path: section/Toroidal-excess-connection-positivity/clause/5
+fingerprints:
+  raw_sha256: sha256:3a3e141fc3cbe249fe7529e245d8c5c87a7788f41c0c49b3cfcdc5a759ee1eb6
+  normalized_sha256: sha256:3a3e141fc3cbe249fe7529e245d8c5c87a7788f41c0c49b3cfcdc5a759ee1eb6
+cas_ref: sha256:3a3e141fc3cbe249fe7529e245d8c5c87a7788f41c0c49b3cfcdc5a759ee1eb6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

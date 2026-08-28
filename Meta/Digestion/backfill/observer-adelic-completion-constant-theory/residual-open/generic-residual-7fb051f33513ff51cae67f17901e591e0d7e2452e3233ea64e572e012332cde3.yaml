@@ -1,0 +1,10 @@
+ast_path: section/246-1-折叠-Newman-family
+fingerprints:
+  raw_sha256: sha256:7fb051f33513ff51cae67f17901e591e0d7e2452e3233ea64e572e012332cde3
+  normalized_sha256: sha256:7fb051f33513ff51cae67f17901e591e0d7e2452e3233ea64e572e012332cde3
+cas_ref: sha256:7fb051f33513ff51cae67f17901e591e0d7e2452e3233ea64e572e012332cde3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

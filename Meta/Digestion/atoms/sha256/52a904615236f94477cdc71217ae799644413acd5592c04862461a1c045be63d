@@ -1,0 +1,34 @@
+## 291.2 CMV 只是矩阵图表
+
+前文由 Li 曲率 moments 构造的 CMV unitary，并不是另一个独立对象。
+
+它正是：
+
+$$
+U_1
+$$
+
+在由 \(\mu_\lambda=\sigma_1\) 的正交多项式基下的五对角矩阵表示。
+
+因此：
+
+$$
+\boxed{
+\text{Clark family}
+=
+\text{坐标无关算子对象},
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{CMV matrix}
+=
+\text{其 OPUC 坐标图表}.
+}
+$$
+
+---
+

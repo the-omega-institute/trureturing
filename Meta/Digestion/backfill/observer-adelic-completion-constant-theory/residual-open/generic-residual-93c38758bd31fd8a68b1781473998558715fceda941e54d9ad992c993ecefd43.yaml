@@ -1,0 +1,14 @@
+ast_path: section/第一百五十五部-RH-的散射四分之一线等价形式
+fingerprints:
+  raw_sha256: sha256:93c38758bd31fd8a68b1781473998558715fceda941e54d9ad992c993ecefd43
+  normalized_sha256: sha256:93c38758bd31fd8a68b1781473998558715fceda941e54d9ad992c993ecefd43
+cas_ref: sha256:93c38758bd31fd8a68b1781473998558715fceda941e54d9ad992c993ecefd43
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-6b811929c9766de20a9b0a74b5953405fe77f0023050c3ff7bb0d2b1c0b585b6-eff4a611a7c53fb871c72d656d703afd7607fe2a8ba74c54d0ff46737d4c2646
+    - generic-residual-593a97036f0a5282dbb7cbe0a5c2bc426c2c4c50bd7e245ad295759e919225ed-59f289c2116c376d7b419dafd2054679476bf911bde3baa23af1c292480ac47a
+    - generic-residual-1b57d34c4a141d46f431f3f8897368f702fdada9ecf1625447d3baae2f4f33e7-21c60cf9600bca4944071b8cd1f782d2c6202197430e8ce7404553e48edd3e7e

@@ -1,0 +1,31 @@
+# 第二百四十二部　Toeplitz 总正性
+
+令：
+
+$$
+a_n=[x^n]\mathscr F(x),
+\qquad
+a_n=0\quad(n<0).
+$$
+
+定义无限 Toeplitz 矩阵：
+
+$$
+\boxed{
+T(a)
+=
+[a_{j-i}]_{i,j\ge0}.
+}
+\tag{242.1}
+$$
+
+若 \(T(a)\) 的全部有限 minors 非负，则称 \((a_n)\) 为 Pólya-frequency sequence of infinite order，记作：
+
+$$
+PF_\infty.
+$$
+
+经典 Aissen–Schoenberg–Whitney–Edrei 理论刻画了这类生成函数：无限阶全正 Toeplitz 序列的生成函数由非负参数的线性因子、可能的指数因子及极点因子构成；在整函数、常数项 \(1\)、阶小于 \(1\) 的情形，它退化为负实零点的 genus-zero 乘积。([PubMed][1])
+
+---
+

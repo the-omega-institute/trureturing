@@ -1,0 +1,41 @@
+## 233.1 自改善意义
+
+原始 moments 在高阶时主要受最小 \(\gamma_1\) 控制：
+
+$$
+\mu_n
+\sim
+\frac{m_1}{\gamma_1^{2n+2}}.
+$$
+
+这会遮蔽更高零点结构。
+
+消去前 \(M\) 个原子后：
+
+$$
+\mu_n^{[M]}
+\sim
+\frac{m_{M+1}}{\gamma_{M+1}^{2n+2}}.
+$$
+
+因此 deflation 依次剥离最 sticky 的低谱原子，使残余结构成为新的主导项。
+
+这给 Wang–Deng 方法一个精确可解模型：
+
+$$
+\boxed{
+\begin{aligned}
+\text{sticky primitive}
+&=\text{当前最小零点原子};\\
+\text{counterterm}
+&=\frac{m_j}{x+\gamma_j^2};\\
+\text{renormalized residual}
+&=\mathscr S^{[M]};\\
+\text{self-improvement}
+&=\text{残余支撑下界逐步增加}.
+\end{aligned}
+}
+$$
+
+---
+

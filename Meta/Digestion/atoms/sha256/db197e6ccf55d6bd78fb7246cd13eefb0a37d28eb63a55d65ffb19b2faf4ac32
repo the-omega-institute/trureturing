@@ -1,0 +1,95 @@
+# 第二百八十七部　显式 Li–Clark 内函数
+
+为避免前文 Carathéodory 函数与 CMV 矩阵记号冲突，本节重新冻结记号。
+
+定义：
+
+$$
+\boxed{
+s(z)=\frac{1}{1-z},
+\qquad
+|z|<1.
+}
+\tag{287.1}
+$$
+
+它把单位圆盘映到：
+
+$$
+\Re s>\frac12.
+$$
+
+定义第一 Li 系数：
+
+$$
+\boxed{
+\lambda_1
+=
+\frac{\xi'(1)}{\xi(1)}
+>0.
+}
+\tag{287.2}
+$$
+
+定义 Li–Carathéodory 函数：
+
+$$
+\boxed{
+\mathfrak C_\xi(z)
+=
+\frac{1}{\lambda_1}
+\frac{\xi'(s(z))}{\xi(s(z))}.
+}
+\tag{287.3}
+$$
+
+因为：
+
+$$
+s(0)=1,
+$$
+
+所以：
+
+$$
+\mathfrak C_\xi(0)=1.
+$$
+
+再定义 Li–Clark 函数：
+
+$$
+\boxed{
+\vartheta_\xi(z)
+=
+\frac{\mathfrak C_\xi(z)-1}
+{\mathfrak C_\xi(z)+1}.
+}
+\tag{287.4}
+$$
+
+直接展开：
+
+$$
+\boxed{
+\vartheta_\xi(z)
+=
+\frac{
+\xi'(s(z))-\lambda_1\xi(s(z))
+}{
+\xi'(s(z))+\lambda_1\xi(s(z))
+}.
+}
+\tag{287.5}
+$$
+
+并且：
+
+$$
+\boxed{
+\vartheta_\xi(0)=0.
+}
+\tag{287.6}
+$$
+
+---
+

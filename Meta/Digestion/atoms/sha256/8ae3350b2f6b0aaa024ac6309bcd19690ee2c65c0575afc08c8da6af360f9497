@@ -1,0 +1,44 @@
+# 第二百三十一部　Toroidal 中心 jet 重构
+
+前文有限环面帧给出：
+
+$$
+\mathbf P(s)=\xi(s)\mathbf T(s).
+$$
+
+在中心点：
+
+$$
+s=\frac12,
+$$
+
+二次 twist 非消失保证可以选取某个局部环面图表 \(D_0\)，使：
+
+$$
+\mathcal T_{D_0}(\tfrac12)\neq0.
+$$
+
+于是中心邻域中：
+
+$$
+\boxed{
+\xi(s)
+=
+\frac{
+\mathcal P_{D_0}(s)
+}{
+\mathcal T_{D_0}(s)
+}.
+}
+\tag{231.1}
+$$
+
+因此所有中心导数：
+
+$$
+\xi^{(2n)}(\tfrac12)
+$$
+
+都可以由：
+
+* 环面 period jets；

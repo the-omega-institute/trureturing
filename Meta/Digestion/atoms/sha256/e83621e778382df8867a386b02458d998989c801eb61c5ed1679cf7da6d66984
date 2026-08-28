@@ -1,0 +1,17 @@
+## 325.1 Wang 的任务
+
+证明 automorphic internal dynamics 不存在不可控的 near-unitary residual，或者建立二分：
+
+$$
+\boxed{
+\begin{cases}
+\mathfrak O_{\omega,N}\succeq\eta I,
+&\text{严格可观测};\\
+\exists\text{ sticky near-unitary block},
+&\text{进入结构分类}.
+\end{cases}
+}
+$$
+
+---
+

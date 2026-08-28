@@ -1,0 +1,10 @@
+ast_path: section/251-1-人工零点注入预测/clause/2
+fingerprints:
+  raw_sha256: sha256:bf1ecbddf702dd8c502e3671cdf03f9369e4a743bc2123db158cd999e4a249a5
+  normalized_sha256: sha256:bf1ecbddf702dd8c502e3671cdf03f9369e4a743bc2123db158cd999e4a249a5
+cas_ref: sha256:bf1ecbddf702dd8c502e3671cdf03f9369e4a743bc2123db158cd999e4a249a5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

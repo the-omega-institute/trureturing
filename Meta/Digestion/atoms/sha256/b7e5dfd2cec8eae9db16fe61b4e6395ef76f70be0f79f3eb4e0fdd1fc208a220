@@ -1,0 +1,42 @@
+## 213.1 先前核心缺口的闭合
+
+此前路线需要：
+
+$$
+\boxed{
+\text{off-line zero}
+\Longrightarrow
+\text{定量负见证}.
+}
+$$
+
+现在已得到：
+
+$$
+\boxed{
+\rho=\frac12+\delta+i\gamma
+\Longrightarrow
+\exists\,\omega,z_\rho:
+\Pi_{\omega,\{z_\rho\}}^{\mathrm{tor}}
+\le
+-\frac4{\delta^2}.
+}
+$$
+
+因此 Wang–Deng 路线不再需要担心：
+
+$$
+\text{线外负性可能比任意幂都小}.
+$$
+
+真正剩余的问题是：
+
+$$
+\boxed{
+\text{如何在不知道 }\rho\text{ 的前提下，
+从环面／relative-trace 结构直接证明所有 Pick 证书非负。}
+}
+$$
+
+---
+

@@ -1,0 +1,18 @@
+### Sticky defect
+
+负核方向在一条环面／twist／尺度链中持续集中。
+
+目标：
+
+$$
+\text{primitive factorization}
++
+\text{renormalized Hamiltonian}
+\Longrightarrow
+\text{高阶余项收缩}.
+$$
+
+这正是 Wang–Deng 方法在 de Branges innerness 阈值上的具体化。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/145-1-最大不变全纯圆盘
+fingerprints:
+  raw_sha256: sha256:b73502b59260d3c3f1e0b6bd1ba27750d0b7ef385ef3a05705ffaaf3aa81c131
+  normalized_sha256: sha256:b73502b59260d3c3f1e0b6bd1ba27750d0b7ef385ef3a05705ffaaf3aa81c131
+cas_ref: sha256:b73502b59260d3c3f1e0b6bd1ba27750d0b7ef385ef3a05705ffaaf3aa81c131
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

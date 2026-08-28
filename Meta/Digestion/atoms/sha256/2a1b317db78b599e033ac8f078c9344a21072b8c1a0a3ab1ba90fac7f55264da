@@ -1,0 +1,22 @@
+## 298.1 Non-sticky 的正确含义
+
+不能再把 non-sticky 定义为：
+
+$$
+\varepsilon_N\ge\varepsilon_0>0.
+$$
+
+RH 自身排除了这个目标。
+
+正确的 finite-scale non-sticky 应当是：
+
+$$
+\boxed{
+\text{在固定深度 }N\text{ 内，
+Clark 质量没有过度集中在少数角原子或单一边界弧中。}
+}
+$$
+
+它应推出：
+
+* \(D_N\) 的有限下界；

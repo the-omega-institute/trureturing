@@ -1,0 +1,18 @@
+### Wang 层（265.1）
+
+研究矩阵：
+
+$$
+[K_\lambda(n_i,n_j)]
+$$
+
+在不同索引尺度上的 near-negative vectors。
+
+若质量分散于许多 \(n\)-尺度，则利用：
+
+* Li Fourier 相位正交；
+* 环面 twist 正交；
+* 高度窗口分离；
+
+产生严格 Gram 增益。
+

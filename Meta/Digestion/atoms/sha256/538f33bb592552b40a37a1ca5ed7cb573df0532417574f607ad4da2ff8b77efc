@@ -1,0 +1,11 @@
+## 依赖标准既有理论
+
+* Stieltjes moment sequence 与两族 Hankel 矩阵正性的等价；
+* 非负 Stieltjes continued fraction characterization；
+* J-fraction 与正 Jacobi 算子；
+* Jensen polynomial hyperbolicity 与 Laguerre–Pólya 类。
+
+这些均有成熟的 moment 和 Jensen–Pólya 理论支持。([arXiv][2])
+
+---
+

@@ -1,0 +1,48 @@
+## 295.1 解释
+
+Lebesgue 小弧质量仅为：
+
+$$
+m(I_\varepsilon)\asymp\varepsilon.
+$$
+
+而 Clark 测度为：
+
+$$
+\mu_\lambda(I_\varepsilon)
+\asymp
+\varepsilon\log(1/\varepsilon).
+$$
+
+所以高零点在 \(1\) 附近产生一个 logarithmically enhanced crowding：
+
+$$
+\boxed{
+\frac{\mu_\lambda(I_\varepsilon)}
+{m(I_\varepsilon)}
+\asymp
+\log\frac1\varepsilon
+\to\infty.
+}
+$$
+
+它仍然是纯点测度，但在唯一积聚点 \(1\) 处具有一维局部尺度和对数增益。
+
+因此单位圆上的真正 sticky 区域不是任意角簇，而是：
+
+$$
+\boxed{
+z=1,
+}
+$$
+
+即零点高度：
+
+$$
+\gamma=\infty
+$$
+
+在 Cayley 完成中的边界像。
+
+---
+

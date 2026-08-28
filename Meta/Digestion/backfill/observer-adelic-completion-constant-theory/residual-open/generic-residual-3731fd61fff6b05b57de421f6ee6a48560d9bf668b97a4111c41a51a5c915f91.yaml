@@ -1,0 +1,16 @@
+ast_path: section/300-5-线外零点注入负对照
+fingerprints:
+  raw_sha256: sha256:3731fd61fff6b05b57de421f6ee6a48560d9bf668b97a4111c41a51a5c915f91
+  normalized_sha256: sha256:3731fd61fff6b05b57de421f6ee6a48560d9bf668b97a4111c41a51a5c915f91
+cas_ref: sha256:3731fd61fff6b05b57de421f6ee6a48560d9bf668b97a4111c41a51a5c915f91
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-bdd0409bb1d43faed46cd84d62c9f57bf03f9b6de58b63a83e18ad23d56970e3-ed468f358c769cee5b9aec30b1661aaadc41d334e3f4f2d69817340fa1f738ba
+    - generic-residual-fee5a2dfe8e40147e76fcc9d54b8529fbe931a6c0c495054cbae0c89f6fabead-5ed3631e0604630c39f9da5631ab9c501ddbeb6869099f11a130aeb0b9915711
+    - generic-residual-a8490ee18efb32e788d6eb7862341d1c55503652dc6176fa0efea85dff79b83c-250f61120c0b0981c336a6dd08619acdd63fc92154ea19713e73ad192301c07d
+    - generic-residual-af2d32add24cc96e6683727bbe19137a1918ed3b0f6ec4cfe3a4667b3e2a6c7d-43c616efcdb778df86f01480f53f656cc84881fcd5111779efbeefb90f14248a
+    - generic-residual-b363b4b8179e0c5b2e05d430349031cd8835fb4f4c378dce6b9cabcef3454af3-5aa14fd729eaa318597fa6f5cf77655a6eddfb860e03f7a2e9507c027d20c827

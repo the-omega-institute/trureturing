@@ -1,0 +1,27 @@
+## 282.2 Sticky：谱质量集中
+
+高 ordinates 对应：
+
+$$
+u_\gamma\to1.
+$$
+
+所以 \(\mu_\lambda\) 可能在 \(1\) 附近形成强集中。
+
+这会导致：
+
+* 初始 Fourier moments 接近 \(1\)；
+* 某些 Schur 参数接近边界；
+* finite Toeplitz matrices 变得病态；
+* 有限层析难以区分高零点。
+
+Deng 式处理应是：
+
+1. 识别主导角原子或角簇；
+2. 用 Blaschke／Christoffel 型变换剥离其贡献；
+3. 对 residual measure 重新执行 Schur 算法；
+4. 将重复相位历史压缩为有限 CMV block；
+5. 控制剩余 Schur tail。
+
+---
+

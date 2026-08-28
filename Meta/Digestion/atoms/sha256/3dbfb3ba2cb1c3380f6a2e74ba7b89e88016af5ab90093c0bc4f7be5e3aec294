@@ -1,0 +1,42 @@
+# 第三百一十八部　Shifted-\(\xi\) transfer function
+
+令：
+
+$$
+z\in\mathbb C^+,
+\qquad
+s_z=\frac12-iz.
+$$
+
+对 \(\omega>0\)，定义：
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+\frac{
+\xi(s_z-\omega)
+}{
+\xi(s_z+\omega)
+}.
+}
+\tag{318.1}
+$$
+
+Suzuki 证明：对给定零点自由半平面宽度，\(\Theta_\omega\) 是 meromorphic inner function；若这一 inner/canonical-system 构造能无条件推进到全部 \(\omega>0\)，就得到 RH 的正 Hamiltonian 判据。([arxiv.org][3])
+
+此前已经得到：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Theta_\omega
+\text{ 对全部 }\omega>0
+\text{ 为 inner}.
+}
+\tag{318.2}
+$$
+
+---
+

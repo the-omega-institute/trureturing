@@ -1,0 +1,56 @@
+## 289.1 零点高度的局部恢复公式
+
+由式 (289.2)：
+
+$$
+\boxed{
+\gamma
+=
+\frac12
+\sqrt{
+\frac{
+2m_\gamma
+u_\gamma\vartheta_\xi'(u_\gamma)
+}{
+\lambda_1
+}
+-1
+}.
+}
+\tag{289.4}
+$$
+
+若零点简单：
+
+$$
+m_\gamma=1,
+$$
+
+则零点高度完全由内函数在该边界谱点的角导数恢复。
+
+因此：
+
+$$
+\boxed{
+\text{零点位置}
+=
+\text{Clark 谱点},
+\qquad
+\text{零点高度}
+=
+\text{Clark 相位穿越速度}.
+}
+$$
+
+高零点满足：
+
+$$
+u_\gamma\vartheta_\xi'(u_\gamma)
+\asymp
+\frac{2\lambda_1}{m_\gamma}\gamma^2.
+$$
+
+所以越高的零点，对应越陡峭的边界相位穿越。
+
+---
+

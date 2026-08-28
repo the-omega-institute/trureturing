@@ -1,0 +1,63 @@
+# 第一百五十二部　Eisenstein 散射观察者
+
+模群非全纯 Eisenstein series 的常数项为：
+
+$$
+\boxed{
+E(z,s)
+=
+y^s+
+\Phi(s)y^{1-s}
++\text{nonconstant modes},
+}
+\tag{152.1}
+$$
+
+其中：
+
+$$
+\boxed{
+\Phi(s)
+=
+\sqrt\pi
+\frac{\Gamma(s-\frac12)}{\Gamma(s)}
+\frac{\zeta(2s-1)}{\zeta(2s)}.
+}
+\tag{152.2}
+$$
+
+等价地，令：
+
+$$
+\zeta^*(u)
+=
+\pi^{-u/2}
+\Gamma(u/2)\zeta(u),
+$$
+
+则：
+
+$$
+\boxed{
+\Phi(s)
+=
+\frac{\zeta^*(2s-1)}
+{\zeta^*(2s)}.
+}
+\tag{152.3}
+$$
+
+Eisenstein series 的完成、函数方程及常数项均由这一 completed zeta 比值控制。([arXiv][6])
+
+因此 \(\Phi(s)\) 是一个**散射比值观察者**：
+
+$$
+\boxed{
+\text{incoming cusp mode }y^s
+\longmapsto
+\text{outgoing mode }\Phi(s)y^{1-s}.
+}
+$$
+
+---
+

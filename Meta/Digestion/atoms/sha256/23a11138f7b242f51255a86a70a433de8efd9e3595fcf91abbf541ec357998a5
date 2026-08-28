@@ -1,0 +1,73 @@
+## v2.3：Fredholm–Exterior 完成、双重总正性、Newman 阈值与 Toda 谱流
+
+以下从前文**第二百三十八部之后**继续追加。
+
+上一轮把 RH 压缩为平方折叠函数
+
+$$
+\mathscr F(x)
+=
+\frac{\xi(\frac12+\sqrt x)}{\xi(\frac12)}
+$$
+
+的负实零点性，以及
+
+$$
+\mathscr S(x)
+=
+\frac{\mathscr F'(x)}{\mathscr F(x)}
+$$
+
+的 Stieltjes 正性。
+
+本轮进一步发现，这两个对象并不是仅仅“像某个谱行列式”，而在 RH 成立时精确构成：
+
+$$
+\boxed{
+\text{一个正 trace-class 算子的 Fredholm 行列式与 resolvent trace}.
+}
+$$
+
+由此得到统一链：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&\iff
+\mathscr F(x)=\det(I+xU),\quad U\ge0,\ U\text{ trace-class}\\
+&\iff
+\text{中心 Taylor 系数形成 Pólya-frequency 序列}\\
+&\iff
+\text{相应 Toeplitz 矩阵全非负}\\
+&\iff
+\text{reciprocal-zero moments 形成 Stieltjes moment sequence}\\
+&\iff
+\text{相应 Hankel 矩阵全非负}\\
+&\iff
+\text{存在正 Jacobi／Toda 谱流}.
+\end{aligned}
+}
+$$
+
+这使此前分散的：
+
+* Hadamard 乘积；
+* Stieltjes 连分数；
+* Toeplitz 总正性；
+* Hankel 总正性；
+* Fredholm determinant；
+* Hilbert–Pólya；
+* de Bruijn–Newman 常数；
+* Toda lattice；
+
+全部成为同一个隐藏正谱
+
+$$
+\left\{\gamma^{-2}\right\}
+$$
+
+的不同观察图表。
+
+---
+

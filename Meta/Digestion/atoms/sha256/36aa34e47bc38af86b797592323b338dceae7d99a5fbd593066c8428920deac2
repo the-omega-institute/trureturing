@@ -1,0 +1,61 @@
+## v2.4：Li–Cayley 单位化、Möbius–Fredholm 行列式、条件负定几何与圆周 Lévy 完成
+
+以下从前文**第二百五十三部之后**继续追加。
+
+上一轮把平方折叠完成函数写成：
+
+$$
+\mathscr F(x)
+=
+\frac{\xi(\frac12+\sqrt x)}{\xi(\frac12)}
+=
+\det(I+xA_\Xi),
+$$
+
+其中在 RH 成立时：
+
+$$
+A_\Xi
+=
+\bigoplus_{\gamma>0}
+\gamma^{-2}I_{m_\gamma}
+$$
+
+是正 trace-class 算子。
+
+本轮将这个正算子经 Möbius–Cayley 变换提升为 unitary 完成，得到：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&\iff
+\frac{\xi(\frac1{1-z})}{\xi(1)}
+=
+\det
+\left(
+I+\frac{4z}{(1-z)^2}X_\Xi
+\right),
+\quad
+0\le X_\Xi\le I;\\
+&\iff
+\lambda_n
+=
+\|I-C_\Xi^n\|_{\mathrm{HS}}^2
+\quad(n\ge1);\\
+&\iff
+\lambda_{|m-n|}
+\text{ 是 }\mathbb Z\text{ 上的条件负定函数};\\
+&\iff
+e^{-t\lambda_{|n|}}
+\text{ 对每个 }t\ge0\text{ 是正定序列};\\
+&\iff
+\text{存在一个圆周卷积 Markov 半群，
+其特征指数为 Li 系数。}
+\end{aligned}
+}
+$$
+
+这把：
+
+* Li 判据；

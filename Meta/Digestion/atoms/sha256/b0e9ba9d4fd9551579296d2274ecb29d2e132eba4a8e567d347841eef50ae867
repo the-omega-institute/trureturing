@@ -1,0 +1,47 @@
+## v2.7：Riemann–Clark 正交层析、半平面零点核、de Branges 采样与 Sticky-Infinity 反项
+
+以下从前文**第三百零一部之后**继续追加。
+
+本轮先对上一轮的 Clark 内函数分支作一次科学审计，然后继续推导。最终得到两条新的核心链：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal K_\xi(s,t)
+\text{ 是右半临界平面上的正定核}
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\mathrm{RH}
+\Longrightarrow
+\text{Riemann 零点成为一个 model space 的完整正交采样坐标}.
+}
+$$
+
+更进一步，高零点全部聚向 Cayley 圆周上的同一点 \(1\)。把未观测高零点全部压缩成 \(1\) 处的一个原子，可以构造一列**有限维、严格保持正性的 rational inner approximants**，且在任意紧子圆盘上具有：
+
+$$
+O\!\left(\frac{\log T}{T^2}\right)
+$$
+
+的误差。
+
+这给 Wang–Deng–OACTC 一个极干净的可解模型：
+
+$$
+\boxed{
+\text{有限低谱精确保留}
++
+\text{高谱 sticky tail 压缩成一个反项}
+=
+\text{有限维正完成}.
+}
+$$
+
+---
+

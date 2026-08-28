@@ -1,0 +1,16 @@
+* trace contribution 更可能产生严格估计增益。
+
+研究目标应是：
+
+$$
+\boxed{
+\operatorname{Br}(w)\text{ 大}
+\Longrightarrow
+\text{trace contribution 获得额外衰减}.
+}
+$$
+
+这对应 Wang 式 non-sticky gain。
+
+---
+

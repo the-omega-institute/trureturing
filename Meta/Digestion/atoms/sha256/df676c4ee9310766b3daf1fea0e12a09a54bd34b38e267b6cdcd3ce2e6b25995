@@ -1,0 +1,108 @@
+# 第二百零五部　Riemann \(\Xi\) 的 infinitesimal toroidal observer
+
+定义实型整函数：
+
+$$
+\boxed{
+\Xi(z)
+=
+\xi\left(\frac12-iz\right).
+}
+\tag{205.1}
+$$
+
+由 \(\xi\) 的函数方程和共轭对称：
+
+$$
+\Xi(-z)=\Xi(z),
+$$
+
+且：
+
+$$
+\Xi(x)\in\mathbb R
+\qquad
+(x\in\mathbb R).
+$$
+
+其零点与 ζ 的非平凡零点对应：
+
+$$
+\xi(\rho)=0
+\quad\Longleftrightarrow\quad
+\Xi\left(i\left(\rho-\frac12\right)\right)=0.
+$$
+
+定义 logarithmic Weyl observer：
+
+$$
+\boxed{
+m_0(z)
+=
+-\frac{\Xi'(z)}{\Xi(z)}.
+}
+\tag{205.2}
+$$
+
+因为：
+
+$$
+\Xi'(z)
+=
+-i\xi'\left(\frac12-iz\right),
+$$
+
+所以：
+
+$$
+\boxed{
+m_0(z)
+=
+i\,
+\frac{
+\xi'(\frac12-iz)
+}{
+\xi(\frac12-iz)
+}.
+}
+\tag{205.3}
+$$
+
+当：
+
+$$
+z=x+iy\in\mathbb C^+,
+$$
+
+对应：
+
+$$
+s=\frac12+y-ix,
+$$
+
+即 \(z\)-上半平面正好对应 \(s\)-平面的右半临界带。
+
+于是：
+
+$$
+\boxed{
+\Im m_0(z)
+=
+\Re
+\frac{\xi'(s)}{\xi(s)}.
+}
+\tag{205.4}
+$$
+
+所以此前的水平单调性问题变成：
+
+$$
+\boxed{
+\Im m_0(z)\ge0
+\qquad
+(z\in\mathbb C^+).
+}
+$$
+
+---
+

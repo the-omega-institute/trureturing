@@ -1,0 +1,10 @@
+ast_path: section/202-3-Projective-数据完全看不到-ξ/clause/2
+fingerprints:
+  raw_sha256: sha256:ec1559a54302f997feb6cc8d10064a83336c0509f826fb136723e5a930998797
+  normalized_sha256: sha256:ec1559a54302f997feb6cc8d10064a83336c0509f826fb136723e5a930998797
+cas_ref: sha256:ec1559a54302f997feb6cc8d10064a83336c0509f826fb136723e5a930998797
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

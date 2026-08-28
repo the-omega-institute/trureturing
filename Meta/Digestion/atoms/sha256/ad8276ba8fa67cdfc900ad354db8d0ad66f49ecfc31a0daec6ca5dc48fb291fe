@@ -1,0 +1,87 @@
+## 定理 206.1（Logarithmic Herglotz criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+m_0(z)
+=
+-\frac{\Xi'(z)}{\Xi(z)}
+\text{ 是 Herglotz 函数}.
+}
+\tag{206.1}
+$$
+
+### 证明：RH \(\Rightarrow\) Herglotz
+
+若 RH 成立，\(\Xi\) 的全部零点为实数。由偶性，可将正零点记为：
+
+$$
+0<\gamma_1\le\gamma_2\le\cdots,
+$$
+
+重数为 \(m_\gamma\)。
+
+因为：
+
+$$
+\sum_{\gamma>0}\frac{m_\gamma}{\gamma^2}<\infty,
+$$
+
+有成对 Hadamard 乘积：
+
+$$
+\Xi(z)
+=
+\Xi(0)
+\prod_{\gamma>0}
+\left(
+1-\frac{z^2}{\gamma^2}
+\right)^{m_\gamma}.
+$$
+
+取对数导数：
+
+$$
+\boxed{
+m_0(z)
+=
+\sum_{\gamma>0}
+m_\gamma
+\left[
+\frac1{\gamma-z}
++
+\frac1{-\gamma-z}
+\right].
+}
+\tag{206.2}
+$$
+
+对任意实数 \(t\) 和 \(z\in\mathbb C^+\)：
+
+$$
+\Im\frac1{t-z}
+=
+\frac{\Im z}{|t-z|^2}>0.
+$$
+
+所以：
+
+$$
+\Im m_0(z)>0.
+$$
+
+---
+
+### 证明：Herglotz \(\Rightarrow\) RH
+
+Herglotz 函数必须在 \(\mathbb C^+\) 全纯。
+
+若 \(\Xi\) 在 \(\mathbb C^+\) 有零点，\(m_0=-\Xi'/\Xi\) 就在那里有极点，矛盾。
+
+又因为 \(\Xi\) 是实型整函数，若它在下半平面有非实零点，其共轭必在上半平面。
+
+故全部零点为实数，即 RH 成立。∎
+
+---
+

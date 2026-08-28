@@ -1,0 +1,45 @@
+# 第二百六十一部　Li 圆周 Lévy 半群
+
+定义对称零点角测度：
+
+$$
+\boxed{
+\nu_\Xi
+=
+\sum_{\gamma>0}
+m_\gamma
+\left(
+\delta_{\theta_\gamma}
++
+\delta_{-\theta_\gamma}
+\right).
+}
+\tag{261.1}
+$$
+
+虽然其总质量无穷，但：
+
+$$
+\int_{\mathbb T}
+(1-\cos\theta)\,d\nu_\Xi(\theta)
+=
+\lambda_1<\infty.
+$$
+
+并且：
+
+$$
+\boxed{
+\lambda_n
+=
+\int_{\mathbb T}
+(1-\cos n\theta)
+\,d\nu_\Xi(\theta).
+}
+\tag{261.2}
+$$
+
+所以 Li 系数构成一个圆周 Lévy–Khintchine 指数。
+
+---
+

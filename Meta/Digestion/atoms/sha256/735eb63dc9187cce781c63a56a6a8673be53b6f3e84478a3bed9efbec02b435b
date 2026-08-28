@@ -1,0 +1,57 @@
+# 第一百五十部　黄金测地线是判别式 \(5\) 的 Archimedean 局部通道
+
+黄金数域：
+
+$$
+K=\mathbb Q(\sqrt5)
+$$
+
+在有限素数处的结构由模 \(5\) 二次特征控制：
+
+$$
+\chi_5(p)
+=
+\left(\frac5p\right).
+$$
+
+项目已经机器核验：
+
+* \(p\equiv\pm1\pmod5\) 时分裂；
+* \(p\equiv\pm2\pmod5\) 时惰性；
+* \(p=5\) 时分歧。
+
+而在 Archimedean 几何端，同一个判别式 \(5\) 给出闭测地线：
+
+$$
+C_5\subset PSL_2(\mathbb Z)\backslash\mathbb H
+$$
+
+及长度：
+
+$$
+4\log\varphi.
+$$
+
+因此可以定义：
+
+$$
+\boxed{
+\mathfrak A_5
+=
+\left(
+\{\chi_5(p)\}_{p<\infty},
+C_5,
+4\log\varphi
+\right).
+}
+\tag{150.1}
+$$
+
+它是一个完整的**判别式 \(5\) 阿代尔周期记录**：
+
+* 有限位读取素数分裂；
+* 无穷位读取闭测地线；
+* 调节子读取周期长度。
+
+---
+

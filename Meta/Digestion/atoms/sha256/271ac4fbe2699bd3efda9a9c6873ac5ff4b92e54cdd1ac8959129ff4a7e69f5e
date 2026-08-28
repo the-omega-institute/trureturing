@@ -1,0 +1,35 @@
+## 定理 239.1（Positive Fredholm RH criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\exists\,U\ge0,\ U\text{ trace-class},
+\quad
+\mathscr F(x)=\det(I+xU).
+}
+\tag{239.4}
+$$
+
+### 证明
+
+若 RH 成立，取 \(U=U_\Xi\)，由式 (239.3) 成立。
+
+反之，若：
+
+$$
+\mathscr F(x)=\det(I+xU)
+$$
+
+且 \(U\ge0\)，则 \(\mathscr F\) 的全部零点为：
+
+$$
+x=-\lambda^{-1}\le0,
+$$
+
+其中 \(\lambda>0\) 为 \(U\) 的非零特征值。
+
+所以 \(\mathscr F\) 的全部零点位于负实轴。由平方折叠 RH 判据，RH 成立。∎
+
+---
+

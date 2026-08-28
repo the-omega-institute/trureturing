@@ -1,0 +1,32 @@
+* 二重覆盖中的奇模式。
+
+因此完整观察者还需加入：
+
+$$
+\boxed{
+\epsilon\in\mathbb Z/2\mathbb Z
+}
+$$
+
+作为方向残余。
+
+这修正了此前 Prime–Regulator–Time Observer：
+
+$$
+q_{p,m,t}
+$$
+
+的 regulator 轴，应升级为：
+
+$$
+\boxed{
+q_{p,k,t},
+\qquad
+k\in\mathbb Z,
+}
+$$
+
+其中偶 \(k\) 是绝对值／无向模式，奇 \(k\) 是方向完成模式。
+
+---
+

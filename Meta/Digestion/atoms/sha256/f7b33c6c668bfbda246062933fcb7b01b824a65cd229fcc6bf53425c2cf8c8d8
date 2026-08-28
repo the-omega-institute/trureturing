@@ -1,0 +1,32 @@
+# 第二百二十八部　Jacobi 算子与折叠后的 Hilbert–Pólya
+
+由非负 S-fraction 收缩为 J-fraction，可以构造一族正交多项式及 Jacobi 矩阵。S-fraction 与 J-fraction 的标准收缩关系，以及其 moment-theoretic 解释，是 Stieltjes–Jacobi 理论的基本组成部分。([arXiv][2])
+
+RH 下，倒谱测度为：
+
+$$
+d\nu(u)
+=
+\sum_{\gamma>0}
+\frac{m_\gamma}{\gamma^2}
+\delta_{\gamma^{-2}}(du).
+$$
+
+在：
+
+$$
+L^2(\nu)
+$$
+
+上定义乘法算子：
+
+$$
+\boxed{
+(Uf)(u)=uf(u).
+}
+\tag{228.1}
+$$
+
+则：
+
+* \(U\) 自伴；

@@ -1,0 +1,33 @@
+## 246.1 折叠 Newman family
+
+定义：
+
+$$
+\boxed{
+\mathscr F_t(x)
+=
+\frac{
+H_t(i\sqrt x)
+}{
+H_t(0)
+}.
+}
+\tag{246.1}
+$$
+
+则：
+
+$$
+H_t\text{ 的全部零点实}
+$$
+
+当且仅当：
+
+$$
+\mathscr F_t
+$$
+
+的全部零点为负实数。
+
+因此：
+

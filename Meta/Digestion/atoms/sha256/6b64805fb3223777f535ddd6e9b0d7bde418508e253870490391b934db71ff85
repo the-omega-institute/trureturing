@@ -1,0 +1,58 @@
+## v1.8：黄金闭测地线、Mayer 转移算子、Selberg–\(q\Gamma\) 局部因子与散射型 RH 观察者
+
+以下从前文**第一百四十三部之后**继续追加。
+
+本轮不再继续增加新的高维对象，而是回到此前尚未闭合的一条链：
+
+$$
+\boxed{
+\varphi
+\longrightarrow
+\text{continued fraction}
+\longrightarrow
+\text{closed geodesic}
+\longrightarrow
+\text{transfer operator}
+\longrightarrow
+\text{Selberg product}
+\longrightarrow
+\text{Eisenstein scattering}
+\longrightarrow
+\zeta.
+}
+$$
+
+核心发现是：黄金比例在同一个动力系统中同时承担四种严格角色：
+
+$$
+\boxed{
+\begin{aligned}
+\varphi^{-1}
+&=\text{Gauss 最小分支的固定点};\\
+\varphi^{-2}
+&=\text{该分支的收缩乘子};\\
+\varphi
+&=\text{Mayer 算子最大自然全纯圆盘半径};\\
+\varphi^{-4}
+&=\text{最短模闭测地线的 Selberg }q\text{-参数}.
+\end{aligned}
+}
+$$
+
+而 Riemann zeta 又以两种方式进入同一系统：
+
+1. 作为 Mayer 转移算子矩阵元中的函数；
+2. 作为模曲面 Eisenstein 散射系数的比值。
+
+所以：
+
+$$
+\boxed{
+\pi,\ e,\ \varphi,\ \Gamma,\ \zeta
+}
+$$
+
+第一次在一个单一动力—谱观察系统中各自获得独立而兼容的定义角色。
+
+---
+

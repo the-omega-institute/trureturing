@@ -1,0 +1,67 @@
+# 第一百六十六部　Eisenstein 环面周期的双因子结构
+
+令 \(E_s\) 表示重新参数化后的 normalized Eisenstein family，使 \(s\) 是普通 \(L\)-函数变量。
+
+令 \(\chi_D\) 是二次扩张 \(K_D/\mathbb Q\) 对应的二次 Dirichlet character。
+
+Hecke–Zagier 公式的阿代尔形式给出：
+
+$$
+\boxed{
+\mathcal P_D(E_s)
+=
+\Lambda(s)\,
+\Lambda(s,\chi_D)\,
+e_D(s),
+}
+\tag{166.1}
+$$
+
+其中：
+
+* \(\Lambda(s)\) 是 completed Riemann zeta；
+* \(\Lambda(s,\chi_D)\) 是 completed quadratic \(L\)-function；
+* \(e_D(s)\) 是取决于局部 test vector、平移和测度规范的全纯 period functional；
+* 对每个参数 \(s\)，可以选择 test vector 使 \(e_D(s)\neq0\)。
+
+因此，把无零局部因子正规化掉后，定义：
+
+$$
+\boxed{
+P_D(s)
+=
+\Lambda(s)\Lambda(s,\chi_D).
+}
+\tag{166.2}
+$$
+
+则：
+
+$$
+\boxed{
+P_D(s)=0
+\iff
+\Lambda(s)=0
+\quad\lor\quad
+\Lambda(s,\chi_D)=0.
+}
+\tag{166.3}
+$$
+
+所以一个单独环面观察者会混合两类不可见性：
+
+1. 全局基础不可见：
+
+   $$
+   \Lambda(s)=0;
+   $$
+2. 该环面的 twist-specific 不可见：
+
+   $$
+   \Lambda(s,\chi_D)=0.
+   $$
+
+这就是单环面观察的盲核。
+
+---
+

@@ -1,0 +1,101 @@
+# 第三百一十六部　有限环面帧的商连接
+
+在紧谱窗口 \(K\) 中，选择有限二次环面族：
+
+$$
+\mathcal D_K
+=
+\{D_1,\ldots,D_r\},
+$$
+
+以及正权 \(w_j>0\)。
+
+冻结局部规范，使每个 toric period 写成：
+
+$$
+\boxed{
+\mathcal P_j(s)
+=
+\xi(s)\mathcal T_j(s),
+}
+\tag{316.1}
+$$
+
+其中：
+
+* \(\mathcal P_j\)：完整 Eisenstein toric period；
+* \(\mathcal T_j\)：二次 twist 与局部 carrier；
+* 至少一个 \(\mathcal T_j(s)\neq0\) 对每个 \(s\in K\)。
+
+定义 sesquiholomorphic Gram kernels：
+
+$$
+\boxed{
+\mathcal G_{\mathcal P}(s,t)
+=
+\sum_{j=1}^{r}
+w_j\,
+\mathcal P_j(s)
+\overline{\mathcal P_j(t)},
+}
+\tag{316.2}
+$$
+
+$$
+\boxed{
+\mathcal G_{\mathcal T}(s,t)
+=
+\sum_{j=1}^{r}
+w_j\,
+\mathcal T_j(s)
+\overline{\mathcal T_j(t)}.
+}
+\tag{316.3}
+$$
+
+由式 (316.1)：
+
+$$
+\boxed{
+\mathcal G_{\mathcal P}(s,t)
+=
+\xi(s)\overline{\xi(t)}
+\mathcal G_{\mathcal T}(s,t).
+}
+\tag{316.4}
+$$
+
+在对角附近：
+
+$$
+\mathcal G_{\mathcal T}(s,t)\neq0.
+$$
+
+定义局部商核：
+
+$$
+\boxed{
+\mathcal R_K(s,t)
+=
+\frac{
+\mathcal G_{\mathcal P}(s,t)
+}{
+\mathcal G_{\mathcal T}(s,t)
+}.
+}
+\tag{316.5}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal R_K(s,t)
+=
+\xi(s)\overline{\xi(t)}.
+}
+\tag{316.6}
+$$
+
+---
+

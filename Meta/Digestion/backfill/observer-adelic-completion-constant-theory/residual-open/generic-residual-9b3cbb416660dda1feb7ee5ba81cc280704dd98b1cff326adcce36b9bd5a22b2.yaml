@@ -1,0 +1,16 @@
+ast_path: section/第一百七十八部-标准-L-2-正性为什么不足
+fingerprints:
+  raw_sha256: sha256:9b3cbb416660dda1feb7ee5ba81cc280704dd98b1cff326adcce36b9bd5a22b2
+  normalized_sha256: sha256:9b3cbb416660dda1feb7ee5ba81cc280704dd98b1cff326adcce36b9bd5a22b2
+cas_ref: sha256:9b3cbb416660dda1feb7ee5ba81cc280704dd98b1cff326adcce36b9bd5a22b2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-07ebf953d50ef0ee5607563c4dd7a5ac5dd790893be33ed7080b56adcd4afa12-037c8323395f74779758fa853abd6dd2d5ec2c27f26ddd6b4161a9f29a7c6079
+    - generic-residual-69e4283a7847294c7c21b20d279770a79195e7756213d0c86280a6eca87223f2-471d2f2f326b953c9fc6279fd79a1e43d888f58cdffc45e95757d4fb0136e7cd
+    - generic-residual-3bacb9ec79d1970fbf74103788a91f29c47b0853b66097eae55f5fe43054b996-c06ba6b8f34cef567a485c284e436b805f897282b269065478be8f117214cfe9
+    - generic-residual-098c25a1a8f0cd2e73b5dbf84f98b104b54fe06ba4a7c843308ac21dde675456-049d7669b5c620da87b6cc8a94763dd166f6ce3bebdd948600ff62a5dbec1d00
+    - generic-residual-c66c6d50993d9cd4ab076febc1f10ee3f4c632c27e87ae78d66a1db0a5808fd3-683d9faa65aee1ac195ee15331c87dcc6680646019dc1bd1b4b55c5154a7ded1

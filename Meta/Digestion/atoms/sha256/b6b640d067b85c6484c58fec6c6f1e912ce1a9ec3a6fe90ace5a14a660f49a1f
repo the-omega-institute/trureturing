@@ -1,0 +1,22 @@
+## 276.3 三类有限失败证书
+
+若 RH 失败，则至少存在以下某一种有限证书：
+
+1. Pick 矩阵出现负特征值；
+2. Hankel moment 矩阵出现负特征值；
+3. Li 曲率 Toeplitz 矩阵出现负特征值。
+
+三类证书分别读取：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{Pick}&\text{局部复谱／Herglotz 失败}\\
+\text{Hankel}&\text{中心倒谱 moment 失败}\\
+\text{Toeplitz}&\text{Li 平稳相关／圆周谱失败}
+\end{array}
+}
+$$
+
+---
+
