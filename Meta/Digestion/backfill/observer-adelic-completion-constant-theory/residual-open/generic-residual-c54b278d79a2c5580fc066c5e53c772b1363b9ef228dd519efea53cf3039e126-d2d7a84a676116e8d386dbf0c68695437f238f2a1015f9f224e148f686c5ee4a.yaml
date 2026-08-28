@@ -1,0 +1,10 @@
+ast_path: section/496-1-复杂度结论/clause/2
+fingerprints:
+  raw_sha256: sha256:c54b278d79a2c5580fc066c5e53c772b1363b9ef228dd519efea53cf3039e126
+  normalized_sha256: sha256:c54b278d79a2c5580fc066c5e53c772b1363b9ef228dd519efea53cf3039e126
+cas_ref: sha256:c54b278d79a2c5580fc066c5e53c772b1363b9ef228dd519efea53cf3039e126
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

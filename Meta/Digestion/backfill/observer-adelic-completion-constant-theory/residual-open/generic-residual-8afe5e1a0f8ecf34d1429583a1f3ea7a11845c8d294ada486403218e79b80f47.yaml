@@ -1,0 +1,10 @@
+ast_path: section/阶段一-低层精确完成
+fingerprints:
+  raw_sha256: sha256:8afe5e1a0f8ecf34d1429583a1f3ea7a11845c8d294ada486403218e79b80f47
+  normalized_sha256: sha256:8afe5e1a0f8ecf34d1429583a1f3ea7a11845c8d294ada486403218e79b80f47
+cas_ref: sha256:8afe5e1a0f8ecf34d1429583a1f3ea7a11845c8d294ada486403218e79b80f47
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/第五百七十四部-缺一段圆弧时-破缺只剩边界项
+fingerprints:
+  raw_sha256: sha256:0a1e6ab908df27896e9059f4ed1ab793a83f1e6acaafaa77a82b390cb97e4e9e
+  normalized_sha256: sha256:0a1e6ab908df27896e9059f4ed1ab793a83f1e6acaafaa77a82b390cb97e4e9e
+cas_ref: sha256:0a1e6ab908df27896e9059f4ed1ab793a83f1e6acaafaa77a82b390cb97e4e9e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

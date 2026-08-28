@@ -1,0 +1,37 @@
+# 第五百二十三部　有限窗口的指数尾误差
+
+假设只知道：
+
+$$
+H_a(t)
+\qquad
+(|t|<2L).
+$$
+
+定义有限窗口 moment estimator：
+
+$$
+\boxed{
+\widehat m_{n,L}^{(a)}
+=
+R-
+\int_0^{2L}
+K_{n,a}(t)H_a(t)\,dt.
+}
+\tag{523.1}
+$$
+
+定义 Laguerre tail：
+
+$$
+\boxed{
+\tau_{n,a}(L)
+=
+\int_{2L}^{\infty}
+|K_{n,a}(t)|\,dt.
+}
+\tag{523.2}
+$$
+
+---
+

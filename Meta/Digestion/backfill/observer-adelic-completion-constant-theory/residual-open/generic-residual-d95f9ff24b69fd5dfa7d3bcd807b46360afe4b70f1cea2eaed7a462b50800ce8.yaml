@@ -1,0 +1,10 @@
+ast_path: section/第五百二十部-建议形式化顺序
+fingerprints:
+  raw_sha256: sha256:d95f9ff24b69fd5dfa7d3bcd807b46360afe4b70f1cea2eaed7a462b50800ce8
+  normalized_sha256: sha256:d95f9ff24b69fd5dfa7d3bcd807b46360afe4b70f1cea2eaed7a462b50800ce8
+cas_ref: sha256:d95f9ff24b69fd5dfa7d3bcd807b46360afe4b70f1cea2eaed7a462b50800ce8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

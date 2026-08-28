@@ -1,0 +1,10 @@
+ast_path: section/464-2-奇通道上界
+fingerprints:
+  raw_sha256: sha256:507eaad2f1afe43c1bcbedfbddb6bc7857343c1007267f4684a7802c902e9839
+  normalized_sha256: sha256:507eaad2f1afe43c1bcbedfbddb6bc7857343c1007267f4684a7802c902e9839
+cas_ref: sha256:507eaad2f1afe43c1bcbedfbddb6bc7857343c1007267f4684a7802c902e9839
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

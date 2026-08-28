@@ -1,0 +1,89 @@
+# 第五百一十一部　自然 Cayley 紧化就是 Li–Clark 测度
+
+现在取自然尺度：
+
+$$
+\boxed{
+a=\frac12.
+}
+$$
+
+假设 RH，并记零点 ordinate 测度：
+
+$$
+\boxed{
+\nu_\Xi
+=
+\sum_{\gamma\in\mathbb R}
+m_\gamma\delta_\gamma.
+}
+\tag{511.1}
+$$
+
+定义：
+
+$$
+\boxed{
+u_\gamma
+=
+\mathfrak c_{1/2}(\gamma)
+=
+\frac{\gamma+i/2}{\gamma-i/2}.
+}
+\tag{511.2}
+$$
+
+其 Cayley 紧化为：
+
+$$
+\boxed{
+\mathcal C_{1/2}[\nu_\Xi]
+=
+\sum_{\gamma\in\mathbb R}
+\frac{m_\gamma}
+{\gamma^2+\frac14}
+\delta_{u_\gamma}.
+}
+\tag{511.3}
+$$
+
+总质量为：
+
+$$
+\boxed{
+\mathcal R_{1/2}(\nu_\Xi)
+=
+2\lambda_1.
+}
+\tag{511.4}
+$$
+
+定义归一化概率测度：
+
+$$
+\boxed{
+\widehat\mu_\Xi
+=
+\frac1{2\lambda_1}
+\mathcal C_{1/2}[\nu_\Xi].
+}
+\tag{511.5}
+$$
+
+对每个正 ordinate \(\gamma\)，在 \(u_\gamma\) 和 \(\overline{u_\gamma}\) 上的单个原子质量为：
+
+$$
+\boxed{
+\frac{
+2m_\gamma
+}{
+\lambda_1(4\gamma^2+1)
+}.
+}
+\tag{511.6}
+$$
+
+这恰好是前文 Li–Clark 概率测度的权重。
+
+---
+

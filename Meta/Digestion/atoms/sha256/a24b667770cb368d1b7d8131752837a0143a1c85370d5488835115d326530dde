@@ -1,0 +1,67 @@
+## 定理 521.1（Cayley–Laguerre identity）
+
+$$
+\boxed{
+\chi_a(\xi)^n
+=
+1-
+\int_0^\infty
+K_{n,a}(t)e^{-i\xi t}\,dt.
+}
+\tag{521.3}
+$$
+
+### 证明
+
+generalized Laguerre polynomial 的 Laplace 变换满足：
+
+$$
+\int_0^\infty
+e^{-st}
+L_{n-1}^{(1)}(bt)\,dt
+=
+\frac1b
+\left[
+1-
+\left(
+1-\frac bs
+\right)^n
+\right],
+\qquad
+\Re s>0.
+$$
+
+取：
+
+$$
+s=a+i\xi,
+\qquad
+b=2a.
+$$
+
+则：
+
+$$
+1-\frac{2a}{a+i\xi}
+=
+\frac{i\xi-a}{i\xi+a}
+=
+\frac{\xi+ia}{\xi-ia}
+=
+\chi_a(\xi).
+$$
+
+所以：
+
+$$
+2a\int_0^\infty
+e^{-(a+i\xi)t}
+L_{n-1}^{(1)}(2at)\,dt
+=
+1-\chi_a(\xi)^n.
+$$
+
+移项即得。∎
+
+---
+

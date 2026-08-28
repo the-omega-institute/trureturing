@@ -1,0 +1,60 @@
+# 第六百零九部　当前开放桥补全
+
+本轮已经从仓库定义的黄金指数
+
+$$
+\beta_v=\operatorname{o5Beta}(v)
+$$
+
+中独立推出：
+
+$$
+\beta_v
+=
+\left\lfloor\frac{v+1}{\varphi}\right\rfloor+v\varphi,
+$$
+
+$$
+\beta_v^\perp
+=
+\frac1\varphi
+-
+\left\{\frac{v+1}{\varphi}\right\},
+$$
+
+$$
+\beta_{F_n}=\varphi^n,
+\qquad
+\beta_{F_n}^\perp=(-1)^n\varphi^{-n},
+$$
+
+以及：
+
+$$
+\beta_4=\sqrt5\,\varphi^3,
+\qquad
+N(\beta_4)=5.
+$$
+
+仓库当前只冻结了前三个连续幂模态、第四模态不再等于 \(\varphi^5\)、闭式和增长界；上述无限 Fibonacci 幂骨架与判别式首缺陷尚未进入 Lean。
+
+当前需要补齐的桥为：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{Beatty--Minkowski 正规形的 Lean 化};\\
+&\text{Fibonacci 最佳回归前沿的 Lean 化};\\
+&|N(\beta_v)|=1\iff v\text{ 是 Fibonacci 指标};\\
+&\text{方向字符 }N(\varphi^k)=(-1)^k
+\text{ 的 regulator twist};\\
+&\text{下一阶局部 ζ 因子抽取的全局 majorant};\\
+&\text{黄金观察器 residual 与 Riemann 对象 residual 的严格分离}.
+\end{aligned}
+}
+$$
+
+其中，真正可能推进解析前沿的是第五项；其余几项主要完成几何、算术与观察器分类。
+
+---
+

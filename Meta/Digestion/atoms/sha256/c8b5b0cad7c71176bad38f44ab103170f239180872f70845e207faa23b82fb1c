@@ -1,0 +1,47 @@
+# 第五百一十四部　Szegő 创新预算恒等式
+
+令：
+
+$$
+\beta_{0,L},
+\beta_{1,L},\ldots
+$$
+
+为概率测度 \(p_L\) 的 Verblunsky 系数。
+
+假设：
+
+1. budget active；
+2. residual \(p_L^{\mathrm{res}}\) 为奇异测度——特别是有限原子测度。
+
+则 \(p_L\) 的 absolutely continuous density 恰为常数：
+
+$$
+\boxed{
+w_L(z)=\omega_L
+\quad
+m_{\mathbb T}\text{-a.e.}
+}
+\tag{514.1}
+$$
+
+Szegő 定理给出：
+
+$$
+\boxed{
+\prod_{n=0}^{\infty}
+\left(
+1-|\beta_{n,L}|^2
+\right)
+=
+\exp
+\left[
+\int_{\mathbb T}
+\log w_L\,dm_{\mathbb T}
+\right].
+}
+\tag{514.2}
+$$
+
+因此：
+

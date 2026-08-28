@@ -1,0 +1,45 @@
+## 464.2 奇通道上界
+
+定义：
+
+$$
+\boxed{
+\overline R_L(a)
+=
+R_0+
+\inf_{\substack{
+f\in\mathcal D_L^-\\
+\mathcal S_a(f)\ne0
+}}
+\frac{
+\mathfrak b_0^-(f)
+}{
+|\mathcal S_a(f)|^2
+}.
+}
+\tag{464.7}
+$$
+
+若：
+
+$$
+\mathfrak b_0^-(f)\ge0
+\qquad
+\forall f\in\ker\mathcal S_a,
+$$
+
+则：
+
+$$
+\boxed{
+\mathfrak b_R^-\ge0
+\iff
+R\le\overline R_L(a).
+}
+\tag{464.8}
+$$
+
+所以奇观察者提供此前完全缺失的预算上界。
+
+---
+

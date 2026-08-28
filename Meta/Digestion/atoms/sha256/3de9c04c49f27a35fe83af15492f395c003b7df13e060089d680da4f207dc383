@@ -1,0 +1,26 @@
+## 492.1 与无预算极值的区别
+
+无预算 white-floor optimizer 是否存在，可能依赖谱质量是否逃向无穷远。
+
+加入：
+
+$$
+\mathcal R_a(\nu)\le C
+$$
+
+以后，逃逸被自动排除。
+
+因此：
+
+$$
+\boxed{
+\text{resolvent budget}
+=
+\text{正谱完成问题的紧化器}.
+}
+$$
+
+正定局部数据的扩张一般并不唯一，不同扩张对应不同 unitary representations；预算正则化在这些扩张中切出一个弱紧的凸子集。([arXiv][2])
+
+---
+

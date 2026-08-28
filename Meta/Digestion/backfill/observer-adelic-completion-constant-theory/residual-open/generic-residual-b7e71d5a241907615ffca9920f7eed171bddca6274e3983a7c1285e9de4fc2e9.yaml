@@ -1,0 +1,10 @@
+ast_path: section/第四百一十八部-PNT-主模型本身并不满足-Weil-正性
+fingerprints:
+  raw_sha256: sha256:b7e71d5a241907615ffca9920f7eed171bddca6274e3983a7c1285e9de4fc2e9
+  normalized_sha256: sha256:b7e71d5a241907615ffca9920f7eed171bddca6274e3983a7c1285e9de4fc2e9
+cas_ref: sha256:b7e71d5a241907615ffca9920f7eed171bddca6274e3983a7c1285e9de4fc2e9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

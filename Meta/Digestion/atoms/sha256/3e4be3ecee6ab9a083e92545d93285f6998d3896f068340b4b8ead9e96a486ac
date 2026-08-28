@@ -1,0 +1,33 @@
+## 543.1 Toeplitz matrix 是 rational Gram matrix
+
+定义：
+
+$$
+\boxed{
+T_N^{(b)}
+=
+[m_{j-k}(b)]_{j,k=0}^{N}.
+}
+\tag{543.3}
+$$
+
+则：
+
+$$
+\boxed{
+T_N^{(b)}
+=
+\frac ab
+\left[
+\left\langle
+e_{j,r},e_{k,r}
+\right\rangle_{L^2(\mu_a)}
+\right]_{j,k=0}^{N}.
+}
+\tag{543.4}
+$$
+
+所以不同尺度的 Toeplitz matrix 不是若干无关 PSD 矩阵，而是同一 \(\mu_a\) 上不同 rational bases 的 Gram matrices。
+
+---
+

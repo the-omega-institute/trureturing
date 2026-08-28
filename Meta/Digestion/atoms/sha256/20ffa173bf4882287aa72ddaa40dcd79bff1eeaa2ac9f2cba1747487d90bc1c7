@@ -1,0 +1,52 @@
+# 第四百二十九部　危险频带不是观察不变量
+
+此前定义：
+
+$$
+B_{L,a}(m)
+=
+\{\xi:m(\xi)<a\}.
+$$
+
+现在可以确认：
+
+$$
+\boxed{
+B_{L,a}(m)
+}
+$$
+
+依赖 multiplier representative，而不只依赖 Weil 二次型。
+
+若：
+
+$$
+m'\sim_Lm,
+$$
+
+则完全可能出现：
+
+$$
+|B_{L,a}(m')|
+\ll
+|B_{L,a}(m),
+$$
+
+或者反过来。
+
+同样，以下量也不是未经规范化的内在不变量：
+
+$$
+\boxed{
+\begin{aligned}
+&m(0);\\
+&m^{(j)}(0);\\
+&\text{pointwise negative band};\\
+&\text{Slepian danger-set measure};\\
+&\text{由该 danger set 得到的 sticky rank}.
+\end{aligned}
+}
+$$
+
+---
+

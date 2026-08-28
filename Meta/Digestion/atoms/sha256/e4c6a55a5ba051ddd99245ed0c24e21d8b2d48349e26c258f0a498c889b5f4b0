@@ -1,0 +1,59 @@
+## 定理 570.1（裸黄金数不能存活于标量 Galois 完成）
+
+对：
+
+$$
+c\in K,
+$$
+
+有：
+
+$$
+\boxed{
+\tau(c)=c
+\iff
+c\in\mathbb Q.
+}
+\tag{570.1}
+$$
+
+因此，一个真正标量化、Galois 不变的完成输出不能保留裸的：
+
+$$
+\varphi
+$$
+
+或：
+
+$$
+\varphi'.
+$$
+
+它可以保留的，是二者生成的对称不变量：
+
+$$
+\boxed{
+\begin{aligned}
+\operatorname{Tr}_{K/\mathbb Q}(\varphi)
+&=\varphi+\varphi'=1;\\
+\operatorname{N}_{K/\mathbb Q}(\varphi)
+&=\varphi\varphi'=-1;\\
+(\varphi-\varphi')^2
+&=5.
+\end{aligned}
+}
+\tag{570.2}
+$$
+
+所以完整观察中，裸 \(\varphi\) 往往消失，但以下结构仍可留下：
+
+$$
+\boxed{
+5,\quad
+\sqrt5\text{ 的方向纤维},\quad
+\log\varphi\text{ 的 regulator 长度}.
+}
+$$
+
+---
+

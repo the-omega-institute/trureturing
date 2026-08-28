@@ -1,0 +1,10 @@
+ast_path: section/第五百六十二部-主-Toeplitz-参数压缩率
+fingerprints:
+  raw_sha256: sha256:f27779330bacf38453eced31a9a44b818d92d53ef71c340b17432ab8170f7b83
+  normalized_sha256: sha256:f27779330bacf38453eced31a9a44b818d92d53ef71c340b17432ab8170f7b83
+cas_ref: sha256:f27779330bacf38453eced31a9a44b818d92d53ef71c340b17432ab8170f7b83
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

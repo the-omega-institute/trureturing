@@ -1,0 +1,55 @@
+# 第五百三十八部　Carathéodory 函数的尺度协变
+
+定义尺度 \(a\) 的非归一化 Carathéodory 函数：
+
+$$
+\boxed{
+F_a(w)
+=
+\int_{\mathbb T}
+\frac{z+w}{z-w}
+\,d\mu_a(z),
+\qquad
+|w|<1.
+}
+\tag{538.1}
+$$
+
+因为 \(\mu_a\ge0\)：
+
+$$
+\Re F_a(w)>0.
+$$
+
+而：
+
+$$
+\boxed{
+F_a(0)=R_a(\nu).
+}
+\tag{538.2}
+$$
+
+由于 \(\nu\) 为偶谱，\(\mu_a\) 在复共轭下不变，因此：
+
+$$
+F_a(x)\in\mathbb R
+\qquad
+(-1<x<1).
+$$
+
+定义 observer-side 参数：
+
+$$
+\boxed{
+s_{a,b}
+=
+\frac{b-a}{a+b}
+=
+-r_{a,b}.
+}
+\tag{538.3}
+$$
+
+---
+

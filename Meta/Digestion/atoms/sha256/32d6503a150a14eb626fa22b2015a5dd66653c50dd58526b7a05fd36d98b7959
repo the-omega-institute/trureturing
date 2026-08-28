@@ -1,0 +1,20 @@
+## 547.5 强度层级
+
+有严格蕴含：
+
+$$
+\boxed{
+\text{共同正谱}
+\Longrightarrow
+\text{联合 block Gram}
+\Longrightarrow
+\text{各尺度 Toeplitz PSD}.
+}
+\tag{547.5}
+$$
+
+反向在有限阶均不成立。
+
+但当：
+
+* moment order \(N\to\infty\)；

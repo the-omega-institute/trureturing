@@ -1,0 +1,10 @@
+ast_path: section/550-4-多尺度-bank-没有证明自然预算可行
+fingerprints:
+  raw_sha256: sha256:da2d873ce0bbcdbc0bacbb7db6329e89063ad5fc6875614be35d6a2459c3c9da
+  normalized_sha256: sha256:da2d873ce0bbcdbc0bacbb7db6329e89063ad5fc6875614be35d6a2459c3c9da
+cas_ref: sha256:da2d873ce0bbcdbc0bacbb7db6329e89063ad5fc6875614be35d6a2459c3c9da
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

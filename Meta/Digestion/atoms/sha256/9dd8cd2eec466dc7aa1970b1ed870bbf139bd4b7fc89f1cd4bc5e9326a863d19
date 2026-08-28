@@ -1,0 +1,52 @@
+## 480.1 Shannon 数的相等
+
+时间窗口长度为：
+
+$$
+2L.
+$$
+
+正频带 \([0,T]\) 的 Shannon 数为：
+
+$$
+\boxed{
+\mathcal N_{\mathrm{Sh}}(L,T)
+\sim
+\frac{LT}{\pi}.
+}
+\tag{480.4}
+$$
+
+而：
+
+$$
+N(T)
+\sim
+\frac{T}{2\pi}
+\log\frac{T}{2\pi}.
+$$
+
+在 \(T=T^*(L)\) 时：
+
+$$
+\boxed{
+N(T^*)
+\sim
+\mathcal N_{\mathrm{Sh}}(L,T^*).
+}
+\tag{480.5}
+$$
+
+所以：
+
+$$
+\boxed{
+T^*
+=
+\text{Riemann 零点约束数
+首次耗尽窗口 Fourier 自由度的尺度}.
+}
+$$
+
+---
+

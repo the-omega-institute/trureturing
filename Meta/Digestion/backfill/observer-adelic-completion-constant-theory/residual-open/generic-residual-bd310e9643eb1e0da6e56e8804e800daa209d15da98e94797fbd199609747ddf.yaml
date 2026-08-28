@@ -1,0 +1,10 @@
+ast_path: section/676-1-两种-克隆
+fingerprints:
+  raw_sha256: sha256:bd310e9643eb1e0da6e56e8804e800daa209d15da98e94797fbd199609747ddf
+  normalized_sha256: sha256:bd310e9643eb1e0da6e56e8804e800daa209d15da98e94797fbd199609747ddf
+cas_ref: sha256:bd310e9643eb1e0da6e56e8804e800daa209d15da98e94797fbd199609747ddf
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

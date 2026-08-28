@@ -1,0 +1,10 @@
+ast_path: section/415-1-Archimedean-正-ladder/clause/3
+fingerprints:
+  raw_sha256: sha256:1e1a6d19af3436493102261a5923bd027d0101fd3f675f15c5ddfe02cca3e191
+  normalized_sha256: sha256:1e1a6d19af3436493102261a5923bd027d0101fd3f675f15c5ddfe02cca3e191
+cas_ref: sha256:1e1a6d19af3436493102261a5923bd027d0101fd3f675f15c5ddfe02cca3e191
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

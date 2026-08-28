@@ -1,0 +1,21 @@
+## 定理 510.1（Projective primal convergence）
+
+$$
+\boxed{
+\Lambda_N
+\downarrow
+\Lambda_{L,a}(C).
+}
+\tag{510.2}
+$$
+
+### 证明
+
+有限问题的可行集是一个公共弱-* 紧集中的递减闭子集。
+
+取各层 optimizer。任意收敛子列的极限满足所有 determining constraints，因而是完整问题可行点。
+
+反之，完整可行点对每个有限层都可行。∎
+
+每个有限层又满足精确 duality，因此：
+

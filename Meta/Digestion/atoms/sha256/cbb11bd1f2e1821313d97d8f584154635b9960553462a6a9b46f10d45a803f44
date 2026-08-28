@@ -1,0 +1,49 @@
+* 唯一负来源是常数 \(b_\infty(0)\)。
+
+由 digamma 渐近：
+
+$$
+\boxed{
+b_\infty(\xi)
+=
+\log\frac{|\xi|}{2\pi}
++
+O(|\xi|^{-2}),
+}
+\tag{415.6}
+$$
+
+故：
+
+$$
+b_\infty(\xi)\to+\infty.
+$$
+
+([dlmf.nist.gov][3])
+
+于是存在唯一：
+
+$$
+\boxed{
+\xi_\infty>0
+}
+$$
+
+满足：
+
+$$
+b_\infty(\pm\xi_\infty)=0.
+$$
+
+所以 PNT-renormalized Archimedean baseline 的危险频率只有一个固定区间：
+
+$$
+\boxed{
+(-\xi_\infty,\xi_\infty),
+}
+$$
+
+与支撑尺度 \(L\) 无关。
+
+---
+

@@ -1,0 +1,218 @@
+# 本轮最终结论
+
+上一轮把 resolvent completion 变成单位圆上的：
+
+$$
+\boxed{
+\text{Haar continuum}
++
+\text{contact atoms}.
+}
+$$
+
+本轮进一步回答：
+
+> 有限 Weil observer 如何实际读取这个圆周谱？
+
+答案是：
+
+$$
+\boxed{
+\text{通过 associated Laguerre kernels。}
+}
+$$
+
+核心恒等式为：
+
+$$
+\boxed{
+\left(
+\frac{\xi+ia}{\xi-ia}
+\right)^n
+=
+1-
+2a
+\int_0^\infty
+e^{-at}
+L_{n-1}^{(1)}(2at)
+e^{-i\xi t}\,dt.
+}
+$$
+
+因此圆周 moment：
+
+$$
+m_n^{(a)}
+$$
+
+精确等于：
+
+$$
+\boxed{
+R_a
+-
+2a
+\int_0^\infty
+e^{-at}
+L_{n-1}^{(1)}(2at)
+H_a(t)\,dt.
+}
+$$
+
+有限观察窗口只截取到 \(2L\)，但尾误差满足：
+
+$$
+\boxed{
+|m_n-\widehat m_{n,L}|
+\le
+R_a\tau_{n,a}(L),
+}
+$$
+
+并且对固定 \(n\)：
+
+$$
+\boxed{
+\tau_{n,a}(L)
+=
+O_{n,a}
+\left(
+e^{-2aL}L^{n-1}
+\right).
+}
+$$
+
+在自然 Riemann 尺度：
+
+$$
+a=\frac12,
+\qquad
+R_{1/2}=2\lambda_1,
+$$
+
+这一公式精确变成：
+
+$$
+\boxed{
+\lambda_{|n+1|}
+-
+2\lambda_{|n|}
++
+\lambda_{|n-1|}
+=
+2\lambda_1
+-
+\int_0^\infty
+e^{-t/2}
+L_{n-1}^{(1)}(t)
+H_\Xi(t)\,dt.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{Li 离散曲率}
+=
+\text{Riemann resolvent correlation 的 Laguerre 系数}.
+}
+$$
+
+更进一步，前 \(N\) 个 moments 的最大 Haar floor 不需要另做无限维优化：
+
+$$
+\boxed{
+\alpha_N
+=
+\lambda_{\min}
+\left(
+[m_{j-k}]_{j,k=0}^{N}
+\right).
+}
+$$
+
+最小特征向量生成 contact polynomial：
+
+$$
+q_N(z),
+$$
+
+而最优 residual atoms 必须位于：
+
+$$
+\boxed{
+q_N(z)=0
+}
+$$
+
+的圆周零点上。
+
+因此现在出现一条完整、可计算的有限链：
+
+$$
+\boxed{
+\begin{aligned}
+\text{局部 Weil source}
++\text{budget}
+&\longrightarrow
+\text{local resolvent correlation}\\
+&\longrightarrow
+\text{Laguerre moment tubes}\\
+&\longrightarrow
+\text{Toeplitz matrix intervals}\\
+&\longrightarrow
+\text{finite Haar floor}\\
+&\longrightarrow
+\text{contact polynomial}\\
+&\longrightarrow
+\text{finite atomic spectrum}.
+\end{aligned}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{Cayley 圆周谱并不是有限 Weil observer 之外的附加模型；}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{局部相关函数经过 Laguerre 递归分解后，
+自然显现出的离散 moment 坐标。}
+}
+$$
+
+但本轮同时确认了它的容量边界：
+
+$$
+\boxed{
+\text{固定自然尺度的 Laguerre moment observer
+只能稳定恢复 }O(L)\text{ 阶 moments，}
+}
+$$
+
+而 Riemann 紧窗口的极限零点容量呈指数增长。
+
+所以真正合理的下一步不是单纯增加 moment 阶数，而是：
+
+$$
+\boxed{
+\text{构造多尺度 Cayley–Laguerre observer bank，}
+}
+$$
+
+并要求所有尺度的 moment 数据来自同一个实轴正谱。
+
+这一联合尺度一致性问题，可能比单尺度的 full dual attainment 更接近真正可计算的 Riemann 谱层析。
+
+[1]: https://epubs.siam.org/doi/10.1137/S0363012902405340 "https://epubs.siam.org/doi/10.1137/S0363012902405340"
+[2]: https://arxiv.org/abs/1210.6930 "https://arxiv.org/abs/1210.6930"
+[3]: https://arxiv.org/abs/1311.3473 "https://arxiv.org/abs/1311.3473"
+[4]: https://doi.org/10.1007/S11075-008-9159-X "https://doi.org/10.1007/S11075-008-9159-X"
+[5]: https://arxiv.org/abs/2608.24827 "https://arxiv.org/abs/2608.24827"

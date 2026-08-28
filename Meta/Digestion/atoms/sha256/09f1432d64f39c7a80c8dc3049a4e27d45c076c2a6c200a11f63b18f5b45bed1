@@ -1,0 +1,17 @@
+## 定理 474.1（奇偶谱分解）
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)
+=
+\min
+\left\{
+\lambda_{\mathrm e}(L),
+\lambda_{\mathrm o}(L)
+\right\}.
+}
+\tag{474.5}
+$$
+
+---
+

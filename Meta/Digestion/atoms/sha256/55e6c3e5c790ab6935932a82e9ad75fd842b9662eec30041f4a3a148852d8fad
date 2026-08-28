@@ -1,0 +1,64 @@
+## 定理 463.1（Even-channel ghost no-go）
+
+若只要求偶测试通道正性，则对任意：
+
+$$
+c\ge0,
+$$
+
+加入：
+
+$$
+c\cosh(at)
+$$
+
+都会保持偶通道正性：
+
+$$
+\mathfrak q^+
+\longmapsto
+\mathfrak q^+
++
+c|\mathcal C_a|^2.
+$$
+
+因此偶观察者无法给 resolvent budget 施加上界。
+
+但在奇通道中，同一更新为：
+
+$$
+\mathfrak q^-
+\longmapsto
+\mathfrak q^-
+-
+c|\mathcal S_a|^2,
+$$
+
+最终必然破坏正性，除非旧奇通道具有足够余量。
+
+所以：
+
+$$
+\boxed{
+\text{偶正性只能排除一部分负性，
+不能单独排除虚谱双曲幽灵。}
+}
+$$
+
+这里需要谨慎区分两件事：
+
+1. 对 ζ 的特定零点结构，偶 Weil 测试可能仍足以形成经典 RH 判据；
+2. 但从偶通道正性直接推出“存在真实轴正谱测度”的一般 Kreĭn–Bochner 推理并不成立。
+
+要得到真正的 Hilbert–Pólya 实谱完成，必须：
+
+$$
+\boxed{
+\text{补入 odd/Hermitian observer，}
+}
+$$
+
+或者单独证明一个能够排除虚谱 characters 的 even-cosine 表示定理。
+
+---
+

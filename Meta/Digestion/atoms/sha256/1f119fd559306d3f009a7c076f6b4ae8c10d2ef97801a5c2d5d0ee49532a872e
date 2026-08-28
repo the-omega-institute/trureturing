@@ -1,0 +1,62 @@
+## 543.2 多尺度联合 Gram
+
+选取参考尺度：
+
+$$
+a_0.
+$$
+
+对每个 observer scale \(a_\ell\)，定义：
+
+$$
+r_\ell
+=
+r_{a_0,a_\ell},
+$$
+
+$$
+\boxed{
+f_{\ell,j}(z)
+=
+\sqrt{\frac{a_0}{a_\ell}}
+\,e_{j,r_\ell}(z).
+}
+\tag{543.5}
+$$
+
+定义 block Gram：
+
+$$
+\boxed{
+\mathbb G_{(\ell,j),(m,k)}
+=
+\int_{\mathbb T}
+f_{\ell,j}(z)
+\overline{f_{m,k}(z)}
+\,d\mu_{a_0}(z).
+}
+\tag{543.6}
+$$
+
+则：
+
+$$
+\boxed{
+\mathbb G\succeq0,
+}
+\tag{543.7}
+$$
+
+且第 \(\ell\) 个对角 block 恰为：
+
+$$
+\boxed{
+T_N^{(a_\ell)}.
+}
+\tag{543.8}
+$$
+
+这给出一个比“每个尺度分别 Toeplitz PSD”严格得多的共同谱条件。
+
+---
+

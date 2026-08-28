@@ -1,0 +1,45 @@
+## 506.1 无穷远原子的不可见性
+
+因为：
+
+$$
+\Gamma_{a,\phi}(1)=0,
+$$
+
+任何：
+
+$$
+c\delta_1,
+\qquad
+c\ge0,
+$$
+
+都满足：
+
+$$
+\boxed{
+\int\Gamma_{a,\phi}\,d(c\delta_1)=0.
+}
+\tag{506.5}
+$$
+
+所以：
+
+$$
+\boxed{
+z=1\text{ 原子}
+=
+\text{局部 Weil observer 完全不可见的谱逃逸质量}.
+}
+$$
+
+但它仍消耗总预算。
+
+这一区分非常重要：
+
+* moment constraints 看不见 infinity mass；
+* resolvent budget 看得见；
+* 因此 budget 正则化精确阻止无成本谱逃逸。
+
+---
+

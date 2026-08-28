@@ -1,0 +1,16 @@
+## 依赖外部扩张接口的部分
+
+下列等价仍需标准的一维 Kreĭn 正定扩张接口：
+
+$$
+\boxed{
+\mathfrak b_R\ge0
+\iff
+\exists\text{ real-axis positive spectral completion}.
+}
+$$
+
+当前仓库的 even 测试束尚不足以直接应用这一完整接口；必须加入 odd/Hermitian tests，或者单独证明 even cosine algebra 的实谱表示与虚谱排除定理。
+
+---
+

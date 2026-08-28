@@ -1,0 +1,10 @@
+ast_path: section/554-1-结构意义
+fingerprints:
+  raw_sha256: sha256:bf50ad68a65c15cc83361cceabe9243f387bf27afb471008f4f50161ec98b5a0
+  normalized_sha256: sha256:bf50ad68a65c15cc83361cceabe9243f387bf27afb471008f4f50161ec98b5a0
+cas_ref: sha256:bf50ad68a65c15cc83361cceabe9243f387bf27afb471008f4f50161ec98b5a0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

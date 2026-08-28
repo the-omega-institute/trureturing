@@ -1,0 +1,32 @@
+## 定理 483.1（Approximate complementary concentration）
+
+$$
+\boxed{
+\mu_L(E_\delta(f))
+\le
+\frac{\varepsilon}{\delta^2}.
+}
+\tag{483.3}
+$$
+
+所以近地态会迫使 residual spectral mass 集中在：
+
+$$
+\boxed{
+|\widehat f|\ll1
+}
+$$
+
+的近零集合中。
+
+这提供了一个无需精确 optimizer 的稳定层析原则：
+
+$$
+\boxed{
+\text{Rayleigh quotient 越接近窗口底部，
+谱完成的原子质量越被迫靠近该测试函数的 Fourier 零点。}
+}
+$$
+
+---
+

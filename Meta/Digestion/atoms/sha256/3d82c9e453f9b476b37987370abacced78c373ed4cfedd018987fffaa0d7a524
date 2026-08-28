@@ -1,0 +1,30 @@
+## 493.2 Strong duality 的位置
+
+完整无限维问题要得到：
+
+$$
+\boxed{
+\Lambda_{L,a}(C)
+=
+\inf_{\phi,\theta}
+\left[
+\langle\mathfrak W_L,\phi\rangle+\theta C
+\right]
+}
+\tag{493.5}
+$$
+
+仍需证明：
+
+* moment cone 闭性；
+* 所用函数空间与拓扑；
+* strict feasibility 或相应替代条件；
+* dual attainment；
+* 是否需要广义或有限可加 dual variables。
+
+半无限与广义 moment 规划中的 strong duality 会随约束空间选择而改变，不能仅靠形式 Lagrangian 推导直接宣称无间隙。([arXiv][3])
+
+但对后文的有限维 moment truncation，在标准严格可行条件下可以使用普通有限维锥对偶。
+
+---
+

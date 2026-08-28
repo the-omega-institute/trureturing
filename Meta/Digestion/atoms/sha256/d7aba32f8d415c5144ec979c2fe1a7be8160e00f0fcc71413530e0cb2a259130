@@ -1,0 +1,64 @@
+# 第六百六十九部　有序素数历史与交换完成
+
+定义素数字母表上的自由词幺半群：
+
+$$
+\boxed{
+\mathbb P^*
+=
+\{
+p_1p_2\cdots p_k
+\}.
+}
+\tag{669.1}
+$$
+
+一个词表示一条有序观察历史。
+
+定义交换化映射：
+
+$$
+\boxed{
+\operatorname{ab}:
+\mathbb P^*\to\Lambda_{\mathbb P},
+}
+\tag{669.2}
+$$
+
+其中：
+
+$$
+\operatorname{ab}(w)_p
+=
+\text{词 }w\text{ 中 }p\text{ 出现的次数}.
+$$
+
+再定义：
+
+$$
+\boxed{
+\Pi(w)
+=
+\Pi(\operatorname{ab}(w)).
+}
+\tag{669.3}
+$$
+
+例如：
+
+$$
+2\,3\,5,
+\quad
+5\,2\,3,
+\quad
+3\,5\,2
+$$
+
+都完成到：
+
+$$
+30.
+$$
+
+---
+

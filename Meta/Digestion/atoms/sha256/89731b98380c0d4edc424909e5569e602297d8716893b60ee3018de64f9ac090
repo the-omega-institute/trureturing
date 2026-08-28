@@ -1,0 +1,45 @@
+## 定理 559.1（Unique finite-atomic residual）
+
+存在唯一正测度：
+
+$$
+\boxed{
+\tau_*
+=
+\sum_{j=1}^{r}
+w_j\delta_{\zeta_j},
+\qquad
+w_j>0,\quad
+\zeta_j\in\mathbb T,
+}
+\tag{559.4}
+$$
+
+使：
+
+$$
+T_d(\tau_*)=T_*.
+$$
+
+因此最大 Haar-floor 完成唯一，并具有形式：
+
+$$
+\boxed{
+\mu_*
+=
+\alpha_*m_{\mathbb T}
++
+\sum_{j=1}^{r}
+w_j|D(\zeta_j)|^2\delta_{\zeta_j}.
+}
+\tag{559.5}
+$$
+
+### 证明
+
+奇异正半定 Toeplitz matrix 的 Carathéodory–Fejér/Vandermonde 分解是唯一的，且原子数等于其 rank。([arXiv][1])
+
+再乘回 \(|D|^2\) 即得。∎
+
+---
+

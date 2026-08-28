@@ -1,0 +1,49 @@
+# 第五百五十九部　唯一有限原子最优完成
+
+令：
+
+$$
+\boxed{
+\alpha_*=\alpha_*(G),
+}
+$$
+
+并定义 residual Toeplitz matrix：
+
+$$
+\boxed{
+T_*
+=
+T-\alpha_*H_D.
+}
+\tag{559.1}
+$$
+
+因为 \(\alpha_*\) 是最小 generalized eigenvalue：
+
+$$
+\boxed{
+T_*\succeq0,
+\qquad
+T_*\text{ 奇异}.
+}
+\tag{559.2}
+$$
+
+记：
+
+$$
+\boxed{
+r=\operatorname{rank}T_*.
+}
+\tag{559.3}
+$$
+
+则：
+
+$$
+r\le d=n-1.
+$$
+
+---
+

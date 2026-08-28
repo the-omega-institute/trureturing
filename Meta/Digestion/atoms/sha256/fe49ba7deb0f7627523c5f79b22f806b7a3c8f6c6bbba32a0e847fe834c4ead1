@@ -1,0 +1,52 @@
+# 第四百九十五部　Resolvent 影子价格与完成方程状态
+
+因为：
+
+$$
+C\mapsto\Lambda_{L,a}(C)
+$$
+
+为凹函数，dual 最优参数：
+
+$$
+\theta_*
+$$
+
+是其一个 supergradient：
+
+$$
+\boxed{
+\Lambda_{L,a}(C')
+\le
+\Lambda_{L,a}(C)
++
+\theta_*(C'-C).
+}
+\tag{495.1}
+$$
+
+在可微点：
+
+$$
+\boxed{
+\theta_*
+=
+\frac{d}{dC}
+\Lambda_{L,a}(C).
+}
+\tag{495.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\theta_*
+=
+\text{多增加一单位 resolvent budget
+能够提升多少 white floor}.
+}
+$$
+
+---
+

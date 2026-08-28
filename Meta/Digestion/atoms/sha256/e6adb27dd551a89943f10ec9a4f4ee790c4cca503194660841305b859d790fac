@@ -1,0 +1,20 @@
+## 猜想 660.2（Persistent defect criterion）
+
+若某一缺陷线程满足：
+
+$$
+\delta_{n,k}\to\delta_*\neq0,
+$$
+
+则必须存在非零 forcing class：
+
+$$
+\varepsilon_*
+=
+\varphi\delta_*,
+$$
+
+或相应的非线性稳定破缺源。
+
+---
+

@@ -1,0 +1,60 @@
+# 第六百一十四部　形式 Primitive 深度
+
+将 primitive 模态按大小排序：
+
+$$
+\alpha_1<\alpha_2<\cdots,
+$$
+
+并记其整数重数：
+
+$$
+c_1,c_2,\ldots.
+$$
+
+抽取前 \(m\) 个因子后，定义形式 residual：
+
+$$
+\boxed{
+\mathcal G_m(X)
+=
+\mathcal L(X)
+\prod_{j=1}^{m}
+(1-X^{\alpha_j})^{c_j}.
+}
+\tag{614.1}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal G_m(X)
+=
+1+c_{m+1}X^{\alpha_{m+1}}+\cdots.
+}
+\tag{614.2}
+$$
+
+定义形式 primitive 深度：
+
+$$
+\boxed{
+d_{\mathrm{prim}}(m)=\alpha_{m+1}.
+}
+\tag{614.3}
+$$
+
+定义解析候选横坐标：
+
+$$
+\boxed{
+\sigma_{\mathrm{cand}}(m)
+=
+\frac1{\alpha_{m+1}}.
+}
+\tag{614.4}
+$$
+
+---
+

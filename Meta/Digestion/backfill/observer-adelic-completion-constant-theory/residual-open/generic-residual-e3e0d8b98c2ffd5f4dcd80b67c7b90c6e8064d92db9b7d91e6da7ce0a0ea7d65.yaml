@@ -1,0 +1,10 @@
+ast_path: section/幽灵离线线程
+fingerprints:
+  raw_sha256: sha256:e3e0d8b98c2ffd5f4dcd80b67c7b90c6e8064d92db9b7d91e6da7ce0a0ea7d65
+  normalized_sha256: sha256:e3e0d8b98c2ffd5f4dcd80b67c7b90c6e8064d92db9b7d91e6da7ce0a0ea7d65
+cas_ref: sha256:e3e0d8b98c2ffd5f4dcd80b67c7b90c6e8064d92db9b7d91e6da7ce0a0ea7d65
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

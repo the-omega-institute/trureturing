@@ -1,0 +1,10 @@
+ast_path: section/611-1-形式完成与解析完成
+fingerprints:
+  raw_sha256: sha256:451b2b259f427813f11aed2a1985d78751838a30e705eb18c2d25294da4bbb3f
+  normalized_sha256: sha256:451b2b259f427813f11aed2a1985d78751838a30e705eb18c2d25294da4bbb3f
+cas_ref: sha256:451b2b259f427813f11aed2a1985d78751838a30e705eb18c2d25294da4bbb3f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

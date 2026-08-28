@@ -1,0 +1,57 @@
+# 第五百三十二部　有限 moment 可行性 SDP
+
+固定：
+
+$$
+L,a
+$$
+
+以及预算区间：
+
+$$
+R\in[\underline R,\overline R].
+$$
+
+对：
+
+$$
+1\le n\le N,
+$$
+
+引入 moment 变量：
+
+$$
+m_n\in\mathbb R
+$$
+
+并要求：
+
+$$
+m_0=R,
+$$
+
+$$
+\boxed{
+\left|
+m_n-\widehat m_{n,L}^{(a)}(R)
+\right|
+\le
+R\tau_{n,a}(L).
+}
+\tag{532.1}
+$$
+
+再要求 Toeplitz positivity：
+
+$$
+\boxed{
+[m_{j-k}]_{j,k=0}^{N}
+\succeq0.
+}
+\tag{532.2}
+$$
+
+这些约束构成一个有限半定可行性问题。
+
+---
+

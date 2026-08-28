@@ -1,0 +1,25 @@
+## 559.1 一个重要强化
+
+上一轮有限 Tchakaloff 分析只给出：
+
+$$
+\text{存在不超过 observer dimension 的原子表示}.
+$$
+
+当前共同分母结构给出更强结论：
+
+$$
+\boxed{
+\text{最大 floor completion 不仅存在，
+而且唯一；}
+}
+$$
+
+$$
+\boxed{
+\text{其 residual 原子数精确等于 residual Toeplitz rank}.
+}
+$$
+
+---
+

@@ -1,0 +1,36 @@
+## 定理 523.1（Finite-window moment tube）
+
+$$
+\boxed{
+\left|
+m_n^{(a)}
+-
+\widehat m_{n,L}^{(a)}
+\right|
+\le
+R\,\tau_{n,a}(L).
+}
+\tag{523.3}
+$$
+
+### 证明
+
+由定理 522.1：
+
+$$
+m_n-\widehat m_{n,L}
+=
+-\int_{2L}^\infty
+K_{n,a}(t)H_a(t)\,dt.
+$$
+
+再用：
+
+$$
+|H_a(t)|\le R.
+$$
+
+∎
+
+---
+

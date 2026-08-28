@@ -1,0 +1,10 @@
+ast_path: row/逆极限与对称商的区分
+fingerprints:
+  raw_sha256: sha256:15071487b44fb435e2c9e08531301421cbc2effa6f3c54706970d730dec465b4
+  normalized_sha256: sha256:15071487b44fb435e2c9e08531301421cbc2effa6f3c54706970d730dec465b4
+cas_ref: sha256:15071487b44fb435e2c9e08531301421cbc2effa6f3c54706970d730dec465b4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,76 @@
+## 定理 508.1（Finite circle duality）
+
+$$
+\boxed{
+\begin{aligned}
+\Lambda_{L,a}^{V}(C)
+=
+\min_{\substack{
+\phi\in V\\
+\theta\ge0
+}}
+\Big[
+\langle\mathfrak W_L,\phi\rangle+\theta C
+\Big],
+\end{aligned}
+}
+\tag{508.1}
+$$
+
+其中 dual 可行条件为：
+
+$$
+\boxed{
+\Gamma_{a,\phi}(z)+\theta\ge0
+\qquad
+\forall z\in\mathbb T,
+}
+\tag{508.2}
+$$
+
+以及：
+
+$$
+\boxed{
+2a\,\phi(0)+\theta\ge2a.
+}
+\tag{508.3}
+$$
+
+### 证明结构（第 508 部）
+
+对 primal 变量 \((\alpha,\sigma)\) 写 Lagrangian：
+
+$$
+\begin{aligned}
+\mathcal L
+={}&
+2a\alpha
++
+\langle\mathfrak W_L,\phi\rangle
+-
+2a\alpha\phi(0)
+-
+\int\Gamma_{a,\phi}\,d\sigma\\
+&+
+\theta
+\left[
+C-\alpha-\sigma(\mathbb T)
+\right].
+\end{aligned}
+$$
+
+对：
+
+$$
+\alpha\ge0,\qquad\sigma\ge0
+$$
+
+取上确界有限，恰好给出式 (508.2)、(508.3)。
+
+有限维 moment image 是紧凸集，所以由有限维分离定理无 duality gap。∎
+
+有限维正 moment 泛函可由有限原子正测度精确表示，这是 Richter–Tchakaloff 理论的核心结论。([arXiv][2])
+
+---
+

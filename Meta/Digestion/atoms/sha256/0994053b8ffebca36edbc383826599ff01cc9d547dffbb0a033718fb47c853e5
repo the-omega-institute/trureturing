@@ -1,0 +1,63 @@
+# 第六百四十八部　无理性不是第一破缺的无条件结果
+
+坐标轴可以由一个：
+
+* 有理方向；
+* 代数无理方向；
+* 超越方向；
+* 随机方向；
+
+定义。
+
+所以：
+
+$$
+\boxed{
+\text{“从无到有”}
+\not\Rightarrow
+\text{“第一个坐标必为无理数”.}
+}
+$$
+
+无理性只有在加入额外要求后才自然出现，例如：
+
+$$
+\boxed{
+\text{观察轨道不能在整数格点上有限周期闭合}.
+}
+$$
+
+黄金比例进一步需要更强要求，例如：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{二通道递归};\\
+&\text{整数记忆};\\
+&\text{最小 unimodular 混合};\\
+&\text{最大程度避免短有理共振};\\
+&\text{层间结构自相似}.
+\end{aligned}
+}
+$$
+
+因此更科学的命题是：
+
+$$
+\boxed{
+\text{\(\varphi\) 是某个最小自观察 universality class 的常数，}
+}
+$$
+
+而不是：
+
+$$
+\boxed{
+\text{\(\varphi\) 是所有可能第一破缺的唯一常数。}
+}
+$$
+
+更高通道数、其他 determinant、其他 substitution rule 会产生其他 Perron–Frobenius 代数单位。
+
+---
+

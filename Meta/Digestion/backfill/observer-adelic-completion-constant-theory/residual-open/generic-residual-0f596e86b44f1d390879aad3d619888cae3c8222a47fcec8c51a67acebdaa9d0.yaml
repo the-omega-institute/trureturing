@@ -1,0 +1,13 @@
+ast_path: section/第四百六十五部-有限-Galerkin-Weyl-铅笔
+fingerprints:
+  raw_sha256: sha256:0f596e86b44f1d390879aad3d619888cae3c8222a47fcec8c51a67acebdaa9d0
+  normalized_sha256: sha256:0f596e86b44f1d390879aad3d619888cae3c8222a47fcec8c51a67acebdaa9d0
+cas_ref: sha256:0f596e86b44f1d390879aad3d619888cae3c8222a47fcec8c51a67acebdaa9d0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-d3ee83e49696a65a270e2c10e55811df8fa9f391675929a989aa1e30c6e6eff7-42ae6b7f117719fa87995ac1dd26064900bdbf3f24f076dd85f93e9ebc8d7ef6
+    - generic-residual-47df1d09bd27de82afa4af913d4c7fdd3f55ed5b5a5d20cfce45cffa9f45c6b4-df7330d309030b19d763431cc82742dc18aff4ec655cfcf23ad0b7aea25b8799

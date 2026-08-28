@@ -1,0 +1,10 @@
+ast_path: section/432-1-Fourier-性质
+fingerprints:
+  raw_sha256: sha256:3245d725a561a65a7ba32507448c078c6a4d33593ae990dbbd9ec41a23656608
+  normalized_sha256: sha256:3245d725a561a65a7ba32507448c078c6a4d33593ae990dbbd9ec41a23656608
+cas_ref: sha256:3245d725a561a65a7ba32507448c078c6a4d33593ae990dbbd9ec41a23656608
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

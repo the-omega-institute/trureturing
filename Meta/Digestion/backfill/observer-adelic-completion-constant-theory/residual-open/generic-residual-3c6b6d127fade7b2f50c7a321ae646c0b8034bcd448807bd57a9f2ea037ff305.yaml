@@ -1,0 +1,10 @@
+ast_path: section/650-2-第一种可区分信息
+fingerprints:
+  raw_sha256: sha256:3c6b6d127fade7b2f50c7a321ae646c0b8034bcd448807bd57a9f2ea037ff305
+  normalized_sha256: sha256:3c6b6d127fade7b2f50c7a321ae646c0b8034bcd448807bd57a9f2ea037ff305
+cas_ref: sha256:3c6b6d127fade7b2f50c7a321ae646c0b8034bcd448807bd57a9f2ea037ff305
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

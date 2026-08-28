@@ -1,0 +1,10 @@
+ast_path: section/567-2-Master-moment-solver/clause/4
+fingerprints:
+  raw_sha256: sha256:6dfda469b66f045b91cc982a3312063c5645ae4fbc07e26f16fd8a0e56dc2112
+  normalized_sha256: sha256:6dfda469b66f045b91cc982a3312063c5645ae4fbc07e26f16fd8a0e56dc2112
+cas_ref: sha256:6dfda469b66f045b91cc982a3312063c5645ae4fbc07e26f16fd8a0e56dc2112
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

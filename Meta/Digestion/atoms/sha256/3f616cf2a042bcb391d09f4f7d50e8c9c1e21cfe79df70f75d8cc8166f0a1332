@@ -1,0 +1,83 @@
+# 第四百三十一部　低频 discrepancy 可被压平到任意有限阶
+
+定义 moment-flat cosine multiplier：
+
+$$
+\boxed{
+r_{L,K}(\xi)
+=
+2
+\left\langle
+\varepsilon_L^{[K]},
+\cos(\xi\,\cdot)
+\right\rangle.
+}
+\tag{431.1}
+$$
+
+由定理 430.1：
+
+$$
+\boxed{
+r_{L,K}^{(j)}(0)=0
+\qquad
+(0\le j\le K).
+}
+\tag{431.2}
+$$
+
+更具体地，令：
+
+$$
+T_{K,b}
+\bigl[\cos(\xi\cdot)\bigr](u)
+$$
+
+表示 \(u\mapsto\cos(\xi u)\) 在 \(b\) 处的 \(K\) 阶 Taylor 多项式，则：
+
+$$
+\boxed{
+\begin{aligned}
+r_{L,K}(\xi)
+=
+2\int_{[0,b]}
+\bigl[
+\cos(\xi u)
+-
+T_{K,b}[\cos(\xi\cdot)](u)
+\bigr]
+\,d\varepsilon_L(u).
+\end{aligned}
+}
+\tag{431.3}
+$$
+
+Taylor 余项给出：
+
+$$
+\boxed{
+|r_{L,K}(\xi)|
+\le
+\frac{
+2|\xi|^{K+1}
+}{
+(K+1)!
+}
+\int_{[0,b]}
+|u-b|^{K+1}
+\,d|\varepsilon_L|(u).
+}
+\tag{431.4}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{在不改变 Weil 二次型的情况下，
+可以把 discrepancy 的任意有限低频 jet 全部消去。}
+}
+$$
+
+---
+

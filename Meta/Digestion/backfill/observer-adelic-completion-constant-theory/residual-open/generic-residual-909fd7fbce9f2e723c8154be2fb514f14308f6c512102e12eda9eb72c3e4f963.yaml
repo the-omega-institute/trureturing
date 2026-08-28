@@ -1,0 +1,10 @@
+ast_path: section/第六百二十一部-最终结论
+fingerprints:
+  raw_sha256: sha256:909fd7fbce9f2e723c8154be2fb514f14308f6c512102e12eda9eb72c3e4f963
+  normalized_sha256: sha256:909fd7fbce9f2e723c8154be2fb514f14308f6c512102e12eda9eb72c3e4f963
+cas_ref: sha256:909fd7fbce9f2e723c8154be2fb514f14308f6c512102e12eda9eb72c3e4f963
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,63 @@
+## 定理 467.1（Hyperbolic budget tube）
+
+任意尺度 \(L\) 上的真实局部正谱完成均满足：
+
+$$
+\boxed{
+R_*\tanh^2(aL)
+\le
+R
+\le
+R_*\coth^2(aL).
+}
+\tag{467.3}
+$$
+
+### 证明
+
+令：
+
+$$
+q=\frac{R}{R_*},
+\qquad
+c=\cosh(at).
+$$
+
+式 (467.2) 化为：
+
+$$
+|q-1|c\le q+1.
+$$
+
+若 \(q\ge1\)：
+
+$$
+(q-1)c\le q+1,
+$$
+
+所以：
+
+$$
+q\le\frac{c+1}{c-1}
+=
+\coth^2\frac{at}{2}.
+$$
+
+若 \(q\le1\)：
+
+$$
+(1-q)c\le q+1,
+$$
+
+所以：
+
+$$
+q\ge\frac{c-1}{c+1}
+=
+\tanh^2\frac{at}{2}.
+$$
+
+令 \(t\uparrow2L\)，得到式 (467.3)。∎
+
+---
+

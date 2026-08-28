@@ -1,0 +1,14 @@
+* residual 为奇异谱。
+
+若 residual 还有额外的非均匀绝对连续密度，则只能得到：
+
+$$
+\prod(1-|\beta_n|^2)
+=
+\exp\int\log w\,dm,
+$$
+
+不能直接等同于 Haar floor。
+
+---
+

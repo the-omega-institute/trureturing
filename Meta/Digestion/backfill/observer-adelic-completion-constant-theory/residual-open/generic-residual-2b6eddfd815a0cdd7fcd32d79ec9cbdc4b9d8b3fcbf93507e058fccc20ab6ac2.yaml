@@ -1,0 +1,10 @@
+ast_path: section/第五百六十四部-鲁棒共同谱证书
+fingerprints:
+  raw_sha256: sha256:2b6eddfd815a0cdd7fcd32d79ec9cbdc4b9d8b3fcbf93507e058fccc20ab6ac2
+  normalized_sha256: sha256:2b6eddfd815a0cdd7fcd32d79ec9cbdc4b9d8b3fcbf93507e058fccc20ab6ac2
+cas_ref: sha256:2b6eddfd815a0cdd7fcd32d79ec9cbdc4b9d8b3fcbf93507e058fccc20ab6ac2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

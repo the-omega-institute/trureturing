@@ -1,0 +1,22 @@
+* Fibonacci/Beatty 账本。
+
+所以 \(\varphi\) 会直接出现。
+
+而 completed \(\xi\) 的标准定义选择的是：
+
+$$
+\boxed{
+\mathbb Q,
+\quad
+\mathbb R,
+\quad
+\Gamma\text{ 因子},
+\quad
+s\leftrightarrow1-s.
+}
+$$
+
+它没有预先选择 \(\mathbb Q(\sqrt5)\) 的某一嵌入。
+
+---
+

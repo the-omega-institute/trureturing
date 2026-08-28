@@ -1,0 +1,39 @@
+# 第四百七十部　Weyl 区间与 Slepian–Feshbach 图表的关系
+
+前文的 multiplier gauge、Slepian sticky space 与 Feshbach matrix 仍然有计算价值，但它们不是内在不变量。
+
+本轮得到的 Weyl 预算区间：
+
+$$
+\boxed{
+\mathbb I_L(a)
+}
+$$
+
+则是由局部 source 与真实轴正谱条件共同定义的内在对象。
+
+二者的关系为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Weyl interval}
+&=\text{gauge-independent scalar feasibility};\\
+\text{Slepian danger band}
+&=\text{选定 multiplier gauge 后的坐标};\\
+\text{Feshbach matrix}
+&=\text{该坐标中的有限维计算器}.
+\end{aligned}
+}
+$$
+
+因此建议的计算顺序应当调整为：
+
+1. 用偶测试族给出预算下界；
+2. 用奇测试族给出预算上界；
+3. 若区间仍宽，再选 multiplier gauge；
+4. 用 Slepian–Feshbach 解析区间中真正危险的有限模式；
+5. 用 Weyl 区间检查不同 gauge 的计算是否一致。
+
+---
+

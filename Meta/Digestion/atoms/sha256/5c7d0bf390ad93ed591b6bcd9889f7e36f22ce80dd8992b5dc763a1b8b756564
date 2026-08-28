@@ -1,0 +1,29 @@
+## 定理 544.1（Budget transport error）
+
+$$
+\boxed{
+\begin{aligned}
+\left|
+R_b
+-
+\frac ab
+\left[
+R_a+
+2\sum_{k=1}^{M}
+(-r)^km_k(a)
+\right]
+\right|
+\le
+\frac{2a}{b}
+R_a
+\frac{|r|^{M+1}}
+{1-|r|}.
+\end{aligned}
+}
+\tag{544.2}
+$$
+
+所以相邻尺度之间的预算传输具有严格几何尾界。
+
+---
+

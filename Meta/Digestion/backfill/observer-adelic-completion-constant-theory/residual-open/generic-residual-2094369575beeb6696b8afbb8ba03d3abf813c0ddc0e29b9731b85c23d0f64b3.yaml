@@ -1,0 +1,10 @@
+ast_path: section/632-1-完成层级
+fingerprints:
+  raw_sha256: sha256:2094369575beeb6696b8afbb8ba03d3abf813c0ddc0e29b9731b85c23d0f64b3
+  normalized_sha256: sha256:2094369575beeb6696b8afbb8ba03d3abf813c0ddc0e29b9731b85c23d0f64b3
+cas_ref: sha256:2094369575beeb6696b8afbb8ba03d3abf813c0ddc0e29b9731b85c23d0f64b3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

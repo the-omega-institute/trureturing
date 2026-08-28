@@ -1,0 +1,41 @@
+## 命题 D：Golden parity extraction
+
+把 local logarithm 分成：
+
+$$
+\boxed{
+\log L_{p,\varphi}
+=
+\mathcal L_{p,\mathrm{even}}
++
+\mathcal L_{p,\mathrm{odd}}.
+}
+\tag{587.5}
+$$
+
+验证：
+
+$$
+\tau(\mathcal L_{\mathrm{even}})
+=
+\mathcal L_{\mathrm{even}},
+$$
+
+$$
+\tau(\mathcal L_{\mathrm{odd}})
+=
+-\mathcal L_{\mathrm{odd}}
+$$
+
+在加入 orientation ledger 后成立。
+
+研究：
+
+$$
+\boxed{
+\text{奇残差是否正是阻止下一阶完成的最低模式。}
+}
+$$
+
+---
+

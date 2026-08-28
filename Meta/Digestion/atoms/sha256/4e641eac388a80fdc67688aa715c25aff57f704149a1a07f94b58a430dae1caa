@@ -1,0 +1,24 @@
+## 533.1 Local Green solver
+
+对给定：
+
+$$
+L,a,R
+$$
+
+从 prime–pole–Archimedean source 求解：
+
+$$
+(-\partial_t^2+a^2)H_{L,R}
+=
+\mathfrak W_L,
+$$
+
+$$
+H(0)=R,
+\qquad
+H'(0)=0.
+$$
+
+---
+
