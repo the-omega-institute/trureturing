@@ -1,0 +1,80 @@
+## 本轮独立闭合的有限定理
+
+$$
+\boxed{
+d_{\omega+\eta,T}
+=
+P_\eta*d_{\omega,T}
+}
+$$
+
+无条件成立。
+
+$$
+\boxed{
+\mathrm{RH}_{\le T}
+\iff
+e^{\omega|t|}
+\widehat d_{\omega,T}(t)
+\text{ 正定}.
+}
+$$
+
+$$
+\boxed{
+\mathrm{RH}_{\le T}
+\iff
+\mathfrak R_T(\tau)=0.
+}
+$$
+
+$$
+\boxed{
+\mathfrak R_T''(0)
+=
+\sum_{\rho\in\mathcal Z_T^+}
+\left(
+\Re\rho-\frac12
+\right)^2.
+}
+$$
+
+$$
+\boxed{
+\mathfrak A_T(y)
+=
+\sum_{\rho\in\mathcal Z_T^+}
+\min(y,\Re\rho).
+}
+$$
+
+$$
+\boxed{
+-\mathfrak A_T''
+=
+\sum_\rho\delta_{\Re\rho}.
+}
+$$
+
+$$
+\boxed{
+\mathfrak W_T(y)\ge0.
+}
+$$
+
+$$
+\boxed{
+\int_0^\infty
+\mathfrak W_T(y)\,dy
+=
+\frac12
+\sum_\rho
+\left(
+\Re\rho-\frac12
+\right)^2.
+}
+$$
+
+这些结果只使用：
+
+* Blaschke 因子；

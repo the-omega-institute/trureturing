@@ -1,0 +1,73 @@
+# 第三百五十四部　Prime–Archimedean 逆 Poisson 目标
+
+由：
+
+$$
+\Theta_{1/2}(x)
+=
+\frac{\xi(-ix)}{\xi(1-ix)}
+$$
+
+以及函数方程，在实轴上：
+
+$$
+\boxed{
+d_{1/2}(x)
+=
+\frac1\pi
+\Re
+\frac{
+\xi'(1-ix)
+}{
+\xi(1-ix)
+}.
+}
+\tag{354.1}
+$$
+
+而：
+
+$$
+\frac{\xi'(s)}{\xi(s)}
+=
+\frac1s
++
+\frac1{s-1}
+-
+\frac12\log\pi
++
+\frac12\psi\!\left(\frac s2\right)
++
+\frac{\zeta'(s)}{\zeta(s)}.
+$$
+
+所以 \(d_{1/2}\) 是：
+
+$$
+\boxed{
+\text{Archimedean completion barrier}
+-
+\text{renormalized prime coherence}
+}
+$$
+
+在临界 shifted 边界上的净相位密度。
+
+RH 下，形式上：
+
+$$
+\boxed{
+e^{\frac12|D_x|}
+\left[
+\frac1\pi
+\Re\frac{\xi'(1-ix)}{\xi(1-ix)}
+\right]
+=
+\sum_\rho
+m_\rho\delta_{-\Im\rho}.
+}
+\tag{354.2}
+$$
+
+因此新的 prime-side 中心目标可写成：
+

@@ -1,0 +1,10 @@
+ast_path: section/371-2-Cayley-Clark/clause/1
+fingerprints:
+  raw_sha256: sha256:17a6b5ee3b8791ed1623250f962677ae30e8db730376be2bc23d03c0821c035a
+  normalized_sha256: sha256:17a6b5ee3b8791ed1623250f962677ae30e8db730376be2bc23d03c0821c035a
+cas_ref: sha256:17a6b5ee3b8791ed1623250f962677ae30e8db730376be2bc23d03c0821c035a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

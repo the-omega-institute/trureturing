@@ -1,0 +1,22 @@
+## 342.1 一个 inner model 不够
+
+$$
+\boxed{
+\Theta_{1/2}\text{ inner}
+}
+$$
+
+是无条件事实，不推出 RH。
+
+RH 要求的是：
+
+$$
+\boxed{
+Z(\Theta_{1/2})
+\subset
+\mathbb R+\frac i2.
+}
+$$
+
+---
+

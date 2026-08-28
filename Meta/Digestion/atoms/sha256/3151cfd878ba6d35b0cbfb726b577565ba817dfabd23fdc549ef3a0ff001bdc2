@@ -1,0 +1,33 @@
+## 371.4 Fredholm
+
+取正算子：
+
+$$
+\boxed{
+U_\Xi
+=
+\operatorname{diag}
+(\gamma^{-2}).
+}
+\tag{371.6}
+$$
+
+则：
+
+$$
+\boxed{
+\frac{
+\xi(\frac12+\sqrt x)
+}{
+\xi(\frac12)
+}
+=
+\det(I+xU_\Xi).
+}
+\tag{371.7}
+$$
+
+其 exterior traces 是中心 Taylor 系数，power traces 是 reciprocal-zero moments。
+
+---
+

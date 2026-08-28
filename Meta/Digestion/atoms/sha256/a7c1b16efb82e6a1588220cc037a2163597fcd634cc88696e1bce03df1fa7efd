@@ -1,0 +1,23 @@
+## 400.1 Sticky 维数
+
+$$
+\boxed{
+\dim P
+\le
+1+
+\frac{L|B_{L,a}|}{\pi\eta}.
+}
+\tag{400.8}
+$$
+
+因此，固定 \(L\) 后：
+
+$$
+\boxed{
+\text{除有限多个 Slepian sticky modes 外，
+全部状态已经具有统一严格正余量。}
+}
+$$
+
+---
+

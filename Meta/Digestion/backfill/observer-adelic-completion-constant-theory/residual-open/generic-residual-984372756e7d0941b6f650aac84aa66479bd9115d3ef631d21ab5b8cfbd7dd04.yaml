@@ -1,0 +1,14 @@
+ast_path: section/354-1-为什么这一步困难
+fingerprints:
+  raw_sha256: sha256:984372756e7d0941b6f650aac84aa66479bd9115d3ef631d21ab5b8cfbd7dd04
+  normalized_sha256: sha256:984372756e7d0941b6f650aac84aa66479bd9115d3ef631d21ab5b8cfbd7dd04
+cas_ref: sha256:984372756e7d0941b6f650aac84aa66479bd9115d3ef631d21ab5b8cfbd7dd04
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-29365389d72b84954b9d47a227107f5f7c586391be0ea2844fe6ffa4aaa3dd90-ce42d645dc91f9039db6ab96a86a2a4b03b97ea1bcfd0316e3e0a48ad6a333ed
+    - generic-residual-a3d7ee637918ef40fa9770de8509a1f6cbbb1df0322021d6944f5ecc90d66137-901e926b8b6b3a32839785ce9493ff546251ae525ee63abf6392438115faf0d1
+    - generic-residual-2310109e139189b8a9f5d82ab1c726aaa1b687dd22d34e6a9eaac17946c8e524-50007e05f3e6a44bdbfbb6c2e55733e43cbfa987f3babc6294694d84079202f2

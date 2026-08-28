@@ -1,0 +1,54 @@
+# 第三百六十一部　临界逆 Poisson 不变量
+
+在分布意义下取 Fourier 变换：
+
+$$
+\widehat{P_a(\,\cdot+\gamma\,)}(t)
+=
+e^{-a|t|}e^{i\gamma t}.
+$$
+
+因此：
+
+$$
+\boxed{
+\widehat d_\sigma(t)
+=
+\sum_\rho
+m_\rho
+e^{-(\sigma-\beta)|t|}
+e^{i\gamma t}.
+}
+\tag{361.1}
+$$
+
+定义临界逆 Poisson 源：
+
+$$
+\boxed{
+\mathfrak W_\xi(t)
+=
+e^{(\sigma-\frac12)|t|}
+\widehat d_\sigma(t).
+}
+\tag{361.2}
+$$
+
+代入式 (361.1)：
+
+$$
+\boxed{
+\mathfrak W_\xi(t)
+=
+\sum_\rho
+m_\rho
+e^{(\beta-\frac12)|t|}
+e^{i\gamma t}.
+}
+\tag{361.3}
+$$
+
+右侧与 \(\sigma\) 无关。
+
+---
+

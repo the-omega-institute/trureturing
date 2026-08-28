@@ -1,0 +1,10 @@
+ast_path: section/355-1-最小-doubled-trace-目标/clause/2
+fingerprints:
+  raw_sha256: sha256:96cee7f2e05c732177191d9623fccc85d61f9eb3ac2de3810974739034799601
+  normalized_sha256: sha256:96cee7f2e05c732177191d9623fccc85d61f9eb3ac2de3810974739034799601
+cas_ref: sha256:96cee7f2e05c732177191d9623fccc85d61f9eb3ac2de3810974739034799601
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

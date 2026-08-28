@@ -1,0 +1,10 @@
+ast_path: section/383-1-唯一负项/clause/3
+fingerprints:
+  raw_sha256: sha256:269e9fb74eb31944d8c21c7c539aab45ae871f4377783a58e9f2584d2a1b9fa6
+  normalized_sha256: sha256:269e9fb74eb31944d8c21c7c539aab45ae871f4377783a58e9f2584d2a1b9fa6
+cas_ref: sha256:269e9fb74eb31944d8c21c7c539aab45ae871f4377783a58e9f2584d2a1b9fa6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

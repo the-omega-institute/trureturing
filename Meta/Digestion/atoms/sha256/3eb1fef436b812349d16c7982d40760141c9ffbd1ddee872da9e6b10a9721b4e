@@ -1,0 +1,71 @@
+## v3.2：Weil 跳跃能量、对数素数拉普拉斯、Bohr–Gaussian 非粘滞律与 Slepian 有限秩重整化
+
+以下从前文**第三百七十八部之后**继续追加。
+
+上一轮已经完成科学剪枝：Pick、Clark、CMV、Li、Hankel、Fredholm 等正性图表，都只是 Weil 母分布的不同压缩。项目目前已经无假设闭合经典 Weil 显式公式；其 prime side 采用
+
+$$
+\Lambda(n)n^{-1/2}
+\bigl(g(\log n)+g(-\log n)\bigr),
+$$
+
+compact support 又使该和严格有限。项目同时已经证明临界线零点对卷积平方测试的每个有限贡献均为实且非负，但并未把正性或 RH 作为现成结论。
+
+因此，真正需要研究的对象不再是“另一个 RH 等价判据”，而是显式公式右侧本身的能量结构。
+
+本轮得到的核心分解是：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal Q_W(f)
+={}&
+2\left|\int_{\mathbb R}e^{x/2}f(x)\,dx\right|^2\\
+&+
+\int_0^\infty
+\frac{e^{-a/2}}{1-e^{-2a}}
+\|f-U_af\|_2^2\,da\\
+&+
+\sum_{\log n\le2L}
+\frac{\Lambda(n)}{\sqrt n}
+\|f-U_{\log n}f\|_2^2\\
+&-
+\left(
+2\sum_{\log n\le2L}
+\frac{\Lambda(n)}{\sqrt n}
+-a_\infty
+\right)
+\|f\|_2^2,
+\end{aligned}}
+$$
+
+其中：
+
+$$
+a_\infty
+=
+\psi\!\left(\frac14\right)-\log\pi,
+\qquad
+\operatorname{supp}f\subset[-L,L].
+$$
+
+换言之：
+
+$$
+\boxed{
+\text{Weil 正性}
+=
+\text{pole rank-one energy}
++
+\text{连续 Archimedean jump energy}
++
+\text{离散 prime jump energy}
+-
+\text{coherent mass}.
+}
+$$
+
+这第一次把 multi-prime sticky cluster 变成了一个真正可研究的**加权跳跃拉普拉斯谱隙问题**。
+
+---
+

@@ -1,0 +1,50 @@
+## 403.1 矩阵元
+
+取 \(P\mathcal H_L\) 的正交基：
+
+$$
+e_1,\ldots,e_N.
+$$
+
+则：
+
+$$
+\boxed{
+(G_L)_{ij}
+=
+\langle e_i,A_Le_j\rangle
+-
+\delta^{-1}
+\langle QA_Le_i,QA_Le_j\rangle.
+}
+\tag{403.3}
+$$
+
+每个矩阵元只涉及：
+
+1. 有限多个：
+
+   $$
+   n\le e^{2L}
+   $$
+
+   的 prime-power 数据；
+
+2. 一个显式 digamma multiplier 积分；
+
+3. pole rank-one 读数；
+
+4. Slepian eigenfunctions 的有限积分。
+
+因此它适合：
+
+$$
+\boxed{
+\text{区间算术}
++
+\text{有限矩阵最小特征值证书}.
+}
+$$
+
+---
+

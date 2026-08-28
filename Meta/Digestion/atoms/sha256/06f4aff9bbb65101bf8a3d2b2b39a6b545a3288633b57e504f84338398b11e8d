@@ -1,0 +1,39 @@
+## 371.1 Square-fold / Stieltjes
+
+取正 ordinates：
+
+$$
+\gamma>0,
+$$
+
+映射：
+
+$$
+\boxed{
+\gamma\longmapsto\gamma^{-2}.
+}
+$$
+
+并赋权：
+
+$$
+\frac{m_\gamma}{\gamma^2}.
+$$
+
+得到 Stieltjes moment 测度：
+
+$$
+\boxed{
+\nu_{\mathrm{St}}
+=
+\sum_{\gamma>0}
+\frac{m_\gamma}{\gamma^2}
+\delta_{\gamma^{-2}}.
+}
+\tag{371.1}
+$$
+
+其 moments 给出 Hankel 层级。
+
+---
+

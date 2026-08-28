@@ -1,0 +1,73 @@
+# 第三百三十六部　Riesz 曲率与线外零点偶极
+
+定义上半平面势：
+
+$$
+\boxed{
+\mathcal U(\omega,x)
+=
+\log
+\left|
+\Xi(x+i\omega)
+\right|
+=
+\log
+\left|
+\xi\left(
+\frac12+\omega-ix
+\right)
+\right|.
+}
+\tag{336.1}
+$$
+
+则：
+
+$$
+\boxed{
+\partial_\omega\mathcal U
+=
+\Re\frac{\xi'}{\xi}
+=
+\pi\mathfrak d_\omega.
+}
+\tag{336.2}
+$$
+
+若 ζ 有线外零点：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma,
+\qquad
+\delta>0,
+$$
+
+则 \(\Xi\) 在上半平面有零点：
+
+$$
+\boxed{
+z_\rho
+=
+-\gamma+i\delta.
+}
+\tag{336.3}
+$$
+
+Poincaré–Lelong/Riesz 公式给出：
+
+$$
+\boxed{
+\Delta_{x,\omega}\mathcal U
+=
+2\pi
+\sum_{\Re\rho>1/2}
+m_\rho
+\delta_{(-\Im\rho,\Re\rho-1/2)}.
+}
+\tag{336.4}
+$$
+
+所以：
+

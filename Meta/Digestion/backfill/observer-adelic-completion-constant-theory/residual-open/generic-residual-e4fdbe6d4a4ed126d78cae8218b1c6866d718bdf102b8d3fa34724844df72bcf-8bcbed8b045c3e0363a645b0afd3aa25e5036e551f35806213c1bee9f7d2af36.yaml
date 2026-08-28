@@ -1,0 +1,10 @@
+ast_path: section/404-1-单负方向的精确修复条件/clause/2
+fingerprints:
+  raw_sha256: sha256:e4fdbe6d4a4ed126d78cae8218b1c6866d718bdf102b8d3fa34724844df72bcf
+  normalized_sha256: sha256:e4fdbe6d4a4ed126d78cae8218b1c6866d718bdf102b8d3fa34724844df72bcf
+cas_ref: sha256:e4fdbe6d4a4ed126d78cae8218b1c6866d718bdf102b8d3fa34724844df72bcf
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

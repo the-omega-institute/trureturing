@@ -1,0 +1,16 @@
+## 342.3 Poisson 正性只能向粗尺度传播
+
+$$
+\boxed{
+\mathfrak d_\omega\ge0
+\Longrightarrow
+\mathfrak d_{\omega+\eta}\ge0,
+}
+$$
+
+但反向不成立。
+
+所以任何证明 RH 的 scale descent 都必须使用算术信息，而不能只使用调和分析。
+
+---
+

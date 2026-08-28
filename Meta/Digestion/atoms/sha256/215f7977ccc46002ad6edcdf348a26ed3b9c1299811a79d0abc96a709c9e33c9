@@ -1,0 +1,39 @@
+## 371.2 Cayley / Clark
+
+映射：
+
+$$
+\boxed{
+\gamma
+\longmapsto
+u_\gamma
+=
+\frac{\gamma+i/2}{\gamma-i/2}.
+}
+\tag{371.2}
+$$
+
+赋权：
+
+$$
+\boxed{
+\frac{|1-u_\gamma|^2}
+{2\lambda_1}
+=
+\frac{2}
+{\lambda_1(4\gamma^2+1)}.
+}
+\tag{371.3}
+$$
+
+得到 Li–Clark 概率测度。
+
+其 Fourier moments 是 Li 二阶差分，产生：
+
+* Toeplitz 正性；
+* Schur 参数；
+* CMV unitary；
+* Clark family。
+
+---
+

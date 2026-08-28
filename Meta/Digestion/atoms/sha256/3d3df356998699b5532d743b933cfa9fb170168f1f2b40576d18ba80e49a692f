@@ -1,0 +1,65 @@
+# 第三百五十五部　普通显式公式为何不足
+
+宽度方差：
+
+$$
+\left(
+\Re\rho-\frac12
+\right)^2
+$$
+
+同时依赖：
+
+$$
+\rho
+\quad\text{和}\quad
+\overline\rho.
+$$
+
+它不是单个复变量 \(\rho\) 的全纯函数。
+
+因此普通的一变量 Weil 显式公式，即使可以计算：
+
+$$
+\sum_\rho h(\rho),
+$$
+
+也不能直接把：
+
+$$
+\sum_\rho
+\left(
+\Re\rho-\frac12
+\right)^2
+e^{-u(\Im\rho)^2}
+$$
+
+写成显然非负的单通道素数和。
+
+这解释了为什么当前最自然的证明载体不是另一个标量显式公式，而是：
+
+$$
+\boxed{
+\text{doubled／relative trace formula}.
+}
+$$
+
+因为：
+
+$$
+\boxed{
+\left(
+\Re\rho-\frac12
+\right)^2
+=
+\frac14
+\left[
+(\rho+\overline\rho-1)^2
+\right]
+}
+$$
+
+天然是二点、共轭或 Gram 型统计量。
+
+---
+

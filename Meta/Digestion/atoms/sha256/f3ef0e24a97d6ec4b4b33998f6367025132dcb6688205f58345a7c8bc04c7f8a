@@ -1,0 +1,59 @@
+# 第四百零七部　Weil Sticky Dimension
+
+定义固定参数下的 sticky dimension：
+
+$$
+\boxed{
+\mathfrak s_L(a,\eta)
+=
+1+
+\operatorname{rank}
+P_{L,B_{L,a},\eta}.
+}
+\tag{407.1}
+$$
+
+其中额外的 \(1\) 是 pole direction。
+
+有：
+
+$$
+\boxed{
+\mathfrak s_L(a,\eta)
+\le
+1+
+\frac{
+L|B_{L,a}|
+}{
+\pi\eta
+}.
+}
+\tag{407.2}
+$$
+
+定义最优 sticky complexity：
+
+$$
+\boxed{
+\mathfrak s_L^*
+=
+\inf_{\substack{a>0\\
+0<\eta<a/(a+b_{L,a})}}
+\mathfrak s_L(a,\eta).
+}
+\tag{407.3}
+$$
+
+它是 OACTC 中一个新的结构复杂度：
+
+$$
+\boxed{
+\mathfrak s_L^*
+=
+\text{在支撑尺度 }L
+\text{ 上完整观察全部潜在负性所需的最小有限状态数。}
+}
+$$
+
+---
+

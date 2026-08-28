@@ -1,0 +1,10 @@
+ast_path: section/本轮独立闭合的有限定理/clause/2
+fingerprints:
+  raw_sha256: sha256:2fc7fb7d61f108c8d4a0c5d3dfdfeec46d9b065d24ebed96204dcc78ce4942bf
+  normalized_sha256: sha256:2fc7fb7d61f108c8d4a0c5d3dfdfeec46d9b065d24ebed96204dcc78ce4942bf
+cas_ref: sha256:2fc7fb7d61f108c8d4a0c5d3dfdfeec46d9b065d24ebed96204dcc78ce4942bf
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

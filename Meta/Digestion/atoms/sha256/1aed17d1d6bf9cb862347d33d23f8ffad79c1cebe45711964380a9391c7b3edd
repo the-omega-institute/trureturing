@@ -1,0 +1,29 @@
+## 335.1 尺度方向的非对称性
+
+由：
+
+$$
+\mathfrak d_{\omega+\eta}
+=
+P_\eta*\mathfrak d_\omega,
+$$
+
+可知：
+
+* 向更大 \(\omega\) 推进是稳定的平滑；
+* 从较大 \(\omega\) 反推较小 \(\omega\) 是逆 Poisson 问题，指数不稳定。
+
+因此：
+
+$$
+\boxed{
+\text{从无条件区域 }\omega\ge\frac12
+\text{向 }\omega=0\text{ 推进，
+本质上是一个逆平滑问题。}
+}
+$$
+
+这解释了为什么“已知大 \(\omega\) inner”不能通过普通连续性直接推出 RH。
+
+---
+

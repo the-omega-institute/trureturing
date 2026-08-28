@@ -1,0 +1,24 @@
+## 定理 336.1（Interior-curvature RH criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Delta\mathcal U=0
+\quad
+\text{于 }\omega>0.
+}
+\tag{336.5}
+$$
+
+即 RH 等价于：
+
+$$
+\boxed{
+\text{全部零点曲率源都位于上半平面的边界，
+没有内部曲率原子。}
+}
+$$
+
+---
+

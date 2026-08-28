@@ -1,0 +1,18 @@
+# 第三百四十八部　逆 Poisson 源的有限窗判据
+
+定义反平滑源：
+
+$$
+\boxed{
+Q_T(t)
+=
+e^{\omega|t|}
+\widehat d_{\omega,T}(t).
+}
+\tag{348.1}
+$$
+
+它可由任意 \(\omega\ge\tfrac12\) 的相位密度计算，并且与所选 \(\omega\) 无关。
+
+---
+

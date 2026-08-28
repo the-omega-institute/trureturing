@@ -1,0 +1,71 @@
+# 第三百八十部　Prime side 的精确跳跃拉普拉斯
+
+假设：
+
+$$
+\operatorname{supp}f\subset[-L,L].
+$$
+
+则：
+
+$$
+\operatorname{supp}g\subset[-2L,2L].
+$$
+
+定义活跃 prime-power history 集：
+
+$$
+\boxed{
+\mathscr H_L
+=
+\left\{
+n\ge2:
+\Lambda(n)\neq0,\ 
+\log n\le2L
+\right\}.
+}
+\tag{380.1}
+$$
+
+定义权重：
+
+$$
+\boxed{
+w_n=\frac{\Lambda(n)}{\sqrt n},
+}
+\tag{380.2}
+$$
+
+以及总相干质量：
+
+$$
+\boxed{
+W_L
+=
+\sum_{n\in\mathscr H_L}w_n.
+}
+\tag{380.3}
+$$
+
+由项目 prime term 的定义与式 (379.4)：
+
+$$
+\begin{aligned}
+\operatorname{Prime}(g)
+&=
+\sum_{n\in\mathscr H_L}
+w_n
+\left[
+g(\log n)+g(-\log n)
+\right]\\
+&=
+2\sum_{n\in\mathscr H_L}
+w_n
+\Re
+\langle f,U_{\log n}f\rangle.
+\end{aligned}
+\tag{380.4}
+$$
+
+代入式 (379.5)，得到：
+

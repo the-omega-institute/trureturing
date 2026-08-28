@@ -1,0 +1,86 @@
+## 366.1 局部危险相位
+
+定义 centered prime defect：
+
+$$
+\boxed{
+D_p(\xi)
+=
+\Re\mathsf C_p(e^{-i\xi\ell_p})-1.
+}
+\tag{366.5}
+$$
+
+直接化简：
+
+$$
+\boxed{
+D_p(\xi)
+=
+\frac{
+2r_p
+\left[
+\cos(\xi\ell_p)-r_p
+\right]
+}{
+1-2r_p\cos(\xi\ell_p)+r_p^2
+}.
+}
+\tag{366.6}
+$$
+
+因此：
+
+$$
+\boxed{
+D_p(\xi)>0
+\iff
+\cos(\xi\log p)>p^{-1/2}.
+}
+\tag{366.7}
+$$
+
+由于 prime contribution 带负号：
+
+$$
+-\log p\,D_p,
+$$
+
+所以 \(D_p>0\) 的相位区域会消耗 Archimedean 正性容量。
+
+最大值为：
+
+$$
+\boxed{
+\max_\xi D_p(\xi)
+=
+\frac{2}{\sqrt p-1}.
+}
+\tag{366.8}
+$$
+
+最小值为：
+
+$$
+\boxed{
+\min_\xi D_p(\xi)
+=
+-\frac{2}{\sqrt p+1}.
+}
+\tag{366.9}
+$$
+
+这给 prime stickiness 一个精确定义：
+
+$$
+\boxed{
+\xi\log p
+\approx
+2\pi k
+}
+$$
+
+时，该素数通道最危险。
+
+---
+

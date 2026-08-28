@@ -1,0 +1,10 @@
+ast_path: section/392-1-重要限制/clause/1
+fingerprints:
+  raw_sha256: sha256:05a726e3b21174fe27f393fb990ec3c1c721a0c19e07f2405620cbb8cef694aa
+  normalized_sha256: sha256:05a726e3b21174fe27f393fb990ec3c1c721a0c19e07f2405620cbb8cef694aa
+cas_ref: sha256:05a726e3b21174fe27f393fb990ec3c1c721a0c19e07f2405620cbb8cef694aa
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

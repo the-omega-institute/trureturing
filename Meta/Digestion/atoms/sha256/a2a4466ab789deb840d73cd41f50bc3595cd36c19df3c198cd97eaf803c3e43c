@@ -1,0 +1,60 @@
+# 第三百六十九部　Weil GNS 空间是所有正性图表的母空间
+
+假设 RH。
+
+由 Weil 正性定义预 Hilbert 空间：
+
+$$
+C_c^\infty(\mathbb R)
+$$
+
+上的内积：
+
+$$
+\boxed{
+\langle\psi_1,\psi_2\rangle_W
+=
+\left\langle
+\mathfrak W_\xi,
+\psi_1*\widetilde{\psi_2}
+\right\rangle.
+}
+\tag{369.1}
+$$
+
+其零点谱表示为：
+
+$$
+\boxed{
+\langle\psi_1,\psi_2\rangle_W
+=
+\sum_\gamma
+m_\gamma
+\widehat\psi_1(\gamma)
+\overline{\widehat\psi_2(\gamma)}.
+}
+\tag{369.2}
+$$
+
+所以 Fourier 评价映射把该空间嵌入：
+
+$$
+L^2(\nu_\Xi),
+\qquad
+\nu_\Xi=\sum_\gamma m_\gamma\delta_\gamma.
+$$
+
+Suzuki 证明，这一 Weil Hilbert completion 在 RH 下与一个 de Branges 空间自然同构，并由此获得自伴扩张和 Hilbert–Pólya 型谱解释。([arXiv][1])
+
+因此：
+
+$$
+\boxed{
+\mathcal H_W
+}
+$$
+
+才是此前所有正性核的公共母空间。
+
+---
+

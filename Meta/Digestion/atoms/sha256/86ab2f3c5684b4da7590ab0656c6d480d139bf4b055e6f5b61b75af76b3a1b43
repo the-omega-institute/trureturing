@@ -1,0 +1,42 @@
+# 第三百七十五部　一个新的负结论
+
+由于有限 prime set 总能同时 recurrence，所以不能存在只依赖有限素数集合的统一常数：
+
+$$
+\eta>0
+$$
+
+使：
+
+$$
+\operatorname{Coh}_L(\xi)
+\le
+(1-\eta)
+\sum_{p\le e^{2L}}
+\log p
+\frac{2}{\sqrt p-1}
+$$
+
+对所有 \(\xi\) 成立。
+
+因此：
+
+$$
+\boxed{
+\text{任何 RH 证明都不能只靠“有限素数永远无法对齐”。}
+}
+$$
+
+必须至少利用以下一项：
+
+* Archimedean barrier 随频率的增长；
+* prime cutoff 与测试支撑的耦合；
+* 无限 prime tail；
+* 不确定性原理；
+* 相干 recurrence 的代价；
+* relative trace 中的额外正项。
+
+这是对 Wang non-sticky 路线的一条硬约束。
+
+---
+
