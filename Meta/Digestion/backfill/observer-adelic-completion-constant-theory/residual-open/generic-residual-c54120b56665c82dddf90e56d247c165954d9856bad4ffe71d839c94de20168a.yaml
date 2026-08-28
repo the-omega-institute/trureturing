@@ -8,6 +8,20 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-28T09:19:36.0642620+00:00
+    gids:
+      - D5/S3/Factorization/ObserverTypes/AlternatingFiveObserverTypeIrreplaceability.alternating_five_observer_type_irreplaceability
+    gaps:
+      - code: chain-migration-incomplete
+        detail: generic-residual-2683e2b938eb4fbf44fbd44aef5e1b4c067e035cdfc6d7e733e2085a4c8d2cbe-b3ee0965f98792f5787bb24e7b4b63dac4318dc52bedd4812be0b80d3396a5a0
+      - code: chain-migration-incomplete
+        detail: generic-residual-2f3282ed18dec42a1c2953b520ed4530e0995e40f33529e2e1ad0ae8d7651f01-b8b6b1845153686c9ba5628dd7832b012cafef91663bbc62e9c9b86eb683b3c1
+      - code: chain-migration-incomplete
+        detail: generic-residual-2f89e47e16e1b123da4eb5212eb33d2499200f62ba3ae57d8f693460f359584f-0d5cbf26121c7f6186f2400a7c3575da3a0d4e5b016dc6eace01c4abf019e0e5
+      - code: chain-migration-incomplete
+        detail: generic-residual-836381d47b2bfebb038fd8c2b69b2219a435c12ef2926189a2c418a5c6249f7b-af14df25bc88cc3fc7fa572586ef9d324b3bfc5c44890dc7682bc478e2537e69
   chain_atoms:
     - generic-residual-bc4e244f7a2260c9fc9d2f07a00d03e52f8a0f797ebf9a71febcb1aad9518a48-d0dd2f3830c9ccb6f7df5873366c57954d5da2d53023e7bc196420074b7e35e4
     - generic-residual-2f3282ed18dec42a1c2953b520ed4530e0995e40f33529e2e1ad0ae8d7651f01-b8b6b1845153686c9ba5628dd7832b012cafef91663bbc62e9c9b86eb683b3c1

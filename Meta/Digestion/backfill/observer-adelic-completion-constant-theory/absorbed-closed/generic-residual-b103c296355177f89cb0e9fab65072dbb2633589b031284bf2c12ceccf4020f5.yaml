@@ -1,0 +1,17 @@
+ast_path: 定理/74.1
+fingerprints:
+  raw_sha256: sha256:b103c296355177f89cb0e9fab65072dbb2633589b031284bf2c12ceccf4020f5
+  normalized_sha256: sha256:b103c296355177f89cb0e9fab65072dbb2633589b031284bf2c12ceccf4020f5
+cas_ref: sha256:b103c296355177f89cb0e9fab65072dbb2633589b031284bf2c12ceccf4020f5
+coverage_gids:
+  - D5/S3/Arith/Lattices/RamifiedFiveDissection.ramified_five_dissection
+receipts:
+  coverage:
+    - gid: D5/S3/Arith/Lattices/RamifiedFiveDissection.ramified_five_dissection
+      source_sha256: sha256:b103c296355177f89cb0e9fab65072dbb2633589b031284bf2c12ceccf4020f5
+      target_sha256: sha256:34a7c52e4a1e34a508b95d686bbc872310d37f87fc70be78dc668a18e8dc72d5
+  scribe:
+    - gid: D5/S3/Arith/Lattices/RamifiedFiveDissection.ramified_five_dissection
+      definition_sha256: sha256:a6c196c10c2617755e8871c110579c62a2ba8c3113de4407dece2e998819c8f1
+      emission_sha256: sha256:72b7447234fea65456d6e6005e9b2827c980c4de4043dd5b0bb9ef7f3e4f29e4
+  unresolved_subitems: []

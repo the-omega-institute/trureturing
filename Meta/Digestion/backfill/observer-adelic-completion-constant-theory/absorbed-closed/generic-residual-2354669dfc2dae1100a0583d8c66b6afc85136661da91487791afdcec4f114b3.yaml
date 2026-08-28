@@ -1,0 +1,17 @@
+ast_path: 定理/44.1
+fingerprints:
+  raw_sha256: sha256:2354669dfc2dae1100a0583d8c66b6afc85136661da91487791afdcec4f114b3
+  normalized_sha256: sha256:2354669dfc2dae1100a0583d8c66b6afc85136661da91487791afdcec4f114b3
+cas_ref: sha256:2354669dfc2dae1100a0583d8c66b6afc85136661da91487791afdcec4f114b3
+coverage_gids:
+  - D5/S3/Analytic/Dilation/GoldenUnitZetaPeriodicity.golden_unit_zeta_periodicity
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/Dilation/GoldenUnitZetaPeriodicity.golden_unit_zeta_periodicity
+      source_sha256: sha256:2354669dfc2dae1100a0583d8c66b6afc85136661da91487791afdcec4f114b3
+      target_sha256: sha256:eea24db3285ced7affaefaf0a44d741854518e284e9c569bd8c081739f8077e2
+  scribe:
+    - gid: D5/S3/Analytic/Dilation/GoldenUnitZetaPeriodicity.golden_unit_zeta_periodicity
+      definition_sha256: sha256:bbba842538a911d6f160ff06c08b8e8917e699d419bbf8a1059787c3c07961c8
+      emission_sha256: sha256:b263ab1af7180598d46a9c50de99db582d515e64cf5598ce850a7be0f9b720ee
+  unresolved_subitems: []
