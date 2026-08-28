@@ -46,6 +46,11 @@ public sealed class ColdBuildBudgetReviewLineTests
     /// **越线后的后果,如实写**:本测试在必跑的 `make -C tools test` 里,故越线会使**整个仓库的
     /// PR 全部变红**,直到有人收口。这**不是** advisory —— 触发线取 80% 而非 100% 只意味着
     /// 「红出现时预算本身仍够用,收口有时间做」,**不意味着红是软的**。
+    ///
+    /// **它守不住什么(第五轮评审收窄)**:若 Engine 的枚举静默漏掉若干 `.lean`,
+    /// 本测试的计数偏小而**假绿** —— 即越线可能发生而它看不见。
+    /// 该前提由 issue #3833 追踪。**本测试的声称仅限于「按 Engine 的枚举,计数未越线」**,
+    /// 不是「D5 模块数未越线」。
     /// (此段是对一条评审判词的更正:此前这里写「那条红是提醒,不是事故」,与真实门语义相反。)
     /// </summary>
     [Fact]
@@ -130,9 +135,24 @@ public sealed class ColdBuildBudgetReviewLineTests
     /// 与 <see cref="GitIndexRepositoryFiles.EnumerateDeclared"/> 的结果**逐项比对**;
     /// 任何截断、重排丢项或前缀语义漂移都会在这里红。
     ///
-    /// **保证边界(照实写)**:本测试**不证明** `StrataLint.Engine.GitIndexRepositoryFiles.Enumerate`
-    /// 自身完整 —— 那是它的义务,由它众多的消费者共同承担(变异它会红一大片)。
-    /// 本测试证明的是**包装没有在它之上再丢东西**。
+    /// **保证边界(第五轮评审实测收窄,原文写错了)**:本测试**不证明**
+    /// `StrataLint.Engine.GitIndexRepositoryFiles.Enumerate` 自身完整。
+    ///
+    /// 此处原本写的是「那是它的义务,由它众多的消费者共同承担(变异它会红一大片)」。
+    /// **那句话被实测证伪**:评审席在 Engine 的 `File.Exists` 过滤后省略**一个**文件
+    /// (`D5/S0/Asymptotics/Bonferroni/TailBounds.lean`),`exit=0`、232/232 全过、
+    /// **红消费者 0 个**。只有**粗**截断(降序 `Take(32776)`)才会红 14 个,
+    /// 而那 14 条守的是别的不变量,只是碰巧连带失败。
+    ///
+    /// 故准确的表述是:**Engine 的枚举在单文件粒度上无任何钉子**,已立 issue #3833。
+    /// 本测试证明的是**这个包装没有在 Engine 之上再丢东西**——仅此而已。
+    /// 它与它的消费者 `ColdBuildBudgetReviewLineHasNotBeenCrossed` 一样,
+    /// **都以「Engine 枚举完整」为未经证明的前提**;那个前提由 #3833 追踪,不在本文件内解决。
+    ///
+    /// **为什么不在这里解决**:任何住在 `tools/tests/**` 的独立比对若也调 `Enumerate`,
+    /// 就与被测对象同源;改用目录遍历则撞 `TestMapUnknownReason.DirectoryEnumeration`
+    /// 的 unknown 棘轮(对每个新增 unknown identity 直接 Block)。
+    /// 需要的是给 Engine 自己一个钉子,而不是让它的某个消费者去证明它。
     ///
     /// **为什么单独一条测试而不并进上面那条**:本测试调无前缀的 `Enumerate`,
     /// deriver 因此把它归因为**整仓**;而上面那条必须保持 `D5` 归因,
