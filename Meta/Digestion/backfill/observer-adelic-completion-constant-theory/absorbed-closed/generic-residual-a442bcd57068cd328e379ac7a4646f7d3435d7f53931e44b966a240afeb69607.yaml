@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/ArithmeticTomography/GoldenSlopeSeparation.golden_separation_bound
       source_sha256: sha256:a442bcd57068cd328e379ac7a4646f7d3435d7f53931e44b966a240afeb69607
-      target_sha256: sha256:35cd939b8307b75479c50bc168e88b3598ad56155dd9d1009c56038c81faa3ba
+      target_statement_id: sha256:7b842e3b0449c5a1c914361965e54f245e98196d2a613cf9c868bd07a9510008
   scribe:
     - gid: D5/S3/Observer/ArithmeticTomography/GoldenSlopeSeparation.golden_separation_bound
       definition_sha256: sha256:06571dc6decb65d39106b05ea28bebade6eed4db5936bed900300cf3befed70d
