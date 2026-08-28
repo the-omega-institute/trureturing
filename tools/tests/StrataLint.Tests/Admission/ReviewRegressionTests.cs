@@ -130,6 +130,41 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
+    public void Sl016AdmissionAndReportFreeShareInvalidSourceIdValidation()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        var source = fixture.Files[RuleFixture.FixtureBackfillSourcePath]
+            .Replace("source_id = \"fixture-source\"", "source_id = \"INVALID\"", StringComparison.Ordinal);
+        var atom = fixture.Files[RuleFixture.FixtureBackfillAtomPath];
+        fixture.Files.Remove(RuleFixture.FixtureBackfillSourcePath);
+        fixture.Files.Remove(RuleFixture.FixtureBackfillAtomPath);
+        var invalidSourcePath = RuleFixture.FixtureBackfillSourcePath.Replace(
+            "/fixture-source/",
+            "/INVALID/",
+            StringComparison.Ordinal);
+        var invalidAtomPath = RuleFixture.FixtureBackfillAtomPath.Replace(
+            "/fixture-source/",
+            "/INVALID/",
+            StringComparison.Ordinal);
+        fixture.Files[invalidSourcePath] = source;
+        fixture.Files[invalidAtomPath] = atom;
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(16),
+            fixture.Build(RawChangeSet.Create([
+                RuleFixture.FixtureBackfillSourcePath,
+                RuleFixture.FixtureBackfillAtomPath,
+                invalidSourcePath,
+                invalidAtomPath,
+            ])));
+
+        Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
+            "invalid source_id: INVALID",
+            StringComparison.Ordinal));
+    }
+
+    [Fact]
     public void Sl016RejectsDeletingABaselineCasBlob()
     {
         var fixture = new RuleFixture();

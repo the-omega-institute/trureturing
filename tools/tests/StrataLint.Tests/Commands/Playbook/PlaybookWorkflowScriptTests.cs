@@ -20,7 +20,7 @@ public sealed class PlaybookWorkflowScriptTests
             [
                 "make:lean-report",
                 "make:emit",
-                "make:ingest BASE=synthetic-base",
+                "make:align-digestion-status BASE=synthetic-base",
                 "dotnet:digest-status --base synthetic-base",
                 "git:diff --diff-filter=A --name-only -z synthetic-base...HEAD -- Golden/Frozen/accepted/*.json",
                 "git:ls-files --others --exclude-standard -z -- Golden/Frozen/accepted/*.json",
@@ -51,7 +51,7 @@ public sealed class PlaybookWorkflowScriptTests
             Encoding.UTF8.GetString(result.StandardError),
             StringComparison.Ordinal);
         Assert.Equal(
-            ["make:ingest BASE=synthetic-base", "dotnet:digest-status --base synthetic-base"],
+            ["make:align-digestion-status BASE=synthetic-base", "dotnet:digest-status --base synthetic-base"],
             fixture.Calls());
     }
 
