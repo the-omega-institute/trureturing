@@ -161,11 +161,12 @@ independent. Take
 \quad
 \mathsf{live}(j)\Longleftrightarrow j.2=\mathsf{true},
 \quad
-\mathsf{shape}(j)=\star.
+\mathsf{shape}(j)=j.1.
 \]
 
 Then `(true,false)` is sound but not live, while `(false,true)` is live but not
-sound. Neither property implies the other.
+sound. The pair `(true,false)` and `(true,true)` has equal shape and different
+liveness. Neither property implies the other.
 
 More generally, let `shape : Judge \to Shape` and `live : Judge \to Prop`. If
 there are `j₁` and `j₂` with equal shape and different liveness, then every

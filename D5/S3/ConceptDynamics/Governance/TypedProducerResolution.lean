@@ -12,7 +12,7 @@
    * Shape searches for graph carriers and unresolved `Option` witnesses found
      only unrelated finite proof graphs and dependency-topology relations; none
      has the producer-actor/artifact boundary of this source atom.
-   * The neighboring Governance modules were inspected directly: 
+   * The neighboring Governance modules were inspected directly:
      `CommitInterfaceSealPreservation` provides commitment/bundle carriers, and
      `TargetLaunderingCriterion` provides temporal commitment carriers. Neither
      contains a producer-resolution edge or a compatible theorem.

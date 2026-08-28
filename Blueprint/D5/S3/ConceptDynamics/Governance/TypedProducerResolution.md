@@ -6,7 +6,7 @@ Producer actors enter artifact dependency edges only through typed resolution; u
 
 **Theorem 1.1 (Unresolved producer actors create no artifact edge and no admissible graph).**
 
-$$\begin{gathered}\forall Artifact, ProducerActor: Type,\\{}producer: Artifact \to \operatorname{Option}\left(ProducerActor\right), resolve: ProducerActor \to \operatorname{Option}\left(Artifact\right), x: Artifact, q: ProducerActor,\\{}producer(x) = \operatorname{some}\left(q\right) \land resolve(q) = none \longrightarrow\\{}\forall a: Artifact, \neg \operatorname{ProducerEdge}\left(producer, resolve, a, x\right) \land \neg \operatorname{ResolutionComplete}\left(producer, resolve\right) \land\\{}\neg \exists E: Artifact \to Artifact \to Prop, \operatorname{AdmissibleProducerGraph}\left(producer, resolve, E\right).\end{gathered}$$
+$$\begin{gathered}\forall Artifact, ProducerActor: Type,\\{}producer: Artifact \to \operatorname{Option}\left(ProducerActor\right), resolve: ProducerActor \to \operatorname{Option}\left(Artifact\right), x: Artifact, q: ProducerActor,\\{}producer(x) = \operatorname{some}\left(q\right) \land resolve(q) = none \longrightarrow\\{}(\forall a: Artifact, \neg \operatorname{ProducerEdge}\left(producer, resolve, a, x\right)) \land \neg \operatorname{ResolutionComplete}\left(producer, resolve\right) \land\\{}\neg \exists E: Artifact \to Artifact \to Prop, \operatorname{AdmissibleProducerGraph}\left(producer, resolve, E\right).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Governance/TypedProducerResolution.typed_producer_resolution_fail_closed` (`✓ std3`). ∎
 

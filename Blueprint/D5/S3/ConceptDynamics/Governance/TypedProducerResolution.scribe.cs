@@ -68,8 +68,10 @@ internal sealed class TypedProducerResolutionDocument : IScribeDocumentDefinitio
             Apply(producer, x), Sp, Eq, Sp, Call("some", q), Sp, Land, Sp,
             Apply(resolve, q), Sp, Eq, Sp, F.Id("none"));
         Formula noEdges = Seq(
+            Open,
             Forall, Sp, Typed(a, artifact), Comma, Sp, Neg, Sp,
-            Call("ProducerEdge", producer, resolve, a, x));
+            Call("ProducerEdge", producer, resolve, a, x),
+            Close);
         Formula noAdmissibleGraph = Seq(
             Neg, Sp, Exists, Sp, Typed(edges, edgeType), Comma, Sp,
             Call("AdmissibleProducerGraph", producer, resolve, edges));
