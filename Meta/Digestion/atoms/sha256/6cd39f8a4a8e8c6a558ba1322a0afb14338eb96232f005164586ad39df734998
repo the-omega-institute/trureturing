@@ -1,0 +1,23 @@
+# 第二百四十四部　中心 jet 的完整谱层析
+
+假设 RH，按大小排列：
+
+$$
+\alpha_1>\alpha_2>\cdots>0,
+\qquad
+\alpha_j=\gamma_j^{-2},
+$$
+
+并把重数记为 \(m_j\)。
+
+则：
+
+$$
+\mu_n
+=
+\sum_{j\ge1}
+m_j\alpha_j^{n+1}.
+$$
+
+---
+

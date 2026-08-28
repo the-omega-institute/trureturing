@@ -1,0 +1,38 @@
+## 定理 243.1（Dual total-positivity square）
+
+下列命题等价：
+
+$$
+\boxed{
+\begin{aligned}
+&(1)\quad \mathrm{RH};\\
+&(2)\quad T(a)\text{ 全非负};\\
+&(3)\quad H(\mu),H^+(\mu)\text{ 全非负};\\
+&(4)\quad \exists\,U\ge0\text{ trace-class}:
+\mathscr F=\det(I+xU).
+\end{aligned}
+}
+\tag{243.1}
+$$
+
+其交换图为：
+
+$$
+\boxed{
+\begin{array}{ccc}
+U
+&\xrightarrow{\ \Lambda^n\ }&
+a_n\\[1mm]
+\downarrow U^n
+&&
+\downarrow\text{Newton}\\[1mm]
+\mu_n
+&\xrightarrow{\ \text{moments}\ }&
+\mathscr S.
+\end{array}
+}
+$$
+
+这给出两类独立的有限反例证书：
+
+* 若 RH 失败，某个有限 Toeplitz minor 必为负；

@@ -1,0 +1,49 @@
+## 315.1 对 \(\xi'/\xi\) 的解释
+
+若：
+
+$$
+\xi(s)
+=
+(s-\rho)^m g(s),
+\qquad
+g(\rho)\neq0,
+$$
+
+则：
+
+$$
+\boxed{
+\frac{\xi'(s)}{\xi(s)}
+=
+\frac{m}{s-\rho}
++
+\frac{g'(s)}{g(s)}.
+}
+\tag{315.6}
+$$
+
+所以 logarithmic derivative 正是一个**jet-to-mass renormalization**：
+
+$$
+\boxed{
+\mathcal J_\rho^{(m)}
+\longmapsto
+m\,\delta_\rho.
+}
+$$
+
+它丢弃：
+
+* Jordan 链中的具体 nilpotent 坐标；
+* 各阶导数的基选择；
+
+只保留：
+
+* 零点位置；
+* 正整数重数。
+
+这正是正谱 Gram 核所需要的信息。
+
+---
+

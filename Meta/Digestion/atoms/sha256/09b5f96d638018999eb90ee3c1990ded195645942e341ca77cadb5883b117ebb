@@ -1,0 +1,53 @@
+# 第二百九十六部　Clark 谱的离散熵与连续熵
+
+定义每个有向原子的质量：
+
+$$
+w_\gamma
+=
+\frac{2m_\gamma}
+{\lambda_1(4\gamma^2+1)}.
+$$
+
+定义离散 Shannon 熵：
+
+$$
+\boxed{
+\mathsf H_{\mathrm{Clark}}
+=
+-2
+\sum_{\gamma>0}
+w_\gamma\log w_\gamma.
+}
+\tag{296.1}
+$$
+
+Riemann–von Mangoldt 公式说明，高度约为 \(T\) 的零点数量密度为 \(O(\log T)\)，而：
+
+$$
+w_\gamma=O(\gamma^{-2})
+$$
+
+按重数计。
+
+因此：
+
+$$
+\boxed{
+\mathsf H_{\mathrm{Clark}}<\infty.
+}
+\tag{296.2}
+$$
+
+粗略地，每个单位高度区间对熵的贡献至多为：
+
+$$
+O\left(
+\frac{\log^2 T}{T^2}
+\right),
+$$
+
+其和收敛。
+
+---
+

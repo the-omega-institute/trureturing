@@ -1,0 +1,31 @@
+### 低零点区
+
+若：
+
+$$
+\gamma\ll n,
+$$
+
+贡献在：
+
+$$
+0\le4\sin^2(\cdot)\le4
+$$
+
+之间振荡。
+
+所以：
+
+$$
+\boxed{
+\lambda_n
+=
+\text{以高度 }\gamma\sim n
+\text{ 为主要分辨尺度的零点能量观察}.
+}
+$$
+
+Lagarias 对 automorphic \(L\)-functions 证明：在 GRH 下，广义 Li 系数具有主项 \(\frac N2n\log n\) 以及线性项和可控误差；在 Riemann zeta 情形 \(N=1\)。这与上述“尺度 \(n\) 读取高度约 \(n\) 的零点密度”解释一致，但该滤波图像本身不替代其解析证明。([数字对象标识符][5])
+
+---
+

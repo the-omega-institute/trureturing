@@ -1,0 +1,74 @@
+# 第三百零一部　建议形式化顺序
+
+```text
+D5/S3/Analytic/LiClark/
+  LiCaratheodoryFunction.lean
+  LiClarkInnerFunction.lean
+  LiClarkRHEquivalence.lean
+  LiClarkMeasure.lean
+  RiemannZeroClarkWeights.lean
+  ZeroAngularDerivative.lean
+
+D5/S3/Analytic/LiClarkSpectrum/
+  ClarkBoundaryPencil.lean
+  ZeroSpectrumAlphaOne.lean
+  CriticalSpectrumAlphaMinusOne.lean
+  ClarkSpectralInterlacing.lean
+  ClarkInverseCayleyFamily.lean
+
+D5/S3/Analytic/LiClarkOPUC/
+  LiClarkVerblunsky.lean
+  SzegoInnovationCollapse.lean
+  PredictionErrorDepth.lean
+  ClarkAleksandrovDisintegration.lean
+  LiClarkCMVBridge.lean
+
+D5/S3/Analytic/LiClarkAsymptotic/
+  ZeroAngleCrowding.lean
+  ClarkSmallArcAsymptotic.lean
+  ClarkAtomicEntropy.lean
+  ClarkHeightMomentThreshold.lean
+
+D5/S3/Observer/ToroidalClark/
+  ToroidalClarkGramTarget.lean
+  ToroidalClarkInnerTarget.lean
+  ToroidalRankOneUnitaryFamily.lean
+  ClarkStickyRenormalization.lean
+```
+
+首批风险最低的闭合链是：
+
+$$
+\boxed{
+\mathfrak C_\xi
+\to
+\vartheta_\xi
+\to
+\text{RH iff inner}.
+}
+$$
+
+其次是局部 Laurent 展开：
+
+$$
+\boxed{
+\xi'/\xi
+\to
+\vartheta_\xi'(u_\gamma)
+\to
+\text{Clark atom weight}.
+}
+$$
+
+再之后是：
+
+$$
+\boxed{
+\text{Riemann--von Mangoldt}
+\to
+\text{Clark small-arc crowding}.
+}
+$$
+
+---
+

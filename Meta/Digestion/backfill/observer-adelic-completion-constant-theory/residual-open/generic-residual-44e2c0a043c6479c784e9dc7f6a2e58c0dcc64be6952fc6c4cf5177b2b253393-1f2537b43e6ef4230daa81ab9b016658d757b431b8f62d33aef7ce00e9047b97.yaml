@@ -1,0 +1,10 @@
+ast_path: section/160-2-Scattering-observer/clause/1
+fingerprints:
+  raw_sha256: sha256:44e2c0a043c6479c784e9dc7f6a2e58c0dcc64be6952fc6c4cf5177b2b253393
+  normalized_sha256: sha256:44e2c0a043c6479c784e9dc7f6a2e58c0dcc64be6952fc6c4cf5177b2b253393
+cas_ref: sha256:44e2c0a043c6479c784e9dc7f6a2e58c0dcc64be6952fc6c4cf5177b2b253393
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

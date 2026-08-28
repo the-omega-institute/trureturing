@@ -1,0 +1,64 @@
+# 第一百七十九部　de Branges 内函数完成
+
+定义 Riemann \(\xi\)-函数对应的 ratio：
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+\frac{
+\xi(\frac12-\omega-iz)
+}{
+\xi(\frac12+\omega-iz)
+},
+\qquad
+\omega>0.
+}
+\tag{179.1}
+$$
+
+它在实轴上满足：
+
+$$
+|\Theta_\omega(u)|=1.
+$$
+
+Suzuki 证明：
+
+$$
+\boxed{
+\zeta(s)\neq0
+\text{ 对所有 }\Re s>\frac12+\omega_0
+}
+$$
+
+当且仅当：
+
+$$
+\boxed{
+\Theta_\omega
+\text{ 对每个 }\omega>\omega_0
+\text{ 是上半平面的 meromorphic inner function}.
+}
+\tag{179.2}
+$$
+
+当 \(\Theta_\omega\) 为 inner function 时，核：
+
+$$
+\boxed{
+K_\omega(z,w)
+=
+\frac{
+1-\Theta_\omega(z)\overline{\Theta_\omega(w)}
+}{
+2\pi i(\overline w-z)
+}
+}
+\tag{179.3}
+$$
+
+是正定核，并产生 model/de Branges Hilbert space；相应 canonical system 的 Hamiltonian 是正半定矩阵。([arXiv][5])
+
+---
+

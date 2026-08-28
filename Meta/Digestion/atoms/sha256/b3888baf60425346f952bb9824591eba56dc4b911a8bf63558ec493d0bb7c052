@@ -1,0 +1,32 @@
+# 第一百八十九部　Projective blindness：方向观察看不到 ζ
+
+在 \(\xi(s)\neq0\) 时：
+
+$$
+\mathbf P_K(s)=\xi(s)\mathbf T_K(s).
+$$
+
+因此在射影空间中：
+
+$$
+\boxed{
+[\mathbf P_K(s)]
+=
+[\mathbf T_K(s)].
+}
+\tag{189.1}
+$$
+
+也就是说：
+
+> 如果只观察环面周期向量的方向，而不保留整体振幅和相位，那么 Riemann \(\xi\) 会被完全消去。
+
+这与此前多种观察失明严格同型：
+
+* 对角量子测量看不到相位；
+* 衍射强度看不到 Fourier 相位；
+* 六轴无向观察看不到 antipodal orientation；
+* projective torus period 看不到公共 \(\xi\)-振幅。
+
+---
+

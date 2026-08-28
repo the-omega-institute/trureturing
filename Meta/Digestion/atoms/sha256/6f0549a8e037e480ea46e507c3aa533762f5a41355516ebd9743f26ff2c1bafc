@@ -1,0 +1,26 @@
+## 300.3 创新误差塌缩
+
+由已计算 Li 系数构造：
+
+$$
+c_n,
+$$
+
+再执行 Schur 算法得到：
+
+$$
+\beta_0,\ldots,\beta_N.
+$$
+
+测量：
+
+$$
+\varepsilon_N
+=
+\prod_{j<N}(1-\beta_j^2).
+$$
+
+检验其塌缩速度，并与 Clark crowding law 比较。
+
+---
+

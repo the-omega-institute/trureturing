@@ -1,0 +1,42 @@
+# 第二百六十部　Li 条件负定几何
+
+定义偶延拓：
+
+$$
+\boxed{
+\psi(n)
+=
+\lambda_{|n|},
+\qquad
+n\in\mathbb Z,
+\qquad
+\psi(0)=0.
+}
+\tag{260.1}
+$$
+
+RH 下：
+
+$$
+\psi(n)
+=
+\|I-C_\Xi^n\|_{\mathrm{HS}}^2.
+$$
+
+所以它是平移不变的平方 Hilbert 距离：
+
+$$
+\boxed{
+d_\lambda(m,n)
+=
+\sqrt{
+\lambda_{|m-n|}
+}.
+}
+\tag{260.2}
+$$
+
+严格地说，它至少是 pseudometric；若没有非零整数 \(k\) 使 \(C_\Xi^k=I\)，则为 metric。
+
+---
+

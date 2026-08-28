@@ -1,0 +1,20 @@
+* 从而得到相应曲线 zeta 的自动形式 RH 证明。([arXiv][3])
+
+这提供一个科学上的强正对照：
+
+$$
+\boxed{
+\text{Toroidal invisibility}
++
+\text{representation temperedness}
+\Longrightarrow
+\text{RH}
+}
+$$
+
+并非仅仅形式重述；在函数域中，它确实能成为证明机制。
+
+数域困难并不是逻辑链错误，而是尚无法证明 toroidal Eisenstein kernel 的 temperedness。
+
+---
+

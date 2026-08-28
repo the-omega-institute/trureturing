@@ -1,0 +1,47 @@
+# 第二百五十一部　Toeplitz–Hankel 双证书的科学价值
+
+若 RH 失败，则至少发生两种有限失败：
+
+$$
+\boxed{
+\exists\,\text{finite Toeplitz minor}<0,
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\exists\,\text{finite Hankel／shifted-Hankel minor}<0.
+}
+$$
+
+但二者的最低失败阶可能差异巨大。
+
+因此应同时计算：
+
+$$
+\boxed{
+N_T
+=
+\min\{\text{负 Toeplitz minor 阶}\},
+}
+$$
+
+$$
+\boxed{
+N_H
+=
+\min\{\text{负 Hankel minor 阶}\}.
+}
+$$
+
+它们分别测量：
+
+* composite/exterior 图表最早何时感知非实零点；
+* primitive/moment 图表最早何时感知非正谱。
+
+这可以成为人工线外零点注入实验的核心指标。
+
+---
+

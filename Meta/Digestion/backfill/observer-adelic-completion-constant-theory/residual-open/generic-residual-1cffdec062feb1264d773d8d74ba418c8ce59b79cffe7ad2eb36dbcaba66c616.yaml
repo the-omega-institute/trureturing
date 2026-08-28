@@ -1,0 +1,10 @@
+ast_path: section/Trace-目标
+fingerprints:
+  raw_sha256: sha256:1cffdec062feb1264d773d8d74ba418c8ce59b79cffe7ad2eb36dbcaba66c616
+  normalized_sha256: sha256:1cffdec062feb1264d773d8d74ba418c8ce59b79cffe7ad2eb36dbcaba66c616
+cas_ref: sha256:1cffdec062feb1264d773d8d74ba418c8ce59b79cffe7ad2eb36dbcaba66c616
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

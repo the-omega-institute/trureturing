@@ -1,0 +1,67 @@
+## 定理 287.1（Li–Clark inner criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\vartheta_\xi
+\text{ 是单位圆盘上的内函数}.
+}
+\tag{287.7}
+$$
+
+### 证明：RH \(\Rightarrow\)（第 287 部）
+
+前文已证明 RH 等价于：
+
+$$
+\Re\mathfrak C_\xi(z)>0
+\qquad
+(|z|<1).
+$$
+
+Cayley 变换：
+
+$$
+w\mapsto\frac{w-1}{w+1}
+$$
+
+把右半平面送到单位圆盘，因此：
+
+$$
+|\vartheta_\xi(z)|<1.
+$$
+
+RH 下 \(\mathfrak C_\xi\) 的 Herglotz 测度是由 Riemann 零点角组成的纯点测度，因此是奇异测度。一个 Schur 函数的某个 Clark 测度为奇异测度，当且仅当该 Schur 函数是内函数。([London Mathematical Society (LMS)][1])
+
+---
+
+### 证明：内函数 \(\Rightarrow\) RH
+
+若 \(\vartheta_\xi\) 为内函数，则它首先是 Schur 函数，因此：
+
+$$
+\mathfrak C_\xi
+=
+\frac{1+\vartheta_\xi}
+{1-\vartheta_\xi}
+$$
+
+在单位圆盘中实部非负。
+
+所以：
+
+$$
+\frac{\xi'(s)}{\xi(s)}
+$$
+
+在：
+
+$$
+\Re s>\frac12
+$$
+
+中没有极点，故 \(\xi\) 在该半平面无零点。由函数方程对称性，全部非平凡零点位于临界线。∎
+
+---
+

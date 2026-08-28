@@ -1,0 +1,88 @@
+# 第二百零七部　零点测度与 Nevanlinna Gram 核
+
+在 RH 成立时，定义零点谱测度：
+
+$$
+\boxed{
+\mu_\Xi
+=
+\sum_{\gamma\in Z_\Xi}
+m_\gamma\,\delta_\gamma,
+}
+\tag{207.1}
+$$
+
+其中 \(Z_\Xi\subset\mathbb R\) 包括正负零点。
+
+则：
+
+$$
+m_0(z)
+=
+\int_{\mathbb R}
+\frac{d\mu_\Xi(t)}{t-z},
+$$
+
+以对称配对或标准 Herglotz 正则化理解。
+
+定义 Nevanlinna 核：
+
+$$
+\boxed{
+\mathcal N_0(z,w)
+=
+\frac{
+m_0(z)-\overline{m_0(w)}
+}{
+z-\overline w
+}.
+}
+\tag{207.2}
+$$
+
+代入谱表示：
+
+$$
+\boxed{
+\mathcal N_0(z,w)
+=
+\sum_{\gamma\in Z_\Xi}
+\frac{
+m_\gamma
+}{
+(\gamma-z)(\gamma-\overline w)
+}.
+}
+\tag{207.3}
+$$
+
+定义特征向量：
+
+$$
+\boxed{
+\mathbf v(z)
+=
+\left(
+\frac{\sqrt{m_\gamma}}{\gamma-z}
+\right)_{\gamma\in Z_\Xi}.
+}
+\tag{207.4}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal N_0(z,w)
+=
+\langle
+\mathbf v(z),\mathbf v(w)
+\rangle_{\ell^2}.
+}
+\tag{207.5}
+$$
+
+所以 RH 下的 Nevanlinna 核不是抽象正核，而是 Riemann 零点 resolvent vectors 的 Gram 核。
+
+---
+

@@ -1,0 +1,56 @@
+## 271.2 二阶差分的正规化作用
+
+未经加权的零点角计数测度：
+
+$$
+\nu_\Xi
+=
+\sum_{\gamma>0}
+m_\gamma
+\left(
+\delta_{\theta_\gamma}
++
+\delta_{-\theta_\gamma}
+\right)
+$$
+
+总质量无穷。
+
+但：
+
+$$
+\lambda_1
+=
+\int_{\mathbb T}
+(1-\cos\theta)\,d\nu_\Xi(\theta)
+<\infty.
+$$
+
+因此：
+
+$$
+\boxed{
+d\mu_\lambda(\theta)
+=
+\frac{1-\cos\theta}{\lambda_1}
+\,d\nu_\Xi(\theta).
+}
+\tag{271.9}
+$$
+
+即：
+
+> Li 二阶差分等价于给无限零点角测度乘上 \(1-\cos\theta\) 反项，将其正规化为概率测度。
+
+因此 \(\lambda_1\) 的结构角色是：
+
+$$
+\boxed{
+\lambda_1
+=
+\text{零点角谱经过一阶圆周能量正规化后的总质量}.
+}
+$$
+
+---
+

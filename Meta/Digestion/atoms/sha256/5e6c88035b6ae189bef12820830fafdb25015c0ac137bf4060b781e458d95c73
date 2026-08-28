@@ -1,0 +1,22 @@
+# 第二百三十部　Jensen 图表与 Stieltjes 图表
+
+平方折叠函数：
+
+$$
+\mathscr F(x)=\sum a_nx^n
+$$
+
+提供直接系数图表。
+
+其 logarithmic derivative：
+
+$$
+\mathscr S(x)=\mathscr F'/\mathscr F
+$$
+
+提供 reciprocal-zero moment 图表。
+
+于是存在两个不同的有限层级。
+
+---
+

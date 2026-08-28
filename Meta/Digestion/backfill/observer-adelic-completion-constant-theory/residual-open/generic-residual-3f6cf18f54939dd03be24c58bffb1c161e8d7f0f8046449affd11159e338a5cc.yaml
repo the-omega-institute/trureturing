@@ -1,0 +1,10 @@
+ast_path: section/第二百四十八部-辅助-Toda-观察流
+fingerprints:
+  raw_sha256: sha256:3f6cf18f54939dd03be24c58bffb1c161e8d7f0f8046449affd11159e338a5cc
+  normalized_sha256: sha256:3f6cf18f54939dd03be24c58bffb1c161e8d7f0f8046449affd11159e338a5cc
+cas_ref: sha256:3f6cf18f54939dd03be24c58bffb1c161e8d7f0f8046449affd11159e338a5cc
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

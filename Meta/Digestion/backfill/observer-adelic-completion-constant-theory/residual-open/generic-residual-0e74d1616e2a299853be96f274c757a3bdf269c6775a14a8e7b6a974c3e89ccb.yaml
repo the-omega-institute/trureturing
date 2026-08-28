@@ -1,0 +1,10 @@
+ast_path: section/本轮独立推导得到-第-327-部
+fingerprints:
+  raw_sha256: sha256:0e74d1616e2a299853be96f274c757a3bdf269c6775a14a8e7b6a974c3e89ccb
+  normalized_sha256: sha256:0e74d1616e2a299853be96f274c757a3bdf269c6775a14a8e7b6a974c3e89ccb
+cas_ref: sha256:0e74d1616e2a299853be96f274c757a3bdf269c6775a14a8e7b6a974c3e89ccb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

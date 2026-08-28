@@ -1,0 +1,40 @@
+## 294.1 观察者完成深度
+
+定义：
+
+$$
+\boxed{
+\mathfrak D(\varepsilon)
+=
+\min
+\left\{
+N:
+\varepsilon_N\le\varepsilon
+\right\}.
+}
+\tag{294.1}
+$$
+
+则：
+
+$$
+\mathfrak D(\varepsilon)<\infty
+$$
+
+对每个 \(\varepsilon>0\)，但：
+
+$$
+\boxed{
+\mathfrak D(\varepsilon)\to\infty
+\qquad
+(\varepsilon\downarrow0).
+}
+\tag{294.2}
+$$
+
+这正对应此前 RDS 的 scale-dependent definition depth：
+
+> 任意固定精度都只需有限定义深度，但精确完成要求无限递归层。
+
+---
+

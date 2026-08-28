@@ -1,0 +1,80 @@
+## 319.1 能量核恒等式
+
+unitarity 给出：
+
+$$
+\boxed{
+\frac{
+1-
+\Theta_\omega(z)
+\overline{\Theta_\omega(w)}
+}{
+1-z\overline w
+}
+=
+C_\omega
+(I-zA_\omega)^{-1}
+(I-\overline wA_\omega^*)^{-1}
+C_\omega^*.
+}
+\tag{319.3}
+$$
+
+定义状态向量：
+
+$$
+\boxed{
+X_{\omega,z}
+=
+(I-\overline zA_\omega^*)^{-1}
+C_\omega^*.
+}
+\tag{319.4}
+$$
+
+则：
+
+$$
+\boxed{
+\frac{
+1-
+\Theta_\omega(z)
+\overline{\Theta_\omega(w)}
+}{
+1-z\overline w
+}
+=
+\langle
+X_{\omega,z},
+X_{\omega,w}
+\rangle.
+}
+\tag{319.5}
+$$
+
+对角上：
+
+$$
+\boxed{
+1-|\Theta_\omega(z)|^2
+=
+(1-|z|^2)\,
+\|X_{\omega,z}\|^2.
+}
+\tag{319.6}
+$$
+
+所以 inner/Schur 正性具有严格的能量守恒解释：
+
+$$
+\boxed{
+\text{input energy}
+=
+\text{output energy}
++
+\text{internal stored energy}.
+}
+$$
+
+---
+

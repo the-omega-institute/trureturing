@@ -1,0 +1,40 @@
+## 284.3 Toeplitz–PF 层级
+
+输入：
+
+$$
+\xi^{(2n)}(\tfrac12)
+$$
+
+的平方折叠 Taylor 系数 \(a_n\)。
+
+测试：
+
+$$
+[a_{j-i}]
+$$
+
+的全部 minors 非负。
+
+解释：
+
+$$
+\text{Fredholm 外幂系数是否来自正谱 alphabet}.
+$$
+
+三者分别读取：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{Hankel}&\text{primitive powers}\\
+\text{Li 曲率 Toeplitz}&\text{unitary correlations}\\
+\text{PF Toeplitz}&\text{exterior composites}
+\end{array}
+}
+$$
+
+它们不是重复判据，而是同一隐藏正谱在三个不同基底中的 Gram/total-positivity 表达。
+
+---
+

@@ -1,0 +1,15 @@
+ast_path: section/202-1-有限层析不等于-RH
+fingerprints:
+  raw_sha256: sha256:a89fffeaf09afabca4400ded2e15727e361ba0f42b1f3155c5160624ea435d10
+  normalized_sha256: sha256:a89fffeaf09afabca4400ded2e15727e361ba0f42b1f3155c5160624ea435d10
+cas_ref: sha256:a89fffeaf09afabca4400ded2e15727e361ba0f42b1f3155c5160624ea435d10
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-8cb1f6a6a6f0b006bc508f5d3bb7206bca9743c592efb83a6d0922a1cb370c07-904008fa0b05fcca713093bf4d2ee419733ac701c6da57dd29bde3a02f497c09
+    - generic-residual-dd2556b4bbf948e51ce20f4436802feabe74746a388597524c60a3a5c4c75221-37364d8c9da5a367a643be1ee0e17a1819cc13e197f782b523b81f6ae7e7c972
+    - generic-residual-48af8ea653eea4231d59db7d667a247bb4d32a10a3f8aa3c41b722f3abe41d09-57b8bc0d265dde9f0a4094cbec2aeb6768d10a8fb2bd610e8e09d49f2dd407fa
+    - generic-residual-141ee05c282148c16476b4fd1fab7dd53bdcb5206dbb0083d4abe9e24b211d69-ef3679c0d5ed209536fc313557058a3429ed6711ba37b5d6f5e5b5593527c5ad

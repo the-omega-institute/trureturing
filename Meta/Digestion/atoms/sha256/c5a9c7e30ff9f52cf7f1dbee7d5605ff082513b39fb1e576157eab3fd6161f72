@@ -1,0 +1,54 @@
+# 第三百零九部　Riemann–Clark 变换
+
+令：
+
+$$
+\mu_\lambda
+=
+\sum_\rho w_\rho\delta_{u_\rho}.
+$$
+
+在：
+
+$$
+L^2(\mathbb T,\mu_\lambda)
+$$
+
+中取 CMV 正交 Laurent 基：
+
+$$
+\chi_0,\chi_1,\chi_2,\ldots.
+$$
+
+单位圆正交多项式、Verblunsky 参数及其递推构成标准 OPUC/CMV 理论。([DLMF][5])
+
+定义矩阵：
+
+$$
+\boxed{
+\mathcal U_{n,\rho}
+=
+\sqrt{w_\rho}\,
+\chi_n(u_\rho).
+}
+\tag{309.1}
+$$
+
+由正交性：
+
+$$
+\boxed{
+\sum_\rho
+w_\rho
+\chi_n(u_\rho)
+\overline{\chi_m(u_\rho)}
+=
+\delta_{nm}.
+}
+\tag{309.2}
+$$
+
+因此 \(\mathcal U\) 是 unitary 变换。
+
+---
+

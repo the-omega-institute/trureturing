@@ -1,0 +1,10 @@
+ast_path: section/第二百零一部-Wang-式零区下降
+fingerprints:
+  raw_sha256: sha256:ee215c612ba0db22b6de9571a362b5ac985904ca741230963d820644756fd0e8
+  normalized_sha256: sha256:ee215c612ba0db22b6de9571a362b5ac985904ca741230963d820644756fd0e8
+cas_ref: sha256:ee215c612ba0db22b6de9571a362b5ac985904ca741230963d820644756fd0e8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

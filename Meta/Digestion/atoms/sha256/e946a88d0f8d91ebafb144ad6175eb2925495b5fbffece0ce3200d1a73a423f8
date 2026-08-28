@@ -1,0 +1,24 @@
+## 219.1 一点负证书测试
+
+人为注入线外零点：
+
+$$
+\rho=\frac12+\delta+i\gamma.
+$$
+
+在：
+
+$$
+z_\rho=-\gamma+i(\delta-\omega)
+$$
+
+处验证：
+
+$$
+m_\omega(z_\rho)=-i/\omega.
+$$
+
+任何实现若不能恢复式 (213.4)，说明 finite-frame reconstruction 或 normalization 有误。
+
+---
+

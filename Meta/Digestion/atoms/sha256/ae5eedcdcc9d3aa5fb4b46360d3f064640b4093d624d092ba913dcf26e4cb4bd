@@ -1,0 +1,75 @@
+# 第二百一十部　de Branges 核与 Nevanlinna 核的精确等价
+
+定义 \(\Theta_\omega\) 的 model-space 核：
+
+$$
+\boxed{
+K_{\Theta_\omega}(z,w)
+=
+\frac{
+1-
+\Theta_\omega(z)
+\overline{\Theta_\omega(w)}
+}{
+2\pi i(\overline w-z)
+}.
+}
+\tag{210.1}
+$$
+
+定义：
+
+$$
+\boxed{
+\mathcal N_\omega(z,w)
+=
+\frac{
+m_\omega(z)-\overline{m_\omega(w)}
+}{
+z-\overline w
+}.
+}
+\tag{210.2}
+$$
+
+直接代数计算得到：
+
+$$
+\boxed{
+\mathcal N_\omega(z,w)
+=
+\frac{4\pi}{\omega}
+\,
+\frac{
+K_{\Theta_\omega}(z,w)
+}{
+\left(1+\Theta_\omega(z)\right)
+\left(1+\overline{\Theta_\omega(w)}\right)
+}.
+}
+\tag{210.3}
+$$
+
+所以两类核只相差一个非零 holomorphic gauge：
+
+$$
+g_\omega(z)=\frac1{1+\Theta_\omega(z)}
+$$
+
+和正标量 \(4\pi/\omega\)。
+
+因此：
+
+$$
+\boxed{
+K_{\Theta_\omega}\succeq0
+\iff
+\mathcal N_\omega\succeq0.
+}
+\tag{210.4}
+$$
+
+这使 Suzuki 的 de Branges 正性与 logarithmic Weyl Herglotz 正性完全合流。
+
+---
+

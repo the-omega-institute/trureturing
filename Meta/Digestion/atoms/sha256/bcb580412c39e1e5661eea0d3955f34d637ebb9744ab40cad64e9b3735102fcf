@@ -1,0 +1,57 @@
+# 第一百六十五部　非分裂环面观察者
+
+设：
+
+$$
+G=\operatorname{GL}_2,
+$$
+
+\(T\subset G\) 是由二次扩张 \(K/\mathbb Q\) 给出的非分裂极大环面。
+
+对 automorphic form \(f\)，定义 \(T\)-环面周期：
+
+$$
+\boxed{
+\mathcal P_T(f)(g)
+=
+\int_{T(\mathbb Q)Z(\mathbb A)\backslash T(\mathbb A)}
+f(tg)\,dt.
+}
+\tag{165.1}
+$$
+
+定义全部二次环面的联合观察：
+
+$$
+\boxed{
+\mathcal P_{\mathrm{tor}}(f)
+=
+\bigl(
+\mathcal P_T(f)
+\bigr)_{T}.
+}
+\tag{165.2}
+$$
+
+定义普遍环面不可见空间：
+
+$$
+\boxed{
+\mathcal A_{\mathrm{tor}}
+=
+\ker\mathcal P_{\mathrm{tor}}
+=
+\bigcap_T\ker\mathcal P_T.
+}
+\tag{165.3}
+$$
+
+它与项目此前的 prime observer 不同：
+
+* prime observer 按局部素数通道读取对象；
+* torus observer 把一整个二次扩张的有限位与无穷位同时组合成一个阿代尔周期。
+
+若 \(K=\mathbb Q(\sqrt D)\) 为实二次域，相应的 Archimedean 周期表现为模曲面上的闭测地线；若 \(K\) 为虚二次域，则对应 CM 型环面周期。
+
+---
+

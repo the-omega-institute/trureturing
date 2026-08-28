@@ -1,0 +1,21 @@
+## 185.4 Innerness threshold 检验
+
+数值估计：
+
+$$
+\Theta_\omega(z)
+$$
+
+在上半平面的 Schur defect：
+
+$$
+\sup_{\Im z>0}
+\left(
+|\Theta_\omega(z)|-1
+\right)_+.
+$$
+
+观察该缺陷随 \(\omega\) 向下推进时是否出现多尺度自改善或集中结构。
+
+---
+

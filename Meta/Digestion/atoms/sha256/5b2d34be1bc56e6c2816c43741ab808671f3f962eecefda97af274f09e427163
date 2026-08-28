@@ -1,0 +1,53 @@
+## 定理 314.1（Raw toroidal jet positivity obstruction）
+
+若某个 \(T\) 在 \(\mathcal J_\rho\) 上具有非平凡 Jordan 块，则不存在正定内积，使该 \(T\) 在 \(\mathcal J_\rho\) 上成为 normal，因而更不可能成为 self-adjoint。
+
+### 证明
+
+设：
+
+$$
+T=\lambda I+N,
+\qquad
+N\neq0,
+\qquad
+N^r=0.
+$$
+
+若 \(T\) normal，则由有限维谱定理，它可酉对角化。
+
+但 \(T\) 只有唯一特征值 \(\lambda\)，故可酉对角化时只能等于：
+
+$$
+\lambda I.
+$$
+
+这与 \(N\neq0\) 矛盾。∎
+
+因此：
+
+$$
+\boxed{
+\text{“toroidal derivative tower 是正 Hilbert–Pólya eigenspace”}
+}
+$$
+
+一般是错误的。
+
+必须区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{jet depth}
+&=\text{观察值消失到多少阶};\\
+\text{spectral multiplicity}
+&=\text{自伴算子同一实特征值的 eigenspace 维数}.
+\end{aligned}
+}
+$$
+
+前者天然允许 nilpotent chain；后者必须半单。
+
+---
+

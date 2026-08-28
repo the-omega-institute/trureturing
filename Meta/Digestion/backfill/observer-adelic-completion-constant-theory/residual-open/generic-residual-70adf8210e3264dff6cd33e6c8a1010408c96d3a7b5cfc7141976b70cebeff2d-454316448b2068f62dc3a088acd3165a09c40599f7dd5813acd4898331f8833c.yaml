@@ -1,0 +1,10 @@
+ast_path: section/318-1-环面图表中的-transfer-function/clause/1
+fingerprints:
+  raw_sha256: sha256:70adf8210e3264dff6cd33e6c8a1010408c96d3a7b5cfc7141976b70cebeff2d
+  normalized_sha256: sha256:70adf8210e3264dff6cd33e6c8a1010408c96d3a7b5cfc7141976b70cebeff2d
+cas_ref: sha256:70adf8210e3264dff6cd33e6c8a1010408c96d3a7b5cfc7141976b70cebeff2d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

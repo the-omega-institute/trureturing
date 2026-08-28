@@ -1,0 +1,124 @@
+# 本轮最终结论
+
+上一轮将 RH 写成：
+
+$$
+\boxed{
+\text{Li 离散曲率是否为单位圆正定相关函数}.
+}
+$$
+
+本轮进一步证明，这个相关函数属于一个显式内函数：
+
+$$
+\boxed{
+\vartheta_\xi(z)
+=
+\frac{
+\xi'(\frac1{1-z})
+-\lambda_1\xi(\frac1{1-z})
+}{
+\xi'(\frac1{1-z})
++\lambda_1\xi(\frac1{1-z})
+}.
+}
+$$
+
+而：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\vartheta_\xi\text{ 是内函数}.
+}
+$$
+
+它的 \(\alpha=1\) Clark 谱正是 Riemann 零点：
+
+$$
+\boxed{
+\sigma_1
+=
+\sum_{\gamma>0}
+\frac{2m_\gamma}
+{\lambda_1(4\gamma^2+1)}
+\left(
+\delta_{u_\gamma}
++
+\delta_{\overline{u_\gamma}}
+\right).
+}
+$$
+
+并且：
+
+$$
+\boxed{
+u_\gamma\vartheta_\xi'(u_\gamma)
+=
+\frac{\lambda_1(4\gamma^2+1)}
+{2m_\gamma}.
+}
+$$
+
+因此 Riemann 零点具有三种完全一致的身份：
+
+$$
+\boxed{
+\begin{aligned}
+u_\gamma
+&=\text{Clark unitary 的谱点};\\
+w_\gamma
+&=\text{Clark 谱质量};\\
+\gamma
+&=\text{内函数边界相位的穿越速度}.
+\end{aligned}
+}
+$$
+
+\(\alpha=-1\) 则给出 \(\xi'\) 的临界点谱，全部 \(\alpha\) 形成一个 rank-one unitary boundary-condition family。
+
+最重要的理论修正是：
+
+$$
+\boxed{
+\text{RH 下的零点角谱是纯点奇异的，
+所以 Schur 创新误差在无限深度必然归零。}
+}
+$$
+
+这意味着真正的证明机制不能依赖永久随机性，而必须解释：
+
+$$
+\boxed{
+\text{一个无限可预测、零创新的确定性谱过程，
+为什么仍然只能由临界线上的实谱原子生成。}
+}
+$$
+
+当前 OACTC 的最小证明目标因此可以最终写成：
+
+$$
+\boxed{
+\text{从 toric relative trace formula
+直接证明 }\vartheta_\xi\text{ 是内函数，}
+}
+$$
+
+或者更弱地：
+
+$$
+\boxed{
+\text{直接构造 Li 曲率 Toeplitz 核的 Gram 表示。}
+}
+$$
+
+一旦其中任一项闭合，Clark family、CMV、de Branges、Hilbert–Pólya 与 RH 将同时完成。
+
+[1]: https://londmathsoc.onlinelibrary.wiley.com/doi/full/10.1112/plms.70001?utm_source=chatgpt.com "Analytic mappings of the unit disk which almost preserve hyperbolic area - Ivrii - 2024 - Proceedings of the London Mathematical Society - Wiley Online Library"
+[2]: https://en.wikipedia.org/wiki/Aleksandrov%E2%80%93Clark_measure?utm_source=chatgpt.com "Aleksandrov–Clark measure"
+[3]: https://arxiv.org/abs/2006.12105?utm_source=chatgpt.com "A Central Limit Theorem for Inner Functions"
+[4]: https://dlmf.nist.gov/18.33?utm_source=chatgpt.com "DLMF: §18.33 Polynomials Orthogonal on the Unit Circle ‣ Other Orthogonal Polynomials ‣ Chapter 18 Orthogonal Polynomials"
+[5]: https://arxiv.org/abs/1912.10665?utm_source=chatgpt.com "On Szegö--Kolmogorov Prediction Theorem"
+[6]: https://dlmf.nist.gov/25.10?utm_source=chatgpt.com "DLMF: §25.10 Zeros ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"

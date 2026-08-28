@@ -1,0 +1,16 @@
+ast_path: section/依赖成熟理论
+fingerprints:
+  raw_sha256: sha256:6a30cebd9fdb97eee99a3c9e0c2b8082eb8be449785a1b890b5d3d9414d17b28
+  normalized_sha256: sha256:6a30cebd9fdb97eee99a3c9e0c2b8082eb8be449785a1b890b5d3d9414d17b28
+cas_ref: sha256:6a30cebd9fdb97eee99a3c9e0c2b8082eb8be449785a1b890b5d3d9414d17b28
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-db722fa1343d90dfbb311cda65bd5c7ad36064d82a8350aab5ac72248903f1ad-f64019b8d6cc4cd5388be8fecc143b394f33ecbcbba3cfec8ea92fe01f7261e9
+    - generic-residual-4c6fc62e99afcf58cf9e9de03778cc1a85eb5293d5e51616d2906a0da785f6f8-fc56abca811ea81d10df799bafadbf840364b9f8263a6bef07386e4efdb7b389
+    - generic-residual-d0d1ac619568ea49f2348235626c1360819dd6f276607a2855b0e5df955f86cd-dce16af9e5f71894160fc0847dc4bc983463af283bd362f583e86f1263231f1e
+    - generic-residual-d816562225a389ef3a07f35236bd0127b2df9d7267dc38b08456a0da384d178b-5e5addcf12313b4dfb4a3474347a12acfbd4564bf4bbaa8d6d7c8501633bd547
+    - generic-residual-dfbad9ec3200034537fc7d9637d8cd8b2a4df4a7ae79477a4d4c472f5c1f3b76-fe28650e7c3d95644199919487f43e64624f0267b96330a2e34db171e85b62f0

@@ -1,0 +1,10 @@
+ast_path: section/296-2-高度矩的临界指数/clause/2
+fingerprints:
+  raw_sha256: sha256:6343635659b2ee517e83550d03b1a8d6dca9e2a3ac4c5b1fae40e81048c437db
+  normalized_sha256: sha256:6343635659b2ee517e83550d03b1a8d6dca9e2a3ac4c5b1fae40e81048c437db
+cas_ref: sha256:6343635659b2ee517e83550d03b1a8d6dca9e2a3ac4c5b1fae40e81048c437db
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

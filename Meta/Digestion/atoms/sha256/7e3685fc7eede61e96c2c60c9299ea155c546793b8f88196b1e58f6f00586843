@@ -1,0 +1,33 @@
+## 312.1 半平面 Gram 数值检验
+
+选取：
+
+$$
+s_1,\ldots,s_N
+\in\mathbb H_{1/2}.
+$$
+
+计算：
+
+$$
+\left[
+\mathcal K_\xi(s_i,s_j)
+\right].
+$$
+
+并与已知零点截断 Gram 和：
+
+$$
+\sum_{|\gamma|\le T}
+\frac{
+m_\gamma/\lambda_1
+}{
+(s_i-\rho)
+(\overline{s_j}-\overline\rho)
+}
+$$
+
+交叉验证。
+
+---
+

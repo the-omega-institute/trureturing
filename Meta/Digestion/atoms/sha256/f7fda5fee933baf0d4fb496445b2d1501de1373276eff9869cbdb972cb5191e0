@@ -1,0 +1,47 @@
+# 第二百四十部　Exterior–Power–Trace 基因组
+
+设：
+
+$$
+\alpha_j=\gamma_j^{-2}
+$$
+
+并按重数重复。
+
+则：
+
+$$
+\mathscr F(x)
+=
+\prod_j(1+\alpha_jx).
+$$
+
+将其展开：
+
+$$
+\boxed{
+\mathscr F(x)
+=
+\sum_{n=0}^{\infty}a_nx^n.
+}
+\tag{240.1}
+$$
+
+其中：
+
+$$
+\boxed{
+a_n
+=
+\sum_{j_1<\cdots<j_n}
+\alpha_{j_1}\cdots\alpha_{j_n}
+=
+\operatorname{Tr}\left(\Lambda^nU_\Xi\right).
+}
+\tag{240.2}
+$$
+
+所以中心 Taylor 系数不是任意导数数据，而是 \(U_\Xi\) 各外幂表示的迹。
+
+---
+

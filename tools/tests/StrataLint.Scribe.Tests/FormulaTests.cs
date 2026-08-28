@@ -490,11 +490,122 @@ public sealed class FormulaTests
     }
 
     [Fact]
+    public void ScriptChainsAreRefusedWhereTheBaseAlreadyCarriesTheScript()
+    {
+        // `T^{*}^{k}` is a KaTeX parse error ("Double superscript"): TeX binds one script
+        // mark per base. The scripted base is a nested sequence, so only its tail shows it.
+        var superscripted = FormulaDsl.Seq(
+            FormulaDsl.Id("T"), FormulaDsl.Caret, FormulaDsl.Grp(FormulaDsl.Star));
+        Assert.Throws<ArgumentException>(() => new Formula.LatexSequence(
+            [superscripted, FormulaDsl.Caret, FormulaDsl.Grp(FormulaDsl.Id("k"))]));
+
+        // `u_{n}_{i}` is the same defect one script mark down, and a group is no shelter.
+        Assert.Throws<ArgumentException>(() => new Formula.LatexGroup(
+        [
+            FormulaDsl.Seq(FormulaDsl.Id("u"), FormulaDsl.Underscore, FormulaDsl.Grp(FormulaDsl.Id("n"))),
+            FormulaDsl.Underscore,
+            FormulaDsl.Grp(FormulaDsl.Id("i")),
+        ]));
+
+        // A structured script over the same tail is the same chain.
+        Assert.Throws<ArgumentException>(() => new Formula.LatexSequence(
+        [
+            new Formula.Power(FormulaDsl.Id("x"), FormulaDsl.D(2)),
+            FormulaDsl.Caret,
+            FormulaDsl.Grp(FormulaDsl.D(3)),
+        ]));
+
+        // Grouping the base states the nesting, and is what the rejection asks for.
+        Assert.Equal(
+            "{T^{*}}^{k}",
+            LatexWriter.Write(FormulaDsl.Seq(
+                FormulaDsl.Grp(FormulaDsl.Id("T"), FormulaDsl.Caret, FormulaDsl.Grp(FormulaDsl.Star)),
+                FormulaDsl.Caret,
+                FormulaDsl.Grp(FormulaDsl.Id("k")))));
+
+        // One base carries one of each, so a superscript after a subscript is no chain.
+        Assert.Equal(
+            "\\sum_{n=0}^{\\infty}",
+            LatexWriter.Write(FormulaDsl.Seq(
+                FormulaDsl.Sum,
+                FormulaDsl.Underscore,
+                FormulaDsl.Grp(FormulaDsl.Id("n"), FormulaDsl.Eq, FormulaDsl.D(0)),
+                FormulaDsl.Caret,
+                FormulaDsl.Grp(FormulaDsl.Infty))));
+
+        // An empty group opens a fresh base, which is how TeX itself stacks two scripts.
+        Assert.Equal(
+            "T^{*}{}^{k}",
+            LatexWriter.Write(FormulaDsl.Seq(
+                superscripted,
+                FormulaDsl.Grp(),
+                FormulaDsl.Caret,
+                FormulaDsl.Grp(FormulaDsl.Id("k")))));
+    }
+
+    [Fact]
+    public void EmissionRefusesAScriptChainAssembledAcrossNodes()
+    {
+        // A structured script parenthesizes a structured scripted base, but it cannot see
+        // the tail of a raw sequence, so the chain only exists in the finished bytes.
+        var chained = new Formula.Power(
+            FormulaDsl.Seq(FormulaDsl.Id("T"), FormulaDsl.Caret, FormulaDsl.Grp(FormulaDsl.Star)),
+            FormulaDsl.Id("k"));
+
+        var rejection = Assert.Throws<InvalidOperationException>(() => LatexWriter.Write(chained));
+
+        Assert.Contains("already carries a '^' script", rejection.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void MacrosAreRefusedWhereTheirArgumentIsMissing()
+    {
+        // `\operatorname\left({NeZero}, d\right)` applies the macro before it has its
+        // own argument, so `\left` lands in the argument position and KaTeX refuses the
+        // formula with "Expected group as argument to '\operatorname'".
+        Assert.Throws<ArgumentException>(() => new Formula.Apply(
+            FormulaDsl.Operatorname,
+            [FormulaDsl.Grp(FormulaDsl.Id("NeZero")), FormulaDsl.Id("d")]));
+
+        // The same defect spelled as a sequence, and left dangling at the end of one.
+        Assert.Throws<ArgumentException>(() => new Formula.LatexSequence(
+        [
+            FormulaDsl.Operatorname,
+            FormulaDsl.Left,
+            FormulaDsl.Open,
+            FormulaDsl.Id("d"),
+            FormulaDsl.Right,
+            FormulaDsl.Close,
+        ]));
+        Assert.Throws<ArgumentException>(() => new Formula.LatexGroup(
+            [FormulaDsl.Id("x"), FormulaDsl.Mathbb]));
+
+        // Naming the operator first is the fix.
+        Assert.Equal(
+            "\\operatorname{NeZero}\\left(d\\right)",
+            LatexWriter.Write(new Formula.Apply(
+                FormulaDsl.Seq(FormulaDsl.Operatorname, FormulaDsl.Grp(FormulaDsl.Id("NeZero"))),
+                [FormulaDsl.Id("d")])));
+
+        // TeX discards the whitespace between a macro and its argument, and `\frac` binds
+        // two tokens, so a digit pair legally serves both.
+        Assert.Equal(
+            "\\operatorname {Inv}",
+            LatexWriter.Write(FormulaDsl.Seq(
+                FormulaDsl.Operatorname, FormulaDsl.Sp, FormulaDsl.Grp(FormulaDsl.Id("Inv")))));
+        Assert.Equal(
+            "\\frac12",
+            LatexWriter.Write(FormulaDsl.Seq(FormulaDsl.Frac, FormulaDsl.D(1, 2))));
+    }
+
+    [Fact]
     public void MacrosRefusedAsAScriptArgumentAreExactlyTheMeasuredKatexSet()
     {
         // Measured against katex 0.16 by rendering `x^<macro><minimal legal argument>`:
         // every member below raises "Got function ... with no arguments as superscript",
-        // and every non-member renders. Grouping the argument fixes all of them.
+        // and every non-member renders. Grouping the argument fixes all of them. The
+        // trailing group is that minimal argument: it keeps the macros that bind one from
+        // being refused for the unrelated reason of standing bare.
         string[] refused =
         [
             "Begin", "End", "Exp", "Gcd", "Iff", "Implies", "Ker", "Left", "Lim", "Log",
@@ -509,7 +620,12 @@ public sealed class FormulaTests
             try
             {
                 _ = new Formula.LatexSequence(
-                    [FormulaDsl.Id("x"), FormulaDsl.Caret, new Formula.LatexMacro(macro)]);
+                [
+                    FormulaDsl.Id("x"),
+                    FormulaDsl.Caret,
+                    new Formula.LatexMacro(macro),
+                    FormulaDsl.Grp(FormulaDsl.Id("a")),
+                ]);
             }
             catch (ArgumentException)
             {

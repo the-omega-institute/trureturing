@@ -1,0 +1,59 @@
+# 第一百八十部　Toroidal escape radius
+
+定义：
+
+$$
+\boxed{
+\omega_{\mathrm{tor}}
+=
+\sup
+\left\{
+\Re\rho-\frac12:
+\mathcal P_{\mathrm{tor}}(E_\rho)=0,\ 
+\Re\rho\ge\frac12
+\right\}.
+}
+\tag{180.1}
+$$
+
+由全环面共同核定理：
+
+$$
+\mathcal P_{\mathrm{tor}}(E_\rho)=0
+\iff
+\xi(\rho)=0.
+$$
+
+因此：
+
+$$
+\boxed{
+\omega_{\mathrm{tor}}
+=
+\sup_{\xi(\rho)=0}
+\left|
+\Re\rho-\frac12
+\right|.
+}
+\tag{180.2}
+$$
+
+再定义 innerness threshold：
+
+$$
+\boxed{
+\omega_{\mathrm{in}}
+=
+\inf
+\left\{
+\omega_0\ge0:
+\Theta_\omega
+\text{ 对全部 }\omega>\omega_0
+\text{ 为 meromorphic inner}
+\right\}.
+}
+\tag{180.3}
+$$
+
+由 Suzuki 的等价定理：
+

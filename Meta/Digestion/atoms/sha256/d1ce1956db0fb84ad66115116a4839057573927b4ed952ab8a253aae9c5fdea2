@@ -1,0 +1,18 @@
+### Deng 层（265.1）
+
+若 near-negative vector 集中于长 arithmetic progression 或单一相位簇，则：
+
+1. 提取主导 unitary 相位；
+2. 收缩重复 \(C^n\) 历史；
+3. 以 power traces：
+
+   $$
+   \operatorname{Tr}X^k
+   $$
+
+   作为 primitive cumulants；
+4. 用 Möbius／Fredholm 对数重求和；
+5. 控制剩余 Gram defect。
+
+---
+

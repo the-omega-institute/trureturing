@@ -1,0 +1,65 @@
+# 第二百九十三部　Szegő 创新塌缩
+
+令：
+
+$$
+\beta_0,\beta_1,\ldots
+$$
+
+为 \(\mu_\lambda\) 的 Verblunsky 系数。
+
+由于测度关于复共轭对称：
+
+$$
+\beta_n\in\mathbb R.
+$$
+
+定义：
+
+$$
+\boxed{
+r_n^2=1-\beta_n^2.
+}
+\tag{293.1}
+$$
+
+RH 下 \(\mu_\lambda\) 是纯点测度，因而其 absolutely continuous density：
+
+$$
+w(\theta)=0
+$$
+
+几乎处处成立。
+
+Szegő 定理给出：
+
+$$
+\boxed{
+\prod_{n=0}^{\infty}
+(1-\beta_n^2)
+=
+\exp
+\left[
+\int_0^{2\pi}
+\log w(\theta)
+\frac{d\theta}{2\pi}
+\right]
+=
+0.
+}
+\tag{293.2}
+$$
+
+因此：
+
+$$
+\boxed{
+\sum_{n=0}^{\infty}\beta_n^2=\infty.
+}
+\tag{293.3}
+$$
+
+Szegő 定理及 Verblunsky 系数的递推和唯一测度对应，是 OPUC 的标准结构。([DLMF][4])
+
+---
+

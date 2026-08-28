@@ -1,0 +1,24 @@
+## 320.3 Deng 式处理
+
+对 sticky mode：
+
+1. 提取其近单位模谱分量；
+2. 将相应 finite Blaschke/inner factor 从 transfer function 中分离；
+3. 把该模式压缩为一个有限维 conservative block；
+4. 对剩余 transfer function 重新构造 colligation；
+5. 重复直到残余达到 uniform observability。
+
+所以：
+
+$$
+\boxed{
+\text{Schur/Blaschke factor extraction}
+=
+\text{sticky primitive-history contraction}.
+}
+$$
+
+Schur 参数或 Verblunsky 系数则是逐层消去一个内部状态后留下的最小创新耦合。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/242-1-Schur-正性
+fingerprints:
+  raw_sha256: sha256:08db795b2b31b90c9616758f06b1eb62a9e1782fea6bf43e721bc0dc3f42c7e2
+  normalized_sha256: sha256:08db795b2b31b90c9616758f06b1eb62a9e1782fea6bf43e721bc0dc3f42c7e2
+cas_ref: sha256:08db795b2b31b90c9616758f06b1eb62a9e1782fea6bf43e721bc0dc3f42c7e2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

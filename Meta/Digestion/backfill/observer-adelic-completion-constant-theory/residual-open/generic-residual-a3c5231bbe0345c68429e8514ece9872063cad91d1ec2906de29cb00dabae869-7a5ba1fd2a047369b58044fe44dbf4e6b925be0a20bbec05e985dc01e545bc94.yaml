@@ -1,0 +1,10 @@
+ast_path: section/311-3-Fredholm-Hankel-接口/clause/3
+fingerprints:
+  raw_sha256: sha256:a3c5231bbe0345c68429e8514ece9872063cad91d1ec2906de29cb00dabae869
+  normalized_sha256: sha256:a3c5231bbe0345c68429e8514ece9872063cad91d1ec2906de29cb00dabae869
+cas_ref: sha256:a3c5231bbe0345c68429e8514ece9872063cad91d1ec2906de29cb00dabae869
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

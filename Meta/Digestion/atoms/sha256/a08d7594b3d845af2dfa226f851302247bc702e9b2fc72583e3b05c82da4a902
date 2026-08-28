@@ -1,0 +1,32 @@
+# 第一百六十八部　解析最大公因子
+
+对一个零点 \(\rho\)，定义零阶：
+
+$$
+\nu_\rho(f)=\operatorname{ord}_\rho f.
+$$
+
+由：
+
+$$
+P_D=\Lambda\Lambda_D,
+$$
+
+有：
+
+$$
+\nu_\rho(P_D)
+=
+\nu_\rho(\Lambda)
++
+\nu_\rho(\Lambda_D).
+$$
+
+由于存在 \(D\) 使：
+
+$$
+\Lambda_D(\rho)\neq0,
+$$
+
+得到：
+

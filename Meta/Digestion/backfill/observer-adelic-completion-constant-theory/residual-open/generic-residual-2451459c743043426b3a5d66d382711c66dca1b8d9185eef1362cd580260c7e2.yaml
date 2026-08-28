@@ -1,0 +1,10 @@
+ast_path: section/第二百一十五部-无穷小-de-Branges-极限
+fingerprints:
+  raw_sha256: sha256:2451459c743043426b3a5d66d382711c66dca1b8d9185eef1362cd580260c7e2
+  normalized_sha256: sha256:2451459c743043426b3a5d66d382711c66dca1b8d9185eef1362cd580260c7e2
+cas_ref: sha256:2451459c743043426b3a5d66d382711c66dca1b8d9185eef1362cd580260c7e2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

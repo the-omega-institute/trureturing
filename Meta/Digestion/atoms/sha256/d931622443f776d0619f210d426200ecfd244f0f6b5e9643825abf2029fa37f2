@@ -1,0 +1,51 @@
+## 309.2 逆 Cayley ordinate 算子
+
+在零点基中定义：
+
+$$
+U_{\mathrm{zero}}
+=
+\operatorname{diag}(u_\rho).
+$$
+
+则：
+
+$$
+\boxed{
+H_{\mathrm{zero}}
+=
+\frac{i}{2}
+(U_{\mathrm{zero}}+I)
+(U_{\mathrm{zero}}-I)^{-1}
+}
+\tag{309.3}
+$$
+
+的谱值为：
+
+$$
+\Im\rho.
+$$
+
+在 CMV 基中：
+
+$$
+H_{\mathrm{CMV}}
+=
+\mathcal U
+H_{\mathrm{zero}}
+\mathcal U^*.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{Hilbert--Pólya 频率算子}
+=
+\text{Clark 对角谱算子在 Schur 创新基中的矩阵图表}.
+}
+$$
+
+---
+

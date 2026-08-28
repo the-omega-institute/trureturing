@@ -8,6 +8,16 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-28T02:20:41.8968570+00:00
+    gids:
+      - D5/S3/ConceptDynamics/Communication/TruthfulnessSufficiencyIndependence.truthfulness_sufficiency_independence
+    gaps:
+      - code: chain-migration-incomplete
+        detail: generic-residual-c5e94a0e42b2d55184caa27ccbb4bd8576500d51212be5516ba4267924643b54-0af5e5d066f76d5f0861c3f5aba752d251e7dbb14a1312a3fec837790db287eb
+      - code: chain-migration-incomplete
+        detail: generic-residual-fed18860b779db0ece034c454cbffa45777c69f6c70eaa6bf7dddf06adc4643d-4bd4ae4e43135fe42d53c590f93463501cfed376bbf37beb958f64a4f4e641af
   chain_atoms:
     - generic-residual-d852956c26e1f805dbc99bd766c2a8697388bcaabe8146642f4adb00f303734c-771c05c2dff796aadd27ba9b900098e3aa3145dbfe41224b44173dd3371f5c07
     - generic-residual-fed18860b779db0ece034c454cbffa45777c69f6c70eaa6bf7dddf06adc4643d-4bd4ae4e43135fe42d53c590f93463501cfed376bbf37beb958f64a4f4e641af

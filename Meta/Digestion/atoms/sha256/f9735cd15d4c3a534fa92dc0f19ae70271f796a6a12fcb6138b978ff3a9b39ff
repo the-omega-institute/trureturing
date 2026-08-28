@@ -1,0 +1,25 @@
+* 谱支撑为：
+
+  $$
+  \{0\}\cup\{\gamma^{-2}\}.
+  $$
+
+取循环向量：
+
+$$
+\mathbf1(u)=1.
+$$
+
+则：
+
+$$
+\boxed{
+\mu_n
+=
+\langle U^n\mathbf1,\mathbf1\rangle.
+}
+\tag{228.2}
+$$
+
+---
+

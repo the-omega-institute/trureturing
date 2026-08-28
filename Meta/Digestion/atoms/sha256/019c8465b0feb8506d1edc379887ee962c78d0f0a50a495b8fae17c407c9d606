@@ -1,0 +1,103 @@
+# 本轮最终结论
+
+上一轮的核心对象是：
+
+$$
+m_0(z)
+=
+-\frac{\Xi'(z)}{\Xi(z)},
+$$
+
+RH 等价于其 Herglotz 正性。
+
+本轮利用偶对称将其折叠为：
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\frac{1}{2\sqrt{x}}
+\frac{
+\xi'(\frac12+\sqrt{x})
+}{
+\xi(\frac12+\sqrt{x})
+}.
+}
+$$
+
+RH 等价于：
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\sum_{\gamma>0}
+\frac{m_\gamma}{x+\gamma^2},
+}
+$$
+
+即它是一个正 Stieltjes transform。
+
+由此 RH 获得四个新的完全等价形式：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{全部 reciprocal-zero Hankel 矩阵正半定};\\
+&\text{全部 Stieltjes continued-fraction 系数非负};\\
+&\text{全部有限 Padé observers 具有负实极点与正留数};\\
+&\text{存在一个正紧算子 }U\text{，其谱为 }\gamma^{-2}.
+\end{aligned}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{Hilbert–Pólya 算子不一定需要从零点本身直接猜出，}
+}
+$$
+
+而可以经由：
+
+$$
+\boxed{
+\text{中心导数}
+\to
+\text{Stieltjes moments}
+\to
+\text{Hankel positivity}
+\to
+\text{Jacobi operator}
+\to
+\text{自伴谱}
+}
+$$
+
+逐层生成。
+
+所以当前 OACTC 最小、最具体的 RH 中心命题已经可以写成：
+
+$$
+\boxed{
+\mu_n
+=
+\langle
+U_{\mathrm{tor}}^n
+v_{\mathrm{tor}},
+v_{\mathrm{tor}}
+\rangle
+\qquad
+(U_{\mathrm{tor}}\ge0),
+}
+$$
+
+其中 \(\mu_n\) 完全由有限二次环面周期的中心 jets 重构。
+
+如果能从 relative trace formula 直接建立这个正 moment representation，RH 将随之成立。
+
+[1]: https://arxiv.org/abs/1204.1827 "A canonical system of differential equations arising from the Riemann zeta-function"
+[2]: https://arxiv.org/abs/2404.12131 "Continued-fraction characterization of Stieltjes moment sequences with support in $[ξ, \infty)$"
+[3]: https://arxiv.org/abs/1905.11269?utm_source=chatgpt.com "The Jensen-Pólya program for various L-functions"
+[4]: https://arxiv.org/abs/1902.07321?utm_source=chatgpt.com "Jensen polynomials for the Riemann zeta function and other sequences"

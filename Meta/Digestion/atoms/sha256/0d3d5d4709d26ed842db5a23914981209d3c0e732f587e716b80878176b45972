@@ -1,0 +1,47 @@
+# 第三百一十七部　普通相对迹正性为何不够
+
+两个核：
+
+$$
+\mathcal G_{\mathcal P},
+\qquad
+\mathcal G_{\mathcal T}
+$$
+
+本身都是正定核，因为它们分别是有限向量族的 Gram kernels。
+
+而对任意标量函数 \(f\)：
+
+$$
+K_f(s,t)
+=
+f(s)\overline{f(t)}K(s,t)
+$$
+
+只要 \(K\succeq0\)，就仍然有：
+
+$$
+K_f\succeq0.
+$$
+
+所以由：
+
+$$
+\mathcal G_{\mathcal P}
+=
+\xi(s)\overline{\xi(t)}
+\mathcal G_{\mathcal T},
+$$
+
+可知：
+
+$$
+\boxed{
+\mathcal G_{\mathcal P}\succeq0
+}
+$$
+
+对任意 \(\xi\) 都自动成立。
+
+因此：
+

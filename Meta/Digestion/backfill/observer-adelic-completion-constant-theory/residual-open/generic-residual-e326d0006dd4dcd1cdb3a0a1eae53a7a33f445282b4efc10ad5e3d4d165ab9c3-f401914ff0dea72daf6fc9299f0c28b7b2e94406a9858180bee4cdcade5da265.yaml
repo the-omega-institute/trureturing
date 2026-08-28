@@ -1,0 +1,10 @@
+ast_path: section/218-1-Non-sticky-分支/clause/8
+fingerprints:
+  raw_sha256: sha256:e326d0006dd4dcd1cdb3a0a1eae53a7a33f445282b4efc10ad5e3d4d165ab9c3
+  normalized_sha256: sha256:e326d0006dd4dcd1cdb3a0a1eae53a7a33f445282b4efc10ad5e3d4d165ab9c3
+cas_ref: sha256:e326d0006dd4dcd1cdb3a0a1eae53a7a33f445282b4efc10ad5e3d4d165ab9c3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

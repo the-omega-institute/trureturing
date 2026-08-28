@@ -1,0 +1,85 @@
+# 第二百一十四部　Herglotz escape radius
+
+定义右侧最大零点偏移：
+
+$$
+\boxed{
+\delta_*
+=
+\sup_{\xi(\rho)=0}
+\left(
+\Re\rho-\frac12
+\right)_+.
+}
+\tag{214.1}
+$$
+
+定义 Herglotz 阈值：
+
+$$
+\boxed{
+\omega_H
+=
+\inf
+\left\{
+a\ge0:
+m_\omega
+\text{ 对每个 }\omega>a
+\text{ 都是 Herglotz}
+\right\}.
+}
+\tag{214.2}
+$$
+
+由 shifted inner/zero-free equivalence：
+
+$$
+\boxed{
+\omega_H=\delta_*.
+}
+\tag{214.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\omega_H=0.
+}
+\tag{214.4}
+$$
+
+这与前文：
+
+$$
+\omega_{\mathrm{tor}}
+=
+\omega_{\mathrm{in}}
+$$
+
+进一步闭合为：
+
+$$
+\boxed{
+\omega_{\mathrm{tor}}
+=
+\omega_{\mathrm{in}}
+=
+\omega_H
+=
+\delta_*.
+}
+\tag{214.5}
+$$
+
+同一个常数同时表示：
+
+* 普遍环面不可见谱离 tempered 轴的最大距离；
+* de Branges innerness 的失效宽度；
+* Herglotz Weyl 函数的最小平移阈值；
+* 最右侧 Riemann 零点偏移。
+
+---
+

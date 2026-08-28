@@ -1,0 +1,79 @@
+# 第一百九十五部　有限环面 Pick 层级
+
+在 \(\mathbf P_\omega^+\neq0\) 时，从有限环面帧重构：
+
+$$
+\Theta_\omega(z)
+=
+\frac{
+\langle
+\mathbf P_\omega^-(z),
+\mathbf T_\omega^-(z)
+\rangle
+}{
+\|\mathbf T_\omega^-(z)\|^2
+}
+\cdot
+\frac{
+\|\mathbf T_\omega^+(z)\|^2
+}{
+\langle
+\mathbf P_\omega^+(z),
+\mathbf T_\omega^+(z)
+\rangle
+}.
+\tag{195.1}
+$$
+
+对有限点集：
+
+$$
+z_1,\ldots,z_n\in\mathbb C^+,
+$$
+
+定义 Pick 矩阵：
+
+$$
+\boxed{
+\Pi_{\omega,n}
+=
+\left[
+\frac{
+1-
+\Theta_\omega(z_a)
+\overline{\Theta_\omega(z_b)}
+}{
+2\pi i(\overline{z_b}-z_a)
+}
+\right]_{a,b=1}^n.
+}
+\tag{195.2}
+$$
+
+则：
+
+$$
+\boxed{
+\Theta_\omega\text{ 为 Schur/inner}
+\iff
+\Pi_{\omega,n}\succeq0
+}
+$$
+
+对所有有限点集成立。
+
+所以 RH 也等价于一个有限环面 Pick 正性层级：
+
+$$
+\boxed{
+\det\Pi_{\omega,n}\ge0
+\quad
+\forall\,\omega,n,z_1,\ldots,z_n.
+}
+\tag{195.3}
+$$
+
+在解析性已知的条件下，一点模长不等式已经足以表达 Schur 性；高阶 Pick 矩阵仍然是更适合数值证书和稳定性分析的有限形式。
+
+---
+

@@ -1,0 +1,64 @@
+# 第二百九十五部　零点角在 \(1\) 附近的拥挤律
+
+Clark 谱点满足：
+
+$$
+u_\gamma=e^{i\theta_\gamma},
+\qquad
+\theta_\gamma
+=
+2\arctan\frac{1}{2\gamma}.
+$$
+
+所以：
+
+$$
+\theta_\gamma\sim\gamma^{-1}.
+$$
+
+全部高零点角聚集于：
+
+$$
+1\in\mathbb T.
+$$
+
+定义小弧：
+
+$$
+\boxed{
+I_\varepsilon
+=
+\left\{
+e^{i\theta}:|\theta|<\varepsilon
+\right\}.
+}
+\tag{295.1}
+$$
+
+条件：
+
+$$
+u_\gamma\in I_\varepsilon
+$$
+
+等价于：
+
+$$
+\gamma>
+T_\varepsilon
+:=
+\frac{1}{2\tan(\varepsilon/2)}.
+$$
+
+由：
+
+$$
+\mu_\lambda(I_\varepsilon)
+=
+\frac{4}{\lambda_1}
+\sum_{\gamma>T_\varepsilon}
+\frac{m_\gamma}{4\gamma^2+1},
+$$
+
+以及 Riemann–von Mangoldt 零点计数公式，可得：
+

@@ -1,0 +1,15 @@
+ast_path: section/158-1-Non-sticky-words
+fingerprints:
+  raw_sha256: sha256:5071830a8cbd35b3d2f3dcb1cd129251d3b7eace12fd6c158bf54b40f1c0d674
+  normalized_sha256: sha256:5071830a8cbd35b3d2f3dcb1cd129251d3b7eace12fd6c158bf54b40f1c0d674
+cas_ref: sha256:5071830a8cbd35b3d2f3dcb1cd129251d3b7eace12fd6c158bf54b40f1c0d674
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-f7b91d519d389def7c34a82e0a0c9c7f5f84aa4356936dcd6cb7842387281b0c-ffd5c86295be3f2be9cd3c202a8200c10c6415449fb4fed4c2879e9f2423374c
+    - generic-residual-7093553b5d2ae6ab9c3c3f6a87bb1b414068b3500dd636dcd9a1c00e10250f94-267a59924c7f7529475778e3fe1e83b4efbaed7b3827ad76f3971e47a17738c2
+    - generic-residual-39a72bb8e58ce89811968a48432932fa7040b2ae5c844a91ccb1672139e91530-d5df8b5b0e2e3d790b18816b433aa883f59a19ff4e84c213982eb3b076488fae
+    - generic-residual-b38202698e71d2b1a1d62ff11ac381f459335991ba0e5738fd937e5dadedb42e-e5dd4ea984839e2655a5c0a2d6841dd32ceaecc7605937f5ed0440885840967d

@@ -1,0 +1,47 @@
+# 第一百九十八部　定量环面容量
+
+有限覆盖只说明“可以重构”，却不说明重构是否稳定。
+
+定义带权环面帧容量：
+
+$$
+\boxed{
+\operatorname{Cap}_{\mathrm{tor}}
+(K;\mathcal D,w)
+=
+\inf_{s\in K}
+\sum_{D\in\mathcal D}
+w_D|\mathcal T_D(s)|^2.
+}
+\tag{198.1}
+$$
+
+定义上界：
+
+$$
+\operatorname{Top}_{\mathrm{tor}}
+(K;\mathcal D,w)
+=
+\sup_{s\in K}
+\sum_Dw_D|\mathcal T_D(s)|^2.
+$$
+
+定义条件数：
+
+$$
+\boxed{
+\kappa_{\mathrm{tor}}
+=
+\sqrt{
+\frac{
+\operatorname{Top}_{\mathrm{tor}}
+}{
+\operatorname{Cap}_{\mathrm{tor}}
+}
+}.
+}
+\tag{198.2}
+$$
+
+---
+

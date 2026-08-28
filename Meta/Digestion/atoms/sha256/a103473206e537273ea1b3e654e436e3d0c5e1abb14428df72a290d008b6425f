@@ -1,0 +1,51 @@
+## 247.1 正完成锥的前向不变性
+
+de Bruijn 的单调性结论意味着：
+
+$$
+t_0\ge\Lambda_{\mathrm N}
+\quad\Longrightarrow\quad
+t\ge t_0
+\Rightarrow
+t\ge\Lambda_{\mathrm N}.
+$$
+
+因此：
+
+$$
+\boxed{
+\mathscr F_{t_0}
+\in\mathcal C_{\mathrm{Fredholm}}^+
+\Longrightarrow
+\mathscr F_t
+\in\mathcal C_{\mathrm{Fredholm}}^+
+\quad(t\ge t_0).
+}
+\tag{247.3}
+$$
+
+这里：
+
+$$
+\mathcal C_{\mathrm{Fredholm}}^+
+=
+\left\{
+\det(I+xU):U\ge0,\ U\text{ trace-class}
+\right\}.
+$$
+
+所以 folded Newman PDE 具有一个前向不变的总正性锥。
+
+RH 的断言是：
+
+$$
+\boxed{
+t=0
+\text{ 恰好已经进入该正完成锥}.
+}
+$$
+
+Rodgers–Tao 的 \(\Lambda_{\mathrm N}\ge0\) 则说明：若 RH 成立，\(t=0\) 位于该锥的临界边界，而不是其内部远处。
+
+---
+

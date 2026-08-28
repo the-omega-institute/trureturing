@@ -1,0 +1,17 @@
+# 第三百二十部　可观测 Gramian 与 Wang–Deng 二分
+
+由 \(\mathfrak U_\omega\) unitary：
+
+$$
+\boxed{
+A_\omega^*A_\omega
++
+C_\omega^*C_\omega
+=
+I.
+}
+\tag{320.1}
+$$
+
+迭代得到：
+

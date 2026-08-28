@@ -1,0 +1,27 @@
+## 240.1 Primitive power sums
+
+上一轮定义：
+
+$$
+\mu_n
+=
+\sum_j\alpha_j^{n+1}.
+$$
+
+现在可写成：
+
+$$
+\boxed{
+\mu_n
+=
+\operatorname{Tr}
+\left(
+U_\Xi^{n+1}
+\right).
+}
+\tag{240.3}
+$$
+
+于是：
+
+* \(a_n\)：不同谱原子组成的外积复合状态；

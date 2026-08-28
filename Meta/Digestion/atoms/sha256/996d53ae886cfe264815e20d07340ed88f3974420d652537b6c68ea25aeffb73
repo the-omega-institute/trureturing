@@ -1,0 +1,28 @@
+## 定理 187.1（Toroidal Čech completion）
+
+设 \(\Omega\) 是由二次 twist 非消失域 \(U_D\) 覆盖的谱域。则局部比值：
+
+$$
+\frac{\mathcal P_D}{\mathcal T_D}
+$$
+
+在交叠区域上一致，并唯一胶合成：
+
+$$
+\boxed{
+\xi:\Omega\to\mathbb C.
+}
+$$
+
+这意味着：
+
+$$
+\boxed{
+\text{Riemann }\xi
+=
+\text{全部二次环面周期图表的共同标量振幅}.
+}
+$$
+
+---
+

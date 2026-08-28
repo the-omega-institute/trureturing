@@ -1,0 +1,31 @@
+* \(p=5\) 时分歧。
+
+而在 Archimedean 几何端，同一个判别式 \(5\) 给出闭测地线：
+
+$$
+C_5\subset PSL_2(\mathbb Z)\backslash\mathbb H
+$$
+
+及长度：
+
+$$
+4\log\varphi.
+$$
+
+因此可以定义：
+
+$$
+\boxed{
+\mathfrak A_5
+=
+\left(
+\{\chi_5(p)\}_{p<\infty},
+C_5,
+4\log\varphi
+\right).
+}
+\tag{150.1}
+$$
+
+它是一个完整的**判别式 \(5\) 阿代尔周期记录**：
+

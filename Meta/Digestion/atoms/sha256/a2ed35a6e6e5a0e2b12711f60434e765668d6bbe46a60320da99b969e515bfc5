@@ -1,0 +1,40 @@
+# 第一百五十七部　Golden Eisenstein 周期实验
+
+令：
+
+$$
+C_5
+$$
+
+为判别式 \(5\) 的黄金闭测地线，\(d\mu_5\) 为其归一化弧长测度。
+
+定义：
+
+$$
+\boxed{
+F_5(s)
+=
+\int_{C_5}
+E^*(z,s)\,d\mu_5(z).
+}
+\tag{157.1}
+$$
+
+由 Hecke 型积分公式，此类实二次闭测地线周期与：
+
+$$
+\mathbb Q(\sqrt5)
+$$
+
+的部分 zeta／Hecke \(L\)-数据相联系。([arXiv][5])
+
+所以 \(F_5\) 是一个非常自然的实验对象：
+
+* 测度非负；
+* 几何周期为黄金最短闭轨；
+* 算术端读取 \(\zeta_{\mathbb Q(\sqrt5)}\) 或其部分通道；
+* regulator 为 \(\log\varphi\)；
+* Fourier 模式给出 Hecke twists。
+
+---
+

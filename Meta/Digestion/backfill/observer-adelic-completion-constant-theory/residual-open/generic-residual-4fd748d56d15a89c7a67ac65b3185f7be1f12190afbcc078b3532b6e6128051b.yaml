@@ -1,0 +1,14 @@
+ast_path: section/297-1-观察者边界条件原理
+fingerprints:
+  raw_sha256: sha256:4fd748d56d15a89c7a67ac65b3185f7be1f12190afbcc078b3532b6e6128051b
+  normalized_sha256: sha256:4fd748d56d15a89c7a67ac65b3185f7be1f12190afbcc078b3532b6e6128051b
+cas_ref: sha256:4fd748d56d15a89c7a67ac65b3185f7be1f12190afbcc078b3532b6e6128051b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-19ca48bc4013857f9439bbea39eeea1e037fcdd92d45d44ed2777f7363a3d8ab-ce1ee74e81d99fe8a3f517a704570e56308cde439467ed7bf5cf7fd473fa9a3e
+    - generic-residual-84514b59c69c0e2a8cca448b8fe7d4f4cf9dec586b2900f9491a308810ac7fcf-b15ebbfca8c32cd457388d82a2fe9e77c0209f6a19c390cf9115a614e57aa992
+    - generic-residual-a47a2a745129f0fe1ff459bfa1931c93679dfcbd74899209a41331464c87ff40-dbb589571143c61dfd0055cfd01dc9287fab1fb8faff9dd1e161b409560ef2d3
