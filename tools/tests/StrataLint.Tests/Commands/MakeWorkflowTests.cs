@@ -56,6 +56,7 @@ public sealed partial class MakeWorkflowTests
         "build",
         "emit",
         "ingest",
+        "align-digestion-status",
         "echo-residual-summary",
         "show-atom",
         "theory-candidates",
@@ -363,6 +364,32 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("STRATALINT_LEAN_REPORT", consumer, StringComparison.Ordinal);
         Assert.Contains(".materials.zip", consumer, StringComparison.Ordinal);
         Assert.DoesNotContain("may be stale", consumer, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void IngestWrapperSeparatesReportFreeDigestionFromTruthAlignment()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var script = File.ReadAllText(Path.Combine(root, IngestScriptPath));
+
+        Assert.Contains("lean-report-input.sh", script, StringComparison.Ordinal);
+        Assert.Contains(" address --repository ", script, StringComparison.Ordinal);
+        Assert.Contains("git -C \"$ROOT\" archive", script, StringComparison.Ordinal);
+        Assert.DoesNotContain(
+            "input_state=\"$(report_input_state)\"",
+            script,
+            StringComparison.Ordinal);
+        Assert.Contains("report_input_state\n    cleanup", script, StringComparison.Ordinal);
+        Assert.Contains(
+            "ingest --base \"$BASE\" --report-input-state \"$REPORT_INPUT_STATE\"",
+            script,
+            StringComparison.Ordinal);
+        Assert.Contains("align-digestion-status)", script, StringComparison.Ordinal);
+        Assert.Contains(
+            "--role digestion-alignment-consumer --report \"$REPORT\"",
+            script,
+            StringComparison.Ordinal);
+        Assert.Single(Regex.Matches(script, Regex.Escape("exec \"$CONSUMER\"")).Cast<Match>());
     }
 
     [Fact]

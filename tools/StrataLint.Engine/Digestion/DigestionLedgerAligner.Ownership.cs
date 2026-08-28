@@ -91,12 +91,7 @@ internal static partial class DigestionLedgerAligner
             DigestionMigrationState.Residual,
             DigestionTruthState.Open)
         && entry.CoverageGids.IsEmpty
-        && entry.Receipts.Coverage.IsEmpty
-        && entry.Receipts.Scribe.IsEmpty
-        && entry.Receipts.UnresolvedSubitems.IsEmpty
-        && entry.Receipts.ChainAtoms.IsEmpty
-        && entry.Receipts.TailAuthorization is null
-        && entry.Receipts.Quarantine is null
+        && entry.Receipts.IsEmptyForSourceRevision
         && !ownedAtomIds.Contains(entry.AtomId);
 
     private static bool CanAcknowledgeSupersededGeneration(
