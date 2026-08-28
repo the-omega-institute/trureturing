@@ -262,28 +262,6 @@ internal static class LeanImportClosure
         return packages.ToImmutable();
     }
 
-    internal static bool ProtectedEnvironmentMatchesEntry(
-        FrozenActiveEntry entry,
-        RepositorySnapshot snapshot)
-    {
-        if (!TryGetPinnedEnvironmentFiles(snapshot, out var toolchain, out var manifest))
-        {
-            return false;
-        }
-
-        if (toolchain.GitBlobOid is not { } toolchainOid
-            || manifest.GitBlobOid is not { } manifestOid)
-        {
-            return false;
-        }
-
-        return entry.Environment is { } environment
-            ? environment.LeanToolchainBlobOid == toolchainOid
-                && environment.LakeManifestBlobOid == manifestOid
-            : entry.Payload.Input.SupportingBlobOids.Contains(toolchainOid, StringComparer.Ordinal)
-                && entry.Payload.Input.SupportingBlobOids.Contains(manifestOid, StringComparer.Ordinal);
-    }
-
     private static bool TryGetPinnedEnvironmentFiles(
         RepositorySnapshot snapshot,
         out RepositoryFile toolchain,

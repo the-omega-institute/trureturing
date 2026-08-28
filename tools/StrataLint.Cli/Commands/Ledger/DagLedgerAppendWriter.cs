@@ -1,7 +1,6 @@
 using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Nodes;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -25,28 +24,29 @@ internal static class DagLedgerAppendWriter
                 repositoryRoot,
                 repository,
                 arguments[1]);
-            var candidateBytes = FrozenLedgerGenerator.AppendMissingFreezes(
+            var drafts = FrozenLedgerGenerator.MissingFreezes(
                 context.Baseline,
                 context.Catalog);
-            if (candidateBytes.IsEmpty)
+            if (drafts.IsEmpty)
             {
                 return new CommandResult(
                     true,
-                    $"LEDGER_APPEND appended_reattests=0 appended_freezes=0 no catalog reconciliation required "
-                    + $"events={context.Baseline.Events.Length} head={context.Baseline.HeadHash}\n",
+                    $"LEDGER_APPEND appended_freezes=0 no catalog reconciliation required "
+                    + $"events={context.Baseline.EventCount} head={context.Baseline.HeadHash}\n",
                     string.Empty);
             }
 
-            var candidateSyntax = DagLedgerCommandPreparation.LoadLedger(
-                candidateBytes.AsSpan(),
-                "generated frozen ledger");
+            var pending = BuildNewEventFiles(drafts);
+            var prospective = DagLedgerCommandPreparation.ValidateGeneratedEventFiles(
+                context.BaseView,
+                pending,
+                "generated frozen ledger suffix");
             var trustedCandidateReferences = DagLedgerCommandPreparation.ValidateSuffixReferences(
                 repository,
-                candidateSyntax,
-                context.Baseline,
+                prospective,
                 "generated frozen ledger");
             var candidate = FrozenLedger.ValidateCandidate(
-                candidateSyntax,
+                prospective,
                 context.Baseline,
                 context.Catalog,
                 trustedCandidateReferences) switch
@@ -57,28 +57,15 @@ internal static class DagLedgerAppendWriter
                 _ => throw new InvalidOperationException("unknown ledger validation outcome"),
             };
             RequireUnchangedBaseline(context.LedgerPath, context.BaselineFiles, "ledger-append");
-
-            var pending = BuildNewEventFiles(
-                candidateSyntax.Lines,
-                knownDagHashes: context.BaseView.EventHashes);
-            var prospective = DagLedgerCommandPreparation.ValidateGeneratedEventFiles(
-                context.BaseView,
-                pending,
-                "generated frozen ledger suffix");
             WriteEventFiles(context.LedgerPath, pending, context.BaselineFiles);
-            var appended = candidate.Events.Skip(context.Baseline.Events.Length).ToImmutableArray();
-            var reattests = appended
-                .OfType<FrozenLedgerEvent.Reattest>()
+            var freezes = prospective
+                .Where(static item => item.EventType == "Freeze")
                 .ToImmutableArray();
-            var freezes = appended
-                .OfType<FrozenLedgerEvent.Freeze>()
-                .ToImmutableArray();
-            var output = $"LEDGER_APPEND appended_reattests={reattests.Length} appended_freezes={freezes.Length} "
-                + $"events={candidate.Events.Length} "
+            var output = $"LEDGER_APPEND appended_freezes={freezes.Length} "
+                + $"events={candidate.EventCount} "
                 + $"head={context.BaseView.EventSetRoot(prospective.Select(static item => item.EventHash))}\n"
-                + string.Concat(reattests.Select(item =>
-                    $"REATTESTED {context.Baseline.ActiveEntries[item.Payload.CaseId].Material.RepoPath.Value}\n"))
-                + string.Concat(freezes.Select(static item => $"FROZEN {item.Payload.Input.DescriptorSelector}\n"));
+                + string.Concat(freezes.Select(static item =>
+                    $"FROZEN {item.Input!.DescriptorSelector}\n"));
             return new CommandResult(true, output, string.Empty);
         }
         // Preparation marks report and repository faults now. Without these two the wrapped
@@ -101,77 +88,16 @@ internal static class DagLedgerAppendWriter
         }
     }
 
-    internal static void WriteNewEvents(
-        string directory,
-        IEnumerable<FrozenLedgerLineSyntax> lines,
-        int skip = 0,
-        ImmutableArray<RepositoryFile> expectedBaselineFiles = default,
-        FrozenLedgerSyntax? existingSyntax = null) =>
-        WriteEventFiles(
-            directory,
-            BuildNewEventFiles(lines, skip, existingSyntax),
-            expectedBaselineFiles);
-
     internal static ImmutableArray<RepositoryFile> BuildNewEventFiles(
-        IEnumerable<FrozenLedgerLineSyntax> lines,
-        int skip = 0,
-        FrozenLedgerSyntax? existingSyntax = null,
-        IReadOnlySet<string>? knownDagHashes = null)
+        IEnumerable<FrozenLedgerDraft> drafts)
     {
         var files = ImmutableArray.CreateBuilder<RepositoryFile>();
-        var linearToDagHash = new Dictionary<string, string>(StringComparer.Ordinal);
-        var existingDagHashByLinearHash = existingSyntax?.Lines
-            .Where(static line => line.SourceDagEventHash is not null)
-            .ToDictionary(
-                static line => line.Value.GetProperty("event_hash").GetString()!,
-                static line => line.SourceDagEventHash!,
-                StringComparer.Ordinal)
-            ?? new Dictionary<string, string>(StringComparer.Ordinal);
-        var sequence = 0;
-        foreach (var line in lines)
+        foreach (var draft in drafts)
         {
-            var eventType = line.Value.GetProperty("event_type").GetString()!;
-            var payload = line.Value.GetProperty("payload");
-            var linearEventHash = line.Value.GetProperty("event_hash").GetString()!;
-            if (sequence < skip
-                && existingDagHashByLinearHash.TryGetValue(linearEventHash, out var existingDagHash))
-            {
-                linearToDagHash.Add(linearEventHash, existingDagHash);
-                sequence++;
-                continue;
-            }
-
-            if (payload.TryGetProperty("previous_attestation_event_hash", out var previous))
-            {
-                var previousHash = previous.GetString()!;
-                if (linearToDagHash.TryGetValue(previousHash, out var dagPrevious))
-                {
-                    var rewritten = JsonNode.Parse(payload.GetRawText())!.AsObject();
-                    rewritten["previous_attestation_event_hash"] = dagPrevious;
-                    payload = JsonSerializer.SerializeToElement(rewritten);
-                }
-                else if (knownDagHashes is null || !knownDagHashes.Contains(previousHash))
-                {
-                    throw new InvalidOperationException(
-                        "generated attestation names an unknown predecessor");
-                }
-            }
-
-            var schemaVersion = sequence < skip && !payload.TryGetProperty("axiom_closure", out _)
-                ? 2
-                : FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion;
-            var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(eventType, payload, schemaVersion);
-            linearToDagHash.Add(linearEventHash, encoded.Hash);
-            if (sequence++ < skip)
-            {
-                continue;
-            }
-
-            var identity = FrozenLedgerCanonicalWriter.EventIdentity(
-                eventType,
-                payload,
-                encoded.Hash,
-                schemaVersion);
+            var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
+                draft.EventType,
+                draft.Payload);
+            var identity = FrozenLedgerCanonicalWriter.EventIdentity(encoded.Hash);
             var path = RepoPath.CreateKnown(
                 $"{FrozenLedgerChangeClassifier.AcceptedRoot}/{identity[7..]}.json");
             files.Add(new RepositoryFile(

@@ -7,77 +7,6 @@ namespace StrataLint.Engine;
 
 public static partial class FrozenLedger
 {
-    private static void ValidateSyntaxEnvelope(FrozenLedgerSyntax syntax)
-    {
-        var concatenated = syntax.Lines.SelectMany(static line => line.RawBytes).ToArray();
-        if (!syntax.RawBytes.AsSpan().SequenceEqual(concatenated))
-        {
-            throw new FormatException("Frozen ledger syntax lines do not reproduce the raw bytes.");
-        }
-    }
-
-    private static void ValidateSuffixSyntaxEnvelope(FrozenLedgerSyntax syntax, int startIndex)
-    {
-        var prefixLength = syntax.Lines.Take(startIndex).Sum(static line => line.RawBytes.Length);
-        var suffix = syntax.Lines.Skip(startIndex).SelectMany(static line => line.RawBytes).ToArray();
-        if (prefixLength > syntax.RawBytes.Length
-            || !syntax.RawBytes.AsSpan()[prefixLength..].SequenceEqual(suffix))
-        {
-            throw new FormatException("Frozen ledger suffix lines do not reproduce the suffix bytes.");
-        }
-    }
-
-    private static void RequireCanonicalLine(FrozenLedgerLineSyntax line)
-    {
-        var canonical = StructuredCanonicalWriter.WriteJson(line.Value);
-        if (!line.RawBytes.AsSpan().SequenceEqual(canonical.AsSpan()))
-        {
-            throw new FormatException("Frozen event bytes are not canonical JSONL.");
-        }
-    }
-
-    private static FrozenGenesisPayload ParseGenesis(
-        JsonElement payload,
-        FrozenMaterialCatalog catalog) =>
-        ParseGenesis(payload, catalog, requireCurrentRuleCatalog: true);
-
-    private static FrozenGenesisPayload ParseHistoricalGenesis(
-        JsonElement payload,
-        FrozenMaterialCatalog catalog) =>
-        ParseGenesis(payload, catalog, requireCurrentRuleCatalog: false);
-
-    private static FrozenGenesisPayload ParseGenesis(
-        JsonElement payload,
-        FrozenMaterialCatalog catalog,
-        bool requireCurrentRuleCatalog)
-    {
-        RequireObjectFields(
-            payload,
-            "Genesis payload",
-            "generator_blob_oid", "origin_commit_oid", "origin_tree_oid", "protocol_version", "rule_catalog_root");
-        var result = new FrozenGenesisPayload(
-            RequiredString(payload, "generator_blob_oid"),
-            RequiredString(payload, "origin_commit_oid"),
-            RequiredString(payload, "origin_tree_oid"),
-            RequiredNonnegativeInteger(payload, "protocol_version"),
-            RequiredString(payload, "rule_catalog_root"));
-        if (!FrozenHashSyntax.IsGitOid(result.GeneratorBlobOid)
-            || !FrozenHashSyntax.IsSha256(result.RuleCatalogRoot)
-            || result.ProtocolVersion != 1
-            || !string.Equals(result.OriginCommitOid, catalog.Environment.OriginCommitOid, StringComparison.Ordinal)
-            || !string.Equals(result.OriginTreeOid, catalog.Environment.OriginTreeOid, StringComparison.Ordinal)
-            || requireCurrentRuleCatalog
-                && !string.Equals(
-                    result.RuleCatalogRoot,
-                    RuleCatalog.Default.RootSha256,
-                    StringComparison.Ordinal))
-        {
-            throw new FormatException("Genesis payload does not bind the validated origin/environment/catalog.");
-        }
-
-        return result;
-    }
-
     private static FrozenFreezePayload ParseFreeze(
         JsonElement payload,
         FrozenMaterialCatalog catalog,
@@ -85,13 +14,8 @@ public static partial class FrozenLedger
         bool requireCatalogRevisionIdentity = true)
     {
         RequireEventPayloadFields(payload, "Freeze");
-        var currentShape = HasExactObjectFields(
-            payload,
-            FrozenLedgerReferenceProjection.FreezePayloadFieldsV4);
         var input = ParseInput(payload.GetProperty("input"));
-        var pathText = currentShape
-            ? input.DescriptorSelector
-            : RequiredString(payload, "node_path");
+        var pathText = input.DescriptorSelector;
         if (!RepoPath.TryCreate(pathText, out var path) || !catalog.ByPath.TryGetValue(path, out var expectedMaterial))
         {
             throw new FormatException($"Freeze targets a non-Closed or unknown module {pathText}.");
@@ -127,22 +51,6 @@ public static partial class FrozenLedger
             throw new FormatException("Freeze input has no validated Git commit/tree/blob capability.");
         }
         var expectedCaseId = FrozenLedgerCanonicalWriter.CaseId(expectedMaterial.FrozenNodeId);
-        if (!currentShape)
-        {
-            var expectedVerdict = ParseExpected(payload.GetProperty("expected"));
-            if (RequiredString(payload, "case_class") != "active-frozen"
-                || RequiredString(payload, "evaluation") != "admission"
-                || RequiredString(payload, "truth_state") != nameof(TruthState.Closed)
-                || !expectedVerdict.AllowedDispositions.SequenceEqual(new[] { "admit" }, StringComparer.Ordinal)
-                || expectedVerdict.DiagnosticMatch != "none"
-                || expectedVerdict.RequiredDiagnostics.Length != 0
-                || RequiredString(payload, "input_fingerprint") != expectedMaterial.WitnessId.Value
-                || RequiredString(payload, "semantic_receipt") != expectedMaterial.FrozenNodeId.Value)
-            {
-                throw new FormatException($"Freeze payload does not match recomputed material for {path.Value}.");
-            }
-        }
-
         if (result.CaseId != expectedCaseId
             || !result.DeclarationStatementIds.SequenceEqual(expectedMaterial.DeclarationStatementIds)
             || result.StatementId != expectedMaterial.StatementId
@@ -158,7 +66,6 @@ public static partial class FrozenLedger
                         != (expectedMaterial.Attestation.BaseTreeOid ?? catalog.Environment.OriginTreeOid))
             || result.Input.DescriptorBlobOid != expectedMaterial.Attestation.SourceBlobOid
             || result.Input.DescriptorSelector != expectedMaterial.RepoPath.Value
-            || result.Input.Materializer != "repository-snapshot-v1"
             || !result.Input.SupportingBlobOids.SequenceEqual(
                 new[]
                 {
@@ -177,6 +84,9 @@ public static partial class FrozenLedger
         payload.TryGetProperty("axiom_closure", out _)
             ? ParseAxiomClosure(payload, "axiom_closure")
             : default;
+
+    private static ImmutableArray<string> ParseAxiomClosure(JsonElement payload, string name) =>
+        RequiredStringArray(payload, name);
 
     internal static ImmutableArray<FrozenDeclarationStatement> ParseDeclarationStatementIds(
         JsonElement payload) =>
@@ -219,45 +129,18 @@ public static partial class FrozenLedger
         return result;
     }
 
-    private static FrozenExpectedVerdict ParseExpected(JsonElement value)
-    {
-        RequireObjectFields(
-            value,
-            "expected verdict",
-            "allowed_dispositions", "diagnostic_match", "required_diagnostics");
-        var diagnostics = value.GetProperty("required_diagnostics");
-        if (diagnostics.ValueKind != JsonValueKind.Array)
-        {
-            throw new FormatException("required_diagnostics must be an array.");
-        }
-
-        var parsed = diagnostics.EnumerateArray().Select(item =>
-        {
-            RequireObjectFields(item, "expected diagnostic", "message_sha256", "path", "rule_id");
-            return new FrozenExpectedDiagnostic(
-                RequiredString(item, "message_sha256"),
-                RequiredString(item, "path"),
-                RequiredString(item, "rule_id"));
-        }).ToImmutableArray();
-        return new FrozenExpectedVerdict(
-            RequiredStringArray(value, "allowed_dispositions"),
-            RequiredString(value, "diagnostic_match"),
-            parsed);
-    }
-
     private static FrozenLedgerInput ParseInput(JsonElement value)
     {
         RequireObjectFields(
             value,
             "Freeze input",
             "base_commit_oid", "base_tree_oid", "descriptor_blob_oid", "descriptor_selector",
-            "materializer", "supporting_blob_oids");
+            "supporting_blob_oids");
         var result = new FrozenLedgerInput(
             RequiredString(value, "base_commit_oid"),
             RequiredString(value, "base_tree_oid"),
             RequiredString(value, "descriptor_blob_oid"),
             RequiredString(value, "descriptor_selector"),
-            RequiredString(value, "materializer"),
             RequiredStringArray(value, "supporting_blob_oids"));
         if (!FrozenHashSyntax.IsGitOid(result.BaseCommitOid)
             || !FrozenHashSyntax.IsGitOid(result.BaseTreeOid)
@@ -268,21 +151,6 @@ public static partial class FrozenLedger
         }
 
         return result;
-    }
-
-    private static string ComputeEventHash(JsonElement root)
-    {
-        var material = JsonSerializer.SerializeToElement(new
-        {
-            event_type = RequiredString(root, "event_type"),
-            payload = root.GetProperty("payload"),
-            previous_hash = RequiredString(root, "previous_hash"),
-            schema_version = RequiredNonnegativeInteger(root, "schema_version"),
-            sequence = RequiredNonnegativeInteger(root, "sequence"),
-        });
-        return FrozenContentHash.Compute(
-            FrozenHashDomains.FrozenEvent,
-            StructuredCanonicalWriter.WriteJson(material).AsSpan());
     }
 
     private static string ComputeCorpusRoot(
