@@ -404,6 +404,46 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal("creation_unknown", ReasonFor(result.Output, lane));
     }
 
+    /// <summary>
+    /// **三种 reflog 首行形状都必须能解析出创建记录**(#3459)。
+    ///
+    /// 此前 `Probes.cs` 把「制表符在行末」当畸形而返回 `default` ⟹ 判 `creation_unknown` ⟹
+    /// `worktree-clean` **永远回收不了那棵 lane**。而行末制表符只是**空 reflog message**,
+    /// message 根本不参与解析(`record` 只取制表符之前的部分)。
+    ///
+    /// **这不是一个边角形状**:实测本机 127 棵有 `logs/HEAD` 的 worktree,
+    /// **114 棵(89.8%)首行的制表符在行末**,11 棵无制表符,2 棵制表符在中间。
+    /// 只测其中一种的话,今天新建的树(无制表符)恰好会让测试绿而 89.8% 的存量仍坏 ——
+    /// 故本测试用 `[Theory]` 覆盖全部三形。
+    /// </summary>
+    [Theory]
+    [InlineData("empty-message")]
+    [InlineData("no-tab")]
+    [InlineData("with-message")]
+    public void EveryReflogFirstLineShapeYieldsACreationRecord(string shape)
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddLandedLane("harness/reflog-shape");
+        switch (shape)
+        {
+            case "empty-message":
+                fixture.MakeFirstRecordEmptyMessage(lane);
+                break;
+            case "no-tab":
+                fixture.MakeFirstRecordWithoutTab(lane);
+                break;
+            case "with-message":
+                break;
+            default:
+                throw new InvalidOperationException(shape);
+        }
+
+        var result = fixture.Run();
+
+        Assert.True(result.Success, result.Error);
+        Assert.NotEqual("creation_unknown", ReasonFor(result.Output, lane));
+    }
+
     [Fact]
     public void LockedLaneIsRefusedWhileUnlockedControlIsReclaimed()
     {
