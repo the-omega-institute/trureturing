@@ -60,7 +60,7 @@ internal static class LeanCacheBudgetPolicy
     ///
     /// **这不是本文件派生的数,是 #3029 裁定的数** —— 由本机实测的单模块冷建成本
     /// (负读数② 的 3388s / 1571 模块)与本预算的 80% 线算出。本文件只**登记**它,
-    /// 由 `LeanCacheProvisionerTests.ColdBuildBudgetReviewLineHasNotBeenCrossed` 盯住。
+    /// 由 `ColdBuildBudgetReviewLineTests.ColdBuildBudgetReviewLineHasNotBeenCrossed` 盯住。
     ///
     /// **为什么需要这一条**:2026-08-26 实测 `grep -rnw 2672` 全仓 **0 命中**
     /// (阳性对照 `grep -rnw 7200` 得 7 条,证明探针有效)—— 即这条退出条件当时

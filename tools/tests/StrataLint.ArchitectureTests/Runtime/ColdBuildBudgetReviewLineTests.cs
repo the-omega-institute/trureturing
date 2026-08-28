@@ -51,21 +51,29 @@ public sealed class ColdBuildBudgetReviewLineTests
     [Fact]
     public void ColdBuildBudgetReviewLineHasNotBeenCrossed()
     {
-        var leanFiles = GitIndexRepositoryFiles
-            .Enumerate(RepositoryLayout.FindRoot())
-            .Where(file => file.RelativePath.StartsWith("D5/", StringComparison.Ordinal)
-                && file.RelativePath.EndsWith(".lean", StringComparison.Ordinal))
+        var d5Files = GitIndexRepositoryFiles.EnumerateDeclared(RepositoryLayout.FindRoot(), "D5");
+        var leanFiles = d5Files
+            .Where(static file => file.RelativePath.EndsWith(".lean", StringComparison.Ordinal))
             .ToArray();
 
-        // 放行侧守卫:枚举必须真的选中了内容层。模式拼错(例如 ".leam")会得到空集,
-        // 而空集 < 2672 恒成立 —— 那样本测试就永远绿,什么也没守。
-        // 下界 2000 取自被审时的实测 2469 之下的一个保守值:它不随日常增长而失真,
-        // 又足以把「枚举结果为空/近空」这一整类打错的形态判红。
+        // 放行侧守卫。此前这里是一条裸下界 `> 2000`,一轮评审判它两条不成立:
+        //   ① `2000` 是无来源的瞬时规模数,**对缩仓方向不稳定** ——
+        //      本仓实测净减过两次(1487→1486、1115→1114),历史合法树曾为 1486/1114;
+        //      而当时的文案把真实缩仓断言成「几乎一定是枚举坏了」,**错误指向修法**;
+        //   ② 它只证明「结果大于某数」,不证明**枚举完整** ——
+        //      在枚举后插一个 `.Take(2001)` 即可让两条测试都绿而观察者永远看不到越线。
+        // 现改为与**同一次枚举的上游集合**做关系断言,不再引入任何裸数:
+        //   D5 下的 `.lean` 必须是 D5 tracked 文件的**非空真子集或全集**,
+        //   且必须包含 `D5/X_Frontier/Hearts.lean` —— 那是本仓受保护的 sentinel(SL 明文钉住),
+        //   它在任何合法树上都存在。截断到任意固定条数都会以极高概率丢掉它,
+        //   而把它单独保留下来需要在 diff 里写出这个名字,那正是评审看得见的东西。
+        Assert.NotEmpty(d5Files);
+        Assert.Contains(
+            leanFiles,
+            file => file.RelativePath == "D5/X_Frontier/Hearts.lean");
         Assert.True(
-            leanFiles.Length > 2000,
-            $"D5 内容层只枚举到 {leanFiles.Length} 个 .lean 文件,远少于预期规模 —— "
-            + "这几乎一定是枚举本身坏了(路径前缀、后缀模式或枚举器),而不是仓库真的缩小了。"
-            + "在修好它之前,本测试的绿不构成任何证据。");
+            leanFiles.Length <= d5Files.Count,
+            "`.lean` 集合不可能大于它所属的 D5 tracked 集合 —— 枚举自相矛盾。");
 
         Assert.True(
             leanFiles.Length < StrataLint.Cli.LeanCacheBudgetPolicy.ColdBuildBudgetReviewModuleCount,
@@ -76,5 +84,34 @@ public sealed class ColdBuildBudgetReviewLineTests
             + "该 policy-override 的取值依据失效,其「非永久」声明到期。"
             + "按 https://github.com/the-omega-institute/trureturing/issues/2535 重新按三型收口,"
             + "或按 #3029 的五条开建条件建拦全量冷建的门。");
+    }
+
+    /// <summary>
+    /// **可达性契约**:一次只改 D5 的变更**必须**选中上面那个观察者。
+    ///
+    /// 这条是一轮评审用实测买来的。上一版为了避开 unknown 棘轮改用
+    /// `GitIndexRepositoryFiles.Enumerate`(deriver 不识别的名字)—— 那确实消掉了 unknown,
+    /// **但同时消掉了 `D5` 输入归因**:评审席在临时克隆里只新增一条 D5 `.lean`,
+    /// 跑 canonical planner 得到 `kind=selected, selected_count=185, cold_build_observer=[]`。
+    /// 即**观察者对它唯一要观察的那类变更是盲的**;而 D5 模块数的增长几乎全部来自 D5-only PR,
+    /// 故它当时几乎不可能red——一个永远不会红的观察者不是观察者。
+    ///
+    /// 现在观察者走 `EnumerateDeclared(root, "D5")`,deriver 把 `"D5"` 记为 declared input,
+    /// `EngineeringTestPlanDeriver` 的 `Covers` 是前缀匹配,故任何 `D5/**` 变更都会选中它。
+    /// **本测试就是那条链的机器保证** —— 没有它,下一次有人换掉枚举方式时,
+    /// 观察者会再次静默失去可达性而两条断言依旧全绿。
+    /// </summary>
+    [Fact]
+    public void ColdBuildBudgetReviewLineObserverIsSelectedByD5OnlyChanges()
+    {
+        var plan = EngineeringTestPlanDeriver.DeriveRepository(
+            RepositoryLayout.FindRoot(),
+            ["D5/S3/Constants/Irrationality/SyntheticColdBuildProbe.lean"]);
+
+        Assert.Contains(
+            plan.Tests,
+            test => test.Id.Contains(
+                nameof(ColdBuildBudgetReviewLineHasNotBeenCrossed),
+                StringComparison.Ordinal));
     }
 }

@@ -335,6 +335,19 @@ internal static class ScribeTestMapDeriver
                 AddDiscoveryPaths(invocation, discoveryPaths, paths, reasons);
             }
 
+            // 声明式仓库枚举(#2535 / PR #3799 第二轮评审):
+            // `EnumerateDeclared(root, "<字面量前缀>")` 读 git index 而非目录,
+            // 故**不记** `DirectoryEnumeration`;但它必须把那个前缀登记为 declared path,
+            // 否则 `EngineeringTestPlanDeriver` 在只改该前缀下文件的 PR 上**不会选中该测试** ——
+            // 一个观察者对它要观察的那类变更盲,等于没有。
+            // 该缺口正是一次评审用「临时克隆只加一条 D5 .lean → planner 输出
+            // cold_build_observer=[]」实测出来的。
+            if (IsAccessorCall(invocation, "EnumerateDeclared"))
+            {
+                AddDeclaredPrefix(invocation, paths, reasons);
+                continue;
+            }
+
             if (IsAccessorCall(invocation, "EnumerateFiles"))
             {
                 reasons.Add(TestMapUnknownReason.DirectoryEnumeration);
@@ -349,6 +362,24 @@ internal static class ScribeTestMapDeriver
 
             AddLiteralCreatePath(invocation.ArgumentList.Arguments.FirstOrDefault()?.Expression, paths, reasons);
         }
+    }
+
+    // 只接受**字面量**前缀:变量前缀无法静态归因,按 fail-closed 记 VariablePath。
+    private static void AddDeclaredPrefix(
+        InvocationExpressionSyntax invocation,
+        HashSet<string> paths,
+        HashSet<TestMapUnknownReason> reasons)
+    {
+        var arguments = invocation.ArgumentList.Arguments;
+        if (arguments.Count >= 2
+            && arguments[1].Expression is LiteralExpressionSyntax literal
+            && literal.IsKind(SyntaxKind.StringLiteralExpression))
+        {
+            paths.Add(literal.Token.ValueText.Replace('\\', '/'));
+            return;
+        }
+
+        reasons.Add(TestMapUnknownReason.VariablePath);
     }
 
     private static void AddLiteralCreatePath(
