@@ -1,0 +1,17 @@
+ast_path: 定理/296.1/clause/4
+fingerprints:
+  raw_sha256: sha256:ef8dccb848a3a303ab7f1be9e13a27e133703d35b6e46882b434c1147a07270d
+  normalized_sha256: sha256:ef8dccb848a3a303ab7f1be9e13a27e133703d35b6e46882b434c1147a07270d
+cas_ref: sha256:ef8dccb848a3a303ab7f1be9e13a27e133703d35b6e46882b434c1147a07270d
+coverage_gids:
+  - D5/S3/ConceptDynamics/DecisionValue/FreeInformationValue.free_ignorable_information_value_nonnegative
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/DecisionValue/FreeInformationValue.free_ignorable_information_value_nonnegative
+      source_sha256: sha256:ef8dccb848a3a303ab7f1be9e13a27e133703d35b6e46882b434c1147a07270d
+      target_sha256: sha256:10e850cef308c9dc388a9666c1a0c747726372766c30821c1d6a7d9eb2867539
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DecisionValue/FreeInformationValue.free_ignorable_information_value_nonnegative
+      definition_sha256: sha256:8edc55bc233630451c3a3e6966d77378f21a7fe8ab2def46da4362dec97562d5
+      emission_sha256: sha256:6a7540d8a04a764c620a345bc87816d4d78d1ba24e76fc2ce5828208fb7a8af1
+  unresolved_subitems: []
