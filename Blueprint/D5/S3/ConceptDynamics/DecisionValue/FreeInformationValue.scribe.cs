@@ -57,51 +57,44 @@ internal sealed class FreeInformationValueDocument : IScribeDocumentDefinition
         Formula candidatePoliciesSet = F.Id("P");
         Formula expectation = Seq(Mathbb, Grp(F.Id("E")));
         Formula utility = F.Id("V");
-        Formula transition = F.Id("T");
-        Formula cost = Subscript(F.Id("c"), evidence);
-        Formula actionsBefore = Subscript(action, D(0));
-        Formula actionsAfter = Subscript(action, evidence);
-        Formula policies = Pi;
-        Formula admissiblePolicies = Subscript(policies, F.Id("adm"));
         Formula uninformed = Subscript(F.Id("W"), D(0));
         Formula informed = Subscript(F.Id("W"), evidence);
         Formula selectedAction = F.Id("u");
-        Formula observedPolicy = F.Id("p");
         Formula currentState = F.Id("x");
         Formula observedValue = F.Id("e");
         Formula constantPolicy = Seq(
             Operatorname, Grp(F.Id("const")), Open, selectedAction, Close);
-        Formula beforeMaximum = Seq(
-            Max, Underscore, Grp(selectedAction, Sp, InMacro, Sp, actionsBefore),
-            Sp, Apply(expectation, Apply(Apply(utility, state), selectedAction)));
-        Formula afterMaximum = Seq(
-            Max, Underscore, Grp(observedPolicy, Sp, InMacro, Sp,
-              admissiblePolicies), Sp,
-            Open, Apply(expectation,
-              Apply(Apply(utility,
-                Apply(Apply(transition, evidence), state)),
-                Apply(observedPolicy, evidence))),
-            Sp, Minus, Sp, cost, Close);
-        Formula admissiblePolicyDefinition = Seq(
-            admissiblePolicies, Sp, Eq, Sp, OpenBrace,
-            observedPolicy, Sp, InMacro, Sp, policies, Sp, Mid, Sp,
-            Forall, Sp, observedValue, Comma, Sp,
-            Apply(observedPolicy, observedValue), Sp, InMacro, Sp,
-            Subscript(action, observedValue), CloseBrace);
         Formula safeguards = Seq(
-            cost, Sp, Eq, Sp, D(0), Comma, Sp,
+            informationCost, Sp, Eq, Sp, D(0), Comma, Sp,
             Forall, Sp, observedValue, Comma, Sp, currentState, Comma, Sp,
             Apply(Apply(worldAfterObservation, observedValue), currentState), Sp, Eq, Sp,
             currentState, Comma, RowBreak, Grp(),
-            Forall, Sp, selectedAction, Sp, InMacro, Sp, actionsBefore, Comma, Sp,
-            constantPolicy, Sp, InMacro, Sp, policies, Comma, RowBreak, Grp(),
-            Forall, Sp, observedValue, Comma, Sp, actionsBefore, Sp,
-            Subseteq, Sp, Subscript(action, observedValue));
+            Forall, Sp, selectedAction, Sp, InMacro, Sp, actionsBeforeSet, Comma, Sp,
+            constantPolicy, Sp, InMacro, Sp, candidatePoliciesSet,
+            Comma, RowBreak, Grp(),
+            Forall, Sp, observedValue, Comma, Sp, actionsBeforeSet, Sp,
+            Subseteq, Sp, Apply(actionsAfterSet, observedValue));
 
         Formula uninformedGreatest = Call(
-            "IsGreatest", Call("Image", expectation, utility, actionsBeforeSet), uninformed);
+            "IsGreatest",
+            Call(
+                "Image",
+                Call("uninformedExpectedValue", expectation, utility),
+                actionsBeforeSet),
+            uninformed);
         Formula informedGreatest = Call(
-            "IsGreatest", Call("Image", expectation, utility, admissiblePolicies), informed);
+            "IsGreatest",
+            Call(
+                "Image",
+                Call(
+                    "informedExpectedValue",
+                    expectation,
+                    observe,
+                    worldAfterObservation,
+                    utility,
+                    informationCost),
+                Call("admissiblePolicies", candidatePoliciesSet, actionsAfterSet)),
+            informed);
 
         return Disp(Seq(
             Forall, Sp, state, Comma, Sp, evidence, Comma, Sp, action, Colon, Sp, type,
@@ -119,11 +112,9 @@ internal sealed class FreeInformationValueDocument : IScribeDocumentDefinition
             Comma, Sp, candidatePoliciesSet, Colon, Sp,
             Call("Set", new Formula.TypeArrow(evidence, action)), Comma, Sp,
             uninformed, Comma, Sp, informed, Colon, Sp, real, Comma, RowBreak, Grp(),
-            admissiblePolicyDefinition, Comma, RowBreak, Grp(),
-            uninformed, Sp, Eq, Sp, beforeMaximum, Comma, RowBreak, Grp(),
-            informed, Sp, Eq, Sp, afterMaximum, Comma, RowBreak, Grp(),
-            uninformedGreatest, Comma, Sp, informedGreatest, Comma, RowBreak, Grp(),
-            safeguards, RowBreak, Grp(),
+            safeguards, Comma, RowBreak, Grp(),
+            uninformedGreatest, Comma, RowBreak, Grp(),
+            informedGreatest, RowBreak, Grp(),
             Rightarrow, Sp, informed, Sp, Geq, Sp, uninformed, Dot));
     }
 
