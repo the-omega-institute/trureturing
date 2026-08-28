@@ -1,0 +1,17 @@
+ast_path: 命题/76.10/clause/1
+fingerprints:
+  raw_sha256: sha256:2b4ca577a9bf301342e2060fc68e8a4b4fa70e7a58bb9576a2b912b3ef6781ae
+  normalized_sha256: sha256:2b4ca577a9bf301342e2060fc68e8a4b4fa70e7a58bb9576a2b912b3ef6781ae
+cas_ref: sha256:2b4ca577a9bf301342e2060fc68e8a4b4fa70e7a58bb9576a2b912b3ef6781ae
+coverage_gids:
+  - D5/S3/ConceptDynamics/Topology/CircleDoubleCoverNoSection.no_continuous_global_section
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Topology/CircleDoubleCoverNoSection.no_continuous_global_section
+      source_sha256: sha256:2b4ca577a9bf301342e2060fc68e8a4b4fa70e7a58bb9576a2b912b3ef6781ae
+      target_statement_id: sha256:2ec179b64b09041d7371af7f55d5f9886adae64f90954f90e87448173db3506e
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Topology/CircleDoubleCoverNoSection.no_continuous_global_section
+      definition_sha256: sha256:26167979013516fe626db7999a6f0c228e0fc84447e9ea316e08fbb3df8d3bf9
+      emission_sha256: sha256:d7d1a18c0620bf9be90723fb887672fe5b21eeff3866cb31315e7b5512e59b47
+  unresolved_subitems: []

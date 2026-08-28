@@ -1,0 +1,17 @@
+ast_path: 推论/238.1
+fingerprints:
+  raw_sha256: sha256:ace817afb8a70297f1d1f9231b433b10f2f76116a920c094ed8d67be0fbf301e
+  normalized_sha256: sha256:ace817afb8a70297f1d1f9231b433b10f2f76116a920c094ed8d67be0fbf301e
+cas_ref: sha256:ace817afb8a70297f1d1f9231b433b10f2f76116a920c094ed8d67be0fbf301e
+coverage_gids:
+  - D5/S3/Estimation/DataProcessing/UniversalBeliefDecisionSufficiency.task_independent_belief_sufficiency
+receipts:
+  coverage:
+    - gid: D5/S3/Estimation/DataProcessing/UniversalBeliefDecisionSufficiency.task_independent_belief_sufficiency
+      source_sha256: sha256:ace817afb8a70297f1d1f9231b433b10f2f76116a920c094ed8d67be0fbf301e
+      target_statement_id: sha256:9fb0bf7e2df5cb7cd0a4e8f8cfdb4b61355d8b1cf642180b1e50372b7cd74338
+  scribe:
+    - gid: D5/S3/Estimation/DataProcessing/UniversalBeliefDecisionSufficiency.task_independent_belief_sufficiency
+      definition_sha256: sha256:57410b31c7282e012344a89aac6c3b99521d494a18ed996f8e052a1224d25303
+      emission_sha256: sha256:caa389f44d786bb58f855ce08ebd921ad66a6e2ce898cc805182c4797f92e3b7
+  unresolved_subitems: []

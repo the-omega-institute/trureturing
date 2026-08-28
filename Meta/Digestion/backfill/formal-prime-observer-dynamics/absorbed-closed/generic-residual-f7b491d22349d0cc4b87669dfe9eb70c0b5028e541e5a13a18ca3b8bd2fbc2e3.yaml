@@ -1,0 +1,17 @@
+ast_path: 定理/141.3
+fingerprints:
+  raw_sha256: sha256:f7b491d22349d0cc4b87669dfe9eb70c0b5028e541e5a13a18ca3b8bd2fbc2e3
+  normalized_sha256: sha256:f7b491d22349d0cc4b87669dfe9eb70c0b5028e541e5a13a18ca3b8bd2fbc2e3
+cas_ref: sha256:f7b491d22349d0cc4b87669dfe9eb70c0b5028e541e5a13a18ca3b8bd2fbc2e3
+coverage_gids:
+  - D5/S3/Quantum/Measurement/ZetaThermalStatePinchingFixed.zeta_thermal_state_pinching_fixed
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Measurement/ZetaThermalStatePinchingFixed.zeta_thermal_state_pinching_fixed
+      source_sha256: sha256:f7b491d22349d0cc4b87669dfe9eb70c0b5028e541e5a13a18ca3b8bd2fbc2e3
+      target_statement_id: sha256:5a37bbbef2d97c4842ef1dc02fcb6dfd607785b8b0a5c392ffcce8a02c61d345
+  scribe:
+    - gid: D5/S3/Quantum/Measurement/ZetaThermalStatePinchingFixed.zeta_thermal_state_pinching_fixed
+      definition_sha256: sha256:4faa2e1928ef5b491b8033a2a255f651b34ab31fc6c9561aaa895d234d19192a
+      emission_sha256: sha256:c4cb3f3cdf238c6964bfcc277206c360e73006e5454ac19e2514d5e30a3b3a63
+  unresolved_subitems: []
