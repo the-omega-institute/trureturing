@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Arith/Congruence/HorizontalJointKernel.horizontal_joint_kernel
       source_sha256: sha256:87d6ef081cc88d25447a5434e9d0abe8ee959aef2ecdcdfafd17d3f5b03da56b
-      target_sha256: sha256:70fd0487705618fa1e9f6ca3a739db029b0fec36ced36a3eba03c155c3b8f4f4
+      target_statement_id: sha256:10bdfe23ca22d9a2c46b79f55e5f397a65f6eb82accfb285bd24423d6d577d4b
   scribe:
     - gid: D5/S3/Arith/Congruence/HorizontalJointKernel.horizontal_joint_kernel
       definition_sha256: sha256:289317a02558c33346e43e27477d01334abd826757279e71f45e82cded28f379

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/ProbabilisticClosure/StrongLumpabilityDescent.strong_lumpability_descent_tfae
       source_sha256: sha256:102f184059aff795fe0b8960193fd298ca2e0412d1dccfc30d65ec303390ac31
-      target_sha256: sha256:582972ca761ef0b7e77da1c6401179c8790185f22b847bf74caabd4f7e7f09c8
+      target_statement_id: sha256:fcfc67479009562be0ae165000297b1cfc012c40356d50c5d0f9c9adb114c18a
   scribe:
     - gid: D5/S3/Observer/ProbabilisticClosure/StrongLumpabilityDescent.strong_lumpability_descent_tfae
       definition_sha256: sha256:e1af1fe0901d06883ccd70f2c8f9746992e79f7eb3428658e995c1fea1d0f1f9

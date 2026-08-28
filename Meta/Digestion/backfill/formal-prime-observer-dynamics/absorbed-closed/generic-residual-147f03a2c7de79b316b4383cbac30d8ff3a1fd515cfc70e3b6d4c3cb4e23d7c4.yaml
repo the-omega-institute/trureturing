@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/Budget/AdaptiveEarlyStoppingLimits.adaptive_worst_case_depth_information_lower_bound
       source_sha256: sha256:147f03a2c7de79b316b4383cbac30d8ff3a1fd515cfc70e3b6d4c3cb4e23d7c4
-      target_sha256: sha256:30fdf830d9c857f1aa14ce312ec1065dfd7970e0eb9b3fe761485b4d3a2970ea
+      target_statement_id: sha256:32888d53aef1d0ee64506b54e0250873175e2a148df4a510d5f113e80916e589
   scribe:
     - gid: D5/S3/Observer/Budget/AdaptiveEarlyStoppingLimits.adaptive_worst_case_depth_information_lower_bound
       definition_sha256: sha256:1d4e61ef9027a738ad664ca8c8c90e206464d07487a017c955a961dad25f3973

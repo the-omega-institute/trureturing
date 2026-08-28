@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Quantum/Fibers/TraceZeroReadoutOrthogonalEquivalence.readout_fiber_orthogonal_equivalence
       source_sha256: sha256:2bf9310069128f8014ce68be79775e9c784e4086794868625a9e7698fcb75067
-      target_sha256: sha256:73baf5e10587f3dc2335d499566859986c3016a2a7fe143b30b1645217c64f39
+      target_statement_id: sha256:92a37f8d3202cbd316d8fd4c02250a65a9f74bec0fa22d9d8a1fb1a91ad086b8
   scribe:
     - gid: D5/S3/Quantum/Fibers/TraceZeroReadoutOrthogonalEquivalence.readout_fiber_orthogonal_equivalence
       definition_sha256: sha256:5428b360a2978d1e61e32d6216c23a3738a1c7b13143a26dc2370731c8b2c85a

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/Prediction/ConditionalEntropyStability.prediction_stability_depth_eq_conditional_entropy_zero
       source_sha256: sha256:cf5abdce8bbf309762cd4ffa4e9f1cf6628bdd1ab4b5368dab789d5ee9b0c784
-      target_sha256: sha256:d0848dfa2b3928ef3e670590057f4dd27aa70b8cdec2875a12332aebb0484938
+      target_statement_id: sha256:95dc75766e2c31e9d8e88c3b5d3af7ca616b9b71710eba5feea858ffc28d9f7b
   scribe:
     - gid: D5/S3/ObserverMemory/Prediction/ConditionalEntropyStability.prediction_stability_depth_eq_conditional_entropy_zero
       definition_sha256: sha256:56ba59439b2eee6e65a5d16535e1a1e9250f94d43ca96aed1611836cf4491a92

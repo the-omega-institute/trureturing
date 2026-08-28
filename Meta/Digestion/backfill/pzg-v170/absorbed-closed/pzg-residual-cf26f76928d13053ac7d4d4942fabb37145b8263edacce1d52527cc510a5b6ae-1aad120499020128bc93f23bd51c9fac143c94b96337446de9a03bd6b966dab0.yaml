@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Axis/LambdaMinusDirichletSeries.lambda_minus_dirichlet_series
       source_sha256: sha256:cf26f76928d13053ac7d4d4942fabb37145b8263edacce1d52527cc510a5b6ae
-      target_sha256: sha256:b295ee81da6d4f31c00693afdbe0f42f6db6b097c1fbd7573b05173fcca8c68e
+      target_statement_id: sha256:220da045248aaa70abe8123086a1fa3f48268b7d0d302258efb99d9bba69ef71
   scribe:
     - gid: D5/S3/Axis/LambdaMinusDirichletSeries.lambda_minus_dirichlet_series
       definition_sha256: sha256:ca6c7ef5623d619b4729df4ebbfbbde1933f4f4dd5cae7ffecbd7b5590a25d2c

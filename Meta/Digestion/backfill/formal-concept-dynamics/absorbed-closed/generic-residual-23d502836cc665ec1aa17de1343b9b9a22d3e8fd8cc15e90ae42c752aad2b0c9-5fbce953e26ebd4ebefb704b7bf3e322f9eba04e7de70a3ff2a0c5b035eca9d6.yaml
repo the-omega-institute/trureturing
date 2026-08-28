@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Refinement/ResourceAsymmetricConceptEquivalence.ordinary_equivalence_does_not_imply_resource_equivalence
       source_sha256: sha256:23d502836cc665ec1aa17de1343b9b9a22d3e8fd8cc15e90ae42c752aad2b0c9
-      target_sha256: sha256:51593268e6653ddfe8deb8f5ff6f12e3d51e13390dd33576cb99032fc6b2a5c7
+      target_statement_id: sha256:65e5fb84e97fa2f9e313c6de05005818c8e0e0b8b56e7ffd32187b6b00da06e6
   scribe:
     - gid: D5/S3/ConceptDynamics/Refinement/ResourceAsymmetricConceptEquivalence.ordinary_equivalence_does_not_imply_resource_equivalence
       definition_sha256: sha256:158b7236d8d293472798360882a9618eb6c8f19a0a580ed2cce26fa794be9251

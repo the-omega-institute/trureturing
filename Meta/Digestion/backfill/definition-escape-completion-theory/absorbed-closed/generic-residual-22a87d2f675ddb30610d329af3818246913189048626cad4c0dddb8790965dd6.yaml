@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/DefinitionEscape/ResidualJoinLaw.residual_join_law
       source_sha256: sha256:22a87d2f675ddb30610d329af3818246913189048626cad4c0dddb8790965dd6
-      target_sha256: sha256:c756a00a8444562c6d4b60bc8e0ec0187b9ca4ebc7ac7d44c137f782fbcecf0e
+      target_statement_id: sha256:0b17d31e47c6590f0b8a023ca385d6bf0f378d81b9ea897065b91ddd4b1653c3
   scribe:
     - gid: D5/S3/ConceptDynamics/DefinitionEscape/ResidualJoinLaw.residual_join_law
       definition_sha256: sha256:2696e67a0ac93a268684761e8752f8bd69779483b43a1b4c4805e7eaef6d95b4

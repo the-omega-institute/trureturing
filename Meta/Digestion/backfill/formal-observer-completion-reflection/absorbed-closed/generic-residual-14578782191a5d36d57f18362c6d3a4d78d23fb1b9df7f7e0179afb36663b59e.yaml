@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/WindowCharacter.window_algebra_has_no_character
       source_sha256: sha256:14578782191a5d36d57f18362c6d3a4d78d23fb1b9df7f7e0179afb36663b59e
-      target_sha256: sha256:1876a6d6d93f58f0c1da260e6b380314877dd19a208da622ce59366d06e01701
+      target_statement_id: sha256:1762dfcfbcf1b350626e711534c61da8425e1e829dfb73e4ab1b7fb74e30db39
   scribe:
     - gid: D5/S3/Observer/WindowCharacter.window_algebra_has_no_character
       definition_sha256: sha256:c5accedabf0f0d42752caec86430e25b771cb44fcbf3c0f383f245eaa04346cf

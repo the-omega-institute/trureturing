@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Quantum/Algebra/RecordFixedCenter.record_fixed_center_eq_block_scalars
       source_sha256: sha256:ce4bd8da572f22ccfba175805328e8a3332a178ac9262296e4994eb1c97601ce
-      target_sha256: sha256:4755e307bd0ed02049028b251258ca23203587873ac16f0a8844630dd5d67bcb
+      target_statement_id: sha256:63cf52719e7b9b90f6425d3b0a79bcd40bb3e331a481f4a2a786d5e6f756222f
   scribe:
     - gid: D5/S3/Quantum/Algebra/RecordFixedCenter.record_fixed_center_eq_block_scalars
       definition_sha256: sha256:707b64c41a3ed31f3bf86f6d499826a47a56c5ca80f130055e923b4ed57fa279

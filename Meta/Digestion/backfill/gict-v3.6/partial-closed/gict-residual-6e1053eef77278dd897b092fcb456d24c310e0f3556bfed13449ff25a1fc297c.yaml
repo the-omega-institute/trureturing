@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Constants/ElementaryExactValues.elementary_exact_values
       source_sha256: sha256:6e1053eef77278dd897b092fcb456d24c310e0f3556bfed13449ff25a1fc297c
-      target_sha256: sha256:d329cb0cdf1676b321dfaf7fcb3fd6af71d7b49a09c90427592ec6f4f7e23550
+      target_statement_id: sha256:8048edc36da416a1892773a1130334c4d59efb84e9118dbb0908de090368f073
   scribe:
     - gid: D5/S3/Constants/ElementaryExactValues.elementary_exact_values
       definition_sha256: sha256:516a3bf8c09c94e88103f8d3b95c68532e5e06e17a3ee961b75c3e6728e0437b

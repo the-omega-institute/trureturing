@@ -461,7 +461,7 @@ internal sealed record CoverUnrelatedSiblingSpec(
 // Declarative fixture for the cover gate matrix. Defaults produce a clean happy
 // path (an open, CAS-backed residual atom whose target declaration is proven
 // closed and Scribe-emitted); each gate test flips exactly one field.
-internal sealed record CoverSpec
+internal sealed partial record CoverSpec
 {
     internal string AtomId { get; init; } = CoverWorld.DefaultAtomId;
 
@@ -493,9 +493,7 @@ internal sealed record CoverSpec
     internal string ReportType { get; init; } = "True";
 
     internal ImmutableArray<string> TargetAxioms { get; init; } = ImmutableArray<string>.Empty;
-
     internal bool VerifyScribe { get; init; } = true;
-
     // Pre-committed formalization receipt (digestion-formalization-v1, spec §11.21).
     // Defaults produce a receipt that binds this atom and pins a signature equal to
     // the deposited declaration; each envelope gate test flips exactly one field.
@@ -636,7 +634,7 @@ internal static partial class CoverWorld
             includeOtherAtom: true,
             tailAuthPath,
             tailAuthSha,
-            DigestionFingerprint.Compute(targetBytes).RawSha256,
+            gid => FrozenStatementIdFor(spec, gid),
             unrelatedAtom,
             unrelatedSourcePath,
             useUnrelatedBaselineCoverage: false);
@@ -727,6 +725,8 @@ internal static partial class CoverWorld
             .Select(name => new LeanDeclaration(name, spec.ReportKind, spec.ReportType, spec.TargetAxioms))
             .ToImmutableArray();
         var report = MaterializeReport(spec, targetPath, declarations);
+
+        MaterializeFrozenLedger(spec, report, targetPath, files, baseline);
 
         var verified = spec.VerifyScribe
             ? VerifiedScribeEmissions.Create(records, MaterializeVerifiedGids(spec))

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/NormativeStructure/CommitmentNormativeMemory.committed_permissions_do_not_factor_through_physical_state
       source_sha256: sha256:6ffce2d94e191381363f0fdf8328c867084a5eb75fba83058b58915a83e0131c
-      target_sha256: sha256:e20ebb04be92e208087cd0ec64c6b9be6b12de35a17597f55bbb65c0ffa26e90
+      target_statement_id: sha256:474b305346eb9bcd7873334b3681f532505b19c10ed09673daa8b2db4ca405c0
   scribe:
     - gid: D5/S3/ConceptDynamics/NormativeStructure/CommitmentNormativeMemory.committed_permissions_do_not_factor_through_physical_state
       definition_sha256: sha256:5f0a42e7cffcd4b994ae14a3dd5845a27d63edd3f66faaa42cfa0ea5accafb4c

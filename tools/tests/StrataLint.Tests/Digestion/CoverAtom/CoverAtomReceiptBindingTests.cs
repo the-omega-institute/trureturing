@@ -5,8 +5,45 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
+internal sealed partial record CoverSpec
+{
+    internal bool FreezeTargetModule { get; init; } = true;
+
+    internal string TargetStatementId { get; init; } = FrozenStatementReceiptTestData.Id('a');
+}
+
 public sealed partial class CoverAtomTests
 {
+    [Fact]
+    public void CoverReceiptBindsTheFrozenDeclarationStatementId()
+    {
+        var spec = new CoverSpec
+        {
+            ReportDeclarations = ImmutableArray.Create("other", "probe"),
+        };
+        var execution = Execute(spec);
+
+        Assert.True(execution.Result.Success, execution.Result.Error);
+        var entry = Assert.Single(
+            execution.AfterDocument.RequireDigestionEntries(),
+            candidate => candidate.AtomId == spec.AtomId);
+        var receipt = Assert.Single(entry.Receipts.Coverage);
+        var (_, _, targetBinding) = receipt;
+        Assert.Equal(spec.TargetStatementId, targetBinding);
+    }
+
+    [Fact]
+    public void CoverRejectsTargetWhoseHostModuleIsNotFrozen()
+    {
+        var spec = new CoverSpec { FreezeTargetModule = false };
+        var execution = Execute(spec);
+
+        Assert.False(execution.Result.Success);
+        Assert.Contains(spec.ModuleGid + ".lean", execution.Result.Error, StringComparison.Ordinal);
+        Assert.Contains("is not frozen; run make deposit before cover", execution.Result.Error, StringComparison.Ordinal);
+        Assert.Equal(execution.Before, execution.After);
+    }
+
     [Fact]
     public void CoverAcceptsGidAlreadyBoundToAnotherAtomWithIndependentPairReceipts()
     {

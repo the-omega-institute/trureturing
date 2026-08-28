@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Completion/TargetClosureOperator.target_closure_equivalent_iff_target_sufficient
       source_sha256: sha256:13bbb0bbf45c862fb5dd4d88b4f615a82c7c667551896cc61f92629ce2261b73
-      target_sha256: sha256:358b3b4ecfdfa25d1c98cf78178d207f5536daace3dcf75487c29626e3c6f56c
+      target_statement_id: sha256:61105c511c35e592ba45a2269d48a65801e9f4d54896a623963828068a8bdd25
   scribe:
     - gid: D5/S3/ConceptDynamics/Completion/TargetClosureOperator.target_closure_equivalent_iff_target_sufficient
       definition_sha256: sha256:18b6e80d9db71107057ae2874dd776343c4981157f833594994326887d1d02ed

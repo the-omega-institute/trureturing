@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Analytic/ScaledPoleAccumulation.scaled_candidate_poles_tendsto
       source_sha256: sha256:c6ca453fe37374cc9227d88a43d546cab736746de7621367cdb30d9bc0adc348
-      target_sha256: sha256:bafbe177601d2d39afed3725b9a5964461e881ef8170b9b1ad39d0cf8499f7b4
+      target_statement_id: sha256:3fadf0181a4b5b9aaf4a54b5743c28bb547a872b234d411943abaf326036b759
   scribe:
     - gid: D5/S3/Analytic/ScaledPoleAccumulation.scaled_candidate_poles_tendsto
       definition_sha256: sha256:2dd9173420b4c576c2f4b80ddcf4c1d35abf34109fe2898d5d2251ad747e73cb

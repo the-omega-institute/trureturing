@@ -16,14 +16,6 @@ internal static class BackfillInventoryRule
 {
     private const string BackfillPath = BackfillInventoryLoader.RelativePath;
 
-    private readonly record struct ReceiptIntegrityGapIdentity(
-        string AtomId,
-        string Code,
-        string Detail);
-
-    internal static ImmutableArray<string> BaselineComparableReceiptIntegrityCodes { get; } =
-        ["coverage-receipt-mismatch"];
-
     private static readonly Regex SourceIdPattern = new(
         "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",
         RegexOptions.CultureInvariant);
@@ -54,6 +46,7 @@ internal static class BackfillInventoryRule
                 || path.Value.StartsWith(
                     "tools/Authorizations/digestion-tail/",
                     StringComparison.Ordinal)
+                || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path.Value)
                 || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path.Value)
                 // 理论卷按路径规则治理后,`GovernanceDocuments` 里已无理论路径;
                 // 若此处仍只靠那张清单,只改理论卷的候选就**整条规则不触发**
@@ -398,10 +391,7 @@ internal static class BackfillInventoryRule
                 findings.Add(new RuleFinding(BackfillPath, finding));
             }
 
-            findings.AddRange(ClassifyReceiptIntegrityGaps(
-                evaluation,
-                baselineDocument,
-                context.Baseline));
+            findings.AddRange(ClassifyReceiptIntegrityGaps(evaluation));
 
             // 观察项不阻断准入。理论卷入库后尚未消化是账本四态里的 `open`,
             // 由本地 `make ingest` 闭合;它不该挡住一个只改 markdown 的 PR。
@@ -417,123 +407,16 @@ internal static class BackfillInventoryRule
     }
 
     internal static ImmutableArray<RuleFinding> ClassifyReceiptIntegrityGaps(
-        DigestionLedgerEvaluation evaluation,
-        BackfillInventoryDocument baselineDocument,
-        RepositorySnapshot baselineSnapshot)
+        DigestionLedgerEvaluation evaluation)
     {
         ArgumentNullException.ThrowIfNull(evaluation);
-        ArgumentNullException.ThrowIfNull(baselineDocument);
-        ArgumentNullException.ThrowIfNull(baselineSnapshot);
-        var receiptIntegrityGaps = evaluation.ReceiptIntegrityGaps.ToArray();
-        // A rule implementation change forces FullScan, which republishes stored gaps.
-        // Baseline membership keeps stored gaps observable while newly introduced
-        // receipt drift remains blocking. Commands use this same classifier for their
-        // write gates so fork-point identity has one source of truth.
-        var baselineComparableReceiptIntegrityGaps = receiptIntegrityGaps.Length == 0
-            ? new HashSet<ReceiptIntegrityGapIdentity>()
-            : BaselineComparableReceiptIntegrityGaps(baselineDocument, baselineSnapshot);
-        return receiptIntegrityGaps.Select(item =>
-        {
-            var identity = GapIdentity(item.Entry, item.Gap);
-            var effect = BaselineComparableReceiptIntegrityCodes.Contains(
-                    item.Gap.Code,
-                    StringComparer.Ordinal)
-                && baselineComparableReceiptIntegrityGaps.Contains(identity)
-                    ? AdmissionEffect.Observe
-                    : AdmissionEffect.Block;
-            return new RuleFinding(
+        return evaluation.ReceiptIntegrityGaps
+            .Select(static item => new RuleFinding(
                 BackfillPath,
-                $"{identity.AtomId}:{item.Gap.Code}:{identity.Detail}",
-                effect);
-        }).ToImmutableArray();
+                $"{item.Entry.AtomId}:{item.Gap.Code}:{item.Gap.Detail}",
+                AdmissionEffect.Block))
+            .ToImmutableArray();
     }
-
-    private static ReceiptIntegrityGapIdentity GapIdentity(
-        DigestionLedgerEntry entry,
-        DigestionGap gap) =>
-        new(entry.AtomId, gap.Code, gap.Detail);
-
-    private static HashSet<ReceiptIntegrityGapIdentity> BaselineComparableReceiptIntegrityGaps(
-        BackfillInventoryDocument document,
-        RepositorySnapshot snapshot)
-    {
-        var gaps = new HashSet<ReceiptIntegrityGapIdentity>();
-        foreach (var entry in document.RequireDigestionEntries())
-        {
-            var coverageReceipts = FirstReceiptByGid(
-                entry.Receipts.Coverage,
-                static receipt => receipt.Gid);
-            foreach (var gid in entry.CoverageGids.Distinct(StringComparer.Ordinal))
-            {
-                if (coverageReceipts.TryGetValue(gid, out var coverage)
-                    && (coverage.SourceSha256 != entry.Fingerprints.RawSha256
-                        || !Gid.TryParse(gid, out var parsedGid)
-                        || !SnapshotFileMatches(snapshot, parsedGid.Path.Value, coverage.TargetSha256)))
-                {
-                    gaps.Add(new ReceiptIntegrityGapIdentity(
-                        entry.AtomId,
-                        "coverage-receipt-mismatch",
-                        gid));
-                }
-            }
-
-            var scribeReceipts = FirstReceiptByGid(
-                entry.Receipts.Scribe,
-                static receipt => receipt.Gid);
-            foreach (var gid in entry.CoverageGids.Distinct(StringComparer.Ordinal))
-            {
-                if (!scribeReceipts.TryGetValue(gid, out var scribe))
-                {
-                    continue;
-                }
-
-                var documentGid = ScribeEmissionAttestation.DocumentGid(gid);
-                var definitionPath = ScribeEmissionAttestation.DefinitionPath(documentGid);
-                if (snapshot.TryGetFile(definitionPath, out var definition)
-                    && scribe.DefinitionSha256
-                    != DigestionFingerprint.Compute(definition.RawBytes.AsSpan()).RawSha256)
-                {
-                    gaps.Add(new ReceiptIntegrityGapIdentity(
-                        entry.AtomId,
-                        "scribe-definition-mismatch",
-                        gid));
-                }
-
-                var emissionPath = ScribeEmissionAttestation.EmissionPath(documentGid);
-                if (snapshot.TryGetFile(emissionPath, out var emission)
-                    && scribe.EmissionSha256
-                    != DigestionFingerprint.Compute(emission.RawBytes.AsSpan()).RawSha256)
-                {
-                    gaps.Add(new ReceiptIntegrityGapIdentity(
-                        entry.AtomId,
-                        "scribe-emission-mismatch",
-                        gid));
-                }
-            }
-        }
-
-        return gaps;
-    }
-
-    private static Dictionary<string, T> FirstReceiptByGid<T>(
-        IEnumerable<T> receipts,
-        Func<T, string> gid)
-    {
-        var result = new Dictionary<string, T>(StringComparer.Ordinal);
-        foreach (var receipt in receipts)
-        {
-            result.TryAdd(gid(receipt), receipt);
-        }
-
-        return result;
-    }
-
-    private static bool SnapshotFileMatches(
-        RepositorySnapshot snapshot,
-        string path,
-        string expectedSha256) =>
-        snapshot.TryGetFile(path, out var file)
-        && DigestionFingerprint.Compute(file.RawBytes.AsSpan()).RawSha256 == expectedSha256;
 
     private static BackfillInventoryDocument LoadBaselineDocument(RepositorySnapshot baseline)
     {

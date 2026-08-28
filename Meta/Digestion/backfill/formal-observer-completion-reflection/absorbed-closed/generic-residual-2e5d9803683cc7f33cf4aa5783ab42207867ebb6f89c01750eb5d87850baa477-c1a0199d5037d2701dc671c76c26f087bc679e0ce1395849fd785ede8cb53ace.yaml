@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/ProbabilisticClosure/TransitiveInvariantDistribution.transitive_invariant_distribution_unique_uniform
       source_sha256: sha256:2e5d9803683cc7f33cf4aa5783ab42207867ebb6f89c01750eb5d87850baa477
-      target_sha256: sha256:fe14c90fd900226240e4cdad0feac933ed2b27626244cab15f83deec351d07a0
+      target_statement_id: sha256:86b2e73c1679b7a87ea68ef153c655e5588da74bea663139c23f1ef714e1fa19
   scribe:
     - gid: D5/S3/Observer/ProbabilisticClosure/TransitiveInvariantDistribution.transitive_invariant_distribution_unique_uniform
       definition_sha256: sha256:b018b53596a8088965a05bd6cdfe68a9e6468db5f3a6fe1cdb583f28d7041d5f

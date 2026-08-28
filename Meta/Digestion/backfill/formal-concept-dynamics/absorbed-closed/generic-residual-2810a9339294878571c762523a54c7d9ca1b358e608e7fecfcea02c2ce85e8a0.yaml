@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Identity/PluralIdentityTheoryJudgments.identity_theories_can_disagree_on_distinct_propositions
       source_sha256: sha256:2810a9339294878571c762523a54c7d9ca1b358e608e7fecfcea02c2ce85e8a0
-      target_sha256: sha256:934fc8a74c784f8c8ef60643bf4e1f286972d869592dc10c8facadf1b7c6f9d6
+      target_statement_id: sha256:e5465d12a191684eee5e4d506f556c921be79c964eb372a369c9c5ae0ca79103
   scribe:
     - gid: D5/S3/ConceptDynamics/Identity/PluralIdentityTheoryJudgments.identity_theories_can_disagree_on_distinct_propositions
       definition_sha256: sha256:a8e7ee8cc9133304f71b27d502479cf7bff7131571f04b9f4867157495ec4b67

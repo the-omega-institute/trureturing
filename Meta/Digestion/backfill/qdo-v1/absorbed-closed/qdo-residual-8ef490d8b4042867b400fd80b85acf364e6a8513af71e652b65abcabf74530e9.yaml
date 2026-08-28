@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Quantum/Algebra/CommutingProjectionFourSector.commuting_projection_four_sector_criterion
       source_sha256: sha256:8ef490d8b4042867b400fd80b85acf364e6a8513af71e652b65abcabf74530e9
-      target_sha256: sha256:8a58b883bd57b98b4764f6e953049e064142d1fd2ec2b2ea1860076c81a69c74
+      target_statement_id: sha256:61e3147f4e4695991d4c86afb54adca50af526bc68019c04e4f438366654bf10
   scribe:
     - gid: D5/S3/Quantum/Algebra/CommutingProjectionFourSector.commuting_projection_four_sector_criterion
       definition_sha256: sha256:6a157e44794ea80812c91f5921ffe823e4c45a7af5ec647f9fb7be2c52db1ffc

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Information/MarginalActionEntropyCausalContrast.marginal_action_entropy_causal_contrast
       source_sha256: sha256:5cfb847b3808470ed0889e2eeb928c01ddc1edc391e3e96baa7ee1a8940016b2
-      target_sha256: sha256:9852a92fbd0406c0b43d920619d84db6dc53d9d7b346958f4c43e9e6e2e2f98f
+      target_statement_id: sha256:542764660b5a9aa8a3064f96df65c0fb96065377e9a4d203bd746f0f546976e3
   scribe:
     - gid: D5/S3/ConceptDynamics/Information/MarginalActionEntropyCausalContrast.marginal_action_entropy_causal_contrast
       definition_sha256: sha256:0227280312a9a0006becdb1eca809618c25be488e7208866fac0ed8382d724c1

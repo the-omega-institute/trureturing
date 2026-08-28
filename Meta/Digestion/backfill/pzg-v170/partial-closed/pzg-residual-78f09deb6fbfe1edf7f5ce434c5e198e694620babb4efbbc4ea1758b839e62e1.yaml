@@ -9,6 +9,6 @@ receipts:
   coverage:
     - gid: D5/S3/Weil/EulerProduct.single_address_heat_trace_eq_log_derivative
       source_sha256: sha256:78f09deb6fbfe1edf7f5ce434c5e198e694620babb4efbbc4ea1758b839e62e1
-      target_sha256: sha256:ad68e04ffe461a7cd468c188da3685076e9ef22c4436ea5fa92fcc922cd6ffed
+      target_statement_id: sha256:9c1b82cb02a89cc4b71ef4be67b4d3f59df46fa70fefa9802a6c3084ddf731c0
   scribe: []
   unresolved_subitems: []

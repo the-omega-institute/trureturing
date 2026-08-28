@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Computability/DescriptionComplexity/WideVacuumBand.arbitrarily_wide_vacuum_band
       source_sha256: sha256:aa45f85fd757607d0c3dcf3a6ad4f5461eb00b30e7471420c7ae108102630ee8
-      target_sha256: sha256:db24637f394895bc77957c383e57b853eb4cc523bc34245aee43a0e2076a4c98
+      target_statement_id: sha256:736b86db018172aeedf9a7c697bd0c4e18db0e9a18346960ab88c17d43790050
   scribe:
     - gid: D5/S0/Computability/DescriptionComplexity/WideVacuumBand.arbitrarily_wide_vacuum_band
       definition_sha256: sha256:8f2a3b8a7bf8d37f8236d7238156453ef3666210f4bbe52e9457ea57f44cacca

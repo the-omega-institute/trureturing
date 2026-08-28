@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Solenoid/ExactSequence.congruence_solenoid_short_exact
       source_sha256: sha256:38bf584e6833e905221040a9763a4b8bac9b85189f1bb4fd16210e426a0795f6
-      target_sha256: sha256:041479aae7c350feefe68c187be9553dae88bdba13d92c5e09dfdb0c7570b74d
+      target_statement_id: sha256:0a9bf8bcb0b7e0f35a9126b6880ab8524982944507b03c62e61f70a756fd897e
   scribe:
     - gid: D5/S1/Solenoid/ExactSequence.congruence_solenoid_short_exact
       definition_sha256: sha256:04a94e96b0a77d6d98e2b61c0255861f009fa3ae8110fc07d40042712bf6dcf3

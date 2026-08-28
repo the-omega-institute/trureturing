@@ -10,7 +10,7 @@ receipts:
   coverage:
     - gid: D5/S0/Carrier/GoldenDiscriminant.golden_discriminant_spec
       source_sha256: sha256:819d8f05f192d081658df28c99756a44dade1464f4ceaee6ca95d6af0637f372
-      target_sha256: sha256:a87db21d2aecb91502d9d85d9c3fe27ce1ef893c2405075909a44ebb5baf6178
+      target_statement_id: sha256:db5991e14436b2929628f6c5f4279df71531e26a810ab6d8696d8780f93b3f93
   scribe: []
   unresolved_subitems:
     - maximal-real-subfield-of-q-zeta-five-equals-q-sqrt-five

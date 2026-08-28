@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Epistemic/DescriptiveAnnouncementCommutation.descriptive_announcement_commutation
       source_sha256: sha256:ab45120e691bcba0828f7d1b0aeae6b9823b51a014830dfafac836e4693f787a
-      target_sha256: sha256:d685f725d831d9a0e84c806a09b717c775e2a5f4ec3e1599666103170f164861
+      target_statement_id: sha256:7b0e9ae040fcb2556b166d6f20a77f99df325d43e7d75bbc7f85ff5fcd548919
   scribe:
     - gid: D5/S3/ConceptDynamics/Epistemic/DescriptiveAnnouncementCommutation.descriptive_announcement_commutation
       definition_sha256: sha256:96ac99edc368f6d3cb635e1ec0615aa61e24b6aa024a9361b09d7de8adaaadbc
