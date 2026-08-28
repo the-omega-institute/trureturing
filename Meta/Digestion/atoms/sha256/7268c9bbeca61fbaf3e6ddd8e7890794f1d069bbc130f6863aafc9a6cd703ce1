@@ -1,0 +1,12 @@
+# 第二百三十四部　Folded Hilbert–Pólya 的最小充分条件
+
+Stieltjes moment theory给出另一个等价形式：
+
+$$
+(\mu_n)
+\text{ 是 Stieltjes moment sequence}
+$$
+
+当且仅当存在：
+
+* Hilbert 空间 \(\mathcal H\)；

@@ -1,0 +1,10 @@
+ast_path: section/194-1-de-Branges-对角核
+fingerprints:
+  raw_sha256: sha256:c6aa0a4360a4543d643b61543c423788a98d1187a09c3666f269c7375efb4bb8
+  normalized_sha256: sha256:c6aa0a4360a4543d643b61543c423788a98d1187a09c3666f269c7375efb4bb8
+cas_ref: sha256:c6aa0a4360a4543d643b61543c423788a98d1187a09c3666f269c7375efb4bb8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

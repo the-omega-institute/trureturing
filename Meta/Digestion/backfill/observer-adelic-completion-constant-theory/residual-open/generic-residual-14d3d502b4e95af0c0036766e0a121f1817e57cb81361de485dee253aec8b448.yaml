@@ -1,0 +1,10 @@
+ast_path: section/第一百九十二部-线外零点产生无界负见证
+fingerprints:
+  raw_sha256: sha256:14d3d502b4e95af0c0036766e0a121f1817e57cb81361de485dee253aec8b448
+  normalized_sha256: sha256:14d3d502b4e95af0c0036766e0a121f1817e57cb81361de485dee253aec8b448
+cas_ref: sha256:14d3d502b4e95af0c0036766e0a121f1817e57cb81361de485dee253aec8b448
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

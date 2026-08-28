@@ -1,0 +1,59 @@
+# 第二百二十七部　Ramanujan–Stieltjes 连分数完成
+
+定义 moment generating function：
+
+$$
+\boxed{
+M(t)
+=
+\sum_{n=0}^{\infty}\mu_nt^n.
+}
+\tag{227.1}
+$$
+
+则：
+
+$$
+\mathscr S(x)=M(-x).
+$$
+
+Stieltjes theorem 给出：
+
+$$
+\boxed{
+M(t)
+=
+\cfrac{\mu_0}{
+1-\cfrac{\alpha_1t}{
+1-\cfrac{\alpha_2t}{
+1-\cfrac{\alpha_3t}{1-\ddots}}}}
+}
+}
+\tag{227.2}
+$$
+
+其中：
+
+$$
+\alpha_j\ge0.
+$$
+
+所以：
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\cfrac{\mu_0}{
+1+\cfrac{\alpha_1x}{
+1+\cfrac{\alpha_2x}{
+1+\cfrac{\alpha_3x}{1+\ddots}}}}
+}.
+}
+\tag{227.3}
+$$
+
+非负 S-fraction 与 Stieltjes moment sequence 的等价是经典 Stieltjes 定理；系数在非退化情形下唯一。([arXiv][2])
+
+因此：
+

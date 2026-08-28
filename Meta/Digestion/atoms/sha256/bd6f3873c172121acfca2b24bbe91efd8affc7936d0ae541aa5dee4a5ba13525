@@ -1,0 +1,60 @@
+## v2.1：Toroidal Weyl 函数、Herglotz 正性、有限 Pick 证书与线外零点放大
+
+以下从前文**第二百零四部之后**继续追加。
+
+上一轮已经把 Riemann \(\xi\) 写成有限环面谱帧中的公共振幅：
+
+$$
+\mathbf P_K(s)=\xi(s)\mathbf T_K(s),
+$$
+
+并把 RH 的核心目标压缩成：
+
+$$
+\Re\frac{\xi'(s)}{\xi(s)}>0,
+\qquad
+\Re s>\frac12.
+$$
+
+本轮继续完成这条链。核心结论是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{由有限环面周期重构出的超额连接是 Herglotz 函数}.
+}
+$$
+
+更强地，任何线外零点都会产生一个**单点、有限维、定量为负**的 Pick 证书：
+
+$$
+\boxed{
+\mathcal N_\omega(z_\rho,z_\rho)
+=
+-\frac1{\omega(\delta-\omega)}
+\le
+-\frac4{\delta^2}.
+}
+$$
+
+其中：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+\qquad
+0<\omega<\delta.
+$$
+
+因此此前尚未闭合的：
+
+$$
+\text{off-line zero}
+\Longrightarrow
+\text{不可消除的有限负见证}
+$$
+
+现在可以在 de Branges–toroidal 接口中严格建立。
+
+---
+

@@ -1,0 +1,53 @@
+# 第二百三十三部　零点原子消去与递归自改善
+
+假设已经严格验证临界线上的前 \(M\) 个正零点：
+
+$$
+\gamma_1,\ldots,\gamma_M.
+$$
+
+定义 deflated Stieltjes observer：
+
+$$
+\boxed{
+\mathscr S^{[M]}(x)
+=
+\mathscr S(x)
+-
+\sum_{j=1}^{M}
+\frac{m_j}{x+\gamma_j^2}.
+}
+\tag{233.1}
+$$
+
+若 RH 成立，则：
+
+$$
+\boxed{
+\mathscr S^{[M]}(x)
+=
+\sum_{j>M}
+\frac{m_j}{x+\gamma_j^2}
+}
+$$
+
+仍为 Stieltjes 函数。
+
+其 moments 为：
+
+$$
+\boxed{
+\mu_n^{[M]}
+=
+\mu_n
+-
+\sum_{j=1}^{M}
+\frac{m_j}{\gamma_j^{2n+2}}.
+}
+\tag{233.2}
+$$
+
+所以每次消去一个已验证原子后，所有 Hankel 条件必须继续保持。
+
+---
+

@@ -1,0 +1,37 @@
+## 定理 273.1（Li stationary-process criterion）
+
+RH 等价于存在一个归一化平稳复过程 \((Y_k)_{k\in\mathbb Z}\)，使：
+
+$$
+\mathbb E[Y_j\overline{Y_k}]
+=
+c_{j-k},
+$$
+
+并满足：
+
+$$
+\boxed{
+\lambda_n
+=
+\lambda_1
+\mathbb E
+\left|
+Y_0+\cdots+Y_{n-1}
+\right|^2.
+}
+\tag{273.7}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{Li 系数}
+=
+\text{一个平稳观察过程的部分和方差}.
+}
+$$
+
+---
+

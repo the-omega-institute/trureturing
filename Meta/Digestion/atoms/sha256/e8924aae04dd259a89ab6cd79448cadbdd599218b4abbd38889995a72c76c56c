@@ -1,0 +1,20 @@
+## 248.2 必须区分两种流
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{Newman flow}&\text{Toda observer flow}\\
+\hline
+\text{改变整个 }\Xi_t&\text{不改变零点支撑}\\
+\text{移动零点}&\text{只改变谱原子权重}\\
+\text{决定 }\Lambda_{\mathrm N}&\text{描述已正完成谱的可积观察动力}\\
+\end{array}
+}
+$$
+
+当前没有证明二者通过简单变量变换同一。
+
+Toda 流是正完成以后可用的精确实验模型，而不是 Newman flow 的替代品。
+
+---
+

@@ -1,0 +1,60 @@
+## 271.1 Li 曲率测度
+
+定义单位圆上的对称概率测度：
+
+$$
+\boxed{
+\mu_\lambda
+=
+\frac{2}{\lambda_1}
+\sum_{\gamma>0}
+m_\gamma x_\gamma
+\left(
+\delta_{u_\gamma}
++
+\delta_{\overline{u_\gamma}}
+\right).
+}
+\tag{271.6}
+$$
+
+其总质量为：
+
+$$
+\frac{4}{\lambda_1}
+\sum_{\gamma>0}m_\gamma x_\gamma
+=1.
+$$
+
+对 \(n\in\mathbb Z\)：
+
+$$
+\begin{aligned}
+\widehat\mu_\lambda(n)
+&=
+\int_{\mathbb T}\zeta^n\,d\mu_\lambda(\zeta)\\
+&=
+\frac{4}{\lambda_1}
+\sum_{\gamma>0}
+m_\gamma x_\gamma\cos(n\theta_\gamma).
+\end{aligned}
+\tag{271.7}
+$$
+
+另一方面，由式 (271.4)：
+
+$$
+\begin{aligned}
+\kappa_n
+&=
+\lambda_{n+1}
+-2\lambda_n
++\lambda_{n-1}\\
+&=
+8\sum_{\gamma>0}
+m_\gamma x_\gamma\cos(n\theta_\gamma).
+\end{aligned}
+$$
+
+因此：
+

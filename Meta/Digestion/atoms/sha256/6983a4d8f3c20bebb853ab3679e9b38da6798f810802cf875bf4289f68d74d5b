@@ -1,0 +1,25 @@
+## 312.3 Sticky-infinity approximant
+
+构造：
+
+$$
+\mu_T,\quad
+\mathfrak C_T,\quad
+\vartheta_T.
+$$
+
+比较：
+
+$$
+\sup_{|z|\le r}
+|\vartheta_\xi(z)-\vartheta_T(z)|
+$$
+
+是否满足：
+
+$$
+O_r(\log T/T^2).
+$$
+
+---
+

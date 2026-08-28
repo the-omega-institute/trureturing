@@ -1,0 +1,45 @@
+# 第一百六十二部　与项目现有 Weil 真源的衔接
+
+项目当前已经具有：
+
+1. 无条件 Weil 显式公式；
+2. 卷积平方测试函数在临界线零点上的非负贡献；
+3. 临界线与离线零点有限截断的精确分解。
+
+因此本轮新增结构可以接在该真源之后：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Weil explicit formula}
+&\longrightarrow
+\text{critical/off-line defect};\\
+\text{Eisenstein scattering}
+&\longrightarrow
+\text{off-line resonance};\\
+\text{Mayer transfer}
+&\longrightarrow
+\text{primitive geodesic histories};\\
+\text{Golden cycle}
+&\longrightarrow
+\text{minimal sticky block};\\
+\text{positive Eisenstein period}
+&\longrightarrow
+\text{候选零点刚性}.
+\end{aligned}
+}
+$$
+
+真正尚未闭合的桥仍然是：
+
+$$
+\boxed{
+\text{off-line ζ zero}
+\Longrightarrow
+\text{某个 refined positive observer 中的严格负／非酉见证}.
+}
+\tag{162.1}
+$$
+
+---
+

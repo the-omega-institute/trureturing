@@ -1,0 +1,19 @@
+## 定理 274.1（Li–Carathéodory identity）
+
+$$
+\boxed{
+\mathcal C_\lambda(z)
+=
+\frac1{\lambda_1}
+\frac{
+\xi'(\frac1{1-z})
+}{
+\xi(\frac1{1-z})
+}.
+}
+\tag{274.5}
+$$
+
+这是一条极简的完成公式：
+
+* Möbius 变换把单位圆盘送到 \(\Re s>\tfrac12\)；

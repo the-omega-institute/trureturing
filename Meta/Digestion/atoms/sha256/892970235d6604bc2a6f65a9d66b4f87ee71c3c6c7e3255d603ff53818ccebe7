@@ -1,0 +1,30 @@
+## 171.2 重要负结论
+
+正能量只说明：
+
+$$
+\text{哪里是零点}.
+$$
+
+它不说明：
+
+$$
+\text{零点为什么必须位于 }\Re s=\frac12.
+$$
+
+无论 \(\rho\) 在线上还是线外，\(\mathscr E_K\) 都会在 \(\rho\) 产生非负局部极小。
+
+所以：
+
+$$
+\boxed{
+\text{positive period energy}
+\neq
+\text{critical-line rigidity}.
+}
+$$
+
+这正是当前路线必须避免的过度推断。
+
+---
+

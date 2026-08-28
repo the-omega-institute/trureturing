@@ -1,0 +1,58 @@
+# 第二百五十九部　Hausdorff moment 完成
+
+定义：
+
+$$
+\boxed{
+h_n=p_{n+1}.
+}
+\tag{259.1}
+$$
+
+RH 下，定义有限正测度：
+
+$$
+\boxed{
+d\eta(x)
+=
+\sum_{\gamma>0}
+m_\gamma x_\gamma
+\delta_{x_\gamma}(dx),
+\qquad
+0<x_\gamma<1.
+}
+\tag{259.2}
+$$
+
+则：
+
+$$
+\boxed{
+h_n
+=
+\int_0^1x^n\,d\eta(x).
+}
+\tag{259.3}
+$$
+
+因此 \((h_n)\) 是 Hausdorff moment sequence。
+
+经典 Hausdorff 定理说明：一个序列是 \([0,1]\) 上有限正测度的 moment sequence，当且仅当它完全单调，即全部交替有限差分非负。([Springer][3])
+
+在当前算子图表中：
+
+$$
+\boxed{
+(-1)^r\Delta^rh_n
+=
+\operatorname{Tr}
+\left[
+X_\Xi^{n+1}(I-X_\Xi)^r
+\right]
+\ge0.
+}
+\tag{259.4}
+$$
+
+---
+

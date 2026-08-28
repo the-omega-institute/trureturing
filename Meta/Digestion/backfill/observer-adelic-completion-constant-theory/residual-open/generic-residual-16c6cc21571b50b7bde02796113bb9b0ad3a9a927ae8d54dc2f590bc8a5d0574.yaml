@@ -1,0 +1,10 @@
+ast_path: section/261-1-Li-Markov-生成元
+fingerprints:
+  raw_sha256: sha256:16c6cc21571b50b7bde02796113bb9b0ad3a9a927ae8d54dc2f590bc8a5d0574
+  normalized_sha256: sha256:16c6cc21571b50b7bde02796113bb9b0ad3a9a927ae8d54dc2f590bc8a5d0574
+cas_ref: sha256:16c6cc21571b50b7bde02796113bb9b0ad3a9a927ae8d54dc2f590bc8a5d0574
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

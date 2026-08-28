@@ -1,0 +1,28 @@
+## 定理 174.1（Cuspidal 全环面核）
+
+$$
+\boxed{
+\Pi\text{ 对全部二次环面不可见}
+\iff
+L(\tfrac12,\Pi)=0.
+}
+\tag{174.2}
+$$
+
+Cornelissen–Lorscheid 因而把 cuspidal toroidal spectrum 精确描述为中心 \(L\)-值为零的 cusp forms。([arXiv][1])
+
+这给出一个统一结构：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{自动表示类型}&\text{全环面不可见条件}\\
+\hline
+\text{Eisenstein family}&L(s)=0\\
+\text{Cuspidal representation}&L(\frac12,\Pi)=0
+\end{array}
+}
+$$
+
+---
+

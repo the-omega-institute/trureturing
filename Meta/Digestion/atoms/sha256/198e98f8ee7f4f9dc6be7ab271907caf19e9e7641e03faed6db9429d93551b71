@@ -1,0 +1,66 @@
+# 第三百零二部　科学审计：内函数结论与重数问题
+
+定义：
+
+$$
+\lambda_1=\frac{\xi'(1)}{\xi(1)}>0,
+$$
+
+$$
+s(z)=\frac1{1-z},
+\qquad |z|<1.
+$$
+
+再定义 Li–Carathéodory 函数：
+
+$$
+\boxed{
+\mathfrak C_\xi(z)
+=
+\frac1{\lambda_1}
+\frac{\xi'(s(z))}{\xi(s(z))}
+}
+\tag{302.1}
+$$
+
+以及 Cayley 完成：
+
+$$
+\boxed{
+\vartheta_\xi(z)
+=
+\frac{\mathfrak C_\xi(z)-1}
+{\mathfrak C_\xi(z)+1}.
+}
+\tag{302.2}
+$$
+
+因为 \(s(z)\) 把单位圆盘映到：
+
+$$
+\Re s>\frac12,
+$$
+
+RH 等价于：
+
+$$
+\Re \mathfrak C_\xi(z)>0
+\qquad(|z|<1),
+$$
+
+并且在几乎处处的圆周边界上，\(\mathfrak C_\xi\) 为纯虚边界值。因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\vartheta_\xi
+\text{ 是内函数}.
+}
+\tag{302.3}
+$$
+
+正实部函数、Herglotz 表示、de Branges–Rovnyak 核之间的联系是标准 Carathéodory 理论；Suzuki 的 shifted-\(\xi\) family 则给出了 RH、meromorphic inner functions 与正 canonical systems 的直接接口。([arXiv][1])
+
+---
+

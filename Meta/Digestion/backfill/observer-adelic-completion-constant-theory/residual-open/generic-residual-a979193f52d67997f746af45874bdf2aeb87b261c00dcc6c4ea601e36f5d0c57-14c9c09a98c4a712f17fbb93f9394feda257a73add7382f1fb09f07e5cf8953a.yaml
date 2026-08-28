@@ -1,0 +1,10 @@
+ast_path: section/219-4-Golden-通道负对照/clause/1
+fingerprints:
+  raw_sha256: sha256:a979193f52d67997f746af45874bdf2aeb87b261c00dcc6c4ea601e36f5d0c57
+  normalized_sha256: sha256:a979193f52d67997f746af45874bdf2aeb87b261c00dcc6c4ea601e36f5d0c57
+cas_ref: sha256:a979193f52d67997f746af45874bdf2aeb87b261c00dcc6c4ea601e36f5d0c57
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,29 @@
+## 158.2 Sticky words
+
+若 word 长期停留在一个或少数 digit：
+
+$$
+1,1,\ldots,1
+$$
+
+则形成嵌套周期结构。
+
+黄金 orbit：
+
+$$
+\overline1
+$$
+
+是最纯粹 sticky 极限。
+
+对这类历史，正确操作不是逐 word 绝对估计，而是：
+
+1. 识别 primitive block；
+2. 收缩重复块；
+3. 重求和所有 repetition；
+4. 得到 \(q\)-Pochhammer／\(q\)-Gamma counterterm。
+
+这正对应 Yu Deng 式 primitive-history renormalization。
+
+---
+

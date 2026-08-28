@@ -1,0 +1,14 @@
+ast_path: section/219-4-Golden-通道负对照
+fingerprints:
+  raw_sha256: sha256:1a4bc96f8834317cef8f1188b693b3d2e4274ef63c90a4e639b3de92d3e2d441
+  normalized_sha256: sha256:1a4bc96f8834317cef8f1188b693b3d2e4274ef63c90a4e639b3de92d3e2d441
+cas_ref: sha256:1a4bc96f8834317cef8f1188b693b3d2e4274ef63c90a4e639b3de92d3e2d441
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-a979193f52d67997f746af45874bdf2aeb87b261c00dcc6c4ea601e36f5d0c57-14c9c09a98c4a712f17fbb93f9394feda257a73add7382f1fb09f07e5cf8953a
+    - generic-residual-67e61f198fd17afdfb4af0cfb69779197d6ba220974a0f77ae793a71323d4e20-f750fe8e3590ef29258509f579a712c45251ce85d9ac8e772429009ca203555d
+    - generic-residual-a580298747e7d0b6f58cc975e20280e0f18da44204c77712d3231b39829c3677-74fc8152d0f0db68fef570c8c0cea31242d08739e693254d603394e3b21ef9eb

@@ -1,0 +1,26 @@
+## 定理 196.1（RH 的超额连接形式）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathfrak M_K(s)>0
+\quad
+\text{对全部 }\Re s>\frac12.
+}
+\tag{196.4}
+$$
+
+即：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{观测环面周期的水平增长
+始终严格超过 twist 载体自身的水平增长}.
+}
+$$
+
+---
+

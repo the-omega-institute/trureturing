@@ -1,0 +1,52 @@
+# 第三百一十九部　保守 colligation 完成
+
+Schur 类函数具有以下等价刻画：
+
+1. 取值于单位圆盘；
+2. de Branges–Rovnyak kernel 正定；
+3. 可实现为 contractive system 的 transfer function；
+4. 可选择 conservative/unitary realization。
+
+这些正核—transfer realization 等价是经典 Schur 系统理论。([arxiv.org][4])
+
+因此，对固定 \(\omega>0\)，RH 等价于存在 Hilbert 状态空间：
+
+$$
+\mathscr H_\omega
+$$
+
+以及 unitary colligation：
+
+$$
+\boxed{
+\mathfrak U_\omega
+=
+\begin{pmatrix}
+A_\omega&B_\omega\\
+C_\omega&D_\omega
+\end{pmatrix}
+:
+\mathscr H_\omega\oplus\mathbb C
+\longrightarrow
+\mathscr H_\omega\oplus\mathbb C,
+}
+\tag{319.1}
+$$
+
+使：
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+D_\omega
++
+zC_\omega
+(I-zA_\omega)^{-1}
+B_\omega.
+}
+\tag{319.2}
+$$
+
+---
+

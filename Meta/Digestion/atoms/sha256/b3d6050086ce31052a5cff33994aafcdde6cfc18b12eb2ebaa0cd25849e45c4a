@@ -1,0 +1,15 @@
+## 定理 288.1（Riemann zero Clark measure）
+
+$$
+\boxed{
+\mu_\lambda
+=
+\sigma_1[\vartheta_\xi],
+}
+\tag{288.7}
+$$
+
+即 \(\mu_\lambda\) 正是 \(\vartheta_\xi\) 在边界参数 \(\alpha=1\) 下的 Clark 测度。
+
+---
+

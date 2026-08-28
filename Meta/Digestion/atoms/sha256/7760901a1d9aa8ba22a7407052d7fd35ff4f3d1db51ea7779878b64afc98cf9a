@@ -1,0 +1,100 @@
+# 第二百七十三部　Li 系数是平稳过程部分和的方差
+
+由式 (272.3)，RH 下：
+
+$$
+\boxed{
+\lambda_n
+=
+\lambda_1
+\int_{\mathbb T}
+\left|
+\sum_{k=0}^{n-1}\zeta^k
+\right|^2
+d\mu_\lambda(\zeta).
+}
+\tag{273.1}
+$$
+
+令：
+
+$$
+\mathcal H_\lambda=L^2(\mathbb T,\mu_\lambda),
+$$
+
+定义 unitary：
+
+$$
+\boxed{
+(Uf)(\zeta)=\zeta f(\zeta),
+}
+\tag{273.2}
+$$
+
+以及循环向量：
+
+$$
+v(\zeta)=1.
+$$
+
+则：
+
+$$
+c_n=\langle U^nv,v\rangle.
+$$
+
+定义一阶 cocycle：
+
+$$
+\boxed{
+b_n
+=
+\sqrt{\lambda_1}
+\sum_{k=0}^{n-1}U^kv,
+\qquad
+b_0=0.
+}
+\tag{273.3}
+$$
+
+有：
+
+$$
+\boxed{
+b_{m+n}=b_m+U^mb_n.
+}
+\tag{273.4}
+$$
+
+并且：
+
+$$
+\boxed{
+\|b_n\|^2=\lambda_n.
+}
+\tag{273.5}
+$$
+
+若 \(m\ge n\)：
+
+$$
+b_m-b_n
+=
+U^nb_{m-n},
+$$
+
+所以：
+
+$$
+\boxed{
+\|b_m-b_n\|^2
+=
+\lambda_{m-n}.
+}
+\tag{273.6}
+$$
+
+这重新得到前文的 Li Hilbert 距离，但现在其 unitary 和循环向量是由 Li 曲率概率测度规范构造的。
+
+---
+

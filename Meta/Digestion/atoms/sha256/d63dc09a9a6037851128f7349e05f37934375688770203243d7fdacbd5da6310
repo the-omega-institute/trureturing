@@ -1,0 +1,56 @@
+## v2.8：环面 Jet 半单化、保守系统实现、相对迹被动性与函数域闭合模型
+
+以下从前文**第三百一十三部之后**继续追加。
+
+上一轮把 RH 的最小目标压缩为半平面正核：
+
+$$
+\mathcal K_\xi(s,t)
+=
+\frac{
+\frac{\xi'(s)}{\xi(s)}
++
+\overline{\frac{\xi'(t)}{\xi(t)}}
+}{
+\lambda_1(s+\overline t-1)
+},
+\qquad
+\Re s,\Re t>\frac12,
+$$
+
+并指出：
+
+$$
+\mathrm{RH}
+\iff
+\mathcal K_\xi\succeq0.
+$$
+
+本轮继续攻击：
+
+$$
+\boxed{
+\text{怎样从 toric relative trace formula
+直接构造 }\mathcal K_\xi\text{ 的 Gram 表示？}
+}
+$$
+
+首先得到一个必要修正：
+
+> 不能直接把全部 toroidal Eisenstein derivative tower 放入正 Hilbert 空间，并要求 Hecke 算子在其中自伴。
+> 多重零点对应的导数塔天然携带 Jordan/nilpotent 结构；正谱完成必须先把它从“jet”半单化为“正重数”。
+
+随后得到一个更精确的证明目标：
+
+$$
+\boxed{
+\text{不要直接构造零点算子，}
+\quad
+\text{而应从环面相对迹构造一个保守输入—状态—输出系统，}
+}
+$$
+
+使它的 transfer function 正好是 shifted-\(\xi\) 的内函数比值。
+
+---
+

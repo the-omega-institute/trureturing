@@ -1,0 +1,42 @@
+## 315.2 多重零点的正确正谱完成
+
+若 RH 成立，\(\rho=\frac12+i\gamma\)。
+
+要把重数表现为真正的 self-adjoint 谱重数，应使用：
+
+$$
+\boxed{
+\mathcal H_\rho
+\simeq
+\mathbb C^{m_\rho},
+}
+$$
+
+并令自伴算子在该 fiber 上作用为：
+
+$$
+\gamma I_{m_\rho}.
+$$
+
+不能使用：
+
+$$
+\mathbb C[\varepsilon]/(\varepsilon^{m_\rho})
+$$
+
+上的 Jordan 作用。
+
+所以正确链为：
+
+$$
+\boxed{
+\text{toroidal jet}
+\to
+\text{log-residue weight}
+\to
+\text{\(m_\rho\)-dimensional semisimple fiber}.
+}
+$$
+
+---
+

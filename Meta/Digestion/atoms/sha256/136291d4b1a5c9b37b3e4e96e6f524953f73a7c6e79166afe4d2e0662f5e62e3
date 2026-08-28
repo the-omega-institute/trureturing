@@ -1,0 +1,52 @@
+## 244.2 重数恢复
+
+一旦 \(\alpha_1\) 已知：
+
+$$
+\boxed{
+m_1
+=
+\lim_{n\to\infty}
+\frac{\mu_n}{\alpha_1^{n+1}}.
+}
+\tag{244.4}
+$$
+
+定义 deflated moments：
+
+$$
+\mu_n^{[1]}
+=
+\mu_n-m_1\alpha_1^{n+1}.
+$$
+
+则：
+
+$$
+\alpha_2
+=
+\lim_{n\to\infty}
+\frac{
+\mu_{n+1}^{[1]}
+}{
+\mu_n^{[1]}
+}.
+$$
+
+递归得到全部：
+
+$$
+(\gamma_j,m_j).
+$$
+
+所以：
+
+$$
+\boxed{
+\text{中心的完整无穷 jet，若满足 RH 正性，
+能够逐原子恢复全部 Riemann 零点。}
+}
+$$
+
+---
+

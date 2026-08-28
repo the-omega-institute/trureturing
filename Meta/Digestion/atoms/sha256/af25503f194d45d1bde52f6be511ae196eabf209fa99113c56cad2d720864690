@@ -1,0 +1,54 @@
+# 第二百四十九部　Toda 流中的 sticky 原子
+
+归一化倾斜测度：
+
+$$
+\boxed{
+d\widehat\nu_\tau
+=
+\frac{
+e^{\tau u}d\nu(u)
+}{
+\int e^{\tau u}d\nu(u)
+}.
+}
+\tag{249.1}
+$$
+
+设最大支撑点为：
+
+$$
+\alpha_1>\alpha_2.
+$$
+
+则：
+
+$$
+\boxed{
+\widehat\nu_\tau
+\Longrightarrow
+\delta_{\alpha_1}
+\qquad
+(\tau\to+\infty).
+}
+\tag{249.2}
+$$
+
+即观察注意力最终完全集中于最小 Riemann ordinate：
+
+$$
+\gamma_1=\alpha_1^{-1/2}.
+$$
+
+这给出一个严格 sticky limit：
+
+$$
+\boxed{
+\text{largest reciprocal-zero atom}
+=
+\text{Toda attention flow 的最终 sticky state}.
+}
+$$
+
+---
+

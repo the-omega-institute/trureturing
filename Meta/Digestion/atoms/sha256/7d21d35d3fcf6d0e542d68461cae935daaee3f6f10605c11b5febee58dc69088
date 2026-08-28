@@ -1,0 +1,24 @@
+## 323.1 Toroidal temperedness
+
+在函数域 toroidal automorphic theory 中，toroidal space 可以被明确分析；相关结果证明其 irreducible subquotients tempered，并在若干 class-number-one、低 genus 情形中给出自动形式版本的曲线 RH。([arxiv.org][6])
+
+因此函数域已经闭合了三条链：
+
+$$
+\boxed{
+\begin{aligned}
+\text{toroidal invisibility}
+&\to
+\text{zeta zero};\\
+\text{positive/cohomological pairing}
+&\to
+\text{unitary Frobenius};\\
+\text{unitary Frobenius}
+&\to
+\text{tempered zero location}.
+\end{aligned}
+}
+$$
+
+---
+

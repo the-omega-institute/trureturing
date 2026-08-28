@@ -1,0 +1,27 @@
+* 连续 scattering dynamics。
+
+所以定义联合观察：
+
+$$
+\boxed{
+\mathfrak O_{\mathrm{mod}}(s)
+=
+\left(
+\mathcal L_s,\Phi(s)
+\right).
+}
+\tag{160.1}
+$$
+
+这比单独使用：
+
+$$
+Z_{\mathrm{Sel}}(s)
+\quad\text{或}\quad
+\xi(s)
+$$
+
+保留更多 primitive 信息。
+
+---
+

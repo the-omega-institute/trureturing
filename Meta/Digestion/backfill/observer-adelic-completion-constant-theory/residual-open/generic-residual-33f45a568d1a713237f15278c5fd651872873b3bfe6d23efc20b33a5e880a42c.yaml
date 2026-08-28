@@ -1,0 +1,14 @@
+ast_path: section/298-3-原子消去后的-Clark-重整化
+fingerprints:
+  raw_sha256: sha256:33f45a568d1a713237f15278c5fd651872873b3bfe6d23efc20b33a5e880a42c
+  normalized_sha256: sha256:33f45a568d1a713237f15278c5fd651872873b3bfe6d23efc20b33a5e880a42c
+cas_ref: sha256:33f45a568d1a713237f15278c5fd651872873b3bfe6d23efc20b33a5e880a42c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-e215dd406298862a1f062587c965c365b440c5491dc7332feed20dd9b166d33b-e5bcbe0134b9d83e3c38dbba80c0bf1f52e6a82478711516812db278b71e60f5
+    - generic-residual-302b70ac0564ce179b3f0ad278ed4634a14a2ed8951de1081feeeb721a044d30-0b729d1ce30c11a679d1e88131be44d960185e0a6061950dc478b7103393d07c
+    - generic-residual-a49dfb3fb59373efaa0bb21e93a36fbfb556a56bca378cbe82275f83799fa098-cb2a4b931a72228e962c2d69942fe6c5c3a3457ac821c818be27f3a3f38be689

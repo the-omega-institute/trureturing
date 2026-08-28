@@ -1,0 +1,10 @@
+ast_path: section/213-1-先前核心缺口的闭合
+fingerprints:
+  raw_sha256: sha256:b7e5dfd2cec8eae9db16fe61b4e6395ef76f70be0f79f3eb4e0fdd1fc208a220
+  normalized_sha256: sha256:b7e5dfd2cec8eae9db16fe61b4e6395ef76f70be0f79f3eb4e0fdd1fc208a220
+cas_ref: sha256:b7e5dfd2cec8eae9db16fe61b4e6395ef76f70be0f79f3eb4e0fdd1fc208a220
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

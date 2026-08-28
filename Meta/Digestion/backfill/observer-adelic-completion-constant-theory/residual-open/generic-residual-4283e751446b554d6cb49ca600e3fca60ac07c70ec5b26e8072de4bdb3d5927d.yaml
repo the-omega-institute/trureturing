@@ -1,0 +1,10 @@
+ast_path: section/第三百零八部-显式-Hermite-Biehler-函数
+fingerprints:
+  raw_sha256: sha256:4283e751446b554d6cb49ca600e3fca60ac07c70ec5b26e8072de4bdb3d5927d
+  normalized_sha256: sha256:4283e751446b554d6cb49ca600e3fca60ac07c70ec5b26e8072de4bdb3d5927d
+cas_ref: sha256:4283e751446b554d6cb49ca600e3fca60ac07c70ec5b26e8072de4bdb3d5927d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,68 @@
+## 定理 260.1（Conditional negative definiteness）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\psi(n)=\lambda_{|n|}
+\text{ 是 }\mathbb Z\text{ 上的条件负定函数}.
+}
+\tag{260.3}
+$$
+
+条件负定意指：对任意有限整数 \(n_j\) 和复数 \(c_j\)，若：
+
+$$
+\sum_jc_j=0,
+$$
+
+则：
+
+$$
+\boxed{
+\sum_{j,k}
+c_j\overline{c_k}
+\psi(n_j-n_k)
+\le0.
+}
+\tag{260.4}
+$$
+
+### 正向证明
+
+在每个零点相位 \(\theta_\gamma\) 上：
+
+$$
+\psi(n)
+=
+\sum_{\gamma>0}
+m_\gamma
+|1-e^{in\theta_\gamma}|^2.
+$$
+
+代入零和系数后，每个相位贡献为某个 Fourier 和模平方的负值。
+
+### 反向证明（第 260 部）
+
+取两个系数：
+
+$$
+c_1=1,\qquad c_2=-1
+$$
+
+于点 \(0,n\)，条件负定性给出：
+
+$$
+-2\psi(n)\le0.
+$$
+
+所以：
+
+$$
+\lambda_n=\psi(n)\ge0.
+$$
+
+由 Li 判据得到 RH。∎
+
+---
+

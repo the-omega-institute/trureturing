@@ -1,0 +1,35 @@
+## 230.2 Stieltjes–Hankel 层级
+
+$$
+\mathscr S
+$$
+
+的 moments 要求：
+
+$$
+H_N^{(0)},H_N^{(1)}\succeq0
+$$
+
+对所有 \(N\) 成立。
+
+两者关系为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Jensen 图表}
+&:\text{直接测试 }\mathscr F\text{ 的实零性};\\
+\text{Hankel 图表}
+&:\text{测试 reciprocal-zero measure 的正性};\\
+\text{continued fraction}
+&:\text{测试该正测度的递归编码};\\
+\text{Jacobi 图表}
+&:\text{把正测度提升成自伴算子}.
+\end{aligned}
+}
+$$
+
+它们不是四套猜想，而是同一个完成对象的四种观察语言。
+
+---
+

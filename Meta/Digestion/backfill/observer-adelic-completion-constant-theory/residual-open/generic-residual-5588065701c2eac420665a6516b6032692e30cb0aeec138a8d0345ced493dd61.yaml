@@ -1,0 +1,10 @@
+ast_path: section/292-1-观察者意义
+fingerprints:
+  raw_sha256: sha256:5588065701c2eac420665a6516b6032692e30cb0aeec138a8d0345ced493dd61
+  normalized_sha256: sha256:5588065701c2eac420665a6516b6032692e30cb0aeec138a8d0345ced493dd61
+cas_ref: sha256:5588065701c2eac420665a6516b6032692e30cb0aeec138a8d0345ced493dd61
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,55 @@
+# 第二百五十部　Toroidal Fredholm 目标
+
+前文有限环面中心 jets 可以重构：
+
+$$
+\mu_n
+=
+\operatorname{Tr}U_\Xi^{n+1}.
+$$
+
+因此，相比仅证明所有 Hankel matrices 正半定，一个更完整的目标是直接构造：
+
+$$
+\boxed{
+U_{\mathrm{tor}}\ge0,
+\qquad
+U_{\mathrm{tor}}\text{ trace-class},
+}
+$$
+
+使：
+
+$$
+\boxed{
+\mu_n
+=
+\operatorname{Tr}
+U_{\mathrm{tor}}^{n+1}.
+}
+\tag{250.1}
+$$
+
+等价地：
+
+$$
+\boxed{
+\mathscr F(x)
+=
+\det
+(I+xU_{\mathrm{tor}}).
+}
+\tag{250.2}
+$$
+
+若该构造来自：
+
+* 二次环面周期；
+* relative trace kernel；
+* Eisenstein jets；
+* twist normalization；
+
+则 RH 立即成立。
+
+---
+

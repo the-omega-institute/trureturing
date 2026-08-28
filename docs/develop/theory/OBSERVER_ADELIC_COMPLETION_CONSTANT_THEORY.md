@@ -16629,3 +16629,21884 @@ $$
 [5]: https://arxiv.org/abs/1701.07846 "https://arxiv.org/abs/1701.07846"
 [6]: https://arxiv.org/abs/alg-geom/9609022 "https://arxiv.org/abs/alg-geom/9609022"
 [7]: https://londmathsoc.onlinelibrary.wiley.com/doi/full/10.1112/blms.12287 "https://londmathsoc.onlinelibrary.wiley.com/doi/full/10.1112/blms.12287"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v1.8：黄金闭测地线、Mayer 转移算子、Selberg–\(q\Gamma\) 局部因子与散射型 RH 观察者
+
+以下从前文**第一百四十三部之后**继续追加。
+
+本轮不再继续增加新的高维对象，而是回到此前尚未闭合的一条链：
+
+$$
+\boxed{
+\varphi
+\longrightarrow
+\text{continued fraction}
+\longrightarrow
+\text{closed geodesic}
+\longrightarrow
+\text{transfer operator}
+\longrightarrow
+\text{Selberg product}
+\longrightarrow
+\text{Eisenstein scattering}
+\longrightarrow
+\zeta.
+}
+$$
+
+核心发现是：黄金比例在同一个动力系统中同时承担四种严格角色：
+
+$$
+\boxed{
+\begin{aligned}
+\varphi^{-1}
+&=\text{Gauss 最小分支的固定点};\\
+\varphi^{-2}
+&=\text{该分支的收缩乘子};\\
+\varphi
+&=\text{Mayer 算子最大自然全纯圆盘半径};\\
+\varphi^{-4}
+&=\text{最短模闭测地线的 Selberg }q\text{-参数}.
+\end{aligned}
+}
+$$
+
+而 Riemann zeta 又以两种方式进入同一系统：
+
+1. 作为 Mayer 转移算子矩阵元中的函数；
+2. 作为模曲面 Eisenstein 散射系数的比值。
+
+所以：
+
+$$
+\boxed{
+\pi,\ e,\ \varphi,\ \Gamma,\ \zeta
+}
+$$
+
+第一次在一个单一动力—谱观察系统中各自获得独立而兼容的定义角色。
+
+---
+
+# 第一百四十四部　判别式 \(5\) 的最短闭测地线
+
+定义整数矩阵：
+
+$$
+\boxed{
+C=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix},
+\qquad
+\det C=-1.
+}
+\tag{144.1}
+$$
+
+其特征多项式为：
+
+$$
+x^2-x-1,
+$$
+
+特征值为：
+
+$$
+\varphi,
+\qquad
+\varphi'=-\varphi^{-1}.
+$$
+
+平方后：
+
+$$
+\boxed{
+A=C^2=
+\begin{pmatrix}
+2&1\\
+1&1
+\end{pmatrix}
+\in SL_2(\mathbb Z).
+}
+\tag{144.2}
+$$
+
+其特征值为：
+
+$$
+\varphi^2,
+\qquad
+\varphi^{-2},
+$$
+
+且：
+
+$$
+\operatorname{tr}A=3.
+$$
+
+---
+
+## 144.1 固定点与判别式
+
+Möbius 变换：
+
+$$
+z\longmapsto\frac{2z+1}{z+1}
+$$
+
+的固定点满足：
+
+$$
+z=\frac{2z+1}{z+1},
+$$
+
+即：
+
+$$
+z^2-z-1=0.
+$$
+
+所以两个端点为：
+
+$$
+\boxed{
+\varphi,\qquad\varphi'.
+}
+$$
+
+双曲元素的判别式为：
+
+$$
+\boxed{
+(\operatorname{tr}A)^2-4
+=
+9-4
+=
+5.
+}
+\tag{144.3}
+$$
+
+因此这条闭测地线是实二次域：
+
+$$
+\mathbb Q(\sqrt5)
+$$
+
+在模曲面上的几何图表。
+
+---
+
+## 144.2 测地线长度
+
+对双曲矩阵 \(A\)，若最大特征值为 \(\lambda>1\)，则平移长度为：
+
+$$
+\ell(A)=2\log\lambda.
+$$
+
+这里：
+
+$$
+\lambda=\varphi^2,
+$$
+
+故：
+
+$$
+\boxed{
+\ell_\varphi
+=
+4\log\varphi.
+}
+\tag{144.4}
+$$
+
+这还是模曲面上最短的双曲长度之一。原因完全初等：任意双曲整数矩阵满足：
+
+$$
+|\operatorname{tr}A|>2,
+$$
+
+而迹为整数，所以最小可能绝对值为 \(3\)；双曲长度随 \(|\operatorname{tr}A|\) 严格增加。
+
+因此：
+
+$$
+\boxed{
+\varphi
+=
+e^{\ell_\varphi/4}.
+}
+\tag{144.5}
+$$
+
+黄金比例在这里是**最短闭测地线四分之一长度的指数**。
+
+---
+
+# 第一百四十五部　黄金传递三角
+
+考虑 Gauss 逆分支：
+
+$$
+\boxed{
+\psi_1(x)=\frac1{x+1}.
+}
+\tag{145.1}
+$$
+
+其正固定点满足：
+
+$$
+x=\frac1{x+1},
+$$
+
+所以：
+
+$$
+\boxed{
+x_*=\frac1\varphi.
+}
+\tag{145.2}
+$$
+
+其导数为：
+
+$$
+\psi_1'(x)=-\frac1{(x+1)^2}.
+$$
+
+在固定点：
+
+$$
+x_*+1=\varphi,
+$$
+
+故：
+
+$$
+\boxed{
+\psi_1'(x_*)=-\varphi^{-2}.
+}
+\tag{145.3}
+$$
+
+因此同一个 \(\varphi\) 同时给出：
+
+$$
+\boxed{
+\text{固定位置 } \varphi^{-1}
+\quad+\quad
+\text{局部收缩 } \varphi^{-2}.
+}
+$$
+
+---
+
+## 145.1 最大不变全纯圆盘
+
+令：
+
+$$
+D_r=\{z\in\mathbb C:|z-1|<r\}.
+$$
+
+Mayer 转移算子使用全部逆分支：
+
+$$
+\psi_n(z)=\frac1{z+n},
+\qquad n\ge1.
+$$
+
+决定最大允许半径的是最弱收缩分支 \(n=1\)。
+
+圆盘左端点为：
+
+$$
+1-r.
+$$
+
+要求其像仍位于圆盘内部：
+
+$$
+\psi_1(1-r)<1+r.
+$$
+
+即：
+
+$$
+\frac1{2-r}<1+r.
+$$
+
+临界等号给出：
+
+$$
+1=(2-r)(1+r)
+=2+r-r^2,
+$$
+
+所以：
+
+$$
+r^2-r-1=0.
+$$
+
+唯一正根为：
+
+$$
+\boxed{
+r_*=\varphi.
+}
+\tag{145.4}
+$$
+
+Mayer 转移算子的标准全纯函数空间确实取：
+
+$$
+1\le r<\varphi;
+$$
+
+原始分析中，\(\varphi\) 正是全部逆分支严格保持圆盘的极限半径。([arXiv][1])
+
+---
+
+## 定理 145.1（黄金传递三角）
+
+$$
+\boxed{
+r_*=\varphi,
+\qquad
+x_*=r_*-1=\varphi^{-1},
+\qquad
+|\psi_1'(x_*)|=r_*^{-2}.
+}
+\tag{145.5}
+$$
+
+并且最短闭测地线满足：
+
+$$
+\boxed{
+e^{-\ell_\varphi}=r_*^{-4}.
+}
+\tag{145.6}
+$$
+
+所以黄金比例不是被人为插入转移算子，而是同时由：
+
+* 最大全纯域；
+* 最简单周期点；
+* 局部导数；
+* 最短闭轨道；
+
+四个独立条件唯一选出。
+
+---
+
+# 第一百四十六部　方向翻转与长度加倍
+
+Gauss 分支 \(\psi_1\) 对应一个行列式为 \(-1\) 的矩阵。
+
+一次作用会翻转方向标记；Mayer 对模群测地流的编码中，离散动力显式带有：
+
+$$
+\epsilon\mapsto-\epsilon.
+$$
+
+因此需要两次迭代，才返回原方向。Mayer 的测地流编码和转移算子正保留了这一 \(\mathbb Z_2\) 方向状态。([arXiv][1])
+
+于是出现三个不同但兼容的长度：
+
+$$
+\boxed{
+\begin{array}{c|l}
+\log\varphi&
+\text{单一实嵌入的单位增长}\\
+2\log\varphi&
+\text{一次 Gauss 分支／无向单位流尺度}\\
+4\log\varphi&
+\text{方向完成后的 PSL}_2(\mathbb Z)\text{ 闭测地线}
+\end{array}
+}
+\tag{146.1}
+$$
+
+因此此前单位流中出现的周期：
+
+$$
+2\log\varphi
+$$
+
+与闭测地线长度：
+
+$$
+4\log\varphi
+$$
+
+并不矛盾。
+
+它们之间的关系是：
+
+$$
+\boxed{
+\text{无向／绝对值观察}
+\quad\longrightarrow\quad
+\text{有向测地线完成}
+}
+$$
+
+所产生的二重覆盖。
+
+这与此前 OACTC 中的：
+
+* 六条无向轴 \(\to\) 十二个有向顶点；
+* \(SO(3)\to SU(2)\)；
+* \(A_5\to2.A_5\)；
+
+属于同一个**方向完成原理**。
+
+---
+
+# 第一百四十七部　Mayer 转移算子与 primitive-history determinant
+
+定义 Mayer 转移算子：
+
+$$
+\boxed{
+(\mathcal L_sf)(z)
+=
+\sum_{n=1}^{\infty}
+(z+n)^{-2s}
+f\left(\frac1{z+n}\right).
+}
+\tag{147.1}
+$$
+
+在适当全纯 Banach 空间上，它是核型算子，并可定义 Fredholm determinant。
+
+在常用规范下，模群 Selberg zeta 满足：
+
+$$
+\boxed{
+Z_{\mathrm{Sel}}(s)
+=
+\det(1-\mathcal L_s)
+\det(1+\mathcal L_s)
+=
+\det(1-\mathcal L_s^2).
+}
+\tag{147.2}
+$$
+
+这正是 Mayer–Lewis–Zagier 转移算子理论的核心关系：Selberg zeta 被表示为 Gauss 动力转移算子的 Fredholm determinant。([arXiv][1])
+
+---
+
+## 147.1 determinant 的历史展开
+
+一般核型算子满足：
+
+$$
+\boxed{
+-\log\det(1-\mathcal L)
+=
+\sum_{r\ge1}
+\frac1r
+\operatorname{Tr}\mathcal L^r.
+}
+\tag{147.3}
+$$
+
+\(\operatorname{Tr}\mathcal L_s^r\) 的每一项由长度为 \(r\) 的 continued-fraction word：
+
+$$
+(a_1,\ldots,a_r),
+\qquad
+a_i\ge1
+$$
+
+给出。
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\text{raw histories}
+&=\text{continued-fraction words};\\
+\text{closed histories}
+&=\text{periodic words};\\
+\text{primitive histories}
+&=\text{primitive closed geodesics};\\
+1/r
+&=\text{循环重标号的对称因子}.
+\end{aligned}
+}
+$$
+
+这与此前 Monster denominator 中：
+
+$$
+-\log\mathcal D
+=
+\sum_{r\ge1}\frac1r H(p^r,q^r)
+$$
+
+具有完全相同的组合骨架。
+
+---
+
+## 147.2 最粘滞的黄金 word
+
+最简单周期 word 是：
+
+$$
+\boxed{
+\overline{1}
+=
+(1,1,1,\ldots).
+}
+$$
+
+它对应：
+
+$$
+x_*=[0;\overline1]=\varphi^{-1},
+$$
+
+以及最短闭测地线。
+
+因此它可以被定义为转移系统中的**基础 sticky orbit**：
+
+$$
+\boxed{
+\text{所有尺度都停留在同一最小 digit 分支。}
+}
+$$
+
+这给 Wang–Deng 方法一个精确动力学原型：
+
+* Wang 层：区分 continued-fraction word 是否长期集中于少数 digit；
+* Deng 层：将重复周期 word 收缩为 primitive orbit 及其重复次数；
+* determinant：自动完成全部 primitive orbit 的重求和。
+
+---
+
+# 第一百四十八部　Golden Selberg 局部因子
+
+Selberg zeta 的乘积定义为：
+
+$$
+\boxed{
+Z_{\mathrm{Sel}}(s)
+=
+\prod_{[\gamma]_{\mathrm{prim}}}
+\prod_{k=0}^{\infty}
+\left(
+1-e^{-(s+k)\ell_\gamma}
+\right).
+}
+\tag{148.1}
+$$
+
+内层 \(k\) 可理解为闭轨道的横向激发层。([Springer][2])
+
+对黄金最短闭测地线：
+
+$$
+\ell_\varphi=4\log\varphi.
+$$
+
+定义：
+
+$$
+\boxed{
+q_\varphi
+=
+e^{-\ell_\varphi}
+=
+\varphi^{-4}.
+}
+\tag{148.2}
+$$
+
+其局部因子为：
+
+$$
+\boxed{
+Z_\varphi^{\mathrm{geo}}(s)
+=
+\prod_{k=0}^{\infty}
+\left(
+1-q_\varphi^{s+k}
+\right)
+=
+(q_\varphi^s;q_\varphi)_\infty.
+}
+\tag{148.3}
+$$
+
+---
+
+## 148.1 \(q\)-Gamma 图表
+
+标准 \(q\)-Gamma 函数满足：
+
+$$
+\Gamma_q(s)
+=
+\frac{(q;q)_\infty(1-q)^{1-s}}
+{(q^s;q)_\infty}.
+$$
+
+因此：
+
+$$
+\boxed{
+Z_\varphi^{\mathrm{geo}}(s)
+=
+\frac{
+(q_\varphi;q_\varphi)_\infty
+(1-q_\varphi)^{1-s}
+}{
+\Gamma_{q_\varphi}(s)
+}.
+}
+\tag{148.4}
+$$
+
+\(q\)-Gamma 与 \(q\)-Pochhammer 的这一关系是标准定义。([DLMF][3])
+
+所以黄金闭测地线局部因子具有三种图表：
+
+$$
+\boxed{
+\text{Selberg product}
+\leftrightarrow
+q\text{-Pochhammer}
+\leftrightarrow
+q\text{-Gamma}.
+}
+$$
+
+这使 Ramanujan 的 \(q\)-级数方法与双曲闭轨道乘积产生了一个严格接口。
+
+---
+
+## 148.2 级数图表
+
+Euler 的 \(q\)-二项式展开给出：
+
+$$
+\boxed{
+(q_\varphi^s;q_\varphi)_\infty
+=
+\sum_{n=0}^{\infty}
+\frac{
+(-1)^n
+q_\varphi^{n(n-1)/2+sn}
+}{
+(q_\varphi;q_\varphi)_n
+}.
+}
+\tag{148.5}
+$$
+
+所以同一局部闭轨道可以被读取为：
+
+* 无限乘积；
+* 基本超几何级数；
+* \(q\)-Gamma 倒数。
+
+这正是 Ramanujan “同一对象多图表”视野的标准实例。基本 \(q\)-超几何和 \(q\)-Pochhammer 体系由统一的 \(q\)-函数理论组织。([DLMF][4])
+
+---
+
+## 148.3 重复历史展开
+
+取对数：
+
+$$
+\boxed{
+-\log Z_\varphi^{\mathrm{geo}}(s)
+=
+\sum_{r=1}^{\infty}
+\frac{
+q_\varphi^{rs}
+}{
+r(1-q_\varphi^r)
+}.
+}
+\tag{148.6}
+$$
+
+其中：
+
+$$
+\frac1{1-q_\varphi^r}
+=
+\sum_{k\ge0}q_\varphi^{rk}
+$$
+
+记录横向激发，而 \(r\) 记录 primitive orbit 的重复次数。
+
+所以：
+
+$$
+\boxed{
+\text{一个黄金 primitive orbit}
++
+\text{全部重复}
++
+\text{全部横向激发}
+=
+q\text{-Gamma 局部完成}.
+}
+$$
+
+---
+
+# 第一百四十九部　黄金局部因子的严格零点边界
+
+由：
+
+$$
+1-q_\varphi^{s+k}=0
+$$
+
+得到：
+
+$$
+-4\log\varphi\,(s+k)=2\pi in.
+$$
+
+所以全部零点为：
+
+$$
+\boxed{
+s
+=
+-k+
+\frac{\pi in}{2\log\varphi},
+\qquad
+k\in\mathbb N_0,\ n\in\mathbb Z.
+}
+\tag{149.1}
+$$
+
+因此：
+
+$$
+\boxed{
+Z_\varphi^{\mathrm{geo}}(s)\neq0
+\qquad
+\text{当 }\Re(s)>0.
+}
+\tag{149.2}
+$$
+
+这给出一个重要负结论：
+
+> 黄金最短闭测地线本身不会产生 Selberg zeta 在正半平面的非平凡谱零点。
+
+因此：
+
+$$
+\boxed{
+\text{抽取 Golden local factor}
+}
+$$
+
+可以改善低长度展开和数值收敛，但不能单独解释或证明全局临界线性质。
+
+这再次说明：
+
+$$
+\boxed{
+\text{一个最自然的 primitive factor}
+\neq
+\text{完整全局正性}.
+}
+$$
+
+---
+
+# 第一百五十部　黄金测地线是判别式 \(5\) 的 Archimedean 局部通道
+
+黄金数域：
+
+$$
+K=\mathbb Q(\sqrt5)
+$$
+
+在有限素数处的结构由模 \(5\) 二次特征控制：
+
+$$
+\chi_5(p)
+=
+\left(\frac5p\right).
+$$
+
+项目已经机器核验：
+
+* \(p\equiv\pm1\pmod5\) 时分裂；
+* \(p\equiv\pm2\pmod5\) 时惰性；
+* \(p=5\) 时分歧。
+
+而在 Archimedean 几何端，同一个判别式 \(5\) 给出闭测地线：
+
+$$
+C_5\subset PSL_2(\mathbb Z)\backslash\mathbb H
+$$
+
+及长度：
+
+$$
+4\log\varphi.
+$$
+
+因此可以定义：
+
+$$
+\boxed{
+\mathfrak A_5
+=
+\left(
+\{\chi_5(p)\}_{p<\infty},
+C_5,
+4\log\varphi
+\right).
+}
+\tag{150.1}
+$$
+
+它是一个完整的**判别式 \(5\) 阿代尔周期记录**：
+
+* 有限位读取素数分裂；
+* 无穷位读取闭测地线；
+* 调节子读取周期长度。
+
+---
+
+## 150.1 Hecke 积分接口
+
+Hecke 的积分公式将实二次扩张的部分 zeta 函数表示为 Eisenstein series 在相应二次周期上的积分；现代一般化仍以“二次扩张的部分 zeta 等于 Eisenstein 周期”为核心。([arXiv][5])
+
+所以对 \(K=\mathbb Q(\sqrt5)\)，黄金闭测地线不是仅仅一个双曲几何对象，而是：
+
+$$
+\boxed{
+\text{实二次 zeta／Hecke 数据的 Archimedean 周期观察器。}
+}
+$$
+
+这与前文单位流 Fourier 模式：
+
+$$
+L(s,\chi_m)
+$$
+
+的构造完全一致：对黄金测地线方向作 Fourier 分解，产生调节子字符与 Hecke 型模式。
+
+---
+
+# 第一百五十一部　调节子频率的方向修正
+
+完整有向闭测地线长度为：
+
+$$
+\ell_\varphi=4\log\varphi.
+$$
+
+因此其自然 Fourier 频率为：
+
+$$
+\boxed{
+\Omega_k
+=
+\frac{2\pi k}{\ell_\varphi}
+=
+\frac{\pi k}{2\log\varphi},
+\qquad
+k\in\mathbb Z.
+}
+\tag{151.1}
+$$
+
+此前单位流使用的频率为：
+
+$$
+\omega_m
+=
+\frac{\pi m}{\log\varphi}.
+$$
+
+二者满足：
+
+$$
+\boxed{
+\omega_m=\Omega_{2m}.
+}
+\tag{151.2}
+$$
+
+所以此前的 regulator Fourier genome 实际只读取了闭测地线上的**偶数谐波**。
+
+原因是其能量定义使用：
+
+$$
+|\sigma_\pm(\alpha)|^2,
+$$
+
+已经遗忘了：
+
+* 单位 \(\varphi\) 的负范数符号；
+* 测地线方向；
+* 二重覆盖中的奇模式。
+
+因此完整观察者还需加入：
+
+$$
+\boxed{
+\epsilon\in\mathbb Z/2\mathbb Z
+}
+$$
+
+作为方向残余。
+
+这修正了此前 Prime–Regulator–Time Observer：
+
+$$
+q_{p,m,t}
+$$
+
+的 regulator 轴，应升级为：
+
+$$
+\boxed{
+q_{p,k,t},
+\qquad
+k\in\mathbb Z,
+}
+$$
+
+其中偶 \(k\) 是绝对值／无向模式，奇 \(k\) 是方向完成模式。
+
+---
+
+# 第一百五十二部　Eisenstein 散射观察者
+
+模群非全纯 Eisenstein series 的常数项为：
+
+$$
+\boxed{
+E(z,s)
+=
+y^s+
+\Phi(s)y^{1-s}
++\text{nonconstant modes},
+}
+\tag{152.1}
+$$
+
+其中：
+
+$$
+\boxed{
+\Phi(s)
+=
+\sqrt\pi
+\frac{\Gamma(s-\frac12)}{\Gamma(s)}
+\frac{\zeta(2s-1)}{\zeta(2s)}.
+}
+\tag{152.2}
+$$
+
+等价地，令：
+
+$$
+\zeta^*(u)
+=
+\pi^{-u/2}
+\Gamma(u/2)\zeta(u),
+$$
+
+则：
+
+$$
+\boxed{
+\Phi(s)
+=
+\frac{\zeta^*(2s-1)}
+{\zeta^*(2s)}.
+}
+\tag{152.3}
+$$
+
+Eisenstein series 的完成、函数方程及常数项均由这一 completed zeta 比值控制。([arXiv][6])
+
+因此 \(\Phi(s)\) 是一个**散射比值观察者**：
+
+$$
+\boxed{
+\text{incoming cusp mode }y^s
+\longmapsto
+\text{outgoing mode }\Phi(s)y^{1-s}.
+}
+$$
+
+---
+
+## 152.1 散射函数方程
+
+由：
+
+$$
+\zeta^*(u)=\zeta^*(1-u)
+$$
+
+得到：
+
+$$
+\boxed{
+\Phi(s)\Phi(1-s)=1.
+}
+\tag{152.4}
+$$
+
+在：
+
+$$
+s=\frac12+it
+$$
+
+上：
+
+$$
+1-s=\overline s,
+$$
+
+而 \(\Phi(\overline s)=\overline{\Phi(s)}\)，故：
+
+$$
+\boxed{
+|\Phi(\tfrac12+it)|=1.
+}
+\tag{152.5}
+$$
+
+所以散射在连续谱轴上是单位模的。
+
+但这只是边界酉性，并不决定左半条带中所有 resonance poles 的位置。
+
+---
+
+# 第一百五十三部　散射观察者的周期盲核
+
+对一个非零亚纯函数 \(F\)，定义比值观察：
+
+$$
+\boxed{
+\mathscr R[F](s)
+=
+\frac{F(2s-1)}{F(2s)}.
+}
+\tag{153.1}
+$$
+
+若：
+
+$$
+\mathscr R[F]=\mathscr R[G],
+$$
+
+令：
+
+$$
+H=\frac FG.
+$$
+
+则：
+
+$$
+H(2s-1)=H(2s).
+$$
+
+令 \(z=2s\)，得到：
+
+$$
+\boxed{
+H(z-1)=H(z).
+}
+\tag{153.2}
+$$
+
+所以散射比值观察的盲核恰为：
+
+$$
+\boxed{
+\text{乘法型 }1\text{-周期亚纯 gauge}.
+}
+$$
+
+---
+
+## 定理 153.1（散射比值完备化）
+
+若：
+
+1. \(\mathscr R[F]=\mathscr R[G]\)；
+2. \(F/G\) 在右移时满足：
+
+   $$
+   \lim_{n\to\infty}\frac{F(z+n)}{G(z+n)}=1;
+   $$
+
+则：
+
+$$
+\boxed{
+F=G.
+}
+$$
+
+### 证明
+
+由周期性：
+
+$$
+H(z)=H(z+n)
+$$
+
+对全部整数 \(n\) 成立。取 \(n\to\infty\)，得到：
+
+$$
+H(z)=1.
+$$
+
+∎
+
+因此：
+
+$$
+\boxed{
+\text{散射比值}
++
+\text{右半平面归一化}
+}
+$$
+
+足以唯一恢复原函数。
+
+这与 OACTC 的一般形式完全一致：
+
+$$
+\boxed{
+\text{局部比值读数}
++
+\text{gauge completion}
+=
+\text{全局对象}.
+}
+$$
+
+---
+
+# 第一百五十四部　由散射系数重构 Riemann zeta
+
+将散射系数中的已知 Archimedean 因子除去：
+
+$$
+\boxed{
+R(s)
+=
+\frac{\Gamma(s)}
+{\sqrt\pi\,\Gamma(s-\frac12)}
+\Phi(s).
+}
+\tag{154.1}
+$$
+
+由式 (152.2)：
+
+$$
+\boxed{
+R(s)
+=
+\frac{\zeta(2s-1)}
+{\zeta(2s)}.
+}
+\tag{154.2}
+$$
+
+令：
+
+$$
+s=\frac{z+j+1}{2}.
+$$
+
+则：
+
+$$
+R\left(\frac{z+j+1}{2}\right)
+=
+\frac{\zeta(z+j)}
+{\zeta(z+j+1)}.
+$$
+
+因此有限乘积精确 telescoping：
+
+$$
+\prod_{j=0}^{N-1}
+R\left(\frac{z+j+1}{2}\right)
+=
+\frac{\zeta(z)}
+{\zeta(z+N)}.
+$$
+
+当：
+
+$$
+\Re z>1
+$$
+
+时：
+
+$$
+\zeta(z+N)\longrightarrow1.
+$$
+
+所以得到：
+
+## 定理 154.1（散射—zeta 重构）
+
+$$
+\boxed{
+\zeta(z)
+=
+\prod_{j=0}^{\infty}
+R\left(\frac{z+j+1}{2}\right),
+\qquad
+\Re z>1.
+}
+\tag{154.3}
+$$
+
+即：
+
+$$
+\boxed{
+\zeta(z)
+=
+\prod_{j=0}^{\infty}
+\left[
+\Phi\left(\frac{z+j+1}{2}\right)
+\frac{
+\Gamma\left(\frac{z+j+1}{2}\right)
+}{
+\sqrt\pi\,
+\Gamma\left(\frac{z+j}{2}\right)
+}
+\right].
+}
+\tag{154.4}
+$$
+
+这说明：
+
+$$
+\boxed{
+\text{模曲面散射系数的全部平移读数，
+可以完整重构 Riemann zeta。}
+}
+$$
+
+因此 Eisenstein scattering 不是 ζ 的某个粗略影子，而是一个带有明确周期 gauge 的完整观察接口。
+
+---
+
+# 第一百五十五部　RH 的散射四分之一线等价形式
+
+考察条带：
+
+$$
+0<\Re(s)<\frac12.
+$$
+
+在此区域：
+
+* \(\Gamma(s)\) 与 \(\Gamma(s-\frac12)\) 不产生可与非平凡 ζ 零点抵消的零；
+* \(\zeta(2s-1)\) 的实部位于 \((-1,0)\)，不存在非平凡零点，也不落在负偶整数上；
+* 因此散射系数的非平凡极点恰来自：
+
+  $$
+  \zeta(2s)=0.
+  $$
+
+若：
+
+$$
+\rho=\beta+i\gamma
+$$
+
+是 ζ 非平凡零点，则对应散射极点：
+
+$$
+\boxed{
+s_\rho=\frac\rho2
+=
+\frac\beta2+\frac{i\gamma}{2}.
+}
+\tag{155.1}
+$$
+
+所以：
+
+## 定理 155.1（RH 的散射共振形式）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{全部非平凡散射极点 }
+s_\rho
+\text{ 位于 }
+\Re(s)=\frac14.
+}
+\tag{155.2}
+$$
+
+由：
+
+$$
+\Phi(s)\Phi(1-s)=1,
+$$
+
+对应的散射零点位于：
+
+$$
+1-s_\rho,
+$$
+
+所以 RH 等价于这些零点位于：
+
+$$
+\boxed{
+\Re(s)=\frac34.
+}
+\tag{155.3}
+$$
+
+于是 Riemann 临界线在散射坐标中裂成：
+
+$$
+\boxed{
+\text{resonance line } \frac14
+\quad+\quad
+\text{antiresonance line } \frac34.
+}
+$$
+
+---
+
+# 第一百五十六部　为什么散射酉性仍然不证明 RH
+
+散射系数满足：
+
+$$
+|\Phi(\tfrac12+it)|=1.
+$$
+
+但 RH 要求控制的是：
+
+$$
+0<\Re(s)<\frac12
+$$
+
+内部的 poles。
+
+边界单位模并不能排除内域中任意位置的极点—零点对，只要它们遵守：
+
+$$
+s\longleftrightarrow1-s.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{unitarity on the spectrum}
+\not\Rightarrow
+\text{resonance rigidity}.
+}
+$$
+
+真正缺少的可能是某种：
+
+* contractivity；
+* passivity；
+* Herglotz/Nevanlinna 性；
+* positive kernel；
+* Maass–Selberg positivity；
+* self-adjoint dilation。
+
+---
+
+## 156.1 正测度 Eisenstein 实验
+
+Lagarias–Suzuki 证明，一些由非负测度积分 Eisenstein series 得到的完成函数，其全部零点确实位于临界线；其中包括特定截断区域和半稳定格积分。([arXiv][6])
+
+这给出一个非常重要的科学信号：
+
+$$
+\boxed{
+\text{Eisenstein 完成}
++
+\text{非负观察测度}
+}
+$$
+
+有时真的能够把函数方程升级为零点刚性。
+
+但这并不自动适用于原始 ζ；必须找到一个观察器，其零点：
+
+1. 能捕获全部 ζ 零点；
+2. 又具备可证明的正性。
+
+---
+
+# 第一百五十七部　Golden Eisenstein 周期实验
+
+令：
+
+$$
+C_5
+$$
+
+为判别式 \(5\) 的黄金闭测地线，\(d\mu_5\) 为其归一化弧长测度。
+
+定义：
+
+$$
+\boxed{
+F_5(s)
+=
+\int_{C_5}
+E^*(z,s)\,d\mu_5(z).
+}
+\tag{157.1}
+$$
+
+由 Hecke 型积分公式，此类实二次闭测地线周期与：
+
+$$
+\mathbb Q(\sqrt5)
+$$
+
+的部分 zeta／Hecke \(L\)-数据相联系。([arXiv][5])
+
+所以 \(F_5\) 是一个非常自然的实验对象：
+
+* 测度非负；
+* 几何周期为黄金最短闭轨；
+* 算术端读取 \(\zeta_{\mathbb Q(\sqrt5)}\) 或其部分通道；
+* regulator 为 \(\log\varphi\)；
+* Fourier 模式给出 Hecke twists。
+
+---
+
+## 假设 157.1（Golden positive-period program）
+
+寻找有限或可控的非负组合：
+
+$$
+\mu
+=
+\sum_j a_j\mu_{5,j},
+\qquad
+a_j\ge0,
+$$
+
+使：
+
+$$
+F_\mu(s)
+=
+\int E^*(z,s)\,d\mu(z)
+$$
+
+同时满足：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{零点捕获：}\quad
+\zeta(\rho)=0
+\Rightarrow
+F_\mu(\rho')=0;\\
+&\text{正性刚性：}\quad
+F_\mu
+\text{ 的全部非实零点位于其反射中线}.
+\end{aligned}
+}
+$$
+
+若这两条能同时闭合，就可能把散射表示转化为真正的 RH 正性桥。
+
+目前这是开放研究程序，而不是结论。
+
+---
+
+# 第一百五十八部　Wang–Deng 转移树
+
+continued-fraction 周期 word：
+
+$$
+w=(a_1,\ldots,a_r)
+$$
+
+对应一个 primitive closed geodesic。
+
+定义 digit complexity：
+
+$$
+\boxed{
+\operatorname{Br}(w)
+=
+\#\{j:a_{j+1}\neq a_j\}.
+}
+$$
+
+定义最长常值块：
+
+$$
+\boxed{
+\operatorname{Stick}(w)
+=
+\max
+\{\text{连续相同 digit 的长度}\}.
+}
+$$
+
+---
+
+## 158.1 Non-sticky words
+
+若 word 在许多尺度上不断切换 digit，则：
+
+* 不同逆分支产生较强几何分离；
+* 导数乘积更均匀；
+* periodic points 反集中；
+* trace contribution 更可能产生严格估计增益。
+
+研究目标应是：
+
+$$
+\boxed{
+\operatorname{Br}(w)\text{ 大}
+\Longrightarrow
+\text{trace contribution 获得额外衰减}.
+}
+$$
+
+这对应 Wang 式 non-sticky gain。
+
+---
+
+## 158.2 Sticky words
+
+若 word 长期停留在一个或少数 digit：
+
+$$
+1,1,\ldots,1
+$$
+
+则形成嵌套周期结构。
+
+黄金 orbit：
+
+$$
+\overline1
+$$
+
+是最纯粹 sticky 极限。
+
+对这类历史，正确操作不是逐 word 绝对估计，而是：
+
+1. 识别 primitive block；
+2. 收缩重复块；
+3. 重求和所有 repetition；
+4. 得到 \(q\)-Pochhammer／\(q\)-Gamma counterterm。
+
+这正对应 Yu Deng 式 primitive-history renormalization。
+
+---
+
+## 假设 158.1（Transfer self-improvement dichotomy）
+
+存在某个坏度泛函 \(\mathfrak B_s(w)\)，使每个近极值 word 满足：
+
+$$
+\boxed{
+\begin{cases}
+\text{non-sticky}
+&\Rightarrow
+\mathfrak B_s\text{ 严格改善};\\
+\text{sticky}
+&\Rightarrow
+\text{由有限个 primitive periodic blocks 重整化}.
+\end{cases}
+}
+$$
+
+Mayer determinant 是检验这一假设的理想实验场，因为它同时具有：
+
+* 精确 symbolic dynamics；
+* 精确 Fredholm determinant；
+* 精确 Selberg product；
+* 明确的最 sticky 黄金 orbit。
+
+---
+
+# 第一百五十九部　Riemann ζ 已经写在转移算子矩阵中
+
+Mayer 算子在自然全纯基中的矩阵元可写成 Gamma 比值与 Riemann zeta 值。
+
+在一种标准基下：
+
+$$
+\boxed{
+a_{mk}(s)
+=
+\frac{(-1)^m}{m!}
+\frac{
+\Gamma(2s+k+m)
+}{
+\Gamma(2s+k)
+}
+\zeta(2s+k+m).
+}
+\tag{159.1}
+$$
+
+另一种 Taylor 基中则出现：
+
+$$
+\zeta(2s+j+m)-1
+$$
+
+的有限组合。Mayer 转移算子的这些矩阵表示在文献中被明确写出。([arXiv][1])
+
+因此：
+
+$$
+\boxed{
+\text{Riemann zeta 值}
+=
+\text{经典 Gauss 动力转移算子的矩阵坐标}.
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{Selberg zeta}
+=
+\text{该无限矩阵的 Fredholm determinant}.
+}
+$$
+
+这给出又一种观察压缩：
+
+$$
+\boxed{
+\text{全部 }\zeta(2s+n)\text{ 坐标}
+\longrightarrow
+\det(1-\mathcal L_s^2).
+}
+$$
+
+---
+
+## 159.1 标量 determinant 盲性
+
+Fredholm determinant 只记录算子特征值乘积：
+
+$$
+\det(1-\mathcal L_s)
+=
+\prod_j(1-\lambda_j(s)).
+$$
+
+不同算子可以具有相同 determinant。
+
+因此：
+
+$$
+\boxed{
+\text{Selberg scalar zeta}
+\not\Rightarrow
+\text{transfer operator 已被完整恢复}.
+}
+$$
+
+这与此前：
+
+* 标量 Theta 无法恢复 Niemeier 根系；
+* 标量 character 无法恢复 VOA；
+* 衍射强度无法恢复相位；
+
+完全同型。
+
+所以 RH 研究中可能需要的不是另一个标量 zeta，而是：
+
+$$
+\boxed{
+\text{operator-valued completion}.
+}
+$$
+
+---
+
+# 第一百六十部　散射—转移双观察
+
+现在有两种互补观察。
+
+## 160.1 Transfer observer
+
+$$
+\mathcal L_s
+$$
+
+读取：
+
+* continued-fraction branches；
+* periodic geodesics；
+* Selberg determinant；
+* \(\zeta(2s+n)\) 的矩阵坐标。
+
+## 160.2 Scattering observer
+
+$$
+\Phi(s)
+=
+\frac{\zeta^*(2s-1)}{\zeta^*(2s)}
+$$
+
+读取：
+
+* cusp incoming/outgoing ratio；
+* Riemann zeros对应的 resonances；
+* 连续谱单位模边界；
+* ζ 的平移比值。
+
+二者分别对应：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal L_s&:\text{closed-orbit／内部动力观察};\\
+\Phi(s)&:\text{cusp／开放边界观察}.
+\end{aligned}
+}
+$$
+
+完整模曲面谱必须同时包含：
+
+* 离散 closed dynamics；
+* 连续 scattering dynamics。
+
+所以定义联合观察：
+
+$$
+\boxed{
+\mathfrak O_{\mathrm{mod}}(s)
+=
+\left(
+\mathcal L_s,\Phi(s)
+\right).
+}
+\tag{160.1}
+$$
+
+这比单独使用：
+
+$$
+Z_{\mathrm{Sel}}(s)
+\quad\text{或}\quad
+\xi(s)
+$$
+
+保留更多 primitive 信息。
+
+---
+
+# 第一百六十一部　更新后的算术观察索引
+
+此前 Prime–Regulator–Time Observer 为：
+
+$$
+q_{p,m,t}.
+$$
+
+本轮说明，还必须加入：
+
+* continued-fraction／closed-geodesic word \(\omega\)；
+* orientation parity \(\epsilon\)；
+* cusp/scattering 通道标记 \(b\)。
+
+因此完整候选索引为：
+
+$$
+\boxed{
+q_{p,k,\omega,t,\epsilon,b}.
+}
+\tag{161.1}
+$$
+
+其中：
+
+$$
+\begin{aligned}
+p&:\text{有限素数／素理想通道};\\
+k&:\text{完整有向 regulator harmonic};\\
+\omega&:\text{primitive closed-geodesic word};\\
+t&:\text{Mellin／spectral height};\\
+\epsilon&:\text{方向／spin parity};\\
+b&:\text{bulk closed orbit 或 cusp scattering}.
+\end{aligned}
+$$
+
+这不是建议一次性把所有索引塞入最终证明，而是建立一个**完整候选观察空间**。
+
+DECT 的工作将是逐步测量：
+
+* 哪些索引真正切开负 Weil residual；
+* 哪些只是冗余；
+* 哪些可以通过 primitive decomposition 压缩。
+
+---
+
+# 第一百六十二部　与项目现有 Weil 真源的衔接
+
+项目当前已经具有：
+
+1. 无条件 Weil 显式公式；
+2. 卷积平方测试函数在临界线零点上的非负贡献；
+3. 临界线与离线零点有限截断的精确分解。
+
+因此本轮新增结构可以接在该真源之后：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Weil explicit formula}
+&\longrightarrow
+\text{critical/off-line defect};\\
+\text{Eisenstein scattering}
+&\longrightarrow
+\text{off-line resonance};\\
+\text{Mayer transfer}
+&\longrightarrow
+\text{primitive geodesic histories};\\
+\text{Golden cycle}
+&\longrightarrow
+\text{minimal sticky block};\\
+\text{positive Eisenstein period}
+&\longrightarrow
+\text{候选零点刚性}.
+\end{aligned}
+}
+$$
+
+真正尚未闭合的桥仍然是：
+
+$$
+\boxed{
+\text{off-line ζ zero}
+\Longrightarrow
+\text{某个 refined positive observer 中的严格负／非酉见证}.
+}
+\tag{162.1}
+$$
+
+---
+
+# 第一百六十三部　本轮结论分级
+
+## 已由初等矩阵与函数恒等式直接推出
+
+$$
+\boxed{
+A=
+\begin{pmatrix}2&1\\1&1\end{pmatrix},
+\quad
+\operatorname{disc}(A)=5.
+}
+$$
+
+$$
+\boxed{
+\ell_\varphi=4\log\varphi.
+}
+$$
+
+$$
+\boxed{
+x_*=\varphi^{-1},
+\quad
+|\psi_1'(x_*)|=\varphi^{-2}.
+}
+$$
+
+$$
+\boxed{
+r_*=\varphi
+}
+$$
+
+是 Mayer 自然圆盘的临界半径。
+
+$$
+\boxed{
+q_\varphi=e^{-\ell_\varphi}=\varphi^{-4}.
+}
+$$
+
+$$
+\boxed{
+Z_\varphi^{\mathrm{geo}}(s)
+=
+(q_\varphi^s;q_\varphi)_\infty.
+}
+$$
+
+$$
+\boxed{
+Z_\varphi^{\mathrm{geo}}(s)\neq0
+\quad
+(\Re s>0).
+}
+$$
+
+$$
+\boxed{
+\zeta(z)
+=
+\prod_{j\ge0}
+R\left(\frac{z+j+1}{2}\right)
+\quad
+(\Re z>1).
+}
+$$
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{模曲面非平凡散射极点位于 }\Re s=\frac14.
+}
+$$
+
+---
+
+## 有成熟理论支持
+
+$$
+\boxed{
+Z_{\mathrm{Sel}}
+=
+\det(1-\mathcal L_s)\det(1+\mathcal L_s).
+}
+$$
+
+$$
+\boxed{
+\text{闭测地线 Eisenstein 周期}
+\longleftrightarrow
+\text{实二次 partial zeta}.
+}
+$$
+
+$$
+\boxed{
+\Phi(s)
+=
+\zeta^*(2s-1)/\zeta^*(2s).
+}
+$$
+
+这些均为经典 Selberg–Mayer–Hecke–Eisenstein 理论的一部分。([arXiv][5])
+
+---
+
+## 当前开放桥梁
+
+$$
+\boxed{
+\begin{aligned}
+&\text{Golden geodesic 正测度周期是否具有足够的 ζ 零点捕获性};\\
+&\text{transfer non-sticky words 是否产生严格 trace gain};\\
+&\text{sticky word 是否可由有限 }q\text{-Gamma factors 完全重整化};\\
+&\text{联合 operator/scattering observer 是否能给出 Weil 正性};\\
+&\text{散射 resonance quarter-line 是否可由新的 passivity 原理强制}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第一百六十四部　建议形式化顺序
+
+```text
+D5/S3/Geometry/GoldenGeodesic/
+  GoldenHyperbolicMatrix.lean
+  DiscriminantFiveAxis.lean
+  GoldenTranslationLength.lean
+  ShortestIntegralHyperbolicTrace.lean
+  OrientationDoubleCover.lean
+
+D5/S3/Analytic/MayerGolden/
+  GaussBranchGoldenFixedPoint.lean
+  GoldenDerivativeMultiplier.lean
+  GoldenInvariantDiscRadius.lean
+  ContinuedFractionWord.lean
+  StickyGoldenOrbit.lean
+
+D5/S3/Analytic/SelbergGolden/
+  PrimitiveGeodesicLocalFactor.lean
+  GoldenQPochhammerFactor.lean
+  GoldenQGammaChart.lean
+  GoldenLocalZeroSet.lean
+  RepetitionHistoryLog.lean
+
+D5/S3/Analytic/EisensteinScattering/
+  ModularScatteringCoefficient.lean
+  ScatteringFunctionalEquation.lean
+  ScatteringPeriodicGauge.lean
+  ScatteringZetaReconstruction.lean
+  ScatteringQuarterLineRH.lean
+
+D5/S3/Observer/AutomorphicTomography/
+  TransferScatteringJointObserver.lean
+  RegulatorOrientationCompletion.lean
+  PrimeRegulatorGeodesicTimeObserver.lean
+  PositiveEisensteinPeriodProgram.lean
+```
+
+优先级最高且形式化风险最低的链是：
+
+$$
+\boxed{
+\text{Golden matrix}
+\to
+\text{length }4\log\varphi
+\to
+q_\varphi=\varphi^{-4}
+\to
+q\text{-Pochhammer zeros}.
+}
+$$
+
+其次是纯代数 telescoping 链：
+
+$$
+\boxed{
+\Phi(s)
+\to
+R(s)=\zeta(2s-1)/\zeta(2s)
+\to
+\zeta(z)\text{ 重构}.
+}
+$$
+
+---
+
+# 本轮最终结论
+
+此前 OACTC 已经说明：
+
+$$
+\varphi
+$$
+
+是：
+
+* Fibonacci 递归固定点；
+* Galois 双曲单位；
+* 六维准晶体显隐尺度；
+* Coxeter 黄金扇区特征值；
+* 无碰撞一维观察斜率。
+
+本轮进一步证明，它还是：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{Gauss 转移算子的最小分支固定尺度};\\
+&\text{Mayer 全纯状态空间的最大半径};\\
+&\text{模曲面最短闭测地线的指数长度};\\
+&\text{该测地线 Selberg 局部因子的 }q\text{-基}.
+\end{aligned}
+}
+$$
+
+完整恒等链为：
+
+$$
+\boxed{
+\frac1\varphi
+\xrightarrow{\text{Gauss fixed point}}
+\varphi^{-2}
+\xrightarrow{\text{two-step orbit}}
+\varphi^{-4}
+\xrightarrow{\text{Selberg}}
+(q_\varphi^s;q_\varphi)_\infty.
+}
+$$
+
+而 Riemann zeta 则通过散射满足：
+
+$$
+\boxed{
+\Phi(s)
+=
+\frac{\zeta^*(2s-1)}
+{\zeta^*(2s)},
+}
+$$
+
+并可由全部散射平移读数完整重构。
+
+所以最深的一句话是：
+
+$$
+\boxed{
+\text{黄金比例控制的是模曲面内部最短闭动力的完成，}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{Riemann zeta 控制的是模曲面 cusp 边界的散射完成。}
+}
+$$
+
+要推进 RH，真正需要研究的不是让黄金闭轨“替代”ζ，而是证明：
+
+$$
+\boxed{
+\text{内部 primitive closed dynamics}
++
+\text{边界 scattering dynamics}
++
+\text{非负观察者}
+}
+$$
+
+能否共同形成一个没有 off-line 逃逸残差的完整谱观察系统。
+
+[1]: https://arxiv.org/abs/1008.4229 "https://arxiv.org/abs/1008.4229"
+[2]: https://link.springer.com/article/10.1007/s00029-019-0534-3 "https://link.springer.com/article/10.1007/s00029-019-0534-3"
+[3]: https://dlmf.nist.gov/5.18 "https://dlmf.nist.gov/5.18"
+[4]: https://dlmf.nist.gov/17.4 "https://dlmf.nist.gov/17.4"
+[5]: https://arxiv.org/abs/math/0602618 "https://arxiv.org/abs/math/0602618"
+[6]: https://arxiv.org/abs/math/0412039 "https://arxiv.org/abs/math/0412039"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v1.9：全环面零点观察、有限谱层析、Toroidal Temperedness 与 de Branges 正完成
+
+以下从前文**第一百六十四部之后**继续追加。
+
+本轮找到了一条比“黄金闭测地线可能帮助 RH”更精确的既有数学接口：
+
+$$
+\boxed{
+\text{Riemann ζ 零点}
+=
+\text{Eisenstein 状态对全部非分裂环面观察者同时不可见的参数}.
+}
+$$
+
+这不是类比。
+
+Hecke–Zagier 的环面周期公式把 Eisenstein series 沿二次环面的积分写成两个 \(L\)-函数之积；Cornelissen–Lorscheid 再结合二次 twist 非消失，证明一个 Eisenstein 状态对**所有**二次环面周期都为零，当且仅当它的基础 \(L\)-函数为零。其导数塔还精确记录零点重数。([arXiv][1])
+
+由此，OACTC 的 RH 主问题可以第一次严格改写成：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{全部“普遍环面不可见”的非平凡 Eisenstein 状态都是 tempered 的}.
+}
+$$
+
+---
+
+# 第一百六十五部　非分裂环面观察者
+
+设：
+
+$$
+G=\operatorname{GL}_2,
+$$
+
+\(T\subset G\) 是由二次扩张 \(K/\mathbb Q\) 给出的非分裂极大环面。
+
+对 automorphic form \(f\)，定义 \(T\)-环面周期：
+
+$$
+\boxed{
+\mathcal P_T(f)(g)
+=
+\int_{T(\mathbb Q)Z(\mathbb A)\backslash T(\mathbb A)}
+f(tg)\,dt.
+}
+\tag{165.1}
+$$
+
+定义全部二次环面的联合观察：
+
+$$
+\boxed{
+\mathcal P_{\mathrm{tor}}(f)
+=
+\bigl(
+\mathcal P_T(f)
+\bigr)_{T}.
+}
+\tag{165.2}
+$$
+
+定义普遍环面不可见空间：
+
+$$
+\boxed{
+\mathcal A_{\mathrm{tor}}
+=
+\ker\mathcal P_{\mathrm{tor}}
+=
+\bigcap_T\ker\mathcal P_T.
+}
+\tag{165.3}
+$$
+
+它与项目此前的 prime observer 不同：
+
+* prime observer 按局部素数通道读取对象；
+* torus observer 把一整个二次扩张的有限位与无穷位同时组合成一个阿代尔周期。
+
+若 \(K=\mathbb Q(\sqrt D)\) 为实二次域，相应的 Archimedean 周期表现为模曲面上的闭测地线；若 \(K\) 为虚二次域，则对应 CM 型环面周期。
+
+---
+
+# 第一百六十六部　Eisenstein 环面周期的双因子结构
+
+令 \(E_s\) 表示重新参数化后的 normalized Eisenstein family，使 \(s\) 是普通 \(L\)-函数变量。
+
+令 \(\chi_D\) 是二次扩张 \(K_D/\mathbb Q\) 对应的二次 Dirichlet character。
+
+Hecke–Zagier 公式的阿代尔形式给出：
+
+$$
+\boxed{
+\mathcal P_D(E_s)
+=
+\Lambda(s)\,
+\Lambda(s,\chi_D)\,
+e_D(s),
+}
+\tag{166.1}
+$$
+
+其中：
+
+* \(\Lambda(s)\) 是 completed Riemann zeta；
+* \(\Lambda(s,\chi_D)\) 是 completed quadratic \(L\)-function；
+* \(e_D(s)\) 是取决于局部 test vector、平移和测度规范的全纯 period functional；
+* 对每个参数 \(s\)，可以选择 test vector 使 \(e_D(s)\neq0\)。
+
+因此，把无零局部因子正规化掉后，定义：
+
+$$
+\boxed{
+P_D(s)
+=
+\Lambda(s)\Lambda(s,\chi_D).
+}
+\tag{166.2}
+$$
+
+则：
+
+$$
+\boxed{
+P_D(s)=0
+\iff
+\Lambda(s)=0
+\quad\lor\quad
+\Lambda(s,\chi_D)=0.
+}
+\tag{166.3}
+$$
+
+所以一个单独环面观察者会混合两类不可见性：
+
+1. 全局基础不可见：
+
+   $$
+   \Lambda(s)=0;
+   $$
+2. 该环面的 twist-specific 不可见：
+
+   $$
+   \Lambda(s,\chi_D)=0.
+   $$
+
+这就是单环面观察的盲核。
+
+---
+
+# 第一百六十七部　全部环面共同核就是 Riemann 零点
+
+Cornelissen–Lorscheid 使用二次 twist 的非消失定理证明：对任意给定的 \(s\)，存在某个二次扩张 \(K_D\)，使：
+
+$$
+\Lambda(s,\chi_D)\neq0.
+$$
+
+因此：
+
+## 定理 167.1（全环面共同零点定理）
+
+在排除极点和正规化奇点的区域内：
+
+$$
+\boxed{
+\bigcap_D
+\{s:P_D(s)=0\}
+=
+\{s:\Lambda(s)=0\}.
+}
+\tag{167.1}
+$$
+
+### 证明
+
+若：
+
+$$
+\Lambda(s)=0,
+$$
+
+则显然：
+
+$$
+P_D(s)=0
+$$
+
+对全部 \(D\) 成立。
+
+反之，若：
+
+$$
+\Lambda(s)\neq0,
+$$
+
+由二次 twist 非消失，存在 \(D\) 使：
+
+$$
+\Lambda(s,\chi_D)\neq0.
+$$
+
+于是：
+
+$$
+P_D(s)\neq0.
+$$
+
+∎
+
+所以：
+
+$$
+\boxed{
+\text{Riemann 零点}
+=
+\text{所有二次环面观察者的共同不可见谱}.
+}
+$$
+
+这给 ζ 零点一个全新的 OACTC 定义角色：
+
+$$
+\boxed{
+\rho
+=
+\text{基础 Eisenstein 状态在所有二次局部—全局图表中的共同消失点}.
+}
+$$
+
+---
+
+# 第一百六十八部　解析最大公因子
+
+对一个零点 \(\rho\)，定义零阶：
+
+$$
+\nu_\rho(f)=\operatorname{ord}_\rho f.
+$$
+
+由：
+
+$$
+P_D=\Lambda\Lambda_D,
+$$
+
+有：
+
+$$
+\nu_\rho(P_D)
+=
+\nu_\rho(\Lambda)
++
+\nu_\rho(\Lambda_D).
+$$
+
+由于存在 \(D\) 使：
+
+$$
+\Lambda_D(\rho)\neq0,
+$$
+
+得到：
+
+## 定理 168.1（环面周期的 divisor-gcd）
+
+$$
+\boxed{
+\operatorname{ord}_\rho\Lambda
+=
+\min_D
+\operatorname{ord}_\rho P_D.
+}
+\tag{168.1}
+$$
+
+所以在零除子意义下：
+
+$$
+\boxed{
+\operatorname{div}_0(\Lambda)
+=
+\gcd_D
+\operatorname{div}_0(P_D).
+}
+\tag{168.2}
+$$
+
+这不是通常函数环中的字面最大公因式，而是**共同零除子的逐点最小值**。
+
+它说明：
+
+> Riemann ζ 是全部二次环面周期函数的共同 primitive factor。
+
+每个环面周期包含：
+
+$$
+\text{公共 ζ 因子}
+\times
+\text{该环面特有 twist 因子}.
+$$
+
+在 Yu Deng 的语言中：
+
+* \(\Lambda\)：跨所有环面历史稳定存在的 primitive core；
+* \(\Lambda(s,\chi_D)\)：依赖环面选择的 child history；
+* 取全部 \(D\) 的共同核：收缩全部 twist-specific child，留下 base primitive。
+
+---
+
+# 第一百六十九部　紧谱窗口上的有限环面层析
+
+全环面族是无限的，但在任何固定紧谱窗口中，有限个环面已经足够。
+
+令：
+
+$$
+K\subset\{0<\Re s<1\}
+$$
+
+为紧集。
+
+对每个二次判别式 \(D\)，定义开集：
+
+$$
+U_D
+=
+\{s\in K:\Lambda(s,\chi_D)\neq0\}.
+$$
+
+二次 twist 非消失说明：
+
+$$
+K=\bigcup_DU_D.
+$$
+
+由紧致性，存在有限判别式：
+
+$$
+D_1,\ldots,D_r
+$$
+
+使：
+
+$$
+K=U_{D_1}\cup\cdots\cup U_{D_r}.
+$$
+
+因此：
+
+## 定理 169.1（有限环面谱层析）
+
+对任意紧谱窗口 \(K\)，存在有限环面集：
+
+$$
+\mathcal D_K=\{D_1,\ldots,D_r\},
+$$
+
+使：
+
+$$
+\boxed{
+\bigcap_{D\in\mathcal D_K}
+Z(P_D)\cap K
+=
+Z(\Lambda)\cap K.
+}
+\tag{169.1}
+$$
+
+并且对每个 \(\rho\in K\)：
+
+$$
+\boxed{
+\operatorname{ord}_\rho\Lambda
+=
+\min_{D\in\mathcal D_K}
+\operatorname{ord}_\rho P_D.
+}
+\tag{169.2}
+$$
+
+这是项目现有 finite prime-time tomography 的解析版本：
+
+$$
+\boxed{
+\text{无限完备环面观察族}
+\quad
+\xrightarrow{\text{固定紧窗口}}
+\quad
+\text{有限见证族}.
+}
+$$
+
+需要注意：上述精确定理使用全部非分裂二次环面。若只允许实二次闭测地线，则还需要“固定符号的二次 twist 非消失”作为单独输入，不能自动从全二次扩张版本推出。
+
+---
+
+# 第一百七十部　零点重数等于环面 jet 深度
+
+令：
+
+$$
+E_s^{(j)}
+=
+\left.
+\frac{\partial^j}{\partial u^j}
+E_u
+\right|_{u=s}.
+$$
+
+定义全环面不可见 jet 深度：
+
+$$
+\boxed{
+d_{\mathrm{tor}}(s)
+=
+\min
+\left\{
+j\ge0:
+\mathcal P_{\mathrm{tor}}(E_s^{(j)})\neq0
+\right\}.
+}
+\tag{170.1}
+$$
+
+若 \(\Lambda\) 在 \(s\) 处有 \(m\) 重零点，则 period factorization 和 Leibniz 公式给出：
+
+$$
+\mathcal P_{\mathrm{tor}}(E_s^{(j)})=0
+\qquad
+(0\le j<m),
+$$
+
+而在适当 twist 非零的环面方向上：
+
+$$
+\mathcal P_{\mathrm{tor}}(E_s^{(m)})\neq0.
+$$
+
+所以：
+
+## 定理 170.1（零点重数—反射 jet 等价）
+
+$$
+\boxed{
+d_{\mathrm{tor}}(s)
+=
+\operatorname{ord}_s\Lambda.
+}
+\tag{170.2}
+$$
+
+Cornelissen–Lorscheid 的结果正是：若对应 \(L\)-function 在 \(s\) 有 \(m\) 重零点，则 Eisenstein series 的前 \(m\) 层导数形成 toroidal derivative tower。([arXiv][1])
+
+这与此前黄金分歧中的：
+
+$$
+\text{值碰撞}
+\longrightarrow
+\text{nilpotent jet}
+$$
+
+完全同型。
+
+区别是：
+
+* 黄金分歧 jet 记录两个 Galois 共轭值在模 \(5\) 后的碰撞阶；
+* toroidal jet 记录 Eisenstein 状态在全部环面观察下的消失阶。
+
+---
+
+# 第一百七十一部　有限正环面能量
+
+取紧窗口 \(K\) 的有限层析族：
+
+$$
+\mathcal D_K=\{D_1,\ldots,D_r\},
+$$
+
+以及正权：
+
+$$
+w_i>0.
+$$
+
+定义：
+
+$$
+\boxed{
+\mathscr E_K(s)
+=
+\sum_{i=1}^r
+w_i
+\left|
+P_{D_i}(s)
+\right|^2.
+}
+\tag{171.1}
+$$
+
+显然：
+
+$$
+\mathscr E_K(s)\ge0.
+$$
+
+由有限层析定理：
+
+$$
+\boxed{
+\mathscr E_K(s)=0
+\iff
+\Lambda(s)=0
+\qquad
+(s\in K).
+}
+\tag{171.2}
+$$
+
+所以 Riemann 零点可以成为一个由有限几何周期产生的非负能量函数的零点集。
+
+---
+
+## 171.1 局部零点形状
+
+若 \(\rho\) 是 \(\Lambda\) 的 \(m\) 重零点，则：
+
+$$
+\Lambda(s)
+=
+a_m(s-\rho)^m
++
+O((s-\rho)^{m+1}),
+\qquad
+a_m\neq0.
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\mathscr E_K(s)
+={}&
+|a_m|^2
+\left(
+\sum_{i=1}^r
+w_i
+|\Lambda(\rho,\chi_{D_i})|^2
+\right)
+|s-\rho|^{2m}\\
+&+
+o(|s-\rho|^{2m}).
+\end{aligned}
+}
+\tag{171.3}
+$$
+
+有限覆盖保证括号内严格为正。
+
+所以：
+
+$$
+\boxed{
+\operatorname{ord}^{\mathbb R}_\rho\mathscr E_K
+=
+2\,\operatorname{ord}_\rho\Lambda.
+}
+\tag{171.4}
+$$
+
+若零点为单零点，\(\rho\) 是 \(\mathscr E_K\) 的非退化二维局部极小点。
+
+---
+
+## 171.2 重要负结论
+
+正能量只说明：
+
+$$
+\text{哪里是零点}.
+$$
+
+它不说明：
+
+$$
+\text{零点为什么必须位于 }\Re s=\frac12.
+$$
+
+无论 \(\rho\) 在线上还是线外，\(\mathscr E_K\) 都会在 \(\rho\) 产生非负局部极小。
+
+所以：
+
+$$
+\boxed{
+\text{positive period energy}
+\neq
+\text{critical-line rigidity}.
+}
+$$
+
+这正是当前路线必须避免的过度推断。
+
+---
+
+# 第一百七十二部　黄金环面是最低成本通道，但不是完备通道
+
+取：
+
+$$
+K_5=\mathbb Q(\sqrt5).
+$$
+
+对应 period 为：
+
+$$
+\boxed{
+P_5(s)
+=
+\Lambda(s)\Lambda(s,\chi_5)
+=
+\Lambda_{K_5}(s).
+}
+\tag{172.1}
+$$
+
+其 Archimedean 闭测地线长度在前文规范下为：
+
+$$
+\boxed{
+\ell_5=4\log\varphi.
+}
+$$
+
+它是整数双曲矩阵中迹 \(3\) 的最短闭轨道，因此是实二次环面观察中的最低几何成本通道。
+
+但：
+
+$$
+Z(P_5)
+=
+Z(\Lambda)
+\cup
+Z(\Lambda(\cdot,\chi_5)).
+$$
+
+所以黄金环面无法单独判断一个零点究竟属于：
+
+* Riemann ζ；
+* 还是二次 twist \(L(s,\chi_5)\)。
+
+因此黄金比例的正确角色是：
+
+$$
+\boxed{
+\text{最低成本的首个环面观察通道，}
+}
+$$
+
+而不是：
+
+$$
+\boxed{
+\text{单独完备的 RH 观察者。}
+}
+$$
+
+---
+
+# 第一百七十三部　环面观察者设计是定义集合覆盖问题
+
+对紧谱窗口 \(K\)，每个判别式 \(D\) 提供可见区域：
+
+$$
+U_D
+=
+\{s:\Lambda(s,\chi_D)\neq0\}.
+$$
+
+定义环面成本：
+
+$$
+c(D)>0.
+$$
+
+对实二次环面，可以使用：
+
+$$
+c(D)=\ell_D
+$$
+
+即闭测地线长度；对全部二次环面，也可以使用：
+
+$$
+c(D)=\log|D|
+$$
+
+或 conductor cost。
+
+定义最优有限环面观察问题：
+
+$$
+\boxed{
+\mathfrak C_{\mathrm{tor}}(K)
+=
+\inf_{\substack{\mathcal D\text{ finite}\\
+K\subseteq\bigcup_{D\in\mathcal D}U_D}}
+\sum_{D\in\mathcal D}c(D).
+}
+\tag{173.1}
+$$
+
+这正是 DECT 的加权集合覆盖：
+
+* 目标逃逸点：某 \(s\) 上所有已选 twist 同时为零；
+* 候选新定义：加入一个新判别式 \(D\)；
+* 捕获集合：
+
+  $$
+  U_D;
+  $$
+* 成本：
+
+  $$
+  c(D).
+  $$
+
+黄金环面由于 \(\ell_5\) 最小，是自然的第一个候选，但不保证出现在每个全局最优 cover 中；是否选择它还取决于：
+
+$$
+U_5
+$$
+
+在目标谱窗口内的覆盖效率。
+
+---
+
+# 第一百七十四部　Cuspidal Waldspurger 观察者
+
+令 \(\Pi\) 是 cuspidal automorphic representation，\(\phi\in\Pi\) 是适当 test vector。
+
+Waldspurger 公式在适当局部规范下具有结构：
+
+$$
+\boxed{
+|\mathcal P_D(\phi)|^2
+=
+C_D(\phi)
+\frac{
+L(\frac12,\Pi)
+L(\frac12,\Pi\otimes\chi_D)
+}{
+L(1,\Pi,\operatorname{Ad})
+},
+}
+\tag{174.1}
+$$
+
+其中 \(C_D(\phi)\) 是显式局部因子。显式 test-vector 版本及相应非消失结论已有成熟理论。([arXiv][2])
+
+因此：
+
+$$
+L(\tfrac12,\Pi)=0
+\Longrightarrow
+\mathcal P_D(\phi)=0
+\quad
+\text{对全部 }D.
+$$
+
+反过来，二次 twist 非消失保证：若基础中心值非零，则存在某个 \(D\) 和适当 test vector 使 toric period 非零。
+
+所以：
+
+## 定理 174.1（Cuspidal 全环面核）
+
+$$
+\boxed{
+\Pi\text{ 对全部二次环面不可见}
+\iff
+L(\tfrac12,\Pi)=0.
+}
+\tag{174.2}
+$$
+
+Cornelissen–Lorscheid 因而把 cuspidal toroidal spectrum 精确描述为中心 \(L\)-值为零的 cusp forms。([arXiv][1])
+
+这给出一个统一结构：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{自动表示类型}&\text{全环面不可见条件}\\
+\hline
+\text{Eisenstein family}&L(s)=0\\
+\text{Cuspidal representation}&L(\frac12,\Pi)=0
+\end{array}
+}
+$$
+
+---
+
+# 第一百七十五部　Toroidal automorphic null spectrum
+
+自动形式空间分为：
+
+$$
+\mathcal A
+=
+\mathcal E
+\oplus
+\mathcal A_0
+\oplus
+\mathcal R,
+$$
+
+其中：
+
+* \(\mathcal E\)：Eisenstein 及导数；
+* \(\mathcal A_0\)：cusp forms；
+* \(\mathcal R\)：Eisenstein residues。
+
+全环面核满足：
+
+$$
+\boxed{
+\mathcal A_{\mathrm{tor}}
+=
+\mathcal E_{\mathrm{zero}}
+\oplus
+\mathcal A_{0,\mathrm{central\ zero}},
+}
+\tag{175.1}
+$$
+
+并且没有非平凡 Eisenstein residue 落入 toroidal kernel。([arXiv][1])
+
+所以全环面观察者不是只检测 Riemann ζ，而是一个统一的自动 \(L\)-值零点过滤器：
+
+$$
+\boxed{
+\text{Toroidal kernel}
+=
+\text{连续谱 }L\text{-零点}
++
+\text{离散谱中心值零点}.
+}
+$$
+
+---
+
+# 第一百七十六部　RH 的精确 observer-temperedness 形式
+
+考虑 spherical Eisenstein principal series：
+
+$$
+\Pi_s
+=
+\operatorname{Ind}
+\left(
+|\cdot|^{s-\frac12},
+|\cdot|^{\frac12-s}
+\right).
+$$
+
+其归一化谱参数为：
+
+$$
+\nu=s-\frac12.
+$$
+
+该表示 tempered 的条件为：
+
+$$
+\Re\nu=0,
+$$
+
+即：
+
+$$
+\boxed{
+\Re s=\frac12.
+}
+$$
+
+而前文已经证明：
+
+$$
+\Lambda(s)=0
+\iff
+E_s\in\mathcal A_{\mathrm{tor}}.
+$$
+
+所以：
+
+## 定理 176.1（RH 的 toroidal-temperedness 形式）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{每个非平凡 toroidal Eisenstein constituent 都是 tempered}.
+}
+\tag{176.1}
+$$
+
+这正是 Zagier 的 toroidal automorphic programme 的核心思想；Cornelissen–Lorscheid 明确指出，如果 toroidal automorphic representations 的不可约成分都是 tempered，则 RH 随之成立。([arXiv][1])
+
+因此 RH 不再只是：
+
+$$
+\text{零点是否在线上},
+$$
+
+而可以写成：
+
+$$
+\boxed{
+\text{所有普遍不可见状态，是否仍属于单位／tempered 物理谱。}
+}
+$$
+
+---
+
+# 第一百七十七部　函数域中的实验性闭合
+
+在函数域情形，toroidal automorphic programme 可以真正闭合。
+
+相关工作证明，在若干函数域上：
+
+* toroidal automorphic space 可以明确计算；
+* 它是 admissible representation；
+* 不可约 subquotients 是 tempered；
+* 从而得到相应曲线 zeta 的自动形式 RH 证明。([arXiv][3])
+
+这提供一个科学上的强正对照：
+
+$$
+\boxed{
+\text{Toroidal invisibility}
++
+\text{representation temperedness}
+\Longrightarrow
+\text{RH}
+}
+$$
+
+并非仅仅形式重述；在函数域中，它确实能成为证明机制。
+
+数域困难并不是逻辑链错误，而是尚无法证明 toroidal Eisenstein kernel 的 temperedness。
+
+---
+
+# 第一百七十八部　标准 \(L^2\) 正性为什么不足
+
+模曲面的标准 \(L^2\) 连续谱由：
+
+$$
+s=\frac12+it
+$$
+
+参数化。
+
+而一个假想线外 ζ 零点：
+
+$$
+s=\frac12+\delta+i\gamma,
+\qquad
+\delta\neq0,
+$$
+
+对应的是 Eisenstein family 的 meromorphic continuation／resonant state，不是标准 unitary \(L^2\) 连续谱中的普通向量。
+
+因此：
+
+$$
+\boxed{
+\text{任何只在标准 }L^2\text{ 谱上成立的正算子，
+不能直接把线外零点作为 Hilbert 向量排除。}
+}
+$$
+
+闭测地线 relative trace formula 确实产生非负 period squares，并把 period spectrum 与 ortholength spectrum 联系起来；它还可给出若干 simultaneous nonvanishing 结果。([arXiv][4])
+
+但其正性首先作用于 unitary Laplace spectrum。
+
+所以真正需要的是：
+
+$$
+\boxed{
+\text{一个包含 meromorphic Eisenstein jets 的正完成空间，}
+}
+$$
+
+例如：
+
+* rigged Hilbert space；
+* Pontryagin space；
+* de Branges space；
+* canonical system；
+* positive reproducing kernel completion。
+
+---
+
+# 第一百七十九部　de Branges 内函数完成
+
+定义 Riemann \(\xi\)-函数对应的 ratio：
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+\frac{
+\xi(\frac12-\omega-iz)
+}{
+\xi(\frac12+\omega-iz)
+},
+\qquad
+\omega>0.
+}
+\tag{179.1}
+$$
+
+它在实轴上满足：
+
+$$
+|\Theta_\omega(u)|=1.
+$$
+
+Suzuki 证明：
+
+$$
+\boxed{
+\zeta(s)\neq0
+\text{ 对所有 }\Re s>\frac12+\omega_0
+}
+$$
+
+当且仅当：
+
+$$
+\boxed{
+\Theta_\omega
+\text{ 对每个 }\omega>\omega_0
+\text{ 是上半平面的 meromorphic inner function}.
+}
+\tag{179.2}
+$$
+
+当 \(\Theta_\omega\) 为 inner function 时，核：
+
+$$
+\boxed{
+K_\omega(z,w)
+=
+\frac{
+1-\Theta_\omega(z)\overline{\Theta_\omega(w)}
+}{
+2\pi i(\overline w-z)
+}
+}
+\tag{179.3}
+$$
+
+是正定核，并产生 model/de Branges Hilbert space；相应 canonical system 的 Hamiltonian 是正半定矩阵。([arXiv][5])
+
+---
+
+# 第一百八十部　Toroidal escape radius
+
+定义：
+
+$$
+\boxed{
+\omega_{\mathrm{tor}}
+=
+\sup
+\left\{
+\Re\rho-\frac12:
+\mathcal P_{\mathrm{tor}}(E_\rho)=0,\ 
+\Re\rho\ge\frac12
+\right\}.
+}
+\tag{180.1}
+$$
+
+由全环面共同核定理：
+
+$$
+\mathcal P_{\mathrm{tor}}(E_\rho)=0
+\iff
+\xi(\rho)=0.
+$$
+
+因此：
+
+$$
+\boxed{
+\omega_{\mathrm{tor}}
+=
+\sup_{\xi(\rho)=0}
+\left|
+\Re\rho-\frac12
+\right|.
+}
+\tag{180.2}
+$$
+
+再定义 innerness threshold：
+
+$$
+\boxed{
+\omega_{\mathrm{in}}
+=
+\inf
+\left\{
+\omega_0\ge0:
+\Theta_\omega
+\text{ 对全部 }\omega>\omega_0
+\text{ 为 meromorphic inner}
+\right\}.
+}
+\tag{180.3}
+$$
+
+由 Suzuki 的等价定理：
+
+## 定理 180.1（Toroidal–de Branges 阈值同一）
+
+$$
+\boxed{
+\omega_{\mathrm{tor}}
+=
+\omega_{\mathrm{in}}.
+}
+\tag{180.4}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\omega_{\mathrm{tor}}=0
+\iff
+\omega_{\mathrm{in}}=0.
+}
+\tag{180.5}
+$$
+
+这给出了 OACTC 中一个新的结构常数：
+
+$$
+\boxed{
+\omega_*
+=
+\text{普遍不可见谱偏离 tempered 轴的最大距离}
+}
+$$
+
+同时也是：
+
+$$
+\boxed{
+\text{de Branges inner completion 开始失效的临界宽度}.
+}
+$$
+
+---
+
+# 第一百八十一部　Wang 式 innerness 自改善
+
+定义性质：
+
+$$
+\boxed{
+\mathsf I(a):
+\quad
+\Theta_\omega
+\text{ 对所有 }\omega>a
+\text{ 是 meromorphic inner}.
+}
+\tag{181.1}
+$$
+
+无条件已知：
+
+$$
+\mathsf I(\tfrac12).
+$$
+
+RH 等价于：
+
+$$
+\mathsf I(0).
+$$
+
+因此一种真正的 Wang 式证明路线是寻找函数：
+
+$$
+F:(0,\tfrac12]\to[0,\tfrac12)
+$$
+
+满足：
+
+$$
+F(a)<a
+\qquad(a>0),
+$$
+
+并证明：
+
+$$
+\boxed{
+\mathsf I(a)
+\Longrightarrow
+\mathsf I(F(a)).
+}
+\tag{181.2}
+$$
+
+迭代得到：
+
+$$
+a>F(a)>F^2(a)>\cdots\to0,
+$$
+
+从而：
+
+$$
+\mathsf I(0).
+$$
+
+这比笼统说“自改善可能证明 RH”精确得多：
+
+$$
+\boxed{
+\text{需要改善的量就是 }
+\omega_{\mathrm{in}}
+=
+\omega_{\mathrm{tor}}.
+}
+$$
+
+---
+
+## 181.1 Non-sticky 与 sticky 的新定义
+
+假定 \(\Theta_\omega\) 在某宽度 \(a\) 已经 inner。
+
+当尝试向较小 \(\omega\) 延拓时：
+
+### Non-sticky defect
+
+负核方向分散于：
+
+* 多个二次环面；
+* 多个 twist；
+* 多个高度窗口；
+* 多个 canonical-system 尺度。
+
+目标：
+
+$$
+\text{orthogonality}
+\Longrightarrow
+\text{strict kernel gain}.
+$$
+
+### Sticky defect
+
+负核方向在一条环面／twist／尺度链中持续集中。
+
+目标：
+
+$$
+\text{primitive factorization}
++
+\text{renormalized Hamiltonian}
+\Longrightarrow
+\text{高阶余项收缩}.
+$$
+
+这正是 Wang–Deng 方法在 de Branges innerness 阈值上的具体化。
+
+---
+
+# 第一百八十二部　Deng 式 canonical-system 重整化
+
+Suzuki 已在一定参数范围内通过 Fredholm integral operators 构造与 \(\Theta_\omega\) 对应的 canonical system，并指出若能无条件延伸到所有 \(\omega>0\)，就会把 RH 表达为一族 Hamiltonian 的正半定性。([arXiv][5])
+
+因此需要研究：
+
+$$
+H_\omega(a)
+=
+\begin{pmatrix}
+\alpha_\omega(a)&\beta_\omega(a)\\
+\beta_\omega(a)&\gamma_\omega(a)
+\end{pmatrix}.
+$$
+
+定义负性缺陷：
+
+$$
+\boxed{
+\Delta_H(\omega)
+=
+\int
+\operatorname{tr}
+\left(
+H_\omega(a)
+\right)_{-}\,da.
+}
+\tag{182.1}
+$$
+
+理想目标：
+
+$$
+\boxed{
+\Delta_H(\omega)=0
+\quad
+\forall\omega>0.
+}
+$$
+
+Yu Deng 式程序应当是：
+
+1. 对 Fredholm/Hankel kernel 展开高阶历史；
+2. 将闭合子历史收缩成 counterterms；
+3. 保留 primitive kernel；
+4. 选择随 \(\omega\downarrow0\) 增长的展开阶数；
+5. 证明 remainder 小于已有正性 margin。
+
+这条路线目前是开放的，但目标对象已经明确：
+
+$$
+\boxed{
+\text{不是直接估计 ζ 零点，}
+\quad
+\text{而是证明 canonical Hamiltonian 在全部 }\omega>0\text{ 上正半定}.
+}
+$$
+
+---
+
+# 第一百八十三部　正环面载体判据
+
+取非负环面测度组合：
+
+$$
+\mu
+=
+\sum_Da_D\mu_D,
+\qquad
+a_D\ge0,
+$$
+
+其中 \(\mu_D\) 是对应二次环面的归一化周期测度。
+
+定义 Eisenstein period：
+
+$$
+\boxed{
+F_\mu(s)
+=
+\int E^*(z,s)\,d\mu(z).
+}
+\tag{183.1}
+$$
+
+由 Hecke factorization：
+
+$$
+\boxed{
+F_\mu(s)
+=
+\Lambda(s)G_\mu(s),
+}
+\tag{183.2}
+$$
+
+其中：
+
+$$
+G_\mu(s)
+=
+\sum_Da_D\,e_D(s)\Lambda(s,\chi_D).
+$$
+
+于是：
+
+## 定理 183.1（正环面载体条件）
+
+若某非负 \(\mu\) 同时满足：
+
+1. \(F_\mu\) 的全部非平凡零点位于：
+
+   $$
+   \Re s=\frac12;
+   $$
+2. \(G_\mu(s)\) 在：
+
+   $$
+   \Re s>\frac12
+   $$
+
+   内全纯且无零；
+
+则 RH 成立。
+
+### 证明
+
+若 \(\Lambda(\rho)=0\) 且 \(\Re\rho>\frac12\)，则：
+
+$$
+F_\mu(\rho)=0.
+$$
+
+由条件 1，矛盾。条件 2 排除了 factorization 的极点或异常抵消。再由函数方程得到左半边。∎
+
+Lagarias–Suzuki 已证明，某些非负测度下的 Eisenstein 积分确实具有“全部零点在线上”的性质；但其具体测度并不是上述所需的全环面组合，也没有自动保留一个零自由的 \(G_\mu\)。([arXiv][6])
+
+所以这是一条**真正具体但尚未闭合**的桥。
+
+---
+
+# 第一百八十四部　二次 twist 平均与平方历史
+
+定义截断环面平均：
+
+$$
+\boxed{
+F_X(s)
+=
+\frac1{W_X}
+\sum_D
+w(D/X)\,
+P_D(s).
+}
+\tag{184.1}
+$$
+
+则：
+
+$$
+F_X(s)
+=
+\Lambda(s)G_X(s),
+$$
+
+其中：
+
+$$
+G_X(s)
+=
+\frac1{W_X}
+\sum_D
+w(D/X)\Lambda(s,\chi_D).
+$$
+
+展开：
+
+$$
+L(s,\chi_D)
+=
+\sum_{n\ge1}
+\frac{\chi_D(n)}{n^s}.
+$$
+
+对 \(D\) 平均时，非平方 \(n\) 的二次 character 通常产生显著抵消，而平方：
+
+$$
+n=m^2
+$$
+
+形成稳定主项。
+
+因此预期：
+
+$$
+\boxed{
+G_X(s)
+\longrightarrow
+G_\square(s)
+=
+\sum_{m\ge1}
+\frac{a(m)}{m^{2s}},
+}
+\tag{184.2}
+$$
+
+其中 \(a(m)\ge0\) 是局部平方密度。
+
+在：
+
+$$
+\Re s>\frac12
+$$
+
+内，该平方 Dirichlet series 有可能绝对收敛并形成无零 Euler product。
+
+这是一个精确的 Wang–Deng 结构：
+
+### Wang 分散
+
+非平方 twist histories 在判别式方向分散，平均后抵消。
+
+### Deng primitive survival
+
+只有平方 histories 作为 primitive sticky diagonal 存活。
+
+### 目标
+
+证明：
+
+$$
+G_X\to G_\square
+$$
+
+具有足够强的一致性，并证明 \(G_\square\) 在右半临界带无零。
+
+双 Dirichlet series 正是现有二次 twist 非消失证明的主要工具，因此这一方向与全环面共同核定理使用的是同一分析机器。([arXiv][1])
+
+目前这仍是研究计划，不能将形式 character orthogonality 当作已经证明的临界带极限。
+
+---
+
+# 第一百八十五部　科学证伪协议
+
+## 185.1 有限层析实验
+
+对固定：
+
+$$
+|\Im s|\le T
+$$
+
+和窄带区域，按成本顺序加入：
+
+$$
+D=5,8,12,13,\ldots
+$$
+
+计算：
+
+$$
+\Lambda(s,\chi_D)
+$$
+
+的共同近零集合。
+
+目标测量：
+
+$$
+N_{\mathrm{tor}}(T)
+=
+\min|\mathcal D_T|,
+$$
+
+以及：
+
+$$
+C_{\mathrm{tor}}(T)
+=
+\min\sum_{D\in\mathcal D_T}c(D).
+$$
+
+理论只保证每个紧窗口存在有限观察族，并未保证所需判别式小或数量有统一上界。
+
+---
+
+## 185.2 Golden 首通道检验
+
+测量包含 \(D=5\) 与不包含 \(D=5\) 的最优 cover 成本。
+
+若黄金环面经常被更高判别式组合替代，则它是最低单通道成本，但不是最优信息通道。
+
+---
+
+## 185.3 Jet 重数检验
+
+在人为构造的多重零点模型中，验证：
+
+$$
+\text{period derivative tower depth}
+=
+\text{基础因子零点重数}.
+$$
+
+---
+
+## 185.4 Innerness threshold 检验
+
+数值估计：
+
+$$
+\Theta_\omega(z)
+$$
+
+在上半平面的 Schur defect：
+
+$$
+\sup_{\Im z>0}
+\left(
+|\Theta_\omega(z)|-1
+\right)_+.
+$$
+
+观察该缺陷随 \(\omega\) 向下推进时是否出现多尺度自改善或集中结构。
+
+---
+
+# 第一百八十六部　建议形式化顺序
+
+```text
+D5/S3/Observer/Toroidal/
+  QuadraticTorusIndex.lean
+  ToroidalPeriod.lean
+  JointToroidalObserver.lean
+  ToroidalKernel.lean
+
+D5/S3/Analytic/ToroidalEisenstein/
+  HeckeToroidalFactorization.lean
+  QuadraticTwistNonvanishingInterface.lean
+  UniversalToroidalZeroKernel.lean
+  ToroidalDivisorGCD.lean
+  CompactWindowFiniteTomography.lean
+  ToroidalJetMultiplicity.lean
+
+D5/S3/Analytic/ToroidalPositivity/
+  FiniteToroidalEnergy.lean
+  EnergyZeroSet.lean
+  EnergyVanishingOrder.lean
+  WeightedTorusCover.lean
+
+D5/S3/Analytic/ToroidalCuspidal/
+  WaldspurgerPeriodInterface.lean
+  CuspidalToroidalKernel.lean
+  AutomorphicNullSpectrum.lean
+
+D5/S3/Analytic/DeBrangesCompletion/
+  XiRatioInnerFunction.lean
+  ToroidalEscapeRadius.lean
+  InnernessThresholdEquality.lean
+  WangInnernessSelfImprovement.lean
+  CanonicalHamiltonianDefect.lean
+
+D5/S3/Analytic/ToroidalAverage/
+  PositiveTorusCarrierCriterion.lean
+  QuadraticTwistAverage.lean
+  SquareHistoryLimit.lean
+```
+
+优先级最高、且能独立闭合的抽象定理是：
+
+$$
+\boxed{
+\text{pointwise twist nonvanishing}
++
+\text{compactness}
+\Longrightarrow
+\text{finite torus tomography}.
+}
+$$
+
+其次是：
+
+$$
+\boxed{
+\text{joint period zero divisor}
+=
+\text{base }L\text{-function zero divisor}.
+}
+$$
+
+---
+
+# 本轮最终结论
+
+此前 OACTC 将 RH 研究写成：
+
+$$
+\text{局部素数}
++
+\text{调节子模式}
++
+\text{闭测地动力}
++
+\text{散射}.
+$$
+
+本轮找到了一个比这些候选索引更直接的共同对象：
+
+$$
+\boxed{
+\text{全部非分裂二次环面周期}.
+}
+$$
+
+它具有三个精确性质：
+
+$$
+\boxed{
+\begin{aligned}
+\text{零点识别}
+&:\quad
+\Lambda(s)=0
+\iff
+E_s\text{ 对所有环面不可见};\\
+\text{重数识别}
+&:\quad
+\operatorname{ord}_s\Lambda
+=
+\text{toroidal derivative depth};\\
+\text{有限层析}
+&:\quad
+\text{每个紧谱窗口只需有限个环面}.
+\end{aligned}
+}
+$$
+
+因此最深的新表述是：
+
+$$
+\boxed{
+\text{Riemann 零点并不是某个观察器看到的异常峰，}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{一个 Eisenstein 状态在所有二次局部—全局周期观察中
+同时消失的普遍不可见点。}
+}
+$$
+
+RH 则进一步问：
+
+$$
+\boxed{
+\text{为什么这些普遍不可见状态仍然全部是 tempered 的？}
+}
+$$
+
+de Branges 理论把同一个问题编码成：
+
+$$
+\boxed{
+\Theta_\omega
+\text{ 是否对全部 }\omega>0
+\text{为 meromorphic inner},
+}
+$$
+
+而二者的临界阈值严格相等：
+
+$$
+\boxed{
+\omega_{\mathrm{tor}}
+=
+\omega_{\mathrm{in}}.
+}
+$$
+
+所以 Wang–Deng–OACTC 路线现在拥有一个明确的可改善量：
+
+$$
+\boxed{
+\omega_*.
+}
+$$
+
+真正可能闭合 RH 的下一条核心桥不再模糊：
+
+$$
+\boxed{
+\mathsf I(a)
+\Longrightarrow
+\mathsf I(F(a)),
+\qquad
+F(a)<a,
+}
+$$
+
+或者等价地：
+
+$$
+\boxed{
+\text{全环面不可见}
+\Longrightarrow
+\text{canonical Hamiltonian 正半定}
+\Longrightarrow
+\text{tempered}.
+}
+$$
+
+这才是当前理论最值得继续攻击的中心命题。
+
+[1]: https://arxiv.org/abs/0906.5284 "https://arxiv.org/abs/0906.5284"
+[2]: https://arxiv.org/abs/1310.1765 "https://arxiv.org/abs/1310.1765"
+[3]: https://arxiv.org/abs/1012.3223 "https://arxiv.org/abs/1012.3223"
+[4]: https://arxiv.org/abs/1504.05684 "https://arxiv.org/abs/1504.05684"
+[5]: https://arxiv.org/abs/1204.1827 "https://arxiv.org/abs/1204.1827"
+[6]: https://arxiv.org/abs/math/0412039 "https://arxiv.org/abs/math/0412039"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v2.0：环面谱帧、超额连接、曲率零点与 de Branges 有限正性
+
+以下从前文**第一百八十六部之后**继续追加。
+
+本轮不再增加新的特殊对象，而是直接攻击上一轮留下的中心桥：
+
+$$
+\boxed{
+\text{全环面不可见}
+\quad\Longrightarrow\quad
+\text{de Branges 正性／temperedness}
+}
+$$
+
+本轮得到的最重要结果是：
+
+$$
+\boxed{
+\text{二次环面周期可以组成有限谱帧，
+并在任意紧谱窗内稳定重构 }\xi(s).
+}
+$$
+
+在这个谱帧中：
+
+$$
+\boxed{
+\Re\frac{\xi'(s)}{\xi(s)}
+=
+\text{观测周期增长}
+-
+\text{二次 twist 载体增长}.
+}
+$$
+
+因此 RH 可以精确改写为：
+
+$$
+\boxed{
+\text{所有有限环面谱帧的“超额水平连接”
+在 }\Re s>\frac12\text{ 内始终向右。}
+}
+$$
+
+更关键的是，如果存在一个线外零点，那么这个超额连接不是产生一个极小、难以观测的误差，而会在零点左侧趋向：
+
+$$
+-\infty.
+$$
+
+所以此前担心的“线外负见证可能比任何幂都小”在这个观察接口中不再存在。
+
+---
+
+# 第一百八十七部　环面谱图册
+
+设 \(\xi(s)\) 为 Riemann 的整个完成函数，其零点恰为 ζ 的非平凡零点。
+
+对每个二次判别式 \(D\)，令：
+
+$$
+\chi_D
+$$
+
+为对应二次特征。
+
+Hecke 环面周期公式及其阿代尔推广表明，在固定规范、固定 test vector 后，可把相应 Eisenstein 环面周期写成：
+
+$$
+\boxed{
+\mathcal P_D(s)
+=
+\xi(s)\,\mathcal T_D(s),
+}
+\tag{187.1}
+$$
+
+其中：
+
+$$
+\mathcal T_D(s)
+=
+\Lambda(s,\chi_D)\,e_D(s)
+$$
+
+是二次 twist 与局部 period factor 的乘积。
+
+这里 \(e_D\) 在所研究局部图表中可被选择为非零；Cornelissen–Lorscheid 由 Hecke 恒等式、Waldspurger 周期及二次 twist 非消失，证明了 Eisenstein 导数塔与 \(L\)-零点重数之间的精确对应。([arXiv][1])
+
+定义局部可用域：
+
+$$
+\boxed{
+U_D
+=
+\{s:\mathcal T_D(s)\neq0\}.
+}
+\tag{187.2}
+$$
+
+在 \(U_D\) 上定义局部重构：
+
+$$
+\boxed{
+\xi_D(s)
+=
+\frac{\mathcal P_D(s)}
+{\mathcal T_D(s)}.
+}
+\tag{187.3}
+$$
+
+显然：
+
+$$
+\xi_D(s)=\xi(s).
+$$
+
+若：
+
+$$
+s\in U_D\cap U_E,
+$$
+
+则：
+
+$$
+\xi_D(s)=\xi_E(s).
+$$
+
+所以全部二次环面观察形成一个谱图册：
+
+$$
+\boxed{
+\left\{
+(U_D,\xi_D)
+\right\}_D,
+}
+$$
+
+而 \(\xi\) 是这些局部读数的唯一胶合对象。
+
+---
+
+## 定理 187.1（Toroidal Čech completion）
+
+设 \(\Omega\) 是由二次 twist 非消失域 \(U_D\) 覆盖的谱域。则局部比值：
+
+$$
+\frac{\mathcal P_D}{\mathcal T_D}
+$$
+
+在交叠区域上一致，并唯一胶合成：
+
+$$
+\boxed{
+\xi:\Omega\to\mathbb C.
+}
+$$
+
+这意味着：
+
+$$
+\boxed{
+\text{Riemann }\xi
+=
+\text{全部二次环面周期图表的共同标量振幅}.
+}
+$$
+
+---
+
+# 第一百八十八部　有限环面谱帧
+
+设：
+
+$$
+K\subset\{0<\Re s<1\}
+$$
+
+为紧集。
+
+前文已由二次 twist 的逐点非消失和紧致性得到：存在有限判别式集合
+
+$$
+\mathcal D_K
+=
+\{D_1,\ldots,D_r\},
+$$
+
+使对每个 \(s\in K\)，至少有一个：
+
+$$
+\mathcal T_{D_j}(s)\neq0.
+$$
+
+取正权：
+
+$$
+w_j>0.
+$$
+
+定义载体向量：
+
+$$
+\boxed{
+\mathbf T_K(s)
+=
+\left(
+\sqrt{w_1}\mathcal T_{D_1}(s),
+\ldots,
+\sqrt{w_r}\mathcal T_{D_r}(s)
+\right)
+\in\mathbb C^r.
+}
+\tag{188.1}
+$$
+
+定义观测周期向量：
+
+$$
+\boxed{
+\mathbf P_K(s)
+=
+\left(
+\sqrt{w_1}\mathcal P_{D_1}(s),
+\ldots,
+\sqrt{w_r}\mathcal P_{D_r}(s)
+\right).
+}
+\tag{188.2}
+$$
+
+由式 (187.1)：
+
+$$
+\boxed{
+\mathbf P_K(s)
+=
+\xi(s)\mathbf T_K(s).
+}
+\tag{188.3}
+$$
+
+---
+
+## 188.1 谱帧下界
+
+定义：
+
+$$
+\boxed{
+A_K
+=
+\min_{s\in K}
+\|\mathbf T_K(s)\|^2.
+}
+\tag{188.4}
+$$
+
+因为：
+
+* \(\mathbf T_K(s)\neq0\) 对每个 \(s\in K\)；
+* \(\|\mathbf T_K(s)\|^2\) 连续；
+* \(K\) 紧；
+
+所以：
+
+$$
+\boxed{
+A_K>0.
+}
+\tag{188.5}
+$$
+
+同样定义：
+
+$$
+B_K
+=
+\max_{s\in K}
+\|\mathbf T_K(s)\|^2<\infty.
+$$
+
+---
+
+## 定理 188.1（有限环面帧重构）
+
+对任意 \(s\in K\)：
+
+$$
+\boxed{
+\xi(s)
+=
+\frac{
+\langle
+\mathbf P_K(s),
+\mathbf T_K(s)
+\rangle
+}{
+\|\mathbf T_K(s)\|^2
+}.
+}
+\tag{188.6}
+$$
+
+### 证明
+
+由：
+
+$$
+\mathbf P_K=\xi\mathbf T_K,
+$$
+
+有：
+
+$$
+\langle\mathbf P_K,\mathbf T_K\rangle
+=
+\xi\|\mathbf T_K\|^2.
+$$
+
+∎
+
+因此：
+
+> 在任意固定紧谱窗内，不需要无限多个环面；有限个二次环面周期已经足以重构完整的 \(\xi\)-值。
+
+---
+
+## 188.2 观测稳定性
+
+若观测存在误差：
+
+$$
+\widetilde{\mathbf P}_K
+=
+\mathbf P_K+\varepsilon,
+$$
+
+定义重构值：
+
+$$
+\widetilde\xi
+=
+\frac{
+\langle
+\widetilde{\mathbf P}_K,
+\mathbf T_K
+\rangle
+}{
+\|\mathbf T_K\|^2
+}.
+$$
+
+则：
+
+$$
+\boxed{
+|\widetilde\xi(s)-\xi(s)|
+\le
+\frac{\|\varepsilon(s)\|}
+{\sqrt{A_K}}.
+}
+\tag{188.7}
+$$
+
+所以：
+
+$$
+A_K
+$$
+
+是环面观察者的稳定容量。
+
+---
+
+# 第一百八十九部　Projective blindness：方向观察看不到 ζ
+
+在 \(\xi(s)\neq0\) 时：
+
+$$
+\mathbf P_K(s)=\xi(s)\mathbf T_K(s).
+$$
+
+因此在射影空间中：
+
+$$
+\boxed{
+[\mathbf P_K(s)]
+=
+[\mathbf T_K(s)].
+}
+\tag{189.1}
+$$
+
+也就是说：
+
+> 如果只观察环面周期向量的方向，而不保留整体振幅和相位，那么 Riemann \(\xi\) 会被完全消去。
+
+这与此前多种观察失明严格同型：
+
+* 对角量子测量看不到相位；
+* 衍射强度看不到 Fourier 相位；
+* 六轴无向观察看不到 antipodal orientation；
+* projective torus period 看不到公共 \(\xi\)-振幅。
+
+---
+
+## 189.1 振幅—相位补全
+
+由式 (188.3)：
+
+$$
+\boxed{
+|\xi(s)|
+=
+\frac{
+\|\mathbf P_K(s)\|
+}{
+\|\mathbf T_K(s)\|
+}.
+}
+\tag{189.2}
+$$
+
+同时：
+
+$$
+\boxed{
+\xi(s)
+=
+\frac{
+\langle\mathbf P_K(s),\mathbf T_K(s)\rangle
+}{
+\|\mathbf T_K(s)\|^2
+}.
+}
+$$
+
+所以完整 \(\xi\) 读数由：
+
+$$
+\boxed{
+\text{相对范数}
++
+\text{相对 }U(1)\text{ 相位}
+}
+$$
+
+组成。
+
+在零点处：
+
+$$
+\mathbf P_K(s)=0,
+\qquad
+\mathbf T_K(s)\neq0.
+$$
+
+因此 Riemann 零点可重新定义为：
+
+$$
+\boxed{
+\text{环面周期谱帧的整体振幅塌缩点}.
+}
+$$
+
+---
+
+# 第一百九十部　超额连接
+
+设 \(s\) 处：
+
+$$
+\xi(s)\neq0.
+$$
+
+对一个非零向量值函数 \(\mathbf U(s)\)，定义连接一形式：
+
+$$
+\boxed{
+\mathcal A_{\mathbf U}
+=
+\frac{
+\langle d\mathbf U,\mathbf U\rangle
+}{
+\|\mathbf U\|^2
+}.
+}
+\tag{190.1}
+$$
+
+由：
+
+$$
+\mathbf P_K=\xi\mathbf T_K,
+$$
+
+直接得到：
+
+$$
+\boxed{
+\mathcal A_{\mathbf P_K}
+-
+\mathcal A_{\mathbf T_K}
+=
+\frac{d\xi}{\xi}.
+}
+\tag{190.2}
+$$
+
+这一定义与选取的有限环面帧无关。
+
+称：
+
+$$
+\boxed{
+\mathcal A_{\mathrm{exc}}
+:=
+\mathcal A_{\mathbf P_K}
+-
+\mathcal A_{\mathbf T_K}
+}
+$$
+
+为**环面超额连接**。
+
+它记录：
+
+$$
+\text{完整周期变化}
+-
+\text{twist 载体自身变化}.
+$$
+
+---
+
+## 190.1 零点计数是超额 holonomy
+
+设 \(\Omega\) 是边界不含 \(\xi\)-零点的有界区域，则由辩值原理：
+
+$$
+\boxed{
+\frac{1}{2\pi i}
+\oint_{\partial\Omega}
+\mathcal A_{\mathrm{exc}}
+=
+\sum_{\rho\in\Omega}
+m_\rho.
+}
+\tag{190.3}
+$$
+
+所以 Riemann 零点数可以由有限环面周期帧的连接差完整恢复。
+
+---
+
+# 第一百九十一部　零点是相对曲率原子
+
+定义相对势：
+
+$$
+\boxed{
+\mathcal U_K(s)
+=
+\log
+\frac{
+\|\mathbf P_K(s)\|^2
+}{
+\|\mathbf T_K(s)\|^2
+}.
+}
+\tag{191.1}
+$$
+
+由于：
+
+$$
+\mathbf P_K=\xi\mathbf T_K,
+$$
+
+有：
+
+$$
+\boxed{
+\mathcal U_K(s)
+=
+\log|\xi(s)|^2.
+}
+\tag{191.2}
+$$
+
+Poincaré–Lelong 公式给出：
+
+$$
+\boxed{
+\frac{i}{2\pi}
+\partial\bar\partial
+\mathcal U_K
+=
+\sum_\rho
+m_\rho\,\delta_\rho.
+}
+\tag{191.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{Riemann 零点除子}
+=
+\text{周期线与 twist 载体线之间的相对曲率}.
+}
+$$
+
+---
+
+## 定理 191.1（RH 的曲率支撑形式）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\operatorname{supp}
+\left(
+\frac{i}{2\pi}
+\partial\bar\partial
+\mathcal U_K
+\right)
+\cap
+\{0<\Re s<1\}
+\subseteq
+\left\{\Re s=\frac12\right\}.
+}
+\tag{191.4}
+$$
+
+这给“零点在线”一个几何化表述：
+
+> 全部相对曲率原子是否集中在完成对偶的固定中线。
+
+---
+
+# 第一百九十二部　线外零点产生无界负见证
+
+这是本轮最关键的严格结论。
+
+设：
+
+$$
+\rho=\beta+i\gamma
+$$
+
+是 \(\xi\) 的 \(m\) 重零点，且：
+
+$$
+\beta>\frac12.
+$$
+
+取：
+
+$$
+s_\varepsilon
+=
+\rho-\varepsilon,
+\qquad
+0<\varepsilon<\beta-\frac12.
+$$
+
+局部写成：
+
+$$
+\xi(s)
+=
+(s-\rho)^m g(s),
+\qquad
+g(\rho)\neq0.
+$$
+
+则：
+
+$$
+\frac{\xi'(s)}{\xi(s)}
+=
+\frac{m}{s-\rho}
++
+\frac{g'(s)}{g(s)}.
+$$
+
+代入：
+
+$$
+s=s_\varepsilon
+$$
+
+得到：
+
+$$
+\boxed{
+\Re\frac{\xi'(s_\varepsilon)}{\xi(s_\varepsilon)}
+=
+-\frac{m}{\varepsilon}
++
+O(1).
+}
+\tag{192.1}
+$$
+
+因此：
+
+$$
+\boxed{
+\Re\frac{\xi'(s_\varepsilon)}{\xi(s_\varepsilon)}
+\longrightarrow-\infty
+\qquad
+(\varepsilon\downarrow0).
+}
+\tag{192.2}
+$$
+
+---
+
+## 192.1 环面帧形式
+
+由：
+
+$$
+\mathcal U_K=\log|\xi|^2,
+$$
+
+有：
+
+$$
+\boxed{
+\frac12
+\frac{\partial}{\partial\sigma}
+\log
+\frac{
+\|\mathbf P_K(\sigma+it)\|^2
+}{
+\|\mathbf T_K(\sigma+it)\|^2
+}
+=
+\Re
+\frac{\xi'(\sigma+it)}
+{\xi(\sigma+it)}.
+}
+\tag{192.3}
+$$
+
+所以线外零点强迫：
+
+$$
+\boxed{
+\frac{\partial}{\partial\sigma}
+\log
+\frac{
+\|\mathbf P_K(s_\varepsilon)\|^2
+}{
+\|\mathbf T_K(s_\varepsilon)\|^2
+}
+\longrightarrow-\infty.
+}
+\tag{192.4}
+$$
+
+这说明：
+
+> 在线外零点附近，完整周期能量相对于 twist 载体能量会出现任意强的反向增长。
+
+因此线外零点的负见证：
+
+* 不是指数微小；
+* 不是可能被高阶余项轻易吞没；
+* 而是一个极点型、无界负信号。
+
+这解决了此前 Wang–Deng 路线中的一个关键逻辑困难。
+
+---
+
+# 第一百九十三部　对称位移的环面 Hermite–Biehler 缺陷
+
+令：
+
+$$
+z\in\mathbb C^+,
+$$
+
+并定义：
+
+$$
+s_z
+=
+\frac12-iz.
+$$
+
+因为：
+
+$$
+\Im z>0,
+$$
+
+所以：
+
+$$
+\Re s_z>\frac12.
+$$
+
+对：
+
+$$
+\omega>0,
+$$
+
+定义：
+
+$$
+\boxed{
+E_\omega^+(z)
+=
+\xi(s_z+\omega),
+}
+$$
+
+$$
+\boxed{
+E_\omega^-(z)
+=
+\xi(s_z-\omega).
+}
+\tag{193.1}
+$$
+
+由 \(\xi\) 的函数方程和实结构：
+
+$$
+E_\omega^-
+=
+(E_\omega^+)^\#.
+$$
+
+在包含两个移位谱窗的有限环面帧中，定义：
+
+$$
+\mathbf P_\omega^\pm(z)
+=
+E_\omega^\pm(z)\,
+\mathbf T_\omega^\pm(z).
+$$
+
+于是：
+
+$$
+\boxed{
+\mathscr N_\omega^\pm(z)
+=
+\frac{
+\|\mathbf P_\omega^\pm(z)\|^2
+}{
+\|\mathbf T_\omega^\pm(z)\|^2
+}
+=
+|E_\omega^\pm(z)|^2.
+}
+\tag{193.2}
+$$
+
+定义环面 Hermite–Biehler 缺陷：
+
+$$
+\boxed{
+\mathscr H_\omega(z)
+=
+\mathscr N_\omega^+(z)
+-
+\mathscr N_\omega^-(z).
+}
+\tag{193.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathscr H_\omega(z)
+=
+|\xi(s_z+\omega)|^2
+-
+|\xi(s_z-\omega)|^2.
+}
+\tag{193.4}
+$$
+
+---
+
+# 第一百九十四部　有限环面 de Branges 判据
+
+Suzuki 定义：
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+\frac{
+\xi(\frac12-\omega-iz)
+}{
+\xi(\frac12+\omega-iz)
+}
+=
+\frac{E_\omega^-(z)}
+{E_\omega^+(z)}.
+}
+\tag{194.1}
+$$
+
+他证明：给定 \(\omega_0\ge0\)，ζ 在
+
+$$
+\Re s>\frac12+\omega_0
+$$
+
+无零，当且仅当对每个 \(\omega>\omega_0\)，\(\Theta_\omega\) 是上半平面的 meromorphic inner function；其 de Branges/model-space 核为标准 Pick 核。([arXiv][2])
+
+因此：
+
+## 定理 194.1（有限环面 Hermite–Biehler 判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathscr H_\omega(z)>0
+}
+$$
+
+对所有：
+
+$$
+\omega>0,
+\qquad
+z\in\mathbb C^+
+$$
+
+成立。
+
+展开为环面周期：
+
+$$
+\boxed{
+\frac{
+\|\mathbf P_\omega^+(z)\|^2
+}{
+\|\mathbf T_\omega^+(z)\|^2
+}
+>
+\frac{
+\|\mathbf P_\omega^-(z)\|^2
+}{
+\|\mathbf T_\omega^-(z)\|^2
+}.
+}
+\tag{194.2}
+$$
+
+这就是 RH 的**有限环面归一能量形式**。
+
+---
+
+## 194.1 de Branges 对角核
+
+de Branges 核在对角线上为：
+
+$$
+\boxed{
+K_\omega(z,z)
+=
+\frac{
+|E_\omega^+(z)|^2
+-
+|E_\omega^-(z)|^2
+}{
+4\pi\Im z
+}.
+}
+\tag{194.3}
+$$
+
+所以：
+
+$$
+\boxed{
+K_\omega(z,z)
+=
+\frac{
+\mathscr H_\omega(z)
+}{
+4\pi\Im z
+}.
+}
+\tag{194.4}
+$$
+
+因此 RH 等价于全部有限环面重构的 de Branges 对角核严格为正。
+
+---
+
+# 第一百九十五部　有限环面 Pick 层级
+
+在 \(\mathbf P_\omega^+\neq0\) 时，从有限环面帧重构：
+
+$$
+\Theta_\omega(z)
+=
+\frac{
+\langle
+\mathbf P_\omega^-(z),
+\mathbf T_\omega^-(z)
+\rangle
+}{
+\|\mathbf T_\omega^-(z)\|^2
+}
+\cdot
+\frac{
+\|\mathbf T_\omega^+(z)\|^2
+}{
+\langle
+\mathbf P_\omega^+(z),
+\mathbf T_\omega^+(z)
+\rangle
+}.
+\tag{195.1}
+$$
+
+对有限点集：
+
+$$
+z_1,\ldots,z_n\in\mathbb C^+,
+$$
+
+定义 Pick 矩阵：
+
+$$
+\boxed{
+\Pi_{\omega,n}
+=
+\left[
+\frac{
+1-
+\Theta_\omega(z_a)
+\overline{\Theta_\omega(z_b)}
+}{
+2\pi i(\overline{z_b}-z_a)
+}
+\right]_{a,b=1}^n.
+}
+\tag{195.2}
+$$
+
+则：
+
+$$
+\boxed{
+\Theta_\omega\text{ 为 Schur/inner}
+\iff
+\Pi_{\omega,n}\succeq0
+}
+$$
+
+对所有有限点集成立。
+
+所以 RH 也等价于一个有限环面 Pick 正性层级：
+
+$$
+\boxed{
+\det\Pi_{\omega,n}\ge0
+\quad
+\forall\,\omega,n,z_1,\ldots,z_n.
+}
+\tag{195.3}
+$$
+
+在解析性已知的条件下，一点模长不等式已经足以表达 Schur 性；高阶 Pick 矩阵仍然是更适合数值证书和稳定性分析的有限形式。
+
+---
+
+# 第一百九十六部　无穷小环面单调性
+
+令：
+
+$$
+s=s_z.
+$$
+
+当：
+
+$$
+\omega\downarrow0
+$$
+
+时：
+
+$$
+\begin{aligned}
+|\xi(s+\omega)|^2
+-
+|\xi(s-\omega)|^2
+=
+4\omega
+|\xi(s)|^2
+\Re\frac{\xi'(s)}{\xi(s)}
++
+O(\omega^3).
+\end{aligned}
+$$
+
+因此：
+
+$$
+\boxed{
+\lim_{\omega\downarrow0}
+\frac{
+\mathscr H_\omega(z)
+}{
+4\omega
+\mathscr N_0(z)
+}
+=
+\Re\frac{\xi'(s_z)}{\xi(s_z)}.
+}
+\tag{196.1}
+$$
+
+定义环面单调性评分：
+
+$$
+\boxed{
+\mathfrak M_K(s)
+=
+\frac12
+\frac{\partial}{\partial\sigma}
+\log
+\frac{
+\|\mathbf P_K(s)\|^2
+}{
+\|\mathbf T_K(s)\|^2
+}.
+}
+\tag{196.2}
+$$
+
+则：
+
+$$
+\boxed{
+\mathfrak M_K(s)
+=
+\Re\frac{\xi'(s)}{\xi(s)}.
+}
+\tag{196.3}
+$$
+
+Sondow–Dumitrescu 证明，\(|\xi(s)|\) 在每个无零右半平面内沿水平半线严格递增，并由此得到 RH 的等价单调性表述。([arXiv][3])
+
+所以：
+
+## 定理 196.1（RH 的超额连接形式）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathfrak M_K(s)>0
+\quad
+\text{对全部 }\Re s>\frac12.
+}
+\tag{196.4}
+$$
+
+即：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{观测环面周期的水平增长
+始终严格超过 twist 载体自身的水平增长}.
+}
+$$
+
+---
+
+# 第一百九十七部　从零点场到 Poisson 场
+
+定义：
+
+$$
+u(\sigma,t)
+=
+\log|\xi(\sigma+it)|.
+$$
+
+则：
+
+$$
+\partial_\sigma u
+=
+\Re\frac{\xi'}{\xi}.
+$$
+
+在 RH 成立时，全部零点位于：
+
+$$
+\Re\rho=\frac12.
+$$
+
+以对称收敛理解 Hadamard 乘积后，水平导数具有 Poisson 核结构：
+
+$$
+\boxed{
+\partial_\sigma u(\sigma,t)
+=
+\sum_{\rho=\frac12+i\gamma}
+m_\rho
+\frac{
+\sigma-\frac12
+}{
+(\sigma-\frac12)^2+(t-\gamma)^2
+}.
+}
+\tag{197.1}
+$$
+
+每项均为正。
+
+所以 RH 下：
+
+$$
+\boxed{
+\mathfrak M_K
+=
+\text{临界线零点测度的 Poisson 延拓}.
+}
+$$
+
+若出现线外零点，它成为右半平面内部的对数曲率原子，并在其左侧产生式 (192.2) 的负极点。
+
+这给 Wang 式结构一个极具体的几何图像：
+
+* RH：全部源位于边界；
+* 线外零点：出现内部源；
+* 自改善目标：证明右半平面内部无曲率原子。
+
+---
+
+# 第一百九十八部　定量环面容量
+
+有限覆盖只说明“可以重构”，却不说明重构是否稳定。
+
+定义带权环面帧容量：
+
+$$
+\boxed{
+\operatorname{Cap}_{\mathrm{tor}}
+(K;\mathcal D,w)
+=
+\inf_{s\in K}
+\sum_{D\in\mathcal D}
+w_D|\mathcal T_D(s)|^2.
+}
+\tag{198.1}
+$$
+
+定义上界：
+
+$$
+\operatorname{Top}_{\mathrm{tor}}
+(K;\mathcal D,w)
+=
+\sup_{s\in K}
+\sum_Dw_D|\mathcal T_D(s)|^2.
+$$
+
+定义条件数：
+
+$$
+\boxed{
+\kappa_{\mathrm{tor}}
+=
+\sqrt{
+\frac{
+\operatorname{Top}_{\mathrm{tor}}
+}{
+\operatorname{Cap}_{\mathrm{tor}}
+}
+}.
+}
+\tag{198.2}
+$$
+
+---
+
+## 198.1 成本约束下的最优观察
+
+给每个判别式赋成本：
+
+$$
+c(D),
+$$
+
+例如：
+
+* \(\log|D|\)；
+* conductor；
+* 实二次闭测地线长度；
+* 计算成本。
+
+定义预算 \(C\) 下的最优容量：
+
+$$
+\boxed{
+\operatorname{Cap}_{\mathrm{tor}}^*(K,C)
+=
+\sup_{\substack{
+\mathcal D,w\\
+\sum_Dw_Dc(D)\le C\\
+\sum_Dw_D=1
+}}
+\inf_{s\in K}
+\sum_Dw_D|\mathcal T_D(s)|^2.
+}
+\tag{198.3}
+$$
+
+黄金判别式 \(D=5\) 具有最低几何成本，但未必单独提供最高覆盖容量。
+
+这把“黄金环面是否最有价值”转化成了可证伪优化问题，而不是象征性判断。
+
+---
+
+# 第一百九十九部　环面 stickiness
+
+定义某点 \(s\) 的载体质量分布：
+
+$$
+\boxed{
+\mu_D(s)
+=
+\frac{
+w_D|\mathcal T_D(s)|^2
+}{
+\sum_Ew_E|\mathcal T_E(s)|^2
+}.
+}
+\tag{199.1}
+$$
+
+定义最大集中度：
+
+$$
+\boxed{
+\operatorname{Stick}_{\mathrm{tor}}(s)
+=
+\max_D\mu_D(s).
+}
+\tag{199.2}
+$$
+
+### Non-sticky carrier
+
+若：
+
+$$
+\operatorname{Stick}_{\mathrm{tor}}(s)
+\le1-\eta
+$$
+
+在一个尺度链上成立，则多个 twist 通道共同支撑观察。
+
+### Sticky carrier
+
+若：
+
+$$
+\operatorname{Stick}_{\mathrm{tor}}(s)\approx1,
+$$
+
+则重构几乎完全依赖一个二次 twist。
+
+Sticky 不意味着 \(\xi\) 为零；它表示 observer frame 接近退化，任何误差都可能被放大。
+
+---
+
+## 199.1 与 Wang–Deng 的分工
+
+### Wang 层（199.1）
+
+证明 non-sticky twist mass 带来：
+
+* 二次 character 正交；
+* 更大的帧下界；
+* 更稳定的水平导数估计；
+* 严格的超额连接增益。
+
+### Deng 层（199.1）
+
+sticky 区域中：
+
+1. 识别主导 twist；
+2. 保留其零点／导数历史；
+3. 加入新的环面通道；
+4. 用 double Dirichlet series 重求和复合 twist histories；
+5. 将仅依赖个别 twist 的部分收缩为 counterterm。
+
+---
+
+# 第二百部　真正需要证明的新不等式
+
+现在 RH 的中心目标可以写成一个完全具体的周期不等式。
+
+## Toroidal excess-connection positivity
+
+对：
+
+$$
+\Re s>\frac12,
+$$
+
+需要证明：
+
+$$
+\boxed{
+\Re
+\left[
+\frac{
+\langle
+\partial_\sigma\mathbf P_K(s),
+\mathbf P_K(s)
+\rangle
+}{
+\|\mathbf P_K(s)\|^2
+}
+-
+\frac{
+\langle
+\partial_\sigma\mathbf T_K(s),
+\mathbf T_K(s)
+\rangle
+}{
+\|\mathbf T_K(s)\|^2
+}
+\right]
+>0.
+}
+\tag{200.1}
+$$
+
+由式 (190.2)，左侧恰为：
+
+$$
+\Re\frac{\xi'(s)}{\xi(s)}.
+$$
+
+因此该不等式与 RH 等价，但它把问题放入了两个几何可观测对象之间：
+
+$$
+\boxed{
+\text{Eisenstein period line}
+\quad\text{与}\quad
+\text{twist carrier line}.
+}
+$$
+
+证明不应通过重新代回 \(\xi'/\xi\)，而应从：
+
+* 环面测度正性；
+* Eisenstein deformation；
+* 二次 twist 正交；
+* relative trace formula；
+* canonical-system Hamiltonian；
+
+直接推出。
+
+---
+
+# 第二百零一部　Wang 式零区下降
+
+定义命题：
+
+$$
+\boxed{
+\mathsf T(a):
+\quad
+\mathfrak M_K(s)>0
+\quad
+\text{对所有 }\Re s>\frac12+a.
+}
+\tag{201.1}
+$$
+
+无条件已知：
+
+$$
+\mathsf T(\tfrac12),
+$$
+
+因为：
+
+$$
+\Re s>1
+$$
+
+是 ζ 的 Euler-product 无零区域，且 \(|\xi|\) 在无零右半平面沿水平线严格增长。([arXiv][3])
+
+RH 等价于：
+
+$$
+\mathsf T(0).
+$$
+
+因此最清楚的 Wang 式研究命题是：
+
+$$
+\boxed{
+\mathsf T(a)
+\Longrightarrow
+\mathsf T(F(a)),
+\qquad
+F(a)<a
+\quad(a>0).
+}
+\tag{201.2}
+$$
+
+可能的机制是：
+
+$$
+\begin{cases}
+\text{non-sticky torus frame}
+&\Rightarrow
+\text{正交平均产生严格增益};\\
+\text{sticky torus frame}
+&\Rightarrow
+\text{jet／primitive twist 重整化}.
+\end{cases}
+$$
+
+---
+
+# 第二百零二部　最重要的边界与负结论
+
+## 202.1 有限层析不等于 RH
+
+有限环面帧已经能：
+
+* 重构 \(\xi\)；
+* 识别零点；
+* 识别重数；
+* 稳定计数零点。
+
+但它没有自动证明：
+
+$$
+\mathfrak M_K>0.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{观察完备}
+\neq
+\text{正性完备}.
+}
+$$
+
+---
+
+## 202.2 添加更多环面不自动改变公共因子
+
+所有周期都有：
+
+$$
+\mathcal P_D=\xi\mathcal T_D.
+$$
+
+无论加入多少环面，公共 \(\xi\)-因子始终存在。
+
+增加环面解决的是：
+
+$$
+\text{twist-specific blind spots},
+$$
+
+而不是自动解决：
+
+$$
+\text{base amplitude positivity}.
+$$
+
+---
+
+## 202.3 Projective 数据完全看不到 ξ
+
+若只保留：
+
+$$
+[\mathbf P_K],
+$$
+
+则：
+
+$$
+[\mathbf P_K]=[\mathbf T_K].
+$$
+
+所以必须保留：
+
+* 范数；
+* 相位；
+* 连接；
+* 曲率；
+
+至少一种非射影信息。
+
+---
+
+## 202.4 正能量零点集不决定位置
+
+$$
+\sum_D|\mathcal P_D(s)|^2\ge0
+$$
+
+可以识别零点，但无论零点在线还是线外，它都只是一个局部极小。
+
+真正需要的是**方向性单调性**：
+
+$$
+\partial_\sigma\log|\xi|>0.
+$$
+
+---
+
+# 第二百零三部　新的科学实验程序
+
+## 203.1 有限谱帧证书
+
+对矩形：
+
+$$
+K_{T,\delta}
+=
+\left\{
+\frac12+\delta\le\Re s\le1,\ 
+|\Im s|\le T
+\right\},
+$$
+
+搜索有限判别式集合 \(\mathcal D\)，并用区间算术证明：
+
+$$
+\inf_{s\in K_{T,\delta}}
+\sum_{D\in\mathcal D}
+w_D|\mathcal T_D(s)|^2
+>0.
+$$
+
+输出：
+
+* 帧下界；
+* 条件数；
+* 最坏谱点；
+* 各环面贡献。
+
+---
+
+## 203.2 超额连接数值检验
+
+计算：
+
+$$
+\mathfrak M_K(s)
+=
+\frac12\partial_\sigma
+\log
+\frac{\|\mathbf P_K(s)\|^2}
+{\|\mathbf T_K(s)\|^2}.
+$$
+
+与直接计算：
+
+$$
+\Re\frac{\xi'(s)}{\xi(s)}
+$$
+
+交叉验证。
+
+---
+
+## 203.3 人工线外零点注入
+
+将：
+
+$$
+\xi_{\mathrm{test}}(s)
+=
+\xi(s)
+\prod_{\rho\in Q}
+\frac{s-\rho}{s-\rho_0}
+$$
+
+构造成保持所需对称的测试模型，注入一个线外零点四元组。
+
+检验：
+
+$$
+\mathfrak M_K(s)
+$$
+
+是否在零点左侧产生预测的：
+
+$$
+-\frac{m}{\varepsilon}
+$$
+
+发散。
+
+---
+
+## 203.4 Golden first-channel 对照
+
+分别使用：
+
+* 仅 \(D=5\)；
+* 小判别式集合；
+* 优化后的有限帧；
+
+比较：
+
+$$
+A_K,\quad
+\kappa_{\mathrm{tor}},
+\quad
+\operatorname{Stick}_{\mathrm{tor}}.
+$$
+
+若 \(D=5\) 并未显著改善容量，应保留它作为最低成本结构通道，而不是宣称其普遍最优。
+
+---
+
+# 第二百零四部　建议形式化顺序
+
+```text
+D5/S3/Observer/ToroidalFrame/
+  ToroidalCarrier.lean
+  ToroidalPeriodVector.lean
+  CompactFiniteFrame.lean
+  FrameLowerBound.lean
+  StableScalarReconstruction.lean
+  ProjectiveBlindness.lean
+
+D5/S3/Analytic/ToroidalConnection/
+  ExcessConnection.lean
+  ExcessConnectionEqualsXiLogDerivative.lean
+  ToroidalArgumentPrinciple.lean
+  RelativeCurvatureCurrent.lean
+  OffLineZeroAmplification.lean
+
+D5/S3/Analytic/ToroidalDeBranges/
+  ShiftedToroidalFrame.lean
+  ToroidalHermiteBiehlerDefect.lean
+  ToroidalDiagonalKernel.lean
+  FiniteToroidalPickMatrix.lean
+  ToroidalMonotonicityCriterion.lean
+
+D5/S3/Observer/ToroidalOptimization/
+  ToroidalFrameCapacity.lean
+  ToroidalConditionNumber.lean
+  ToroidalStickiness.lean
+  WeightedTorusDesign.lean
+
+D5/S3/Analytic/RHTargets/
+  ToroidalExcessPositivity.lean
+  ZeroFreeStripDescent.lean
+  WangToroidalDichotomy.lean
+  DengTwistRenormalization.lean
+```
+
+优先级最高、完全独立可闭合的定理链是：
+
+$$
+\boxed{
+\text{有限 cover}
+\to
+\text{frame lower bound}
+\to
+\text{stable }\xi\text{ reconstruction}.
+}
+$$
+
+其次是：
+
+$$
+\boxed{
+\mathbf P=\xi\mathbf T
+\to
+\mathcal A_{\mathbf P}-\mathcal A_{\mathbf T}
+=d\log\xi
+\to
+\text{zero holonomy}.
+}
+$$
+
+再之后是：
+
+$$
+\boxed{
+\text{off-line zero}
+\to
+\Re(\xi'/\xi)\to-\infty
+\to
+\text{finite toroidal negative witness}.
+}
+$$
+
+---
+
+# 本轮最终结论
+
+上一轮把 Riemann 零点定义成：
+
+$$
+\boxed{
+\text{所有二次环面观察者的共同不可见点}.
+}
+$$
+
+本轮进一步证明，这些环面观察不仅能判断“是否不可见”，还可以在任何紧谱窗内组成一个稳定的有限帧，并完整恢复：
+
+$$
+\xi(s),
+\qquad
+\frac{\xi'(s)}{\xi(s)},
+\qquad
+\operatorname{div}(\xi).
+$$
+
+其核心公式是：
+
+$$
+\boxed{
+\mathbf P_K(s)
+=
+\xi(s)\mathbf T_K(s).
+}
+$$
+
+由此同时得到：
+
+$$
+\boxed{
+\xi(s)
+=
+\frac{
+\langle\mathbf P_K,\mathbf T_K\rangle
+}{
+\|\mathbf T_K\|^2
+},
+}
+$$
+
+$$
+\boxed{
+\frac{d\xi}{\xi}
+=
+\mathcal A_{\mathbf P_K}
+-
+\mathcal A_{\mathbf T_K},
+}
+$$
+
+$$
+\boxed{
+\frac{i}{2\pi}\partial\bar\partial
+\log
+\frac{\|\mathbf P_K\|^2}
+{\|\mathbf T_K\|^2}
+=
+\sum_\rho m_\rho\delta_\rho.
+}
+$$
+
+最关键的是：
+
+$$
+\boxed{
+\rho\text{ 为线外零点}
+\Longrightarrow
+\Re\frac{\xi'(s)}{\xi(s)}
+\longrightarrow-\infty
+}
+$$
+
+当 \(s\) 从左侧逼近 \(\rho\)。
+
+所以线外零点一定产生一个强烈、局部、有限环面可观测的负信号。
+
+至此，Wang–Deng–OACTC 路线的中心目标可以极精确地写成：
+
+$$
+\boxed{
+\Re
+\left(
+\mathcal A_{\mathbf P_K}
+-
+\mathcal A_{\mathbf T_K}
+\right)
+>0
+\qquad
+(\Re s>\tfrac12).
+}
+$$
+
+也就是：
+
+$$
+\boxed{
+\text{完整 Eisenstein 环面周期的水平增长，
+是否始终超过所有 twist 载体自身的水平增长？}
+}
+$$
+
+如果这条不等式能够通过：
+
+$$
+\text{环面正测度}
++
+\text{twist 正交}
++
+\text{non-sticky gain}
++
+\text{sticky primitive renormalization}
+$$
+
+直接证明，那么 RH 将随之成立。
+
+[1]: https://arxiv.org/abs/0906.5284?utm_source=chatgpt.com "Toroidal automorphic forms, Waldspurger periods and double Dirichlet series"
+[2]: https://arxiv.org/abs/1204.1827 "A canonical system of differential equations arising from the Riemann zeta-function"
+[3]: https://arxiv.org/abs/1005.1104 "A monotonicity property of Riemann's xi function and a reformulation of the Riemann Hypothesis"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v2.1：Toroidal Weyl 函数、Herglotz 正性、有限 Pick 证书与线外零点放大
+
+以下从前文**第二百零四部之后**继续追加。
+
+上一轮已经把 Riemann \(\xi\) 写成有限环面谱帧中的公共振幅：
+
+$$
+\mathbf P_K(s)=\xi(s)\mathbf T_K(s),
+$$
+
+并把 RH 的核心目标压缩成：
+
+$$
+\Re\frac{\xi'(s)}{\xi(s)}>0,
+\qquad
+\Re s>\frac12.
+$$
+
+本轮继续完成这条链。核心结论是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{由有限环面周期重构出的超额连接是 Herglotz 函数}.
+}
+$$
+
+更强地，任何线外零点都会产生一个**单点、有限维、定量为负**的 Pick 证书：
+
+$$
+\boxed{
+\mathcal N_\omega(z_\rho,z_\rho)
+=
+-\frac1{\omega(\delta-\omega)}
+\le
+-\frac4{\delta^2}.
+}
+$$
+
+其中：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+\qquad
+0<\omega<\delta.
+$$
+
+因此此前尚未闭合的：
+
+$$
+\text{off-line zero}
+\Longrightarrow
+\text{不可消除的有限负见证}
+$$
+
+现在可以在 de Branges–toroidal 接口中严格建立。
+
+---
+
+# 第二百零五部　Riemann \(\Xi\) 的 infinitesimal toroidal observer
+
+定义实型整函数：
+
+$$
+\boxed{
+\Xi(z)
+=
+\xi\left(\frac12-iz\right).
+}
+\tag{205.1}
+$$
+
+由 \(\xi\) 的函数方程和共轭对称：
+
+$$
+\Xi(-z)=\Xi(z),
+$$
+
+且：
+
+$$
+\Xi(x)\in\mathbb R
+\qquad
+(x\in\mathbb R).
+$$
+
+其零点与 ζ 的非平凡零点对应：
+
+$$
+\xi(\rho)=0
+\quad\Longleftrightarrow\quad
+\Xi\left(i\left(\rho-\frac12\right)\right)=0.
+$$
+
+定义 logarithmic Weyl observer：
+
+$$
+\boxed{
+m_0(z)
+=
+-\frac{\Xi'(z)}{\Xi(z)}.
+}
+\tag{205.2}
+$$
+
+因为：
+
+$$
+\Xi'(z)
+=
+-i\xi'\left(\frac12-iz\right),
+$$
+
+所以：
+
+$$
+\boxed{
+m_0(z)
+=
+i\,
+\frac{
+\xi'(\frac12-iz)
+}{
+\xi(\frac12-iz)
+}.
+}
+\tag{205.3}
+$$
+
+当：
+
+$$
+z=x+iy\in\mathbb C^+,
+$$
+
+对应：
+
+$$
+s=\frac12+y-ix,
+$$
+
+即 \(z\)-上半平面正好对应 \(s\)-平面的右半临界带。
+
+于是：
+
+$$
+\boxed{
+\Im m_0(z)
+=
+\Re
+\frac{\xi'(s)}{\xi(s)}.
+}
+\tag{205.4}
+$$
+
+所以此前的水平单调性问题变成：
+
+$$
+\boxed{
+\Im m_0(z)\ge0
+\qquad
+(z\in\mathbb C^+).
+}
+$$
+
+---
+
+# 第二百零六部　RH 与 Herglotz 性的直接等价
+
+称一个在上半平面全纯的函数 \(m\) 为 Herglotz–Nevanlinna 函数，若：
+
+$$
+\Im m(z)\ge0
+\qquad
+(z\in\mathbb C^+).
+$$
+
+---
+
+## 定理 206.1（Logarithmic Herglotz criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+m_0(z)
+=
+-\frac{\Xi'(z)}{\Xi(z)}
+\text{ 是 Herglotz 函数}.
+}
+\tag{206.1}
+$$
+
+### 证明：RH \(\Rightarrow\) Herglotz
+
+若 RH 成立，\(\Xi\) 的全部零点为实数。由偶性，可将正零点记为：
+
+$$
+0<\gamma_1\le\gamma_2\le\cdots,
+$$
+
+重数为 \(m_\gamma\)。
+
+因为：
+
+$$
+\sum_{\gamma>0}\frac{m_\gamma}{\gamma^2}<\infty,
+$$
+
+有成对 Hadamard 乘积：
+
+$$
+\Xi(z)
+=
+\Xi(0)
+\prod_{\gamma>0}
+\left(
+1-\frac{z^2}{\gamma^2}
+\right)^{m_\gamma}.
+$$
+
+取对数导数：
+
+$$
+\boxed{
+m_0(z)
+=
+\sum_{\gamma>0}
+m_\gamma
+\left[
+\frac1{\gamma-z}
++
+\frac1{-\gamma-z}
+\right].
+}
+\tag{206.2}
+$$
+
+对任意实数 \(t\) 和 \(z\in\mathbb C^+\)：
+
+$$
+\Im\frac1{t-z}
+=
+\frac{\Im z}{|t-z|^2}>0.
+$$
+
+所以：
+
+$$
+\Im m_0(z)>0.
+$$
+
+---
+
+### 证明：Herglotz \(\Rightarrow\) RH
+
+Herglotz 函数必须在 \(\mathbb C^+\) 全纯。
+
+若 \(\Xi\) 在 \(\mathbb C^+\) 有零点，\(m_0=-\Xi'/\Xi\) 就在那里有极点，矛盾。
+
+又因为 \(\Xi\) 是实型整函数，若它在下半平面有非实零点，其共轭必在上半平面。
+
+故全部零点为实数，即 RH 成立。∎
+
+---
+
+## 206.1 新的完成链
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&\iff
+\Xi\text{ 的零点全实}\\
+&\iff
+-\Xi'/\Xi\text{ 是 Herglotz}\\
+&\iff
+m_0\text{ 是某个正谱测度的 Cauchy 变换}\\
+&\iff
+m_0\text{ 是一个正 canonical system 的 Weyl 函数}.
+\end{aligned}
+}
+\tag{206.3}
+$$
+
+de Branges/canonical-system 理论正是把 meromorphic inner functions、Herglotz functions 与正半定 Hamiltonian 联系起来；Suzuki 对 \(\xi\) 构造的 shifted family 给出了这一接口的具体版本。([arXiv][1])
+
+---
+
+# 第二百零七部　零点测度与 Nevanlinna Gram 核
+
+在 RH 成立时，定义零点谱测度：
+
+$$
+\boxed{
+\mu_\Xi
+=
+\sum_{\gamma\in Z_\Xi}
+m_\gamma\,\delta_\gamma,
+}
+\tag{207.1}
+$$
+
+其中 \(Z_\Xi\subset\mathbb R\) 包括正负零点。
+
+则：
+
+$$
+m_0(z)
+=
+\int_{\mathbb R}
+\frac{d\mu_\Xi(t)}{t-z},
+$$
+
+以对称配对或标准 Herglotz 正则化理解。
+
+定义 Nevanlinna 核：
+
+$$
+\boxed{
+\mathcal N_0(z,w)
+=
+\frac{
+m_0(z)-\overline{m_0(w)}
+}{
+z-\overline w
+}.
+}
+\tag{207.2}
+$$
+
+代入谱表示：
+
+$$
+\boxed{
+\mathcal N_0(z,w)
+=
+\sum_{\gamma\in Z_\Xi}
+\frac{
+m_\gamma
+}{
+(\gamma-z)(\gamma-\overline w)
+}.
+}
+\tag{207.3}
+$$
+
+定义特征向量：
+
+$$
+\boxed{
+\mathbf v(z)
+=
+\left(
+\frac{\sqrt{m_\gamma}}{\gamma-z}
+\right)_{\gamma\in Z_\Xi}.
+}
+\tag{207.4}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal N_0(z,w)
+=
+\langle
+\mathbf v(z),\mathbf v(w)
+\rangle_{\ell^2}.
+}
+\tag{207.5}
+$$
+
+所以 RH 下的 Nevanlinna 核不是抽象正核，而是 Riemann 零点 resolvent vectors 的 Gram 核。
+
+---
+
+## 定理 207.1（有限零点 Gram 层级）
+
+对任意：
+
+$$
+z_1,\ldots,z_n\in\mathbb C^+,
+$$
+
+矩阵：
+
+$$
+\boxed{
+\mathbf N_0
+=
+\left[
+\mathcal N_0(z_a,z_b)
+\right]_{a,b=1}^n
+}
+\tag{207.6}
+$$
+
+正半定。
+
+其行列式具有 Cauchy–Binet 展开：
+
+$$
+\boxed{
+\begin{aligned}
+\det\mathbf N_0
+={}&
+\sum_{\gamma_1<\cdots<\gamma_n}
+\left(
+\prod_{k=1}^n m_{\gamma_k}
+\right)
+\\
+&\times
+\left|
+\det
+\left[
+\frac1{\gamma_k-z_a}
+\right]_{a,k=1}^n
+\right|^2
+\ge0.
+\end{aligned}
+}
+\tag{207.7}
+$$
+
+因此每一级 Pick 行列式都是零点子集贡献的非负平方和。
+
+这给 RH 一个新的有限层级：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathbf N_0(z_1,\ldots,z_n)\succeq0
+\quad
+\forall n,\ \forall z_a\in\mathbb C^+.
+}
+\tag{207.8}
+$$
+
+---
+
+# 第二百零八部　Shifted Hermite–Biehler family
+
+对：
+
+$$
+\omega>0,
+$$
+
+定义：
+
+$$
+\boxed{
+E_\omega^+(z)
+=
+\xi\left(
+\frac12+\omega-iz
+\right),
+}
+\tag{208.1}
+$$
+
+$$
+\boxed{
+E_\omega^-(z)
+=
+\xi\left(
+\frac12-\omega-iz
+\right).
+}
+\tag{208.2}
+$$
+
+由函数方程：
+
+$$
+E_\omega^-
+=
+(E_\omega^+)^\#.
+$$
+
+定义 Suzuki ratio：
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+\frac{
+E_\omega^-(z)
+}{
+E_\omega^+(z)
+}.
+}
+\tag{208.3}
+$$
+
+Suzuki 证明，这一 ratio 成为上半平面的 meromorphic inner function，与相应右半平面的零点空区等价；若能对全部 \(\omega>0\) 建立相应 canonical systems 的正 Hamiltonian，就得到 RH 的 de Branges 型判据。([arXiv][1])
+
+---
+
+# 第二百零九部　有限差分 Weyl 函数
+
+对 \(\Theta_\omega\) 作 Cayley 变换，定义：
+
+$$
+\boxed{
+m_\omega(z)
+=
+\frac{i}{\omega}
+\frac{
+1-\Theta_\omega(z)
+}{
+1+\Theta_\omega(z)
+}.
+}
+\tag{209.1}
+$$
+
+等价地：
+
+$$
+\boxed{
+m_\omega(z)
+=
+\frac{i}{\omega}
+\frac{
+E_\omega^+(z)-E_\omega^-(z)
+}{
+E_\omega^+(z)+E_\omega^-(z)
+}.
+}
+\tag{209.2}
+$$
+
+这是 \(\xi'/\xi\) 的对称有限差分版本。
+
+若令：
+
+$$
+s=\frac12-iz,
+$$
+
+则：
+
+$$
+E_\omega^\pm(z)=\xi(s\pm\omega).
+$$
+
+Taylor 展开给出：
+
+$$
+\xi(s+\omega)-\xi(s-\omega)
+=
+2\omega\xi'(s)+O(\omega^3),
+$$
+
+$$
+\xi(s+\omega)+\xi(s-\omega)
+=
+2\xi(s)+O(\omega^2).
+$$
+
+所以在 \(\xi(s)\neq0\) 的紧集上：
+
+$$
+\boxed{
+m_\omega(z)
+=
+i\frac{\xi'(s)}{\xi(s)}
++
+O(\omega^2).
+}
+\tag{209.3}
+$$
+
+即：
+
+$$
+\boxed{
+m_\omega
+\longrightarrow
+m_0
+}
+$$
+
+局部一致成立。
+
+---
+
+## 定理 209.1（Shifted Herglotz criterion）
+
+对固定 \(\omega>0\)：
+
+$$
+\boxed{
+m_\omega
+\text{ 是 Herglotz}
+\iff
+\Theta_\omega
+\text{ 是 Schur／inner}.
+}
+\tag{209.4}
+$$
+
+### 证明
+
+变换：
+
+$$
+u\mapsto
+i\frac{1-u}{1+u}
+$$
+
+把单位圆盘映到上半平面。
+
+正标量 \(1/\omega\) 不改变 Herglotz 性。∎
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+m_\omega\text{ 对每个 }\omega>0\text{ 都是 Herglotz}.
+}
+\tag{209.5}
+$$
+
+---
+
+# 第二百一十部　de Branges 核与 Nevanlinna 核的精确等价
+
+定义 \(\Theta_\omega\) 的 model-space 核：
+
+$$
+\boxed{
+K_{\Theta_\omega}(z,w)
+=
+\frac{
+1-
+\Theta_\omega(z)
+\overline{\Theta_\omega(w)}
+}{
+2\pi i(\overline w-z)
+}.
+}
+\tag{210.1}
+$$
+
+定义：
+
+$$
+\boxed{
+\mathcal N_\omega(z,w)
+=
+\frac{
+m_\omega(z)-\overline{m_\omega(w)}
+}{
+z-\overline w
+}.
+}
+\tag{210.2}
+$$
+
+直接代数计算得到：
+
+$$
+\boxed{
+\mathcal N_\omega(z,w)
+=
+\frac{4\pi}{\omega}
+\,
+\frac{
+K_{\Theta_\omega}(z,w)
+}{
+\left(1+\Theta_\omega(z)\right)
+\left(1+\overline{\Theta_\omega(w)}\right)
+}.
+}
+\tag{210.3}
+$$
+
+所以两类核只相差一个非零 holomorphic gauge：
+
+$$
+g_\omega(z)=\frac1{1+\Theta_\omega(z)}
+$$
+
+和正标量 \(4\pi/\omega\)。
+
+因此：
+
+$$
+\boxed{
+K_{\Theta_\omega}\succeq0
+\iff
+\mathcal N_\omega\succeq0.
+}
+\tag{210.4}
+$$
+
+这使 Suzuki 的 de Branges 正性与 logarithmic Weyl Herglotz 正性完全合流。
+
+---
+
+## 210.1 对角公式
+
+令：
+
+$$
+A=E_\omega^+(z),
+\qquad
+B=E_\omega^-(z).
+$$
+
+则：
+
+$$
+\boxed{
+\Im m_\omega(z)
+=
+\frac{
+|A|^2-|B|^2
+}{
+\omega|A+B|^2
+}.
+}
+\tag{210.5}
+$$
+
+所以：
+
+$$
+\Im m_\omega(z)>0
+$$
+
+严格等价于 Hermite–Biehler 不等式：
+
+$$
+\boxed{
+|E_\omega^+(z)|
+>
+|E_\omega^-(z)|.
+}
+\tag{210.6}
+$$
+
+这与前文的 toroidal normalized energy defect 完全相同。
+
+---
+
+# 第二百一十一部　有限环面重构 \(m_\omega\)
+
+固定：
+
+$$
+\omega>0
+$$
+
+以及紧集：
+
+$$
+Z\subset\mathbb C^+.
+$$
+
+对应两个紧谱窗：
+
+$$
+K_\pm
+=
+\left\{
+\frac12\pm\omega-iz:
+z\in Z
+\right\}.
+$$
+
+由有限环面层析，分别选择有限环面帧：
+
+$$
+\left(
+\mathbf P_\pm(z),
+\mathbf T_\pm(z)
+\right)
+$$
+
+使：
+
+$$
+\mathbf P_\pm(z)
+=
+E_\omega^\pm(z)\mathbf T_\pm(z).
+$$
+
+于是：
+
+$$
+\boxed{
+\widehat E_\omega^\pm(z)
+=
+\frac{
+\langle
+\mathbf P_\pm(z),\mathbf T_\pm(z)
+\rangle
+}{
+\|\mathbf T_\pm(z)\|^2
+}
+=
+E_\omega^\pm(z).
+}
+\tag{211.1}
+$$
+
+定义有限环面 Weyl observer：
+
+$$
+\boxed{
+m_{\omega,\mathrm{tor}}(z)
+=
+\frac{i}{\omega}
+\frac{
+\widehat E_\omega^+(z)-\widehat E_\omega^-(z)
+}{
+\widehat E_\omega^+(z)+\widehat E_\omega^-(z)
+}.
+}
+\tag{211.2}
+$$
+
+则：
+
+$$
+\boxed{
+m_{\omega,\mathrm{tor}}=m_\omega.
+}
+\tag{211.3}
+$$
+
+所以 \(m_\omega\) 的全部 Herglotz/Pick 正性，可以仅由有限个二次环面周期读数表达。
+
+---
+
+# 第二百一十二部　有限环面 Pick 判据
+
+取：
+
+$$
+z_1,\ldots,z_n\in Z.
+$$
+
+定义有限环面 Nevanlinna 矩阵：
+
+$$
+\boxed{
+\Pi_{\omega,Z}^{\mathrm{tor}}
+=
+\left[
+\frac{
+m_{\omega,\mathrm{tor}}(z_a)
+-
+\overline{
+m_{\omega,\mathrm{tor}}(z_b)
+}
+}{
+z_a-\overline{z_b}
+}
+\right]_{a,b=1}^n.
+}
+\tag{212.1}
+$$
+
+---
+
+## 定理 212.1（Finite toroidal Pick criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Pi_{\omega,Z}^{\mathrm{tor}}
+\succeq0
+}
+$$
+
+对所有：
+
+$$
+\omega>0,
+\quad
+n\ge1,
+\quad
+z_1,\ldots,z_n\in\mathbb C^+
+$$
+
+成立，并且所有矩阵元均有定义。
+
+### 证明
+
+有限环面重构给出：
+
+$$
+m_{\omega,\mathrm{tor}}=m_\omega.
+$$
+
+由定理 209.1、210.4 及 Suzuki 的 shifted inner criterion：
+
+$$
+\mathrm{RH}
+\iff
+m_\omega
+\text{ 对全部 }\omega>0\text{ 是 Herglotz}.
+$$
+
+Herglotz 性等价于全部有限 Nevanlinna 矩阵正半定。∎
+
+这给 RH 一个真正的：
+
+$$
+\boxed{
+\text{有限矩阵、有限环面、有限点集证书层级}.
+}
+$$
+
+---
+
+# 第二百一十三部　线外零点的单点负证书
+
+设存在一个线外零点：
+
+$$
+\boxed{
+\rho
+=
+\frac12+\delta+i\gamma,
+\qquad
+\delta>0.
+}
+\tag{213.1}
+$$
+
+取：
+
+$$
+0<\omega<\delta,
+$$
+
+并要求：
+
+$$
+\xi(\rho-2\omega)\neq0.
+$$
+
+这样的 \(\omega\) 必然存在，因为零点集合离散。
+
+定义：
+
+$$
+\boxed{
+z_\rho
+=
+-\gamma+i(\delta-\omega).
+}
+\tag{213.2}
+$$
+
+则：
+
+$$
+z_\rho\in\mathbb C^+.
+$$
+
+并且：
+
+$$
+\frac12+\omega-iz_\rho
+=
+\rho,
+$$
+
+所以：
+
+$$
+E_\omega^+(z_\rho)=0.
+$$
+
+另一方面：
+
+$$
+E_\omega^-(z_\rho)
+=
+\xi(\rho-2\omega)\neq0.
+$$
+
+代入有限差分 Weyl 函数：
+
+$$
+\boxed{
+m_\omega(z_\rho)
+=
+-\frac{i}{\omega}.
+}
+\tag{213.3}
+$$
+
+因此：
+
+$$
+\Im m_\omega(z_\rho)
+=
+-\frac1\omega<0.
+$$
+
+---
+
+## 定理 213.1（Off-line one-point Pick witness）
+
+对应的一阶 Nevanlinna 矩阵为：
+
+$$
+\boxed{
+\mathcal N_\omega(z_\rho,z_\rho)
+=
+\frac{
+\Im m_\omega(z_\rho)
+}{
+\Im z_\rho
+}
+=
+-\frac1{
+\omega(\delta-\omega)
+}
+<0.
+}
+\tag{213.4}
+$$
+
+又因为：
+
+$$
+\omega(\delta-\omega)
+\le
+\frac{\delta^2}{4},
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal N_\omega(z_\rho,z_\rho)
+\le
+-\frac4{\delta^2}.
+}
+\tag{213.5}
+$$
+
+这说明：
+
+> 任意线外零点都会产生一个仅需一个测试点、一个 \(\omega\) 和有限个环面周期的严格负证书。
+
+负性不是微小量，而具有至少：
+
+$$
+4/\delta^2
+$$
+
+级别的放大。
+
+---
+
+## 213.1 先前核心缺口的闭合
+
+此前路线需要：
+
+$$
+\boxed{
+\text{off-line zero}
+\Longrightarrow
+\text{定量负见证}.
+}
+$$
+
+现在已得到：
+
+$$
+\boxed{
+\rho=\frac12+\delta+i\gamma
+\Longrightarrow
+\exists\,\omega,z_\rho:
+\Pi_{\omega,\{z_\rho\}}^{\mathrm{tor}}
+\le
+-\frac4{\delta^2}.
+}
+$$
+
+因此 Wang–Deng 路线不再需要担心：
+
+$$
+\text{线外负性可能比任意幂都小}.
+$$
+
+真正剩余的问题是：
+
+$$
+\boxed{
+\text{如何在不知道 }\rho\text{ 的前提下，
+从环面／relative-trace 结构直接证明所有 Pick 证书非负。}
+}
+$$
+
+---
+
+# 第二百一十四部　Herglotz escape radius
+
+定义右侧最大零点偏移：
+
+$$
+\boxed{
+\delta_*
+=
+\sup_{\xi(\rho)=0}
+\left(
+\Re\rho-\frac12
+\right)_+.
+}
+\tag{214.1}
+$$
+
+定义 Herglotz 阈值：
+
+$$
+\boxed{
+\omega_H
+=
+\inf
+\left\{
+a\ge0:
+m_\omega
+\text{ 对每个 }\omega>a
+\text{ 都是 Herglotz}
+\right\}.
+}
+\tag{214.2}
+$$
+
+由 shifted inner/zero-free equivalence：
+
+$$
+\boxed{
+\omega_H=\delta_*.
+}
+\tag{214.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\omega_H=0.
+}
+\tag{214.4}
+$$
+
+这与前文：
+
+$$
+\omega_{\mathrm{tor}}
+=
+\omega_{\mathrm{in}}
+$$
+
+进一步闭合为：
+
+$$
+\boxed{
+\omega_{\mathrm{tor}}
+=
+\omega_{\mathrm{in}}
+=
+\omega_H
+=
+\delta_*.
+}
+\tag{214.5}
+$$
+
+同一个常数同时表示：
+
+* 普遍环面不可见谱离 tempered 轴的最大距离；
+* de Branges innerness 的失效宽度；
+* Herglotz Weyl 函数的最小平移阈值；
+* 最右侧 Riemann 零点偏移。
+
+---
+
+# 第二百一十五部　无穷小 de Branges 极限
+
+有限差分 observer 满足：
+
+$$
+m_\omega\longrightarrow m_0.
+$$
+
+其 Nevanlinna 核同样满足：
+
+$$
+\boxed{
+\mathcal N_\omega(z,w)
+\longrightarrow
+\mathcal N_0(z,w)
+}
+\tag{215.1}
+$$
+
+在避开零点的紧集上局部一致。
+
+所以：
+
+$$
+\boxed{
+\text{de Branges shifted kernel}
+\quad
+\xrightarrow{\omega\downarrow0}
+\quad
+\text{零点 resolvent Gram kernel}.
+}
+$$
+
+更具体地：
+
+$$
+\boxed{
+\frac{i}{\omega}
+\frac{
+1-\Theta_\omega
+}{
+1+\Theta_\omega
+}
+\longrightarrow
+-\frac{\Xi'}{\Xi}.
+}
+\tag{215.2}
+$$
+
+因此 logarithmic derivative 不是与 de Branges ratio 并列的另一个判据，而是：
+
+$$
+\boxed{
+\text{de Branges inner observer 的 infinitesimal Cayley connection}.
+}
+$$
+
+---
+
+# 第二百一十六部　Hilbert–Pólya 作为正性输出
+
+若能从环面周期或 relative trace formula 直接证明：
+
+$$
+\mathcal N_0\succeq0,
+$$
+
+则 \(m_0\) 为 Herglotz 函数。
+
+由 Herglotz 表示，存在正测度 \(\mu\) 使：
+
+$$
+\boxed{
+m_0(z)
+=
+az+b+
+\int_{\mathbb R}
+\left(
+\frac1{t-z}
+-
+\frac{t}{1+t^2}
+\right)
+d\mu(t).
+}
+\tag{216.1}
+$$
+
+因为 \(m_0\) 是 meromorphic，\(\mu\) 必为离散测度，其原子位置正是 \(\Xi\) 的实零点，权重为重数。
+
+于是可在：
+
+$$
+L^2(\mu)
+$$
+
+上定义自伴乘法算子：
+
+$$
+\boxed{
+(Hf)(t)=tf(t).
+}
+\tag{216.2}
+$$
+
+其 Weyl resolvent 产生 \(m_0\)。
+
+因此：
+
+$$
+\boxed{
+\text{Hilbert–Pólya 自伴算子不必先被猜出；}
+}
+$$
+
+只要证明 toroidal excess connection 是 Herglotz，谱定理会自动产生一个自伴实现。
+
+完整链为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{toroidal period positivity}
+&\Longrightarrow
+\mathcal N_0\succeq0\\
+&\Longrightarrow
+m_0\text{ Herglotz}\\
+&\Longrightarrow
+\mu_\Xi\ge0\text{ 支持于 }\mathbb R\\
+&\Longrightarrow
+\text{self-adjoint spectral realization}\\
+&\Longrightarrow
+\mathrm{RH}.
+\end{aligned}
+}
+\tag{216.3}
+$$
+
+这与 Suzuki 的 canonical-system 方向一致，但现在 Weyl 函数由有限环面谱帧显式重构，而不是只从 \(\xi\) 本身抽象定义。([arXiv][1])
+
+---
+
+# 第二百一十七部　相对迹公式的真正目标
+
+Toric relative trace formula 比较环面周期平方与自动谱数据，并可重新证明 Waldspurger 型公式。([arXiv][2])
+
+本理论需要的并不是再次证明：
+
+$$
+|\mathcal P_D|^2\ge0,
+$$
+
+而是构造一个几何表达，使：
+
+$$
+\boxed{
+\sum_{a,b}
+c_a\overline{c_b}
+\,
+\mathcal N_\omega(z_a,z_b)
+}
+\tag{217.1}
+$$
+
+等于某个显式非负的几何量。
+
+换言之，真正目标是：
+
+## 假设 217.1（Relative-trace Herglotz realization）
+
+存在一族 Hilbert 空间向量：
+
+$$
+\mathscr V_{\omega,z}
+$$
+
+由：
+
+* 环面周期；
+* Eisenstein 变形；
+* relative trace kernel；
+* twist normalization；
+
+自然构造，使：
+
+$$
+\boxed{
+\mathcal N_\omega(z,w)
+=
+\langle
+\mathscr V_{\omega,z},
+\mathscr V_{\omega,w}
+\rangle.
+}
+\tag{217.2}
+$$
+
+若该表示对全部 \(\omega>0\) 成立，则立即推出 RH。
+
+---
+
+## 217.1 为什么普通周期平方还不够
+
+每个单独周期都含公共因子：
+
+$$
+\mathcal P_D=\xi\mathcal T_D.
+$$
+
+其平方只给出：
+
+$$
+|\xi|^2|\mathcal T_D|^2.
+$$
+
+这可以定位零点，却无法决定左右平移间的 Hermite–Biehler 不等式。
+
+所需几何量必须比较：
+
+$$
+s+\omega
+\quad\text{与}\quad
+s-\omega,
+$$
+
+并在减去 carrier 变化后保持正性。
+
+所以 relative trace kernel 必须是**差分化、归一化和 carrier-subtracted** 的，而不是普通的 period second moment。
+
+---
+
+# 第二百一十八部　Wang–Deng 在 Pick 核上的具体分工
+
+令：
+
+$$
+\mathbf z=(z_1,\ldots,z_n),
+\qquad
+\mathbf c=(c_1,\ldots,c_n).
+$$
+
+定义坏度：
+
+$$
+\boxed{
+\mathfrak B_\omega(\mathbf z,\mathbf c)
+=
+-
+\sum_{a,b}
+c_a\overline{c_b}
+\mathcal N_\omega(z_a,z_b).
+}
+\tag{218.1}
+$$
+
+RH 等价于：
+
+$$
+\mathfrak B_\omega\le0
+$$
+
+对全部数据成立。
+
+---
+
+## 218.1 Non-sticky 分支
+
+将 period carriers 按：
+
+* 判别式；
+* conductor；
+* Archimedean geodesic length；
+* spectral height；
+* regulator mode；
+
+分块。
+
+若负候选向量分散于许多互相弱相关的块，则目标是利用：
+
+* quadratic-character large sieve；
+* relative trace formula 正交；
+* 高度窗口分离；
+* finite-frame lower bound；
+
+证明：
+
+$$
+\boxed{
+\mathfrak B_\omega
+\le
+(1-\eta)\,
+\mathfrak B_\omega^{\mathrm{coarse}}
+}
+$$
+
+或直接得到正增益。
+
+---
+
+## 218.2 Sticky 分支
+
+若负候选长期集中于：
+
+* 单一判别式；
+* 单一 twist family；
+* 单一 geodesic branch；
+* 单一尺度链；
+
+则：
+
+1. 提取主导 primitive twist；
+2. 将重复 character histories 组织为 double Dirichlet series；
+3. 收缩闭合子历史；
+4. 对 ramified/diagonal histories 加入 counterterms；
+5. 选择随 \(\omega\downarrow0\) 增长的展开深度；
+6. 控制剩余 Pick 缺陷。
+
+这就是 Yu Deng 式重整化在 Herglotz kernel 上的具体目标。
+
+---
+
+# 第二百一十九部　新的科学证伪标准
+
+## 219.1 一点负证书测试
+
+人为注入线外零点：
+
+$$
+\rho=\frac12+\delta+i\gamma.
+$$
+
+在：
+
+$$
+z_\rho=-\gamma+i(\delta-\omega)
+$$
+
+处验证：
+
+$$
+m_\omega(z_\rho)=-i/\omega.
+$$
+
+任何实现若不能恢复式 (213.4)，说明 finite-frame reconstruction 或 normalization 有误。
+
+---
+
+## 219.2 内函数—Herglotz 双实现
+
+分别计算：
+
+$$
+\Theta_\omega
+$$
+
+和：
+
+$$
+m_\omega.
+$$
+
+验证：
+
+$$
+m_\omega
+=
+\frac{i}{\omega}
+\frac{1-\Theta_\omega}{1+\Theta_\omega},
+$$
+
+以及核恒等式 (210.3)。
+
+---
+
+## 219.3 环面帧独立性
+
+使用不同有限判别式 cover：
+
+$$
+\mathcal D_1,\quad\mathcal D_2.
+$$
+
+分别重构：
+
+$$
+m_{\omega,\mathrm{tor}}^{(1)},
+\qquad
+m_{\omega,\mathrm{tor}}^{(2)}.
+$$
+
+两者必须一致。
+
+否则说明所谓观察结果仍依赖图表，而没有真正胶合为全局对象。
+
+---
+
+## 219.4 Golden 通道负对照
+
+比较：
+
+* 只用 \(D=5\)；
+* 低判别式 finite frame；
+* 优化容量 frame。
+
+若黄金环面不能稳定覆盖目标谱窗，就必须保留其“最低几何成本”角色，而不能提升为“单通道完备性”。
+
+---
+
+# 第二百二十部　建议形式化顺序
+
+```text
+D5/S3/Analytic/XiHerglotz/
+  XiSpectralVariable.lean
+  XiLogarithmicWeyl.lean
+  RHImpliesHerglotz.lean
+  HerglotzImpliesRH.lean
+  ZeroResolventKernel.lean
+  FiniteZeroGramDeterminant.lean
+
+D5/S3/Analytic/ShiftedDeBranges/
+  ShiftedXiPair.lean
+  ShiftedCayleyWeyl.lean
+  ShiftedWeylLimit.lean
+  DeBrangesNevanlinnaKernelBridge.lean
+  HerglotzEscapeRadius.lean
+
+D5/S3/Observer/ToroidalWeyl/
+  ShiftedToroidalFrame.lean
+  ToroidalWeylReconstruction.lean
+  FiniteToroidalPickMatrix.lean
+  FrameIndependence.lean
+  OffLineOnePointWitness.lean
+
+D5/S3/Analytic/CanonicalCompletion/
+  HerglotzSpectralMeasure.lean
+  ToroidalWeylSelfAdjointRealization.lean
+  HilbertPolyaAsOutput.lean
+
+D5/S3/Analytic/RHTargets/
+  RelativeTraceHerglotzTarget.lean
+  PickKernelStickyDichotomy.lean
+  NonStickyRelativeTraceGain.lean
+  StickyTwistRenormalization.lean
+```
+
+最优先且可独立闭合的链是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+-\Xi'/\Xi\text{ Herglotz}.
+}
+$$
+
+其次是纯代数链：
+
+$$
+\boxed{
+\Theta_\omega
+\to
+m_\omega
+\to
+\mathcal N_\omega
+\to
+K_{\Theta_\omega}.
+}
+$$
+
+第三条是本轮最关键的反例链：
+
+$$
+\boxed{
+\text{off-line zero}
+\to
+m_\omega(z_\rho)=-i/\omega
+\to
+\mathcal N_\omega(z_\rho,z_\rho)<0.
+}
+$$
+
+---
+
+# 本轮最终结论
+
+上一轮已经得到：
+
+$$
+\boxed{
+\text{Riemann 零点}
+=
+\text{全部二次环面观察者的共同不可见点}.
+}
+$$
+
+本轮进一步得到：
+
+$$
+\boxed{
+\text{Riemann 零点的 ordinates}
+=
+\text{toroidal excess connection 的谱测度原子}.
+}
+$$
+
+关键函数为：
+
+$$
+\boxed{
+m_0(z)
+=
+-\frac{\Xi'(z)}{\Xi(z)}
+=
+i\frac{
+\xi'(\frac12-iz)
+}{
+\xi(\frac12-iz)
+}.
+}
+$$
+
+而：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+m_0\text{ 是 Herglotz}.
+}
+$$
+
+其 shifted 正则化为：
+
+$$
+\boxed{
+m_\omega(z)
+=
+\frac{i}{\omega}
+\frac{
+\xi(\frac12+\omega-iz)
+-
+\xi(\frac12-\omega-iz)
+}{
+\xi(\frac12+\omega-iz)
++
+\xi(\frac12-\omega-iz)
+}.
+}
+$$
+
+它同时是：
+
+* de Branges inner ratio 的 Cayley 变换；
+* \(\xi'/\xi\) 的对称有限差分；
+* 有限环面帧可重构的 Weyl observer；
+* RH 的有限 Pick 正性证书。
+
+最重要的是：
+
+$$
+\boxed{
+\rho=\frac12+\delta+i\gamma
+\text{ 为线外零点}
+}
+$$
+
+必然导致：
+
+$$
+\boxed{
+\exists\,\omega,z_\rho:
+\quad
+\mathcal N_\omega(z_\rho,z_\rho)
+\le
+-\frac4{\delta^2}.
+}
+$$
+
+因此线外零点不是藏在高阶余项中的微弱异常，而是会在一个一阶 Pick 矩阵中产生定量、放大的负性。
+
+至此，OACTC 的 RH 中心桥已经被压缩到最明确的形式：
+
+$$
+\boxed{
+\text{能否从 toric relative trace formula
+直接构造 }
+\mathcal N_\omega
+\text{ 的 Gram 表示？}
+}
+$$
+
+一旦证明：
+
+$$
+\mathcal N_\omega(z,w)
+=
+\langle
+\mathscr V_{\omega,z},
+\mathscr V_{\omega,w}
+\rangle
+$$
+
+对所有 \(\omega>0\) 成立，RH 将立即随之成立。
+
+[1]: https://arxiv.org/abs/1204.1827?utm_source=chatgpt.com "A canonical system of differential equations arising from the Riemann zeta-function"
+[2]: https://arxiv.org/abs/1402.3524?utm_source=chatgpt.com "Beyond Endoscopy for the relative trace formula II: global theory"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v2.2：平方折叠、Stieltjes 正完成、Hankel 层级与 Ramanujan 连分数谱
+
+以下从前文**第二百二十部之后**继续追加。
+
+上一轮将 RH 压缩成 Herglotz 正性：
+
+$$
+\mathrm{RH}
+\iff
+m_0(z):=-\frac{\Xi'(z)}{\Xi(z)}
+\text{ 是上半平面的 Herglotz 函数}.
+$$
+
+本轮利用 \(\Xi\) 的偶对称，将上下对称的零点谱进一步折叠为一个正半轴 moment problem，得到新的完整链：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&\iff
+\text{平方折叠后的 }\xi\text{ 函数只有负实零点}\\
+&\iff
+\text{其对数导数是 Stieltjes 函数}\\
+&\iff
+\text{全部中心 reciprocal-zero moments 构成 Stieltjes moment sequence}\\
+&\iff
+\text{两族 Hankel 矩阵全部正半定}\\
+&\iff
+\text{存在非负系数的 Stieltjes 连分数}\\
+&\iff
+\text{存在一个正 Jacobi 算子，其谱为 }\gamma^{-2}.
+\end{aligned}
+}
+$$
+
+这把此前的：
+
+* Herglotz；
+* de Branges；
+* Ramanujan 连分数；
+* moment matrices；
+* Hilbert–Pólya；
+
+压缩成同一个对象的五张图表。
+
+---
+
+# 第二百二十一部　临界线对称的平方折叠
+
+沿用：
+
+$$
+\Xi(z)=\xi\left(\frac12-iz\right).
+$$
+
+由函数方程：
+
+$$
+\xi(s)=\xi(1-s),
+$$
+
+可得：
+
+$$
+\Xi(-z)=\Xi(z).
+$$
+
+所以 \(\Xi\) 是偶整函数。
+
+定义平方折叠完成函数：
+
+$$
+\boxed{
+\mathscr F(x)
+=
+\frac{
+\xi(\frac12+\sqrt{x})
+}{
+\xi(\frac12)
+}.
+}
+\tag{221.1}
+$$
+
+它不依赖 \(\sqrt{x}\) 的分支。更严格地，若：
+
+$$
+a_n
+=
+\frac{
+\xi^{(2n)}(\frac12)
+}{
+(2n)!\,\xi(\frac12)
+},
+$$
+
+则：
+
+$$
+\boxed{
+\mathscr F(x)
+=
+\sum_{n=0}^{\infty}a_nx^n.
+}
+\tag{221.2}
+$$
+
+因为所有奇阶中心导数为零。
+
+---
+
+## 221.1 零点映射
+
+若：
+
+$$
+\rho
+$$
+
+是 \(\xi\) 的零点，令：
+
+$$
+z_\rho=\rho-\frac12.
+$$
+
+那么 \(\mathscr F\) 的相应零点是：
+
+$$
+\boxed{
+\lambda_\rho
+=
+z_\rho^2
+=
+\left(\rho-\frac12\right)^2.
+}
+\tag{221.3}
+$$
+
+由于：
+
+$$
+\rho
+\longleftrightarrow
+1-\rho
+$$
+
+对应：
+
+$$
+z_\rho
+\longleftrightarrow
+-z_\rho,
+$$
+
+两个函数方程对称零点在平方图表中合并为一个零点。
+
+---
+
+## 定理 221.1（平方折叠 RH 判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathscr F
+\text{ 的全部零点属于 }(-\infty,0).
+}
+\tag{221.4}
+$$
+
+### 证明
+
+若 RH 成立，则：
+
+$$
+\rho=\frac12+i\gamma,
+$$
+
+所以：
+
+$$
+\lambda_\rho=(i\gamma)^2=-\gamma^2<0.
+$$
+
+反之，若：
+
+$$
+(\rho-\tfrac12)^2<0,
+$$
+
+则：
+
+$$
+\rho-\frac12
+$$
+
+为纯虚数，因此：
+
+$$
+\Re\rho=\frac12.
+$$
+
+∎
+
+由于 \(\xi\) 是一阶整函数，而平方折叠将变量阶数减半，\(\mathscr F\) 的整函数阶为 \(1/2\)。因此其 Hadamard 乘积属于 genus zero；不需要额外的指数因子。
+
+---
+
+# 第二百二十二部　Herglotz 到 Stieltjes 的平方折叠
+
+定义：
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\frac{\mathscr F'(x)}{\mathscr F(x)}.
+}
+\tag{222.1}
+$$
+
+由链式法则：
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\frac{1}{2\sqrt{x}}
+\frac{
+\xi'(\frac12+\sqrt{x})
+}{
+\xi(\frac12+\sqrt{x})
+}.
+}
+\tag{222.2}
+$$
+
+上一轮定义：
+
+$$
+m_0(z)
+=
+-\frac{\Xi'(z)}{\Xi(z)}
+=
+i\frac{
+\xi'(\frac12-iz)
+}{
+\xi(\frac12-iz)
+}.
+$$
+
+取：
+
+$$
+z=i\sqrt{x},
+$$
+
+得到精确折叠关系：
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\frac{
+m_0(i\sqrt{x})
+}{
+2i\sqrt{x}
+}.
+}
+\tag{222.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{Stieltjes observer}
+=
+\text{Herglotz Weyl observer 沿虚轴取值后再除去奇对称尺度}.
+}
+$$
+
+Suzuki 的 shifted-\(\xi\) 模型将 RH 与 meromorphic inner functions、de Branges spaces 及正 canonical Hamiltonians 联系起来；这里的平方折叠是该 Herglotz 图表在偶对称下的一维正半轴版本。([arXiv][1])
+
+---
+
+## 222.1 RH 下的 Stieltjes 表示
+
+若 RH 成立，令：
+
+$$
+0<\gamma_1\le\gamma_2\le\cdots
+$$
+
+为 \(\Xi\) 的正零点，重数为 \(m_\gamma\)。
+
+则：
+
+$$
+\boxed{
+\mathscr F(x)
+=
+\prod_{\gamma>0}
+\left(
+1+\frac{x}{\gamma^2}
+\right)^{m_\gamma}.
+}
+\tag{222.4}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\sum_{\gamma>0}
+\frac{m_\gamma}{x+\gamma^2}.
+}
+\tag{222.5}
+$$
+
+定义正测度：
+
+$$
+\boxed{
+d\sigma(t)
+=
+\sum_{\gamma>0}
+m_\gamma\,\delta_{\gamma^2}(dt).
+}
+\tag{222.6}
+$$
+
+则：
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\int_{0}^{\infty}
+\frac{d\sigma(t)}{x+t}.
+}
+\tag{222.7}
+$$
+
+这正是一个 meromorphic Stieltjes function。
+
+---
+
+## 定理 222.1（Stieltjes RH 判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathscr S
+\text{ 是一个正测度的 meromorphic Stieltjes transform}.
+}
+\tag{222.8}
+$$
+
+### 证明
+
+正向已由式 (222.7) 得到。
+
+反向若 \(\mathscr S=\mathscr F'/\mathscr F\) 是 Stieltjes 函数，则其全部极点只能位于负实轴，且留数非负。
+
+而 \(\mathscr F'/\mathscr F\) 的极点恰是 \(\mathscr F\) 的零点，留数为零点重数。
+
+所以 \(\mathscr F\) 的全部零点均位于负实轴。由定理 221.1，RH 成立。∎
+
+---
+
+# 第二百二十三部　完全单调性与 Loewner 正核
+
+由式 (222.5)，对：
+
+$$
+x>0
+$$
+
+和任意 \(n\ge0\)：
+
+$$
+\boxed{
+(-1)^n
+\mathscr S^{(n)}(x)
+=
+n!
+\sum_{\gamma>0}
+\frac{m_\gamma}{(x+\gamma^2)^{n+1}}
+>0.
+}
+\tag{223.1}
+$$
+
+所以 RH 推出：
+
+$$
+\boxed{
+\mathscr S
+\text{ 在正实轴上完全单调}.
+}
+$$
+
+但仅有正轴完全单调性尚不自动等价于 RH；还必须保留 Stieltjes 函数在割平面上的解析结构。否则线外极点可能没有被正轴局部观察立即发现。
+
+---
+
+## 223.1 Stieltjes–Loewner 核
+
+定义：
+
+$$
+\boxed{
+\mathcal L_{\mathscr S}(x,y)
+=
+\frac{
+\mathscr S(x)-\mathscr S(y)
+}{
+y-x
+},
+\qquad
+x,y>0.
+}
+\tag{223.2}
+$$
+
+对 \(x=y\)，定义：
+
+$$
+\mathcal L_{\mathscr S}(x,x)
+=
+-\mathscr S'(x).
+$$
+
+由式 (222.5)：
+
+$$
+\boxed{
+\mathcal L_{\mathscr S}(x,y)
+=
+\sum_{\gamma>0}
+\frac{
+m_\gamma
+}{
+(x+\gamma^2)(y+\gamma^2)
+}.
+}
+\tag{223.3}
+$$
+
+令：
+
+$$
+v_x(\gamma)
+=
+\frac{\sqrt{m_\gamma}}{x+\gamma^2}.
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal L_{\mathscr S}(x,y)
+=
+\langle v_x,v_y\rangle_{\ell^2}.
+}
+\tag{223.4}
+$$
+
+因此任意有限点集：
+
+$$
+x_1,\ldots,x_N>0
+$$
+
+对应的 Loewner 矩阵：
+
+$$
+\boxed{
+\left[
+\mathcal L_{\mathscr S}(x_i,x_j)
+\right]_{i,j=1}^{N}
+}
+$$
+
+在 RH 下正半定。
+
+它是前文 Nevanlinna/Pick 核在平方折叠后的正实轴版本。
+
+---
+
+# 第二百二十四部　中心 reciprocal-zero moments
+
+在 \(x=0\) 附近展开：
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\sum_{n=0}^{\infty}
+(-1)^n\mu_nx^n.
+}
+\tag{224.1}
+$$
+
+RH 下：
+
+$$
+\boxed{
+\mu_n
+=
+\sum_{\gamma>0}
+\frac{m_\gamma}{\gamma^{2n+2}}.
+}
+\tag{224.2}
+$$
+
+定义倒谱测度：
+
+$$
+\boxed{
+d\nu(u)
+=
+\sum_{\gamma>0}
+\frac{m_\gamma}{\gamma^2}
+\,
+\delta_{\gamma^{-2}}(du).
+}
+\tag{224.3}
+$$
+
+则：
+
+$$
+\boxed{
+\mu_n
+=
+\int_0^\infty u^n\,d\nu(u).
+}
+\tag{224.4}
+$$
+
+所以：
+
+$$
+(\mu_n)_{n\ge0}
+$$
+
+是一个 Stieltjes moment sequence。
+
+---
+
+## 224.1 由中心导数计算 moments
+
+令：
+
+$$
+a_n
+=
+\frac{
+\xi^{(2n)}(\frac12)
+}{
+(2n)!\,\xi(\frac12)
+}.
+$$
+
+则：
+
+$$
+\mathscr F(x)
+=
+1+a_1x+a_2x^2+a_3x^3+\cdots.
+$$
+
+由：
+
+$$
+\mathscr S=\mathscr F'/\mathscr F
+$$
+
+得到：
+
+$$
+\boxed{
+\mu_0=a_1,
+}
+\tag{224.5}
+$$
+
+$$
+\boxed{
+\mu_1=a_1^2-2a_2,
+}
+\tag{224.6}
+$$
+
+$$
+\boxed{
+\mu_2=a_1^3-3a_1a_2+3a_3,
+}
+\tag{224.7}
+$$
+
+$$
+\boxed{
+\mu_3
+=
+a_1^4
+-4a_1^2a_2
++2a_2^2
++4a_1a_3
+-4a_4.
+}
+\tag{224.8}
+$$
+
+因此 RH 推出一系列纯中心导数不等式。例如：
+
+$$
+\boxed{
+\frac{\xi''(\frac12)}
+{2\,\xi(\frac12)}
+\ge0,
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\left(
+\frac{\xi''(\frac12)}
+{2\,\xi(\frac12)}
+\right)^2
+-
+\frac{\xi^{(4)}(\frac12)}
+{12\,\xi(\frac12)}
+\ge0.
+}
+$$
+
+这些不是单独充分条件；它们是下一节完整半正定层级的最低阶投影。
+
+---
+
+# 第二百二十五部　Hankel 半正定层级
+
+定义两族 Hankel 矩阵：
+
+$$
+\boxed{
+H_N^{(0)}
+=
+\left[
+\mu_{i+j}
+\right]_{i,j=0}^{N},
+}
+\tag{225.1}
+$$
+
+$$
+\boxed{
+H_N^{(1)}
+=
+\left[
+\mu_{i+j+1}
+\right]_{i,j=0}^{N}.
+}
+\tag{225.2}
+$$
+
+Stieltjes moment problem 的标准判据是：
+
+$$
+(\mu_n)
+\text{ 为 Stieltjes moment sequence}
+$$
+
+当且仅当：
+
+$$
+H_N^{(0)}\succeq0,
+\qquad
+H_N^{(1)}\succeq0
+$$
+
+对全部 \(N\) 成立。该 moment–continued-fraction 等价源于 Stieltjes 理论；现代工作仍以 Hankel positivity 和非负 S-fraction 作为核心刻画。([arXiv][2])
+
+---
+
+## 定理 225.1（Hankel–RH criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+H_N^{(0)}\succeq0
+\text{ 且 }
+H_N^{(1)}\succeq0
+\quad
+\forall N\ge0.
+}
+\tag{225.3}
+$$
+
+### 证明：RH \(\Rightarrow\) Hankel 正性
+
+由式 (224.4)：
+
+$$
+\begin{aligned}
+\sum_{i,j=0}^{N}
+c_i\overline{c_j}\mu_{i+j}
+&=
+\int
+\left|
+\sum_{i=0}^{N}c_iu^i
+\right|^2d\nu(u)
+\ge0,
+\end{aligned}
+$$
+
+所以：
+
+$$
+H_N^{(0)}\succeq0.
+$$
+
+同理：
+
+$$
+\sum c_i\overline{c_j}\mu_{i+j+1}
+=
+\int
+u
+\left|
+\sum c_iu^i
+\right|^2d\nu(u)
+\ge0.
+$$
+
+---
+
+### 证明：Hankel 正性 \(\Rightarrow\) RH
+
+由 Stieltjes moment theorem，存在正测度 \(\nu\) 使：
+
+$$
+\mu_n=\int u^n\,d\nu(u).
+$$
+
+由于 \(\mathscr S\) 在原点解析，其 Taylor 系数具有有限指数增长：
+
+$$
+\limsup_{n\to\infty}\mu_n^{1/n}<\infty.
+$$
+
+这迫使任意正表示测度 \(\nu\) 具有紧支撑；否则高阶 moments 会增长得更快。
+
+于是：
+
+$$
+\widetilde{\mathscr S}(x)
+=
+\int
+\frac{d\nu(u)}{1+ux}
+$$
+
+在负实割线以外解析，并且其原点 Taylor 级数为：
+
+$$
+\sum(-1)^n\mu_nx^n.
+$$
+
+所以：
+
+$$
+\widetilde{\mathscr S}
+=
+\mathscr S
+$$
+
+在原点邻域相等，并由解析延拓在共同定义域中相等。
+
+因此 \(\mathscr S\) 的全部极点位于负实轴，故 \(\mathscr F\) 的全部零点位于负实轴。由定理 221.1，RH 成立。∎
+
+---
+
+## 225.1 第一非平凡 Hankel 不等式
+
+大小 \(2\) 的第一 Hankel 行列式为：
+
+$$
+\det
+\begin{pmatrix}
+\mu_0&\mu_1\\
+\mu_1&\mu_2
+\end{pmatrix}
+\ge0.
+$$
+
+代入 \(a_n\)：
+
+$$
+\boxed{
+a_1^2a_2
++
+3a_1a_3
+-
+4a_2^2
+\ge0.
+}
+\tag{225.4}
+$$
+
+所以 RH 被转化为一列明确的中心导数多项式不等式。
+
+---
+
+# 第二百二十六部　Hankel 行列式是 Vandermonde 平方和
+
+RH 下，令：
+
+$$
+u_\gamma=\gamma^{-2},
+\qquad
+w_\gamma=\frac{m_\gamma}{\gamma^2}.
+$$
+
+则：
+
+$$
+\mu_n=\sum_{\gamma>0}w_\gamma u_\gamma^n.
+$$
+
+Cauchy–Binet 给出：
+
+$$
+\boxed{
+\begin{aligned}
+\det H_N^{(0)}
+={}&
+\sum_{\gamma_0<\cdots<\gamma_N}
+\left(
+\prod_{k=0}^{N}w_{\gamma_k}
+\right)
+\\
+&\times
+\prod_{0\le i<j\le N}
+\left(
+u_{\gamma_i}-u_{\gamma_j}
+\right)^2.
+\end{aligned}
+}
+\tag{226.1}
+$$
+
+同理：
+
+$$
+\boxed{
+\begin{aligned}
+\det H_N^{(1)}
+={}&
+\sum_{\gamma_0<\cdots<\gamma_N}
+\left(
+\prod_{k=0}^{N}w_{\gamma_k}u_{\gamma_k}
+\right)
+\\
+&\times
+\prod_{i<j}
+\left(
+u_{\gamma_i}-u_{\gamma_j}
+\right)^2.
+\end{aligned}
+}
+\tag{226.2}
+$$
+
+因此每一个 Hankel 行列式都是有限零点子集贡献的非负平方和。
+
+这与前文 Pick/Gram determinant 的结构完全一致：
+
+$$
+\boxed{
+\text{Pick positivity}
+\quad\text{与}\quad
+\text{Hankel positivity}
+}
+$$
+
+只是同一正谱测度在：
+
+* resolvent basis；
+* polynomial basis；
+
+中的两种 Gram 图表。
+
+---
+
+# 第二百二十七部　Ramanujan–Stieltjes 连分数完成
+
+定义 moment generating function：
+
+$$
+\boxed{
+M(t)
+=
+\sum_{n=0}^{\infty}\mu_nt^n.
+}
+\tag{227.1}
+$$
+
+则：
+
+$$
+\mathscr S(x)=M(-x).
+$$
+
+Stieltjes theorem 给出：
+
+$$
+\boxed{
+M(t)
+=
+\cfrac{\mu_0}{
+1-\cfrac{\alpha_1t}{
+1-\cfrac{\alpha_2t}{
+1-\cfrac{\alpha_3t}{1-\ddots}}}}
+}
+}
+\tag{227.2}
+$$
+
+其中：
+
+$$
+\alpha_j\ge0.
+$$
+
+所以：
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\cfrac{\mu_0}{
+1+\cfrac{\alpha_1x}{
+1+\cfrac{\alpha_2x}{
+1+\cfrac{\alpha_3x}{1+\ddots}}}}
+}.
+}
+\tag{227.3}
+$$
+
+非负 S-fraction 与 Stieltjes moment sequence 的等价是经典 Stieltjes 定理；系数在非退化情形下唯一。([arXiv][2])
+
+因此：
+
+## 定理 227.1（Ramanujan–Stieltjes RH criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathscr S
+\text{ 具有与其 Taylor 系数一致的、全部系数非负的 Stieltjes 连分数}.
+}
+\tag{227.4}
+$$
+
+最初两个系数为：
+
+$$
+\boxed{
+\alpha_1
+=
+\frac{\mu_1}{\mu_0},
+}
+\tag{227.5}
+$$
+
+$$
+\boxed{
+\alpha_2
+=
+\frac{
+\mu_0\mu_2-\mu_1^2
+}{
+\mu_0\mu_1
+}.
+}
+\tag{227.6}
+$$
+
+所以每一项连分数系数的正性，都是某个 Hankel determinant ratio 的正性。
+
+---
+
+## 227.1 黄金固定尾是最简单的正完成模型
+
+考虑最简单的 stationary positive tail：
+
+$$
+Y
+=
+\cfrac1{
+1+\cfrac1{
+1+\cfrac1{1+\ddots}}}.
+$$
+
+它满足：
+
+$$
+Y=\frac1{1+Y}.
+$$
+
+唯一正解为：
+
+$$
+\boxed{
+Y=\frac1\varphi.
+}
+\tag{227.7}
+$$
+
+这说明 \(\varphi^{-1}\) 是**常系数正 Stieltjes 尾部的固定点**。
+
+但必须严格限定：
+
+$$
+\boxed{
+\text{这并不意味着 }\xi\text{ 的 Stieltjes 系数 }\alpha_n\text{ 恒等于 }1.
+}
+$$
+
+其意义只是：黄金比例再次作为最简单的正递归 tail completion 出现，和 Ramanujan 第 541 号恒等式中“连分数压缩无限尾部”的角色一致。
+
+---
+
+# 第二百二十八部　Jacobi 算子与折叠后的 Hilbert–Pólya
+
+由非负 S-fraction 收缩为 J-fraction，可以构造一族正交多项式及 Jacobi 矩阵。S-fraction 与 J-fraction 的标准收缩关系，以及其 moment-theoretic 解释，是 Stieltjes–Jacobi 理论的基本组成部分。([arXiv][2])
+
+RH 下，倒谱测度为：
+
+$$
+d\nu(u)
+=
+\sum_{\gamma>0}
+\frac{m_\gamma}{\gamma^2}
+\delta_{\gamma^{-2}}(du).
+$$
+
+在：
+
+$$
+L^2(\nu)
+$$
+
+上定义乘法算子：
+
+$$
+\boxed{
+(Uf)(u)=uf(u).
+}
+\tag{228.1}
+$$
+
+则：
+
+* \(U\) 自伴；
+* \(U\ge0\)；
+* \(U\) 有界且紧；
+* 谱支撑为：
+
+  $$
+  \{0\}\cup\{\gamma^{-2}\}.
+  $$
+
+取循环向量：
+
+$$
+\mathbf1(u)=1.
+$$
+
+则：
+
+$$
+\boxed{
+\mu_n
+=
+\langle U^n\mathbf1,\mathbf1\rangle.
+}
+\tag{228.2}
+$$
+
+---
+
+## 228.1 折叠 Hilbert–Pólya 算子
+
+在 \(U\) 的正谱子空间上定义：
+
+$$
+\boxed{
+\mathcal H_\Xi
+=
+U^{-1/2}.
+}
+\tag{228.3}
+$$
+
+则其谱集合为：
+
+$$
+\boxed{
+\operatorname{spec}(\mathcal H_\Xi)
+=
+\{\gamma:\Xi(\gamma)=0,\ \gamma>0\}.
+}
+\tag{228.4}
+$$
+
+因此：
+
+> 一旦 Hankel 正性成立，Hilbert–Pólya 型自伴算子无需另外猜测；它由中心导数 moments 的 GNS/Jacobi 构造自动产生。
+
+需要保留一个限制：
+
+* 标量 moment measure 的原子权重记录零点重数；
+* 标量循环 Jacobi 实现通常具有 simple spectral support；
+* 若要把零点重数实现为算子谱重数，还需加入相应有限维 fiber。
+
+所以这里首先得到的是零点**谱集及权重**的规范实现。
+
+---
+
+# 第二百二十九部　有限 Padé–Jacobi 观察者
+
+使用前：
+
+$$
+2N+1
+$$
+
+个 moments，可以构造 \(N\) 阶 Jacobi 截断：
+
+$$
+U_N.
+$$
+
+其全部特征值为非负实数。
+
+对应的 Padé/Stieltjes 逼近：
+
+$$
+\boxed{
+\mathscr S_N(x)
+=
+\sum_{j=1}^{N}
+\frac{w_{j,N}}{x+t_{j,N}},
+}
+\tag{229.1}
+$$
+
+满足：
+
+$$
+t_{j,N}>0,
+\qquad
+w_{j,N}>0.
+$$
+
+因此每个有限逼近：
+
+* 全部极点位于负实轴；
+* 全部留数为正；
+* 极点随 \(N\) 交错；
+* 对应一个有限维正自伴矩阵。
+
+所以 RH 等价于：
+
+$$
+\boxed{
+\text{全部有限中心-jet Padé 观察者，
+可以一致地组织成正 Jacobi 链并收敛到 }\mathscr S.
+}
+$$
+
+这提供一条可计算、可区间认证的有限逼近路线。
+
+---
+
+# 第二百三十部　Jensen 图表与 Stieltjes 图表
+
+平方折叠函数：
+
+$$
+\mathscr F(x)=\sum a_nx^n
+$$
+
+提供直接系数图表。
+
+其 logarithmic derivative：
+
+$$
+\mathscr S(x)=\mathscr F'/\mathscr F
+$$
+
+提供 reciprocal-zero moment 图表。
+
+于是存在两个不同的有限层级。
+
+---
+
+## 230.1 Jensen–Pólya 层级
+
+RH 等价于 \(\mathscr F\) 属于 Laguerre–Pólya 类，即其全部 Jensen polynomials 具有实零点。Pólya 的这一等价及现代 Jensen polynomial 研究已经形成系统理论。([arXiv][3])
+
+对固定次数 \(d\)，已有结果证明足够高 shift 的 Jensen polynomials 无条件双曲；因此“高阶渐近上越来越像 Hermite polynomial”并不足以证明 RH。真正承重的是所有次数、所有 shift 的完整层级。([arXiv][4])
+
+---
+
+## 230.2 Stieltjes–Hankel 层级
+
+$$
+\mathscr S
+$$
+
+的 moments 要求：
+
+$$
+H_N^{(0)},H_N^{(1)}\succeq0
+$$
+
+对所有 \(N\) 成立。
+
+两者关系为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Jensen 图表}
+&:\text{直接测试 }\mathscr F\text{ 的实零性};\\
+\text{Hankel 图表}
+&:\text{测试 reciprocal-zero measure 的正性};\\
+\text{continued fraction}
+&:\text{测试该正测度的递归编码};\\
+\text{Jacobi 图表}
+&:\text{把正测度提升成自伴算子}.
+\end{aligned}
+}
+$$
+
+它们不是四套猜想，而是同一个完成对象的四种观察语言。
+
+---
+
+# 第二百三十一部　Toroidal 中心 jet 重构
+
+前文有限环面帧给出：
+
+$$
+\mathbf P(s)=\xi(s)\mathbf T(s).
+$$
+
+在中心点：
+
+$$
+s=\frac12,
+$$
+
+二次 twist 非消失保证可以选取某个局部环面图表 \(D_0\)，使：
+
+$$
+\mathcal T_{D_0}(\tfrac12)\neq0.
+$$
+
+于是中心邻域中：
+
+$$
+\boxed{
+\xi(s)
+=
+\frac{
+\mathcal P_{D_0}(s)
+}{
+\mathcal T_{D_0}(s)
+}.
+}
+\tag{231.1}
+$$
+
+因此所有中心导数：
+
+$$
+\xi^{(2n)}(\tfrac12)
+$$
+
+都可以由：
+
+* 环面 period jets；
+* quadratic-twist carrier jets；
+
+通过有限 Leibniz 反演求出。
+
+所以：
+
+$$
+a_n,\qquad
+\mu_n,\qquad
+H_N^{(0)},\qquad
+H_N^{(1)}
+$$
+
+都是**有限环面 jet invariants**。
+
+---
+
+## 定理 231.1（Toroidal Hankel RH criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{由任意合法局部环面图表重构出的全部 Hankel 矩阵正半定}.
+}
+\tag{231.2}
+$$
+
+这给出 RH 的第二类有限环面证书：
+
+### 先前 Pick 证书
+
+* 依赖谱点 \(z\) 和 shift \(\omega\)；
+* 线外零点给出一阶强负证书；
+* 但需知道或搜索零点附近位置。
+
+### 当前 Hankel 证书
+
+* 全部位于中心 \(s=1/2\)；
+* 只使用有限阶 jet；
+* 不需要预先知道线外零点位置；
+* 若 RH 失败，某个有限阶必然出现负特征值。
+
+---
+
+# 第二百三十二部　RH 失败必有有限中心证书
+
+由定理 225.1：
+
+$$
+\neg\mathrm{RH}
+$$
+
+意味着 \((\mu_n)\) 不是 Stieltjes moment sequence。
+
+因此必存在有限 \(N\)，使：
+
+$$
+\boxed{
+H_N^{(0)}\not\succeq0
+\quad\text{或}\quad
+H_N^{(1)}\not\succeq0.
+}
+\tag{232.1}
+$$
+
+等价地，存在有限向量：
+
+$$
+c=(c_0,\ldots,c_N)\neq0
+$$
+
+满足：
+
+$$
+\boxed{
+\sum_{i,j}
+c_i\overline{c_j}\mu_{i+j}<0
+}
+$$
+
+或：
+
+$$
+\boxed{
+\sum_{i,j}
+c_i\overline{c_j}\mu_{i+j+1}<0.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{任意线外零点最终都会在有限阶中心导数中留下负半正定证书。}
+}
+$$
+
+当前理论不提供该最小阶 \(N\) 的通用上界。
+
+这和一阶 Pick 负证书形成互补：
+
+$$
+\boxed{
+\begin{array}{c|c|c}
+\text{证书}&\text{优点}&\text{代价}\\
+\hline
+\text{Pick}&\text{一阶、强放大}&\text{需要局部化零点}\\
+\text{Hankel}&\text{中心化、有限 jet}&\text{失败阶未知}
+\end{array}
+}
+$$
+
+---
+
+# 第二百三十三部　零点原子消去与递归自改善
+
+假设已经严格验证临界线上的前 \(M\) 个正零点：
+
+$$
+\gamma_1,\ldots,\gamma_M.
+$$
+
+定义 deflated Stieltjes observer：
+
+$$
+\boxed{
+\mathscr S^{[M]}(x)
+=
+\mathscr S(x)
+-
+\sum_{j=1}^{M}
+\frac{m_j}{x+\gamma_j^2}.
+}
+\tag{233.1}
+$$
+
+若 RH 成立，则：
+
+$$
+\boxed{
+\mathscr S^{[M]}(x)
+=
+\sum_{j>M}
+\frac{m_j}{x+\gamma_j^2}
+}
+$$
+
+仍为 Stieltjes 函数。
+
+其 moments 为：
+
+$$
+\boxed{
+\mu_n^{[M]}
+=
+\mu_n
+-
+\sum_{j=1}^{M}
+\frac{m_j}{\gamma_j^{2n+2}}.
+}
+\tag{233.2}
+$$
+
+所以每次消去一个已验证原子后，所有 Hankel 条件必须继续保持。
+
+---
+
+## 233.1 自改善意义
+
+原始 moments 在高阶时主要受最小 \(\gamma_1\) 控制：
+
+$$
+\mu_n
+\sim
+\frac{m_1}{\gamma_1^{2n+2}}.
+$$
+
+这会遮蔽更高零点结构。
+
+消去前 \(M\) 个原子后：
+
+$$
+\mu_n^{[M]}
+\sim
+\frac{m_{M+1}}{\gamma_{M+1}^{2n+2}}.
+$$
+
+因此 deflation 依次剥离最 sticky 的低谱原子，使残余结构成为新的主导项。
+
+这给 Wang–Deng 方法一个精确可解模型：
+
+$$
+\boxed{
+\begin{aligned}
+\text{sticky primitive}
+&=\text{当前最小零点原子};\\
+\text{counterterm}
+&=\frac{m_j}{x+\gamma_j^2};\\
+\text{renormalized residual}
+&=\mathscr S^{[M]};\\
+\text{self-improvement}
+&=\text{残余支撑下界逐步增加}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第二百三十四部　Folded Hilbert–Pólya 的最小充分条件
+
+Stieltjes moment theory给出另一个等价形式：
+
+$$
+(\mu_n)
+\text{ 是 Stieltjes moment sequence}
+$$
+
+当且仅当存在：
+
+* Hilbert 空间 \(\mathcal H\)；
+* 正自伴算子 \(U\ge0\)；
+* 向量 \(v\in\mathcal H\)；
+
+使：
+
+$$
+\boxed{
+\mu_n
+=
+\langle U^nv,v\rangle
+\qquad
+(n\ge0).
+}
+\tag{234.1}
+$$
+
+因此：
+
+## 定理 234.1（Positive moment operator criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\exists\,
+(\mathcal H,U,v),
+\quad
+U\ge0,
+\quad
+\mu_n=\langle U^nv,v\rangle
+\ \forall n.
+}
+\tag{234.2}
+$$
+
+这是一个比直接寻找 Hilbert–Pólya 算子更弱、也更具体的目标：
+
+* 不必首先构造 ordinates \(\gamma\) 本身；
+* 只需构造其倒平方 moments 的正算子模型；
+* 谱定理会自动恢复正测度；
+* 然后 \(U^{-1/2}\) 才产生 ordinates。
+
+---
+
+# 第二百三十五部　真正的 toroidal Gram 目标
+
+由前文，\(\mu_n\) 可以从有限环面 period jets 求出。
+
+所以最直接的新中心命题是：
+
+## 假设 235.1（Toroidal Stieltjes Gram realization）
+
+存在一个由：
+
+* 二次环面周期；
+* relative trace kernel；
+* Eisenstein deformation；
+* twist normalization；
+
+自然构造的 Hilbert 空间 \(\mathcal H_{\mathrm{tor}}\)、正算子 \(U_{\mathrm{tor}}\) 和向量 \(v_{\mathrm{tor}}\)，使：
+
+$$
+\boxed{
+\mu_n
+=
+\langle
+U_{\mathrm{tor}}^n
+v_{\mathrm{tor}},
+v_{\mathrm{tor}}
+\rangle.
+}
+\tag{235.1}
+$$
+
+若该表示成立，则所有 Hankel 矩阵自动为 Gram 矩阵：
+
+$$
+\boxed{
+\mu_{i+j}
+=
+\langle
+U^iv,U^jv
+\rangle,
+}
+$$
+
+$$
+\boxed{
+\mu_{i+j+1}
+=
+\langle
+U^{i+\frac12}v,
+U^{j+\frac12}v
+\rangle.
+}
+$$
+
+因此 RH 立即成立。
+
+---
+
+## 235.1 与上一轮核目标的关系
+
+上一轮的目标是构造：
+
+$$
+\mathcal N_\omega(z,w)
+=
+\langle
+\mathscr V_{\omega,z},
+\mathscr V_{\omega,w}
+\rangle.
+$$
+
+当前目标是其中心化、平方折叠、moment 版本：
+
+$$
+\mu_{i+j}
+=
+\langle
+U^iv,U^jv
+\rangle.
+$$
+
+所以有两种证明入口：
+
+### 连续 Pick 入口
+
+构造所有 \(z,w,\omega\) 上的正核。
+
+### 离散 Hankel 入口
+
+只构造中心 moments 的正算子模型。
+
+后者可能更适合：
+
+* Lean 形式化；
+* interval certificates；
+* relative trace 的有限阶展开；
+* Wang–Deng 高阶归纳。
+
+---
+
+# 第二百三十六部　Jensen 与 Hankel 的科学负对照
+
+Pólya 已将 RH 等价地写成 \(\Xi\) 的全部 Jensen polynomials 双曲；现代工作证明，对每个固定次数，足够高 shift 的 Jensen polynomials 无条件双曲。([arXiv][3])
+
+这提供一个重要警告：
+
+$$
+\boxed{
+\text{固定复杂度下的渐近正确}
+\not\Rightarrow
+\text{全局 RH}.
+}
+$$
+
+同样地，在 Hankel 路线中：
+
+* 前若干个 Hankel 矩阵正定；
+* 高阶数值近似表现良好；
+* 前若干 S-fraction 系数为正；
+
+都不能单独证明 RH。
+
+真正需要的是：
+
+$$
+\boxed{
+\forall N,\quad
+H_N^{(0)},H_N^{(1)}\succeq0,
+}
+$$
+
+或一个能一次性生成全部 \(N\) 的正算子／Gram 表示。
+
+---
+
+# 第二百三十七部　本轮结果分级
+
+## 本轮独立推导得到（第 237 部）
+
+$$
+\boxed{
+\mathscr F(x)
+=
+\xi(\frac12+\sqrt{x})/\xi(\frac12)
+}
+$$
+
+是整函数，且：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+Z(\mathscr F)\subset(-\infty,0).
+}
+$$
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\frac{\mathscr F'}{\mathscr F}
+=
+\frac{m_0(i\sqrt{x})}{2i\sqrt{x}}.
+}
+$$
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathscr S\text{ 是 Stieltjes 函数}.
+}
+$$
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+H_N^{(0)},H_N^{(1)}\succeq0
+\quad
+\forall N.
+}
+$$
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathscr S
+\text{ 具有非负 S-fraction}.
+}
+$$
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mu_n=\langle U^nv,v\rangle
+\text{ 对某正算子 }U.
+}
+$$
+
+---
+
+## 依赖标准既有理论
+
+* Stieltjes moment sequence 与两族 Hankel 矩阵正性的等价；
+* 非负 Stieltjes continued fraction characterization；
+* J-fraction 与正 Jacobi 算子；
+* Jensen polynomial hyperbolicity 与 Laguerre–Pólya 类。
+
+这些均有成熟的 moment 和 Jensen–Pólya 理论支持。([arXiv][2])
+
+---
+
+## 当前真正开放的桥梁
+
+$$
+\boxed{
+\begin{aligned}
+&\text{从 toric relative trace 直接构造 }U_{\mathrm{tor}}\ge0;\\
+&\text{从 prime／Eisenstein 数据直接证明全部 S-fraction 系数非负};\\
+&\text{建立 Hankel 阶数上的 Wang 式自改善};\\
+&\text{对 sticky moment histories 建立 Deng 式 atom/counterterm 收缩};\\
+&\text{给线外零点对应的最小 Hankel 失败阶提供定量上界}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第二百三十八部　建议形式化顺序
+
+```text
+D5/S3/Analytic/XiSquareFold/
+  XiEvenSquareFactor.lean
+  FoldedXiEntire.lean
+  FoldedZeroRHCriterion.lean
+  FoldedLogDerivative.lean
+  HerglotzStieltjesFold.lean
+
+D5/S3/Analytic/XiMoments/
+  ReciprocalZeroMoment.lean
+  CentralDerivativeMoments.lean
+  StieltjesMomentRHCriterion.lean
+  HankelPairPositivity.lean
+  VandermondeHankelExpansion.lean
+
+D5/S3/Analytic/XiContinuedFraction/
+  XiStieltjesFraction.lean
+  NonnegativeFractionRHCriterion.lean
+  GoldenStationaryTail.lean
+  XiJacobiOperator.lean
+  FinitePadeObserver.lean
+
+D5/S3/Observer/ToroidalMoments/
+  ToroidalCentralJet.lean
+  ToroidalMomentReconstruction.lean
+  ToroidalHankelCriterion.lean
+  ToroidalStieltjesGramTarget.lean
+
+D5/S3/Analytic/RHTargets/
+  FoldedHilbertPolyaOperator.lean
+  ZeroAtomDeflation.lean
+  HankelSelfImprovement.lean
+  PrimitiveMomentRenormalization.lean
+```
+
+优先级最高且最独立的链是：
+
+$$
+\boxed{
+\text{Xi even}
+\to
+\text{square fold}
+\to
+\text{negative-real-zero RH criterion}.
+}
+$$
+
+其次是：
+
+$$
+\boxed{
+\text{Stieltjes moments}
+\to
+\text{Hankel pair positivity}
+\to
+\text{positive operator representation}.
+}
+$$
+
+---
+
+# 本轮最终结论
+
+上一轮的核心对象是：
+
+$$
+m_0(z)
+=
+-\frac{\Xi'(z)}{\Xi(z)},
+$$
+
+RH 等价于其 Herglotz 正性。
+
+本轮利用偶对称将其折叠为：
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\frac{1}{2\sqrt{x}}
+\frac{
+\xi'(\frac12+\sqrt{x})
+}{
+\xi(\frac12+\sqrt{x})
+}.
+}
+$$
+
+RH 等价于：
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\sum_{\gamma>0}
+\frac{m_\gamma}{x+\gamma^2},
+}
+$$
+
+即它是一个正 Stieltjes transform。
+
+由此 RH 获得四个新的完全等价形式：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{全部 reciprocal-zero Hankel 矩阵正半定};\\
+&\text{全部 Stieltjes continued-fraction 系数非负};\\
+&\text{全部有限 Padé observers 具有负实极点与正留数};\\
+&\text{存在一个正紧算子 }U\text{，其谱为 }\gamma^{-2}.
+\end{aligned}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{Hilbert–Pólya 算子不一定需要从零点本身直接猜出，}
+}
+$$
+
+而可以经由：
+
+$$
+\boxed{
+\text{中心导数}
+\to
+\text{Stieltjes moments}
+\to
+\text{Hankel positivity}
+\to
+\text{Jacobi operator}
+\to
+\text{自伴谱}
+}
+$$
+
+逐层生成。
+
+所以当前 OACTC 最小、最具体的 RH 中心命题已经可以写成：
+
+$$
+\boxed{
+\mu_n
+=
+\langle
+U_{\mathrm{tor}}^n
+v_{\mathrm{tor}},
+v_{\mathrm{tor}}
+\rangle
+\qquad
+(U_{\mathrm{tor}}\ge0),
+}
+$$
+
+其中 \(\mu_n\) 完全由有限二次环面周期的中心 jets 重构。
+
+如果能从 relative trace formula 直接建立这个正 moment representation，RH 将随之成立。
+
+[1]: https://arxiv.org/abs/1204.1827 "A canonical system of differential equations arising from the Riemann zeta-function"
+[2]: https://arxiv.org/abs/2404.12131 "Continued-fraction characterization of Stieltjes moment sequences with support in $[ξ, \infty)$"
+[3]: https://arxiv.org/abs/1905.11269?utm_source=chatgpt.com "The Jensen-Pólya program for various L-functions"
+[4]: https://arxiv.org/abs/1902.07321?utm_source=chatgpt.com "Jensen polynomials for the Riemann zeta function and other sequences"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v2.3：Fredholm–Exterior 完成、双重总正性、Newman 阈值与 Toda 谱流
+
+以下从前文**第二百三十八部之后**继续追加。
+
+上一轮把 RH 压缩为平方折叠函数
+
+$$
+\mathscr F(x)
+=
+\frac{\xi(\frac12+\sqrt x)}{\xi(\frac12)}
+$$
+
+的负实零点性，以及
+
+$$
+\mathscr S(x)
+=
+\frac{\mathscr F'(x)}{\mathscr F(x)}
+$$
+
+的 Stieltjes 正性。
+
+本轮进一步发现，这两个对象并不是仅仅“像某个谱行列式”，而在 RH 成立时精确构成：
+
+$$
+\boxed{
+\text{一个正 trace-class 算子的 Fredholm 行列式与 resolvent trace}.
+}
+$$
+
+由此得到统一链：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&\iff
+\mathscr F(x)=\det(I+xU),\quad U\ge0,\ U\text{ trace-class}\\
+&\iff
+\text{中心 Taylor 系数形成 Pólya-frequency 序列}\\
+&\iff
+\text{相应 Toeplitz 矩阵全非负}\\
+&\iff
+\text{reciprocal-zero moments 形成 Stieltjes moment sequence}\\
+&\iff
+\text{相应 Hankel 矩阵全非负}\\
+&\iff
+\text{存在正 Jacobi／Toda 谱流}.
+\end{aligned}
+}
+$$
+
+这使此前分散的：
+
+* Hadamard 乘积；
+* Stieltjes 连分数；
+* Toeplitz 总正性；
+* Hankel 总正性；
+* Fredholm determinant；
+* Hilbert–Pólya；
+* de Bruijn–Newman 常数；
+* Toda lattice；
+
+全部成为同一个隐藏正谱
+
+$$
+\left\{\gamma^{-2}\right\}
+$$
+
+的不同观察图表。
+
+---
+
+# 第二百三十九部　正 Fredholm 完成
+
+令：
+
+$$
+\Xi(z)=\xi\left(\frac12-iz\right).
+$$
+
+若 RH 成立，其非零零点为：
+
+$$
+\pm\gamma_1,\pm\gamma_2,\ldots
+$$
+
+并按重数 \(m_\gamma\) 计。
+
+平方折叠函数满足：
+
+$$
+\boxed{
+\mathscr F(x)
+=
+\prod_{\gamma>0}
+\left(
+1+\frac{x}{\gamma^2}
+\right)^{m_\gamma}.
+}
+\tag{239.1}
+$$
+
+由于：
+
+$$
+\sum_{\gamma>0}
+\frac{m_\gamma}{\gamma^2}<\infty,
+$$
+
+定义 Hilbert 空间：
+
+$$
+\mathcal H_\Xi
+=
+\bigoplus_{\gamma>0}
+\mathbb C^{m_\gamma},
+$$
+
+以及正对角算子：
+
+$$
+\boxed{
+U_\Xi
+=
+\bigoplus_{\gamma>0}
+\gamma^{-2} I_{m_\gamma}.
+}
+\tag{239.2}
+$$
+
+则：
+
+$$
+U_\Xi\ge0,
+\qquad
+\operatorname{Tr}U_\Xi<\infty.
+$$
+
+所以 \(U_\Xi\) 是正 trace-class 算子。
+
+Fredholm determinant 给出：
+
+$$
+\boxed{
+\det(I+xU_\Xi)
+=
+\prod_{\gamma>0}
+\left(
+1+\frac{x}{\gamma^2}
+\right)^{m_\gamma}
+=
+\mathscr F(x).
+}
+\tag{239.3}
+$$
+
+---
+
+## 定理 239.1（Positive Fredholm RH criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\exists\,U\ge0,\ U\text{ trace-class},
+\quad
+\mathscr F(x)=\det(I+xU).
+}
+\tag{239.4}
+$$
+
+### 证明
+
+若 RH 成立，取 \(U=U_\Xi\)，由式 (239.3) 成立。
+
+反之，若：
+
+$$
+\mathscr F(x)=\det(I+xU)
+$$
+
+且 \(U\ge0\)，则 \(\mathscr F\) 的全部零点为：
+
+$$
+x=-\lambda^{-1}\le0,
+$$
+
+其中 \(\lambda>0\) 为 \(U\) 的非零特征值。
+
+所以 \(\mathscr F\) 的全部零点位于负实轴。由平方折叠 RH 判据，RH 成立。∎
+
+---
+
+## 239.1 Hilbert–Pólya 的折叠形式
+
+定义：
+
+$$
+\boxed{
+H_\Xi=U_\Xi^{-1/2}
+}
+$$
+
+于 \(U_\Xi\) 的非零谱子空间上。
+
+则：
+
+$$
+\operatorname{spec}(H_\Xi)
+=
+\{\gamma:\Xi(\gamma)=0,\ \gamma>0\}.
+$$
+
+并且：
+
+$$
+\boxed{
+\frac{\Xi(z)}{\Xi(0)}
+=
+\det
+\left(
+I-z^2H_\Xi^{-2}
+\right).
+}
+\tag{239.5}
+$$
+
+所以 Hilbert–Pólya 不必从一个未知微分算子开始猜测。它可以分两步生成：
+
+$$
+\boxed{
+\text{先构造正 trace-class }U_\Xi,
+\qquad
+\text{再令 }H_\Xi=U_\Xi^{-1/2}.
+}
+$$
+
+真正承重的对象可能不是无界的 \(H_\Xi\)，而是有界紧算子：
+
+$$
+\boxed{
+U_\Xi=H_\Xi^{-2}.
+}
+$$
+
+---
+
+# 第二百四十部　Exterior–Power–Trace 基因组
+
+设：
+
+$$
+\alpha_j=\gamma_j^{-2}
+$$
+
+并按重数重复。
+
+则：
+
+$$
+\mathscr F(x)
+=
+\prod_j(1+\alpha_jx).
+$$
+
+将其展开：
+
+$$
+\boxed{
+\mathscr F(x)
+=
+\sum_{n=0}^{\infty}a_nx^n.
+}
+\tag{240.1}
+$$
+
+其中：
+
+$$
+\boxed{
+a_n
+=
+\sum_{j_1<\cdots<j_n}
+\alpha_{j_1}\cdots\alpha_{j_n}
+=
+\operatorname{Tr}\left(\Lambda^nU_\Xi\right).
+}
+\tag{240.2}
+$$
+
+所以中心 Taylor 系数不是任意导数数据，而是 \(U_\Xi\) 各外幂表示的迹。
+
+---
+
+## 240.1 Primitive power sums
+
+上一轮定义：
+
+$$
+\mu_n
+=
+\sum_j\alpha_j^{n+1}.
+$$
+
+现在可写成：
+
+$$
+\boxed{
+\mu_n
+=
+\operatorname{Tr}
+\left(
+U_\Xi^{n+1}
+\right).
+}
+\tag{240.3}
+$$
+
+于是：
+
+* \(a_n\)：不同谱原子组成的外积复合状态；
+* \(\mu_n\)：单个谱原子的幂和读数。
+
+这正是：
+
+$$
+\boxed{
+\text{composite exterior states}
+\quad\text{与}\quad
+\text{primitive power traces}.
+}
+$$
+
+---
+
+## 240.2 Fredholm 对数
+
+Fredholm determinant 的对数展开为：
+
+$$
+\boxed{
+\log\mathscr F(x)
+=
+\sum_{r=1}^{\infty}
+\frac{(-1)^{r+1}}{r}
+\mu_{r-1}x^r.
+}
+\tag{240.4}
+$$
+
+微分后：
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\frac{\mathscr F'(x)}{\mathscr F(x)}
+=
+\sum_{r=0}^{\infty}
+(-1)^r\mu_rx^r.
+}
+\tag{240.5}
+$$
+
+也可直接写成 resolvent trace：
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\operatorname{Tr}
+\left[
+U_\Xi(I+xU_\Xi)^{-1}
+\right].
+}
+\tag{240.6}
+$$
+
+因此 Stieltjes observer 就是正算子的 resolvent trace。
+
+---
+
+## 240.3 Newton 变换
+
+外幂迹 \(a_n\) 与幂迹 \(\mu_n\) 满足 Newton 恒等式：
+
+$$
+\boxed{
+n a_n
+=
+\sum_{r=1}^{n}
+(-1)^{r-1}
+a_{n-r}\mu_{r-1}.
+}
+\tag{240.7}
+$$
+
+反过来，\(\mu_n\) 可递归由 \(a_1,\ldots,a_{n+1}\) 恢复。
+
+所以有一个精确的定义变换：
+
+$$
+\boxed{
+\text{Taylor／exterior observer}
+\quad
+\longleftrightarrow
+\quad
+\text{logarithmic／primitive observer}.
+}
+$$
+
+---
+
+# 第二百四十一部　Bosonic 与 Fermionic 两张图表
+
+定义 fermionic 配分函数：
+
+$$
+\boxed{
+Z_F(x)
+=
+\det(I+xU_\Xi)
+=
+\mathscr F(x).
+}
+\tag{241.1}
+$$
+
+每个谱原子最多被选择一次，所以系数为外幂迹。
+
+再定义 bosonic 配分函数：
+
+$$
+\boxed{
+Z_B(x)
+=
+\det(I-xU_\Xi)^{-1},
+\qquad
+|x|<\gamma_1^2.
+}
+\tag{241.2}
+$$
+
+展开：
+
+$$
+\boxed{
+Z_B(x)
+=
+\sum_{n=0}^{\infty}h_nx^n,
+}
+$$
+
+其中：
+
+$$
+\boxed{
+h_n
+=
+\operatorname{Tr}
+\left(
+\operatorname{Sym}^nU_\Xi
+\right).
+}
+\tag{241.3}
+$$
+
+因此同一个 Riemann 零点谱同时产生：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{图表}&\text{状态规则}\\
+\hline
+\det(I+xU)&\text{每个谱原子最多占据一次}\\
+\det(I-xU)^{-1}&\text{每个谱原子可重复占据}\\
+\operatorname{Tr}U^n&\text{primitive 单原子幂读数}
+\end{array}
+}
+$$
+
+这正把此前 Ramanujan 基因组中的：
+
+* 乘积；
+* 分拆；
+* exterior powers；
+* occupation numbers；
+
+接入 Riemann 零点谱。
+
+---
+
+# 第二百四十二部　Toeplitz 总正性
+
+令：
+
+$$
+a_n=[x^n]\mathscr F(x),
+\qquad
+a_n=0\quad(n<0).
+$$
+
+定义无限 Toeplitz 矩阵：
+
+$$
+\boxed{
+T(a)
+=
+[a_{j-i}]_{i,j\ge0}.
+}
+\tag{242.1}
+$$
+
+若 \(T(a)\) 的全部有限 minors 非负，则称 \((a_n)\) 为 Pólya-frequency sequence of infinite order，记作：
+
+$$
+PF_\infty.
+$$
+
+经典 Aissen–Schoenberg–Whitney–Edrei 理论刻画了这类生成函数：无限阶全正 Toeplitz 序列的生成函数由非负参数的线性因子、可能的指数因子及极点因子构成；在整函数、常数项 \(1\)、阶小于 \(1\) 的情形，它退化为负实零点的 genus-zero 乘积。([PubMed][1])
+
+---
+
+## 定理 242.1（Toeplitz total-positivity RH criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+(a_n)_{n\ge0}\in PF_\infty.
+}
+\tag{242.2}
+$$
+
+### 证明：RH \(\Rightarrow\)（第 242 部）
+
+RH 下：
+
+$$
+\mathscr F(x)
+=
+\prod_j(1+\alpha_jx),
+\qquad
+\alpha_j\ge0,
+\quad
+\sum_j\alpha_j<\infty.
+$$
+
+每个有限截断：
+
+$$
+\prod_{j=1}^{M}(1+\alpha_jx)
+$$
+
+的系数形成完全全正序列；取系数极限保持所有有限 minors 非负。
+
+---
+
+### 证明：PF\(_\infty\Rightarrow\) RH
+
+Edrei 型表示给出：
+
+$$
+\mathscr F(x)
+=
+e^{cx}
+\frac{
+\prod_j(1+\alpha_jx)
+}{
+\prod_k(1-\beta_kx)
+},
+\qquad
+c,\alpha_j,\beta_k\ge0.
+$$
+
+由于 \(\mathscr F\) 是整函数，不能存在 \(\beta_k>0\)。
+
+又因为 \(\mathscr F\) 的整函数阶为 \(1/2\)，不能含 \(e^{cx}\) 的非平凡指数因子，所以 \(c=0\)。
+
+因此：
+
+$$
+\mathscr F(x)=\prod_j(1+\alpha_jx),
+$$
+
+全部零点为负实数。由平方折叠判据，RH 成立。∎
+
+---
+
+## 242.1 Schur 正性
+
+RH 下：
+
+$$
+a_n=e_n(\alpha_1,\alpha_2,\ldots)
+$$
+
+是谱变量的 elementary symmetric functions。
+
+Toeplitz minors由 Jacobi–Trudi 对偶公式变成 skew Schur functions：
+
+$$
+s_{\lambda/\mu}(\alpha_1,\alpha_2,\ldots).
+$$
+
+由于：
+
+$$
+\alpha_j\ge0,
+$$
+
+全部这些 Schur 读数非负。
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{Riemann reciprocal-zero alphabet 的全部 skew-Schur observables 非负}.
+}
+$$
+
+---
+
+# 第二百四十三部　双重总正性方块
+
+现在出现两种不同的全正矩阵。
+
+## 243.1 Toeplitz 图表
+
+$$
+T(a)=[a_{j-i}].
+$$
+
+它读取：
+
+$$
+a_n=\operatorname{Tr}\Lambda^nU_\Xi.
+$$
+
+这是 exterior/composite 图表。
+
+---
+
+## 243.2 Hankel 图表
+
+$$
+H(\mu)=[\mu_{i+j}],
+\qquad
+H^+(\mu)=[\mu_{i+j+1}].
+$$
+
+它读取：
+
+$$
+\mu_n=\operatorname{Tr}U_\Xi^{n+1}.
+$$
+
+这是 primitive/moment 图表。
+
+Stieltjes moment sequence 与 Hankel total positivity 是同一经典正性结构；相关总正性理论也把 Pólya-frequency、Toeplitz 与 Hankel 核置于统一框架中。([arXiv][2])
+
+---
+
+## 定理 243.1（Dual total-positivity square）
+
+下列命题等价：
+
+$$
+\boxed{
+\begin{aligned}
+&(1)\quad \mathrm{RH};\\
+&(2)\quad T(a)\text{ 全非负};\\
+&(3)\quad H(\mu),H^+(\mu)\text{ 全非负};\\
+&(4)\quad \exists\,U\ge0\text{ trace-class}:
+\mathscr F=\det(I+xU).
+\end{aligned}
+}
+\tag{243.1}
+$$
+
+其交换图为：
+
+$$
+\boxed{
+\begin{array}{ccc}
+U
+&\xrightarrow{\ \Lambda^n\ }&
+a_n\\[1mm]
+\downarrow U^n
+&&
+\downarrow\text{Newton}\\[1mm]
+\mu_n
+&\xrightarrow{\ \text{moments}\ }&
+\mathscr S.
+\end{array}
+}
+$$
+
+这给出两类独立的有限反例证书：
+
+* 若 RH 失败，某个有限 Toeplitz minor 必为负；
+* 若 RH 失败，某个有限 Hankel／shifted-Hankel minor必为负。
+
+最早失败阶未必相同。
+
+---
+
+# 第二百四十四部　中心 jet 的完整谱层析
+
+假设 RH，按大小排列：
+
+$$
+\alpha_1>\alpha_2>\cdots>0,
+\qquad
+\alpha_j=\gamma_j^{-2},
+$$
+
+并把重数记为 \(m_j\)。
+
+则：
+
+$$
+\mu_n
+=
+\sum_{j\ge1}
+m_j\alpha_j^{n+1}.
+$$
+
+---
+
+## 定理 244.1（第一零点恢复）
+
+$$
+\boxed{
+\alpha_1
+=
+\lim_{n\to\infty}
+\frac{\mu_{n+1}}{\mu_n}
+=
+\lim_{n\to\infty}
+\mu_n^{1/(n+1)}.
+}
+\tag{244.1}
+$$
+
+因此：
+
+$$
+\boxed{
+\gamma_1
+=
+\lim_{n\to\infty}
+\sqrt{\frac{\mu_n}{\mu_{n+1}}}.
+}
+\tag{244.2}
+$$
+
+### 证明
+
+$$
+\mu_n
+=
+\alpha_1^{n+1}
+\left[
+m_1+
+\sum_{j\ge2}
+m_j
+\left(\frac{\alpha_j}{\alpha_1}\right)^{n+1}
+\right].
+$$
+
+括号趋向 \(m_1\)。∎
+
+---
+
+## 244.1 有限阶双边界
+
+因为：
+
+$$
+\mu_n\ge\alpha_1^{n+1},
+$$
+
+得到：
+
+$$
+\alpha_1
+\le
+\mu_n^{1/(n+1)}.
+$$
+
+另一方面：
+
+$$
+\frac{\mu_{n+1}}{\mu_n}
+$$
+
+是 \(\alpha_j\) 的加权平均，所以：
+
+$$
+\frac{\mu_{n+1}}{\mu_n}
+\le
+\alpha_1.
+$$
+
+因此：
+
+$$
+\boxed{
+\mu_n^{-1/(2n+2)}
+\le
+\gamma_1
+\le
+\sqrt{\frac{\mu_n}{\mu_{n+1}}}.
+}
+\tag{244.3}
+$$
+
+这给出仅由有限阶中心导数计算的第一零点严格区间。
+
+---
+
+## 244.2 重数恢复
+
+一旦 \(\alpha_1\) 已知：
+
+$$
+\boxed{
+m_1
+=
+\lim_{n\to\infty}
+\frac{\mu_n}{\alpha_1^{n+1}}.
+}
+\tag{244.4}
+$$
+
+定义 deflated moments：
+
+$$
+\mu_n^{[1]}
+=
+\mu_n-m_1\alpha_1^{n+1}.
+$$
+
+则：
+
+$$
+\alpha_2
+=
+\lim_{n\to\infty}
+\frac{
+\mu_{n+1}^{[1]}
+}{
+\mu_n^{[1]}
+}.
+$$
+
+递归得到全部：
+
+$$
+(\gamma_j,m_j).
+$$
+
+所以：
+
+$$
+\boxed{
+\text{中心的完整无穷 jet，若满足 RH 正性，
+能够逐原子恢复全部 Riemann 零点。}
+}
+$$
+
+---
+
+# 第二百四十五部　广义特征值有限层析
+
+令：
+
+$$
+H_N^{(0)}
+=
+[\mu_{i+j}]_{i,j=0}^{N},
+$$
+
+$$
+H_N^{(1)}
+=
+[\mu_{i+j+1}]_{i,j=0}^{N}.
+$$
+
+对多项式：
+
+$$
+p(u)=\sum_{j=0}^{N}c_ju^j,
+$$
+
+有：
+
+$$
+c^*H_N^{(0)}c
+=
+\int|p(u)|^2\,d\nu(u),
+$$
+
+$$
+c^*H_N^{(1)}c
+=
+\int u|p(u)|^2\,d\nu(u).
+$$
+
+定义最大广义特征值：
+
+$$
+\boxed{
+\theta_N
+=
+\max_{c\neq0}
+\frac{
+c^*H_N^{(1)}c
+}{
+c^*H_N^{(0)}c
+}.
+}
+\tag{245.1}
+$$
+
+则：
+
+$$
+\boxed{
+0<\theta_N\le\alpha_1.
+}
+\tag{245.2}
+$$
+
+随着多项式空间增加：
+
+$$
+\theta_N
+$$
+
+单调不减，并趋向：
+
+$$
+\alpha_1.
+$$
+
+因此：
+
+$$
+\boxed{
+\gamma_1
+\le
+\frac1{\sqrt{\theta_N}},
+}
+\tag{245.3}
+$$
+
+给出一列由有限 Hankel matrices 产生的改进上界。
+
+该广义特征值问题正是正测度乘法算子在多项式 Krylov 子空间上的 Rayleigh–Ritz 压缩。
+
+---
+
+# 第二百四十六部　de Bruijn–Newman 常数的正 determinant 含义
+
+Rodgers–Tao 研究的 Newman family 为：
+
+$$
+H_t(z)
+=
+\int_0^\infty
+e^{tu^2}\Phi(u)\cos(zu)\,du.
+$$
+
+存在唯一常数 \(\Lambda_{\mathrm N}\)，使：
+
+$$
+H_t
+$$
+
+的全部零点为实数，当且仅当：
+
+$$
+t\ge\Lambda_{\mathrm N}.
+$$
+
+RH 等价于：
+
+$$
+\Lambda_{\mathrm N}\le0,
+$$
+
+而 Rodgers–Tao 证明：
+
+$$
+\Lambda_{\mathrm N}\ge0.
+$$
+
+所以 RH 等价于：
+
+$$
+\Lambda_{\mathrm N}=0.
+$$
+
+([arXiv][3])
+
+---
+
+## 246.1 折叠 Newman family
+
+定义：
+
+$$
+\boxed{
+\mathscr F_t(x)
+=
+\frac{
+H_t(i\sqrt x)
+}{
+H_t(0)
+}.
+}
+\tag{246.1}
+$$
+
+则：
+
+$$
+H_t\text{ 的全部零点实}
+$$
+
+当且仅当：
+
+$$
+\mathscr F_t
+$$
+
+的全部零点为负实数。
+
+因此：
+
+## 定理 246.1（Newman determinant threshold）
+
+$$
+\boxed{
+\Lambda_{\mathrm N}
+=
+\inf
+\left\{
+t:
+\exists\,U_t\ge0,\ U_t\text{ trace-class},
+\quad
+\mathscr F_t(x)=\det(I+xU_t)
+\right\}.
+}
+\tag{246.2}
+$$
+
+同样：
+
+$$
+\boxed{
+\Lambda_{\mathrm N}
+=
+\inf
+\left\{
+t:
+[x^n]\mathscr F_t
+\text{ 形成 }PF_\infty\text{ 序列}
+\right\}.
+}
+\tag{246.3}
+$$
+
+以及：
+
+$$
+\boxed{
+\Lambda_{\mathrm N}
+=
+\inf
+\left\{
+t:
+\text{相应 reciprocal-zero moments 为 Stieltjes moments}
+\right\}.
+}
+\tag{246.4}
+$$
+
+所以 Newman 常数的 OACTC 角色为：
+
+$$
+\boxed{
+\Lambda_{\mathrm N}
+=
+\text{Riemann heat family进入正 Fredholm／总正性完成锥的临界时间}.
+}
+$$
+
+---
+
+# 第二百四十七部　平方折叠后的 Newman 偏微分方程
+
+Newman family 满足：
+
+$$
+\frac{\partial H_t}{\partial t}
+=
+-\frac{\partial^2H_t}{\partial z^2}.
+$$
+
+定义未归一化平方折叠：
+
+$$
+G_t(x)=H_t(i\sqrt x).
+$$
+
+由于：
+
+$$
+x=-z^2,
+$$
+
+链式法则给出：
+
+$$
+\boxed{
+\frac{\partial G_t}{\partial t}
+=
+4x\frac{\partial^2G_t}{\partial x^2}
++
+2\frac{\partial G_t}{\partial x}.
+}
+\tag{247.1}
+$$
+
+若：
+
+$$
+\mathscr F_t(x)
+=
+G_t(x)/G_t(0),
+$$
+
+则：
+
+$$
+\boxed{
+\partial_t\mathscr F_t
+=
+4x\partial_x^2\mathscr F_t
++
+2\partial_x\mathscr F_t
+-
+2\partial_x\mathscr F_t(0)\,
+\mathscr F_t.
+}
+\tag{247.2}
+$$
+
+最后一项是保持：
+
+$$
+\mathscr F_t(0)=1
+$$
+
+的归一化 counterterm。
+
+---
+
+## 247.1 正完成锥的前向不变性
+
+de Bruijn 的单调性结论意味着：
+
+$$
+t_0\ge\Lambda_{\mathrm N}
+\quad\Longrightarrow\quad
+t\ge t_0
+\Rightarrow
+t\ge\Lambda_{\mathrm N}.
+$$
+
+因此：
+
+$$
+\boxed{
+\mathscr F_{t_0}
+\in\mathcal C_{\mathrm{Fredholm}}^+
+\Longrightarrow
+\mathscr F_t
+\in\mathcal C_{\mathrm{Fredholm}}^+
+\quad(t\ge t_0).
+}
+\tag{247.3}
+$$
+
+这里：
+
+$$
+\mathcal C_{\mathrm{Fredholm}}^+
+=
+\left\{
+\det(I+xU):U\ge0,\ U\text{ trace-class}
+\right\}.
+$$
+
+所以 folded Newman PDE 具有一个前向不变的总正性锥。
+
+RH 的断言是：
+
+$$
+\boxed{
+t=0
+\text{ 恰好已经进入该正完成锥}.
+}
+$$
+
+Rodgers–Tao 的 \(\Lambda_{\mathrm N}\ge0\) 则说明：若 RH 成立，\(t=0\) 位于该锥的临界边界，而不是其内部远处。
+
+---
+
+# 第二百四十八部　辅助 Toda 观察流
+
+Newman flow 直接移动整个函数及其零点。
+
+现在定义另一个不同的流：在 RH 已成立的正谱测度上改变观察权重。
+
+令：
+
+$$
+d\nu(u)
+=
+\sum_jm_j\alpha_j\,\delta_{\alpha_j}(du).
+$$
+
+定义指数倾斜：
+
+$$
+\boxed{
+d\nu_\tau(u)
+=
+e^{\tau u}\,d\nu(u).
+}
+\tag{248.1}
+$$
+
+其 moments 为：
+
+$$
+\boxed{
+\mu_n(\tau)
+=
+\int u^ne^{\tau u}\,d\nu(u).
+}
+\tag{248.2}
+$$
+
+显然：
+
+$$
+\boxed{
+\partial_\tau\mu_n(\tau)
+=
+\mu_{n+1}(\tau).
+}
+\tag{248.3}
+$$
+
+定义 Hankel tau-functions：
+
+$$
+\boxed{
+D_N(\tau)
+=
+\det
+[\mu_{i+j}(\tau)]_{i,j=0}^{N-1}.
+}
+\tag{248.4}
+$$
+
+对指数变形测度，正交多项式的递推系数满足 Toda lattice；moment-matrix、Gauss–Borel 分解与 Toda hierarchy 的联系是正交多项式理论中的标准结构。([arXiv][4])
+
+---
+
+## 248.1 Jacobi 递推系数
+
+定义：
+
+$$
+\boxed{
+a_N(\tau)^2
+=
+\frac{
+D_{N+1}(\tau)D_{N-1}(\tau)
+}{
+D_N(\tau)^2
+},
+}
+\tag{248.5}
+$$
+
+以及：
+
+$$
+\boxed{
+b_N(\tau)
+=
+\partial_\tau
+\log
+\frac{
+D_{N+1}(\tau)
+}{
+D_N(\tau)
+}.
+}
+\tag{248.6}
+$$
+
+则：
+
+$$
+\boxed{
+\partial_\tau a_N^2
+=
+a_N^2
+(b_N-b_{N-1}),
+}
+\tag{248.7}
+$$
+
+$$
+\boxed{
+\partial_\tau b_N
+=
+a_{N+1}^2-a_N^2.
+}
+\tag{248.8}
+$$
+
+这就是半无限 Toda lattice。
+
+---
+
+## 248.2 必须区分两种流
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{Newman flow}&\text{Toda observer flow}\\
+\hline
+\text{改变整个 }\Xi_t&\text{不改变零点支撑}\\
+\text{移动零点}&\text{只改变谱原子权重}\\
+\text{决定 }\Lambda_{\mathrm N}&\text{描述已正完成谱的可积观察动力}\\
+\end{array}
+}
+$$
+
+当前没有证明二者通过简单变量变换同一。
+
+Toda 流是正完成以后可用的精确实验模型，而不是 Newman flow 的替代品。
+
+---
+
+# 第二百四十九部　Toda 流中的 sticky 原子
+
+归一化倾斜测度：
+
+$$
+\boxed{
+d\widehat\nu_\tau
+=
+\frac{
+e^{\tau u}d\nu(u)
+}{
+\int e^{\tau u}d\nu(u)
+}.
+}
+\tag{249.1}
+$$
+
+设最大支撑点为：
+
+$$
+\alpha_1>\alpha_2.
+$$
+
+则：
+
+$$
+\boxed{
+\widehat\nu_\tau
+\Longrightarrow
+\delta_{\alpha_1}
+\qquad
+(\tau\to+\infty).
+}
+\tag{249.2}
+$$
+
+即观察注意力最终完全集中于最小 Riemann ordinate：
+
+$$
+\gamma_1=\alpha_1^{-1/2}.
+$$
+
+这给出一个严格 sticky limit：
+
+$$
+\boxed{
+\text{largest reciprocal-zero atom}
+=
+\text{Toda attention flow 的最终 sticky state}.
+}
+$$
+
+---
+
+## 249.1 Darboux deflation
+
+识别 \((\alpha_1,m_1)\) 后，定义：
+
+$$
+d\nu^{[1]}
+=
+d\nu-m_1\alpha_1\,\delta_{\alpha_1}.
+$$
+
+对剩余测度重新进行 Toda 倾斜，极限将集中于 \(\alpha_2\)。
+
+所以得到递归：
+
+$$
+\boxed{
+\text{tilt}
+\to
+\text{isolate largest atom}
+\to
+\text{deflate}
+\to
+\text{repeat}.
+}
+\tag{249.3}
+$$
+
+它与此前 Wang–Deng 语言精确对应：
+
+$$
+\boxed{
+\begin{aligned}
+\text{sticky state}
+&=\text{当前最大谱原子};\\
+\text{counterterm}
+&=\text{其 rank-one measure};\\
+\text{renormalized residual}
+&=\text{deflated measure};\\
+\text{self-improvement}
+&=\text{下一原子成为新主导}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第二百五十部　Toroidal Fredholm 目标
+
+前文有限环面中心 jets 可以重构：
+
+$$
+\mu_n
+=
+\operatorname{Tr}U_\Xi^{n+1}.
+$$
+
+因此，相比仅证明所有 Hankel matrices 正半定，一个更完整的目标是直接构造：
+
+$$
+\boxed{
+U_{\mathrm{tor}}\ge0,
+\qquad
+U_{\mathrm{tor}}\text{ trace-class},
+}
+$$
+
+使：
+
+$$
+\boxed{
+\mu_n
+=
+\operatorname{Tr}
+U_{\mathrm{tor}}^{n+1}.
+}
+\tag{250.1}
+$$
+
+等价地：
+
+$$
+\boxed{
+\mathscr F(x)
+=
+\det
+(I+xU_{\mathrm{tor}}).
+}
+\tag{250.2}
+$$
+
+若该构造来自：
+
+* 二次环面周期；
+* relative trace kernel；
+* Eisenstein jets；
+* twist normalization；
+
+则 RH 立即成立。
+
+---
+
+## 250.1 三个等价的正完成目标
+
+### Moment 目标
+
+$$
+\mu_n
+=
+\langle
+U^nv,v
+\rangle.
+$$
+
+它足以给出 Stieltjes moment positivity。
+
+### Trace 目标
+
+$$
+\mu_n
+=
+\operatorname{Tr}U^{n+1}.
+$$
+
+它进一步保留全部谱原子的自然重数。
+
+### Fredholm 目标
+
+$$
+\mathscr F(x)=\det(I+xU).
+$$
+
+它一次性恢复整个平方折叠 \(\xi\)-函数。
+
+因此：
+
+$$
+\boxed{
+\text{Moment}
+\subset
+\text{Trace}
+\subset
+\text{Fredholm}
+}
+$$
+
+是三种强度递增的证明目标。
+
+---
+
+# 第二百五十一部　Toeplitz–Hankel 双证书的科学价值
+
+若 RH 失败，则至少发生两种有限失败：
+
+$$
+\boxed{
+\exists\,\text{finite Toeplitz minor}<0,
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\exists\,\text{finite Hankel／shifted-Hankel minor}<0.
+}
+$$
+
+但二者的最低失败阶可能差异巨大。
+
+因此应同时计算：
+
+$$
+\boxed{
+N_T
+=
+\min\{\text{负 Toeplitz minor 阶}\},
+}
+$$
+
+$$
+\boxed{
+N_H
+=
+\min\{\text{负 Hankel minor 阶}\}.
+}
+$$
+
+它们分别测量：
+
+* composite/exterior 图表最早何时感知非实零点；
+* primitive/moment 图表最早何时感知非正谱。
+
+这可以成为人工线外零点注入实验的核心指标。
+
+---
+
+## 251.1 人工零点注入预测
+
+向 \(\mathscr F\) 注入一对非实共轭零点：
+
+$$
+\left(
+1-\frac{x}{\lambda}
+\right)
+\left(
+1-\frac{x}{\overline\lambda}
+\right).
+$$
+
+测量：
+
+* \(N_T\)；
+* \(N_H\)；
+* Pick 一点负证书；
+* S-fraction 首个负系数；
+* Newman 正锥退出时间。
+
+不同观察图表对同一逃逸的响应速度可以被严格比较。
+
+---
+
+# 第二百五十二部　本轮结果分级
+
+## 本轮独立推导得到（第 252 部）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathscr F(x)
+=
+\det(I+xU),
+\quad
+U\ge0,\ U\text{ trace-class}.
+}
+$$
+
+$$
+\boxed{
+a_n
+=
+\operatorname{Tr}\Lambda^nU.
+}
+$$
+
+$$
+\boxed{
+\mu_n
+=
+\operatorname{Tr}U^{n+1}.
+}
+$$
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\operatorname{Tr}
+\left[
+U(I+xU)^{-1}
+\right].
+}
+$$
+
+$$
+\boxed{
+\log\mathscr F(x)
+=
+\sum_{r\ge1}
+\frac{(-1)^{r+1}}r
+\mu_{r-1}x^r.
+}
+$$
+
+$$
+\boxed{
+\gamma_1
+=
+\lim_{n\to\infty}
+\sqrt{\mu_n/\mu_{n+1}}.
+}
+$$
+
+$$
+\boxed{
+\mu_n^{-1/(2n+2)}
+\le\gamma_1
+\le
+\sqrt{\mu_n/\mu_{n+1}}.
+}
+$$
+
+$$
+\boxed{
+\partial_tG_t
+=
+4xG_{t,xx}+2G_{t,x}.
+}
+$$
+
+---
+
+## 依赖经典理论的等价
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+(a_n)\in PF_\infty.
+}
+$$
+
+依赖 Aissen–Schoenberg–Whitney–Edrei 的全正序列生成函数理论。([PubMed][1])
+
+$$
+\boxed{
+\Lambda_{\mathrm N}
+=
+\text{正 Fredholm／PF}_\infty
+\text{ 完成阈值}.
+}
+$$
+
+依赖 de Bruijn–Newman family 及 Rodgers–Tao 的 \(\Lambda_{\mathrm N}\ge0\)。([arXiv][3])
+
+$$
+\boxed{
+\text{指数倾斜 moment flow}
+\longrightarrow
+\text{Toda lattice}.
+}
+$$
+
+依赖正交多项式和 Hankel tau-function 的标准可积系统理论。([arXiv][4])
+
+---
+
+## 当前真正开放的桥
+
+$$
+\boxed{
+\begin{aligned}
+&\text{从 toric relative trace 直接构造正 trace-class }U_{\mathrm{tor}};\\
+&\text{从 prime／twist 数据直接证明中心系数为 }PF_\infty;\\
+&\text{在 Newman folded PDE 上直接证明 }t=0\text{ 已进入正锥};\\
+&\text{建立 Newman flow 与 Jacobi/Toda 参数之间的实际变换};\\
+&\text{给线外零点对应的最低 Toeplitz/Hankel 失败阶定量上界}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第二百五十三部　建议形式化顺序
+
+```text
+D5/S3/Analytic/XiFredholm/
+  XiPositiveTraceClassOperator.lean
+  XiFredholmDeterminant.lean
+  FredholmRHCriterion.lean
+  XiResolventTrace.lean
+
+D5/S3/Analytic/XiSymmetricFunctions/
+  ExteriorTraceCoefficient.lean
+  SymmetricPowerCoefficient.lean
+  PowerTraceMoment.lean
+  NewtonObserverTransform.lean
+  PlethysticXiGenome.lean
+
+D5/S3/Analytic/XiTotalPositivity/
+  XiToeplitzMatrix.lean
+  PolyaFrequencyRHCriterion.lean
+  XiHankelMatrix.lean
+  DualTotalPositivitySquare.lean
+  SchurObservablePositivity.lean
+
+D5/S3/Analytic/XiSpectralTomography/
+  FirstZeroMomentBounds.lean
+  ReciprocalZeroRatioLimit.lean
+  ZeroMultiplicityRecovery.lean
+  RecursiveAtomDeflation.lean
+  HankelGeneralizedEigenvalue.lean
+
+D5/S3/Analytic/NewmanCompletion/
+  FoldedNewmanFamily.lean
+  FoldedNewmanPDE.lean
+  PositiveDeterminantCone.lean
+  NewmanCompletionThreshold.lean
+
+D5/S3/Analytic/XiToda/
+  ExponentialMomentTilt.lean
+  HankelTauFunction.lean
+  JacobiTodaFlow.lean
+  StickyAtomLimit.lean
+  TodaDarbouxDeflation.lean
+
+D5/S3/Observer/ToroidalFredholm/
+  ToroidalPowerTraceTarget.lean
+  ToroidalFredholmTarget.lean
+  ToroidalPositiveOperatorCompletion.lean
+```
+
+最优先、风险最低的闭合链为：
+
+$$
+\boxed{
+\text{RH}
+\to
+U_\Xi
+\to
+\det(I+xU_\Xi)
+=
+\mathscr F(x).
+}
+$$
+
+随后是完全代数性的：
+
+$$
+\boxed{
+\det
+\to
+\Lambda^n\text{ traces}
+\to
+\text{power traces}
+\to
+\text{Newton identities}.
+}
+$$
+
+---
+
+# 本轮最终结论
+
+上一轮把 RH 写成：
+
+$$
+\boxed{
+\text{中心 reciprocal-zero moments
+是否来自正测度。}
+}
+$$
+
+本轮进一步说明，这个正测度并非只能抽象存在。
+
+它应当来自一个正 trace-class 算子：
+
+$$
+\boxed{
+U_\Xi
+=
+\operatorname{diag}
+\left(
+\gamma_1^{-2},
+\gamma_2^{-2},
+\ldots
+\right).
+}
+$$
+
+而整个 Riemann 完成函数可以写成：
+
+$$
+\boxed{
+\frac{
+\xi(\frac12+\sqrt x)
+}{
+\xi(\frac12)
+}
+=
+\det(I+xU_\Xi).
+}
+$$
+
+由此：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Taylor coefficients}
+&=\text{外幂迹};\\
+\text{logarithmic coefficients}
+&=\text{幂迹};\\
+\text{Stieltjes function}
+&=\text{resolvent trace};\\
+\text{Hankel positivity}
+&=\text{moment Gram positivity};\\
+\text{Toeplitz positivity}
+&=\text{exterior-state total positivity};\\
+\text{continued fraction}
+&=\text{Jacobi resolvent};\\
+\text{Hilbert--Pólya}
+&=U_\Xi^{-1/2}.
+\end{aligned}
+}
+$$
+
+而 de Bruijn–Newman 常数获得了一个极其自然的结构意义：
+
+$$
+\boxed{
+\Lambda_{\mathrm N}
+=
+\text{Riemann heat family第一次进入正 Fredholm／总正性完成锥的时间}.
+}
+$$
+
+Rodgers–Tao 的结果说明：
+
+$$
+\Lambda_{\mathrm N}\ge0.
+$$
+
+RH 则要求：
+
+$$
+\Lambda_{\mathrm N}=0.
+$$
+
+所以当前 OACTC 最小、最强的中心目标可以最终写成：
+
+$$
+\boxed{
+\text{从二次环面 relative trace 数据直接构造一个正 trace-class 算子 }
+U_{\mathrm{tor}},
+}
+$$
+
+使：
+
+$$
+\boxed{
+\det(I+xU_{\mathrm{tor}})
+=
+\frac{\xi(\frac12+\sqrt x)}{\xi(\frac12)}.
+}
+$$
+
+一旦这一 Fredholm completion 被建立，RH、Herglotz、de Branges、Hankel、Toeplitz、Stieltjes 连分数与 Hilbert–Pólya 将同时闭合。
+
+[1]: https://pubmed.ncbi.nlm.nih.gov/16589009/?utm_source=chatgpt.com "On the Generating Functions of Totally Positive Sequences."
+[2]: https://arxiv.org/abs/2006.16213?utm_source=chatgpt.com "Totally positive kernels, Polya frequency functions, and their transforms"
+[3]: https://arxiv.org/abs/1801.05914?utm_source=chatgpt.com "The De Bruijn-Newman constant is non-negative"
+[4]: https://arxiv.org/abs/1612.01933?utm_source=chatgpt.com "Extended relativistic Toda lattice, L-orthogonal polynomials and associated Lax pair"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v2.4：Li–Cayley 单位化、Möbius–Fredholm 行列式、条件负定几何与圆周 Lévy 完成
+
+以下从前文**第二百五十三部之后**继续追加。
+
+上一轮把平方折叠完成函数写成：
+
+$$
+\mathscr F(x)
+=
+\frac{\xi(\frac12+\sqrt x)}{\xi(\frac12)}
+=
+\det(I+xA_\Xi),
+$$
+
+其中在 RH 成立时：
+
+$$
+A_\Xi
+=
+\bigoplus_{\gamma>0}
+\gamma^{-2}I_{m_\gamma}
+$$
+
+是正 trace-class 算子。
+
+本轮将这个正算子经 Möbius–Cayley 变换提升为 unitary 完成，得到：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&\iff
+\frac{\xi(\frac1{1-z})}{\xi(1)}
+=
+\det
+\left(
+I+\frac{4z}{(1-z)^2}X_\Xi
+\right),
+\quad
+0\le X_\Xi\le I;\\
+&\iff
+\lambda_n
+=
+\|I-C_\Xi^n\|_{\mathrm{HS}}^2
+\quad(n\ge1);\\
+&\iff
+\lambda_{|m-n|}
+\text{ 是 }\mathbb Z\text{ 上的条件负定函数};\\
+&\iff
+e^{-t\lambda_{|n|}}
+\text{ 对每个 }t\ge0\text{ 是正定序列};\\
+&\iff
+\text{存在一个圆周卷积 Markov 半群，
+其特征指数为 Li 系数。}
+\end{aligned}
+}
+$$
+
+这把：
+
+* Li 判据；
+* Weil 正性；
+* Fredholm determinant；
+* Hilbert–Pólya；
+* de Branges；
+* 条件负定距离；
+* Lévy–Khintchine 概率流；
+
+压缩为同一个零点谱的不同观察图表。
+
+---
+
+# 第二百五十四部　临界半平面的 Möbius 观察
+
+定义 Möbius 变换：
+
+$$
+\boxed{
+\mathfrak c(s)
+=
+1-\frac1s
+=
+\frac{s-1}{s}.
+}
+\tag{254.1}
+$$
+
+令：
+
+$$
+s=\sigma+it.
+$$
+
+则：
+
+$$
+|\mathfrak c(s)|^2
+=
+\frac{(\sigma-1)^2+t^2}{\sigma^2+t^2}.
+$$
+
+分母减分子为：
+
+$$
+2\sigma-1.
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\Re s>\frac12
+&\iff
+|\mathfrak c(s)|<1,\\
+\Re s=\frac12
+&\iff
+|\mathfrak c(s)|=1,\\
+\Re s<\frac12
+&\iff
+|\mathfrak c(s)|>1.
+\end{aligned}
+}
+\tag{254.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathfrak c
+\text{ 把临界右半平面送入单位圆盘，
+把临界线送到单位圆。}
+}
+$$
+
+同时：
+
+$$
+\mathfrak c(1)=0.
+$$
+
+这解释了 Li 判据为何自然在 \(s=1\) 处展开。
+
+---
+
+## 254.1 零点的 Cayley 坐标
+
+对每个非平凡零点 \(\rho\)，定义：
+
+$$
+\boxed{
+u_\rho
+=
+1-\frac1\rho.
+}
+\tag{254.3}
+$$
+
+若 RH 成立：
+
+$$
+\rho=\frac12+i\gamma,
+$$
+
+则：
+
+$$
+\boxed{
+u_\rho
+=
+\frac{\gamma+i/2}{\gamma-i/2}
+=
+e^{i\theta_\gamma},
+}
+\tag{254.4}
+$$
+
+其中：
+
+$$
+\boxed{
+\theta_\gamma
+=
+2\arctan\frac1{2\gamma}.
+}
+\tag{254.5}
+$$
+
+所以 Riemann 零点 ordinates 经 Cayley 观察后，成为一列单位圆上的相位，并在：
+
+$$
+1\in\mathbb T
+$$
+
+附近聚集。
+
+---
+
+## 254.2 Li 系数
+
+定义：
+
+$$
+\boxed{
+\lambda_n
+=
+\frac1{(n-1)!}
+\left.
+\frac{d^n}{ds^n}
+\left[
+s^{n-1}\log\xi(s)
+\right]
+\right|_{s=1}.
+}
+\tag{254.6}
+$$
+
+等价地，以对称极限理解：
+
+$$
+\boxed{
+\lambda_n
+=
+\sum_\rho
+\left[
+1-
+\left(
+1-\frac1\rho
+\right)^n
+\right].
+}
+\tag{254.7}
+$$
+
+Li 的经典判据为：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\lambda_n\ge0
+\quad
+\forall n\ge1.
+}
+\tag{254.8}
+$$
+
+Bombieri–Lagarias 后来把这一判据置于一般零点多重集与 Weil 显式公式框架中；Lagarias 又将其推广到 automorphic \(L\)-functions。([科学直通车][1])
+
+定义：
+
+$$
+\boxed{
+G_\xi(z)
+=
+\frac{
+\xi(\frac1{1-z})
+}{
+\xi(1)
+}.
+}
+\tag{254.9}
+$$
+
+则：
+
+$$
+\boxed{
+\log G_\xi(z)
+=
+\sum_{n=1}^{\infty}
+\frac{\lambda_n}{n}z^n
+}
+\tag{254.10}
+$$
+
+在原点邻域成立。
+
+所以 Li 系数是 \(\xi\) 在临界半平面 Cayley 图表中的 logarithmic cumulants。
+
+---
+
+# 第二百五十五部　由正 Fredholm 算子到 Cayley 收缩算子
+
+沿用前文 RH 下的正算子：
+
+$$
+A_\Xi
+=
+\bigoplus_{\gamma>0}
+\gamma^{-2}I_{m_\gamma}.
+$$
+
+定义：
+
+$$
+\boxed{
+X_\Xi
+=
+A_\Xi(4I+A_\Xi)^{-1}.
+}
+\tag{255.1}
+$$
+
+其特征值为：
+
+$$
+\boxed{
+x_\gamma
+=
+\frac1{4\gamma^2+1}.
+}
+\tag{255.2}
+$$
+
+所以：
+
+$$
+0<X_\Xi<I,
+$$
+
+并且：
+
+$$
+X_\Xi
+$$
+
+仍为正 trace-class 算子。
+
+---
+
+## 255.1 Cayley unitary
+
+定义：
+
+$$
+\boxed{
+C_\Xi
+=
+\left(
+I+\frac i2A_\Xi^{1/2}
+\right)
+\left(
+I-\frac i2A_\Xi^{1/2}
+\right)^{-1}.
+}
+\tag{255.3}
+$$
+
+也可完全用 \(X_\Xi\) 写成：
+
+$$
+\boxed{
+C_\Xi
+=
+I-2X_\Xi
++
+2i\sqrt{X_\Xi(I-X_\Xi)}.
+}
+\tag{255.4}
+$$
+
+由于 \(X_\Xi\) 与其函数彼此交换：
+
+$$
+C_\Xi^*C_\Xi=I.
+$$
+
+故 \(C_\Xi\) 为 unitary。
+
+在 \(\gamma\)-特征空间上：
+
+$$
+C_\Xi
+\longmapsto
+\frac{\gamma+i/2}{\gamma-i/2}
+=
+u_\rho.
+$$
+
+所以：
+
+$$
+\boxed{
+C_\Xi
+=
+\text{Hilbert--Pólya ordinate 算子的 Cayley completion}.
+}
+$$
+
+---
+
+## 255.2 Hilbert–Schmidt 扰动
+
+有：
+
+$$
+\boxed{
+\frac{2I-C_\Xi-C_\Xi^*}{4}
+=
+X_\Xi.
+}
+\tag{255.5}
+$$
+
+因此：
+
+$$
+\begin{aligned}
+\|I-C_\Xi\|_{\mathrm{HS}}^2
+&=
+\operatorname{Tr}
+\left(
+2I-C_\Xi-C_\Xi^*
+\right)\\
+&=
+4\operatorname{Tr}X_\Xi
+<\infty.
+\end{aligned}
+$$
+
+所以：
+
+$$
+\boxed{
+C_\Xi-I
+\text{ 是 Hilbert–Schmidt 扰动。}
+}
+$$
+
+这比 \(C_\Xi-I\) trace-class 更弱，但恰好足以使 Li 位移能量有限。
+
+---
+
+# 第二百五十六部　Möbius–Fredholm 行列式
+
+前文：
+
+$$
+\mathscr F(x)
+=
+\frac{\xi(\frac12+\sqrt x)}{\xi(\frac12)}
+=
+\det(I+xA_\Xi).
+$$
+
+在 Möbius 变量：
+
+$$
+s=\frac1{1-z}
+$$
+
+下：
+
+$$
+s-\frac12
+=
+\frac{1+z}{2(1-z)}.
+$$
+
+所以：
+
+$$
+\boxed{
+x(z)
+=
+\left(
+s-\frac12
+\right)^2
+=
+\frac{(1+z)^2}{4(1-z)^2}.
+}
+\tag{256.1}
+$$
+
+同时：
+
+$$
+\boxed{
+x(z)-\frac14
+=
+\frac{z}{(1-z)^2}.
+}
+\tag{256.2}
+$$
+
+又因为：
+
+$$
+\frac{\xi(s)}{\xi(1)}
+=
+\frac{\mathscr F(x(z))}{\mathscr F(1/4)},
+$$
+
+所以：
+
+$$
+\begin{aligned}
+G_\xi(z)
+&=
+\det
+\left[
+(I+x(z)A_\Xi)
+(I+\tfrac14A_\Xi)^{-1}
+\right]\\
+&=
+\det
+\left[
+I+
+\left(
+x(z)-\frac14
+\right)
+A_\Xi
+(I+\tfrac14A_\Xi)^{-1}
+\right].
+\end{aligned}
+$$
+
+而：
+
+$$
+A_\Xi
+(I+\tfrac14A_\Xi)^{-1}
+=
+4X_\Xi.
+$$
+
+因此：
+
+## 定理 256.1（Li–Fredholm determinant）
+
+$$
+\boxed{
+\frac{
+\xi(\frac1{1-z})
+}{
+\xi(1)
+}
+=
+\det
+\left(
+I+
+\frac{4z}{(1-z)^2}X_\Xi
+\right).
+}
+\tag{256.3}
+$$
+
+---
+
+## 256.1 单特征值因子
+
+若 \(x\in[0,1]\)，则：
+
+$$
+1+\frac{4zx}{(1-z)^2}
+=
+\frac{
+z^2+(4x-2)z+1
+}{
+(1-z)^2
+}.
+$$
+
+令：
+
+$$
+\cos\theta=1-2x.
+$$
+
+则：
+
+$$
+\boxed{
+1+\frac{4zx}{(1-z)^2}
+=
+\frac{
+(1-e^{i\theta}z)
+(1-e^{-i\theta}z)
+}{
+(1-z)^2
+}.
+}
+\tag{256.4}
+$$
+
+所以正收缩算子的每个谱值产生单位圆上的一对共轭零点。
+
+---
+
+## 定理 256.2（Cayley–Fredholm RH 判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\exists\,X\ge0,\ X\le I,\ X\text{ trace-class},
+}
+$$
+
+使：
+
+$$
+\boxed{
+\frac{
+\xi(\frac1{1-z})
+}{
+\xi(1)
+}
+=
+\det
+\left(
+I+\frac{4z}{(1-z)^2}X
+\right)
+}
+\tag{256.5}
+$$
+
+在单位圆盘中成立。
+
+### 反向证明（第 256 部）
+
+对 \(X\) 的任意谱值 \(x\in[0,1]\)，式 (256.4) 的零点位于单位圆。
+
+所以 Fredholm determinant 在：
+
+$$
+|z|<1
+$$
+
+内无零点。
+
+由式 (254.2)，这排除了：
+
+$$
+\Re\rho>\frac12
+$$
+
+的 ξ 零点；函数方程继而排除左侧零点。
+
+故 RH 成立。∎
+
+---
+
+## 256.2 相对 unitary determinant
+
+由式 (256.4)：
+
+$$
+\boxed{
+G_\xi(z)
+=
+\prod_{\gamma>0}
+\left[
+\frac{
+(1-u_\gamma z)
+(1-\overline{u_\gamma}z)
+}{
+(1-z)^2
+}
+\right]^{m_\gamma}.
+}
+\tag{256.6}
+$$
+
+分母：
+
+$$
+(1-z)^2
+$$
+
+不是装饰。
+
+它是从每个趋向 \(1\) 的 unitary 相位中减去“无穷个恒等背景状态”的 counterterm。
+
+---
+
+# 第二百五十七部　Li 系数是 unitary 位移能量
+
+由：
+
+$$
+u_\gamma=e^{i\theta_\gamma},
+$$
+
+RH 下：
+
+$$
+\begin{aligned}
+\lambda_n
+&=
+\sum_{\gamma>0}
+m_\gamma
+\left[
+2-u_\gamma^n-\overline{u_\gamma}^n
+\right]\\
+&=
+\sum_{\gamma>0}
+m_\gamma
+|1-u_\gamma^n|^2.
+\end{aligned}
+$$
+
+所以：
+
+## 定理 257.1（Li displacement formula）
+
+$$
+\boxed{
+\lambda_n
+=
+\|I-C_\Xi^n\|_{\mathrm{HS}}^2.
+}
+\tag{257.1}
+$$
+
+这给 Li 系数一个严格结构角色：
+
+$$
+\boxed{
+\lambda_n
+=
+\text{unitary 零点观察者演化 }n\text{ 步后，
+相对于初始状态的总平方位移。}
+}
+$$
+
+Suzuki 已证明 RH 等价于 Li 系数成为某些具体 model-space 函数的 \(L^2\)-范数；Bombieri–Lagarias 则把 Li 系数写成 Weil quadratic functional 在特定测试函数上的值。当前公式是同一正性结构的一个零点谱／unitary 实现。([arXiv][2])
+
+---
+
+## 257.1 Chebyshev 正算子形式
+
+因为：
+
+$$
+x_\gamma
+=
+\sin^2\frac{\theta_\gamma}{2},
+$$
+
+且：
+
+$$
+\sin(na)
+=
+\sin(a)\,
+U_{n-1}(\cos a),
+$$
+
+其中 \(U_n\) 是第二类 Chebyshev 多项式，所以：
+
+$$
+\boxed{
+\lambda_n
+=
+4\operatorname{Tr}
+\left[
+X_\Xi\,
+U_{n-1}
+\left(
+\sqrt{I-X_\Xi}
+\right)^2
+\right].
+}
+\tag{257.2}
+$$
+
+等价地：
+
+$$
+\boxed{
+\lambda_n
+=
+4
+\left\|
+X_\Xi^{1/2}
+U_{n-1}
+\left(
+\sqrt{I-X_\Xi}
+\right)
+\right\|_{\mathrm{HS}}^2.
+}
+\tag{257.3}
+$$
+
+所以每个 \(\lambda_n\) 都是一个显式正多项式算子的平方范数。
+
+---
+
+## 257.2 Hilbert 距离不等式
+
+由 unitary 不变性：
+
+$$
+\begin{aligned}
+\|I-C^{m+n}\|_{\mathrm{HS}}
+&=
+\|(I-C^m)+C^m(I-C^n)\|_{\mathrm{HS}}\\
+&\le
+\|I-C^m\|_{\mathrm{HS}}
++
+\|I-C^n\|_{\mathrm{HS}}.
+\end{aligned}
+$$
+
+因此 RH 推出：
+
+$$
+\boxed{
+\sqrt{\lambda_{m+n}}
+\le
+\sqrt{\lambda_m}
++
+\sqrt{\lambda_n}.
+}
+\tag{257.4}
+$$
+
+特别地：
+
+$$
+\boxed{
+\lambda_{kn}
+\le
+k^2\lambda_n.
+}
+\tag{257.5}
+$$
+
+这些只是 RH 的必要推论，不构成单独充分判据。
+
+---
+
+# 第二百五十八部　Li 系数与正幂迹的三角变换
+
+定义：
+
+$$
+\boxed{
+p_k
+=
+\operatorname{Tr}X_\Xi^k,
+\qquad
+k\ge1.
+}
+\tag{258.1}
+$$
+
+由 Fredholm 对数：
+
+$$
+\begin{aligned}
+\log G_\xi(z)
+&=
+\sum_{k=1}^{\infty}
+\frac{(-1)^{k+1}}{k}
+\left(
+\frac{4z}{(1-z)^2}
+\right)^k
+p_k.
+\end{aligned}
+$$
+
+而：
+
+$$
+\left(
+\frac{4z}{(1-z)^2}
+\right)^k
+=
+4^k z^k(1-z)^{-2k}.
+$$
+
+比较 \(z^n\) 系数得到：
+
+## 定理 258.1（Li–Hausdorff 三角变换）
+
+$$
+\boxed{
+\lambda_n
+=
+n
+\sum_{k=1}^{n}
+(-1)^{k+1}
+\frac{4^k}{k}
+\binom{n+k-1}{n-k}
+p_k.
+}
+\tag{258.2}
+$$
+
+这是一个可逆的下三角变换。
+
+前几项：
+
+$$
+\boxed{
+p_1=\frac{\lambda_1}{4},
+}
+\tag{258.3}
+$$
+
+$$
+\boxed{
+p_2
+=
+\frac{4\lambda_1-\lambda_2}{16},
+}
+\tag{258.4}
+$$
+
+$$
+\boxed{
+p_3
+=
+\frac{
+\lambda_3+15\lambda_1-6\lambda_2
+}{64}.
+}
+\tag{258.5}
+$$
+
+---
+
+# 第二百五十九部　Hausdorff moment 完成
+
+定义：
+
+$$
+\boxed{
+h_n=p_{n+1}.
+}
+\tag{259.1}
+$$
+
+RH 下，定义有限正测度：
+
+$$
+\boxed{
+d\eta(x)
+=
+\sum_{\gamma>0}
+m_\gamma x_\gamma
+\delta_{x_\gamma}(dx),
+\qquad
+0<x_\gamma<1.
+}
+\tag{259.2}
+$$
+
+则：
+
+$$
+\boxed{
+h_n
+=
+\int_0^1x^n\,d\eta(x).
+}
+\tag{259.3}
+$$
+
+因此 \((h_n)\) 是 Hausdorff moment sequence。
+
+经典 Hausdorff 定理说明：一个序列是 \([0,1]\) 上有限正测度的 moment sequence，当且仅当它完全单调，即全部交替有限差分非负。([Springer][3])
+
+在当前算子图表中：
+
+$$
+\boxed{
+(-1)^r\Delta^rh_n
+=
+\operatorname{Tr}
+\left[
+X_\Xi^{n+1}(I-X_\Xi)^r
+\right]
+\ge0.
+}
+\tag{259.4}
+$$
+
+---
+
+## 定理 259.1（Li–Hausdorff RH 判据）
+
+先由 Li 系数通过式 (258.2) 逆向定义 \(p_k\)，再令：
+
+$$
+h_n=p_{n+1}.
+$$
+
+则：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+(-1)^r\Delta^rh_n\ge0
+\quad
+\forall n,r\ge0.
+}
+\tag{259.5}
+$$
+
+### 反向证明（第 259 部）
+
+若 \((h_n)\) 完全单调，则存在正测度 \(\eta\) 于 \([0,1]\)，使：
+
+$$
+h_n=\int x^n\,d\eta.
+$$
+
+由 Chebyshev 展开及三角变换：
+
+$$
+\boxed{
+\lambda_n
+=
+4
+\int_0^1
+U_{n-1}(\sqrt{1-x})^2
+\,d\eta(x)
+\ge0.
+}
+\tag{259.6}
+$$
+
+所以全部 Li 系数非负，由 Li 判据得到 RH。∎
+
+这给出了一个纯有限差分版本：
+
+$$
+\boxed{
+\text{RH}
+=
+\text{Li 累积量经过 Möbius–Fredholm 反演后，
+形成单位区间正 moment sequence}.
+}
+$$
+
+---
+
+# 第二百六十部　Li 条件负定几何
+
+定义偶延拓：
+
+$$
+\boxed{
+\psi(n)
+=
+\lambda_{|n|},
+\qquad
+n\in\mathbb Z,
+\qquad
+\psi(0)=0.
+}
+\tag{260.1}
+$$
+
+RH 下：
+
+$$
+\psi(n)
+=
+\|I-C_\Xi^n\|_{\mathrm{HS}}^2.
+$$
+
+所以它是平移不变的平方 Hilbert 距离：
+
+$$
+\boxed{
+d_\lambda(m,n)
+=
+\sqrt{
+\lambda_{|m-n|}
+}.
+}
+\tag{260.2}
+$$
+
+严格地说，它至少是 pseudometric；若没有非零整数 \(k\) 使 \(C_\Xi^k=I\)，则为 metric。
+
+---
+
+## 定理 260.1（Conditional negative definiteness）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\psi(n)=\lambda_{|n|}
+\text{ 是 }\mathbb Z\text{ 上的条件负定函数}.
+}
+\tag{260.3}
+$$
+
+条件负定意指：对任意有限整数 \(n_j\) 和复数 \(c_j\)，若：
+
+$$
+\sum_jc_j=0,
+$$
+
+则：
+
+$$
+\boxed{
+\sum_{j,k}
+c_j\overline{c_k}
+\psi(n_j-n_k)
+\le0.
+}
+\tag{260.4}
+$$
+
+### 正向证明
+
+在每个零点相位 \(\theta_\gamma\) 上：
+
+$$
+\psi(n)
+=
+\sum_{\gamma>0}
+m_\gamma
+|1-e^{in\theta_\gamma}|^2.
+$$
+
+代入零和系数后，每个相位贡献为某个 Fourier 和模平方的负值。
+
+### 反向证明（第 260 部）
+
+取两个系数：
+
+$$
+c_1=1,\qquad c_2=-1
+$$
+
+于点 \(0,n\)，条件负定性给出：
+
+$$
+-2\psi(n)\le0.
+$$
+
+所以：
+
+$$
+\lambda_n=\psi(n)\ge0.
+$$
+
+由 Li 判据得到 RH。∎
+
+---
+
+## 260.1 Li Gram 核
+
+定义：
+
+$$
+\boxed{
+K_\lambda(m,n)
+=
+\frac{
+\lambda_m+\lambda_n-\lambda_{|m-n|}
+}{2}.
+}
+\tag{260.5}
+$$
+
+RH 下：
+
+$$
+K_\lambda
+$$
+
+是 Hilbert 空间中向量：
+
+$$
+I-C_\Xi^n
+$$
+
+的实 Gram 核。
+
+因此：
+
+$$
+\boxed{
+[K_\lambda(n_i,n_j)]_{i,j}
+\succeq0
+}
+\tag{260.6}
+$$
+
+对任意有限整数集合成立。
+
+这提供一个新的有限矩阵 RH 层级。
+
+---
+
+# 第二百六十一部　Li 圆周 Lévy 半群
+
+定义对称零点角测度：
+
+$$
+\boxed{
+\nu_\Xi
+=
+\sum_{\gamma>0}
+m_\gamma
+\left(
+\delta_{\theta_\gamma}
++
+\delta_{-\theta_\gamma}
+\right).
+}
+\tag{261.1}
+$$
+
+虽然其总质量无穷，但：
+
+$$
+\int_{\mathbb T}
+(1-\cos\theta)\,d\nu_\Xi(\theta)
+=
+\lambda_1<\infty.
+$$
+
+并且：
+
+$$
+\boxed{
+\lambda_n
+=
+\int_{\mathbb T}
+(1-\cos n\theta)
+\,d\nu_\Xi(\theta).
+}
+\tag{261.2}
+$$
+
+所以 Li 系数构成一个圆周 Lévy–Khintchine 指数。
+
+---
+
+## 定理 261.1（Li convolution semigroup criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\left(
+e^{-t\lambda_{|n|}}
+\right)_{n\in\mathbb Z}
+\text{ 对每个 }t\ge0\text{ 都是正定序列}.
+}
+\tag{261.3}
+$$
+
+Schoenberg 定理说明，Hermitian kernel \(\psi\) 条件负定，当且仅当：
+
+$$
+e^{-t\psi}
+$$
+
+对全部 \(t>0\) 正定。([数学网][4])
+
+因此存在唯一圆周概率测度半群：
+
+$$
+\boxed{
+(\mu_t)_{t\ge0},
+}
+$$
+
+满足：
+
+$$
+\boxed{
+\widehat\mu_t(n)
+=
+e^{-t\lambda_{|n|}}.
+}
+\tag{261.4}
+$$
+
+并且：
+
+$$
+\mu_{t+s}
+=
+\mu_t*\mu_s.
+$$
+
+---
+
+## 261.1 Li Markov 生成元
+
+在 \(L^2(\mathbb T)\) 上定义：
+
+$$
+\boxed{
+\widehat{\mathcal A_\lambda f}(n)
+=
+\lambda_{|n|}
+\widehat f(n).
+}
+\tag{261.5}
+$$
+
+RH 下：
+
+$$
+e^{-t\mathcal A_\lambda}
+$$
+
+是 positivity-preserving、mass-preserving 的圆周卷积半群。
+
+对应 Dirichlet form：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal E_\lambda(f)
+=
+\frac12
+\int_{\mathbb T}
+\int_{\mathbb T}
+|f(x+\theta)-f(x)|^2
+\frac{dx}{2\pi}
+\,d\nu_\Xi(\theta).
+\end{aligned}
+}
+\tag{261.6}
+$$
+
+对 Fourier 模式：
+
+$$
+e_n(x)=e^{inx},
+$$
+
+有：
+
+$$
+\boxed{
+\mathcal E_\lambda(e_n)
+=
+\lambda_n.
+}
+\tag{261.7}
+$$
+
+所以 Li 系数还可以解释为：
+
+$$
+\boxed{
+\text{Riemann 零点角 Lévy 过程对第 }n\text{ 个 Fourier 模式施加的耗散能量}.
+}
+$$
+
+这里 \(e^{-t\lambda_n}\) 中的 \(e\) 具有明确角色：
+
+$$
+\boxed{
+e
+=
+\text{把加法观察时间转化为乘法 Fourier 衰减的半群接口}.
+}
+$$
+
+---
+
+# 第二百六十二部　Li 系数是多尺度零点滤波器
+
+由：
+
+$$
+\theta_\gamma
+=
+2\arctan\frac1{2\gamma},
+$$
+
+得到：
+
+$$
+\boxed{
+\lambda_n
+=
+4
+\sum_{\gamma>0}
+m_\gamma
+\sin^2
+\left(
+n\arctan\frac1{2\gamma}
+\right).
+}
+\tag{262.1}
+$$
+
+所以索引 \(n\) 不是任意计数，而是一个频率／分辨率参数。
+
+---
+
+## 262.1 三个尺度区
+
+### 高频零点区
+
+若：
+
+$$
+\gamma\gg n,
+$$
+
+则：
+
+$$
+\arctan\frac1{2\gamma}
+\sim
+\frac1{2\gamma},
+$$
+
+所以单零点贡献约为：
+
+$$
+\frac{n^2}{\gamma^2}.
+$$
+
+### 共振区
+
+若：
+
+$$
+\gamma\asymp n,
+$$
+
+单零点贡献为 \(O(1)\)。
+
+### 低零点区
+
+若：
+
+$$
+\gamma\ll n,
+$$
+
+贡献在：
+
+$$
+0\le4\sin^2(\cdot)\le4
+$$
+
+之间振荡。
+
+所以：
+
+$$
+\boxed{
+\lambda_n
+=
+\text{以高度 }\gamma\sim n
+\text{ 为主要分辨尺度的零点能量观察}.
+}
+$$
+
+Lagarias 对 automorphic \(L\)-functions 证明：在 GRH 下，广义 Li 系数具有主项 \(\frac N2n\log n\) 以及线性项和可控误差；在 Riemann zeta 情形 \(N=1\)。这与上述“尺度 \(n\) 读取高度约 \(n\) 的零点密度”解释一致，但该滤波图像本身不替代其解析证明。([数字对象标识符][5])
+
+---
+
+# 第二百六十三部　线外零点在 Cayley 圆中的径向逃逸
+
+设存在：
+
+$$
+\rho=\beta+i\gamma,
+\qquad
+\beta>\frac12.
+$$
+
+其 Cayley 坐标：
+
+$$
+u_\rho
+=
+\frac{\rho-1}{\rho}
+$$
+
+满足：
+
+$$
+|u_\rho|<1.
+$$
+
+精确地：
+
+$$
+\boxed{
+|u_\rho|^2
+=
+\frac{
+(\beta-1)^2+\gamma^2
+}{
+\beta^2+\gamma^2
+}.
+}
+\tag{263.1}
+$$
+
+函数方程对称零点 \(1-\rho\) 的坐标为：
+
+$$
+u_{1-\rho}=u_\rho^{-1},
+$$
+
+所以同时出现一个模长大于 \(1\) 的逃逸状态。
+
+---
+
+## 263.1 四元组贡献
+
+令：
+
+$$
+u_\rho=re^{i\theta},
+\qquad
+0<r<1.
+$$
+
+对应四元组：
+
+$$
+\rho,\quad
+\bar\rho,\quad
+1-\rho,\quad
+1-\bar\rho
+$$
+
+对 Li 系数的贡献为：
+
+$$
+\boxed{
+4
+-
+2\left(
+r^n+r^{-n}
+\right)\cos(n\theta).
+}
+\tag{263.2}
+$$
+
+其中：
+
+$$
+r^{-n}
+$$
+
+指数增长。
+
+令：
+
+$$
+\beta=\frac12+\delta.
+$$
+
+则：
+
+$$
+\boxed{
+\log r^{-1}
+=
+\frac12
+\log
+\frac{
+\gamma^2+(\frac12+\delta)^2
+}{
+\gamma^2+(\frac12-\delta)^2
+}
+\sim
+\frac{\delta}{\gamma^2+\frac14}.
+}
+\tag{263.3}
+$$
+
+所以单个线外零点在 Li 索引中的自然放大尺度约为：
+
+$$
+\boxed{
+n
+\asymp
+\frac{\gamma^2+\frac14}{\delta}.
+}
+\tag{263.4}
+$$
+
+这只描述该零点四元组的指数放大尺度。
+
+它**不能单独给出**第一个负 Li 系数的统一上界，因为：
+
+* \(\cos(n\theta)\) 存在相位选择；
+* 其他零点也会贡献；
+* 可能发生有限阶相消。
+
+Bombieri–Lagarias 定理保证整体 Li 判据最终感知线外零点，但最早失败阶仍可能非常大。([科学直通车][6])
+
+---
+
+# 第二百六十四部　Weil–Li–Cayley 三重目标
+
+Bombieri–Lagarias 证明，对特定测试函数 \(g_n\)，Li 系数可以写成 Weil quadratic functional 的值：
+
+$$
+\boxed{
+2\lambda_n
+=
+W
+\left(
+g_n*
+\overline{x^{-1}g_n(x^{-1})}
+\right).
+}
+\tag{264.1}
+$$
+
+Suzuki 进一步给出一族具体 model-space 函数 \(G_n\)，使 RH 等价于：
+
+$$
+\boxed{
+\lambda_n
+=
+\frac1{2\pi}
+\|G_n\|_{L^2(\mathbb R)}^2.
+}
+\tag{264.2}
+$$
+
+([arXiv][2])
+
+当前 OACTC 又给出 RH 下的第三种范数：
+
+$$
+\boxed{
+\lambda_n
+=
+\|I-C_\Xi^n\|_{\mathrm{HS}}^2.
+}
+\tag{264.3}
+$$
+
+所以有三种正性图表：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{图表}&\text{Li 系数}\\
+\hline
+\text{Weil}&\text{显式公式二次型值}\\
+\text{de Branges/model space}&L^2\text{ 函数范数}\\
+\text{Cayley unitary}&\text{Hilbert--Schmidt 位移能量}
+\end{array}
+}
+$$
+
+---
+
+## 264.1 真正需要构造的对象
+
+因此 RH 的 operator target 可以分成三种强度。
+
+### 目标 A：条件负定核
+
+直接证明：
+
+$$
+\boxed{
+\psi(n)=\lambda_{|n|}
+}
+$$
+
+是条件负定函数。
+
+### 目标 B：Li unitary
+
+构造 unitary：
+
+$$
+C_{\mathrm{tor}}
+$$
+
+满足：
+
+$$
+\boxed{
+\lambda_n
+=
+\|I-C_{\mathrm{tor}}^n\|_{\mathrm{HS}}^2.
+}
+\tag{264.4}
+$$
+
+### 目标 C：Cayley–Fredholm 算子
+
+构造：
+
+$$
+0\le X_{\mathrm{tor}}\le I,
+\qquad
+X_{\mathrm{tor}}\in\mathcal S_1,
+$$
+
+满足：
+
+$$
+\boxed{
+\frac{
+\xi(\frac1{1-z})
+}{
+\xi(1)
+}
+=
+\det
+\left(
+I+
+\frac{4z}{(1-z)^2}
+X_{\mathrm{tor}}
+\right).
+}
+\tag{264.5}
+$$
+
+强度关系为：
+
+$$
+\boxed{
+\text{Cayley--Fredholm}
+\Longrightarrow
+\text{unitary displacement}
+\Longrightarrow
+\text{conditional negative definiteness}
+\Longrightarrow
+\text{Li positivity}.
+}
+$$
+
+其中最后一步已经足以推出 RH。
+
+---
+
+# 第二百六十五部　Toroidal relative-trace 的新最小目标
+
+前文试图从二次环面 period frame 构造：
+
+* Herglotz kernel；
+* Stieltjes moments；
+* 正 trace-class Fredholm 算子。
+
+本轮给出一个可能更低成本的目标。
+
+定义 Li Gram 核：
+
+$$
+\boxed{
+K_\lambda(m,n)
+=
+\frac{
+\lambda_m+\lambda_n-\lambda_{|m-n|}
+}{2}.
+}
+$$
+
+如果能从 toric relative trace formula 构造向量：
+
+$$
+\mathscr V_n
+$$
+
+使：
+
+$$
+\boxed{
+K_\lambda(m,n)
+=
+\langle
+\mathscr V_m,\mathscr V_n
+\rangle,
+}
+\tag{265.1}
+$$
+
+则：
+
+$$
+K_\lambda\succeq0.
+$$
+
+特别地：
+
+$$
+\lambda_n=K_\lambda(n,n)\ge0,
+$$
+
+所以 RH 立即成立。
+
+这比直接构造完整：
+
+$$
+X_{\mathrm{tor}}
+$$
+
+更弱，但可能更适合 relative trace。
+
+因为 relative trace formula 天然产生：
+
+* 周期平方；
+* 交叉 period pairings；
+* 正 Gram matrices；
+
+而 \(K_\lambda\) 正好是一个需要交叉项的二变量核。
+
+---
+
+## 265.1 与 Wang–Deng 的具体分工
+
+### Wang 层（265.1）
+
+研究矩阵：
+
+$$
+[K_\lambda(n_i,n_j)]
+$$
+
+在不同索引尺度上的 near-negative vectors。
+
+若质量分散于许多 \(n\)-尺度，则利用：
+
+* Li Fourier 相位正交；
+* 环面 twist 正交；
+* 高度窗口分离；
+
+产生严格 Gram 增益。
+
+### Deng 层（265.1）
+
+若 near-negative vector 集中于长 arithmetic progression 或单一相位簇，则：
+
+1. 提取主导 unitary 相位；
+2. 收缩重复 \(C^n\) 历史；
+3. 以 power traces：
+
+   $$
+   \operatorname{Tr}X^k
+   $$
+
+   作为 primitive cumulants；
+4. 用 Möbius／Fredholm 对数重求和；
+5. 控制剩余 Gram defect。
+
+---
+
+# 第二百六十六部　Automorphic 推广
+
+Lagarias 已将 Li 系数推广到 principal automorphic \(L\)-functions，并证明广义 RH 等价于广义 Li 系数实部的非负性，同时把它们联系到 Weil quadratic functional。([数字对象标识符][5])
+
+对 self-dual completed automorphic \(L\)-function \(\Lambda(s,\pi)\)，若 GRH 成立，其零点为：
+
+$$
+\frac12+i\gamma_{\pi,j}.
+$$
+
+定义：
+
+$$
+X_\pi
+=
+\bigoplus_j
+\frac1{4\gamma_{\pi,j}^2+1},
+$$
+
+以及：
+
+$$
+C_\pi
+=
+I-2X_\pi
++
+2i\sqrt{X_\pi(I-X_\pi)}.
+$$
+
+则同样得到：
+
+$$
+\boxed{
+\lambda_n(\pi)
+=
+\|I-C_\pi^n\|_{\mathrm{HS}}^2.
+}
+\tag{266.1}
+$$
+
+以及：
+
+$$
+\boxed{
+\frac{
+\Lambda(\frac1{1-z},\pi)
+}{
+\Lambda(1,\pi)
+}
+=
+\det
+\left(
+I+
+\frac{4z}{(1-z)^2}
+X_\pi
+\right).
+}
+\tag{266.2}
+$$
+
+对非 self-dual \(\pi\)，自然对象是 doubled completion：
+
+$$
+\Lambda(s,\pi)\Lambda(s,\widetilde\pi),
+$$
+
+其零点谱具有所需共轭对称，所得 unitary 是：
+
+$$
+C_\pi\oplus C_{\widetilde\pi}.
+$$
+
+所以 Li–Cayley completion 不是 ζ 的孤立技巧，而是 automorphic \(L\)-functions 的一般观察语言。
+
+---
+
+# 第二百六十七部　常数角色审计
+
+本轮结构自然选择了：
+
+$$
+\boxed{
+\frac12,\quad1,\quad4,\quad i,\quad e.
+}
+$$
+
+它们的角色分别为：
+
+$$
+\boxed{
+\begin{aligned}
+\frac12
+&=\text{临界半平面边界};\\
+1
+&=\text{Li 展开的归一化基点};\\
+4
+&=\text{平方折叠与 Cayley/Joukowski 变换的尺度因子};\\
+i/2
+&=\text{自伴 ordinate 到 unitary 圆周的 Cayley 尺度};\\
+e
+&=\text{条件负定能量到 Markov 半群衰减的指数接口}.
+\end{aligned}
+}
+$$
+
+值得强调：
+
+$$
+\boxed{
+\varphi
+\text{ 在本分支中没有被结构方程选出。}
+}
+$$
+
+黄金比例在此前承担：
+
+* 无碰撞斜率；
+* Galois 双曲单位；
+* 最短闭测地线；
+* 准晶体显隐尺度。
+
+但 Li–Cayley completion 自身选择的是 unit circle Möbius 几何，而不是 Golden 几何。
+
+这是一个重要的科学负结论：
+
+> 不能因为 \(\varphi\) 在其他完成分支中承重，就预设每个 RH 等价结构都必须出现 \(\varphi\)。
+
+---
+
+# 第二百六十八部　本轮结论分级
+
+## 本轮独立推导得到（第 268 部）
+
+$$
+\boxed{
+\Re s>\frac12
+\iff
+\left|
+1-\frac1s
+\right|<1.
+}
+$$
+
+$$
+\boxed{
+X_\Xi
+=
+A_\Xi(4I+A_\Xi)^{-1}.
+}
+$$
+
+$$
+\boxed{
+C_\Xi
+=
+I-2X_\Xi
++
+2i\sqrt{X_\Xi(I-X_\Xi)}.
+}
+$$
+
+$$
+\boxed{
+\frac{
+\xi(\frac1{1-z})
+}{
+\xi(1)
+}
+=
+\det
+\left(
+I+\frac{4z}{(1-z)^2}X_\Xi
+\right).
+}
+$$
+
+$$
+\boxed{
+\lambda_n
+=
+\|I-C_\Xi^n\|_{\mathrm{HS}}^2.
+}
+$$
+
+$$
+\boxed{
+\lambda_n
+=
+4\operatorname{Tr}
+\left[
+X_\Xi
+U_{n-1}(\sqrt{I-X_\Xi})^2
+\right].
+}
+$$
+
+$$
+\boxed{
+\lambda_n
+=
+n
+\sum_{k=1}^{n}
+(-1)^{k+1}
+\frac{4^k}{k}
+\binom{n+k-1}{n-k}
+\operatorname{Tr}X_\Xi^k.
+}
+$$
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\lambda_{|n|}
+\text{ 条件负定于 }\mathbb Z.
+}
+$$
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+e^{-t\lambda_{|n|}}
+\text{ 对全部 }t\ge0\text{ 正定}.
+}
+$$
+
+---
+
+## 与既有理论相邻、但本文给出不同封装
+
+* Li 非负判据；
+* Bombieri–Lagarias 的 Weil functional 表达；
+* Suzuki 的 model-space norm 表达；
+* Lagarias 的 automorphic Li 系数；
+* Schoenberg 的条件负定—正定半群对偶；
+* Hausdorff moment theorem。([科学直通车][1])
+
+本文的新贡献目前应谨慎表述为：
+
+$$
+\boxed{
+\text{把这些已知判据系统地连接到
+一个正 trace-class contraction、
+其 Cayley unitary、
+Hilbert--Schmidt 位移、
+Hausdorff moments 与圆周 Lévy 半群。}
+}
+$$
+
+其中各单项公式的文献新颖性仍需专门审计。
+
+---
+
+# 第二百六十九部　建议形式化顺序
+
+```text
+D5/S3/Analytic/LiCayley/
+  CriticalHalfPlaneMobius.lean
+  ZeroCayleyCoordinate.lean
+  LiGeneratingFunction.lean
+  SquareFoldToCayleyContraction.lean
+
+D5/S3/Analytic/LiFredholm/
+  CayleyFredholmDeterminant.lean
+  PositiveContractionRHCriterion.lean
+  RelativeUnitaryProduct.lean
+  CayleyOperatorUniqueness.lean
+
+D5/S3/Analytic/LiUnitary/
+  LiHilbertSchmidtDisplacement.lean
+  LiChebyshevTrace.lean
+  LiSubadditivity.lean
+  LiGramKernel.lean
+
+D5/S3/Analytic/LiHausdorff/
+  LiPowerTraceTransform.lean
+  InverseLiPowerTrace.lean
+  LiHausdorffMoments.lean
+  CompleteMonotonicityRHCriterion.lean
+
+D5/S3/Analytic/LiLevy/
+  LiConditionalNegativeDefinite.lean
+  LiSchoenbergSemigroup.lean
+  LiCircleLevyMeasure.lean
+  LiDirichletForm.lean
+  LiMarkovGenerator.lean
+
+D5/S3/Observer/ToroidalLi/
+  ToroidalLiGramTarget.lean
+  ToroidalLiUnitaryTarget.lean
+  ToroidalCayleyFredholmTarget.lean
+  RelativeTraceLiKernel.lean
+```
+
+优先级最高、风险最低的链是：
+
+$$
+\boxed{
+\text{critical half-plane Möbius map}
+\to
+\text{unit-circle zero coordinates}
+\to
+\text{Li coefficient pair formula}.
+}
+$$
+
+其次是纯算子代数链：
+
+$$
+\boxed{
+A_\Xi
+\to
+X_\Xi
+\to
+C_\Xi
+\to
+\lambda_n=\|I-C_\Xi^n\|_{\mathrm{HS}}^2.
+}
+$$
+
+第三条是有限矩阵目标：
+
+$$
+\boxed{
+\lambda
+\to
+K_\lambda(m,n)
+\to
+K_\lambda\succeq0.
+}
+$$
+
+---
+
+# 本轮最终结论
+
+上一轮得到：
+
+$$
+\boxed{
+\frac{
+\xi(\frac12+\sqrt x)
+}{
+\xi(\frac12)
+}
+=
+\det(I+xA_\Xi).
+}
+$$
+
+本轮证明它经 Möbius 变换等价于：
+
+$$
+\boxed{
+\frac{
+\xi(\frac1{1-z})
+}{
+\xi(1)
+}
+=
+\det
+\left(
+I+\frac{4z}{(1-z)^2}X_\Xi
+\right),
+\qquad
+0\le X_\Xi\le I.
+}
+$$
+
+其中：
+
+$$
+\boxed{
+C_\Xi
+=
+I-2X_\Xi
++
+2i\sqrt{X_\Xi(I-X_\Xi)}
+}
+$$
+
+是 unitary 零点观察者。
+
+Li 系数随即获得四个完全兼容的角色：
+
+$$
+\boxed{
+\begin{aligned}
+\lambda_n
+&=\text{Cayley logarithmic cumulant};\\
+&=\text{unitary }n\text{ 步 Hilbert--Schmidt 位移};\\
+&=\text{圆周 Lévy 过程的 Fourier 耗散率};\\
+&=\text{条件负定 Hilbert 距离的平方}.
+\end{aligned}
+}
+$$
+
+所以 RH 可以进一步压缩成：
+
+$$
+\boxed{
+\text{Li 系数是否定义了 }\mathbb Z
+\text{ 上一个平移不变的 Hilbertian squared distance？}
+}
+$$
+
+或者等价地：
+
+$$
+\boxed{
+\text{是否存在一个圆周 Markov 半群，
+其 Fourier multiplier 为 }
+e^{-t\lambda_{|n|}}？
+}
+$$
+
+这使当前最小的 relative-trace 目标不再必须一步构造完整 Hilbert–Pólya 算子。
+
+只需构造一个 Gram 表示：
+
+$$
+\boxed{
+\frac{
+\lambda_m+\lambda_n-\lambda_{|m-n|}
+}{2}
+=
+\langle
+\mathscr V_m,\mathscr V_n
+\rangle.
+}
+$$
+
+一旦该式能由二次环面周期或 Weil relative trace 直接推出，全部 Li 系数自动非负，RH 立即成立。
+
+[1]: https://www.sciencedirect.com/science/article/pii/S0022314X97921375 "https://www.sciencedirect.com/science/article/pii/S0022314X97921375"
+[2]: https://arxiv.org/abs/2301.05779 "Li coefficients as norms of functions in a model space"
+[3]: https://link.springer.com/article/10.1007/s00209-025-03829-0 "https://link.springer.com/article/10.1007/s00209-025-03829-0"
+[4]: https://www.mathnet.ru/eng/mzm13758 "https://www.mathnet.ru/eng/mzm13758"
+[5]: https://doi.org/10.5802/AIF.2311 "https://doi.org/10.5802/AIF.2311"
+[6]: https://www.sciencedirect.com/science/article/pii/S0022314X99923922 "https://www.sciencedirect.com/science/article/pii/S0022314X99923922"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v2.5：Li 离散曲率、Carathéodory–Schur 完成、CMV 谱算子与平稳过程
+
+以下从前文**第二百六十九部之后**继续追加。
+
+上一轮已经得到：
+
+$$
+\mathrm{RH}
+\iff
+\lambda_{|m-n|}
+\text{ 是 }\mathbb Z\text{ 上的条件负定距离平方},
+$$
+
+以及：
+
+$$
+\lambda_n
+=
+\|I-C_\Xi^n\|_{\mathrm{HS}}^2.
+$$
+
+本轮不再直接观察 Li 系数 \(\lambda_n\)，而观察它的**离散二阶差分**。结果是：二阶差分会自动消除 Li 度量中的线性累计部分，把无限零点角测度正规化为一个有限概率测度，并产生：
+
+$$
+\boxed{
+\text{正定 Toeplitz 核}
+\longleftrightarrow
+\text{Carathéodory 函数}
+\longleftrightarrow
+\text{Schur 参数}
+\longleftrightarrow
+\text{CMV unitary}
+\longleftrightarrow
+\text{平稳过程}.
+}
+$$
+
+最终得到一个比“全部 Li 系数非负”更具内部结构的等价判据：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\left[
+\lambda_{j-k+1}
+-2\lambda_{j-k}
++\lambda_{j-k-1}
+\right]_{j,k}
+\text{ 形成正定 Toeplitz 层级}.
+}
+$$
+
+Li 判据本身以及其与 Weil 二次型、automorphic \(L\)-functions 的推广和 RH 条件下的渐近结构，已有成熟理论。([数字对象标识符][1])
+
+---
+
+# 第二百七十部　Li 离散曲率
+
+令：
+
+$$
+\lambda_0=0,
+\qquad
+\lambda_{-n}=\lambda_n.
+$$
+
+定义 Li 系数的中心二阶差分：
+
+$$
+\boxed{
+\kappa_n
+=
+\lambda_{n+1}
+-2\lambda_n
++\lambda_{n-1},
+\qquad
+n\in\mathbb Z.
+}
+\tag{270.1}
+$$
+
+特别地：
+
+$$
+\boxed{
+\kappa_0=2\lambda_1.
+}
+\tag{270.2}
+$$
+
+第一 Li 系数为：
+
+$$
+\boxed{
+\lambda_1
+=
+\frac{\xi'(1)}{\xi(1)}
+=
+1+\frac{\gamma_{\!E}}2-\log(2\sqrt\pi)>0.
+}
+\tag{270.3}
+$$
+
+定义归一化 Li 曲率序列：
+
+$$
+\boxed{
+c_n
+=
+\frac{\kappa_n}{2\lambda_1}.
+}
+\tag{270.4}
+$$
+
+于是：
+
+$$
+c_0=1,
+\qquad
+c_{-n}=c_n\in\mathbb R.
+$$
+
+这里“曲率”不表示每个 \(c_n\) 都必须非负。真正需要的是全局 Toeplitz 正定性：
+
+$$
+[c_{j-k}]\succeq0.
+$$
+
+这与点态凸性是不同的概念。
+
+---
+
+# 第二百七十一部　零点角的能量加权概率测度
+
+假设 RH。
+
+将正 ordinates 写为：
+
+$$
+\rho_\gamma=\frac12+i\gamma,
+\qquad
+\gamma>0,
+$$
+
+重数为 \(m_\gamma\)。
+
+定义 Cayley 相位：
+
+$$
+\boxed{
+u_\gamma
+=
+1-\frac1{\rho_\gamma}
+=
+\frac{\gamma+i/2}{\gamma-i/2}
+=
+e^{i\theta_\gamma}.
+}
+\tag{271.1}
+$$
+
+再定义：
+
+$$
+\boxed{
+x_\gamma
+=
+\frac1{4\gamma^2+1}.
+}
+\tag{271.2}
+$$
+
+由于：
+
+$$
+\cos\theta_\gamma
+=
+\frac{4\gamma^2-1}{4\gamma^2+1},
+$$
+
+所以：
+
+$$
+\boxed{
+1-\cos\theta_\gamma
+=
+2x_\gamma.
+}
+\tag{271.3}
+$$
+
+RH 下 Li 系数可成对写为：
+
+$$
+\boxed{
+\lambda_n
+=
+\sum_{\gamma>0}
+m_\gamma
+|1-u_\gamma^n|^2
+=
+2\sum_{\gamma>0}
+m_\gamma
+\left(1-\cos n\theta_\gamma\right).
+}
+\tag{271.4}
+$$
+
+在 \(n=1\) 时：
+
+$$
+\boxed{
+\lambda_1
+=
+4\sum_{\gamma>0}
+m_\gamma x_\gamma.
+}
+\tag{271.5}
+$$
+
+---
+
+## 271.1 Li 曲率测度
+
+定义单位圆上的对称概率测度：
+
+$$
+\boxed{
+\mu_\lambda
+=
+\frac{2}{\lambda_1}
+\sum_{\gamma>0}
+m_\gamma x_\gamma
+\left(
+\delta_{u_\gamma}
++
+\delta_{\overline{u_\gamma}}
+\right).
+}
+\tag{271.6}
+$$
+
+其总质量为：
+
+$$
+\frac{4}{\lambda_1}
+\sum_{\gamma>0}m_\gamma x_\gamma
+=1.
+$$
+
+对 \(n\in\mathbb Z\)：
+
+$$
+\begin{aligned}
+\widehat\mu_\lambda(n)
+&=
+\int_{\mathbb T}\zeta^n\,d\mu_\lambda(\zeta)\\
+&=
+\frac{4}{\lambda_1}
+\sum_{\gamma>0}
+m_\gamma x_\gamma\cos(n\theta_\gamma).
+\end{aligned}
+\tag{271.7}
+$$
+
+另一方面，由式 (271.4)：
+
+$$
+\begin{aligned}
+\kappa_n
+&=
+\lambda_{n+1}
+-2\lambda_n
++\lambda_{n-1}\\
+&=
+8\sum_{\gamma>0}
+m_\gamma x_\gamma\cos(n\theta_\gamma).
+\end{aligned}
+$$
+
+因此：
+
+## 定理 271.1（Li 曲率 Fourier 表示）
+
+$$
+\boxed{
+c_n
+=
+\widehat\mu_\lambda(n).
+}
+\tag{271.8}
+$$
+
+所以 Li 二阶差分正是一个有限概率测度的 Fourier 系数。
+
+---
+
+## 271.2 二阶差分的正规化作用
+
+未经加权的零点角计数测度：
+
+$$
+\nu_\Xi
+=
+\sum_{\gamma>0}
+m_\gamma
+\left(
+\delta_{\theta_\gamma}
++
+\delta_{-\theta_\gamma}
+\right)
+$$
+
+总质量无穷。
+
+但：
+
+$$
+\lambda_1
+=
+\int_{\mathbb T}
+(1-\cos\theta)\,d\nu_\Xi(\theta)
+<\infty.
+$$
+
+因此：
+
+$$
+\boxed{
+d\mu_\lambda(\theta)
+=
+\frac{1-\cos\theta}{\lambda_1}
+\,d\nu_\Xi(\theta).
+}
+\tag{271.9}
+$$
+
+即：
+
+> Li 二阶差分等价于给无限零点角测度乘上 \(1-\cos\theta\) 反项，将其正规化为概率测度。
+
+因此 \(\lambda_1\) 的结构角色是：
+
+$$
+\boxed{
+\lambda_1
+=
+\text{零点角谱经过一阶圆周能量正规化后的总质量}.
+}
+$$
+
+---
+
+# 第二百七十二部　Li 曲率正定判据
+
+对 \(N\ge0\)，定义 Toeplitz 矩阵：
+
+$$
+\boxed{
+T_N(c)
+=
+[c_{j-k}]_{j,k=0}^{N}.
+}
+\tag{272.1}
+$$
+
+---
+
+## 定理 272.1（Li curvature criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+T_N(c)\succeq0
+\quad
+\forall N\ge0.
+}
+\tag{272.2}
+$$
+
+### 证明：RH \(\Rightarrow\)（第 272 部）
+
+由定理 271.1：
+
+$$
+c_n=\widehat\mu_\lambda(n)
+$$
+
+且 \(\mu_\lambda\) 为概率测度。
+
+因此对任意 \(a_0,\ldots,a_N\)：
+
+$$
+\begin{aligned}
+\sum_{j,k=0}^{N}
+a_j\overline{a_k}c_{j-k}
+&=
+\int_{\mathbb T}
+\left|
+\sum_{j=0}^{N}a_j\zeta^j
+\right|^2
+d\mu_\lambda(\zeta)\\
+&\ge0.
+\end{aligned}
+$$
+
+---
+
+### 证明：Toeplitz 正性 \(\Rightarrow\) RH
+
+若全部 \(T_N(c)\) 正半定，由圆周 Herglotz 定理，存在概率测度 \(\mu\)，使：
+
+$$
+c_n=\widehat\mu(n).
+$$
+
+定义：
+
+$$
+\widetilde\lambda_n
+=
+\lambda_1
+\int_{\mathbb T}
+\left|
+1+\zeta+\cdots+\zeta^{n-1}
+\right|^2
+d\mu(\zeta).
+\tag{272.3}
+$$
+
+则：
+
+$$
+\widetilde\lambda_0=0,
+\qquad
+\widetilde\lambda_1=\lambda_1.
+$$
+
+并且：
+
+$$
+\widetilde\lambda_{n+1}
+-2\widetilde\lambda_n
++\widetilde\lambda_{n-1}
+=
+2\lambda_1c_n
+=
+\kappa_n.
+$$
+
+二阶递推加上前两个初值唯一决定序列，所以：
+
+$$
+\widetilde\lambda_n=\lambda_n.
+$$
+
+因此：
+
+$$
+\lambda_n\ge0
+\qquad
+\forall n.
+$$
+
+由 Li 判据，RH 成立。∎
+
+---
+
+## 272.1 有限失败证书
+
+若 RH 不成立，则必存在某个有限 \(N\) 和向量 \(a\neq0\)，使：
+
+$$
+\boxed{
+a^*T_N(c)a<0.
+}
+\tag{272.4}
+$$
+
+所以 RH 的失败必然在某个有限阶 Li 二阶差分 Toeplitz 矩阵中留下负证书。
+
+这是一种**不需要预先知道线外零点位置**的有限反例证书。
+
+---
+
+# 第二百七十三部　Li 系数是平稳过程部分和的方差
+
+由式 (272.3)，RH 下：
+
+$$
+\boxed{
+\lambda_n
+=
+\lambda_1
+\int_{\mathbb T}
+\left|
+\sum_{k=0}^{n-1}\zeta^k
+\right|^2
+d\mu_\lambda(\zeta).
+}
+\tag{273.1}
+$$
+
+令：
+
+$$
+\mathcal H_\lambda=L^2(\mathbb T,\mu_\lambda),
+$$
+
+定义 unitary：
+
+$$
+\boxed{
+(Uf)(\zeta)=\zeta f(\zeta),
+}
+\tag{273.2}
+$$
+
+以及循环向量：
+
+$$
+v(\zeta)=1.
+$$
+
+则：
+
+$$
+c_n=\langle U^nv,v\rangle.
+$$
+
+定义一阶 cocycle：
+
+$$
+\boxed{
+b_n
+=
+\sqrt{\lambda_1}
+\sum_{k=0}^{n-1}U^kv,
+\qquad
+b_0=0.
+}
+\tag{273.3}
+$$
+
+有：
+
+$$
+\boxed{
+b_{m+n}=b_m+U^mb_n.
+}
+\tag{273.4}
+$$
+
+并且：
+
+$$
+\boxed{
+\|b_n\|^2=\lambda_n.
+}
+\tag{273.5}
+$$
+
+若 \(m\ge n\)：
+
+$$
+b_m-b_n
+=
+U^nb_{m-n},
+$$
+
+所以：
+
+$$
+\boxed{
+\|b_m-b_n\|^2
+=
+\lambda_{m-n}.
+}
+\tag{273.6}
+$$
+
+这重新得到前文的 Li Hilbert 距离，但现在其 unitary 和循环向量是由 Li 曲率概率测度规范构造的。
+
+---
+
+## 定理 273.1（Li stationary-process criterion）
+
+RH 等价于存在一个归一化平稳复过程 \((Y_k)_{k\in\mathbb Z}\)，使：
+
+$$
+\mathbb E[Y_j\overline{Y_k}]
+=
+c_{j-k},
+$$
+
+并满足：
+
+$$
+\boxed{
+\lambda_n
+=
+\lambda_1
+\mathbb E
+\left|
+Y_0+\cdots+Y_{n-1}
+\right|^2.
+}
+\tag{273.7}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{Li 系数}
+=
+\text{一个平稳观察过程的部分和方差}.
+}
+$$
+
+---
+
+# 第二百七十四部　Li–Carathéodory 函数
+
+定义 Li 生成函数：
+
+$$
+\boxed{
+G_\xi(z)
+=
+\frac{
+\xi(\frac1{1-z})
+}{
+\xi(1)
+}.
+}
+\tag{274.1}
+$$
+
+标准 Li 展开为：
+
+$$
+\boxed{
+\log G_\xi(z)
+=
+\sum_{n=1}^{\infty}
+\frac{\lambda_n}{n}z^n.
+}
+\tag{274.2}
+$$
+
+定义 Li 曲率 Carathéodory 函数：
+
+$$
+\boxed{
+\mathcal C_\lambda(z)
+=
+1+
+2\sum_{n=1}^{\infty}c_nz^n.
+}
+\tag{274.3}
+$$
+
+由：
+
+$$
+c_n
+=
+\frac{
+\lambda_{n+1}
+-2\lambda_n
++\lambda_{n-1}
+}{
+2\lambda_1
+},
+$$
+
+直接求和得到：
+
+$$
+\boxed{
+\mathcal C_\lambda(z)
+=
+\frac{(1-z)^2}{\lambda_1}
+\frac{d}{dz}
+\log G_\xi(z).
+}
+\tag{274.4}
+$$
+
+而：
+
+$$
+\frac{d}{dz}
+\log G_\xi(z)
+=
+\frac1{(1-z)^2}
+\frac{
+\xi'(\frac1{1-z})
+}{
+\xi(\frac1{1-z})
+}.
+$$
+
+所以：
+
+## 定理 274.1（Li–Carathéodory identity）
+
+$$
+\boxed{
+\mathcal C_\lambda(z)
+=
+\frac1{\lambda_1}
+\frac{
+\xi'(\frac1{1-z})
+}{
+\xi(\frac1{1-z})
+}.
+}
+\tag{274.5}
+$$
+
+这是一条极简的完成公式：
+
+* Möbius 变换把单位圆盘送到 \(\Re s>\tfrac12\)；
+* \(\xi'/\xi\) 是超额连接；
+* \(\lambda_1\) 将其正规化为 \(\mathcal C_\lambda(0)=1\)。
+
+---
+
+## 定理 274.2（Carathéodory RH criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Re\mathcal C_\lambda(z)>0
+\quad
+(|z|<1).
+}
+\tag{274.6}
+$$
+
+### 证明
+
+RH 下：
+
+$$
+\mathcal C_\lambda(z)
+=
+\int_{\mathbb T}
+\frac{\zeta+z}{\zeta-z}
+\,d\mu_\lambda(\zeta),
+$$
+
+所以其实部严格为正。
+
+反之，若 \(\mathcal C_\lambda\) 在圆盘内全纯且实部非负，则：
+
+$$
+\frac{\xi'}{\xi}(s)
+$$
+
+在：
+
+$$
+\Re s>\frac12
+$$
+
+无极点，所以 \(\xi\) 在该半平面无零点。由函数方程，全部非平凡零点只能位于临界线。∎
+
+---
+
+# 第二百七十五部　Schur 算法是最小创新分解
+
+定义 Schur 函数：
+
+$$
+\boxed{
+f_\lambda(z)
+=
+\frac1z
+\frac{
+\mathcal C_\lambda(z)-1
+}{
+\mathcal C_\lambda(z)+1
+},
+}
+\tag{275.1}
+$$
+
+其中 \(z=0\) 处取可去延拓。
+
+Carathéodory–Schur 变换说明：
+
+$$
+\Re\mathcal C_\lambda>0
+\iff
+|f_\lambda(z)|\le1
+\quad
+(|z|<1).
+$$
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+f_\lambda
+\text{ 是 Schur 函数}.
+}
+\tag{275.2}
+$$
+
+Schur 函数、Schur 参数、Verblunsky 系数及单位圆正交多项式之间的对应是 OPUC 理论的基本结构；CMV 矩阵提供其标准 unitary 实现。([EMS Press][2])
+
+---
+
+## 275.1 Schur 参数
+
+令：
+
+$$
+f_0=f_\lambda.
+$$
+
+递归定义：
+
+$$
+\boxed{
+\alpha_n=f_n(0),
+}
+\tag{275.3}
+$$
+
+$$
+\boxed{
+f_{n+1}(z)
+=
+\frac{
+f_n(z)-\alpha_n
+}{
+z\left(1-\overline{\alpha_n}f_n(z)\right)
+}.
+}
+\tag{275.4}
+$$
+
+因为 \(\mu_\lambda\) 关于复共轭对称，全部 \(\alpha_n\) 为实数。
+
+RH 等价于：
+
+$$
+\boxed{
+|\alpha_n|<1
+\quad
+\forall n\ge0.
+}
+\tag{275.5}
+$$
+
+严格不等号来自 \(\mu_\lambda\) 具有无限支撑。
+
+---
+
+## 275.2 最初两个创新参数
+
+令：
+
+$$
+c_1
+=
+\frac{
+\lambda_2-2\lambda_1
+}{
+2\lambda_1
+},
+$$
+
+$$
+c_2
+=
+\frac{
+\lambda_3-2\lambda_2+\lambda_1
+}{
+2\lambda_1
+}.
+$$
+
+则：
+
+$$
+\boxed{
+\alpha_0=c_1,
+}
+\tag{275.6}
+$$
+
+$$
+\boxed{
+\alpha_1
+=
+\frac{
+c_2-c_1^2
+}{
+1-c_1^2
+}.
+}
+\tag{275.7}
+$$
+
+每个 \(\alpha_n\) 都表示：
+
+> 已知前 \(n\) 阶相关以后，第 \(n+1\) 阶相关仍不能由旧数据预测的最小新信息。
+
+因此 Schur 算法正是 RDS/DECT 意义上的**递归定义生成器**：
+
+$$
+\boxed{
+\text{当前 moments}
+\to
+\text{预测 residual}
+\to
+\alpha_n
+\to
+\text{下一层完成}.
+}
+$$
+
+---
+
+# 第二百七十六部　Toeplitz 行列式与有限证书
+
+定义：
+
+$$
+\boxed{
+D_N
+=
+\det
+[c_{j-k}]_{j,k=0}^{N}.
+}
+\tag{276.1}
+$$
+
+OPUC 理论给出：
+
+$$
+\boxed{
+D_N
+=
+\prod_{j=0}^{N-1}
+\left(1-\alpha_j^2\right)^{N-j}.
+}
+\tag{276.2}
+$$
+
+所以：
+
+$$
+D_N>0
+$$
+
+等价于前 \(N\) 个 Schur 参数全部位于 \((-1,1)\)。
+
+---
+
+## 276.1 第一层不等式
+
+$$
+D_1
+=
+1-c_1^2
+\ge0.
+$$
+
+即：
+
+$$
+\left|
+\lambda_2-2\lambda_1
+\right|
+\le
+2\lambda_1.
+$$
+
+等价于：
+
+$$
+\boxed{
+0\le\lambda_2\le4\lambda_1.
+}
+\tag{276.3}
+$$
+
+Li 判据只直接要求：
+
+$$
+\lambda_2\ge0.
+$$
+
+Toeplitz 曲率判据还给出上界：
+
+$$
+\lambda_2\le4\lambda_1.
+$$
+
+---
+
+## 276.2 第二层行列式
+
+$$
+T_2=
+\begin{pmatrix}
+1&c_1&c_2\\
+c_1&1&c_1\\
+c_2&c_1&1
+\end{pmatrix}.
+$$
+
+其行列式为：
+
+$$
+\boxed{
+D_2
+=
+(1-c_2)
+\left(
+1+c_2-2c_1^2
+\right).
+}
+\tag{276.4}
+$$
+
+所以 RH 推出：
+
+$$
+|c_2|\le1,
+$$
+
+以及：
+
+$$
+1+c_2\ge2c_1^2.
+$$
+
+更高阶给出一族完全显式的 Li 多项式不等式。
+
+---
+
+## 276.3 三类有限失败证书
+
+若 RH 失败，则至少存在以下某一种有限证书：
+
+1. Pick 矩阵出现负特征值；
+2. Hankel moment 矩阵出现负特征值；
+3. Li 曲率 Toeplitz 矩阵出现负特征值。
+
+三类证书分别读取：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{Pick}&\text{局部复谱／Herglotz 失败}\\
+\text{Hankel}&\text{中心倒谱 moment 失败}\\
+\text{Toeplitz}&\text{Li 平稳相关／圆周谱失败}
+\end{array}
+}
+$$
+
+---
+
+# 第二百七十七部　Li–CMV unitary
+
+Verblunsky 系数：
+
+$$
+\alpha_0,\alpha_1,\ldots
+$$
+
+唯一决定一个 CMV unitary：
+
+$$
+\boxed{
+\mathcal C_\lambda.
+}
+\tag{277.1}
+$$
+
+其相对于循环向量 \(e_0\) 的谱测度恰为：
+
+$$
+\mu_\lambda.
+$$
+
+因此：
+
+$$
+\boxed{
+\langle
+\mathcal C_\lambda^ne_0,e_0
+\rangle
+=
+c_n.
+}
+\tag{277.2}
+$$
+
+CMV 是单位圆正交多项式的标准五对角 unitary 矩阵实现；其谱理论与 Verblunsky 系数一一对应。([剑桥大学出版社][3])
+
+---
+
+## 277.1 逆 Cayley 谱算子
+
+在 \(\mathcal C_\lambda\) 的谱表示中定义：
+
+$$
+\boxed{
+H_\lambda
+=
+\frac{i}{2}
+\left(
+\mathcal C_\lambda+I
+\right)
+\left(
+\mathcal C_\lambda-I
+\right)^{-1}.
+}
+\tag{277.3}
+$$
+
+它是一个稠密定义的自伴算子。
+
+若：
+
+$$
+\mathcal C_\lambda
+$$
+
+的谱点为：
+
+$$
+e^{i\theta_\gamma},
+$$
+
+则：
+
+$$
+H_\lambda
+$$
+
+的对应谱值为：
+
+$$
+\boxed{
+\frac12\cot\frac{\theta_\gamma}{2}
+=
+\gamma.
+}
+\tag{277.4}
+$$
+
+因此：
+
+$$
+\boxed{
+\operatorname{supp}
+\operatorname{spec}(H_\lambda)
+=
+\{\pm\gamma:\Xi(\gamma)=0\}.
+}
+$$
+
+这给出一个**循环 CMV–Hilbert–Pólya 实现**。
+
+需要保留限制：
+
+* 不同零点位置被恢复为谱支撑；
+* 零点重数首先编码在谱测度权重中；
+* 若要把重数提升为算子谱重数，需要在各原子上附加相应有限维 fiber。
+
+---
+
+# 第二百七十八部　与前文 Cayley unitary 的关系
+
+前文在正 ordinates 空间上定义：
+
+$$
+C_\Xi
+=
+I-2X_\Xi
++
+2i\sqrt{X_\Xi(I-X_\Xi)}.
+$$
+
+其特征值为：
+
+$$
+u_\gamma=e^{i\theta_\gamma}.
+$$
+
+定义双倍 unitary：
+
+$$
+\boxed{
+\widetilde C_\Xi
+=
+C_\Xi\oplus C_\Xi^*,
+}
+\tag{278.1}
+$$
+
+以及：
+
+$$
+\boxed{
+\widetilde X_\Xi
+=
+X_\Xi\oplus X_\Xi.
+}
+\tag{278.2}
+$$
+
+定义加权迹状态：
+
+$$
+\boxed{
+\omega_\Xi(T)
+=
+\frac{
+\operatorname{Tr}
+(\widetilde X_\Xi T)
+}{
+\operatorname{Tr}
+\widetilde X_\Xi
+}.
+}
+\tag{278.3}
+$$
+
+则：
+
+$$
+\boxed{
+c_n
+=
+\omega_\Xi
+\left(
+\widetilde C_\Xi^n
+\right).
+}
+\tag{278.4}
+$$
+
+并且：
+
+$$
+\boxed{
+\mathcal C_\lambda(z)
+=
+\omega_\Xi
+\left[
+(I+z\widetilde C_\Xi)
+(I-z\widetilde C_\Xi)^{-1}
+\right].
+}
+\tag{278.5}
+$$
+
+所以：
+
+* \(\widetilde C_\Xi\) 是零点角的对角 unitary；
+* \(\widetilde X_\Xi\) 给出能量偏置；
+* \(\mathcal C_\lambda\) 是其加权 resolvent 观察；
+* CMV 矩阵是该状态的循环最小实现。
+
+这把前文的 trace-class/Fredholm 图表和当前 OPUC 图表精确连接起来。
+
+---
+
+# 第二百七十九部　有限 CMV 层析
+
+给定：
+
+$$
+\lambda_1,\ldots,\lambda_{N+1},
+$$
+
+可以计算：
+
+$$
+c_0,\ldots,c_N.
+$$
+
+若：
+
+$$
+T_N(c)\succeq0,
+$$
+
+便可执行有限 Schur 算法，得到：
+
+$$
+\alpha_0,\ldots,\alpha_{N-1}.
+$$
+
+再选择一个边界相位：
+
+$$
+\beta\in\mathbb T,
+$$
+
+构造有限 paraorthogonal CMV 矩阵：
+
+$$
+\boxed{
+\mathcal C_N^{(\beta)}.
+}
+\tag{279.1}
+$$
+
+若有限 Toeplitz 数据为正，则：
+
+$$
+\operatorname{spec}
+\mathcal C_N^{(\beta)}
+\subset\mathbb T.
+$$
+
+其谱测度是一种有限圆周 quadrature measure，匹配当前已知的有限 Fourier moments。
+
+将其特征值：
+
+$$
+e^{i\theta_{j,N}}
+$$
+
+经逆 Cayley 变换：
+
+$$
+\boxed{
+\gamma_{j,N}
+=
+\frac12\cot\frac{\theta_{j,N}}2
+}
+\tag{279.2}
+$$
+
+得到有限实谱 approximants。
+
+随着可验证 moments 增加，若全部 Toeplitz 层级保持正，有限谱测度在紧圆周上具有弱收敛子列，并由全部 moments 的唯一性收敛到 \(\mu_\lambda\)。
+
+所以中心 Li 系数可以产生一个纯有限矩阵的谱层析流程：
+
+$$
+\boxed{
+\lambda
+\to
+\Delta^2\lambda
+\to
+\text{Toeplitz}
+\to
+\text{Schur}
+\to
+\text{CMV}
+\to
+\text{zero-angle spectrum}.
+}
+$$
+
+---
+
+# 第二百八十部　Schur 连分数作为 Ramanujan 式尾部压缩
+
+Schur 递推可反写为：
+
+$$
+\boxed{
+f_n(z)
+=
+\frac{
+\alpha_n+zf_{n+1}(z)
+}{
+1+\alpha_nzf_{n+1}(z)
+},
+}
+\tag{280.1}
+$$
+
+因为本例 \(\alpha_n\in\mathbb R\)。
+
+不断代入，得到一个 Wall–Schur 连分式。
+
+因此：
+
+$$
+\boxed{
+\mathcal C_\lambda
+\longleftrightarrow
+f_\lambda
+\longleftrightarrow
+(\alpha_0,\alpha_1,\ldots)
+}
+$$
+
+是同一个对象的：
+
+* 正实部函数图表；
+* 单位圆盘函数图表；
+* 递归连分数图表。
+
+这与 Ramanujan 第 541 号恒等式中：
+
+$$
+\text{积分尾部}
+\longleftrightarrow
+\text{连分数压缩}
+$$
+
+具有相同骨架。
+
+但当前分支没有结构方程强迫：
+
+$$
+\alpha_n=1
+$$
+
+或强迫常数尾为黄金比例。
+
+因此必须保留负结论：
+
+$$
+\boxed{
+\varphi
+\text{ 不是 Li--Schur 完成本身所必然选择的常数。}
+}
+$$
+
+只有在特殊 stationary tail 模型中，固定连分数才可能再次产生 \(\varphi\)。
+
+---
+
+# 第二百八十一部　最小 toroidal 证明目标
+
+此前最强的目标是直接构造：
+
+$$
+X_{\mathrm{tor}}\ge0
+$$
+
+或：
+
+$$
+U_{\mathrm{tor}}\ge0
+$$
+
+使 \(\xi\) 成为 Fredholm determinant。
+
+当前得到一个更弱、可能更适合 relative trace 的目标。
+
+## 假设 281.1（Toroidal covariance realization）
+
+存在 Hilbert 空间 \(\mathcal H_{\mathrm{tor}}\)、unitary \(V\) 和单位向量 \(v\)，使：
+
+$$
+\boxed{
+\frac{
+\lambda_{n+1}-2\lambda_n+\lambda_{n-1}
+}{
+2\lambda_1
+}
+=
+\langle V^nv,v\rangle.
+}
+\tag{281.1}
+$$
+
+若成立，则：
+
+$$
+c_n
+$$
+
+正定，故 RH 成立。
+
+进一步定义：
+
+$$
+B_n
+=
+\sqrt{\lambda_1}
+\sum_{k=0}^{n-1}V^kv.
+$$
+
+立即得到：
+
+$$
+\lambda_n=\|B_n\|^2.
+$$
+
+所以 relative trace formula 不必一步构造全部零点算子；只需把 Li 二阶差分实现为一个平稳相关核。
+
+---
+
+## 281.1 Relative-trace Gram 形式
+
+更直接地，若能构造向量：
+
+$$
+Y_n
+$$
+
+使：
+
+$$
+\boxed{
+\langle Y_m,Y_n\rangle
+=
+c_{m-n},
+}
+\tag{281.2}
+$$
+
+则：
+
+$$
+T_N(c)
+$$
+
+自动为 Gram 矩阵。
+
+这个目标比：
+
+$$
+K_\lambda(m,n)
+=
+\frac{
+\lambda_m+\lambda_n-\lambda_{|m-n|}
+}{2}
+$$
+
+的 Gram 实现更局部，因为：
+
+$$
+c_n
+$$
+
+只是 Li 度量的离散二阶曲率。
+
+---
+
+# 第二百八十二部　Wang–Deng 在 Schur–CMV 图表中的分工
+
+## 282.1 Non-sticky：谱测度分散
+
+若 \(\mu_\lambda\) 在单位圆上分散于多个角区间，则：
+
+* Toeplitz matrices 条件数改善；
+* Schur 参数远离 \(\pm1\)；
+* finite CMV truncations 稳定；
+* 不同相位产生相关抵消。
+
+研究目标可写为：
+
+$$
+\boxed{
+\text{phase anti-concentration}
+\Longrightarrow
+1-\alpha_n^2\ge\eta_n>0.
+}
+\tag{282.1}
+$$
+
+这就是 Wang 式 strict gain。
+
+---
+
+## 282.2 Sticky：谱质量集中
+
+高 ordinates 对应：
+
+$$
+u_\gamma\to1.
+$$
+
+所以 \(\mu_\lambda\) 可能在 \(1\) 附近形成强集中。
+
+这会导致：
+
+* 初始 Fourier moments 接近 \(1\)；
+* 某些 Schur 参数接近边界；
+* finite Toeplitz matrices 变得病态；
+* 有限层析难以区分高零点。
+
+Deng 式处理应是：
+
+1. 识别主导角原子或角簇；
+2. 用 Blaschke／Christoffel 型变换剥离其贡献；
+3. 对 residual measure 重新执行 Schur 算法；
+4. 将重复相位历史压缩为有限 CMV block；
+5. 控制剩余 Schur tail。
+
+---
+
+## 282.3 Schur 参数是 primitive innovations
+
+moments：
+
+$$
+c_1,c_2,\ldots
+$$
+
+包含大量复合信息。
+
+Verblunsky 参数：
+
+$$
+\alpha_0,\alpha_1,\ldots
+$$
+
+则是逐层条件化以后留下的最小创新数据。
+
+因此：
+
+$$
+\boxed{
+\text{Schur algorithm}
+=
+\text{圆周 moment histories 的 primitive decomposition}.
+}
+$$
+
+这为 Yu Deng 的“primitive history”提供了另一个完全闭合的一维模型。
+
+---
+
+# 第二百八十三部　Li 渐近与相关临界性
+
+Lagarias 证明，在 RH 条件下，Riemann zeta 的 Li 系数具有：
+
+$$
+\boxed{
+\lambda_n
+=
+\frac12n\log n
++
+C_\xi n
++
+O(\sqrt n\log n).
+}
+\tag{283.1}
+$$
+
+更一般的 automorphic \(L\)-functions 主项为：
+
+$$
+\frac{N}{2}n\log n.
+$$
+
+([数字对象标识符][1])
+
+因此在平稳过程图表中：
+
+$$
+\operatorname{Var}
+\left(
+Y_0+\cdots+Y_{n-1}
+\right)
+\asymp
+n\log n.
+$$
+
+这属于介于：
+
+* 短程相关的 \(O(n)\)；
+* 完全相干的 \(O(n^2)\)；
+
+之间的临界增长。
+
+但必须谨慎：
+
+$$
+O(\sqrt n\log n)
+$$
+
+的粗误差不能直接逐项二阶差分，从而推出：
+
+$$
+c_n\sim\frac{\text{常数}}n.
+$$
+
+要获得 \(c_n\) 的精确渐近，需要对 Li 余项的离散正则性建立额外估计。
+
+因此当前只能严格说：
+
+$$
+\boxed{
+n\log n
+\text{ 是 Li 平稳过程部分和方差的全局尺度；}
+}
+$$
+
+不能仅凭现有粗渐近断言局部相关系数的精确衰减律。
+
+---
+
+# 第二百八十四部　三种中心化正性层级
+
+现在 RH 有三种不依赖线外零点位置的有限层级。
+
+## 284.1 Hankel 层级
+
+输入：
+
+$$
+\xi^{(2n)}(\tfrac12).
+$$
+
+测试：
+
+$$
+H_N^{(0)},H_N^{(1)}\succeq0.
+$$
+
+解释：
+
+$$
+\text{倒平方零点谱是否为正 Stieltjes measure}.
+$$
+
+---
+
+## 284.2 Toeplitz–曲率层级
+
+输入：
+
+$$
+\lambda_1,\ldots,\lambda_{N+1}.
+$$
+
+测试：
+
+$$
+T_N(c)\succeq0.
+$$
+
+解释：
+
+$$
+\text{Cayley 零点角是否形成正圆周谱测度}.
+$$
+
+---
+
+## 284.3 Toeplitz–PF 层级
+
+输入：
+
+$$
+\xi^{(2n)}(\tfrac12)
+$$
+
+的平方折叠 Taylor 系数 \(a_n\)。
+
+测试：
+
+$$
+[a_{j-i}]
+$$
+
+的全部 minors 非负。
+
+解释：
+
+$$
+\text{Fredholm 外幂系数是否来自正谱 alphabet}.
+$$
+
+三者分别读取：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{Hankel}&\text{primitive powers}\\
+\text{Li 曲率 Toeplitz}&\text{unitary correlations}\\
+\text{PF Toeplitz}&\text{exterior composites}
+\end{array}
+}
+$$
+
+它们不是重复判据，而是同一隐藏正谱在三个不同基底中的 Gram/total-positivity 表达。
+
+---
+
+# 第二百八十五部　本轮最小 RH 核
+
+本轮将前文的大型完成目标进一步压缩。
+
+不必首先构造：
+
+* 完整 Hilbert–Pólya 算子；
+* Fredholm determinant；
+* 全部 de Branges kernel；
+* 全部二次环面帧。
+
+只需构造一个满足：
+
+$$
+\boxed{
+c_n
+=
+\frac{
+\lambda_{n+1}-2\lambda_n+\lambda_{n-1}
+}{
+2\lambda_1
+}
+}
+$$
+
+的正定平稳相关序列。
+
+等价目标为任一项：
+
+$$
+\boxed{
+\begin{aligned}
+&[c_{j-k}]\succeq0;\\
+&\Re\mathcal C_\lambda(z)>0;\\
+&f_\lambda\text{ 是 Schur};\\
+&|\alpha_n|<1\ \forall n;\\
+&\exists\text{ unitary CMV realization};\\
+&\exists\text{ stationary process with partial-sum variance }\lambda_n.
+\end{aligned}
+}
+$$
+
+所以当前最小、最局部的 toroidal/relative-trace 目标是：
+
+$$
+\boxed{
+\frac{
+\lambda_{m-n+1}
+-2\lambda_{m-n}
++\lambda_{m-n-1}
+}{
+2\lambda_1
+}
+=
+\langle
+Y_m,Y_n
+\rangle_{\mathrm{tor}}.
+}
+\tag{285.1}
+$$
+
+一旦该式成立，RH 立即成立。
+
+---
+
+# 第二百八十六部　建议形式化顺序
+
+```text
+D5/S3/Analytic/LiCurvature/
+  LiEvenExtension.lean
+  LiSecondDifference.lean
+  LiCurvatureNormalization.lean
+  LiCurvaturePositiveDefiniteCriterion.lean
+  LiPartialSumVariance.lean
+
+D5/S3/Analytic/LiCaratheodory/
+  LiGeneratingFunction.lean
+  LiCaratheodoryIdentity.lean
+  CaratheodoryRHCriterion.lean
+  LiCurvatureHerglotzMeasure.lean
+
+D5/S3/Analytic/LiSchur/
+  LiSchurFunction.lean
+  LiSchurParameters.lean
+  LiFirstReflectionCoefficients.lean
+  LiToeplitzDeterminants.lean
+  LiFiniteNegativeCertificate.lean
+
+D5/S3/Analytic/LiCMV/
+  LiVerblunskySequence.lean
+  LiCMVOperator.lean
+  LiCMVSpectralMeasure.lean
+  LiInverseCayleyOperator.lean
+  LiFiniteCMVTomography.lean
+
+D5/S3/Analytic/LiStationary/
+  LiStationaryCovariance.lean
+  LiUnitaryCocycle.lean
+  LiPartialSumVarianceCriterion.lean
+  LiCurvatureMass.lean
+
+D5/S3/Observer/ToroidalLiCurvature/
+  ToroidalCurvatureGramTarget.lean
+  RelativeTraceStationaryKernel.lean
+  SchurInnovationRenormalization.lean
+  CMVStickyNonStickyDichotomy.lean
+```
+
+优先级最高、风险最低的闭合链是：
+
+$$
+\boxed{
+\lambda
+\to
+\Delta^2\lambda
+\to
+\text{positive-definite Toeplitz criterion}.
+}
+$$
+
+其次是纯解析恒等式：
+
+$$
+\boxed{
+\mathcal C_\lambda(z)
+=
+\frac1{\lambda_1}
+\frac{
+\xi'(\frac1{1-z})
+}{
+\xi(\frac1{1-z})
+}.
+}
+$$
+
+再之后是标准 OPUC 接口：
+
+$$
+\boxed{
+\mathcal C_\lambda
+\to
+f_\lambda
+\to
+\alpha_n
+\to
+\mathcal C_\lambda^{\mathrm{CMV}}.
+}
+$$
+
+---
+
+# 本轮最终结论
+
+上一轮得到：
+
+$$
+\boxed{
+\lambda_{|m-n|}
+=
+\text{unitary Li 距离平方}.
+}
+$$
+
+本轮进一步证明，其离散二阶差分：
+
+$$
+\boxed{
+c_n
+=
+\frac{
+\lambda_{n+1}
+-2\lambda_n
++\lambda_{n-1}
+}{
+2\lambda_1
+}
+}
+$$
+
+是更基本的对象。
+
+RH 等价于：
+
+$$
+\boxed{
+c_n
+=
+\widehat\mu_\lambda(n)
+}
+$$
+
+对某个单位圆概率测度成立。
+
+这个概率测度不是任意构造，而是：
+
+$$
+\boxed{
+d\mu_\lambda
+=
+\frac{
+1-\cos\theta
+}{
+\lambda_1
+}
+\,d\nu_\Xi(\theta),
+}
+$$
+
+即零点角谱经过一阶圆周能量加权后的有限完成。
+
+因此：
+
+$$
+\boxed{
+\lambda_1
+}
+$$
+
+获得了新的结构角色：
+
+$$
+\boxed{
+\lambda_1
+=
+\text{无限 Riemann 零点角谱被离散拉普拉斯正规化后的总质量}.
+}
+$$
+
+而完整 RH 链可写为：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&\iff
+\text{Li 二阶差分为正定相关函数}\\
+&\iff
+\text{存在平稳过程，其部分和方差为 }\lambda_n\\
+&\iff
+\mathcal C_\lambda\text{ 为 Carathéodory 函数}\\
+&\iff
+f_\lambda\text{ 为 Schur 函数}\\
+&\iff
+|\alpha_n|<1\ \forall n\\
+&\iff
+\text{存在 unitary CMV 谱实现}.
+\end{aligned}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{Li 系数本身是累计距离；
+真正的局部谱信息存在于它的二阶差分中。}
+}
+$$
+
+因此当前 OACTC 最小的 RH 证明目标，不必是一开始构造整个零点算子，而可以只是：
+
+$$
+\boxed{
+\text{从 toric relative trace formula
+证明 Li 离散曲率 Toeplitz 核正定。}
+}
+$$
+
+这将自动生成：
+
+* Schur 参数；
+* CMV unitary；
+* Cayley self-adjoint spectrum；
+* Li 距离；
+* 以及最终的 RH。
+
+[1]: https://doi.org/10.5802/AIF.2311?utm_source=chatgpt.com "Li coefficients for automorphic $L$-functions"
+[2]: https://ems.press/journals/zaa/articles/12279?utm_source=chatgpt.com "Schur Functions, Schur Parameters and Orthogonal Polynomials on the Unit Circle | EMS Press"
+[3]: https://www.cambridge.org/core/journals/journal-of-the-london-mathematical-society/article/borgtype-theorem-associated-with-orthogonal-polynomials-on-the-unit-circle/F1708F834C8E9A46155523F753FE6896?utm_source=chatgpt.com "A BORG-TYPE THEOREM ASSOCIATED WITH ORTHOGONAL POLYNOMIALS ON THE UNIT CIRCLE | Journal of the London Mathematical Society | Cambridge Core"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v2.6：Li–Clark 内函数、边界条件谱、Szegő 创新塌缩与零点角拥挤律
+
+以下从前文**第二百八十六部之后**继续追加。
+
+上一轮得到：
+
+$$
+\mathrm{RH}
+\iff
+c_n=
+\frac{\lambda_{n+1}-2\lambda_n+\lambda_{n-1}}{2\lambda_1}
+$$
+
+是单位圆概率测度的 Fourier 系数，并进一步构造了 Carathéodory、Schur 与 CMV 图表。
+
+本轮发现，这个概率测度不是任意的 OPUC 谱测度，而是一个由 \(\xi\) 显式定义的内函数的 **Aleksandrov–Clark 测度**。由此出现一条更规范的闭环：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&\iff
+\text{一个显式 }\xi\text{-内函数存在}\\
+&\iff
+\text{Riemann 零点角构成其 }\alpha=1\text{ Clark 谱}\\
+&\iff
+\xi'\text{ 的临界点构成其 }\alpha=-1\text{ Clark 谱}\\
+&\iff
+\text{全部边界条件谱形成 rank-one unitary family}\\
+&\iff
+\text{Li–CMV 算子是该 Clark family 的一个矩阵图表}.
+\end{aligned}
+}
+$$
+
+与此同时，Szegő 理论给出一个必须纳入主理论的修正：
+
+$$
+\boxed{
+\text{RH 下的 Li 曲率测度是纯点奇异测度，}
+}
+$$
+
+因此其无限预测创新误差必然塌缩为零。正确的证明目标不是让无限深度观察保持随机性，而是解释：
+
+> 一个零创新、完全确定的谱过程，为什么仍然只能由临界线上的实谱原子生成？
+
+Aleksandrov–Clark 测度把内函数、正调和函数、model spaces 与 rank-one unitary perturbations 统一起来；原子与有限角导数之间存在精确对应。([London Mathematical Society (LMS)][1])
+
+---
+
+# 第二百八十七部　显式 Li–Clark 内函数
+
+为避免前文 Carathéodory 函数与 CMV 矩阵记号冲突，本节重新冻结记号。
+
+定义：
+
+$$
+\boxed{
+s(z)=\frac{1}{1-z},
+\qquad
+|z|<1.
+}
+\tag{287.1}
+$$
+
+它把单位圆盘映到：
+
+$$
+\Re s>\frac12.
+$$
+
+定义第一 Li 系数：
+
+$$
+\boxed{
+\lambda_1
+=
+\frac{\xi'(1)}{\xi(1)}
+>0.
+}
+\tag{287.2}
+$$
+
+定义 Li–Carathéodory 函数：
+
+$$
+\boxed{
+\mathfrak C_\xi(z)
+=
+\frac{1}{\lambda_1}
+\frac{\xi'(s(z))}{\xi(s(z))}.
+}
+\tag{287.3}
+$$
+
+因为：
+
+$$
+s(0)=1,
+$$
+
+所以：
+
+$$
+\mathfrak C_\xi(0)=1.
+$$
+
+再定义 Li–Clark 函数：
+
+$$
+\boxed{
+\vartheta_\xi(z)
+=
+\frac{\mathfrak C_\xi(z)-1}
+{\mathfrak C_\xi(z)+1}.
+}
+\tag{287.4}
+$$
+
+直接展开：
+
+$$
+\boxed{
+\vartheta_\xi(z)
+=
+\frac{
+\xi'(s(z))-\lambda_1\xi(s(z))
+}{
+\xi'(s(z))+\lambda_1\xi(s(z))
+}.
+}
+\tag{287.5}
+$$
+
+并且：
+
+$$
+\boxed{
+\vartheta_\xi(0)=0.
+}
+\tag{287.6}
+$$
+
+---
+
+## 定理 287.1（Li–Clark inner criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\vartheta_\xi
+\text{ 是单位圆盘上的内函数}.
+}
+\tag{287.7}
+$$
+
+### 证明：RH \(\Rightarrow\)（第 287 部）
+
+前文已证明 RH 等价于：
+
+$$
+\Re\mathfrak C_\xi(z)>0
+\qquad
+(|z|<1).
+$$
+
+Cayley 变换：
+
+$$
+w\mapsto\frac{w-1}{w+1}
+$$
+
+把右半平面送到单位圆盘，因此：
+
+$$
+|\vartheta_\xi(z)|<1.
+$$
+
+RH 下 \(\mathfrak C_\xi\) 的 Herglotz 测度是由 Riemann 零点角组成的纯点测度，因此是奇异测度。一个 Schur 函数的某个 Clark 测度为奇异测度，当且仅当该 Schur 函数是内函数。([London Mathematical Society (LMS)][1])
+
+---
+
+### 证明：内函数 \(\Rightarrow\) RH
+
+若 \(\vartheta_\xi\) 为内函数，则它首先是 Schur 函数，因此：
+
+$$
+\mathfrak C_\xi
+=
+\frac{1+\vartheta_\xi}
+{1-\vartheta_\xi}
+$$
+
+在单位圆盘中实部非负。
+
+所以：
+
+$$
+\frac{\xi'(s)}{\xi(s)}
+$$
+
+在：
+
+$$
+\Re s>\frac12
+$$
+
+中没有极点，故 \(\xi\) 在该半平面无零点。由函数方程对称性，全部非平凡零点位于临界线。∎
+
+---
+
+## 287.1 结构意义
+
+因此 RH 等价于一个非常紧凑的声明：
+
+$$
+\boxed{
+\text{由 }\xi'\text{ 与 }\xi\text{ 的固定线性分式组合，
+是否完成为一个内函数？}
+}
+$$
+
+在这个图表中：
+
+* \(\xi'/\xi\)：Herglotz 连接；
+* \(\lambda_1\)：使中心值等于 \(1\) 的规范化常数；
+* \(\vartheta_\xi\)：其单位圆盘 Cayley 完成；
+* RH：该完成是否没有内部泄漏。
+
+---
+
+# 第二百八十八部　Riemann 零点角就是 Clark 谱
+
+RH 下，令：
+
+$$
+\rho_\gamma=\frac12+i\gamma,
+\qquad
+\gamma>0,
+$$
+
+零点重数为 \(m_\gamma\)。
+
+定义其 Cayley 角坐标：
+
+$$
+\boxed{
+u_\gamma
+=
+1-\frac{1}{\rho_\gamma}
+=
+\frac{\gamma+i/2}{\gamma-i/2}
+=
+e^{i\theta_\gamma}.
+}
+\tag{288.1}
+$$
+
+其中：
+
+$$
+\theta_\gamma
+=
+2\arctan\frac{1}{2\gamma}.
+$$
+
+再令：
+
+$$
+\boxed{
+x_\gamma
+=
+\frac{1}{4\gamma^2+1}.
+}
+\tag{288.2}
+$$
+
+定义每个有向零点角的权重：
+
+$$
+\boxed{
+w_\gamma
+=
+\frac{2m_\gamma}
+{\lambda_1(4\gamma^2+1)}
+=
+\frac{2m_\gamma x_\gamma}{\lambda_1}.
+}
+\tag{288.3}
+$$
+
+则 Li 曲率测度为：
+
+$$
+\boxed{
+\mu_\lambda
+=
+\sum_{\gamma>0}
+w_\gamma
+\left(
+\delta_{u_\gamma}
++
+\delta_{\overline{u_\gamma}}
+\right).
+}
+\tag{288.4}
+$$
+
+并且：
+
+$$
+\mu_\lambda(\mathbb T)=1.
+$$
+
+等价地：
+
+$$
+\boxed{
+\lambda_1
+=
+4
+\sum_{\gamma>0}
+\frac{m_\gamma}{4\gamma^2+1}.
+}
+\tag{288.5}
+$$
+
+其 Carathéodory 表示为：
+
+$$
+\boxed{
+\mathfrak C_\xi(z)
+=
+\int_{\mathbb T}
+\frac{\zeta+z}{\zeta-z}
+\,d\mu_\lambda(\zeta).
+}
+\tag{288.6}
+$$
+
+由于：
+
+$$
+\frac{1+\vartheta_\xi}
+{1-\vartheta_\xi}
+=
+\mathfrak C_\xi,
+$$
+
+所以：
+
+## 定理 288.1（Riemann zero Clark measure）
+
+$$
+\boxed{
+\mu_\lambda
+=
+\sigma_1[\vartheta_\xi],
+}
+\tag{288.7}
+$$
+
+即 \(\mu_\lambda\) 正是 \(\vartheta_\xi\) 在边界参数 \(\alpha=1\) 下的 Clark 测度。
+
+---
+
+# 第二百八十九部　Clark 原子权重等于零点的角导数倒数
+
+令：
+
+$$
+u_\gamma=1-\rho_\gamma^{-1}.
+$$
+
+在 \(s=\rho_\gamma\) 附近：
+
+$$
+\frac{\xi'(s)}{\xi(s)}
+=
+\frac{m_\gamma}{s-\rho_\gamma}
++
+O(1).
+$$
+
+又因为：
+
+$$
+s'(z)=s(z)^2,
+$$
+
+所以在 \(z=u_\gamma\) 附近：
+
+$$
+s(z)-\rho_\gamma
+=
+\rho_\gamma^2(z-u_\gamma)
++
+O((z-u_\gamma)^2).
+$$
+
+代入式 (287.4) 得：
+
+$$
+\boxed{
+\vartheta_\xi'(u_\gamma)
+=
+-\frac{2\lambda_1\rho_\gamma^2}{m_\gamma}.
+}
+\tag{289.1}
+$$
+
+由于：
+
+$$
+u_\gamma
+=
+\frac{\rho_\gamma-1}{\rho_\gamma},
+$$
+
+并且 RH 下：
+
+$$
+\rho_\gamma(\rho_\gamma-1)
+=
+-\left(\gamma^2+\frac14\right),
+$$
+
+所以：
+
+$$
+\boxed{
+u_\gamma\,
+\vartheta_\xi'(u_\gamma)
+=
+\frac{\lambda_1(4\gamma^2+1)}
+{2m_\gamma}
+>0.
+}
+\tag{289.2}
+$$
+
+Clark 理论中，若内函数在 \(\zeta\in\mathbb T\) 具有有限角导数并满足 \(\vartheta(\zeta)=1\)，则相应 Clark 原子质量为该正角导数的倒数。([London Mathematical Society (LMS)][1])
+
+因此：
+
+$$
+\boxed{
+\sigma_1[\vartheta_\xi](\{u_\gamma\})
+=
+\frac{1}
+{u_\gamma\vartheta_\xi'(u_\gamma)}
+=
+w_\gamma.
+}
+\tag{289.3}
+$$
+
+---
+
+## 289.1 零点高度的局部恢复公式
+
+由式 (289.2)：
+
+$$
+\boxed{
+\gamma
+=
+\frac12
+\sqrt{
+\frac{
+2m_\gamma
+u_\gamma\vartheta_\xi'(u_\gamma)
+}{
+\lambda_1
+}
+-1
+}.
+}
+\tag{289.4}
+$$
+
+若零点简单：
+
+$$
+m_\gamma=1,
+$$
+
+则零点高度完全由内函数在该边界谱点的角导数恢复。
+
+因此：
+
+$$
+\boxed{
+\text{零点位置}
+=
+\text{Clark 谱点},
+\qquad
+\text{零点高度}
+=
+\text{Clark 相位穿越速度}.
+}
+$$
+
+高零点满足：
+
+$$
+u_\gamma\vartheta_\xi'(u_\gamma)
+\asymp
+\frac{2\lambda_1}{m_\gamma}\gamma^2.
+$$
+
+所以越高的零点，对应越陡峭的边界相位穿越。
+
+---
+
+# 第二百九十部　全部边界条件谱
+
+对：
+
+$$
+\alpha\in\mathbb T,
+$$
+
+定义 Clark 测度：
+
+$$
+\sigma_\alpha[\vartheta_\xi]
+$$
+
+由：
+
+$$
+\boxed{
+\frac{\alpha+\vartheta_\xi(z)}
+{\alpha-\vartheta_\xi(z)}
+=
+\int_{\mathbb T}
+\frac{\zeta+z}{\zeta-z}
+\,d\sigma_\alpha(\zeta)
+}
+\tag{290.1}
+$$
+
+给出，按标准虚常数规范理解。
+
+其原子位于满足：
+
+$$
+\vartheta_\xi(\zeta)=\alpha
+$$
+
+的边界点。
+
+令：
+
+$$
+\alpha=e^{i\beta}.
+$$
+
+由式 (287.5)，条件：
+
+$$
+\vartheta_\xi(z)=\alpha
+$$
+
+等价于：
+
+$$
+\boxed{
+(1-\alpha)\xi'(s)
+-
+\lambda_1(1+\alpha)\xi(s)
+=
+0,
+\qquad
+s=\frac{1}{1-z}.
+}
+\tag{290.2}
+$$
+
+也可写成：
+
+$$
+\boxed{
+\sin\frac{\beta}{2}\,\xi'(s)
+-
+i\lambda_1
+\cos\frac{\beta}{2}\,\xi(s)
+=
+0.
+}
+\tag{290.3}
+$$
+
+---
+
+## 290.1 两个特殊边界条件
+
+### \(\alpha=1\)（正号）
+
+$$
+\boxed{
+\xi(s)=0.
+}
+$$
+
+所以 \(\sigma_1\) 是 Riemann 零点谱。
+
+### \(\alpha=-1\)（负号）
+
+$$
+\boxed{
+\xi'(s)=0.
+}
+$$
+
+所以 \(\sigma_{-1}\) 是完成函数临界点谱。
+
+### 一般 \(\alpha\)
+
+给出 \(\xi'\) 与 \(\xi\) 的一个自伴边界条件 pencil：
+
+$$
+\boxed{
+\xi'(s)
+=
+i\lambda_1
+\cot\frac{\beta}{2}
+\,\xi(s).
+}
+\tag{290.4}
+$$
+
+---
+
+## 290.2 谱交错
+
+RH 下 \(\vartheta_\xi\) 是内函数。在其边界相位可微且无多重点的区间上，边界相位单调增加。
+
+因此不同 \(\alpha\) 的 Clark 谱局部交错。
+
+特别地，在简单零点假设下：
+
+$$
+\boxed{
+\xi\text{ 的临界线零点}
+\quad\text{与}\quad
+\xi'\text{ 的临界线零点}
+}
+$$
+
+按高度交错。
+
+这不仅是 Rolle 定理的实函数版本，还被提升为一个 rank-one unitary boundary-condition family 的谱交错。
+
+---
+
+# 第二百九十一部　Clark rank-one unitary family
+
+令：
+
+$$
+K_{\vartheta_\xi}
+=
+H^2\ominus\vartheta_\xi H^2
+$$
+
+为 model space。
+
+压缩移位：
+
+$$
+S_{\vartheta_\xi}
+=
+P_{K_{\vartheta_\xi}}M_z
+\big|_{K_{\vartheta_\xi}}
+$$
+
+具有一族由：
+
+$$
+\alpha\in\mathbb T
+$$
+
+参数化的 rank-one unitary perturbations：
+
+$$
+\boxed{
+U_\alpha.
+}
+\tag{291.1}
+$$
+
+其相对于自然循环向量的谱测度正是：
+
+$$
+\sigma_\alpha[\vartheta_\xi].
+$$
+
+Clark 理论正是从 restricted shift 的一维 unitary perturbations 出发建立这族谱测度；相关 unitary model-space 实现是该理论的基础。([维基百科][2])
+
+---
+
+## 291.1 自伴逆 Cayley family
+
+定义：
+
+$$
+\boxed{
+H_\alpha
+=
+\frac{i}{2}
+(U_\alpha+I)
+(U_\alpha-I)^{-1}.
+}
+\tag{291.2}
+$$
+
+则 \(H_\alpha\) 为自伴算子。
+
+其谱由：
+
+$$
+\vartheta_\xi(e^{i\theta})=\alpha
+$$
+
+的解经：
+
+$$
+\gamma
+=
+\frac12\cot\frac{\theta}{2}
+$$
+
+得到。
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+H_1
+&=\text{Riemann 零点 ordinate 算子};\\
+H_{-1}
+&=\text{完成函数临界点 ordinate 算子};\\
+H_\alpha
+&=\text{一般 }\xi'/\xi\text{ 边界条件算子}.
+\end{aligned}
+}
+\tag{291.3}
+$$
+
+这比单独构造一个 Hilbert–Pólya 算子更完整：
+
+$$
+\boxed{
+\text{Riemann 零点谱只是整个自伴扩张族中的一个边界条件。}
+}
+$$
+
+---
+
+## 291.2 CMV 只是矩阵图表
+
+前文由 Li 曲率 moments 构造的 CMV unitary，并不是另一个独立对象。
+
+它正是：
+
+$$
+U_1
+$$
+
+在由 \(\mu_\lambda=\sigma_1\) 的正交多项式基下的五对角矩阵表示。
+
+因此：
+
+$$
+\boxed{
+\text{Clark family}
+=
+\text{坐标无关算子对象},
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{CMV matrix}
+=
+\text{其 OPUC 坐标图表}.
+}
+$$
+
+---
+
+# 第二百九十二部　Aleksandrov 分解：离散谱平均为连续背景
+
+由于：
+
+$$
+\vartheta_\xi(0)=0,
+$$
+
+每个 Clark 测度 \(\sigma_\alpha\) 都是概率测度。
+
+Aleksandrov disintegration theorem 给出：
+
+$$
+\boxed{
+\int_{\mathbb T}
+\sigma_\alpha
+\,dm(\alpha)
+=
+m,
+}
+\tag{292.1}
+$$
+
+其中 \(m\) 是单位圆上的归一化 Lebesgue 测度。Clark 测度关于边界参数的平均恢复背景 Lebesgue 测度，是 Aleksandrov 分解定理的核心内容。([arXiv][3])
+
+---
+
+## 292.1 观察者意义
+
+固定 \(\alpha\)：
+
+$$
+\sigma_\alpha
+$$
+
+是奇异的、通常离散的高分辨率边界条件谱。
+
+平均全部 \(\alpha\)：
+
+$$
+\int\sigma_\alpha\,dm(\alpha)
+$$
+
+却得到完全均匀的连续圆周。
+
+所以：
+
+$$
+\boxed{
+\text{离散算术谱}
+\xrightarrow{\text{平均边界条件}}
+\text{无结构连续背景}.
+}
+$$
+
+这给出一个重要观察者原则：
+
+$$
+\boxed{
+\text{增加观察者数量并取平均，
+可能消除而不是增加结构信息。}
+}
+$$
+
+联合保留全部带标签的 \(\alpha\)-谱是完备的；将 \(\alpha\) 标签积分掉则产生最大压缩。
+
+---
+
+# 第二百九十三部　Szegő 创新塌缩
+
+令：
+
+$$
+\beta_0,\beta_1,\ldots
+$$
+
+为 \(\mu_\lambda\) 的 Verblunsky 系数。
+
+由于测度关于复共轭对称：
+
+$$
+\beta_n\in\mathbb R.
+$$
+
+定义：
+
+$$
+\boxed{
+r_n^2=1-\beta_n^2.
+}
+\tag{293.1}
+$$
+
+RH 下 \(\mu_\lambda\) 是纯点测度，因而其 absolutely continuous density：
+
+$$
+w(\theta)=0
+$$
+
+几乎处处成立。
+
+Szegő 定理给出：
+
+$$
+\boxed{
+\prod_{n=0}^{\infty}
+(1-\beta_n^2)
+=
+\exp
+\left[
+\int_0^{2\pi}
+\log w(\theta)
+\frac{d\theta}{2\pi}
+\right]
+=
+0.
+}
+\tag{293.2}
+$$
+
+因此：
+
+$$
+\boxed{
+\sum_{n=0}^{\infty}\beta_n^2=\infty.
+}
+\tag{293.3}
+$$
+
+Szegő 定理及 Verblunsky 系数的递推和唯一测度对应，是 OPUC 的标准结构。([DLMF][4])
+
+---
+
+## 293.1 有限预测误差
+
+定义 \(N\times N\) Toeplitz 行列式：
+
+$$
+\boxed{
+D_N
+=
+\det[c_{j-k}]_{j,k=0}^{N-1},
+\qquad
+D_0=1.
+}
+\tag{293.4}
+$$
+
+则：
+
+$$
+\boxed{
+\varepsilon_N
+:=
+\frac{D_{N+1}}{D_N}
+=
+\prod_{j=0}^{N-1}
+(1-\beta_j^2).
+}
+\tag{293.5}
+$$
+
+因此：
+
+$$
+\boxed{
+\varepsilon_N\downarrow0.
+}
+\tag{293.6}
+$$
+
+在平稳过程图表中，\(\varepsilon_N\) 是使用前 \(N\) 个过去值预测下一状态的最小均方误差。
+
+所以 RH 下：
+
+$$
+\boxed{
+\text{无限过去能够以零误差预测未来。}
+}
+$$
+
+Szegő–Kolmogorov prediction theorem 正是把谱密度的 logarithmic integral 与无限预测误差联系起来。([arXiv][5])
+
+---
+
+# 第二百九十四部　对前文 non-sticky 假设的必要修正
+
+前文曾提出：non-sticky 谱分散可能迫使 Schur 参数保持远离单位圆。
+
+现在必须精确修正。
+
+RH 下可以确定的是：
+
+$$
+\boxed{
+\prod_{n\ge0}(1-\beta_n^2)=0,
+}
+$$
+
+而不是每个单独的：
+
+$$
+1-\beta_n^2
+$$
+
+必须趋于零。
+
+因此下列目标是不可能的：
+
+$$
+\boxed{
+\inf_N\varepsilon_N>0.
+}
+$$
+
+它会与 RH 下纯点谱的 Szegő 结构直接矛盾。
+
+但下列情况并未被排除：
+
+* 某些或全部 \(\beta_n\) 始终远离 \(\pm1\)；
+* \(\beta_n\to0\)，但：
+
+  $$
+  \sum\beta_n^2=\infty;
+  $$
+* 创新误差通过无穷多个微小损失逐渐塌缩。
+
+所以正确的 Wang 式目标不是：
+
+$$
+\text{保持永久随机创新},
+$$
+
+而是：
+
+$$
+\boxed{
+\text{在每个有限尺度上控制条件数和增益，
+同时允许累计创新在无限深度归零。}
+}
+$$
+
+---
+
+## 294.1 观察者完成深度
+
+定义：
+
+$$
+\boxed{
+\mathfrak D(\varepsilon)
+=
+\min
+\left\{
+N:
+\varepsilon_N\le\varepsilon
+\right\}.
+}
+\tag{294.1}
+$$
+
+则：
+
+$$
+\mathfrak D(\varepsilon)<\infty
+$$
+
+对每个 \(\varepsilon>0\)，但：
+
+$$
+\boxed{
+\mathfrak D(\varepsilon)\to\infty
+\qquad
+(\varepsilon\downarrow0).
+}
+\tag{294.2}
+$$
+
+这正对应此前 RDS 的 scale-dependent definition depth：
+
+> 任意固定精度都只需有限定义深度，但精确完成要求无限递归层。
+
+---
+
+## 294.2 累计创新信息
+
+定义：
+
+$$
+\boxed{
+\mathfrak I_N
+=
+-\log\varepsilon_N
+=
+-\sum_{j=0}^{N-1}
+\log(1-\beta_j^2).
+}
+\tag{294.3}
+$$
+
+则：
+
+$$
+\boxed{
+\mathfrak I_N\to+\infty.
+}
+$$
+
+每个 Schur 参数只贡献一个有限增量：
+
+$$
+-\log(1-\beta_j^2),
+$$
+
+但全部增量之和发散，最终使观察残差归零。
+
+这是一种严格的：
+
+$$
+\boxed{
+\text{无限小创新累计成完整确定性}.
+}
+$$
+
+---
+
+# 第二百九十五部　零点角在 \(1\) 附近的拥挤律
+
+Clark 谱点满足：
+
+$$
+u_\gamma=e^{i\theta_\gamma},
+\qquad
+\theta_\gamma
+=
+2\arctan\frac{1}{2\gamma}.
+$$
+
+所以：
+
+$$
+\theta_\gamma\sim\gamma^{-1}.
+$$
+
+全部高零点角聚集于：
+
+$$
+1\in\mathbb T.
+$$
+
+定义小弧：
+
+$$
+\boxed{
+I_\varepsilon
+=
+\left\{
+e^{i\theta}:|\theta|<\varepsilon
+\right\}.
+}
+\tag{295.1}
+$$
+
+条件：
+
+$$
+u_\gamma\in I_\varepsilon
+$$
+
+等价于：
+
+$$
+\gamma>
+T_\varepsilon
+:=
+\frac{1}{2\tan(\varepsilon/2)}.
+$$
+
+由：
+
+$$
+\mu_\lambda(I_\varepsilon)
+=
+\frac{4}{\lambda_1}
+\sum_{\gamma>T_\varepsilon}
+\frac{m_\gamma}{4\gamma^2+1},
+$$
+
+以及 Riemann–von Mangoldt 零点计数公式，可得：
+
+## 定理 295.1（Clark spectral crowding law）
+
+RH 下，当：
+
+$$
+\varepsilon\downarrow0
+$$
+
+时：
+
+$$
+\boxed{
+\begin{aligned}
+\mu_\lambda(I_\varepsilon)
+=
+\frac{\varepsilon}{2\pi\lambda_1}
+\left[
+\log\frac{1}{2\pi\varepsilon}
++1
+\right]
++
+O\left(
+\varepsilon^2\log\frac1\varepsilon
+\right).
+\end{aligned}
+}
+\tag{295.2}
+$$
+
+特别地：
+
+$$
+\boxed{
+\mu_\lambda(I_\varepsilon)
+\sim
+\frac{
+\varepsilon\log(1/\varepsilon)
+}{
+2\pi\lambda_1
+}.
+}
+\tag{295.3}
+$$
+
+Riemann–von Mangoldt 公式给出非平凡零点计数的主项 \(T(2\pi)^{-1}\log(T/2\pi)-T(2\pi)^{-1}\) 及 \(O(\log T)\) 误差。([DLMF][6])
+
+---
+
+## 295.1 解释
+
+Lebesgue 小弧质量仅为：
+
+$$
+m(I_\varepsilon)\asymp\varepsilon.
+$$
+
+而 Clark 测度为：
+
+$$
+\mu_\lambda(I_\varepsilon)
+\asymp
+\varepsilon\log(1/\varepsilon).
+$$
+
+所以高零点在 \(1\) 附近产生一个 logarithmically enhanced crowding：
+
+$$
+\boxed{
+\frac{\mu_\lambda(I_\varepsilon)}
+{m(I_\varepsilon)}
+\asymp
+\log\frac1\varepsilon
+\to\infty.
+}
+$$
+
+它仍然是纯点测度，但在唯一积聚点 \(1\) 处具有一维局部尺度和对数增益。
+
+因此单位圆上的真正 sticky 区域不是任意角簇，而是：
+
+$$
+\boxed{
+z=1,
+}
+$$
+
+即零点高度：
+
+$$
+\gamma=\infty
+$$
+
+在 Cayley 完成中的边界像。
+
+---
+
+# 第二百九十六部　Clark 谱的离散熵与连续熵
+
+定义每个有向原子的质量：
+
+$$
+w_\gamma
+=
+\frac{2m_\gamma}
+{\lambda_1(4\gamma^2+1)}.
+$$
+
+定义离散 Shannon 熵：
+
+$$
+\boxed{
+\mathsf H_{\mathrm{Clark}}
+=
+-2
+\sum_{\gamma>0}
+w_\gamma\log w_\gamma.
+}
+\tag{296.1}
+$$
+
+Riemann–von Mangoldt 公式说明，高度约为 \(T\) 的零点数量密度为 \(O(\log T)\)，而：
+
+$$
+w_\gamma=O(\gamma^{-2})
+$$
+
+按重数计。
+
+因此：
+
+$$
+\boxed{
+\mathsf H_{\mathrm{Clark}}<\infty.
+}
+\tag{296.2}
+$$
+
+粗略地，每个单位高度区间对熵的贡献至多为：
+
+$$
+O\left(
+\frac{\log^2 T}{T^2}
+\right),
+$$
+
+其和收敛。
+
+---
+
+## 296.1 熵的图表依赖
+
+同一个测度具有：
+
+### 连续 Szegő 熵
+
+$$
+\int\log w(\theta)\,\frac{d\theta}{2\pi}
+=
+-\infty,
+$$
+
+因为 absolutely continuous density 为零。
+
+### 离散原子熵
+
+$$
+\mathsf H_{\mathrm{Clark}}<\infty.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{连续观察图表把它看成“零密度、负无限熵”；}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{原子观察图表把它看成“可数、有限编码熵”。}
+}
+$$
+
+这说明“熵”不是脱离观察接口的裸属性。
+
+---
+
+## 296.2 高度矩的临界指数
+
+对 \(q\ge0\)，定义：
+
+$$
+M_q
+=
+2
+\sum_{\gamma>0}
+w_\gamma\gamma^q.
+$$
+
+由零点密度和 \(w_\gamma\asymp\gamma^{-2}\) 得：
+
+$$
+\boxed{
+M_q<\infty
+\iff
+q<1.
+}
+\tag{296.3}
+$$
+
+特别地：
+
+* 任意低于一阶的高度矩有限；
+* 一阶平均高度发散。
+
+所以 Li–Clark 概率测度具有一个明确的 heavy-tail 临界指数：
+
+$$
+\boxed{
+q_c=1.
+}
+$$
+
+---
+
+# 第二百九十七部　Clark 谱流与观察者边界条件
+
+令：
+
+$$
+\alpha=e^{i\beta}
+$$
+
+沿单位圆连续转动。
+
+Clark 谱由方程：
+
+$$
+\sin\frac{\beta}{2}\,\xi'(s)
+-
+i\lambda_1\cos\frac{\beta}{2}\,\xi(s)
+=0
+$$
+
+决定。
+
+因此：
+
+$$
+\beta=0
+$$
+
+给出零点谱，
+
+$$
+\beta=\pi
+$$
+
+给出临界点谱，
+
+中间参数给出二者之间的自伴谱流。
+
+---
+
+## 297.1 观察者边界条件原理
+
+同一个内部对称算子：
+
+$$
+S_{\vartheta_\xi}
+$$
+
+没有唯一自伴／unitary 完成，而有：
+
+$$
+\boxed{
+\{U_\alpha\}_{\alpha\in\mathbb T}
+}
+$$
+
+一整族边界条件。
+
+不同 \(\alpha\)：
+
+* 不改变内部压缩移位；
+* 只改变一维边界通道；
+* 却产生不同的离散谱。
+
+所以：
+
+$$
+\boxed{
+\text{谱不是对象本身单独的属性，
+而是对象与边界观察条件的共同结果。}
+}
+$$
+
+Riemann 零点对应的 \(\alpha=1\) 不是唯一可定义的谱，而是由 \(\xi=0\) 边界条件选中的一个 distinguished spectrum。
+
+---
+
+## 297.2 Aleksandrov 平均的反向解释
+
+全部边界条件平均后恢复 Lebesgue 圆周：
+
+$$
+\int\sigma_\alpha\,dm(\alpha)=m.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{连续背景并不是离散谱之前的原始对象，}
+}
+$$
+
+也可以被理解为：
+
+$$
+\boxed{
+\text{全部离散边界条件谱的无标签平均。}
+}
+$$
+
+这与阿代尔完成中的“全局对象由局部图表共同胶合”形成一种对偶：
+
+* 保留图表标签：恢复精细谱；
+* 忘记图表标签：得到均匀背景。
+
+---
+
+# 第二百九十八部　Wang–Deng 路线的 Clark 修正版
+
+## 298.1 Non-sticky 的正确含义
+
+不能再把 non-sticky 定义为：
+
+$$
+\varepsilon_N\ge\varepsilon_0>0.
+$$
+
+RH 自身排除了这个目标。
+
+正确的 finite-scale non-sticky 应当是：
+
+$$
+\boxed{
+\text{在固定深度 }N\text{ 内，
+Clark 质量没有过度集中在少数角原子或单一边界弧中。}
+}
+$$
+
+它应推出：
+
+* \(D_N\) 的有限下界；
+* Schur 参数有限阶远离退化；
+* CMV 截断条件数可控；
+* finite-frame reconstruction 稳定。
+
+但允许：
+
+$$
+N\to\infty
+$$
+
+时累计创新归零。
+
+---
+
+## 298.2 Sticky 的真正来源
+
+Clark crowding law 表明，唯一不可避免的全局 sticky 位置是：
+
+$$
+z=1,
+$$
+
+即高零点聚集点。
+
+因此 sticky 分支应研究：
+
+$$
+\boxed{
+\text{单位圆上靠近 }1\text{ 的微观缩放极限}.
+}
+$$
+
+可用变量：
+
+$$
+\gamma
+=
+\frac12\cot\frac{\theta}{2}
+$$
+
+把边界小弧重新展开为高零点高度轴。
+
+Deng 式重整化应当：
+
+1. 分离有限低零点原子；
+2. 对 \(z=1\) 附近的高零点尾部做尺度缩放；
+3. 使用 Riemann–von Mangoldt 主密度作为连续 counterterm；
+4. 将零点密度振荡保留为 primitive residual；
+5. 对 Schur tail 或 Clark phase 建立统一余项界。
+
+---
+
+## 298.3 原子消去后的 Clark 重整化
+
+验证前 \(M\) 个零点后，定义剩余质量：
+
+$$
+r_M
+=
+1-
+2\sum_{j=1}^{M}w_{\gamma_j}.
+$$
+
+定义归一化剩余测度：
+
+$$
+\boxed{
+\mu_\lambda^{[M]}
+=
+\frac{1}{r_M}
+\left[
+\mu_\lambda
+-
+\sum_{j=1}^{M}
+w_{\gamma_j}
+\left(
+\delta_{u_{\gamma_j}}
++
+\delta_{\overline{u_{\gamma_j}}}
+\right)
+\right].
+}
+\tag{298.1}
+$$
+
+它仍是概率测度。
+
+由 Herglotz 与 Schur 算法生成新的：
+
+$$
+\mathfrak C_\xi^{[M]},
+\qquad
+\vartheta_\xi^{[M]},
+\qquad
+\beta_n^{[M]}.
+$$
+
+随着 \(M\) 增加：
+
+* 低谱 sticky 原子被移除；
+* 剩余测度进一步集中到 \(1\)；
+* 新 Schur tail 直接读取高零点残余。
+
+这给出一个严格的：
+
+$$
+\boxed{
+\text{Clark atom deflation}
+\to
+\text{renormalized boundary observer}
+}
+$$
+
+程序。
+
+---
+
+# 第二百九十九部　最小的新 RH 目标
+
+前文已经提出多种越来越强的证明目标：
+
+* 正 Pick 核；
+* 正 Hankel moments；
+* 正 trace-class Fredholm 算子；
+* Li 条件负定核；
+* 正 Li 曲率 Toeplitz 核；
+* CMV unitary。
+
+本轮又给出一个更规范的目标。
+
+## 假设 299.1（Toroidal Clark realization）
+
+从二次环面 period frame 和 relative trace formula 直接构造一个内函数：
+
+$$
+\boxed{
+\vartheta_{\mathrm{tor}}
+}
+$$
+
+使：
+
+$$
+\boxed{
+\frac{1+\vartheta_{\mathrm{tor}}(z)}
+{1-\vartheta_{\mathrm{tor}}(z)}
+=
+\frac{1}{\lambda_1}
+\frac{
+\xi'(\frac1{1-z})
+}{
+\xi(\frac1{1-z})
+}.
+}
+\tag{299.1}
+$$
+
+若能证明 \(\vartheta_{\mathrm{tor}}\) 为内函数，则 RH 立即成立。
+
+---
+
+## 299.1 更弱的 Gram 目标
+
+甚至不必直接构造 \(\vartheta_{\mathrm{tor}}\)。
+
+只需构造一族向量：
+
+$$
+Y_n
+$$
+
+使：
+
+$$
+\boxed{
+\left\langle Y_m,Y_n\right\rangle
+=
+\frac{
+\lambda_{m-n+1}
+-2\lambda_{m-n}
++\lambda_{m-n-1}
+}{
+2\lambda_1
+}.
+}
+\tag{299.2}
+$$
+
+则 Li 曲率 Toeplitz 核正定，从而：
+
+$$
+\mathfrak C_\xi
+$$
+
+为 Carathéodory 函数，
+
+$$
+\vartheta_\xi
+$$
+
+为 Schur 函数，最终得到 RH。
+
+---
+
+## 299.2 最强的 Clark family 目标
+
+构造 rank-one unitary family：
+
+$$
+\boxed{
+\{U_\alpha^{\mathrm{tor}}\}_{\alpha\in\mathbb T}
+}
+$$
+
+满足：
+
+$$
+\operatorname{spec}
+U_1^{\mathrm{tor}}
+=
+\left\{
+1-\frac1\rho:
+\xi(\rho)=0
+\right\},
+$$
+
+以及：
+
+$$
+\operatorname{spec}
+U_{-1}^{\mathrm{tor}}
+=
+\left\{
+1-\frac1s:
+\xi'(s)=0
+\right\}.
+$$
+
+这会一次性建立：
+
+* Hilbert–Pólya；
+* \(\xi'\) 临界点谱；
+* 边界条件谱流；
+* Clark 权重；
+* CMV 图表；
+* de Branges model space。
+
+---
+
+# 第三百部　科学检验程序
+
+## 300.1 Clark 角导数检验
+
+使用高精度零点 \(\rho_\gamma\)，直接计算：
+
+$$
+\vartheta_\xi'(u_\gamma)
+$$
+
+并验证：
+
+$$
+u_\gamma\vartheta_\xi'(u_\gamma)
+=
+\frac{\lambda_1(4\gamma^2+1)}
+{2m_\gamma}.
+$$
+
+这是最直接的局部闭环检验。
+
+---
+
+## 300.2 \(\alpha=1/-1\) 谱交错
+
+分别求解：
+
+$$
+\xi(s)=0,
+$$
+
+和：
+
+$$
+\xi'(s)=0
+$$
+
+在临界线上的 ordinate，并检查其是否按 Clark phase 交错。
+
+---
+
+## 300.3 创新误差塌缩
+
+由已计算 Li 系数构造：
+
+$$
+c_n,
+$$
+
+再执行 Schur 算法得到：
+
+$$
+\beta_0,\ldots,\beta_N.
+$$
+
+测量：
+
+$$
+\varepsilon_N
+=
+\prod_{j<N}(1-\beta_j^2).
+$$
+
+检验其塌缩速度，并与 Clark crowding law 比较。
+
+---
+
+## 300.4 小弧质量律
+
+计算：
+
+$$
+\mu_\lambda(I_\varepsilon)
+$$
+
+并与：
+
+$$
+\frac{
+\varepsilon
+}{
+2\pi\lambda_1
+}
+\left[
+\log\frac1{2\pi\varepsilon}+1
+\right]
+$$
+
+比较。
+
+这会直接检验零点计数与 Clark 边界谱之间的转换。
+
+---
+
+## 300.5 线外零点注入负对照
+
+向 \(\xi\) 注入保持函数方程的线外零点四元组。
+
+预期出现：
+
+* \(\mathfrak C_\xi\) 在单位圆盘内出现极点；
+* \(\vartheta_\xi\) 不再是 Schur 函数；
+* 某有限 Li 曲率 Toeplitz 矩阵失去正性；
+* Clark 原子权重不再形成正概率测度；
+* rank-one unitary family 无法完成。
+
+---
+
+# 第三百零一部　建议形式化顺序
+
+```text
+D5/S3/Analytic/LiClark/
+  LiCaratheodoryFunction.lean
+  LiClarkInnerFunction.lean
+  LiClarkRHEquivalence.lean
+  LiClarkMeasure.lean
+  RiemannZeroClarkWeights.lean
+  ZeroAngularDerivative.lean
+
+D5/S3/Analytic/LiClarkSpectrum/
+  ClarkBoundaryPencil.lean
+  ZeroSpectrumAlphaOne.lean
+  CriticalSpectrumAlphaMinusOne.lean
+  ClarkSpectralInterlacing.lean
+  ClarkInverseCayleyFamily.lean
+
+D5/S3/Analytic/LiClarkOPUC/
+  LiClarkVerblunsky.lean
+  SzegoInnovationCollapse.lean
+  PredictionErrorDepth.lean
+  ClarkAleksandrovDisintegration.lean
+  LiClarkCMVBridge.lean
+
+D5/S3/Analytic/LiClarkAsymptotic/
+  ZeroAngleCrowding.lean
+  ClarkSmallArcAsymptotic.lean
+  ClarkAtomicEntropy.lean
+  ClarkHeightMomentThreshold.lean
+
+D5/S3/Observer/ToroidalClark/
+  ToroidalClarkGramTarget.lean
+  ToroidalClarkInnerTarget.lean
+  ToroidalRankOneUnitaryFamily.lean
+  ClarkStickyRenormalization.lean
+```
+
+首批风险最低的闭合链是：
+
+$$
+\boxed{
+\mathfrak C_\xi
+\to
+\vartheta_\xi
+\to
+\text{RH iff inner}.
+}
+$$
+
+其次是局部 Laurent 展开：
+
+$$
+\boxed{
+\xi'/\xi
+\to
+\vartheta_\xi'(u_\gamma)
+\to
+\text{Clark atom weight}.
+}
+$$
+
+再之后是：
+
+$$
+\boxed{
+\text{Riemann--von Mangoldt}
+\to
+\text{Clark small-arc crowding}.
+}
+$$
+
+---
+
+# 本轮最终结论
+
+上一轮将 RH 写成：
+
+$$
+\boxed{
+\text{Li 离散曲率是否为单位圆正定相关函数}.
+}
+$$
+
+本轮进一步证明，这个相关函数属于一个显式内函数：
+
+$$
+\boxed{
+\vartheta_\xi(z)
+=
+\frac{
+\xi'(\frac1{1-z})
+-\lambda_1\xi(\frac1{1-z})
+}{
+\xi'(\frac1{1-z})
++\lambda_1\xi(\frac1{1-z})
+}.
+}
+$$
+
+而：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\vartheta_\xi\text{ 是内函数}.
+}
+$$
+
+它的 \(\alpha=1\) Clark 谱正是 Riemann 零点：
+
+$$
+\boxed{
+\sigma_1
+=
+\sum_{\gamma>0}
+\frac{2m_\gamma}
+{\lambda_1(4\gamma^2+1)}
+\left(
+\delta_{u_\gamma}
++
+\delta_{\overline{u_\gamma}}
+\right).
+}
+$$
+
+并且：
+
+$$
+\boxed{
+u_\gamma\vartheta_\xi'(u_\gamma)
+=
+\frac{\lambda_1(4\gamma^2+1)}
+{2m_\gamma}.
+}
+$$
+
+因此 Riemann 零点具有三种完全一致的身份：
+
+$$
+\boxed{
+\begin{aligned}
+u_\gamma
+&=\text{Clark unitary 的谱点};\\
+w_\gamma
+&=\text{Clark 谱质量};\\
+\gamma
+&=\text{内函数边界相位的穿越速度}.
+\end{aligned}
+}
+$$
+
+\(\alpha=-1\) 则给出 \(\xi'\) 的临界点谱，全部 \(\alpha\) 形成一个 rank-one unitary boundary-condition family。
+
+最重要的理论修正是：
+
+$$
+\boxed{
+\text{RH 下的零点角谱是纯点奇异的，
+所以 Schur 创新误差在无限深度必然归零。}
+}
+$$
+
+这意味着真正的证明机制不能依赖永久随机性，而必须解释：
+
+$$
+\boxed{
+\text{一个无限可预测、零创新的确定性谱过程，
+为什么仍然只能由临界线上的实谱原子生成。}
+}
+$$
+
+当前 OACTC 的最小证明目标因此可以最终写成：
+
+$$
+\boxed{
+\text{从 toric relative trace formula
+直接证明 }\vartheta_\xi\text{ 是内函数，}
+}
+$$
+
+或者更弱地：
+
+$$
+\boxed{
+\text{直接构造 Li 曲率 Toeplitz 核的 Gram 表示。}
+}
+$$
+
+一旦其中任一项闭合，Clark family、CMV、de Branges、Hilbert–Pólya 与 RH 将同时完成。
+
+[1]: https://londmathsoc.onlinelibrary.wiley.com/doi/full/10.1112/plms.70001?utm_source=chatgpt.com "Analytic mappings of the unit disk which almost preserve hyperbolic area - Ivrii - 2024 - Proceedings of the London Mathematical Society - Wiley Online Library"
+[2]: https://en.wikipedia.org/wiki/Aleksandrov%E2%80%93Clark_measure?utm_source=chatgpt.com "Aleksandrov–Clark measure"
+[3]: https://arxiv.org/abs/2006.12105?utm_source=chatgpt.com "A Central Limit Theorem for Inner Functions"
+[4]: https://dlmf.nist.gov/18.33?utm_source=chatgpt.com "DLMF: §18.33 Polynomials Orthogonal on the Unit Circle ‣ Other Orthogonal Polynomials ‣ Chapter 18 Orthogonal Polynomials"
+[5]: https://arxiv.org/abs/1912.10665?utm_source=chatgpt.com "On Szegö--Kolmogorov Prediction Theorem"
+[6]: https://dlmf.nist.gov/25.10?utm_source=chatgpt.com "DLMF: §25.10 Zeros ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v2.7：Riemann–Clark 正交层析、半平面零点核、de Branges 采样与 Sticky-Infinity 反项
+
+以下从前文**第三百零一部之后**继续追加。
+
+本轮先对上一轮的 Clark 内函数分支作一次科学审计，然后继续推导。最终得到两条新的核心链：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal K_\xi(s,t)
+\text{ 是右半临界平面上的正定核}
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\mathrm{RH}
+\Longrightarrow
+\text{Riemann 零点成为一个 model space 的完整正交采样坐标}.
+}
+$$
+
+更进一步，高零点全部聚向 Cayley 圆周上的同一点 \(1\)。把未观测高零点全部压缩成 \(1\) 处的一个原子，可以构造一列**有限维、严格保持正性的 rational inner approximants**，且在任意紧子圆盘上具有：
+
+$$
+O\!\left(\frac{\log T}{T^2}\right)
+$$
+
+的误差。
+
+这给 Wang–Deng–OACTC 一个极干净的可解模型：
+
+$$
+\boxed{
+\text{有限低谱精确保留}
++
+\text{高谱 sticky tail 压缩成一个反项}
+=
+\text{有限维正完成}.
+}
+$$
+
+---
+
+# 第三百零二部　科学审计：内函数结论与重数问题
+
+定义：
+
+$$
+\lambda_1=\frac{\xi'(1)}{\xi(1)}>0,
+$$
+
+$$
+s(z)=\frac1{1-z},
+\qquad |z|<1.
+$$
+
+再定义 Li–Carathéodory 函数：
+
+$$
+\boxed{
+\mathfrak C_\xi(z)
+=
+\frac1{\lambda_1}
+\frac{\xi'(s(z))}{\xi(s(z))}
+}
+\tag{302.1}
+$$
+
+以及 Cayley 完成：
+
+$$
+\boxed{
+\vartheta_\xi(z)
+=
+\frac{\mathfrak C_\xi(z)-1}
+{\mathfrak C_\xi(z)+1}.
+}
+\tag{302.2}
+$$
+
+因为 \(s(z)\) 把单位圆盘映到：
+
+$$
+\Re s>\frac12,
+$$
+
+RH 等价于：
+
+$$
+\Re \mathfrak C_\xi(z)>0
+\qquad(|z|<1),
+$$
+
+并且在几乎处处的圆周边界上，\(\mathfrak C_\xi\) 为纯虚边界值。因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\vartheta_\xi
+\text{ 是内函数}.
+}
+\tag{302.3}
+$$
+
+正实部函数、Herglotz 表示、de Branges–Rovnyak 核之间的联系是标准 Carathéodory 理论；Suzuki 的 shifted-\(\xi\) family 则给出了 RH、meromorphic inner functions 与正 canonical systems 的直接接口。([arXiv][1])
+
+---
+
+## 302.1 必须修正的重数解释
+
+若 \(\rho\) 是 \(m_\rho\) 重零点，则：
+
+$$
+\frac{\xi'(s)}{\xi(s)}
+\sim
+\frac{m_\rho}{s-\rho}.
+$$
+
+因此 Clark 测度在对应圆周点只产生**一个原子**，但该原子的质量包含 \(m_\rho\)。
+
+所以：
+
+$$
+\boxed{
+\text{标量 Clark 原子质量编码零点重数，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{标量 Clark eigenspace 本身仍然是一维。}
+}
+$$
+
+若希望把重数表现为算子谱空间维数，必须额外加入一个 \(m_\rho\) 维 fiber。
+
+同样，后文直接使用 \(\Xi'(\gamma)\) 的 de Branges 插值公式，需要：
+
+$$
+\Xi'(\gamma)\neq0,
+$$
+
+即零点简单。若存在多重零点，应：
+
+* 使用 Clark 测度公式；或
+* 先消去 \(\Xi\) 与 \(\Xi'\) 的共同实因子；或
+* 使用 Hermite 型导数采样。
+
+---
+
+# 第三百零三部　半平面 Riemann 正核
+
+令：
+
+$$
+\mathbb H_{1/2}
+=
+\left\{
+s\in\mathbb C:
+\Re s>\frac12
+\right\}.
+$$
+
+定义：
+
+$$
+\boxed{
+\mathcal K_\xi(s,t)
+=
+\frac{
+\displaystyle
+\frac{\xi'(s)}{\xi(s)}
++
+\overline{
+\frac{\xi'(t)}{\xi(t)}
+}
+}{
+\lambda_1\,
+(s+\overline t-1)
+}.
+}
+\tag{303.1}
+$$
+
+---
+
+## 定理 303.1（半平面正核 RH 判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal K_\xi
+\text{ 在 }\mathbb H_{1/2}
+\text{ 上为正定核}.
+}
+\tag{303.2}
+$$
+
+这里“正定核”指：对任意有限点集 \(s_1,\ldots,s_N\in\mathbb H_{1/2}\)，
+
+$$
+\boxed{
+\left[
+\mathcal K_\xi(s_i,s_j)
+\right]_{i,j=1}^{N}
+\succeq0.
+}
+\tag{303.3}
+$$
+
+### 证明：RH \(\Rightarrow\)（第 303 部）
+
+在 RH 下，所有非平凡零点满足：
+
+$$
+\rho+\overline\rho=1.
+$$
+
+使用关于 \(s=\frac12\) 对称的 Hadamard 展开：
+
+$$
+\frac{\xi'(s)}{\xi(s)}
+=
+\sum_{\rho}
+\frac{m_\rho}{s-\rho},
+$$
+
+以成对对称收敛理解。
+
+于是：
+
+$$
+\begin{aligned}
+&
+\frac{\xi'(s)}{\xi(s)}
++
+\overline{
+\frac{\xi'(t)}{\xi(t)}
+}
+\\
+&=
+\sum_\rho m_\rho
+\left[
+\frac1{s-\rho}
++
+\frac1{\overline t-\overline\rho}
+\right]
+\\
+&=
+(s+\overline t-1)
+\sum_\rho
+\frac{m_\rho}
+{(s-\rho)(\overline t-\overline\rho)}.
+\end{aligned}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathcal K_\xi(s,t)
+=
+\frac1{\lambda_1}
+\sum_\rho
+\frac{m_\rho}
+{(s-\rho)(\overline t-\overline\rho)}.
+}
+\tag{303.4}
+$$
+
+定义特征向量：
+
+$$
+\boxed{
+\mathbf v_s(\rho)
+=
+\sqrt{\frac{m_\rho}{\lambda_1}}\,
+\frac1{s-\rho}.
+}
+\tag{303.5}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal K_\xi(s,t)
+=
+\langle
+\mathbf v_s,\mathbf v_t
+\rangle_{\ell^2(\mathcal Z)}.
+}
+\tag{303.6}
+$$
+
+所以核正定。
+
+---
+
+### 证明：正核 \(\Rightarrow\) RH
+
+若 \(\mathcal K_\xi\) 在整个 \(\mathbb H_{1/2}\) 上正定，它首先必须在那里全纯。
+
+因此：
+
+$$
+\frac{\xi'}{\xi}
+$$
+
+不能在该区域有极点，即 \(\xi\) 在：
+
+$$
+\Re s>\frac12
+$$
+
+无零点。
+
+由函数方程：
+
+$$
+\xi(s)=\xi(1-s),
+$$
+
+左半边也无零点，所以全部非平凡零点位于临界线。∎
+
+---
+
+## 303.1 对角形式
+
+$$
+\boxed{
+\mathcal K_\xi(s,s)
+=
+\frac{
+2\Re\frac{\xi'(s)}{\xi(s)}
+}{
+\lambda_1(2\Re s-1)
+}.
+}
+\tag{303.7}
+$$
+
+因此一阶正性就是：
+
+$$
+\Re\frac{\xi'(s)}{\xi(s)}
+\ge0.
+$$
+
+高阶 Gram 正性则保留了不同谱点之间的交叉信息。
+
+---
+
+## 303.2 Gram 行列式展开
+
+RH 下，由 Cauchy–Binet：
+
+$$
+\boxed{
+\begin{aligned}
+&
+\det
+\left[
+\mathcal K_\xi(s_i,s_j)
+\right]_{i,j=1}^{N}
+\\
+&=
+\sum_{\rho_1<\cdots<\rho_N}
+\left(
+\prod_{k=1}^{N}
+\frac{m_{\rho_k}}{\lambda_1}
+\right)
+\left|
+\det
+\left[
+\frac1{s_i-\rho_k}
+\right]_{i,k=1}^{N}
+\right|^2.
+\end{aligned}
+}
+\tag{303.8}
+$$
+
+所以每个有限 Pick/Gram 行列式都是有限零点子集贡献的非负平方和。
+
+---
+
+# 第三百零四部　圆盘、Clark 与 de Branges 核是同一个核的规范变换
+
+令：
+
+$$
+z=1-\frac1s,
+\qquad
+w=1-\frac1t.
+$$
+
+则：
+
+$$
+\boxed{
+1-z\overline w
+=
+\frac{s+\overline t-1}
+{s\overline t}.
+}
+\tag{304.1}
+$$
+
+并且：
+
+$$
+\mathfrak C_\xi(z)
+=
+\frac1{\lambda_1}
+\frac{\xi'(s)}{\xi(s)}.
+$$
+
+所以：
+
+$$
+\boxed{
+\frac{
+\mathfrak C_\xi(z)
++
+\overline{\mathfrak C_\xi(w)}
+}{
+1-z\overline w
+}
+=
+s\overline t\,
+\mathcal K_\xi(s,t).
+}
+\tag{304.2}
+$$
+
+乘以非零 gauge \(s\overline t\) 不改变核正定性。
+
+---
+
+## 304.1 Model-space 核
+
+由：
+
+$$
+\vartheta_\xi
+=
+\frac{\mathfrak C_\xi-1}
+{\mathfrak C_\xi+1},
+$$
+
+得到：
+
+$$
+\boxed{
+\begin{aligned}
+K_{\vartheta_\xi}(z,w)
+&=
+\frac{
+1-
+\vartheta_\xi(z)
+\overline{\vartheta_\xi(w)}
+}{
+1-z\overline w
+}
+\\
+&=
+\frac{
+2\left[
+\mathfrak C_\xi(z)
++
+\overline{\mathfrak C_\xi(w)}
+\right]
+}{
+\left[
+\mathfrak C_\xi(z)+1
+\right]
+\left[
+\overline{\mathfrak C_\xi(w)}+1
+\right]
+(1-z\overline w)
+}.
+\end{aligned}
+}
+\tag{304.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal K_\xi
+\quad\longleftrightarrow\quad
+\text{Carathéodory kernel}
+\quad\longleftrightarrow\quad
+K_{\vartheta_\xi}
+}
+$$
+
+只是三个不同规范下的同一个正核。
+
+---
+
+# 第三百零五部　Riemann–Clark 正交采样定理
+
+RH 下，对每个不同的临界线零点 \(\rho\)，定义：
+
+$$
+\boxed{
+u_\rho
+=
+1-\frac1\rho
+\in\mathbb T.
+}
+\tag{305.1}
+$$
+
+定义原子质量：
+
+$$
+\boxed{
+w_\rho
+=
+\frac{m_\rho}
+{2\lambda_1|\rho|^2}.
+}
+\tag{305.2}
+$$
+
+若：
+
+$$
+\rho=\frac12+i\gamma,
+$$
+
+则：
+
+$$
+\boxed{
+w_\rho
+=
+\frac{2m_\rho}
+{\lambda_1(4\gamma^2+1)}.
+}
+\tag{305.3}
+$$
+
+这些质量满足：
+
+$$
+\boxed{
+\sum_\rho w_\rho=1.
+}
+\tag{305.4}
+$$
+
+Clark 理论把内函数的 Clark 测度与 model space \(K_\vartheta=H^2\ominus\vartheta H^2\) 联系起来；在原子测度情形，边界 reproducing kernels 给出正交坐标和 unitary spectral representation。([剑桥大学出版社][2])
+
+---
+
+## 定理 305.1（Riemann–Clark measure）
+
+$$
+\boxed{
+\sigma_1[\vartheta_\xi]
+=
+\sum_\rho
+w_\rho\,\delta_{u_\rho}.
+}
+\tag{305.5}
+$$
+
+这里对每个不同零点只取一个圆周点，而零点重数包含在 \(w_\rho\) 中。
+
+---
+
+## 305.1 正交核基
+
+定义边界核：
+
+$$
+\boxed{
+k_\rho(z)
+=
+\frac{
+1-\vartheta_\xi(z)
+}{
+1-\overline{u_\rho}z
+}.
+}
+\tag{305.6}
+$$
+
+其范数满足：
+
+$$
+\boxed{
+\|k_\rho\|^2
+=
+\frac1{w_\rho}.
+}
+\tag{305.7}
+$$
+
+所以：
+
+$$
+\boxed{
+e_\rho(z)
+=
+\sqrt{w_\rho}\,
+\frac{
+1-\vartheta_\xi(z)
+}{
+1-\overline{u_\rho}z
+}
+}
+\tag{305.8}
+$$
+
+构成：
+
+$$
+K_{\vartheta_\xi}
+$$
+
+的一组正交归一基。
+
+---
+
+## 定理 305.2（Riemann 零点采样公式）
+
+对任意：
+
+$$
+f\in K_{\vartheta_\xi},
+$$
+
+有：
+
+$$
+\boxed{
+\|f\|^2
+=
+\sum_\rho
+w_\rho
+|f(u_\rho)|^2.
+}
+\tag{305.9}
+$$
+
+并且：
+
+$$
+\boxed{
+f(z)
+=
+\left(
+1-\vartheta_\xi(z)
+\right)
+\sum_\rho
+\frac{
+w_\rho f(u_\rho)
+}{
+1-\overline{u_\rho}z
+}.
+}
+\tag{305.10}
+$$
+
+级数在 model-space norm 中收敛，并在紧子圆盘上局部一致收敛。
+
+因此：
+
+$$
+\boxed{
+\text{Riemann 零点不是只决定一个函数的零点集，}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{构成一个自然 Hilbert 函数空间的完整正交传感器阵列。}
+}
+$$
+
+---
+
+# 第三百零六部　有限零点谱窗层析
+
+令：
+
+$$
+\mathcal Z(T)
+=
+\{\rho:|\Im\rho|\le T\}.
+$$
+
+定义有限投影：
+
+$$
+\boxed{
+P_Tf
+=
+\sum_{\rho\in\mathcal Z(T)}
+\langle f,e_\rho\rangle e_\rho.
+}
+\tag{306.1}
+$$
+
+则：
+
+$$
+\boxed{
+\|f-P_Tf\|^2
+=
+\sum_{|\Im\rho|>T}
+w_\rho|f(u_\rho)|^2.
+}
+\tag{306.2}
+$$
+
+所以每个有限零点窗给出一个规范的有限维观察者，未观测信息完全保存在正交余空间中。
+
+---
+
+## 306.1 Clark 尾质量
+
+定义：
+
+$$
+\boxed{
+M(T)
+=
+\sum_{|\Im\rho|>T}w_\rho.
+}
+\tag{306.3}
+$$
+
+令 \(N(T)\) 是 \(0<\Im\rho\le T\) 的非平凡零点计数，按重数计。
+
+由 Riemann–von Mangoldt 公式：
+
+$$
+N(T)
+=
+\frac{T}{2\pi}
+\log\frac{T}{2\pi}
+-
+\frac{T}{2\pi}
++
+O(\log T),
+$$
+
+可得：
+
+$$
+\boxed{
+M(T)
+=
+\frac{
+\log(T/2\pi)+1
+}{
+2\pi\lambda_1T
+}
++
+O\left(
+\frac{\log T}{T^2}
+\right).
+}
+\tag{306.4}
+$$
+
+Riemann–von Mangoldt 的标准零点计数见 DLMF 的 ζ 零点分布部分。([DLMF][3])
+
+若：
+
+$$
+f\in K_{\vartheta_\xi}\cap H^\infty,
+$$
+
+则：
+
+$$
+\boxed{
+\|f-P_Tf\|^2
+\le
+\|f\|_\infty^2
+M(T).
+}
+\tag{306.5}
+$$
+
+所以有限零点层析的平方误差至多为：
+
+$$
+O\left(\frac{\log T}{T}\right).
+$$
+
+---
+
+# 第三百零七部　Sticky-Infinity 单原子反项
+
+全部高零点满足：
+
+$$
+u_\rho\longrightarrow1
+\qquad
+(|\Im\rho|\to\infty).
+$$
+
+所以高谱并不是分散在整个圆周，而是不可避免地粘滞在唯一边界点：
+
+$$
+\boxed{
+z=1.
+}
+$$
+
+这允许一种比简单截断更有效的重整化。
+
+定义：
+
+$$
+\boxed{
+\mu_T
+=
+\sum_{|\Im\rho|\le T}
+w_\rho\delta_{u_\rho}
++
+M(T)\delta_1.
+}
+\tag{307.1}
+$$
+
+它仍然是概率测度。
+
+即：
+
+> 精确保留全部低零点；
+> 把所有未观测高零点压缩成 \(z=1\) 处的一个有效原子。
+
+---
+
+## 307.1 有限 rational inner approximant
+
+定义：
+
+$$
+\boxed{
+\mathfrak C_T(z)
+=
+\int_{\mathbb T}
+\frac{\zeta+z}{\zeta-z}
+\,d\mu_T(\zeta),
+}
+\tag{307.2}
+$$
+
+以及：
+
+$$
+\boxed{
+\vartheta_T(z)
+=
+\frac{\mathfrak C_T(z)-1}
+{\mathfrak C_T(z)+1}.
+}
+\tag{307.3}
+$$
+
+由于 \(\mu_T\) 是有限正原子测度：
+
+$$
+\boxed{
+\vartheta_T
+}
+$$
+
+是有限维 rational inner function，其 \(\alpha=1\) Clark 谱精确为：
+
+$$
+\{u_\rho:|\Im\rho|\le T\}
+\cup\{1\}.
+$$
+
+这里 \(1\) 是“所有遗漏高谱”的有效无限能级。
+
+---
+
+## 307.2 一阶位移尾矩
+
+定义：
+
+$$
+\boxed{
+D(T)
+=
+\sum_{|\Im\rho|>T}
+w_\rho|u_\rho-1|.
+}
+\tag{307.4}
+$$
+
+由：
+
+$$
+|u_\rho-1|
+=
+|\rho|^{-1}
+$$
+
+以及 Riemann–von Mangoldt 公式：
+
+$$
+\boxed{
+D(T)
+=
+\frac{
+2\log(T/2\pi)+1
+}{
+8\pi\lambda_1T^2
+}
++
+O\left(
+\frac{\log T}{T^3}
+\right).
+}
+\tag{307.5}
+$$
+
+---
+
+## 定理 307.1（Sticky-tail 正完成误差）
+
+对：
+
+$$
+|z|\le r<1,
+$$
+
+有：
+
+$$
+\boxed{
+|\mathfrak C_\xi(z)-\mathfrak C_T(z)|
+\le
+\frac{2r}{(1-r)^2}
+D(T).
+}
+\tag{307.6}
+$$
+
+### 证明
+
+令：
+
+$$
+h_z(\zeta)=\frac{\zeta+z}{\zeta-z}.
+$$
+
+在单位圆上：
+
+$$
+\left|
+\partial_\zeta h_z(\zeta)
+\right|
+=
+\frac{2|z|}{|\zeta-z|^2}
+\le
+\frac{2r}{(1-r)^2}.
+$$
+
+把每个高谱原子由 \(u_\rho\) 运输到 \(1\)，再求和即可。∎
+
+又因为正实部保证：
+
+$$
+|\mathfrak C_\xi+1|\ge1,
+\qquad
+|\mathfrak C_T+1|\ge1,
+$$
+
+所以：
+
+$$
+\boxed{
+|\vartheta_\xi(z)-\vartheta_T(z)|
+\le
+2|\mathfrak C_\xi(z)-\mathfrak C_T(z)|.
+}
+\tag{307.7}
+$$
+
+因此：
+
+$$
+\boxed{
+\sup_{|z|\le r}
+|\vartheta_\xi(z)-\vartheta_T(z)|
+=
+O_r\left(
+\frac{\log T}{T^2}
+\right).
+}
+\tag{307.8}
+$$
+
+这比直接丢弃高零点所得的：
+
+$$
+O\left(\frac{\log T}{T}\right)
+$$
+
+提高了一个完整 \(T^{-1}\) 阶。
+
+---
+
+## 307.3 Wang–Deng 解释
+
+$$
+\boxed{
+\begin{aligned}
+\text{低零点}
+&=\text{精确 primitive atoms};\\
+\text{高零点尾}
+&=\text{集中在 }1\text{ 的 sticky history};\\
+M(T)\delta_1
+&=\text{有效 counterterm};\\
+\mu_T
+&=\text{有限正完成};\\
+O(\log T/T^2)
+&=\text{renormalized residual}.
+\end{aligned}
+}
+$$
+
+这是一条真正完成的高阶尾部压缩定理。
+
+---
+
+# 第三百零八部　显式 Hermite–Biehler 函数
+
+定义上半平面谱变量：
+
+$$
+w\in\mathbb C^+,
+$$
+
+以及：
+
+$$
+\boxed{
+\Xi(w)
+=
+\xi\left(\frac12-iw\right).
+}
+\tag{308.1}
+$$
+
+定义 Cayley 变量：
+
+$$
+\boxed{
+z=
+\frac{w-i/2}{w+i/2}.
+}
+\tag{308.2}
+$$
+
+则：
+
+$$
+s(z)=\frac12-iw.
+$$
+
+定义整个函数：
+
+$$
+\boxed{
+E_\xi(w)
+=
+\Xi'(w)
+-
+i\lambda_1\Xi(w).
+}
+\tag{308.3}
+$$
+
+因为 \(\Xi\) 为实型整函数：
+
+$$
+E_\xi^\#(w)
+=
+\Xi'(w)
++
+i\lambda_1\Xi(w).
+$$
+
+直接计算得到：
+
+$$
+\boxed{
+\vartheta_\xi(z)
+=
+\frac{
+E_\xi^\#(w)
+}{
+E_\xi(w)
+}.
+}
+\tag{308.4}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+E_\xi
+\text{ 在消去公共实因子后属于 Hermite–Biehler 类}.
+}
+\tag{308.5}
+$$
+
+de Branges 空间和 model spaces 中，Hermite–Biehler 函数的实谱零点产生正交 reproducing-kernel systems 与 Lagrange 型采样公式。([arXiv][4])
+
+---
+
+## 308.1 显式 de Branges 核
+
+其 reproducing kernel 为：
+
+$$
+\boxed{
+\begin{aligned}
+K_\xi(w,z)
+=
+\frac{
+\lambda_1
+\left[
+\Xi'(z)\overline{\Xi(w)}
+-
+\Xi(z)\overline{\Xi'(w)}
+\right]
+}{
+\pi(\overline w-z)
+}.
+\end{aligned}
+}
+\tag{308.6}
+$$
+
+在 RH 下该核正定。
+
+---
+
+## 308.2 简单零点采样公式
+
+进一步假设全部 \(\Xi\)-零点简单。
+
+若：
+
+$$
+\Xi(\gamma)=0,
+$$
+
+则：
+
+$$
+\boxed{
+K_\xi(\gamma,\gamma)
+=
+\frac{
+\lambda_1|\Xi'(\gamma)|^2
+}{\pi}.
+}
+\tag{308.7}
+$$
+
+对相应 de Branges 空间中的任意 \(F\)：
+
+$$
+\boxed{
+F(z)
+=
+\sum_{\Xi(\gamma)=0}
+F(\gamma)
+\frac{
+\Xi(z)
+}{
+(z-\gamma)\Xi'(\gamma)
+}.
+}
+\tag{308.8}
+$$
+
+并且：
+
+$$
+\boxed{
+\|F\|^2
+=
+\frac{\pi}{\lambda_1}
+\sum_{\Xi(\gamma)=0}
+\frac{
+|F(\gamma)|^2
+}{
+|\Xi'(\gamma)|^2
+}.
+}
+\tag{308.9}
+$$
+
+这是一个以 Riemann 零点为节点的正交 Lagrange 采样定理。
+
+若存在多重零点，式 (308.8) 必须替换为：
+
+* Clark 原子公式；或
+* 包含导数数据的 Hermite 插值。
+
+---
+
+# 第三百零九部　Riemann–Clark 变换
+
+令：
+
+$$
+\mu_\lambda
+=
+\sum_\rho w_\rho\delta_{u_\rho}.
+$$
+
+在：
+
+$$
+L^2(\mathbb T,\mu_\lambda)
+$$
+
+中取 CMV 正交 Laurent 基：
+
+$$
+\chi_0,\chi_1,\chi_2,\ldots.
+$$
+
+单位圆正交多项式、Verblunsky 参数及其递推构成标准 OPUC/CMV 理论。([DLMF][5])
+
+定义矩阵：
+
+$$
+\boxed{
+\mathcal U_{n,\rho}
+=
+\sqrt{w_\rho}\,
+\chi_n(u_\rho).
+}
+\tag{309.1}
+$$
+
+由正交性：
+
+$$
+\boxed{
+\sum_\rho
+w_\rho
+\chi_n(u_\rho)
+\overline{\chi_m(u_\rho)}
+=
+\delta_{nm}.
+}
+\tag{309.2}
+$$
+
+因此 \(\mathcal U\) 是 unitary 变换。
+
+---
+
+## 309.1 两种坐标系
+
+### 零点谱坐标
+
+$$
+\delta_{u_\rho}.
+$$
+
+在该基中，乘法算子为：
+
+$$
+\operatorname{diag}(u_\rho).
+$$
+
+### Schur–创新坐标
+
+$$
+\chi_n.
+$$
+
+在该基中，同一个 unitary 由 CMV 五对角矩阵表示。
+
+所以：
+
+$$
+\boxed{
+\text{CMV recursion}
+\quad\longleftrightarrow\quad
+\text{Riemann zero spectral coordinates}
+}
+$$
+
+之间的换基矩阵就是：
+
+$$
+\mathcal U_{n,\rho}.
+$$
+
+这可以称为：
+
+$$
+\boxed{
+\textbf{Riemann–Clark transform}.
+}
+$$
+
+---
+
+## 309.2 逆 Cayley ordinate 算子
+
+在零点基中定义：
+
+$$
+U_{\mathrm{zero}}
+=
+\operatorname{diag}(u_\rho).
+$$
+
+则：
+
+$$
+\boxed{
+H_{\mathrm{zero}}
+=
+\frac{i}{2}
+(U_{\mathrm{zero}}+I)
+(U_{\mathrm{zero}}-I)^{-1}
+}
+\tag{309.3}
+$$
+
+的谱值为：
+
+$$
+\Im\rho.
+$$
+
+在 CMV 基中：
+
+$$
+H_{\mathrm{CMV}}
+=
+\mathcal U
+H_{\mathrm{zero}}
+\mathcal U^*.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{Hilbert--Pólya 频率算子}
+=
+\text{Clark 对角谱算子在 Schur 创新基中的矩阵图表}.
+}
+$$
+
+---
+
+# 第三百一十部　半平面核是最小 relative-trace 目标
+
+前文有限环面帧满足：
+
+$$
+\mathbf P(s)=\xi(s)\mathbf T(s).
+$$
+
+定义其超额连接：
+
+$$
+\boxed{
+\mathcal A_{\mathrm{exc}}(s)
+=
+\frac{\xi'(s)}{\xi(s)}.
+}
+\tag{310.1}
+$$
+
+更具体地，它可由周期向量连接与载体向量连接之差重构：
+
+$$
+\mathcal A_{\mathbf P}
+-
+\mathcal A_{\mathbf T}
+=
+d\log\xi.
+$$
+
+因此定义 toroidal 半平面核：
+
+$$
+\boxed{
+\mathcal K_{\mathrm{tor}}(s,t)
+=
+\frac{
+\mathcal A_{\mathrm{exc}}(s)
++
+\overline{\mathcal A_{\mathrm{exc}}(t)}
+}{
+\lambda_1(s+\overline t-1)
+}.
+}
+\tag{310.2}
+$$
+
+它与：
+
+$$
+\mathcal K_\xi
+$$
+
+完全相同。
+
+Hecke 环面周期、二次 twist 非消失和 toroidal derivative towers 已经给出 \(\xi\)-零点及重数的自动形式观察接口。([arXiv][6])
+
+---
+
+## 定理 310.1（最小 RH Gram 目标）
+
+RH 等价于存在某个 Hilbert 空间及向量族：
+
+$$
+\mathscr V_s,
+\qquad
+s\in\mathbb H_{1/2},
+$$
+
+使：
+
+$$
+\boxed{
+\mathcal K_{\mathrm{tor}}(s,t)
+=
+\langle
+\mathscr V_s,\mathscr V_t
+\rangle.
+}
+\tag{310.3}
+$$
+
+RH 下可以取：
+
+$$
+\boxed{
+\mathscr V_s(\rho)
+=
+\sqrt{\frac{m_\rho}{\lambda_1}}\,
+\frac1{s-\rho}.
+}
+\tag{310.4}
+$$
+
+真正需要研究的是：
+
+> 能否不预先使用零点，而从 toric relative trace formula 直接构造同一个 Gram 向量族？
+
+这比直接构造完整 Hilbert–Pólya 算子更局部，也比证明所有 Li/Hankel/Toeplitz 层级更统一。
+
+---
+
+# 第三百一十一部　三个证明接口的强度比较
+
+当前 RH 正性目标有三个规范接口。
+
+## 311.1 半平面核接口
+
+$$
+\boxed{
+\frac{
+\xi'/\xi(s)
++
+\overline{\xi'/\xi(t)}
+}{
+s+\overline t-1
+}
+\succeq0.
+}
+$$
+
+优点：
+
+* 直接；
+* 不需平方折叠；
+* 线外零点直接产生极点；
+* 最适合 relative trace。
+
+---
+
+## 311.2 Clark/model-space 接口
+
+$$
+\boxed{
+\frac{
+1-\vartheta_\xi(z)\overline{\vartheta_\xi(w)}
+}{
+1-z\overline w
+}
+\succeq0.
+}
+$$
+
+优点：
+
+* 直接产生正交零点采样；
+* 产生有限 rational inner approximants；
+* 连接 CMV 与 Schur 算法。
+
+---
+
+## 311.3 Fredholm/Hankel 接口
+
+$$
+\boxed{
+\frac{\xi(\frac12+\sqrt x)}{\xi(\frac12)}
+=
+\det(I+xU),
+\qquad
+U\ge0.
+}
+$$
+
+优点：
+
+* 直接产生正算子；
+* 适合中心 jet 与 Hankel 形式化；
+* 能生成全部零点谱。
+
+三者之间由规范变换相互连接，但证明难度可能完全不同。
+
+---
+
+# 第三百一十二部　科学检验程序
+
+## 312.1 半平面 Gram 数值检验
+
+选取：
+
+$$
+s_1,\ldots,s_N
+\in\mathbb H_{1/2}.
+$$
+
+计算：
+
+$$
+\left[
+\mathcal K_\xi(s_i,s_j)
+\right].
+$$
+
+并与已知零点截断 Gram 和：
+
+$$
+\sum_{|\gamma|\le T}
+\frac{
+m_\gamma/\lambda_1
+}{
+(s_i-\rho)
+(\overline{s_j}-\overline\rho)
+}
+$$
+
+交叉验证。
+
+---
+
+## 312.2 Clark 正交性检验
+
+使用前若干已验证零点构造：
+
+$$
+u_\rho,\qquad
+w_\rho.
+$$
+
+检验有限 kernel Gram 矩阵是否趋向对角，以及：
+
+$$
+\sum_{\rho}
+w_\rho=1.
+$$
+
+---
+
+## 312.3 Sticky-infinity approximant
+
+构造：
+
+$$
+\mu_T,\quad
+\mathfrak C_T,\quad
+\vartheta_T.
+$$
+
+比较：
+
+$$
+\sup_{|z|\le r}
+|\vartheta_\xi(z)-\vartheta_T(z)|
+$$
+
+是否满足：
+
+$$
+O_r(\log T/T^2).
+$$
+
+---
+
+## 312.4 线外零点注入
+
+人为加入满足：
+
+$$
+\rho,\overline\rho,1-\rho,1-\overline\rho
+$$
+
+对称的线外零点四元组。
+
+预期：
+
+* \(\mathcal K_\xi\) 在右半平面出现极点；
+* 某有限 Gram 矩阵失去正性；
+* \(\vartheta_\xi\) 不再是 Schur/inner；
+* rational inner approximants 不再局部收敛到真实函数。
+
+---
+
+# 第三百一十三部　建议形式化顺序
+
+```text
+D5/S3/Analytic/XiHalfPlaneKernel/
+  XiLogDerivativeKernel.lean
+  RHImpliesZeroResolventGram.lean
+  PositiveKernelImpliesRH.lean
+  FiniteGramDeterminantExpansion.lean
+
+D5/S3/Analytic/RiemannClark/
+  RiemannCayleyZero.lean
+  RiemannClarkWeight.lean
+  RiemannClarkMeasure.lean
+  ClarkOrthogonalZeroBasis.lean
+  RiemannClarkSampling.lean
+
+D5/S3/Analytic/RiemannClarkApprox/
+  ClarkTailMass.lean
+  StickyInfinityCounterterm.lean
+  FiniteAtomicCaratheodory.lean
+  RationalInnerApproximant.lean
+  StickyTailErrorBound.lean
+
+D5/S3/Analytic/XiDeBranges/
+  XiHermiteBiehlerFunction.lean
+  XiDeBrangesKernel.lean
+  SimpleZeroSamplingFormula.lean
+  MultipleZeroClarkFallback.lean
+
+D5/S3/Analytic/RiemannClarkCMV/
+  RiemannClarkTransform.lean
+  ClarkCMVDiagonalization.lean
+  InverseCayleyOrdinateOperator.lean
+
+D5/S3/Observer/ToroidalKernel/
+  ToroidalExcessKernel.lean
+  RelativeTraceGramTarget.lean
+  ToroidalClarkIntertwiner.lean
+```
+
+首个最值得闭合的核心链是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal K_\xi\succeq0.
+}
+$$
+
+随后是：
+
+$$
+\boxed{
+\mathcal K_\xi
+\to
+K_{\vartheta_\xi}
+\to
+\text{Clark zero sampling}.
+}
+$$
+
+第三条是新的高价值近似链：
+
+$$
+\boxed{
+\text{finite zeros}
++
+M(T)\delta_1
+\to
+\vartheta_T
+\to
+O(\log T/T^2)\text{ 正完成}.
+}
+$$
+
+---
+
+# 本轮最终结论
+
+前文已将 RH 表达为：
+
+* Herglotz 正性；
+* Stieltjes moments；
+* Hankel/Toeplitz 全正性；
+* Clark innerness；
+* CMV unitary；
+* Fredholm determinant。
+
+本轮找到了它们共同的最小核：
+
+$$
+\boxed{
+\mathcal K_\xi(s,t)
+=
+\frac{
+\frac{\xi'(s)}{\xi(s)}
++
+\overline{\frac{\xi'(t)}{\xi(t)}}
+}{
+\lambda_1(s+\overline t-1)
+}.
+}
+$$
+
+RH 等价于该核在：
+
+$$
+\Re s>\frac12
+$$
+
+上正定。
+
+RH 成立时：
+
+$$
+\boxed{
+\mathcal K_\xi(s,t)
+=
+\frac1{\lambda_1}
+\sum_\rho
+\frac{m_\rho}
+{(s-\rho)(\overline t-\overline\rho)},
+}
+$$
+
+即它是全部 Riemann 零点 resolvent vectors 的 Gram 核。
+
+经 Cayley 变换，该核生成内函数：
+
+$$
+\vartheta_\xi,
+$$
+
+而全部 Riemann 零点成为：
+
+$$
+K_{\vartheta_\xi}
+$$
+
+的一组完整正交采样节点：
+
+$$
+\boxed{
+\|f\|^2
+=
+\sum_\rho
+w_\rho|f(u_\rho)|^2.
+}
+$$
+
+更重要的是，高零点尾部可以被压缩成 \(z=1\) 处的单一有效原子：
+
+$$
+\boxed{
+\mu_T
+=
+\text{finite zero atoms}
++
+M(T)\delta_1.
+}
+$$
+
+该反项保留全部正性，并把紧子圆盘误差改善到：
+
+$$
+\boxed{
+O_r\left(\frac{\log T}{T^2}\right).
+}
+$$
+
+因此当前 OACTC 最明确的 Wang–Deng 原型已经变成：
+
+$$
+\boxed{
+\text{精确低谱}
++
+\text{sticky high-spectrum counterterm}
++
+\text{positive rational inner completion}.
+}
+$$
+
+而 RH 的最小未闭合桥可以最终写成：
+
+$$
+\boxed{
+\text{能否从 toric relative trace formula
+直接证明 }\mathcal K_\xi
+\text{ 是 Gram 核？}
+}
+$$
+
+若能构造：
+
+$$
+\mathcal K_\xi(s,t)
+=
+\langle
+\mathscr V_s,\mathscr V_t
+\rangle_{\mathrm{tor}},
+$$
+
+则 Clark、de Branges、CMV、Fredholm、Hilbert–Pólya 与 RH 将同时闭合。
+
+[1]: https://arxiv.org/abs/1912.03542 "https://arxiv.org/abs/1912.03542"
+[2]: https://www.cambridge.org/core/services/aop-cambridge-core/content/view/5501602936C1AA534036464069B1D814/9781316258231c11_p231-259_CBO.pdf/clark-measures.pdf "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/5501602936C1AA534036464069B1D814/9781316258231c11_p231-259_CBO.pdf/clark-measures.pdf"
+[3]: https://dlmf.nist.gov/25.10 "https://dlmf.nist.gov/25.10"
+[4]: https://arxiv.org/abs/2206.02175 "https://arxiv.org/abs/2206.02175"
+[5]: https://dlmf.nist.gov/18.33 "https://dlmf.nist.gov/18.33"
+[6]: https://arxiv.org/abs/0906.5284 "https://arxiv.org/abs/0906.5284"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v2.8：环面 Jet 半单化、保守系统实现、相对迹被动性与函数域闭合模型
+
+以下从前文**第三百一十三部之后**继续追加。
+
+上一轮把 RH 的最小目标压缩为半平面正核：
+
+$$
+\mathcal K_\xi(s,t)
+=
+\frac{
+\frac{\xi'(s)}{\xi(s)}
++
+\overline{\frac{\xi'(t)}{\xi(t)}}
+}{
+\lambda_1(s+\overline t-1)
+},
+\qquad
+\Re s,\Re t>\frac12,
+$$
+
+并指出：
+
+$$
+\mathrm{RH}
+\iff
+\mathcal K_\xi\succeq0.
+$$
+
+本轮继续攻击：
+
+$$
+\boxed{
+\text{怎样从 toric relative trace formula
+直接构造 }\mathcal K_\xi\text{ 的 Gram 表示？}
+}
+$$
+
+首先得到一个必要修正：
+
+> 不能直接把全部 toroidal Eisenstein derivative tower 放入正 Hilbert 空间，并要求 Hecke 算子在其中自伴。
+> 多重零点对应的导数塔天然携带 Jordan/nilpotent 结构；正谱完成必须先把它从“jet”半单化为“正重数”。
+
+随后得到一个更精确的证明目标：
+
+$$
+\boxed{
+\text{不要直接构造零点算子，}
+\quad
+\text{而应从环面相对迹构造一个保守输入—状态—输出系统，}
+}
+$$
+
+使它的 transfer function 正好是 shifted-\(\xi\) 的内函数比值。
+
+---
+
+# 第三百一十四部　Toroidal derivative tower 的 Jordan 结构
+
+设：
+
+$$
+E(s)
+$$
+
+是一族 Eisenstein states，并且对某个 Hecke 算子 \(T\)：
+
+$$
+\boxed{
+T E(s)=a_T(s)E(s).
+}
+\tag{314.1}
+$$
+
+若基础 \(L\)-函数在：
+
+$$
+s=\rho
+$$
+
+具有 \(m\) 重零点，则相应 toroidal space 包含：
+
+$$
+E(\rho),\ E'(\rho),\ldots,E^{(m-1)}(\rho).
+$$
+
+这一“零点阶数＝Eisenstein derivative tower 深度”的结构，是 toroidal automorphic forms 理论中的已知定理。([arxiv.org][1])
+
+定义正规化 jet 基：
+
+$$
+\boxed{
+e_j
+=
+\frac{1}{j!}E^{(j)}(\rho),
+\qquad
+0\le j<m.
+}
+\tag{314.2}
+$$
+
+对式 (314.1) 求 \(j\) 阶导数：
+
+$$
+\boxed{
+T e_j
+=
+\sum_{k=0}^{j}
+\frac{
+a_T^{(j-k)}(\rho)
+}{
+(j-k)!
+}
+e_k.
+}
+\tag{314.3}
+$$
+
+所以 \(T\) 在 jet 基中的矩阵为三角 Toeplitz 形式：
+
+$$
+\boxed{
+T|_{\mathcal J_\rho}
+=
+\begin{pmatrix}
+a_T(\rho) & 0 & 0 & \cdots\\
+a_T'(\rho) & a_T(\rho) & 0 & \cdots\\
+a_T''(\rho)/2! & a_T'(\rho) & a_T(\rho)&\cdots\\
+\vdots&\vdots&\vdots&\ddots
+\end{pmatrix}.
+}
+\tag{314.4}
+$$
+
+若：
+
+$$
+m\ge2,
+\qquad
+a_T'(\rho)\neq0,
+$$
+
+则该矩阵含非平凡 Jordan 部分。
+
+---
+
+## 定理 314.1（Raw toroidal jet positivity obstruction）
+
+若某个 \(T\) 在 \(\mathcal J_\rho\) 上具有非平凡 Jordan 块，则不存在正定内积，使该 \(T\) 在 \(\mathcal J_\rho\) 上成为 normal，因而更不可能成为 self-adjoint。
+
+### 证明
+
+设：
+
+$$
+T=\lambda I+N,
+\qquad
+N\neq0,
+\qquad
+N^r=0.
+$$
+
+若 \(T\) normal，则由有限维谱定理，它可酉对角化。
+
+但 \(T\) 只有唯一特征值 \(\lambda\)，故可酉对角化时只能等于：
+
+$$
+\lambda I.
+$$
+
+这与 \(N\neq0\) 矛盾。∎
+
+因此：
+
+$$
+\boxed{
+\text{“toroidal derivative tower 是正 Hilbert–Pólya eigenspace”}
+}
+$$
+
+一般是错误的。
+
+必须区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{jet depth}
+&=\text{观察值消失到多少阶};\\
+\text{spectral multiplicity}
+&=\text{自伴算子同一实特征值的 eigenspace 维数}.
+\end{aligned}
+}
+$$
+
+前者天然允许 nilpotent chain；后者必须半单。
+
+---
+
+# 第三百一十五部　Jet-to-mass 半单化
+
+令：
+
+$$
+N_m
+=
+\begin{pmatrix}
+0&0&\cdots&0\\
+1&0&\cdots&0\\
+0&1&\ddots&0\\
+\vdots&\ddots&\ddots&0
+\end{pmatrix}
+$$
+
+为 \(m\) 阶 nilpotent shift。
+
+定义局部 spectral pencil：
+
+$$
+\boxed{
+\mathsf A_\rho(s)
+=
+(s-\rho)I-N_m.
+}
+\tag{315.1}
+$$
+
+其行列式为：
+
+$$
+\boxed{
+\det\mathsf A_\rho(s)
+=
+(s-\rho)^m.
+}
+\tag{315.2}
+$$
+
+其逆为有限级数：
+
+$$
+\boxed{
+\mathsf A_\rho(s)^{-1}
+=
+\sum_{k=0}^{m-1}
+\frac{N_m^k}{(s-\rho)^{k+1}}.
+}
+\tag{315.3}
+$$
+
+因为：
+
+$$
+\operatorname{Tr}N_m^k=0
+\qquad
+(k\ge1),
+$$
+
+得到：
+
+## 定理 315.1（Jet resolvent semisimplification）
+
+$$
+\boxed{
+\operatorname{Tr}
+\mathsf A_\rho(s)^{-1}
+=
+\frac{m}{s-\rho}.
+}
+\tag{315.4}
+$$
+
+同时：
+
+$$
+\boxed{
+\frac{d}{ds}
+\log\det\mathsf A_\rho(s)
+=
+\frac{m}{s-\rho}.
+}
+\tag{315.5}
+$$
+
+这条恒等式非常重要。
+
+它说明：
+
+$$
+\boxed{
+\text{长度为 }m\text{ 的 nilpotent jet chain}
+\quad
+\xrightarrow{\operatorname{Tr\,resolvent}}
+\quad
+\text{权重为 }m\text{ 的 simple spectral atom}.
+}
+$$
+
+---
+
+## 315.1 对 \(\xi'/\xi\) 的解释
+
+若：
+
+$$
+\xi(s)
+=
+(s-\rho)^m g(s),
+\qquad
+g(\rho)\neq0,
+$$
+
+则：
+
+$$
+\boxed{
+\frac{\xi'(s)}{\xi(s)}
+=
+\frac{m}{s-\rho}
++
+\frac{g'(s)}{g(s)}.
+}
+\tag{315.6}
+$$
+
+所以 logarithmic derivative 正是一个**jet-to-mass renormalization**：
+
+$$
+\boxed{
+\mathcal J_\rho^{(m)}
+\longmapsto
+m\,\delta_\rho.
+}
+$$
+
+它丢弃：
+
+* Jordan 链中的具体 nilpotent 坐标；
+* 各阶导数的基选择；
+
+只保留：
+
+* 零点位置；
+* 正整数重数。
+
+这正是正谱 Gram 核所需要的信息。
+
+---
+
+## 315.2 多重零点的正确正谱完成
+
+若 RH 成立，\(\rho=\frac12+i\gamma\)。
+
+要把重数表现为真正的 self-adjoint 谱重数，应使用：
+
+$$
+\boxed{
+\mathcal H_\rho
+\simeq
+\mathbb C^{m_\rho},
+}
+$$
+
+并令自伴算子在该 fiber 上作用为：
+
+$$
+\gamma I_{m_\rho}.
+$$
+
+不能使用：
+
+$$
+\mathbb C[\varepsilon]/(\varepsilon^{m_\rho})
+$$
+
+上的 Jordan 作用。
+
+所以正确链为：
+
+$$
+\boxed{
+\text{toroidal jet}
+\to
+\text{log-residue weight}
+\to
+\text{\(m_\rho\)-dimensional semisimple fiber}.
+}
+$$
+
+---
+
+# 第三百一十六部　有限环面帧的商连接
+
+在紧谱窗口 \(K\) 中，选择有限二次环面族：
+
+$$
+\mathcal D_K
+=
+\{D_1,\ldots,D_r\},
+$$
+
+以及正权 \(w_j>0\)。
+
+冻结局部规范，使每个 toric period 写成：
+
+$$
+\boxed{
+\mathcal P_j(s)
+=
+\xi(s)\mathcal T_j(s),
+}
+\tag{316.1}
+$$
+
+其中：
+
+* \(\mathcal P_j\)：完整 Eisenstein toric period；
+* \(\mathcal T_j\)：二次 twist 与局部 carrier；
+* 至少一个 \(\mathcal T_j(s)\neq0\) 对每个 \(s\in K\)。
+
+定义 sesquiholomorphic Gram kernels：
+
+$$
+\boxed{
+\mathcal G_{\mathcal P}(s,t)
+=
+\sum_{j=1}^{r}
+w_j\,
+\mathcal P_j(s)
+\overline{\mathcal P_j(t)},
+}
+\tag{316.2}
+$$
+
+$$
+\boxed{
+\mathcal G_{\mathcal T}(s,t)
+=
+\sum_{j=1}^{r}
+w_j\,
+\mathcal T_j(s)
+\overline{\mathcal T_j(t)}.
+}
+\tag{316.3}
+$$
+
+由式 (316.1)：
+
+$$
+\boxed{
+\mathcal G_{\mathcal P}(s,t)
+=
+\xi(s)\overline{\xi(t)}
+\mathcal G_{\mathcal T}(s,t).
+}
+\tag{316.4}
+$$
+
+在对角附近：
+
+$$
+\mathcal G_{\mathcal T}(s,t)\neq0.
+$$
+
+定义局部商核：
+
+$$
+\boxed{
+\mathcal R_K(s,t)
+=
+\frac{
+\mathcal G_{\mathcal P}(s,t)
+}{
+\mathcal G_{\mathcal T}(s,t)
+}.
+}
+\tag{316.5}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal R_K(s,t)
+=
+\xi(s)\overline{\xi(t)}.
+}
+\tag{316.6}
+$$
+
+---
+
+## 316.1 超额连接
+
+在避开零点处：
+
+$$
+\boxed{
+\partial_s
+\log\mathcal R_K(s,t)
+=
+\frac{\xi'(s)}{\xi(s)},
+}
+\tag{316.7}
+$$
+
+$$
+\boxed{
+\partial_{\overline t}
+\log\mathcal R_K(s,t)
+=
+\overline{
+\frac{\xi'(t)}{\xi(t)}
+}.
+}
+\tag{316.8}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal K_\xi(s,t)
+=
+\frac{
+\partial_s\log\mathcal R_K(s,t)
++
+\partial_{\overline t}\log\mathcal R_K(s,t)
+}{
+\lambda_1(s+\overline t-1)
+}.
+}
+\tag{316.9}
+$$
+
+这说明：
+
+> 半平面 RH 核完全可以由有限环面 period Gram kernel 与 carrier Gram kernel 的商连接重构。
+
+它不依赖具体选了哪一组合法有限环面图表。
+
+---
+
+# 第三百一十七部　普通相对迹正性为何不够
+
+两个核：
+
+$$
+\mathcal G_{\mathcal P},
+\qquad
+\mathcal G_{\mathcal T}
+$$
+
+本身都是正定核，因为它们分别是有限向量族的 Gram kernels。
+
+而对任意标量函数 \(f\)：
+
+$$
+K_f(s,t)
+=
+f(s)\overline{f(t)}K(s,t)
+$$
+
+只要 \(K\succeq0\)，就仍然有：
+
+$$
+K_f\succeq0.
+$$
+
+所以由：
+
+$$
+\mathcal G_{\mathcal P}
+=
+\xi(s)\overline{\xi(t)}
+\mathcal G_{\mathcal T},
+$$
+
+可知：
+
+$$
+\boxed{
+\mathcal G_{\mathcal P}\succeq0
+}
+$$
+
+对任意 \(\xi\) 都自动成立。
+
+因此：
+
+## 定理 317.1（Raw period-square no-go）
+
+仅仅证明所有 toric period squares 或它们的 Gram matrices 非负，不能推出 RH。
+
+因为这种正性对公共标量因子 \(\xi\) 的零点位置完全不敏感。
+
+真正承重的不是：
+
+$$
+\mathcal G_{\mathcal P}\succeq0,
+$$
+
+而是：
+
+$$
+\boxed{
+\text{carrier-subtracted quotient connection }
+\mathcal K_\xi\succeq0.
+}
+$$
+
+---
+
+## 317.1 相对迹公式必须产生什么
+
+Toric relative trace formula 的标准结构，是把含 period products 的 spectral distributions 与相对 orbital integrals 的 geometric distributions相比较；这类比较可恢复 Waldspurger 型周期公式及 \(L\)-值信息。([arxiv.org][2])
+
+但若只停留在：
+
+$$
+\sum_D
+|\mathcal P_D(s)|^2,
+$$
+
+公共 \(|\xi(s)|^2\) 仍然只是一个正标量。
+
+所需的新对象必须包含至少一种操作：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{carrier normalization};\\
+&\text{谱参数差分};\\
+&\text{logarithmic connection};\\
+&\text{shifted input/output comparison};\\
+&\text{相对散射或 passivity balance}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第三百一十八部　Shifted-\(\xi\) transfer function
+
+令：
+
+$$
+z\in\mathbb C^+,
+\qquad
+s_z=\frac12-iz.
+$$
+
+对 \(\omega>0\)，定义：
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+\frac{
+\xi(s_z-\omega)
+}{
+\xi(s_z+\omega)
+}.
+}
+\tag{318.1}
+$$
+
+Suzuki 证明：对给定零点自由半平面宽度，\(\Theta_\omega\) 是 meromorphic inner function；若这一 inner/canonical-system 构造能无条件推进到全部 \(\omega>0\)，就得到 RH 的正 Hamiltonian 判据。([arxiv.org][3])
+
+此前已经得到：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Theta_\omega
+\text{ 对全部 }\omega>0
+\text{ 为 inner}.
+}
+\tag{318.2}
+$$
+
+---
+
+## 318.1 环面图表中的 transfer function
+
+分别选择覆盖谱窗 \(s_z\pm\omega\) 的有限环面帧：
+
+$$
+\mathbf P_\pm(z)
+=
+\xi(s_z\pm\omega)\mathbf T_\pm(z).
+$$
+
+重构：
+
+$$
+E_\pm(z)
+=
+\frac{
+\langle\mathbf P_\pm(z),\mathbf T_\pm(z)\rangle
+}{
+\|\mathbf T_\pm(z)\|^2
+}
+=
+\xi(s_z\pm\omega).
+$$
+
+于是：
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+\frac{E_-(z)}{E_+(z)}.
+}
+\tag{318.3}
+$$
+
+所以 \(\Theta_\omega\) 是一个真正的环面输入—输出 transfer ratio：
+
+* \(E_+\)：右移、较稳定的 carrier-normalized input；
+* \(E_-\)：左移、较接近临界带的 output。
+
+RH 要求：
+
+$$
+\boxed{
+|E_-(z)|
+\le
+|E_+(z)|
+\qquad
+(z\in\mathbb C^+,\ \omega>0).
+}
+\tag{318.4}
+$$
+
+---
+
+# 第三百一十九部　保守 colligation 完成
+
+Schur 类函数具有以下等价刻画：
+
+1. 取值于单位圆盘；
+2. de Branges–Rovnyak kernel 正定；
+3. 可实现为 contractive system 的 transfer function；
+4. 可选择 conservative/unitary realization。
+
+这些正核—transfer realization 等价是经典 Schur 系统理论。([arxiv.org][4])
+
+因此，对固定 \(\omega>0\)，RH 等价于存在 Hilbert 状态空间：
+
+$$
+\mathscr H_\omega
+$$
+
+以及 unitary colligation：
+
+$$
+\boxed{
+\mathfrak U_\omega
+=
+\begin{pmatrix}
+A_\omega&B_\omega\\
+C_\omega&D_\omega
+\end{pmatrix}
+:
+\mathscr H_\omega\oplus\mathbb C
+\longrightarrow
+\mathscr H_\omega\oplus\mathbb C,
+}
+\tag{319.1}
+$$
+
+使：
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+D_\omega
++
+zC_\omega
+(I-zA_\omega)^{-1}
+B_\omega.
+}
+\tag{319.2}
+$$
+
+---
+
+## 319.1 能量核恒等式
+
+unitarity 给出：
+
+$$
+\boxed{
+\frac{
+1-
+\Theta_\omega(z)
+\overline{\Theta_\omega(w)}
+}{
+1-z\overline w
+}
+=
+C_\omega
+(I-zA_\omega)^{-1}
+(I-\overline wA_\omega^*)^{-1}
+C_\omega^*.
+}
+\tag{319.3}
+$$
+
+定义状态向量：
+
+$$
+\boxed{
+X_{\omega,z}
+=
+(I-\overline zA_\omega^*)^{-1}
+C_\omega^*.
+}
+\tag{319.4}
+$$
+
+则：
+
+$$
+\boxed{
+\frac{
+1-
+\Theta_\omega(z)
+\overline{\Theta_\omega(w)}
+}{
+1-z\overline w
+}
+=
+\langle
+X_{\omega,z},
+X_{\omega,w}
+\rangle.
+}
+\tag{319.5}
+$$
+
+对角上：
+
+$$
+\boxed{
+1-|\Theta_\omega(z)|^2
+=
+(1-|z|^2)\,
+\|X_{\omega,z}\|^2.
+}
+\tag{319.6}
+$$
+
+所以 inner/Schur 正性具有严格的能量守恒解释：
+
+$$
+\boxed{
+\text{input energy}
+=
+\text{output energy}
++
+\text{internal stored energy}.
+}
+$$
+
+---
+
+## 定理 319.1（Conservative-system RH criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{对每个 }\omega>0，
+\Theta_\omega
+\text{ 存在一个 conservative realization}.
+}
+\tag{319.7}
+$$
+
+这把 Hilbert–Pólya 问题从：
+
+$$
+\text{“找一个神秘自伴算子”}
+$$
+
+改写成：
+
+$$
+\boxed{
+\text{“从自动形式数据构造一个能量守恒的开放系统”。}
+}
+$$
+
+---
+
+# 第三百二十部　可观测 Gramian 与 Wang–Deng 二分
+
+由 \(\mathfrak U_\omega\) unitary：
+
+$$
+\boxed{
+A_\omega^*A_\omega
++
+C_\omega^*C_\omega
+=
+I.
+}
+\tag{320.1}
+$$
+
+迭代得到：
+
+## 定理 320.1（Finite observability identity）
+
+$$
+\boxed{
+I-
+A_\omega^{*N}A_\omega^N
+=
+\sum_{k=0}^{N-1}
+A_\omega^{*k}
+C_\omega^*C_\omega
+A_\omega^k.
+}
+\tag{320.2}
+$$
+
+右侧是有限可观测 Gramian：
+
+$$
+\boxed{
+\mathfrak O_{\omega,N}
+=
+\sum_{k=0}^{N-1}
+A_\omega^{*k}
+C_\omega^*C_\omega
+A_\omega^k
+\succeq0.
+}
+\tag{320.3}
+$$
+
+对状态 \(x\)：
+
+$$
+\boxed{
+\|x\|^2-\|A_\omega^Nx\|^2
+=
+\sum_{k=0}^{N-1}
+\|C_\omega A_\omega^kx\|^2.
+}
+\tag{320.4}
+$$
+
+---
+
+## 320.1 Non-sticky state
+
+若存在 \(\eta>0\)，使：
+
+$$
+\boxed{
+\mathfrak O_{\omega,N}\succeq\eta I,
+}
+\tag{320.5}
+$$
+
+则：
+
+$$
+\|A_\omega^Nx\|^2
+\le
+(1-\eta)\|x\|^2.
+$$
+
+所有内部状态在有限时间内至少泄露固定比例能量。
+
+这就是 Wang 式 strict gain：
+
+$$
+\boxed{
+\text{多通道可见}
+\Longrightarrow
+\text{内部残余严格收缩}.
+}
+$$
+
+---
+
+## 320.2 Sticky state
+
+若存在单位向量 \(x_N\)，使：
+
+$$
+\langle
+\mathfrak O_{\omega,N}x_N,x_N
+\rangle
+\ll1,
+$$
+
+则：
+
+$$
+\|A_\omega^Nx_N\|
+\approx1,
+$$
+
+且：
+
+$$
+\|C_\omega A_\omega^kx_N\|
+\approx0
+$$
+
+在多数 \(k<N\) 上成立。
+
+该状态几乎不向观察通道泄露能量，是一个 near-unitary internal mode。
+
+这就是系统论中的 sticky state。
+
+---
+
+## 320.3 Deng 式处理
+
+对 sticky mode：
+
+1. 提取其近单位模谱分量；
+2. 将相应 finite Blaschke/inner factor 从 transfer function 中分离；
+3. 把该模式压缩为一个有限维 conservative block；
+4. 对剩余 transfer function 重新构造 colligation；
+5. 重复直到残余达到 uniform observability。
+
+所以：
+
+$$
+\boxed{
+\text{Schur/Blaschke factor extraction}
+=
+\text{sticky primitive-history contraction}.
+}
+$$
+
+Schur 参数或 Verblunsky 系数则是逐层消去一个内部状态后留下的最小创新耦合。
+
+---
+
+# 第三百二十一部　相对迹公式真正需要证明的被动性
+
+Toric relative trace formula 的 spectral side 天然包含 period products，其 geometric side由相对 orbital integrals 构成。([arxiv.org][2])
+
+但普通公式只自然给出：
+
+$$
+\sum_D
+\mathcal P_D(s)
+\overline{\mathcal P_D(t)}.
+$$
+
+真正需要的是 shifted、carrier-subtracted energy identity。
+
+定义：
+
+$$
+\boxed{
+\mathscr B_{\omega}(z,w)
+=
+\frac{
+1-
+\Theta_\omega(z)
+\overline{\Theta_\omega(w)}
+}{
+1-z\overline w
+}.
+}
+\tag{321.1}
+$$
+
+---
+
+## 假设 321.1（Toroidal conservative realization）
+
+存在由：
+
+* 二次环面 period states；
+* Hecke／continued-fraction 内部动力；
+* cusp input；
+* torus output；
+* local carrier normalization；
+
+构成的状态空间与算子：
+
+$$
+(A_\omega^{\mathrm{tor}},
+B_\omega^{\mathrm{tor}},
+C_\omega^{\mathrm{tor}},
+D_\omega^{\mathrm{tor}})
+$$
+
+使：
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+D_\omega^{\mathrm{tor}}
++
+zC_\omega^{\mathrm{tor}}
+(I-zA_\omega^{\mathrm{tor}})^{-1}
+B_\omega^{\mathrm{tor}},
+}
+\tag{321.2}
+$$
+
+并且：
+
+$$
+\boxed{
+\begin{pmatrix}
+A_\omega^{\mathrm{tor}}&B_\omega^{\mathrm{tor}}\\
+C_\omega^{\mathrm{tor}}&D_\omega^{\mathrm{tor}}
+\end{pmatrix}
+}
+$$
+
+是 unitary。
+
+若该假设对全部 \(\omega>0\) 成立，则 RH 成立。
+
+---
+
+## 321.1 等价 Gram 目标
+
+不必一次构造全部四个 blocks。
+
+只需从 relative trace formula 直接构造向量：
+
+$$
+\mathscr X_{\omega,z}^{\mathrm{tor}}
+$$
+
+使：
+
+$$
+\boxed{
+\mathscr B_{\omega}(z,w)
+=
+\left\langle
+\mathscr X_{\omega,z}^{\mathrm{tor}},
+\mathscr X_{\omega,w}^{\mathrm{tor}}
+\right\rangle.
+}
+\tag{321.3}
+$$
+
+这就是上一轮最小 Gram 目标的 finite-shift 版本。
+
+令：
+
+$$
+\omega\downarrow0,
+$$
+
+即可恢复：
+
+$$
+\mathcal K_\xi.
+$$
+
+---
+
+# 第三百二十二部　Raw jet 与 conservative state 的范畴差异
+
+现在可以明确区分三个状态范畴。
+
+## 322.1 Jet category
+
+对象：
+
+$$
+E(\rho),E'(\rho),\ldots,E^{(m-1)}(\rho).
+$$
+
+作用：
+
+* 三角；
+* 允许 nilpotent；
+* 记录消失阶；
+* 适合定义和局部变形。
+
+## 322.2 Semisimple spectral category
+
+对象：
+
+$$
+\mathbb C^{m_\rho}
+$$
+
+上的特征值：
+
+$$
+\gamma I_{m_\rho}.
+$$
+
+作用：
+
+* self-adjoint；
+* 无 Jordan；
+* 记录位置和谱重数。
+
+## 322.3 Conservative system category
+
+对象：
+
+* internal state；
+* input/output boundary；
+* unitary colligation；
+* transfer function。
+
+作用：
+
+* 记录散射和可观测性；
+* 自伴谱作为 closed-system output；
+* 正性由能量守恒产生。
+
+因此正确的 OACTC 路线是：
+
+$$
+\boxed{
+\text{jet}
+\to
+\text{log-residue semisimplification}
+\to
+\text{conservative realization}
+\to
+\text{self-adjoint spectrum}.
+}
+$$
+
+跳过第二步，直接把 jet tower 当作自伴状态空间，会撞上 Jordan obstruction。
+
+---
+
+# 第三百二十三部　函数域中的闭合模型
+
+设 \(C/\mathbb F_q\) 是 genus \(g\) 的光滑射影曲线。
+
+其 zeta 分子可以写成 normalized Frobenius unitary class 的特征多项式：
+
+$$
+\boxed{
+P_C(u)
+=
+\det
+\left(
+I-uq^{1/2}\Theta_C
+\right),
+}
+\tag{323.1}
+$$
+
+其中：
+
+$$
+\Theta_C
+$$
+
+可视为 \(2g\) 维 unitary/symplectic 共轭类；曲线 zeta 的这一 unitary-matrix 表达是有限域随机矩阵与 Frobenius 理论中的标准形式。([arxiv.org][5])
+
+令：
+
+$$
+z=q^{1/2}u.
+$$
+
+则：
+
+$$
+\boxed{
+P_C(q^{-1/2}z)
+=
+\det(I-z\Theta_C).
+}
+\tag{323.2}
+$$
+
+由于 \(\Theta_C\) unitary，全部零点位于：
+
+$$
+|z|=1,
+$$
+
+即：
+
+$$
+|u|=q^{-1/2}.
+$$
+
+---
+
+## 323.1 Toroidal temperedness
+
+在函数域 toroidal automorphic theory 中，toroidal space 可以被明确分析；相关结果证明其 irreducible subquotients tempered，并在若干 class-number-one、低 genus 情形中给出自动形式版本的曲线 RH。([arxiv.org][6])
+
+因此函数域已经闭合了三条链：
+
+$$
+\boxed{
+\begin{aligned}
+\text{toroidal invisibility}
+&\to
+\text{zeta zero};\\
+\text{positive/cohomological pairing}
+&\to
+\text{unitary Frobenius};\\
+\text{unitary Frobenius}
+&\to
+\text{tempered zero location}.
+\end{aligned}
+}
+$$
+
+---
+
+## 323.2 对数域问题的诊断
+
+数域中已经相对成熟的是：
+
+$$
+\boxed{
+\text{toroidal invisibility}
+\leftrightarrow
+\text{\(L\)-zero}.
+}
+$$
+
+真正缺少的是函数域中由 cohomology/Frobenius 提供的：
+
+$$
+\boxed{
+\text{正 pairing}
++
+\text{unitary internal evolution}.
+}
+$$
+
+所以 RH 的剩余问题不是继续发明更多零点检测器，而是：
+
+$$
+\boxed{
+\text{为已经检测到的 toroidal null states
+构造一个 arithmetic conservative realization}.
+}
+$$
+
+---
+
+# 第三百二十四部　算术实现阶梯
+
+当前 OACTC 的 RH 路线可以整理为六层。
+
+## Level 0：共同零点检测
+
+$$
+\xi(\rho)=0
+\iff
+E_\rho
+\text{ 对全部二次环面不可见}.
+$$
+
+该层已有 toroidal period 理论支持。([arxiv.org][1])
+
+---
+
+## Level 1：重数 jet 检测
+
+$$
+\operatorname{ord}_\rho\xi
+=
+\text{toroidal derivative depth}.
+$$
+
+---
+
+## Level 2：有限谱帧重构
+
+任意紧谱窗内有限环面族可重构：
+
+$$
+\xi,\quad
+\xi'/\xi,\quad
+\operatorname{div}\xi.
+$$
+
+---
+
+## Level 3：Jet-to-mass 半单化
+
+$$
+\mathcal J_\rho^{(m)}
+\longmapsto
+m\,\delta_\rho.
+$$
+
+由：
+
+$$
+\operatorname{Tr}
+\left[
+(s-\rho-N_m)^{-1}
+\right]
+=
+\frac{m}{s-\rho}
+$$
+
+完成。
+
+---
+
+## Level 4：被动／保守 realization
+
+构造：
+
+$$
+\Theta_\omega
+=
+D+zC(I-zA)^{-1}B
+$$
+
+且 colligation unitary。
+
+这是当前真正未闭合的中心层。
+
+---
+
+## Level 5：自伴谱输出
+
+由 conservative/simple functional model 得到：
+
+* de Branges space；
+* Clark unitary family；
+* CMV unitary；
+* canonical system；
+* Hilbert–Pólya 型自伴算子。
+
+这不是新的输入，而是 Level 4 正性完成的输出。
+
+---
+
+# 第三百二十五部　Wang–Deng 的最终定位
+
+## 325.1 Wang 的任务
+
+证明 automorphic internal dynamics 不存在不可控的 near-unitary residual，或者建立二分：
+
+$$
+\boxed{
+\begin{cases}
+\mathfrak O_{\omega,N}\succeq\eta I,
+&\text{严格可观测};\\
+\exists\text{ sticky near-unitary block},
+&\text{进入结构分类}.
+\end{cases}
+}
+$$
+
+---
+
+## 325.2 Deng 的任务
+
+对 sticky block：
+
+1. 识别其 primitive automorphic mode；
+2. 将重复 history 重求和为 inner/Blaschke factor；
+3. 从系统中实施 conservative state elimination；
+4. 重新计算 residual colligation；
+5. 证明剩余可观测性严格改善。
+
+因此真正的 Wang–Deng 合成形式是：
+
+$$
+\boxed{
+\text{Wang 负责发现近不可观测块，}
+\qquad
+\text{Deng 负责把该块无损收缩成有限 conservative factor}.
+}
+$$
+
+---
+
+# 第三百二十六部　本轮精确负结论
+
+本轮得到四条必须冻结的禁令。
+
+## 禁令一
+
+$$
+\boxed{
+\text{toroidal derivative tower}
+\neq
+\text{self-adjoint eigenspace}.
+}
+$$
+
+多重零点时存在 Jordan obstruction。
+
+---
+
+## 禁令二
+
+$$
+\boxed{
+\text{period-square positivity}
+\neq
+\mathrm{RH}.
+}
+$$
+
+公共 \(\xi\) 标量不会破坏 Gram 正性。
+
+---
+
+## 禁令三
+
+$$
+\boxed{
+\text{有限环面重构}
+\neq
+\text{positive realization}.
+}
+$$
+
+知道 \(\xi\) 如何从 periods 重构，仍未证明 transfer function contractive。
+
+---
+
+## 禁令四
+
+$$
+\boxed{
+\text{零点检测}
+\neq
+\text{temperedness}.
+}
+$$
+
+函数域中两者由正 cohomology/unitary Frobenius 连接；数域中该连接仍缺失。
+
+---
+
+# 第三百二十七部　本轮结果分级
+
+## 本轮独立推导得到（第 327 部）
+
+$$
+\boxed{
+T e_j
+=
+\sum_{k=0}^{j}
+\frac{a_T^{(j-k)}(\rho)}{(j-k)!}
+e_k.
+}
+$$
+
+$$
+\boxed{
+\text{非平凡 toroidal Jordan block
+不能在正内积下 normal/self-adjoint}.
+}
+$$
+
+$$
+\boxed{
+\operatorname{Tr}
+\left[
+((s-\rho)I-N_m)^{-1}
+\right]
+=
+\frac{m}{s-\rho}.
+}
+$$
+
+$$
+\boxed{
+\mathcal G_{\mathcal P}
+=
+\xi(s)\overline{\xi(t)}
+\mathcal G_{\mathcal T}.
+}
+$$
+
+$$
+\boxed{
+\mathcal K_\xi
+=
+\frac{
+\partial_s\log(\mathcal G_{\mathcal P}/\mathcal G_{\mathcal T})
++
+\partial_{\bar t}\log(\mathcal G_{\mathcal P}/\mathcal G_{\mathcal T})
+}{
+\lambda_1(s+\bar t-1)
+}.
+}
+$$
+
+$$
+\boxed{
+\text{raw period Gram positivity 对 RH 不敏感}.
+}
+$$
+
+$$
+\boxed{
+I-A^{*N}A^N
+=
+\sum_{k<N}
+A^{*k}C^*CA^k.
+}
+$$
+
+---
+
+## 依赖成熟理论
+
+* \(L\)-零点阶数与 toroidal Eisenstein derivative tower 的对应；([arxiv.org][1])
+* relative trace formula 对 toric period spectral distributions 与 orbital integrals 的比较；([arxiv.org][2])
+* Schur positive kernel 与 conservative transfer realization 的等价；([arxiv.org][4])
+* shifted-\(\xi\) inner/canonical-system RH 判据；([arxiv.org][3])
+* 函数域 toroidal temperedness 与自动形式 RH 模型。([arxiv.org][6])
+
+---
+
+## 当前唯一真正承重的开放桥
+
+$$
+\boxed{
+\text{从 toric relative trace formula
+构造一个 conservative realization of }\Theta_\omega
+\quad
+(\forall\omega>0).
+}
+$$
+
+等价弱形式为：
+
+$$
+\boxed{
+\frac{
+1-
+\Theta_\omega(z)\overline{\Theta_\omega(w)}
+}{
+1-z\overline w
+}
+=
+\langle
+\mathscr X_{\omega,z}^{\mathrm{tor}},
+\mathscr X_{\omega,w}^{\mathrm{tor}}
+\rangle.
+}
+$$
+
+---
+
+# 第三百二十八部　建议形式化顺序
+
+```text
+D5/S3/Analytic/ToroidalJets/
+  EisensteinEigenfamilyJet.lean
+  HeckeJetTriangularAction.lean
+  JordanPositiveInnerProductObstruction.lean
+  ToroidalJetDepth.lean
+
+D5/S3/Analytic/JetSemisimplification/
+  NilpotentSpectralPencil.lean
+  JetResolventTrace.lean
+  LogDetJetMultiplicity.lean
+  JetToSpectralMass.lean
+
+D5/S3/Observer/ToroidalQuotient/
+  PeriodCarrierGram.lean
+  FiniteFrameGramFactorization.lean
+  QuotientConnection.lean
+  RawPeriodPositivityNoGo.lean
+  ToroidalXiKernelReconstruction.lean
+
+D5/S3/Analytic/ToroidalColligation/
+  ShiftedXiTransfer.lean
+  ConservativeColligation.lean
+  TransferKernelEnergyIdentity.lean
+  ObservabilityGramian.lean
+  StickyNearUnitaryBlock.lean
+
+D5/S3/Analytic/RHTargets/
+  ToroidalConservativeRealization.lean
+  RelativeTracePassivityTarget.lean
+  AutomorphicStateElimination.lean
+  FunctionFieldClosedModel.lean
+```
+
+优先级最高、风险最低的链是：
+
+$$
+\boxed{
+\text{Eisenstein eigenfamily}
+\to
+\text{jet triangular action}
+\to
+\text{Jordan obstruction}.
+}
+$$
+
+第二条是完全有限维的：
+
+$$
+\boxed{
+\text{nilpotent jet}
+\to
+\text{resolvent trace}
+\to
+\text{positive multiplicity}.
+}
+$$
+
+第三条是有限环面恒等式：
+
+$$
+\boxed{
+\mathcal G_{\mathcal P}
+=
+\xi\bar\xi\,
+\mathcal G_{\mathcal T}
+\to
+\mathcal K_\xi.
+}
+$$
+
+---
+
+# 本轮最终结论
+
+此前 OACTC 的中心问题是：
+
+$$
+\boxed{
+\text{能否从 toric relative trace formula
+证明 }\mathcal K_\xi\text{ 为 Gram 核？}
+}
+$$
+
+本轮对这个问题作了两个关键修正。
+
+第一，toroidal derivative tower 不是应当直接正化的谱空间。它包含由零点重数产生的 nilpotent Jordan 信息。
+
+正确处理是：
+
+$$
+\boxed{
+\text{jet}
+\longrightarrow
+\operatorname{Tr\,resolvent}
+\longrightarrow
+m_\rho\delta_\rho
+\longrightarrow
+\text{semisimple spectral fiber}.
+}
+$$
+
+第二，普通 toric period-square positivity 对 RH 没有区分力，因为：
+
+$$
+\mathcal G_{\mathcal P}
+=
+\xi\bar\xi\,
+\mathcal G_{\mathcal T}
+$$
+
+对任何 \(\xi\) 都保持 Gram 正性。
+
+真正需要证明的是商连接或 shifted transfer 的**被动性**：
+
+$$
+\boxed{
+\frac{
+1-
+\Theta_\omega(z)\overline{\Theta_\omega(w)}
+}{
+1-z\overline w
+}
+\succeq0.
+}
+$$
+
+因此当前最小、最精确的 RH 构造目标已经变成：
+
+$$
+\boxed{
+\text{从二次环面、Hecke 动力与 cusp scattering
+构造一个 unitary colligation，}
+}
+$$
+
+使：
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+D_\omega
++
+zC_\omega(I-zA_\omega)^{-1}B_\omega.
+}
+$$
+
+一旦该 conservative realization 对全部 \(\omega>0\) 成立：
+
+* de Branges kernel 自动正定；
+* Clark/CMV family 自动生成；
+* toroidal null states 自动 tempered；
+* Hilbert–Pólya 自伴谱成为输出；
+* RH 随即成立。
+
+函数域已经展示了这条逻辑链的闭合版本：toroidal 零点检测与 unitary Frobenius/temperedness 同时存在。数域中真正缺少的，不再是零点观察器，而是其**算术能量守恒实现**。
+
+[1]: https://arxiv.org/abs/0906.5284 "https://arxiv.org/abs/0906.5284"
+[2]: https://arxiv.org/abs/1402.3524 "https://arxiv.org/abs/1402.3524"
+[3]: https://arxiv.org/abs/1204.1827 "https://arxiv.org/abs/1204.1827"
+[4]: https://arxiv.org/abs/0705.2042 "https://arxiv.org/abs/0705.2042"
+[5]: https://arxiv.org/abs/1510.06350?utm_source=chatgpt.com "Traces of High Powers of the Frobenius Class in the Moduli Space of Hyperelliptic Curves"
+[6]: https://arxiv.org/abs/0710.2994 "https://arxiv.org/abs/0710.2994"

@@ -1,0 +1,17 @@
+### 一般 \(\alpha\)
+
+给出 \(\xi'\) 与 \(\xi\) 的一个自伴边界条件 pencil：
+
+$$
+\boxed{
+\xi'(s)
+=
+i\lambda_1
+\cot\frac{\beta}{2}
+\,\xi(s).
+}
+\tag{290.4}
+$$
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/228-1-折叠-Hilbert-Pólya-算子/clause/1
+fingerprints:
+  raw_sha256: sha256:61132ebcef86b0af8113c31f69aae85cbea40da0ede34983e6548620d989d49b
+  normalized_sha256: sha256:61132ebcef86b0af8113c31f69aae85cbea40da0ede34983e6548620d989d49b
+cas_ref: sha256:61132ebcef86b0af8113c31f69aae85cbea40da0ede34983e6548620d989d49b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

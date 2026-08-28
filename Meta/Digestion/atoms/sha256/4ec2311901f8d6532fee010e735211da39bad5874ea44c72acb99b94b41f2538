@@ -1,0 +1,31 @@
+## 203.1 有限谱帧证书
+
+对矩形：
+
+$$
+K_{T,\delta}
+=
+\left\{
+\frac12+\delta\le\Re s\le1,\ 
+|\Im s|\le T
+\right\},
+$$
+
+搜索有限判别式集合 \(\mathcal D\)，并用区间算术证明：
+
+$$
+\inf_{s\in K_{T,\delta}}
+\sum_{D\in\mathcal D}
+w_D|\mathcal T_D(s)|^2
+>0.
+$$
+
+输出：
+
+* 帧下界；
+* 条件数；
+* 最坏谱点；
+* 各环面贡献。
+
+---
+

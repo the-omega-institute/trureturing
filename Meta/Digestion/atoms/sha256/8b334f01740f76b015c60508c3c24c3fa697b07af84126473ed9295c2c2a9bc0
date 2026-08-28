@@ -1,0 +1,58 @@
+# 第三百一十部　半平面核是最小 relative-trace 目标
+
+前文有限环面帧满足：
+
+$$
+\mathbf P(s)=\xi(s)\mathbf T(s).
+$$
+
+定义其超额连接：
+
+$$
+\boxed{
+\mathcal A_{\mathrm{exc}}(s)
+=
+\frac{\xi'(s)}{\xi(s)}.
+}
+\tag{310.1}
+$$
+
+更具体地，它可由周期向量连接与载体向量连接之差重构：
+
+$$
+\mathcal A_{\mathbf P}
+-
+\mathcal A_{\mathbf T}
+=
+d\log\xi.
+$$
+
+因此定义 toroidal 半平面核：
+
+$$
+\boxed{
+\mathcal K_{\mathrm{tor}}(s,t)
+=
+\frac{
+\mathcal A_{\mathrm{exc}}(s)
++
+\overline{\mathcal A_{\mathrm{exc}}(t)}
+}{
+\lambda_1(s+\overline t-1)
+}.
+}
+\tag{310.2}
+$$
+
+它与：
+
+$$
+\mathcal K_\xi
+$$
+
+完全相同。
+
+Hecke 环面周期、二次 twist 非消失和 toroidal derivative towers 已经给出 \(\xi\)-零点及重数的自动形式观察接口。([arXiv][6])
+
+---
+

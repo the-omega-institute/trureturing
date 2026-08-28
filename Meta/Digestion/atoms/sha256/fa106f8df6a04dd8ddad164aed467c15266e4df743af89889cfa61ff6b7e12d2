@@ -1,0 +1,17 @@
+* 向量 \(v\in\mathcal H\)；
+
+使：
+
+$$
+\boxed{
+\mu_n
+=
+\langle U^nv,v\rangle
+\qquad
+(n\ge0).
+}
+\tag{234.1}
+$$
+
+因此：
+

@@ -1,0 +1,19 @@
+## 312.4 线外零点注入
+
+人为加入满足：
+
+$$
+\rho,\overline\rho,1-\rho,1-\overline\rho
+$$
+
+对称的线外零点四元组。
+
+预期：
+
+* \(\mathcal K_\xi\) 在右半平面出现极点；
+* 某有限 Gram 矩阵失去正性；
+* \(\vartheta_\xi\) 不再是 Schur/inner；
+* rational inner approximants 不再局部收敛到真实函数。
+
+---
+

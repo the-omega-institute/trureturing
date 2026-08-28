@@ -1,0 +1,12 @@
+### Moment 目标
+
+$$
+\mu_n
+=
+\langle
+U^nv,v
+\rangle.
+$$
+
+它足以给出 Stieltjes moment positivity。
+

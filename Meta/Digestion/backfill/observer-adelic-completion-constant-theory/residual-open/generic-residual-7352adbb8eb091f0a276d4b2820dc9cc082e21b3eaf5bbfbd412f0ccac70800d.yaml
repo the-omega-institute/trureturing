@@ -1,0 +1,10 @@
+ast_path: section/第三百二十三部-函数域中的闭合模型
+fingerprints:
+  raw_sha256: sha256:7352adbb8eb091f0a276d4b2820dc9cc082e21b3eaf5bbfbd412f0ccac70800d
+  normalized_sha256: sha256:7352adbb8eb091f0a276d4b2820dc9cc082e21b3eaf5bbfbd412f0ccac70800d
+cas_ref: sha256:7352adbb8eb091f0a276d4b2820dc9cc082e21b3eaf5bbfbd412f0ccac70800d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

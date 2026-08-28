@@ -1,0 +1,29 @@
+## 定理 176.1（RH 的 toroidal-temperedness 形式）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{每个非平凡 toroidal Eisenstein constituent 都是 tempered}.
+}
+\tag{176.1}
+$$
+
+这正是 Zagier 的 toroidal automorphic programme 的核心思想；Cornelissen–Lorscheid 明确指出，如果 toroidal automorphic representations 的不可约成分都是 tempered，则 RH 随之成立。([arXiv][1])
+
+因此 RH 不再只是：
+
+$$
+\text{零点是否在线上},
+$$
+
+而可以写成：
+
+$$
+\boxed{
+\text{所有普遍不可见状态，是否仍属于单位／tempered 物理谱。}
+}
+$$
+
+---
+

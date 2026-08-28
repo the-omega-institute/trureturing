@@ -1,0 +1,58 @@
+# 第二百六十四部　Weil–Li–Cayley 三重目标
+
+Bombieri–Lagarias 证明，对特定测试函数 \(g_n\)，Li 系数可以写成 Weil quadratic functional 的值：
+
+$$
+\boxed{
+2\lambda_n
+=
+W
+\left(
+g_n*
+\overline{x^{-1}g_n(x^{-1})}
+\right).
+}
+\tag{264.1}
+$$
+
+Suzuki 进一步给出一族具体 model-space 函数 \(G_n\)，使 RH 等价于：
+
+$$
+\boxed{
+\lambda_n
+=
+\frac1{2\pi}
+\|G_n\|_{L^2(\mathbb R)}^2.
+}
+\tag{264.2}
+$$
+
+([arXiv][2])
+
+当前 OACTC 又给出 RH 下的第三种范数：
+
+$$
+\boxed{
+\lambda_n
+=
+\|I-C_\Xi^n\|_{\mathrm{HS}}^2.
+}
+\tag{264.3}
+$$
+
+所以有三种正性图表：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{图表}&\text{Li 系数}\\
+\hline
+\text{Weil}&\text{显式公式二次型值}\\
+\text{de Branges/model space}&L^2\text{ 函数范数}\\
+\text{Cayley unitary}&\text{Hilbert--Schmidt 位移能量}
+\end{array}
+}
+$$
+
+---
+

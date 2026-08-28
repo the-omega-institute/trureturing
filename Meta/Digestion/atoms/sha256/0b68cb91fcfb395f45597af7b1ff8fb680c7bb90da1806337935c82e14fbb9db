@@ -1,0 +1,81 @@
+# 第二百六十九部　建议形式化顺序
+
+```text
+D5/S3/Analytic/LiCayley/
+  CriticalHalfPlaneMobius.lean
+  ZeroCayleyCoordinate.lean
+  LiGeneratingFunction.lean
+  SquareFoldToCayleyContraction.lean
+
+D5/S3/Analytic/LiFredholm/
+  CayleyFredholmDeterminant.lean
+  PositiveContractionRHCriterion.lean
+  RelativeUnitaryProduct.lean
+  CayleyOperatorUniqueness.lean
+
+D5/S3/Analytic/LiUnitary/
+  LiHilbertSchmidtDisplacement.lean
+  LiChebyshevTrace.lean
+  LiSubadditivity.lean
+  LiGramKernel.lean
+
+D5/S3/Analytic/LiHausdorff/
+  LiPowerTraceTransform.lean
+  InverseLiPowerTrace.lean
+  LiHausdorffMoments.lean
+  CompleteMonotonicityRHCriterion.lean
+
+D5/S3/Analytic/LiLevy/
+  LiConditionalNegativeDefinite.lean
+  LiSchoenbergSemigroup.lean
+  LiCircleLevyMeasure.lean
+  LiDirichletForm.lean
+  LiMarkovGenerator.lean
+
+D5/S3/Observer/ToroidalLi/
+  ToroidalLiGramTarget.lean
+  ToroidalLiUnitaryTarget.lean
+  ToroidalCayleyFredholmTarget.lean
+  RelativeTraceLiKernel.lean
+```
+
+优先级最高、风险最低的链是：
+
+$$
+\boxed{
+\text{critical half-plane Möbius map}
+\to
+\text{unit-circle zero coordinates}
+\to
+\text{Li coefficient pair formula}.
+}
+$$
+
+其次是纯算子代数链：
+
+$$
+\boxed{
+A_\Xi
+\to
+X_\Xi
+\to
+C_\Xi
+\to
+\lambda_n=\|I-C_\Xi^n\|_{\mathrm{HS}}^2.
+}
+$$
+
+第三条是有限矩阵目标：
+
+$$
+\boxed{
+\lambda
+\to
+K_\lambda(m,n)
+\to
+K_\lambda\succeq0.
+}
+$$
+
+---
+

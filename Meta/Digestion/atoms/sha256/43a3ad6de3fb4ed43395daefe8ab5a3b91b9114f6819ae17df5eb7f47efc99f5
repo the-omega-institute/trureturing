@@ -1,0 +1,66 @@
+# 第一百五十四部　由散射系数重构 Riemann zeta
+
+将散射系数中的已知 Archimedean 因子除去：
+
+$$
+\boxed{
+R(s)
+=
+\frac{\Gamma(s)}
+{\sqrt\pi\,\Gamma(s-\frac12)}
+\Phi(s).
+}
+\tag{154.1}
+$$
+
+由式 (152.2)：
+
+$$
+\boxed{
+R(s)
+=
+\frac{\zeta(2s-1)}
+{\zeta(2s)}.
+}
+\tag{154.2}
+$$
+
+令：
+
+$$
+s=\frac{z+j+1}{2}.
+$$
+
+则：
+
+$$
+R\left(\frac{z+j+1}{2}\right)
+=
+\frac{\zeta(z+j)}
+{\zeta(z+j+1)}.
+$$
+
+因此有限乘积精确 telescoping：
+
+$$
+\prod_{j=0}^{N-1}
+R\left(\frac{z+j+1}{2}\right)
+=
+\frac{\zeta(z)}
+{\zeta(z+N)}.
+$$
+
+当：
+
+$$
+\Re z>1
+$$
+
+时：
+
+$$
+\zeta(z+N)\longrightarrow1.
+$$
+
+所以得到：
+

@@ -1,0 +1,10 @@
+ast_path: section/147-1-determinant-的历史展开
+fingerprints:
+  raw_sha256: sha256:c99affa45332348c6303301fd3843b8f03e7b2ea73ecf1cc1b0afef9fb8fe35b
+  normalized_sha256: sha256:c99affa45332348c6303301fd3843b8f03e7b2ea73ecf1cc1b0afef9fb8fe35b
+cas_ref: sha256:c99affa45332348c6303301fd3843b8f03e7b2ea73ecf1cc1b0afef9fb8fe35b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

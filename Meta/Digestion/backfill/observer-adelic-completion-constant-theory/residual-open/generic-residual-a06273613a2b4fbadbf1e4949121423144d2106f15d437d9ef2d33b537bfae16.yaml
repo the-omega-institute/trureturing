@@ -1,0 +1,10 @@
+ast_path: section/300-4-小弧质量律
+fingerprints:
+  raw_sha256: sha256:a06273613a2b4fbadbf1e4949121423144d2106f15d437d9ef2d33b537bfae16
+  normalized_sha256: sha256:a06273613a2b4fbadbf1e4949121423144d2106f15d437d9ef2d33b537bfae16
+cas_ref: sha256:a06273613a2b4fbadbf1e4949121423144d2106f15d437d9ef2d33b537bfae16
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

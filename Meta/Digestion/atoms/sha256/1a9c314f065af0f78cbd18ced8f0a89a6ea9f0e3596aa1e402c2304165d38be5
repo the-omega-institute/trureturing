@@ -1,0 +1,42 @@
+## 假设 157.1（Golden positive-period program）
+
+寻找有限或可控的非负组合：
+
+$$
+\mu
+=
+\sum_j a_j\mu_{5,j},
+\qquad
+a_j\ge0,
+$$
+
+使：
+
+$$
+F_\mu(s)
+=
+\int E^*(z,s)\,d\mu(z)
+$$
+
+同时满足：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{零点捕获：}\quad
+\zeta(\rho)=0
+\Rightarrow
+F_\mu(\rho')=0;\\
+&\text{正性刚性：}\quad
+F_\mu
+\text{ 的全部非实零点位于其反射中线}.
+\end{aligned}
+}
+$$
+
+若这两条能同时闭合，就可能把散射表示转化为真正的 RH 正性桥。
+
+目前这是开放研究程序，而不是结论。
+
+---
+

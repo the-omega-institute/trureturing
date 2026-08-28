@@ -1,0 +1,10 @@
+ast_path: section/230-1-Jensen-Pólya-层级
+fingerprints:
+  raw_sha256: sha256:017d72b2119d8930c52f2e64c6acbe062199d37fe94ebf68647d2dccc84c3f94
+  normalized_sha256: sha256:017d72b2119d8930c52f2e64c6acbe062199d37fe94ebf68647d2dccc84c3f94
+cas_ref: sha256:017d72b2119d8930c52f2e64c6acbe062199d37fe94ebf68647d2dccc84c3f94
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
