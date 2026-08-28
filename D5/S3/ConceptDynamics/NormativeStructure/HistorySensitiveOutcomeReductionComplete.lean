@@ -46,7 +46,12 @@ theorem history_sensitive_evaluation_not_outcome_reducible_with_defect
   · exact history_sensitive_evaluation_not_outcome_reducible endpoint evaluation
       historySensitive
   · ext pair
-    simp only [defectRelation, Set.mem_setOf_eq, Set.mem_sdiff, Setoid.ker_def]
+    change
+      (endpoint pair.1 = endpoint pair.2 ∧
+          evaluation pair.1 ≠ evaluation pair.2) ↔
+        (endpoint pair.1 = endpoint pair.2 ∧
+          ¬ evaluation pair.1 = evaluation pair.2)
+    rfl
 
 #print axioms history_sensitive_evaluation_not_outcome_reducible_with_defect
 

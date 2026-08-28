@@ -97,21 +97,23 @@ theorem injective_policy_coalition_threshold
         constructor
         · rintro ⟨factor, hfactor⟩
           refine ⟨recoverViaPolicy secret policyMap hinjective ∘ factor, ?_⟩
+          funext x
+          have hfactorPoint := congrFun hfactor x
+          unfold Function.comp at hfactorPoint ⊢
           calc
-            secret = recoverViaPolicy secret policyMap hinjective ∘ policy := by
-              funext x
-              simp only [Function.comp_apply, hpolicy]
+            secret x = recoverViaPolicy secret policyMap hinjective (policy x) := by
+              simp only [hpolicy]
               exact (hrecover x).symm
-            _ = recoverViaPolicy secret policyMap hinjective ∘
-                  (factor ∘ coalitionReadout share K) := by rw [hfactor]
-            _ = (recoverViaPolicy secret policyMap hinjective ∘ factor) ∘
-                  coalitionReadout share K := by rfl
+            _ = recoverViaPolicy secret policyMap hinjective
+                (factor (coalitionReadout share K x)) :=
+              congrArg (recoverViaPolicy secret policyMap hinjective) hfactorPoint
         · rintro ⟨factor, hfactor⟩
           refine ⟨policyMap ∘ factor, ?_⟩
-          calc
-            policy = policyMap ∘ secret := hpolicy
-            _ = policyMap ∘ (factor ∘ coalitionReadout share K) := by rw [hfactor]
-            _ = (policyMap ∘ factor) ∘ coalitionReadout share K := by rfl
+          funext x
+          have hpolicyPoint := congrFun hpolicy x
+          have hfactorPoint := congrFun hfactor x
+          unfold Function.comp at hpolicyPoint hfactorPoint ⊢
+          exact hpolicyPoint.trans (congrArg policyMap hfactorPoint)
       have hsizeSets :
           coalitionSizeSet (fun K => Refines policy (coalitionReadout share K)) =
             coalitionSizeSet (fun K => Refines secret (coalitionReadout share K)) := by

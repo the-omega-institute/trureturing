@@ -394,7 +394,7 @@ theorem ramification_hypothesis_is_necessary :
     (𝒪 := NumberField.RingOfIntegers (CyclotomicField 3 ℚ)) hdegree
   refine ⟨P, hP, ?_, hramified⟩
   letI : P.IsMaximal := hP
-  exact Ideal.finiteQuotientOfFreeOfNeBot P
+  exact Ring.HasFiniteQuotients.finiteQuotient
     (P.bot_lt_of_maximal
       (NumberField.RingOfIntegers.not_isField (CyclotomicField 3 ℚ))).ne'
 

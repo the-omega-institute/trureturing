@@ -46,8 +46,16 @@ theorem fixed_target_completion_curvature_empty
           pair.1 pair.2}) = ∅ := by
   rw [Set.symmDiff_eq_empty]
   ext pair
-  simp only [Set.mem_setOf_eq, Setoid.ker_def, targetClosure, conceptJoin,
-    canonicalTargetReadout, Prod.mk.injEq, Subtype.mk.injEq]
+  change
+    (((concept pair.1, canonicalTargetReadout secondTarget pair.1),
+          canonicalTargetReadout firstTarget pair.1) =
+        ((concept pair.2, canonicalTargetReadout secondTarget pair.2),
+          canonicalTargetReadout firstTarget pair.2)) ↔
+      (((concept pair.1, canonicalTargetReadout firstTarget pair.1),
+          canonicalTargetReadout secondTarget pair.1) =
+        ((concept pair.2, canonicalTargetReadout firstTarget pair.2),
+          canonicalTargetReadout secondTarget pair.2))
+  simp only [Prod.mk.injEq]
   tauto
 
 #print axioms fixed_target_completion_curvature_empty

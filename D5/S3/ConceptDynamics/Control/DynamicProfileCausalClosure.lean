@@ -37,7 +37,7 @@ theorem dynamic_profile_causal_closure
           controlProfile readout := by
   intro action
   funext state continuation
-  simp only [Function.comp_apply, controlProfile, mul_smul]
+  exact congrArg readout (mul_smul continuation action state).symm
 
 #print axioms dynamic_profile_causal_closure
 

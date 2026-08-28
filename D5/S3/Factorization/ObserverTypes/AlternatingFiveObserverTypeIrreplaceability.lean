@@ -69,13 +69,24 @@ def Faithful {p : Nat} {G : Type} [Group G] :
 
 end LocalObserverAtPrime
 
+-- Lean 4.33 needs default transparency while checking the explicit Finsupp representation.
+section
+set_option backward.isDefEq.respectTransparency.types false
+
 /-- The left regular representation, promoted through the units of the linear
 endomorphism monoid to an observer valued in the general linear group. -/
 noncomputable def leftRegularLinearObserver
     (k : Type u) [CommSemiring k] (G : Type v) [Group G] :
-    G →* ((G →₀ k) ≃ₗ[k] (G →₀ k)) :=
-  (LinearMap.GeneralLinearGroup.generalLinearEquiv k (G →₀ k)).toMonoidHom.comp
-    (Representation.leftRegular k G).toHomUnits
+    G →* ((G →₀ k) ≃ₗ[k] (G →₀ k)) := by
+  let rho : Representation k G (G →₀ k) :=
+    { toFun := fun g => Finsupp.lmapDomain k k (g * ·)
+      map_one' := by ext; simp
+      map_mul' := by intro g h; ext; simp [mul_assoc] }
+  exact
+    (LinearMap.GeneralLinearGroup.generalLinearEquiv k (G →₀ k)).toMonoidHom.comp
+      rho.toHomUnits
+
+end
 
 /-- A nontrivial coefficient semiring makes the left regular linear observer
 faithful: its value on the basis vector at `1` records the acting group element. -/

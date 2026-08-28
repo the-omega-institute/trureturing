@@ -49,7 +49,10 @@ theorem recording_isometry_and_state_blocks
     simpa only [Matrix.conjTranspose_apply] using entry
   constructor
   · ext i j
-    simp only [Matrix.mul_apply, Matrix.conjTranspose_apply]
+    change
+      (∑ x : System × Outcome,
+          star (projector x.2 x.1 i) * projector x.2 x.1 j) =
+        (1 : Matrix System System ℂ) i j
     calc
       (∑ x : System × Outcome,
           star (projector x.2 x.1 i) * projector x.2 x.1 j) =
@@ -75,7 +78,12 @@ theorem recording_isometry_and_state_blocks
       _ = (1 : Matrix System System ℂ) i j := by
             rw [projectorComplete]
   · intro rho a b i j
-    simp only [Matrix.mul_apply, Matrix.conjTranspose_apply]
+    change
+      (∑ l : System,
+          (∑ k : System, projector a i k * rho k l) *
+            star (projector b j l)) =
+        ∑ l : System,
+          (∑ k : System, projector a i k * rho k l) * projector b l j
     simp_rw [projectorConjugate]
 
 #print axioms recording_isometry_and_state_blocks

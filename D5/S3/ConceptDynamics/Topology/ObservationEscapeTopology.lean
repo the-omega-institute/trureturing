@@ -63,7 +63,9 @@ theorem partitionTopology_le_of_kernel
   letI : DiscreteTopology Coarse := ⟨rfl⟩
   letI : TopologicalSpace Fine := ⊥
   letI : DiscreteTopology Fine := ⟨rfl⟩
-  change TopologicalSpace.induced fine ⊥ ≤ TopologicalSpace.induced coarse ⊥
+  change
+    TopologicalSpace.induced (show X -> Fine from fine) ⊥ ≤
+      TopologicalSpace.induced (show X -> Coarse from coarse) ⊥
   intro states statesOpen
   rw [isOpen_induced_iff] at statesOpen ⊢
   rcases statesOpen with ⟨coarseCoordinates, _coarseOpen, rfl⟩
@@ -174,6 +176,13 @@ theorem productiveSeparation_iff_topological_target_split
     refine ⟨left, right, targetSplit.1, targetSplit.2, ?_, ?_⟩
     · apply (partition_inseparable_iff_kernel
         (jointReadout (fun definition : Gamma => definition.1)) left right).2
+      change
+        jointReadout
+            (fun definition : Gamma =>
+              (show X -> InputOutput from definition.1)) left =
+          jointReadout
+            (fun definition : Gamma =>
+              (show X -> InputOutput from definition.1)) right
       rw [jointReadout_eq_iff_jointKernel]
       exact pairInBlind.2
     · intro candidateInseparable
@@ -186,7 +195,11 @@ theorem productiveSeparation_iff_topological_target_split
       (defectRelation_iff_topological_separation_deficit
         current target left right).2 ⟨currentInseparable, targetSeparable⟩
     refine ⟨left, right, ⟨pairInDefect, ?_⟩, ?_⟩
-    · rw [← jointReadout_eq_iff_jointKernel]
+    · change
+        (left, right) ∈ jointKernel
+          (fun definition : Gamma =>
+            (show X -> InputOutput from definition.1))
+      rw [← jointReadout_eq_iff_jointKernel]
       exact (partition_inseparable_iff_kernel
         (jointReadout (fun definition : Gamma => definition.1)) left right).1
           languageInseparable

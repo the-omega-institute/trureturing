@@ -32,11 +32,17 @@ namespace D5.S3.ConceptDynamics.Fibers.DegreeZeroClassObstruction
 open D5.S3.Factorization.QuadraticIdeals.NormTwoIdeal
 open D5.S3.Factorization.QuadraticIdeals.NormTwoIdealLocalGlobalGap
 
+-- Lean 4.33's stricter type check breaks mathlib's `Fintype` deriving handler.
+section
+set_option backward.isDefEq.respectTransparency.types false
+
 /-- The two prime coordinates retained by the ideal-class downgrade. -/
 inductive IdealClassPlace
   | normTwoPrime
   | classNeutralPrime
   deriving DecidableEq, Fintype
+
+end
 
 /-- A finitely supported integer family on the downgraded local coordinates. -/
 abbrev LocalValuationData := IdealClassPlace →₀ ℤ

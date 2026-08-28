@@ -134,7 +134,8 @@ theorem no_strict_component_cycle
         fun thirdFirst => firstSecond.2
           (componentReachable_trans edge secondThird.1 thirdFirst)⟩⟩
   have selfStrict : strictReach component component :=
-    Relation.transGen_minimal (fun _ _ step => step) cycle
+    Relation.transGen_minimal (r := strictReach) (r' := strictReach)
+      (fun _ _ step => step) component component cycle
   exact selfStrict.2 selfStrict.1
 
 #print axioms componentReachable_antisymm

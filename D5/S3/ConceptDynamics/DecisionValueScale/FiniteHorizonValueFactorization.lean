@@ -52,16 +52,22 @@ theorem finite_horizon_value_factorization
   induction horizon with
   | zero =>
       funext state
-      simpa [finiteHorizonValue, Function.comp_apply] using terminalFactors state
+      change microTerminal state = macroTerminal (abstract state)
+      exact terminalFactors state
   | succ horizon inductionHypothesis =>
       funext state
-      simp only [finiteHorizonValue, Function.comp_apply]
+      simp only [finiteHorizonValue]
       apply Finset.sup'_congr Finset.univ_nonempty rfl
       intro action _
-      rw [rewardFactors state action,
-        congrFun inductionHypothesis (microTransition action state)]
-      simp only [Function.comp_apply]
-      rw [transitionCompatible action state]
+      have continuationFactors :=
+        congrFun inductionHypothesis (microTransition action state)
+      change
+        finiteHorizonValue microTransition microReward microTerminal horizon
+            (microTransition action state) =
+          finiteHorizonValue macroTransition macroReward macroTerminal horizon
+            (abstract (microTransition action state)) at continuationFactors
+      rw [rewardFactors state action, continuationFactors,
+        transitionCompatible action state]
 
 #print axioms finite_horizon_value_factorization
 

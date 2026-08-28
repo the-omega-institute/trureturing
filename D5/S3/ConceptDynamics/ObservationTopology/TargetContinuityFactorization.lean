@@ -30,22 +30,32 @@ theorem continuous_partition_iff_fiber_constant
     have sourceInseparable : @Inseparable X (partitionTopology readout) x y :=
       (partition_inseparable_iff_kernel readout x y).2 sameReadout
     have preimageOpen :
-        @IsOpen X (partitionTopology readout) (target ⁻¹' {target x}) :=
-      (@continuous_def X Target (partitionTopology readout) ⊥ target).1
+        @IsOpen X (partitionTopology readout)
+          ((show X -> Target from target) ⁻¹' {target x}) :=
+      (@continuous_def X Target (partitionTopology readout) ⊥
+        (show X -> Target from target)).1
         targetContinuous _ (isOpen_discrete _)
-    have xInPreimage : x ∈ target ⁻¹' {target x} := by simp
-    have yInPreimage : y ∈ target ⁻¹' {target x} :=
+    have xInPreimage : x ∈ (show X -> Target from target) ⁻¹' {target x} := by
+      change target x ∈ ({target x} : Set Target)
+      exact Set.mem_singleton _
+    have yInPreimage : y ∈ (show X -> Target from target) ⁻¹' {target x} :=
       ((@Inseparable.mem_open_iff X (partitionTopology readout)
-        x y (target ⁻¹' {target x}) sourceInseparable preimageOpen).mp
+        x y ((show X -> Target from target) ⁻¹' {target x})
+          sourceInseparable preimageOpen).mp
           xInPreimage)
-    have targetYX : target y = target x := by simpa using yInPreimage
+    have targetYX : target y = target x := by
+      change target y ∈ ({target x} : Set Target) at yInPreimage
+      exact Set.mem_singleton_iff.mp yInPreimage
     exact targetYX.symm
   · intro fiberConstant
     letI : TopologicalSpace Coordinate := ⊥
     letI : DiscreteTopology Coordinate := ⟨rfl⟩
+    change @Continuous X Target
+      (TopologicalSpace.induced (show X -> Coordinate from readout) ⊥) ⊥
+      (show X -> Target from target)
     rw [continuous_def]
     intro targetOpen _targetOpen
-    rw [partitionTopology, isOpen_induced_iff]
+    rw [isOpen_induced_iff]
     let coordinates : Set Coordinate :=
       {coordinate | exists x, readout x = coordinate ∧ target x ∈ targetOpen}
     refine ⟨coordinates, ?_, ?_⟩

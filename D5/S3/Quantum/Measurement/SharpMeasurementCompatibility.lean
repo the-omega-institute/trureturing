@@ -173,31 +173,68 @@ private theorem jointly_measurable_noncommuting_effects :
     all_goals
       dsimp [joint]
       exact (Matrix.posSemidef_vecMulVec_self_star _).smul (by norm_num)
+  have real_smul_matrix (scalar : ℝ) (matrix : QubitMatrix) :
+      scalar • matrix = (scalar : ℂ) • matrix :=
+    RCLike.real_smul_eq_coe_smul scalar matrix
+  have hZPlus :
+      (1 / 2 : ℝ) • Matrix.vecMulVec zPlus (star zPlus) =
+        !![(1 / 2 : ℂ), 0; 0, 0] := by
+    rw [real_smul_matrix]
+    ext i j <;> fin_cases i <;> fin_cases j <;>
+      simp only [Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.star_apply, zPlus,
+        Matrix.cons_val, Matrix.cons_val_zero, Matrix.cons_val_one,
+        Matrix.cons_val_fin_one] <;> norm_num
+  have hZMinus :
+      (1 / 2 : ℝ) • Matrix.vecMulVec zMinus (star zMinus) =
+        !![(0 : ℂ), 0; 0, 1 / 2] := by
+    rw [real_smul_matrix]
+    ext i j <;> fin_cases i <;> fin_cases j <;>
+      simp only [Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.star_apply, zMinus,
+        Matrix.cons_val, Matrix.cons_val_zero, Matrix.cons_val_one,
+        Matrix.cons_val_fin_one] <;> norm_num
+  have hXPlus :
+      (1 / 4 : ℝ) • Matrix.vecMulVec xPlus (star xPlus) =
+        !![(1 / 4 : ℂ), 1 / 4; 1 / 4, 1 / 4] := by
+    rw [real_smul_matrix]
+    ext i j <;> fin_cases i <;> fin_cases j <;>
+      simp only [Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.star_apply, xPlus,
+        Matrix.cons_val, Matrix.cons_val_zero, Matrix.cons_val_one,
+        Matrix.cons_val_fin_one] <;> norm_num
+  have hXMinus :
+      (1 / 4 : ℝ) • Matrix.vecMulVec xMinus (star xMinus) =
+        !![(1 / 4 : ℂ), -1 / 4; -1 / 4, 1 / 4] := by
+    rw [real_smul_matrix]
+    ext i j <;> fin_cases i <;> fin_cases j <;>
+      simp only [Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.star_apply, xMinus,
+        Matrix.cons_val, Matrix.cons_val_zero, Matrix.cons_val_one,
+        Matrix.cons_val_fin_one] <;> norm_num
   have hComplete : (∑ outcome, joint outcome) = 1 := by
     ext i j
     fin_cases i <;> fin_cases j <;>
-      norm_num [joint, zPlus, zMinus, xPlus, xMinus,
-        Matrix.vecMulVec_apply, Matrix.smul_apply, Fintype.sum_prod_type,
-        Fintype.sum_bool, Matrix.one_apply]
+      norm_num [joint, hZPlus, hZMinus, hXPlus, hXMinus,
+        Fintype.sum_prod_type, Fintype.sum_bool, Matrix.one_apply,
+        Matrix.cons_val, Matrix.cons_val_zero, Matrix.cons_val_one,
+        Matrix.cons_val_fin_one]
   have hFirstNonsharp : Not (IsRecordMeasurement first) := by
     intro hSharp
     have hEntry := congrFun (congrFun (hSharp.idempotent false) 0) 0
-    norm_num [first, joint, zPlus, xPlus, Matrix.mul_apply,
-      Matrix.vecMulVec_apply, Matrix.smul_apply, Fintype.sum_bool,
-      Fin.sum_univ_two] at hEntry
+    norm_num [first, joint, hZPlus, hXPlus, Matrix.mul_apply,
+      Fintype.sum_bool, Fin.sum_univ_two, Matrix.cons_val,
+      Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_fin_one] at hEntry
   have hSecondNonsharp : Not (IsRecordMeasurement second) := by
     intro hSharp
     have hEntry := congrFun (congrFun (hSharp.idempotent false) 0) 0
-    norm_num [second, joint, zPlus, xMinus, Matrix.mul_apply,
-      Matrix.vecMulVec_apply, Matrix.smul_apply, Fintype.sum_bool,
-      Fin.sum_univ_two] at hEntry
+    norm_num [second, joint, hZPlus, hXMinus, Matrix.mul_apply,
+      Fintype.sum_bool, Fin.sum_univ_two, Matrix.cons_val,
+      Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_fin_one] at hEntry
   have hNoncommuting :
       first false * second false ≠ second false * first false := by
     intro hCommute
     have hEntry := congrFun (congrFun hCommute 0) 1
-    norm_num [first, second, joint, zPlus, xPlus, xMinus,
-      Matrix.mul_apply, Matrix.vecMulVec_apply, Matrix.smul_apply,
-      Fintype.sum_bool, Fin.sum_univ_two] at hEntry
+    norm_num [first, second, joint, hZPlus, hXPlus, hXMinus,
+      Matrix.mul_apply, Fintype.sum_bool, Fin.sum_univ_two,
+      Matrix.cons_val, Matrix.cons_val_zero, Matrix.cons_val_one,
+      Matrix.cons_val_fin_one] at hEntry
   exact ⟨hPositive, hComplete, hFirstNonsharp, hSecondNonsharp, hNoncommuting⟩
 
 /-- Two arbitrary finite sharp measurements admit a joint sharp measurement

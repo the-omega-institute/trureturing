@@ -74,7 +74,9 @@ theorem rational_finite_valuation_kernel_and_sign_recovery (x y : ℚˣ) :
     apply Additive.toMul.injective
     apply Units.ext
     apply Subtype.ext
-    norm_num [Rat.nnabs]
+    change ((Rat.nnabs (1 : ℚ) : ℚ≥0) : ℚ) = 1
+    rw [Rat.coe_nnabs]
+    norm_num
   constructor
   · intro h
     exact abs_eq_abs.mp (profile_eq_abs h)
@@ -94,7 +96,9 @@ theorem rational_finite_valuation_kernel_and_sign_recovery (x y : ℚˣ) :
         apply Additive.toMul.injective
         apply Units.ext
         apply Subtype.ext
-        norm_num [Rat.nnabs]
+        change ((Rat.nnabs (-1 : ℚ) : ℚ≥0) : ℚ) = 1
+        rw [Rat.coe_nnabs]
+        norm_num
   · intro hprofile hsign
     rcases abs_eq_abs.mp (profile_eq_abs hprofile) with h | h
     · exact h
