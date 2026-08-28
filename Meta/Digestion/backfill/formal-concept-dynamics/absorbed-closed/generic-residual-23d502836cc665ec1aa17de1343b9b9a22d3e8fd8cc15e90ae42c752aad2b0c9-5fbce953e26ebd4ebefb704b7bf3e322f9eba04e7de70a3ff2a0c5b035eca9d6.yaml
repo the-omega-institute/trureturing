@@ -1,0 +1,17 @@
+ast_path: 命题/376.1/clause/1
+fingerprints:
+  raw_sha256: sha256:23d502836cc665ec1aa17de1343b9b9a22d3e8fd8cc15e90ae42c752aad2b0c9
+  normalized_sha256: sha256:23d502836cc665ec1aa17de1343b9b9a22d3e8fd8cc15e90ae42c752aad2b0c9
+cas_ref: sha256:23d502836cc665ec1aa17de1343b9b9a22d3e8fd8cc15e90ae42c752aad2b0c9
+coverage_gids:
+  - D5/S3/ConceptDynamics/Refinement/ResourceAsymmetricConceptEquivalence.ordinary_equivalence_does_not_imply_resource_equivalence
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Refinement/ResourceAsymmetricConceptEquivalence.ordinary_equivalence_does_not_imply_resource_equivalence
+      source_sha256: sha256:23d502836cc665ec1aa17de1343b9b9a22d3e8fd8cc15e90ae42c752aad2b0c9
+      target_sha256: sha256:51593268e6653ddfe8deb8f5ff6f12e3d51e13390dd33576cb99032fc6b2a5c7
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Refinement/ResourceAsymmetricConceptEquivalence.ordinary_equivalence_does_not_imply_resource_equivalence
+      definition_sha256: sha256:f522ccb51884637b97b5d350094440ed8529a82d4644be763308238716b2abf3
+      emission_sha256: sha256:501775d24a3d1a65703d0f229ab77463eed0255d7d3d5a53b45abd019926a67c
+  unresolved_subitems: []
