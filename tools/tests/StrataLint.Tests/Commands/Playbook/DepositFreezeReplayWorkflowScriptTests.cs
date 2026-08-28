@@ -57,6 +57,43 @@ public sealed partial class DepositCoverWorkflowScriptTests
     }
 
     [Fact]
+    public void DepositAfterMultiCaseRevocationAppendsANewFreeze()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        fixture.ChangeFormalization();
+        fixture.WriteMultiCaseRevocation(includesTargetCase: true);
+
+        var result = fixture.Run("deposit");
+
+        Assert.True(result.ExitCode == 0, Diagnostics(result));
+        Assert.DoesNotContain(
+            "PLAYBOOK_INVALID",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
+        Assert.Equal(1, fixture.CallKinds().Count(call => call == "dotnet:ledger-append"));
+        Assert.Equal(2, fixture.FreezeCount());
+    }
+
+    [Fact]
+    public void DepositSkipsAppendWhenMultiCaseRevocationDoesNotIncludeTarget()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        fixture.WriteMultiCaseRevocation(includesTargetCase: false);
+
+        var result = fixture.Run("deposit");
+
+        Assert.True(result.ExitCode == 0, Diagnostics(result));
+        Assert.Contains(
+            "module-already-frozen",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
+        Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
+        Assert.Equal(1, fixture.FreezeCount());
+    }
+
+    [Fact]
     public void DepositSkipsAppendWhenTargetModuleWasReattested()
     {
         if (OperatingSystem.IsWindows()) return;
@@ -178,6 +215,69 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 },
             });
             WriteLedger(freeze, reattest, revoke);
+        }
+
+        internal void WriteMultiCaseRevocation(bool includesTargetCase)
+        {
+            const string targetCaseId = "active-frozen/multi-case-target";
+            const string unrelatedCaseId = "active-frozen/multi-case-unrelated";
+            const string secondUnrelatedCaseId = "active-frozen/multi-case-second-unrelated";
+            const string targetFrozenNodeId =
+                "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            const string unrelatedFrozenNodeId =
+                "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
+            const string secondUnrelatedFrozenNodeId =
+                "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc";
+            var descriptorBlobOid = "git-sha1:" + Git("hash-object", "--", LeanPath).Trim();
+
+            string Freeze(string caseId, string frozenNodeId, string descriptorSelector) =>
+                JsonSerializer.Serialize(new
+                {
+                    event_type = "Freeze",
+                    payload = new
+                    {
+                        case_id = caseId,
+                        frozen_node_id = frozenNodeId,
+                        input = new
+                        {
+                            descriptor_blob_oid = descriptorBlobOid,
+                            descriptor_selector = descriptorSelector,
+                        },
+                    },
+                });
+
+            var events = new List<string>
+            {
+                Freeze(targetCaseId, targetFrozenNodeId, LeanPath),
+                Freeze(unrelatedCaseId, unrelatedFrozenNodeId, "D5/S4/Unrelated.lean"),
+            };
+            string[] affectedCaseIds;
+            string[] affectedFrozenNodeIds;
+            if (includesTargetCase)
+            {
+                affectedCaseIds = [targetCaseId, unrelatedCaseId];
+                affectedFrozenNodeIds = [targetFrozenNodeId, unrelatedFrozenNodeId];
+            }
+            else
+            {
+                events.Add(Freeze(
+                    secondUnrelatedCaseId,
+                    secondUnrelatedFrozenNodeId,
+                    "D5/S4/SecondUnrelated.lean"));
+                affectedCaseIds = [unrelatedCaseId, secondUnrelatedCaseId];
+                affectedFrozenNodeIds = [unrelatedFrozenNodeId, secondUnrelatedFrozenNodeId];
+            }
+
+            events.Add(JsonSerializer.Serialize(new
+            {
+                event_type = "Revoke",
+                payload = new
+                {
+                    affected_case_ids = affectedCaseIds,
+                    affected_frozen_node_ids = affectedFrozenNodeIds,
+                },
+            }));
+            WriteLedger(events.ToArray());
         }
 
         internal void AddUnrelatedMalformedLedgerShard() => WriteFile(

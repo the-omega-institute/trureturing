@@ -349,7 +349,8 @@ freeze_exists() {
               error("Revoke is missing affected active identities")
             else
               reduce ($cases[]
-                | select(($target_case_ids | index(.)) != null)) as $case (.;
+                | . as $case
+                | select(($target_case_ids | index($case)) != null)) as $case (.;
                 if (has($case) | not) then
                   error("Revoke targets an inactive frozen case")
                 elif (.[$case].frozen_node_id as $id
