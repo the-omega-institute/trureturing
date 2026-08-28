@@ -1,0 +1,61 @@
+## 定理 332.1（Critical damping semisimplification）
+
+对任意固定 \(\omega\ge\tfrac12\)：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathsf G_\omega+\omega I
+\text{ 是 skew-adjoint}.
+}
+\tag{332.2}
+$$
+
+### 证明
+
+$$
+\mathsf G_\omega+\omega I
+=
+\bigoplus_\rho
+\left[
+-\left(
+\beta-\frac12
+\right)
++i\gamma
+\right]I.
+$$
+
+它 skew-adjoint 当且仅当所有实部为零，即：
+
+$$
+\beta=\frac12.
+$$
+
+∎
+
+在 \(\omega=\tfrac12\) 时：
+
+$$
+\boxed{
+\mathsf G_{1/2}
+=
+-\frac12I+iH_\Xi
+}
+\tag{332.3}
+$$
+
+其中 \(H_\Xi\) 自伴，当且仅当 RH 成立。
+
+所以 Hilbert–Pólya 可以重述为：
+
+$$
+\boxed{
+\text{从无条件存在的耗散共振生成元中，
+剥离普适阻尼 }1/2，
+剩余部分是否自伴？}
+}
+$$
+
+---
+

@@ -1,0 +1,46 @@
+## 定理 383.1（Prime–Archimedean energy identity）
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal Q_W(f)
+={}&
+2|\ell_{1/2}(f)|^2
++
+\mathcal E_\infty(f)
++
+\mathcal E_{\mathrm{arith},L}(f)\\
+&-
+\left(
+2W_L-a_\infty
+\right)
+\|f\|_2^2.
+\end{aligned}
+}
+\tag{383.1}
+$$
+
+这里 \(\mathcal Q_W(f)\) 表示显式公式的零点侧在 \(g=f*\widetilde f\) 上的值。
+
+于是经典 Weil 正性可写成：
+
+$$
+\boxed{
+2|\ell_{1/2}(f)|^2
++
+\mathcal E_\infty(f)
++
+\mathcal E_{\mathrm{arith},L}(f)
+\ge
+\left(
+2W_L-a_\infty
+\right)
+\|f\|_2^2.
+}
+\tag{383.2}
+$$
+
+这就是 **Prime–Archimedean Poincaré inequality**。
+
+---
+

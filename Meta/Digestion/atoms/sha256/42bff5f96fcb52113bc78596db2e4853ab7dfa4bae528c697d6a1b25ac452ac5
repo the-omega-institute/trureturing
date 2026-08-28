@@ -1,0 +1,40 @@
+# 第四百零五部　Feshbach 消元的精确可迭代性
+
+设 Hilbert 空间进一步分解为：
+
+$$
+\mathcal H
+=
+\mathcal H_0
+\oplus
+\mathcal H_1
+\oplus
+\mathcal H_2,
+$$
+
+其中 \(\mathcal H_2\) 已有严格正谱隙。
+
+可以先消去：
+
+$$
+\mathcal H_2,
+$$
+
+得到作用于：
+
+$$
+\mathcal H_0\oplus\mathcal H_1
+$$
+
+的有效算子；然后再消去 \(\mathcal H_1\)。
+
+也可以一次性消去：
+
+$$
+\mathcal H_1\oplus\mathcal H_2.
+$$
+
+两种结果相同。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/352-1-单个离线对的三角指纹/clause/3
+fingerprints:
+  raw_sha256: sha256:3511c5d1aeefcfbb6ee25914a3d8cdb69c36532309210792831ea3dcd9118060
+  normalized_sha256: sha256:3511c5d1aeefcfbb6ee25914a3d8cdb69c36532309210792831ea3dcd9118060
+cas_ref: sha256:3511c5d1aeefcfbb6ee25914a3d8cdb69c36532309210792831ea3dcd9118060
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

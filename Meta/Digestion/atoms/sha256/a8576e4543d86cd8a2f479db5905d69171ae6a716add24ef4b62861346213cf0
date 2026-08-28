@@ -1,0 +1,45 @@
+## 定理 360.1（粗观察 Poisson 半群）
+
+对：
+
+$$
+\sigma>1,
+\qquad
+\eta>0,
+$$
+
+有：
+
+$$
+\boxed{
+d_{\sigma+\eta}
+=
+P_\eta*d_\sigma.
+}
+\tag{360.4}
+$$
+
+### 证明
+
+由：
+
+$$
+P_\eta*P_{\sigma-\beta}
+=
+P_{\sigma+\eta-\beta},
+$$
+
+逐零点求和即可。∎
+
+所以：
+
+$$
+\boxed{
+\sigma\text{ 增大}
+=
+\text{对零点谱进行更强 Poisson 平滑}.
+}
+$$
+
+---
+

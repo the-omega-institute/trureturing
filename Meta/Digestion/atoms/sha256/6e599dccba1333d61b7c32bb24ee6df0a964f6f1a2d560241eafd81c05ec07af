@@ -1,0 +1,51 @@
+## 定理 381.1（Archimedean jump decomposition）
+
+$$
+\boxed{
+\operatorname{Arch}(g)
+=
+a_\infty\|f\|_2^2
++
+\mathcal E_\infty(f),
+}
+\tag{381.5}
+$$
+
+其中：
+
+$$
+\boxed{
+\mathcal E_\infty(f)
+=
+\int_0^\infty
+\kappa_\infty(x)
+\|f-U_xf\|_2^2\,dx
+\ge0.
+}
+\tag{381.6}
+$$
+
+这给 \(\Gamma\)-完成一个新的严格角色：
+
+$$
+\boxed{
+\Gamma_\infty
+=
+\text{全部连续正跳跃尺度的 Lévy–Dirichlet 完成。}
+}
+$$
+
+与素数项相比：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{Archimedean}&\text{连续跳跃测度 } \kappa_\infty(x)\,dx\\
+\text{prime side}&\text{离散跳跃测度 }
+\sum w_n\delta_{\log n}
+\end{array}
+}
+$$
+
+---
+

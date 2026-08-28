@@ -1,0 +1,41 @@
+# 第三百八十八部　Bohr–Gaussian 非粘滞定律
+
+令：
+
+$$
+\mathcal P_Y
+=
+\{p:p\le Y\},
+$$
+
+$$
+\mathcal C_Y
+=
+\mathcal C_{\mathcal P_Y},
+$$
+
+$$
+V_Y
+=
+2\sum_{p\le Y}
+\frac{(\log p)^2}{p-1}.
+$$
+
+在 Haar 环面图表中，各局部变量：
+
+$$
+X_p
+=
+(\log p)D_p(\theta_p)
+$$
+
+相互独立、均值为零，且：
+
+$$
+\sum_{p\le Y}\operatorname{Var}X_p=V_Y\to\infty.
+$$
+
+每个 \(X_p\) 有界，而最大局部振幅除以 \(\sqrt{V_Y}\) 趋于零，所以 Lindeberg 条件成立。
+
+---
+

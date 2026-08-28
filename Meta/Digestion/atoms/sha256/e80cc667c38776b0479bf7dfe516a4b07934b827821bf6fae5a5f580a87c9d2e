@@ -1,0 +1,13 @@
+## 335.1 尺度方向的非对称性
+
+由：
+
+$$
+\mathfrak d_{\omega+\eta}
+=
+P_\eta*\mathfrak d_\omega,
+$$
+
+可知：
+
+* 向更大 \(\omega\) 推进是稳定的平滑；

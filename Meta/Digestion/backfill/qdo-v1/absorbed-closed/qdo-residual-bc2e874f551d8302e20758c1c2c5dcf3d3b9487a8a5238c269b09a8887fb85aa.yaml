@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Entropy/Submodularity/CommonStateEntropyBound.common_state_entropy_le_mutual_information
       source_sha256: sha256:bc2e874f551d8302e20758c1c2c5dcf3d3b9487a8a5238c269b09a8887fb85aa
-      target_sha256: sha256:bb912a89de7a8daec274eb58b0173c9b1de95f4f199a6cc46c24367fe3dd8a8b
+      target_statement_id: sha256:0d6aef68fea0e98f398de7f4fd8c35ab308b6e5dc14ddfef16f10ac234af1059
   scribe:
     - gid: D5/S3/Entropy/Submodularity/CommonStateEntropyBound.common_state_entropy_le_mutual_information
       definition_sha256: sha256:1f916c7c21294df5a67e7cc8c33ab3bae3813afa9dc5c7bc8e7d220c9f95830a

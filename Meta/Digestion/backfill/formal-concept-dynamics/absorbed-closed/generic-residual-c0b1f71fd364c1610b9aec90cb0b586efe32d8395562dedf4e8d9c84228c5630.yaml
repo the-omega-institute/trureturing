@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Transport/MisleadingReceiverExclusion.misleading_impossible
       source_sha256: sha256:c0b1f71fd364c1610b9aec90cb0b586efe32d8395562dedf4e8d9c84228c5630
-      target_sha256: sha256:6dea7933d94579926776bc5eba87397599ba7dddf6788d9c5ae34cf63ceda9f9
+      target_statement_id: sha256:f6eb942a871236fd5acf813c276572dcf92165d66995455a3e16dd97303f844c
   scribe:
     - gid: D5/S3/ConceptDynamics/Transport/MisleadingReceiverExclusion.misleading_impossible
       definition_sha256: sha256:3ff38dc40dc8f5f6502ba464a3a31bee060e898698afd1f9180faeed809bc5b1

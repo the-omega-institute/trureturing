@@ -1,0 +1,25 @@
+* self-energy \(\Sigma_L\)。
+
+定义 pole-free Feshbach matrix：
+
+$$
+F_L^{(0)}.
+$$
+
+则精确有：
+
+$$
+\boxed{
+F_L
+=
+F_L^{(0)}
++
+2|p_L\rangle\langle p_L|,
+}
+\tag{404.2}
+$$
+
+其中 \(p_L\) 是 \(v_L\) 在有限 sticky 基中的坐标向量。
+
+---
+

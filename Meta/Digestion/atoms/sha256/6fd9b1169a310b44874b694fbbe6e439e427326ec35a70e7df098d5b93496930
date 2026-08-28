@@ -1,0 +1,29 @@
+## 341.3 Interior-source 排除
+
+从几何端看，真正的 sticky defect 是一个内部 Riesz 原子：
+
+$$
+(-\gamma,\delta),
+\qquad
+\delta>0.
+$$
+
+它会产生：
+
+$$
+-\frac{m}{\varepsilon}
+$$
+
+级负偶极。
+
+所以最终目标可以写成：
+
+$$
+\boxed{
+\text{prime-side history decomposition
+不能产生任何 }\omega>0\text{ 的内部曲率原子}.
+}
+$$
+
+---
+

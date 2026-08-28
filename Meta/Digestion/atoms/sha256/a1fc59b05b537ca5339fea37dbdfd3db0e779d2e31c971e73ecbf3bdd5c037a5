@@ -1,0 +1,47 @@
+## 337.1 结构角色
+
+$$
+\boxed{
+\begin{aligned}
+\mathfrak A_\infty
+&=\text{极点、}\pi\text{ 与 Gamma 完成产生的连续屏障};\\
+\mathfrak C_{\mathrm{prime}}
+&=\text{所有素数幂模式的相位相干};\\
+\Re(\xi'/\xi)
+&=\text{完成屏障减去算术相干后的净被动性}.
+\end{aligned}
+}
+$$
+
+RH 因而等价于：
+
+$$
+\boxed{
+\mathfrak A_\infty
+-
+\mathfrak C_{\mathrm{prime}}^{\mathrm{ren}}
+>0
+\qquad
+(\sigma>\tfrac12),
+}
+\tag{337.5}
+$$
+
+其中在：
+
+$$
+\sigma>1
+$$
+
+时 \(\mathfrak C_{\mathrm{prime}}^{\mathrm{ren}}\) 就是绝对收敛级数 (337.3)；在临界带中必须通过显式公式、解析延拓或重整化分解定义，不能继续把发散级数当作普通和。
+
+这给 RH 一个明确的 arithmetic passivity 形式：
+
+$$
+\boxed{
+\text{素数相干不能超过 Archimedean 完成容量。}
+}
+$$
+
+---
+

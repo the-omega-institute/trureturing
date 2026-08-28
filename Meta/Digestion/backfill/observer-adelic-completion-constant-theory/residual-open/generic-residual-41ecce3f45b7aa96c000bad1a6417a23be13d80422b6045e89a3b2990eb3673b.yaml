@@ -1,0 +1,10 @@
+ast_path: section/第三百四十部-Wang-式尺度下降
+fingerprints:
+  raw_sha256: sha256:41ecce3f45b7aa96c000bad1a6417a23be13d80422b6045e89a3b2990eb3673b
+  normalized_sha256: sha256:41ecce3f45b7aa96c000bad1a6417a23be13d80422b6045e89a3b2990eb3673b
+cas_ref: sha256:41ecce3f45b7aa96c000bad1a6417a23be13d80422b6045e89a3b2990eb3673b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ArithUnits/NonSplitModFour.mod_four_quotient_has_no_additive_section
       source_sha256: sha256:c5ab7b2b435de2c0d17ac94edbe81653c767c3c0662644cf9127b5ebcfe1718c
-      target_sha256: sha256:4092dcffada7b68843748d0f316721dc15244b79f6465ef233b17f4a78d04305
+      target_statement_id: sha256:21dc36eb1b7ddf0fced901169c92517dfc51ed111d746068698a3e98e87f3cc2
   scribe:
     - gid: D5/S3/ArithUnits/NonSplitModFour.mod_four_quotient_has_no_additive_section
       definition_sha256: sha256:0e694c79bf73d8a01246ff204c3dac496028f7fdc6547f4f5bd17a159e15acc9

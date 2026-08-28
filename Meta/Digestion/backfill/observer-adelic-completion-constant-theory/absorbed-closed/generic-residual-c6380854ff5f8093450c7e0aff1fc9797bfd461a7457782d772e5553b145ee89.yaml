@@ -1,0 +1,17 @@
+ast_path: 定理/7.1
+fingerprints:
+  raw_sha256: sha256:c6380854ff5f8093450c7e0aff1fc9797bfd461a7457782d772e5553b145ee89
+  normalized_sha256: sha256:c6380854ff5f8093450c7e0aff1fc9797bfd461a7457782d772e5553b145ee89
+cas_ref: sha256:c6380854ff5f8093450c7e0aff1fc9797bfd461a7457782d772e5553b145ee89
+coverage_gids:
+  - D5/S1/FixedPoints/Algebraic/GoldenFixedPoint.golden_fixed_point_unique
+receipts:
+  coverage:
+    - gid: D5/S1/FixedPoints/Algebraic/GoldenFixedPoint.golden_fixed_point_unique
+      source_sha256: sha256:c6380854ff5f8093450c7e0aff1fc9797bfd461a7457782d772e5553b145ee89
+      target_statement_id: sha256:771aee0dba83a9ce3372477e12c888e107eba4084f286c96b7b01362ddf3e60f
+  scribe:
+    - gid: D5/S1/FixedPoints/Algebraic/GoldenFixedPoint.golden_fixed_point_unique
+      definition_sha256: sha256:bda08199f1e8febd30347a1ecc8a03e786924516f7c2733bae1266279e1a1229
+      emission_sha256: sha256:0ed78a7e292621f227f5302b35ec36ce492c0c38d25fadd95e6c447c2846c057
+  unresolved_subitems: []

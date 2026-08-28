@@ -1,0 +1,39 @@
+## 定理 401.1（Finite negative-index bound）
+
+$$
+\boxed{
+n_-(A_L)
+\le
+\dim P.
+}
+\tag{401.1}
+$$
+
+### 证明
+
+假设存在维数大于 \(\dim P\) 的负定子空间 \(V\)。
+
+由于：
+
+$$
+\operatorname{codim}Q=\dim P,
+$$
+
+必存在：
+
+$$
+0\neq f\in V\cap Q.
+$$
+
+但定理 400.1 给出：
+
+$$
+\langle f,A_Lf\rangle
+\ge
+\delta\|f\|^2>0,
+$$
+
+与 \(V\) 负定矛盾。∎
+
+---
+

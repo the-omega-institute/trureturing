@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/QuantumBounds/CollisionEntropyUncertainty.collision_entropy_uncertainty
       source_sha256: sha256:87a0447ee3484d9e12fbbf66d8e57fbb67109e907fd3163b964e1b05ad66dc19
-      target_sha256: sha256:8cfb2b239670b5a95ed87a8161651a623773ca820db6f9e338f405285d582519
+      target_statement_id: sha256:c5df0222ababf59d0e4de9e285899fa4b70b938d3dac1aafddf4f94a31500700
   scribe:
     - gid: D5/S3/QuantumBounds/CollisionEntropyUncertainty.collision_entropy_uncertainty
       definition_sha256: sha256:e3b90b14512d6e3133ecb6b30647869293fa086c0c9cf32a3ac5c8c10dffd174

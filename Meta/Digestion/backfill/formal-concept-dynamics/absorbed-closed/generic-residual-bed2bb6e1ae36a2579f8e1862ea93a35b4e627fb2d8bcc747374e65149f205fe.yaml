@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/Separation/FiniteHistoryStability.finite_history_stability
       source_sha256: sha256:bed2bb6e1ae36a2579f8e1862ea93a35b4e627fb2d8bcc747374e65149f205fe
-      target_sha256: sha256:b50688d4c6d6866437b4d2951bbc2b370c0804a4576bb63951cf2913c0c991da
+      target_statement_id: sha256:7351a1560f56b0fd9a631a67a899a20579bd35476c89d7cab05be52bef661bcc
   scribe:
     - gid: D5/S3/Observer/Separation/FiniteHistoryStability.finite_history_stability
       definition_sha256: sha256:0e44f20a14d7b97deff47bc74dda571eaaa88fa14bf8d46068e434cbda85698b

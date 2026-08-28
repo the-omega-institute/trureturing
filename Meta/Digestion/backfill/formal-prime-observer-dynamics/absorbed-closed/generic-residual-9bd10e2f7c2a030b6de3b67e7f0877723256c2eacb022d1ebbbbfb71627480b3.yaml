@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/MetricGeometryLaws/WeightedJointUltrapseudometric.weighted_joint_ultrapseudometric
       source_sha256: sha256:9bd10e2f7c2a030b6de3b67e7f0877723256c2eacb022d1ebbbbfb71627480b3
-      target_sha256: sha256:2518e236c1de0466264dbe01b6e4a33d6628f5d6850d26c17e7f9c22a61efa7f
+      target_statement_id: sha256:7693c53147ef0befb5c1f8051fe274e691f4ebf7404c9c6422b3ddcab581fb71
   scribe:
     - gid: D5/S3/Observer/MetricGeometryLaws/WeightedJointUltrapseudometric.weighted_joint_ultrapseudometric
       definition_sha256: sha256:fb3a5e5856485d6cd16e8c857eaa9bb3d9e53053fc259a6785d2f879b2f52004

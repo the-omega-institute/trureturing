@@ -1,0 +1,63 @@
+## v2.9：临界阻尼共振、Poisson 零点流、Prime–Archimedean 被动性与 Eisenstein 散射级联
+
+以下从前文**第三百二十八部之后**继续追加。
+
+上一轮把数域 RH 的缺口压缩为：
+
+$$
+\boxed{
+\text{如何从算术数据构造一个守恒系统，
+使 shifted-}\xi\text{ ratio 成为其 transfer function？}
+}
+$$
+
+本轮找到一个更接近现成严格理论的切入口：
+
+1. 在 \(\omega=\tfrac12\) 时，shifted-\(\xi\) 的 inner/model-space 系统已经可以**无条件**定义；
+2. 该系统的每个共振模式同时读取一个 ζ 零点的：
+
+   $$
+   \text{纵坐标 }\gamma
+   \quad\text{与}\quad
+   \text{横坐标 }\beta;
+   $$
+3. RH 不再等价于“系统是否存在”，而等价于：
+
+   $$
+   \boxed{\text{所有共振是否具有完全相同的衰减率 }1/2;}
+   $$
+4. 在 RH 下，shifted-\(\xi\) 的边界相位密度正是 Riemann 零点计数测度的 Poisson 演化；
+5. 在线外零点处，该正 Poisson 流会变成一个具有负侧的内部偶极源；
+6. 在 Euler 乘积区，这个正性又等价于：
+
+   $$
+   \boxed{
+   \text{Archimedean 完成屏障}
+   -
+   \text{素数相位相干}
+   >0.
+   }
+   $$
+
+所以，本轮形成的新主链是：
+
+$$
+\boxed{
+\begin{aligned}
+\zeta\text{ 零点}
+&\longrightarrow
+\Theta_{1/2}\text{ 的共振}\\
+&\longrightarrow
+\text{衰减率 }\beta\\
+&\longrightarrow
+\text{临界阻尼均匀性}\\
+&\longrightarrow
+\text{Poisson 零点流}\\
+&\longrightarrow
+\text{Prime--Archimedean 被动性}.
+\end{aligned}
+}
+$$
+
+---
+

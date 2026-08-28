@@ -1,0 +1,31 @@
+## 352.1 单个离线对的三角指纹
+
+取一对：
+
+$$
+\beta_\pm
+=
+\frac12\pm\delta,
+\qquad
+\delta>0.
+$$
+
+它对 \(\mathfrak W_T\) 的贡献为：
+
+$$
+\boxed{
+\mathfrak w_\delta(y)
+=
+\left(
+\delta-
+\left|
+y-\frac12
+\right|
+\right)_+.
+}
+\tag{352.4}
+$$
+
+即一个：
+
+* 中心位于 \(y=\tfrac12\)；

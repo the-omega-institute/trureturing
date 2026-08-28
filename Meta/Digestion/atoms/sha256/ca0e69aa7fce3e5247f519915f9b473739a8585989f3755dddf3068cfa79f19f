@@ -1,0 +1,40 @@
+# 第三百五十部　Bode–Blaschke 垂直衰减恒等式
+
+现在取临界平移：
+
+$$
+\omega=\frac12.
+$$
+
+此时：
+
+$$
+a_{\rho,1/2}
+=
+-\gamma+i\beta.
+$$
+
+记：
+
+$$
+B_T=B_{1/2,T}.
+$$
+
+对垂直观察高度 \(y>0\)，定义积分衰减：
+
+$$
+\boxed{
+\mathfrak A_T(y)
+=
+\frac1{4\pi}
+\int_{-\infty}^{\infty}
+-\log
+\left|
+B_T(x+iy)
+\right|^2dx.
+}
+\tag{350.1}
+$$
+
+---
+

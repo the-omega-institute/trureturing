@@ -89,8 +89,7 @@ public sealed partial class ProductionEnvironmentTests
         var emissionPath = ScribeEmissionAttestation.EmissionPath(coveredDocumentGid);
         const string definition = "// previously verified Scribe definition\n";
         const string emission = "# Previously verified emission\n";
-        var targetHash = DigestionFingerprint.Compute(
-            Encoding.UTF8.GetBytes(fixture.Files[targetPath])).RawSha256;
+        var targetStatementId = FrozenStatementReceiptTestData.Id('b');
         var definitionHash = DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(definition)).RawSha256;
         var emissionHash = DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(emission)).RawSha256;
         var record = new ScribeEmissionRecord(
@@ -109,7 +108,7 @@ public sealed partial class ProductionEnvironmentTests
                     new DigestionCoverageReceipt(
                         coveredGid,
                         atom.Fingerprints.RawSha256,
-                        targetHash),
+                        targetStatementId),
                 ],
                 Scribe =
                 [
@@ -149,6 +148,8 @@ public sealed partial class ProductionEnvironmentTests
                 ImmutableArray<string>.Empty)]);
         fixture.Reports[targetPath] = targetReport;
         fixture.BaselineReports[targetPath] = targetReport;
+        AddFrozenTarget(fixture.Files, targetPath);
+        AddFrozenTarget(fixture.Baseline, targetPath);
         const string newScribePath = "Blueprint/D5/S0/Carrier/NewDeposit.scribe.cs";
         fixture.Files[newScribePath] = "// candidate-only Scribe definition\n";
         var current = Decode(Snapshot(fixture.Files));
@@ -322,9 +323,11 @@ public sealed partial class ProductionEnvironmentTests
         var stockEmissionSha256 = baselineHasScribeGap
             ? ReportDerivedScribeEmissionVerifier.EmissionSha256For([])
             : DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(baselineEmission)).RawSha256;
-        InstallLedger(fixture.Files, fixture.Files[targetPath]);
-        InstallLedger(fixture.Baseline, fixture.Baseline[targetPath]);
-        InstallLedger(fixture.ForkPoint, fixture.ForkPoint[targetPath]);
+        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        {
+            AddFrozenTarget(files, targetPath);
+            InstallLedger(files);
+        }
 
         var verifier = new ReportDerivedScribeEmissionVerifier(
             targetPath,
@@ -358,11 +361,9 @@ public sealed partial class ProductionEnvironmentTests
             environment.Check(["--candidate-lean-report", candidateReport]),
             verifier);
 
-        void InstallLedger(Dictionary<string, string> files, string target)
+        void InstallLedger(Dictionary<string, string> files)
         {
             var document = BackfillInventoryLoader.Load(Decode(Snapshot(files)));
-            var targetSha256 = DigestionFingerprint.Compute(
-                Encoding.UTF8.GetBytes(target)).RawSha256;
             document = MapOnlyEntry(document, entry => entry with
             {
                 CoverageGids = [coverageGid],
@@ -373,7 +374,7 @@ public sealed partial class ProductionEnvironmentTests
                         new DigestionCoverageReceipt(
                             coverageGid,
                             entry.Fingerprints.RawSha256,
-                            targetSha256),
+                            FrozenStatementReceiptTestData.Id('b')),
                     ],
                     Scribe =
                     [
@@ -387,6 +388,20 @@ public sealed partial class ProductionEnvironmentTests
             DirectoryLedgerTestSupport.ReplaceWithProjection(files, document);
         }
     }
+
+    private static void AddFrozenTarget(
+        IDictionary<string, string> files,
+        string targetPath) =>
+        FrozenStatementReceiptTestData.AddLedger(
+            files,
+            new FrozenStatementReceiptTestData.Module(
+                targetPath,
+                FrozenStatementReceiptTestData.Id('a'),
+                [
+                    new FrozenStatementReceiptTestData.Declaration(
+                        "protectedTargetFixture",
+                        FrozenStatementReceiptTestData.Id('b')),
+                ]));
 }
 
 internal sealed class ProjectionReconciliationFailureVerifier : IScribeEmissionVerifier

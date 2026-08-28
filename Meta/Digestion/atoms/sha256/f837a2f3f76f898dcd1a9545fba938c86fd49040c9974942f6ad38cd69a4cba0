@@ -1,0 +1,24 @@
+## 341.2 Sticky prime histories
+
+若大量素数幂满足近似相位锁定：
+
+$$
+x\log n
+\approx
+2\pi k,
+$$
+
+则普通绝对值估计失效。
+
+正确处理应当：
+
+1. 将 prime-power repetitions 组织成完整 Euler histories；
+2. 抽取 primitive local factors；
+3. 对重复闭合历史做 logarithmic/Möbius contraction；
+4. 加入 ζ、Hecke 或 \(q\)-Gamma counterterms；
+5. 对剩余历史做 Mellin/Riemann 积分控制。
+
+这对应 Yu Deng 式 primitive-history renormalization。
+
+---
+

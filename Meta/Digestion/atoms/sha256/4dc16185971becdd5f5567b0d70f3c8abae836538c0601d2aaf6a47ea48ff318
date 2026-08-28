@@ -1,0 +1,125 @@
+# 本轮最终结论
+
+此前数域 RH 的 conservative-system 目标仍然比较抽象。
+
+本轮给出了一个已经无条件存在的、最小的算术共振系统：
+
+$$
+\boxed{
+\Theta_{1/2}(z)
+=
+\frac{\xi(-iz)}{\xi(1-iz)}.
+}
+$$
+
+其每个共振为：
+
+$$
+\boxed{
+a_\rho
+=
+-\gamma+i\beta.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\beta
+=
+\text{共振衰减率},
+\qquad
+\gamma
+=
+\text{共振振荡频率}.
+}
+$$
+
+RH 精确等价于：
+
+$$
+\boxed{
+\text{全部共振都处于统一临界阻尼 }1/2.
+}
+$$
+
+在 RH 下，shifted system 的相位密度为：
+
+$$
+\boxed{
+\frac1\pi
+\Re
+\frac{
+\xi'(\frac12+\omega-ix)
+}{
+\xi(\frac12+\omega-ix)
+}
+=
+P_\omega*\nu_\Xi.
+}
+$$
+
+所以 Riemann 零点不是静态点集，而是一个通过 Poisson Markov 半群向粗尺度传播的边界谱源。
+
+若存在一个线外零点：
+
+$$
+\frac12+\delta+i\gamma,
+$$
+
+它会在上半平面产生一个内部 Riesz 曲率原子，并在其左侧形成：
+
+$$
+\boxed{
+-\frac{m}{\varepsilon}
+}
+$$
+
+级的负偶极。
+
+因此 RH 的几何本质可压缩为：
+
+$$
+\boxed{
+\text{所有谱曲率源是否都严格位于完成边界，
+而没有任何内部耗散源？}
+}
+$$
+
+其 arithmetic 形式则是：
+
+$$
+\boxed{
+\text{Archimedean 完成屏障}
+>
+\text{renormalized prime coherence}
+\qquad
+(\Re s>\tfrac12).
+}
+$$
+
+当前最明确的 Wang–Deng 研究任务因此成为：
+
+$$
+\boxed{
+\text{从无条件临界模型 }\omega=\frac12
+\text{ 出发，
+证明所有 resonance widths 的离散度为零；}
+}
+$$
+
+或者等价地：
+
+$$
+\boxed{
+\text{通过 prime-history 自改善，
+把 innerness 阈值从 }\frac12
+\text{ 连续下降到 }0.
+}
+$$
+
+[1]: https://arxiv.org/abs/1204.1827 "https://arxiv.org/abs/1204.1827"
+[2]: https://arxiv.org/abs/0811.3649 "https://arxiv.org/abs/0811.3649"
+[3]: https://arxiv.org/abs/1603.07613 "https://arxiv.org/abs/1603.07613"
+[4]: https://arxiv.org/abs/math-ph/9903010 "https://arxiv.org/abs/math-ph/9903010"

@@ -1,0 +1,74 @@
+## 定理 367.1（有限 prime recurrence）
+
+给定有限素数集合：
+
+$$
+\mathcal P=\{p_1,\ldots,p_m\}
+$$
+
+和任意：
+
+$$
+\varepsilon>0,
+$$
+
+存在任意大的实数 \(\xi\)，使：
+
+$$
+\boxed{
+\left|
+e^{i\xi\log p_j}-1
+\right|
+<\varepsilon
+\qquad
+(1\le j\le m).
+}
+\tag{367.1}
+$$
+
+### 证明
+
+对：
+
+$$
+\alpha_j=\frac{\log p_j}{2\pi}
+$$
+
+使用同时 Dirichlet 逼近。
+
+把：
+
+$$
+0,\alpha,2\alpha,\ldots,N^m\alpha
+$$
+
+在 \(m\) 维单位立方体中按坐标模 \(1\) 投影，并把立方体分成 \(N^m\) 个小盒。
+
+存在两个点落入同一盒，其差给出整数 \(q\) 满足：
+
+$$
+\|q\alpha_j\|_{\mathbb R/\mathbb Z}<\frac1N.
+$$
+
+令 \(\xi=q\)，再使 \(N\to\infty\)。∎
+
+因此：
+
+$$
+\boxed{
+\text{任意有限 prime subsystem 都存在近乎完全 coherent 的 recurrence times。}
+}
+$$
+
+这意味着：
+
+$$
+\boxed{
+\text{不能通过有限素数的统一相位反集中直接证明 RH。}
+}
+$$
+
+Wang 二分中的 sticky branch 不是异常边角，而是结构上不可避免。
+
+---
+

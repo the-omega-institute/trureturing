@@ -1,0 +1,49 @@
+## 402.1 Deng self-energy
+
+定义：
+
+$$
+\boxed{
+\Sigma_L
+=
+A_{PQ}
+A_{QQ}^{-1}
+A_{QP}
+\succeq0.
+}
+\tag{402.7}
+$$
+
+则：
+
+$$
+\boxed{
+F_L=A_{PP}-\Sigma_L.
+}
+\tag{402.8}
+$$
+
+这里：
+
+* \(A_{PP}\)：bare sticky block；
+* \(\Sigma_L\)：安全补空间被积分掉以后产生的 self-energy counterterm；
+* \(F_L\)：真正的 renormalized sticky matrix。
+
+所以：
+
+$$
+\boxed{
+\text{Deng 式消元不能只删除 non-sticky states，}
+}
+$$
+
+而必须保留它们通过：
+
+$$
+\Sigma_L
+$$
+
+反馈给 sticky block 的精确影响。
+
+---
+

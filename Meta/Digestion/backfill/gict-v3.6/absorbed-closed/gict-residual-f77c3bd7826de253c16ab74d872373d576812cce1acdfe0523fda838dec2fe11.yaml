@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Depth/GoldenHurwitzBound.golden_hurwitz_bound
       source_sha256: sha256:f77c3bd7826de253c16ab74d872373d576812cce1acdfe0523fda838dec2fe11
-      target_sha256: sha256:9bcc2581e60f1e95b4f0b99d64e7a1c70caabb52a1627598d21fcfafbfa93e50
+      target_statement_id: sha256:f617648e18748931d18b4da1f0f10b50e64a237c3e4717d263acbfe92cdb59d7
   scribe:
     - gid: D5/S1/Depth/GoldenHurwitzBound.golden_hurwitz_bound
       definition_sha256: sha256:00205d7a3236aa28935a239f6d2689840fc88c2986ee248eb1175ca398776d4b

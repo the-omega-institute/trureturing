@@ -1,0 +1,97 @@
+## 定理 338.1（Finite scattering cascade）
+
+令：
+
+$$
+N\in\mathbb N,
+\qquad
+\omega=\frac N2,
+$$
+
+并定义：
+
+$$
+s_z=\frac12-iz,
+\qquad
+a=s_z-\omega.
+$$
+
+则：
+
+$$
+s_z+\omega=a+N.
+$$
+
+有精确恒等式：
+
+$$
+\boxed{
+\begin{aligned}
+\Theta_{N/2}(z)
+={}&
+\frac{
+a(a-1)
+}{
+(a+N)(a+N-1)
+}
+\\
+&\times
+\prod_{j=0}^{N-1}
+\Phi_{\mathrm{mod}}
+\left(
+\frac{a+j+1}{2}
+\right).
+\end{aligned}
+}
+\tag{338.3}
+$$
+
+### 证明
+
+首先：
+
+$$
+\frac{\xi(a)}{\xi(a+N)}
+=
+\frac{
+a(a-1)
+}{
+(a+N)(a+N-1)
+}
+\frac{
+\Lambda_{\mathbb R}(a)
+}{
+\Lambda_{\mathbb R}(a+N)
+}.
+$$
+
+而：
+
+$$
+\frac{
+\Lambda_{\mathbb R}(a)
+}{
+\Lambda_{\mathbb R}(a+N)
+}
+=
+\prod_{j=0}^{N-1}
+\frac{
+\Lambda_{\mathbb R}(a+j)
+}{
+\Lambda_{\mathbb R}(a+j+1)
+}.
+$$
+
+每个因子为：
+
+$$
+\Phi_{\mathrm{mod}}
+\left(
+\frac{a+j+1}{2}
+\right).
+$$
+
+∎
+
+---
+

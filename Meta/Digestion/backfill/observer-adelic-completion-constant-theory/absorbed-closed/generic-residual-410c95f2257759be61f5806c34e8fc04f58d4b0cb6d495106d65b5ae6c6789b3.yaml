@@ -1,0 +1,17 @@
+ast_path: 定理/6.2
+fingerprints:
+  raw_sha256: sha256:410c95f2257759be61f5806c34e8fc04f58d4b0cb6d495106d65b5ae6c6789b3
+  normalized_sha256: sha256:410c95f2257759be61f5806c34e8fc04f58d4b0cb6d495106d65b5ae6c6789b3
+cas_ref: sha256:410c95f2257759be61f5806c34e8fc04f58d4b0cb6d495106d65b5ae6c6789b3
+coverage_gids:
+  - D5/S3/Constants/Characterizations/OptimalLogarithmicShell.exp_one_unique_logarithmic_shell_minimizer
+receipts:
+  coverage:
+    - gid: D5/S3/Constants/Characterizations/OptimalLogarithmicShell.exp_one_unique_logarithmic_shell_minimizer
+      source_sha256: sha256:410c95f2257759be61f5806c34e8fc04f58d4b0cb6d495106d65b5ae6c6789b3
+      target_statement_id: sha256:03a4e74cdbb6641baf8169b03b3da29cb3a7b61998e43ccbb215c2f76d00e390
+  scribe:
+    - gid: D5/S3/Constants/Characterizations/OptimalLogarithmicShell.exp_one_unique_logarithmic_shell_minimizer
+      definition_sha256: sha256:3bf029ed825e8a489d3319b93fc3ff9e86c0f4514eb3ec99e2180ab97f4e209e
+      emission_sha256: sha256:a881b72518b904c234f2dcfb8aaf379791f820d6bdb9de02ec076be12e95da35
+  unresolved_subitems: []

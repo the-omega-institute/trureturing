@@ -1,0 +1,17 @@
+ast_path: 定理/8.1/clause/1
+fingerprints:
+  raw_sha256: sha256:665905877ba7e0deb7d3b7cb896d5f5854d39bd4ae848540f736544b39b782f5
+  normalized_sha256: sha256:665905877ba7e0deb7d3b7cb896d5f5854d39bd4ae848540f736544b39b782f5
+cas_ref: sha256:665905877ba7e0deb7d3b7cb896d5f5854d39bd4ae848540f736544b39b782f5
+coverage_gids:
+  - D5/S3/Constants/Characterizations/LocalPrecisionUnit.local_precision_unit_unique
+receipts:
+  coverage:
+    - gid: D5/S3/Constants/Characterizations/LocalPrecisionUnit.local_precision_unit_unique
+      source_sha256: sha256:665905877ba7e0deb7d3b7cb896d5f5854d39bd4ae848540f736544b39b782f5
+      target_statement_id: sha256:c37dd76aa4251f3a3f147cba04e534b3d799c40738f1c5dc5bd80cbb84fcfd7a
+  scribe:
+    - gid: D5/S3/Constants/Characterizations/LocalPrecisionUnit.local_precision_unit_unique
+      definition_sha256: sha256:0d8a85075c86b8ca0d0157f7439f592e151544f28b0ed14bad7b65e9bed693ac
+      emission_sha256: sha256:f6cfe5cf8cdcf660d63de6b5f02311be2232658d9bcaba36ab70152284510579
+  unresolved_subitems: []

@@ -1,0 +1,33 @@
+## 377.1 其结构解释
+
+$$
+\boxed{
+\begin{aligned}
+\mathfrak A_\infty
+&=\text{连续实位的完成容量};\\
+U_p
+&=\text{素数 }p\text{ 的对数平移};\\
+p^{-1/2}
+&=\text{临界局部 Schur 参数};\\
+\mathsf P_{p^{-1/2}}(U_p)
+&=\text{全部 }p^k\text{ 历史的被动重求和};\\
+\text{不等式}
+&=\text{全局 prime network 不得超过 Archimedean 容量}.
+\end{aligned}
+}
+$$
+
+这就是此前所有：
+
+* prime coherence；
+* shifted scattering；
+* Herglotz；
+* Clark；
+* Li；
+* Fredholm；
+* toroidal positivity；
+
+最终 collapse 回来的唯一算术不等式。
+
+---
+

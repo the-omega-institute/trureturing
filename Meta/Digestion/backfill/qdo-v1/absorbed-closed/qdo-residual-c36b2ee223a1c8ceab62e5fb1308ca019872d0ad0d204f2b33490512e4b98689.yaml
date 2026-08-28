@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/HiddenFlow/RecurrentCoboundaryObstruction.recurrent_cocycle_not_continuous_coboundary
       source_sha256: sha256:c36b2ee223a1c8ceab62e5fb1308ca019872d0ad0d204f2b33490512e4b98689
-      target_sha256: sha256:4e509a2e89751122aee6c6eb72ba31e1f815be7516fab1379a0c3168154547f9
+      target_statement_id: sha256:09dc4f55d23cce0ba155448e367db7a41b95c725d4d34f11fe94394d93d3618b
   scribe:
     - gid: D5/S3/Observer/HiddenFlow/RecurrentCoboundaryObstruction.recurrent_cocycle_not_continuous_coboundary
       definition_sha256: sha256:08e1a69691b50ed5de2bc85980a29334a0408c18a3c0bd3ba19831f9ef7fa00a

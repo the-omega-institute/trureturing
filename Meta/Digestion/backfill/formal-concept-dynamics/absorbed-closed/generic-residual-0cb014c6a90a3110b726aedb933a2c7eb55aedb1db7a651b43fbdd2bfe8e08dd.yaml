@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Entropy/Submodularity/ConditionalMutualInformation.conditionalMutualInformation
       source_sha256: sha256:0cb014c6a90a3110b726aedb933a2c7eb55aedb1db7a651b43fbdd2bfe8e08dd
-      target_sha256: sha256:3db1bd6489f0e2caee6e4ba2c337fbb44d6762f160db98caadf7b60850e9b1a0
+      target_statement_id: sha256:26a976bb737f2e94217d977ee8dcfce78b1a190e14d98c4e49556693ee69c7ea
   scribe:
     - gid: D5/S3/Entropy/Submodularity/ConditionalMutualInformation.conditionalMutualInformation
       definition_sha256: sha256:2554fac1797c1cec7e1b9a9832c2c01f9a8c914d53225929b89a70256db727ba

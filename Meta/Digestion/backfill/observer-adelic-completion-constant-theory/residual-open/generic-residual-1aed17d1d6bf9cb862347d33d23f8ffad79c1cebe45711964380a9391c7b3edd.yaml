@@ -1,0 +1,13 @@
+ast_path: section/335-1-尺度方向的非对称性
+fingerprints:
+  raw_sha256: sha256:1aed17d1d6bf9cb862347d33d23f8ffad79c1cebe45711964380a9391c7b3edd
+  normalized_sha256: sha256:1aed17d1d6bf9cb862347d33d23f8ffad79c1cebe45711964380a9391c7b3edd
+cas_ref: sha256:1aed17d1d6bf9cb862347d33d23f8ffad79c1cebe45711964380a9391c7b3edd
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-e80cc667c38776b0479bf7dfe516a4b07934b827821bf6fae5a5f580a87c9d2e-8ad5a315e6c3cf670b472c98b9ea01c5baac66115c79cab44fbd0968c43f8492
+    - generic-residual-628304120856e0c6896cfba91acf5df9d3c4cbb7e2290f776c655dd2fa57b431-72cbd331ea3bdfe1938a88115e918e906d0a3bf18c0cfc98ec744205e02856ef

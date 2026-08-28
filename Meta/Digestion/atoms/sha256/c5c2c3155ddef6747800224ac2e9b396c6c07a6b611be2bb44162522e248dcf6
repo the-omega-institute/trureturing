@@ -1,0 +1,19 @@
+## 定理 350.1（垂直衰减层析）
+
+$$
+\boxed{
+\mathfrak A_T(y)
+=
+\sum_{\rho\in\mathcal Z_T^+}
+\min
+\left(
+y,\Re\rho
+\right).
+}
+\tag{350.3}
+$$
+
+这是一条完全精确的 modulus-only 公式。
+
+---
+

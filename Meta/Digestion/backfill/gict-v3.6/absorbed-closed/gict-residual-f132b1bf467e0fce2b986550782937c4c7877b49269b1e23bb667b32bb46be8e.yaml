@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Quantum/Decoherence/CoherenceDecay.equal_superposition_coherence_tendsto_zero
       source_sha256: sha256:f132b1bf467e0fce2b986550782937c4c7877b49269b1e23bb667b32bb46be8e
-      target_sha256: sha256:42e994ae808e69302261971d72228d6e0c1ddc7c22b25fdd139b2fa771a31569
+      target_statement_id: sha256:c803ebf4a07156a5ec8754d13ee4087fdd9c53926edc0b02a3f6609a43dab8de
   scribe:
     - gid: D5/S3/Quantum/Decoherence/CoherenceDecay.equal_superposition_coherence_tendsto_zero
       definition_sha256: sha256:cfe3dc5b83dffb7e3053408e7b4731d1119b7ee0b6b3e2c8875f71233acadad3

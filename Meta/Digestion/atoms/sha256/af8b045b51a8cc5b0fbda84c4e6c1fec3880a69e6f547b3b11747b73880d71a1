@@ -1,0 +1,54 @@
+## 384.2 第一个显式充分证书
+
+定义：
+
+$$
+\boxed{
+G_\infty(L)
+=
+\int_0^\infty
+\kappa_\infty(a)\eta_L(a)\,da,
+}
+\tag{384.4}
+$$
+
+$$
+\boxed{
+G_{\mathrm{arith}}(L)
+=
+\sum_{n\in\mathscr H_L}
+w_n\eta_L(\log n).
+}
+\tag{384.5}
+$$
+
+则：
+
+$$
+\mathcal E_\infty(f)
++
+\mathcal E_{\mathrm{arith},L}(f)
+\ge
+\left[
+G_\infty(L)+G_{\mathrm{arith}}(L)
+\right]
+\|f\|_2^2.
+$$
+
+所以：
+
+$$
+\boxed{
+G_\infty(L)+G_{\mathrm{arith}}(L)
+\ge
+2W_L-a_\infty
+}
+\tag{384.6}
+$$
+
+是 support radius \(L\) 上 Weil 正性的一个完全显式充分条件。
+
+它未必足够强，但它已经是一个非循环、可计算、可形式化的真实下界。
+
+---
+

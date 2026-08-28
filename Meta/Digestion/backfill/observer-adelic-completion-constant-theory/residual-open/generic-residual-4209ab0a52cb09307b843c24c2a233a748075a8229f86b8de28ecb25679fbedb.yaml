@@ -1,0 +1,10 @@
+ast_path: section/356-1-Wang-宽度分散的严格可见性
+fingerprints:
+  raw_sha256: sha256:4209ab0a52cb09307b843c24c2a233a748075a8229f86b8de28ecb25679fbedb
+  normalized_sha256: sha256:4209ab0a52cb09307b843c24c2a233a748075a8229f86b8de28ecb25679fbedb
+cas_ref: sha256:4209ab0a52cb09307b843c24c2a233a748075a8229f86b8de28ecb25679fbedb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

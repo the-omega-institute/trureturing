@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Diagonal/Naturality/RelativeDiagonalEscape.relative_diagonal_escape
       source_sha256: sha256:0da13db8edb11c151ade9f23d5795ac8a1c1b62a44804dce5f159171d61ad638
-      target_sha256: sha256:327cc39e62c7d253b041253435de51aa71f33c469519fea8a36d6080446f7a3c
+      target_statement_id: sha256:1786834610ae6c385f9344317e5f1a0dbe5839d2955b2812b8c091d42f767880
   scribe:
     - gid: D5/S0/Diagonal/Naturality/RelativeDiagonalEscape.relative_diagonal_escape
       definition_sha256: sha256:4cdd28863078b1f045bedd309fb3157e2e27a30a7c9c2cea939b2926e4fee21d

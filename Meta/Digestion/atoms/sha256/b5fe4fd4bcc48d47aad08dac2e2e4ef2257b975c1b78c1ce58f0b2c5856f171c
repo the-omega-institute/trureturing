@@ -1,0 +1,28 @@
+## 402.1 Deng self-energy
+
+定义：
+
+$$
+\boxed{
+\Sigma_L
+=
+A_{PQ}
+A_{QQ}^{-1}
+A_{QP}
+\succeq0.
+}
+\tag{402.7}
+$$
+
+则：
+
+$$
+\boxed{
+F_L=A_{PP}-\Sigma_L.
+}
+\tag{402.8}
+$$
+
+这里：
+
+* \(A_{PP}\)：bare sticky block；

@@ -1,0 +1,63 @@
+# 第三百七十二部　母观察函子定理
+
+设：
+
+$$
+\nu
+$$
+
+是一个正谱测度。
+
+对任意参数空间 \(X\) 和特征族：
+
+$$
+\Phi_x\in L^2(\nu),
+\qquad
+x\in X,
+$$
+
+定义：
+
+$$
+\boxed{
+K_\Phi(x,y)
+=
+\int
+\Phi_x(\gamma)
+\overline{\Phi_y(\gamma)}
+\,d\nu(\gamma).
+}
+\tag{372.1}
+$$
+
+则：
+
+$$
+K_\Phi\succeq0.
+$$
+
+RH 下取：
+
+$$
+\nu=\nu_\Xi,
+$$
+
+不同特征族分别产生：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\Phi_x(\gamma)&\text{生成的图表}\\
+\hline
+\widehat\psi(\gamma)&\text{Weil form}\\
+(s-\frac12-i\gamma)^{-1}&\text{半平面 Pick 核}\\
+(x+\gamma^2)^{-1}&\text{Stieltjes/Loewner 核}\\
+1-u_\gamma^n&\text{Li Gram 核}\\
+(1-\overline{u_\gamma}z)^{-1}&\text{Clark/model-space 核}\\
+\gamma^{-2n}&\text{Hankel moments}
+\end{array}
+}
+$$
+
+所以：
+

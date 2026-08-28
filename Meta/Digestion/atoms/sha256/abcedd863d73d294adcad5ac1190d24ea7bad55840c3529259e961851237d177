@@ -1,0 +1,20 @@
+* \(F_L\)：真正的 renormalized sticky matrix。
+
+所以：
+
+$$
+\boxed{
+\text{Deng 式消元不能只删除 non-sticky states，}
+}
+$$
+
+而必须保留它们通过：
+
+$$
+\Sigma_L
+$$
+
+反馈给 sticky block 的精确影响。
+
+---
+

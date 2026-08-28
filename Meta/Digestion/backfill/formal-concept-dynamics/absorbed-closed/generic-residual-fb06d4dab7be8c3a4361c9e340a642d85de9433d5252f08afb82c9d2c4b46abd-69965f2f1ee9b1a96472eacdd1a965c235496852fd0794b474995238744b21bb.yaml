@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/FixedPoints/FiniteMonotoneTermination.finite_monotone_termination_and_nonunique_example
       source_sha256: sha256:fb06d4dab7be8c3a4361c9e340a642d85de9433d5252f08afb82c9d2c4b46abd
-      target_sha256: sha256:002b30a51788c5498e99795fa52daf64e899fa8c0db642419ebb54cdb3561f23
+      target_statement_id: sha256:dd1026a0b6143414144cf6fa9542a32d8665982a4df74786ff83e717efc993c1
   scribe:
     - gid: D5/S1/FixedPoints/FiniteMonotoneTermination.finite_monotone_termination_and_nonunique_example
       definition_sha256: sha256:9c496578cf097bbc96c439691cda32ce9113e6d55e7375f806e626e6418e3885

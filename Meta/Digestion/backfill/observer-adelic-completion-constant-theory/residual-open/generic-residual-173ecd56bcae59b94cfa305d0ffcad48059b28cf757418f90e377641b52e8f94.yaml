@@ -1,0 +1,10 @@
+ast_path: section/禁令一-第-395-部
+fingerprints:
+  raw_sha256: sha256:173ecd56bcae59b94cfa305d0ffcad48059b28cf757418f90e377641b52e8f94
+  normalized_sha256: sha256:173ecd56bcae59b94cfa305d0ffcad48059b28cf757418f90e377641b52e8f94
+cas_ref: sha256:173ecd56bcae59b94cfa305d0ffcad48059b28cf757418f90e377641b52e8f94
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

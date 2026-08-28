@@ -1,0 +1,16 @@
+## 尚未闭合的中心桥
+
+$$
+\boxed{
+\begin{aligned}
+&\text{从 prime-side 直接证明逆 Poisson 源为正；}\\
+&\text{从 toric relative trace 推出 }\mathfrak V(u)=0;\\
+&\text{构造宽度方差的算术守恒律；}\\
+&\text{给有限 Blaschke 衰减曲线建立无零点输入的直接计算公式；}\\
+&\text{将 Bode 三角缺陷与 Wang 自改善不等式连接}.
+\end{aligned}
+}
+$$
+
+---
+

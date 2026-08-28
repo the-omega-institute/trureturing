@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/Dynamics/InfiniteObservabilityOrthogonalDuality.infinite_unobservable_eq_observable_orthogonal
       source_sha256: sha256:ee4de732bd14a86034f5b4309ef2233c93199c78ec19f9e3610b3969ad06b736
-      target_sha256: sha256:ca2cd2b73b2a6e225bddb9024f68540696d0cf673c49a7dd7ebdbb54ec7e3c48
+      target_statement_id: sha256:ca7203e3e1e4739f67e0452a617281fe413c42f83cffe7489c5148d2ff29d819
   scribe:
     - gid: D5/S3/ObserverMemory/Dynamics/InfiniteObservabilityOrthogonalDuality.infinite_unobservable_eq_observable_orthogonal
       definition_sha256: sha256:0818374f342ccfd3814a7ee9e2a522a5dc65fb45f42bb5777f6b8d1174877185

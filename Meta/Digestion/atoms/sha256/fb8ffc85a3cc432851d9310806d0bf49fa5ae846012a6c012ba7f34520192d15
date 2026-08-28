@@ -1,0 +1,30 @@
+## 356.2 Deng：宽度簇的 primitive 压缩
+
+若许多离线零点共享近似相同的 \(\delta\)，它们形成 sticky width cluster。
+
+正确处理为：
+
+1. 将共同三角 profile：
+
+   $$
+   (\delta-|y-\tfrac12|)_+
+   $$
+
+   抽取为 primitive width kernel；
+
+2. 将不同 ordinate \(\gamma\) 的重复实例记录为 multiplicity ledger；
+
+3. 用热权：
+
+   $$
+   e^{-u\gamma^2}
+   $$
+
+   压缩高频历史；
+
+4. 只对 width residual 做更高阶 refinement。
+
+这提供一个没有组合阶乘爆炸的正模型：宽度方向的 primitive 类型是一参数族，而不是全部零点历史的排列。
+
+---
+

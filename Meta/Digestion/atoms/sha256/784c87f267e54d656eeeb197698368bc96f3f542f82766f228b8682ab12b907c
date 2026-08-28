@@ -1,0 +1,14 @@
+## 410.4 Bohr recurrence 不再构成无限维障碍
+
+固定 \(L\) 时，Archimedean confinement 把危险 recurrence 限制在有限频率范围。
+
+所以真正问题不是“无限多 recurrence peaks”，而是：
+
+$$
+\boxed{
+\text{有限频率窗口内的有限个高浓缩 Slepian modes。}
+}
+$$
+
+---
+
