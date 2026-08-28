@@ -1,0 +1,10 @@
+ast_path: section/依赖标准既有理论/clause/3
+fingerprints:
+  raw_sha256: sha256:cc29ce9506d66b5fdc727ab69b682a5596082d9d4bce49fee73d19c89b06c4f3
+  normalized_sha256: sha256:cc29ce9506d66b5fdc727ab69b682a5596082d9d4bce49fee73d19c89b06c4f3
+cas_ref: sha256:cc29ce9506d66b5fdc727ab69b682a5596082d9d4bce49fee73d19c89b06c4f3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

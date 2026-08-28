@@ -57,7 +57,7 @@ internal sealed class DiscountedObservabilityGramianKernelDocument
         Formula mapOutput = Call("LinearMap", scalar, state, output);
         Formula gramian = new Formula.Subscript(F.Id("W"), discount);
         Formula hidden = new Formula.Subscript(F.Id("N"), Infty);
-        Formula evolutionAdjoint = Seq(evolution, Caret, Grp(Star));
+        Formula evolutionAdjoint = Grp(evolution, Caret, Grp(Star));
         Formula readoutAdjoint = Seq(readout, Caret, Grp(Star));
         Formula summand = Seq(
             discount, Caret, Grp(index), Sp,

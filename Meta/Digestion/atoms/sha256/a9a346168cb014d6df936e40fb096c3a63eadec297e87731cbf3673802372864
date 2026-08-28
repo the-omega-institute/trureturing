@@ -1,0 +1,61 @@
+# 第二百二十四部　中心 reciprocal-zero moments
+
+在 \(x=0\) 附近展开：
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\sum_{n=0}^{\infty}
+(-1)^n\mu_nx^n.
+}
+\tag{224.1}
+$$
+
+RH 下：
+
+$$
+\boxed{
+\mu_n
+=
+\sum_{\gamma>0}
+\frac{m_\gamma}{\gamma^{2n+2}}.
+}
+\tag{224.2}
+$$
+
+定义倒谱测度：
+
+$$
+\boxed{
+d\nu(u)
+=
+\sum_{\gamma>0}
+\frac{m_\gamma}{\gamma^2}
+\,
+\delta_{\gamma^{-2}}(du).
+}
+\tag{224.3}
+$$
+
+则：
+
+$$
+\boxed{
+\mu_n
+=
+\int_0^\infty u^n\,d\nu(u).
+}
+\tag{224.4}
+$$
+
+所以：
+
+$$
+(\mu_n)_{n\ge0}
+$$
+
+是一个 Stieltjes moment sequence。
+
+---
+

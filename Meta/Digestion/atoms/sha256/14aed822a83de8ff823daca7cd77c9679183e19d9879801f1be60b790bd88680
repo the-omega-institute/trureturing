@@ -1,0 +1,38 @@
+# 第三百零六部　有限零点谱窗层析
+
+令：
+
+$$
+\mathcal Z(T)
+=
+\{\rho:|\Im\rho|\le T\}.
+$$
+
+定义有限投影：
+
+$$
+\boxed{
+P_Tf
+=
+\sum_{\rho\in\mathcal Z(T)}
+\langle f,e_\rho\rangle e_\rho.
+}
+\tag{306.1}
+$$
+
+则：
+
+$$
+\boxed{
+\|f-P_Tf\|^2
+=
+\sum_{|\Im\rho|>T}
+w_\rho|f(u_\rho)|^2.
+}
+\tag{306.2}
+$$
+
+所以每个有限零点窗给出一个规范的有限维观察者，未观测信息完全保存在正交余空间中。
+
+---
+

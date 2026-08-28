@@ -1,0 +1,44 @@
+## 148.3 重复历史展开
+
+取对数：
+
+$$
+\boxed{
+-\log Z_\varphi^{\mathrm{geo}}(s)
+=
+\sum_{r=1}^{\infty}
+\frac{
+q_\varphi^{rs}
+}{
+r(1-q_\varphi^r)
+}.
+}
+\tag{148.6}
+$$
+
+其中：
+
+$$
+\frac1{1-q_\varphi^r}
+=
+\sum_{k\ge0}q_\varphi^{rk}
+$$
+
+记录横向激发，而 \(r\) 记录 primitive orbit 的重复次数。
+
+所以：
+
+$$
+\boxed{
+\text{一个黄金 primitive orbit}
++
+\text{全部重复}
++
+\text{全部横向激发}
+=
+q\text{-Gamma 局部完成}.
+}
+$$
+
+---
+

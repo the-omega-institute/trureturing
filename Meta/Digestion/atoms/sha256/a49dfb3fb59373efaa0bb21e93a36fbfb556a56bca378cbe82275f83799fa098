@@ -1,0 +1,16 @@
+* 新 Schur tail 直接读取高零点残余。
+
+这给出一个严格的：
+
+$$
+\boxed{
+\text{Clark atom deflation}
+\to
+\text{renormalized boundary observer}
+}
+$$
+
+程序。
+
+---
+

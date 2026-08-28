@@ -1,0 +1,43 @@
+## 307.2 一阶位移尾矩
+
+定义：
+
+$$
+\boxed{
+D(T)
+=
+\sum_{|\Im\rho|>T}
+w_\rho|u_\rho-1|.
+}
+\tag{307.4}
+$$
+
+由：
+
+$$
+|u_\rho-1|
+=
+|\rho|^{-1}
+$$
+
+以及 Riemann–von Mangoldt 公式：
+
+$$
+\boxed{
+D(T)
+=
+\frac{
+2\log(T/2\pi)+1
+}{
+8\pi\lambda_1T^2
+}
++
+O\left(
+\frac{\log T}{T^3}
+\right).
+}
+\tag{307.5}
+$$
+
+---
+

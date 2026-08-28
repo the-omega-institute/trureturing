@@ -1,0 +1,8 @@
+## 230.1 Jensen–Pólya 层级
+
+RH 等价于 \(\mathscr F\) 属于 Laguerre–Pólya 类，即其全部 Jensen polynomials 具有实零点。Pólya 的这一等价及现代 Jensen polynomial 研究已经形成系统理论。([arXiv][3])
+
+对固定次数 \(d\)，已有结果证明足够高 shift 的 Jensen polynomials 无条件双曲；因此“高阶渐近上越来越像 Hermite polynomial”并不足以证明 RH。真正承重的是所有次数、所有 shift 的完整层级。([arXiv][4])
+
+---
+

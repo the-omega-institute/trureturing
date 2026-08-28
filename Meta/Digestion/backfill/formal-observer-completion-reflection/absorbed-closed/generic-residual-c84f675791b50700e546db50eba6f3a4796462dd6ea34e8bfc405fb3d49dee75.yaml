@@ -1,0 +1,17 @@
+ast_path: 定理/210.2
+fingerprints:
+  raw_sha256: sha256:c84f675791b50700e546db50eba6f3a4796462dd6ea34e8bfc405fb3d49dee75
+  normalized_sha256: sha256:c84f675791b50700e546db50eba6f3a4796462dd6ea34e8bfc405fb3d49dee75
+cas_ref: sha256:c84f675791b50700e546db50eba6f3a4796462dd6ea34e8bfc405fb3d49dee75
+coverage_gids:
+  - D5/S3/Observer/Budget/AdaptiveEarlyStoppingLimits.adaptive_worst_case_depth_information_lower_bound
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/Budget/AdaptiveEarlyStoppingLimits.adaptive_worst_case_depth_information_lower_bound
+      source_sha256: sha256:c84f675791b50700e546db50eba6f3a4796462dd6ea34e8bfc405fb3d49dee75
+      target_sha256: sha256:30fdf830d9c857f1aa14ce312ec1065dfd7970e0eb9b3fe761485b4d3a2970ea
+  scribe:
+    - gid: D5/S3/Observer/Budget/AdaptiveEarlyStoppingLimits.adaptive_worst_case_depth_information_lower_bound
+      definition_sha256: sha256:1d4e61ef9027a738ad664ca8c8c90e206464d07487a017c955a961dad25f3973
+      emission_sha256: sha256:2b7a86980b8a98e49d3a1a347c4481293bba3fc47cd5769d5143163ef7294526
+  unresolved_subitems: []

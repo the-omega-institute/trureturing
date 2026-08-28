@@ -1,0 +1,61 @@
+## 255.1 Cayley unitary
+
+定义：
+
+$$
+\boxed{
+C_\Xi
+=
+\left(
+I+\frac i2A_\Xi^{1/2}
+\right)
+\left(
+I-\frac i2A_\Xi^{1/2}
+\right)^{-1}.
+}
+\tag{255.3}
+$$
+
+也可完全用 \(X_\Xi\) 写成：
+
+$$
+\boxed{
+C_\Xi
+=
+I-2X_\Xi
++
+2i\sqrt{X_\Xi(I-X_\Xi)}.
+}
+\tag{255.4}
+$$
+
+由于 \(X_\Xi\) 与其函数彼此交换：
+
+$$
+C_\Xi^*C_\Xi=I.
+$$
+
+故 \(C_\Xi\) 为 unitary。
+
+在 \(\gamma\)-特征空间上：
+
+$$
+C_\Xi
+\longmapsto
+\frac{\gamma+i/2}{\gamma-i/2}
+=
+u_\rho.
+$$
+
+所以：
+
+$$
+\boxed{
+C_\Xi
+=
+\text{Hilbert--Pólya ordinate 算子的 Cayley completion}.
+}
+$$
+
+---
+

@@ -1,0 +1,13 @@
+## 282.2 Sticky：谱质量集中
+
+高 ordinates 对应：
+
+$$
+u_\gamma\to1.
+$$
+
+所以 \(\mu_\lambda\) 可能在 \(1\) 附近形成强集中。
+
+这会导致：
+
+* 初始 Fourier moments 接近 \(1\)；

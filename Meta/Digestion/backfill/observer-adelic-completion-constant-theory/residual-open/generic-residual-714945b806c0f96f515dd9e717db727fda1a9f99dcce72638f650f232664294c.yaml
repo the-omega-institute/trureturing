@@ -1,0 +1,14 @@
+ast_path: section/第三百一十六部-有限环面帧的商连接
+fingerprints:
+  raw_sha256: sha256:714945b806c0f96f515dd9e717db727fda1a9f99dcce72638f650f232664294c
+  normalized_sha256: sha256:714945b806c0f96f515dd9e717db727fda1a9f99dcce72638f650f232664294c
+cas_ref: sha256:714945b806c0f96f515dd9e717db727fda1a9f99dcce72638f650f232664294c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-88de7868fe6a6366cabf5294cfc438da5c848c508d7e2791288365be28fd9de2-c2289707707660cbb5dbf0d6fd2db817cd9aac3f8416e4da3cb4aa1990c32a11
+    - generic-residual-a867096d5b34864fc6c6a8c2463765c5d8a05bc4aaaac64a5aed72b878e8cf90-ce7f1da4ef42244a82ad412a54bc9dc1b253e9f6803934a3eb23d64f77b6ed53
+    - generic-residual-9144079ab5a33bda92b6baa80438f9af977c17a682c8c20c145f08be08a41d02-771e58a1e2674650793196853e76a93b9261078bca500a0c9234efa871840424

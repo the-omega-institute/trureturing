@@ -41,6 +41,7 @@ done < <(
 
 requires_projection_check=0
 requires_describe_check=0
+requires_markdown_check=0
 derive_producer_closure=0
 if [[ "${#CHANGED_PATHS[@]}" -gt 0 ]]; then
   for path in "${CHANGED_PATHS[@]}"; do
@@ -48,7 +49,16 @@ if [[ "${#CHANGED_PATHS[@]}" -gt 0 ]]; then
       Golden/Projection/*.json)
         requires_projection_check=1
         ;;
-      Blueprint/*.scribe.cs|D5/*.lean|Trureturing.lean|lean-toolchain|lake-manifest.json|lakefile.toml|lakefile.lean|\
+      Blueprint/*.scribe.cs)
+        requires_describe_check=1
+        requires_markdown_check=1
+        ;;
+      # 投影本身:新鲜度仍然不入门(它是 reader snapshot),但它承载的公式要过
+      # 真 KaTeX——那是站点实际用的解析器,而发射器的规则只是它的人工读数。
+      Blueprint/*.md)
+        requires_markdown_check=1
+        ;;
+      D5/*.lean|Trureturing.lean|lean-toolchain|lake-manifest.json|lakefile.toml|lakefile.lean|\
       Library/*|Problems/*|Meta/BACKFILL.yaml|Meta/Digestion/backfill/*|\
       tools/lean-inspector/*|tools/scripts/report/lean-report-input.sh)
         requires_describe_check=1
@@ -88,3 +98,8 @@ fi
 if [[ "$requires_describe_check" == "1" ]]; then
   run_scribe describe-report --check
 fi
+# 判词只落在改动触及的那几篇文档上;路径经本块的标准输入交付,NUL 分隔,与 git 同口径,
+# 因而不必落一个还要清理的临时文件。
+if [[ "$requires_markdown_check" == "1" ]]; then
+  run_scribe markdown-check --report "$REPORT" --paths-from -
+fi < <(printf '%s\0' "${CHANGED_PATHS[@]}")

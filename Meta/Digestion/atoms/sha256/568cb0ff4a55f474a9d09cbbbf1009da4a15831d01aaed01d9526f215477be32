@@ -1,0 +1,61 @@
+## 189.1 振幅—相位补全
+
+由式 (188.3)：
+
+$$
+\boxed{
+|\xi(s)|
+=
+\frac{
+\|\mathbf P_K(s)\|
+}{
+\|\mathbf T_K(s)\|
+}.
+}
+\tag{189.2}
+$$
+
+同时：
+
+$$
+\boxed{
+\xi(s)
+=
+\frac{
+\langle\mathbf P_K(s),\mathbf T_K(s)\rangle
+}{
+\|\mathbf T_K(s)\|^2
+}.
+}
+$$
+
+所以完整 \(\xi\) 读数由：
+
+$$
+\boxed{
+\text{相对范数}
++
+\text{相对 }U(1)\text{ 相位}
+}
+$$
+
+组成。
+
+在零点处：
+
+$$
+\mathbf P_K(s)=0,
+\qquad
+\mathbf T_K(s)\neq0.
+$$
+
+因此 Riemann 零点可重新定义为：
+
+$$
+\boxed{
+\text{环面周期谱帧的整体振幅塌缩点}.
+}
+$$
+
+---
+

@@ -1,0 +1,12 @@
+* 有限层析难以区分高零点。
+
+Deng 式处理应是：
+
+1. 识别主导角原子或角簇；
+2. 用 Blaschke／Christoffel 型变换剥离其贡献；
+3. 对 residual measure 重新执行 Schur 算法；
+4. 将重复相位历史压缩为有限 CMV block；
+5. 控制剩余 Schur tail。
+
+---
+

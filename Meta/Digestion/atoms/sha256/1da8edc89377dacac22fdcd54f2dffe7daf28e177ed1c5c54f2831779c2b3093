@@ -1,0 +1,11 @@
+### Non-sticky carrier
+
+若：
+
+$$
+\operatorname{Stick}_{\mathrm{tor}}(s)
+\le1-\eta
+$$
+
+在一个尺度链上成立，则多个 twist 通道共同支撑观察。
+

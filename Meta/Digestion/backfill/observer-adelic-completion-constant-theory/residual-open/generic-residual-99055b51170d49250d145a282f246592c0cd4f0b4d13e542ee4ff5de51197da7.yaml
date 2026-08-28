@@ -1,0 +1,10 @@
+ast_path: section/第二百六十二部-Li-系数是多尺度零点滤波器
+fingerprints:
+  raw_sha256: sha256:99055b51170d49250d145a282f246592c0cd4f0b4d13e542ee4ff5de51197da7
+  normalized_sha256: sha256:99055b51170d49250d145a282f246592c0cd4f0b4d13e542ee4ff5de51197da7
+cas_ref: sha256:99055b51170d49250d145a282f246592c0cd4f0b4d13e542ee4ff5de51197da7
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

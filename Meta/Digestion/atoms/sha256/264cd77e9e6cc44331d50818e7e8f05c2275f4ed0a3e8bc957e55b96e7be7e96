@@ -1,0 +1,56 @@
+* 全部二次环面帧。
+
+只需构造一个满足：
+
+$$
+\boxed{
+c_n
+=
+\frac{
+\lambda_{n+1}-2\lambda_n+\lambda_{n-1}
+}{
+2\lambda_1
+}
+}
+$$
+
+的正定平稳相关序列。
+
+等价目标为任一项：
+
+$$
+\boxed{
+\begin{aligned}
+&[c_{j-k}]\succeq0;\\
+&\Re\mathcal C_\lambda(z)>0;\\
+&f_\lambda\text{ 是 Schur};\\
+&|\alpha_n|<1\ \forall n;\\
+&\exists\text{ unitary CMV realization};\\
+&\exists\text{ stationary process with partial-sum variance }\lambda_n.
+\end{aligned}
+}
+$$
+
+所以当前最小、最局部的 toroidal/relative-trace 目标是：
+
+$$
+\boxed{
+\frac{
+\lambda_{m-n+1}
+-2\lambda_{m-n}
++\lambda_{m-n-1}
+}{
+2\lambda_1
+}
+=
+\langle
+Y_m,Y_n
+\rangle_{\mathrm{tor}}.
+}
+\tag{285.1}
+$$
+
+一旦该式成立，RH 立即成立。
+
+---
+

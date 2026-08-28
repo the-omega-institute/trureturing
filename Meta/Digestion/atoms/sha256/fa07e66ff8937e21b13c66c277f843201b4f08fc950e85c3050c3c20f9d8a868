@@ -1,0 +1,35 @@
+# 第一百五十六部　为什么散射酉性仍然不证明 RH
+
+散射系数满足：
+
+$$
+|\Phi(\tfrac12+it)|=1.
+$$
+
+但 RH 要求控制的是：
+
+$$
+0<\Re(s)<\frac12
+$$
+
+内部的 poles。
+
+边界单位模并不能排除内域中任意位置的极点—零点对，只要它们遵守：
+
+$$
+s\longleftrightarrow1-s.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{unitarity on the spectrum}
+\not\Rightarrow
+\text{resonance rigidity}.
+}
+$$
+
+真正缺少的可能是某种：
+
+* contractivity；

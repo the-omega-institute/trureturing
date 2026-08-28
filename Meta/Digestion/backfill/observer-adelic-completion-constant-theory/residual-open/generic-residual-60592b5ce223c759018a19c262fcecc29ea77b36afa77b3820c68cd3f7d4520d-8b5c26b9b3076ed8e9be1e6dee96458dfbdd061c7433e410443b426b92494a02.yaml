@@ -1,0 +1,10 @@
+ast_path: section/第一百四十六部-方向翻转与长度加倍/clause/1
+fingerprints:
+  raw_sha256: sha256:60592b5ce223c759018a19c262fcecc29ea77b36afa77b3820c68cd3f7d4520d
+  normalized_sha256: sha256:60592b5ce223c759018a19c262fcecc29ea77b36afa77b3820c68cd3f7d4520d
+cas_ref: sha256:60592b5ce223c759018a19c262fcecc29ea77b36afa77b3820c68cd3f7d4520d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

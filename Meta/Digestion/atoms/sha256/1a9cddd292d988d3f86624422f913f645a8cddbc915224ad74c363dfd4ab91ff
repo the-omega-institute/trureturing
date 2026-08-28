@@ -1,0 +1,61 @@
+# 第三百一十五部　Jet-to-mass 半单化
+
+令：
+
+$$
+N_m
+=
+\begin{pmatrix}
+0&0&\cdots&0\\
+1&0&\cdots&0\\
+0&1&\ddots&0\\
+\vdots&\ddots&\ddots&0
+\end{pmatrix}
+$$
+
+为 \(m\) 阶 nilpotent shift。
+
+定义局部 spectral pencil：
+
+$$
+\boxed{
+\mathsf A_\rho(s)
+=
+(s-\rho)I-N_m.
+}
+\tag{315.1}
+$$
+
+其行列式为：
+
+$$
+\boxed{
+\det\mathsf A_\rho(s)
+=
+(s-\rho)^m.
+}
+\tag{315.2}
+$$
+
+其逆为有限级数：
+
+$$
+\boxed{
+\mathsf A_\rho(s)^{-1}
+=
+\sum_{k=0}^{m-1}
+\frac{N_m^k}{(s-\rho)^{k+1}}.
+}
+\tag{315.3}
+$$
+
+因为：
+
+$$
+\operatorname{Tr}N_m^k=0
+\qquad
+(k\ge1),
+$$
+
+得到：
+

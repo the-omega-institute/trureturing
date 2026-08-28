@@ -1,0 +1,61 @@
+# 第一百九十一部　零点是相对曲率原子
+
+定义相对势：
+
+$$
+\boxed{
+\mathcal U_K(s)
+=
+\log
+\frac{
+\|\mathbf P_K(s)\|^2
+}{
+\|\mathbf T_K(s)\|^2
+}.
+}
+\tag{191.1}
+$$
+
+由于：
+
+$$
+\mathbf P_K=\xi\mathbf T_K,
+$$
+
+有：
+
+$$
+\boxed{
+\mathcal U_K(s)
+=
+\log|\xi(s)|^2.
+}
+\tag{191.2}
+$$
+
+Poincaré–Lelong 公式给出：
+
+$$
+\boxed{
+\frac{i}{2\pi}
+\partial\bar\partial
+\mathcal U_K
+=
+\sum_\rho
+m_\rho\,\delta_\rho.
+}
+\tag{191.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{Riemann 零点除子}
+=
+\text{周期线与 twist 载体线之间的相对曲率}.
+}
+$$
+
+---
+

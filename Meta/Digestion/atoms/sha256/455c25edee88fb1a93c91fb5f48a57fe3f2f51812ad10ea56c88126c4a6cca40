@@ -1,0 +1,16 @@
+## 243.1 Toeplitz 图表
+
+$$
+T(a)=[a_{j-i}].
+$$
+
+它读取：
+
+$$
+a_n=\operatorname{Tr}\Lambda^nU_\Xi.
+$$
+
+这是 exterior/composite 图表。
+
+---
+

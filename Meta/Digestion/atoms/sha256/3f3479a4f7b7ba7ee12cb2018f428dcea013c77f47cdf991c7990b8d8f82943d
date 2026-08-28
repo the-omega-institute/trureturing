@@ -1,0 +1,46 @@
+## 定理 168.1（环面周期的 divisor-gcd）
+
+$$
+\boxed{
+\operatorname{ord}_\rho\Lambda
+=
+\min_D
+\operatorname{ord}_\rho P_D.
+}
+\tag{168.1}
+$$
+
+所以在零除子意义下：
+
+$$
+\boxed{
+\operatorname{div}_0(\Lambda)
+=
+\gcd_D
+\operatorname{div}_0(P_D).
+}
+\tag{168.2}
+$$
+
+这不是通常函数环中的字面最大公因式，而是**共同零除子的逐点最小值**。
+
+它说明：
+
+> Riemann ζ 是全部二次环面周期函数的共同 primitive factor。
+
+每个环面周期包含：
+
+$$
+\text{公共 ζ 因子}
+\times
+\text{该环面特有 twist 因子}.
+$$
+
+在 Yu Deng 的语言中：
+
+* \(\Lambda\)：跨所有环面历史稳定存在的 primitive core；
+* \(\Lambda(s,\chi_D)\)：依赖环面选择的 child history；
+* 取全部 \(D\) 的共同核：收缩全部 twist-specific child，留下 base primitive。
+
+---
+

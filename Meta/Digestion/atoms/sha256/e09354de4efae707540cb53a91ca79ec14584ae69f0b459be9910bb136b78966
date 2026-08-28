@@ -1,0 +1,31 @@
+## 当前唯一真正承重的开放桥
+
+$$
+\boxed{
+\text{从 toric relative trace formula
+构造一个 conservative realization of }\Theta_\omega
+\quad
+(\forall\omega>0).
+}
+$$
+
+等价弱形式为：
+
+$$
+\boxed{
+\frac{
+1-
+\Theta_\omega(z)\overline{\Theta_\omega(w)}
+}{
+1-z\overline w
+}
+=
+\langle
+\mathscr X_{\omega,z}^{\mathrm{tor}},
+\mathscr X_{\omega,w}^{\mathrm{tor}}
+\rangle.
+}
+$$
+
+---
+

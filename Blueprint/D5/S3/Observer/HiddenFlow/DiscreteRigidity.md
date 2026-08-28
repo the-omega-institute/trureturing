@@ -6,7 +6,7 @@ Nonzero integer-parameter hidden actions cannot extend to continuous additive re
 
 **Theorem 1.1 (Nonzero integer actions have no continuous real extension).**
 
-$$\forall jump \in \operatorname{AddHom}(\mathbb{Z}, \prod_{p \in \mathbb{P}} \mathbb{Z}_{p}), jump \neq 0 \Rightarrow \neg \exists flow \in \operatorname{CAddHom}(\mathbb{R}, \prod_{p \in \mathbb{P}} \mathbb{Z}_{p}), flow \circ cast_{\mathbb{Z}} = jump.$$
+$$\operatorname{let} HiddenAddress := \prod_{p \in \mathbb{P}} \mathbb{Z}_{p},\ \forall jump \in \operatorname{AddHom}(\mathbb{Z}, HiddenAddress), jump \neq 0 \Rightarrow \neg \exists flow \in \operatorname{CAddHom}(\mathbb{R}, HiddenAddress), flow \circ cast_{\mathbb{Z}} = jump.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/HiddenFlow/DiscreteRigidity.nonzero_integer_action_has_no_continuous_real_extension` (`✓ std3`). ∎
 

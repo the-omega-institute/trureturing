@@ -1,0 +1,15 @@
+## 定理 271.1（Li 曲率 Fourier 表示）
+
+$$
+\boxed{
+c_n
+=
+\widehat\mu_\lambda(n).
+}
+\tag{271.8}
+$$
+
+所以 Li 二阶差分正是一个有限概率测度的 Fourier 系数。
+
+---
+

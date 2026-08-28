@@ -1,0 +1,76 @@
+# 第二百六十六部　Automorphic 推广
+
+Lagarias 已将 Li 系数推广到 principal automorphic \(L\)-functions，并证明广义 RH 等价于广义 Li 系数实部的非负性，同时把它们联系到 Weil quadratic functional。([数字对象标识符][5])
+
+对 self-dual completed automorphic \(L\)-function \(\Lambda(s,\pi)\)，若 GRH 成立，其零点为：
+
+$$
+\frac12+i\gamma_{\pi,j}.
+$$
+
+定义：
+
+$$
+X_\pi
+=
+\bigoplus_j
+\frac1{4\gamma_{\pi,j}^2+1},
+$$
+
+以及：
+
+$$
+C_\pi
+=
+I-2X_\pi
++
+2i\sqrt{X_\pi(I-X_\pi)}.
+$$
+
+则同样得到：
+
+$$
+\boxed{
+\lambda_n(\pi)
+=
+\|I-C_\pi^n\|_{\mathrm{HS}}^2.
+}
+\tag{266.1}
+$$
+
+以及：
+
+$$
+\boxed{
+\frac{
+\Lambda(\frac1{1-z},\pi)
+}{
+\Lambda(1,\pi)
+}
+=
+\det
+\left(
+I+
+\frac{4z}{(1-z)^2}
+X_\pi
+\right).
+}
+\tag{266.2}
+$$
+
+对非 self-dual \(\pi\)，自然对象是 doubled completion：
+
+$$
+\Lambda(s,\pi)\Lambda(s,\widetilde\pi),
+$$
+
+其零点谱具有所需共轭对称，所得 unitary 是：
+
+$$
+C_\pi\oplus C_{\widetilde\pi}.
+$$
+
+所以 Li–Cayley completion 不是 ζ 的孤立技巧，而是 automorphic \(L\)-functions 的一般观察语言。
+
+---
+

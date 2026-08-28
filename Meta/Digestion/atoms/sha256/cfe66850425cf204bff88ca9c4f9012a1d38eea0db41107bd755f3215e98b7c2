@@ -1,0 +1,59 @@
+* 正 trace-class Fredholm 算子。
+
+本轮给出一个可能更低成本的目标。
+
+定义 Li Gram 核：
+
+$$
+\boxed{
+K_\lambda(m,n)
+=
+\frac{
+\lambda_m+\lambda_n-\lambda_{|m-n|}
+}{2}.
+}
+$$
+
+如果能从 toric relative trace formula 构造向量：
+
+$$
+\mathscr V_n
+$$
+
+使：
+
+$$
+\boxed{
+K_\lambda(m,n)
+=
+\langle
+\mathscr V_m,\mathscr V_n
+\rangle,
+}
+\tag{265.1}
+$$
+
+则：
+
+$$
+K_\lambda\succeq0.
+$$
+
+特别地：
+
+$$
+\lambda_n=K_\lambda(n,n)\ge0,
+$$
+
+所以 RH 立即成立。
+
+这比直接构造完整：
+
+$$
+X_{\mathrm{tor}}
+$$
+
+更弱，但可能更适合 relative trace。
+
+因为 relative trace formula 天然产生：
+

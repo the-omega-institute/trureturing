@@ -1,0 +1,70 @@
+# 第二百三十二部　RH 失败必有有限中心证书
+
+由定理 225.1：
+
+$$
+\neg\mathrm{RH}
+$$
+
+意味着 \((\mu_n)\) 不是 Stieltjes moment sequence。
+
+因此必存在有限 \(N\)，使：
+
+$$
+\boxed{
+H_N^{(0)}\not\succeq0
+\quad\text{或}\quad
+H_N^{(1)}\not\succeq0.
+}
+\tag{232.1}
+$$
+
+等价地，存在有限向量：
+
+$$
+c=(c_0,\ldots,c_N)\neq0
+$$
+
+满足：
+
+$$
+\boxed{
+\sum_{i,j}
+c_i\overline{c_j}\mu_{i+j}<0
+}
+$$
+
+或：
+
+$$
+\boxed{
+\sum_{i,j}
+c_i\overline{c_j}\mu_{i+j+1}<0.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{任意线外零点最终都会在有限阶中心导数中留下负半正定证书。}
+}
+$$
+
+当前理论不提供该最小阶 \(N\) 的通用上界。
+
+这和一阶 Pick 负证书形成互补：
+
+$$
+\boxed{
+\begin{array}{c|c|c}
+\text{证书}&\text{优点}&\text{代价}\\
+\hline
+\text{Pick}&\text{一阶、强放大}&\text{需要局部化零点}\\
+\text{Hankel}&\text{中心化、有限 jet}&\text{失败阶未知}
+\end{array}
+}
+$$
+
+---
+

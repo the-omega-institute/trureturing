@@ -72,12 +72,17 @@ public sealed partial class MakeWorkflowTests
             result.ExitCode == 0,
             $"expected exit 0, actual {result.ExitCode}\nstdout:\n{Encoding.UTF8.GetString(result.StandardOutput)}\nstderr:\n{Encoding.UTF8.GetString(result.StandardError)}");
         var invocations = File.ReadAllLines(log);
-        Assert.Single(invocations);
+        Assert.Equal(2, invocations.Length);
         Assert.All(invocations, line => Assert.StartsWith(explicitReport + "|", line, StringComparison.Ordinal));
         Assert.DoesNotContain(invocations, line => line.Contains(ambientReport, StringComparison.Ordinal));
         Assert.Contains(
             invocations,
             static line => line.EndsWith(" describe-report --check", StringComparison.Ordinal));
+        Assert.Contains(
+            invocations,
+            line => line.EndsWith(
+                $" markdown-check --report {explicitReport} --paths-from -",
+                StringComparison.Ordinal));
     }
 
     [Fact]

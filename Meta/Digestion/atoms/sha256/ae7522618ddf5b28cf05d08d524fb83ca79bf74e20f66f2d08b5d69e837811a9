@@ -1,0 +1,43 @@
+* 对每个参数 \(s\)，可以选择 test vector 使 \(e_D(s)\neq0\)。
+
+因此，把无零局部因子正规化掉后，定义：
+
+$$
+\boxed{
+P_D(s)
+=
+\Lambda(s)\Lambda(s,\chi_D).
+}
+\tag{166.2}
+$$
+
+则：
+
+$$
+\boxed{
+P_D(s)=0
+\iff
+\Lambda(s)=0
+\quad\lor\quad
+\Lambda(s,\chi_D)=0.
+}
+\tag{166.3}
+$$
+
+所以一个单独环面观察者会混合两类不可见性：
+
+1. 全局基础不可见：
+
+   $$
+   \Lambda(s)=0;
+   $$
+2. 该环面的 twist-specific 不可见：
+
+   $$
+   \Lambda(s,\chi_D)=0.
+   $$
+
+这就是单环面观察的盲核。
+
+---
+

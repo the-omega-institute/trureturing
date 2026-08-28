@@ -1,0 +1,10 @@
+ast_path: section/297-1-观察者边界条件原理/clause/1
+fingerprints:
+  raw_sha256: sha256:19ca48bc4013857f9439bbea39eeea1e037fcdd92d45d44ed2777f7363a3d8ab
+  normalized_sha256: sha256:19ca48bc4013857f9439bbea39eeea1e037fcdd92d45d44ed2777f7363a3d8ab
+cas_ref: sha256:19ca48bc4013857f9439bbea39eeea1e037fcdd92d45d44ed2777f7363a3d8ab
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

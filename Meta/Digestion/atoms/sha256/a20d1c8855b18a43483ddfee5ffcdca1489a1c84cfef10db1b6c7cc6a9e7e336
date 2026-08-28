@@ -1,0 +1,21 @@
+## 311.2 Clark/model-space 接口
+
+$$
+\boxed{
+\frac{
+1-\vartheta_\xi(z)\overline{\vartheta_\xi(w)}
+}{
+1-z\overline w
+}
+\succeq0.
+}
+$$
+
+优点：
+
+* 直接产生正交零点采样；
+* 产生有限 rational inner approximants；
+* 连接 CMV 与 Schur 算法。
+
+---
+

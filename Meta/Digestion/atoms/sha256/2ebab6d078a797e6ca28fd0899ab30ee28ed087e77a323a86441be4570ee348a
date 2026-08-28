@@ -1,0 +1,28 @@
+## 308.1 显式 de Branges 核
+
+其 reproducing kernel 为：
+
+$$
+\boxed{
+\begin{aligned}
+K_\xi(w,z)
+=
+\frac{
+\lambda_1
+\left[
+\Xi'(z)\overline{\Xi(w)}
+-
+\Xi(z)\overline{\Xi'(w)}
+\right]
+}{
+\pi(\overline w-z)
+}.
+\end{aligned}
+}
+\tag{308.6}
+$$
+
+在 RH 下该核正定。
+
+---
+

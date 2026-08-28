@@ -1,0 +1,10 @@
+ast_path: section/148-2-级数图表/clause/2
+fingerprints:
+  raw_sha256: sha256:47c39dfce6967e16c94a4043ac84b229033de7342a63dba26f02151addf21b89
+  normalized_sha256: sha256:47c39dfce6967e16c94a4043ac84b229033de7342a63dba26f02151addf21b89
+cas_ref: sha256:47c39dfce6967e16c94a4043ac84b229033de7342a63dba26f02151addf21b89
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

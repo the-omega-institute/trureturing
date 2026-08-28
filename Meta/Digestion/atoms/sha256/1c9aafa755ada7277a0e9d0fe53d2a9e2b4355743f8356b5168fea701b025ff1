@@ -1,0 +1,52 @@
+# 第一百七十一部　有限正环面能量
+
+取紧窗口 \(K\) 的有限层析族：
+
+$$
+\mathcal D_K=\{D_1,\ldots,D_r\},
+$$
+
+以及正权：
+
+$$
+w_i>0.
+$$
+
+定义：
+
+$$
+\boxed{
+\mathscr E_K(s)
+=
+\sum_{i=1}^r
+w_i
+\left|
+P_{D_i}(s)
+\right|^2.
+}
+\tag{171.1}
+$$
+
+显然：
+
+$$
+\mathscr E_K(s)\ge0.
+$$
+
+由有限层析定理：
+
+$$
+\boxed{
+\mathscr E_K(s)=0
+\iff
+\Lambda(s)=0
+\qquad
+(s\in K).
+}
+\tag{171.2}
+$$
+
+所以 Riemann 零点可以成为一个由有限几何周期产生的非负能量函数的零点集。
+
+---
+

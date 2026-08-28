@@ -1,0 +1,22 @@
+### 高频零点区
+
+若：
+
+$$
+\gamma\gg n,
+$$
+
+则：
+
+$$
+\arctan\frac1{2\gamma}
+\sim
+\frac1{2\gamma},
+$$
+
+所以单零点贡献约为：
+
+$$
+\frac{n^2}{\gamma^2}.
+$$
+

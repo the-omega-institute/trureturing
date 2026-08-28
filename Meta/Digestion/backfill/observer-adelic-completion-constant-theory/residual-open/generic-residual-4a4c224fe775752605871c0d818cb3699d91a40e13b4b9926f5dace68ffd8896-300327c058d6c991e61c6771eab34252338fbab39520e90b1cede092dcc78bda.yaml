@@ -1,0 +1,10 @@
+ast_path: section/198-1-成本约束下的最优观察/clause/1
+fingerprints:
+  raw_sha256: sha256:4a4c224fe775752605871c0d818cb3699d91a40e13b4b9926f5dace68ffd8896
+  normalized_sha256: sha256:4a4c224fe775752605871c0d818cb3699d91a40e13b4b9926f5dace68ffd8896
+cas_ref: sha256:4a4c224fe775752605871c0d818cb3699d91a40e13b4b9926f5dace68ffd8896
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,64 @@
+## 222.1 RH 下的 Stieltjes 表示
+
+若 RH 成立，令：
+
+$$
+0<\gamma_1\le\gamma_2\le\cdots
+$$
+
+为 \(\Xi\) 的正零点，重数为 \(m_\gamma\)。
+
+则：
+
+$$
+\boxed{
+\mathscr F(x)
+=
+\prod_{\gamma>0}
+\left(
+1+\frac{x}{\gamma^2}
+\right)^{m_\gamma}.
+}
+\tag{222.4}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\sum_{\gamma>0}
+\frac{m_\gamma}{x+\gamma^2}.
+}
+\tag{222.5}
+$$
+
+定义正测度：
+
+$$
+\boxed{
+d\sigma(t)
+=
+\sum_{\gamma>0}
+m_\gamma\,\delta_{\gamma^2}(dt).
+}
+\tag{222.6}
+$$
+
+则：
+
+$$
+\boxed{
+\mathscr S(x)
+=
+\int_{0}^{\infty}
+\frac{d\sigma(t)}{x+t}.
+}
+\tag{222.7}
+$$
+
+这正是一个 meromorphic Stieltjes function。
+
+---
+

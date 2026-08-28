@@ -1,0 +1,86 @@
+# 第二百八十六部　建议形式化顺序
+
+```text
+D5/S3/Analytic/LiCurvature/
+  LiEvenExtension.lean
+  LiSecondDifference.lean
+  LiCurvatureNormalization.lean
+  LiCurvaturePositiveDefiniteCriterion.lean
+  LiPartialSumVariance.lean
+
+D5/S3/Analytic/LiCaratheodory/
+  LiGeneratingFunction.lean
+  LiCaratheodoryIdentity.lean
+  CaratheodoryRHCriterion.lean
+  LiCurvatureHerglotzMeasure.lean
+
+D5/S3/Analytic/LiSchur/
+  LiSchurFunction.lean
+  LiSchurParameters.lean
+  LiFirstReflectionCoefficients.lean
+  LiToeplitzDeterminants.lean
+  LiFiniteNegativeCertificate.lean
+
+D5/S3/Analytic/LiCMV/
+  LiVerblunskySequence.lean
+  LiCMVOperator.lean
+  LiCMVSpectralMeasure.lean
+  LiInverseCayleyOperator.lean
+  LiFiniteCMVTomography.lean
+
+D5/S3/Analytic/LiStationary/
+  LiStationaryCovariance.lean
+  LiUnitaryCocycle.lean
+  LiPartialSumVarianceCriterion.lean
+  LiCurvatureMass.lean
+
+D5/S3/Observer/ToroidalLiCurvature/
+  ToroidalCurvatureGramTarget.lean
+  RelativeTraceStationaryKernel.lean
+  SchurInnovationRenormalization.lean
+  CMVStickyNonStickyDichotomy.lean
+```
+
+优先级最高、风险最低的闭合链是：
+
+$$
+\boxed{
+\lambda
+\to
+\Delta^2\lambda
+\to
+\text{positive-definite Toeplitz criterion}.
+}
+$$
+
+其次是纯解析恒等式：
+
+$$
+\boxed{
+\mathcal C_\lambda(z)
+=
+\frac1{\lambda_1}
+\frac{
+\xi'(\frac1{1-z})
+}{
+\xi(\frac1{1-z})
+}.
+}
+$$
+
+再之后是标准 OPUC 接口：
+
+$$
+\boxed{
+\mathcal C_\lambda
+\to
+f_\lambda
+\to
+\alpha_n
+\to
+\mathcal C_\lambda^{\mathrm{CMV}}.
+}
+$$
+
+---
+

@@ -1,0 +1,14 @@
+ast_path: section/第一百九十七部-从零点场到-Poisson-场
+fingerprints:
+  raw_sha256: sha256:f26d12f623a83b5393c4b77c5b2688eb1a286acb27e24efa04bc7d255ef1b0a8
+  normalized_sha256: sha256:f26d12f623a83b5393c4b77c5b2688eb1a286acb27e24efa04bc7d255ef1b0a8
+cas_ref: sha256:f26d12f623a83b5393c4b77c5b2688eb1a286acb27e24efa04bc7d255ef1b0a8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-ae5f5c531230b12e6ed0d0ca0ec82d260039ff06b69953f814254bfb46d9fa9a-df534b6061970c20dbde73651f9b6b682f1334fd66dfde0ea28ca6b129228a6b
+    - generic-residual-2316550780099c5bafc94645680042bcc6dfbd229c659fd36cffb93a2daadc46-678af9b18ccbc35de2f49dcbf28c5ae4c656dd10a1e244c93163bb2e5f83ee72
+    - generic-residual-609a2e6dfbec4a219f1190e17be7e842d1eb326464b7c99775df8b716bc1f5a4-a7ff90973304f74b216652a203fd3c1f0599d743027f3c9e558ab8947493653d

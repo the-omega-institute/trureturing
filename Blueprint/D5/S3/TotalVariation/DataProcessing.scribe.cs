@@ -16,7 +16,8 @@ internal sealed class DataProcessingDocument : IScribeDocumentDefinition
                 H("Stochastic channels contract total variation"),
                 StatementSource.FromAuthor(Disp(Seq(
                                     Begin, Grp(F.Id("gathered")),
-                                    Forall, Sp, F.Id("X"), Comma, Sp, F.Id("Y"), Esc,
+                                    Forall, Sp, F.Id("X"), Comma, Sp, F.Id("Y"),
+                                    Colon, Sp, Operatorname, Grp(F.Id("Type")), Comma, Esc,
                                     OpenBracket,
                                     Operatorname, Grp(F.Id("Fintype")), Open, F.Id("X"), Close,
                                     CloseBracket, Sp,

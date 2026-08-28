@@ -1,0 +1,82 @@
+# 第二百一十六部　Hilbert–Pólya 作为正性输出
+
+若能从环面周期或 relative trace formula 直接证明：
+
+$$
+\mathcal N_0\succeq0,
+$$
+
+则 \(m_0\) 为 Herglotz 函数。
+
+由 Herglotz 表示，存在正测度 \(\mu\) 使：
+
+$$
+\boxed{
+m_0(z)
+=
+az+b+
+\int_{\mathbb R}
+\left(
+\frac1{t-z}
+-
+\frac{t}{1+t^2}
+\right)
+d\mu(t).
+}
+\tag{216.1}
+$$
+
+因为 \(m_0\) 是 meromorphic，\(\mu\) 必为离散测度，其原子位置正是 \(\Xi\) 的实零点，权重为重数。
+
+于是可在：
+
+$$
+L^2(\mu)
+$$
+
+上定义自伴乘法算子：
+
+$$
+\boxed{
+(Hf)(t)=tf(t).
+}
+\tag{216.2}
+$$
+
+其 Weyl resolvent 产生 \(m_0\)。
+
+因此：
+
+$$
+\boxed{
+\text{Hilbert–Pólya 自伴算子不必先被猜出；}
+}
+$$
+
+只要证明 toroidal excess connection 是 Herglotz，谱定理会自动产生一个自伴实现。
+
+完整链为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{toroidal period positivity}
+&\Longrightarrow
+\mathcal N_0\succeq0\\
+&\Longrightarrow
+m_0\text{ Herglotz}\\
+&\Longrightarrow
+\mu_\Xi\ge0\text{ 支持于 }\mathbb R\\
+&\Longrightarrow
+\text{self-adjoint spectral realization}\\
+&\Longrightarrow
+\mathrm{RH}.
+\end{aligned}
+}
+\tag{216.3}
+$$
+
+这与 Suzuki 的 canonical-system 方向一致，但现在 Weyl 函数由有限环面谱帧显式重构，而不是只从 \(\xi\) 本身抽象定义。([arXiv][1])
+
+---
+

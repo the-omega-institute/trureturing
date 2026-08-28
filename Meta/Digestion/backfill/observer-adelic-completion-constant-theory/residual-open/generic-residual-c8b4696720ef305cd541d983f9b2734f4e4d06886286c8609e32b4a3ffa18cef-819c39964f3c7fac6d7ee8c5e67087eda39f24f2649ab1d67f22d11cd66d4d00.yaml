@@ -1,0 +1,10 @@
+ast_path: section/322-1-Jet-category/clause/1
+fingerprints:
+  raw_sha256: sha256:c8b4696720ef305cd541d983f9b2734f4e4d06886286c8609e32b4a3ffa18cef
+  normalized_sha256: sha256:c8b4696720ef305cd541d983f9b2734f4e4d06886286c8609e32b4a3ffa18cef
+cas_ref: sha256:c8b4696720ef305cd541d983f9b2734f4e4d06886286c8609e32b4a3ffa18cef
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

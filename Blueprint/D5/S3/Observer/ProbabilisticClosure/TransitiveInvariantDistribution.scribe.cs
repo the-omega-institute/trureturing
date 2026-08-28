@@ -39,7 +39,7 @@ internal sealed class TransitiveInvariantDistributionDocument
             Sp, Land, RowBreak, Grp(),
             Grp(Seq(
                 Forall, Sp, law, Colon, Sp, pmfType, Comma, Sp,
-                invariant, Sp, Rightarrow, Sp, pointMass)), Dot,
+                Open, invariant, Close, Sp, Rightarrow, Sp, pointMass)), Dot,
             End, Grp(F.Id("gathered"))));
 
         return DocumentDefinition.Create(ScribeNode.Create(

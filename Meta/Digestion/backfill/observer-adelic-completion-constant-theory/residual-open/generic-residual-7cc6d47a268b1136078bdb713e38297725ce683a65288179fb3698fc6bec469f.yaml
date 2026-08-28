@@ -1,0 +1,10 @@
+ast_path: section/第一百四十八部-Golden-Selberg-局部因子
+fingerprints:
+  raw_sha256: sha256:7cc6d47a268b1136078bdb713e38297725ce683a65288179fb3698fc6bec469f
+  normalized_sha256: sha256:7cc6d47a268b1136078bdb713e38297725ce683a65288179fb3698fc6bec469f
+cas_ref: sha256:7cc6d47a268b1136078bdb713e38297725ce683a65288179fb3698fc6bec469f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

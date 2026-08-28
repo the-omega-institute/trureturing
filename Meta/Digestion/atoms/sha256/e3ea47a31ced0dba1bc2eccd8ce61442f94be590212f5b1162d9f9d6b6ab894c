@@ -1,0 +1,45 @@
+## 定理 244.1（第一零点恢复）
+
+$$
+\boxed{
+\alpha_1
+=
+\lim_{n\to\infty}
+\frac{\mu_{n+1}}{\mu_n}
+=
+\lim_{n\to\infty}
+\mu_n^{1/(n+1)}.
+}
+\tag{244.1}
+$$
+
+因此：
+
+$$
+\boxed{
+\gamma_1
+=
+\lim_{n\to\infty}
+\sqrt{\frac{\mu_n}{\mu_{n+1}}}.
+}
+\tag{244.2}
+$$
+
+### 证明
+
+$$
+\mu_n
+=
+\alpha_1^{n+1}
+\left[
+m_1+
+\sum_{j\ge2}
+m_j
+\left(\frac{\alpha_j}{\alpha_1}\right)^{n+1}
+\right].
+$$
+
+括号趋向 \(m_1\)。∎
+
+---
+

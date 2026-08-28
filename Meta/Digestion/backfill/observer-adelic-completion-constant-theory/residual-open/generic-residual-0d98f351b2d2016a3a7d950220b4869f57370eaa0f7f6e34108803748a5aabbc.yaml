@@ -1,0 +1,13 @@
+ast_path: section/240-1-Primitive-power-sums
+fingerprints:
+  raw_sha256: sha256:0d98f351b2d2016a3a7d950220b4869f57370eaa0f7f6e34108803748a5aabbc
+  normalized_sha256: sha256:0d98f351b2d2016a3a7d950220b4869f57370eaa0f7f6e34108803748a5aabbc
+cas_ref: sha256:0d98f351b2d2016a3a7d950220b4869f57370eaa0f7f6e34108803748a5aabbc
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-9269701f2c4dcec824768140cf43bd3ec12f245ff423b237eba65960ab250780-f1286a89f169f5d2dad5eca100ae0323a71b319fdc41f898616ed1204e8be3e9
+    - generic-residual-614d723c9dfb83e3354c124c4b4554b534fe1fab7090e6679cbc727a44371021-c6b1ed4befb7428583c12ae88bf2e639b50fe0d84da15649733bfb978f90525a

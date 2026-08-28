@@ -1,0 +1,19 @@
+### 目标 B：Li unitary
+
+构造 unitary：
+
+$$
+C_{\mathrm{tor}}
+$$
+
+满足：
+
+$$
+\boxed{
+\lambda_n
+=
+\|I-C_{\mathrm{tor}}^n\|_{\mathrm{HS}}^2.
+}
+\tag{264.4}
+$$
+

@@ -1,0 +1,51 @@
+## 假设 321.1（Toroidal conservative realization）
+
+存在由：
+
+* 二次环面 period states；
+* Hecke／continued-fraction 内部动力；
+* cusp input；
+* torus output；
+* local carrier normalization；
+
+构成的状态空间与算子：
+
+$$
+(A_\omega^{\mathrm{tor}},
+B_\omega^{\mathrm{tor}},
+C_\omega^{\mathrm{tor}},
+D_\omega^{\mathrm{tor}})
+$$
+
+使：
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+D_\omega^{\mathrm{tor}}
++
+zC_\omega^{\mathrm{tor}}
+(I-zA_\omega^{\mathrm{tor}})^{-1}
+B_\omega^{\mathrm{tor}},
+}
+\tag{321.2}
+$$
+
+并且：
+
+$$
+\boxed{
+\begin{pmatrix}
+A_\omega^{\mathrm{tor}}&B_\omega^{\mathrm{tor}}\\
+C_\omega^{\mathrm{tor}}&D_\omega^{\mathrm{tor}}
+\end{pmatrix}
+}
+$$
+
+是 unitary。
+
+若该假设对全部 \(\omega>0\) 成立，则 RH 成立。
+
+---
+

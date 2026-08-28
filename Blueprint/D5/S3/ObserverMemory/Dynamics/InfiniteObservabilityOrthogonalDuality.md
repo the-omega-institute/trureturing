@@ -6,7 +6,7 @@ The all-future readout kernel is the orthogonal complement of the observable orb
 
 **Theorem 1.1 (The infinite hidden and observable spaces are orthogonal duals).**
 
-$$\forall K, V, Y, T, C,\\{}\operatorname{RCLike}(K) \land \operatorname{NormedAddCommGroup}(V) \land \operatorname{InnerProductSpace}(K, V) \land \operatorname{FiniteDimensional}(K, V) \land\\{}\operatorname{NormedAddCommGroup}(Y) \land \operatorname{InnerProductSpace}(K, Y) \land \operatorname{FiniteDimensional}(K, Y) \land\\{}T \in \operatorname{LinearMap}(K, V, V) \land C \in \operatorname{LinearMap}(K, V, Y) \Rightarrow\\{}N_{\infty} := \operatorname{iInf}(k, \operatorname{ker}(C \circ T^{k})); O_{\infty} := \operatorname{span}(K, \{T^{*}^{k}(C^{*}(y)) \mid k \in N, y \in Y\});\\{}N_{\infty} = O_{\infty}^{\perp}.$$
+$$\forall K, V, Y, T, C,\\{}\operatorname{RCLike}(K) \land \operatorname{NormedAddCommGroup}(V) \land \operatorname{InnerProductSpace}(K, V) \land \operatorname{FiniteDimensional}(K, V) \land\\{}\operatorname{NormedAddCommGroup}(Y) \land \operatorname{InnerProductSpace}(K, Y) \land \operatorname{FiniteDimensional}(K, Y) \land\\{}T \in \operatorname{LinearMap}(K, V, V) \land C \in \operatorname{LinearMap}(K, V, Y) \Rightarrow\\{}N_{\infty} := \operatorname{iInf}(k, \operatorname{ker}(C \circ T^{k})); O_{\infty} := \operatorname{span}(K, \{{T^{*}}^{k}(C^{*}(y)) \mid k \in N, y \in Y\});\\{}N_{\infty} = O_{\infty}^{\perp}.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Dynamics/InfiniteObservabilityOrthogonalDuality.infinite_unobservable_eq_observable_orthogonal` (`✓ std3`). ∎
 

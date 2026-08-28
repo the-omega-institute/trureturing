@@ -1,0 +1,17 @@
+ast_path: section/与既有理论相邻-但本文给出不同封装
+fingerprints:
+  raw_sha256: sha256:9aa58766ca42bf168d736f12c979c960c940a3faa512fa81d7a1cee51191fe76
+  normalized_sha256: sha256:9aa58766ca42bf168d736f12c979c960c940a3faa512fa81d7a1cee51191fe76
+cas_ref: sha256:9aa58766ca42bf168d736f12c979c960c940a3faa512fa81d7a1cee51191fe76
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-3b7ae1383924c24965cfa128edaa74ed69ac01cd2dd25061f17e87618cb38655-eefcc97ccb3f0626df7b8823ba04d2129436422d6a5d84e2b2e3ee23a8c402f4
+    - generic-residual-29d28bb425201c04ef9feb658d0c27b7a17f74a6dc214cf21a94ca2504684465-cd6a88fa8a0b1d2d089b0976e6d6405924803e35a080ab57c6fc8df08cf3497c
+    - generic-residual-daeb4d62faafb7728ea430b5162e44c27f27b27a2b63b23e1e2a8db330efc0de-b7e19669848fcc5237e19ef2b7b69e7e05b58a516c0ad262d18c141a3be96a5d
+    - generic-residual-7798071e7eefde121af583546e7c84dce5ba7e0bcdde11f03827d3284989fddf-b8ddde0c1f9b04e8d3f5de91f9ee95cf8915b3dcb1cc37aa1124a482f4c6fe79
+    - generic-residual-66962310204e597ae5fe20400619c054e457db1963c14f4cf145cb34ec8f6529-788ee01f32b7119b9540b51a2b2017fd237fc63506ed8b8fa68edf82be9a27db
+    - generic-residual-f7e73eed1203499aa7eba5a8feea3e44db92bdac4bcaef1de3fcd957048c6c41-0f5f85f55dd985a605464bc15fcce8fbbf4857d79ad4702d9d3d0c221f1ed537

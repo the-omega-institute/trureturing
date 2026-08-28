@@ -1,0 +1,14 @@
+ast_path: section/第二百八十部-Schur-连分数作为-Ramanujan-式尾部压缩
+fingerprints:
+  raw_sha256: sha256:468f20d8c13afc0203746b5c06d02a889d10885fd588b989610606ea7d1a51d4
+  normalized_sha256: sha256:468f20d8c13afc0203746b5c06d02a889d10885fd588b989610606ea7d1a51d4
+cas_ref: sha256:468f20d8c13afc0203746b5c06d02a889d10885fd588b989610606ea7d1a51d4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-9740b8dfb4d22df95def49897135921756dff5b339076cc775e3788173469141-078a52be07a351d6fd08989ac414b767859050a950a3c4e686c6a7dd4e9ca883
+    - generic-residual-b0aa4a3482b347be47c02c5ac0378a104eaa96bc83b6ad05bfc966c659c2de5b-6515b264ac38e2f6713048e408514e9651e17fd0ee9a0975a0afc1076678d703
+    - generic-residual-8a941e1a2d9bc90ebce38be6ec0dc96e51b813faa4dab2b0c368d5d0da6f363a-049b5a3c571e290ff5df3867f9148c38f01584d9df78ddbb95a1f9d39fbc5300

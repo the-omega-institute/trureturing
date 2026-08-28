@@ -1,0 +1,17 @@
+ast_path: section/160-2-Scattering-observer
+fingerprints:
+  raw_sha256: sha256:6c3ed33904e477c2ade173b620c7e43218bbcc8e28d2570e263e57d94dc77c83
+  normalized_sha256: sha256:6c3ed33904e477c2ade173b620c7e43218bbcc8e28d2570e263e57d94dc77c83
+cas_ref: sha256:6c3ed33904e477c2ade173b620c7e43218bbcc8e28d2570e263e57d94dc77c83
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-44e2c0a043c6479c784e9dc7f6a2e58c0dcc64be6952fc6c4cf5177b2b253393-1f2537b43e6ef4230daa81ab9b016658d757b431b8f62d33aef7ce00e9047b97
+    - generic-residual-5232c2a3acfd4f88f8aca72f921518496d6852ce68ffa1799e89dd7956aa3004-d2919e4329ac64005da1554c037c8382f31be8f2f60d856c05c555d61d600461
+    - generic-residual-06b41b97f4d41763222544e82737939710c5b04f81869fda63cbcefc1a2ad12a-755462189758e80202a29c98e9e80d6999530eb0fb1ebb4dcc4537f8c402fc32
+    - generic-residual-ef98e580caa7d2ffeda5f25cbfc80d9f77dacdbba78eca3aedfdc9268ac8f9bd-0476005d23620522b35c2b74381b2a2ad0f03d308cbbcab590aab80cf95ca2f9
+    - generic-residual-31a606be3a597c3ccaa8a1ebb0ad11d8028d9cec065c1d4576056db1d8bb1b3e-d6fe89608f00eaccb5fe3b81100082ee86dee2c0246e5622b5cd38eedb73f3cb
+    - generic-residual-1dfc843f692fe96c54b155b1adb4540ebd0c1a0b741944d34eb5736be1c292a6-1b0eaa0e99ef74e0f02ba8dff2533befd42341fb5cada486ce065a339863491b

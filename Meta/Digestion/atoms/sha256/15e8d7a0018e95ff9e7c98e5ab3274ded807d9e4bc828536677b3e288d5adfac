@@ -1,0 +1,14 @@
+### Sticky carrier
+
+若：
+
+$$
+\operatorname{Stick}_{\mathrm{tor}}(s)\approx1,
+$$
+
+则重构几乎完全依赖一个二次 twist。
+
+Sticky 不意味着 \(\xi\) 为零；它表示 observer frame 接近退化，任何误差都可能被放大。
+
+---
+

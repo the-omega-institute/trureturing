@@ -1,0 +1,124 @@
+* Fredholm determinant。
+
+本轮找到了它们共同的最小核：
+
+$$
+\boxed{
+\mathcal K_\xi(s,t)
+=
+\frac{
+\frac{\xi'(s)}{\xi(s)}
++
+\overline{\frac{\xi'(t)}{\xi(t)}}
+}{
+\lambda_1(s+\overline t-1)
+}.
+}
+$$
+
+RH 等价于该核在：
+
+$$
+\Re s>\frac12
+$$
+
+上正定。
+
+RH 成立时：
+
+$$
+\boxed{
+\mathcal K_\xi(s,t)
+=
+\frac1{\lambda_1}
+\sum_\rho
+\frac{m_\rho}
+{(s-\rho)(\overline t-\overline\rho)},
+}
+$$
+
+即它是全部 Riemann 零点 resolvent vectors 的 Gram 核。
+
+经 Cayley 变换，该核生成内函数：
+
+$$
+\vartheta_\xi,
+$$
+
+而全部 Riemann 零点成为：
+
+$$
+K_{\vartheta_\xi}
+$$
+
+的一组完整正交采样节点：
+
+$$
+\boxed{
+\|f\|^2
+=
+\sum_\rho
+w_\rho|f(u_\rho)|^2.
+}
+$$
+
+更重要的是，高零点尾部可以被压缩成 \(z=1\) 处的单一有效原子：
+
+$$
+\boxed{
+\mu_T
+=
+\text{finite zero atoms}
++
+M(T)\delta_1.
+}
+$$
+
+该反项保留全部正性，并把紧子圆盘误差改善到：
+
+$$
+\boxed{
+O_r\left(\frac{\log T}{T^2}\right).
+}
+$$
+
+因此当前 OACTC 最明确的 Wang–Deng 原型已经变成：
+
+$$
+\boxed{
+\text{精确低谱}
++
+\text{sticky high-spectrum counterterm}
++
+\text{positive rational inner completion}.
+}
+$$
+
+而 RH 的最小未闭合桥可以最终写成：
+
+$$
+\boxed{
+\text{能否从 toric relative trace formula
+直接证明 }\mathcal K_\xi
+\text{ 是 Gram 核？}
+}
+$$
+
+若能构造：
+
+$$
+\mathcal K_\xi(s,t)
+=
+\langle
+\mathscr V_s,\mathscr V_t
+\rangle_{\mathrm{tor}},
+$$
+
+则 Clark、de Branges、CMV、Fredholm、Hilbert–Pólya 与 RH 将同时闭合。
+
+[1]: https://arxiv.org/abs/1912.03542 "https://arxiv.org/abs/1912.03542"
+[2]: https://www.cambridge.org/core/services/aop-cambridge-core/content/view/5501602936C1AA534036464069B1D814/9781316258231c11_p231-259_CBO.pdf/clark-measures.pdf "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/5501602936C1AA534036464069B1D814/9781316258231c11_p231-259_CBO.pdf/clark-measures.pdf"
+[3]: https://dlmf.nist.gov/25.10 "https://dlmf.nist.gov/25.10"
+[4]: https://arxiv.org/abs/2206.02175 "https://arxiv.org/abs/2206.02175"
+[5]: https://dlmf.nist.gov/18.33 "https://dlmf.nist.gov/18.33"
+[6]: https://arxiv.org/abs/0906.5284 "https://arxiv.org/abs/0906.5284"

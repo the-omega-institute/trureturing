@@ -6,7 +6,7 @@ The canonical linear memory quotient has dimension equal to the all-future obser
 
 **Theorem 1.1 (Memory dimension is future visibility beyond current rank).**
 
-$$\forall K, V, Y, T, C,\\{}\operatorname{RCLike}(K) \land \operatorname{NormedAddCommGroup}(V) \land \operatorname{InnerProductSpace}(K, V) \land \operatorname{FiniteDimensional}(K, V) \land\\{}\operatorname{NormedAddCommGroup}(Y) \land \operatorname{InnerProductSpace}(K, Y) \land \operatorname{FiniteDimensional}(K, Y) \land\\{}T \in \operatorname{LinearMap}(K, V, V) \land C \in \operatorname{LinearMap}(K, V, Y) \Rightarrow\\{}\operatorname{finrank}(K, \operatorname{memoryQuotient}(C, T)) = \operatorname{finrank}(K, \operatorname{span}(K, \{T^{*}^{k}(C^{*}(y)) \mid k \in N, y \in Y\})) - \operatorname{finrank}(K, \operatorname{range}(C)).$$
+$$\forall K, V, Y, T, C,\\{}\operatorname{RCLike}(K) \land \operatorname{NormedAddCommGroup}(V) \land \operatorname{InnerProductSpace}(K, V) \land \operatorname{FiniteDimensional}(K, V) \land\\{}\operatorname{NormedAddCommGroup}(Y) \land \operatorname{InnerProductSpace}(K, Y) \land \operatorname{FiniteDimensional}(K, Y) \land\\{}T \in \operatorname{LinearMap}(K, V, V) \land C \in \operatorname{LinearMap}(K, V, Y) \Rightarrow\\{}\operatorname{finrank}(K, \operatorname{memoryQuotient}(C, T)) = \operatorname{finrank}(K, \operatorname{span}(K, \{{T^{*}}^{k}(C^{*}(y)) \mid k \in N, y \in Y\})) - \operatorname{finrank}(K, \operatorname{range}(C)).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/LinearMemory/MemoryDimensionFormula.memory_dimension_formula` (`✓ std3`). ∎
 

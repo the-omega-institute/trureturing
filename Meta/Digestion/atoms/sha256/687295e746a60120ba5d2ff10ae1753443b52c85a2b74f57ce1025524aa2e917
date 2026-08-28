@@ -1,0 +1,33 @@
+## 256.2 相对 unitary determinant
+
+由式 (256.4)：
+
+$$
+\boxed{
+G_\xi(z)
+=
+\prod_{\gamma>0}
+\left[
+\frac{
+(1-u_\gamma z)
+(1-\overline{u_\gamma}z)
+}{
+(1-z)^2
+}
+\right]^{m_\gamma}.
+}
+\tag{256.6}
+$$
+
+分母：
+
+$$
+(1-z)^2
+$$
+
+不是装饰。
+
+它是从每个趋向 \(1\) 的 unitary 相位中减去“无穷个恒等背景状态”的 counterterm。
+
+---
+

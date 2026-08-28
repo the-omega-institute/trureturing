@@ -1,0 +1,10 @@
+ast_path: section/Sticky-defect
+fingerprints:
+  raw_sha256: sha256:faa5d57bd264967e1aafdf1ddae6b7bffd8d7dee73f1f2c20ee776d2de5392fe
+  normalized_sha256: sha256:faa5d57bd264967e1aafdf1ddae6b7bffd8d7dee73f1f2c20ee776d2de5392fe
+cas_ref: sha256:faa5d57bd264967e1aafdf1ddae6b7bffd8d7dee73f1f2c20ee776d2de5392fe
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

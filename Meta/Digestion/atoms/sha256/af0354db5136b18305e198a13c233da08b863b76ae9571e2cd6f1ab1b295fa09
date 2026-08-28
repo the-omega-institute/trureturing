@@ -1,0 +1,142 @@
+## 定理 303.1（半平面正核 RH 判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal K_\xi
+\text{ 在 }\mathbb H_{1/2}
+\text{ 上为正定核}.
+}
+\tag{303.2}
+$$
+
+这里“正定核”指：对任意有限点集 \(s_1,\ldots,s_N\in\mathbb H_{1/2}\)，
+
+$$
+\boxed{
+\left[
+\mathcal K_\xi(s_i,s_j)
+\right]_{i,j=1}^{N}
+\succeq0.
+}
+\tag{303.3}
+$$
+
+### 证明：RH \(\Rightarrow\)（第 303 部）
+
+在 RH 下，所有非平凡零点满足：
+
+$$
+\rho+\overline\rho=1.
+$$
+
+使用关于 \(s=\frac12\) 对称的 Hadamard 展开：
+
+$$
+\frac{\xi'(s)}{\xi(s)}
+=
+\sum_{\rho}
+\frac{m_\rho}{s-\rho},
+$$
+
+以成对对称收敛理解。
+
+于是：
+
+$$
+\begin{aligned}
+&
+\frac{\xi'(s)}{\xi(s)}
++
+\overline{
+\frac{\xi'(t)}{\xi(t)}
+}
+\\
+&=
+\sum_\rho m_\rho
+\left[
+\frac1{s-\rho}
++
+\frac1{\overline t-\overline\rho}
+\right]
+\\
+&=
+(s+\overline t-1)
+\sum_\rho
+\frac{m_\rho}
+{(s-\rho)(\overline t-\overline\rho)}.
+\end{aligned}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathcal K_\xi(s,t)
+=
+\frac1{\lambda_1}
+\sum_\rho
+\frac{m_\rho}
+{(s-\rho)(\overline t-\overline\rho)}.
+}
+\tag{303.4}
+$$
+
+定义特征向量：
+
+$$
+\boxed{
+\mathbf v_s(\rho)
+=
+\sqrt{\frac{m_\rho}{\lambda_1}}\,
+\frac1{s-\rho}.
+}
+\tag{303.5}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal K_\xi(s,t)
+=
+\langle
+\mathbf v_s,\mathbf v_t
+\rangle_{\ell^2(\mathcal Z)}.
+}
+\tag{303.6}
+$$
+
+所以核正定。
+
+---
+
+### 证明：正核 \(\Rightarrow\) RH
+
+若 \(\mathcal K_\xi\) 在整个 \(\mathbb H_{1/2}\) 上正定，它首先必须在那里全纯。
+
+因此：
+
+$$
+\frac{\xi'}{\xi}
+$$
+
+不能在该区域有极点，即 \(\xi\) 在：
+
+$$
+\Re s>\frac12
+$$
+
+无零点。
+
+由函数方程：
+
+$$
+\xi(s)=\xi(1-s),
+$$
+
+左半边也无零点，所以全部非平凡零点位于临界线。∎
+
+---
+

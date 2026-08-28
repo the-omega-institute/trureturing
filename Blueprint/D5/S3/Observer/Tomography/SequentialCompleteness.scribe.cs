@@ -66,11 +66,11 @@ internal sealed class SequentialCompletenessDocument : IScribeDocumentDefinition
 
         return Disp(Seq(
             Forall, Sp, d, InMacro, Sp, naturals, Comma, Sp,
-            Call(Operatorname, Grp(F.Id("NeZero")), d), Comma, Sp,
+            Call(Seq(Operatorname, Grp(F.Id("NeZero"))), d), Comma, Sp,
             indexType, Colon, Sp, Seq(Operatorname, Grp(F.Id("Type"))), Comma, RowBreak,
             Grp(), effects, Colon, Sp, indexType, Sp, To, Sp, traceZero, Comma, RowBreak,
             Grp(), definitions, Comma, RowBreak,
-            Grp(), Call(Operatorname, Grp(F.Id("Injective")), signature), Sp, Iff, Sp,
+            Grp(), Call(Seq(Operatorname, Grp(F.Id("Injective"))), signature), Sp, Iff, Sp,
             residual, Sp, Eq, Sp, OpenBrace, D(0), CloseBrace, Sp, Iff, Sp,
             visible, Sp, Eq, Sp, hermitian, Dot));
     }

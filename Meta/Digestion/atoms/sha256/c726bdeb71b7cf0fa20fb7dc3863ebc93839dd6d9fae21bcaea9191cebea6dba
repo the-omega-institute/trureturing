@@ -1,0 +1,16 @@
+## 251.1 人工零点注入预测
+
+向 \(\mathscr F\) 注入一对非实共轭零点：
+
+$$
+\left(
+1-\frac{x}{\lambda}
+\right)
+\left(
+1-\frac{x}{\overline\lambda}
+\right).
+$$
+
+测量：
+
+* \(N_T\)；

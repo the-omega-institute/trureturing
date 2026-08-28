@@ -1,0 +1,46 @@
+# 第一百七十三部　环面观察者设计是定义集合覆盖问题
+
+对紧谱窗口 \(K\)，每个判别式 \(D\) 提供可见区域：
+
+$$
+U_D
+=
+\{s:\Lambda(s,\chi_D)\neq0\}.
+$$
+
+定义环面成本：
+
+$$
+c(D)>0.
+$$
+
+对实二次环面，可以使用：
+
+$$
+c(D)=\ell_D
+$$
+
+即闭测地线长度；对全部二次环面，也可以使用：
+
+$$
+c(D)=\log|D|
+$$
+
+或 conductor cost。
+
+定义最优有限环面观察问题：
+
+$$
+\boxed{
+\mathfrak C_{\mathrm{tor}}(K)
+=
+\inf_{\substack{\mathcal D\text{ finite}\\
+K\subseteq\bigcup_{D\in\mathcal D}U_D}}
+\sum_{D\in\mathcal D}c(D).
+}
+\tag{173.1}
+$$
+
+这正是 DECT 的加权集合覆盖：
+
+* 目标逃逸点：某 \(s\) 上所有已选 twist 同时为零；

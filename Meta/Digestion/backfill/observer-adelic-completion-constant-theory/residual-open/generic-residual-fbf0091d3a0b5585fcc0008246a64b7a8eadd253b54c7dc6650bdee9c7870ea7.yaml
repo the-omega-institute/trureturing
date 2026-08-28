@@ -1,0 +1,10 @@
+ast_path: section/303-1-对角形式
+fingerprints:
+  raw_sha256: sha256:fbf0091d3a0b5585fcc0008246a64b7a8eadd253b54c7dc6650bdee9c7870ea7
+  normalized_sha256: sha256:fbf0091d3a0b5585fcc0008246a64b7a8eadd253b54c7dc6650bdee9c7870ea7
+cas_ref: sha256:fbf0091d3a0b5585fcc0008246a64b7a8eadd253b54c7dc6650bdee9c7870ea7
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,52 @@
+## 293.1 有限预测误差
+
+定义 \(N\times N\) Toeplitz 行列式：
+
+$$
+\boxed{
+D_N
+=
+\det[c_{j-k}]_{j,k=0}^{N-1},
+\qquad
+D_0=1.
+}
+\tag{293.4}
+$$
+
+则：
+
+$$
+\boxed{
+\varepsilon_N
+:=
+\frac{D_{N+1}}{D_N}
+=
+\prod_{j=0}^{N-1}
+(1-\beta_j^2).
+}
+\tag{293.5}
+$$
+
+因此：
+
+$$
+\boxed{
+\varepsilon_N\downarrow0.
+}
+\tag{293.6}
+$$
+
+在平稳过程图表中，\(\varepsilon_N\) 是使用前 \(N\) 个过去值预测下一状态的最小均方误差。
+
+所以 RH 下：
+
+$$
+\boxed{
+\text{无限过去能够以零误差预测未来。}
+}
+$$
+
+Szegő–Kolmogorov prediction theorem 正是把谱密度的 logarithmic integral 与无限预测误差联系起来。([arXiv][5])
+
+---
+

@@ -1,0 +1,92 @@
+# 本轮最终结论
+
+此前 OACTC 已经说明：
+
+$$
+\varphi
+$$
+
+是：
+
+* Fibonacci 递归固定点；
+* Galois 双曲单位；
+* 六维准晶体显隐尺度；
+* Coxeter 黄金扇区特征值；
+* 无碰撞一维观察斜率。
+
+本轮进一步证明，它还是：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{Gauss 转移算子的最小分支固定尺度};\\
+&\text{Mayer 全纯状态空间的最大半径};\\
+&\text{模曲面最短闭测地线的指数长度};\\
+&\text{该测地线 Selberg 局部因子的 }q\text{-基}.
+\end{aligned}
+}
+$$
+
+完整恒等链为：
+
+$$
+\boxed{
+\frac1\varphi
+\xrightarrow{\text{Gauss fixed point}}
+\varphi^{-2}
+\xrightarrow{\text{two-step orbit}}
+\varphi^{-4}
+\xrightarrow{\text{Selberg}}
+(q_\varphi^s;q_\varphi)_\infty.
+}
+$$
+
+而 Riemann zeta 则通过散射满足：
+
+$$
+\boxed{
+\Phi(s)
+=
+\frac{\zeta^*(2s-1)}
+{\zeta^*(2s)},
+}
+$$
+
+并可由全部散射平移读数完整重构。
+
+所以最深的一句话是：
+
+$$
+\boxed{
+\text{黄金比例控制的是模曲面内部最短闭动力的完成，}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{Riemann zeta 控制的是模曲面 cusp 边界的散射完成。}
+}
+$$
+
+要推进 RH，真正需要研究的不是让黄金闭轨“替代”ζ，而是证明：
+
+$$
+\boxed{
+\text{内部 primitive closed dynamics}
++
+\text{边界 scattering dynamics}
++
+\text{非负观察者}
+}
+$$
+
+能否共同形成一个没有 off-line 逃逸残差的完整谱观察系统。
+
+[1]: https://arxiv.org/abs/1008.4229 "https://arxiv.org/abs/1008.4229"
+[2]: https://link.springer.com/article/10.1007/s00029-019-0534-3 "https://link.springer.com/article/10.1007/s00029-019-0534-3"
+[3]: https://dlmf.nist.gov/5.18 "https://dlmf.nist.gov/5.18"
+[4]: https://dlmf.nist.gov/17.4 "https://dlmf.nist.gov/17.4"
+[5]: https://arxiv.org/abs/math/0602618 "https://arxiv.org/abs/math/0602618"
+[6]: https://arxiv.org/abs/math/0412039 "https://arxiv.org/abs/math/0412039"

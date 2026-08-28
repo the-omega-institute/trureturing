@@ -1,0 +1,92 @@
+# 第二百七十九部　有限 CMV 层析
+
+给定：
+
+$$
+\lambda_1,\ldots,\lambda_{N+1},
+$$
+
+可以计算：
+
+$$
+c_0,\ldots,c_N.
+$$
+
+若：
+
+$$
+T_N(c)\succeq0,
+$$
+
+便可执行有限 Schur 算法，得到：
+
+$$
+\alpha_0,\ldots,\alpha_{N-1}.
+$$
+
+再选择一个边界相位：
+
+$$
+\beta\in\mathbb T,
+$$
+
+构造有限 paraorthogonal CMV 矩阵：
+
+$$
+\boxed{
+\mathcal C_N^{(\beta)}.
+}
+\tag{279.1}
+$$
+
+若有限 Toeplitz 数据为正，则：
+
+$$
+\operatorname{spec}
+\mathcal C_N^{(\beta)}
+\subset\mathbb T.
+$$
+
+其谱测度是一种有限圆周 quadrature measure，匹配当前已知的有限 Fourier moments。
+
+将其特征值：
+
+$$
+e^{i\theta_{j,N}}
+$$
+
+经逆 Cayley 变换：
+
+$$
+\boxed{
+\gamma_{j,N}
+=
+\frac12\cot\frac{\theta_{j,N}}2
+}
+\tag{279.2}
+$$
+
+得到有限实谱 approximants。
+
+随着可验证 moments 增加，若全部 Toeplitz 层级保持正，有限谱测度在紧圆周上具有弱收敛子列，并由全部 moments 的唯一性收敛到 \(\mu_\lambda\)。
+
+所以中心 Li 系数可以产生一个纯有限矩阵的谱层析流程：
+
+$$
+\boxed{
+\lambda
+\to
+\Delta^2\lambda
+\to
+\text{Toeplitz}
+\to
+\text{Schur}
+\to
+\text{CMV}
+\to
+\text{zero-angle spectrum}.
+}
+$$
+
+---
+

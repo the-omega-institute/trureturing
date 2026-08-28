@@ -1,0 +1,33 @@
+## 323.2 对数域问题的诊断
+
+数域中已经相对成熟的是：
+
+$$
+\boxed{
+\text{toroidal invisibility}
+\leftrightarrow
+\text{\(L\)-zero}.
+}
+$$
+
+真正缺少的是函数域中由 cohomology/Frobenius 提供的：
+
+$$
+\boxed{
+\text{正 pairing}
++
+\text{unitary internal evolution}.
+}
+$$
+
+所以 RH 的剩余问题不是继续发明更多零点检测器，而是：
+
+$$
+\boxed{
+\text{为已经检测到的 toroidal null states
+构造一个 arithmetic conservative realization}.
+}
+$$
+
+---
+

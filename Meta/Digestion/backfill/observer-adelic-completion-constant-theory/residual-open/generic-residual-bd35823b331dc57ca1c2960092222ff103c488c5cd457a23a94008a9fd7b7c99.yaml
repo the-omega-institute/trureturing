@@ -1,0 +1,10 @@
+ast_path: section/第一百五十三部-散射观察者的周期盲核
+fingerprints:
+  raw_sha256: sha256:bd35823b331dc57ca1c2960092222ff103c488c5cd457a23a94008a9fd7b7c99
+  normalized_sha256: sha256:bd35823b331dc57ca1c2960092222ff103c488c5cd457a23a94008a9fd7b7c99
+cas_ref: sha256:bd35823b331dc57ca1c2960092222ff103c488c5cd457a23a94008a9fd7b7c99
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

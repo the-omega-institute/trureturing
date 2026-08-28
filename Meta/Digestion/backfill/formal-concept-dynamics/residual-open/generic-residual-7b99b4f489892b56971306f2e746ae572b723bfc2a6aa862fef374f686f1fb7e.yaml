@@ -8,6 +8,16 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-28T01:39:06.0103670+00:00
+    gids:
+      - D5/S3/ConceptDynamics/Transport/CompactHausdorffDescent.compact_hausdorff_automatic_quotient
+    gaps:
+      - code: chain-migration-incomplete
+        detail: generic-residual-dfef54b111200365af2fd03b0ad75b57de412cdb86a0c34a04a25e2392913fe0-d478e22131de1db3599079148cca2fd858d2f25a75fd259cb58e81ee108dba61
+      - code: chain-migration-incomplete
+        detail: generic-residual-f6009aae1021ba2ed2b6296b82f4d7064f61e97938224d145be2a99a89d78b63-bc1a105dbf0626d3ba497ad1f018cdbdb9a7beb6467a378ef0c8142b805e1108
   chain_atoms:
     - generic-residual-365fa99fdcfb2d7c4392a8ab794ffbddd5b815a436915fa5d2fde8ca6a05e88f-19e30da51b4dc1548554de01c1510d1b97755be9392baa85e88e660486b9fdde
     - generic-residual-dfef54b111200365af2fd03b0ad75b57de412cdb86a0c34a04a25e2392913fe0-d478e22131de1db3599079148cca2fd858d2f25a75fd259cb58e81ee108dba61

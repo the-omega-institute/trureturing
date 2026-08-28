@@ -1,0 +1,76 @@
+# 第二百七十部　Li 离散曲率
+
+令：
+
+$$
+\lambda_0=0,
+\qquad
+\lambda_{-n}=\lambda_n.
+$$
+
+定义 Li 系数的中心二阶差分：
+
+$$
+\boxed{
+\kappa_n
+=
+\lambda_{n+1}
+-2\lambda_n
++\lambda_{n-1},
+\qquad
+n\in\mathbb Z.
+}
+\tag{270.1}
+$$
+
+特别地：
+
+$$
+\boxed{
+\kappa_0=2\lambda_1.
+}
+\tag{270.2}
+$$
+
+第一 Li 系数为：
+
+$$
+\boxed{
+\lambda_1
+=
+\frac{\xi'(1)}{\xi(1)}
+=
+1+\frac{\gamma_{\!E}}2-\log(2\sqrt\pi)>0.
+}
+\tag{270.3}
+$$
+
+定义归一化 Li 曲率序列：
+
+$$
+\boxed{
+c_n
+=
+\frac{\kappa_n}{2\lambda_1}.
+}
+\tag{270.4}
+$$
+
+于是：
+
+$$
+c_0=1,
+\qquad
+c_{-n}=c_n\in\mathbb R.
+$$
+
+这里“曲率”不表示每个 \(c_n\) 都必须非负。真正需要的是全局 Toeplitz 正定性：
+
+$$
+[c_{j-k}]\succeq0.
+$$
+
+这与点态凸性是不同的概念。
+
+---
+
