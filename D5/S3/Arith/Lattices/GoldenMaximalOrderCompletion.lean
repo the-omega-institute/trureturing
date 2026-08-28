@@ -1,0 +1,526 @@
+/- GID: D5/S3/Arith/Lattices/GoldenMaximalOrderCompletion
+   generality: I
+   mirror-B: D5/B/S3/Arith/Lattices/GoldenMaximalOrderCompletion
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   digest: The golden Hodge lattice completes to a stable index-two maximal-order lattice. -/
+
+import D5.S0.Carrier.GoldenDiscriminant
+import D5.S0.Carrier.Ring
+import D5.S3.Arith.Lattices.ExactDualLatticeFormula
+import Mathlib.GroupTheory.Index
+import Mathlib.GroupTheory.OrderOfElement
+
+-- Library-search audit trail (2026-08-28):
+-- Repository search found the exact golden ring in `D5.S0.Carrier.Ring`, the golden
+-- discriminant in `D5.S0.Carrier.GoldenDiscriminant`, and the source's concrete
+-- `Lambda^2 A4` basis and Hodge matrix in `ExactDualLatticeFormula`; all are imported.
+-- Pinned Mathlib's `AddSubgroup.relIndex_eq_two_iff_exists_notMem_and` is the exact
+-- two-coset index theorem used below. General determinant-index APIs were also found,
+-- but the two-coset theorem is the thinner match for this parity completion.
+-- Loogle returned those Mathlib index declarations. LeanSearch, Reservoir, and
+-- unauthenticated GitHub searches produced no specialized `Z[sqrt 5]` to `Z[phi]`
+-- maximal-order theorem. The complete receipt is `/tmp/SEARCH-q3.md`.
+
+namespace D5.S3.Arith.Lattices.GoldenMaximalOrderCompletion
+
+open D5.S0.Carrier
+open D5.S3.Arith.Lattices.ExactDualLatticeFormula
+open Module Set
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+-- The rational scalar extension of the source lattice in its ordered six-element basis.
+abbrev GoldenSpace := LatticeIndex -> ℚ
+
+-- The chosen ordered basis after scalar extension from the integers to the rationals.
+noncomputable def goldenBasis : Basis LatticeIndex ℚ GoldenSpace :=
+  Pi.basisFun ℚ LatticeIndex
+
+-- The source's integral Hodge matrix, now acting over the rationals.
+def rationalHodgeMatrix : Matrix LatticeIndex LatticeIndex ℚ :=
+  integralHodgeMatrix.map (Int.castRingHom ℚ)
+
+-- The source operator `J` on the rational scalar extension.
+def hodgeOperator : GoldenSpace →ₗ[ℚ] GoldenSpace :=
+  Matrix.mulVecLin rationalHodgeMatrix
+
+-- The golden operator `Phi = (I + J) / 2`.
+noncomputable def goldenOperator : GoldenSpace →ₗ[ℚ] GoldenSpace :=
+  (1 / 2 : ℚ) • (LinearMap.id + hodgeOperator)
+
+-- The integral lattice `W_Z = Lambda^2 A4` in the source basis.
+noncomputable def integerLattice : Submodule ℤ GoldenSpace :=
+  Submodule.span ℤ (Set.range goldenBasis)
+
+-- The same golden operator regarded as an integer-linear map.
+noncomputable def goldenOperatorInt : GoldenSpace →ₗ[ℤ] GoldenSpace :=
+  goldenOperator.restrictScalars ℤ
+
+-- The source-defined saturation `W_max = W_Z + Phi W_Z`.
+noncomputable def maximalOrderLattice : Submodule ℤ GoldenSpace :=
+  integerLattice ⊔ integerLattice.map goldenOperatorInt
+
+-- Full rank means that rational scalar extension spans the whole six-dimensional space.
+def IsFullRank (L : Submodule ℤ GoldenSpace) : Prop :=
+  Submodule.span ℚ (L : Set GoldenSpace) = ⊤
+
+-- The concrete action of `a + b phi` through `Phi` on the Hodge space.
+noncomputable def goldenIntegerOperator (r : GoldenInt) : GoldenSpace →ₗ[ℤ] GoldenSpace :=
+  r.a • LinearMap.id + r.b • goldenOperatorInt
+
+-- A lattice is preserved by the concrete `Z[phi]` action.
+def IsGoldenStable (L : Submodule ℤ GoldenSpace) : Prop :=
+  ∀ r : GoldenInt, L.map (goldenIntegerOperator r) ≤ L
+
+private def goldenBCoord : GoldenInt →+ ℤ where
+  toFun x := x.b
+  map_zero' := rfl
+  map_add' _ _ := rfl
+
+@[simp] private theorem golden_b_zsmul (z : ℤ) (x : GoldenInt) :
+    (z • x).b = z * x.b := by
+  change goldenBCoord (z • x) = z * goldenBCoord x
+  rw [map_zsmul]
+  simp [goldenBCoord]
+
+-- The nonmaximal order `Z[sqrt 5]`, namely the golden integers with even
+-- `phi` coordinate because `sqrt 5 = 2 phi - 1`.
+def sqrtFiveOrder : Subring GoldenInt where
+  carrier := {x | ∃ k : ℤ, x.b = 2 * k}
+  zero_mem' := ⟨0, by simp⟩
+  one_mem' := ⟨0, by simp⟩
+  add_mem' := by
+    rintro x y ⟨kx, hkx⟩ ⟨ky, hky⟩
+    refine ⟨kx + ky, ?_⟩
+    simp only [b_add, hkx, hky]
+    ring
+  neg_mem' := by
+    rintro x ⟨k, hk⟩
+    refine ⟨-k, ?_⟩
+    simp only [b_neg, hk]
+    ring
+  mul_mem' := by
+    rintro x y ⟨kx, hkx⟩ ⟨ky, hky⟩
+    refine ⟨x.a * ky + kx * y.a + 2 * kx * ky, ?_⟩
+    simp only [b_mul, hkx, hky]
+    ring
+
+private theorem hodge_operator_sq (x : GoldenSpace) :
+    hodgeOperator (hodgeOperator x) = 5 • x := by
+  funext i
+  fin_cases i <;>
+    simp [hodgeOperator, rationalHodgeMatrix, integralHodgeMatrix,
+      Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;>
+    ring
+
+private theorem golden_operator_sq (x : GoldenSpace) :
+    goldenOperator (goldenOperator x) = goldenOperator x + x := by
+  unfold goldenOperator
+  simp only [LinearMap.smul_apply, LinearMap.add_apply, LinearMap.id_apply]
+  rw [map_smul, map_add]
+  rw [hodge_operator_sq]
+  module
+
+private theorem mem_integerLattice_iff (x : GoldenSpace) :
+    x ∈ integerLattice ↔ ∀ i, ∃ z : ℤ, x i = (z : ℚ) := by
+  constructor
+  · intro hx
+    rw [integerLattice, Submodule.mem_span_range_iff_exists_fun] at hx
+    obtain ⟨c, hc⟩ := hx
+    intro i
+    refine ⟨c i, ?_⟩
+    have hi := congrArg (fun y : GoldenSpace => y i) hc
+    simpa [goldenBasis, Pi.basisFun_apply, Pi.single_apply] using hi.symm
+  · intro hx
+    classical
+    choose z hz using hx
+    rw [integerLattice, Submodule.mem_span_range_iff_exists_fun]
+    refine ⟨z, ?_⟩
+    funext i
+    simpa [goldenBasis, Pi.basisFun_apply, Pi.single_apply] using (hz i).symm
+
+-- The nonintegral class added by completion, represented by `Phi(u12)`.
+noncomputable def parityHalfClass : GoldenSpace :=
+  goldenOperator (goldenBasis 0)
+
+-- The cyclic subgroup generated by the added half-integral class.
+noncomputable def parityHalfLattice : Submodule ℤ GoldenSpace :=
+  ℤ ∙ parityHalfClass
+
+private theorem phi_basis_sub_half_mem (j : LatticeIndex) :
+    goldenOperator (goldenBasis j) - parityHalfClass ∈ integerLattice := by
+  rw [mem_integerLattice_iff]
+  intro i
+  fin_cases j <;> fin_cases i <;>
+    norm_num [parityHalfClass, goldenOperator, hodgeOperator, rationalHodgeMatrix,
+      integralHodgeMatrix, goldenBasis, Matrix.mulVecLin_apply, Pi.basisFun_apply,
+      Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;>
+    first
+    | (refine ⟨-3, ?_⟩; norm_num) <;> done
+    | (refine ⟨-2, ?_⟩; norm_num) <;> done
+    | (refine ⟨-1, ?_⟩; norm_num) <;> done
+    | (refine ⟨0, ?_⟩; norm_num) <;> done
+    | (refine ⟨1, ?_⟩; norm_num) <;> done
+    | (refine ⟨2, ?_⟩; norm_num) <;> done
+    | (refine ⟨3, ?_⟩; norm_num) <;> done
+
+private theorem two_parityHalf_mem :
+    (2 : ℤ) • parityHalfClass ∈ integerLattice := by
+  rw [mem_integerLattice_iff]
+  intro i
+  fin_cases i <;>
+    norm_num [parityHalfClass, goldenOperator, hodgeOperator, rationalHodgeMatrix,
+      integralHodgeMatrix, goldenBasis, Matrix.mulVecLin_apply, Pi.basisFun_apply,
+      Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;>
+    first
+    | (refine ⟨-3, ?_⟩; norm_num) <;> done
+    | (refine ⟨-2, ?_⟩; norm_num) <;> done
+    | (refine ⟨-1, ?_⟩; norm_num) <;> done
+    | (refine ⟨0, ?_⟩; norm_num) <;> done
+    | (refine ⟨1, ?_⟩; norm_num) <;> done
+    | (refine ⟨2, ?_⟩; norm_num) <;> done
+    | (refine ⟨3, ?_⟩; norm_num) <;> done
+
+private theorem parityHalf_not_mem :
+    parityHalfClass ∉ integerLattice := by
+  intro hmem
+  obtain ⟨z, hz⟩ := (mem_integerLattice_iff parityHalfClass).mp hmem 0
+  have hcoordinate : parityHalfClass 0 = (1 / 2 : ℚ) := by
+    norm_num [parityHalfClass, goldenOperator, hodgeOperator, rationalHodgeMatrix,
+      integralHodgeMatrix, goldenBasis, Matrix.mulVecLin_apply, Pi.basisFun_apply,
+      Matrix.mulVec, dotProduct, Fin.sum_univ_succ]
+  rw [hcoordinate] at hz
+  have hcast : (2 * z : ℚ) = 1 := by linarith
+  have hint : 2 * z = 1 := by exact_mod_cast hcast
+  omega
+
+private theorem maximal_eq_integer_sup_half :
+    maximalOrderLattice = integerLattice ⊔ parityHalfLattice := by
+  apply le_antisymm
+  · rw [maximalOrderLattice]
+    apply sup_le
+    · exact le_sup_left
+    · rw [Submodule.map_le_iff_le_comap, integerLattice, Submodule.span_le]
+      rintro _ ⟨j, rfl⟩
+      change goldenOperator (goldenBasis j) ∈
+        integerLattice ⊔ parityHalfLattice
+      have hdifference : goldenOperator (goldenBasis j) - parityHalfClass ∈
+          integerLattice ⊔ parityHalfLattice :=
+        Submodule.mem_sup_left (phi_basis_sub_half_mem j)
+      have hhalf : parityHalfClass ∈ integerLattice ⊔ parityHalfLattice :=
+        Submodule.mem_sup_right (Submodule.mem_span_singleton_self parityHalfClass)
+      convert Submodule.add_mem _ hdifference hhalf using 1 <;> module
+  · apply sup_le
+    · exact le_sup_left
+    · rw [parityHalfLattice, Submodule.span_le]
+      intro x hx
+      rcases hx with rfl
+      rw [maximalOrderLattice]
+      apply Submodule.mem_sup_right
+      exact ⟨goldenBasis 0,
+        Submodule.subset_span (Set.mem_range_self 0), rfl⟩
+
+private theorem integer_le_maximal : integerLattice ≤ maximalOrderLattice := by
+  rw [maximalOrderLattice]
+  exact le_sup_left
+
+private theorem maximal_full_rank : IsFullRank maximalOrderLattice := by
+  apply top_unique
+  rw [← goldenBasis.span_eq]
+  apply Submodule.span_mono
+  rintro _ ⟨i, rfl⟩
+  exact integer_le_maximal (Submodule.subset_span (Set.mem_range_self i))
+
+private theorem golden_operator_preserves_maximal :
+    maximalOrderLattice.map goldenOperatorInt ≤ maximalOrderLattice := by
+  rintro _ ⟨x, hx, rfl⟩
+  rw [maximalOrderLattice] at hx ⊢
+  rcases (Submodule.mem_sup.mp hx) with ⟨a, ha, b, hb, rfl⟩
+  rcases hb with ⟨y, hy, rfl⟩
+  change goldenOperator (a + goldenOperator y) ∈ _
+  rw [map_add, golden_operator_sq]
+  exact Submodule.add_mem _
+    (Submodule.mem_sup_right ⟨a, ha, rfl⟩)
+    (Submodule.add_mem _ (Submodule.mem_sup_right ⟨y, hy, rfl⟩)
+      (Submodule.mem_sup_left hy))
+
+private theorem golden_ring_preserves_maximal : IsGoldenStable maximalOrderLattice := by
+  intro r
+  rintro _ ⟨x, hx, rfl⟩
+  change r.a • x + r.b • goldenOperator x ∈ maximalOrderLattice
+  exact Submodule.add_mem _ (Submodule.smul_mem _ r.a hx)
+    (Submodule.smul_mem _ r.b (golden_operator_preserves_maximal ⟨x, hx, rfl⟩))
+
+private theorem maximal_minimal :
+    ∀ M : Submodule ℤ GoldenSpace,
+      integerLattice ≤ M → IsGoldenStable M → maximalOrderLattice ≤ M := by
+  intro M hInteger hStable
+  rw [maximalOrderLattice]
+  apply sup_le hInteger
+  rw [Submodule.map_le_iff_le_comap]
+  intro x hx
+  have hPhi := hStable phi
+  have hop : goldenIntegerOperator phi = goldenOperatorInt := by
+    ext y i
+    simp [goldenIntegerOperator, phi, goldenOperatorInt]
+  rw [hop] at hPhi
+  exact hPhi ⟨x, hInteger hx, rfl⟩
+
+private theorem two_coset_index :
+    integerLattice.toAddSubgroup.relIndex maximalOrderLattice.toAddSubgroup = 2 := by
+  rw [AddSubgroup.relIndex_eq_two_iff_exists_notMem_and]
+  refine ⟨parityHalfClass, ?_, parityHalf_not_mem, ?_⟩
+  · rw [maximal_eq_integer_sup_half]
+    exact Submodule.mem_sup_right (Submodule.mem_span_singleton_self parityHalfClass)
+  · intro b hb
+    rw [maximal_eq_integer_sup_half] at hb
+    rcases (Submodule.mem_sup.mp hb) with ⟨a, ha, c, hc, rfl⟩
+    obtain ⟨n, rfl⟩ := Submodule.mem_span_singleton.mp hc
+    by_cases heven : ∃ k : ℤ, n = 2 * k
+    · right
+      rcases heven with ⟨k, rfl⟩
+      exact Submodule.add_mem _ ha <| by
+        simpa [mul_smul, mul_comm] using
+          Submodule.smul_mem integerLattice k two_parityHalf_mem
+    · left
+      have hnotEven : ¬ Even n := by
+        rintro ⟨k, hk⟩
+        apply heven
+        exact ⟨k, by omega⟩
+      obtain ⟨k, hk⟩ := Int.not_even_iff_odd.mp hnotEven
+      have hodd : n + 1 = 2 * (k + 1) := by omega
+      have hcombine : n • parityHalfClass + parityHalfClass =
+          (n + 1) • parityHalfClass := by module
+      rw [add_assoc, hcombine, hodd]
+      exact Submodule.add_mem _ ha <| by
+        simpa [mul_smul, mul_comm] using
+          Submodule.smul_mem integerLattice (k + 1) two_parityHalf_mem
+
+private theorem strict_sqrtFiveOrder : sqrtFiveOrder < (⊤ : Subring GoldenInt) := by
+  apply lt_top_iff_ne_top.mpr
+  intro htop
+  have hphi : phi ∈ sqrtFiveOrder := by rw [htop]; trivial
+  rcases hphi with ⟨k, hk⟩
+  norm_num [phi] at hk
+  omega
+
+private theorem sqrtFiveOrder_index_two :
+    sqrtFiveOrder.toAddSubgroup.relIndex (⊤ : Subring GoldenInt).toAddSubgroup = 2 := by
+  rw [AddSubgroup.relIndex_eq_two_iff_exists_notMem_and]
+  refine ⟨phi, by trivial, ?_, ?_⟩
+  · rintro ⟨k, hk⟩
+    norm_num [phi] at hk
+    omega
+  · intro x _
+    by_cases heven : ∃ k : ℤ, x.b = 2 * k
+    · exact Or.inr heven
+    · left
+      change ∃ k : ℤ, (x + phi).b = 2 * k
+      have hnotEven : ¬ Even x.b := by
+        rintro ⟨k, hk⟩
+        apply heven
+        exact ⟨k, by omega⟩
+      obtain ⟨k, hk⟩ := Int.not_even_iff_odd.mp hnotEven
+      refine ⟨k + 1, ?_⟩
+      simp only [b_add, phi_b]
+      omega
+
+private theorem two_repairs_order_parity :
+    ∀ x : GoldenInt, (2 : ℤ) • x ∈ sqrtFiveOrder := by
+  intro x
+  refine ⟨x.b, ?_⟩
+  exact golden_b_zsmul 2 x
+
+-- The exterior-square matrix induced by the even five-cycle
+-- `(1 2 3 4 5)` on the `A4` root coordinates.
+def fiveCycleMatrix : Matrix LatticeIndex LatticeIndex ℤ :=
+  !![1, 1, 1, 0, 0, 0;
+     -1, 0, 0, 1, 1, 0;
+     0, -1, 0, -1, 0, 1;
+     1, 0, 0, 0, 0, 0;
+     0, 1, 0, 0, 0, 0;
+     0, 0, 0, 1, 0, 0]
+
+-- The five-cycle acting on the rational scalar extension.
+def fiveCycleRationalMatrix : Matrix LatticeIndex LatticeIndex ℚ :=
+  fiveCycleMatrix.map (Int.castRingHom ℚ)
+
+-- The five-cycle acting on the rational scalar extension.
+def fiveCycleOperator : GoldenSpace →ₗ[ℚ] GoldenSpace :=
+  Matrix.mulVecLin fiveCycleRationalMatrix
+
+set_option maxHeartbeats 1000000 in
+-- Expanding the 36 entries of the fifth matrix power exceeds the default budget.
+private theorem five_cycle_matrix_pow_five : fiveCycleRationalMatrix ^ 5 = 1 := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [fiveCycleRationalMatrix, fiveCycleMatrix, pow_succ,
+      Matrix.mul_apply, Fin.sum_univ_succ]
+
+private theorem five_cycle_fifth_power (x : GoldenSpace) :
+    fiveCycleOperator
+      (fiveCycleOperator
+        (fiveCycleOperator
+          (fiveCycleOperator (fiveCycleOperator x)))) = x := by
+  have h := congrArg
+    (fun (M : Matrix LatticeIndex LatticeIndex ℚ) => M.mulVec x)
+    five_cycle_matrix_pow_five
+  simpa [fiveCycleOperator, pow_succ, mul_assoc] using h
+
+private theorem five_cycle_hodge_commute :
+    fiveCycleRationalMatrix * rationalHodgeMatrix =
+      rationalHodgeMatrix * fiveCycleRationalMatrix := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [fiveCycleRationalMatrix, fiveCycleMatrix, rationalHodgeMatrix,
+      integralHodgeMatrix, Matrix.mul_apply, Fin.sum_univ_succ]
+
+private theorem five_cycle_commutes_phi (x : GoldenSpace) :
+    fiveCycleOperator (goldenOperator x) =
+      goldenOperator (fiveCycleOperator x) := by
+  change fiveCycleRationalMatrix.mulVec
+      ((1 / 2 : ℚ) • (x + rationalHodgeMatrix.mulVec x)) =
+    (1 / 2 : ℚ) •
+      (fiveCycleRationalMatrix.mulVec x +
+        rationalHodgeMatrix.mulVec (fiveCycleRationalMatrix.mulVec x))
+  rw [Matrix.mulVec_smul, Matrix.mulVec_add, Matrix.mulVec_mulVec,
+    Matrix.mulVec_mulVec, five_cycle_hodge_commute]
+
+private theorem five_cycle_preserves_integer :
+    integerLattice.map (fiveCycleOperator.restrictScalars ℤ) ≤ integerLattice := by
+  rw [Submodule.map_le_iff_le_comap, integerLattice, Submodule.span_le]
+  rintro _ ⟨j, rfl⟩
+  change fiveCycleOperator (goldenBasis j) ∈ integerLattice
+  rw [mem_integerLattice_iff]
+  intro i
+  fin_cases i <;> fin_cases j <;>
+    norm_num [fiveCycleOperator, fiveCycleMatrix, goldenBasis,
+      Matrix.mulVecLin_apply, Pi.basisFun_apply, Matrix.mulVec, dotProduct,
+      Fin.sum_univ_succ, fiveCycleRationalMatrix, Pi.single_apply] <;>
+    first
+    | (refine ⟨-1, ?_⟩; norm_num) <;> done
+    | (refine ⟨0, ?_⟩; norm_num) <;> done
+    | (refine ⟨1, ?_⟩; norm_num) <;> done
+
+private theorem five_cycle_preserves_maximal (x : GoldenSpace)
+    (hx : x ∈ maximalOrderLattice) : fiveCycleOperator x ∈ maximalOrderLattice := by
+  rw [maximalOrderLattice] at hx ⊢
+  rcases (Submodule.mem_sup.mp hx) with ⟨a, ha, b, hb, rfl⟩
+  rcases hb with ⟨y, hy, rfl⟩
+  change fiveCycleOperator (a + goldenOperator y) ∈
+    integerLattice ⊔ integerLattice.map goldenOperatorInt
+  rw [map_add, five_cycle_commutes_phi]
+  exact Submodule.add_mem _
+    (Submodule.mem_sup_left (five_cycle_preserves_integer ⟨a, ha, rfl⟩))
+    (Submodule.mem_sup_right ⟨fiveCycleOperator y,
+      five_cycle_preserves_integer ⟨y, hy, rfl⟩, rfl⟩)
+
+-- The concrete five-cycle restricted to the completed lattice.
+noncomputable def fiveCycleOnCompletionLinear :
+    maximalOrderLattice →ₗ[ℤ] maximalOrderLattice where
+  toFun x := ⟨fiveCycleOperator x, five_cycle_preserves_maximal x x.property⟩
+  map_add' x y := by ext i; simp
+  map_smul' z x := by
+    ext i
+    change fiveCycleOperator ((z : ℚ) • (x : GoldenSpace)) i =
+      ((z : ℚ) • fiveCycleOperator (x : GoldenSpace)) i
+    rw [map_smul]
+
+private theorem fiveCycleOnCompletion_bijective :
+    Function.Bijective fiveCycleOnCompletionLinear := by
+  constructor
+  · intro x y hxy
+    have h := congrArg (fun z : maximalOrderLattice =>
+      fiveCycleOnCompletionLinear
+        (fiveCycleOnCompletionLinear
+          (fiveCycleOnCompletionLinear
+            (fiveCycleOnCompletionLinear z)))) hxy
+    apply Subtype.ext
+    have hval := congrArg (fun z : maximalOrderLattice => (z : GoldenSpace)) h
+    change fiveCycleOperator
+        (fiveCycleOperator
+          (fiveCycleOperator
+            (fiveCycleOperator (fiveCycleOperator (x : GoldenSpace))))) =
+      fiveCycleOperator
+        (fiveCycleOperator
+          (fiveCycleOperator
+            (fiveCycleOperator (fiveCycleOperator (y : GoldenSpace))))) at hval
+    rw [five_cycle_fifth_power, five_cycle_fifth_power] at hval
+    exact hval
+  · intro y
+    let x1 : maximalOrderLattice := fiveCycleOnCompletionLinear y
+    let x2 : maximalOrderLattice := fiveCycleOnCompletionLinear x1
+    let x3 : maximalOrderLattice := fiveCycleOnCompletionLinear x2
+    let x4 : maximalOrderLattice := fiveCycleOnCompletionLinear x3
+    refine ⟨x4, ?_⟩
+    apply Subtype.ext
+    simpa [x1, x2, x3, x4, fiveCycleOnCompletionLinear] using
+      five_cycle_fifth_power y.1
+
+-- The order-five automorphism of the completed `Lambda^2 A4` lattice.
+noncomputable def fiveCycleOnCompletion :
+    maximalOrderLattice ≃ₗ[ℤ] maximalOrderLattice :=
+  LinearEquiv.ofBijective fiveCycleOnCompletionLinear fiveCycleOnCompletion_bijective
+
+private theorem fiveCycleOnCompletion_order : orderOf fiveCycleOnCompletion = 5 := by
+  letI : Fact (Nat.Prime 5) := ⟨by norm_num⟩
+  apply orderOf_eq_prime
+  · apply LinearEquiv.ext
+    intro x
+    apply Subtype.ext
+    simpa [pow_succ, fiveCycleOnCompletion, fiveCycleOnCompletionLinear] using
+      five_cycle_fifth_power x.1
+  · intro hone
+    let e0 : maximalOrderLattice :=
+      ⟨goldenBasis 0, integer_le_maximal
+        (Submodule.subset_span (Set.mem_range_self 0))⟩
+    have hvalue := congrArg (fun e : maximalOrderLattice ≃ₗ[ℤ] maximalOrderLattice =>
+      ((e e0 : maximalOrderLattice) : GoldenSpace) 1) hone
+    norm_num [fiveCycleOnCompletion, fiveCycleOnCompletionLinear, e0,
+      fiveCycleOperator, fiveCycleMatrix, goldenBasis, Matrix.mulVecLin_apply,
+      Pi.basisFun_apply, Matrix.mulVec, dotProduct, Fin.sum_univ_succ,
+      fiveCycleRationalMatrix, Pi.single_apply] at hvalue
+
+-- Golden maximal-order completion. The ten conjuncts correspond, in order,
+-- to the ten semantic assertions counted in OACTC theorem 28.1.
+theorem golden_maximal_order_completion :
+    maximalOrderLattice =
+        integerLattice ⊔ integerLattice.map goldenOperatorInt ∧
+      IsFullRank maximalOrderLattice ∧
+      integerLattice ≤ maximalOrderLattice ∧
+      IsGoldenStable maximalOrderLattice ∧
+      (∀ M : Submodule ℤ GoldenSpace,
+        integerLattice ≤ M → IsGoldenStable M → maximalOrderLattice ≤ M) ∧
+      sqrtFiveOrder < (⊤ : Subring GoldenInt) ∧
+      sqrtFiveOrder.toAddSubgroup.relIndex
+        (⊤ : Subring GoldenInt).toAddSubgroup = 2 ∧
+      ((-1 : ℤ) ^ 2 - 4 * 1 * (-1) = 5) ∧
+      orderOf fiveCycleOnCompletion = 5 ∧
+      (∀ x : GoldenInt, (2 : ℤ) • x ∈ sqrtFiveOrder) := by
+  refine ⟨rfl, maximal_full_rank, integer_le_maximal,
+    golden_ring_preserves_maximal, maximal_minimal, strict_sqrtFiveOrder,
+    sqrtFiveOrder_index_two, golden_discriminant_spec.1, fiveCycleOnCompletion_order,
+    two_repairs_order_parity⟩
+
+-- Reverse probe: the public statement exposes the strict index-two order inclusion and symmetry.
+example :
+    sqrtFiveOrder < (⊤ : Subring GoldenInt) ∧
+      sqrtFiveOrder.toAddSubgroup.relIndex
+        (⊤ : Subring GoldenInt).toAddSubgroup = 2 ∧
+      orderOf fiveCycleOnCompletion = 5 := by
+  rcases golden_maximal_order_completion with
+    ⟨_, _, _, _, _, hstrict, hindex, _, horder, _⟩
+  exact ⟨hstrict, hindex, horder⟩
+
+-- Trivialization probe: the added class is genuinely absent from the original lattice.
+example : parityHalfClass ∈ maximalOrderLattice ∧ parityHalfClass ∉ integerLattice := by
+  constructor
+  · rw [maximal_eq_integer_sup_half]
+    exact Submodule.mem_sup_right (Submodule.mem_span_singleton_self parityHalfClass)
+  · exact parityHalf_not_mem
+
+#print axioms golden_maximal_order_completion
+
+end D5.S3.Arith.Lattices.GoldenMaximalOrderCompletion
