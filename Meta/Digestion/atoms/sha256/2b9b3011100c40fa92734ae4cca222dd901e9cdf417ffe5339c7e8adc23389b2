@@ -1,0 +1,32 @@
+## 定理 471.2（Doob–Dynkin 型反向）
+
+假设概念值空间非空且为标准 Borel 空间。
+
+若 (C) 对 (\sigma(D)) 可测，则存在可测：
+
+[
+p:B_D\to B_C
+]
+
+使：
+
+[
+\boxed{
+C=p\circ D.
+}
+]
+
+因此在标准 Borel 条件下：
+
+[
+\boxed{
+C\preceq_{\mathrm{meas}}D
+\iff
+\sigma(C)\subseteq\sigma(D).
+}
+]
+
+概念 refinement 可以等价地理解为可测信息代数包含。
+
+---
+
