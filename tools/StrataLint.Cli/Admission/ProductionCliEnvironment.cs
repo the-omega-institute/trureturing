@@ -97,7 +97,6 @@ internal interface IRepositoryGateway
     /// reference discipline: only the caller may name a revision; this gateway just diffs it).
     RawChangeSet ReadChanges(string changeBase);
 
-    TrustedFrozenGitReferences ValidateFrozenReferences(FrozenLedgerReferenceSet references);
 }
 
 internal interface ILeanReportSource
@@ -112,8 +111,7 @@ internal interface IFrozenLedgerAdmissionServices
     FrozenLedgerAdmissionPreparation Prepare(
         RepositorySnapshot current,
         RepositorySnapshot protectedBase,
-        RawChangeSet changes,
-        Func<FrozenLedgerReferenceSet, TrustedFrozenGitReferences> validateReferences);
+        RawChangeSet changes);
 
     AdmissionOutcome? Validate(
         FrozenLedgerAdmissionPreparation preparation,
@@ -318,8 +316,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                         var preparation = frozenLedgerAdmission.Prepare(
                             current,
                             baseline,
-                            prepared.Changes,
-                            repository.ValidateFrozenReferences);
+                            prepared.Changes);
                         var identity = DagLedgerCommandPreparation.Ask(
                             repository.ResolveCurrentRevision);
                         return (Preparation: preparation, Identity: identity);

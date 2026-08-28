@@ -11,7 +11,8 @@ public sealed record DagLedgerFileEvent(
     string EventType,
     JsonElement Payload,
     int SchemaVersion,
-    FrozenLedgerInput? Input);
+    RepoPath DescriptorPath,
+    FrozenNodeId FrozenNodeId);
 
 public abstract record DagLedgerFilesLoadOutcome
 {
@@ -110,9 +111,14 @@ public static class FrozenAcceptedEventLoader
                 var eventType = value.GetProperty("event_type").GetString()!;
                 var payload = value.GetProperty("payload").Clone();
                 var schemaVersion = value.GetProperty("schema_version").GetInt32();
-                var input = validationMode is ValidationMode.Candidate
-                    ? FrozenLedger.ParseAcceptedEventInput(eventType, payload)
-                    : FrozenLedgerBaseViewReader.ReadTrustedAcceptedEventInput(eventType, payload);
+                var descriptorPath = FrozenLedger.ParseAcceptedEventDescriptorPath(eventType, payload);
+                var statement = StatementId.Create(
+                    FrozenLedgerAttestationChain.RequiredString(payload, "statement_id"));
+                var prerequisites = FrozenLedgerAttestationChain.RequiredStringArray(
+                        payload,
+                        "prerequisite_frozen_node_ids")
+                    .Select(FrozenNodeId.Create)
+                    .ToImmutableArray();
 
                 events.Add(new DagLedgerFileEvent(
                     file.Path,
@@ -121,7 +127,11 @@ public static class FrozenAcceptedEventLoader
                     eventType,
                     payload,
                     schemaVersion,
-                    input));
+                    descriptorPath,
+                    FrozenContentAddress.ComputeFrozenNodeId(
+                        descriptorPath,
+                        statement,
+                        prerequisites)));
             }
 
             return new DagLedgerFilesLoadOutcome.Loaded(events.ToImmutable());

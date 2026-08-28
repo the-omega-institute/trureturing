@@ -40,7 +40,6 @@ public static partial class FrozenLedger
                 ComputeFrozenGraphRoot(activeNodes),
                 activeEntries,
                 baseView.AllCaseIds,
-                baseline.RevokedFrozenNodeIds,
                 baseline.EventHashes,
                 baseView.EventCount));
         }
@@ -106,8 +105,6 @@ public static partial class FrozenLedger
             var materialMatches = FrozenLedgerHistoricalFreezeMatcher.HistoricalActiveFreezeMatches(
                 entry.Payload,
                 material,
-                recordedPathsByIdentity,
-                currentPathsByIdentity,
                 out _);
             if (materialMatches)
             {
@@ -128,23 +125,6 @@ public static partial class FrozenLedger
                 ImmutableArray.Create(material.RepoPath),
                 $"Active module {material.RepoPath.Value} changed identity; append Revoke before rerunning ledger-append.");
         }
-    }
-
-    internal static FrozenRevokePayload ReadTrustedRevoke(JsonElement payload)
-    {
-        var evidence = payload.GetProperty("evidence");
-        if (evidence.ValueKind != JsonValueKind.Array)
-        {
-            throw new FormatException("trusted Revoke evidence is not an array");
-        }
-
-        return new FrozenRevokePayload(
-            RequiredStringArray(payload, "affected_case_ids"),
-            ParseFrozenNodeIds(payload, "affected_frozen_node_ids"),
-            RequiredString(payload, "closure_hash"),
-            evidence.EnumerateArray().Select(ParseEvidence).ToImmutableArray(),
-            RequiredString(payload, "graph_root"),
-            RequiredStringArray(payload, "root_case_ids"));
     }
 
     private static ImmutableDictionary<FrozenNodeId, RepoPath> FrozenPathsByIdentity(

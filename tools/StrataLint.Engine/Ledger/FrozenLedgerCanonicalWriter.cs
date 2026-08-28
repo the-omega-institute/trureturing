@@ -45,8 +45,6 @@ internal static class FrozenLedgerGenerator
             if (FrozenLedgerHistoricalFreezeMatcher.HistoricalActiveFreezeMatches(
                 activeEntry.Payload,
                 candidate,
-                recordedPathsByIdentity,
-                currentPathsByIdentity,
                 out _))
             {
                 continue;
@@ -66,8 +64,8 @@ internal static class FrozenLedgerGenerator
 
         var payloads = candidateCatalog.ClosedNodes
             .Where(node => !activeByPath.ContainsKey(node.RepoPath))
-            .Select(node => FrozenLedgerCanonicalWriter.FreezePayload(candidateCatalog.Environment, node))
-            .OrderBy(static payload => payload.CaseId, StringComparer.Ordinal)
+            .Select(FrozenLedgerCanonicalWriter.FreezePayload)
+            .OrderBy(static payload => payload.DescriptorSelector, StringComparer.Ordinal)
             .Select(static payload => new FrozenLedgerDraft(
                 "Freeze",
                 FrozenLedgerCanonicalWriter.FreezeElement(payload)))
@@ -75,192 +73,71 @@ internal static class FrozenLedgerGenerator
         return payloads;
     }
 
-    internal static ImmutableArray<FrozenLedgerDraft> Revocation(
-        FrozenLedgerConsistent baseline,
-        RevocationPlan plan)
-    {
-        ArgumentNullException.ThrowIfNull(baseline);
-        ArgumentNullException.ThrowIfNull(plan);
-        if (plan.BaselineHeadHash != baseline.HeadHash)
-        {
-            throw new ArgumentException("Revocation plan is bound to a different ledger head.", nameof(plan));
-        }
-
-        var roots = plan.RootFrozenNodeIds.ToHashSet();
-        var rootCases = baseline.ActiveEntries.Values
-            .Where(entry => roots.Contains(entry.Material.FrozenNodeId))
-            .Select(static entry => entry.Payload.CaseId)
-            .Order(StringComparer.Ordinal)
-            .ToImmutableArray();
-        var payload = new FrozenRevokePayload(
-            plan.AffectedCaseIds,
-            plan.AffectedFrozenNodeIds,
-            plan.ClosureHash,
-            plan.Evidence.Select(static item => item.Evidence)
-                .OrderBy(RevocationEvidenceRoot, StringComparer.Ordinal)
-                .ThenBy(static item => item.GetType().Name, StringComparer.Ordinal)
-                .ToImmutableArray(),
-            plan.GraphRoot,
-            rootCases);
-        return ImmutableArray.Create(new FrozenLedgerDraft(
-            "Revoke",
-            FrozenLedgerCanonicalWriter.RevokeElement(payload)));
-    }
-
-    private static string RevocationEvidenceRoot(RevocationEvidence evidence) => evidence switch
-    {
-        RevocationEvidence.KernelWitnessFailure item => item.RootFrozenNodeId.Value,
-        RevocationEvidence.AllowedAxiomRetired item => item.RootFrozenNodeId.Value,
-        RevocationEvidence.FormalContradictionCertificate item => item.RootFrozenNodeId.Value,
-        RevocationEvidence.ContentAddressMismatch item => item.RootFrozenNodeId.Value,
-        _ => throw new InvalidOperationException("unknown revocation evidence variant"),
-    };
-
 }
 
 internal static class FrozenLedgerCanonicalWriter
 {
-    internal const int GenesisDagSchemaVersion = 2;
-    internal const int CurrentDagSchemaVersion = 4;
+    internal const int CurrentDagSchemaVersion = 5;
 
     private static readonly string[] DagEnvelopeFields =
     [
         "event_hash", "event_type", "payload", "schema_version",
     ];
 
-    internal static string CaseId(FrozenNodeId id) => "active-frozen/" + id.Value[7..];
-
-    internal static FrozenFreezePayload FreezePayload(
-        FrozenEnvironmentAttestation environment,
-        FrozenNodeMaterial node)
+    internal static string CaseId(RepoPath path, StatementId statement)
     {
-        var supporting = new[]
+        var material = JsonSerializer.SerializeToElement(new
         {
-            environment.LeanToolchainBlobOid,
-            environment.LakeManifestBlobOid,
-        }.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToImmutableArray();
-        return new FrozenFreezePayload(
-            CaseId(node.FrozenNodeId),
-            node.DeclarationStatementIds,
-            node.FrozenNodeId,
-            new FrozenLedgerInput(
-                node.Attestation.BaseCommitOid ?? environment.OriginCommitOid,
-                node.Attestation.BaseTreeOid ?? environment.OriginTreeOid,
-                node.Attestation.SourceBlobOid,
-                node.RepoPath.Value,
-                supporting),
-            node.PrerequisiteFrozenNodeIds,
-            node.StatementId,
-            node.WitnessId)
-        {
-            AxiomClosure = node.AxiomClosure,
-        };
+            descriptor_selector = path.Value,
+            schema = "frozen-case-identity-v1",
+            statement_id = statement.Value,
+        });
+        var hash = FrozenContentHash.Compute(
+            FrozenHashDomains.FrozenCaseIdentity,
+            StructuredCanonicalWriter.WriteJson(material).AsSpan());
+        return "active-frozen/" + hash[7..];
     }
+
+    internal static FrozenFreezePayload FreezePayload(FrozenNodeMaterial node) =>
+        new(
+            node.RepoPath.Value,
+            node.DeclarationStatementIds,
+            node.PrerequisiteFrozenNodeIds,
+            node.StatementId);
 
     internal static JsonElement FreezeElement(FrozenFreezePayload payload)
     {
         var element = JsonSerializer.SerializeToElement(new
         {
-            case_id = payload.CaseId,
             declaration_statement_ids = payload.DeclarationStatementIds.Select(static declaration => new
             {
                 declaration_name_key = declaration.DeclarationNameKey,
                 kind = declaration.Kind,
                 statement_id = declaration.StatementId.Value,
             }),
-            frozen_node_id = payload.FrozenNodeId.Value,
-            input = InputElement(payload.Input),
+            descriptor_selector = payload.DescriptorSelector,
             prerequisite_frozen_node_ids = payload.PrerequisiteFrozenNodeIds.Select(static id => id.Value),
             statement_id = payload.StatementId.Value,
-            witness_id = payload.WitnessId.Value,
         });
-        return WithAxiomClosure(element, payload.AxiomClosure);
+        return element;
     }
-
-    internal static JsonElement InputElement(FrozenLedgerInput input) =>
-        JsonSerializer.SerializeToElement(new
-        {
-            base_commit_oid = input.BaseCommitOid,
-            base_tree_oid = input.BaseTreeOid,
-            descriptor_blob_oid = input.DescriptorBlobOid,
-            descriptor_selector = input.DescriptorSelector,
-            supporting_blob_oids = input.SupportingBlobOids,
-        });
-
-    private static JsonElement WithAxiomClosure(
-        JsonElement value,
-        ImmutableArray<string> axiomClosure)
-    {
-        if (axiomClosure.IsDefault)
-        {
-            return value;
-        }
-
-        var result = JsonNode.Parse(value.GetRawText())!.AsObject();
-        result.Add("axiom_closure", JsonSerializer.SerializeToNode(axiomClosure));
-        return JsonSerializer.SerializeToElement(result);
-    }
-
-    internal static JsonElement RevokeElement(FrozenRevokePayload payload) =>
-        JsonSerializer.SerializeToElement(new
-        {
-            affected_case_ids = payload.AffectedCaseIds,
-            affected_frozen_node_ids = payload.AffectedFrozenNodeIds.Select(static id => id.Value),
-            closure_hash = payload.ClosureHash,
-            evidence = payload.Evidence.Select(EvidenceElement),
-            graph_root = payload.GraphRoot,
-            root_case_ids = payload.RootCaseIds,
-        });
-
-    internal static JsonElement EvidenceElement(RevocationEvidence evidence) => evidence switch
-    {
-        RevocationEvidence.KernelWitnessFailure item => JsonSerializer.SerializeToElement(new
-        {
-            evidence_type = nameof(RevocationEvidence.KernelWitnessFailure),
-            failed_witness_id = item.FailedWitnessId.Value,
-            receipt_blob_oid = item.ReceiptBlobOid,
-            receipt_sha256 = item.ReceiptSha256,
-            root_frozen_node_id = item.RootFrozenNodeId.Value,
-        }),
-        RevocationEvidence.AllowedAxiomRetired item => JsonSerializer.SerializeToElement(new
-        {
-            axiom_name = item.AxiomName,
-            evidence_type = nameof(RevocationEvidence.AllowedAxiomRetired),
-            receipt_blob_oid = item.ReceiptBlobOid,
-            receipt_sha256 = item.ReceiptSha256,
-            root_frozen_node_id = item.RootFrozenNodeId.Value,
-        }),
-        RevocationEvidence.FormalContradictionCertificate item => JsonSerializer.SerializeToElement(new
-        {
-            contradicted_statement_id = item.ContradictedStatementId.Value,
-            evidence_type = nameof(RevocationEvidence.FormalContradictionCertificate),
-            receipt_blob_oid = item.ReceiptBlobOid,
-            receipt_sha256 = item.ReceiptSha256,
-            root_frozen_node_id = item.RootFrozenNodeId.Value,
-        }),
-        RevocationEvidence.ContentAddressMismatch item => JsonSerializer.SerializeToElement(new
-        {
-            actual_sha256 = item.ActualSha256,
-            evidence_type = nameof(RevocationEvidence.ContentAddressMismatch),
-            receipt_blob_oid = item.ReceiptBlobOid,
-            receipt_sha256 = item.ReceiptSha256,
-            root_frozen_node_id = item.RootFrozenNodeId.Value,
-        }),
-        _ => throw new InvalidOperationException("unknown revocation evidence variant"),
-    };
 
     internal static (ImmutableArray<byte> Bytes, string Hash) WriteDagEvent(
         string eventType,
         JsonElement payload,
         int? schemaVersion = null)
     {
-        var expectedVersion = ExpectedDagSchemaVersion(eventType);
-        var version = schemaVersion ?? expectedVersion;
-        if (version != expectedVersion)
+        if (eventType != "Freeze")
+        {
+            throw new ArgumentOutOfRangeException(nameof(eventType), "Only Freeze events are stored in ledger v5.");
+        }
+
+        var version = schemaVersion ?? CurrentDagSchemaVersion;
+        if (version != CurrentDagSchemaVersion)
         {
             throw new ArgumentOutOfRangeException(
                 nameof(schemaVersion),
-                $"Content-addressed {eventType} schema_version must be {expectedVersion}.");
+                $"Content-addressed {eventType} schema_version must be {CurrentDagSchemaVersion}.");
         }
 
         return WriteDagEnvelope(eventType, payload, version);
@@ -304,10 +181,15 @@ internal static class FrozenLedgerCanonicalWriter
         }
 
         var type = eventType.GetString()!;
-        var expectedVersion = ExpectedDagSchemaVersion(type);
-        if (version != expectedVersion)
+        if (type != "Freeze")
         {
-            message = $"content-addressed {type} schema_version must be {expectedVersion}.";
+            message = $"content-addressed event type {type} is not legal in ledger v5.";
+            return false;
+        }
+
+        if (version != CurrentDagSchemaVersion)
+        {
+            message = $"content-addressed {type} schema_version must be {CurrentDagSchemaVersion}.";
             return false;
         }
 
@@ -327,9 +209,6 @@ internal static class FrozenLedgerCanonicalWriter
     }
 
     internal static string EventIdentity(string eventHash) => eventHash;
-
-    private static int ExpectedDagSchemaVersion(string eventType) =>
-        eventType == "Genesis" ? GenesisDagSchemaVersion : CurrentDagSchemaVersion;
 
     private static (ImmutableArray<byte> Bytes, string Hash) WriteDagEnvelope(
         string eventType,

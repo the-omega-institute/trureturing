@@ -146,7 +146,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(0, ledger.AdmissionCatalogBuildCount);
         Assert.Equal(0, ledger.IncrementalValidationCount);
         Assert.Equal(0, gateway.CurrentRevisionResolutionCount);
-        Assert.Equal(0, gateway.FrozenReferenceValidationCount);
     }
 
     [Fact]
@@ -185,7 +184,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(1, ledger.AdmissionCatalogBuildCount);
         Assert.Equal(1, ledger.IncrementalValidationCount);
         Assert.Equal(1, gateway.CurrentRevisionResolutionCount);
-        Assert.Equal(0, gateway.FrozenReferenceValidationCount);
     }
 
     [Fact]
@@ -501,17 +499,8 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Baseline["lakefile.toml"] = lakefile;
         fixture.Files["lake-manifest.json"] = manifest;
         fixture.Baseline["lake-manifest.json"] = manifest;
-        var environment = new FrozenEnvironmentAttestation(
-            FrozenLedgerTestData.GitOid('a'),
-            FrozenLedgerTestData.GitOid('b'),
-            FrozenLedgerTestData.GitBlobOid(toolchain),
-            FrozenLedgerTestData.GitBlobOid(manifest))
-        {
-            LakefilePath = "lakefile.toml",
-            LakefileBlobOid = FrozenLedgerTestData.GitBlobOid(lakefile),
-        };
-        var baselineCatalog = Catalog(fixture.Baseline, fixture.BaselineReports, environment);
-        var currentCatalog = Catalog(fixture.Files, fixture.Reports, environment);
+        var baselineCatalog = Catalog(fixture.Baseline, fixture.BaselineReports);
+        var currentCatalog = Catalog(fixture.Files, fixture.Reports);
         var baselineEvents = FrozenLedgerTestData.EventFiles(baselineCatalog);
         var baselineCapability = FrozenLedgerTestData.Baseline(baselineCatalog);
         var currentEvents = baselineEvents.AddRange(DagLedgerAppendWriter.BuildNewEventFiles(
@@ -524,8 +513,7 @@ public sealed partial class ProductionEnvironmentTests
 
         static FrozenMaterialCatalog Catalog(
             IReadOnlyDictionary<string, string> files,
-            IReadOnlyDictionary<string, LeanFileReport> reports,
-            FrozenEnvironmentAttestation environment)
+            IReadOnlyDictionary<string, LeanFileReport> reports)
         {
             var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
                 SnapshotDecoder.Decode(Snapshot(files))).Snapshot;
@@ -533,14 +521,27 @@ public sealed partial class ProductionEnvironmentTests
                 LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
             var states = LeanTruthStates.Resolve(snapshot, closure);
             var adjacency = LeanImportAdjacency.Build(snapshot, closure);
-            var attestations = states
-                .Where(static item => item.Value is TruthState.Closed)
-                .Select(item => new FrozenModuleAttestation(
-                    item.Key,
-                    FrozenLedgerTestData.GitBlobOid(files[item.Key.Value])));
             return Assert.IsType<FrozenMaterialOutcome.Accepted>(
-                FrozenContentAddress.Build(snapshot, closure, states, adjacency, environment, attestations)).Capability;
+                FrozenContentAddress.Build(snapshot, closure, states, adjacency)).Capability;
         }
+    }
+
+    private static RuleFixture TrustedFrozenFixture()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        _ = AddFrozenLedger(fixture);
+        foreach (var item in fixture.Files)
+        {
+            fixture.Baseline[item.Key] = item.Value;
+        }
+
+        foreach (var item in fixture.Reports)
+        {
+            fixture.BaselineReports[item.Key] = item.Value;
+        }
+
+        return fixture;
     }
 
 }
@@ -549,7 +550,6 @@ internal sealed class FakeRepositoryGateway(
     RawChangeSet changes,
     RawRepositorySnapshot? current,
     RawRepositorySnapshot? baseline,
-    Func<FrozenLedgerReferenceSet, TrustedFrozenGitReferences>? frozenReferenceValidator = null,
     Func<FrozenRevisionIdentity>? currentRevisionResolver = null,
     Func<string, RawChangeSet>? changesForBase = null,
     RawRepositorySnapshot? forkPoint = null,
@@ -563,10 +563,6 @@ internal sealed class FakeRepositoryGateway(
     internal List<string> ReadRevisionCalls { get; } = [];
 
     internal List<string> ReadChangesCalls { get; } = [];
-
-    internal List<FrozenLedgerReferenceSet> FrozenReferenceValidations { get; } = [];
-
-    internal int FrozenReferenceValidationCount => FrozenReferenceValidations.Count;
 
     internal int CurrentRevisionResolutionCount { get; private set; }
 
@@ -624,13 +620,6 @@ internal sealed class FakeRepositoryGateway(
     {
         ReadChangesCalls.Add(changeBase);
         return changesForBase?.Invoke(changeBase) ?? changes;
-    }
-
-    public TrustedFrozenGitReferences ValidateFrozenReferences(FrozenLedgerReferenceSet references)
-    {
-        FrozenReferenceValidations.Add(references);
-        return frozenReferenceValidator?.Invoke(references)
-            ?? TrustedFrozenGitReferences.CreateForTrustedAdapter(references.Inputs);
     }
 
     private static RawRepositorySnapshot WithAtomizerData(RawRepositorySnapshot snapshot) =>

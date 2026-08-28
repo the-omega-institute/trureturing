@@ -83,8 +83,7 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
     public FrozenLedgerAdmissionPreparation Prepare(
         RepositorySnapshot current,
         RepositorySnapshot protectedBase,
-        RawChangeSet changes,
-        Func<FrozenLedgerReferenceSet, TrustedFrozenGitReferences> validateReferences)
+        RawChangeSet changes)
     {
         BaseViewReadCount++;
         var baseView = FrozenLedgerBaseViewReader.Read(protectedBase);
@@ -98,8 +97,7 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
             return new FrozenLedgerAdmissionPreparation(
                 baseView,
                 ImmutableArray<DagLedgerFileEvent>.Empty,
-                producerPaths.Value,
-                TrustedFrozenGitReferences.CreateForTrustedAdapter([]));
+                producerPaths.Value);
         }
 
         var deltaFiles = deltaPaths.Select(path => current.TryGetFile(path.Value, out var file)
@@ -108,7 +106,6 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
                     [path],
                     "added frozen-ledger delta path is absent from the candidate snapshot"))
             .ToImmutableArray();
-        RejectClosurelessAddedFreezes(deltaFiles);
         DeltaEventLoadCount++;
         var loaded = FrozenAcceptedEventLoader.LoadFiles(deltaFiles) switch
         {
@@ -129,56 +126,6 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
             }
         }
 
-        var inputs = ImmutableArray.CreateBuilder<FrozenLedgerInput>();
-        var receiptOids = ImmutableArray.CreateBuilder<string>();
-        var requiredAncestorCommitOids = ImmutableArray.CreateBuilder<string>();
-        foreach (var item in loaded)
-        {
-            try
-            {
-                if (item.Input is { } input)
-                {
-                    inputs.Add(input);
-                    if (item.EventType == "Freeze")
-                    {
-                        requiredAncestorCommitOids.Add(input.BaseCommitOid);
-                    }
-                }
-                else if (item.EventType == "Revoke")
-                {
-                    receiptOids.AddRange(FrozenLedger.ReadTrustedRevoke(item.Payload).Evidence
-                        .Select(TrustedRevocationReceiptStore.ReceiptBlobOid));
-                }
-            }
-            catch (Exception exception) when (exception is FormatException
-                or InvalidOperationException
-                or KeyNotFoundException)
-            {
-                throw new FrozenLedgerAdmissionPreparationException(
-                    [item.SourcePath],
-                    "candidate frozen-ledger delta payload is invalid: " + exception.Message);
-            }
-        }
-
-        var references = FrozenLedgerReferenceSet.Create(
-            inputs.ToImmutable(),
-            receiptOids.ToImmutable(),
-            requiredAncestorCommitOids);
-        TrustedFrozenGitReferences trusted;
-        try
-        {
-            trusted = inputs.Count == 0 && receiptOids.Count == 0
-                ? TrustedFrozenGitReferences.CreateForTrustedAdapter([])
-                : validateReferences(references);
-        }
-        catch (FrozenReferenceRejectionException exception)
-        {
-            throw new FrozenLedgerAdmissionPreparationException(
-                deltaPaths.OrderBy(static path => path.Value, StringComparer.Ordinal).ToImmutableArray(),
-                "added frozen-ledger delta recorded an unavailable or inconsistent Git anchor: "
-                    + exception.Message);
-        }
-
         if (!DagLedgerLoader.TryOrderIncrementalDag(
             loaded,
             baseView.EventIdentities,
@@ -190,92 +137,10 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
                 "candidate frozen-ledger delta does not extend the protected-base dependency DAG");
         }
 
-        FrozenLedgerConsistent? revocationBaseline = null;
-        TrustedRevocationReceiptStore? revocationReceipts = null;
-        if (loaded.Any(static item => item.EventType == "Revoke"))
-        {
-            revocationBaseline = baseView.ToWriterBaseline();
-            revocationReceipts = TrustedRevocationReceiptStore.Materialize(
-                revocationBaseline,
-                protectedBase,
-                receiptOids) switch
-            {
-                RevocationReceiptStoreOutcome.Accepted accepted => accepted.Capability,
-                RevocationReceiptStoreOutcome.Rejected rejected =>
-                    throw new FrozenLedgerAdmissionPreparationException(
-                        deltaPaths.OrderBy(static path => path.Value, StringComparer.Ordinal).ToImmutableArray(),
-                        "candidate Revoke receipt is invalid: " + rejected.Message),
-            };
-        }
-
         return new FrozenLedgerAdmissionPreparation(
             baseView,
             ordered,
-            producerPaths.Value,
-            trusted,
-            revocationBaseline,
-            revocationReceipts);
-    }
-
-    private static void RejectClosurelessAddedFreezes(
-        ImmutableArray<RepositoryFile> deltaFiles)
-    {
-        foreach (var file in deltaFiles)
-        {
-            var nodePath = ClosurelessFreezeNodePath(file);
-            if (nodePath is null)
-            {
-                continue;
-            }
-
-            throw new FrozenLedgerAdmissionPreparationException(
-                [nodePath],
-                $"Added Freeze event for {nodePath.Value} must carry axiom_closure. "
-                    + $"delta witness: {file.Path.Value}");
-        }
-    }
-
-    private static RepoPath? ClosurelessFreezeNodePath(RepositoryFile file)
-    {
-        try
-        {
-            using var document = JsonDocument.Parse(file.RawBytes.AsSpan().ToArray());
-            var root = document.RootElement;
-            if (!root.TryGetProperty("event_type", out var eventType)
-                || eventType.ValueKind != JsonValueKind.String
-                || eventType.GetString() != "Freeze"
-                || !root.TryGetProperty("payload", out var payload)
-                || payload.ValueKind != JsonValueKind.Object
-                || payload.TryGetProperty("axiom_closure", out _)
-                )
-            {
-                return null;
-            }
-
-            JsonElement nodePath;
-            if (!payload.TryGetProperty("node_path", out nodePath))
-            {
-                if (!payload.TryGetProperty("input", out var input)
-                    || input.ValueKind != JsonValueKind.Object
-                    || !input.TryGetProperty("descriptor_selector", out nodePath))
-                {
-                    return null;
-                }
-            }
-
-            if (nodePath.ValueKind != JsonValueKind.String)
-            {
-                return null;
-            }
-
-            return RepoPath.TryCreate(nodePath.GetString()!, out var parsedPath)
-                ? parsedPath
-                : null;
-        }
-        catch (JsonException)
-        {
-            return null;
-        }
+            producerPaths.Value);
     }
 
     public AdmissionOutcome? Validate(
@@ -341,8 +206,7 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
             () => FrozenLedger.ValidateAdmissionDelta(
                 preparation,
                 scoped.Scope,
-                catalog,
-                preparation.TrustedDeltaReferences),
+                catalog),
             static result => result is not null);
         return failure is null
             ? null

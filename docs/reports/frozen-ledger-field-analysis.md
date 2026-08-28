@@ -1,5 +1,7 @@
 # 冻结账本:字段分层、生产者/消费者链,与 git 固化能力的边界
 
+> 历史报告勘注(2026-08-29):本文记录 v5 以前的字段普查,不再描述现役 schema。当前唯一形态见仓库 spec A14 v5;`witness_id`、坐标 input、Genesis/Reattest/Revoke 持久事件均已退役。
+
 本文汇总冻结账本的字段分层、生产者/消费者链、git 固化能力边界与账本目的四项分析的实测结论。
 所有读数取自 2026-08-17 的 dev(1986 事件、955 case)。它记述**已落地的事实**,不是新规范——
 规范在 `docs/develop/spec/golden-ledger-repo-spec.md`(A14 系列),判据在 `CLAUDE.md`(第〇节、第Ⅵ节)。

@@ -30,10 +30,10 @@ public static class RevocationReceiptWriter
                 baseline_graph_root = baselineGraphRoot,
                 baseline_head_hash = baselineHeadHash,
                 evidence_type = nameof(RevocationEvidence.KernelWitnessFailure),
-                failed_witness_id = item.FailedWitnessId.Value,
+                failed_statement_id = item.FailedStatementId.Value,
                 kind = "revocation-receipt",
                 root_frozen_node_id = item.RootFrozenNodeId.Value,
-                schema_version = 1,
+                schema_version = 2,
             }),
             RevocationEvidence.AllowedAxiomRetired item => JsonSerializer.SerializeToElement(new
             {
@@ -43,7 +43,7 @@ public static class RevocationReceiptWriter
                 evidence_type = nameof(RevocationEvidence.AllowedAxiomRetired),
                 kind = "revocation-receipt",
                 root_frozen_node_id = item.RootFrozenNodeId.Value,
-                schema_version = 1,
+                schema_version = 2,
             }),
             RevocationEvidence.FormalContradictionCertificate item => JsonSerializer.SerializeToElement(new
             {
@@ -53,7 +53,7 @@ public static class RevocationReceiptWriter
                 evidence_type = nameof(RevocationEvidence.FormalContradictionCertificate),
                 kind = "revocation-receipt",
                 root_frozen_node_id = item.RootFrozenNodeId.Value,
-                schema_version = 1,
+                schema_version = 2,
             }),
             RevocationEvidence.ContentAddressMismatch item => JsonSerializer.SerializeToElement(new
             {
@@ -64,7 +64,7 @@ public static class RevocationReceiptWriter
                 expected_sha256 = item.ExpectedSha256,
                 kind = "revocation-receipt",
                 root_frozen_node_id = item.RootFrozenNodeId.Value,
-                schema_version = 1,
+                schema_version = 2,
             }),
             _ => throw new FormatException("Unknown revocation evidence variant."),
         };
@@ -200,8 +200,8 @@ public sealed class TrustedRevocationReceiptStore
         switch (evidence)
         {
             case RevocationEvidence.KernelWitnessFailure failure
-                when failure.FailedWitnessId != entry.Material.WitnessId:
-                throw new FormatException("KernelWitnessFailure receipt does not bind the active witness.");
+                when failure.FailedStatementId != entry.Material.StatementId:
+                throw new FormatException("KernelWitnessFailure receipt does not bind the active statement.");
             case RevocationEvidence.AllowedAxiomRetired retired
                 when string.IsNullOrWhiteSpace(retired.AxiomName)
                 || !entry.Material.AxiomClosure.Contains(retired.AxiomName, StringComparer.Ordinal):
@@ -247,7 +247,7 @@ public sealed class TrustedRevocationReceiptStore
             _ => throw new FormatException($"Unknown typed revocation receipt {type}."),
         };
         if (String(root, "kind") != "revocation-receipt"
-            || Integer(root, "schema_version") != 1)
+            || Integer(root, "schema_version") != 2)
         {
             throw new FormatException("Revocation receipt has an unsupported kind or schema version.");
         }
@@ -286,7 +286,7 @@ public sealed class TrustedRevocationReceiptStore
         {
             (RevocationEvidence.KernelWitnessFailure left, RevocationEvidence.KernelWitnessFailure right) =>
                 left.RootFrozenNodeId == right.RootFrozenNodeId
-                && left.FailedWitnessId == right.FailedWitnessId,
+                && left.FailedStatementId == right.FailedStatementId,
             (RevocationEvidence.AllowedAxiomRetired left, RevocationEvidence.AllowedAxiomRetired right) =>
                 left.RootFrozenNodeId == right.RootFrozenNodeId
                 && left.AxiomName == right.AxiomName,
@@ -303,12 +303,12 @@ public sealed class TrustedRevocationReceiptStore
 
     private static RevocationEvidence ParseKernel(JsonElement value, FrozenNodeId root)
     {
-        Fields(value, "baseline_graph_root", "baseline_head_hash", "evidence_type", "failed_witness_id",
+        Fields(value, "baseline_graph_root", "baseline_head_hash", "evidence_type", "failed_statement_id",
             "kind", "root_frozen_node_id", "schema_version");
-        var witness = String(value, "failed_witness_id");
-        return FrozenHashSyntax.IsSha256(witness)
-            ? new RevocationEvidence.KernelWitnessFailure(root, WitnessId.Create(witness), string.Empty, string.Empty)
-            : throw new FormatException("Typed kernel receipt has a malformed witness ID.");
+        var statement = String(value, "failed_statement_id");
+        return FrozenHashSyntax.IsSha256(statement)
+            ? new RevocationEvidence.KernelWitnessFailure(root, StatementId.Create(statement), string.Empty, string.Empty)
+            : throw new FormatException("Typed kernel receipt has a malformed statement ID.");
     }
 
     private static RevocationEvidence ParseAxiom(JsonElement value, FrozenNodeId root)

@@ -16,7 +16,7 @@ public sealed class TruthExportCommandTests
     private const string Manifest = "{}\n";
 
     [Fact]
-    public void ExportEqualsStrictActiveSetDroppingRevokedNodes()
+    public void ExportEqualsStrictActiveFreezeSnapshot()
     {
         using var fixture = DivergentLedgerFixture();
         using var output = new TemporaryDirectory();
@@ -173,24 +173,10 @@ public sealed class TruthExportCommandTests
     private static TruthExportFixture DivergentLedgerFixture()
     {
         var originalA = Module("A", source: "theorem a : True := by trivial\n");
-        var moduleB = Module("B");
         var moduleC = Module("C");
 
-        var genesisCatalog = BuildCatalog(originalA, moduleB, moduleC);
-        var genesisFiles = EventFiles(genesisCatalog);
-        var genesis = Baseline(genesisCatalog);
-
-        var bNode = genesis.ActiveFrozenNodes.Single(node => node.RepoPath.Value == PathFor("B"));
-        var (evidence, store) = ReceiptStore(genesis, KernelFailure(bNode));
-        var validated = Assert.IsType<RevocationEvidenceValidationOutcome.Accepted>(
-            RevocationEvidenceValidator.Validate(evidence[0], genesis, store)).Capability;
-        var plan = Assert.IsType<RevocationPlanOutcome.Accepted>(
-            RevocationPlanner.Plan(genesis, [validated])).Capability;
-        var revokeFiles = DagLedgerAppendWriter.BuildNewEventFiles(
-            FrozenLedgerGenerator.Revocation(genesis, plan));
-        var ledgerFiles = genesisFiles.AddRange(revokeFiles);
-
         var finalCatalog = BuildCatalog(originalA, moduleC);
+        var ledgerFiles = EventFiles(finalCatalog);
         var fixture = FixtureFromLedger(ledgerFiles, [originalA, moduleC]);
         fixture.LedgerFiles = ledgerFiles;
         fixture.FinalCatalog = finalCatalog;
@@ -347,45 +333,6 @@ public sealed class TruthExportCommandTests
                 IncludeInStatement = true,
             }));
     }
-
-    private static (ImmutableArray<RevocationEvidence> Evidence, TrustedRevocationReceiptStore Store) ReceiptStore(
-        FrozenLedgerConsistent ledger,
-        params RevocationEvidence[] provisional)
-    {
-        var evidence = ImmutableArray.CreateBuilder<RevocationEvidence>();
-        var entries = ImmutableArray.CreateBuilder<RawRepositoryEntry>();
-        var oids = ImmutableArray.CreateBuilder<string>();
-        foreach (var (item, index) in provisional.Select(static (item, index) => (item, index)))
-        {
-            var bytes = RevocationReceiptWriter.Write(ledger, item);
-            var text = Encoding.UTF8.GetString(bytes.AsSpan());
-            var oid = GitBlobOid(text);
-            entries.Add(new RawRepositoryEntry($"Evidence/D5/revocation-{index}.json", bytes, oid));
-            oids.Add(oid);
-            evidence.Add(item switch
-            {
-                RevocationEvidence.KernelWitnessFailure failure => failure with
-                {
-                    ReceiptBlobOid = oid,
-                    ReceiptSha256 = Sha256(text),
-                },
-                _ => throw new InvalidOperationException("unexpected evidence variant"),
-            });
-        }
-
-        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-            SnapshotDecoder.Decode(RawRepositorySnapshot.Create(entries))).Snapshot;
-        var store = Assert.IsType<RevocationReceiptStoreOutcome.Accepted>(
-            TrustedRevocationReceiptStore.Materialize(ledger, snapshot, oids)).Capability;
-        return (evidence.ToImmutable(), store);
-    }
-
-    private static RevocationEvidence KernelFailure(FrozenNodeMaterial node) =>
-        new RevocationEvidence.KernelWitnessFailure(
-            node.FrozenNodeId,
-            node.WitnessId,
-            string.Empty,
-            string.Empty);
 
     private sealed class TruthExportFixture(
         TemporaryDirectory temporary,

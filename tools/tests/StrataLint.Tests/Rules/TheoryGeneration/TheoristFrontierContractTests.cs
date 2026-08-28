@@ -618,8 +618,14 @@ public sealed partial class TheoristFrontierContractTests
 
     private static void AssertFullActiveCatalogAccepts(RuleFixture fixture)
     {
-        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.Build())).Capability;
+        var outcome = RuleCatalog.Default.Execute(fixture.Build());
+        var completed = outcome switch
+        {
+            RuleExecutionOutcome.Completed value => value.Capability,
+            RuleExecutionOutcome.InfrastructureFailure failure => throw new Xunit.Sdk.XunitException(
+                failure.Message),
+            _ => throw new Xunit.Sdk.XunitException("unknown rule execution outcome"),
+        };
 
         Assert.Empty(completed.Diagnostics);
         var expectedActiveRules = RuleCatalog.Default.Descriptors

@@ -400,53 +400,36 @@ internal sealed partial class RuleFixture
 
     private void AddFrozenMotivationMembership()
     {
-        var genesis = FrozenLedgerCanonicalWriter.WriteDagEvent(
-            "Genesis",
-            JsonSerializer.SerializeToElement(new
-            {
-                generator_blob_oid = FrozenLedgerTestData.GitOid('1'),
-                origin_commit_oid = FrozenLedgerTestData.GitOid('2'),
-                origin_tree_oid = FrozenLedgerTestData.GitOid('3'),
-                protocol_version = 1,
-                rule_catalog_root = RuleCatalog.Default.RootSha256,
-            }));
-        const string frozenId =
-            "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        foreach (var path in Files.Keys
+                     .Where(FrozenLedgerChangeClassifier.IsAcceptedEventPath)
+                     .ToArray())
+        {
+            Files.Remove(path);
+            Baseline.Remove(path);
+            ForkPoint.Remove(path);
+        }
+
         var freeze = FrozenLedgerCanonicalWriter.WriteDagEvent(
             "Freeze",
             JsonSerializer.SerializeToElement(new
             {
-                axiom_closure = Array.Empty<string>(),
-                case_id = "active-frozen/theorist-contract-fixture",
-                declaration_statement_ids = Reports[currentMotivationPath].Declarations.Select(
-                    static declaration => new
+                declaration_statement_ids = Reports[currentMotivationPath].Declarations
+                    .OrderBy(static declaration => declaration.NameKey, StringComparer.Ordinal)
+                    .Select(static declaration => new
                     {
                         declaration_name_key = declaration.NameKey,
                         kind = declaration.Kind,
                         statement_id =
                             "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
                     }).ToArray(),
-                frozen_node_id = frozenId,
-                input = new
-                {
-                    base_commit_oid = FrozenLedgerTestData.GitOid('4'),
-                    base_tree_oid = FrozenLedgerTestData.GitOid('5'),
-                    descriptor_blob_oid = FrozenLedgerTestData.GitOid('6'),
-                    descriptor_selector = currentMotivationPath,
-                    materializer = "repository-snapshot-v1",
-                    supporting_blob_oids = Array.Empty<string>(),
-                },
+                descriptor_selector = currentMotivationPath,
                 prerequisite_frozen_node_ids = Array.Empty<string>(),
                 statement_id =
                     "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-                witness_id =
-                    "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
             }));
         var entries = new Dictionary<string, string>(StringComparer.Ordinal)
         {
-            [FrozenLedgerChangeClassifier.AcceptedRoot + "/fixture-genesis.json"] =
-                Encoding.UTF8.GetString(genesis.Bytes.AsSpan()),
-            [FrozenLedgerChangeClassifier.AcceptedRoot + "/fixture-freeze.json"] =
+            [FrozenLedgerChangeClassifier.AcceptedRoot + "/" + freeze.Hash[7..] + ".json"] =
                 Encoding.UTF8.GetString(freeze.Bytes.AsSpan()),
         };
         foreach (var (path, text) in entries)
