@@ -1,0 +1,17 @@
+ast_path: theorem/25.1
+fingerprints:
+  raw_sha256: sha256:6c69c25c46b6b2bafd0ca8fd0bfd87ba9959f815e752eeaed28f4a416362daaf
+  normalized_sha256: sha256:6c69c25c46b6b2bafd0ca8fd0bfd87ba9959f815e752eeaed28f4a416362daaf
+cas_ref: sha256:6c69c25c46b6b2bafd0ca8fd0bfd87ba9959f815e752eeaed28f4a416362daaf
+coverage_gids:
+  - D5/S3/ObserverMemory/Algorithms/ControlledRelationRecursion.controlled_behavior_relation_recursion
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/Algorithms/ControlledRelationRecursion.controlled_behavior_relation_recursion
+      source_sha256: sha256:6c69c25c46b6b2bafd0ca8fd0bfd87ba9959f815e752eeaed28f4a416362daaf
+      target_statement_id: sha256:0f13defa063529ddef7119476cdc35c19e365b9e7846e004b727860b05c47f70
+  scribe:
+    - gid: D5/S3/ObserverMemory/Algorithms/ControlledRelationRecursion.controlled_behavior_relation_recursion
+      definition_sha256: sha256:3b00c3101cf354b8f8440fdd4dde7aecc1ed8d1e2d3f6ee4e6c94060a4cc8d6b
+      emission_sha256: sha256:2f516264344bd15152d0aded69fad83df94958623f3f8dfe91755437ddd3ded4
+  unresolved_subitems: []
