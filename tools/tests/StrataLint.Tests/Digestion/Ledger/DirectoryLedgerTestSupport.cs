@@ -134,6 +134,35 @@ internal static class DirectoryLedgerTestSupport
             + "\n"));
     }
 
+    internal static string RepositoryImage(string repositoryRoot)
+    {
+        var root = Path.GetFullPath(repositoryRoot);
+        return string.Concat(Directory.EnumerateFiles(root, "*", SearchOption.AllDirectories)
+            .Order(StringComparer.Ordinal)
+            .Select(path => Path.GetRelativePath(root, path).Replace(Path.DirectorySeparatorChar, '/')
+                + "\0"
+                + Convert.ToBase64String(File.ReadAllBytes(path))
+                + "\n"));
+    }
+
+    internal static Dictionary<string, string> OverlayRepositoryFiles(
+        string repositoryRoot,
+        IReadOnlyDictionary<string, string> files)
+    {
+        var result = new Dictionary<string, string>(files, StringComparer.Ordinal);
+        foreach (var path in Directory.EnumerateFiles(
+                     repositoryRoot,
+                     "*",
+                     SearchOption.AllDirectories))
+        {
+            var relative = Path.GetRelativePath(repositoryRoot, path)
+                .Replace(Path.DirectorySeparatorChar, '/');
+            result[relative] = File.ReadAllText(path);
+        }
+
+        return result;
+    }
+
     internal static string Image(BackfillInventoryDocument ledger)
     {
         var files = new List<(string Path, byte[] Bytes)>();

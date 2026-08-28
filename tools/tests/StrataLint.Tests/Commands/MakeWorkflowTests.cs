@@ -369,8 +369,8 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void IngestWrapperSeparatesReportFreeDigestionFromTruthAlignment()
     {
-        var root = TestRepositoryLayout.FindRoot();
-        var script = File.ReadAllText(Path.Combine(root, IngestScriptPath));
+        var script = File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/ingest.sh"));
 
         Assert.Contains("lean-report-input.sh", script, StringComparison.Ordinal);
         Assert.Contains(" address --repository ", script, StringComparison.Ordinal);

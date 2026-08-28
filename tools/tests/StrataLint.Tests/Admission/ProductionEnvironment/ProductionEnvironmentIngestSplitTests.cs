@@ -68,13 +68,9 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.True(firstResult.Success, firstResult.Error);
         var afterFirst = GeneratedIngestImage(temporary.Path);
-        var generated = fixture.Files.ToDictionary(static pair => pair.Key, static pair => pair.Value);
-        foreach (var path in Directory.EnumerateFiles(temporary.Path, "*", SearchOption.AllDirectories))
-        {
-            var relative = Path.GetRelativePath(temporary.Path, path)
-                .Replace(Path.DirectorySeparatorChar, '/');
-            generated[relative] = File.ReadAllText(path);
-        }
+        var generated = DirectoryLedgerTestSupport.OverlayRepositoryFiles(
+            temporary.Path,
+            fixture.Files);
 
         var reportSource = new FakeLeanReportSource(report: null);
         var scribeVerifier = new FakeScribeEmissionVerifier(verification: null);
@@ -621,16 +617,8 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(before, GeneratedIngestImage(temporary.Path));
     }
 
-    private static string GeneratedIngestImage(string repositoryRoot)
-    {
-        var root = Path.GetFullPath(repositoryRoot);
-        return string.Concat(Directory.EnumerateFiles(root, "*", SearchOption.AllDirectories)
-            .Order(StringComparer.Ordinal)
-            .Select(path => Path.GetRelativePath(root, path).Replace(Path.DirectorySeparatorChar, '/')
-                + "\0"
-                + Convert.ToBase64String(File.ReadAllBytes(path))
-                + "\n"));
-    }
+    private static string GeneratedIngestImage(string repositoryRoot) =>
+        DirectoryLedgerTestSupport.RepositoryImage(repositoryRoot);
 
     private static string DirectorySourceMetadataPath() =>
         $"{BackfillInventoryLoader.RootPath}fixture-source/source.toml";
