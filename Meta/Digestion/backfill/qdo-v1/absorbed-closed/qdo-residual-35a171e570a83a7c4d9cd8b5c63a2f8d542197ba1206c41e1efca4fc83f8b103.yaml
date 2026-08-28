@@ -1,0 +1,17 @@
+ast_path: theorem/41.14
+fingerprints:
+  raw_sha256: sha256:35a171e570a83a7c4d9cd8b5c63a2f8d542197ba1206c41e1efca4fc83f8b103
+  normalized_sha256: sha256:35a171e570a83a7c4d9cd8b5c63a2f8d542197ba1206c41e1efca4fc83f8b103
+cas_ref: sha256:35a171e570a83a7c4d9cd8b5c63a2f8d542197ba1206c41e1efca4fc83f8b103
+coverage_gids:
+  - D5/S3/Entropy/Submodularity/RefinementInformationDecomposition.deterministic_refinement_information_decomposition
+receipts:
+  coverage:
+    - gid: D5/S3/Entropy/Submodularity/RefinementInformationDecomposition.deterministic_refinement_information_decomposition
+      source_sha256: sha256:35a171e570a83a7c4d9cd8b5c63a2f8d542197ba1206c41e1efca4fc83f8b103
+      target_statement_id: sha256:39983d9b8e320ada38907f1a70229c7c934927632f72b5aa3454137721bf90b9
+  scribe:
+    - gid: D5/S3/Entropy/Submodularity/RefinementInformationDecomposition.deterministic_refinement_information_decomposition
+      definition_sha256: sha256:af3dcbe9d23e67155ae53259a3f7b077789c4183e4b18c5ed5fac5d22604eb90
+      emission_sha256: sha256:bcc82847b6a46d6fd0f128c83c8bf4c8bdce65e9edfa2d05734c32a5996ac350
+  unresolved_subitems: []
