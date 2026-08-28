@@ -150,7 +150,18 @@ internal static partial class IngestCommand
     private static IngestPreparation Prepare(
         IRepositoryGateway repository,
         string baselineRevision,
-        IngestInputs inputs)
+        IngestInputs inputs) =>
+        Prepare(
+            repository,
+            baselineRevision,
+            inputs,
+            repository.ReadChanges(baselineRevision));
+
+    private static IngestPreparation Prepare(
+        IRepositoryGateway repository,
+        string baselineRevision,
+        IngestInputs inputs,
+        RawChangeSet repositoryChanges)
     {
         var currentRaw = inputs.CurrentRaw;
         var current = inputs.Current;
@@ -162,7 +173,6 @@ internal static partial class IngestCommand
             current,
             baselineDocument,
             baseline);
-        var repositoryChanges = repository.ReadChanges(baselineRevision);
         var plannedRaw = AddCasObjects(
             ReplaceLedger(currentRaw, currentDocument, plan.Document),
             plan.CasObjects);
