@@ -187,6 +187,8 @@ internal sealed class CommutingCompletionExchangeDocument
 
     private static Formula ExchangeFormula()
     {
+        Formula state = F.Id("X");
+        Formula output = F.Id("O");
         Formula first = F.Id("F");
         Formula second = F.Id("G");
         Formula readout = F.Id("q");
@@ -197,12 +199,29 @@ internal sealed class CommutingCompletionExchangeDocument
         Formula generated = Apply(F.Id("Generated"), first, second);
         Formula allWords = Apply(F.Id("C"), generated, readout);
 
-        return Disp(Seq(
-            Apply(F.Id("Commute"), first, second), Sp, Rightarrow, Sp,
+        Formula conclusion = new Formula.Logic(
             Apply(F.Id("KernelEquivalent"), firstThenSecond, secondThenFirst),
-            Sp, Land, RowBreak, Grp(),
-            Apply(F.Id("KernelEquivalent"), secondThenFirst, allWords), Dot));
+            FormulaLogicOperator.And,
+            Apply(F.Id("KernelEquivalent"), secondThenFirst, allWords));
+        Formula theorem = new Formula.Logic(
+            Apply(F.Id("Commute"), first, second),
+            FormulaLogicOperator.Implies,
+            conclusion);
+
+        return Disp(new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [
+                Bound("X", TypeUniverse()),
+                Bound("O", TypeUniverse()),
+                Bound("F", Arrow(state, state)),
+                Bound("G", Arrow(state, state)),
+                Bound("q", Arrow(state, output)),
+            ],
+            theorem));
     }
+
+    private static Formula.BoundVariable Bound(string name, Formula domain) =>
+        new(FormulaIdentifier.Create(name), domain);
 
     private static Formula NecessityFormula()
     {
