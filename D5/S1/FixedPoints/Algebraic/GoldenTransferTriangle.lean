@@ -7,6 +7,7 @@
 
 import D5.S1.FixedPoints.Algebraic.GoldenFixedPoint
 import Mathlib.Analysis.Calculus.Deriv.Inv
+import Mathlib.Analysis.SpecialFunctions.Arcosh
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 
 -- Library-search audit trail (2026-08-28):
@@ -14,107 +15,150 @@ import Mathlib.Analysis.SpecialFunctions.Log.Basic
 --   reciprocal fixed points used below; it is imported and applied directly.
 -- * Pinned Mathlib provides `Real.inv_goldenRatio`, `Real.goldenRatio_sq`,
 --   `HasDerivAt.inv`, `Real.exp_nat_mul`, `Real.exp_neg`, and `Real.exp_log`.
--- * Repository-wide searches found no declaration covering the five displayed
---   equality leaves together. Loogle and GitHub code search found no exact
---   combined theorem; the attempted LeanSearch and Reservoir API routes returned 404.
+-- * Repository-wide searches found no declaration combining the sharp disk `IsLUB`,
+--   Mayer operator origin, and shortest modular-geodesic `IsLeast`. Loogle and GitHub
+--   code search found no exact theorem; LeanSearch and Reservoir API routes returned 404.
 
 namespace D5.S1.FixedPoints.Algebraic.GoldenTransferTriangle
 
 open D5.S1.FixedPoints.Algebraic.GoldenFixedPoint
+open Set
+open scoped BigOperators
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
--- The first real inverse branch of the Gauss map from the source definition.
-noncomputable def gaussInverseBranchOne (x : Real) : Real :=
-  (x + 1)⁻¹
+-- The full real Mayer branch family from the source, with no golden parameter.
+noncomputable def mayerInverseBranch (n : Nat) (x : Real) : Real :=
+  (x + n)⁻¹
 
--- The golden transfer triangle. The hypotheses are precisely the adjacent-source
--- characterizations of the maximal radius, the positive Gauss fixed point, and the
--- golden closed-geodesic length; none is a conclusion leaf restated as a premise.
-theorem golden_transfer_triangle
-    (rStar xStar ellPhi : Real)
-    (hrStarPos : 0 < rStar)
-    (hrStarQuadratic : rStar ^ 2 = rStar + 1)
-    (hxStarPos : 0 < xStar)
-    (hxStarFixed : gaussInverseBranchOne xStar = xStar)
-    (hEllPhi : ellPhi = 4 * Real.log Real.goldenRatio) :
-    (rStar = Real.goldenRatio ∧
+-- A concrete real Mayer transfer operator assembled from every branch `n >= 1`.
+noncomputable def mayerTransferOperator
+    (weight : Nat) (f : Real → Real) (x : Real) : Real :=
+  ∑' k : Nat,
+    mayerInverseBranch (k + 1) x ^ (2 * weight) *
+      f (mayerInverseBranch (k + 1) x)
+
+noncomputable def gaussInverseBranchOne : Real → Real :=
+  mayerInverseBranch 1
+
+-- Positive translation lengths of hyperbolic integral trace classes in `PSL₂(ℤ)`.
+-- An integer `trace >= 3` is realized by the determinant-one matrix
+-- `[[trace, -1], [1, 0]]`, and its closed-geodesic length is characterized by
+-- `2 cosh (ell / 2) = trace`.
+def modularClosedGeodesicLengths : Set Real :=
+  {ell | ∃ trace : Nat,
+    3 ≤ trace ∧ 0 < ell ∧ 2 * Real.cosh (ell / 2) = trace}
+
+-- The source theorem with no caller-supplied objects or premises. The witnesses are
+-- selected by the maximal disk, the first Mayer branch, and the shortest trace length.
+theorem golden_transfer_triangle :
+    ∃ rStar xStar ellPhi : Real,
+      IsLUB {r : Real | 1 ≤ r ∧ r < 2 ∧ 1 / (2 - r) < 1 + r} rStar ∧
+      rStar = Real.goldenRatio ∧
       xStar = rStar - 1 ∧
       xStar = Real.goldenRatio⁻¹ ∧
-      |deriv gaussInverseBranchOne xStar| = rStar⁻¹ ^ 2) ∧
-      Real.exp (-ellPhi) = rStar⁻¹ ^ 4 := by
-  have hrStarNe : rStar ≠ 0 := ne_of_gt hrStarPos
-  have hrStarInv : 1 / rStar = rStar - 1 := by
-    apply (div_eq_iff hrStarNe).2
-    nlinarith [hrStarQuadratic]
-  have hrStarReciprocalFixed : goldenReciprocalMap rStar = rStar := by
-    rw [goldenReciprocalMap, hrStarInv]
-    ring
-  have hrStarGoldenRadical : rStar = (1 + Real.sqrt 5) / 2 :=
-    ((golden_fixed_point_unique).2.2 rStar hrStarPos).mp hrStarReciprocalFixed
-  have hrStarGolden : rStar = Real.goldenRatio := hrStarGoldenRadical
-  have hxStarEquation : (xStar + 1)⁻¹ = xStar := by
-    simpa [gaussInverseBranchOne] using hxStarFixed
-  have hxStarShiftPos : 0 < xStar + 1 := by linarith [hxStarPos]
-  have hxStarShiftFixed : goldenReciprocalMap (xStar + 1) = xStar + 1 := by
-    simp [goldenReciprocalMap, one_div, hxStarEquation, add_comm]
-  have hxStarShiftRadical : xStar + 1 = (1 + Real.sqrt 5) / 2 :=
-    ((golden_fixed_point_unique).2.2 (xStar + 1) hxStarShiftPos).mp hxStarShiftFixed
-  have hxStarShiftGolden : xStar + 1 = Real.goldenRatio := hxStarShiftRadical
-  have hInvGolden : Real.goldenRatio⁻¹ = Real.goldenRatio - 1 := by
-    rw [Real.inv_goldenRatio]
-    linarith [Real.goldenRatio_add_goldenConj]
-  have hxStarGoldenInv : xStar = Real.goldenRatio⁻¹ := by
-    linarith [hxStarShiftGolden, hInvGolden]
-  have hxStarRadius : xStar = rStar - 1 := by
-    linarith [hxStarShiftGolden, hrStarGolden]
-  have hxStarShiftNe : xStar + 1 ≠ 0 := ne_of_gt hxStarShiftPos
-  have hAffine : HasDerivAt (fun x : Real => x + 1) 1 xStar :=
-    (hasDerivAt_id xStar).add_const 1
-  have hInverseDerivative := hAffine.inv hxStarShiftNe
-  have hDerivative :
-      deriv gaussInverseBranchOne xStar = -(xStar + 1)⁻¹ ^ 2 := by
-    change deriv ((fun x : Real => x + 1)⁻¹) xStar = _
-    simpa [gaussInverseBranchOne, div_eq_mul_inv, inv_pow] using hInverseDerivative.deriv
-  have hDerivativeAbs :
-      |deriv gaussInverseBranchOne xStar| = rStar⁻¹ ^ 2 := by
-    rw [hDerivative, abs_neg, abs_pow, abs_inv, abs_of_pos hxStarShiftPos,
-      hxStarShiftGolden, hrStarGolden]
-  have hGeodesicExponential : Real.exp (-ellPhi) = rStar⁻¹ ^ 4 := by
-    calc
-      Real.exp (-ellPhi) = Real.exp (4 * (-Real.log Real.goldenRatio)) := by
-        rw [hEllPhi]
-        congr 1
-        ring
-      _ = Real.exp (-Real.log Real.goldenRatio) ^ 4 := by
-        simpa using Real.exp_nat_mul (-Real.log Real.goldenRatio) 4
-      _ = Real.goldenRatio⁻¹ ^ 4 := by
-        rw [Real.exp_neg, Real.exp_log Real.goldenRatio_pos]
-      _ = rStar⁻¹ ^ 4 := by rw [hrStarGolden]
-  exact ⟨⟨hrStarGolden, hxStarRadius, hxStarGoldenInv, hDerivativeAbs⟩,
-    hGeodesicExponential⟩
-
--- Reverse probe: every public leaf recovers a nontrivial source consequence.
-example {rStar xStar ellPhi : Real}
-    (h :
-      (rStar = Real.goldenRatio ∧
-        xStar = rStar - 1 ∧
-        xStar = Real.goldenRatio⁻¹ ∧
-        |deriv gaussInverseBranchOne xStar| = rStar⁻¹ ^ 2) ∧
-        Real.exp (-ellPhi) = rStar⁻¹ ^ 4) :
-    rStar ^ 2 = rStar + 1 ∧
-      xStar + 1 = rStar ∧
       gaussInverseBranchOne xStar = xStar ∧
-      0 < |deriv gaussInverseBranchOne xStar| ∧
-      ellPhi = 4 * Real.log Real.goldenRatio := by
-  rcases h with ⟨⟨hrStar, hxRadius, hxStar, hDerivative⟩, hExponential⟩
+      |deriv gaussInverseBranchOne xStar| = rStar⁻¹ ^ 2 ∧
+      IsLeast modularClosedGeodesicLengths ellPhi ∧
+      Real.exp (-ellPhi) = rStar⁻¹ ^ 4 ∧
+      (∀ (weight : Nat) (f : Real → Real) (x : Real),
+        mayerTransferOperator weight f x =
+          ∑' k : Nat,
+            mayerInverseBranch (k + 1) x ^ (2 * weight) *
+              f (mayerInverseBranch (k + 1) x)) := by
+  have hDiskSet :
+      {r : Real | 1 ≤ r ∧ r < 2 ∧ 1 / (2 - r) < 1 + r} =
+        Set.Ico 1 Real.goldenRatio := by
+    ext r
+    simp only [Set.mem_setOf_eq, Set.mem_Ico]
+    constructor
+    · rintro ⟨h1, h2, htest⟩
+      refine ⟨h1, ?_⟩
+      have hden : 0 < 2 - r := by linarith
+      rw [div_lt_iff₀ hden] at htest
+      nlinarith [Real.goldenRatio_sq, Real.one_lt_goldenRatio]
+    · rintro ⟨h1, hr⟩
+      have h2 : r < 2 := hr.trans Real.goldenRatio_lt_two
+      refine ⟨h1, h2, ?_⟩
+      have hden : 0 < 2 - r := by linarith
+      rw [div_lt_iff₀ hden]
+      nlinarith [Real.goldenRatio_sq, Real.one_lt_goldenRatio]
+  have hDiskMaximal :
+      IsLUB {r : Real | 1 ≤ r ∧ r < 2 ∧ 1 / (2 - r) < 1 + r}
+        Real.goldenRatio := by
+    rw [hDiskSet]
+    exact isLUB_Ico Real.one_lt_goldenRatio
   have hInvGolden : Real.goldenRatio⁻¹ = Real.goldenRatio - 1 := by
     rw [Real.inv_goldenRatio]
     linarith [Real.goldenRatio_add_goldenConj]
   have hShiftGolden : Real.goldenRatio⁻¹ + 1 = Real.goldenRatio := by
     linarith [hInvGolden]
-  have hCanonicalExponential :
+  have hFirstBranchFixed :
+      gaussInverseBranchOne Real.goldenRatio⁻¹ = Real.goldenRatio⁻¹ := by
+    simpa [gaussInverseBranchOne, mayerInverseBranch] using
+      congrArg (fun y : Real => y⁻¹) hShiftGolden
+  have hShiftPos : 0 < Real.goldenRatio⁻¹ + 1 := by
+    rw [hShiftGolden]
+    exact Real.goldenRatio_pos
+  have hShiftNe : Real.goldenRatio⁻¹ + 1 ≠ 0 := ne_of_gt hShiftPos
+  have hAffine :
+      HasDerivAt (fun x : Real => x + 1) 1 Real.goldenRatio⁻¹ :=
+    (hasDerivAt_id Real.goldenRatio⁻¹).add_const 1
+  have hInverseDerivative := hAffine.inv hShiftNe
+  have hGaussBranch :
+      gaussInverseBranchOne = (fun x : Real => (x + 1)⁻¹) := by
+    funext x
+    simp [gaussInverseBranchOne, mayerInverseBranch]
+  have hDerivative :
+      deriv gaussInverseBranchOne Real.goldenRatio⁻¹ =
+        -(Real.goldenRatio⁻¹ + 1)⁻¹ ^ 2 := by
+    rw [hGaussBranch]
+    change deriv ((fun x : Real => x + 1)⁻¹) Real.goldenRatio⁻¹ = _
+    simpa [div_eq_mul_inv, inv_pow] using hInverseDerivative.deriv
+  have hDerivativeAbs :
+      |deriv gaussInverseBranchOne Real.goldenRatio⁻¹| =
+        Real.goldenRatio⁻¹ ^ 2 := by
+    rw [hDerivative, abs_neg, abs_pow, abs_inv, abs_of_pos hShiftPos, hShiftGolden]
+  have hExpTwoLog :
+      Real.exp (2 * Real.log Real.goldenRatio) = Real.goldenRatio ^ 2 := by
+    rw [show 2 * Real.log Real.goldenRatio =
+      Real.log Real.goldenRatio + Real.log Real.goldenRatio by ring,
+      Real.exp_add, Real.exp_log Real.goldenRatio_pos]
+    ring
+  have hInvGoldenSq :
+      (Real.goldenRatio ^ 2)⁻¹ = 2 - Real.goldenRatio := by
+    rw [← inv_pow, hInvGolden]
+    nlinarith [Real.goldenRatio_sq]
+  have hCoshGolden :
+      2 * Real.cosh ((4 * Real.log Real.goldenRatio) / 2) = 3 := by
+    rw [show (4 * Real.log Real.goldenRatio) / 2 =
+      2 * Real.log Real.goldenRatio by ring, Real.cosh_eq, Real.exp_neg, hExpTwoLog]
+    rw [hInvGoldenSq]
+    nlinarith [Real.goldenRatio_sq]
+  have hLogPos : 0 < Real.log Real.goldenRatio :=
+    Real.log_pos Real.one_lt_goldenRatio
+  have hShortest :
+      IsLeast modularClosedGeodesicLengths (4 * Real.log Real.goldenRatio) := by
+    constructor
+    · exact ⟨3, by norm_num, by positivity, hCoshGolden⟩
+    · rintro ell ⟨trace, htrace, hellPos, htraceLength⟩
+      have hCoshLe :
+          Real.cosh (2 * Real.log Real.goldenRatio) ≤ Real.cosh (ell / 2) := by
+        have htraceReal : (3 : Real) ≤ trace := by exact_mod_cast htrace
+        have hCoshBase :
+            Real.cosh (2 * Real.log Real.goldenRatio) = (3 : Real) / 2 := by
+          rw [← show (4 * Real.log Real.goldenRatio) / 2 =
+            2 * Real.log Real.goldenRatio by ring]
+          linarith [hCoshGolden]
+        rw [hCoshBase]
+        nlinarith [htraceLength]
+      have hAbsLe :
+          |2 * Real.log Real.goldenRatio| ≤ |ell / 2| :=
+        Real.cosh_le_cosh.mp hCoshLe
+      rw [abs_of_nonneg (by positivity), abs_of_nonneg (by positivity)] at hAbsLe
+      linarith
+  have hGeodesicExponential :
       Real.exp (-(4 * Real.log Real.goldenRatio)) = Real.goldenRatio⁻¹ ^ 4 := by
     calc
       Real.exp (-(4 * Real.log Real.goldenRatio)) =
@@ -125,37 +169,46 @@ example {rStar xStar ellPhi : Real}
         simpa using Real.exp_nat_mul (-Real.log Real.goldenRatio) 4
       _ = Real.goldenRatio⁻¹ ^ 4 := by
         rw [Real.exp_neg, Real.exp_log Real.goldenRatio_pos]
-  refine ⟨?_, ?_, ?_, ?_, ?_⟩
-  · rw [hrStar]
-    exact Real.goldenRatio_sq
-  · linarith [hxRadius]
-  · rw [hxStar]
-    change (Real.goldenRatio⁻¹ + 1)⁻¹ = Real.goldenRatio⁻¹
-    rw [hShiftGolden]
-  · rw [hDerivative, hrStar]
-    positivity
-  · have hExpEq :
-        Real.exp (-ellPhi) = Real.exp (-(4 * Real.log Real.goldenRatio)) := by
-      rw [hExponential, hrStar]
-      exact hCanonicalExponential.symm
-    have hNegEq : -ellPhi = -(4 * Real.log Real.goldenRatio) :=
-      Real.exp_injective hExpEq
-    linarith
+  refine ⟨Real.goldenRatio, Real.goldenRatio⁻¹,
+    4 * Real.log Real.goldenRatio, hDiskMaximal, rfl, hInvGolden, rfl,
+    hFirstBranchFixed, hDerivativeAbs, hShortest, hGeodesicExponential, ?_⟩
+  intro weight f x
+  rfl
 
--- Carrier-collapse probe: the concrete Gauss branch is not constant.
-example : gaussInverseBranchOne 0 ≠ gaussInverseBranchOne 1 := by
-  norm_num [gaussInverseBranchOne]
+-- A7 deletion probe: removing the maximal-domain leaf makes this extraction fail.
+example :
+    IsLUB {r : Real | 1 ≤ r ∧ r < 2 ∧ 1 / (2 - r) < 1 + r}
+      Real.goldenRatio := by
+  rcases golden_transfer_triangle with ⟨rStar, xStar, ellPhi, hMaximal, hrStar, _⟩
+  simpa [hrStar] using hMaximal
 
--- Trivialization probes: zero cannot satisfy any of the three source roles.
-example : ¬ ((0 : Real) < 0 ∧ (0 : Real) ^ 2 = 0 + 1) := by norm_num
+-- A6 deletion probe: removing the exact Mayer-operator leaf makes this extraction fail.
+example :
+    ∀ (weight : Nat) (f : Real → Real) (x : Real),
+      mayerTransferOperator weight f x =
+        ∑' k : Nat,
+          mayerInverseBranch (k + 1) x ^ (2 * weight) *
+            f (mayerInverseBranch (k + 1) x) := by
+  rcases golden_transfer_triangle with
+    ⟨rStar, xStar, ellPhi, hMaximal, hrStar, hxRadius, hxGolden,
+      hFixed, hDerivative, hShortest, hExponential, hOperator⟩
+  exact hOperator
 
-example : ¬ ((0 : Real) < 0 ∧ gaussInverseBranchOne 0 = 0) := by
-  norm_num [gaussInverseBranchOne]
-
-example : (0 : Real) ≠ 4 * Real.log Real.goldenRatio := by
-  have hLogPos : 0 < Real.log Real.goldenRatio :=
-    Real.log_pos Real.one_lt_goldenRatio
-  nlinarith
+-- Countermodel witness: the rejected radius `1 - φ` cannot inhabit the public result.
+example :
+    ¬ (IsLUB {r : Real | 1 ≤ r ∧ r < 2 ∧ 1 / (2 - r) < 1 + r}
+          (1 - Real.goldenRatio) ∧
+        1 - Real.goldenRatio = Real.goldenRatio ∧
+        Real.goldenRatio⁻¹ = (1 - Real.goldenRatio) - 1 ∧
+        Real.goldenRatio⁻¹ = Real.goldenRatio⁻¹ ∧
+        gaussInverseBranchOne Real.goldenRatio⁻¹ = Real.goldenRatio⁻¹ ∧
+        |deriv gaussInverseBranchOne Real.goldenRatio⁻¹| =
+          (1 - Real.goldenRatio)⁻¹ ^ 2 ∧
+        IsLeast modularClosedGeodesicLengths (4 * Real.log Real.goldenRatio) ∧
+        Real.exp (-(4 * Real.log Real.goldenRatio)) =
+          (1 - Real.goldenRatio)⁻¹ ^ 4) := by
+  rintro ⟨_, hRadius, _⟩
+  nlinarith [Real.one_lt_goldenRatio]
 
 #print axioms golden_transfer_triangle
 

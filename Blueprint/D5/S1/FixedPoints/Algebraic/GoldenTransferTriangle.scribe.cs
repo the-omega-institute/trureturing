@@ -7,8 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.FixedPoints.Algebraic;
 internal sealed class GoldenTransferTriangleDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The positive critical radius, the positive first Gauss fixed point, its local "
-            + "multiplier, and the shortest golden geodesic obey the golden transfer triangle.",
+        "The maximal real disk, the Mayer operator, its first fixed branch, and the shortest "
+            + "modular geodesic select the golden transfer triangle without caller premises.",
         H("Golden Transfer Triangle"),
         Blocks(
             Describe.Lean(
@@ -16,27 +16,24 @@ internal sealed class GoldenTransferTriangleDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S1/FixedPoints/Algebraic/GoldenTransferTriangle."
                         + "golden_transfer_triangle"),
-                H("The golden radius links the Gauss branch and shortest geodesic"),
+                H("The maximal disk and Mayer operator select the golden triangle"),
                 StatementSource.FromAuthor(TransferTriangleFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Let psi_1(x) = 1/(x+1). The five hypotheses are the adjacent-source "
-                            + "characterizations: r_* is positive and satisfies its critical "
-                            + "quadratic, x_* is positive and fixed by psi_1, and ell_phi is "
-                            + "four times log(phi). These are assumptions about the source "
-                            + "objects, not restatements of any conclusion leaf.")),
+                        "There are no public premises. The proof chooses r_*, x_*, and ell_phi "
+                            + "from concrete source carriers: the sharp real disk IsLUB, the "
+                            + "first branch of the full Mayer operator, and the least positive "
+                            + "PSL_2(Z) hyperbolic-trace length.")),
                     Paragraph(Text(
-                        "The first boxed group has exactly four equality leaves: r_* = phi, "
-                            + "x_* = r_* - 1, x_* = phi^(-1), and the absolute derivative "
-                            + "equals r_*^(-2). The second boxed group is the fifth leaf, "
-                            + "exp(-ell_phi) = r_*^(-4).")),
+                        "The modular length carrier consists of positive ell for which "
+                            + "2 cosh(ell/2) is an integer trace at least three. Its least "
+                            + "member is 4 log(phi), and exp(-ell_phi) = r_*^(-4).")),
                     Paragraph(Text(
-                        "The proof imports the repository's positive golden fixed-point "
-                            + "uniqueness theorem, uses Mathlib's derivative rule for inversion, "
-                            + "and rewrites the sourced length equation with elementary "
-                            + "exponential and logarithm identities. It uses no conjectural "
-                            + "or Riemann-hypothesis premise."))),
+                        "For every natural weight, the Mayer operator is exactly the sum over "
+                            + "psi_n(x) = 1/(x+n), n >= 1. Its defining formula contains no "
+                            + "golden parameter; phi is selected by maximality and the fixed "
+                            + "branch. The proof uses no conjectural premise."))),
                 DescribeRole.Theorem)),
         [DocumentEdge.Dependency.Create(
             GidRef.Create("D5/S1/FixedPoints/Algebraic/GoldenFixedPoint"))]));
@@ -44,35 +41,57 @@ internal sealed class GoldenTransferTriangleDocument : IScribeDocumentDefinition
     private static Formula TransferTriangleFormula()
     {
         Formula reals = Seq(Mathbb, Grp(F.Id("R")));
+        Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
         Formula rStar = new Formula.Subscript(F.Id("r"), Star);
         Formula xStar = new Formula.Subscript(F.Id("x"), Star);
         Formula ellPhi = new Formula.Subscript(Ell, Varphi);
+        Formula r = F.Id("r");
+        Formula n = F.Id("n");
+        Formula w = F.Id("w");
+        Formula x = F.Id("x");
+        Formula f = F.Id("f");
         Formula psiOne = new Formula.Subscript(Psi, D(1));
         Formula psiAtX = Seq(psiOne, Open, xStar, Close);
         Formula derivativeAtX = Seq(psiOne, Apos, Open, xStar, Close);
+        Formula diskSet = Seq(
+            OpenBrace, r, Sp, Mid, Sp, D(1), Sp, Le, Sp, r, Sp, Land, Sp,
+            r, Sp, Lt, Sp, D(2), Sp, Land, Sp,
+            D(1), Sp, Slash, Sp, Open, D(2), Sp, Minus, Sp, r, Close,
+            Sp, Lt, Sp, D(1), Sp, Plus, Sp, r, CloseBrace);
+        Formula isLub = Seq(
+            Operatorname, Grp(F.Id("IsLUB")), Open, diskSet, Comma, Sp, rStar, Close);
+        Formula geodesicSpectrum = Seq(
+            Operatorname, Grp(F.Id("L")), Underscore,
+            Grp(Operatorname, Grp(F.Id("PSL")), Underscore, D(2), Open, Mathbb,
+                Grp(F.Id("Z")), Close));
+        Formula isLeast = Seq(
+            Operatorname, Grp(F.Id("IsLeast")), Open, geodesicSpectrum,
+            Comma, Sp, ellPhi, Close);
+        Formula mayer = new Formula.Subscript(
+            Seq(Operatorname, Grp(F.Id("M"))), w);
+        Formula psiN = new Formula.Subscript(Psi, n);
+        Formula mayerExact = Seq(
+            Forall, Sp, w, Sp, InMacro, Sp, naturals, Comma, Sp,
+            f, Colon, Sp, reals, Sp, To, Sp, reals, Comma, Sp,
+            x, Sp, InMacro, Sp, reals, Comma, Sp,
+            mayer, Open, f, Close, Open, x, Close, Sp, Eq, Sp,
+            Sum, Underscore, Grp(n, Sp, Ge, Sp, D(1)), Sp,
+            new Formula.Power(Seq(psiN, Open, x, Close), Seq(D(2), w)), Sp,
+            f, Open, psiN, Open, x, Close, Close);
 
-        Formula premises = Seq(
-            D(0), Sp, Lt, Sp, rStar, Sp, Land, Sp,
-            new Formula.Power(rStar, D(2)), Sp, Eq, Sp, rStar, Sp, Plus, Sp, D(1), Sp,
-            Land, Sp, D(0), Sp, Lt, Sp, xStar, Sp, Land, Sp,
-            psiAtX, Sp, Eq, Sp, xStar, Sp, Land, Sp,
-            ellPhi, Sp, Eq, Sp, D(4), Sp, Cdot, Sp, Log, Open, Varphi, Close);
-
-        Formula firstBox = Seq(
+        return Disp(Seq(
+            Exists, Sp, rStar, Comma, Sp, xStar, Comma, Sp, ellPhi,
+            Sp, InMacro, Sp, reals, Comma, Sp,
+            isLub, Sp, Land, Sp,
             rStar, Sp, Eq, Sp, Varphi, Sp, Land, Sp,
             xStar, Sp, Eq, Sp, rStar, Sp, Minus, Sp, D(1), Sp, Land, Sp,
             xStar, Sp, Eq, Sp, new Formula.Power(Varphi, new Formula.Negate(D(1))), Sp,
-            Land, Sp, new Formula.Absolute(derivativeAtX), Sp, Eq, Sp,
-            new Formula.Power(rStar, new Formula.Negate(D(2))));
-
-        Formula secondBox = Seq(
+            Land, Sp, psiAtX, Sp, Eq, Sp, xStar, Sp, Land, Sp,
+            new Formula.Absolute(derivativeAtX), Sp, Eq, Sp,
+            new Formula.Power(rStar, new Formula.Negate(D(2))), Sp, Land, Sp,
+            isLeast, Sp, Land, Sp,
             Exp, Open, new Formula.Negate(ellPhi), Close, Sp, Eq, Sp,
-            new Formula.Power(rStar, new Formula.Negate(D(4))));
-
-        return Disp(Seq(
-            Forall, Sp, rStar, Comma, Sp, xStar, Comma, Sp, ellPhi,
-            Sp, InMacro, Sp, reals, Comma, Sp,
-            Open, premises, Close, Sp, Rightarrow, Sp,
-            Open, Open, firstBox, Close, Sp, Land, Sp, secondBox, Close, Dot));
+            new Formula.Power(rStar, new Formula.Negate(D(4))), Sp, Land, Sp,
+            Open, mayerExact, Close, Dot));
     }
 }
