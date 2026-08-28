@@ -16,7 +16,7 @@ public sealed class TruthExportCommandTests
     private const string Manifest = "{}\n";
 
     [Fact]
-    public void ExportEqualsStrictActiveSetDroppingRevokedAndKeepingReattested()
+    public void ExportEqualsStrictActiveSetDroppingRevokedNodes()
     {
         using var fixture = DivergentLedgerFixture();
         using var output = new TemporaryDirectory();
@@ -27,16 +27,17 @@ public sealed class TruthExportCommandTests
         Assert.Equal(string.Empty, console.Error);
         var exportPath = Path.Combine(output.Path, "truth-export.v1.json");
         Assert.True(File.Exists(exportPath));
-        using (var document = JsonDocument.Parse(File.ReadAllBytes(exportPath)))
+        using (var document = JsonDocument.Parse(
+                   TemporaryFileSystem.ReadAllBytes(output, "truth-export.v1.json")))
         {
             Assert.False(document.RootElement.TryGetProperty("lean_report_digest", out _));
         }
 
-        var model = ParseExport(exportPath);
+        var model = ParseExport(output);
         Assert.Equal("TruthExportCommand", model.Producer);
 
         var expected = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateHistory(Load(fixture.LedgerBytes), fixture.FinalCatalog)).Capability.ActiveFrozenNodes;
+            ValidateHistory(fixture.LedgerFiles, fixture.FinalCatalog)).Capability.ActiveFrozenNodes;
 
         Assert.Equal(
             expected.Select(static node => node.RepoPath.Value).Order(StringComparer.Ordinal),
@@ -44,10 +45,6 @@ public sealed class TruthExportCommandTests
         Assert.DoesNotContain(model.Nodes, node => node.RepoPath == PathFor("B"));
         Assert.Contains(model.Nodes, node => node.RepoPath == PathFor("A"));
         Assert.Contains(model.Nodes, node => node.RepoPath == PathFor("C"));
-
-        var exportedA = model.Nodes.Single(node => node.RepoPath == PathFor("A"));
-        Assert.Equal(fixture.ChangedAFrozenNodeId, exportedA.FrozenNodeId);
-        Assert.NotEqual(fixture.OriginalAFrozenNodeId, exportedA.FrozenNodeId);
 
         foreach (var node in expected)
         {
@@ -64,33 +61,11 @@ public sealed class TruthExportCommandTests
     }
 
     [Fact]
-    public void PendingReattestationDriftFailsClosedWithNoOutput()
-    {
-        var original = Module("A", source: "theorem a : True := by trivial\n");
-        var changed = Module("A", source: "-- drifted\ntheorem a : True := by trivial\n");
-        var genesisCatalog = BuildCatalog(original);
-        var ledgerBytes = FrozenLedgerGenerator.GenerateGenesis(
-            genesisCatalog,
-            new FrozenGenesisDescriptor(GitOid('e'), Sha256("historical-rule-catalog")));
-        using var fixture = FixtureFromLedger(ledgerBytes, [changed]);
-        using var output = new TemporaryDirectory();
-
-        var (exitCode, console) = Run(fixture, output.Path);
-
-        Assert.Equal(2, exitCode);
-        Assert.Contains("TRUTH_EXPORT_REJECTED", console.Error, StringComparison.Ordinal);
-        Assert.False(File.Exists(Path.Combine(output.Path, "truth-export.v1.json")));
-        Assert.Empty(Directory.EnumerateFiles(output.Path));
-    }
-
-    [Fact]
     public void ClosedModuleWithoutAFreezeFailsClosedWithNoOutput()
     {
         var genesisCatalog = BuildCatalog(Module("A"));
-        var ledgerBytes = FrozenLedgerGenerator.GenerateGenesis(
-            genesisCatalog,
-            new FrozenGenesisDescriptor(GitOid('e'), Sha256("historical-rule-catalog")));
-        using var fixture = FixtureFromLedger(ledgerBytes, [Module("A"), Module("B")]);
+        var ledgerFiles = EventFiles(genesisCatalog);
+        using var fixture = FixtureFromLedger(ledgerFiles, [Module("A"), Module("B")]);
         using var output = new TemporaryDirectory();
 
         var (exitCode, console) = Run(fixture, output.Path);
@@ -104,10 +79,8 @@ public sealed class TruthExportCommandTests
     public void MissingCandidateLeanReportFileFailsClosedWithNoOutput()
     {
         var genesisCatalog = BuildCatalog(Module("A"));
-        var ledgerBytes = FrozenLedgerGenerator.GenerateGenesis(
-            genesisCatalog,
-            new FrozenGenesisDescriptor(GitOid('e'), Sha256("historical-rule-catalog")));
-        using var fixture = FixtureFromLedger(ledgerBytes, [Module("A")]);
+        var ledgerFiles = EventFiles(genesisCatalog);
+        using var fixture = FixtureFromLedger(ledgerFiles, [Module("A")]);
         using var output = new TemporaryDirectory();
         File.Delete(fixture.ReportPath);
 
@@ -128,11 +101,9 @@ public sealed class TruthExportCommandTests
         var committed = Module("A", source: "theorem a : True := by trivial\n");
         var working = Module("A", source: "-- mutable working bytes\ntheorem a : True := by trivial\n");
         var catalog = BuildCatalog(committed);
-        var ledgerBytes = FrozenLedgerGenerator.GenerateGenesis(
-            catalog,
-            new FrozenGenesisDescriptor(GitOid('e'), Sha256("historical-rule-catalog")));
+        var ledgerFiles = EventFiles(catalog);
         using var fixture = FixtureFromLedger(
-            ledgerBytes,
+            ledgerFiles,
             [committed],
             identity,
             workingModules: [working]);
@@ -142,7 +113,7 @@ public sealed class TruthExportCommandTests
 
         Assert.Equal(0, exitCode);
         Assert.Equal(string.Empty, console.Error);
-        var model = ParseExport(Path.Combine(output.Path, "truth-export.v1.json"));
+        var model = ParseExport(output);
         Assert.Equal(new string('c', 40), model.SourceCommit);
         Assert.Equal(new string('d', 40), model.SourceTree);
         Assert.Equal(1, fixture.Gateway.CurrentRevisionResolutionCount);
@@ -165,8 +136,8 @@ public sealed class TruthExportCommandTests
         Assert.Equal(0, Run(fixture, second.Path).ExitCode);
 
         Assert.Equal(
-            File.ReadAllBytes(Path.Combine(first.Path, "truth-export.v1.json")),
-            File.ReadAllBytes(Path.Combine(second.Path, "truth-export.v1.json")));
+            TemporaryFileSystem.ReadAllBytes(first, "truth-export.v1.json"),
+            TemporaryFileSystem.ReadAllBytes(second, "truth-export.v1.json"));
     }
 
     [Theory]
@@ -202,47 +173,39 @@ public sealed class TruthExportCommandTests
     private static TruthExportFixture DivergentLedgerFixture()
     {
         var originalA = Module("A", source: "theorem a : True := by trivial\n");
-        var changedA = Module("A", source: "-- reattested\ntheorem a : True := by trivial\n");
         var moduleB = Module("B");
         var moduleC = Module("C");
 
         var genesisCatalog = BuildCatalog(originalA, moduleB, moduleC);
-        var genesis = Baseline(FrozenLedgerGenerator.GenerateGenesis(
-            genesisCatalog,
-            new FrozenGenesisDescriptor(GitOid('e'), Sha256("historical-rule-catalog"))), genesisCatalog);
+        var genesisFiles = EventFiles(genesisCatalog);
+        var genesis = Baseline(genesisCatalog);
 
-        var reattestCatalog = BuildCatalog(changedA, moduleB, moduleC);
-        var reattestBytes = FrozenLedgerGenerator.AppendReattestation(genesis, reattestCatalog);
-        var reattested = Baseline(reattestBytes, reattestCatalog);
-
-        var bNode = reattested.ActiveFrozenNodes.Single(node => node.RepoPath.Value == PathFor("B"));
-        var (evidence, store) = ReceiptStore(reattested, KernelFailure(bNode));
+        var bNode = genesis.ActiveFrozenNodes.Single(node => node.RepoPath.Value == PathFor("B"));
+        var (evidence, store) = ReceiptStore(genesis, KernelFailure(bNode));
         var validated = Assert.IsType<RevocationEvidenceValidationOutcome.Accepted>(
-            RevocationEvidenceValidator.Validate(evidence[0], reattested, store)).Capability;
+            RevocationEvidenceValidator.Validate(evidence[0], genesis, store)).Capability;
         var plan = Assert.IsType<RevocationPlanOutcome.Accepted>(
-            RevocationPlanner.Plan(reattested, [validated])).Capability;
-        var ledgerBytes = FrozenLedgerGenerator.AppendRevocation(reattested, plan);
+            RevocationPlanner.Plan(genesis, [validated])).Capability;
+        var revokeFiles = DagLedgerAppendWriter.BuildNewEventFiles(
+            FrozenLedgerGenerator.Revocation(genesis, plan));
+        var ledgerFiles = genesisFiles.AddRange(revokeFiles);
 
-        var finalCatalog = BuildCatalog(changedA, moduleC);
-        var fixture = FixtureFromLedger(ledgerBytes, [changedA, moduleC]);
-        fixture.LedgerBytes = ledgerBytes;
+        var finalCatalog = BuildCatalog(originalA, moduleC);
+        var fixture = FixtureFromLedger(ledgerFiles, [originalA, moduleC]);
+        fixture.LedgerFiles = ledgerFiles;
         fixture.FinalCatalog = finalCatalog;
-        fixture.OriginalAFrozenNodeId = genesisCatalog.ClosedNodes
-            .Single(node => node.RepoPath.Value == PathFor("A")).FrozenNodeId.Value;
-        fixture.ChangedAFrozenNodeId = finalCatalog.ClosedNodes
-            .Single(node => node.RepoPath.Value == PathFor("A")).FrozenNodeId.Value;
         return fixture;
     }
 
     private static TruthExportFixture FixtureFromLedger(
-        ImmutableArray<byte> ledgerBytes,
+        ImmutableArray<RepositoryFile> ledgerFiles,
         ModuleSpec[] revisionModules,
         FrozenRevisionIdentity? identity = null,
         ModuleSpec[]? workingModules = null)
     {
         var temporary = new TemporaryDirectory();
         var revisionFiles = RepositoryFiles(revisionModules);
-        AddLedgerFiles(revisionFiles, ledgerBytes);
+        AddLedgerFiles(revisionFiles, ledgerFiles);
         var revisionReports = Reports(revisionModules);
         var immutableRevision = RawSnapshot(revisionFiles);
         var revisionSnapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
@@ -255,7 +218,7 @@ public sealed class TruthExportCommandTests
         WriteStatementMaterials(reportPath, revisionReports);
         var mutableModules = workingModules ?? revisionModules;
         var mutableFiles = RepositoryFiles(mutableModules);
-        AddLedgerFiles(mutableFiles, ledgerBytes);
+        AddLedgerFiles(mutableFiles, ledgerFiles);
         var mutableReports = Reports(mutableModules);
         var mutableWorkingTree = RawSnapshot(mutableFiles);
         var mutableLeanReportSource = new FakeLeanReportSource(LeanAxiomReport.Create(mutableReports));
@@ -319,16 +282,10 @@ public sealed class TruthExportCommandTests
         RawRepositorySnapshot.Create(
             files.Select(static pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
 
-    private static FrozenLedgerConsistent Baseline(ImmutableArray<byte> bytes, FrozenMaterialCatalog catalog) =>
-        Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateHistory(Load(bytes), catalog)).Capability;
-
-    private static FrozenLedgerSyntax Load(ImmutableArray<byte> bytes) =>
-        Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes.AsSpan())).Syntax;
-
-    private static ParsedExport ParseExport(string path)
+    private static ParsedExport ParseExport(TemporaryDirectory output)
     {
-        using var document = JsonDocument.Parse(File.ReadAllBytes(path));
+        using var document = JsonDocument.Parse(
+            TemporaryFileSystem.ReadAllBytes(output, "truth-export.v1.json"));
         var root = document.RootElement;
         var nodes = root.GetProperty("nodes").EnumerateArray()
             .Select(static node => new ParsedExportNode(
@@ -361,6 +318,19 @@ public sealed class TruthExportCommandTests
         string[] AxiomClosure,
         string[] DeclarationStatementIds,
         string[] PrerequisiteFrozenNodeIds);
+
+    private static class TemporaryFileSystem
+    {
+        internal static byte[] ReadAllBytes(TemporaryDirectory directory, string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName) || Path.GetFileName(fileName) != fileName)
+            {
+                throw new ArgumentException("temporary output name must be a single file name", nameof(fileName));
+            }
+
+            return File.ReadAllBytes(Path.Combine(directory.Path, fileName));
+        }
+    }
 
     private static LeanFileReport ReportFor(ModuleSpec module)
     {
@@ -435,13 +405,9 @@ public sealed class TruthExportCommandTests
 
         internal ImmutableArray<byte> ReportBytes { get; } = reportBytes;
 
-        internal ImmutableArray<byte> LedgerBytes { get; set; }
+        internal ImmutableArray<RepositoryFile> LedgerFiles { get; set; }
 
         internal FrozenMaterialCatalog FinalCatalog { get; set; } = null!;
-
-        internal string OriginalAFrozenNodeId { get; set; } = string.Empty;
-
-        internal string ChangedAFrozenNodeId { get; set; } = string.Empty;
 
         public void Dispose() => temporary.Dispose();
     }

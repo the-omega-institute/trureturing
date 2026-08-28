@@ -1,3 +1,5 @@
+using StrataLint.Tests;
+
 namespace StrataLint.ArchitectureTests;
 
 public sealed class ScribeTestMapDeriverTests
@@ -19,6 +21,13 @@ public sealed class ScribeTestMapDeriverTests
         Assert.Equal(280, ScribeUnknownDebtPolicy.UnknownDebtLimit);
         Assert.Equal(281, ScribeUnknownDebtPolicy.UnknownDebtToleranceLimit);
         Assert.Empty(ScribeUnknownDebtPolicy.InspectCurrent(map));
+        var retiredLedgerMethod = Assert.Single(
+            map.Methods,
+            static method => method.Id ==
+                "TruthExportCommandTests.ExportEqualsStrictActiveSetDroppingRevokedNodes");
+        Assert.False(
+            retiredLedgerMethod.IsUnknown,
+            $"{retiredLedgerMethod.Id}: {string.Join(',', retiredLedgerMethod.UnknownReasons)}");
         Assert.All(
             map.Methods.SelectMany(static method => method.Paths),
             path => Assert.True(
@@ -164,7 +173,7 @@ public sealed class ScribeTestMapDeriverTests
 
         var map = ScribeTestMapDeriver.DeriveRepository(
             repository.Path,
-            timeout: TimeSpan.Zero);
+            timeout: TestBudgets.ZeroDuration);
         var finding = Assert.Single(map.CompileQueryFindings);
 
         Assert.Contains("timed out", finding.Message, StringComparison.Ordinal);
@@ -642,7 +651,7 @@ public sealed class ScribeTestMapDeriverTests
     }
 
     private static ProcessOutput RunGit(string repositoryRoot, params string[] arguments) =>
-        BoundedProcessRunner.Run(
+        TestProcessRunner.Run(
             "git",
             arguments,
             repositoryRoot,

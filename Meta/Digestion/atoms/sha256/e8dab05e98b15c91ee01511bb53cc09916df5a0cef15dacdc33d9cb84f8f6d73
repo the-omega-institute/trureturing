@@ -1,0 +1,26 @@
+## 121.1 Completion prime
+
+它使局部结构本身发生分歧、导子修复或最大阶扩张。
+
+例：
+
+$$
+5
+$$
+
+是 \(\mathbb Q(\sqrt5)\) 的判别式素数。
+
+$$
+2
+$$
+
+负责：
+
+$$
+\mathbb Z[\sqrt5]
+\subset
+\mathbb Z[\varphi]
+$$
+
+的最大阶修复。
+

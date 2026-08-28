@@ -41,7 +41,19 @@ internal sealed class CascadeCompletionDocument : IScribeDocumentDefinition
                             + "Setoid.quotientQuotientEquivQuotient, Quotient.map_surjective, "
                             + "Quotient.eq, and Quotient.congrRight; each is applied in the "
                             + "Lean bridge. LeanSearch returned HTTP 404 and no usable result."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("cascade-completion-equivalence"),
+                DeclarationHandle.Create(
+                    "D5/S3/ObserverMemory/Refinement/CascadeCompletion.cascadeCompletionEquiv"),
+                H("Cascade completion equivalence"),
+                StatementSource.FromAuthor(CascadeEquivFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The canonical equivalence identifies the quotient by the second-stage "
+                        + "relation with the completed coarse state, under the factorization "
+                        + "of the coarse readout through the fine readout."))),
+                DescribeRole.Definition))));
 
     private static Formula Apply(Formula function, Formula argument) =>
         Seq(function, Open, argument, Close);
@@ -92,5 +104,40 @@ internal sealed class CascadeCompletionDocument : IScribeDocumentDefinition
             Apply(kappa, state), Close, Sp, Land, Esc,
             Forall, Sp, y, Comma, Esc,
             Apply(equivalence, projectedClass), Sp, Eq, Sp, Apply(piR, y), Dot));
+    }
+
+    private static Formula CascadeEquivFormula()
+    {
+        Formula state = F.Id("Y");
+        Formula fine = F.Id("O");
+        Formula coarse = F.Id("P");
+        Formula update = F.Id("update");
+        Formula fineReadout = F.Id("fine");
+        Formula coarseReadout = F.Id("coarse");
+        Formula forget = F.Id("forget");
+        Formula hfactor = F.Id("hfactor");
+        Formula relation = Call("secondStageRelation", update, fineReadout, forget);
+        Formula quotient = QuotientOf(relation);
+        Formula completion = Call("CompletedState", update, coarseReadout);
+        Formula hypothesis = Seq(
+            coarseReadout, Sp, Eq, Sp, forget, Sp, Circ, Sp, fineReadout);
+
+        return Disp(new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [
+                new Formula.BoundVariable(FormulaIdentifier.Create("Y"), F.Id("Type")),
+                new Formula.BoundVariable(FormulaIdentifier.Create("O"), F.Id("Type")),
+                new Formula.BoundVariable(FormulaIdentifier.Create("P"), F.Id("Type")),
+                new Formula.BoundVariable(FormulaIdentifier.Create("update"),
+                    new Formula.TypeArrow(state, state)),
+                new Formula.BoundVariable(FormulaIdentifier.Create("fine"),
+                    new Formula.TypeArrow(state, fine)),
+                new Formula.BoundVariable(FormulaIdentifier.Create("coarse"),
+                    new Formula.TypeArrow(state, coarse)),
+                new Formula.BoundVariable(FormulaIdentifier.Create("forget"),
+                    new Formula.TypeArrow(fine, coarse)),
+                new Formula.BoundVariable(FormulaIdentifier.Create("hfactor"), hypothesis),
+            ],
+            Seq(quotient, Sp, Equiv, Sp, completion, Dot)));
     }
 }

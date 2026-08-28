@@ -186,6 +186,24 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier? scribeEmissionVerifier,
+        TimeProvider timeProvider)
+        : this(
+            repositoryRoot,
+            repository,
+            leanReportSource,
+            scribeEmissionVerifier,
+            new ProductionFrozenLedgerAdmissionServices(
+                repositoryRoot,
+                ImmutableHashSet<string>.Empty),
+            timeProvider)
+    {
+    }
+
+    internal ProductionCliEnvironment(
+        string repositoryRoot,
+        IRepositoryGateway repository,
+        ILeanReportSource leanReportSource,
+        IScribeEmissionVerifier? scribeEmissionVerifier,
         IFrozenLedgerAdmissionServices frozenLedgerAdmission,
         TimeProvider? timeProvider = null)
     {
@@ -646,17 +664,8 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     public CommandResult AppendLedger(IReadOnlyList<string> arguments) =>
         DagLedgerAppendWriter.Append(repositoryRoot, repository, arguments);
 
-    public CommandResult ReattestLedger(IReadOnlyList<string> arguments) =>
-        DagLedgerReattestWriter.Reattest(repositoryRoot, repository, arguments);
-
     public CommandResult RevokeLedger(IReadOnlyList<string> arguments) =>
         DagLedgerRevokeWriter.Revoke(repositoryRoot, repository, arguments);
-
-    public CommandResult SupersedeLedger(IReadOnlyList<string> arguments) =>
-        DagLedgerSupersedeWriter.Supersede(repositoryRoot, repository, arguments);
-
-    public CommandResult SyncLedger(IReadOnlyList<string> arguments) =>
-        DagLedgerSyncWriter.Sync(repositoryRoot, repository, arguments);
 
     public ExplicitCommandResult TruthRelease(IReadOnlyList<string> arguments) =>
         TruthReleaseCommand.Run(repository, scribeEmissionVerifier, arguments);
@@ -666,12 +675,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
     public CommandResult CleanLanes(IReadOnlyList<string> arguments) =>
         CleanLanesCommand.Run(repositoryRoot, arguments, TimeProvider.System.GetUtcNow());
-
-    public CommandResult AppendPerf(IReadOnlyList<string> arguments) =>
-        PerfAppendCommand.Run(repositoryRoot, arguments);
-
-    public CommandResult PerfReport(IReadOnlyList<string> arguments) =>
-        PerfReportCommand.Run(arguments);
 
     public CommandResult Worktree(IReadOnlyList<string> arguments) =>
         WorktreeCommand.Run(repositoryRoot, arguments);

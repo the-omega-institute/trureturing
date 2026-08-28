@@ -45,23 +45,13 @@ internal interface ICliEnvironment
 
     CommandResult AppendLedger(IReadOnlyList<string> arguments);
 
-    CommandResult ReattestLedger(IReadOnlyList<string> arguments);
-
     CommandResult RevokeLedger(IReadOnlyList<string> arguments);
-
-    CommandResult SupersedeLedger(IReadOnlyList<string> arguments);
-
-    CommandResult SyncLedger(IReadOnlyList<string> arguments);
 
     ExplicitCommandResult TruthExport(IReadOnlyList<string> arguments);
 
     ExplicitCommandResult TruthRelease(IReadOnlyList<string> arguments);
 
     CommandResult CleanLanes(IReadOnlyList<string> arguments);
-
-    CommandResult AppendPerf(IReadOnlyList<string> arguments);
-
-    CommandResult PerfReport(IReadOnlyList<string> arguments);
 
     CommandResult Worktree(IReadOnlyList<string> arguments);
 
@@ -119,18 +109,8 @@ internal static class CliApplication
                 RenderCommand(environment.Ingest(tail), console),
             ["ledger-append"] = static (environment, tail, console) =>
                 RenderCommand(environment.AppendLedger(tail), console),
-            ["ledger-reattest"] = static (environment, tail, console) =>
-                RenderCommand(environment.ReattestLedger(tail), console),
             ["ledger-revoke"] = static (environment, tail, console) =>
                 RenderCommand(environment.RevokeLedger(tail), console),
-            ["ledger-supersede"] = static (environment, tail, console) =>
-                RenderCommand(environment.SupersedeLedger(tail), console),
-            ["ledger-sync"] = static (environment, tail, console) =>
-                RenderCommand(environment.SyncLedger(tail), console),
-            ["perf-append"] = static (environment, tail, console) =>
-                RenderCommand(environment.AppendPerf(tail), console),
-            ["perf-report"] = static (environment, tail, console) =>
-                RenderCommand(environment.PerfReport(tail), console),
             ["route"] = static (environment, tail, console) =>
                 RenderCommand(environment.Route(tail), console),
             ["selftest"] = static (environment, tail, console) =>

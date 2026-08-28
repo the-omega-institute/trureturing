@@ -1,0 +1,10 @@
+ast_path: section/134-1-Hecke-形式
+fingerprints:
+  raw_sha256: sha256:00a4b556f324d4be86c90c640d55b155c857256f1589f2590509974df9d01aa2
+  normalized_sha256: sha256:00a4b556f324d4be86c90c640d55b155c857256f1589f2590509974df9d01aa2
+cas_ref: sha256:00a4b556f324d4be86c90c640d55b155c857256f1589f2590509974df9d01aa2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

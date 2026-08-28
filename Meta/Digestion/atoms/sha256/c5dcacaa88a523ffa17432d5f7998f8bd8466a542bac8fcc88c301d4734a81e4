@@ -1,0 +1,71 @@
+# 第一百四十部　与 DECT 的直接合并
+
+当前概念为有理斜率观察：
+
+$$
+q_r(m,n)=rm+n.
+$$
+
+目标为完整根标签：
+
+$$
+T(m,n)=(m,n).
+$$
+
+其逃逸关系为：
+
+$$
+\mathcal E(q_r;T)
+=
+\left\{
+((m,n),(m',n')):
+rm+n=rm'+n',
+\ (m,n)\neq(m',n')
+\right\}.
+$$
+
+该集合非空。
+
+加入 Golden 观察：
+
+$$
+d_\varphi(m,n)=m\varphi+n.
+$$
+
+则：
+
+$$
+\ker d_\varphi
+$$
+
+在根标签空间上只有对角，因此：
+
+$$
+\boxed{
+\mathcal E(q_r\vee d_\varphi;T)
+=
+\varnothing.
+}
+$$
+
+这正是项目 DECT 中：
+
+$$
+\mathcal E(q\vee d;T)
+=
+\mathcal E(q;T)\cap\ker d
+$$
+
+的一个无限但完全显式实例。
+
+黄金比例的定义价值由此不是“它很美”，而是：
+
+$$
+\boxed{
+\text{它以一个低复杂度、可 Galois 完成、有限精度稳定的定义，
+切开全部有理投影逃逸纤维。}
+}
+$$
+
+---
+

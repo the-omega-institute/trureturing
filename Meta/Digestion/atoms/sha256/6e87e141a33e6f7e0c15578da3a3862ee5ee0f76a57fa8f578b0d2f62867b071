@@ -1,0 +1,70 @@
+## 108.1 标量 Theta 观察者的盲核
+
+定义：
+
+$$
+q_\Theta(N)=\Theta_N.
+$$
+
+式 (108.2) 表明：
+
+$$
+q_\Theta(N)
+$$
+
+只依赖于：
+
+$$
+h_N.
+$$
+
+所以：
+
+$$
+h_{N_1}=h_{N_2}
+\Longrightarrow
+\Theta_{N_1}=\Theta_{N_2}.
+$$
+
+例如：
+
+$$
+A_5^4D_4
+\quad\text{与}\quad
+D_4^6
+$$
+
+都是 Coxeter 数 \(6\) 的不同 Niemeier 根系，但 genus-one Theta 相同。
+
+类似地：
+
+$$
+D_{16}E_8
+\quad\text{与}\quad
+E_8^3
+$$
+
+都具有 Coxeter 数 \(30\)，所以标量 Theta 观察者无法区分它们。
+
+因此：
+
+$$
+\boxed{
+\ker q_\Theta
+\text{ 明显大于格同构关系。}
+}
+$$
+
+这正是 DECT 的目标逃逸：
+
+$$
+\mathcal E
+\left(
+q_\Theta;
+\operatorname{RootSystemType}
+\right)
+\neq\varnothing.
+$$
+
+---
+

@@ -1,0 +1,33 @@
+## 126.1 对 Yu Deng 方法的严格对应
+
+这不是一般类比，而是精确恒等式：
+
+$$
+\boxed{
+\begin{aligned}
+\text{all histories}
+&=
+-\log\mathcal D,\\
+\text{primitive histories}
+&=
+H,\\
+\text{repetition quotient}
+&=
+1/k,\\
+\text{primitive extraction}
+&=
+\text{Möbius inversion}.
+\end{aligned}
+}
+$$
+
+因此 Monster denominator 是一个完全可解的：
+
+$$
+\boxed{
+\text{primitive-history renormalization model}.
+}
+$$
+
+---
+

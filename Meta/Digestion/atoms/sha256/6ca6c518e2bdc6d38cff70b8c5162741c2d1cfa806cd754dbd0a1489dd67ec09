@@ -1,0 +1,60 @@
+# 第九十八部　\(E_8\) Coxeter 谱是三十阶 cyclotomic 完成
+
+\(E_8\) 的 Coxeter 数为：
+
+$$
+h=30.
+$$
+
+其指数为：
+
+$$
+\boxed{
+1,7,11,13,17,19,23,29.
+}
+\tag{98.1}
+$$
+
+这些整数恰好是：
+
+$$
+\boxed{
+(\mathbb Z/30\mathbb Z)^\times.
+}
+$$
+
+所以 Coxeter 元 \(C\) 的特征值为：
+
+$$
+e^{2\pi i m/30},
+\qquad
+m\in(\mathbb Z/30\mathbb Z)^\times,
+$$
+
+从而：
+
+$$
+\boxed{
+\chi_C(X)=\Phi_{30}(X).
+}
+\tag{98.2}
+$$
+
+\(E_8\) Coxeter 旋转可分解为角度由 \(1,7,11,13\) 及其共轭指数决定的四个正交二维旋转平面。([arXiv][8])
+
+因此：
+
+$$
+\boxed{
+\operatorname{rank}E_8
+=
+\varphi_{\mathrm{Euler}}(30)
+=
+8.
+}
+$$
+
+这里 \(\varphi_{\mathrm{Euler}}\) 是 Euler totient，不能与黄金比例混淆。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/102-3-将开放问题改写成有限整数问题/clause/4
+fingerprints:
+  raw_sha256: sha256:70b4ba554ee7f64ed2358508096f127d67dca23995092acde551aa3f58c58278
+  normalized_sha256: sha256:70b4ba554ee7f64ed2358508096f127d67dca23995092acde551aa3f58c58278
+cas_ref: sha256:70b4ba554ee7f64ed2358508096f127d67dca23995092acde551aa3f58c58278
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

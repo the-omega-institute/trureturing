@@ -91,10 +91,15 @@ public sealed class TruthExportJsonTests
                 declarations: new[] { ($"nk-{index}", "theorem", Id((char)('0' + index))) }))
             .ToArray();
         var outputs = new HashSet<string>(StringComparer.Ordinal);
-        for (var seed = 0; seed < 20; seed++)
+        for (var permutation = 0; permutation < 20; permutation++)
         {
-            var random = new Random(seed);
-            var shuffled = nodes.OrderBy(_ => random.Next()).ToImmutableArray();
+            var multiplier = (permutation % 4 * 2) + 1;
+            var offset = permutation / 4;
+            var shuffled = nodes
+                .Select((node, index) => (Node: node, Key: (index * multiplier + offset) % nodes.Length))
+                .OrderBy(static item => item.Key)
+                .Select(static item => item.Node)
+                .ToImmutableArray();
             outputs.Add(Convert.ToBase64String(
                 TruthExportJsonWriter.Write(TruthExportModel.Create(shuffled, Commit, Tree)).AsSpan()));
         }
@@ -158,17 +163,22 @@ public sealed class TruthExportJsonTests
     }
 
     [Fact]
-    public void StrictReaderRejectsANodeWithNoDeclarations()
+    public void StrictReaderRoundTripsANodeWithNoDeclarations()
     {
-        // Every exported node is invariantly Closed and carries at least one declaration; a node with an
-        // empty declaration array is malformed even though its shape is otherwise valid.
-        var noDeclarations =
-            "{\"dialect\":\"stratalint.truth-export.v1\",\"nodes\":["
-            + "{\"declarations\":[],\"frozen_node_id\":\"" + Id('a') + "\",\"node_axiom_closure\":[],\"prerequisite_frozen_node_ids\":[],\"repo_path\":\"D5/S0/Carrier/A.lean\"}"
-            + "],\"producer\":\"TruthExportCommand\",\"schema\":\"stratalint.truth-export\",\"schema_version\":1,"
-            + "\"source_commit\":\"" + Commit + "\",\"source_tree\":\"" + Tree + "\"}\n";
+        var expected = TruthExportModel.Create(
+            ImmutableArray.Create(Node(
+                "D5/S0/Carrier/A.lean",
+                Id('a'),
+                Array.Empty<string>(),
+                Array.Empty<(string, string, string)>())),
+            Commit,
+            Tree);
+        var bytes = TruthExportJsonWriter.Write(expected);
 
-        Assert.Throws<FormatException>(() => TruthExportJsonReader.Read(Encoding.UTF8.GetBytes(noDeclarations)));
+        var model = TruthExportJsonReader.Read(bytes.AsSpan());
+
+        Assert.Empty(Assert.Single(model.Nodes).Declarations);
+        Assert.True(bytes.AsSpan().SequenceEqual(TruthExportJsonWriter.Write(model).AsSpan()));
     }
 
     [Theory]

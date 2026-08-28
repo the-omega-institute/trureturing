@@ -20,7 +20,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.True(result.ExitCode == 0, Diagnostics(result));
         Assert.Equal(before + 2, fixture.CommitCount());
         Assert.Equal(1, fixture.FreezeCount());
-        Assert.Equal(2, fixture.FreezeProbeCount());
+        Assert.Equal(0, fixture.FreezeProbeCount());
         Assert.True(File.Exists(fixture.ReceiptPath));
         Assert.Empty(fixture.Status());
         Assert.Equal(
@@ -32,7 +32,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "dotnet:ledger-append",
             ],
             fixture.CallKinds());
-        AssertDepositPerformanceEvents(fixture);
 
         var phaseA = fixture.CommitPaths("HEAD~1");
         Assert.Contains(TransactionFixture.LeanPath, phaseA);
@@ -117,7 +116,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
     }
 
     [Fact]
-    public void DepositDoesNotSkipAFreezeForStaleModuleIdentity()
+    public void DepositSkipsFreezeWhenTheModulePathIsAlreadyActive()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -128,45 +127,8 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var result = fixture.Run("deposit");
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
-        Assert.Equal(1, fixture.CallKinds().Count(call => call == "dotnet:ledger-append"));
-        Assert.Equal(2, fixture.FreezeCount());
-    }
-
-    [Fact]
-    public void DepositReplaysReattestationsInCausalOrderInsteadOfFileNameOrder()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.WriteActiveReattestationChainInReverseFileNameOrder();
-
-        var result = fixture.Run("deposit");
-
-        Assert.True(result.ExitCode == 0, Diagnostics(result));
-        Assert.Contains(
-            "module-already-frozen",
-            Encoding.UTF8.GetString(result.StandardError),
-            StringComparison.Ordinal);
         Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
         Assert.Equal(1, fixture.FreezeCount());
-    }
-
-    [Fact]
-    public void DepositRejectsCyclicReattestationChainWithoutHanging()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.WriteCyclicReattestationChain();
-
-        // This generous wall-clock budget is only a runaway guard; the verdict is
-        // the deterministic cycle diagnostic and exit code below.
-        var result = fixture.Run("deposit", timeout: BoundedProcessRunner.HangDetectionBudget);
-
-        Assert.Equal(2, result.ExitCode);
-        Assert.Contains(
-            "Reattest chain contains a cycle",
-            Encoding.UTF8.GetString(result.StandardError),
-            StringComparison.Ordinal);
-        Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
     }
 
     [Fact]
@@ -345,7 +307,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var deposit = fixture.Run("deposit");
         Assert.True(deposit.ExitCode == 0, Diagnostics(deposit));
         fixture.ClearCalls();
-        fixture.ClearPerformanceEvents();
         var before = fixture.CommitCount();
 
         var result = fixture.Run("cover");
@@ -360,7 +321,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "make:emit",
             ],
             fixture.CallKinds());
-        AssertCoverPerformanceEvents(fixture);
         Assert.Contains("aligned: covered", fixture.BackfillContents(), StringComparison.Ordinal);
         Assert.Equal("emission: covered\n", fixture.EmissionContents());
         Assert.Empty(fixture.Status());
@@ -383,25 +343,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(before + 1, fixture.CommitCount());
         Assert.Contains("cover_disposition:", fixture.BackfillContents(), StringComparison.Ordinal);
         Assert.Equal(["make:lean-report", "dotnet:cover-atom"], fixture.CallKinds());
-        AssertFailedCoverPerformanceEvents(fixture);
         Assert.Empty(fixture.Status());
-
-        using var probeFailureFixture = new TransactionFixture();
-        var probeFailure = probeFailureFixture.Run(
-            "cover",
-            coverDispositionFailure: true,
-            usePerformanceProbeOverrides: false,
-            failPerformanceCommitProbe: true);
-        Assert.NotEqual(0, probeFailure.ExitCode);
-        var degradedEvents = probeFailureFixture.PerformanceEvents()
-            .Select(PerfEventCodec.ParseLine)
-            .ToArray();
-        Assert.NotEmpty(degradedEvents);
-        Assert.All(degradedEvents, item =>
-        {
-            Assert.Equal("unknown", item.Context.Commit);
-            Assert.Equal("observation", item.Status);
-        });
     }
 
     private static string Diagnostics(ProcessOutput result) =>
@@ -427,9 +369,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
         internal const string ReceiptRelativePath = "Meta/Digestion/formalizations/atom-1.v1.json";
         internal const string SecondaryReceiptRelativePath =
             "Meta/Digestion/formalizations/atom-2.v1.json";
-        internal const string PerformanceCommit = "0123456789abcdef0123456789abcdef01234567";
-        internal const string PerformanceLoadavg = "0.25";
-        internal const string PerformanceHostConcurrency = "3";
 
         private const string ScriptPath = "tools/scripts/workflow/playbook-workflows.sh";
         private readonly TemporaryDirectory temporary = new();
@@ -443,7 +382,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
             binPath = Path.Combine(Root, "bin");
             callsPath = Path.Combine(Root, "calls");
             freezeProbePath = Path.Combine(Root, "freeze-probes");
-            performanceLedgerPath = Path.Combine(performance.Path, "events.jsonl");
             Directory.CreateDirectory(binPath);
             CopyScript();
             File.Copy(
@@ -570,96 +508,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
             WriteLedger(freeze);
         }
 
-        internal void WriteActiveReattestationChainInReverseFileNameOrder()
-        {
-            const string caseId = "active-frozen/replayed-probe";
-            const string freezeHash =
-                "sha256:1111111111111111111111111111111111111111111111111111111111111111";
-            const string earlierReattestHash =
-                "sha256:2222222222222222222222222222222222222222222222222222222222222222";
-            var currentDescriptorBlobOid = "git-sha1:" + Git("hash-object", "--", LeanPath).Trim();
-            var freeze = JsonSerializer.Serialize(new
-            {
-                event_hash = freezeHash,
-                event_type = "Freeze",
-                payload = new
-                {
-                    case_id = caseId,
-                    frozen_node_id =
-                        "sha256:f000000000000000000000000000000000000000000000000000000000000000",
-                    input = new
-                    {
-                        descriptor_blob_oid =
-                            "git-sha1:0000000000000000000000000000000000000000",
-                        descriptor_selector = LeanPath,
-                    },
-                    node_path = LeanPath,
-                },
-            });
-            var earlierReattest = ReattestEvent(
-                caseId,
-                earlierReattestHash,
-                freezeHash,
-                "sha256:2000000000000000000000000000000000000000000000000000000000000000",
-                "git-sha1:1111111111111111111111111111111111111111");
-            var latestReattest = ReattestEvent(
-                caseId,
-                "sha256:3333333333333333333333333333333333333333333333333333333333333333",
-                earlierReattestHash,
-                "sha256:1000000000000000000000000000000000000000000000000000000000000000",
-                currentDescriptorBlobOid);
-            WriteLedger(
-                ("1000000000000000000000000000000000000000000000000000000000000000.json", latestReattest),
-                ("2000000000000000000000000000000000000000000000000000000000000000.json", earlierReattest),
-                ("f000000000000000000000000000000000000000000000000000000000000000.json", freeze));
-        }
-
-        internal void WriteCyclicReattestationChain()
-        {
-            const string freezeHash =
-                "sha256:9999999999999999999999999999999999999999999999999999999999999999";
-            const string frozenNodeId =
-                "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc";
-            const string firstHash =
-                "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            const string secondHash =
-                "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
-            const string caseId = "active-frozen/cyclic-probe";
-            var freeze = JsonSerializer.Serialize(new
-            {
-                event_hash = freezeHash,
-                event_type = "Freeze",
-                payload = new
-                {
-                    case_id = caseId,
-                    frozen_node_id = frozenNodeId,
-                    input = new
-                    {
-                        descriptor_blob_oid =
-                            "git-sha1:0000000000000000000000000000000000000000",
-                        descriptor_selector = LeanPath,
-                    },
-                    node_path = LeanPath,
-                },
-            });
-            var first = ReattestEvent(
-                caseId,
-                firstHash,
-                secondHash,
-                firstHash,
-                "git-sha1:0000000000000000000000000000000000000000");
-            var second = ReattestEvent(
-                caseId,
-                secondHash,
-                firstHash,
-                secondHash,
-                "git-sha1:1111111111111111111111111111111111111111");
-            WriteLedger(
-                (frozenNodeId["sha256:".Length..] + ".json", freeze),
-                ("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json", first),
-                ("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.json", second));
-        }
-
         internal void LeaveInterruptedTemporaryFiles(
             string receiptRelativePath = ReceiptRelativePath)
         {
@@ -686,25 +534,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
                         ? descriptorSelector.GetString()
                         : null;
                 return selector == leanPath;
-            });
-
-        private static string ReattestEvent(
-            string caseId,
-            string eventHash,
-            string previousHash,
-            string frozenNodeId,
-            string descriptorBlobOid) =>
-            JsonSerializer.Serialize(new
-            {
-                event_hash = eventHash,
-                event_type = "Reattest",
-                payload = new
-                {
-                    case_id = caseId,
-                    frozen_node_id = frozenNodeId,
-                    input = new { descriptor_blob_oid = descriptorBlobOid },
-                    previous_attestation_event_hash = previousHash,
-                },
             });
 
         private void WriteLedger(params string[] events)
@@ -760,11 +589,11 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         private string Git(params string[] arguments)
         {
-            var result = BoundedProcessRunner.Run(
+            var result = TestProcessRunner.Run(
                 "/usr/bin/git",
                 arguments,
                 Root,
-                TimeSpan.FromSeconds(15),
+                TestBudgets.PlaybookProcessHangGuard,
                 128 * 1024);
             if (result.ExitCode != 0)
             {

@@ -1,0 +1,16 @@
+ast_path: section/118-1-为什么-scalar-Theta-必须被-refined
+fingerprints:
+  raw_sha256: sha256:9961fc555a45bc9d8553ede69bad429dd28091f4e9bf3c89a493c69c18070753
+  normalized_sha256: sha256:9961fc555a45bc9d8553ede69bad429dd28091f4e9bf3c89a493c69c18070753
+cas_ref: sha256:9961fc555a45bc9d8553ede69bad429dd28091f4e9bf3c89a493c69c18070753
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-e8eabc21bd648f72fb1a08f43af07431a4e254d2dcfe392d18c8fdfabb93ab61-95098ae3e361cb56bb8efa087157af8fcbccc09d2786ca07a31352e5abc6dd95
+    - generic-residual-767252d3b1ea45af92c645bbc927f638bf328b81c73ad6f9a69c8b2b640b320d-739f4d8a13b346985f8d1028a0a6c1ceb685ed72e220d929772ce000cd264329
+    - generic-residual-0cb671337e87c83bdc144277f603b1333d8e5a43c9f13e53061ece9a9742c2f4-0d47dd29e414974a52ffa888fffc132de7d7dd3d9e26fae782d1a51d1428b1c6
+    - generic-residual-605bf2ae8f5fe39df68622a0e987dc99ef1b29bc94138bcdd1b4808f0d14372e-8029b4a22a92cd6cedd1d1d5747fa231aa2716ac93f34e20267a298b3d2d0348
+    - generic-residual-874d8457c76e96401ad642e0f55ed5bd517d9c904fd76b4d95b7c285bcb397d9-e7577d6a4eb47340c4cfcde4708924091b22266a1a3d666701af86f83a40247d

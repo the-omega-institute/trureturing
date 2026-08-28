@@ -1,0 +1,10 @@
+ast_path: section/139-2-有理斜率观察/clause/4
+fingerprints:
+  raw_sha256: sha256:0ca2cfb42cc8cea95d968a3c3ffa5d5c2a50c8f55bd53bd46bd68736133a846a
+  normalized_sha256: sha256:0ca2cfb42cc8cea95d968a3c3ffa5d5c2a50c8f55bd53bd46bd68736133a846a
+cas_ref: sha256:0ca2cfb42cc8cea95d968a3c3ffa5d5c2a50c8f55bd53bd46bd68736133a846a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

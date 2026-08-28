@@ -1,0 +1,10 @@
+ast_path: section/121-3-二者可能耦合/clause/1
+fingerprints:
+  raw_sha256: sha256:5dcf41f25c830d8849cdde7ec081244e71aa450e7a81a47e079e18728b07a5c5
+  normalized_sha256: sha256:5dcf41f25c830d8849cdde7ec081244e71aa450e7a81a47e079e18728b07a5c5
+cas_ref: sha256:5dcf41f25c830d8849cdde7ec081244e71aa450e7a81a47e079e18728b07a5c5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

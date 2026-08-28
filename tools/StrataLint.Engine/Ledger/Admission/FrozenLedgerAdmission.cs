@@ -8,8 +8,7 @@ internal sealed record FrozenLedgerAdmissionPreparation(
     ImmutableHashSet<string> LeanReportProducerPaths,
     TrustedFrozenGitReferences TrustedDeltaReferences,
     FrozenLedgerConsistent? RevocationBaseline = null,
-    TrustedRevocationReceiptStore? TrustedRevocationReceipts = null,
-    RepositorySnapshot? ProtectedBaseSnapshot = null);
+    TrustedRevocationReceiptStore? TrustedRevocationReceipts = null);
 
 internal sealed record FrozenLedgerAdmissionFailure(
     ImmutableArray<RepoPath> AffectedPaths,
@@ -19,18 +18,14 @@ internal sealed record FrozenLedgerAdmissionFailure(
 internal sealed class FrozenLedgerAdmissionScope
 {
     private FrozenLedgerAdmissionScope(
-        ImmutableDictionary<RepoPath, ImmutableHashSet<RepoPath>> witnessesByPath,
-        bool environmentChanged)
+        ImmutableDictionary<RepoPath, ImmutableHashSet<RepoPath>> witnessesByPath)
     {
         WitnessesByPath = witnessesByPath;
-        EnvironmentChanged = environmentChanged;
     }
 
     internal ImmutableDictionary<RepoPath, ImmutableHashSet<RepoPath>> WitnessesByPath { get; }
 
     internal ImmutableHashSet<RepoPath> Paths => WitnessesByPath.Keys.ToImmutableHashSet();
-
-    internal bool EnvironmentChanged { get; }
 
     internal ImmutableArray<RepoPath> WitnessesFor(RepoPath path) =>
         WitnessesByPath.TryGetValue(path, out var witnesses)
@@ -49,13 +44,8 @@ internal sealed class FrozenLedgerAdmissionScope
         ArgumentNullException.ThrowIfNull(states);
         ArgumentNullException.ThrowIfNull(adjacency);
         var witnesses = new Dictionary<RepoPath, HashSet<RepoPath>>();
-        var environmentChanges = changes.Entries
-            .Where(static change => FrozenLedgerDeltaPredicate.IsEnvironmentInput(change.Path.Value))
-            .Select(static change => change.Path)
-            .ToImmutableArray();
         var allChanges = changes.Entries
-            .Where(change => environmentChanges.Contains(change.Path)
-                || change.Path.Value == "Trureturing.lean"
+            .Where(change => change.Path.Value == "Trureturing.lean"
                 || FrozenLedgerDeltaPredicate.IsDeltaDefinitionInput(change.Path.Value)
                 || preparation.LeanReportProducerPaths.Contains(change.Path.Value))
             .Select(static change => change.Path)
@@ -125,8 +115,7 @@ internal sealed class FrozenLedgerAdmissionScope
         return new FrozenLedgerAdmissionScope(
             witnesses.ToImmutableDictionary(
                 static item => item.Key,
-                static item => item.Value.ToImmutableHashSet()),
-            !environmentChanges.IsEmpty);
+                static item => item.Value.ToImmutableHashSet()));
 
         void Add(RepoPath path, IEnumerable<RepoPath> deltaWitnesses)
         {
@@ -212,15 +201,11 @@ public static partial class FrozenLedger
         FrozenLedgerAdmissionPreparation preparation,
         FrozenLedgerAdmissionScope scope,
         FrozenMaterialCatalog catalog,
-        RawChangeSet changes,
-        TrustedFrozenGitReferences trustedReferences,
-        LeanAxiomReport? report = null,
-        RepositorySnapshot? snapshot = null)
+        TrustedFrozenGitReferences trustedReferences)
     {
         ArgumentNullException.ThrowIfNull(preparation);
         ArgumentNullException.ThrowIfNull(scope);
         ArgumentNullException.ThrowIfNull(catalog);
-        ArgumentNullException.ThrowIfNull(changes);
         ArgumentNullException.ThrowIfNull(trustedReferences);
         try
         {
@@ -232,7 +217,6 @@ public static partial class FrozenLedger
             var activePathCases = active.Values.ToDictionary(
                 static entry => entry.Material.RepoPath,
                 static entry => entry.Payload.CaseId);
-            var supersededBaseCases = new HashSet<string>(StringComparer.Ordinal);
             foreach (var item in preparation.DeltaEvents)
             {
                 try
@@ -263,80 +247,6 @@ public static partial class FrozenLedger
                             freeze.CaseId,
                             new FrozenActiveEntry(material, freeze, item.EventHash));
                         activePathCases.Add(freezePath, freeze.CaseId);
-                    }
-                    else if (item.EventType == "Reattest")
-                    {
-                        var reattest = ParseReattest(
-                            item.Payload,
-                            active,
-                            trustedReferences,
-                            requireAxiomClosure: true);
-                        var entry = active[reattest.CaseId];
-                        var material = ValidateReattestCandidateMaterial(
-                            reattest,
-                            entry,
-                            catalog,
-                            "is not Closed");
-
-                        active[reattest.CaseId] = ApplyReattest(
-                            entry,
-                            reattest,
-                            item.EventHash,
-                            material);
-                    }
-                    else if (item.EventType == SupersedeEventType)
-                    {
-                        var supersede = ValidateSupersede(
-                            item.Payload,
-                            active,
-                            trustedReferences,
-                            catalog,
-                            report is null || snapshot is null
-                                || !LeanImportClosure.RepositoryPaths(
-                                    report,
-                                    active[FrozenLedgerAttestationChain.RequiredString(
-                                        item.Payload,
-                                        "case_id")].Material.RepoPath)
-                                    .Overlaps(changes.Paths),
-                            report is null || snapshot is null
-                                || LeanImportClosure.ExternalImportsHaveNamedPinCoverage(
-                                    report,
-                                    active[FrozenLedgerAttestationChain.RequiredString(
-                                        item.Payload,
-                                        "case_id")].Material.RepoPath,
-                                    snapshot),
-                            report is not null
-                                && snapshot is not null
-                                && preparation.ProtectedBaseSnapshot is not null
-                                && LeanImportClosure.ProtectedEnvironmentMatchesEntry(
-                                    active[FrozenLedgerAttestationChain.RequiredString(
-                                        item.Payload,
-                                        "case_id")],
-                                    preparation.ProtectedBaseSnapshot)
-                                && LeanImportClosure.RelevantSemanticPinsChanged(
-                                    report,
-                                    active[FrozenLedgerAttestationChain.RequiredString(
-                                        item.Payload,
-                                        "case_id")].Material.RepoPath,
-                                    preparation.ProtectedBaseSnapshot,
-                                    snapshot),
-                            report is not null
-                                && LeanImportClosure.CandidateStatementsAvoidTrivialTruth(
-                                    report,
-                                    active[FrozenLedgerAttestationChain.RequiredString(
-                                        item.Payload,
-                                        "case_id")].Material.RepoPath));
-                        if (!preparation.BaseView.ActiveByCase.ContainsKey(supersede.CaseId)
-                            || !supersededBaseCases.Add(supersede.CaseId))
-                        {
-                            throw new FormatException(
-                                "Supersede must target each protected-base active case exactly once.");
-                        }
-
-                        active[supersede.CaseId] = ApplySupersede(
-                            active[supersede.CaseId],
-                            supersede,
-                            item.EventHash);
                     }
                     else if (item.EventType == "Revoke")
                     {
@@ -373,23 +283,12 @@ public static partial class FrozenLedger
                 }
             }
 
-            if (scope.EnvironmentChanged)
-            {
-                foreach (var baseEntry in preparation.BaseView.ActiveByCase.Values.OrderBy(
-                    static entry => entry.Material.RepoPath.Value,
-                    StringComparer.Ordinal))
-                {
-                    if (!supersededBaseCases.Contains(baseEntry.Payload.CaseId))
-                    {
-                        return Failure(
-                            [baseEntry.Material.RepoPath],
-                            scope.WitnessesFor(baseEntry.Material.RepoPath),
-                            $"Active module {baseEntry.Material.RepoPath.Value} is missing a Supersede event for the environment pin change.");
-                    }
-                }
-            }
-
             var actualByPath = active.Values.ToDictionary(static entry => entry.Material.RepoPath);
+            var recordedPathsByIdentity = FrozenPathsByIdentity(
+                active.Values.Select(static entry => entry.Material));
+            var currentPathsByIdentity = FrozenPathsByIdentity(
+                active.Values.Select(static entry => entry.Material),
+                catalog.ClosedNodes);
             foreach (var path in scope.Paths.OrderBy(static item => item.Value, StringComparer.Ordinal))
             {
                 var hasExpected = catalog.ByPath.TryGetValue(path, out var material);
@@ -399,7 +298,7 @@ public static partial class FrozenLedger
                     return Failure(
                         [path],
                         scope.WitnessesFor(path),
-                        $"Closed module {path.Value} is missing a Freeze event; run ledger-sync.");
+                        $"Closed module {path.Value} is missing a Freeze event; run ledger-append.");
                 }
 
                 if (!hasExpected && hasActual)
@@ -417,9 +316,11 @@ public static partial class FrozenLedger
 
                 var activeEntry = entry!;
                 var expectedMaterial = material!;
-                var materialMatches = HistoricalActiveFreezeMatches(
+                var materialMatches = FrozenLedgerHistoricalFreezeMatcher.HistoricalActiveFreezeMatches(
                     activeEntry.Payload,
                     expectedMaterial,
+                    recordedPathsByIdentity,
+                    currentPathsByIdentity,
                     out var materialDifferences);
                 if (materialMatches)
                 {
@@ -441,7 +342,7 @@ public static partial class FrozenLedger
                 return Failure(
                     [path],
                     scope.WitnessesFor(path),
-                    $"Active module {path.Value} has material/blob drift and lacks a matching Reattest event; run ledger-sync.; field differences: {differenceMessage}");
+                    $"Active module {path.Value} changed identity; append Revoke before rerunning ledger-append; field differences: {differenceMessage}");
             }
 
             return null;
@@ -465,118 +366,4 @@ public static partial class FrozenLedger
             message + "; delta witness: "
                 + string.Join(", ", witnesses.Select(static item => item.Value)));
 
-    private static bool HistoricalActiveFreezeMatches(
-        FrozenFreezePayload payload,
-        FrozenNodeMaterial material,
-        out ImmutableArray<string> differences)
-    {
-        var result = ImmutableArray.CreateBuilder<string>();
-        if (!payload.DeclarationStatementIds.SequenceEqual(material.DeclarationStatementIds))
-        {
-            result.Add(SequenceDifference(
-                "DeclarationStatementIds",
-                material.DeclarationStatementIds,
-                payload.DeclarationStatementIds,
-                static item =>
-                    $"{item.DeclarationNameKey}|{item.Kind}|{item.StatementId.Value}"));
-        }
-
-        if (payload.StatementId != material.StatementId)
-        {
-            result.Add(ScalarDifference(
-                "StatementId",
-                material.StatementId.Value,
-                payload.StatementId.Value));
-        }
-
-        if (payload.WitnessId != material.WitnessId)
-        {
-            result.Add(ScalarDifference(
-                "WitnessId",
-                material.WitnessId.Value,
-                payload.WitnessId.Value));
-        }
-
-        if (payload.FrozenNodeId != material.FrozenNodeId)
-        {
-            result.Add(ScalarDifference(
-                "FrozenNodeId",
-                material.FrozenNodeId.Value,
-                payload.FrozenNodeId.Value));
-        }
-
-        if (!payload.PrerequisiteFrozenNodeIds.SequenceEqual(material.PrerequisiteFrozenNodeIds))
-        {
-            result.Add(SequenceDifference(
-                "PrerequisiteFrozenNodeIds",
-                material.PrerequisiteFrozenNodeIds,
-                payload.PrerequisiteFrozenNodeIds,
-                static item => item.Value));
-        }
-
-        if (payload.Input.DescriptorBlobOid != material.Attestation.SourceBlobOid)
-        {
-            result.Add(ScalarDifference(
-                "Input.DescriptorBlobOid",
-                material.Attestation.SourceBlobOid,
-                payload.Input.DescriptorBlobOid));
-        }
-
-        if (payload.Input.DescriptorSelector != material.RepoPath.Value)
-        {
-            result.Add(ScalarDifference(
-                "Input.DescriptorSelector",
-                material.RepoPath.Value,
-                payload.Input.DescriptorSelector));
-        }
-
-        differences = result.ToImmutable();
-        return differences.IsEmpty;
-    }
-
-    private static string ScalarDifference(string field, string expected, string actual) =>
-        $"{field} expected={expected}, actual={actual}";
-
-    private static string SequenceDifference<T>(
-        string field,
-        ImmutableArray<T> expected,
-        ImmutableArray<T> actual,
-        Func<T, string> format)
-    {
-        var missing = MissingItems(expected, actual);
-        var extra = MissingItems(actual, expected);
-        var shape = missing.IsEmpty && extra.IsEmpty
-            ? "order differs"
-            : $"missing={FormatSequence(missing, format)}, extra={FormatSequence(extra, format)}";
-        return $"{field} expected={FormatSequence(expected, format)}, "
-            + $"actual={FormatSequence(actual, format)}, {shape}";
-    }
-
-    private static ImmutableArray<T> MissingItems<T>(
-        ImmutableArray<T> expected,
-        ImmutableArray<T> actual)
-    {
-        var remaining = actual.ToList();
-        var missing = ImmutableArray.CreateBuilder<T>();
-        foreach (var item in expected)
-        {
-            var index = remaining.FindIndex(candidate =>
-                EqualityComparer<T>.Default.Equals(candidate, item));
-            if (index < 0)
-            {
-                missing.Add(item);
-            }
-            else
-            {
-                remaining.RemoveAt(index);
-            }
-        }
-
-        return missing.ToImmutable();
-    }
-
-    private static string FormatSequence<T>(
-        ImmutableArray<T> items,
-        Func<T, string> format) =>
-        "[" + string.Join(", ", items.Select(format)) + "]";
 }

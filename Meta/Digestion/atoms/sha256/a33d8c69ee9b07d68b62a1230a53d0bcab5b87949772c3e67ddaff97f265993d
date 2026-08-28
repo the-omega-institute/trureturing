@@ -1,0 +1,23 @@
+### 乘法图表
+
+$$
+\mathcal D(p,q)
+=
+\prod_{m,n\ge1}
+(1-p^mq^n)^{c(mn)}.
+$$
+
+前者把全部结构压缩成两个标量 \(J\)-读数之差；后者保留每一个二维根标签。
+
+因此：
+
+$$
+\boxed{
+\text{Monster denominator}
+=
+\text{additive chart 与 primitive multiplicative chart 的连接函数。}
+}
+$$
+
+---
+
