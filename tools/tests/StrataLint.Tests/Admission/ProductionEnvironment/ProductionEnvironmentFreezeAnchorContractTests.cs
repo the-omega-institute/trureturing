@@ -201,7 +201,7 @@ public sealed partial class ProductionEnvironmentTests
 
         var payloadElement = JsonSerializer.SerializeToElement(payload);
         var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent("Freeze", payloadElement);
-        var identity = FrozenLedgerCanonicalWriter.EventIdentity("Freeze", payloadElement, encoded.Hash);
+        var identity = FrozenLedgerCanonicalWriter.EventIdentity(encoded.Hash);
         var newPath = FrozenLedgerChangeClassifier.AcceptedPath(identity);
         fixture.Files.Remove(oldPath);
         fixture.Files[newPath] = Encoding.UTF8.GetString(encoded.Bytes.AsSpan());

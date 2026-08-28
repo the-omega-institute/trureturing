@@ -172,7 +172,6 @@ public sealed class FrozenGitInfrastructureFixtureTests
             "git-sha1:" + new string('b', 40),
             "git-sha1:" + new string('c', 40),
             "D5/S0/Carrier/A.lean",
-            "repository-snapshot-v1",
             ImmutableArray.Create("git-sha1:" + new string('d', 40)));
 
     private static string ObjectType(string oid) => oid[0] switch

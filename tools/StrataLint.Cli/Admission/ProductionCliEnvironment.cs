@@ -664,17 +664,8 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     public CommandResult AppendLedger(IReadOnlyList<string> arguments) =>
         DagLedgerAppendWriter.Append(repositoryRoot, repository, arguments);
 
-    public CommandResult ReattestLedger(IReadOnlyList<string> arguments) =>
-        DagLedgerReattestWriter.Reattest(repositoryRoot, repository, arguments);
-
     public CommandResult RevokeLedger(IReadOnlyList<string> arguments) =>
         DagLedgerRevokeWriter.Revoke(repositoryRoot, repository, arguments);
-
-    public CommandResult SupersedeLedger(IReadOnlyList<string> arguments) =>
-        DagLedgerSupersedeWriter.Supersede(repositoryRoot, repository, arguments);
-
-    public CommandResult SyncLedger(IReadOnlyList<string> arguments) =>
-        DagLedgerSyncWriter.Sync(repositoryRoot, repository, arguments);
 
     public ExplicitCommandResult TruthRelease(IReadOnlyList<string> arguments) =>
         TruthReleaseCommand.Run(repository, scribeEmissionVerifier, arguments);

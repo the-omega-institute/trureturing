@@ -206,7 +206,7 @@ internal static partial class RepositoryRules
             .OrderBy(static file => file.Path.Value, StringComparer.Ordinal)
             .ToArray();
         if (files.Length == 0
-            || FrozenAcceptedEventLoader.LoadFiles(files) is not DagLedgerFilesLoadOutcome.Invalid invalid)
+            || FrozenAcceptedEventLoader.LoadTrustedFiles(files) is not DagLedgerFilesLoadOutcome.Invalid invalid)
         {
             return;
         }

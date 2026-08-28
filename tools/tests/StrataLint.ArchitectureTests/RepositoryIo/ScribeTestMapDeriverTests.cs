@@ -21,6 +21,13 @@ public sealed class ScribeTestMapDeriverTests
         Assert.Equal(280, ScribeUnknownDebtPolicy.UnknownDebtLimit);
         Assert.Equal(281, ScribeUnknownDebtPolicy.UnknownDebtToleranceLimit);
         Assert.Empty(ScribeUnknownDebtPolicy.InspectCurrent(map));
+        var retiredLedgerMethod = Assert.Single(
+            map.Methods,
+            static method => method.Id ==
+                "TruthExportCommandTests.ExportEqualsStrictActiveSetDroppingRevokedNodes");
+        Assert.False(
+            retiredLedgerMethod.IsUnknown,
+            $"{retiredLedgerMethod.Id}: {string.Join(',', retiredLedgerMethod.UnknownReasons)}");
         Assert.All(
             map.Methods.SelectMany(static method => method.Paths),
             path => Assert.True(

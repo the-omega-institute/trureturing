@@ -6,7 +6,7 @@ Bounded linear descent through an orthogonal visible projection is equivalent to
 
 **Theorem 1.1 (Orthogonal projection descent and the cross block).**
 
-$$\begin{gathered}\forall K, H, V, P, Q, T,\\{}(\operatorname{HilbertSetup}(K, H, V, P, Q, T)) \Rightarrow\\{}(\operatorname{TFAE}(\exists Tbar: V \to V, P \circ T = Tbar \circ P, P \circ T \circ Q = 0, \forall x, y: H, P(x) = P(y) \Rightarrow {P \circ T}(x) = {P \circ T}(y))) \land\\{}((P \circ T \circ Q = 0) \Rightarrow (P \circ T = \operatorname{restrictTo}(P \circ T, V) \circ P \land \forall Tbar: V \to V, (P \circ T = Tbar \circ P) \Rightarrow Tbar = \operatorname{restrictTo}(P \circ T, V))).\end{gathered}$$
+$$\begin{gathered}\forall K, H: \operatorname{Type},\\{}[\operatorname{RCLike}(K)], [\operatorname{NormedAddCommGroup}(H)], [\operatorname{InnerProductSpace}(K, H)], V: \operatorname{Submodule}(K, H), [\operatorname{HasOrthogonalProjection}(V)], T: \operatorname{ContinuousLinearMap}(K, H, H), P: \operatorname{ContinuousLinearMap}(K, H, H), Q: \operatorname{ContinuousLinearMap}(K, H, H),\\{}P = \operatorname{orthogonalProjectionOnto}(V), Q = \operatorname{starProjection}(V^{\perp}) \Rightarrow\\{}(\operatorname{TFAE}(\exists Tbar: V \to V, P \circ T = Tbar \circ P, P \circ T \circ Q = 0, \forall x, y: H, P(x) = P(y) \Rightarrow {P \circ T}(x) = {P \circ T}(y))) \land\\{}((P \circ T \circ Q = 0) \Rightarrow (P \circ T = \operatorname{restrictTo}(P \circ T, V) \circ P \land \forall Tbar: V \to V, (P \circ T = Tbar \circ P) \Rightarrow Tbar = \operatorname{restrictTo}(P \circ T, V))).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/VisibleDescent/LinearDescentCriterion.linear_descent_criterion` (`✓ std3`). ∎
 
