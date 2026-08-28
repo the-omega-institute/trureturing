@@ -1,0 +1,21 @@
+## 390.1 Sticky modes 的有限秩定理
+
+对：
+
+$$
+0<\eta\le1,
+$$
+
+定义强浓缩模数：
+
+$$
+N_\eta(L,B)
+=
+\#\left\{
+j:
+\lambda_j(\mathcal C_{L,B})\ge\eta
+\right\}.
+$$
+
+由正算子迹界：
+

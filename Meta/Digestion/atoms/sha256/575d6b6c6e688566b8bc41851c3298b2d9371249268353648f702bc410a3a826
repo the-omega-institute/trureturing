@@ -1,0 +1,16 @@
+* 由此可构造对应的 model space 和 de Branges 空间。([arXiv][1])
+
+因此：
+
+$$
+\boxed{
+\Theta_{1/2}
+}
+$$
+
+是一个无条件存在的临界 shifted-\(\xi\) inner system。
+
+这非常重要：RH 的困难已经不再是构造第一个 inner function，而是理解它的内部共振几何。
+
+---
+

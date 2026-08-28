@@ -1,0 +1,26 @@
+## 383.1 唯一负项
+
+式 (383.1) 中：
+
+* pole energy 非负；
+* continuous jump energy 非负；
+* arithmetic jump energy 非负。
+
+唯一潜在负项是：
+
+$$
+\boxed{
+-\left(
+2W_L-a_\infty
+\right)\|f\|_2^2.
+}
+$$
+
+因此 RH 的真正问题变成：
+
+> 连续与离散跳跃图，加上一个 rank-one 边界观测，是否具有足够大的统一谱隙？
+
+这已经不是零点语言，而是一个正算子谱隙问题。
+
+---
+

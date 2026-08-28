@@ -1,0 +1,10 @@
+ast_path: section/第三百六十二部-Weil-正定性就是-RH
+fingerprints:
+  raw_sha256: sha256:1ae7ff7af5947e032b5389506e093b551c7bab9df738860ba71847392aaee167
+  normalized_sha256: sha256:1ae7ff7af5947e032b5389506e093b551c7bab9df738860ba71847392aaee167
+cas_ref: sha256:1ae7ff7af5947e032b5389506e093b551c7bab9df738860ba71847392aaee167
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

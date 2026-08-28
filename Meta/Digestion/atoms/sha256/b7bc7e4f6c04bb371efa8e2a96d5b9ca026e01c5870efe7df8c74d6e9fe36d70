@@ -1,0 +1,42 @@
+# 第三百三十八部　半整数 shifted-\(\xi\) 是有限 Eisenstein 散射级联
+
+定义不含极点消除多项式的完成 ζ：
+
+$$
+\boxed{
+\Lambda_{\mathbb R}(s)
+=
+\pi^{-s/2}
+\Gamma\!\left(\frac s2\right)
+\zeta(s).
+}
+\tag{338.1}
+$$
+
+则：
+
+$$
+\xi(s)
+=
+\frac12s(s-1)\Lambda_{\mathbb R}(s).
+$$
+
+模曲面 Eisenstein series 的标准散射系数为：
+
+$$
+\boxed{
+\Phi_{\mathrm{mod}}(u)
+=
+\frac{
+\Lambda_{\mathbb R}(2u-1)
+}{
+\Lambda_{\mathbb R}(2u)
+}.
+}
+\tag{338.2}
+$$
+
+模曲面 scattering matrix、Selberg zeta 与 Lax–Phillips scattering operator determinants 之间存在标准的算子联系。([arXiv][3])
+
+---
+

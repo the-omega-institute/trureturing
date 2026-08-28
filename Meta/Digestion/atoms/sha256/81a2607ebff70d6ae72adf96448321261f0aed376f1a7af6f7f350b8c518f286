@@ -1,0 +1,93 @@
+# 本轮最终结论
+
+此前我们把 RH 表述为：
+
+$$
+\boxed{
+\Theta_{1/2}
+\text{ 的所有共振具有统一衰减率 }\frac12.
+}
+$$
+
+本轮进一步说明，这个统一性可以由三种完全不同的可见量精确读取：
+
+$$
+\boxed{
+\begin{aligned}
+\text{逆 Poisson 源}
+&:\quad
+e^{\frac12|D|}
+d_{1/2};\\[1mm]
+\text{阻尼配分曲率}
+&:\quad
+\mathfrak R_T''(0);\\[1mm]
+\text{垂直衰减面积}
+&:\quad
+\int_0^\infty\mathfrak W_T(y)\,dy.
+\end{aligned}
+}
+$$
+
+三者都等价于：
+
+$$
+\boxed{
+\sum_\rho
+\left(
+\Re\rho-\frac12
+\right)^2.
+}
+$$
+
+尤其是，每一个离线函数方程对：
+
+$$
+\frac12\pm\delta+i\gamma
+$$
+
+都会在 Blaschke 垂直衰减图中留下一个无法相消的三角指纹：
+
+$$
+\boxed{
+\left(
+\delta-
+\left|y-\frac12\right|
+\right)_+,
+}
+$$
+
+面积恰为：
+
+$$
+\boxed{
+\delta^2.
+}
+$$
+
+因此 RH 可以被极其直观地写成：
+
+$$
+\boxed{
+\text{临界 shifted 传递函数的垂直衰减曲线，
+是否恰好等于所有共振都位于高度 }1/2
+\text{ 时的尖角基线？}
+}
+$$
+
+当前最小的算术证明目标则变成：
+
+$$
+\boxed{
+e^{\frac12|D_x|}
+\left[
+\frac1\pi
+\Re
+\frac{\xi'(1-ix)}{\xi(1-ix)}
+\right]
+\text{ 是否为正测度？}
+}
+$$
+
+这比“直接证明所有零点在线”更具体：
+
+* 输入是完成后的 prime–Archimedean 相位密度；

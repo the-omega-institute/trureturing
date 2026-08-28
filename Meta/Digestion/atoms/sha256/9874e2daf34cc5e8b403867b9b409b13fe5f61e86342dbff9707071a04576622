@@ -1,0 +1,54 @@
+## Bohr–Slepian Prime–Archimedean Gap Conjecture
+
+对每个 \(L>0\)，令：
+
+$$
+\mathcal H_L
+=
+2|\ell_{1/2}\rangle\langle\ell_{1/2}|
++
+\mathcal L_\infty
++
+\mathcal L_{\mathrm{arith},L}.
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal H_L
+\ge
+\left(
+2W_L-a_\infty
+\right)I
+}
+\tag{394.1}
+$$
+
+于偶的 \(C_c^\infty([-L,L])\) 上成立。
+
+其建议证明结构是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Bohr typicality}
+&\to
+\text{危险集小／厚 complement};\\
+\text{Slepian extraction}
+&\to
+\text{有限 sticky block};\\
+\text{exact local resummation}
+&\to
+\text{有限 cluster counterterm};\\
+\text{Archimedean jump energy}
+&\to
+\text{residual spectral gap}.
+\end{aligned}
+}
+$$
+
+这已经是一个真正面向证明的算子不等式，而不是对 RH 的再次改名。
+
+---
+

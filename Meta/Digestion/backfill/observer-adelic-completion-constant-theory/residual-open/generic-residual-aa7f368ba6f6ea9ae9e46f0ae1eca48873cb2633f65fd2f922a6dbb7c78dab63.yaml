@@ -1,0 +1,10 @@
+ast_path: section/366-2-常数角色
+fingerprints:
+  raw_sha256: sha256:aa7f368ba6f6ea9ae9e46f0ae1eca48873cb2633f65fd2f922a6dbb7c78dab63
+  normalized_sha256: sha256:aa7f368ba6f6ea9ae9e46f0ae1eca48873cb2633f65fd2f922a6dbb7c78dab63
+cas_ref: sha256:aa7f368ba6f6ea9ae9e46f0ae1eca48873cb2633f65fd2f922a6dbb7c78dab63
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

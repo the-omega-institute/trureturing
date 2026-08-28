@@ -1,0 +1,38 @@
+## 374.1 Wang 层：多素数相位分支
+
+在 Fourier 变量 \(\xi\) 中，每个素数贡献 centered symbol：
+
+$$
+D_p(\xi)
+=
+\frac{
+2p^{-1/2}
+\left[
+\cos(\xi\log p)-p^{-1/2}
+\right]
+}{
+1-2p^{-1/2}\cos(\xi\log p)+p^{-1}
+}.
+$$
+
+定义危险相干画像：
+
+$$
+\boxed{
+\operatorname{Coh}_L(\xi)
+=
+\sum_{p\le e^{2L}}
+\log p\,
+[D_p(\xi)]_+.
+}
+\tag{374.1}
+$$
+
+Wang 式任务应当是证明：
+
+* 当 \(\widehat\psi\) 的质量跨越许多不相干 prime-phase blocks 时；
+* 危险正部分不能同时饱和；
+* Archimedean 完成获得严格余量。
+
+---
+

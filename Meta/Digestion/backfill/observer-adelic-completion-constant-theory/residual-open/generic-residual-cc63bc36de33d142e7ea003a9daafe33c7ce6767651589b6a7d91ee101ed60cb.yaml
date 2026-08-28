@@ -1,0 +1,14 @@
+ast_path: section/374-1-Wang-层-多素数相位分支
+fingerprints:
+  raw_sha256: sha256:cc63bc36de33d142e7ea003a9daafe33c7ce6767651589b6a7d91ee101ed60cb
+  normalized_sha256: sha256:cc63bc36de33d142e7ea003a9daafe33c7ce6767651589b6a7d91ee101ed60cb
+cas_ref: sha256:cc63bc36de33d142e7ea003a9daafe33c7ce6767651589b6a7d91ee101ed60cb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-ea7d1b9074f24eec3aec579e333df4be5a2bbbebfe1ad7580230b2ec915b3bac-91c5bc8c58a2552f6226ceafb5ab62eb56526a057fa35dc6565c4996d1143aec
+    - generic-residual-8904b952c4948ca133ffcfaf35967a31490a25ea4175c70de2c73fa8ab0ee306-028e1245c0b38d40e72fb9fdca8ed9fb8787885462d5b0bbd3ac09aa56c39de4
+    - generic-residual-edacdc1aafa174bf6e498003c92dea45282d7c5caa3c33954fb86a65dcb20f71-5f9d13e97141c8c6863257eea25a0e6cee6480c8b0b260753c5bed422d490b61

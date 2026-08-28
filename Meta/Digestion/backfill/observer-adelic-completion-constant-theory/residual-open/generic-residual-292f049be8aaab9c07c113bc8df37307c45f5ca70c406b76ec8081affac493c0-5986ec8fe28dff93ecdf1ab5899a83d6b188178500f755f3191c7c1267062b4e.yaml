@@ -1,0 +1,10 @@
+ast_path: section/342-4-本分支没有选出黄金比例/clause/1
+fingerprints:
+  raw_sha256: sha256:292f049be8aaab9c07c113bc8df37307c45f5ca70c406b76ec8081affac493c0
+  normalized_sha256: sha256:292f049be8aaab9c07c113bc8df37307c45f5ca70c406b76ec8081affac493c0
+cas_ref: sha256:292f049be8aaab9c07c113bc8df37307c45f5ca70c406b76ec8081affac493c0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

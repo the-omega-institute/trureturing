@@ -1,0 +1,85 @@
+## 本轮独立推导得到
+
+$$
+\boxed{
+a_{\rho,\omega}
+=
+-\Im\rho
++
+i\left(
+\omega+\Re\rho-\frac12
+\right).
+}
+$$
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+Z(\Theta_\omega)
+\subset
+\{\Im z=\omega\}
+\quad
+(\omega\ge\tfrac12).
+}
+$$
+
+$$
+\boxed{
+S_\omega(t)^*k_{a_{\rho,\omega}}
+=
+e^{-(\omega+\beta-1/2)t}
+e^{i\gamma t}
+k_{a_{\rho,\omega}}.
+}
+$$
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathsf G_\omega+\omega I
+\text{ skew-adjoint}.
+}
+$$
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+\frac{\Xi(z-i\omega)}{\Xi(z+i\omega)}.
+}
+$$
+
+RH 下：
+
+$$
+\boxed{
+\mathfrak d_\omega
+=
+P_\omega*\nu_\Xi.
+}
+$$
+
+$$
+\boxed{
+\Delta\log|\Xi(x+i\omega)|
+=
+2\pi
+\sum_{\Re\rho>1/2}
+m_\rho\delta_{(-\Im\rho,\Re\rho-1/2)}.
+}
+$$
+
+$$
+\boxed{
+\Theta_{N/2}
+=
+\text{显式 rational corrector}
+\times
+\text{有限 modular scattering cascade}.
+}
+$$
+
+---
+

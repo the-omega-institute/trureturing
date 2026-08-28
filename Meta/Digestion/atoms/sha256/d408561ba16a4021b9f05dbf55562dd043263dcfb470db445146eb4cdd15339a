@@ -1,0 +1,76 @@
+# 第三百九十部　Slepian 浓缩算子
+
+设：
+
+$$
+I_L=[-L,L].
+$$
+
+对可测频率集合 \(B\subset\mathbb R\)，定义 time–frequency concentration operator：
+
+$$
+\boxed{
+\mathcal C_{L,B}
+=
+P_{I_L}
+\mathcal F^{-1}
+1_B
+\mathcal F
+P_{I_L}
+}
+\tag{390.1}
+$$
+
+作用于：
+
+$$
+L^2(I_L),
+$$
+
+其中 \(P_{I_L}\) 表示区间外作零。
+
+定义最大浓缩率：
+
+$$
+\boxed{
+\Lambda_L(B)
+=
+\|\mathcal C_{L,B}\|
+=
+\sup_{\substack{f\neq0\\\operatorname{supp}f\subset I_L}}
+\frac{
+\int_B|\widehat f(\xi)|^2d\xi
+}{
+\int_{\mathbb R}|\widehat f(\xi)|^2d\xi
+}.
+}
+\tag{390.2}
+$$
+
+若 \(|B|<\infty\)，则 \(\mathcal C_{L,B}\) 为正 trace-class 算子，并且：
+
+$$
+\boxed{
+\operatorname{Tr}\mathcal C_{L,B}
+=
+\frac{L|B|}{\pi}.
+}
+\tag{390.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\Lambda_L(B)
+\le
+\min
+\left(
+1,\frac{L|B|}{\pi}
+\right).
+}
+\tag{390.4}
+$$
+
+---
+

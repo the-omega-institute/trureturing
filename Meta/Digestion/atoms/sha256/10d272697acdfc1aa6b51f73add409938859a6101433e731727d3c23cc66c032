@@ -1,0 +1,53 @@
+## 398.1 回归只在有限窗口内危险
+
+定义最粗 confinement radius：
+
+$$
+\boxed{
+R_L(a)
+=
+\inf
+\left\{
+R:
+a_\infty(\xi)\ge2W_L+a
+\quad
+\forall|\xi|\ge R
+\right\}.
+}
+\tag{398.7}
+$$
+
+则：
+
+$$
+\boxed{
+B_{L,a}
+\subset[-R_L(a),R_L(a)].
+}
+\tag{398.8}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{finite-prime recurrence 在任意高频处仍存在，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{超过 }R_L(a)\text{ 后，
+Archimedean 屏障必然压倒全部有限 prime coherence。}
+}
+$$
+
+这修正了上一轮的 recurrence 难题：
+
+> recurrence 不能被排除；
+> 但对固定空间支撑，它只在一个有限频率窗口中可能影响正性。
+
+---
+

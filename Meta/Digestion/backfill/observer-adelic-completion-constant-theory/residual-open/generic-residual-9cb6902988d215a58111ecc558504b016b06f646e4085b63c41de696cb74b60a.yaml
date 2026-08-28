@@ -1,0 +1,10 @@
+ast_path: section/第四百零九部-严格计算协议
+fingerprints:
+  raw_sha256: sha256:9cb6902988d215a58111ecc558504b016b06f646e4085b63c41de696cb74b60a
+  normalized_sha256: sha256:9cb6902988d215a58111ecc558504b016b06f646e4085b63c41de696cb74b60a
+cas_ref: sha256:9cb6902988d215a58111ecc558504b016b06f646e4085b63c41de696cb74b60a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

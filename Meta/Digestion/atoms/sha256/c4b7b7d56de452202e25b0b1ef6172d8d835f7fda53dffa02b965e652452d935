@@ -1,0 +1,63 @@
+# 第三百七十六部　最小有限矩阵研究程序
+
+固定支撑尺度 \(L\)，选择有限基：
+
+$$
+\psi_1,\ldots,\psi_N
+\subset C_c^\infty([-L,L]).
+$$
+
+定义：
+
+$$
+\boxed{
+\begin{aligned}
+M_{ij}^{\infty}
+&=
+\left\langle
+\mathfrak A_\infty,
+\psi_i*\widetilde{\psi_j}
+\right\rangle,\\
+M_{ij}^{p}
+&=
+-\log p\,
+\left\langle
+\psi_i,
+\left[
+\mathsf P_{p^{-1/2}}(U_p)-I
+\right]
+\psi_j
+\right\rangle.
+\end{aligned}
+}
+\tag{376.1}
+$$
+
+则：
+
+$$
+\boxed{
+M^{(L)}
+=
+M^\infty
++
+\sum_{p\le e^{2L}}M^p.
+}
+\tag{376.2}
+$$
+
+RH 等价于所有这类矩阵在基完备极限中正半定。
+
+该分解允许分别测量：
+
+* Archimedean 正性容量；
+* 每个 prime channel 的危险特征值；
+* 多素数 eigenvector alignment；
+* cutoff 增长时的 sticky depth；
+* Wang gain；
+* Deng cluster rank。
+
+这比直接对一个巨大 Weil Gram 矩阵做黑箱特征值计算更有解释力。
+
+---
+

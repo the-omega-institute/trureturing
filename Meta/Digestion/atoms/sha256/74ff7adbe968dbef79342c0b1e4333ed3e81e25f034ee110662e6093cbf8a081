@@ -1,0 +1,55 @@
+# 第三百九十八部　Archimedean 囚禁定理
+
+此前已经证明：任意有限素数集的相位都能在任意高频率处近乎同时回归。
+
+但这并不意味着这些高频回归始终危险。
+
+定义有限 prime-power 总质量：
+
+$$
+\boxed{
+W_L
+=
+\sum_{\substack{n\ge2\\\log n\le2L}}
+\frac{\Lambda(n)}{\sqrt n}.
+}
+\tag{398.1}
+$$
+
+则：
+
+$$
+\boxed{
+|p_L(\xi)|\le2W_L.
+}
+\tag{398.2}
+$$
+
+另一方面，由 digamma 的 Stirling 渐近：
+
+$$
+\boxed{
+a_\infty(\xi)
+=
+\log\frac{|\xi|}{2\pi}
++
+O(|\xi|^{-2})
+\qquad
+(|\xi|\to\infty).
+}
+\tag{398.3}
+$$
+
+所以：
+
+$$
+\boxed{
+m_L(\xi)\longrightarrow+\infty
+\qquad
+(|\xi|\to\infty).
+}
+\tag{398.4}
+$$
+
+---
+

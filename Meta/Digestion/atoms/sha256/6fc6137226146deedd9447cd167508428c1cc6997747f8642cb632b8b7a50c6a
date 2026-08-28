@@ -1,0 +1,87 @@
+# 第三百七十九部　卷积平方的相关函数图表
+
+令：
+
+$$
+f\in C_c^\infty(\mathbb R)
+$$
+
+为偶函数，并定义 Weil involution：
+
+$$
+\widetilde f(x)=\overline{f(-x)}.
+$$
+
+令：
+
+$$
+\boxed{
+g=f*\widetilde f.
+}
+\tag{379.1}
+$$
+
+项目中的 Weil 测试函数正被冻结为偶、光滑、紧支撑函数，并闭合于 involution 与 convolution square。
+
+采用平移算子：
+
+$$
+\boxed{
+(U_af)(x)=f(x-a).
+}
+\tag{379.2}
+$$
+
+则：
+
+$$
+\boxed{
+g(a)
+=
+\langle f,U_af\rangle.
+}
+\tag{379.3}
+$$
+
+同时：
+
+$$
+g(-a)=\overline{g(a)}.
+$$
+
+所以：
+
+$$
+\boxed{
+g(a)+g(-a)
+=
+2\Re\langle f,U_af\rangle.
+}
+\tag{379.4}
+$$
+
+又有基本恒等式：
+
+$$
+\boxed{
+2\Re\langle f,U_af\rangle
+=
+2\|f\|_2^2
+-
+\|f-U_af\|_2^2.
+}
+\tag{379.5}
+$$
+
+这一条看似初等，却把 prime correlation 彻底改写成了：
+
+$$
+\boxed{
+\text{最大相干质量}
+-
+\text{平移 Dirichlet 能量}.
+}
+$$
+
+---
+

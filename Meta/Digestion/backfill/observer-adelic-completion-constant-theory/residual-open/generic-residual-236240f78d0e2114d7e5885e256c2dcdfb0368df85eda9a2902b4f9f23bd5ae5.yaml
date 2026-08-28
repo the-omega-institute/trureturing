@@ -1,0 +1,10 @@
+ast_path: section/399-1-精确迹公式
+fingerprints:
+  raw_sha256: sha256:236240f78d0e2114d7e5885e256c2dcdfb0368df85eda9a2902b4f9f23bd5ae5
+  normalized_sha256: sha256:236240f78d0e2114d7e5885e256c2dcdfb0368df85eda9a2902b4f9f23bd5ae5
+cas_ref: sha256:236240f78d0e2114d7e5885e256c2dcdfb0368df85eda9a2902b4f9f23bd5ae5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

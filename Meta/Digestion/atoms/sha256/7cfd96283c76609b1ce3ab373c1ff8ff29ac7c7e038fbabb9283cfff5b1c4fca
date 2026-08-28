@@ -1,0 +1,21 @@
+## 409.5 输出
+
+程序只能有三种可信输出：
+
+$$
+\boxed{
+\begin{array}{c|l}
+\text{PSD certificate}
+&\mathsf{WP}(L)\text{ 已严格证明}\\
+\text{negative eigenvalue}
+&\text{构造实际 Weil 负见证}\\
+\text{undetermined}
+&\text{提高 Slepian rank 或积分精度}
+\end{array}
+}
+$$
+
+不能把有限数值网格上“没有发现负值”当作证明。
+
+---
+

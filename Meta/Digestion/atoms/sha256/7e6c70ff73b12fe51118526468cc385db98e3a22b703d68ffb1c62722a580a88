@@ -1,0 +1,86 @@
+# 第四百一十一部　建议形式化顺序
+
+```text
+D5/S3/Weil/Multiplier/
+  SupportScalePrimeMultiplier.lean
+  ArchimedeanMultiplier.lean
+  FixedScaleWeilQuadraticForm.lean
+  PoleVectorRepresentation.lean
+  ArchimedeanConfinement.lean
+  DangerSetFiniteIntervals.lean
+
+D5/S3/Weil/SlepianObserver/
+  FrequencyProjection.lean
+  TimeFrequencyConcentration.lean
+  ConcentrationTrace.lean
+  StickySpectralProjection.lean
+  StickyRankBound.lean
+  PoleAugmentedStickySpace.lean
+
+D5/S3/Weil/SafeComplement/
+  DangerDepth.lean
+  FrequencyMassBound.lean
+  SafeComplementGap.lean
+  FiniteNegativeIndex.lean
+
+D5/S3/Weil/FeshbachSticky/
+  BlockQuadraticCompletion.lean
+  ExactSchurReduction.lean
+  InertiaPreservation.lean
+  SelfEnergyCounterterm.lean
+  ConservativeFiniteCertificate.lean
+  NegativeWitnessLift.lean
+
+D5/S3/Weil/PoleRescue/
+  PoleRankOneUpdate.lean
+  PoleNegativeIndexCapacity.lean
+  SingleNegativeDirectionRescue.lean
+
+D5/S3/Weil/FeshbachRG/
+  NestedSchurAssociativity.lean
+  MultiscaleStickyElimination.lean
+  WeilStickyDimension.lean
+  SupportScaleFiniteMatrixTower.lean
+```
+
+首批最值得闭合的定理是：
+
+$$
+\boxed{
+m_L(\xi)\to+\infty,
+}
+$$
+
+$$
+\boxed{
+B_{L,a}\text{ 有界且为有限区间并},
+}
+$$
+
+$$
+\boxed{
+\operatorname{rank}P_{L,B,\eta}
+\le
+\frac{L|B|}{\pi\eta},
+}
+$$
+
+$$
+\boxed{
+Q A_L Q\ge
+\left[a-(a+b)\eta\right]Q,
+}
+$$
+
+以及：
+
+$$
+\boxed{
+A_L\ge0
+\iff
+F_L\ge0.
+}
+$$
+
+---
+

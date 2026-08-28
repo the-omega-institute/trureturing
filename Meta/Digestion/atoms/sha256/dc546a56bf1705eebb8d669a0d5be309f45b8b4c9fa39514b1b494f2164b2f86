@@ -1,0 +1,56 @@
+# 第三百三十一部　Model-space 平移半群与共振衰减
+
+令：
+
+$$
+K_\omega
+=
+H^2(\mathbb C^+)
+\ominus
+\Theta_\omega H^2(\mathbb C^+).
+$$
+
+对：
+
+$$
+t\ge0,
+$$
+
+定义 Hardy 平移乘子：
+
+$$
+(V_tf)(z)=e^{itz}f(z),
+$$
+
+以及压缩平移半群：
+
+$$
+\boxed{
+S_\omega(t)
+=
+P_{K_\omega}V_t|_{K_\omega}.
+}
+\tag{331.1}
+$$
+
+meromorphic inner functions、model spaces 和 de Branges spaces之间的这一标准接口，正是 Suzuki 用于 shifted-\(\xi\) canonical system 的函数空间底座。([arXiv][1])
+
+若 \(a\in\mathbb C^+\) 是 \(\Theta_\omega\) 的零点，令 \(k_a\) 是 \(K_\omega\) 在 \(a\) 处的 reproducing kernel。
+
+因为：
+
+$$
+\Theta_\omega(a)=0,
+$$
+
+得到：
+
+$$
+\boxed{
+S_\omega(t)^*k_a
+=
+e^{-it\overline a}k_a.
+}
+\tag{331.2}
+$$
+

@@ -1,0 +1,10 @@
+ast_path: section/第三百八十八部-Bohr-Gaussian-非粘滞定律
+fingerprints:
+  raw_sha256: sha256:ae68a599a2ea6318fb3d0c82341ae123bfbc118c50a7ab7328ab3320cf67efcb
+  normalized_sha256: sha256:ae68a599a2ea6318fb3d0c82341ae123bfbc118c50a7ab7328ab3320cf67efcb
+cas_ref: sha256:ae68a599a2ea6318fb3d0c82341ae123bfbc118c50a7ab7328ab3320cf67efcb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

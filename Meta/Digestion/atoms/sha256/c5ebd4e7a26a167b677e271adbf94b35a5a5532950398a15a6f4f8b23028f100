@@ -1,0 +1,90 @@
+# 第三百四十六部　有限 shifted-Blaschke 共振模型
+
+固定高度 \(T>0\)，定义正 ordinate 零点多重集：
+
+$$
+\boxed{
+\mathcal Z_T^+
+=
+\left\{
+\rho=\beta+i\gamma:
+\xi(\rho)=0,\ 
+0<\gamma\le T
+\right\},
+}
+$$
+
+按零点重数计数。
+
+由函数方程和共轭对称，\(\mathcal Z_T^+\) 在 involution
+
+$$
+\rho
+\longmapsto
+1-\overline\rho
+$$
+
+下稳定；该 involution 保持 \(\gamma\)，并把：
+
+$$
+\beta-\frac12
+\longmapsto
+-\left(\beta-\frac12\right).
+$$
+
+记：
+
+$$
+\boxed{
+\delta_\rho
+=
+\beta-\frac12.
+}
+\tag{346.1}
+$$
+
+对 \(\omega\ge\tfrac12\)，\(\rho\) 对应 \(\Theta_\omega\) 的上半平面零点：
+
+$$
+\boxed{
+a_{\rho,\omega}
+=
+-\gamma
++
+i(\omega+\delta_\rho).
+}
+\tag{346.2}
+$$
+
+因为：
+
+$$
+-\frac12<\delta_\rho<\frac12,
+$$
+
+所以：
+
+$$
+\Im a_{\rho,\omega}>0.
+$$
+
+定义有限 Blaschke 乘积：
+
+$$
+\boxed{
+B_{\omega,T}(z)
+=
+\prod_{\rho\in\mathcal Z_T^+}
+\frac{
+z-a_{\rho,\omega}
+}{
+z-\overline{a_{\rho,\omega}}
+}.
+}
+\tag{346.3}
+$$
+
+全局 unimodular 常数不影响以下任何读数。
+
+---
+

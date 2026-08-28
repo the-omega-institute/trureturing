@@ -1,0 +1,51 @@
+# 第三百五十一部　零点实部分布的完整恢复
+
+由式 (350.3)，在 \(y\) 不等于任何 \(\Re\rho\) 时：
+
+$$
+\boxed{
+\mathfrak A_T'(y)
+=
+\#\left\{
+\rho\in\mathcal Z_T^+:
+\Re\rho>y
+\right\}.
+}
+\tag{351.1}
+$$
+
+在分布意义下：
+
+$$
+\boxed{
+-\mathfrak A_T''(y)
+=
+\sum_{\rho\in\mathcal Z_T^+}
+\delta_{\Re\rho}(y).
+}
+\tag{351.2}
+$$
+
+所以仅仅扫描：
+
+$$
+y
+\longmapsto
+\int_{\mathbb R}
+-\log|B_T(x+iy)|^2dx
+$$
+
+就能精确恢复高度 \(T\) 以下所有零点实部的多重集。
+
+这给出一个非常直接的观察者结论：
+
+$$
+\boxed{
+\text{零点的横向偏移并不隐藏在振荡相位中；}
+}
+$$
+
+它被完整编码在传递函数垂直衰减曲线的折点中。
+
+---
+

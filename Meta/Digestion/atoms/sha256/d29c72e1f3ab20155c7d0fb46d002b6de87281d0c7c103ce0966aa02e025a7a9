@@ -1,0 +1,31 @@
+## 341.1 Non-sticky prime histories
+
+在 prime-side 表达中，若：
+
+$$
+x\log n
+$$
+
+在许多 log-prime blocks 上分散，则：
+
+$$
+\cos(x\log n)
+$$
+
+发生相位抵消。
+
+目标是证明：
+
+$$
+\boxed{
+\text{phase anti-concentration}
+\Longrightarrow
+\mathfrak C_{\mathrm{prime}}
+\text{ 获得严格小于 Archimedean barrier 的增益}.
+}
+$$
+
+这对应 Wang 式 non-sticky gain。
+
+---
+

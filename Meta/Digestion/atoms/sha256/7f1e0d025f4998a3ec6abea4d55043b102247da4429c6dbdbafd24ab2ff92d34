@@ -1,0 +1,17 @@
+## 当前真正开放的桥（第 343 部）
+
+$$
+\boxed{
+\begin{aligned}
+&\text{从 prime-side 直接证明 }
+\mathfrak A_\infty-\mathfrak C_{\mathrm{prime}}^{\mathrm{ren}}>0;\\
+&\text{建立 }\mathsf I(a)\Rightarrow\mathsf I(F(a)),\ F(a)<a;\\
+&\text{从 actual modular/Lax--Phillips system
+证明 resonance damping 全部等于 }\omega;\\
+&\text{从 relative trace 排除上半平面内部 Riesz curvature atoms}.
+\end{aligned}
+}
+$$
+
+---
+

@@ -1,0 +1,26 @@
+## 353.3 联合恢复
+
+由：
+
+$$
+-\mathfrak A_T''
+=
+\sum_\rho\delta_{\Re\rho}
+$$
+
+先恢复全部宽度。
+
+随后在已知宽度的条件下：
+
+$$
+d_{1/2,T}(x)
+$$
+
+是有限个已知宽度 Cauchy–Poisson 核的平移和；其 meromorphic continuation 的极点位置恢复：
+
+$$
+-\Im\rho\pm i\Re\rho.
+$$
+
+因此：
+

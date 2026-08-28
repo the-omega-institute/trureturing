@@ -1,0 +1,101 @@
+# 第三百六十三部　Prime–Archimedean 母分布
+
+定义完成函数的 Archimedean 对数导数：
+
+$$
+\boxed{
+A_\infty(s)
+=
+\frac1s
++
+\frac1{s-1}
+-
+\frac12\log\pi
++
+\frac12
+\psi\!\left(\frac s2\right),
+}
+\tag{363.1}
+$$
+
+其中：
+
+$$
+\psi=\Gamma'/\Gamma.
+$$
+
+在：
+
+$$
+\sigma>1
+$$
+
+时：
+
+$$
+\boxed{
+\frac{\xi'(s)}{\xi(s)}
+=
+A_\infty(s)
+-
+\sum_{n=2}^{\infty}
+\frac{\Lambda(n)}{n^s}.
+}
+\tag{363.2}
+$$
+
+定义 Archimedean 临界源：
+
+$$
+\boxed{
+\mathfrak A_\infty
+=
+e^{(\sigma-\frac12)|D|}
+\mathcal F_x
+\left[
+\frac1\pi
+\Re A_\infty(\sigma-ix)
+\right].
+}
+\tag{363.3}
+$$
+
+与 \(\mathfrak W_\xi\) 一样，\(\mathfrak A_\infty\) 不依赖 \(\sigma>1\)。
+
+对 prime-side 项：
+
+$$
+\mathcal F_x
+\left[
+-\frac1\pi
+\Lambda(n)n^{-\sigma}
+\cos(x\log n)
+\right]
+=
+-\Lambda(n)n^{-\sigma}
+\left(
+\delta_{\log n}
++
+\delta_{-\log n}
+\right).
+$$
+
+再乘：
+
+$$
+e^{(\sigma-\frac12)|t|},
+$$
+
+得到：
+
+$$
+-\frac{\Lambda(n)}{\sqrt n}
+\left(
+\delta_{\log n}
++
+\delta_{-\log n}
+\right).
+$$
+
+因此：
+

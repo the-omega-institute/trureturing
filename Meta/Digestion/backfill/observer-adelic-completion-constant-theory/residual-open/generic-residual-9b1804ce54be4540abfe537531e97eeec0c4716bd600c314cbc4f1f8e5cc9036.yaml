@@ -1,0 +1,10 @@
+ast_path: section/步骤-B-临界阻尼刚性
+fingerprints:
+  raw_sha256: sha256:9b1804ce54be4540abfe537531e97eeec0c4716bd600c314cbc4f1f8e5cc9036
+  normalized_sha256: sha256:9b1804ce54be4540abfe537531e97eeec0c4716bd600c314cbc4f1f8e5cc9036
+cas_ref: sha256:9b1804ce54be4540abfe537531e97eeec0c4716bd600c314cbc4f1f8e5cc9036
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

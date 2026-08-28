@@ -1,0 +1,108 @@
+# 第三百四十九部　临界阻尼配分函数
+
+在有限维空间：
+
+$$
+\mathcal H_T
+=
+\mathbb C^{N(T)},
+\qquad
+N(T)=|\mathcal Z_T^+|,
+$$
+
+定义 damping operator：
+
+$$
+\boxed{
+\mathsf B_T
+=
+\operatorname{diag}
+\left(
+\Re\rho
+\right)_{\rho\in\mathcal Z_T^+}.
+}
+\tag{349.1}
+$$
+
+定义 centered damping defect：
+
+$$
+\boxed{
+\mathsf D_T
+=
+\mathsf B_T-\frac12I.
+}
+\tag{349.2}
+$$
+
+函数方程对称意味着 \(\mathsf D_T\) 的特征值多重集在：
+
+$$
+\delta\longmapsto-\delta
+$$
+
+下稳定。
+
+定义阻尼配分函数：
+
+$$
+\boxed{
+\mathfrak Z_T(\tau)
+=
+e^{\tau/2}
+\operatorname{Tr}
+e^{-\tau\mathsf B_T},
+\qquad
+\tau\in\mathbb R.
+}
+\tag{349.3}
+$$
+
+则：
+
+$$
+\mathfrak Z_T(\tau)
+=
+\operatorname{Tr}e^{-\tau\mathsf D_T}.
+$$
+
+由于奇函数部分在对称谱上迹为零：
+
+$$
+\boxed{
+\mathfrak Z_T(\tau)
+=
+\operatorname{Tr}
+\cosh(\tau\mathsf D_T).
+}
+\tag{349.4}
+$$
+
+定义临界阻尼缺陷：
+
+$$
+\boxed{
+\mathfrak R_T(\tau)
+=
+\mathfrak Z_T(\tau)-N(T).
+}
+\tag{349.5}
+$$
+
+于是：
+
+$$
+\boxed{
+\mathfrak R_T(\tau)
+=
+\operatorname{Tr}
+\left[
+\cosh(\tau\mathsf D_T)-I
+\right]
+\ge0.
+}
+\tag{349.6}
+$$
+
+---
+
