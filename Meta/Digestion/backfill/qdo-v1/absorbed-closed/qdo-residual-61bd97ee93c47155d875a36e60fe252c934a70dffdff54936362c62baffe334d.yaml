@@ -1,0 +1,17 @@
+ast_path: theorem/41.13
+fingerprints:
+  raw_sha256: sha256:61bd97ee93c47155d875a36e60fe252c934a70dffdff54936362c62baffe334d
+  normalized_sha256: sha256:61bd97ee93c47155d875a36e60fe252c934a70dffdff54936362c62baffe334d
+cas_ref: sha256:61bd97ee93c47155d875a36e60fe252c934a70dffdff54936362c62baffe334d
+coverage_gids:
+  - D5/S3/Entropy/Fusion/QuotientFiberDecomposition.quotient_fiber_entropy_decomposition
+receipts:
+  coverage:
+    - gid: D5/S3/Entropy/Fusion/QuotientFiberDecomposition.quotient_fiber_entropy_decomposition
+      source_sha256: sha256:61bd97ee93c47155d875a36e60fe252c934a70dffdff54936362c62baffe334d
+      target_statement_id: sha256:6661d41769a4c338816fbfaeaa223da3be341a42fe554f91f0e82dc3b1dc20df
+  scribe:
+    - gid: D5/S3/Entropy/Fusion/QuotientFiberDecomposition.quotient_fiber_entropy_decomposition
+      definition_sha256: sha256:2c999645df70ffc294cf98fbfcae754a3c114c5fb8d69c1a22ebe2526d06cda7
+      emission_sha256: sha256:ca51e7c32e849390e077ca4530e806511e16a2cb17d2b597720e12975e3f4751
+  unresolved_subitems: []
