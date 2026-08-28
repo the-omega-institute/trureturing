@@ -1,0 +1,10 @@
+ast_path: section/Definition-1-Typed-producer-resolution
+fingerprints:
+  raw_sha256: sha256:2255b764c7475b956aae0b110b58267ae5b90a6be3c2bb51e058ade154c01784
+  normalized_sha256: sha256:2255b764c7475b956aae0b110b58267ae5b90a6be3c2bb51e058ade154c01784
+cas_ref: sha256:2255b764c7475b956aae0b110b58267ae5b90a6be3c2bb51e058ade154c01784
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

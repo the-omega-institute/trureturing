@@ -1,0 +1,10 @@
+ast_path: section/565-2-尺度过近与合流极限
+fingerprints:
+  raw_sha256: sha256:0e70120981d07963f291159820e97ba9f332e40d6edffbf270534f9d973d9a75
+  normalized_sha256: sha256:0e70120981d07963f291159820e97ba9f332e40d6edffbf270534f9d973d9a75
+cas_ref: sha256:0e70120981d07963f291159820e97ba9f332e40d6edffbf270534f9d973d9a75
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

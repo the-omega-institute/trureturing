@@ -1,0 +1,57 @@
+# 第四百六十八部　Riemann 自然预算 \(2\lambda_1\)
+
+在自然尺度：
+
+$$
+a=\frac12,
+$$
+
+RH 成立时真实谱为：
+
+$$
+\boxed{
+\nu_\Xi
+=
+\sum_{\gamma\in\mathbb R}
+m_\gamma\delta_\gamma,
+}
+\tag{468.1}
+$$
+
+其中：
+
+$$
+\rho=\frac12+i\gamma
+$$
+
+遍历非平凡零点。
+
+第一 Li 系数为：
+
+$$
+\boxed{
+\lambda_1
+=
+1+\frac{\gamma_E}{2}
+-\log(2\sqrt\pi).
+}
+\tag{468.2}
+$$
+
+正、负 ordinate 成对后：
+
+$$
+\boxed{
+R_{1/2}(\nu_\Xi)
+=
+\sum_{\gamma\in\mathbb R}
+\frac{m_\gamma}
+{\gamma^2+\frac14}
+=
+2\lambda_1.
+}
+\tag{468.3}
+$$
+
+因此定理 467.1 专化为：
+

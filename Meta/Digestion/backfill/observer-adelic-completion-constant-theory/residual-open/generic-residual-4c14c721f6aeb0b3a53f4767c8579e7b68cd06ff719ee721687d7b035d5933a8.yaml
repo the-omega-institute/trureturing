@@ -1,0 +1,10 @@
+ast_path: section/第六百四十三部-建议形式化顺序
+fingerprints:
+  raw_sha256: sha256:4c14c721f6aeb0b3a53f4767c8579e7b68cd06ff719ee721687d7b035d5933a8
+  normalized_sha256: sha256:4c14c721f6aeb0b3a53f4767c8579e7b68cd06ff719ee721687d7b035d5933a8
+cas_ref: sha256:4c14c721f6aeb0b3a53f4767c8579e7b68cd06ff719ee721687d7b035d5933a8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

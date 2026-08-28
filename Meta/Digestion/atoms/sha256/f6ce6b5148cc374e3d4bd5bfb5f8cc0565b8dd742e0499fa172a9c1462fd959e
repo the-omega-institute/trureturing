@@ -1,0 +1,82 @@
+## 定理 432.1（平滑外部有限矩消除）
+
+设 \(\varepsilon_L\) 的偶部分支撑于：
+
+$$
+[-2L,2L].
+$$
+
+对每个 \(K\ge0\)，存在偶函数：
+
+$$
+\boxed{
+\kappa_{L,K}
+\in
+C_c^\infty
+\left(
+\mathbb R\setminus[-2L,2L]
+\right)
+}
+\tag{432.1}
+$$
+
+使：
+
+$$
+\boxed{
+\int_{\mathbb R}
+u^{2j}
+\,d(\varepsilon_L+\kappa_{L,K})(u)
+=0,
+\qquad
+0\le j\le K.
+}
+\tag{432.2}
+$$
+
+### 证明构造
+
+选择互不相同的：
+
+$$
+a_0,\ldots,a_K>2L.
+$$
+
+在每个 \(\pm a_r\) 附近选择很窄的对称 bump pair：
+
+$$
+\phi_r(u)
+=
+\phi_\epsilon(u-a_r)
++
+\phi_\epsilon(u+a_r).
+$$
+
+矩阵：
+
+$$
+M_{jr}
+=
+\int u^{2j}\phi_r(u)\,du
+$$
+
+在 \(\epsilon\downarrow0\) 时趋向：
+
+$$
+2a_r^{2j},
+$$
+
+即变量 \(a_r^2\) 的 Vandermonde 矩阵，因此在足够小的 \(\epsilon\) 下可逆。
+
+解有限线性方程即可选择系数 \(c_r\)，使：
+
+$$
+\kappa_{L,K}
+=
+\sum_rc_r\phi_r
+$$
+
+满足式 (432.2)。∎
+
+---
+

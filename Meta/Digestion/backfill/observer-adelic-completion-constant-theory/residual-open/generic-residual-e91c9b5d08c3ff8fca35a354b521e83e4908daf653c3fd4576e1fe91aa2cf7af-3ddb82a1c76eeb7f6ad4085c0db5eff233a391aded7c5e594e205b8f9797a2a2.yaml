@@ -1,0 +1,10 @@
+ast_path: section/567-5-Innovation-flow/clause/3
+fingerprints:
+  raw_sha256: sha256:e91c9b5d08c3ff8fca35a354b521e83e4908daf653c3fd4576e1fe91aa2cf7af
+  normalized_sha256: sha256:e91c9b5d08c3ff8fca35a354b521e83e4908daf653c3fd4576e1fe91aa2cf7af
+cas_ref: sha256:e91c9b5d08c3ff8fca35a354b521e83e4908daf653c3fd4576e1fe91aa2cf7af
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

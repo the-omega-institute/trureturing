@@ -1,0 +1,24 @@
+## 565.1 全局 MT 预条件
+
+原始分块 Crofoot 特征在各自尺度内部良好，却可能在尺度之间近线性相关。
+
+将全部 pole multiplicities 统一编排为一个全局 Malmquist–Takenaka basis 后：
+
+$$
+\boxed{
+B=I.
+}
+$$
+
+这消除了 Haar metric 的条件数。
+
+但未知谱 Gram：
+
+$$
+G_{\mathrm{MT}}
+$$
+
+仍可能具有极小最低特征值；这反映的是实际 observer floor 接近零，而不是坐标病态。
+
+---
+

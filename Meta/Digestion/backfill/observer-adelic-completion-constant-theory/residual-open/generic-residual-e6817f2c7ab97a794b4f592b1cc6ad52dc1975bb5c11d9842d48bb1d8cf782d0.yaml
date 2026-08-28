@@ -1,0 +1,10 @@
+ast_path: section/第六百四十七部-同一个黄金矩阵同时产生-有-与-归零
+fingerprints:
+  raw_sha256: sha256:e6817f2c7ab97a794b4f592b1cc6ad52dc1975bb5c11d9842d48bb1d8cf782d0
+  normalized_sha256: sha256:e6817f2c7ab97a794b4f592b1cc6ad52dc1975bb5c11d9842d48bb1d8cf782d0
+cas_ref: sha256:e6817f2c7ab97a794b4f592b1cc6ad52dc1975bb5c11d9842d48bb1d8cf782d0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

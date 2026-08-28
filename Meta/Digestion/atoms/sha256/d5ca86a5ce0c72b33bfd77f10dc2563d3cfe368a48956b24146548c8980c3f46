@@ -1,0 +1,57 @@
+# 第六百五十部　每个零点的局部世界在最低阶完全相同
+
+设：
+
+$$
+\rho
+$$
+
+是 \(\xi\) 的 \(m\) 重零点。
+
+局部展开为：
+
+$$
+\boxed{
+\xi(\rho+z)
+=
+a_m(\rho)z^m
+\left[
+1+
+g_1(\rho)z+
+g_2(\rho)z^2+\cdots
+\right],
+}
+\tag{650.1}
+$$
+
+其中：
+
+$$
+a_m(\rho)\neq0.
+$$
+
+定义零点自中心观察器：
+
+$$
+\boxed{
+\mathcal G_\rho(z)
+=
+\frac{
+\xi(\rho+z)
+}{
+a_m(\rho)z^m
+}.
+}
+\tag{650.2}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal G_\rho(0)=1.
+}
+$$
+
+---
+

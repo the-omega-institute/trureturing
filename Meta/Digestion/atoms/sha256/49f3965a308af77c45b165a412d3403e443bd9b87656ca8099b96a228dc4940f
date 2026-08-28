@@ -1,0 +1,25 @@
+## 命题 A：黄金观察器协变分解
+
+构造：
+
+$$
+\mathcal O_\varphi,
+\qquad
+\mathcal O_{\varphi'},
+$$
+
+并证明：
+
+$$
+\boxed{
+\mathcal O_{\varphi'}
+=
+\tau
+\mathcal O_\varphi
+\tau^{-1}.
+}
+\tag{587.1}
+$$
+
+---
+

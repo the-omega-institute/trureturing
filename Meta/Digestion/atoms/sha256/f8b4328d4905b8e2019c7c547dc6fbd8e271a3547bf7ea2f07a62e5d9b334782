@@ -1,0 +1,20 @@
+## 547.2 Budget Loewner 正性
+
+对：
+
+$$
+u_\ell=a_\ell^2,
+$$
+
+要求：
+
+$$
+\boxed{
+[\mathcal L_B(u_\ell,u_m)]_{\ell,m}
+\succeq0.
+}
+\tag{547.2}
+$$
+
+---
+

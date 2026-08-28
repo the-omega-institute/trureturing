@@ -1,0 +1,40 @@
+# 第六百一十部　Fibonacci 回归是“差一点完成”的精确动力学
+
+定义黄金圆旋转：
+
+$$
+\boxed{
+T(x)=x+\frac1\varphi\pmod1.
+}
+\tag{610.1}
+$$
+
+前文已得到：
+
+$$
+x_v=T^{v+1}(0)
+=
+\left\{\frac{v+1}{\varphi}\right\}.
+$$
+
+Fibonacci 数满足：
+
+$$
+F_n-\varphi F_{n-1}=(\varphi')^{n-1}.
+$$
+
+除以 \(\varphi\)，得到：
+
+$$
+\boxed{
+\frac{F_n}{\varphi}
+=
+F_{n-1}
++
+(-1)^{n-1}\varphi^{-n}.
+}
+\tag{610.2}
+$$
+
+因此：
+

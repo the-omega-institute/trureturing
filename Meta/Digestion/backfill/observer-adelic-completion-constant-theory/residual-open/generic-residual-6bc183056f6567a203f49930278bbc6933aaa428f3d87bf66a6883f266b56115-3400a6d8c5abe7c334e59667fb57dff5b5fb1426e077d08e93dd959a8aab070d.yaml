@@ -1,0 +1,10 @@
+ast_path: section/437-3-有限-Galerkin-版本/clause/2
+fingerprints:
+  raw_sha256: sha256:6bc183056f6567a203f49930278bbc6933aaa428f3d87bf66a6883f266b56115
+  normalized_sha256: sha256:6bc183056f6567a203f49930278bbc6933aaa428f3d87bf66a6883f266b56115
+cas_ref: sha256:6bc183056f6567a203f49930278bbc6933aaa428f3d87bf66a6883f266b56115
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

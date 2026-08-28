@@ -1,0 +1,24 @@
+# 第六百八十部　新的统一对象：Prime–Frame Observer
+
+定义：
+
+$$
+\boxed{
+\mathfrak{PFO}
+=
+\left(
+\mathbb P^*,
+\Lambda_{\mathbb P},
+\mathcal H_{\mathbb P},
+\ell,
+\pi,
+U,
+q
+\right).
+}
+\tag{680.1}
+$$
+
+其中：
+
+* \(\mathbb P^*\)：有序观察历史；

@@ -1,0 +1,22 @@
+## 497.1 数值与证明的区别
+
+有限原子层级给出：
+
+$$
+\boxed{
+\text{从上方收敛的 primal 近似值}.
+}
+$$
+
+但仅匹配有限 moments 的原子模型，不是完整局部完成证书。
+
+要把某一有限层升级为严格证明，还需要：
+
+* 稠密余项控制；
+* local kernel error envelope；
+* 或一个完整的 positive-definite extension certificate。
+
+这与最新紧窗口工作从 dual 侧给出的有限矩阵严格下界互补：有限 primal moments 自然给上界和候选谱，dual 区间矩阵给下界和正性证书。([arXiv][1])
+
+---
+

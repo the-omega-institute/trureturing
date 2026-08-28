@@ -1,0 +1,10 @@
+ast_path: section/529-1-Moment-floor-最终趋零
+fingerprints:
+  raw_sha256: sha256:2fd9b91223d6d3e9a1adf85889ffe09e36675b55678e8f3ae1e02cee2bf15c4b
+  normalized_sha256: sha256:2fd9b91223d6d3e9a1adf85889ffe09e36675b55678e8f3ae1e02cee2bf15c4b
+cas_ref: sha256:2fd9b91223d6d3e9a1adf85889ffe09e36675b55678e8f3ae1e02cee2bf15c4b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

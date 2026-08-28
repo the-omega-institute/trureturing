@@ -1,0 +1,10 @@
+ast_path: section/466-1-对前文预算判据的修正
+fingerprints:
+  raw_sha256: sha256:d318cb207406e9a4aad4ff586e250536166854bf176c94e394a6c55e1bbe21a3
+  normalized_sha256: sha256:d318cb207406e9a4aad4ff586e250536166854bf176c94e394a6c55e1bbe21a3
+cas_ref: sha256:d318cb207406e9a4aad4ff586e250536166854bf176c94e394a6c55e1bbe21a3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

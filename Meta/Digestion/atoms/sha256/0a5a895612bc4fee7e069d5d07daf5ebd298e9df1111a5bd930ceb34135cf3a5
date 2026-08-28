@@ -1,0 +1,54 @@
+## 定理 542.1（Laguerre–Chebyshev duality）
+
+$$
+\boxed{
+\begin{aligned}
+&
+B(u)
+-
+2\sqrt u
+\int_0^\infty
+e^{-\sqrt u\,t}
+L_{n-1}^{(1)}
+(2\sqrt u\,t)
+H_{\sqrt u}(t)\,dt
+\\
+&=
+\sum_{k=0}^{n}
+p_{n,k}
+u^k
+\frac{(-1)^k}{k!}
+B^{(k)}(u).
+\end{aligned}
+}
+\tag{542.2}
+$$
+
+左侧是：
+
+$$
+\boxed{
+\text{相关时间轴上的 Laguerre 观察};
+}
+$$
+
+右侧是：
+
+$$
+\boxed{
+\text{尺度轴上的 Chebyshev derivative jet}.
+}
+$$
+
+因此同一个 moment 有两种独立层析路线：
+
+$$
+\boxed{
+\text{time tomography}
+\quad\longleftrightarrow\quad
+\text{scale tomography}.
+}
+$$
+
+---
+

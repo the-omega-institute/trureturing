@@ -1,0 +1,48 @@
+## 定理 498.2（Natural white floor collapses）
+
+在上述等价条件成立时：
+
+$$
+\boxed{
+\Lambda_L^\Xi
+\downarrow0
+\qquad
+(L\to\infty).
+}
+\tag{498.5}
+$$
+
+### 证明
+
+\(\Lambda_L^\Xi\) 随 \(L\) 单调不增。
+
+设其极限为：
+
+$$
+\lambda_\infty>0.
+$$
+
+选择 optimizer：
+
+$$
+\nu_L\ge\Lambda_L^\Xi m_0,
+\qquad
+\mathcal R_{1/2}(\nu_L)\le2\lambda_1.
+$$
+
+取局部到全局极限，得到：
+
+$$
+\nu_\infty\ge\lambda_\infty m_0.
+$$
+
+但全局 Fourier source 唯一确定的正谱是纯点测度：
+
+$$
+\nu_\Xi.
+$$
+
+纯点测度不可能支配非零 Lebesgue 测度，矛盾。∎
+
+---
+

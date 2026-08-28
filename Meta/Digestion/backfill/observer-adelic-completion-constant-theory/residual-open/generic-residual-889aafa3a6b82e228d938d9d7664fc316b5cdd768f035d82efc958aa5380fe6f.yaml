@@ -1,0 +1,10 @@
+ast_path: section/477-1-奇偶-frame-operators
+fingerprints:
+  raw_sha256: sha256:889aafa3a6b82e228d938d9d7664fc316b5cdd768f035d82efc958aa5380fe6f
+  normalized_sha256: sha256:889aafa3a6b82e228d938d9d7664fc316b5cdd768f035d82efc958aa5380fe6f
+cas_ref: sha256:889aafa3a6b82e228d938d9d7664fc316b5cdd768f035d82efc958aa5380fe6f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/491-1-有限预算饱和值
+fingerprints:
+  raw_sha256: sha256:92d4cb94997056df1dbdad02ad44cba54dbf65dde0b051c7f3713ed0c2bcb495
+  normalized_sha256: sha256:92d4cb94997056df1dbdad02ad44cba54dbf65dde0b051c7f3713ed0c2bcb495
+cas_ref: sha256:92d4cb94997056df1dbdad02ad44cba54dbf65dde0b051c7f3713ed0c2bcb495
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

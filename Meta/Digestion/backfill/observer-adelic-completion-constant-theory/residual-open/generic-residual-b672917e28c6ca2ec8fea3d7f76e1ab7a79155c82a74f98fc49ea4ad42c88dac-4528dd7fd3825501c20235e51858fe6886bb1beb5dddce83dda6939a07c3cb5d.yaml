@@ -1,0 +1,10 @@
+ast_path: section/530-1-重要负结论/clause/5
+fingerprints:
+  raw_sha256: sha256:b672917e28c6ca2ec8fea3d7f76e1ab7a79155c82a74f98fc49ea4ad42c88dac
+  normalized_sha256: sha256:b672917e28c6ca2ec8fea3d7f76e1ab7a79155c82a74f98fc49ea4ad42c88dac
+cas_ref: sha256:b672917e28c6ca2ec8fea3d7f76e1ab7a79155c82a74f98fc49ea4ad42c88dac
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

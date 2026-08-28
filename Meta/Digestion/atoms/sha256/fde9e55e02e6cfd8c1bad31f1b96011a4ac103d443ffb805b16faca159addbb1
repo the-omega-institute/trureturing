@@ -1,0 +1,38 @@
+# 第五百四十三部　Crofoot–Malmquist Gram 运输
+
+令：
+
+$$
+r=r_{a,b}.
+$$
+
+定义 Hardy 空间中的加权组合函数：
+
+$$
+\boxed{
+e_{j,r}(z)
+=
+\frac{
+\sqrt{1-r^2}
+}{
+1+rz
+}
+\Phi_r(z)^j,
+\qquad
+j\ge0.
+}
+\tag{543.1}
+$$
+
+它们由单位圆盘自同构对应的加权组合算子作用于标准基：
+
+$$
+z^j
+$$
+
+得到。
+
+适当核权重下，圆盘自同构诱导 unitary weighted composition operator 是 Hardy 空间中的标准结果；\(e_{j,r}\) 正是相应 rational Malmquist 型坐标。([arXiv][2])
+
+---
+

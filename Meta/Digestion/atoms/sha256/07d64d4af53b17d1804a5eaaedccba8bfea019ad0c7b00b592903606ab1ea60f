@@ -1,0 +1,17 @@
+## 516.1 Pressure phase
+
+$$
+\theta>0.
+$$
+
+则：
+
+* budget active；
+* infinity ledger 被排除；
+* contact set 有限；
+* residual spectrum 有限原子；
+* Toeplitz matrix 具有精确平底；
+* Szegő product 等于 Haar floor fraction。
+
+---
+

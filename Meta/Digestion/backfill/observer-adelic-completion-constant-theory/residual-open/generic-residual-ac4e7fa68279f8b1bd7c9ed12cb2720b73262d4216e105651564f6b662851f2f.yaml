@@ -1,0 +1,10 @@
+ast_path: section/573-2-近完成展开
+fingerprints:
+  raw_sha256: sha256:ac4e7fa68279f8b1bd7c9ed12cb2720b73262d4216e105651564f6b662851f2f
+  normalized_sha256: sha256:ac4e7fa68279f8b1bd7c9ed12cb2720b73262d4216e105651564f6b662851f2f
+cas_ref: sha256:ac4e7fa68279f8b1bd7c9ed12cb2720b73262d4216e105651564f6b662851f2f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

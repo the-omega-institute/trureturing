@@ -1,0 +1,5 @@
+## 518.5 当前 Lean 真源尚未覆盖本轮圆周问题
+
+仓库已经机器核验 convolution square 的 Fourier 模平方非负性，但尚未建立：
+
+* Cayley pushforward measure；

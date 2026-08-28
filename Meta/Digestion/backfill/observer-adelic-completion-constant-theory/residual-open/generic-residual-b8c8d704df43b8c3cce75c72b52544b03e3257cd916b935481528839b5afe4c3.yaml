@@ -1,0 +1,10 @@
+ast_path: row/抽出-zeta-varphi-2s
+fingerprints:
+  raw_sha256: sha256:b8c8d704df43b8c3cce75c72b52544b03e3257cd916b935481528839b5afe4c3
+  normalized_sha256: sha256:b8c8d704df43b8c3cce75c72b52544b03e3257cd916b935481528839b5afe4c3
+cas_ref: sha256:b8c8d704df43b8c3cce75c72b52544b03e3257cd916b935481528839b5afe4c3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

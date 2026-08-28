@@ -1,0 +1,71 @@
+# 第五百三十五部　建议形式化顺序
+
+```text
+D5/S3/Weil/CayleyLaguerre/
+  SpectralCayleyCharacter.lean
+  GeneralizedLaguerreKernel.lean
+  LaguerreLaplaceTransform.lean
+  CayleyCharacterImpulse.lean
+
+D5/S3/Weil/ResolventMoments/
+  ResolventWeightedMeasure.lean
+  ResolventCorrelation.lean
+  PositiveDefiniteCorrelationBound.lean
+  CayleyMoment.lean
+  LaguerreMomentFormula.lean
+
+D5/S3/Weil/FiniteWindowMoments/
+  TruncatedLaguerreMoment.lean
+  LaguerreTail.lean
+  FiniteWindowMomentError.lean
+  ExplicitLaguerreTailBound.lean
+  FixedDepthExponentialRecovery.lean
+
+D5/S3/Weil/BudgetMomentTube/
+  LocalResolventGreenSolution.lean
+  BudgetAffineCorrelation.lean
+  BudgetAffineMomentEstimator.lean
+  WeylBudgetMomentTube.lean
+
+D5/S3/Weil/LiLaguerre/
+  LiCurvatureSequence.lean
+  ZeroResolventCorrelation.lean
+  LiCurvatureCayleyMoment.lean
+  LaguerreLiBridge.lean
+  FiniteWindowLiCurvatureBound.lean
+
+D5/S3/Weil/ToeplitzHaarFloor/
+  TruncatedCircleMoment.lean
+  ToeplitzMomentMatrix.lean
+  ResidualHaarMomentMatrix.lean
+  ExactFiniteHaarFloor.lean
+  MinimumEigenContactPolynomial.lean
+  AtomicContactSupport.lean
+
+D5/S3/Weil/RobustToeplitz/
+  MomentEntryErrorMatrix.lean
+  ToeplitzOperatorError.lean
+  HaarFloorEigenvalueInterval.lean
+  PositiveMomentCertificate.lean
+  NegativeMomentCertificate.lean
+
+D5/S3/Weil/MultiScaleBudget/
+  ResolventBudgetCurve.lean
+  BudgetCurveStieltjes.lean
+  BudgetCompleteMonotone.lean
+  EvenSpectrumBudgetUniqueness.lean
+  RiemannBudgetLogDerivative.lean
+  MultiCayleyObserverBank.lean
+
+D5/S3/Weil/MomentSDP/
+  BudgetedMomentVariables.lean
+  MomentTubeConstraints.lean
+  ToeplitzPSDConstraint.lean
+  FiniteMomentInfeasibility.lean
+  JointScaleMomentConsistency.lean
+```
+
+Laguerre 大阶统一误差与 turning-point control 应作为独立分析接口，不应混入固定阶的初始形式化链。
+
+---
+

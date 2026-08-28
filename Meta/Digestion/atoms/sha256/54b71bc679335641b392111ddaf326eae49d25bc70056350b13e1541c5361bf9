@@ -1,0 +1,33 @@
+## 定理 664.1（First self-similar observation theorem）
+
+若第一次自观察满足：
+
+$$
+W=S\oplus R,
+$$
+
+并且“整体—自身”与“自身—其余”具有同一正比例，则该比例唯一为：
+
+$$
+\boxed{
+\varphi.
+}
+$$
+
+这给你的直觉一个严格版本：
+
+$$
+\boxed{
+\text{第一次自观察}
++
+\text{二元划分}
++
+\text{精确递归自相似}
+\Longrightarrow
+\varphi.
+}
+$$
+
+但若：
+
+* 通道数超过两个；

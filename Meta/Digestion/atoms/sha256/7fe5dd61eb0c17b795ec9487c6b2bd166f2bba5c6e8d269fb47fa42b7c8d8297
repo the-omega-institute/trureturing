@@ -1,0 +1,15 @@
+* budget 严格减小。
+
+所以：
+
+$$
+\boxed{
+\text{总可选择一个无 }z=1\text{ 原子的 optimizer}.
+}
+\tag{507.7}
+$$
+
+这给出了一个规范的 **no-escape optimizer**。
+
+---
+

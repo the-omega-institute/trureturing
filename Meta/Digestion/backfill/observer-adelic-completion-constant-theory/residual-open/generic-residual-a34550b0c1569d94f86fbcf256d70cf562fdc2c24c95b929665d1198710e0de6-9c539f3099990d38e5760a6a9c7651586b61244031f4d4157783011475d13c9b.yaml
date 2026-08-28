@@ -1,0 +1,10 @@
+ast_path: section/547-5-强度层级/clause/3
+fingerprints:
+  raw_sha256: sha256:a34550b0c1569d94f86fbcf256d70cf562fdc2c24c95b929665d1198710e0de6
+  normalized_sha256: sha256:a34550b0c1569d94f86fbcf256d70cf562fdc2c24c95b929665d1198710e0de6
+cas_ref: sha256:a34550b0c1569d94f86fbcf256d70cf562fdc2c24c95b929665d1198710e0de6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

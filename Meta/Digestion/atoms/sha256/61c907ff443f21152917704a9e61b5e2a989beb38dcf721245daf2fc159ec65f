@@ -1,0 +1,29 @@
+# 第五百七十部　裸 \(\varphi\) 的外部性判据
+
+令：
+
+$$
+K=\mathbb Q(\sqrt5),
+$$
+
+$$
+\varphi=\frac{1+\sqrt5}{2},
+\qquad
+\varphi'=\frac{1-\sqrt5}{2}
+=-\frac1\varphi.
+$$
+
+记非平凡 Galois 自同构为：
+
+$$
+\tau:\sqrt5\mapsto-\sqrt5.
+$$
+
+于是：
+
+$$
+\tau(\varphi)=\varphi'.
+$$
+
+---
+

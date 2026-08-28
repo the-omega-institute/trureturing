@@ -1,0 +1,58 @@
+# 第六百六十三部　建议形式化顺序
+
+```text
+D5/S3/ObserverOrigin/Symmetry/
+  SymmetricState.lean
+  ObserverAxisSpace.lean
+  NoEquivariantAxisSelector.lean
+  BrokenObserverPair.lean
+  InvariantAxisEnsemble.lean
+  ObserverWorldCovariance.lean
+
+D5/S3/ObserverOrigin/GoldenMinimal/
+  PrimitiveBinaryIntegerMatrix.lean
+  UnimodularOrientationReversingBound.lean
+  UnimodularOrientationPreservingBound.lean
+  FibonacciMatrixMinimalPerron.lean
+  GoldenStableUnstableDirections.lean
+  OddBreakEvenCompletion.lean
+
+D5/S3/Analytic/Zeta/LocalObserver/
+  ZeroCenteredGerm.lean
+  LogDerivativePrincipalPart.lean
+  SimpleZeroUniversalObserver.lean
+  ZeroJetObserver.lean
+  ZeroFirstDifferenceDepth.lean
+
+D5/S3/Analytic/Zeta/ReflectionObserver/
+  ZeroReflectionPartner.lean
+  LocalAffineReflection.lean
+  PartnerDerivativeParity.lean
+  NormalizedGermMirror.lean
+  CriticalAxisDistance.lean
+  LocalObserverSelfBlindness.lean
+
+D5/S3/Analytic/Zeta/ObserverThreads/
+  FiniteObserverSpectralDefect.lean
+  SpectralDefectThread.lean
+  RealizedOffLineThread.lean
+  PhantomOffLineThread.lean
+  PairCoalescenceMultiplicityObstruction.lean
+
+D5/S3/Analytic/Zeta/GoldenDefectFlow/
+  GoldenTransverseRecurrence.lean
+  GoldenDefectClosedForm.lean
+  NoNonzeroGoldenPeriodicDefect.lean
+  ForcedGoldenDefect.lean
+  PersistentDefectForcing.lean
+  GoldenFiniteObserverOriginConjecture.lean
+
+D5/S3/ConceptDynamics/GoldenUniversality/
+  GoldenObserverUniversalityClass.lean
+  GoldenShadowRatio.lean
+  HigherChannelPerronCompletion.lean
+  GoldenNotUniversalWithoutAxioms.lean
+```
+
+---
+

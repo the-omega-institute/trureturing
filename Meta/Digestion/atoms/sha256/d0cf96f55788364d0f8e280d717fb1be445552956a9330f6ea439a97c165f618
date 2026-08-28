@@ -1,0 +1,67 @@
+## v4.7：自观察坐标轴、黄金最小破缺、零点局部宇宙与持久离线残差
+
+以下从前文**第六百四十三部**继续追加。
+
+本轮先冻结一个最重要的科学边界：
+
+$$
+\boxed{
+\text{“自观察需要选择坐标轴”}
+\not\Rightarrow
+\text{“真实 }\xi\text{ 必须存在离线零点”.}
+}
+$$
+
+更严格的逻辑链应当是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{完全对称状态}
+&\longrightarrow
+\text{观察者选择坐标轴}\\
+&\longrightarrow
+\text{观察器层的对称破缺}\\
+&\longrightarrow
+\text{有限层横向谱缺陷}\\
+&\longrightarrow
+\begin{cases}
+\text{缺陷随完成消失},\\
+\text{缺陷成为幽灵线程},\\
+\text{缺陷在逆极限中真实实现}.
+\end{cases}
+\end{aligned}
+}
+$$
+
+只有第三种情况，才对应真实 completed \(\xi\) 的离线零点。
+
+黄金比例在其中最自然的角色也不是：
+
+$$
+\boxed{
+\Re\rho-\frac12
+\text{ 必须等于某个 }\varphi\text{ 表达式},
+}
+$$
+
+而更可能是：
+
+$$
+\boxed{
+\text{第一破缺与后续完成之间的层间缩放率}.
+}
+$$
+
+换言之：
+
+$$
+\boxed{
+\varphi
+\text{ 更可能决定“缺陷如何缩放”，
+而不是“缺陷绝对位于哪里”.}
+}
+$$
+
+---
+

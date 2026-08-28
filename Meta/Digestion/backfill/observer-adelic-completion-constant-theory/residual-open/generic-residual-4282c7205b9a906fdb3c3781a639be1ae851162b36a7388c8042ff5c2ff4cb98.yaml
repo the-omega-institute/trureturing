@@ -1,0 +1,10 @@
+ast_path: section/502-3-Atomic-contact-solver
+fingerprints:
+  raw_sha256: sha256:4282c7205b9a906fdb3c3781a639be1ae851162b36a7388c8042ff5c2ff4cb98
+  normalized_sha256: sha256:4282c7205b9a906fdb3c3781a639be1ae851162b36a7388c8042ff5c2ff4cb98
+cas_ref: sha256:4282c7205b9a906fdb3c3781a639be1ae851162b36a7388c8042ff5c2ff4cb98
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

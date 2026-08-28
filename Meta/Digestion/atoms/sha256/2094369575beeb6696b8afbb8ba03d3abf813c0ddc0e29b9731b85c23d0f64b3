@@ -1,0 +1,34 @@
+## 632.1 完成层级
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{层级}&\text{条件}\\
+\hline
+0&\text{零点位于临界带}\\
+1&J(\mathcal Z)=\mathcal Z\\
+2&\mathbb E[\delta\mid\gamma]=0\\
+3&\operatorname{Var}(\delta\mid\gamma)=0\\
+4&\text{更高谱统计、重数与关联完成}
+\end{array}
+}
+$$
+
+其中：
+
+$$
+\boxed{
+\text{第 2 层不推出第 3 层}.
+}
+$$
+
+离线零点正是：
+
+$$
+\boxed{
+\text{均值完成但方差未完成}.
+}
+$$
+
+---
+

@@ -1,0 +1,17 @@
+## 当前真正开放的桥（第 473 部）
+
+$$
+\boxed{
+\begin{aligned}
+&\text{构造 full Hermitian Weil explicit-formula form};\\
+&\text{证明 }\underline R_L(1/2)\le\overline R_L(1/2)
+\text{ 对全部 }L;\\
+&\text{从 prime--Archimedean 数据直接控制奇通道上界};\\
+&\text{证明 Galerkin Weyl intervals 的可认证收敛};\\
+&\text{将 Weyl interval 与 gauge-optimized Feshbach matrices 对接}.
+\end{aligned}
+}
+$$
+
+---
+

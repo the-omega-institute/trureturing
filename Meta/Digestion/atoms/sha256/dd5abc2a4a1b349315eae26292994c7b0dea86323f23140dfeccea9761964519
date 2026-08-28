@@ -1,0 +1,16 @@
+## 501.5 Maximum entropy 不是必需的第一层
+
+有限预算已经保证 optimizer existence 和紧性。
+
+Maximum entropy 更适合作为：
+
+$$
+\boxed{
+\text{在最优或近最优 completion face 内选择唯一代表}
+}
+$$
+
+的第二级规范，而不是用来阻止谱逃逸。有限 covariance/moment extension 中通过 entropy 选择 rational spectral density 是成熟的计算框架，但其规范依赖于所选 entropy 和参考测度。([arXiv][5])
+
+---
+

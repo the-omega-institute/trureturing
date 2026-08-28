@@ -1,0 +1,10 @@
+ast_path: row/无外力黄金流只固定于-0
+fingerprints:
+  raw_sha256: sha256:0af5e1b07db7250d22a76e2cdfc5e5273e3945bad43d689a5863c098f377d316
+  normalized_sha256: sha256:0af5e1b07db7250d22a76e2cdfc5e5273e3945bad43d689a5863c098f377d316
+cas_ref: sha256:0af5e1b07db7250d22a76e2cdfc5e5273e3945bad43d689a5863c098f377d316
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

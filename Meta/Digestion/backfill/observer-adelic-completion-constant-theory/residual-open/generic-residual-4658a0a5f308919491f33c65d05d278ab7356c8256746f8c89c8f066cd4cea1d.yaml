@@ -1,0 +1,10 @@
+ast_path: section/547-3-Cross-scale-transport-intervals
+fingerprints:
+  raw_sha256: sha256:4658a0a5f308919491f33c65d05d278ab7356c8256746f8c89c8f066cd4cea1d
+  normalized_sha256: sha256:4658a0a5f308919491f33c65d05d278ab7356c8256746f8c89c8f066cd4cea1d
+cas_ref: sha256:4658a0a5f308919491f33c65d05d278ab7356c8256746f8c89c8f066cd4cea1d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

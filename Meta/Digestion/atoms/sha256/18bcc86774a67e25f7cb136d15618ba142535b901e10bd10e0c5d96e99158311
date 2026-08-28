@@ -1,0 +1,15 @@
+* 零点高度 cutoff；
+
+直接控制。
+
+所以：
+
+$$
+\boxed{
+\text{有限正谱 completion 的自然复杂度
+是 observer constraint rank。}
+}
+$$
+
+---
+

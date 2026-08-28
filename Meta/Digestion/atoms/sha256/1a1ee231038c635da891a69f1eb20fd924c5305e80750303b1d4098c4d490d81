@@ -1,0 +1,48 @@
+## 定理 414.1（Pole–continuum completion）
+
+$$
+\boxed{
+\mathsf P(f)-\mathsf M_0(f)
+=
+\iint_{\mathbb R^2}
+e^{-|x-y|/2}
+f(x)\overline{f(y)}
+\,dx\,dy.
+}
+\tag{414.5}
+$$
+
+### 证明
+
+首先：
+
+$$
+\mathsf M_0(f)
+=
+\iint_{\mathbb R^2}
+e^{|x-y|/2}
+f(x)\overline{f(y)}\,dx\,dy.
+$$
+
+另一方面，由 \(f\) 的偶性，可以对 \((x,y)\) 的四个符号组合取平均。对 \(x,y\ge0\)，pole kernel 与连续 prime kernel 的差为：
+
+$$
+\begin{aligned}
+&
+8\cosh(x/2)\cosh(y/2)
+\\
+&\quad
+-2e^{(x+y)/2}
+-2e^{|x-y|/2}
+\\
+&=
+2e^{-(x+y)/2}
++
+2e^{-|x-y|/2}.
+\end{aligned}
+$$
+
+这正是 full-line kernel \(e^{-|x-y|/2}\) 在偶子空间上的四象限展开。∎
+
+---
+

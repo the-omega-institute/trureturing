@@ -1,0 +1,72 @@
+# 第五百二十四部　局部 Weil source 与 budget 联合决定 moments
+
+固定尺度 \(L\)。
+
+设局部 source：
+
+$$
+\mathfrak W_L
+$$
+
+已知，并固定候选 resolvent budget：
+
+$$
+R.
+$$
+
+对应的 even resolvent correlation 在窗口中满足：
+
+$$
+\boxed{
+\left(
+-\partial_t^2+a^2
+\right)
+H_{L,R}
+=
+\mathfrak W_L,
+}
+\tag{524.1}
+$$
+
+$$
+\boxed{
+H_{L,R}(0)=R,
+\qquad
+H_{L,R}'(0)=0.
+}
+\tag{524.2}
+$$
+
+因此 \(H_{L,R}\) 在 \((-2L,2L)\) 中唯一确定。
+
+若选定一个满足：
+
+$$
+H_{L,0}(0)=0
+$$
+
+的偶 particular solution，则：
+
+$$
+\boxed{
+H_{L,R}(t)
+=
+H_{L,0}(t)
++
+R\cosh(at).
+}
+\tag{524.3}
+$$
+
+代入有限 moment estimator：
+
+$$
+\widehat m_{n,L}^{(a)}(R)
+=
+R-
+\int_0^{2L}
+K_{n,a}(t)H_{L,R}(t)\,dt.
+$$
+
+所以：
+

@@ -1,0 +1,78 @@
+# 第五百一十五部　Contact atoms 的实轴回译
+
+若圆周 contact atom 为：
+
+$$
+z_r=e^{i\theta_r},
+$$
+
+其对应实频率为：
+
+$$
+\boxed{
+\tau_r
+=
+a\cot\frac{\theta_r}{2}.
+}
+\tag{515.1}
+$$
+
+dual contact equation：
+
+$$
+\Gamma_{a,\phi_*}(z_r)+\theta_*=0
+$$
+
+等价于：
+
+$$
+\boxed{
+(\tau_r^2+a^2)
+\widehat\phi_*(\tau_r)
++
+\theta_*
+=
+0.
+}
+\tag{515.2}
+$$
+
+这正是上一轮实轴 contact entire function：
+
+$$
+G_*(z)
+=
+(z^2+a^2)\widehat\phi_*(z)+\theta_*
+$$
+
+的圆周版本。
+
+但圆周图表多揭示了两个事实：
+
+1. contact atoms 的有限性来自：
+
+   $$
+   S_*(1)=\theta_*>0;
+   $$
+2. contact ordinates 向无穷远逃逸，等价于 contact points 向唯一圆周点：
+
+   $$
+   1
+   $$
+
+   聚集。
+
+所以：
+
+$$
+\boxed{
+\text{有限 contact spectrum}
+\longrightarrow
+\text{Riemann zero-angle spectrum}
+}
+$$
+
+可以在紧空间中研究，不再需要处理原子位置逃向无穷远的非紧困难。
+
+---
+

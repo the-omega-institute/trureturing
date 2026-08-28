@@ -1,0 +1,10 @@
+ast_path: section/第五百一十三部-Toeplitz-平底定理
+fingerprints:
+  raw_sha256: sha256:d6848fffa7d9c9f445c252ef8c2960a49f19e53b42efb40e50be6d8e3b4e381a
+  normalized_sha256: sha256:d6848fffa7d9c9f445c252ef8c2960a49f19e53b42efb40e50be6d8e3b4e381a
+cas_ref: sha256:d6848fffa7d9c9f445c252ef8c2960a49f19e53b42efb40e50be6d8e3b4e381a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

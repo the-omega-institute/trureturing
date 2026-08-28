@@ -1,0 +1,10 @@
+ast_path: section/534-2-Toeplitz-PSD-是-moment-必要条件-不是完整局部完成
+fingerprints:
+  raw_sha256: sha256:bbee2d4dff9841b2e8d1e8169fd731f0a47ffb899da48d836ef3879090d1e0b7
+  normalized_sha256: sha256:bbee2d4dff9841b2e8d1e8169fd731f0a47ffb899da48d836ef3879090d1e0b7
+cas_ref: sha256:bbee2d4dff9841b2e8d1e8169fd731f0a47ffb899da48d836ef3879090d1e0b7
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

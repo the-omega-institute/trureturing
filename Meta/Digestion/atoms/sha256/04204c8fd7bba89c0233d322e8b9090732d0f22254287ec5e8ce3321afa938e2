@@ -1,0 +1,53 @@
+## 定理 475.1（White-noise cone margin）
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)
+=
+\sup
+\left\{
+\lambda\in\mathbb R:
+\mathfrak W_L-\lambda\delta_0
+\in\mathcal P_L
+\right\}.
+}
+\tag{475.3}
+$$
+
+### 证明
+
+$$
+\begin{aligned}
+&
+\mathfrak W_L-\lambda\delta_0\in\mathcal P_L
+\\
+\iff{}&
+Q_L(f)-\lambda\|f\|_2^2\ge0
+\quad
+\forall f
+\\
+\iff{}&
+\lambda
+\le
+\inf_{f\ne0}
+\frac{Q_L(f)}{\|f\|_2^2}.
+\end{aligned}
+$$
+
+∎
+
+所以：
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)
+=
+\text{Weil 局部 source 沿 }\delta_0
+\text{ 方向到正锥边界的距离}.
+}
+$$
+
+它是 gauge-independent 的局部观察不变量，比某个 multiplier 的负频带或某个特定有限矩阵更本质。
+
+---
+

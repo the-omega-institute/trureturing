@@ -1,0 +1,50 @@
+# 第四百九十九部　接触原子逼近 Riemann 零点
+
+进一步假设在一列尺度 \(L_n\) 上：
+
+* full strong duality 成立；
+* primal 与 dual optimizer 均存在；
+* dual shadow price：
+
+  $$
+  \theta_n>0.
+  $$
+
+则每个 optimizer 具有有限原子形式：
+
+$$
+\boxed{
+\nu_n
+=
+\frac{\Lambda_{L_n}^\Xi}{2\pi}d\xi
++
+\sum_{j=1}^{M_n}
+c_{j,n}
+\left(
+\delta_{\tau_{j,n}}
++
+\delta_{-\tau_{j,n}}
+\right).
+}
+\tag{499.1}
+$$
+
+其中：
+
+$$
+\boxed{
+G_n(\tau_{j,n})=0,
+}
+\tag{499.2}
+$$
+
+$$
+G_n(z)
+=
+\left(z^2+\frac14\right)
+\widehat\phi_n(z)
++\theta_n.
+$$
+
+---
+

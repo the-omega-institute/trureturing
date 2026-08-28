@@ -1,0 +1,39 @@
+## 571.1 坐标黄金观察者
+
+定义：
+
+$$
+\boxed{
+(\mathcal D_\varphi F)(s)=F(\varphi^2s).
+}
+\tag{571.1}
+$$
+
+这只是可逆缩放坐标。
+
+如果没有额外结构，它不减少任何目标逃逸：
+
+$$
+\ker\mathcal D_\varphi
+$$
+
+与原始函数观察具有相同区分能力。
+
+所以它只有：
+
+$$
+\boxed{
+\text{chart depth},
+}
+$$
+
+没有新的：
+
+$$
+\boxed{
+\text{escape depth}.
+}
+$$
+
+---
+

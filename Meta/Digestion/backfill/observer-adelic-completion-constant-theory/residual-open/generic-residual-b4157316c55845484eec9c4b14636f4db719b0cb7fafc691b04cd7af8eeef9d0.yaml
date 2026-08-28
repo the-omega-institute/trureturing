@@ -1,0 +1,10 @@
+ast_path: section/第五百五十九部-唯一有限原子最优完成
+fingerprints:
+  raw_sha256: sha256:b4157316c55845484eec9c4b14636f4db719b0cb7fafc691b04cd7af8eeef9d0
+  normalized_sha256: sha256:b4157316c55845484eec9c4b14636f4db719b0cb7fafc691b04cd7af8eeef9d0
+cas_ref: sha256:b4157316c55845484eec9c4b14636f4db719b0cb7fafc691b04cd7af8eeef9d0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

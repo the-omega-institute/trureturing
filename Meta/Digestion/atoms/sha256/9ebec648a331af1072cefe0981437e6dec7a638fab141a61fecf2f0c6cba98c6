@@ -1,0 +1,66 @@
+## 504.1 Resolvent 紧化测度
+
+对正 Borel 测度 \(\nu\)，定义其 Cayley 紧化：
+
+$$
+\boxed{
+\mathcal C_a[\nu]
+=
+(\mathfrak c_a)_*
+\left(
+\frac{d\nu(\xi)}{\xi^2+a^2}
+\right).
+}
+\tag{504.5}
+$$
+
+记：
+
+$$
+\mu=\mathcal C_a[\nu].
+$$
+
+则：
+
+$$
+\boxed{
+\mu(\mathbb T)
+=
+\int_{\mathbb R}
+\frac{d\nu(\xi)}{\xi^2+a^2}
+=
+\mathcal R_a(\nu).
+}
+\tag{504.6}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{resolvent budget}
+=
+\text{Cayley 圆周上的总质量}.
+}
+$$
+
+非紧实轴上的谱质量逃逸，在紧化后不再消失，而成为：
+
+$$
+\boxed{
+z=1
+}
+$$
+
+处的潜在原子。
+
+所以 \(1\) 是：
+
+$$
+\boxed{
+\textbf{spectral infinity ledger}.
+}
+$$
+
+---
+

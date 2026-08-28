@@ -1,0 +1,10 @@
+ast_path: section/第五百四十九部-信息完备性与计算稳定性的严格区分
+fingerprints:
+  raw_sha256: sha256:70da931c4bd842baaf6f3ad751716cc7af8df9313c41ec97c17bedeb749560a0
+  normalized_sha256: sha256:70da931c4bd842baaf6f3ad751716cc7af8df9313c41ec97c17bedeb749560a0
+cas_ref: sha256:70da931c4bd842baaf6f3ad751716cc7af8df9313c41ec97c17bedeb749560a0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

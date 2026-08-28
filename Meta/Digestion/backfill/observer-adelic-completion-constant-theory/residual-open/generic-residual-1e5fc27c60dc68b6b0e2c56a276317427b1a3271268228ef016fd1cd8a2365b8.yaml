@@ -1,0 +1,10 @@
+ast_path: section/第五百零六部-局部-Weil-测试变成圆周-flat-moments
+fingerprints:
+  raw_sha256: sha256:1e5fc27c60dc68b6b0e2c56a276317427b1a3271268228ef016fd1cd8a2365b8
+  normalized_sha256: sha256:1e5fc27c60dc68b6b0e2c56a276317427b1a3271268228ef016fd1cd8a2365b8
+cas_ref: sha256:1e5fc27c60dc68b6b0e2c56a276317427b1a3271268228ef016fd1cd8a2365b8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

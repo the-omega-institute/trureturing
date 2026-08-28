@@ -1,0 +1,30 @@
+## 567.2 Master moment solver
+
+使用未知 moments：
+
+$$
+y_0,\ldots,y_d
+$$
+
+构造：
+
+$$
+T_d(y).
+$$
+
+加入：
+
+* Laguerre moment intervals；
+* 多尺度 budget 数据；
+* 已知 Li moments；
+* Crofoot cross pairings；
+* local Weil constraints。
+
+求解：
+
+$$
+T_d(y)\succeq0.
+$$
+
+---
+

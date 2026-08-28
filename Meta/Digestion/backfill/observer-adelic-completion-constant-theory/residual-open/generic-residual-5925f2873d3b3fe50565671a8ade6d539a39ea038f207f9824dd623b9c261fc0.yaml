@@ -1,0 +1,10 @@
+ast_path: row/反射伙伴-germ-镜像
+fingerprints:
+  raw_sha256: sha256:5925f2873d3b3fe50565671a8ade6d539a39ea038f207f9824dd623b9c261fc0
+  normalized_sha256: sha256:5925f2873d3b3fe50565671a8ade6d539a39ea038f207f9824dd623b9c261fc0
+cas_ref: sha256:5925f2873d3b3fe50565671a8ade6d539a39ea038f207f9824dd623b9c261fc0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

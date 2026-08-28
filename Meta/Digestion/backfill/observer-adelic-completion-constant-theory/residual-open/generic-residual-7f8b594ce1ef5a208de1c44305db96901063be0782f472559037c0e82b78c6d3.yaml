@@ -1,0 +1,10 @@
+ast_path: section/561-2-Wang-Deng-的精确有限形式
+fingerprints:
+  raw_sha256: sha256:7f8b594ce1ef5a208de1c44305db96901063be0782f472559037c0e82b78c6d3
+  normalized_sha256: sha256:7f8b594ce1ef5a208de1c44305db96901063be0782f472559037c0e82b78c6d3
+cas_ref: sha256:7f8b594ce1ef5a208de1c44305db96901063be0782f472559037c0e82b78c6d3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

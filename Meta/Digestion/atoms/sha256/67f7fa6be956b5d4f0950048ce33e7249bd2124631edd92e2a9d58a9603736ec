@@ -1,0 +1,25 @@
+## 588.3 六维表示实验
+
+构造 \(A_5\) 的两个三维共轭表示：
+
+$$
+\rho_\varphi,
+\qquad
+\rho_{\varphi'}.
+$$
+
+组合：
+
+$$
+\rho_6
+=
+\rho_\varphi\oplus\rho_{\varphi'}.
+$$
+
+验证：
+
+* 5-cycle 的单块迹分别为：
+
+  $$
+  \varphi,\varphi';
+  $$

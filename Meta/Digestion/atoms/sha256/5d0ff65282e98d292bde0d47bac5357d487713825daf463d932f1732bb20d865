@@ -1,0 +1,17 @@
+## 439.4 Scale-by-scale 任意扩张不能直接胶合
+
+每个 \(L\) 独立选择一个：
+
+$$
+\nu_L\in\mathfrak E_L
+$$
+
+并不自动保证这些选择彼此兼容。
+
+必须：
+
+* 直接证明所有局部 Weil forms 正定；或
+* 构造 projectively consistent completion family。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/516-2-Saturated-phase/clause/4
+fingerprints:
+  raw_sha256: sha256:29c1315b563fe949355782b5fb98ab102841d4ba0cd8a775e3ed2dc12df37482
+  normalized_sha256: sha256:29c1315b563fe949355782b5fb98ab102841d4ba0cd8a775e3ed2dc12df37482
+cas_ref: sha256:29c1315b563fe949355782b5fb98ab102841d4ba0cd8a775e3ed2dc12df37482
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

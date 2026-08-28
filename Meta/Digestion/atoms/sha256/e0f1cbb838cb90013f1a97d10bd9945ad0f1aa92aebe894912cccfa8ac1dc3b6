@@ -1,0 +1,18 @@
+* \(\theta w_a\) 是为保持 Fourier 非负而加入的 resolvent counterterm。
+
+当：
+
+$$
+\theta=0,
+$$
+
+dual 退化为通常的：
+
+$$
+\widehat\phi\ge0,\qquad \phi(0)\ge1,
+$$
+
+即 convolution-square/Rayleigh 图表。
+
+---
+

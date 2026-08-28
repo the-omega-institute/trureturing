@@ -1,0 +1,47 @@
+## 定理 527.1（Toeplitz contact support）
+
+$$
+\boxed{
+\operatorname{supp}\sigma_N
+\subseteq
+\left\{
+z\in\mathbb T:
+q_v(z)=0
+\right\}.
+}
+\tag{527.3}
+$$
+
+若 \(\sigma_N\neq0\)，则可选择一个 residual optimizer，其原子数不超过：
+
+$$
+\boxed{
+\deg q_v\le N.
+}
+\tag{527.4}
+$$
+
+所以有限 moment optimizer 具有精确形式：
+
+$$
+\boxed{
+\mu_N
+=
+\alpha_Nm_{\mathbb T}
++
+\sum_{r=1}^{M_N}
+w_r\delta_{z_r},
+\qquad
+M_N\le N,
+}
+\tag{527.5}
+$$
+
+其中：
+
+$$
+q_v(z_r)=0.
+$$
+
+---
+

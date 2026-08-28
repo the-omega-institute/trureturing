@@ -1,0 +1,10 @@
+ast_path: section/618-2-诊断层
+fingerprints:
+  raw_sha256: sha256:c9c4767ae1673a8267ebd15169c5579bb00b9308882cd61b033952100d4d3c7c
+  normalized_sha256: sha256:c9c4767ae1673a8267ebd15169c5579bb00b9308882cd61b033952100d4d3c7c
+cas_ref: sha256:c9c4767ae1673a8267ebd15169c5579bb00b9308882cd61b033952100d4d3c7c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

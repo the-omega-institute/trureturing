@@ -1,0 +1,10 @@
+ast_path: section/486-2-Dual-状态依赖的-prime-concentration-路线/clause/1
+fingerprints:
+  raw_sha256: sha256:94f1e9436ab86313502466752b3023287b09a647945fadaeb5c7eea9fdbd6c95
+  normalized_sha256: sha256:94f1e9436ab86313502466752b3023287b09a647945fadaeb5c7eea9fdbd6c95
+cas_ref: sha256:94f1e9436ab86313502466752b3023287b09a647945fadaeb5c7eea9fdbd6c95
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

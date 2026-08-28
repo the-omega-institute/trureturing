@@ -1,0 +1,74 @@
+# 第四百六十三部　偶观察者中的双曲虚谱幽灵
+
+当前仓库的 `WeilTestFunction` 直接冻结了偶性条件；convolution-square 文件证明的也是这一偶测试束上的 Fourier 模平方与临界线非负性。
+
+对偶函数定义：
+
+$$
+\boxed{
+\chi_a(f)
+=
+\mathcal C_a(f)
+=
+\int e^{ax}f(x)\,dx.
+}
+\tag{463.1}
+$$
+
+由于 \(f\) 为偶函数：
+
+$$
+\int e^{ax}f(x)\,dx
+=
+\int e^{-ax}f(x)\,dx.
+$$
+
+并且：
+
+$$
+\boxed{
+\chi_a(f*\widetilde h)
+=
+\chi_a(f)\overline{\chi_a(h)}.
+}
+\tag{463.2}
+$$
+
+所以 \(\chi_a\) 是偶卷积代数上的一个正 rank-one character。
+
+然而：
+
+$$
+e^{ax}=e^{i(-ia)x}
+$$
+
+对应的形式谱频率是：
+
+$$
+\boxed{
+\xi=-ia,
+}
+$$
+
+并不位于真实谱轴 \(\mathbb R\)。
+
+同理 \(e^{-ax}\) 对应 \(\xi=ia\)。
+
+因此：
+
+$$
+\boxed{
+\cosh(ax)
+}
+$$
+
+可以解释为一对形式上的虚频率：
+
+$$
+\boxed{
+\pm ia.
+}
+$$
+
+---
+

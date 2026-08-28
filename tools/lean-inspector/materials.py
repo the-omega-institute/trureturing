@@ -19,7 +19,13 @@ SPOOL_SCHEMA = "stratalint-lean-inspector-spool-v1"
 REPORT_SCHEMA = "stratalint-raw-lean-report-v2"
 STATEMENT_DOMAIN = b"trureturing:statement:v1\0"
 MATERIAL_FILE = re.compile(r"^[0-9]+\.statement$")
+SUPPLEMENTARY_SCALAR = re.compile(r"[\U00010000-\U0010FFFF]")
 ARCHIVE_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
+
+
+def escape_supplementary_scalar(match: re.Match[str]) -> str:
+    offset = ord(match.group()) - 0x10000
+    return f"\\u{0xD800 + offset // 0x400:04X}\\u{0xDC00 + offset % 0x400:04X}"
 
 
 def canonical_json(value: object) -> bytes:
@@ -34,18 +40,7 @@ def canonical_json(value: object) -> bytes:
     # scalars intact but renders supplementary-plane scalars as uppercase UTF-16
     # surrogate pairs. StructuredCanonicalWriter therefore has this exact byte
     # shape, and declaration identity includes it.
-    encoded: list[str] = []
-    for character in text:
-        scalar = ord(character)
-        if scalar <= 0xFFFF:
-            encoded.append(character)
-            continue
-        offset = scalar - 0x10000
-        encoded.append(
-            f"\\u{0xD800 + offset // 0x400:04X}"
-            f"\\u{0xDC00 + offset % 0x400:04X}"
-        )
-    return ("".join(encoded) + "\n").encode("utf-8")
+    return (SUPPLEMENTARY_SCALAR.sub(escape_supplementary_scalar, text) + "\n").encode("utf-8")
 
 
 def statement_address(material: bytes) -> str:

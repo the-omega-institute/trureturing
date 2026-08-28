@@ -1,0 +1,10 @@
+ast_path: section/464-1-偶通道下界
+fingerprints:
+  raw_sha256: sha256:a04c87d1a1dab393c69145335c17290a11c8a73093f3dab078ed7938989ef6fb
+  normalized_sha256: sha256:a04c87d1a1dab393c69145335c17290a11c8a73093f3dab078ed7938989ef6fb
+cas_ref: sha256:a04c87d1a1dab393c69145335c17290a11c8a73093f3dab078ed7938989ef6fb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

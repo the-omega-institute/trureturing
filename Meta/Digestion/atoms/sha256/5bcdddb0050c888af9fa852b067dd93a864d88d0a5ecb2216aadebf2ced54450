@@ -1,0 +1,43 @@
+## 定理 485.1（Ground-state zero localization）
+
+令 \(\gamma\) 是一个孤立 Riemann zero ordinate。
+
+对任意包含 \(\gamma\)、但不包含其他 ordinate 的开邻域 \(U\)，当 \(j\) 充分大时：
+
+$$
+\boxed{
+Z(F_j)\cap U\neq\varnothing.
+}
+\tag{485.2}
+$$
+
+### 证明
+
+$$
+\nu_\Xi(U)=m_\gamma>0.
+$$
+
+由 vague convergence，取支撑于 \(U\) 的非负连续函数 \(\phi\)，且 \(\phi(\gamma)>0\)，则：
+
+$$
+\int\phi\,d\mu_j>0
+$$
+
+对充分大的 \(j\) 成立。
+
+所以：
+
+$$
+\mu_j(U)>0.
+$$
+
+而：
+
+$$
+\operatorname{supp}\mu_j\subseteq Z(F_j),
+$$
+
+故 \(U\) 中必有 \(F_j\) 的零点。∎
+
+---
+

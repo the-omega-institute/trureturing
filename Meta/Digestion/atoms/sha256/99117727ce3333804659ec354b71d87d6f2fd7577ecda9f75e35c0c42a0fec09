@@ -1,0 +1,77 @@
+# 第五百六十八部　建议形式化顺序
+
+```text
+D5/S3/Weil/RationalObserver/
+  CayleyScaleFeature.lean
+  RationalFeatureDepth.lean
+  CommonDenominator.lean
+  NumeratorPolynomial.lean
+
+D5/S3/Weil/CommonDenominatorBasis/
+  LocalPartialFractionTriangular.lean
+  DistinctPoleIndependence.lean
+  ProperRationalBasis.lean
+  ReferencePolynomialTail.lean
+  CommonDenominatorPolynomialBasis.lean
+
+D5/S3/Weil/RationalToeplitz/
+  RationalFeatureVector.lean
+  NumeratorCoefficientMatrix.lean
+  WeightedCircleMeasure.lean
+  MasterToeplitzMoment.lean
+  RationalGramFactorization.lean
+  CommonSpectrumIffToeplitzPSD.lean
+
+D5/S3/Weil/CommonSpectrumDefect/
+  HermitianToeplitzSubspace.lean
+  CommonSpectrumCodimension.lean
+  EvenRealToeplitzReduction.lean
+  CommonSpectrumProjectionDefect.lean
+  GlueDimension.lean
+
+D5/S3/Weil/MasterMomentSDP/
+  PartialRationalObservation.lean
+  MasterMomentLinearMap.lean
+  MasterToeplitzFeasibility.lean
+  IntervalObservationConstraint.lean
+  RationalCompressionPSD.lean
+
+D5/S3/Weil/CommonHaarFloor/
+  RationalHaarGram.lean
+  DenominatorWeightedHaarMoment.lean
+  FloorResidualToeplitz.lean
+  GeneralizedEigenFloor.lean
+  HaarWhitenedFloor.lean
+
+D5/S3/Weil/AtomicFloorCompletion/
+  SingularToeplitzVandermondeInterface.lean
+  UniqueResidualAtomicMeasure.lean
+  MaxFloorCompletionUnique.lean
+  RationalContactFunction.lean
+  ContactSupportZeros.lean
+
+D5/S3/Weil/ObserverInnovation/
+  NestedHaarRationalBasis.lean
+  ObserverGramExtension.lean
+  InnovationSchurFunction.lean
+  FloorRootUniqueness.lean
+  FeshbachContactVector.lean
+  ObserverRedundancyCriterion.lean
+
+D5/S3/Weil/RobustCommonSpectrum/
+  TransformedGramError.lean
+  ToeplitzConsistencyRejection.lean
+  FloorLipschitzBound.lean
+  ContactSubspaceGapStability.lean
+
+D5/S3/Weil/ScaleDesign/
+  GlobalMalmquistTakenakaInterface.lean
+  HaarOrthonormalRationalBasis.lean
+  ScaleCollisionConfluentJet.lean
+  RationalObserverConditionNumber.lean
+```
+
+Malmquist–Takenaka 正交性和奇异 Toeplitz 的唯一 Vandermonde 分解可先作为成熟外部接口；共同分母基、Gram–Toeplitz congruence、generalized floor 与创新 Schur complement 均可直接在仓库内证明。
+
+---
+
