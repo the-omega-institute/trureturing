@@ -1,0 +1,17 @@
+ast_path: corollary/33.2
+fingerprints:
+  raw_sha256: sha256:9f1003a802f17f1992cc85f4bc1b463a8430b5e206ac731340193cdbc26bd3e1
+  normalized_sha256: sha256:9f1003a802f17f1992cc85f4bc1b463a8430b5e206ac731340193cdbc26bd3e1
+cas_ref: sha256:9f1003a802f17f1992cc85f4bc1b463a8430b5e206ac731340193cdbc26bd3e1
+coverage_gids:
+  - D5/S3/Observer/WindowAlgebra/UpdateKernelCharacterization.update_difference_kernel_fixed_observables
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/WindowAlgebra/UpdateKernelCharacterization.update_difference_kernel_fixed_observables
+      source_sha256: sha256:9f1003a802f17f1992cc85f4bc1b463a8430b5e206ac731340193cdbc26bd3e1
+      target_sha256: sha256:1f6367034a6b68b9b235018c2eaf3b741e1b5ea91bff58aa1b0a0216bbe5323a
+  scribe:
+    - gid: D5/S3/Observer/WindowAlgebra/UpdateKernelCharacterization.update_difference_kernel_fixed_observables
+      definition_sha256: sha256:d4d7704235c874efe538bd211ef0ff1db9a161153e33b74db1c77b9f15c4e90f
+      emission_sha256: sha256:2fff90aa32fffca5525acc7ef4edbe9909a7f4142093e34e5e28b85649c8826f
+  unresolved_subitems: []

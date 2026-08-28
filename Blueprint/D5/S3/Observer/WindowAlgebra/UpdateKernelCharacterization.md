@@ -6,7 +6,7 @@ Zero update difference is exactly invariance, and cyclic-window fixed observable
 
 **Theorem 1.1 (Update difference kernel and fixed observables).**
 
-$$\begin{gathered}\forall tau, f,\\L_{tau}(f) = 0 \Leftrightarrow f \circ tau = f; \\\ker L_{tau} = \operatorname {Inv}_{tau}; \\\forall M \in \mathbb{N}_{>0},\ \forall g: \operatorname {ZMod}(M)\to \mathbb{C},\ g \in \ker L_{+1} \iff \exists c\in \mathbb{C},\ g = (i\mapsto c).\end{gathered}$$
+$$\begin{gathered}\forall I: \operatorname{Type}, tau: \operatorname{Perm}\left(I\right), f: I \to \mathbb{C},\\L_{tau}(f) = 0 \Leftrightarrow f \circ tau = f; \\\ker L_{tau} = \operatorname {Inv}_{tau}; \\\forall M \in \mathbb{N}_{>0},\ \forall g: \operatorname {ZMod}(M)\to \mathbb{C},\ g \in \ker L_{+1} \iff \exists c\in \mathbb{C},\ g = (i\mapsto c).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/WindowAlgebra/UpdateKernelCharacterization.update_difference_kernel_fixed_observables` (`✓ std3`). ∎
 

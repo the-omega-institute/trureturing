@@ -43,8 +43,13 @@ internal sealed class UpdateKernelCharacterizationDocument : IScribeDocumentDefi
 
     private static Formula UpdateKernelFormula()
     {
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula index = F.Id("I");
         Formula tau = F.Id("tau");
         Formula observable = F.Id("f");
+        Formula complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula permutation = Call("Perm", index);
+        Formula observableType = Seq(index, Sp, To, Sp, complex);
         Formula updateMap = UpdateMap(tau);
         Formula zero = Seq(updateMap, Open, observable, Close, Sp, Eq, Sp, D(0));
         Formula invariant = Seq(
@@ -63,7 +68,9 @@ internal sealed class UpdateKernelCharacterizationDocument : IScribeDocumentDefi
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, tau, Comma, Sp, observable, Comma, RowBreak,
+            Forall, Sp, index, Colon, Sp, type, Comma, Sp,
+            tau, Colon, Sp, permutation, Comma, Sp,
+            observable, Colon, Sp, observableType, Comma, RowBreak,
             zero, Sp, Leftrightarrow, Sp, invariant, Semi, Sp, RowBreak,
             kernel, Sp, Eq, Sp, fixedSubmodule, Semi, Sp, RowBreak,
             Forall, Sp, F.Id("M"), Sp, InMacro, Sp,
