@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Arith/Lattices/FiveModularLatticeSimilarity.five_modular_lattice_similarity
       source_sha256: sha256:9fc3b4f87d3ff2c2d83c952c93820cec9967318ce7f45701402007427a60bbca
-      target_sha256: sha256:0d0c90965d0caef9958f4395adc6ad282193e76e861532c40ebb0829b80acea0
+      target_statement_id: sha256:6e80dbfe0b93a88f40c38aea70d40683f96c3644fb3f0465abe28ff3efb783e8
   scribe:
     - gid: D5/S3/Arith/Lattices/FiveModularLatticeSimilarity.five_modular_lattice_similarity
       definition_sha256: sha256:5b1d470f5eeae117110559a6c383228aec2c5bbae54b5e82fa3b41ddb50a5eb0

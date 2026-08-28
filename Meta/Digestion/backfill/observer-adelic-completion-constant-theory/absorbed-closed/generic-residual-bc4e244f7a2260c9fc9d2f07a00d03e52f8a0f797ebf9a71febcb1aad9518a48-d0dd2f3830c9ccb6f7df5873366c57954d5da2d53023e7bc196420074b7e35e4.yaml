@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Factorization/ObserverTypes/AlternatingFiveObserverTypeIrreplaceability.alternating_five_observer_type_irreplaceability
       source_sha256: sha256:bc4e244f7a2260c9fc9d2f07a00d03e52f8a0f797ebf9a71febcb1aad9518a48
-      target_sha256: sha256:45dc824e27e1f52716a3704c1bea663f0a8abffd2826edf74a1da10ce4b49eeb
+      target_statement_id: sha256:29f1214b38d6646afa08f77afc7e7c7ad39849e53a417050df2b2c2e97d535d9
   scribe:
     - gid: D5/S3/Factorization/ObserverTypes/AlternatingFiveObserverTypeIrreplaceability.alternating_five_observer_type_irreplaceability
       definition_sha256: sha256:ad8dbd20d2d7d399b1213eef371f298305a0d6301aff75e1ad4e875f220f7476

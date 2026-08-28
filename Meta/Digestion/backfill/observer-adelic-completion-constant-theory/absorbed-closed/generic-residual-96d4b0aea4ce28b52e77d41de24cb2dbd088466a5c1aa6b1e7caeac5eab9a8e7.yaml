@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Analytic/Asymptotics/FiniteCountertermMellinContinuation.finite_counterterm_mellin_continuation
       source_sha256: sha256:96d4b0aea4ce28b52e77d41de24cb2dbd088466a5c1aa6b1e7caeac5eab9a8e7
-      target_sha256: sha256:e1a161a8c7ca15983ff540508536b5dab2d8848b8588b7573551f3a604d7fe5c
+      target_statement_id: sha256:adff8a07e71397459c2dd230aa2e681540c889e6740aa7e3b94a2262711eb3da
   scribe:
     - gid: D5/S3/Analytic/Asymptotics/FiniteCountertermMellinContinuation.finite_counterterm_mellin_continuation
       definition_sha256: sha256:1c4fc732ddaeb4d1b37b48f69c515341e78f25d591c49e855f85cb4e13e0880e
