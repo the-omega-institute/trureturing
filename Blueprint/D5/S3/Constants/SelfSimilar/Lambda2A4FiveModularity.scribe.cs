@@ -21,12 +21,10 @@ internal sealed class Lambda2A4FiveModularityDocument : IScribeDocumentDefinitio
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Let L be any integral lattice realization carrying the six-element basis, "
-                            + "the displayed Lambda-squared A4 Gram matrix, the integral Hodge "
-                            + "operator, and the exact identification of its bilinear dual with "
-                            + "the image of J divided by five. The source and transported-dual "
-                            + "integral bases are also identified with real bases of the ambient "
-                            + "space.")),
+                        "Here L is the integral span of the fixed ordered wedge basis in the actual "
+                            + "second exterior power of the A4 root space. Its form has the displayed "
+                            + "Gram matrix, its Hodge operator is the fixed matrix J, and its actual "
+                            + "bilinear dual is identified by the concrete map x to Jx divided by five.")),
                     Paragraph(Text(
                         "The Hodge similitude equation makes that dual identification scale the "
                             + "bilinear form by one fifth. It therefore gives similarity ratio "
@@ -46,15 +44,10 @@ internal sealed class Lambda2A4FiveModularityDocument : IScribeDocumentDefinitio
 
     private static Formula FiveModularityFormula()
     {
-        Formula ambient = F.Id("E");
-        Formula form = F.Id("B");
-        Formula lattice = F.Id("L");
-        Formula basis = F.Id("b");
-        Formula hodge = F.Id("J");
-        Formula dualEquiv = F.Id("e");
-        Formula sourceRealBasis = F.Id("s");
-        Formula dualRealBasis = F.Id("t");
-        Formula index = F.Id("i");
+        Formula form = F.Id("lambda2A4Form");
+        Formula lattice = F.Id("lambda2A4Lattice");
+        Formula basis = F.Id("lambda2A4IntegralBasis");
+        Formula dualEquiv = F.Id("lambda2A4DualEquiv");
         Formula x = F.Id("x");
         Formula y = F.Id("y");
         Formula dual = Call("dualSubmodule", form, lattice);
@@ -67,35 +60,6 @@ internal sealed class Lambda2A4FiveModularityDocument : IScribeDocumentDefinitio
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, ambient, Comma, Sp, form, Comma, Sp, lattice, Comma, Sp,
-            basis, Comma, Sp, hodge, Comma, Sp, dualEquiv, Comma, Sp,
-            sourceRealBasis, Comma, Sp, dualRealBasis, Comma, RowBreak, Grp(),
-            Call("IntegralRealBilinearLattice", ambient, form, lattice), Sp, Land, Sp,
-            Call("BasisFin6Z", basis, lattice), Sp, Land, RowBreak, Grp(),
-            Call("latticeGram", form, lattice, basis), Sp, Eq, Sp,
-            F.Id("lambda2A4Gram"), Sp, Land, RowBreak, Grp(),
-            Call("LinearEquiv", dualEquiv, lattice, dual), Sp, Land, RowBreak, Grp(),
-            Open, Forall, Sp, x, Sp, InMacro, Sp, lattice, Comma, Sp,
-            Apply(dualEquiv, x), Sp, Eq, Sp,
-            Frac, Grp(D(1)), Grp(D(5)), Sp, Cdot, Sp, Apply(hodge, x), Close,
-            Sp, Land, RowBreak, Grp(),
-            Open, Forall, Sp, x, Comma, Sp, y, Sp, InMacro, Sp, ambient, Comma, Sp,
-            Apply(form, Apply(hodge, x), Apply(hodge, y)), Sp, Eq, Sp,
-            D(5), Sp, Cdot, Sp, Apply(form, x, y), Close,
-            Sp, Land, RowBreak, Grp(),
-            Call("BasisFin6R", sourceRealBasis, ambient), Sp, Land, Sp,
-            Call("BasisFin6R", dualRealBasis, ambient), Sp, Land, RowBreak, Grp(),
-            Open, Forall, Sp, index, Comma, Sp,
-            Apply(sourceRealBasis, index), Sp, Eq, Sp, Apply(basis, index), Close,
-            Sp, Land, RowBreak, Grp(),
-            Open, Forall, Sp, index, Comma, Sp,
-            Apply(dualRealBasis, index), Sp, Eq, Sp,
-            Apply(dualEquiv, Apply(basis, index)), Close,
-            Sp, Land, RowBreak, Grp(),
-            Call("det", Call("latticePairingMatrix", form, lattice, basis, dualEquiv)),
-            Sp, Eq, Sp, Minus, D(1), Sp, Land, RowBreak, Grp(),
-            D(0), Sp, Lt, Sp, discriminant,
-            Sp, Rightarrow, RowBreak, Grp(),
             Call("LatticeSimilarity", form, smallScale, lattice, dual),
             Sp, Land, RowBreak, Grp(),
             Call("finrankZ", lattice), Sp, Eq, Sp, D(6),
