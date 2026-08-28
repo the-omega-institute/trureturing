@@ -607,4 +607,3 @@ theorem golden_germ_second_order_factorization :
 end
 
 end D5.S3.Analytic.EulerGerm.GoldenGermSecondOrderFactorization
-
