@@ -28,12 +28,11 @@ internal sealed class GaloisReflectionDocument : IScribeDocumentDefinition
                         "For nonzero algebraic integers alpha, the definitions set a(alpha) and "
                         + "b(alpha) to the squared absolute values under those fixed embeddings, "
                         + "Q_eta(alpha) = exp(eta)a(alpha) + exp(-eta)b(alpha), and Z_s(eta) to the "
-                        + "complex-power sum. The public premises include Re(s) > 1, summability at "
-                        + "every eta, regulator periodicity, and a nonconstancy certificate exhibiting "
-                        + "two parameter points with different zeta values.")),
+                        + "complex-power sum. The source domain Re(s) > 1 is carried by the subtype "
+                        + "H1, and regulator periodicity is the sole public premise.")),
                     Paragraph(Text(
                         "Restricting the fixed star automorphism with Mathlib's "
-                        + "RingOfIntegers.mapAlgEquiv reindexes a genuinely summable series after "
+                        + "RingOfIntegers.mapAlgEquiv reindexes the raw tsum after "
                         + "Q_eta(tau(alpha)) = Q_(-eta)(alpha). Here A_p is the displayed Lean "
                         + "monoid homomorphism from Mathlib's "
                         + "DihedralGroup 0 to permutations of the real parameter line: "
@@ -48,8 +47,6 @@ internal sealed class GaloisReflectionDocument : IScribeDocumentDefinition
     {
         Formula s = F.Id("s");
         Formula eta = F.Id("eta");
-        Formula etaOne = F.Id("eta1");
-        Formula etaTwo = F.Id("eta2");
         Formula g = F.Id("g");
         Formula z = F.Id("Zs");
         Formula p = F.Id("p");
@@ -58,24 +55,17 @@ internal sealed class GaloisReflectionDocument : IScribeDocumentDefinition
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
         Formula complex = Seq(Mathbb, Grp(F.Id("C")));
         Formula dinfinity = Seq(F.Id("DihedralGroup"), Open, D(0), Close);
-        Formula summable = Grp(Seq(
-            Forall, Sp, eta, Sp, InMacro, Sp, real, Comma, Sp,
-            Operatorname, Grp(F.Id("Summable")), Open, F.Id("term"),
-            Open, s, Comma, Sp, eta, Close, Close));
+        Formula halfPlane = F.Id("H1");
 
         return Disp(Seq(
             goldenField, Sp, Eq, Sp, F.Id("QuadraticAlgebra"),
             Open, Mathbb, Grp(F.Id("Q")), Comma, Sp, D(1), Comma, Sp, D(1), Close,
             Comma, RowBreak,
             p, Sp, Eq, Sp, D(2), Sp, Log, Open, Varphi, Close, Comma, RowBreak,
-            Forall, Sp, s, Sp, InMacro, Sp, complex, Comma, RowBreak, Grp(),
-            OpenBracket,
-            D(1), Sp, Lt, Sp, Re, Open, s, Close, Sp, Land, RowBreak,
-            summable, Sp, Land, RowBreak,
-            F.Id("Periodic"), Open, z, Comma, Sp, p, Close, Sp, Land, RowBreak,
-            Exists, Sp, etaOne, Comma, Sp, etaTwo, Sp, InMacro, Sp, real, Comma, Sp,
-            z, Open, etaOne, Close, Sp, Neq, Sp, z, Open, etaTwo, Close,
-            CloseBracket, RowBreak,
+            halfPlane, Sp, Eq, Sp, OpenBrace, s, Sp, InMacro, Sp, complex, Sp, Mid,
+            Sp, D(1), Sp, Lt, Sp, Re, Open, s, Close, CloseBrace, Comma, RowBreak,
+            Forall, Sp, s, Sp, InMacro, Sp, halfPlane, Comma, RowBreak, Grp(),
+            F.Id("Periodic"), Open, z, Comma, Sp, p, Close, RowBreak,
             Longrightarrow, RowBreak, Grp(),
             OpenBracket,
             Forall, Sp, eta, Sp, InMacro, Sp, real, Comma, Sp,
