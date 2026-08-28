@@ -55,7 +55,19 @@ private theorem chartFiveCycleUniqueFixedPoint :
       ∃ h : chartFiveCycleSubgroup p,
         ∀ q : AxisChart, h.1 • q = q → q = p.1 := by
   intro p
-  fin_cases p <;> decide
+  fin_cases p
+  · refine ⟨⟨evaluateAlternatingWord [0, 3, 0], by decide⟩, ?_⟩
+    decide
+  · refine ⟨⟨evaluateAlternatingWord [1, 3], by decide⟩, ?_⟩
+    decide
+  · refine ⟨⟨evaluateAlternatingWord [0, 2, 1], by decide⟩, ?_⟩
+    decide
+  · refine ⟨⟨evaluateAlternatingWord [0, 3, 3], by decide⟩, ?_⟩
+    decide
+  · refine ⟨⟨evaluateAlternatingWord [2], by decide⟩, ?_⟩
+    decide
+  · refine ⟨⟨evaluateAlternatingWord [0, 2], by decide⟩, ?_⟩
+    decide
 
 private theorem fiveCycleNormalizer_mem_stabilizer
     (p : ChartFivefoldAxis) (g : IcosahedralGroup)
