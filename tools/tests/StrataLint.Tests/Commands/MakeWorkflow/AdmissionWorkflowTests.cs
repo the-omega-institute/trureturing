@@ -462,7 +462,7 @@ public sealed partial class AdmissionWorkflowTests
             },
         }));
 
-        var probeBuild = BoundedProcessRunner.Run(
+        var probeBuild = TestProcessRunner.Run(
             DotnetHost(root),
             ["build", project, "--configuration", "Release", "--nologo"],
             repository,
@@ -527,7 +527,7 @@ public sealed partial class AdmissionWorkflowTests
             step => step.Children.TryGetValue(new YamlScalarNode("id"), out var id)
                 && id is YamlScalarNode { Value: "scope" });
         var scopeScript = Assert.IsType<YamlScalarNode>(scope.Children[new YamlScalarNode("run")]).Value!;
-        var scopeResult = BoundedProcessRunner.Run(
+        var scopeResult = TestProcessRunner.Run(
             "env",
             [
                 $"PATH={bin}:{Environment.GetEnvironmentVariable("PATH")}",
@@ -668,7 +668,7 @@ public sealed partial class AdmissionWorkflowTests
             step => step.Children.TryGetValue(new YamlScalarNode("id"), out var id)
                 && id is YamlScalarNode { Value: "scope" });
         var scopeScript = Assert.IsType<YamlScalarNode>(scope.Children[new YamlScalarNode("run")]).Value!;
-        var scopeResult = BoundedProcessRunner.Run(
+        var scopeResult = TestProcessRunner.Run(
             "env",
             [
                 $"PATH={bin}:{Environment.GetEnvironmentVariable("PATH")}",
@@ -691,7 +691,7 @@ public sealed partial class AdmissionWorkflowTests
 
         var executeScript = StepScript(JobSteps(workflow, "candidate-engineering"), "Run candidate golden and integration tests");
         Assert.DoesNotContain("--filter", executeScript, StringComparison.Ordinal);
-        var execute = BoundedProcessRunner.Run(
+        var execute = TestProcessRunner.Run(
             "env",
             [
                 "BASE_FULL_REQUIRED=true",
