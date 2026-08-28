@@ -1,14 +1,14 @@
 ast_path: 定理/479.1
 fingerprints:
-  raw_sha256: sha256:671d587cf73443a53ebf3e02bc5fc9c2f8816d7f04dd0509eaf1478e410c0a24
-  normalized_sha256: sha256:671d587cf73443a53ebf3e02bc5fc9c2f8816d7f04dd0509eaf1478e410c0a24
-cas_ref: sha256:671d587cf73443a53ebf3e02bc5fc9c2f8816d7f04dd0509eaf1478e410c0a24
+  raw_sha256: sha256:89df68df43ed784d41037446b585ff271037955fd746b5fdf5e5bb1add40002d
+  normalized_sha256: sha256:89df68df43ed784d41037446b585ff271037955fd746b5fdf5e5bb1add40002d
+cas_ref: sha256:89df68df43ed784d41037446b585ff271037955fd746b5fdf5e5bb1add40002d
 coverage_gids:
   - D5/S3/ConceptDynamics/ObservationOrder/CommonPriorPosteriorAgreement.common_knowledge_posteriors_agree
 receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/ObservationOrder/CommonPriorPosteriorAgreement.common_knowledge_posteriors_agree
-      source_sha256: sha256:671d587cf73443a53ebf3e02bc5fc9c2f8816d7f04dd0509eaf1478e410c0a24
+      source_sha256: sha256:89df68df43ed784d41037446b585ff271037955fd746b5fdf5e5bb1add40002d
       target_sha256: sha256:669103618545ef0b989bf227ade1b0e7064025fd5fca09df4d187b0ac8912e48
   scribe:
     - gid: D5/S3/ConceptDynamics/ObservationOrder/CommonPriorPosteriorAgreement.common_knowledge_posteriors_agree
