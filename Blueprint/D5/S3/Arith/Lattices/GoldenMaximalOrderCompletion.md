@@ -6,7 +6,7 @@ The golden Hodge lattice completes to a stable full-rank lattice, while the sqrt
 
 **Theorem 1.1 (The golden completion is stable and the order defect is repaired at two).**
 
-$$\begin{aligned}maximalOrderLattice = integerLattice + \operatorname{map}(integerLattice, goldenOperatorInt) \land\\\operatorname{IsFullRank}(maximalOrderLattice) \land\\integerLattice \subseteq maximalOrderLattice \land\\\operatorname{IsGoldenStable}(maximalOrderLattice) \land\\{\forall M, (integerLattice \subseteq M \land \operatorname{IsGoldenStable}(M)) \Rightarrow maximalOrderLattice \subseteq M} \land\\sqrtFiveOrder \subset GoldenInt \land\\\operatorname{relIndex}(sqrtFiveOrder, GoldenInt) = 2 \land\\(-1)^2 - 4\cdot1\cdot(-1) = 5 \land\\\operatorname{orderOf}(fiveCycleOnCompletion) = 5 \land\\\forall x: GoldenInt, 2\cdot x \in sqrtFiveOrder.\end{aligned}$$
+$$\begin{aligned}maximalOrderLattice = integerLattice + \operatorname{map}(integerLattice, goldenOperatorInt) \land\\\operatorname{IsFullRank}(maximalOrderLattice) \land\\integerLattice \subseteq maximalOrderLattice \land\\\operatorname{IsGoldenStable}(maximalOrderLattice) \land\\{\forall M, (integerLattice \subseteq M \land \operatorname{IsGoldenStable}(M)) \Rightarrow maximalOrderLattice \subseteq M} \land\\sqrtFiveOrder \subset GoldenInt \land\\\operatorname{relIndex}(sqrtFiveOrder, GoldenInt) = 2 \land\\\operatorname{discr}(GoldenNumberField) = 5 \land\\\operatorname{orderOf}(fiveCycleOnCompletion) = 5 \land\\\forall x: GoldenInt, \operatorname{goldenIntegerTwoAdicEmbedding}(2\cdot x): GoldenTwoAdicCompletion \in completedSqrtFiveOrder.\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Lattices/GoldenMaximalOrderCompletion.golden_maximal_order_completion` (`✓ std3`). ∎
 
@@ -20,7 +20,7 @@ The first five clauses state the lattice formula, full rank, containment, stabil
 
 The next two clauses use sqrtFiveOrder, the GoldenInt elements whose phi coordinate is even. They state both strict inclusion in GoldenInt and relative additive index two. Thus the Scribe formula records the index of Z[sqrt(5)] in Z[phi], rather than substituting the separate index-two calculation for the completed Hodge lattice.
 
-The final three clauses are the discriminant-five identity, exact order five of the explicit exterior-square five-cycle on the completed lattice, and the parity repair statement that twice every GoldenInt element lies in sqrtFiveOrder. No hypothesis, uniqueness claim, or stronger ring-of-integers identification is added here.
+The final three clauses identify the number-field discriminant of the named golden field Q(sqrt(5)) as five, give exact order five for the explicit exterior-square five-cycle on the completed lattice, and place the image of twice every GoldenInt element in the image of sqrtFiveOrder inside the finite-place completion above two. No hypothesis, uniqueness claim, or stronger ring-of-integers identification is added here.
 
 ## References
 

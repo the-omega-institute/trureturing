@@ -39,11 +39,13 @@ internal sealed class GoldenMaximalOrderCompletionDocument : IScribeDocumentDefi
                             + "index of Z[sqrt(5)] in Z[phi], rather than substituting the separate "
                             + "index-two calculation for the completed Hodge lattice.")),
                     Paragraph(Text(
-                        "The final three clauses are the discriminant-five identity, exact order "
-                            + "five of the explicit exterior-square five-cycle on the completed "
-                            + "lattice, and the parity repair statement that twice every GoldenInt "
-                            + "element lies in sqrtFiveOrder. No hypothesis, uniqueness claim, or "
-                            + "stronger ring-of-integers identification is added here."))),
+                        "The final three clauses identify the number-field discriminant of the "
+                            + "named golden field Q(sqrt(5)) as five, give exact order five for the "
+                            + "explicit exterior-square five-cycle on the completed lattice, and "
+                            + "place the image of twice every GoldenInt element in the image of "
+                            + "sqrtFiveOrder inside the finite-place completion above two. No "
+                            + "hypothesis, uniqueness claim, or stronger ring-of-integers "
+                            + "identification is added here."))),
                 DescribeRole.Theorem))));
 
     private static Formula CompletionFormula()
@@ -53,6 +55,9 @@ internal sealed class GoldenMaximalOrderCompletionDocument : IScribeDocumentDefi
         Formula phi = F.Id("goldenOperatorInt");
         Formula sqrtOrder = F.Id("sqrtFiveOrder");
         Formula goldenInt = F.Id("GoldenInt");
+        Formula goldenField = F.Id("GoldenNumberField");
+        Formula goldenCompletion = F.Id("GoldenTwoAdicCompletion");
+        Formula completedSqrtOrder = F.Id("completedSqrtFiveOrder");
         Formula candidate = F.Id("M");
 
         Formula stableWmax = Call("IsGoldenStable", wmax);
@@ -73,15 +78,14 @@ internal sealed class GoldenMaximalOrderCompletionDocument : IScribeDocumentDefi
                 Sp, Land),
             Seq(sqrtOrder, Sp, Subset, Sp, goldenInt, Sp, Land),
             Seq(Call("relIndex", sqrtOrder, goldenInt), Sp, Eq, Sp, D(2), Sp, Land),
-            Seq(
-                Open, Minus, D(1), Close, Caret, D(2), Sp, Minus, Sp,
-                D(4), Cdot, D(1), Cdot, Open, Minus, D(1), Close,
-                Sp, Eq, Sp, D(5), Sp, Land),
+            Seq(Call("discr", goldenField), Sp, Eq, Sp, D(5), Sp, Land),
             Seq(Call("orderOf", F.Id("fiveCycleOnCompletion")),
                 Sp, Eq, Sp, D(5), Sp, Land),
             Seq(
                 Forall, Sp, F.Id("x"), Colon, Sp, goldenInt, Comma, Sp,
-                D(2), Cdot, Sp, F.Id("x"), Sp, InMacro, Sp, sqrtOrder, Dot),
+                Call("goldenIntegerTwoAdicEmbedding",
+                    Seq(D(2), Cdot, Sp, F.Id("x"))),
+                Colon, Sp, goldenCompletion, Sp, InMacro, Sp, completedSqrtOrder, Dot),
         ]));
     }
 

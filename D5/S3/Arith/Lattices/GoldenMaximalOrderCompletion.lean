@@ -8,8 +8,13 @@
 import D5.S0.Carrier.GoldenDiscriminant
 import D5.S0.Carrier.Ring
 import D5.S3.Arith.Lattices.ExactDualLatticeFormula
+import Mathlib.Algebra.QuadraticAlgebra.NormDeterminant
+import Mathlib.Data.Int.Lemmas
 import Mathlib.GroupTheory.Index
 import Mathlib.GroupTheory.OrderOfElement
+import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+import Mathlib.NumberTheory.NumberField.Discriminant.Defs
+import Mathlib.RingTheory.Ideal.Int
 
 -- Library-search audit trail (2026-08-28):
 -- Repository search found the exact golden ring in `D5.S0.Carrier.Ring`, the golden
@@ -27,9 +32,147 @@ namespace D5.S3.Arith.Lattices.GoldenMaximalOrderCompletion
 open D5.S0.Carrier
 open D5.S3.Arith.Lattices.ExactDualLatticeFormula
 open Module Set
+open scoped NumberField QuadraticAlgebra
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+
+private instance goldenPolynomialNoRationalRoot :
+    Fact (∀ r : ℚ, r ^ 2 ≠ (1 : ℚ) + 1 * r) := by
+  refine ⟨fun r hr => ?_⟩
+  have hsq : (5 : ℚ) = (2 * r - 1) ^ 2 := by
+    nlinarith
+  have hfive : IsSquare (5 : ℚ) := ⟨2 * r - 1, by nlinarith⟩
+  have hfiveNat : IsSquare (5 : ℕ) := Rat.isSquare_natCast_iff.mp hfive
+  exact (show Nat.Prime 5 by norm_num).not_isSquare hfiveNat
+
+-- The source's named golden number field `Q(sqrt 5)`, presented by `omega^2 = omega + 1`.
+abbrev GoldenNumberField := QuadraticAlgebra ℚ 1 1
+
+noncomputable instance goldenNumberField : NumberField GoldenNumberField where
+  to_charZero := inferInstance
+  to_finiteDimensional := inferInstance
+
+-- The ordered rational basis `(1, omega)` of the golden number field.
+noncomputable def goldenFieldBasis : Basis (Fin 2) ℚ GoldenNumberField :=
+  QuadraticAlgebra.basis 1 1
+
+@[simp] private theorem goldenFieldBasis_zero :
+    goldenFieldBasis 0 = (1 : GoldenNumberField) := by
+  apply goldenFieldBasis.repr.injective
+  ext i
+  fin_cases i <;>
+    simp [goldenFieldBasis, QuadraticAlgebra.basis_repr_apply]
+
+@[simp] private theorem goldenFieldBasis_one :
+    goldenFieldBasis 1 = (QuadraticAlgebra.omega : GoldenNumberField) := by
+  apply goldenFieldBasis.repr.injective
+  ext i
+  fin_cases i <;>
+    simp [goldenFieldBasis, QuadraticAlgebra.basis_repr_apply]
+
+private theorem golden_field_trace (z : GoldenNumberField) :
+    Algebra.trace ℚ GoldenNumberField z = 2 * z.re + z.im := by
+  rw [Algebra.trace_eq_matrix_trace goldenFieldBasis, Matrix.trace_fin_two]
+  simp only [Algebra.leftMulMatrix_eq_repr_mul, goldenFieldBasis_zero,
+    goldenFieldBasis_one, mul_one]
+  simp [goldenFieldBasis, QuadraticAlgebra.basis_repr_apply]
+  ring_nf
+
+private theorem golden_field_basis_discr :
+    Algebra.discr ℚ goldenFieldBasis = 5 := by
+  rw [Algebra.discr_def, Matrix.det_fin_two]
+  norm_num [Algebra.traceMatrix_apply, Algebra.traceForm_apply, golden_field_trace]
+
+private theorem golden_omega_isIntegral :
+    IsIntegral ℤ (QuadraticAlgebra.omega : GoldenNumberField) := by
+  let p : Polynomial ℤ :=
+    (Polynomial.X ^ 2 - Polynomial.C 1) - Polynomial.X
+  have hp : p.Monic := by
+    apply (Polynomial.monic_X_pow_sub_C (1 : ℤ) (by norm_num : 2 ≠ 0)).sub_of_left
+    rw [Polynomial.degree_X, Polynomial.degree_X_pow_sub_C (by norm_num : 0 < 2)]
+    norm_num
+  refine ⟨p, hp, ?_⟩
+  simp only [p, Polynomial.eval₂_sub, Polynomial.eval₂_X_pow,
+    Polynomial.eval₂_one, Polynomial.eval₂_X, map_one]
+  rw [pow_two]
+  rw [QuadraticAlgebra.omega_mul_omega_eq_add]
+  norm_num
+
+private theorem golden_field_basis_isIntegral (i : Fin 2) :
+    IsIntegral ℤ (goldenFieldBasis i) := by
+  have hi : i = 0 ∨ i = 1 := by omega
+  rcases hi with rfl | rfl
+  · simpa using
+      (isIntegral_one : IsIntegral ℤ (1 : GoldenNumberField))
+  · simpa using golden_omega_isIntegral
+
+private noncomputable def goldenFieldBasisOnIntegralIndex :
+    Basis (Module.Free.ChooseBasisIndex ℤ (𝓞 GoldenNumberField)) ℚ GoldenNumberField :=
+  goldenFieldBasis.reindex
+    (goldenFieldBasis.indexEquiv (NumberField.integralBasis GoldenNumberField))
+
+private theorem golden_change_entry_isIntegral
+    (i j : Module.Free.ChooseBasisIndex ℤ (𝓞 GoldenNumberField)) :
+    IsIntegral ℤ
+      ((NumberField.integralBasis GoldenNumberField).toMatrix
+        goldenFieldBasisOnIntegralIndex i j) := by
+  rw [Basis.toMatrix_apply]
+  have hx : IsIntegral ℤ (goldenFieldBasisOnIntegralIndex j) := by
+    simpa [goldenFieldBasisOnIntegralIndex, Basis.reindex_apply] using
+      golden_field_basis_isIntegral
+        ((goldenFieldBasis.indexEquiv
+          (NumberField.integralBasis GoldenNumberField)).symm j)
+  let x : 𝓞 GoldenNumberField := ⟨goldenFieldBasisOnIntegralIndex j, hx⟩
+  change IsIntegral ℤ
+    ((NumberField.integralBasis GoldenNumberField).repr
+      (algebraMap (𝓞 GoldenNumberField) GoldenNumberField x) i)
+  rw [NumberField.integralBasis_repr_apply]
+  exact isIntegral_algebraMap
+
+private theorem golden_numberField_discr :
+    NumberField.discr GoldenNumberField = 5 := by
+  let P := (NumberField.integralBasis GoldenNumberField).toMatrix
+    goldenFieldBasisOnIntegralIndex
+  have hP : ∀ i j, IsIntegral ℤ (P i j) := golden_change_entry_isIntegral
+  have hdet : IsIntegral ℤ P.det := IsIntegral.det hP
+  obtain ⟨d, hd⟩ := IsIntegrallyClosed.isIntegral_iff.mp hdet
+  have hchange :
+      Algebra.discr ℚ goldenFieldBasisOnIntegralIndex =
+        P.det ^ 2 * Algebra.discr ℚ (NumberField.integralBasis GoldenNumberField) := by
+    rw [← Algebra.discr_of_matrix_vecMul
+      (NumberField.integralBasis GoldenNumberField) P]
+    congr 1
+    exact ((NumberField.integralBasis GoldenNumberField).toMatrix_map_vecMul
+      goldenFieldBasisOnIntegralIndex).symm
+  have hreindex :
+      Algebra.discr ℚ goldenFieldBasisOnIntegralIndex =
+        Algebra.discr ℚ goldenFieldBasis := by
+    simpa [goldenFieldBasisOnIntegralIndex, Basis.coe_reindex] using
+      Algebra.discr_reindex goldenFieldBasis
+        (goldenFieldBasis.indexEquiv (NumberField.integralBasis GoldenNumberField))
+  have hrat :
+      (5 : ℚ) = (d : ℚ) ^ 2 * (NumberField.discr GoldenNumberField : ℚ) := by
+    rw [← golden_field_basis_discr, ← hreindex, hchange, ← hd,
+      NumberField.coe_discr]
+    norm_num
+  have hint : (5 : ℤ) = d ^ 2 * NumberField.discr GoldenNumberField := by
+    exact_mod_cast hrat
+  have hdvd : d ^ 2 ∣ (5 : ℤ) := ⟨NumberField.discr GoldenNumberField, hint⟩
+  have habs := Int.natAbs_le_of_dvd_ne_zero hdvd (by norm_num : (5 : ℤ) ≠ 0)
+  have hfourth : (d ^ 2) * (d ^ 2) ≤ (5 : ℤ) * 5 :=
+    Int.natAbs_le_iff_mul_self_le.mp habs
+  have hsq : d ^ 2 ≤ (5 : ℤ) := by
+    nlinarith [sq_nonneg d]
+  have hdle : d ≤ 2 := by
+    by_contra h
+    have : 3 ≤ d := by omega
+    nlinarith
+  have hdge : -2 ≤ d := by
+    by_contra h
+    have : d ≤ -3 := by omega
+    nlinarith
+  interval_cases d <;> omega
 
 -- The rational scalar extension of the source lattice in its ordered six-element basis.
 abbrev GoldenSpace := LatticeIndex -> ℚ
@@ -333,6 +476,99 @@ private theorem two_repairs_order_parity :
   refine ⟨x.b, ?_⟩
   exact golden_b_zsmul 2 x
 
+-- The coordinate embedding `Z[phi] -> Q(sqrt 5)` sending `phi` to `omega`.
+def goldenIntegerEmbedding : GoldenInt →+* GoldenNumberField where
+  toFun x := ⟨(x.a : ℚ), (x.b : ℚ)⟩
+  map_zero' := by ext <;> norm_num
+  map_one' := by ext <;> norm_num
+  map_add' x y := by ext <;> norm_num
+  map_mul' x y := by ext <;> norm_num <;> push_cast <;> ring
+
+private theorem goldenIntegerEmbedding_injective :
+    Function.Injective goldenIntegerEmbedding := by
+  intro x y hxy
+  apply GoldenInt.ext
+  · have ha := congrArg QuadraticAlgebra.re hxy
+    change (x.a : ℚ) = (y.a : ℚ) at ha
+    exact_mod_cast ha
+  · have hb := congrArg QuadraticAlgebra.im hxy
+    change (x.b : ℚ) = (y.b : ℚ) at hb
+    exact_mod_cast hb
+
+private instance goldenTwoPrimeFact : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+
+-- The rational prime ideal `(2)` whose extensions define the source's 2-adic channel.
+def goldenTwoBaseIdeal : Ideal ℤ := Ideal.span {(2 : ℤ)}
+
+private instance goldenTwoBaseIdeal_isMaximal : goldenTwoBaseIdeal.IsMaximal := by
+  change (Ideal.span {(2 : ℤ)}).IsMaximal
+  exact Int.ideal_span_isMaximal_of_prime 2
+
+private theorem exists_goldenTwoPrimeIdeal :
+    ∃ Q : Ideal (𝓞 GoldenNumberField),
+      Q.IsMaximal ∧ Q.LiesOver goldenTwoBaseIdeal :=
+  Ideal.exists_maximal_ideal_liesOver_of_isIntegral
+    (S := 𝓞 GoldenNumberField) goldenTwoBaseIdeal
+
+-- A named prime of the golden integer ring above `(2)`.
+noncomputable def goldenTwoPrimeIdeal : Ideal (𝓞 GoldenNumberField) :=
+  Classical.choose exists_goldenTwoPrimeIdeal
+
+private theorem goldenTwoPrimeIdeal_isMaximal : goldenTwoPrimeIdeal.IsMaximal :=
+  (Classical.choose_spec exists_goldenTwoPrimeIdeal).1
+
+private theorem goldenTwoPrimeIdeal_liesOver :
+    goldenTwoPrimeIdeal.LiesOver goldenTwoBaseIdeal :=
+  (Classical.choose_spec exists_goldenTwoPrimeIdeal).2
+
+private theorem goldenTwoPrimeIdeal_ne_bot : goldenTwoPrimeIdeal ≠ ⊥ := by
+  intro hbot
+  letI : goldenTwoPrimeIdeal.LiesOver goldenTwoBaseIdeal :=
+    goldenTwoPrimeIdeal_liesOver
+  have htwo : (2 : ℤ) ∈ goldenTwoBaseIdeal := by
+    exact Ideal.subset_span (by simp)
+  have hmap : algebraMap ℤ (𝓞 GoldenNumberField) (2 : ℤ) ∈ goldenTwoPrimeIdeal :=
+    (Ideal.mem_of_liesOver goldenTwoPrimeIdeal goldenTwoBaseIdeal 2).mp htwo
+  rw [hbot] at hmap
+  norm_num at hmap
+
+-- The source-specific finite place of `Q(sqrt 5)` lying above the rational prime 2.
+noncomputable def goldenTwoFinitePlace :
+    IsDedekindDomain.HeightOneSpectrum (𝓞 GoldenNumberField) where
+  asIdeal := goldenTwoPrimeIdeal
+  isPrime := goldenTwoPrimeIdeal_isMaximal.isPrime
+  ne_bot := goldenTwoPrimeIdeal_ne_bot
+
+-- The concluding finite-place completion in theorem 28.1.
+abbrev GoldenTwoAdicCompletion :=
+  goldenTwoFinitePlace.adicCompletion GoldenNumberField
+
+-- The canonical embedding of the golden number field into its completion above 2.
+noncomputable def goldenTwoAdicEmbedding :
+    GoldenNumberField →+* GoldenTwoAdicCompletion :=
+  NumberField.FinitePlace.embedding goldenTwoFinitePlace
+
+-- The golden integers inside the same named 2-adic finite-place completion.
+noncomputable def goldenIntegerTwoAdicEmbedding :
+    GoldenInt →+* GoldenTwoAdicCompletion :=
+  goldenTwoAdicEmbedding.comp goldenIntegerEmbedding
+
+private theorem goldenIntegerTwoAdicEmbedding_injective :
+    Function.Injective goldenIntegerTwoAdicEmbedding :=
+  goldenTwoAdicEmbedding.injective.comp goldenIntegerEmbedding_injective
+
+-- The image of the nonmaximal order in the named finite-place completion above 2.
+noncomputable def completedSqrtFiveOrder : Subring GoldenTwoAdicCompletion :=
+  sqrtFiveOrder.map goldenIntegerTwoAdicEmbedding
+
+private theorem two_repairs_order_parity_in_completion :
+    ∀ x : GoldenInt,
+      goldenIntegerTwoAdicEmbedding ((2 : ℤ) • x) ∈ completedSqrtFiveOrder := by
+  intro x
+  change ∃ y, y ∈ sqrtFiveOrder ∧
+    goldenIntegerTwoAdicEmbedding y = goldenIntegerTwoAdicEmbedding ((2 : ℤ) • x)
+  exact ⟨(2 : ℤ) • x, two_repairs_order_parity x, rfl⟩
+
 -- The exterior-square matrix induced by the even five-cycle
 -- `(1 2 3 4 5)` on the `A4` root coordinates.
 def fiveCycleMatrix : Matrix LatticeIndex LatticeIndex ℤ :=
@@ -496,13 +732,15 @@ theorem golden_maximal_order_completion :
       sqrtFiveOrder < (⊤ : Subring GoldenInt) ∧
       sqrtFiveOrder.toAddSubgroup.relIndex
         (⊤ : Subring GoldenInt).toAddSubgroup = 2 ∧
-      ((-1 : ℤ) ^ 2 - 4 * 1 * (-1) = 5) ∧
+      NumberField.discr GoldenNumberField = 5 ∧
       orderOf fiveCycleOnCompletion = 5 ∧
-      (∀ x : GoldenInt, (2 : ℤ) • x ∈ sqrtFiveOrder) := by
+      (∀ x : GoldenInt,
+        (goldenIntegerTwoAdicEmbedding ((2 : ℤ) • x) : GoldenTwoAdicCompletion) ∈
+          completedSqrtFiveOrder) := by
   refine ⟨rfl, maximal_full_rank, integer_le_maximal,
     golden_ring_preserves_maximal, maximal_minimal, strict_sqrtFiveOrder,
-    sqrtFiveOrder_index_two, golden_discriminant_spec.1, fiveCycleOnCompletion_order,
-    two_repairs_order_parity⟩
+    sqrtFiveOrder_index_two, golden_numberField_discr, fiveCycleOnCompletion_order,
+    two_repairs_order_parity_in_completion⟩
 
 -- Reverse probe: the public statement exposes the strict index-two order inclusion and symmetry.
 example :
@@ -513,6 +751,17 @@ example :
   rcases golden_maximal_order_completion with
     ⟨_, _, _, _, _, hstrict, hindex, _, horder, _⟩
   exact ⟨hstrict, hindex, horder⟩
+
+-- Reverse probe for the two repaired carriers: field discriminant and completion above 2.
+example :
+    NumberField.discr GoldenNumberField = 5 ∧
+      ∀ x : GoldenInt, (2 : ℤ) • x ∈ sqrtFiveOrder := by
+  rcases golden_maximal_order_completion with
+    ⟨_, _, _, _, _, _, _, hdisc, _, hcompletion⟩
+  refine ⟨hdisc, fun x => ?_⟩
+  rcases hcompletion x with ⟨y, hy, heq⟩
+  have hxy : y = (2 : ℤ) • x := goldenIntegerTwoAdicEmbedding_injective heq
+  rwa [← hxy]
 
 -- Trivialization probe: the added class is genuinely absent from the original lattice.
 example : parityHalfClass ∈ maximalOrderLattice ∧ parityHalfClass ∉ integerLattice := by
