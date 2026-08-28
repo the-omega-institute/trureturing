@@ -6501,3 +6501,992 @@ P_N^{q,\tau}(x)=P_N^{q,\tau}(y).
 - 零新增首创声明，零测度论前件，零既有段落回写。
 
 后续增订继续严格追加于本节之后。
+
+---
+
+# 第五十七部　保护坐标重评与输运越界的语义闭合
+
+## 57.1 拒因分析、继承接口与收窄纪律
+
+本部是 v1.5 的追加式增订，只精确化第 54.3 部证明义务 5 的保护坐标—目标洗白半条，以及证明义务 6 的输运证书—越界收口半条。第 1—56 部的定义、开放问题、冻结结算、既有 Lean 载体与已证定理均不回写、不删除，也不因本部改变原地址。
+
+本部预期进入既有 canonical 命名空间
+
+`D5.S3.ConceptDynamics.DefinitionEscape.Adjudication`
+
+并直接复用第 54.3 部已经给出的
+
+`ProtectedCoordinates`、`protectedCoordinates`、`RegradeReport`、`TransportCert`、`TransportReport`、`TransportSemantics`、`ValidTransportCert`、`HasValidTransportCert` 与 `Overreach`。
+
+本部只使用以下初等构件：
+
+- 七元有限标签、依值类型与 `Finset`；
+- 结构投影、函数外延、等式与不等式；
+- `Option` 表示的部分运行结果；
+- 合取、存在、否定与带证明的布尔判定；
+- 对既有载体的语义解释器及其遗忘映射。
+
+不引入测度、概率、拓扑、统计显著性、任意选择、商代表、外生许可证布尔门或新的目标成功标准。除明确写出的可判等号与可判关系外，不暗加 `Fintype`、`Nonempty` 或有限状态前件。
+
+### 57.1.1 第 54.3-5 条拒因：直接投影不等式不是完整洗白语义
+
+原判词为：
+
+> “Protected-coordinate and target-laundering behavior is not an elementary atom: an honest closure needs a broader semantic regrade and coordinate-witness bundle.”
+
+该拒因指出的不是 `protectedCoordinates` 投影错误，而是源理论只给出了
+
+`protectedCoordinates newK ≠ protectedCoordinates oldK`
+
+这一整体不等式，却缺少使“哪一项保护承诺被改写”成为可审计对象的坐标语义。原结构有七个异型字段；整体不等式只能证明“至少有一项不同”，不能给出：
+
+1. 七个保护字段的有限、穷尽标签；
+2. 每个标签对应的依值字段类型；
+3. 声称发生变化的标签集合；
+4. 集合中每个标签确实变化的可靠性；
+5. 所有实际变化标签均被登记的封闭性。
+
+因此必须增加坐标见证束。该见证束不是保护坐标的第二份副本；它只保存标签集合及其正确性证明，字段值仍唯一来自既有 `ProtectedCoordinates`。
+
+原 `RegradeReport` 还只携带修订承诺对旧证据给出的实际判词。它证明
+
+`report.regradedVerdict = evaluate report.revised report.evidence`
+
+却没有同时把原承诺对同一证据的判词放入一个有类型语义对象。若没有这一半，所谓“重评”仍只是单次新评价加若干外部等式，而不是同一证据、原承诺、修订承诺之间的语义关系。
+
+同时，源理论中存在两种不可静默混同的时间口径：
+
+- 正文口径要求证据严格先于修订承诺的冻结时刻到达；
+- 后置 Lean 草图要求证据在冻结事件处可见，并另要求报告时间戳等于冻结时刻。
+
+二者只有在显式给出“冻结可见当且仅当严格到达后”的桥时才能互换。故本部把二者定义成两个独立谓词，并把桥本身作为有名结构；不从滤过单调性、事件时钟单调性或首次可达定义中擅自推出该桥。
+
+目标洗白也不要求原判词与修订判词不同。只要到达后改变保护坐标、用修订坐标重评旧证据，并把结果归因于原承诺，即可构成洗白。报告时间戳等于冻结时刻同样只属于后置草图，不进入正文级洗白判据。
+
+### 57.1.2 第 54.3-6 条拒因：Prop 级合取没有给出输运运行语义
+
+原判词为：
+
+> “Transport-certificate and overreach closure is not an elementary atom: an honest closure needs broader transport semantics plus failure and refutation witnesses.”
+
+第 54.3 部的 `TransportSemantics` 把以下项目全部留作互不相关的 Prop 级接口：
+
+- `strictSubset`；
+- `inNewOnlyDomain`；
+- `predictionDefined`；
+- `predictionFails`；
+- `refutes`。
+
+这足以陈述一个合取，却没有保证：
+
+1. 严格扩域真的包含一个新域差点；
+2. “有定义”“失败”“反驳”来自同一次预测运行；
+3. 失败见证携带实际运行结果；
+4. 反驳见证是在同一结果上同时证明失败与对主张的反驳；
+5. 去掉类型化语义后所得 Prop 级接口精确回到原 `ValidTransportCert`；
+6. 越界只能由同一个有效证书谓词及精确保留条件的报告许可证收口。
+
+若把 `predictionFails` 与 `refutes` 任意赋值为两个无关谓词，即使各自存在见证，也不能证明它们描述同一次失败。若另造一个“新证书有效性”谓词，又会与已经冻结的 `ValidTransportCert` 形成第二真源。
+
+因此本部增加一个带部分运行结果的输运语义框架。它不替换 `TransportCert` 或 `TransportReport`，而是解释其预测字段；失败见证保存新域差点、运行结果与失败证明，反驳见证在同一结果上追加反驳证明。新有效性结构经遗忘后必须与原 `ValidTransportCert` 双向等价；越界闭包仍由原有报告条件与同一证书有效性解除。
+
+---
+
+## 57.2 保护坐标语义与坐标见证束
+
+以下 Lean 代码块按出现顺序拼接为一个模块。所有既有名称均指第 54.3 部的 canonical 定义，不在本部重声明。
+
+### 57.2.1 七个保护坐标的有限标签与依值投影
+
+```lean
+universe u v
+
+namespace D5.S3.ConceptDynamics.DefinitionEscape.Adjudication
+
+inductive ProtectedCoordinateTag
+  | targetChain
+  | domain
+  | epsilon
+  | conditions
+  | comparator
+  | baseline
+  | weightSpec
+  deriving DecidableEq, Fintype
+```
+
+`ProtectedCoordinateTag` 穷尽且只穷尽既有 `ProtectedCoordinates` 的七个字段。`testPlan`、`decision`、被承诺对象与日志坐标不因本部被暗中提升为保护坐标；若未来要改变保护集合，必须另作追加式理论修订，不能只改枚举。
+
+```lean
+def ProtectedCoordinateValue
+    (TargetChain Domain Epsilon Condition Comparator Baseline WeightSpec :
+      Type u) :
+    ProtectedCoordinateTag → Type u
+  | .targetChain => TargetChain
+  | .domain => Domain
+  | .epsilon => Epsilon
+  | .conditions => Condition
+  | .comparator => Comparator
+  | .baseline => Baseline
+  | .weightSpec => WeightSpec
+```
+
+`ProtectedCoordinateValue` 给出标签对应的依值类型。七个字段不被强迫进入同一和类型，也不借助字符串、动态类型或不可核验强制转换抹平其异型性。
+
+```lean
+def protectedCoordinateAt
+    {TargetChain Domain Epsilon Condition Comparator Baseline WeightSpec :
+      Type u}
+    (coordinates :
+      ProtectedCoordinates TargetChain Domain Epsilon Condition Comparator
+        Baseline WeightSpec)
+    (tag : ProtectedCoordinateTag) :
+    ProtectedCoordinateValue TargetChain Domain Epsilon Condition Comparator
+      Baseline WeightSpec tag :=
+  match tag with
+  | .targetChain => coordinates.targetChain
+  | .domain => coordinates.domain
+  | .epsilon => coordinates.epsilon
+  | .conditions => coordinates.conditions
+  | .comparator => coordinates.comparator
+  | .baseline => coordinates.baseline
+  | .weightSpec => coordinates.weightSpec
+```
+
+`protectedCoordinateAt` 是既有保护坐标记录的依值投影。它不保存字段副本；任何坐标见证最终都必须回到该投影的等式或不等式。
+
+### 57.2.2 坐标见证束及其封闭条件
+
+```lean
+structure CoordinateWitnessBundle
+    {TargetChain Domain Epsilon Condition Comparator Baseline WeightSpec :
+      Type u}
+    (oldCoordinates newCoordinates :
+      ProtectedCoordinates TargetChain Domain Epsilon Condition Comparator
+        Baseline WeightSpec) where
+  changed : Finset ProtectedCoordinateTag
+  sound :
+    ∀ tag, tag ∈ changed →
+      protectedCoordinateAt oldCoordinates tag ≠
+        protectedCoordinateAt newCoordinates tag
+```
+
+`CoordinateWitnessBundle` 登记一组声称已经改变的保护标签。`sound` 排除伪报：束中每个标签都必须在既有记录的相应投影上确实不同。该结构故意不要求 `changed` 非空，因为空束仍可诚实表示“没有登记任何变化”；洗白判据将另行要求非空。
+
+```lean
+namespace CoordinateWitnessBundle
+
+def Closed
+    {TargetChain Domain Epsilon Condition Comparator Baseline WeightSpec :
+      Type u}
+    {oldCoordinates newCoordinates :
+      ProtectedCoordinates TargetChain Domain Epsilon Condition Comparator
+        Baseline WeightSpec}
+    (bundle : CoordinateWitnessBundle oldCoordinates newCoordinates) : Prop :=
+  ∀ tag,
+    protectedCoordinateAt oldCoordinates tag ≠
+      protectedCoordinateAt newCoordinates tag →
+    tag ∈ bundle.changed
+
+end CoordinateWitnessBundle
+```
+
+`CoordinateWitnessBundle.Closed` 是完备方向：所有实际变化的标签均必须进入束。与结构内的 `sound` 合并后，`bundle.changed` 恰好等于真实变化标签集；只列出一个方便字段而遗漏其他变化不算封闭见证。
+
+```lean
+def HasClosedCoordinateWitnessBundle
+    {TargetChain Domain Epsilon Condition Comparator Baseline WeightSpec :
+      Type u}
+    (oldCoordinates newCoordinates :
+      ProtectedCoordinates TargetChain Domain Epsilon Condition Comparator
+        Baseline WeightSpec) : Prop :=
+  ∃ bundle : CoordinateWitnessBundle oldCoordinates newCoordinates,
+    CoordinateWitnessBundle.Closed bundle ∧ bundle.changed.Nonempty
+```
+
+`HasClosedCoordinateWitnessBundle` 要求一个可靠、完备且非空的坐标见证束。它是整体坐标不等式的审计化版本：不增加新的字段值事实，只把不等式的有限来源显式登记。
+
+### 57.2.3 语义重评框架
+
+```lean
+structure RegradeSemantics
+    (Commitment Evidence Verdict Time Coordinate : Type u)
+    (Report : Type v) where
+  protected : Commitment → Coordinate
+  evaluate : Commitment → Evidence → Verdict
+  arrival : Evidence → Time
+  freezeTime : Commitment → Time
+  visibleAtFreeze : Commitment → Evidence → Prop
+  reportOriginal : Report → Commitment
+  reportRevised : Report → Commitment
+  reportEvidence : Report → Evidence
+  reportVerdict : Report → Verdict
+  reportAttributedTo : Report → Commitment
+  reportOccurredAt : Report → Time
+  reportVerdictCorrect :
+    ∀ report,
+      reportVerdict report =
+        evaluate (reportRevised report) (reportEvidence report)
+```
+
+`RegradeSemantics` 是对既有承诺与报告载体的解释器。它不新建承诺或报告字段，而是说明如何从已有载体读取保护坐标、评价、到达时间、冻结时间、冻结可见性及报告各项。最后一项把“报告判词确为修订承诺对旧证据的实际评价”提升为解释器定律，禁止调用方另传一个不受约束的成功布尔值。
+
+```lean
+structure SemanticRegrade
+    {Commitment Evidence Verdict Time Coordinate : Type u}
+    {Report : Type v}
+    (S : RegradeSemantics Commitment Evidence Verdict Time Coordinate Report)
+    where
+  report : Report
+  originalVerdict : Verdict
+  originalVerdictCorrect :
+    originalVerdict =
+      S.evaluate (S.reportOriginal report) (S.reportEvidence report)
+```
+
+`SemanticRegrade` 在既有报告之外只增加原承诺对同一证据的实际判词及其正确性证明。修订判词仍唯一来自报告和 `S.reportVerdictCorrect`。该结构不要求两个判词不同；“重评”表示评价坐标发生切换，不表示评价值必然变化。
+
+```lean
+def SemanticRegradeAt
+    {Commitment Evidence Verdict Time Coordinate : Type u}
+    {Report : Type v}
+    {S : RegradeSemantics Commitment Evidence Verdict Time Coordinate Report}
+    (regrade : SemanticRegrade S)
+    (oldK newK : Commitment)
+    (Z : Evidence) : Prop :=
+  S.reportOriginal regrade.report = oldK ∧
+    S.reportRevised regrade.report = newK ∧
+    S.reportEvidence regrade.report = Z
+```
+
+`SemanticRegradeAt` 把语义重评定位到显式的原承诺、修订承诺与证据。它只表达报告身份，不把时间条件、坐标改变或归因条件重复塞入同一谓词。
+
+```lean
+def PostArrivalSemanticRegrade
+    {Commitment Evidence Verdict Time Coordinate : Type u}
+    {Report : Type v}
+    [LT Time]
+    (S : RegradeSemantics Commitment Evidence Verdict Time Coordinate Report)
+    (regrade : SemanticRegrade S) : Prop :=
+  S.arrival (S.reportEvidence regrade.report) <
+    S.freezeTime (S.reportRevised regrade.report)
+```
+
+`PostArrivalSemanticRegrade` 对应正文级严格时间口径：证据的首次到达时刻严格早于修订承诺的冻结时刻。它不提报告时间戳，也不把事件编号与时钟值视为同一类型。
+
+```lean
+def FreezeVisibleSemanticRegrade
+    {Commitment Evidence Verdict Time Coordinate : Type u}
+    {Report : Type v}
+    (S : RegradeSemantics Commitment Evidence Verdict Time Coordinate Report)
+    (regrade : SemanticRegrade S) : Prop :=
+  S.visibleAtFreeze
+    (S.reportRevised regrade.report)
+    (S.reportEvidence regrade.report)
+```
+
+`FreezeVisibleSemanticRegrade` 对应第 54.3 部后置 Lean 草图的冻结可见口径。它与严格到达后谓词分别命名，因而滤过可见性不能在没有桥的情况下冒充时钟不等式。
+
+```lean
+structure RegradeTemporalBridge
+    {Commitment Evidence Verdict Time Coordinate : Type u}
+    {Report : Type v}
+    [LT Time]
+    (S : RegradeSemantics Commitment Evidence Verdict Time Coordinate Report) :
+    Prop where
+  visibility_iff_arrival :
+    ∀ K Z,
+      S.visibleAtFreeze K Z ↔ S.arrival Z < S.freezeTime K
+```
+
+`RegradeTemporalBridge` 是两种时间口径之间唯一允许的转换接口。它必须对相关承诺与证据给出精确双向关系；事件滤过单调、时钟单调或“首次可见”名称本身均不自动生成该结构。
+
+### 57.2.4 正文级洗白、草图级洗白与判定证书
+
+```lean
+def SemanticTargetLaunderingAt
+    {Commitment Evidence Verdict Time TargetChain Domain Epsilon Condition
+      Comparator Baseline WeightSpec : Type u}
+    {Report : Type v}
+    [LT Time]
+    (S :
+      RegradeSemantics Commitment Evidence Verdict Time
+        (ProtectedCoordinates TargetChain Domain Epsilon Condition Comparator
+          Baseline WeightSpec)
+        Report)
+    (oldK newK : Commitment)
+    (Z : Evidence)
+    (regrade : SemanticRegrade S) : Prop :=
+  SemanticRegradeAt regrade oldK newK Z ∧
+    PostArrivalSemanticRegrade S regrade ∧
+    S.reportAttributedTo regrade.report = oldK ∧
+    HasClosedCoordinateWitnessBundle
+      (S.protected oldK) (S.protected newK)
+```
+
+`SemanticTargetLaunderingAt` 是正文级语义重评判据。它恰有四层：报告定位、严格到达后、归因于原承诺、保护坐标的封闭非空见证束。修订判词的真实性由语义框架承担，原判词的真实性由 `SemanticRegrade` 承担，故这里不再重复评价等式。
+
+该定义不要求：
+
+- 原判词与修订判词不同；
+- 报告发生时刻等于冻结时刻；
+- 修订承诺与原承诺整体不等；
+- 非保护字段保持相同。
+
+它只判定第 54 部所说的保护坐标回写与旧轮归因，不把其他治理违规混入同一原子。
+
+```lean
+def SemanticSketchTargetLaunderingAt
+    {Commitment Evidence Verdict Time TargetChain Domain Epsilon Condition
+      Comparator Baseline WeightSpec : Type u}
+    {Report : Type v}
+    (S :
+      RegradeSemantics Commitment Evidence Verdict Time
+        (ProtectedCoordinates TargetChain Domain Epsilon Condition Comparator
+          Baseline WeightSpec)
+        Report)
+    (oldK newK : Commitment)
+    (Z : Evidence)
+    (regrade : SemanticRegrade S) : Prop :=
+  SemanticRegradeAt regrade oldK newK Z ∧
+    FreezeVisibleSemanticRegrade S regrade ∧
+    S.reportOccurredAt regrade.report = S.freezeTime newK ∧
+    S.reportAttributedTo regrade.report = oldK ∧
+    HasClosedCoordinateWitnessBundle
+      (S.protected oldK) (S.protected newK)
+```
+
+`SemanticSketchTargetLaunderingAt` 精确保留后置 Lean 草图的两个额外选择：冻结事件可见性和报告时间戳等于冻结时刻。它不是正文级定义的别名；在给出 `RegradeTemporalBridge` 后，它才等价于正文级洗白再合取时间戳条件。
+
+```lean
+structure TargetLaunderingDecision
+    {Commitment Evidence Verdict Time TargetChain Domain Epsilon Condition
+      Comparator Baseline WeightSpec : Type u}
+    {Report : Type v}
+    [LT Time]
+    (S :
+      RegradeSemantics Commitment Evidence Verdict Time
+        (ProtectedCoordinates TargetChain Domain Epsilon Condition Comparator
+          Baseline WeightSpec)
+        Report)
+    (oldK newK : Commitment)
+    (Z : Evidence)
+    (regrade : SemanticRegrade S) where
+  verdict : Bool
+  correct :
+    verdict = true ↔
+      SemanticTargetLaunderingAt S oldK newK Z regrade
+```
+
+`TargetLaunderingDecision` 是带正确性证明的判定结果，而不是外生准入门。只有在所需等式与时间关系可判时才能构造该结构；不能先给一个布尔值，再把它当作洗白事实。
+
+### 57.2.5 对第 54.3 部既有载体的标准解释器
+
+```lean
+def prospectiveRegradeSemantics
+    {EventId Evidence Round Artifact Time TargetChain Domain Epsilon Condition
+      Comparator TestPlan Baseline WeightSpec Verdict : Type u}
+    [LinearOrder EventId]
+    [Preorder Time]
+    [DecidableEq Artifact]
+    {n : Round}
+    (arrival : Evidence → Time)
+    (evaluate :
+      ProspectiveCommitment EventId Evidence Round Artifact Time TargetChain
+        Domain Epsilon Condition Comparator TestPlan Baseline WeightSpec n →
+      Evidence → Verdict) :
+    RegradeSemantics
+      (ProspectiveCommitment EventId Evidence Round Artifact Time TargetChain
+        Domain Epsilon Condition Comparator TestPlan Baseline WeightSpec n)
+      Evidence
+      Verdict
+      Time
+      (ProtectedCoordinates TargetChain Domain Epsilon Condition Comparator
+        Baseline WeightSpec)
+      (RegradeReport
+        (ProspectiveCommitment EventId Evidence Round Artifact Time TargetChain
+          Domain Epsilon Condition Comparator TestPlan Baseline WeightSpec n)
+        Evidence Verdict Time evaluate) where
+  protected := protectedCoordinates
+  evaluate := evaluate
+  arrival := arrival
+  freezeTime := fun K => K.adjudication.frozenAt
+  visibleAtFreeze := fun K Z =>
+    Z ∈ K.adjudication.filtration.seen K.adjudication.freezeEvent
+  reportOriginal := fun report => report.original
+  reportRevised := fun report => report.revised
+  reportEvidence := fun report => report.evidence
+  reportVerdict := fun report => report.regradedVerdict
+  reportAttributedTo := fun report => report.attributedTo
+  reportOccurredAt := fun report => report.occurredAt
+  reportVerdictCorrect := fun report => report.regradesOldRound
+```
+
+`prospectiveRegradeSemantics` 只是第 54.3 部既有载体的标准解释器。它直接调用 `protectedCoordinates` 和 `RegradeReport` 投影，不复制其七个字段，也不另造报告正确性谓词。后续 Lean 模块若已经导入冻结载体，应构造同形解释器，而不是重新声明 `ProspectiveCommitment`、`ProtectedCoordinates` 或 `RegradeReport`。
+
+---
+
+## 57.3 输运语义与证书
+
+### 57.3.1 带运行结果的输运语义
+
+```lean
+structure TransportSemanticFrame
+    (TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u)
+    (PredictionResult : Type v) where
+  claimAddress : Claim → ContentAddress
+  claimScope : Claim → Domain
+  claimVersion : Claim → Version
+  receiptMatches :
+    TruthReceipt → ContentAddress → Domain → Version → Prop
+  claimOn : Claim → Domain → Prop
+  inDomain : NewEvidence → Domain → Prop
+  run : NewDomainPrediction → NewEvidence → Option PredictionResult
+  fails :
+    NewDomainPrediction → NewEvidence → PredictionResult → Prop
+  refutes :
+    NewDomainPrediction → NewEvidence → PredictionResult → Claim → Prop
+```
+
+`TransportSemanticFrame` 把第 54.3 部的 Prop 级预测接口提升为部分运行语义。`run p z = none` 表示预测在该点未定义，`some result` 表示取得一个具体结果；失败与反驳都以同一结果为参数。该框架不假定结果有可判等号、度量、概率或损失结构。
+
+```lean
+def SemanticNewOnly
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult)
+    (z : NewEvidence)
+    (J J' : Domain) : Prop :=
+  S.inDomain z J' ∧ ¬ S.inDomain z J
+```
+
+`SemanticNewOnly` 给出有方向的新域差：点属于报告域而不属于原域。它不接受另一个与成员关系无关的 `inNewOnlyDomain` 黑箱谓词。
+
+```lean
+def SemanticStrictSubset
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult)
+    (J J' : Domain) : Prop :=
+  (∀ z, S.inDomain z J → S.inDomain z J') ∧
+    ∃ z, SemanticNewOnly S z J J'
+```
+
+`SemanticStrictSubset` 由成员语义定义：原域中的每个点仍在新域中，并且至少存在一个新域差点。严格扩域因而自带非空见证，不能把 `strictSubset` 与 `inNewOnlyDomain` 任意解释成互不相干的关系。
+
+```lean
+def SemanticPredictionDefined
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult)
+    (prediction : NewDomainPrediction)
+    (z : NewEvidence) : Prop :=
+  ∃ result, S.run prediction z = some result
+```
+
+`SemanticPredictionDefined` 是部分运行返回具体结果的存在命题。它不是独立可赋值的 Prop 字段。
+
+```lean
+def SemanticPredictionFails
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult)
+    (prediction : NewDomainPrediction)
+    (z : NewEvidence) : Prop :=
+  ∃ result,
+    S.run prediction z = some result ∧
+      S.fails prediction z result
+```
+
+`SemanticPredictionFails` 要求预测在该点实际运行并产生一个满足失败关系的结果。取恒假失败关系会直接排除任何失败见证，而不是由外部非真空口号补救。
+
+```lean
+def SemanticRefutes
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult)
+    (z : NewEvidence)
+    (cert : TransportCert TruthReceipt NewDomainPrediction)
+    (claim : Claim) : Prop :=
+  ∃ result,
+    S.run cert.falsifiablePrediction z = some result ∧
+      S.refutes cert.falsifiablePrediction z result claim
+```
+
+`SemanticRefutes` 把反驳绑定到证书所登记预测的一次实际运行。它仍是对第 54.3 部 Prop 级接口的遗忘结果；更强的同一结果失败—反驳绑定由下面的类型化见证承担。
+
+### 57.3.2 对原 Prop 级接口的唯一遗忘映射
+
+```lean
+namespace TransportSemanticFrame
+
+def toLegacy
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult) :
+    TransportSemantics TruthReceipt NewDomainPrediction Claim ContentAddress
+      Domain Version NewEvidence where
+  claimAddress := S.claimAddress
+  claimScope := S.claimScope
+  claimVersion := S.claimVersion
+  receiptMatches := S.receiptMatches
+  strictSubset := SemanticStrictSubset S
+  claimOn := S.claimOn
+  inNewOnlyDomain := SemanticNewOnly S
+  predictionDefined := SemanticPredictionDefined S
+  predictionFails := SemanticPredictionFails S
+  refutes := SemanticRefutes S
+
+end TransportSemanticFrame
+```
+
+`TransportSemanticFrame.toLegacy` 是新语义回到第 54.3 部 `TransportSemantics` 的唯一遗忘映射。后续证明必须通过该映射复用原 `ValidTransportCert` 与 `Overreach`；不得另造第二个不相容的 Prop 级运输接口。
+
+### 57.3.3 失败见证与反驳见证
+
+```lean
+structure TransportFailureWitness
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult)
+    (prediction : NewDomainPrediction)
+    (J J' : Domain) where
+  evidence : NewEvidence
+  newOnly : SemanticNewOnly S evidence J J'
+  result : PredictionResult
+  observed : S.run prediction evidence = some result
+  failed : S.fails prediction evidence result
+```
+
+`TransportFailureWitness` 保存新域差点、实际运行结果与失败证明。它排除“在一个点有定义、在另一个点失败”或“只宣称存在失败但不展示运行结果”的弱化解释。
+
+```lean
+structure TransportRefutationWitness
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult)
+    (cert : TransportCert TruthReceipt NewDomainPrediction)
+    (claim : Claim)
+    (J J' : Domain) where
+  failure :
+    TransportFailureWitness S cert.falsifiablePrediction J J'
+  refutesClaim :
+    S.refutes cert.falsifiablePrediction
+      failure.evidence failure.result claim
+```
+
+`TransportRefutationWitness` 在同一个失败见证及同一个运行结果上追加对被输运主张的反驳。失败与反驳因此既可分别读取，又不能由两个无关结果拼接。
+
+### 57.3.4 证书合法性结构及其 Prop 闭包
+
+```lean
+structure SemanticTransportCertificate
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult)
+    (cert : TransportCert TruthReceipt NewDomainPrediction)
+    (claim : Claim)
+    (J J' : Domain)
+    (version : Version) where
+  strictExpansion : SemanticStrictSubset S J J'
+  receiptBound :
+    S.receiptMatches cert.oldReceipt
+      (S.claimAddress claim) J version
+  conditionalTransport :
+    cert.givenPremises →
+      cert.transportAssumption →
+      S.claimOn claim J'
+  totalOnNewOnly :
+    ∀ z, SemanticNewOnly S z J J' →
+      SemanticPredictionDefined S cert.falsifiablePrediction z
+  refutingFailure :
+    TransportRefutationWitness S cert claim J J'
+```
+
+`SemanticTransportCertificate` 是证书合法性的类型化证明对象。五项分别对应严格扩域、claim-bound 原域收据、保留前件的条件输运、新域差上的全定义，以及同一运行结果上的失败—反驳见证。它不增加外部“已批准”字段。
+
+```lean
+def ValidSemanticTransportCert
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult)
+    (cert : TransportCert TruthReceipt NewDomainPrediction)
+    (claim : Claim)
+    (J J' : Domain)
+    (version : Version) : Prop :=
+  Nonempty
+    (SemanticTransportCertificate S cert claim J J' version)
+```
+
+`ValidSemanticTransportCert` 只是上述证明对象的存在闭包。它不是与 `ValidTransportCert` 并行的第二套真值；57.3-C 将要求它经 `toLegacy` 后与原谓词双向等价。
+
+### 57.3.5 报告许可证、越界闭包与越界判据
+
+```lean
+structure LicensedSemanticTransportReport
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult)
+    (report : TransportReport Claim Domain)
+    (J : Domain) where
+  cert : TransportCert TruthReceipt NewDomainPrediction
+  valid :
+    ValidSemanticTransportCert S cert report.claim J report.reportedDomain
+      (S.claimVersion report.claim)
+  conditionExact :
+    report.condition ↔
+      cert.givenPremises ∧ cert.transportAssumption
+```
+
+`LicensedSemanticTransportReport` 要求报告携带同一主张、原域、报告域与主张版本上的有效证书，并精确保留证书前件。无条件报告只有在两项前件均成立时才能获得许可证；把报告条件弱化为真、遗漏一项前件或使用其他版本证书均不能构造该结构。
+
+```lean
+def OverreachClosure
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult)
+    (report : TransportReport Claim Domain)
+    (J : Domain) : Prop :=
+  Nonempty (LicensedSemanticTransportReport S report J)
+```
+
+`OverreachClosure` 是越界指控的正向收口证书：存在一个合法报告对象。它不接受外部布尔门，也不允许只证明“某个证书大致有效”而不证明报告条件精确对应其前件。
+
+```lean
+def SemanticOverreach
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult)
+    (report : TransportReport Claim Domain)
+    (J : Domain) : Prop :=
+  SemanticStrictSubset S J report.reportedDomain ∧
+    S.claimScope report.claim = J ∧
+    ¬ OverreachClosure S report J
+```
+
+`SemanticOverreach` 恰表示：报告严格扩张原主张范围、主张原范围确为 `J`，且不存在合法输运报告对象。严格扩域本身不自动构成许可证；局部闭合也不自动输运到新域。反之，一旦 `OverreachClosure` 成立，同一报告便不再满足该越界谓词。
+
+```lean
+end D5.S3.ConceptDynamics.DefinitionEscape.Adjudication
+```
+
+---
+
+## 57.4 证明义务清单
+
+本部共提出十条义务。每条都只消费 57.2—57.3 已经给出的类型和谓词；不存在“先寻找合适定义”或“补充自然假设”式开放项。
+
+### 57.4.1 保护坐标与目标洗白义务
+
+**证明义务 57.2-A（保护坐标依值外延，预期为定理）。** 对任意适型的七个字段类型及任意 `oldCoordinates newCoordinates : ProtectedCoordinates ...`，证明单一命题
+
+```lean
+oldCoordinates = newCoordinates ↔
+  ∀ tag,
+    protectedCoordinateAt oldCoordinates tag =
+      protectedCoordinateAt newCoordinates tag
+```
+
+该证明只允许结构外延与对 `ProtectedCoordinateTag` 的有限分类，不需要任何字段可判等号。
+
+**证明义务 57.2-B（封闭非空见证束刻画整体变化，预期为定理）。** 若七个字段类型各自有 `DecidableEq`，则对任意 `oldCoordinates newCoordinates` 证明
+
+```lean
+HasClosedCoordinateWitnessBundle oldCoordinates newCoordinates ↔
+  oldCoordinates ≠ newCoordinates
+```
+
+从右到左应以七标签有限扫描构造真实变化集；从左到右应由非空标签及 `sound` 投影出整体记录不等。
+
+**证明义务 57.2-C（正文级洗白的束消去判据，预期为定理）。** 在 57.2-B 的可判等号前件下，对任意 `S oldK newK Z regrade` 证明
+
+```lean
+SemanticTargetLaunderingAt S oldK newK Z regrade ↔
+  SemanticRegradeAt regrade oldK newK Z ∧
+    PostArrivalSemanticRegrade S regrade ∧
+    S.reportAttributedTo regrade.report = oldK ∧
+    S.protected oldK ≠ S.protected newK
+```
+
+该命题只把完整坐标见证束消去为既有整体不等式，不得删除报告身份、严格时间或归因条件。
+
+**证明义务 57.2-D（草图口径与正文口径的精确桥，预期为定理）。** 对任意 `bridge : RegradeTemporalBridge S`，证明
+
+```lean
+SemanticSketchTargetLaunderingAt S oldK newK Z regrade ↔
+  SemanticTargetLaunderingAt S oldK newK Z regrade ∧
+    S.reportOccurredAt regrade.report = S.freezeTime newK
+```
+
+没有 `bridge` 时不得提供该等价式；特别地，不得只凭滤过单调或事件时钟单调省略桥前件。
+
+**证明义务 57.2-E（洗白判定证书，预期为可判定性）。** 若有
+
+```lean
+DecidableEq Commitment
+DecidableEq Evidence
+DecidableEq TargetChain
+DecidableEq Domain
+DecidableEq Epsilon
+DecidableEq Condition
+DecidableEq Comparator
+DecidableEq Baseline
+DecidableEq WeightSpec
+DecidableRel (fun a b : Time => a < b)
+```
+
+则对任意 `S oldK newK Z regrade` 构造
+
+```lean
+Nonempty
+  (TargetLaunderingDecision S oldK newK Z regrade)
+```
+
+该构造不得要求 `Fintype Commitment`、`Fintype Evidence`、`DecidableEq Verdict`、`Nonempty Commitment` 或原判词与修订判词不同。
+
+### 57.4.2 输运证书与越界收口义务
+
+**证明义务 57.3-A（严格扩域产生新域差见证，预期为定理）。** 对任意 `S J J'` 证明
+
+```lean
+SemanticStrictSubset S J J' →
+  ∃ z, SemanticNewOnly S z J J'
+```
+
+该命题由严格扩域的第二分量得到，不要求域类型或证据类型有限、非空或可判等。
+
+**证明义务 57.3-B（类型化反驳见证的 Prop 投影，预期为定理）。** 对任意 `w : TransportRefutationWitness S cert claim J J'`，证明
+
+```lean
+∃ z,
+  SemanticNewOnly S z J J' ∧
+    SemanticPredictionDefined S cert.falsifiablePrediction z ∧
+    SemanticPredictionFails S cert.falsifiablePrediction z ∧
+    SemanticRefutes S z cert claim
+```
+
+四个结论必须由 `w.failure` 的同一点和同一结果构造，不能分别选择三个互不相关的运行见证。
+
+**证明义务 57.3-C（类型化证书与原有效性谓词的精确等价，预期为定理）。** 对任意 `S cert claim J J' version` 证明
+
+```lean
+ValidSemanticTransportCert S cert claim J J' version ↔
+  ValidTransportCert S.toLegacy cert claim J J' version
+```
+
+从右到左合并 `SemanticPredictionFails` 与 `SemanticRefutes` 的结果时，只可利用二者都等于同一次 `run` 的 `some` 值；不得假设 `DecidableEq PredictionResult`，也不得另加结果唯一性公理。
+
+**证明义务 57.3-D（越界收口判据，预期为定理）。** 对任意 `S report J`，在给定严格扩域和原范围等式时证明
+
+```lean
+SemanticStrictSubset S J report.reportedDomain →
+S.claimScope report.claim = J →
+  (SemanticOverreach S report J ↔
+    ¬ OverreachClosure S report J)
+```
+
+该式是越界的方向化收口准则，不使用双重否定消去，不要求 `OverreachClosure` 可判。
+
+**证明义务 57.3-E（新越界语义回降到第 54.3 部，预期为定理）。** 对任意 `S report J` 证明
+
+```lean
+SemanticOverreach S report J ↔
+  Overreach S.toLegacy report J
+```
+
+该证明必须经 57.3-C 把许可证中的 `ValidSemanticTransportCert` 回降为原 `ValidTransportCert`；禁止复制原 `Overreach` 合取后把双向等价伪装成第二个独立定理源。
+
+---
+
+## 57.5 与既有冻结定理的关系、唯一真源与非越界边界
+
+### 57.5.1 保护坐标侧的直接复用
+
+57.2 直接消费既有 `ProtectedCoordinates` 与 `protectedCoordinates`。七标签只是该记录的有限索引，不得重新声明第二个七字段结构。义务 57.2-A—57.2-B 只证明“整体不等”与“封闭非空变化标签束”之间的等价。
+
+既有冻结定理
+
+`regrade_report_carries_actual_evaluation`
+
+继续唯一承担“报告判词确为修订承诺对报告证据的实际评价”。`RegradeSemantics.reportVerdictCorrect` 的标准实例必须直接填入该证明字段或其定义相同的投影；不得重建一个独立的评价正确性公理。
+
+既有冻结定理
+
+`target_laundering_criterion`
+
+继续唯一承担正文级三合取：
+
+- 严格到达后的保护坐标改变；
+- 对旧证据的实际重评；
+- 把修订评价归因于原承诺。
+
+57.2-C 只把其中的保护坐标整体不等式细化为坐标见证束。以冻结载体实例化 `RegradeSemantics` 后，57.2-C 与 `target_laundering_criterion` 合成的桥应作为推论导出；不得在新模块中复制正文级 `TargetLaundering` 定义。
+
+既有冻结定理
+
+`target_laundering_sketch_criterion`
+
+继续唯一承担后置草图的冻结可见性与额外报告时间戳。57.2-D 只说明在显式 `RegradeTemporalBridge` 下，草图语义等于正文语义再合取该时间戳条件。
+
+既有冻结定理
+
+`freeze_visible_iff_post_arrival_under_exact_bridge`
+
+可直接为 57.2-D 提供保护变化部分的转换。其桥前件不得从名称、单调性或首次可达约定中删除。
+
+既有冻结定理
+
+`post_arrival_protected_change_criterion`
+
+可直接用于展开正文级时间条件与保护坐标整体不等式；57.2 不重新证明其时间部分。
+
+既有有限见证定理
+
+`same_verdict_target_laundering`
+
+与
+
+`report_timestamp_not_required_by_boxed_criterion`
+
+是本部定义的强制边界：
+
+- `SemanticTargetLaunderingAt` 不得增加原判词与修订判词不等前件；
+- `SemanticTargetLaunderingAt` 不得增加报告时间戳等于冻结时刻前件；
+- 时间戳等式只属于 `SemanticSketchTargetLaunderingAt`；
+- 任一新增义务若排除上述两个冻结见证，即为 statement-revise，而不是证明失败。
+
+旧轮结算守恒仍由既有冻结的目标变更—结算守恒定理承担。`SemanticRegrade` 是一份带来源的重评对象，不修改原承诺、原报告或原结算值。
+
+### 57.5.2 输运侧的直接复用
+
+57.3 不重声明 `TransportCert`、`TransportReport` 或 `TransportSemantics`。`TransportSemanticFrame` 只为既有预测字段提供运行结果解释，`toLegacy` 是回到原 Prop 级接口的唯一出口。
+
+既有冻结定理
+
+`receipt_matches_original_coordinates`
+
+继续唯一承担收据对原记录、原域、版本、误差与主张地址的锁定。57.3 的 `receiptBound` 不得用一组较弱的字段等式替换该收据谓词。
+
+既有冻结定理
+
+`valid_transport_cert_criterion`
+
+继续唯一承担原 `ValidTransportCert` 的公开合取展开。57.3-C 的目标是证明类型化证书经遗忘后恰为该谓词；不得把 `SemanticTransportCertificate` 的字段再平铺成另一个永久有效性定义并让下游自行选择。
+
+既有冻结定理
+
+`valid_transport_cert_fails_if_any_clause_fails`
+
+可直接用于证明：收据、条件输运、全定义或失败—反驳见证任一缺失时，57.3-C 右侧不成立，因而左侧也不成立。本部不重证四项删除失败律。
+
+既有冻结定理
+
+`falsifiable_prediction_failure_is_not_const_false`
+
+继续排除冻结载体中恒假失败谓词。57.3 的类型化失败见证提供更细的运行结果，但不把该非退化定理改写成新的全局存在公理。
+
+既有冻结定理
+
+`overreach_without_license`
+
+继续唯一承担许可证、条件保留、越界与扩域重开的组合结论。57.3-D—57.3-E 只给出新语义层的收口与遗忘桥，不复制该组合包。
+
+既有冻结定理
+
+`domain_expansion_reopens_completion`
+
+继续提供“旧域闭合不推出扩域闭合”的有限反例。故 `SemanticStrictSubset` 不能被弱化为普通包含，`OverreachClosure` 也不能从旧域局部闭合自动构造。
+
+### 57.5.3 与第 56 部十二条义务的正交关系
+
+第 56 部的十二条义务已经由 Lean 内核结案，本部不得重复：
+
+1. 56.2-A—56.2-D 的有限 Pareto 商只在某个具体输运域被实例化为有限 Pareto 类像时可直接引用；57.3 的一般域语义不要求该实例。
+2. 56.3-A—56.3-C 的 `Stop` 指称、有限检查器与非退化见证和本部两条拒因正交；57.x 不从洗白或越界推出新的停止定理。
+3. 56.4-A—56.4-E 的有限时域投影、限制律与 `ExpansionEscape` 实例可在 `Domain` 取有限时域时直接引用；本部不重证投影核反单调或预测逃逸等价。
+4. `ExpansionEscape` 仍是扩展读数暴露旧核盲点的唯一既有接口；`SemanticNewOnly` 描述的是输运域差点，不得冒充预测核逃逸，二者只有在具体实例给出桥时才能连接。
+
+因此，第 56 部全部十二条义务继续保持已证状态，第 55 部开放问题继续保持 open；本部不借两条新语义闭合结算任何未列出的父问题。
+
+### 57.5.4 唯一真源纪律
+
+入库实现必须遵守以下单源规则：
+
+- 已有冻结载体存在时，只增加 `RegradeSemantics` 或 `TransportSemanticFrame` 的解释器实例，不复制载体；
+- 已有冻结谓词存在时，只证明 57.2-C、57.2-D、57.3-C、57.3-E 一类双向桥，不另造供下游选择的同义谓词；
+- 坐标见证束只索引既有 `ProtectedCoordinates`，不保存第二份坐标值；
+- 失败与反驳见证只解释既有证书中的 `falsifiablePrediction`，不允许替换预测；
+- `OverreachClosure` 只由带同一报告、同一主张版本和精确保留条件的许可证对象构造；
+- 正文级严格到达与草图级冻结可见保持两个名字，除非显式持有 `RegradeTemporalBridge`；
+- 不从本部推出统计泛化、外部有效性、因果输运、显著性、最优停止或跨问题迁移结论。
+
+本部的结案范围精确为：
+
+$\boxed{\text{保护坐标变化有封闭见证，重评有双评价语义，输运失败与反驳绑定同一次运行，越界由同一有效证书闭合。}}$
+
+除此之外均不在 v1.5 的证明承诺内。
+
+---
+
+# 追加账本增订
+
+## v1.5 — 2026-08-28
+
+追加存入：
+
+- 七个既有保护坐标的有限标签 `ProtectedCoordinateTag`、依值类型 `ProtectedCoordinateValue` 与唯一投影 `protectedCoordinateAt`；
+- 可靠坐标见证束 `CoordinateWitnessBundle`、完备条件 `Closed` 及封闭非空存在谓词；
+- 对既有承诺与报告载体的宇宙多态解释器 `RegradeSemantics`；
+- 同时携带原评价证明并复用报告修订评价证明的 `SemanticRegrade`；
+- 正文级严格到达、草图级冻结可见及显式 `RegradeTemporalBridge`；
+- 不要求判词改变或报告时间戳等于冻结时刻的正文级 `SemanticTargetLaunderingAt`；
+- 保留草图额外时间戳条件的 `SemanticSketchTargetLaunderingAt`；
+- 带正确性证明的 `TargetLaunderingDecision`；
+- 带 `Option` 运行结果、域成员、失败关系与反驳关系的 `TransportSemanticFrame`；
+- 由成员关系定义的新域差与严格扩域；
+- 同一次运行上的 `TransportFailureWitness` 与 `TransportRefutationWitness`；
+- 五项合法性条件组成的 `SemanticTransportCertificate` 及其 Prop 闭包；
+- 精确保留报告条件的 `LicensedSemanticTransportReport`、`OverreachClosure` 与 `SemanticOverreach`；
+- 回降到第 54.3 部 `TransportSemantics`、`ValidTransportCert` 与 `Overreach` 的唯一遗忘映射及双向桥；
+- 五条 57.2 义务与五条 57.3 义务，共十条 elementary 证明目标；
+- 第 56 部十二条已证义务零重证，第 55 部开放问题零结算；
+- 零新增首创声明，零既有段落回写，零第二真源。

@@ -1,0 +1,9 @@
+### 57.1.2 第 54.3-6 条拒因：Prop 级合取没有给出输运运行语义
+
+原判词为：
+
+> “Transport-certificate and overreach closure is not an elementary atom: an honest closure needs broader transport semantics plus failure and refutation witnesses.”
+
+第 54.3 部的 `TransportSemantics` 把以下项目全部留作互不相关的 Prop 级接口：
+
+- `strictSubset`；

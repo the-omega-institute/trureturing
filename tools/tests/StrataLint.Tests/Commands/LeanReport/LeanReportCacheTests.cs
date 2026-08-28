@@ -5,16 +5,9 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-// Contract for the content-addressed canonical-Lean-report cache ported from CI
-// (.github/workflows/ci.yml, key stratalint-canonical-lean-report-v1-<address>)
-// into the local run path. The cache is opt-in via STRATALINT_REPORT_CACHE_ROOT
-// (never set in CI) and MUST be fail-closed: a hit is only served after the stored
-// bundle re-verifies against the current tree; any anomaly evicts and reproduces.
-//
-// These tests never touch Mathlib, the real Lean slot, or the real report
-// supervisor (the #452 tar pit). They drive the real lean-report-pair.sh and the
-// real lean-report-input.sh against a stub producer + stub supervisor so the cache
-// logic is exercised in isolation and in well under a second.
+// Contract for the opt-in content-addressed report cache. Hits re-verify against
+// the current tree; anomalies evict and reproduce. Stubs drive the real cache and
+// input scripts without Mathlib, the Lean slot, or the report supervisor.
 public sealed class LeanReportCacheTests
 {
     private const string RawReportPath = "tools/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
@@ -34,6 +27,8 @@ public sealed class LeanReportCacheTests
         var address = world.AddressFrom(first);
         Assert.Matches("^[0-9a-f]{64}$", address);
         Assert.True(Directory.Exists(Path.Combine(world.CacheRoot, address)));
+        Assert.False(Directory.Exists(Path.Combine(
+            world.CacheRoot, address, "raw-lean-report.json.logs")));
 
         var second = world.RunPair();
         Assert.Equal(0, second.ExitCode);
@@ -47,6 +42,115 @@ public sealed class LeanReportCacheTests
         Assert.Contains(
             "\"mode\":\"cached\"",
             File.ReadAllText(world.Output + ".provenance.json"),
+            StringComparison.Ordinal);
+        Assert.False(Directory.Exists(world.Output + ".logs"));
+    }
+
+    [Fact]
+    public void ExactCacheEntryWithLegacyLogsFailsClosedAndIsReproduced()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var world = new CacheWorld();
+        var first = world.RunPair();
+        Assert.Equal(0, first.ExitCode);
+        var address = world.AddressFrom(first);
+        world.AddLegacyLogsToCacheEntry(address);
+
+        var second = world.RunPair();
+
+        Assert.Equal(0, second.ExitCode);
+        Assert.Equal(2, world.ProducerRunCount);
+        Assert.Equal("produced", world.LiveMode());
+        Assert.False(world.CacheEntryHasLogs(address));
+    }
+
+    [Fact]
+    public void ExactCacheEntryWithDanglingLogsSymlinkFailsClosedAndIsReproduced()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var world = new CacheWorld();
+        var first = world.RunPair();
+        Assert.Equal(0, first.ExitCode);
+        var address = world.AddressFrom(first);
+        world.AddDanglingLogsSymlinkToCacheEntry(address);
+
+        var second = world.RunPair();
+
+        Assert.Equal(0, second.ExitCode);
+        Assert.Equal(2, world.ProducerRunCount);
+        Assert.Equal("produced", world.LiveMode());
+        Assert.False(world.CacheEntryHasLogs(address));
+    }
+
+    [Fact]
+    public void ProducedBundleWithLogsPassesVerificationAndPublishesLiveLogs()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var world = new CacheWorld();
+
+        var result = world.RunPair(cacheEnabled: false);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal("produced", world.LiveMode());
+        Assert.True(world.LiveLogsExist());
+    }
+
+    [Fact]
+    public void ProducedBundleWithoutLogsFailsClosedBeforePublication()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var world = new CacheWorld();
+
+        var result = world.RunPair(cacheEnabled: false, omitProducerLogs: true);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Equal(1, world.ProducerRunCount);
+        Assert.False(world.LiveBundleExists());
+    }
+
+    [Fact]
+    public void ProducedBundleWithLogFileFailsClosedBeforePublication()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var world = new CacheWorld();
+
+        var result = world.RunPair(cacheEnabled: false, producerLogsAsFile: true);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Equal(1, world.ProducerRunCount);
+        Assert.False(world.LiveBundleExists());
+    }
+
+    [Fact]
+    public void ProducedBundleWithEmptyLogsDirectoryFailsClosedBeforePublication()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var world = new CacheWorld();
+
+        var result = world.RunPair(cacheEnabled: false, emptyProducerLogs: true);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Equal(1, world.ProducerRunCount);
+        Assert.False(world.LiveBundleExists());
+    }
+
+    [Fact]
+    public void CachedBundleWithLogsInjectedAfterRestoreFailsClosedBeforePublication()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var world = new CacheWorld();
+        var first = world.RunPair();
+        Assert.Equal(0, first.ExitCode);
+        var prior = world.SnapshotLiveBundle();
+
+        var second = world.RunPair(injectCachedLogs: true);
+
+        Assert.NotEqual(0, second.ExitCode);
+        Assert.Equal(1, world.ProducerRunCount);
+        Assert.Equal(prior, world.SnapshotLiveBundle());
+        Assert.Contains(
+            "cached bundle contains producer logs",
+            Encoding.UTF8.GetString(second.StandardError),
             StringComparison.Ordinal);
     }
 
@@ -339,6 +443,10 @@ public sealed class LeanReportCacheTests
         internal ProcessOutput RunPair(
             bool cacheEnabled = true,
             bool producerFails = false,
+            bool omitProducerLogs = false,
+            bool producerLogsAsFile = false,
+            bool emptyProducerLogs = false,
+            bool injectCachedLogs = false,
             string? failureStage = null,
             int reportVersion = 1)
         {
@@ -354,6 +462,10 @@ public sealed class LeanReportCacheTests
             arguments.Add($"STUB_PRODUCER_LOG={ProducerLog}");
             arguments.Add($"STUB_REPORT_CONTENT={{\"schema\":\"stub-lean-report\",\"v\":{reportVersion}}}");
             if (producerFails || failureStage == "producer") arguments.Add("STUB_PRODUCER_FAIL=1");
+            if (omitProducerLogs) arguments.Add("STUB_OMIT_LOGS=1");
+            if (producerLogsAsFile) arguments.Add("STUB_LOGS_AS_FILE=1");
+            if (emptyProducerLogs) arguments.Add("STUB_EMPTY_LOGS=1");
+            if (injectCachedLogs) arguments.Add("STUB_INJECT_CACHED_LOGS=1");
             if (failureStage == "supervisor") arguments.Add("STUB_SUPERVISOR_FAIL=1");
             if (failureStage == "verification") arguments.Add("STUB_BAD_SHA=1");
             if (failureStage == "sidecar") arguments.Add("STUB_SIDECAR_FAIL=1");
@@ -377,6 +489,47 @@ public sealed class LeanReportCacheTests
                 Repo,
                 TestBudgets.WorkflowProcessHangGuard,
                 1024 * 1024);
+        }
+
+        internal void AddLegacyLogsToCacheEntry(string address)
+        {
+            var logs = Path.Combine(CacheRoot, address, "raw-lean-report.json.logs");
+            Directory.CreateDirectory(logs);
+            File.WriteAllText(Path.Combine(logs, "producer.log"), "legacy\n");
+        }
+
+        internal void AddDanglingLogsSymlinkToCacheEntry(string address)
+        {
+            var entry = Path.Combine(CacheRoot, address);
+            File.CreateSymbolicLink(
+                Path.Combine(entry, "raw-lean-report.json.logs"),
+                Path.Combine(entry, "missing-producer-logs"));
+        }
+
+        internal bool CacheEntryHasLogs(string address)
+        {
+            var logs = Path.Combine(CacheRoot, address, "raw-lean-report.json.logs");
+            if (Directory.Exists(logs) || File.Exists(logs)) return true;
+            try
+            {
+                return (File.GetAttributes(logs) & FileAttributes.ReparsePoint) != 0;
+            }
+            catch (FileNotFoundException)
+            {
+                return false;
+            }
+        }
+
+        internal bool LiveLogsExist() => Directory.Exists(Output + ".logs")
+            && Directory.EnumerateFiles(Output + ".logs", "*", SearchOption.AllDirectories).Any();
+
+        internal bool LiveBundleExists() => File.Exists(Output);
+
+        internal string LiveMode()
+        {
+            using var provenance = System.Text.Json.JsonDocument.Parse(
+                File.ReadAllText(Output + ".provenance.json"));
+            return provenance.RootElement.GetProperty("mode").GetString()!;
         }
 
         internal string[] SnapshotLiveBundle()
@@ -481,8 +634,14 @@ public sealed class LeanReportCacheTests
             if [[ -n "${STUB_BAD_SHA:-}" ]]; then h="$(printf '0%.0s' {1..64})"; fi
             printf '%s  %s\n' "$h" "$(basename "$output")" > "${output}.sha256"
             rm -rf -- "${output}.logs"
-            mkdir -p "${output}.logs"
-            printf '%s\n' "$STUB_REPORT_CONTENT" > "${output}.logs/producer.log"
+            if [[ -n "${STUB_LOGS_AS_FILE:-}" ]]; then
+              printf '%s\n' "$STUB_REPORT_CONTENT" > "${output}.logs"
+            elif [[ -z "${STUB_OMIT_LOGS:-}" ]]; then
+              mkdir -p "${output}.logs"
+              if [[ -z "${STUB_EMPTY_LOGS:-}" ]]; then
+                printf '%s\n' "$STUB_REPORT_CONTENT" > "${output}.logs/producer.log"
+              fi
+            fi
             if [[ -n "${STUB_SIDECAR_FAIL:-}" ]]; then
               mkdir "${output}.provenance.json"
             fi
@@ -514,7 +673,15 @@ public sealed class LeanReportCacheTests
                 fi
               done
             fi
-            exec /bin/cp "$@"
+            source="${1:-}"
+            destination="${@: -1}"
+            /bin/cp "$@"
+            if [[ -n "${STUB_INJECT_CACHED_LOGS:-}" \
+              && "$source" == "$STUB_CACHE_ROOT/"* \
+              && "$destination" == */raw-lean-report.json ]]; then
+              mkdir -p "${destination}.logs"
+              printf '%s\n' 'injected cached log' > "${destination}.logs/producer.log"
+            fi
             """;
     }
 }

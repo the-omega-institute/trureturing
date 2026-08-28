@@ -1,0 +1,17 @@
+ast_path: 定理/69.2/clause/1
+fingerprints:
+  raw_sha256: sha256:807af71aa8054f17eb7868b879fb01c07abcadfe51c7e470b16135797fa028bb
+  normalized_sha256: sha256:807af71aa8054f17eb7868b879fb01c07abcadfe51c7e470b16135797fa028bb
+cas_ref: sha256:807af71aa8054f17eb7868b879fb01c07abcadfe51c7e470b16135797fa028bb
+coverage_gids:
+  - D5/S3/Entropy/Observation/AuthorInformationDecomposition.author_information_decomposition
+receipts:
+  coverage:
+    - gid: D5/S3/Entropy/Observation/AuthorInformationDecomposition.author_information_decomposition
+      source_sha256: sha256:807af71aa8054f17eb7868b879fb01c07abcadfe51c7e470b16135797fa028bb
+      target_statement_id: sha256:3e5d5c41d32ceb24deacbd9b6cf268664c333af3e8d99532af994a60dfb5312a
+  scribe:
+    - gid: D5/S3/Entropy/Observation/AuthorInformationDecomposition.author_information_decomposition
+      definition_sha256: sha256:2b6b7174abec92a89a95ee9ba954f19774a8f42ca376ef3ee84c1683edd0779e
+      emission_sha256: sha256:b7520c03ec30c040316719e61f6937d77f3cdc07088862bc6ff11e5eaf052d97
+  unresolved_subitems: []

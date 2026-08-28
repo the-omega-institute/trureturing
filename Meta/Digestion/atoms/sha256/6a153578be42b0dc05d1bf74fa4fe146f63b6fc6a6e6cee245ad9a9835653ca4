@@ -1,0 +1,61 @@
+### 57.3.5 报告许可证、越界闭包与越界判据
+
+```lean
+structure LicensedSemanticTransportReport
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult)
+    (report : TransportReport Claim Domain)
+    (J : Domain) where
+  cert : TransportCert TruthReceipt NewDomainPrediction
+  valid :
+    ValidSemanticTransportCert S cert report.claim J report.reportedDomain
+      (S.claimVersion report.claim)
+  conditionExact :
+    report.condition ↔
+      cert.givenPremises ∧ cert.transportAssumption
+```
+
+`LicensedSemanticTransportReport` 要求报告携带同一主张、原域、报告域与主张版本上的有效证书，并精确保留证书前件。无条件报告只有在两项前件均成立时才能获得许可证；把报告条件弱化为真、遗漏一项前件或使用其他版本证书均不能构造该结构。
+
+```lean
+def OverreachClosure
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult)
+    (report : TransportReport Claim Domain)
+    (J : Domain) : Prop :=
+  Nonempty (LicensedSemanticTransportReport S report J)
+```
+
+`OverreachClosure` 是越界指控的正向收口证书：存在一个合法报告对象。它不接受外部布尔门，也不允许只证明“某个证书大致有效”而不证明报告条件精确对应其前件。
+
+```lean
+def SemanticOverreach
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult)
+    (report : TransportReport Claim Domain)
+    (J : Domain) : Prop :=
+  SemanticStrictSubset S J report.reportedDomain ∧
+    S.claimScope report.claim = J ∧
+    ¬ OverreachClosure S report J
+```
+
+`SemanticOverreach` 恰表示：报告严格扩张原主张范围、主张原范围确为 `J`，且不存在合法输运报告对象。严格扩域本身不自动构成许可证；局部闭合也不自动输运到新域。反之，一旦 `OverreachClosure` 成立，同一报告便不再满足该越界谓词。
+
+```lean
+end D5.S3.ConceptDynamics.DefinitionEscape.Adjudication
+```
+
+---
+

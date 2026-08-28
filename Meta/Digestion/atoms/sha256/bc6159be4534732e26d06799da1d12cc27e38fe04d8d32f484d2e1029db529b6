@@ -1,0 +1,9 @@
+**证明义务 57.3-C（类型化证书与原有效性谓词的精确等价，预期为定理）。** 对任意 `S cert claim J J' version` 证明
+
+```lean
+ValidSemanticTransportCert S cert claim J J' version ↔
+  ValidTransportCert S.toLegacy cert claim J J' version
+```
+
+从右到左合并 `SemanticPredictionFails` 与 `SemanticRefutes` 的结果时，只可利用二者都等于同一次 `run` 的 `some` 值；不得假设 `DecidableEq PredictionResult`，也不得另加结果唯一性公理。
+
