@@ -1,0 +1,17 @@
+ast_path: 定理/68.1/clause/1
+fingerprints:
+  raw_sha256: sha256:2e20a4f1d9a5c9f2d03f6681ec527c08f7b7df25e19988bdc73e1764c93a947e
+  normalized_sha256: sha256:2e20a4f1d9a5c9f2d03f6681ec527c08f7b7df25e19988bdc73e1764c93a947e
+cas_ref: sha256:2e20a4f1d9a5c9f2d03f6681ec527c08f7b7df25e19988bdc73e1764c93a947e
+coverage_gids:
+  - D5/S3/Arith/Lattices/EnergyBoundarySelectionLaw.energy_boundary_selection_law
+receipts:
+  coverage:
+    - gid: D5/S3/Arith/Lattices/EnergyBoundarySelectionLaw.energy_boundary_selection_law
+      source_sha256: sha256:2e20a4f1d9a5c9f2d03f6681ec527c08f7b7df25e19988bdc73e1764c93a947e
+      target_sha256: sha256:31bfe7eeda7fe17e9090abe8856a049e34b32d75148f284eb515f94782730853
+  scribe:
+    - gid: D5/S3/Arith/Lattices/EnergyBoundarySelectionLaw.energy_boundary_selection_law
+      definition_sha256: sha256:5fe3f4c91d909a10f33474e9b14d068e0fbf4c1c67fe094d556de95cc4fff917
+      emission_sha256: sha256:f8c08f583ab8ad928c1429a3021e5352567572db8fd6cc54941ad27ff3338484
+  unresolved_subitems: []
