@@ -127,7 +127,7 @@ internal static class LeanReportCiBaselineScriptContract
         var modules = Path.Combine(temporaryPath, "modules.tsv");
         var plan = Path.Combine(temporaryPath, "plan.json");
         File.WriteAllText(modules, string.Empty, new UTF8Encoding(false));
-        var delta = BoundedProcessRunner.Run(
+        var delta = TestProcessRunner.Run(
             "python3",
             [Path.Combine(TestRepositoryLayout.FindRoot(), "tools/lean-inspector/delta.py"), "plan",
                 temporaryPath, cache, new string('b', 64), Producer, Resident, Config, modules, plan],
@@ -170,7 +170,7 @@ internal static class LeanReportCiBaselineScriptContract
     private static ProcessOutput Run(string bundle, string cache)
     {
         var root = TestRepositoryLayout.FindRoot();
-        return BoundedProcessRunner.Run(
+        return TestProcessRunner.Run(
             Path.Combine(root, ScriptPath),
             ["--bundle", bundle, "--cache-root", cache],
             root,

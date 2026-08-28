@@ -74,7 +74,7 @@ public sealed partial class AdmissionWorkflowTests
 
     private static IReadOnlyDictionary<string, string> Resolve(string resolver, string root)
     {
-        var result = BoundedProcessRunner.Run(
+        var result = TestProcessRunner.Run(
             "/bin/bash",
             [resolver, SourceAddress],
             root,
