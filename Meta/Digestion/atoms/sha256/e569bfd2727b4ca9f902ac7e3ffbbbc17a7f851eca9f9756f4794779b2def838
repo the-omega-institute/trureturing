@@ -1,0 +1,5 @@
+### 57.5.4 唯一真源纪律
+
+入库实现必须遵守以下单源规则：
+
+- 已有冻结载体存在时，只增加 `RegradeSemantics` 或 `TransportSemanticFrame` 的解释器实例，不复制载体；

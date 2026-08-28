@@ -1,0 +1,29 @@
+### 57.1.1 第 54.3-5 条拒因：直接投影不等式不是完整洗白语义
+
+原判词为：
+
+> “Protected-coordinate and target-laundering behavior is not an elementary atom: an honest closure needs a broader semantic regrade and coordinate-witness bundle.”
+
+该拒因指出的不是 `protectedCoordinates` 投影错误，而是源理论只给出了
+
+`protectedCoordinates newK ≠ protectedCoordinates oldK`
+
+这一整体不等式，却缺少使“哪一项保护承诺被改写”成为可审计对象的坐标语义。原结构有七个异型字段；整体不等式只能证明“至少有一项不同”，不能给出：
+
+1. 七个保护字段的有限、穷尽标签；
+2. 每个标签对应的依值字段类型；
+3. 声称发生变化的标签集合；
+4. 集合中每个标签确实变化的可靠性；
+5. 所有实际变化标签均被登记的封闭性。
+
+因此必须增加坐标见证束。该见证束不是保护坐标的第二份副本；它只保存标签集合及其正确性证明，字段值仍唯一来自既有 `ProtectedCoordinates`。
+
+原 `RegradeReport` 还只携带修订承诺对旧证据给出的实际判词。它证明
+
+`report.regradedVerdict = evaluate report.revised report.evidence`
+
+却没有同时把原承诺对同一证据的判词放入一个有类型语义对象。若没有这一半，所谓“重评”仍只是单次新评价加若干外部等式，而不是同一证据、原承诺、修订承诺之间的语义关系。
+
+同时，源理论中存在两种不可静默混同的时间口径：
+
+- 正文口径要求证据严格先于修订承诺的冻结时刻到达；

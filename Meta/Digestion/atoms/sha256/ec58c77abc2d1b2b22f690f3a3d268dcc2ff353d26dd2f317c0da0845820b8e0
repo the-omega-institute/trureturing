@@ -1,0 +1,41 @@
+### 57.3.3 失败见证与反驳见证
+
+```lean
+structure TransportFailureWitness
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult)
+    (prediction : NewDomainPrediction)
+    (J J' : Domain) where
+  evidence : NewEvidence
+  newOnly : SemanticNewOnly S evidence J J'
+  result : PredictionResult
+  observed : S.run prediction evidence = some result
+  failed : S.fails prediction evidence result
+```
+
+`TransportFailureWitness` 保存新域差点、实际运行结果与失败证明。它排除“在一个点有定义、在另一个点失败”或“只宣称存在失败但不展示运行结果”的弱化解释。
+
+```lean
+structure TransportRefutationWitness
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult)
+    (cert : TransportCert TruthReceipt NewDomainPrediction)
+    (claim : Claim)
+    (J J' : Domain) where
+  failure :
+    TransportFailureWitness S cert.falsifiablePrediction J J'
+  refutesClaim :
+    S.refutes cert.falsifiablePrediction
+      failure.evidence failure.result claim
+```
+
+`TransportRefutationWitness` 在同一个失败见证及同一个运行结果上追加对被输运主张的反驳。失败与反驳因此既可分别读取，又不能由两个无关结果拼接。
+

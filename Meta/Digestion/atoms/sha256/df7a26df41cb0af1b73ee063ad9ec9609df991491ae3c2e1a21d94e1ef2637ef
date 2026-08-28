@@ -1,0 +1,10 @@
+**证明义务 57.2-D（草图口径与正文口径的精确桥，预期为定理）。** 对任意 `bridge : RegradeTemporalBridge S`，证明
+
+```lean
+SemanticSketchTargetLaunderingAt S oldK newK Z regrade ↔
+  SemanticTargetLaunderingAt S oldK newK Z regrade ∧
+    S.reportOccurredAt regrade.report = S.freezeTime newK
+```
+
+没有 `bridge` 时不得提供该等价式；特别地，不得只凭滤过单调或事件时钟单调省略桥前件。
+

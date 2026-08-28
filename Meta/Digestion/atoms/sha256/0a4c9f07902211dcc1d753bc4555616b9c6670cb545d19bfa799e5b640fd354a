@@ -1,0 +1,11 @@
+**证明义务 57.3-D（越界收口判据，预期为定理）。** 对任意 `S report J`，在给定严格扩域和原范围等式时证明
+
+```lean
+SemanticStrictSubset S J report.reportedDomain →
+S.claimScope report.claim = J →
+  (SemanticOverreach S report J ↔
+    ¬ OverreachClosure S report J)
+```
+
+该式是越界的方向化收口准则，不使用双重否定消去，不要求 `OverreachClosure` 可判。
+
