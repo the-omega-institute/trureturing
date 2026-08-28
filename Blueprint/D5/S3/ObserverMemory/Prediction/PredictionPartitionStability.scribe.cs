@@ -54,6 +54,7 @@ internal sealed class PredictionPartitionStabilityDocument : IScribeDocumentDefi
     {
         Formula stateType = F.Id("Y");
         Formula outputType = F.Id("O");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
         Formula y = F.Id("y");
         Formula yPrime = Seq(F.Id("y"), Apos);
         Formula depth = F.Id("m");
@@ -71,7 +72,7 @@ internal sealed class PredictionPartitionStabilityDocument : IScribeDocumentDefi
             Word(Seq(depth, Plus, offset), yPrime));
 
         return Disp(Seq(
-            Forall, Sp, stateType, Comma, Sp, outputType, Comma, Esc,
+            Forall, Sp, stateType, Comma, Sp, outputType, Colon, Sp, type, Comma, Esc,
             F.Id("F"), Colon, Sp, stateType, Sp, To, Sp, stateType,
             Comma, Sp, F.Id("q"), Colon, Sp, stateType, Sp, To, Sp,
             outputType, Comma, Sp, depth, InMacro, Sp,
