@@ -63,8 +63,18 @@ internal sealed class AnchoredFlowEquivalenceDocument : IScribeDocumentDefinitio
     private static Formula Apply2(Formula function, Formula first, Formula second) =>
         Apply(Apply(function, first), second);
 
+    private static Formula Typeclass(string name, Formula argument) =>
+        Seq(OpenBracket, Call(name, argument), CloseBracket);
+
     private static Formula AnchoredEquivalenceFormula()
     {
+        Formula carrierX = F.Id("X");
+        Formula carrierY = F.Id("Y");
+        Formula readoutType = F.Id("Q");
+        Formula valueType = F.Id("V");
+        Formula ledgerType = F.Id("L");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula real = Seq(Mathbb, Grp(F.Id("R")));
         Formula a = F.Id("A");
         Formula b = F.Id("B");
         Formula h = F.Id("h");
@@ -85,30 +95,51 @@ internal sealed class AnchoredFlowEquivalenceDocument : IScribeDocumentDefinitio
         Formula gx = Apply(g, x);
 
         return Disp(Seq(
+            Begin, Grp(F.Id("gathered")),
+            Forall, Sp, carrierX, Comma, Sp, carrierY, Comma, Sp,
+            readoutType, Comma, Sp, valueType, Comma, Sp, ledgerType,
+            Colon, Sp, type, Comma, RowBreak, Grp(),
+            Typeclass("TopologicalSpace", carrierX), Comma, Sp,
+            Typeclass("CompactSpace", carrierX), Comma, Sp,
+            Typeclass("ConnectedSpace", carrierX), Comma, Sp,
+            Typeclass("T2Space", carrierX), Comma, RowBreak, Grp(),
+            Typeclass("TopologicalSpace", carrierY), Comma, Sp,
+            Typeclass("CompactSpace", carrierY), Comma, Sp,
+            Typeclass("ConnectedSpace", carrierY), Comma, Sp,
+            Typeclass("T2Space", carrierY), Comma, RowBreak, Grp(),
+            Typeclass("AddCommMonoid", valueType), Comma, RowBreak, Grp(),
+            a, Colon, Sp, Call("AnchoredFlow", carrierX, readoutType, valueType, ledgerType),
+            Comma, Sp,
+            b, Colon, Sp, Call("AnchoredFlow", carrierY, readoutType, valueType, ledgerType),
+            Comma, RowBreak, Grp(),
             b, Sp, InMacro, Sp, Call("observerIdentity", a), Sp, Iff, Sp,
             Open, Exists, Sp, h, Colon, Sp,
-            Call("Homeomorph", F.Id("X"), F.Id("Y")), Comma, Esc,
+            Call("Homeomorph", carrierX, carrierY), Comma, Esc,
             Apply(h, anchorA), Sp, Eq, Sp, anchorB, Sp, Land, RowBreak,
-            Open, Forall, Sp, t, Comma, Sp, x, Comma, Sp,
+            Open, Forall, Sp, t, Colon, Sp, real, Comma, Sp,
+            x, Colon, Sp, carrierX, Comma, Sp,
             Apply(h, Apply2(flowA, t, x)), Sp, Eq, Sp,
             Apply2(flowB, t, hx), Close, Sp, Land, RowBreak,
             readoutB, Sp, Circ, Sp, h, Sp, Eq, Sp, readoutA, Sp, Land, RowBreak,
-            Open, Forall, Sp, t, Comma, Sp, x, Comma, Sp,
+            Open, Forall, Sp, t, Colon, Sp, real, Comma, Sp,
+            x, Colon, Sp, carrierX, Comma, Sp,
             Apply2(cocycleB, t, hx), Sp, Eq, Sp,
             Apply2(cocycleA, t, x), Close, Sp, Land, RowBreak,
             ledgerB, Sp, Circ, Sp, h, Sp, Eq, Sp, ledgerA, Close, Sp, Land, RowBreak,
             Open, Forall, Sp, g, Colon, Sp,
-            Call("Homeomorph", F.Id("X"), F.Id("X")), Comma, Esc,
+            Call("Homeomorph", carrierX, carrierX), Comma, Esc,
             Open, Apply(g, anchorA), Sp, Eq, Sp, anchorA, Sp, Land, Sp,
-            Open, Forall, Sp, t, Comma, Sp, x, Comma, Sp,
+            Open, Forall, Sp, t, Colon, Sp, real, Comma, Sp,
+            x, Colon, Sp, carrierX, Comma, Sp,
             Apply(g, Apply2(flowA, t, x)), Sp, Eq, Sp,
             Apply2(flowA, t, gx), Close, Sp, Land, RowBreak,
             readoutA, Sp, Circ, Sp, g, Sp, Eq, Sp, readoutA, Sp, Land, Sp,
-            Open, Forall, Sp, t, Comma, Sp, x, Comma, Sp,
+            Open, Forall, Sp, t, Colon, Sp, real, Comma, Sp,
+            x, Colon, Sp, carrierX, Comma, Sp,
             Apply2(cocycleA, t, gx), Sp, Eq, Sp,
             Apply2(cocycleA, t, x), Close, Sp, Land, Sp,
             ledgerA, Sp, Circ, Sp, g, Sp, Eq, Sp, ledgerA, Close,
             Sp, Rightarrow, Sp, Apply(g, anchorA), Sp, Eq, Sp, anchorA,
-            Close, Dot));
+            Close, Dot, End, Grp(F.Id("gathered"))));
     }
 }
