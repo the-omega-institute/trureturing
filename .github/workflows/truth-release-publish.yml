@@ -22,7 +22,7 @@ concurrency:
 jobs:
   produce:
     name: produce verified truth-release inputs
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
     timeout-minutes: 150
     permissions:
       contents: read
@@ -315,7 +315,7 @@ jobs:
     name: publish persistent verified truth-release
     needs: produce
     if: needs.produce.outputs.publish_ready == 'true'
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
       contents: write
