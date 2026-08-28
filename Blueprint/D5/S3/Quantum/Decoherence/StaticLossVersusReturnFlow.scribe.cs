@@ -30,6 +30,8 @@ internal sealed class StaticLossVersusReturnFlowDocument : IScribeDocumentDefini
         Formula matrix = F.Id("X");
         Formula projection = F.Id("D");
         Formula dynamics = F.Id("T");
+        Formula matrixType = F.Id("QubitMatrix");
+        Formula dynamicsType = F.Id("Dynamics");
         Formula diagonal = F.Seq(F.Operatorname, F.Grp(F.Id("diag")));
         Formula staticLoss = StaticLoss(projection, matrix);
         Formula returnFlow = ReturnFlow(projection, dynamics, matrix);
@@ -90,14 +92,18 @@ internal sealed class StaticLossVersusReturnFlowDocument : IScribeDocumentDefini
                             + "static_loss_and_return_flow_are_logically_independent"),
                     H("Static loss and return flow are logically independent"),
                     StatementSource.FromAuthor(F.Disp(F.Seq(
-                        F.Open, F.Neg, F.Forall, F.Sp, matrix, F.Comma, F.Sp,
-                        projection, F.Comma, F.Sp, dynamics, F.Comma, F.Sp,
+                        F.Open, F.Neg, F.Forall, F.Sp,
+                        matrix, F.Colon, F.Sp, matrixType, F.Comma, F.Sp,
+                        projection, F.Comma, F.Sp, dynamics,
+                        F.Colon, F.Sp, dynamicsType, F.Comma, F.Sp,
                         projection, F.Sp, F.Eq, F.Sp, diagonal, F.Sp,
                         F.Rightarrow, F.Sp, F.D(1), F.Sp, F.Leq, F.Sp, staticLoss,
                         F.Sp, F.Rightarrow, F.Sp, returnFlow, F.Sp, F.Neq, F.Sp,
                         F.D(0), F.Close, F.Sp, F.Land, F.Sp,
-                        F.Open, F.Neg, F.Forall, F.Sp, matrix, F.Comma, F.Sp,
-                        projection, F.Comma, F.Sp, dynamics, F.Comma, F.Sp,
+                        F.Open, F.Neg, F.Forall, F.Sp,
+                        matrix, F.Colon, F.Sp, matrixType, F.Comma, F.Sp,
+                        projection, F.Comma, F.Sp, dynamics,
+                        F.Colon, F.Sp, dynamicsType, F.Comma, F.Sp,
                         projection, F.Sp, F.Eq, F.Sp, diagonal, F.Sp,
                         F.Rightarrow, F.Sp, returnFlow, F.Sp, F.Neq, F.Sp,
                         F.D(0), F.Sp, F.Rightarrow, F.Sp, F.D(1), F.Sp,
