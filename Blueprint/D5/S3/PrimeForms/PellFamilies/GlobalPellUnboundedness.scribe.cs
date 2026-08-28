@@ -75,7 +75,7 @@ internal sealed class GlobalPellUnboundednessDocument : IScribeDocumentDefinitio
             Exists, Sp, time, Sp, InMacro, Sp, naturals, Comma, Sp,
             Exists, Sp, coordinate, Sp, InMacro, Sp, finTwo, Comma, Sp,
             bound, Sp, Lt, Sp,
-            Seq(pellOrbit, Underscore, Grp(time), Underscore, Grp(coordinate)), Dot));
+            Seq(Grp(pellOrbit, Underscore, Grp(time)), Underscore, Grp(coordinate)), Dot));
     }
 
     private static Formula UnitOneFormula()
@@ -98,13 +98,13 @@ internal sealed class GlobalPellUnboundednessDocument : IScribeDocumentDefinitio
         Formula concreteOrbit = Call("PellOrbit", D(3), D(2), D(1),
             Seq(Open, D(1), Comma, Sp, D(0), Close));
         Formula reducedValue = Call("mod",
-            Seq(orbit, Underscore, Grp(time), Underscore, Grp(coordinate)),
+            Seq(Grp(orbit, Underscore, Grp(time)), Underscore, Grp(coordinate)),
             modulus);
         Formula periodicity = Seq(
             Forall, Sp, time, Sp, InMacro, Sp, naturals, Comma, Sp,
             Forall, Sp, coordinate, Sp, InMacro, Sp, Call("Fin", D(2)), Comma, Sp,
             Call("mod",
-                Seq(orbit, Underscore, Grp(Seq(time, Sp, Plus, Sp, period)),
+                Seq(Grp(orbit, Underscore, Grp(Seq(time, Sp, Plus, Sp, period))),
                     Underscore, Grp(coordinate)), modulus),
             Sp, Eq, Sp, reducedValue);
         return Disp(Seq(
