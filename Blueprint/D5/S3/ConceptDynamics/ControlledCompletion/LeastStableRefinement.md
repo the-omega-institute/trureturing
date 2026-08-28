@@ -6,7 +6,7 @@ Action-word completion is the least interface stable under every generating acti
 
 **Theorem 1.1 (Controlled completion is the least stable refinement).**
 
-$$\forall X \in \operatorname{Type}, A \in \operatorname{Type}, U \in \operatorname{Type}, B \in \operatorname{Type}, q \in X \to A, intervene \in U \to \left(X \to X\right), candidate \in X \to B,\; \operatorname{Refines}\left(q, \operatorname{DynClosure}\left(q, intervene\right)\right) \land \left(\operatorname{InterventionClosed}\left(\operatorname{DynClosure}\left(q, intervene\right), intervene\right) \land \left(\left(\operatorname{Refines}\left(q, candidate\right) \land \operatorname{InterventionClosed}\left(candidate, intervene\right)\right) \Rightarrow \operatorname{Refines}\left(\operatorname{DynClosure}\left(q, intervene\right), candidate\right)\right)\right)$$
+$$\forall X \in \operatorname{Type}, A \in \operatorname{Type}, U \in \operatorname{Type}, q \in X \to A, intervene \in U \to \left(X \to X\right),\; \operatorname{Refines}\left(q, \operatorname{DynClosure}\left(q, intervene\right)\right) \land \left(\operatorname{InterventionClosed}\left(\operatorname{DynClosure}\left(q, intervene\right), intervene\right) \land \left(\forall B \in \operatorname{Type}, candidate \in X \to B,\; \left(\operatorname{Refines}\left(q, candidate\right) \land \operatorname{InterventionClosed}\left(candidate, intervene\right)\right) \Rightarrow \operatorname{Refines}\left(\operatorname{DynClosure}\left(q, intervene\right), candidate\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ControlledCompletion/LeastStableRefinement.controlled_completion_is_least_stable_refinement` (`✓ std3`). ∎
 

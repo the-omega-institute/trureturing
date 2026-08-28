@@ -38,10 +38,46 @@ internal sealed class CanonicalCompletionIdempotenceDocument : IScribeDocumentDe
 
     private static Formula IdempotenceFormula()
     {
-        Formula q = F.Id("q");
-        Formula completed = Call("C", q);
-        Formula second = Call("C", completed);
+        Formula state = F.Id("Y");
+        Formula output = F.Id("O");
+        Formula update = F.Id("update");
+        Formula readout = F.Id("readout");
+        Formula identity = F.Id("id");
+        Formula secondRelation = Call("secondStageRelation", update, readout, identity);
+        Formula completedState = Call("CompletedState", update, readout);
+        Formula conclusion = Seq(
+            Call("Quotient", secondRelation), Sp, Equiv, Sp, completedState);
 
-        return Disp(Seq(second, Sp, Equiv, Sp, completed, Dot));
+        return Disp(new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [
+                Bound("Y", TypeUniverse()),
+                Bound("O", TypeUniverse()),
+                Bound("update", Arrow(state, state)),
+                Bound("readout", Arrow(state, output)),
+            ],
+            Seq(conclusion, Dot)));
     }
+
+    private static Formula TypeUniverse() =>
+        Seq(Operatorname, Grp(F.Id("Type")));
+
+    private static Formula Arrow(Formula domain, Formula codomain) =>
+        new Formula.TypeArrow(domain, codomain);
+
+    private static Formula Call(string name, params Formula[] arguments)
+    {
+        var items = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
+        for (var index = 0; index < arguments.Length; index++)
+        {
+            if (index > 0) items.AddRange([Comma, Sp]);
+            items.Add(arguments[index]);
+        }
+
+        items.Add(Close);
+        return Seq([.. items]);
+    }
+
+    private static Formula.BoundVariable Bound(string name, Formula domain) =>
+        new(FormulaIdentifier.Create(name), domain);
 }

@@ -22,7 +22,20 @@ The quotient equivalence is the pinned Mathlib third isomorphism theorem for set
 
 Repository search found the exact completion factor theorem and the complete-itinerary construction. Pinned Mathlib and Loogle found Setoid.quotientQuotientEquivQuotient, Quotient.map_surjective, Quotient.eq, and Quotient.congrRight; each is applied in the Lean bridge. LeanSearch returned HTTP 404 and no usable result.
 
+**Definition 1.2 (Cascade completion equivalence).**
+
+$$\forall Y \in Type, O \in Type, P \in Type, update \in Y \to Y, fine \in Y \to O, coarse \in Y \to P, forget \in O \to P, hfactor \in coarse = forget \circ fine,\; \operatorname{Quotient}(\operatorname{secondStageRelation}\left(update, fine, forget\right)) \equiv \operatorname{CompletedState}\left(update, coarse\right).$$
+
+*Formalization.* `D5/S3/ObserverMemory/Refinement/CascadeCompletion.cascadeCompletionEquiv` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The canonical equivalence identifies the quotient by the second-stage relation with the completed coarse state, under the factorization of the coarse readout through the fine readout.
+
 ## References
 
+- Truth anchor: `D5/S3/ObserverMemory/Refinement/CascadeCompletion.cascadeCompletionEquiv`
 - Truth anchor: `D5/S3/ObserverMemory/Refinement/CascadeCompletion.cascade_completion`
 - Dependency: [D5/S3/ObserverMemory/Refinement/PredictionCompletion](PredictionCompletion.md)

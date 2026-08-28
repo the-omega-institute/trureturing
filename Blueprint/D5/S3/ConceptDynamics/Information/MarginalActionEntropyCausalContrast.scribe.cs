@@ -52,19 +52,33 @@ internal sealed class MarginalActionEntropyCausalContrastDocument : IScribeDocum
         Formula model = F.Id("f");
         Formula stateLaw = F.Id("mu");
         Formula noiseLaw = F.Id("nu");
-        Formula external = new Formula.Subscript(F.Id("f"), F.Id("ext"));
+        Formula externalModel = new Formula.Subscript(F.Id("f"), F.Id("ext"));
         Formula internalModel = new Formula.Subscript(F.Id("f"), F.Id("int"));
+        Formula external = externalModel;
         Formula intervention = F.Id("J");
+        Formula boolType = F.Id("Bool");
+        Formula boolPair = Seq(boolType, Sp, Times, Sp, boolType);
+        Formula real = Seq(Mathbb, Grp(F.Id("R")));
+        Formula stateFunction = new Formula.TypeArrow(boolPair, real);
+        Formula modelFunction = new Formula.TypeArrow(boolPair, boolType);
+        Formula noiseFunction = new Formula.TypeArrow(boolType, real);
 
         Formula definitions = Seq(
-            state, Sp, Colon, Sp, F.Id("Bool"), Sp, Times, Sp, F.Id("Bool"), Comma, Sp,
+            state, Sp, Colon, Sp, boolPair, Comma, Sp,
+            stateLaw, Sp, Colon, Sp, stateFunction, Comma, Sp,
             Apply(stateLaw, state), Sp, Eq, Sp, new Formula.Fraction(one, four),
             Comma, RowBreak, Grp(),
+            externalModel, Sp, Colon, Sp, modelFunction, Comma, Sp,
+            internalModel, Sp, Colon, Sp, modelFunction, Comma, RowBreak, Grp(),
             Apply(external, state), Sp, Eq, Sp, Call("snd", state), Comma, Sp,
             Apply(internalModel, state), Sp, Eq, Sp, Call("fst", state),
             Comma, RowBreak, Grp(),
+            noiseLaw, Sp, Colon, Sp, noiseFunction, Comma, Sp,
             Apply(noiseLaw, noise), Sp, Eq, Sp, new Formula.Fraction(one, two),
             Comma, RowBreak, Grp(),
+            intervention, Sp, Colon, Sp,
+            new Formula.TypeArrow(Seq(Open, modelFunction, Close),
+                new Formula.TypeArrow(boolType, noiseFunction)), Comma, Sp,
             Apply(intervention, model, bit, output), Sp, Eq, Sp,
             Call("pushforward", Seq(
                 noise, Sp, Mapsto, Sp, Apply(model, Seq(bit, Comma, Sp, noise))),
