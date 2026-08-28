@@ -136,6 +136,53 @@ noncomputable def ramanujanStepWeight (x : ℝ)
   | .advanceExponential => exponentialFlowFactor x
   | .applyScale => scaleJacobianFactor x
 
+-- One path edge observed together with the semantic role of its numeric factor.
+structure RamanujanFactorCertificateEntry where
+  factor : ℝ
+  role : RamanujanFactorRole
+
+noncomputable def ramanujanStepCertificateEntry (x : ℝ)
+    {i j : RamanujanCompletionStage} (step : i ⟶ j) :
+    RamanujanFactorCertificateEntry where
+  factor := ramanujanStepWeight x step
+  role := ramanujanStepRole step
+
+noncomputable def ramanujanPathCertificateEntries (x : ℝ) :
+    ∀ {i j : RamanujanCompletionStage}, Path i j →
+      List RamanujanFactorCertificateEntry
+  | _, _, .nil => []
+  | _, _, .cons path step =>
+      ramanujanPathCertificateEntries x path ++ [ramanujanStepCertificateEntry x step]
+
+-- Data, rather than nested propositions, keeps CAS-A5 one semantic assertion.
+@[ext]
+structure RamanujanCompositionCertificateData where
+  radical : ℝ
+  pathWeight : ℝ
+  factorEntries : List RamanujanFactorCertificateEntry
+  roles : List RamanujanFactorRole
+
+noncomputable def ramanujanCompositionCertificateObservation (x : ℝ) :
+    RamanujanCompositionCertificateData where
+  radical := ramanujanRadical x
+  pathWeight := Path.weight (ramanujanStepWeight x) ramanujanCompletionPath
+  factorEntries := ramanujanPathCertificateEntries x ramanujanCompletionPath
+  roles := ramanujanPathRoles ramanujanCompletionPath
+
+noncomputable def ramanujanCompositionCertificateSpecification (x : ℝ) :
+    RamanujanCompositionCertificateData where
+  radical := Path.weight (ramanujanStepWeight x) ramanujanCompletionPath
+  pathWeight := gaussianMassFactor * exponentialFlowFactor x * scaleJacobianFactor x
+  factorEntries :=
+    [{ factor := gaussianMassFactor, role := .gaussianTotalMass },
+      { factor := exponentialFlowFactor x, role := .exponentialFlow },
+      { factor := scaleJacobianFactor x, role := .scaleJacobian }]
+  roles := [.gaussianTotalMass, .exponentialFlow, .scaleJacobian]
+
+def IsRamanujanStructuralConstantCompositionCertificate (x : ℝ) : Prop :=
+  ramanujanCompositionCertificateObservation x =
+    ramanujanCompositionCertificateSpecification x
+
 theorem connection_coefficient_multiplication :
     (∀ (a b X Y Z : ℝ), IsCoefficientBearingCompletionChain a b X Y Z →
       Z = (a * b) * X ∧
@@ -144,8 +191,8 @@ theorem connection_coefficient_multiplication :
     (∀ (x : ℝ), 0 < x →
       ramanujanRadical x =
         gaussianMassFactor * exponentialFlowFactor x * scaleJacobianFactor x) ∧
-    ramanujanPathRoles ramanujanCompletionPath =
-      [.gaussianTotalMass, .exponentialFlow, .scaleJacobian] := by
+    (∀ (x : ℝ), 0 < x →
+      IsRamanujanStructuralConstantCompositionCertificate x) := by
   fail_if_success rfl
   have hfactor : ∀ (x : ℝ), 0 < x →
       ramanujanRadical x =
@@ -192,8 +239,23 @@ theorem connection_coefficient_multiplication :
         Quiver.Hom.toPath]
     · simp [IsPrimitiveConnectionPath, completionChainPath, completedPath,
         firstCompletionStep, secondCompletionStep]
-  · simp [ramanujanCompletionPath, ramanujanPathRoles, ramanujanStepRole,
-      Quiver.Hom.toPath]
+  · intro x hx
+    change ramanujanCompositionCertificateObservation x =
+      ramanujanCompositionCertificateSpecification x
+    apply RamanujanCompositionCertificateData.ext
+    · simpa [ramanujanCompositionCertificateObservation,
+        ramanujanCompositionCertificateSpecification, ramanujanCompletionPath,
+        ramanujanStepWeight, Quiver.Hom.toPath, Path.weight] using hfactor x hx
+    · simp [ramanujanCompositionCertificateObservation,
+        ramanujanCompositionCertificateSpecification, ramanujanCompletionPath,
+        ramanujanStepWeight, Quiver.Hom.toPath]
+    · simp [ramanujanCompositionCertificateObservation,
+        ramanujanCompositionCertificateSpecification, ramanujanCompletionPath,
+        ramanujanPathCertificateEntries, ramanujanStepCertificateEntry,
+        ramanujanStepWeight, ramanujanStepRole, Quiver.Hom.toPath]
+    · simp [ramanujanCompositionCertificateObservation,
+        ramanujanCompositionCertificateSpecification, ramanujanCompletionPath,
+        ramanujanPathRoles, ramanujanStepRole, Quiver.Hom.toPath]
 
 -- Probe R1 (CAS-A1): the shared bridge recovers the boxed scalar conclusion.
 example : (6 : ℝ) = (2 * 3) * 1 := by
@@ -218,11 +280,71 @@ example :
       gaussianMassFactor * exponentialFlowFactor 1 * scaleJacobianFactor 1 :=
   connection_coefficient_multiplication.2.1 1 (by norm_num)
 
--- Probe R5 (CAS-A5): the certificate exposes the fixed role order.
+-- Probe R5a (CAS-A5): the deleted radical/path-weight leaf is public again.
+example (x : ℝ) (hx : 0 < x) :
+    ramanujanRadical x =
+      Path.weight (ramanujanStepWeight x) ramanujanCompletionPath := by
+  have hcertificate := connection_coefficient_multiplication.2.2 x hx
+  change ramanujanCompositionCertificateObservation x =
+    ramanujanCompositionCertificateSpecification x at hcertificate
+  have hradical := congrArg RamanujanCompositionCertificateData.radical hcertificate
+  simpa [ramanujanCompositionCertificateObservation,
+    ramanujanCompositionCertificateSpecification] using hradical
+
+-- Probe R5b (CAS-A5): that path weight is the displayed three-factor product.
+example (x : ℝ) (hx : 0 < x) :
+    Path.weight (ramanujanStepWeight x) ramanujanCompletionPath =
+      gaussianMassFactor * exponentialFlowFactor x * scaleJacobianFactor x := by
+  have hcertificate := connection_coefficient_multiplication.2.2 x hx
+  change ramanujanCompositionCertificateObservation x =
+    ramanujanCompositionCertificateSpecification x at hcertificate
+  have hpathWeight :=
+    congrArg RamanujanCompositionCertificateData.pathWeight hcertificate
+  simpa [ramanujanCompositionCertificateObservation,
+    ramanujanCompositionCertificateSpecification] using hpathWeight
+
+-- Probe R5c (CAS-A5): each path factor is paired with its concrete role.
+example (x : ℝ) (hx : 0 < x) :
+    ramanujanPathCertificateEntries x ramanujanCompletionPath =
+      [{ factor := gaussianMassFactor, role := .gaussianTotalMass },
+        { factor := exponentialFlowFactor x, role := .exponentialFlow },
+        { factor := scaleJacobianFactor x, role := .scaleJacobian }] := by
+  have hcertificate := connection_coefficient_multiplication.2.2 x hx
+  change ramanujanCompositionCertificateObservation x =
+    ramanujanCompositionCertificateSpecification x at hcertificate
+  have hentries :=
+    congrArg RamanujanCompositionCertificateData.factorEntries hcertificate
+  simpa [ramanujanCompositionCertificateObservation,
+    ramanujanCompositionCertificateSpecification] using hentries
+
+-- Probe R5d (CAS-A5): the existing public role-list equality is preserved.
 example :
     ramanujanPathRoles ramanujanCompletionPath =
-      [.gaussianTotalMass, .exponentialFlow, .scaleJacobian] :=
-  connection_coefficient_multiplication.2.2
+      [.gaussianTotalMass, .exponentialFlow, .scaleJacobian] := by
+  have hcertificate := connection_coefficient_multiplication.2.2 1 (by norm_num)
+  change ramanujanCompositionCertificateObservation 1 =
+    ramanujanCompositionCertificateSpecification 1 at hcertificate
+  have hroles := congrArg RamanujanCompositionCertificateData.roles hcertificate
+  simpa [ramanujanCompositionCertificateObservation,
+    ramanujanCompositionCertificateSpecification] using hroles
+
+-- Role/factor mismatch probe (CAS-A5): cross-pairing two roles is impossible.
+example (x : ℝ) (hx : 0 < x) :
+    ramanujanPathCertificateEntries x ramanujanCompletionPath ≠
+      [{ factor := gaussianMassFactor, role := .exponentialFlow },
+        { factor := exponentialFlowFactor x, role := .gaussianTotalMass },
+        { factor := scaleJacobianFactor x, role := .scaleJacobian }] := by
+  have hcertificate := connection_coefficient_multiplication.2.2 x hx
+  change ramanujanCompositionCertificateObservation x =
+    ramanujanCompositionCertificateSpecification x at hcertificate
+  have hentries :=
+    congrArg RamanujanCompositionCertificateData.factorEntries hcertificate
+  change ramanujanPathCertificateEntries x ramanujanCompletionPath =
+    [{ factor := gaussianMassFactor, role := .gaussianTotalMass },
+      { factor := exponentialFlowFactor x, role := .exponentialFlow },
+      { factor := scaleJacobianFactor x, role := .scaleJacobian }] at hentries
+  rw [hentries]
+  simp
 
 -- Role-permutation probe (CAS-A5): swapping Gaussian and flow roles is rejected.
 example :
@@ -231,8 +353,13 @@ example :
   intro hpermuted
   have hordered :
       ramanujanPathRoles ramanujanCompletionPath =
-        [.gaussianTotalMass, .exponentialFlow, .scaleJacobian] :=
-    connection_coefficient_multiplication.2.2
+        [.gaussianTotalMass, .exponentialFlow, .scaleJacobian] := by
+    have hcertificate := connection_coefficient_multiplication.2.2 1 (by norm_num)
+    change ramanujanCompositionCertificateObservation 1 =
+      ramanujanCompositionCertificateSpecification 1 at hcertificate
+    have hroles := congrArg RamanujanCompositionCertificateData.roles hcertificate
+    simpa [ramanujanCompositionCertificateObservation,
+      ramanujanCompositionCertificateSpecification] using hroles
   rw [hordered] at hpermuted
   simp at hpermuted
 

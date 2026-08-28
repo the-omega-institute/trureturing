@@ -43,9 +43,11 @@ internal sealed class ConnectionCoefficientCompositionDocument : IScribeDocument
                                 + "scale-Jacobian factors.")),
                         Paragraph(Text(
                             "The fifth semantic conjunct is the structural-composition certificate: "
-                                + "the named typed Ramanujan completion path has, in order, the "
-                                + "Gaussian-total-mass, exponential-flow, and scale-Jacobian roles. "
-                                + "Swapping Gaussian and flow roles falsifies this public conjunct."))),
+                                + "one data equality binds the radical to the named path weight, "
+                                + "that weight to the displayed three-factor product, and every "
+                                + "numeric edge factor to its ordered semantic role. The previous "
+                                + "role-list equality remains a projection of this same conjunct; "
+                                + "cross-pairing the Gaussian and flow roles falsifies it."))),
                     DescribeRole.Theorem)),
             []));
     }
@@ -120,19 +122,9 @@ internal sealed class ConnectionCoefficientCompositionDocument : IScribeDocument
 
     private static Formula RamanujanRoleCertificate()
     {
-        var orderedRoles = Seq(
-            OpenBracket,
-            F.Id("gaussianTotalMass"),
-            Comma,
-            Sp,
-            F.Id("exponentialFlow"),
-            Comma,
-            Sp,
-            F.Id("scaleJacobian"),
-            CloseBracket);
-
-        return Equal(
-            Call("ramanujanPathRoles", F.Id("ramanujanCompletionPath")),
-            orderedRoles);
+        var x = F.Id("x");
+        return PositiveRealStatement(Call(
+            "IsRamanujanStructuralConstantCompositionCertificate",
+            x));
     }
 }
