@@ -1,6 +1,6 @@
-/- GID: D5/S3/Constants/Limits/EulerCountertermExistenceUniqueness
+/- GID: D5/S3/Constants/Limits/EulerCountertermExistenceAndPiDuality
    generality: G
-   mirror-B: D5/B/S3/Constants/Limits/EulerCountertermExistenceUniqueness
+   mirror-B: D5/B/S3/Constants/Limits/EulerCountertermExistenceAndPiDuality
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Euler's constant supplies the finite counterterm, while pi removes Gaussian defect. -/
@@ -11,7 +11,7 @@ import Mathlib.NumberTheory.Harmonic.EulerMascheroni
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Constants.Limits.EulerCountertermExistenceUniqueness
+namespace D5.S3.Constants.Limits.EulerCountertermExistenceAndPiDuality
 
 open Filter Topology
 open scoped FourierTransform
@@ -27,7 +27,7 @@ def EliminatesGaussianSelfDualityDefect (a : ℝ) : Prop :=
 
 /-- The Euler-Mascheroni constant supplies the zero harmonic-log residual, and pi eliminates
 the standard Gaussian Fourier self-duality defect. -/
-theorem euler_counterterm_exists_and_unique :
+theorem euler_counterterm_existence_and_pi_duality :
     Tendsto
       (fun n : ℕ =>
         (harmonic n : ℝ) - Real.log n - Real.eulerMascheroniConstant)
@@ -44,6 +44,6 @@ theorem euler_counterterm_exists_and_unique :
     simp only [EliminatesGaussianSelfDualityDefect, gaussianSelfDualityDefect,
       pi_self_dual, sub_self]
 
-#print axioms euler_counterterm_exists_and_unique
+#print axioms euler_counterterm_existence_and_pi_duality
 
-end D5.S3.Constants.Limits.EulerCountertermExistenceUniqueness
+end D5.S3.Constants.Limits.EulerCountertermExistenceAndPiDuality

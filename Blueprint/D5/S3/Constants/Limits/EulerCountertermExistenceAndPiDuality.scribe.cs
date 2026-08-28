@@ -4,11 +4,11 @@ using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Constants.Limits;
 
-internal sealed class EulerCountertermExistenceUniquenessDocument : IScribeDocumentDefinition
+internal sealed class EulerCountertermExistenceAndPiDualityDocument : IScribeDocumentDefinition
 {
     private const string Declaration =
-        "D5/S3/Constants/Limits/EulerCountertermExistenceUniqueness."
-            + "euler_counterterm_exists_and_unique";
+        "D5/S3/Constants/Limits/EulerCountertermExistenceAndPiDuality."
+            + "euler_counterterm_existence_and_pi_duality";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Euler's constant supplies the finite harmonic-log counterterm, while pi eliminates "

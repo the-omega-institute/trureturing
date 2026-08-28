@@ -8,7 +8,7 @@ Euler's constant supplies the finite harmonic-log counterterm, while pi eliminat
 
 $$[\lim_{n\to\infty} (H_n - \log n - \gamma) = 0] \land\\{}[\widehat{g_\pi} - g_\pi = 0].$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Constants/Limits/EulerCountertermExistenceUniqueness.euler_counterterm_exists_and_unique` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Constants/Limits/EulerCountertermExistenceAndPiDuality.euler_counterterm_existence_and_pi_duality` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,5 +20,5 @@ For the second conjunct, g_pi is the real Gaussian exp(-pi x^2), and its defect 
 
 ## References
 
-- Truth anchor: `D5/S3/Constants/Limits/EulerCountertermExistenceUniqueness.euler_counterterm_exists_and_unique`
+- Truth anchor: `D5/S3/Constants/Limits/EulerCountertermExistenceAndPiDuality.euler_counterterm_existence_and_pi_duality`
 - Dependency: [D5/S3/Fourier/CompletionConstants/GaussianSelfDualPi](../../Fourier/CompletionConstants/GaussianSelfDualPi.md)
