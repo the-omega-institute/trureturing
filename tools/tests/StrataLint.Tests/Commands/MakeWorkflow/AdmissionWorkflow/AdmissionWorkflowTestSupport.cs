@@ -85,7 +85,7 @@ public sealed partial class AdmissionWorkflowTests
             "tools",
             "StrataLint.EngineeringScope",
             "StrataLint.EngineeringScope.csproj");
-        var build = BoundedProcessRunner.Run(
+        var build = TestProcessRunner.Run(
             DotnetHost(engineeringRoot),
             ["build", project, "--configuration", "Release", "--no-restore", "--nologo"],
             engineeringRoot,
@@ -118,7 +118,7 @@ public sealed partial class AdmissionWorkflowTests
             "--plan-file",
             planFile,
         };
-        return BoundedProcessRunner.Run(
+        return TestProcessRunner.Run(
             "env",
             arguments,
             repositoryRoot,
@@ -128,7 +128,7 @@ public sealed partial class AdmissionWorkflowTests
 
     private static string DotnetHost(string root)
     {
-        var result = BoundedProcessRunner.Run(
+        var result = TestProcessRunner.Run(
             "/bin/sh",
             ["-c", "command -v dotnet"],
             root,
@@ -140,7 +140,7 @@ public sealed partial class AdmissionWorkflowTests
 
     private static string GitText(string repository, params string[] arguments)
     {
-        var result = BoundedProcessRunner.Run(
+        var result = TestProcessRunner.Run(
             "git",
             ["-C", repository, .. arguments],
             repository,
