@@ -8,6 +8,18 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-28T01:54:04.4140960+00:00
+    gids:
+      - D5/S3/ConceptDynamics/Refinement/SemanticResourceSeparation.semantic_sufficiency_can_exceed_finite_resources
+    gaps:
+      - code: chain-migration-incomplete
+        detail: generic-residual-34e9d35bf66b5e34880b2a93a6fa430ad6e4c9edb14d70a8f2e3deeb8d555eb5-7ac7d8e10f4e28ef8511f19891e61a0656c6032f9e3276effc081b75d515ca90
+      - code: chain-migration-incomplete
+        detail: generic-residual-4c2b714cb3985bd4de5c58bf02d1c1c78bb6cfe342f2143ce0b84383c00d59f2-fadb7579d20503c39d0b3c115090548113ec17e90453115f61e9360f27e1c845
+      - code: chain-migration-incomplete
+        detail: generic-residual-962eb13c4d47fc6e40bf1e4c99228bf763b6f90178f49bb0fe081f8dabb22d32-e6c39a109dbdac68c35843e40734e7a6d4ea288365d53145b0437fe4080c15ee
   chain_atoms:
     - generic-residual-962eb13c4d47fc6e40bf1e4c99228bf763b6f90178f49bb0fe081f8dabb22d32-e6c39a109dbdac68c35843e40734e7a6d4ea288365d53145b0437fe4080c15ee
     - generic-residual-34e9d35bf66b5e34880b2a93a6fa430ad6e4c9edb14d70a8f2e3deeb8d555eb5-7ac7d8e10f4e28ef8511f19891e61a0656c6032f9e3276effc081b75d515ca90
