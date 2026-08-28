@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Dynamics/OrbitClosure/CompactConnected.orbit_closure_is_compact_and_connected
       source_sha256: sha256:00b9a454a0a60e212c9b755d3d4e2adc696bb0dd1da8724a9012a4ea39ffd9d0
-      target_sha256: sha256:5e905f2dc994dc90119daefc2f4d189706323bcef5231d0551c68d5af00db877
+      target_statement_id: sha256:9ab01283f4f5961d56ae964709f3b2324e75176d1689e153545db21ef0a780f2
   scribe:
     - gid: D5/S1/Dynamics/OrbitClosure/CompactConnected.orbit_closure_is_compact_and_connected
       definition_sha256: sha256:089fb182082ffc74df560321fdb1851908bfb7c48821ccce237043164dc140af

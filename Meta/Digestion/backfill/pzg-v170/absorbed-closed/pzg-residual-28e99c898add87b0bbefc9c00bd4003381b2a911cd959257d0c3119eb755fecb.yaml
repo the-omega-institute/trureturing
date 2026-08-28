@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/CertificateHistory/FiniteCertificateDepth.certificate_references_finitely_many_events
       source_sha256: sha256:28e99c898add87b0bbefc9c00bd4003381b2a911cd959257d0c3119eb755fecb
-      target_sha256: sha256:3b0f43ace1264cc310e10c93d8deceb0f9116aed4fcf5be4557c375f20ab8ac7
+      target_statement_id: sha256:baff0f1524f5243eb3ff2bdecad5be6d58dbae012082f11204487206b8f6bb4b
   scribe:
     - gid: D5/S0/CertificateHistory/FiniteCertificateDepth.certificate_references_finitely_many_events
       definition_sha256: sha256:990a3ed84cf6c33d093a299f01da7ae390e85dd2230365657c32b01caaf20b67

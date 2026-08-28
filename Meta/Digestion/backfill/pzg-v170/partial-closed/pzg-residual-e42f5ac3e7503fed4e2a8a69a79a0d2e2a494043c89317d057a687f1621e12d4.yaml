@@ -10,7 +10,7 @@ receipts:
   coverage:
     - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
       source_sha256: sha256:e42f5ac3e7503fed4e2a8a69a79a0d2e2a494043c89317d057a687f1621e12d4
-      target_sha256: sha256:eadb8ba77aa7d9d1648ae398d680d11c525bca2e60ec090ae38e35d7f5e738e5
+      target_statement_id: sha256:260a95bcca3f1b09a54fbb51bf365134cf33b27a35312b81694a6d476633ca87
   scribe:
     - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
       definition_sha256: sha256:67de1be388e78bdfa74ed54c5e67f94587de944e5a0dc2edc667911f47c96d94

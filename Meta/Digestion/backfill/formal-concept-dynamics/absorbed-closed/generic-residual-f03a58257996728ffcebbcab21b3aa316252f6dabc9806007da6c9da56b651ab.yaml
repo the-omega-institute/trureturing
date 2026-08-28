@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Appeal/ExplainableNotContestable.explainable_not_contestable
       source_sha256: sha256:f03a58257996728ffcebbcab21b3aa316252f6dabc9806007da6c9da56b651ab
-      target_sha256: sha256:ba2827bc3d1582be893189c4941b7f090b90d8f9754148ae713816f47d021fd4
+      target_statement_id: sha256:fa2dc13929808f04dc293822183ba3e39482ae0313a46f15a1f7e7b5db8e3567
   scribe:
     - gid: D5/S3/ConceptDynamics/Appeal/ExplainableNotContestable.explainable_not_contestable
       definition_sha256: sha256:e5188cfbbb77b8b84553978fd1f59013ab1d24dfcdec198badb92cb8c952e63c

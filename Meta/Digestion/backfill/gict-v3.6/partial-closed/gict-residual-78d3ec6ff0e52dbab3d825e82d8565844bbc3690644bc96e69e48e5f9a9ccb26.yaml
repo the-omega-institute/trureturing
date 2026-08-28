@@ -19,19 +19,19 @@ receipts:
   coverage:
     - gid: D5/S1/Phase/SeatTowerArithmetic.bhk_implies_w3_walk
       source_sha256: sha256:78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26
-      target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
+      target_statement_id: sha256:44c5588871738b8d6f1dc91ada55913b521ebcce0310883991fcc71e4434bdd7
     - gid: D5/S1/Phase/WalkFormula.alternating_walk_append
       source_sha256: sha256:78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26
-      target_sha256: sha256:3e5dc47ec0e8b70372ef32e4c7783fb95ba43679edf1342cc991d8a5bebd7e2f
+      target_statement_id: sha256:13ceab1fadfd26184076ed925afbf27cce6e6b7fe59ec454217ea8560f4862fd
     - gid: D5/S1/Phase/WalkFormula.alternating_walk_reverse
       source_sha256: sha256:78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26
-      target_sha256: sha256:3e5dc47ec0e8b70372ef32e4c7783fb95ba43679edf1342cc991d8a5bebd7e2f
+      target_statement_id: sha256:921ce110a2f304627497ed47a1813d715e7b23b778199d5468df2f76203d41db
     - gid: D5/S1/Phase/WalkFormula.endpoint_correction_is_integer
       source_sha256: sha256:78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26
-      target_sha256: sha256:3e5dc47ec0e8b70372ef32e4c7783fb95ba43679edf1342cc991d8a5bebd7e2f
+      target_statement_id: sha256:35b9add727aae2a3681fdb6d6f2fd8fb5689ba827a65d6ae899a07d7f48df3f7
     - gid: D5/S1/Phase/WalkFormula.w3_walk_endpoint_translation
       source_sha256: sha256:78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26
-      target_sha256: sha256:3e5dc47ec0e8b70372ef32e4c7783fb95ba43679edf1342cc991d8a5bebd7e2f
+      target_statement_id: sha256:31fd07ff22f89282732e9b00963fd6ca2f66b010c67e6daae35d41844b8b3f6a
   scribe:
     - gid: D5/S1/Phase/SeatTowerArithmetic.bhk_implies_w3_walk
       definition_sha256: sha256:74dc7747edb474cc66d3a095a487051ea7594d474a79c177acf1cfb3d912a936

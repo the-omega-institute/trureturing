@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/RefinementFactorization/IndexedReadoutMonotonicity.indexed_readout_monotonicity
       source_sha256: sha256:ea419baa78f88aff7c29101705b1cf9b7c987c189de82ad64c144a14b7355837
-      target_sha256: sha256:c4e69a6bbb5df60c1991010a754f2ea4bafc54bf8b712644c68309c3296ce41b
+      target_statement_id: sha256:eb6d85fb75da09740cbcb85348d0d00a60a8dd936d71a80670165db7f213268c
   scribe:
     - gid: D5/S3/ConceptDynamics/RefinementFactorization/IndexedReadoutMonotonicity.indexed_readout_monotonicity
       definition_sha256: sha256:f3ca100c6089438def43643381dd448736ea638722a419105ebafbc9f059fd52

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/QuantumChannels/ContractionSpectrumOrder.contraction_spectrum_order
       source_sha256: sha256:2a68d5833e74a5efda6aa512d8a126c6d1082ada8d77a088c16d39c4d2e7aeb1
-      target_sha256: sha256:642fa0050a68db1e2c6b358076c585c923e7ad8631010eda5d861dba01c44a47
+      target_statement_id: sha256:9068fff5dd683b0233b236d14ee6c1f5bdec5b25e632f5063de0f9207dd38772
   scribe:
     - gid: D5/S3/QuantumChannels/ContractionSpectrumOrder.contraction_spectrum_order
       definition_sha256: sha256:7778505ee3dd17bc2f51e645643ad4579cea10562f2dddaa1afca0dda19ea7fb

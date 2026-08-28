@@ -148,10 +148,11 @@ internal static partial class DigestionLedgerAligner
     {
         var admissionEntry = entry with
         {
-            // Scribe receipts have their own fail-closed producer verification. They do not
-            // change the source atom identity that this structural inheritance key protects.
+            // Coverage and Scribe receipts have their own fail-closed verification. They do
+            // not change the source atom identity that this structural inheritance key protects.
             Receipts = entry.Receipts with
             {
+                Coverage = [],
                 Scribe = [],
                 CoverDisposition = null,
             },

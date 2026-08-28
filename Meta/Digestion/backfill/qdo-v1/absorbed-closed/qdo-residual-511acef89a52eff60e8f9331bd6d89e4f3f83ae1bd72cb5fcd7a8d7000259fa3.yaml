@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Quantum/Dynamics/BaseNormContraction.positive_normalization_preserving_dynamics_contracts_base_norm
       source_sha256: sha256:511acef89a52eff60e8f9331bd6d89e4f3f83ae1bd72cb5fcd7a8d7000259fa3
-      target_sha256: sha256:ea875ba2db06ff34218f5b6024427e676fbce0a6010a07a80197276077edb894
+      target_statement_id: sha256:bedd01f68f226aff67e80c0ff896b6f9c5bfdabcf62f3b2194eb08466ac9a25b
   scribe:
     - gid: D5/S3/Quantum/Dynamics/BaseNormContraction.positive_normalization_preserving_dynamics_contracts_base_norm
       definition_sha256: sha256:8a7fe6dc51bdc462b5a7d9c7f8d6135cfc183dfb191c23c4cb12bec65db939ac

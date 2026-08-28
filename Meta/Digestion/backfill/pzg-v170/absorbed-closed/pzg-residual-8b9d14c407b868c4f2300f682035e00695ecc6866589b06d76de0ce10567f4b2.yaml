@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Digit/Admissibility/LeastDigitDecomposition.canonical_raw_least_digit_decomposition
       source_sha256: sha256:8b9d14c407b868c4f2300f682035e00695ecc6866589b06d76de0ce10567f4b2
-      target_sha256: sha256:2885b2958b97bd580638a7d8844381e7b46e4d7aeb76f2ba0e6b36bab9e796fd
+      target_statement_id: sha256:f784f2c2466dcb9de73b88abc33cebcef6a4c60f5da4a70b8960eaf9c0a95931
   scribe:
     - gid: D5/S1/Digit/Admissibility/LeastDigitDecomposition.canonical_raw_least_digit_decomposition
       definition_sha256: sha256:9e7ddfdf3b84a3343dbb428734be97c59e95607ab5884036acfbfd2afc2a9512

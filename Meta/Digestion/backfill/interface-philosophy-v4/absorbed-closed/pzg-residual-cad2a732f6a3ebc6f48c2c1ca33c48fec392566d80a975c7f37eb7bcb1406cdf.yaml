@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Computability/KraftInequality.finite_binary_kraft_inequality
       source_sha256: sha256:cad2a732f6a3ebc6f48c2c1ca33c48fec392566d80a975c7f37eb7bcb1406cdf
-      target_sha256: sha256:dec0505020b9623735790d05a0205090c352c0d0416cbb981bffdce1c718e8f9
+      target_statement_id: sha256:334b98be0e2baed6243f1b528f428625ef96e146a28a28b0fdc5ad5c1d7bb80c
   scribe:
     - gid: D5/S0/Computability/KraftInequality.finite_binary_kraft_inequality
       definition_sha256: sha256:1f30f9fbfc882eadd34bd74f47c08a6ec79b9ddd132a67fa157fa602fd998563

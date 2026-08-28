@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/FiniteParetoQuotient.finite_pareto_quotient_exact_and_complete
       source_sha256: sha256:d602e70c7f817ce2d6c319ff867436428788da8a2fffecbe92bd433e966c1cd5
-      target_sha256: sha256:f489818de69a44f081777c7fd521501a9a2fb4d04d79e2b7e207a65b36eca394
+      target_statement_id: sha256:b5a6abd37cc1bc87ae8d7915f06f680c85bc6a90a0f77b32ca1a96549566568a
   scribe:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/FiniteParetoQuotient.finite_pareto_quotient_exact_and_complete
       definition_sha256: sha256:e0bfa82cd917bdca5c5eb2dbc24c60a08e2bca04e8c28c24a440fdd2774fce31

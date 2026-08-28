@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Information/ConditionalLogicalImpurity.zero_impurity_iff_fiber_ae_constant
       source_sha256: sha256:e9ef1e6b4bac2dc0947e528d478eb00b5a6920c9e12d2f0ad639ef6b7d79a4fb
-      target_sha256: sha256:956763646a187cae656d4815ce9ff09cbf99d0f3c0cfeac1651c9bc1a4367b56
+      target_statement_id: sha256:65f1267b9d776e71e24d5f2543775a5c0cc280ca61281a36cef8965374195fd2
   scribe:
     - gid: D5/S3/ConceptDynamics/Information/ConditionalLogicalImpurity.zero_impurity_iff_fiber_ae_constant
       definition_sha256: sha256:688ec80caa44fa61cb7c72e544b4327e8e706451226580f19a2f41e9422b7ae4

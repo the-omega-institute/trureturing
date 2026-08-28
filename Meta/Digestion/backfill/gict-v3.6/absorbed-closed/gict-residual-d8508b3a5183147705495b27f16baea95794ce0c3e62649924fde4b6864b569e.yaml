@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Asymptotics/OddCycleDrift.odd_cycle_drift_eq_zero
       source_sha256: sha256:d8508b3a5183147705495b27f16baea95794ce0c3e62649924fde4b6864b569e
-      target_sha256: sha256:a69920f7554b15c1e99f7db75d848e846e82e14ec2c010480e4dc8afbd578f02
+      target_statement_id: sha256:45f57ec9f0ac5787f562f105de41357376c8a9d1f36fd7872ffb2a90c4419327
   scribe:
     - gid: D5/S0/Asymptotics/OddCycleDrift.odd_cycle_drift_eq_zero
       definition_sha256: sha256:e118e5982d9cf6a6b548f38cb53a46ee9c1d0204753e2e844b7789536a99ff0b

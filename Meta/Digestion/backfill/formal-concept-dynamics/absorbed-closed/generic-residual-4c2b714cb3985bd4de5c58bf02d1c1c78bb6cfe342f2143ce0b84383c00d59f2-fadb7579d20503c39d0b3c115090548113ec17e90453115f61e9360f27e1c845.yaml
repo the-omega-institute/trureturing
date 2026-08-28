@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Refinement/SemanticResourceSeparation.semantic_sufficiency_can_exceed_finite_resources
       source_sha256: sha256:4c2b714cb3985bd4de5c58bf02d1c1c78bb6cfe342f2143ce0b84383c00d59f2
-      target_sha256: sha256:d2bffa740c9487b437a4227dafd7d196580afd8789543563436235480c2a0994
+      target_statement_id: sha256:b81d41e47f78b24b43b1966066729daa199675d45d5c70344196e941bfefa073
   scribe:
     - gid: D5/S3/ConceptDynamics/Refinement/SemanticResourceSeparation.semantic_sufficiency_can_exceed_finite_resources
       definition_sha256: sha256:86fa40c3cd0c44cf713291c86cfbbf43859a954a0f8c9f1a64d35519d67c2676

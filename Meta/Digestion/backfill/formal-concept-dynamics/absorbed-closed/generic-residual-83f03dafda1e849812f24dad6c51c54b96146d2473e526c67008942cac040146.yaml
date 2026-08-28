@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/PredictionFactors/BeliefSetSufficiency.belief_set_sufficiency
       source_sha256: sha256:83f03dafda1e849812f24dad6c51c54b96146d2473e526c67008942cac040146
-      target_sha256: sha256:3a4d5bcb3b36de453f0e3911b317f957a94c99bea48bdf1e51413961e99b39cd
+      target_statement_id: sha256:d2043a3f0b7b4e776d1d4a9b203194b0bc2ff80f661f86c2628f6f1742d9c176
   scribe:
     - gid: D5/S3/ObserverMemory/PredictionFactors/BeliefSetSufficiency.belief_set_sufficiency
       definition_sha256: sha256:52de72212b7efed398451c8a422a799759d6cb13d2df6266a003b51544a96abe

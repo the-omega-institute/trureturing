@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Diagonal/Naturality/NaturalityDefectComposition.naturality_defect_comp_le
       source_sha256: sha256:1999e18917e121f39cb09f43e1b0bf9e72e094f396ab89d1ed02eb896960c0f3
-      target_sha256: sha256:5b0bc5a7df062a4a757e2c22e9c71dac799a033fb237763ee814ba49aa14015f
+      target_statement_id: sha256:03255a1d1bf17d7788c74728ed2da68ba2488acee5734d3d7270e6f32c7227e1
   scribe:
     - gid: D5/S0/Diagonal/Naturality/NaturalityDefectComposition.naturality_defect_comp_le
       definition_sha256: sha256:bb5581f0f86854f09b51c60a5948ab2548b7cd233422a14da70950a9ad44871f

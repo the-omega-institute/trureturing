@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Quantum/CloningMachine.machine_entropy_closed_form
       source_sha256: sha256:29dbc0f22f81e47fd93f0011befd30cd967a228dfe360662617303ab588dd044
-      target_sha256: sha256:dc3804e92b1cc27f6d05a5894ca30c3165a174b43ae9eebb93db04a331deb4bc
+      target_statement_id: sha256:38cebeb7b52a1937f9741801c7f10a9e0d5528f43158be88de18013e2c9132bb
   scribe:
     - gid: D5/S3/Quantum/CloningMachine.machine_entropy_closed_form
       definition_sha256: sha256:9b146243d29cdd36e7417252024bc4ae9aa98c31e12b4cd38112b63643e6784b
