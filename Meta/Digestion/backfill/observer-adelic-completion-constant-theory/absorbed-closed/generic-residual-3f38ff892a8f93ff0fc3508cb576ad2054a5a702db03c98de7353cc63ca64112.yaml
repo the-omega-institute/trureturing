@@ -1,0 +1,17 @@
+ast_path: 定理/129.1
+fingerprints:
+  raw_sha256: sha256:3f38ff892a8f93ff0fc3508cb576ad2054a5a702db03c98de7353cc63ca64112
+  normalized_sha256: sha256:3f38ff892a8f93ff0fc3508cb576ad2054a5a702db03c98de7353cc63ca64112
+cas_ref: sha256:3f38ff892a8f93ff0fc3508cb576ad2054a5a702db03c98de7353cc63ca64112
+coverage_gids:
+  - D5/S3/Observer/ArithmeticTomography/IrrationalSlopeFaithfulness.irrational_slope_observer_injective
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/ArithmeticTomography/IrrationalSlopeFaithfulness.irrational_slope_observer_injective
+      source_sha256: sha256:3f38ff892a8f93ff0fc3508cb576ad2054a5a702db03c98de7353cc63ca64112
+      target_sha256: sha256:e3e1e5fd6c355e08e7da86afb216ea59a16cf647a5c80cebf79d08df25308b63
+  scribe:
+    - gid: D5/S3/Observer/ArithmeticTomography/IrrationalSlopeFaithfulness.irrational_slope_observer_injective
+      definition_sha256: sha256:e93862111a827a28490521b52dd664af0f3dbb2338557b45f3046947c4cbbcbc
+      emission_sha256: sha256:d3732827d6cb7003df3544b10206552ec33e0df57c5bf5c435b6f352e238ed24
+  unresolved_subitems: []
