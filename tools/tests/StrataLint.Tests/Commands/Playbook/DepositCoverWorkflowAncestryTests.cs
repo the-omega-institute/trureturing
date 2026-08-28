@@ -74,7 +74,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
                         base_tree_oid = "git-sha1:" + baseTree,
                         descriptor_blob_oid = "git-sha1:" + descriptorBlob,
                         descriptor_selector = LeanPath,
-                        materializer = "repository-snapshot-v1",
                         supporting_blob_oids = Array.Empty<string>(),
                     },
                 },

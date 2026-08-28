@@ -48,11 +48,8 @@ public sealed class LedgerRevokeCommandTests
         {
             var module = ModuleWithReport("A", "theorem a : True := by trivial\n", "True");
             var baselineCatalog = BuildCatalog(module);
-            var baselineBytes = FrozenLedgerGenerator.GenerateGenesis(
-                baselineCatalog,
-                new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
-            var baseline = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-                ValidateGenesis(Load(baselineBytes), baselineCatalog)).Capability;
+            var baselineFiles = EventFiles(baselineCatalog);
+            var baseline = Baseline(baselineCatalog);
             var node = Assert.Single(baseline.ActiveFrozenNodes);
             var provisional = new RevocationEvidence.KernelWitnessFailure(
                 node.FrozenNodeId,
@@ -70,7 +67,7 @@ public sealed class LedgerRevokeCommandTests
                 ["lakefile.toml"] = "[package]\nname = \"fixture\"\n",
                 ["lean-toolchain"] = "leanprover/lean4:v4.24.0\n",
             };
-            AddLedgerFiles(files, baselineBytes);
+            AddLedgerFiles(files, baselineFiles);
             var raw = RawRepositorySnapshot.Create(
                 files.Select(static item => new RawRepositoryEntry(
                     item.Key,
@@ -83,7 +80,7 @@ public sealed class LedgerRevokeCommandTests
             LedgerPath = Path.Combine(
                 temporary.Path,
                 FrozenLedgerChangeClassifier.AcceptedRoot.Replace('/', Path.DirectorySeparatorChar));
-            WriteLedgerDirectory(LedgerPath, baselineBytes);
+            WriteLedgerDirectory(LedgerPath, baselineFiles);
             ReportPath = Path.Combine(temporary.Path, "candidate-lean-report.json");
             RawLeanReportArtifact.WriteFile(ReportPath, snapshot, report);
             Environment = new ProductionCliEnvironment(
@@ -102,7 +99,5 @@ public sealed class LedgerRevokeCommandTests
 
         public void Dispose() => temporary.Dispose();
 
-        private static FrozenLedgerSyntax Load(IEnumerable<byte> bytes) =>
-            Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes.ToArray())).Syntax;
     }
 }

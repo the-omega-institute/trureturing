@@ -135,8 +135,7 @@ internal static class DagLedgerCommandPreparation
         var selectedPaths = closedPaths
             .Where(path => !baseView.ActiveByPath.TryGetValue(path, out var entry)
                 || !entry.AxiomClosureKnown
-                || changedPaths.Contains(path)
-                || FrozenLedger.EnvironmentPinsChanged(environment, entry))
+                || changedPaths.Contains(path))
             .ToHashSet();
         foreach (var path in LeanImportAdjacency.DependenciesFirst(closedPaths, adjacency)
             .Where(path => states.TryGetValue(path, out var state) && state is TruthState.Closed))
@@ -357,16 +356,9 @@ internal static class DagLedgerCommandPreparation
             RawLeanReportArtifact.ReadFile(path, snapshot);
     }
 
-    internal static FrozenLedgerSyntax LoadLedger(ReadOnlySpan<byte> bytes, string label) =>
-        DagLedgerLoader.Load(bytes) switch
-        {
-            DagLedgerLoadOutcome.Loaded loaded => loaded.Syntax,
-            DagLedgerLoadOutcome.Invalid invalid => throw new InvalidOperationException(
-                label + " syntax is invalid: " + invalid.Message),
-            _ => throw new InvalidOperationException("unknown ledger load outcome"),
-        };
-
-    internal static FrozenLedgerSyntax LoadLedgerDirectory(string directory, string label) =>
+    internal static ImmutableArray<DagLedgerFileEvent> LoadLedgerDirectory(
+        string directory,
+        string label) =>
         LoadLedgerFiles(ReadLedgerDirectoryFiles(directory), label);
 
     internal static ImmutableArray<RepositoryFile> ReadLedgerDirectoryFiles(string directory) =>
@@ -385,17 +377,17 @@ internal static class DagLedgerCommandPreparation
             bytes,
             Encoding.UTF8.GetString(bytes.AsSpan()));
 
-    internal static FrozenLedgerSyntax LoadLedgerFiles(
+    internal static ImmutableArray<DagLedgerFileEvent> LoadLedgerFiles(
         IEnumerable<RepositoryFile> files,
         string label) =>
         LoadLedgerFiles(files, label, trustRecordedHashes: false);
 
-    internal static FrozenLedgerSyntax LoadTrustedLedgerFiles(
+    internal static ImmutableArray<DagLedgerFileEvent> LoadTrustedLedgerFiles(
         IEnumerable<RepositoryFile> files,
         string label) =>
         LoadLedgerFiles(files, label, trustRecordedHashes: true);
 
-    private static FrozenLedgerSyntax LoadLedgerFiles(
+    private static ImmutableArray<DagLedgerFileEvent> LoadLedgerFiles(
         IEnumerable<RepositoryFile> files,
         string label,
         bool trustRecordedHashes)
@@ -417,101 +409,25 @@ internal static class DagLedgerCommandPreparation
             throw new InvalidOperationException(label + " does not form a closed dependency DAG");
         }
 
-        return DagLedgerLoader.ToLinearSyntax(OrderForReplay(ordered));
+        return ordered;
     }
-
-    private static ImmutableArray<DagLedgerFileEvent> OrderForReplay(
-        ImmutableArray<DagLedgerFileEvent> events)
-    {
-        var remaining = events.ToList();
-        var result = ImmutableArray.CreateBuilder<DagLedgerFileEvent>(events.Length);
-        var identities = new HashSet<string>(StringComparer.Ordinal);
-        var hashes = new HashSet<string>(StringComparer.Ordinal);
-        while (remaining.Count > 0)
-        {
-            var index = remaining.FindIndex(item => item.EventType switch
-            {
-                "Genesis" => result.Count == 0,
-                "Freeze" => result.Count > 0
-                    && DependenciesPresent(item.Payload, "prerequisite_frozen_node_ids", identities),
-                "Reattest" => item.Payload.TryGetProperty("previous_attestation_event_hash", out var previous)
-                    && hashes.Contains(previous.GetString()!),
-                FrozenLedger.SupersedeEventType =>
-                    item.Payload.TryGetProperty("previous_attestation_event_hash", out var previous)
-                    && hashes.Contains(previous.GetString()!)
-                    && DependenciesPresent(
-                        item.Payload,
-                        "prerequisite_frozen_node_ids",
-                        identities),
-                "Revoke" => RevokeDependenciesPresent(item.Payload, identities),
-                _ => true,
-            });
-            if (index < 0)
-            {
-                throw new InvalidOperationException(
-                    "frozen ledger has no valid linear replay order; remaining="
-                    + string.Join(",", remaining.Select(static item =>
-                        $"{item.EventType}:{item.Identity}")));
-            }
-
-            var item = remaining[index];
-            remaining.RemoveAt(index);
-            result.Add(item);
-            identities.Add(item.Identity);
-            if (item.Payload.TryGetProperty("frozen_node_id", out var frozenNodeId)
-                && frozenNodeId.ValueKind == JsonValueKind.String)
-            {
-                identities.Add(frozenNodeId.GetString()!);
-            }
-            hashes.Add(item.EventHash);
-        }
-
-        return result.MoveToImmutable();
-    }
-
-    private static bool DependenciesPresent(
-        JsonElement payload,
-        string property,
-        HashSet<string> identities) =>
-        payload.TryGetProperty(property, out var dependencies)
-        && dependencies.ValueKind == JsonValueKind.Array
-        && dependencies.EnumerateArray().All(item =>
-            item.ValueKind == JsonValueKind.String && identities.Contains(item.GetString()!));
-
-    private static bool RevokeDependenciesPresent(
-        JsonElement payload,
-        HashSet<string> identities) =>
-        payload.TryGetProperty("evidence", out var evidence)
-        && evidence.ValueKind == JsonValueKind.Array
-        && evidence.EnumerateArray().All(item =>
-            item.ValueKind == JsonValueKind.Object
-            && item.TryGetProperty("root_frozen_node_id", out var root)
-            && root.ValueKind == JsonValueKind.String
-            && identities.Contains(root.GetString()!));
 
     internal static TrustedFrozenGitReferences ValidateSuffixReferences(
         IRepositoryGateway repository,
-        FrozenLedgerSyntax syntax,
-        FrozenLedgerConsistent baseline,
+        ImmutableArray<DagLedgerFileEvent> events,
         string label)
     {
-        var references = ScanSuffixReferences(syntax, baseline, label);
+        var references = ScanSuffixReferences(events, label);
         return references.CommitOids.IsEmpty
             && references.TreeOids.IsEmpty
             && references.BlobOids.IsEmpty
-            && references.EnvironmentReferences.IsEmpty
-                ? TrustedFrozenGitReferences.CreateForTrustedAdapter([], [])
+                ? TrustedFrozenGitReferences.CreateForTrustedAdapter([])
                 : repository.ValidateFrozenReferences(references);
     }
 
     internal static FrozenLedgerReferenceSet ScanSuffixReferences(
-        FrozenLedgerSyntax syntax,
-        FrozenLedgerConsistent baseline,
-        string label) => FrozenLedger.ScanSuffixReferences(
-            syntax,
-            baseline.Events.Length - baseline.SyntaxStartSequence,
-            baseline.SyntaxStartSequence,
-            baseline.HeadHash) switch
+        ImmutableArray<DagLedgerFileEvent> events,
+        string label) => FrozenLedger.ScanReferences(events) switch
         {
             FrozenLedgerReferenceScanOutcome.Accepted accepted => accepted.References,
             FrozenLedgerReferenceScanOutcome.Rejected rejected => throw new InvalidOperationException(

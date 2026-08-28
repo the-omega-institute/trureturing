@@ -14,20 +14,22 @@ public partial record FrozenCoverageLoadOutcome
 
 public static class FrozenCoverageLedger
 {
-    public static FrozenCoverageLoadOutcome Load(FrozenLedgerSyntax syntax)
+    public static FrozenCoverageLoadOutcome Load(ImmutableArray<DagLedgerFileEvent> events)
     {
-        ArgumentNullException.ThrowIfNull(syntax);
+        if (events.IsDefault)
+        {
+            throw new ArgumentException("Frozen event set is uninitialized.", nameof(events));
+        }
         try
         {
             var active = new Dictionary<string, RepoPath>(StringComparer.Ordinal);
             var activePaths = new HashSet<RepoPath>();
             var sawGenesis = false;
-            foreach (var line in syntax.Lines)
+            foreach (var item in events)
             {
-                var root = line.Value;
-                var eventType = RequiredString(root, "event_type");
-                var payload = RequiredObject(root, "payload");
-                if (!sawGenesis && eventType is "Freeze" or "Reattest" or "Supersede" or "Revoke")
+                var eventType = item.EventType;
+                var payload = item.Payload;
+                if (!sawGenesis && eventType != "Genesis")
                 {
                     throw new FormatException($"{eventType} event occurs before Genesis");
                 }
@@ -42,14 +44,9 @@ public static class FrozenCoverageLedger
                         break;
                     case "Freeze":
                         var nodeId = RequiredString(payload, "frozen_node_id");
-                        // schema v4 retired the node_path alias; the authoritative path has
-                        // always been input.descriptor_selector. Committed v2/v3 events keep
-                        // the alias, so read the authority first and fall back for history.
-                        var pathText = payload.TryGetProperty("input", out var freezeInput)
-                            && freezeInput.TryGetProperty("descriptor_selector", out var selector)
-                            && selector.ValueKind == JsonValueKind.String
-                                ? selector.GetString()!
-                                : RequiredString(payload, "node_path");
+                        var pathText = RequiredString(
+                            payload.GetProperty("input"),
+                            "descriptor_selector");
                         if (!FrozenHashSyntax.IsSha256(nodeId)
                             || !RepoPath.TryCreate(pathText, out var path)
                             || !active.TryAdd(nodeId, path))
@@ -61,48 +58,6 @@ public static class FrozenCoverageLedger
                             throw new FormatException($"Freeze has a duplicate path {path.Value}");
                         }
                         break;
-                    case "Reattest":
-                        // Reattest 换 frozen_node_id(witness 含 source blob),路径不变。
-                        // 不跟着换,后续 Revoke 指向新 id 时 active 表里没有它 ⟹ 整册被拒。
-                        // v4 extended 用正名 frozen_node_id。v2/v3 的 semantic_receipt 只作
-                        // 历史字节兼容，不是运行时 identity；v4 legacy 两者皆无。两种 legacy
-                        // 形都保持前驱 active identity 不动。
-                        var reattested = payload.TryGetProperty("frozen_node_id", out var freshNode)
-                            && freshNode.ValueKind == JsonValueKind.String
-                                ? freshNode.GetString()!
-                                : null;
-                        if (reattested is null)
-                        {
-                            break;
-                        }
-
-                        var reattestPath = RequiredString(
-                            payload.GetProperty("input"), "descriptor_selector");
-                        var priorNode = active.SingleOrDefault(item => item.Value.Value == reattestPath);
-                        if (!FrozenHashSyntax.IsSha256(reattested)
-                            || priorNode.Equals(default(KeyValuePair<string, RepoPath>))
-                            || !active.Remove(priorNode.Key, out var reattestedPath)
-                            || !active.TryAdd(reattested, reattestedPath))
-                        {
-                            throw new FormatException(
-                                "Reattest has an invalid or inactive node identity");
-                        }
-                        break;
-                    case "Supersede":
-                        var caseId = RequiredString(payload, "case_id");
-                        var newNodeId = RequiredString(payload, "frozen_node_id");
-                        var oldNode = active.SingleOrDefault(item =>
-                            item.Value.Value == RequiredString(payload.GetProperty("input"), "descriptor_selector"));
-                        if (!FrozenHashSyntax.IsSha256(newNodeId)
-                            || string.IsNullOrEmpty(caseId)
-                            || oldNode.Equals(default(KeyValuePair<string, RepoPath>))
-                            || !active.Remove(oldNode.Key, out var supersededPath)
-                            || !active.TryAdd(newNodeId, supersededPath))
-                        {
-                            throw new FormatException(
-                                "Supersede has an invalid or inactive node identity");
-                        }
-                        break;
                     case "Revoke":
                         foreach (var node in RequiredStrings(payload, "affected_frozen_node_ids"))
                         {
@@ -111,6 +66,22 @@ public static class FrozenCoverageLedger
                                 throw new FormatException($"Revoke targets inactive frozen node {node}");
                             }
                             activePaths.Remove(revokedPath);
+                        }
+                        break;
+                    case "Reattest":
+                        var reattestedNodeId = RequiredString(payload, "frozen_node_id");
+                        var reattestedPathText = RequiredString(
+                            payload.GetProperty("input"),
+                            "descriptor_selector");
+                        var priorNode = active.SingleOrDefault(
+                            item => item.Value.Value == reattestedPathText);
+                        if (!FrozenHashSyntax.IsSha256(reattestedNodeId)
+                            || priorNode.Equals(default(KeyValuePair<string, RepoPath>))
+                            || !active.Remove(priorNode.Key, out var reattestedPath)
+                            || !active.TryAdd(reattestedNodeId, reattestedPath))
+                        {
+                            throw new FormatException(
+                                "Reattest has an invalid or inactive node identity");
                         }
                         break;
                     default:
@@ -130,16 +101,6 @@ public static class FrozenCoverageLedger
         {
             return new FrozenCoverageLoadOutcome.Invalid(exception.Message);
         }
-    }
-
-    private static JsonElement RequiredObject(JsonElement value, string property)
-    {
-        if (!value.TryGetProperty(property, out var result) || result.ValueKind != JsonValueKind.Object)
-        {
-            throw new FormatException($"ledger event {property} must be an object");
-        }
-
-        return result;
     }
 
     private static string RequiredString(JsonElement value, string property)

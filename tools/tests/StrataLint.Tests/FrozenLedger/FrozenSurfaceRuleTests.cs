@@ -11,8 +11,6 @@ public sealed class FrozenSurfaceRuleTests
     private const string OtherPath = RuleFixture.BlueprintPath;
     private const string FrozenNodeId =
         "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-    private const string ReattestedNodeId =
-        "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
 
     [Theory]
     [InlineData(RawChangeKind.Modified)]
@@ -59,8 +57,7 @@ public sealed class FrozenSurfaceRuleTests
 
         var diagnostic = Assert.Single(evaluation.Diagnostics);
         Assert.Equal(eventPath, diagnostic.Path);
-        Assert.Contains("ledger-sync", diagnostic.Message, StringComparison.Ordinal);
-        Assert.DoesNotContain("ledger-reattest", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains("ledger-append", diagnostic.Message, StringComparison.Ordinal);
         Assert.Contains("already-frozen fragment", diagnostic.Message, StringComparison.Ordinal);
     }
 
@@ -76,22 +73,6 @@ public sealed class FrozenSurfaceRuleTests
     }
 
     [Fact]
-    public void AddedReattestPreparationRejectsIncompletePayload()
-    {
-        var fixture = FrozenFixture();
-        var reattestPath = AddIncompleteReattest(fixture, ReattestedNodeId, FrozenPath);
-
-        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
-            RawRepositorySnapshot.Create(fixture.Files.Select(pair =>
-                RawRepositoryEntry.FromText(pair.Key, pair.Value))))).Snapshot;
-
-        var outcome = FrozenAcceptedEventLoader.LoadFiles(
-            [snapshot.Files[RepoPath.CreateKnown(reattestPath)]]);
-
-        Assert.IsType<DagLedgerFilesLoadOutcome.Invalid>(outcome);
-    }
-
-    [Fact]
     public void Sl008IgnoresModifiedNonFrozenModule()
     {
         var fixture = FrozenFixture();
@@ -104,13 +85,12 @@ public sealed class FrozenSurfaceRuleTests
     private static RuleFixture FrozenFixture()
     {
         var fixture = new RuleFixture();
-        _ = AddEvent(fixture, "Freeze", FrozenNodeId, FrozenPath);
+        _ = AddFreeze(fixture, FrozenNodeId, FrozenPath);
         return fixture;
     }
 
-    private static string AddEvent(
+    private static string AddFreeze(
         RuleFixture fixture,
-        string eventType,
         string frozenNodeId,
         string descriptorSelector)
     {
@@ -130,73 +110,31 @@ public sealed class FrozenSurfaceRuleTests
             base_tree_oid = "git-sha1:" + new string('2', 40),
             descriptor_blob_oid = "git-sha1:" + new string('3', 40),
             descriptor_selector = descriptorSelector,
-            materializer = "repository-snapshot-v1",
             supporting_blob_oids = Array.Empty<string>(),
         };
-        var payload = eventType switch
-        {
-            "Freeze" => JsonSerializer.SerializeToElement(new
-            {
-                case_class = "active-frozen",
-                case_id = "delta-v0.1/freeze",
-                declaration_statement_ids = declarationStatementIds,
-                evaluation = "admission",
-                expected = new
-                {
-                    allowed_dispositions = new[] { "admit" },
-                    diagnostic_match = "none",
-                    required_diagnostics = Array.Empty<object>(),
-                },
-                frozen_node_id = frozenNodeId,
-                input,
-                input_fingerprint = "sha256:" + new string('4', 64),
-                node_path = descriptorSelector,
-                prerequisite_frozen_node_ids = Array.Empty<string>(),
-                semantic_receipt = "sha256:" + new string('5', 64),
-                statement_id = "sha256:" + new string('6', 64),
-                truth_state = "Closed",
-                witness_id = "sha256:" + new string('7', 64),
-            }),
-            "Reattest" => JsonSerializer.SerializeToElement(new
-            {
-                case_id = "delta-v0.1/reattest",
-                declaration_statement_ids = declarationStatementIds,
-                frozen_node_id = frozenNodeId,
-                input,
-                input_fingerprint = "sha256:" + new string('4', 64),
-                prerequisite_frozen_node_ids = Array.Empty<string>(),
-                previous_attestation_event_hash = "sha256:" + new string('8', 64),
-                semantic_receipt = "sha256:" + new string('5', 64),
-                statement_id = "sha256:" + new string('6', 64),
-                witness_id = "sha256:" + new string('7', 64),
-            }),
-            _ => throw new ArgumentOutOfRangeException(nameof(eventType)),
-        };
-        var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(eventType, payload);
-        var path = FrozenLedgerChangeClassifier.AcceptedPath(frozenNodeId);
-        fixture.Files[path] = Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
-        return path;
-    }
-
-    private static string AddIncompleteReattest(
-        RuleFixture fixture,
-        string frozenNodeId,
-        string descriptorSelector)
-    {
         var payload = JsonSerializer.SerializeToElement(new
         {
-            frozen_node_id = frozenNodeId,
-            input = new
+            case_class = "active-frozen",
+            case_id = "delta-v0.1/freeze",
+            declaration_statement_ids = declarationStatementIds,
+            evaluation = "admission",
+            expected = new
             {
-                base_commit_oid = "git-sha1:" + new string('1', 40),
-                base_tree_oid = "git-sha1:" + new string('2', 40),
-                descriptor_blob_oid = "git-sha1:" + new string('3', 40),
-                descriptor_selector = descriptorSelector,
-                materializer = "repository-snapshot-v1",
-                supporting_blob_oids = Array.Empty<string>(),
+                allowed_dispositions = new[] { "admit" },
+                diagnostic_match = "none",
+                required_diagnostics = Array.Empty<object>(),
             },
+            frozen_node_id = frozenNodeId,
+            input,
+            input_fingerprint = "sha256:" + new string('4', 64),
+            node_path = descriptorSelector,
+            prerequisite_frozen_node_ids = Array.Empty<string>(),
+            semantic_receipt = "sha256:" + new string('5', 64),
+            statement_id = "sha256:" + new string('6', 64),
+            truth_state = "Closed",
+            witness_id = "sha256:" + new string('7', 64),
         });
-        var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent("Reattest", payload);
+        var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent("Freeze", payload);
         var path = FrozenLedgerChangeClassifier.AcceptedPath(frozenNodeId);
         fixture.Files[path] = Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
         return path;
