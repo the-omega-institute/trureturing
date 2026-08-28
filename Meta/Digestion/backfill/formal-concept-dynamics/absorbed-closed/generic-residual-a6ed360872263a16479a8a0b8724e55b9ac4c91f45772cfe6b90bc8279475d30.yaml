@@ -1,14 +1,14 @@
-ast_path: 定理/8.1
+ast_path: 定理/239.1
 fingerprints:
-  raw_sha256: sha256:62be66b882a215e777ad4a7c57fcb3ad49845eec0a4ec5f240b18fbe78278484
-  normalized_sha256: sha256:62be66b882a215e777ad4a7c57fcb3ad49845eec0a4ec5f240b18fbe78278484
-cas_ref: sha256:62be66b882a215e777ad4a7c57fcb3ad49845eec0a4ec5f240b18fbe78278484
+  raw_sha256: sha256:a6ed360872263a16479a8a0b8724e55b9ac4c91f45772cfe6b90bc8279475d30
+  normalized_sha256: sha256:a6ed360872263a16479a8a0b8724e55b9ac4c91f45772cfe6b90bc8279475d30
+cas_ref: sha256:a6ed360872263a16479a8a0b8724e55b9ac4c91f45772cfe6b90bc8279475d30
 coverage_gids:
   - D5/S3/ConceptDynamics/ConceptJoinUniversal.concept_join_universal
 receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/ConceptJoinUniversal.concept_join_universal
-      source_sha256: sha256:62be66b882a215e777ad4a7c57fcb3ad49845eec0a4ec5f240b18fbe78278484
+      source_sha256: sha256:a6ed360872263a16479a8a0b8724e55b9ac4c91f45772cfe6b90bc8279475d30
       target_sha256: sha256:07069fa41072b7b124329290d5b1eb64e5d4875acbdb7c5954b799f60bc2818f
   scribe:
     - gid: D5/S3/ConceptDynamics/ConceptJoinUniversal.concept_join_universal
