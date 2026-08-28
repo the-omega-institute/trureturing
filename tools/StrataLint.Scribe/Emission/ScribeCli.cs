@@ -9,7 +9,12 @@ public static class ScribeCli
         ImmutableHashSet.Create(StringComparer.Ordinal, "emit", "emit-values", "filemap");
 
     public static ImmutableArray<string> ImplementedCommands { get; } =
-        ["describe-report", .. EmissionCommands.Order(StringComparer.Ordinal), "projections"];
+    [
+        "describe-report",
+        .. EmissionCommands.Order(StringComparer.Ordinal),
+        "markdown-check",
+        "projections",
+    ];
 
     public static int Run(
         IReadOnlyList<string> arguments,
@@ -23,7 +28,16 @@ public static class ScribeCli
         string workingDirectory,
         TextWriter output,
         TextWriter error,
-        LeanAxiomReport? leanReport)
+        TextReader input) =>
+        Run(arguments, workingDirectory, output, error, leanReport: null, input);
+
+    internal static int Run(
+        IReadOnlyList<string> arguments,
+        string workingDirectory,
+        TextWriter output,
+        TextWriter error,
+        LeanAxiomReport? leanReport,
+        TextReader? input = null)
     {
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentException.ThrowIfNullOrWhiteSpace(workingDirectory);
@@ -56,6 +70,44 @@ public static class ScribeCli
                     error.WriteLine(finding);
                 }
                 return findings.IsEmpty ? 0 : 1;
+            }
+            catch (Exception exception) when (
+                exception is IOException
+                    or UnauthorizedAccessException
+                    or ArgumentException
+                    or FormatException
+                    or InvalidOperationException)
+            {
+                error.WriteLine(exception.Message);
+                return 2;
+            }
+        }
+
+        if (command == "markdown-check")
+        {
+            if (arguments.Count != 5
+                || !string.Equals(arguments[1], "--report", StringComparison.Ordinal)
+                || string.IsNullOrWhiteSpace(arguments[2])
+                || !string.Equals(arguments[3], "--paths-from", StringComparison.Ordinal)
+                || string.IsNullOrWhiteSpace(arguments[4]))
+            {
+                error.WriteLine(Usage);
+                return 2;
+            }
+
+            try
+            {
+                var repositoryRoot = FindRepositoryRoot(workingDirectory);
+                var report = leanReport ?? LeanCompiledArtifactReports.ReadRepository(
+                    repositoryRoot,
+                    arguments[2]);
+
+                // The caller owns the diff: git references stay in the workflow, and this
+                // verb judges exactly the paths it is handed.
+                var scope = new MarkdownFormulaScope(
+                    repositoryRoot,
+                    ReadPaths(arguments[4], input));
+                return ScribeEmitter.CheckMarkdown(repositoryRoot, output, error, report, scope);
             }
             catch (Exception exception) when (
                 exception is IOException
@@ -147,7 +199,17 @@ public static class ScribeCli
     private const string Usage =
         "usage: dotnet run --project tools/StrataLint.Scribe -- "
         + "emit|emit-values|filemap [--check] | describe-report [--json] [--check] "
-        + "| projections --check --report <file>";
+        + "| projections --check --report <file> "
+        + "| markdown-check --report <file> --paths-from <file|->";
+
+    /// <summary>
+    /// The paths to judge. `-` reads them from standard input, which keeps the change's
+    /// paths out of a temporary file the caller would then have to clean up.
+    /// </summary>
+    private static ImmutableArray<string> ReadPaths(string pathsFile, TextReader? input) =>
+        MarkdownFormulaScope.ParsePaths(string.Equals(pathsFile, "-", StringComparison.Ordinal)
+            ? (input ?? Console.In).ReadToEnd()
+            : File.ReadAllText(pathsFile));
 
     private static string FindRepositoryRoot(string workingDirectory)
     {
