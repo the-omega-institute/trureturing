@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Arith/Lattices/EnergyBoundarySelectionLaw.energy_boundary_selection_law
       source_sha256: sha256:2e20a4f1d9a5c9f2d03f6681ec527c08f7b7df25e19988bdc73e1764c93a947e
-      target_sha256: sha256:31bfe7eeda7fe17e9090abe8856a049e34b32d75148f284eb515f94782730853
+      target_statement_id: sha256:71e4de035e278f7dda250f3148d159d1d7cfe4c71d1b31bada8d1466591b9d72
   scribe:
     - gid: D5/S3/Arith/Lattices/EnergyBoundarySelectionLaw.energy_boundary_selection_law
       definition_sha256: sha256:5fe3f4c91d909a10f33474e9b14d068e0fbf4c1c67fe094d556de95cc4fff917

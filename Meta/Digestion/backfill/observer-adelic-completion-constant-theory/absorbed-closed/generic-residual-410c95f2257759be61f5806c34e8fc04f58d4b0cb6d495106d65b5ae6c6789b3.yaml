@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Constants/Characterizations/OptimalLogarithmicShell.exp_one_unique_logarithmic_shell_minimizer
       source_sha256: sha256:410c95f2257759be61f5806c34e8fc04f58d4b0cb6d495106d65b5ae6c6789b3
-      target_sha256: sha256:e35075029d4918caf12fccddae47fa06971fe1c16bb11da1915f4a324c3f4519
+      target_statement_id: sha256:03a4e74cdbb6641baf8169b03b3da29cb3a7b61998e43ccbb215c2f76d00e390
   scribe:
     - gid: D5/S3/Constants/Characterizations/OptimalLogarithmicShell.exp_one_unique_logarithmic_shell_minimizer
       definition_sha256: sha256:3bf029ed825e8a489d3319b93fc3ff9e86c0f4514eb3ec99e2180ab97f4e209e

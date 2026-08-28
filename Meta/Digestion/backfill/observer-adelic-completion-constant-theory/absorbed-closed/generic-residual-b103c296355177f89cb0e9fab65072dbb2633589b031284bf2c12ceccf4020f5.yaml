@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Arith/Lattices/RamifiedFiveDissection.ramified_five_dissection
       source_sha256: sha256:b103c296355177f89cb0e9fab65072dbb2633589b031284bf2c12ceccf4020f5
-      target_sha256: sha256:34a7c52e4a1e34a508b95d686bbc872310d37f87fc70be78dc668a18e8dc72d5
+      target_statement_id: sha256:127673e7b64b345873c050d08ffa0d6f213a0d9892e680aecf355b6170b5d31a
   scribe:
     - gid: D5/S3/Arith/Lattices/RamifiedFiveDissection.ramified_five_dissection
       definition_sha256: sha256:a6c196c10c2617755e8871c110579c62a2ba8c3113de4407dece2e998819c8f1

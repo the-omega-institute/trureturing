@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Faithfulness/BareValueObservationNoninjective.bare_value_observation_not_injective
       source_sha256: sha256:e450b31e608e2c5d3af3c97a1aca45a2d46a42b5875a90f5a94b947a61db170e
-      target_sha256: sha256:6e6311ce52adfe78fe08ee6f47d612a32b799667cd8f11f2ef64dee555f0e471
+      target_statement_id: sha256:f090f969202194de31027a02278a3fa55bf698e371baf9e766bbfe8cea59f316
   scribe:
     - gid: D5/S3/ConceptDynamics/Faithfulness/BareValueObservationNoninjective.bare_value_observation_not_injective
       definition_sha256: sha256:fd8f23c06dcd223e3e8ba9d997cec19aca98667d05ddcc33c94f1fa9279a3fb8

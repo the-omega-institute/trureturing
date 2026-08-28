@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Constants/Characterizations/LocalPrecisionUnit.local_precision_unit_unique
       source_sha256: sha256:665905877ba7e0deb7d3b7cb896d5f5854d39bd4ae848540f736544b39b782f5
-      target_sha256: sha256:613ac80f8d72af6d5eeb2d246e4362a687d0167b7a867aeaf442e8e2f9c222cc
+      target_statement_id: sha256:c37dd76aa4251f3a3f147cba04e534b3d799c40738f1c5dc5bd80cbb84fcfd7a
   scribe:
     - gid: D5/S3/Constants/Characterizations/LocalPrecisionUnit.local_precision_unit_unique
       definition_sha256: sha256:0d8a85075c86b8ca0d0157f7439f592e151544f28b0ed14bad7b65e9bed693ac
