@@ -223,7 +223,8 @@ cache_try_restore() {
   # Completeness: the whole stored bundle must be present before we trust it.
   [[ -s "$report" && -s "${report}.sha256" \
     && -s "${report}.input.attestation" && -s "${report}.provenance.json" \
-    && -s "${report}.materials.zip" ]] \
+    && -s "${report}.materials.zip" \
+    && ! -e "${report}.logs" && ! -L "${report}.logs" ]] \
     || { cache_evict "$address"; return 1; }
   local declared="" declared_name=""
   read -r declared declared_name < "${report}.sha256" || true
@@ -392,6 +393,13 @@ verify_bundle() {
   local expected_provenance="$TMP_ROOT/expected.provenance.json"
   local expected_attestation="$TMP_ROOT/expected.input.attestation"
 
+  if [[ "$mode" == "produced" ]]; then
+    [[ -d "${output}.logs" && -n "$(find "${output}.logs" -type f -print -quit)" ]] \
+      || { echo "lean-report-pair: producer left no log sidecar: $output" >&2; return 2; }
+  else
+    [[ ! -e "${output}.logs" && ! -L "${output}.logs" ]] \
+      || { echo "lean-report-pair: cached bundle contains producer logs: $output" >&2; return 2; }
+  fi
   [[ -s "${output}.materials.zip" ]] \
     || { echo "lean-report-pair: producer left no material archive: $output" >&2; return 2; }
   "$INPUT_HELPER" verify --repository "$root" --report "$output" \

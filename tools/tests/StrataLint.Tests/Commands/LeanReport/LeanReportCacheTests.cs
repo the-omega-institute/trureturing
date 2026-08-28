@@ -47,6 +47,50 @@ public sealed class LeanReportCacheTests
     }
 
     [Fact]
+    public void ExactCacheEntryWithLegacyLogsFailsClosedAndIsReproduced()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var world = new CacheWorld();
+        var first = world.RunPair();
+        Assert.Equal(0, first.ExitCode);
+        var address = world.AddressFrom(first);
+        world.AddLegacyLogsToCacheEntry(address);
+
+        var second = world.RunPair();
+
+        Assert.Equal(0, second.ExitCode);
+        Assert.Equal(2, world.ProducerRunCount);
+        Assert.Equal("produced", world.LiveMode());
+        Assert.False(world.CacheEntryHasLogs(address));
+    }
+
+    [Fact]
+    public void ProducedBundleWithLogsPassesVerificationAndPublishesLiveLogs()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var world = new CacheWorld();
+
+        var result = world.RunPair(cacheEnabled: false);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal("produced", world.LiveMode());
+        Assert.True(world.LiveLogsExist());
+    }
+
+    [Fact]
+    public void ProducedBundleWithoutLogsFailsClosedBeforePublication()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var world = new CacheWorld();
+
+        var result = world.RunPair(cacheEnabled: false, omitProducerLogs: true);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Equal(1, world.ProducerRunCount);
+        Assert.False(world.LiveBundleExists());
+    }
+
+    [Fact]
     public void CorruptedCacheReportFailsClosedAndIsReproduced()
     {
         if (OperatingSystem.IsWindows()) return;
@@ -335,6 +379,7 @@ public sealed class LeanReportCacheTests
         internal ProcessOutput RunPair(
             bool cacheEnabled = true,
             bool producerFails = false,
+            bool omitProducerLogs = false,
             string? failureStage = null,
             int reportVersion = 1)
         {
@@ -350,6 +395,7 @@ public sealed class LeanReportCacheTests
             arguments.Add($"STUB_PRODUCER_LOG={ProducerLog}");
             arguments.Add($"STUB_REPORT_CONTENT={{\"schema\":\"stub-lean-report\",\"v\":{reportVersion}}}");
             if (producerFails || failureStage == "producer") arguments.Add("STUB_PRODUCER_FAIL=1");
+            if (omitProducerLogs) arguments.Add("STUB_OMIT_LOGS=1");
             if (failureStage == "supervisor") arguments.Add("STUB_SUPERVISOR_FAIL=1");
             if (failureStage == "verification") arguments.Add("STUB_BAD_SHA=1");
             if (failureStage == "sidecar") arguments.Add("STUB_SIDECAR_FAIL=1");
@@ -373,6 +419,28 @@ public sealed class LeanReportCacheTests
                 Repo,
                 TestBudgets.WorkflowProcessHangGuard,
                 1024 * 1024);
+        }
+
+        internal void AddLegacyLogsToCacheEntry(string address)
+        {
+            var logs = Path.Combine(CacheRoot, address, "raw-lean-report.json.logs");
+            Directory.CreateDirectory(logs);
+            File.WriteAllText(Path.Combine(logs, "producer.log"), "legacy\n");
+        }
+
+        internal bool CacheEntryHasLogs(string address) => Directory.Exists(
+            Path.Combine(CacheRoot, address, "raw-lean-report.json.logs"));
+
+        internal bool LiveLogsExist() => Directory.Exists(Output + ".logs")
+            && Directory.EnumerateFiles(Output + ".logs", "*", SearchOption.AllDirectories).Any();
+
+        internal bool LiveBundleExists() => File.Exists(Output);
+
+        internal string LiveMode()
+        {
+            using var provenance = System.Text.Json.JsonDocument.Parse(
+                File.ReadAllText(Output + ".provenance.json"));
+            return provenance.RootElement.GetProperty("mode").GetString()!;
         }
 
         internal string[] SnapshotLiveBundle()
@@ -477,8 +545,10 @@ public sealed class LeanReportCacheTests
             if [[ -n "${STUB_BAD_SHA:-}" ]]; then h="$(printf '0%.0s' {1..64})"; fi
             printf '%s  %s\n' "$h" "$(basename "$output")" > "${output}.sha256"
             rm -rf -- "${output}.logs"
-            mkdir -p "${output}.logs"
-            printf '%s\n' "$STUB_REPORT_CONTENT" > "${output}.logs/producer.log"
+            if [[ -z "${STUB_OMIT_LOGS:-}" ]]; then
+              mkdir -p "${output}.logs"
+              printf '%s\n' "$STUB_REPORT_CONTENT" > "${output}.logs/producer.log"
+            fi
             if [[ -n "${STUB_SIDECAR_FAIL:-}" ]]; then
               mkdir "${output}.provenance.json"
             fi

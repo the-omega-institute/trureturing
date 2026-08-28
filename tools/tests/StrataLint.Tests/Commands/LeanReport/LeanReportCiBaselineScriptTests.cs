@@ -17,10 +17,30 @@ internal static class LeanReportCiBaselineScriptContract
         if (OperatingSystem.IsWindows()) return;
 
         CompleteFlatBundleBecomesAContentAddressedDeltaEntry();
+        DeltaBaselineWithLegacyLogsIsRejected();
         foreach (var damage in new[] { "missing-provenance", "damaged-provenance", "missing-materials" })
         {
             UntrustedBundleIsANonFatalBaselineMiss(damage);
         }
+    }
+
+    private static void DeltaBaselineWithLegacyLogsIsRejected()
+    {
+        using var temporary = new TemporaryDirectory();
+        var bundle = Path.Combine(temporary.Path, "bundle", "raw-lean-report.json");
+        var cache = Path.Combine(temporary.Path, "cache");
+        WriteBundle(bundle);
+        Assert.Equal(0, Run(bundle, cache).ExitCode);
+        var entry = Path.Combine(cache, Address, "raw-lean-report.json");
+        Directory.CreateDirectory(entry + ".logs");
+        File.WriteAllText(
+            Path.Combine(entry + ".logs", "producer.log"),
+            "legacy\n",
+            new UTF8Encoding(false));
+
+        var plan = RunDeltaPlan(temporary.Path, cache);
+
+        Assert.Contains("\"status\": \"fallback\"", File.ReadAllText(plan), StringComparison.Ordinal);
     }
 
     private static void CompleteFlatBundleBecomesAContentAddressedDeltaEntry()
@@ -43,16 +63,22 @@ internal static class LeanReportCiBaselineScriptContract
             Assert.True(File.Exists(entry + suffix), $"staged baseline member is missing: {suffix}");
         }
         Assert.False(Directory.Exists(entry + ".logs"));
-        var modules = Path.Combine(temporary.Path, "modules.tsv");
-        var plan = Path.Combine(temporary.Path, "plan.json");
+        var plan = RunDeltaPlan(temporary.Path, cache);
+        Assert.Contains("\"status\": \"reuse\"", File.ReadAllText(plan), StringComparison.Ordinal);
+    }
+
+    private static string RunDeltaPlan(string temporaryPath, string cache)
+    {
+        var modules = Path.Combine(temporaryPath, "modules.tsv");
+        var plan = Path.Combine(temporaryPath, "plan.json");
         File.WriteAllText(modules, string.Empty, new UTF8Encoding(false));
         var delta = BoundedProcessRunner.Run(
             "python3",
             [Path.Combine(TestRepositoryLayout.FindRoot(), "tools/lean-inspector/delta.py"), "plan",
-                temporary.Path, cache, new string('b', 64), Producer, Resident, Config, modules, plan],
-            temporary.Path, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+                temporaryPath, cache, new string('b', 64), Producer, Resident, Config, modules, plan],
+            temporaryPath, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
         Assert.Equal(0, delta.ExitCode);
-        Assert.Contains("\"status\": \"reuse\"", File.ReadAllText(plan), StringComparison.Ordinal);
+        return plan;
     }
 
     private static void UntrustedBundleIsANonFatalBaselineMiss(string damage)

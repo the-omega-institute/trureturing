@@ -102,6 +102,9 @@ def valid_baseline(
     if not HEX64.fullmatch(entry.name) or entry.name == current_address:
         return None
     report = entry / "raw-lean-report.json"
+    logs = entry / "raw-lean-report.json.logs"
+    if logs.exists() or logs.is_symlink():
+        return None
     attestation = pathlib.Path(str(report) + ".input.attestation")
     provenance = pathlib.Path(str(report) + ".provenance.json")
     if not (report.is_file() and sidecar_path(report).is_file()
