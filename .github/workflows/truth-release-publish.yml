@@ -264,6 +264,13 @@ jobs:
           # RUNNER_TEMP, and sample /tmp + /dev/shm so this run confirms whether the
           # default temp was tmpfs and whether the redirect stops the collapse.
           export TMPDIR="$RUNNER_TEMP"
+          # The producer's StrataLint process grows its managed heap linearly to ~15GB
+          # and OOMs the 16GB runner. On a multi-core runner .NET defaults to Server GC,
+          # which grows heaps aggressively and collects lazily while memory is available,
+          # so allocation-heavy work runs the box out of RAM before a gen2 collection.
+          # Force workstation GC with eager memory conservation so the heap stays bounded.
+          export DOTNET_gcServer=0
+          export DOTNET_GCConserveMemory=9
           printf 'TRDIAG tmp_mounts /tmp=[%s] shm=[%s] RUNNER_TEMP=[%s]\n' \
             "$(df -h /tmp 2>/dev/null | awk 'NR==2{print $1" size="$2" avail="$4}')" \
             "$(df -h /dev/shm 2>/dev/null | awk 'NR==2{print $1" size="$2" avail="$4}')" \
