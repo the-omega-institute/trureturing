@@ -22,6 +22,23 @@ Define the artifact-to-artifact producer-edge relation by
   \mathsf{resolve}(q)=\mathsf{some}(a).
 \]
 
+Define resolution completeness by
+
+\[
+\mathsf{ResolutionComplete}
+\quad\Longleftrightarrow\quad
+\forall x\;q,\;
+  \mathsf{producer}(x)=\mathsf{some}(q)
+  \to \exists a,\;\mathsf{resolve}(q)=\mathsf{some}(a).
+\]
+
+An artifact relation `E` is an admissible producer graph exactly when
+`ResolutionComplete` holds and
+
+\[
+\forall a\;x,\;E(a,x)\leftrightarrow\mathsf{ProducerEdge}(a,x).
+\]
+
 Thus every producer edge is witnessed by a resolved artifact. In particular,
 for every `x` and `q`,
 
@@ -33,8 +50,10 @@ for every `x` and `q`,
 \forall a,\;\neg\mathsf{ProducerEdge}(a,x).
 \]
 
-An unresolved producer actor therefore produces no artifact edge. It is not
-represented by an empty edge whose source silently disappeared.
+The same premises refute `ResolutionComplete`, so no relation `E` is an
+admissible producer graph. An unresolved producer actor therefore produces no
+artifact edge, but it also makes the graph fail closed; it cannot be accepted
+as an empty family of edges whose source silently disappeared.
 
 ## Proposition 2. Consumption is not inverse to production input
 
