@@ -134,9 +134,9 @@ internal static class DirectoryLedgerTestSupport
             + "\n"));
     }
 
-    internal static string RepositoryImage(string repositoryRoot)
+    internal static string RepositoryImage(TemporaryDirectory repository)
     {
-        var root = Path.GetFullPath(repositoryRoot);
+        var root = Path.GetFullPath(repository.Path);
         return string.Concat(Directory.EnumerateFiles(root, "*", SearchOption.AllDirectories)
             .Order(StringComparer.Ordinal)
             .Select(path => Path.GetRelativePath(root, path).Replace(Path.DirectorySeparatorChar, '/')
@@ -146,9 +146,10 @@ internal static class DirectoryLedgerTestSupport
     }
 
     internal static Dictionary<string, string> OverlayRepositoryFiles(
-        string repositoryRoot,
+        TemporaryDirectory repository,
         IReadOnlyDictionary<string, string> files)
     {
+        var repositoryRoot = repository.Path;
         var result = new Dictionary<string, string>(files, StringComparer.Ordinal);
         foreach (var path in Directory.EnumerateFiles(
                      repositoryRoot,

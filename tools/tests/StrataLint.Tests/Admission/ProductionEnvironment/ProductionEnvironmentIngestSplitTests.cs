@@ -45,7 +45,7 @@ public sealed partial class ProductionEnvironmentTests
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty),
             ["--base", "baseline"]);
         Assert.True(alignedResult.Success, alignedResult.Error);
-        Assert.Equal(GeneratedIngestImage(alignedRoot.Path), GeneratedIngestImage(reportFreeRoot.Path));
+        Assert.Equal(GeneratedIngestImage(alignedRoot), GeneratedIngestImage(reportFreeRoot));
     }
 
     [Fact]
@@ -67,9 +67,9 @@ public sealed partial class ProductionEnvironmentTests
         var firstResult = first.Ingest(ReportInputUnchangedArguments);
 
         Assert.True(firstResult.Success, firstResult.Error);
-        var afterFirst = GeneratedIngestImage(temporary.Path);
+        var afterFirst = GeneratedIngestImage(temporary);
         var generated = DirectoryLedgerTestSupport.OverlayRepositoryFiles(
-            temporary.Path,
+            temporary,
             fixture.Files);
 
         var reportSource = new FakeLeanReportSource(report: null);
@@ -89,7 +89,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("ledger_changed=false", secondResult.Output, StringComparison.Ordinal);
         Assert.Equal(0, reportSource.CallCount);
         Assert.Equal(0, scribeVerifier.CallCount);
-        Assert.Equal(afterFirst, GeneratedIngestImage(temporary.Path));
+        Assert.Equal(afterFirst, GeneratedIngestImage(temporary));
     }
 
     [Fact]
@@ -98,7 +98,7 @@ public sealed partial class ProductionEnvironmentTests
         var fixture = UncoveredOnlyIngestFixture();
         using var temporary = new TemporaryDirectory();
         WriteDirectoryLedger(temporary.Path, fixture.Files);
-        var before = GeneratedIngestImage(temporary.Path);
+        var before = GeneratedIngestImage(temporary);
         var reportSource = new FakeLeanReportSource(report: null);
         var scribeVerifier = new FakeScribeEmissionVerifier(verification: null);
         var environment = new ProductionCliEnvironment(
@@ -118,7 +118,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("make align-digestion-status", result.Error, StringComparison.Ordinal);
         Assert.Equal(0, reportSource.CallCount);
         Assert.Equal(0, scribeVerifier.CallCount);
-        Assert.Equal(before, GeneratedIngestImage(temporary.Path));
+        Assert.Equal(before, GeneratedIngestImage(temporary));
     }
 
     [Fact]
@@ -133,7 +133,7 @@ public sealed partial class ProductionEnvironmentTests
             StringComparison.Ordinal);
         using var temporary = new TemporaryDirectory();
         WriteDirectoryLedger(temporary.Path, fixture.Files);
-        var before = GeneratedIngestImage(temporary.Path);
+        var before = GeneratedIngestImage(temporary);
         var reportSource = new FakeLeanReportSource(report: null);
         var environment = new ProductionCliEnvironment(
             temporary.Path,
@@ -150,7 +150,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("INGEST_TRUTH_ALIGNMENT_REQUIRED", result.Error, StringComparison.Ordinal);
         Assert.Contains("existing entry", result.Error, StringComparison.Ordinal);
         Assert.Equal(0, reportSource.CallCount);
-        Assert.Equal(before, GeneratedIngestImage(temporary.Path));
+        Assert.Equal(before, GeneratedIngestImage(temporary));
     }
 
     [Fact]
@@ -279,7 +279,7 @@ public sealed partial class ProductionEnvironmentTests
 
         using var temporary = new TemporaryDirectory();
         WriteDirectoryLedger(temporary.Path, fixture.Files);
-        var before = GeneratedIngestImage(temporary.Path);
+        var before = GeneratedIngestImage(temporary);
         var reportSource = new FakeLeanReportSource(report: null);
         var environment = new ProductionCliEnvironment(
             temporary.Path,
@@ -296,7 +296,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("INGEST_TRUTH_ALIGNMENT_REQUIRED", result.Error, StringComparison.Ordinal);
         Assert.Contains("coverage-bearing", result.Error, StringComparison.Ordinal);
         Assert.Equal(0, reportSource.CallCount);
-        Assert.Equal(before, GeneratedIngestImage(temporary.Path));
+        Assert.Equal(before, GeneratedIngestImage(temporary));
     }
 
     [Fact]
@@ -509,7 +509,7 @@ public sealed partial class ProductionEnvironmentTests
         InstallProjectedLedger(fixture, ledger, atom);
         using var temporary = new TemporaryDirectory();
         WriteDirectoryLedger(temporary.Path, fixture.Files);
-        var before = GeneratedIngestImage(temporary.Path);
+        var before = GeneratedIngestImage(temporary);
         var reportSource = new FakeLeanReportSource(report: null);
         var environment = new ProductionCliEnvironment(
             temporary.Path,
@@ -525,7 +525,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.False(result.Success);
         Assert.Contains("invalid source_id: INVALID", result.Error, StringComparison.Ordinal);
         Assert.Equal(0, reportSource.CallCount);
-        Assert.Equal(before, GeneratedIngestImage(temporary.Path));
+        Assert.Equal(before, GeneratedIngestImage(temporary));
     }
 
     [Fact]
@@ -547,7 +547,7 @@ public sealed partial class ProductionEnvironmentTests
         InstallProjectedLedger(fixture, ledger, atom);
         using var temporary = new TemporaryDirectory();
         WriteDirectoryLedger(temporary.Path, fixture.Files);
-        var before = GeneratedIngestImage(temporary.Path);
+        var before = GeneratedIngestImage(temporary);
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(
@@ -562,7 +562,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.False(result.Success);
         Assert.Contains("report-free digest status is invalid", result.Error, StringComparison.Ordinal);
         Assert.Contains("handwritten status partial-open differs from derived residual-open", result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, GeneratedIngestImage(temporary.Path));
+        Assert.Equal(before, GeneratedIngestImage(temporary));
     }
 
     private static RuleFixture UncoveredOnlyIngestFixture(
@@ -595,7 +595,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         using var temporary = new TemporaryDirectory();
         WriteDirectoryLedger(temporary.Path, fixture.Files);
-        var before = GeneratedIngestImage(temporary.Path);
+        var before = GeneratedIngestImage(temporary);
         var reportSource = new FakeLeanReportSource(report: null);
         var scribeVerifier = new FakeScribeEmissionVerifier(verification: null);
         var environment = new ProductionCliEnvironment(
@@ -614,11 +614,11 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains(witness, result.Error, StringComparison.Ordinal);
         Assert.Equal(0, reportSource.CallCount);
         Assert.Equal(0, scribeVerifier.CallCount);
-        Assert.Equal(before, GeneratedIngestImage(temporary.Path));
+        Assert.Equal(before, GeneratedIngestImage(temporary));
     }
 
-    private static string GeneratedIngestImage(string repositoryRoot) =>
-        DirectoryLedgerTestSupport.RepositoryImage(repositoryRoot);
+    private static string GeneratedIngestImage(TemporaryDirectory repository) =>
+        DirectoryLedgerTestSupport.RepositoryImage(repository);
 
     private static string DirectorySourceMetadataPath() =>
         $"{BackfillInventoryLoader.RootPath}fixture-source/source.toml";
