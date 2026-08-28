@@ -1,0 +1,17 @@
+ast_path: 定理/248.1
+fingerprints:
+  raw_sha256: sha256:57bf7455641c437e7a15e0fcc9e977c00f49376a673037af654efa7a6024b633
+  normalized_sha256: sha256:57bf7455641c437e7a15e0fcc9e977c00f49376a673037af654efa7a6024b633
+cas_ref: sha256:57bf7455641c437e7a15e0fcc9e977c00f49376a673037af654efa7a6024b633
+coverage_gids:
+  - D5/S3/ObserverMemory/PredictionFactors/CanonicalPredictiveStateSufficiency.canonical_predictive_state_is_sufficient
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/PredictionFactors/CanonicalPredictiveStateSufficiency.canonical_predictive_state_is_sufficient
+      source_sha256: sha256:57bf7455641c437e7a15e0fcc9e977c00f49376a673037af654efa7a6024b633
+      target_statement_id: sha256:74a90cd447e2a773c88a4934c4cce7cb9f0ca37fb5f6d31943c7794091780aac
+  scribe:
+    - gid: D5/S3/ObserverMemory/PredictionFactors/CanonicalPredictiveStateSufficiency.canonical_predictive_state_is_sufficient
+      definition_sha256: sha256:f064c21f58c033b14b63e4c3669a38b97bbe546f24cba96eddfe01213e02b603
+      emission_sha256: sha256:bc63e1cfa65ccd28e1d31a159cae9e799286cdb6cab188d50549b8267c980895
+  unresolved_subitems: []
