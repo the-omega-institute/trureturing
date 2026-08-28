@@ -13,7 +13,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Constants.IcosahedralGeometry.ProjectiveAxisDecomposition
 
 set_option maxHeartbeats 4000000 in
--- The normalizer certificate enumerates each fivefold axis and group element.
+-- The public certificate reuses the fixed-axis argument from the parts module.
 set_option maxRecDepth 100000 in
 theorem chartFivefoldNormalizerCertificate :
     ∀ p : ChartFivefoldAxis,
@@ -23,14 +23,6 @@ theorem chartFivefoldNormalizerCertificate :
             g ∈ Subgroup.normalizer (chartFiveCycleSubgroup p : Set IcosahedralGroup) := by
   change ∀ p, chartFivefoldNormalizerCertificateAt p
   intro p
-  fin_cases p
-  all_goals
-    first
-    | exact chartFivefoldNormalizerCertificateAt19
-    | exact chartFivefoldNormalizerCertificateAt20
-    | exact chartFivefoldNormalizerCertificateAt23
-    | exact chartFivefoldNormalizerCertificateAt25
-    | exact chartFivefoldNormalizerCertificateAt28
-    | exact chartFivefoldNormalizerCertificateAt29
+  exact chartFivefoldNormalizerCertificateAtAll p
 
 end D5.S3.Constants.IcosahedralGeometry.ProjectiveAxisDecomposition

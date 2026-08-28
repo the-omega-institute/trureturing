@@ -47,142 +47,54 @@ private theorem stabilizer_mem_fiveCycleNormalizer
         _ = g⁻¹ * (g * h * g⁻¹) ^ 5 * g := by rw [conj_pow]
         _ = 1 := by rw [hconjpow]; group
 
-private theorem certificateAt_of_not_stabilizer_witness
+set_option maxHeartbeats 4000000 in
+-- One five-cycle per fivefold axis certifies that its chart fixed point is unique.
+set_option maxRecDepth 100000 in
+private theorem chartFiveCycleUniqueFixedPoint :
+    ∀ p : ChartFivefoldAxis,
+      ∃ h : chartFiveCycleSubgroup p,
+        ∀ q : AxisChart, h.1 • q = q → q = p.1 := by
+  intro p
+  fin_cases p <;> decide
+
+private theorem fiveCycleNormalizer_mem_stabilizer
+    (p : ChartFivefoldAxis) (g : IcosahedralGroup)
+    (hg : g ∈ Subgroup.normalizer
+      (chartFiveCycleSubgroup p : Set IcosahedralGroup)) :
+    g ∈ MulAction.stabilizer IcosahedralGroup p.1 := by
+  change g • p.1 = p.1
+  obtain ⟨h, hfixed⟩ := chartFiveCycleUniqueFixedPoint p
+  apply hfixed
+  rw [Subgroup.mem_normalizer_iff] at hg
+  have hconj : g⁻¹ * h.1 * g ∈ chartFiveCycleSubgroup p := by
+    apply (hg (g⁻¹ * h.1 * g)).mpr
+    convert h.property using 1 <;> group
+  change (g⁻¹ * h.1 * g) • p.1 = p.1 ∧
+    (g⁻¹ * h.1 * g) ^ 5 = 1 at hconj
+  calc
+    h.1 • (g • p.1) = (h.1 * g) • p.1 := (mul_smul h.1 g p.1).symm
+    _ = (g * (g⁻¹ * h.1 * g)) • p.1 := by
+      apply congrArg (fun k : IcosahedralGroup => k • p.1)
+      group
+    _ = g • ((g⁻¹ * h.1 * g) • p.1) := mul_smul g (g⁻¹ * h.1 * g) p.1
+    _ = g • p.1 := congrArg (g • ·) hconj.1
+
+private theorem certificateAt_of_card
     (p : ChartFivefoldAxis)
-    (hcard : Fintype.card (chartFiveCycleSubgroup p) = 5)
-    (hwitness : ∀ g : IcosahedralGroup,
-      g ∉ MulAction.stabilizer IcosahedralGroup p.1 →
-        ∃ h : chartFiveCycleSubgroup p,
-          g * h.1 * g⁻¹ ∉ chartFiveCycleSubgroup p) :
+    (hcard : Fintype.card (chartFiveCycleSubgroup p) = 5) :
     chartFivefoldNormalizerCertificateAt p := by
   refine ⟨hcard, ?_⟩
   intro g
-  constructor
-  · exact stabilizer_mem_fiveCycleNormalizer p g
-  · intro hnormalizer
-    by_contra hg
-    obtain ⟨h, hh⟩ := hwitness g hg
-    rw [Subgroup.mem_normalizer_iff] at hnormalizer
-    exact hh ((hnormalizer h.1).mp h.property)
-
-set_option maxHeartbeats 4000000 in
--- The witness search enumerates the 60 group elements at chart axis 19.
-set_option maxRecDepth 100000 in
-private theorem chartFivefoldNormalizerWitnessAt19 :
-    ∀ g : IcosahedralGroup,
-      g ∉ MulAction.stabilizer IcosahedralGroup
-        (⟨19, by decide⟩ : ChartFivefoldAxis).1 →
-        ∃ h : chartFiveCycleSubgroup (⟨19, by decide⟩ : ChartFivefoldAxis),
-          g * h.1 * g⁻¹ ∉
-            chartFiveCycleSubgroup (⟨19, by decide⟩ : ChartFivefoldAxis) := by
-  intro g
-  fin_cases g <;> decide
+  exact ⟨stabilizer_mem_fiveCycleNormalizer p g,
+    fiveCycleNormalizer_mem_stabilizer p g⟩
 
 set_option maxRecDepth 100000 in
-theorem chartFivefoldNormalizerCertificateAt19 :
-    chartFivefoldNormalizerCertificateAt (⟨19, by decide⟩ : ChartFivefoldAxis) := by
-  apply certificateAt_of_not_stabilizer_witness
-  · decide
-  · exact chartFivefoldNormalizerWitnessAt19
+private theorem chartFiveCycleSubgroup_card (p : ChartFivefoldAxis) :
+    Fintype.card (chartFiveCycleSubgroup p) = 5 := by
+  fin_cases p <;> decide
 
-set_option maxHeartbeats 4000000 in
--- The witness search enumerates the 60 group elements at chart axis 20.
-set_option maxRecDepth 100000 in
-private theorem chartFivefoldNormalizerWitnessAt20 :
-    ∀ g : IcosahedralGroup,
-      g ∉ MulAction.stabilizer IcosahedralGroup
-        (⟨20, by decide⟩ : ChartFivefoldAxis).1 →
-        ∃ h : chartFiveCycleSubgroup (⟨20, by decide⟩ : ChartFivefoldAxis),
-          g * h.1 * g⁻¹ ∉
-            chartFiveCycleSubgroup (⟨20, by decide⟩ : ChartFivefoldAxis) := by
-  intro g
-  fin_cases g <;> decide
-
-set_option maxRecDepth 100000 in
-theorem chartFivefoldNormalizerCertificateAt20 :
-    chartFivefoldNormalizerCertificateAt (⟨20, by decide⟩ : ChartFivefoldAxis) := by
-  apply certificateAt_of_not_stabilizer_witness
-  · decide
-  · exact chartFivefoldNormalizerWitnessAt20
-
-set_option maxHeartbeats 4000000 in
--- The witness search enumerates the 60 group elements at chart axis 23.
-set_option maxRecDepth 100000 in
-private theorem chartFivefoldNormalizerWitnessAt23 :
-    ∀ g : IcosahedralGroup,
-      g ∉ MulAction.stabilizer IcosahedralGroup
-        (⟨23, by decide⟩ : ChartFivefoldAxis).1 →
-        ∃ h : chartFiveCycleSubgroup (⟨23, by decide⟩ : ChartFivefoldAxis),
-          g * h.1 * g⁻¹ ∉
-            chartFiveCycleSubgroup (⟨23, by decide⟩ : ChartFivefoldAxis) := by
-  intro g
-  fin_cases g <;> decide
-
-set_option maxRecDepth 100000 in
-theorem chartFivefoldNormalizerCertificateAt23 :
-    chartFivefoldNormalizerCertificateAt (⟨23, by decide⟩ : ChartFivefoldAxis) := by
-  apply certificateAt_of_not_stabilizer_witness
-  · decide
-  · exact chartFivefoldNormalizerWitnessAt23
-
-set_option maxHeartbeats 4000000 in
--- The witness search enumerates the 60 group elements at chart axis 25.
-set_option maxRecDepth 100000 in
-private theorem chartFivefoldNormalizerWitnessAt25 :
-    ∀ g : IcosahedralGroup,
-      g ∉ MulAction.stabilizer IcosahedralGroup
-        (⟨25, by decide⟩ : ChartFivefoldAxis).1 →
-        ∃ h : chartFiveCycleSubgroup (⟨25, by decide⟩ : ChartFivefoldAxis),
-          g * h.1 * g⁻¹ ∉
-            chartFiveCycleSubgroup (⟨25, by decide⟩ : ChartFivefoldAxis) := by
-  intro g
-  fin_cases g <;> decide
-
-set_option maxRecDepth 100000 in
-theorem chartFivefoldNormalizerCertificateAt25 :
-    chartFivefoldNormalizerCertificateAt (⟨25, by decide⟩ : ChartFivefoldAxis) := by
-  apply certificateAt_of_not_stabilizer_witness
-  · decide
-  · exact chartFivefoldNormalizerWitnessAt25
-
-set_option maxHeartbeats 4000000 in
--- The witness search enumerates the 60 group elements at chart axis 28.
-set_option maxRecDepth 100000 in
-private theorem chartFivefoldNormalizerWitnessAt28 :
-    ∀ g : IcosahedralGroup,
-      g ∉ MulAction.stabilizer IcosahedralGroup
-        (⟨28, by decide⟩ : ChartFivefoldAxis).1 →
-        ∃ h : chartFiveCycleSubgroup (⟨28, by decide⟩ : ChartFivefoldAxis),
-          g * h.1 * g⁻¹ ∉
-            chartFiveCycleSubgroup (⟨28, by decide⟩ : ChartFivefoldAxis) := by
-  intro g
-  fin_cases g <;> decide
-
-set_option maxRecDepth 100000 in
-theorem chartFivefoldNormalizerCertificateAt28 :
-    chartFivefoldNormalizerCertificateAt (⟨28, by decide⟩ : ChartFivefoldAxis) := by
-  apply certificateAt_of_not_stabilizer_witness
-  · decide
-  · exact chartFivefoldNormalizerWitnessAt28
-
-set_option maxHeartbeats 4000000 in
--- The witness search enumerates the 60 group elements at chart axis 29.
-set_option maxRecDepth 100000 in
-private theorem chartFivefoldNormalizerWitnessAt29 :
-    ∀ g : IcosahedralGroup,
-      g ∉ MulAction.stabilizer IcosahedralGroup
-        (⟨29, by decide⟩ : ChartFivefoldAxis).1 →
-        ∃ h : chartFiveCycleSubgroup (⟨29, by decide⟩ : ChartFivefoldAxis),
-          g * h.1 * g⁻¹ ∉
-            chartFiveCycleSubgroup (⟨29, by decide⟩ : ChartFivefoldAxis) := by
-  intro g
-  fin_cases g <;> decide
-
-set_option maxRecDepth 100000 in
-theorem chartFivefoldNormalizerCertificateAt29 :
-    chartFivefoldNormalizerCertificateAt (⟨29, by decide⟩ : ChartFivefoldAxis) := by
-  apply certificateAt_of_not_stabilizer_witness
-  · decide
-  · exact chartFivefoldNormalizerWitnessAt29
+theorem chartFivefoldNormalizerCertificateAtAll (p : ChartFivefoldAxis) :
+    chartFivefoldNormalizerCertificateAt p :=
+  certificateAt_of_card p (chartFiveCycleSubgroup_card p)
 
 end D5.S3.Constants.IcosahedralGeometry.ProjectiveAxisDecomposition
