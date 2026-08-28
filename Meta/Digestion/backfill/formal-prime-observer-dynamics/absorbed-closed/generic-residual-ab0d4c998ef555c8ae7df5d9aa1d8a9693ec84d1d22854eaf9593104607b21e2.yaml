@@ -1,0 +1,17 @@
+ast_path: 定理/293.3
+fingerprints:
+  raw_sha256: sha256:ab0d4c998ef555c8ae7df5d9aa1d8a9693ec84d1d22854eaf9593104607b21e2
+  normalized_sha256: sha256:ab0d4c998ef555c8ae7df5d9aa1d8a9693ec84d1d22854eaf9593104607b21e2
+cas_ref: sha256:ab0d4c998ef555c8ae7df5d9aa1d8a9693ec84d1d22854eaf9593104607b21e2
+coverage_gids:
+  - D5/S3/ConceptDynamics/Causal/RecursiveInterventionComposition.recursive_intervention_composition
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Causal/RecursiveInterventionComposition.recursive_intervention_composition
+      source_sha256: sha256:ab0d4c998ef555c8ae7df5d9aa1d8a9693ec84d1d22854eaf9593104607b21e2
+      target_statement_id: sha256:b0f8aeb95f479fd84dee2199a6b9fddacc2f9a504e491c41dc15d77caada8eae
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Causal/RecursiveInterventionComposition.recursive_intervention_composition
+      definition_sha256: sha256:7205f81589e083eaa2b0ffac9327e47a396e6c3dd60ec07bf12c5607085466ed
+      emission_sha256: sha256:2bd06030f3db6e0aa76ea6357d80dcf7924e425a0d9d41bdda056df8c798610e
+  unresolved_subitems: []
