@@ -95,6 +95,39 @@ public sealed class LeanCacheProvisionerTests
     ///
     /// 本测试读该常数的声明文本并逐项核对 —— 缺任一项即红,迫使改动者补齐而非静默删注。
     /// </summary>
+    /// <summary>
+    /// #2535 的 `policy-override` 声明自己「**非永久**」,而它的复审触发线 ②
+    /// (D5 内容层模块数达到 <see cref="LeanCacheBudgetPolicy.ColdBuildBudgetReviewModuleCount"/>,
+    /// 由 #3029 裁定)在本测试之前**没有任何观察者**。
+    ///
+    /// 2026-08-26 实测:`grep -rnw 2672` 全仓 **0 命中**;阳性对照 `grep -rnw 7200` 得 **7 条**,
+    /// 证明探针有效,故那个 0 是阴性证据而非坏探针。本测试就是补上的那个观察者。
+    ///
+    /// **红了怎么办**:不要改那个数让它变绿 —— 那是把到期的期票撕掉。
+    /// 按 #2535 重新把预算收口到三型之一,或按 #3029 的五条开建条件建拦全量冷建的门,
+    /// 然后连同本测试一并重写。触发线取 80% 而非 100%,正是为了让红出现时**预算仍够用**,
+    /// 收口有时间做。
+    /// </summary>
+    [Fact]
+    public void ColdBuildBudgetReviewLineHasNotBeenCrossed()
+    {
+        var modules = Directory
+            .EnumerateFiles(
+                Path.Combine(TestRepositoryLayout.FindRoot(), "D5"),
+                "*.lean",
+                SearchOption.AllDirectories)
+            .Count();
+
+        Assert.True(
+            modules < LeanCacheBudgetPolicy.ColdBuildBudgetReviewModuleCount,
+            $"D5 内容层已有 {modules} 个模块,达到或越过 #3029 裁定的复审触发线 "
+            + $"{LeanCacheBudgetPolicy.ColdBuildBudgetReviewModuleCount}:全量冷建的预计耗时"
+            + $"已越过 {LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds}s 预算的 80% 线,"
+            + "该 policy-override 的取值依据失效,其「非永久」声明到期。"
+            + "按 https://github.com/the-omega-institute/trureturing/issues/2535 重新按三型收口,"
+            + "或按 #3029 的五条开建条件建拦全量冷建的门。不要改那个数让本测试变绿。");
+    }
+
     [Fact]
     public void PolicyOverrideDeclarationReportsEveryRequiredItem()
     {
