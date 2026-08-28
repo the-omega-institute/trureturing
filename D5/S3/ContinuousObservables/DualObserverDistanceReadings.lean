@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/ContinuousObservables/DualObserverDistanceReadings
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Two bounded-function observers give paired zero, finite,
-     or infinite distance readings. -/
+   digest: Paired observers classify bounded-function distances. -/
 
 import D5.S3.Observer.Separation.RefinementDistanceMonotonicity
 import Mathlib.Analysis.Normed.Lp.lpSpace
