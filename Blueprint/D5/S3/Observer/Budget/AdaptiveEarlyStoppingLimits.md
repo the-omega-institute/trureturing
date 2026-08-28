@@ -6,7 +6,7 @@ Adaptive early stopping lowers a concrete expected count while preserving the ad
 
 **Theorem 1.1 (Early stopping retains the adaptive worst-case lower bound).**
 
-$$\operatorname{clog}(B, \operatorname{card}(X)) \leq \operatorname{adaptiveIdentificationDepth}(X, q).$$
+$$\begin{aligned}\forall Question, X: \operatorname{Type}, [\operatorname{Fintype}(X)],\\{}\forall B: \mathbb{N},\\{}\forall q: Question \to \left(X \to \operatorname{Fin}(B)\right),\\{}\forall identifiable: \exists depth: \mathbb{N}, \operatorname{ExactAtDepth}(q, depth),\\{}\operatorname{clog}(B, \operatorname{card}(X)) \leq \operatorname{adaptiveIdentificationDepth}(q, identifiable).\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/Budget/AdaptiveEarlyStoppingLimits.adaptive_worst_case_depth_information_lower_bound` (`✓ std3`). ∎
 

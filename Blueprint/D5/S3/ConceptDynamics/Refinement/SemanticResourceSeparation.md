@@ -6,7 +6,7 @@ More semantic targets than allowed algorithms force a resource-unreachable targe
 
 **Theorem 1.1 (Semantic sufficiency can exceed finite resources).**
 
-$$\begin{gathered}\forall X, B_{C}, Y: \operatorname{Type}, \operatorname{Finite}\left(Y\right), \operatorname{Nonempty}\left(Y\right),\\{}C: X \to B_{C}, \operatorname{Finite}\left(\operatorname{range}\left(C\right)\right), cost: ResourceCost, r\in \mathbb{N},\\{}A_{r}: \operatorname{Finset}\left(B_{C} \to Y\right),\\{}A_{r} = \{f: B_{C} \to Y \mid \operatorname{cost}\left(f\right) \le r\},\\{}\lvert Y \rvert^{\lvert \operatorname{range}\left(C\right) \rvert} > \lvert A_{r} \rvert \Rightarrow \exists T: X \to Y,\\{}\operatorname{Refines}\left(T, C\right) \land \neg \operatorname{ResourceRefines}\left(cost, r, T, C\right).\end{gathered}$$
+$$\begin{gathered}\forall X, B_{C}, Y: \operatorname{Type}, [\operatorname{Fintype}\left(Y\right)], [\operatorname{Nonempty}\left(Y\right)],\\{}C: X \to B_{C}, [\operatorname{Fintype}\left(\operatorname{range}\left(C\right)\right)], cost: ResourceCost, r\in \mathbb{N},\\{}A_{r}: \operatorname{Finset}\left(B_{C} \to Y\right),\\{}A_{r} = \{f: B_{C} \to Y \mid \operatorname{cost}\left(f\right) \le r\},\\{}\lvert Y \rvert^{\lvert \operatorname{range}\left(C\right) \rvert} > \lvert A_{r} \rvert \Rightarrow \exists T: X \to Y,\\{}\operatorname{Refines}\left(T, C\right) \land \neg \operatorname{ResourceRefines}\left(cost, r, T, C\right).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Refinement/SemanticResourceSeparation.semantic_sufficiency_can_exceed_finite_resources` (`✓ std3`). ∎
 

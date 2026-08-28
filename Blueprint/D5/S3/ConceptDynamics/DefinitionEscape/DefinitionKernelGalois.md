@@ -6,7 +6,7 @@ Family kernels form a Galois connection detecting primitive and productive escap
 
 **Theorem 1.1 (Definition families and relations form a Galois connection).**
 
-$$\operatorname{Subset}\left(Gamma, \operatorname{RelationInvariantReadouts}\left(relation\right)\right) \iff \operatorname{Subset}\left(relation, \operatorname{jointKernel}\left(\operatorname{definitionReadout}\left(Gamma\right)\right)\right).$$
+$$\begin{aligned}\forall X, Output: \operatorname{Type},\\{}\forall Gamma: \operatorname{Set}\left(\operatorname{Concept}\left(X, Output\right)\right),\\{}\forall relation: \operatorname{Set}\left(X \times X\right),\\{}\operatorname{Subset}\left(Gamma, \operatorname{RelationInvariantReadouts}\left(relation\right)\right) \iff \operatorname{Subset}\left(relation, \operatorname{jointKernel}\left(\operatorname{definitionReadout}\left(Gamma\right)\right)\right).\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.definition_relation_galois` (`✓ std3`). ∎
 

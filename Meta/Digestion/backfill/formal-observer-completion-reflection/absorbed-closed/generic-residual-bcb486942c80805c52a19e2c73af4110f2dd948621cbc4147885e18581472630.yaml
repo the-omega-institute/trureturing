@@ -1,0 +1,17 @@
+ast_path: 定理/10.1
+fingerprints:
+  raw_sha256: sha256:bcb486942c80805c52a19e2c73af4110f2dd948621cbc4147885e18581472630
+  normalized_sha256: sha256:bcb486942c80805c52a19e2c73af4110f2dd948621cbc4147885e18581472630
+cas_ref: sha256:bcb486942c80805c52a19e2c73af4110f2dd948621cbc4147885e18581472630
+coverage_gids:
+  - D5/S3/Observer/WindowAlgebra/FinitePartitionAlgebraAntiequivalence.finite_partition_algebra_antiequivalence
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/WindowAlgebra/FinitePartitionAlgebraAntiequivalence.finite_partition_algebra_antiequivalence
+      source_sha256: sha256:bcb486942c80805c52a19e2c73af4110f2dd948621cbc4147885e18581472630
+      target_sha256: sha256:cad0e79a0f1ded00b8bd6292b0b118c02c8845380e6cb12dfab9f89007ef3016
+  scribe:
+    - gid: D5/S3/Observer/WindowAlgebra/FinitePartitionAlgebraAntiequivalence.finite_partition_algebra_antiequivalence
+      definition_sha256: sha256:e74939aaaeac094d15bf0d1e69734658f111a541fdfac2aea8320e17334c383c
+      emission_sha256: sha256:8da00dd5f14efffe0cf93af09cae22b3f5598a6c3daff5189b0c56c54b183fbd
+  unresolved_subitems: []

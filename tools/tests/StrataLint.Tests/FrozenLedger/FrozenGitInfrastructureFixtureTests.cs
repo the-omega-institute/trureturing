@@ -121,7 +121,7 @@ public sealed class FrozenGitInfrastructureFixtureTests
         using var repository = new TemporaryDirectory();
         var gateway = new GitRepositoryGateway(
             repository.Path,
-            new DelegateGitProcessRunner(_ => Output(41, stderr: "rev-parse fixture failure\n")),
+            new DelegateGitProcessRunner((_, _) => Output(41, stderr: "rev-parse fixture failure\n")),
             "git");
 
         var exception = Assert.Throws<GitInfrastructureException>(() =>
@@ -140,9 +140,9 @@ public sealed class FrozenGitInfrastructureFixtureTests
         var input = FixtureInput();
         var gateway = new GitRepositoryGateway(
             repository.Path,
-            new DelegateGitProcessRunner(arguments => arguments[0] switch
+            new DelegateGitProcessRunner((arguments, standardInput) => arguments[0] switch
             {
-                "cat-file" => Output(0, ObjectType(arguments[2]) + "\n"),
+                "cat-file" => BatchCheck(standardInput),
                 "ls-tree" => Output(74, stderr: "ls-tree fixture IO failure\n"),
                 "rev-parse" when arguments[1] == "--show-object-format" => Output(0, "sha1\n"),
                 "rev-parse" => Output(0, input.BaseTreeOid["git-sha1:".Length..] + "\n"),
@@ -159,6 +159,161 @@ public sealed class FrozenGitInfrastructureFixtureTests
         Assert.Equal(74, exception.Failure.ExitCode);
         Assert.Equal("ls-tree fixture IO failure", exception.Failure.StandardError);
         Assert.Equal("ls-tree", exception.Failure.Arguments[0]);
+    }
+
+    [Fact]
+    public void EveryReferencedObjectIsValidatedInASingleBatchCheckInvocation()
+    {
+        var catFileCalls = 0;
+        var batchedIds = ImmutableArray<string>.Empty;
+        var gateway = new GitRepositoryGateway(
+            "/repo",
+            new DelegateGitProcessRunner((arguments, standardInput) =>
+            {
+                if (arguments[0] == "cat-file" && arguments[1] == "--batch-check")
+                {
+                    catFileCalls++;
+                    batchedIds = Encoding.UTF8.GetString(standardInput.Span)
+                        .Split('\n', StringSplitOptions.RemoveEmptyEntries)
+                        .ToImmutableArray();
+                    return BatchCheck(standardInput);
+                }
+
+                if (arguments[0] == "rev-parse" && arguments[1] == "--show-object-format")
+                {
+                    return Output(0, "sha1\n");
+                }
+
+                throw new InvalidOperationException("unexpected fixture command " + arguments[0]);
+            }),
+            "git");
+
+        gateway.ValidateFrozenReferences(FrozenLedgerReferenceSet.Create(
+            ImmutableArray<FrozenLedgerInput>.Empty,
+            ImmutableArray<string>.Empty,
+            ["git-sha1:" + new string('a', 40)],
+            ["git-sha1:" + new string('b', 40)],
+            ["git-sha1:" + new string('c', 40), "git-sha1:" + new string('d', 40)]));
+
+        // Exactly one process spawn, and every referenced object id — across all three
+        // categories — is present in that single batch. A regression that dropped a whole
+        // category would leave its ids out of the stdin here.
+        Assert.Equal(1, catFileCalls);
+        Assert.Equal(
+            new[] { new string('a', 40), new string('b', 40), new string('c', 40), new string('d', 40) },
+            batchedIds.OrderBy(static id => id, StringComparer.Ordinal).ToArray());
+    }
+
+    [Theory]
+    [InlineData("OID commit garbage\n")]        // non-decimal size
+    [InlineData("OID commit -1\n")]             // signed size
+    [InlineData("OID commit 1x\n")]             // trailing junk in size
+    [InlineData("OID commit\n")]                // missing size field
+    [InlineData("OID\n")]                       // single field
+    [InlineData("OID missing extra\n")]         // malformed missing frame
+    [InlineData("OID commit 1")]                // missing final newline
+    [InlineData("OID commit 1 extra\n")]        // present frame with a trailing field
+    [InlineData("OID  commit 1\n")]             // repeated space between fields
+    [InlineData("OID commit 1\nOID commit 1\n")] // more lines than inputs
+    [InlineData("")]                            // empty output
+    [InlineData("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb commit 1\n")] // echoed oid mismatch
+    public void MalformedBatchCheckSuccessFrameFailsClosed(string template)
+    {
+        var oid = new string('a', 40);
+        var output = template.Replace("OID", oid, StringComparison.Ordinal);
+        var gateway = new GitRepositoryGateway(
+            "/repo",
+            new DelegateGitProcessRunner((arguments, _) => arguments[0] switch
+            {
+                "cat-file" => Output(0, output),
+                "rev-parse" when arguments[1] == "--show-object-format" => Output(0, "sha1\n"),
+                _ => throw new InvalidOperationException("unexpected fixture command"),
+            }),
+            "git");
+
+        var exception = Assert.Throws<GitInfrastructureException>(() =>
+            gateway.ValidateFrozenReferences(FrozenLedgerReferenceSet.Create(
+                ImmutableArray<FrozenLedgerInput>.Empty,
+                ImmutableArray<string>.Empty,
+                ["git-sha1:" + oid],
+                ImmutableArray<string>.Empty,
+                ImmutableArray<string>.Empty)));
+
+        Assert.Equal(GitCommandFailureKind.InvalidOutput, exception.Failure.Kind);
+    }
+
+    [Fact]
+    public void ValidSizeInBatchCheckSuccessFrameIsAccepted()
+    {
+        var oid = new string('a', 40);
+        var gateway = new GitRepositoryGateway(
+            "/repo",
+            new DelegateGitProcessRunner((arguments, _) => arguments[0] switch
+            {
+                "cat-file" => Output(0, oid + " commit 0\n"),
+                "rev-parse" when arguments[1] == "--show-object-format" => Output(0, "sha1\n"),
+                _ => throw new InvalidOperationException("unexpected fixture command"),
+            }),
+            "git");
+
+        gateway.ValidateFrozenReferences(FrozenLedgerReferenceSet.Create(
+            ImmutableArray<FrozenLedgerInput>.Empty,
+            ImmutableArray<string>.Empty,
+            ["git-sha1:" + oid],
+            ImmutableArray<string>.Empty,
+            ImmutableArray<string>.Empty));
+    }
+
+    [Fact]
+    public void BatchCheckMissingLineIsMissingObjectRejection()
+    {
+        var oid = "git-sha1:" + new string('a', 40);
+        var gateway = new GitRepositoryGateway(
+            "/repo",
+            new DelegateGitProcessRunner((arguments, standardInput) => arguments[0] switch
+            {
+                "cat-file" => Output(0, oid["git-sha1:".Length..] + " missing\n"),
+                "rev-parse" when arguments[1] == "--show-object-format" => Output(0, "sha1\n"),
+                _ => throw new InvalidOperationException("unexpected fixture command"),
+            }),
+            "git");
+
+        var exception = Assert.Throws<FrozenReferenceRejectionException>(() =>
+            gateway.ValidateFrozenReferences(FrozenLedgerReferenceSet.Create(
+                ImmutableArray<FrozenLedgerInput>.Empty,
+                ImmutableArray<string>.Empty,
+                [oid],
+                ImmutableArray<string>.Empty,
+                ImmutableArray<string>.Empty)));
+
+        Assert.Equal(FrozenReferenceRejectionKind.MissingObject, exception.Kind);
+        Assert.Contains("is not a reachable commit", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void BatchCheckWrongTypeIsWrongObjectTypeRejection()
+    {
+        var oid = "git-sha1:" + new string('a', 40);
+        var gateway = new GitRepositoryGateway(
+            "/repo",
+            new DelegateGitProcessRunner((arguments, standardInput) => arguments[0] switch
+            {
+                "cat-file" => Output(0, oid["git-sha1:".Length..] + " blob 12\n"),
+                "rev-parse" when arguments[1] == "--show-object-format" => Output(0, "sha1\n"),
+                _ => throw new InvalidOperationException("unexpected fixture command"),
+            }),
+            "git");
+
+        var exception = Assert.Throws<FrozenReferenceRejectionException>(() =>
+            gateway.ValidateFrozenReferences(FrozenLedgerReferenceSet.Create(
+                ImmutableArray<FrozenLedgerInput>.Empty,
+                ImmutableArray<string>.Empty,
+                [oid],
+                ImmutableArray<string>.Empty,
+                ImmutableArray<string>.Empty)));
+
+        Assert.Equal(FrozenReferenceRejectionKind.WrongObjectType, exception.Kind);
+        Assert.Contains("has type blob; expected commit", exception.Message, StringComparison.Ordinal);
     }
 
     private static FrozenLedgerReferenceSet NoReferences() =>
@@ -197,7 +352,7 @@ public sealed class FrozenGitInfrastructureFixtureTests
     }
 
     private sealed class DelegateGitProcessRunner(
-        Func<IReadOnlyList<string>, ProcessOutput> run) : IGitProcessRunner
+        Func<IReadOnlyList<string>, ReadOnlyMemory<byte>, ProcessOutput> run) : IGitProcessRunner
     {
         public ProcessOutput Run(
             string fileName,
@@ -205,7 +360,22 @@ public sealed class FrozenGitInfrastructureFixtureTests
             string workingDirectory,
             TimeSpan timeout,
             int maximumOutputBytes = GitRepositoryGateway.DefaultGitOutputBytes,
-            ReadOnlyMemory<byte> standardInput = default) => run(arguments);
+            ReadOnlyMemory<byte> standardInput = default) => run(arguments, standardInput);
+    }
+
+    // Reproduce `git cat-file --batch-check`: one header line per stdin object id,
+    // in input order, using the fixture's first-character type mapping.
+    private static ProcessOutput BatchCheck(ReadOnlyMemory<byte> standardInput)
+    {
+        var ids = Encoding.UTF8.GetString(standardInput.Span)
+            .Split('\n', StringSplitOptions.RemoveEmptyEntries);
+        var builder = new StringBuilder();
+        foreach (var id in ids)
+        {
+            builder.Append(id).Append(' ').Append(ObjectType(id)).Append(" 1\n");
+        }
+
+        return Output(0, builder.ToString());
     }
 }
 

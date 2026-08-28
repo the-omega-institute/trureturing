@@ -39,92 +39,97 @@ internal sealed class FreeInformationValueDocument : IScribeDocumentDefinition
                             + "and pinned-library searches found no exact theorem combining them."))),
                 DescribeRole.Theorem))));
 
-    private static Formula Apply(Formula function, Formula argument) =>
-        Seq(function, Open, argument, Close);
+    private static Formula Apply(Formula function, params Formula[] arguments)
+    {
+        var items = new List<Formula> { function, Open };
+        for (var index = 0; index < arguments.Length; index++)
+        {
+            if (index > 0) items.AddRange([Comma, Sp]);
+            items.Add(arguments[index]);
+        }
+        items.Add(Close);
+        return Seq([.. items]);
+    }
+
+    private static Formula Arrow(Formula domain, Formula codomain) =>
+        Seq(domain, Sp, To, Sp, codomain);
+
+    private static Formula Typed(Formula value, Formula type) =>
+        Seq(value, Colon, Sp, type);
 
     private static Formula TheoremFormula()
     {
         Formula state = F.Id("X");
         Formula evidence = F.Id("E");
         Formula action = F.Id("U");
-        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
-        Formula real = Seq(Mathbb, Grp(F.Id("R")));
-        Formula observe = F.Id("observe");
-        Formula worldAfterObservation = F.Id("worldAfterObservation");
-        Formula informationCost = F.Id("informationCost");
-        Formula actionsBeforeSet = F.Id("A0");
-        Formula actionsAfterSet = F.Id("A1");
-        Formula candidatePoliciesSet = F.Id("P");
         Formula expectation = Seq(Mathbb, Grp(F.Id("E")));
+        Formula observe = F.Id("observe");
+        Formula transition = F.Id("worldAfterObservation");
         Formula utility = F.Id("V");
-        Formula transition = F.Id("T");
-        Formula cost = Subscript(F.Id("c"), evidence);
-        Formula actionsBefore = Subscript(action, D(0));
-        Formula actionsAfter = Subscript(action, evidence);
-        Formula policies = Pi;
-        Formula admissiblePolicies = Subscript(policies, F.Id("adm"));
+        Formula cost = F.Id("informationCost");
+        Formula actionsBefore = F.Id("A0");
+        Formula actionsAfter = F.Id("A1");
+        Formula policies = F.Id("P");
         Formula uninformed = Subscript(F.Id("W"), D(0));
         Formula informed = Subscript(F.Id("W"), evidence);
         Formula selectedAction = F.Id("u");
-        Formula observedPolicy = F.Id("p");
-        Formula currentState = F.Id("x");
         Formula observedValue = F.Id("e");
-        Formula constantPolicy = Seq(
-            Operatorname, Grp(F.Id("const")), Open, selectedAction, Close);
-        Formula beforeMaximum = Seq(
-            Max, Underscore, Grp(selectedAction, Sp, InMacro, Sp, actionsBefore),
-            Sp, Apply(expectation, Apply(Apply(utility, state), selectedAction)));
-        Formula afterMaximum = Seq(
-            Max, Underscore, Grp(observedPolicy, Sp, InMacro, Sp,
-              admissiblePolicies), Sp,
-            Open, Apply(expectation,
-              Apply(Apply(utility,
-                Apply(Apply(transition, evidence), state)),
-                Apply(observedPolicy, evidence))),
-            Sp, Minus, Sp, cost, Close);
-        Formula admissiblePolicyDefinition = Seq(
-            admissiblePolicies, Sp, Eq, Sp, OpenBrace,
-            observedPolicy, Sp, InMacro, Sp, policies, Sp, Mid, Sp,
-            Forall, Sp, observedValue, Comma, Sp,
-            Apply(observedPolicy, observedValue), Sp, InMacro, Sp,
-            Subscript(action, observedValue), CloseBrace);
-        Formula safeguards = Seq(
-            cost, Sp, Eq, Sp, D(0), Comma, Sp,
-            Forall, Sp, observedValue, Comma, Sp, currentState, Comma, Sp,
-            Apply(Apply(worldAfterObservation, observedValue), currentState), Sp, Eq, Sp,
-            currentState, Comma, RowBreak, Grp(),
-            Forall, Sp, selectedAction, Sp, InMacro, Sp, actionsBefore, Comma, Sp,
-            constantPolicy, Sp, InMacro, Sp, policies, Comma, RowBreak, Grp(),
-            Forall, Sp, observedValue, Comma, Sp, actionsBefore, Sp,
-            Subseteq, Sp, Subscript(action, observedValue));
+        Formula currentState = F.Id("x");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula real = Seq(Mathbb, Grp(F.Id("R")));
+        Formula policyType = Arrow(evidence, action);
+        Formula actionSet = Call("Set", action);
+        Formula policySet = Call("Set", policyType);
+        Formula constantPolicy = Seq(Open, observedValue, Colon, Sp, evidence, Close,
+            Sp, Mapsto, Sp, selectedAction);
+        Formula uninformedImage = Call("image",
+            Call("uninformedExpectedValue", expectation, utility), actionsBefore);
+        Formula informedImage = Call("image",
+            Call("informedExpectedValue", expectation, observe, transition, utility, cost),
+            Call("admissiblePolicies", policies, actionsAfter));
 
-        Formula uninformedGreatest = Call(
-            "IsGreatest", Call("Image", expectation, utility, actionsBeforeSet), uninformed);
-        Formula informedGreatest = Call(
-            "IsGreatest", Call("Image", expectation, utility, admissiblePolicies), informed);
-
-        return Disp(Seq(
-            Forall, Sp, state, Comma, Sp, evidence, Comma, Sp, action, Colon, Sp, type,
-            Comma, RowBreak, Grp(),
-            expectation, Colon, Sp,
-            Call("Concept", new Formula.TypeArrow(state, real), real), Comma, Sp,
-            observe, Colon, Sp, Call("Concept", state, evidence), Comma, Sp,
-            worldAfterObservation, Colon, Sp,
-            new Formula.TypeArrow(evidence, new Formula.TypeArrow(state, state)), Comma, Sp,
-            utility, Colon, Sp,
-            Call("Concept", state, new Formula.TypeArrow(action, real)), Comma, Sp,
-            informationCost, Colon, Sp, real, Comma, Sp,
-            actionsBeforeSet, Colon, Sp, Call("Set", action), Comma, Sp,
-            actionsAfterSet, Colon, Sp, new Formula.TypeArrow(evidence, Call("Set", action)),
-            Comma, Sp, candidatePoliciesSet, Colon, Sp,
-            Call("Set", new Formula.TypeArrow(evidence, action)), Comma, Sp,
-            uninformed, Comma, Sp, informed, Colon, Sp, real, Comma, RowBreak, Grp(),
-            admissiblePolicyDefinition, Comma, RowBreak, Grp(),
-            uninformed, Sp, Eq, Sp, beforeMaximum, Comma, RowBreak, Grp(),
-            informed, Sp, Eq, Sp, afterMaximum, Comma, RowBreak, Grp(),
-            uninformedGreatest, Comma, Sp, informedGreatest, Comma, RowBreak, Grp(),
-            safeguards, RowBreak, Grp(),
-            Rightarrow, Sp, informed, Sp, Geq, Sp, uninformed, Dot));
+        return Disp(new Formula.Aligned([
+            Seq(Forall, Sp,
+                Typed(Seq(state, Comma, Sp, evidence, Comma, Sp, action), type), Comma),
+            Seq(Grp(), Forall, Sp,
+                Typed(expectation, Call("Concept", Arrow(state, real), real)), Comma),
+            Seq(Grp(), Forall, Sp,
+                Typed(observe, Call("Concept", state, evidence)), Comma, Sp,
+                Typed(transition, Arrow(evidence, Arrow(state, state))), Comma),
+            Seq(Grp(), Forall, Sp,
+                Typed(utility, Call("Concept", state, Arrow(action, real))), Comma, Sp,
+                Typed(cost, real), Comma),
+            Seq(Grp(), Forall, Sp,
+                Typed(actionsBefore, actionSet), Comma, Sp,
+                Typed(actionsAfter, Arrow(evidence, actionSet)), Comma),
+            Seq(Grp(), Forall, Sp, Typed(policies, policySet), Comma, Sp,
+                Typed(Seq(uninformed, Comma, Sp, informed), real), Comma),
+            Seq(Grp(), Forall, Sp,
+                Typed(F.Id("informationFree"), Seq(cost, Sp, Eq, Sp, D(0))), Comma),
+            Seq(Grp(), Forall, Sp,
+                Typed(F.Id("observationDoesNotChangeWorld"), Seq(
+                    Forall, Sp, Typed(observedValue, evidence), Comma, Sp,
+                    Typed(currentState, state), Comma, Sp,
+                    Apply(transition, observedValue, currentState), Sp, Eq, Sp, currentState)),
+                Comma),
+            Seq(Grp(), Forall, Sp,
+                Typed(F.Id("canIgnoreInformation"), Seq(
+                    Forall, Sp, Typed(selectedAction, action), Comma, Sp,
+                    selectedAction, Sp, InMacro, Sp, actionsBefore, Sp, Rightarrow, Sp,
+                    constantPolicy, Sp, InMacro, Sp, policies)), Comma),
+            Seq(Grp(), Forall, Sp,
+                Typed(F.Id("actionSetNotReduced"), Seq(
+                    Forall, Sp, Typed(observedValue, evidence), Comma, Sp,
+                    actionsBefore, Sp, Subseteq, Sp, Apply(actionsAfter, observedValue))),
+                Comma),
+            Seq(Grp(), Forall, Sp,
+                Typed(F.Id("uninformedOptimal"),
+                    Call("IsGreatest", uninformedImage, uninformed)), Comma),
+            Seq(Grp(), Forall, Sp,
+                Typed(F.Id("informedOptimal"),
+                    Call("IsGreatest", informedImage, informed)), Comma),
+            Seq(Grp(), uninformed, Sp, Leq, Sp, informed, Dot),
+        ]));
     }
 
     private static Formula Subscript(Formula value, Formula index) =>

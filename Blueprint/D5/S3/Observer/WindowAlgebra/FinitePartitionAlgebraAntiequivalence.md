@@ -6,7 +6,7 @@ Finite real partition algebras and their relations reconstruct each other.
 
 **Theorem 1.1 (Relations and real partition algebras reconstruct each other).**
 
-$$\forall X, R, A,\ \operatorname{Finite}(X) \land \operatorname{Equivalence}(R) \land\ A \in \operatorname{Subalgebra}(\mathbb{R}, X \to \mathbb{R}) \Rightarrow\ R_{A_{R}} = R \land A_{R_{A}} = A.$$
+$$\begin{aligned}\forall X: \operatorname{Type}, [\operatorname{Finite}(X)],\\{}\forall R: X \to X \to Prop, hR: \operatorname{Equivalence}(R),\\{}\forall A: \operatorname{Subalgebra}(\mathbb{R}, X \to \mathbb{R}),\\{}\operatorname{let} A_{R} := \{f: X \to \mathbb{R} \mid \forall a, b: X, R(a, b) \Rightarrow f(a) = f(b)\},\\{}\operatorname{let} R_{A} := (x, y) \mapsto \forall g: X \to \mathbb{R}, g \in A \Rightarrow g(x) = g(y),\\{}R_{A_{R}} = R \land A_{R_{A}} = A.\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/WindowAlgebra/FinitePartitionAlgebraAntiequivalence.finite_partition_algebra_antiequivalence` (`✓ std3`). ∎
 
