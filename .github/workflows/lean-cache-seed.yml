@@ -156,9 +156,24 @@ jobs:
         shell: bash
         working-directory: candidate
         run: |
-          set -euo pipefail
+          # 【为什么必须 timebox】2026-08-28 实测四个样本:本 runner 分别在
+          # 76.2 / 76.7 / 79.0 / 87.3 分钟处收到关停信号,日志原文:
+          #   ##[error]The runner has received a shutdown signal.
+          #   ##[error]The operation was canceled.
+          # 而 `continue-on-error` 只吸收 **failure**,不吸收 **cancellation** ——
+          # 于是紧随其后带 `if: always()` 的快照保存步骤被**跳过**(实测四轮皆然),
+          # `gh cache list` 在本分支上因此恒为 0 条,增量续编的设计从未启动过。
+          #
+          # 修法:让构建在关停截止**之前主动**停下。timeout 退 124 → continue-on-error
+          # 吸收 → 快照步骤正常执行 → 下一轮 restore 后 lake 增量续编。
+          # 预算:55min 构建,余 21min 给快照保存(关停下界样本 76.2min;
+          # 保存 1.6GB 级 cache 的步骤自带 timeout-minutes: 12)。
+          set -uo pipefail
           export PATH="$HOME/.elan/bin:$PATH"
-          make lean
+          timeout --kill-after=120s 55m make lean
+          rc=$?
+          printf 'SEED_BUILD exit=%s timeboxed=%s\n' "$rc" "$([ "$rc" -eq 124 ] && echo true || echo false)"
+          exit "$rc"
 
       # 进度快照:无论构建是完成还是被砍都保存,供下一轮续编。
       # key 带 run_id 以避免同 key 重复写入被拒;消费由上面的 restore-keys 前缀完成。
