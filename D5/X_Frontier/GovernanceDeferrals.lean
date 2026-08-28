@@ -388,3 +388,112 @@ def goldenUnitsPrincipalIdealDelivery : Unit := ()
 
     依据:issue #2647(三席并发盲评,判 `godel`;同族,不构成多样性共识)、
     #3066(第七轮 arch 席 blocking,orchestrator 独立复算)、#3774(六个实例)、#3320。 -/
+
+/- TASK D5-T0059
+    **迁移的完备性:执法侧落地而存量/窗口未清,代价由下一个全库校验者买单。**
+    〔本条承接 issue #3757 的模式留痕;该单明写「不认领实施,制度归迁移作者」,
+     故它记的是一个**类**,不是一件待办。〕
+
+    **共同形**:执法侧(canonical 校验)与生产侧(新写入器)都对,缺的是两样 ——
+    ①**存量清零的完备性**;②**M1/M2 窗口**:迁移者的 sweep 快照之后、合入之前,
+    在飞 lane 仍以旧代码落旧形,合入后第一个全库校验者踩雷。
+    第Ⅵ节「系统在动时先立门后补账」只解决新增侧;**窗口侧需要合后一次追扫**。
+
+    **判例(四案同构,前三案见 #3757,第四案为本条新增)**:
+    ① `#3363`:切片规则变更未迁存量 → 55 对 cover 预提交失配,全仓 ingest 停;
+    ② `#3499`:吸收分解门只有执法侧、`generic-v1` 无生产侧 → 331 个多子句 atom 结构性不可吸收;
+    ③ 收据 `target_sha256 → target_statement_id` 迁移:784 文件清扫后**仍有 21 条窗口存量**
+       (observer-adelic 源,迁移合入前在飞 lane 落的旧键)→ 全仓 cover/ingest 再死锁;
+    ④ **`#3579`(2026-08-29 实测新增)**:空 `receipts.scribe` 的 `partial-closed` 条目
+       由 74 涨到 **86**,而**增量 12 条全部落在 `observer-quantum-v1` 一个源卷**,
+       其余五个源卷一条不差。该单只描述存量、**没有写侧拒绝** ——
+       故它不是一笔静态存量,是**一个仍在写入的账**。
+       〔口径注:该复算用正则扫描 YAML 而非 loader,`74 → 86` 里可能有一部分是口径差;
+        但「唯一变动的源卷恰好是一个」这一点使真实增长更可能,该判断**未被证明**。〕
+
+    **制度(供迁移作者采纳,三件标配)**:
+    ①**写侧拒绝** —— 新代码拒绝再写旧形;
+    ②**合入后立即重跑一次全库校验**,并把窗口存量补扫为后续 PR,而非留给陌生人踩;
+    ③迁移 PR 正文声明「存量清零验证于 <sha>,窗口责任人 = 作者」。
+
+    **为什么这条不是「先立门后补账」的重复**:那条只管**新增侧**的顺序
+    (先立门,否则补录追移动靶);本条管的是**存量侧的完备性**与**合入窗口**——
+    即便顺序正确,sweep 快照与合入之间仍有一段时间,那段时间里在飞 lane 照旧写旧形。
+    两条合起来才是完整的迁移纪律。
+
+    **关闭条件**:上列三件成为迁移单的**机器可判**标配(例如 PR 模板的必载字段 +
+    合后追扫的具名义务),或 τ=0 裁定它只作评审守护的软规则并写明理由。
+    **仅仅「又出现一次同形判例」不构成关闭,也不构成本条失效** —— 那只是又一个数据点。
+
+    依据:issue #3757(三案,ElonSG/Fable-5 读数在案,orchestrator 未独立复跑);
+    第四案 #3579 由本条作者实测(claude 主循环,`macstudio-4`,零席位,单点)。 -/
+
+/- TASK D5-T0060
+    **投影重算谓词(§12.4.1 草案)在当前基础设施下无法达到「总函数 + fail-closed」。**
+    〔本条承接 issue #3127;该单是 7 轮双席盲评 + 6 轮修复后的**停止决定**,
+     入账目的是**避免后来者重走**(第 12 条:失败须留战史,不重走死路)。〕
+
+    **循环的形状**:要让谓词 total,必须逐层给出 `Known | Unknown(reason)`。七轮逐层补进 ——
+    ④ 最终判值、③ 操作数求值、② `Delta(q)` 求值、① scope 枚举 **均已补成总函数**;
+    而 ⓪ 两层**补不上**:
+    * **声明的语义真实性** —— 关节 ID 集全等**不证明** step-effect / phase-ownership 声明的**值**
+      等于实现的真实读写副作用;SPEC 亦未定义可判的 `stale` 谓词
+      (ARCH-SCOPE-EFFECT-SEMANTICS / T-SCOPE-EFFECT-DOMAIN-001);
+    * **canonical workflow 集本身** —— 未定义
+      `Workflows(snapshot) = Known(set) | Unknown(reason)`;每个 W 内的完整图解析
+      证明不了没有整个 W 被调用方漏掉(ARCH-WORKFLOW-DOMAIN-UNKNOWN)。
+
+    **循环在此闭合**:证明「声明 ≡ 实现副作用」所需的正是
+    `FILEMAP-ACTOR-PATTERN-SEMANTICS`(actor 名存在 ≠ 该 actor 读该 pattern,
+    `FileMapPolicy.cs` 自记为 open)——**而它正是该 SPEC 自己列为现役化前置的四项 open 之一**。
+    即:**SPEC 要 total,需要它自己的前置条件先成立。**
+
+    **两席(architecture / tests,均 codex-cli)独立收敛到同一结构**;同族,不构成多样性共识。
+    分支 `harness/emitspec-spec` 保留,最终 commit `d1e33a995`(未推送,`make preflight` exit 0)。
+
+    **关闭条件(按依赖序,第一条不成立则其余无从谈起)**:
+    ① `FILEMAP-ACTOR-PATTERN-SEMANTICS` 落地 —— 每个 canonical producer 暴露唯一 typed input
+      declaration,实现/actor 绑定与 FILEMAP 候选集**机器证明全等**,缺失/多余输入的变异产生具名红;
+    ② 在①之上定义可判的 `Workflows(snapshot)` 域与 `stale` 谓词。
+    **不得以「再补一轮 fix」代替** —— 七轮已证明补的是错的那一层。
+
+    依据:issue #3127。 -/
+
+/- TASK D5-T0061
+    **元层自改的 D(保守扩展证明)未付,且本仓无通用机器 —— 这是被钉死的,不是碰巧缺失。**
+    〔本条承接 issue #3648。它记的是一笔**账**(第 1 条:异常必须入账或显式标记),
+     不是一件待办 —— 因为付 D 所需的机器本身不存在。〕
+
+    **事实**:`c5f142118`(PR #3612)与 `c3ad174b8`(PR #3601)均属元层自改,
+    前者 SL-022 保护面 **105 处**,改动面含编译期 analyzer 接线与禁令表、CI 与 preflight 的
+    `RS0030` marker 对齐投影、TRX `INFRASTRUCTURE_UNRESOLVED` fail-closed 投影、
+    engineering/preflight predicate 与路由,以及 `CLAUDE.md` 的准入契约。
+
+    按第 21 条,元层自改须付 **W(多模型独立验证)+ D(保守扩展证明)+ E(可审计论证)**。实付:
+    * **W:部分,且已如实声明** —— 六轮实施 + 五轮对抗评审,但**全程无 gpt-pro 席**
+      (nyxid-oracle 多次 `extraction_failure` 与一次 `HTTP 502`);
+      `codex-cli` 与 `nyxid-oracle` 是否属不同模型族为 `ASSUMED-UNVERIFIED`,
+      故两 PR 均**未声称** model-diverse consensus。
+    * **D:未付。**
+    * **E:未单独出具。**
+
+    **D 无机器是被现役测试钉死的**:
+    ```
+    tools/tests/StrataLint.Tests/Admission/ReviewRegressionTests.cs:729
+      Assert.DoesNotContain("verify-conservative", gate, StringComparison.Ordinal);
+    tools/tests/StrataLint.Tests/Commands/MakeWorkflowTests.cs:240
+      Assert.DoesNotContain("verify-conservative", sharedGate, StringComparison.Ordinal);
+    ```
+    ⟹ gate 内无该命令,且**有两条现役测试主动断言它不该在**
+    (保守扩展重放机器 2026-08-12 退役,与审计报告记载一致)。
+
+    **为什么这条必须留着而不是「已知即可」**:第 21 条把 D 列为元层自改的**承重梁**
+    (`∀a, τ(a)≥τ: H(a)=admit ⟹ H′(a)=admit`),而它现在**对每一次元层自改都未被验证**。
+    这不是某一个 PR 的疏漏,是**成本塔在 τ 靠近核心处的那一格是空的**。
+
+    **关闭条件**:①重建可跑的保守扩展验证机器(并撤掉那两条断言它不该在的测试),
+    或 ②τ=0 明确裁定 D 在当前阶段以何物替代,**并说明替代物如何满足
+    `H(a)=admit ⟹ H′(a)=admit`**。
+    **「以后每次元层自改都多派几席」不构成②** —— 那是 W,不是 D;第 21 条把它们列为并列三项。
+
+    依据:issue #3648。 -/
