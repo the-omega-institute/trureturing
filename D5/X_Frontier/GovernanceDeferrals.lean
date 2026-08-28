@@ -281,3 +281,49 @@ def goldenUnitsPrincipalIdealDelivery : Unit := ()
     关闭条件(该单终句原文):**建议先答那三个设计题,再开 lane。**
     〔此处刻意保留「建议」二字:该单写的是建议,把它升级为「不得续开修复轮」会替 owner 预先裁定
     后续工作方式 —— 一轮评审判此为越权,已改回。〕 -/
+
+/- TASK D5-T0056
+    PZG `remark/6.27` 的原子 `pzg-residual-b9b6b0a6…` 保持 `residual-open`:
+    11 条语义断言中 **8 条未承载**,故 `D5/S3/Constants/Irrationality/TribonacciTraceLattice`
+    是**部分/支撑覆盖,不是整原子覆盖**;该模块已冻结,但**刻意未 deposit 收据**
+    ——`cover` 不判忠实性,发一份收据不会有机器惩罚,而它会 claim 超出已证的东西。
+    已承载:①存在一个 Tribonacci 亏空**不存在整数代表**(公开叶,非仅集合基数);
+    ②`HasIntegralDeficit .fibonacci ≠ HasIntegralDeficit .tribonacci`(整性是双面结构的特权,
+    评审判据:取 P=Q 则 P≠Q 因自反性不可能,故非任意 P∧Q 模板);③`¬ HasIntegralDeficit .tribonacci`。
+    已诚实收窄并在模块 docstring 逐条声明(349-360 行):
+    ①「非整值离散谱**即**复共轭对之迹格」—— 无具名 lattice / 加法子群载体,现有的是
+      逐点模整数同余与含零的八点码谱,二者合起来**不是**那句话;
+    ②三次域「一实二复」签名、二次侧嵌入族与穷尽定理、`Algebra.trace` 载体 —— 词汇表里都没有;
+    ③扫描窗口 `1 ≤ v₁ ≤ v₂ ≤ 200`、`8934/20100`、两个取整不等式与八点像等式 ——
+      CAS 的定量断言**没有给出它自己的量化域**,故这些是受限形式而非源文所述,已移出对源的声明面。
+    关闭条件:上列三类收窄中的任一类被真正承载(需先有对应词汇表:lattice/trace 载体、
+    数域嵌入族、或源侧对量化域的裁决),或理论侧裁定该 remark 的定量部分不可形式化。
+    依据:issue #2446;实施 codex-cli 两轮,评审 codex-cli 两席(第一轮 `reject` 五条 blocking,
+    第二轮 `comment` 零 blocking 且明判 `still_a_coverage = No`)。同族,不构成多样性共识。 -/
+
+/- TASK D5-T0057
+    DECT §43 的 `BudgetStop` 与 `OpenWorldSequence` 两个构造因**连续两轮忠实性缺陷**
+    被移出 `harness/dect-g2` 交付面,原子 `generic-residual-8f069bfad7d5…` 保持 `residual-open`。
+    〔与 `D5-T0054` 的分工:那一条只登记**承重命题** `stagewise_completion_with_infinite_reopening`
+    未形式化;本条登记这两个构造的缺陷与其待答设计题。两条同源于 issue #3157。〕
+    缺陷(每条两席一致):
+    A-1 `BudgetStop` 未编码 §53.4 的前提 —— §53.4 要求具名 Current 行动存在且可行,
+        Lean 只要求「存在某个可行决策」,四参数接口无 Current/Option 输入;
+        编译探针 `cost = gain = budget = threshold = 0` 且 Current 为 none 时 `BudgetStop` 成立,
+        而 Scribe 写着「requires a feasible action」——**掩盖了一个实质不同的谓词**。
+    A-2 `ENNReal` 除法发明了源文未定义的语义:`(1:ENNReal)/0 = ⊤`、`(0:ENNReal)/0 = 0`,
+        而源文只给 `c(γ) ≥ 0`(允许零成本)并写普通分式,**从未选择 0/0 约定**。
+        (背景:第二轮已判过 `Real.sSup` 把空集与向上无界集都映到 0;改用 `ENNReal` 解决了那一个,
+        **换来了 0/0 这一个**。)
+    B-3 `AlternatingOpenWorldReadingsControl` 的分离见证不分离 —— 其陈述里显式包含
+        `∀ stage, LocalParametersChanged …`,**正是它声称要与之分离的那个相邻阶段条件**。
+    待答的三个设计题(逐字取自 #3157):
+    ①§53.4 的 Current 行动如何进入 `Stop_L` 的类型?它是 `Option`,而 `:4534` 说没有当前行动是
+      **合法轮次** —— 那么 `Stop_L` 在该轮次取什么值?
+    ②源文既允许 `c(γ) = 0` 又写普通分式,**0/0 在源文里是未定义还是隐含排除**?
+      这是**卷的缺口**还是**读法问题**?**需 τ=0 裁决或卷内勘误。**
+    ③「持续变化」的节律:`∀ stage` 还是 `∃ᶠ atTop`?源文 `:3289` 无节律条款;
+      若取最弱读法,分离见证须真正分离两者。
+    关闭条件:三题各有答案(其中②须 τ=0 裁决或卷内勘误),两个构造据此重做并通过评审。
+    依据:issue #3157;实施 codex-cli 三轮,评审每轮 arch/tests = codex-cli、quality = nyxid-oracle;
+    停止判据写于第三轮结果返回之前(`g2-stopping-rule-r3.md`)。 -/
