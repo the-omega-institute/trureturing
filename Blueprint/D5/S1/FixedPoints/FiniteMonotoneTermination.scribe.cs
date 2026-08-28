@@ -71,6 +71,12 @@ internal sealed class FiniteMonotoneTerminationDocument : IScribeDocumentDefinit
         Formula nonunique = Seq(
             Exists, Sp, F.Id("x"), Comma, Sp, F.Id("y"), Colon, Sp, F.Id("Bool"), Comma, Sp,
             F.Id("x"), Sp, Neq, Sp, F.Id("y"), Sp, Land, Sp,
+            Open, Forall, Sp, later, InMacro, Sp, naturals, Comma, Sp,
+            Apply("iterate", F.Id("id"), later, F.Id("x")),
+            Sp, Eq, Sp, F.Id("x"), Close, Sp, Land, Sp,
+            Open, Forall, Sp, later, InMacro, Sp, naturals, Comma, Sp,
+            Apply("iterate", F.Id("id"), later, F.Id("y")),
+            Sp, Eq, Sp, F.Id("y"), Close, Sp, Land, Sp,
             Apply("IsFixedPt", F.Id("id"), F.Id("x")), Sp, Land, Sp,
             Apply("IsFixedPt", F.Id("id"), F.Id("y")));
 
