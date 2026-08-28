@@ -251,6 +251,10 @@ freeze_exists() {
               (.payload.case_id // null) as $case
               | (($case | type) == "string"
                   and (($target_case_ids | index($case)) != null))
+            elif .event_type == "Reattest" then
+              (.payload.case_id // null) as $case
+              | (($case | type) == "string"
+                  and (($target_case_ids | index($case)) != null))
             elif .event_type == "Revoke" then
               (.payload.affected_case_ids // null) as $cases
               | if (($cases | type) != "array") then
@@ -262,34 +266,70 @@ freeze_exists() {
             else
               false
             end)] as $events
-      | ([$events[]
-        | select(.event_type == "Revoke")
-        | .payload.affected_frozen_node_ids[]] | unique) as $revoked_ids
-      | def replay_rank:
-          if . == "Genesis" then 0
-          elif . == "Freeze" then 1
-          elif . == "Revoke" then 2
-          else 3
+      | def replay_reattests($pending):
+          if ($pending | length) == 0 then
+            .
+          else
+            . as $active
+            | [$pending[]
+              | select(
+                  (.payload.case_id // null) as $case
+                  | (.payload.previous_attestation_event_hash // null) as $previous
+                  | (($case | type) == "string"
+                      and ($previous | type) == "string"
+                      and ($active | has($case))
+                      and $active[$case].attestation_event_hash == $previous))] as $ready
+            | if ($ready | length) == 0 then
+                error("Reattest chain has no active predecessor")
+              else
+                reduce $ready[] as $event (.;
+                  ($event.payload.case_id // null) as $case
+                  | ($event.payload.frozen_node_id // null) as $frozen_id
+                  | ($event.payload.previous_attestation_event_hash // null) as $previous
+                  | ($event.payload.input.descriptor_selector // null) as $path
+                  | ($event.payload.input.descriptor_blob_oid // null) as $blob
+                  | ($event.event_hash // null) as $event_hash
+                  | if (($case | type) != "string"
+                      or (($frozen_id | type) != "null"
+                        and ($frozen_id | type) != "string")
+                      or ($previous | type) != "string"
+                      or ($path | type) != "string"
+                      or ($blob | type) != "string"
+                      or ($event_hash | type) != "string") then
+                      error("Reattest is missing replay identity fields")
+                    elif (has($case) | not) then
+                      error("Reattest targets an inactive case")
+                    elif .[$case].attestation_event_hash != $previous then
+                      error("Reattest branches from a stale attestation")
+                    elif .[$case].node_path != $path then
+                      error("Reattest changes the active module path")
+                    else
+                      .[$case].frozen_node_id as $current_id
+                      | .[$case] = {
+                          frozen_node_id: ($frozen_id // $current_id),
+                          node_path: $path,
+                          descriptor_blob_oid: $blob,
+                          attestation_event_hash: $event_hash
+                        }
+                    end)
+                | replay_reattests($pending - $ready)
+              end
           end;
-      $events
-      | to_entries
-      | sort_by([
-          (.value.event_type | replay_rank),
-          .key
-        ])
-      | map(.value)
-      | reduce .[] as $event ({};
-        if $event.event_type == "Genesis" then
-          .
-        elif $event.event_type == "Freeze" then
+      ($events | map(select(.event_type == "Freeze"))) as $freezes
+      | ($events | map(select(.event_type == "Reattest"))) as $reattests
+      | ($events | map(select(.event_type == "Revoke"))) as $revokes
+      | reduce $freezes[] as $event ({};
           ($event.payload.case_id // null) as $case
           | ($event.payload.frozen_node_id // null) as $frozen_id
           | ($event.payload.input.descriptor_selector // null) as $path
           | ($event.payload.input.descriptor_blob_oid // null) as $blob
+          | ($event.event_hash // null) as $event_hash
           | if (($case | type) != "string"
               or ($frozen_id | type) != "string"
               or ($path | type) != "string"
-              or ($blob | type) != "string") then
+              or ($blob | type) != "string"
+              or (($event_hash | type) != "null"
+                and ($event_hash | type) != "string")) then
               error("Freeze is missing replay identity fields")
             elif has($case) then
               error("Freeze reuses an active case")
@@ -297,22 +337,28 @@ freeze_exists() {
               .[$case] = {
                 frozen_node_id: $frozen_id,
                 node_path: $path,
-                descriptor_blob_oid: $blob
+                descriptor_blob_oid: $blob,
+                attestation_event_hash: $event_hash
               }
-            end
-        elif $event.event_type == "Revoke" then
+            end)
+      | replay_reattests($reattests)
+      | reduce $revokes[] as $event (.;
           ($event.payload.affected_case_ids // null) as $cases
           | ($event.payload.affected_frozen_node_ids // null) as $frozen_ids
           | if (($cases | type) != "array" or ($frozen_ids | type) != "array") then
               error("Revoke is missing affected active identities")
             else
-              .
-            end
-        else
-          error("unknown frozen ledger event type")
-        end)
-      | with_entries(
-          select(.value.frozen_node_id as $id | ($revoked_ids | index($id) | not)))
+              reduce ($cases[]
+                | select(($target_case_ids | index(.)) != null)) as $case (.;
+                if (has($case) | not) then
+                  error("Revoke targets an inactive frozen case")
+                elif (.[$case].frozen_node_id as $id
+                    | ($frozen_ids | index($id)) == null) then
+                  error("Revoke targets a stale frozen node identity")
+                else
+                  del(.[$case])
+                end)
+            end)
       | any(.[]; .node_path == $node)
     ' "${related_ledger_files[@]}" 2>&1)"; then
     echo "PLAYBOOK_INVALID failed to replay target module frozen ledger shards: $active_state" >&2
