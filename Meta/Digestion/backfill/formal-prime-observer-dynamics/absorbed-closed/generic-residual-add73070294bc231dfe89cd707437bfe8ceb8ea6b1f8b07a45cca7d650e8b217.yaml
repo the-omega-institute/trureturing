@@ -1,0 +1,17 @@
+ast_path: 推论/258.1
+fingerprints:
+  raw_sha256: sha256:add73070294bc231dfe89cd707437bfe8ceb8ea6b1f8b07a45cca7d650e8b217
+  normalized_sha256: sha256:add73070294bc231dfe89cd707437bfe8ceb8ea6b1f8b07a45cca7d650e8b217
+cas_ref: sha256:add73070294bc231dfe89cd707437bfe8ceb8ea6b1f8b07a45cca7d650e8b217
+coverage_gids:
+  - D5/S3/ConceptDynamics/InterventionLaws/ObservationInterventionKernelStrictness.intervention_kernel_strictly_finer_than_observation
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/InterventionLaws/ObservationInterventionKernelStrictness.intervention_kernel_strictly_finer_than_observation
+      source_sha256: sha256:add73070294bc231dfe89cd707437bfe8ceb8ea6b1f8b07a45cca7d650e8b217
+      target_statement_id: sha256:cdb94fd10f606ea8714d348a67d7856b36f694a0a032c22eb760d564b0089434
+  scribe:
+    - gid: D5/S3/ConceptDynamics/InterventionLaws/ObservationInterventionKernelStrictness.intervention_kernel_strictly_finer_than_observation
+      definition_sha256: sha256:7e70fd143ab831d20bef9bf51cc31ce21d89438fbc6fadcfb2d73dae3d2815d0
+      emission_sha256: sha256:a552ab4120dafc6bcf727570b5ff351339ec18690c75963ff110281c6826306c
+  unresolved_subitems: []
