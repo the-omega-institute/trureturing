@@ -234,3 +234,50 @@ def goldenUnitsPrincipalIdealDelivery : Unit := ()
    either impose finite remaining mass or revise the source definition.
    See `D5.S3.ConceptDynamics.DefinitionCapture.MeasureCapture.infinite_counting_cas_bridge_fails`;
    delivery branch `harness/dect-f5-w1`, PR #3160. -/
+
+/- TASK D5-T0053
+    GICT 1.9 环合元定理当前不可形式化:三条件在候选 `x` 上没有刻画谓词,理论侧自标为「窗」。
+    分类 `awaiting-capability`,属主 **τ=0 理论 owner** —— 缺的是**定义**(命题尚未成形),
+    不是「已成形的命题在给定系统内不可判」;故不标 `godel`。
+    依据:issue #2899 的处置面板,5 席 codex-cli 并发盲评 5/5 判 `open-typed`,
+    其中 4 席分类为 `awaiting-capability`、1 席(teleology)判 `godel`;采 4/5,
+    分歧理由记于该单。**席位是否跨模型族为 ASSUMED-UNVERIFIED,不冒充多样性共识。**
+    关闭条件(三项,逐字取自该单):理论侧交付①三条件在候选 `x` 上可机器陈述的刻画谓词、
+    ②候选域的定义、③其上等价关系的定义。三者齐备后本条转为可判;
+    若届时命题被证形式不可判,改标 `godel`。 -/
+
+/- TASK D5-T0054
+    DECT §43 的**承重命题** `stagewise_completion_with_infinite_reopening`
+    (「一个系统可以在每个固定阶段完成,却在扩张序列中反复重新打开」)**未形式化**,
+    已随 `BudgetStop` / `OpenWorldSequence` 一并移出 `harness/dect-g2` 的交付面。
+    该 lane 实际交付的是该节的**定义层**:`Closed` / `ApproximatelyClosed`(经 §9.1 的 `Δ` 与 `𝓔_η`)
+    / `MethodStopped` / `LocallyComplete` / `Reopens`。
+    立此条是因为读者可能从「两个构造移出」推断主命题已形式化 —— 按第 4 条不冒领,明写它不在其中。
+    依据:issue #3157(orchestrator 自陈的读数勘正,无评审席)。
+    **本条只登记该承重命题;#3157 正文另有 `BudgetStop`/`OpenWorldSequence` 的三个设计题
+    与其 residual-open 原子,不在本条的关闭集合内**(评审判词指出的 material,如实记)。
+    关闭条件〔**注:此条为本 TASK 新增的判断,#3157 原文未写出关闭条件**〕:
+    该承重命题被忠实形式化并结账,或理论侧裁定它不可形式化并给出理由。 -/
+
+/- TASK D5-T0055
+    DECT §48.3 的三个设计题未答,`harness/dect-g1` 因此停止迭代,原子
+    `generic-residual-661d307df0f3…` 保持 `residual-open`。
+    **地址关系(先读这句)**:分支 `harness/dect-g1` 上已有 `TASK D5-T0050` 承载同一 issue 的
+    方向设计缺口,且 #3218 的评论正在引用那一条;该分支**未合入 dev 且已停止迭代**。
+    本条是 **dev 侧**的记录;两者若日后同处一树,须合并为一条,**不得同址异义**。
+    总账:**7 轮评审、7 次修复、零交付**;其中**四轮**出现方向类缺陷,每轮位置不同
+    (`Contam` 特化 → `Dep*` 方向 → `commitmentClosureVisibleAtFreeze` → `artifactDependsOn`)。
+    **每一次修复都把方向问题挪到下一个位置,而不是解决它。**
+    停止依据(判据写于第七轮结果返回之前):「若第七轮的修复 brief 会重复第六轮已写过的同一条指令,即停止加轮」——
+    第八轮需要的三条(方向依赖、泛化完成、Scribe 收窄)全部是第六轮已写过的,触发。
+    仍可复用:`EvidenceRole` 五构造子、`UseEvent` 六参泛化、`FirstSeen`(`WithTop` + mathlib
+    `MeasureTheory.hittingAfter`)、`ReplicateIndependent` 的诚实移出、语义负例
+    `admissible_judge_early_append_witness`。分支 `harness/dect-g1` HEAD `29f4ce61d`,未开 PR、未 deposit。
+    依据:issue #3218,判词来自 arch/tests 两席 codex-cli,orchestrator 逐条亲读;同族,不构成多样性共识。
+    **三个设计题逐字取自该单**:①`Artifact` 与 `Evidence` 独立之后,`Dep*(K_n) ⊆ 𝓕_{t_n}` 怎么表述
+    (§48.1 的 `𝓕_k` 装对象、`Dep*(K_n)` 装记录/工件;卷内若无联系二者的构造,即卷的缺口);
+    ②`seen` 该被约束到什么程度(只单调 vs 强制为「访问对象 ∪ 其反身传递依赖闭包」);
+    ③**方向点的穷举该由谁做**(该单教训:由 orchestrator 列表不可靠,两次不完整)。
+    关闭条件(该单终句原文):**建议先答那三个设计题,再开 lane。**
+    〔此处刻意保留「建议」二字:该单写的是建议,把它升级为「不得续开修复轮」会替 owner 预先裁定
+    后续工作方式 —— 一轮评审判此为越权,已改回。〕 -/

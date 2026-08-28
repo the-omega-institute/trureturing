@@ -1,0 +1,10 @@
+ast_path: section/57-2-3-语义重评框架
+fingerprints:
+  raw_sha256: sha256:b41cab36c0664076d72484d1cc20fe14a1f832df6131b1650816f3eb19119363
+  normalized_sha256: sha256:b41cab36c0664076d72484d1cc20fe14a1f832df6131b1650816f3eb19119363
+cas_ref: sha256:b41cab36c0664076d72484d1cc20fe14a1f832df6131b1650816f3eb19119363
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

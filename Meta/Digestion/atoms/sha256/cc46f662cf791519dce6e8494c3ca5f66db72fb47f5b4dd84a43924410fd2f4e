@@ -1,0 +1,30 @@
+### 57.3.2 对原 Prop 级接口的唯一遗忘映射
+
+```lean
+namespace TransportSemanticFrame
+
+def toLegacy
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult) :
+    TransportSemantics TruthReceipt NewDomainPrediction Claim ContentAddress
+      Domain Version NewEvidence where
+  claimAddress := S.claimAddress
+  claimScope := S.claimScope
+  claimVersion := S.claimVersion
+  receiptMatches := S.receiptMatches
+  strictSubset := SemanticStrictSubset S
+  claimOn := S.claimOn
+  inNewOnlyDomain := SemanticNewOnly S
+  predictionDefined := SemanticPredictionDefined S
+  predictionFails := SemanticPredictionFails S
+  refutes := SemanticRefutes S
+
+end TransportSemanticFrame
+```
+
+`TransportSemanticFrame.toLegacy` 是新语义回到第 54.3 部 `TransportSemantics` 的唯一遗忘映射。后续证明必须通过该映射复用原 `ValidTransportCert` 与 `Overreach`；不得另造第二个不相容的 Prop 级运输接口。
+

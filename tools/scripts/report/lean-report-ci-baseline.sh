@@ -33,9 +33,6 @@ trap cleanup EXIT HUP INT TERM
 for suffix in '' .sha256 .input.attestation .provenance.json .materials.zip; do
   [[ -s "${BUNDLE}${suffix}" ]] || fallback "missing-bundle-member"
 done
-[[ -d "${BUNDLE}.logs" \
-  && -n "$(find "${BUNDLE}.logs" -type f -print -quit 2>/dev/null)" ]] \
-  || fallback "missing-producer-logs"
 
 address="$(python3 - "$BUNDLE" <<'PY'
 import hashlib
@@ -92,8 +89,6 @@ for suffix in '' .sha256 .input.attestation .provenance.json .materials.zip; do
     || cp "${BUNDLE}${suffix}" "${target}${suffix}" \
     || fallback "bundle-copy-failed"
 done
-cp -R "${BUNDLE}.logs" "${target}.logs" 2>/dev/null \
-  || fallback "log-copy-failed"
 mv "$STAGING" "$entry" 2>/dev/null || fallback "cache-publish-failed"
 STAGING=""
 printf 'LEAN_REPORT_CI_BASELINE status=ready input_address=sha256:%s\n' "$address" >&2
