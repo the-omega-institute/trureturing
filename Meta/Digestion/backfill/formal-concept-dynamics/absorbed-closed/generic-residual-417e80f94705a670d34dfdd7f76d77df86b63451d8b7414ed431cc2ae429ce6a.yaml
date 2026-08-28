@@ -12,6 +12,6 @@ receipts:
       target_sha256: sha256:c532b2ea84bff29e4fbaa0b040304c63feb60b86e5f0834eb2161db1be2514af
   scribe:
     - gid: D5/S3/ConceptDynamics/Discussion/FiniteDiscussionStability.finite_discussion_stability
-      definition_sha256: sha256:5e8b0a86fc02c12699f05d1c81d29c3c339c8db13c4517ae2cfef212c26ce23f
-      emission_sha256: sha256:b32ac9cbb25f70881edf378f312f9f5d6899bf6c9ba62681eb9109143e4f6472
+      definition_sha256: sha256:cd9c03b343da9b379d66d57e243e1f8e55f38e46678c744f0a3a3623bb99933d
+      emission_sha256: sha256:0a76cdb1d006d9288108fb15ed95a4b174e54df53dc0db64166150dded016d7f
   unresolved_subitems: []
