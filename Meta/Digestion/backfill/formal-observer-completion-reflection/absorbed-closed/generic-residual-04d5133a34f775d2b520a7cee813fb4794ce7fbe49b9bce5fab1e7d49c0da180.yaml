@@ -1,0 +1,17 @@
+ast_path: 定理/14.2
+fingerprints:
+  raw_sha256: sha256:04d5133a34f775d2b520a7cee813fb4794ce7fbe49b9bce5fab1e7d49c0da180
+  normalized_sha256: sha256:04d5133a34f775d2b520a7cee813fb4794ce7fbe49b9bce5fab1e7d49c0da180
+cas_ref: sha256:04d5133a34f775d2b520a7cee813fb4794ce7fbe49b9bce5fab1e7d49c0da180
+coverage_gids:
+  - D5/S3/ObserverMemory/Dynamics/ObservableKrylovGrowthBound.observable_krylov_strict_growth_bound
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/Dynamics/ObservableKrylovGrowthBound.observable_krylov_strict_growth_bound
+      source_sha256: sha256:04d5133a34f775d2b520a7cee813fb4794ce7fbe49b9bce5fab1e7d49c0da180
+      target_statement_id: sha256:234639aa94dafdf57e1aa0e975cb8097ff20331df86da6c46101e3000100029d
+  scribe:
+    - gid: D5/S3/ObserverMemory/Dynamics/ObservableKrylovGrowthBound.observable_krylov_strict_growth_bound
+      definition_sha256: sha256:c488778dc92efe24bbaa6f9e759b3f2c8ef622313ee7e59b12b617a4cfb6236c
+      emission_sha256: sha256:2852a21f68f2cc41161f018f7004f5aa2ae22c824f91c2411be7d6dfe0801a02
+  unresolved_subitems: []
