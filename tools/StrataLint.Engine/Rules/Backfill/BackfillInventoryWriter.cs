@@ -89,6 +89,11 @@ internal static class BackfillInventoryWriter
         return ImmutableArray.CreateRange(StrictUtf8.GetBytes(builder.ToString()));
     }
 
+    internal static ImmutableArray<byte> WriteStatusAuthorityIdentity(
+        DigestionLedgerSource source,
+        DigestionLedgerEntry entry) =>
+        [.. WriteSourceMetadata(source with { AcknowledgedStale = [] }), .. WriteEntry(entry)];
+
     private static void ValidateGenreRegistryCheck(GenreRegistryCheck check)
     {
         ArgumentNullException.ThrowIfNull(check);

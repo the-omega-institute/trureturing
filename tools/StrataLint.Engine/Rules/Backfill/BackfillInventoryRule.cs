@@ -7,7 +7,7 @@ internal sealed record BackfillInventoryValidationContext(
     RepositorySnapshot Current,
     RepositorySnapshot Baseline,
     ValidatedPolicy Policy,
-    AcceptedLeanClosure Lean,
+    AcceptedLeanClosure? Lean,
     VerifiedScribeEmissions? VerifiedScribeEmissions,
     RawChangeSet? Changes = null,
     Func<string, bool>? IsBaseFactAffected = null);
@@ -95,7 +95,32 @@ internal static class BackfillInventoryRule
 
     internal static ImmutableArray<RuleFinding> EvaluateDocument(
         BackfillInventoryValidationContext context,
-        BackfillInventoryDocument document)
+        BackfillInventoryDocument document) =>
+        EvaluateDocument(context, document, validateTruthAlignment: true);
+
+    internal static ImmutableArray<RuleFinding> EvaluateDocumentWithoutTruthAlignment(
+        RepositorySnapshot current,
+        RepositorySnapshot baseline,
+        ValidatedPolicy policy,
+        BackfillInventoryDocument document,
+        RawChangeSet? changes = null,
+        Func<string, bool>? isBaseFactAffected = null) =>
+        EvaluateDocument(
+            new BackfillInventoryValidationContext(
+                current,
+                baseline,
+                policy,
+                Lean: null,
+                VerifiedScribeEmissions: null,
+                changes,
+                isBaseFactAffected),
+            document,
+            validateTruthAlignment: false);
+
+    private static ImmutableArray<RuleFinding> EvaluateDocument(
+        BackfillInventoryValidationContext context,
+        BackfillInventoryDocument document,
+        bool validateTruthAlignment)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(document);
@@ -133,7 +158,8 @@ internal static class BackfillInventoryRule
                 document,
                 sources,
                 sources.SelectMany(static source => source.Entries).ToImmutableArray(),
-                findings);
+                findings,
+                validateTruthAlignment);
         }
 
         return findings.ToImmutable();
@@ -179,7 +205,8 @@ internal static class BackfillInventoryRule
         BackfillInventoryDocument document,
         ImmutableArray<DigestionLedgerSource> sources,
         ImmutableArray<DigestionLedgerEntry> entries,
-        ImmutableArray<RuleFinding>.Builder findings)
+        ImmutableArray<RuleFinding>.Builder findings,
+        bool validateTruthAlignment)
     {
         if (sources.Length == 0)
         {
@@ -356,6 +383,11 @@ internal static class BackfillInventoryRule
             findings.Add(new RuleFinding(BackfillPath, finding));
         }
 
+        if (!validateTruthAlignment)
+        {
+            return;
+        }
+
         if (hasStructuralFindings)
         {
             return;
@@ -368,7 +400,7 @@ internal static class BackfillInventoryRule
                          baselineDocument,
                          document,
                          context.Baseline,
-                         context.Lean.Report))
+                         context.Lean!.Report))
             {
                 findings.Add(new RuleFinding(BackfillPath, finding, AdmissionEffect.Block));
             }
@@ -379,7 +411,7 @@ internal static class BackfillInventoryRule
                     : DigestionEvaluationScope.ChangedSet,
                 document,
                 context.Current,
-                context.Lean,
+                context.Lean!,
                 context.VerifiedScribeEmissions,
                 baselineDocument,
                 baselineSnapshot: context.Baseline,
