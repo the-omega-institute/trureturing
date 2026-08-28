@@ -100,6 +100,9 @@ internal sealed class ZeroMemoryCriterionDocument : IScribeDocumentDefinition
 
     private static Formula Op(Formula name) => Seq(Operatorname, Grp(name));
 
+    private static Formula Call(string name, params Formula[] arguments) =>
+        App(Op(F.Id(name)), arguments);
+
     private static Formula Setup(
         Formula scalar, Formula source, Formula target, Formula observation, Formula update) =>
         App(Op(F.Id("LinearSetup")), scalar, source, target, observation, update);
@@ -172,6 +175,9 @@ internal sealed class ZeroMemoryCriterionDocument : IScribeDocumentDefinition
 
     private static Formula CriterionFormula()
     {
+        Formula scalar = F.Id("K");
+        Formula state = F.Id("V");
+        Formula output = F.Id("W");
         Formula observation = F.Id("C");
         Formula update = F.Id("T");
         Formula descent = F.Id("Tbar");
@@ -184,12 +190,23 @@ internal sealed class ZeroMemoryCriterionDocument : IScribeDocumentDefinition
             App(Op(F.Id("map")), update, Kernel(observation)),
             Sp, Subseteq, Sp, Kernel(observation));
         Formula descentClause = Seq(
-            Exists, Sp, descent, Colon, Sp, F.Id("W"), Sp, To, Sp, F.Id("W"),
+            Exists, Sp, descent, Colon, Sp, Call("LinearMap", scalar, output, output),
+            Sp,
             Comma, Sp, Forall, Sp, x, Comma, Sp,
             App(observation, App(update, x)), Sp, Eq, Sp,
             App(descent, App(observation, x)));
 
         return Disp(Seq(
+            Forall, Sp, scalar, Comma, Sp, state, Comma, Sp, output, Colon, Sp,
+            F.Seq(F.Operatorname, F.Grp(F.Id("Type"))), Comma, Sp,
+            OpenBracket, Call("DivisionRing", scalar), CloseBracket, Comma, Sp,
+            OpenBracket, Call("AddCommGroup", state), CloseBracket, Comma, Sp,
+            OpenBracket, Call("Module", scalar, state), CloseBracket, Comma, Sp,
+            OpenBracket, Call("AddCommGroup", output), CloseBracket, Comma, Sp,
+            OpenBracket, Call("Module", scalar, output), CloseBracket, RowBreak, Grp(),
+            observation, Colon, Sp, Call("LinearMap", scalar, state, output), Comma, Sp,
+            update, Colon, Sp, Call("LinearMap", scalar, state, state), Comma,
+            RowBreak, Grp(),
             App(Op(F.Id("TFAE")), zeroMemory, invariant, descentClause), Dot));
     }
 

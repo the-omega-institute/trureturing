@@ -1,0 +1,17 @@
+ast_path: 定理/12.3
+fingerprints:
+  raw_sha256: sha256:c807f31fd30e036e7ba4ab5cbcf92ae3c4b5ed1fd1df3b1a9f4be4dc8ff7130c
+  normalized_sha256: sha256:c807f31fd30e036e7ba4ab5cbcf92ae3c4b5ed1fd1df3b1a9f4be4dc8ff7130c
+cas_ref: sha256:c807f31fd30e036e7ba4ab5cbcf92ae3c4b5ed1fd1df3b1a9f4be4dc8ff7130c
+coverage_gids:
+  - D5/S3/ObserverMemory/Dynamics/MaximalUnobservableSubspace.future_kernel_is_maximal_invariant
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/Dynamics/MaximalUnobservableSubspace.future_kernel_is_maximal_invariant
+      source_sha256: sha256:c807f31fd30e036e7ba4ab5cbcf92ae3c4b5ed1fd1df3b1a9f4be4dc8ff7130c
+      target_sha256: sha256:66b89f7084b8505c555b8d9aec110926b8ec98c9c51ce20f896abc43f3a0a12c
+  scribe:
+    - gid: D5/S3/ObserverMemory/Dynamics/MaximalUnobservableSubspace.future_kernel_is_maximal_invariant
+      definition_sha256: sha256:ba718a0ce8e0d60c173e03c7ad53523f29953c61e00d520612618ec64fe8b974
+      emission_sha256: sha256:2edd64bf483e1afb2e48c0afbc63956c71cda0a106b5b923d40bc5f0ea554e44
+  unresolved_subitems: []

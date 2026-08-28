@@ -1,0 +1,17 @@
+ast_path: 定理/13.1
+fingerprints:
+  raw_sha256: sha256:78673476afc7a1bff0eef470155a2c1e4b0d5492703e26976f00e1c0f1d58de5
+  normalized_sha256: sha256:78673476afc7a1bff0eef470155a2c1e4b0d5492703e26976f00e1c0f1d58de5
+cas_ref: sha256:78673476afc7a1bff0eef470155a2c1e4b0d5492703e26976f00e1c0f1d58de5
+coverage_gids:
+  - D5/S3/Observer/LinearMemory/ZeroMemoryCriterion.zero_memory_criterion
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/LinearMemory/ZeroMemoryCriterion.zero_memory_criterion
+      source_sha256: sha256:78673476afc7a1bff0eef470155a2c1e4b0d5492703e26976f00e1c0f1d58de5
+      target_sha256: sha256:aab6a936f5c08cfcd7ce5b0d33c83af80748a26308048f93f64d3ddb827e6a10
+  scribe:
+    - gid: D5/S3/Observer/LinearMemory/ZeroMemoryCriterion.zero_memory_criterion
+      definition_sha256: sha256:eae5e250915c5e5d1d5306add6f87ced1c47335932dc9cec311903cabdceeea2
+      emission_sha256: sha256:b9c71200cf2530a936d61d445eebaee2bdd65531193cf1d738b2739a0ea79bde
+  unresolved_subitems: []

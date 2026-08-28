@@ -34,8 +34,9 @@ internal sealed class StreamlineDecompositionDocument : IScribeDocumentDefinitio
                         + "existsUnique_normalized_streamline"),
                 H("Every solenoid path has a unique normalized streamline"),
                 StatementSource.FromAuthor(Disp(Seq(
-                    Forall, Sp, GammaLower, InMacro, Sp, F.Id("C"), Open,
+                    Forall, Sp, GammaLower, Colon, Sp, F.Id("C"), Open,
                     Mathbb, Grp(F.Id("R")), Comma, Sp, Mathcal, Sp, F.Id("S"), Close,
+                    Comma, Sp, F.Id("t0"), Colon, Sp, Mathbb, Grp(F.Id("R")), Comma,
                     Comma, Esc, Exists, Bang, Sp, F.Id("r"), Comma, Sp, F.Id("k"), Comma, Esc,
                     F.Id("r"), Open, D(0), Close, Eq, Sp,
                     F.Id("rep"), Open, GammaLower, Close, Sp, Land, Sp,

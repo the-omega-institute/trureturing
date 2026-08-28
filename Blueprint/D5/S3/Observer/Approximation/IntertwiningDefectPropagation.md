@@ -6,7 +6,7 @@ An operator intertwining defect telescopes and propagates with exact norm bounds
 
 **Theorem 1.1 (Intertwining defects telescope exactly).**
 
-$$C \cdot T^{n} - A^{n} \cdot C = \sum_{j=0}^{n-1} A^{n-1-j} \cdot \left(C \cdot T - A \cdot C\right) \cdot T^{j}$$
+$$\forall k, X, Y: \operatorname{Type}, [\operatorname{NontriviallyNormedField}\left(k\right)], [\operatorname{SeminormedAddCommGroup}\left(X\right)], [\operatorname{NormedSpace}\left(k, X\right)], [\operatorname{SeminormedAddCommGroup}\left(Y\right)], [\operatorname{NormedSpace}\left(k, Y\right)],\\{}A: \operatorname{ContinuousLinearMap}\left(k, Y, Y\right), C: \operatorname{ContinuousLinearMap}\left(k, X, Y\right), T: \operatorname{ContinuousLinearMap}\left(k, X, X\right), n: Nat,\\{}C \cdot T^{n} - A^{n} \cdot C = \sum_{j=0}^{n-1} A^{n-1-j} \cdot \left(C \cdot T - A \cdot C\right) \cdot T^{j}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/Approximation/IntertwiningDefectPropagation.intertwining_defect_telescope` (`✓ std3`). ∎
 

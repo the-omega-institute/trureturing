@@ -6,7 +6,7 @@ Observation refinement induces a unique surjective map of predictive completions
 
 **Theorem 1.1 (Refinement induces the canonical predictive quotient map).**
 
-$$r = h \circ q \Rightarrow\ R_{q} \subseteq R_{r} \land\ \exists! kappa: Z_{q} \to Z_{r},\ \operatorname{Surjective}\left(kappa\right) \land\ \pi_{r} = kappa \circ \pi_{q} \land\ kappa \circ \overline{\tau}_{q} = \overline{\tau}_{r} \circ kappa \land\ \overline{r} \circ kappa = h \circ \overline{q}.$$
+$$\forall Y \in \operatorname{Type}, O \in \operatorname{Type}, P \in \operatorname{Type}, update \in Y \to Y, fine \in Y \to O, coarse \in Y \to P, forget \in O \to P, hfactor \in coarse = forget \circ fine,\; \operatorname{ker}(\operatorname{completeItinerary}(update, fine)) \subseteq \operatorname{ker}(\operatorname{completeItinerary}(update, coarse)) \land \exists! descend: \operatorname{Function}(\operatorname{CompletedState}(update, fine), \operatorname{CompletedState}(update, coarse)), \operatorname{Surjective}(descend) \land \left(\operatorname{completionProjection}(update, coarse) = descend \circ \operatorname{completionProjection}(update, fine) \land \left(descend \circ \operatorname{completionUpdate}(update, fine) = \operatorname{completionUpdate}(update, coarse) \circ descend \land \operatorname{completionReadout}(update, coarse) \circ descend = forget \circ \operatorname{completionReadout}(update, fine)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Refinement/PredictionCompletion.observation_refinement_completion` (`✓ std3`). ∎
 

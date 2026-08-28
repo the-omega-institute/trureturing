@@ -12,6 +12,6 @@ receipts:
       target_sha256: sha256:6df08d2ec17891c4b397c02388e96f8f173307e16805eeb509e7bbe693093041
   scribe:
     - gid: D5/S3/ObserverMemory/Refinement/PredictionCompletion.observation_refinement_completion
-      definition_sha256: sha256:42df95413717581fe496c7ec52bf523e23748ba23caa45e4eac7e819c4d018f9
-      emission_sha256: sha256:02549d30221b83830bc64696a75fa754ba2e444863b3fce5564b277df8b39d63
+      definition_sha256: sha256:011a6df62fd3468120fbb99d6b5150417e3a623d84d3d61f3b634a3524615d7f
+      emission_sha256: sha256:797a43274e559b912b7b21368a804ee29e808585755ea2590c20a7be4d1028c4
   unresolved_subitems: []
