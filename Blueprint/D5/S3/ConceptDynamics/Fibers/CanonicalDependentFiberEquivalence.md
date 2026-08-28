@@ -6,7 +6,7 @@ The canonical dependent-fiber equivalence records a readout and recovers its sou
 
 **Theorem 1.1 (Canonical dependent-fiber equivalence).**
 
-$$\forall X, B: \operatorname{Type}, q: X \to B, e_{q} := \operatorname{canonical}(q): X \equiv \sum _{b: B} R(b), (\forall x: X, e_{q}(x) = \langle q(x), \langle x, refl\rangle\rangle) \land (\forall b: B, x: X, p: q(x) = b, e_{q}^{-1}(\langle b, \langle x, p\rangle\rangle) = x).$$
+$$\forall X, B: \operatorname{Type}, q: X \to B, e_{q} := \operatorname{canonical}(q): X \equiv \sum _{b: B} \operatorname{ConceptFiber}\left(q, b\right), (\forall x: X, e_{q}(x) = \langle q(x), \langle x, refl\rangle\rangle) \land (\forall b: B, x: X, p: q(x) = b, e_{q}^{-1}(\langle b, \langle x, p\rangle\rangle) = x).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Fibers/CanonicalDependentFiberEquivalence.whole_dependent_fiber_form` (`✓ std3`). ∎
 

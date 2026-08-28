@@ -40,11 +40,10 @@ internal sealed class CanonicalDependentFiberEquivalenceDocument : IScribeDocume
         Formula point = F.Id("x");
         Formula proof = F.Id("p");
         Formula readout = F.Id("q");
-        Formula fiber = F.Id("R");
         Formula equivalence = Seq(F.Id("e"), Underscore, Grp(readout));
         Formula sigma = Seq(Sum, Sp, Underscore,
             Grp(coordinate, Colon, Sp, coordinateType), Sp,
-            Apply(fiber, coordinate));
+            Call("ConceptFiber", readout, coordinate));
         Formula forwardValue = Seq(
             Langle, Sp, Apply(readout, point), Comma, Sp,
             Langle, Sp, point, Comma, Sp, F.Id("refl"), Rangle, Rangle);
