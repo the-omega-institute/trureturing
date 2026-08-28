@@ -8,3 +8,11 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-28T01:27:47.3574130+00:00
+    gids:
+      - D5/S3/ConceptDynamics/DecisionValue/FreeInformationValue.free_ignorable_information_value_nonnegative
+    gaps:
+      - code: structural-alignment-rejected
+        detail: 定理/296.1
