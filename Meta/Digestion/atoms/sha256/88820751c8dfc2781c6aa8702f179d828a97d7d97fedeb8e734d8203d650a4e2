@@ -1,0 +1,18 @@
+## 2.3 原语逃逸
+
+候选 \(c:X\to C\) 是原语逃逸，当
+
+\[
+c\notin\operatorname{Cl}(\Gamma).
+\]
+
+等价地，存在 \(x,y\) 满足
+
+\[
+\forall d\in\Gamma,\ d(x)=d(y),
+\qquad
+c(x)\neq c(y).
+\]
+
+也就是说，候选切开了旧语言共同核中的一对状态。
+

@@ -10,12 +10,14 @@ internal static class ResidualFrontierAssembler
         RepositorySnapshot snapshot,
         AcceptedLeanClosure lean,
         LeanAxiomReport report,
-        IScribeEmissionVerifier scribeEmissionVerifier)
+        IScribeEmissionVerifier scribeEmissionVerifier,
+        IReadOnlyDictionary<RepoPath, TruthState> truthStates)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(lean);
         ArgumentNullException.ThrowIfNull(report);
         ArgumentNullException.ThrowIfNull(scribeEmissionVerifier);
+        ArgumentNullException.ThrowIfNull(truthStates);
 
         var verifiedScribeEmissions = scribeEmissionVerifier.Verify(snapshot, report);
         var document = BackfillInventoryLoader.Load(snapshot);
@@ -24,7 +26,8 @@ internal static class ResidualFrontierAssembler
             document,
             snapshot,
             lean,
-            verifiedScribeEmissions);
+            verifiedScribeEmissions,
+            truthStates: truthStates);
         if (evaluation.HasReceiptIntegrityFailure)
         {
             throw new InvalidOperationException(

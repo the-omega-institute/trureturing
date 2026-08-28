@@ -1,0 +1,10 @@
+ast_path: section/398-若公共目标只依赖总量-治理不需要收集完整身份
+fingerprints:
+  raw_sha256: sha256:7ac664559885646f6e97b1199354459cbcadadba41ec8d43cc6e297bb140ff28
+  normalized_sha256: sha256:7ac664559885646f6e97b1199354459cbcadadba41ec8d43cc6e297bb140ff28
+cas_ref: sha256:7ac664559885646f6e97b1199354459cbcadadba41ec8d43cc6e297bb140ff28
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

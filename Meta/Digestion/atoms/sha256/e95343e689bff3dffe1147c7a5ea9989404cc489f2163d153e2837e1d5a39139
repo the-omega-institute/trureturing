@@ -1,0 +1,38 @@
+## 命题 59.2（最优集合仍可能多值）
+
+即使损失固定，也可能有
+
+$$
+R(x,L)=R(x,R),
+$$
+
+从而
+
+$$
+A^*(x)=\{L,R\}.
+$$
+
+所以完整链条是：
+
+$$
+\boxed{
+\text{prediction}
++
+\text{value}
+\longrightarrow
+\text{optimal-action set},
+}
+$$
+
+而不是：
+
+$$
+\text{prediction}
+\longrightarrow
+\text{unique act}.
+$$
+
+唯一行动还需要严格偏好、额外 tie-breaker 或一个实际选择事件。
+
+---
+

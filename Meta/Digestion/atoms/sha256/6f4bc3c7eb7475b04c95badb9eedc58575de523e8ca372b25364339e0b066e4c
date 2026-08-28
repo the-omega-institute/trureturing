@@ -1,0 +1,20 @@
+# 33. 策略 cocycle、喉部 cocycle 与势函数障碍
+
+设增强观察状态为 $z=(q,m)$。合法转移边 $e:z\to z'$ 携带隐藏分量增量
+
+$$
+c(e)\in\mathcal K,
+\qquad
+\mathcal K=K_\infty/\Delta(\mathbb Z),
+$$
+
+其中该商仍是前文登记的条件接口，不冒充现成 Lean 类型。
+
+对路径 $\gamma=e_1\cdots e_n$ 定义
+
+$$
+C(\gamma)=\sum_i c(e_i).
+$$
+
+它满足路径拼接加法。
+

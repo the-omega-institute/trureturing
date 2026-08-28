@@ -1,0 +1,10 @@
+ast_path: row/第Ⅵ节恕道-你交出的工件-须是你自己作为下游愿意接收的
+fingerprints:
+  raw_sha256: sha256:0c41780952b6446730e91c9c77d953cbdecd97fe990c8561d60ad3fcdb938e97
+  normalized_sha256: sha256:0c41780952b6446730e91c9c77d953cbdecd97fe990c8561d60ad3fcdb938e97
+cas_ref: sha256:0c41780952b6446730e91c9c77d953cbdecd97fe990c8561d60ad3fcdb938e97
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

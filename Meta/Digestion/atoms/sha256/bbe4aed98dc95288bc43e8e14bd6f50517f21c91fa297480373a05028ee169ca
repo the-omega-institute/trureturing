@@ -1,0 +1,33 @@
+## 定理 163.1（信任是目标相对的）
+
+若：
+
+[
+T_1
+===
+
+f\circ R\circ C_B,
+]
+
+并不推出另一个目标 (T_2) 也能通过同一报告链因子化。
+
+因此：
+
+[
+\boxed{
+\operatorname{Trust}_A(B;T_1)
+\not\Rightarrow
+\operatorname{Trust}_A(B;T_2).
+}
+]
+
+“这个来源可信”必须进一步类型化成：
+
+[
+\boxed{
+\text{对什么目标、什么语境、什么误差范围可信。}
+}
+]
+
+---
+

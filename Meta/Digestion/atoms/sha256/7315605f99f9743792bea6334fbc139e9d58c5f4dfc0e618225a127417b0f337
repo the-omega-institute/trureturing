@@ -1,0 +1,14 @@
+## 定义 90.1（有限时间可观测矩阵）
+
+$$
+\mathscr O_n
+=
+\begin{bmatrix}
+C\\
+CA\\
+CA^2\\
+\vdots\\
+CA^{n-1}
+\end{bmatrix}.
+$$
+

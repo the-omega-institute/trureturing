@@ -1,0 +1,28 @@
+## 7.1 相容精度塔
+
+设：
+
+$$
+q_k:X\to O_k,
+$$
+
+且存在降精度映射：
+
+$$
+ρ_k:O_{k+1}\to O_k
+$$
+
+满足：
+
+$$
+q_k=ρ_k\circ q_{k+1}.
+$$
+
+仓库 `CompatiblePrecisionTowerMonotonicity` 已机器验证：
+
+$$
+ker(q_{k+1})\subseteq ker(q_k).
+$$
+
+---
+

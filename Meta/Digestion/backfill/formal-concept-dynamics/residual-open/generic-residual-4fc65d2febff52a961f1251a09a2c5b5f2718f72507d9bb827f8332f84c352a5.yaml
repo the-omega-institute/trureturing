@@ -1,0 +1,10 @@
+ast_path: section/383-最小操作实现定理
+fingerprints:
+  raw_sha256: sha256:4fc65d2febff52a961f1251a09a2c5b5f2718f72507d9bb827f8332f84c352a5
+  normalized_sha256: sha256:4fc65d2febff52a961f1251a09a2c5b5f2718f72507d9bb827f8332f84c352a5
+cas_ref: sha256:4fc65d2febff52a961f1251a09a2c5b5f2718f72507d9bb827f8332f84c352a5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

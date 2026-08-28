@@ -1,0 +1,40 @@
+## 定理 467.1（连续下降）
+
+存在唯一连续映射：
+
+[
+\boxed{
+\overline T:B\to Y
+}
+]
+
+满足：
+
+[
+\boxed{
+T=\overline T\circ q.
+}
+]
+
+### 证明
+
+定义：
+
+[
+\overline T(q(x))=T(x).
+]
+
+纤维恒定性保证良定义。
+
+由于：
+
+[
+\overline T\circ q=T
+]
+
+连续，而 (q) 为 quotient map，故 (\overline T) 连续。
+
+唯一性来自 (q) 满射。(\square)
+
+---
+

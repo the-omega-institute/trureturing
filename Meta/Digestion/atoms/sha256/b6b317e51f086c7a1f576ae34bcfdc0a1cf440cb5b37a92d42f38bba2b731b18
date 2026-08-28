@@ -1,0 +1,30 @@
+## 定理 136.1（目标预测充分性）
+
+若 $T\subseteq V_{J,m}$，则对任意 $A\in T$，其期望
+
+$$
+\operatorname{Tr}(\rho A)
+$$
+
+由 prime-time 观察签名唯一决定。
+
+反之，若存在
+
+$$
+A\in T\setminus V_{J,m},
+$$
+
+则存在迹零残差方向 $D\in V_{J,m}^\perp$ 与 $\operatorname{Tr}(DA)\neq0$，从而可构造两个当前观察不可区分、但目标期望不同的物理状态。
+
+因此 prime-quantum 实验设计应首先问：
+
+$$
+\boxed{
+\text{which target subspace must be captured?}
+}
+$$
+
+而不是默认追求所有 $d^2-1$ 个状态自由度。
+
+---
+

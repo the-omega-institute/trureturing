@@ -1,0 +1,14 @@
+## 结论 123.1
+
+$$
+\boxed{
+\text{all-prime/all-precision/all-time completeness}
+\Longrightarrow
+\text{finite prime-time quantum certificate}.
+}
+$$
+
+这里的有限性来自算子空间维数，不来自量子状态集合的基数。
+
+---
+

@@ -178,7 +178,7 @@ public sealed class PlaybookWorkflowScriptTests
             string baseline,
             string? dotnetFailure = null,
             string? dotnetDiagnostic = null) =>
-            BoundedProcessRunner.Run(
+            TestProcessRunner.Run(
                 "/usr/bin/env",
                 [
                     $"PATH={binPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
@@ -191,7 +191,7 @@ public sealed class PlaybookWorkflowScriptTests
                     baseline,
                 ],
                 temporary.Path,
-                TimeSpan.FromSeconds(30),
+                BoundedProcessRunner.HangDetectionBudget,
                 64 * 1024);
 
         internal string[] Calls() => File.Exists(callsPath)

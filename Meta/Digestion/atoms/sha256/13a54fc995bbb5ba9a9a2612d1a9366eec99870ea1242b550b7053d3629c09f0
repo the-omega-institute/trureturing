@@ -1,0 +1,24 @@
+## 定理 55.1（确定性策略计数）
+
+所有确定性策略构成直积
+
+$$
+\operatorname{Sec}(\mathcal A)
+\cong
+\prod_{q\in Q}\mathcal A(q),
+$$
+
+因此
+
+$$
+\boxed{
+|\operatorname{Sec}(\mathcal A)|
+=
+\prod_{q\in Q}|\mathcal A(q)|.
+}
+$$
+
+### 证明
+
+一个截面恰好为每个 $q$ 选择一个 $a_q\in\mathcal A(q)$；不同状态上的选择彼此独立地组成函数。∎
+

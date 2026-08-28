@@ -1,0 +1,22 @@
+## 定义 19.1（代理等价）
+
+$$
+h\sim_{\mathrm{ag}}h'
+\iff
+\forall w\in\mathcal W,
+\quad
+\Gamma(h)(w)=\Gamma(h')(w).
+$$
+
+定义代理因果状态空间
+
+$$
+\boxed{
+S_{\mathrm{ag}}
+=
+\mathcal H/{\sim_{\mathrm{ag}}}.
+}
+$$
+
+它不只决定下一动作，还决定在所有允许干预下未来行动、环境响应、记录与内部更新的联合分布。
+

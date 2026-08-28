@@ -1,0 +1,14 @@
+## 定义 57.1（动作行为等价）
+
+在固定 $q$ 下定义
+
+$$
+a\sim_q b
+\iff
+\forall w\in W^*,
+\quad
+\operatorname{Prof}(q,a)(w)
+=
+\operatorname{Prof}(q,b)(w).
+$$
+

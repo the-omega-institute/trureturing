@@ -1,0 +1,29 @@
+## 定理 473.2（精化误差分解）
+
+[
+\boxed{
+\begin{aligned}
+\mathbb E[(T-P_C T)^2]
+={}&
+\mathbb E[(T-P_D T)^2]\
+&+
+\mathbb E[(P_D T-P_C T)^2].
+\end{aligned}
+}
+]
+
+所以：
+
+[
+\boxed{
+\text{精化带来的均方误差下降}
+==================
+
+\mathbb E[(P_D T-P_C T)^2].
+}
+]
+
+这是概念新增信息相对于目标 (T) 的精确预测价值。
+
+---
+

@@ -1,0 +1,20 @@
+## 定理 4.1（下降—代数闭合对偶）
+
+以下等价：
+
+1. \(F\) 沿 \(q\) 下降；
+2. \(F^*\mathcal A_q\subseteq\mathcal A_q\)；
+3. 每个当前可观测量的下一步值仍是当前接口的函数。
+
+### 证明
+
+若 \(qF=\overline Fq\)，则
+
+\[
+F^*(f\circ q)
+=f\circ q\circ F
+=f\circ\overline F\circ q\in\mathcal A_q.
+\]
+
+反向，取足以分离 \(B_q\) 中点的函数族。若 \(q(x)=q(y)\)，闭合性令所有函数在 \(q(Fx),q(Fy)\) 上取同值，故两点相等。应用定理 2.1。\(\square\)
+

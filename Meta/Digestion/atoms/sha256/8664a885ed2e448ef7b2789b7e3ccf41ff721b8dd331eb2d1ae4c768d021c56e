@@ -1,0 +1,37 @@
+## 定理 509.1（序列交换）
+
+若每个单步方格交换，则：
+
+[
+\boxed{
+C\circ F_\alpha
+===============
+
+G_\alpha\circ C.
+}
+]
+
+### 证明
+
+对序列长度归纳。
+
+长度 (0) 为恒等。
+
+若对 (\alpha) 成立，则：
+
+[
+\begin{aligned}
+C F_uF_\alpha
+&=
+G_uCF_\alpha\
+&=
+G_uG_\alpha C.
+\end{aligned}
+]
+
+(\square)
+
+因此精确单步因果抽象自动保存全部有限实验路径。
+
+---
+

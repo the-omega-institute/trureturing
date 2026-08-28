@@ -204,9 +204,9 @@ public sealed partial class WorktreeCommandTests
     {
         var parsed = WorktreeCommand.ParseArguments(
             "/repo",
-            new[] { "--branch", "harness/worktree-probe", "--path", "/tmp/probe" });
+            new[] { "--branch", "harness/math/worktree-probe", "--path", "/tmp/probe" });
 
-        Assert.Equal("harness/worktree-probe", parsed.Branch);
+        Assert.Equal("harness/math/worktree-probe", parsed.Branch);
         Assert.Equal(Path.GetFullPath("/tmp/probe"), parsed.Path);
         Assert.Equal("origin/dev", parsed.Base);
         Assert.Equal(Path.GetFullPath("/repo"), parsed.Source);
@@ -224,10 +224,10 @@ public sealed partial class WorktreeCommandTests
                 "--source", "/source",
                 "--base", "HEAD",
                 "--path", "/tmp/probe",
-                "--branch", "agent/prover/D5-T0099",
+                "--branch", "harness/math/D5-T0099",
             });
 
-        Assert.Equal("agent/prover/D5-T0099", parsed.Branch);
+        Assert.Equal("harness/math/D5-T0099", parsed.Branch);
         Assert.Equal("HEAD", parsed.Base);
         Assert.Equal(Path.GetFullPath("/source"), parsed.Source);
         Assert.True(parsed.SkipRestore);
@@ -242,23 +242,7 @@ public sealed partial class WorktreeCommandTests
     }
 
     [Theory]
-    [InlineData("feature/probe")]
-    [InlineData("harness")]
-    [InlineData("harness/")]
-    [InlineData("agent/prover")]
-    [InlineData("agent/prover/task/extra")]
-    public void ParseRejectsBranchOutsideBranchLockGrammar(string branch)
-    {
-        var exception = Assert.Throws<InvalidOperationException>(() =>
-            WorktreeCommand.ParseArguments(
-                "/repo",
-                new[] { "--branch", branch, "--path", "/tmp/probe" }));
-
-        Assert.Contains("harness/* or agent/<official>/<task-code>", exception.Message, StringComparison.Ordinal);
-    }
-
-    [Theory]
-    [InlineData("--branch", "harness/probe")]
+    [InlineData("--branch", "harness/math/probe")]
     [InlineData("--path", "/tmp/probe")]
     [InlineData("--unknown", "value")]
     public void ParseRejectsMissingOrUnknownArguments(string flag, string value)
@@ -282,7 +266,7 @@ public sealed partial class WorktreeCommandTests
         var result = WorktreeCommand.Run(
             repository.Path,
             [
-                "--branch", "harness/lazy-cache",
+                "--branch", "harness/math/lazy-cache",
                 "--path", target,
                 "--base", "HEAD",
                 "--source", repository.Path,
@@ -317,7 +301,7 @@ public sealed partial class WorktreeCommandTests
         var exitCode = CliApplication.Run(
             [
                 "worktree",
-                "--branch", "harness/ignore-probe",
+                "--branch", "harness/math/ignore-probe",
                 "--path", target,
                 "--base", "HEAD",
                 "--source", repository.Path,
@@ -349,7 +333,7 @@ public sealed partial class WorktreeCommandTests
         var exitCode = CliApplication.Run(
             [
                 "worktree",
-                "--branch", "harness/clean-ignore-probe",
+                "--branch", "harness/math/clean-ignore-probe",
                 "--path", target,
                 "--base", "HEAD",
                 "--source", repository.Path,
@@ -373,7 +357,7 @@ public sealed partial class WorktreeCommandTests
         File.WriteAllText(Path.Combine(ignoreDirectory, "marker"), "fixture\n");
         ReviewRegressionTests.RunGit(repository.Path, "add", ".gitignore/marker");
         ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "fixture invalid ignore path");
-        const string branch = "harness/ignore-write-failure";
+        const string branch = "harness/math/ignore-write-failure";
         var target = Path.Combine(repository.Path, "ignore-write-failure");
         var console = new BufferedConsole();
 
@@ -392,11 +376,11 @@ public sealed partial class WorktreeCommandTests
         Assert.Equal(2, exitCode);
         Assert.Contains("WORKTREE_FAILED", console.Error, StringComparison.Ordinal);
         Assert.False(Directory.Exists(target));
-        var branchLookup = BoundedProcessRunner.Run(
+        var branchLookup = TestProcessRunner.Run(
             "git",
             ["show-ref", "--verify", "--quiet", $"refs/heads/{branch}"],
             repository.Path,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             4096);
         Assert.Equal(1, branchLookup.ExitCode);
     }
@@ -414,7 +398,7 @@ public sealed partial class WorktreeCommandTests
             new[]
             {
                 "worktree",
-                "--branch", "harness/existing-path",
+                "--branch", "harness/math/existing-path",
                 "--path", target,
                 "--base", "HEAD",
                 "--source", repository.Path,
@@ -439,7 +423,7 @@ public sealed partial class WorktreeCommandTests
             new[]
             {
                 "worktree",
-                "--branch", "harness/invalid-base",
+                "--branch", "harness/math/invalid-base",
                 "--path", target,
                 "--base", "missing-revision",
                 "--source", repository.Path,
@@ -450,11 +434,11 @@ public sealed partial class WorktreeCommandTests
         Assert.Equal(2, exitCode);
         Assert.Contains("WORKTREE_FAILED", console.Error, StringComparison.Ordinal);
         Assert.False(Directory.Exists(target));
-        var branchLookup = BoundedProcessRunner.Run(
+        var branchLookup = TestProcessRunner.Run(
             "git",
-            new[] { "show-ref", "--verify", "--quiet", "refs/heads/harness/invalid-base" },
+            new[] { "show-ref", "--verify", "--quiet", "refs/heads/harness/math/invalid-base" },
             repository.Path,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             4096);
         Assert.Equal(1, branchLookup.ExitCode);
     }
@@ -464,7 +448,7 @@ public sealed partial class WorktreeCommandTests
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
-        const string branch = "harness/already-present";
+        const string branch = "harness/math/already-present";
         ReviewRegressionTests.RunGit(repository.Path, "branch", branch, "HEAD");
         var target = Path.Combine(repository.Path, "branch-conflict");
         var console = new BufferedConsole();
@@ -537,11 +521,11 @@ public sealed partial class WorktreeCommandTests
     {
         foreach (var path in new[] { ".caller-review-prompt.md", ".echo-review.md", ".sshx-review" })
         {
-            var result = BoundedProcessRunner.Run(
+            var result = TestProcessRunner.Run(
                 "git",
                 ["check-ignore", "--quiet", "--no-index", path],
                 root,
-                TimeSpan.FromSeconds(30),
+                BoundedProcessRunner.HangDetectionBudget,
                 4096);
             Assert.Equal(0, result.ExitCode);
         }

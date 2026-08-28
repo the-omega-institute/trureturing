@@ -1,0 +1,15 @@
+## 定义 55.1（鲁棒前驱）
+
+$$
+\boxed{
+\operatorname{Pre}_{\exists\forall}(Z)
+=
+\{x\in S_{\mathrm{ag}}:
+\exists a\in\mathcal A(x),
+\ \forall e\in\mathcal E(x,a),
+\ F(x,a,e)\in Z\}.
+}
+$$
+
+它不是“存在一个好后果”，而是“存在一个动作，使所有允许环境响应都留在目标集合”。
+

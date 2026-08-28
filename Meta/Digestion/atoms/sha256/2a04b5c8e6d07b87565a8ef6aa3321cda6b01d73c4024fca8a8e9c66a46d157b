@@ -1,0 +1,5 @@
+## v1.3 — 2026-08-24
+
+追加存入：
+
+- 从 \(K.\operatorname{adjudication}\) 派生且唯一命名的 \(\operatorname{AdjudicationSignature}\)：冻结/裁决可见性、\(\operatorname{evidenceDependencies}\) 与不保留 ReuseDepth 的角色存在签名投影；

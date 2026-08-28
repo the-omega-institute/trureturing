@@ -1,0 +1,34 @@
+# 133. 自适应 prime-quantum 实验
+
+仓库 `D5/S3/ConceptDynamics/ExperimentDesign/ThreeStateAdaptiveEarlyStopping.lean` 已机器核验一个三状态例子：固定两实验 transcript 与自适应 transcript 都保持精确识别，自适应策略最坏深度仍为 $2$，但期望实验数降为
+
+$$
+1+2\varepsilon<2
+$$
+
+对 $0<\varepsilon<1/2$ 成立。
+
+在 prime-quantum setting 中，将实验动作定义为：
+
+$$
+\boxed{
+a_t=(p_t,k_t,b_t,\mathcal I_t,\Phi_t).
+}
+$$
+
+它分别选择 prime、precision、measurement basis/instrument 与动力学准备。
+
+设候选量子状态／通道模型为 $\theta\in\Theta$，历史为 $h_t$，posterior：
+
+$$
+\pi_t(\theta)=P(\theta\mid h_t).
+$$
+
+一个自适应 policy：
+
+$$
+a_t=\pi_{\mathrm{policy}}(\pi_t)
+$$
+
+可根据当前剩余 fiber 选择下一个 prime-time experiment，并在满足风险阈值时提前停止。
+

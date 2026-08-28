@@ -1,0 +1,10 @@
+ast_path: section/10-3-结构因果实现
+fingerprints:
+  raw_sha256: sha256:9aaec60b6c848aaf3ff08750a8260536ff7cca7ebda7d65a155c072db47b9360
+  normalized_sha256: sha256:9aaec60b6c848aaf3ff08750a8260536ff7cca7ebda7d65a155c072db47b9360
+cas_ref: sha256:9aaec60b6c848aaf3ff08750a8260536ff7cca7ebda7d65a155c072db47b9360
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

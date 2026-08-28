@@ -1,0 +1,5 @@
+## 已合并案号排除账
+
+2026-08-24 已亲跑 `gh pr view`，#2904、#2938、#3039 均为 `MERGED`。排除地址冻结如下：
+
+- **#2904（13 个 Lean 模块）**：共同前缀 `D5/S3/ConceptDynamics/`；`Coding/ProductiveDiagonalEscapeCriterion.*`；`DefinitionEscape/{DefinitionKernelGalois,LatentAdequacyCriterion,MinimalTargetDistillation,MultiTargetBlindResidual,QuestionAlgebraDuality,RelativeSemanticDiagonal}.*`；`Promotion/ResearchPromotionLoop.*`；`RefinementGeometry/{InverseLimitCompletion,RefinementUltrametric}.*`；`ResidualCoverage/{GreedyResidualAllocation,ResidualSeparationAdapter,WeightedResidualCoverage}.*`。

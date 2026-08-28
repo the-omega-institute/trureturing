@@ -1,0 +1,15 @@
+## 定理 7.1（精化缩小不可区分性）
+
+若 \(C\preceq D\)，则：
+
+\[
+\boxed{
+x\sim_Dy
+\Longrightarrow
+x\sim_Cy.}
+\]
+
+### 证明
+
+对 \(q_Dx=q_Dy\) 应用 \(p\)，再使用因子化等式。\(\square\)
+

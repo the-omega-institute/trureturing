@@ -352,15 +352,15 @@ public sealed class EmissionTests
             // reference the absent document gap out downstream and the deletion itself is a
             // protected-surface change.
             var victim = DocumentDefinitions.All.Single(static definition =>
-                definition.Document.Header.Gid.Value == "D5/S1/Scale/FibonacciEigen");
+                definition.Document.Header.Gid.Value == "D5/S1/Scale/CarrierFoundations");
             var victimSourcePath = Path.Combine(root, victim.RelativePath.Value[..^3] + ".scribe.cs");
             var victimEmissionPath = Path.Combine(root, victim.RelativePath.Value);
             var victimEntry =
-                "{\"definition_path\": \"Blueprint/D5/S1/Scale/FibonacciEigen.scribe.cs\", "
+                "{\"definition_path\": \"Blueprint/D5/S1/Scale/CarrierFoundations.scribe.cs\", "
                 + "\"definition_sha256\": \"" + Sha256(TemporaryFileSystem.File.ReadAllBytes(victimSourcePath)) + "\", "
-                + "\"emission_path\": \"Blueprint/D5/S1/Scale/FibonacciEigen.md\", "
+                + "\"emission_path\": \"Blueprint/D5/S1/Scale/CarrierFoundations.md\", "
                 + "\"emission_sha256\": \"" + Sha256(TemporaryFileSystem.File.ReadAllBytes(victimEmissionPath)) + "\", "
-                + "\"gid\": \"D5/S1/Scale/FibonacciEigen\"}";
+                + "\"gid\": \"D5/S1/Scale/CarrierFoundations\"}";
             TemporaryFileSystem.File.Delete(victimSourcePath);
             TemporaryFileSystem.File.Delete(victimEmissionPath);
             var attestationPath = Path.Combine(root, ScribeEmitter.AttestationRelativePath);
@@ -377,8 +377,8 @@ public sealed class EmissionTests
             Assert.True(verification!.ReferencesDeclaration(
                 "D5/S0/Carrier/GoldenRatio.golden_ratio_spec"));
             Assert.False(verification.ReferencesDeclaration(
-                "D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec"));
-            Assert.False(verification.TryGet("D5/S1/Scale/FibonacciEigen", out _));
+                "D5/S1/Scale/CarrierFoundations.golden_carrier_foundations"));
+            Assert.False(verification.TryGet("D5/S1/Scale/CarrierFoundations", out _));
         }
         finally
         {
@@ -683,6 +683,14 @@ public sealed class EmissionTests
             var reportDestination = Path.Combine(destinationRoot, rawReport);
             TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(reportDestination)!);
             repository.CopyTo(rawReportPath, reportDestination, overwrite: true);
+            var materialArchive = RepositoryRelativePath.Create(rawReport + ".materials.zip");
+            if (repository.FileExists(materialArchive))
+            {
+                repository.CopyTo(
+                    materialArchive,
+                    reportDestination + ".materials.zip",
+                    overwrite: true);
+            }
         }
     }
 }

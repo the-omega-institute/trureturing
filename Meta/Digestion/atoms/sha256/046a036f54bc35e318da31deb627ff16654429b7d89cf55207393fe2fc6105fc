@@ -1,0 +1,22 @@
+## 12.1 静态隐藏信息
+
+令 G 为随机基因型，联合观察为 Π_L(G)。定义：
+
+$$
+I_{eff}(\mathcal L)=H(Π_{\mathcal L}(G)),
+$$
+
+$$
+I_{hidden}(\mathcal L)=H(G\mid Π_{\mathcal L}(G)).
+$$
+
+因为观察是 G 的函数：
+
+$$
+H(G)=I_{eff}(\mathcal L)+I_{hidden}(\mathcal L).
+$$
+
+若观察语言扩张，隐藏信息不能增加。
+
+---
+

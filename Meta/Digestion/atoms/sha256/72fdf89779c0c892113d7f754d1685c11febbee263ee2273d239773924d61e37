@@ -1,0 +1,19 @@
+## 定理 108.2（统一完备性）
+
+以下等价：
+
+$$
+\mathfrak O
+\text{ 对允许顺序协议信息完备},
+$$
+
+$$
+N_{\mathfrak O}^{\mathrm{seq}}=\{0\},
+$$
+
+$$
+V_{\mathfrak O}^{\mathrm{seq}}
+=
+\operatorname{Herm}_d.
+$$
+

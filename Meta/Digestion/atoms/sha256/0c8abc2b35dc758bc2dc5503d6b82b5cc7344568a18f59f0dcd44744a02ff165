@@ -1,0 +1,39 @@
+# 38. 预测充分性只给出最优集合，不强制唯一元素
+
+设预测接口为
+
+$$
+K:X\to\operatorname{PMF}(Y),
+$$
+
+动作损失为
+
+$$
+\ell:A\times Y\to\mathbb R.
+$$
+
+定义期望损失
+
+$$
+R(x,a)
+=
+\int_Y\ell(a,y)\,dK(x)(y).
+$$
+
+以及最优动作集合
+
+$$
+A^*(x)
+=
+\operatorname*{arg\,min}_{a\in A}R(x,a).
+$$
+
+仓库已证明：若一个概念足以决定完整预测分布 $K(x)$，它也足以决定全部期望损失和最优动作集合。
+
+对应 Lean 锚点：
+
+```text
+D5/S3/ConceptDynamics/Decision/PredictionDecisionSufficiency.
+  prediction_sufficiency_implies_decision_sufficiency
+```
+

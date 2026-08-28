@@ -1,0 +1,39 @@
+## 定义 83.2（不可见残差）
+
+$$
+\boxed{
+N_{\mathfrak O}
+=
+V_{\mathfrak O}^{\perp}
+=
+\{D\in\operatorname{Herm}_d:
+\operatorname{Tr}(DA)=0,\ \forall A\in V_{\mathfrak O}\}.
+}
+$$
+
+由于
+
+$$
+I\in V_{\mathfrak O},
+$$
+
+任意
+
+$$
+D\in N_{\mathfrak O}
+$$
+
+自动满足
+
+$$
+\operatorname{Tr}D=0.
+$$
+
+因此
+
+$$
+N_{\mathfrak O}
+\subseteq
+\operatorname{Herm}_d^0.
+$$
+

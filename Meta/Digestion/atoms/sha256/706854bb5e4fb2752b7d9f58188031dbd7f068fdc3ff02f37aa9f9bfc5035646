@@ -1,0 +1,29 @@
+# 518. 最大许可安全控制器保留最多自治空间
+
+对：
+
+[
+x\in K^*,
+]
+
+定义安全行动集合：
+
+[
+\boxed{
+U_{\mathrm{safe}}(x)
+====================
+
+\left{
+u\in U(x)
+;\middle|;
+R_u(x)\subseteq K^*
+\right}.
+}
+]
+
+由 (K^*) 的定义：
+
+[
+U_{\mathrm{safe}}(x)\neq\varnothing.
+]
+

@@ -1,0 +1,25 @@
+## 定义 107.5（顺序可见 operator system）
+
+$$
+\boxed{
+V_{\mathfrak O}^{\mathrm{seq}}
+=
+\operatorname{span}_{\mathbb R}
+\{F_w:w\text{ allowed}\}.
+}
+$$
+
+其不可见残差为
+
+$$
+\boxed{
+N_{\mathfrak O}^{\mathrm{seq}}
+=
+\left(
+V_{\mathfrak O}^{\mathrm{seq}}
+\right)^\perp.
+}
+$$
+
+---
+

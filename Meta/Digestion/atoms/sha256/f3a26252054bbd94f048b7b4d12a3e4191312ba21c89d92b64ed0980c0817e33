@@ -1,0 +1,44 @@
+## 原理 81.1（Born 配对）
+
+$$
+\boxed{
+p(a\mid x,\rho)
+=
+\operatorname{Tr}(\rho E_{a|x}).
+}
+$$
+
+这一定义同时保证：
+
+$$
+p(a\mid x,\rho)\ge0,
+$$
+
+$$
+\sum_a p(a\mid x,\rho)=1,
+$$
+
+以及对状态和效果的仿射性。
+
+仓库 `D5/S3/Quantum/FiniteDimensional.lean` 已经机器核验正半定、迹一矩阵对投影给出归一、可加、非负的 Born 权重；`D5/S3/Observer/BornReduction.lean` 进一步证明，当
+
+$$
+\rho=|\psi\rangle\langle\psi|,
+\qquad
+E=|\phi\rangle\langle\phi|
+$$
+
+时，
+
+$$
+\boxed{
+\operatorname{Tr}(\rho E)
+=
+|\langle\phi|\psi\rangle|^2.
+}
+$$
+
+因此“模平方”不是另一套独立规则，而是迹配对在纯态—秩一效果上的化简。
+
+---
+

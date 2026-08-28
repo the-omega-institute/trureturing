@@ -18,7 +18,7 @@ public sealed class WorktreeCacheStrategyTests
         var result = WorktreeCommand.Run(
             repository.Path,
             [
-                "--branch", "harness/failed-restore",
+                "--branch", "harness/math/failed-restore",
                 "--path", target,
                 "--base", "HEAD",
             ],
@@ -32,7 +32,7 @@ public sealed class WorktreeCacheStrategyTests
                 && call.Arguments.SequenceEqual(
                     ["restore", WorktreeCommand.SolutionPath, "--locked-mode"]));
         Assert.False(Directory.Exists(target));
-        AssertBranchMissing(repository.Path, "harness/failed-restore");
+        AssertBranchMissing(repository.Path, "harness/math/failed-restore");
     }
 
     [Fact]
@@ -46,7 +46,7 @@ public sealed class WorktreeCacheStrategyTests
         var result = WorktreeCommand.Run(
             repository.Path,
             [
-                "--branch", "harness/concurrent-add",
+                "--branch", "harness/math/concurrent-add",
                 "--path", target,
                 "--base", "HEAD",
                 "--skip-restore",
@@ -78,7 +78,7 @@ public sealed class WorktreeCacheStrategyTests
         var result = WorktreeCommand.Run(
             repository.Path,
             [
-                "--branch", "harness/fetched-default",
+                "--branch", "harness/math/fetched-default",
                 "--path", target,
                 "--skip-restore",
             ],
@@ -103,7 +103,13 @@ public sealed class WorktreeCacheStrategyTests
 
         Assert.Contains("WORKTREE_DEST = $(if $(DEST)", makefile, StringComparison.Ordinal);
         Assert.Contains("[DEST=DIR]", makefile, StringComparison.Ordinal);
+        Assert.Contains("\"$(KIND)\" \"$(NAME)\"", makefile, StringComparison.Ordinal);
         Assert.DoesNotContain("$(origin PATH)", makefile, StringComparison.Ordinal);
+        Assert.Contains("harness/$KIND/$NAME", init, StringComparison.Ordinal);
+        Assert.Contains("exec dotnet run", init, StringComparison.Ordinal);
+        Assert.DoesNotContain("case \"$KIND\" in", init, StringComparison.Ordinal);
+        Assert.DoesNotContain("NAME must be", init, StringComparison.Ordinal);
+        Assert.DoesNotContain("harness/$NAME", init, StringComparison.Ordinal);
         Assert.DoesNotContain("export PATH=", init, StringComparison.Ordinal);
         Assert.DoesNotContain("export PATH=", clean, StringComparison.Ordinal);
 
@@ -113,11 +119,11 @@ public sealed class WorktreeCacheStrategyTests
         var recursiveFlag = string.Concat('-', 'R');
         var shellForm = $"cp {cloneFlag}";
         var argumentForm = $"\"{cloneFlag}\", \"{recursiveFlag}\"";
-        var scan = BoundedProcessRunner.Run(
+        var scan = TestProcessRunner.Run(
             "git",
             ["grep", "-n", "-I", "-e", shellForm, "-e", argumentForm, "--", "."],
             root,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             1024 * 1024);
 
         Assert.Equal(
@@ -142,11 +148,11 @@ public sealed class WorktreeCacheStrategyTests
 
     private static void AssertBranchMissing(string root, string branch)
     {
-        var lookup = BoundedProcessRunner.Run(
+        var lookup = TestProcessRunner.Run(
             "git",
             ["show-ref", "--verify", "--quiet", $"refs/heads/{branch}"],
             root,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             4096);
         Assert.Equal(1, lookup.ExitCode);
     }
@@ -356,7 +362,7 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
             return FailDotnet ? Failure("dotnet restore failed") : Success();
         }
 
-        var result = BoundedProcessRunner.Run(
+        var result = TestProcessRunner.Run(
             fileName,
             arguments,
             workingDirectory,

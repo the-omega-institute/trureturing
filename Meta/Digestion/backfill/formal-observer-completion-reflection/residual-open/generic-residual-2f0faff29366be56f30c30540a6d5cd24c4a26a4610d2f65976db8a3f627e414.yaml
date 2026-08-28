@@ -1,0 +1,10 @@
+ast_path: section/总解释
+fingerprints:
+  raw_sha256: sha256:2f0faff29366be56f30c30540a6d5cd24c4a26a4610d2f65976db8a3f627e414
+  normalized_sha256: sha256:2f0faff29366be56f30c30540a6d5cd24c4a26a4610d2f65976db8a3f627e414
+cas_ref: sha256:2f0faff29366be56f30c30540a6d5cd24c4a26a4610d2f65976db8a3f627e414
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

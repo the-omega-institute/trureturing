@@ -1,0 +1,46 @@
+# 34. 动作顺序曲率与策略—喉部半直积
+
+设动作 $a,b$ 的增强状态更新为 $T_a,T_b$，隐藏增量为 $c(a,z),c(b,z)$。定义离散曲率
+
+$$
+\boxed{
+\Omega_{a,b}(z)
+=
+c(a,z)+c(b,T_az)
+-c(b,z)-c(a,T_bz).
+}
+$$
+
+若 $T_aT_bz=T_bT_az$ 且 $c=d\Phi$，则 $\Omega_{a,b}(z)=0$。所以非零曲率表示动作顺序携带不能由单一状态势消除的隐藏信息。
+
+若策略 holonomy 群 $H$ 作用于 $\mathcal K$：
+
+$$
+\alpha:H\to\operatorname{Aut}(\mathcal K),
+$$
+
+则组合输运位于半直积
+
+$$
+\boxed{\mathcal K\rtimes_\alpha H}
+$$
+
+中，其乘法为
+
+$$
+(k_2,h_2)(k_1,h_1)
+=
+(k_2+\alpha_{h_2}(k_1),h_2h_1).
+$$
+
+即使 $\mathcal K$ 阿贝尔，半直积也可能非交换：
+
+$$
+[(0,h),(k,e)]
+=(\alpha_h(k)-k,e).
+$$
+
+先改变选择者再执行喉部动作，与先执行动作再改变选择者，可以产生不同隐藏结果。
+
+---
+

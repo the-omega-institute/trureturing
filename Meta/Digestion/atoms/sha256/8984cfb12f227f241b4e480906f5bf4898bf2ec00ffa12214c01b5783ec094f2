@@ -1,0 +1,78 @@
+# 74. 回到喉部：自由在动作截面，不在隐藏坐标
+
+设路径分量商在未来形式化为
+
+$$
+\mathcal K
+=
+K_\infty/\Delta(\mathbb Z).
+$$
+
+合法动作丛为
+
+$$
+p:E_{\mathcal A}\to Q.
+$$
+
+每个动作携带分量 cocycle 类
+
+$$
+\bar c:E_{\mathcal A}\to\mathcal K.
+$$
+
+策略充分自我状态为
+
+$$
+M_{\mathrm{self}}.
+$$
+
+观察者策略为
+
+$$
+s:Q\times M_{\mathrm{self}}
+\to
+E_{\mathcal A},
+$$
+
+满足
+
+$$
+p(s(q,m))=q.
+$$
+
+实际喉部位移为
+
+$$
+\boxed{
+\Delta\kappa_t
+=
+\bar c(s(q_t,m_t)).
+}
+$$
+
+并有
+
+$$
+\kappa_{t+1}
+=
+\kappa_t+
+\Delta\kappa_t.
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal K
+&=\text{动作后果的隐藏分量几何},\\
+E_{\mathcal A}
+&=\text{规律允许的动作空间},\\
+s
+&=\text{观察者形成的策略截面},\\
+\bar c\circ s
+&=\text{实际喉部迁移}.
+\end{aligned}
+}
+$$
+

@@ -1,0 +1,10 @@
+ast_path: section/当前最重要的开放桥/clause/1
+fingerprints:
+  raw_sha256: sha256:87c888486a3b40d184e0ec03a4d249acd29014a70ca2dc588146796ff15d70bd
+  normalized_sha256: sha256:87c888486a3b40d184e0ec03a4d249acd29014a70ca2dc588146796ff15d70bd
+cas_ref: sha256:87c888486a3b40d184e0ec03a4d249acd29014a70ca2dc588146796ff15d70bd
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

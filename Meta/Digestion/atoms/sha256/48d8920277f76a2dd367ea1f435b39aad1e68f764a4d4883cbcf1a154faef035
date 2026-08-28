@@ -1,0 +1,11 @@
+## 严格边界 133.1
+
+必须区分：
+
+1. 每轮重新制备同一未知态后执行不同 prime-time 测量；
+2. 对同一个单量子样本连续执行 instrument。
+
+第二种情况下早期测量改变后续状态，不能用相互独立的静态 Born law 替代 instrument word probability。
+
+---
+

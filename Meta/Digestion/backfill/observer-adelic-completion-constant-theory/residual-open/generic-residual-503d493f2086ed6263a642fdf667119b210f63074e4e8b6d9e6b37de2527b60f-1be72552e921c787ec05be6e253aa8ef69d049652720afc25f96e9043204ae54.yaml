@@ -1,0 +1,10 @@
+ast_path: section/87-2-中央符号是一个真实残余/clause/1
+fingerprints:
+  raw_sha256: sha256:503d493f2086ed6263a642fdf667119b210f63074e4e8b6d9e6b37de2527b60f
+  normalized_sha256: sha256:503d493f2086ed6263a642fdf667119b210f63074e4e8b6d9e6b37de2527b60f
+cas_ref: sha256:503d493f2086ed6263a642fdf667119b210f63074e4e8b6d9e6b37de2527b60f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

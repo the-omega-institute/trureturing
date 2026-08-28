@@ -1,0 +1,28 @@
+## 定义 82.2（观察签名）
+
+$$
+\boxed{
+\Sigma_{\mathfrak O}(\rho)
+=
+\left(
+\operatorname{Tr}(\rho E_{a|x})
+\right)_{x,a}.
+}
+$$
+
+观察者一次实验得到的是某个随机结果；只有对同一制备进行足够多次重复，才能估计上述概率签名。因此必须区分：
+
+$$
+\text{single outcome},
+$$
+
+$$
+\text{empirical frequency},
+$$
+
+$$
+\text{ideal probability signature}.
+$$
+
+层析理论讨论的是第三者与其有限样本估计，而不是“一次测量直接读出完整波函数”。
+

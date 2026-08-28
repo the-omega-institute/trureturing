@@ -1,0 +1,21 @@
+## 定义 89.1（有限时间可见空间）
+
+给定基础效果族 $\{E_r\}_{r=1}^m$，定义
+
+$$
+V_n
+=
+\operatorname{span}_{\mathbb R}
+\left\{
+I,
+(\Phi^*)^t(E_r):
+0\le t<n,\ 1\le r\le m
+\right\}.
+$$
+
+定义
+
+$$
+N_n=V_n^\perp.
+$$
+

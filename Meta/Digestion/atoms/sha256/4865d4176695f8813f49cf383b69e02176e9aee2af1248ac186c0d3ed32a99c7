@@ -1,0 +1,32 @@
+## 定理 2.1（动力接口基本等价定理）
+
+以下等价：
+
+1. \(F\) 沿 \(q\) 精确下降；
+2. \(K_q\) 对 \(F\) 前向不变：
+   \[
+   (x,y)\in K_q\Longrightarrow(Fx,Fy)\in K_q;
+   \]
+3. \(\operatorname{Carry}(q,F)=\varnothing\)；
+4. 下一步读数 \(q\circ F\) 沿 \(q\) 因子化。
+
+### 证明
+
+(1) 推出 (2)：若 \(q(x)=q(y)\)，则
+
+\[
+q(Fx)=\overline F(qx)=\overline F(qy)=q(Fy).
+\]
+
+(2) 与 (3) 只是同一命题的否定形式。
+
+(2) 推出 (1)：定义
+
+\[
+\overline F(\widehat q(x)):=\widehat q(Fx).
+\]
+
+前向不变性保证与代表元无关；满射给出唯一性。
+
+(1) 与 (4) 的等价由定理 1.1 立即得到。\(\square\)
+

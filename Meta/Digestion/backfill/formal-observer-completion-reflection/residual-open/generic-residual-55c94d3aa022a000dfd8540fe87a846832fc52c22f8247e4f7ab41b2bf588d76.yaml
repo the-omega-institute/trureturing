@@ -1,0 +1,10 @@
+ast_path: section/分离完备
+fingerprints:
+  raw_sha256: sha256:55c94d3aa022a000dfd8540fe87a846832fc52c22f8247e4f7ab41b2bf588d76
+  normalized_sha256: sha256:55c94d3aa022a000dfd8540fe87a846832fc52c22f8247e4f7ab41b2bf588d76
+cas_ref: sha256:55c94d3aa022a000dfd8540fe87a846832fc52c22f8247e4f7ab41b2bf588d76
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

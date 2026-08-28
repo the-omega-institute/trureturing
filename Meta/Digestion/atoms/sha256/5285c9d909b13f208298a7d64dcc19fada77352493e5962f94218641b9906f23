@@ -1,0 +1,2 @@
+**L1(命题 4.5 的群论核)。** 目标:对 `[Finite I]`、`T : X → U → I → I → Prop`,定义 `Invariant T σ := ∀ x u i j, T x u (σ i) (σ j) ↔ T x u i j`;证 `(∀ σ, IsSwap σ → Invariant T σ) → ∀ σ, Invariant T σ`。路线:先定义 `Equiv.Perm I` 在 `T` 上的作用(命题 4.5 的 \(\sigma\cdot T\)),稳定子作为 `Subgroup (Equiv.Perm I)`(mathlib `MulAction.stabilizer` 可直接用,须先查其在本钉版下的名字),含全部对换,再用 `Equiv.Perm.closure_isSwap`(`Mathlib/GroupTheory/Perm/Sign.lean:121`,本仓钉版 mathlib 内 grep 命中)与 `Subgroup.closure_le`。**检索收据**:D5 内 `IsSwap`/`closure_isSwap` 零命中(不重证);mathlib 命中如上;loogle/leansearch 未查(离线),第三方生态未查。预计为一个短模块,无新公理。
+

@@ -1,0 +1,10 @@
+ast_path: section/56-3-1-决策集级与承诺级-Stop-目标
+fingerprints:
+  raw_sha256: sha256:ce2778d9ffa1ec389f713f59dea1f83b68cea6ff8d12868f23b87555a55cec03
+  normalized_sha256: sha256:ce2778d9ffa1ec389f713f59dea1f83b68cea6ff8d12868f23b87555a55cec03
+cas_ref: sha256:ce2778d9ffa1ec389f713f59dea1f83b68cea6ff8d12868f23b87555a55cec03
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

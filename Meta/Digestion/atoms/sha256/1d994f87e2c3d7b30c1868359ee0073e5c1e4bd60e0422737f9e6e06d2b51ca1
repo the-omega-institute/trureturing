@@ -1,0 +1,18 @@
+**证明义务 56.4-C（延长时域实例）。** 假设 \(O\) 有可判等号。对任意
+\(N,N'\)、\(h:N\le N'\) 与 \(x,y:X\)，机器核验
+
+\[
+\boxed{
+\operatorname{TimeExpansionEscape}(q,\tau,N,N',h,x,y)
+\Longleftrightarrow
+\operatorname{ExpansionEscape}
+(P_N^{q,\tau},P_{N'}^{q,\tau})(x,y).
+}
+\]
+
+从右到左唯一需要的有限见证步骤是：若两个
+\(\operatorname{Fin}(N'+1)\to O\)
+函数不等，则有限扫描找出一个不等坐标；旧投影相等排除 \(k\le N\)，故该坐标满足 \(N<k\le N'\)。
+
+当 \(N<N'\) 时，该式正是第 51.5 部
+

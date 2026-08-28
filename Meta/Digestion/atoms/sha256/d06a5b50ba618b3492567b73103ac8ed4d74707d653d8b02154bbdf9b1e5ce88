@@ -1,0 +1,8 @@
+## 定义 57.2（有效动作空间）
+
+$$
+\mathcal A_{\mathrm{eff}}(q)
+=
+\mathcal A(q)/{\sim_q}.
+$$
+

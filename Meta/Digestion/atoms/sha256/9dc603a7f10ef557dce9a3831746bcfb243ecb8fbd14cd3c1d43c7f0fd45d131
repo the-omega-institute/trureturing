@@ -1,0 +1,22 @@
+# 124. prime precision entropy 与量子观察预算
+
+仓库 `D5/S3/Analytic/PrimeProducts/PrimePrecisionEntropyContraction.lean` 已机器核验：对 $s>1$、素数 $p$，canonical prime-exponent geometric channel 的未解析尾熵在每增加一层精度时精确按
+
+$$
+\boxed{
+p^{-s}}
+$$
+
+缩放。
+
+若记第 $k$ 层未解析熵为 $R_{p,k}$，则：
+
+$$
+\boxed{
+R_{p,k+1}
+=p^{-s}R_{p,k}.
+}
+$$
+
+这一定理属于算术概率通道，不是量子退相干定理；但它提供了自然的纵向 prime-precision 成本权重。
+

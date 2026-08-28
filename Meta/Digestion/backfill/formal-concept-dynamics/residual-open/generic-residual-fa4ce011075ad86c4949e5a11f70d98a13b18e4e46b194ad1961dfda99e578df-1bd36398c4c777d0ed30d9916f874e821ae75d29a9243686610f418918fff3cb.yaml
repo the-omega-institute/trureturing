@@ -1,0 +1,10 @@
+ast_path: section/139-第三层最终命题-成熟是缺陷定位能力/clause/1
+fingerprints:
+  raw_sha256: sha256:fa4ce011075ad86c4949e5a11f70d98a13b18e4e46b194ad1961dfda99e578df
+  normalized_sha256: sha256:fa4ce011075ad86c4949e5a11f70d98a13b18e4e46b194ad1961dfda99e578df
+cas_ref: sha256:fa4ce011075ad86c4949e5a11f70d98a13b18e4e46b194ad1961dfda99e578df
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

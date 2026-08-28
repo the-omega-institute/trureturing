@@ -41,36 +41,69 @@ internal sealed class TerminalLedgerPartitionDocument : IScribeDocumentDefinitio
     private static Formula GradeAt(Formula time, Formula statement) =>
         Seq(SigmaLower, Underscore, Grp(time), Open, statement, Close);
 
-    private static Formula Positive(Formula time, Formula statement) =>
-        Seq(GradeAt(time, statement), Sp, InMacro, Sp, F.Id("Gplus"));
-
     private static Formula Forbidden(Formula time, Formula statement) =>
         Seq(Operatorname, Grp(F.Id("forbidden")), Open, time, Comma, statement, Close);
 
+    private static Formula Typeclass(string name, Formula argument) =>
+        Seq(OpenBracket, Operatorname, Grp(F.Id(name)), Open, argument, Close, CloseBracket);
+
+    private static Formula CallHistory(string field, Formula history, params Formula[] arguments) =>
+        Call(field, [history, .. arguments]);
+
     private static Formula PartitionFormula()
     {
+        Formula statementType = F.Id("Statement"), gradeType = F.Id("Grade");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
+        Formula proposition = Seq(Operatorname, Grp(F.Id("Prop")));
+        Formula history = SigmaLower;
+        Formula positiveGrades = F.Id("Gplus"), semantic = F.Id("Sem");
+        Formula wall = F.Id("W"), gatekeepers = F.Id("T");
         Formula time = F.Id("t"), statement = F.Id("s"), wallStatement = F.Id("w");
         Formula gatekeeper = F.Id("g"), cutoff = F.Id("N");
+        Formula historyGradeAt(Formula t, Formula s) => CallHistory("grade", history, s, t);
+        Formula enrolledAt(Formula s) => CallHistory("enrolledAt", history, s);
+        Formula revisionTrack = Seq(Open, time, Colon, Sp, naturals, Sp, Mapsto, Sp,
+            historyGradeAt(time, statement), Close);
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Operatorname, Grp(F.Id("Countable")), Open, F.Id("Statement"), Close,
-            Comma, Sp,
-            Operatorname, Grp(F.Id("Finite")), Open, F.Id("Grade"), Close,
-            Comma, Sp,
-            Operatorname, Grp(F.Id("PartialOrder")), Open, F.Id("Grade"), Close,
+            Forall, Sp, statementType, Comma, Sp, gradeType, Colon, Sp, type,
             Comma, RowBreak, Grp(),
-            Operatorname, Grp(F.Id("FiniteRevisions")), Open, F.Id("history"), Close,
-            Comma, Sp, F.Id("W"), Sp, Subseteq, Sp, F.Id("Sem"), Comma, RowBreak, Grp(),
-            Open, Forall, Sp, time, Comma, Sp, gatekeeper, Sp, InMacro, Sp, F.Id("T"),
-            Comma, Sp, Positive(time, gatekeeper), Close, Comma, RowBreak, Grp(),
-            Open, Forall, Sp, time, Comma, Sp, wallStatement, Sp, InMacro, Sp, F.Id("W"),
-            Comma, Sp, Positive(time, wallStatement), Sp, Land, Sp,
-            Forall, Sp, gatekeeper, Sp, InMacro, Sp, F.Id("T"), Comma, Sp,
-            Positive(time, gatekeeper), Sp, Rightarrow, Sp,
+            Typeclass("Countable", statementType), Comma, Sp,
+            Typeclass("Finite", gradeType), Comma, Sp,
+            Typeclass("PartialOrder", gradeType), Comma, RowBreak, Grp(),
+            Forall, Sp, history, Colon, Sp,
+            Call("LedgerHistory", statementType, gradeType), Comma, RowBreak, Grp(),
+            Open, Forall, Sp, statement, Colon, Sp, statementType, Comma, Sp,
+            Call("Finite", Call("revisionTimesFrom", enrolledAt(statement), revisionTrack)),
+            Close, Comma, RowBreak, Grp(),
+            Forall, Sp, positiveGrades, Colon, Sp, Call("Set", gradeType), Comma, Sp,
+            Forall, Sp, semantic, Comma, Sp, wall, Comma, Sp, gatekeepers, Colon, Sp,
+            Call("Set", statementType), Comma, RowBreak, Grp(),
+            wall, Sp, Subseteq, Sp, semantic, Comma, Sp,
+            Forall, Sp, F.Id("forbidden"), Colon, Sp,
+            naturals, Sp, To, Sp, statementType, Sp, To, Sp, proposition,
+            Comma, RowBreak, Grp(),
+            Open, Forall, Sp, time, Colon, Sp, naturals, Comma, Sp,
+            gatekeeper, Colon, Sp, statementType, Comma, Sp,
+            gatekeeper, Sp, InMacro, Sp, gatekeepers, Sp, Rightarrow, Sp,
+            historyGradeAt(time, gatekeeper), Sp, InMacro, Sp, positiveGrades,
+            Close, Comma, RowBreak, Grp(),
+            Open, Forall, Sp, time, Colon, Sp, naturals, Comma, Sp,
+            wallStatement, Colon, Sp, statementType, Comma, Sp,
+            wallStatement, Sp, InMacro, Sp, wall, Sp, Rightarrow, Sp,
+            historyGradeAt(time, wallStatement), Sp, InMacro, Sp, positiveGrades,
+            Sp, Rightarrow, Sp,
+            Open, Forall, Sp, gatekeeper, Colon, Sp, statementType, Comma, Sp,
+            gatekeeper, Sp, InMacro, Sp, gatekeepers, Sp, Rightarrow, Sp,
+            historyGradeAt(time, gatekeeper), Sp, InMacro, Sp, positiveGrades, Close,
+            Sp, Rightarrow, Sp,
             Forbidden(time, wallStatement), Close, Comma, RowBreak, Grp(),
-            Open, Forall, Sp, time, Comma, Sp, wallStatement, Sp, InMacro, Sp, F.Id("W"),
-            Comma, Sp, Neg, Sp, Forbidden(time, wallStatement), Close, RowBreak, Grp(),
+            Open, Forall, Sp, time, Colon, Sp, naturals, Comma, Sp,
+            wallStatement, Colon, Sp, statementType, Comma, Sp,
+            wallStatement, Sp, InMacro, Sp, wall, Sp, Rightarrow, Sp,
+            Neg, Sp, Forbidden(time, wallStatement), Close, RowBreak, Grp(),
             Rightarrow, Sp, Exists, Bang, Sp,
             SigmaLower, Underscore, Grp(Infty), Colon, Sp,
             F.Id("Statement"), Sp, To, Sp, F.Id("Grade"), Comma, RowBreak, Grp(),

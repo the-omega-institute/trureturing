@@ -1,0 +1,42 @@
+## 定理 100.2（不可克隆）
+
+若酉变换 $U$ 同时满足
+
+$$
+U|\psi\rangle|0\rangle
+=
+|\psi\rangle|\psi\rangle,
+$$
+
+$$
+U|\phi\rangle|0\rangle
+=
+|\phi\rangle|\phi\rangle,
+$$
+
+则
+
+$$
+\langle\phi|\psi\rangle
+=
+\langle\phi|\psi\rangle^2.
+$$
+
+所以两态要么相同，要么正交。
+
+### 证明
+
+酉变换保持内积；输入内积为
+
+$$
+\langle\phi|\psi\rangle,
+$$
+
+输出内积为
+
+$$
+\langle\phi|\psi\rangle^2.
+$$
+
+故结论成立。∎
+

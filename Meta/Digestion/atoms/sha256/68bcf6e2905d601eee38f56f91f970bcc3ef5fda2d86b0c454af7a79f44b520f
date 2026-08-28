@@ -1,0 +1,21 @@
+## 定义 276.1（制度捕获数）
+
+[
+\boxed{
+\kappa_{\mathrm{capture}}
+=========================
+
+\min
+\left{
+|H|
+;\middle|;
+\forall i,\
+\operatorname{Compromised}_i(H)
+\right}.
+}
+]
+
+它是控制全部必要批准分支所需的最少独立来源数。
+
+---
+

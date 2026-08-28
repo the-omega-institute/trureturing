@@ -1,0 +1,32 @@
+## 定理 95.1（记录等距性）
+
+$$
+V^\dagger V=I.
+$$
+
+### 证明
+
+$$
+V^\dagger V
+=
+\sum_{a,b}
+P_aP_b\langle a|b\rangle
+=
+\sum_aP_a
+=
+I.
+$$
+
+∎
+
+对一般状态：
+
+$$
+V\rho V^\dagger
+=
+\sum_{a,b}
+P_a\rho P_b
+\otimes
+|a\rangle\langle b|_M.
+$$
+

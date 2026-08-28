@@ -1,0 +1,28 @@
+# 54. 合法动作丛与策略截面
+
+令规范观察状态空间为
+
+$$
+Q,
+$$
+
+动作类型为
+
+$$
+A,
+$$
+
+合法关系为
+
+$$
+\operatorname{Legal}:Q\times A\to\operatorname{Prop}.
+$$
+
+对每个 $q\in Q$，定义合法动作纤维
+
+$$
+\mathcal A(q)
+=
+\{a\in A:\operatorname{Legal}(q,a)\}.
+$$
+

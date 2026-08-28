@@ -1,0 +1,20 @@
+# 59. 长期主体能力由 Bellman 固定点而不是当前按钮数决定
+
+设主体奖励
+
+$$
+r_{\mathrm{ag}}(x,a,e)
+$$
+
+综合当前可控—可见能力、来源可识别性、账本完整度、策略可修订性等，取折扣 $0<\gamma<1$。定义
+
+$$
+\boxed{
+(\mathcal TV)(x)
+=
+\sup_{a\in\mathcal A(x)}
+\inf_{e\in\mathcal E(x,a)}
+[r_{\mathrm{ag}}(x,a,e)+\gamma V(F(x,a,e))].
+}
+$$
+

@@ -1,0 +1,24 @@
+## 定理 207.2（闭包算子）
+
+两个算子均满足：
+
+$$
+Q\subseteq\operatorname{Cl}_P(Q),
+$$
+
+$$
+Q_1\subseteq Q_2
+\Longrightarrow
+\operatorname{Cl}_P(Q_1)
+\subseteq
+\operatorname{Cl}_P(Q_2),
+$$
+
+$$
+\operatorname{Cl}_P^2(Q)
+=
+\operatorname{Cl}_P(Q),
+$$
+
+关系侧同理。
+

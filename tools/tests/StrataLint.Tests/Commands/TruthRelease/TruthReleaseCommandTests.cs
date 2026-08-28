@@ -222,16 +222,18 @@ public sealed class TruthReleaseCommandTests
                 BaseTreeOid = "git-sha1:" + originTree,
             },
         };
+        var states = LeanTruthStates.Resolve(snapshotWithoutLedger, lean);
+        var adjacency = LeanImportAdjacency.Build(snapshotWithoutLedger, lean);
         var realCatalog = Assert.IsType<FrozenMaterialOutcome.Accepted>(
             FrozenContentAddress.Build(
                 snapshotWithoutLedger,
                 lean,
+                states,
+                adjacency,
                 realEnvironment,
                 realAttestations)).Capability;
-        var ledgerBytes = FrozenLedgerGenerator.GenerateGenesis(
-            realCatalog,
-            new FrozenGenesisDescriptor("git-sha1:" + generatorBlob, Sha256("rule-catalog")));
-        AddLedgerFiles(files, ledgerBytes);
+        var ledgerFiles = EventFiles(realCatalog, "git-sha1:" + generatorBlob);
+        AddLedgerFiles(files, ledgerFiles);
         WriteFiles(
             gitRoot,
             files.Where(static pair => pair.Key.StartsWith(
@@ -249,9 +251,9 @@ public sealed class TruthReleaseCommandTests
             revisionSnapshot.Files.Values
                 .Where(file => file.Path.Value.StartsWith(ledgerPrefix, StringComparison.Ordinal))
                 .ToImmutableDictionary(static file => file.Path)));
-        var reportBytes = RawLeanReportArtifact.Write(revisionSnapshot, report);
         var reportPath = Path.Combine(temporary.Path, "candidate-lean-report.json");
-        File.WriteAllBytes(reportPath, reportBytes.AsSpan());
+        RawLeanReportArtifact.WriteFile(reportPath, revisionSnapshot, report);
+        var reportBytes = ImmutableArray.CreateRange(File.ReadAllBytes(reportPath));
         File.WriteAllText(
             Path.Combine(gitRoot, formalPath),
             "-- mutable working tree bytes must be ignored\n" + files[formalPath],

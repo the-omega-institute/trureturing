@@ -1,0 +1,41 @@
+# 209. 信任传递需要目标类型对齐
+
+设主体 (A) 接收 (B) 的报告：
+
+[
+R_B:X\to M_B.
+]
+
+主体 (B) 又依赖 (C) 的报告：
+
+[
+R_C:X\to M_C.
+]
+
+若存在：
+
+[
+h:M_C\to M_B
+]
+
+使：
+
+[
+R_B=h\circ R_C,
+]
+
+且：
+
+[
+T=\overline T\circ R_B,
+]
+
+则：
+
+[
+T
+=
+
+\overline T\circ h\circ R_C.
+]
+

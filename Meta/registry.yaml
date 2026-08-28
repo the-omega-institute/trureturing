@@ -16,16 +16,12 @@ root_files:
 governance_documents:
   - "D5/X_Frontier/HeartsAuthorizations.md"
   - "Golden/gate-authority-roots.toml"
-  - "Golden/perf-budgets.toml"
   - "Meta/Digestion/atomizers.toml"
   - "Meta/FILEMAP.toml"
   - "docs/CONTRIBUTING.md"
   - "docs/GOVERNANCE.md"
   - "docs/MISSION.md"
   - "docs/develop/spec/golden-ledger-repo-spec.md"
-  - "docs/develop/theory/DEFINITION_ESCAPE_SPECTRUM_COMPLETION.md"
-  - "docs/develop/theory/PROOF_TOPOLOGY_DIAGONAL_ESCAPE_THEORY.md"
-  - "docs/develop/theory/RELATIVE_NEGATION_INVOLUTIVE_ESCAPE.md"
 agent_files:
   - "CONTEXT.md"
   - "adversary.md"

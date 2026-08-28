@@ -1,0 +1,40 @@
+## 12.2 完全显性的最小例子
+
+对 Aa 与 Aa 交配：
+
+$$
+P(AA)=\frac14,
+\quad
+P(Aa)=\frac12,
+\quad
+P(aa)=\frac14.
+$$
+
+所以：
+
+$$
+H(G)=1.5\ \text{bits}.
+$$
+
+若 A 完全显性：
+
+$$
+P(D)=\frac34,
+\quad
+P(R)=\frac14.
+$$
+
+则：
+
+$$
+H(Y)\approx0.811278\ \text{bits},
+$$
+
+$$
+H(G\mid Y)\approx0.688722\ \text{bits}.
+$$
+
+这部分信息没有消失，只是当前表型通道未携带它。
+
+---
+

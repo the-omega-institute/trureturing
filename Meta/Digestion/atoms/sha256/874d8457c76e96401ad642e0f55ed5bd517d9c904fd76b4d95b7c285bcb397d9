@@ -1,0 +1,24 @@
+* shadow／completion 数据。
+
+所以可以定义 refined observer：
+
+$$
+\boxed{
+q_{\mathrm{umbral}}(N^X)
+=
+\left(
+X,G^X,\{H_g^X\}_{[g]}
+\right).
+}
+$$
+
+其作用正是切开：
+
+$$
+\ker q_\Theta
+$$
+
+留下的巨大纤维。
+
+---
+

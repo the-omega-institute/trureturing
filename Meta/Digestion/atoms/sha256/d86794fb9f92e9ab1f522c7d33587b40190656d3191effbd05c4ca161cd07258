@@ -1,0 +1,46 @@
+# 130. 平行精化与串行后处理的 kernel 演算
+
+设两个观察接口
+
+$$
+q_1:X\to O_1,
+\qquad
+q_2:X\to O_2.
+$$
+
+平行联合
+
+$$
+q(x)=(q_1(x),q_2(x))
+$$
+
+满足：
+
+$$
+\boxed{
+\ker q
+=
+\ker q_1\cap\ker q_2.
+}
+$$
+
+所以平行增加独立接口只会减少余量。
+
+反之，串行后处理
+
+$$
+X\xrightarrow qO\xrightarrow fY
+$$
+
+满足：
+
+$$
+\boxed{
+\ker q
+\subseteq
+\ker(f\circ q).
+}
+$$
+
+所以后处理只能保持或扩大不可区分关系。
+

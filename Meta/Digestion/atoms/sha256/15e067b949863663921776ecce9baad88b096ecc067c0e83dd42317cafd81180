@@ -1,0 +1,30 @@
+# 118. 量子素数局部—全局余量
+
+设
+
+$$
+\mathcal H
+=
+\bigotimes_{j=1}^{r}\mathcal H_j,
+\qquad
+\dim\mathcal H_j=d_j,
+$$
+
+其中每个 $j$ 对应一个 prime-power 因子。
+
+定义所有单素数约化态读出：
+
+$$
+\mathcal R_{\mathrm{loc}}(\rho)
+=
+(\rho_j)_{j=1}^{r},
+$$
+
+其中
+
+$$
+\rho_j
+=
+\operatorname{Tr}_{\widehat j}\rho.
+$$
+

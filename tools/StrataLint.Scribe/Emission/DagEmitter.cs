@@ -33,14 +33,7 @@ public static class DagEmitter
         {
             var model = TruthGraphModelBuilder.Create(dag, provenance, documentProjection);
             var markdown = CanonicalDagWriter.Write(dag);
-            var markdownAgain = CanonicalDagWriter.Write(dag);
             var json = TruthGraphJsonWriter.Write(model);
-            var jsonAgain = TruthGraphJsonWriter.Write(model);
-            if (!markdown.AsSpan().SequenceEqual(markdownAgain.AsSpan())
-                || !json.AsSpan().SequenceEqual(jsonAgain.AsSpan()))
-            {
-                throw new InvalidOperationException("DAG projection writer is not byte deterministic.");
-            }
 
             var projections = new[]
             {

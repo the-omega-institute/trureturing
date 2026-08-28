@@ -1,0 +1,14 @@
+## 16.2 每个非单射观察都隐藏某个逃逸
+
+只要 \(A\neq\varnothing\)，若 \(r\) 非单射，取 \(y_0\neq y_1\) 且 \(r(y_0)=r(y_1)\)。令唯一目录项为常值 \(y_0\)，候选为常值 \(y_1\)。原候选逃出目录，观察后却与目录项相同。
+
+因此：
+
+\[
+\boxed{
+r\text{ preserves every one-row catalog escape}
+\iff
+r\text{ is injective}.
+}
+\]
+

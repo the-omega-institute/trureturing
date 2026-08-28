@@ -1,0 +1,10 @@
+ast_path: section/第十四部-Boolean-对合观察量
+fingerprints:
+  raw_sha256: sha256:78aeb1c647cffced177be5bef980863f2703418a23ddc50bf05e95c45a32d191
+  normalized_sha256: sha256:78aeb1c647cffced177be5bef980863f2703418a23ddc50bf05e95c45a32d191
+cas_ref: sha256:78aeb1c647cffced177be5bef980863f2703418a23ddc50bf05e95c45a32d191
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

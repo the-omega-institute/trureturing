@@ -1,0 +1,46 @@
+## 定理 44.2（Galois 反射）
+
+$$
+\boxed{
+\mathfrak Z_\varphi(s,\eta)
+=
+\mathfrak Z_\varphi(s,-\eta).
+}
+$$
+
+### 证明
+
+Galois 共轭：
+
+$$
+\alpha\mapsto\alpha'
+$$
+
+交换：
+
+$$
+a_\alpha\leftrightarrow b_\alpha.
+$$
+
+因此：
+
+$$
+Q_\eta(\alpha')
+=
+Q_{-\eta}(\alpha).
+$$
+
+共轭是整数环上的双射。∎
+
+所以 Golden 单位流主 zeta 具有无限二面体对称：
+
+$$
+\boxed{
+\eta\mapsto\eta+2\log\varphi,
+\qquad
+\eta\mapsto-\eta.
+}
+$$
+
+---
+

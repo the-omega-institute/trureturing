@@ -1,0 +1,16 @@
+## 定理 88.1（精化的三重等价）
+
+$$
+\boxed{
+\mathfrak O_1\preceq\mathfrak O_2
+\iff
+N_{\mathfrak O_2}\subseteq N_{\mathfrak O_1}
+\iff
+V_{\mathfrak O_1}\subseteq V_{\mathfrak O_2}.
+}
+$$
+
+### 证明
+
+第一项与第二项由定理 83.1 得到；第二项与第三项由正交补反序性得到。∎
+

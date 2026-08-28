@@ -1,0 +1,25 @@
+# 226. 理论 revision 一般不交换
+
+设当前允许世界集合为：
+
+[
+A\subseteq X.
+]
+
+定义一个简单 revision 算子：
+
+[
+\boxed{
+\operatorname{Rev}_P(A)
+=======================
+
+\begin{cases}
+A\cap P,&A\cap P\neq\varnothing,\
+P,&A\cap P=\varnothing.
+\end{cases}
+}
+]
+
+它表示：
+
+* 若新命题与旧理论一致，则条件化；

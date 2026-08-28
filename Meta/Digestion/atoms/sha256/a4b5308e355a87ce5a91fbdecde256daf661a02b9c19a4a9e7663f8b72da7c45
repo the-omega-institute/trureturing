@@ -1,0 +1,13 @@
+**证明义务 56.2-D（对称核等价于同向量等价）。** 在五坐标均为偏序的前件下，机器核验
+
+\[
+\boxed{
+\forall x,y:A_F,\quad
+\operatorname{ParetoEqOn}(v,F,x,y)
+\Longleftrightarrow
+v(x.1)=v(y.1)
+}
+\]
+
+以及
+

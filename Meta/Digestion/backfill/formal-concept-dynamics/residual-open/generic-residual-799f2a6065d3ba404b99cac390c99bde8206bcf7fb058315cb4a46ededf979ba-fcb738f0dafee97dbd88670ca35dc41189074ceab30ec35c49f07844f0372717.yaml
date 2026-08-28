@@ -1,0 +1,10 @@
+ast_path: section/315-严格数值同一性同样不能无损融合/clause/3
+fingerprints:
+  raw_sha256: sha256:799f2a6065d3ba404b99cac390c99bde8206bcf7fb058315cb4a46ededf979ba
+  normalized_sha256: sha256:799f2a6065d3ba404b99cac390c99bde8206bcf7fb058315cb4a46ededf979ba
+cas_ref: sha256:799f2a6065d3ba404b99cac390c99bde8206bcf7fb058315cb4a46ededf979ba
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

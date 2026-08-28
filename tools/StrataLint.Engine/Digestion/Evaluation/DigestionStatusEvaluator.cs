@@ -77,7 +77,8 @@ internal static partial class DigestionStatusEvaluator
         DigestionCasEvaluation? casEvaluation = null,
         RawChangeSet? changes = null,
         Func<string, bool>? isBaseFactAffected = null,
-        RawChangeSet? projectedStatusChanges = null)
+        RawChangeSet? projectedStatusChanges = null,
+        IReadOnlyDictionary<RepoPath, TruthState>? truthStates = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
@@ -118,7 +119,7 @@ internal static partial class DigestionStatusEvaluator
             .Where(static group => group.Count() == 1)
             .ToDictionary(static group => group.Key, static group => group.Single(), StringComparer.Ordinal);
 
-        var states = LeanTruthStates.Resolve(snapshot, lean);
+        var states = truthStates ?? LeanTruthStates.Resolve(snapshot, lean);
         var genreChecks = document.RequireDigestionSources()
             .ToDictionary(
                 static source => source.SourceId,

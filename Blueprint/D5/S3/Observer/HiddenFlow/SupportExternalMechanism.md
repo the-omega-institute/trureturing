@@ -6,7 +6,7 @@ A mechanism value outside an accessed support can change without changing the ob
 
 **Theorem 1.1 (An unseen parent configuration is not identified by the observed channel).**
 
-$$\forall Parent \in \operatorname{Type}, Outcome \in \operatorname{Type}, support \in \operatorname{Set}\left(Parent\right), hidden \in Parent,\; \left(\operatorname{Nontrivial}\left(Outcome\right) \land \left(\neg support\left(hidden\right)\right)\right) \Rightarrow \exists mechanism0 \in Parent \to Outcome, mechanism1 \in Parent \to Outcome,\; observationChannel\left(support\right)\left(mechanism0\right) = observationChannel\left(support\right)\left(mechanism1\right) \land mechanism0\left(hidden\right) \ne mechanism1\left(hidden\right)$$
+$$\forall Parent \in \operatorname{Type}, Outcome \in \operatorname{Type}, support \in \operatorname{Set}\left(Parent\right), hidden \in Parent,\; \left(\operatorname{Nontrivial}\left(Outcome\right) \land \left(\neg support\left(hidden\right)\right)\right) \Rightarrow \left(\exists mechanism0 \in Parent \to Outcome, mechanism1 \in Parent \to Outcome,\; observationChannel\left(support\right)\left(mechanism0\right) = observationChannel\left(support\right)\left(mechanism1\right) \land mechanism0\left(hidden\right) \ne mechanism1\left(hidden\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/HiddenFlow/SupportExternalMechanism.unseen_parent_config_can_change_without_observed_law` (`✓ std3`). ∎
 

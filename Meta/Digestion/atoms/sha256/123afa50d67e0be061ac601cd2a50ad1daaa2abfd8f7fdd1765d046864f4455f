@@ -1,0 +1,10 @@
+## 命题 48.5（承诺导致可行动作集收缩）
+
+若账本一致性条件按追加记录单调加强，则
+
+$$
+\mathcal A_{t+1}\subseteq\mathcal A_t.
+$$
+
+**状态**：依赖具体 ledger-consistency carrier；一般关系版容易形式化。
+

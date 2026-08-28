@@ -1,0 +1,10 @@
+ast_path: section/75-自我生成回路与固定点问题
+fingerprints:
+  raw_sha256: sha256:4c771a62a734a2bf726feffeda7333a85c99fc0320d8e84cddbe22b90004bdef
+  normalized_sha256: sha256:4c771a62a734a2bf726feffeda7333a85c99fc0320d8e84cddbe22b90004bdef
+cas_ref: sha256:4c771a62a734a2bf726feffeda7333a85c99fc0320d8e84cddbe22b90004bdef
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

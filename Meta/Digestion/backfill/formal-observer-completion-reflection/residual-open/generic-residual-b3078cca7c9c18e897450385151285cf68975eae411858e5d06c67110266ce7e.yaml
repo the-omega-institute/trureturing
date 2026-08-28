@@ -1,0 +1,10 @@
+ast_path: row/投影记录-未读态与条件态
+fingerprints:
+  raw_sha256: sha256:b3078cca7c9c18e897450385151285cf68975eae411858e5d06c67110266ce7e
+  normalized_sha256: sha256:b3078cca7c9c18e897450385151285cf68975eae411858e5d06c67110266ce7e
+cas_ref: sha256:b3078cca7c9c18e897450385151285cf68975eae411858e5d06c67110266ce7e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

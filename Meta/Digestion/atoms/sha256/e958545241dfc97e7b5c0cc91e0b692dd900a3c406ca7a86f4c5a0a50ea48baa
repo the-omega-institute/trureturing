@@ -1,0 +1,41 @@
+# 490. 证据聚合在信息序上单调
+
+定义信息序：
+
+[
+\boxed{
+(t,f)\le_k(t',f')
+\iff
+t\le t'
+\land
+f\le f'.
+}
+]
+
+于是：
+
+[
+\mathbf N\le_k\mathbf T\le_k\mathbf B,
+]
+
+[
+\mathbf N\le_k\mathbf F\le_k\mathbf B.
+]
+
+(\mathbf T,\mathbf F) 在该序中不可比较。
+
+两个来源的证据聚合定义为：
+
+[
+\boxed{
+(t_1,f_1)\oplus(t_2,f_2)
+========================
+
+(t_1\lor t_2,\ f_1\lor f_2).
+}
+]
+
+它是信息序中的 join。
+
+---
+

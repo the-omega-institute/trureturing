@@ -1,0 +1,40 @@
+## 定义 19.1（遗传潜伏签名）
+
+对等位基因对 a、b 和上下文 c，定义：
+
+$$
+Λ(a,b;c)
+=
+(r_2,r_1,\partial U,C^*,σ_{law},λ_{causal},r_{sel},\mathcal V_β,I_{hidden}).
+$$
+
+其中：
+
+- r_2：ab 与 bb 的精度分离阈值；
+- r_1：aa 与 ab 的精度分离阈值；
+- partial U：时间—精度—干预揭示前沿；
+- C_star：最小目标充分揭示成本；
+- sigma_law：equal、equivalent、mixed 或 singular；
+- lambda_causal：观察、干预、反事实显性深度；
+- r_sel：群体选择揭示阶；
+- V_beta：动力学可观测能量；
+- I_hidden：指定语言下的剩余基因信息。
+
+经典 Boolean 显性只是该签名在固定精度 k 上的投影：
+
+$$
+Dom_k(a,b)=1
+\iff
+r_2\le k<r_1.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{显性／隐性不是理论终点，而是高维潜伏签名的一维切片。}
+}
+$$
+
+---
+

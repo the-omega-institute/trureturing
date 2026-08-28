@@ -1,0 +1,19 @@
+## 10.3 结构因果实现
+
+仓库 `ParentOrderedStructuralEvaluationSemantics` 已机器验证：有限父节点有序结构模型在给定外部状态与干预后具有唯一结果；`InterventionEffectiveness` 进一步验证被干预坐标最终等于指定值。
+
+因此基因因果图：
+
+$$
+G\to RNA\to Protein\to Complex\to Cell\to Trait
+$$
+
+可在结构模型中区分：
+
+1. 自然观察显性；
+2. 对全部环境的结构显性；
+3. 对全部允许干预的稳定显性；
+4. 仅在中介干预后显现的因果潜伏。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: row/坐标运输与-Hadamard-指针基
+fingerprints:
+  raw_sha256: sha256:427a221e46a352cdaacc0942704b93b0cf82fe9d7367cd2e166f28f54e830d3e
+  normalized_sha256: sha256:427a221e46a352cdaacc0942704b93b0cf82fe9d7367cd2e166f28f54e830d3e
+cas_ref: sha256:427a221e46a352cdaacc0942704b93b0cf82fe9d7367cd2e166f28f54e830d3e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

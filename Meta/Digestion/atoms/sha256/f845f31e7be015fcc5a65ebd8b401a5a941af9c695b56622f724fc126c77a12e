@@ -1,0 +1,24 @@
+# 170. 观察者格：所有观察者构成同一个精化偏序
+
+固定隐藏空间 \(X\)。
+
+把 kernel 相同的观察接口视为同一个观察者。定义精化：
+
+$$
+\mathfrak O_1
+\preceq
+\mathfrak O_2
+$$
+
+当且仅当 \(\mathfrak O_2\) 至少能区分 \(\mathfrak O_1\) 能区分的一切：
+
+$$
+\boxed{
+K_{\mathfrak O_2}
+\subseteq
+K_{\mathfrak O_1}.
+}
+$$
+
+若允许任意 quotient 接口，则观察者等价类与 \(X\) 上的等价关系反序对应。
+

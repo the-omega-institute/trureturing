@@ -1,0 +1,10 @@
+ast_path: section/9-2-线性可见-隐藏分解
+fingerprints:
+  raw_sha256: sha256:c581b027b6a8097c601cee4922b8228332643d4b6c76283fcda3304728cd7e9e
+  normalized_sha256: sha256:c581b027b6a8097c601cee4922b8228332643d4b6c76283fcda3304728cd7e9e
+cas_ref: sha256:c581b027b6a8097c601cee4922b8228332643d4b6c76283fcda3304728cd7e9e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

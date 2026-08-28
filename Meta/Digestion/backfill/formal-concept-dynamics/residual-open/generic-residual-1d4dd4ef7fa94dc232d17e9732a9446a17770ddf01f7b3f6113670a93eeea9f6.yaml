@@ -1,4 +1,4 @@
-ast_path: section/最小反例/occurrence/1
+ast_path: section/最小反例
 fingerprints:
   raw_sha256: sha256:1d4dd4ef7fa94dc232d17e9732a9446a17770ddf01f7b3f6113670a93eeea9f6
   normalized_sha256: sha256:1d4dd4ef7fa94dc232d17e9732a9446a17770ddf01f7b3f6113670a93eeea9f6
@@ -8,3 +8,10 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-056bf8f61192b7c6e412887511e90de0bf6c466735a05b5ed954c25f7354cc35-7f8f408a2831f14c4ef1c8c6d3e31cb58517459091c1068ffc064a745c31e87a
+    - generic-residual-4df37c2ee9014c5f96790e07532cefbc12ddeebddffdcb888075a298dec368a7-cdcbe421612af03e30d142b20ddcbb86a667868847b01de4eb729e3c7ef4aa19
+    - generic-residual-12c57eb559c638b2e20e802f09826d4753f1447561ac6b74a5fc6d4d663a5b04-f863fd8b7a5a743341f1988d758b71b80e69249a2f7c0140f2c53f89b89b312d
+    - generic-residual-86df7973f72ca52ba5d5676471d61bd20a529645e23aa74fd7fb14f7b91d0420-9c770cfcae70a219b17d684867c75736c9d1c0f81e0106dc2837a560fab370ff
+    - generic-residual-91b3d2cb9d519d5cb8c64657ebee929d2a165ab654adf1bff8c4a5eb4793b1cc-f5a9e2df09274c5a257f99fb7a1fe15e963bf3519d884c44fa6fd4a8a3a5e63b
+    - generic-residual-e8fdc4a489157dd314100b59715c7b9974a6ae90fe24e68fc0e2bbad15d31ce8-8d58daf7da32dc4e06bb12bc894c5b6fe31514e40ef23fb0371fbcc7bb9ff422

@@ -216,6 +216,73 @@ public sealed class GenericAtomizerTests
     }
 
     [Fact]
+    public void AClaimIncludesItsDisplayedConclusionUntilTheNextClaimOrPeerHeading()
+    {
+        const string firstClaim =
+            "## 定理 1.1（合成展示结论）\n\n"
+            + "设最大纤维大小如下：\n\n"
+            + "$$\n"
+            + "\\boxed{\n"
+            + "m_U\n"
+            + "===\n\n"
+            + "\\max_{y \\in Y}|U^{-1}(y)|\n"
+            + "}\n"
+            + "$$\n\n"
+            + "### 下界\n\n"
+            + "每个纤维中的状态需要不同标签。\n\n";
+        var document = Atomize(
+            firstClaim
+            + "## 引理 1.2（下一条）\n\n"
+            + "这是独立的下一条 claim。\n");
+
+        Assert.Equal(["定理/1.1", "引理/1.2"], Paths(document));
+        Assert.Equal(
+            firstClaim,
+            Encoding.UTF8.GetString(document.ResolveClaim("定理/1.1").RawBytes.AsSpan()));
+    }
+
+    [Fact]
+    public void ALegacyBracketDisplayIsOpaqueToClaimDiscovery()
+    {
+        const string firstClaim =
+            "## 定理 1.3（旧式展示分隔符）\n\n"
+            + "定义如下：\n\n"
+            + "[\n"
+            + "\\boxed{\n"
+            + "m_U\n"
+            + "===\n\n"
+            + "\\max_{y \\in Y}|U^{-1}(y)|\n"
+            + "}\n"
+            + "]\n\n";
+        var document = Atomize(
+            firstClaim
+            + "## 推论 1.4（下一条）\n\n"
+            + "这是独立的下一条 claim。\n");
+
+        Assert.Equal(["定理/1.3", "推论/1.4"], Paths(document));
+        Assert.Equal(
+            firstClaim,
+            Encoding.UTF8.GetString(document.ResolveClaim("定理/1.3").RawBytes.AsSpan()));
+    }
+
+    [Fact]
+    public void AdjacentClaimsRemainSeparateEvenWhenTheSecondClaimUsesADeeperHeading()
+    {
+        const string firstClaim = "## 定理 2.1（第一条）\n\n第一条正文。\n\n";
+        const string secondClaim = "### 引理 2.2（第二条）\n\n第二条正文。\n";
+
+        var document = Atomize(firstClaim + secondClaim);
+
+        Assert.Equal(["定理/2.1", "引理/2.2"], Paths(document));
+        Assert.Equal(
+            firstClaim,
+            Encoding.UTF8.GetString(document.ResolveClaim("定理/2.1").RawBytes.AsSpan()));
+        Assert.Equal(
+            secondClaim,
+            Encoding.UTF8.GetString(document.ResolveClaim("引理/2.2").RawBytes.AsSpan()));
+    }
+
+    [Fact]
     public void TheDefaultAtomizerIsRegisteredAndCarriesItsOwnResidualStem()
     {
         Assert.Contains(AtomizerRegistry.GenericId, AtomizerRegistry.RegisteredIds);
@@ -235,5 +302,40 @@ public sealed class GenericAtomizerTests
             Paths(AtomizerRegistry.Atomize(AtomizerRegistry.GenericId, bytes, TheoryAtomizerRules.None)),
             Paths(AtomizerRegistry.Atomize(
                 AtomizerRegistry.GenericId, bytes, DigestionTestSupport.Rules)));
+    }
+
+    [Fact]
+    public void AMultiClauseSectionClaimCarriesADeterministicClausePlan()
+    {
+        var bytes = System.Text.Encoding.UTF8.GetBytes(
+            "## T1. 包络\n\n定义与记号。\n\n**定理 T1**。主张。\n\n**结案判据**:核验单调性。\n");
+
+        var first = GenericAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
+        var second = GenericAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
+
+        var claim = Assert.Single(first.Claims);
+        var plan = Assert.Single(first.ClausePlans);
+        Assert.Equal(claim.AstPath, plan.ParentAstPath);
+        Assert.Equal(
+            [claim.AstPath + "/clause/1", claim.AstPath + "/clause/2", claim.AstPath + "/clause/3"],
+            plan.Children.Select(static child => child.AstPath).ToArray());
+        Assert.Equal(
+            claim.RawBytes.ToArray(),
+            plan.Children.SelectMany(static child => child.RawBytes.ToArray()).ToArray());
+        Assert.Equal(
+            Assert.Single(second.ClausePlans).Children
+                .Select(static child => (child.AstPath, child.Fingerprints.RawSha256)),
+            plan.Children.Select(static child => (child.AstPath, child.Fingerprints.RawSha256)));
+    }
+
+    [Fact]
+    public void ASingleClauseSectionClaimCarriesNoClausePlan()
+    {
+        var bytes = System.Text.Encoding.UTF8.GetBytes("## T0. 单款\n\n只有一段散文主张。\n");
+
+        var document = GenericAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
+
+        Assert.Single(document.Claims);
+        Assert.Empty(document.ClausePlans);
     }
 }

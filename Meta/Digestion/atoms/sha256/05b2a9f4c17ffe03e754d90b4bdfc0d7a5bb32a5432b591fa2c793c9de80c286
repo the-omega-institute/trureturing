@@ -1,0 +1,44 @@
+## 9.1 非干扰
+
+设当前公开读出：
+
+$$
+l:X\to L,
+$$
+
+隐藏状态：
+
+$$
+h:X\to H,
+$$
+
+演化：
+
+$$
+F:X\to Y,
+$$
+
+未来公开读出：
+
+$$
+O:Y\to B.
+$$
+
+若存在：
+
+$$
+\bar F:L\to B
+$$
+
+使：
+
+$$
+O\circ F=\bar F\circ l,
+$$
+
+则当前公开状态相同必推出未来公开状态相同。
+
+仓库 `NoninterferenceSecretFlowExclusion` 已机器验证该结构。
+
+---
+

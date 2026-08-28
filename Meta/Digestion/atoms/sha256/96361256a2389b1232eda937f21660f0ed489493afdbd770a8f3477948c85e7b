@@ -1,0 +1,12 @@
+\[
+\boxed{
+\forall x:A_F,\quad
+\operatorname{paretoClass}_{v,F}(x)
+=
+\operatorname{sameVectorClass}_{v,F}(x).
+}
+\]
+
+所以第 52.3 部“按同向量等价取商”的有限限制，与本部“按弱支配对称核取商”的类像外延相同；本部补的是此前缺失的承载、枚举、代表无关关系及反对称证明，不改变旧命题的方向或前件。若 `Action` 本身为有限类型并取
+\(F=\operatorname{Finset.univ}\)，本构造覆盖完整行动载体；一般情况下，本部只关闭用户指定的有限承载版本，不冒领无限承载的机器实现。
+

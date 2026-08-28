@@ -1,0 +1,74 @@
+# 第一百一十七部　Leech rootlessness 是唯一 weight-12 counterterm
+
+二十四维的关键不是只存在一个漂亮格，而是：
+
+$$
+M_{12}
+=
+\operatorname{span}\{E_4^3,\Delta\}
+$$
+
+只有一个 cusp residual 方向。
+
+要求根系消失，相当于施加：
+
+$$
+[q]\Theta=0.
+$$
+
+对：
+
+$$
+E_4^3+c\Delta
+$$
+
+这唯一决定：
+
+$$
+720+c=0.
+$$
+
+所以：
+
+$$
+\boxed{
+c=-720.
+}
+$$
+
+即：
+
+$$
+\boxed{
+\Theta_\Lambda
+=
+E_4^3-720\Delta
+}
+$$
+
+不是一个可调选择，而是：
+
+> 在 weight \(12\)、常数项 \(1\) 的完成空间中，使第一非平凡壳消失的唯一 cusp counterterm。
+
+因此 \(720\) 的角色为：
+
+$$
+\boxed{
+720
+=
+\text{将 }E_8^3\text{ 的全部 root residual 清零所需的唯一反项振幅。}
+}
+$$
+
+由于 cusp residual 空间是一维的，一个低能条件自动决定全部高能修正：
+
+$$
+\boxed{
+\text{rootlessness at }q
+\Longrightarrow
+\text{all-shell Leech spectrum}.
+}
+$$
+
+---
+

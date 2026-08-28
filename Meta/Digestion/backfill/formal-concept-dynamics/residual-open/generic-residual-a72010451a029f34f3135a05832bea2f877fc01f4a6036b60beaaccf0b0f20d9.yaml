@@ -1,0 +1,10 @@
+ast_path: section/296-免费且可忽略的信息具有非负期望价值
+fingerprints:
+  raw_sha256: sha256:a72010451a029f34f3135a05832bea2f877fc01f4a6036b60beaaccf0b0f20d9
+  normalized_sha256: sha256:a72010451a029f34f3135a05832bea2f877fc01f4a6036b60beaaccf0b0f20d9
+cas_ref: sha256:a72010451a029f34f3135a05832bea2f877fc01f4a6036b60beaaccf0b0f20d9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

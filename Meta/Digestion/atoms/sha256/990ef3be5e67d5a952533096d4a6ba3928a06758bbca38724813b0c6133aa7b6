@@ -1,0 +1,18 @@
+# 79. 身份账本是一种纠错码
+
+设身份／承诺状态集合为 $\mathcal Z$，编码为
+
+$$
+c:\mathcal Z\to\Sigma^n.
+$$
+
+定义最小 Hamming 距离
+
+$$
+\boxed{
+d_{\min}
+=
+\min_{z\ne z'}d_H(c(z),c(z')).
+}
+$$
+

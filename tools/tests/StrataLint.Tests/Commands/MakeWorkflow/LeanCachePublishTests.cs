@@ -78,6 +78,38 @@ public sealed class LeanCachePublishTests
     }
 
     /// <summary>
+    /// Darwin's system `shasum` is a Perl program. The fixture models its exit-9 startup failure
+    /// for an unavailable caller locale, including on hosts that now provide C.UTF-8.
+    /// </summary>
+    [Fact]
+    public void PublishPinsAPortableLocaleAndWritesTheCorrectArchiveDigest()
+    {
+        const string Sha = "0123456789abcdef0123456789abcdef01234567";
+        using var fixture = new PublishFixture(requirePortableLocaleForShasum: true);
+
+        var result = fixture.RunPublish(ScriptPath(), Sha, "4242", callerLocale: "C.UTF-8");
+
+        Assert.Equal(0, result.ExitCode);
+        var expected = Convert.ToHexStringLower(
+            System.Security.Cryptography.SHA256.HashData(Encoding.UTF8.GetBytes("archive\n")));
+        Assert.Contains($"archive_sha256={expected}", fixture.CapturedManifest(), StringComparison.Ordinal);
+    }
+
+    /// <summary>
+    /// Direct `perl` calls have the same exposure. File discovery lives behind another type's
+    /// property so SL-003 does not classify this test as an unbounded repository reader.
+    /// </summary>
+    [Fact]
+    public void EveryPerlBackedShellScriptPinsThePortableLocale()
+    {
+        var unpinned = PerlBackedShellScriptInventory.PathsWithoutPortableLocale;
+
+        Assert.True(
+            unpinned.Length == 0,
+            $"Perl-backed scripts without `export LC_ALL=C`: {string.Join(", ", unpinned)}");
+    }
+
+    /// <summary>
     /// tag 必须把身份三元组（toolchain、config、sources）全部绑进去。少任何一个，两棵语义不同的树就会共用一个 tag，
     /// 而它们的归档互相覆盖时没有任何东西会红。
     /// </summary>
@@ -269,11 +301,11 @@ public sealed class LeanCachePublishTests
         else assign.Add($"GITHUB_RUN_ID={runId}");
         var environment = new List<string>([.. unset, .. assign]);
 
-        var result = BoundedProcessRunner.Run(
+        var result = TestProcessRunner.Run(
             "/usr/bin/env",
             [.. environment, "/bin/bash", script, "publish"],
             Path.GetDirectoryName(script)!,
-            TimeSpan.FromSeconds(60),
+            TestBudgets.WorkflowProcessHangGuard,
             256 * 1024);
 
         return new PublishAttempt(
@@ -327,11 +359,11 @@ public sealed class LeanCachePublishTests
         // warnaserror 下即编译失败。夹具自己的 WriteExecutable 已是这个写法。
         Assert.Equal(
             0,
-            BoundedProcessRunner.Run(
+            TestProcessRunner.Run(
                 "chmod",
                 ["+x", gh],
                 Path.GetDirectoryName(gh)!,
-                TimeSpan.FromSeconds(30),
+                BoundedProcessRunner.HangDetectionBudget,
                 4096).ExitCode);
 
         var result = fixture.RunPublish(ScriptPath(), Sha, "4242");
@@ -457,7 +489,7 @@ public sealed class LeanCachePublishTests
     {
         private readonly TemporaryDirectory root = new();
 
-        internal PublishFixture()
+        internal PublishFixture(bool requirePortableLocaleForShasum = false)
         {
             Repository = Path.Combine(root.Path, "repo");
             Bin = Path.Combine(root.Path, "bin");
@@ -498,6 +530,17 @@ public sealed class LeanCachePublishTests
                 "#!/usr/bin/env bash\n"
                     + "if [[ \"$1\" == 'pack' ]]; then printf 'archive\\n' > \"$2\"; fi\n"
                     + "exit 0\n");
+            if (requirePortableLocaleForShasum)
+            {
+                WriteExecutable(
+                    Path.Combine(Bin, "shasum"),
+                    "#!/usr/bin/env bash\n"
+                        + "if [[ \"${LC_ALL:-}\" != 'C' ]]; then\n"
+                        + "  printf 'shasum: locale startup failed for LC_ALL=%s\\n' \"${LC_ALL:-<unset>}\" >&2\n"
+                        + "  exit 9\n"
+                        + "fi\n"
+                        + "exec /usr/bin/shasum \"$@\"\n");
+            }
         }
 
         private string Repository { get; }
@@ -508,22 +551,37 @@ public sealed class LeanCachePublishTests
 
         private string ManifestPath { get; }
 
-        internal PublishAttempt RunPublish(string script, string sha, string runId)
+        internal PublishAttempt RunPublish(
+            string script,
+            string sha,
+            string runId,
+            string? callerLocale = null)
         {
-            var result = BoundedProcessRunner.Run(
-                "/usr/bin/env",
-                [
-                    $"PATH={Bin}:{Environment.GetEnvironmentVariable("PATH")}",
-                    $"GITHUB_SHA={sha}",
-                    $"GITHUB_RUN_ID={runId}",
-                    "/bin/bash",
-                    script,
-                    "publish",
-                    "--repository",
-                    Repository,
-                ],
+            var arguments = new List<string>
+            {
+                $"PATH={Bin}:{Environment.GetEnvironmentVariable("PATH")}",
+                $"GITHUB_SHA={sha}",
+                $"GITHUB_RUN_ID={runId}",
+            };
+            if (callerLocale is not null)
+            {
+                arguments.Add($"LC_ALL={callerLocale}");
+                arguments.Add($"LANG={callerLocale}");
+            }
+            arguments.AddRange(
+            [
+                "/bin/bash",
+                script,
+                "publish",
+                "--repository",
                 Repository,
-                TimeSpan.FromSeconds(60),
+            ]);
+
+            var result = TestProcessRunner.Run(
+                "/usr/bin/env",
+                [.. arguments],
+                Repository,
+                TestBudgets.WorkflowProcessHangGuard,
                 256 * 1024);
 
             return new PublishAttempt(
@@ -546,11 +604,11 @@ public sealed class LeanCachePublishTests
             File.WriteAllText(path, contents);
             // 走 chmod 而不是 File.SetUnixFileMode：后者带 CA1416（Windows 不支持），
             // 在 warnaserror 下即编译失败。ReportSupervisorFixture 已是这个写法。
-            var chmod = BoundedProcessRunner.Run(
+            var chmod = TestProcessRunner.Run(
                 "chmod",
                 ["+x", path],
                 Path.GetDirectoryName(path)!,
-                TimeSpan.FromSeconds(30),
+                BoundedProcessRunner.HangDetectionBudget,
                 4096);
             Assert.Equal(0, chmod.ExitCode);
         }
@@ -675,7 +733,7 @@ public sealed class LeanCachePublishTests
 
         internal PublishAttempt RunFetch(string script)
         {
-            var result = BoundedProcessRunner.Run(
+            var result = TestProcessRunner.Run(
                 "/usr/bin/env",
                 [
                     $"PATH={Bin}:{Environment.GetEnvironmentVariable("PATH")}",
@@ -686,7 +744,7 @@ public sealed class LeanCachePublishTests
                     Repository,
                 ],
                 Repository,
-                TimeSpan.FromSeconds(60),
+                TestBudgets.WorkflowProcessHangGuard,
                 256 * 1024);
 
             return new PublishAttempt(
@@ -700,13 +758,42 @@ public sealed class LeanCachePublishTests
         private static void WriteExecutable(string path, string contents)
         {
             File.WriteAllText(path, contents);
-            var chmod = BoundedProcessRunner.Run(
+            var chmod = TestProcessRunner.Run(
                 "chmod",
                 ["+x", path],
                 Path.GetDirectoryName(path)!,
-                TimeSpan.FromSeconds(30),
+                BoundedProcessRunner.HangDetectionBudget,
                 4096);
             Assert.Equal(0, chmod.ExitCode);
         }
+    }
+}
+
+internal static class PerlBackedShellScriptInventory
+{
+    internal static string[] PathsWithoutPortableLocale
+    {
+        get
+        {
+            var root = TestRepositoryLayout.FindRoot();
+            var scripts = Path.Combine(root, "tools", "scripts");
+            return Directory.EnumerateFiles(scripts, "*.sh", SearchOption.AllDirectories)
+                .Where(InvokesPerlBackedToolWithoutPortableLocale)
+                .Select(path => Path.GetRelativePath(root, path))
+                .Order(StringComparer.Ordinal)
+                .ToArray();
+        }
+    }
+
+    private static bool InvokesPerlBackedToolWithoutPortableLocale(string path)
+    {
+        var source = File.ReadAllText(path);
+        var invokesPerlBackedTool = source
+            .Split('\n')
+            .Where(static line => !line.TrimStart().StartsWith('#'))
+            .Any(static line => line.Contains("shasum", StringComparison.Ordinal)
+                || line.Contains("perl", StringComparison.Ordinal));
+        return invokesPerlBackedTool
+            && !source.Split('\n').Contains("export LC_ALL=C", StringComparer.Ordinal);
     }
 }

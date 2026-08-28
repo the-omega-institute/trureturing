@@ -1,0 +1,80 @@
+# 29. 承诺深度、自由深度与代理视界
+
+设历史 $h$ 的相容未来计划集为 $\Omega_h$。选择动作 $a$ 后，计划柱集为
+
+$$
+\Omega_{h,a}
+=
+\{\omega\in\Omega_h:A_h(\omega)=a\}.
+$$
+
+有限情形定义承诺深度
+
+$$
+B(h,a)
+=
+\log_2|\Omega_h|-
+\log_2|\Omega_{h,a}|.
+$$
+
+沿历史 $h_0\to\cdots\to h_n$，若每一步恰对应所选计划柱集，则
+
+$$
+\boxed{
+\sum_{t=0}^{n-1}B(h_t,a_t)
+=
+\log_2|\Omega_{h_0}|-
+\log_2|\Omega_{h_n}|.
+}
+$$
+
+选择把未来可能性体积转换成追加式历史信息。
+
+对目标时刻 $t$，令
+
+$$
+B_t(h_\tau)
+=
+\{A_t(\omega):\omega\text{ 从 }h_\tau\text{ 延伸至 }t\}.
+$$
+
+若 $h_\tau\preceq h_{\tau'}$，则
+
+$$
+B_t(h_{\tau'})\subseteq B_t(h_\tau).
+$$
+
+定义最近真实分支时刻
+
+$$
+\tau^*(t)
+=
+\max\{\tau\le t:|B_t(h_\tau)|\ge2\}
+$$
+
+和自由深度
+
+$$
+\boxed{d_{\mathrm{free}}(t)=t-\tau^*(t).}
+$$
+
+当前只有一个动作，不表示它从未自由；它可能由更早承诺锁定。
+
+再令当前承诺为 $C_t$，未来自我状态为 $M_{t+k}$，定义
+
+$$
+J_k=I(C_t;M_{t+k}\mid E).
+$$
+
+若记忆形成 Markov 信道，则 $J_{k+1}\le J_k$。定义 $\varepsilon$-代理视界
+
+$$
+\boxed{
+h_\varepsilon(C_t)=\sup\{k:J_k\ge\varepsilon\}.
+}
+$$
+
+意志强度不仅取决于此刻选择了什么，还取决于这一选择能在未来自己中存活多久。
+
+---
+

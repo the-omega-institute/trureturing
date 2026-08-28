@@ -139,7 +139,7 @@ Run:
 ```sh
 eval "$(sed -n '/^export PATH=/p' tools/scripts/local-harness-gate.sh)"
 # If no dispatcher-assigned isolated lane exists:
-make worktree NAME=<lane> && cd <created-path-from-output>
+make worktree KIND=math NAME=<lane> && cd <created-path-from-output>
 pwd -P && git rev-parse --show-toplevel && git status --short
 make -C tools dotnet
 ```
@@ -522,7 +522,7 @@ Push the already reviewed and admitted commit, then use the repository door:
 
 ```sh
 git push -u origin <branch>
-make pr-open HEAD=<branch> MESSAGE=<message-file>
+make pr-open HEAD=<branch> MESSAGE=<message-file> AUTO_MERGE=1
 # The message file's first line is the PR title; the rest is the PR body.
 ```
 

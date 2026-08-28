@@ -1,0 +1,28 @@
+# 64. 自我作为策略充分历史商
+
+设全部有限历史构成类型
+
+$$
+\mathcal H.
+$$
+
+允许的未来环境／控制输入词构成
+
+$$
+W^*.
+$$
+
+对于每段历史 $h\in\mathcal H$，定义其完整未来策略画像
+
+$$
+\Pi_h:W^*\to\operatorname{Dist}(A),
+$$
+
+其中
+
+$$
+\Pi_h(w)
+=
+P(\text{next action}\mid h,w).
+$$
+

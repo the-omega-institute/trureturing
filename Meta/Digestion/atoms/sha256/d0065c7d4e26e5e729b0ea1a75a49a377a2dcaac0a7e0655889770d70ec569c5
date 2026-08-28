@@ -1,0 +1,23 @@
+## 定义 448.1（协议空间）
+
+[
+\boxed{
+\operatorname{Agree}
+====================
+
+\bigcap_iA_i.
+}
+]
+
+若：
+
+[
+\operatorname{Agree}\neq\varnothing,
+]
+
+则存在所有参与者都接受的协议。
+
+若为空，则发生真实规范冲突。
+
+---
+

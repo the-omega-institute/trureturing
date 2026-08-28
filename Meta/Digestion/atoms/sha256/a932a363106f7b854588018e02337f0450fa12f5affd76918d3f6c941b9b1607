@@ -1,0 +1,32 @@
+# 结论
+
+本理论的承重链为：
+
+\[
+\boxed{
+\begin{aligned}
+\text{依赖边}
+&\to\text{路径}\to\text{可达偏序}\to\text{Alexandrov 拓扑},\\
+\text{读数}
+&\to\text{核}\to\text{观察拓扑}\to\text{T0 商},\\
+\text{目标}
+&\to\text{分离缺陷}\to\text{新定义}\to\text{严格拓扑精化},\\
+\text{对合}
+&\to\text{轨道}\to\text{横截定向}\to\text{Boolean 奇偶},\\
+\text{对角化}
+&\to\text{本体逃逸}\to\text{观察忠实性}\to\text{可见逃逸}.
+\end{aligned}
+}
+\]
+
+最终判词是：
+
+\[
+\boxed{
+\text{逃逸语义闭包的定义创造才严格增加可分辨结构（闭包内定义保持拓扑不变），}
+\quad
+\text{对角化证明固定语言不封闭，}
+\quad
+\text{拓扑记录这种增长在何种观察下可见。}
+}
+\]

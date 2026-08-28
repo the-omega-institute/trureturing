@@ -1,0 +1,26 @@
+# 41. 资源受限代理容量与外部噪声
+
+考虑高斯输入—输出模型
+
+$$
+Y=HU+\Xi,
+\qquad
+\Xi\sim\mathcal N(0,\Sigma),
+\qquad
+\Sigma\succ0,
+$$
+
+其中 $H=\mathcal H_O$，输入协方差 $S\succeq0$ 满足 $\operatorname{tr}S\le P$。
+
+定义代理信道容量
+
+$$
+\boxed{
+C_O(P)
+=
+\sup_S
+\frac12\log_2\det
+\bigl(I+\Sigma^{-1/2}HSH^*\Sigma^{-1/2}\bigr).
+}
+$$
+

@@ -1,0 +1,56 @@
+# 485. 鸟与企鹅的最小排名模型
+
+设四个世界：
+
+[
+\begin{array}{c|ccc|c}
+&\text{Bird}&\text{Penguin}&\text{Fly}&\kappa\
+\hline
+w_1&1&0&1&0\
+w_2&1&0&0&2\
+w_3&1&1&0&1\
+w_4&1&1&1&3
+\end{array}
+]
+
+最正常的鸟是 (w_1)，所以：
+
+[
+\boxed{
+\text{Bird}\sim_\kappa\text{Fly}.
+}
+]
+
+最正常的企鹅是 (w_3)，所以：
+
+[
+\boxed{
+\text{Penguin}\sim_\kappa\neg\text{Fly}.
+}
+]
+
+由于 Penguin 蕴含 Bird：
+
+[
+\boxed{
+\text{Bird}\land\text{Penguin}
+\sim_\kappa
+\neg\text{Fly}.
+}
+]
+
+加入更具体前提后，原默认结论被合理撤回。
+
+所以：
+
+[
+\boxed{
+\text{默认非单调性}
+=============
+
+\text{新增信息改变了当前被选择的最正常模型层}.
+}
+]
+
+---
+

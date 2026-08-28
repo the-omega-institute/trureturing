@@ -1,0 +1,16 @@
+## 定理 83.1（观察等价的残差刻画）
+
+$$
+\boxed{
+\rho\sim_{\mathfrak O}\sigma
+\iff
+\rho-\sigma\in N_{\mathfrak O}.
+}
+$$
+
+### 证明
+
+若签名相同，则 $\rho-\sigma$ 与每个效果正交；两态同为迹一，所以它也与 $I$ 正交，因此与 $V_{\mathfrak O}$ 的全部线性组合正交。
+
+反向若差属于 $N_{\mathfrak O}$，它与全部效果正交，故所有 Born 概率相同。∎
+

@@ -1,0 +1,10 @@
+## 第一层：操作开放性
+
+$$
+\mathsf{Open}(q)
+:\iff
+|\mathcal A_{\mathrm{eff}}(q)|\ge2.
+$$
+
+存在两个完整后果画像不同的动作。
+

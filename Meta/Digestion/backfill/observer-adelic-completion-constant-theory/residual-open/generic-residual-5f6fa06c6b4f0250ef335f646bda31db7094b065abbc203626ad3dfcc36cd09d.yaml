@@ -1,0 +1,10 @@
+ast_path: 第五十九部/125
+fingerprints:
+  raw_sha256: sha256:5f6fa06c6b4f0250ef335f646bda31db7094b065abbc203626ad3dfcc36cd09d
+  normalized_sha256: sha256:5f6fa06c6b4f0250ef335f646bda31db7094b065abbc203626ad3dfcc36cd09d
+cas_ref: sha256:5f6fa06c6b4f0250ef335f646bda31db7094b065abbc203626ad3dfcc36cd09d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

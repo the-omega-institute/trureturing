@@ -1,0 +1,63 @@
+## 29.3 核为零仍可能观察失败
+
+DECT 主要通过：
+
+$$
+\ker q
+$$
+
+刻画不可区分性。
+
+但准晶体投影显示另一类失败：
+
+> 一个观察映射可以是单射的，却仍不具有局部有限性或稳定可恢复性。
+
+定义观察者的**适当性逃逸**：
+
+$$
+\boxed{
+\operatorname{PropEsc}(q)
+=
+\left\{
+(x_n):
+\|x_n\|\to\infty,
+\ \sup_n\|q(x_n)\|<\infty
+\right\}.
+}
+$$
+
+若：
+
+$$
+\operatorname{PropEsc}(q)\neq\varnothing,
+$$
+
+则无限远的隐藏状态可以堆积在有界可见区域中。
+
+这说明观察者完备性至少需要区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{代数忠实性}&:\ker q=\Delta;\\
+\text{拓扑适当性}&:\operatorname{PropEsc}(q)=\varnothing;\\
+\text{数值稳定性}&:\text{逆映射条件数可控};\\
+\text{显现局部有限性}&:\text{有界区域只含有限可见状态}.
+\end{aligned}
+}
+$$
+
+内部窗口 \(\Omega\) 的作用不是增加物理坐标，而是消除投影观察中的适当性逃逸。
+
+这是对项目观察者理论的一项必要扩展：
+
+$$
+\boxed{
+\text{无核}
+\not\Rightarrow
+\text{完备可观测}.
+}
+$$
+
+---
+

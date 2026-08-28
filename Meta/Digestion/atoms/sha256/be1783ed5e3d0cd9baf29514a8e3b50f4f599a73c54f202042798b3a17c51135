@@ -1,0 +1,19 @@
+# 116. 代数张量分解不推出状态独立
+
+即使
+
+$$
+\mathcal B(\mathcal H_M)
+\cong
+\bigotimes_p
+\mathcal B(\mathcal H_{p^{k_p}}),
+$$
+
+一般量子态并不满足
+
+$$
+\rho=\bigotimes_p\rho_p.
+$$
+
+它可以包含经典相关、相位相关和纠缠。
+

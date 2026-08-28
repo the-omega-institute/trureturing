@@ -1,0 +1,10 @@
+ast_path: section/理论修订
+fingerprints:
+  raw_sha256: sha256:607f8d7a11a7541f8fbb9cd0ead917344ae00a9ed419257d630e0b9ffdee33f6
+  normalized_sha256: sha256:607f8d7a11a7541f8fbb9cd0ead917344ae00a9ed419257d630e0b9ffdee33f6
+cas_ref: sha256:607f8d7a11a7541f8fbb9cd0ead917344ae00a9ed419257d630e0b9ffdee33f6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

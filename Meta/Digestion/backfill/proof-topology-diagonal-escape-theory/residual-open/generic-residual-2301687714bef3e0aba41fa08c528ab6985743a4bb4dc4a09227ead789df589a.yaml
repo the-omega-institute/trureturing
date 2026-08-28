@@ -1,0 +1,13 @@
+ast_path: section/8b1f60fa/occurrence/9
+fingerprints:
+  raw_sha256: sha256:2301687714bef3e0aba41fa08c528ab6985743a4bb4dc4a09227ead789df589a
+  normalized_sha256: sha256:2301687714bef3e0aba41fa08c528ab6985743a4bb4dc4a09227ead789df589a
+cas_ref: sha256:2301687714bef3e0aba41fa08c528ab6985743a4bb4dc4a09227ead789df589a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-42038beee5da7572b763135a4198593fca2420ba68168f01c6988e13bfe6a5c7-9ff7c6da0ea8105ba76f8e2ff11719b69fb494b4d6ea1a61047a49c21eaa8855
+    - generic-residual-7597e6961fb2b8cb8b4f0b9f8c9d54c9c5fdb98f5b6cb08e97c2566330a6454e-f696ac1b3a2ee8605ffa9e36161b801878a41a7fc22fd541a058e44ecd714f89

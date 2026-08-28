@@ -344,6 +344,25 @@ public sealed class FormulaTests
     }
 
     [Fact]
+    public void LatexWriterParenthesizesBindManyNestedInLogicConjunction()
+    {
+        Formula formula = new Formula.Logic(
+            new Formula.BindMany(
+                FormulaQuantifier.ForAll,
+                [
+                    new Formula.BoundVariable(FormulaIdentifier.Create("x"), new Formula.Integers()),
+                    new Formula.BoundVariable(FormulaIdentifier.Create("y"), new Formula.Integers()),
+                ],
+                Id("P")),
+            FormulaLogicOperator.And,
+            Id("Q"));
+
+        Assert.Equal(
+            "\\left(\\forall x \\in \\mathbb{Z}, y \\in \\mathbb{Z},\\; P\\right) \\land Q",
+            LatexWriter.Write(formula));
+    }
+
+    [Fact]
     public void LatexWriterEmitsTheInventoriedLogicalCoreCanonically()
     {
         Formula formula = new Formula.Bind(

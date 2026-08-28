@@ -1,0 +1,41 @@
+# 453. 一个概念诱导规范的“最大安全回答器”
+
+设准入谓词：
+
+[
+A:X\to\mathsf{Prop}.
+]
+
+概念：
+
+[
+C:X\to B_C.
+]
+
+目标：
+
+[
+T:X\to Y.
+]
+
+对每个概念值 (b)，定义目标纤维：
+
+[
+\boxed{
+Y_b
+===
+
+\left{
+T(x)
+;\middle|;
+A(x)\land C(x)=b
+\right}.
+}
+]
+
+引入拒答符号：
+
+[
+\bot_{\mathrm{ans}}\notin Y.
+]
+

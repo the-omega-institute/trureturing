@@ -1,0 +1,50 @@
+## 本文定理 38.1（作者性秩）
+
+$$
+\boxed{
+\operatorname{rank}G_O
+=
+\dim\mathsf{Agt}_O.
+}
+$$
+
+### 证明
+
+$(W_c^O)^{1/2}$ 的像是 $R_O$，$W_o^{1/2}$ 的核是 $N_\infty$。故复合在 $R_O$ 上丢失的恰是 $R_O\cap N_\infty$。∎
+
+定义折扣观察算子 $\mathcal O_\beta$ 与自我可达算子 $\mathcal C_{\beta,O}$：
+
+$$
+\mathcal O_\beta x=(\beta^{n/2}CT^nx)_{n\ge0},
+$$
+
+$$
+\mathcal C_{\beta,O}(u)
+=
+\sum_{n\ge0}\beta^{n/2}T^nB_Ou_n.
+$$
+
+代理 Hankel 算子为
+
+$$
+\boxed{
+\mathcal H_O
+=
+\mathcal O_\beta\mathcal C_{\beta,O}.
+}
+$$
+
+其秩满足
+
+$$
+\boxed{
+\operatorname{rank}\mathcal H_O
+=
+\dim\mathsf{Agt}_O.
+}
+$$
+
+因此任何精确实现同一“自身过去控制到未来读出”映射的有限维系统，状态维数至少为该秩；可达且可观测实现恰达到它。这给“最小操作自我”一个系统论定义。
+
+---
+

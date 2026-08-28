@@ -1,0 +1,37 @@
+# 56. 无结构非空集合不存在自然确定性选择
+
+把非空有限集合与双射组成的群胚记为
+
+$$
+\mathbf{FinSet}_{\neq\varnothing}^{\simeq}.
+$$
+
+令忘却函子
+
+$$
+U:
+\mathbf{FinSet}_{\neq\varnothing}^{\simeq}
+\to
+\mathbf{Set}
+$$
+
+把有限集合送到其底层集合。
+
+所谓完全不依赖标签的自然选择，要求对每个非空有限集合 $S$ 给出
+
+$$
+c_S\in S,
+$$
+
+并对任意双射
+
+$$
+f:S\overset{\simeq}{\longrightarrow}T
+$$
+
+满足
+
+$$
+f(c_S)=c_T.
+$$
+

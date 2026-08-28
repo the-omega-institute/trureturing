@@ -1,0 +1,36 @@
+## 本文定理 39.1（伪逆能量公式）
+
+$$
+\boxed{
+E_O(r)
+=
+\langle r,(W_c^O)^\dagger r\rangle.
+}
+$$
+
+同一行为商类的代表元可相差静默方向，故操作能量应进一步取
+
+$$
+E_O([r])
+=
+\inf_{n\in R_O\cap N_\infty}E_O(r+n).
+$$
+
+令 $\sigma_1\ge\cdots\ge\sigma_s>0$ 为 $L_O$ 或 $\mathcal H_O$ 的非零奇异值，定义
+
+$$
+\kappa_{\mathrm{ag}}=\frac{\sigma_1}{\sigma_s}.
+$$
+
+即使代理商非零，若最小奇异值极小，关键自我方向仍可能需要巨大能量、极低噪声或很长时间才能稳定使用。
+
+所以必须区分：
+
+```text
+exact agency；
+conditioned agency；
+physically realizable agency.
+```
+
+---
+

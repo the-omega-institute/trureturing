@@ -1,0 +1,39 @@
+## 定义 93.1（顺序可见空间）
+
+$$
+V_n^{\mathrm{seq}}
+=
+\operatorname{span}_{\mathbb R}
+\{F_w:|w|\le n\}.
+$$
+
+空词满足
+
+$$
+F_\varepsilon=I.
+$$
+
+等价地可递归定义：
+
+$$
+V_0^{\mathrm{seq}}=\mathbb RI,
+$$
+
+$$
+V_{n+1}^{\mathrm{seq}}
+=
+V_n^{\mathrm{seq}}
++
+\sum_g
+\mathcal I_g^*
+\bigl(V_n^{\mathrm{seq}}\bigr).
+$$
+
+定义顺序残差
+
+$$
+N_n^{\mathrm{seq}}
+=
+\left(V_n^{\mathrm{seq}}\right)^\perp.
+$$
+

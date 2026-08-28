@@ -1,0 +1,10 @@
+ast_path: section/232-理论空间的普遍经验商
+fingerprints:
+  raw_sha256: sha256:41d58024cb389e7c83fa8766f8064cede82f64b7954e08fa4558baf50b9dcb49
+  normalized_sha256: sha256:41d58024cb389e7c83fa8766f8064cede82f64b7954e08fa4558baf50b9dcb49
+cas_ref: sha256:41d58024cb389e7c83fa8766f8064cede82f64b7954e08fa4558baf50b9dcb49
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

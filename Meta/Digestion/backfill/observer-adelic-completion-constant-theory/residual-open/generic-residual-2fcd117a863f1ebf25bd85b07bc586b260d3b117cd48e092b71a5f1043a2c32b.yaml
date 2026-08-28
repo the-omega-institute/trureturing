@@ -1,0 +1,10 @@
+ast_path: section/83-1-Boundary-lift-energy
+fingerprints:
+  raw_sha256: sha256:2fcd117a863f1ebf25bd85b07bc586b260d3b117cd48e092b71a5f1043a2c32b
+  normalized_sha256: sha256:2fcd117a863f1ebf25bd85b07bc586b260d3b117cd48e092b71a5f1043a2c32b
+cas_ref: sha256:2fcd117a863f1ebf25bd85b07bc586b260d3b117cd48e092b71a5f1043a2c32b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

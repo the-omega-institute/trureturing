@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -55,15 +56,29 @@ internal static class GenericAtomizer
         "[^\\p{L}\\p{N}]+",
         RegexOptions.CultureInvariant);
 
-    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules _) =>
-        MarkdownAstAtomizer.Atomize(
+    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules _)
+    {
+        var document = MarkdownAstAtomizer.Atomize(
             bytes,
             IdentifyParagraph,
             static () => GenreRegistryCheck.NoGenreRegistry,
             identifyHeading: IdentifyHeading,
             parse: MarkdigBlockAst.Parse,
             identifyTableRow: IdentifyTableRow,
-            dropEmptyHeadingClaims: true);
+            dropEmptyHeadingClaims: true,
+            identifyHeadingClaim: IsHeadingClaim);
+        // 分解生产侧与 pzg 同一实现:08-15 的吸收分解门对全部方言执法,
+        // generic-v1 的多子句 claim 同样必须能产出 clause plan(#3499)。
+        return new AtomizedTheoryDocument(
+            document.Claims,
+            document.Slices,
+            document.Claims
+                .Select(PzgAtomizer.PlanClauses)
+                .Where(static plan => plan is not null)
+                .Select(static plan => plan!)
+                .ToImmutableArray(),
+            document.GenreRegistryCheck);
+    }
 
     /// <summary>
     /// A claim table states one proposition per row — each with its own attestation and its
@@ -82,6 +97,8 @@ internal static class GenericAtomizer
             ? claim.Groups["kind"].Value + "/" + claim.Groups["number"].Value
             : "section/" + Slug(heading);
     }
+
+    private static bool IsHeadingClaim(string heading) => HeadingClaim.IsMatch(heading);
 
     private static string? IdentifyParagraph(string paragraph)
     {

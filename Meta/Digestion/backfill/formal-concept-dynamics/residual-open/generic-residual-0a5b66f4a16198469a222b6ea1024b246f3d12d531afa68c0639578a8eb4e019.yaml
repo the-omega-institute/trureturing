@@ -1,0 +1,10 @@
+ast_path: 定理/253.1
+fingerprints:
+  raw_sha256: sha256:0a5b66f4a16198469a222b6ea1024b246f3d12d531afa68c0639578a8eb4e019
+  normalized_sha256: sha256:0a5b66f4a16198469a222b6ea1024b246f3d12d531afa68c0639578a8eb4e019
+cas_ref: sha256:0a5b66f4a16198469a222b6ea1024b246f3d12d531afa68c0639578a8eb4e019
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

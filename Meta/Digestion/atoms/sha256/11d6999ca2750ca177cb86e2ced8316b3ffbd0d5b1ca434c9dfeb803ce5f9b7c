@@ -1,0 +1,22 @@
+## 定理 259.2（重复同族干预不能跨越 kernel）
+
+若存在 \(M,N\) 满足：
+
+\[
+\forall a\in\mathcal A,
+\quad
+P_M^a=P_N^a,
+\]
+
+但：
+
+\[
+T(M)\neq T(N),
+\]
+
+则任意重复次数、样本量、随机后处理或自适应重排，只要每一步仍只调用 \(\mathcal A\)，都不能精确决定 \(T\)。
+
+### 证明
+
+每次 transcript kernel 都只依赖同一族 \(P_M^a=P_N^a\)。由统计 law kernel 的函子性，完整 transcript laws 在 \(M,N\) 下相同。 \(\square\)
+

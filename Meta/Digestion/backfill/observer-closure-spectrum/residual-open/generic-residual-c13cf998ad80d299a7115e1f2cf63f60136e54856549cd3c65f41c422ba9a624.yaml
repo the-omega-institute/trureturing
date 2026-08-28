@@ -1,0 +1,10 @@
+ast_path: section/48-自由保持核与-meta-agency
+fingerprints:
+  raw_sha256: sha256:c13cf998ad80d299a7115e1f2cf63f60136e54856549cd3c65f41c422ba9a624
+  normalized_sha256: sha256:c13cf998ad80d299a7115e1f2cf63f60136e54856549cd3c65f41c422ba9a624
+cas_ref: sha256:c13cf998ad80d299a7115e1f2cf63f60136e54856549cd3c65f41c422ba9a624
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

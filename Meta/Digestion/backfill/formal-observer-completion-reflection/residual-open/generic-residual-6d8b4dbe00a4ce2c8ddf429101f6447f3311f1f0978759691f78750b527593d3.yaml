@@ -1,0 +1,10 @@
+ast_path: row/Heisenberg-finite-horizon-theory
+fingerprints:
+  raw_sha256: sha256:6d8b4dbe00a4ce2c8ddf429101f6447f3311f1f0978759691f78750b527593d3
+  normalized_sha256: sha256:6d8b4dbe00a4ce2c8ddf429101f6447f3311f1f0978759691f78750b527593d3
+cas_ref: sha256:6d8b4dbe00a4ce2c8ddf429101f6447f3311f1f0978759691f78750b527593d3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/哲学研究
+fingerprints:
+  raw_sha256: sha256:1573bbb747b3618b14b3ac74f6d543b5144c8e01ef119bedf6a800369a48bcdf
+  normalized_sha256: sha256:1573bbb747b3618b14b3ac74f6d543b5144c8e01ef119bedf6a800369a48bcdf
+cas_ref: sha256:1573bbb747b3618b14b3ac74f6d543b5144c8e01ef119bedf6a800369a48bcdf
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

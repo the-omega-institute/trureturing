@@ -226,9 +226,11 @@ internal static class ScribeTestMapDeriver
             testSources,
             indirectSites,
             FindUnclassifiedManagedProjects(projectFiles),
-            FindOrphanManagedSources(
-                sources.Select(static source => source.Path),
-                compileMap.ProjectBySourcePath),
+            compileMap.Findings.Count == 0
+                ? FindOrphanManagedSources(
+                    sources.Select(static source => source.Path),
+                    compileMap.ProjectBySourcePath)
+                : [],
             FindDanglingCompileFailProofProjectExemptions(
                 projectFiles.Select(static project => project.Path)),
             compileMap.ProjectBySourcePath,

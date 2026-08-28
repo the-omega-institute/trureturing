@@ -1,0 +1,27 @@
+## 命题 48.6（非典范不等于主体自由）
+
+存在两个反例模型：
+
+1. 对称硬币随机打破平局：无典范确定性 selector，但无内部作者性；
+2. 内部理由状态确定性选择：策略确定，却可满足外部环境相同、内部理由不同导致行动不同。
+
+所以
+
+$$
+\text{noncanonical}
+\not\Rightarrow
+\text{agency},
+$$
+
+且
+
+$$
+\text{deterministic}
+\not\Rightarrow
+\text{nonfree}.
+$$
+
+**状态**：有限 Bool 反例可机器化。
+
+---
+

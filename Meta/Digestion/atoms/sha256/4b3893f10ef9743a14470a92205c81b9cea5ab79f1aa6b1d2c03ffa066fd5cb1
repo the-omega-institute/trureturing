@@ -1,0 +1,28 @@
+## 定理 99.1（局部观察等价）
+
+若观察者 $B$ 可以使用全部局部效果，则
+
+$$
+\boxed{
+\rho_{AB}\sim_B\sigma_{AB}
+\iff
+\operatorname{Tr}_A\rho_{AB}
+=
+\operatorname{Tr}_A\sigma_{AB}.
+}
+$$
+
+### 证明
+
+正向：所有局部期望相等意味着两个约化态对全部 Hermitian 局部算子配对相等，非退化性推出约化态相等。
+
+反向：由偏迹定义，
+
+$$
+\operatorname{Tr}\bigl(\rho_{AB}(I\otimes E)\bigr)
+=
+\operatorname{Tr}(\rho_BE).
+$$
+
+约化态相等即全部局部读出相等。∎
+

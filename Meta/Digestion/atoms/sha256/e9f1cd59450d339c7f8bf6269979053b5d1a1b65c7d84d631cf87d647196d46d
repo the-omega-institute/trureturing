@@ -1,0 +1,66 @@
+## 71.1 Antipodal involution
+
+定义：
+
+$$
+\iota(v)=-v.
+$$
+
+它把十二个顶点配成六对。
+
+定义偶函数空间：
+
+$$
+\mathbb C[\mathcal V_{12}]^+
+=
+\{f:f(-v)=f(v)\},
+$$
+
+以及奇函数空间：
+
+$$
+\mathbb C[\mathcal V_{12}]^-
+=
+\{f:f(-v)=-f(v)\}.
+$$
+
+二者维数均为 \(6\)。
+
+直接计算其特征标：
+
+$$
+\chi_+
+=
+(6,2,0,1,1),
+$$
+
+$$
+\chi_-
+=
+(6,-2,0,1,1).
+$$
+
+所以：
+
+$$
+\boxed{
+\mathbb C[\mathcal V_{12}]^+
+\simeq
+\mathbf1\oplus V_5,
+}
+\tag{71.3}
+$$
+
+而：
+
+$$
+\boxed{
+\mathbb C[\mathcal V_{12}]^-
+\simeq
+V_3\oplus V_3'.
+}
+\tag{71.4}
+$$
+
+---
+

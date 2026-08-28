@@ -1,0 +1,8 @@
+**第 12 条时域半条。** 对
+   \(P_N^{q,\tau}:X\to(\operatorname{Fin}(N+1)\to O)\)，
+   从 \(P_N\) 扩到 \(P_{N'}\) 的时域逃逸是
+   `ExpansionEscape P_N P_N'`
+   的实例；从当前读数 \(q\) 扩到 \(P_N\) 的第 8 部预测逃逸是
+   `ExpansionEscape q P_N`
+   的实例。证明目标精确为 56.4-A—56.4-E。
+

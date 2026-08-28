@@ -6,7 +6,7 @@ Empty carry yields a unique descent on the effective image.
 
 **Theorem 1.1 (Empty carry determines the effective-image descent).**
 
-$$\forall X, Y, B_{C}, B_{D}: \operatorname{Type},\ [\operatorname{Fintype}(X)], [\operatorname{DecidableEq}(X)], [\operatorname{Fintype}(B_{C})], [\operatorname{DecidableEq}(B_{C})], [\operatorname{Fintype}(B_{D})], [\operatorname{DecidableEq}(B_{D})],\ F: X \to Y, q_{C}: X \to B_{C}, q_{D}: Y \to B_{D},\ \operatorname{Carry}(F, q_{C}, q_{D}) = \emptyset \Rightarrow\ \exists! \overline{F}: \operatorname{range}(q_{C}) \to B_{D},\ \forall x: X, \overline{F}(\operatorname{rangeFactorization}(q_{C}, x)) = q_{D}(F(x)).$$
+$$\forall X, Y, B_{C}, B_{D}: \operatorname{Type},\ [\operatorname{Fintype}(X)], [\operatorname{DecidableEq}(X)], [\operatorname{Fintype}(B_{C})], [\operatorname{DecidableEq}(B_{C})], [\operatorname{Fintype}(B_{D})], [\operatorname{DecidableEq}(B_{D})],\ F: X \to Y, q_{C}: X \to B_{C}, q_{D}: Y \to B_{D},\ \operatorname{IsEmpty}\left(\operatorname{Carry}(F, q_{C}, q_{D})\right) \Rightarrow\ \exists! \overline{F}: \operatorname{range}(q_{C}) \to B_{D},\ \forall x: X, \overline{F}(\operatorname{rangeFactorization}(q_{C}, x)) = q_{D}(F(x)).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Transport/FiniteReverseCriterion.finite_reverse_criterion` (`✓ std3`). ∎
 

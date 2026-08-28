@@ -16,8 +16,10 @@ internal static class SnapshotAdmissionCore
         RawChangeSet changes,
         BootstrapOutcome bootstrap,
         VerifiedScribeEmissions? verifiedScribeEmissions,
-        RepositorySnapshot? forkPoint = null)
+        RepositorySnapshot? forkPoint = null,
+        AdmissionCheckTiming? timing = null)
     {
+        var phaseTiming = timing ?? AdmissionCheckTiming.Disabled;
         try
         {
             if (bootstrap is BootstrapOutcome.InfrastructureFailure bootstrapFailure)
@@ -29,45 +31,59 @@ internal static class SnapshotAdmissionCore
                 BootstrapOutcome.ProtectedSurfaceVerificationRequired bootstrapVerification
                 ? BootstrapGate.CreateSl022Diagnostics(bootstrapVerification.ChangeSet)
                 : ImmutableArray<Diagnostic>.Empty;
-            if (!current.TryGetFile("Meta/registry.yaml", out var registryFile)
-                || !current.TryGetFile("Meta/domains.yaml", out var domainsFile))
-            {
-                return Failure("current snapshot lacks Meta/registry.yaml or Meta/domains.yaml");
-            }
+            var registry = phaseTiming.Measure(
+                "policy-load",
+                () =>
+                {
+                    if (!current.TryGetFile("Meta/registry.yaml", out var registryFile)
+                        || !current.TryGetFile("Meta/domains.yaml", out var domainsFile))
+                    {
+                        throw new InvalidOperationException(
+                            "current snapshot lacks Meta/registry.yaml or Meta/domains.yaml");
+                    }
 
-            var registry = RegistryLoader.Load(
-                registryFile.RawBytes.AsSpan(),
-                domainsFile.RawBytes.AsSpan()) switch
-            {
-                RegistryLoadOutcome.Accepted accepted => accepted,
-                RegistryLoadOutcome.InfrastructureFailure failure =>
-                    throw new InvalidOperationException(failure.Message),
-            };
-            var lean = ValidateLean(current, currentReport);
+                    return RegistryLoader.Load(
+                        registryFile.RawBytes.AsSpan(),
+                        domainsFile.RawBytes.AsSpan()) switch
+                    {
+                        RegistryLoadOutcome.Accepted accepted => accepted,
+                        RegistryLoadOutcome.InfrastructureFailure failure =>
+                            throw new InvalidOperationException(failure.Message),
+                    };
+                });
+            var lean = phaseTiming.Measure(
+                "lean-closure",
+                () => ValidateLean(current, currentReport));
 
-            var admission = bootstrap switch
-            {
-                BootstrapOutcome.Clear clear => AdmissionPipeline.EvaluateWithScribe(
-                    current,
-                    baseline,
-                    registry.Policy,
-                    lean,
-                    changes,
-                    clear.Capability,
-                    verifiedScribeEmissions,
-                    forkPoint),
-                BootstrapOutcome.ProtectedSurfaceVerificationRequired protectedSurfaceVerification =>
-                    AdmissionPipeline.EvaluateProtectedSurface(
+            var admission = phaseTiming.Measure(
+                "rule-passes",
+                () => bootstrap switch
+                {
+                    BootstrapOutcome.Clear clear => AdmissionPipeline.EvaluateWithScribe(
                         current,
                         baseline,
                         registry.Policy,
                         lean,
                         changes,
-                        protectedSurfaceVerification.ChangeSet,
+                        clear.Capability,
                         verifiedScribeEmissions,
-                        forkPoint),
-                _ => throw new InvalidOperationException("unknown bootstrap outcome"),
-            };
+                        forkPoint,
+                        MeasureRule),
+                    BootstrapOutcome.ProtectedSurfaceVerificationRequired protectedSurfaceVerification =>
+                        AdmissionPipeline.EvaluateProtectedSurface(
+                            current,
+                            baseline,
+                            registry.Policy,
+                            lean,
+                            changes,
+                            protectedSurfaceVerification.ChangeSet,
+                            verifiedScribeEmissions,
+                            forkPoint,
+                            MeasureRule),
+                    _ => throw new InvalidOperationException("unknown bootstrap outcome"),
+                },
+                static outcome => outcome is not AdmissionOutcome.Admitted
+                    && outcome is not AdmissionOutcome.ProtectedSurfaceChange);
             if (admission is not AdmissionOutcome.Admitted
                 && admission is not AdmissionOutcome.ProtectedSurfaceChange)
             {
@@ -77,6 +93,16 @@ internal static class SnapshotAdmissionCore
             return new SnapshotAdmissionEvaluation(
                 admission,
                 lean);
+
+            ImmutableArray<RuleFinding> MeasureRule(
+                RuleId ruleId,
+                AdmissionEffect admissionEffect,
+                Func<ImmutableArray<RuleFinding>> evaluate) =>
+                phaseTiming.Measure(
+                    "rule-" + ruleId.Value.ToLowerInvariant(),
+                    evaluate,
+                    findings => findings.Any(finding =>
+                        (finding.Effect ?? admissionEffect) is AdmissionEffect.Block));
         }
         catch (Exception exception)
         {

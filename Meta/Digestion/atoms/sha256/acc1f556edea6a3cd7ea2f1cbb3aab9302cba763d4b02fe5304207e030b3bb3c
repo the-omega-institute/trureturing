@@ -1,0 +1,19 @@
+## 定理 31.2（路径可达即 real-flow 同轨；Lean 锚点）
+
+对任意 $x,y\in\Sigma_\infty$：
+
+$$
+\operatorname{Joined}(x,y)
+\iff
+\exists t\in\mathbb R,
+\quad
+y=\operatorname{realFlow}(t)+x.
+$$
+
+对应仓库锚点：
+
+```text
+D5/S1/Solenoid/PathOrbitClassification.
+  path_joined_iff_real_flow_orbit
+```
+

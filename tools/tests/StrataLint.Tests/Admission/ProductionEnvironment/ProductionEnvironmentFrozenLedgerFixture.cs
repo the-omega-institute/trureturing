@@ -45,15 +45,10 @@ public sealed partial class ProductionEnvironmentTests
             RevocationEvidenceValidator.Validate(evidence, baselineLedger, receipts)).Capability;
         var plan = Assert.IsType<RevocationPlanOutcome.Accepted>(
             RevocationPlanner.Plan(baselineLedger, [validated])).Capability;
-        var revokedBytes = FrozenLedgerGenerator.AppendRevocation(baselineLedger, plan);
-        var revokeLine = FrozenLedgerTestData.Lines(revokedBytes)[^1];
-        using var revokeDocument = JsonDocument.Parse(
-            revokeLine.AsMemory(0, revokeLine.Length - 1));
-        var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
-            "Revoke",
-            revokeDocument.RootElement.GetProperty("payload"));
-        var path = FrozenLedgerChangeClassifier.AcceptedPath(encoded.Hash);
-        fixture.Files[path] = Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
+        var revokeFile = Assert.Single(DagLedgerAppendWriter.BuildNewEventFiles(
+            FrozenLedgerGenerator.Revocation(baselineLedger, plan)));
+        var path = revokeFile.Path.Value;
+        fixture.Files[path] = revokeFile.Text;
         fixture.Files.Remove(RuleFixture.RingPath);
         fixture.Reports.Remove(RuleFixture.RingPath);
         var environment = new ProductionCliEnvironment(
@@ -153,33 +148,6 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CheckAdmitsHistoricalClosurelessV2FreezeDuringIncrementalEvaluation()
-    {
-        using var temporary = new TemporaryDirectory();
-        var fixture = TrustedFrozenFixture();
-        var freezePath = FreezePathFor(fixture, RuleFixture.RingPath);
-        var historicalPath = RewriteFreezeWithoutAxiomClosure(
-            fixture.Files,
-            freezePath,
-            schemaVersion: 2);
-        Assert.Equal(
-            historicalPath,
-            RewriteFreezeWithoutAxiomClosure(fixture.Baseline, freezePath, schemaVersion: 2));
-        var environment = new ProductionCliEnvironment(
-            "/repo",
-            new FakeRepositoryGateway(
-                RawChangeSet.CreateWithKinds([(RuleFixture.RingPath, RawChangeKind.Modified)]),
-                Snapshot(fixture.Files),
-                Snapshot(fixture.Baseline)),
-            new FakeLeanReportSource(null));
-
-        var outcome = environment.Check(
-            ["--candidate-lean-report", WriteCandidateReport(temporary, fixture)]);
-
-        Assert.IsType<AdmissionOutcome.Admitted>(outcome);
-    }
-
-    [Fact]
     public void CheckAdmitsAddedFreezeAnchoredToPhaseAWhenCurrentRevisionIsPhaseB()
     {
         using var temporary = new TemporaryDirectory();
@@ -249,7 +217,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CheckRetainsScopedMaterialBlobDriftDetection()
+    public void CheckAllowsScopedMaterialBlobDriftWhenFrozenIdentityIsStable()
     {
         using var temporary = new TemporaryDirectory();
         var fixture = TrustedFrozenFixture();
@@ -265,15 +233,7 @@ public sealed partial class ProductionEnvironmentTests
         var outcome = environment.Check(
             ["--candidate-lean-report", WriteCandidateReport(temporary, fixture)]);
 
-        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
-        var diagnostic = Assert.Single(
-            rejected.Diagnostics.Where(static item => item.RuleId == RuleId.CreateKnown(8)));
-        Assert.Equal(RuleFixture.RingPath, diagnostic.Path);
-        Assert.Contains("material/blob drift", diagnostic.Message, StringComparison.Ordinal);
-        Assert.Contains(
-            "delta witness: " + RuleFixture.RingPath,
-            diagnostic.Message,
-            StringComparison.Ordinal);
+        Assert.IsType<AdmissionOutcome.Admitted>(outcome);
     }
 
     private static RuleFixture TrustedFrozenFixtureWithLedger(
@@ -294,94 +254,6 @@ public sealed partial class ProductionEnvironmentTests
         return fixture;
     }
 
-    private static string AddIncompleteReattest(RuleFixture fixture)
-    {
-        var payload = JsonSerializer.SerializeToElement(new
-        {
-            frozen_node_id = "sha256:" + new string('9', 64),
-            input = new
-            {
-                base_commit_oid = FrozenLedgerTestData.GitOid('a'),
-                base_tree_oid = FrozenLedgerTestData.GitOid('b'),
-                descriptor_blob_oid = FrozenLedgerTestData.GitBlobOid(
-                    fixture.Files[RuleFixture.RingPath]),
-                descriptor_selector = RuleFixture.RingPath,
-                materializer = "repository-snapshot-v1",
-                supporting_blob_oids = Array.Empty<string>(),
-            },
-        });
-        var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent("Reattest", payload);
-        var identity = FrozenLedgerCanonicalWriter.EventIdentity(
-            "Reattest",
-            payload,
-            encoded.Hash);
-        var path = FrozenLedgerChangeClassifier.AcceptedPath(identity);
-        fixture.Files[path] = Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
-        return path;
-    }
-
-    private static string AddMatchingReattest(
-        RuleFixture fixture,
-        FrozenLedgerConsistent baselineLedger,
-        out ImmutableArray<byte> reattestedLedger)
-    {
-        var candidateCatalog = BuildFrozenCatalog(fixture.Files, fixture.Reports);
-        reattestedLedger = FrozenLedgerGenerator.AppendReattestation(
-            baselineLedger,
-            candidateCatalog);
-        SetLedger(fixture.Files, Encoding.UTF8.GetString(reattestedLedger.AsSpan()));
-        return Assert.Single(AddedLedgerPaths(fixture), path => EventType(fixture.Files[path]) == "Reattest");
-    }
-
-    private static FrozenMaterialCatalog BuildFrozenCatalog(
-        IReadOnlyDictionary<string, string> files,
-        IReadOnlyDictionary<string, LeanFileReport> reports)
-    {
-        var (snapshot, lean, dag) = BuildState(files, reports);
-        var attestations = dag.Nodes
-            .Where(static node => node.State is TruthState.Closed && node.ModuleName is not null)
-            .Select(node => new FrozenModuleAttestation(
-                node.RepoPath,
-                FrozenLedgerTestData.GitBlobOid(files[node.RepoPath.Value]))
-            {
-                BaseCommitOid = FrozenLedgerTestData.GitOid('a'),
-                BaseTreeOid = FrozenLedgerTestData.GitOid('b'),
-            });
-        return Assert.IsType<FrozenMaterialOutcome.Accepted>(
-            FrozenContentAddress.Build(snapshot, lean, FrozenEnvironment(files), attestations)).Capability;
-    }
-
-    private static FrozenEnvironmentAttestation FrozenEnvironment(
-        IReadOnlyDictionary<string, string> files) => new(
-            FrozenLedgerTestData.GitOid('a'),
-            FrozenLedgerTestData.GitOid('b'),
-            FrozenLedgerTestData.GitBlobOid(files["lean-toolchain"]),
-            FrozenLedgerTestData.GitBlobOid(files["lake-manifest.json"]))
-        {
-            LakefilePath = "lakefile.toml",
-            LakefileBlobOid = FrozenLedgerTestData.GitBlobOid(files["lakefile.toml"]),
-        };
-
-    private static FrozenEnvironmentPins FrozenPins(FrozenEnvironmentAttestation environment) => new(
-        environment.LakeManifestBlobOid,
-        environment.LakefileBlobOid!,
-        RepoPath.CreateKnown(environment.LakefilePath!),
-        environment.LeanToolchainBlobOid);
-
-    private static ImmutableArray<string> EnvironmentOids(FrozenEnvironmentPins environment) =>
-        new[]
-        {
-            environment.LakeManifestBlobOid,
-            environment.LakefileBlobOid,
-            environment.LeanToolchainBlobOid,
-        }.Order(StringComparer.Ordinal).ToImmutableArray();
-
-    private static string EventType(string contents)
-    {
-        using var document = JsonDocument.Parse(contents);
-        return document.RootElement.GetProperty("event_type").GetString()!;
-    }
-
     private static string RewriteFreezeWithoutAxiomClosure(
         IDictionary<string, string> files,
         string eventPath,
@@ -392,33 +264,12 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal("Freeze", root.GetProperty("event_type").GetString());
         var payload = JsonNode.Parse(root.GetProperty("payload").GetRawText())!.AsObject();
         Assert.True(payload.Remove("axiom_closure"));
-        if (schemaVersion == 2)
-        {
-            var input = payload["input"]!.AsObject();
-            payload["case_class"] = "active-frozen";
-            payload["evaluation"] = "admission";
-            payload["expected"] = new JsonObject
-            {
-                ["allowed_dispositions"] = new JsonArray("admit"),
-                ["diagnostic_match"] = "none",
-                ["required_diagnostics"] = new JsonArray(),
-            };
-            payload["input_fingerprint"] = payload["witness_id"]!.GetValue<string>();
-            payload["node_path"] = input["descriptor_selector"]!.GetValue<string>();
-            payload["semantic_receipt"] = payload["frozen_node_id"]!.GetValue<string>();
-            payload["truth_state"] = nameof(TruthState.Closed);
-        }
-
         var payloadElement = JsonSerializer.SerializeToElement(payload);
         var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
             "Freeze",
             payloadElement,
             schemaVersion);
-        var identity = FrozenLedgerCanonicalWriter.EventIdentity(
-            "Freeze",
-            payloadElement,
-            encoded.Hash,
-            schemaVersion);
+        var identity = FrozenLedgerCanonicalWriter.EventIdentity(encoded.Hash);
         var rewrittenPath = FrozenLedgerChangeClassifier.AcceptedPath(identity);
         files.Remove(eventPath);
         files[rewrittenPath] = Encoding.UTF8.GetString(encoded.Bytes.AsSpan());

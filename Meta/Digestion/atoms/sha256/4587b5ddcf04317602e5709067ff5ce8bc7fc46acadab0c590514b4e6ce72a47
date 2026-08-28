@@ -1,0 +1,56 @@
+# 36. 可观测与可控 Gramian
+
+取 $0<\beta<1$ 且满足收敛条件。定义
+
+$$
+W_o
+=
+\sum_{n\ge0}\beta^n(T^*)^nC^*CT^n,
+$$
+
+$$
+W_c^O
+=
+\sum_{n\ge0}\beta^nT^nB_OB_O^*(T^*)^n.
+$$
+
+有能量恒等式
+
+$$
+\langle x,W_ox\rangle
+=
+\sum_{n\ge0}\beta^n\|CT^nx\|^2,
+$$
+
+$$
+\langle x,W_c^Ox\rangle
+=
+\sum_{n\ge0}\beta^n\|B_O^*(T^*)^nx\|^2.
+$$
+
+因此
+
+$$
+\boxed{
+\ker W_o=N_\infty,
+\qquad
+\ker W_c^O=R_O^\perp,
+\qquad
+\operatorname{ran}W_c^O=R_O.
+}
+$$
+
+并满足双 Lyapunov 方程
+
+$$
+W_o=C^*C+\beta T^*W_oT,
+$$
+
+$$
+W_c^O=B_OB_O^*+\beta TW_c^OT^*.
+$$
+
+观察完成与行动完成由此形成状态—效应对偶。
+
+---
+

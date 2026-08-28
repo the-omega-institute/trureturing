@@ -1,0 +1,10 @@
+ast_path: section/统一观察者双完成定理
+fingerprints:
+  raw_sha256: sha256:3981ab7e759c72eb646724f1c7f5ada81f1b5f920589b01c7648429d10a1739f
+  normalized_sha256: sha256:3981ab7e759c72eb646724f1c7f5ada81f1b5f920589b01c7648429d10a1739f
+cas_ref: sha256:3981ab7e759c72eb646724f1c7f5ada81f1b5f920589b01c7648429d10a1739f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

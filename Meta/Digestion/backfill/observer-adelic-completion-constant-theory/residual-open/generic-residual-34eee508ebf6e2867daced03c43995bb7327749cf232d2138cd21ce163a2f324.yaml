@@ -1,0 +1,15 @@
+ast_path: section/第一百一十九部-Ramanujan-基因组的二十四维闭合
+fingerprints:
+  raw_sha256: sha256:34eee508ebf6e2867daced03c43995bb7327749cf232d2138cd21ce163a2f324
+  normalized_sha256: sha256:34eee508ebf6e2867daced03c43995bb7327749cf232d2138cd21ce163a2f324
+cas_ref: sha256:34eee508ebf6e2867daced03c43995bb7327749cf232d2138cd21ce163a2f324
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-66de12decb225e76b0aa17e082e797e723c7150b97b2d9dfec8fa40131286a2a-42379a3275bb23cec0a50ee7ca15b87de59344cac0934b19057eddb7c1e0387a
+    - generic-residual-fe35e0cef507d4a3568734058392afd2e07246acd5e66ae4e81291e24eabbdd2-63eb1c128314e203d7f2ed593e450371a291fb0c3ff8dcdf983b2250dd115e25
+    - generic-residual-fd68f0283dc2c9f09d209e30bddd0807e975ff084573484f20fe5f36cdc8daa8-1f0ecda2efc3a4da8e7cdab66b2b254d6e3a0e5a51d17222e58efe39feda3326
+    - generic-residual-f31d5b703a25cde1220bd521b3f787fd44cd239b151aacc766d3432ff2585bf2-e18ff3aab0d7819cc804deb7ca0256ca708f25cc07d9db94a307ff8272188c09

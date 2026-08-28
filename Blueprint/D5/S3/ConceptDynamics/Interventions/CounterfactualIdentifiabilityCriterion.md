@@ -6,7 +6,7 @@ Counterfactual recovery from all single-world marginals is exactly constancy on 
 
 **Theorem 1.1 (Single-world identifiability is constancy on coupling fibers).**
 
-$$\begin{gathered}\forall Value: \operatorname{Type}, [\operatorname{Nonempty} Value],\\{}Q: BooleanCoupling \to Value,\\{}\exists f \in (Bool \to BooleanMarginal) \to Value,\; Q = f \circ allSingleWorldMarginals \Leftrightarrow \forall mu \in Bool \to BooleanMarginal, M \in BooleanCoupling, N \in BooleanCoupling,\; \left(M \in couplingFiber\left(allSingleWorldMarginals, mu\right) \land N \in couplingFiber\left(allSingleWorldMarginals, mu\right)\right) \Rightarrow Q\left(M\right) = Q\left(N\right).\end{gathered}$$
+$$\begin{gathered}\forall Value: \operatorname{Type}, [\operatorname{Nonempty} Value],\\{}Q: BooleanCoupling \to Value,\\{}\left(\exists f \in (Bool \to BooleanMarginal) \to Value,\; Q = f \circ allSingleWorldMarginals\right) \Leftrightarrow \left(\forall mu \in Bool \to BooleanMarginal, M \in BooleanCoupling, N \in BooleanCoupling,\; \left(M \in couplingFiber\left(allSingleWorldMarginals, mu\right) \land N \in couplingFiber\left(allSingleWorldMarginals, mu\right)\right) \Rightarrow Q\left(M\right) = Q\left(N\right)\right).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Interventions/CounterfactualIdentifiabilityCriterion.boolean_counterfactual_identifiable_iff_constant_on_coupling_fibers` (`✓ std3`). ∎
 
@@ -34,7 +34,7 @@ Their complete unit-level counterfactual tables nevertheless differ. The observa
 
 **Lemma 1.3 (The complete Boolean counterfactual is not identifiable).**
 
-$$\neg \exists f \in (Bool \to BooleanMarginal) \to Bool \to \left(Bool \to \left(Bool \to Bool\right)\right),\; CF = f \circ allSingleWorldMarginals$$
+$$\neg \left(\exists f \in (Bool \to BooleanMarginal) \to Bool \to \left(Bool \to \left(Bool \to Bool\right)\right),\; CF = f \circ allSingleWorldMarginals\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Interventions/CounterfactualIdentifiabilityCriterion.boolean_counterfactual_not_identifiable` (`✓ std3`). ∎
 

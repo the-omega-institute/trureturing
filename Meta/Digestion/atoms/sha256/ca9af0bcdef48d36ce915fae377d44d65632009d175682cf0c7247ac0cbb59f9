@@ -1,0 +1,12 @@
+## 定义 118.1（量子局部—全局余量）
+
+$$
+\boxed{
+\operatorname{QLGRes}
+=
+\{(\rho,\sigma):
+\rho\neq\sigma,
+\ \rho_j=\sigma_j\ \forall j\}.
+}
+$$
+

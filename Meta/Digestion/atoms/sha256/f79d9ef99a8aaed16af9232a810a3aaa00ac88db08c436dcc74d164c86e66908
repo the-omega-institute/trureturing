@@ -1,0 +1,22 @@
+## 定理 152.1（可观察事件代数表示）
+
+存在规范 Boolean 代数同构：
+
+\[
+\boxed{
+\operatorname{ObsAlg}(q)
+\cong
+\mathcal P(O_{\mathrm{eff}}).
+}
+\]
+
+### 证明
+
+正向把 \(B\subseteq O_{\mathrm{eff}}\) 送到 \(q^{-1}(B)\)。反向把饱和事件 \(A\) 送到：
+
+\[
+\{o\in O_{\mathrm{eff}}:\exists x,\ q(x)=o\land x\in A\}.
+\]
+
+由于 \(A\) 在纤维上为常值，反向定义与代表选择无关。逆像保持并、交与补，二者互逆。\(\square\)
+

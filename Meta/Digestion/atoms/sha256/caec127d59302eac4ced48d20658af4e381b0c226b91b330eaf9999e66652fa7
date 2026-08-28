@@ -1,0 +1,27 @@
+## 定理 224.1（旧问题保守性）
+
+[
+\boxed{
+C\preceq D
+\Longrightarrow
+\operatorname{Ans}(C)
+\subseteq
+\operatorname{Ans}(D),
+}
+]
+
+其中：
+
+[
+\operatorname{Ans}(C)
+=====================
+
+{T\mid E_T\preceq C}.
+]
+
+所以概念 refinement 不会破坏旧的精确可回答性。
+
+新增区别只会增加能够回答的问题。
+
+---
+

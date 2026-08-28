@@ -1,0 +1,61 @@
+# 第八十部　标量 Theta 的 level-20 模影
+
+对偶化格：
+
+$$
+L^{\mathrm{ev}}
+=
+(\mathbb Z^6,2G)
+$$
+
+是偶正定格。
+
+其：
+
+$$
+\det(2G)=2^6\cdot5^3=8000.
+$$
+
+标准 Theta 理论给出：
+
+$$
+\boxed{
+\Theta_L(\tau)
+=
+\sum_{x\in\mathbb Z^6}
+q^{x^TGx}
+\in
+M_3\bigl(\Gamma_0(20),\chi_{-20}\bigr).
+}
+\tag{80.1}
+$$
+
+这里 weight 为：
+
+$$
+6/2=3.
+$$
+
+而字符中的负号来自：
+
+$$
+(-1)^{3}.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{实黄金判别式 }+5
+\quad
+\xrightarrow{\text{weight-3 Fourier completion}}
+\quad
+\text{虚判别式 }-20.
+}
+\tag{80.2}
+$$
+
+矢量值格 Theta 与判别式模的 Weil 表示之间的关系，以及它们同标量模形式空间之间的转换，是标准的矢量值模形式理论。([arXiv][5])
+
+---
+

@@ -1,0 +1,46 @@
+# 186. Completion 算子的公共固定点
+
+设：
+
+$$
+C_1,\ldots,C_m
+$$
+
+分别表示：
+
+* 时间 completion；
+* 干预 completion；
+* 素数 completion；
+* 量子上下文 completion；
+* 记录 completion；
+* belief completion；
+* agency completion。
+
+每个 \(C_i\) 都可以是观察者精化格上的 closure operator：
+
+$$
+q\preceq C_i(q),
+$$
+
+$$
+q\preceq r
+\Rightarrow
+C_i(q)\preceq C_i(r),
+$$
+
+$$
+C_i(C_i(q))
+\simeq
+C_i(q).
+$$
+
+但一般：
+
+$$
+C_iC_j
+\neq
+C_jC_i.
+$$
+
+因此不能任意各执行一次就宣称获得“总完成”。
+

@@ -1,0 +1,25 @@
+## 定义 201.1（实验等价）
+
+[
+\boxed{
+x\sim_{\mathrm{exp}}y
+\iff
+\forall\alpha,\quad
+\operatorname{Trace}_{\alpha}(x)
+================================
+
+\operatorname{Trace}_{\alpha}(y).
+}
+]
+
+实验商：
+
+[
+\boxed{
+Z_{\mathrm{exp}}
+================
+
+X/{\sim_{\mathrm{exp}}}.
+}
+]
+

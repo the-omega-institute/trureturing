@@ -19,10 +19,15 @@ public sealed class LeanReportInputScriptTests
     private static readonly string PairScriptPath = string.Join(
         '/', "tools", "scripts", "lean-report-pair.sh");
     private const string SupervisorScriptPath = "tools/scripts/report/report-supervisor.sh";
+    private const string CiBaselineScriptPath =
+        "tools/scripts/report/lean-report-ci-baseline.sh";
     private const string CacheEnsureScriptPath =
         "tools/scripts/worktree/lean-cache-ensure.sh";
-    private const string PerformanceLibraryPath = "tools/scripts/lib/perf-event-lib.sh";
+    private const string ResourceObservationLibraryPath =
+        "tools/scripts/lib/resource-observation-lib.sh";
     private const string ToolchainInstallerPath = "tools/scripts/workflow/install-lean-toolchain.sh";
+    private const string JudgeContentAddressPath =
+        "tools/scripts/workflow/judge-content-address.sh";
     private const string WorkflowPath = ".github/workflows/ci.yml";
     private static readonly string CliProjectPath = string.Join(
         '/', "tools", "StrataLint.Cli", "StrataLint.Cli.csproj");
@@ -102,9 +107,11 @@ public sealed class LeanReportInputScriptTests
         Assert.Contains(RawReportPath, paths);
         Assert.Contains(LeanModelsPath, paths);
         Assert.Contains(SupervisorScriptPath, paths);
+        Assert.Contains(CiBaselineScriptPath, paths);
         Assert.Contains(CacheEnsureScriptPath, paths);
-        Assert.Contains(PerformanceLibraryPath, paths);
+        Assert.Contains(ResourceObservationLibraryPath, paths);
         Assert.Contains(ToolchainInstallerPath, paths);
+        Assert.Contains(JudgeContentAddressPath, paths);
         Assert.Contains(WorkflowPath, paths);
         Assert.Contains(derivedProbe, paths);
         Assert.DoesNotContain(TestSourcePath, paths);
@@ -125,6 +132,8 @@ public sealed class LeanReportInputScriptTests
         Assert.Contains(RawReportPath, paths);
         Assert.Contains(LeanModelsPath, paths);
         Assert.Contains(CacheEnsureScriptPath, paths);
+        Assert.Contains(ResourceObservationLibraryPath, paths);
+        Assert.Contains(JudgeContentAddressPath, paths);
         Assert.DoesNotContain(TestSourcePath, paths);
         Assert.DoesNotContain(BlueprintSourcePath, paths);
     }
@@ -148,6 +157,7 @@ public sealed class LeanReportInputScriptTests
         Assert.Contains(LeanModelsPath, paths);
         Assert.Contains(ScribeProjectPath, paths);
         Assert.Contains(ScribeContentChecksPath, paths);
+        Assert.Contains(JudgeContentAddressPath, paths);
         Assert.Contains(derivedProbe, paths);
         Assert.DoesNotContain(TestSourcePath, paths);
     }
@@ -175,7 +185,9 @@ public sealed class LeanReportInputScriptTests
     public void CacheClosureHashesSeparateConfigurationFromSources()
     {
         using var fixture = new LeanReportInputFixture();
+        if (!OperatingSystem.IsWindows()) fixture.InitializeGitRepository();
         var before = fixture.CacheIdentity();
+        fixture.AssertMemoBehavior(before);
 
         fixture.Append("lean-toolchain", "mutation\n");
         var configChanged = fixture.CacheIdentity();
@@ -192,7 +204,13 @@ public sealed class LeanReportInputScriptTests
     public void AddingASecondSourceWithIdenticalContentsChangesTheSourcesHash()
     {
         using var fixture = new LeanReportInputFixture();
+        if (!OperatingSystem.IsWindows()) fixture.InitializeGitRepository();
         var before = fixture.CacheIdentity();
+
+        fixture.Append("D5/Probe.lean", " ");
+        Assert.NotEqual(before.Sources, fixture.CacheIdentity().Sources);
+        fixture.WriteSource("D5/Probe.lean", "theorem probe : True := by trivial\n");
+        Assert.Equal(before, fixture.CacheIdentity());
 
         fixture.WriteSource("D5/Copy.lean", "theorem probe : True := by trivial\n");
 
@@ -270,9 +288,17 @@ public sealed class LeanReportInputScriptTests
             Write(
                 SupervisorScriptPath,
                 File.ReadAllText(Path.Combine(root, SupervisorScriptPath), Encoding.UTF8));
+            Write(
+                CiBaselineScriptPath,
+                File.ReadAllText(Path.Combine(root, CiBaselineScriptPath), Encoding.UTF8));
             Write(CacheEnsureScriptPath, "#!/usr/bin/env bash\n");
-            Write(PerformanceLibraryPath, "#!/usr/bin/env bash\n");
+            Write(
+                ResourceObservationLibraryPath,
+                File.ReadAllText(Path.Combine(root, ResourceObservationLibraryPath), Encoding.UTF8));
             Write(ToolchainInstallerPath, "#!/usr/bin/env bash\n");
+            Write(
+                JudgeContentAddressPath,
+                File.ReadAllText(Path.Combine(root, JudgeContentAddressPath), Encoding.UTF8));
             Write(ScribeContentChecksPath, "#!/usr/bin/env bash\n");
             Write(
                 WorkflowPath,
@@ -303,6 +329,10 @@ public sealed class LeanReportInputScriptTests
                 "{}\n",
                 new UTF8Encoding(false));
         }
+
+        internal string MemoRoot => Path.Combine(temporary.Path, "memo");
+
+        internal string MemoFile => Path.Combine(MemoRoot, "memo.v1");
 
         internal ProcessOutput CaptureProductionInput()
         {
@@ -350,6 +380,73 @@ public sealed class LeanReportInputScriptTests
 
         internal void WriteSource(string relativePath, string contents) => Write(relativePath, contents);
 
+        internal void InitializeGitRepository()
+        {
+            ReviewRegressionTests.RunGit(repository, "init", "--quiet");
+            ReviewRegressionTests.RunGit(repository, "config", "user.email", "stratalint@example.invalid");
+            ReviewRegressionTests.RunGit(repository, "config", "user.name", "StrataLint Tests");
+            ReviewRegressionTests.RunGit(repository, "add", ".");
+            ReviewRegressionTests.RunGit(repository, "commit", "--quiet", "-m", "lean input fixture");
+        }
+
+        internal void AssertMemoBehavior((string Sources, string Config) before)
+        {
+            if (OperatingSystem.IsWindows()) return;
+
+            Assert.True(File.Exists(MemoFile));
+            var memo = File.ReadAllBytes(MemoFile);
+            Assert.Equal(before, CacheIdentity());
+
+            PoisonSourceMemo();
+            File.SetUnixFileMode(
+                MemoRoot,
+                UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute
+                    | UnixFileMode.GroupRead | UnixFileMode.GroupWrite | UnixFileMode.GroupExecute
+                    | UnixFileMode.OtherRead | UnixFileMode.OtherWrite | UnixFileMode.OtherExecute);
+            Assert.Equal(before, CacheIdentity());
+
+            File.SetUnixFileMode(
+                MemoRoot,
+                UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+            foreach (var failure in new[] { "malformed", "unreadable" })
+            {
+                File.WriteAllBytes(MemoFile, memo);
+                MakeMemoUnusable(failure);
+                Assert.Equal(before, CacheIdentity());
+                File.SetUnixFileMode(
+                    MemoFile,
+                    UnixFileMode.UserRead | UnixFileMode.UserWrite);
+            }
+            File.WriteAllBytes(MemoFile, memo);
+        }
+
+        [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
+        internal void MakeMemoUnusable(string failure)
+        {
+            if (failure == "malformed")
+            {
+                File.WriteAllText(MemoFile, "not a memo\n", new UTF8Encoding(false));
+                return;
+            }
+
+            Assert.Equal("unreadable", failure);
+            File.SetUnixFileMode(MemoFile, 0);
+        }
+
+        internal void PoisonSourceMemo()
+        {
+            var sourceOid = ReviewRegressionTests.RunGit(
+                    repository, "rev-parse", "HEAD:D5/Probe.lean")
+                .Trim();
+            var lines = File.ReadAllLines(MemoFile);
+            var index = Array.FindIndex(
+                lines,
+                line => line.StartsWith(sourceOid + " ", StringComparison.Ordinal));
+            Assert.True(index >= 0, "source blob is absent from memo");
+            lines[index] = $"{sourceOid} {new string('0', 64)}";
+            File.WriteAllLines(MemoFile, lines, new UTF8Encoding(false));
+        }
+
         internal string Producer()
         {
             var result = Run("address");
@@ -373,12 +470,23 @@ public sealed class LeanReportInputScriptTests
             contents,
             new UTF8Encoding(false));
 
-        private ProcessOutput Run(string command) => BoundedProcessRunner.Run(
-            "bash",
-            [script, command, "--repository", repository, "--report", report],
-            temporary.Path,
-            TimeSpan.FromSeconds(30),
-            1024 * 1024);
+        private ProcessOutput Run(string command)
+        {
+            var arguments = new List<string>
+            {
+                $"STRATALINT_LEAN_INPUT_MEMO_ROOT={MemoRoot}",
+            };
+            arguments.AddRange(
+            [
+                "bash", script, command, "--repository", repository, "--report", report,
+            ]);
+            return TestProcessRunner.Run(
+                "env",
+                arguments,
+                temporary.Path,
+                BoundedProcessRunner.HangDetectionBudget,
+                1024 * 1024);
+        }
 
         private void Write(string relativePath, string contents)
         {

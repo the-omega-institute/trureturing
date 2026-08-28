@@ -1,0 +1,70 @@
+## 定理 374.1（语义充分但资源不可达）
+
+假设：
+
+* (\operatorname{Im}(C)) 有限；
+* 允许算法类 (\mathcal A_r) 有限；
+* 满足：
+
+[
+|Y|^{|\operatorname{Im}(C)|}
+
+>
+
+|\mathcal A_r|.
+]
+
+则存在目标：
+
+[
+T:X\to Y
+]
+
+满足：
+
+[
+E_T\preceq C,
+]
+
+但：
+
+[
+E_T\not\preceq_r C.
+]
+
+### 证明
+
+从 (\operatorname{Im}(C)) 到 (Y) 的全部函数数目为：
+
+[
+|Y|^{|\operatorname{Im}(C)|}.
+]
+
+它严格大于允许算法数，因此至少有一个函数：
+
+[
+f:\operatorname{Im}(C)\to Y
+]
+
+不在 (\mathcal A_r) 的可实现函数像中。
+
+定义：
+
+[
+T(x)=f(C(x)).
+]
+
+则 (T) 语义上通过 (C) 因子化，但不存在资源预算 (r) 内的因子程序。 (\square)
+
+所以：
+
+[
+\boxed{
+\text{目标已被信息决定}
+\not\Rightarrow
+\text{目标在现实资源内可得}.
+}
+]
+
+---
+

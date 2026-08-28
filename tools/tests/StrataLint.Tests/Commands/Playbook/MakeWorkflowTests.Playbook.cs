@@ -30,6 +30,12 @@ public sealed partial class MakeWorkflowTests
                 StringComparison.Ordinal);
         }
 
+        Assert.Contains("make cover-batch ATOMS=", makefile, StringComparison.Ordinal);
+        Assert.Contains(
+            "scripts/workflow/playbook-workflows.sh cover-batch \"$(BASE)\" \"$(ATOMS)\"",
+            makefile,
+            StringComparison.Ordinal);
+
         Assert.Contains("ledger-append --candidate-lean-report", script, StringComparison.Ordinal);
         Assert.Contains("digest-status --base", script, StringComparison.Ordinal);
     }

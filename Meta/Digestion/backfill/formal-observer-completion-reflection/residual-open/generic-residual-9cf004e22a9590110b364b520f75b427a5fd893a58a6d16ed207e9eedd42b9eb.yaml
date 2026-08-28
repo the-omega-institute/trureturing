@@ -1,0 +1,10 @@
+ast_path: section/47-5-执行状态更新
+fingerprints:
+  raw_sha256: sha256:9cf004e22a9590110b364b520f75b427a5fd893a58a6d16ed207e9eedd42b9eb
+  normalized_sha256: sha256:9cf004e22a9590110b364b520f75b427a5fd893a58a6d16ed207e9eedd42b9eb
+cas_ref: sha256:9cf004e22a9590110b364b520f75b427a5fd893a58a6d16ed207e9eedd42b9eb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

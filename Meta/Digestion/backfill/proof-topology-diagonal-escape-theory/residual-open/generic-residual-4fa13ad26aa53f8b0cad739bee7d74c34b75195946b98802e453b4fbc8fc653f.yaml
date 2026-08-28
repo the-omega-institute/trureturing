@@ -1,0 +1,10 @@
+ast_path: section/16-1-单射观察保存逃逸
+fingerprints:
+  raw_sha256: sha256:4fa13ad26aa53f8b0cad739bee7d74c34b75195946b98802e453b4fbc8fc653f
+  normalized_sha256: sha256:4fa13ad26aa53f8b0cad739bee7d74c34b75195946b98802e453b4fbc8fc653f
+cas_ref: sha256:4fa13ad26aa53f8b0cad739bee7d74c34b75195946b98802e453b4fbc8fc653f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,15 @@
+## 严格边界 33.1
+
+目前不能把以下两件事直接当作已机器证明的同一对象：
+
+1. `discreteHiddenJump n` 的逐 $p$-进坐标整数 cast；
+2. `realFlow n` 在 solenoid 核中的端点。
+
+在标准模型中二者自然对应对角整数方向，但当前公开 Lean 声明中尚缺一个逐坐标桥定理。因此本增订不把
+
+$$
+J_{\mathrm{can}}(n)=\operatorname{realFlow}(n)
+$$
+
+列为已闭合等式。
+

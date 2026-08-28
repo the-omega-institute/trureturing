@@ -1,0 +1,16 @@
+## 定义 54.3（随机策略）
+
+随机策略是 Markov kernel
+
+$$
+\Pi:Q\to\operatorname{Dist}(A)
+$$
+
+满足
+
+$$
+\operatorname{supp}\Pi(q)
+\subseteq
+\mathcal A(q).
+$$
+

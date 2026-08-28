@@ -1,0 +1,13 @@
+ast_path: 假说/4.8
+fingerprints:
+  raw_sha256: sha256:34784c48ac01f17a034a1ab973d0faccb5d68df83069c90931db77fe67a72a9f
+  normalized_sha256: sha256:34784c48ac01f17a034a1ab973d0faccb5d68df83069c90931db77fe67a72a9f
+cas_ref: sha256:34784c48ac01f17a034a1ab973d0faccb5d68df83069c90931db77fe67a72a9f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-8fcd681695243feb255b79b2a85962f3dc1608a4493905c9ba1e8a11a47fcafb-c34d60703571ff3f4e4be3be038471da6b385dd9a34b2fd7a52f116cd7335788
+    - generic-residual-f61d434e59c26b94e598573a797effe7c451b1193002c61c189067db862caf2a-c4bdd55ec1517dc900163350ed4d04662e5c708a985aa9b8f568d578b0778d89

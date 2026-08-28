@@ -1,0 +1,38 @@
+## 定理 248.2（普适最小性）
+
+若另一个过去统计量：
+
+$$
+R_t=r(\overleftarrow X_t)
+$$
+
+也满足：
+
+$$
+P(\overrightarrow X_t\mid\overleftarrow X_t)
+=
+P(\overrightarrow X_t\mid R_t),
+$$
+
+则存在唯一映射 `f` 使：
+
+$$
+S_t=f(R_t)
+$$
+
+在实际像上成立。
+
+所以：
+
+$$
+\boxed{
+S_t
+=
+\text{保持完整未来 law 的最粗过去商}.
+}
+$$
+
+这正是一般协议行为商在随机过程上的实例。
+
+---
+

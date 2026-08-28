@@ -1,0 +1,10 @@
+ast_path: 结论/64.1
+fingerprints:
+  raw_sha256: sha256:c8b5cc897ef8ae7fa938f2892ebdfc47df53dd13c6eb0b17b55e787779b2e172
+  normalized_sha256: sha256:c8b5cc897ef8ae7fa938f2892ebdfc47df53dd13c6eb0b17b55e787779b2e172
+cas_ref: sha256:c8b5cc897ef8ae7fa938f2892ebdfc47df53dd13c6eb0b17b55e787779b2e172
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

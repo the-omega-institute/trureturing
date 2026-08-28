@@ -1,0 +1,10 @@
+ast_path: section/61-主体受损后的鲁棒恢复域
+fingerprints:
+  raw_sha256: sha256:93e64fc967988b3c2999fca057ddff87733a94b4da1e0364391fb0757764ae91
+  normalized_sha256: sha256:93e64fc967988b3c2999fca057ddff87733a94b4da1e0364391fb0757764ae91
+cas_ref: sha256:93e64fc967988b3c2999fca057ddff87733a94b4da1e0364391fb0757764ae91
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/39-最小自我修改能量与代理条件数
+fingerprints:
+  raw_sha256: sha256:05a3d01c36261610bc1c2ef9a413d7c8cea70868bdb022fa5793b204a25174a2
+  normalized_sha256: sha256:05a3d01c36261610bc1c2ef9a413d7c8cea70868bdb022fa5793b204a25174a2
+cas_ref: sha256:05a3d01c36261610bc1c2ef9a413d7c8cea70868bdb022fa5793b204a25174a2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,46 @@
+## 定理 103.2（观察秩次模）
+
+$$
+\boxed{
+r(A)+r(B)
+\ge
+r(A\cup B)+r(A\cap B).
+}
+$$
+
+### 证明
+
+令
+
+$$
+U_A=\sum_{x\in A}U_x.
+$$
+
+则
+
+$$
+\dim(U_A+U_B)
++
+\dim(U_A\cap U_B)
+=
+\dim U_A+\dim U_B.
+$$
+
+又有
+
+$$
+U_{A\cap B}\subseteq U_A\cap U_B.
+$$
+
+代入即得。∎
+
+等价的边际收益递减形式为：
+
+$$
+r(A\cup\{x\})-r(A)
+\ge
+r(B\cup\{x\})-r(B)
+$$
+
+当 $A\subseteq B$。
+

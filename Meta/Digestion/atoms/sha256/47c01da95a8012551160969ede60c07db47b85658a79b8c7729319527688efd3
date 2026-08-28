@@ -1,0 +1,86 @@
+# 171. 观察函数—状态关系的统一 Galois connection
+
+对状态关系：
+
+$$
+R\subseteq X^2,
+$$
+
+定义所有在 \(R\) 上常值的目标：
+
+$$
+\operatorname{Obs}(R)
+=
+\left\{
+f:
+xRy\Rightarrow f(x)=f(y)
+\right\}.
+$$
+
+对函数族：
+
+$$
+\mathcal F,
+$$
+
+定义共同 kernel：
+
+$$
+\operatorname{Ker}(\mathcal F)
+=
+\bigcap_{f\in\mathcal F}\ker f.
+$$
+
+则有：
+
+$$
+\boxed{
+\mathcal F\subseteq\operatorname{Obs}(R)
+\iff
+R\subseteq\operatorname{Ker}(\mathcal F).
+}
+$$
+
+这产生一个反序 Galois connection。
+
+于是完整观察函数闭包为：
+
+$$
+\boxed{
+\overline{\mathcal F}
+=
+\operatorname{Obs}
+\left(
+\operatorname{Ker}(\mathcal F)
+\right).
+}
+$$
+
+含义是：
+
+> 从当前观察函数族中逻辑上能够恢复的全部函数。
+
+对于接口 \(q\)，这就是：
+
+$$
+\overline{\{q\}}
+=
+\{f:f\text{ factors through }q\}.
+$$
+
+仓库进一步证明，这个 pullback algebra 的最小非空事件，恰好是实际观察纤维。
+
+因此：
+
+$$
+\boxed{
+\text{状态纤维}
+=
+\text{观察事件代数的原子}.
+}
+$$
+
+这说明状态侧的 partition 和命题侧的 observable algebra 不是两套理论，而是完全反对偶的两种坐标。
+
+---
+

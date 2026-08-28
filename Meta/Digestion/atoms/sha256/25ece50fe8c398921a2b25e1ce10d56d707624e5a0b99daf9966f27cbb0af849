@@ -1,0 +1,14 @@
+## 严格边界 56.1
+
+选择公理可以担保“存在某个截面”，但不能把它提升为“由原对象结构自然指定的截面”。因此必须区分：
+
+$$
+\boxed{
+\text{existence of a selector}
+\neq
+\text{canonicality of a selector}.
+}
+$$
+
+---
+

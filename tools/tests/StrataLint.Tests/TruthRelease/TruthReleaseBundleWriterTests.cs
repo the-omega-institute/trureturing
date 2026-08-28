@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Trureturing.Truth;
 using Xunit;
+using Xunit.Sdk;
 
 namespace StrataLint.Tests;
 
@@ -74,8 +75,57 @@ public sealed class TruthReleaseBundleWriterTests
             var releaseDigest = TruthReleaseBundleWriter.WriteBundle(directory, fixture.Input);
 
             var verified = TruthReleaseVerification.Verify(directory, releaseDigest);
+            var publicationPath = Path.Combine(
+                directory,
+                TruthReleaseBundleWriter.PublicationFileName);
+            var publicationBytes = TemporaryFileSystem.File.ReadAllBytes(publicationPath);
+            var publication = TruthReleasePublicationReader.Read(publicationBytes);
+            var publicationVerified = TruthReleasePublicationVerification.Verify(directory, publication);
+            var canonicalPublicationBytes = TruthReleasePublicationJsonWriter.Write(publication).ToArray();
 
             Assert.Equal(releaseDigest, verified.ReleaseDigest);
+            Assert.Equal(releaseDigest, publicationVerified.ReleaseDigest);
+            Assert.Equal(releaseDigest, publication.ReleaseDigest);
+            Assert.Equal(releaseDigest, publication.BundleRef);
+            Assert.Equal(fixture.Input.Source.SourceCommit, publication.SourceCommit);
+            Assert.Equal(fixture.Input.Source.SourceTree, publication.SourceTree);
+            Assert.Equal(fixture.Input.Producer.PackageCommit, publication.ProducerCommit);
+            AssertPublicationBytesAreCanonical(publicationPath, canonicalPublicationBytes);
+            Assert.Equal((byte)'\n', canonicalPublicationBytes[^1]);
+            var hostilePublicationBytes = new (string Name, byte[] Bytes)[]
+            {
+                ("UTF-8 BOM", [.. Encoding.UTF8.Preamble, .. canonicalPublicationBytes]),
+                ("CRLF", Encoding.UTF8.GetBytes(
+                    Encoding.UTF8.GetString(canonicalPublicationBytes)
+                        .Replace("\n", "\r\n", StringComparison.Ordinal))),
+                ("missing final LF", canonicalPublicationBytes[..^1]),
+            };
+            try
+            {
+                foreach (var hostile in hostilePublicationBytes)
+                {
+                    TemporaryFileSystem.File.WriteAllBytes(publicationPath, hostile.Bytes);
+                    var failure = Record.Exception(
+                        () => AssertPublicationBytesAreCanonical(publicationPath, canonicalPublicationBytes));
+                    Assert.True(
+                        failure is EqualException,
+                        $"{hostile.Name} bytes must fail canonical raw-byte equality; observed "
+                            + (failure?.GetType().FullName ?? "no failure"));
+                }
+            }
+            finally
+            {
+                TemporaryFileSystem.File.WriteAllBytes(publicationPath, canonicalPublicationBytes);
+            }
+            Assert.Throws<FormatException>(() => TruthReleasePublicationVerification.Verify(
+                directory,
+                publication with { SourceCommit = new string('9', 40) }));
+            Assert.Throws<FormatException>(() => TruthReleasePublicationVerification.Verify(
+                directory,
+                publication with { SourceTree = new string('8', 40) }));
+            Assert.Throws<FormatException>(() => TruthReleasePublicationVerification.Verify(
+                directory,
+                publication with { ProducerCommit = new string('7', 40) }));
             Assert.Equal("source-snapshot.v1.json", verified.Manifest.Artifacts.SourceSnapshot.File);
             Assert.Equal("truth-graph.v1.json", verified.Manifest.Artifacts.TruthGraph.File);
             Assert.Equal("raw-lean-report.json", verified.Manifest.Artifacts.RawLeanReport.File);
@@ -242,7 +292,7 @@ public sealed class TruthReleaseBundleWriterTests
         var truthGraph = MinimalTruthGraph();
         var truthGraphBytes = TruthGraphJsonWriter.Write(truthGraph);
         var rawLeanReport = ImmutableArray.CreateRange(Utf8(
-            "{\"modules\": [], \"schema\": \"stratalint-raw-lean-report-v1\"}\n"));
+            "{\"modules\": [], \"schema\": \"stratalint-raw-lean-report-v2\"}\n"));
         var truthExport = MinimalTruthExport();
         var truthExportBytes = TruthExportJsonWriter.Write(truthExport);
         var blueprintIndex = ImmutableArray.CreateRange(Utf8("{\"blueprints\": []}\n"));
@@ -344,6 +394,20 @@ public sealed class TruthReleaseBundleWriterTests
     private static byte[] Utf8(string text) => new UTF8Encoding(false).GetBytes(text);
 
     private static string Digest(byte[] bytes) => "sha256:" + Sha256Sums.HashHex(bytes);
+
+    private static void AssertPublicationBytesAreCanonical(string path, byte[] canonicalBytes) =>
+        Assert.Equal(canonicalBytes, TemporaryFileSystem.File.ReadAllBytes(path));
+
+    private static class TemporaryFileSystem
+    {
+        internal static class File
+        {
+            internal static byte[] ReadAllBytes(string path) => System.IO.File.ReadAllBytes(path);
+
+            internal static void WriteAllBytes(string path, byte[] contents) =>
+                System.IO.File.WriteAllBytes(path, contents);
+        }
+    }
 
     private sealed record BundleFixture(
         TruthReleaseBundleInput Input,

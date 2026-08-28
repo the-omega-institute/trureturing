@@ -1,0 +1,20 @@
+## 定义 44.3（预算信息 policy）
+
+给定成本 $c(a)$ 与预算 $B$，可定义最优动作集合
+
+$$
+A^*_{\mathrm{info}}(q)
+=
+\operatorname*{arg\,max}_{c(a)\le B}
+\left[
+I(Y;D_a\mid Q)-\lambda c(a)
+\right].
+$$
+
+或者使用单位成本增益：
+
+$$
+\operatorname*{arg\,max}_{0<c(a)\le B}
+\frac{I(Y;D_a\mid Q)}{c(a)}.
+$$
+

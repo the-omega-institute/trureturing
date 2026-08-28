@@ -1,0 +1,24 @@
+## 12.3 动态完成信息
+
+仓库 `CompletionInformationChainDecomposition` 已机器验证：
+
+$$
+H(W_m)
+=
+H(O_0)
++
+\sum_{k=1}^{m}H(O_k\mid W_{k-1}),
+$$
+
+并在稳定完成深度：
+
+$$
+H(CompletedState\mid O_0)
+=
+\sum_{k=1}^{m_*}H(O_k\mid W_{k-1}).
+$$
+
+因此动态隐性信息就是当前观察之后、由后续观察逐层释放的条件信息总和。
+
+---
+

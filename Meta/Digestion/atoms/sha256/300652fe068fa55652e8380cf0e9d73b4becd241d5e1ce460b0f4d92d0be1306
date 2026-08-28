@@ -1,0 +1,36 @@
+## 定理 154.1（最小充分目标状态）
+
+商：
+
+\[
+Z_{\mathcal K}=X/{\sim_{\mathcal K}}
+\]
+
+是同时决定全部目标 \(K_t\) 的最粗概念。
+
+更精确地，若读出 \(q:X\to O\) 对全部目标充分，即：
+
+\[
+\forall t,\exists\bar K_t,
+\qquad
+K_t=\bar K_t\circ q,
+\]
+
+则：
+
+\[
+\ker(q)
+\subseteq
+\sim_{\mathcal K},
+\]
+
+因而 \(q\) 精化目标商投影：
+
+\[
+X\to Z_{\mathcal K}.
+\]
+
+### 证明
+
+若 \(q(x)=q(y)\)，每个 \(K_t\) 都由 \(q\) 计算，所以 \(K_t(x)=K_t(y)\)。故 \(x\sim_{\mathcal K}y\)。联合目标读出自身显然决定每个分量，因此其 kernel quotient 满足普适最小性。\(\square\)
+

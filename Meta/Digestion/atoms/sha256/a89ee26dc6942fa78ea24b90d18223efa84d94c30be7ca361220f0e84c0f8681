@@ -1,0 +1,26 @@
+* \(G\) 是参数与对象上的规范群。
+
+定义完成点集：
+
+$$
+\boxed{
+K(\mathfrak C)
+=
+\{a\in\mathcal N:\Delta(a)=0_D\}.
+}
+$$
+
+若 \(K(\mathfrak C)\) 在规范群作用下只有一个轨道，则称它为该完成问题的**结构完成签名**：
+
+$$
+\boxed{
+\Sigma(\mathfrak C)
+=
+K(\mathfrak C)/G.
+}
+$$
+
+若进一步固定规范后只剩一个数值 \(\kappa\)，则称 \(\kappa\) 为该规范下的**完成常数**。
+
+---
+

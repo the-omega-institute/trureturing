@@ -1,7 +1,9 @@
+using System.Collections.Immutable;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using StrataLint.Cli;
 using StrataLint.Engine;
+using Trureturing.Truth;
 using static StrataLint.Tests.FrozenLedgerTestData;
 
 namespace StrataLint.Tests;
@@ -11,11 +13,15 @@ public sealed class FrozenContentAddressTests
     [Fact]
     public void ProofOnlyRewritePreservesStatementIdAndChangesWitnessAndFrozenNodeIds()
     {
-        var first = BuildCatalog(Module("A", source: "theorem a : True := by trivial\n"));
-        var second = BuildCatalog(Module("A", source: "theorem a : True := by exact True.intro\n"));
+        const string firstSource = "theorem a : True := by trivial\n";
+        var secondSource = firstSource;
+        secondSource = "theorem a : True := by exact True.intro\n";
+        var first = BuildCatalog(Module("A", source: firstSource));
+        var second = BuildCatalog(Module("A", source: secondSource));
 
         var firstNode = Assert.Single(first.ClosedNodes);
         var secondNode = Assert.Single(second.ClosedNodes);
+        Assert.NotEqual(firstNode.Attestation.SourceBlobOid, secondNode.Attestation.SourceBlobOid);
         Assert.Equal(firstNode.StatementId, secondNode.StatementId);
         Assert.NotEqual(firstNode.WitnessId, secondNode.WitnessId);
         Assert.NotEqual(firstNode.FrozenNodeId, secondNode.FrozenNodeId);
@@ -42,24 +48,132 @@ public sealed class FrozenContentAddressTests
             GitOid('b'),
             GitBlobOid("leanprover/lean4:v4.24.0\n"),
             GitBlobOid("{}\n"));
+        var states = LeanTruthStates.Resolve(snapshot, closure);
+        var adjacency = LeanImportAdjacency.Build(snapshot, closure);
 
         Assert.False(snapshot.Files.ContainsKey(RepoPathFor("Missing")));
         var danglingImportCatalog = Assert.IsType<FrozenMaterialOutcome.Accepted>(
             FrozenContentAddress.Build(
                 snapshot,
                 closure,
+                states,
+                adjacency,
                 environment,
                 [new FrozenModuleAttestation(RepoPathFor("A"), GitBlobOid(source))])).Capability;
         Assert.Empty(Assert.Single(danglingImportCatalog.ClosedNodes).PrerequisiteFrozenNodeIds);
     }
 
     [Fact]
+    public void WitnessV1PreimageContainsSourceAndPinnedEnvironmentIdentity()
+    {
+        const string source = "theorem a : True := by trivial\n";
+        var catalog = BuildCatalog(Module(
+            "A",
+            source,
+            axioms: new[] { "Classical.choice" }));
+        var node = Assert.Single(catalog.ClosedNodes);
+        var material = JsonSerializer.SerializeToElement(new
+        {
+            axiom_closure = node.AxiomClosure,
+            imports = Array.Empty<string>(),
+            lake_manifest_blob_oid = catalog.Environment.LakeManifestBlobOid,
+            lean_toolchain_blob_oid = catalog.Environment.LeanToolchainBlobOid,
+            module_path = node.RepoPath.Value,
+            schema = "witness-v1",
+            source_blob_oid = node.Attestation.SourceBlobOid,
+            source_sha256 = Sha256(source),
+            statement_id = node.StatementId.Value,
+        });
+
+        Assert.Equal(
+            [
+                "axiom_closure", "imports", "lake_manifest_blob_oid",
+                "lean_toolchain_blob_oid", "module_path", "schema", "source_blob_oid",
+                "source_sha256", "statement_id",
+            ],
+            material.EnumerateObject().Select(static property => property.Name));
+        Assert.Equal("witness-v1", material.GetProperty("schema").GetString());
+
+        var expected = FrozenContentHash.Compute(
+            FrozenHashDomains.Witness,
+            StructuredCanonicalWriter.WriteJson(material).AsSpan());
+        Assert.Equal(expected, node.WitnessId.Value);
+    }
+
+    [Fact]
+    public void PinBlobOidChangesChangeWitnessIdentity()
+    {
+        const string firstToolchain = "leanprover/lean4:v4.24.0\n";
+        const string firstManifest = "{}\n";
+        var secondToolchain = firstToolchain;
+        var secondManifest = firstManifest;
+        secondToolchain = "leanprover/lean4:v4.31.0\n";
+        secondManifest = "{\"packages\":[]}\n";
+        var first = BuildCatalogWithEnvironment(
+            firstToolchain,
+            "[package]\nname = \"fixture\"\n",
+            firstManifest,
+            GitOid('a'),
+            GitOid('b'),
+            Module("A"));
+        var second = BuildCatalogWithEnvironment(
+            secondToolchain,
+            "[package]\nname = \"fixture\"\n",
+            secondManifest,
+            GitOid('a'),
+            GitOid('b'),
+            Module("A"));
+
+        var firstNode = Assert.Single(first.ClosedNodes);
+        var secondNode = Assert.Single(second.ClosedNodes);
+        Assert.Equal(firstNode.StatementId, secondNode.StatementId);
+        Assert.Equal(firstNode.Attestation.SourceBlobOid, secondNode.Attestation.SourceBlobOid);
+        Assert.NotEqual(
+            first.Environment.LeanToolchainBlobOid,
+            second.Environment.LeanToolchainBlobOid);
+        Assert.NotEqual(
+            first.Environment.LakeManifestBlobOid,
+            second.Environment.LakeManifestBlobOid);
+        Assert.NotEqual(firstNode.WitnessId, secondNode.WitnessId);
+    }
+
+    [Fact]
+    public void StatementIdChangeChangesWitnessIdentity()
+    {
+        const string source = "theorem a : True := by trivial\n";
+        const string firstStatement = "True";
+        var secondStatement = firstStatement;
+        secondStatement = "False";
+        var first = Assert.Single(BuildCatalog(
+            ModuleWithReport("A", source, firstStatement)).ClosedNodes);
+        var second = Assert.Single(BuildCatalog(
+            ModuleWithReport("A", source, secondStatement)).ClosedNodes);
+
+        Assert.Equal(first.Attestation.SourceBlobOid, second.Attestation.SourceBlobOid);
+        Assert.NotEqual(first.StatementId, second.StatementId);
+        Assert.NotEqual(first.WitnessId, second.WitnessId);
+    }
+
+    [Fact]
+    public void AxiomClosureChangeChangesWitnessIdentity()
+    {
+        const string source = "theorem a : True := by trivial\n";
+        var first = Assert.Single(BuildCatalog(Module("A", source)).ClosedNodes);
+        var second = Assert.Single(BuildCatalog(Module(
+            "A",
+            source,
+            axioms: new[] { "Classical.choice" })).ClosedNodes);
+
+        Assert.Equal(first.Attestation.SourceBlobOid, second.Attestation.SourceBlobOid);
+        Assert.Equal(first.StatementId, second.StatementId);
+        Assert.NotEqual(first.AxiomClosure, second.AxiomClosure);
+        Assert.NotEqual(first.WitnessId, second.WitnessId);
+    }
+
+    [Fact]
     public void ContentAddressBytesArePinnedOnAFixedFixture()
     {
-        // #3030 phase 1 invariant: shrinking the truth-DAG node domain to managed Lean modules
-        // must not move a single frozen address byte. The fixture snapshot deliberately carries
-        // non-Lean files (lean-toolchain, lakefile.toml, lake-manifest.json), so these literals
-        // span the domain change: they were captured before the shrink and must hold after it.
+        // Pin witness-v1 and derived frozen-node bytes for a representative dependency graph.
         var catalog = BuildCatalog(Module("A"), Module("B", imports: new[] { "A" }));
 
         var nodes = catalog.ClosedNodes
@@ -100,11 +214,10 @@ public sealed class FrozenContentAddressTests
     public void FreezeCarriesDeclarationStatementIdsWithoutCopyingStatementMaterial()
     {
         var catalog = BuildCatalog(Module("A"));
-        var bytes = FrozenLedgerGenerator.GenerateGenesis(
-            catalog,
-            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
-        var line = Lines(bytes)[1];
-        using var document = JsonDocument.Parse(line.AsMemory(0, line.Length - 1));
+        var files = EventFiles(catalog);
+        var freeze = Assert.Single(LoadEvents(files), static item => item.EventType == "Freeze");
+        var file = files.Single(item => item.Path == freeze.SourcePath);
+        using var document = JsonDocument.Parse(file.RawBytes.AsSpan()[..^1].ToArray());
 
         var payload = document.RootElement.GetProperty("payload");
         Assert.True(payload.TryGetProperty("declaration_statement_ids", out var declarationStatementIds));
@@ -121,65 +234,26 @@ public sealed class FrozenContentAddressTests
     [Fact]
     public void ForgedDeclarationStatementIdFailsAfterCanonicalEventRehash()
     {
+        var emptyCatalog = BuildCatalog();
         var catalog = BuildCatalog(Module("A"));
-        var bytes = FrozenLedgerGenerator.GenerateGenesis(
-            catalog,
-            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
-        var lines = Lines(bytes);
-        using var genesisDocument = JsonDocument.Parse(
-            lines[0].AsMemory(0, lines[0].Length - 1));
-        using var freezeDocument = JsonDocument.Parse(
-            lines[1].AsMemory(0, lines[1].Length - 1));
+        var baselineFiles = EventFiles(emptyCatalog);
+        var baseView = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
+            baselineFiles.ToImmutableDictionary(static file => file.Path)));
+        var baseline = baseView.ToWriterBaseline();
+        var draft = Assert.Single(FrozenLedgerGenerator.MissingFreezes(baseline, catalog));
         var payload = JsonNode.Parse(
-            freezeDocument.RootElement.GetProperty("payload").GetRawText())!.AsObject();
+            draft.Payload.GetRawText())!.AsObject();
         payload["declaration_statement_ids"]!.AsArray()[0]!["statement_id"] =
             Sha256("forged-declaration");
-        var forgedLine = FrozenLedgerCanonicalWriter.WriteEvent(
-            "Freeze",
-            JsonSerializer.SerializeToElement(payload),
-            genesisDocument.RootElement.GetProperty("event_hash").GetString()!,
-            1).Bytes;
-        var forged = lines[0].Concat(forgedLine).ToArray();
+        var forgedFile = EventFile("Freeze", JsonSerializer.SerializeToElement(payload));
+        var forged = DagLedgerCommandPreparation.ValidateGeneratedEventFiles(
+            baseView,
+            [forgedFile],
+            "forged test event");
 
         var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
-            ValidateGenesis(
-                Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(forged)).Syntax,
-                catalog));
+            ValidateCandidate(forged, baseline, catalog));
 
         Assert.Contains("recomputed material", rejected.Message, StringComparison.OrdinalIgnoreCase);
-    }
-
-    [Fact]
-    public void RehashedGenesisFreezeReorderingFailsCanonicalEventOrder()
-    {
-        var catalog = BuildCatalog(Module("A"), Module("B"));
-        var bytes = FrozenLedgerGenerator.GenerateGenesis(
-            catalog,
-            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
-        var lines = Lines(bytes);
-        using var genesisDocument = JsonDocument.Parse(
-            lines[0].AsMemory(0, lines[0].Length - 1));
-        using var firstFreezeDocument = JsonDocument.Parse(
-            lines[1].AsMemory(0, lines[1].Length - 1));
-        using var secondFreezeDocument = JsonDocument.Parse(
-            lines[2].AsMemory(0, lines[2].Length - 1));
-        var first = FrozenLedgerCanonicalWriter.WriteEvent(
-            "Freeze",
-            secondFreezeDocument.RootElement.GetProperty("payload"),
-            genesisDocument.RootElement.GetProperty("event_hash").GetString()!,
-            1);
-        var second = FrozenLedgerCanonicalWriter.WriteEvent(
-            "Freeze",
-            firstFreezeDocument.RootElement.GetProperty("payload"),
-            first.Hash,
-            2);
-        var reordered = lines[0].Concat(first.Bytes).Concat(second.Bytes).ToArray();
-
-        var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
-            ValidateGenesis(
-                Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(reordered)).Syntax,
-                catalog));
-
-        Assert.Contains("order", rejected.Message, StringComparison.OrdinalIgnoreCase);
     }
 }

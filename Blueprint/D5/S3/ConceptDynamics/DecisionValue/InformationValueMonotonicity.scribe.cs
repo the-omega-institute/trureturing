@@ -45,6 +45,9 @@ internal sealed class InformationValueMonotonicityDocument : IScribeDocumentDefi
     private static Formula Compose(Formula outer, Formula inner) =>
         Seq(outer, Sp, Circ, Sp, inner);
 
+    private static Formula Arrow(Formula source, Formula target) =>
+        Seq(source, Sp, To, Sp, target);
+
     private static Formula Admissible(Formula candidates, Formula actions) =>
         Call("admissiblePolicies", candidates, actions);
 
@@ -59,6 +62,7 @@ internal sealed class InformationValueMonotonicityDocument : IScribeDocumentDefi
 
     private static Formula TheoremFormula()
     {
+        Formula stateType = F.Id("X");
         Formula coarse = F.Id("C");
         Formula fine = F.Id("D");
         Formula action = F.Id("U");
@@ -81,6 +85,17 @@ internal sealed class InformationValueMonotonicityDocument : IScribeDocumentDefi
         Formula coarseOptimal = Sub(F.Id("W"), coarse);
         Formula fineOptimal = Sub(F.Id("W"), fine);
         Formula zero = D(0);
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula real = Seq(Mathbb, Grp(F.Id("R")));
+        Formula expectationType = Call("Concept", Arrow(stateType, real), real);
+        Formula coarseConceptType = Call("Concept", stateType, coarse);
+        Formula fineConceptType = Call("Concept", stateType, fine);
+        Formula worldType = Arrow(fine, Arrow(stateType, stateType));
+        Formula utilityType = Call("Concept", stateType, Arrow(action, real));
+        Formula coarseActionsType = Arrow(coarse, Call("Set", action));
+        Formula fineActionsType = Arrow(fine, Call("Set", action));
+        Formula coarseCandidatesType = Call("Set", Arrow(coarse, action));
+        Formula fineCandidatesType = Call("Set", Arrow(fine, action));
 
         Formula coarseValue = ExpectedValue(
             expectation, coarseConcept, identityWorld, utility, zero, coarsePolicy);
@@ -91,16 +106,32 @@ internal sealed class InformationValueMonotonicityDocument : IScribeDocumentDefi
             Exists, Sp, forget, Colon, Sp, fine, Sp, To, Sp, coarse, Comma, Sp,
             coarseConcept, Sp, Eq, Sp, Compose(forget, fineConcept), Sp, Land,
             RowBreak, Grp(),
-            Open, Forall, Sp, evidence, Comma, Sp,
+            Open, Forall, Sp, evidence, Colon, Sp, fine, Comma, Sp,
             Apply(fineActions, evidence), Sp, Eq, Sp,
             Apply(coarseActions, Apply(forget, evidence)), Close, Sp, Land,
             RowBreak, Grp(),
-            Open, Forall, Sp, coarsePolicy, Sp, InMacro, Sp, coarseCandidates,
-            Comma, Sp, ignoredFinePolicy, Sp, InMacro, Sp, fineCandidates, Close);
+            Open, Forall, Sp, coarsePolicy, Colon, Sp, Arrow(coarse, action), Comma, Sp,
+            coarsePolicy, Sp, InMacro, Sp, coarseCandidates, Sp, Rightarrow, Sp,
+            ignoredFinePolicy, Sp, InMacro, Sp, fineCandidates, Close);
 
         return Disp(Seq(
+            Begin, Grp(F.Id("gathered")),
+            Forall, Sp, stateType, Comma, Sp, coarse, Comma, Sp, fine, Comma, Sp,
+            action, Colon, Sp, type, Comma, RowBreak, Grp(),
+            expectation, Colon, Sp, expectationType, Comma, Sp,
+            coarseConcept, Colon, Sp, coarseConceptType, Comma, RowBreak, Grp(),
+            fineConcept, Colon, Sp, fineConceptType, Comma, Sp,
+            world, Colon, Sp, worldType, Comma, RowBreak, Grp(),
+            utility, Colon, Sp, utilityType, Comma, Sp,
+            cost, Colon, Sp, real, Comma, RowBreak, Grp(),
+            coarseActions, Colon, Sp, coarseActionsType, Comma, Sp,
+            fineActions, Colon, Sp, fineActionsType, Comma, RowBreak, Grp(),
+            coarseCandidates, Colon, Sp, coarseCandidatesType, Comma, Sp,
+            fineCandidates, Colon, Sp, fineCandidatesType, Comma, RowBreak, Grp(),
+            coarseOptimal, Comma, Sp, fineOptimal, Colon, Sp, real, Comma, RowBreak, Grp(),
             cost, Sp, Eq, Sp, zero, Comma, RowBreak, Grp(),
-            Forall, Sp, evidence, Comma, Sp, state, Comma, Sp,
+            Forall, Sp, evidence, Colon, Sp, fine, Comma, Sp,
+            state, Colon, Sp, stateType, Comma, Sp,
             Apply(Apply(world, evidence), state), Sp, Eq, Sp, state,
             Comma, RowBreak, Grp(),
             safeguards, Comma, RowBreak, Grp(),
@@ -112,7 +143,8 @@ internal sealed class InformationValueMonotonicityDocument : IScribeDocumentDefi
             Max, Underscore, Grp(finePolicy, Sp, InMacro, Sp,
                 Admissible(fineCandidates, fineActions)), Sp,
             fineValue, RowBreak, Grp(),
-            Rightarrow, Sp, fineOptimal, Sp, Geq, Sp, coarseOptimal, Dot));
+            Rightarrow, Sp, fineOptimal, Sp, Geq, Sp, coarseOptimal, Dot,
+            End, Grp(F.Id("gathered"))));
     }
 
 }

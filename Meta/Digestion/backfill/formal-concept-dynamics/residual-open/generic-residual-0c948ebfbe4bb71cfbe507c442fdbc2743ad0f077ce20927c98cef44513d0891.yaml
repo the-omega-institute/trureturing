@@ -1,0 +1,10 @@
+ast_path: section/298-Bayesian-决策-最坏情形与后悔最小化一般给出不同答案
+fingerprints:
+  raw_sha256: sha256:0c948ebfbe4bb71cfbe507c442fdbc2743ad0f077ce20927c98cef44513d0891
+  normalized_sha256: sha256:0c948ebfbe4bb71cfbe507c442fdbc2743ad0f077ce20927c98cef44513d0891
+cas_ref: sha256:0c948ebfbe4bb71cfbe507c442fdbc2743ad0f077ce20927c98cef44513d0891
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

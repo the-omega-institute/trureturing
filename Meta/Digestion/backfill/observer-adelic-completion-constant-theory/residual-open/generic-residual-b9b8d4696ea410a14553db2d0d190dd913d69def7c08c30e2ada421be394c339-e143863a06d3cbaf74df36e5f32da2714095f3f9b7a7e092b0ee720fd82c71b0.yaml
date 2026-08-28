@@ -1,0 +1,10 @@
+ast_path: section/36-2-需要计算分类/clause/5
+fingerprints:
+  raw_sha256: sha256:b9b8d4696ea410a14553db2d0d190dd913d69def7c08c30e2ada421be394c339
+  normalized_sha256: sha256:b9b8d4696ea410a14553db2d0d190dd913d69def7c08c30e2ada421be394c339
+cas_ref: sha256:b9b8d4696ea410a14553db2d0d190dd913d69def7c08c30e2ada421be394c339
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

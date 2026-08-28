@@ -1,0 +1,10 @@
+ast_path: section/证明/occurrence/3
+fingerprints:
+  raw_sha256: sha256:a9a99ede1da239623769d675cd6a3fadee7842ca3572f4ef3b14c7dcb485e156
+  normalized_sha256: sha256:a9a99ede1da239623769d675cd6a3fadee7842ca3572f4ef3b14c7dcb485e156
+cas_ref: sha256:a9a99ede1da239623769d675cd6a3fadee7842ca3572f4ef3b14c7dcb485e156
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

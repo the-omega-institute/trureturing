@@ -1,0 +1,12 @@
+## 定义 4.2(积极形:金律)
+
+\[
+\boxed{
+\operatorname{Obligated}_i(x,u\!\to\! j)
+\ \Longleftarrow\
+W_i\bigl(F(x,u,j\!\to\! i)\bigr)\ \wedge\ \operatorname{Can}_i(x,u\!\to\! j).
+}
+\]
+
+「我愿此事施于我,则我当施于人。」它规定义务,故还需能力谓词 \(\operatorname{Can}_i\);无能力处义务为空。
+

@@ -1,0 +1,10 @@
+ast_path: section/29-3-核为零仍可能观察失败
+fingerprints:
+  raw_sha256: sha256:19a2ad486619a357172c67962c4a5feb6925d4a0bdf0cc4ddb8a9c6ca78d516d
+  normalized_sha256: sha256:19a2ad486619a357172c67962c4a5feb6925d4a0bdf0cc4ddb8a9c6ca78d516d
+cas_ref: sha256:19a2ad486619a357172c67962c4a5feb6925d4a0bdf0cc4ddb8a9c6ca78d516d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,16 @@
+## 16.1 单射观察保存逃逸
+
+若 \(r\) 单射，则
+
+\[
+\boxed{
+d\notin\operatorname{range}(g)
+\Rightarrow
+r\circ d
+\notin
+\operatorname{range}(i\mapsto r\circ g_i).
+}
+\]
+
+因为观察后若等于某一目录项，逐点利用单射性即可恢复原候选等于该目录项。
+

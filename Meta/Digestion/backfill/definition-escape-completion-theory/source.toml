@@ -3,4 +3,4 @@ path = "docs/develop/theory/DEFINITION_ESCAPE_COMPLETION_THEORY.md"
 atomizer = "generic-v1"
 genre_registry_check = "no-registry"
 unregistered_genres = []
-acknowledged_stale = ["generic-residual-85e2e774861dc9a1fdaa42ed72bc74ff8e33893dc729f8c2ec509421523ffe85", "generic-residual-f78eaad13466ce643d70a739e0ba2567a26b9894fd35c9f51b37b92badf87096"]
+acknowledged_stale = ["generic-residual-85e2e774861dc9a1fdaa42ed72bc74ff8e33893dc729f8c2ec509421523ffe85", "generic-residual-b5a755235da43a60c52590897d17afb289499ed52cda65ee8570884714cc01e1", "generic-residual-f78eaad13466ce643d70a739e0ba2567a26b9894fd35c9f51b37b92badf87096"]

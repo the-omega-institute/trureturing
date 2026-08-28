@@ -1,0 +1,24 @@
+## 定理 88.3（有限维容量守恒）
+
+$$
+\boxed{
+C(\mathfrak O)+R(\mathfrak O)=d^2-1.
+}
+$$
+
+信息精化使
+
+$$
+C(\mathfrak O)\uparrow,
+$$
+
+同时使
+
+$$
+R(\mathfrak O)\downarrow.
+$$
+
+这给出量子观察者 completion 的离散进度量。
+
+---
+

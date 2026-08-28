@@ -1,0 +1,36 @@
+## 定理 104.3（量子有限压缩）
+
+若全部索引—全部时间联合起来信息完备，则存在至多
+
+$$
+d^2-1
+$$
+
+个具体索引—时间效果
+
+$$
+(p_1,t_1),\ldots,(p_k,t_k)
+$$
+
+已经张成 $\operatorname{Herm}_d^0$，从而分离全部状态。
+
+所以：
+
+$$
+\boxed{
+\text{all-prime/all-time quantum completeness}
+\Longrightarrow
+\text{finite prime-time certificate}.
+}
+$$
+
+这里的“prime”在一般 Lean carrier 中只是自然数索引；要获得真实算术素数观察者，还需添加
+
+$$
+p\in\mathbb P
+$$
+
+约束及相应数论读出。
+
+---
+

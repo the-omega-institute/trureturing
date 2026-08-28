@@ -1,0 +1,46 @@
+# 106. 无限维边界：维数不是完成进度
+
+有限维理论中：
+
+$$
+R(\mathfrak O)=\dim N_{\mathfrak O}
+$$
+
+是良好离散进度量。
+
+无限维中不成立。仓库 `ResidualProgressMeasure.lean` 与 `TerminalResidualDimension.lean` 已机器核验：在
+
+$$
+\ell^2(\mathbb N)
+$$
+
+中存在严格递减闭子空间链
+
+$$
+R_0\supsetneq R_1\supsetneq R_2\supsetneq\cdots
+$$
+
+使每个 $R_n$ 都线性等距同构于整个环境空间，但
+
+$$
+\bigcap_nR_n=\{0\}.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{same Hilbert dimension at every finite stage}
+}
+$$
+
+与
+
+$$
+\boxed{
+\text{genuine strict completion progress}
+}
+$$
+
+可以同时发生。
+

@@ -1,0 +1,18 @@
+- 合取保持。
+
+定义：
+
+\[
+\Diamond_CP(a)
+\iff
+\exists x,\ x\sim_Ca\land P(x).
+\]
+
+则 \(\Diamond_C\) 是相应闭包算子。在经典或适当稳定条件下：
+
+\[
+K_CP=\neg\Diamond_C\neg P.
+\]
+
+---
+

@@ -1,0 +1,49 @@
+## 40.1 唯一自对偶热尺度
+
+对偶变换为：
+
+$$
+t\longmapsto\frac1{5t}.
+$$
+
+固定点满足：
+
+$$
+t=\frac1{5t}.
+$$
+
+所以：
+
+$$
+\boxed{
+t_*=\frac1{\sqrt5}.
+}
+$$
+
+这给 \(\sqrt5\) 一个新的 OACTC 角色证书：
+
+$$
+\boxed{
+\sqrt5
+=
+\text{六维黄金外幂格的 Fourier–Poisson 对偶尺度。}
+}
+$$
+
+注意角色分工：
+
+$$
+\boxed{
+\begin{aligned}
+\pi
+&=\text{Gaussian Fourier 规范};\\
+\sqrt5
+&=\text{格与对偶格的模性比例};\\
+1/\sqrt5
+&=\text{两者共同决定的自对偶热参数}.
+\end{aligned}
+}
+$$
+
+---
+

@@ -1,0 +1,13 @@
+**证明义务 56.3-C（只消费 \(K.\operatorname{decision}\) 与 \(O\)）。** 对同一轮次、同一承诺类型的任意
+\(K,K'\)
+及同一 OrientationSpec 类型的任意
+\(O,O'\)，若
+
+\[
+K.\operatorname{decision}=K'.\operatorname{decision}
+\quad\wedge\quad
+O=O',
+\]
+
+则机器核验
+

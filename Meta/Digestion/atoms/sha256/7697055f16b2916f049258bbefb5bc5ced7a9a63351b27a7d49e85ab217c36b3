@@ -1,0 +1,11 @@
+## 横向
+
+不同 prime powers 形成真实张量因子：
+
+$$
+\mathcal H_{p^k}\otimes\mathcal H_{q^\ell},
+\qquad p\neq q.
+$$
+
+它们允许独立局部效果、联合效果、经典相关和纠缠。
+

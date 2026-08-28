@@ -1,0 +1,17 @@
+ast_path: 证明义务/56.4/occurrence/1
+fingerprints:
+  raw_sha256: sha256:936177d0c73fc67c02f2c62f05a2a5140ee7361220d20c2d7064a9d1718dada3
+  normalized_sha256: sha256:936177d0c73fc67c02f2c62f05a2a5140ee7361220d20c2d7064a9d1718dada3
+cas_ref: sha256:936177d0c73fc67c02f2c62f05a2a5140ee7361220d20c2d7064a9d1718dada3
+coverage_gids:
+  - D5/S3/ConceptDynamics/TimeProjection/FiniteTimeProjectionRestrictionLaws.finite_time_projection_expansion_and_restriction_laws
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/TimeProjection/FiniteTimeProjectionRestrictionLaws.finite_time_projection_expansion_and_restriction_laws
+      source_sha256: sha256:936177d0c73fc67c02f2c62f05a2a5140ee7361220d20c2d7064a9d1718dada3
+      target_sha256: sha256:1cf78b839394c1537a99df57c51cc2332d7de5cc19c99998d7673625b9e3bbef
+  scribe:
+    - gid: D5/S3/ConceptDynamics/TimeProjection/FiniteTimeProjectionRestrictionLaws.finite_time_projection_expansion_and_restriction_laws
+      definition_sha256: sha256:3cb96b0e88adca420e5ca4f9429b12799fcabd9cc5fb9e68a3a0eaaa6b7244f2
+      emission_sha256: sha256:47b24f55b6faf6ec566fc7480bc3d0e5e3ab678ca1fb2061bd31c7c3573cefbb
+  unresolved_subitems: []

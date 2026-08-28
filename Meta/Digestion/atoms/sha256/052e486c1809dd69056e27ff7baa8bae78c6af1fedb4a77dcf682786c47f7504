@@ -1,0 +1,25 @@
+# 29. 严格非主张
+
+1. 本文不声称所有 observer completion 都是有限维线性的。
+2. 本文不声称任意接口偏序自动具备所需的全部 join。
+3. 本文不声称非满射 codomain 上的下降映射唯一；唯一性均在有效像上。
+4. 本文不声称稳定接口对子接口或商接口封闭。
+5. 本文不声称非交换 closure residual 自动具有群、环或普通上同调结构。
+6. 本文不声称分别闭合每个 context 一次足以得到自由词闭合。
+7. 本文不声称 Gramian 正定自动给出物理可实现状态差。
+8. 本文不声称 Hilbert–Schmidt 正交性替代 PSD、CP 或 complete positivity。
+9. 本文不声称折扣 Gramian 在无收敛条件时存在为有界算子。
+10. 本文不声称最小正特征值在无限维中自动与零隔离。
+11. 本文不声称 mutual information 与 target-pair cover 等价。
+12. 本文不声称有限 set-cover 直接解决连续 SCM 实验设计。
+13. 本文不声称 nested commutator span 在无限维无界算子情形无需域分析。
+14. 本文不声称静态退相干余量与动态回流强度相同。
+15. 本文不声称预测 reflector 解决 representation surjectivity。
+16. 本文不声称预测 reflector 消除 Cantor–Lawvere 对角逃逸。
+17. 本文不声称 local closure 自动 glue 为 global closure。
+18. 本文不声称超限 closure 一定在可数阶段停止。
+19. 本文新增定理未经 Lean kernel 验证不得标记为 `Closed`。
+20. 本文没有证明 Riemann 假设或 negative-base-φ 主分类定理。
+
+---
+

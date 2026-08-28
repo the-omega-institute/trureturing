@@ -1,0 +1,15 @@
+ast_path: section/第四十九部-直接格与倒格的共轭完成
+fingerprints:
+  raw_sha256: sha256:b8968830573bfb34e894fa9bb6ecb3fb4f4e241ad46467f4edc6ee8a5fae22b8
+  normalized_sha256: sha256:b8968830573bfb34e894fa9bb6ecb3fb4f4e241ad46467f4edc6ee8a5fae22b8
+cas_ref: sha256:b8968830573bfb34e894fa9bb6ecb3fb4f4e241ad46467f4edc6ee8a5fae22b8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-ca7b9c7f90b30fc3e674dc4fe07977bd7afcd5571cf4ccc35c2071ffa56e60c2-6b4ffb82f5d7075b88b529eda16b8c204d9ef7f9615313fa51986803ac3de467
+    - generic-residual-1b9548af41913df2f2f8d8b958056f720dc72e6b27db753b2311565893cbe068-a42401968f275b3bcd9e0c8142de1f89018b4eb7c4436ecff9c50b52f84ec0ba
+    - generic-residual-38e26f6f7ce72fb2e4abad86e0f5914331f895e3c13eca7e96fffe9ffcebe450-35f83b146eca77d914c6b8ed3059ecf067bbcdb3b54ef14711d280a40ac6e585
+    - generic-residual-d698fdb6e26441638546145b99f095fcefa0dfa4fb82f49351055a243cb67901-ef908fafeb3472b77bc7c7d137d04bed9bd3cdd9d797095c9cd443bb8228befa

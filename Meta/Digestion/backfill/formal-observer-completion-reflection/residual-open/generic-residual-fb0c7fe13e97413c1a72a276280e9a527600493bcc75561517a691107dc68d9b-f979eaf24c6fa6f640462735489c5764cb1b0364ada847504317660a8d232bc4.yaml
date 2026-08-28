@@ -1,0 +1,10 @@
+ast_path: section/186-Completion-算子的公共固定点/clause/3
+fingerprints:
+  raw_sha256: sha256:fb0c7fe13e97413c1a72a276280e9a527600493bcc75561517a691107dc68d9b
+  normalized_sha256: sha256:fb0c7fe13e97413c1a72a276280e9a527600493bcc75561517a691107dc68d9b
+cas_ref: sha256:fb0c7fe13e97413c1a72a276280e9a527600493bcc75561517a691107dc68d9b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

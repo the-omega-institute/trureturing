@@ -1,0 +1,107 @@
+# 第四十六部　Golden 留数完成方块
+
+令：
+
+$$
+\overline{\mathfrak Z}_\varphi(s)
+=
+\operatorname{Avg}_\eta
+\mathfrak Z_\varphi(s,\eta).
+$$
+
+由式 (45.4)：
+
+$$
+\overline{\mathfrak Z}_\varphi(s)
+=
+\frac{\Gamma(s/2)^2}
+{2\log\varphi\,\Gamma(s)}
+\zeta_K(s).
+$$
+
+在 \(s=1\)：
+
+$$
+\Gamma(1/2)^2=\pi,
+\qquad
+\Gamma(1)=1.
+$$
+
+结合：
+
+$$
+\operatorname*{Res}_{s=1}\zeta_K(s)
+=
+\frac{2\log\varphi}{\sqrt5},
+$$
+
+得到：
+
+$$
+\boxed{
+\operatorname*{Res}_{s=1}
+\overline{\mathfrak Z}_\varphi(s)
+=
+\frac{\pi}{\sqrt5}.
+}
+\tag{46.1}
+$$
+
+即：
+
+$$
+\boxed{
+\frac{\pi}{\sqrt5}
+=
+\underbrace{
+\frac{\pi}{2\log\varphi}
+}_{\text{Archimedean 单位轨道积分}}
+\cdot
+\underbrace{
+\frac{2\log\varphi}{\sqrt5}
+}_{\text{算术 Dedekind 留数}}.
+}
+\tag{46.2}
+$$
+
+这里调节子精确消去：
+
+$$
+2\log\varphi.
+$$
+
+留下：
+
+$$
+\frac{\pi}{\sqrt5}.
+$$
+
+这正是二维 Minkowski 格 Epstein zeta 的几何留数：
+
+$$
+\text{Gaussian 面积常数}
+\div
+\text{格协体积}.
+$$
+
+所以得到一个完整常数角色链：
+
+$$
+\boxed{
+\begin{aligned}
+\pi
+&:\text{Archimedean Gaussian 面积};\\
+2\log\varphi
+&:\text{单位轨道周长};\\
+\sqrt5
+&:\text{Minkowski 格协体积};\\
+\pi/\sqrt5
+&:\text{几何谱 zeta 留数};\\
+2\log\varphi/\sqrt5
+&:\text{算术 Dedekind zeta 留数}.
+\end{aligned}
+}
+$$
+
+---
+

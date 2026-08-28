@@ -1,0 +1,14 @@
+## 定义 88.2（观察容量与残差）
+
+$$
+C(\mathfrak O)
+=
+\dim V_{\mathfrak O}-1,
+$$
+
+$$
+R(\mathfrak O)
+=
+\dim N_{\mathfrak O}.
+$$
+

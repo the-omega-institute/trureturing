@@ -1,146 +1,155 @@
 ---
 name: codex-formal-answer
-description: Use when answering natural-language mathematical assertions with clause-complete formalization and owner-issued Lean evidence, without depositing repository truth.
+description: Use when answering mathematical, conceptual, philosophical, or metaphysical questions through repository-first scientific reasoning, a clause-complete formal bridge, and an ordinary conversational answer.
 ---
 
 # Codex Formal Answer Workflow
 
 ## Install
 
-This is a Codex skill package. Install it by copying the `skills/codex-formal-answer/` directory into `$CODEX_HOME/skills/` (default `~/.codex/skills`), or load it by naming this `SKILL.md` path directly in a dispatcher. This repository copy is the single source of truth; any installed copy is a projection of it.
+This repository copy is the single source of truth for `skills/codex-formal-answer/`; any installed copy is a projection of it.
 
 ## Scope and authority
 
-This skill is a thin adapter for one invocation, from a user's natural-language input to an evidence-bearing reply. It owns only (1) the clause-complete mapping from that input to exact propositions and (2) the per-assertion rendering of facts issued by existing owners. It owns no proof status and defaults to zero repository mutation.
+This file is Codex-specific packaging of repository obligations; it has no authority of its own. `docs/develop/spec/golden-ledger-repo-spec.md` is the sole normative specification; `CLAUDE.md` is the invariant frame governing how work is done; and `agents/CONTEXT.md` is the finite-context map and routing aid, not an authority above the specification. Live harness output is the decisive judge of fact about the current tree. If this file disagrees with any of them, they win and this file is the bug.
 
-A reply is a proof-carrying projection over existing truth, not a new truth plane or an automatic frozen node. A request for a durable contribution is a separate task routed to the existing Frontier, formalization, or admission workflow; answering never deposits or freezes by itself.
+This skill produces two things. An internal assertion record for the current run always exists, including when no Lean is written. The default public product is an ordinary conversational answer rendered from that record. The internal record carries the clause inventory, `P`/`G`/`S` bridge, premise map, evidence, outcomes, conditions, and derivation; Step 7 directs the public answer to be drafted only from that record and subjects it to a bounded worker audit. That audit reduces leakage but cannot guarantee that natural-language strength never exceeds the register.
 
-This file is Codex-specific packaging of repository obligations; it has no authority over owner facts. `docs/develop/spec/golden-ledger-repo-spec.md` is the sole normative specification, `CLAUDE.md` is the invariant frame, and live owner output decides facts about the current tree. Any current-state summary below is a non-load-bearing reading: it creates no rule independent of its owner, and if the owner disagrees, follow the owner and treat the summary here as void.
+codex-formalize owns digestion atoms and their deposit and coverage workflow. This skill owns the user's clause-complete `P`/`G`/`S` bridge, inferential completion, assertion register, and renderer. Do not import freezing, deposit, coverage, receipt-ledger, or truth-DAG publication machinery. Leave a repository mutation only when Step 2 selects a new-`G` compile route and Step 6 retains substantive canonical source.
 
 ## Read first
 
-- `CLAUDE.md`, especially item 11, item 22, and section VI.
-- `agents/CONTEXT.md` for the finite-context map and routing guidance.
-- `docs/develop/spec/golden-ledger-repo-spec.md`, especially 1.4 and A17.2.
-- `agents/echo-template.md`, which owns the exact-statement record.
-- `make help`, which owns the live catalogue of canonical doors.
-- `tools/lean-inspector/Inspector.lean` and the canonical `make lean-report` output, which own declaration axiom closures.
-- The existing `codex-formalize`, `codex-theorize`, or `codex-theory-ingest` skill only when a separate durable task is routed to it.
+- `CLAUDE.md`, especially items 4, 5-double-prime, 6, 11, 15, 18, and 20-prime, plus section VI's ban on hedge-words substituting for measurement.
+- `agents/CONTEXT.md` and `agents/echo-template.md`.
+- `docs/develop/spec/golden-ledger-repo-spec.md`, `Meta/FILEMAP.toml`, `Meta/domains.yaml`, and `make help` when repository mutation is in scope.
+- Existing Lean declarations and Describe sources reached by Step 2; read `tools/lean-inspector/Inspector.lean` only when an axiom-closure report is material.
+
+## Method anchors
+
+`CLAUDE.md` item 5-double-prime solely owns the meanings of the eight disciplines and marks their use as agent reasoning as analogical. The registry below supplies only grep-resolvable frozen declaration addresses; it does not restate theorem content or assert a one-to-one discipline/declaration mapping. The pre-commitment discipline has no single frozen declaration and is carried by the existing machinery named in `CLAUDE.md`. The Pareto discipline has two anchors.
+
+- `lookup_copy_zero_loss_and_nonanticipating_failure` - `D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure.lean`
+- `blind_residual_charge_decomposition` - `D5/S3/ConceptDynamics/EscapeSpectrum/BlindResidualChargeDecomposition.lean`
+- `budget_envelope_infimum_and_limit` - `D5/S3/ConceptDynamics/EscapeSpectrum/BudgetEnvelopeCompletion.lean`
+- `append_only_old_settlement_unchanged` - `D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/TargetChangeSettlementConservation.lean`
+- `pareto_weak_reflexive_transitive` - `D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoWeakPreorder.lean`
+- `gain_difference_self_zero_and_cocycle` - `D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/GainDifferenceCocycle.lean`
+- `dependency_closure_admission_antitone` - `D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/DependencyClosureAdmissionAntitone.lean`
+- `spectrum_commitment_local_settlement` - `D5/S3/ConceptDynamics/EscapeSpectrum/SpectrumCommitmentSettlement.lean`
 
 ## State machine
 
-Follow these steps in order. Do not pass a step until its postcondition holds.
+Follow the steps in order. Do not pass a step until its postcondition holds.
 
-### 0. Measure capabilities
+### 0. Fix the answer commitment
 
-Measure, rather than assume, whether the current Lean `make` door and third-party search are usable. Record each probe, its location, its result, and its exit code when it is a command. After owner facts exist, apply Step 5's ordered rules.
+Before searching, record the candidate answer propositions, what would count as answering each one, what would refute each one, and the bounded stopping and settlement criteria. Apply the pre-commitment discipline from `CLAUDE.md` item 5-double-prime; do not revise the criteria to fit evidence already seen.
 
-Use the capability owner's typed result for each transition. A capability failure is never negative evidence about `P`.
-
-Postcondition: every relevant capability has measured evidence, and each unavailable transition has an addressed owner-issued capability fact while independent assertions continue.
+Postcondition: the answer, refutation, and stop conditions are fixed before evidence collection.
 
 ### 1. Inventory raw clauses
 
-Split the input into assertion records while preserving each clause verbatim. For each record, account for every material phrase in a pending semantic mapping and classify it as exactly one of:
+Split the input into assertion records and give each assertion a stable key that survives later revision. Preserve every material object, relation, qualifier, alternative meaning, empirical premise, and metaphysical premise exactly once. Turn a question into candidate truth-valued answer propositions rather than grading the interrogative. Model alternative meanings with explicit indices instead of silently choosing one.
 
-- `formalizable`: it can be stated exactly as a proposition; this says nothing about decidability or provability.
-- `conditional-empirical`: its force depends on an explicit empirical condition that must remain visible.
-- `ambiguous`: retain a bounded set of materially distinct candidate formalizations without choosing one. Never claim the set is exhaustive without a finiteness proof, and never ask the user to choose.
-- `not-formalizable`: no exact proposition can be stated; create no ornamental Lean.
+Classify each assertion from its clause shape as `formalizable`, `conditional-empirical`, `ambiguous`, or `not-formalizable`. It is formalizable exactly when a truth-valued `P` can be stated with explicit types, relations, quantifiers, and hypotheses. Fix the classification here; proof difficulty, elapsed effort, convenience, and compiler availability cannot later change it. A formal representation does not establish that its empirical, existential, metaphysical, or interpretive premises hold in reality.
 
-Separate explanatory prose from assertions. Explanations need no grade; every assertion does.
+Postcondition: every material clause has one stable-keyed record, one fixed classification, and a candidate exact `P` or an explicit reason no exact `P` can yet be stated.
 
-Postcondition: every assertion and every material clause is present exactly once, with original wording, classification, and clause coverage; no assertion has been dropped or weakened.
+### 2. Search and model
 
-### 2. Coordinate and search for reuse
+Execute `C`, `F`, and `M` in that order and retain queries, result counts, addresses, and reuse decisions.
 
-Execute CLAUDE.md item 11's current owner-defined ordered search before fixing the typed echo. At every stage search both the pending proposition and the shape of its negation or counterexample. Record the verbatim query, where it ran, hit or miss, and the address of every hit. A textual hit discharges nothing until it is exactly reused or applied.
+1. `C`: enumerate text-bearing semantic surfaces from `Meta/FILEMAP.toml`; search at least `D5/`, `Blueprint/`, `Library/`, `Problems/`, `docs/develop/theory/`, `Evidence/`, `Chronicle/`, and `Meta/Digestion/`. Search original wording, translations, historical terms, synonyms, antonyms, and structural roles; follow relevant references and Describe dependencies.
+2. `F`: trace useful concepts to exact declarations and statement shapes in `D5/`, rendered meanings in `Blueprint/`, and pinned abstractions in `.lake/packages/mathlib/Mathlib/`. Search the proposed conclusion, its negation, and counterexample shapes. Follow `CLAUDE.md` item 11's repository, mathlib, third-party, local-proof order. Stop external theorem search at an exact repository hit, but continue inferential completion unless that one declaration closes the complete proposition. Reuse and apply the strongest exact declaration that supplies the needed claim; never reprove it or add a renamed copy. A weaker exact hit does not license rebuilding what a stronger declaration already supplies.
+3. `M`: construct the candidate `P`, reusable `G`, and applying `S` from discovered carriers, relations, contexts, histories, modalities, observers, and premises. Map what the declarations jointly imply and name the remaining inferential gap. A hit list or prose synthesis does not answer a complex question that still requires composition.
 
-Third-party reuse and admission are owned by specification A17.2. This invocation performs no admission: record an exact third-party hit as provenance, and let Step 5 accept it as kernel basis only if an owner separately issues eligible in-repository evidence.
+Do not call search complete when output was truncated, a referenced source was unopened, or either the semantic or statement-shape pass was skipped. Prose may choose vocabulary and model boundaries; only compiled Lean can establish a formal outcome.
 
-Invoke specification 11.20.4 for the current SL-028 semantics. This file neither defines its admission effect nor assumes its output is visible; record only output actually received.
+Invoke the remaining disciplines from `CLAUDE.md` item 5-double-prime here. Bind lookup-copy, blind-residual, budget-envelope, Pareto/gain, and dependency-closure admission to `C`/`F`/`M` route evaluation, and record each application and result; Step 5 owns append-only and local settlement.
 
-Postcondition: each searchable record has the owner-ordered trace for the proposition and its negation shape, or the exact blocked stage has an addressed owner-issued `wait-for-capability` fact; every hit has an address and an explicit reuse disposition.
+Search chooses only the implementation route: reuse one exact compiled declaration, compile one new load-bearing `G`, or produce no Lean. Failed proof, unavailable compiler, elapsed effort, and convenience do not revise Step 1; they leave the internal result unsettled.
+
+Across all routes, record an unavailable required capability with its command and result or an explicit unavailable-state note; never silently treat it as completed work.
+
+Postcondition: every source has a role and trust status, the inferential gap and ambiguity class are explicit, and exactly one implementation route is selected without changing formalizability.
 
 ### 3. Fix the exact statement echo
 
-Only after search has fixed canonical domains, types, declarations, and imports, invoke `agents/echo-template.md`; do not copy its fields here. Complete the clause-coverage account against one exact Lean proposition `P`. An ambiguous or not-formalizable record gets no exact Lean proposition.
+Complete `agents/echo-template.md` separately for every `formalizable` assertion: exactly one auditable bridge per `formalizable` assertion key, not one bridge per run. Do not retain competing bridges for the same assertion key.
 
-Kernel outcomes attach only to exact `P` or its exact negation, never to the original prose or to a nearby statement.
+1. `P` is the clause-complete truth-valued proposition answering the user's actual question.
+2. `G` is a reusable theorem over repository-native carriers and relations. It replaces scenario names with parameters and explicit hypotheses, retains the inferential content of `P`, and adds a consequence not already assumed or merely listed.
+3. `S` applies `G` to exact `P` through a total explicit substitution map and discharges every formal hypothesis. Its statement is exact `P` or exact negation of `P`; it does not independently reprove the result.
 
-Postcondition: every eligible record has an owner-shaped exact echo whose clause mapping is complete, while ambiguous and not-formalizable records remain explicitly non-kernel branches.
+If `P` is already canonical and reusable, use `G := P` and an identity substitution as `S`; there is no bridge exception. Map every clause of `P` to a parameter, premise, conclusion, or substitution. Keep context, tradition, observer, world, modality, time, and empirical or metaphysical premises explicit where relevant.
 
-### 4. Construct a report-owned run-local declaration
+For every `not-formalizable` assertion, record the Step 1 reason no exact `P` can yet be stated and proceed directly to Step 5 without manufacturing a `P`/`G`/`S` bridge.
 
-After the owner-ordered search, and only with measured Lean capability, follow the current reuse-before-proof rule in `CLAUDE.md` item 11 in a disposable isolated lane on exactly two occasions: (1) for an exact in-repository or pinned-mathlib hit, create the thinnest honest wrapper that imports and applies the hit to declare exact `P` or its negation; this is reuse, not reproof, and a wrapper that restates or reproves the hit instead of applying it is forbidden; (2) for a genuine miss, create a local proof declaration for exact `P` or its negation. Both forms give the canonical report a run-local managed declaration it can own and issue a declaration receipt for. Select the current build and report doors from the current `make help`; never use a cold bare `lake build`.
+Postcondition: each `formalizable` assertion key has exactly one fixed `P`/`G`/`S` bridge, clause coverage, and total substitution map, with no hidden premise and no hypothesis that assumes the conclusion; each `not-formalizable` key has its recorded reason and no bridge.
 
-This step is run-local: never deposit, freeze, cover, or edit a receipt. Retain the exact commands, exit codes, diagnostics, pins, and canonical report address. A failed attempt is evidence of failure to prove, never evidence that `P` is false.
+### 4. Implement the inferential completion
 
-Postcondition: owner output contains an exact declaration for `P` or its negation, or retains the failed attempts and machine diagnostics as facts for Step 5; the repository has no new mutation from this skill.
+Implement the missing composition through this ordered completion:
 
-### 5. Derive outcomes from owner facts
+1. Build a `premise-map` that maps every useful declaration to the exact premise or intermediate consequence it supplies and lists empirical, interpretive, and metaphysical premises separately.
+2. Use `G` to implement only the missing composition; a conjunction of unrelated hits, a renamed theorem, a conclusion repeated as a hypothesis, or definitions chosen to make the conclusion reflexive is not completion.
+3. Use `S` to apply `G` to exact `P`; for a broad question, separate interpretations and prove their boundary instead of forcing an ambiguous yes/no predicate.
 
-Project outcomes mechanically; never author, select, or downgrade a label. Before applying the ordered rules, discard any purported kernel evidence unless it matches the exact statement and carries either an active Frozen receipt or a successful current `make` door receipt with its exit code, plus the owner-issued declaration receipt and inspector-owned closure contained in the owner-defined standard axiom set. For current evidence, the door receipt, declaration receipt, closure, and report/input attestation must form one bundle from a single production for the current repository inputs: `tools/scripts/lean-report-pair.sh` emits the `input_address` and `report_sha256` join keys, and `tools/scripts/report/lean-report-input.sh verify` verifies the report and current repository input. Never assemble evidence across runs or pins. `sorryAx`, any non-standard axiom, a failed command, or a statement mismatch makes that evidence ineligible. Apply the first matching rule:
+On the reuse route, carry out Step 2's reuse decision and write no new Lean. On the new-`G` compile route only, run `make help`, inspect current project structure, and measure compiler capability with current `make` doors and exit codes; never use a cold bare Lake command. Route the smallest canonical module, prove only the missing composition, and add concrete inhabited examples or countermodels when needed to establish non-vacuity. Compile `G` and any formally graded `S`. On the no-Lean route, write no ornamental definition or scenario wrapper.
+
+Capability failure is not evidence for or against `P`. A failed or unavailable compile leaves the formal result unsettled.
+
+Postcondition: the record contains either an exact reused declaration, the smallest substantive compiled synthesis, or explicit evidence for no formal result; search results alone never masquerade as the missing inference.
+
+### 5. Settle outcomes and freeze the answer register
+
+Use one successful current `make` build and the exact compiled statements as the authority for any formal result. Reject evidence with `sorry`, a statement mismatch, a failed command, or a nonstandard axiom closure. Apply the first matching rule:
 
 1. `not-formalized` when the record is `not-formalizable` and has no Lean statement.
-2. `conditional` when the record is `conditional-empirical`, exact `P` is conditional with its named empirical premise undischarged, and eligible owner evidence establishes exact `P`.
-3. `proved` when eligible owner evidence establishes exact `P` for any record not matched above.
-4. `refuted` when eligible owner evidence establishes the exact negation of `P` for any record not matched above; keep `P` unchanged.
-5. `open` otherwise, including an ambiguous record, an unavailable required capability, a provenance-only third-party hit, or no eligible evidence for `P` or its negation.
+2. `conditional` when compiled exact `P` is conditional on named empirical or metaphysical premises that remain undischarged.
+3. `proved` when the successful build establishes exact `P` for any record not matched above.
+4. `refuted` when the successful build establishes the exact negation of `P` for any record not matched above.
+5. `open` otherwise, including ambiguity, unavailable compilation, failed proof, or no compiled declaration for `P` or its negation.
 
-These rules are a total function over reachable owner-fact states: rule 1 handles the reachable not-formalizable/no-statement state; rules 2-4 handle eligible positive or negative evidence in order; and rule 5 catches every remainder, including ambiguity, unavailable capability, and ineligible evidence. First-match evaluation stops at one rule, so the projected domains are mutually exclusive by construction and exactly one outcome results. In particular, a `conditional-empirical` record whose named empirical premise is discharged cannot match rule 2; eligible evidence for exact `P` matches rule 3 exactly once, yielding `proved`.
+These ordered rules are exhaustive and single-valued by first-match evaluation. A failed proof never implies falsity, and a compiled conditional never discharges its real-world premises.
 
-`conditional` applies only while the named empirical premise is undischarged. An active Frozen receipt remains reusable without current Lean. Never infer falsity from failure to prove or downgrade a terminal to an informal sink.
+Emit one immutable internal settlement record per material assertion. It contains a unique record id, the stable assertion key, an explicit initial `active` status, the exact proposition, outcome, every undischarged condition, the unsettled reason where applicable, whether the claim is a formal result or a judgment, and the maximum permitted public claim. Set that maximum from the outcome: `proved` permits exact `P`; `refuted` permits exact negation of `P`; `conditional` permits only the consequent under every undischarged condition; `open` permits neither `P` nor its negation; and `not-formalized` permits only the recorded nonformal judgment, never a formal-grade claim. No outcome is allowed without an exact compiled proposition or an explicit record of its absence. Apply the local-settlement duty from `CLAUDE.md` item 5-double-prime; do not leave an elapsed task disguised as still progressing.
 
-Postcondition: every assertion has exactly one mechanically projected outcome, and every formalizable assertion is graded `proved`, `refuted`, `conditional`, or `open`.
+After any revision of `P` or `G`, append a validity delta that explicitly assigns `void` to each superseded active record for that assertion key, names every earlier settlement that still stands, and append a replacement settlement as `active`. The latest status assignment is the record's effective `active` or `void` status; never overwrite a record or delta, and keep exactly one active settlement per key.
 
-### 6. Render the reply
+Postcondition: every assertion key has exactly one active record with one outcome and one maximum permitted claim, while every record has an explicit effective `active` or `void` status in the append-only validity history.
 
-For each assertion render the original clause, the exact proposition or its explicit absence, the outcome, source or report address, exact commands and exit codes, axiom closure, search trace, and persistence marking. Mark evidence `active-frozen` or `run-local`; for run-local evidence include the recorded pins on which it expires.
+### 6. Persist project source and account for the worktree
 
-The outcome vocabulary is closed: `proved`, `refuted`, `conditional`, `open`, `not-formalized`. Do not add an informal assertion grade or any human-review state. Third-party provenance must be visibly distinguished from kernel basis.
+Apply the first matching route and stop at one:
 
-Postcondition: the reply is clause-complete, evidence-bearing per assertion, uses only the closed outcome set, and exposes every persistence boundary.
+1. `reuse-complete`: one existing declaration already proves the whole `G` or canonical `P`, including every clause and boundary. Cite that `project-source` and stop persistence. Multiple adjacent hits that still require a deduction do not qualify.
+2. `discard-thin`: the only new code is scenario-only `S`, an import wrapper, an ornamental definition, or a theorem whose conclusion is assumed. Keep it as `run-local` build evidence only, then remove it.
+3. `persist-synthesis`: a new reusable `G` closes a genuine inferential gap, has nontrivial examples or hypotheses, reuses existing declarations, and compiles without `sorry` or nonstandard axioms. Route it to a canonical module, retain it as `tracked-lean` with a matching canonical `Describe` source that states the model's interpretive and empirical limits there, connect it to the project import graph, and verify it with `make lean`; use `make lean-report` only when the answer needs a machine-readable closure.
+4. `open-compile`: otherwise, including an unavailable compiler, failed elaboration, unresolved model, or nonstandard axiom closure. Preserve the exact source, command, exit code, and diagnostics in the current-run record as `open`; never report the proposition as proved.
 
-### 7. Close without repository mutation
+Compare the worktree with its pre-run state. Retain only substantive canonical source and required import changes; remove thin artifacts and disposable specializations. Useful synthesis is not discarded merely because prose can answer, and thin code does not earn retention by compiling. Commit the coherent local unit only when repository policy and the user's request allow; never open or advance a pull request unless requested.
 
-Compare the repository change set with the pre-run state and leave it unchanged. State explicitly which conclusions are active-frozen and which are run-local. Route any requested durable contribution as a separate task; do not continue into deposit, freeze, coverage, receipts, PR, CI, or merge work.
+Emit an internal `side_effects` record containing the final project paths, the exact build command and exit code, the axiom output or report or an explicit reason none was produced, any other verification commands and exit codes, whether anything was committed, and the plain verification result. If nothing was written, record that fact and an empty path set without inventing a mutation.
 
-Postcondition: the answer has been delivered, its persistence scope is explicit, and this invocation has made zero repository changes.
+Postcondition: persistence is settled, the final tree is accounted for, every discarded artifact is demonstrably thin, every compiler failure is evidence-complete, and `side_effects` describes the state that Step 7 will report.
 
-## Acceptance obligation
+### 7. Render the plain answer
 
-At runtime, Step 5's ordered rules are the sole outcome authority. Each assertion record carries the specific address of every owner fact it actually relied on; it never fabricates unused owner addresses.
+For this skill's output, default to ordinary conversational prose. By default omit `P`/`G`/`S` labels, GIDs, proof-provenance module paths, build receipts, axiom closures, search traces, and the outcome-vocabulary words. This is not a repository-wide register policy.
 
-At skill-change time, before changing this file, the editor must verify that the ordered rules remain a total function: exhaustive over reachable owner-fact states and single-valued by first-match evaluation. A pull request changing this file carries that verification as the executable echo required by `CLAUDE.md` item 11. Failed verification is a defect, not a human-review state. This is a **SOFT** acceptance obligation and adds no per-skill machine test; the FILEMAP owner remains authoritative for repository-policy classification.
+The procedure directs the renderer one-way from the immutable Step 5 register to prose to reduce epistemic-strength leaks; it does not make the renderer strength-monotone. The register is its only epistemic input; it may not draft claims afresh from search hits, `G`, or `S`. Draft ordinary prose freely without a phrase table, then ask what a competent reader would take away from every heading, lead, body paragraph, and final sentence, including what is implied rather than stated, and translate that takeaway into propositions. Assertive sentences, presuppositions, definite descriptions, rhetorical questions, imperatives, sentence fragments, and conventional implicatures are non-exhaustive examples, not a closed list. Match each epistemic proposition to the unique active Step 5 record for its stable assertion key, never to a void record, and ask whether that active record entails it with no hidden premise. Match each repository-action proposition to the Step 6 `side_effects` record. If the competent-reader takeaway is unmatched or exceeds the active record's maximum permitted claim, reject and redraft it. For this audit, communicating any proposition stronger than an active `open` record's `P` counts as asserting `P`. Do not emit the answer while the worker has identified any stronger or unmapped item.
 
-## Earned hard gates
+Enforce these scope rules during that audit:
 
-These are the only hard gates added by this adapter; each names an occurred failure.
+- Put every material condition in the same sentence or grammatical scope as its consequent; a detached disclaimer does not count.
+- For an unsettled proposition, redraft any wording from which a competent reader would take away `P` or its negation, including after "my judgment is." The forms named above are examples, not the boundary. Ground any practical recommendation separately and say that it does not settle the question.
+- For a mixed summary sentence, qualify, split, or delete it until it does not exceed its weakest load-bearing clause. A clause is load-bearing when removing it changes which active record the sentence maps to.
 
-- **Honor the owner-issued reuse disposition; never invent a reproof path.** Invoke `CLAUDE.md` item 11 and specification A17.2 (`docs/develop/spec/golden-ledger-repo-spec.md:163`). The occurred incident is the third-party path collapsing into forbidden reproof.
-- **Reject a tautological or thin mapping.** Invoke `skills/codex-formalize/SKILL.md`, "Mathematical content" and "Deposit substance," which record seven definitional-tautology cases and the landed thin-deposit case.
-- **Never use a cold bare `lake build`.** Invoke `CLAUDE.md` tool law 3, which records issue #2762's multi-hour cold-lane failure and PR #2764's repair.
-- **Treat owner summaries here as non-load-bearing.** Invoke the owner before use; any summary is void on disagreement and may not create an independent rule. Specification revision v7.16 R20 at `docs/develop/spec/golden-ledger-repo-spec.md:877` records the stale `skills/` copy left when a reference-closure sweep missed that directory.
-- **Never claim a command result without its exit code.** Invoke `skills/codex-formalize/SKILL.md`, "Process honesty," which records the seat that reported a failed Lean build as green.
+Treat each active record's maximum permitted claim as the drafting ceiling: whenever the competent-reader test identifies an excess, reject and redraft it. The competent-reader takeaway, natural-language entailment, and no-hidden-premise checks are worker judgments, not decidable procedures; this prompt-level audit reduces the leak surface and blocks identified channels, but unbounded pragmatic conveyance means it cannot guarantee strength preservation. There is no lint behind it; do not claim machine-level enforcement.
 
-## Prohibitions
+Default suppression yields when it would hide a material condition, model boundary, unresolved ambiguity, compiler or axiom limitation material to the answer, persistent repository mutation, or an audit record requested for proof review, reproduction, debugging, or challenge. Expose the minimum formal detail the answer needs. When a formal predicate's ordinary-language name differs materially from its formal content, state in ordinary words what the term actually means there; a formal symbol or bare "within the model" does not suffice. Include excluded ordinary readings and material observer, world, and time indices whenever they change the answer. When the user requests the full record, show the current run's record; do not promise indefinite storage or later retrieval.
 
-- No deposit, freeze, coverage edit, or receipt edit; the `make` deposit and cover doors and the existing formalize, theorize, and ingest skills own them.
-- No second axiom parser, search engine, ledger, or receipt service; `tools/lean-inspector/Inspector.lean` via `make lean-report`, CLAUDE.md item 11, and the frozen ledger own those facts.
-- No `requires human review`, `awaiting human`, or equivalent branch; `CLAUDE.md` item 22 owns that prohibition.
-- No hedging word in place of a measurement; `CLAUDE.md` section VI owns its typed alternatives.
-- No third-party admission in this run; specification A17.2 owns that separate workflow.
-- No automatic conversion of a reply into a repository node; the F-plane admission and freezing workflows own durable truth.
+If Step 6 retained source, add one ordinary sentence naming every changed path, whether it was committed, and the plain verification result. This action disclosure is a narrow exception to suppressing proof-provenance paths and receipts. If nothing was written, claim nothing about repository mutation.
 
-## What this skill does not own
-
-- Search order and `wait-for-capability`: CLAUDE.md item 11.
-- Third-party admission: specification A17.2.
-- Truth-state syntax: specification 1.4.
-- Axiom authority: `tools/lean-inspector/Inspector.lean`, the canonical `make lean-report`, and the owner-pinned standard axiom set.
-- Lean build doors: the root `Makefile` as listed by `make help`.
-- Freezing, receipts, and coverage: the deposit and cover doors and their existing skills.
-- PR mechanics: `make pr-open`.
-
-This skill names each owner and states only the minimum non-load-bearing reading needed to run the workflow. Owners and their live machine output always win; a conflicting local sentence is void.
+Postcondition: the answer reads like normal conversation; the worker has mapped its competent-reader takeaways, redrafted every strengthening or unmatched item the audit identified, kept all material limits visible, and accurately disclosed repository side effects. This records completion of the bounded judgment, not a guarantee that no pragmatic strengthening remains.

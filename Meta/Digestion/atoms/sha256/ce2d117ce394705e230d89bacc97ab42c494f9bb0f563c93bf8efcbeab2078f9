@@ -1,0 +1,49 @@
+## 定理 227.1（有限族 pairwise singular 即 simultaneous completion）
+
+对有限状态族，以下条件等价：
+
+\[
+\boxed{
+\forall i\neq j,
+\quad
+\mathbf P_i\perp\mathbf P_j
+}
+\]
+
+与：
+
+\[
+\boxed{
+\exists\Phi,
+\quad
+\mathbf P_i[\Phi=x_i]=1
+\quad\forall i.
+}
+\]
+
+### 证明
+
+必要性显然：若同一个分类器在两个状态下均零错误，则事件：
+
+\[
+A_i=\{\Phi=x_i\}
+\]
+
+满足：
+
+\[
+\mathbf P_i(A_i)=1,
+\qquad
+\mathbf P_j(A_i)=0.
+\]
+
+充分性方面，对每个无序对 \(i<j\)，取可测集 \(B_{ij}\) 使：
+
+\[
+\mathbf P_i(B_{ij})=1,
+\qquad
+\mathbf P_j(B_{ij})=0.
+\]
+
+令：
+

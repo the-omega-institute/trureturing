@@ -1,0 +1,14 @@
+ast_path: section/355-地方自治与统一标准的冲突是共同因子问题
+fingerprints:
+  raw_sha256: sha256:1b44fde727d2e5c0408840ff336df9cdfb67eaa60a92f55697c9e76583b93ace
+  normalized_sha256: sha256:1b44fde727d2e5c0408840ff336df9cdfb67eaa60a92f55697c9e76583b93ace
+cas_ref: sha256:1b44fde727d2e5c0408840ff336df9cdfb67eaa60a92f55697c9e76583b93ace
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-11ce6ebf936cb306d1bdd95342a775000009f0a5a72815ce489b420af0043635-836adf4539eb66e1617c76ce5c28f5209a232a114f3c5e234c0d311ab92aad5e
+    - generic-residual-8691183204bef837c6df311271bfe394d1d1e59752f5368046643bd042d6d0d5-3c8cb1d8624aa1aabb4e25093be5132b8ab9af65d36e11ceaa7728d5e39e0806
+    - generic-residual-660e3a18b4dc4349f70b1984b4d276485fe238164f183f18e42b24062890b004-718431ab92524b6d4894e1c2b1912dcb366eee0441d085e28ee103fdbd0c6da4

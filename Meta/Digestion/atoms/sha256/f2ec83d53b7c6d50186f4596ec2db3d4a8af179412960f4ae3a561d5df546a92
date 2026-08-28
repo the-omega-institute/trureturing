@@ -1,0 +1,11 @@
+# 19. 代理因果画像与最小历史商
+
+设全部有限历史构成集合 $\mathcal H$，未来允许施加的环境或控制协议构成 $\mathcal W$，未来行动—观察—记录序列空间为 $\mathcal Z$。对历史 $h$ 与协议 $w$，定义完整未来交互律
+
+$$
+\Gamma(h)(w)
+=
+\operatorname{Law}
+\bigl(Z_{\mathrm{future}}\mid h,\operatorname{do}(w)\bigr).
+$$
+

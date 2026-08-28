@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Coding/LosslessEncodingCriterion.lossless_iff_injective_on_image
       definition_sha256: sha256:23827de79636e25fcc25921f41a2465e374f7ce5bdd06067d2a3d64a02af24e8
-      emission_sha256: sha256:64e4def0ad4c37c2d472e6dcf1e7b74f20d4f992c83faff94d8d154182fd1b0a
+      emission_sha256: sha256:bb440075c68720f44c7813b641b48139e45157e899c4fcab7687b799d090e2c6
   unresolved_subitems: []

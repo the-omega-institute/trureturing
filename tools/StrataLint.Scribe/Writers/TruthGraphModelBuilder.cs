@@ -22,7 +22,6 @@ public static class TruthGraphModelBuilder
         ArgumentNullException.ThrowIfNull(dag);
         ArgumentNullException.ThrowIfNull(provenance);
         var nodes = dag.Nodes
-            .OrderBy(static node => node.RepoPath.Value, StringComparer.Ordinal)
             .Select(node => new TruthGraphNode(
                 node.RepoPath.Value,
                 node.Gid?.Value,
@@ -31,13 +30,9 @@ public static class TruthGraphModelBuilder
                 dag.Depth(node.RepoPath)))
             .ToImmutableArray();
         var edges = dag.Edges
-            .OrderBy(static edge => edge.Dependency.Value, StringComparer.Ordinal)
-            .ThenBy(static edge => edge.Dependent.Value, StringComparer.Ordinal)
             .Select(static edge => new TruthGraphEdge(edge.Dependency.Value, edge.Dependent.Value))
             .ToImmutableArray();
         var blockers = dag.OpenBlockers
-            .OrderBy(static blocker => blocker.Dependent.Value, StringComparer.Ordinal)
-            .ThenBy(static blocker => blocker.DependencyModule, StringComparer.Ordinal)
             .Select(static blocker => new TruthGraphOpenBlocker(
                 blocker.Dependent.Value,
                 blocker.DependencyModule))

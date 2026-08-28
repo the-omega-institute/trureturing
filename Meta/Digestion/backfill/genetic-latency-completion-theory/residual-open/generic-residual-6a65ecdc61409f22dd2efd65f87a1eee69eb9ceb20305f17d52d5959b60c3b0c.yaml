@@ -1,0 +1,10 @@
+ast_path: section/10-1-过程-monoid-完成
+fingerprints:
+  raw_sha256: sha256:6a65ecdc61409f22dd2efd65f87a1eee69eb9ceb20305f17d52d5959b60c3b0c
+  normalized_sha256: sha256:6a65ecdc61409f22dd2efd65f87a1eee69eb9ceb20305f17d52d5959b60c3b0c
+cas_ref: sha256:6a65ecdc61409f22dd2efd65f87a1eee69eb9ceb20305f17d52d5959b60c3b0c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

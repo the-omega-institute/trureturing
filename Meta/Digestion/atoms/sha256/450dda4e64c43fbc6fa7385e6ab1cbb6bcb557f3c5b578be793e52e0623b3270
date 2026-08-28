@@ -1,0 +1,18 @@
+## 定义 500.1（可达集）
+
+[
+\boxed{
+\operatorname{Reach}(I_0)
+=========================
+
+\mu A.,
+\left(
+I_0\cup\operatorname{sp}_R(A)
+\right),
+}
+]
+
+即 (\Phi) 的最小固定点。
+
+---
+

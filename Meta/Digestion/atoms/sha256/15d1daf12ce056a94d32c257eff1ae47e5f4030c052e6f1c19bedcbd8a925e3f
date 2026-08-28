@@ -1,0 +1,35 @@
+\[
+\begin{aligned}
+&x\in\operatorname{carrierEnum}_F,\\
+&y\in\operatorname{paretoClass}_{v,F}(x)
+\Longleftrightarrow
+\operatorname{ParetoEqOn}(v,F,y,x),\\
+&x\in\operatorname{paretoClass}_{v,F}(x),\\
+&\operatorname{paretoClass}_{v,F}(x)
+=
+\operatorname{paretoClass}_{v,F}(y)
+\Longleftrightarrow
+\operatorname{ParetoEqOn}(v,F,x,y),\\
+&C.1.\operatorname{Nonempty},\\
+&\forall z:A_F,\ z\in C.1\to
+\operatorname{paretoClass}_{v,F}(z)=C.1,\\
+&C\in\operatorname{quotientEnum}_{v,F}.
+\end{aligned}
+\]
+
+最后一式给出 \(Q_{v,F}\) 的显式有限枚举，因而可据此构造 `Fintype Q_{v,F}`，不以 `Nonempty Q_{v,F}` 为前件。退化承载也必须机器核验：
+
+\[
+\begin{aligned}
+&F=\varnothing
+\to
+\forall C:Q_{v,F},\ \mathsf{False},\\
+&F.\operatorname{card}=1
+\to
+\exists C:Q_{v,F},\
+\forall D:Q_{v,F},\ D=C.
+\end{aligned}
+\]
+
+所以空 \(F\) 给出空商，单点 \(F\) 给出恰一商类。
+

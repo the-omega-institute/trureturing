@@ -1,0 +1,67 @@
+## 定理 433.1（最佳安全抽象）
+
+定义：
+
+[
+\boxed{
+F^#_{\mathrm{best}}
+===================
+
+\alpha\circ\mathcal F\circ\gamma.
+}
+]
+
+则：
+
+1. (F^#_{\mathrm{best}}) 安全；
+2. 对任意其他安全抽象 (G^#)：
+
+[
+\boxed{
+F^#_{\mathrm{best}}(a)
+\sqsubseteq
+G^#(a).
+}
+]
+
+### 证明
+
+由 Galois 连接的单位：
+
+[
+\mathcal F(\gamma(a))
+\subseteq
+\gamma\alpha\mathcal F\gamma(a),
+]
+
+所以安全。
+
+若 (G^#) 安全：
+
+[
+\mathcal F(\gamma(a))
+\subseteq
+\gamma(G^#a).
+]
+
+由伴随关系：
+
+[
+\alpha\mathcal F\gamma(a)
+\sqsubseteq
+G^#a.
+]
+
+(\square)
+
+所以：
+
+[
+\boxed{
+\text{最佳抽象不是最小误差数值，
+而是在保证不漏真实行为前提下最精确的抽象后继。}
+}
+]
+
+---
+

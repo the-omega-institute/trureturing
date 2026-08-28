@@ -1,0 +1,14 @@
+## 第二：kernel 和 image 是两种完全不同的不完备
+
+$$
+\boxed{
+\text{kernel defect}=\text{多个状态同一行为};
+}
+$$
+
+$$
+\boxed{
+\text{image defect}=\text{某些形式行为没有状态}.
+}
+$$
+

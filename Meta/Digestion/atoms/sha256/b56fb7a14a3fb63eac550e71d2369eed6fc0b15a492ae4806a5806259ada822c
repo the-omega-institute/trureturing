@@ -1,0 +1,39 @@
+## 定理 230.1（四种局部证据的闭式）
+
+有：
+
+\[
+\boxed{
+\operatorname{TV}(P_\delta,Q_\delta)
+=2|\delta|,
+}
+\]
+
+\[
+\boxed{
+\rho(P_\delta,Q_\delta)
+=\sqrt{1-4\delta^2},
+}
+\]
+
+\[
+\boxed{
+H^2(P_\delta,Q_\delta)
+=2\left(1-\sqrt{1-4\delta^2}\right),
+}
+\]
+
+以及：
+
+\[
+\boxed{
+D_{\mathrm{KL}}(P_\delta\Vert Q_\delta)
+=2\delta
+\log\frac{1+2\delta}{1-2\delta}.
+}
+\]
+
+### 证明
+
+直接在两点空间展开定义。Bhattacharyya affinity 为：
+

@@ -1,0 +1,10 @@
+ast_path: section/任务完备
+fingerprints:
+  raw_sha256: sha256:86820913a6d9daa55df47308ff39ab8a23b2a6e2f48f46e2968103e378d11e6c
+  normalized_sha256: sha256:86820913a6d9daa55df47308ff39ab8a23b2a6e2f48f46e2968103e378d11e6c
+cas_ref: sha256:86820913a6d9daa55df47308ff39ab8a23b2a6e2f48f46e2968103e378d11e6c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

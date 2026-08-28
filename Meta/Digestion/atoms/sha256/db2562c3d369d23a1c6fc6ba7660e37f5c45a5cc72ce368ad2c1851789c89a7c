@@ -1,0 +1,8 @@
+## 定义 134.1（算术 residual）
+
+$$
+N_{\mathrm{arith}}
+=
+\{(x,y):q_{p,k}(x)=q_{p,k}(y)\ \forall p,k\}.
+$$
+

@@ -1,0 +1,12 @@
+## 定义 87.1（模型相对完备）
+
+观察者在 $\mathcal M$ 上完备，当且仅当
+
+$$
+\rho,\sigma\in\mathcal M,
+\quad
+\rho\sim_{\mathfrak O}\sigma
+\Longrightarrow
+\rho=\sigma.
+$$
+

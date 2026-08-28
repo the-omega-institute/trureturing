@@ -1,0 +1,45 @@
+# 359. 可持续性可以定义为跨代准入不变性
+
+设安全准入集合：
+
+[
+S_t\subseteq X_t.
+]
+
+策略 (\pi_t) 可持续，当：
+
+[
+x_t\in S_t
+\Longrightarrow
+F_t(x_t,\pi_t(x_t))
+\in S_{t+1}.
+]
+
+如果对全部代际连续成立：
+
+[
+\boxed{
+S_0
+\xrightarrow{\pi_0}
+S_1
+\xrightarrow{\pi_1}
+S_2
+\to\cdots
+}
+]
+
+则形成安全不变量塔。
+
+因此：
+
+[
+\boxed{
+\text{可持续性}
+===========
+
+\text{代际 FLOW 对安全 ADMIT 集合的长期不变性}.
+}
+]
+
+---
+

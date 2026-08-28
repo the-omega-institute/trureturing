@@ -1,0 +1,11 @@
+**第 9 条商序半条。** 对任意有限
+   \(F:\operatorname{Finset}(\mathsf{Action})\)
+   和五个可判预序坐标，弱支配对称核
+   `ParetoEqOn`
+   形成可判等价关系；显式类像
+   `FiniteParetoQuotient`
+   上的
+   `QuotientParetoWeak`
+   代表无关且满足反身、传递、反对称。若五坐标是偏序，则该对称核恰等于同向量等价。证明目标精确为 56.2-A—56.2-D。
+
+2. 

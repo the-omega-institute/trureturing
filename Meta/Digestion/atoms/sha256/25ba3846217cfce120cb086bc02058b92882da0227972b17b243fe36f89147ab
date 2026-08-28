@@ -1,0 +1,102 @@
+# 28. 最终统一
+
+给定动力接口
+
+$$
+(X,F,q),
+$$
+
+存在四个互相对偶的对象：
+
+$$
+K_q
+=
+当前被合并的状态对,
+$$
+
+$$
+K_∞
+=
+其中可永久保持合并的最大不变部分,
+$$
+
+$$
+A_∞
+=
+由全部未来拉回生成的最小不变可观测代数,
+$$
+
+$$
+C_F(q)
+=
+实现上述二者的规范最小稳定接口.
+$$
+
+在线性模型中：
+
+$$
+N₀=ker(C),
+$$
+
+$$
+N_∞=⋂_{n≥0}ker(C T^n),
+$$
+
+$$
+O_∞=span_{n≥0}ran((T*)^n C*),
+$$
+
+$$
+W_β=Σ_{n≥0}β^n(T*)^n C* C T^n,
+$$
+
+并满足
+
+$$
+N_∞=O_∞^⊥=ker(W_β).
+$$
+
+当前接口真正缺失的记忆不是全部 ker(C)，而是
+
+$$
+M(C,T)=ker(C)/N_∞.
+$$
+
+对受控系统，时间迭代替换为动作词；对量子系统，状态读数替换为 Heisenberg effect 词；对非交换过程，closure 次序与自由词结构本身成为余量；对因果系统，实验必须横切 target-distinct model pairs，而不是泛化地“增加信息”。
+
+本文的最终结论是：
+
+$$
+观察者完成不是把世界全部复制进观察者，
+而是把当前 fiber 中仍具有未来效力的区别，
+以最小稳定、可组合、可度量的方式重新加入接口。
+$$
+
+更短地：
+
+$$
+completion
+=
+reflection into stable interfaces,
+$$
+
+$$
+memory
+=
+relative kernel removed by that reflection,
+$$
+
+$$
+Gramian
+=
+metric shadow of the reflected behavior space,
+$$
+
+$$
+commutator
+=
+infinitesimal generator of effect completion.
+$$
+
+---
+

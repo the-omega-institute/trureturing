@@ -1,0 +1,42 @@
+## 定理 102.1（kernel）
+
+$$
+\boxed{
+\ker\|\cdot\|_{\mathfrak O}
+=
+N_{\mathfrak O}.
+}
+$$
+
+因此
+
+$$
+d_{\mathfrak O}(\rho,\sigma)
+=
+\|\rho-\sigma\|_{\mathfrak O}
+$$
+
+在状态空间上是伪距离，在操作商上是真距离；它在完整状态空间上是真距离，当且仅当观察者信息完备。
+
+取 $\operatorname{Herm}_d^0$ 正交基，并定义矩阵
+
+$$
+M_{r\mu}
+=
+\sqrt{w_r}\operatorname{Tr}(E_rF_\mu).
+$$
+
+令
+
+$$
+\alpha
+=
+\lambda_{\min}(M^\top M),
+$$
+
+$$
+\beta
+=
+\lambda_{\max}(M^\top M).
+$$
+

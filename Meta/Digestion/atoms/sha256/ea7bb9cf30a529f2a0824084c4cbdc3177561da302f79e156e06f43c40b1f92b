@@ -1,0 +1,31 @@
+# 31. 喉部、可见相位与路径分量
+
+设 universal solenoid 具有正合列
+
+$$
+0
+\longrightarrow
+K_\infty
+\xrightarrow{\iota}
+\Sigma_\infty
+\xrightarrow{\pi}
+\mathbb T
+\longrightarrow
+0,
+$$
+
+其中
+
+$$
+K_\infty
+\cong
+\prod_{p\in\mathbb P}\mathbb Z_p.
+$$
+
+这里：
+
+- $\Sigma_\infty$ 是完整状态空间；
+- $\mathbb T$ 是公开可见的相位圆；
+- $K_\infty=\ker\pi$ 是隐藏素数地址空间；
+- $\pi^{-1}(\theta)$ 是公开相位 $\theta$ 上方的隐藏纤维，本文称为“喉部”。
+

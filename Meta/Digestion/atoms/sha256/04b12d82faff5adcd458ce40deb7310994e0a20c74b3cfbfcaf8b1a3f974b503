@@ -1,0 +1,50 @@
+## 本文定理 19.1（普适最小性）
+
+若历史接口
+
+$$
+r:\mathcal H\to R
+$$
+
+足以决定完整未来交互画像，即存在
+
+$$
+F:R\to(\mathcal W\to\operatorname{Prob}(\mathcal Z))
+$$
+
+满足 $\Gamma=F\circ r$，则存在唯一映射
+
+$$
+\bar r:\operatorname{Im}(r)\to S_{\mathrm{ag}}
+$$
+
+使
+
+$$
+[h]_{\mathrm{ag}}=\bar r(r(h)).
+$$
+
+### 证明
+
+若 $r(h)=r(h')$，则
+
+$$
+\Gamma(h)=F(r(h))=F(r(h'))=\Gamma(h'),
+$$
+
+故 $h\sim_{\mathrm{ag}}h'$。于是 $r(h)\mapsto[h]_{\mathrm{ag}}$ 与代表元无关；在有效像上唯一。∎
+
+因此：
+
+$$
+\boxed{
+\text{代理自我}
+=
+\text{保持全部未来可干预交互规律的最粗历史表示}.
+}
+$$
+
+只保留未来动作分布得到的“策略自我”是它的进一步商；完整代理自我还保留行动与世界共同演化的差异。
+
+---
+

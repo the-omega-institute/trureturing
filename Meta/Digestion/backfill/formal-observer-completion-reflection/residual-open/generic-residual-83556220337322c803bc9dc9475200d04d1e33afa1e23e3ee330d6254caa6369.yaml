@@ -1,0 +1,13 @@
+ast_path: section/30-增订-喉部运动-控制选择与自由策略
+fingerprints:
+  raw_sha256: sha256:83556220337322c803bc9dc9475200d04d1e33afa1e23e3ee330d6254caa6369
+  normalized_sha256: sha256:83556220337322c803bc9dc9475200d04d1e33afa1e23e3ee330d6254caa6369
+cas_ref: sha256:83556220337322c803bc9dc9475200d04d1e33afa1e23e3ee330d6254caa6369
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-1df53118d4efacda48c9c672b73e807a97fa7440c00cae36b20ffc9b661a4670-967683f5d21ee432e36468f5cc8e4ab7946f7a94efea9b21a0aed7eb47c683d4
+    - generic-residual-647c89733fca1ece640d9be57e0e2b4fd9bcb81f23d7169a3c9e9100dfdfd9b4-2cc8d76a0a332d64a8a3d600a581d25edaf5891e130c16668ec70d93bfafd17a

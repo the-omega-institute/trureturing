@@ -1,0 +1,16 @@
+## 定理 11.1（未来词信息链）
+
+\[
+\boxed{
+H(W_n)
+=H(O_0)
++
+\sum_{j=1}^{n}
+H(O_j\mid O_0,\ldots,O_{j-1}).
+}
+\]
+
+### 证明
+
+Shannon chain rule。\(\square\)
+

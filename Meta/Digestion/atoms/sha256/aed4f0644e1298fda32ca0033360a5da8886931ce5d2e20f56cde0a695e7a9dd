@@ -1,0 +1,17 @@
+## 1.2 观察者作为读数族与核(PT 摘要;FOCR §82–88 为量子特例)
+
+一个观察者 \(\mathfrak O\) 是一族读数 \(\{q_\alpha:X\to B_\alpha\}_{\alpha\in A}\)。**这是抽象形,不是 FOCR 原文定义**:FOCR §82 的静态量子观察者是 \((X,\{A_x\},\{E_{a|x}\})\)(设定—效应—POVM 概率签名),其「效应」是本卷「读数」的量子实例;通用形取自 PT 摘要与 FCD 定义 5.1 的抽象化。它诱导
+
+\[
+N_{\mathfrak O}
+=\{(x,y)\mid \forall\alpha,\ q_\alpha(x)=q_\alpha(y)\}
+\]
+
+(不可区分核),以及可区分商 \(X/N_{\mathfrak O}\)。PT 摘要把这条链写为
+
+\[
+\text{读数族}\longrightarrow\text{共同核}\longrightarrow\text{观察拓扑}\longrightarrow\text{可区分状态商}.
+\]
+
+观察者按精化排序:\(\mathfrak O_1\preceq\mathfrak O_2\) 当且仅当 \(\mathfrak O_2\) 至少与 \(\mathfrak O_1\) 一样能区分状态;联合观察者的核是核的交。FOCR 定义 88.1 与定理 88.2 在量子情形下陈述并证明了这两条;本卷在抽象读数族上使用它们时,精化与联合按上述核的包含与交**定义**,不引用 FOCR 的证明。
+

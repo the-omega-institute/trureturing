@@ -6,7 +6,7 @@ The discounted observability Gramian satisfies its Lyapunov equation.
 
 **Theorem 1.1 (The discounted Gramian obeys the fixed-point equation).**
 
-$$\begin{gathered}\forall K, V, Y, \\{}T: \operatorname{LinearMap}(K, V, V), C: \operatorname{LinearMap}(K, V, Y), \beta,\\{}\operatorname{RCLike}(K) \land \operatorname{NormedAddCommGroup}(V) \land \operatorname{InnerProductSpace}(K, V) \land \operatorname{FiniteDimensional}(K, V) \land \operatorname{NormedAddCommGroup}(Y) \land \operatorname{InnerProductSpace}(K, Y) \land \operatorname{FiniteDimensional}(K, Y) \land\\{}0 < \beta < 1 \land \sqrt{\beta} \left\lVert T \right\rVert < 1 \Rightarrow\\{}\operatorname{discountedObservabilityGramian}(T, C, \beta) = C^{*} C + \beta T^{*} \operatorname{discountedObservabilityGramian}(T, C, \beta) T.\end{gathered}$$
+$$\begin{gathered}\forall K, V, Y: \operatorname{Type}, \\{}[\operatorname{RCLike}(K)], [\operatorname{NormedAddCommGroup}(V)], [\operatorname{InnerProductSpace}(K, V)], [\operatorname{FiniteDimensional}(K, V)],\\{}[\operatorname{NormedAddCommGroup}(Y)], [\operatorname{InnerProductSpace}(K, Y)], [\operatorname{FiniteDimensional}(K, Y)],\\{}T: \operatorname{LinearMap}(K, V, V), C: \operatorname{LinearMap}(K, V, Y), \beta: \mathbb{R},\\{}0 < \beta < 1 \land \sqrt{\beta} \left\lVert T \right\rVert < 1 \Rightarrow\\{}\operatorname{discountedObservabilityGramian}(T, C, \beta) = C^{*} C + \beta T^{*} \operatorname{discountedObservabilityGramian}(T, C, \beta) T.\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/Linear/DiscountedObservabilityGramianEquation.discounted_observability_gramian_equation` (`✓ std3`). ∎
 

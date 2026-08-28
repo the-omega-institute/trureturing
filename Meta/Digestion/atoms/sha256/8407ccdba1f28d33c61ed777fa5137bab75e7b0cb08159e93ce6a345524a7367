@@ -1,0 +1,19 @@
+## 定义 81.1（量子态）
+
+$$
+\mathsf S_d
+=
+\{\rho\in\operatorname{Herm}_d:
+\rho\ge0,\ \operatorname{Tr}\rho=1\}.
+$$
+
+纯态是
+
+$$
+\rho_\psi
+=
+|\psi\rangle\langle\psi|,
+\qquad
+\langle\psi|\psi\rangle=1.
+$$
+

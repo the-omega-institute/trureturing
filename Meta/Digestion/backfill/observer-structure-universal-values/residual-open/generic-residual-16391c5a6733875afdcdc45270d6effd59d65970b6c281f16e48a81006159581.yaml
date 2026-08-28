@@ -1,0 +1,10 @@
+ast_path: row/第-2-条-对错机器判-真-证-诚实标-open
+fingerprints:
+  raw_sha256: sha256:16391c5a6733875afdcdc45270d6effd59d65970b6c281f16e48a81006159581
+  normalized_sha256: sha256:16391c5a6733875afdcdc45270d6effd59d65970b6c281f16e48a81006159581
+cas_ref: sha256:16391c5a6733875afdcdc45270d6effd59d65970b6c281f16e48a81006159581
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

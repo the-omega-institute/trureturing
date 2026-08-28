@@ -1,0 +1,27 @@
+## 定理 114.2（kernel 保持）
+
+对计算基态
+
+$$
+\rho_x=|x\rangle\langle x|,
+$$
+
+有
+
+$$
+\operatorname{Tr}(\rho_xP_{o|i})
+=
+\mathbf1_{\{q_i(x)=o\}}.
+$$
+
+因此
+
+$$
+\boxed{
+q_i(x)=q_i(y)
+\iff
+\rho_x,\rho_y
+\text{ 对该 PVM 不可区分}.
+}
+$$
+

@@ -1,0 +1,15 @@
+**第 10 条 Stop 半条。** `Stop` 精确指
+   `AdjudicationStopTarget`
+   即既有 `OrientedStop`；其有限检查器为 `settleStop`。具体
+   \(\operatorname{Fin}(2)\)
+   见证满足
+   `NoDominatingCandidate`
+   而在完整
+   \(O_{\mathrm{advance}}\)
+   下不满足 Stop，并在完整
+   \(O_{\mathrm{stay}}\)
+   下满足 Stop。证明目标精确为 56.3-A—56.3-C。第 10 条前半的 gainDifference 自差与 cocycle 继续由已冻结
+   `gain_difference_self_zero_and_cocycle`
+   承担，本部不重证。
+
+3. 

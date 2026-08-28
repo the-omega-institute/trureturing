@@ -1,0 +1,10 @@
+ast_path: section/71-2-观察者意义/clause/1
+fingerprints:
+  raw_sha256: sha256:f124494f5def80210561d5490db85533d3ef96518efa7196ab9dac918167bb52
+  normalized_sha256: sha256:f124494f5def80210561d5490db85533d3ef96518efa7196ab9dac918167bb52
+cas_ref: sha256:f124494f5def80210561d5490db85533d3ef96518efa7196ab9dac918167bb52
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

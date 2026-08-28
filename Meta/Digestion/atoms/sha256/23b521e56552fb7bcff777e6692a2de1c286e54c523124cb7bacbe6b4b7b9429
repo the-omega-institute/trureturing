@@ -1,0 +1,28 @@
+## 本文定理 46.1（公开恢复判据）
+
+以下等价：
+
+1. 存在 $\bar K:\operatorname{im}H\to\mathcal K$ 使 $K=\bar K\circ H$；
+2. $\ker H\subseteq\ker K$；
+3. $\mathsf{CovertThroat}=0$。
+
+这是标准核因子化判据。∎
+
+若加入动作账本
+
+$$
+L:\mathcal U\to\Lambda,
+$$
+
+联合接口为 $(H,L)$，不可恢复输运缩为
+
+$$
+K(\ker H\cap\ker L)
+\subseteq
+K(\ker H).
+$$
+
+所以增加账本不能增加来源歧义，只能保持或缩小它；但账本不改变已经发生的本体输运，只改善“谁做了什么、因此隐藏分量如何变化”的可恢复性。
+
+---
+

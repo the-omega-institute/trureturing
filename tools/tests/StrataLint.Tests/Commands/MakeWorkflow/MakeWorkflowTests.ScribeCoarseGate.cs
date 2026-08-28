@@ -235,7 +235,7 @@ public sealed partial class MakeWorkflowTests
             File.AppendAllText(path, "changed\n", new UTF8Encoding(false));
         }
 
-        internal ProcessOutput Run(string? baseRevisionOverride = null) => BoundedProcessRunner.Run(
+        internal ProcessOutput Run(string? baseRevisionOverride = null) => TestProcessRunner.Run(
             "/bin/bash",
             [
                 "-c",
@@ -250,7 +250,7 @@ public sealed partial class MakeWorkflowTests
                 baseRevisionOverride ?? baseRevision,
             ],
             Repository,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
         internal string[] Invocations() => File.Exists(log) ? File.ReadAllLines(log) : [];
@@ -259,11 +259,11 @@ public sealed partial class MakeWorkflowTests
 
         private string RunGit(IReadOnlyList<string> arguments)
         {
-            var result = BoundedProcessRunner.Run(
+            var result = TestProcessRunner.Run(
                 "git",
                 arguments,
                 Repository,
-                TimeSpan.FromSeconds(30),
+                BoundedProcessRunner.HangDetectionBudget,
                 64 * 1024);
             Assert.Equal(0, result.ExitCode);
             return Encoding.UTF8.GetString(result.StandardOutput).Trim();

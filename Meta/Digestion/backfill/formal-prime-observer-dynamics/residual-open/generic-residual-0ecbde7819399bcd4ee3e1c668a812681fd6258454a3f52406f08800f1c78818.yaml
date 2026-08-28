@@ -8,3 +8,11 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-26T18:42:14.9870540+00:00
+    gids:
+      - D5/S3/Observer/ProbabilisticClosure/KernelTranscriptInvariance.statistical_kernel_transcript_law_invariant
+    gaps:
+      - code: structural-alignment-rejected
+        detail: 定理/203.1

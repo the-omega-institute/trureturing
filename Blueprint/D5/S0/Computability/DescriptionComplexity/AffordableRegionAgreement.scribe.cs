@@ -15,15 +15,7 @@ internal sealed class AffordableRegionAgreementDocument : IScribeDocumentDefinit
                 DeclarationHandle.Create(
                     "D5/S0/Computability/DescriptionComplexity/AffordableRegionAgreement.affordable_region_agreement"),
                 H("Affordable regions contain no remaining disagreement"),
-                StatementSource.FromAuthor(Disp(Seq(
-                    Operatorname, Grp(F.Id("price")), Open, F.Id("P"), Close,
-                    Sp, Leq, Sp, F.Id("budget"), Sp, Minus, Sp,
-                    Operatorname, Grp(F.Id("complexity")), Open, F.Id("g"), Close,
-                    Sp, Minus, Sp, F.Id("overhead"), Sp, Rightarrow, Sp,
-                    Forall, Sp, F.Id("n"), Sp, InMacro, Sp, F.Id("P"),
-                    Comma, Esc, F.Id("g"), Open, F.Id("n"), Close,
-                    Sp, Eq, Sp, Operatorname, Grp(F.Id("truth")),
-                    Open, F.Id("n"), Close, Dot))),
+                StatementSource.FromAuthor(AffordableFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -47,4 +39,91 @@ internal sealed class AffordableRegionAgreementDocument : IScribeDocumentDefinit
                         + "and preorder contradiction."))),
                 DescribeRole.Theorem)),
         []));
+
+    private static Formula Typeclass(string name, Formula argument) =>
+        Seq(OpenBracket, Operatorname, Grp(F.Id(name)), Open, argument, Close, CloseBracket);
+
+    private static Formula Apply(Formula function, Formula argument) =>
+        Seq(function, Open, argument, Close);
+
+    private static Formula AffordableFormula()
+    {
+        Formula outputType = F.Id("Output"), lossType = F.Id("Loss");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
+        Formula finsetNaturals = Call("Finset", naturals);
+        Formula truth = F.Id("truth"), candidate = F.Id("g");
+        Formula record = F.Id("record"), region = F.Id("P");
+        Formula complexity = F.Id("complexity"), price = F.Id("price");
+        Formula budget = F.Id("budget"), overhead = F.Id("overhead");
+        Formula loss = F.Id("loss"), n = F.Id("n"), h = F.Id("h");
+        Formula functionType = Seq(naturals, Sp, To, Sp, outputType);
+        Formula truthAt(Formula index) =>
+            Seq(Operatorname, Grp(truth), Open, index, Close);
+        Formula candidateAt(Formula index) => Apply(candidate, index);
+        Formula hAt(Formula index) => Apply(h, index);
+        Formula complexityOf(Formula function) =>
+            Seq(Operatorname, Grp(complexity), Open, function, Close);
+        Formula priceOf(Formula finiteRegion) =>
+            Seq(Operatorname, Grp(price), Open, finiteRegion, Close);
+        Formula lossOf(Formula function) =>
+            Seq(Operatorname, Grp(loss), Open, function, Close);
+        Formula inRegion = Seq(n, Sp, InMacro, Sp, region);
+        Formula patched = Seq(Open, n, Colon, Sp, naturals, Sp, Mapsto, Sp,
+            Call("ite", inRegion, truthAt(n), candidateAt(n)), Close);
+
+        return Disp(Seq(
+            Begin, Grp(F.Id("gathered")),
+            Forall, Sp, outputType, Comma, Sp, lossType, Colon, Sp, type,
+            Comma, RowBreak, Grp(),
+            Typeclass("Preorder", lossType), Comma, RowBreak, Grp(),
+            Forall, Sp, truth, Comma, Sp, candidate, Colon, Sp, functionType,
+            Comma, RowBreak, Grp(),
+            Forall, Sp, record, Comma, Sp, region, Colon, Sp, finsetNaturals,
+            Comma, RowBreak, Grp(),
+            Forall, Sp, complexity, Colon, Sp,
+            Open, functionType, Close, Sp, To, Sp, naturals, Comma, Sp,
+            Forall, Sp, price, Colon, Sp, finsetNaturals, Sp, To, Sp, naturals,
+            Comma, RowBreak, Grp(),
+            Forall, Sp, budget, Comma, Sp, overhead, Colon, Sp, naturals,
+            Comma, Sp, Forall, Sp, loss, Colon, Sp,
+            Open, functionType, Close, Sp, To, Sp, lossType, Comma, RowBreak, Grp(),
+            Open, Forall, Sp, n, Colon, Sp, naturals, Comma, Sp,
+            n, Sp, InMacro, Sp, record, Sp, Rightarrow, Sp,
+            candidateAt(n), Sp, Eq, Sp, truthAt(n), Close,
+            Comma, RowBreak, Grp(),
+            complexityOf(patched), Sp, Leq, Sp,
+            complexityOf(candidate), Sp, Plus, Sp, priceOf(region), Sp, Plus, Sp, overhead,
+            Comma, RowBreak, Grp(),
+            complexityOf(candidate), Sp, Plus, Sp, overhead, Sp, Leq, Sp, budget,
+            Comma, RowBreak, Grp(),
+            Open, Forall, Sp, h, Colon, Sp, functionType, Comma, Sp,
+            Call("Nonempty", region), Sp, Rightarrow, Sp,
+            Open, Forall, Sp, n, Colon, Sp, naturals, Comma, Sp,
+            Neg, Sp, Open, inRegion, Close, Sp, Rightarrow, Sp,
+            hAt(n), Sp, Eq, Sp, candidateAt(n), Close, Sp, Rightarrow, Sp,
+            Open, Forall, Sp, n, Colon, Sp, naturals, Comma, Sp,
+            inRegion, Sp, Rightarrow, Sp, hAt(n), Sp, Eq, Sp, truthAt(n), Close,
+            Sp, Rightarrow, Sp,
+            Open, Exists, Sp, n, Colon, Sp, naturals, Comma, Sp,
+            inRegion, Sp, Land, Sp, candidateAt(n), Sp, Neq, Sp, truthAt(n), Close,
+            Sp, Rightarrow, Sp, lossOf(h), Sp, Lt, Sp, lossOf(candidate), Close,
+            Comma, RowBreak, Grp(),
+            Open, Forall, Sp, h, Colon, Sp, functionType, Comma, Sp,
+            Open, Forall, Sp, n, Colon, Sp, naturals, Comma, Sp,
+            n, Sp, InMacro, Sp, record, Sp, Rightarrow, Sp,
+            hAt(n), Sp, Eq, Sp, truthAt(n), Close, Sp, Rightarrow, Sp,
+            complexityOf(h), Sp, Leq, Sp, budget, Sp, Rightarrow, Sp,
+            lossOf(candidate), Sp, Leq, Sp, lossOf(h), Close,
+            Comma, RowBreak, Grp(),
+            Operatorname, Grp(F.Id("price")), Open, F.Id("P"), Close,
+            Sp, Leq, Sp, F.Id("budget"), Sp, Minus, Sp,
+            Operatorname, Grp(F.Id("complexity")), Open, F.Id("g"), Close,
+            Sp, Minus, Sp, F.Id("overhead"), Sp, Rightarrow, Sp,
+            Forall, Sp, F.Id("n"), Sp, InMacro, Sp, F.Id("P"),
+            Comma, Esc, F.Id("g"), Open, F.Id("n"), Close,
+            Sp, Eq, Sp, Operatorname, Grp(F.Id("truth")),
+            Open, F.Id("n"), Close, Dot,
+            End, Grp(F.Id("gathered"))));
+    }
 }

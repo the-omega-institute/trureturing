@@ -85,11 +85,10 @@ public sealed partial class ProductionEnvironmentTests
             currentRaw,
             baselineRaw);
         var candidateReport = Path.Combine(temporary.Path, "candidate.json");
-        File.WriteAllBytes(
+        RawLeanReportArtifact.WriteFile(
             candidateReport,
-            RawLeanReportArtifact.Write(
-                Decode(currentRaw),
-                LeanAxiomReport.Create(fixture.Reports)).AsSpan());
+            Decode(currentRaw),
+            LeanAxiomReport.Create(fixture.Reports));
         var source = new FakeLeanReportSource(null);
         var environment = new ProductionCliEnvironment("/repo", gateway, source);
 
@@ -105,7 +104,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CheckPerformsZeroLedgerSemanticCallsForAnUnrelatedChange()
+    public void CheckAdmitsAnUnrelatedChangeWhenMaterialArchiveIsMissingAndUnused()
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
@@ -125,11 +124,11 @@ public sealed partial class ProductionEnvironmentTests
             "/repo",
             ImmutableHashSet<string>.Empty);
         var candidateReport = Path.Combine(temporary.Path, "candidate.json");
-        File.WriteAllBytes(
+        RawLeanReportArtifact.WriteFile(
             candidateReport,
-            RawLeanReportArtifact.Write(
-                Decode(currentRaw),
-                LeanAxiomReport.Create(fixture.Reports)).AsSpan());
+            Decode(currentRaw),
+            LeanAxiomReport.Create(fixture.Reports));
+        File.Delete(RawLeanReportArtifact.MaterialsPath(candidateReport));
         var environment = new ProductionCliEnvironment(
             "/repo",
             gateway,
@@ -165,11 +164,10 @@ public sealed partial class ProductionEnvironmentTests
             "/repo",
             ImmutableHashSet<string>.Empty);
         var candidateReport = Path.Combine(temporary.Path, "candidate.json");
-        File.WriteAllBytes(
+        RawLeanReportArtifact.WriteFile(
             candidateReport,
-            RawLeanReportArtifact.Write(
-                Decode(currentRaw),
-                LeanAxiomReport.Create(fixture.Reports)).AsSpan());
+            Decode(currentRaw),
+            LeanAxiomReport.Create(fixture.Reports));
         var environment = new ProductionCliEnvironment(
             "/repo",
             gateway,
@@ -216,11 +214,10 @@ public sealed partial class ProductionEnvironmentTests
         var currentRaw = Snapshot(fixture.Files);
         var baselineRaw = Snapshot(fixture.Baseline);
         var candidateReport = Path.Combine(temporary.Path, "candidate.json");
-        File.WriteAllBytes(
+        RawLeanReportArtifact.WriteFile(
             candidateReport,
-            RawLeanReportArtifact.Write(
-                Decode(currentRaw),
-                LeanAxiomReport.Create(fixture.Reports)).AsSpan());
+            Decode(currentRaw),
+            LeanAxiomReport.Create(fixture.Reports));
         var environment = new ProductionCliEnvironment(
             "/repo",
             new FakeRepositoryGateway(
@@ -466,27 +463,14 @@ public sealed partial class ProductionEnvironmentTests
     {
         using var temporary = new TemporaryDirectory();
         var candidateReport = Path.Combine(temporary.Path, "candidate.json");
-        File.WriteAllBytes(
+        RawLeanReportArtifact.WriteFile(
             candidateReport,
-            RawLeanReportArtifact.Write(
-                Decode(Snapshot(fixture.Files)),
-                LeanAxiomReport.Create(fixture.Reports)).AsSpan());
+            Decode(Snapshot(fixture.Files)),
+            LeanAxiomReport.Create(fixture.Reports));
         return environment.Check(new[]
         {
             "--candidate-lean-report", candidateReport,
         });
-    }
-
-    private static (RepositorySnapshot Snapshot, AcceptedLeanClosure Lean, TruthDagProjection Dag) BuildState(
-        IReadOnlyDictionary<string, string> files,
-        IReadOnlyDictionary<string, LeanFileReport> reports)
-    {
-        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-            SnapshotDecoder.Decode(Snapshot(files))).Snapshot;
-        var lean = Assert.IsType<LeanValidationOutcome.Accepted>(
-            LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
-        var dag = TruthDagProjectionAssembler.Build(snapshot, lean);
-        return (snapshot, lean, dag);
     }
 
     private static void AssertCompleteRuleDisposition(AdmissionCertificate certificate)
@@ -528,20 +512,14 @@ public sealed partial class ProductionEnvironmentTests
         };
         var baselineCatalog = Catalog(fixture.Baseline, fixture.BaselineReports, environment);
         var currentCatalog = Catalog(fixture.Files, fixture.Reports, environment);
-        var baselineLedger = FrozenLedgerGenerator.GenerateGenesis(
-            baselineCatalog,
-            new FrozenGenesisDescriptor(
-                FrozenLedgerTestData.GitOid('e'),
-                RuleCatalog.Default.RootSha256));
-        var baselineSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
-            DagLedgerLoader.Load(baselineLedger.AsSpan())).Syntax;
-        var baselineCapability = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            FrozenLedgerTestData.ValidateGenesis(baselineSyntax, baselineCatalog)).Capability;
-        var currentLedger = FrozenLedgerGenerator.AppendSynchronization(
+        var baselineEvents = FrozenLedgerTestData.EventFiles(baselineCatalog);
+        var baselineCapability = FrozenLedgerTestData.Baseline(baselineCatalog);
+        var currentEvents = baselineEvents.AddRange(DagLedgerAppendWriter.BuildNewEventFiles(
+            FrozenLedgerGenerator.MissingFreezes(
             baselineCapability,
-            currentCatalog);
-        SetLedger(fixture.Files, Encoding.UTF8.GetString(currentLedger.AsSpan()));
-        SetLedger(fixture.Baseline, Encoding.UTF8.GetString(baselineLedger.AsSpan()));
+            currentCatalog)));
+        SetLedger(fixture.Files, currentEvents);
+        SetLedger(fixture.Baseline, baselineEvents);
         return baselineCapability;
 
         static FrozenMaterialCatalog Catalog(
@@ -553,14 +531,15 @@ public sealed partial class ProductionEnvironmentTests
                 SnapshotDecoder.Decode(Snapshot(files))).Snapshot;
             var closure = Assert.IsType<LeanValidationOutcome.Accepted>(
                 LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
-            var dag = TruthDagProjectionAssembler.Build(snapshot, closure);
-            var attestations = dag.Nodes
-                .Where(static node => node.State is TruthState.Closed && node.ModuleName is not null)
-                .Select(node => new FrozenModuleAttestation(
-                    node.RepoPath,
-                    FrozenLedgerTestData.GitBlobOid(files[node.RepoPath.Value])));
+            var states = LeanTruthStates.Resolve(snapshot, closure);
+            var adjacency = LeanImportAdjacency.Build(snapshot, closure);
+            var attestations = states
+                .Where(static item => item.Value is TruthState.Closed)
+                .Select(item => new FrozenModuleAttestation(
+                    item.Key,
+                    FrozenLedgerTestData.GitBlobOid(files[item.Key.Value])));
             return Assert.IsType<FrozenMaterialOutcome.Accepted>(
-                FrozenContentAddress.Build(snapshot, closure, environment, attestations)).Capability;
+                FrozenContentAddress.Build(snapshot, closure, states, adjacency, environment, attestations)).Capability;
         }
     }
 
@@ -573,7 +552,8 @@ internal sealed class FakeRepositoryGateway(
     Func<FrozenLedgerReferenceSet, TrustedFrozenGitReferences>? frozenReferenceValidator = null,
     Func<FrozenRevisionIdentity>? currentRevisionResolver = null,
     Func<string, RawChangeSet>? changesForBase = null,
-    RawRepositorySnapshot? forkPoint = null)
+    RawRepositorySnapshot? forkPoint = null,
+    Func<RawRepositorySnapshot>? currentReader = null)
     : IRepositoryGateway
 {
     internal int ReadCount { get; private set; }
@@ -621,7 +601,9 @@ internal sealed class FakeRepositoryGateway(
         ReadCount++;
         ReadCurrentCount++;
         return WithAtomizerData(
-            current ?? throw new InvalidOperationException("current snapshot should not be read"));
+            currentReader?.Invoke()
+            ?? current
+            ?? throw new InvalidOperationException("current snapshot should not be read"));
     }
 
     public RawRepositorySnapshot ReadRevision(string revision)
@@ -681,9 +663,7 @@ internal sealed class FakeRepositoryGateway(
     {
         FrozenReferenceValidations.Add(references);
         return frozenReferenceValidator?.Invoke(references)
-            ?? TrustedFrozenGitReferences.CreateForTrustedAdapter(
-                references.Inputs,
-                references.EnvironmentReferences);
+            ?? TrustedFrozenGitReferences.CreateForTrustedAdapter(references.Inputs);
     }
 
     private static RawRepositorySnapshot WithAtomizerData(RawRepositorySnapshot snapshot) =>

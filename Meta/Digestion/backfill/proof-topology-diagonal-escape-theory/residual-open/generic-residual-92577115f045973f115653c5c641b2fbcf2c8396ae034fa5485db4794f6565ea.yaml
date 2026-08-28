@@ -1,0 +1,10 @@
+ast_path: section/6-3-T0-商
+fingerprints:
+  raw_sha256: sha256:92577115f045973f115653c5c641b2fbcf2c8396ae034fa5485db4794f6565ea
+  normalized_sha256: sha256:92577115f045973f115653c5c641b2fbcf2c8396ae034fa5485db4794f6565ea
+cas_ref: sha256:92577115f045973f115653c5c641b2fbcf2c8396ae034fa5485db4794f6565ea
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

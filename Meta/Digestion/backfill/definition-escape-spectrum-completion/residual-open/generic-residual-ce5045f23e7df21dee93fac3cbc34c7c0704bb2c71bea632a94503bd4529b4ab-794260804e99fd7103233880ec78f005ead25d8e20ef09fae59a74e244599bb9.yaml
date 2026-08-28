@@ -1,0 +1,10 @@
+ast_path: section/证据极性与-T4-父聚合/clause/1
+fingerprints:
+  raw_sha256: sha256:ce5045f23e7df21dee93fac3cbc34c7c0704bb2c71bea632a94503bd4529b4ab
+  normalized_sha256: sha256:ce5045f23e7df21dee93fac3cbc34c7c0704bb2c71bea632a94503bd4529b4ab
+cas_ref: sha256:ce5045f23e7df21dee93fac3cbc34c7c0704bb2c71bea632a94503bd4529b4ab
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

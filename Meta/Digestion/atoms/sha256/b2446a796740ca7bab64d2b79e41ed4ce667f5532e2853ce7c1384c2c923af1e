@@ -1,0 +1,19 @@
+## 定义 23.2（理由绕过残差）
+
+$$
+\mathcal B_r(\Pi)
+=
+\{(h,h'):r(h)=r(h'),\ \Pi(h)\ne\Pi(h')\}.
+$$
+
+有
+
+$$
+\mathcal B_r(\Pi)=\varnothing
+\iff
+\exists f,\ \Pi=f\circ r.
+$$
+
+因此可以区分：
+
+- **说服**：新证据改变理由，策略随理由改变；

@@ -1,0 +1,33 @@
+# 95. 理想记录、条件化与两种“坍缩”
+
+设投影测量满足
+
+$$
+P_aP_b=\delta_{ab}P_a,
+\qquad
+\sum_aP_a=I.
+$$
+
+Lüders instrument 为
+
+$$
+\mathcal I_a(\rho)=P_a\rho P_a.
+$$
+
+引入记录空间
+
+$$
+\mathcal H_M
+=
+\operatorname{span}\{|a\rangle_M\}.
+$$
+
+定义等距映射
+
+$$
+V|\psi\rangle
+=
+\sum_a
+P_a|\psi\rangle\otimes|a\rangle_M.
+$$
+

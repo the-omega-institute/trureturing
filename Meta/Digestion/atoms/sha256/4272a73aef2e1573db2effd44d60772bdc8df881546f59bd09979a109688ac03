@@ -1,0 +1,36 @@
+## 133.1 Golden 临界温度
+
+取：
+
+$$
+\alpha=\varphi,
+$$
+
+得到：
+
+$$
+\boxed{
+t_{\mathrm c}
+=
+\frac{2\pi}{\sqrt\varphi}.
+}
+\tag{133.3}
+$$
+
+它的结构来源为：
+
+$$
+\boxed{
+\begin{aligned}
+4\pi
+&=\text{Monster coefficient entropy rate};\\
+2\sqrt\varphi
+&=\text{Golden 线性能量的最优 AM--GM 斜率};\\
+2\pi/\sqrt\varphi
+&=\text{根熵与 Golden 观察能量的平衡点}.
+\end{aligned}
+}
+$$
+
+---
+

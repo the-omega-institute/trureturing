@@ -1,0 +1,10 @@
+ast_path: section/359-可持续性可以定义为跨代准入不变性
+fingerprints:
+  raw_sha256: sha256:ced084c2e7113f8f7fe0c9f36ea845cc8ccd858701bccd180b85d911d724be04
+  normalized_sha256: sha256:ced084c2e7113f8f7fe0c9f36ea845cc8ccd858701bccd180b85d911d724be04
+cas_ref: sha256:ced084c2e7113f8f7fe0c9f36ea845cc8ccd858701bccd180b85d911d724be04
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

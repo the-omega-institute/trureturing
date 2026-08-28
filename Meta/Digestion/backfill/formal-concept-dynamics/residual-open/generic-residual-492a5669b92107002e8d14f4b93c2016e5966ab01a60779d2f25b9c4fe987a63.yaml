@@ -1,0 +1,10 @@
+ast_path: section/522-随机充分性等价于条件独立
+fingerprints:
+  raw_sha256: sha256:492a5669b92107002e8d14f4b93c2016e5966ab01a60779d2f25b9c4fe987a63
+  normalized_sha256: sha256:492a5669b92107002e8d14f4b93c2016e5966ab01a60779d2f25b9c4fe987a63
+cas_ref: sha256:492a5669b92107002e8d14f4b93c2016e5966ab01a60779d2f25b9c4fe987a63
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

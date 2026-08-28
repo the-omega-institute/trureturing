@@ -191,7 +191,7 @@ public sealed partial class RevocationTests
     {
         var catalog = BuildCatalog(Module("A"));
         var ledger = Genesis(catalog);
-        var fixture = ReceiptAdmissionFixture(ledger);
+        var fixture = ReceiptAdmissionFixture(catalog);
         var receiptBaseline = ReceiptBaseline(fixture);
         var node = Assert.Single(receiptBaseline.ActiveFrozenNodes);
         var invalid = new RevocationEvidence.KernelWitnessFailure(
@@ -220,7 +220,7 @@ public sealed partial class RevocationTests
     {
         var catalog = BuildCatalog(Module("A"));
         var ledger = Genesis(catalog);
-        var fixture = ReceiptAdmissionFixture(ledger);
+        var fixture = ReceiptAdmissionFixture(catalog);
         var receiptBaseline = ReceiptBaseline(fixture);
         var receipt = RevocationReceiptWriter.Write(
             receiptBaseline,
@@ -238,8 +238,9 @@ public sealed partial class RevocationTests
     [Fact]
     public void CandidateReceiptWriteGateRejectsNoncanonicalBytes()
     {
-        var ledger = Genesis(BuildCatalog(Module("A")));
-        var fixture = ReceiptAdmissionFixture(ledger);
+        var catalog = BuildCatalog(Module("A"));
+        var ledger = Genesis(catalog);
+        var fixture = ReceiptAdmissionFixture(catalog);
         var receiptBaseline = ReceiptBaseline(fixture);
         var node = Assert.Single(receiptBaseline.ActiveFrozenNodes);
         var canonical = RevocationReceiptWriter.Write(receiptBaseline, KernelFailure(node));
@@ -260,8 +261,9 @@ public sealed partial class RevocationTests
     [Fact]
     public void CandidateReceiptWriteGateRejectsShapeViolation()
     {
-        var ledger = Genesis(BuildCatalog(Module("A")));
-        var fixture = ReceiptAdmissionFixture(ledger);
+        var catalog = BuildCatalog(Module("A"));
+        var ledger = Genesis(catalog);
+        var fixture = ReceiptAdmissionFixture(catalog);
         var receiptBaseline = ReceiptBaseline(fixture);
         var receipt = WithoutFinalLf(RevocationReceiptWriter.Write(
             receiptBaseline,
@@ -296,8 +298,9 @@ public sealed partial class RevocationTests
     [Fact]
     public void ReceiptImplementationChangeRevalidatesStoredCandidateShape()
     {
-        var ledger = Genesis(BuildCatalog(Module("A")));
-        var fixture = ReceiptAdmissionFixture(ledger);
+        var catalog = BuildCatalog(Module("A"));
+        var ledger = Genesis(catalog);
+        var fixture = ReceiptAdmissionFixture(catalog);
         var receiptBaseline = ReceiptBaseline(fixture);
         var receipt = WithoutFinalLf(RevocationReceiptWriter.Write(
             receiptBaseline,
@@ -346,13 +349,12 @@ public sealed partial class RevocationTests
         var ledger = Genesis(catalog);
         var node = Assert.Single(ledger.ActiveFrozenNodes);
         var receipts = ReceiptStore(ledger, KernelFailure(node));
-        var freeze = Assert.IsType<FrozenLedgerEvent.Freeze>(ledger.Events[1]);
-        var advancedBytes = FrozenLedgerGenerator.AppendReattestation(
-            ledger,
-            freeze.Payload.CaseId,
-            freeze.Payload.Input);
+        var advancedCatalog = BuildCatalog(Module("A"), Module("B"));
+        var advancedEvents = LoadDrafts(
+            BaseView(catalog),
+            FrozenLedgerGenerator.MissingFreezes(ledger, advancedCatalog));
         var advanced = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateCandidate(Load(advancedBytes), ledger, catalog)).Capability;
+            ValidateCandidate(advancedEvents, ledger, advancedCatalog)).Capability;
 
         var rejected = Assert.IsType<RevocationEvidenceValidationOutcome.Rejected>(
             RevocationEvidenceValidator.Validate(receipts.Evidence[0], advanced, receipts.Store));
@@ -435,35 +437,35 @@ public sealed partial class RevocationTests
         var evidence = ValidateEvidence(receipts.Evidence[0], baseline, receipts.Store);
         var plan = Assert.IsType<RevocationPlanOutcome.Accepted>(
             RevocationPlanner.Plan(baseline, new[] { evidence })).Capability;
-        var revokeBytes = FrozenLedgerGenerator.AppendRevocation(baseline, plan);
+        var baseView = BaseView(baselineCatalog);
+        var revokeEvents = LoadDrafts(
+            baseView,
+            FrozenLedgerGenerator.Revocation(baseline, plan));
         var emptyCatalog = BuildCatalog();
         var revoked = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateCandidate(Load(revokeBytes), baseline, emptyCatalog, receipts.Store)).Capability;
+            ValidateCandidate(revokeEvents, baseline, emptyCatalog, receipts.Store)).Capability;
 
         Assert.Empty(revoked.ActiveFrozenNodes);
         Assert.Contains(oldNode.FrozenNodeId, revoked.RevokedFrozenNodeIds);
 
-        var deletedTombstone = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
-            ValidateCandidate(
-                Load(baseline.RawBytes),
-                revoked,
-                emptyCatalog,
-                receipts.Store));
-        Assert.Contains("prefix", deletedTombstone.Message, StringComparison.OrdinalIgnoreCase);
-
-        var resurrectBytes = FrozenLedgerGenerator.AppendMissingFreezes(revoked, baselineCatalog);
+        var resurrectEvents = LoadDrafts(
+            baseView,
+            FrozenLedgerGenerator.MissingFreezes(revoked, baselineCatalog));
         var resurrected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
-            ValidateCandidate(Load(resurrectBytes), baseline, baselineCatalog, receipts.Store));
-        Assert.Contains("reused", resurrected.Message, StringComparison.OrdinalIgnoreCase);
+            ValidateCandidate(resurrectEvents, revoked, baselineCatalog, receipts.Store));
+        Assert.Contains("duplicates an existing event hash", resurrected.Message, StringComparison.OrdinalIgnoreCase);
 
-        var correctedCatalog = BuildCatalog(Module(
+        var correctedCatalog = BuildCatalog(ModuleWithReport(
             "A",
-            source: "theorem a : True := by exact True.intro\n"));
+            "theorem a : True ∧ True := by constructor <;> trivial\n",
+            "True ∧ True"));
         var correctedNode = Assert.Single(correctedCatalog.ClosedNodes);
         Assert.NotEqual(oldNode.FrozenNodeId, correctedNode.FrozenNodeId);
-        var correctedBytes = FrozenLedgerGenerator.AppendMissingFreezes(revoked, correctedCatalog);
+        var correctedEvents = LoadDrafts(
+            baseView,
+            FrozenLedgerGenerator.MissingFreezes(revoked, correctedCatalog));
         var corrected = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateCandidate(Load(correctedBytes), baseline, correctedCatalog, receipts.Store)).Capability;
+            ValidateCandidate(correctedEvents, revoked, correctedCatalog, receipts.Store)).Capability;
         Assert.Equal(correctedNode.FrozenNodeId, Assert.Single(corrected.ActiveFrozenNodes).FrozenNodeId);
     }
 
@@ -479,45 +481,38 @@ public sealed partial class RevocationTests
         var evidence = ValidateEvidence(receipts.Evidence[0], genesis, receipts.Store);
         var plan = Assert.IsType<RevocationPlanOutcome.Accepted>(
             RevocationPlanner.Plan(genesis, new[] { evidence })).Capability;
-        var historyBytes = FrozenLedgerGenerator.AppendRevocation(genesis, plan);
+        var baseFiles = EventFiles(originalCatalog);
+        var revokeFiles = DagLedgerAppendWriter.BuildNewEventFiles(
+            FrozenLedgerGenerator.Revocation(genesis, plan));
+        var revokeEvents = LoadDrafts(
+            BaseView(originalCatalog),
+            FrozenLedgerGenerator.Revocation(genesis, plan));
         var emptyCatalog = BuildCatalog();
         var admittedSuffix = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateCandidate(Load(historyBytes), genesis, emptyCatalog, receipts.Store)).Capability;
+            ValidateCandidate(revokeEvents, genesis, emptyCatalog, receipts.Store)).Capability;
 
         var reloaded = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateHistory(Load(historyBytes), emptyCatalog));
+            ValidateHistory(baseFiles.AddRange(revokeFiles), emptyCatalog));
 
         Assert.Equal(admittedSuffix.HeadHash, reloaded.Capability.HeadHash);
         Assert.Empty(reloaded.Capability.ActiveFrozenNodes);
         Assert.Equal(2, reloaded.Capability.RevokedFrozenNodeIds.Count);
     }
 
-    private static FrozenLedgerConsistent Genesis(FrozenMaterialCatalog catalog)
-    {
-        var bytes = FrozenLedgerGenerator.GenerateGenesis(
-            catalog,
-            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
-        return Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateGenesis(Load(bytes), catalog)).Capability;
-    }
+    private static FrozenLedgerConsistent Genesis(FrozenMaterialCatalog catalog) => Baseline(catalog);
 
-    private static RuleFixture ReceiptAdmissionFixture(FrozenLedgerConsistent ledger)
+    private static RuleFixture ReceiptAdmissionFixture(FrozenMaterialCatalog catalog)
     {
         var fixture = new RuleFixture();
-        AddLedgerFiles(fixture.Files, ledger.RawBytes);
-        AddLedgerFiles(fixture.Baseline, ledger.RawBytes);
-        AddLedgerFiles(fixture.ForkPoint, ledger.RawBytes);
+        var events = EventFiles(catalog);
+        AddLedgerFiles(fixture.Files, events);
+        AddLedgerFiles(fixture.Baseline, events);
+        AddLedgerFiles(fixture.ForkPoint, events);
         return fixture;
     }
 
     private static FrozenLedgerConsistent ReceiptBaseline(RuleFixture fixture) =>
         FrozenLedgerBaseViewReader.Read(fixture.Build().Baseline).ToWriterBaseline();
-
-    private static FrozenLedgerSyntax Load(IEnumerable<byte> bytes)
-    {
-        var array = bytes.ToArray();
-        return Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(array)).Syntax;
-    }
 
     private static ImmutableArray<byte> WithoutFinalLf(ImmutableArray<byte> bytes) =>
         ImmutableArray.CreateRange(bytes.AsSpan()[..^1].ToArray());

@@ -1,0 +1,10 @@
+ast_path: row/第-19-条零信任-约束人与约束-AI-是同一件事-提交者是谁与准入无关
+fingerprints:
+  raw_sha256: sha256:7dab7943124e1f96014d8516b2ab8b543973b4c69b3aaacc1a680f87ca737e5f
+  normalized_sha256: sha256:7dab7943124e1f96014d8516b2ab8b543973b4c69b3aaacc1a680f87ca737e5f
+cas_ref: sha256:7dab7943124e1f96014d8516b2ab8b543973b4c69b3aaacc1a680f87ca737e5f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

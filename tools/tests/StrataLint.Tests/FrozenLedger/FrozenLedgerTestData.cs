@@ -2,7 +2,6 @@ using System.Collections.Immutable;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Nodes;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -62,7 +61,8 @@ internal static class FrozenLedgerTestData
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
         var closure = Assert.IsType<LeanValidationOutcome.Accepted>(
             LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
-        var dag = TruthDagProjectionAssembler.Build(snapshot, closure);
+        var states = LeanTruthStates.Resolve(snapshot, closure);
+        var adjacency = LeanImportAdjacency.Build(snapshot, closure);
         var environment = new FrozenEnvironmentAttestation(
             originCommitOid,
             originTreeOid,
@@ -81,7 +81,7 @@ internal static class FrozenLedgerTestData
         });
 
         return Assert.IsType<FrozenMaterialOutcome.Accepted>(
-            FrozenContentAddress.Build(snapshot, closure, environment, attestations)).Capability;
+            FrozenContentAddress.Build(snapshot, closure, states, adjacency, environment, attestations)).Capability;
     }
 
     internal static FrozenMaterialOutcome BuildCatalogOutcome(
@@ -105,17 +105,15 @@ internal static class FrozenLedgerTestData
                 {
                     [path] = report,
                 }))).Capability;
-        var dag = TruthDagProjectionAssembler.Build(snapshot, closure);
+        var states = LeanTruthStates.Resolve(snapshot, closure);
+        var adjacency = LeanImportAdjacency.Build(snapshot, closure);
         var environment = new FrozenEnvironmentAttestation(
             GitOid('a'),
             GitOid('b'),
             GitBlobOid(files["lean-toolchain"]),
             GitBlobOid(files["lake-manifest.json"]));
         return FrozenContentAddress.Build(
-            snapshot,
-            closure,
-            environment,
-            Array.Empty<FrozenModuleAttestation>());
+            snapshot, closure, states, adjacency, environment, Array.Empty<FrozenModuleAttestation>());
     }
 
     internal static ModuleSpec Module(
@@ -182,105 +180,144 @@ internal static class FrozenLedgerTestData
     internal static string Sha256(string text) =>
         "sha256:" + Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(text)));
 
-    internal static byte[][] Lines(ImmutableArray<byte> bytes)
+    internal static FrozenLedgerValidationOutcome ValidateHistory(
+        ImmutableArray<RepositoryFile> files,
+        FrozenMaterialCatalog catalog)
     {
-        var result = new List<byte[]>();
-        var start = 0;
-        for (var index = 0; index < bytes.Length; index++)
-        {
-            if (bytes[index] != (byte)'\n') continue;
-            result.Add(bytes.AsSpan(start, index - start + 1).ToArray());
-            start = index + 1;
-        }
-
-        Assert.Equal(bytes.Length, start);
-        return result.ToArray();
+        var snapshot = RepositorySnapshot.Create(files.ToImmutableDictionary(static file => file.Path));
+        return FrozenLedger.ValidateTrustedHistory(FrozenLedgerBaseViewReader.Read(snapshot), catalog);
     }
 
-    internal static FrozenLedgerValidationOutcome ValidateGenesis(
-        FrozenLedgerSyntax syntax,
-        FrozenMaterialCatalog catalog) =>
-        FrozenLedger.ValidateGenesis(syntax, catalog, Trust(syntax));
+    internal static FrozenLedgerConsistent Baseline(FrozenMaterialCatalog catalog) =>
+        Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateHistory(EventFiles(catalog), catalog)).Capability;
 
-    internal static FrozenLedgerValidationOutcome ValidateGenesis(
-        FrozenLedgerSyntax syntax,
-        FrozenMaterialCatalog catalog,
-        TrustedFrozenGitReferences references) =>
-        FrozenLedger.ValidateGenesis(syntax, catalog, references);
-
-    internal static FrozenLedgerValidationOutcome ValidateHistory(
-        FrozenLedgerSyntax syntax,
-        FrozenMaterialCatalog catalog) =>
-        FrozenLedger.ValidateHistory(syntax, catalog, Trust(syntax));
+    internal static FrozenLedgerBaseView BaseView(FrozenMaterialCatalog catalog)
+    {
+        var files = EventFiles(catalog);
+        return FrozenLedgerBaseViewReader.Read(
+            RepositorySnapshot.Create(files.ToImmutableDictionary(static file => file.Path)));
+    }
 
     internal static FrozenLedgerValidationOutcome ValidateCandidate(
-        FrozenLedgerSyntax syntax,
+        ImmutableArray<DagLedgerFileEvent> events,
         FrozenLedgerConsistent baseline,
         FrozenMaterialCatalog catalog) =>
-        FrozenLedger.ValidateCandidate(syntax, baseline, catalog, Trust(syntax));
+        FrozenLedger.ValidateCandidate(events, baseline, catalog, Trust(events));
 
     internal static FrozenLedgerValidationOutcome ValidateCandidate(
-        FrozenLedgerSyntax syntax,
+        ImmutableArray<DagLedgerFileEvent> events,
         FrozenLedgerConsistent baseline,
         FrozenMaterialCatalog catalog,
         TrustedRevocationReceiptStore receipts) =>
-        FrozenLedger.ValidateCandidate(syntax, baseline, catalog, Trust(syntax), receipts);
+        FrozenLedger.ValidateCandidate(events, baseline, catalog, Trust(events), receipts);
 
     internal static FrozenLedgerValidationOutcome ValidateCandidate(
-        FrozenLedgerSyntax syntax,
+        ImmutableArray<DagLedgerFileEvent> events,
         FrozenLedgerConsistent baseline,
         FrozenMaterialCatalog catalog,
         TrustedFrozenGitReferences references,
         TrustedRevocationReceiptStore receipts) =>
-        FrozenLedger.ValidateCandidate(syntax, baseline, catalog, references, receipts);
+        FrozenLedger.ValidateCandidate(events, baseline, catalog, references, receipts);
 
-    internal static TrustedFrozenGitReferences Trust(FrozenLedgerSyntax syntax) =>
+    internal static TrustedFrozenGitReferences Trust(ImmutableArray<DagLedgerFileEvent> events) =>
         TrustedFrozenGitReferences.CreateForTrustedAdapter(
-            FrozenLedger.ScanReferences(syntax) is FrozenLedgerReferenceScanOutcome.Accepted accepted
+            FrozenLedger.ScanReferences(events) is FrozenLedgerReferenceScanOutcome.Accepted accepted
                 ? accepted.References.Inputs
-                : ImmutableArray<FrozenLedgerInput>.Empty,
-            FrozenLedger.ScanReferences(syntax) is FrozenLedgerReferenceScanOutcome.Accepted environmentAccepted
-                ? environmentAccepted.References.EnvironmentReferences
-                : ImmutableArray<FrozenEnvironmentReference>.Empty);
+                : ImmutableArray<FrozenLedgerInput>.Empty);
+
+    internal static ImmutableArray<RepositoryFile> EventFiles(
+        FrozenMaterialCatalog catalog,
+        string? generatorBlobOid = null)
+    {
+        var files = ImmutableArray.CreateBuilder<RepositoryFile>();
+        files.Add(EventFile(
+            "Genesis",
+            JsonSerializer.SerializeToElement(new
+            {
+                generator_blob_oid = generatorBlobOid ?? GitOid('e'),
+                origin_commit_oid = catalog.Environment.OriginCommitOid,
+                origin_tree_oid = catalog.Environment.OriginTreeOid,
+                protocol_version = 1,
+                rule_catalog_root = RuleCatalog.Default.RootSha256,
+            }),
+            FrozenLedgerCanonicalWriter.GenesisDagSchemaVersion));
+        foreach (var material in catalog.ClosedNodes.OrderBy(
+            static item => item.RepoPath.Value,
+            StringComparer.Ordinal))
+        {
+            var payload = FrozenLedgerCanonicalWriter.FreezePayload(catalog.Environment, material);
+            files.Add(EventFile("Freeze", FrozenLedgerCanonicalWriter.FreezeElement(payload)));
+        }
+
+        return files.ToImmutable();
+    }
+
+    internal static RepositoryFile EventFile(
+        string eventType,
+        JsonElement payload,
+        int? schemaVersion = null)
+    {
+        var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(eventType, payload, schemaVersion);
+        var identity = FrozenLedgerCanonicalWriter.EventIdentity(encoded.Hash);
+        var path = RepoPath.CreateKnown(
+            $"{FrozenLedgerChangeClassifier.AcceptedRoot}/{identity[7..]}.json");
+        return new RepositoryFile(
+            path,
+            encoded.Bytes,
+            Encoding.UTF8.GetString(encoded.Bytes.AsSpan()));
+    }
+
+    internal static ImmutableArray<DagLedgerFileEvent> LoadEvents(
+        IEnumerable<RepositoryFile> files,
+        bool trusted = false)
+    {
+        var loaded = (trusted
+            ? FrozenAcceptedEventLoader.LoadTrustedFiles(files)
+            : FrozenAcceptedEventLoader.LoadFiles(files)) switch
+        {
+            DagLedgerFilesLoadOutcome.Loaded accepted => accepted.Events,
+            DagLedgerFilesLoadOutcome.Invalid invalid => throw new Xunit.Sdk.XunitException(invalid.Message),
+            _ => throw new InvalidOperationException("unknown frozen event load outcome"),
+        };
+        Assert.True(DagLedgerLoader.TryOrderClosedDag(
+            loaded,
+            ImmutableArray<string>.Empty,
+            out var ordered));
+        return ordered;
+    }
+
+    internal static ImmutableArray<DagLedgerFileEvent> LoadDrafts(
+        FrozenLedgerBaseView baseView,
+        IEnumerable<FrozenLedgerDraft> drafts) =>
+        DagLedgerCommandPreparation.ValidateGeneratedEventFiles(
+            baseView,
+            DagLedgerAppendWriter.BuildNewEventFiles(drafts),
+            "test generated frozen event set");
 
     internal static void AddLedgerFiles(
         IDictionary<string, string> files,
-        ImmutableArray<byte> bytes)
+        IEnumerable<RepositoryFile> events)
     {
-        var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes.AsSpan())).Syntax;
-        var linearToDagHash = new Dictionary<string, string>(StringComparer.Ordinal);
-        foreach (var line in syntax.Lines)
+        foreach (var item in events)
         {
-            var payload = line.Value.GetProperty("payload");
-            if (payload.TryGetProperty("previous_attestation_event_hash", out var previous))
-            {
-                var rewritten = JsonNode.Parse(payload.GetRawText())!.AsObject();
-                rewritten["previous_attestation_event_hash"] = linearToDagHash[previous.GetString()!];
-                payload = JsonSerializer.SerializeToElement(rewritten);
-            }
-
-            var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
-                line.Value.GetProperty("event_type").GetString()!,
-                payload);
-            linearToDagHash.Add(line.Value.GetProperty("event_hash").GetString()!, encoded.Hash);
-            var identity = FrozenLedgerCanonicalWriter.EventIdentity(
-                line.Value.GetProperty("event_type").GetString()!,
-                payload,
-                encoded.Hash);
-            files[$"{FrozenLedgerChangeClassifier.AcceptedRoot}/{identity[7..]}.json"] =
-                Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
+            files[item.Path.Value] = item.Text;
         }
     }
 
-    internal static void WriteLedgerDirectory(string directory, ImmutableArray<byte> bytes)
+    internal static void WriteLedgerDirectory(
+        string directory,
+        IEnumerable<RepositoryFile> events)
     {
         Directory.CreateDirectory(directory);
-        var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes.AsSpan())).Syntax;
-        DagLedgerAppendWriter.WriteNewEvents(directory, syntax.Lines);
+        DagLedgerAppendWriter.WriteEventFiles(directory, events);
     }
 
     internal static byte[] ReadLedgerDirectory(string directory) =>
-        DagLedgerCommandPreparation.LoadLedgerDirectory(directory, "test frozen ledger").RawBytes.ToArray();
+        DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(directory)
+            .OrderBy(static file => file.Path.Value, StringComparer.Ordinal)
+            .SelectMany(static file => file.RawBytes)
+            .ToArray();
 
     private static string ModuleNameFor(string module) => $"D5.S0.Carrier.{module}";
 

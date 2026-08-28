@@ -12,6 +12,72 @@ internal sealed record CheckArguments(
     string? ProtectedBase,
     string? CandidateLeanReport);
 
+internal sealed class AdmissionCheckTiming(TimeProvider timeProvider, bool enabled = true)
+{
+    internal static AdmissionCheckTiming Disabled { get; } = new(TimeProvider.System, enabled: false);
+
+    internal T Measure<T>(
+        string stage,
+        Func<T> action,
+        Func<T, bool>? failed = null)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(stage);
+        ArgumentNullException.ThrowIfNull(action);
+        var started = enabled ? TryGetTimestamp() : null;
+        try
+        {
+            var result = action();
+            Write(stage, failed?.Invoke(result) is true ? "failed" : "passed", started);
+            return result;
+        }
+        catch
+        {
+            Write(stage, "failed", started);
+            throw;
+        }
+    }
+
+    private long? TryGetTimestamp()
+    {
+        try
+        {
+            return timeProvider.GetTimestamp();
+        }
+        catch
+        {
+            // Telemetry cannot change the admission decision when the clock is unavailable.
+            return null;
+        }
+    }
+
+    private void Write(string stage, string status, long? started)
+    {
+        if (!enabled)
+        {
+            return;
+        }
+
+        try
+        {
+            var elapsedSeconds = started is null
+                ? 0
+                : Math.Max(0, timeProvider.GetElapsedTime(started.Value).TotalSeconds);
+            Console.Error.WriteLine(JsonSerializer.Serialize(new
+            {
+                @event = "gate_stage_timing",
+                scope = "admission-check",
+                stage,
+                status,
+                elapsed_seconds = elapsedSeconds,
+            }));
+        }
+        catch
+        {
+            // The check result remains the fail-closed signal if timing output is unavailable.
+        }
+    }
+}
+
 internal interface IRepositoryGateway
 {
     AdmissionTopologyOutcome InspectAdmissionTopology();
@@ -57,7 +123,8 @@ internal interface IFrozenLedgerAdmissionServices
         AcceptedLeanClosure lean,
         LeanAxiomReport report,
         RawChangeSet changes,
-        FrozenRevisionIdentity currentIdentity);
+        FrozenRevisionIdentity currentIdentity,
+        AdmissionCheckTiming timing);
 }
 
 internal sealed class ProductionCliEnvironment : ICliEnvironment
@@ -121,6 +188,24 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier? scribeEmissionVerifier,
+        TimeProvider timeProvider)
+        : this(
+            repositoryRoot,
+            repository,
+            leanReportSource,
+            scribeEmissionVerifier,
+            new ProductionFrozenLedgerAdmissionServices(
+                repositoryRoot,
+                ImmutableHashSet<string>.Empty),
+            timeProvider)
+    {
+    }
+
+    internal ProductionCliEnvironment(
+        string repositoryRoot,
+        IRepositoryGateway repository,
+        ILeanReportSource leanReportSource,
+        IScribeEmissionVerifier? scribeEmissionVerifier,
         IFrozenLedgerAdmissionServices frozenLedgerAdmission,
         TimeProvider? timeProvider = null)
     {
@@ -134,39 +219,70 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
     public AdmissionOutcome Check(IReadOnlyList<string> arguments)
     {
+        var timing = new AdmissionCheckTiming(timeProvider);
         try
         {
-            var options = ParseCheckArguments(arguments);
-            var prepared = repository.Prepare(options.ProtectedBase);
-            var hasFrozenLedgerDelta = FrozenLedgerDeltaPredicate.HasLedgerDelta(
-                prepared.Changes,
-                frozenLedgerAdmission.LeanReportProducerPaths);
-            var bootstrap = BootstrapGate.Evaluate(prepared.Changes);
+            var repositoryPhase = timing.Measure(
+                "repository-prepare",
+                () =>
+                {
+                    var options = ParseCheckArguments(arguments);
+                    var prepared = repository.Prepare(options.ProtectedBase);
+                    var hasFrozenLedgerDelta = FrozenLedgerDeltaPredicate.HasLedgerDelta(
+                        prepared.Changes,
+                        frozenLedgerAdmission.LeanReportProducerPaths);
+                    var bootstrap = BootstrapGate.Evaluate(prepared.Changes);
+                    return (
+                        Options: options,
+                        Prepared: prepared,
+                        HasFrozenLedgerDelta: hasFrozenLedgerDelta,
+                        Bootstrap: bootstrap);
+                },
+                static result => result.Bootstrap is BootstrapOutcome.InfrastructureFailure
+                    || result.Options.CandidateLeanReport is null);
+            var options = repositoryPhase.Options;
+            var prepared = repositoryPhase.Prepared;
+            var hasFrozenLedgerDelta = repositoryPhase.HasFrozenLedgerDelta;
+            var bootstrap = repositoryPhase.Bootstrap;
             if (bootstrap is BootstrapOutcome.InfrastructureFailure bootstrapFailure)
             {
                 return new AdmissionOutcome.InfrastructureFailure(bootstrapFailure.Message);
             }
-
             if (options.CandidateLeanReport is null)
             {
                 return new AdmissionOutcome.InfrastructureFailure(
                     "check requires --candidate-lean-report FILE");
             }
 
-            var current = Decode(repository.ReadCurrent());
-            var baseline = Decode(repository.ReadRevision(prepared.Revision));
-            // fork point 只需树,不需要 Lean report:append-only 保留性检查比的是文件字节。
-            var forkPoint = string.Equals(prepared.ChangeBase, prepared.Revision, StringComparison.Ordinal)
-                ? baseline
-                : Decode(repository.ReadRevision(prepared.ChangeBase));
-            var candidateLeanReport = RawLeanReportArtifact.ReadFile(
-                options.CandidateLeanReport,
-                current);
-            var verifiedScribeEmissions = VerifyScribeForAdmission(
-                scribeEmissionVerifier,
-                current,
-                candidateLeanReport,
-                prepared.Changes);
+            var snapshots = timing.Measure(
+                "snapshot-load",
+                () =>
+                {
+                    var current = Decode(repository.ReadCurrent());
+                    var baseline = Decode(repository.ReadRevision(prepared.Revision));
+                    // fork point 只需树,不需要 Lean report:append-only 保留性检查比的是文件字节。
+                    var forkPoint = string.Equals(
+                        prepared.ChangeBase,
+                        prepared.Revision,
+                        StringComparison.Ordinal)
+                        ? baseline
+                        : Decode(repository.ReadRevision(prepared.ChangeBase));
+                    return (Current: current, Baseline: baseline, ForkPoint: forkPoint);
+                });
+            var current = snapshots.Current;
+            var baseline = snapshots.Baseline;
+            var candidateLeanReport = timing.Measure(
+                "lean-report-load",
+                () => RawLeanReportArtifact.ReadFile(
+                    options.CandidateLeanReport,
+                    current));
+            var verifiedScribeEmissions = timing.Measure(
+                "scribe-verify",
+                () => VerifyScribeForAdmission(
+                    scribeEmissionVerifier,
+                    current,
+                    candidateLeanReport,
+                    prepared.Changes));
             var evaluation = SnapshotAdmissionCore.Evaluate(
                 current,
                 baseline,
@@ -174,7 +290,8 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 prepared.Changes,
                 bootstrap,
                 verifiedScribeEmissions,
-                forkPoint);
+                snapshots.ForkPoint,
+                timing);
             if (!hasFrozenLedgerDelta)
             {
                 return evaluation.Outcome;
@@ -193,25 +310,30 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             }
 
             FrozenLedgerAdmissionPreparation frozenLedgerPreparation;
+            FrozenRevisionIdentity currentIdentity;
             try
             {
-                frozenLedgerPreparation = frozenLedgerAdmission.Prepare(
-                    current,
-                    baseline,
-                    prepared.Changes,
-                    repository.ValidateFrozenReferences);
+                var frozenPreparation = timing.Measure(
+                    "frozen-ledger-prepare",
+                    () =>
+                    {
+                        var preparation = frozenLedgerAdmission.Prepare(
+                            current,
+                            baseline,
+                            prepared.Changes,
+                            repository.ValidateFrozenReferences);
+                        var identity = DagLedgerCommandPreparation.Ask(
+                            repository.ResolveCurrentRevision);
+                        return (Preparation: preparation, Identity: identity);
+                    });
+                frozenLedgerPreparation = frozenPreparation.Preparation;
+                currentIdentity = frozenPreparation.Identity;
             }
             catch (FrozenLedgerAdmissionPreparationException exception)
             {
                 return MergeFrozenLedgerRejection(
                     evaluation.Outcome,
                     FrozenLedgerRuleRejection(exception.Paths, exception.Message));
-            }
-
-            FrozenRevisionIdentity currentIdentity;
-            try
-            {
-                currentIdentity = DagLedgerCommandPreparation.Ask(repository.ResolveCurrentRevision);
             }
             catch (DagLedgerCommandPreparation.RepositoryUnavailableException exception)
             {
@@ -225,7 +347,8 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 evaluation.CurrentLean,
                 candidateLeanReport,
                 prepared.Changes,
-                currentIdentity);
+                currentIdentity,
+                timing);
             if (serviceRejection is AdmissionOutcome.RuleRejected serviceRuleRejection)
             {
                 return MergeFrozenLedgerRejection(evaluation.Outcome, serviceRuleRejection);
@@ -334,6 +457,9 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
     public ExplicitCommandResult FileMapConform(IReadOnlyList<string> arguments) =>
         FileMapConformCommand.Run(arguments, repositoryRoot);
+
+    public ExplicitCommandResult DepositHeaderCheck(IReadOnlyList<string> arguments) =>
+        DepositHeaderCheckCommand.Run(repository, arguments);
 
     public CommandResult Ingest(IReadOnlyList<string> arguments) =>
         scribeEmissionVerifier is null
@@ -540,17 +666,8 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     public CommandResult AppendLedger(IReadOnlyList<string> arguments) =>
         DagLedgerAppendWriter.Append(repositoryRoot, repository, arguments);
 
-    public CommandResult ReattestLedger(IReadOnlyList<string> arguments) =>
-        DagLedgerReattestWriter.Reattest(repositoryRoot, repository, arguments);
-
     public CommandResult RevokeLedger(IReadOnlyList<string> arguments) =>
         DagLedgerRevokeWriter.Revoke(repositoryRoot, repository, arguments);
-
-    public CommandResult SupersedeLedger(IReadOnlyList<string> arguments) =>
-        DagLedgerSupersedeWriter.Supersede(repositoryRoot, repository, arguments);
-
-    public CommandResult SyncLedger(IReadOnlyList<string> arguments) =>
-        DagLedgerSyncWriter.Sync(repositoryRoot, repository, arguments);
 
     public ExplicitCommandResult TruthRelease(IReadOnlyList<string> arguments) =>
         TruthReleaseCommand.Run(repository, scribeEmissionVerifier, arguments);
@@ -560,12 +677,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
     public CommandResult CleanLanes(IReadOnlyList<string> arguments) =>
         CleanLanesCommand.Run(repositoryRoot, arguments, TimeProvider.System.GetUtcNow());
-
-    public CommandResult AppendPerf(IReadOnlyList<string> arguments) =>
-        PerfAppendCommand.Run(repositoryRoot, arguments);
-
-    public CommandResult PerfReport(IReadOnlyList<string> arguments) =>
-        PerfReportCommand.Run(arguments);
 
     public CommandResult Worktree(IReadOnlyList<string> arguments) =>
         WorktreeCommand.Run(repositoryRoot, arguments);

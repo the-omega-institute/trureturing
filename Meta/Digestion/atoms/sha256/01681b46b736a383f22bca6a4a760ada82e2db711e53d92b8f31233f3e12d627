@@ -1,0 +1,23 @@
+# 516. 强制到达目标的区域是最小固定点
+
+设目标集合：
+
+[
+G\subseteq X.
+]
+
+定义：
+
+[
+W_0=G,
+]
+
+[
+\boxed{
+W_{n+1}
+=
+
+W_n\cup\operatorname{CPre}(W_n).
+}
+]
+

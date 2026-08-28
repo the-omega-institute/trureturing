@@ -1,0 +1,48 @@
+## 定义 16.1（五类余量）
+
+对模型／状态到证据的接口，区分：
+
+### 16.1.1 Kernel residual
+
+\[
+x\neq y,
+\qquad
+q(x)=q(y).
+\]
+
+它记录接口合并了哪些对象。
+
+### 16.1.2 Carry residual
+
+\[
+q(x)=q(y),
+\qquad
+q(Fx)\neq q(Fy).
+\]
+
+它记录当前 kernel 不是动力学 congruence。
+
+### 16.1.3 Image defect
+
+给定形式证据值 \(b\)，问
+
+\[
+b\in\operatorname{Im}(q)?
+\]
+
+兼容坐标族不一定由真实对象实现。
+
+### 16.1.4 Coupling residual
+
+边缘族 \((\mu_i)\) 已知，但 joint coupling
+
+\[
+\Gamma((\mu_i)_i)
+\]
+
+不唯一。
+
+### 16.1.5 Gauge residual
+
+不同参数化、坐标或外生变量表示给出相同全部目标查询。它应取商，而不应被误报为经验不确定性。
+

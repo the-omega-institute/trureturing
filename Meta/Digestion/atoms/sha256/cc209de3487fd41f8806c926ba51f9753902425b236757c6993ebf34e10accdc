@@ -1,0 +1,25 @@
+**证明义务 56.4-E（有限可判性）。** 若 \(O\) 有可判等号，则对任意
+\(N,N'\)、\(h:N\le N'\) 与 \(x,y:X\)，机器从
+\(\operatorname{Finset.range}(N+1)\)
+和
+\(\operatorname{Finset.range}(N'+1)\)
+的有限扫描构造
+
+\[
+\begin{aligned}
+&\operatorname{Decidable}
+\bigl(\operatorname{TimeExpansionEscape}(q,\tau,N,N',h,x,y)\bigr),\\
+&\operatorname{Decidable}
+\bigl(\operatorname{PredictionEscape}(q,\tau,N,x,y)\bigr),\\
+&\operatorname{Decidable}
+\bigl(P_N^{q,\tau}(x)=P_N^{q,\tau}(y)\bigr).
+\end{aligned}
+\]
+
+该义务不要求 `Fintype X`、`Fintype O` 或 `Nonempty X`。
+
+## 56.5 对第 54.3 部三条义务的追加式精确重述
+
+从本部追加后，第 54.3 部相关文字按以下自包含命题消费；旧编号不删除。
+
+1. 

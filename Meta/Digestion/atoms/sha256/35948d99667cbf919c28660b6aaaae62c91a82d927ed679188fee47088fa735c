@@ -1,0 +1,10 @@
+## 185.4 Image residual
+
+$$
+\operatorname{ImageRes}
+=
+L_{\mathrm{formal}}
+\setminus
+\operatorname{Im}\Sigma.
+$$
+

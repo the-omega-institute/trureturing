@@ -6,7 +6,7 @@ An inductive invariant makes every finitely reachable state safe.
 
 **Theorem 1.1 (Inductive invariants certify finite executions).**
 
-$$\forall R, I0, J, S,\\I0 \subseteq J \land J \subseteq S \land\\(\forall x, y, x \in J \land R(x, y) \Rightarrow y \in J)\\\Rightarrow \forall x0, x,\\x0 \in I0 \land \operatorname{ReflTransGen}(R)(x0, x) \Rightarrow x \in S.$$
+$$\forall X: \operatorname{Type}, R: X \to \left(X \to \operatorname{Prop}\right),\\I0, J, S: \operatorname{Set}(X),\\I0 \subseteq J \land J \subseteq S \land\\(\forall x, y: X, x \in J \land R(x, y) \Rightarrow y \in J)\\\Rightarrow \forall x0, x: X,\\x0 \in I0 \land \operatorname{ReflTransGen}(R)(x0, x) \Rightarrow x \in S.$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Rewriting/Safety/InvariantSafety.invariant_safety` (`✓ std3`). ∎
 

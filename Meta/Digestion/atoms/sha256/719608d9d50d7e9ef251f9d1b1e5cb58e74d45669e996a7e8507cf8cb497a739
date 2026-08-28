@@ -1,0 +1,47 @@
+## 定义 438.2（实际秘密泄漏）
+
+公共可见概念：
+
+[
+P_{\mathrm{pub}}
+================
+
+L\vee E_{O\circ F}.
+]
+
+实际可由公众恢复的秘密共同因子：
+
+[
+\boxed{
+\operatorname{Leak}_{\mathrm{actual}}
+=====================================
+
+P_{\mathrm{pub}}\wedge H.
+}
+]
+
+授权可披露的秘密共同因子：
+
+[
+\boxed{
+\operatorname{Leak}_{\mathrm{auth}}
+===================================
+
+(L\vee D)\wedge H.
+}
+]
+
+安全要求：
+
+[
+\boxed{
+\operatorname{Leak}*{\mathrm{actual}}
+\preceq
+\operatorname{Leak}*{\mathrm{auth}}.
+}
+]
+
+否则公开输出泄漏了超出授权 declassification 的秘密区别。
+
+---
+

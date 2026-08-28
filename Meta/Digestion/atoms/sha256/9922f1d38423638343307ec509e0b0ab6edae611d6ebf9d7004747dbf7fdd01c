@@ -1,0 +1,29 @@
+## 定义 223.1（隐藏假设）
+
+谓词 (H) 是一个隐藏补充假设，当：
+
+[
+A\land H
+\Longrightarrow
+P,
+]
+
+但：
+
+[
+A\not\Longrightarrow P.
+]
+
+因此：
+
+[
+\boxed{
+\text{隐藏假设债务}
+=============
+
+\text{理论实际需要、但未在公开 claim package 中列出的准入条件}.
+}
+]
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/433-每个具体过程都有最精确的安全抽象
+fingerprints:
+  raw_sha256: sha256:ac6ce9e5b68c9dd0f9c85b91d28df027d24874cb3ee10f97a0f2fd1281f63dcc
+  normalized_sha256: sha256:ac6ce9e5b68c9dd0f9c85b91d28df027d24874cb3ee10f97a0f2fd1281f63dcc
+cas_ref: sha256:ac6ce9e5b68c9dd0f9c85b91d28df027d24874cb3ee10f97a0f2fd1281f63dcc
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

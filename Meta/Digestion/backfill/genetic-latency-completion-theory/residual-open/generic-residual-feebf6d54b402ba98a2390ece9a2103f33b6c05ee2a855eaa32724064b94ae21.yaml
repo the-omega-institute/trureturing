@@ -1,0 +1,10 @@
+ast_path: section/16-3-局部-整体粘合
+fingerprints:
+  raw_sha256: sha256:feebf6d54b402ba98a2390ece9a2103f33b6c05ee2a855eaa32724064b94ae21
+  normalized_sha256: sha256:feebf6d54b402ba98a2390ece9a2103f33b6c05ee2a855eaa32724064b94ae21
+cas_ref: sha256:feebf6d54b402ba98a2390ece9a2103f33b6c05ee2a855eaa32724064b94ae21
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

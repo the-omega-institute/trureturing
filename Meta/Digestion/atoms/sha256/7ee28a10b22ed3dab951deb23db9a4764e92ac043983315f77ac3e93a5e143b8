@@ -1,0 +1,37 @@
+# 98. 非交换性、兼容性与不确定性
+
+仓库 `ObserverAlgebra` 定义寄存器读取
+
+$$
+(M_f\psi)(i)=f(i)\psi(i)
+$$
+
+和可逆更新
+
+$$
+(U_\tau\psi)(i)=\psi(\tau^{-1}i).
+$$
+
+`ObserverCommutator` 机器核验：
+
+$$
+\boxed{
+[U_\tau,M_f]\psi(i)
+=
+\left(
+f(\tau^{-1}i)-f(i)
+\right)
+\psi(\tau^{-1}i).
+}
+$$
+
+`ObserverMetric` 定义更新缺陷
+
+$$
+\delta_\tau f(i)
+=
+f(\tau^{-1}i)-f(i)
+$$
+
+及其有限窗口 sup 半范数，并证明其为零当且仅当读出在更新下不变。
+

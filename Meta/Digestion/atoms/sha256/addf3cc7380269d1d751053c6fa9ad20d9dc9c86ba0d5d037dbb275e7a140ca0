@@ -1,0 +1,28 @@
+## 定理 4.2（原始揭示判据）
+
+$$
+q\notin Cl_Q(Γ)
+$$
+
+当且仅当存在 x、y，使：
+
+$$
+(x,y)\in K(Γ),
+$$
+
+但：
+
+$$
+q(x)\neq q(y).
+$$
+
+### 证明
+
+q 不属于 I(K(Γ))，恰表示 K(Γ) 不包含于 ker(q)。证毕。
+
+因此新实验真正有意义，当且仅当它切开当前 residual 中至少一个尚未分离的状态对。
+
+仓库 `InvolutiveBlindResidual` 已机器验证一个结构化特例：隐藏 involution 若被旧定义族全部忽略，而新 Boolean 读出沿该 involution 反转，就会产生非空盲 residual 和 primitive semantic escape。
+
+---
+

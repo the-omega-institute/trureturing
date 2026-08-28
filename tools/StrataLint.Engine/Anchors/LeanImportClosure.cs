@@ -167,7 +167,7 @@ internal static class LeanImportClosure
         return report.Files.TryGetValue(path, out var file)
             && file.Declarations
                 .Where(static declaration => declaration.IncludeInStatement)
-                .All(static declaration => !IsTrivialTruth(declaration.TypeRepresentation));
+                .All(static declaration => !IsTrivialTruth(declaration.LoadTypeRepresentation()));
     }
 
     private static ImmutableHashSet<string> ExternalImports(
@@ -260,28 +260,6 @@ internal static class LeanImportClosure
         }
 
         return packages.ToImmutable();
-    }
-
-    internal static bool ProtectedEnvironmentMatchesEntry(
-        FrozenActiveEntry entry,
-        RepositorySnapshot snapshot)
-    {
-        if (!TryGetPinnedEnvironmentFiles(snapshot, out var toolchain, out var manifest))
-        {
-            return false;
-        }
-
-        if (toolchain.GitBlobOid is not { } toolchainOid
-            || manifest.GitBlobOid is not { } manifestOid)
-        {
-            return false;
-        }
-
-        return entry.Environment is { } environment
-            ? environment.LeanToolchainBlobOid == toolchainOid
-                && environment.LakeManifestBlobOid == manifestOid
-            : entry.Payload.Input.SupportingBlobOids.Contains(toolchainOid, StringComparer.Ordinal)
-                && entry.Payload.Input.SupportingBlobOids.Contains(manifestOid, StringComparer.Ordinal);
     }
 
     private static bool TryGetPinnedEnvironmentFiles(

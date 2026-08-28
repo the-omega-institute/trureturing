@@ -1,0 +1,54 @@
+## 定理 496.1（前后条件伴随）
+
+对任意：
+
+[
+P\subseteq X,
+\qquad
+Q\subseteq Y,
+]
+
+有：
+
+[
+\boxed{
+\operatorname{sp}_F(P)\subseteq Q
+\iff
+P\subseteq\operatorname{wp}_F(Q).
+}
+]
+
+### 证明
+
+左侧表示：
+
+[
+\forall x\in P,\quad F(x)\in Q.
+]
+
+这正是：
+
+[
+\forall x\in P,\quad x\in F^{-1}(Q).
+]
+
+即：
+
+[
+P\subseteq\operatorname{wp}_F(Q).
+]
+
+(\square)
+
+所以：
+
+[
+\boxed{
+\operatorname{sp}_F
+\dashv
+\operatorname{wp}_F.
+}
+]
+
+---
+

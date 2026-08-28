@@ -1,0 +1,16 @@
+# 继续：统一观察者演算的闭合形式
+
+前面的推导已经把各种观察者压缩到了同一个核心：
+
+$$
+\boxed{
+K_{\mathfrak O}
+=
+\bigcap_{\pi\in\mathsf{Prot}_{\mathfrak O}}
+\ker \mathcal L_\pi
+}
+$$
+
+其中：
+
+* \(X\) 是隐藏世界、模型、状态或历史；

@@ -1,0 +1,18 @@
+# 65. Agency completion：观察者完成在选择侧的对应物
+
+第 3–7 节的 observer completion 把当前读出补成未来动力学稳定接口。现在定义平行的 agency completion。
+
+设当前自我接口为
+
+$$
+m_0:\mathcal H\to M_0.
+$$
+
+定义完整策略画像接口
+
+$$
+P_\infty(h)
+=
+(\Pi_h(w))_{w\in W^*}.
+$$
+

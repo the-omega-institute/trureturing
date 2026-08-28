@@ -1,0 +1,14 @@
+## 定义 36.1（$q$-可实现策略）
+
+策略 $\Pi:X\to\operatorname{Dist}(A)$ 称为可由接口 $q$ 实现，若存在
+
+$$
+\bar\Pi:O\to\operatorname{Dist}(A)
+$$
+
+使
+
+$$
+\Pi=\bar\Pi\circ q.
+$$
+

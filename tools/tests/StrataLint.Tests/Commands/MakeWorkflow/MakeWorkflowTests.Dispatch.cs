@@ -7,34 +7,39 @@ namespace StrataLint.Tests;
 public sealed partial class MakeWorkflowTests
 {
     [Fact]
-    public void EngineeringCheckRunsTheCanonicalToolsTestTargetWithoutAFilter()
+    public void EngineeringCheckUsesScopedExecutionAndABaseOwnedRequiredProjectFloor()
     {
-        var root = TestRepositoryLayout.FindRoot();
-        var makefile = File.ReadAllText(Path.Combine(root, ToolsMakefilePath));
-        var workflow = File.ReadAllText(Path.Combine(root, AdmissionWorkflowPath));
+        var makefile = TestRepositoryLayout.ReadAllText(
+            RepositoryRelativePath.Create("tools/Makefile"));
+        var workflow = TestRepositoryLayout.ReadAllText(
+            RepositoryRelativePath.Create(".github/workflows/ci.yml"));
         var engineeringStep = EngineeringTestStep(workflow);
         var targetMatches = Regex.Matches(
             engineeringStep,
-            @"(?m)^[ \t]*make[ \t]+-C[ \t]+candidate/tools[ \t]+(?<target>[A-Za-z][A-Za-z0-9_-]*)[ \t]*$",
+            @"(?m)^[ \t]*make[ \t]+-C[ \t]+candidate/tools[ \t]+(?<target>engineering-tests)\b",
             RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
 
-        Assert.True(
-            targetMatches.Count == 1,
-            "The candidate-engineering test step must invoke exactly one concrete make target so CI cannot silently switch to a different test lane.");
-        var targetMatch = targetMatches[0];
-        Assert.True(
-            !engineeringStep.Contains("--filter", StringComparison.Ordinal),
-            "The candidate-engineering check must call the canonical unfiltered test target; commit 5743d114 filtered Script tests and left those tests unexecuted in CI.");
-
-        var target = targetMatch.Groups["target"].Value;
-        Assert.Equal("test", target);
+        var target = Assert.Single(targetMatches.Cast<Match>()).Groups["target"].Value;
+        Assert.Equal("engineering-tests", target);
         var recipe = Recipe(makefile, target);
-        Assert.True(
-            recipe.Contains("dotnet test", StringComparison.Ordinal),
-            $"The make target '{target}' called by candidate-engineering must be the .NET test target guarded by this invariant.");
-        Assert.True(
-            !recipe.Contains("--filter", StringComparison.Ordinal),
-            $"The canonical make target '{target}' must keep its dotnet test command unfiltered; commit 5743d114 filtered Script tests and CI then had no replacement lane.");
+        Assert.Contains("StrataLint.EngineeringScope.csproj", recipe, StringComparison.Ordinal);
+        Assert.Contains("--head \"$(HEAD)\" --base \"$(BASE)\"", recipe, StringComparison.Ordinal);
+        foreach (var project in new[]
+        {
+            "candidate/tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
+            "candidate/tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
+            "candidate/tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+        })
+        {
+            Assert.Contains(project, engineeringStep, StringComparison.Ordinal);
+        }
+        Assert.Contains("dotnet test \"$project\"", engineeringStep, StringComparison.Ordinal);
+        Assert.Contains(
+            "verify-trx --results-directory \"$assembly_results\" --required-assembly \"$assembly\"",
+            engineeringStep,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain("--filter", engineeringStep, StringComparison.Ordinal);
+        Assert.DoesNotContain("git diff", engineeringStep, StringComparison.Ordinal);
     }
 
     [Fact(DisplayName = "Makefile and inspector dispatch counts are pinned in the thin dispatch table")]
@@ -146,9 +151,6 @@ public sealed partial class MakeWorkflowTests
         var cacheEnsure = File.ReadAllText(Path.Combine(root, LeanCacheEnsureScriptPath));
         Assert.DoesNotContain("[[ -L", cacheEnsure, StringComparison.Ordinal);
         Assert.DoesNotContain("[[ -d", cacheEnsure, StringComparison.Ordinal);
-        var perfEvents = File.ReadAllText(Path.Combine(root, PerfEventScriptPath));
-        Assert.DoesNotContain(".lake/build", perfEvents, StringComparison.Ordinal);
-        Assert.Contains("cache_state\":null", perfEvents, StringComparison.Ordinal);
         Assert.Contains(ScribeScriptPath + " emit", Recipe(makefile, "emit"), StringComparison.Ordinal);
         Assert.Contains(IngestScriptPath, Recipe(makefile, "ingest"), StringComparison.Ordinal);
         var showAtomRecipe = Recipe(makefile, "show-atom");
@@ -172,6 +174,7 @@ public sealed partial class MakeWorkflowTests
             Recipe(makefile, "preflight"));
         var worktreeRecipe = Recipe(makefile, "worktree");
         Assert.Contains(WorktreeInitScriptPath, worktreeRecipe, StringComparison.Ordinal);
+        Assert.Contains("\"$(KIND)\" \"$(NAME)\"", worktreeRecipe, StringComparison.Ordinal);
         Assert.Contains("\"$(WORKTREE_DEST)\"", worktreeRecipe, StringComparison.Ordinal);
         // 回收**不得**是建树的前置(#2769)。此前它是依赖形式,于是每次 `make worktree`
         // 都无条件回收所有「已合并且干净」的 lane —— 而那正是一条刚建好、worker 尚未落笔
@@ -211,10 +214,11 @@ public sealed partial class MakeWorkflowTests
         var openRecipe = Recipe(makefile, "pr-open");
         var watchRecipe = Recipe(makefile, "pr-watch");
 
-        Assert.Contains("make pr-open HEAD=branch MESSAGE=file  Create from a message file whose first line is the title, arm auto-merge, and wait for required-CI verdict", makefile, StringComparison.Ordinal);
+        Assert.Contains("make pr-open HEAD=branch MESSAGE=file [AUTO_MERGE=1]  Create from a message file, optionally arm auto-merge, and wait for required-CI verdict", makefile, StringComparison.Ordinal);
         Assert.Contains("make pr-watch PR=n                Wait for required-CI verdict on an existing PR", makefile, StringComparison.Ordinal);
         Assert.Single(Regex.Matches(openRecipe, Regex.Escape(PrOpenScriptPath)));
         Assert.Single(Regex.Matches(watchRecipe, Regex.Escape(PrWatchScriptPath)));
+        Assert.Contains("$(if $(filter 1,$(AUTO_MERGE)),--auto-merge,)", openRecipe, StringComparison.Ordinal);
         Assert.Contains("--timeout-seconds \"$(WATCH_TIMEOUT_SECONDS)\"", openRecipe, StringComparison.Ordinal);
         Assert.Contains("--interval-seconds \"$(WATCH_INTERVAL_SECONDS)\"", openRecipe, StringComparison.Ordinal);
         Assert.Contains("--pr \"$(PR)\"", watchRecipe, StringComparison.Ordinal);
@@ -251,8 +255,15 @@ public sealed partial class MakeWorkflowTests
 
         Assert.Contains("$(HERE)/scripts/dotnet-build.sh", Recipe(makefile, "dotnet"), StringComparison.Ordinal);
         var testRecipe = Recipe(makefile, "test");
-        Assert.Contains("dotnet test $(HERE)/StrataLint.sln", testRecipe, StringComparison.Ordinal);
+        Assert.Contains("scripts/dotnet-test.sh $(HERE)/StrataLint.sln", testRecipe, StringComparison.Ordinal);
         Assert.DoesNotContain("--filter", testRecipe, StringComparison.Ordinal);
+        var dotnetTest = File.ReadAllText(Path.Combine(root, "tools", "scripts", "dotnet-test.sh"));
+        Assert.Contains("dotnet test \"$@\"", dotnetTest, StringComparison.Ordinal);
+        Assert.Contains("verify-trx --results-directory \"$RESULTS_DIRECTORY\"", dotnetTest, StringComparison.Ordinal);
+        Assert.Contains(
+            "StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+            Recipe(makefile, "engineering-tests"),
+            StringComparison.Ordinal);
         Assert.Contains("$(HERE)/scripts/stratalint-selftest.sh", Recipe(makefile, "selftest"), StringComparison.Ordinal);
         Assert.Contains(
             "$(HERE)/scripts/update-renderer-contract.sh",
@@ -264,8 +275,6 @@ public sealed partial class MakeWorkflowTests
         Assert.True(
             File.Exists(Path.Combine(root, RendererContractUpdateScriptPath)),
             $"{RendererContractUpdateScriptPath} is named by the update-renderer-contract recipe but is absent");
-        Assert.Contains("$(HERE)/scripts/perf-report.sh", Recipe(makefile, "perf-report"), StringComparison.Ordinal);
-        Assert.Contains("$(HERE)/../Golden/perf-budgets.toml", Recipe(makefile, "perf-report"), StringComparison.Ordinal);
         Assert.Contains("$(HERE)/scripts/clean-lanes.sh", Recipe(makefile, "clean-lanes"), StringComparison.Ordinal);
         Assert.DoesNotContain("refactor-p0-0-gate-authority", makefile, StringComparison.Ordinal);
         Assert.DoesNotContain("--old-build", makefile, StringComparison.Ordinal);
@@ -399,6 +408,14 @@ public sealed partial class MakeWorkflowTests
     {
         foreach (Match match in Regex.Matches(
             shell,
+            @"(?m)^[ \t]*(?:FULL=1[ \t]+)?(?:CI=true[ \t]+)?(?:STRATALINT_REQUIRE_LIVE_REPORT=1[ \t]+)?make[ \t]+-C[ \t]+(?:candidate/)?tools[ \t]+engineering-tests[ \t]+MODE=(?<mode>plan|execute)\b[^\r\n]*$",
+            RegexOptions.CultureInvariant | RegexOptions.NonBacktracking))
+        {
+            yield return $"make -C tools engineering-tests MODE={match.Groups["mode"].Value}";
+        }
+
+        foreach (Match match in Regex.Matches(
+            shell,
             @"(?m)^[ \t]*(?:CI=true[ \t]+)?(?:STRATALINT_REQUIRE_LIVE_REPORT=1[ \t]+)?make[ \t]+-C[ \t]+(?:candidate/)?tools[ \t]+(?<target>dotnet|test|selftest)[ \t]*$",
             RegexOptions.CultureInvariant | RegexOptions.NonBacktracking))
         {
@@ -493,24 +510,24 @@ public sealed partial class MakeWorkflowTests
     public void HelpRunsAndNamesEveryTarget()
     {
         var root = TestRepositoryLayout.FindRoot();
-        var rootResult = BoundedProcessRunner.Run(
+        var rootResult = TestProcessRunner.Run(
             "make",
             ["help"],
             root,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
-        var toolsResult = BoundedProcessRunner.Run(
+        var toolsResult = TestProcessRunner.Run(
             "make",
             ["-C", "tools", "help"],
             root,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
-        var directToolsResult = BoundedProcessRunner.Run(
+        var directToolsResult = TestProcessRunner.Run(
             "make",
             ["-f", "tools/Makefile", "help"],
             root,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
         Assert.Equal(0, rootResult.ExitCode);

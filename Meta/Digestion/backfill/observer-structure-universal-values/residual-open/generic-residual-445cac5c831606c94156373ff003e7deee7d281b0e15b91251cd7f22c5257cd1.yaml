@@ -1,0 +1,10 @@
+ast_path: row/第-9-条-工件须自报产地
+fingerprints:
+  raw_sha256: sha256:445cac5c831606c94156373ff003e7deee7d281b0e15b91251cd7f22c5257cd1
+  normalized_sha256: sha256:445cac5c831606c94156373ff003e7deee7d281b0e15b91251cd7f22c5257cd1
+cas_ref: sha256:445cac5c831606c94156373ff003e7deee7d281b0e15b91251cd7f22c5257cd1
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

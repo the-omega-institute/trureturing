@@ -108,6 +108,26 @@ public static partial class FrozenLedger
         _ => throw new FormatException("Unknown revocation evidence variant."),
     };
 
+    private static FrozenNodeId EvidenceRoot(RevocationEvidence evidence) => evidence switch
+    {
+        RevocationEvidence.KernelWitnessFailure item => item.RootFrozenNodeId,
+        RevocationEvidence.AllowedAxiomRetired item => item.RootFrozenNodeId,
+        RevocationEvidence.FormalContradictionCertificate item => item.RootFrozenNodeId,
+        RevocationEvidence.ContentAddressMismatch item => item.RootFrozenNodeId,
+        _ => throw new FormatException("Unknown revocation evidence variant."),
+    };
+
+    private static (string Oid, string Sha256) EvidenceReceipt(RevocationEvidence evidence) =>
+        evidence switch
+        {
+            RevocationEvidence.KernelWitnessFailure item => (item.ReceiptBlobOid, item.ReceiptSha256),
+            RevocationEvidence.AllowedAxiomRetired item => (item.ReceiptBlobOid, item.ReceiptSha256),
+            RevocationEvidence.FormalContradictionCertificate item =>
+                (item.ReceiptBlobOid, item.ReceiptSha256),
+            RevocationEvidence.ContentAddressMismatch item => (item.ReceiptBlobOid, item.ReceiptSha256),
+            _ => throw new FormatException("Unknown revocation evidence variant."),
+        };
+
     private static ImmutableArray<FrozenNodeId> ParseFrozenNodeIds(JsonElement value, string name) =>
         RequiredStringArray(value, name)
             .Select(item => ParseFrozenNodeId(item, name))

@@ -1,0 +1,20 @@
+**证明义务 56.4-D（第 8 部预测逃逸实例）。** 在 \(O\) 有可判等号的前件下，对任意
+\(N:\mathbb N\) 与 \(x,y:X\)，机器核验
+
+\[
+\boxed{
+\operatorname{PredictionEscape}(q,\tau,N,x,y)
+\Longleftrightarrow
+\operatorname{ExpansionEscape}
+(q,P_N^{q,\tau})(x,y).
+}
+\]
+
+因此第 8.1 部的
+
+\[
+\mathcal E_N(q,\tau)=\mathcal E(q;T_N)
+\]
+
+在本部的有类型实现中就是
+

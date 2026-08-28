@@ -1,0 +1,13 @@
+ast_path: section/Observer-Structure-and-Universal-Values-The-Gold-bc7d8069
+fingerprints:
+  raw_sha256: sha256:892781c713c3f094adc48f715d3903514100d223aef685a4ab9735179edb56ca
+  normalized_sha256: sha256:892781c713c3f094adc48f715d3903514100d223aef685a4ab9735179edb56ca
+cas_ref: sha256:892781c713c3f094adc48f715d3903514100d223aef685a4ab9735179edb56ca
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-76122ee57c5ba47380f341787be608fdcc01ad4c1cadecaa0c3a1a211557cc80-ad7d8ba18c8fa26ce69c0540bfd8c65b60652844c80ad6963a85a337a9dd0398
+    - generic-residual-3b1e5191140c2011572e4f9ea3dbb515f399bc5332cf4f39b5605843ff484db6-709a1ea886d35786e2c3c08c9ca6b5895f130d6aea36d0ed6e042b37cedb4968

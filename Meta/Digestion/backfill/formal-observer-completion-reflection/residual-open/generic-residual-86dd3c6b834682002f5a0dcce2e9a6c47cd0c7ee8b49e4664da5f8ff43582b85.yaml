@@ -1,0 +1,13 @@
+ast_path: 命题/76.6
+fingerprints:
+  raw_sha256: sha256:86dd3c6b834682002f5a0dcce2e9a6c47cd0c7ee8b49e4664da5f8ff43582b85
+  normalized_sha256: sha256:86dd3c6b834682002f5a0dcce2e9a6c47cd0c7ee8b49e4664da5f8ff43582b85
+cas_ref: sha256:86dd3c6b834682002f5a0dcce2e9a6c47cd0c7ee8b49e4664da5f8ff43582b85
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-2e5d9803683cc7f33cf4aa5783ab42207867ebb6f89c01750eb5d87850baa477-c1a0199d5037d2701dc671c76c26f087bc679e0ce1395849fd785ede8cb53ace
+    - generic-residual-74c30b26f895541fa219cd528afeec174a5b69a679c12854cf6bccd137e56930-a6006dff5d39a6c9d8f08584d1718a16aa50102e18a59fe31f5806c151144eb8

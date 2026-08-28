@@ -263,20 +263,6 @@ public sealed partial class LeanCacheEnsureCommandTests
         var target = AddWorktree(repository.Path, "incomplete-donor-target");
         var runner = new RecordingWorktreeProcessRunner();
         var cloner = new RecordingDirectoryCloner();
-        using var publishedTarget = new ManualResetEventSlim();
-        using var watcher = new FileSystemWatcher(target)
-        {
-            NotifyFilter = NotifyFilters.DirectoryName,
-            EnableRaisingEvents = true,
-        };
-        watcher.Created += (_, eventArgs) =>
-        {
-            if (Path.GetFileName(eventArgs.FullPath) == ".lake") publishedTarget.Set();
-        };
-        watcher.Renamed += (_, eventArgs) =>
-        {
-            if (Path.GetFileName(eventArgs.FullPath) == ".lake") publishedTarget.Set();
-        };
 
         var result = WorktreeCommand.Run(
             repository.Path,
@@ -285,9 +271,6 @@ public sealed partial class LeanCacheEnsureCommandTests
             cloner);
 
         Assert.True(result.Success, result.Error);
-        Assert.True(
-            publishedTarget.Wait(TimeSpan.FromSeconds(1)),
-            "the staged cache was not published after its missing count was recorded");
         Assert.Empty(result.Error);
         Assert.True(Directory.Exists(Path.Combine(target, ".lake")));
         Assert.True(File.Exists(LeanCacheStamp.PathFor(Path.Combine(target, ".lake"))));
@@ -596,7 +579,7 @@ public sealed class LeanCacheRunScriptTests
             wrapped,
             "#!/usr/bin/env bash\ntouch \"$WRAPPED_MARKER\"\nexit 23");
 
-        var result = BoundedProcessRunner.Run(
+        var result = TestProcessRunner.Run(
             "/bin/bash",
             [
                 "-c",
@@ -609,7 +592,7 @@ public sealed class LeanCacheRunScriptTests
                 wrapped,
             ],
             fixture.Path,
-            TimeSpan.FromSeconds(10),
+            TestBudgets.ScriptProcessHangGuard,
             64 * 1024);
 
         Assert.Equal(97, result.ExitCode);

@@ -34,22 +34,22 @@ concurrency:
 # candidate-owned Lean producer and .NET judge inspect GitHub's post-merge tree
 # (candidate plus the current dev parent). Candidate engineering is only a signal.
 # Admission consumes immutable raw reports from the predecessor job; the protected
-# base is the checked merge commit's first-parent SHA passed to the gate.
+# base is the checked merge commit's first-parent SHA passed to the gate. The
+# workflow itself retains an unfiltered floor for engineering and root inputs.
 jobs:
   candidate-engineering:
     name: Candidate harness engineering checks
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
+      - name: Wait for the GitHub merge ref
+        if: github.event_name == 'pull_request_target'
+        run: "set -euo pipefail\nfor attempt in {1..25}; do\n  timestamp=\"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"\n  printf '%s poll=%s/25\\n' \"$timestamp\" \"$attempt\"\n  if git ls-remote --exit-code \"https://github.com/${{ github.repository }}.git\" \"refs/pull/${{ github.event.pull_request.number }}/merge\" >/dev/null 2>&1; then exit 0; fi\n  sleep 5\ndone\nprintf '%s\\n' \"merge ref absent after 125s (conflicted PR or still computing)\"\nexit 0"
       - name: Check out candidate
         id: checkout-merge
         continue-on-error: ${{ github.event_name == 'pull_request_target' }}
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event_name == 'pull_request_target' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}
-          fetch-depth: 0
-          persist-credentials: false
-          path: candidate
+        with: { ref: "${{ github.event_name == 'pull_request_target' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
 
       - name: Strip checkout remote state
         if: steps.checkout-merge.outcome == 'success'
@@ -84,128 +84,89 @@ jobs:
           fi
           exit 1
 
-      - name: Install pinned SDK for scope derivation
+      - name: Install pinned SDK for test planning
         uses: actions/setup-dotnet@v4
         with:
           global-json-file: candidate/global.json
-      - name: Decide candidate engineering scope
+      - name: Plan candidate engineering tests
         id: scope
         shell: bash
         run: |
           set -euo pipefail
-          run="true"
-          reason="dev push always runs the union engineering check"
-          base_sha="not-applicable"
-          changed_count="0"
-          matched_count="0"
+          head_sha="$(git -C candidate rev-parse HEAD)"
+          base_sha="$(git -C candidate rev-parse HEAD^1)"
+          plan_file="$RUNNER_TEMP/engineering-test-plan.json"
+          base_full_required=false
+          changed_count=0
+          path=""
+          while IFS= read -r -d '' path; do
+            changed_count="$(expr "$changed_count" + 1)"
+            case "$path" in
+              tools|tools/*|.github/workflows/ci.yml) base_full_required=true ;;
+              */*) ;;
+              *) base_full_required=true ;;
+            esac
+          done < <(git -C candidate diff --name-only -z --no-renames --diff-filter=ACDMRTUXB "$base_sha" "$head_sha" --)
           if [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
-            :
-          elif [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
-            base_sha="$(git -C candidate rev-parse HEAD^1)"
-            candidate_sha="$(git -C candidate rev-parse HEAD)"
-            if [[ -z "$base_sha" || "$base_sha" =~ ^0+$ || -z "$candidate_sha" || "$candidate_sha" =~ ^0+$ ]]; then
-              printf '%s\n' "pull request merge result has no content-addressable dev parent or candidate SHA" >&2
-              exit 1
-            fi
-            changed_file="$RUNNER_TEMP/engineering-changed-paths"
-            derived_result="$RUNNER_TEMP/engineering-scope-result"
-            derived_log="$RUNNER_TEMP/engineering-scope.log"
-            git -C candidate diff --name-only -z --no-renames --diff-filter=ACDMRTUXB "$base_sha" "$candidate_sha" -- > "$changed_file"
-            mapfile -d '' -t changed_paths < "$changed_file"
-            changed_count="${#changed_paths[@]}"
-            mapfile -d '' -t solution_paths < <(
-              git -C candidate ls-tree -r --name-only -z "$base_sha" -- '*.sln'
-            )
-            engineering_root=""
-            if [[ "${#solution_paths[@]}" -eq 1 ]]; then
-              engineering_root="$(dirname -- "${solution_paths[0]}")"
-            else
-              reason="engineering solution root is not uniquely derivable; scope fails closed to the full check"
-            fi
-            quoted_path=""
-            for path in "${changed_paths[@]}"; do
-              printf -v quoted_path '%q' "$path"
-              printf 'ENGINEERING_SCOPE_CHANGED %s\n' "$quoted_path"
-              structural_reason=""
-              if [[ "$path" != */* ]]; then
-                structural_reason="repository-root input"
-              elif [[ -n "$engineering_root" && ( "$engineering_root" == "." ||
-                "$path" == "$engineering_root" || "$path" == "$engineering_root/"* ) ]]; then
-                structural_reason="derived engineering project root $engineering_root"
-              fi
-              if [[ -n "$structural_reason" ]]; then
-                printf 'ENGINEERING_SCOPE_MATCHED %s -> %s\n' "$quoted_path" "$structural_reason"
-                ((matched_count += 1))
-              fi
-            done
-            if [[ -z "$engineering_root" ]]; then
-              run="true"
-            elif [[ "$matched_count" -gt 0 ]]; then
-              run="true"
-              reason="post-merge delta intersects the mechanically derived engineering project surface"
-            else
-              rm -f "$derived_result"
-              set +e
-              {
-                dotnet restore candidate/tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj --locked-mode &&
-                  dotnet run --project candidate/tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj \
-                    --configuration Release --no-launch-profile --no-restore -- --repository candidate \
-                    --changes-file "$changed_file" \
-                    --result-file "$derived_result"
-              } > "$derived_log" 2>&1
-              derived_status=$?
-              set -e
-              cat "$derived_log"
-              if [[ "$derived_status" -ne 0 || ! -s "$derived_result" ]]; then
-                run="true"
-                reason="consumer input derivation failed; scope fails closed to the full check"
-              else
-                derived_run="$(sed -n 's/^run=//p' "$derived_result")"
-                derived_matched="$(sed -n 's/^matched_count=//p' "$derived_result")"
-                derived_reason="$(sed -n 's/^reason=//p' "$derived_result")"
-                if [[ ! "$derived_run" =~ ^(true|false)$ || ! "$derived_matched" =~ ^[0-9]+$ ||
-                      ! "$derived_reason" =~ ^(consumer-derived-input|proven-disjoint|incomplete-derivation)$ ]]; then
-                  run="true"
-                  reason="consumer input derivation returned an invalid result; scope fails closed to the full check"
-                else
-                  run="$derived_run"
-                  matched_count="$derived_matched"
-                  if [[ "$derived_reason" == "proven-disjoint" ]]; then
-                    reason="post-merge delta is proven disjoint from the consumer-derived engineering input closure"
-                  elif [[ "$derived_reason" == "incomplete-derivation" ]]; then
-                    reason="consumer input derivation is incomplete; scope fails closed to the full check"
-                  else
-                    reason="post-merge delta intersects the consumer-derived engineering input closure"
-                  fi
-                fi
-              fi
-            fi
+            base_full_required=true
+            FULL=1 make -C candidate/tools engineering-tests MODE=plan HEAD="$head_sha" BASE="$base_sha" PLAN_FILE="$plan_file"
           else
-            run="true"
-            reason="unrecognized event fails closed to the full engineering check"
+            make -C candidate/tools engineering-tests MODE=plan HEAD="$head_sha" BASE="$base_sha" PLAN_FILE="$plan_file"
           fi
-          printf 'ENGINEERING_SCOPE event=%s run=%s base=%s changed=%s matched=%s reason=%s\n' \
-            "$GITHUB_EVENT_NAME" "$run" "$base_sha" "$changed_count" "$matched_count" "$reason"
-          echo "run=$run" >> "$GITHUB_OUTPUT"
+          fallback_count=0
+          plan_summary=""
+          if plan_summary="$(PLAN_EXPECTED_HEAD="$head_sha" PLAN_EXPECTED_BASE="$base_sha" jq -er '
+            select(
+                (type == "object" and (keys | sort) == ["base", "head", "plan", "version"])
+                and .version == 1 and .head == env.PLAN_EXPECTED_HEAD and .base == env.PLAN_EXPECTED_BASE
+                and (.plan | type == "object" and (keys | sort) == ["changed_paths", "kind", "reason", "tests"])
+                and (.plan.kind == "full" or .plan.kind == "selected" or .plan.kind == "none")
+                and (.plan.changed_paths | type == "array" and all(.[]; type == "string"))
+                and (.plan.tests | type == "array" and all(.[];
+                  type == "object" and (keys | sort) == ["detail", "id", "project_path", "reason"]
+                  and (.project_path | type == "string" and test("\\S"))
+                  and (.id | type == "string" and test("\\S"))
+                  and (.detail | type == "string" and test("\\S"))
+                  and (.reason == "unknown_input" or .reason == "declared_input" or .reason == "compiled_input")))
+                and (.plan.reason | type == "string" and test("\\S"))
+                and ((.plan.kind == "selected") == ((.plan.tests | length) != 0)))
+            | [.plan.kind, (.plan.changed_paths | length), (.plan.tests | length)] | @tsv
+          ' "$plan_file" 2>/dev/null)"; then
+            IFS=$'\t' read -r state artifact_changed_count selected_count <<< "$plan_summary"
+          else
+            artifact_changed_count=-1
+          fi
+          if [[ "$artifact_changed_count" -ne "$changed_count" ]]; then
+            printf '%s\n' 'ENGINEERING_TEST_PLAN_FALLBACK artifact unreadable or schema-invalid' >&2
+            state=full
+            selected_count=0
+            fallback_count=1
+          fi
+          run_required=false
+          if [[ "$state" != "none" || "$base_full_required" == "true" ]]; then
+            run_required=true
+          fi
+          echo "state=$state" >> "$GITHUB_OUTPUT"
+          echo "base_full_required=$base_full_required" >> "$GITHUB_OUTPUT"
+          echo "run_required=$run_required" >> "$GITHUB_OUTPUT"
           echo "event=$GITHUB_EVENT_NAME" >> "$GITHUB_OUTPUT"
+          echo "head_sha=$head_sha" >> "$GITHUB_OUTPUT"
           echo "base_sha=$base_sha" >> "$GITHUB_OUTPUT"
           echo "changed_count=$changed_count" >> "$GITHUB_OUTPUT"
-          echo "matched_count=$matched_count" >> "$GITHUB_OUTPUT"
-          echo "reason=$reason" >> "$GITHUB_OUTPUT"
-
+          echo "selected_count=$selected_count" >> "$GITHUB_OUTPUT"
+          echo "fallback_count=$fallback_count" >> "$GITHUB_OUTPUT"
       - name: Resolve judge binary content address before build outputs exist
         id: judge-address
-        if: steps.scope.outputs.run == 'true'
+        if: steps.scope.outputs.run_required == 'true'
         shell: bash
         run: |
           set -euo pipefail
-          address="${{ hashFiles('candidate/tools/**', 'candidate/Blueprint/**/*.scribe.cs', 'candidate/Directory.*', 'candidate/global.json') }}"
-          [[ "$address" =~ ^[0-9a-f]{64}$ ]]
-          echo "address=$address" >> "$GITHUB_OUTPUT"
+          source_address="${{ hashFiles('candidate/tools/**', 'candidate/Blueprint/**/*.scribe.cs', 'candidate/Directory.*', 'candidate/global.json') }}"
+          candidate/tools/scripts/workflow/judge-content-address.sh "$source_address" >> "$GITHUB_OUTPUT"
 
       - name: Resolve pinned Lean toolchain
         id: lean
-        if: steps.scope.outputs.run == 'true'
+        if: steps.scope.outputs.run_required == 'true'
         shell: bash
         env:
           LEAN_TOOLCHAIN_FILE: candidate/lean-toolchain
@@ -216,7 +177,7 @@ jobs:
           echo "hash=$(sha256sum "$LEAN_TOOLCHAIN_FILE" | cut -d ' ' -f 1)" >> "$GITHUB_OUTPUT"
 
       - name: Restore elan and pinned Lean toolchain
-        if: steps.scope.outputs.run == 'true'
+        if: steps.scope.outputs.run_required == 'true'
         uses: actions/cache/restore@v4
         with:
           path: ~/.elan
@@ -227,7 +188,7 @@ jobs:
 
       - name: Install pinned Lean toolchain for producer integration tests
         id: install-elan
-        if: steps.scope.outputs.run == 'true'
+        if: steps.scope.outputs.run_required == 'true'
         shell: bash
         env:
           LEAN_TOOLCHAIN_FILE: ${{ steps.lean.outputs.file }}
@@ -239,26 +200,55 @@ jobs:
           "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/install-lean-toolchain.sh" "$LEAN_TOOLCHAIN_FILE" --github-path "$GITHUB_PATH"
 
       - name: Restore candidate locked dependencies
-        if: steps.scope.outputs.run == 'true'
+        if: steps.scope.outputs.run_required == 'true'
         run: |
           dotnet restore candidate/tools/tests/CompileFailProof/CompileFailProof.csproj --locked-mode
           dotnet restore candidate/tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj --locked-mode
 
       - name: Build candidate with warnings as errors
-        if: steps.scope.outputs.run == 'true'
+        if: steps.scope.outputs.run_required == 'true'
         run: make -C candidate/tools dotnet
-
       - name: Run candidate golden and integration tests
-        if: steps.scope.outputs.run == 'true'
-        run: make -C candidate/tools test
+        if: steps.scope.outputs.run_required == 'true'
+        shell: bash
+        env:
+          BASE_FULL_REQUIRED: ${{ steps.scope.outputs.base_full_required }}
+          PLAN_STATE: ${{ steps.scope.outputs.state }}
+          ENGINEERING_HEAD: ${{ steps.scope.outputs.head_sha }}
+          ENGINEERING_BASE: ${{ steps.scope.outputs.base_sha }}
+        run: |
+          set -euo pipefail
+          if [[ "$BASE_FULL_REQUIRED" == "true" ]]; then
+            required_test_projects=(
+              'candidate/tools/tests/StrataLint.Tests/StrataLint.Tests.csproj|StrataLint.Tests'
+              'candidate/tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj|StrataLint.Scribe.Tests'
+              'candidate/tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj|StrataLint.ArchitectureTests'
+            )
+            floor_results="$(mktemp -d "$RUNNER_TEMP/engineering-base-floor.XXXXXX")"
+            trap 'rm -rf -- "$floor_results"' EXIT
+            for required in "${required_test_projects[@]}"; do
+              IFS='|'
+              read -r project assembly <<< "$required"
+              assembly_results="$floor_results/$assembly"
+              mkdir -p "$assembly_results"
+              dotnet test "$project" --configuration Release --verbosity normal \
+                --logger 'trx;LogFileName=floor.trx' --results-directory "$assembly_results"
+              dotnet run \
+                --project candidate/tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj \
+                --configuration Release --no-launch-profile -- \
+                verify-trx --results-directory "$assembly_results" --required-assembly "$assembly"
+            done
+          else
+            make -C candidate/tools engineering-tests MODE=execute HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$RUNNER_TEMP/engineering-test-plan.json"
+          fi
 
       - name: Run candidate selftest twice and compare bytes
-        if: steps.scope.outputs.run == 'true'
+        if: steps.scope.outputs.run_required == 'true'
         shell: bash
         run: make -C candidate/tools selftest
 
       - name: Prove missing capability does not compile
-        if: steps.scope.outputs.run == 'true'
+        if: steps.scope.outputs.run_required == 'true'
         shell: bash
         run: |
           set +e
@@ -271,7 +261,7 @@ jobs:
           grep -F "MetaClear" <<<"$output"
 
       - name: Prove banned deterministic APIs do not compile
-        if: steps.scope.outputs.run == 'true'
+        if: steps.scope.outputs.run_required == 'true'
         shell: bash
         run: |
           proof="candidate/tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"
@@ -296,7 +286,7 @@ jobs:
 
       - name: Stage judge binaries for the shared cache (dev push only)
         id: stage-judge
-        if: steps.scope.outputs.run == 'true' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        if: steps.scope.outputs.run_required == 'true' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         shell: bash
         run: |
           set -euo pipefail
@@ -309,14 +299,14 @@ jobs:
           test -s .judge-binaries/scribe/StrataLint.Scribe.dll
 
       - name: Save judge binaries by content address (dev push only)
-        if: steps.scope.outputs.run == 'true' && steps.stage-judge.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        if: steps.scope.outputs.run_required == 'true' && steps.stage-judge.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         uses: actions/cache/save@v4
         with:
           path: .judge-binaries
-          key: stratalint-judge-binaries-v1-${{ runner.os }}-${{ steps.judge-address.outputs.address }}
+          key: stratalint-judge-binaries-v2-${{ runner.os }}-${{ steps.judge-address.outputs.runtime }}-${{ steps.judge-address.outputs.address }}
 
       - name: Save elan toolchain for engineering checks (dev push only)
-        if: steps.scope.outputs.run == 'true' && always() && steps.install-elan.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        if: steps.scope.outputs.run_required == 'true' && always() && steps.install-elan.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         uses: actions/cache/save@v4
         with:
           path: ~/.elan
@@ -327,27 +317,29 @@ jobs:
         shell: bash
         env:
           SCOPE_EVENT: ${{ steps.scope.outputs.event }}
-          SCOPE_RUN: ${{ steps.scope.outputs.run }}
+          SCOPE_STATE: ${{ steps.scope.outputs.state }}
           SCOPE_BASE: ${{ steps.scope.outputs.base_sha }}
           SCOPE_CHANGED_COUNT: ${{ steps.scope.outputs.changed_count }}
-          SCOPE_MATCHED_COUNT: ${{ steps.scope.outputs.matched_count }}
-          SCOPE_REASON: ${{ steps.scope.outputs.reason }}
+          SCOPE_SELECTED_COUNT: ${{ steps.scope.outputs.selected_count }}
+          SCOPE_FALLBACK_COUNT: ${{ steps.scope.outputs.fallback_count }}
         run: |
           set -euo pipefail
-          result="$SCOPE_RUN"
+          result="$SCOPE_STATE"
           if [[ -z "$result" ]]; then
             result="unavailable"
           fi
+          fallback_count="$SCOPE_FALLBACK_COUNT"
+          [[ -n "$fallback_count" ]] || fallback_count=0
           {
             printf '%s\n' '## Candidate engineering scope'
             printf '\n'
             printf -- '- Event: %s\n' "$SCOPE_EVENT"
-            printf -- '- Run engineering: %s\n' "$result"
+            printf -- '- Test plan: %s\n' "$result"
             printf -- '- Dev parent: %s\n' "$SCOPE_BASE"
             printf -- '- Changed paths: %s\n' "$SCOPE_CHANGED_COUNT"
-            printf -- '- Trigger matches: %s\n' "$SCOPE_MATCHED_COUNT"
-            printf -- '- Decision: %s\n' "$SCOPE_REASON"
-            printf -- '%s\n' '- Detail: see the ENGINEERING_SCOPE_CHANGED and ENGINEERING_SCOPE_MATCHED log lines of the scope step.'
+            printf -- '- Selected tests: %s\n' "$SCOPE_SELECTED_COUNT"
+            printf -- '- Planner fallback count: %s\n' "$fallback_count"
+            printf -- '%s\n' '- Detail: see the ENGINEERING_TEST_PLAN and ENGINEERING_TEST_SELECTED log lines of the planning step.'
           } >> "$GITHUB_STEP_SUMMARY"
 
   lean-inspect:
@@ -357,15 +349,14 @@ jobs:
     outputs:
       baseline_sha: ${{ steps.base.outputs.sha }}
     steps:
+      - name: Wait for the GitHub merge ref
+        if: github.event_name == 'pull_request_target'
+        run: "set -euo pipefail\nfor attempt in {1..25}; do\n  timestamp=\"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"\n  printf '%s poll=%s/25\\n' \"$timestamp\" \"$attempt\"\n  if git ls-remote --exit-code \"https://github.com/${{ github.repository }}.git\" \"refs/pull/${{ github.event.pull_request.number }}/merge\" >/dev/null 2>&1; then exit 0; fi\n  sleep 5\ndone\nprintf '%s\\n' \"merge ref absent after 125s (conflicted PR or still computing)\"\nexit 0"
       - name: Check out candidate with history
         id: checkout-merge
         continue-on-error: ${{ github.event_name == 'pull_request_target' }}
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event_name == 'pull_request_target' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}
-          fetch-depth: 0
-          persist-credentials: false
-          path: candidate
+        with: { ref: "${{ github.event_name == 'pull_request_target' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
 
       - name: Strip checkout remote state
         if: steps.checkout-merge.outcome == 'success'
@@ -400,21 +391,25 @@ jobs:
           fi
           exit 1
 
+      - name: Install pinned SDK for statement projection reconciliation
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: candidate/global.json
+
       - name: Resolve judge binary content address before build outputs exist
         id: judge-address
         shell: bash
         run: |
           set -euo pipefail
-          address="${{ hashFiles('candidate/tools/**', 'candidate/Blueprint/**/*.scribe.cs', 'candidate/Directory.*', 'candidate/global.json') }}"
-          [[ "$address" =~ ^[0-9a-f]{64}$ ]]
-          echo "address=$address" >> "$GITHUB_OUTPUT"
+          source_address="${{ hashFiles('candidate/tools/**', 'candidate/Blueprint/**/*.scribe.cs', 'candidate/Directory.*', 'candidate/global.json') }}"
+          candidate/tools/scripts/workflow/judge-content-address.sh "$source_address" >> "$GITHUB_OUTPUT"
 
       - name: Restore judge binaries
         id: judge-cache
         uses: actions/cache/restore@v4
         with:
           path: .judge-binaries
-          key: stratalint-judge-binaries-v1-${{ runner.os }}-${{ steps.judge-address.outputs.address }}
+          key: stratalint-judge-binaries-v2-${{ runner.os }}-${{ steps.judge-address.outputs.runtime }}-${{ steps.judge-address.outputs.address }}
 
       - name: Resolve checked merge result's dev parent
         id: base
@@ -450,20 +445,17 @@ jobs:
           # project/build/lock/global 输入 + inspector)、Lean 源(Trureturing.lean +
           # D5/**/*.lean)与 config(toolchain/lake-manifest/lakefile)三者的清单哈希。
 
-      # 一事不再理:报告是其输入闭包的纯函数,而该闭包已被内容寻址(上一步)。
-      # dev push 早已把结果按同一 key 存下(下方 Save 步);
-      # 只有 CI 自己的关键路径从不读 —— 于是每个 PR 重付一次 lake 恢复 + 报告生产
-      # (2026-08-11 实测 92s + 83s),哪怕闭包逐字节未变。
-      #
-      # 安全性不靠这一步:下游 `RawLeanReportArtifact.ReadFile` 会把报告里每个模块的
-      # source_sha256 与树逐一对账,不符即抛 INFRASTRUCTURE_FAILURE。一份错的或陈旧的
-      # 报告不可能被静默接受,最坏是红,不是假绿。
+      # 精确 key 命中仍直接复用;prefix restore 只提供陈旧 delta 基线,不算 cache hit。
+      # adapter 与现行 delta 机器重验报告、provenance、materials 与 producer logs;
+      # 任一项不可信就不给 cache root,沿原路径全量生产。下游仍逐模块核对
+      # source_sha256,故陈旧报告不能被静默接受。
       - name: Restore canonical Lean report by input address
         id: report-cache
         uses: actions/cache/restore@v4
         with:
           path: .canonical-lean-report-cache
           key: stratalint-canonical-lean-report-v2-${{ steps.lean-report-input.outputs.address }}
+          restore-keys: stratalint-canonical-lean-report-v2-
 
       - name: Serve candidate canonical Lean report from the cached address
         id: report-reuse
@@ -478,13 +470,13 @@ jobs:
           reports="$RUNNER_TEMP/raw-lean-reports"
           mkdir -p "$reports"
           # verify 需要 .sha256 旁文件(lean-report-input.sh:100),故一并要求存在。
-          for suffix in '' .sha256 .input.attestation .provenance.json; do
+          for suffix in '' .sha256 .input.attestation .provenance.json .materials.zip; do
             test -s "${source}${suffix}"
           done
           helper="$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh"
           # 缓存条目对候选树重新验一次地址与报告哈希;不符即整体回落,不静默使用。
           "$helper" verify --repository "$GITHUB_WORKSPACE/candidate" --report "$source"
-          for suffix in '' .input.attestation .provenance.json; do
+          for suffix in '' .input.attestation .provenance.json .materials.zip; do
             cp "${source}${suffix}" "$reports/candidate-lean-report.json${suffix}"
           done
           printf '%s  %s\n' \
@@ -511,11 +503,6 @@ jobs:
             exit 1
           fi
           "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/install-lean-toolchain.sh" candidate/lean-toolchain
-
-      - name: Install pinned SDK for statement projection reconciliation
-        uses: actions/setup-dotnet@v4
-        with:
-          global-json-file: candidate/global.json
 
       - name: Build Scribe binary on judge cache miss
         if: steps.judge-cache.outputs.cache-hit != 'true'
@@ -556,6 +543,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          export STRATALINT_REPORT_CACHE_ROOT="$("$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-ci-baseline.sh" \
+            --bundle "$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json" --cache-root "$RUNNER_TEMP/canonical-lean-report-delta-cache" || true)"
           producer="$GITHUB_WORKSPACE/candidate/tools/lean-inspector/inspect.sh"
           pair_producer="$GITHUB_WORKSPACE/candidate/tools/scripts/lean-report-pair.sh"
           test -x "$producer"
@@ -590,7 +579,7 @@ jobs:
           source="$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json"
           target="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
           mkdir -p "$(dirname "$target")"
-          for suffix in '' .input.attestation .provenance.json; do
+          for suffix in '' .input.attestation .provenance.json .materials.zip; do
             test -s "${source}${suffix}"
             cp "${source}${suffix}" "${target}${suffix}"
           done
@@ -599,6 +588,7 @@ jobs:
           test "$declaredSha256" = "$reportSha256"
           test "$declaredName" = "$(basename "$source")"
           printf '%s  %s\n' "$reportSha256" "$(basename "$target")" > "${target}.sha256"
+          cp -R "${source}.logs" "${target}.logs" 2>/dev/null || true
           "$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh" verify \
             --repository "$GITHUB_WORKSPACE/candidate" \
             --report "$target"
@@ -669,15 +659,14 @@ jobs:
     env:
       DEV_BASELINE_SHA: ${{ needs.lean-inspect.outputs.baseline_sha }}
     steps:
+      - name: Wait for the GitHub merge ref
+        if: github.event_name == 'pull_request_target'
+        run: "set -euo pipefail\nfor attempt in {1..25}; do\n  timestamp=\"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"\n  printf '%s poll=%s/25\\n' \"$timestamp\" \"$attempt\"\n  if git ls-remote --exit-code \"https://github.com/${{ github.repository }}.git\" \"refs/pull/${{ github.event.pull_request.number }}/merge\" >/dev/null 2>&1; then exit 0; fi\n  sleep 5\ndone\nprintf '%s\\n' \"merge ref absent after 125s (conflicted PR or still computing)\"\nexit 0"
       - name: Check out candidate with history
         id: checkout-merge
         continue-on-error: ${{ github.event_name == 'pull_request_target' }}
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event_name == 'pull_request_target' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}
-          fetch-depth: 0
-          persist-credentials: false
-          path: candidate
+        with: { ref: "${{ github.event_name == 'pull_request_target' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
 
       - name: Strip checkout remote state
         if: steps.checkout-merge.outcome == 'success'
@@ -712,26 +701,25 @@ jobs:
           fi
           exit 1
 
+      - name: Install pinned SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: candidate/global.json
+
       - name: Resolve judge binary content address before build outputs exist
         id: judge-address
         shell: bash
         run: |
           set -euo pipefail
-          address="${{ hashFiles('candidate/tools/**', 'candidate/Blueprint/**/*.scribe.cs', 'candidate/Directory.*', 'candidate/global.json') }}"
-          [[ "$address" =~ ^[0-9a-f]{64}$ ]]
-          echo "address=$address" >> "$GITHUB_OUTPUT"
+          source_address="${{ hashFiles('candidate/tools/**', 'candidate/Blueprint/**/*.scribe.cs', 'candidate/Directory.*', 'candidate/global.json') }}"
+          candidate/tools/scripts/workflow/judge-content-address.sh "$source_address" >> "$GITHUB_OUTPUT"
 
       - name: Restore judge binaries
         id: judge-cache
         uses: actions/cache/restore@v4
         with:
           path: .judge-binaries
-          key: stratalint-judge-binaries-v1-${{ runner.os }}-${{ steps.judge-address.outputs.address }}
-
-      - name: Install pinned SDK
-        uses: actions/setup-dotnet@v4
-        with:
-          global-json-file: candidate/global.json
+          key: stratalint-judge-binaries-v2-${{ runner.os }}-${{ steps.judge-address.outputs.runtime }}-${{ steps.judge-address.outputs.address }}
 
       - name: Download canonical Lean reports
         uses: actions/download-artifact@v4

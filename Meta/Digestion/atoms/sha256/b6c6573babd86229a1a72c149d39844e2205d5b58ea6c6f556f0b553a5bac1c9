@@ -1,0 +1,22 @@
+## 推论 25.1（记忆是 reflector 的单位余量）
+
+反射单位
+
+$$
+q⪯C_F(q)
+$$
+
+新增的不是任意隐藏状态，而是原 kernel 与最大不变子kernel之间的相对差异。在线性模型中正是
+
+$$
+ker(C)/N_∞.
+$$
+
+所以：
+
+$$
+memory
+=
+unit of dynamical reflection measured inside the current fiber.
+$$
+

@@ -1,0 +1,10 @@
+ast_path: section/43-自由在选择后可以生成自我施加的必然
+fingerprints:
+  raw_sha256: sha256:9802bf30353f4ea00155fbafe980a6287497d2a79a6ff99e44782776dc7a1c24
+  normalized_sha256: sha256:9802bf30353f4ea00155fbafe980a6287497d2a79a6ff99e44782776dc7a1c24
+cas_ref: sha256:9802bf30353f4ea00155fbafe980a6287497d2a79a6ff99e44782776dc7a1c24
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

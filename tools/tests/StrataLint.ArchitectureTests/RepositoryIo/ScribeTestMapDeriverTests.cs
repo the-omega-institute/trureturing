@@ -1,3 +1,5 @@
+using StrataLint.Tests;
+
 namespace StrataLint.ArchitectureTests;
 
 public sealed class ScribeTestMapDeriverTests
@@ -14,21 +16,18 @@ public sealed class ScribeTestMapDeriverTests
     [Fact]
     public void RepositoryMapHasNoUnknownGrowthAndEveryPathIsDeclared()
     {
-        const string ledgerSupersedeTests =
-            "tools/tests/StrataLint.Tests/Ledger/LedgerSupersedeCommandTests.cs";
         var map = ScribeTestMapDeriver.DeriveRepository(RepositoryLayout.FindRoot());
-        var unknownLedgerSupersedeMethods = map.Methods
-            .Where(method => method.SourcePath == ledgerSupersedeTests && method.IsUnknown)
-            .Select(method => $"{method.Id}: {string.Join(", ", method.UnknownReasons)}")
-            .ToArray();
 
         Assert.Equal(280, ScribeUnknownDebtPolicy.UnknownDebtLimit);
         Assert.Equal(281, ScribeUnknownDebtPolicy.UnknownDebtToleranceLimit);
         Assert.Empty(ScribeUnknownDebtPolicy.InspectCurrent(map));
-        Assert.True(
-            unknownLedgerSupersedeMethods.Length == 0,
-            "conservative unknown ledger-supersede methods:\n"
-                + string.Join('\n', unknownLedgerSupersedeMethods));
+        var retiredLedgerMethod = Assert.Single(
+            map.Methods,
+            static method => method.Id ==
+                "TruthExportCommandTests.ExportEqualsStrictActiveSetDroppingRevokedNodes");
+        Assert.False(
+            retiredLedgerMethod.IsUnknown,
+            $"{retiredLedgerMethod.Id}: {string.Join(',', retiredLedgerMethod.UnknownReasons)}");
         Assert.All(
             map.Methods.SelectMany(static method => method.Paths),
             path => Assert.True(
@@ -145,6 +144,28 @@ public sealed class ScribeTestMapDeriverTests
     }
 
     [Fact]
+    public void MsBuildCompileQueryFailureDoesNotProduceOrphanFindings()
+    {
+        const string sourcePath = "tools/tests/CompileFailProof/MissingCapability.cs";
+        using var repository = CreateTrackedRepository(
+            ("tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", SdkProject),
+            ("tools/tests/CompileFailProof/CompileFailProof.csproj", SdkProject),
+            (sourcePath, "class MissingCapability { }"));
+
+        var map = ScribeTestMapDeriver.DeriveRepository(
+            repository.Path,
+            Path.Combine(repository.Path, "missing-dotnet"));
+        var findings = ScribeUnknownDebtPolicy.InspectCurrent(map);
+
+        Assert.NotEmpty(map.CompileQueryFindings);
+        Assert.Contains(findings, static finding => finding.Message.Contains(
+            "MSBuild Compile query failed closed",
+            StringComparison.Ordinal));
+        Assert.DoesNotContain(sourcePath, map.OrphanManagedSourcePaths);
+        Assert.DoesNotContain(findings, finding => finding.Path == sourcePath);
+    }
+
+    [Fact]
     public void MsBuildCompileQueryTimeoutProducesBlockingFinding()
     {
         using var repository = CreateTrackedRepository(
@@ -152,7 +173,7 @@ public sealed class ScribeTestMapDeriverTests
 
         var map = ScribeTestMapDeriver.DeriveRepository(
             repository.Path,
-            timeout: TimeSpan.Zero);
+            timeout: TestBudgets.ZeroDuration);
         var finding = Assert.Single(map.CompileQueryFindings);
 
         Assert.Contains("timed out", finding.Message, StringComparison.Ordinal);
@@ -630,11 +651,11 @@ public sealed class ScribeTestMapDeriverTests
     }
 
     private static ProcessOutput RunGit(string repositoryRoot, params string[] arguments) =>
-        BoundedProcessRunner.Run(
+        TestProcessRunner.Run(
             "git",
             arguments,
             repositoryRoot,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             1024 * 1024);
 
     private sealed class TemporaryRepository : IDisposable

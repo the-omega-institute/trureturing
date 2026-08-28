@@ -1,0 +1,15 @@
+### 56.2.4 与既有“同向量取商”的一致性
+
+现在加强前件：五个坐标都带偏序，而不只是预序。由原先可判的
+\(\le\)
+与反对称性，逐坐标构造可判等号，再由五个字段构造
+`GainVector`
+的可判等号。定义同向量类
+
+\[
+\operatorname{sameVectorClass}_{v,F}(x)
+:=
+\operatorname{carrierEnum}_F.\operatorname{filter}
+\bigl(\lambda y:A_F,\ v(y.1)=v(x.1)\bigr).
+\]
+

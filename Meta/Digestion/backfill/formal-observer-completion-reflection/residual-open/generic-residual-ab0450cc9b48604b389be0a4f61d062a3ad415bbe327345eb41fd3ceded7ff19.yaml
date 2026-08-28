@@ -1,0 +1,10 @@
+ast_path: section/47-2-构造可行动作集
+fingerprints:
+  raw_sha256: sha256:ab0450cc9b48604b389be0a4f61d062a3ad415bbe327345eb41fd3ceded7ff19
+  normalized_sha256: sha256:ab0450cc9b48604b389be0a4f61d062a3ad415bbe327345eb41fd3ceded7ff19
+cas_ref: sha256:ab0450cc9b48604b389be0a4f61d062a3ad415bbe327345eb41fd3ceded7ff19
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

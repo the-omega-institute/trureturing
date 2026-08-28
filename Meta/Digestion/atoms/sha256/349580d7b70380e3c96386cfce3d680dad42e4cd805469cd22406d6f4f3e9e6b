@@ -1,0 +1,52 @@
+### 56.2.2 等价类、类像与有限商承载
+
+对 \(x:A_F\)，定义显式等价类
+
+\[
+\boxed{
+\operatorname{paretoClass}_{v,F}(x)
+:=
+\operatorname{carrierEnum}_F.\operatorname{filter}
+\bigl(\lambda y:A_F,\
+\operatorname{ParetoEqOn}(v,F,y,x)\bigr).
+}
+\]
+
+定义全部类的有限像
+
+\[
+\operatorname{paretoClassImage}_{v,F}
+:=
+\operatorname{carrierEnum}_F.\operatorname{image}
+\bigl(\operatorname{paretoClass}_{v,F}\bigr)
+\in
+\operatorname{Finset}\bigl(\operatorname{Finset}(A_F)\bigr).
+\]
+
+定义有限 Pareto 商承载
+
+\[
+\boxed{
+\operatorname{FiniteParetoQuotient}(v,F)
+:=
+\left\{
+C:\operatorname{Finset}(A_F)
+\ \middle|\
+C\in\operatorname{paretoClassImage}_{v,F}
+\right\}.
+}
+\]
+
+记该类型为 \(Q_{v,F}\)。再定义它的显式全枚举
+
+\[
+\boxed{
+\operatorname{quotientEnum}_{v,F}
+:=
+\operatorname{paretoClassImage}_{v,F}.\operatorname{attach}
+\in\operatorname{Finset}(Q_{v,F}).
+}
+\]
+
+这里的“商”就是有限类像本身；下游不需要选择代表元，也不需要调用抽象 `Quotient`。
+

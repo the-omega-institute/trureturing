@@ -1,0 +1,10 @@
+ast_path: row/无限维残差测试量
+fingerprints:
+  raw_sha256: sha256:0e0bb0dac400cc1e4bdff034c28d8e653149abe6130bef368868857296162b4c
+  normalized_sha256: sha256:0e0bb0dac400cc1e4bdff034c28d8e653149abe6130bef368868857296162b4c
+cas_ref: sha256:0e0bb0dac400cc1e4bdff034c28d8e653149abe6130bef368868857296162b4c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

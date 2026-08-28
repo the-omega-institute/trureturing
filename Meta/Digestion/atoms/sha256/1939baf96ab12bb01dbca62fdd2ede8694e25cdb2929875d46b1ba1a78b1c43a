@@ -1,0 +1,18 @@
+# 426. 哲学理论之间的映射必须同时保持状态、过程与锚点
+
+设两个哲学模型：
+
+[
+\mathfrak M
+===========
+
+(X,\operatorname{Adm}_X,a_X,U_X,F^X,\mathcal C_X),
+]
+
+[
+\mathfrak N
+===========
+
+(Y,\operatorname{Adm}_Y,a_Y,U_Y,F^Y,\mathcal C_Y).
+]
+

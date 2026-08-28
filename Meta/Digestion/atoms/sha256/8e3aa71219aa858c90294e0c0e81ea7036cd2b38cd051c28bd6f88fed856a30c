@@ -1,0 +1,26 @@
+## 定理 1.1（核判据）
+
+以下等价：
+
+\[
+T\text{ 沿 }q\text{ 因子化};
+\]
+
+\[
+K_q\subseteq K_T;
+\]
+
+\[
+q(x)=q(y)\Longrightarrow T(x)=T(y).
+\]
+
+### 证明
+
+若 \(T=\overline T\circ\widehat q\)，则相同 \(q\)-值经同一 \(\overline T\) 得到相同 \(T\)-值。反向定义
+
+\[
+\overline T(\widehat q(x)):=T(x).
+\]
+
+核包含保证该定义与代表元无关；有效像满射保证唯一性。\(\square\)
+

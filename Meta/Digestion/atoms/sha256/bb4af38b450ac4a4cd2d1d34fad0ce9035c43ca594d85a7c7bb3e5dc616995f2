@@ -1,0 +1,22 @@
+## 定义 102.1（状态侧观察半范数）
+
+对
+
+$$
+D\in\operatorname{Herm}_d^0
+$$
+
+定义
+
+$$
+\boxed{
+\|D\|_{\mathfrak O}^2
+=
+\sum_{r=1}^m
+w_r
+\left|
+\operatorname{Tr}(DE_r)
+\right|^2.
+}
+$$
+

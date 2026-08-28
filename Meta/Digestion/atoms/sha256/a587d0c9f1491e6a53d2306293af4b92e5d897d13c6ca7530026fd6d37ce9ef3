@@ -1,0 +1,32 @@
+# 103. 最小观察预算是秩次模覆盖
+
+设候选测量设置集合为
+
+$$
+\mathcal X.
+$$
+
+每个设置 $x$ 贡献中心化效果子空间
+
+$$
+U_x
+=
+\operatorname{span}_{\mathbb R}
+\left\{
+E_{a|x}
+-
+\frac{\operatorname{Tr}E_{a|x}}dI
+\right\}_a.
+$$
+
+对设置集合 $S\subseteq\mathcal X$，定义
+
+$$
+r(S)
+=
+\dim
+\left(
+\sum_{x\in S}U_x
+\right).
+$$
+

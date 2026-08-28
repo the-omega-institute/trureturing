@@ -1,0 +1,22 @@
+## 定理 224.2（预测状态的普适最小性）
+
+若另一个历史接口
+
+$$
+r:\mathcal H\to R
+$$
+
+能够决定全部未来 transcript law，则存在唯一映射
+
+$$
+\overline r:\operatorname{Im}r\to S_{\mathrm{pred}}
+$$
+
+使
+
+$$
+\Psi=\overline r\circ r.
+$$
+
+所以 $S_{\mathrm{pred}}$ 是全部未来实验预测所需的最粗历史状态。
+

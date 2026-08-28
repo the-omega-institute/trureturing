@@ -1,0 +1,16 @@
+ast_path: section/80-1-一个必须比较的-CM-模形式
+fingerprints:
+  raw_sha256: sha256:e5dec20a27de17f7c4fac053787232caa13b65fa4640113516cc7d68f98ec6fb
+  normalized_sha256: sha256:e5dec20a27de17f7c4fac053787232caa13b65fa4640113516cc7d68f98ec6fb
+cas_ref: sha256:e5dec20a27de17f7c4fac053787232caa13b65fa4640113516cc7d68f98ec6fb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-1daa3f1860f1cc840ef75f209d76deb82291893a6c35e2821ebc41181ac10fcc-4b836a88a6e5caa0a5542755f5cc3ae70cfd46a032a73721c40df8cac6918db0
+    - generic-residual-9e71c3878934a4a7182b28aad62b5501df0dd4018a2df0857d72845e929f087f-f55b346b97c186f5ab4409163dfba46be5231e87818d8851e519bf5cee9502fb
+    - generic-residual-41d3b55f074f49295ee42646976c2c972f8bc511fe6f7f57d25e51a8de15ddef-31bb7fcae4930fd908320ed1f7a9b2b2ac9da3cab62033f32c5c4d346ef30889
+    - generic-residual-acf3ba681df88a2125b96898f1e1a464e277c4a1ebc20ac3f14dc9f9f6c86ffc-fd4714aaf3a25d5a6d652f18bf3aaea514d0ca8ea9ec624939fb79d822ece214
+    - generic-residual-9f5cebd3cf5ec1ea7b76bd6877c588a67133e4ec8ce84a37178dd9dbf4b72ad9-ef133e9a9efde32ea2836dd13e935c9bb9f73bb83fd7a766908fd77a2d681c39

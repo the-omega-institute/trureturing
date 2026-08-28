@@ -1,0 +1,36 @@
+## 定理 39.1（无等变确定性 selector）
+
+若存在 $x\in X$ 与 $\gamma\in\Gamma$ 满足
+
+$$
+\gamma x=x,
+$$
+
+但 $\gamma$ 在合法动作集 $\mathcal A(x)$ 上没有固定点：
+
+$$
+\forall a\in\mathcal A(x),
+\quad
+\gamma a\neq a,
+$$
+
+则不存在等变确定性 selector
+
+$$
+\sigma(x)\in\mathcal A(x).
+$$
+
+### 证明
+
+假设存在。由 $\gamma x=x$ 和等变性：
+
+$$
+\sigma(x)
+=
+\sigma(\gamma x)
+=
+\gamma\sigma(x).
+$$
+
+所以 $\sigma(x)$ 是 $\gamma$ 的固定动作，与假设矛盾。∎
+

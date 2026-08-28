@@ -1,0 +1,42 @@
+# 69. 集体自由保持联盟
+
+设成员集合 $N=\{1,\ldots,n\}$。对联盟 $C\subseteq N$，把 $C$ 的控制视为主体动作，其余成员与环境视为外部响应，定义联盟自由保持核
+
+$$
+\mathsf{FreeKernel}_C.
+$$
+
+若联盟扩大只增加控制能力而不增加对手能力，则
+
+$$
+\boxed{
+C\subseteq D
+\Longrightarrow
+\mathsf{FreeKernel}_C
+\subseteq
+\mathsf{FreeKernel}_D.
+}
+$$
+
+定义状态 $x$ 的最小自由保持联盟阶数
+
+$$
+\boxed{
+r_{\mathrm{viab}}(x)
+=
+\min\{|C|:x\in\mathsf{FreeKernel}_C\}.
+}
+$$
+
+它与第 32 节的最小作者联盟不同：
+
+```text
+谁共同产生了行动
+≠
+谁共同维持了主体继续行动的能力。
+```
+
+集体主体可以在行为作者性和长期存续性两方面具有不同的不可约联盟结构。
+
+---
+

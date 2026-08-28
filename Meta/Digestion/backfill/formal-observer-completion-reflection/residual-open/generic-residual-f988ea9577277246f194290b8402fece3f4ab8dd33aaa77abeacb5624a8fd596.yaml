@@ -1,0 +1,10 @@
+ast_path: section/117-3-任意量子状态
+fingerprints:
+  raw_sha256: sha256:f988ea9577277246f194290b8402fece3f4ab8dd33aaa77abeacb5624a8fd596
+  normalized_sha256: sha256:f988ea9577277246f194290b8402fece3f4ab8dd33aaa77abeacb5624a8fd596
+cas_ref: sha256:f988ea9577277246f194290b8402fece3f4ab8dd33aaa77abeacb5624a8fd596
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

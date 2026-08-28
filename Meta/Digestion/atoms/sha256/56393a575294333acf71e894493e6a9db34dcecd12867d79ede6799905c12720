@@ -1,0 +1,17 @@
+# 84. 观察商的仿射表示
+
+定义限制映射
+
+$$
+r_{\mathfrak O}:
+\mathsf S_d\to V_{\mathfrak O}^*
+$$
+
+为
+
+$$
+r_{\mathfrak O}(\rho)(A)
+=
+\operatorname{Tr}(\rho A).
+$$
+

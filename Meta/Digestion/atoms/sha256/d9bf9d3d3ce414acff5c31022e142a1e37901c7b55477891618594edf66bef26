@@ -1,0 +1,22 @@
+# 99. 局部观察者与约化态边界
+
+设全局系统为
+
+$$
+\mathcal H_A\otimes\mathcal H_B.
+$$
+
+观察者 $B$ 只能访问局部效果
+
+$$
+I_A\otimes E_B.
+$$
+
+定义约化态
+
+$$
+\rho_B
+=
+\operatorname{Tr}_A\rho_{AB}.
+$$
+

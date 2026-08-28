@@ -34,7 +34,7 @@ At treatment true the first model still returns false and the second returns tru
 
 **Theorem 1.3 (The three query kernels form a strictness-capable chain).**
 
-$$\forall M \in DeterministicBoolSCM, N \in DeterministicBoolSCM,\; CF\left(M\right) = CF\left(N\right) \Rightarrow Int\left(M\right) = Int\left(N\right) \land \left(\forall M \in DeterministicBoolSCM, N \in DeterministicBoolSCM,\; Int\left(M\right) = Int\left(N\right) \Rightarrow Obs\left(M\right) = Obs\left(N\right) \land \left(\exists M \in DeterministicBoolSCM, N \in DeterministicBoolSCM,\; Int\left(M\right) = Int\left(N\right) \land CF\left(M\right) \ne CF\left(N\right) \land \exists M \in DeterministicBoolSCM, N \in DeterministicBoolSCM,\; Obs\left(M\right) = Obs\left(N\right) \land Int\left(M\right) \ne Int\left(N\right)\right)\right)$$
+$$\left(\forall M \in DeterministicBoolSCM, N \in DeterministicBoolSCM,\; CF\left(M\right) = CF\left(N\right) \Rightarrow Int\left(M\right) = Int\left(N\right)\right) \land \left(\left(\forall M \in DeterministicBoolSCM, N \in DeterministicBoolSCM,\; Int\left(M\right) = Int\left(N\right) \Rightarrow Obs\left(M\right) = Obs\left(N\right)\right) \land \left(\left(\exists M \in DeterministicBoolSCM, N \in DeterministicBoolSCM,\; Int\left(M\right) = Int\left(N\right) \land CF\left(M\right) \ne CF\left(N\right)\right) \land \left(\exists M \in DeterministicBoolSCM, N \in DeterministicBoolSCM,\; Obs\left(M\right) = Obs\left(N\right) \land Int\left(M\right) \ne Int\left(N\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Causal/ObservationInterventionCounterfactualChain.observation_intervention_counterfactual_chain` (`✓ std3`). ∎
 

@@ -1,0 +1,19 @@
+# 510. 干预 carry 阻碍宏观因果闭合
+
+对干预 (u)，定义：
+
+[
+\boxed{
+\operatorname{ICarry}_u(C)
+==========================
+
+\left{
+(x,y)
+;\middle|;
+C(x)=C(y),
+\quad
+C(F_ux)\neq C(F_uy)
+\right}.
+}
+]
+

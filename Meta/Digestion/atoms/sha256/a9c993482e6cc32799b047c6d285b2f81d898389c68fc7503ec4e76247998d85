@@ -1,0 +1,12 @@
+## 定理 5.1（余量空当且仅当局部完备）
+
+\[
+\operatorname{LGRes}(q)=\varnothing
+\iff
+\operatorname{Injective}(q_{\mathrm{all}}).
+\]
+
+### 证明
+
+若完整读出单射，则不存在不同状态具有相同全部局部输出。反之，若不单射，存在 \(x\neq y\) 且完整输出相同，函数外延给出逐坐标相同，构成 `LGRes` 的项。\(\square\)
+

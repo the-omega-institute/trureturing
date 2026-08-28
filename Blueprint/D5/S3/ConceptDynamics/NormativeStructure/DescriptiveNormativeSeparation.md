@@ -6,7 +6,7 @@ One descriptive structure admits incompatible normative extensions.
 
 **Theorem 1.1 (Descriptive structure does not uniquely determine norms).**
 
-$$D = (X, Adm_{phys}, F, C, a), U \neq \emptyset,\\{}\exists M_{1}, M_{2},\\{}P_{1} = \operatorname{Permitted}(M_{1}), P_{2} = \operatorname{Permitted}(M_{2}),\\{}\operatorname{Desc}(M_{1}) = D \land \operatorname{Desc}(M_{2}) = D \land\\{}(\forall x, u, P_{1}(x)(u)) \land\\{}(\forall x, u, \neg P_{2}(x)(u)) \land\\{}P_{1} \neq P_{2} \land\\{}\forall I, \neg (I(D) = P_{1} \land I(D) = P_{2}).$$
+$$\forall State, Action, Description: \operatorname{Type},\\{}descriptive: \operatorname{DescriptiveStructure}(State, Action, Description), action: Action,\\{}\exists M_{1}, M_{2}: \operatorname{NormativeExtension}(State, Action, Description),\\{}\operatorname{Desc}(M_{1}) = descriptive \land \operatorname{Desc}(M_{2}) = descriptive \land\\{}(\forall x: State, u: Action, \operatorname{Permitted}(M_{1})(x)(u)) \land\\{}(\forall x: State, u: Action, \neg \operatorname{Permitted}(M_{2})(x)(u)) \land\\{}\operatorname{Permitted}(M_{1}) \neq \operatorname{Permitted}(M_{2}) \land\\{}\forall I: \operatorname{DescriptiveStructure}(State, Action, Description) \to \left(State \to \left(Action \to \operatorname{Prop}\right)\right), \neg (I(descriptive) = \operatorname{Permitted}(M_{1}) \land I(descriptive) = \operatorname{Permitted}(M_{2})).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/NormativeStructure/DescriptiveNormativeSeparation.descriptive_structure_does_not_uniquely_determine_norms` (`✓ std3`). ∎
 

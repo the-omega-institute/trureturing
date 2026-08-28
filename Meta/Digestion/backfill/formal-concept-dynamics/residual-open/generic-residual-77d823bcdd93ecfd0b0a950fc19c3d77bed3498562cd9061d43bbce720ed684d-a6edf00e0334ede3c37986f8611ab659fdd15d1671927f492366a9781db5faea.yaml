@@ -1,0 +1,10 @@
+ast_path: section/389-隐藏耦合是组合-carry/clause/1
+fingerprints:
+  raw_sha256: sha256:77d823bcdd93ecfd0b0a950fc19c3d77bed3498562cd9061d43bbce720ed684d
+  normalized_sha256: sha256:77d823bcdd93ecfd0b0a950fc19c3d77bed3498562cd9061d43bbce720ed684d
+cas_ref: sha256:77d823bcdd93ecfd0b0a950fc19c3d77bed3498562cd9061d43bbce720ed684d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,33 @@
+## 定理 33.2（非零整数隐藏动作无连续实扩张；Lean 锚点）
+
+若
+
+$$
+J:\mathbb Z\to K_\infty
+$$
+
+是非零加法同态，则不存在连续加法同态
+
+$$
+\Phi:\mathbb R\to K_\infty
+$$
+
+满足
+
+$$
+\Phi|_\mathbb Z=J.
+$$
+
+对应仓库锚点：
+
+```text
+D5/S3/Observer/HiddenFlow/DiscreteRigidity.
+  nonzero_integer_action_has_no_continuous_real_extension
+```
+
+仓库另给出显式非零见证
+
+$$
+J_{\mathrm{can}}(n)_p=n\in\mathbb Z_p.
+$$
+

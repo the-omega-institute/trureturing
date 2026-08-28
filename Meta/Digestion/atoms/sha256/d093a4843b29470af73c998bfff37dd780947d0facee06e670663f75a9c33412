@@ -1,0 +1,13 @@
+## 定理 95.2（选择性条件化）
+
+读取记录 $a$ 后，系统条件态为
+
+$$
+\boxed{
+\rho_a
+=
+\frac{P_a\rho P_a}
+{\operatorname{Tr}(\rho P_a)}.
+}
+$$
+

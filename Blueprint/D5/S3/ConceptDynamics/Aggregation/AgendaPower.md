@@ -6,7 +6,7 @@ Changing only the order of sequential pairwise comparisons can make any candidat
 
 **Theorem 1.1 (Every candidate wins under a suitable valid agenda).**
 
-$$\left(\forall w \in \operatorname{Fin}\left(3\right),\; \exists g \in Agenda,\; \operatorname{ValidAgenda}\left(g\right) \land \operatorname{sequentialWinner}\left(majorityPrefers, g\right) = w\right) \land \exists g \in Agenda, h \in Agenda,\; \operatorname{ValidAgenda}\left(g\right) \land \left(\operatorname{ValidAgenda}\left(h\right) \land \left(\left(\neg g = h\right) \land \left(\neg \operatorname{sequentialWinner}\left(majorityPrefers, g\right) = \operatorname{sequentialWinner}\left(majorityPrefers, h\right)\right)\right)\right)$$
+$$\left(\forall w \in \operatorname{Fin}\left(3\right),\; \exists g \in Agenda,\; \operatorname{ValidAgenda}\left(g\right) \land \operatorname{sequentialWinner}\left(majorityPrefers, g\right) = w\right) \land \left(\exists g \in Agenda, h \in Agenda,\; \operatorname{ValidAgenda}\left(g\right) \land \left(\operatorname{ValidAgenda}\left(h\right) \land \left(\left(\neg g = h\right) \land \left(\neg \operatorname{sequentialWinner}\left(majorityPrefers, g\right) = \operatorname{sequentialWinner}\left(majorityPrefers, h\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Aggregation/AgendaPower.agenda_power` (`✓ std3`). ∎
 

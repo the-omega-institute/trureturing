@@ -1,0 +1,10 @@
+ast_path: section/136-任务相对-prime-quantum-完成
+fingerprints:
+  raw_sha256: sha256:b971ad89dc7fc36aa605754ee9b758d0b2728950976e20816944e979c4d785dc
+  normalized_sha256: sha256:b971ad89dc7fc36aa605754ee9b758d0b2728950976e20816944e979c4d785dc
+cas_ref: sha256:b971ad89dc7fc36aa605754ee9b758d0b2728950976e20816944e979c4d785dc
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

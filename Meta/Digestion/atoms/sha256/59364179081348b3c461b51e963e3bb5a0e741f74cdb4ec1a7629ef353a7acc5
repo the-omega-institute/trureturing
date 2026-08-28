@@ -1,0 +1,16 @@
+## 定理 207.1（反序 Galois 连接）
+
+对任意 $Q\subseteq P$ 与 $R\subseteq X^2$：
+
+$$
+\boxed{
+Q\subseteq\Pi(R)
+\iff
+R\subseteq K(Q).
+}
+$$
+
+### 证明
+
+左侧表示每个 $p\in Q$ 都在每个 $(x,y)\in R$ 上取相同值。这恰好表示每个 $(x,y)\in R$ 属于所有 $\ker c_p$ 的交。∎
+

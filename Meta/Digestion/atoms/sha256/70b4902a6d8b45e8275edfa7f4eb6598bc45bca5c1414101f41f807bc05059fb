@@ -1,0 +1,12 @@
+## 定义 24.1（因果自主容量）
+
+有限模型中定义
+
+$$
+\boxed{
+C_{\mathrm{aut}}(e)
+=
+\sup_{\nu\in\operatorname{Prob}(M)}I_\nu(M;A).
+}
+$$
+

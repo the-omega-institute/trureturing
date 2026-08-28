@@ -29,8 +29,8 @@ internal static class TruthExportCommand
             var identity = DagLedgerCommandPreparation.Ask(repository.ResolveCurrentRevision);
             var snapshot = Decode(DagLedgerCommandPreparation.Ask(
                 () => repository.ReadRevision(identity.Revision)));
-            var reportBytes = File.ReadAllBytes(options.CandidateLeanReport);
-            var preparation = PrepareStrictHistory(repository, snapshot, identity, reportBytes);
+            var report = RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, snapshot);
+            var preparation = PrepareStrictHistory(repository, snapshot, identity, report);
             if (preparation.Outcome is FrozenLedgerValidationOutcome.Rejected rejected)
             {
                 return new ExplicitCommandResult(
@@ -71,26 +71,27 @@ internal static class TruthExportCommand
         IRepositoryGateway repository,
         RepositorySnapshot snapshot,
         FrozenRevisionIdentity identity,
-        ReadOnlySpan<byte> reportBytes)
+        LeanAxiomReport report)
     {
         var ledgerFiles = LedgerFiles(snapshot);
         var baseView = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
             ledgerFiles.ToImmutableDictionary(static file => file.Path)));
-        var report = RawLeanReportArtifact.Read(reportBytes, snapshot);
         var truth = DagLedgerCommandPreparation.BuildTruth(snapshot, report);
+        var states = LeanTruthStates.Resolve(truth.Snapshot, truth.Lean);
+        var adjacency = LeanImportAdjacency.Build(truth.Snapshot, truth.Lean);
         var catalog = DagLedgerCommandPreparation.BuildCompleteCatalog(
             truth.Snapshot,
             truth.Lean,
+            states,
+            adjacency,
             baseView,
             identity);
-        var syntax = DagLedgerCommandPreparation.LoadLedgerFiles(
+        var events = DagLedgerCommandPreparation.LoadTrustedLedgerFiles(
             ledgerFiles,
             "frozen ledger");
-        var outcome = FrozenLedger.ValidateHistory(
-            syntax,
-            catalog,
-            TrustReferences(repository, syntax));
-        return new StrictTruthHistoryPreparation(truth, baseView, outcome);
+        _ = TrustReferences(repository, events);
+        var outcome = FrozenLedger.ValidateTrustedHistory(baseView, catalog);
+        return new StrictTruthHistoryPreparation(truth, states, baseView, outcome);
     }
 
     private static ImmutableArray<RepositoryFile> LedgerFiles(RepositorySnapshot snapshot)
@@ -110,9 +111,9 @@ internal static class TruthExportCommand
 
     private static TrustedFrozenGitReferences TrustReferences(
         IRepositoryGateway repository,
-        FrozenLedgerSyntax syntax)
+        ImmutableArray<DagLedgerFileEvent> events)
     {
-        var references = FrozenLedger.ScanReferences(syntax) switch
+        var references = FrozenLedger.ScanReferences(events) switch
         {
             FrozenLedgerReferenceScanOutcome.Accepted accepted => accepted.References,
             FrozenLedgerReferenceScanOutcome.Rejected rejected => throw new InvalidOperationException(
@@ -122,8 +123,7 @@ internal static class TruthExportCommand
         return references.CommitOids.IsEmpty
             && references.TreeOids.IsEmpty
             && references.BlobOids.IsEmpty
-            && references.EnvironmentReferences.IsEmpty
-                ? TrustedFrozenGitReferences.CreateForTrustedAdapter([], [])
+                ? TrustedFrozenGitReferences.CreateForTrustedAdapter([])
                 : repository.ValidateFrozenReferences(references);
     }
 
@@ -227,5 +227,6 @@ internal static class TruthExportCommand
 
 internal sealed record StrictTruthHistoryPreparation(
     TruthContext Truth,
+    ImmutableDictionary<RepoPath, TruthState> States,
     FrozenLedgerBaseView BaseView,
     FrozenLedgerValidationOutcome Outcome);

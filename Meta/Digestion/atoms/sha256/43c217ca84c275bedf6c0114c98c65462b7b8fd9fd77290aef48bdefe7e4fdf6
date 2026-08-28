@@ -1,0 +1,14 @@
+## 定理 5.1（事件分离刻画）
+
+$$
+xR_{\mathcal L}y
+\iff
+∀A\in\mathcal E(\mathcal L),\ (x\in A\iff y\in A).
+$$
+
+### 证明
+
+正向由事件在纤维上常值。反向若 profiles 不同，取 x 所在 profile 纤维的逆像事件即可分离二者。证毕。
+
+---
+

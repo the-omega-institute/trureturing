@@ -1,0 +1,13 @@
+ast_path: section/113-增订四-素数观察者与量子观察者的局部-全局统一
+fingerprints:
+  raw_sha256: sha256:0ac929c60d325a086e2313c55577cfbf90e59b1cf81611c5c13633309f6b87d2
+  normalized_sha256: sha256:0ac929c60d325a086e2313c55577cfbf90e59b1cf81611c5c13633309f6b87d2
+cas_ref: sha256:0ac929c60d325a086e2313c55577cfbf90e59b1cf81611c5c13633309f6b87d2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-9236ec33fabdc97ec9602586e055e571e21bf3131e8a8fc7afa256063e80126e-a3212101036196f9d17f861b1a4daeb0828eb2fbf8a6176825789c71ba377264
+    - generic-residual-07cd42f372016f51782b4764a66a89fc736f13a311f2edd3b765c51d358d704b-d53aff19444e766ec3f991c2041c8b8e4f0108d42849845c262301b445418b38

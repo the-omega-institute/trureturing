@@ -1,0 +1,27 @@
+## 定理 145.1（固定目标完成零曲率）
+
+对固定目标 (S,T)：
+
+[
+\boxed{
+\Omega_{\operatorname{cl}_S,\operatorname{cl}_T}(C)
+===================================================
+
+\varnothing.
+}
+]
+
+因为：
+
+[
+\operatorname{cl}_S\operatorname{cl}_T(C)
+\simeq
+C\vee E_T\vee E_S
+\simeq
+\operatorname{cl}_T\operatorname{cl}_S(C).
+]
+
+所以静态、无限资源、无遗忘的目标累加是平坦的。
+
+---
+

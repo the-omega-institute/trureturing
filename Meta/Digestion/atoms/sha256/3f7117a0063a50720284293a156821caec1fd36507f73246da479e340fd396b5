@@ -1,0 +1,39 @@
+## 定理 87.1（差集判据）
+
+$$
+\boxed{
+\mathfrak O
+\text{ 在 }\mathcal M\text{ 上完备}
+\iff
+N_{\mathfrak O}
+\cap
+(\mathcal M-\mathcal M)
+=
+\{0\}.
+}
+$$
+
+其中
+
+$$
+\mathcal M-\mathcal M
+=
+\{\rho-\sigma:\rho,\sigma\in\mathcal M\}.
+$$
+
+### 证明
+
+模型上不完备恰好意味着存在不同
+
+$$
+\rho,\sigma\in\mathcal M
+$$
+
+且
+
+$$
+\rho-\sigma\in N_{\mathfrak O}.
+$$
+
+这等价于上述交集中存在非零元素。∎
+

@@ -1,0 +1,12 @@
+## 定义 237.2（双向实验距离）
+
+$$
+\Delta(E,F)
+=
+\max
+\left\{
+\delta(F\mid E),
+\delta(E\mid F)
+\right\}.
+$$
+

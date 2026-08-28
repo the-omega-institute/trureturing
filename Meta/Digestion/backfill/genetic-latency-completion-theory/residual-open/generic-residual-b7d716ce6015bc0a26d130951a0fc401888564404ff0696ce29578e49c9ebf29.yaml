@@ -1,0 +1,14 @@
+ast_path: section/从-ACGT-环境相对补与杂合重叠-到观察残余-因果完成-未来许可与群体选择
+fingerprints:
+  raw_sha256: sha256:b7d716ce6015bc0a26d130951a0fc401888564404ff0696ce29578e49c9ebf29
+  normalized_sha256: sha256:b7d716ce6015bc0a26d130951a0fc401888564404ff0696ce29578e49c9ebf29
+cas_ref: sha256:b7d716ce6015bc0a26d130951a0fc401888564404ff0696ce29578e49c9ebf29
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-8d34e777504f024e28f21956512dd09929e045a18dde2f8ead17cc1b4d8edb9a-db6151839d120e28c507638f2db31bb4f11777cdc82248927a5b38887178542d
+    - generic-residual-9889bd376e6c96d00fa18af685ecb16b4c8d967467a9617cd16618a81af470f4-d75fbeb098e30dd15b8b526e33fb1a801b9654fc68bc8cd9f6f06cd18a587a86
+    - generic-residual-66428fe1a1b94ff99ceb0b6b98a3896a0bcee8116f1d70e9387bc484ce82221d-72aa61753838aa4810e8ee8f38adfd109dd9815c54a43de5366321755665092f

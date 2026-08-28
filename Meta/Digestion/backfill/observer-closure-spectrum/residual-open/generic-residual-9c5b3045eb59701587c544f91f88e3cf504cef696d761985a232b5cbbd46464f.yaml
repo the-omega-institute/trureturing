@@ -1,0 +1,10 @@
+ast_path: section/34-动作顺序曲率与策略-喉部半直积
+fingerprints:
+  raw_sha256: sha256:9c5b3045eb59701587c544f91f88e3cf504cef696d761985a232b5cbbd46464f
+  normalized_sha256: sha256:9c5b3045eb59701587c544f91f88e3cf504cef696d761985a232b5cbbd46464f
+cas_ref: sha256:9c5b3045eb59701587c544f91f88e3cf504cef696d761985a232b5cbbd46464f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

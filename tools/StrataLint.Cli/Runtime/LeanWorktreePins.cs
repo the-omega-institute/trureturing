@@ -81,7 +81,7 @@ internal sealed record LeanPinSet(byte[] LeanToolchain, byte[] LakeManifest, str
             "git",
             ["show", $"{revision}:{path}"],
             repositoryRoot,
-            TimeSpan.FromSeconds(30));
+            BoundedProcessRunner.HangDetectionBudget);
         if (result.ExitCode == 0) return result.StandardOutput;
 
         var error = StrictUtf8.GetString(result.StandardError).Trim();
@@ -406,7 +406,7 @@ internal static class LeanCacheBusyProbe
                 "lsof",
                 ["-Fpcn", "-a", "-d", "cwd"],
                 Path.GetTempPath(),
-                TimeSpan.FromSeconds(30));
+                BoundedProcessRunner.HangDetectionBudget);
         }
         catch (Exception exception) when (exception is IOException
             or UnauthorizedAccessException

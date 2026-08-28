@@ -6,7 +6,7 @@ An omega-continuous operator's least fixed point is the supremum of its finite s
 
 **Theorem 1.1 (The least fixed point is reached as a stage supremum).**
 
-$$\operatorname{lfp}(f)=\operatorname{sup}_{n\in \mathbb{N}} f^{[n]}(\operatorname{bottom}).$$
+$$\begin{gathered}\forall \alpha: \operatorname{Type}, [\operatorname{CompleteLattice}\left(\alpha\right)],\\{}f: \alpha \to_{o} \alpha, \omega\operatorname{ScottContinuous}(f) \Rightarrow \operatorname{lfp}(f)=\operatorname{sup}_{n\in \mathbb{N}} f^{[n]}(\operatorname{bottom}).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/FixedPoints/KleeneStageLimit.inductive_definition_is_supremum_of_stages` (`✓ std3`). ∎
 

@@ -1,0 +1,10 @@
+ast_path: section/第十三部-对合横截与-Boolean-定向
+fingerprints:
+  raw_sha256: sha256:61d557f474dbcf0a79726395a62dca69c64ab56d10b6573c8e08c6999a53ab76
+  normalized_sha256: sha256:61d557f474dbcf0a79726395a62dca69c64ab56d10b6573c8e08c6999a53ab76
+cas_ref: sha256:61d557f474dbcf0a79726395a62dca69c64ab56d10b6573c8e08c6999a53ab76
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

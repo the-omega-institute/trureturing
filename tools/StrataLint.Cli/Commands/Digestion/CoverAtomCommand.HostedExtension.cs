@@ -9,14 +9,12 @@ internal static partial class CoverAtomCommand
         DigestionEntryEvaluation before,
         DigestionEntryEvaluation after,
         ImmutableArray<string> addedGids,
-        RepositorySnapshot snapshot,
-        AcceptedLeanClosure lean)
+        IReadOnlyDictionary<RepoPath, TruthState> truthStates)
     {
-        var states = LeanTruthStates.Resolve(snapshot, lean);
         foreach (var gidText in addedGids)
         {
             if (!Gid.TryParse(gidText, out var gid)
-                || !states.TryGetValue(gid.Path, out var state)
+                || !truthStates.TryGetValue(gid.Path, out var state)
                 || state != TruthState.Closed)
             {
                 throw new InvalidOperationException(

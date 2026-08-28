@@ -1,0 +1,10 @@
+ast_path: section/J-3-CRT-observation-code-library/clause/4
+fingerprints:
+  raw_sha256: sha256:b08c9bfd3fd62932d948d11cce26721f6e77ab07e273d79210997b42c2567102
+  normalized_sha256: sha256:b08c9bfd3fd62932d948d11cce26721f6e77ab07e273d79210997b42c2567102
+cas_ref: sha256:b08c9bfd3fd62932d948d11cce26721f6e77ab07e273d79210997b42c2567102
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

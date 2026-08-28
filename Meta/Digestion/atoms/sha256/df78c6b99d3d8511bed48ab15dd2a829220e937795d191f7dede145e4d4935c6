@@ -1,0 +1,8 @@
+\[
+\ker P_N^{q,\tau}\setminus\ker P_{N'}^{q,\tau}
+=
+\operatorname{ExpansionEscape}(P_N^{q,\tau},P_{N'}^{q,\tau})
+\]
+
+的逐对版本；当 \(N=N'\) 时，两边同时为空。
+

@@ -1,0 +1,10 @@
+ast_path: section/142-2-乘积临界检验/clause/3
+fingerprints:
+  raw_sha256: sha256:2ce741c5dfe6e98eda8252e2383e11562ab573044a2147b57e4dec65cc78cfc9
+  normalized_sha256: sha256:2ce741c5dfe6e98eda8252e2383e11562ab573044a2147b57e4dec65cc78cfc9
+cas_ref: sha256:2ce741c5dfe6e98eda8252e2383e11562ab573044a2147b57e4dec65cc78cfc9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

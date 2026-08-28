@@ -1,0 +1,10 @@
+ast_path: section/精确无损判据/clause/4
+fingerprints:
+  raw_sha256: sha256:3675f25fce40ab647463fa31ffb90a6e7202a316720ac6412deaf26834acb2f4
+  normalized_sha256: sha256:3675f25fce40ab647463fa31ffb90a6e7202a316720ac6412deaf26834acb2f4
+cas_ref: sha256:3675f25fce40ab647463fa31ffb90a6e7202a316720ac6412deaf26834acb2f4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

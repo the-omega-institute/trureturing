@@ -1,0 +1,10 @@
+ast_path: section/181-分类可以改变被分类者-从而使-真值-成为固定点问题
+fingerprints:
+  raw_sha256: sha256:577f9bf980a258f186eaf8a392ead4b98a531b3763679eb88d7a02c4a7a3462b
+  normalized_sha256: sha256:577f9bf980a258f186eaf8a392ead4b98a531b3763679eb88d7a02c4a7a3462b
+cas_ref: sha256:577f9bf980a258f186eaf8a392ead4b98a531b3763679eb88d7a02c4a7a3462b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

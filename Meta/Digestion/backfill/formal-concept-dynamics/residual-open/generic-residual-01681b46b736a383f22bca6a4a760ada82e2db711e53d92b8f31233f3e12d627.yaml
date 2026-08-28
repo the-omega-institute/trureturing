@@ -1,0 +1,10 @@
+ast_path: section/516-强制到达目标的区域是最小固定点
+fingerprints:
+  raw_sha256: sha256:01681b46b736a383f22bca6a4a760ada82e2db711e53d92b8f31233f3e12d627
+  normalized_sha256: sha256:01681b46b736a383f22bca6a4a760ada82e2db711e53d92b8f31233f3e12d627
+cas_ref: sha256:01681b46b736a383f22bca6a4a760ada82e2db711e53d92b8f31233f3e12d627
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

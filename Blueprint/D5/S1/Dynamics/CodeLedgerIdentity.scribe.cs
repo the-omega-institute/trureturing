@@ -15,6 +15,12 @@ internal sealed class CodeLedgerIdentityDocument : IScribeDocumentDefinition
                                     + "same_state_iff_same_code_and_ledger"),
                 H("States agree exactly when their codes and ledgers agree"),
                 StatementSource.FromAuthor(Disp(Seq(
+                                    Forall, Sp, F.Id("Ledger"), Colon, Sp,
+                                    Operatorname, Grp(F.Id("Type")), Comma, Sp,
+                                    Forall, Sp, F.Id("K"), Underscore, D(1), Comma, Sp,
+                                    F.Id("K"), Underscore, D(2), Colon, Sp,
+                                    Operatorname, Grp(F.Id("CodeLedgerState")), Open,
+                                    F.Id("Ledger"), Close, Comma, Sp,
                                     F.Id("K"), Underscore, D(1), Eq, F.Id("K"), Underscore, D(2),
                                     Sp, Iff, Sp,
                                     Operatorname, Grp(F.Id("code")), Open,

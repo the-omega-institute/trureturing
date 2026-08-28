@@ -1,0 +1,43 @@
+## 第五步：理想极限完成
+
+按需要取：
+
+* 逆极限；
+* 拓扑闭包；
+* 度量完成；
+* 弱／强算子闭包。
+
+得到：
+
+$$
+\widehat B.
+$$
+
+最终结构：
+
+$$
+\boxed{
+\operatorname{Core}(\mathfrak O)
+=
+\left(
+X/{\sim_X},
+P_\infty/{\sim_P},
+B_{\mathrm{real}},
+\widehat B
+\right).
+}
+$$
+
+这四个部分分别回答：
+
+$$
+\begin{aligned}
+&\text{哪些世界状态真正不同？}\\
+&\text{哪些协议真正不同？}\\
+&\text{哪些行为真实发生？}\\
+&\text{哪些理想行为作为极限存在？}
+\end{aligned}
+$$
+
+---
+

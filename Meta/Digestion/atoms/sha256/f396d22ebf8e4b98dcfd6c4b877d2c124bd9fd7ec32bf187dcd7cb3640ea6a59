@@ -1,0 +1,36 @@
+## 定义 25.1（所有权扩张）
+
+$$
+\Gamma(S)
+=
+S\cup S_0
+\cup\operatorname{Read}(S)
+\cup\operatorname{Write}(S)
+\cup\operatorname{Dep}(S)
+\cup\operatorname{Trace}(S).
+$$
+
+它单调且扩张，因此在幂集完备格上存在最小固定点
+
+$$
+\boxed{
+\operatorname{Own}(S_0)=\mu S.\Gamma(S).
+}
+$$
+
+它是包含种子自我并对行动相关依赖闭合的最小边界。
+
+所有权扩张可能不断吞入环境，因此还需反向剪枝。令 $\operatorname{Eligible}(S)$ 表示在 $S$ 内可读、可更新、可审计并可追溯的变量，假设它单调，定义
+
+$$
+\Psi(S)=S\cap\operatorname{Eligible}(S).
+$$
+
+它单调且收缩，因此存在最大固定点
+
+$$
+\boxed{
+\operatorname{Core}(I)=\nu S.\Psi(S).
+}
+$$
+

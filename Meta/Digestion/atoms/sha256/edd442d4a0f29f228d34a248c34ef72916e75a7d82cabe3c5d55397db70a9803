@@ -1,0 +1,31 @@
+## 定理 94.1（一次稳定永久稳定）
+
+若
+
+$$
+V_{n+1}^{\mathrm{seq}}
+=
+V_n^{\mathrm{seq}},
+$$
+
+则对所有 $m\ge n$：
+
+$$
+V_m^{\mathrm{seq}}
+=
+V_n^{\mathrm{seq}}.
+$$
+
+### 证明
+
+等式意味着对每个分支 $g$：
+
+$$
+\mathcal I_g^*
+\left(V_n^{\mathrm{seq}}\right)
+\subseteq
+V_n^{\mathrm{seq}}.
+$$
+
+因此任何更长的对偶分支复合仍把 $I$ 送入同一空间，不再产生新方向。∎
+

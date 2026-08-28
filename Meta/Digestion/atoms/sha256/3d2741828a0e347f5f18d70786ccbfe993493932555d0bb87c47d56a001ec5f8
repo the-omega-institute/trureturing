@@ -1,0 +1,14 @@
+## 结论 118.1
+
+$$
+\boxed{
+\text{知道每个 prime factor 的完整局部量子态}
+\not\Rightarrow
+\text{知道完整全局量子态}.
+}
+$$
+
+这给出了 `FORMAL_PRIME_OBSERVER_DYNAMICS.md` 的“局部—全局余量”在量子理论中的直接非交换实例。
+
+---
+

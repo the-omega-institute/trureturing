@@ -1,0 +1,10 @@
+ast_path: section/481-信息设计受-Bayes-plausibility-约束
+fingerprints:
+  raw_sha256: sha256:6a8dfc1ee937c22f06a2eefb5c3cc1d8f299921cc4216612942f435565cf7a33
+  normalized_sha256: sha256:6a8dfc1ee937c22f06a2eefb5c3cc1d8f299921cc4216612942f435565cf7a33
+cas_ref: sha256:6a8dfc1ee937c22f06a2eefb5c3cc1d8f299921cc4216612942f435565cf7a33
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -37,7 +37,7 @@ public sealed partial class DigestionAlignmentTests
                                 [new DigestionDispositionGap(
                                     "unresolved-subitem",
                                     "remaining theorem clause")],
-                                new DateTimeOffset(2026, 8, 25, 4, 3, 2, TimeSpan.Zero)),
+                                new DateTimeOffset(2026, 8, 25, 4, 3, 2, TestBudgets.ZeroDuration)),
                         },
                     }
                     : entry).ToImmutableArray(),
@@ -163,8 +163,16 @@ public sealed partial class DigestionAlignmentTests
         var first = DigestionIngestor.Plan(candidate, snapshot, loaded);
         var plannedSource = Assert.Single(first.Document.RequireDigestionSources());
 
-        Assert.Equal(1, first.StaleAcknowledged);
-        Assert.Equal(["unowned-receipt"], plannedSource.AcknowledgedStale.ToArray());
+        Assert.Equal(5, first.StaleAcknowledged);
+        Assert.Equal(
+            [
+                "coverage-receipt",
+                "covered-receipt",
+                "formalized-receipt",
+                "frozen-receipt",
+                "unowned-receipt",
+            ],
+            plannedSource.AcknowledgedStale.ToArray());
         Assert.Equal(1, first.ResidualOpenAdded);
 
         var firstBytes = DirectoryLedgerTestSupport.Image(first.Document);
@@ -173,15 +181,25 @@ public sealed partial class DigestionAlignmentTests
         DirectoryLedgerTestSupport.ReplaceWithProjection(persisted, first.Document);
         DirectoryLedgerTestSupport.Write(temporary.Path, persisted);
         var settled = BackfillInventoryLoader.LoadRoot(temporary.Path);
+        var secondSnapshot = Snapshot(
+            currentBytes,
+            historicalCaptures.Concat(first.CasObjects),
+            extraEntries: ownershipArtifacts);
         var second = DigestionIngestor.Plan(
             settled,
-            Snapshot(
-                currentBytes,
-                historicalCaptures.Concat(first.CasObjects),
-                extraEntries: ownershipArtifacts),
+            secondSnapshot,
             settled);
         var secondBytes = DirectoryLedgerTestSupport.Image(second.Document);
 
+        Assert.Equal(
+            [
+                "coverage-receipt",
+                "covered-receipt",
+                "formalized-receipt",
+                "frozen-receipt",
+                "unowned-receipt",
+            ],
+            Assert.Single(second.Document.RequireDigestionSources()).AcknowledgedStale.ToArray());
         Assert.Equal(0, second.StaleAcknowledged);
         Assert.Equal(0, second.ResidualOpenAdded);
         Assert.Equal(firstBytes, secondBytes);

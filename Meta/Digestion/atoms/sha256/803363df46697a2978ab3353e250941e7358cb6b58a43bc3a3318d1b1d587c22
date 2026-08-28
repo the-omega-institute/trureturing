@@ -1,0 +1,58 @@
+# 第二十五部　黄金域的六维完成
+
+令
+
+$$
+K=\mathbb Q(\sqrt5),
+\qquad
+\mathcal O_K=\mathbb Z[\varphi],
+$$
+
+其中
+
+$$
+\varphi=\frac{1+\sqrt5}{2},
+\qquad
+\varphi'=\frac{1-\sqrt5}{2}=-\frac1\varphi.
+$$
+
+它有两个实嵌入：
+
+$$
+\sigma_+(\varphi)=\varphi,
+\qquad
+\sigma_-(\varphi)=\varphi'.
+$$
+
+对一个秩三 \(\mathcal O_K\)-模 \(M\)，Minkowski 完成为：
+
+$$
+\boxed{
+M
+\hookrightarrow
+M_{\sigma_+}\oplus M_{\sigma_-}
+\simeq
+\mathbb R^3\oplus\mathbb R^3
+=
+\mathbb R^6.
+}
+$$
+
+所以六维在这一语境中的严格来源是：
+
+$$
+\boxed{
+6
+=
+3\times[K:\mathbb Q]
+=
+3\times2.
+}
+$$
+
+它不是“黄金比例需要额外三个神秘维度”，而是：
+
+> 三个黄金域坐标，需要在两个实嵌入中同时被观察，才能形成整数闭合。
+
+---
+

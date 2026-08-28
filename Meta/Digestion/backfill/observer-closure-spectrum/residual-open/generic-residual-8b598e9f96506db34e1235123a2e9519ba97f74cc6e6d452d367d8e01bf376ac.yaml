@@ -1,0 +1,10 @@
+ast_path: section/观察作者性不可识别反例
+fingerprints:
+  raw_sha256: sha256:8b598e9f96506db34e1235123a2e9519ba97f74cc6e6d452d367d8e01bf376ac
+  normalized_sha256: sha256:8b598e9f96506db34e1235123a2e9519ba97f74cc6e6d452d367d8e01bf376ac
+cas_ref: sha256:8b598e9f96506db34e1235123a2e9519ba97f74cc6e6d452d367d8e01bf376ac
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

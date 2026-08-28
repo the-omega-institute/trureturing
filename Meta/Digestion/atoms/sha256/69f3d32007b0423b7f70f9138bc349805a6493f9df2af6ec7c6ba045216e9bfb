@@ -1,0 +1,26 @@
+# 179. 观察 atlas 的局部—全局统一定理
+
+设局部观察空间为：
+
+$$
+B_i,
+\qquad i\in I,
+$$
+
+并有兼容限制映射。
+
+令兼容族空间：
+
+$$
+L_{\mathrm{loc}}
+=
+\varprojlim_iB_i.
+$$
+
+全局对象产生：
+
+$$
+\Sigma_{\mathrm{loc}}:
+X\to L_{\mathrm{loc}}.
+$$
+

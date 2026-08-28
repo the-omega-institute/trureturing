@@ -1,0 +1,10 @@
+ast_path: section/342-转让是权利束的-transport-而非物理状态变化
+fingerprints:
+  raw_sha256: sha256:849a06af76d0568754e5018a6ef445f337ebad7c5fcc3ebca72e13b562310b2a
+  normalized_sha256: sha256:849a06af76d0568754e5018a6ef445f337ebad7c5fcc3ebca72e13b562310b2a
+cas_ref: sha256:849a06af76d0568754e5018a6ef445f337ebad7c5fcc3ebca72e13b562310b2a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

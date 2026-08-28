@@ -1,0 +1,26 @@
+## 定理 88.2（联合观察者）
+
+令
+
+$$
+\mathfrak O_1\vee\mathfrak O_2
+$$
+
+包含两者全部效果。则
+
+$$
+V_{\mathfrak O_1\vee\mathfrak O_2}
+=
+V_{\mathfrak O_1}+V_{\mathfrak O_2},
+$$
+
+$$
+\boxed{
+N_{\mathfrak O_1\vee\mathfrak O_2}
+=
+N_{\mathfrak O_1}\cap N_{\mathfrak O_2}.
+}
+$$
+
+因此观察者合作的本体不是“平均各自观点”，而是合并可见 effect 空间；不可见残差则取交。
+

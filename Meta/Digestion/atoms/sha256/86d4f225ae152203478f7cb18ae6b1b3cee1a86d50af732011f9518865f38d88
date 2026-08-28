@@ -1,0 +1,21 @@
+## 定义 497.1（存在性前置条件）
+
+[
+\boxed{
+\operatorname{pre}^{\exists}_R(Q)
+=================================
+
+\left{
+x
+;\middle|;
+\exists y,\quad xRy\land Q(y)
+\right}.
+}
+]
+
+它表示：
+
+> 从 (x) 出发，至少存在一条执行结果满足 (Q)。
+
+---
+

@@ -1,0 +1,21 @@
+## 定义 82.3（观察等价）
+
+$$
+\boxed{
+\rho\sim_{\mathfrak O}\sigma
+\iff
+\Sigma_{\mathfrak O}(\rho)
+=
+\Sigma_{\mathfrak O}(\sigma).
+}
+$$
+
+等价地：
+
+$$
+\rho\sim_{\mathfrak O}\sigma
+\iff
+\forall x,a,\quad
+\operatorname{Tr}\bigl((\rho-\sigma)E_{a|x}\bigr)=0.
+$$
+

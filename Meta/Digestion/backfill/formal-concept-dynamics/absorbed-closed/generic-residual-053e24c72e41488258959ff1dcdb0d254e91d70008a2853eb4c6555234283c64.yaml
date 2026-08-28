@@ -12,6 +12,6 @@ receipts:
       target_sha256: sha256:87aa426eaddad53abdb7284b010df131626751377c5e9fa9d71e22961060df7b
   scribe:
     - gid: D5/S0/History/Coding/MinimumRollbackAlphabet.minimum_rollback_alphabet
-      definition_sha256: sha256:1884e455e102e87581526646d27d4bf70adacbf96703adb121195c59eba9cfeb
-      emission_sha256: sha256:c7184f12f5dc64c9479b8016eaf08c05b4170899c2b2e203261f7627a567bb9d
+      definition_sha256: sha256:b24ef73b84824a36683d9348a7d1ab37b27af61baead8733520b31c0057b4d7c
+      emission_sha256: sha256:ed364097ceac4e1ebe954a80324e068f4df2364891314182b468892d2230867a
   unresolved_subitems: []

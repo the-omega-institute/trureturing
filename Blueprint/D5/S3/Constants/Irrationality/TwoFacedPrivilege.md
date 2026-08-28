@@ -12,7 +12,7 @@ Both halves were already proved and neither is restated. What did not exist was 
 
 **Theorem 1.1 (Integrality is a two-faced privilege).**
 
-$$\forall v1 \in N, v2 \in N,\; \operatorname{deficit}\left(\mathit{v1}, \mathit{v2}\right) = \operatorname{deficitContraction}\left(\mathit{v1}, \mathit{v2}\right) \land \operatorname{Irrational}\left(1 - \mathit{tribonacciConstant}\right)$$
+$$\left(\forall v1 \in N, v2 \in N,\; \operatorname{deficit}\left(\mathit{v1}, \mathit{v2}\right) = \operatorname{deficitContraction}\left(\mathit{v1}, \mathit{v2}\right)\right) \land \operatorname{Irrational}\left(1 - \mathit{tribonacciConstant}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Constants/Irrationality/TwoFacedPrivilege.integrality_is_a_two_faced_privilege` (`✓ std3`). ∎
 

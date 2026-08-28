@@ -1,0 +1,16 @@
+## 定理 128.1（二次角色量子后处理 no-go）
+
+若
+
+$$
+\operatorname{triRingImage}(u)
+=
+\operatorname{triRingImage}(v),
+$$
+
+则对任何由三 splitting characters 通过加法、乘法、函数演算以及仅依赖其联合经典输出的量子制备得到的观察协议，$u,v$ 仍不可区分。
+
+### 证明
+
+仓库定理说明每个二次 character 都在该 fiber 上常值；这些 character 生成的交换代数中任意函数亦常值。任何只依赖其输出的下游通道仍通过同一 quotient 因子化。∎
+

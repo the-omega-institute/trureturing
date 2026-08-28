@@ -1,0 +1,10 @@
+ast_path: section/29-承诺深度-自由深度与代理视界
+fingerprints:
+  raw_sha256: sha256:dac9d718131176052206c2b20fa1a240e133fc2a1ca50d562a1c3f5d0cb00576
+  normalized_sha256: sha256:dac9d718131176052206c2b20fa1a240e133fc2a1ca50d562a1c3f5d0cb00576
+cas_ref: sha256:dac9d718131176052206c2b20fa1a240e133fc2a1ca50d562a1c3f5d0cb00576
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

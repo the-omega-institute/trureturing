@@ -1,0 +1,70 @@
+## 定理 64.1（策略充分自我的普适最小性）
+
+$M_{\mathrm{self}}$ 是决定全部未来选择倾向的最粗历史接口。
+
+更具体地，若另一个历史接口
+
+$$
+r:\mathcal H\to R
+$$
+
+也决定完整未来策略画像，即存在
+
+$$
+F:R\to(W^*\to\operatorname{Dist}(A))
+$$
+
+满足
+
+$$
+\Pi_h=F(r(h)),
+$$
+
+则存在唯一映射
+
+$$
+\bar r:\operatorname{range}(r)\to M_{\mathrm{self}}
+$$
+
+使
+
+$$
+[h]_{\mathrm{self}}
+=
+\bar r(r(h)).
+$$
+
+### 证明
+
+若
+
+$$
+r(h)=r(h'),
+$$
+
+则
+
+$$
+\Pi_h
+=
+F(r(h))
+=
+F(r(h'))
+=
+\Pi_{h'}.
+$$
+
+故
+
+$$
+h\sim_{\mathrm{self}}h'.
+$$
+
+因此定义
+
+$$
+\bar r(r(h))=[h]_{\mathrm{self}}
+$$
+
+与代表元无关；在 $r$ 的有效像上由满射性给出唯一性。∎
+

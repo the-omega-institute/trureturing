@@ -1,0 +1,14 @@
+# 75. 自我生成回路与固定点问题
+
+第 64 节把自我定义为保持未来策略画像的最小历史商。第 71 节说明选择通过承诺进入未来行为。二者组合为：
+
+$$
+M_t
+\longrightarrow
+A_t
+\longrightarrow
+\Lambda_{t+1}
+\longrightarrow
+M_{t+1}.
+$$
+

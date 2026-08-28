@@ -1,0 +1,40 @@
+# 231. 私人性随实验制度扩张而单调缩小
+
+设允许实验族：
+
+[
+\mathcal E\subseteq\mathcal E'.
+]
+
+对应实验概念：
+
+[
+C_{\mathcal E}
+==============
+
+\bigvee_{e\in\mathcal E}E_e,
+]
+
+[
+C_{\mathcal E'}
+===============
+
+\bigvee_{e\in\mathcal E'}E_e.
+]
+
+显然：
+
+[
+C_{\mathcal E}
+\preceq
+C_{\mathcal E'}.
+]
+
+所以：
+
+[
+\ker C_{\mathcal E'}
+\subseteq
+\ker C_{\mathcal E}.
+]
+

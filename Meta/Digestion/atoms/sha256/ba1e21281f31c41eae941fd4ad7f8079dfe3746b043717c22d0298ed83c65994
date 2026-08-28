@@ -1,0 +1,25 @@
+## 定义 107.2（经典—量子记录通道）
+
+$$
+\boxed{
+\mathcal M_x(\rho)
+=
+\sum_a
+\mathcal I_{a|x}(\rho)
+\otimes
+|a\rangle\langle a|_M.
+}
+$$
+
+若只保留结果、丢弃测后系统：
+
+$$
+\boxed{
+\mathcal C_x(\rho)
+=
+\sum_a
+\operatorname{Tr}(\rho E_{a|x})
+|a\rangle\langle a|.
+}
+$$
+

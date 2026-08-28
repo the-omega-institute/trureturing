@@ -1,0 +1,10 @@
+ast_path: section/3-4-Alexandrov-依赖拓扑
+fingerprints:
+  raw_sha256: sha256:02e17dac916b2a6071b765fed9b90347666b25964ac4f73fb2a51190199b2144
+  normalized_sha256: sha256:02e17dac916b2a6071b765fed9b90347666b25964ac4f73fb2a51190199b2144
+cas_ref: sha256:02e17dac916b2a6071b765fed9b90347666b25964ac4f73fb2a51190199b2144
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

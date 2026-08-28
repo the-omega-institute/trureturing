@@ -1,0 +1,51 @@
+# 45. 决定—执行—世界—记录的信息结算
+
+设内部决定 $D$ 经执行接口成为控制 $U$，产生世界结果 $Y$，再进入记录 $R$：
+
+$$
+D\to U\to Y\to R
+$$
+
+条件于公开状态 $Q$ 构成 Markov 链。
+
+链式法则与数据处理给出：
+
+$$
+\boxed{
+\begin{aligned}
+H(D\mid Q)
+={}&H(D\mid U,Q)\\
+&+[I(D;U\mid Q)-I(D;Y\mid Q)]\\
+&+[I(D;Y\mid Q)-I(D;R\mid Q)]\\
+&+I(D;R\mid Q).
+\end{aligned}
+}
+$$
+
+四项均非负，分别解释为：
+
+```text
+未执行的决定信息；
+被世界动力学抹除的决定信息；
+被记录接口抹除的决定信息；
+最终保留的作者签名。
+```
+
+线性情形下，若决定接口为 $K:D\to U$，世界行为接口为 $H:U\to Y$，则有效决定商为
+
+$$
+\mathsf{DecisionAgt}=D/\ker(HK).
+$$
+
+并有
+
+$$
+\ker(HK)/\ker K
+\cong
+\operatorname{im}K\cap\ker H.
+$$
+
+所以“有意愿”“被执行”“产生后果”“进入记录”是四个不同层次。
+
+---
+

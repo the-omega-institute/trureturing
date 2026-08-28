@@ -1,0 +1,10 @@
+ast_path: section/436-有限反例驱动精化必然终止-但不保证低成本
+fingerprints:
+  raw_sha256: sha256:560b5a3200d22bc21671eb1b1dd219791a0b3c0cf39418de37fe1ff8f55daefb
+  normalized_sha256: sha256:560b5a3200d22bc21671eb1b1dd219791a0b3c0cf39418de37fe1ff8f55daefb
+cas_ref: sha256:560b5a3200d22bc21671eb1b1dd219791a0b3c0cf39418de37fe1ff8f55daefb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

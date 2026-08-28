@@ -1,0 +1,18 @@
+## 定义 98.1（通道不扰动可观测量）
+
+量子通道 $\Lambda$ 不扰动 Hermitian 量 $A$，若
+
+$$
+\Lambda^*(A)=A.
+$$
+
+这等价于：
+
+$$
+\operatorname{Tr}(\Lambda(\rho)A)
+=
+\operatorname{Tr}(\rho A)
+$$
+
+对所有状态成立。
+

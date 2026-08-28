@@ -1,0 +1,22 @@
+## 纵向
+
+同一素数的 residue tower 是粗化链：
+
+$$
+\mathbb Z/p^{k+1}\mathbb Z
+\to
+\mathbb Z/p^k\mathbb Z.
+$$
+
+在 outcome 侧是逆系统；在 effect 侧通过拉回形成正向嵌入：
+
+$$
+\mathcal A_{p,k}
+\hookrightarrow
+\mathcal A_{p,k+1}.
+$$
+
+因此不同 $k$ 层不是独立张量因子。把它们当成独立子系统会重复计算同一 $p$-进信息。
+
+---
+

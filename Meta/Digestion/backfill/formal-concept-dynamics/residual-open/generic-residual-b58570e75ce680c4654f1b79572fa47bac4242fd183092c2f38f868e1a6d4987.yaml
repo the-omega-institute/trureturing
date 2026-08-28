@@ -1,0 +1,10 @@
+ast_path: section/514-精确因果抽象推出有限时域决策充分
+fingerprints:
+  raw_sha256: sha256:b58570e75ce680c4654f1b79572fa47bac4242fd183092c2f38f868e1a6d4987
+  normalized_sha256: sha256:b58570e75ce680c4654f1b79572fa47bac4242fd183092c2f38f868e1a6d4987
+cas_ref: sha256:b58570e75ce680c4654f1b79572fa47bac4242fd183092c2f38f868e1a6d4987
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

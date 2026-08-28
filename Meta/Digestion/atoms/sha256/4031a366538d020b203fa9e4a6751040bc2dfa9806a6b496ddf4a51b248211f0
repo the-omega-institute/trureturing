@@ -1,0 +1,29 @@
+# 297. 预防原则是模型集合上的稳健准入
+
+设可接受模型集合为：
+
+[
+\mathcal M.
+]
+
+行动 (u) 在模型 (m) 下的灾难风险为：
+
+[
+r_m(u).
+]
+
+给定容忍阈值 (\alpha)，定义稳健安全行动集：
+
+[
+\boxed{
+\operatorname{Safe}_\alpha(\mathcal M)
+======================================
+
+\left{
+u
+;\middle|;
+\sup_{m\in\mathcal M}r_m(u)\le\alpha
+\right}.
+}
+]
+

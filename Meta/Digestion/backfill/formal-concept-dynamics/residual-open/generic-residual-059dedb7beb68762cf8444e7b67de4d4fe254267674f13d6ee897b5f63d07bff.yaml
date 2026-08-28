@@ -1,0 +1,10 @@
+ast_path: section/485-鸟与企鹅的最小排名模型
+fingerprints:
+  raw_sha256: sha256:059dedb7beb68762cf8444e7b67de4d4fe254267674f13d6ee897b5f63d07bff
+  normalized_sha256: sha256:059dedb7beb68762cf8444e7b67de4d4fe254267674f13d6ee897b5f63d07bff
+cas_ref: sha256:059dedb7beb68762cf8444e7b67de4d4fe254267674f13d6ee897b5f63d07bff
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,13 @@
+## 定义 104.1（prime-time 可见空间）
+
+$$
+V_{J,m}
+=
+\operatorname{span}_{\mathbb R}
+\left\{
+I,
+(\Phi^*)^t(E_p):
+p\in J,\ 0\le t<m
+\right\}.
+$$
+

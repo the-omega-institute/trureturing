@@ -1,0 +1,22 @@
+# 70. 承诺是未来计划空间的收缩
+
+设当前历史为 $h$，与其相容的完整未来计划集合为
+
+$$
+\Omega_h.
+$$
+
+每个未来计划 $\omega\in\Omega_h$ 在当前时刻指定动作
+
+$$
+A_h(\omega)\in\mathcal A(h).
+$$
+
+对动作 $a$，定义计划柱集
+
+$$
+\Omega_{h,a}
+=
+\{\omega\in\Omega_h:A_h(\omega)=a\}.
+$$
+

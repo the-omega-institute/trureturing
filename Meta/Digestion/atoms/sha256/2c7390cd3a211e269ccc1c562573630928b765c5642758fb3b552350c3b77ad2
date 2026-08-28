@@ -1,0 +1,14 @@
+## 定理 3.2（固定观察下的非对称性）
+
+$$
+a\triangleright_{\mathcal L,c}b
+\Rightarrow
+\neg(b\triangleright_{\mathcal L,c}a).
+$$
+
+### 证明
+
+前者给出 ab 与 bb 不等价；后者却要求二者等价，矛盾。证毕。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/压缩义务
+fingerprints:
+  raw_sha256: sha256:405828d1a4f7f9e81db1002627d606ccc6a92e19a8635fcb86066be29346bc13
+  normalized_sha256: sha256:405828d1a4f7f9e81db1002627d606ccc6a92e19a8635fcb86066be29346bc13
+cas_ref: sha256:405828d1a4f7f9e81db1002627d606ccc6a92e19a8635fcb86066be29346bc13
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,20 @@
+* \(\Lambda\) 是结果、概率 law、矩阵期望、记录或行为值。
+
+于是每个状态产生一行：
+
+$$
+r_x:P\to\Lambda,
+\qquad
+r_x(\pi)=e(x,\pi),
+$$
+
+每个协议产生一列：
+
+$$
+c_\pi:X\to\Lambda,
+\qquad
+c_\pi(x)=e(x,\pi).
+$$
+
+这暴露出两种不同的冗余。
+

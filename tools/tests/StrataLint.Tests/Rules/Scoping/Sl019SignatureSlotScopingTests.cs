@@ -10,6 +10,9 @@ public sealed class Sl019SignatureSlotScopingTests
         "Meta/Digestion/formalizations/fixture-signature-slot.v1.json";
     private const string FailureNameKey =
         "ns(n0,35:InfiniteIdentificationFiniteFailure)";
+    private const string FailureGid =
+        "D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure"
+        + ".lookup_copy_zero_loss_and_nonanticipating_failure";
     private const string Finding = "unknown anomaly-bearing schema";
 
     [Theory]
@@ -106,6 +109,97 @@ public sealed class Sl019SignatureSlotScopingTests
         Assert.True(CanonicalLeanNameDecoder.IsRepositoryNameKey(nameKey));
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void Sl019AcceptsFailureAsMathematicalContentInAReceiptGid(bool hostedExtension)
+    {
+        var evaluation = Evaluate(
+            ReceiptPath,
+            ReceiptText(
+                "ns(n0,13:primary_probe)",
+                hostedExtension,
+                FailureGid,
+                hostedExtension
+                    ? "D5/S3/ConceptDynamics/DefinitionEscapeAdjudication"
+                        + "/RetrospectiveLookupFailure.secondary_failure_probe"
+                    : null));
+
+        Assert.Empty(evaluation.Diagnostics);
+    }
+
+    [Theory]
+    [InlineData("unresolved failure without case")]
+    [InlineData("{\\\"kind\\\":\\\"failure\\\",\\\"state\\\":\\\"unresolved\\\"}")]
+    [InlineData("FiniteFailure")]
+    [InlineData("row//failure.probe")]
+    public void Sl019RejectsAnAnomalyRecordPlacedInAReceiptGid(string value)
+    {
+        // The canonical writer refuses these values outright, so the fixture is raw JSON: the
+        // scan must reject them even when a hand-authored receipt smuggles them past the writer.
+        var text = "{\"primary_gid\":\"" + value
+            + "\",\"schema\":\"digestion-formalization-v1\"}\n";
+
+        AssertSl019Finding(Evaluate(ReceiptPath, text));
+    }
+
+    [Fact]
+    public void Sl019RejectsAValidGidOutsideAFormalizationReceiptPath()
+    {
+        const string path = "Evidence/D5/S0/Carrier/Gid.run.json";
+        var text = "{\"primary_gid\":\"" + FailureGid + "\"}\n";
+
+        AssertSl019Finding(Evaluate(path, text));
+    }
+
+    [Fact]
+    public void Sl019RejectsAValidGidOutsideTheStructurallyReachedGidSlot()
+    {
+        var text = "{\"nested\":{\"primary_gid\":\"" + FailureGid
+            + "\"},\"schema\":\"digestion-formalization-v1\"}\n";
+
+        AssertSl019Finding(Evaluate(ReceiptPath, text));
+    }
+
+    private const string FailureBearingStatementType =
+        "statement-v1(uparams=[],type=ec(ns(ns(n0,17:CommitmentVerdict),7:failure),[]))";
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void Sl019AcceptsFailureAsMathematicalContentInAReceiptStatementType(
+        bool hostedExtension)
+    {
+        var evaluation = Evaluate(
+            ReceiptPath,
+            ReceiptText(
+                "ns(n0,13:primary_probe)",
+                hostedExtension,
+                statementType: FailureBearingStatementType));
+
+        Assert.Empty(evaluation.Diagnostics);
+    }
+
+    [Fact]
+    public void Sl019RejectsAFailureBearingStatementTypeOutsideAFormalizationReceiptPath()
+    {
+        const string path = "Evidence/D5/S0/Carrier/Signature.run.json";
+        var text = "{\"precommitted_signature\":{\"kind\":\"theorem\",\"name_key\":\"k\","
+            + "\"type\":\"" + FailureBearingStatementType + "\"}}\n";
+
+        AssertSl019Finding(Evaluate(path, text));
+    }
+
+    [Fact]
+    public void Sl019RejectsAnAnomalyProseValuePlacedInAReceiptStatementType()
+    {
+        AssertSl019Finding(Evaluate(
+            ReceiptPath,
+            ReceiptText(
+                "ns(n0,13:primary_probe)",
+                statementType: "unresolved failure without case")));
+    }
+
     private static SingleRuleEvaluation Evaluate(string path, string text)
     {
         var fixture = new RuleFixture();
@@ -123,20 +217,25 @@ public sealed class Sl019SignatureSlotScopingTests
         Assert.Single(findings);
     }
 
-    private static string ReceiptText(string nameKey, bool hostedExtension = false)
+    private static string ReceiptText(
+        string nameKey,
+        bool hostedExtension = false,
+        string? primaryGid = null,
+        string? extensionGid = null,
+        string? statementType = null)
     {
         var signature = new DigestionFormalizationSignature(
             nameKey,
             "theorem",
-            "statement-v1(uparams=[],type=ec(ns(n0,4:True),[]))");
+            statementType ?? "statement-v1(uparams=[],type=ec(ns(n0,4:True),[]))");
         var extensions = hostedExtension
             ? ImmutableArray.Create(new DigestionFormalizationExtension(
-                "D5/S0/Carrier/SignatureSlot.secondary_probe",
+                extensionGid ?? "D5/S0/Carrier/SignatureSlot.secondary_probe",
                 signature))
             : ImmutableArray<DigestionFormalizationExtension>.Empty;
         var receipt = new DigestionFormalizationReceipt(
             "fixture-signature-slot",
-            "D5/S0/Carrier/SignatureSlot.primary_probe",
+            primaryGid ?? "D5/S0/Carrier/SignatureSlot.primary_probe",
             hostedExtension
                 ? new DigestionFormalizationSignature(
                     "ns(n0,13:primary_probe)",

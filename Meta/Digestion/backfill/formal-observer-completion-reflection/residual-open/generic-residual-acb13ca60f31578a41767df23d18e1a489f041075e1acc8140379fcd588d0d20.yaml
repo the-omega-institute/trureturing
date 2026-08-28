@@ -1,0 +1,10 @@
+ast_path: section/227-4-极限完成
+fingerprints:
+  raw_sha256: sha256:acb13ca60f31578a41767df23d18e1a489f041075e1acc8140379fcd588d0d20
+  normalized_sha256: sha256:acb13ca60f31578a41767df23d18e1a489f041075e1acc8140379fcd588d0d20
+cas_ref: sha256:acb13ca60f31578a41767df23d18e1a489f041075e1acc8140379fcd588d0d20
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: row/finite-prime-time-separation
+fingerprints:
+  raw_sha256: sha256:79d3b2bd89f36a5f54ddb83b7084d6d441b1ddd3d6e7427f4e10f922d01ec2b8
+  normalized_sha256: sha256:79d3b2bd89f36a5f54ddb83b7084d6d441b1ddd3d6e7427f4e10f922d01ec2b8
+cas_ref: sha256:79d3b2bd89f36a5f54ddb83b7084d6d441b1ddd3d6e7427f4e10f922d01ec2b8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

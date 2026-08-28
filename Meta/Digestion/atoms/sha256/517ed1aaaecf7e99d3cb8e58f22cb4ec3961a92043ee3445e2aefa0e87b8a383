@@ -1,0 +1,50 @@
+## 定理 219.2（有限一致性推出全局实现）
+
+给定形式行为签名
+
+$$
+\lambda=(\lambda_p)_{p\in P}.
+$$
+
+若对每个有限协议集
+
+$$
+F\subseteq P
+$$
+
+都存在某个 $x_F\in X$ 满足
+
+$$
+e_p(x_F)=\lambda_p
+\qquad
+\forall p\in F,
+$$
+
+则存在单一全局状态 $x\in X$ 满足
+
+$$
+\boxed{
+e_p(x)=\lambda_p
+\qquad
+\forall p\in P.
+}
+$$
+
+### 证明
+
+对每个 $p$ 定义闭集
+
+$$
+C_p
+=
+\{x\in X:e_p(x)=\lambda_p\}.
+$$
+
+有限一致性正是这些闭集具有有限交性质。由 $X$ 紧致：
+
+$$
+\bigcap_{p\in P}C_p\neq\varnothing.
+$$
+
+∎
+

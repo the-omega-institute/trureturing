@@ -1,0 +1,10 @@
+ast_path: section/386-可控性与可观察性共同决定操作本体/clause/3
+fingerprints:
+  raw_sha256: sha256:9f81c91ec64e3f547b52b4e67b815a8282a8ea81cc980fa4fd28ef60681c308b
+  normalized_sha256: sha256:9f81c91ec64e3f547b52b4e67b815a8282a8ea81cc980fa4fd28ef60681c308b
+cas_ref: sha256:9f81c91ec64e3f547b52b4e67b815a8282a8ea81cc980fa4fd28ef60681c308b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

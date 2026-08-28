@@ -1,0 +1,28 @@
+## 117.3 任意量子状态
+
+纯 residue PVM 只读取对角元
+
+$$
+\rho_{nn}.
+$$
+
+例如
+
+$$
+|\psi_\pm\rangle
+=
+\frac{|x\rangle\pm|y\rangle}{\sqrt2}
+$$
+
+在所有计算基 residue 统计上相同，却具有不同相对相位。
+
+若 $\dim\mathcal H_M=M$，对角 Hermitian 可见空间维数为 $M$，而全部 Hermitian 空间维数为 $M^2$。所以纯 residue 观察留下
+
+$$
+\boxed{
+M^2-M
+}
+$$
+
+维线性不可见残差。
+

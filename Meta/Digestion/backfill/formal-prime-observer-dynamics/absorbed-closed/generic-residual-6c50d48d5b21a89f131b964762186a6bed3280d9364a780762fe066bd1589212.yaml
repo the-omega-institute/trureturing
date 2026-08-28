@@ -1,0 +1,17 @@
+ast_path: 定理/293.1
+fingerprints:
+  raw_sha256: sha256:6c50d48d5b21a89f131b964762186a6bed3280d9364a780762fe066bd1589212
+  normalized_sha256: sha256:6c50d48d5b21a89f131b964762186a6bed3280d9364a780762fe066bd1589212
+cas_ref: sha256:6c50d48d5b21a89f131b964762186a6bed3280d9364a780762fe066bd1589212
+coverage_gids:
+  - D5/S3/ConceptDynamics/Causal/InterventionEffectiveness.intervention_effectiveness
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Causal/InterventionEffectiveness.intervention_effectiveness
+      source_sha256: sha256:6c50d48d5b21a89f131b964762186a6bed3280d9364a780762fe066bd1589212
+      target_sha256: sha256:a9fa29e4f25326a5b3c70d1d97fc450b3e2b32f497fa28c1434b4bb7adb8ef27
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Causal/InterventionEffectiveness.intervention_effectiveness
+      definition_sha256: sha256:d8a1bf6bedb5e571fb9eaebe3d5e052e395f02992421d3bc4533decdac02cca1
+      emission_sha256: sha256:9578b5dffaca9845e02ebdbba05425f50b280844e9f21731c0beedc6196263e6
+  unresolved_subitems: []

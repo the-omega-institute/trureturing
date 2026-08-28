@@ -1,0 +1,10 @@
+ast_path: row/Pauli-非交换-Born-权重-无矩阵-character
+fingerprints:
+  raw_sha256: sha256:7c2095a3c9d2fa36ac4d869f97c3095a8df9327a27f7a38ff3b975b8c0ab8c9e
+  normalized_sha256: sha256:7c2095a3c9d2fa36ac4d869f97c3095a8df9327a27f7a38ff3b975b8c0ab8c9e
+cas_ref: sha256:7c2095a3c9d2fa36ac4d869f97c3095a8df9327a27f7a38ff3b975b8c0ab8c9e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

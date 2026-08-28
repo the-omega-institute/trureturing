@@ -1,0 +1,18 @@
+## 定理 97.2（固定块代数）
+
+$$
+\boxed{
+\operatorname{Fix}(\mathcal D_G)
+=
+\bigoplus_{k=1}^r
+P_kM_d(\mathbb C)P_k
+\cong
+\bigoplus_{k=1}^r
+M_{|C_k|}(\mathbb C).
+}
+$$
+
+### 证明
+
+定理 97.1 表明，只有记录完全相同的地址之间可以保留矩阵元；这些地址恰组成上述等价类。∎
+

@@ -9,6 +9,8 @@ COMMAND="${1:-}"
 BASE="${2:-origin/dev}"
 ATOM_ID="${3:-}"
 GID="${4:-}"
+BATCH_ATOM_IDS=()
+BATCH_GIDS=()
 PREPARED_RECEIPT_PATH=""
 PREPARED_RECEIPT_ORIGINAL_PATH=""
 PREPARED_RECEIPT_REPLACES_EXISTING=0
@@ -18,7 +20,15 @@ cleanup_prepared_receipt() {
   [[ -z "$PREPARED_RECEIPT_ORIGINAL_PATH" ]] \
     || rm -f -- "$PREPARED_RECEIPT_ORIGINAL_PATH"
 }
-trap cleanup_prepared_receipt EXIT
+
+finish_playbook() {
+  local rc=$?
+  trap - EXIT
+  set +e
+  cleanup_prepared_receipt
+  exit "$rc"
+}
+trap finish_playbook EXIT
 
 run_cli() {
   dotnet run --project "$PROJECT" --configuration Release -- "$@"
@@ -33,11 +43,21 @@ receipts_stage() {
   run_digest_status
 }
 
+begin_step() {
+  local label="$1"
+  printf 'PLAYBOOK_STEP command=%s detail=%s\n' "$COMMAND" "$label" >&2
+}
+
+complete_step() {
+  :
+}
+
 step() {
   local label="$1"
   shift
-  printf 'PLAYBOOK_STEP command=%s detail=%s\n' "$COMMAND" "$label" >&2
+  begin_step "$label"
   "$@"
+  complete_step passed
 }
 
 require_transaction_arguments() {
@@ -53,6 +73,59 @@ require_transaction_arguments() {
     echo "PLAYBOOK_INVALID GID does not resolve to a Lean module: $GID" >&2
     return 2
   fi
+}
+
+require_cover_batch_arguments() {
+  local atoms_file="$ATOM_ID" line atom gid remainder status line_number=0
+  if [[ -z "$atoms_file" || -n "$GID" || ! -f "$atoms_file" || ! -r "$atoms_file" ]]; then
+    echo "usage: playbook-workflows.sh cover-batch BASE ATOMS_FILE" >&2
+    return 2
+  fi
+
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    line_number=$((line_number + 1))
+    if [[ "$line" == *$'\r'* || "$line" != *$'\t'* ]]; then
+      echo "PLAYBOOK_INVALID cover-batch line $line_number must be ATOM_ID<TAB>GID" >&2
+      return 2
+    fi
+    atom="${line%%$'\t'*}"
+    remainder="${line#*$'\t'}"
+    if [[ "$remainder" == *$'\t'* ]]; then
+      echo "PLAYBOOK_INVALID cover-batch line $line_number must contain exactly two TSV fields" >&2
+      return 2
+    fi
+    gid="$remainder"
+    ATOM_ID="$atom"
+    GID="$gid"
+    if require_transaction_arguments; then
+      :
+    else
+      status=$?
+      return "$status"
+    fi
+    BATCH_ATOM_IDS+=("$atom")
+    BATCH_GIDS+=("$gid")
+  done < "$atoms_file"
+
+  if [[ "${#BATCH_ATOM_IDS[@]}" -eq 0 ]]; then
+    echo "PLAYBOOK_INVALID cover-batch input is empty: $atoms_file" >&2
+    return 2
+  fi
+}
+
+derive_cover_batch_row_state() {
+  local index="$1"
+  ATOM_ID="${BATCH_ATOM_IDS[index]}"
+  GID="${BATCH_GIDS[index]}"
+  require_transaction_arguments
+}
+
+cleanup_cover_batch_temporaries() {
+  local index
+  for index in "${!BATCH_ATOM_IDS[@]}"; do
+    derive_cover_batch_row_state "$index"
+    cleanup_transaction_temporaries
+  done
 }
 
 require_new_module_blueprint_mirror() {
@@ -81,7 +154,6 @@ cleanup_transaction_temporaries() {
 }
 
 commit_phase_a_if_needed() {
-  printf 'PLAYBOOK_STEP command=deposit detail=stage-phase-a\n' >&2
   git add -A
   git reset --quiet HEAD -- "$FROZEN_LEDGER" "$RECEIPT_PATH"
   if git diff --cached --quiet; then
@@ -94,7 +166,6 @@ commit_phase_a_if_needed() {
 
 commit_all_if_needed() {
   local message="$1"
-  printf 'PLAYBOOK_STEP command=%s detail=stage-final-tree\n' "$COMMAND" >&2
   git add -A
   if git diff --cached --quiet; then
     printf 'PLAYBOOK_SKIP command=%s detail=final-tree-unchanged\n' "$COMMAND" >&2
@@ -105,7 +176,7 @@ commit_all_if_needed() {
 }
 
 freeze_exists() {
-  local active_state current_blob current_identity freeze_case_ids grep_output grep_status
+  local active_state freeze_case_ids grep_output grep_status
   local ledger_file target_case_id
   local git_grep_arguments=() module_ledger_files=() related_ledger_files=()
   local target_case_ids=()
@@ -117,19 +188,6 @@ freeze_exists() {
     echo "PLAYBOOK_INVALID frozen ledger is missing: $FROZEN_LEDGER" >&2
     return 2
   fi
-
-  if ! current_blob="$(git hash-object -- "$MODULE_PATH")"; then
-    echo "PLAYBOOK_INVALID failed to identify current module: $MODULE_PATH" >&2
-    return 2
-  fi
-  case "${#current_blob}" in
-    40) current_identity="git-sha1:$current_blob" ;;
-    64) current_identity="git-sha256:$current_blob" ;;
-    *)
-      echo "PLAYBOOK_INVALID git returned a malformed module identity: $current_blob" >&2
-      return 2
-      ;;
-  esac
 
   if grep_output="$(git grep --untracked -l -F -e "$MODULE_PATH" \
       -- "$FROZEN_LEDGER/*.json" 2>&1)"; then
@@ -185,14 +243,11 @@ freeze_exists() {
 
   if ! active_state="$(jq -sc \
       --arg node "$MODULE_PATH" \
-      --arg identity "$current_identity" \
       --arg target_cases "$freeze_case_ids" '
       ($target_cases | split("\n")) as $target_case_ids
       | [.[]
         | select(
-            if (.event_type == "Freeze"
-                or .event_type == "Reattest"
-                or .event_type == "Supersede") then
+            if .event_type == "Freeze" then
               (.payload.case_id // null) as $case
               | (($case | type) == "string"
                   and (($target_case_ids | index($case)) != null))
@@ -210,48 +265,15 @@ freeze_exists() {
       | ([$events[]
         | select(.event_type == "Revoke")
         | .payload.affected_frozen_node_ids[]] | unique) as $revoked_ids
-      | (reduce $events[] as $event ({};
-          ($event.event_hash // null) as $event_hash
-          | if (($event_hash | type) == "string") then .[$event_hash] = $event else . end
-        )) as $events_by_hash
       | def replay_rank:
           if . == "Genesis" then 0
           elif . == "Freeze" then 1
-          elif . == "Reattest" then 2
-          elif . == "Supersede" then 2
-          elif . == "Revoke" then 3
-          else 4
-          end;
-      def attestation_depth($event; $visited):
-          if $event.event_type == "Freeze" then
-            0
-          elif ($event.event_type == "Reattest" or $event.event_type == "Supersede") then
-            ($event.event_hash // null) as $event_hash
-            | if (($event_hash | type) != "string") then
-                error("Reattest is missing its event hash")
-              elif ($visited[$event_hash] // false) then
-                error("Reattest chain contains a cycle")
-              else
-                ($event.payload.previous_attestation_event_hash // null) as $previous_hash
-                | if (($previous_hash | type) != "string") then
-                    error("Reattest references an unknown previous attestation")
-                  else
-                    ($events_by_hash[$previous_hash] // null) as $previous
-                    | if (($previous | type) != "object") then
-                        error("Reattest references an unknown previous attestation")
-                      else
-                        1 + attestation_depth($previous; $visited + {($event_hash): true})
-                      end
-                  end
-              end
-          else
-            error("Reattest chain does not terminate at Freeze")
+          elif . == "Revoke" then 2
+          else 3
           end;
       to_entries
       | sort_by([
           (.value.event_type | replay_rank),
-          (if (.value.event_type == "Reattest" or .value.event_type == "Supersede")
-            then attestation_depth(.value; {}) else 0 end),
           .key
         ])
       | map(.value)
@@ -277,30 +299,6 @@ freeze_exists() {
                 descriptor_blob_oid: $blob
               }
             end
-        elif $event.event_type == "Reattest" then
-          ($event.payload.case_id // null) as $case
-          | ($event.payload.input.descriptor_blob_oid // null) as $blob
-          | if (($case | type) != "string" or ($blob | type) != "string" or (has($case) | not)) then
-              error("Reattest targets no active case or lacks module identity")
-            else
-              .[$case].descriptor_blob_oid = $blob
-              | if (($event.payload.frozen_node_id? // null) | type) == "string" then
-                  .[$case].frozen_node_id = $event.payload.frozen_node_id
-                else . end
-            end
-        elif $event.event_type == "Supersede" then
-          ($event.payload.case_id // null) as $case
-          | ($event.payload.input.descriptor_blob_oid // null) as $blob
-          | ($event.payload.frozen_node_id // null) as $frozen_id
-          | if (($case | type) != "string"
-              or ($blob | type) != "string"
-              or ($frozen_id | type) != "string"
-              or (has($case) | not)) then
-              error("Supersede targets no active case or lacks module identity")
-            else
-              .[$case].descriptor_blob_oid = $blob
-              | .[$case].frozen_node_id = $frozen_id
-            end
         elif $event.event_type == "Revoke" then
           ($event.payload.affected_case_ids // null) as $cases
           | ($event.payload.affected_frozen_node_ids // null) as $frozen_ids
@@ -314,7 +312,7 @@ freeze_exists() {
         end)
       | with_entries(
           select(.value.frozen_node_id as $id | ($revoked_ids | index($id) | not)))
-      | any(.[]; .node_path == $node and .descriptor_blob_oid == $identity)
+      | any(.[]; .node_path == $node)
     ' "${related_ledger_files[@]}" 2>&1)"; then
     echo "PLAYBOOK_INVALID failed to replay target module frozen ledger shards: $active_state" >&2
     return 2
@@ -331,13 +329,11 @@ freeze_exists() {
 }
 
 freeze_module_if_needed() {
-  if freeze_exists; then
+  local already_frozen="$1"
+  if [[ "$already_frozen" -eq 1 ]]; then
     printf 'PLAYBOOK_SKIP command=deposit detail=module-already-frozen path=%s\n' \
       "$MODULE_PATH" >&2
     return
-  else
-    local status=$?
-    [[ "$status" -eq 1 ]] || return "$status"
   fi
 
   step "ledger-append $MODULE_PATH" run_cli \
@@ -356,8 +352,7 @@ verify_added_frozen_event_ancestor() {
   fi
 
   case "$event_type" in
-    Freeze|Reattest) input_selector='.payload.input.base_commit_oid' ;;
-    Supersede) input_selector='.payload.input.base_commit_oid' ;;
+    Freeze) input_selector='.payload.input.base_commit_oid' ;;
     Genesis|Revoke) return 0 ;;
     *)
       echo "PLAYBOOK_INVALID added frozen event has unsupported event_type $event_type: $path" >&2
@@ -457,7 +452,6 @@ prepare_formalization_receipt() {
     --out "$temporary"
   )
 
-  printf 'PLAYBOOK_STEP command=deposit detail=validate-formalization-receipt\n' >&2
   if run_cli "${receipt_arguments[@]}"; then
     :
   else
@@ -557,6 +551,46 @@ cover_atom_or_resume() {
   fi
 }
 
+cover_row() {
+  begin_step cover-atom
+  if cover_atom_or_resume; then
+    complete_step passed
+  else
+    local status=$?
+    complete_step failed
+    step stage-final-tree commit_all_if_needed \
+      "formalize: record failed cover disposition for $ATOM_ID"
+    exit "$status"
+  fi
+  step align-scribe-receipt run_cli \
+    align-scribe-receipt --atom-id "$ATOM_ID" --gid "$GID" --base "$BASE"
+}
+
+cover_batch_row() {
+  local output status
+  begin_step cover-atom-aligned
+  if output="$(run_cli cover-atom --cover-atom "$ATOM_ID" --gid "$GID" \
+      --base "$BASE" --envelope "$RECEIPT_PATH" --align-scribe-receipt 2>&1)"; then
+    [[ -z "$output" ]] || printf '%s\n' "$output"
+    if grep -Fq "COVER_ATOM_ALIGNED cover=resumed align=passed" <<<"$output"; then
+      printf 'PLAYBOOK_SKIP command=cover detail=coverage-already-applied atom_id=%s gid=%s\n' \
+        "$ATOM_ID" "$GID" >&2
+    fi
+    complete_step passed
+    return
+  else
+    status=$?
+  fi
+
+  printf '%s\n' "$output" >&2
+  complete_step failed
+  if grep -Fq "COVER_ATOM_ALIGNED cover=failed" <<<"$output"; then
+    step stage-final-tree commit_all_if_needed \
+      "formalize: record failed cover disposition for $ATOM_ID"
+  fi
+  exit "$status"
+}
+
 cd "$ROOT"
 case "$COMMAND" in
   deliver-check)
@@ -578,38 +612,46 @@ case "$COMMAND" in
     require_new_module_blueprint_mirror
     cleanup_transaction_temporaries
     if freeze_exists; then
+      freeze_precheck=1
       printf 'PLAYBOOK_SKIP command=deposit detail=phase-a-already-committed path=%s\n' \
         "$MODULE_PATH" >&2
+      step deposit-header-check run_cli deposit-header-check --target "$MODULE_PATH"
     else
       status=$?
       [[ "$status" -eq 1 ]] || exit "$status"
+      freeze_precheck=0
       step lean-report make lean-report
+      step deposit-header-check run_cli deposit-header-check --target "$MODULE_PATH"
       step emit make emit
-      commit_phase_a_if_needed
+      step stage-phase-a commit_phase_a_if_needed
     fi
-    prepare_formalization_receipt
-    freeze_module_if_needed
+    step validate-formalization-receipt prepare_formalization_receipt
+    freeze_module_if_needed "$freeze_precheck"
     install_prepared_formalization_receipt
-    commit_all_if_needed "formalize: record deposit receipt for $GID"
+    step stage-final-tree commit_all_if_needed "formalize: record deposit receipt for $GID"
     ;;
   cover)
     require_transaction_arguments
     cleanup_transaction_temporaries
     step lean-report make lean-report
-    if step cover-atom cover_atom_or_resume; then
-      :
-    else
-      status=$?
-      commit_all_if_needed "formalize: record failed cover disposition for $ATOM_ID"
-      exit "$status"
-    fi
-    step align-scribe-receipt run_cli \
-      align-scribe-receipt --atom-id "$ATOM_ID" --gid "$GID" --base "$BASE"
+    cover_row
     step emit-post-alignment make emit
-    commit_all_if_needed "formalize: cover $ATOM_ID with $GID"
+    step stage-final-tree commit_all_if_needed "formalize: cover $ATOM_ID with $GID"
+    ;;
+  cover-batch)
+    require_cover_batch_arguments
+    cleanup_cover_batch_temporaries
+    step lean-report make lean-report
+    for index in "${!BATCH_ATOM_IDS[@]}"; do
+      derive_cover_batch_row_state "$index"
+      cover_batch_row
+      step stage-final-tree commit_all_if_needed "formalize: cover $ATOM_ID with $GID"
+    done
+    step emit-post-alignment make emit
+    step stage-final-tree commit_all_if_needed "formalize: emit projections after cover batch"
     ;;
   *)
-    echo "usage: playbook-workflows.sh deliver-check|receipts-stage|deposit|cover [BASE] [ATOM_ID GID]" >&2
+    echo "usage: playbook-workflows.sh deliver-check|receipts-stage|deposit|cover|cover-batch [BASE] [ATOM_ID GID|ATOMS_FILE]" >&2
     exit 2
     ;;
 esac

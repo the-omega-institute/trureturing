@@ -1,0 +1,46 @@
+# 第十五部：对合在观察商上的下降
+
+给定读数
+
+\[
+q:X\to Q
+\]
+
+与变换 \(\kappa:X\to X\)。定义 kernel stability：
+
+\[
+q(x)=q(y)
+\Rightarrow
+q(\kappa x)=q(\kappa y).
+\]
+
+若 \(q\) 满射，则：
+
+\[
+\boxed{
+\kappa\text{ preserves }q\text{-fibers}
+\iff
+\exists\bar\kappa:Q\to Q,
+\quad
+\bar\kappa\circ q=q\circ\kappa.
+}
+\]
+
+下降映射在满射值域上唯一。若 \(\kappa\) 是对合，则 \(\bar\kappa\) 也是对合。
+
+固定点可见性的精确判据为：
+
+\[
+\boxed{
+\bar\kappa(q(x))=q(x)
+\iff
+q(\kappa x)=q(x).
+}
+\]
+
+因此 quotient 可以制造伪固定点。它们表示一个本体二元轨道被读数压入同一纤维。
+
+若 \(q\) 双射，则固定点自由性必被保留。一般满射不足以保留。
+
+---
+

@@ -1,0 +1,5 @@
+source_id = "proof-topology-diagonal-escape-theory"
+path = "docs/develop/theory/PROOF_TOPOLOGY_DIAGONAL_ESCAPE_THEORY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

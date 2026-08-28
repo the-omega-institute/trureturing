@@ -1,0 +1,10 @@
+ast_path: row/常维严格尾链与零终端
+fingerprints:
+  raw_sha256: sha256:d137afc583112df1a534845fd1d547e76662af5c4f15b767da46bdf21ebd8a10
+  normalized_sha256: sha256:d137afc583112df1a534845fd1d547e76662af5c4f15b767da46bdf21ebd8a10
+cas_ref: sha256:d137afc583112df1a534845fd1d547e76662af5c4f15b767da46bdf21ebd8a10
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

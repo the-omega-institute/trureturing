@@ -1,0 +1,10 @@
+ast_path: section/504-omega-连续递归可以由有限近似逼近
+fingerprints:
+  raw_sha256: sha256:cec471f40c61b036a29f95f02cb075c5449817b8ed55da7076f583ec5daedafb
+  normalized_sha256: sha256:cec471f40c61b036a29f95f02cb075c5449817b8ed55da7076f583ec5daedafb
+cas_ref: sha256:cec471f40c61b036a29f95f02cb075c5449817b8ed55da7076f583ec5daedafb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

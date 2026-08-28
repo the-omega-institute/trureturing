@@ -27,6 +27,7 @@ internal static class MarkdigBlockAst
 {
     private static readonly MarkdownPipeline Pipeline = new MarkdownPipelineBuilder()
         .UsePipeTables()
+        .UseMathematics()
         .UsePreciseSourceLocation()
         .Build();
 
@@ -38,17 +39,23 @@ internal static class MarkdigBlockAst
     {
         ArgumentNullException.ThrowIfNull(source);
         var blocks = ImmutableArray.CreateBuilder<MarkdownBlock>();
-        Walk(Markdown.Parse(source, Pipeline), source, blocks);
+        Walk(Markdown.Parse(source, Pipeline), source, LegacyDisplaySpans(source), blocks);
         return blocks.ToImmutable();
     }
 
     private static void Walk(
         ContainerBlock container,
         string source,
+        ImmutableArray<SourceSpan> legacyDisplaySpans,
         ImmutableArray<MarkdownBlock>.Builder blocks)
     {
         foreach (var block in container)
         {
+            if (IsInsideLegacyDisplay(block, legacyDisplaySpans))
+            {
+                continue;
+            }
+
             switch (block)
             {
                 case HeadingBlock heading:
@@ -83,13 +90,75 @@ internal static class MarkdigBlockAst
                     break;
 
                 case ContainerBlock nested:
-                    Walk(nested, source, blocks);
+                    Walk(nested, source, legacyDisplaySpans, blocks);
                     break;
 
                 default:
                     break;
             }
         }
+    }
+
+    /// <summary>
+    /// The imported theory volumes also contain a legacy display form delimited by standalone
+    /// <c>[</c> and <c>]</c> lines. Markdig cannot name that repository dialect, so an equality
+    /// line inside it can otherwise turn the preceding formula lines into a Setext heading.
+    /// Paired delimiters make the range structural and keep its contents opaque to claim discovery.
+    /// </summary>
+    private static ImmutableArray<SourceSpan> LegacyDisplaySpans(string source)
+    {
+        var spans = ImmutableArray.CreateBuilder<SourceSpan>();
+        int? displayStart = null;
+        var lineStart = 0;
+        while (lineStart < source.Length)
+        {
+            var lineEnd = source.IndexOfAny(['\r', '\n'], lineStart);
+            if (lineEnd < 0)
+            {
+                lineEnd = source.Length;
+            }
+
+            var line = source.AsSpan(lineStart, lineEnd - lineStart).Trim();
+            if (displayStart is null && line.SequenceEqual("["))
+            {
+                displayStart = lineStart;
+            }
+            else if (displayStart is not null && line.SequenceEqual("]"))
+            {
+                spans.Add(new SourceSpan(displayStart.Value, lineEnd));
+                displayStart = null;
+            }
+
+            lineStart = lineEnd;
+            while (lineStart < source.Length && source[lineStart] is '\r' or '\n')
+            {
+                lineStart++;
+            }
+        }
+
+        return spans.ToImmutable();
+    }
+
+    private static bool IsInsideLegacyDisplay(
+        MarkdownObject block,
+        ImmutableArray<SourceSpan> legacyDisplaySpans)
+    {
+        var blockStart = block.Span.Start;
+        var blockEnd = End(block);
+        foreach (var span in legacyDisplaySpans)
+        {
+            if (span.Start > blockStart)
+            {
+                return false;
+            }
+
+            if (blockStart >= span.Start && blockEnd <= span.End)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -136,4 +205,6 @@ internal static class MarkdigBlockAst
 
     private static string Slice(string source, MarkdownObject block) =>
         source[block.Span.Start..Math.Min(End(block), source.Length)];
+
+    private sealed record SourceSpan(int Start, int End);
 }

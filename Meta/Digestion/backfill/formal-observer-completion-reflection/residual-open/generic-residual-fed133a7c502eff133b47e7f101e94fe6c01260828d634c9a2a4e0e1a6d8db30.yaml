@@ -1,0 +1,10 @@
+ast_path: 条件/63.4
+fingerprints:
+  raw_sha256: sha256:fed133a7c502eff133b47e7f101e94fe6c01260828d634c9a2a4e0e1a6d8db30
+  normalized_sha256: sha256:fed133a7c502eff133b47e7f101e94fe6c01260828d634c9a2a4e0e1a6d8db30
+cas_ref: sha256:fed133a7c502eff133b47e7f101e94fe6c01260828d634c9a2a4e0e1a6d8db30
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

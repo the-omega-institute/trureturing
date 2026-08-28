@@ -1,0 +1,14 @@
+## 定义 2.1(观察者结构)
+
+一个观察者结构是四元组
+
+\[
+\boxed{
+\mathfrak O=(X,\ \{q_\alpha:X\to B_\alpha\}_{\alpha\in A},\ \operatorname{Adm},\ a)
+}
+\]
+
+其中:\(X\) 为状态类型;\(\{q_\alpha\}\) 为读数族,其**乘积读数**记 \(q_{\mathfrak O}:=\langle q_\alpha\rangle_\alpha:X\to\prod_\alpha B_\alpha\);\(\operatorname{Adm}:\prod_\alpha B_\alpha\to\mathsf{Prop}\) 为定义在读数值上的准入谓词(FCD 18.2 中 \(\prod_iA_i\) 的单层形);\(a:X\) 为实际锚点(FCD 摘要模型 \(\mathfrak M=(X,\operatorname{Adm},a,\mathcal F,\mathcal C)\) 中的 \(a\)),要求 \(\operatorname{Adm}(q_{\mathfrak O}(a))\)。派生量:核 \(N_{\mathfrak O}=\ker q_{\mathfrak O}\)、商 \(X/N_{\mathfrak O}\)、有效像 \(\operatorname{Im}_{\operatorname{Adm}}=\{b\in\operatorname{Im}q_{\mathfrak O}\mid\operatorname{Adm}(b)\}\)。
+
+**读数部分**\((X,\{q_\alpha\})\)决定「能区分什么」;**准入—锚点部分**\((\operatorname{Adm},a)\)决定「允许什么、站在哪里」。本文全部论证依赖这一分栏。FCD 18.1 的塔(多层 \(X_i\) 与相容截面)在本卷折叠为单层;塔的内容在本卷不承重。
+

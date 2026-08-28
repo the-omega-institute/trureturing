@@ -1,0 +1,59 @@
+## 定义 37.1（规范代理状态空间）
+
+$$
+\boxed{
+\mathsf{Agt}_O
+=
+\frac{R_O+N_\infty}{N_\infty}
+\cong
+\frac{R_O}{R_O\cap N_\infty}.
+}
+$$
+
+其维数为
+
+$$
+\boxed{
+\dim\mathsf{Agt}_O
+=
+\dim R_O-
+\dim(R_O\cap N_\infty).
+}
+$$
+
+它恰好保存既能由观察者改变、又会在未来留下可观察差异的状态方向。
+
+定义静默控制
+
+$$
+\mathsf{Silent}_O=R_O\cap N_\infty,
+$$
+
+得到正合列
+
+$$
+0\to\mathsf{Silent}_O
+\to R_O
+\to\mathsf{Agt}_O
+\to0.
+$$
+
+行为商中非自我可达的部分为
+
+$$
+\mathsf{Imposed}_O
+=
+\frac{V/N_\infty}{\mathsf{Agt}_O}
+\cong
+\frac{V}{R_O+N_\infty},
+$$
+
+并有
+
+$$
+0\to\mathsf{Agt}_O
+\to V/N_\infty
+\to\mathsf{Imposed}_O
+\to0.
+$$
+

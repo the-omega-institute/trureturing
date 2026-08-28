@@ -1,0 +1,16 @@
+## 定义 88.1（观察者精化）
+
+定义
+
+$$
+\mathfrak O_1\preceq\mathfrak O_2
+$$
+
+当且仅当 $\mathfrak O_2$ 至少与 $\mathfrak O_1$ 一样能区分状态：
+
+$$
+\rho\sim_{\mathfrak O_2}\sigma
+\Longrightarrow
+\rho\sim_{\mathfrak O_1}\sigma.
+$$
+

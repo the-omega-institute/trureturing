@@ -1,0 +1,22 @@
+## 定理 17.1（预测充分性）
+
+过程 \(F\) 下降为：
+
+\[
+\overline F_q:Z_q\to Z_q,
+\qquad
+\overline F_q([x])=[Fx].
+\]
+
+读出也下降到 \(Z_q\)。
+
+### 证明
+
+若 \(x\sim_q^\infty y\)，则对全部 \(n\)：
+
+\[
+q(F^nFx)=q(F^{n+1}x)=q(F^{n+1}y)=q(F^nFy).
+\]
+
+故 \(Fx\sim_q^\infty Fy\)。\(\square\)
+

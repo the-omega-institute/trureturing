@@ -1,0 +1,10 @@
+ast_path: section/47-6-追加动作账
+fingerprints:
+  raw_sha256: sha256:eb63d94fb969a1286629a162897aa4df8d9dcad702c577841481245765a5c48b
+  normalized_sha256: sha256:eb63d94fb969a1286629a162897aa4df8d9dcad702c577841481245765a5c48b
+cas_ref: sha256:eb63d94fb969a1286629a162897aa4df8d9dcad702c577841481245765a5c48b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

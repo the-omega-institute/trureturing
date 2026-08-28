@@ -1,0 +1,16 @@
+\[
+\operatorname{Inv}(R)
+=
+\{d:X\to B:(x,y)\in R\Rightarrow d(x)=d(y)\}.
+\]
+
+两者形成反变 Galois 对应：
+
+\[
+\boxed{
+\Gamma\subseteq\operatorname{Inv}(R)
+\iff
+R\subseteq K_\Gamma.
+}
+\]
+

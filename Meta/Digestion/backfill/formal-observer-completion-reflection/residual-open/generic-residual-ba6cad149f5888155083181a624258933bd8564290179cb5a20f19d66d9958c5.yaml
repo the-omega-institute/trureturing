@@ -1,0 +1,10 @@
+ast_path: section/139-追加严格非主张
+fingerprints:
+  raw_sha256: sha256:ba6cad149f5888155083181a624258933bd8564290179cb5a20f19d66d9958c5
+  normalized_sha256: sha256:ba6cad149f5888155083181a624258933bd8564290179cb5a20f19d66d9958c5
+cas_ref: sha256:ba6cad149f5888155083181a624258933bd8564290179cb5a20f19d66d9958c5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

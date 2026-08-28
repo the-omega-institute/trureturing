@@ -1,0 +1,41 @@
+## 定理 97.3（重复记录的指数衰减）
+
+若每次交互写入独立的同型环境记录，则
+
+$$
+(\mathcal D_G^n(\rho))_{ij}
+=
+G_{ij}^n\rho_{ij}.
+$$
+
+若不同记录类之间存在统一常数
+
+$$
+|G_{ij}|\le q<1,
+$$
+
+定义极限 pinching
+
+$$
+\mathcal P(\rho)
+=
+\sum_kP_k\rho P_k.
+$$
+
+则
+
+$$
+\boxed{
+\|\mathcal D_G^n(\rho)-\mathcal P(\rho)\|_{\mathrm{HS}}
+\le
+q^n
+\|\rho-\mathcal P(\rho)\|_{\mathrm{HS}}.
+}
+$$
+
+### 证明
+
+类外矩阵元逐项乘以 $G_{ij}^n$；平方求和后提取 $q^{2n}$，再开平方。∎
+
+仓库 `QubitWitnesses` 与 `Decoherence` 已机器核验量子比特非对角项按 $c^N$ 精确衰减、阻尼复合时系数相乘，并证明非平凡相位阻尼固定点恰好是对角矩阵。
+

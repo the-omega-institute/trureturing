@@ -1,0 +1,26 @@
+## 定义 135.1（cross-prime completion defect）
+
+令
+
+$$
+\Pi_{\mathrm{loc}}
+$$
+
+为到 $V_{\le1}$ 的 Hilbert–Schmidt 正交投影。定义
+
+$$
+\boxed{
+\Delta_\Phi(E)
+=
+\|(I-\Pi_{\mathrm{loc}})\Phi^*(E)\|_{\mathrm{HS}}.
+}
+$$
+
+若
+
+$$
+\Delta_\Phi(E)=0,
+$$
+
+该局部效果一步后仍无跨素数部分；若正，则动力学已把局部问题运输出新的相关信息。
+

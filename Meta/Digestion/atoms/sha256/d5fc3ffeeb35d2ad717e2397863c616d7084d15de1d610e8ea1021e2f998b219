@@ -1,0 +1,18 @@
+## 15.5 多目标 Pareto 前沿
+
+实验方案 A 的价值可写为：
+
+$$
+V(A)=(Information,ResidualCapture,Transfer,Cost,Risk).
+$$
+
+前三项越大越好，后二项越小越好。
+
+仓库 `ParetoWeakPreorder` 已机器验证，在各坐标均为 preorder 时，弱 Pareto 关系自反且传递。
+
+所以没有额外效用函数时，规范对象是 Pareto 非支配前沿，而不是唯一“最佳实验”。
+
+该 Pareto dominance 与遗传显性 dominance 是不同类型上的不同关系，必须避免术语混淆。
+
+---
+

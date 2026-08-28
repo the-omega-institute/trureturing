@@ -53,7 +53,7 @@ public sealed partial class DigestionQuarantineTests
             disposition.Outcome);
         Assert.Equal(["D5/S0/Carrier/Probe.probe"], disposition.Gids.ToArray());
         Assert.Equal(
-            new DateTimeOffset(2026, 8, 25, 4, 3, 2, TimeSpan.Zero),
+            new DateTimeOffset(2026, 8, 25, 4, 3, 2, TestBudgets.ZeroDuration),
             disposition.RecordedAtUtc);
 
         var first = BackfillInventoryWriter.WriteAtom(entry);
@@ -141,7 +141,7 @@ public sealed partial class DigestionQuarantineTests
                     [new DigestionDispositionGap(
                         "unresolved-subitem",
                         "remaining theorem clause")],
-                    new DateTimeOffset(2026, 8, 25, 4, 3, 2, TimeSpan.Zero))),
+                    new DateTimeOffset(2026, 8, 25, 4, 3, 2, TestBudgets.ZeroDuration))),
             new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open),
             Digest);
         var evaluated = new DigestionEntryEvaluation(

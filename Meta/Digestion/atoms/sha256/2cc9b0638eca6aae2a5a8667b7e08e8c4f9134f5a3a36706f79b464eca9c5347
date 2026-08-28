@@ -1,0 +1,41 @@
+## 定理 141.2（总信息成本与顺序无关）
+
+在有限概率模型中，对任意目标排列 (\pi)：
+
+[
+\boxed{
+H(T_1,\ldots,T_n\mid C)
+=======================
+
+\sum_{k=1}^n
+H!\left(
+T_{\pi(k)}
+\mid
+C,T_{\pi(1)},\ldots,T_{\pi(k-1)}
+\right).
+}
+]
+
+总完成成本与加入目标的顺序无关，但每个目标的边际贡献依赖顺序。
+
+这与静态 completion 的交换性一致：
+
+[
+\operatorname{cl}*{T_i}
+\operatorname{cl}*{T_j}
+\simeq
+\operatorname{cl}*{T_j}
+\operatorname{cl}*{T_i}.
+]
+
+所以两件事必须分开：
+
+[
+\boxed{
+\text{总理论信息量是顺序不变的；
+发现信用与边际贡献可能是顺序依赖的。}
+}
+]
+
+---
+

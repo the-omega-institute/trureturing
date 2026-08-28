@@ -1,0 +1,10 @@
+ast_path: section/62-Barrier-与-Lyapunov-证书
+fingerprints:
+  raw_sha256: sha256:7ffea520f22802656204486de79f7aed2ebc4823b3e080fe5ea4996ddd34a168
+  normalized_sha256: sha256:7ffea520f22802656204486de79f7aed2ebc4823b3e080fe5ea4996ddd34a168
+cas_ref: sha256:7ffea520f22802656204486de79f7aed2ebc4823b3e080fe5ea4996ddd34a168
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

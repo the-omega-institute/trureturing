@@ -1,0 +1,30 @@
+## 4.1 联合 kernel 与关系不变量
+
+设候选观察器全集为：
+
+$$
+\mathfrak Q.
+$$
+
+对观察族 Γ，定义：
+
+$$
+K(Γ)=\bigcap_{q\in Γ}ker(q).
+$$
+
+对关系 R，定义所有尊重 R 的观察器：
+
+$$
+I(R)=\{q\in\mathfrak Q:R\subseteq ker(q)\}.
+$$
+
+仓库 `DefinitionKernelGalois` 已机器验证：
+
+$$
+Γ\subseteq I(R)
+\iff
+R\subseteq K(Γ).
+$$
+
+---
+

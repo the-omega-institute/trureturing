@@ -1,0 +1,29 @@
+## 64.2 新的 sticky 定义
+
+若负质量沿嵌套链：
+
+$$
+(p_j,m_j,t_j,\alpha_j)
+$$
+
+持续集中，则定义为 Icosahedral sticky history。
+
+此时：
+
+* \(p\)-方向用 Euler/Hecke primitive decomposition；
+* \(m\)-方向用调节子 Fourier 分解；
+* \(t\)-方向用 Mellin/Riemann 积分；
+* \(\alpha\)-方向用七状态有限 Fourier 矩阵；
+
+进行 Yu Deng 式 history contraction。
+
+七状态矩阵满足：
+
+$$
+M^2=125I,
+$$
+
+所以 \(\alpha\)-方向不是不可控组合爆炸，而是一个精确闭合的有限状态系统。
+
+---
+

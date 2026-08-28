@@ -1,0 +1,10 @@
+ast_path: section/6-与本库不动点的对应
+fingerprints:
+  raw_sha256: sha256:c6c9ca1260d0e85bcaa99e23434c6ac8ec51c698345bff72bd35f9c5f8e3e440
+  normalized_sha256: sha256:c6c9ca1260d0e85bcaa99e23434c6ac8ec51c698345bff72bd35f9c5f8e3e440
+cas_ref: sha256:c6c9ca1260d0e85bcaa99e23434c6ac8ec51c698345bff72bd35f9c5f8e3e440
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

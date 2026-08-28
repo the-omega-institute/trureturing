@@ -1,0 +1,10 @@
+ast_path: section/卖者完全知道类型
+fingerprints:
+  raw_sha256: sha256:7b059c11fc39047d620d3a972ad672e8472eeb5b0c508a370c7330c48c71b112
+  normalized_sha256: sha256:7b059c11fc39047d620d3a972ad672e8472eeb5b0c508a370c7330c48c71b112
+cas_ref: sha256:7b059c11fc39047d620d3a972ad672e8472eeb5b0c508a370c7330c48c71b112
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

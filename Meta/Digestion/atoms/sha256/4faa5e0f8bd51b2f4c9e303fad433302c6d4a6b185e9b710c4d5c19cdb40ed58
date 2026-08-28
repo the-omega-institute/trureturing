@@ -1,0 +1,18 @@
+## 102.2 几何／McKay 路径
+
+$$
+\Gamma
+\longrightarrow
+\mathbb C^2/\Gamma
+\longrightarrow
+\text{minimal resolution}
+\longrightarrow
+H_2
+\simeq
+E_8.
+$$
+
+Baez 的综述明确指出：两条路径从相同二十面体数据出发并得到相同 \(E_8\)，但二者之间最自然的直接统一仍然值得解释。([arXiv][1])
+
+---
+

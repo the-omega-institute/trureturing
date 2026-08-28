@@ -1,0 +1,27 @@
+# 153. 信息源依赖形成一般闭包系统，而不必形成向量空间
+
+给定概念族：
+
+[
+(C_i)_{i\in I}.
+]
+
+对子集 (S\subseteq I)，定义：
+
+[
+\boxed{
+\operatorname{cl}(S)
+====================
+
+\left{
+i\in I
+;\middle|;
+C_i
+\preceq
+\bigvee_{j\in S}C_j
+\right}.
+}
+]
+
+它表示可由 (S) 中信息源恢复的全部来源。
+

@@ -545,7 +545,7 @@ public static class LatexWriter
 
     private static int GetPrecedence(Formula formula) => formula switch
     {
-        Formula.Logic or Formula.Not or Formula.Bind => LogicPrecedence,
+        Formula.Logic or Formula.Not or Formula.Bind or Formula.BindMany => LogicPrecedence,
         Formula.Relation or Formula.RelationChain or Formula.TypeArrow => RelationPrecedence,
         Formula.Binary { Operator: FormulaBinaryOperator.Add or FormulaBinaryOperator.Subtract } =>
             AdditivePrecedence,

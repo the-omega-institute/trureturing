@@ -58,16 +58,17 @@ internal sealed class MinimumRollbackAlphabetDocument : IScribeDocumentDefinitio
         Formula x = F.Id("x");
         Formula y = F.Id("y");
         Formula maximum = Seq(F.Id("m"), Underscore, Grp(process));
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
 
         return Disp(Seq(
-            Forall, Sp, xType, Comma, Sp, yType, Comma, Esc,
+            Forall, Sp, xType, Comma, Sp, yType, Colon, Sp, type, Comma, Esc,
             OpenBracket, Operatorname, Grp(F.Id("Finite")), Sp, xType, CloseBracket, Sp,
             OpenBracket, Operatorname, Grp(F.Id("Fintype")), Sp, yType, CloseBracket, Comma, Esc,
             process, Colon, Sp, xType, Sp, To, Sp, yType, Comma, RowBreak,
             maximum, Sp, Eq, Sp, Max, Underscore,
             Grp(y, InMacro, Sp, yType), Sp, Card(Fiber(process, x, y)), Comma, RowBreak,
             Open,
-            Forall, Sp, mType, Comma, Sp,
+            Forall, Sp, mType, Colon, Sp, type, Comma, Sp,
             OpenBracket, Operatorname, Grp(F.Id("Finite")), Sp, mType, CloseBracket, Comma, Sp,
             log, Colon, Sp, xType, Sp, To, Sp, mType, Comma, RowBreak,
             Operatorname, Grp(F.Id("Injective")), Open,

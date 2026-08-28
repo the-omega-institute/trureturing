@@ -1,0 +1,27 @@
+## 定理 500.1（有限步展开）
+
+由于关系直接像保持任意并：
+
+[
+\boxed{
+\operatorname{Reach}(I_0)
+=========================
+
+\bigcup_{n\ge0}\Phi^n(\varnothing).
+}
+]
+
+其中：
+
+[
+\Phi^0(\varnothing)=\varnothing,
+]
+
+[
+\Phi^1(\varnothing)=I_0,
+]
+
+后续层分别加入一步、两步、三步可达状态。
+
+---
+

@@ -1,0 +1,26 @@
+## 推论 97.1（纯经典性判据）
+
+若每个记录等价类均为单点，则固定代数交换：
+
+$$
+\operatorname{Fix}(\mathcal D_G)\cong\mathbb C^d.
+$$
+
+观察者状态只剩概率向量
+
+$$
+(p_1,\ldots,p_d).
+$$
+
+因此：
+
+$$
+\boxed{
+\text{classical observable reality}
+=
+\text{stable accessible commutative algebra}.
+}
+$$
+
+---
+

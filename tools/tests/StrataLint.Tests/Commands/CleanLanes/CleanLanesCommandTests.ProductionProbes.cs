@@ -297,7 +297,7 @@ public sealed partial class CleanLanesCommandTests
                 fileName,
                 arguments,
                 workingDirectory,
-                TimeSpan.FromSeconds(30));
+                BoundedProcessRunner.HangDetectionBudget);
             var inventory = Encoding.UTF8.GetString(output.StandardOutput);
             var observedRecord = $"worktree {retained}\0HEAD {retainedHead}\0";
             var changedRecord = $"worktree {retained}\0HEAD {replacementHead}\0";
@@ -341,7 +341,7 @@ public sealed partial class CleanLanesCommandTests
                 fileName,
                 arguments,
                 workingDirectory,
-                TimeSpan.FromSeconds(30));
+                BoundedProcessRunner.HangDetectionBudget);
             var inventory = Encoding.UTF8.GetString(output.StandardOutput);
             var observedRecord = $"worktree {retained}\0HEAD {retainedHead}\0"
                 + $"branch refs/heads/{retainedBranch}\0";
@@ -388,7 +388,7 @@ public sealed partial class CleanLanesCommandTests
                 fileName,
                 arguments,
                 workingDirectory,
-                TimeSpan.FromSeconds(30));
+                BoundedProcessRunner.HangDetectionBudget);
             Assert.Equal(0, removal.ExitCode);
             Assert.False(fixture.WorktreeRegistered(damaged));
             Directory.CreateDirectory(damaged);
@@ -537,7 +537,7 @@ public sealed partial class CleanLanesCommandTests
                 fileName,
                 arguments,
                 workingDirectory,
-                TimeSpan.FromSeconds(30));
+                BoundedProcessRunner.HangDetectionBudget);
             Assert.Equal(0, removal.ExitCode);
             Assert.False(fixture.WorktreeRegistered(arguments[2]));
             return new ProcessOutput(

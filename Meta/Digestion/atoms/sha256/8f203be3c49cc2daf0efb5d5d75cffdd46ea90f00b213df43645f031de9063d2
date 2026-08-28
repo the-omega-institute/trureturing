@@ -1,0 +1,12 @@
+## 定义 57.3（操作自由容量）
+
+有限情形定义
+
+$$
+\boxed{
+F_{\mathrm{op}}(q)
+=
+\log_2|\mathcal A_{\mathrm{eff}}(q)|.
+}
+$$
+

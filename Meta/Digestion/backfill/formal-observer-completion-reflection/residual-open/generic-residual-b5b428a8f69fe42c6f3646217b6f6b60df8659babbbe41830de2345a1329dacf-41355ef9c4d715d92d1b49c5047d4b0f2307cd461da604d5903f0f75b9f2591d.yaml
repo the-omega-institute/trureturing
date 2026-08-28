@@ -1,0 +1,10 @@
+ast_path: section/235-有限-Blackwell-判据/clause/1
+fingerprints:
+  raw_sha256: sha256:b5b428a8f69fe42c6f3646217b6f6b60df8659babbbe41830de2345a1329dacf
+  normalized_sha256: sha256:b5b428a8f69fe42c6f3646217b6f6b60df8659babbbe41830de2345a1329dacf
+cas_ref: sha256:b5b428a8f69fe42c6f3646217b6f6b60df8659babbbe41830de2345a1329dacf
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

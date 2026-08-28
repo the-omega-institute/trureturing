@@ -34,7 +34,7 @@ Thus counterfactual indistinguishability is stronger than interventional indisti
 
 **Theorem 1.3 (The counterfactual kernel is strictly finer).**
 
-$$\forall M \in DeterministicBoolSCM, N \in DeterministicBoolSCM,\; \operatorname{CF}\left(M\right) = \operatorname{CF}\left(N\right) \Rightarrow \operatorname{Int}\left(M\right) = \operatorname{Int}\left(N\right) \land \exists M \in DeterministicBoolSCM, N \in DeterministicBoolSCM,\; \operatorname{Int}\left(M\right) = \operatorname{Int}\left(N\right) \land \operatorname{CF}\left(M\right) \ne \operatorname{CF}\left(N\right)$$
+$$\left(\forall M \in DeterministicBoolSCM, N \in DeterministicBoolSCM,\; \operatorname{CF}\left(M\right) = \operatorname{CF}\left(N\right) \Rightarrow \operatorname{Int}\left(M\right) = \operatorname{Int}\left(N\right)\right) \land \left(\exists M \in DeterministicBoolSCM, N \in DeterministicBoolSCM,\; \operatorname{Int}\left(M\right) = \operatorname{Int}\left(N\right) \land \operatorname{CF}\left(M\right) \ne \operatorname{CF}\left(N\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Interventions/CounterfactualKernelStrictlyFiner.counterfactual_kernel_strictly_finer` (`✓ std3`). ∎
 

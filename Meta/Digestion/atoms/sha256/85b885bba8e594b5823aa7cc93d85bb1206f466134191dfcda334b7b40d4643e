@@ -1,0 +1,86 @@
+# 196. 当前最深的新结论
+
+把 §163–§195 压缩，出现了五条新的承重结论。
+
+第一，**信任是代理因子化，而不是人格标签**：
+
+[
+\boxed{
+\text{Trust}(B;T)
+=================
+
+T\text{ 能否通过 }B\text{ 的报告链因子化}.
+}
+]
+
+第二，**理论验证本身有组合复杂度**：
+
+[
+\boxed{
+\text{最小测试}
+===========
+
+\text{缺陷覆盖问题}.
+}
+]
+
+第三，**主体身份、能力和规范可以分别变化**：
+
+[
+\boxed{
+\text{Identity}
+\neq
+\text{Control Profile}
+\neq
+\text{Normative State}.
+}
+]
+
+第四，**制度或主体一旦读取预测并响应预测，就进入反身系统**：
+
+[
+\boxed{
+\text{预测}
+\to
+\text{行动}
+\to
+\text{被预测对象改变}.
+}
+]
+
+第五，也是最重要的：
+
+[
+\boxed{
+\text{哲学完备性不是绝对属性；
+它只相对于固定目标族成立。
+哲学开放性来自能够生成当前体系尚不能回答的新问题。}
+}
+]
+
+于是整套理论的最高层形式变成：
+
+[
+\boxed{
+\textbf{Philosophy}
+===================
+
+\textbf{a self-auditing process that generates targets,
+constructs factorization proofs,
+locates defects,
+repairs interfaces,
+and tracks the provenance and cost of every repair.}
+}
+]
+
+这时“哲学是什么”已经可以得到一个很严格的回答：
+
+[
+\boxed{
+\textbf{哲学不是答案的集合，而是关于“什么能从什么推出、什么不能，以及缺了什么”的形式科学。}
+}
+]
+以下从 **§197** 继续。仍然只进行纸面推理，不处理 GitHub，也不把新增命题标记为已经获得 Lean proof term 的 `Closed` 结论。
+
+---
+

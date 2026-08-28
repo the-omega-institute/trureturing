@@ -34,7 +34,7 @@ Applying one intervention merely prefixes that intervention to each word being o
 
 **Lemma 1.3 (Closed concept fibers persist along finite intervention words).**
 
-$$\forall X \in \operatorname{Type}, B \in \operatorname{Type}, U \in \operatorname{Type}, candidate \in X \to B, intervene \in U \to \left(X \to X\right),\; \operatorname{InterventionClosed}\left(candidate, intervene\right) \Rightarrow \forall word \in \operatorname{List}\left(U\right), x \in X, y \in X,\; candidate\left(x\right) = candidate\left(y\right) \Rightarrow candidate\left(\operatorname{runWord}\left(intervene, word, x\right)\right) = candidate\left(\operatorname{runWord}\left(intervene, word, y\right)\right)$$
+$$\forall X \in \operatorname{Type}, B \in \operatorname{Type}, U \in \operatorname{Type}, candidate \in X \to B, intervene \in U \to \left(X \to X\right),\; \operatorname{InterventionClosed}\left(candidate, intervene\right) \Rightarrow \left(\forall word \in \operatorname{List}\left(U\right), x \in X, y \in X,\; candidate\left(x\right) = candidate\left(y\right) \Rightarrow candidate\left(\operatorname{runWord}\left(intervene, word, x\right)\right) = candidate\left(\operatorname{runWord}\left(intervene, word, y\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.runWord_preserves_fiber` (`✓ std3`). ∎
 

@@ -1,0 +1,10 @@
+ast_path: section/470-局部解释的-gluing-定理
+fingerprints:
+  raw_sha256: sha256:01c45005610297ef24bb8a4478b58e6811d39dd8bfaa63c11c73555c62756382
+  normalized_sha256: sha256:01c45005610297ef24bb8a4478b58e6811d39dd8bfaa63c11c73555c62756382
+cas_ref: sha256:01c45005610297ef24bb8a4478b58e6811d39dd8bfaa63c11c73555c62756382
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

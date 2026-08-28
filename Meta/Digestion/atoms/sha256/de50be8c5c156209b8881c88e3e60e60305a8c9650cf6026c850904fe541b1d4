@@ -1,0 +1,20 @@
+# 128. 二次角色观察是一个交换量子子代数
+
+仓库 `D5/S3/PrimeForms/Splitting/QuadraticCharacterProfileRedundancy.lean` 已机器核验：在
+
+$$
+(\mathbb Z/60\mathbb Z)^\times
+$$
+
+上，Gaussian、Eisenstein、Golden 三个 splitting characters 生成全部二次 character；所有二次 character 都在三环画像 fiber 上常值，而每个 fiber 恰有两个元素。
+
+把单位类 $u$ 编码为计算基态 $|u\rangle$。每个二次角色成为对角可观测量：
+
+$$
+A_\chi
+=
+\sum_u\chi(u)|u\rangle\langle u|.
+$$
+
+这些算子两两交换。
+

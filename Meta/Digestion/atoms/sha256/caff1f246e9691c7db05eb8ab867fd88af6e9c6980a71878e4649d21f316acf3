@@ -1,0 +1,18 @@
+## 条件定义 32.1（流线分量坐标）
+
+定义候选分量映射
+
+$$
+\operatorname{Comp}:\Sigma_\infty
+\longrightarrow
+K_\infty/\Delta(\mathbb Z)
+$$
+
+为
+
+$$
+\operatorname{Comp}([t,k])=[k].
+$$
+
+标准商模型中它是良定义的，因为改变提升 $t\mapsto t+n$ 只会同时把 $k$ 改变一个对角整数。
+

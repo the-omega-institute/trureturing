@@ -1,0 +1,16 @@
+# 第十一部：相对否定
+
+给定显式论域 \(U\subseteq X\) 与命题区域 \(A\subseteq U\)，定义
+
+\[
+\neg_U A=U\setminus A.
+\]
+
+若
+
+\[
+A\subseteq U\subseteq V,
+\]
+
+则有不交分解
+

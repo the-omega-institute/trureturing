@@ -1,0 +1,10 @@
+ast_path: section/128-二次角色观察是一个交换量子子代数
+fingerprints:
+  raw_sha256: sha256:de50be8c5c156209b8881c88e3e60e60305a8c9650cf6026c850904fe541b1d4
+  normalized_sha256: sha256:de50be8c5c156209b8881c88e3e60e60305a8c9650cf6026c850904fe541b1d4
+cas_ref: sha256:de50be8c5c156209b8881c88e3e60e60305a8c9650cf6026c850904fe541b1d4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

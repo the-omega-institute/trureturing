@@ -1,0 +1,57 @@
+# 35. 线性受控观察者：可达空间与不可观测空间
+
+设有限维内积空间 $V$ 上有受控动力学
+
+$$
+x_{t+1}=Tx_t+B_Ou_t+B_Ee_t,
+$$
+
+读出为
+
+$$
+y_t=Cx_t.
+$$
+
+其中 $B_O$ 是观察者拥有的控制通道，$B_E$ 是环境通道。
+
+定义永久不可观测子空间
+
+$$
+\boxed{
+N_\infty
+=
+\bigcap_{n\ge0}\ker(CT^n),
+}
+$$
+
+自我可达子空间
+
+$$
+\boxed{
+R_O
+=
+\operatorname{span}_{n\ge0}\operatorname{ran}(T^nB_O),
+}
+$$
+
+环境可达子空间
+
+$$
+R_E
+=
+\operatorname{span}_{n\ge0}\operatorname{ran}(T^nB_E).
+$$
+
+三者均对 $T$ 前向不变。
+
+这里出现两个方向相反的闭包：
+
+```text
+N∞ = 能永久保持隐藏的最大不变方向；
+R_O = 能由观察者行动生成的最小不变方向。
+```
+
+前者是可观测闭包的 kernel 面，后者是控制闭包的 image 面。
+
+---
+

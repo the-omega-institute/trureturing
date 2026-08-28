@@ -1,0 +1,24 @@
+# 49. 操作代理存在的六重等价
+
+在线性系统
+
+$$
+x_{t+1}=Tx_t+B_Ou_t,
+\qquad y_t=Cx_t
+$$
+
+中，以下条件等价：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{(i)}\;&\mathsf{Agt}_O\ne0;\\
+\mathrm{(ii)}\;&R_O\not\subseteq N_\infty;\\
+\mathrm{(iii)}\;&\exists n\ge0,\ CT^nB_O\ne0;\\
+\mathrm{(iv)}\;&\mathcal H_O\ne0;\\
+\mathrm{(v)}\;&G_O\ne0;\\
+\mathrm{(vi)}\;&\forall P>0,\ C_O(P)>0.
+\end{aligned}
+}
+$$
+

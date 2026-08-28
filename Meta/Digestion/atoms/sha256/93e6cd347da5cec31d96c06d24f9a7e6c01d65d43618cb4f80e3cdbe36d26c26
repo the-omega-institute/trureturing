@@ -1,0 +1,12 @@
+## 定义 44.1（动作的结构捕获量）
+
+$$
+\Delta_T(a\mid q)
+=
+\mu\left(
+\mathcal E(q;T)
+\cap
+(\ker d_a)^c
+\right).
+$$
+

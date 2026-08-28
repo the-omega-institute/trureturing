@@ -35,11 +35,12 @@ internal static class TruthReleaseCommand
                 () => repository.ReadRevision(identity.Revision)));
             var rawLeanReportBytes = ImmutableArray.CreateRange(
                 File.ReadAllBytes(options.CandidateLeanReport));
+            var report = RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, snapshot);
             var preparation = TruthExportCommand.PrepareStrictHistory(
                 repository,
                 snapshot,
                 identity,
-                rawLeanReportBytes.AsSpan());
+                report);
             if (preparation.Outcome is FrozenLedgerValidationOutcome.Rejected rejected)
             {
                 return new ExplicitCommandResult(
@@ -55,7 +56,10 @@ internal static class TruthReleaseCommand
                 frozen.Capability.ActiveFrozenNodes,
                 identity.Revision,
                 sourceTree));
-            var projection = TruthDagProjectionAssembler.Build(truth.Snapshot, truth.Lean);
+            var projection = TruthDagProjectionAssembler.Build(
+                truth.Snapshot,
+                truth.Lean,
+                preparation.States);
             var dagMarkdownBytes = CanonicalDagWriter.Write(projection);
             var truthGraphBytes = AssembleTruthGraph(snapshot, truth, projection, rawLeanReportBytes);
             var blueprintIndexBytes = BlueprintIndexAssembler.Assemble(snapshot);
@@ -64,7 +68,8 @@ internal static class TruthReleaseCommand
                 snapshot,
                 truth.Lean,
                 truth.Report,
-                verifier);
+                verifier,
+                preparation.States);
             var sourceSnapshot = SourceSnapshotAssembler.Assemble(
                 snapshot,
                 identity,

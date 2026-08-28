@@ -1,0 +1,14 @@
+ast_path: section/0-真值层级与严格边界
+fingerprints:
+  raw_sha256: sha256:52be625efe2d11e7a11b580d82cd6d4b5796d241982a2ea2f5e87f569653f584
+  normalized_sha256: sha256:52be625efe2d11e7a11b580d82cd6d4b5796d241982a2ea2f5e87f569653f584
+cas_ref: sha256:52be625efe2d11e7a11b580d82cd6d4b5796d241982a2ea2f5e87f569653f584
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-8b20d7aeb55cf8ebf2b8e60b9cfcec1ef8d76d7de8ca0be9563f2962d9ff8035-12e1d6cb91283e57a127b605337a78b29725e23e7856f070d06ab63767dbf5fc
+    - generic-residual-96267c319e9848cfcc8550724a6149bd8178c5f744182834b69cf7336a3fe01d-bb1491ec2aca48f7295f6dc69c0b051c9169f77cc94f5e45aeae88e4674fbc71
+    - generic-residual-77ca51c5cce62e12af2a12c7559b8046b7af3cdec6958bbae3f5e8266ea3f77b-9159cb44164089f4ab6b5cc68da54263ad9be5df277a721661478ce75e1f26ab

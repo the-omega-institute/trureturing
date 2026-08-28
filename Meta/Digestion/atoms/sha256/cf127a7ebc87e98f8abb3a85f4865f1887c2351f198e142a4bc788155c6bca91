@@ -1,0 +1,31 @@
+## 命题 32.2（横向跳跃判据；条件于分量接口）
+
+若平移
+
+$$
+T_\kappa(x)=x+\iota(\kappa),
+$$
+
+则
+
+$$
+T_\kappa
+\text{ 改变路径分量}
+\iff
+[\kappa]\neq0.
+$$
+
+### 证明
+
+由分量加法性：
+
+$$
+\operatorname{Comp}(T_\kappa x)
+=
+\operatorname{Comp}(x)+[\kappa].
+$$
+
+所以分量保持当且仅当 $[\kappa]=0$。∎
+
+---
+

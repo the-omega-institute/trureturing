@@ -1,0 +1,10 @@
+ast_path: section/分布式真理
+fingerprints:
+  raw_sha256: sha256:8642e2d870902966861227a728256279c575082909ebeb188b60363f45fb419d
+  normalized_sha256: sha256:8642e2d870902966861227a728256279c575082909ebeb188b60363f45fb419d
+cas_ref: sha256:8642e2d870902966861227a728256279c575082909ebeb188b60363f45fb419d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

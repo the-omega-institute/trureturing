@@ -1,0 +1,58 @@
+## 从协议商到双侧完成、局部—全局、自指与科学发现
+
+当前 `dev` 已包含此前的量子—素数观察者统一文档；随后仓库又合并了一次治理勘误。该勘误撤回的是一条形式化收据，而非相应 Lean 源文件本身，因此以下必须持续区分：
+
+$$
+\mathbf L:\text{仓库中已有 Lean 定理};
+$$
+
+$$
+\mathbf P:\text{由这些结构继续推出的 paper-level 定理};
+$$
+
+$$
+\mathbf R:\text{尚需新数学或新物理桥梁的研究命题}.
+$$
+
+上一阶段得到：
+
+$$
+\mathfrak O
+=
+(X,\mathsf{Prot},\mathsf{Out},\mathcal L),
+$$
+
+$$
+\Sigma_{\mathfrak O}(x)
+=
+\bigl(\mathcal L_\pi(x)\bigr)_{\pi\in\mathsf{Prot}},
+$$
+
+$$
+K_{\mathfrak O}
+=
+\ker \Sigma_{\mathfrak O},
+$$
+
+$$
+Q_{\mathfrak O}
+=
+X/K_{\mathfrak O}
+\cong
+\operatorname{Im}\Sigma_{\mathfrak O}.
+$$
+
+这已经统一了“观察者怎样压缩世界”。
+
+但它还没有回答五个更深的问题：
+
+1. 协议本身是否有冗余？
+2. 形式上可能的记录是否都有真实世界实现？
+3. 多个观察者的联合知识与共同知识是否相同？
+4. 自指和对角化究竟改变的是观察 kernel，还是行为像？
+5. 观察者理论怎样成为一套可反复发现新实验、新定义和新模型的科学方法？
+
+下面继续闭合。
+
+---
+

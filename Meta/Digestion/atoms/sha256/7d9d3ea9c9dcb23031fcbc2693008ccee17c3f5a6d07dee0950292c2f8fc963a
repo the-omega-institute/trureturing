@@ -1,0 +1,36 @@
+## 定义 97.1（记录等价）
+
+对归一化记录，定义
+
+$$
+i\approx_E j
+\iff
+G_{ij}=1.
+$$
+
+由 Cauchy–Schwarz 等号条件，
+
+$$
+G_{ij}=1
+$$
+
+当且仅当
+
+$$
+|e_i\rangle=|e_j\rangle.
+$$
+
+故 $\approx_E$ 是等价关系。令等价类为
+
+$$
+C_1,\ldots,C_r
+$$
+
+并令
+
+$$
+P_k
+=
+\sum_{i\in C_k}|i\rangle\langle i|.
+$$
+

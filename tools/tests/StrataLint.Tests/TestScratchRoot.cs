@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Text.Json;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
@@ -6,18 +7,28 @@ using Xunit.Sdk;
 
 namespace StrataLint.Tests;
 
+internal static class TestEnvironmentBridge
+{
+    internal static DateTime UtcNow() => TimeProvider.System.GetUtcNow().UtcDateTime;
+
+    internal static void PauseBeforeCleanupRetry()
+    {
+        using var retryPause = new ManualResetEventSlim(false);
+        retryPause.Wait(25);
+    }
+}
+
 internal static class TestDirectoryCleanup
 {
     internal const int MaximumAttempts = 40;
-    private static readonly TimeSpan RetryDelay = TimeSpan.FromMilliseconds(25);
 
     internal static void DeleteRecursively(string path) =>
-        DeleteRecursively(path, Directory.Delete, Thread.Sleep);
+        DeleteRecursively(path, Directory.Delete, TestEnvironmentBridge.PauseBeforeCleanupRetry);
 
     internal static void DeleteRecursively(
         string path,
         Action<string, bool> deleteDirectory,
-        Action<TimeSpan> delay)
+        Action pauseBeforeRetry)
     {
         for (var attempt = 1; ; attempt++)
         {
@@ -33,8 +44,150 @@ internal static class TestDirectoryCleanup
             catch (IOException) when (attempt < MaximumAttempts)
             {
                 // Git maintenance may detach after commit and briefly repopulate .git/objects.
-                delay(RetryDelay);
+                pauseBeforeRetry();
             }
+        }
+    }
+}
+
+internal static class TestScratchRootSweeper
+{
+    internal const string DirectoryPrefix = "stratalint-tests-";
+    internal const string LeaseFileName = ".owner.lock";
+    private const string RecordPrefix = "TEST_SCRATCH_SWEEP ";
+
+    internal static FileStream CreateOwnerLease(string rootPath) =>
+        OpenLease(Path.Combine(rootPath, LeaseFileName), FileMode.CreateNew);
+
+    internal static void SweepAtStartup() =>
+        Sweep(Path.GetTempPath(), TestEnvironmentBridge.UtcNow(), Console.Error);
+
+    internal static void Sweep(
+        string temporaryPath,
+        DateTime utcNow,
+        TextWriter diagnostics,
+        Action<string>? deleteRecursively = null)
+    {
+        deleteRecursively ??= TestDirectoryCleanup.DeleteRecursively;
+
+        string[] candidates;
+        try
+        {
+            candidates = Directory.GetDirectories(
+                temporaryPath,
+                DirectoryPrefix + "*",
+                SearchOption.TopDirectoryOnly);
+        }
+        catch (Exception exception)
+        {
+            Record(diagnostics, "enumerate", "failed", temporaryPath, exception);
+            return;
+        }
+
+        foreach (var candidate in candidates)
+        {
+            if (!Path.GetFileName(candidate).StartsWith(DirectoryPrefix, StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            SweepCandidate(candidate, utcNow, diagnostics, deleteRecursively);
+        }
+    }
+
+    private static void SweepCandidate(
+        string candidate,
+        DateTime utcNow,
+        TextWriter diagnostics,
+        Action<string> deleteRecursively)
+    {
+        DateTime lastWriteTimeUtc;
+        try
+        {
+            lastWriteTimeUtc = Directory.GetLastWriteTimeUtc(candidate);
+        }
+        catch (Exception exception)
+        {
+            Record(diagnostics, "inspect-age", "failed", candidate, exception);
+            return;
+        }
+
+        if (lastWriteTimeUtc > utcNow.AddDays(-1))
+        {
+            return;
+        }
+
+        FileStream lease;
+        try
+        {
+            lease = AcquireSweepLease(candidate);
+        }
+        catch (Exception exception)
+        {
+            Record(diagnostics, "acquire-lease", "skipped", candidate, exception);
+            return;
+        }
+
+        try
+        {
+            lease.Dispose();
+        }
+        catch (Exception exception)
+        {
+            Record(diagnostics, "release-lease", "failed", candidate, exception);
+            return;
+        }
+
+        try
+        {
+            deleteRecursively(candidate);
+        }
+        catch (Exception exception)
+        {
+            Record(diagnostics, "delete", "failed", candidate, exception);
+        }
+    }
+
+    private static FileStream AcquireSweepLease(string rootPath)
+    {
+        var leasePath = Path.Combine(rootPath, LeaseFileName);
+        try
+        {
+            return OpenLease(leasePath, FileMode.Open);
+        }
+        catch (FileNotFoundException)
+        {
+            return OpenLease(leasePath, FileMode.CreateNew);
+        }
+    }
+
+    private static FileStream OpenLease(string path, FileMode mode) =>
+        new(path, mode, FileAccess.ReadWrite, FileShare.None);
+
+    private static void Record(
+        TextWriter diagnostics,
+        string operation,
+        string status,
+        string path,
+        Exception exception)
+    {
+        try
+        {
+            diagnostics.WriteLine(
+                RecordPrefix
+                + JsonSerializer.Serialize(new
+                {
+                    schema = "test-scratch-sweep-v1",
+                    operation,
+                    status,
+                    path,
+                    exception_type = exception.GetType().FullName,
+                    message = exception.Message,
+                }));
+        }
+        catch (Exception)
+        {
+            // Startup cleanup must never prevent the test process from running.
         }
     }
 }
@@ -84,13 +237,17 @@ internal sealed class TestScratchRoot : IDisposable
     private static readonly object CurrentGate = new();
     private static TestScratchRoot? current;
     private readonly object gate = new();
+    private readonly FileStream lease;
     private bool disposed;
 
     static TestScratchRoot() =>
-        AppDomain.CurrentDomain.ProcessExit += static (_, _) => DisposeCurrentAtExit();
+        TestScratchRootSweeper.SweepAtStartup();
 
-    internal TestScratchRoot() =>
+    internal TestScratchRoot()
+    {
         Path = Directory.CreateTempSubdirectory("stratalint-tests-").FullName;
+        lease = TestScratchRootSweeper.CreateOwnerLease(Path);
+    }
 
     internal static TestScratchRoot Current
     {
@@ -133,28 +290,8 @@ internal sealed class TestScratchRoot : IDisposable
             }
 
             disposed = true;
+            lease.Dispose();
             TestDirectoryCleanup.DeleteRecursively(Path);
-        }
-    }
-
-    private static void DisposeCurrentAtExit()
-    {
-        try
-        {
-            TestScratchRoot? root;
-            lock (CurrentGate)
-            {
-                root = current;
-                current = null;
-            }
-
-            root?.Dispose();
-        }
-        catch (IOException)
-        {
-        }
-        catch (UnauthorizedAccessException)
-        {
         }
     }
 }

@@ -1,0 +1,34 @@
+# 第十二部：原子否定的二元素刚性
+
+称结构 \(n:X\to X\) 为原子否定，如果
+
+\[
+\forall x,y,
+\qquad
+y\neq x\iff y=n(x).
+\]
+
+它要求一个点的所有其他可能性仍然由一个点表示。由定义推出：
+
+\[
+n(x)\neq x,
+\qquad
+n(n(x))=x,
+\qquad
+X\setminus\{x\}=\{n(x)\}.
+\]
+
+在 \(X\neq\varnothing\) 时：
+
+\[
+\boxed{
+X\text{ admits atomic negation}
+\iff
+X\simeq\mathbf 2.
+}
+\]
+
+所以二值逻辑的特殊性是：点层和补集层在二元素空间中意外闭合。
+
+---
+

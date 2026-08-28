@@ -1,0 +1,12 @@
+# 25. 自我边界：所有权闭包与自主核心
+
+设候选内部变量全集为 $I$，种子自我变量为 $S_0\subseteq I$。设读取、改写、策略依赖与来源追溯算子均对集合包含单调：
+
+$$
+\operatorname{Read},
+\operatorname{Write},
+\operatorname{Dep},
+\operatorname{Trace}:
+\mathcal P(I)\to\mathcal P(I).
+$$
+

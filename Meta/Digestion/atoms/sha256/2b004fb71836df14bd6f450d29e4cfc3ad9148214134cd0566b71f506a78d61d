@@ -1,0 +1,28 @@
+## 229.1 Separation repair
+
+找到：
+
+$$
+x\neq y,
+\qquad
+xK_{\mathfrak O_n}y,
+$$
+
+但目标不同：
+
+$$
+T(x)\neq T(y).
+$$
+
+这是 target residual witness。
+
+修复方式是加入新协议 \(\pi\)，使：
+
+$$
+\mathcal L_\pi(x)
+\neq
+\mathcal L_\pi(y).
+$$
+
+这缩小 kernel。
+

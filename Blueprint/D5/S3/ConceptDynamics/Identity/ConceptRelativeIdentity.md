@@ -18,7 +18,7 @@ A concept readout partitions its source into fibers of equal observed value. Bel
 
 **Theorem 1.2 (Concept-relative identity can be strictly coarser than equality).**
 
-$$\forall X \in Type, C \in Type, q \in X \to C, x \in X, y \in X,\; x = y \Rightarrow \operatorname{ConceptIdentity}\left(q, x, y\right) \land \exists q \in Bool \to Unit, x \in Bool, y \in Bool,\; \operatorname{ConceptIdentity}\left(q, x, y\right) \land x \ne y$$
+$$\left(\forall X \in Type, C \in Type, q \in X \to C, x \in X, y \in X,\; x = y \Rightarrow \operatorname{ConceptIdentity}\left(q, x, y\right)\right) \land \left(\exists q \in Bool \to Unit, x \in Bool, y \in Bool,\; \operatorname{ConceptIdentity}\left(q, x, y\right) \land x \ne y\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Identity/ConceptRelativeIdentity.concept_identity_strictly_coarser_than_equality` (`✓ std3`). ∎
 

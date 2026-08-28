@@ -1,0 +1,16 @@
+\[
+\operatorname{Cl}(\Gamma)
+=
+\operatorname{Inv}(K_\Gamma).
+\]
+
+则闭包满足广延、单调与幂等，并且
+
+\[
+\boxed{
+K_{\operatorname{Cl}(\Gamma)}=K_\Gamma.
+}
+\]
+
+闭包加入所有能从旧联合坐标恢复的同值域读数。它提高命名和表达便利性，但不增加对源状态的区分力。
+

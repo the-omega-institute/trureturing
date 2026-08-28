@@ -251,7 +251,7 @@ internal sealed record DigestionFormalizationReceipt(
         return new DigestionFormalizationSignature(
             declaration.NameKey,
             declaration.Kind,
-            declaration.TypeRepresentation);
+            declaration.LoadTypeRepresentation());
     }
 
     private static void Validate(DigestionFormalizationReceipt receipt)
@@ -328,7 +328,7 @@ internal sealed record DigestionFormalizationReceipt(
         }
     }
 
-    private static bool SelectsDeclaration(string gidText) =>
+    internal static bool SelectsDeclaration(string gidText) =>
         Gid.TryParse(gidText, out var gid)
         && gid.ToTarget() is Target.Formal { Declaration: not null };
 

@@ -1,0 +1,15 @@
+## 定义 85.1（信息完备观察者）
+
+$$
+\mathfrak O
+\text{ 信息完备}
+$$
+
+当且仅当
+
+$$
+\rho\sim_{\mathfrak O}\sigma
+\Longrightarrow
+\rho=\sigma.
+$$
+

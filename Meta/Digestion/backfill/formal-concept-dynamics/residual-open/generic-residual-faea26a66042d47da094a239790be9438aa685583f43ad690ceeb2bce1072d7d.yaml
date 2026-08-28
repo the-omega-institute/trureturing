@@ -1,0 +1,10 @@
+ast_path: section/哲学解释/occurrence/2
+fingerprints:
+  raw_sha256: sha256:faea26a66042d47da094a239790be9438aa685583f43ad690ceeb2bce1072d7d
+  normalized_sha256: sha256:faea26a66042d47da094a239790be9438aa685583f43ad690ceeb2bce1072d7d
+cas_ref: sha256:faea26a66042d47da094a239790be9438aa685583f43ad690ceeb2bce1072d7d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

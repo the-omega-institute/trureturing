@@ -371,11 +371,11 @@ public sealed class LeanReportCacheTests
                 "--candidate-output", Output,
             ]);
 
-            return BoundedProcessRunner.Run(
+            return TestProcessRunner.Run(
                 "env",
                 arguments,
                 Repo,
-                TimeSpan.FromSeconds(60),
+                TestBudgets.WorkflowProcessHangGuard,
                 1024 * 1024);
         }
 
@@ -396,6 +396,10 @@ public sealed class LeanReportCacheTests
             {
                 entries[".logs/" + Path.GetRelativePath(logs, path)] = HashFile(path);
             }
+
+            var materials = Output + ".materials.zip";
+            Assert.True(File.Exists(materials), $"bundle material archive is missing: {materials}");
+            entries[".materials.zip"] = HashFile(materials);
 
             return entries.Select(static pair => $"{pair.Key}={pair.Value}").ToArray();
         }
@@ -466,6 +470,7 @@ public sealed class LeanReportCacheTests
             [[ -n "$output" ]] || { echo "stub-producer: no --output" >&2; exit 2; }
             mkdir -p "$(dirname "$output")"
             printf '%s\n' "$STUB_REPORT_CONTENT" > "$output"
+            printf '%s\n' "$STUB_REPORT_CONTENT" > "${output}.materials.zip"
             if command -v sha256sum >/dev/null 2>&1; then
               h="$(sha256sum "$output" | awk '{print $1}')"
             elif command -v openssl >/dev/null 2>&1; then

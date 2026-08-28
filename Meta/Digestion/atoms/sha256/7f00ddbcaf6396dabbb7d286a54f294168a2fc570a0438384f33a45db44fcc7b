@@ -1,0 +1,26 @@
+## 定理 8.3（目标后处理收缩）
+
+对任意可测后处理 \(r:B\to C\)，定义固定 source fiber 上的后处理缺陷：
+
+\[
+\delta_q^{r}(K)
+:=
+\sup_{q(x)=q(y)}
+\operatorname{TV}
+\bigl(r_*q_*K_x,r_*q_*K_y\bigr).
+\]
+
+则
+
+\[
+\boxed{
+\delta_q^{r}(K)
+\le
+\delta_q(K).
+}
+\]
+
+### 证明
+
+全变差距离在 Markov 后处理下不增加。\(\square\)
+

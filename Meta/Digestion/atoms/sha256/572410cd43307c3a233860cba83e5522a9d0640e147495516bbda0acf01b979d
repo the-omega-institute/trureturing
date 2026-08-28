@@ -1,0 +1,10 @@
+## 推论 25.2（Gramian 是 completion 的度量化）
+
+行为接口只给 partition；Gramian 给其商空间加上由全部未来读出诱导的二次型：
+
+$$
+Gram geometry
+=
+metric shadow of the behavior quotient.
+$$
+

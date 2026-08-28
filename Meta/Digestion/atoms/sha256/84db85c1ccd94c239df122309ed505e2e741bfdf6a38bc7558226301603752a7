@@ -1,0 +1,24 @@
+## 结论 54.1
+
+规律给出的基本对象不是某个单值策略，而是
+
+$$
+\boxed{
+p:E_{\mathcal A}\to Q.
+}
+$$
+
+策略是在这个投影之上的额外截面：
+
+$$
+\boxed{
+\text{Law}=\text{fiber assignment},
+\qquad
+\text{Policy}=\text{section}.
+}
+$$
+
+所以“每个状态都有合法动作”只说明各纤维非空，并不自动选出某个全局截面。
+
+---
+

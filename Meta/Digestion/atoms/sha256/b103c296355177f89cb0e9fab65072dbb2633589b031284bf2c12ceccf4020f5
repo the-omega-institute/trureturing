@@ -1,0 +1,51 @@
+## 定理 74.1（六状态 Ramified 5-dissection）
+
+$$
+\boxed{
+6
+=
+5\text{ 个普通能量余数}
++
+1\text{ 个零余数中的 ramification residual}.
+}
+\tag{74.6}
+$$
+
+普通五分拆只记录：
+
+$$
+n\bmod5.
+$$
+
+但当：
+
+$$
+n\equiv0\pmod5
+$$
+
+时，边界仍需区分：
+
+$$
+\rho_5(x)=0
+$$
+
+与：
+
+$$
+\rho_5(x)\neq0,\qquad q_R(\rho_5(x))=0.
+$$
+
+也就是：
+
+$$
+\boxed{
+\text{零状态}
+\quad\text{与}\quad
+\text{非零 nilpotent/isotropic 状态}.
+}
+$$
+
+这额外的一个通道，就是分歧素数 \(5\) 在普通余数观察之外留下的一阶 jet 信息。
+
+---
+

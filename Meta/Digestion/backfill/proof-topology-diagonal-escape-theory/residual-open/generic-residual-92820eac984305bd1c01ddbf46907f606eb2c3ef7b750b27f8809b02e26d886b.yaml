@@ -1,0 +1,10 @@
+ast_path: section/第七部-residual-是拓扑分离缺陷
+fingerprints:
+  raw_sha256: sha256:92820eac984305bd1c01ddbf46907f606eb2c3ef7b750b27f8809b02e26d886b
+  normalized_sha256: sha256:92820eac984305bd1c01ddbf46907f606eb2c3ef7b750b27f8809b02e26d886b
+cas_ref: sha256:92820eac984305bd1c01ddbf46907f606eb2c3ef7b750b27f8809b02e26d886b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

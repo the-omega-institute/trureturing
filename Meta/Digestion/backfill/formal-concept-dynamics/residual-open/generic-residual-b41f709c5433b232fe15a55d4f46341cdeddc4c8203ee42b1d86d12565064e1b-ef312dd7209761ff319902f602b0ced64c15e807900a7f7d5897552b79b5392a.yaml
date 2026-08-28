@@ -1,0 +1,10 @@
+ast_path: section/411-只看已发表研究的元分析不能恢复被隐藏结果/clause/1
+fingerprints:
+  raw_sha256: sha256:b41f709c5433b232fe15a55d4f46341cdeddc4c8203ee42b1d86d12565064e1b
+  normalized_sha256: sha256:b41f709c5433b232fe15a55d4f46341cdeddc4c8203ee42b1d86d12565064e1b
+cas_ref: sha256:b41f709c5433b232fe15a55d4f46341cdeddc4c8203ee42b1d86d12565064e1b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

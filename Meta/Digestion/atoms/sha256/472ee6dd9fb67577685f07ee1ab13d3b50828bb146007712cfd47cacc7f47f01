@@ -1,0 +1,34 @@
+# 257. 治理的核心是从多个合法修复中选择一个
+
+给定缺陷：
+
+[
+\Delta.
+]
+
+允许修复集合：
+
+[
+\mathcal R_\Delta.
+]
+
+每个修复 (r) 具有代价向量：
+
+[
+\boxed{
+c(r)
+====
+
+\left(
+c_{\mathrm{info}},
+c_{\mathrm{privacy}},
+c_{\mathrm{power}},
+c_{\mathrm{complexity}},
+c_{\mathrm{norm}}
+\right).
+}
+]
+
+其中分别表示：
+
+* 新增信息收集；

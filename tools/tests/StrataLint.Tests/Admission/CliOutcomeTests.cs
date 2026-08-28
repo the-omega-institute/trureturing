@@ -202,6 +202,9 @@ internal sealed class StubCliEnvironment(
     public ExplicitCommandResult FileMapConform(IReadOnlyList<string> arguments) =>
         fileMapConform ?? new(2, string.Empty, "filemap conformance is not configured in this fixture");
 
+    public ExplicitCommandResult DepositHeaderCheck(IReadOnlyList<string> arguments) =>
+        new(2, string.Empty, "deposit header check is not configured in this fixture");
+
     public CommandResult Ingest(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ingest is not configured in this fixture");
 
@@ -226,17 +229,8 @@ internal sealed class StubCliEnvironment(
     public CommandResult AppendLedger(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ledger append is not configured in this fixture");
 
-    public CommandResult ReattestLedger(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "ledger reattest is not configured in this fixture");
-
     public CommandResult RevokeLedger(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ledger revoke is not configured in this fixture");
-
-    public CommandResult SupersedeLedger(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "ledger supersede is not configured in this fixture");
-
-    public CommandResult SyncLedger(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "ledger sync is not configured in this fixture");
 
     public ExplicitCommandResult TruthExport(IReadOnlyList<string> arguments) =>
         new(2, string.Empty, "truth export is not configured in this fixture");
@@ -249,12 +243,6 @@ internal sealed class StubCliEnvironment(
         CleanLanesArguments = arguments.ToArray();
         return cleanLanes ?? new(false, string.Empty, "clean lanes is not configured in this fixture");
     }
-
-    public CommandResult AppendPerf(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "perf append is not configured in this fixture");
-
-    public CommandResult PerfReport(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "perf report is not configured in this fixture");
 
     public CommandResult Worktree(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "worktree is not configured in this fixture");

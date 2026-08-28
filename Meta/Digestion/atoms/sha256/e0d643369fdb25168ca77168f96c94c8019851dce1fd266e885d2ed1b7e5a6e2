@@ -1,0 +1,102 @@
+# 110. 建议追加 Lean 模块树
+
+```text
+D5/S3/QuantumObserver/Core/
+  StateEffectPairing.lean
+  StaticObserver.lean
+  QuantumInstrument.lean
+  RecordChannel.lean
+
+D5/S3/QuantumObserver/Visibility/
+  VisibleRealSpace.lean
+  InvisibleResidual.lean
+  ObservationalEquivalence.lean
+  OperationalQuotient.lean
+  RefinementOrder.lean
+  JointObserver.lean
+
+D5/S3/QuantumObserver/Tomography/
+  CompletenessEquivalences.lean
+  PhysicalIndistinguishablePair.lean
+  FiniteEffectCertificate.lean
+  OutcomeBudgetLowerBound.lean
+  ModelRelativeCompleteness.lean
+
+D5/S3/QuantumObserver/Dynamics/
+  HeisenbergPullback.lean
+  FiniteTimeVisibleSpace.lean
+  ObservabilityMatrix.lean
+  ObservabilityGramian.lean
+  FiniteHorizonTomography.lean
+
+D5/S3/QuantumObserver/Sequential/
+  WordEffect.lean
+  SequentialVisibleSpace.lean
+  SequentialStabilization.lean
+  FiniteSequentialHorizon.lean
+  SamePovmDifferentInstrument.lean
+
+D5/S3/QuantumObserver/Records/
+  IdealProjectiveDilation.lean
+  SelectiveVsUnreadUpdate.lean
+  GeneralRecordGramChannel.lean
+  RecordClassFixedAlgebra.lean
+  RepeatedRecordConvergence.lean
+  ClassicalCenter.lean
+
+D5/S3/QuantumObserver/Local/
+  PartialTraceObservationalEquivalence.lean
+  LocalResidualDimension.lean
+  SingleCopyDiscrimination.lean
+  NoCloningBoundary.lean
+  RecordConsistency.lean
+
+D5/S3/QuantumObserver/Robust/
+  StateObservationSeminorm.lean
+  ObserverFrameBounds.lean
+  ObserverConditionNumber.lean
+  LinearReconstructionNoiseBound.lean
+
+D5/S3/QuantumObserver/Budget/
+  CenteredEffectRank.lean
+  ObservationRankSubmodular.lean
+  MinimumCompleteBudget.lean
+  IncompleteBudgetPhysicalCertificate.lean
+
+D5/S3/QuantumObserver/PrimeTime/
+  QuantumPrimeTimeObserver.lean
+  PrimeTimeResidual.lean
+  FinitePrimeTimeEffectCertificate.lean
+
+D5/S3/QuantumObserver/Boundary/
+  CharacterVsContextuality.lean
+  DiagonalQuantumBridgeRequirements.lean
+  InfiniteDimensionalProgressBoundary.lean
+```
+
+建议优先闭合：
+
+```text
+observationalEquivalent_iff_sub_mem_invisibleResidual
+informationallyComplete_iff_visibleSpace_eq_top
+incomplete_observer_has_density_pair_certificate
+complete_observer_has_finite_effect_certificate
+informationallyComplete_povm_card_lower_bound
+observerRefines_iff_visibleSpace_le
+jointObserver_invisibleResidual_eq_inf
+finite_time_observability_iff_gramian_posDef
+complete_time_observer_finite_horizon
+sequence_probability_eq_trace_wordEffect
+sequential_complete_has_finite_horizon
+same_povm_different_sequential_statistics
+recordChannel_apply_eq_gram_mul
+recordChannel_fixed_iff_supported_on_record_classes
+repeated_record_converges_to_pinching
+local_observationalEquivalent_iff_partialTrace_eq
+stateObservationSeminorm_kernel
+observationRank_submodular
+quantum_prime_time_residual_eq_orthogonal
+```
+
+---
+

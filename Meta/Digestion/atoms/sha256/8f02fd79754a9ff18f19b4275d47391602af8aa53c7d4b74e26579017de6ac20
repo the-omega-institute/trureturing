@@ -1,0 +1,16 @@
+## 18.3 ObservationTopology
+
+```text
+D5/S3/ConceptDynamics/ObservationTopology/InvolutionDescent.lean
+D5/S3/ConceptDynamics/ObservationTopology/EscapeUnderObservation.lean
+D5/S3/ConceptDynamics/ObservationTopology/PartitionTopologyKernel.lean
+D5/S3/ConceptDynamics/ObservationTopology/ResidualSeparationTopology.lean
+D5/S3/ConceptDynamics/ObservationTopology/TargetContinuityFactorization.lean
+D5/S3/ConceptDynamics/ObservationTopology/SemanticClosureTopologyInvariance.lean
+D5/S3/ConceptDynamics/ObservationTopology/PrimitiveEscapeStrictRefinement.lean
+```
+
+这些模块复用 Base 已有的 `Concept`、`Refines`、`jointReadout`、`jointKernel`、`defectRelation`、`SemanticClosure`、`PrimitiveEscape`、`partitionTopology` 与 Lawvere qualitative escape，不建立平行真源。
+
+---
+

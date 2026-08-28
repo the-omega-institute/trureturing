@@ -1,0 +1,42 @@
+## 2.2 等位基因存在事件
+
+定义：
+
+$$
+E_a=\{g\in\mathcal G_p:n_a(g)>0\},
+$$
+
+$$
+E_b=\{g\in\mathcal G_p:n_b(g)>0\}.
+$$
+
+在二倍体二等位情形：
+
+$$
+E_a=\{aa,ab\},
+\qquad
+E_b=\{ab,bb\}.
+$$
+
+于是：
+
+$$
+E_a\cap E_b=\{ab\}.
+$$
+
+而：
+
+$$
+E_a^c=\{bb\},
+\qquad
+E_b^c=\{aa\}.
+$$
+
+所以：
+
+$$
+\boxed{E_b\neq E_a^c.}
+$$
+
+---
+

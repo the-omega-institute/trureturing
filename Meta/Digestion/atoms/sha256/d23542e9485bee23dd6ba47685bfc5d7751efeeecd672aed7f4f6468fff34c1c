@@ -1,0 +1,28 @@
+# 145. 修复顺序的概念曲率
+
+设：
+
+[
+\Phi,\Psi:
+\operatorname{Con}(X)
+\to
+\operatorname{Con}(X)
+]
+
+为两个概念修复算子。
+
+定义它们在概念 (C) 上的曲率关系：
+
+[
+\boxed{
+\Omega_{\Phi,\Psi}(C)
+=====================
+
+\ker(\Phi\Psi C)
+\triangle
+\ker(\Psi\Phi C),
+}
+]
+
+其中 (\triangle) 为对称差。
+

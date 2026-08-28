@@ -1,0 +1,30 @@
+# 139. 追加严格非主张
+
+1. 本增订不声称素数本身是有意识的观察者。
+2. 本增订不声称素数产生量子力学或量子随机性。
+3. 本增订不声称所有量子系统天然具有 arithmetic prime-power tensor decomposition；这里的分解针对选定 CRT finite-register carrier。
+4. 本增订不声称 `PrimePowerTensorTower` 推出任意量子态按素数统计独立。
+5. 本增订不声称 CRT residue 数据可以恢复任意量子相位或纠缠。
+6. 本增订不声称各单素数 reduced states 决定全局状态。
+7. 本增订不声称跨素数相关 residual 必然是物理基本粒子之间的纠缠；它首先是所选张量分解上的算子扇区。
+8. 本增订不声称相互作用图连通足以保证完整层析。
+9. 本增订不声称局部动力学能通过延长时间自动看到跨素数 correlation sectors。
+10. 本增订不声称 `FinitePrimeTimeTomography` 当前 Lean theorem 已把索引限制为真实素数。
+11. 本增订不声称 finite quantum prime-time certificate 已有同名 Lean proof term。
+12. 本增订不声称 prime precision entropy contraction 是量子退相干定律。
+13. 本增订不声称 zeta-weighted Gramian 的 $s$ 参数具有已证明的物理温度、能量或 RH 临界意义。
+14. 本增订不声称 $s=1/2$、$s=1$ 或其他特殊值自动对应量子相变。
+15. 本增订不声称 Frobenius infinite fiber theorem 等价于 Chebotarev 密度定理。
+16. 本增订不声称量子后处理可以恢复已经由 Frobenius quotient 删除的 prime identity。
+17. 本增订不声称 three-ring quadratic profile 是完整 mod-$60$ 身份接口；现有 Lean theorem 反而证明其 fiber 大小为二。
+18. 本增订不声称增加任意数量的二次 character 可以打破现有三环 fiber。
+19. 本增订不声称 Galois fiber product 与量子 marginal fiber 是同一个数学对象；它们只共享局部—全局 compatibility/existence/uniqueness 的组织问题。
+20. 本增订不声称不同 prime precision 层是独立量子子系统。
+21. 本增订不声称 Weyl clock/shift 结构本身是新物理定律。
+22. 本增订不声称 adaptive prime experiment 必然优于所有静态方案；优势依赖 prior、cost、loss 与实验模型。
+23. 本增订不声称后验 belief 可在单样本未知态问题中绕过不可克隆或状态扰动。
+24. 本增订不声称所有 residual 可以不分类型地取交；串行接口必须计算复合 kernel。
+25. 本增订不修改此前关于对角逃逸、意识、自由意志、RH、negative-base-$\varphi$ 或其他开放问题的严格边界。
+
+---
+

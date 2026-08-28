@@ -1,0 +1,21 @@
+## 定理 21.1（有限确定性动力接口六重等价）
+
+设 \(X\) 有限，\(q:X\to B\)，\(F:X\to X\)。以下等价：
+
+1. 存在唯一有效下降 \(\overline F:B_q\to B_q\)；
+2. \(K_q\) 是 \(F\)-congruence；
+3. \(\operatorname{Carry}(q,F)=\varnothing\)；
+4. \(q\circ F\) 沿 \(q\) 因子化；
+5. \(F^*\mathcal A_q\subseteq\mathcal A_q\)；
+6. \(K_0=K_1\)。
+
+### 证明
+
+(1)–(4) 为定理 2.1；(1) 与 (5) 为定理 4.1；(2) 与 (6) 由
+
+\[
+K_1=K_q\cap(F\times F)^{-1}K_q
+\]
+
+立即等价。\(\square\)
+

@@ -1,0 +1,16 @@
+ast_path: section/第一百三十八部-Quasi-pullback-是带反项的观察者限制
+fingerprints:
+  raw_sha256: sha256:d5610f2ce170c7793f7cfe65662c4a99c2802652712020b3fb30d0bcad06177f
+  normalized_sha256: sha256:d5610f2ce170c7793f7cfe65662c4a99c2802652712020b3fb30d0bcad06177f
+cas_ref: sha256:d5610f2ce170c7793f7cfe65662c4a99c2802652712020b3fb30d0bcad06177f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-e3275db953d007a492e2ac6cdfe6b3cf9fee9cf0f98634d560235d17880c9fd1-cac024725556796703a3701bf772a981a32d7a6c0278c3fd533ac37380c4aa21
+    - generic-residual-3e4773b5c5259ed31ced2b7b9c3978c79b33148270742d475a5f56f24b7f5be9-f80623912ce928300f94015eb8b442c7b99b0087da4786c679a377538a081b45
+    - generic-residual-dbb9852de0df93532458dfc8074db7703cac948a29186fe6a8afd92a8503dd39-745eed8e5db089f5679a65462104e4d30369e1be0728a97e45f73ce99af0b293
+    - generic-residual-855176f8c4b0217fc478ded25ab032e2e4b1e1a1e55dc5eee8c4aeadd6f455a2-cd7fc7a64802cfe421e15e36bf979dfc86acb8f2f18c9a37f47b343dafd5fe73
+    - generic-residual-b21f26234d0aecd96ff8ce010f4add9f0640cae81af296945ae30754a436ffeb-472af14fbdc0bc95106b0e53bcb36ca51f1f7e2b990a764a0c2624510594cffc

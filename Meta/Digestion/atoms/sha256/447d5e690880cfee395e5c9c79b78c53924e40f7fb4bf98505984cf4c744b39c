@@ -1,0 +1,26 @@
+## 定理 243.2（描述公告交换）
+
+对两个描述性公告 (P,Q)：
+
+[
+\boxed{
+\operatorname{Cond}_P
+\operatorname{Cond}_Q
+=====================
+
+\operatorname{Cond}_Q
+\operatorname{Cond}_P.
+}
+]
+
+因为：
+
+[
+A\cap P\cap Q
+=============
+
+A\cap Q\cap P.
+]
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/第九十六部-2-3-5-产生常数-30/clause/4
+fingerprints:
+  raw_sha256: sha256:317cf1e602ed52c84ad0d4cd13f316c18cc29e090ba8f6e29109b14b78bdd47b
+  normalized_sha256: sha256:317cf1e602ed52c84ad0d4cd13f316c18cc29e090ba8f6e29109b14b78bdd47b
+cas_ref: sha256:317cf1e602ed52c84ad0d4cd13f316c18cc29e090ba8f6e29109b14b78bdd47b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

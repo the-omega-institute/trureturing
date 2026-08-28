@@ -1,0 +1,22 @@
+## 定义 73.1（结构化自由席位）
+
+可以定义较强但仍兼容决定论的自由席位：
+
+$$
+\boxed{
+\mathsf{FreeSeat}(q)
+=
+\mathsf{Open}(q)
+\land
+\mathsf{NonCanonical}(q)
+\land
+\mathsf{Authored}(q)
+\land
+\mathsf{Diachronic}(q).
+}
+$$
+
+它不包含第五层，因此不是强 libertarian freedom 的证明；它刻画的是可操作、非典范、内部作者并跨历史保持的自主性结构。
+
+---
+

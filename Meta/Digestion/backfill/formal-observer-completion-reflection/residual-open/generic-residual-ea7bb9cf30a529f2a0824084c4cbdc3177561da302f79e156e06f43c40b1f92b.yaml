@@ -1,0 +1,15 @@
+ast_path: section/31-喉部-可见相位与路径分量
+fingerprints:
+  raw_sha256: sha256:ea7bb9cf30a529f2a0824084c4cbdc3177561da302f79e156e06f43c40b1f92b
+  normalized_sha256: sha256:ea7bb9cf30a529f2a0824084c4cbdc3177561da302f79e156e06f43c40b1f92b
+cas_ref: sha256:ea7bb9cf30a529f2a0824084c4cbdc3177561da302f79e156e06f43c40b1f92b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-e0a7fc4d2934b4ca359febac8898af3a8fe6bbb6df7b181837fa2d1060d7dfc9-29e3cd875d7936d7abc3cc5e6ef8caabc3e576e04faee62d4e370878424e4358
+    - generic-residual-b27b2556e40c7258eaea8448c827546f38c6fb47e23e6a979f7d5670b3c1a4f9-c7234414a8dd4cd552a971abeb9a603df3b88f93937b0d8963402676134206ab
+    - generic-residual-95633b808b685be5dd9bf11320f78b1a766c8b9353b2ec2d8edc39777c5caf4a-c54694c8ddf0b794398c9987efa023e070e7544ea0d9bd8860ba6c3a34299eff
+    - generic-residual-ca542f3c654a3f747edd7eb0f5807d754f566c3206782b59e616bc4c63f675b6-d3f0ef3bd5ccdeb02d1617a55a64960c0ba7cf1bed57ab1dfdcaa2b2a7a9aa02

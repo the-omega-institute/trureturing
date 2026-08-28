@@ -1,0 +1,38 @@
+* \(\sqrt5\) 来自格与对偶格之间的五模比例。
+
+六维 Poisson 求和给出：
+
+$$
+\Theta_L(t)
+=
+\frac1{\operatorname{covol}(L)}
+t^{-3}
+\Theta_{L^\#}(1/t).
+$$
+
+由于：
+
+$$
+\operatorname{covol}(L)=\sqrt{\det G}=5^{3/2},
+$$
+
+并且：
+
+$$
+L^\#\simeq\frac1{\sqrt5}L,
+$$
+
+故：
+
+$$
+\boxed{
+\Theta_L(t)
+=
+5^{-3/2}t^{-3}
+\Theta_L\left(\frac1{5t}\right).
+}
+\tag{40.1}
+$$
+
+---
+

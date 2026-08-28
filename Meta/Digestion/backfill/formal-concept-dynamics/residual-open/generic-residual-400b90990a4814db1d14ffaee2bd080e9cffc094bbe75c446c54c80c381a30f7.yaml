@@ -1,0 +1,17 @@
+ast_path: section/348-内部化外部性就是最小公共完成
+fingerprints:
+  raw_sha256: sha256:400b90990a4814db1d14ffaee2bd080e9cffc094bbe75c446c54c80c381a30f7
+  normalized_sha256: sha256:400b90990a4814db1d14ffaee2bd080e9cffc094bbe75c446c54c80c381a30f7
+cas_ref: sha256:400b90990a4814db1d14ffaee2bd080e9cffc094bbe75c446c54c80c381a30f7
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-23a00e4b1b8496997eb98be846367454742fef8f8474ec2c95b5a8ae3788783c-287b850e05dc6284a1341093c0c9a26683ba6ae4e33df4438047e46177ad1a4b
+    - generic-residual-f3fed05ec65d7a0d5b8a58eea3ba9bdfc5f0b6d6f3e9d05cccca85d41f908151-86856ef6efb8b5c198949b1dc29bab9fd8e385f3f526036ba8aa6a44bc39ca1e
+    - generic-residual-c36b6a5b8ab48ecda7dc1aa2ba221976dc040f5fa5cc9a05baee9c1e26f046ef-313c5dc879af71a980e24912395cf145e4c8bb874ab2dd84a4f916e15e8bb602
+    - generic-residual-72ce405595b578c8080e6c972f5c32057c3d726a21a358cedc6142d6fd1d5ac4-edd14652aef78f60b080955a88bfd9135d1aa4716a6778a8b08eb30bc4e4bbc1
+    - generic-residual-0d22289de6257f99353426f92b05544ed0bf670cdac98118ed4b850a3b309951-ee6f66ffd80e9ed062bac78f318794cdf1f054fa0a6b79653c4a317956fa6ff1
+    - generic-residual-c5bdff806b061592df148702255bcfae4f453ff00738863a10f69af244ea5cc3-810972d127bae1c01256bb3c2e7f136ce473178395a6131a91ac8c3a00ce11c7

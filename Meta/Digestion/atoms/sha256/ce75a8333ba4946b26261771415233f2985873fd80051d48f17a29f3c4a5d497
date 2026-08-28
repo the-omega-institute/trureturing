@@ -1,0 +1,30 @@
+# 89. 通道、Heisenberg 拉回与时间观察
+
+设系统在测量之间通过量子通道
+
+$$
+\Phi:M_d(\mathbb C)\to M_d(\mathbb C)
+$$
+
+演化。这里 $\Phi$ 为完全正、迹保持线性映射。
+
+定义 Heisenberg 对偶
+
+$$
+\Phi^*
+$$
+
+满足
+
+$$
+\operatorname{Tr}(\Phi(\rho)A)
+=
+\operatorname{Tr}(\rho\Phi^*(A)).
+$$
+
+迹保持等价于
+
+$$
+\Phi^*(I)=I.
+$$
+

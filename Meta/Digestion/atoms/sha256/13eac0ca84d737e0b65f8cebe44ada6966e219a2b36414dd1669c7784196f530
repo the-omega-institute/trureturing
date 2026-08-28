@@ -1,0 +1,21 @@
+### 定理 43.2（置换模型下全读出族的视界 = 轨道补集）
+
+取置换模型：\(X=I\)，更新 \(\tau\in\operatorname{Sym}(I)\)，读出族为**全部** \(\tau\)-边可容许函数，距离 \(d_\tau\) 即 `observerDistance`。记 \(\operatorname{Orb}_\tau(x)=\{\tau^{\,n}x:n\in\mathbb Z\}\)。则对一切 \(x,y\in I\)（\(I\) 可无限）：
+
+\[
+\boxed{
+d_\tau(x,y)=+\infty
+\iff
+\operatorname{Orb}_\tau(x)\neq\operatorname{Orb}_\tau(y),
+}
+\]
+
+且当 \(y=\tau^{\,n}x\)（\(n\in\mathbb Z\)）时 \(d_\tau(x,y)\le|n|\)。特别地
+\[
+\boxed{
+\mathcal H_\tau(o)=I\setminus\operatorname{Orb}_\tau(o),
+\qquad
+\mathcal B_\tau(o)=\operatorname{Orb}_\tau(o).
+}
+\]
+

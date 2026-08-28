@@ -1,4 +1,7 @@
 using System.Collections.Immutable;
+using System.Text;
+using StrataLint.Cli;
+using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -202,6 +205,7 @@ public sealed class R15ScopeNarrowingTests
             historicalPath);
 
         var taskSetDelta = AnomalyHistory(historicalPath);
+        AddHistoricalTask(taskSetDelta);
         AssertFinding(
             Execute(taskSetDelta, RuleFixture.ValuesBindingPath),
             19,
@@ -209,11 +213,168 @@ public sealed class R15ScopeNarrowingTests
             historicalPath);
 
         var bothDelta = AnomalyHistory(historicalPath);
+        AddHistoricalTask(bothDelta);
         AssertFinding(
             Execute(bothDelta, historicalPath, RuleFixture.ValuesBindingPath),
             19,
             message,
             historicalPath);
+    }
+
+    [Fact]
+    public void Sl019ReplaysWhenPolicyChangesAlongsideTaskPreservingLeanEdit()
+    {
+        const string artifactPath = "Evidence/D5/S0/Carrier/Result.spec.json";
+        const string task = "/-- TASK D5-T0097\n    historical task. -/\n";
+        const string anomaly = "{\"anomaly\":\"fixture drift\",\"case_id\":\"D5-T0098\"}\n";
+        var fixture = new RuleFixture();
+        fixture.Baseline[RuleFixture.RingPath] += task;
+        fixture.ForkPoint[RuleFixture.RingPath] += task;
+        fixture.Files[RuleFixture.RingPath] = fixture.Baseline[RuleFixture.RingPath]
+            .Replace("Nat := 0", "Nat := 1", StringComparison.Ordinal);
+        fixture.Files[artifactPath] = anomaly;
+        fixture.Baseline[artifactPath] = anomaly;
+        fixture.ForkPoint[artifactPath] = anomaly;
+        fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical.Replace(
+            "      - \"legacy\"\n",
+            "      - \"legacy\"\n      - \"spec\"\n",
+            StringComparison.Ordinal);
+
+        var changes = RawChangeSet.Create([RuleFixture.RingPath, "Meta/registry.yaml"]);
+        var policy = RegistryLoadAssert.Accepted(
+            RegistryLoader.Load(
+                Encoding.UTF8.GetBytes(fixture.Files["Meta/registry.yaml"]),
+                Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build(changes, policy))).Capability;
+
+        Assert.Contains(RuleId.CreateKnown(19), completed.ExecutedRules);
+        AssertFinding(completed, 19, "unledgered anomaly", artifactPath);
+    }
+
+    [Fact]
+    public void Sl019ReplaysWhenAnyJudgeSourceChangesAlongsideTaskPreservingLeanEdit()
+    {
+        const string artifactPath = "Evidence/D5/S0/Carrier/Result.run.json";
+        const string helperPath = "tools/StrataLint.Engine/Coordinates/RegistryPolicy.cs";
+        const string task = "/-- TASK D5-T0097\n    historical task. -/\n";
+        const string anomaly = "{\"anomaly\":\"fixture drift\",\"case_id\":\"D5-T0098\"}\n";
+        const string helperSource = "namespace StrataLint.Engine;\n";
+        var fixture = new RuleFixture();
+        fixture.Baseline[RuleFixture.RingPath] += task;
+        fixture.ForkPoint[RuleFixture.RingPath] += task;
+        fixture.Files[RuleFixture.RingPath] = fixture.Baseline[RuleFixture.RingPath]
+            .Replace("Nat := 0", "Nat := 1", StringComparison.Ordinal);
+        fixture.Files[artifactPath] = anomaly;
+        fixture.Baseline[artifactPath] = anomaly;
+        fixture.ForkPoint[artifactPath] = anomaly;
+        fixture.Files[helperPath] = helperSource.Replace(";", "; ", StringComparison.Ordinal);
+        fixture.Baseline[helperPath] = helperSource;
+        fixture.ForkPoint[helperPath] = helperSource;
+
+        var changes = RawChangeSet.Create([RuleFixture.RingPath, helperPath]);
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build(changes))).Capability;
+
+        Assert.Contains(RuleId.CreateKnown(19), completed.ExecutedRules);
+        AssertFinding(completed, 19, "unledgered anomaly", artifactPath);
+    }
+
+    [Fact]
+    public void Sl019ReplaysWhenTaskMovesFromD5IntoTrureturingLean()
+    {
+        const string rootPath = "Trureturing.lean";
+        const string artifactPath = "Evidence/D5/S0/Carrier/TaskMove.run.json";
+        const string task = "/-- TASK D5-T0099\n    historical task. -/\n";
+        const string anomaly = "{\"anomaly\":\"fixture drift\",\"case_id\":\"D5-T0099\"}\n";
+        var fixture = new RuleFixture();
+        fixture.Baseline[RuleFixture.RingPath] += task;
+        fixture.ForkPoint[RuleFixture.RingPath] += task;
+        fixture.Files[rootPath] = task;
+        fixture.Baseline[rootPath] = "import D5\n";
+        fixture.ForkPoint[rootPath] = "import D5\n";
+        fixture.Reports[rootPath] = new LeanFileReport([], []);
+        fixture.BaselineReports[rootPath] = new LeanFileReport([], []);
+        fixture.Files[artifactPath] = anomaly;
+        fixture.Baseline[artifactPath] = anomaly;
+        fixture.ForkPoint[artifactPath] = anomaly;
+
+        var completed = Execute(fixture, RuleFixture.RingPath, rootPath);
+
+        Assert.Contains(RuleId.CreateKnown(19), completed.ExecutedRules);
+        AssertFinding(completed, 19, "unledgered anomaly", artifactPath);
+    }
+
+    [Fact]
+    public void Sl019ReplaysWhenBlueprintScribeSourceChangesAlongsideTaskPreservingLeanEdit()
+    {
+        const string artifactPath = "Evidence/D5/S0/Carrier/ScribeSource.run.json";
+        const string scribePath = "Blueprint/D5/S0/Carrier/Result.scribe.cs";
+        const string task = "/-- TASK D5-T0097\n    historical task. -/\n";
+        const string anomaly = "{\"anomaly\":\"fixture drift\",\"case_id\":\"D5-T0098\"}\n";
+        const string scribeSource = "namespace Trureturing.Blueprint;\n";
+        var fixture = new RuleFixture();
+        fixture.Baseline[RuleFixture.RingPath] += task;
+        fixture.ForkPoint[RuleFixture.RingPath] += task;
+        fixture.Files[RuleFixture.RingPath] = fixture.Baseline[RuleFixture.RingPath]
+            .Replace("Nat := 0", "Nat := 1", StringComparison.Ordinal);
+        fixture.Files[artifactPath] = anomaly;
+        fixture.Baseline[artifactPath] = anomaly;
+        fixture.ForkPoint[artifactPath] = anomaly;
+        fixture.Files[scribePath] = scribeSource.Replace(";", "; ", StringComparison.Ordinal);
+        fixture.Baseline[scribePath] = scribeSource;
+        fixture.ForkPoint[scribePath] = scribeSource;
+
+        var completed = Execute(fixture, RuleFixture.RingPath, scribePath);
+
+        Assert.Contains(RuleId.CreateKnown(19), completed.ExecutedRules);
+        AssertFinding(completed, 19, "unledgered anomaly", artifactPath);
+    }
+
+    [Theory]
+    [InlineData("tools/StrataLint.Engine/TaskBlockReferenceSyntax.cs")]
+    [InlineData("tools/Trureturing.Truth/YamlSubsetParser.cs")]
+    public void Sl019ReplaysWhenGrammarOrParserChangesAlongsideTaskPreservingLeanEdit(
+        string dependencyPath)
+    {
+        const string artifactPath = "Evidence/D5/S0/Carrier/Result.run.yaml";
+        const string task = "/-- TASK D5-T0097\n    historical task. -/\n";
+        const string anomaly = "anomaly: fixture drift\ncase_id: D5-T0098\n";
+        var fixture = new RuleFixture();
+        fixture.Baseline[RuleFixture.RingPath] += task;
+        fixture.ForkPoint[RuleFixture.RingPath] += task;
+        fixture.Files[RuleFixture.RingPath] = fixture.Baseline[RuleFixture.RingPath]
+            .Replace("Nat := 0", "Nat := 1", StringComparison.Ordinal);
+        fixture.Files[artifactPath] = anomaly;
+        fixture.Baseline[artifactPath] = anomaly;
+        fixture.ForkPoint[artifactPath] = anomaly;
+
+        var changes = RawChangeSet.Create([RuleFixture.RingPath, dependencyPath]);
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build(changes))).Capability;
+
+        Assert.Contains(RuleId.CreateKnown(19), completed.ExecutedRules);
+        AssertFinding(completed, 19, "unledgered anomaly", artifactPath);
+    }
+
+    [Theory]
+    [InlineData("fail{\"key\":\"value\"}ure")]
+    [InlineData("fail{}ure")]
+    [InlineData("fail[]ure")]
+    public void Sl019EmbeddedJsonPreservesOpaqueFragmentBoundaries(string payload)
+    {
+        const string path = "Evidence/D5/S0/Carrier/Serialized.run.json";
+        var fixture = new RuleFixture();
+        SetHistorical(
+            fixture,
+            path,
+            JsonSerializer.Serialize(new { payload }) + "\n");
+
+        var completed = Execute(
+            fixture,
+            "tools/StrataLint.Engine/Rules/RepositoryRules.StructuredScan.cs");
+
+        AssertNoFinding(completed, 19, "unknown anomaly-bearing schema", path);
     }
 
     [Fact]
@@ -343,6 +504,13 @@ public sealed class R15ScopeNarrowingTests
         var fixture = new RuleFixture();
         SetHistorical(fixture, path, "{\"kind\":\"fixture-anomaly\",\"state\":\"invalid\"}\n");
         return fixture;
+    }
+
+    private static void AddHistoricalTask(RuleFixture fixture)
+    {
+        const string task = "/-- TASK D5-T0099\n    historical task. -/\n";
+        fixture.Baseline[RuleFixture.ValuesBindingPath] += task;
+        fixture.ForkPoint[RuleFixture.ValuesBindingPath] += task;
     }
 
     private static RuleFixture AxiomHistory(string? dependencyPath = null)

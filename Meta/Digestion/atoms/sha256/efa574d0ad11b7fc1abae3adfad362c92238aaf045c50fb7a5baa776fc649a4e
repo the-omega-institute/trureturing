@@ -1,0 +1,22 @@
+## 定义 167.1（完整测试集）
+
+测试族：
+
+[
+\mathcal S
+]
+
+是完整的，当：
+
+[
+\boxed{
+\bigcup_{\tau\in\mathcal S}
+\operatorname{Cover}(\tau)
+==========================
+
+\Delta(C;T).
+}
+]
+
+---
+

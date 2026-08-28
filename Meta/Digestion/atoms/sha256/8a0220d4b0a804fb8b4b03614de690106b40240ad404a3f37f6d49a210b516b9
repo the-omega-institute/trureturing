@@ -1,0 +1,73 @@
+# 234. 哲学应建模为一台交互式状态机
+
+定义哲学研究状态：
+
+[
+\boxed{
+\mathfrak S
+===========
+
+(
+X,
+A,
+C,
+\mathcal T,
+\mathcal P,
+\mathcal D,
+\mathcal R
+).
+}
+]
+
+其中：
+
+[
+\begin{aligned}
+X&=\text{当前对象类型};\
+A&=\text{准入域};\
+C&=\text{当前概念体系};\
+\mathcal T&=\text{当前问题／目标族};\
+\mathcal P&=\text{proof 与 provenance 库};\
+\mathcal D&=\text{已知缺陷和反模型};\
+\mathcal R&=\text{修订规则}.
+\end{aligned}
+]
+
+允许的基本操作包括：
+
+[
+\boxed{
+\begin{aligned}
+\mathsf{Ask}
+&:\text{加入目标};\
+\mathsf{Observe}
+&:\text{精化概念};\
+\mathsf{Intervene}
+&:\text{改变状态并产生实验读出};\
+\mathsf{Prove}
+&:\text{构造因子化或逻辑证明};\
+\mathsf{Refute}
+&:\text{构造缺陷见证};\
+\mathsf{Repair}
+&:\text{精化、压缩、锚定或扩域};\
+\mathsf{Revise}
+&:\text{修改准入和假设};\
+\mathsf{Audit}
+&:\text{检查 provenance、循环性和实现性}.
+\end{aligned}
+}
+]
+
+哲学研究因此不是一次性输出，而是状态转换：
+
+[
+\mathfrak S_0
+\to
+\mathfrak S_1
+\to
+\mathfrak S_2
+\to\cdots.
+]
+
+---
+

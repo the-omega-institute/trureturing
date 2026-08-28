@@ -1,0 +1,10 @@
+## 24.2 遗传潜伏谱
+
+对嵌套语言：
+
+$$
+\mathcal L_0\subseteq\mathcal L_1\subseteq\cdots,
+$$
+
+定义差异首次逃逸层级。所有状态对的首次逃逸层级构成潜伏谱。
+

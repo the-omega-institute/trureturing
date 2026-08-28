@@ -1,0 +1,60 @@
+# 279. 间接机制可以在条件下直接化
+
+设有主体 (i=1,\ldots,n)。
+
+类型空间：
+
+[
+\Theta_i.
+]
+
+消息空间：
+
+[
+M_i.
+]
+
+原机制：
+
+[
+g:\prod_iM_i\to O.
+]
+
+假设存在占优策略：
+
+[
+s_i:\Theta_i\to M_i.
+]
+
+即对任意真实类型 (\theta_i)、任意他人消息 (m_{-i}) 和任意替代消息 (m_i)：
+
+[
+u_i
+\left(
+\theta_i,
+g(s_i(\theta_i),m_{-i})
+\right)
+\ge
+u_i
+\left(
+\theta_i,
+g(m_i,m_{-i})
+\right).
+]
+
+定义直接机制：
+
+[
+\boxed{
+g'(\hat\theta_1,\ldots,\hat\theta_n)
+====================================
+
+g
+\left(
+s_1(\hat\theta_1),
+\ldots,
+s_n(\hat\theta_n)
+\right).
+}
+]
+

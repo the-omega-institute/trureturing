@@ -1,0 +1,10 @@
+ast_path: row/K-infty-mathbb-Z-路径分量接口与穷尽-jump-分类
+fingerprints:
+  raw_sha256: sha256:8869ca5d26843de88617de94cc6925bf084cf2350607820bf99835901dbbce8e
+  normalized_sha256: sha256:8869ca5d26843de88617de94cc6925bf084cf2350607820bf99835901dbbce8e
+cas_ref: sha256:8869ca5d26843de88617de94cc6925bf084cf2350607820bf99835901dbbce8e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

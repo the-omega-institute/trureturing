@@ -1,0 +1,41 @@
+## 定义 380.2（资源成熟）
+
+[
+\boxed{
+\forall T\in\mathcal T,\quad
+E_T\preceq_r C.
+}
+]
+
+一个体系可能语义成熟，却不具备现实时间内回答问题的能力。
+
+可以通过加入缓存、索引、证书和预计算结果构造操作完成：
+
+[
+\boxed{
+C^{+,r}
+=
+
+C
+\vee
+\bigvee_{\substack{T\in\mathcal T\E_T\not\preceq_rC}}
+E_T.
+}
+]
+
+它不一定增加新的世界信息，却重新组织了信息的访问路径。
+
+所以：
+
+[
+\boxed{
+\text{成熟理论}
+\neq
+\text{可用理论};
+\qquad
+\text{可用性还依赖表示与计算架构。}
+}
+]
+
+---
+

@@ -47,12 +47,24 @@ internal static partial class DigestionLedgerAligner
         AtomizerRegistration registration,
         DigestionAtom atom,
         string kind,
-        ISet<string> suggestedAtomIds)
+        ISet<string> suggestedAtomIds,
+        IReadOnlySet<string>? occurrenceQualifiedStems = null)
     {
         var stem = registration.ResidualPrefix
             + $"-{kind}-"
             + atom.Fingerprints.RawSha256["sha256:".Length..];
         if (suggestedAtomIds.Add(stem))
+        {
+            return stem;
+        }
+
+        // Generic atomization can legitimately expose the same CAS content at a new locator
+        // after a structural parser change (or at several locators in one source). Keep the
+        // legacy ID untouched and qualify only the new residual occurrence. Other atomizers
+        // retain their stricter collision refusal, notably the unregistered-genre path.
+        var qualifyGenericCollision = registration.ResidualPrefix == GenericAtomizer.ResidualPrefix;
+        if (!qualifyGenericCollision
+            && (occurrenceQualifiedStems is null || !occurrenceQualifiedStems.Contains(stem)))
         {
             return stem;
         }

@@ -1,0 +1,14 @@
+## 严格结论 224.1
+
+$$
+\boxed{
+\text{相同一步输出 law}
+\not\Rightarrow
+\text{相同顺序协议行为}.
+}
+$$
+
+只有完整 transcript law 相同，才可以安全地把两个 instrument 或历史合并。
+
+---
+

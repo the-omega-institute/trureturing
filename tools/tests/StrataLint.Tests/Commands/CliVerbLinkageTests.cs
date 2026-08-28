@@ -10,8 +10,9 @@ namespace StrataLint.Tests;
 // 立条案由:`make c0-verify` / `make c0-reconcile-trust-root` / `make record-golden` 三个目标
 // 各自把一个 dispatch 表里不存在的动词交给 CLI,实跑得 `UNKNOWN_COMMAND ... exit=2`。
 // 既有的 MakeWorkflowTests 对此全绿——它断言的是「Makefile 文本里有这段字符串」,
-// 验的是语法不是指向。现行 `make -C tools test` 不带 filter；
-// `EngineeringCheckRunsTheCanonicalToolsTestTargetWithoutAFilter` 守住这条执行链。
+// 验的是语法不是指向。现行 base-owned required-project floor 显式运行包含本测试的
+// StrataLint.Tests；`EngineeringCheckUsesScopedExecutionAndABaseOwnedRequiredProjectFloor`
+// 守住这条执行链。
 //
 // 本测试刻意是纯 in-process 断言(不 spawn 进程),直接落在该全量 tools-test 中。
 public sealed class CliVerbLinkageTests

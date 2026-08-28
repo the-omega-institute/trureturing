@@ -1,0 +1,50 @@
+# 513. 近似因果抽象的误差沿干预链累积
+
+设宏观空间有度量 (d)。
+
+对每个干预 (u)，定义单步缺陷：
+
+[
+\boxed{
+\epsilon_u
+==========
+
+\sup_x
+d
+\left(
+C(F_ux),
+G_u(Cx)
+\right).
+}
+]
+
+假设 (G_u) 的 Lipschitz 常数为 (L_u)。
+
+对序列：
+
+[
+\alpha=(u_1,\ldots,u_n),
+]
+
+有：
+
+[
+\boxed{
+\begin{aligned}
+\epsilon_\alpha
+\le{}&
+\epsilon_{u_n}
++
+L_{u_n}\epsilon_{u_{n-1}}\
+&+
+L_{u_n}L_{u_{n-1}}\epsilon_{u_{n-2}}
++\cdots\
+&+
+\left(
+\prod_{j=2}^{n}L_{u_j}
+\right)
+\epsilon_{u_1}.
+\end{aligned}
+}
+]
+

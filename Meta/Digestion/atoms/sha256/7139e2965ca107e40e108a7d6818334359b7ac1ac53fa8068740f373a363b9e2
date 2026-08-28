@@ -1,0 +1,16 @@
+## 4.2 闭 filtration
+
+定义
+
+\[
+F_k=\{v:d(v)\le k\}.
+\]
+
+在上集开集约定下，\(F_k\) 是下集，因而是闭集，并且
+
+\[
+F_0\subseteq F_1\subseteq F_2\subseteq\cdots.
+\]
+
+所以 depth sublevel 是闭 filtration。其补集 \(\{v:k<d(v)\}\) 是开集。
+

@@ -1,0 +1,51 @@
+# 44. 有限深度代理谱
+
+定义有限可达与可观测矩阵
+
+$$
+\mathcal C_N=[B_O,TB_O,\ldots,T^{N-1}B_O],
+$$
+
+$$
+\mathcal O_N=
+\begin{bmatrix}C\\CT\\\vdots\\CT^{N-1}\end{bmatrix},
+$$
+
+以及有限 Hankel 算子
+
+$$
+\mathcal H_N=\mathcal O_N\mathcal C_N.
+$$
+
+令
+
+$$
+r_N=\operatorname{rank}\mathcal H_N.
+$$
+
+则
+
+$$
+\boxed{r_N\le r_{N+1}.}
+$$
+
+有限维中它最终稳定于 $\dim\mathsf{Agt}_O$。定义代理完成深度
+
+$$
+\boxed{
+d_{\mathrm{ag}}
+=
+\min\{N:r_N=\dim\mathsf{Agt}_O\}
+}
+$$
+
+和新增代理谱
+
+$$
+\Delta r_N=r_N-r_{N-1}.
+$$
+
+这表示观察者必须考虑多长的过去控制与未来读出窗口，才能显现全部有效行动维度。有些能力立即可见，有些必须经过长时间传播才形成差异。
+
+---
+

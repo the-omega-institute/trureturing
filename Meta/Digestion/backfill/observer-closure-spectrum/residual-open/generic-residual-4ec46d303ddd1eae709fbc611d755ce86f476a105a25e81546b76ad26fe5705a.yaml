@@ -1,0 +1,10 @@
+ast_path: section/30-自我治理的根-环边界与审计不完备
+fingerprints:
+  raw_sha256: sha256:4ec46d303ddd1eae709fbc611d755ce86f476a105a25e81546b76ad26fe5705a
+  normalized_sha256: sha256:4ec46d303ddd1eae709fbc611d755ce86f476a105a25e81546b76ad26fe5705a
+cas_ref: sha256:4ec46d303ddd1eae709fbc611d755ce86f476a105a25e81546b76ad26fe5705a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

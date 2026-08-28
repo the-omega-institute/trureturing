@@ -1,0 +1,125 @@
+## 定理 140.1（概念依赖的基本规则）
+
+下列规则全部成立。
+
+### 自反性
+
+[
+\boxed{
+A\Rightarrow A.
+}
+]
+
+### 投影
+
+[
+\boxed{
+A\vee B\Rightarrow A,
+\qquad
+A\vee B\Rightarrow B.
+}
+]
+
+### 传递性
+
+[
+A\Rightarrow B,
+\qquad
+B\Rightarrow C
+]
+
+推出：
+
+[
+\boxed{
+A\Rightarrow C.
+}
+]
+
+### 增广
+
+[
+A\Rightarrow B
+]
+
+推出：
+
+[
+\boxed{
+A\vee C
+\Rightarrow
+B\vee C.
+}
+]
+
+### 合并
+
+[
+A\Rightarrow B,
+\qquad
+A\Rightarrow C
+]
+
+推出：
+
+[
+\boxed{
+A\Rightarrow B\vee C.
+}
+]
+
+### 分解
+
+[
+A\Rightarrow B\vee C
+]
+
+推出：
+
+[
+\boxed{
+A\Rightarrow B,
+\qquad
+A\Rightarrow C.
+}
+]
+
+### 伪传递
+
+[
+A\Rightarrow B,
+\qquad
+B\vee C\Rightarrow D
+]
+
+推出：
+
+[
+\boxed{
+A\vee C\Rightarrow D.
+}
+]
+
+### 证明
+
+全部由因子映射的恒等、复合、配对和投影构造得到。比如增广中，若：
+
+[
+q_B=f(q_A),
+]
+
+则：
+
+[
+(q_B,q_C)
+=========
+
+(f\times\operatorname{id})(q_A,q_C).
+]
+
+(\square)
+
+这意味着概念间的决定关系具有一套独立于具体哲学领域的推理演算。
+
+---
+

@@ -1,0 +1,24 @@
+**证明义务 56.4-B（时域核反单调）。** 对任意
+\(N,N'\)、\(h:N\le N'\)，机器核验
+
+\[
+\boxed{
+\forall x,y:X,\quad
+P_{N'}^{q,\tau}(x)=P_{N'}^{q,\tau}(y)
+\to
+P_N^{q,\tau}(x)=P_N^{q,\tau}(y).
+}
+\]
+
+等价地，
+
+\[
+\ker P_{N'}^{q,\tau}
+\subseteq
+\ker P_N^{q,\tau}.
+\]
+
+该结论由 56.4-A 的限制律直接得到，不需要动力系统、概率或测度前件。
+
+### 56.4.4 `ExpansionEscape` 的两个精确实例
+

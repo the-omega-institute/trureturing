@@ -1,0 +1,42 @@
+## 定义 140.1（依赖闭包）
+
+给定一组已知概念依赖 (\Sigma)，定义概念 (A) 的依赖闭包：
+
+[
+\boxed{
+\operatorname{Dep}_{\Sigma}(A)
+==============================
+
+\bigvee
+\left{
+B
+;\middle|;
+\Sigma\vdash A\Rightarrow B
+\right}.
+}
+]
+
+在有限概念族中，该算子满足：
+
+[
+A\preceq\operatorname{Dep}_{\Sigma}(A),
+]
+
+单调性与幂等性。
+
+所以概念理论至少包含两个不同的闭包：
+
+[
+\begin{aligned}
+\operatorname{cl}*T(A)
+&=A\vee E_T,
+&&\text{由目标强迫的语义完成};\
+\operatorname{Dep}*{\Sigma}(A)
+&=\text{由既有依赖规则推出的推理闭包}.
+\end{aligned}
+]
+
+前者加入当前概念尚不能表达的新区别；后者只展开已经隐含在现有依赖中的后果。
+
+---
+

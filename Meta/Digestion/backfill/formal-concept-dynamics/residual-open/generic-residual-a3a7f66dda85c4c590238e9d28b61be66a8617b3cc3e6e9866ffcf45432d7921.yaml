@@ -1,0 +1,10 @@
+ast_path: section/489-四值逻辑可以保留矛盾而不爆炸
+fingerprints:
+  raw_sha256: sha256:a3a7f66dda85c4c590238e9d28b61be66a8617b3cc3e6e9866ffcf45432d7921
+  normalized_sha256: sha256:a3a7f66dda85c4c590238e9d28b61be66a8617b3cc3e6e9866ffcf45432d7921
+cas_ref: sha256:a3a7f66dda85c4c590238e9d28b61be66a8617b3cc3e6e9866ffcf45432d7921
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

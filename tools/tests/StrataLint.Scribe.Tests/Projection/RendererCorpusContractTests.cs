@@ -9,7 +9,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed partial class FormulaCorpusInventoryTests
 {
     private const string CanonicalRendererSha256 =
-        "a0b1de75daaffa6a8ae71995885744e1be013bbd0696fd02359870623c27b400";
+        "ef2afd944cd029f6c7c740a813207e98a43787aecec9c22bc36cfb7c0e2b7882";
     private const string UpdateCommand = "make -C tools update-renderer-contract";
 
     [Fact]
@@ -406,10 +406,20 @@ public sealed partial class FormulaCorpusInventoryTests
         formulas.Add(new Formula.Power(digits, group));
         formulas.Add(new Formula.Power(digits, sequence));
         formulas.Add(new Formula.Power(digits, word));
+        formulas.Add(new Formula.Power(new Formula.Absolute(x), word));
+        formulas.Add(new Formula.Power(
+            new Formula.LatexMacro(FormulaLatexMacro.Phi),
+            sequence));
+        formulas.Add(new Formula.Power(
+            new Formula.LatexMacro(FormulaLatexMacro.Phi),
+            word));
         formulas.Add(new Formula.Power(sequence, group));
+        formulas.Add(new Formula.Power(sequence, digits));
         formulas.Add(new Formula.Power(sequence, sequence));
+        formulas.Add(new Formula.Power(sequence, word));
         formulas.Add(new Formula.Power(word, digits));
         formulas.Add(new Formula.Power(word, group));
+        formulas.Add(new Formula.Power(word, word));
         formulas.Add(new Formula.Power(one, x));
         formulas.Add(new Formula.Power(new Formula.Phi(), one));
         formulas.Add(new Formula.Power(new Formula.Phi(), x));
@@ -424,6 +434,8 @@ public sealed partial class FormulaCorpusInventoryTests
             word,
             new Formula.LatexMacro(FormulaLatexMacro.Phi)));
         formulas.Add(new Formula.Subscript(word, sequence));
+        // 仓库实际使用:ℝ_{≥0} 之类「序列底、序列标」的下标(EscapeSpectrum 预算包络)。
+        formulas.Add(new Formula.Subscript(sequence, sequence));
         formulas.Add(new Formula.Subscript(
             word,
             new Formula.LatexSymbol(FormulaLatexSymbol.Plus)));

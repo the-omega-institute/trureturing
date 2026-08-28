@@ -1,0 +1,12 @@
+## 定理 91.1（instrument 的 Born 边缘）
+
+$$
+\boxed{
+p(a\mid x,\rho)
+=
+\operatorname{Tr}\mathcal I_{a|x}(\rho)
+=
+\operatorname{Tr}(\rho E_{a|x}).
+}
+$$
+

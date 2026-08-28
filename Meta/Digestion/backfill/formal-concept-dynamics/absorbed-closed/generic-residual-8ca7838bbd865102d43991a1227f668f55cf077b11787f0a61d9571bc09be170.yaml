@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Disclosure/ExactTargetForcedLeak.exact_target_forced_leak
       definition_sha256: sha256:22f1a05f4216bc18afb8f118a740c30a3c901e6708fb7e15ae6b3cb545be046f
-      emission_sha256: sha256:0b26190e966918326c6c8dff70374d0b2c26a767a4bfe5a511c43bef8f0cebee
+      emission_sha256: sha256:6b013d8c14a835f6bfc67effb1879f31c9f659a6d98999b43846edbe5379f021
   unresolved_subitems: []

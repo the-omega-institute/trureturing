@@ -1,0 +1,8 @@
+- 可唯一纠正至多：
+
+\[
+\left\lfloor\frac{d_{\min}-1}{2}\right\rfloor
+\]
+
+个错误。
+

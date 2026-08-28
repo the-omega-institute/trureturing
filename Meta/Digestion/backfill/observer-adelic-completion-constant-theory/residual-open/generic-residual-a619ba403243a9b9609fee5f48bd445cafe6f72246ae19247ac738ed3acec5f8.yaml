@@ -1,0 +1,14 @@
+ast_path: section/Observer-Adelic-Completion-Theory-of-Structural-4e20415d
+fingerprints:
+  raw_sha256: sha256:a619ba403243a9b9609fee5f48bd445cafe6f72246ae19247ac738ed3acec5f8
+  normalized_sha256: sha256:a619ba403243a9b9609fee5f48bd445cafe6f72246ae19247ac738ed3acec5f8
+cas_ref: sha256:a619ba403243a9b9609fee5f48bd445cafe6f72246ae19247ac738ed3acec5f8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-cb6da6f1203ad27ddcac3e0644cd9d65858f4a0e1c4786754d6b3461435f72ed-077387865e983d4d1584b7aa303417ec4c756d70441eeb656a1d4651d6418f13
+    - generic-residual-b1a2ea6daa8fb325c7fb43849c1576a83ef4802d30502afab676cc4f7df5e16d-17f8ea132d2631eb3601dbe64fe80ad21c18ee146b619c64ef7a49b8da111df8
+    - generic-residual-f1945572d8fd05630d8a157b677f7ef6627e1e247f3d62e202248d3912eba05f-6dd81c24e0324e3fbed750f140430d27e3ecee6a51672c4c62a1ea77090a63b4

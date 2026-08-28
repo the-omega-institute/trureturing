@@ -1,0 +1,10 @@
+ast_path: section/167-反例不是点-而可以形成-测试基
+fingerprints:
+  raw_sha256: sha256:139b87d848523fb6c3951e9d5133acb395c856df0cf1a8bf761f3acb55f9ab6d
+  normalized_sha256: sha256:139b87d848523fb6c3951e9d5133acb395c856df0cf1a8bf761f3acb55f9ab6d
+cas_ref: sha256:139b87d848523fb6c3951e9d5133acb395c856df0cf1a8bf761f3acb55f9ab6d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

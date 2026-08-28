@@ -1,0 +1,39 @@
+# 180. 理论越压缩，潜在问题空间越大
+
+若：
+
+[
+C\preceq D,
+]
+
+则 (D) 更精细。
+
+由此前结果：
+
+[
+\Delta(D;T)
+\subseteq
+\Delta(C;T)
+]
+
+对任意固定 (T)。
+
+因此更粗概念 (C) 对更多目标容易产生缺陷。
+
+定义目标族：
+
+[
+\mathcal T.
+]
+
+理论风险：
+
+[
+\boxed{
+\mathcal R(C;\mathcal T)
+========================
+
+{T\in\mathcal T\mid \Delta(C;T)\neq\varnothing}.
+}
+]
+

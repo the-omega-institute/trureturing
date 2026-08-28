@@ -6,7 +6,7 @@ A target-relevant omission is exactly a collapsed message distinction that matte
 
 **Theorem 1.1 (Target-relevant omission has a collapsed distinction witness).**
 
-$$\forall X \in Type, S \in Type, M \in Type, Target \in Type, sender \in X \to S, encoder \in S \to M, target \in X \to Target,\; \left(\operatorname{Nonempty}\left(X\right) \land \operatorname{Refines}\left(target, sender\right)\right) \Rightarrow \left(\operatorname{TargetRelevantOmission}\left(sender, encoder, target\right) \Leftrightarrow \exists x \in X, y \in X,\; \operatorname{messageConcept}\left(sender, encoder, x\right) = \operatorname{messageConcept}\left(sender, encoder, y\right) \land \left(target\left(x\right) \ne target\left(y\right) \land sender\left(x\right) \ne sender\left(y\right)\right)\right)$$
+$$\forall X \in Type, S \in Type, M \in Type, Target \in Type, sender \in X \to S, encoder \in S \to M, target \in X \to Target,\; \left(\operatorname{Nonempty}\left(X\right) \land \operatorname{Refines}\left(target, sender\right)\right) \Rightarrow \left(\operatorname{TargetRelevantOmission}\left(sender, encoder, target\right) \Leftrightarrow \left(\exists x \in X, y \in X,\; \operatorname{messageConcept}\left(sender, encoder, x\right) = \operatorname{messageConcept}\left(sender, encoder, y\right) \land \left(target\left(x\right) \ne target\left(y\right) \land sender\left(x\right) \ne sender\left(y\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/TargetRelevantOmission.omission_iff_witness_exists` (`✓ std3`). ∎
 

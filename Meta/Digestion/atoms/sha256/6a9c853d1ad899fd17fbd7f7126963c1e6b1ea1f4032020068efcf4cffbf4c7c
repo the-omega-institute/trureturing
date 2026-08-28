@@ -1,0 +1,18 @@
+## 117.1 单一计算基标签
+
+若先验模型限制为
+
+$$
+\rho_n=|n\bmod M\rangle\langle n\bmod M|,
+$$
+
+则全部 prime-power residue 坐标
+
+$$
+(n\bmod p^{v_p(M)})_{p\mid M}
+$$
+
+由 CRT 唯一恢复 $n\bmod M$。
+
+所以 CRT 对该离散基模型信息完备。
+

@@ -501,8 +501,10 @@ public sealed class StatementProjectionPilotTests
         {
             var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.LakefileInvalidOperation);
             var requireLiveReport = Environment.GetEnvironmentVariable("STRATALINT_REQUIRE_LIVE_REPORT") == "1";
-            if (!requireLiveReport && !repository.FileExists(RepositoryRelativePath.Create(
-                    ".lake/build/stratalint/raw-lean-report.json")))
+            if (!requireLiveReport && (!repository.FileExists(RepositoryRelativePath.Create(
+                    ".lake/build/stratalint/raw-lean-report.json"))
+                || !repository.FileExists(RepositoryRelativePath.Create(
+                    ".lake/build/stratalint/raw-lean-report.json.materials.zip"))))
             {
                 Skip = "Live raw Lean report is absent; pinned statement-v1 fixture remains the self-contained verifier asset.";
                 return;
@@ -513,7 +515,7 @@ public sealed class StatementProjectionPilotTests
                 {
                     _ = LeanCompiledArtifactReports.InspectRepository(repository.Root.FullPath);
                 }
-                catch (FormatException)
+                catch (Exception exception) when (exception is FormatException or InvalidDataException)
                 {
                     Skip = "Live raw Lean report is stale; pinned statement-v1 fixture remains the self-contained verifier asset.";
                 }

@@ -1,0 +1,19 @@
+## 117.2 计算基上的经典概率混合
+
+若
+
+$$
+\rho
+=
+\sum_{n\bmod M}
+\mu(n)|n\rangle\langle n|,
+$$
+
+完整联合 residue tuple 的分布可恢复 $\mu$。但只知道各 prime-power 边缘分布
+
+$$
+(\mu_p)_p
+$$
+
+一般不能恢复跨素数相关。
+

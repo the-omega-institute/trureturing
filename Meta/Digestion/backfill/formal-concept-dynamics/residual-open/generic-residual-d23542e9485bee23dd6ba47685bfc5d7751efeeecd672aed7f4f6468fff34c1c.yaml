@@ -1,0 +1,10 @@
+ast_path: section/145-修复顺序的概念曲率
+fingerprints:
+  raw_sha256: sha256:d23542e9485bee23dd6ba47685bfc5d7751efeeecd672aed7f4f6468fff34c1c
+  normalized_sha256: sha256:d23542e9485bee23dd6ba47685bfc5d7751efeeecd672aed7f4f6468fff34c1c
+cas_ref: sha256:d23542e9485bee23dd6ba47685bfc5d7751efeeecd672aed7f4f6468fff34c1c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

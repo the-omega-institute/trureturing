@@ -1,0 +1,37 @@
+## 定义 186.1（统一完成）
+
+统一观察者完成应是满足：
+
+$$
+C_i(q^*)\simeq q^*
+\qquad
+\forall i
+$$
+
+的最小共同固定点：
+
+$$
+\boxed{
+q^*
+=
+\operatorname{lfp}
+\left(
+q\mapsto
+\bigvee_iC_i(q)
+\right).
+}
+$$
+
+若观察者精化格具有有限高度，则迭代：
+
+$$
+q_{n+1}
+=
+\bigvee_iC_i(q_n)
+$$
+
+必在有限步稳定。
+
+若无限维或无限状态，则可能需要：
+
+* 极限阶段 join；

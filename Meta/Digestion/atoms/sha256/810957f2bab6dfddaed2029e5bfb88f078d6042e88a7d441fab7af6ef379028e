@@ -1,0 +1,17 @@
+## 定义 3.1(多观察者行动模型)
+
+设有限主体集 \(I\)。每个 \(i\in I\) 携带一个观察者结构 \(\mathfrak O_i=(X,\{q_{i,\alpha}\},\operatorname{Adm}_i,a_i)\),其乘积读数记 \(q_i:=q_{\mathfrak O_i}:X\to B_i\)(定义 2.1)。设行动类型 \(U\) 与转移
+
+\[
+F:X\times U\times I\times I\to X,
+\qquad F(x,u,i\!\to\! j)
+\]
+
+表示「\(i\) 在状态 \(x\) 对 \(j\) 施行 \(u\)」之后的状态。每个主体的**欲**是一个通过自身读数因子化的谓词:
+
+\[
+W_i:X\to\mathsf{Prop},\qquad W_i=\overline W_i\circ q_i,
+\]
+
+即 \(i\) 只能对自己读得出的差异表达愿或不愿。**这是「欲」的观察者相对性:\(W_i\) 对 \(N_{\mathfrak O_i}\) 常值。** 另设能力谓词 \(\operatorname{Can}_i:X\times U\times I\to\mathsf{Prop}\)(「\(i\) 在 \(x\) 能对 \(j\) 施 \(u\)」),同样要求通过 \(q_i\) 因子化:\(\operatorname{Can}_i=\overline{\operatorname{Can}}_i\circ(q_i\times\mathrm{id})\)。
+

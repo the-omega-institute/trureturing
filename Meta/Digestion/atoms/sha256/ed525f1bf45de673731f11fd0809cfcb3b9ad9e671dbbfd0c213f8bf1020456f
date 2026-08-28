@@ -1,0 +1,27 @@
+# 122. 跨素数耦合把高阶相关运输进局部读出
+
+设 Hamiltonian 分解为
+
+$$
+H=\sum_SH_S,
+$$
+
+其中 $H_S$ 只作用于素数集合 $S$。
+
+若 $A_R$ 只作用在 $R$ 上，则
+
+$$
+\operatorname{supp}[H_S,A_R]
+\subseteq
+S\cup R.
+$$
+
+Heisenberg 方程为
+
+$$
+\frac{dA}{dt}
+=i[H,A].
+$$
+
+因此 effect support 沿由非零 $H_S$ 定义的相互作用超图传播。
+

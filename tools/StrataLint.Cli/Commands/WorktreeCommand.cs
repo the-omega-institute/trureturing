@@ -14,11 +14,17 @@ internal sealed record WorktreeOptions(
 internal static class WorktreeCommand
 {
     internal const string SolutionPath = "tools/StrataLint.sln";
-    internal const string Usage =
+    internal static IReadOnlyList<string> CreationKinds { get; } =
+        ["math", "governance", "theory"];
+
+    private static string CreationKindList => string.Join(", ", CreationKinds);
+
+    internal static string Usage { get; } =
         "USAGE: StrataLint worktree ensure-cache [--path DIR] | "
         + "StrataLint worktree with-cache-writer [--path DIR] -- COMMAND [ARG ...] | "
         + "StrataLint worktree --branch NAME --path DIR "
         + "[--base REV] [--source REPO_ROOT] [--skip-restore]. "
+        + $"Allowed worktree kinds: {CreationKindList}. "
         + "The .lake cache is materialized by the first Lean command; symlink sharing is forbidden.";
 
     private static readonly string[] ReviewScaffoldIgnorePatterns =
@@ -27,18 +33,6 @@ internal static class WorktreeCommand
         ".echo-review.md",
         ".sshx-*",
     ];
-
-    private static readonly HashSet<string> OfficialRoles = new(StringComparer.Ordinal)
-    {
-        "adversary",
-        "gate",
-        "librarian",
-        "numericist",
-        "prover",
-        "scout",
-        "scribe",
-        "theorist",
-    };
 
     internal static CommandResult Run(string repositoryRoot, IReadOnlyList<string> arguments) =>
         Run(repositoryRoot, arguments, new ProductionWorktreeProcessRunner());
@@ -79,11 +73,11 @@ internal static class WorktreeCommand
 
         WorktreeOptions? options = null;
         var worktreeCreated = false;
-        var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+        var halfBuiltRecovered = false;
         try
         {
             options = ParseArguments(repositoryRoot, arguments);
-            ValidatePreflight(options, runner);
+            halfBuiltRecovered = ValidatePreflight(options, runner);
             GitWorktreeInventory.FetchRemoteBase(options.Source, options.Base, runner);
             VerifyBase(options, runner);
             var pins = LeanPinSet.ReadBase(options.Source, options.Base, runner);
@@ -108,8 +102,8 @@ internal static class WorktreeCommand
                     TimeSpan.FromSeconds(1800),
                     "dotnet restore failed");
             }
+            WorktreeCreationSafety.ValidateCreatedWorktree(options, runner);
 
-            stopwatch.Stop();
             var summary = JsonSerializer.Serialize(new
             {
                 @event = "worktree_init",
@@ -120,14 +114,13 @@ internal static class WorktreeCommand
                 pin_sha256 = pins.Sha256,
                 donor_behind_base = donor.BehindBase,
                 donor_cache_pin = donor.CachePin,
+                halfbuilt_recovered = halfBuiltRecovered,
                 dotnet_restore = options.SkipRestore ? "skipped" : "restored",
-                elapsed_ms = stopwatch.ElapsedMilliseconds,
             }) + "\n";
             return new CommandResult(true, summary, RenderDonorWarning(options, donor));
         }
         catch (Exception exception)
         {
-            stopwatch.Stop();
             var cleanup = options is not null && worktreeCreated
                 ? Cleanup(options, runner)
                 : string.Empty;
@@ -140,7 +133,6 @@ internal static class WorktreeCommand
                 base_revision = options?.Base,
                 reason = exception.Message,
                 cleanup_error = cleanup.Length == 0 ? null : cleanup.TrimStart(';', ' '),
-                elapsed_ms = stopwatch.ElapsedMilliseconds,
             });
             return new CommandResult(
                 false,
@@ -178,7 +170,7 @@ internal static class WorktreeCommand
                 "git",
                 ["rev-list", "--count", "--end-of-options", $"HEAD..{options.Base}"],
                 options.Source,
-                TimeSpan.FromSeconds(30));
+                BoundedProcessRunner.HangDetectionBudget);
             if (counted.ExitCode == 0
                 && int.TryParse(
                     Encoding.UTF8.GetString(counted.StandardOutput).Trim(),
@@ -331,35 +323,37 @@ internal static class WorktreeCommand
         return arguments[index];
     }
 
-    internal static bool IsManagedBranch(string branch)
-    {
-        if (branch.StartsWith("harness/", StringComparison.Ordinal)
-            && branch.Length > "harness/".Length)
-        {
-            return true;
-        }
+    internal static bool IsManagedBranch(string branch) =>
+        branch.StartsWith("harness/", StringComparison.Ordinal)
+        && branch.Length > "harness/".Length;
 
+    private static bool IsValidCreationBranch(string branch)
+    {
         var fields = branch.Split('/');
         return fields.Length == 3
-            && fields[0] == "agent"
-            && OfficialRoles.Contains(fields[1])
+            && fields[0] == "harness"
+            && CreationKinds.Contains(fields[1], StringComparer.Ordinal)
             && fields[2].Length > 0;
     }
 
+    private static string CreationGrammarError(string prefix) =>
+        $"{prefix}; kind must be one of: {CreationKindList}";
+
     private static void ValidateBranchGrammar(string branch)
     {
-        if (!IsManagedBranch(branch))
+        if (!IsValidCreationBranch(branch))
             throw new InvalidOperationException(
-                "branch must match harness/* or agent/<official>/<task-code>");
+                CreationGrammarError("branch must match harness/<kind>/<task-code>"));
     }
 
-    private static void ValidatePreflight(WorktreeOptions options, IWorktreeProcessRunner runner)
+    private static bool ValidatePreflight(WorktreeOptions options, IWorktreeProcessRunner runner)
     {
         if (!Directory.Exists(options.Source))
         {
             throw new InvalidOperationException($"source does not exist: {options.Source}");
         }
 
+        var halfBuiltRecovered = WorktreeCreationSafety.RecoverHalfBuiltWorktree(options, runner);
         if (File.Exists(options.Path) || Directory.Exists(options.Path))
         {
             throw new InvalidOperationException($"path already exists: {options.Path}");
@@ -370,11 +364,12 @@ internal static class WorktreeCommand
             "git",
             ["check-ref-format", "--branch", options.Branch],
             options.Source,
-            TimeSpan.FromSeconds(30));
+            BoundedProcessRunner.HangDetectionBudget);
         if (branchFormat.ExitCode != 0)
         {
             throw new InvalidOperationException(
-                "branch must be a valid git ref matching harness/* or agent/<official>/<task-code>");
+                CreationGrammarError(
+                    "branch must be a valid git ref matching harness/<kind>/<task-code>"));
         }
 
         var existingBranch = RunProcess(
@@ -382,7 +377,7 @@ internal static class WorktreeCommand
             "git",
             ["show-ref", "--verify", "--quiet", $"refs/heads/{options.Branch}"],
             options.Source,
-            TimeSpan.FromSeconds(30));
+            BoundedProcessRunner.HangDetectionBudget);
         if (existingBranch.ExitCode == 0)
         {
             throw new InvalidOperationException($"branch already exists: {options.Branch}");
@@ -392,6 +387,8 @@ internal static class WorktreeCommand
         {
             throw new InvalidOperationException(ProcessError(existingBranch, "could not inspect branch"));
         }
+
+        return halfBuiltRecovered;
     }
 
     private static void VerifyBase(WorktreeOptions options, IWorktreeProcessRunner runner) =>
@@ -400,7 +397,7 @@ internal static class WorktreeCommand
             "git",
             ["rev-parse", "--verify", "--end-of-options", $"{options.Base}^{{commit}}"],
             options.Source,
-            TimeSpan.FromSeconds(30),
+            BoundedProcessRunner.HangDetectionBudget,
             $"base revision does not resolve: {options.Base}");
 
     private static string Cleanup(WorktreeOptions options, IWorktreeProcessRunner runner)
@@ -430,7 +427,7 @@ internal static class WorktreeCommand
             "git",
             ["show-ref", "--verify", "--quiet", $"refs/heads/{options.Branch}"],
             options.Source,
-            TimeSpan.FromSeconds(30));
+            BoundedProcessRunner.HangDetectionBudget);
         if (branchLookup.ExitCode == 0)
         {
             var branchRemoval = RunProcess(
@@ -438,7 +435,7 @@ internal static class WorktreeCommand
                 "git",
                 ["branch", "-D", options.Branch],
                 options.Source,
-                TimeSpan.FromSeconds(30));
+                BoundedProcessRunner.HangDetectionBudget);
             if (branchRemoval.ExitCode != 0)
             {
                 errors.Add(ProcessError(branchRemoval, "git branch cleanup failed"));

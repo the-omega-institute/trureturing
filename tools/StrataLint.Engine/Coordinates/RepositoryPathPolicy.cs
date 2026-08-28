@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Text.RegularExpressions;
 
 namespace StrataLint.Engine;
 
@@ -7,18 +8,45 @@ internal sealed record RepositoryPathIssue(RuleId RuleId, string Path, string Me
 [FindingEdgeProvider(15)]
 internal static partial class RepositoryPathPolicy
 {
+    internal const string AgentFilesRootPath = "agents/";
     internal const string AssumptionRegistryPath = "D5/X_Assumptions/REGISTRY.md";
     internal const string WorkflowPath = ".github/workflows/ci.yml";
     // 缓存发布 workflow（#2542）。`.github` 下是白名单而非通配，新增控制工件必须在此具名登记。
     internal const string CachePublicationWorkflowPath =
         ".github/workflows/lean-cache-publish.yml";
-
-    // 集成分支的 Lean 缓存 seed(mathlib v4.33 升级用)。**临时工件**:升级合入 dev 后即删,
-    // 届时本常量与下方 pattern 分支一并移除。它只在 `integration-**` 分支上存在,
-    // push 触发,非 required check,权限只有 contents: read。案号 #2814。
-    internal const string IntegrationCacheSeedWorkflowPath =
-        ".github/workflows/lean-cache-seed.yml";
+    // Persistent truth-release publisher. `.github` remains an explicit allowlist.
+    internal const string TruthReleasePublicationWorkflowPath =
+        ".github/workflows/truth-release-publish.yml";
     internal const string HarnessGatePath = ".github/scripts/harness-gate.sh";
+    internal const string RepositoryCoordinate = "the-omega-institute/trureturing";
+
+    internal static bool ContainsRepositorySourceMaterializationIndicator(string value) =>
+        value.StartsWith("./", StringComparison.Ordinal)
+        || value.StartsWith("actions/checkout@", StringComparison.OrdinalIgnoreCase)
+        || IsSelfRepositorySourceMaterializationIndicator(value)
+        || RepositorySourceMaterializationIndicator().IsMatch(value);
+
+    internal static bool ContainsRepositorySourceExecutionIndicator(string value) =>
+        RepositorySourceExecutionIndicator().IsMatch(value);
+
+    private static bool IsSelfRepositorySourceMaterializationIndicator(string value) =>
+        value.StartsWith($"{RepositoryCoordinate}/", StringComparison.OrdinalIgnoreCase)
+        && RepositorySelfSourceMaterializationIndicator().IsMatch(value[RepositoryCoordinate.Length..]);
+
+    [GeneratedRegex(
+        @"^/[^@\s]+@[^@\s]+$",
+        RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)]
+    private static partial Regex RepositorySelfSourceMaterializationIndicator();
+
+    [GeneratedRegex(
+        @"(?:^|[\s;&|])(?:git\s+(?:clone|fetch|checkout|switch|worktree)\b|gh\s+repo\s+clone\b)",
+        RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)]
+    private static partial Regex RepositorySourceMaterializationIndicator();
+
+    [GeneratedRegex(
+        @"(?:^|[\s;&|])(?:dotnet\s+(?:build|run|test)\b|lake(?:\s|$)|make\s+|run\s+--project\b|(?:\./)?(?:tools|scripts)/|(?:bash|sh|source|python\d*|node)\s+\./)",
+        RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)]
+    private static partial Regex RepositorySourceExecutionIndicator();
 
     internal static ImmutableArray<Diagnostic> Evaluate(
         RepositorySnapshot snapshot,
@@ -97,9 +125,9 @@ internal static partial class RepositoryPathPolicy
             return null;
         }
 
-        if (value.StartsWith("agents/", StringComparison.Ordinal))
+        if (value.StartsWith(AgentFilesRootPath, StringComparison.Ordinal))
         {
-            return policy.AgentFiles.Contains(value["agents/".Length..])
+            return policy.AgentFiles.Contains(value[AgentFilesRootPath.Length..])
                 ? null
                 : Sl000(value, "unknown agent charter artifact");
         }
@@ -110,7 +138,7 @@ internal static partial class RepositoryPathPolicy
             or "Golden/values-kernels.toml"
             or WorkflowPath
             or CachePublicationWorkflowPath
-            or IntegrationCacheSeedWorkflowPath
+            or TruthReleasePublicationWorkflowPath
             or ".github/CODEOWNERS"
             or HarnessGatePath
             || value.StartsWith("tools/", StringComparison.Ordinal)
@@ -219,8 +247,8 @@ internal static partial class RepositoryPathPolicy
         if (Validate(path, policy) is null) sources.Add("path-policy");
         if (policy.RootFiles.Contains(path)) sources.Add("registry:root-files");
         if (policy.GovernanceDocuments.Contains(path)) sources.Add("registry:governance-documents");
-        if (path.Value.StartsWith("agents/", StringComparison.Ordinal)
-            && policy.AgentFiles.Contains(path.Value["agents/".Length..]))
+        if (path.Value.StartsWith(AgentFilesRootPath, StringComparison.Ordinal)
+            && policy.AgentFiles.Contains(path.Value[AgentFilesRootPath.Length..]))
         {
             sources.Add("registry:agent-files");
         }

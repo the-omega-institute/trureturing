@@ -1,0 +1,10 @@
+ast_path: section/21-合法动作丛-策略截面与无典范选择
+fingerprints:
+  raw_sha256: sha256:2284982a973be8579f82150546ddf6b5ff69d257aa78795d9ba7e587d11345e0
+  normalized_sha256: sha256:2284982a973be8579f82150546ddf6b5ff69d257aa78795d9ba7e587d11345e0
+cas_ref: sha256:2284982a973be8579f82150546ddf6b5ff69d257aa78795d9ba7e587d11345e0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

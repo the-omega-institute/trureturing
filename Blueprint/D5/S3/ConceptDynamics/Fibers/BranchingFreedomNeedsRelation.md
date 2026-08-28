@@ -6,7 +6,7 @@ A process with two distinct futures is not functional, and branching autonomy st
 
 **Theorem 1.1 (A branching process is not functional).**
 
-$$\forall X \in \operatorname{Type}, F \in X \to \operatorname{Set}\left(X\right),\; \operatorname{BranchingFree}\left(F\right) \Rightarrow \left(\neg \exists f \in X \to X,\; \forall a \in X,\; F\left(a\right) = \left\{f\left(a\right)\right\}\right)$$
+$$\forall X \in \operatorname{Type}, F \in X \to \operatorname{Set}\left(X\right),\; \operatorname{BranchingFree}\left(F\right) \Rightarrow \left(\neg \left(\exists f \in X \to X,\; \forall a \in X,\; F\left(a\right) = \left\{f\left(a\right)\right\}\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Fibers/BranchingFreedomNeedsRelation.branching_process_is_not_functional` (`✓ std3`). ∎
 
@@ -32,7 +32,7 @@ The process induced by a function assigns each state the singleton containing it
 
 **Lemma 1.3 (Branching freedom strictly strengthens autonomy).**
 
-$$\forall External \in \operatorname{Type}, X \in \operatorname{Type}, P \in External \to \left(X \to \operatorname{Set}\left(X\right)\right),\; \operatorname{BranchingAutonomousFree}\left(P\right) \Rightarrow \operatorname{AutonomousFree}\left(P\right) \land \exists P \in Bool \to \left(Bool \to \operatorname{Set}\left(Bool\right)\right),\; \operatorname{AutonomousFree}\left(P\right) \land \left(\neg \operatorname{BranchingAutonomousFree}\left(P\right)\right)$$
+$$\left(\forall External \in \operatorname{Type}, X \in \operatorname{Type}, P \in External \to \left(X \to \operatorname{Set}\left(X\right)\right),\; \operatorname{BranchingAutonomousFree}\left(P\right) \Rightarrow \operatorname{AutonomousFree}\left(P\right)\right) \land \left(\exists P \in Bool \to \left(Bool \to \operatorname{Set}\left(Bool\right)\right),\; \operatorname{AutonomousFree}\left(P\right) \land \left(\neg \operatorname{BranchingAutonomousFree}\left(P\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Fibers/BranchingFreedomNeedsRelation.branching_freedom_strictly_stronger_than_autonomy` (`✓ std3`). ∎
 

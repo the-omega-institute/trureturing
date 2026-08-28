@@ -1,0 +1,10 @@
+ast_path: section/6-1-混合状态模型
+fingerprints:
+  raw_sha256: sha256:c057d93a714f9125670b02aeaf95da09c6ee81c4f9bd94dc7f1ef8fea62c8e31
+  normalized_sha256: sha256:c057d93a714f9125670b02aeaf95da09c6ee81c4f9bd94dc7f1ef8fea62c8e31
+cas_ref: sha256:c057d93a714f9125670b02aeaf95da09c6ee81c4f9bd94dc7f1ef8fea62c8e31
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

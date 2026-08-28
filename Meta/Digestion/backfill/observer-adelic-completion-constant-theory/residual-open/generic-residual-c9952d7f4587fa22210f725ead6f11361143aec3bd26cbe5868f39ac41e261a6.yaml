@@ -1,0 +1,10 @@
+ast_path: section/57-1-六个-isotropic-方向
+fingerprints:
+  raw_sha256: sha256:c9952d7f4587fa22210f725ead6f11361143aec3bd26cbe5868f39ac41e261a6
+  normalized_sha256: sha256:c9952d7f4587fa22210f725ead6f11361143aec3bd26cbe5868f39ac41e261a6
+cas_ref: sha256:c9952d7f4587fa22210f725ead6f11361143aec3bd26cbe5868f39ac41e261a6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

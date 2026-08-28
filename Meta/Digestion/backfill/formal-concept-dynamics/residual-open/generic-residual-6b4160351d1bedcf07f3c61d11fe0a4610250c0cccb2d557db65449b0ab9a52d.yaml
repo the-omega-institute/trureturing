@@ -1,0 +1,10 @@
+ast_path: section/330-6-身份-transport
+fingerprints:
+  raw_sha256: sha256:6b4160351d1bedcf07f3c61d11fe0a4610250c0cccb2d557db65449b0ab9a52d
+  normalized_sha256: sha256:6b4160351d1bedcf07f3c61d11fe0a4610250c0cccb2d557db65449b0ab9a52d
+cas_ref: sha256:6b4160351d1bedcf07f3c61d11fe0a4610250c0cccb2d557db65449b0ab9a52d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
