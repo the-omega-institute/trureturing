@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Observer/ArithmeticTomography/QuaternaryResidueCoordinateDimension
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: The four states 0, 10, 15, and 21 have residue-coordinate dimension three. -/
+   digest: The four-state carrier has dimension three; the ternary subcarrier has dimension two. -/
 
 import D5.S3.Observer.ArithmeticTomography.ResidueCoordinateDimension
 
@@ -32,8 +32,8 @@ abbrev StateOn (carrier : Finset State) := {x : State // x ∈ carrier}
 /-- The four-state carrier fixed in the source. -/
 def quaternaryCarrier : Finset State := {0, 10, 15, 21}
 
-private theorem quaternaryCarrier_card : quaternaryCarrier.card = 4 := by
-  decide
+/-- A three-state carrier that requires only two coordinate readings. -/
+def ternaryCarrier : Finset State := {0, 10, 15}
 
 /-- A selected coordinate reading restricted to a finite state carrier. -/
 noncomputable def restrictedReading (carrier : Finset State)
@@ -58,6 +58,13 @@ def state10 : StateOn quaternaryCarrier := ⟨10, by simp [quaternaryCarrier]⟩
 def state15 : StateOn quaternaryCarrier := ⟨15, by simp [quaternaryCarrier]⟩
 
 def state21 : StateOn quaternaryCarrier := ⟨21, by simp [quaternaryCarrier]⟩
+
+/-- The three named states as elements of the ternary carrier. -/
+def ternary0 : StateOn ternaryCarrier := ⟨0, by simp [ternaryCarrier]⟩
+
+def ternary10 : StateOn ternaryCarrier := ⟨10, by simp [ternaryCarrier]⟩
+
+def ternary15 : StateOn ternaryCarrier := ⟨15, by simp [ternaryCarrier]⟩
 
 private theorem all_coordinates_complete_on (carrier : Finset State) :
     CompleteOn carrier Finset.univ := by
@@ -128,6 +135,127 @@ private theorem coordinate_cases (q : Coordinate) : q = q2 ∨ q = q3 ∨ q = q5
   interval_cases q <;> norm_num at hpd
   all_goals simp
 
+private theorem q2_modulus_eq_two : coordinateModulus q2 = 2 := by
+  rw [show coordinateModulus q2 = 2 ^ (30 : Nat).factorization 2 by rfl,
+    Nat.factorization_def 30 (by norm_num), show 30 = 2 * 15 by norm_num,
+    padicValNat_base_mul (by norm_num) (by norm_num),
+    padicValNat.eq_zero_of_not_dvd (by norm_num)]
+  norm_num
+
+private theorem q3_modulus_eq_three : coordinateModulus q3 = 3 := by
+  rw [show coordinateModulus q3 = 3 ^ (30 : Nat).factorization 3 by rfl,
+    Nat.factorization_def 30 (by norm_num), show 30 = 3 * 10 by norm_num,
+    padicValNat_base_mul (by norm_num) (by norm_num),
+    padicValNat.eq_zero_of_not_dvd (by norm_num)]
+  norm_num
+
+private theorem reading_natCast_on_ternary (q : Coordinate) (n : Nat) :
+    reading q (n : ZMod 30) = (n : ZMod (coordinateModulus q)) := by
+  exact congrFun (map_natCast (ZMod.equivPi (n := 30) (by decide)) n) q
+
+private theorem reading_zero_on_ternary (q : Coordinate) : reading q 0 = 0 := by
+  exact congrFun (map_zero (ZMod.equivPi (n := 30) (by decide))) q
+
+private theorem q3_reading_zero_ne_ten : reading q3 0 ≠ reading q3 10 := by
+  intro h
+  have hmod : (0 : ZMod (coordinateModulus q3)) = 10 :=
+    (reading_zero_on_ternary q3).symm.trans
+      (h.trans (reading_natCast_on_ternary q3 10))
+  rw [q3_modulus_eq_three] at hmod
+  exact (by decide : (0 : ZMod 3) ≠ 10) hmod
+
+private theorem q2_reading_zero_ne_fifteen : reading q2 0 ≠ reading q2 15 := by
+  intro h
+  have hmod : (0 : ZMod (coordinateModulus q2)) = 15 :=
+    (reading_zero_on_ternary q2).symm.trans
+      (h.trans (reading_natCast_on_ternary q2 15))
+  rw [q2_modulus_eq_two] at hmod
+  exact (by decide : (0 : ZMod 2) ≠ 15) hmod
+
+private theorem q2_reading_ten_ne_fifteen : reading q2 10 ≠ reading q2 15 := by
+  intro h
+  have hmod : (10 : ZMod (coordinateModulus q2)) = 15 :=
+    (reading_natCast_on_ternary q2 10).symm.trans
+      (h.trans (reading_natCast_on_ternary q2 15))
+  rw [q2_modulus_eq_two] at hmod
+  exact (by decide : (10 : ZMod 2) ≠ 15) hmod
+
+private theorem q2_q3_complete_on_ternary :
+    CompleteOn ternaryCarrier {q2, q3} := by
+  intro x y hxy
+  apply Subtype.ext
+  have h2 : reading q2 x.1 = reading q2 y.1 := by
+    exact congrFun hxy ⟨q2, by simp⟩
+  have h3 : reading q3 x.1 = reading q3 y.1 := by
+    exact congrFun hxy ⟨q3, by simp⟩
+  have hx : x.1 = 0 ∨ x.1 = 10 ∨ x.1 = 15 := by
+    simpa only [ternaryCarrier, Finset.mem_insert, Finset.mem_singleton] using x.2
+  have hy : y.1 = 0 ∨ y.1 = 10 ∨ y.1 = 15 := by
+    simpa only [ternaryCarrier, Finset.mem_insert, Finset.mem_singleton] using y.2
+  rcases hx with hx | hx | hx <;> rcases hy with hy | hy | hy
+  · exact hx.trans hy.symm
+  · exfalso
+    exact q3_reading_zero_ne_ten (by simpa [hx, hy] using h3)
+  · exfalso
+    exact q2_reading_zero_ne_fifteen (by simpa [hx, hy] using h2)
+  · exfalso
+    exact q3_reading_zero_ne_ten (by simpa [hx, hy] using h3.symm)
+  · exact hx.trans hy.symm
+  · exfalso
+    exact q2_reading_ten_ne_fifteen (by simpa [hx, hy] using h2)
+  · exfalso
+    exact q2_reading_zero_ne_fifteen (by simpa [hx, hy] using h2.symm)
+  · exfalso
+    exact q2_reading_ten_ne_fifteen (by simpa [hx, hy] using h2.symm)
+  · exact hx.trans hy.symm
+
+private theorem q2_q5_collision_on_ternary :
+    MergesOn ternaryCarrier {q2, q5} ternary0 ternary10 := by
+  simpa [MergesOn, restrictedReading, ternary0, ternary10, Merges] using
+    q2_q5_collision.2
+
+private theorem q3_q5_collision_on_ternary :
+    MergesOn ternaryCarrier {q3, q5} ternary0 ternary15 := by
+  simpa [MergesOn, restrictedReading, ternary0, ternary15, Merges] using
+    q3_q5_collision.2
+
+private theorem ternary0_ne_ternary10 : ternary0 ≠ ternary10 := by
+  intro h
+  have hval := congrArg Subtype.val h
+  exact (by decide : (0 : ZMod 30) ≠ 10) (by simpa [ternary0, ternary10] using hval)
+
+private theorem ternary0_ne_ternary15 : ternary0 ≠ ternary15 := by
+  intro h
+  have hval := congrArg Subtype.val h
+  exact (by decide : (0 : ZMod 30) ≠ 15) (by simpa [ternary0, ternary15] using hval)
+
+private theorem fewer_than_two_incomplete_on_ternary
+    (s : Finset Coordinate) (hs : s.card < 2) :
+    ¬CompleteOn ternaryCarrier s := by
+  by_cases h2 : q2 ∈ s
+  · by_cases h3 : q3 ∈ s
+    · have hsub : {q2, q3} ⊆ s := by
+        intro q hq
+        simp only [Finset.mem_insert, Finset.mem_singleton] at hq
+        rcases hq with rfl | rfl <;> assumption
+      have hcard := Finset.card_le_card hsub
+      have : 2 ≤ s.card := by simpa [q2, q3] using hcard
+      omega
+    · apply mergesOn_not_complete ternary0_ne_ternary10
+      apply mergesOn_of_subset ternary0_ne_ternary10 _ q2_q5_collision_on_ternary
+      intro q hq
+      rcases coordinate_cases q with rfl | rfl | rfl
+      · simp
+      · exact (h3 hq).elim
+      · simp
+  · apply mergesOn_not_complete ternary0_ne_ternary15
+    apply mergesOn_of_subset ternary0_ne_ternary15 _ q3_q5_collision_on_ternary
+    intro q hq
+    rcases coordinate_cases q with rfl | rfl | rfl
+    · exact (h2 hq).elim
+    · simp
+    · simp
+
 private theorem fewer_than_three_incomplete_on_quaternary
     (s : Finset Coordinate) (hs : s.card < 3) :
     ¬CompleteOn quaternaryCarrier s := by
@@ -184,6 +312,18 @@ private theorem quaternary_dimension_eq_three :
     apply fewer_than_three_incomplete_on_quaternary s (by omega)
     exact hcomplete
 
+/-- The three-state carrier `{0,10,15}` has statistical dimension two, so the
+dimension genuinely depends on the supplied carrier. -/
+theorem ternary_dimension_eq_two : statisticalDimensionOn ternaryCarrier = 2 := by
+  classical
+  rw [statisticalDimensionOn, Nat.find_eq_iff]
+  constructor
+  · exact ⟨{q2, q3}, by norm_num [q2, q3], q2_q3_complete_on_ternary⟩
+  · intro n hn
+    rintro ⟨s, hcard, hcomplete⟩
+    apply fewer_than_two_incomplete_on_ternary s (by omega)
+    exact hcomplete
+
 /-- On the source carrier `X = {0,10,15,21}`, each fixed coordinate pair has
 the stated collision and the least complete coordinate count is three. -/
 theorem quaternary_statistical_dimension_eq_three
@@ -196,38 +336,7 @@ theorem quaternary_statistical_dimension_eq_three
     q3_q5_collision_on_quaternary,
     quaternary_dimension_eq_three⟩
 
-/- Reverse probes: the three public collision clauses force pairwise
-incompleteness on the supplied carrier. -/
-example :
-    ¬CompleteOn quaternaryCarrier {q2, q3} /\
-    ¬CompleteOn quaternaryCarrier {q2, q5} /\
-    ¬CompleteOn quaternaryCarrier {q3, q5} := by
-  have h := quaternary_statistical_dimension_eq_three
-  exact ⟨mergesOn_not_complete state15_ne_state21 h.1,
-    mergesOn_not_complete state0_ne_state10 h.2.1,
-    mergesOn_not_complete state0_ne_state15 h.2.2.1⟩
-
-example : statisticalDimensionOn quaternaryCarrier ≠ 2 := by
-  have h := quaternary_statistical_dimension_eq_three.2.2.2
-  omega
-
-/- Carrier-separation probes: neither the full ambient space nor the empty
-carrier is the source carrier named in the public theorem. -/
-example : (Finset.univ : Finset State) ≠ quaternaryCarrier := by
-  intro h
-  have hcard := congrArg Finset.card h
-  have hfull : (Finset.univ : Finset State).card = 30 := by
-    simp [State, ZMod.card]
-  have hqc := quaternaryCarrier_card
-  omega
-
-example : (∅ : Finset State) ≠ quaternaryCarrier := by
-  intro h
-  have hcard := congrArg Finset.card h
-  simp only [Finset.card_empty] at hcard
-  have hqc := quaternaryCarrier_card
-  omega
-
 #print axioms quaternary_statistical_dimension_eq_three
+#print axioms ternary_dimension_eq_two
 
 end D5.S3.Observer.ArithmeticTomography.QuaternaryResidueCoordinateDimension
