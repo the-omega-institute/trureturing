@@ -204,9 +204,11 @@ public sealed partial class WorktreeCommandTests
     {
         var parsed = WorktreeCommand.ParseArguments(
             "/repo",
-            new[] { "--branch", "harness/math/worktree-probe", "--path", "/tmp/probe" });
+            new[] { "--kind", "math", "--name", "worktree-probe", "--path", "/tmp/probe" });
 
-        Assert.Equal("harness/math/worktree-probe", parsed.Branch);
+        Assert.Equal(
+            $"{WorktreeCommand.CreationNamespace}/math/worktree-probe",
+            parsed.Branch);
         Assert.Equal(Path.GetFullPath("/tmp/probe"), parsed.Path);
         Assert.Equal("origin/dev", parsed.Base);
         Assert.Equal(Path.GetFullPath("/repo"), parsed.Source);
@@ -224,10 +226,11 @@ public sealed partial class WorktreeCommandTests
                 "--source", "/source",
                 "--base", "HEAD",
                 "--path", "/tmp/probe",
-                "--branch", "harness/math/D5-T0099",
+                "--name", "D5-T0099",
+                "--kind", "math",
             });
 
-        Assert.Equal("harness/math/D5-T0099", parsed.Branch);
+        Assert.Equal($"{WorktreeCommand.CreationNamespace}/math/D5-T0099", parsed.Branch);
         Assert.Equal("HEAD", parsed.Base);
         Assert.Equal(Path.GetFullPath("/source"), parsed.Source);
         Assert.True(parsed.SkipRestore);
@@ -242,7 +245,9 @@ public sealed partial class WorktreeCommandTests
     }
 
     [Theory]
-    [InlineData("--branch", "harness/math/probe")]
+    [InlineData("--branch", "feature/probe")]
+    [InlineData("--kind", "math")]
+    [InlineData("--name", "probe")]
     [InlineData("--path", "/tmp/probe")]
     [InlineData("--unknown", "value")]
     public void ParseRejectsMissingOrUnknownArguments(string flag, string value)
@@ -266,7 +271,8 @@ public sealed partial class WorktreeCommandTests
         var result = WorktreeCommand.Run(
             repository.Path,
             [
-                "--branch", "harness/math/lazy-cache",
+                "--kind", "math",
+                "--name", "lazy-cache",
                 "--path", target,
                 "--base", "HEAD",
                 "--source", repository.Path,
@@ -301,7 +307,8 @@ public sealed partial class WorktreeCommandTests
         var exitCode = CliApplication.Run(
             [
                 "worktree",
-                "--branch", "harness/math/ignore-probe",
+                "--kind", "math",
+                "--name", "ignore-probe",
                 "--path", target,
                 "--base", "HEAD",
                 "--source", repository.Path,
@@ -333,7 +340,8 @@ public sealed partial class WorktreeCommandTests
         var exitCode = CliApplication.Run(
             [
                 "worktree",
-                "--branch", "harness/math/clean-ignore-probe",
+                "--kind", "math",
+                "--name", "clean-ignore-probe",
                 "--path", target,
                 "--base", "HEAD",
                 "--source", repository.Path,
@@ -357,14 +365,15 @@ public sealed partial class WorktreeCommandTests
         File.WriteAllText(Path.Combine(ignoreDirectory, "marker"), "fixture\n");
         ReviewRegressionTests.RunGit(repository.Path, "add", ".gitignore/marker");
         ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "fixture invalid ignore path");
-        const string branch = "harness/math/ignore-write-failure";
+        var branch = $"{WorktreeCommand.CreationNamespace}/math/ignore-write-failure";
         var target = Path.Combine(repository.Path, "ignore-write-failure");
         var console = new BufferedConsole();
 
         var exitCode = CliApplication.Run(
             [
                 "worktree",
-                "--branch", branch,
+                "--kind", "math",
+                "--name", "ignore-write-failure",
                 "--path", target,
                 "--base", "HEAD",
                 "--source", repository.Path,
@@ -398,7 +407,8 @@ public sealed partial class WorktreeCommandTests
             new[]
             {
                 "worktree",
-                "--branch", "harness/math/existing-path",
+                "--kind", "math",
+                "--name", "existing-path",
                 "--path", target,
                 "--base", "HEAD",
                 "--source", repository.Path,
@@ -423,7 +433,8 @@ public sealed partial class WorktreeCommandTests
             new[]
             {
                 "worktree",
-                "--branch", "harness/math/invalid-base",
+                "--kind", "math",
+                "--name", "invalid-base",
                 "--path", target,
                 "--base", "missing-revision",
                 "--source", repository.Path,
@@ -436,7 +447,10 @@ public sealed partial class WorktreeCommandTests
         Assert.False(Directory.Exists(target));
         var branchLookup = TestProcessRunner.Run(
             "git",
-            new[] { "show-ref", "--verify", "--quiet", "refs/heads/harness/math/invalid-base" },
+            [
+                "show-ref", "--verify", "--quiet",
+                $"refs/heads/{WorktreeCommand.CreationNamespace}/math/invalid-base",
+            ],
             repository.Path,
             BoundedProcessRunner.HangDetectionBudget,
             4096);
@@ -448,7 +462,7 @@ public sealed partial class WorktreeCommandTests
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
-        const string branch = "harness/math/already-present";
+        var branch = $"{WorktreeCommand.CreationNamespace}/math/already-present";
         ReviewRegressionTests.RunGit(repository.Path, "branch", branch, "HEAD");
         var target = Path.Combine(repository.Path, "branch-conflict");
         var console = new BufferedConsole();
@@ -456,7 +470,8 @@ public sealed partial class WorktreeCommandTests
         var exitCode = CliApplication.Run(
             [
                 "worktree",
-                "--branch", branch,
+                "--kind", "math",
+                "--name", "already-present",
                 "--path", target,
                 "--base", "HEAD",
                 "--source", repository.Path,
