@@ -5,7 +5,7 @@
    anchors: []
    digest: Fivefold stabilizers are certified as normalizers of the explicit five-cycle subgroups. -/
 
-import D5.S3.Constants.IcosahedralGeometry.ProjectiveAxisDecompositionOrbitCertificate
+import D5.S3.Constants.IcosahedralGeometry.ProjectiveAxisDecompositionNormalizerCertificateParts
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -21,14 +21,16 @@ theorem chartFivefoldNormalizerCertificate :
         ∀ g : IcosahedralGroup,
           g ∈ MulAction.stabilizer IcosahedralGroup p.1 ↔
             g ∈ Subgroup.normalizer (chartFiveCycleSubgroup p : Set IcosahedralGroup) := by
+  change ∀ p, chartFivefoldNormalizerCertificateAt p
   intro p
-  fin_cases p <;> constructor
+  fin_cases p
   all_goals
     first
-    | decide
-    | intro g
-      fin_cases g <;>
-        rw [Subgroup.mem_normalizer_iff] <;>
-        decide
+    | exact chartFivefoldNormalizerCertificateAt19
+    | exact chartFivefoldNormalizerCertificateAt20
+    | exact chartFivefoldNormalizerCertificateAt23
+    | exact chartFivefoldNormalizerCertificateAt25
+    | exact chartFivefoldNormalizerCertificateAt28
+    | exact chartFivefoldNormalizerCertificateAt29
 
 end D5.S3.Constants.IcosahedralGeometry.ProjectiveAxisDecomposition
