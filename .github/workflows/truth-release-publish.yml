@@ -3,6 +3,14 @@ name: truth-release-publish
 on:
   schedule:
     - cron: '17 * * * *'
+  # repository_dispatch always runs the workflow definition from the DEFAULT branch and
+  # carries no ref selector, so a caller cannot execute a modified workflow definition
+  # from an attacker-controlled ref. It carries no source_commit input either:
+  # the produce job still resolves the current protected dev tip and walk-backs to the
+  # newest gate-verified commit, identical to the scheduled path. It exists only so an
+  # operator can force a publish when GitHub's scheduler is delayed.
+  repository_dispatch:
+    types: [publish-truth-release]
 permissions: {}
 concurrency:
   group: truth-release-publish-dev
@@ -15,7 +23,7 @@ jobs:
   produce:
     name: produce verified truth-release inputs
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 120
+    timeout-minutes: 150
     permissions:
       contents: read
     outputs:
@@ -146,9 +154,73 @@ jobs:
           make lean-cache-from-github-without-mathlib \
             || printf '%s\n' 'repository Lean build cache was unavailable; canonical report production will fill remaining dependencies'
 
+      # The publish producer only needs the canonical Lean report for the selected
+      # gate-verified commit. That commit already passed the "Canonical Lean report
+      # production" gate on its dev push, which content-addresses and caches the report
+      # under stratalint-canonical-lean-report-v2-<address>. Reuse it here instead of
+      # re-running the whole-tree `make lean-report` (which does not finish in the
+      # runner window). If the cache misses or fails to verify, fall through to the
+      # full production path below, so this is a pure speed-up, never a trust weakening.
+      - name: Resolve canonical Lean report address
+        id: lean-report-input
+        if: steps.source.outputs.publish_ready == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          helper="$GITHUB_WORKSPACE/tools/scripts/report/lean-report-input.sh"
+          test -x "$helper"
+          # Only reuse the cached report when the producer closure is COMPLETELY
+          # discovered. If discovery degrades (the address then embeds an
+          # `unavailable:candidate` marker over a declared-only producer set), a
+          # changed-but-omitted producer source could retain the cache key, so we
+          # refuse reuse and fall through to full production. The producer-paths and
+          # scribe-producer-paths subcommands exit non-zero when the closure is
+          # incomplete, giving us a fail-closed gate on the reuse path.
+          closure_complete=true
+          "$helper" producer-paths --repository "$GITHUB_WORKSPACE" >/dev/null 2>&1 \
+            && "$helper" scribe-producer-paths --repository "$GITHUB_WORKSPACE" >/dev/null 2>&1 \
+            || closure_complete=false
+          echo "closure_complete=$closure_complete" >> "$GITHUB_OUTPUT"
+          read -r address producer_sha256 sources_sha256 config_sha256 \
+            <<< "$("$helper" address --repository "$GITHUB_WORKSPACE")"
+          [[ "$address" =~ ^[0-9a-f]{64}$ ]]
+          echo "address=$address" >> "$GITHUB_OUTPUT"
+
+      - name: Restore canonical Lean report by input address
+        id: report-cache
+        if: steps.source.outputs.publish_ready == 'true' && steps.lean-report-input.outputs.closure_complete == 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: .canonical-lean-report-cache
+          key: stratalint-canonical-lean-report-v2-${{ steps.lean-report-input.outputs.address }}
+          restore-keys: stratalint-canonical-lean-report-v2-
+
+      - name: Serve the canonical Lean report from the cached address
+        id: report-reuse
+        if: steps.source.outputs.publish_ready == 'true' && steps.lean-report-input.outputs.closure_complete == 'true' && steps.report-cache.outputs.cache-hit == 'true'
+        # A cache serve failure must fall back to full production, not fail the job.
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          source="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
+          for suffix in '' .sha256 .input.attestation .provenance.json .materials.zip; do
+            test -s "${source}${suffix}"
+          done
+          # Re-verify the cached report against the checked-out tree; mismatch falls back.
+          "$GITHUB_WORKSPACE/tools/scripts/report/lean-report-input.sh" verify \
+            --repository "$GITHUB_WORKSPACE" --report "$source"
+          served="$RUNNER_TEMP/canonical-lean-report/raw-lean-report.json"
+          mkdir -p "$RUNNER_TEMP/canonical-lean-report"
+          for suffix in '' .sha256 .input.attestation .provenance.json .materials.zip; do
+            cp "${source}${suffix}" "${served}${suffix}"
+          done
+          printf 'path=%s\n' "$served" >> "$GITHUB_OUTPUT"
+          printf '%s\n' 'canonical Lean report served from cached input address' >> "$GITHUB_STEP_SUMMARY"
+
       - name: Produce the canonical Lean report
         id: report
-        if: steps.source.outputs.publish_ready == 'true'
+        if: steps.source.outputs.publish_ready == 'true' && steps.report-reuse.outcome != 'success'
         shell: bash
         run: |
           set -euo pipefail
@@ -166,7 +238,7 @@ jobs:
           COMMIT_ON_PROTECTED_DEV: ${{ steps.identity.outputs.commit_on_protected_dev }}
           SOURCE_COMMIT: ${{ steps.source.outputs.source_commit }}
           SOURCE_TREE: ${{ steps.identity.outputs.source_tree }}
-          REPORT_PATH: ${{ steps.report.outputs.path }}
+          REPORT_PATH: ${{ steps.report-reuse.outputs.path || steps.report.outputs.path }}
         shell: bash
         run: |
           set -euo pipefail

@@ -1,0 +1,17 @@
+ast_path: 定理/89.2
+fingerprints:
+  raw_sha256: sha256:67b6ff8de7e2b73d0de64a21a0a53494488304f14d7be41119d8ad5d2f60d8d6
+  normalized_sha256: sha256:67b6ff8de7e2b73d0de64a21a0a53494488304f14d7be41119d8ad5d2f60d8d6
+cas_ref: sha256:67b6ff8de7e2b73d0de64a21a0a53494488304f14d7be41119d8ad5d2f60d8d6
+coverage_gids:
+  - D5/S3/ConceptDynamics/ConceptJoinUniversal.concept_join_universal
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/ConceptJoinUniversal.concept_join_universal
+      source_sha256: sha256:67b6ff8de7e2b73d0de64a21a0a53494488304f14d7be41119d8ad5d2f60d8d6
+      target_sha256: sha256:07069fa41072b7b124329290d5b1eb64e5d4875acbdb7c5954b799f60bc2818f
+  scribe:
+    - gid: D5/S3/ConceptDynamics/ConceptJoinUniversal.concept_join_universal
+      definition_sha256: sha256:46682f25629d83436050a044df143dc982bfd68938fbae67a1a74c80687283bc
+      emission_sha256: sha256:76c1b3c14cd89a5cc23e315964b95a98c5f269b8179d90c48863f5db80a72dda
+  unresolved_subitems: []

@@ -137,13 +137,29 @@ internal sealed class IntertwiningDefectPropagationDocument : IScribeDocumentDef
 
     private static Formula TelescopeFormula()
     {
+        Formula scalar = F.Id("k");
+        Formula source = F.Id("X");
+        Formula target = F.Id("Y");
         Formula a = F.Id("A");
         Formula c = F.Id("C");
         Formula t = F.Id("T");
         Formula n = F.Id("n");
         Formula j = F.Id("j");
         Formula sum = FiniteSum(WeightedTerm(a, c, t, n, j, false), n, j);
-        return Disp(Equal(IteratedDefect(a, c, t, n), sum));
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        return Disp(Seq(
+            Forall, Sp, scalar, Comma, Sp, source, Comma, Sp, target, Colon, Sp, type,
+            Comma, Sp, OpenBracket, Call("NontriviallyNormedField", scalar), CloseBracket,
+            Comma, Sp, OpenBracket, Call("SeminormedAddCommGroup", source), CloseBracket,
+            Comma, Sp, OpenBracket, Call("NormedSpace", scalar, source), CloseBracket,
+            Comma, Sp, OpenBracket, Call("SeminormedAddCommGroup", target), CloseBracket,
+            Comma, Sp, OpenBracket, Call("NormedSpace", scalar, target), CloseBracket,
+            Comma, RowBreak, Grp(),
+            a, Colon, Sp, Call("ContinuousLinearMap", scalar, target, target), Comma, Sp,
+            c, Colon, Sp, Call("ContinuousLinearMap", scalar, source, target), Comma, Sp,
+            t, Colon, Sp, Call("ContinuousLinearMap", scalar, source, source), Comma, Sp,
+            n, Colon, Sp, F.Id("Nat"), Comma, RowBreak, Grp(),
+            Equal(IteratedDefect(a, c, t, n), sum)));
     }
 
     private static Formula NormBoundFormula()
