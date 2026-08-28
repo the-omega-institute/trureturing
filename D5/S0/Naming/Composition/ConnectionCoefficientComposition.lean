@@ -106,6 +106,8 @@ def IsStructuralConstantCompositionCertificate (x : ℝ)
     ramanujanRadical x = Path.weight (ramanujanStepWeight x) path
 
 theorem connection_coefficient_multiplication :
+    (∀ (a b X Y Z : ℝ),
+      Y = a * X → Z = b * Y → Z = (a * b) * X) ∧
     (∀ {V : Type} [Quiver.{0} V] {R : Type} [Monoid R]
       {X Y Z : V} (edgeWeight : ∀ {i j : V}, (i ⟶ j) → R)
       (firstStep : X ⟶ Y) (secondStep : Y ⟶ Z),
@@ -156,7 +158,12 @@ theorem connection_coefficient_multiplication :
           Real.pi * Real.exp x / (2 * x) := Real.sq_sqrt hrad
       _ = (Real.sqrt (Real.pi / 2) * Real.exp (x / 2) *
           x ^ (-1 / 2 : ℝ)) ^ 2 := hproduct.symm
-  refine ⟨?_, ?_, ?_, hfactor, ?_⟩
+  refine ⟨?_, ?_, ?_, ?_, hfactor, ?_⟩
+  · intro a b X Y Z hY hZ
+    calc
+      Z = b * Y := hZ
+      _ = b * (a * X) := by rw [hY]
+      _ = (a * b) * X := by ring
   · intro V quiver R monoid X Y Z edgeWeight firstStep secondStep
     rw [completedPath, Path.weight_comp]
     simp [Quiver.Hom.toPath]
@@ -178,20 +185,32 @@ theorem connection_coefficient_multiplication :
 example {V : Type} [Quiver.{0} V] {X Y Z : V}
     (firstStep : X ⟶ Y) (secondStep : Y ⟶ Z) :
     ¬ IsPrimitiveConnectionPath (completedPath firstStep secondStep) :=
-  connection_coefficient_multiplication.2.2.1 firstStep secondStep
+  connection_coefficient_multiplication.2.2.2.1 firstStep secondStep
+
+-- The scalar carriers cannot be replaced by Unit while projecting the public clause.
+example : True := by
+  fail_if_success
+    have _hUnit : ∀ (a b X Y Z : Unit),
+        Y = a * X → Z = b * Y → Z = (a * b) * X :=
+      connection_coefficient_multiplication.1
+  trivial
+
+-- The source equations expose a concrete nontrivial consequence of the public clause.
+example : (6 : ℝ) = (2 * 3) * 1 := by
+  exact connection_coefficient_multiplication.1 2 3 1 2 6 (by norm_num) (by norm_num)
 
 -- The certificate fixes factor roles in path order, not merely their commutative product.
 example :
     ramanujanPathRoles ramanujanCompletionPath =
       [.gaussianTotalMass, .exponentialFlow, .scaleJacobian] :=
-  (connection_coefficient_multiplication.2.2.2.2 1 (by norm_num)).2.1
+  (connection_coefficient_multiplication.2.2.2.2.2 1 (by norm_num)).2.1
 
 example :
     ramanujanPathRoles ramanujanCompletionPath ≠
       [.exponentialFlow, .gaussianTotalMass, .scaleJacobian] := by
   intro hpermuted
   have hordered :=
-    (connection_coefficient_multiplication.2.2.2.2 1 (by norm_num)).2.1
+    (connection_coefficient_multiplication.2.2.2.2.2 1 (by norm_num)).2.1
   rw [hordered] at hpermuted
   simp at hpermuted
 

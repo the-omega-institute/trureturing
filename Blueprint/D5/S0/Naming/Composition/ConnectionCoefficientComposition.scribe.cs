@@ -9,6 +9,7 @@ internal sealed class ConnectionCoefficientCompositionDocument : IScribeDocument
     public DocumentDefinition Create()
     {
         var statement = AndAll(
+            RealScalarChain(),
             PathWeightMultiplication(),
             CompletedPathFactorization(),
             CompletedPathIsNotPrimitive(),
@@ -29,17 +30,20 @@ internal sealed class ConnectionCoefficientCompositionDocument : IScribeDocument
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text(
-                            "The first three conjuncts quantify typed Quiver edges X to Y and "
+                            "The first conjunct is the real scalar chain from the source: Y equals "
+                                + "aX and Z equals bY imply Z equals (ab)X.")),
+                        Paragraph(Text(
+                            "The next three conjuncts quantify typed Quiver edges X to Y and "
                                 + "Y to Z. Path weight multiplication is the pinned Mathlib "
                                 + "theorem Quiver.Path.weight_comp; the same path is explicitly "
                                 + "identified as the completed factorization and has length two, "
                                 + "so it is not a one-edge primitive.")),
                         Paragraph(Text(
-                            "The fourth conjunct is the positive-real Ramanujan 541 identity in "
+                            "The fifth conjunct is the positive-real Ramanujan 541 identity in "
                                 + "the named Gaussian-total-mass, exponential-flow, and "
                                 + "scale-Jacobian factors.")),
                         Paragraph(Text(
-                            "The fifth conjunct gives the factorization structural-composition "
+                            "The sixth conjunct gives the factorization structural-composition "
                                 + "certificate status. Its predicate checks the exact three-edge "
                                 + "Ramanujan path, the ordered role list, non-primitiveness, and "
                                 + "agreement of the radical with the path weight. Permuting the "
@@ -47,6 +51,33 @@ internal sealed class ConnectionCoefficientCompositionDocument : IScribeDocument
                                 + "real multiplication is commutative."))),
                     DescribeRole.Theorem)),
             []));
+    }
+
+    private static Formula RealScalarChain()
+    {
+        var reals = Seq(Mathbb, Grp(F.Id("R")));
+        var a = F.Id("a");
+        var b = F.Id("b");
+        var X = F.Id("X");
+        var Y = F.Id("Y");
+        var Z = F.Id("Z");
+
+        return new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [
+                new Formula.BoundVariable(FormulaIdentifier.Create("a"), reals),
+                new Formula.BoundVariable(FormulaIdentifier.Create("b"), reals),
+                new Formula.BoundVariable(FormulaIdentifier.Create("X"), reals),
+                new Formula.BoundVariable(FormulaIdentifier.Create("Y"), reals),
+                new Formula.BoundVariable(FormulaIdentifier.Create("Z"), reals),
+            ],
+            new Formula.Logic(
+                Equal(Y, Multiply(a, X)),
+                FormulaLogicOperator.Implies,
+                new Formula.Logic(
+                    Equal(Z, Multiply(b, Y)),
+                    FormulaLogicOperator.Implies,
+                    Equal(Z, Multiply(Seq(Open, Multiply(a, b), Close), X)))));
     }
 
     private static Formula AndAll(params Formula[] items)
