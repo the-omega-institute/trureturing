@@ -1,0 +1,17 @@
+ast_path: 定理/33.2
+fingerprints:
+  raw_sha256: sha256:1c01bed82c69398d62fffa29542be3a9eb99d378f3c1a9e3b091a447f8cfb722
+  normalized_sha256: sha256:1c01bed82c69398d62fffa29542be3a9eb99d378f3c1a9e3b091a447f8cfb722
+cas_ref: sha256:1c01bed82c69398d62fffa29542be3a9eb99d378f3c1a9e3b091a447f8cfb722
+coverage_gids:
+  - D5/S3/Observer/MetricGeometryLaws/WeightedPredictionZeroKernel.weighted_prediction_zero_kernel
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/MetricGeometryLaws/WeightedPredictionZeroKernel.weighted_prediction_zero_kernel
+      source_sha256: sha256:1c01bed82c69398d62fffa29542be3a9eb99d378f3c1a9e3b091a447f8cfb722
+      target_statement_id: sha256:aec6bb9805cbe0fad62af6a03b13db9c5984e0e0e51e9a65e341634d1be349c1
+  scribe:
+    - gid: D5/S3/Observer/MetricGeometryLaws/WeightedPredictionZeroKernel.weighted_prediction_zero_kernel
+      definition_sha256: sha256:eb47d7dfc3593ea93dba407ee083a5bb6adfd21293de3a8290bf6e261a82d29d
+      emission_sha256: sha256:00d160e94bfe563880d27b92b90b704c96578a534d18cd92f8425cf1359fb5e8
+  unresolved_subitems: []
