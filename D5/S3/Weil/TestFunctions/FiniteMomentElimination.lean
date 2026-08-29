@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Weil/TestFunctions/FiniteMomentElimination
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Endpoint delta jets remove finitely many moments.
-   Their correction leaves Weil tests unchanged. -/
+   digest: Endpoint delta jets remove moments while leaving Weil tests unchanged. -/
 
 import D5.S3.Weil.ZetaCore.ExplicitFormula
 import Mathlib.Algebra.Polynomial.Taylor
