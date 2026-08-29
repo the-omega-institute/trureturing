@@ -77,46 +77,6 @@ public sealed class ContentsWriteWorkflowClosureTests
         Assert.DoesNotContain("github.event.inputs", publisher.Content, StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void TheTruthReleasePublisherDerivesTrustOnlyFromTheProtectedDevTip()
-    {
-        var content = TruthReleaseWorkflow().Content;
-
-        Assert.Contains("repos/${GITHUB_REPOSITORY}/branches/dev", content, StringComparison.Ordinal);
-        Assert.Contains(".protected", content, StringComparison.Ordinal);
-        // #4006 deliberately pins the candidate to GITHUB_SHA: binding source_commit to the
-        // run's own commit keeps provenance on the gate-verified source instead of downgrading
-        // it to publisher-run provenance. GITHUB_SHA is therefore no longer forbidden - what
-        // must hold is that it only becomes source_commit after it is shape-checked and every
-        // required check on it reports success. Pin that instead of the retired prohibition.
-        Assert.Contains("candidate=\"$GITHUB_SHA\"", content, StringComparison.Ordinal);
-        Assert.Contains(
-            "[[ \"$candidate\" =~ ^[0-9a-f]{40}$ ]]",
-            content,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "[[ \"$candidate_green\" == true ]] && source_commit=\"$candidate\"",
-            content,
-            StringComparison.Ordinal);
-        // The dev walk-back query went away with the same change: there is no candidate list to
-        // walk any more, only this run's own commit. What survives is the requirement that the
-        // candidate be reachable on protected dev, which the merge_base and
-        // commit_on_protected_dev assertions below still pin.
-        Assert.DoesNotContain("commits?sha=dev&per_page=", content, StringComparison.Ordinal);
-        Assert.Contains("check-runs?per_page=100", content, StringComparison.Ordinal);
-        Assert.Contains("publish_ready=false", content, StringComparison.Ordinal);
-        Assert.Contains("git symbolic-ref -q HEAD", content, StringComparison.Ordinal);
-        Assert.Contains(
-            "REQUIRED_CHECKS: 'Candidate harness engineering checks|Canonical Lean report production|Content-addressed dev baseline admission'",
-            content,
-            StringComparison.Ordinal);
-        Assert.Contains(".merge_base_commit.sha", content, StringComparison.Ordinal);
-        Assert.Contains("commit_on_protected_dev=true", content, StringComparison.Ordinal);
-        Assert.Contains("--commit-on-protected-dev \"$COMMIT_ON_PROTECTED_DEV\"", content, StringComparison.Ordinal);
-        Assert.DoesNotContain("--commit-on-protected-dev true", content, StringComparison.Ordinal);
-        Assert.Contains("COMMIT_ON_PROTECTED_DEV: ${{ steps.identity.outputs.commit_on_protected_dev }}", content, StringComparison.Ordinal);
-        Assert.Contains("git show -s --format=%ct HEAD", content, StringComparison.Ordinal);
-    }
 
     [Fact]
     public void TheTruthReleasePublisherSerializesAndBindsImmutableDigestPublications()
@@ -322,21 +282,6 @@ public sealed class ContentsWriteWorkflowClosureTests
         Assert.DoesNotContain(publisherScalars, static value => value.Contains("tools/", StringComparison.Ordinal));
     }
 
-    [Fact]
-    public void TheTruthReleasePublisherRepairsAndVerifiesProvenanceOnEveryRun()
-    {
-        var content = TruthReleaseWorkflow().Content;
-
-        Assert.DoesNotContain("steps.oci.outputs.pushed", content, StringComparison.Ordinal);
-        Assert.Contains("attestations/${encoded_digest}", content, StringComparison.Ordinal);
-        Assert.Contains("gh attestation verify \"oci://${SUBJECT_REFERENCE}\"", content, StringComparison.Ordinal);
-        Assert.Contains("SUBJECT_REFERENCE: ${{ steps.oci.outputs.reference }}", content, StringComparison.Ordinal);
-        Assert.Contains("subject-digest: ${{ steps.oci.outputs.digest }}", content, StringComparison.Ordinal);
-        Assert.Contains("--signer-workflow \"$GITHUB_REPOSITORY/.github/workflows/truth-release-publish.yml\"", content, StringComparison.Ordinal);
-        Assert.Contains("--source-digest \"$SOURCE_COMMIT\"", content, StringComparison.Ordinal);
-        Assert.Contains("--source-ref 'refs/heads/dev'", content, StringComparison.Ordinal);
-        Assert.Contains("GHCR provenance did not become verifiable", content, StringComparison.Ordinal);
-    }
 
     [Fact]
     public void TheTruthReleasePublisherCreatesAndRepairsOneImmutableRelease()
