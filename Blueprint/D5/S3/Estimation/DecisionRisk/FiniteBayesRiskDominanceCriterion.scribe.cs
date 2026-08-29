@@ -113,8 +113,10 @@ internal sealed class FiniteBayesRiskDominanceCriterionDocument
             RowBreak, Grp(),
             Call("IsRowStochastic", source), Sp, Land, Sp,
             Call("IsRowStochastic", target), Sp, Rightarrow, RowBreak, Grp(),
-            Open, postprocessing, Close, Sp, Leftrightarrow, RowBreak, Grp(),
-            Open, universalRiskOrder, Close, Dot,
+            Grp(
+                Open, postprocessing, Close, Sp, Leftrightarrow, RowBreak, Grp(),
+                Open, universalRiskOrder, Close),
+            Dot,
             End, Grp(F.Id("gathered"))));
     }
 }
