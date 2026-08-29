@@ -5,7 +5,7 @@
    anchors: []
    digest: A singular positive Toeplitz matrix has a unique rank-atomic residual and completion. -/
 
-import D5.S3.Weil.CayleyLaguerre.TruncatedCircleMomentBridge
+import D5.S3.Weil.TestFunctions.ExactTruncatedHaarFloor
 import Mathlib.LinearAlgebra.Lagrange
 import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.MeasureTheory.Measure.WithDensity
@@ -30,12 +30,32 @@ open Matrix MeasureTheory Set
 open scoped BigOperators ComplexConjugate ComplexOrder ENNReal NNReal MatrixOrder
 open D5.S3.Weil.Budget.FullCirclePrimalAttainment
 open D5.S3.Weil.CayleyLaguerre.TruncatedCircleMomentBridge
+open D5.S3.Weil.TestFunctions.ExactTruncatedHaarFloor
 open D5.S3.Weil.TestFunctions.ToeplitzContactSupport
 
 namespace D5.S3.Weil.TestFunctions.UniqueFiniteAtomicResidual
 
 noncomputable local instance circleMeasurableSpace : MeasurableSpace Circle := borel Circle
 local instance circleBorelSpace : BorelSpace Circle := ⟨rfl⟩
+
+/-- A coefficient is a feasible normalized-Haar floor when some representing
+circle measure dominates that Haar multiple. -/
+def TruncatedHaarFloorFeasible
+    (N : Nat)
+    (moment : Int → Complex)
+    (alpha : NNReal) : Prop :=
+  ∃ mu : FiniteMeasure Circle,
+    (∀ k : Int, k.natAbs ≤ N →
+      (∫ z : Circle, (z : Complex) ^ (-k) ∂(mu : Measure Circle)) = moment k) ∧
+    (((alpha • normalizedCircleHaar : FiniteMeasure Circle) : Measure Circle) ≤
+      (mu : Measure Circle))
+
+/-- The maximal truncated normalized-Haar floor is the supremum of the
+feasible coefficients. -/
+noncomputable def maximalTruncatedHaarFloor
+    (N : Nat)
+    (moment : Int → Complex) : NNReal :=
+  sSup {alpha | TruncatedHaarFloorFeasible N moment alpha}
 
 private theorem difference_bound {N : Nat} (j k : Fin (N + 1)) :
     Int.natAbs ((j : Int) - (k : Int)) ≤ N := by
@@ -346,24 +366,41 @@ private theorem withDensity_fintypeSum
       ∑ i, (measure i).withDensity density := by
   simpa using withDensity_finsetSum (Finset.univ : Finset ι) measure density
 
-/-- A singular positive semidefinite truncated Toeplitz moment matrix constructs
-one positive residual measure. That measure has exactly `rank` many positive
-circle atoms. Multiplication by the source denominator density then constructs
-one maximal-Haar-floor completion, with the displayed atomic formula. -/
+/-- A represented truncated moment vector has a maximal normalized-Haar floor.
+After subtracting that exact floor, a singular positive semidefinite residual
+Toeplitz matrix constructs one positive residual measure with exactly `rank`
+many positive circle atoms. Multiplication by the source denominator density
+then constructs the unique maximal-floor completion and its atomic formula. -/
 theorem unique_finite_atomic_residual
     (N : Nat)
-    (moments : Int → Complex)
-    (hermitian : ∀ k, moments (-k) = star (moments k))
-    (positive : Matrix.PosSemidef
-      (fun j k : Fin (N + 1) => moments ((j : Int) - (k : Int))))
+    (sourceMoment : Int → Complex)
+    (R : Real)
+    (sourceHermitian : ∀ k, sourceMoment (-k) = star (sourceMoment k))
+    (zeroMoment : sourceMoment 0 = (R : Complex))
+    (positiveMass : 0 < R)
+    (represented : ∃ mu : FiniteMeasure Circle,
+      ∀ k : Int, k.natAbs ≤ N →
+        (∫ z : Circle, (z : Complex) ^ (-k) ∂(mu : Measure Circle)) = sourceMoment k)
     (v : Fin (N + 1) → Complex)
     (unitVector : star v ⬝ᵥ v = 1)
-    (singularKernel :
-      (fun j k : Fin (N + 1) => moments ((j : Int) - (k : Int))) *ᵥ v = 0)
-    (alpha : NNReal)
     (denominator : C(Circle, Complex)) :
+    let alphaStar := maximalTruncatedHaarFloor N sourceMoment
+    let moments : Int → Complex := fun k =>
+      sourceMoment k - if k = 0 then (alphaStar : Complex) else 0
     let residualToeplitz : Matrix (Fin (N + 1)) (Fin (N + 1)) Complex :=
       fun j k => moments ((j : Int) - (k : Int))
+    TruncatedHaarFloorFeasible N sourceMoment alphaStar →
+    Matrix.PosSemidef residualToeplitz →
+    residualToeplitz *ᵥ v = 0 →
+    IsGreatest {beta | TruncatedHaarFloorFeasible N sourceMoment beta} alphaStar ∧
+    ((alphaStar : Real) =
+      (show Matrix.IsHermitian
+          (fun j k : Fin (N + 1) => sourceMoment ((j : Int) - (k : Int))) by
+        apply Matrix.IsHermitian.ext
+        intro i j
+        rw [← sourceHermitian]
+        congr 1
+        omega).eigenvalues₀ ⟨N, by simp⟩) ∧
     ∃ tau : FiniteMeasure Circle,
       (∀ k : Int, k.natAbs ≤ N →
         (∫ z : Circle, (z : Complex) ^ (-k) ∂(tau : Measure Circle)) = moments k) ∧
@@ -384,7 +421,7 @@ theorem unique_finite_atomic_residual
               (∫ z : Circle, (z : Complex) ^ (-k)
                 ∂(residual : Measure Circle)) = moments k) ∧
             (completion : Measure Circle) =
-              ((alpha • normalizedCircleHaar : FiniteMeasure Circle) : Measure Circle) +
+              ((alphaStar • normalizedCircleHaar : FiniteMeasure Circle) : Measure Circle) +
                 (residual : Measure Circle).withDensity
                   (fun z => ENNReal.ofReal (Complex.normSq (denominator z)))) ∧
           (∀ candidate : FiniteMeasure Circle,
@@ -393,21 +430,83 @@ theorem unique_finite_atomic_residual
                 (∫ z : Circle, (z : Complex) ^ (-k)
                   ∂(residual : Measure Circle)) = moments k) ∧
               (candidate : Measure Circle) =
-                ((alpha • normalizedCircleHaar : FiniteMeasure Circle) : Measure Circle) +
+                ((alphaStar • normalizedCircleHaar : FiniteMeasure Circle) : Measure Circle) +
                   (residual : Measure Circle).withDensity
                     (fun z => ENNReal.ofReal (Complex.normSq (denominator z)))) →
             candidate = completion) ∧
           (completion : Measure Circle) =
-            ((alpha • normalizedCircleHaar : FiniteMeasure Circle) : Measure Circle) +
+            ((alphaStar • normalizedCircleHaar : FiniteMeasure Circle) : Measure Circle) +
               ∑ j, ((weight j : ENNReal) *
                 ENNReal.ofReal (Complex.normSq (denominator (point j)))) •
                   Measure.dirac (point j) := by
   classical
-  dsimp only
+  let alphaStar := maximalTruncatedHaarFloor N sourceMoment
+  let moments : Int → Complex := fun k =>
+    sourceMoment k - if k = 0 then (alphaStar : Complex) else 0
   let residualToeplitz : Matrix (Fin (N + 1)) (Fin (N + 1)) Complex :=
     fun j k => moments ((j : Int) - (k : Int))
+  change TruncatedHaarFloorFeasible N sourceMoment alphaStar →
+    Matrix.PosSemidef residualToeplitz → residualToeplitz *ᵥ v = 0 → _
+  intro alphaStarFeasible positive singularKernel
+  obtain ⟨sourceMeasure, sourceRepresents⟩ := represented
+  have feasibleBounded :
+      BddAbove {alpha | TruncatedHaarFloorFeasible N sourceMoment alpha} := by
+    let massBound : NNReal := ⟨R, positiveMass.le⟩
+    refine ⟨massBound, ?_⟩
+    intro beta betaFeasible
+    obtain ⟨mu, muMoments, domination⟩ := betaFeasible
+    have betaMass : (beta • normalizedCircleHaar).mass = beta := by
+      rw [FiniteMeasure.mass, FiniteMeasure.smul_apply]
+      change beta * normalizedCircleHaar.mass = beta
+      rw [normalizedCircleHaar_mass, mul_one]
+    have betaMassLe : (beta • normalizedCircleHaar).mass ≤ mu.mass := by
+      apply ENNReal.coe_le_coe.mp
+      simpa only [FiniteMeasure.ennreal_mass] using domination Set.univ
+    have muMassReal : (mu.mass : Real) = R := by
+      have hzero := muMoments 0 (by simp)
+      rw [zeroMoment] at hzero
+      simp only [neg_zero, zpow_zero, integral_const] at hzero
+      have hzeroReal : (mu : Measure Circle).real Set.univ = R := by
+        apply Complex.ofReal_injective
+        simpa using hzero
+      simpa only [FiniteMeasure.measureReal_eq_coe_coeFn, FiniteMeasure.mass] using hzeroReal
+    have muMass : mu.mass = massBound := by
+      apply NNReal.eq
+      exact muMassReal
+    calc
+      beta = (beta • normalizedCircleHaar).mass := betaMass.symm
+      _ ≤ mu.mass := betaMassLe
+      _ = massBound := muMass
+  have alphaStarMaximal : ∀ beta : NNReal,
+      TruncatedHaarFloorFeasible N sourceMoment beta → beta ≤ alphaStar := by
+    intro beta betaFeasible
+    exact le_csSup feasibleBounded betaFeasible
+  have floorIdentity :
+      (alphaStar : Real) =
+        (show Matrix.IsHermitian
+            (fun j k : Fin (N + 1) => sourceMoment ((j : Int) - (k : Int))) by
+          apply Matrix.IsHermitian.ext
+          intro i j
+          rw [← sourceHermitian]
+          congr 1
+          omega).eigenvalues₀ ⟨N, by simp⟩ := by
+    simpa only [alphaStar, maximalTruncatedHaarFloor, TruncatedHaarFloorFeasible] using
+      exact_truncated_haar_floor N sourceMoment R sourceHermitian zeroMoment positiveMass
+        ⟨sourceMeasure, sourceRepresents⟩
+  have residualHermitian : ∀ k, moments (-k) = star (moments k) := by
+    intro k
+    dsimp only [moments]
+    by_cases hzero : k = 0
+    · subst k
+      have sourceZeroStar : sourceMoment 0 = star (sourceMoment 0) := by
+        simpa using sourceHermitian 0
+      rw [neg_zero, if_pos rfl, star_sub, ← sourceZeroStar]
+      simp
+    · have hnegzero : -k ≠ 0 := neg_ne_zero.mpr hzero
+      simp only [hzero, hnegzero, if_false, sub_zero]
+      exact sourceHermitian k
   obtain ⟨tau, tauRepresents⟩ :=
-    truncated_circle_moment_of_posSemidef N moments hermitian positive
+    truncated_circle_moment_of_posSemidef N moments residualHermitian positive
   have polynomialNonzero :
       (∑ j, Polynomial.C (v j) * Polynomial.X ^ (j : Nat)) ≠ 0 :=
     contact_polynomial_ne_zero v unitVector
@@ -539,26 +638,27 @@ theorem unique_finite_atomic_residual
       IsFiniteMeasure ((measure : Measure Circle).withDensity density) := by
     exact isFiniteMeasure_withDensity_ofReal (densityHasFiniteIntegral measure)
   let completionMeasure : Measure Circle :=
-    ((alpha • normalizedCircleHaar : FiniteMeasure Circle) : Measure Circle) +
+    ((alphaStar • normalizedCircleHaar : FiniteMeasure Circle) : Measure Circle) +
       (tau : Measure Circle).withDensity density
   have completionFinite : IsFiniteMeasure completionMeasure := by
     dsimp only [completionMeasure]
     infer_instance
   let completion : FiniteMeasure Circle := ⟨completionMeasure, completionFinite⟩
   have completionAtomic : (completion : Measure Circle) =
-      ((alpha • normalizedCircleHaar : FiniteMeasure Circle) : Measure Circle) +
+      ((alphaStar • normalizedCircleHaar : FiniteMeasure Circle) : Measure Circle) +
         ∑ j, ((rankedWeight j : ENNReal) * density (rankedPoint j)) •
           Measure.dirac (rankedPoint j) := by
     change completionMeasure = _
     dsimp only [completionMeasure]
     rw [rankedAtomic, withDensity_fintypeSum]
     apply congrArg (fun residual : Measure Circle =>
-      ((alpha • normalizedCircleHaar : FiniteMeasure Circle) : Measure Circle) + residual)
+      ((alphaStar • normalizedCircleHaar : FiniteMeasure Circle) : Measure Circle) + residual)
     apply Finset.sum_congr rfl
     intro j _
     rw [withDensity_smul_measure, dirac_withDensity]
     simp [smul_smul]
-  refine ⟨tau, tauRepresents, ?_, rankedPoint, rankedWeight,
+  refine ⟨⟨alphaStarFeasible, alphaStarMaximal⟩, floorIdentity,
+    tau, tauRepresents, ?_, rankedPoint, rankedWeight,
     rankedPointInjective, rankedWeightPositive, rankedAtomic,
     completion, ⟨tau, tauRepresents, rfl⟩, ?_, ?_⟩
   · intro candidate candidateRepresents

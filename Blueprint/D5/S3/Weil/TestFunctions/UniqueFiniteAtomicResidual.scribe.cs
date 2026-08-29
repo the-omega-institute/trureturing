@@ -10,8 +10,8 @@ internal sealed class UniqueFiniteAtomicResidualDocument : IScribeDocumentDefini
         "D5/S3/Weil/TestFunctions/UniqueFiniteAtomicResidual.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A singular positive truncated Toeplitz matrix has one representing residual "
-            + "measure, exactly rank many positive atoms, and one weighted Haar-floor completion.",
+        "A represented truncated moment vector has an attained greatest Haar floor. Its singular "
+            + "residual has one rank-atomic measure and one maximal weighted completion.",
         H("Unique Finite-Atomic Residual"),
         Blocks(Describe.Lean(
             DescribeId.Create("unique-finite-atomic-residual"),
@@ -21,18 +21,22 @@ internal sealed class UniqueFiniteAtomicResidualDocument : IScribeDocumentDefini
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
-                    "The residual measure is constructed from the positive semidefinite "
-                        + "truncated moment matrix. A unit kernel vector confines its support "
-                        + "to the roots of the associated contact polynomial.")),
+                    "The feasible floor coefficients are those dominated by a representing "
+                        + "measure, and the distinguished coefficient is their supremum. The "
+                        + "exact floor theorem identifies it with the least Toeplitz eigenvalue.")),
+                Paragraph(Text(
+                    "After subtracting that attained greatest coefficient, the residual measure "
+                        + "is constructed from the positive semidefinite truncated moment matrix. "
+                        + "A unit kernel vector confines its support to the contact roots.")),
                 Paragraph(Text(
                     "Lagrange interpolation makes every representing measure agree on each "
                         + "root mass, proving uniqueness. Removing zero masses leaves positive "
                         + "distinct atoms, while a weighted Vandermonde Gram factorization "
                         + "identifies their number with the Toeplitz rank.")),
                 Paragraph(Text(
-                    "Multiplication by the denominator norm-square density constructs the "
-                        + "completion. Residual uniqueness gives completion uniqueness, and "
-                        + "density of a Dirac mass yields the displayed weighted atomic sum."))),
+                    "Multiplication by the denominator norm-square density constructs the maximal "
+                        + "completion at the distinguished coefficient. Residual uniqueness gives "
+                        + "completion uniqueness, and Dirac density gives the weighted atomic sum."))),
             DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()
@@ -40,17 +44,22 @@ internal sealed class UniqueFiniteAtomicResidualDocument : IScribeDocumentDefini
         Formula natural = Seq(Mathbb, Grp(F.Id("N")));
         Formula integer = Seq(Mathbb, Grp(F.Id("Z")));
         Formula complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula real = Seq(Mathbb, Grp(F.Id("R")));
         Formula nonnegativeReal = Call("NonnegativeReal");
         Formula circle = Call("Circle");
         Formula finiteMeasure = Call("FiniteMeasure", circle);
         Formula depth = F.Id("N");
-        Formula moment = F.Id("m");
+        Formula sourceMoment = F.Id("m");
+        Formula residualMoment = F.Id("mStar");
         Formula exponent = F.Id("ell");
         Formula row = F.Id("j");
         Formula column = F.Id("k");
         Formula circlePoint = F.Id("z");
         Formula vector = F.Id("v");
         Formula alpha = F.Id("alpha");
+        Formula beta = F.Id("beta");
+        Formula alphaStar = F.Id("alphaStar");
+        Formula totalMass = F.Id("R");
         Formula denominator = F.Id("D");
         Formula toeplitz = F.Id("Tstar");
         Formula residual = F.Id("tau");
@@ -69,16 +78,33 @@ internal sealed class UniqueFiniteAtomicResidualDocument : IScribeDocumentDefini
             Seq(Open, variable, Sp, Mapsto, Sp, body, Close);
         Formula Let(Formula name, Formula value) =>
             Seq(Operatorname, Grp(F.Id("let")), Sp, name, Sp, Eq, Sp, value);
-        Formula MomentAt(Formula index) => Apply(moment, index);
+        Formula SourceMomentAt(Formula index) => Apply(sourceMoment, index);
+        Formula ResidualMomentAt(Formula index) => Apply(residualMoment, index);
         Formula MonomialAt(Formula index) =>
             Call("zpow", circlePoint, Call("neg", index));
-        Formula MomentAgreement(Formula measure) => ForAll(
+        Formula SourceMomentAgreement(Formula measure) => ForAll(
             [Bound("ell", integer)],
             Implies(
                 LessEqual(Call("natAbs", exponent), depth),
                 Equal(
                     Call("integral", circlePoint, circle, MonomialAt(exponent), measure),
-                    MomentAt(exponent))));
+                    SourceMomentAt(exponent))));
+        Formula ResidualMomentAgreement(Formula measure) => ForAll(
+            [Bound("ell", integer)],
+            Implies(
+                LessEqual(Call("natAbs", exponent), depth),
+                Equal(
+                    Call("integral", circlePoint, circle, MonomialAt(exponent), measure),
+                    ResidualMomentAt(exponent))));
+        Formula FloorFeasible(Formula coefficient) => Exists(
+            [Bound("mu", finiteMeasure)],
+            All(
+                SourceMomentAgreement(F.Id("mu")),
+                LessEqual(
+                    Call(
+                        "toMeasure",
+                        Call("smul", coefficient, Call("normalizedCircleHaar"))),
+                    Call("toMeasure", F.Id("mu")))));
         Formula DensityAt(Formula location) =>
             Call("ofReal", Call("normSq", Apply(denominator, location)));
         Formula AtomicSum() => Call(
@@ -97,27 +123,46 @@ internal sealed class UniqueFiniteAtomicResidualDocument : IScribeDocumentDefini
         Formula CompletionRelation(Formula measure) => Exists(
             [Bound("tau", finiteMeasure)],
             All(
-                MomentAgreement(residual),
+                ResidualMomentAgreement(residual),
                 Equal(
                     Call("toMeasure", measure),
                     Add(
                         Call(
                             "toMeasure",
-                            Call("smul", alpha, Call("normalizedCircleHaar"))),
+                            Call("smul", alphaStar, Call("normalizedCircleHaar"))),
                         Call(
                             "withDensity",
                             Call("toMeasure", residual),
                             Lambda(circlePoint, DensityAt(circlePoint)))))));
 
-        Formula hermitian = ForAll(
+        Formula sourceHermitian = ForAll(
             [Bound("ell", integer)],
             Equal(
-                MomentAt(Call("neg", exponent)),
-                Call("star", MomentAt(exponent))));
+                SourceMomentAt(Call("neg", exponent)),
+                Call("star", SourceMomentAt(exponent))));
+        Formula zeroMoment = Equal(SourceMomentAt(D(0)), totalMass);
+        Formula positiveMass = Less(D(0), totalMass);
+        Formula represented = Exists(
+            [Bound("mu", finiteMeasure)],
+            SourceMomentAgreement(F.Id("mu")));
+        Formula alphaStarDefinition = Let(
+            alphaStar,
+            Call("sSup", Call("setOf", Lambda(alpha, FloorFeasible(alpha)))));
+        Formula residualMomentDefinition = Let(
+            residualMoment,
+            Lambda(
+                exponent,
+                Sub(
+                    SourceMomentAt(exponent),
+                    Call("ite", Equal(exponent, D(0)), alphaStar, D(0)))));
         Formula matrixLambda = Lambda(
             Seq(row, Comma, column, InMacro, finDepth),
-            MomentAt(Sub(Call("toInt", row), Call("toInt", column))));
+            ResidualMomentAt(Sub(Call("toInt", row), Call("toInt", column))));
         Formula matrix = Call("Matrix", matrixLambda);
+        Formula sourceMatrixLambda = Lambda(
+            Seq(row, Comma, column, InMacro, finDepth),
+            SourceMomentAt(Sub(Call("toInt", row), Call("toInt", column))));
+        Formula sourceMatrix = Call("Matrix", sourceMatrixLambda);
         Formula positive = Call("PosSemidef", matrix);
         Formula unitVector = Equal(
             Call("dotProduct", Call("star", vector), vector),
@@ -126,10 +171,19 @@ internal sealed class UniqueFiniteAtomicResidualDocument : IScribeDocumentDefini
             Call("mulVec", matrix, vector),
             D(0));
         Formula toeplitzDefinition = Let(toeplitz, matrix);
+        Formula alphaStarAttained = FloorFeasible(alphaStar);
+        Formula maximalFloor = All(
+            alphaStarAttained,
+            ForAll(
+                [Bound("beta", nonnegativeReal)],
+                Implies(FloorFeasible(beta), LessEqual(beta, alphaStar))));
+        Formula exactFloor = Equal(
+            alphaStar,
+            Call("smallestEigenvalue", sourceMatrix));
         Formula residualUnique = ForAll(
             [Bound("rho", finiteMeasure)],
             Implies(
-                MomentAgreement(candidate),
+                ResidualMomentAgreement(candidate),
                 Equal(candidate, residual)));
         Formula pointInjective = Call("Injective", point);
         Formula positiveWeights = ForAll(
@@ -148,7 +202,7 @@ internal sealed class UniqueFiniteAtomicResidualDocument : IScribeDocumentDefini
             Add(
                 Call(
                     "toMeasure",
-                    Call("smul", alpha, Call("normalizedCircleHaar"))),
+                    Call("smul", alphaStar, Call("normalizedCircleHaar"))),
                 WeightedAtomicSum()));
         Formula completionWitness = Exists(
             [Bound("muStar", finiteMeasure)],
@@ -169,25 +223,35 @@ internal sealed class UniqueFiniteAtomicResidualDocument : IScribeDocumentDefini
         Formula residualWitness = Exists(
             [Bound("tau", finiteMeasure)],
             All(
-                MomentAgreement(residual),
+                ResidualMomentAgreement(residual),
                 residualUnique,
                 atomicWitness));
         Formula premise = All(
-            hermitian,
+            sourceHermitian,
+            zeroMoment,
+            positiveMass,
+            represented,
+            alphaStarDefinition,
+            residualMomentDefinition,
+            toeplitzDefinition,
+            alphaStarAttained,
             positive,
             unitVector,
-            singularKernel,
-            toeplitzDefinition);
+            singularKernel);
+        Formula conclusion = All(
+            maximalFloor,
+            exactFloor,
+            residualWitness);
 
         return Disp(ForAll(
             [
                 Bound("N", natural),
                 Bound("m", Arrow(integer, complex)),
+                Bound("R", real),
                 Bound("v", Arrow(finDepth, complex)),
-                Bound("alpha", nonnegativeReal),
                 Bound("D", Call("ContinuousMap", circle, complex)),
             ],
-            Implies(premise, residualWitness)));
+            Implies(premise, conclusion)));
     }
 
     private static Formula.BoundVariable Bound(string name, Formula domain) =>
