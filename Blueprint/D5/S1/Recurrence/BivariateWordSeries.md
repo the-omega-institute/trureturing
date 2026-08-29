@@ -6,7 +6,7 @@ Admissible-word bookkeeping obeys its bivariate self-substitution equation.
 
 **Theorem 1.1 (The word series splits into its two substituted branches).**
 
-$$F(u, v) = F(v, uv) + u\cdot F(uv, uv^{2})$$
+$$(\operatorname{bookkeepingSeries}: \operatorname{Degree} \to \operatorname{Cardinal}) = (degree: \operatorname{Degree} \mapsto \operatorname{skipBranchSeries}(degree) + \operatorname{takeBranchSeries}(degree)).$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/BivariateWordSeries.bookkeeping_series_self_functional_equation` (`✓ std3`). ∎
 
