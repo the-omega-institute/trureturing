@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using Xunit;
 
 [assembly: InternalsVisibleTo("StrataLint.ArchitectureTests")]
+[assembly: InternalsVisibleTo("StrataLint.ScriptTests")]
 
 namespace StrataLint.Tests;
 

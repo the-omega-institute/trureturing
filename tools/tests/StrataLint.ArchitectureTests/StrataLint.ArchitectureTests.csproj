@@ -11,6 +11,7 @@
     <ProjectReference Include="../../StrataLint.Scribe/StrataLint.Scribe.csproj" />
     <ProjectReference Include="../StrataLint.Tests/StrataLint.Tests.csproj" />
     <ProjectReference Include="../StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj" />
+    <ProjectReference Include="../StrataLint.ScriptTests/StrataLint.ScriptTests.csproj" />
     <!-- The official analyzer is admitted because compiler diagnostics enforce source
          calls before binaries exist. Reflection is sufficient for assembly and type
          architecture, so ArchUnitNET and NetArchTest are not admitted. -->

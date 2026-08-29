@@ -18,11 +18,6 @@ public sealed partial class AdmissionWorkflowTests
     {
         const string installerPath = "tools/scripts/workflow/install-lean-toolchain.sh";
         var workflow = AdmissionWorkflow();
-        var installer = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), installerPath));
-
-        // 安装算法只在脚本实现一次,两个 CI 步骤都从候选树调用它。
-        Assert.Single(Regex.Matches(installer, @"elan-init\.sh"));
-        Assert.Single(Regex.Matches(installer, @"elan_install_with_retry\(\) \{"));
         // 数的是行首直接调用(与 Dispatch parity 扫描器同口径),不数路径字面量——
         // 调用前的具名缺席检查也引用同一路径,那不是第三次调用。
         Assert.Equal(
@@ -43,11 +38,6 @@ public sealed partial class AdmissionWorkflowTests
             $"\"$GITHUB_WORKSPACE/candidate/{installerPath}\" candidate/lean-toolchain\n",
             workflow,
             StringComparison.Ordinal);
-
-        // 工具链下载是第二个网络跳,单独失败过(releases.lean-lang.org 返回空响应),
-        // 所以它也必须走重试,而不是裸 elan toolchain install。
-        Assert.Single(Regex.Matches(installer, @"elan_toolchain_with_retry\(\) \{"));
-        Assert.DoesNotContain("\"$HOME/.elan/bin/elan\" toolchain install \"$toolchain\"", installer, StringComparison.Ordinal);
 
         // 每一处 ~/.elan 的 restore 都必须有前缀回退。两个 job 的精确 key 由不同表达式算出
         // (单文件 sha256 vs hashFiles 两文件),永不相等;没有回退,写入方存的缓存读取方
@@ -92,59 +82,6 @@ public sealed partial class AdmissionWorkflowTests
         Assert.Contains("always()", condition, StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void LeanToolchainInstallerHonorsAttemptsAndGithubPath()
-    {
-        if (OperatingSystem.IsWindows()) return;
-
-        var root = TestRepositoryLayout.FindRoot();
-        var installer = Path.Combine(root, "tools", "scripts", "workflow", "install-lean-toolchain.sh");
-        using var fixture = new TemporaryDirectory();
-        var home = Path.Combine(fixture.Path, "home");
-        var elanBin = Path.Combine(home, ".elan", "bin");
-        var stubBin = Path.Combine(fixture.Path, "bin");
-        var attempts = Path.Combine(fixture.Path, "attempts.log");
-        var githubPath = Path.Combine(fixture.Path, "github-path");
-        var toolchain = Path.Combine(fixture.Path, "lean-toolchain");
-        Directory.CreateDirectory(elanBin);
-        Directory.CreateDirectory(stubBin);
-        File.WriteAllText(toolchain, "leanprover/lean4:v4.24.0\n");
-        File.WriteAllText(
-            Path.Combine(elanBin, "elan"),
-            "#!/usr/bin/env bash\n"
-                + "if [[ \"${1:-}\" == toolchain && \"${2:-}\" == list ]]; then exit 0; fi\n"
-                + "if [[ \"${1:-}\" == toolchain && \"${2:-}\" == install ]]; then printf 'attempt\\n' >> \"$ATTEMPTS_LOG\"; exit 42; fi\n"
-                + "exit 0\n");
-        File.WriteAllText(Path.Combine(stubBin, "sleep"), "#!/usr/bin/env bash\nexit 0\n");
-        File.SetUnixFileMode(
-            Path.Combine(elanBin, "elan"),
-            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-        File.SetUnixFileMode(
-            Path.Combine(stubBin, "sleep"),
-            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-
-        var result = TestProcessRunner.Run(
-            "env",
-            [
-                $"HOME={home}",
-                $"PATH={stubBin}:{Environment.GetEnvironmentVariable("PATH")}",
-                $"ATTEMPTS_LOG={attempts}",
-                "/bin/bash",
-                installer,
-                toolchain,
-                "--attempts",
-                "2",
-                "--github-path",
-                githubPath,
-            ],
-            root,
-            BoundedProcessRunner.HangDetectionBudget,
-            64 * 1024);
-
-        Assert.Equal(1, result.ExitCode);
-        Assert.Equal(2, File.ReadAllLines(attempts).Length);
-        Assert.Equal($"{elanBin}\n", File.ReadAllText(githubPath));
-    }
 
     [Fact]
     public void BaselineAdmissionNeedsExactlyLeanInspect()
@@ -568,11 +505,6 @@ public sealed partial class AdmissionWorkflowTests
         if (OperatingSystem.IsWindows()) return;
 
         var root = TestRepositoryLayout.FindRoot();
-        var preflight = TestRepositoryLayout.ReadAllText(
-            RepositoryRelativePath.Create("tools/scripts/preflight.sh"));
-        Assert.Contains("ENGINEERING_HEAD=\"$(git rev-parse HEAD)\"", preflight, StringComparison.Ordinal);
-        Assert.Contains("ENGINEERING_BASE=\"$(git rev-parse HEAD^1)\"", preflight, StringComparison.Ordinal);
-
         using var fixture = new TemporaryDirectory();
         var repository = Path.Combine(fixture.Path, "candidate");
         Directory.CreateDirectory(repository);

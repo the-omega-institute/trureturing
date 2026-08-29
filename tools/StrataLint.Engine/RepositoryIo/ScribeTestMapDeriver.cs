@@ -64,6 +64,8 @@ internal static class ScribeTestMapDeriver
     // roots; engineering scope is derived from consumers and does not use this declaration.
     internal static readonly IReadOnlyList<string> DeclaredPathWhitelist =
     [
+        // CLI linkage governance derives callers from the tracked harness scripts.
+        ".github/scripts",
         // 消化退出 CI 后,ci.yml 是仓内唯一的 workflow;守卫「无 workflow 代跑消化」
         // 与 lake 缓存契约都声明式读它(此前二者读的是已删除的 theory-ingest.yml)。
         ".github/workflows/ci.yml",
