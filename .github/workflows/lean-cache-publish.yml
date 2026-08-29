@@ -63,8 +63,12 @@ name: Lean build cache publication
 #   到全仓 release namespace。manifest digest 由同一 writer 自报，摘要校验挡不住它。
 #
 #   边界只能是触发集合本身，故这里只留 `schedule`。代价是验证要等下一个 6 小时窗口；
-#   那是这条边界的价钱，不是疏漏。`ContentsWriteWorkflowClosureTests` 钉住此形状：
-#   加回任何手动/推送触发，或出现第二个 `contents: write` 的 workflow，即判红。
+#   那是这条边界的价钱，不是疏漏。
+#
+#   〔2026-08-29：`ContentsWriteWorkflowClosureTests` 曾钉住此形状（加回任何手动/推送触发，
+#   或出现第二个 `contents: write` 的 workflow 即判红），已随 workflow 测试禁令（CLAUDE.md
+#   器律⑦′）整体删除。**此形状此后没有机器钉子。** 理由是那族测试只能校验 workflow
+#   长什么样、校验不了它会不会执行（`if: false` 判例：16 个测试全过）。改这里请自行评审。〕
 on:
   schedule:
     - cron: '0 */6 * * *'
@@ -108,9 +112,10 @@ jobs:
     #   这个 job 会在一棵不是 dev 的树上发布缓存，而 tag 与 manifest 会把那次产出写成
     #   正常产物。此条件在那一刻取到 false，job 不执行。
     #
-    #   **它不是边界。** 边界是触发集合本身（只有 schedule），由
-    #   ContentsWriteWorkflowClosureTests 钉住 —— 一个由分支选出的 workflow 版本可以
-    #   删掉自己的这行条件，故它挡不住那类改动，别把它当防线读。
+    #   **它不是边界。** 边界是触发集合本身（只有 schedule）—— 一个由分支选出的 workflow
+    #   版本可以删掉自己的这行条件，故它挡不住那类改动，别把它当防线读。
+    #   〔2026-08-29：曾由 ContentsWriteWorkflowClosureTests 钉住触发集合，该测试已随
+    #   workflow 测试禁令删除；此后无机器钉子。〕
     #
     #   〔本条曾被删过一次：我判「schedule-only ⟹ github.ref 恒为 refs/heads/dev，
     #     恒真的量不构成判据」。那个「恒」是错的 —— 我把仓库配置排除在状态空间之外了。
