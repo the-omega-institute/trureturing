@@ -54,45 +54,67 @@ internal sealed class BoundedInverseLimitReconstructionDocument : IScribeDocumen
         return Seq([.. items]);
     }
 
+    private static Formula Apply(Formula function, Formula argument) =>
+        Seq(function, Open, argument, Close);
+
     private static Formula ReconstructionFormula()
     {
         Formula scalar = F.Id("k");
         Formula space = F.Id("H");
         Formula stages = F.Id("S");
-        Formula cumulative = F.Id("Sinfinity");
-        Formula residual = F.Id("Rinfinity");
-        Formula limit = Call("BoundedInverseLimit", stages);
-        Formula canonical = F.Id("J");
-        Formula quotientMap = F.Id("Q");
+        Formula monotonicity = F.Id("hS");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
+        Formula cumulative = Call("cumulativeSpace", stages);
+        Formula residual = Call("residualSpace", stages);
+        Formula limit = Call("boundedInverseLimit", stages);
+        Formula canonical = Call("canonicalReconstructionEquiv", stages, monotonicity);
+        Formula quotientMap = Call("quotientReconstructionEquiv", stages, monotonicity);
         Formula x = F.Id("x");
         Formula n = F.Id("n");
+        Formula boundedFunction = Call("BoundedContinuousFunction", naturals, space);
+        Formula canonicalFunction = Seq(
+            Open, canonical, Colon, Sp, cumulative, Sp, To, Sp, limit, Close);
+        Formula quotientFunction = Seq(
+            Open, quotientMap, Colon, Sp,
+            Call("Quotient", space, residual), Sp, To, Sp, limit, Close);
 
-        Formula isometryJ = Call("Isometry", canonical);
-        Formula bijectiveJ = Call("Bijective", canonical);
+        Formula isometryJ = Call("Isometry", canonicalFunction);
+        Formula bijectiveJ = Call("Bijective", canonicalFunction);
         Formula coordinateFormula = Seq(
-            Forall, Sp, x, Sp, InMacro, Sp, cumulative, Comma, Sp,
-            Forall, Sp, n, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Esc,
-            Call("coord", Call("apply", canonical, x), n), Sp, Eq, Sp,
-            Call("orthogonalProjection", Call("apply", stages, n), x));
-        Formula isometryQ = Call("Isometry", quotientMap);
-        Formula bijectiveQ = Call("Bijective", quotientMap);
+            Forall, Sp, x, Colon, Sp, cumulative, Comma, Sp,
+            Forall, Sp, n, Colon, Sp, naturals, Comma, Esc,
+            Apply(
+                Seq(
+                    Open,
+                    Seq(Open, Apply(canonical, x), Colon, Sp, limit, Close),
+                    Colon, Sp, boundedFunction,
+                    Close),
+                n),
+            Sp, Eq, Sp,
+            Call("starProjection", Apply(stages, n), Seq(Open, x, Colon, Sp, space, Close)));
+        Formula isometryQ = Call("Isometry", quotientFunction);
+        Formula bijectiveQ = Call("Bijective", quotientFunction);
 
         return Disp(Seq(
-            Forall, Sp, scalar, Colon, Sp, Call("RCLikeField"), Comma, Esc,
-            Forall, Sp, space, Colon, Sp, Call("CompleteHilbertSpace", scalar), Comma, Esc,
-            Forall, Sp, stages, Colon, Sp,
-            Call("Sequence", Call("Submodule", scalar, space)), Comma, Esc,
-            Call("Monotone", stages), Sp, Land, Sp,
-            Call("HasOrthogonalProjection", stages), Comma, Esc,
-            cumulative, Sp, Eq, Sp, Call("ClosureUnion", stages), Comma, Esc,
-            residual, Sp, Eq, Sp, Call("OrthogonalComplement", cumulative), Comma, Esc,
-            canonical, Colon, Sp, cumulative, Sp, To, Sp, limit, Comma, Esc,
-            quotientMap, Colon, Sp, Call("Quotient", space, residual), Sp, To, Sp, limit,
-            Comma, Esc,
+            Begin, Grp(F.Id("gathered")),
+            Forall, Sp, scalar, Comma, Sp, space, Colon, Sp, type, Comma, RowBreak, Grp(),
+            OpenBracket, Call("RCLike", scalar), CloseBracket, Comma, Sp,
+            OpenBracket, Call("NormedAddCommGroup", space), CloseBracket, Comma, RowBreak, Grp(),
+            OpenBracket, Call("InnerProductSpace", scalar, space), CloseBracket, Comma, Sp,
+            OpenBracket, Call("CompleteSpace", space), CloseBracket, Comma, RowBreak, Grp(),
+            stages, Colon, Sp, naturals, Sp, To, Sp,
+            Call("Submodule", scalar, space), Comma, RowBreak, Grp(),
+            OpenBracket,
+            Forall, Sp, n, Colon, Sp, naturals, Comma, Sp,
+            Call("HasOrthogonalProjection", Apply(stages, n)),
+            CloseBracket, Comma, RowBreak, Grp(),
+            monotonicity, Colon, Sp, Call("Monotone", stages), Comma, RowBreak, Grp(),
             isometryJ, Sp, Land, Sp,
             bijectiveJ, Sp, Land, Sp,
-            Open, coordinateFormula, Close, Sp, Land, Sp,
+            Open, coordinateFormula, Close, Sp, Land, RowBreak, Grp(),
             isometryQ, Sp, Land, Sp,
-            bijectiveQ, Dot));
+            bijectiveQ, Dot,
+            End, Grp(F.Id("gathered"))));
     }
 }

@@ -6,7 +6,7 @@ A lookup compiler bounds the least cost of a total program consistent with a rec
 
 **Theorem 1.1 (A table-lookup program bounds the spectrum bottom).**
 
-$$k_{min}(R) \le K(R) + c.$$
+$$\begin{gathered}\forall Record, TotalProgram: \operatorname{Type},\\{}\forall consistent: TotalProgram \to Record \to \operatorname{Prop},\\{}\forall programCost: TotalProgram \to \operatorname{Nat},\\{}\forall recordComplexity: Record \to \operatorname{Nat}, overhead: \operatorname{Nat},\\{}\forall compiler: \operatorname{LookupCompiler}(Record, TotalProgram, consistent, programCost, recordComplexity, overhead),\\{}\forall record: Record,\\{}\operatorname{spectrumBottom}(compiler, record) \leq \operatorname{recordComplexity}(record) + overhead.\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Computability/DescriptionComplexity/LookupProgramUpperBound.lookup_program_upper_bound` (`✓ std3`). ∎
 
