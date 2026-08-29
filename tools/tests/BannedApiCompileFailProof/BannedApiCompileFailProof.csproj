@@ -4,9 +4,7 @@
     <AssemblyName>StrataLint.BannedApiCompileFailProof</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
     <AdditionalFiles Include="../../Architecture/BannedSymbols.txt" />
-    <AdditionalFiles Include="../../Architecture/BannedSymbols.Determinism.txt" />
     <AdditionalFiles Include="../../Architecture/BannedSymbols.Guid.txt" />
   </ItemGroup>
 </Project>

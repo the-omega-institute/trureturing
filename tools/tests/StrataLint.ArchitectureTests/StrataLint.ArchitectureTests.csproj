@@ -16,7 +16,6 @@
          architecture, so ArchUnitNET and NetArchTest are not admitted. -->
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
-    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
     <PackageReference Include="Tomlyn" />
     <PackageReference Include="YamlDotNet" />
     <PackageReference Include="xunit" />
@@ -24,6 +23,5 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <AdditionalFiles Include="../../Architecture/BannedSymbols.Determinism.txt" />
   </ItemGroup>
 </Project>
