@@ -148,6 +148,7 @@ internal static partial class RepositoryPathPolicy
             || IsEchoResidualShardPath(value)
             || ProblemPoolPaths.IsCanonicalPath(value)
             || FrozenLedgerChangeClassifier.IsAcceptedEventPath(value)
+            || EngineeringTestRetirementLoader.IsCanonicalPath(value)
             || value.StartsWith("skills/", StringComparison.Ordinal)
             || value.StartsWith(".codex/skills/", StringComparison.Ordinal)
             || value.StartsWith("docs/reports/", StringComparison.Ordinal)

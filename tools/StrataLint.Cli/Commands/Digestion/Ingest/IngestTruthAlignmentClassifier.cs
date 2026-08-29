@@ -76,6 +76,7 @@ internal static class IngestTruthAlignmentClassifier
         BackfillInventoryDocument current,
         BackfillInventoryDocument baseline,
         BackfillInventoryDocument planned,
+        DigestionLedgerAlignment alignment,
         DigestionEvaluationScope scope,
         RawChangeSet changes)
     {
@@ -100,7 +101,10 @@ internal static class IngestTruthAlignmentClassifier
                 continue;
             }
 
-            if (ValidateNewEntry(entry) is { } witness)
+            if (ValidateNewEntry(entry with
+                {
+                    Receipts = entry.Receipts with { ChainAtoms = [] },
+                }) is { } witness)
             {
                 return IngestTruthAlignmentClassification.TruthAlignmentRequired(witness);
             }
@@ -110,7 +114,8 @@ internal static class IngestTruthAlignmentClassifier
         var authorityChangedAtomIds = DigestionStatusEvaluator.StatusAuthorityChangedAtomIds(
             planned,
             baseline,
-            resolvedChanges);
+            resolvedChanges,
+            alignment);
         var changedCoveredEntry = planned.RequireDigestionEntries()
             .Where(static entry => !entry.CoverageGids.IsEmpty)
             .Where(entry => authorityChangedAtomIds.Contains(entry.AtomId))
@@ -149,9 +154,12 @@ internal static class IngestTruthAlignmentClassifier
             return $"new entry {entry.AtomId} carries receipts";
         }
 
-        return entry.ProjectedStatus != ResidualOpen
-            ? $"new entry {entry.AtomId} projected status is not residual-open"
-            : null;
+        if (entry.ProjectedStatus != ResidualOpen)
+        {
+            return $"new entry {entry.AtomId} projected status is not residual-open";
+        }
+
+        return null;
     }
 
     private sealed record StatusAuthorityEntry(

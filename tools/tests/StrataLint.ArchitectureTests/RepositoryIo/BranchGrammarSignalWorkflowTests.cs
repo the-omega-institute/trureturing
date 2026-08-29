@@ -11,7 +11,7 @@ public sealed class BranchGrammarSignalWorkflowTests
 {
     private const string SignalStepName = "Signal PR head branch grammar";
     private const string FixtureHeadRef = "lane/governance/w33-branch-signal";
-    private static readonly string Workflow = File.ReadAllText(
+    private static string ReadWorkflow() => File.ReadAllText(
         Path.Combine(RepositoryLayout.FindRoot(), ".github", "workflows", "ci.yml"));
 
     [Fact]
@@ -289,7 +289,7 @@ public sealed class BranchGrammarSignalWorkflowTests
     private static YamlMappingNode[] CandidateEngineeringSteps()
     {
         var stream = new YamlStream();
-        stream.Load(new StringReader(Workflow));
+        stream.Load(new StringReader(ReadWorkflow()));
         var root = Assert.IsType<YamlMappingNode>(Assert.Single(stream.Documents).RootNode);
         var jobs = Mapping(root, "jobs");
         var engineering = Mapping(jobs, "candidate-engineering");
