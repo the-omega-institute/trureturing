@@ -78,11 +78,13 @@ theorem weak_prime_signal_energy_not_summable_iff_half_le
 theorem weak_prime_signal_zero_energy_summable (alpha : Real) :
     weakPrimeSignal 0 alpha = 0 ∧
       Summable (quadraticStatisticalEnergy (weakPrimeSignal 0 alpha)) := by
-  constructor
-  · funext p
+  have hzero : weakPrimeSignal 0 alpha = fun _ : Nat.Primes => 0 := by
+    funext p
     simp [weakPrimeSignal]
-  · simpa [weakPrimeSignal] using
-      (quadraticStatisticalEnergy_zero_summable (ι := Nat.Primes))
+  constructor
+  · exact hzero
+  · rw [hzero]
+    exact quadraticStatisticalEnergy_zero_summable
 
 #print axioms weak_prime_signal_zero_energy_summable
 
@@ -90,7 +92,8 @@ theorem weak_prime_signal_zero_energy_summable (alpha : Real) :
 theorem nonzero_amplitude_is_necessary :
     ¬(¬Summable (quadraticStatisticalEnergy (weakPrimeSignal 0 0)) ↔
       (0 : Real) ≤ 1 / 2) := by
-  simp [weakPrimeSignal, quadraticStatisticalEnergy]
+  intro hthreshold
+  exact hthreshold.mpr (by norm_num) (weak_prime_signal_zero_energy_summable 0).2
 
 #print axioms nonzero_amplitude_is_necessary
 
@@ -99,10 +102,13 @@ theorem weak_prime_signal_tendsto_zero (c : Real) (p : Nat.Primes) :
     Tendsto (fun alpha => weakPrimeSignal c alpha p) atTop (nhds 0) := by
   have hp : (1 : Real) < (p : Real) := by
     exact_mod_cast p.2.one_lt
+  have hinv_pos : 0 < (p : Real)⁻¹ := by positivity
+  have hinv_lt_one : (p : Real)⁻¹ < 1 :=
+    (inv_lt_one₀ (show 0 < (p : Real) by positivity)).mpr hp
   have hbase : Tendsto (fun alpha : Real => ((p : Real)⁻¹) ^ alpha)
       atTop (nhds 0) :=
-    tendsto_rpow_atTop_of_base_lt_one (p : Real)⁻¹ (by positivity)
-      (inv_lt_one₀ (by positivity)).mpr hp
+    tendsto_rpow_atTop_of_base_lt_one (p : Real)⁻¹
+      (lt_of_lt_of_le neg_one_lt_zero hinv_pos.le) hinv_lt_one
   have hsignal : Tendsto (fun alpha : Real => (p : Real) ^ (-alpha))
       atTop (nhds 0) := by
     simpa only [Real.rpow_neg_eq_inv_rpow] using hbase
@@ -139,7 +145,7 @@ theorem signal_kakutani_dichotomy_is_necessary :
       one_ne_zero).2 le_rfl
   have hsingular : (Measure.dirac () : Measure Unit) ⟂ₘ Measure.dirac () :=
     hK.1.mpr henergy
-  simpa using hsingular
+  simp at hsingular
 
 #print axioms signal_kakutani_dichotomy_is_necessary
 

@@ -93,7 +93,8 @@ internal sealed class WeakPrimeSignalCompletionThresholdDocument
         return Disp(new Formula.Relation(
             Signal(amplitude, exponent, prime),
             FormulaRelationOperator.Equal,
-            Seq(amplitude, Cdot, new Formula.Power(prime, Grp(Seq(Minus, exponent))))));
+            Seq(amplitude, Cdot, Sp,
+                new Formula.Power(prime, Grp(Seq(Minus, exponent))))));
     }
 
     private static Formula EnergyFormula()
