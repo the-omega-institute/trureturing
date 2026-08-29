@@ -1,9 +1,9 @@
 # 观察者完成反射与可观测 Gram 演算
 ## 稳定接口的普适闭包、状态—效应反对偶与定量可观测性
 
-**版本：v1.2，2026-08-29**
+**版本：v1.2.1，2026-08-29**
 
-**版本史**：v1.0 初稿 → **v1.1 勘误(issue #3118)：推论 25.3 补回 Heisenberg 导数的因子 i，并将生成元记为 i·ad_H** → **v1.2 理论分层与形式化取址：补入 effective-image 纪律、接口运算、有限深度完成塔、agency enrichment、可见环 holonomy、completion locus 演算，并勘正公共固定点的超限迭代条件**。
+**版本史**：v1.0 初稿 → **v1.1 勘误(issue #3118)：推论 25.3 补回 Heisenberg 导数的因子 i，并将生成元记为 i·ad_H** → **v1.2 理论分层与形式化取址：补入 effective-image 纪律、接口运算、有限深度完成塔、agency enrichment、可见环 holonomy、completion locus 演算，并勘正公共固定点的超限迭代条件** → **v1.2.1 勘误：把 pointed holonomy 明确定义为可见回返与隐藏状态变化的合取，并使公共 closure 的联合推进在空指标族上仍为扩张算子**。
 
 ---
 
@@ -299,6 +299,10 @@ $$
 $$
 
 加入新坐标只会缩小联合 kernel；若新坐标分离了旧联合 kernel 中的一对状态，则该精化严格。
+
+### 顺序方向约定
+
+接口侧采用“更细信息更大”的顺序，因此联合读出是 supremum，行为 completion 是扩张 closure。kernel 侧顺序相反：联合读出对应关系交，接口 completion 对应 kernel 收缩。后文在关系格上讨论迭代时，必须显式翻转这一方向，不能把接口侧的扩张性原样写成 kernel 侧的扩张性。
 
 # 2. 稳定接口
 
@@ -865,19 +869,21 @@ $$
 q(F_wx)=q(x),
 $$
 
-称 $w$ 在 $x$ 处形成 **可见环**。若同时
+称 $w$ 在 $x$ 处形成 **可见环**。定义 pointed holonomy 谓词
 
 $$
-F_wx\ne x,
+\operatorname{Hol}_q(w,x)
+\Longleftrightarrow
+q(F_wx)=q(x)\ \land\ F_wx\ne x.
 $$
 
-则称其具有非平凡 pointed holonomy。若
+因此 holonomy 同时包含可见基点回返与隐藏状态变化。只满足 $F_wx\ne x$ 时，本文称其为非平凡 transport。若
 
 $$
 s(F_wx)\ne s(x),
 $$
 
-则该 holonomy 对策略可见。
+则该 pointed holonomy 对策略可见。
 
 ## 定理 9A.3（策略变化检测非平凡 holonomy）
 
@@ -888,7 +894,7 @@ q(F_wx)=q(x)
 \ \land\ 
 s(F_wx)\ne s(x)
 \Longrightarrow
-F_wx\ne x.
+\operatorname{Hol}_q(w,x).
 $$
 
 ## 定理 9A.4（因子化消去策略 holonomy）
@@ -1751,8 +1757,10 @@ $$
 是一族 closure operator。每个 $C_i$ 单调、扩张且幂等。定义联合推进算子
 
 $$
-T(x)=\bigvee_{i\in I}C_i(x).
+T(x)=x\vee\bigvee_{i\in I}C_i(x).
 $$
+
+前置的 $x\vee(-)$ 使定义也覆盖空指标族；此时 $T=\operatorname{id}$。当 $I$ 非空时，由每个 $C_i$ 的扩张性可省略该前置项。
 
 从 $x_0=x$ 开始作超限迭代：
 
