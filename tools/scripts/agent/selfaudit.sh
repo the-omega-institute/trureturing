@@ -4,7 +4,7 @@
 #       selfaudit.sh --selftest                      跑匹配器的阳性/阴性对照
 set -u
 if [ "${1:-}" = "--selftest" ]; then T=--selftest; N=0; else
-  T="${1:-$(ls -t ~/.claude/projects/-Users-auricstudio-trureturing/*.jsonl | head -1)}"
+  T="${1:-$(ls -t "${CLAUDE_PROJECT_DIR:-$HOME/.claude/projects/$(git rev-parse --show-toplevel 2>/dev/null | sed "s|/|-|g")}"/*.jsonl | head -1)}"
   N="${2:-0}"
 fi
 python3 - "$T" "$N" <<'PY'
