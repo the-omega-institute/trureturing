@@ -48,31 +48,30 @@ theorem pair_readout_kernel
     exact Prod.ext sameFirst sameSecond
 
 /-- The pair readout refines its first coordinate by projection. -/
-theorem pair_readout_refines_first
+def pair_readout_refines_first
     {X : Type u} {Y : Type v} {Z : Type w}
     (first : Concept X Y) (second : Concept X Z) :
-    Refines (pairReadout first second) first := by
-  exact ⟨Prod.fst, fun _ => rfl⟩
+    Refines (pairReadout first second) first :=
+  ⟨Prod.fst, fun _ => rfl⟩
 
 /-- The pair readout refines its second coordinate by projection. -/
-theorem pair_readout_refines_second
+def pair_readout_refines_second
     {X : Type u} {Y : Type v} {Z : Type w}
     (first : Concept X Y) (second : Concept X Z) :
-    Refines (pairReadout first second) second := by
-  exact ⟨Prod.snd, fun _ => rfl⟩
+    Refines (pairReadout first second) second :=
+  ⟨Prod.snd, fun _ => rfl⟩
 
 /-- Any readout that refines both coordinates also refines their pair. Hence
 pairing is the supremum in the factorization preorder. -/
-theorem pair_readout_least_common_refinement
+def pair_readout_least_common_refinement
     {X : Type u} {Y : Type v} {Z : Type w} {W : Type z}
     (first : Concept X Y) (second : Concept X Z) (jointSource : Concept X W)
     (refinesFirst : Refines jointSource first)
     (refinesSecond : Refines jointSource second) :
-    Refines jointSource (pairReadout first second) := by
-  refine ⟨fun value =>
-    (refinesFirst.factor value, refinesSecond.factor value), ?_⟩
-  intro x
-  exact Prod.ext (refinesFirst.commutes x) (refinesSecond.commutes x)
+    Refines jointSource (pairReadout first second) :=
+  ⟨fun value =>
+      (refinesFirst.factor value, refinesSecond.factor value),
+    fun x => Prod.ext (refinesFirst.commutes x) (refinesSecond.commutes x)⟩
 
 /-- A Boolean identity paired with a constant coordinate still has the identity
 kernel. -/
