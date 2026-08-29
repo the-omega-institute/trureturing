@@ -102,7 +102,11 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
                     baseView,
                     current,
                     changes,
-                    ImmutableArray<DagLedgerFileEvent>.Empty));
+                    ImmutableArray<DagLedgerFileEvent>.Empty))
+            {
+                ProtectedBaseSnapshot = protectedBase,
+                CandidateSnapshot = current,
+            };
         }
 
         var deltaFiles = deltaPaths.Select(path => current.TryGetFile(path.Value, out var file)
@@ -150,7 +154,11 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
                 baseView,
                 current,
                 changes,
-                ordered));
+                ordered))
+        {
+            ProtectedBaseSnapshot = protectedBase,
+            CandidateSnapshot = current,
+        };
     }
 
     public AdmissionOutcome? Validate(
@@ -210,14 +218,41 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
                     + string.Join(", ", witnesses.Select(static path => path.Value)));
         }
 
+        var validationPreparation = preparation;
+        IFrozenLedgerReplacementAuthorization replacementAuthorization =
+            LegacyFrozenLedgerReplacementAuthorization.Instance;
+        if (preparation.ProtectedBaseSnapshot is { } protectedBaseSnapshot
+            && preparation.CandidateSnapshot is { } candidateSnapshot)
+        {
+            var incrementalRecognition =
+                FrozenLedgerIncrementalReplacementRecognition.Recognize(
+                    preparation.BaseView,
+                    candidateSnapshot,
+                    changes,
+                    preparation.DeltaEvents,
+                    catalog);
+            if (incrementalRecognition is not null)
+            {
+                validationPreparation = preparation with
+                {
+                    Replacement = incrementalRecognition,
+                };
+            }
+
+            replacementAuthorization = new FrozenLedgerReplacementAuthorization(
+                new MathlibUpgradeFrozenLedgerReplacementAuthorization(
+                    protectedBaseSnapshot,
+                    candidateSnapshot));
+        }
+
         IncrementalValidationCount++;
         var failure = timing.Measure(
             "frozen-ledger-delta",
             () => FrozenLedger.ValidateAdmissionDelta(
-                preparation,
+                validationPreparation,
                 scoped.Scope,
                 catalog,
-                LegacyFrozenLedgerReplacementAuthorization.Instance),
+                replacementAuthorization),
             static result => result is not null);
         return failure is null
             ? null
