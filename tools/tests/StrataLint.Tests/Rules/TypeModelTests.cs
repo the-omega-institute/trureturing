@@ -348,6 +348,10 @@ public sealed class TypeModelTests
 
     [Theory]
     [InlineData("Golden/other.toml")]
+    [InlineData("Golden/EngineeringTestRetirements/example.json")]
+    [InlineData("Golden/EngineeringTestRetirements/.json")]
+    [InlineData("Golden/EngineeringTestRetirements/example.toml")]
+    [InlineData("Golden/EngineeringTestRetirements/nested/example.json")]
     [InlineData("Golden/Other/x.json")]
     [InlineData("Golden/Projection/nested/x.json")]
     [InlineData("Golden/Projection/x.toml")]
