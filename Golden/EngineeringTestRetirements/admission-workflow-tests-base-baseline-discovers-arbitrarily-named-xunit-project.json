@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "AdmissionWorkflowTests.BaseBaselineDiscoversArbitrarilyNamedXunitProjectWithoutHarnessList",
+  "disposition": "renamed",
+  "replacement": {
+    "assembly": "StrataLint.Tests",
+    "id": "EngineeringScopeHarnessTests.BaseBaselineDiscoversArbitrarilyNamedXunitProjectWithoutHarnessList"
+  },
+  "reason": "Renamed with the workflow-test prohibition (CLAUDE.md 器律⑦′, 2026-08-29): the partial class AdmissionWorkflowTests no longer asserts anything about workflows, so it was renamed to EngineeringScopeHarnessTests and moved to Commands/MakeWorkflow/EngineeringScope/."
+}

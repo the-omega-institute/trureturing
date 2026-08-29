@@ -6,31 +6,6 @@ namespace StrataLint.Tests;
 
 public sealed partial class MakeWorkflowTests
 {
-    [Fact]
-    public void EngineeringCheckUsesBaseOwnedIdentityPlanWithoutProjectRepresentatives()
-    {
-        var makefile = TestRepositoryLayout.ReadAllText(
-            RepositoryRelativePath.Create("tools/Makefile"));
-        var workflow = TestRepositoryLayout.ReadAllText(
-            RepositoryRelativePath.Create(".github/workflows/ci.yml"));
-        var engineeringStep = EngineeringTestStep(workflow);
-        var targetMatches = Regex.Matches(
-            engineeringStep,
-            "(?m)^[ \\t]*make[ \\t]+-C[ \\t]+\"\\$base_harness_root/tools\"[ \\t]+(?<target>engineering-tests)\\b[^\\r\\n]*\\bMODE=execute\\b",
-            RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
-
-        var target = Assert.Single(targetMatches.Cast<Match>()).Groups["target"].Value;
-        Assert.Equal("engineering-tests", target);
-        var recipe = Recipe(makefile, target);
-        Assert.Contains("StrataLint.EngineeringScope.csproj", recipe, StringComparison.Ordinal);
-        Assert.Contains("--head \"$(HEAD)\" --base \"$(BASE)\"", recipe, StringComparison.Ordinal);
-        Assert.Contains("REPOSITORY=\"$GITHUB_WORKSPACE/candidate\"", engineeringStep, StringComparison.Ordinal);
-        Assert.Contains("MODE=execute", engineeringStep, StringComparison.Ordinal);
-        Assert.DoesNotContain("required_test_projects", engineeringStep, StringComparison.Ordinal);
-        Assert.DoesNotContain("--required-assembly", engineeringStep, StringComparison.Ordinal);
-        Assert.DoesNotContain("--filter", engineeringStep, StringComparison.Ordinal);
-        Assert.DoesNotContain("git diff", engineeringStep, StringComparison.Ordinal);
-    }
 
     [Fact(DisplayName = "Makefile and inspector dispatch counts are pinned in the thin dispatch table")]
     public void MakefileIsAThinCompleteDispatchTable()
@@ -81,7 +56,6 @@ public sealed partial class MakeWorkflowTests
         {
             WorktreeInitScriptPath,
             LeanCacheEnsureScriptPath,
-            AdmissionWorkflowPath,
             PreflightScriptPath,
             "tools/scripts/workflow/math-gate.sh",
             LocalHarnessGateScriptPath,
@@ -278,92 +252,6 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("OUT ?=", makefile, StringComparison.Ordinal);
     }
 
-    private static string EngineeringTestStep(string workflow)
-    {
-        var stream = new YamlStream();
-        stream.Load(new StringReader(workflow));
-        var document = Assert.IsType<YamlMappingNode>(stream.Documents[0].RootNode);
-        var jobs = Assert.IsType<YamlMappingNode>(document.Children[new YamlScalarNode("jobs")]);
-        var engineering = Assert.IsType<YamlMappingNode>(
-            jobs.Children[new YamlScalarNode("candidate-engineering")]);
-        var steps = Assert.IsType<YamlSequenceNode>(engineering.Children[new YamlScalarNode("steps")]);
-        var step = steps.Children.OfType<YamlMappingNode>().Single(candidate =>
-            candidate.Children.TryGetValue(new YamlScalarNode("name"), out var name)
-            && name is YamlScalarNode scalar
-            && scalar.Value == "Replan and run engineering tests with protected-base harness");
-        return Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("run")]).Value!;
-    }
-
-    [Fact]
-    public void PreflightCoversRecognizedCiGateCommandsAndRejectsUnrecognizedOnes()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var workflow = File.ReadAllText(Path.Combine(root, AdmissionWorkflowPath));
-        var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
-        var stream = new YamlStream();
-        stream.Load(new StringReader(workflow));
-        var document = Assert.IsType<YamlMappingNode>(stream.Documents[0].RootNode);
-        var jobs = Assert.IsType<YamlMappingNode>(document.Children[new YamlScalarNode("jobs")]);
-        var localEvidence = GateCommandSignatures(preflight).ToHashSet(StringComparer.Ordinal);
-        var recognizedCiScripts = new List<string>();
-        if (InvokesScript(preflight, ScribeContentChecksScriptPath))
-        {
-            localEvidence.UnionWith(GateCommandSignatures(
-                File.ReadAllText(Path.Combine(root, ScribeContentChecksScriptPath))));
-        }
-        if (Regex.IsMatch(
-            preflight,
-            @"(?m)^[ \t]*make[ \t]+gate(?:[ \t]|$)",
-            RegexOptions.CultureInvariant | RegexOptions.NonBacktracking))
-        {
-            localEvidence.UnionWith(GateCommandSignatures(
-                File.ReadAllText(Path.Combine(root, LocalHarnessGateScriptPath))));
-        }
-
-        Assert.NotEmpty(jobs.Children);
-        foreach (var (jobNode, definitionNode) in jobs.Children)
-        {
-            var job = Assert.IsType<YamlScalarNode>(jobNode).Value ?? string.Empty;
-            var definition = Assert.IsType<YamlMappingNode>(definitionNode);
-            Assert.True(
-                definition.Children.TryGetValue(new YamlScalarNode("steps"), out var stepsNode)
-                    && stepsNode is YamlSequenceNode,
-                $"CI job '{job}' must define a 'steps' sequence so gate-command parity can inspect its run blocks; job-level 'uses' declarations are not inspectable here.");
-            var steps = (YamlSequenceNode)stepsNode!;
-            var ciCommands = new List<string>();
-            foreach (var step in steps.Children.OfType<YamlMappingNode>())
-            {
-                if (!step.Children.TryGetValue(new YamlScalarNode("run"), out var runNode)) continue;
-                var run = Assert.IsType<YamlScalarNode>(runNode).Value ?? string.Empty;
-                var stepName = step.Children.TryGetValue(new YamlScalarNode("name"), out var nameNode)
-                    && nameNode is YamlScalarNode name
-                    ? name.Value ?? "<unnamed>"
-                    : "<unnamed>";
-                AssertNoUnrecognizedGateCommands(run, $"CI job '{job}' step '{stepName}'");
-                ciCommands.AddRange(GateCommandSignatures(run));
-                foreach (var scriptPath in CandidateWorkflowScriptPaths(run))
-                {
-                    recognizedCiScripts.Add(scriptPath);
-                    var script = File.ReadAllText(Path.Combine(root, scriptPath));
-                    AssertNoUnrecognizedGateCommands(script, $"CI script '{scriptPath}'");
-                    ciCommands.AddRange(GateCommandSignatures(script));
-                }
-            }
-
-            var distinctCiCommands = ciCommands
-                .Distinct(StringComparer.Ordinal)
-                .ToArray();
-
-            Assert.All(
-                distinctCiCommands,
-                command => Assert.True(
-                    localEvidence.Contains(command),
-                    $"preflight does not execute CI job '{job}' command '{command}'."));
-        }
-
-        Assert.Equal(2, recognizedCiScripts.Count(path => path == InstallLeanToolchainScriptPath));
-    }
-
     private static void AssertNoUnrecognizedGateCommands(string shell, string source)
     {
         foreach (var rawLine in shell.Split('\n'))
@@ -380,24 +268,6 @@ public sealed partial class MakeWorkflowTests
             Assert.True(
                 GateCommandSignatures(line).Any(),
                 $"{source} contains an unrecognized gate command: '{line.Trim()}'.");
-        }
-    }
-
-    private static bool InvokesScript(string shell, string repositoryPath) => Regex.IsMatch(
-        shell,
-        "(?m)^[ \\t]*/bin/bash[ \\t]+(?:\"\\$ROOT/|\"?)"
-            + Regex.Escape(repositoryPath)
-            + "\"?(?:[ \\t]+\\\\)?[ \\t]*$",
-        RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
-
-    private static IEnumerable<string> CandidateWorkflowScriptPaths(string shell)
-    {
-        foreach (Match match in Regex.Matches(
-            shell,
-            """(?m)^[ \t]*"\$GITHUB_WORKSPACE/candidate/(?<path>tools/scripts/workflow/[A-Za-z0-9_.-]+\.sh)"[^\\\r\n]*$""",
-            RegexOptions.CultureInvariant | RegexOptions.NonBacktracking))
-        {
-            yield return match.Groups["path"].Value;
         }
     }
 
@@ -463,18 +333,6 @@ public sealed partial class MakeWorkflowTests
         var canonical = File.ReadAllText(canonicalPath);
         var mathGate = File.ReadAllText(Path.Combine(root, "tools", "scripts", "workflow", "math-gate.sh"));
         var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
-        var workflow = File.ReadAllText(Path.Combine(root, AdmissionWorkflowPath));
-        var stream = new YamlStream();
-        stream.Load(new StringReader(workflow));
-        var document = Assert.IsType<YamlMappingNode>(stream.Documents[0].RootNode);
-        var jobs = Assert.IsType<YamlMappingNode>(document.Children[new YamlScalarNode("jobs")]);
-        var leanInspect = Assert.IsType<YamlMappingNode>(jobs.Children[new YamlScalarNode("lean-inspect")]);
-        var steps = Assert.IsType<YamlSequenceNode>(leanInspect.Children[new YamlScalarNode("steps")]);
-        var contentStep = Assert.Single(
-            steps.Children.OfType<YamlMappingNode>(),
-            step => step.Children.TryGetValue(new YamlScalarNode("name"), out var name)
-                && name is YamlScalarNode { Value: "Run complete mathematical content checks" });
-        var ciRun = Assert.IsType<YamlScalarNode>(contentStep.Children[new YamlScalarNode("run")]).Value!;
 
         AssertNoUnrecognizedGateCommands(canonical, $"canonical script '{ScribeContentChecksScriptPath}'");
         var canonicalCommands = GateCommandSignatures(canonical).ToArray();
@@ -499,9 +357,6 @@ public sealed partial class MakeWorkflowTests
             "STRATALINT_SCRIBE_BASE=\"$BASE_SHA\"",
             preflight,
             StringComparison.Ordinal);
-        Assert.Contains(ScribeContentChecksScriptPath, ciRun, StringComparison.Ordinal);
-        Assert.Contains("steps.base.outputs.sha", ciRun, StringComparison.Ordinal);
-        Assert.Empty(GateCommandSignatures(ciRun));
     }
 
     [Fact]
