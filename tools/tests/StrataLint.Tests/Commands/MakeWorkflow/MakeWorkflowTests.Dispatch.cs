@@ -196,7 +196,7 @@ public sealed partial class MakeWorkflowTests
     public void CheckFastFilterIsNonEmptyAndPinsRequiredRepositoryChecks()
     {
         var makefile = File.ReadAllText(
-            Path.Combine(TestRepositoryLayout.FindRoot(), ToolsMakefilePath));
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "Makefile"));
         var filterLine = Assert.Single(
             makefile.Split('\n'),
             static line => line.StartsWith(CheckFastFilterVariable, StringComparison.Ordinal));
