@@ -1,0 +1,28 @@
+## 935.1 离散观察作用保持
+
+由于：
+
+$$
+\kappa_a(\delta_n)
+\sim
+\frac{2\delta_n}{\sqrt a},
+$$
+
+有：
+
+$$
+\boxed{
+N_n\kappa_a(\delta_n)
+\longrightarrow
+\frac{
+2\delta_0\varphi^r
+}{
+\sqrt{5a}
+}.
+}
+\tag{935.5}
+$$
+
+因此在黄金完成塔中：
+
+* 破缺距离趋于零；

@@ -1,0 +1,15 @@
+## 723.1 黄金指数与局部 germ 层
+
+仓库定义：
+
+$$
+L_p^\varphi(s)
+=
+\sum_{v\ge0}
+p^{-s\beta_v},
+$$
+
+其中 \(\beta_v\) 由黄金 floor/fractional-part 账本产生。
+
+---
+

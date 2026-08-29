@@ -1,0 +1,89 @@
+# 第七百二十八部　新的中心定义：动态无理观察者
+
+定义一个动态无理观察者为：
+
+$$
+\boxed{
+\mathfrak O
+=
+\left(
+x_\infty,
+\lambda,
+c,
+J_2,J_3,\ldots
+\right),
+}
+\tag{728.1}
+$$
+
+其中线程满足：
+
+$$
+\boxed{
+x_n
+=
+x_\infty
++
+c\lambda^n
++
+J_2\lambda^{2n}
++
+J_3\lambda^{3n}
++\cdots,
+}
+\tag{728.2}
+$$
+
+且：
+
+$$
+|\lambda|<1.
+$$
+
+其零阶完成读出为：
+
+$$
+q_0(\mathfrak O)=x_\infty.
+$$
+
+一阶 blow-up 读出为：
+
+$$
+q_1(\mathfrak O)=c.
+$$
+
+更高读出为：
+
+$$
+q_k(\mathfrak O)=J_k.
+$$
+
+于是：
+
+$$
+\boxed{
+q_0\text{ 克隆完成世界，}
+}
+$$
+
+但只有完整 jet：
+
+$$
+(q_0,q_1,q_2,\ldots)
+$$
+
+才能克隆观察线程。
+
+黄金第一观察类对应：
+
+$$
+\boxed{
+x_\infty=\varphi,
+\qquad
+\lambda=-\varphi^{-2}.
+}
+\tag{728.3}
+$$
+
+---
+

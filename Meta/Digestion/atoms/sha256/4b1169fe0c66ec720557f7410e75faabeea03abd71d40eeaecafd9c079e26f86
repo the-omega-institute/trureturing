@@ -1,0 +1,68 @@
+# 第七百八十部　分裂素数携带 regulator 角度
+
+项目已经机器证明，对 \(p\neq5\)：
+
+$$
+p\equiv1,4\pmod5
+$$
+
+当且仅当 \(p\) 在黄金整数中分裂，而：
+
+$$
+p\equiv2,3\pmod5
+$$
+
+当且仅当其保持惰性；\(5\) 为分歧素数。
+
+若 \(p\) 分裂：
+
+$$
+(p)=\mathfrak p\overline{\mathfrak p},
+\qquad
+N\mathfrak p=p.
+$$
+
+选择：
+
+$$
+\mathfrak p=(\pi),
+$$
+
+定义规范角度：
+
+$$
+\boxed{
+\theta_p
+=
+\omega_\varphi\eta(\pi)
+\pmod{2\pi}.
+}
+\tag{780.1}
+$$
+
+改变生成元：
+
+$$
+\pi\mapsto\varphi^m\pi
+$$
+
+不改变 \(\theta_p\)。
+
+交换两个共轭素理想只会：
+
+$$
+\theta_p\mapsto-\theta_p.
+$$
+
+所以分裂素数规范地定义一个：
+
+$$
+\boxed{
+S^1/\{\theta\sim-\theta\}
+}
+$$
+
+中的观察点。
+
+---
+

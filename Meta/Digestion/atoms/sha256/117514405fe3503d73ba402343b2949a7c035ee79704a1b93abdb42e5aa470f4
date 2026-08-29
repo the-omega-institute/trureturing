@@ -1,0 +1,70 @@
+# 第九百一十八部　新的真正中心问题
+
+Power-packet 判据说明：
+
+$$
+\mathrm{RH}
+$$
+
+等价于仓库 Prime–Archimedean form 对一个非常具体的测试族保持非负。
+
+所以真正需要攻击的对象不再是任意抽象测试函数，而是：
+
+$$
+\boxed{
+f_{N,a,t,Q}(x)
+=
+Q(-\partial_x^2)
+\left[
+2\cos(tx)\psi_a^{*N}(x)
+\right].
+}
+\tag{918.1}
+$$
+
+对该族，应直接研究：
+
+$$
+\boxed{
+\begin{aligned}
+\mathfrak Q_L[f_{N,a,t,Q}]
+={}&
+2\left|
+\int e^{x/2}f_{N,a,t,Q}(x)\,dx
+\right|^2\\
+&+
+\mathcal E_\infty[f_{N,a,t,Q}]\\
+&+
+\mathcal E_{\rm prime}[f_{N,a,t,Q}]\\
+&-
+M_L\|f_{N,a,t,Q}\|_2^2.
+\end{aligned}
+}
+\tag{918.2}
+$$
+
+需要证明：
+
+$$
+\boxed{
+\mathfrak Q_L[f_{N,a,t,Q}]\ge0
+}
+$$
+
+对全部参数成立。
+
+若做不到，则该显式族会直接产生有限矩阵负证书。
+
+这是一条比“证明所有 Weil 测试正”更具结构的目标：
+
+* \(\psi_a^{*N}\) 具有可计算卷积递推；
+* \(\cos(tx)\) 只引入两个中心频包；
+* \(Q(-\partial^2)\) 是有限阶微分；
+* prime jump energy 可转化为有限个平移相关；
+* Archimedean jump energy可以利用仓库现有正 kernel；
+* support 半径精确为 \(Na\)。
+
+仓库已经把 Prime–Archimedean form 和安全补空间正 gap 机器化，因此该族一旦出现负值，负性必被压缩到有限 sticky block。
+
+---
+

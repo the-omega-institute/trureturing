@@ -1,0 +1,57 @@
+## 700.2 真正的记忆完成深度
+
+定义第 \(r\) 层的黄金 holonomy budget：
+
+$$
+\boxed{
+\mathfrak H_r(K,\pi)
+=
+\sum_{j\ge1}
+\varphi^{-j}
+\sup_{s\in K}
+\left\|
+C_{r;p_j,p_{j+1}}(s)
+\right\|.
+}
+\tag{700.4}
+$$
+
+在 residual envelope 有限时，该量有限。
+
+但必须严格区分：
+
+仓库已经证明的是解析域推进：
+
+$$
+\boxed{
+\varphi^{-2}
+\to
+\varphi^{-3}
+\to
+\varphi^{-4}.
+}
+$$
+
+目前尚未证明，在同一个公共紧集上必有：
+
+$$
+\boxed{
+\mathfrak H_{r+1}
+<
+\mathfrak H_r.
+}
+\tag{700.5}
+$$
+
+所以现有结果增加了：
+
+$$
+\boxed{
+\text{analytic depth},
+}
+$$
+
+但“每次 ζ 因子抽取都严格降低顺序记忆”仍是新的开放命题。
+
+---
+

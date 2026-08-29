@@ -1,0 +1,83 @@
+## 818.1 黄金圆 Poisson 核
+
+定义：
+
+$$
+q=e^{-2\pi y/P_\varphi}.
+$$
+
+Poisson kernel 为：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal P_y^\varphi(\eta)
+&=
+\frac1{P_\varphi}
+\sum_{n\in\mathbb Z}
+e^{-|k_n|y}e^{ik_n\eta}
+\\
+&=
+\frac1{P_\varphi}
+\frac{
+\sinh(2\pi y/P_\varphi)
+}{
+\cosh(2\pi y/P_\varphi)
+-
+\cos(2\pi\eta/P_\varphi)
+}.
+\end{aligned}
+}
+\tag{818.6}
+$$
+
+它满足：
+
+$$
+\mathcal P_y^\varphi(\eta)>0,
+$$
+
+$$
+\int_{\mathbb T_\varphi}
+\mathcal P_y^\varphi(\eta)\,d\eta=1.
+$$
+
+当：
+
+$$
+y\downarrow0,
+$$
+
+局部趋向 Cauchy kernel：
+
+$$
+\boxed{
+\mathcal P_y^\varphi(\eta)
+\sim
+\frac1\pi
+\frac{y}{y^2+\eta^2}.
+}
+\tag{818.7}
+$$
+
+当：
+
+$$
+y\to\infty,
+$$
+
+有：
+
+$$
+\boxed{
+\mathcal P_y^\varphi(\eta)
+\to
+\frac1{P_\varphi}.
+}
+\tag{818.8}
+$$
+
+所以 completion depth 越大，观察者起点越被均匀化，最终只剩 Haar 零模态。
+
+---
+

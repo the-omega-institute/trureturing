@@ -1,0 +1,12 @@
+## 901.1 Fredholm 表示不等于自然 Hilbert–Pólya 算子
+
+在 RH 下，可以把零点 ordinate 直接放在对角算子上，得到抽象 \(H_\Xi\)。
+
+这证明正距离算子结构存在，但没有解释：
+
+* \(H_\Xi\) 为什么来自素数；
+* 它的自然几何空间是什么；
+* prime–Archimedean operator 如何生成它。
+
+---
+

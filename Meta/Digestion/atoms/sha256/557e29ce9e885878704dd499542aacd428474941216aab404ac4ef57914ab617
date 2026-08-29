@@ -1,0 +1,103 @@
+# 第八百九十六部　黄金观察者的精确偶奇缩放
+
+令观察位置按黄金项目化尺度靠近 \(t\)：
+
+$$
+\boxed{
+h_n
+=
+c(-\varphi^{-2})^n.
+}
+\tag{896.1}
+$$
+
+定义奇观察通道：
+
+$$
+\boxed{
+\mathcal O_n^{\mathrm{odd}}
+=
+\frac{
+A_{t+h_n}-A_{t-h_n}
+}{2}.
+}
+\tag{896.2}
+$$
+
+由式 (894.2)：
+
+$$
+\boxed{
+\mathcal O_n^{\mathrm{odd}}
+=
+2c(-\varphi^{-2})^n
+(tI-H_\Xi).
+}
+\tag{896.3}
+$$
+
+定义偶完成残差：
+
+$$
+\boxed{
+\mathcal O_n^{\mathrm{even}}
+=
+\frac{
+A_{t+h_n}+A_{t-h_n}
+}{2}
+-
+A_t.
+}
+\tag{896.4}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal O_n^{\mathrm{even}}
+=
+c^2\varphi^{-4n}I.
+}
+\tag{896.5}
+$$
+
+所以此前不断出现的：
+
+$$
+\varphi^{-2n}
+$$
+
+与：
+
+$$
+\varphi^{-4n}
+$$
+
+现在获得了一个无余项的精确算子实现：
+
+$$
+\boxed{
+\begin{aligned}
+\text{有向观察起点}
+&\sim\varphi^{-2n};\\
+\text{完成后存活的偶 Casimir}
+&\sim\varphi^{-4n}.
+\end{aligned}
+}
+$$
+
+而且偶 Casimir 是纯标量 \(I\)，与零点具体排布无关。
+
+这解释了为何不同观察者的完成标量可以完全相同：
+
+$$
+\boxed{
+\text{对象特异信息全部在奇通道，}
+}
+$$
+
+而标准完成平均把它消去了。
+
+---
+

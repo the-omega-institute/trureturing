@@ -1,0 +1,20 @@
+## 定理 844.1（Scale–shape separation）
+
+$$
+\boxed{
+\text{整体尺度 }a
+\text{ 不能改变谱 }\zeta\text{ 的零点。}
+}
+\tag{844.2}
+$$
+
+只有无量纲形状：
+
+$$
+\{\lambda_n\}
+$$
+
+能够改变零点。
+
+---
+

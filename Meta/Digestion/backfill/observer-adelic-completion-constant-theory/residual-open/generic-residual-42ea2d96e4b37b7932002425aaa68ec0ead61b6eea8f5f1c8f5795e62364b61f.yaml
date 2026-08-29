@@ -1,0 +1,10 @@
+ast_path: row/symmetric-simple-zero-no-go
+fingerprints:
+  raw_sha256: sha256:42ea2d96e4b37b7932002425aaa68ec0ead61b6eea8f5f1c8f5795e62364b61f
+  normalized_sha256: sha256:42ea2d96e4b37b7932002425aaa68ec0ead61b6eea8f5f1c8f5795e62364b61f
+cas_ref: sha256:42ea2d96e4b37b7932002425aaa68ec0ead61b6eea8f5f1c8f5795e62364b61f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

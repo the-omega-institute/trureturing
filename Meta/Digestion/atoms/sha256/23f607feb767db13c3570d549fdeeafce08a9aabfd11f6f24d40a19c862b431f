@@ -1,0 +1,49 @@
+# 第八百六十四部　法向 Jet 是隐藏观察者纤维的偶矩
+
+令
+
+$$
+\phi_\xi(u)
+=
+\frac12\Phi_\xi(|u|),
+\qquad
+u\in\mathbb R.
+$$
+
+于是
+
+$$
+\boxed{
+F(z)
+=
+\int_{\mathbb R}
+\phi_\xi(x)e^{zx}\,dx.
+}
+\tag{864.1}
+$$
+
+代入式 (863.2)：
+
+$$
+\begin{aligned}
+R(\delta,t)
+=
+\iint_{\mathbb R^2}
+\phi_\xi(x)\phi_\xi(y)
+e^{it(x+y)}
+e^{\delta(x-y)}
+\,dx\,dy.
+\end{aligned}
+\tag{864.2}
+$$
+
+由于交换 \(x,y\) 不改变积分，指数项可以对称化为：
+
+$$
+e^{\delta(x-y)}
+\longmapsto
+\cosh\!\bigl(\delta(x-y)\bigr).
+$$
+
+因此：
+

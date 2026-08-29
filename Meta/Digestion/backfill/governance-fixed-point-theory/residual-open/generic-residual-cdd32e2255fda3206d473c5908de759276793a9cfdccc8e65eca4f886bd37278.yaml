@@ -1,0 +1,14 @@
+ast_path: section/2-3-非盲派生没有统一保证
+fingerprints:
+  raw_sha256: sha256:cdd32e2255fda3206d473c5908de759276793a9cfdccc8e65eca4f886bd37278
+  normalized_sha256: sha256:cdd32e2255fda3206d473c5908de759276793a9cfdccc8e65eca4f886bd37278
+cas_ref: sha256:cdd32e2255fda3206d473c5908de759276793a9cfdccc8e65eca4f886bd37278
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-6a2c4a292c62ac8f6cc05c690f8e7a1bf2afbceaef3eca4546e5d826180587ac-57b1e5509ac7211024e226a966d31adf291958aefcef1fdd10063b739b0f7dc7
+    - generic-residual-1e22735b681c587f2de9d111e701be7caa1fec7e951ca366088f8fcd07d94678-c34b2fe66741613d91553b8cffc7e2f49cdfb92b64b9ccd1e7a7864acd8443eb
+    - generic-residual-3a890a32365c582a44c42a251d5b99889b2de32aa472d2796cc1edbf06002705-e04f6f4a7b9c0e5e40a8f06779f5cd634281f03d7d9e355c1a2a139d5f1e745d

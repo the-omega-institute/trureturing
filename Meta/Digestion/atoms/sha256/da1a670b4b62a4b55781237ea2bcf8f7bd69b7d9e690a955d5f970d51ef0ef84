@@ -1,0 +1,15 @@
+## 708.6 谱实验
+
+只把以下对象标记为 observer transfer：
+
+$$
+\Theta_{\pi,\kappa}(s)
+=
+F(s)
+-
+\kappa A_{\mathrm{odd},\pi}(s)^2.
+$$
+
+跟踪其零点时必须同时做：
+
+* 反射对称检查；

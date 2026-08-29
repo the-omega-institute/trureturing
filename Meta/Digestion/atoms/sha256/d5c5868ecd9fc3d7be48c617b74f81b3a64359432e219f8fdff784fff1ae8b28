@@ -1,0 +1,59 @@
+# 第七百一十四部　动态“无克隆”：完成值不能恢复完成线程
+
+定义完成映射：
+
+$$
+\boxed{
+\mathsf C:
+\{\text{收敛线程}\}
+\to
+\mathbb R,
+\qquad
+(x_n)\mapsto\lim_nx_n.
+}
+\tag{714.1}
+$$
+
+存在无穷多个不同线程：
+
+$$
+x_n^{(c)}
+$$
+
+满足：
+
+$$
+\lim_nx_n^{(c)}=\varphi.
+$$
+
+例如令：
+
+$$
+\kappa(x_n^{(c)})
+=
+c(-\varphi^{-2})^n.
+$$
+
+则：
+
+$$
+\mathsf C(x_\bullet^{(c)})=\varphi
+$$
+
+对所有 \(c\) 成立。
+
+但：
+
+$$
+\boxed{
+c
+=
+(-\varphi^2)^n\kappa(x_n^{(c)})
+}
+\tag{714.2}
+$$
+
+在每一层都可以由 blow-up 恢复。
+
+---
+

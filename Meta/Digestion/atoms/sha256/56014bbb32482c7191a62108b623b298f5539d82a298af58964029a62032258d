@@ -1,0 +1,83 @@
+## v5.9：正距离算子束、Poisson–Resolvent 负证书、黄金观察者平行四边形与 Jet–Sticky 编译
+
+以下续接前文**第八百八十八部**。
+
+上一轮已经把临界线法向喷流写成：
+
+$$
+\mathfrak N_t(u)
+=
+\Xi(t-i\sqrt u)\Xi(t+i\sqrt u)
+=
+\sum_{m\ge0}\mathcal J_m(t)u^m,
+$$
+
+并在 RH 下得到：
+
+$$
+\frac{\mathfrak N_t(u)}{\Xi(t)^2}
+=
+\det\!\left(I+u(H_\Xi-t)^{-2}\right).
+$$
+
+这意味着每个临界线观察者看到的不是零点的绝对坐标，而是一个**平方距离谱**。
+
+本轮继续完成三条桥：
+
+$$
+\boxed{
+\begin{aligned}
+\text{有限负 Jet}
+&\longrightarrow
+\text{有理 Hermitian 零点见证};\\
+\text{平方距离谱}
+&\longrightarrow
+\text{共同自伴观察者束};\\
+\text{观察者导数}
+&\longrightarrow
+\text{被零阶完成遗忘的方向信息}.
+\end{aligned}
+}
+$$
+
+其中最深的新结果是一个精确恒等式：
+
+$$
+\boxed{
+\frac{A_{t+h}+A_{t-h}}2-A_t
+=
+h^2I,
+}
+$$
+
+$$
+\boxed{
+\frac{A_{t+h}-A_{t-h}}{4h}
+=
+tI-H_\Xi.
+}
+$$
+
+也就是说：
+
+* 镜像观察者的**偶完成残差**完全普适，只剩 \(h^2I\)；
+* 镜像观察者的**奇差分**完整恢复零点方向算子 \(H_\Xi\)。
+
+因此：
+
+$$
+\boxed{
+\text{完成后的世界可以完全一样，}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{形成这个世界的方向只存在于导数／连接中。}
+}
+$$
+
+---
+

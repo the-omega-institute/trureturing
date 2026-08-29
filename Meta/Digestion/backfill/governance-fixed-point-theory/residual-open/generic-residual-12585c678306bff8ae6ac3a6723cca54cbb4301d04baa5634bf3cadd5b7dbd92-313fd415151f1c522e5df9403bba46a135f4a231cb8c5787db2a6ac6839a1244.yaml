@@ -1,0 +1,10 @@
+ast_path: section/4-1-修复类与放行集/clause/3
+fingerprints:
+  raw_sha256: sha256:12585c678306bff8ae6ac3a6723cca54cbb4301d04baa5634bf3cadd5b7dbd92
+  normalized_sha256: sha256:12585c678306bff8ae6ac3a6723cca54cbb4301d04baa5634bf3cadd5b7dbd92
+cas_ref: sha256:12585c678306bff8ae6ac3a6723cca54cbb4301d04baa5634bf3cadd5b7dbd92
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

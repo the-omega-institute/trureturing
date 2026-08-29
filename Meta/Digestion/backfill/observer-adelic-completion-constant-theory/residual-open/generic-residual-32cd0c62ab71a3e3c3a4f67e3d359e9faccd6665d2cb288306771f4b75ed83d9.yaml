@@ -1,0 +1,10 @@
+ast_path: section/923-1-小破缺极限
+fingerprints:
+  raw_sha256: sha256:32cd0c62ab71a3e3c3a4f67e3d359e9faccd6665d2cb288306771f4b75ed83d9
+  normalized_sha256: sha256:32cd0c62ab71a3e3c3a4f67e3d359e9faccd6665d2cb288306771f4b75ed83d9
+cas_ref: sha256:32cd0c62ab71a3e3c3a4f67e3d359e9faccd6665d2cb288306771f4b75ed83d9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

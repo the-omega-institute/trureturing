@@ -1,0 +1,24 @@
+## 猜想 749.1（Golden null-graph universality）
+
+任何满足以下条件的第一次自观察：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{二通道};\\
+&\text{维度无偏};\\
+&\text{primitive 整数更新};\\
+&\text{unimodular};\\
+&\text{最小非平凡自相似};
+\end{aligned}
+}
+$$
+
+都等价于某个 Fibonacci anti-Lorentz 系统，其正 null graph 的标量像为：
+
+$$
+\varphi.
+$$
+
+---
+

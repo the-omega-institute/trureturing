@@ -1,0 +1,10 @@
+ast_path: section/第八百七十二部-建议形式化顺序/clause/2
+fingerprints:
+  raw_sha256: sha256:be46c384f25c5a44c5076c75b2448739f6689493f55836c40a6b99610daaadaf
+  normalized_sha256: sha256:be46c384f25c5a44c5076c75b2448739f6689493f55836c40a6b99610daaadaf
+cas_ref: sha256:be46c384f25c5a44c5076c75b2448739f6689493f55836c40a6b99610daaadaf
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

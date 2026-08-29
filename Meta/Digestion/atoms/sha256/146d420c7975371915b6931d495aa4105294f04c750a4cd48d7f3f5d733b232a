@@ -1,0 +1,68 @@
+# 第七百八十一部　Hecke 模态是素数观察角分布的 Fourier 层析
+
+在：
+
+$$
+\Re s>1
+$$
+
+中，对分裂素数局部因子取对数：
+
+$$
+\boxed{
+\log L_{n,p}(s)
+=
+2\sum_{k\ge1}
+\frac{
+\cos(kn\theta_p)
+}{
+k
+}
+p^{-ks}.
+}
+\tag{781.1}
+$$
+
+惰性与分歧部分不依赖 \(n\)。
+
+定义正测度：
+
+$$
+\boxed{
+\mu_s^{\mathrm{split}}
+=
+2
+\sum_{\substack{p\text{ split}\\k\ge1}}
+\frac{p^{-ks}}{k}
+\delta_{\,k\theta_p\bmod2\pi}.
+}
+\tag{781.2}
+$$
+
+则：
+
+$$
+\boxed{
+\log L_n(s)
+-
+\log L_{\mathrm{inert+ram}}(s)
+=
+\int_{S^1}
+\cos(n\theta)\,
+d\mu_s^{\mathrm{split}}(\theta).
+}
+\tag{781.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\{L_n(s)\}_{n\in\mathbb Z}
+}
+$$
+
+正是 split-prime regulator 角分布的 Fourier 层析。
+
+---
+

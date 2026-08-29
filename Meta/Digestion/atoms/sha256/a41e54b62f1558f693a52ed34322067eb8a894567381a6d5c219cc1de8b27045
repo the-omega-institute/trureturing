@@ -1,0 +1,68 @@
+# 第九百零二部　建议形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/NormalResolvent/
+  NormalEntireFunction.lean
+  NormalLogResolvent.lean
+  PositiveNormalZeroImpliesNegativeResolvent.lean
+  FirstResolventRHCriterion.lean
+  RationalHermitianResolventWitness.lean
+
+D5/S3/Analytic/Zeta/ResolventStrip/
+  OneSidedExponentialTransform.lean
+  ResolventTransformStrip.lean
+  OffLineResolventStripObstruction.lean
+  TruncatedResolventFailure.lean
+
+D5/S3/Analytic/Zeta/PaleyWienerBridge/
+  FiniteSymmetricInterpolation.lean
+  PolynomialTimesBumpInterpolation.lean
+  WeightedZeroSamplingSpace.lean
+  ExteriorPoleRationalizationTarget.lean
+  JetToCompactWeilTarget.lean
+
+D5/S3/Analytic/Zeta/DistanceBundle/
+  AbstractZeroOperator.lean
+  ObserverDistanceSquare.lean
+  NormalResolventTrace.lean
+  DistanceParallelogramLaw.lean
+  DistanceOddDifferenceRecoversOperator.lean
+  OneObserverReflectionBlindness.lean
+
+D5/S3/Analytic/Zeta/FlatObserverBundle/
+  StrongQuadraticOperatorFamily.lean
+  ObserverBundleSecondDerivative.lean
+  ObserverBundleDiscriminant.lean
+  FlatQuadraticBundleReconstruction.lean
+  PositiveDistanceBundleRHInterface.lean
+
+D5/S3/Analytic/Zeta/GoldenDistanceObserver/
+  GoldenObserverDisplacement.lean
+  GoldenOddDistanceChannel.lean
+  GoldenEvenDistanceCasimir.lean
+  GoldenDistanceExactScaling.lean
+
+D5/S3/Analytic/Zeta/TachyonicDefect/
+  FormalZeroDistanceSquare.lean
+  CriticalZeroMasslessMode.lean
+  OffLineZeroNegativeDistanceSquare.lean
+  PositiveNormalRootFromNegativeMassSquare.lean
+
+D5/S3/Weil/JetCompiler/
+  RationalZeroSideWitness.lean
+  ExteriorPoleApproximationInterface.lean
+  CompactSupportApproximationInterface.lean
+  JetWitnessToWeilNegative.lean
+  WeilNegativeToStickyBlock.lean
+  JetToFeshbachCompiler.lean
+
+D5/S3/ConceptDynamics/DepthTransport/
+  JetEscapeDepth.lean
+  HankelEscapeDepth.lean
+  WeilSupportDepth.lean
+  StickyEscapeDepth.lean
+  DepthTransportTarget.lean
+```
+
+---
+

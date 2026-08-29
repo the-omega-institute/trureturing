@@ -1,0 +1,10 @@
+ast_path: row/外极点指数核到紧支撑
+fingerprints:
+  raw_sha256: sha256:dc69b3a8234710ff49b8ae23a43d8c8376ef5ccbb73b5813b38637e16b7400c6
+  normalized_sha256: sha256:dc69b3a8234710ff49b8ae23a43d8c8376ef5ccbb73b5813b38637e16b7400c6
+cas_ref: sha256:dc69b3a8234710ff49b8ae23a43d8c8376ef5ccbb73b5813b38637e16b7400c6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

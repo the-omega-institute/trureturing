@@ -1,0 +1,162 @@
+# 本轮最终结论
+
+带记忆的黄金素数观察器已经可以被完整写成：
+
+$$
+\boxed{
+\mathbf U_{r,p}(s)
+=
+\begin{pmatrix}
+\mathbf F&
+\left(
+L_p^{\langle r\rangle}(s)-1
+\right)v_p
+\\
+0&
+L_p^{\langle r\rangle}(s)
+\end{pmatrix}.
+}
+$$
+
+它把素数信息分成两部分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{标量通道}
+&:\quad
+\prod_pL_p^{\langle r\rangle},
+\\
+\text{记忆通道}
+&:\quad
+\sum_j
+\mathbf F^{n-j}
+Z_{j-1}
+B_{r,p_j}.
+\end{aligned}
+}
+$$
+
+标量通道交换、无序，最终完成为同一个 Euler product。
+
+记忆通道非交换、有序，保存素数观察词的 holonomy。
+
+因此：
+
+$$
+\boxed{
+\text{相同世界输出}
+\quad
+\text{可以对应不同观察起源}.
+}
+$$
+
+这一差异无法从完成标量中反演，但可以通过受控 probe 显现。
+
+黄金比例在该系统中承担两个互补作用：
+
+$$
+\boxed{
+\varphi
+=
+\text{历史档案的自相似尺度},
+}
+$$
+
+$$
+\boxed{
+-\varphi^{-1}
+=
+\text{活动破缺的交替收缩尺度}.
+}
+$$
+
+最关键的结果是：
+
+$$
+\boxed{
+D_{n+1}
+=
+-\varphi^{-1}D_n
++
+Z_n b_{r,p_{n+1}}^-.
+}
+$$
+
+在仓库已经证明的普通 Euler 收敛区域，局部偏差趋零，因而 forcing 也趋零：
+
+$$
+\boxed{
+D_n\to0.
+}
+$$
+
+所以该构造自然产生的是：
+
+$$
+\boxed{
+\text{有限层存在顺序破缺，
+无限标量完成消除活动缺陷，
+但保留隐藏历史档案}.
+}
+$$
+
+这与“不同观察者看见同样的完成世界，却拥有不同起点”完全一致。
+
+但它还给出了一条强科学限制：
+
+$$
+\boxed{
+\text{一个保持 completed reflection 的小记忆耦合，
+不能把简单临界零点推出临界线。}
+}
+$$
+
+真实离线零点若存在，必须来自：
+
+* 多重零点 bifurcation；
+* 非微扰持久分支；
+* completed reflection 的真实破坏；
+* 或一个在全部 ζ 因子抽取后仍不消失的二阶 holonomy forcing。
+
+因此当前最值得推进的中心问题已经变成：
+
+$$
+\boxed{
+\text{随着 }
+L_p^{\langle0\rangle}
+\to
+L_p^{\langle1\rangle}
+\to
+L_p^{\langle2\rangle}
+\to\cdots,
+}
+$$
+
+$$
+\boxed{
+\text{黄金素数记忆的 paired odd variance
+是否严格趋于零？}
+}
+$$
+
+若趋于零，则顺序差异只是观察器纤维，完成极限支持 RH。
+
+若不趋于零，则剩余的、对观察者交换不变的二阶记忆项：
+
+$$
+\boxed{
+A_{\mathrm{odd}}^2
+}
+$$
+
+才是一个真正值得尝试连接到 prime–Archimedean／Weil 谱缺陷的候选。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{ζ 因子抽取解释“世界为什么相同”，
+Fibonacci 记忆解释“观察者为什么不同”，
+而二阶 holonomy 决定这种不同是否能穿透完成，成为对象本身的谱破缺。}
+$$

@@ -1,0 +1,26 @@
+## 猜想 828.2（Golden observer bulk extension）
+
+存在一个局部 bulk operator：
+
+$$
+\mathbb L_{\sigma,\varphi}
+$$
+
+作用于：
+
+$$
+(0,\infty)_y
+\times
+\mathbb T_\varphi,
+$$
+
+使其 Dirichlet-to-Neumann map 恰为：
+
+$$
+\Phi_\sigma(-\partial_\eta^2).
+$$
+
+complete Bernstein 函数的通用延拓理论支持这一构造。([arXiv][3])
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: row/洗白谓词有精确有限判定证书-无额外-Verdict-Fintype-前件
+fingerprints:
+  raw_sha256: sha256:86131215bc59a49581c27d70dec450fdbe1d98b3e698b655dd0af4c9f9f93f2f
+  normalized_sha256: sha256:86131215bc59a49581c27d70dec450fdbe1d98b3e698b655dd0af4c9f9f93f2f
+cas_ref: sha256:86131215bc59a49581c27d70dec450fdbe1d98b3e698b655dd0af4c9f9f93f2f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

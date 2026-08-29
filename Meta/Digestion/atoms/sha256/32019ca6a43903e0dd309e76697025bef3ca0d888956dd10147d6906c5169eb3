@@ -1,0 +1,35 @@
+* \(Q\) 的系数；
+
+作充分小扰动，负性仍然保持。
+
+因此，在补齐统一尾界连续性之后，可把参数限制为有理数，得到一个可数测试族：
+
+$$
+\boxed{
+\mathscr P_\psi^{\mathbb Q}.
+}
+$$
+
+相应候选判据为：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathfrak Q_{\mathcal Z}[\widehat f]\ge0
+\quad
+\forall f\in\mathscr P_\psi^{\mathbb Q}.
+}
+\tag{910.3}
+$$
+
+它并不使 RH 自动可判定，但把“任意测试函数”的量词压缩成：
+
+$$
+\boxed{
+\text{一个固定 bump 的卷积幂、余弦调制与实偶多项式微分族。}
+}
+$$
+
+---
+

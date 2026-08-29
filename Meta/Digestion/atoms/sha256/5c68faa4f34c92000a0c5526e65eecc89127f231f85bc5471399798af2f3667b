@@ -1,0 +1,52 @@
+# 第九百三十一部　Active contact 的临界解释
+
+仓库当前已经机器构造：在 active pressure 下，圆周 completion 的 residual support 被限制在有限接触零点上，并可由有限正原子表示。
+
+因此，当某个 Chebyshev–Toeplitz 最低特征值下降到零时：
+
+$$
+\lambda_{\min}(M)=0,
+$$
+
+其最小特征向量生成一个 contact rational function：
+
+$$
+q(z)=c^*\Phi(z).
+$$
+
+残余谱必须位于：
+
+$$
+q(z)=0
+$$
+
+与 Chebyshev slack 接触集合的交上。
+
+所以“第一破缺”可以不再被描述为某个不可见复数点，而是：
+
+$$
+\boxed{
+\text{一个有限 contact matrix 的最低特征值穿过零。}
+}
+$$
+
+在临界层：
+
+$$
+\boxed{
+\lambda_{\min}=0;
+}
+$$
+
+破缺之后：
+
+$$
+\boxed{
+\lambda_{\min}<0.
+}
+$$
+
+这是一个真正的有限维相变。
+
+---
+

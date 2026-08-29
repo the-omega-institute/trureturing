@@ -1,0 +1,28 @@
+## 3.2 追加式载体与尾节
+
+对字节串 $x,y:B^\ast$，定义前缀扩展：
+
+$x\preceq y\Longleftrightarrow\exists u:B^\ast,\ y=x\cdot u$。
+
+对起点 $m\le |x|$，定义尾节 span：
+
+$\operatorname{TailSpan}(x,m):=[m,|x|)$。
+
+其字节为：
+
+$\operatorname{Tail}(x,m):=\operatorname{drop}_m(x)$。
+
+若 $y=x\cdot u$ 且 $m\le |x|$，则：
+
+$\operatorname{Tail}(y,m)=\operatorname{Tail}(x,m)\cdot u$。
+
+故：
+
+$\operatorname{Tail}(x,m)\preceq\operatorname{Tail}(y,m)$。
+
+这就是 **span 前缀扩展**。
+
+若 $u$ 非空，则新尾节比旧尾节更长，精确字节内容键必然改变。该改变是追加式载体的正常结果，不应被诊断为旧字节遭篡改。
+
+对账本历史 $H$，追加式更新同样写成 $H\preceq H'$。物理实现只允许向历史尾部追加新条目和重键事件；活动地址变化只是这些事件折叠后的视图变化。
+

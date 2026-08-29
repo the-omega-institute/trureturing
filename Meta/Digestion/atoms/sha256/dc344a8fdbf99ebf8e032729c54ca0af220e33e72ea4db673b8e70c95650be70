@@ -1,0 +1,81 @@
+## 736.1 两个最大 null graph
+
+定义：
+
+$$
+\boxed{
+\mathcal L_+
+=
+\left\{
+(\varphi Y,Y):Y\in\mathcal H
+\right\},
+}
+\tag{736.5}
+$$
+
+$$
+\boxed{
+\mathcal L_-
+=
+\left\{
+(\varphi'Y,Y):Y\in\mathcal H
+\right\}.
+}
+\tag{736.6}
+$$
+
+对任意 \(Y,Y'\)：
+
+$$
+B_{\varphi,\mathcal H}
+\bigl(
+(\varphi Y,Y),
+(\varphi Y',Y')
+\bigr)
+=0.
+$$
+
+所以 \(\mathcal L_+\) 是完全 isotropic 的 null 子空间；\(\mathcal L_-\) 同理。
+
+而且：
+
+$$
+\boxed{
+\mathbf F_{\mathcal H}(\varphi Y,Y)
+=
+\varphi(\varphi Y,Y),
+}
+\tag{736.7}
+$$
+
+$$
+\boxed{
+\mathbf F_{\mathcal H}(\varphi'Y,Y)
+=
+\varphi'(\varphi'Y,Y).
+}
+\tag{736.8}
+$$
+
+因此：
+
+$$
+\boxed{
+\varphi I_{\mathcal H}
+}
+$$
+
+不是某一维度偶然出现的数，而是整个正 null graph 的标量斜率。
+
+这给“在各个维度都一样、没有区别”一个严格版本：
+
+$$
+\boxed{
+X=\varphi Y
+\quad
+\text{在 }\mathcal H\text{ 的每个方向上同时成立。}
+}
+$$
+
+---
+

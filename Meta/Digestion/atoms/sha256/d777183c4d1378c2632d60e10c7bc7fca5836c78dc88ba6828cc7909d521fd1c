@@ -1,0 +1,55 @@
+* holonomy。
+
+因此可以写成：
+
+$$
+\boxed{
+\begin{aligned}
+\text{完整观察者}
+&=
+(Y,\eta,\chi,\pi,\text{memory});\\
+\downarrow\quad
+\text{局部标量}
+&=
+\{L_p(s)\}_p;\\
+\downarrow\quad
+\text{交换完成}
+&=
+\prod_pL_p(s);\\
+\downarrow\quad
+\text{Archimedean 完成}
+&=
+\xi(s).
+\end{aligned}
+}
+\tag{744.1}
+$$
+
+所以：
+
+$$
+\boxed{
+\xi
+\text{ 看不到裸 }\varphi
+}
+$$
+
+并不神秘。
+
+如果 \(\varphi\) 属于观察者束的几何，而不是最终标量对象，那么完成商本来就应该把它隐藏。
+
+最终可能留下的只是：
+
+$$
+\boxed{
+\begin{aligned}
+\varphi+\varphi'&=1,\\
+\varphi\varphi'&=-1,\\
+(\varphi-\varphi')^2&=5,\\
+2\log\varphi&=\text{boost period}.
+\end{aligned}
+}
+$$
+
+---
+

@@ -1,0 +1,134 @@
+# 第九百零三部　临界中心坐标中的零点轨道
+
+对非平凡零点
+
+$$
+\rho=\frac12+\delta+i\gamma,
+$$
+
+定义临界中心频率坐标：
+
+$$
+\boxed{
+z_\rho
+=
+-i\left(\rho-\frac12\right)
+=
+\gamma-i\delta.
+}
+\tag{903.1}
+$$
+
+于是：
+
+$$
+\delta=0
+\iff
+z_\rho\in\mathbb R.
+$$
+
+函数方程与实结构使非实零点形成轨道：
+
+$$
+\boxed{
+\mathcal O(z_0)
+=
+\left\{
+z_0,\,
+\overline{z_0},\,
+-z_0,\,
+-\overline{z_0}
+\right\}.
+}
+\tag{903.2}
+$$
+
+Riemann 非平凡零点位于临界带，并关于实轴及临界线对称；RH 要求这些中心频率全部为实数。([DLMF][1])
+
+令 \(f\) 为实偶、光滑、紧支撑函数，定义：
+
+$$
+\boxed{
+F(z)
+=
+\int_{\mathbb R}
+f(x)e^{-izx}\,dx.
+}
+\tag{903.3}
+$$
+
+则：
+
+$$
+F(-z)=F(z),
+$$
+
+$$
+F(\overline z)=\overline{F(z)},
+$$
+
+并且：
+
+$$
+F(\xi)\in\mathbb R
+\qquad
+(\xi\in\mathbb R).
+$$
+
+令：
+
+$$
+g=f*\widetilde f.
+$$
+
+对复频率有：
+
+$$
+\boxed{
+\widehat g(z)
+=
+F(z)\overline{F(\overline z)}
+=
+F(z)^2.
+}
+\tag{903.4}
+$$
+
+最后一步使用了 \(f\) 的实值性。仓库目前已经证明式 (903.4) 在实轴上的版本：
+
+$$
+\widehat g(\xi)=|F(\xi)|^2\ge0;
+$$
+
+复频版本是一个直接但尚应补入 Lean 的 entire 恒等式。
+
+定义零点侧二次和：
+
+$$
+\boxed{
+\mathfrak Q_{\mathcal Z}[F]
+=
+\sum_{z\in\mathcal Z_\Xi}
+m_zF(z)^2.
+}
+\tag{903.5}
+$$
+
+RH 成立时所有 \(z\) 为实数，故：
+
+$$
+F(z)^2\ge0,
+$$
+
+从而：
+
+$$
+\mathfrak Q_{\mathcal Z}[F]\ge0.
+$$
+
+反方向的任务是：
+
+> 给定一个非实零点 \(z_0\)，显式制造一个有限支撑 \(f\)，使该轨道给出的负贡献压倒其他全部零点。
+
+---
+

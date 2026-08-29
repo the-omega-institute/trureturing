@@ -1,0 +1,39 @@
+## v5.7（续）：临界线法向喷流、观察者纤维矩与离线零点的有限阶负证书
+
+以下续接前文**第八百六十三部**。
+
+令
+
+$$
+F(z):=\xi\!\left(\frac12+z\right),
+\qquad
+\Xi(t):=F(it)=\xi\!\left(\frac12+it\right).
+$$
+
+由 Theta 自对偶与 Mellin 完成，可以构造严格正、快速衰减的 kernel \(\Phi_\xi(u)\)，使
+
+$$
+\boxed{
+F(z)
+=
+\int_0^\infty
+\Phi_\xi(u)\cosh(zu)\,du.
+}
+\tag{863.0}
+$$
+
+该表示来自 Jacobi Theta 的模变换与 Riemann \(\zeta\) 的 Mellin 表示；函数方程使 \(F(z)=F(-z)\)。([DLMF][1])
+
+本轮最重要的结论是：
+
+$$
+\boxed{
+\text{每一个真实离线零点，
+都必然在临界线上的某个有限阶偶法向导数中留下负证书。}
+}
+$$
+
+因此，“点不在轴上，但导数能够找到它”不再只是比喻。
+
+---
+

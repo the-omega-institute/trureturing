@@ -1,0 +1,10 @@
+ast_path: section/934-1-Prime-horizon
+fingerprints:
+  raw_sha256: sha256:c8592d6231a3e41feae1f02906bd103bd664ff2ebf4e6c83dc4e059b5331cc62
+  normalized_sha256: sha256:c8592d6231a3e41feae1f02906bd103bd664ff2ebf4e6c83dc4e059b5331cc62
+cas_ref: sha256:c8592d6231a3e41feae1f02906bd103bd664ff2ebf4e6c83dc4e059b5331cc62
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

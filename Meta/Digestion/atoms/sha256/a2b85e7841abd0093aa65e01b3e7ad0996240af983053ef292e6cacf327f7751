@@ -1,0 +1,89 @@
+# 第七百七十六部　连续观察者群、regulator 圆与离散黄金群
+
+前文黄金 Lorentz 平面给出两个 null 方向：
+
+$$
+L_+=\mathbb R(\varphi,1),
+\qquad
+L_-=\mathbb R(\varphi',1),
+$$
+
+以及双曲观察参数：
+
+$$
+\eta\in\mathbb R.
+$$
+
+现在定义连续观察者群：
+
+$$
+\boxed{
+\widetilde G_{\mathrm{obs}}
+=
+\mathbb R\rtimes C_2,
+}
+\tag{776.1}
+$$
+
+其作用为：
+
+$$
+(a,0):\eta\mapsto\eta+a,
+$$
+
+$$
+(0,1):\eta\mapsto-\eta.
+$$
+
+记黄金 proper period：
+
+$$
+\boxed{
+P_\varphi=2\log\varphi.
+}
+\tag{776.2}
+$$
+
+商去黄金单位平移：
+
+$$
+\boxed{
+G_{\mathrm{reg}}
+=
+\left(
+\mathbb R/P_\varphi\mathbb Z
+\right)
+\rtimes C_2
+\simeq O(2).
+}
+\tag{776.3}
+$$
+
+而由一个黄金平移与反射生成的离散子群为：
+
+$$
+\boxed{
+G_{\mathrm{unit}}
+=
+P_\varphi\mathbb Z\rtimes C_2
+\simeq D_\infty.
+}
+\tag{776.4}
+$$
+
+项目当前已经机器证明黄金单位格点 \(\zeta\) 同时满足：
+
+$$
+Z(s,\eta)=Z(s,-\eta)
+$$
+
+和：
+
+$$
+Z(s,\eta+2\log\varphi)=Z(s,\eta).
+$$
+
+所以该标量函数确实下降到 regulator 圆再商反射所得的轨道空间。
+
+---
+

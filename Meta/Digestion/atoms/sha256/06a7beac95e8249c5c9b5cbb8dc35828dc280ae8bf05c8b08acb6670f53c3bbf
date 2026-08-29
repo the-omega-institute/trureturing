@@ -1,0 +1,69 @@
+# 第七百三十二部　黄金算术 Lorentz 平面
+
+定义 Fibonacci 更新矩阵：
+
+$$
+\boxed{
+\mathbf F
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+}
+\tag{732.1}
+$$
+
+定义二次型：
+
+$$
+\boxed{
+Q_\varphi(x,y)
+=
+x^2-xy-y^2.
+}
+\tag{732.2}
+$$
+
+它的矩阵为：
+
+$$
+\begin{pmatrix}
+1&-\frac12\\[1mm]
+-\frac12&-1
+\end{pmatrix},
+$$
+
+行列式为：
+
+$$
+-\frac54<0.
+$$
+
+因此 \(Q_\varphi\) 的符号为：
+
+$$
+(1,1),
+$$
+
+它是一个真正的二维 split-signature／Lorentz 型二次型。
+
+并且：
+
+$$
+\boxed{
+Q_\varphi(x,y)
+=
+(x-\varphi y)(x-\varphi' y),
+}
+\tag{732.3}
+$$
+
+其中：
+
+$$
+\varphi'=-\frac1\varphi.
+$$
+
+---
+

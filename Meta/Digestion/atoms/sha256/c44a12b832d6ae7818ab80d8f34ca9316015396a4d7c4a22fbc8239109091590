@@ -1,0 +1,63 @@
+# 第七百五十七部　闭合轨道迹公式
+
+对任意有限维算子 \(A\)，在 \(|x|\) 足够小时：
+
+$$
+\boxed{
+\log\det(I-xA)^{-1}
+=
+\sum_{k\ge1}
+\frac{x^k}{k}
+\operatorname{Tr}(A^k).
+}
+\tag{757.1}
+$$
+
+而：
+
+$$
+\boxed{
+\mathsf F_p^k
+=
+P_{\mathrm{ev}}
++
+\chi_5(p)^kP_{\mathrm{odd}}.
+}
+\tag{757.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\operatorname{Tr}
+\left(
+\mathsf F_p^k
+\right)
+=
+1+\chi_5(p)^k.
+}
+\tag{757.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\log
+\det
+\left(
+I-p^{-s}\mathsf F_p
+\right)^{-1}
+=
+\sum_{k\ge1}
+\frac{
+1+\chi_5(p)^k
+}{k}
+p^{-ks}.
+}
+\tag{757.4}
+$$
+
+---
+

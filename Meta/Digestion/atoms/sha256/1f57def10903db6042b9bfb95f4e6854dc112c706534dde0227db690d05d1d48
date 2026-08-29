@@ -1,0 +1,93 @@
+# 第七百三十八部　Fibonacci 更新是离散双曲 boost
+
+在 null 分解中：
+
+$$
+v=a\,v_++b\,v_-.
+$$
+
+Fibonacci 更新满足：
+
+$$
+\boxed{
+a\mapsto\varphi a,
+\qquad
+b\mapsto-\varphi^{-1}b.
+}
+\tag{738.1}
+$$
+
+所以一次更新由两部分组成：
+
+$$
+\boxed{
+\text{半 boost}
++
+\text{方向翻转}.
+}
+$$
+
+两次更新：
+
+$$
+\boxed{
+a\mapsto\varphi^2a,
+\qquad
+b\mapsto\varphi^{-2}b.
+}
+\tag{738.2}
+$$
+
+定义双曲 rapidity：
+
+$$
+\boxed{
+\eta
+=
+\frac12
+\log
+\left|
+\frac ab
+\right|.
+}
+\tag{738.3}
+$$
+
+则：
+
+$$
+\boxed{
+\mathbf F^2:
+\eta
+\longmapsto
+\eta+2\log\varphi.
+}
+\tag{738.4}
+$$
+
+所以：
+
+$$
+\boxed{
+2\log\varphi
+}
+$$
+
+是 Fibonacci 双步完成的离散 Lorentz rapidity。
+
+项目已经机器证明黄金单位格点 ζ 关于流参数具有：
+
+$$
+\eta\mapsto-\eta
+$$
+
+的反射，以及：
+
+$$
+\eta\mapsto\eta+2\log\varphi
+$$
+
+的周期。当前光锥模型为这两个已形式化变换提供了一个统一解释：前者交换两个 null 嵌入，后者是偶数 Fibonacci 更新产生的 proper boost。
+
+---
+

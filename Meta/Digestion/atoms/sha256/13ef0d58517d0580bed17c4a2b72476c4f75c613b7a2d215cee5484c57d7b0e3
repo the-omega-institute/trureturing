@@ -1,0 +1,66 @@
+# 第七百七十八部　\(O(2)\) 观察模态与克隆层级
+
+令归一化角坐标为：
+
+$$
+\boxed{
+\theta
+=
+\omega_\varphi\eta,
+\qquad
+\omega_\varphi
+=
+\frac{2\pi}{P_\varphi}
+=
+\frac{\pi}{\log\varphi}.
+}
+\tag{778.1}
+$$
+
+于是：
+
+$$
+\theta\in\mathbb R/2\pi\mathbb Z.
+$$
+
+对于 regulator 圆上的有限测度 \(\mu\)，定义 Fourier 模态：
+
+$$
+\boxed{
+\widehat\mu(n)
+=
+\int e^{-in\theta}\,d\mu(\theta).
+}
+\tag{778.2}
+$$
+
+其中：
+
+$$
+\widehat\mu(0)=\mu(S^1)
+$$
+
+只读取总质量。
+
+若完成对象满足反射：
+
+$$
+\theta\mapsto-\theta,
+$$
+
+则：
+
+$$
+\widehat\mu(n)=\widehat\mu(-n)\in\mathbb R,
+$$
+
+所有正弦模态消失，只剩：
+
+$$
+\boxed{
+\int\cos(n\theta)\,d\mu(\theta).
+}
+$$
+
+---
+

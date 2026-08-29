@@ -1,0 +1,30 @@
+# 第八百三十二部　Gamma 层塔的 Theta–Subordination 公式
+
+定义 Gamma 层热迹：
+
+$$
+\boxed{
+\Theta_\sigma(u)
+=
+\sum_{m=0}^{\infty}
+e^{-(\sigma+2m)^2u},
+\qquad
+u>0.
+}
+\tag{832.1}
+$$
+
+利用恒等式：
+
+$$
+\log\left(1+\frac{\lambda}{M^2}\right)
+=
+\int_0^\infty
+\left(
+1-e^{-\lambda u}
+\right)
+\frac{e^{-M^2u}}u\,du,
+$$
+
+得到：
+

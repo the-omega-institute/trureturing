@@ -1,0 +1,50 @@
+# 第七百六十六部　同谱观察者不可重建
+
+对每个素数任选：
+
+$$
+G_p\in GL(V_{\mathrm{br}}),
+$$
+
+定义局部换框：
+
+$$
+\boxed{
+\widetilde{\mathsf F}_p
+=
+G_p\mathsf F_pG_p^{-1}.
+}
+\tag{766.1}
+$$
+
+则：
+
+$$
+\det
+\left(
+I-p^{-s}\widetilde{\mathsf F}_p
+\right)
+=
+\det
+\left(
+I-p^{-s}\mathsf F_p
+\right).
+$$
+
+所以所有局部 Euler 因子、\(\zeta_K\)、\(\zeta\) 与 \(L(s,\chi_5)\) 都不变。
+
+但不同素数框架之间的 transition map：
+
+$$
+\boxed{
+T_{q\leftarrow p}
+=
+G_q^{-1}G_p
+}
+\tag{766.2}
+$$
+
+可以完全不同。
+
+---
+

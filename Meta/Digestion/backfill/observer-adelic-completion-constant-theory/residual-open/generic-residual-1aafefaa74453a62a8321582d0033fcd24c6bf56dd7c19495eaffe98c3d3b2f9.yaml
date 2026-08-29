@@ -1,0 +1,10 @@
+ast_path: row/对全部有限矩阵证明-PSD
+fingerprints:
+  raw_sha256: sha256:1aafefaa74453a62a8321582d0033fcd24c6bf56dd7c19495eaffe98c3d3b2f9
+  normalized_sha256: sha256:1aafefaa74453a62a8321582d0033fcd24c6bf56dd7c19495eaffe98c3d3b2f9
+cas_ref: sha256:1aafefaa74453a62a8321582d0033fcd24c6bf56dd7c19495eaffe98c3d3b2f9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

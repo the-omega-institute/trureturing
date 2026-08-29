@@ -1,0 +1,40 @@
+# 第七百一十二部　黄金比例是动态固定点，而不仅是静态常数
+
+定义 Möbius 动力：
+
+$$
+\boxed{
+T(x)=1+\frac1x.
+}
+\tag{712.1}
+$$
+
+其两个固定点为：
+
+$$
+\varphi=\frac{1+\sqrt5}{2},
+\qquad
+\varphi'=\frac{1-\sqrt5}{2}=-\frac1\varphi.
+$$
+
+即：
+
+$$
+T(\varphi)=\varphi,
+\qquad
+T(\varphi')=\varphi'.
+$$
+
+定义黄金 cross-ratio 坐标：
+
+$$
+\boxed{
+\kappa(x)
+=
+\frac{x-\varphi}{x-\varphi'}.
+}
+\tag{712.2}
+$$
+
+---
+

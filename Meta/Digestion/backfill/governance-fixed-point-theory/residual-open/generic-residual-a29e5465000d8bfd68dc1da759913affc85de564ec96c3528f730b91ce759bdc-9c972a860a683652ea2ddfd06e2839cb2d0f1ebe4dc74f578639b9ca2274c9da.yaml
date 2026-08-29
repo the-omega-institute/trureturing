@@ -1,0 +1,10 @@
+ast_path: section/边界与非冒领/clause/2
+fingerprints:
+  raw_sha256: sha256:a29e5465000d8bfd68dc1da759913affc85de564ec96c3528f730b91ce759bdc
+  normalized_sha256: sha256:a29e5465000d8bfd68dc1da759913affc85de564ec96c3528f730b91ce759bdc
+cas_ref: sha256:a29e5465000d8bfd68dc1da759913affc85de564ec96c3528f730b91ce759bdc
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

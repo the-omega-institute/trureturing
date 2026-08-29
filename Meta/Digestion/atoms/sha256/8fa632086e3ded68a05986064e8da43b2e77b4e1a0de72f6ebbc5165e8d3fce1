@@ -1,0 +1,107 @@
+# 第七百七十五部　建议形式化顺序
+
+```text
+D5/S3/GoldenObserver/QuadraticCharacter/
+  GoldenCharacterModFive.lean
+  GoldenCharacterPrimeValues.lean
+  GoldenCharacterEqualsSplittingType.lean
+  GoldenCharacterMultiplicative.lean
+
+D5/S3/GoldenObserver/BranchSpace/
+  GoldenBranchSpace.lean
+  GoldenBranchSwap.lean
+  GoldenEvenProjection.lean
+  GoldenOddProjection.lean
+  GoldenPrimeBranchOperator.lean
+  GoldenPrimeOperatorRank.lean
+
+D5/S3/GoldenObserver/LocalEuler/
+  GoldenPrimeOperatorEigenvalues.lean
+  GoldenLocalDeterminantFactor.lean
+  GoldenPrimePowerTrace.lean
+  InertOddTraceZero.lean
+  InertEvenTraceTwo.lean
+  RamifiedRankCollapse.lean
+
+D5/S3/GoldenObserver/Dedekind/
+  GoldenDedekindLocalFactor.lean
+  GoldenDedekindEulerProduct.lean
+  GoldenDedekindFactorization.lean
+  GoldenRegularRepresentationFactorization.lean
+
+D5/S3/GoldenObserver/Regulator/
+  GoldenLogEmbedding.lean
+  GoldenUnitRegulator.lean
+  GoldenProperBoostPeriod.lean
+  GoldenClassNumberFormulaInterface.lean
+  GoldenLValueAtOne.lean
+  BoostPeriodOverBranchGap.lean
+
+D5/S3/GoldenObserver/Dihedral/
+  GoldenProperBoost.lean
+  GoldenBranchReflection.lean
+  GoldenDihedralRelation.lean
+  GoldenPrimeDihedralStep.lean
+  GoldenPrimeWordHolonomy.lean
+  GoldenHolonomyNormalForm.lean
+  SplitInertOrderWitness.lean
+
+D5/S3/GoldenObserver/ScalarBlindness/
+  GoldenUnitZetaDihedralInvariant.lean
+  GoldenDerivativeSignCovariance.lean
+  ScalarCannotRecoverRapidity.lean
+  GoldenObserverGaugeConjugacy.lean
+  IsospectralObserverNonreconstruction.lean
+
+D5/S3/GoldenObserver/MemoryTower/
+  FullHolonomyToGoldenCharacter.lean
+  GoldenCharacterToTrivial.lean
+  GoldenAbelianMemoryQuotient.lean
+  NonabelianResidualHolonomy.lean
+
+D5/S3/GoldenObserver/Weil/
+  GoldenCompletedLFunction.lean
+  GoldenPrimeArchimedeanSource.lean
+  GoldenWeilHermitianForm.lean
+  GoldenGRHPositivityTarget.lean
+  GoldenFieldTwoChannelSource.lean
+
+D5/S3/Analytic/Zeta/ObserverRepresentation/
+  TrivialObserverChannel.lean
+  SignObserverChannel.lean
+  ObserverOddVariance.lean
+  ObserverCasimirToScalarTarget.lean
+```
+
+最优先且风险最低的形式化链为：
+
+$$
+\boxed{
+\chi_5
+\to
+\mathsf F_p
+\to
+\operatorname{Tr}\mathsf F_p^k
+\to
+\det(I-p^{-s}\mathsf F_p)
+\to
+\zeta_K=\zeta L(\chi_5).
+}
+$$
+
+第二条为：
+
+$$
+\boxed{
+U,J
+\to
+D_\infty
+\to
+\text{prime-word holonomy}
+\to
+\text{scalar blindness}.
+}
+$$
+
+---
+

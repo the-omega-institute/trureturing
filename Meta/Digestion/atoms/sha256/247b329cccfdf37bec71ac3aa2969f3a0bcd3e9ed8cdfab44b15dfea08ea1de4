@@ -1,0 +1,60 @@
+# 第八百三十部　建议形式化顺序
+
+```text
+D5/S3/GoldenObserver/ArchimedeanDispersion/
+  GammaObserverDispersion.lean
+  GammaObserverInfiniteProduct.lean
+  GammaLayerMassTower.lean
+  GammaTowerLinearAsymptotic.lean
+  TowerToLightLimit.lean
+
+D5/S3/GoldenObserver/EulerBoundaryDispersion/
+  OddIntegerGammaProduct.lean
+  EulerBoundaryLogCosh.lean
+  EulerBoundaryGroupVelocity.lean
+  ArchimedeanMaximumVelocity.lean
+  ArchimedeanVelocityLimit.lean
+
+D5/S3/GoldenObserver/BernsteinOperator/
+  GammaDispersionBernstein.lean
+  GammaDispersionStieltjesDerivative.lean
+  GammaObserverFunctionalCalculus.lean
+  GammaObserverBulkExtensionInterface.lean
+
+D5/S3/GoldenObserver/PoissonLight/
+  GoldenCircleFrequency.lean
+  GoldenPoissonGenerator.lean
+  GoldenPoissonKernel.lean
+  GoldenPoissonHarmonicExtension.lean
+  GoldenPoissonZeroModeLimit.lean
+  GoldenPoissonInverseUnbounded.lean
+
+D5/S3/GoldenObserver/MasslessTangent/
+  GammaDispersionBlowup.lean
+  GammaMasslessPrincipalSymbol.lean
+  GoldenObserverLightGap.lean
+  GoldenPeriodLightProduct.lean
+
+D5/S3/GoldenObserver/LorentzCoordinates/
+  GoldenNullCoordinateTransform.lean
+  GoldenLorentzStandardForm.lean
+  GoldenSlopeNotPropagationSpeed.lean
+  GoldenChiralObserverModes.lean
+
+D5/S3/GoldenObserver/ScaleCrossover/
+  GammaDispersionSmallMomentum.lean
+  GammaDispersionTrigammaCoefficient.lean
+  TemperedCauchyLevyDensity.lean
+  InfraredQuadraticUltravioletLinear.lean
+
+D5/S3/Weil/ObserverPhoton/
+  ObserverModeWeilOperator.lean
+  ObserverModePrimeBoundedness.lean
+  ObserverModeArchimedeanCoercivity.lean
+  ObserverHighModePositive.lean
+  ObserverFiniteDangerousModes.lean
+  ObserverLowModeCollisionTarget.lean
+```
+
+---
+

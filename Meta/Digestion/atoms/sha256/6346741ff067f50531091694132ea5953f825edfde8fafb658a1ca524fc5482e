@@ -1,0 +1,88 @@
+# 第七百六十部　\(\varphi\) 在完成态中的正确生存方式
+
+\(\varphi\) 在局部素数字符中并不直接出现。
+
+局部字符只留下：
+
+$$
+\boxed{
++1,\,-1,\,0.
+}
+$$
+
+但 \(\varphi\) 通过全局单位格子的 regulator 再次出现。
+
+两个实嵌入下：
+
+$$
+\boxed{
+\left(
+\log|\sigma_+(\varphi)|,
+\log|\sigma_-(\varphi)|
+\right)
+=
+\left(
+\log\varphi,
+-\log\varphi
+\right).
+}
+\tag{760.1}
+$$
+
+所以黄金单位在对数嵌入空间中是一条 Lorentz boost 向量。
+
+因为：
+
+$$
+N_{K/\mathbb Q}(\varphi)=-1,
+$$
+
+方向保持的最小正单位是：
+
+$$
+\varphi^2.
+$$
+
+对应 proper boost 长度：
+
+$$
+\boxed{
+2\log\varphi.
+}
+\tag{760.2}
+$$
+
+项目已经机器证明黄金单位格点 \(\zeta\) 满足：
+
+$$
+\eta\mapsto-\eta
+$$
+
+反射，以及：
+
+$$
+\eta\mapsto
+\eta+2\log\varphi
+$$
+
+周期。
+
+所以：
+
+$$
+\boxed{
+\varphi
+\text{ 在完成态中不再主要表现为一个点，}
+}
+$$
+
+而表现为：
+
+$$
+\boxed{
+\text{regulator boost 的基本长度。}
+}
+$$
+
+---
+

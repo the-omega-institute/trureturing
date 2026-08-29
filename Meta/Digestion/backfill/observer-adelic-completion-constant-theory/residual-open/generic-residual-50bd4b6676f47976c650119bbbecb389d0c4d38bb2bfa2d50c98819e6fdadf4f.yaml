@@ -1,0 +1,10 @@
+ast_path: section/第七百部-重整化记忆塔
+fingerprints:
+  raw_sha256: sha256:50bd4b6676f47976c650119bbbecb389d0c4d38bb2bfa2d50c98819e6fdadf4f
+  normalized_sha256: sha256:50bd4b6676f47976c650119bbbecb389d0c4d38bb2bfa2d50c98819e6fdadf4f
+cas_ref: sha256:50bd4b6676f47976c650119bbbecb389d0c4d38bb2bfa2d50c98819e6fdadf4f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

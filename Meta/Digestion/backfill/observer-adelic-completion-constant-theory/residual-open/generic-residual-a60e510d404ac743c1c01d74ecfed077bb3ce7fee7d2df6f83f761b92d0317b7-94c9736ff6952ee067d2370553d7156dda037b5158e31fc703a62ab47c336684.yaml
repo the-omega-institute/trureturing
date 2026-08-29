@@ -1,0 +1,10 @@
+ast_path: section/910-1-可数化/clause/1
+fingerprints:
+  raw_sha256: sha256:a60e510d404ac743c1c01d74ecfed077bb3ce7fee7d2df6f83f761b92d0317b7
+  normalized_sha256: sha256:a60e510d404ac743c1c01d74ecfed077bb3ce7fee7d2df6f83f761b92d0317b7
+cas_ref: sha256:a60e510d404ac743c1c01d74ecfed077bb3ce7fee7d2df6f83f761b92d0317b7
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

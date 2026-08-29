@@ -1,0 +1,10 @@
+ast_path: row/曲率核连接真实离线零点
+fingerprints:
+  raw_sha256: sha256:925ed86fd5e78c7328a58e2d63306a5af5d2c72d8da499bcbd253fa32ef62c4c
+  normalized_sha256: sha256:925ed86fd5e78c7328a58e2d63306a5af5d2c72d8da499bcbd253fa32ef62c4c
+cas_ref: sha256:925ed86fd5e78c7328a58e2d63306a5af5d2c72d8da499bcbd253fa32ef62c4c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,22 @@
+- 旧结算视图 $\sigma$。
+
+合法重键结果记为：
+
+$R(x,y,m,e,a,\sigma)=(e',a',\sigma',k_{\mathrm{pred}})$。
+
+其条件为：
+
+1. **资格**：$\operatorname{TailEligible}(e.\operatorname{id})$。
+2. **追加**：$x\preceq y$ 且 $m\le |x|$。
+3. **旧键规范**：$e.\operatorname{bytes}=\operatorname{Tail}(x,m)$。
+4. **旧键现役**：$a(e.\operatorname{id})=\kappa(e.\operatorname{bytes})$。
+5. **新条目规范**：$e'.\operatorname{id}=e.\operatorname{id}$ 且 $e'.\operatorname{bytes}=\operatorname{Tail}(y,m)$。
+6. **谱系**：$k_{\mathrm{pred}}=\kappa(e.\operatorname{bytes})$，且 $e.\operatorname{bytes}\preceq e'.\operatorname{bytes}$。
+7. **结算守恒**：$\sigma'=\sigma$。
+8. **单活动源**：$a'$ 只在 $e.\operatorname{id}$ 处更新为 $\kappa(e'.\operatorname{bytes})$，其余逻辑 ID 不变。
+9. **物理追加**：旧条目和旧事件不改字节；系统只追加 $e'$ 与从旧键到新键的重键事件。
+
+条件 7 比“已 admit 不被翻转”更强：任何逻辑 ID 的结算都不因纯重键而改变。
+
+条件 8 不删除历史。它只说明在新前缀的语义视图中，同一逻辑 ID 恰有一个活动内容键。旧键仍可由历史审计访问，但不再是当前活动源。
+

@@ -1,0 +1,10 @@
+ast_path: row/临界线一阶法向导数恒零
+fingerprints:
+  raw_sha256: sha256:2e9309b67017aba67ae1df3c37f8a500aeee37193e9bba5f77d2a323f666e375
+  normalized_sha256: sha256:2e9309b67017aba67ae1df3c37f8a500aeee37193e9bba5f77d2a323f666e375
+cas_ref: sha256:2e9309b67017aba67ae1df3c37f8a500aeee37193e9bba5f77d2a323f666e375
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

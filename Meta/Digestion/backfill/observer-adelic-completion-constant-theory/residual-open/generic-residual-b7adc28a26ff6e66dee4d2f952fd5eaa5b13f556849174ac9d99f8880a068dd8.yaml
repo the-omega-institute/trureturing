@@ -1,0 +1,10 @@
+ast_path: section/784-2-无序-occupation-配分函数
+fingerprints:
+  raw_sha256: sha256:b7adc28a26ff6e66dee4d2f952fd5eaa5b13f556849174ac9d99f8880a068dd8
+  normalized_sha256: sha256:b7adc28a26ff6e66dee4d2f952fd5eaa5b13f556849174ac9d99f8880a068dd8
+cas_ref: sha256:b7adc28a26ff6e66dee4d2f952fd5eaa5b13f556849174ac9d99f8880a068dd8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

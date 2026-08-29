@@ -1,0 +1,20 @@
+## 猜想 941.2（Selector margin complexity law）
+
+存在显式函数 \(F\)，使：
+
+$$
+\boxed{
+L_*
+\le
+\frac1{|\delta|}
+F
+\left(
+G_{\mathrm{hyp}}^{-1},
+\log\Delta^{-1},
+\text{zero-tail constants}
+\right).
+}
+$$
+
+---
+

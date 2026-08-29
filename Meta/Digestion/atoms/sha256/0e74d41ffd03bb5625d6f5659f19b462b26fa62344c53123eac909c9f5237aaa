@@ -1,0 +1,24 @@
+## 785.2 科学边界
+
+$$
+Z_{\mathrm{ord}}^\varphi
+$$
+
+是观察器 transfer determinant，不是已知具有标准函数方程和解析延拓的算术 \(L\)-函数。
+
+它的价值是精确显示：
+
+$$
+\boxed{
+\text{有序历史}
+\quad\text{与}\quad
+\text{Euler occupation}
+}
+$$
+
+是两种不同完成。
+
+不能把它的零点直接称为 Riemann 或 Hecke 零点。
+
+---
+

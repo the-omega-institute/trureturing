@@ -1,0 +1,10 @@
+ast_path: section/786-1-观察者-Ruelle-型生成函数
+fingerprints:
+  raw_sha256: sha256:eeb2bb35f774b2b9ab8de761b501d47c11b914c7973d465c393446182727fbcb
+  normalized_sha256: sha256:eeb2bb35f774b2b9ab8de761b501d47c11b914c7973d465c393446182727fbcb
+cas_ref: sha256:eeb2bb35f774b2b9ab8de761b501d47c11b914c7973d465c393446182727fbcb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

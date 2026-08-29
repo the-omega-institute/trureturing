@@ -1,0 +1,78 @@
+# 第七百五十一部　建议形式化顺序
+
+```text
+D5/S3/ObserverCone/GoldenLorentz/
+  GoldenLorentzForm.lean
+  FibonacciAntiIsometry.lean
+  FibonacciSquareIsometry.lean
+  GoldenNullLines.lean
+  GoldenProjectiveEndpoints.lean
+
+D5/S3/ObserverCone/HyperbolicObserver/
+  GoldenHyperbolaObserver.lean
+  GoldenObserverTangent.lean
+  ObserverNullDecomposition.lean
+  ObserverBoundaryIndependentOfRapidity.lean
+  GoldenImageNonReconstruction.lean
+
+D5/S3/ObserverCone/HilbertNullGraph/
+  GoldenSplitHilbertForm.lean
+  HilbertFibonacciUpdate.lean
+  GoldenPositiveNullGraph.lean
+  GoldenNegativeNullGraph.lean
+  DimensionNeutralGoldenSlope.lean
+  GoldenObserverProjectiveFiber.lean
+
+D5/S3/ObserverCone/SixDimensional/
+  GoldenSixDimensionalForm.lean
+  GoldenSignatureThreeThree.lean
+  GoldenThreePlaneNullGraphs.lean
+  GoldenSixDimensionalAntiIsometry.lean
+
+D5/S3/ObserverCone/RegulatorBoost/
+  GoldenNullCoordinates.lean
+  FibonacciHalfBoost.lean
+  FibonacciDoubleBoost.lean
+  GoldenRapidityShift.lean
+  GoldenRegulatorCircleFromBoost.lean
+
+D5/S3/ObserverCone/ProjectiveDynamics/
+  GoldenSlopeMobiusMap.lean
+  GoldenCrossRatioCoordinate.lean
+  GoldenCrossRatioContraction.lean
+  GoldenUniversalImage.lean
+  GoldenObserverBlowupIdentity.lean
+
+D5/S3/ObserverCone/Bundle/
+  GoldenObserverBundle.lean
+  GoldenObserverImageProjection.lean
+  GoldenImageFiber.lean
+  NoEquivariantGoldenObserverSection.lean
+  ProjectiveCloneVsObserverClone.lean
+
+D5/S3/PrimeObserver/GoldenCone/
+  PrimeModeHilbertSpace.lean
+  PrimeGoldenNullGraph.lean
+  GoldenPrimeProfileObserver.lean
+  PrimeMemoryNullCoordinates.lean
+  PrimeForcedConeRecurrence.lean
+  ProjectiveConeForcing.lean
+
+D5/S3/PrimeObserver/Connection/
+  PrimeObserverConnection.lean
+  PrimeTransportCurvature.lean
+  PrimeHistoryHolonomy.lean
+  ScalarCompletionKillsFiber.lean
+  ProbeRecoversFiber.lean
+
+D5/S3/Analytic/Zeta/ObserverConeBridge/
+  ObserverRapidityDerivative.lean
+  EvenObserverZeroBranch.lean
+  ObserverZeroSecondDerivative.lean
+  ConeDefectToSpectralDefectInterface.lean
+  AllOrderConeFlatteningTarget.lean
+  CompletedXiFiberCurvatureTarget.lean
+```
+
+---
+
