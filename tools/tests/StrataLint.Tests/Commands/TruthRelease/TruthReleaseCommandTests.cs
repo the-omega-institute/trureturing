@@ -200,28 +200,6 @@ public sealed class TruthReleaseCommandTests
         var originCommit = GitObject(gitRoot, "HEAD");
         var originTree = GitObject(gitRoot, "HEAD^{tree}");
         var generatorBlob = GitObject(gitRoot, "HEAD:lakefile.toml");
-        var realEnvironment = new FrozenEnvironmentAttestation(
-            "git-sha1:" + originCommit,
-            "git-sha1:" + originTree,
-            GitBlobOid(Toolchain),
-            GitBlobOid(Manifest))
-        {
-            LakefilePath = "lakefile.toml",
-            LakefileBlobOid = GitBlobOid(files["lakefile.toml"]),
-        };
-        var realAttestations = new[]
-        {
-            new FrozenModuleAttestation(RepoPathFor("Dependency"), GitBlobOid(files[dependencyPath]))
-            {
-                BaseCommitOid = "git-sha1:" + originCommit,
-                BaseTreeOid = "git-sha1:" + originTree,
-            },
-            new FrozenModuleAttestation(ParseRepoPath(formalPath), GitBlobOid(files[formalPath]))
-            {
-                BaseCommitOid = "git-sha1:" + originCommit,
-                BaseTreeOid = "git-sha1:" + originTree,
-            },
-        };
         var states = LeanTruthStates.Resolve(snapshotWithoutLedger, lean);
         var adjacency = LeanImportAdjacency.Build(snapshotWithoutLedger, lean);
         var realCatalog = Assert.IsType<FrozenMaterialOutcome.Accepted>(
@@ -229,9 +207,7 @@ public sealed class TruthReleaseCommandTests
                 snapshotWithoutLedger,
                 lean,
                 states,
-                adjacency,
-                realEnvironment,
-                realAttestations)).Capability;
+                adjacency)).Capability;
         var ledgerFiles = EventFiles(realCatalog, "git-sha1:" + generatorBlob);
         AddLedgerFiles(files, ledgerFiles);
         WriteFiles(
@@ -329,11 +305,6 @@ public sealed class TruthReleaseCommandTests
     private static RepositorySnapshot Decode(IReadOnlyDictionary<string, string> files) =>
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(
             SnapshotDecoder.Decode(RawSnapshot(files))).Snapshot;
-
-    private static RepoPath ParseRepoPath(string value) =>
-        RepoPath.TryCreate(value, out var path)
-            ? path
-            : throw new InvalidOperationException($"invalid fixture repository path: {value}");
 
     private static RawRepositorySnapshot RawSnapshot(IReadOnlyDictionary<string, string> files) =>
         RawRepositorySnapshot.Create(files.Select(static pair =>

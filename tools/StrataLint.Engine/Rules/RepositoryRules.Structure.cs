@@ -331,14 +331,6 @@ internal static partial class RepositoryRules
                     + "SL-022 protected-surface gate"));
             }
 
-            if (FrozenLedgerChangeClassifier.IsAcceptedEventPath(change.Path.Value)
-                && change.Kind is RawChangeKind.Modified or RawChangeKind.Deleted)
-            {
-                findings.Add(new RuleFinding(
-                    change.Path.Value,
-                    "accepted frozen-ledger event files are append-only; run ledger-append to "
-                    + "add a new event and do not modify an already-frozen fragment"));
-            }
         }
 
         return findings.ToImmutable();

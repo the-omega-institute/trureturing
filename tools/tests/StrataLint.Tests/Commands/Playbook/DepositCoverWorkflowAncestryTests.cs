@@ -6,16 +6,14 @@ namespace StrataLint.Tests;
 public sealed partial class DepositCoverWorkflowScriptTests
 {
     [Fact]
-    public void DeliverCheckRejectsAddedFreezeWhoseBaseWasRewrittenOutOfHeadHistory()
+    public void DeliverCheckRejectsAddedLegacyFreeze()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
         var deliveryBase = fixture.HeadRevision();
         fixture.ChangeFormalization();
-        var frozenBase = fixture.CommitAll("snapshot before freeze");
-        var eventPath = fixture.WriteAcceptedFreezeForBase(frozenBase);
+        var eventPath = fixture.WriteLegacyFreeze();
         fixture.CommitAll("record freeze");
-        fixture.RewriteHeadWithParent(deliveryBase);
 
         var result = fixture.Run("deliver-check", baseRevision: deliveryBase);
 
@@ -23,21 +21,19 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var error = Encoding.UTF8.GetString(result.StandardError);
         Assert.Contains("PLAYBOOK_INVALID", error, StringComparison.Ordinal);
         Assert.Contains(eventPath, error, StringComparison.Ordinal);
-        Assert.Contains("is not an ancestor of current HEAD", error, StringComparison.Ordinal);
-        Assert.Contains("re-freeze from a pushed base", error, StringComparison.Ordinal);
+        Assert.Contains("is not a v5 Freeze", error, StringComparison.Ordinal);
         Assert.DoesNotContain("dotnet:ledger-append", fixture.Calls());
         Assert.DoesNotContain("make:preflight", fixture.Calls());
     }
 
     [Fact]
-    public void DeliverCheckAcceptsAddedFreezeWhoseBaseRemainsInHeadHistory()
+    public void DeliverCheckAcceptsAddedCanonicalV5Freeze()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
         var deliveryBase = fixture.HeadRevision();
         fixture.ChangeFormalization();
-        var frozenBase = fixture.CommitAll("snapshot before freeze");
-        fixture.WriteAcceptedFreezeForBase(frozenBase);
+        fixture.WriteAcceptedFreezeV5();
         fixture.CommitAll("record freeze");
 
         var result = fixture.Run("deliver-check", baseRevision: deliveryBase);
@@ -57,35 +53,37 @@ public sealed partial class DepositCoverWorkflowScriptTests
             return HeadRevision();
         }
 
-        internal string WriteAcceptedFreezeForBase(string baseCommit)
+        internal string WriteAcceptedFreezeV5()
         {
             var identity = new string('4', 64);
             var relativePath = $"{LedgerPath}/{identity}.json";
-            var baseTree = Git("rev-parse", $"{baseCommit}^{{tree}}").Trim();
-            var descriptorBlob = Git("rev-parse", $"{baseCommit}:{LeanPath}").Trim();
             WriteFile(relativePath, JsonSerializer.Serialize(new
             {
+                event_hash = "sha256:" + identity,
                 event_type = "Freeze",
                 payload = new
                 {
-                    input = new
-                    {
-                        base_commit_oid = "git-sha1:" + baseCommit,
-                        base_tree_oid = "git-sha1:" + baseTree,
-                        descriptor_blob_oid = "git-sha1:" + descriptorBlob,
-                        descriptor_selector = LeanPath,
-                        supporting_blob_oids = Array.Empty<string>(),
-                    },
+                    declaration_statement_ids = Array.Empty<object>(),
+                    descriptor_selector = LeanPath,
+                    prerequisite_frozen_node_ids = Array.Empty<string>(),
+                    statement_id = "sha256:" + identity,
                 },
+                schema_version = 5,
             }) + "\n");
             return relativePath;
         }
 
-        internal void RewriteHeadWithParent(string parent)
+        internal string WriteLegacyFreeze()
         {
-            var tree = Git("rev-parse", "HEAD^{tree}").Trim();
-            var rewritten = Git("commit-tree", tree, "-p", parent, "-m", "rewritten delivery").Trim();
-            Git("reset", "--hard", rewritten);
+            var identity = new string('5', 64);
+            var relativePath = $"{LedgerPath}/{identity}.json";
+            WriteFile(relativePath, JsonSerializer.Serialize(new
+            {
+                event_type = "Freeze",
+                payload = new { descriptor_selector = LeanPath },
+                schema_version = 4,
+            }) + "\n");
+            return relativePath;
         }
     }
 }

@@ -15,7 +15,7 @@ public partial record RevocationEvidence
 {
     public partial record KernelWitnessFailure(
         FrozenNodeId RootFrozenNodeId,
-        WitnessId FailedWitnessId,
+        StatementId FailedStatementId,
         string ReceiptBlobOid,
         string ReceiptSha256);
 

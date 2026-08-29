@@ -457,8 +457,7 @@ internal sealed class NoOpFrozenLedgerAdmissionServices : IFrozenLedgerAdmission
     public FrozenLedgerAdmissionPreparation Prepare(
         RepositorySnapshot current,
         RepositorySnapshot protectedBase,
-        RawChangeSet changes,
-        Func<FrozenLedgerReferenceSet, TrustedFrozenGitReferences> validateReferences) => null!;
+        RawChangeSet changes) => null!;
 
     public AdmissionOutcome? Validate(
         FrozenLedgerAdmissionPreparation preparation,

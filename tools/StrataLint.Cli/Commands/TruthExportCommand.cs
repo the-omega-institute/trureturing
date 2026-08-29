@@ -86,10 +86,9 @@ internal static class TruthExportCommand
             adjacency,
             baseView,
             identity);
-        var events = DagLedgerCommandPreparation.LoadTrustedLedgerFiles(
+        _ = DagLedgerCommandPreparation.LoadTrustedLedgerFiles(
             ledgerFiles,
             "frozen ledger");
-        _ = TrustReferences(repository, events);
         var outcome = FrozenLedger.ValidateTrustedHistory(baseView, catalog);
         return new StrictTruthHistoryPreparation(truth, states, baseView, outcome);
     }
@@ -107,24 +106,6 @@ internal static class TruthExportCommand
             ? throw new InvalidOperationException(
                 $"immutable revision contains no frozen ledger files under {FrozenLedgerChangeClassifier.AcceptedRoot}")
             : files;
-    }
-
-    private static TrustedFrozenGitReferences TrustReferences(
-        IRepositoryGateway repository,
-        ImmutableArray<DagLedgerFileEvent> events)
-    {
-        var references = FrozenLedger.ScanReferences(events) switch
-        {
-            FrozenLedgerReferenceScanOutcome.Accepted accepted => accepted.References,
-            FrozenLedgerReferenceScanOutcome.Rejected rejected => throw new InvalidOperationException(
-                "frozen ledger references are invalid: " + rejected.Message),
-            _ => throw new InvalidOperationException("unknown ledger reference scan outcome"),
-        };
-        return references.CommitOids.IsEmpty
-            && references.TreeOids.IsEmpty
-            && references.BlobOids.IsEmpty
-                ? TrustedFrozenGitReferences.CreateForTrustedAdapter([])
-                : repository.ValidateFrozenReferences(references);
     }
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>

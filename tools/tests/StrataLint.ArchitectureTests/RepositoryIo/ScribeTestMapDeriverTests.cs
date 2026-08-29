@@ -21,13 +21,13 @@ public sealed class ScribeTestMapDeriverTests
         Assert.Equal(280, ScribeUnknownDebtPolicy.UnknownDebtLimit);
         Assert.Equal(281, ScribeUnknownDebtPolicy.UnknownDebtToleranceLimit);
         Assert.Empty(ScribeUnknownDebtPolicy.InspectCurrent(map));
-        var retiredLedgerMethod = Assert.Single(
+        var currentLedgerMethod = Assert.Single(
             map.Methods,
             static method => method.Id ==
-                "TruthExportCommandTests.ExportEqualsStrictActiveSetDroppingRevokedNodes");
+                "TruthExportCommandTests.ExportEqualsStrictActiveFreezeSnapshot");
         Assert.False(
-            retiredLedgerMethod.IsUnknown,
-            $"{retiredLedgerMethod.Id}: {string.Join(',', retiredLedgerMethod.UnknownReasons)}");
+            currentLedgerMethod.IsUnknown,
+            $"{currentLedgerMethod.Id}: {string.Join(',', currentLedgerMethod.UnknownReasons)}");
         var ingestSplitClosureMethod = Assert.Single(
             map.Methods,
             static method => method.Id ==

@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Cli;
@@ -8,6 +7,8 @@ namespace StrataLint.Tests;
 
 public sealed class CoverageCommandTests
 {
+    private const string DescriptorSelector = "D5/S0/Tower/Fixture.lean";
+
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
@@ -16,8 +17,7 @@ public sealed class CoverageCommandTests
         using var directory = new TemporaryDirectory();
         var raw = Snapshot();
         var gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), raw, null);
-        var source = new FakeLeanReportSource(LeanAxiomReport.Create(
-            ImmutableDictionary<string, LeanFileReport>.Empty));
+        var source = new FakeLeanReportSource(Report());
         var environment = new ProductionCliEnvironment(directory.Path, gateway, source);
         var arguments = json ? new[] { "coverage", "--json" } : new[] { "coverage" };
 
@@ -51,8 +51,7 @@ public sealed class CoverageCommandTests
             RawChangeSet.Create([]),
             Snapshot(recordedHash),
             null);
-        var source = new FakeLeanReportSource(LeanAxiomReport.Create(
-            ImmutableDictionary<string, LeanFileReport>.Empty));
+        var source = new FakeLeanReportSource(Report());
         var environment = new ProductionCliEnvironment(directory.Path, gateway, source);
         var console = new BufferedConsole();
 
@@ -70,8 +69,7 @@ public sealed class CoverageCommandTests
             RawChangeSet.Create([]),
             Snapshot(terminateAcceptedEvent: false),
             null);
-        var source = new FakeLeanReportSource(LeanAxiomReport.Create(
-            ImmutableDictionary<string, LeanFileReport>.Empty));
+        var source = new FakeLeanReportSource(Report());
         var environment = new ProductionCliEnvironment(directory.Path, gateway, source);
         var console = new BufferedConsole();
 
@@ -156,19 +154,18 @@ public sealed class CoverageCommandTests
         string? recordedHash = null,
         bool terminateAcceptedEvent = true)
     {
-        var genesis = FrozenLedgerCanonicalWriter.WriteDagEvent(
-            "Genesis",
+        var anchor = FrozenLedgerCanonicalWriter.WriteDagEvent(
+            "Freeze",
             JsonSerializer.SerializeToElement(new
             {
-                generator_blob_oid = "git-sha1:" + new string('a', 40),
-                origin_commit_oid = "git-sha1:" + new string('b', 40),
-                origin_tree_oid = "git-sha1:" + new string('c', 40),
-                protocol_version = 1,
-                rule_catalog_root = "sha256:" + new string('d', 64),
+                declaration_statement_ids = Array.Empty<object>(),
+                descriptor_selector = DescriptorSelector,
+                prerequisite_frozen_node_ids = Array.Empty<string>(),
+                statement_id = "sha256:" + new string('d', 64),
             }));
-        var eventHash = recordedHash ?? genesis.Hash;
-        var eventBytes = Encoding.UTF8.GetString(genesis.Bytes.AsSpan()).Replace(
-            genesis.Hash,
+        var eventHash = recordedHash ?? anchor.Hash;
+        var eventBytes = Encoding.UTF8.GetString(anchor.Bytes.AsSpan()).Replace(
+            anchor.Hash,
             eventHash,
             StringComparison.Ordinal);
         if (!terminateAcceptedEvent)
@@ -184,6 +181,7 @@ public sealed class CoverageCommandTests
                 """,
             ["Meta/domains.yaml"] = TestRegistry.Domains,
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
+            [DescriptorSelector] = "theorem fixture : True := by trivial\n",
             [FrozenLedgerChangeClassifier.AcceptedRoot
                 + "/" + eventHash[7..] + ".json"] = eventBytes,
             [RuleFixture.TowerManifestPath] = TowerYaml.Replace(
@@ -194,6 +192,17 @@ public sealed class CoverageCommandTests
         return RawRepositorySnapshot.Create(
             files.Select(static item => RawRepositoryEntry.FromText(item.Key, item.Value)));
     }
+
+    private static LeanAxiomReport Report() => LeanAxiomReport.Create(
+        new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
+        {
+            [DescriptorSelector] = new(
+                [],
+                [new LeanDeclaration("fixture", "theorem", "statement-v1(True)", [])
+                {
+                    NameKey = "ns(n0,7:fixture)",
+                }]),
+        });
 
     private const string TowerYaml = """
         schema_version: 1

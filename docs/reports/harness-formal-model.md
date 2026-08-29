@@ -146,7 +146,7 @@ producer actor 都唯一解析到 `D` 中的工件时,`Π_D` 才有定义;任一
 
 > **本仓实测**:`tools/TOWER.yaml` 末节 `bootstrap: id: bootstrap-pr-1, judge: open,
 > reason: "Godel boundary: the bootstrap trust root cannot prove its own consistency",
-> genesis_event: sha256:80bdd2d2…, verification: ASSUMED-UNVERIFIED`。塔顶已诚实标 open。
+> genesis_event: sha256:0018245c…, verification: ASSUMED-UNVERIFIED`。该字段现锚定 v5 Freeze 快照;塔顶已诚实标 open。
 
 **粒度律(定理 2.2)**:登记表的**分辨率应与 τ 成反比**。
 错误代价按 `C(τ) = C_leaf · α^(τ_max−τ)` 增长,而分辨率的价值正比于该层单次错误的代价。

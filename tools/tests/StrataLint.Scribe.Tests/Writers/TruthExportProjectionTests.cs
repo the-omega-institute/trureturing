@@ -25,15 +25,11 @@ public sealed class TruthExportProjectionTests
                 new FrozenDeclarationStatement(
                     "nk-one", "def", StatementId.Create(Sha("statement:one")))),
             StatementId.Create(Sha("statement:" + repoPath)),
-            WitnessId.Create(Sha("witness:" + repoPath)),
             FrozenNodeId.Create(frozenNodeId),
             ImmutableArray.Create(
                 FrozenNodeId.Create(prerequisiteB),
                 FrozenNodeId.Create(prerequisiteA)),
-            ImmutableArray.Create("propext", "Classical.choice"),
-            new FrozenModuleAttestation(
-                RepoPath.CreateKnown(repoPath),
-                "git-sha1:" + new string('a', 40)));
+            ImmutableArray.Create("propext", "Classical.choice"));
 
         var model = TruthExportProjection.Project(
             ImmutableArray.Create(
@@ -70,13 +66,9 @@ public sealed class TruthExportProjectionTests
                 "theorem",
                 StatementId.Create(Sha("statement:" + repoPath)))),
             StatementId.Create(Sha("module-statement:" + repoPath)),
-            WitnessId.Create(Sha("witness:" + repoPath)),
             FrozenNodeId.Create(frozenNodeId),
             ImmutableArray<FrozenNodeId>.Empty,
-            ImmutableArray<string>.Empty,
-            new FrozenModuleAttestation(
-                RepoPath.CreateKnown(repoPath),
-                "git-sha1:" + new string(blobDigit, 40)));
+            ImmutableArray<string>.Empty);
 
     private static string Sha(string text) =>
         "sha256:" + Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(text)));

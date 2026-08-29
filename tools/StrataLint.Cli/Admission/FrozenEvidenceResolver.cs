@@ -3,13 +3,6 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-internal enum FrozenReferenceRejectionKind
-{
-    MissingObject,
-    WrongObjectType,
-    InvalidReference,
-}
-
 internal enum GitCommandFailureKind
 {
     NonzeroExit,
@@ -50,23 +43,6 @@ internal sealed record GitCommandFailure(
         var detail = Detail.Length > 0 ? $", detail: {Detail}" : string.Empty;
         return $"{command} [{classification}{exit}{native}{stderr}{detail}]";
     }
-}
-
-internal sealed class FrozenReferenceRejectionException : InvalidOperationException
-{
-    internal FrozenReferenceRejectionException(
-        FrozenReferenceRejectionKind kind,
-        string message,
-        GitCommandFailure? gitFailure = null)
-        : base(gitFailure is null ? message : $"{message}; {gitFailure.Render()}")
-    {
-        Kind = kind;
-        GitFailure = gitFailure;
-    }
-
-    internal FrozenReferenceRejectionKind Kind { get; }
-
-    internal GitCommandFailure? GitFailure { get; }
 }
 
 internal sealed class GitInfrastructureException : InvalidOperationException

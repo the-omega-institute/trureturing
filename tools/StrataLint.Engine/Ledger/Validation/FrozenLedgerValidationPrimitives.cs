@@ -9,84 +9,42 @@ public static partial class FrozenLedger
 {
     private static FrozenFreezePayload ParseFreeze(
         JsonElement payload,
-        FrozenMaterialCatalog catalog,
-        TrustedFrozenGitReferences trustedReferences,
-        bool requireCatalogRevisionIdentity = true)
+        FrozenMaterialCatalog catalog)
     {
         RequireEventPayloadFields(payload, "Freeze");
-        var input = ParseInput(payload.GetProperty("input"));
-        var pathText = input.DescriptorSelector;
+        var pathText = RequiredString(payload, "descriptor_selector");
         if (!RepoPath.TryCreate(pathText, out var path) || !catalog.ByPath.TryGetValue(path, out var expectedMaterial))
         {
             throw new FormatException($"Freeze targets a non-Closed or unknown module {pathText}.");
         }
 
         var statementText = RequiredString(payload, "statement_id");
-        var witnessText = RequiredString(payload, "witness_id");
-        var frozenText = RequiredString(payload, "frozen_node_id");
-        if (!FrozenHashSyntax.IsSha256(statementText)
-            || !FrozenHashSyntax.IsSha256(witnessText)
-            || !FrozenHashSyntax.IsSha256(frozenText))
+        if (!FrozenHashSyntax.IsSha256(statementText))
         {
             throw new FormatException("Freeze contains a malformed content address.");
         }
 
         var declarationStatementIds = ParseDeclarationStatementIds(payload);
         var prerequisites = RequiredStringArray(payload, "prerequisite_frozen_node_ids")
-            .Select(FrozenNodeId.Create)
+            .Select(item => FrozenHashSyntax.IsSha256(item)
+                ? FrozenNodeId.Create(item)
+                : throw new FormatException("Freeze prerequisite contains a malformed content address."))
             .ToImmutableArray();
         var result = new FrozenFreezePayload(
-            RequiredString(payload, "case_id"),
+            pathText,
             declarationStatementIds,
-            FrozenNodeId.Create(frozenText),
-            input,
             prerequisites,
-            StatementId.Create(statementText),
-            WitnessId.Create(witnessText))
-        {
-            AxiomClosure = ParseOptionalAxiomClosure(payload),
-        };
-        if (!trustedReferences.Covers(result.Input))
-        {
-            throw new FormatException("Freeze input has no validated Git commit/tree/blob capability.");
-        }
-        var expectedCaseId = FrozenLedgerCanonicalWriter.CaseId(expectedMaterial.FrozenNodeId);
-        if (result.CaseId != expectedCaseId
-            || !result.DeclarationStatementIds.SequenceEqual(expectedMaterial.DeclarationStatementIds)
+            StatementId.Create(statementText));
+        if (!result.DeclarationStatementIds.SequenceEqual(expectedMaterial.DeclarationStatementIds)
             || result.StatementId != expectedMaterial.StatementId
-            || result.WitnessId != expectedMaterial.WitnessId
-            || result.FrozenNodeId != expectedMaterial.FrozenNodeId
-            || result.HasAxiomClosure
-                && !result.AxiomClosure.SequenceEqual(expectedMaterial.AxiomClosure)
             || !result.PrerequisiteFrozenNodeIds.SequenceEqual(expectedMaterial.PrerequisiteFrozenNodeIds)
-            || requireCatalogRevisionIdentity
-                && (result.Input.BaseCommitOid
-                        != (expectedMaterial.Attestation.BaseCommitOid ?? catalog.Environment.OriginCommitOid)
-                    || result.Input.BaseTreeOid
-                        != (expectedMaterial.Attestation.BaseTreeOid ?? catalog.Environment.OriginTreeOid))
-            || result.Input.DescriptorBlobOid != expectedMaterial.Attestation.SourceBlobOid
-            || result.Input.DescriptorSelector != expectedMaterial.RepoPath.Value
-            || !result.Input.SupportingBlobOids.SequenceEqual(
-                new[]
-                {
-                    catalog.Environment.LakeManifestBlobOid,
-                    catalog.Environment.LeanToolchainBlobOid,
-                }.Order(StringComparer.Ordinal),
-                StringComparer.Ordinal))
+            || result.DescriptorSelector != expectedMaterial.RepoPath.Value)
         {
             throw new FormatException($"Freeze payload does not match recomputed material for {path.Value}.");
         }
 
         return result;
     }
-
-    private static ImmutableArray<string> ParseOptionalAxiomClosure(JsonElement payload) =>
-        payload.TryGetProperty("axiom_closure", out _)
-            ? ParseAxiomClosure(payload, "axiom_closure")
-            : default;
-
-    private static ImmutableArray<string> ParseAxiomClosure(JsonElement payload, string name) =>
-        RequiredStringArray(payload, name);
 
     internal static ImmutableArray<FrozenDeclarationStatement> ParseDeclarationStatementIds(
         JsonElement payload) =>
@@ -129,36 +87,16 @@ public static partial class FrozenLedger
         return result;
     }
 
-    private static FrozenLedgerInput ParseInput(JsonElement value)
-    {
-        RequireObjectFields(
-            value,
-            "Freeze input",
-            "base_commit_oid", "base_tree_oid", "descriptor_blob_oid", "descriptor_selector",
-            "supporting_blob_oids");
-        var result = new FrozenLedgerInput(
-            RequiredString(value, "base_commit_oid"),
-            RequiredString(value, "base_tree_oid"),
-            RequiredString(value, "descriptor_blob_oid"),
-            RequiredString(value, "descriptor_selector"),
-            RequiredStringArray(value, "supporting_blob_oids"));
-        if (!FrozenHashSyntax.IsGitOid(result.BaseCommitOid)
-            || !FrozenHashSyntax.IsGitOid(result.BaseTreeOid)
-            || !FrozenHashSyntax.IsGitOid(result.DescriptorBlobOid)
-            || result.SupportingBlobOids.Any(static oid => !FrozenHashSyntax.IsGitOid(oid)))
-        {
-            throw new FormatException("Freeze input has a malformed Git object reference.");
-        }
-
-        return result;
-    }
-
     private static string ComputeCorpusRoot(
         string headHash,
         ImmutableArray<FrozenFreezePayload> activeFreezes)
     {
         var leaves = activeFreezes
-            .Select(payload => (payload.CaseId, Hash: ComputeCaseLeaf(payload)))
+            .Select(payload => (
+                CaseId: FrozenLedgerCanonicalWriter.CaseId(
+                    RepoPath.CreateKnown(payload.DescriptorSelector),
+                    payload.StatementId),
+                Hash: ComputeCaseLeaf(payload)))
             .OrderBy(static item => item.CaseId, StringComparer.Ordinal)
             .ThenBy(static item => item.Hash, StringComparer.Ordinal)
             .ToImmutableArray();
