@@ -29,6 +29,8 @@ jobs:
         shell: bash
         run: |
           set +e
+          mkdir -p diagnostics
+          : > diagnostics/summary.tsv
           failed=0
           modules=(
             D5.S3.ObserverMemory.Refinement.PostprocessingKernelCalculus
@@ -37,14 +39,32 @@ jobs:
             D5.S3.Observer.Agency.Holonomy.VisibleLoopHolonomy
             D5.S3.Observer.Completion.CompletionLocusCalculus
             D5.S3.ObserverMemory.RefinementClosure.FiniteHorizonKernelRecurrence
+            D5.S3.ObserverMemory.RefinementClosure.CommutingClosureCommonFixedPoint
           )
           for module in "${modules[@]}"; do
-            echo "::group::lake build $module"
-            lake build "$module"
+            safe="${module//./_}"
+            log="diagnostics/${safe}.log"
+            echo "===== $module ====="
+            lake build "$module" > "$log" 2>&1
             status=$?
-            echo "::endgroup::"
+            cat "$log"
+            printf '%s\t%s\n' "$module" "$status" >> diagnostics/summary.tsv
             if [ "$status" -ne 0 ]; then
               failed=1
             fi
           done
-          exit "$failed"
+          printf '%s\n' "$failed" > diagnostics/failed
+          exit 0
+      - name: Upload Lean diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: observer-v12-lean-diagnostics
+          path: diagnostics
+          if-no-files-found: error
+          retention-days: 3
+      - name: Enforce successful module builds
+        shell: bash
+        run: |
+          cat diagnostics/summary.tsv
+          test "$(cat diagnostics/failed)" = "0"
