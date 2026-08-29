@@ -46,15 +46,15 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void ByteIdenticalIngestToleratesDanglingGenericChainMember()
+    public void ByteIdenticalIngestRejectsGenericChainWhoseParentHasNoClausePlan()
     {
-        AssertByteIdenticalGenericChainIngest("missing-child");
+        AssertByteIdenticalGenericChainIngestRejected("missing-child");
     }
 
     [Fact]
-    public void ByteIdenticalIngestToleratesCyclicGenericChain()
+    public void ByteIdenticalIngestRejectsSelfReferentialGenericChainWhoseParentHasNoClausePlan()
     {
-        AssertByteIdenticalGenericChainIngest("old-receipt");
+        AssertByteIdenticalGenericChainIngestRejected("old-receipt");
     }
 
     [Fact]
@@ -639,7 +639,7 @@ public sealed partial class ProductionEnvironmentTests
         ]);
     }
 
-    private static void AssertByteIdenticalGenericChainIngest(string chainAtomId)
+    private static void AssertByteIdenticalGenericChainIngestRejected(string chainAtomId)
     {
         var fixture = new RuleFixture();
         var atomizerId = SyntheticNumberedAtomizer.Id;
@@ -676,9 +676,12 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
-        Assert.True(result.Success, result.Error);
-        Assert.Contains("residual_open_added=0", result.Output, StringComparison.Ordinal);
-        Assert.Contains("ledger_changed=false", result.Output, StringComparison.Ordinal);
+        Assert.False(result.Success);
+        Assert.Contains(
+            "INGEST_INVALID ingest clause chain parent old-receipt lacks verified clause-plan proof: "
+                + "entry old-receipt malformed clause chain: parent CAS blob has no clause plan",
+            result.Error,
+            StringComparison.Ordinal);
         Assert.Equal(atomText, File.ReadAllText(outputPath));
         Assert.Equal(unchangedWriteTime, File.GetLastWriteTimeUtc(outputPath));
     }

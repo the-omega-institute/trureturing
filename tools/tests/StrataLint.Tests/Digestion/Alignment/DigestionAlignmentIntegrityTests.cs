@@ -210,13 +210,22 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void AdmissionAcceptsNestedChildrenOnlyWhenVerifiedParentListsExactPlan()
+    public void AdmissionVerifiesRecordedClauseChainFromParentCasAndPreservesInheritedAlignment()
     {
-        var parentBytes = Encoding.UTF8.GetBytes("abcdef");
-        var parent = Atom("theorem/1.1", parentBytes);
-        var first = SpannedAtom(parent, 0, 3, 1);
-        var second = SpannedAtom(parent, 3, 6, 2);
-        var parentCapture = DigestionCasStore.Capture(parentBytes);
+        const string claim = """
+            **定理 18.7(Parent)**. first clause.
+
+            **推论:Second clause**. second clause.
+
+            """;
+        var sourceBytes = Encoding.UTF8.GetBytes("# PZG\n\n" + claim);
+        var atomized = PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
+        var parent = Assert.Single(atomized.Claims);
+        var clausePlan = Assert.Single(atomized.ClausePlans);
+        Assert.Equal(2, clausePlan.Children.Length);
+        var first = clausePlan.Children[0];
+        var second = clausePlan.Children[1];
+        var parentCapture = DigestionCasStore.Capture(parent.RawBytes.AsSpan());
         var firstCapture = DigestionCasStore.Capture(first.RawBytes.AsSpan());
         var secondCapture = DigestionCasStore.Capture(second.RawBytes.AsSpan());
         var baseline = Ledger(
@@ -245,12 +254,7 @@ public sealed partial class DigestionAlignmentTests
                 ],
             },
         ]);
-        var snapshot = Snapshot(parentBytes, [parentCapture, firstCapture, secondCapture]);
-        var atomized = new AtomizedTheoryDocument(
-            [parent],
-            [new DigestionSlice(true, parent.RawBytes)],
-            [new DigestionClausePlan(parent.AstPath, [first, second])],
-            GenreRegistryCheck.NoGenreRegistry);
+        var snapshot = Snapshot(sourceBytes, [parentCapture, firstCapture, secondCapture]);
 
         var rejected = DigestionLedgerAligner.Evaluate(
             unchained,
@@ -280,7 +284,7 @@ public sealed partial class DigestionAlignmentTests
         Assert.Equal(first.Fingerprints, admitted.AtomFor(firstId)?.Fingerprints);
         Assert.Equal(second.Fingerprints, admitted.AtomFor(secondId)?.Fingerprints);
         Assert.All([firstId, secondId], childId => Assert.Equal(
-            DigestionReceiptAlignment.Rejected,
+            DigestionReceiptAlignment.Seen,
             inheritedButUnchained.AlignmentFor(childId)));
     }
 
@@ -407,7 +411,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void InheritedGictGenericChainKeepsBaseAlignmentAndIngestSemantics()
+    public void InheritedGictGenericChainIsNotRecheckedByAdmissionButIngestRejectsMissingPlan()
     {
         var sourceBytes = Encoding.UTF8.GetBytes(
             "# GICT\n\n**定理 1.1(A)**。first。\n\n**定理 1.2(B)**。second。\n");
@@ -444,18 +448,14 @@ public sealed partial class DigestionAlignmentTests
             snapshot,
             ledger,
             DigestionAlignmentMode.Admission);
-        var plan = DigestionIngestor.Plan(ledger, snapshot, ledger);
+        var exception = Assert.Throws<FormatException>(() =>
+            DigestionIngestor.Plan(ledger, snapshot, ledger));
 
-        Assert.All(ledger.RequireDigestionEntries(), entry => Assert.Equal(
-            DigestionReceiptAlignment.Seen,
-            alignment.AlignmentFor(entry.AtomId)));
+        Assert.Equal(DigestionReceiptAlignment.Seen, alignment.AlignmentFor("parent"));
+        Assert.Equal(DigestionReceiptAlignment.Seen, alignment.AlignmentFor("generic-child"));
         Assert.Empty(alignment.Findings);
-        var plannedParent = Assert.Single(
-            plan.Document.RequireDigestionEntries(),
-            static entry => entry.AtomId == "parent");
-        Assert.Equal(["generic-child"], plannedParent.Receipts.ChainAtoms.ToArray());
-        Assert.Equal(0, plan.ResidualOpenAdded);
-        Assert.Empty(plan.CasObjects);
+        Assert.Contains("ingest clause chain parent parent lacks verified clause-plan proof", exception.Message);
+        Assert.Contains("parent CAS blob has no clause plan", exception.Message);
     }
 
     [Fact]
