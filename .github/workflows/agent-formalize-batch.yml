@@ -1,0 +1,75 @@
+name: agent-formalize-batch
+
+on:
+  push:
+    branches:
+      - agent/prover/observer-action-spectrum
+
+permissions:
+  contents: write
+
+jobs:
+  formalize:
+    if: contains(github.event.head_commit.message, 'launch formalization batch 1')
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/prover/observer-action-spectrum
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - name: Configure and synchronize latest dev
+        run: |
+          set -euo pipefail
+          git config user.name Lexa
+          git config user.email 50111876+AlyciaBHZ@users.noreply.github.com
+          git fetch origin dev
+          git rebase origin/dev
+      - name: Install pinned Lean toolchain
+        run: |
+          set -euo pipefail
+          tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Build repository CLI
+        run: make -C tools dotnet
+      - name: Prepare exact source-bound cover batch
+        run: |
+          mkdir -p .lake
+          cat > .lake/agent-cover-batch-1.tsv <<'EOF'
+          generic-residual-1a8135c900a57add60a2a037258ba54348561dc150d128ca6e20d0db5bee006a	D5/S3/ConceptDynamics/Faithfulness/BareValueObservationNoninjective.bare_value_observation_not_injective
+          generic-residual-e71b343f956210cbc6e1e7a8d3032f73715af19ced0aabde7bebfd21bfa37ddb	D5/S3/AnalyticClosure/LocalPrecisionUnit.local_precision_unit
+          generic-residual-2dde7dc7f7b198a84b25e7b5519454ba1c4f77c3b4496313e93deb04be7af252	D5/S3/Constants/Limits/EulerCountertermUniqueness.euler_counterterm_unique
+          generic-residual-487276d78591c15fbe5b0c6a8587124a155d2413bca7d5ea867a0c2c98595013	D5/S3/Analytic/Characterizations/VisibleGaussianMass.visible_gaussian_mass
+          generic-residual-25b26706631e16d3df4856b2f51bc190b7a0f3936923a8952144a68601235605	D5/S3/Arith/Lattices/GoldenMaximalOrderCompletion.golden_maximal_order_completion
+          generic-residual-fdf7550308c2364541a81f182ebb7dc34432e9526ac774f1eea129b21ff34802	D5/S3/Arith/Lattices/EnergyBoundarySelectionLaw.energy_boundary_selection_law
+          generic-residual-15ee562628f0ae21e0bcc04ef96e4f06f52571e0301b6355cb057e79bcb14570	D5/S3/Weil/Scattering/ShiftedResonanceCriterion.horizontal_resonance_line_iff_critical_line
+          generic-residual-3476fba3972a87e1eaedb13e15739df5c83d839ef885716ac08135f5bca8d89b	D5/S3/Weil/Scattering/ScatteringResonanceLines.scattering_resonance_lines
+          generic-residual-7d1660acc6e4e998d6d4066c7f181d3f8db2f2c476fe4ef59931e0274104595a	D5/S3/Weil/Scattering/UniformDampingCriterion.uniform_damping_iff_critical_line
+          generic-residual-ffe188ef1071b6acd4954a62b229a1de4c9fb5d63a43d140bc81bc22442fd0ca	D5/S3/Analytic/Adelic/ToroidalCommonZeroLocus.toroidal_common_zero_locus
+          generic-residual-3f3479a4f7b7ba7ee12cb2018f428dcea013c77f47cdf991c7990b8d8f82943d	D5/S3/Analytic/Adelic/ToroidalDivisorGcd.toroidal_divisor_gcd
+          generic-residual-04448fdd133940872daa03d16350c9f09e3d3ee6853d2f721460bedb53c3e5c6	D5/S3/ObserverMemory/RefinementClosure/BehaviorCompletionShiftStability.behavior_completion_shift_stability
+          generic-residual-1869329af2dc4044c5dcea3394cad2b2e707271260464fbf10dae549afa3696b	D5/S3/ObserverMemory/Refinement/CascadeCompletion.cascadeCompletionEquiv
+          generic-residual-2b9f1438d8209eb6d910398ebbcc57bd8284fb74181df0bd61c855d776082d4e	D5/S3/Observer/WindowAlgebra/DynamicalObservableKernel.dynamical_observable_kernel
+          generic-residual-29d133ad349cc83cb72549a7b5d3da1c23b1a47533403ef69a4dd7d909eb2bf3	D5/S3/Observer/MetricGeometryLaws/ObserverUltrametricThresholdClosure.observer_ultrametric_threshold_closure
+          generic-residual-022c541c0c94e4fa9f159be7b08a4035c49b954ba29f20e099a17d0148338582	D5/S3/ConceptDynamics/OperationalOntology/DuplicateActionLabelInvariance.duplicate_action_labels_preserve_effective_space
+          generic-residual-1d7ebe10e30598080d1d3a1d7e2aca2b8bf48f9bdebcb3f7c6a25c528e6e72a7	D5/S3/Quantum/Dynamics/ConservationAutonomySeparation.conservation_and_autonomy_are_distinct
+          generic-residual-39266e5ca98059a731ed592ec73e2bbfeecd9980d612d38a9eb293aaf65cdd84	D5/S3/ObserverMemory/PredictionCertificates/ClockTimeVersusRefinementDepth.clock_time_does_not_determine_refinement_depth
+          generic-residual-4fe529dd4fa2b0f9f2dcf52f68a0d51df11775fc558734a4c058682808b501c5	D5/S3/ObserverMemory/PredictionCertificates/EarliestFutureWitness.memory_is_earliest_future_witness
+          generic-residual-1bead217c3e5c8420efa172bd98fcb38c11a49135a1ebdfbce0407ce604afa85	D5/S3/AnalyticClosure/FamilySums/TermBoundDoesNotBoundFamilySum.term_bound_does_not_bound_family_sum
+          EOF
+          sed -i 's/^          //' .lake/agent-cover-batch-1.tsv
+      - name: Cover validated atoms
+        run: make cover-batch ATOMS=.lake/agent-cover-batch-1.tsv BASE=origin/dev
+      - name: Canonical preflight
+        run: make preflight BASE=origin/dev
+      - name: Remove temporary agent workflows
+        run: |
+          rm -f .github/workflows/agent-export-latest-dev.yml
+          rm -f .github/workflows/agent-formalize-batch.yml
+          git add -A
+          git commit -m 'chore: remove temporary formalization workflows' || true
+      - name: Push synchronized formalization branch
+        run: git push --force-with-lease origin HEAD:agent/prover/observer-action-spectrum
