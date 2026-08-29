@@ -333,12 +333,22 @@ internal static class EngineeringCompileInputDeriver
                 .Select(static file => ParseProject(file.Path, file.Content))
                 .ToDictionary(static project => project.Path, StringComparer.Ordinal);
             var affected = projects.Values
-                .Where(project => project.InputPatterns.Any(pattern => changedPaths.Any(path => EngineeringInputGlob.IsMatch(pattern, path))))
+                .Where(project => project.InputPatterns.Any(input =>
+                    !input.IsContentGlob
+                    && changedPaths.Any(path => EngineeringInputGlob.IsMatch(input.Pattern, path))))
+                .Select(static project => project.Path)
+                .ToHashSet(StringComparer.Ordinal);
+            var directlyAffectedContentTestProjects = projects.Values
+                .Where(static project => project.IsTest)
+                .Where(project => project.InputPatterns.Any(input =>
+                    input.IsContentGlob
+                    && changedPaths.Any(path => EngineeringInputGlob.IsMatch(input.Pattern, path))))
                 .Select(static project => project.Path)
                 .ToHashSet(StringComparer.Ordinal);
             var testProjects = projects.Values
                 .Where(static project => project.IsTest)
-                .Where(project => DependsOnAffected(project.Path, projects, affected, []))
+                .Where(project => directlyAffectedContentTestProjects.Contains(project.Path)
+                    || DependsOnAffected(project.Path, projects, affected, []))
                 .Select(static project => project.Path)
                 .ToHashSet(StringComparer.Ordinal);
             failure = null;
@@ -355,7 +365,7 @@ internal static class EngineeringCompileInputDeriver
     {
         var document = XDocument.Parse(content, LoadOptions.None);
         var references = new List<string>();
-        var inputs = new List<string>();
+        var inputs = new List<EngineeringProjectInput>();
         foreach (var item in document.Descendants().Where(static element => element.Attribute("Include") is not null))
         {
             var include = (string)item.Attribute("Include")!;
@@ -374,7 +384,9 @@ internal static class EngineeringCompileInputDeriver
                 else if (InputItemTypes.Contains(item.Name.LocalName) && !resolved.StartsWith("tools/", StringComparison.Ordinal))
                 {
                     EngineeringInputGlob.Validate(resolved);
-                    inputs.Add(resolved);
+                    inputs.Add(new EngineeringProjectInput(
+                        resolved,
+                        IsContentGlob(path, resolved)));
                 }
             }
         }
@@ -386,6 +398,16 @@ internal static class EngineeringCompileInputDeriver
                 && string.Equals((string?)element.Attribute("Include"), "xunit", StringComparison.OrdinalIgnoreCase)),
             references,
             inputs);
+    }
+
+    private static bool IsContentGlob(string projectPath, string pattern)
+    {
+        if (!projectPath.StartsWith("tools/", StringComparison.Ordinal)) return false;
+        var wildcardIndex = pattern.IndexOfAny(['*', '?']);
+        if (wildcardIndex < 0) return false;
+        var rootEnd = pattern.LastIndexOf('/', wildcardIndex);
+        var root = rootEnd < 0 ? string.Empty : pattern[..rootEnd];
+        return root != "tools" && !root.StartsWith("tools/", StringComparison.Ordinal);
     }
 
     private static bool DependsOnAffected(
@@ -424,7 +446,9 @@ internal static class EngineeringCompileInputDeriver
         string Path,
         bool IsTest,
         IReadOnlyList<string> References,
-        IReadOnlyList<string> InputPatterns);
+        IReadOnlyList<EngineeringProjectInput> InputPatterns);
+
+    private sealed record EngineeringProjectInput(string Pattern, bool IsContentGlob);
 }
 
 internal static class EngineeringInputGlob
