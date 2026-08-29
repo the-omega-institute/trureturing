@@ -132,12 +132,42 @@ internal static class DigestionIngestor
         return id.Length > 0 ? id : "source-" + DigestionFingerprint.ShortHash(path);
     }
 
+    internal static RawChangeSet IncludeCasReverseDependencies(
+        BackfillInventoryDocument baselineDocument,
+        RawChangeSet changes)
+    {
+        var entries = changes.Entries
+            .Select(static change => (change.Path.Value, change.Kind))
+            .ToList();
+        var paths = changes.Paths
+            .Select(static path => path.Value)
+            .ToHashSet(StringComparer.Ordinal);
+        var affectedCasPaths = baselineDocument.RequireDigestionEntries()
+            .Where(entry => DigestionCasStore.EntryChanged(entry, changes))
+            .Select(static entry => entry.CasRef)
+            .Where(DigestionFingerprint.IsCanonicalSha256)
+            .Select(static reference =>
+                DigestionCasStore.RootPath + reference["sha256:".Length..])
+            .Distinct(StringComparer.Ordinal)
+            .Order(StringComparer.Ordinal);
+        foreach (var path in affectedCasPaths)
+        {
+            if (paths.Add(path))
+            {
+                entries.Add((path, RawChangeKind.Modified));
+            }
+        }
+
+        return RawChangeSet.CreateWithKinds(entries);
+    }
+
     internal static DigestionIngestPlan Plan(
         BackfillInventoryDocument document,
         RepositorySnapshot snapshot,
         BackfillInventoryDocument baselineDocument,
         RepositorySnapshot? baselineSnapshot = null,
-        Func<string, TheoryAtomizer>? atomizerResolver = null)
+        Func<string, TheoryAtomizer>? atomizerResolver = null,
+        RawChangeSet? changes = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
@@ -146,12 +176,16 @@ internal static class DigestionIngestor
         var migrationDocument = RegisterDefaultTheorySources(
             PrepareLegacyMigrations(document),
             snapshot);
+        var evaluationChanges = changes is null
+            ? null
+            : IncludeCasReverseDependencies(baselineDocument, changes);
         var alignment = DigestionLedgerAligner.Evaluate(
             migrationDocument,
             snapshot,
             baselineDocument,
             DigestionAlignmentMode.Ingest,
-            atomizerResolver);
+            atomizerResolver,
+            changes: evaluationChanges);
         var unverifiedChainParent = migrationDocument.RequireDigestionEntries().FirstOrDefault(entry =>
             entry.Receipts.ChainAtoms.Length > 0
             && alignment.ClausePlanChainParents.Contains(entry.AtomId)

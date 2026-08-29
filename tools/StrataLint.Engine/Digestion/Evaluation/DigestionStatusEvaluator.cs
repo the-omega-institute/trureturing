@@ -10,11 +10,13 @@ internal static partial class DigestionStatusEvaluator
         BackfillInventoryDocument document,
         RepositorySnapshot snapshot,
         BackfillInventoryDocument? baselineDocument = null,
-        RawChangeSet? changes = null)
+        RawChangeSet? changes = null,
+        RawChangeSet? casChanges = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
         changes = DigestionEvaluationScopes.ResolveChanges(scope, changes);
+        casChanges ??= changes;
         var entries = document.RequireDigestionEntries();
         var findings = ImmutableArray.CreateBuilder<string>();
         if (FindDuplicateAtomId(entries) is { } duplicateAtomId)
@@ -28,8 +30,9 @@ internal static partial class DigestionStatusEvaluator
             snapshot,
             baselineDocument,
             DigestionAlignmentMode.Projection,
-            casEvaluation: DigestionCasStore.Evaluate(document, snapshot, changes),
-            changes: changes);
+            casEvaluation: DigestionCasStore.Evaluate(document, snapshot, casChanges),
+            changes: changes,
+            casChanges: casChanges);
         findings.AddRange(alignment.Findings);
         var emptyLeanReport = LeanAxiomReport.Create(
             new Dictionary<string, LeanFileReport>(StringComparer.Ordinal));
@@ -78,6 +81,7 @@ internal static partial class DigestionStatusEvaluator
         RepositorySnapshot? baselineSnapshot = null,
         DigestionCasEvaluation? casEvaluation = null,
         RawChangeSet? changes = null,
+        RawChangeSet? casChanges = null,
         Func<string, bool>? isBaseFactAffected = null,
         RawChangeSet? projectedStatusChanges = null,
         IReadOnlyDictionary<RepoPath, TruthState>? truthStates = null)
@@ -86,6 +90,7 @@ internal static partial class DigestionStatusEvaluator
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(lean);
         changes = DigestionEvaluationScopes.ResolveChanges(scope, changes);
+        casChanges ??= changes;
         var entries = document.RequireDigestionEntries();
         var findings = ImmutableArray.CreateBuilder<string>();
         if (FindDuplicateAtomId(entries) is { } duplicateAtomId)
@@ -94,7 +99,7 @@ internal static partial class DigestionStatusEvaluator
             return new DigestionLedgerEvaluation([], findings.ToImmutable());
         }
 
-        if (casEvaluation is not null && !casEvaluation.Matches(changes))
+        if (casEvaluation is not null && !casEvaluation.Matches(casChanges))
         {
             throw new ArgumentException(
                 "CAS evaluation scope does not match the digestion evaluation scope.",
@@ -104,7 +109,7 @@ internal static partial class DigestionStatusEvaluator
         casEvaluation ??= DigestionCasStore.Evaluate(
             document,
             snapshot,
-            changes,
+            casChanges,
             isBaseFactAffected);
         var alignment = DigestionLedgerAligner.Evaluate(
             document,
@@ -113,7 +118,8 @@ internal static partial class DigestionStatusEvaluator
             DigestionAlignmentMode.Admission,
             baselineSnapshot: baselineSnapshot,
             casEvaluation: casEvaluation,
-            changes: changes);
+            changes: changes,
+            casChanges: casChanges);
         findings.AddRange(alignment.Findings);
         var baselineEntries = (baselineDocument?.RequireDigestionEntries()
                 ?? ImmutableArray<DigestionLedgerEntry>.Empty)

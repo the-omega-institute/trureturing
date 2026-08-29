@@ -11,7 +11,9 @@ internal static class DigestionBackfillValidation
         ValidatedPolicy policy,
         AcceptedLeanClosure lean,
         VerifiedScribeEmissions verifiedScribeEmissions,
-        RawChangeSet? changes = null)
+        RawChangeSet? changes = null,
+        RawChangeSet? repositoryChanges = null,
+        RawChangeSet? casChanges = null)
     {
         var findings = BackfillInventoryRule.EvaluateDocument(
             new BackfillInventoryValidationContext(
@@ -20,7 +22,9 @@ internal static class DigestionBackfillValidation
                 policy,
                 lean,
                 verifiedScribeEmissions,
-                changes),
+                changes,
+                RepositoryChanges: repositoryChanges,
+                CasChanges: casChanges),
             document);
         return RenderOrThrow(findings);
     }
@@ -30,14 +34,18 @@ internal static class DigestionBackfillValidation
         RepositorySnapshot current,
         RepositorySnapshot baseline,
         ValidatedPolicy policy,
-        RawChangeSet? changes = null)
+        RawChangeSet? changes = null,
+        RawChangeSet? repositoryChanges = null,
+        RawChangeSet? casChanges = null)
     {
         var findings = BackfillInventoryRule.EvaluateDocumentWithoutTruthAlignment(
             current,
             baseline,
             policy,
             document,
-            changes);
+            changes,
+            repositoryChanges: repositoryChanges,
+            casChanges: casChanges);
         return RenderOrThrow(findings);
     }
 
