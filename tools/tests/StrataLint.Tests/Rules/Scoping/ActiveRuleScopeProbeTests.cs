@@ -33,7 +33,7 @@ public sealed class ActiveRuleScopeProbeTests
 
     [Fact]
     [BaseFactScopeProbe(16)]
-    public void Sl016SourceMetadataScopesHistoryAndKeepsDeltaAndImplementationRechecks()
+    public void Sl016SourceMetadataScopesHistoryAndKeepsImplementationDeltaOnly()
     {
         const string path = "Meta/Digestion/backfill/delta-v0.1/source.toml";
         const string message = "source metadata";
@@ -48,7 +48,7 @@ public sealed class ActiveRuleScopeProbeTests
             16,
             message,
             BackfillInventoryLoader.RelativePath);
-        AssertFinding(
+        AssertNoFinding(
             Execute(
                 InvalidBackfillSourceHistory(),
                 "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs"),

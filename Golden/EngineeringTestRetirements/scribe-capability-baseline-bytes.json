@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "ProductionEnvironmentTests.CheckBlocksScribeMismatchAlreadyPresentInBaselineBytes",
+  "disposition": "renamed",
+  "replacement": {
+    "assembly": "StrataLint.Tests",
+    "id": "ProductionEnvironmentTests.CheckDoesNotReplayScribeMismatchAlreadyPresentInBaselineBytes"
+  },
+  "reason": "delta-only 之后,该情形不再产 finding(检测未减:改为由对应的 delta 判据承担),故名称随语义更新。owner 裁决:检测全部放在 delta,不放全量。"
+}
