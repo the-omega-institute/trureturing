@@ -84,25 +84,22 @@ public sealed class ContentsWriteWorkflowClosureTests
 
         Assert.Contains("repos/${GITHUB_REPOSITORY}/branches/dev", content, StringComparison.Ordinal);
         Assert.Contains(".protected", content, StringComparison.Ordinal);
-        // #4006 deliberately pins the candidate to GITHUB_SHA: binding source_commit to the
-        // run's own commit keeps provenance on the gate-verified source instead of downgrading
-        // it to publisher-run provenance. GITHUB_SHA is therefore no longer forbidden - what
-        // must hold is that it only becomes source_commit after it is shape-checked and every
-        // required check on it reports success. Pin that instead of the retired prohibition.
-        Assert.Contains("candidate=\"$GITHUB_SHA\"", content, StringComparison.Ordinal);
+        // #4006 briefly pinned the candidate to GITHUB_SHA and dropped the walk-back; #4010
+        // restored the walk-back and now verifies provenance against GITHUB_SHA separately.
+        // What must hold across both is unchanged: a candidate only becomes source_commit after
+        // it is shape-checked as a commit sha and every required check on it reports success.
         Assert.Contains(
-            "[[ \"$candidate\" =~ ^[0-9a-f]{40}$ ]]",
+            "repos/${GITHUB_REPOSITORY}/commits?sha=dev&per_page=40",
             content,
             StringComparison.Ordinal);
         Assert.Contains(
-            "[[ \"$candidate_green\" == true ]] && source_commit=\"$candidate\"",
+            "[[ \"$candidate\" =~ ^[0-9a-f]{40}$ ]] || continue",
             content,
             StringComparison.Ordinal);
-        // The dev walk-back query went away with the same change: there is no candidate list to
-        // walk any more, only this run's own commit. What survives is the requirement that the
-        // candidate be reachable on protected dev, which the merge_base and
-        // commit_on_protected_dev assertions below still pin.
-        Assert.DoesNotContain("commits?sha=dev&per_page=", content, StringComparison.Ordinal);
+        Assert.Contains(
+            "[[ \"$candidate_green\" == true ]]",
+            content,
+            StringComparison.Ordinal);
         Assert.Contains("check-runs?per_page=100", content, StringComparison.Ordinal);
         Assert.Contains("publish_ready=false", content, StringComparison.Ordinal);
         Assert.Contains("git symbolic-ref -q HEAD", content, StringComparison.Ordinal);
@@ -333,7 +330,13 @@ public sealed class ContentsWriteWorkflowClosureTests
         Assert.Contains("SUBJECT_REFERENCE: ${{ steps.oci.outputs.reference }}", content, StringComparison.Ordinal);
         Assert.Contains("subject-digest: ${{ steps.oci.outputs.digest }}", content, StringComparison.Ordinal);
         Assert.Contains("--signer-workflow \"$GITHUB_REPOSITORY/.github/workflows/truth-release-publish.yml\"", content, StringComparison.Ordinal);
-        Assert.Contains("--source-digest \"$SOURCE_COMMIT\"", content, StringComparison.Ordinal);
+        // #4010: the provenance verify gate binds to GITHUB_SHA, which attests publisher-run
+        // authenticity - attest-build-provenance can only stamp GITHUB_SHA. It is deliberately
+        // not the source-of-truth for the bundle's source commit; that travels in the
+        // integrity-bound manifest and the consumer re-derives it. So the digest verified here
+        // is the run's own commit, and the walk-back source_commit need not equal it.
+        Assert.Contains("--source-digest \"$GITHUB_SHA\"", content, StringComparison.Ordinal);
+        Assert.DoesNotContain("--source-digest \"$SOURCE_COMMIT\"", content, StringComparison.Ordinal);
         Assert.Contains("--source-ref 'refs/heads/dev'", content, StringComparison.Ordinal);
         Assert.Contains("GHCR provenance did not become verifiable", content, StringComparison.Ordinal);
     }
