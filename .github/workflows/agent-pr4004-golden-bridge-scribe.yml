@@ -1,0 +1,37 @@
+name: agent-pr4004-golden-bridge-scribe
+
+on:
+  push:
+    branches:
+      - agent/formalize/observer-golden-jet-v5-20260829
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    if: contains(github.event.head_commit.message, '[pr4004-golden-bridge-scribe]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/formalize/observer-golden-jet-v5-20260829
+          fetch-depth: 0
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - name: Build Scribe toolchain with warnings as errors
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p diagnostics
+          make -C tools dotnet 2>&1 | tee diagnostics/dotnet-build.log
+      - name: Upload Scribe diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr4004-golden-bridge-scribe-diagnostics
+          path: diagnostics
+          if-no-files-found: error
+          retention-days: 3
