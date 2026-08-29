@@ -56,31 +56,118 @@ public sealed class CapacityAuditCommandTests
     }
 
     [Fact]
+    public void CapacityAuditRunUsesIndexedPathWhenTrackedWorkingTreeFileIsMissing()
+    {
+        using var repository = RepositoryWithTrackedFiles(
+            RepositoryRules.DirectoryToleranceLimit + 1);
+        File.Delete(Path.Combine(repository.Path, "Synthetic", "Bucket", "File0.cs"));
+
+        var result = CapacityAuditCommand.Run([], repository.Path);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Equal(
+            $"CAPACITY_AUDIT Synthetic/Bucket: directory contains "
+            + $"{RepositoryRules.DirectoryToleranceLimit + 1} files (admission limit "
+            + $"{RepositoryRules.DirectoryFileLimit}, repository tolerance "
+            + $"{RepositoryRules.DirectoryToleranceLimit}; split per CLAUDE.md 8)\n",
+            result.Output);
+        Assert.Empty(result.Error);
+    }
+
+    [Fact]
+    public void CapacityAuditRunUsesIndexedBlobWhenWorkingTreeFileIsShortened()
+    {
+        using var repository = new TemporaryDirectory();
+        ReviewRegressionTests.RunGit(repository.Path, "init");
+        var path = Path.Combine(repository.Path, "Synthetic", "Oversize.cs");
+        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+        File.WriteAllText(path, string.Join(
+            '\n',
+            Enumerable.Range(0, RepositoryRules.ArtifactHardLineLimit + 1)
+                .Select(static index => $"line {index}")));
+        ReviewRegressionTests.RunGit(repository.Path, "add", "--all");
+        File.WriteAllText(path, "short\n");
+
+        var result = CapacityAuditCommand.Run([], repository.Path);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Equal(
+            $"CAPACITY_AUDIT Synthetic/Oversize.cs: artifact spans "
+            + $"{RepositoryRules.ArtifactHardLineLimit + 1} lines (hard limit "
+            + $"{RepositoryRules.ArtifactHardLineLimit})\n",
+            result.Output);
+        Assert.Empty(result.Error);
+    }
+
+    [Fact]
+    public void CliApplicationDispatchesCapacityAuditCleanIndexThroughProductionEnvironment()
+    {
+        using var repository = RepositoryWithTrackedFiles(RepositoryRules.DirectoryToleranceLimit);
+        var console = new BufferedConsole();
+
+        var exitCode = CliApplication.Run(
+            ["capacity-audit"],
+            new ProductionCliEnvironment(repository.Path),
+            console);
+
+        Assert.Equal(0, exitCode);
+        Assert.Empty(console.Output);
+        Assert.Empty(console.Error);
+    }
+
+    [Fact]
+    public void CliApplicationDispatchesCapacityAuditViolationThroughProductionEnvironment()
+    {
+        using var repository = RepositoryWithTrackedFiles(
+            RepositoryRules.DirectoryToleranceLimit + 1);
+        var console = new BufferedConsole();
+
+        var exitCode = CliApplication.Run(
+            ["capacity-audit"],
+            new ProductionCliEnvironment(repository.Path),
+            console);
+
+        Assert.Equal(1, exitCode);
+        Assert.Equal(
+            $"CAPACITY_AUDIT Synthetic/Bucket: directory contains "
+            + $"{RepositoryRules.DirectoryToleranceLimit + 1} files (admission limit "
+            + $"{RepositoryRules.DirectoryFileLimit}, repository tolerance "
+            + $"{RepositoryRules.DirectoryToleranceLimit}; split per CLAUDE.md 8)\n",
+            console.Output);
+        Assert.Empty(console.Error);
+    }
+
+    [Fact]
     public void CapacityAuditRunReturnsTwoWhenIndexEnumerationFails()
     {
         var access = new StubCapacityAuditFileAccess(
             enumerate: _ => throw new InvalidOperationException("synthetic index failure"),
-            readAllText: _ => throw new InvalidOperationException("unexpected read"));
+            readFiles: (_, _) => throw new InvalidOperationException("unexpected read"));
 
         var result = CapacityAuditCommand.Run([], "/synthetic", access);
 
         Assert.Equal(2, result.ExitCode);
         Assert.Empty(result.Output);
-        Assert.Contains("synthetic index failure", result.Error, StringComparison.Ordinal);
+        Assert.Equal(
+            "INFRASTRUCTURE_FAILURE capacity-audit: stage=index-enumeration "
+            + "synthetic index failure\n",
+            result.Error);
     }
 
     [Fact]
     public void CapacityAuditRunReturnsTwoWhenTrackedFileReadFails()
     {
         var access = new StubCapacityAuditFileAccess(
-            enumerate: _ => [("Synthetic/Bucket/File.cs", "/synthetic/File.cs")],
-            readAllText: _ => throw new IOException("synthetic read failure"));
+            enumerate: _ => [new CapacityAuditIndexEntry("Synthetic/Bucket/File.cs", "object-id")],
+            readFiles: (_, _) => throw new IOException("synthetic read failure"));
 
         var result = CapacityAuditCommand.Run([], "/synthetic", access);
 
         Assert.Equal(2, result.ExitCode);
         Assert.Empty(result.Output);
-        Assert.Contains("synthetic read failure", result.Error, StringComparison.Ordinal);
+        Assert.Equal(
+            "INFRASTRUCTURE_FAILURE capacity-audit: stage=file-read synthetic read failure\n",
+            result.Error);
     }
 
     [Fact]
@@ -122,12 +209,18 @@ public sealed class CapacityAuditCommandTests
     }
 
     private sealed class StubCapacityAuditFileAccess(
-        Func<string, IReadOnlyList<(string RelativePath, string FullPath)>> enumerate,
-        Func<string, string> readAllText) : ICapacityAuditFileAccess
+        Func<string, IReadOnlyList<CapacityAuditIndexEntry>> enumerate,
+        Func<
+            string,
+            IReadOnlyList<CapacityAuditIndexEntry>,
+            IReadOnlyList<(string RelativePath, string Text)>> readFiles) : ICapacityAuditFileAccess
     {
-        public IReadOnlyList<(string RelativePath, string FullPath)> Enumerate(string repositoryRoot) =>
+        public IReadOnlyList<CapacityAuditIndexEntry> Enumerate(string repositoryRoot) =>
             enumerate(repositoryRoot);
 
-        public string ReadAllText(string fullPath) => readAllText(fullPath);
+        public IReadOnlyList<(string RelativePath, string Text)> ReadFiles(
+            string repositoryRoot,
+            IReadOnlyList<CapacityAuditIndexEntry> indexedFiles) =>
+            readFiles(repositoryRoot, indexedFiles);
     }
 }

@@ -20,6 +20,20 @@ public sealed class CapacityPolicyTests
         Assert.Contains("hard limit", finding.Message, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void CapacityAuditAllowsArtifactAtHardLineLimit()
+    {
+        var atLimit = string.Join(
+            '\n',
+            Enumerable.Range(0, RepositoryRules.ArtifactHardLineLimit)
+                .Select(static i => $"line {i}"));
+
+        var findings = RepositoryCapacityAudit.InspectFiles(
+            new[] { ("D5/S0/Carrier/Synthetic.lean", atLimit) });
+
+        Assert.Empty(findings);
+    }
+
     // RED: a directory past the repository tolerance must be flagged. The admission rule
     // still refuses at DirectoryFileLimit; this net exists so that a union produced by two
     // concurrent additions - which admission cannot see, because strict is forbidden (19)
