@@ -587,8 +587,8 @@ internal static partial class DigestionLedgerAligner
 
                 AlignNestedChildren(
                     source,
+                    baselineSource,
                     atomized.ClausePlans,
-                    claims,
                     cas.ValidAtomIds,
                     snapshot,
                     alignments,
