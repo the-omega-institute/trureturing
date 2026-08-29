@@ -1,0 +1,17 @@
+ast_path: section/Theorem-4-Two-state-locality-yields-incremental-6f94bbc4
+fingerprints:
+  raw_sha256: sha256:38de1faf880d7b05c3e3ae342550f9f162c3b21bebbedf7f1f255ecf4080673b
+  normalized_sha256: sha256:38de1faf880d7b05c3e3ae342550f9f162c3b21bebbedf7f1f255ecf4080673b
+cas_ref: sha256:38de1faf880d7b05c3e3ae342550f9f162c3b21bebbedf7f1f255ecf4080673b
+coverage_gids:
+  - D5/S3/ConceptDynamics/Governance/TwoStateLocalityIncrementalPreservation.two_state_locality_yields_incremental_preservation
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Governance/TwoStateLocalityIncrementalPreservation.two_state_locality_yields_incremental_preservation
+      source_sha256: sha256:38de1faf880d7b05c3e3ae342550f9f162c3b21bebbedf7f1f255ecf4080673b
+      target_statement_id: sha256:f6933386e118c51a5dd49c6dfee9179015d9f94d0ddb96656bad32fbf42f5fc2
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Governance/TwoStateLocalityIncrementalPreservation.two_state_locality_yields_incremental_preservation
+      definition_sha256: sha256:b684864a0e9bc5e2cdc94e689c2d696bc851067b703916e2ba42cc109e836067
+      emission_sha256: sha256:ba04217976311865d36fbff28bb43a16336d2439996c0118e771c27d3c705eed
+  unresolved_subitems: []

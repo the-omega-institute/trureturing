@@ -3,4 +3,4 @@ path = "docs/develop/theory/PRICED_INTERFACE_PAPER.md"
 atomizer = "pzg-v1"
 genre_registry_check = "collected"
 unregistered_genres = []
-acknowledged_stale = ["pzg-residual-6aa8233cf98d2dec4157db34ad709c3a016e13db3ff9c0db4020970b6675d7a9"]
+acknowledged_stale = ["pzg-residual-6aa8233cf98d2dec4157db34ad709c3a016e13db3ff9c0db4020970b6675d7a9", "pzg-residual-9b31760772f879e87facb48285ff18a4ba5944f7056702e814dacf6f516aee79"]

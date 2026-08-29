@@ -28,6 +28,13 @@ public sealed class ScribeTestMapDeriverTests
         Assert.False(
             currentLedgerMethod.IsUnknown,
             $"{currentLedgerMethod.Id}: {string.Join(',', currentLedgerMethod.UnknownReasons)}");
+        var ingestSplitClosureMethod = Assert.Single(
+            map.Methods,
+            static method => method.Id ==
+                "ProductionEnvironmentTests.IngestReportFreeAcceptsPureAdditionBesideSeenCoveredEntryWithoutRewritingIt");
+        Assert.False(
+            ingestSplitClosureMethod.IsUnknown,
+            $"{ingestSplitClosureMethod.Id}: {string.Join(',', ingestSplitClosureMethod.UnknownReasons)}");
         Assert.All(
             map.Methods.SelectMany(static method => method.Paths),
             path => Assert.True(

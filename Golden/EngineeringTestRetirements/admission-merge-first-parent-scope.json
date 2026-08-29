@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "AdmissionWorkflowTests.PreflightEngineeringScopeUsesCompleteCandidateDeltaAcrossMultipleCommits",
+  "disposition": "renamed",
+  "replacement": {
+    "assembly": "StrataLint.Tests",
+    "id": "AdmissionWorkflowTests.EngineeringScopeUsesCompleteCandidateDeltaFromAMergeFirstParent"
+  },
+  "reason": "The scope fixture now models the checked merge commit and derives its protected base from HEAD^1."
+}
