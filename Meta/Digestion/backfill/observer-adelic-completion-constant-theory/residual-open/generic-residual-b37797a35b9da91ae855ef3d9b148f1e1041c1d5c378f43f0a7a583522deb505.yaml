@@ -1,0 +1,10 @@
+ast_path: section/第六百七十三部-每个素数观察者看到同一个局部世界形状
+fingerprints:
+  raw_sha256: sha256:b37797a35b9da91ae855ef3d9b148f1e1041c1d5c378f43f0a7a583522deb505
+  normalized_sha256: sha256:b37797a35b9da91ae855ef3d9b148f1e1041c1d5c378f43f0a7a583522deb505
+cas_ref: sha256:b37797a35b9da91ae855ef3d9b148f1e1041c1d5c378f43f0a7a583522deb505
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

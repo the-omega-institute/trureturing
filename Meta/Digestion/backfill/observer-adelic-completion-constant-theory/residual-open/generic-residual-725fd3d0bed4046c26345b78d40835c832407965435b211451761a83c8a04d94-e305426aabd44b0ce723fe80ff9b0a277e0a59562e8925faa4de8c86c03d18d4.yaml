@@ -1,0 +1,10 @@
+ast_path: section/567-4-Atomic-extraction/clause/2
+fingerprints:
+  raw_sha256: sha256:725fd3d0bed4046c26345b78d40835c832407965435b211451761a83c8a04d94
+  normalized_sha256: sha256:725fd3d0bed4046c26345b78d40835c832407965435b211451761a83c8a04d94
+cas_ref: sha256:725fd3d0bed4046c26345b78d40835c832407965435b211451761a83c8a04d94
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

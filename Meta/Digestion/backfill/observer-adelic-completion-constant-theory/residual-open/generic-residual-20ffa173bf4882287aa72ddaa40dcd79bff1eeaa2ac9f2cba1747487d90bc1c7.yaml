@@ -1,0 +1,10 @@
+ast_path: section/第四百二十九部-危险频带不是观察不变量
+fingerprints:
+  raw_sha256: sha256:20ffa173bf4882287aa72ddaa40dcd79bff1eeaa2ac9f2cba1747487d90bc1c7
+  normalized_sha256: sha256:20ffa173bf4882287aa72ddaa40dcd79bff1eeaa2ac9f2cba1747487d90bc1c7
+cas_ref: sha256:20ffa173bf4882287aa72ddaa40dcd79bff1eeaa2ac9f2cba1747487d90bc1c7
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

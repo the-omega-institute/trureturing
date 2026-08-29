@@ -1,0 +1,13 @@
+ast_path: section/571-3-Galois-完成黄金观察者
+fingerprints:
+  raw_sha256: sha256:b43c735e7d74924b627e3e8a1beafcf4b69163994a6b19eb544d59fff890aaff
+  normalized_sha256: sha256:b43c735e7d74924b627e3e8a1beafcf4b69163994a6b19eb544d59fff890aaff
+cas_ref: sha256:b43c735e7d74924b627e3e8a1beafcf4b69163994a6b19eb544d59fff890aaff
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-291b7888382f30832c7dd6980c21ed50534c2b2d56023ae330384ba11401c369-79d8c30f6c265bd25f13344ba1c826ec4ccafe0c622bc34ab5608b131a1abb6f
+    - generic-residual-879b4262d9a49e27a5ba7082a9c119461a718f019c0f526ec239ec82e42e0c17-9becf93367f5c1253e6533119c91fc686faba098a207cad6d62eee9f4f60d523

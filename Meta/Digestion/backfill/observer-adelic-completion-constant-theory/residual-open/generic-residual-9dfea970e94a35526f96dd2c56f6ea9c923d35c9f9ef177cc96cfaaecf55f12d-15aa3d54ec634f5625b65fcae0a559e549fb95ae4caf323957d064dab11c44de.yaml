@@ -1,0 +1,10 @@
+ast_path: section/439-3-最大熵扩张本身不证明-RH/clause/1
+fingerprints:
+  raw_sha256: sha256:9dfea970e94a35526f96dd2c56f6ea9c923d35c9f9ef177cc96cfaaecf55f12d
+  normalized_sha256: sha256:9dfea970e94a35526f96dd2c56f6ea9c923d35c9f9ef177cc96cfaaecf55f12d
+cas_ref: sha256:9dfea970e94a35526f96dd2c56f6ea9c923d35c9f9ef177cc96cfaaecf55f12d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/580-2-当前明确未闭合的边界/clause/2
+fingerprints:
+  raw_sha256: sha256:5a847f8b2360d8312c88d8373252e1180d0dd09579a02e3707086e77b2d38886
+  normalized_sha256: sha256:5a847f8b2360d8312c88d8373252e1180d0dd09579a02e3707086e77b2d38886
+cas_ref: sha256:5a847f8b2360d8312c88d8373252e1180d0dd09579a02e3707086e77b2d38886
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

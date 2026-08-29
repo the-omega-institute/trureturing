@@ -1,0 +1,10 @@
+ast_path: section/第四百七十九部-当前紧窗口定量事实
+fingerprints:
+  raw_sha256: sha256:bae68a3445f1f415d899cd71cba41f96e4ddd2336805a6bd577db6a75198f309
+  normalized_sha256: sha256:bae68a3445f1f415d899cd71cba41f96e4ddd2336805a6bd577db6a75198f309
+cas_ref: sha256:bae68a3445f1f415d899cd71cba41f96e4ddd2336805a6bd577db6a75198f309
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

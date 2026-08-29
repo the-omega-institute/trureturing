@@ -1,0 +1,10 @@
+ast_path: section/512-1-RH-下的极限
+fingerprints:
+  raw_sha256: sha256:d928ff446813d55882994993084e55448adc629ff26289a67b9fde034a4aa581
+  normalized_sha256: sha256:d928ff446813d55882994993084e55448adc629ff26289a67b9fde034a4aa581
+cas_ref: sha256:d928ff446813d55882994993084e55448adc629ff26289a67b9fde034a4aa581
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

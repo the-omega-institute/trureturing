@@ -1,0 +1,14 @@
+ast_path: section/507-2-可去除的-infinity-ledger
+fingerprints:
+  raw_sha256: sha256:d5b0df66c17de5487f726c70ec04d10f724f3bf5f1ecd1ce341bc0f215a909e3
+  normalized_sha256: sha256:d5b0df66c17de5487f726c70ec04d10f724f3bf5f1ecd1ce341bc0f215a909e3
+cas_ref: sha256:d5b0df66c17de5487f726c70ec04d10f724f3bf5f1ecd1ce341bc0f215a909e3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-b1ba26a1415fe5ba1c81c8c98eb54f12775de6ec0254c90776a75e3075a4436e-9fb96220a838bc82794f883b14e555ccbf1bb432e9438448727f506d5467d634
+    - generic-residual-93bcd8bc4e5daddb440fac012b5d1fc2cefcf243483057b31b0ec50c95c55c47-babd2ec16064d4f9d2bf6b93e91ebfbc54271c63c2946e0fcb852b062914175b
+    - generic-residual-7fe5dd61eb0c17b795ec9487c6b2bd166f2bba5c6e8d269fb47fa42b7c8d8297-4bb0829057a1b8886a458027475abb53c593c1b37103d1cada1eaa9efe29e51d

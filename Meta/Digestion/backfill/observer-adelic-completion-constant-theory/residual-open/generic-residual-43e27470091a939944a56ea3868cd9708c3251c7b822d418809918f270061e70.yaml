@@ -1,0 +1,10 @@
+ast_path: section/第五百二十七部-最小特征向量就是接触多项式
+fingerprints:
+  raw_sha256: sha256:43e27470091a939944a56ea3868cd9708c3251c7b822d418809918f270061e70
+  normalized_sha256: sha256:43e27470091a939944a56ea3868cd9708c3251c7b822d418809918f270061e70
+cas_ref: sha256:43e27470091a939944a56ea3868cd9708c3251c7b822d418809918f270061e70
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

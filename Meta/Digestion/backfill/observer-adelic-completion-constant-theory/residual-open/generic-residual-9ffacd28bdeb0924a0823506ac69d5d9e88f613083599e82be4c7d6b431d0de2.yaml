@@ -1,0 +1,10 @@
+ast_path: section/433-1-核心解释
+fingerprints:
+  raw_sha256: sha256:9ffacd28bdeb0924a0823506ac69d5d9e88f613083599e82be4c7d6b431d0de2
+  normalized_sha256: sha256:9ffacd28bdeb0924a0823506ac69d5d9e88f613083599e82be4c7d6b431d0de2
+cas_ref: sha256:9ffacd28bdeb0924a0823506ac69d5d9e88f613083599e82be4c7d6b431d0de2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/第五百八十五部-每层应附带的科学证书/clause/2
+fingerprints:
+  raw_sha256: sha256:f4bed1cfc3d04202f5350940592097314412c75726dd88af013e2ff39b2d3cf8
+  normalized_sha256: sha256:f4bed1cfc3d04202f5350940592097314412c75726dd88af013e2ff39b2d3cf8
+cas_ref: sha256:f4bed1cfc3d04202f5350940592097314412c75726dd88af013e2ff39b2d3cf8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/550-3-Chebyshev-jet-高阶求导不稳定
+fingerprints:
+  raw_sha256: sha256:89e662c9d488550546acdc4ec4e82d3bcfddeddbe8777422545ab280f74f9f44
+  normalized_sha256: sha256:89e662c9d488550546acdc4ec4e82d3bcfddeddbe8777422545ab280f74f9f44
+cas_ref: sha256:89e662c9d488550546acdc4ec4e82d3bcfddeddbe8777422545ab280f74f9f44
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

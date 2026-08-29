@@ -1,0 +1,10 @@
+ast_path: section/636-1-完成深度
+fingerprints:
+  raw_sha256: sha256:44712fd396d37da995f58e242e264d387de885d4a38c47a26a7924d6f3547484
+  normalized_sha256: sha256:44712fd396d37da995f58e242e264d387de885d4a38c47a26a7924d6f3547484
+cas_ref: sha256:44712fd396d37da995f58e242e264d387de885d4a38c47a26a7924d6f3547484
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

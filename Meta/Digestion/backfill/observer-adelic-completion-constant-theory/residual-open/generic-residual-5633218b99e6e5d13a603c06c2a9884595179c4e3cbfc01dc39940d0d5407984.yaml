@@ -1,0 +1,10 @@
+ast_path: section/第六百一十五部-黄金方向局部系统
+fingerprints:
+  raw_sha256: sha256:5633218b99e6e5d13a603c06c2a9884595179c4e3cbfc01dc39940d0d5407984
+  normalized_sha256: sha256:5633218b99e6e5d13a603c06c2a9884595179c4e3cbfc01dc39940d0d5407984
+cas_ref: sha256:5633218b99e6e5d13a603c06c2a9884595179c4e3cbfc01dc39940d0d5407984
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

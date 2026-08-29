@@ -1,0 +1,10 @@
+ast_path: section/Dual-路线/clause/2
+fingerprints:
+  raw_sha256: sha256:283a944279e43209e72f61eefd1924ccae919da4f0f25eeca203eaeb4e38fc3c
+  normalized_sha256: sha256:283a944279e43209e72f61eefd1924ccae919da4f0f25eeca203eaeb4e38fc3c
+cas_ref: sha256:283a944279e43209e72f61eefd1924ccae919da4f0f25eeca203eaeb4e38fc3c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

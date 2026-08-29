@@ -1,0 +1,10 @@
+ast_path: section/第六百零九部-当前开放桥补全
+fingerprints:
+  raw_sha256: sha256:d982326a87643f3293bc8710f4b693c360cb30f1b57cbc5a1fa21203990d6e1e
+  normalized_sha256: sha256:d982326a87643f3293bc8710f4b693c360cb30f1b57cbc5a1fa21203990d6e1e
+cas_ref: sha256:d982326a87643f3293bc8710f4b693c360cb30f1b57cbc5a1fa21203990d6e1e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

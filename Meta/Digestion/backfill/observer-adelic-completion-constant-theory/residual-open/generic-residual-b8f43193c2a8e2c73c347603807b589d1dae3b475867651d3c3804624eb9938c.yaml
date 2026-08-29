@@ -1,0 +1,10 @@
+ast_path: section/当前真正开放的桥-第-489-部
+fingerprints:
+  raw_sha256: sha256:b8f43193c2a8e2c73c347603807b589d1dae3b475867651d3c3804624eb9938c
+  normalized_sha256: sha256:b8f43193c2a8e2c73c347603807b589d1dae3b475867651d3c3804624eb9938c
+cas_ref: sha256:b8f43193c2a8e2c73c347603807b589d1dae3b475867651d3c3804624eb9938c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
