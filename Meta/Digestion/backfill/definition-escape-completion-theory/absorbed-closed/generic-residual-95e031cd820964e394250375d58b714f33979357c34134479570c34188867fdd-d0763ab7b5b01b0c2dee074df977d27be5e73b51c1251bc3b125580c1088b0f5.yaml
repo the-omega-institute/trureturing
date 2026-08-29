@@ -1,0 +1,17 @@
+ast_path: section/57-2-4-正文级洗白-草图级洗白与判定证书/clause/4
+fingerprints:
+  raw_sha256: sha256:95e031cd820964e394250375d58b714f33979357c34134479570c34188867fdd
+  normalized_sha256: sha256:95e031cd820964e394250375d58b714f33979357c34134479570c34188867fdd
+cas_ref: sha256:95e031cd820964e394250375d58b714f33979357c34134479570c34188867fdd
+coverage_gids:
+  - D5/S3/ConceptDynamics/DefinitionEscapeRegrade/SemanticTargetLaunderingBundleElimination.semantic_target_laundering_iff_protected_coordinates_ne
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeRegrade/SemanticTargetLaunderingBundleElimination.semantic_target_laundering_iff_protected_coordinates_ne
+      source_sha256: sha256:95e031cd820964e394250375d58b714f33979357c34134479570c34188867fdd
+      target_statement_id: sha256:1cff022942d3d4006afebd1432212f50f4d8018f991a0709a1f7ca28d804c563
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeRegrade/SemanticTargetLaunderingBundleElimination.semantic_target_laundering_iff_protected_coordinates_ne
+      definition_sha256: sha256:db379e80248967e138c6194ff292f6ed2b97cc0d3e7d1fcdb38be0eb06b3a579
+      emission_sha256: sha256:43fdec64625a0140d2785df96afb1ff18fd8a0aca0d1d9d7aa9951aaf2bdf7d7
+  unresolved_subitems: []
