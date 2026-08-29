@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Weil/TestFunctions/UniqueFiniteAtomicResidual
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: A singular positive Toeplitz matrix has a unique finite-atomic residual
-     and Haar-floor completion. -/
+   digest: A singular positive Toeplitz matrix has a unique rank-atomic residual and completion. -/
 
 import D5.S3.Weil.CayleyLaguerre.TruncatedCircleMomentBridge
 import Mathlib.LinearAlgebra.Lagrange
