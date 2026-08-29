@@ -740,6 +740,26 @@ public sealed class ScribeTestMapDeriverTests
         Assert.False(method.IsUnknown);
     }
 
+    [Fact]
+    public void EnumerateDeclaredLiteralPrefixReadFromEntryFullPathIsKnown()
+    {
+        const string source = """
+            class DeclaredReadTests {
+              [Fact] public void ReadsDeclaredFiles() {
+                var contents = GitIndexRepositoryFiles
+                  .EnumerateDeclared(RepositoryLayout.FindRoot(), "D5")
+                  .Select(static entry => File.ReadAllText(entry.FullPath))
+                  .ToArray();
+              }
+            }
+            """;
+
+        var method = Assert.Single(DeriveSources([new("DeclaredReadTests.cs", source)]).Methods);
+
+        Assert.Equal(["D5"], method.Paths);
+        Assert.False(method.IsUnknown);
+    }
+
     /// <summary>
     /// **放行侧的对偶**:前缀是变量时必须 fail-closed 记 `VariablePath`。
     ///
@@ -761,6 +781,49 @@ public sealed class ScribeTestMapDeriverTests
             """;
 
         var method = Assert.Single(DeriveSources([new("VariablePrefixTests.cs", source)]).Methods);
+
+        Assert.Equal(TestMapUnknownReason.VariablePath, Assert.Single(method.UnknownReasons));
+    }
+
+    [Fact]
+    public void EnumerateDeclaredD5DoesNotDeclareBlueprintMemberRead()
+    {
+        const string source = """
+            class MismatchedDeclaredReadTests {
+              [Fact] public void ReadsBlueprintInstead() {
+                var blueprint = (
+                  RelativePath: "Blueprint/Papers.scribe.cs",
+                  FullPath: Path.Combine(
+                    RepositoryLayout.FindRoot(),
+                    "Blueprint",
+                    "Papers.scribe.cs"));
+                var contents = GitIndexRepositoryFiles
+                  .EnumerateDeclared(RepositoryLayout.FindRoot(), "D5")
+                  .Select(entry => File.ReadAllText(blueprint.FullPath))
+                  .ToArray();
+              }
+            }
+            """;
+
+        var method = Assert.Single(DeriveSources([new("MismatchedDeclaredReadTests.cs", source)]).Methods);
+
+        Assert.Contains("D5", method.Paths);
+        Assert.Equal(TestMapUnknownReason.VariablePath, Assert.Single(method.UnknownReasons));
+    }
+
+    [Fact]
+    public void MemberFullPathReadWithoutEnumerateDeclaredIsUnknown()
+    {
+        const string source = """
+            class UndeclaredMemberReadTests {
+              [Fact] public void ReadsVariable() {
+                var entry = Pick();
+                File.ReadAllText(entry.FullPath);
+              }
+            }
+            """;
+
+        var method = Assert.Single(DeriveSources([new("UndeclaredMemberReadTests.cs", source)]).Methods);
 
         Assert.Equal(TestMapUnknownReason.VariablePath, Assert.Single(method.UnknownReasons));
     }
