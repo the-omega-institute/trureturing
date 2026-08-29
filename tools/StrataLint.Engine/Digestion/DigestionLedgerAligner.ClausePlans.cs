@@ -149,8 +149,8 @@ internal static partial class DigestionLedgerAligner
 
     private static void AlignNestedChildren(
         DigestionLedgerSource source,
-        ImmutableArray<DigestionClausePlan> clausePlans,
-        IReadOnlyDictionary<string, DigestionAtom> claims,
+        DigestionLedgerSource? baselineSource,
+        ImmutableArray<DigestionClausePlan> currentClausePlans,
         IReadOnlySet<string> validAtomIds,
         RepositorySnapshot snapshot,
         IDictionary<string, DigestionReceiptAlignment> alignments,
@@ -160,69 +160,57 @@ internal static partial class DigestionLedgerAligner
         ICollection<string> findings)
     {
         var byId = source.Entries.ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
-        var plansByParent = clausePlans.ToDictionary(static plan => plan.ParentAstPath, StringComparer.Ordinal);
-        var plannedChildPaths = clausePlans
-            .SelectMany(static plan => plan.Children)
-            .Select(static child => child.AstPath)
-            .ToHashSet(StringComparer.Ordinal);
-        foreach (var plannedEntry in source.Entries.Where(entry => plannedChildPaths.Contains(entry.AstPath)))
-        {
-            alignments[plannedEntry.AtomId] = DigestionReceiptAlignment.Rejected;
-            matchedAtoms.Remove(plannedEntry.AtomId);
-        }
+        var inheritedChainChildren = InheritedChainChildren(source, baselineSource);
+        RejectCurrentFrontierClausePlanMembers(
+            source,
+            currentClausePlans,
+            inheritedChainChildren,
+            alignments,
+            matchedAtoms);
 
         foreach (var parent in source.Entries.Where(static entry => entry.Receipts.ChainAtoms.Length > 0))
         {
-            var claimedByPlan = plansByParent.ContainsKey(parent.AstPath)
-                || parent.Receipts.ChainAtoms.Any(childId =>
-                    byId.TryGetValue(childId, out var child)
-                    && plannedChildPaths.Contains(child.AstPath));
-            if (!claimedByPlan)
-            {
-                continue;
-            }
-
-            clausePlanChainParents.Add(parent.AtomId);
-            foreach (var childId in parent.Receipts.ChainAtoms)
-            {
-                if (byId.ContainsKey(childId))
-                {
-                    alignments[childId] = DigestionReceiptAlignment.Rejected;
-                    matchedAtoms.Remove(childId);
-                }
-            }
-
             if (!validAtomIds.Contains(parent.AtomId))
             {
+                ClaimClausePlanChain(
+                    parent,
+                    byId,
+                    alignments,
+                    matchedAtoms,
+                    clausePlanChainParents);
                 RejectClauseChain(parent, "parent CAS proof is invalid", findings);
                 continue;
             }
 
-            if (!alignments.TryGetValue(parent.AtomId, out var parentAlignment)
-                || parentAlignment != DigestionReceiptAlignment.Seen)
-            {
-                RejectClauseChain(parent, "parent is not structurally aligned", findings);
-                continue;
-            }
-
-            if (!plansByParent.TryGetValue(parent.AstPath, out var plan))
-            {
-                RejectClauseChain(parent, $"no recomputed plan exists for {parent.AstPath}", findings);
-                continue;
-            }
-
             var parentPath = DigestionCasStore.RootPath + parent.CasRef["sha256:".Length..];
-            if (!snapshot.TryGetFile(parentPath, out var parentBlob)
-                || !parentBlob.RawBytes.AsSpan().SequenceEqual(
-                    claims[plan.ParentAstPath].RawBytes.AsSpan()))
+            if (!snapshot.TryGetFile(parentPath, out var parentBlob))
             {
-                RejectClauseChain(parent, "parent CAS bytes differ from recomputed plan source span", findings);
+                ClaimClausePlanChain(
+                    parent,
+                    byId,
+                    alignments,
+                    matchedAtoms,
+                    clausePlanChainParents);
+                RejectClauseChain(parent, $"parent CAS blob is missing: {parentPath}", findings);
                 continue;
             }
 
-            if (plan.Children.Length < 2)
+            var frozenParent = DigestionAtom.FromFrozenCas(parent.AstPath, parentBlob.RawBytes);
+            var plan = PzgAtomizer.PlanClauses(frozenParent);
+            if (plan is null && source.Atomizer == AtomizerRegistry.ObserverId)
             {
-                RejectClauseChain(parent, "recomputed plan has fewer than two children", findings);
+                continue;
+            }
+
+            ClaimClausePlanChain(
+                parent,
+                byId,
+                alignments,
+                matchedAtoms,
+                clausePlanChainParents);
+            if (plan is null)
+            {
+                RejectClauseChain(parent, "parent CAS blob has no clause plan", findings);
                 continue;
             }
 
@@ -230,7 +218,7 @@ internal static partial class DigestionLedgerAligner
             {
                 RejectClauseChain(
                     parent,
-                    $"chain cardinality {parent.Receipts.ChainAtoms.Length} does not match recomputed plan "
+                    $"chain cardinality {parent.Receipts.ChainAtoms.Length} does not match parent CAS plan "
                     + $"cardinality {plan.Children.Length}",
                     findings);
                 continue;
@@ -243,11 +231,11 @@ internal static partial class DigestionLedgerAligner
                 continue;
             }
 
-            var plannedChildren = plan.Children.ToDictionary(static child => child.AstPath, StringComparer.Ordinal);
             var accepted = new List<(string AtomId, DigestionLedgerEntry Entry, RepositoryFile Blob)>();
             string? rejectionReason = null;
-            foreach (var childId in parent.Receipts.ChainAtoms)
+            for (var index = 0; index < parent.Receipts.ChainAtoms.Length; index++)
             {
+                var childId = parent.Receipts.ChainAtoms[index];
                 if (!byId.TryGetValue(childId, out var child))
                 {
                     rejectionReason = $"listed child {childId} is absent from source {source.SourceId}";
@@ -260,17 +248,11 @@ internal static partial class DigestionLedgerAligner
                     break;
                 }
 
-                if (!plannedChildren.Remove(child.AstPath, out var plannedChild))
+                var plannedChild = plan.Children[index];
+                if (child.AstPath != plannedChild.AstPath)
                 {
-                    rejectionReason = $"listed child {childId} ast_path {child.AstPath} "
-                        + "is not an unclaimed recomputed plan member";
-                    break;
-                }
-
-                if (child.Fingerprints != plannedChild.Fingerprints)
-                {
-                    rejectionReason = $"listed child {childId} fingerprint differs from recomputed plan member "
-                        + plannedChild.AstPath;
+                    rejectionReason = $"listed child {childId} chain order differs from parent CAS plan "
+                        + $"at position {index + 1}: ast_path {child.AstPath}, expected {plannedChild.AstPath}";
                     break;
                 }
 
@@ -287,22 +269,19 @@ internal static partial class DigestionLedgerAligner
                     break;
                 }
 
+                if (!childBlob.RawBytes.AsSpan().SequenceEqual(plannedChild.RawBytes.AsSpan()))
+                {
+                    rejectionReason = $"listed child {childId} bytes differ from parent CAS plan member "
+                        + plannedChild.AstPath;
+                    break;
+                }
+
                 accepted.Add((childId, child, childBlob));
             }
 
             if (rejectionReason is not null)
             {
                 RejectClauseChain(parent, rejectionReason, findings);
-                continue;
-            }
-
-            if (plannedChildren.Count != 0)
-            {
-                RejectClauseChain(
-                    parent,
-                    "chain does not cover recomputed plan members: "
-                    + string.Join(", ", plannedChildren.Keys.Order(StringComparer.Ordinal)),
-                    findings);
                 continue;
             }
 
@@ -315,6 +294,71 @@ internal static partial class DigestionLedgerAligner
             }
 
             verifiedClausePlanParents.Add(parent.AtomId);
+        }
+    }
+
+    private static void RejectCurrentFrontierClausePlanMembers(
+        DigestionLedgerSource source,
+        ImmutableArray<DigestionClausePlan> currentClausePlans,
+        IReadOnlySet<string> inheritedChainChildren,
+        IDictionary<string, DigestionReceiptAlignment> alignments,
+        IDictionary<string, DigestionAtom> matchedAtoms)
+    {
+        var plannedChildPaths = currentClausePlans
+            .SelectMany(static plan => plan.Children)
+            .Select(static child => child.AstPath)
+            .ToHashSet(StringComparer.Ordinal);
+        foreach (var plannedEntry in source.Entries.Where(entry =>
+                     plannedChildPaths.Contains(entry.AstPath)
+                     && !inheritedChainChildren.Contains(entry.AtomId)))
+        {
+            alignments[plannedEntry.AtomId] = DigestionReceiptAlignment.Rejected;
+            matchedAtoms.Remove(plannedEntry.AtomId);
+        }
+    }
+
+    private static HashSet<string> InheritedChainChildren(
+        DigestionLedgerSource source,
+        DigestionLedgerSource? baselineSource)
+    {
+        if (baselineSource is null)
+        {
+            return [];
+        }
+
+        var candidateById = source.Entries.ToDictionary(
+            static entry => entry.AtomId,
+            StringComparer.Ordinal);
+        var baselineById = baselineSource.Entries.ToDictionary(
+            static entry => entry.AtomId,
+            StringComparer.Ordinal);
+        return baselineSource.Entries
+            .SelectMany(static parent => parent.Receipts.ChainAtoms)
+            .Where(childId =>
+                candidateById.TryGetValue(childId, out var candidateChild)
+                && baselineById.TryGetValue(childId, out var baselineChild)
+                && CanonicalEntry(source, candidateChild)
+                    == CanonicalEntry(baselineSource, baselineChild))
+            .ToHashSet(StringComparer.Ordinal);
+    }
+
+    private static void ClaimClausePlanChain(
+        DigestionLedgerEntry parent,
+        IReadOnlyDictionary<string, DigestionLedgerEntry> entriesById,
+        IDictionary<string, DigestionReceiptAlignment> alignments,
+        IDictionary<string, DigestionAtom> matchedAtoms,
+        ISet<string> clausePlanChainParents)
+    {
+        clausePlanChainParents.Add(parent.AtomId);
+        foreach (var childId in parent.Receipts.ChainAtoms)
+        {
+            if (!entriesById.ContainsKey(childId))
+            {
+                continue;
+            }
+
+            alignments[childId] = DigestionReceiptAlignment.Rejected;
+            matchedAtoms.Remove(childId);
         }
     }
 

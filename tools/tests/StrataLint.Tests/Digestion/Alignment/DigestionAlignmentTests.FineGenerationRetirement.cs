@@ -129,7 +129,7 @@ public sealed partial class DigestionAlignmentTests
     [InlineData(CanonicalReceiptKind.TailAuthorization)]
     [InlineData(CanonicalReceiptKind.Quarantine)]
     [InlineData(CanonicalReceiptKind.CoverDisposition)]
-    public void FineGenerationRetirementTreatsEachCanonicalReceiptAsOwnership(
+    public void FineGenerationRetirementTreatsValidReceiptsAsOwnershipAndRejectsMalformedChain(
         CanonicalReceiptKind receiptKind)
     {
         const string gid = "D5/S0/Synthetic/Receipt.owned_generation";
@@ -154,6 +154,16 @@ public sealed partial class DigestionAlignmentTests
                 }).ToImmutableArray(),
             },
         ]);
+
+        if (receiptKind == CanonicalReceiptKind.ChainAtoms)
+        {
+            var exception = Assert.Throws<FormatException>(() => DigestionIngestor.Plan(
+                candidate,
+                Snapshot(currentBytes, [oldCapture]),
+                baseline));
+            Assert.Contains("parent CAS blob has no clause plan", exception.Message, StringComparison.Ordinal);
+            return;
+        }
 
         var plan = DigestionIngestor.Plan(
             candidate,
