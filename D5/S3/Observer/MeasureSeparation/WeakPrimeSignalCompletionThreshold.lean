@@ -1,0 +1,154 @@
+/- GID: D5/S3/Observer/MeasureSeparation/WeakPrimeSignalCompletionThreshold
+   generality: I
+   mirror-B: D5/B/S3/Observer/MeasureSeparation/WeakPrimeSignalCompletionThreshold
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   digest: Weak prime signals split at one half; zero amplitude and missing bridge are audited. -/
+/- Library-search audit trail (2026-08-29): repository name, body-shape, digest,
+   and residual-index searches found no declaration combining a named weak-prime
+   signal, nonzero scaling, and both sides of the product-law dichotomy. The exact
+   numerical predecessor is `quadratic_prime_energy_summable_iff_half_lt`, and
+   `primeEvidence_summable_iff_one_lt` is its unique prime-series source. Pinned
+   Mathlib has five `Kakutani` file hits, all for Riesz--Markov--Kakutani, so the
+   absent product-measure theorem is represented by a named explicit premise.
+   Mathlib's canonical measure relations are `Measure.MutuallySingular` and
+   bidirectional `Measure.AbsolutelyContinuous`. -/
+
+import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+import D5.S3.Analytic.ZetaEntropyPlane.LocalEvidenceOrderThreshold
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+namespace D5.S3.Observer.MeasureSeparation.WeakPrimeSignalCompletionThreshold
+
+open Filter MeasureTheory
+open scoped MeasureTheory Topology
+open D5.S3.Analytic.ZetaEntropyPlane.LocalEvidenceOrderThreshold
+open D5.S3.Analytic.ZetaEntropyPlane.PrimeEvidenceSharpThreshold
+
+noncomputable section
+
+/-- The prime-indexed signal amplitude `c * p ^ (-alpha)`. -/
+def weakPrimeSignal (c alpha : Real) (p : Nat.Primes) : Real :=
+  c * firstEventMass alpha p
+
+/-- An explicit substitute for the unavailable Kakutani product-measure theorem. -/
+def SignalKakutaniDichotomy {Index Transcript : Type*}
+    [MeasurableSpace Transcript] (energy : Index -> Real)
+    (productP productQ : Measure Transcript) : Prop :=
+  (productP ⟂ₘ productQ ↔ ¬Summable energy) ∧
+    ((productP ≪ productQ ∧ productQ ≪ productP) ↔ Summable energy)
+
+/-- Squaring a weak prime signal separates the nonzero scalar from the prime energy. -/
+theorem weak_prime_signal_quadratic_energy (c alpha : Real) :
+    quadraticStatisticalEnergy (weakPrimeSignal c alpha) =
+      fun p => c ^ 2 * quadraticStatisticalEnergy (firstEventMass alpha) p := by
+  funext p
+  simp only [quadraticStatisticalEnergy, weakPrimeSignal]
+  ring
+
+#print axioms weak_prime_signal_quadratic_energy
+
+/-- A nonzero weak prime signal has finite quadratic energy exactly above one half. -/
+theorem weak_prime_signal_energy_summable_iff_half_lt
+    (c alpha : Real) (hc : c ≠ 0) :
+    Summable (quadraticStatisticalEnergy (weakPrimeSignal c alpha)) ↔
+      (1 / 2 : Real) < alpha := by
+  rw [weak_prime_signal_quadratic_energy]
+  rw [summable_mul_left_iff (pow_ne_zero 2 hc)]
+  rw [quadratic_prime_energy_eq_firstEventMass]
+  change Summable (primeEvidence (2 * alpha)) ↔ (1 / 2 : Real) < alpha
+  rw [primeEvidence_summable_iff_one_lt]
+  constructor <;> intro h <;> linarith
+
+#print axioms weak_prime_signal_energy_summable_iff_half_lt
+
+/-- A nonzero weak prime signal has divergent quadratic energy at and below one half. -/
+theorem weak_prime_signal_energy_not_summable_iff_half_le
+    (c alpha : Real) (hc : c ≠ 0) :
+    ¬Summable (quadraticStatisticalEnergy (weakPrimeSignal c alpha)) ↔
+      alpha ≤ (1 / 2 : Real) := by
+  rw [not_congr (weak_prime_signal_energy_summable_iff_half_lt c alpha hc)]
+  exact not_lt
+
+#print axioms weak_prime_signal_energy_not_summable_iff_half_le
+
+/-- At zero amplitude the signal and its quadratic energy are both summably zero. -/
+theorem weak_prime_signal_zero_energy_summable (alpha : Real) :
+    weakPrimeSignal 0 alpha = 0 ∧
+      Summable (quadraticStatisticalEnergy (weakPrimeSignal 0 alpha)) := by
+  have hzero : weakPrimeSignal 0 alpha = fun _ : Nat.Primes => 0 := by
+    funext p
+    simp [weakPrimeSignal]
+  constructor
+  · exact hzero
+  · rw [hzero]
+    exact quadraticStatisticalEnergy_zero_summable
+
+#print axioms weak_prime_signal_zero_energy_summable
+
+/-- The nonzero-amplitude hypothesis is necessary for the half-threshold equivalence. -/
+theorem nonzero_amplitude_is_necessary :
+    ¬(¬Summable (quadraticStatisticalEnergy (weakPrimeSignal 0 0)) ↔
+      (0 : Real) ≤ 1 / 2) := by
+  intro hthreshold
+  exact hthreshold.mpr (by norm_num) (weak_prime_signal_zero_energy_summable 0).2
+
+#print axioms nonzero_amplitude_is_necessary
+
+/-- At every fixed prime coordinate, the signal tends to zero as the exponent grows. -/
+theorem weak_prime_signal_tendsto_zero (c : Real) (p : Nat.Primes) :
+    Tendsto (fun alpha => weakPrimeSignal c alpha p) atTop (nhds 0) := by
+  have hp : (1 : Real) < (p : Real) := by
+    exact_mod_cast p.2.one_lt
+  have hinv_pos : 0 < (p : Real)⁻¹ := by positivity
+  have hinv_lt_one : (p : Real)⁻¹ < 1 :=
+    (inv_lt_one₀ (show 0 < (p : Real) by positivity)).mpr hp
+  have hbase : Tendsto (fun alpha : Real => ((p : Real)⁻¹) ^ alpha)
+      atTop (nhds 0) :=
+    tendsto_rpow_atTop_of_base_lt_one (p : Real)⁻¹
+      (lt_of_lt_of_le neg_one_lt_zero hinv_pos.le) hinv_lt_one
+  have hsignal : Tendsto (fun alpha : Real => (p : Real) ^ (-alpha))
+      atTop (nhds 0) := by
+    simpa only [Real.rpow_neg_eq_inv_rpow] using hbase
+  simpa [weakPrimeSignal, firstEventMass, primeEvidence] using
+    tendsto_const_nhds.mul hsignal
+
+#print axioms weak_prime_signal_tendsto_zero
+
+/-- Under the explicit Kakutani premise, one half is the exact product-law threshold. -/
+theorem weak_prime_signal_completion_dichotomy
+    {Transcript : Type*} [MeasurableSpace Transcript]
+    (productP productQ : Measure Transcript) (c alpha : Real) (hc : c ≠ 0)
+    (hK : SignalKakutaniDichotomy
+      (quadraticStatisticalEnergy (weakPrimeSignal c alpha)) productP productQ) :
+    (productP ⟂ₘ productQ ↔ alpha ≤ (1 / 2 : Real)) ∧
+      ((productP ≪ productQ ∧ productQ ≪ productP) ↔
+        (1 / 2 : Real) < alpha) := by
+  rcases hK with ⟨hsingular, hequivalent⟩
+  constructor
+  · rw [hsingular, weak_prime_signal_energy_not_summable_iff_half_le c alpha hc]
+  · rw [hequivalent, weak_prime_signal_energy_summable_iff_half_lt c alpha hc]
+
+#print axioms weak_prime_signal_completion_dichotomy
+
+/-- Arbitrary product-law names need not follow divergent energy without the Kakutani premise. -/
+theorem signal_kakutani_dichotomy_is_necessary :
+    ¬SignalKakutaniDichotomy
+      (quadraticStatisticalEnergy (weakPrimeSignal 1 (1 / 2 : Real)))
+      (Measure.dirac () : Measure Unit) (Measure.dirac ()) := by
+  intro hK
+  have henergy :
+      ¬Summable (quadraticStatisticalEnergy (weakPrimeSignal 1 (1 / 2 : Real))) :=
+    (weak_prime_signal_energy_not_summable_iff_half_le 1 (1 / 2 : Real)
+      one_ne_zero).2 le_rfl
+  have hsingular : (Measure.dirac () : Measure Unit) ⟂ₘ Measure.dirac () :=
+    hK.1.mpr henergy
+  simp at hsingular
+
+#print axioms signal_kakutani_dichotomy_is_necessary
+
+end
+
+end D5.S3.Observer.MeasureSeparation.WeakPrimeSignalCompletionThreshold
