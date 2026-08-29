@@ -6,7 +6,12 @@ internal sealed record FrozenLedgerAdmissionPreparation(
     FrozenLedgerBaseView BaseView,
     ImmutableArray<DagLedgerFileEvent> DeltaEvents,
     ImmutableHashSet<string> LeanReportProducerPaths,
-    FrozenLedgerReplacementRecognition? Replacement = null);
+    FrozenLedgerReplacementRecognition? Replacement = null)
+{
+    internal RepositorySnapshot? ProtectedBaseSnapshot { get; init; }
+
+    internal RepositorySnapshot? CandidateSnapshot { get; init; }
+}
 
 internal sealed record FrozenLedgerAdmissionFailure(
     ImmutableArray<RepoPath> AffectedPaths,
