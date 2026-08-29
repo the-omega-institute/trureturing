@@ -134,9 +134,20 @@ internal static partial class RepositoryRules
     private static ImmutableArray<RuleFinding> Capacity(RuleEvaluationContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        var currentTestMap = ScribeTestMapDeriver.DeriveSnapshot(context.Current);
+        var forkPointTestMap = ScribeTestMapDeriver.DeriveSnapshot(context.ForkPoint);
         findings.AddRange(ScribeUnknownDebtPolicy.Evaluate(
-                ScribeTestMapDeriver.DeriveSnapshot(context.Current),
-                ScribeTestMapDeriver.DeriveSnapshot(context.ForkPoint))
+                currentTestMap,
+                forkPointTestMap)
+            .Select(static finding => new RuleFinding(
+                finding.Path,
+                finding.Message,
+                finding.Effect)));
+        findings.AddRange(ScriptTestOwnershipPolicy.Evaluate(
+                context.Current,
+                context.ForkPoint,
+                currentTestMap,
+                forkPointTestMap)
             .Select(static finding => new RuleFinding(
                 finding.Path,
                 finding.Message,

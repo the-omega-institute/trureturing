@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.Scribe.Tests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.ArchitectureTests", "tests\StrataLint.ArchitectureTests\StrataLint.ArchitectureTests.csproj", "{1597A91E-2EAD-4E6E-BA67-1EAFA7182300}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.ScriptTests", "tests\StrataLint.ScriptTests\StrataLint.ScriptTests.csproj", "{5723C6FC-81E7-4B8F-AFD8-F3C38EA86285}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.EngineeringScope", "StrataLint.EngineeringScope\StrataLint.EngineeringScope.csproj", "{2055AE1E-5F31-4AB4-91ED-369E4D248596}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trureturing.Truth", "Trureturing.Truth\Trureturing.Truth.csproj", "{3A34CCAD-D87C-433D-98BE-93925312928E}"
@@ -101,6 +103,18 @@ Global
 		{1597A91E-2EAD-4E6E-BA67-1EAFA7182300}.Release|x64.Build.0 = Release|Any CPU
 		{1597A91E-2EAD-4E6E-BA67-1EAFA7182300}.Release|x86.ActiveCfg = Release|Any CPU
 		{1597A91E-2EAD-4E6E-BA67-1EAFA7182300}.Release|x86.Build.0 = Release|Any CPU
+		{5723C6FC-81E7-4B8F-AFD8-F3C38EA86285}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5723C6FC-81E7-4B8F-AFD8-F3C38EA86285}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5723C6FC-81E7-4B8F-AFD8-F3C38EA86285}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5723C6FC-81E7-4B8F-AFD8-F3C38EA86285}.Debug|x64.Build.0 = Debug|Any CPU
+		{5723C6FC-81E7-4B8F-AFD8-F3C38EA86285}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5723C6FC-81E7-4B8F-AFD8-F3C38EA86285}.Debug|x86.Build.0 = Debug|Any CPU
+		{5723C6FC-81E7-4B8F-AFD8-F3C38EA86285}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5723C6FC-81E7-4B8F-AFD8-F3C38EA86285}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5723C6FC-81E7-4B8F-AFD8-F3C38EA86285}.Release|x64.ActiveCfg = Release|Any CPU
+		{5723C6FC-81E7-4B8F-AFD8-F3C38EA86285}.Release|x64.Build.0 = Release|Any CPU
+		{5723C6FC-81E7-4B8F-AFD8-F3C38EA86285}.Release|x86.ActiveCfg = Release|Any CPU
+		{5723C6FC-81E7-4B8F-AFD8-F3C38EA86285}.Release|x86.Build.0 = Release|Any CPU
 		{2055AE1E-5F31-4AB4-91ED-369E4D248596}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2055AE1E-5F31-4AB4-91ED-369E4D248596}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2055AE1E-5F31-4AB4-91ED-369E4D248596}.Debug|x64.ActiveCfg = Debug|Any CPU

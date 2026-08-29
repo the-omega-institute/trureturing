@@ -1,3 +1,7 @@
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("StrataLint.ScriptTests")]
+
 namespace StrataLint.Scribe.Tests;
 
 internal enum RepositoryRootCriterion
