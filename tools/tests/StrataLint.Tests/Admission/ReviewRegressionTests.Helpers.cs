@@ -52,11 +52,17 @@ public sealed partial class ReviewRegressionTests
             new UTF8Encoding(false));
         if (installWorkflow)
         {
+            // 合成夹具,不复制真实 workflow:被测的是 AdmissionTopology 的判据
+            // (on.pull_request_target.branches 含默认分支,且 jobs 有 baseline-admission),
+            // 不是仓库 workflow 长什么样。对 workflow 的测试已被永久禁止,见
+            // WorkflowTestProhibitionTests。
             var workflowDirectory = Path.Combine(repositoryRoot, ".github", "workflows");
             Directory.CreateDirectory(workflowDirectory);
-            File.Copy(
-                Path.Combine(TestRepositoryLayout.FindRoot(), ".github", "workflows", "ci.yml"),
-                Path.Combine(workflowDirectory, "ci.yml"));
+            File.WriteAllText(
+                Path.Combine(workflowDirectory, "ci.yml"),
+                "on:\n  pull_request_target:\n    branches: [dev]\njobs:\n  baseline-admission:\n"
+                + "    runs-on: ubuntu-latest\n    steps:\n      - run: 'true'\n",
+                new UTF8Encoding(false));
         }
 
         RunGit(repositoryRoot, "add", ".");

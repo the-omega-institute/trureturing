@@ -5,7 +5,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed partial class AdmissionWorkflowTests
+public sealed partial class EngineeringScopeHarnessTests
 {
     [Fact]
     public void BaseOwnedIdentityDeletedWithoutDeclarationFailsClosed()
@@ -327,31 +327,6 @@ public sealed partial class AdmissionWorkflowTests
 
         Assert.Equal(2, result.ExitCode);
         Assert.Contains("--base must equal the checked HEAD^1", error, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void EngineeringWorkflowUsesBaseHarnessRuleInsteadOfProjectRepresentatives()
-    {
-        var steps = JobSteps(AdmissionWorkflow(), "candidate-engineering");
-        var plan = StepScript(steps, "Plan base-owned engineering tests");
-        var execute = StepScript(steps, "Replan and run engineering tests with protected-base harness");
-
-        Assert.Contains("git -C candidate rev-parse HEAD^1", plan, StringComparison.Ordinal);
-        Assert.Contains("git -C candidate rev-parse HEAD", plan, StringComparison.Ordinal);
-        Assert.Contains("make -C candidate/tools engineering-tests", plan, StringComparison.Ordinal);
-        Assert.Contains("MODE=plan", plan, StringComparison.Ordinal);
-        Assert.Contains("FULL=1", plan, StringComparison.Ordinal);
-        Assert.Contains("git -C candidate worktree add --detach", execute, StringComparison.Ordinal);
-        Assert.Contains("$ENGINEERING_BASE", execute, StringComparison.Ordinal);
-        Assert.Contains("rm -f -- \"$RUNNER_TEMP/engineering-test-plan.json\"", execute, StringComparison.Ordinal);
-        Assert.Contains("make -C \"$base_harness_root/tools\" engineering-tests", execute, StringComparison.Ordinal);
-        Assert.Contains("REPOSITORY=\"$GITHUB_WORKSPACE/candidate\"", execute, StringComparison.Ordinal);
-        Assert.Contains("MODE=plan", execute, StringComparison.Ordinal);
-        Assert.Contains("MODE=execute", execute, StringComparison.Ordinal);
-
-        var workflow = AdmissionWorkflow();
-        Assert.DoesNotContain("required_test_projects", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("--required-assembly", workflow, StringComparison.Ordinal);
     }
 
     private static void RewriteFullPlanTests(

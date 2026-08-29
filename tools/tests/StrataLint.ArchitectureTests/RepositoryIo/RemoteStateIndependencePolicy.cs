@@ -3,8 +3,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using StrataLint.Engine;
 using System.Text.RegularExpressions;
-using YamlDotNet.Core;
-using YamlDotNet.RepresentationModel;
 
 namespace StrataLint.ArchitectureTests;
 
@@ -18,16 +16,15 @@ internal sealed record RemoteStateFinding(string Path, int Line, string Operatio
 }
 
 /// <summary>
-/// Gives local and pull-request-time feedback for recognized remote-dependent shapes in C# tests
-/// and workflow shell steps. It can fail before a push reaches CI, but it is not a proof that no
-/// remote-reading execution path exists.
+/// Gives local and pull-request-time feedback for recognized remote-dependent shapes in C# tests.
+/// It can fail before a push reaches CI, but it is not a proof that no remote-reading execution
+/// path exists.
 /// </summary>
 /// <remarks>
 /// Carrier families outside a completeness claim include C# helper-argument indirection,
 /// reflection through <c>GetMethod("ReadRevision").Invoke</c>, property-assigned
-/// <c>ProcessStartInfo</c>, workflow executable/revision variables, workflow calls into repository
-/// shell scripts, MSBuild <c>Exec</c> in project files, and event-payload revisions such as
-/// <c>github.event.before</c> (only its direct audited shape has a regression match). Unexecuted
+/// <c>ProcessStartInfo</c>, MSBuild <c>Exec</c> in project files, and event-payload revisions such
+/// as <c>github.event.before</c> (only its direct audited shape has a regression match). Unexecuted
 /// hypotheses intentionally not modeled here include composite and JavaScript actions, source
 /// generators, P/Invoke, PowerShell, Python, Make, <c>eval</c>/<c>bash -c</c>, and revisions read
 /// from files or environment variables. The post-checkout strip step removes every checkout remote
@@ -35,6 +32,12 @@ internal sealed record RemoteStateFinding(string Path, int Line, string Operatio
 /// resolution but not remote reachability: <c>fetch-depth: 0</c> leaves every branch's objects in
 /// the local object database, so a raw OID recorded before the strip still resolves. See CLAUDE.md
 /// for the measured boundary; do not restate either layer as a completeness guarantee.
+///
+/// Scope narrowed on 2026-08-29: the workflow-YAML side of this scan was retired together with
+/// every other workflow test (see <c>WorkflowTestProhibitionTests</c>). A workflow shape assertion
+/// only proves what the file looks like, never whether the step runs — this repository measured
+/// exactly that when <c>if: false</c> on the strip step left all 16 covering tests green. Workflow
+/// behaviour is verified by running it on a real event (CLAUDE.md 器律⑦), not from a unit test.
 /// </remarks>
 internal static partial class RemoteStateIndependencePolicy
 {
@@ -67,12 +70,6 @@ internal static partial class RemoteStateIndependencePolicy
                 && file.RelativePath.EndsWith(".cs", StringComparison.Ordinal))
             {
                 findings.AddRange(InspectTestSource(new(file.RelativePath, File.ReadAllText(file.FullPath))));
-            }
-            else if (file.RelativePath.StartsWith(".github/workflows/", StringComparison.Ordinal)
-                     && (file.RelativePath.EndsWith(".yml", StringComparison.Ordinal)
-                         || file.RelativePath.EndsWith(".yaml", StringComparison.Ordinal)))
-            {
-                findings.AddRange(InspectWorkflowSource(new(file.RelativePath, File.ReadAllText(file.FullPath))));
             }
         }
         return findings.OrderBy(static item => item.Path, StringComparer.Ordinal)
@@ -119,54 +116,6 @@ internal static partial class RemoteStateIndependencePolicy
             }
         }
         findings.AddRange(InspectProcessStartInfos(source.Path, root));
-        return findings;
-    }
-
-    internal static IReadOnlyList<RemoteStateFinding> InspectWorkflowSource(RemoteStateSource source)
-    {
-        var stream = new YamlStream();
-        try
-        {
-            stream.Load(new StringReader(source.Content));
-        }
-        catch (YamlException exception)
-        {
-            return [new(source.Path, checked((int)exception.Start.Line + 1),
-                "unrecognized workflow", exception.Message)];
-        }
-        if (stream.Documents.Count != 1 || stream.Documents[0].RootNode is not YamlMappingNode root
-            || !TryMapping(root, "jobs", out var jobs))
-        {
-            return [new(source.Path, 1, "unrecognized workflow", "workflow must contain one jobs mapping")];
-        }
-
-        var findings = new List<RemoteStateFinding>();
-        foreach (var job in jobs.Children.Values.OfType<YamlMappingNode>())
-        {
-            if (!TrySequence(job, "steps", out var steps)) continue;
-            var checkoutSeen = false;
-            foreach (var step in steps.Children.OfType<YamlMappingNode>())
-            {
-                if (TryScalar(step, "uses", out var uses)
-                    && uses.Value?.StartsWith("actions/checkout@", StringComparison.Ordinal) is true)
-                {
-                    checkoutSeen = true;
-                    continue;
-                }
-                if (!checkoutSeen) continue;
-                if (TryScalar(step, "uses", out uses)
-                    && uses.Value?.StartsWith("actions/github-script@", StringComparison.Ordinal) is true)
-                {
-                    findings.Add(new(source.Path, checked((int)uses.Start.Line + 1), "remote API",
-                        "post-checkout github-script may query live repository state"));
-                }
-                if (TryScalar(step, "run", out var run))
-                {
-                    findings.AddRange(InspectShell(source.Path, run.Value ?? string.Empty,
-                        checked((int)run.Start.Line + (run.Style is ScalarStyle.Literal or ScalarStyle.Folded ? 1 : 0))));
-                }
-            }
-        }
         return findings;
     }
 
@@ -235,41 +184,6 @@ internal static partial class RemoteStateIndependencePolicy
                 .Select(LiteralOrNull).ToArray();
             foreach (var finding in InspectGit(path, creation, args)) yield return finding;
         }
-    }
-
-    private static IReadOnlyList<RemoteStateFinding> InspectShell(string path, string script, int firstLine)
-    {
-        var allowed = new HashSet<string>(AllowedRevisions, StringComparer.Ordinal);
-        foreach (Match match in HeadOrBaseAssignment().Matches(script))
-        {
-            allowed.Add("$" + match.Groups["name"].Value);
-            allowed.Add("${" + match.Groups["name"].Value + "}");
-        }
-
-        var code = ShellCode(script);
-        var findings = new List<RemoteStateFinding>();
-        foreach (Match match in GitInvocation().Matches(code))
-        {
-            var args = ShellWords().Matches(match.Groups["args"].Value)
-                .Select(static item => WordValue(item)).Cast<string?>().ToArray();
-            findings.AddRange(InspectGit(path, firstLine + CountLines(code, match.Index),
-                match.Groups["command"].Value, args, allowed));
-        }
-        foreach (Match match in GitHubCliInvocation().Matches(code))
-        {
-            findings.Add(new(path, firstLine + CountLines(code, match.Index), "remote API",
-                "post-checkout GitHub CLI command queries live repository state"));
-        }
-        foreach (Match match in DownloadInvocation().Matches(code))
-        {
-            if (ShellWords().Matches(match.Groups["args"].Value).Select(static item => WordValue(item))
-                .Any(IsRepositoryApiUrl))
-            {
-                findings.Add(new(path, firstLine + CountLines(code, match.Index), "remote API",
-                    "post-checkout command queries a live repository API"));
-            }
-        }
-        return findings;
     }
 
     private static IEnumerable<RemoteStateFinding> InspectGit(
@@ -394,36 +308,6 @@ internal static partial class RemoteStateIndependencePolicy
         return elements is not null;
     }
 
-    private static string ShellCode(string script)
-    {
-        var result = script.ToCharArray();
-        char quote = '\0';
-        for (var index = 0; index < result.Length; index++)
-        {
-            var current = result[index];
-            if (current == '\\' && index + 1 < result.Length) { index++; continue; }
-            if (quote == '\0' && current == '\'') { quote = '\''; result[index] = ' '; continue; }
-            if (quote == '\'')
-            {
-                if (current == '\'') quote = '\0';
-                if (current != '\n') result[index] = ' ';
-                continue;
-            }
-            if (quote == '\0' && current == '"') { quote = '"'; continue; }
-            if (quote == '"' && current == '"') { quote = '\0'; continue; }
-            if (quote == '\0' && current == '#'
-                && (index == 0 || char.IsWhiteSpace(result[index - 1])))
-            {
-                while (index < result.Length && result[index] != '\n') result[index++] = ' ';
-            }
-        }
-        return new string(result);
-    }
-
-    private static string WordValue(Match match) => match.Groups["double"].Success
-        ? match.Groups["double"].Value
-        : match.Groups["single"].Success ? match.Groups["single"].Value : match.Groups["bare"].Value;
-    private static int CountLines(string value, int end) => value.AsSpan(0, end).Count('\n');
     private static bool IsRepositoryApiUrl(string value) => Uri.TryCreate(value, UriKind.Absolute, out var uri)
         && (string.Equals(uri.Host, "api.github.com", StringComparison.OrdinalIgnoreCase)
             || string.Equals(uri.Host, "gitlab.com", StringComparison.OrdinalIgnoreCase)
@@ -456,33 +340,4 @@ internal static partial class RemoteStateIndependencePolicy
     private static RemoteStateFinding Finding(string path, SyntaxNode node, string operation, string message) =>
         new(path, node.GetLocation().GetLineSpan().StartLinePosition.Line + 1, operation, message);
 
-    private static bool TryMapping(YamlMappingNode parent, string key, out YamlMappingNode mapping)
-    {
-        if (parent.Children.TryGetValue(new YamlScalarNode(key), out var node) && node is YamlMappingNode value)
-        { mapping = value; return true; }
-        mapping = null!; return false;
-    }
-    private static bool TrySequence(YamlMappingNode parent, string key, out YamlSequenceNode sequence)
-    {
-        if (parent.Children.TryGetValue(new YamlScalarNode(key), out var node) && node is YamlSequenceNode value)
-        { sequence = value; return true; }
-        sequence = null!; return false;
-    }
-    private static bool TryScalar(YamlMappingNode parent, string key, out YamlScalarNode scalar)
-    {
-        if (parent.Children.TryGetValue(new YamlScalarNode(key), out var node) && node is YamlScalarNode value)
-        { scalar = value; return true; }
-        scalar = null!; return false;
-    }
-
-    [GeneratedRegex("(?m)^[ \\t]*(?<name>[A-Za-z_][A-Za-z0-9_]*)=\\\"?[$][(]git(?:[ \\t]+-C[ \\t]+[^ \\t]+)?[ \\t]+rev-parse[ \\t]+HEAD(?:\\^1)?[ \\t]*[)]\\\"?[ \\t]*$")]
-    private static partial Regex HeadOrBaseAssignment();
-    [GeneratedRegex("(?<![A-Za-z0-9_-])(?:[^ \\t/]+/)?git(?:[ \\t]+-C[ \\t]+(?:\\\"[^\\\"]*\\\"|[^ \\t]+))*[ \\t]+(?<command>[a-z][a-z-]*)(?<args>[^;\\r\\n|&)<]*)")]
-    private static partial Regex GitInvocation();
-    [GeneratedRegex("(?<![A-Za-z0-9_-])gh[ \\t]+(?:api|issue|pr|release|repo|run|search|workflow)\\b")]
-    private static partial Regex GitHubCliInvocation();
-    [GeneratedRegex("(?<![A-Za-z0-9_-])(?:curl|wget)[ \\t]+(?<args>[^;\\r\\n|&]*)")]
-    private static partial Regex DownloadInvocation();
-    [GeneratedRegex("(?:\\\"(?<double>[^\\\"]*)\\\"|'(?<single>[^']*)'|(?<bare>[^ \\t]+))")]
-    private static partial Regex ShellWords();
 }
