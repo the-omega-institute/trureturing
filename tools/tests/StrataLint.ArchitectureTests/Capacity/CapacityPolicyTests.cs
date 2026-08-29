@@ -144,6 +144,17 @@ public sealed class CapacityPolicyTests
     [Fact]
     public void RepositoryHasNoOversizeArtifactOrOverfullDirectory()
     {
+        const string productionEnvironmentBucket =
+            "tools/tests/StrataLint.Tests/Admission/ProductionEnvironment";
+        var directMembers = GitIndexRepositoryFiles.Enumerate(RepositoryLayout.FindRoot())
+            .Select(static file => file.RelativePath)
+            .Where(path => path.StartsWith(productionEnvironmentBucket + "/", StringComparison.Ordinal))
+            .Where(path => !path[(productionEnvironmentBucket.Length + 1)..].Contains('/'))
+            .ToArray();
+
+        Assert.True(
+            directMembers.Length <= RepositoryRules.DirectoryFileLimit,
+            $"{productionEnvironmentBucket} contains {directMembers.Length} direct files");
         Assert.Empty(CapacityPolicy.InspectRepository(RepositoryLayout.FindRoot()));
     }
 
