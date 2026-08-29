@@ -2,12 +2,12 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.Budget;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.CayleyLaguerre;
 
 internal sealed class CayleyMomentTransportDocument : IScribeDocumentDefinition
 {
     private const string Prefix =
-        "D5/S3/Weil/Budget/CayleyMomentTransport.";
+        "D5/S3/Weil/CayleyLaguerre/CayleyMomentTransport.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Cayley moments have a finite derivative jet and a geometric scale-transport tail bound.",

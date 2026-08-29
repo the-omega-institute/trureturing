@@ -1,6 +1,6 @@
-/- GID: D5/S3/Weil/Budget/CayleyMomentTransport
+/- GID: D5/S3/Weil/CayleyLaguerre/CayleyMomentTransport
    generality: G
-   mirror-B: D5/B/S3/Weil/Budget/CayleyMomentTransport
+   mirror-B: D5/B/S3/Weil/CayleyLaguerre/CayleyMomentTransport
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Cayley moments admit a derivative jet and geometric scale-transport tail bound. -/
@@ -18,7 +18,7 @@ open scoped ComplexConjugate
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
-namespace D5.S3.Weil.Budget.CayleyMomentTransport
+namespace D5.S3.Weil.CayleyLaguerre.CayleyMomentTransport
 private theorem norm_scale_cayley (a xi : Real) (ha : a ≠ 0) :
     norm (((xi : Complex) + Complex.I * a) /
       ((xi : Complex) - Complex.I * a)) = 1 := by
@@ -790,4 +790,4 @@ theorem budget_transport_error
       norm_num [map_sub, map_mul, map_add]]
   rw [Complex.norm_real, Real.norm_eq_abs]
   exact budget_transport_error_real nu a b M aPositive bPositive budgetIntegrable
-end D5.S3.Weil.Budget.CayleyMomentTransport
+end D5.S3.Weil.CayleyLaguerre.CayleyMomentTransport
