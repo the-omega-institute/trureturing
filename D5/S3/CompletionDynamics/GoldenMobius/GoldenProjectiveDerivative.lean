@@ -29,8 +29,12 @@ theorem golden_mobius_hasDerivAt :
         (-(Real.goldenRatio⁻¹) ^ 2) Real.goldenRatio := by
     simpa only [inv_pow] using
       (hasDerivAt_inv Real.goldenRatio_ne_zero)
+  have hSum :
+      HasDerivAt (fun y : ℝ => 1 + y⁻¹)
+        (0 + (-(Real.goldenRatio⁻¹) ^ 2)) Real.goldenRatio :=
+    (hasDerivAt_const (x := Real.goldenRatio) (1 : ℝ)).add hInv
   unfold goldenMobius goldenProjectiveMultiplier
-  simpa only [one_div] using hInv.const_add 1
+  simpa only [one_div, zero_add] using hSum
 
 /-- Evaluation of `deriv` at the golden fixed point. -/
 theorem deriv_golden_mobius_at_golden :
