@@ -148,7 +148,10 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.False(result.Success);
         Assert.Contains("INGEST_TRUTH_ALIGNMENT_REQUIRED", result.Error, StringComparison.Ordinal);
-        Assert.Contains("existing entry", result.Error, StringComparison.Ordinal);
+        Assert.Contains(
+            "existing entry old-receipt changed status-authority inputs",
+            result.Error,
+            StringComparison.Ordinal);
         Assert.Equal(0, reportSource.CallCount);
         Assert.Equal(before, GeneratedIngestImage(temporary));
     }
@@ -193,7 +196,7 @@ public sealed partial class ProductionEnvironmentTests
         AssertReportFreeTruthAlignmentRequiredWithoutTruthOrWrites(
             fixture,
             RawChangeSet.Create([alternateSourcePath, DirectorySourceMetadataPath()]),
-            "existing entry");
+            "existing entry old-receipt changed status-authority inputs");
     }
 
     [Fact]
@@ -209,7 +212,7 @@ public sealed partial class ProductionEnvironmentTests
         AssertReportFreeTruthAlignmentRequiredWithoutTruthOrWrites(
             fixture,
             RawChangeSet.Create([DirectorySourceMetadataPath()]),
-            "existing entry");
+            "existing entry old-receipt changed status-authority inputs");
     }
 
     [Fact]
@@ -225,7 +228,7 @@ public sealed partial class ProductionEnvironmentTests
         AssertReportFreeTruthAlignmentRequiredWithoutTruthOrWrites(
             fixture,
             RawChangeSet.Create([DirectorySourceMetadataPath()]),
-            "existing entry");
+            "existing entry old-receipt changed status-authority inputs");
     }
 
     [Fact]
