@@ -158,4 +158,16 @@ public sealed class CapacityPolicyTests
         Assert.Empty(CapacityPolicy.InspectRepository(RepositoryLayout.FindRoot()));
     }
 
+
+    // Pinned by the owner's 2026-08-30 ruling (放宽到 24、48): admission limit 24, repository
+    // tolerance 48. The tolerance band stays exactly one admission limit wide so that two PRs
+    // branched from the same base can each fill a bucket to the limit and their union still
+    // clears the repository-wide net (see DirectoryToleranceLimit in RepositoryRules.Structure.cs).
+    [Fact]
+    public void DirectoryCapacityThresholdsArePinnedToTheAdjudicatedValues()
+    {
+        Assert.Equal(24, RepositoryRules.DirectoryFileLimit);
+        Assert.Equal(48, RepositoryRules.DirectoryToleranceLimit);
+        Assert.Equal(2 * RepositoryRules.DirectoryFileLimit, RepositoryRules.DirectoryToleranceLimit);
+    }
 }
