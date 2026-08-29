@@ -1,6 +1,6 @@
-/- GID: D5/S3/Analytic/Zeta/CriticalCurvature/CriticalNormalEvenness
+/- GID: D5/S3/Analytic/ZetaCriticalCurvature/CriticalNormalEvenness
    generality: G
-   mirror-B: D5/B/S3/Analytic/Zeta/CriticalCurvature/CriticalNormalEvenness
+   mirror-B: D5/B/S3/Analytic/ZetaCriticalCurvature/CriticalNormalEvenness
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Reflection-even scalar potentials have zero first normal derivative
@@ -18,7 +18,7 @@ ordinary differentiable.
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Analytic.Zeta.CriticalCurvature.CriticalNormalEvenness
+namespace D5.S3.Analytic.ZetaCriticalCurvature.CriticalNormalEvenness
 
 /-- A differentiable even real function has zero derivative at the reflection
 fixed point. -/
@@ -78,4 +78,4 @@ example {V : ℝ → ℝ} {d : ℝ}
 #print axioms critical_normal_derivative_zero
 #print axioms critical_normal_deriv_zero
 
-end D5.S3.Analytic.Zeta.CriticalCurvature.CriticalNormalEvenness
+end D5.S3.Analytic.ZetaCriticalCurvature.CriticalNormalEvenness

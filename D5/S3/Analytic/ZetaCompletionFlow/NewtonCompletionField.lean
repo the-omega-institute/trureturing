@@ -1,6 +1,6 @@
-/- GID: D5/S3/Analytic/Zeta/CompletionFlow/NewtonCompletionField
+/- GID: D5/S3/Analytic/ZetaCompletionFlow/NewtonCompletionField
    generality: G
-   mirror-B: D5/B/S3/Analytic/Zeta/CompletionFlow/NewtonCompletionField
+   mirror-B: D5/B/S3/Analytic/ZetaCompletionFlow/NewtonCompletionField
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: The Newton completion vector is scale invariant, detects roots under a regular derivative, and exactly completes affine zero models in one step. -/
@@ -16,7 +16,7 @@ between a zero vector and a genuine root carry the regularity hypothesis
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Analytic.Zeta.CompletionFlow.NewtonCompletionField
+namespace D5.S3.Analytic.ZetaCompletionFlow.NewtonCompletionField
 
 universe u
 
@@ -84,4 +84,4 @@ example (F dF : K → K) (s : K) (hSingular : dF s = 0) :
 #print axioms affine_newton_completion_step
 #print axioms root_fixed_by_newton_completion
 
-end D5.S3.Analytic.Zeta.CompletionFlow.NewtonCompletionField
+end D5.S3.Analytic.ZetaCompletionFlow.NewtonCompletionField

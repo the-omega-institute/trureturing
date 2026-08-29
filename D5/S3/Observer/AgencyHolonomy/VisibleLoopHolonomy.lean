@@ -1,11 +1,11 @@
-/- GID: D5/S3/Observer/Agency/Holonomy/VisibleLoopHolonomy
+/- GID: D5/S3/Observer/AgencyHolonomy/VisibleLoopHolonomy
    generality: G
-   mirror-B: D5/B/S3/Observer/Agency/Holonomy/VisibleLoopHolonomy
+   mirror-B: D5/B/S3/Observer/AgencyHolonomy/VisibleLoopHolonomy
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Pointed holonomy is a visible return with nontrivial hidden transport; strategy factorization hides policy drift, while a faithful joint readout rules out hidden loops. -/
 
-import D5.S3.Observer.Agency.Self.AgencyEnrichment
+import D5.S3.Observer.AgencySelf.AgencyEnrichment
 import D5.S3.ObserverMemory.RefinementClosure.BehaviorUpdateWordAction
 
 /- Library-search audit trail (2026-08-29):
@@ -18,9 +18,9 @@ import D5.S3.ObserverMemory.RefinementClosure.BehaviorUpdateWordAction
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Observer.Agency.Holonomy.VisibleLoopHolonomy
+namespace D5.S3.Observer.AgencyHolonomy.VisibleLoopHolonomy
 
-open D5.S3.Observer.Agency.Self.AgencyEnrichment
+open D5.S3.Observer.AgencySelf.AgencyEnrichment
 open D5.S3.ObserverMemory.Prediction.ControlledBehaviorUniversality
 
 universe u v w z
@@ -121,4 +121,4 @@ example (update : Unit -> Bool -> Bool) (word : List Unit) (state : Bool)
 #print axioms strategy_factorization_makes_visible_loops_invisible
 #print axioms faithful_joint_readout_kills_hidden_holonomy
 
-end D5.S3.Observer.Agency.Holonomy.VisibleLoopHolonomy
+end D5.S3.Observer.AgencyHolonomy.VisibleLoopHolonomy

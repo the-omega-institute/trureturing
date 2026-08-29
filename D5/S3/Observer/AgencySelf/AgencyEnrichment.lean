@@ -1,6 +1,6 @@
-/- GID: D5/S3/Observer/Agency/Self/AgencyEnrichment
+/- GID: D5/S3/Observer/AgencySelf/AgencyEnrichment
    generality: G
-   mirror-B: D5/B/S3/Observer/Agency/Self/AgencyEnrichment
+   mirror-B: D5/B/S3/Observer/AgencySelf/AgencyEnrichment
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Agency enrichment pairs current state and strategy, isolates the strategy residual inside current fibers, and becomes agency completion only after controlled behavior closure. -/
@@ -19,7 +19,7 @@ import D5.S3.ObserverMemory.Prediction.ControlledBehaviorUniversality
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Observer.Agency.Self.AgencyEnrichment
+namespace D5.S3.Observer.AgencySelf.AgencyEnrichment
 
 open D5.S3.ObserverMemory.Refinement.EffectiveImageKernelCriterion
 open D5.S3.ObserverMemory.Refinement.JointReadoutSupremum
@@ -147,4 +147,4 @@ example :
 #print axioms strategy_factorization_iff_no_residual
 #print axioms agency_enrichment_kernel_eq_current_iff_no_residual
 
-end D5.S3.Observer.Agency.Self.AgencyEnrichment
+end D5.S3.Observer.AgencySelf.AgencyEnrichment

@@ -1,6 +1,6 @@
-/- GID: D5/S3/Analytic/Zeta/CriticalCurvature/OffLinePairCurvatureKernel
+/- GID: D5/S3/Analytic/ZetaCriticalCurvature/OffLinePairCurvatureKernel
    generality: G
-   mirror-B: D5/B/S3/Analytic/Zeta/CriticalCurvature/OffLinePairCurvatureKernel
+   mirror-B: D5/B/S3/Analytic/ZetaCriticalCurvature/OffLinePairCurvatureKernel
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: A reflection-paired logarithmic potential has a certified slope
@@ -19,7 +19,7 @@ set_option relaxedAutoImplicit false
 
 noncomputable section
 
-namespace D5.S3.Analytic.Zeta.CriticalCurvature.OffLinePairCurvatureKernel
+namespace D5.S3.Analytic.ZetaCriticalCurvature.OffLinePairCurvatureKernel
 
 /-- Squared distance in the normal-tangential plane from `(a, 0)`. -/
 def radialQuadratic (a y u : ℝ) : ℝ :=
@@ -172,4 +172,4 @@ theorem off_line_pair_curvature_reflection
 #print axioms off_line_pair_curvature_right_zero
 #print axioms off_line_pair_curvature_left_zero
 
-end D5.S3.Analytic.Zeta.CriticalCurvature.OffLinePairCurvatureKernel
+end D5.S3.Analytic.ZetaCriticalCurvature.OffLinePairCurvatureKernel

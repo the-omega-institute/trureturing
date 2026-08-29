@@ -1,11 +1,11 @@
-/- GID: D5/S3/Analytic/Zeta/CompletionFlow/DiscreteCompletionVelocity
+/- GID: D5/S3/Analytic/ZetaCompletionFlow/DiscreteCompletionVelocity
    generality: G
-   mirror-B: D5/B/S3/Analytic/Zeta/CompletionFlow/DiscreteCompletionVelocity
+   mirror-B: D5/B/S3/Analytic/ZetaCompletionFlow/DiscreteCompletionVelocity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: The finite-difference completion velocity is a Newton predictor and exactly recovers root displacement for affine layer changes. -/
 
-import D5.S3.Analytic.Zeta.CompletionFlow.NewtonCompletionField
+import D5.S3.Analytic.ZetaCompletionFlow.NewtonCompletionField
 
 /-!
 The displayed finite-difference quotient predicts a zero displacement.  Equality
@@ -16,7 +16,7 @@ model below is the exact case.
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Analytic.Zeta.CompletionFlow.DiscreteCompletionVelocity
+namespace D5.S3.Analytic.ZetaCompletionFlow.DiscreteCompletionVelocity
 
 universe u
 
@@ -100,4 +100,4 @@ theorem predicted_discrete_velocity_scale_invariant
 #print axioms affine_layer_prediction_realized
 #print axioms predicted_discrete_velocity_scale_invariant
 
-end D5.S3.Analytic.Zeta.CompletionFlow.DiscreteCompletionVelocity
+end D5.S3.Analytic.ZetaCompletionFlow.DiscreteCompletionVelocity

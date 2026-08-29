@@ -1,6 +1,6 @@
-/- GID: D5/S3/Analytic/Zeta/CompletionFlow/SimpleZeroCompletionVelocity
+/- GID: D5/S3/Analytic/ZetaCompletionFlow/SimpleZeroCompletionVelocity
    generality: G
-   mirror-B: D5/B/S3/Analytic/Zeta/CompletionFlow/SimpleZeroCompletionVelocity
+   mirror-B: D5/B/S3/Analytic/ZetaCompletionFlow/SimpleZeroCompletionVelocity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: A nondegenerate zero-thread chain equation determines its completion
@@ -17,7 +17,7 @@ parameterized family. The nonzero state derivative is explicit.
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Analytic.Zeta.CompletionFlow.SimpleZeroCompletionVelocity
+namespace D5.S3.Analytic.ZetaCompletionFlow.SimpleZeroCompletionVelocity
 
 universe u
 
@@ -94,4 +94,4 @@ example (completionDerivative : K) :
 #print axioms zero_completion_velocity_scale_invariant
 #print axioms zero_completion_velocity_eq_zero_iff
 
-end D5.S3.Analytic.Zeta.CompletionFlow.SimpleZeroCompletionVelocity
+end D5.S3.Analytic.ZetaCompletionFlow.SimpleZeroCompletionVelocity
