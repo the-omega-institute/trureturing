@@ -86,12 +86,11 @@ public sealed partial class ProductionEnvironmentTests
 
         using var temporary = new TemporaryDirectory();
         WriteDirectoryLedger(temporary.Path, fixture.Files);
-        var coveredOutputPath = Path.Combine(
-            temporary.Path,
-            coveredPath.Replace('/', Path.DirectorySeparatorChar));
-        var coveredBytes = File.ReadAllBytes(coveredOutputPath);
-        var unchangedWriteTime = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-        File.SetLastWriteTimeUtc(coveredOutputPath, unchangedWriteTime);
+        var coveredEntryImage = coveredPath + "\0"
+            + Convert.ToBase64String(Encoding.UTF8.GetBytes(fixture.Files[coveredPath]))
+            + "\n";
+        var before = GeneratedIngestImage(temporary);
+        Assert.Contains(coveredEntryImage, before, StringComparison.Ordinal);
         var reportSource = new FakeLeanReportSource(report: null);
         var scribeVerifier = new FakeScribeEmissionVerifier(verification: null);
         var environment = new ProductionCliEnvironment(
@@ -108,8 +107,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(result.Success, result.Error);
         Assert.Equal(0, reportSource.CallCount);
         Assert.Equal(0, scribeVerifier.CallCount);
-        Assert.Equal(coveredBytes, File.ReadAllBytes(coveredOutputPath));
-        Assert.Equal(unchangedWriteTime, File.GetLastWriteTimeUtc(coveredOutputPath));
+        Assert.Contains(coveredEntryImage, GeneratedIngestImage(temporary), StringComparison.Ordinal);
     }
 
     [Fact]
