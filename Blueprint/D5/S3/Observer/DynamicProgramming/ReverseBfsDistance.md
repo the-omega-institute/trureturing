@@ -6,7 +6,7 @@ Reverse breadth-first search computes first-separation depths in quadratic resou
 
 **Theorem 1.1 (Reverse breadth-first search is correct and quadratic).**
 
-$$\begin{gathered}\forall Y, O, [\operatorname{Fintype}(Y)],\\{}\tau: Y \to Y, q: Y \to O,\\{}\operatorname{reverseBfsDistance}(\tau, q) = \operatorname{exactSeparationDepth}(\tau, q) \land\\{}\operatorname{reverseBfsTimeBudget}(\tau) \leq 2 \lvert Y\rvert^{2} \land\\{}\operatorname{reverseBfsSpaceBudget}(\tau) \leq 3 \lvert Y\rvert^{2}.\end{gathered}$$
+$$\begin{gathered}\forall Y, O, [\operatorname{Fintype}(Y)], [\operatorname{DecidableEq}(Y)], [\operatorname{DecidableEq}(O)],\\{}\tau: Y \to Y, q: Y \to O,\\{}\operatorname{reverseBfsDistance}(\tau, q) = \operatorname{exactSeparationDepth}(\tau, q) \land\\{}\operatorname{reverseBfsTimeBudget}(\tau) \leq 2 \lvert Y\rvert^{2} \land\\{}\operatorname{reverseBfsSpaceBudget}(\tau) \leq 3 \lvert Y\rvert^{2}.\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/DynamicProgramming/ReverseBfsDistance.reverse_bfs_correct_and_quadratic` (`✓ std3`). ∎
 

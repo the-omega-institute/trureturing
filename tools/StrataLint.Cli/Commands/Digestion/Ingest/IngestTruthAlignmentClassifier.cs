@@ -78,12 +78,12 @@ internal static class IngestTruthAlignmentClassifier
         BackfillInventoryDocument planned,
         DigestionLedgerAlignment alignment,
         DigestionEvaluationScope scope,
-        RawChangeSet changes)
+        RawChangeSet repositoryChanges)
     {
         ArgumentNullException.ThrowIfNull(current);
         ArgumentNullException.ThrowIfNull(baseline);
         ArgumentNullException.ThrowIfNull(planned);
-        ArgumentNullException.ThrowIfNull(changes);
+        ArgumentNullException.ThrowIfNull(repositoryChanges);
         var currentEntries = StatusAuthorityEntries(current);
 
         foreach (var item in StatusAuthorityEntries(planned).Values
@@ -110,7 +110,7 @@ internal static class IngestTruthAlignmentClassifier
             }
         }
 
-        var resolvedChanges = DigestionEvaluationScopes.ResolveChanges(scope, changes);
+        var resolvedChanges = DigestionEvaluationScopes.ResolveChanges(scope, repositoryChanges);
         var authorityChangedAtomIds = DigestionStatusEvaluator.StatusAuthorityChangedAtomIds(
             planned,
             baseline,
