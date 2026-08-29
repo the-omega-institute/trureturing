@@ -1,48 +1,48 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.Bridges;
+namespace StrataLint.Scribe.Blueprint.D5.S3.CompletionDynamics.GoldenMobius;
 
-internal sealed class DifferentiableFixedPointConjugacyDocument : IScribeDocumentDefinition
+internal sealed class GoldenProjectiveDerivativeDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Observer/Bridges/DifferentiableFixedPointConjugacy.";
+    private const string Prefix = "D5/S3/CompletionDynamics/GoldenMobius/GoldenProjectiveDerivative.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Nondegenerate differentiable bridges preserve local multipliers.",
-        H("Differentiable Fixed Point Conjugacy"),
+        "The golden Mobius derivative equals its projective multiplier.",
+        H("Golden Projective Derivative"),
         Blocks(
             Theorem(
-                "derivative-intertwining-at-fixed-point",
-                "derivative_intertwining_at_fixed_point",
-                "Derivative Intertwining At Fixed Point",
-                "The chain rule intertwines the two local multipliers at a fixed point.",
+                "golden-mobius-has-deriv-at",
+                "golden_mobius_hasDerivAt",
+                "Golden Mobius Has Deriv At",
+                "Ordinary differentiation gives the same multiplier as exact projective linearization.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "multiplier-eq-of-nondegenerate-bridge",
-                "multiplier_eq_of_nondegenerate_bridge",
-                "Multiplier eq Of Nondegenerate Bridge",
-                "A nonzero bridge derivative forces equality of local multipliers.",
+                "deriv-golden-mobius-at-golden",
+                "deriv_golden_mobius_at_golden",
+                "Deriv Golden Mobius At Golden",
+                "Evaluation of deriv at the golden fixed point.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "attracting-multiplier-iff",
-                "attracting_multiplier_iff",
-                "Attracting Multiplier iff",
-                "Strict attraction is preserved by a nondegenerate bridge.",
+                "abs-golden-projective-multiplier",
+                "abs_golden_projective_multiplier",
+                "Abs Golden Projective Multiplier",
+                "The projective multiplier has the expected positive magnitude.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "neutral-multiplier-iff",
-                "neutral_multiplier_iff",
-                "Neutral Multiplier iff",
-                "Neutrality is preserved by a nondegenerate bridge.",
+                "abs-golden-projective-multiplier-lt-one",
+                "abs_golden_projective_multiplier_lt_one",
+                "Abs Golden Projective Multiplier lt One",
+                "The completion derivative is a strict contraction in projective coordinates.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "repelling-multiplier-iff",
-                "repelling_multiplier_iff",
-                "Repelling Multiplier iff",
-                "Repulsion is preserved by a nondegenerate bridge.",
+                "linearized-golden-has-deriv-at-zero",
+                "linearized_golden_hasDerivAt_zero",
+                "Linearized Golden Has Deriv At Zero",
+                "Multiplication by the golden multiplier has that derivative at zero.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."))));
 

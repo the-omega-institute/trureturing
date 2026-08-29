@@ -1,42 +1,51 @@
 using static StrataLint.Scribe.DefinitionDsl;
-using static StrataLint.Scribe.FormulaDsl;
-using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.WorldModel;
 
 internal sealed class TransversalFixedPointDocument : IScribeDocumentDefinition
 {
-    private const string Prefix =
-        "D5/S3/Observer/WorldModel/TransversalFixedPoint.WorldModelDiagram.";
+    private const string Prefix = "D5/S3/Observer/WorldModel/TransversalFixedPoint.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "One fixed anchor determines a fixed coherent section across semiconjugate world models.",
-        H("Transversal Fixed Points Across World Models"),
+        "A coherent family of states across semiconjugate world models forms a transversal fixed point whenever one anchor state is fixed.",
+        H("Transversal Fixed Point"),
         Blocks(
-            Describe.Lean(
-                DescribeId.Create("coherent-section-fixed-from-one-anchor"),
-                DeclarationHandle.Create(Prefix + "coherent_section_fixed_from_anchor"),
-                H("Fixedness propagates across a coherent section"),
-                StatementSource.FromAuthor(SectionFormula()),
-                AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text(
-                        "A world-model diagram supplies one typed state space and update per "
-                            + "model, together with pairwise bridges that semiconjugate the "
-                            + "updates.")),
-                    Paragraph(Text(
-                        "A coherent section chooses one state per model and requires every bridge "
-                            + "to carry the source choice to the target choice.")),
-                    Paragraph(Text(
-                        "If one selected anchor is fixed, semiconjugacy transports fixedness to "
-                            + "every other coordinate of the coherent section."))),
-                DescribeRole.Theorem))));
+            Theorem(
+                "transport-from-fixed-is-fixed",
+                "WorldModelDiagram.transport_from_fixed_is_fixed",
+                "Transport From Fixed Is Fixed",
+                "A fixed anchor transports to a fixed state in every target world model.",
+                "The declaration keeps its parameters and hypotheses explicit; the result "
+                    + "makes no converse or broader existence claim beyond that scope."),
+            Theorem(
+                "coherent-section-fixed-from-anchor",
+                "WorldModelDiagram.coherent_section_fixed_from_anchor",
+                "Coherent Section Fixed From Anchor",
+                "A coherent section that is fixed at one anchor is fixed in every model.",
+                "The declaration keeps its parameters and hypotheses explicit; the result "
+                    + "makes no converse or broader existence claim beyond that scope."),
+            Theorem(
+                "fixed-at-anchor-iff-fixed-at-target-of-injective",
+                "WorldModelDiagram.fixed_at_anchor_iff_fixed_at_target_of_injective",
+                "Fixed At Anchor iff Fixed At Target Of Injective",
+                "For a coherent section, fixedness at any two anchors is equivalent when the bridge in one direction is injective.",
+                "The declaration keeps its parameters and hypotheses explicit; the result "
+                    + "makes no converse or broader existence claim beyond that scope."))));
 
-    private static Formula SectionFormula() => Disp(Seq(
-        Call("Coherent", F.Id("x")), Sp, Land, Sp,
-        Call("IsFixedPt", Sub(F.Id("F"), F.Id("i0")),
-            Sub(F.Id("x"), F.Id("i0"))), Sp, Rightarrow, Sp,
-        Forall, Sp, F.Id("j"), Comma, Sp,
-        Call("IsFixedPt", Sub(F.Id("F"), F.Id("j")),
-            Sub(F.Id("x"), F.Id("j")))));
+    private static DocumentBlock.Describe Theorem(
+        string id,
+        string declaration,
+        string title,
+        string firstParagraph,
+        string secondParagraph) =>
+        Describe.Lean(
+            DescribeId.Create(id),
+            DeclarationHandle.Create(Prefix + declaration),
+            H(title),
+            StatementSource.FromLean(),
+            AssessedProvenance.FromRepo(),
+            Blocks(
+                Paragraph(Text(firstParagraph)),
+                Paragraph(Text(secondParagraph))),
+            DescribeRole.Theorem);
 }

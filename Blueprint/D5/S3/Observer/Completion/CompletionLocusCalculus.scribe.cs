@@ -1,34 +1,34 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.GoldenCoding;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.Completion;
 
-internal sealed class PrimeGoldenScaleCoordinateDocument : IScribeDocumentDefinition
+internal sealed class CompletionLocusCalculusDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Observer/GoldenCoding/PrimeGoldenScaleCoordinate.";
+    private const string Prefix = "D5/S3/Observer/Completion/CompletionLocusCalculus.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Prime logarithmic lengths admit a golden scale coordinate.",
-        H("Prime Golden Scale Coordinate"),
+        "Structural completion loci compose by intersection, pull back along arbitrary parameter maps, and retain gauge stability under conjunction.",
+        H("Completion Locus Calculus"),
         Blocks(
             Theorem(
-                "prime-golden-scale-coordinate-pos",
-                "prime_golden_scale_coordinate_pos",
-                "Prime Golden Scale Coordinate pos",
-                "Every prime has a positive golden scale coordinate.",
+                "completion-locus-pair-eq-inter",
+                "completion_locus_pair_eq_inter",
+                "Completion Locus Pair eq Inter",
+                "Conjoining two normalizations and pairing their defects gives exactly the intersection of their completion loci.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "prime-power-golden-scale-coordinate",
-                "prime_power_golden_scale_coordinate",
-                "Prime Power Golden Scale Coordinate",
-                "Prime powers advance linearly in the lifted golden scale coordinate.",
+                "completion-locus-preimage",
+                "completion_locus_preimage",
+                "Completion Locus Preimage",
+                "Completion loci pull back exactly along arbitrary parameter maps.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "prime-one-golden-scale-coordinate",
-                "prime_one_golden_scale_coordinate",
-                "Prime One Golden Scale Coordinate",
-                "The coordinate of the first power is the prime coordinate itself.",
+                "completion-locus-intersection-gauge-stable",
+                "completion_locus_intersection_gauge_stable",
+                "Completion Locus Intersection Gauge Stable",
+                "If two completion loci are stable under the same gauge action, their conjoined locus is stable as well.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."))));
 

@@ -1,48 +1,48 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.Bridges;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.ZetaCompletionFlow;
 
-internal sealed class DifferentiableFixedPointConjugacyDocument : IScribeDocumentDefinition
+internal sealed class NewtonCompletionFieldDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Observer/Bridges/DifferentiableFixedPointConjugacy.";
+    private const string Prefix = "D5/S3/Analytic/ZetaCompletionFlow/NewtonCompletionField.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Nondegenerate differentiable bridges preserve local multipliers.",
-        H("Differentiable Fixed Point Conjugacy"),
+        "The Newton completion vector is scale invariant, detects roots under a regular derivative, and exactly completes affine zero models in one step.",
+        H("Newton Completion Field"),
         Blocks(
             Theorem(
-                "derivative-intertwining-at-fixed-point",
-                "derivative_intertwining_at_fixed_point",
-                "Derivative Intertwining At Fixed Point",
-                "The chain rule intertwines the two local multipliers at a fixed point.",
+                "newton-completion-vector-eq-zero-iff",
+                "newton_completion_vector_eq_zero_iff",
+                "Newton Completion Vector eq Zero iff",
+                "At a regular point, the Newton vector vanishes exactly at a root.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "multiplier-eq-of-nondegenerate-bridge",
-                "multiplier_eq_of_nondegenerate_bridge",
-                "Multiplier eq Of Nondegenerate Bridge",
-                "A nonzero bridge derivative forces equality of local multipliers.",
+                "newton-completion-vector-scale-invariant",
+                "newton_completion_vector_scale_invariant",
+                "Newton Completion Vector Scale Invariant",
+                "Common nonzero rescaling of a function and its derivative field leaves the Newton vector unchanged.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "attracting-multiplier-iff",
-                "attracting_multiplier_iff",
-                "Attracting Multiplier iff",
-                "Strict attraction is preserved by a nondegenerate bridge.",
+                "affine-newton-completion-vector",
+                "affine_newton_completion_vector",
+                "Affine Newton Completion Vector",
+                "The Newton vector of an affine simple-zero model points exactly from the current point to its root.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "neutral-multiplier-iff",
-                "neutral_multiplier_iff",
-                "Neutral Multiplier iff",
-                "Neutrality is preserved by a nondegenerate bridge.",
+                "affine-newton-completion-step",
+                "affine_newton_completion_step",
+                "Affine Newton Completion Step",
+                "Consequently, an affine simple-zero model completes in one Newton step.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "repelling-multiplier-iff",
-                "repelling_multiplier_iff",
-                "Repelling Multiplier iff",
-                "Repulsion is preserved by a nondegenerate bridge.",
+                "root-fixed-by-newton-completion",
+                "root_fixed_by_newton_completion",
+                "Root Fixed By Newton Completion",
+                "A genuine regular root is fixed by the Newton completion step.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."))));
 

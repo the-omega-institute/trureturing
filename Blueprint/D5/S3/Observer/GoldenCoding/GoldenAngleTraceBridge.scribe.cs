@@ -1,50 +1,86 @@
 using static StrataLint.Scribe.DefinitionDsl;
-using static StrataLint.Scribe.FormulaDsl;
-using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.GoldenCoding;
 
 internal sealed class GoldenAngleTraceBridgeDocument : IScribeDocumentDefinition
 {
-    private const string Prefix =
-        "D5/S3/Observer/GoldenCoding/GoldenAngleTraceBridge.";
+    private const string Prefix = "D5/S3/Observer/GoldenCoding/GoldenAngleTraceBridge.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The real trace of a thirty-six-degree rotation is the golden ratio and forgets chirality.",
+        "Rotation trace sends thirty-six degrees to the golden ratio.",
         H("Golden Angle Trace Bridge"),
         Blocks(
-            Describe.Lean(
-                DescribeId.Create("thirty-six-degree-trace-is-golden"),
-                DeclarationHandle.Create(Prefix + "thirty_six_degree_trace_eq_golden_ratio"),
-                H("Thirty-six degrees has golden rotation trace"),
-                StatementSource.FromAuthor(TraceFormula()),
-                AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text(
-                        "Degrees are first converted to radians. The thirty-six-degree angle is "
-                            + "pi over five, whose doubled cosine is the golden ratio.")),
-                    Paragraph(Text(
-                        "The trace is an observer from rotation phase to a real invariant. It is "
-                            + "even, so opposite rotation directions have the same observation.")),
-                    Paragraph(Text(
-                        "This proves a typed bridge between angle and ratio. It does not identify "
-                            + "the angle carrier with the real number carrier."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("rotation-trace-forgets-orientation"),
-                DeclarationHandle.Create(Prefix + "rotation_trace_not_injective"),
-                H("The trace observer is not injective"),
-                StatementSource.FromAuthor(NoninjectiveFormula()),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "The golden angle and its negative are distinct, while cosine gives them "
-                        + "the same trace. This is the explicit chirality-loss witness."))),
-                DescribeRole.Theorem))));
+            Theorem(
+                "thirty-six-degrees-eq-golden-angle",
+                "thirty_six_degrees_eq_golden_angle",
+                "Thirty Six Degrees eq Golden Angle",
+                "Thirty-six degrees is exactly the golden angle in radians.",
+                "The declaration keeps its parameters and hypotheses explicit; the result "
+                    + "makes no converse or broader existence claim beyond that scope."),
+            Theorem(
+                "golden-angle-trace-eq-golden-ratio",
+                "golden_angle_trace_eq_golden_ratio",
+                "Golden Angle Trace eq Golden Ratio",
+                "The trace of the thirty-six-degree rotation is exactly the golden ratio.",
+                "The declaration keeps its parameters and hypotheses explicit; the result "
+                    + "makes no converse or broader existence claim beyond that scope."),
+            Theorem(
+                "thirty-six-degree-trace-eq-golden-ratio",
+                "thirty_six_degree_trace_eq_golden_ratio",
+                "Thirty Six Degree Trace eq Golden Ratio",
+                "Degree-valued formulation of the golden trace identity.",
+                "The declaration keeps its parameters and hypotheses explicit; the result "
+                    + "makes no converse or broader existence claim beyond that scope."),
+            Theorem(
+                "rotation-trace-neg",
+                "rotation_trace_neg",
+                "Rotation Trace neg",
+                "The trace observer forgets orientation.",
+                "The declaration keeps its parameters and hypotheses explicit; the result "
+                    + "makes no converse or broader existence claim beyond that scope."),
+            Theorem(
+                "golden-angle-ne-neg",
+                "golden_angle_ne_neg",
+                "Golden Angle ne neg",
+                "The golden angle is genuinely distinct from its reflected angle.",
+                "The declaration keeps its parameters and hypotheses explicit; the result "
+                    + "makes no converse or broader existence claim beyond that scope."),
+            Theorem(
+                "rotation-trace-not-injective",
+                "rotation_trace_not_injective",
+                "Rotation Trace Not Injective",
+                "Consequently the trace observer is not injective.",
+                "The declaration keeps its parameters and hypotheses explicit; the result "
+                    + "makes no converse or broader existence claim beyond that scope."),
+            Theorem(
+                "golden-angle-trace-quadratic",
+                "golden_angle_trace_quadratic",
+                "Golden Angle Trace Quadratic",
+                "The observed trace retains the golden quadratic relation.",
+                "The declaration keeps its parameters and hypotheses explicit; the result "
+                    + "makes no converse or broader existence claim beyond that scope."),
+            Theorem(
+                "golden-angle-trace-reciprocal-fixed",
+                "golden_angle_trace_reciprocal_fixed",
+                "Golden Angle Trace Reciprocal Fixed",
+                "The trace also retains the reciprocal fixed-point presentation.",
+                "The declaration keeps its parameters and hypotheses explicit; the result "
+                    + "makes no converse or broader existence claim beyond that scope."))));
 
-    private static Formula TraceFormula() => Disp(Seq(
-        D(2), Sp, Call("cos", Seq(Pi, Slash, D(5))), Sp, Eq, Sp,
-        F.Id("varphi")));
-
-    private static Formula NoninjectiveFormula() => Disp(Seq(
-        Neg, Sp, Call("Injective", F.Id("rotationTrace"))));
+    private static DocumentBlock.Describe Theorem(
+        string id,
+        string declaration,
+        string title,
+        string firstParagraph,
+        string secondParagraph) =>
+        Describe.Lean(
+            DescribeId.Create(id),
+            DeclarationHandle.Create(Prefix + declaration),
+            H(title),
+            StatementSource.FromLean(),
+            AssessedProvenance.FromRepo(),
+            Blocks(
+                Paragraph(Text(firstParagraph)),
+                Paragraph(Text(secondParagraph))),
+            DescribeRole.Theorem);
 }

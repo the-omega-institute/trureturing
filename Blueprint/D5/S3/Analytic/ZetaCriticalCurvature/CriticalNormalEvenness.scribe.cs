@@ -1,41 +1,41 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.WorldModel;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.ZetaCriticalCurvature;
 
-internal sealed class WormholeHolonomyDocument : IScribeDocumentDefinition
+internal sealed class CriticalNormalEvennessDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Observer/WorldModel/WormholeHolonomy.";
+    private const string Prefix = "D5/S3/Analytic/ZetaCriticalCurvature/CriticalNormalEvenness.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Round trips through observer wormholes define holonomy, with inverse bridges giving the trivial loop.",
-        H("Wormhole Holonomy"),
+        "Reflection-even scalar potentials have zero first normal derivative at the fixed axis.",
+        H("Critical Normal Evenness"),
         Blocks(
             Theorem(
-                "round-trip-maps-fixed-point",
-                "round_trip_maps_fixed_point",
-                "Round Trip Maps Fixed Point",
-                "Round trips preserve every fixed source state as a fixed state of the round-trip dynamics.",
+                "even-has-deriv-at-zero",
+                "even_hasDerivAt_zero",
+                "Even Has Deriv At Zero",
+                "A differentiable even real function has zero derivative at the reflection fixed point.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "round-trip-eq-identity-of-left-inverse",
-                "round_trip_eq_identity_of_left_inverse",
-                "Round Trip eq Identity Of Left Inverse",
-                "A genuine left inverse makes the round trip equal to the identity wormhole.",
+                "deriv-even-zero",
+                "deriv_even_zero",
+                "Deriv Even Zero",
+                "deriv formulation of the same reflection obstruction.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "no-holonomy-of-left-inverse",
-                "no_holonomy_of_left_inverse",
-                "No Holonomy Of Left Inverse",
-                "A left inverse rules out holonomy at every source state.",
+                "critical-normal-derivative-zero",
+                "critical_normal_derivative_zero",
+                "Critical Normal Derivative Zero",
+                "Parameterized potential version. For every fixed tangential coordinate t, normal reflection symmetry removes the first normal derivative.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "holonomy-refutes-left-inverse",
-                "holonomy_refutes_left_inverse",
-                "Holonomy Refutes Left Inverse",
-                "Any holonomy witness refutes the claim that the return bridge is a left inverse.",
+                "critical-normal-deriv-zero",
+                "critical_normal_deriv_zero",
+                "Critical Normal Deriv Zero",
+                "Pointwise family formulation.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."))));
 

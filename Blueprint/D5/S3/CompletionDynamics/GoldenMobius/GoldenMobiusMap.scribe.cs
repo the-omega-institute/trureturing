@@ -1,62 +1,55 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.Bridges;
+namespace StrataLint.Scribe.Blueprint.D5.S3.CompletionDynamics.GoldenMobius;
 
-internal sealed class WormholeCategoryDocument : IScribeDocumentDefinition
+internal sealed class GoldenMobiusMapDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Observer/Bridges/WormholeCategory.";
+    private const string Prefix = "D5/S3/CompletionDynamics/GoldenMobius/GoldenMobiusMap.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Typed semiconjugate bridges compose and transport fixed behavior.",
-        H("Wormhole Category"),
+        "The reciprocal golden Mobius map has the golden ratio and its conjugate as fixed points and preserves the positive half-line.",
+        H("Golden Mobius Map"),
         Blocks(
             Theorem(
-                "ext",
-                "Wormhole.ext",
-                "Ext",
-                "Two wormholes are equal when their underlying maps are equal.",
+                "golden-mobius-fixed-golden",
+                "golden_mobius_fixed_golden",
+                "Golden Mobius Fixed Golden",
+                "The positive golden root is a fixed point.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "identity-compose",
-                "Wormhole.identity_compose",
-                "Identity Compose",
-                "Left identity for wormhole composition.",
+                "golden-mobius-fixed-conjugate",
+                "golden_mobius_fixed_conjugate",
+                "Golden Mobius Fixed Conjugate",
+                "The negative conjugate golden root is the second fixed point.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "compose-identity",
-                "Wormhole.compose_identity",
-                "Compose Identity",
-                "Right identity for wormhole composition.",
+                "golden-fixed-points-ne",
+                "golden_fixed_points_ne",
+                "Golden Fixed Points ne",
+                "The two fixed points are distinct.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "compose-assoc",
-                "Wormhole.compose_assoc",
-                "Compose Assoc",
-                "Associativity of wormhole composition.",
+                "golden-fixed-point-gap",
+                "golden_fixed_point_gap",
+                "Golden Fixed Point Gap",
+                "Their oriented gap is the square root of the discriminant.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "maps-fixed-point",
-                "Wormhole.maps_fixed_point",
-                "Maps Fixed Point",
-                "A wormhole transports every fixed source state to a fixed target state.",
+                "golden-mobius-pos",
+                "golden_mobius_pos",
+                "Golden Mobius pos",
+                "Positive starting points remain in the positive affine chart.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "maps-iterate",
-                "Wormhole.maps_iterate",
-                "Maps Iterate",
-                "A wormhole transports every finite iterate of the source dynamics.",
-                "The declaration keeps its parameters and hypotheses explicit; the result "
-                    + "makes no converse or broader existence claim beyond that scope."),
-            Theorem(
-                "composite-maps-fixed-point",
-                "Wormhole.composite_maps_fixed_point",
-                "Composite Maps Fixed Point",
-                "Composite wormholes transport fixed points across multiple worlds.",
+                "golden-projective-multiplier-eq-neg-conjugate-sq",
+                "golden_projective_multiplier_eq_neg_conjugate_sq",
+                "Golden Projective Multiplier eq neg Conjugate Sq",
+                "The projective multiplier can equivalently be read from the stable golden conjugate eigenvalue.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."))));
 

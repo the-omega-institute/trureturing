@@ -1,62 +1,55 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.Bridges;
+namespace StrataLint.Scribe.Blueprint.D5.S3.CompletionDynamics.ObserverJet;
 
-internal sealed class WormholeCategoryDocument : IScribeDocumentDefinition
+internal sealed class FirstBreakOrderDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Observer/Bridges/WormholeCategory.";
+    private const string Prefix = "D5/S3/CompletionDynamics/ObserverJet/FirstBreakOrder.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Typed semiconjugate bridges compose and transport fixed behavior.",
-        H("Wormhole Category"),
+        "The first nonzero normal jet order is totalized in WithTop Nat, with infinity recording threads whose every finite jet remains unbroken.",
+        H("First Break Order"),
         Blocks(
             Theorem(
-                "ext",
-                "Wormhole.ext",
-                "Ext",
-                "Two wormholes are equal when their underlying maps are equal.",
+                "first-break-order-eq-top-iff",
+                "first_break_order_eq_top_iff",
+                "First Break Order eq Top iff",
+                "Absence of every positive finite break is represented exactly by ⊤.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "identity-compose",
-                "Wormhole.identity_compose",
-                "Identity Compose",
-                "Left identity for wormhole composition.",
+                "first-break-order-of-exists",
+                "first_break_order_of_exists",
+                "First Break Order Of Exists",
+                "Under an existence witness, the totalized order is the ordinary least natural-number witness.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "compose-identity",
-                "Wormhole.compose_identity",
-                "Compose Identity",
-                "Right identity for wormhole composition.",
+                "first-break-order-spec",
+                "first_break_order_spec",
+                "First Break Order Spec",
+                "The selected finite order is a genuine positive break.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "compose-assoc",
-                "Wormhole.compose_assoc",
-                "Compose Assoc",
-                "Associativity of wormhole composition.",
+                "no-break-before-first",
+                "no_break_before_first",
+                "No Break Before First",
+                "No smaller order is an admissible break.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "maps-fixed-point",
-                "Wormhole.maps_fixed_point",
-                "Maps Fixed Point",
-                "A wormhole transports every fixed source state to a fixed target state.",
+                "first-order-break-characterization",
+                "first_order_break_characterization",
+                "First Order Break Characterization",
+                "A first-order break means that order one is the least positive nonzero jet.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "maps-iterate",
-                "Wormhole.maps_iterate",
-                "Maps Iterate",
-                "A wormhole transports every finite iterate of the source dynamics.",
-                "The declaration keeps its parameters and hypotheses explicit; the result "
-                    + "makes no converse or broader existence claim beyond that scope."),
-            Theorem(
-                "composite-maps-fixed-point",
-                "Wormhole.composite_maps_fixed_point",
-                "Composite Maps Fixed Point",
-                "Composite wormholes transport fixed points across multiple worlds.",
+                "quadratic-break-characterization",
+                "quadratic_break_characterization",
+                "Quadratic Break Characterization",
+                "If order one vanishes and order two breaks, the first break is quadratic.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."))));
 

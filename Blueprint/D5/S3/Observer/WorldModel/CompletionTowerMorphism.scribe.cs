@@ -1,38 +1,58 @@
 using static StrataLint.Scribe.DefinitionDsl;
-using static StrataLint.Scribe.FormulaDsl;
-using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.WorldModel;
 
 internal sealed class CompletionTowerMorphismDocument : IScribeDocumentDefinition
 {
-    private const string Prefix =
-        "D5/S3/Observer/WorldModel/CompletionTowerMorphism.TowerMorphism.";
+    private const string Prefix = "D5/S3/Observer/WorldModel/CompletionTowerMorphism.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Natural levelwise wormholes transport truth threads between completion towers.",
-        H("Completion-Tower Morphisms"),
+        "Natural wormholes transport fixed threads between completion towers.",
+        H("Completion Tower Morphism"),
         Blocks(
-            Describe.Lean(
-                DescribeId.Create("tower-morphism-transports-truth"),
-                DeclarationHandle.Create(Prefix + "map_truth_thread"),
-                H("Tower morphisms transport truth threads"),
-                StatementSource.FromAuthor(TransportFormula()),
-                AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text(
-                        "A tower morphism supplies one semiconjugate bridge at each level and "
-                            + "requires the horizontal bridges to commute with the vertical "
-                            + "completion bonds.")),
-                    Paragraph(Text(
-                        "Naturality transports coherence, while levelwise semiconjugacy transports "
-                            + "fixedness. Their conjunction transports the full truth thread.")),
-                    Paragraph(Text(
-                        "Identity and composition are defined without asserting that every tower "
-                            + "morphism is invertible."))),
-                DescribeRole.Theorem))));
+            Theorem(
+                "map-thread-coherent",
+                "TowerMorphism.map_thread_coherent",
+                "Map Thread Coherent",
+                "Naturality transports coherent threads.",
+                "The declaration keeps its parameters and hypotheses explicit; the result "
+                    + "makes no converse or broader existence claim beyond that scope."),
+            Theorem(
+                "map-thread-fixed",
+                "TowerMorphism.map_thread_fixed",
+                "Map Thread Fixed",
+                "Levelwise semiconjugacy transports fixed threads.",
+                "The declaration keeps its parameters and hypotheses explicit; the result "
+                    + "makes no converse or broader existence claim beyond that scope."),
+            Theorem(
+                "map-truth-thread",
+                "TowerMorphism.map_truth_thread",
+                "Map Truth Thread",
+                "Every tower morphism transports truth threads.",
+                "The declaration keeps its parameters and hypotheses explicit; the result "
+                    + "makes no converse or broader existence claim beyond that scope."),
+            Theorem(
+                "map-thread-compose",
+                "TowerMorphism.mapThread_compose",
+                "Map Thread Compose",
+                "Coordinatewise transport respects composition.",
+                "The declaration keeps its parameters and hypotheses explicit; the result "
+                    + "makes no converse or broader existence claim beyond that scope."))));
 
-    private static Formula TransportFormula() => Disp(Seq(
-        Call("IsTruthThread", F.Id("x")), Sp, Rightarrow, Sp,
-        Call("IsTruthThread", Call("mapThread", F.Id("H"), F.Id("x")))));
+    private static DocumentBlock.Describe Theorem(
+        string id,
+        string declaration,
+        string title,
+        string firstParagraph,
+        string secondParagraph) =>
+        Describe.Lean(
+            DescribeId.Create(id),
+            DeclarationHandle.Create(Prefix + declaration),
+            H(title),
+            StatementSource.FromLean(),
+            AssessedProvenance.FromRepo(),
+            Blocks(
+                Paragraph(Text(firstParagraph)),
+                Paragraph(Text(secondParagraph))),
+            DescribeRole.Theorem);
 }

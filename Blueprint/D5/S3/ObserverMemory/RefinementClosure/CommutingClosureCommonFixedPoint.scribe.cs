@@ -1,34 +1,34 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.GoldenCoding;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ObserverMemory.RefinementClosure;
 
-internal sealed class PrimeGoldenScaleCoordinateDocument : IScribeDocumentDefinition
+internal sealed class CommutingClosureCommonFixedPointDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Observer/GoldenCoding/PrimeGoldenScaleCoordinate.";
+    private const string Prefix = "D5/S3/ObserverMemory/RefinementClosure/CommutingClosureCommonFixedPoint.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Prime logarithmic lengths admit a golden scale coordinate.",
-        H("Prime Golden Scale Coordinate"),
+        "Two commuting closure operators compose to a closure whose fixed points are exactly their common fixed points.",
+        H("Commuting Closure Common Fixed Point"),
         Blocks(
             Theorem(
-                "prime-golden-scale-coordinate-pos",
-                "prime_golden_scale_coordinate_pos",
-                "Prime Golden Scale Coordinate pos",
-                "Every prime has a positive golden scale coordinate.",
+                "commuting-composition-apply",
+                "commutingComposition_apply",
+                "Commuting Composition Apply",
+                "This theorem establishes commuting composition apply in the module's typed setting.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "prime-power-golden-scale-coordinate",
-                "prime_power_golden_scale_coordinate",
-                "Prime Power Golden Scale Coordinate",
-                "Prime powers advance linearly in the lifted golden scale coordinate.",
+                "commuting-closure-composition-fixed-iff",
+                "commuting_closure_composition_fixed_iff",
+                "Commuting Closure Composition Fixed iff",
+                "A point is fixed by the commuting composition exactly when it is fixed by both constituent closures.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."),
             Theorem(
-                "prime-one-golden-scale-coordinate",
-                "prime_one_golden_scale_coordinate",
-                "Prime One Golden Scale Coordinate",
-                "The coordinate of the first power is the prime coordinate itself.",
+                "commuting-composition-order-independent",
+                "commuting_composition_order_independent",
+                "Commuting Composition Order Independent",
+                "Commutativity makes the one-pass common closure independent of order.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
                     + "makes no converse or broader existence claim beyond that scope."))));
 
