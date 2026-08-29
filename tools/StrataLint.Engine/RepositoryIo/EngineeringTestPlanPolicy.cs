@@ -7,13 +7,14 @@ namespace StrataLint.Engine;
 
 internal enum EngineeringTestPlanKind { Full, Selected, None }
 
-internal enum EngineeringSelectedTestReason { UnknownInput, DeclaredInput, CompiledInput }
+internal enum EngineeringSelectedTestReason { BaseBaseline, UnknownInput, DeclaredInput, CompiledInput }
 
 internal sealed record EngineeringSelectedTest(
     string ProjectPath,
     string Id,
     EngineeringSelectedTestReason Reason,
-    string Detail);
+    string Detail,
+    string Assembly = "");
 
 internal sealed record EngineeringTestPlan(
     EngineeringTestPlanKind Kind,
@@ -39,6 +40,85 @@ internal static class EngineeringTestPlanDeriver
             out var failure);
         return EngineeringTestPlanPolicy.Evaluate(changedPaths, map, compiled, failure);
     }
+
+    internal static EngineeringTestPlan DeriveSnapshot(
+        RepositorySnapshot snapshot,
+        IReadOnlyList<string> changedPaths,
+        bool full = false)
+    {
+        var map = ScribeTestMapDeriver.DeriveSnapshot(snapshot);
+        EnsureClosedMap(map);
+        var assemblies = AssemblyByProject(snapshot, map);
+        if (full)
+        {
+            return EngineeringTestPlanPolicy.Full(
+                changedPaths,
+                "FULL=1 requests the diagnostic full plan",
+                EngineeringTestPlanPolicy.BaseTests(map, assemblies));
+        }
+
+        var compiled = EngineeringCompileInputDeriver.FindAffectedTestProjects(
+            snapshot,
+            changedPaths,
+            out var failure);
+        if (failure is not null)
+        {
+            throw new InvalidOperationException($"project attribution failed: {failure}");
+        }
+
+        return EngineeringTestPlanPolicy.Evaluate(
+            changedPaths,
+            map,
+            compiled,
+            assemblyByProject: assemblies);
+    }
+
+    private static void EnsureClosedMap(ScribeTestMap map)
+    {
+        var failures = map.UnclassifiedManagedProjectPaths
+            .Concat(map.OrphanManagedSourcePaths)
+            .Concat(map.CompileQueryFindings.Select(static finding => finding.Path))
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+        if (failures.Length != 0)
+        {
+            throw new InvalidOperationException(
+                $"base test identity attribution failed: {string.Join(", ", failures)}");
+        }
+    }
+
+    private static IReadOnlyDictionary<string, string> AssemblyByProject(
+        RepositorySnapshot snapshot,
+        ScribeTestMap map)
+    {
+        var result = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var project in map.Methods
+                     .Select(method => map.CompileProjectBySourcePath.TryGetValue(method.SourcePath, out var owner)
+                         ? owner
+                         : throw new InvalidOperationException(
+                             $"project attribution failed for {method.Identity}"))
+                     .Distinct(StringComparer.Ordinal))
+        {
+            if (!snapshot.TryGetFile(project, out var file))
+            {
+                throw new InvalidOperationException($"base test project is absent: {project}");
+            }
+
+            var document = XDocument.Parse(file.Text, LoadOptions.None);
+            var assembly = document.Descendants()
+                .FirstOrDefault(static element => element.Name.LocalName == "AssemblyName")?.Value
+                ?? Path.GetFileNameWithoutExtension(project);
+            if (string.IsNullOrWhiteSpace(assembly) || assembly.Contains("$(", StringComparison.Ordinal))
+            {
+                throw new InvalidOperationException(
+                    $"base test project has no static assembly identity: {project}");
+            }
+
+            result.Add(project, assembly);
+        }
+
+        return result;
+    }
 }
 
 internal static class EngineeringTestPlanPolicy
@@ -47,12 +127,16 @@ internal static class EngineeringTestPlanPolicy
         IReadOnlyList<string> changedPaths,
         ScribeTestMap map,
         IReadOnlySet<string> compileAffectedTestProjects,
-        string? attributionFailure = null)
+        string? attributionFailure = null,
+        IReadOnlyDictionary<string, string>? assemblyByProject = null)
     {
         var changed = changedPaths.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToImmutableArray();
         if (changed.Any(IsFullSurface))
         {
-            return Full(changed, "candidate delta changes the engineering implementation or a repository-root build input");
+            return Full(
+                changed,
+                "candidate delta changes the engineering implementation or a repository-root build input",
+                BaseTests(map, assemblyByProject));
         }
 
         var failures = map.UnclassifiedManagedProjectPaths
@@ -67,7 +151,7 @@ internal static class EngineeringTestPlanPolicy
         }
 
         var tests = new List<EngineeringSelectedTest>();
-        foreach (var method in map.Methods)
+        foreach (var method in RunnableMethods(map))
         {
             if (!map.CompileProjectBySourcePath.TryGetValue(method.SourcePath, out var project))
             {
@@ -98,7 +182,12 @@ internal static class EngineeringTestPlanPolicy
 
             if (reason is not null)
             {
-                tests.Add(new EngineeringSelectedTest(project, method.Id, reason.Value, detail!));
+                tests.Add(new EngineeringSelectedTest(
+                    project,
+                    method.Id,
+                    reason.Value,
+                    detail!,
+                    Assembly(project, assemblyByProject)));
             }
         }
 
@@ -120,11 +209,40 @@ internal static class EngineeringTestPlanPolicy
                 $"selected {selected.Length} affected or locally conservative test targets");
     }
 
-    internal static EngineeringTestPlan Full(IReadOnlyList<string> changedPaths, string reason) => new(
+    internal static ImmutableArray<EngineeringSelectedTest> BaseTests(
+        ScribeTestMap map,
+        IReadOnlyDictionary<string, string>? assemblyByProject) => RunnableMethods(map)
+        .Select(method => map.CompileProjectBySourcePath.TryGetValue(method.SourcePath, out var project)
+            ? new EngineeringSelectedTest(
+                project,
+                method.Id,
+                EngineeringSelectedTestReason.BaseBaseline,
+                "identity is owned by the protected base",
+                Assembly(project, assemblyByProject))
+            : throw new InvalidOperationException($"project attribution failed for {method.Identity}"))
+        .DistinctBy(static test => (test.Assembly, test.Id))
+        .OrderBy(static test => test.Assembly, StringComparer.Ordinal)
+        .ThenBy(static test => test.Id, StringComparer.Ordinal)
+        .ToImmutableArray();
+
+    private static IEnumerable<ScribeTestMethod> RunnableMethods(ScribeTestMap map) =>
+        map.Methods.Where(static method => !method.IsStaticallySkipped);
+
+    internal static EngineeringTestPlan Full(
+        IReadOnlyList<string> changedPaths,
+        string reason,
+        ImmutableArray<EngineeringSelectedTest> tests = default) => new(
         EngineeringTestPlanKind.Full,
         changedPaths.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToImmutableArray(),
-        [],
+        tests.IsDefault ? [] : tests,
         reason);
+
+    private static string Assembly(
+        string project,
+        IReadOnlyDictionary<string, string>? assemblyByProject) =>
+        assemblyByProject is not null && assemblyByProject.TryGetValue(project, out var assembly)
+            ? assembly
+            : Path.GetFileNameWithoutExtension(project);
 
     private static bool IsFullSurface(string path) =>
         path == "tools" || path.StartsWith("tools/", StringComparison.Ordinal) || !path.Contains('/');
@@ -145,7 +263,7 @@ internal static class EngineeringTestExecutor
         }
 
         if (plan.Kind == EngineeringTestPlanKind.Full)
-            return run(new EngineeringTestInvocation("tools/StrataLint.sln", null, []));
+            return run(new EngineeringTestInvocation("tools/StrataLint.sln", null, plan.Tests));
 
         var filter = string.Join('|', plan.Tests.Select(static test => $"FullyQualifiedName~{test.Id}").Distinct(StringComparer.Ordinal));
         try
@@ -153,7 +271,7 @@ internal static class EngineeringTestExecutor
             if (run(new EngineeringTestInvocation("tools/StrataLint.sln", filter, plan.Tests)) == 0) return 0;
         }
         catch (Exception) { }
-        return run(new EngineeringTestInvocation("tools/StrataLint.sln", null, []));
+        return run(new EngineeringTestInvocation("tools/StrataLint.sln", null, plan.Tests));
     }
 }
 
@@ -169,9 +287,50 @@ internal static class EngineeringCompileInputDeriver
     {
         try
         {
-            var projects = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
+            return FindAffectedTestProjects(
+                GitIndexRepositoryFiles.Enumerate(repositoryRoot)
                 .Where(static file => file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal))
-                .Select(file => ParseProject(file.RelativePath, File.ReadAllText(file.FullPath)))
+                .Select(file => (file.RelativePath, Content: File.ReadAllText(file.FullPath))),
+                changedPaths,
+                out failure);
+        }
+        catch (Exception exception) when (exception is FormatException or System.Xml.XmlException or IOException)
+        {
+            failure = exception.Message;
+            return new HashSet<string>(StringComparer.Ordinal);
+        }
+    }
+
+    internal static IReadOnlySet<string> FindAffectedTestProjects(
+        RepositorySnapshot snapshot,
+        IReadOnlyList<string> changedPaths,
+        out string? failure)
+    {
+        try
+        {
+            return FindAffectedTestProjects(
+                snapshot.Files.Values
+                    .Where(static file => file.Path.Value.EndsWith(".csproj", StringComparison.Ordinal))
+                    .Select(static file => (file.Path.Value, Content: file.Text)),
+                changedPaths,
+                out failure);
+        }
+        catch (Exception exception) when (exception is FormatException or System.Xml.XmlException or IOException)
+        {
+            failure = exception.Message;
+            return new HashSet<string>(StringComparer.Ordinal);
+        }
+    }
+
+    private static IReadOnlySet<string> FindAffectedTestProjects(
+        IEnumerable<(string Path, string Content)> projectFiles,
+        IReadOnlyList<string> changedPaths,
+        out string? failure)
+    {
+        try
+        {
+            var projects = projectFiles
+                .Select(static file => ParseProject(file.Path, file.Content))
                 .ToDictionary(static project => project.Path, StringComparer.Ordinal);
             var affected = projects.Values
                 .Where(project => project.InputPatterns.Any(pattern => changedPaths.Any(path => EngineeringInputGlob.IsMatch(pattern, path))))
