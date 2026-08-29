@@ -6,6 +6,7 @@
    digest: Nilpotent jet trace and log derivative reduce to one weighted pole. -/
 
 import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
+import Mathlib.Analysis.Meromorphic.Order
 import Mathlib.LinearAlgebra.Matrix.Block
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 
@@ -20,14 +21,16 @@ import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
      twisted xi reading; it supplies no matrix-jet carrier or pencil primitive.
    * Pinned Mathlib supplies `Matrix.det_of_lowerTriangular`, preservation of
      block triangularity by inverse, `Matrix.mul_nonsing_inv`, and
-     `logDeriv_fun_pow`. These are applied directly. -/
+     `logDeriv_fun_pow`. Its `meromorphicOrderAt` definition expresses a
+     simple pole by order `-1`. These are applied directly. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S3.Analytic.Adelic.JetResolventSemisimplification
 
-open scoped BigOperators Matrix
+open Filter
+open scoped BigOperators Matrix Topology
 
 /-- The source lower nilpotent shift on a finite jet. -/
 def nilpotentJetShift (m : ℕ) : Matrix (Fin m) (Fin m) ℂ :=
@@ -100,19 +103,60 @@ private theorem jetPencil_logDeriv_det (m : ℕ) (rho s : ℂ) :
   rw [hdet, logDeriv_fun_pow (by fun_prop)]
   simp [logDeriv_apply, div_eq_mul_inv]
 
+private theorem jetPencil_trace_punctured (m : ℕ) (rho : ℂ) :
+    ∀ᶠ z in 𝓝[≠] rho,
+      Matrix.trace (jetPencil m rho z)⁻¹ =
+        (z - rho) ^ (-1 : ℤ) • (m : ℂ) := by
+  filter_upwards [self_mem_nhdsWithin] with z hz
+  rw [jetPencil_trace_nonsing_inv m rho z (by simpa using hz)]
+  simp [zpow_neg, zpow_one, div_eq_mul_inv, mul_comm]
+
+private theorem jetPencil_trace_meromorphic (m : ℕ) (rho : ℂ) :
+    MeromorphicAt (fun z => Matrix.trace (jetPencil m rho z)⁻¹) rho :=
+  MeromorphicAt.iff_eventuallyEq_zpow_smul_analyticAt.mpr
+    ⟨(-1 : ℤ), fun _ => (m : ℂ), analyticAt_const,
+      jetPencil_trace_punctured m rho⟩
+
+private theorem jetPencil_trace_simple_pole (m : ℕ) (hm : 0 < m) (rho : ℂ) :
+    meromorphicOrderAt (fun z => Matrix.trace (jetPencil m rho z)⁻¹) rho =
+      (-1 : ℤ) := by
+  have hm_complex : (m : ℂ) ≠ 0 := by
+    exact_mod_cast Nat.ne_of_gt hm
+  exact (meromorphicOrderAt_eq_int_iff (jetPencil_trace_meromorphic m rho)).mpr
+    ⟨fun _ => (m : ℂ), analyticAt_const, hm_complex,
+      jetPencil_trace_punctured m rho⟩
+
+private theorem jetPencil_trace_residue (m : ℕ) (rho : ℂ) :
+    Tendsto
+      (fun z => (z - rho) * Matrix.trace (jetPencil m rho z)⁻¹)
+      (𝓝[≠] rho) (𝓝 (m : ℂ)) := by
+  apply tendsto_const_nhds.congr'
+  filter_upwards [self_mem_nhdsWithin] with z hz
+  rw [jetPencil_trace_nonsing_inv m rho z (by simpa using hz)]
+  exact (mul_div_cancel₀ (m : ℂ) (sub_ne_zero.mpr (by simpa using hz))).symm
+
 /--
-The trace resolvent and the logarithmic determinant derivative of a length-`m`
-nilpotent jet both reduce to the simple pole of weight `m`. The final public
-conjunct exposes the jet-to-mass identification between the two channels.
+For a nonempty length-`m` nilpotent jet, the trace resolvent and logarithmic
+determinant derivative equal `m / (s - rho)` off the eigenvalue. The trace
+resolvent is meromorphic there, has exact order `-1`, and has residue `m`.
+
+The positivity hypothesis is necessary for the simple-pole clause: at `m = 0`
+the pencil has determinant one and trace resolvent zero, hence no pole.
 -/
-theorem jet_resolvent_semisimplification (m : ℕ) (rho s : ℂ) (hs : s ≠ rho) :
+theorem jet_resolvent_semisimplification
+    (m : ℕ) (hm : 0 < m) (rho s : ℂ) (hs : s ≠ rho) :
     Matrix.trace (jetPencil m rho s)⁻¹ = (m : ℂ) / (s - rho) ∧
       logDeriv (fun z => (jetPencil m rho z).det) s = (m : ℂ) / (s - rho) ∧
-      Matrix.trace (jetPencil m rho s)⁻¹ =
-        logDeriv (fun z => (jetPencil m rho z).det) s := by
+      MeromorphicAt (fun z => Matrix.trace (jetPencil m rho z)⁻¹) rho ∧
+      meromorphicOrderAt (fun z => Matrix.trace (jetPencil m rho z)⁻¹) rho =
+        (-1 : ℤ) ∧
+      Tendsto
+        (fun z => (z - rho) * Matrix.trace (jetPencil m rho z)⁻¹)
+        (𝓝[≠] rho) (𝓝 (m : ℂ)) := by
   have htrace := jetPencil_trace_nonsing_inv m rho s hs
   have hlog := jetPencil_logDeriv_det m rho s
-  exact ⟨htrace, hlog, htrace.trans hlog.symm⟩
+  exact ⟨htrace, hlog, jetPencil_trace_meromorphic m rho,
+    jetPencil_trace_simple_pole m hm rho, jetPencil_trace_residue m rho⟩
 
 #print axioms jet_resolvent_semisimplification
 

@@ -24,15 +24,18 @@ internal sealed class JetResolventSemisimplificationDocument
                         + "below the diagonal and zero elsewhere. The named "
                         + "jetPencil is (s-rho) times the identity minus that shift.")),
                 Paragraph(Text(
-                    "The displayed non-pole premise is the exact invertibility domain of "
-                        + "the source resolvent. The logarithmic derivative is Mathlib's "
-                        + "branch-independent deriv(f)/f operation, so no principal-log "
-                        + "branch condition is introduced.")),
+                    "The theorem assumes positive length, so the jet is nonempty and its "
+                        + "weight is nonzero. The excluded length-zero pencil has determinant "
+                        + "one and trace resolvent zero, and therefore has no pole. The "
+                        + "separate premise s != rho is exactly the pointwise invertibility "
+                        + "domain for a positive-length pencil.")),
                 Paragraph(Text(
                     "Lower triangularity makes the pencil determinant (s-rho)^m and every "
                         + "diagonal inverse entry (s-rho)^(-1). Summing the diagonal and "
-                        + "differentiating the determinant therefore give the same simple "
-                        + "pole of weight m, exposed again by the final conjunct."))),
+                        + "differentiating the determinant give the two displayed identities. "
+                        + "The punctured identity also proves that the trace resolvent is "
+                        + "meromorphic with order minus one and that multiplication by s-rho "
+                        + "converges to the nonzero residue m."))),
             DescribeRole.Theorem))));
 
     private static Formula.BoundVariable Bound(string name, Formula domain) =>
@@ -73,11 +76,39 @@ internal sealed class JetResolventSemisimplificationDocument
         Formula simplePole = new Formula.Fraction(
             length,
             Seq(point, Sp, Minus, Sp, zero));
+        Formula traceFunction = Lambda(
+            variable,
+            Call("trace", new Formula.Power(
+                Call("jetPencil", length, zero, variable),
+                Seq(Minus, D(1)))));
+        Formula meromorphic = Call("MeromorphicAt", traceFunction, zero);
+        Formula poleOrder = EqualTo(
+            Call("meromorphicOrderAt", traceFunction, zero),
+            Seq(Minus, D(1)));
+        Formula puncturedNeighborhood = Call(
+            "nhdsWithin",
+            zero,
+            Seq(complex, Sp, Setminus, Sp, OpenBrace, zero, CloseBrace));
+        Formula residueFunction = Lambda(
+            variable,
+            Seq(
+                Grp(Seq(variable, Sp, Minus, Sp, zero)), Sp, Times, Sp,
+                Call("trace", new Formula.Power(
+                    Call("jetPencil", length, zero, variable),
+                    Seq(Minus, D(1))))));
+        Formula residueLimit = Call(
+            "Tendsto",
+            residueFunction,
+            puncturedNeighborhood,
+            Call("nhds", length));
         Formula conclusions = And(
             EqualTo(traceResolvent, simplePole),
             And(
                 EqualTo(logarithmicDerivative, simplePole),
-                EqualTo(traceResolvent, logarithmicDerivative)));
+                And(meromorphic, And(poleOrder, residueLimit))));
+        Formula hypotheses = And(
+            new Formula.Relation(D(0), FormulaRelationOperator.LessThan, length),
+            NotEqualTo(point, zero));
 
         return new Formula.BindMany(
             FormulaQuantifier.ForAll,
@@ -86,6 +117,6 @@ internal sealed class JetResolventSemisimplificationDocument
                 Bound("rho", complex),
                 Bound("s", complex),
             ],
-            Implies(NotEqualTo(point, zero), conclusions));
+            Implies(hypotheses, conclusions));
     }
 }
