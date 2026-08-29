@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.Budget;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.TestFunctions;
 
 internal sealed class WhiteToHaarIdentityDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Weil/Budget/WhiteToHaarIdentity.";
+    private const string Prefix = "D5/S3/Weil/TestFunctions/WhiteToHaarIdentity.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Resolvent-weighted Cayley compactification carries normalized white spectrum to "

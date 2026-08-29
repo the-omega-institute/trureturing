@@ -1,6 +1,6 @@
-/- GID: D5/S3/Weil/Budget/WhiteToHaarIdentity
+/- GID: D5/S3/Weil/TestFunctions/WhiteToHaarIdentity
    generality: I
-   mirror-B: D5/B/S3/Weil/Budget/WhiteToHaarIdentity
+   mirror-B: D5/B/S3/Weil/TestFunctions/WhiteToHaarIdentity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Resolvent-weighted white spectrum becomes Haar spectrum under Cayley transport. -/
@@ -29,7 +29,7 @@ noncomputable section
 open Filter Function MeasureTheory Set Topology
 open scoped ENNReal NNReal
 
-namespace D5.S3.Weil.Budget.WhiteToHaarIdentity
+namespace D5.S3.Weil.TestFunctions.WhiteToHaarIdentity
 
 open D5.S3.Weil.Budget.FullCirclePrimalAttainment
 open D5.S3.Weil.TestFunctions.CayleyLaguerreMomentTomography
@@ -355,4 +355,4 @@ theorem white_to_haar_identity
 #print axioms resolventCompactification
 #print axioms white_to_haar_identity
 
-end D5.S3.Weil.Budget.WhiteToHaarIdentity
+end D5.S3.Weil.TestFunctions.WhiteToHaarIdentity

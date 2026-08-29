@@ -8,7 +8,7 @@ Resolvent-weighted Cayley compactification carries normalized white spectrum to 
 
 $$m_{0}: \operatorname{Measure}(\mathbb{R}) = \operatorname{ofReal}(\frac{1}{2 \cdot \pi}) \cdot \operatorname{volume}(\mathbb{R}).$$
 
-*Formalization.* `D5/S3/Weil/Budget/WhiteToHaarIdentity.normalizedLebesgueSpectrum` (`✓ std3`).
+*Formalization.* `D5/S3/Weil/TestFunctions/WhiteToHaarIdentity.normalizedLebesgueSpectrum` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -20,7 +20,7 @@ The source white spectrum is constructed as Lebesgue measure on the real line sc
 
 $$\forall a: \mathbb{R}, h: a \neq 0, xi: \mathbb{R},\\{}\operatorname{cayleyCircle}(a, h, xi) = \operatorname{ofConjDivSelf}((xi: \operatorname{Complex}()) - i \cdot a): Circle.$$
 
-*Formalization.* `D5/S3/Weil/Budget/WhiteToHaarIdentity.cayleyCircle` (`✓ std3`).
+*Formalization.* `D5/S3/Weil/TestFunctions/WhiteToHaarIdentity.cayleyCircle` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -32,7 +32,7 @@ The map is the canonical conjugate-over-self circle point. Its nonzero scale pre
 
 $$\forall a: \mathbb{R}, h: a \neq 0, \nu: \operatorname{Measure}(\mathbb{R}),\\{}\operatorname{resolventCompactification}(a, h, \nu) = \operatorname{map}(\operatorname{cayleyCircle}(a, h), \operatorname{withDensity}(\nu, \operatorname{lambda}(xi: \mathbb{R}, \operatorname{ofReal}(\frac{1}{\operatorname{sq}(xi) + \operatorname{sq}(a)})))).$$
 
-*Formalization.* `D5/S3/Weil/Budget/WhiteToHaarIdentity.resolventCompactification` (`✓ std3`).
+*Formalization.* `D5/S3/Weil/TestFunctions/WhiteToHaarIdentity.resolventCompactification` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -44,7 +44,7 @@ Compactification first weights the source measure by the reciprocal quadratic re
 
 $$\forall a: \mathbb{R}, lambda: ENNReal, \nu: \operatorname{Measure}(\mathbb{R}),\\{}0 < a \Rightarrow\\{}(\operatorname{resolventCompactification}(a, m_{0}) = \operatorname{ofReal}(\frac{1}{2 \cdot a}) \cdot m_{T}) \land\\{}(\operatorname{resolventCompactification}(a, lambda \cdot m_{0}) = (lambda \cdot \operatorname{ofReal}(\frac{1}{2 \cdot a})) \cdot m_{T}) \land\\{}((lambda \cdot m_{0} \leq \nu) \Leftrightarrow ((lambda \cdot \operatorname{ofReal}(\frac{1}{2 \cdot a})) \cdot m_{T} \leq \operatorname{resolventCompactification}(a, \nu))) \land\\{}(\operatorname{resolventCompactification}(\frac{1}{2}, lambda \cdot m_{0}) = lambda \cdot m_{T}).$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Weil/Budget/WhiteToHaarIdentity.white_to_haar_identity` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/TestFunctions/WhiteToHaarIdentity.white_to_haar_identity` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -58,9 +58,9 @@ At scale one half the coefficient is exactly one, giving the final scale-free co
 
 ## References
 
-- Truth anchor: `D5/S3/Weil/Budget/WhiteToHaarIdentity.cayleyCircle`
-- Truth anchor: `D5/S3/Weil/Budget/WhiteToHaarIdentity.normalizedLebesgueSpectrum`
-- Truth anchor: `D5/S3/Weil/Budget/WhiteToHaarIdentity.resolventCompactification`
-- Truth anchor: `D5/S3/Weil/Budget/WhiteToHaarIdentity.white_to_haar_identity`
-- Dependency: [D5/S3/Weil/Budget/FullCirclePrimalAttainment](FullCirclePrimalAttainment.md)
-- Dependency: [D5/S3/Weil/TestFunctions/CayleyLaguerreMomentTomography](../TestFunctions/CayleyLaguerreMomentTomography.md)
+- Truth anchor: `D5/S3/Weil/TestFunctions/WhiteToHaarIdentity.cayleyCircle`
+- Truth anchor: `D5/S3/Weil/TestFunctions/WhiteToHaarIdentity.normalizedLebesgueSpectrum`
+- Truth anchor: `D5/S3/Weil/TestFunctions/WhiteToHaarIdentity.resolventCompactification`
+- Truth anchor: `D5/S3/Weil/TestFunctions/WhiteToHaarIdentity.white_to_haar_identity`
+- Dependency: [D5/S3/Weil/Budget/FullCirclePrimalAttainment](../Budget/FullCirclePrimalAttainment.md)
+- Dependency: [D5/S3/Weil/TestFunctions/CayleyLaguerreMomentTomography](CayleyLaguerreMomentTomography.md)
