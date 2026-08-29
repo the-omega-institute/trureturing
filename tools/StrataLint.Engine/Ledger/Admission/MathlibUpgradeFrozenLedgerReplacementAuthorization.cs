@@ -51,9 +51,10 @@ internal sealed class FrozenLedgerReplacementAuthorization(
     public bool IsAuthorized(FrozenLedgerReplacementAuthorizationContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
+        // Ledger v5 是唯一 schema,legacy 全量替换的授权已随解码器一并退役。
+        // 非增量替换此后没有合法授权者:fail-closed 拒绝,要放行须先立新授权。
         return context.Recognition is FrozenLedgerIncrementalReplacementRecognition
-            ? incrementalAuthorization.IsAuthorized(context)
-            : LegacyFrozenLedgerReplacementAuthorization.Instance.IsAuthorized(context);
+            && incrementalAuthorization.IsAuthorized(context);
     }
 }
 
