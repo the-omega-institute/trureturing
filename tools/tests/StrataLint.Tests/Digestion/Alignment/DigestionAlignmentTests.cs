@@ -614,6 +614,74 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
+    public void ProjectedStatusKeepsSettledStaleReceiptIdentityAndAlignmentByteIdempotent()
+    {
+        var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
+        var currentBytes = Encoding.UTF8.GetBytes(
+            "# GICT\n\n**定理 1.1(A)**。rewritten。\n\n**定理 1.2(B)**。new。\n");
+        var oldAtom = Assert.Single(GictAtomizer.Atomize(
+            oldBytes,
+            DigestionTestSupport.Rules).Claims);
+        var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
+        var original = Ledger([], Entry("old-receipt", oldAtom));
+        var firstPlan = DigestionIngestor.Plan(
+            original,
+            Snapshot(currentBytes, [oldCapture]),
+            original);
+        var settled = firstPlan.Document;
+        var snapshot = Snapshot(currentBytes, firstPlan.CasObjects.Prepend(oldCapture));
+        var settledAlignment = DigestionLedgerAligner.Evaluate(
+            settled,
+            snapshot,
+            settled,
+            DigestionAlignmentMode.Admission);
+        var source = Assert.Single(settled.RequireDigestionSources());
+        var projected = settled.WithDigestionSources(
+        [
+            source with
+            {
+                Entries = source.Entries.Select(entry => entry.AtomId == "old-receipt"
+                    ? entry with
+                    {
+                        ProjectedStatus = new DigestionStatus(
+                            DigestionMigrationState.Partial,
+                            DigestionTruthState.Closed),
+                    }
+                    : entry).ToImmutableArray(),
+            },
+        ]);
+
+        var projectedAlignment = DigestionLedgerAligner.Evaluate(
+            projected,
+            snapshot,
+            settled,
+            DigestionAlignmentMode.Admission);
+        var replay = DigestionIngestor.Plan(
+            projected,
+            snapshot,
+            settled);
+        var replayBytes = DirectoryLedgerTestSupport.Image(replay.Document);
+        var secondReplay = DigestionIngestor.Plan(
+            replay.Document,
+            snapshot,
+            settled);
+
+        Assert.Empty(projectedAlignment.Findings);
+        Assert.Empty(replay.Alignment.Findings);
+        Assert.Equal(
+            DigestionReceiptAlignment.Seen,
+            settledAlignment.AlignmentFor("old-receipt"));
+        Assert.Equal(
+            settledAlignment.AlignmentFor("old-receipt"),
+            projectedAlignment.AlignmentFor("old-receipt"));
+        Assert.Equal(
+            projectedAlignment.AlignmentFor("old-receipt"),
+            replay.Alignment.AlignmentFor("old-receipt"));
+        Assert.Empty(secondReplay.Alignment.Findings);
+        Assert.Equal(replayBytes, DirectoryLedgerTestSupport.Image(secondReplay.Document));
+    }
+
+    [Fact]
     public void IngestMigratesCasBackedBoundariesAgainstNewVolumeAndIsByteIdempotent()
     {
         var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");

@@ -6,24 +6,6 @@ namespace StrataLint.Tests;
 
 public sealed partial class MissionFileLoaderTests
 {
-    private const string NoveltyTaskBlock = """
-        /-- TASK D5-T0040
-            The novelty factor's machine-replayable measurement receipt contract is not installed. Until it lands, docs/MISSION.md must remain open(D5-T0040) and must not claim a complete worth score. -/
-        def missionNoveltyMeasurementTicket : Unit := ()
-        """;
-
-    private static readonly string GovernanceDeferrals = NoveltyTaskBlock + "\n" + """
-        /-- TASK D5-T0041
-            The dependency-readiness factor's machine-replayable measurement receipt contract is not installed. Until it lands, docs/MISSION.md must remain open(D5-T0041) and must not claim a complete worth score. -/
-        def missionDependencyReadinessMeasurementTicket : Unit := ()
-        /-- TASK D5-T0042
-            The structural-realization factor's machine-replayable measurement receipt contract is not installed. Until it lands, docs/MISSION.md must remain open(D5-T0042) and must not claim a complete worth score. -/
-        def missionStructuralRealizationMeasurementTicket : Unit := ()
-        /-- TASK D5-T0043
-            The receipt-potential factor's machine-replayable measurement receipt contract is not installed. Until it lands, docs/MISSION.md must remain open(D5-T0043) and must not claim a complete worth score. -/
-        def missionReceiptPotentialMeasurementTicket : Unit := ()
-        """ + "\n";
-
     private static readonly string ValidMission = """
         # Mission
 
@@ -40,10 +22,10 @@ public sealed partial class MissionFileLoaderTests
             "negative-knowledge-equals-positive-results"
           ],
           "worth_vector": {
-            "novelty": { "state": "open", "case_id": "D5-T0040" },
-            "dependency_readiness": { "state": "open", "case_id": "D5-T0041" },
-            "structural_realization": { "state": "open", "case_id": "D5-T0042" },
-            "receipt_potential": { "state": "open", "case_id": "D5-T0043" }
+            "novelty": { "state": "open" },
+            "dependency_readiness": { "state": "open" },
+            "structural_realization": { "state": "open" },
+            "receipt_potential": { "state": "open" }
           },
         """ + FrontierEligibilityJson + """
           "selection": {
@@ -86,7 +68,7 @@ public sealed partial class MissionFileLoaderTests
     public void UnknownFactorCannotBeSilentlyFilledWithANumericDefault()
     {
         var unknownFactor = ValidMission.Replace(
-            "\"novelty\": { \"state\": \"open\", \"case_id\": \"D5-T0040\" }",
+            "\"novelty\": { \"state\": \"open\" }",
             "\"unknown\": { \"state\": \"measured\", \"value\": 1, \"receipt_ref\": \"receipt:invented\" }",
             StringComparison.Ordinal);
 
@@ -100,8 +82,8 @@ public sealed partial class MissionFileLoaderTests
     public void OpenFactorCannotCarryASilentNumericDefault()
     {
         var defaulted = ValidMission.Replace(
-            "{ \"state\": \"open\", \"case_id\": \"D5-T0040\" }",
-            "{ \"state\": \"open\", \"case_id\": \"D5-T0040\", \"value\": 1 }",
+            "{ \"state\": \"open\" }",
+            "{ \"state\": \"open\", \"value\": 1 }",
             StringComparison.Ordinal);
 
         var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
@@ -111,311 +93,32 @@ public sealed partial class MissionFileLoaderTests
     }
 
     [Fact]
-    public void DanglingOpenCaseIdIsRejected()
+    public void LegacyOpenCaseIdIsRejectedAsUnknownProperty()
     {
-        var dangling = ValidMission.Replace("D5-T0040", "D5-T9999", StringComparison.Ordinal);
+        var legacy = ValidMission.Replace(
+            "\"novelty\": { \"state\": \"open\" }",
+            "\"novelty\": { \"state\": \"open\", \"case_id\": \"D5-T0040\" }",
+            StringComparison.Ordinal);
 
         var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
-            MissionFileLoader.Load(Snapshot(dangling)));
+            MissionFileLoader.Load(Snapshot(legacy)));
 
-        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
+        Assert.Equal(MissionLoadErrorCode.InvalidWorthState, invalid.Error.Code);
+        Assert.Contains("unknown, duplicate, or missing properties", invalid.Error.Message, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void NonBlockTaskMarkerCannotSatisfyAnOpenCaseReference()
-    {
-        var target = ReplaceNoveltyTaskBlock(
-            "def staleMissionMarker : String := \"TASK D5-T0040\"");
-
-        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
-            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
-
-        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
-        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
-        Assert.Contains("no active", invalid.Error.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void ProseTaskMarkerCannotSatisfyAnOpenCaseReference()
-    {
-        var target = ReplaceNoveltyTaskBlock("""
-            /-- This prose mentions TASK D5-T0040 but does not begin with it. -/
-            def missionNoveltyMeasurementTicket : Unit := ()
-            """);
-
-        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
-            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
-
-        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
-        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void NonDocumentationCommentTaskMarkerCannotSatisfyAnOpenCaseReference()
-    {
-        var target = ReplaceNoveltyTaskBlock("""
-            /- TASK D5-T0040
-               This is a regular block comment, not a documentation-comment TASK block. -/
-            def missionNoveltyMeasurementTicket : Unit := ()
-            """);
-
-        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
-            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
-
-        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
-        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void TaskBlockDisabledByAnOuterBlockCommentCannotSatisfyAnOpenCaseReference()
-    {
-        var target = ReplaceNoveltyTaskBlock("/-\n" + NoveltyTaskBlock + "\n-/");
-
-        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
-            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
-
-        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
-        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void FiveDigitTaskCodeCannotSatisfyAFourDigitOpenCaseReference()
-    {
-        var target = ReplaceNoveltyTaskBlock(NoveltyTaskBlock.Replace(
-            "D5-T0040",
-            "D5-T00400",
-            StringComparison.Ordinal));
-
-        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
-            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
-
-        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
-        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void LetterSuffixedTaskCodeCannotSatisfyAFourDigitOpenCaseReference()
-    {
-        var target = ReplaceNoveltyTaskBlock(NoveltyTaskBlock.Replace(
-            "D5-T0040",
-            "D5-T0040foo",
-            StringComparison.Ordinal));
-
-        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
-            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
-
-        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
-        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void UnderscoreSuffixedTaskCodeCannotSatisfyAFourDigitOpenCaseReference()
-    {
-        var target = ReplaceNoveltyTaskBlock(NoveltyTaskBlock.Replace(
-            "D5-T0040",
-            "D5-T0040_x",
-            StringComparison.Ordinal));
-
-        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
-            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
-
-        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
-        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void TaskBlockTextInsideAnEscapedStringLiteralCannotSatisfyAnOpenCaseReference()
-    {
-        var target = ReplaceNoveltyTaskBlock("""
-            def staleMissionMarker : String := "escaped quote: \"
-            /-- TASK D5-T0040
-                This text is inside a string literal. -/"
-            """);
-
-        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
-            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
-
-        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
-        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void DoubleQuoteCharacterLiteralDoesNotHideTheFollowingTaskBlock()
-    {
-        var target = ReplaceNoveltyTaskBlock(
-            "def quote : Char := '\"'\n" + NoveltyTaskBlock);
-
-        Assert.IsType<MissionLoadOutcome.Loaded>(
-            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
-    }
-
-    [Fact]
-    public void AmbiguousCharacterLiteralIntroducerCannotRevealATaskBlock()
-    {
-        var target = ReplaceNoveltyTaskBlock("""
-            def staleMissionMarker := identifier'"
-            /-- TASK D5-T0040
-                This text follows an ambiguous character-literal introducer. -/
-            """);
-
-        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
-            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
-
-        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
-        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void TaskBlockTextInsideAZeroHashRawStringCannotSatisfyAnOpenCaseReference()
-    {
-        var target = ReplaceNoveltyTaskBlock("""
-            def staleMissionMarker : String := r"
-            /-- TASK D5-T0040
-                This text is inside a zero-hash raw string. -/"
-            """);
-
-        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
-            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
-
-        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
-        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void TaskBlockTextInsideAMultiHashRawStringCannotSatisfyAnOpenCaseReference()
-    {
-        var target = ReplaceNoveltyTaskBlock("""
-            def staleMissionMarker : String := r##"
-            An unescaped " does not close this raw string.
-            /-- TASK D5-T0040
-                This text is inside a multi-hash raw string. -/
-            "##
-            """);
-
-        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
-            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
-
-        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
-        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void TaskBlockTextInsideANumeralAdjacentRawStringCannotSatisfyAnOpenCaseReference()
-    {
-        var target = ReplaceNoveltyTaskBlock("""
-            def staleMissionMarker := 1r##"
-            An unescaped " does not close this raw string.
-            /-- TASK D5-T0040
-                This text is inside a numeral-adjacent raw string. -/
-            "## -- " keeps the legacy scanner synchronized after the raw terminator.
-            """);
-
-        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
-            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
-
-        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
-        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void TaskBlockTextInsideAnInterpolatedStringCannotSatisfyAnOpenCaseReference()
-    {
-        var target = ReplaceNoveltyTaskBlock("""
-            def staleMissionMarker : String := s!"{show Char from '"'}
-            /-- TASK D5-T0040
-                This text is inside an interpolated string. -/"
-            """);
-
-        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
-            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
-
-        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
-        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void TaskBlockTextInsideAGuillemetIdentifierCannotSatisfyAnOpenCaseReference()
-    {
-        var target = ReplaceNoveltyTaskBlock("""
-            def «
-            /-- TASK D5-T0040
-                This text is inside a guillemet identifier. -/
-            » : Unit := ()
-            """);
-
-        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
-            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
-
-        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
-        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void CommentDelimiterInsideALineCommentDoesNotHideTheFollowingTaskBlock()
-    {
-        var target = ReplaceNoveltyTaskBlock("-- /-\n" + NoveltyTaskBlock);
-
-        Assert.IsType<MissionLoadOutcome.Loaded>(
-            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
-    }
-
-    [Fact]
-    public void TaskBlockNestedInsideAModuleDocumentationCommentCannotSatisfyAnOpenCaseReference()
-    {
-        var target = ReplaceNoveltyTaskBlock("""
-            /-!
-            /-- TASK D5-T0040
-                This documentation comment is nested inside a module documentation comment. -/
-            -/
-            """);
-
-        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
-            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
-
-        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
-        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
-    }
-
-    [Theory]
-    [InlineData("D5-T0040")]
-    [InlineData("D5-T0041")]
-    [InlineData("D5-T0042")]
-    [InlineData("D5-T0043")]
-    public void LeanDerivedGovernanceTaskBlocksAreEachResolvedExactlyOnce(string caseId)
-    {
-        Assert.IsType<MissionLoadOutcome.Loaded>(
-            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), GovernanceDeferrals));
-        var exact = Assert.IsType<TaskBlockScanResult.Exact>(
-            TaskBlockReferenceSyntax.ScanDocumentationCommentTaskStarts(
-                GovernanceDeferrals,
-                caseId));
-        Assert.Equal(1, exact.Count);
-    }
-
-    [Fact]
-    public void DuplicateCanonicalTaskBlocksCannotSatisfyAnOpenCaseReference()
-    {
-        var target = ReplaceNoveltyTaskBlock(NoveltyTaskBlock + "\n" + NoveltyTaskBlock);
-
-        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
-            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
-
-        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
-        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
-        Assert.Contains("2 active", invalid.Error.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void ReplayProducesByteIdenticalParsedContractAndDerivedOrder()
+    public void ReplayProducesByteIdenticalParsedContractAndDerivedOrderWithoutCaseId()
     {
         var snapshot = Snapshot(ValidMission);
         var first = Assert.IsType<MissionLoadOutcome.Loaded>(MissionFileLoader.Load(snapshot));
         var second = Assert.IsType<MissionLoadOutcome.Loaded>(MissionFileLoader.Load(snapshot));
+        var firstBytes = MissionFileLoader.CanonicalBytes(first.Policy);
+        var secondBytes = MissionFileLoader.CanonicalBytes(second.Policy);
 
-        Assert.Equal(
-            MissionFileLoader.CanonicalBytes(first.Policy),
-            MissionFileLoader.CanonicalBytes(second.Policy));
-        using var canonical = JsonDocument.Parse(MissionFileLoader.CanonicalBytes(first.Policy));
+        Assert.Equal(firstBytes, secondBytes);
+        Assert.DoesNotContain("case_id", Encoding.UTF8.GetString(firstBytes), StringComparison.Ordinal);
+        using var canonical = JsonDocument.Parse(firstBytes);
         var northStar = canonical.RootElement.GetProperty("north_star");
         Assert.Equal("two hearts", northStar.GetProperty("target").GetString());
         Assert.Equal("aspirational-not-direct", northStar.GetProperty("policy").GetString());
@@ -428,6 +131,9 @@ public sealed partial class MissionFileLoaderTests
                 WorthFactorId.ReceiptPotential,
             },
             first.Policy.WorthVector.Factors.Select(static factor => factor.Id));
+        Assert.All(
+            first.Policy.WorthVector.Factors,
+            factor => Assert.IsType<WorthFactorState.Open>(factor.State));
         Assert.Equal(
             WorthSelectionOrder.BootstrapEligibilityOrder,
             first.Policy.Selection.OrderKind);
@@ -450,10 +156,10 @@ public sealed partial class MissionFileLoaderTests
     public static TheoryData<string> RepositoryMissionCases => new()
     {
         "canonical",
-        "measured:novelty:D5-T0040",
-        "measured:dependency_readiness:D5-T0041",
-        "measured:structural_realization:D5-T0042",
-        "measured:receipt_potential:D5-T0043",
+        "measured:novelty",
+        "measured:dependency_readiness",
+        "measured:structural_realization",
+        "measured:receipt_potential",
         "measured:all",
         "north_star:target",
         "north_star:policy",
@@ -479,7 +185,6 @@ public sealed partial class MissionFileLoaderTests
         "schema:selection:duplicate",
         "schema:selection:missing",
         "tie_break",
-        "ticket:missing-task-block",
     };
 
     [Theory]
@@ -521,6 +226,9 @@ public sealed partial class MissionFileLoaderTests
             ["SorryCountOptimization", "TrivialLemmaAccumulation", "CitationChasing"],
             loaded.Policy.Prohibitions.Select(static value => value.ToString()));
         Assert.All(loaded.Policy.Prohibitions, static value => Assert.IsNotType<string>((object)value));
+        Assert.DoesNotContain(
+            loaded.Policy.FrontierEligibility,
+            static entry => entry.SourceRef == "D5/X_Frontier/GovernanceTicket");
         Assert.Contains(
             loaded.Policy.FrontierEligibility,
             static entry => entry.SourceRef == "D5/X_Frontier/GoldenUnitsUFD"
@@ -537,11 +245,11 @@ public sealed partial class MissionFileLoaderTests
         if (scenario.StartsWith("measured:", StringComparison.Ordinal)
             && scenario is not "measured:all")
         {
-            var parts = scenario.Split(':');
+            var factor = scenario["measured:".Length..];
             return Case(
-                WithMeasuredFactor(ValidMission, parts[1], parts[2]),
+                WithMeasuredFactor(ValidMission, factor),
                 MissionLoadErrorCode.InvalidWorthState,
-                parts[2]);
+                $"worth_vector.{factor} measured is fail-closed in P0");
         }
 
         if (scenario.StartsWith("value_order:", StringComparison.Ordinal))
@@ -573,7 +281,7 @@ public sealed partial class MissionFileLoaderTests
             "measured:all" => Case(
                 AllMeasuredMission(),
                 MissionLoadErrorCode.InvalidWorthState,
-                "D5-T0040"),
+                "worth_vector.novelty measured is fail-closed in P0"),
             "north_star:target" => ChangedCase(
                 ValidMission.Replace("\"two hearts\"", "\"three hearts\"", StringComparison.Ordinal),
                 MissionLoadErrorCode.InvalidSchema),
@@ -601,13 +309,6 @@ public sealed partial class MissionFileLoaderTests
                     "display order",
                     StringComparison.Ordinal),
                 MissionLoadErrorCode.InvalidSelection),
-            "ticket:missing-task-block" => Case(
-                ValidMission,
-                MissionLoadErrorCode.DanglingCaseReference,
-                "D5-T0040",
-                ReplaceNoveltyTaskBlock(
-                    "/-- receipt contract is not a TASK block -/\n"
-                    + "def missionNoveltyMeasurementTicket : Unit := ()")),
             _ => throw new ArgumentOutOfRangeException(nameof(scenario), scenario, null),
         };
     }
@@ -638,24 +339,24 @@ public sealed partial class MissionFileLoaderTests
         MissionLoadErrorCode ErrorCode,
         string? MessageFragment);
 
-    private static string WithMeasuredFactor(string mission, string factor, string caseId) =>
+    private static string WithMeasuredFactor(string mission, string factor) =>
         mission.Replace(
-            $"\"{factor}\": {{ \"state\": \"open\", \"case_id\": \"{caseId}\" }}",
+            $"\"{factor}\": {{ \"state\": \"open\" }}",
             $"\"{factor}\": {{ \"state\": \"measured\", \"value\": 1.25, \"receipt_ref\": \"receipt:invented:{factor}\" }}",
             StringComparison.Ordinal);
 
     private static string AllMeasuredMission()
     {
         var mission = ValidMission;
-        foreach (var (factor, caseId) in new[]
+        foreach (var factor in new[]
                  {
-                     ("novelty", "D5-T0040"),
-                     ("dependency_readiness", "D5-T0041"),
-                     ("structural_realization", "D5-T0042"),
-                     ("receipt_potential", "D5-T0043"),
+                     "novelty",
+                     "dependency_readiness",
+                     "structural_realization",
+                     "receipt_potential",
                  })
         {
-            mission = WithMeasuredFactor(mission, factor, caseId);
+            mission = WithMeasuredFactor(mission, factor);
         }
 
         return mission.Replace(
@@ -753,21 +454,11 @@ public sealed partial class MissionFileLoaderTests
         ReviewRegressionTests.RunGit(repository.Path, "init", "--quiet");
         WriteFile(
             repository.Path,
-            "D5/X_Frontier/GovernanceDeferrals.lean",
-            Encoding.UTF8.GetBytes(target ?? GovernanceDeferrals));
+            "D5/X_Frontier/GovernanceTicket.lean",
+            Encoding.UTF8.GetBytes(target ?? "def governanceTicket : Unit := ()\n"));
         WriteFile(repository.Path, MissionFileLoader.RelativePath, mission);
         ReviewRegressionTests.RunGit(repository.Path, "add", ".");
         return MissionFileLoader.LoadRepository(repository.Path);
-    }
-
-    private static string ReplaceNoveltyTaskBlock(string replacement)
-    {
-        var result = GovernanceDeferrals.Replace(
-            NoveltyTaskBlock,
-            replacement,
-            StringComparison.Ordinal);
-        Assert.NotEqual(GovernanceDeferrals, result);
-        return result;
     }
 
     private static void WriteFile(string root, string relativePath, byte[] contents)
@@ -782,8 +473,8 @@ public sealed partial class MissionFileLoaderTests
         var entries = new List<RawRepositoryEntry>
         {
             RawRepositoryEntry.FromText(
-                "D5/X_Frontier/GovernanceDeferrals.lean",
-                GovernanceDeferrals),
+                "D5/X_Frontier/GovernanceTicket.lean",
+                "def governanceTicket : Unit := ()\n"),
         };
         if (mission is not null)
         {
