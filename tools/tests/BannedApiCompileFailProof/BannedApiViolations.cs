@@ -1,4 +1,5 @@
 using System.Globalization;
+using ProcessAlias = System.Diagnostics.Process;
 
 namespace StrataLint.BannedApiCompileFailProof;
 
@@ -15,6 +16,10 @@ internal static class BannedApiViolations
         _ = Task.Delay(TimeSpan.Zero, TimeProvider.System); // banned-api-proof
         _ = Task.Delay(TimeSpan.Zero, TimeProvider.System, CancellationToken.None); // banned-api-proof
         _ = System.Diagnostics.Stopwatch.StartNew(); // banned-api-proof
+        _ = new ProcessAlias(); // banned-api-proof
+        _ = new System.Diagnostics.ProcessStartInfo(); // banned-api-proof
+        StrataLint.Engine.BoundedProcessRunner.Run(); // banned-api-proof
+        StrataLint.Tests.TestProcessRunner.Run(); // banned-api-proof
         return
         [
         DateTime.Now, // banned-api-proof

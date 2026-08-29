@@ -6,5 +6,15 @@
   <ItemGroup>
     <AdditionalFiles Include="../../Architecture/BannedSymbols.txt" />
     <AdditionalFiles Include="../../Architecture/BannedSymbols.Guid.txt" />
+    <AdditionalFiles Include="../../Architecture/BannedSymbols.ProcessCapability.txt" />
   </ItemGroup>
+  <Target Name="WriteProcessCapabilityProofStubs" BeforeTargets="CoreCompile">
+    <WriteLinesToFile File="obj/ProcessCapabilityProofStubs.cs"
+                      Lines="namespace StrataLint.Engine { internal static class BoundedProcessRunner { internal static void Run() { } } } namespace StrataLint.Tests { internal static class TestProcessRunner { internal static void Run() { } } }"
+                      Overwrite="true"
+                      Encoding="UTF-8" />
+    <ItemGroup>
+      <Compile Include="obj/ProcessCapabilityProofStubs.cs" />
+    </ItemGroup>
+  </Target>
 </Project>

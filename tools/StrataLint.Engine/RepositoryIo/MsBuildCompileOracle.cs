@@ -176,7 +176,7 @@ internal static class MsBuildCompileOracle
         .Split(['/', '\\'], StringSplitOptions.RemoveEmptyEntries)
         .Contains("..", StringComparer.Ordinal);
 
-    private static string CanonicalizePath(string path)
+    internal static string CanonicalizePath(string path)
     {
         var fullPath = Path.GetFullPath(path);
         var root = Path.GetPathRoot(fullPath)!;

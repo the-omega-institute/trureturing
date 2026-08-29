@@ -1,0 +1,17 @@
+<Project>
+  <PropertyGroup Condition="'$(ProcessCapabilityAudit)' == 'true'">
+    <ProcessCapabilityCanary>$(BaseIntermediateOutputPath)ProcessCapabilityAuditCanary.cs</ProcessCapabilityCanary>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(ProcessCapabilityAudit)' == 'true'">
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)../../Architecture/BannedSymbols.ProcessCapability.txt" />
+    <Compile Include="$(ProcessCapabilityCanary)" />
+  </ItemGroup>
+  <Target Name="WriteProcessCapabilityAuditCanary"
+          BeforeTargets="CoreCompile"
+          Condition="'$(ProcessCapabilityAudit)' == 'true'">
+    <WriteLinesToFile File="$(ProcessCapabilityCanary)"
+                      Lines="namespace StrataLint.Tests { internal static class ProcessCapabilityAuditCanary { internal static object Probe() { return new System.Diagnostics.Process()%3B } } }"
+                      Overwrite="true"
+                      Encoding="UTF-8" />
+  </Target>
+</Project>

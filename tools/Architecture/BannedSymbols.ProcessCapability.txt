@@ -1,0 +1,4 @@
+T:System.Diagnostics.Process;Use an injected fake instead of starting a real process from a unit test.
+T:System.Diagnostics.ProcessStartInfo;Use an injected fake instead of configuring a real process from a unit test.
+T:StrataLint.Engine.BoundedProcessRunner;Keep process execution outside the unit-test surface.
+T:StrataLint.Tests.TestProcessRunner;Keep process execution outside the unit-test surface.

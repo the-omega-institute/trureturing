@@ -7,13 +7,30 @@ public sealed class BannedApiCoverageTests
     [Fact]
     public void CompileFailProofMarksEveryExpectedDiagnosticLine()
     {
-        var path = Path.Combine(
-            RepositoryLayout.FindRoot(),
-            "tools", "tests", "BannedApiCompileFailProof",
-            "BannedApiViolations.cs");
+        var existingProof = TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+            "tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"));
 
-        Assert.Equal(27, File.ReadLines(path).Count(static line =>
-            line.Contains("// banned-api-proof", StringComparison.Ordinal)));
+        Assert.Equal(31, existingProof.Split('\n')
+            .Count(static line => line.Contains("// banned-api-proof", StringComparison.Ordinal)));
+    }
+
+    [Fact]
+    public void ProcessCapabilityBanNamesOnlyTheUnitProcessSurface()
+    {
+        var source = TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+            "tools/Architecture/BannedSymbols.ProcessCapability.txt"));
+        var symbols = source.Split('\n', StringSplitOptions.RemoveEmptyEntries)
+            .Select(static line => line.Split(';', 2)[0])
+            .ToHashSet(StringComparer.Ordinal);
+
+        Assert.True(symbols.SetEquals(new[]
+        {
+            "T:System.Diagnostics.Process",
+            "T:System.Diagnostics.ProcessStartInfo",
+            "T:StrataLint.Engine.BoundedProcessRunner",
+            "T:StrataLint.Tests.TestProcessRunner",
+        }));
+        Assert.DoesNotContain(symbols, static symbol => symbol.StartsWith("M:System.IO.", StringComparison.Ordinal));
     }
 
     [Fact]
