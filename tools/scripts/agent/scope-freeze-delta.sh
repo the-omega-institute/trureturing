@@ -17,7 +17,9 @@ git rev-parse --verify -q "$BASE" >/dev/null || { echo "FATAL: base 不可解析
 [ -d "$ACC" ] || { echo "FATAL: 不在仓根或无 $ACC" >&2; exit 2; }
 
 # 本分支新增的 Lean 模块(相对 BASE)
-mapfile -t NEWLEAN < <(git diff --name-only --diff-filter=A "$BASE"...HEAD -- 'D5/**/*.lean')
+NEWLEAN=()
+while IFS= read -r line; do [ -n "$line" ] && NEWLEAN+=("$line"); done \
+  < <(git diff --name-only --diff-filter=A "$BASE"...HEAD -- 'D5/**/*.lean')
 printf 'SCOPE new_lean_modules=%d\n' "${#NEWLEAN[@]}"
 for m in "${NEWLEAN[@]}"; do printf '  NEW_LEAN %s\n' "$m"; done
 
