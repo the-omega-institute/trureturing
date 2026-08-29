@@ -208,13 +208,19 @@ public static partial class FrozenLedger
                         preparation.BaseView,
                         catalog));
             var active = replacementAuthorized
-                ? new Dictionary<string, FrozenActiveEntry>(StringComparer.Ordinal)
+                ? preparation.BaseView.ActiveByCase
+                    .Where(item => preparation.Replacement!.RetainedModulePaths.Contains(
+                        item.Value.Material.RepoPath))
+                    .ToDictionary(
+                        static item => item.Key,
+                        static item => item.Value,
+                        StringComparer.Ordinal)
                 : preparation.BaseView.ActiveByCase.ToDictionary(
                     static item => item.Key,
                     static item => item.Value,
                     StringComparer.Ordinal);
             var allCaseIds = replacementAuthorized
-                ? new HashSet<string>(StringComparer.Ordinal)
+                ? active.Keys.ToHashSet(StringComparer.Ordinal)
                 : preparation.BaseView.AllCaseIds.ToHashSet(StringComparer.Ordinal);
             var activePathCases = active.Values.ToDictionary(
                 static entry => entry.Material.RepoPath,

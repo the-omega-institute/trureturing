@@ -66,24 +66,96 @@ public sealed partial class FrozenLedgerTests
     {
         var catalog = BuildCatalog(Module("A"), Module("B"));
         var legacyFiles = LegacyEventFiles(catalog, schemaVersion: 4);
-        var legacyA = legacyFiles.Single(file =>
-            FrozenLedgerBaseViewReader.Read(Snapshot([file])).ActiveByPath.ContainsKey(RepoPathFor("A")));
-        var retainedLegacy = legacyFiles.Single(file => file.Path != legacyA.Path);
+        var legacyA = LegacyFileForModule(legacyFiles, "A");
+        var legacyB = LegacyFileForModule(legacyFiles, "B");
         var v5A = Assert.Single(EventFiles(BuildCatalog(Module("A"))));
-        var candidateFiles = ImmutableArray.Create(retainedLegacy, v5A);
+        var candidateFiles = ImmutableArray.Create(
+            WithBytesAtSamePath(legacyB, Assert.Single(EventFiles(BuildCatalog(Module("B"))))),
+            v5A);
         var changes = RawChangeSet.CreateWithKinds(
         [
             (legacyA.Path.Value, RawChangeKind.Deleted),
+            (legacyB.Path.Value, RawChangeKind.Modified),
             (v5A.Path.Value, RawChangeKind.Added),
         ]);
 
-        var failure = ValidateAdmissionReplacement(
-            legacyFiles,
-            candidateFiles,
-            changes,
-            catalog);
+        var preparation = Prepare(legacyFiles, candidateFiles, changes);
+        var failure = ValidateAdmissionReplacement(preparation, changes, catalog);
 
+        Assert.Null(preparation.Replacement);
         AssertReuseRejected(failure);
+    }
+
+    [Fact]
+    public void AdmissionRejectsReplacementWhenRetainedAndNewFreezeCoverSameModule()
+    {
+        var catalog = BuildCatalog(Module("A"), Module("B"));
+        var legacyFiles = LegacyEventFiles(catalog, schemaVersion: 4);
+        var retainedA = LegacyFileForModule(legacyFiles, "A");
+        var legacyB = LegacyFileForModule(legacyFiles, "B");
+        var v5Files = EventFiles(catalog);
+        var candidateFiles = ImmutableArray.Create(retainedA).AddRange(v5Files);
+        var changes = RawChangeSet.CreateWithKinds(
+        [
+            (legacyB.Path.Value, RawChangeKind.Deleted),
+            .. v5Files.Select(static file => (file.Path.Value, RawChangeKind.Added)),
+        ]);
+
+        var preparation = Prepare(legacyFiles, candidateFiles, changes);
+        var failure = ValidateAdmissionReplacement(preparation, changes, catalog);
+
+        Assert.Null(preparation.Replacement);
+        AssertReuseRejected(failure);
+    }
+
+    [Fact]
+    public void AdmissionRejectsReplacementWhenDeletedModulesAreProperSubsetOfUnretainedBaseModules()
+    {
+        var catalog = BuildCatalog(Module("A"), Module("B"), Module("C"));
+        var legacyFiles = LegacyEventFiles(catalog, schemaVersion: 4);
+        var retainedA = LegacyFileForModule(legacyFiles, "A");
+        var legacyB = LegacyFileForModule(legacyFiles, "B");
+        var legacyC = LegacyFileForModule(legacyFiles, "C");
+        var v5B = Assert.Single(EventFiles(BuildCatalog(Module("B"))));
+        var v5C = Assert.Single(EventFiles(BuildCatalog(Module("C"))));
+        var candidateFiles = ImmutableArray.Create(
+            retainedA,
+            WithBytesAtSamePath(legacyC, v5C),
+            v5B);
+        var changes = RawChangeSet.CreateWithKinds(
+        [
+            (legacyB.Path.Value, RawChangeKind.Deleted),
+            (legacyC.Path.Value, RawChangeKind.Modified),
+            (v5B.Path.Value, RawChangeKind.Added),
+        ]);
+
+        var preparation = Prepare(legacyFiles, candidateFiles, changes);
+        var failure = ValidateAdmissionReplacement(preparation, changes, catalog);
+
+        Assert.Null(preparation.Replacement);
+        AssertReuseRejected(failure);
+    }
+
+    [Fact]
+    public void AdmissionAllowsLegacyReplacementWithRetainedDisjointModules()
+    {
+        var catalog = BuildCatalog(Module("A"), Module("B"));
+        var legacyFiles = LegacyEventFiles(catalog, schemaVersion: 4);
+        var retainedA = LegacyFileForModule(legacyFiles, "A");
+        var legacyB = LegacyFileForModule(legacyFiles, "B");
+        var v5B = Assert.Single(EventFiles(BuildCatalog(Module("B"))));
+        var candidateFiles = ImmutableArray.Create(retainedA, v5B);
+        var changes = RawChangeSet.CreateWithKinds(
+        [
+            (legacyB.Path.Value, RawChangeKind.Deleted),
+            (v5B.Path.Value, RawChangeKind.Added),
+        ]);
+
+        var preparation = Prepare(legacyFiles, candidateFiles, changes);
+        var failure = ValidateAdmissionReplacement(preparation, changes, catalog);
+
+        Assert.NotNull(preparation.Replacement);
+        Assert.Null(failure);
     }
 
     [Fact]
@@ -160,10 +232,9 @@ public sealed partial class FrozenLedgerTests
         var legacyFiles = LegacyEventFiles(catalog, schemaVersion: 4);
         var v5Files = EventFiles(catalog);
         var changes = EntireReplacementChanges(legacyFiles, v5Files);
-        var baseView = FrozenLedgerBaseViewReader.Read(Snapshot(legacyFiles));
 
-        var recognition = FrozenLedgerReplacementRecognition.Recognize(baseView, changes);
         var preparation = Prepare(legacyFiles, v5Files, changes);
+        var recognition = preparation.Replacement;
         var scope = FrozenLedgerAdmissionScope.Create(
             changes,
             preparation,
@@ -183,9 +254,17 @@ public sealed partial class FrozenLedgerTests
         ImmutableArray<RepositoryFile> baseFiles,
         ImmutableArray<RepositoryFile> candidateFiles,
         RawChangeSet changes,
+        FrozenMaterialCatalog catalog) =>
+        ValidateAdmissionReplacement(
+            Prepare(baseFiles, candidateFiles, changes),
+            changes,
+            catalog);
+
+    private static FrozenLedgerAdmissionFailure? ValidateAdmissionReplacement(
+        FrozenLedgerAdmissionPreparation preparation,
+        RawChangeSet changes,
         FrozenMaterialCatalog catalog)
     {
-        var preparation = Prepare(baseFiles, candidateFiles, changes);
         var scope = FrozenLedgerAdmissionScope.Create(
             changes,
             preparation,
@@ -217,6 +296,20 @@ public sealed partial class FrozenLedgerTests
 
     private static RepositorySnapshot Snapshot(IEnumerable<RepositoryFile> files) =>
         RepositorySnapshot.Create(files.ToImmutableDictionary(static file => file.Path));
+
+    private static RepositoryFile LegacyFileForModule(
+        ImmutableArray<RepositoryFile> files,
+        string module) =>
+        files.Single(file => FrozenLedgerBaseViewReader.Read(Snapshot([file]))
+            .ActiveByPath.ContainsKey(RepoPathFor(module)));
+
+    private static RepositoryFile WithBytesAtSamePath(
+        RepositoryFile pathSource,
+        RepositoryFile contentSource) =>
+        new(
+            pathSource.Path,
+            contentSource.RawBytes,
+            contentSource.Text);
 
     private static RepositoryFile WithHistoricalEventHash(RepositoryFile file, string material)
     {

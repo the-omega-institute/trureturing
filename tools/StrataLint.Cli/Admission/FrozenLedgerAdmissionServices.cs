@@ -87,7 +87,6 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
     {
         BaseViewReadCount++;
         var baseView = FrozenLedgerBaseViewReader.Read(protectedBase);
-        var replacement = FrozenLedgerReplacementRecognition.Recognize(baseView, changes);
         var deltaPaths = changes.Entries
             .Where(static change => change.Kind is RawChangeKind.Added or RawChangeKind.Copied
                 && FrozenLedgerChangeClassifier.IsAcceptedEventPath(change.Path.Value))
@@ -99,7 +98,11 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
                 baseView,
                 ImmutableArray<DagLedgerFileEvent>.Empty,
                 producerPaths.Value,
-                replacement);
+                FrozenLedgerReplacementRecognition.Recognize(
+                    baseView,
+                    current,
+                    changes,
+                    ImmutableArray<DagLedgerFileEvent>.Empty));
         }
 
         var deltaFiles = deltaPaths.Select(path => current.TryGetFile(path.Value, out var file)
@@ -143,7 +146,11 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
             baseView,
             ordered,
             producerPaths.Value,
-            replacement);
+            FrozenLedgerReplacementRecognition.Recognize(
+                baseView,
+                current,
+                changes,
+                ordered));
     }
 
     public AdmissionOutcome? Validate(
