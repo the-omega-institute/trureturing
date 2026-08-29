@@ -6,7 +6,7 @@ Sequential memory transport along concatenated action words composes.
 
 **Theorem 1.1 (Transport along concatenated words composes).**
 
-$$\forall first, second: \operatorname{List}\left({M \to M}\right), m: M, \operatorname{transportWord}\left(first ++ second, m\right) = \operatorname{transportWord}\left(second, \operatorname{transportWord}\left(first, m\right)\right).$$
+$$\forall first, second: \operatorname{List}\left((M \to M)\right), m: M, \operatorname{transportWord}\left(first ++ second, m\right) = \operatorname{transportWord}\left(second, \operatorname{transportWord}\left(first, m\right)\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/AgencyHolonomy/MemoryTransport.transportWord_append` (`✓ std3`). ∎
 

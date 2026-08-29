@@ -44,7 +44,7 @@ internal sealed class MemoryTransportDocument : IScribeDocumentDefinition
         new Formula.TypeArrow(source, target);
 
     private static Formula WordType() =>
-        Call("List", Grp(Arrow(F.Id("M"), F.Id("M"))));
+        Call("List", Seq(Open, Arrow(F.Id("M"), F.Id("M")), Close));
 
     private static Formula AppendStatement()
     {

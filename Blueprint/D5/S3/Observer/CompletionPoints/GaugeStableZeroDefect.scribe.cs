@@ -49,13 +49,10 @@ internal sealed class GaugeStableZeroDefectDocument : IScribeDocumentDefinition
     private static Formula Arrow(Formula source, Formula target) =>
         new Formula.TypeArrow(source, target);
 
-    private static Formula Invariance(string readout)
-    {
-        Formula state = F.Id("x");
-        return Seq(
-            Forall, Sp, state, Colon, Sp, F.Id("X"), Comma, Sp,
-            Call(readout, Call("gauge", state)), Sp, Eq, Sp, Call(readout, state));
-    }
+    private static Formula InvarianceOf(Formula appliedToGauge, Formula appliedToState) =>
+        Seq(
+            Forall, Sp, F.Id("x"), Colon, Sp, F.Id("X"), Comma, Sp,
+            appliedToGauge, Sp, Eq, Sp, appliedToState);
 
     private static Formula CompletionStatement()
     {
@@ -64,8 +61,8 @@ internal sealed class GaugeStableZeroDefectDocument : IScribeDocumentDefinition
         Formula right = Call("CompletedAt", F.Id("normalize"), F.Id("target"),
             F.Id("defect"), F.Id("zero"), Call("gauge", F.Id("x")));
         Formula antecedent = Seq(
-            Open, Invariance("normalize"), Close, Sp, Land, Sp,
-            Open, Invariance("defect"), Close);
+            Open, InvarianceOf(Call("normalize", Call("gauge", F.Id("x"))), Call("normalize", F.Id("x"))), Close, Sp, Land, Sp,
+            Open, InvarianceOf(Call("defect", Call("gauge", F.Id("x"))), Call("defect", F.Id("x"))), Close);
         return Disp(Seq(
             Forall, Sp, F.Id("normalize"), Colon, Sp,
             Arrow(F.Id("X"), F.Id("N")), Comma, Sp,
