@@ -25,7 +25,10 @@ namespace StrataLint.ArchitectureTests;
 /// </summary>
 public sealed class WorkflowTestProhibitionTests
 {
-    private const string TestTreePrefix = "tools/tests";
+    // 扫描面是 "tools/tests";**每处都直接写字面量,不抽成常量**——
+    // ScribeTestMapDeriver 只静态折叠字面量实参,传标识符会 fail-closed 记 VariablePath,
+    // 于是这些 [Fact] 变成 "conservative unknown test method introduced after fork point"
+    // 而被 SL-003 拒绝(2026-08-29 实测,PR #4021 首轮 admission rc=1,三条全中)。
 
     /// <summary>本文件自己必须写出被禁的字面量才能匹配它,故是必然豁免。</summary>
     private const string SelfPath =
@@ -68,20 +71,21 @@ public sealed class WorkflowTestProhibitionTests
 
     /// <summary>
     /// 放行侧的钉子:证明扫描确实选中了测试树,且本文件确实被自豁免掉(而非因扫不到而漏过)。
-    /// 缺了它,把 <see cref="TestTreePrefix"/> 写成任何不存在的前缀都会让上一条恒绿。
+    /// 缺了它,把 扫描前缀 写成任何不存在的前缀都会让上一条恒绿。
     /// </summary>
     [Fact]
     public void ScanSelectsTheTestTreeAndNotTheProhibitionItself()
     {
         var root = RepositoryLayout.FindRoot();
         var scanned = GitIndexRepositoryFiles
-            .EnumerateDeclared(root, TestTreePrefix)
+            .EnumerateDeclared(root, "tools/tests")
             .Where(static file => file.RelativePath.EndsWith(".cs", StringComparison.Ordinal))
             .ToArray();
 
         Assert.NotEmpty(scanned);
         Assert.Contains(scanned, file => file.RelativePath == SelfPath);
-        Assert.Matches(WorkflowReference, File.ReadAllText(Path.Combine(root, SelfPath)));
+        Assert.Matches(WorkflowReference, File.ReadAllText(Path.Combine(root,
+            "tools/tests/StrataLint.ArchitectureTests/RepositoryIo/WorkflowTestProhibitionTests.cs")));
         Assert.DoesNotContain(Scan(), hit => hit.Path == SelfPath);
     }
 
@@ -94,7 +98,7 @@ public sealed class WorkflowTestProhibitionTests
     {
         var root = RepositoryLayout.FindRoot();
         var tracked = GitIndexRepositoryFiles
-            .EnumerateDeclared(root, TestTreePrefix)
+            .EnumerateDeclared(root, "tools/tests")
             .ToDictionary(static file => file.RelativePath, static file => file.FullPath);
 
         Assert.All(ProductionConsumerExemptions, entry =>
@@ -114,7 +118,7 @@ public sealed class WorkflowTestProhibitionTests
         var root = RepositoryLayout.FindRoot();
         var hits = new List<(string, int)>();
 
-        foreach (var file in GitIndexRepositoryFiles.EnumerateDeclared(root, TestTreePrefix))
+        foreach (var file in GitIndexRepositoryFiles.EnumerateDeclared(root, "tools/tests"))
         {
             if (!file.RelativePath.EndsWith(".cs", StringComparison.Ordinal)
                 || file.RelativePath == SelfPath
