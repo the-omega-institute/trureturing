@@ -296,6 +296,11 @@ public sealed partial class TheoristFrontierContractTests
         Assert.Empty(Evaluate(fixture));
     }
 
+    // This test pins full-active-catalog acceptance of the deletion shape used by this lane.
+    // It does not pin SL-027's governance routing: if that skip is broken, the no-retirement
+    // fallthrough at TheoristFrontierRevisionValidator.cs:168-171 still continues for this fixture.
+    // BaselineGovernanceRetirementWithActiveDeliveryIsAcceptedByFullActiveCatalog is the SL-027 pin;
+    // breaking the skip makes it fail with "baseline Frontier contract block is missing".
     [Fact]
     public void DeletedBaselineGovernanceCarrierWithoutContractOrOwnerIsAcceptedByFullActiveCatalog()
     {
