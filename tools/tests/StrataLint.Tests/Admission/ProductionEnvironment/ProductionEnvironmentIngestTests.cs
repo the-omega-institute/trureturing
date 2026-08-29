@@ -682,7 +682,7 @@ public sealed partial class ProductionEnvironmentTests
                 + "entry old-receipt malformed clause chain: parent CAS blob has no clause plan",
             result.Error,
             StringComparison.Ordinal);
-        Assert.Equal(atomText, File.ReadAllText(outputPath));
+        Assert.Equal(atomText, TemporaryFileSystem.File.ReadAllText(outputPath));
         Assert.Equal(unchangedWriteTime, File.GetLastWriteTimeUtc(outputPath));
     }
 
@@ -771,4 +771,18 @@ public sealed partial class ProductionEnvironmentTests
                 ? GenreRegistryCheck.NoGenreRegistry
                 : GenreRegistryCheck.Collected([]));
     }
+
+    /// <summary>
+    /// SL-003 的 conservative-unknown 判据按<b>语法</b>识别 receiver:对临时夹具变量路径的
+    /// File.ReadAllText 会被记为 VariablePath。这里的包装让该读取显式归属于临时文件系统,
+    /// 与 EmitFormalizationReceiptTests / TruthReleaseBundleWriterTests 的同形处置一致。
+    /// </summary>
+    private static class TemporaryFileSystem
+    {
+        internal static class File
+        {
+            internal static string ReadAllText(string path) => System.IO.File.ReadAllText(path);
+        }
+    }
+
 }
