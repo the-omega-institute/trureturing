@@ -134,6 +134,8 @@ theorem coherent_threads_ext
     coherent_thread_eq_transport_from_base tower second secondCoherent,
     sameBase]
 
+#print axioms transportFromBase_zero
+#print axioms transportFromBase_succ
 #print axioms transport_from_base_coherent
 #print axioms transport_from_fixed_base_is_fixed
 #print axioms transport_from_fixed_base_is_truth

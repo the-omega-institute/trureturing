@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/ObserverMemory/Refinement/JointReadoutSupremum
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: A paired readout has the intersection kernel and is the least common refinement of its two coordinates. -/
+   digest: A paired readout has the intersection kernel and is the least common
+     refinement of its two coordinates. -/
 
 import D5.S3.ObserverMemory.Refinement.FactorizationCategory
 import Mathlib.Data.Setoid.Basic

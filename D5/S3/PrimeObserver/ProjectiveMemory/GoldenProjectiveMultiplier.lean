@@ -97,9 +97,12 @@ theorem ambient_and_projective_multipliers_ne :
   have hEq : a = a ^ 2 := by linarith
   nlinarith
 
+#print axioms golden_conjugate_eq_neg_inv
 #print axioms stable_dominant_ratio_eq_projective_multiplier
 #print axioms projective_defect_modal_step
 #print axioms projective_multiplier_of_modal_laws
+#print axioms forced_projective_step_zero
+#print axioms zero_state_zero_forcing
 #print axioms ambient_and_projective_multipliers_ne
 
 end D5.S3.PrimeObserver.ProjectiveMemory.GoldenProjectiveMultiplier

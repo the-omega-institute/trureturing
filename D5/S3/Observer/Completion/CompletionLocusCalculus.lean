@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Observer/Completion/CompletionLocusCalculus
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Structural completion loci compose by intersection, pull back along arbitrary parameter maps, and retain gauge stability under conjunction. -/
+   digest: Structural completion loci compose by intersection, pull back along
+     arbitrary parameter maps, and retain gauge stability under conjunction. -/
 
 import D5.S3.Observer.Completion.StructuralCompletionSignature
 
@@ -84,7 +85,7 @@ example {A : Type u} {D : Type v}
     (normalization : Set A) (defect : A -> D) (zeroD : D) :
     completionPointSet (id ⁻¹' normalization) (defect ∘ id) zeroD =
       completionPointSet normalization defect zeroD := by
-  simpa using completion_locus_preimage id normalization defect zeroD
+  rfl
 
 #print axioms completion_locus_pair_eq_inter
 #print axioms completion_locus_preimage

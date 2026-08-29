@@ -3,7 +3,9 @@
    mirror-B: D5/B/S3/Observer/WorldModel/FixedPointStabilityProfile
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Uniform fixed-point stability is a separate multiplier profile whose canonical golden projective radius is positive, strictly below one, and sharper than the ambient stable ratio. -/
+   digest: Uniform fixed-point stability is a separate multiplier profile whose
+     canonical golden projective radius is positive, strictly below one, and
+     sharper than the ambient stable ratio. -/
 
 import D5.S3.CompletionDynamics.GoldenMobius.GoldenProjectiveDerivative
 
@@ -116,6 +118,7 @@ theorem golden_constant_profile_is_uniformly_attracting (Index : Type*) :
 
 #print axioms uniform_radius_bound_each_attracting
 #print axioms uniform_radius_bound_mono
+#print axioms golden_projective_radius_pos
 #print axioms abs_golden_multiplier_eq_radius
 #print axioms golden_projective_radius_lt_one
 #print axioms golden_projective_multiplier_neg

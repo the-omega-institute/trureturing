@@ -53,7 +53,8 @@ theorem zero_completion_velocity_satisfies_chain
     completionDerivative + stateDerivative *
       zeroCompletionVelocity completionDerivative stateDerivative = 0 := by
   unfold zeroCompletionVelocity
-  field_simp [hState] <;> ring
+  field_simp [hState]
+  ring
 
 /-- Common nonzero rescaling of the analytic family leaves zero velocity
 unchanged. -/
@@ -64,7 +65,7 @@ theorem zero_completion_velocity_scale_invariant
         (c * stateDerivative) =
       zeroCompletionVelocity completionDerivative stateDerivative := by
   unfold zeroCompletionVelocity
-  field_simp [hC, hState] <;> ring
+  field_simp [hC, hState]
 
 /-- At a simple zero, vanishing completion velocity is equivalent to vanishing
 completion-direction forcing. -/
@@ -93,5 +94,6 @@ example (completionDerivative : K) :
 #print axioms zero_completion_velocity_satisfies_chain
 #print axioms zero_completion_velocity_scale_invariant
 #print axioms zero_completion_velocity_eq_zero_iff
+#print axioms zero_completion_velocity_ne_zero
 
 end D5.S3.Analytic.ZetaCompletionFlow.SimpleZeroCompletionVelocity

@@ -30,8 +30,10 @@ theorem even_hasDerivAt_zero
   have hNeg : HasDerivAt (fun u : ℝ => -u) (-1) 0 := by
     simpa using (hasDerivAt_neg (𝕜 := ℝ) 0)
   have hReflected : HasDerivAt (fun u : ℝ => V (-u)) (-d) 0 := by
-    have hComp := hDerivative.comp 0 hNeg
-    convert hComp using 1 <;> ring
+    have hDerivative' : HasDerivAt V d (-0) := by
+      simpa using hDerivative
+    have hComp := hDerivative'.comp 0 hNeg
+    simpa [Function.comp_def] using hComp
   have hSame : (fun u : ℝ => V (-u)) = V := by
     funext u
     exact hEven u

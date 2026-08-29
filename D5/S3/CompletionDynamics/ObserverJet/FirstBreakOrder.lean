@@ -21,16 +21,20 @@ noncomputable section
 
 namespace D5.S3.CompletionDynamics.ObserverJet.FirstBreakOrder
 
+local instance (p : Prop) : Decidable p := Classical.propDecidable p
+
 /-- A positive finite order at which the normal jet is nonzero. -/
 def IsBreakOrder (breaks : ℕ → Prop) (k : ℕ) : Prop :=
   0 < k ∧ breaks k
 
 /-- First positive break order, with `⊤` when every finite jet is unbroken. -/
 def firstBreakOrder (breaks : ℕ → Prop) : WithTop ℕ :=
-  if h : ∃ k, IsBreakOrder breaks k then
-    (Nat.find h : WithTop ℕ)
-  else
-    ⊤
+  by
+    classical
+    exact if h : ∃ k, IsBreakOrder breaks k then
+      (Nat.find h : WithTop ℕ)
+    else
+      ⊤
 
 /-- Absence of every positive finite break is represented exactly by `⊤`. -/
 theorem first_break_order_eq_top_iff (breaks : ℕ → Prop) :
@@ -75,7 +79,8 @@ theorem first_order_break_characterization
   congr 1
   have hLe : Nat.find hExists ≤ 1 := Nat.find_min' hExists hAtOne
   have hPos : 0 < Nat.find hExists := (Nat.find_spec hExists).1
-  omega
+  have hFind : Nat.find hExists = 1 := by omega
+  exact hFind
 
 /-- If order one vanishes and order two breaks, the first break is quadratic. -/
 theorem quadratic_break_characterization
@@ -92,7 +97,8 @@ theorem quadratic_break_characterization
   have hNotOne : Nat.find hExists ≠ 1 := by
     intro hEq
     exact hOne (hEq ▸ (Nat.find_spec hExists).2)
-  omega
+  have hFind : Nat.find hExists = 2 := by omega
+  exact hFind
 
 /-- Probe showing why `WithTop` is required. -/
 example : firstBreakOrder (fun _ : ℕ => False) = ⊤ := by

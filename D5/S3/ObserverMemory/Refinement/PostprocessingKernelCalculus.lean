@@ -3,7 +3,9 @@
    mirror-B: D5/B/S3/ObserverMemory/Refinement/PostprocessingKernelCalculus
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Postprocessing enlarges readout kernels, with equality exactly on injective realized postprocessing and strictness witnessed by a realized collision. -/
+   digest: Postprocessing enlarges readout kernels, with equality exactly on
+     injective realized postprocessing and strictness witnessed by a realized
+     collision. -/
 
 import Mathlib.Data.Setoid.Basic
 import Mathlib.Data.Set.Image
@@ -40,8 +42,8 @@ theorem postprocessing_kernel_eq_iff_injOn_range
     Setoid.ker (postprocess ∘ q) = Setoid.ker q <->
       Set.InjOn postprocess (Set.range q) := by
   constructor
-  · intro kernelEquality
-    intro first firstRealized second secondRealized samePostprocessed
+  · intro kernelEquality first firstRealized second secondRealized
+      samePostprocessed
     rcases firstRealized with ⟨x, rfl⟩
     rcases secondRealized with ⟨y, rfl⟩
     have sameAfter : Setoid.ker (postprocess ∘ q) x y := samePostprocessed
@@ -63,7 +65,7 @@ theorem postprocessing_strict_iff_range_collision
   constructor
   · intro strictGrowth
     by_contra noCollision
-    push_neg at noCollision
+    push Not at noCollision
     apply strictGrowth.2
     intro x y sameAfter
     by_contra differentBefore

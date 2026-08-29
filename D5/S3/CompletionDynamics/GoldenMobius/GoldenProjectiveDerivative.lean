@@ -6,6 +6,7 @@
    digest: The golden Mobius derivative equals its projective multiplier. -/
 
 import D5.S3.CompletionDynamics.GoldenMobius.GoldenCrossRatioLinearization
+import Mathlib.Analysis.Calculus.Deriv.Add
 import Mathlib.Analysis.Calculus.Deriv.Inv
 
 set_option autoImplicit false
@@ -19,6 +20,10 @@ open scoped goldenRatio
 open D5.S3.CompletionDynamics.GoldenMobius.GoldenMobiusMap
 open D5.S3.CompletionDynamics.GoldenMobius.GoldenCrossRatioLinearization
 
+local instance : AddCommGroup ℝ := Real.normedAddCommGroup.toAddCommGroup
+local instance : NormedAddCommGroup ℝ := Real.normedAddCommGroup
+local instance : NormedSpace ℝ ℝ := NormedAlgebra.toNormedSpace ℝ
+
 /-- Ordinary differentiation gives the same multiplier as exact projective
 linearization. -/
 theorem golden_mobius_hasDerivAt :
@@ -29,9 +34,10 @@ theorem golden_mobius_hasDerivAt :
         (-(Real.goldenRatio⁻¹) ^ 2) Real.goldenRatio := by
     simpa only [inv_pow] using
       (hasDerivAt_inv Real.goldenRatio_ne_zero)
-  have hSum :=
-    (hasDerivAt_const (x := Real.goldenRatio) (1 : ℝ)).add hInv
-  simp only [Pi.add_apply, zero_add] at hSum
+  have hSum : HasDerivAt (fun y : ℝ => 1 + y⁻¹)
+      (-(Real.goldenRatio⁻¹) ^ 2) Real.goldenRatio :=
+    (hasDerivAt_const_add_iff (f := fun y : ℝ => y⁻¹)
+      (f' := -(Real.goldenRatio⁻¹) ^ 2) (x := Real.goldenRatio) 1).2 hInv
   unfold goldenMobius goldenProjectiveMultiplier
   simpa only [one_div] using hSum
 
@@ -71,6 +77,7 @@ theorem linearized_golden_hasDerivAt_zero :
 
 #print axioms golden_mobius_hasDerivAt
 #print axioms deriv_golden_mobius_at_golden
+#print axioms abs_golden_projective_multiplier
 #print axioms abs_golden_projective_multiplier_lt_one
 #print axioms linearized_golden_hasDerivAt_zero
 

@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/CompletionDynamics/GoldenMobius/GoldenMobiusMap
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: The reciprocal golden Mobius map has the golden ratio and its conjugate as fixed points and preserves the positive half-line. -/
+   digest: The reciprocal golden Mobius map has the golden ratio and its
+     conjugate as fixed points and preserves the positive half-line. -/
 
 import Mathlib.NumberTheory.Real.GoldenRatio
 
@@ -78,6 +79,7 @@ example : goldenMobius 0 ≠ 0 := by
 #print axioms golden_mobius_fixed_golden
 #print axioms golden_mobius_fixed_conjugate
 #print axioms golden_fixed_points_ne
+#print axioms golden_fixed_point_gap
 #print axioms golden_mobius_pos
 #print axioms golden_projective_multiplier_eq_neg_conjugate_sq
 

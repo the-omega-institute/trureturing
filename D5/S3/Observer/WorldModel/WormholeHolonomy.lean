@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Observer/WorldModel/WormholeHolonomy
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Round trips through observer wormholes define holonomy, with inverse bridges giving the trivial loop. -/
+   digest: Round trips through observer wormholes define holonomy, with inverse
+     bridges giving the trivial loop. -/
 
 import D5.S3.Observer.Bridges.WormholeCategory
 

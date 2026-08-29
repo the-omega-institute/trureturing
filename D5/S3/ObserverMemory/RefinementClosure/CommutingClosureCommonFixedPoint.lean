@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/ObserverMemory/RefinementClosure/CommutingClosureCommonFixedPoint
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Two commuting closure operators compose to a closure whose fixed points are exactly their common fixed points. -/
+   digest: Two commuting closure operators compose to a closure whose fixed
+     points are exactly their common fixed points. -/
 
 import Mathlib.Order.Closure
 
@@ -86,6 +87,7 @@ example {α : Type u} [PartialOrder α]
         (by intro value; simp) x = closure x := by
   rfl
 
+#print axioms commutingComposition_apply
 #print axioms commuting_closure_composition_fixed_iff
 #print axioms commuting_composition_order_independent
 

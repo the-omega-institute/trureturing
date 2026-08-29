@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Observer/WorldModel/TransversalFixedPoint
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: A coherent family of states across semiconjugate world models forms a transversal fixed point whenever one anchor state is fixed. -/
+   digest: A coherent family of states across semiconjugate world models forms a
+     transversal fixed point whenever one anchor state is fixed. -/
 
 import D5.S3.Observer.Bridges.FixedPointSemiconjugacy
 

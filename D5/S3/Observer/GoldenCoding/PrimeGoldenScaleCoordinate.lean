@@ -51,7 +51,7 @@ theorem prime_power_golden_scale_coordinate
     (prime : Nat.Primes) (exponent : ℕ) :
     goldenScaleCoordinate ((prime.1 : ℝ) ^ exponent) =
       exponent * primeGoldenScaleCoordinate prime := by
-  unfold goldenScaleCoordinate primeGoldenScaleCoordinate
+  unfold primeGoldenScaleCoordinate goldenScaleCoordinate
   rw [Real.log_pow]
   ring
 

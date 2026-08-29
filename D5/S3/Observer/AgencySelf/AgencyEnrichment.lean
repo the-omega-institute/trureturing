@@ -3,7 +3,9 @@
    mirror-B: D5/B/S3/Observer/AgencySelf/AgencyEnrichment
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Agency enrichment pairs current state and strategy, isolates the strategy residual inside current fibers, and becomes agency completion only after controlled behavior closure. -/
+   digest: Agency enrichment pairs current state and strategy, isolates the
+     strategy residual inside current fibers, and becomes agency completion only
+     after controlled behavior closure. -/
 
 import D5.S3.ObserverMemory.Refinement.EffectiveImageKernelCriterion
 import D5.S3.ObserverMemory.Refinement.JointReadoutSupremum
@@ -144,6 +146,8 @@ example :
   exact residual.2 rfl
 
 #print axioms current_kernel_strategy_residual_partition
+#print axioms agency_kernel_disjoint_strategy_residual
+#print axioms no_strategy_residual_iff_kernel_inclusion
 #print axioms strategy_factorization_iff_no_residual
 #print axioms agency_enrichment_kernel_eq_current_iff_no_residual
 

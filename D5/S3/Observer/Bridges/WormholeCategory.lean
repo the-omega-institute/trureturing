@@ -122,6 +122,7 @@ theorem composite_maps_fixed_point
       ((compose second first).map state) :=
   maps_fixed_point (compose second first) hFixed
 
+#print axioms Wormhole.ext
 #print axioms identity_compose
 #print axioms compose_identity
 #print axioms compose_assoc

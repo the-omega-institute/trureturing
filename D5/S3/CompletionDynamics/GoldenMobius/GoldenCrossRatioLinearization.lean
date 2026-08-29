@@ -86,7 +86,8 @@ theorem golden_cross_ratio_linearization {x : ℝ}
   rw [golden_mobius_sub_golden hx,
     golden_mobius_sub_conjugate hx]
   unfold goldenProjectiveMultiplier
-  field_simp [hx, hConj, Real.goldenRatio_ne_zero]
+  have hChartDomain := hConj
+  field_simp [hx, hChartDomain, Real.goldenRatio_ne_zero]
 
 /-- Positive points avoid both affine-chart singularities. -/
 theorem positive_avoids_golden_singularities {x : ℝ} (hx : 0 < x) :
@@ -126,9 +127,11 @@ example (n : ℕ) :
   rw [golden_cross_ratio_iterate n Real.goldenRatio_pos,
     golden_cross_ratio_at_golden, mul_zero]
 
+#print axioms golden_cross_ratio_at_golden
 #print axioms golden_mobius_sub_golden
 #print axioms golden_mobius_sub_conjugate
 #print axioms golden_cross_ratio_linearization
+#print axioms positive_avoids_golden_singularities
 #print axioms golden_mobius_iterate_pos
 #print axioms golden_cross_ratio_iterate
 

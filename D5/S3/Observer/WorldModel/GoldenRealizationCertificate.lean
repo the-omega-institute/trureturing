@@ -3,7 +3,9 @@
    mirror-B: D5/B/S3/Observer/WorldModel/GoldenRealizationCertificate
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: One certificate packages the quadratic, Fibonacci, rotation-trace, Mobius-fixed, and projective-attraction realizations of the golden structure while exhibiting a repelling countermodel. -/
+   digest: One certificate packages the quadratic, Fibonacci, rotation-trace,
+     Mobius-fixed, and projective-attraction realizations of the golden structure
+     while exhibiting a repelling countermodel. -/
 
 import D5.S3.Observer.GoldenCoding.GoldenAngleTraceBridge
 import D5.S3.Observer.WorldModel.FixedPointStabilityProfile
@@ -71,9 +73,15 @@ theorem golden_repelling_affine_hasDerivAt :
     simpa using (hasDerivAt_id Real.goldenRatio).sub_const
       Real.goldenRatio
   have hScaled := hSub.const_mul (Real.goldenRatio ^ 2)
-  have hConstant :=
-    hasDerivAt_const (x := Real.goldenRatio) Real.goldenRatio
-  simpa [goldenRepellingAffine] using hConstant.add hScaled
+  have hScaled' :
+      HasDerivAt
+        (fun x : ℝ => Real.goldenRatio ^ 2 * (x - Real.goldenRatio))
+        (Real.goldenRatio ^ 2) Real.goldenRatio := by
+    apply hScaled.congr_deriv
+    ring
+  have hAffine := hScaled'.const_add Real.goldenRatio
+  unfold goldenRepellingAffine
+  exact hAffine
 
 /-- The affine countermodel is strictly repelling. -/
 theorem golden_repelling_affine_multiplier_gt_one :

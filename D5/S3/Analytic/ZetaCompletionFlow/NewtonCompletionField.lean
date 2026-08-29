@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Analytic/ZetaCompletionFlow/NewtonCompletionField
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: The Newton completion vector is scale invariant, detects roots under a regular derivative, and exactly completes affine zero models in one step. -/
+   digest: The Newton completion vector is scale invariant, detects roots under
+     a regular derivative, and exactly completes affine zero models in one step. -/
 
 import Mathlib
 
@@ -45,7 +46,6 @@ theorem newton_completion_vector_scale_invariant
       newtonCompletionVector F dF s := by
   unfold newtonCompletionVector
   field_simp [hC, hRegular]
-  ring
 
 /-- The Newton vector of an affine simple-zero model points exactly from the
 current point to its root. -/

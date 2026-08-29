@@ -86,9 +86,14 @@ example :
   norm_num [evenChannel]
 
 #print axioms even_add_odd_eq
+#print axioms even_channel_neg
+#print axioms odd_channel_neg
 #print axioms linear_jet_even_channel_zero
 #print axioms linear_jet_odd_channel
+#print axioms reflected_tangent_square
 #print axioms quadratic_jet_even_channel
+#print axioms quadratic_jet_odd_channel_zero
+#print axioms paired_tangent_average_zero
 #print axioms paired_tangent_second_moment
 
 end D5.S3.CompletionDynamics.ObserverJet.PairedOddJetCancellation

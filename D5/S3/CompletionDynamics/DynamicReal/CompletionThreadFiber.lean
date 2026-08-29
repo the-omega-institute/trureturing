@@ -3,7 +3,9 @@
    mirror-B: D5/B/S3/CompletionDynamics/DynamicReal/CompletionThreadFiber
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: A constant completed readout has a nontrivial thread fiber, while adjoining the blow-up origin restores injectivity and proves that no completed-value decoder can reconstruct every thread. -/
+   digest: A constant completed readout has a nontrivial thread fiber, while
+     adjoining the blow-up origin restores injectivity and proves that no
+     completed-value decoder can reconstruct every thread. -/
 
 import D5.S3.CompletionDynamics.GoldenMobius.GoldenThreadBlowup
 
@@ -112,10 +114,12 @@ example (observer : GoldenThreadObserver) :
     (completedJetReadout observer).2 = observer.origin := by
   rfl
 
+#print axioms completion_value_constant
 #print axioms completion_value_not_injective
 #print axioms blowup_value_injective
 #print axioms completed_jet_readout_injective
 #print axioms no_completion_value_decoder
 #print axioms no_completion_thread_reconstructor
+#print axioms completion_fiber_contains_all_origins
 
 end D5.S3.CompletionDynamics.DynamicReal.CompletionThreadFiber

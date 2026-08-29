@@ -3,7 +3,9 @@
    mirror-B: D5/B/S3/ObserverMemory/RefinementClosure/FiniteHorizonKernelRecurrence
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Finite-horizon behavior kernels descend by one new coordinate, intersect to the complete kernel, and stabilize at the finite completion depth. -/
+   digest: Finite-horizon behavior kernels descend by one new coordinate,
+     intersect to the complete kernel, and stabilize at the finite completion
+     depth. -/
 
 import D5.S3.ObserverMemory.Prediction.ItineraryCompletion
 import Mathlib.Data.Setoid.Basic
@@ -122,7 +124,9 @@ example :
     exact congrFun sameComplete k
 
 #print axioms finite_horizon_kernel_succ_iff
+#print axioms finite_horizon_kernel_antitone
 #print axioms complete_kernel_eq_iInf_finite_horizon
+#print axioms finite_horizon_first_new_coordinate_strict
 #print axioms finite_horizon_stabilizes_at_completionDepth
 
 end D5.S3.ObserverMemory.RefinementClosure.FiniteHorizonKernelRecurrence

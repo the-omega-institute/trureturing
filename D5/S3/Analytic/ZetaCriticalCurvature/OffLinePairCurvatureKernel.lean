@@ -38,9 +38,17 @@ theorem radial_quadratic_hasDerivAt (a y u : ℝ) :
     HasDerivAt (radialQuadratic a y) (2 * (u - a)) u := by
   have hSub : HasDerivAt (fun v : ℝ => v - a) 1 u := by
     simpa using (hasDerivAt_id u).sub_const a
-  have hSquare := hSub.pow 2
-  have hSum := hSquare.add_const (y ^ 2)
-  simpa [radialQuadratic] using hSum
+  have hSquare : HasDerivAt (fun v : ℝ => (v - a) ^ 2)
+      (2 * (u - a)) u := by
+    apply (hSub.pow 2).congr_deriv
+    ring
+  have hSum : HasDerivAt (fun v : ℝ => (v - a) ^ 2 + y ^ 2)
+      (2 * (u - a)) u :=
+    (hasDerivAt_add_const_iff (f := fun v : ℝ => (v - a) ^ 2)
+      (f' := 2 * (u - a)) (x := u) (y ^ 2)).2 hSquare
+  change HasDerivAt (fun v : ℝ => (v - a) ^ 2 + y ^ 2)
+    (2 * (u - a)) u
+  exact hSum
 
 /-- The displayed slope is the ordinary derivative whenever the local factor
 is nonzero. -/
@@ -50,10 +58,11 @@ theorem radial_log_potential_hasDerivAt
       (radialLogSlope a y u) u := by
   have hLog := (radial_quadratic_hasDerivAt a y u).log hNonzero
   have hScaled := hLog.const_mul (1 / 2 : ℝ)
-  convert hScaled using 1
-  · rfl
-  · unfold radialLogSlope
-    ring
+  change HasDerivAt
+    (fun v : ℝ => (1 / 2 : ℝ) * Real.log (radialQuadratic a y v))
+    ((u - a) / radialQuadratic a y u) u
+  apply hScaled.congr_deriv
+  ring
 
 /-- Derivative of the certified slope field. -/
 theorem radial_log_slope_hasDerivAt
@@ -64,11 +73,12 @@ theorem radial_log_slope_hasDerivAt
     simpa using (hasDerivAt_id u).sub_const a
   have hDenominator := radial_quadratic_hasDerivAt a y u
   have hQuotient := hNumerator.div hDenominator hNonzero
-  convert hQuotient using 1
-  · rfl
-  · unfold radialQuadratic
-    field_simp [hNonzero]
-    ring
+  change HasDerivAt
+    (fun v : ℝ => (v - a) / radialQuadratic a y v)
+    ((y ^ 2 - (u - a) ^ 2) / (radialQuadratic a y u) ^ 2) u
+  apply hQuotient.congr_deriv
+  unfold radialQuadratic
+  ring
 
 /-- Reflection-paired local potential centered at tangential height `gamma` and
 normal displacement `delta`. -/
@@ -103,10 +113,12 @@ theorem off_line_pair_potential_hasDerivAt_axis_zero
   have hMinus := radial_log_potential_hasDerivAt hPos.1.ne'
   have hPlus := radial_log_potential_hasDerivAt hPos.2.ne'
   have hSum := hMinus.add hPlus
-  convert hSum using 1
-  · rfl
-  · unfold radialLogSlope radialQuadratic
-    ring
+  change HasDerivAt
+    (radialLogPotential delta (t - gamma) +
+      radialLogPotential (-delta) (t - gamma)) 0 0
+  apply hSum.congr_deriv
+  unfold radialLogSlope radialQuadratic
+  ring
 
 /-- The derivative of the certified first-derivative field at the fixed axis is
 exactly the off-line curvature dipole. -/
@@ -118,10 +130,13 @@ theorem off_line_pair_slope_hasDerivAt_axis
   have hMinus := radial_log_slope_hasDerivAt hPos.1.ne'
   have hPlus := radial_log_slope_hasDerivAt hPos.2.ne'
   have hSum := hMinus.add hPlus
-  convert hSum using 1
-  · rfl
-  · unfold offLinePairCurvatureKernel radialQuadratic
-    ring
+  change HasDerivAt
+    (radialLogSlope delta (t - gamma) +
+      radialLogSlope (-delta) (t - gamma))
+    (offLinePairCurvatureKernel delta gamma t) 0
+  apply hSum.congr_deriv
+  unfold offLinePairCurvatureKernel radialQuadratic
+  ring
 
 /-- Center value of the dipole. -/
 theorem off_line_pair_curvature_center
@@ -164,12 +179,16 @@ theorem off_line_pair_curvature_reflection
   unfold offLinePairCurvatureKernel
   ring
 
+#print axioms radial_quadratic_hasDerivAt
 #print axioms radial_log_potential_hasDerivAt
 #print axioms radial_log_slope_hasDerivAt
+#print axioms radial_quadratic_axis_pos
 #print axioms off_line_pair_potential_hasDerivAt_axis_zero
 #print axioms off_line_pair_slope_hasDerivAt_axis
 #print axioms off_line_pair_curvature_center
 #print axioms off_line_pair_curvature_right_zero
 #print axioms off_line_pair_curvature_left_zero
+#print axioms off_line_pair_curvature_center_neg
+#print axioms off_line_pair_curvature_reflection
 
 end D5.S3.Analytic.ZetaCriticalCurvature.OffLinePairCurvatureKernel

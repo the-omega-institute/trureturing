@@ -3,9 +3,11 @@
    mirror-B: D5/B/S3/CompletionDynamics/GoldenMobius/GoldenThreadBlowup
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Golden completion curves share the same completed value while their first blow-up coordinate and tangent retain the observer origin. -/
+   digest: Golden completion curves share the same completed value while their
+     first blow-up coordinate and tangent retain the observer origin. -/
 
 import D5.S3.CompletionDynamics.GoldenMobius.GoldenProjectiveDerivative
+import Mathlib.Analysis.Calculus.Deriv.Add
 import Mathlib.Analysis.Calculus.Deriv.Inv
 
 /-!
@@ -24,6 +26,10 @@ namespace D5.S3.CompletionDynamics.GoldenMobius.GoldenThreadBlowup
 open scoped goldenRatio
 open D5.S3.CompletionDynamics.GoldenMobius.GoldenMobiusMap
 open D5.S3.CompletionDynamics.GoldenMobius.GoldenCrossRatioLinearization
+
+local instance : AddCommGroup ℝ := Real.normedAddCommGroup.toAddCommGroup
+local instance : NormedAddCommGroup ℝ := Real.normedAddCommGroup
+local instance : NormedSpace ℝ ℝ := NormedAlgebra.toNormedSpace ℝ
 
 /-- Inverse golden cross-ratio chart along the ray with origin coefficient
 `c`. -/
@@ -62,39 +68,22 @@ theorem golden_cross_ratio_thread_curve {c h : ℝ}
   have hGap : Real.goldenRatio - Real.goldenConj ≠ 0 := by
     exact sub_ne_zero.mpr golden_fixed_points_ne
   field_simp [hDen, hGap]
-  ring
 
 /-- The inverse golden chart has first derivative `c(φ-ψ)` at completion. -/
 theorem golden_thread_curve_hasDerivAt (c : ℝ) :
     HasDerivAt (goldenThreadCurve c)
       (c * (Real.goldenRatio - Real.goldenConj)) 0 := by
-  have hHCraw : HasDerivAt (fun h : ℝ => c * h) c 0 := by
-    simpa using (hasDerivAt_id (𝕜 := ℝ) (x := 0)).const_mul c
   have hHC : HasDerivAt (fun h : ℝ => h * c) c 0 := by
-    convert hHCraw using 1 <;> ring
-  have hHCPsiRaw :
-      HasDerivAt (fun h : ℝ => Real.goldenConj * (h * c))
-        (Real.goldenConj * c) 0 := by
-    simpa using hHC.const_mul Real.goldenConj
-  have hHCPsi :
-      HasDerivAt (fun h : ℝ => h * c * Real.goldenConj)
-        (c * Real.goldenConj) 0 := by
-    convert hHCPsiRaw using 1 <;> ring
-  have hNumerator :
-      HasDerivAt
-        (fun h : ℝ => Real.goldenRatio - h * c * Real.goldenConj)
-        (-(c * Real.goldenConj)) 0 := by
-    simpa using
-      (hasDerivAt_const (x := 0) Real.goldenRatio).sub hHCPsi
-  have hDenominator :
-      HasDerivAt (fun h : ℝ => 1 - h * c) (-c) 0 := by
-    simpa using (hasDerivAt_const (x := 0) (1 : ℝ)).sub hHC
+    exact hasDerivAt_mul_const c
+  have hHCPsi := hHC.mul_const Real.goldenConj
+  have hNumerator :=
+    HasDerivAt.const_sub Real.goldenRatio hHCPsi
+  have hDenominator := HasDerivAt.const_sub (1 : ℝ) hHC
   have hQuotient := hNumerator.div hDenominator (by norm_num)
-  convert hQuotient using 1
-  · funext h
-    simp only [goldenThreadCurve]
-  · simp
-    ring
+  unfold goldenThreadCurve
+  apply hQuotient.congr_deriv
+  norm_num
+  ring
 
 /-- The tangent coefficient displays the discriminant gap `sqrt 5`. -/
 theorem golden_thread_curve_hasDerivAt_sqrt_five (c : ℝ) :
@@ -136,14 +125,19 @@ theorem golden_geometric_thread_origin_recovery {c : ℝ} {n : ℕ}
   rw [golden_geometric_thread_cross_ratio hDen, ← mul_assoc, ← mul_pow]
   have hMultiplier : goldenProjectiveMultiplier ≠ 0 := by
     unfold goldenProjectiveMultiplier
-    positivity
+    exact neg_ne_zero.mpr
+      (pow_ne_zero 2 (inv_ne_zero Real.goldenRatio_ne_zero))
   rw [inv_mul_cancel₀ hMultiplier, one_pow, one_mul]
 
+#print axioms golden_thread_curve_zero
 #print axioms golden_thread_curve_sub_golden
 #print axioms golden_thread_curve_sub_conjugate
 #print axioms golden_cross_ratio_thread_curve
+#print axioms golden_thread_curve_hasDerivAt
 #print axioms golden_thread_curve_hasDerivAt_sqrt_five
+#print axioms golden_thread_completion_value_eq
 #print axioms golden_thread_tangent_injective
+#print axioms golden_geometric_thread_cross_ratio
 #print axioms golden_geometric_thread_origin_recovery
 
 end D5.S3.CompletionDynamics.GoldenMobius.GoldenThreadBlowup
