@@ -8,7 +8,7 @@ public sealed partial class MissionFileLoaderTests
     private const string FrontierEligibilityJson = """
           "frontier_eligibility": [
             {
-              "source_ref": "D5/X_Frontier/GovernanceDeferrals",
+              "source_ref": "D5/X_Frontier/GovernanceTicket",
               "kind": "governance"
             }
           ],
@@ -18,10 +18,10 @@ public sealed partial class MissionFileLoaderTests
     private const string RetiredFrontierEligibilityJson = """
           "frontier_eligibility": [
             {
-              "source_ref": "D5/X_Frontier/GovernanceDeferrals",
+              "source_ref": "D5/X_Frontier/GovernanceTicket",
               "kind": "retired",
               "delivery_gids": [
-                "D5/X_Frontier/GovernanceDeferrals.fixture_delivery"
+                "D5/X_Frontier/GovernanceTicket.fixture_delivery"
               ]
             }
           ],
@@ -49,7 +49,7 @@ public sealed partial class MissionFileLoaderTests
             MissionFileLoader.Load(Snapshot(ValidMission)));
 
         var entry = Assert.Single(loaded.Policy.FrontierEligibility);
-        Assert.Equal("D5/X_Frontier/GovernanceDeferrals", entry.SourceRef);
+        Assert.Equal("D5/X_Frontier/GovernanceTicket", entry.SourceRef);
         Assert.Equal(FrontierEligibilityKind.Governance, entry.Kind);
         using var canonical = JsonDocument.Parse(MissionFileLoader.CanonicalBytes(loaded.Policy));
         Assert.Equal(
@@ -75,11 +75,11 @@ public sealed partial class MissionFileLoaderTests
         Assert.Equal(FrontierEligibilityKind.Retired, entry.Kind);
         Assert.Single(entry.DeliveryGids);
         Assert.Equal(
-            "D5/X_Frontier/GovernanceDeferrals.fixture_delivery",
+            "D5/X_Frontier/GovernanceTicket.fixture_delivery",
             entry.DeliveryGids[0]);
         using var canonical = JsonDocument.Parse(MissionFileLoader.CanonicalBytes(loaded.Policy));
         Assert.Equal(
-            "D5/X_Frontier/GovernanceDeferrals.fixture_delivery",
+            "D5/X_Frontier/GovernanceTicket.fixture_delivery",
             canonical.RootElement
                 .GetProperty("frontier_eligibility")[0]
                 .GetProperty("delivery_gids")[0]
@@ -92,7 +92,7 @@ public sealed partial class MissionFileLoaderTests
         var mission = ValidMission.Replace(
             FrontierEligibilityJson,
             RetiredFrontierEligibilityJson.Replace(
-                "\"D5/X_Frontier/GovernanceDeferrals.fixture_delivery\"",
+                "\"D5/X_Frontier/GovernanceTicket.fixture_delivery\"",
                 string.Empty,
                 StringComparison.Ordinal),
             StringComparison.Ordinal);
@@ -113,7 +113,7 @@ public sealed partial class MissionFileLoaderTests
         var mission = ValidMission.Replace(
             FrontierEligibilityJson,
             RetiredFrontierEligibilityJson.Replace(
-                "D5/X_Frontier/GovernanceDeferrals.fixture_delivery",
+                "D5/X_Frontier/GovernanceTicket.fixture_delivery",
                 "D5/S0/Carrier/Ring.missing_delivery",
                 StringComparison.Ordinal),
             StringComparison.Ordinal);
@@ -144,11 +144,11 @@ public sealed partial class MissionFileLoaderTests
             "\"kind\": \"governance\"\n"
             + "    },\n"
             + "    {\n"
-            + "      \"source_ref\": \"D5/X_Frontier/GovernanceDeferrals\",\n"
+            + "      \"source_ref\": \"D5/X_Frontier/GovernanceTicket\",\n"
             + "      \"kind\": \"governance\"",
             StringComparison.Ordinal);
         var dangling = ValidMission.Replace(
-            "D5/X_Frontier/GovernanceDeferrals",
+            "D5/X_Frontier/GovernanceTicket",
             "D5/X_Frontier/Missing",
             StringComparison.Ordinal);
 

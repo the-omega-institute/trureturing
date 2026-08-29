@@ -5,6 +5,10 @@ namespace StrataLint.Engine;
 
 internal static partial class DigestionLedgerAligner
 {
+    private static readonly DigestionStatus StructuralIdentityStatus = new(
+        DigestionMigrationState.Residual,
+        DigestionTruthState.Open);
+
     private static string? AdmissionGenreFinding(
         DigestionAlignmentMode mode,
         RepositorySnapshot candidateSnapshot,
@@ -144,12 +148,19 @@ internal static partial class DigestionLedgerAligner
         && baselineSnapshot.TryGetFile(baselinePath, out var baseline)
         && candidate.RawBytes.AsSpan().SequenceEqual(baseline.RawBytes.AsSpan());
 
-    private static string CanonicalEntry(DigestionLedgerEntry entry)
+    private static string CanonicalEntry(
+        DigestionLedgerSource source,
+        DigestionLedgerEntry entry)
     {
         var admissionEntry = entry with
         {
-            // Coverage and Scribe receipts have their own fail-closed verification. They do
-            // not change the source atom identity that this structural inheritance key protects.
+            // Once stale has been acknowledged, projected status is derived output. Including it
+            // here makes alignment invalidate its own settled receipt on a status-directory move.
+            ProjectedStatus = source.AcknowledgedStale.Contains(
+                entry.AtomId,
+                StringComparer.Ordinal)
+                ? StructuralIdentityStatus
+                : entry.ProjectedStatus,
             Receipts = entry.Receipts with
             {
                 Coverage = [],
