@@ -20,6 +20,24 @@ public sealed partial class FileMapPolicyTests
     }
 
     [Fact]
+    public void EngineeringTestRetirementDeclarationsHaveARegisteredSchemaVerifier()
+    {
+        const string pattern = "Golden/EngineeringTestRetirements/*.json";
+        var root = RepositoryLayout.FindRoot();
+        var manifest = FileMapLoader.LoadRepository(root);
+        var entry = Assert.Single(manifest.Match(
+            "Golden/EngineeringTestRetirements/example.json"));
+
+        Assert.Equal(pattern, entry.Pattern);
+        Assert.Equal(FileMapKind.Data, entry.Kind);
+        Assert.Equal(["EngineeringTestRetirementLoader"], entry.ConsumedBy.ToArray());
+        Assert.Equal(["EngineeringTestRetirementLoader"], entry.VerifiedBy.ToArray());
+        Assert.DoesNotContain(
+            FileMapPolicy.InspectRepository(root),
+            finding => finding.Path == pattern);
+    }
+
+    [Fact]
     public void ComputationalProjectionsHaveCanonicalFileMapEntries()
     {
         var expectedPaths = new HashSet<string>(

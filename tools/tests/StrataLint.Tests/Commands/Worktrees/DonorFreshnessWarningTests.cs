@@ -28,7 +28,7 @@ public sealed partial class WorktreeCommandTests
 
         var result = WorktreeCommand.Run(
             repository.Path,
-            ["--branch", "harness/math/trailing", "--path", target, "--base", "dev", "--skip-restore"],
+            ["--kind", "math", "--name", "trailing", "--path", target, "--base", "dev", "--skip-restore"],
             runner);
 
         Assert.True(result.Success, result.Error);
@@ -54,7 +54,7 @@ public sealed partial class WorktreeCommandTests
 
         var result = WorktreeCommand.Run(
             repository.Path,
-            ["--branch", "harness/math/stale-donor", "--path", target, "--base", "dev", "--skip-restore"],
+            ["--kind", "math", "--name", "stale-donor", "--path", target, "--base", "dev", "--skip-restore"],
             runner);
 
         // 建树照常成功:warning 是 advisory,不是门。
@@ -76,7 +76,7 @@ public sealed partial class WorktreeCommandTests
 
         var result = WorktreeCommand.Run(
             repository.Path,
-            ["--branch", "harness/math/no-donor-cache", "--path", target, "--base", "dev", "--skip-restore"],
+            ["--kind", "math", "--name", "no-donor-cache", "--path", target, "--base", "dev", "--skip-restore"],
             runner);
 
         Assert.True(result.Success, result.Error);
@@ -96,7 +96,7 @@ public sealed partial class WorktreeCommandTests
 
         var result = WorktreeCommand.Run(
             repository.Path,
-            ["--branch", "harness/math/warm-donor", "--path", target, "--base", "dev", "--skip-restore"],
+            ["--kind", "math", "--name", "warm-donor", "--path", target, "--base", "dev", "--skip-restore"],
             runner);
 
         Assert.True(result.Success, result.Error);
@@ -119,7 +119,7 @@ public sealed partial class WorktreeCommandTests
 
         var result = WorktreeCommand.Run(
             repository.Path,
-            ["--branch", "harness/math/read-only-probe", "--path", target, "--base", "dev", "--skip-restore"],
+            ["--kind", "math", "--name", "read-only-probe", "--path", target, "--base", "dev", "--skip-restore"],
             runner);
 
         Assert.True(result.Success, result.Error);
