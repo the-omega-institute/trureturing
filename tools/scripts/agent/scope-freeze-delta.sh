@@ -20,7 +20,7 @@ git rev-parse --verify -q "$BASE" >/dev/null || { echo "FATAL: base 不可解析
 NEWLEAN=()
 while IFS= read -r __l; do [ -n "$__l" ] && NEWLEAN+=("$__l"); done < <(git diff --name-only --diff-filter=A "$BASE"...HEAD -- 'D5/**/*.lean')
 printf 'SCOPE new_lean_modules=%d\n' "${#NEWLEAN[@]}"
-for m in "${NEWLEAN[@]}"; do printf '  NEW_LEAN %s\n' "$m"; done
+for m in ${NEWLEAN[@]+"${NEWLEAN[@]}"}; do printf '  NEW_LEAN %s\n' "$m"; done
 
 restored=0; dropped=0; kept=0
 while IFS=$'\t' read -r st path; do
