@@ -1,0 +1,26 @@
+name: agent-export-latest-dev
+
+on:
+  push:
+    branches:
+      - agent/prover/observer-action-spectrum
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: dev
+          fetch-depth: 0
+      - name: Package latest dev source
+        run: git archive --format=tar.gz --output=trureturing-dev-source.tar.gz HEAD
+      - uses: actions/upload-artifact@v4
+        with:
+          name: trureturing-dev-source-${{ github.sha }}
+          path: trureturing-dev-source.tar.gz
+          if-no-files-found: error
+          retention-days: 1
