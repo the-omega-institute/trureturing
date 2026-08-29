@@ -381,6 +381,7 @@ internal static partial class DigestionStatusEvaluator
             hasProgress,
             StatusAuthorityClosureChanged(
                 entry,
+                alignment,
                 baselineMigration,
                 projectedStatusChanges,
                 isBaseFactAffected));
@@ -388,11 +389,13 @@ internal static partial class DigestionStatusEvaluator
 
     internal static bool StatusAuthorityClosureChanged(
         DigestionLedgerEntry entry,
+        DigestionReceiptAlignment alignment,
         DigestionMigrationState? baselineMigration,
         RawChangeSet? changes,
         Func<string, bool>? isBaseFactAffected)
     {
-        if (changes is null || DigestionCasStore.EntryChanged(entry, changes))
+        var changedSet = changes ?? RawChangeSet.Create([]);
+        if (changes is null || DigestionCasStore.EntryChanged(entry, changedSet))
         {
             return true;
         }
@@ -406,11 +409,11 @@ internal static partial class DigestionStatusEvaluator
             return false;
         }
 
-        bool Affected(string path) => isBaseFactAffected?.Invoke(path) ?? PathChanged(changes, path);
+        bool Affected(string path) => isBaseFactAffected?.Invoke(path) ?? PathChanged(changedSet, path);
 
-        if (changes.Paths.Any(path =>
+        if (changedSet.Paths.Any(path =>
                 FrozenLedgerChangeClassifier.IsAcceptedEventPath(path.Value))
-            || Affected(entry.SourcePath)
+            || alignment != DigestionReceiptAlignment.Seen && Affected(entry.SourcePath)
             || Affected(TheoryAtomizerDataLoader.DataPath)
             || DigestionFingerprint.IsCanonicalSha256(entry.CasRef)
                 && Affected(DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..])
@@ -441,16 +444,21 @@ internal static partial class DigestionStatusEvaluator
     internal static ImmutableHashSet<string> StatusAuthorityChangedAtomIds(
         BackfillInventoryDocument document,
         BackfillInventoryDocument baselineDocument,
-        RawChangeSet? changes)
+        RawChangeSet? changes,
+        DigestionLedgerAlignment alignment)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(baselineDocument);
+        ArgumentNullException.ThrowIfNull(alignment);
         var entries = document.RequireDigestionEntries();
         var baselineEntries = baselineDocument.RequireDigestionEntries()
             .ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
         var directlyChanged = entries
             .Where(entry => StatusAuthorityClosureChanged(
                 entry,
+                alignment.EntryAlignments.GetValueOrDefault(
+                    entry.AtomId,
+                    DigestionReceiptAlignment.Rejected),
                 baselineEntries.TryGetValue(entry.AtomId, out var baseline)
                     ? baseline.ProjectedStatus.Migration
                     : null,

@@ -197,6 +197,15 @@ mode = "100644"
 history_requirement = "not-required"
 
 [[files]]
+pattern = "Golden/EngineeringTestRetirements/*.json"
+kind = "data"
+produced_by = "none"
+consumed_by = ["EngineeringTestRetirementLoader"]
+verified_by = ["EngineeringTestRetirementLoader"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = "Golden/Frozen/accepted/*.json"
 kind = "ledger"
 produced_by = "FrozenLedgerCanonicalWriter"

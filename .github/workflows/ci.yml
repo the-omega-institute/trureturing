@@ -88,7 +88,7 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           global-json-file: candidate/global.json
-      - name: Plan candidate engineering tests
+      - name: Plan base-owned engineering tests
         id: scope
         shell: bash
         run: |
@@ -107,7 +107,7 @@ jobs:
               *) base_full_required=true ;;
             esac
           done < <(git -C candidate diff --name-only -z --no-renames --diff-filter=ACDMRTUXB "$base_sha" "$head_sha" --)
-          if [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
+          if [[ "$GITHUB_EVENT_NAME" == "push" || "$base_full_required" == "true" ]]; then
             base_full_required=true
             FULL=1 make -C candidate/tools engineering-tests MODE=plan HEAD="$head_sha" BASE="$base_sha" PLAN_FILE="$plan_file"
           else
@@ -118,26 +118,30 @@ jobs:
           if plan_summary="$(PLAN_EXPECTED_HEAD="$head_sha" PLAN_EXPECTED_BASE="$base_sha" jq -er '
             select(
                 (type == "object" and (keys | sort) == ["base", "head", "plan", "version"])
-                and .version == 1 and .head == env.PLAN_EXPECTED_HEAD and .base == env.PLAN_EXPECTED_BASE
+                and .version == 2 and .head == env.PLAN_EXPECTED_HEAD and .base == env.PLAN_EXPECTED_BASE
                 and (.plan | type == "object" and (keys | sort) == ["changed_paths", "kind", "reason", "tests"])
                 and (.plan.kind == "full" or .plan.kind == "selected" or .plan.kind == "none")
                 and (.plan.changed_paths | type == "array" and all(.[]; type == "string"))
                 and (.plan.tests | type == "array" and all(.[];
-                  type == "object" and (keys | sort) == ["detail", "id", "project_path", "reason"]
+                  type == "object" and (keys | sort) == ["assembly", "detail", "id", "project_path", "reason"]
+                  and (.assembly | type == "string" and test("\\S"))
                   and (.project_path | type == "string" and test("\\S"))
                   and (.id | type == "string" and test("\\S"))
                   and (.detail | type == "string" and test("\\S"))
-                  and (.reason == "unknown_input" or .reason == "declared_input" or .reason == "compiled_input")))
+                  and (.reason == "base_baseline" or .reason == "unknown_input" or .reason == "declared_input" or .reason == "compiled_input")))
                 and (.plan.reason | type == "string" and test("\\S"))
-                and ((.plan.kind == "selected") == ((.plan.tests | length) != 0)))
+                and (.plan.kind != "selected" or (.plan.tests | length) != 0)
+                and (.plan.kind != "none" or (.plan.tests | length) == 0)
             | [.plan.kind, (.plan.changed_paths | length), (.plan.tests | length)] | @tsv
           ' "$plan_file" 2>/dev/null)"; then
             IFS=$'\t' read -r state artifact_changed_count selected_count <<< "$plan_summary"
           else
             artifact_changed_count=-1
           fi
-          if [[ "$artifact_changed_count" -ne "$changed_count" ]]; then
+          if [[ "$artifact_changed_count" -ne "$changed_count"
+              || ("$base_full_required" == "true" && "$state" != "full") ]]; then
             printf '%s\n' 'ENGINEERING_TEST_PLAN_FALLBACK artifact unreadable or schema-invalid' >&2
+            rm -f -- "$plan_file"
             state=full
             selected_count=0
             fallback_count=1
@@ -206,41 +210,38 @@ jobs:
           dotnet restore candidate/tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj --locked-mode
 
       - name: Build candidate with warnings as errors
-        if: steps.scope.outputs.run_required == 'true'
+        if: github.event_name == 'pull_request_target' && github.event.pull_request.base.ref == 'dev'
         run: make -C candidate/tools dotnet
-      - name: Run candidate golden and integration tests
+      - name: Signal PR head branch grammar
+        if: github.event_name == 'pull_request_target' && github.event.pull_request.base.ref == 'dev'
+        shell: bash
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: "set +e\nvalidation_output=\"$(dotnet run --project candidate/tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release --no-build --no-launch-profile -- worktree validate-branch --branch \"$HEAD_REF\")\"\nvalidation_exit=$?\nset -e\nhead_ref=\"$HEAD_REF\"\nprintf '%s\\n' \"$validation_output\"\ncase \"$validation_exit\" in\n  0)\n    expected_status=canonical\n    ;;\n  1)\n    expected_status=BRANCH_GRAMMAR_NONCONFORMING\n    ;;\n  *)\n    printf 'BRANCH_GRAMMAR_SIGNAL detector_status=failed exit=%s\\n' \"$validation_exit\" >&2\n    exit \"$validation_exit\"\n    ;;\nesac\nif ! jq -e -s --arg expected_status \"$expected_status\" --arg head_ref \"$HEAD_REF\" 'length == 1 and .[0].event == \"branch_validation\" and .[0].status == $expected_status and .[0].branch == $head_ref and (.[0].canonical == ($expected_status == \"canonical\"))' <<< \"$validation_output\" >/dev/null; then\n  printf 'BRANCH_GRAMMAR_SIGNAL detector_status=invalid_output exit=%s\\n' \"$validation_exit\" >&2\n  exit 1\nfi\nif [[ \"$validation_exit\" -eq 1 ]]; then\n  printf '%s\\n' \"::warning title=PR head branch grammar::PR head branch '$HEAD_REF' is rejected by the canonical branch grammar\"\nfi\nprintf 'BRANCH_GRAMMAR_SIGNAL status=%s head_ref=%s\\n' \"$expected_status\" \"$HEAD_REF\"\nsummary_format='## PR head branch grammar\\n\\n- Head branch: `%s`\\n- Status: `%s`\\n- Nonconforming names are advisory; detector faults fail closed.\\n'\nprintf \"$summary_format\" \"$HEAD_REF\" \"$expected_status\" >> \"$GITHUB_STEP_SUMMARY\"\n"
+      - name: Replan and run engineering tests with protected-base harness
         if: steps.scope.outputs.run_required == 'true'
         shell: bash
         env:
-          BASE_FULL_REQUIRED: ${{ steps.scope.outputs.base_full_required }}
-          PLAN_STATE: ${{ steps.scope.outputs.state }}
           ENGINEERING_HEAD: ${{ steps.scope.outputs.head_sha }}
           ENGINEERING_BASE: ${{ steps.scope.outputs.base_sha }}
+          ENGINEERING_FULL_REQUIRED: ${{ steps.scope.outputs.base_full_required }}
         run: |
           set -euo pipefail
-          if [[ "$BASE_FULL_REQUIRED" == "true" ]]; then
-            required_test_projects=(
-              'candidate/tools/tests/StrataLint.Tests/StrataLint.Tests.csproj|StrataLint.Tests'
-              'candidate/tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj|StrataLint.Scribe.Tests'
-              'candidate/tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj|StrataLint.ArchitectureTests'
-            )
-            floor_results="$(mktemp -d "$RUNNER_TEMP/engineering-base-floor.XXXXXX")"
-            trap 'rm -rf -- "$floor_results"' EXIT
-            for required in "${required_test_projects[@]}"; do
-              IFS='|'
-              read -r project assembly <<< "$required"
-              assembly_results="$floor_results/$assembly"
-              mkdir -p "$assembly_results"
-              dotnet test "$project" --configuration Release --verbosity normal \
-                --logger 'trx;LogFileName=floor.trx' --results-directory "$assembly_results"
-              dotnet run \
-                --project candidate/tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj \
-                --configuration Release --no-launch-profile -- \
-                verify-trx --results-directory "$assembly_results" --required-assembly "$assembly"
-            done
+          plan_file="$RUNNER_TEMP/engineering-test-plan.json"
+          base_harness_root="$RUNNER_TEMP/protected-base-engineering-harness"
+          test ! -e "$base_harness_root"
+          rm -f -- "$RUNNER_TEMP/engineering-test-plan.json"
+          git -C candidate worktree add --detach "$base_harness_root" "$ENGINEERING_BASE"
+          cleanup_base_harness() {
+            git -C candidate worktree remove --force "$base_harness_root"
+          }
+          trap cleanup_base_harness EXIT
+          if [[ "$ENGINEERING_FULL_REQUIRED" == "true" ]]; then
+            FULL=1 make -C "$base_harness_root/tools" engineering-tests REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
           else
-            make -C candidate/tools engineering-tests MODE=execute HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$RUNNER_TEMP/engineering-test-plan.json"
+            make -C "$base_harness_root/tools" engineering-tests REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
           fi
+          make -C "$base_harness_root/tools" engineering-tests REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=execute HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
 
       - name: Run candidate selftest twice and compare bytes
         if: steps.scope.outputs.run_required == 'true'

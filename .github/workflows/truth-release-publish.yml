@@ -22,7 +22,12 @@ concurrency:
 jobs:
   produce:
     name: produce verified truth-release inputs
-    runs-on: ubuntu-latest
+    # The producer's truth-release step holds a ~13-14GB live working set during the
+    # full-scan residual-frontier / Scribe emission verification, which exceeds a
+    # 16GB GitHub-hosted runner. It runs on the dedicated 103GB self-hosted Mac Studio
+    # (omega-m3-ultra) instead; the lightweight publish job below stays GitHub-hosted so
+    # the OCI/Release write credentials never reach the self-hosted host.
+    runs-on: [self-hosted, macOS, ARM64, omega-m3-ultra]
     timeout-minutes: 150
     permissions:
       contents: read
@@ -38,6 +43,21 @@ jobs:
     env:
       REQUIRED_CHECKS: 'Candidate harness engineering checks|Canonical Lean report production|Content-addressed dev baseline admission'
     steps:
+      - name: Prepare the self-hosted macOS toolchain PATH
+        shell: bash
+        run: |
+          set -euo pipefail
+          # The GNU coreutils and GNU tar bins make `date`/`stat`/`sha256sum` and the
+          # reproducible `tar` behave exactly as on the Linux runner; Homebrew's bin
+          # provides gh, jq, git and the .NET/Lean toolchain. Prepend them so every
+          # later step resolves GNU/Homebrew tools ahead of the BSD system utilities.
+          printf '%s\n' \
+            '/opt/homebrew/opt/coreutils/libexec/gnubin' \
+            '/opt/homebrew/opt/gnu-tar/libexec/gnubin' \
+            '/opt/homebrew/bin' >> "$GITHUB_PATH"
+          "/opt/homebrew/opt/coreutils/libexec/gnubin/date" --version | head -1
+          "/opt/homebrew/opt/gnu-tar/libexec/gnubin/tar" --version | head -1
+
       - name: Resolve protected dev and wait for required gates
         id: source
         shell: bash
