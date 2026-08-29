@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/CompletionDynamics/GoldenMobius/GoldenProjectiveDerivative
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: The derivative of the golden Mobius map at its attracting fixed point is exactly the projective multiplier minus the inverse golden ratio squared. -/
+   digest: The golden Mobius derivative equals its projective multiplier. -/
 
 import D5.S3.CompletionDynamics.GoldenMobius.GoldenCrossRatioLinearization
 import Mathlib.Analysis.Calculus.Deriv.Inv
@@ -19,15 +19,18 @@ open scoped goldenRatio
 open D5.S3.CompletionDynamics.GoldenMobius.GoldenMobiusMap
 open D5.S3.CompletionDynamics.GoldenMobius.GoldenCrossRatioLinearization
 
-/-- Ordinary differentiation at the complete fixed point gives the same
-multiplier as the exact projective conjugacy. -/
+/-- Ordinary differentiation gives the same multiplier as exact projective
+linearization. -/
 theorem golden_mobius_hasDerivAt :
     HasDerivAt goldenMobius goldenProjectiveMultiplier
       Real.goldenRatio := by
-  have h :=
-    (hasDerivAt_const (𝕜 := ℝ) Real.goldenRatio 1).add
+  have hInv :
+      HasDerivAt (fun y : ℝ => y⁻¹)
+        (-(Real.goldenRatio⁻¹) ^ 2) Real.goldenRatio := by
+    simpa only [inv_pow] using
       (hasDerivAt_inv Real.goldenRatio_ne_zero)
-  simpa [goldenMobius, one_div, goldenProjectiveMultiplier, inv_pow] using h
+  unfold goldenMobius goldenProjectiveMultiplier
+  simpa only [one_div] using hInv.const_add 1
 
 /-- Evaluation of `deriv` at the golden fixed point. -/
 theorem deriv_golden_mobius_at_golden :
@@ -39,8 +42,8 @@ theorem abs_golden_projective_multiplier :
     |goldenProjectiveMultiplier| = (Real.goldenRatio⁻¹) ^ 2 := by
   simp [goldenProjectiveMultiplier]
 
-/-- The completion derivative is a strict contraction in the projective
-coordinate. -/
+/-- The completion derivative is a strict contraction in projective
+coordinates. -/
 theorem abs_golden_projective_multiplier_lt_one :
     |goldenProjectiveMultiplier| < 1 := by
   rw [abs_golden_projective_multiplier]
@@ -56,8 +59,7 @@ theorem abs_golden_projective_multiplier_lt_one :
   dsimp [a] at *
   nlinarith
 
-/-- In the linearized coordinate itself, multiplication by the golden
-multiplier has derivative equal to that multiplier at the completed point. -/
+/-- Multiplication by the golden multiplier has that derivative at zero. -/
 theorem linearized_golden_hasDerivAt_zero :
     HasDerivAt (fun y : ℝ => goldenProjectiveMultiplier * y)
       goldenProjectiveMultiplier 0 := by
