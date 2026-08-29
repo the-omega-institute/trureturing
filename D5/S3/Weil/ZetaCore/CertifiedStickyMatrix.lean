@@ -1,6 +1,6 @@
-/- GID: D5/S3/Weil/ZetaBridge/CertifiedStickyMatrix
+/- GID: D5/S3/Weil/ZetaCore/CertifiedStickyMatrix
    generality: G
-   mirror-B: D5/B/S3/Weil/ZetaBridge/CertifiedStickyMatrix
+   mirror-B: D5/B/S3/Weil/ZetaCore/CertifiedStickyMatrix
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: A conservative finite lower form certifies Schur and full block positivity. -/
@@ -17,7 +17,7 @@ the exact sticky reduction gives positivity of the full block energy.
 
 noncomputable section
 
-namespace D5.S3.Weil.ZetaBridge.CertifiedStickyMatrix
+namespace D5.S3.Weil.ZetaCore.CertifiedStickyMatrix
 
 open D5.S3.Weil.ZetaLinear.ExactStickyReduction
 
@@ -80,4 +80,4 @@ theorem certified_sticky_matrix
     exact (exact_sticky_reduction APP AQP AQQ AQQInv
       hQQNonneg hQQSymm hQQInv).1.mpr hF
 
-end D5.S3.Weil.ZetaBridge.CertifiedStickyMatrix
+end D5.S3.Weil.ZetaCore.CertifiedStickyMatrix

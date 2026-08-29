@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.ZetaBridge;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.ZetaCore;
 
 internal sealed class CertifiedStickyMatrixDocument : IScribeDocumentDefinition
 {
@@ -12,7 +12,7 @@ internal sealed class CertifiedStickyMatrixDocument : IScribeDocumentDefinition
         Blocks(Describe.Lean(
             DescribeId.Create("certified-sticky-matrix"),
             DeclarationHandle.Create(
-                "D5/S3/Weil/ZetaBridge/CertifiedStickyMatrix.certified_sticky_matrix"),
+                "D5/S3/Weil/ZetaCore/CertifiedStickyMatrix.certified_sticky_matrix"),
             H("Finite lower matrix certification"),
             StatementSource.FromAuthor(TheoremFormula()),
             AssessedProvenance.FromRepo(),
