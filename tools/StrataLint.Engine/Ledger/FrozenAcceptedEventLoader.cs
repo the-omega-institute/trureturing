@@ -113,6 +113,12 @@ public static class FrozenAcceptedEventLoader
                 var eventType = value.GetProperty("event_type").GetString()!;
                 var payload = value.GetProperty("payload").Clone();
                 var schemaVersion = value.GetProperty("schema_version").GetInt32();
+                if (freezePayload is null && validationMode is ValidationMode.Trusted)
+                {
+                    throw new FormatException(
+                        "trusted accepted event does not contain a standalone Freeze snapshot");
+                }
+
                 freezePayload ??= FrozenLedgerBaseViewReader.DecodeFreezePayload(
                     payload,
                     schemaVersion);

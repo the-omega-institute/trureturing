@@ -84,19 +84,32 @@ public sealed partial class FrozenLedgerTests
         Assert.Contains("statement identity changed", rejected.Message, StringComparison.Ordinal);
     }
 
-    [Theory]
-    [InlineData(2)]
-    [InlineData(3)]
-    public void LegacyNonFreezeEventsThatCannotConstructV5ViewFailClosed(int schemaVersion)
+    [Fact]
+    public void LegacyReattestV2IsSkippedWhenConstructingV5BaseView() =>
+        AssertLegacyIdentityNeutralEventIsSkipped("Reattest", schemaVersion: 2);
+
+    [Fact]
+    public void LegacyReattestV3IsSkippedWhenConstructingV5BaseView() =>
+        AssertLegacyIdentityNeutralEventIsSkipped("Reattest", schemaVersion: 3);
+
+    [Fact]
+    public void LegacyReattestV4IsSkippedWhenConstructingV5BaseView() =>
+        AssertLegacyIdentityNeutralEventIsSkipped("Reattest", schemaVersion: 4);
+
+    [Fact]
+    public void LegacyGenesisV2IsSkippedWhenConstructingV5BaseView() =>
+        AssertLegacyIdentityNeutralEventIsSkipped("Genesis", schemaVersion: 2);
+
+    [Fact]
+    public void LegacyRevokeV2FailsClosedWhenConstructingV5BaseView()
     {
+        var file = LegacyNonFreezeEventFile("Revoke", schemaVersion: 2);
         var exception = Assert.Throws<FormatException>(() =>
-            FrozenLedgerBaseViewReader.ValidateTrustedPayload(
-                "Reattest",
-                schemaVersion,
-                JsonSerializer.SerializeToElement(new { })));
+            FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
+                ImmutableDictionary<RepoPath, RepositoryFile>.Empty.Add(file.Path, file))));
 
         Assert.Contains(
-            $"trusted Reattest schema_version {schemaVersion} cannot construct a v5 base view",
+            "trusted Revoke schema_version 2 cannot construct a v5 base view",
             exception.Message,
             StringComparison.Ordinal);
     }
@@ -192,6 +205,44 @@ public sealed partial class FrozenLedgerTests
         _ = Assert.IsType<DagLedgerFilesLoadOutcome.Loaded>(
             FrozenAcceptedEventLoader.LoadTrustedFiles(files));
         return ValidateHistory(files, catalog);
+    }
+
+    private static void AssertLegacyIdentityNeutralEventIsSkipped(
+        string eventType,
+        int schemaVersion)
+    {
+        var catalog = BuildCatalog(Module("A"));
+        var freeze = Assert.Single(LegacyEventFiles(catalog, schemaVersion));
+        var skipped = LegacyNonFreezeEventFile(eventType, schemaVersion);
+        var files = new[] { freeze, skipped }.ToImmutableDictionary(static file => file.Path);
+
+        var view = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(files));
+
+        Assert.Equal(2, view.EventCount);
+        Assert.Equal(2, view.EventHashes.Count);
+        Assert.Single(view.ActiveByCase);
+        Assert.Single(view.ActiveByPath);
+        Assert.Equal(PathFor("A"), Assert.Single(view.ActiveByPath).Key.Value);
+    }
+
+    private static RepositoryFile LegacyNonFreezeEventFile(
+        string eventType,
+        int schemaVersion)
+    {
+        var eventHash = Sha256($"legacy v{schemaVersion} {eventType}");
+        var envelope = JsonSerializer.Serialize(new
+        {
+            event_hash = eventHash,
+            event_type = eventType,
+            payload = new { },
+            schema_version = schemaVersion,
+        }) + "\n";
+        var identity = FrozenLedgerCanonicalWriter.EventIdentity(eventHash);
+        return new RepositoryFile(
+            RepoPath.CreateKnown(
+                $"{FrozenLedgerChangeClassifier.AcceptedRoot}/{identity[7..]}.json"),
+            ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(envelope)),
+            envelope);
     }
 
     private static ImmutableArray<RepositoryFile> LegacyEventFiles(

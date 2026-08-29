@@ -187,7 +187,7 @@ internal static class DagLedgerAppendWriter
             using var document = JsonDocument.Parse(file.RawBytes.ToArray());
             var root = document.RootElement;
             var eventType = RequiredLegacyString(root, "event_type", "legacy event");
-            if (eventType is "Genesis" or "Reattest")
+            if (LegacyFrozenLedgerEventSemantics.IsIdentityNeutral(eventType))
             {
                 continue;
             }

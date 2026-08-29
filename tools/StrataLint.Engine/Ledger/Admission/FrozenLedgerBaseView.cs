@@ -11,7 +11,7 @@ internal sealed record TrustedFrozenLedgerEvent(
     string Identity,
     JsonElement Payload,
     int SchemaVersion,
-    FrozenFreezePayload FreezePayload,
+    FrozenFreezePayload? FreezePayload,
     ImmutableArray<byte> RawBytes = default,
     JsonElement Root = default);
 
@@ -138,7 +138,10 @@ internal static class FrozenLedgerBaseViewReader
             .OrderBy(static item => item.Key.Value, StringComparer.Ordinal)
             .Select(static item => ReadEvent(item.Value))
             .ToImmutableArray();
-        var entries = events.Select(ReadFreeze).ToImmutableArray();
+        var entries = events
+            .Where(static item => item.FreezePayload is not null)
+            .Select(ReadFreeze)
+            .ToImmutableArray();
 
         RequireUnique(entries.Select(static entry => entry.Material.RepoPath.Value), "descriptor_selector");
         RequireUnique(entries.Select(static entry => entry.Material.FrozenNodeId.Value), "frozen node identity");
@@ -189,13 +192,19 @@ internal static class FrozenLedgerBaseViewReader
             root.Clone());
     }
 
-    internal static FrozenFreezePayload ValidateTrustedPayload(
+    internal static FrozenFreezePayload? ValidateTrustedPayload(
         string eventType,
         int schemaVersion,
         JsonElement payload)
     {
         if (eventType != "Freeze")
         {
+            if (schemaVersion is >= 2 and <= 4
+                && LegacyFrozenLedgerEventSemantics.IsIdentityNeutral(eventType))
+            {
+                return null;
+            }
+
             if (schemaVersion is >= 2 and <= 4)
             {
                 throw new FormatException(
@@ -261,7 +270,9 @@ internal static class FrozenLedgerBaseViewReader
 
     internal static FrozenActiveEntry ReadFreeze(TrustedFrozenLedgerEvent item)
     {
-        var freeze = item.FreezePayload;
+        var freeze = item.FreezePayload
+            ?? throw new FormatException(
+                "trusted history event does not contain an active Freeze identity");
         var path = RepoPath.CreateKnown(freeze.DescriptorSelector);
         var frozenNodeId = FrozenContentAddress.ComputeFrozenNodeId(
             path,
