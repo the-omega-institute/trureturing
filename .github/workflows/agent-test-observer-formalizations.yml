@@ -1,0 +1,42 @@
+name: agent-test-observer-formalizations
+
+on:
+  push:
+    branches:
+      - agent/test/observer-formalizations-20260829
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/test/observer-formalizations-20260829
+          fetch-depth: 0
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - name: Install pinned Lean toolchain
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Restore Lean dependencies
+        run: lake update
+      - name: Build Scribe and repository CLI
+        run: make -C tools dotnet
+      - name: Build new Lean modules
+        run: |
+          set -euo pipefail
+          lake build D5.S3.ConceptDynamics.Faithfulness.InjectiveConstantReadoutSubsingleton
+          lake build D5.S3.Observer.Refinement.CongruenceKernelSensorFusion
+          lake build D5.S3.ConceptDynamics.ObservationOrder.PostprocessingKernelMonotonicity
+      - name: Emit and validate Scribe projections
+        run: |
+          set -euo pipefail
+          make emit
+          test -f Blueprint/D5/S3/ConceptDynamics/Faithfulness/InjectiveConstantReadoutSubsingleton.md
+          test -f Blueprint/D5/S3/Observer/Refinement/CongruenceKernelSensorFusion.md
+          test -f Blueprint/D5/S3/ConceptDynamics/ObservationOrder/PostprocessingKernelMonotonicity.md
+          git diff --check
