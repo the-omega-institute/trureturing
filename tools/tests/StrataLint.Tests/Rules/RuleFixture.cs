@@ -285,15 +285,6 @@ internal sealed partial class RuleFixture
                 Changes.Clear();
                 Changes.Add(BlueprintSourcePath);
                 break;
-            case "delivery-statement-identity":
-                AddHistoricalTheoristTarget(
-                    "prime-norm-irreducibility",
-                    baselineOwnerKind: "declaration-ready-mathematical-open",
-                    baselineIncludeContract: true);
-                ReplaceRetiredBaselineWithLiteralV2Contract();
-                RetireTheoristTarget();
-                MutateRetiredDeliveryStatement("weakened");
-                break;
             default: throw new ArgumentOutOfRangeException(nameof(mutation));
         }
     }
@@ -312,7 +303,6 @@ internal sealed partial class RuleFixture
         "anomaly" => "Evidence/D5/S0/Carrier/Result.run.json",
         "future" => "D8/S0/Carrier/Ring.lean",
         "blueprint-skeleton" or "legacy-scribe" => BlueprintSourcePath,
-        "delivery-statement-identity" => "D5/X_Frontier/PrimeNormIrreducibility.lean",
         _ => throw new ArgumentOutOfRangeException(nameof(mutation)),
     };
 

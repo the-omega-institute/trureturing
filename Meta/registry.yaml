@@ -20,7 +20,6 @@ governance_documents:
   - "Meta/FILEMAP.toml"
   - "docs/CONTRIBUTING.md"
   - "docs/GOVERNANCE.md"
-  - "docs/MISSION.md"
   - "docs/develop/spec/golden-ledger-repo-spec.md"
 agent_files:
   - "CONTEXT.md"

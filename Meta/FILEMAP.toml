@@ -127,7 +127,7 @@ runtime_disposition = "committed-ledger"
 pattern = "Evidence/D5/**/*.result.json"
 kind = "data"
 produced_by = "none"
-consumed_by = ["TheoristFrontierContractValidator", "reader"]
+consumed_by = ["reader"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
@@ -195,15 +195,6 @@ artifact_id = "A-TRUTH"
 runtime_disposition = "run-local"
 mode = "100644"
 history_requirement = "not-required"
-
-[[files]]
-pattern = "Golden/EngineeringTestRetirements/*.json"
-kind = "data"
-produced_by = "none"
-consumed_by = ["EngineeringTestRetirementLoader"]
-verified_by = ["EngineeringTestRetirementLoader"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Golden/Frozen/accepted/*.json"
@@ -373,15 +364,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["developer"]
 verified_by = ["repository-policy"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "docs/MISSION.md"
-kind = "data"
-produced_by = "none"
-consumed_by = ["MissionFileLoader"]
-verified_by = ["MissionFileLoader"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 

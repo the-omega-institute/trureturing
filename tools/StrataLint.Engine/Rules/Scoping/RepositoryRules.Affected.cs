@@ -1,4 +1,3 @@
-using System.Text.Json;
 using Trureturing.Truth;
 
 namespace StrataLint.Engine;
@@ -11,12 +10,7 @@ internal static partial class RepositoryRules
     private static bool SorryAffected(RuleEvaluationContext context) =>
         LeanReportAffected(context)
         || Changed(context, static path =>
-            path == MissionFileLoader.RelativePath
-            || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path))
-        || TheoristReceiptReferenceChanged(context);
-
-    private static bool DeliveryStatementIdentityAffected(RuleEvaluationContext context) =>
-        TheoristFrontierContractValidator.IsDeliveryIdentityAffected(context);
+            FrozenLedgerChangeClassifier.IsAcceptedEventPath(path));
 
     private static bool CapacityAffected(RuleEvaluationContext context) =>
         Changed(context, static path =>
@@ -126,60 +120,6 @@ internal static partial class RepositoryRules
             .Any(path => context.IsBaseFactAffected(path.Value))
         || context.Changes.Paths.Any(path =>
             IsLeanReportInput(path.Value) && !IsManagedLeanPath(path.Value));
-
-    private static bool TheoristReceiptReferenceChanged(RuleEvaluationContext context)
-    {
-        var changed = context.Changes.Paths
-            .Select(static path => path.Value)
-            .ToHashSet(StringComparer.Ordinal);
-        foreach (var file in context.Current.Files
-                     .Where(static item =>
-                         item.Key.Value.StartsWith("D5/X_Frontier/", StringComparison.Ordinal)
-                         && item.Key.Value.EndsWith(".lean", StringComparison.Ordinal)))
-        {
-            var start = file.Value.Text.IndexOf(
-                TheoristFrontierContractValidator.Marker,
-                StringComparison.Ordinal);
-            if (start < 0)
-            {
-                continue;
-            }
-
-            start += TheoristFrontierContractValidator.Marker.Length;
-            var end = file.Value.Text.IndexOf("\n-/", start, StringComparison.Ordinal);
-            if (end < 0)
-            {
-                continue;
-            }
-
-            try
-            {
-                using var document = JsonDocument.Parse(file.Value.Text[start..end]);
-                foreach (var property in new[] { "search_receipt_gids", "computation_receipt_gids" })
-                {
-                    if (!document.RootElement.TryGetProperty(property, out var references)
-                        || references.ValueKind is not JsonValueKind.Array)
-                    {
-                        continue;
-                    }
-
-                    if (references.EnumerateArray().Any(reference =>
-                            reference.ValueKind is JsonValueKind.String
-                            && Gid.TryParse(reference.GetString()!, out var gid)
-                            && changed.Contains(gid.Path.Value)))
-                    {
-                        return true;
-                    }
-                }
-            }
-            catch (JsonException)
-            {
-                // A malformed contract is awakened by its own managed-Lean source change.
-            }
-        }
-
-        return false;
-    }
 
     private static bool LiteratureReferenceChanged(RuleEvaluationContext context)
     {

@@ -1,7 +1,0 @@
-{
-  "schema_version": 1,
-  "assembly": "StrataLint.Tests",
-  "id": "AdmissionWorkflowTests.PlannerNoneForFullSurfaceDeletesArtifactSoExecuteMustReplanFromBase",
-  "disposition": "retired",
-  "reason": "Retired with the workflow-test prohibition (CLAUDE.md 器律⑦′, 2026-08-29): a workflow shape assertion proves only what the file looks like, never whether the step runs; the repository measured this when `if: false` on the strip step left all 16 covering tests green. Workflow behaviour is verified by running it on a real event, not from a unit test."
-}

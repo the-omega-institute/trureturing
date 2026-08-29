@@ -21,8 +21,6 @@ internal interface ICliEnvironment
 
     CommandResult DigestStatus(IReadOnlyList<string> arguments);
 
-    CommandResult TheoryCandidates(IReadOnlyList<string> arguments);
-
     CommandResult ShowAtom(IReadOnlyList<string> arguments);
 
     ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments);
@@ -131,8 +129,6 @@ internal static class CliApplication
                 RenderExplicit(environment.TruthExport(tail), console),
             ["truth-release"] = static (environment, tail, console) =>
                 RenderExplicit(environment.TruthRelease(tail), console),
-            ["theory-candidates"] = static (environment, tail, console) =>
-                RenderCommand(environment.TheoryCandidates(tail), console),
             ["worktree"] = static (environment, tail, console) =>
                 RenderCommand(environment.Worktree(tail), console),
         }.ToImmutableDictionary(StringComparer.Ordinal);
