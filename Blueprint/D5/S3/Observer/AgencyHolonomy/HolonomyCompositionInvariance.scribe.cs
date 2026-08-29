@@ -2,12 +2,12 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.Agency.Holonomy;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.AgencyHolonomy;
 
 internal sealed class HolonomyCompositionInvarianceDocument : IScribeDocumentDefinition
 {
     private const string Prefix =
-        "D5/S3/Observer/Agency/Holonomy/HolonomyCompositionInvariance.";
+        "D5/S3/Observer/AgencyHolonomy/HolonomyCompositionInvariance.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Policy-invisible memory transports are closed under composition.",

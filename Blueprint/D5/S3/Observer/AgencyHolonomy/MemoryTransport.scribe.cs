@@ -2,12 +2,12 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.Agency.Holonomy;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.AgencyHolonomy;
 
 internal sealed class MemoryTransportDocument : IScribeDocumentDefinition
 {
     private const string Prefix =
-        "D5/S3/Observer/Agency/Holonomy/MemoryTransport.";
+        "D5/S3/Observer/AgencyHolonomy/MemoryTransport.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Sequential memory transport along concatenated action words composes.",

@@ -2,12 +2,12 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.Agency.Holonomy;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.AgencyHolonomy;
 
 internal sealed class ActionLoopRequiresMemoryDocument : IScribeDocumentDefinition
 {
     private const string Prefix =
-        "D5/S3/Observer/Agency/Holonomy/ActionLoopRequiresMemory.";
+        "D5/S3/Observer/AgencyHolonomy/ActionLoopRequiresMemory.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A policy-visible loop effect requires nontrivial memory transport.",
@@ -17,7 +17,7 @@ internal sealed class ActionLoopRequiresMemoryDocument : IScribeDocumentDefiniti
                 DescribeId.Create("policy-change-implies-memory-change"),
                 DeclarationHandle.Create(Prefix + "policy_change_implies_memory_change"),
                 H("Policy change implies memory change"),
-                StatementSource.FromAuthor(ChangeStatement()),
+                StatementSource.FromLean(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -58,13 +58,6 @@ internal sealed class ActionLoopRequiresMemoryDocument : IScribeDocumentDefiniti
     private static Formula PolicyAt(Formula memory) =>
         Call("policy", F.Id("q"), memory);
 
-    private static Formula ChangeStatement()
-    {
-        Formula transported = Call("h", F.Id("m"));
-        return PrefixFormula(
-            Seq(PolicyAt(transported), Sp, Neq, Sp, PolicyAt(F.Id("m"))),
-            Seq(transported, Sp, Neq, Sp, F.Id("m")));
-    }
 
     private static Formula DetectionStatement()
     {

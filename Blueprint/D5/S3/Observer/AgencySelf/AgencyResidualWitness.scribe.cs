@@ -2,12 +2,12 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.Agency.Self;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.AgencySelf;
 
 internal sealed class AgencyResidualWitnessDocument : IScribeDocumentDefinition
 {
     private const string Prefix =
-        "D5/S3/Observer/Agency/Self/AgencyResidualWitness.";
+        "D5/S3/Observer/AgencySelf/AgencyResidualWitness.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A hidden strategy difference is a concrete witness of agency residual.",

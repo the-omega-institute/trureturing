@@ -1,6 +1,6 @@
-/- GID: D5/S3/Observer/Agency/Self/AgencyResidualDecomposition
+/- GID: D5/S3/Observer/AgencySelf/AgencyResidualDecomposition
    generality: G
-   mirror-B: D5/B/S3/Observer/Agency/Self/AgencyResidualDecomposition
+   mirror-B: D5/B/S3/Observer/AgencySelf/AgencyResidualDecomposition
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: The current-state kernel decomposes into completed and strategy-residual pairs. -/
@@ -18,7 +18,7 @@ import Mathlib.Logic.Function.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Observer.Agency.Self.AgencyResidualDecomposition
+namespace D5.S3.Observer.AgencySelf.AgencyResidualDecomposition
 
 universe u v w
 
@@ -70,4 +70,4 @@ theorem completion_residual_exclusive
 #print axioms current_relation_decomposition
 #print axioms completion_residual_exclusive
 
-end D5.S3.Observer.Agency.Self.AgencyResidualDecomposition
+end D5.S3.Observer.AgencySelf.AgencyResidualDecomposition

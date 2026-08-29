@@ -1,6 +1,6 @@
-/- GID: D5/S3/Observer/Agency/Self/AgencyCompletionMinimality
+/- GID: D5/S3/Observer/AgencySelf/AgencyCompletionMinimality
    generality: G
-   mirror-B: D5/B/S3/Observer/Agency/Self/AgencyCompletionMinimality
+   mirror-B: D5/B/S3/Observer/AgencySelf/AgencyCompletionMinimality
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Componentwise recoverability induces recoverability of the paired agency completion. -/
@@ -18,7 +18,7 @@ import Mathlib.Logic.Function.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Observer.Agency.Self.AgencyCompletionMinimality
+namespace D5.S3.Observer.AgencySelf.AgencyCompletionMinimality
 
 universe u v w z
 
@@ -53,4 +53,4 @@ theorem paired_completion_recovers_components
 #print axioms paired_completion_factors_through_summary
 #print axioms paired_completion_recovers_components
 
-end D5.S3.Observer.Agency.Self.AgencyCompletionMinimality
+end D5.S3.Observer.AgencySelf.AgencyCompletionMinimality

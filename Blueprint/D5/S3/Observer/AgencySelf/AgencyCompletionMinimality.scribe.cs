@@ -2,12 +2,12 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.Agency.Self;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.AgencySelf;
 
 internal sealed class AgencyCompletionMinimalityDocument : IScribeDocumentDefinition
 {
     private const string Prefix =
-        "D5/S3/Observer/Agency/Self/AgencyCompletionMinimality.";
+        "D5/S3/Observer/AgencySelf/AgencyCompletionMinimality.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Componentwise recoverability induces recoverability of the paired agency completion.",

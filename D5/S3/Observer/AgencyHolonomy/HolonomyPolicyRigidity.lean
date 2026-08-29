@@ -1,6 +1,6 @@
-/- GID: D5/S3/Observer/Agency/Holonomy/HolonomyPolicyRigidity
+/- GID: D5/S3/Observer/AgencyHolonomy/HolonomyPolicyRigidity
    generality: G
-   mirror-B: D5/B/S3/Observer/Agency/Holonomy/HolonomyPolicyRigidity
+   mirror-B: D5/B/S3/Observer/AgencyHolonomy/HolonomyPolicyRigidity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: An injective policy invariant under holonomy forces trivial holonomy. -/
@@ -18,7 +18,7 @@ import Mathlib.Logic.Function.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Observer.Agency.Holonomy.HolonomyPolicyRigidity
+namespace D5.S3.Observer.AgencyHolonomy.HolonomyPolicyRigidity
 
 universe u v
 
@@ -48,4 +48,4 @@ theorem no_nontrivial_invisible_loop
 #print axioms policy_invariant_holonomy_eq_identity
 #print axioms no_nontrivial_invisible_loop
 
-end D5.S3.Observer.Agency.Holonomy.HolonomyPolicyRigidity
+end D5.S3.Observer.AgencyHolonomy.HolonomyPolicyRigidity

@@ -1,6 +1,6 @@
-/- GID: D5/S3/Observer/Agency/Self/AgencyResidualWitness
+/- GID: D5/S3/Observer/AgencySelf/AgencyResidualWitness
    generality: G
-   mirror-B: D5/B/S3/Observer/Agency/Self/AgencyResidualWitness
+   mirror-B: D5/B/S3/Observer/AgencySelf/AgencyResidualWitness
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: A hidden strategy difference is a concrete witness of agency residual. -/
@@ -18,7 +18,7 @@ import Mathlib.Logic.Function.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Observer.Agency.Self.AgencyResidualWitness
+namespace D5.S3.Observer.AgencySelf.AgencyResidualWitness
 
 universe u v w
 
@@ -53,4 +53,4 @@ theorem residual_separated_by_pair
 #print axioms hidden_strategy_difference_is_residual
 #print axioms residual_separated_by_pair
 
-end D5.S3.Observer.Agency.Self.AgencyResidualWitness
+end D5.S3.Observer.AgencySelf.AgencyResidualWitness

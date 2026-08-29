@@ -2,13 +2,13 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.Agency.Self;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.AgencySelf;
 
 internal sealed class StrategySelfKnowledgeFactorizationDocument
     : IScribeDocumentDefinition
 {
     private const string Prefix =
-        "D5/S3/Observer/Agency/Self/StrategySelfKnowledgeFactorization.";
+        "D5/S3/Observer/AgencySelf/StrategySelfKnowledgeFactorization.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Strategy self-knowledge factorization refines the current-state observation kernel.",
@@ -18,7 +18,7 @@ internal sealed class StrategySelfKnowledgeFactorizationDocument
                 DescribeId.Create("factorization-refines-the-strategy-kernel"),
                 DeclarationHandle.Create(Prefix + "factorization_refines_strategy_kernel"),
                 H("Factorization refines the strategy kernel"),
-                StatementSource.FromAuthor(ProfileStatement()),
+                StatementSource.FromLean(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -67,8 +67,6 @@ internal sealed class StrategySelfKnowledgeFactorizationDocument
             Open, antecedent, Close, Sp, Rightarrow, Sp, conclusion, Dot));
     }
 
-    private static Formula ProfileStatement() => PrefixFormula(Seq(
-        Call("profile", F.Id("x")), Sp, Eq, Sp, Call("profile", F.Id("y"))));
 
     private static Formula PairStatement()
     {

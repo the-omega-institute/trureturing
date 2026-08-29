@@ -1,6 +1,6 @@
-/- GID: D5/S3/Observer/Agency/Holonomy/MemoryTransport
+/- GID: D5/S3/Observer/AgencyHolonomy/MemoryTransport
    generality: G
-   mirror-B: D5/B/S3/Observer/Agency/Holonomy/MemoryTransport
+   mirror-B: D5/B/S3/Observer/AgencyHolonomy/MemoryTransport
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Sequential memory transport along concatenated action words composes. -/
@@ -19,7 +19,7 @@ import Mathlib.Logic.Function.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Observer.Agency.Holonomy.MemoryTransport
+namespace D5.S3.Observer.AgencyHolonomy.MemoryTransport
 
 universe u
 
@@ -52,4 +52,4 @@ theorem transportWord_append
 #print axioms transportWord_append
 #print axioms transportWord_nil
 
-end D5.S3.Observer.Agency.Holonomy.MemoryTransport
+end D5.S3.Observer.AgencyHolonomy.MemoryTransport

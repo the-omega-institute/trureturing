@@ -35,7 +35,7 @@ internal sealed class GaugeStableZeroDefectDocument : IScribeDocumentDefinition
                 DescribeId.Create("defect-invariance-preserves-zero-defect"),
                 DeclarationHandle.Create(Prefix + "gauge_preserves_zero_defect"),
                 H("Defect invariance preserves zero defect"),
-                StatementSource.FromAuthor(ZeroStatement()),
+                StatementSource.FromLean(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -79,18 +79,4 @@ internal sealed class GaugeStableZeroDefectDocument : IScribeDocumentDefinition
             Open, left, Sp, Iff, Sp, right, Close, Dot));
     }
 
-    private static Formula ZeroStatement()
-    {
-        Formula left = Seq(Call("defect", F.Id("x")), Sp, Eq, Sp, F.Id("zero"));
-        Formula right = Seq(
-            Call("defect", Call("gauge", F.Id("x"))), Sp, Eq, Sp, F.Id("zero"));
-        return Disp(Seq(
-            Forall, Sp, F.Id("defect"), Colon, Sp,
-            Arrow(F.Id("X"), F.Id("D")), Comma, Sp,
-            F.Id("zero"), Colon, Sp, F.Id("D"), Comma, Sp,
-            F.Id("gauge"), Colon, Sp, Arrow(F.Id("X"), F.Id("X")), Comma, Sp,
-            F.Id("x"), Colon, Sp, F.Id("X"), Comma, RowBreak, Grp(),
-            Open, Invariance("defect"), Close, Sp, Rightarrow, Sp,
-            Open, left, Sp, Iff, Sp, right, Close, Dot));
-    }
 }

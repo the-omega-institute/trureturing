@@ -1,6 +1,6 @@
-/- GID: D5/S3/Observer/Agency/Self/StrategySelfKnowledgeFactorization
+/- GID: D5/S3/Observer/AgencySelf/StrategySelfKnowledgeFactorization
    generality: G
-   mirror-B: D5/B/S3/Observer/Agency/Self/StrategySelfKnowledgeFactorization
+   mirror-B: D5/B/S3/Observer/AgencySelf/StrategySelfKnowledgeFactorization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Strategy self-knowledge factorization refines the current-state observation kernel. -/
@@ -18,7 +18,7 @@ import Mathlib.Logic.Function.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Observer.Agency.Self.StrategySelfKnowledgeFactorization
+namespace D5.S3.Observer.AgencySelf.StrategySelfKnowledgeFactorization
 
 universe u v w
 
@@ -50,4 +50,4 @@ theorem visible_profile_pair_equality
 #print axioms factorization_refines_strategy_kernel
 #print axioms visible_profile_pair_equality
 
-end D5.S3.Observer.Agency.Self.StrategySelfKnowledgeFactorization
+end D5.S3.Observer.AgencySelf.StrategySelfKnowledgeFactorization

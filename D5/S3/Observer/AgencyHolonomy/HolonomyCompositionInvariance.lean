@@ -1,6 +1,6 @@
-/- GID: D5/S3/Observer/Agency/Holonomy/HolonomyCompositionInvariance
+/- GID: D5/S3/Observer/AgencyHolonomy/HolonomyCompositionInvariance
    generality: G
-   mirror-B: D5/B/S3/Observer/Agency/Holonomy/HolonomyCompositionInvariance
+   mirror-B: D5/B/S3/Observer/AgencyHolonomy/HolonomyCompositionInvariance
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Policy-invisible memory transports are closed under composition. -/
@@ -18,7 +18,7 @@ import Mathlib.Logic.Function.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Observer.Agency.Holonomy.HolonomyCompositionInvariance
+namespace D5.S3.Observer.AgencyHolonomy.HolonomyCompositionInvariance
 
 universe u v
 
@@ -48,4 +48,4 @@ theorem identity_transport_invisible
 #print axioms invisible_transports_compose
 #print axioms identity_transport_invisible
 
-end D5.S3.Observer.Agency.Holonomy.HolonomyCompositionInvariance
+end D5.S3.Observer.AgencyHolonomy.HolonomyCompositionInvariance

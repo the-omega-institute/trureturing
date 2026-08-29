@@ -1,6 +1,6 @@
-/- GID: D5/S3/Observer/Agency/Holonomy/ActionLoopRequiresMemory
+/- GID: D5/S3/Observer/AgencyHolonomy/ActionLoopRequiresMemory
    generality: G
-   mirror-B: D5/B/S3/Observer/Agency/Holonomy/ActionLoopRequiresMemory
+   mirror-B: D5/B/S3/Observer/AgencyHolonomy/ActionLoopRequiresMemory
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: A policy-visible loop effect requires nontrivial memory transport. -/
@@ -18,7 +18,7 @@ import Mathlib.Logic.Function.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Observer.Agency.Holonomy.ActionLoopRequiresMemory
+namespace D5.S3.Observer.AgencyHolonomy.ActionLoopRequiresMemory
 
 universe u v w
 
@@ -49,4 +49,4 @@ theorem injective_policy_detects_memory_change
 #print axioms policy_change_implies_memory_change
 #print axioms injective_policy_detects_memory_change
 
-end D5.S3.Observer.Agency.Holonomy.ActionLoopRequiresMemory
+end D5.S3.Observer.AgencyHolonomy.ActionLoopRequiresMemory
