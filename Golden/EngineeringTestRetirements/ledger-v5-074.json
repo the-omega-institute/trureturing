@@ -1,7 +1,0 @@
-{
-  "schema_version": 1,
-  "assembly": "StrataLint.Tests",
-  "id": "FrozenTrustedHistoryDecoderTests.TrustedHistoryDecoderConsumesReattestV2ExtendedPayload",
-  "disposition": "retired",
-  "reason": "Reattest v2 persistent identity-rewrite semantics retired; schema v5 derives identity from the sole persistent Freeze event and only skips legacy Reattest records while constructing a base view."
-}

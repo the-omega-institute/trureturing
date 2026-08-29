@@ -1,7 +1,0 @@
-{
-  "schema_version": 1,
-  "assembly": "StrataLint.Tests",
-  "id": "FrozenGitInfrastructureFixtureTests.LsTreeNonzeroExitPreservesExitCodeAndStderr",
-  "disposition": "retired",
-  "reason": "ls-tree validation of descriptor membership in a persisted Freeze base tree was retired with coordinate inputs."
-}

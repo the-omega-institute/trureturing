@@ -1,7 +1,0 @@
-{
-  "schema_version": 1,
-  "assembly": "StrataLint.Tests",
-  "id": "FrozenTrustedHistoryDecoderTests.TrustedHistoryProjectionFoldsFreezeV2ExtendedV3ClosureChain",
-  "disposition": "retired",
-  "reason": "Folding Reattest identity and axiom-closure mutations into an active persistent history was retired; v5 identity comes only from Freeze snapshots."
-}

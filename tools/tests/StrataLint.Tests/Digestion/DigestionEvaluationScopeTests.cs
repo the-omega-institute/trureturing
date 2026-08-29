@@ -70,7 +70,7 @@ public sealed class DigestionEvaluationScopeTests
             ["tools/StrataLint.Engine/Digestion/Evaluation/DigestionStatusEvaluator.cs"]);
         var scope = DigestionEvaluationScopes.ForChanges(
             changes,
-            "tools/StrataLint.Cli/Commands/TheoryGeneration/TheoryCandidatesCommand.cs");
+            "tools/StrataLint.Cli/Commands/DigestStatusCommand.cs");
         var evaluation = EvaluateMismatchedProjectedStatus(changes, scope);
 
         Assert.Equal(DigestionEvaluationScope.FullScan, scope);

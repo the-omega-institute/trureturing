@@ -1,7 +1,0 @@
-{
-  "schema_version": 1,
-  "assembly": "StrataLint.Tests",
-  "id": "DepositCoverWorkflowScriptTests.DepositSkipsAppendWhenTargetModuleWasReattested",
-  "disposition": "retired",
-  "reason": "Reattest persistent events and their replacement active-node identity were retired from schema v5."
-}

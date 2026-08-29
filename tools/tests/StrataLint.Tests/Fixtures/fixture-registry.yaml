@@ -19,7 +19,6 @@ governance_documents:
   - "Meta/FILEMAP.toml"
   - "docs/CONTRIBUTING.md"
   - "docs/GOVERNANCE.md"
-  - "docs/MISSION.md"
   - "docs/develop/spec/golden-ledger-repo-spec.md"
   - "tools/Generated/scribe-emissions.v1.json"
 agent_files:

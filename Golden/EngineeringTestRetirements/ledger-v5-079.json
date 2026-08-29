@@ -1,7 +1,0 @@
-{
-  "schema_version": 1,
-  "assembly": "StrataLint.Tests",
-  "id": "FrozenTrustedHistoryDecoderTests.TrustedHistoryProjectionRejectsMissingAttestationParent",
-  "disposition": "retired",
-  "reason": "Reattest predecessor chains and their required-parent relation were retired from the v5 persistent protocol."
-}

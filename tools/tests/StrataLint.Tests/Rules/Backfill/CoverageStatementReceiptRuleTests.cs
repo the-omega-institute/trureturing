@@ -5,12 +5,12 @@ namespace StrataLint.Tests;
 public sealed class CoverageStatementReceiptRuleTests
 {
     [Fact]
-    public void FrozenLedgerEventChangeWakesSl016()
+    public void FrozenLedgerEventPathAloneDoesNotWakeSl016()
     {
         var path = FrozenLedgerChangeClassifier.AcceptedRoot + "/changed.json";
         var context = new RuleFixture().Build(RawChangeSet.Create([path]));
 
-        Assert.True(BackfillInventoryRule.IsAffectedBy(context));
+        Assert.False(BackfillInventoryRule.IsAffectedBy(context));
     }
 
     [Fact]

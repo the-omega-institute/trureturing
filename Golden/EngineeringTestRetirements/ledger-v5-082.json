@@ -1,7 +1,0 @@
-{
-  "schema_version": 1,
-  "assembly": "StrataLint.Tests",
-  "id": "FrozenTrustedHistoryDecoderTests.TrustedReferenceScanAcceptsHistoricalInputMaterializer",
-  "disposition": "retired",
-  "reason": "The historical input materializer and the trusted Git-reference scan that consumed it were retired from schema v5."
-}

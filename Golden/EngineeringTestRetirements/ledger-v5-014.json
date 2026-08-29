@@ -1,7 +1,0 @@
-{
-  "schema_version": 1,
-  "assembly": "StrataLint.Tests",
-  "id": "DepositCoverWorkflowScriptTests.DepositSkipsAppendWhenSchemaV4FreezeUsesDescriptorSelector",
-  "disposition": "retired",
-  "reason": "The schema v4 current-write/reentry path was retired; deposit now requires a canonical schema v5 Freeze shard."
-}

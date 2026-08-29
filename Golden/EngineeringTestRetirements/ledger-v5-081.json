@@ -1,7 +1,0 @@
-{
-  "schema_version": 1,
-  "assembly": "StrataLint.Tests",
-  "id": "FrozenTrustedHistoryDecoderTests.TrustedReferenceScanAcceptsFreezeV2AndV3PayloadShapes",
-  "disposition": "retired",
-  "reason": "Trusted extraction of Git coordinate inputs from legacy Freeze payloads was retired because v5 performs no frozen-reference scan."
-}

@@ -1,7 +1,0 @@
-{
-  "schema_version": 1,
-  "assembly": "StrataLint.Tests",
-  "id": "FrozenLedgerTests.ReferenceProjectionRejectsUnknownFieldsInDagPayload",
-  "disposition": "retired",
-  "reason": "The frozen Git-reference projection and its payload-shape validation retired with the coordinate input fields; schema v5 has no reference-scan consumer because Freeze persists proposition identity only."
-}

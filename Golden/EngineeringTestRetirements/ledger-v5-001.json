@@ -1,7 +1,0 @@
-{
-  "schema_version": 1,
-  "assembly": "StrataLint.Tests",
-  "id": "CoverageLedgerIndexTests.ExtendedReattestMigratesActiveNodeIdentityBeforeRevocation",
-  "disposition": "retired",
-  "reason": "Reattest persistent-event identity migration and its later Revoke replay were retired; schema v5 derives active identity from standalone Freeze snapshots."
-}

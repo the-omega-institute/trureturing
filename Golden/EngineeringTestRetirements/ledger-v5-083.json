@@ -1,7 +1,0 @@
-{
-  "schema_version": 1,
-  "assembly": "StrataLint.Tests",
-  "id": "FrozenTrustedHistoryDecoderTests.TrustedReferenceScanConsumesLegacyFreezeProjectionFields",
-  "disposition": "retired",
-  "reason": "Trusted validation of legacy Freeze projection fields retired with the frozen Git-reference scan; schema v5 consumes proposition-only Freeze snapshots and has no coordinate-reference scanner."
-}

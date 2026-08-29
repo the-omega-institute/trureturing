@@ -1,7 +1,0 @@
-{
-  "schema_version": 1,
-  "assembly": "StrataLint.Tests",
-  "id": "DepositCoverWorkflowScriptTests.DeliverCheckAcceptsAddedFreezeWhoseBaseRemainsInHeadHistory",
-  "disposition": "retired",
-  "reason": "The Freeze coordinate input and its base_commit_oid ancestry contract were retired from the schema v5 payload."
-}

@@ -1,7 +1,0 @@
-{
-  "schema_version": 1,
-  "assembly": "StrataLint.Tests",
-  "id": "ProductionEnvironmentTests.CheckAdmitsAValidatedRevokeAndTheCorrespondingClosedModuleRemoval",
-  "disposition": "retired",
-  "reason": "Admission of an added Revoke persistent event was retired; v5 represents the removal by replacing the Freeze snapshot set."
-}

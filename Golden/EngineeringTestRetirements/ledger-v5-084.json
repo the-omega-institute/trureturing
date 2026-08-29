@@ -1,7 +1,0 @@
-{
-  "schema_version": 1,
-  "assembly": "StrataLint.Tests",
-  "id": "FrozenTrustedHistoryDecoderTests.TrustedReferenceScanConsumesLegacyReattestPayloadFields",
-  "disposition": "retired",
-  "reason": "Legacy Reattest payload interpretation and its Git-reference extraction were retired; read-only v5 transition handling skips Reattest as identity-neutral."
-}
