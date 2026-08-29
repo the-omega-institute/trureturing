@@ -85,8 +85,32 @@ internal static class IngestTruthAlignmentClassifier
         ArgumentNullException.ThrowIfNull(planned);
         ArgumentNullException.ThrowIfNull(repositoryChanges);
         var currentEntries = StatusAuthorityEntries(current);
+        var plannedEntries = StatusAuthorityEntries(planned);
+        var newPlannedEntriesByLocation = plannedEntries.Values
+            .Where(item => !currentEntries.ContainsKey(item.Entry.AtomId))
+            .ToLookup(item => (item.Entry.SourceId, item.Entry.AstPath));
 
-        foreach (var item in StatusAuthorityEntries(planned).Values
+        foreach (var item in currentEntries.Values
+                     .Where(static item => !item.Entry.CoverageGids.IsEmpty)
+                     .OrderBy(static item => item.Entry.AtomId, StringComparer.Ordinal))
+        {
+            var entry = item.Entry;
+            if (!plannedEntries.TryGetValue(entry.AtomId, out var plannedItem))
+            {
+                return IngestTruthAlignmentClassification.TruthAlignmentRequired(
+                    $"covered entry {entry.AtomId} disappeared from plan");
+            }
+
+            if (plannedItem.Entry.CoverageGids.IsEmpty
+                || newPlannedEntriesByLocation[(entry.SourceId, entry.AstPath)]
+                    .Any(static successor => successor.Entry.CoverageGids.IsEmpty))
+            {
+                return IngestTruthAlignmentClassification.TruthAlignmentRequired(
+                    $"covered entry {entry.AtomId} coverage was cleared in plan");
+            }
+        }
+
+        foreach (var item in plannedEntries.Values
                      .OrderBy(static item => item.Entry.AtomId, StringComparer.Ordinal))
         {
             var entry = item.Entry;

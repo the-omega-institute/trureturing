@@ -515,12 +515,16 @@ jobs:
               printf '%s\n' 'OCI lookup failed without a definitive not-found response' >&2
               exit 1
             fi
-            oras push "$reference" \
-              --artifact-type "$OCI_ARTIFACT_TYPE" \
-              --annotation "org.opencontainers.image.source=${source_url}" \
-              --annotation "org.opencontainers.image.revision=${SOURCE_COMMIT}" \
-              --annotation "org.theomega.truth-release.release-digest=${RELEASE_DIGEST}" \
-              "$ARCHIVE:$OCI_LAYER_TYPE"
+            # oras rejects absolute file paths (they would leak the runner path into the
+            # layer title); push from the asset directory so the layer title is the bare
+            # filename, matching the basename-based pull/cmp in verify_pinned_oci_artifact.
+            ( cd "$(dirname "$ARCHIVE")" \
+              && oras push "$reference" \
+                --artifact-type "$OCI_ARTIFACT_TYPE" \
+                --annotation "org.opencontainers.image.source=${source_url}" \
+                --annotation "org.opencontainers.image.revision=${SOURCE_COMMIT}" \
+                --annotation "org.theomega.truth-release.release-digest=${RELEASE_DIGEST}" \
+                "$(basename "$ARCHIVE"):$OCI_LAYER_TYPE" )
             pushed=true
             oras manifest fetch --descriptor "$reference" > "$descriptor"
           fi
