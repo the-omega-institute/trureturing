@@ -21,13 +21,15 @@ internal sealed class PositiveSupportNonexplosionDocument : IScribeDocumentDefin
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
-                    "Use the repository's two-bit evidence carrier. The proposition receives "
-                        + "the canonical both-supported value, while the value of its negation "
-                        + "is obtained by swapping the two support coordinates.")),
+                    "Over an arbitrary formula carrier, choose any distinct proposition, its "
+                        + "negation, and conclusion. The proposition receives the canonical "
+                        + "both-supported value, while the value of its negation is obtained "
+                        + "by swapping the two support coordinates.")),
                 Paragraph(Text(
-                    "Both premises therefore have positive support. A third formula receives "
-                        + "neither positive nor negative support, so this valuation refutes "
-                        + "positive-support entailment of that conclusion.")),
+                    "Both premises therefore have positive support. The arbitrary conclusion "
+                        + "receives neither positive nor negative support, while every other "
+                        + "formula may receive the same unsupported value. This valuation "
+                        + "refutes positive-support entailment of that conclusion.")),
                 Paragraph(Text(
                     "The same witness has inconsistent premise evidence while the consequence "
                         + "relation remains non-explosive: an unsupported conclusion is not "
@@ -42,10 +44,11 @@ internal sealed class PositiveSupportNonexplosionDocument : IScribeDocumentDefin
         Formula entails = F.Id("positivelyEntails");
         Formula valuation = F.Id("valuation");
         Formula candidate = F.Id("candidateValuation");
+        Formula formulaCarrier = F.Id("Formula");
+        Formula type = Call("Type");
         Formula evidenceValue = Call("EvidenceValue");
-        Formula formulaType = Call("Fin", D(3));
         Formula propositionType = F.Id("Prop");
-        Formula valuationType = new Formula.TypeArrow(formulaType, evidenceValue);
+        Formula valuationType = new Formula.TypeArrow(formulaCarrier, evidenceValue);
         Formula bothSupported = Call("bothSupported");
         Formula neitherSupported = Pair(F.Id("false"), F.Id("false"));
 
@@ -81,12 +84,23 @@ internal sealed class PositiveSupportNonexplosionDocument : IScribeDocumentDefin
                     Not(Call("EvidenceConsistent", At(valuation, proposition))),
                     Not(entails))));
 
-        return Disp(Seq(
-            Let(proposition, formulaType, D(0)),
-            Let(negatedProposition, formulaType, D(1)),
-            Let(conclusion, formulaType, D(2)),
-            Let(entails, propositionType, entailmentDefinition),
-            witness));
+        Formula distinctFormulas = All(
+            NotEqual(proposition, negatedProposition),
+            NotEqual(conclusion, proposition),
+            NotEqual(conclusion, negatedProposition));
+
+        return Disp(ForAll(
+            [
+                Bound("Formula", type),
+                Bound("proposition", formulaCarrier),
+                Bound("negatedProposition", formulaCarrier),
+                Bound("conclusion", formulaCarrier),
+            ],
+            Implies(
+                distinctFormulas,
+                Seq(
+                    Let(entails, propositionType, entailmentDefinition),
+                    witness))));
     }
 
     private static Formula Let(Formula name, Formula domain, Formula value) =>
@@ -98,6 +112,9 @@ internal sealed class PositiveSupportNonexplosionDocument : IScribeDocumentDefin
 
     private static Formula Equal(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+
+    private static Formula NotEqual(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.NotEqual, right);
 
     private static Formula Implies(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.Implies, right);
