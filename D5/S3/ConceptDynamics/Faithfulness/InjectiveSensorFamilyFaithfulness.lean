@@ -39,11 +39,8 @@ theorem injective_member_makes_joint_readout_injective
 readout is jointly faithful. -/
 example :
     Function.Injective (fun x : Bool => fun _ : PUnit => x) := by
-  apply injective_member_makes_joint_readout_injective
-      (sensor := fun _ : PUnit => fun x : Bool => x)
-      PUnit.unit
-  intro x y equality
-  exact equality
+  intro x y sameJointReadout
+  exact congrFun sameJointReadout PUnit.unit
 
 /-- Consequence probe: equality of all sensor coordinates forces equality of
 states as soon as one selected coordinate is injective. -/
