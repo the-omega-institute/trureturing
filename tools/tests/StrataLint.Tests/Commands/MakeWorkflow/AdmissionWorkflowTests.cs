@@ -365,20 +365,22 @@ public sealed partial class AdmissionWorkflowTests
         Assert.Equal(
             "make -C candidate/tools dotnet",
             StepScript(steps, "Build candidate with warnings as errors"));
-        var executeScript = StepScript(steps, "Run candidate golden and integration tests");
-        Assert.Contains("if [[ \"$BASE_FULL_REQUIRED\" == \"true\" ]]", executeScript, StringComparison.Ordinal);
-        Assert.Contains("dotnet test \"$project\"", executeScript, StringComparison.Ordinal);
-        Assert.Contains("verify-trx --results-directory \"$assembly_results\"", executeScript, StringComparison.Ordinal);
+        var executeScript = StepScript(steps, "Replan and run engineering tests with protected-base harness");
         Assert.DoesNotContain("ENGINEERING_TEST_TARGET", executeScript, StringComparison.Ordinal);
-        Assert.Contains("make -C candidate/tools engineering-tests MODE=execute", executeScript, StringComparison.Ordinal);
+        Assert.Contains("git -C candidate worktree add --detach", executeScript, StringComparison.Ordinal);
+        Assert.Contains("make -C \"$base_harness_root/tools\" engineering-tests", executeScript, StringComparison.Ordinal);
+        Assert.Contains("REPOSITORY=\"$GITHUB_WORKSPACE/candidate\"", executeScript, StringComparison.Ordinal);
+        Assert.Contains("MODE=plan", executeScript, StringComparison.Ordinal);
+        Assert.Contains("MODE=execute", executeScript, StringComparison.Ordinal);
         Assert.Equal(
             "make -C candidate/tools selftest",
             StepScript(steps, "Run candidate selftest twice and compare bytes"));
-
         Assert.All(
             steps[(scopeIndex + 1)..^1],
             step => Assert.Contains(
-                "steps.scope.outputs.run_required == 'true'",
+                StepName(step) is "Build candidate with warnings as errors" or "Signal PR head branch grammar"
+                    ? "github.event_name == 'pull_request_target' && github.event.pull_request.base.ref == 'dev'"
+                    : "steps.scope.outputs.run_required == 'true'",
                 Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("if")]).Value,
                 StringComparison.Ordinal));
     }
@@ -403,7 +405,7 @@ public sealed partial class AdmissionWorkflowTests
             """);
         File.WriteAllText(
             Path.Combine(Path.GetDirectoryName(project)!, "Probe.cs"),
-            "using Xunit; public sealed class ProductionBoundaryProbe { [Fact] public void Runs() { } }\n");
+            "using Xunit; public sealed class ProductionBoundaryProbe { [Fact] public void Runs() { _ = SyntheticRepositoryAccessor.ReadAllText(Input()); } [Fact] public void Missing() { _ = SyntheticRepositoryAccessor.ReadAllText(Input()); } private static string Input() => \"Meta/Digestion/probe.json\"; } public static class SyntheticRepositoryAccessor { public static string ReadAllText(string path) => string.Empty; }\n");
         File.WriteAllText(
             Path.Combine(repository, "tools", "StrataLint.sln"),
             """
@@ -421,46 +423,37 @@ public sealed partial class AdmissionWorkflowTests
                 EndGlobalSection
             EndGlobal
             """);
+        var changedInput = Path.Combine(repository, "Meta", "Digestion", "probe.json");
+        Directory.CreateDirectory(Path.GetDirectoryName(changedInput)!);
+        File.WriteAllText(changedInput, "{}\n");
+        foreach (var proof in new[] { "BannedApiCompileFailProof", "CompileFailProof" })
+        {
+            var proofDirectory = Path.Combine(repository, "tools", "tests", proof);
+            Directory.CreateDirectory(proofDirectory);
+            File.WriteAllText(
+                Path.Combine(proofDirectory, $"{proof}.csproj"),
+                "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><TargetFramework>net10.0</TargetFramework></PropertyGroup></Project>\n");
+        }
         Git(repository, "init", "--quiet");
         Git(repository, "config", "user.email", "engineering-boundary@example.invalid");
         Git(repository, "config", "user.name", "engineering-boundary");
         Git(repository, "add", ".");
         Git(repository, "commit", "--quiet", "-m", "base");
-        File.AppendAllText(Path.Combine(Path.GetDirectoryName(project)!, "Probe.cs"), "// candidate\n");
-        Git(repository, "add", ".");
+        File.WriteAllText(changedInput, "{\"candidate\":true}\n");
+        Git(repository, "add", "Meta/Digestion/probe.json");
         Git(repository, "commit", "--quiet", "-m", "candidate");
         var head = GitText(repository, "rev-parse", "HEAD");
         var @base = GitText(repository, "rev-parse", "HEAD^1");
         var planFile = Path.Combine(fixture.Path, "plan.json");
-        File.WriteAllText(planFile, System.Text.Json.JsonSerializer.Serialize(new
-        {
-            version = 1,
-            head,
-            @base,
-            plan = new
-            {
-                kind = "selected",
-                changed_paths = new[] { "Meta/Digestion/probe.json" },
-                tests = new[]
-                {
-                    new
-                    {
-                        project_path = "tools/tests/Probe/Probe.csproj",
-                        id = "ProductionBoundaryProbe.Runs",
-                        reason = "unknown_input",
-                        detail = "production boundary probe",
-                    },
-                    new
-                    {
-                        project_path = "tools/tests/Probe/Probe.csproj",
-                        id = "ProductionBoundaryProbe.Missing",
-                        reason = "unknown_input",
-                        detail = "planned identity with no executed result",
-                    },
-                },
-                reason = "production boundary probe",
-            },
-        }));
+        var plan = RunEngineeringScopeMode(root, repository, planFile, head, @base, "plan");
+        var planOutput = System.Text.Encoding.UTF8.GetString(plan.StandardOutput)
+            + System.Text.Encoding.UTF8.GetString(plan.StandardError);
+        Assert.True(plan.ExitCode == 0, planOutput);
+        Assert.Contains("state=selected changed=1 selected=2", planOutput, StringComparison.Ordinal);
+
+        File.WriteAllText(
+            Path.Combine(Path.GetDirectoryName(project)!, "Probe.cs"),
+            "using Xunit; public sealed class ProductionBoundaryProbe { [Fact] public void Runs() { _ = SyntheticRepositoryAccessor.ReadAllText(Input()); } private static string Input() => \"Meta/Digestion/probe.json\"; } public static class SyntheticRepositoryAccessor { public static string ReadAllText(string path) => string.Empty; }\n");
 
         var probeBuild = TestProcessRunner.Run(
             DotnetHost(root),
@@ -477,12 +470,12 @@ public sealed partial class AdmissionWorkflowTests
         var output = System.Text.Encoding.UTF8.GetString(result.StandardOutput);
         var error = System.Text.Encoding.UTF8.GetString(result.StandardError);
 
-        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(1, result.ExitCode);
         Assert.Contains(
-            "ENGINEERING_TEST_EVIDENCE_FAILED TRX is missing planned tests: Probe::ProductionBoundaryProbe.Missing",
+            "ENGINEERING_TEST_EVIDENCE_FAILED TRX is missing base-owned tests: Probe::ProductionBoundaryProbe.Missing",
             error,
             StringComparison.Ordinal);
-        Assert.Contains("filter=null evidence=trx executed=1", output, StringComparison.Ordinal);
+        Assert.DoesNotContain("filter=null evidence=trx executed=1", output, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -543,7 +536,7 @@ public sealed partial class AdmissionWorkflowTests
             64 * 1024);
 
         Assert.Equal(0, scopeResult.ExitCode);
-        Assert.Equal(20, new FileInfo(planFile).Length);
+        Assert.False(File.Exists(planFile));
         var scopeOutputs = ReadTemporaryText(outputs);
         Assert.Contains("state=full", scopeOutputs, StringComparison.Ordinal);
         Assert.Contains("base_full_required=true", scopeOutputs, StringComparison.Ordinal);
@@ -570,16 +563,15 @@ public sealed partial class AdmissionWorkflowTests
     }
 
     [Fact]
-    public void PreflightEngineeringScopeUsesCompleteCandidateDeltaAcrossMultipleCommits()
+    public void EngineeringScopeUsesCompleteCandidateDeltaFromAMergeFirstParent()
     {
         if (OperatingSystem.IsWindows()) return;
 
         var root = TestRepositoryLayout.FindRoot();
         var preflight = TestRepositoryLayout.ReadAllText(
             RepositoryRelativePath.Create("tools/scripts/preflight.sh"));
-        Assert.Contains("ENGINEERING_HEAD=\"$CANDIDATE_SHA\"", preflight, StringComparison.Ordinal);
-        Assert.Contains("ENGINEERING_BASE=\"$BASE_SHA\"", preflight, StringComparison.Ordinal);
-        Assert.DoesNotContain("ENGINEERING_BASE=\"$(git rev-parse HEAD^1)\"", preflight, StringComparison.Ordinal);
+        Assert.Contains("ENGINEERING_HEAD=\"$(git rev-parse HEAD)\"", preflight, StringComparison.Ordinal);
+        Assert.Contains("ENGINEERING_BASE=\"$(git rev-parse HEAD^1)\"", preflight, StringComparison.Ordinal);
 
         using var fixture = new TemporaryDirectory();
         var repository = Path.Combine(fixture.Path, "candidate");
@@ -599,6 +591,19 @@ public sealed partial class AdmissionWorkflowTests
         File.WriteAllText(Path.Combine(repository, "docs", "note.md"), "docs only\n");
         Git(repository, "add", "docs/note.md");
         Git(repository, "commit", "--quiet", "-m", "docs only");
+        var feature = GitText(repository, "rev-parse", "HEAD");
+        var tree = GitText(repository, "write-tree");
+        var merge = GitText(
+            repository,
+            "commit-tree",
+            tree,
+            "-p",
+            @base,
+            "-p",
+            feature,
+            "-m",
+            "merge result");
+        Git(repository, "reset", "--quiet", "--hard", merge);
         var head = GitText(repository, "rev-parse", "HEAD");
         var planFile = Path.Combine(fixture.Path, "plan.json");
 
@@ -615,7 +620,7 @@ public sealed partial class AdmissionWorkflowTests
     }
 
     [Fact]
-    public void PlannerNoneAndSolutionWithoutTestMembersStillExecutesEveryBaseOwnedRequiredAssembly()
+    public void PlannerNoneForFullSurfaceDeletesArtifactSoExecuteMustReplanFromBase()
     {
         if (OperatingSystem.IsWindows()) return;
 
@@ -627,11 +632,6 @@ public sealed partial class AdmissionWorkflowTests
         Directory.CreateDirectory(Path.Combine(candidate, "tools"));
         Directory.CreateDirectory(bin);
         Directory.CreateDirectory(runnerTemp);
-        var marker = Path.Combine(fixture.Path, "floor.executed");
-        WriteFloorProject(candidate, "StrataLint.Tests", "StrataLintTestsFloorProbe");
-        WriteFloorProject(candidate, "StrataLint.Scribe.Tests", "StrataLintScribeTestsFloorProbe");
-        WriteFloorProject(candidate, "StrataLint.ArchitectureTests", "StrataLintArchitectureTestsFloorProbe");
-        WriteEngineeringScopeVerifierStub(candidate);
         File.WriteAllText(
             Path.Combine(candidate, "tools", "StrataLint.sln"),
             "Microsoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio Version 17\nGlobal\nEndGlobal\n");
@@ -659,7 +659,7 @@ public sealed partial class AdmissionWorkflowTests
               esac
             done
             [[ -n "$plan" && -n "$head" && -n "$base" ]] || exit 24
-            printf '{"version":1,"head":"%s","base":"%s","plan":{"kind":"none","changed_paths":["tools/planner.txt"],"tests":[],"reason":"mutated planner always returns none"}}\n' "$head" "$base" > "$plan"
+            printf '{"version":2,"head":"%s","base":"%s","plan":{"kind":"none","changed_paths":["tools/planner.txt"],"tests":[],"reason":"mutated planner always returns none"}}\n' "$head" "$base" > "$plan"
             """);
 
         var workflow = AdmissionWorkflow();
@@ -685,39 +685,10 @@ public sealed partial class AdmissionWorkflowTests
 
         Assert.Equal(0, scopeResult.ExitCode);
         var scopeOutputs = ReadTemporaryText(outputs);
-        Assert.Contains("state=none", scopeOutputs, StringComparison.Ordinal);
+        Assert.Contains("state=full", scopeOutputs, StringComparison.Ordinal);
         Assert.Contains("base_full_required=true", scopeOutputs, StringComparison.Ordinal);
         Assert.Contains("run_required=true", scopeOutputs, StringComparison.Ordinal);
-
-        var executeScript = StepScript(JobSteps(workflow, "candidate-engineering"), "Run candidate golden and integration tests");
-        Assert.DoesNotContain("--filter", executeScript, StringComparison.Ordinal);
-        var execute = TestProcessRunner.Run(
-            "env",
-            [
-                "BASE_FULL_REQUIRED=true",
-                "PLAN_STATE=none",
-                $"RUNNER_TEMP={runnerTemp}",
-                $"ENGINEERING_FLOOR_MARKER={marker}",
-                $"ENGINEERING_HEAD={GitText(candidate, "rev-parse", "HEAD")}",
-                $"ENGINEERING_BASE={GitText(candidate, "rev-parse", "HEAD^1")}",
-                "/bin/bash",
-                "-c",
-                executeScript,
-            ],
-            fixture.Path,
-            TestBudgets.ReportSupervisorHangGuard,
-            2 * 1024 * 1024);
-
-        var executeOutput = System.Text.Encoding.UTF8.GetString(execute.StandardOutput)
-            + System.Text.Encoding.UTF8.GetString(execute.StandardError);
-        Assert.True(execute.ExitCode == 0, executeOutput);
-        foreach (var assembly in new[] { "StrataLint.Tests", "StrataLint.Scribe.Tests", "StrataLint.ArchitectureTests" })
-        {
-            Assert.Contains($"assembly={assembly}", executeOutput, StringComparison.Ordinal);
-        }
-        Assert.Equal(
-            new[] { "StrataLint.ArchitectureTests", "StrataLint.Scribe.Tests", "StrataLint.Tests" },
-            File.ReadAllLines(marker).Order(StringComparer.Ordinal));
+        Assert.False(File.Exists(Path.Combine(runnerTemp, "engineering-test-plan.json")));
     }
 
     [Fact]
