@@ -42,7 +42,7 @@ internal static partial class IngestCommand
                 prepared.PlannedDocument,
                 prepared.Plan.Alignment,
                 prepared.PlannedScope,
-                prepared.PlannedChanges);
+                prepared.RepositoryChanges);
             if (!classification.IsUncoveredOnly)
             {
                 return TruthAlignmentRequired(classification);
