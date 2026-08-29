@@ -1,0 +1,45 @@
+## 800.1 结构意义
+
+如果 Hecke mode family 是忠实的，则每个固定
+
+$$
+n\neq0
+$$
+
+仍满足
+
+$$
+\mathscr C_n^{\mathrm{fin}}>0.
+$$
+
+但不存在统一下界。
+
+所以：
+
+$$
+\boxed{
+\text{每个观察者最终都能被素数区分，}
+}
+$$
+
+同时：
+
+$$
+\boxed{
+\text{存在 arbitrarily deep observer modes，
+对全部主要素数近乎不可区分。}
+}
+$$
+
+这是素数观察层的真正无限深度：
+
+$$
+\boxed{
+\text{pointwise distinguishable}
+\quad\text{但}\quad
+\text{not uniformly distinguishable}.
+}
+$$
+
+---
+

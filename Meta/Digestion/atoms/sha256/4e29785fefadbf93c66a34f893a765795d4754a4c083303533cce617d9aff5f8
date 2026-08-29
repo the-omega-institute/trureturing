@@ -1,0 +1,21 @@
+## 定理 840.1（Golden determinant ratio）
+
+$$
+\boxed{
+\frac{\Delta_2}{\Delta_1}
+=
+\frac{
+\sin(2\pi/5)
+}{
+\sin(\pi/5)
+}
+=
+2\cos\frac{\pi}{5}
+=
+\varphi.
+}
+\tag{840.3}
+$$
+
+同时：
+

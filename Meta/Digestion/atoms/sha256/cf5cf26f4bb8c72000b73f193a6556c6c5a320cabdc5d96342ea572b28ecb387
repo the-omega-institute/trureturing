@@ -1,0 +1,28 @@
+* \(\kappa\) 是记忆反馈强度。
+
+其 Schur determinant 为：
+
+$$
+\boxed{
+\Theta_{\pi,\kappa}(s)
+=
+\det\mathbb K_{\pi,\kappa}(s)
+=
+F(s)
+-
+\kappa
+A_{\mathrm{odd},\pi}(s)^2.
+}
+\tag{704.2}
+$$
+
+该表达在：
+
+$$
+A_{\mathrm{odd}}\mapsto-A_{\mathrm{odd}}
+$$
+
+下保持不变。
+
+---
+

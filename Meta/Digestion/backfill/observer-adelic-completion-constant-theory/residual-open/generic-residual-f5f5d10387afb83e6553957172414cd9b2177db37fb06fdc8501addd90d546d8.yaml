@@ -1,0 +1,10 @@
+ast_path: row/exact-operator-为-complete-Bernstein
+fingerprints:
+  raw_sha256: sha256:f5f5d10387afb83e6553957172414cd9b2177db37fb06fdc8501addd90d546d8
+  normalized_sha256: sha256:f5f5d10387afb83e6553957172414cd9b2177db37fb06fdc8501addd90d546d8
+cas_ref: sha256:f5f5d10387afb83e6553957172414cd9b2177db37fb06fdc8501addd90d546d8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

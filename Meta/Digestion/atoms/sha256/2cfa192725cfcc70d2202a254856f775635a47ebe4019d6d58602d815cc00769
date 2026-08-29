@@ -1,0 +1,62 @@
+# 第九百一十五部　幂包是离线方向的“大偏差探针”
+
+把 \(\psi_a(x)\,dx\) 看成随机变量 \(X\) 的概率分布。
+
+则：
+
+$$
+\Psi_a(\xi)
+=
+\mathbb E[e^{-i\xi X}]
+$$
+
+是特征函数，而：
+
+$$
+\Psi_a(i\delta)
+=
+\mathbb E[e^{\delta X}]
+$$
+
+是矩母函数。
+
+\(N\) 重卷积对应独立和：
+
+$$
+S_N=X_1+\cdots+X_N.
+$$
+
+因此：
+
+$$
+\boxed{
+\Psi_a(i\delta)^N
+=
+\mathbb E[e^{\delta S_N}].
+}
+\tag{915.1}
+$$
+
+离线零点探测本质上是一个指数倾斜：
+
+$$
+\boxed{
+\text{实频观察}
+\longrightarrow
+\text{特征函数};
+}
+$$
+
+$$
+\boxed{
+\text{横向离线观察}
+\longrightarrow
+\text{矩母函数}.
+}
+$$
+
+临界线是两者之间的边界。
+
+这与此前的“光锥”语言形成严格对应：
+
+* 临界线：纯相位、无增益的 null boundary；

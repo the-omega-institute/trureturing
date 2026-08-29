@@ -1,0 +1,15 @@
+ast_path: section/3-1-内容地址-逻辑身份与结算分层
+fingerprints:
+  raw_sha256: sha256:24709e540bc04c05378f6ebdd2915728291aa2bebe6ad8aea9f63ebabf8278db
+  normalized_sha256: sha256:24709e540bc04c05378f6ebdd2915728291aa2bebe6ad8aea9f63ebabf8278db
+cas_ref: sha256:24709e540bc04c05378f6ebdd2915728291aa2bebe6ad8aea9f63ebabf8278db
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-ffaf9ee5c07efa960085cb3e91bd820a9dc1c10a0f8fc0c11b75b7d60d59655d-0f083ff64a78ca2e7864b7e9c1fc6896e7be58cfadc964d291a2ab4fcefcb2f0
+    - generic-residual-be8d10976cf0e4ccb6fcdb72e17225078a26c1c358c23cc223fed8a7b7885c2c-2b4456a860518e15d4abd68a1e9f5b8e6a08dfcb1a174ee53ad4dd01b2e8f007
+    - generic-residual-529099fceb195622a0b1f1a73bab0f5476eeec7bc01037ee0a600498a5fbbba0-64dd83071ba46517436ec34f00b8e229cec3b407b376381afb937c70f91c058d
+    - generic-residual-faf2c77a336d3ea5bf93153e3edb77c1461579d856b4711de2f557c067a4907c-48746b17c3eab0eb0a604923cc647b23782abe88393d3adad582be8288d4baef

@@ -1,0 +1,19 @@
+* 支撑深度会按 \(\log\Delta_d^{-1}\) 增长。
+
+因此一个完整理论深度记录应包含：
+
+$$
+\boxed{
+\left(
+\dim C_d,\,
+\Delta_d,\,
+N_d,\,
+L_d,\,
+\operatorname{rank}P_{\mathrm{sticky}}
+\right).
+}
+\tag{938.2}
+$$
+
+---
+

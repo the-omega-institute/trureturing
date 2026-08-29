@@ -1,0 +1,41 @@
+## 定理 814.1（Tower-to-light condensation）
+
+无限等间距 Archimedean 层塔：
+
+$$
+M_m=\sigma+2m
+$$
+
+的集体色散在高频满足：
+
+$$
+\boxed{
+E_\sigma(k)
+\sim
+c_\infty|k|,
+\qquad
+c_\infty=\frac{\pi}{2}.
+}
+\tag{814.6}
+$$
+
+也就是说：
+
+$$
+\boxed{
+\text{单层有尺度，}
+\qquad
+\text{无限层完成后产生无质量线性色散。}
+}
+$$
+
+这给无限完成层级一个非常明确的物理—数学解释：
+
+$$
+\boxed{
+\text{光样边界模式是整个 Gamma completion tower 的集体像。}
+}
+$$
+
+---
+

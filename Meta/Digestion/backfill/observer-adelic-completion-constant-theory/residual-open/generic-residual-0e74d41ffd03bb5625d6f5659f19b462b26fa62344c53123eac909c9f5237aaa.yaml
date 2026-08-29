@@ -1,0 +1,10 @@
+ast_path: section/785-2-科学边界
+fingerprints:
+  raw_sha256: sha256:0e74d41ffd03bb5625d6f5659f19b462b26fa62344c53123eac909c9f5237aaa
+  normalized_sha256: sha256:0e74d41ffd03bb5625d6f5659f19b462b26fa62344c53123eac909c9f5237aaa
+cas_ref: sha256:0e74d41ffd03bb5625d6f5659f19b462b26fa62344c53123eac909c9f5237aaa
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

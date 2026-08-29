@@ -1,0 +1,47 @@
+## 837.1 两种观察者参数必须分开
+
+$$
+\boxed{
+P/c
+}
+$$
+
+是尺度参数，只产生无零点指数因子。
+
+而：
+
+$$
+\boxed{
+\alpha
+}
+$$
+
+改变无量纲谱形状：
+
+$$
+n\mapsto n+\alpha.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{尺度不改变零点，Holonomy 可以改变零点。}
+}
+$$
+
+这给出了一个重要研究分类：
+
+$$
+\boxed{
+\begin{aligned}
+\text{observer scale}
+&=\text{zero-invisible gauge};\\
+\text{observer holonomy}
+&=\text{zero-visible shape datum}.
+\end{aligned}
+}
+$$
+
+---
+

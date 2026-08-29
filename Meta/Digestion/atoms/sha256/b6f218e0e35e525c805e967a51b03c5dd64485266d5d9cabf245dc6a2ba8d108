@@ -1,0 +1,30 @@
+## 802.1 最核心的完成结论
+
+$$
+\boxed{
+\begin{aligned}
+\text{prime-only}
+&:\quad
+\inf_{n\neq0}\mathscr C_n^{\mathrm{fin}}=0;\\
+\text{prime + Archimedean}
+&:\quad
+\inf_{n\neq0}\mathscr C_n
+\ge g_\varphi>0.
+\end{aligned}
+}
+\tag{802.6}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{Archimedean place
+不是素数系统外部附加的一项；}
+}
+$$
+
+它正是把“逐观察者完成”提升为“统一观察者完成”的通道。
+
+---
+

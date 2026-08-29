@@ -1,0 +1,10 @@
+ast_path: row/二次表示选择律
+fingerprints:
+  raw_sha256: sha256:4fbfc6a226a1924805982047ae662ddd5d2b8cf51947fa4789b6ca9ff7c47def
+  normalized_sha256: sha256:4fbfc6a226a1924805982047ae662ddd5d2b8cf51947fa4789b6ca9ff7c47def
+cas_ref: sha256:4fbfc6a226a1924805982047ae662ddd5d2b8cf51947fa4789b6ca9ff7c47def
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

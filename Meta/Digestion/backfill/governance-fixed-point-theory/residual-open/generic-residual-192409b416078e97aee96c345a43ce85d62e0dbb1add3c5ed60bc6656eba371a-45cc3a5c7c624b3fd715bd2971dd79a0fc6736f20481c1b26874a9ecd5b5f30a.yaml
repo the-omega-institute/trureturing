@@ -1,0 +1,10 @@
+ast_path: section/2-2-盲派生唯一不动点定理骨架/clause/3
+fingerprints:
+  raw_sha256: sha256:192409b416078e97aee96c345a43ce85d62e0dbb1add3c5ed60bc6656eba371a
+  normalized_sha256: sha256:192409b416078e97aee96c345a43ce85d62e0dbb1add3c5ed60bc6656eba371a
+cas_ref: sha256:192409b416078e97aee96c345a43ce85d62e0dbb1add3c5ed60bc6656eba371a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,49 @@
+## 763.1 最小顺序差异
+
+令 \(S\) 为一个 split prime，\(I\) 为一个 inert prime。
+
+则：
+
+$$
+\boxed{
+\mathcal H(SI)=U^2J,
+}
+\tag{763.7}
+$$
+
+而：
+
+$$
+\boxed{
+\mathcal H(IS)=J.
+}
+\tag{763.8}
+$$
+
+两个词：
+
+* 使用同样的素数类型；
+* 具有相同 orientation parity；
+* 在 \(\chi_5\) 通道中完全相同；
+
+但完整 rapidity memory 相差：
+
+$$
+\boxed{
+U^2.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+L(s,\chi_5)
+\text{ 已经比 }\zeta\text{ 更深，}
+}
+$$
+
+但仍然没有恢复完整观察历史。
+
+---
+

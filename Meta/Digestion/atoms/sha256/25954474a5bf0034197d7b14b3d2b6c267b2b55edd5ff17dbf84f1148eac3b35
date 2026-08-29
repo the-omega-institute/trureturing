@@ -1,0 +1,18 @@
+## 猜想 749.2（Prime observer bundle）
+
+项目的所有 prime-local memory interfaces 可以组织成：
+
+$$
+\boxed{
+\mathbb P(\ell^2(\mathbb P))
+\times
+\mathbb R_\eta
+\times
+\operatorname{Hist}
+}
+$$
+
+上的观察者束，而普通 Euler product只读取其基底不变量。
+
+---
+

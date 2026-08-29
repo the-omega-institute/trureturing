@@ -1,0 +1,45 @@
+# 第七百七十二部　GPMO 的规范阿贝尔商
+
+前文构造的带记忆黄金素数观察器保留完整顺序 holonomy。
+
+现在存在一个规范商映射：
+
+$$
+\boxed{
+\operatorname{Hol}_{\mathrm{full}}
+\longrightarrow
+C_2,
+}
+\tag{772.1}
+$$
+
+它把每个未分歧素数映射为：
+
+$$
+\boxed{
+p\longmapsto
+\chi_5(p).
+}
+$$
+
+对素数词：
+
+$$
+w=p_1\cdots p_n,
+$$
+
+定义：
+
+$$
+\boxed{
+\operatorname{Hol}_5(w)
+=
+\prod_{j=1}^n
+\chi_5(p_j).
+}
+\tag{772.2}
+$$
+
+这一商：
+
+* 保留惰性素数次数的奇偶；

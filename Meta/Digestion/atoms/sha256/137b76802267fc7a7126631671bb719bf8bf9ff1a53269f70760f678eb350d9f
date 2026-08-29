@@ -1,0 +1,39 @@
+# 第八百四十一部　模五 Hurwitz 扇区的角色分解
+
+定义两个反射完成扇区：
+
+$$
+\boxed{
+H_1(s)
+=
+\zeta\left(s,\frac15\right)
++
+\zeta\left(s,\frac45\right),
+}
+\tag{841.1}
+$$
+
+$$
+\boxed{
+H_2(s)
+=
+\zeta\left(s,\frac25\right)
++
+\zeta\left(s,\frac35\right).
+}
+\tag{841.2}
+$$
+
+由 Hurwitz 分解：
+
+$$
+L(s,\chi)
+=
+q^{-s}
+\sum_{r=1}^{q-1}
+\chi(r)
+\zeta\left(s,\frac rq\right),
+$$
+
+可得：([DLMF][3])
+

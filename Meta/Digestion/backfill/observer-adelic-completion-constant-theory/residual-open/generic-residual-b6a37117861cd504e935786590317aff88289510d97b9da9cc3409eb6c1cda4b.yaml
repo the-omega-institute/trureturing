@@ -1,0 +1,10 @@
+ast_path: row/法向-Jet-显式公式
+fingerprints:
+  raw_sha256: sha256:b6a37117861cd504e935786590317aff88289510d97b9da9cc3409eb6c1cda4b
+  normalized_sha256: sha256:b6a37117861cd504e935786590317aff88289510d97b9da9cc3409eb6c1cda4b
+cas_ref: sha256:b6a37117861cd504e935786590317aff88289510d97b9da9cc3409eb6c1cda4b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

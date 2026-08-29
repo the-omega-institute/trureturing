@@ -1,0 +1,17 @@
+## 定理 891.1（Off-line resolvent strip obstruction）
+
+直接探测离线零点的 rational resolvent witness，其指数衰减率必然不足以覆盖整个临界带。
+
+即：
+
+$$
+\boxed{
+\text{检测离线破缺所需的局部指数尺度}
+<
+\text{全临界带完成所需的统一指数尺度}.
+}
+$$
+
+这给“离线破缺点在完成空间中看不到”的直觉一个严格解析解释：
+
+* witness 在离线零点附近是有效的；

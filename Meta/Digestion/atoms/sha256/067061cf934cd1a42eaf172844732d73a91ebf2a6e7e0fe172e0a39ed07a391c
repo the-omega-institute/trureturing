@@ -1,0 +1,58 @@
+## 778.1 \(O(2)\) 的观察表示
+
+在 \(n=0\) 层有两个一维表示：
+
+$$
+\boxed{
+\mathbf 1,
+\qquad
+\det.
+}
+\tag{778.3}
+$$
+
+前者对旋转和反射都不可见；
+
+后者只读取反射奇偶。
+
+对于每个：
+
+$$
+n\ge1,
+$$
+
+有二维实表示：
+
+$$
+\boxed{
+\rho_n(R_\theta)
+=
+\begin{pmatrix}
+\cos n\theta&-\sin n\theta\\
+\sin n\theta&\cos n\theta
+\end{pmatrix},
+}
+\tag{778.4}
+$$
+
+而反射把正弦方向翻转。
+
+因此黄金观察者信息形成严格层级：
+
+$$
+\boxed{
+\begin{aligned}
+\mathbf 1
+&:\text{只读取完成总量};\\
+\det
+&:\text{读取 Galois／方向奇偶};\\
+\rho_1
+&:\text{读取第一 regulator 相位};\\
+\rho_2,\rho_3,\ldots
+&:\text{读取越来越细的观察者分布}.
+\end{aligned}
+}
+$$
+
+---
+

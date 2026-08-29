@@ -1,0 +1,10 @@
+ast_path: section/832-1-小时间层密度
+fingerprints:
+  raw_sha256: sha256:4e3a4790f2aeb6d7135ada46b4ee47efcb3010d571b578a85293042d61fdfd82
+  normalized_sha256: sha256:4e3a4790f2aeb6d7135ada46b4ee47efcb3010d571b578a85293042d61fdfd82
+cas_ref: sha256:4e3a4790f2aeb6d7135ada46b4ee47efcb3010d571b578a85293042d61fdfd82
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: row/同级竞争轨道有限
+fingerprints:
+  raw_sha256: sha256:df2ede47c5ca8386948e65940056eb704352bf65d8615558c70a0c6ea5333b1b
+  normalized_sha256: sha256:df2ede47c5ca8386948e65940056eb704352bf65d8615558c70a0c6ea5333b1b
+cas_ref: sha256:df2ede47c5ca8386948e65940056eb704352bf65d8615558c70a0c6ea5333b1b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

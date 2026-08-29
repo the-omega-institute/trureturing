@@ -1,0 +1,52 @@
+## 定理 782.1（完全单调性）
+
+对每个整数：
+
+$$
+m\ge0
+$$
+
+及实数：
+
+$$
+\sigma>1,
+$$
+
+有：
+
+$$
+\boxed{
+(-1)^m
+\frac{d^m}{d\sigma^m}
+\mathscr C_\varphi(\sigma)
+\ge0.
+}
+\tag{782.5}
+$$
+
+### 证明
+
+逐项微分：
+
+$$
+\boxed{
+\begin{aligned}
+(-1)^m\mathscr C_\varphi^{(m)}(\sigma)
+=
+2
+\sum_{\substack{p\text{ split}\\k\ge1}}
+\frac{
+1-\cos(k\theta_p)
+}{
+k
+}
+(k\log p)^m
+p^{-k\sigma},
+\end{aligned}
+}
+$$
+
+每项均非负。∎
+
+---
+

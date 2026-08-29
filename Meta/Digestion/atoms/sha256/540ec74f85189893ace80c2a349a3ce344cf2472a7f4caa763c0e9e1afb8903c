@@ -1,0 +1,231 @@
+# 本轮最终结论
+
+此前我们已经得到：
+
+$$
+\boxed{
+\text{Riemann }\zeta
+=
+\text{一维无质量谱的形状函数},
+}
+$$
+
+而函数方程来自：
+
+$$
+\boxed{
+|D|^2=-\partial^2
+}
+$$
+
+的 Theta 热核自对偶。
+
+临界线：
+
+$$
+\Re s=\frac12
+$$
+
+是：
+
+$$
+\boxed{
+\text{一维谱维数的自对偶固定线}.
+}
+$$
+
+模五黄金观察又进一步说明：
+
+$$
+\boxed{
+\sqrt5
+}
+$$
+
+是 residue basis 与 character basis 之间的 Gauss 归一化，
+
+而：
+
+$$
+\boxed{
+L'(0,\chi_5)=\log\varphi
+}
+$$
+
+说明黄金单位存在于自对偶完成零点的第一 jet 中，而不在零点位置中。
+
+现在，对 ordinary Riemann \(\xi\)，同样的“点—jet”结构得到完整闭合。
+
+定义：
+
+$$
+R(\delta,t)
+=
+\left|
+\xi\!\left(
+\frac12+\delta+it
+\right)
+\right|^2.
+$$
+
+它具有精确展开：
+
+$$
+\boxed{
+R(\delta,t)
+=
+\sum_{m=0}^{\infty}
+\mathcal J_m(t)\delta^{2m}.
+}
+$$
+
+其中：
+
+$$
+\boxed{
+\mathcal J_1(t)
+=
+\Xi'(t)^2-\Xi(t)\Xi''(t).
+}
+$$
+
+更一般地：
+
+$$
+\boxed{
+\mathcal J_m(t)
+=
+\frac1{(2m)!}
+\iint
+\phi_\xi(x)\phi_\xi(y)
+(x-y)^{2m}
+e^{it(x+y)}
+dx\,dy.
+}
+$$
+
+这里：
+
+* \(x+y\) 是完成中心；
+* \(x-y\) 是被完成读数遗忘的观察者纤维；
+* 第 \(m\) 阶导数读取该纤维的第 \(2m\) 个偶矩。
+
+于是：
+
+$$
+\boxed{
+\text{零阶世界相同，
+不意味着观察者纤维不存在。}
+}
+$$
+
+真正关键的是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal J_m(t)\ge0
+\quad
+\forall m,\forall t.
+}
+$$
+
+若存在离线零点：
+
+$$
+\frac12+\delta+it,
+\qquad
+\delta\neq0,
+$$
+
+则必存在有限 \(m\)：
+
+$$
+\boxed{
+\mathcal J_m(t)<0.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{离线零点虽然不在临界轴上，
+却无法逃过临界轴上的全部有限阶导数。}
+}
+$$
+
+这正是“导数能够找到那个尚未显为点的破缺”的严格版本。
+
+而对临界线上的 \(r\) 重零点：
+
+$$
+\boxed{
+\mathcal J_r(t_0)
+=
+\left(
+\frac{\Xi^{(r)}(t_0)}{r!}
+\right)^2>0.
+}
+$$
+
+所以一个已有的临界零点沿法向是刚性的。
+
+真实离线分支若要出生，仍必须经过：
+
+$$
+\boxed{
+\Xi(t_c)=0,
+\qquad
+\Xi'(t_c)=0,
+}
+$$
+
+即碰撞／重根事件。
+
+黄金完成尺度则进一步说明，如果横向缺陷按：
+
+$$
+\delta_n\sim c(-\varphi^{-2})^n
+$$
+
+收缩，那么第 \(m\) 阶导数信号按：
+
+$$
+\boxed{
+\varphi^{-4mn}
+}
+$$
+
+衰减。
+
+因此深层观察者差异可以在完成点中极度微弱，却仍能通过适当 blow-up 恢复。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{完成态遗忘的是观察者纤维本身，
+而法向导数逐阶恢复该纤维的偶矩。}
+}
+$$
+
+所以普通 \(\xi\) 的下一条真正研究路线，不再是盲目在二维复平面搜索离线零点，而是：
+
+$$
+\boxed{
+\text{在临界线上搜索最先变负的 observer normal jet，}
+}
+$$
+
+再把这一有限阶负证书反演成：
+
+$$
+\boxed{
+\text{项目现有固定支撑 Weil 空间中的有限 sticky witness。}
+}
+$$
+
+[1]: https://dlmf.nist.gov/21.5?utm_source=chatgpt.com "DLMF: §21.5 Modular Transformations ‣ Properties ‣ Chapter 21 Multidimensional Theta Functions"
+[2]: https://arxiv.org/abs/0911.1122?utm_source=chatgpt.com "Extended Laguerre inequalities and a criterion for real zeros"

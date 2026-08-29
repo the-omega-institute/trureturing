@@ -1,0 +1,16 @@
+## 723.2 ζ 因子抽取深度
+
+仓库已经构造：
+
+$$
+L_p^{\langle0\rangle},
+\qquad
+L_p^{\langle1\rangle},
+\qquad
+L_p^{\langle2\rangle},
+$$
+
+并分别推进到更深的收敛区域；第一阶与第二阶抽取不是纯坐标变化，而确实移除了局部 Euler 展开的低阶 universal modes。
+
+---
+

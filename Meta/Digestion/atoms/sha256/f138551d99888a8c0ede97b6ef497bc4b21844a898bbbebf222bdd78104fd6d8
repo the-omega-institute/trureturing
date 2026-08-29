@@ -1,0 +1,18 @@
+## 定理 802.1（Completed observer Poincaré inequality）
+
+对所有均值为零的 \(f\)：
+
+$$
+\boxed{
+\mathcal E_\sigma[f]
+\ge
+g_\varphi(\sigma)
+\|f\|_2^2.
+}
+\tag{802.5}
+$$
+
+这给出了 prime-only 层所缺失的统一谱隙。
+
+---
+

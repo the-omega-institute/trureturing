@@ -1,0 +1,45 @@
+# 第九百三十九部　离散码为何必须连续完成
+
+角色码对偶在域上成立，但仓库同时证明在整数环上可以失败。
+
+这产生一条重要本体链：
+
+$$
+\boxed{
+\begin{aligned}
+\text{整数素数账本}
+&\longrightarrow
+\text{离散 relation module};\\
+\text{扩张到 }\mathbb R/\mathbb C
+&\longrightarrow
+\text{完整正交补};\\
+\text{选择器}
+&\longrightarrow
+\text{连续幅度与相位};\\
+\text{最终标量证书}
+&\longrightarrow
+\text{实负特征值}.
+\end{aligned}
+}
+$$
+
+所以从离散素数到连续谱并非丢失整数本体，而是为了使：
+
+$$
+\boxed{
+\text{所有线性关系拥有完整的对偶观察方向。}
+}
+$$
+
+黄金比例作为整数 primitive 更新矩阵的代数特征值，也正发生在这一步：
+
+$$
+\boxed{
+\text{整数更新}
+\quad\longrightarrow\quad
+\text{实特征方向 }\varphi,\varphi'.
+}
+$$
+
+---
+

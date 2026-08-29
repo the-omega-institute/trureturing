@@ -1,0 +1,50 @@
+# 第八百零九部　相对 determinant 到零点谱的开放桥
+
+相对 determinant
+
+$$
+\mathscr R_n(s)
+=
+\frac{\Lambda_0(s)^2}
+{\Lambda_n(s)\Lambda_{-n}(s)}
+$$
+
+在 \(\sigma>1\) 上具有：
+
+$$
+\boxed{
+\log\mathscr R_n
+\text{ 完全单调}.
+}
+$$
+
+定义其对数导数：
+
+$$
+\boxed{
+\mathscr H_n(s)
+=
+-
+\frac{d}{ds}
+\log\mathscr R_n(s).
+}
+\tag{809.1}
+$$
+
+在 \(\sigma>1\) 上：
+
+$$
+\boxed{
+\mathscr H_n(\sigma)
+=
+2
+\int_0^\infty
+x e^{-\sigma x}
+d\mu_n(x)
+\ge0.
+}
+\tag{809.2}
+$$
+
+真正承重的下一猜想是：
+

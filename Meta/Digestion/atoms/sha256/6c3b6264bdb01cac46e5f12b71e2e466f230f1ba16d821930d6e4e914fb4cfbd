@@ -1,0 +1,39 @@
+### 推导
+
+渐近层密度为：
+
+$$
+dN(M)\sim Cd\,M^{d-1}dM.
+$$
+
+所以：
+
+$$
+\begin{aligned}
+\Phi(k^2)
+&\sim
+Cd
+\int_0^\infty
+M^{d-1}
+\log\left(1+\frac{k^2}{M^2}\right)dM\\
+&=
+Cd|k|^d
+\int_0^\infty
+u^{d-1}
+\log(1+u^{-2})du.
+\end{aligned}
+$$
+
+而：
+
+$$
+\int_0^\infty
+u^{d-1}
+\log(1+u^{-2})du
+=
+\frac{\pi}{d}
+\csc\frac{\pi d}{2}.
+$$
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/888-2-为什么不能把该密度视为自动成立
+fingerprints:
+  raw_sha256: sha256:134df23cabb30736e2bd3de1b4b08cf9f4e3e2ef36b952320c9c81ee02f4536a
+  normalized_sha256: sha256:134df23cabb30736e2bd3de1b4b08cf9f4e3e2ef36b952320c9c81ee02f4536a
+cas_ref: sha256:134df23cabb30736e2bd3de1b4b08cf9f4e3e2ef36b952320c9c81ee02f4536a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

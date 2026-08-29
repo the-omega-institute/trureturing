@@ -1,0 +1,10 @@
+ast_path: row/黄金最小轨道统一复现
+fingerprints:
+  raw_sha256: sha256:aa88c51943b3f638cf2c18d8bcd1e5cf372b9ca309661f5922455a3978a56f3e
+  normalized_sha256: sha256:aa88c51943b3f638cf2c18d8bcd1e5cf372b9ca309661f5922455a3978a56f3e
+cas_ref: sha256:aa88c51943b3f638cf2c18d8bcd1e5cf372b9ca309661f5922455a3978a56f3e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

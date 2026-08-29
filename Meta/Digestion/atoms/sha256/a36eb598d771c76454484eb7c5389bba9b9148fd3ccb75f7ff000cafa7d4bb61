@@ -1,0 +1,61 @@
+# 第七百五十四部　项目中的规范黄金字符
+
+定义模 \(5\) 二次字符：
+
+$$
+\boxed{
+\chi_5(n)
+=
+\begin{cases}
+0,&5\mid n,\\
++1,&n\equiv1,4\pmod5,\\
+-1,&n\equiv2,3\pmod5.
+\end{cases}
+}
+\tag{754.1}
+$$
+
+对素数 \(p\neq5\)，项目中的黄金素数分类正好给出：
+
+$$
+\boxed{
+\chi_5(p)=+1
+\iff
+p\text{ 在 }\mathbb Z[\varphi]\text{ 中分裂},
+}
+\tag{754.2}
+$$
+
+$$
+\boxed{
+\chi_5(p)=-1
+\iff
+p\text{ 在 }\mathbb Z[\varphi]\text{ 中惰性}.
+}
+\tag{754.3}
+$$
+
+而：
+
+$$
+\boxed{
+\chi_5(5)=0
+}
+$$
+
+对应分歧。
+
+因此 \(\chi_5\) 不是人为附加的黄金调度。
+
+它是：
+
+$$
+\boxed{
+\text{黄金两嵌入观察器对每个素数的规范局部读数。}
+}
+$$
+
+Dirichlet \(L\)-函数由字符的 Dirichlet 级数与 Euler 乘积定义；对非平凡字符它解析延拓为整函数，并具有标准函数方程。([DLMF][1])
+
+---
+

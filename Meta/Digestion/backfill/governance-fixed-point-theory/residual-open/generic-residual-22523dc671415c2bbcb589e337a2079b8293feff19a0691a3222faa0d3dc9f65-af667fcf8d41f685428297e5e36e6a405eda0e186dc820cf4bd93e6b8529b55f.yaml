@@ -1,0 +1,10 @@
+ast_path: section/5-10-八条义务的原子性边界/clause/10
+fingerprints:
+  raw_sha256: sha256:22523dc671415c2bbcb589e337a2079b8293feff19a0691a3222faa0d3dc9f65
+  normalized_sha256: sha256:22523dc671415c2bbcb589e337a2079b8293feff19a0691a3222faa0d3dc9f65
+cas_ref: sha256:22523dc671415c2bbcb589e337a2079b8293feff19a0691a3222faa0d3dc9f65
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

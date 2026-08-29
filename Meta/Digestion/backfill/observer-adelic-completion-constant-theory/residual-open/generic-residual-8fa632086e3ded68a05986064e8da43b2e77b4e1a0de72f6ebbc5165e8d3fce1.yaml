@@ -1,0 +1,10 @@
+ast_path: section/第七百七十五部-建议形式化顺序
+fingerprints:
+  raw_sha256: sha256:8fa632086e3ded68a05986064e8da43b2e77b4e1a0de72f6ebbc5165e8d3fce1
+  normalized_sha256: sha256:8fa632086e3ded68a05986064e8da43b2e77b4e1a0de72f6ebbc5165e8d3fce1
+cas_ref: sha256:8fa632086e3ded68a05986064e8da43b2e77b4e1a0de72f6ebbc5165e8d3fce1
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

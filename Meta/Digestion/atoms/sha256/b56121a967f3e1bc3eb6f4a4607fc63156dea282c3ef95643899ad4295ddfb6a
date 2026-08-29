@@ -1,0 +1,36 @@
+## 定理 835.1（Golden observer-light spectral zeta）
+
+$$
+\boxed{
+\zeta_{\mathrm{ch},\varphi}(s)
+=
+a_\varphi^{-s}\zeta(s).
+}
+\tag{835.2}
+$$
+
+完整左右手性场则为：
+
+$$
+\boxed{
+\zeta_{\mathrm{full},\varphi}(s)
+=
+2a_\varphi^{-s}\zeta(s).
+}
+\tag{835.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{Riemann }\zeta
+=
+\text{一维无质量 observer tower 的无量纲形状谱}.
+}
+$$
+
+这是一条精确等式，不是类比。
+
+---
+

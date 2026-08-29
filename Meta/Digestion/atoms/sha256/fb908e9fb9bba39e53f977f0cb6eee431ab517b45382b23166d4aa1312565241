@@ -1,0 +1,26 @@
+## 708.3 交换曲率校验
+
+对 split–inert 对 \(p,q\)，比较：
+
+$$
+U_qU_p-U_pU_q
+$$
+
+和闭式：
+
+$$
+C_{r;p,q}.
+$$
+
+再验证长词中的相邻交换差：
+
+$$
+\Delta m
+=
+\mathbf F^\ell
+C_{r;p,q}
+Z_{\mathrm{pre}}.
+$$
+
+---
+

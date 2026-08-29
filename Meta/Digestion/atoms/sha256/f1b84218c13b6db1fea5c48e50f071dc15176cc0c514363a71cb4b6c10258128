@@ -1,0 +1,27 @@
+## 5.4 G-C：尾节 span 保持前缀扩展
+
+建议模块：
+
+`D5/S3/ConceptDynamics/GovernanceFixedPoint/TailSpanPrefixExtension.lean`
+
+精确陈述：
+
+```lean
+theorem tail_span_prefix_extension
+    {Byte : Type u}
+    (oldDocument newDocument : List Byte)
+    (start : Nat)
+    (hprefix : PrefixExtension oldDocument newDocument)
+    (hstart : start ≤ oldDocument.length) :
+    PrefixExtension
+      (TailBytes oldDocument start)
+      (TailBytes newDocument start)
+```
+
+闭合路线是取得 `newDocument = oldDocument ++ suffix`，并证明：
+
+`TailBytes newDocument start =
+  TailBytes oldDocument start ++ suffix`。
+
+不要求 `DecidableEq Byte`。
+

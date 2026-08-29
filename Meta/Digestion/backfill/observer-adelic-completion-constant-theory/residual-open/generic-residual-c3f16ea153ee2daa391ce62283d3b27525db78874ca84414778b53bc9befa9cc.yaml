@@ -1,0 +1,10 @@
+ast_path: section/第七百三十七部-六维完成的最小-split-signature-内核
+fingerprints:
+  raw_sha256: sha256:c3f16ea153ee2daa391ce62283d3b27525db78874ca84414778b53bc9befa9cc
+  normalized_sha256: sha256:c3f16ea153ee2daa391ce62283d3b27525db78874ca84414778b53bc9befa9cc
+cas_ref: sha256:c3f16ea153ee2daa391ce62283d3b27525db78874ca84414778b53bc9befa9cc
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

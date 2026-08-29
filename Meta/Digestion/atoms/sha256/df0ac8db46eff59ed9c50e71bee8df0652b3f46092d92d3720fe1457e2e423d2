@@ -1,0 +1,76 @@
+# 第八百四十六部　临界线上的 Observer Gamma 二阶差分
+
+前述 Casimir 在实半轴：
+
+$$
+\sigma>1
+$$
+
+上是正的。
+
+但要进入 Weil/RH，必须研究临界线频率：
+
+$$
+t\in\mathbb R.
+$$
+
+项目的 Riemann Archimedean multiplier为：
+
+$$
+\boxed{
+a(t)
+=
+\Re\psi
+\left(
+\frac14+\frac{it}{2}
+\right)
+-\log\pi.
+}
+\tag{846.1}
+$$
+
+令 observer mode shift 为：
+
+$$
+\tau.
+$$
+
+定义对称二阶差分：
+
+$$
+\boxed{
+\Delta_\tau a(t)
+=
+\frac12
+\left[
+a(t+\tau)+a(t-\tau)
+\right]
+-a(t).
+}
+\tag{846.2}
+$$
+
+由项目已经形式化的 Lévy 表示：
+
+$$
+a(t)-a(0)
+=
+2
+\int_0^\infty
+\kappa_\infty(x)
+\left(
+1-\cos tx
+\right)dx,
+$$
+
+其中：
+
+$$
+\kappa_\infty(x)
+=
+\frac{e^{-x/2}}
+{1-e^{-2x}},
+$$
+
+得到：
+

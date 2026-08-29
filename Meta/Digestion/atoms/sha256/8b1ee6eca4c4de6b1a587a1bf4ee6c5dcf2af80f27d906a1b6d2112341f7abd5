@@ -1,0 +1,60 @@
+# 第八百九十三部　正零点距离算子束
+
+现在回到 RH 成立时的算子图景。
+
+定义抽象零点算子：
+
+$$
+H_\Xi e_\gamma
+=
+\gamma e_\gamma.
+$$
+
+对每个观察位置 \(t\)，定义：
+
+$$
+\boxed{
+A_t
+=
+(H_\Xi-tI)^2.
+}
+\tag{893.1}
+$$
+
+其谱为：
+
+$$
+\boxed{
+\operatorname{Spec}(A_t)
+=
+\left\{
+(t-\gamma)^2
+\right\}_\gamma
+\subset[0,\infty).
+}
+\tag{893.2}
+$$
+
+而：
+
+$$
+\boxed{
+\mathfrak S_t(u)
+=
+\operatorname{Tr}
+(A_t+uI)^{-1}.
+}
+\tag{893.3}
+$$
+
+所以 RH 可以理解为：
+
+$$
+\boxed{
+\text{临界线上的每个观察者，
+都拥有一个非负平方距离算子。}
+}
+$$
+
+---
+

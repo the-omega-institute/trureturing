@@ -1,0 +1,25 @@
+## 763.1 最小顺序差异
+
+令 \(S\) 为一个 split prime，\(I\) 为一个 inert prime。
+
+则：
+
+$$
+\boxed{
+\mathcal H(SI)=U^2J,
+}
+\tag{763.7}
+$$
+
+而：
+
+$$
+\boxed{
+\mathcal H(IS)=J.
+}
+\tag{763.8}
+$$
+
+两个词：
+
+* 使用同样的素数类型；

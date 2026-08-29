@@ -1,0 +1,10 @@
+ast_path: section/其他冻结裁决定理
+fingerprints:
+  raw_sha256: sha256:19aed759eff6424aabdc014afa038ccbc63dc8104e8ea267a3e8a469938c0501
+  normalized_sha256: sha256:19aed759eff6424aabdc014afa038ccbc63dc8104e8ea267a3e8a469938c0501
+cas_ref: sha256:19aed759eff6424aabdc014afa038ccbc63dc8104e8ea267a3e8a469938c0501
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

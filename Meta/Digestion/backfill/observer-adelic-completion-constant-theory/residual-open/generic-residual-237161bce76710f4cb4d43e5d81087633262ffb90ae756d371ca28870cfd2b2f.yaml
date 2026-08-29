@@ -1,0 +1,10 @@
+ast_path: row/L-0-chi-5-log-varphi
+fingerprints:
+  raw_sha256: sha256:237161bce76710f4cb4d43e5d81087633262ffb90ae756d371ca28870cfd2b2f
+  normalized_sha256: sha256:237161bce76710f4cb4d43e5d81087633262ffb90ae756d371ca28870cfd2b2f
+cas_ref: sha256:237161bce76710f4cb4d43e5d81087633262ffb90ae756d371ca28870cfd2b2f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

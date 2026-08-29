@@ -1,0 +1,93 @@
+# 第七百七十二部　GPMO 的规范阿贝尔商
+
+前文构造的带记忆黄金素数观察器保留完整顺序 holonomy。
+
+现在存在一个规范商映射：
+
+$$
+\boxed{
+\operatorname{Hol}_{\mathrm{full}}
+\longrightarrow
+C_2,
+}
+\tag{772.1}
+$$
+
+它把每个未分歧素数映射为：
+
+$$
+\boxed{
+p\longmapsto
+\chi_5(p).
+}
+$$
+
+对素数词：
+
+$$
+w=p_1\cdots p_n,
+$$
+
+定义：
+
+$$
+\boxed{
+\operatorname{Hol}_5(w)
+=
+\prod_{j=1}^n
+\chi_5(p_j).
+}
+\tag{772.2}
+$$
+
+这一商：
+
+* 保留惰性素数次数的奇偶；
+* 遗忘素数顺序；
+* 遗忘 observer rapidity；
+* 遗忘 commutator holonomy。
+
+所以记忆塔为：
+
+$$
+\boxed{
+\text{full path holonomy}
+\longrightarrow
+C_2\text{ orientation}
+\longrightarrow
+1.
+}
+\tag{772.3}
+$$
+
+对应函数塔为：
+
+$$
+\boxed{
+\text{matrix／memory transfer}
+\longrightarrow
+L(s,\chi_5)
+\longrightarrow
+\zeta(s).
+}
+\tag{772.4}
+$$
+
+这说明此前 GPMO 中的非交换记忆并非无结构附加项。
+
+它位于：
+
+$$
+\boxed{
+\ker
+\left(
+\operatorname{Hol}_{\mathrm{full}}
+\to C_2
+\right)
+}
+$$
+
+中，是黄金字符仍然无法读取的更深观察纤维。
+
+---
+

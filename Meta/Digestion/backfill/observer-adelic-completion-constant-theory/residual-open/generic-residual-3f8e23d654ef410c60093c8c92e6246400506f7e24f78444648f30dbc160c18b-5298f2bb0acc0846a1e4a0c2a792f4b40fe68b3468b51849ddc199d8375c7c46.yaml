@@ -1,0 +1,10 @@
+ast_path: section/701-1-最重要的科学后果/clause/3
+fingerprints:
+  raw_sha256: sha256:3f8e23d654ef410c60093c8c92e6246400506f7e24f78444648f30dbc160c18b
+  normalized_sha256: sha256:3f8e23d654ef410c60093c8c92e6246400506f7e24f78444648f30dbc160c18b
+cas_ref: sha256:3f8e23d654ef410c60093c8c92e6246400506f7e24f78444648f30dbc160c18b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

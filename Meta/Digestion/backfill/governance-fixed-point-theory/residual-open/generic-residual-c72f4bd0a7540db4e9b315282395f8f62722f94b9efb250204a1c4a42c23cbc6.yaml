@@ -1,0 +1,14 @@
+ast_path: section/4-1-修复类与放行集
+fingerprints:
+  raw_sha256: sha256:c72f4bd0a7540db4e9b315282395f8f62722f94b9efb250204a1c4a42c23cbc6
+  normalized_sha256: sha256:c72f4bd0a7540db4e9b315282395f8f62722f94b9efb250204a1c4a42c23cbc6
+cas_ref: sha256:c72f4bd0a7540db4e9b315282395f8f62722f94b9efb250204a1c4a42c23cbc6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-95d98e27d1c042297789b73ea9ca08b4d05f3a570d87582f389e49f2712813ea-16caebfa1be76c1c083988b7990268bd7f4b1548d39d5abe751a1694ffee1004
+    - generic-residual-6887900b2d49b639760c4d7d8c78bfce0b8208064998a88f74a0a1760979cc76-1e53cfcd84e8a5a157db819f9a6be96bac064582718aa7cdb0633f0d80342861
+    - generic-residual-12585c678306bff8ae6ac3a6723cca54cbb4301d04baa5634bf3cadd5b7dbd92-313fd415151f1c522e5df9403bba46a135f4a231cb8c5787db2a6ac6839a1244

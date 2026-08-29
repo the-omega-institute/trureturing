@@ -1,0 +1,10 @@
+ast_path: section/第八百零八部-规范全模态-observer-Casimir
+fingerprints:
+  raw_sha256: sha256:e791d094534cc815af60ca034651be2ffd05499ab6b544b46b203e9fe04c67f6
+  normalized_sha256: sha256:e791d094534cc815af60ca034651be2ffd05499ab6b544b46b203e9fe04c67f6
+cas_ref: sha256:e791d094534cc815af60ca034651be2ffd05499ab6b544b46b203e9fe04c67f6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

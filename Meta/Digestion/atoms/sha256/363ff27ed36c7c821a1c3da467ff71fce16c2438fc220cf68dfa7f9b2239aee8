@@ -1,0 +1,8 @@
+## 猜想 941.3（Golden return-word packet compiler）
+
+Power-Packet/Chebyshev 证书所需的全部二元递归操作，可以编码为黄金子移位的有限 return words。
+
+若成立，任意一个黄金观察者轨道都成为所有有限证书的单轨搜索器。
+
+---
+

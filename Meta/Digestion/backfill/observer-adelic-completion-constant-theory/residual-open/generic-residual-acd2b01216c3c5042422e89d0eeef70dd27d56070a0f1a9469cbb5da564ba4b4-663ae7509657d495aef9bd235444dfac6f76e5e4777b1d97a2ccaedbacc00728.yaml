@@ -1,0 +1,10 @@
+ast_path: section/904-1-横向-Lyapunov-指数/clause/3
+fingerprints:
+  raw_sha256: sha256:acd2b01216c3c5042422e89d0eeef70dd27d56070a0f1a9469cbb5da564ba4b4
+  normalized_sha256: sha256:acd2b01216c3c5042422e89d0eeef70dd27d56070a0f1a9469cbb5da564ba4b4
+cas_ref: sha256:acd2b01216c3c5042422e89d0eeef70dd27d56070a0f1a9469cbb5da564ba4b4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

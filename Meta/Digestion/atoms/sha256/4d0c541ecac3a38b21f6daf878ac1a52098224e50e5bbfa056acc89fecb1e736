@@ -1,0 +1,53 @@
+* 仍以接近 \(e^{-\sqrt a|x|}\) 的速度衰减。
+
+再乘以实偶光滑 cutoff：
+
+$$
+\chi_L(x),
+\qquad
+\chi_L=1\text{ 于 }[-L,L],
+$$
+
+得到：
+
+$$
+f_L(x)=\chi_L(x)r^{(\epsilon)}(x).
+$$
+
+对整个临界带：
+
+$$
+|\Im z|\le\frac12,
+$$
+
+截断误差受：
+
+$$
+\boxed{
+|F_L(z)-R_\epsilon(z)|
+\le
+C_M
+e^{-(\sqrt a-\frac12)L}
+(1+|\Re z|)^{-M}
+}
+\tag{928.3}
+$$
+
+控制。
+
+因为零点计数只按 \(T\log T\) 增长，取 \(M\) 足够大便得到：
+
+$$
+\boxed{
+F_L
+\longrightarrow
+R_\epsilon
+}
+$$
+
+于加权零点取样空间 \(\ell^2(\mathcal Z_\Xi,w)\) 中成立。
+
+最后令 \(\epsilon\downarrow0\)，严格负 margin 得以保持。
+
+---
+

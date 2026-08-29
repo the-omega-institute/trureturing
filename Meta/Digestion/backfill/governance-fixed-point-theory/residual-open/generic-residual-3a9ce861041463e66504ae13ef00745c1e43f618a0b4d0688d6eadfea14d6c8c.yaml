@@ -1,0 +1,15 @@
+ast_path: section/3-3-尾节重键的适用类
+fingerprints:
+  raw_sha256: sha256:3a9ce861041463e66504ae13ef00745c1e43f618a0b4d0688d6eadfea14d6c8c
+  normalized_sha256: sha256:3a9ce861041463e66504ae13ef00745c1e43f618a0b4d0688d6eadfea14d6c8c
+cas_ref: sha256:3a9ce861041463e66504ae13ef00745c1e43f618a0b4d0688d6eadfea14d6c8c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-6b64f2f27b13e0748b0b946c45e7a46142a2c46df33e9d42d2a88daaac30d0fd-64eeb4f9dd0d39f6a23fa44635c51376e48c524632b907fe52e7a91563a62b3d
+    - generic-residual-4c5221a1f00b29c4dc4e488cb1d080fbcff26673e5f089e1aa410f4a51b5ae3d-41b0c84c5e164bdec8b3defa59db96d4ee2b06afb33cca0c097c5e5f6c72f7ef
+    - generic-residual-f8d0373b70ec079e9f67ff733aa6f032c97369046bf47e752176ff0d97ff52ae-39f1eee037759d8183c16a1329e62b47919997801b6b4ab5e13c107b73e6b699
+    - generic-residual-7dc01106a149dd2bd1fcaf6070c35ad81736ea31404c49788104aefe0b2055c2-d419e38c0274a67d98d22854763b7d9a7d65bd76c25b825b7f8fabde0513e4e9

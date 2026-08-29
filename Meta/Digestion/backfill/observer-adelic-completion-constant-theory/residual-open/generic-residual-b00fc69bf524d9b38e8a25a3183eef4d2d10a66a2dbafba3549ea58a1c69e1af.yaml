@@ -1,0 +1,10 @@
+ast_path: section/持久对象残差
+fingerprints:
+  raw_sha256: sha256:b00fc69bf524d9b38e8a25a3183eef4d2d10a66a2dbafba3549ea58a1c69e1af
+  normalized_sha256: sha256:b00fc69bf524d9b38e8a25a3183eef4d2d10a66a2dbafba3549ea58a1c69e1af
+cas_ref: sha256:b00fc69bf524d9b38e8a25a3183eef4d2d10a66a2dbafba3549ea58a1c69e1af
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

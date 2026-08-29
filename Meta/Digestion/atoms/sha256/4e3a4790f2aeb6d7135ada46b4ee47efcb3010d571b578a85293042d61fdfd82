@@ -1,0 +1,70 @@
+## 832.1 小时间层密度
+
+Euler–Maclaurin 展开给出：
+
+$$
+\boxed{
+\Theta_\sigma(u)
+=
+\frac{\sqrt\pi}{4\sqrt u}
++
+\frac{1-\sigma}{2}
++
+O_\sigma(u)
+}
+\qquad
+(u\downarrow0).
+\tag{832.3}
+$$
+
+第一项：
+
+$$
+u^{-1/2}
+$$
+
+表示 completion tower 的渐近层数按一维 Weyl law 增长。
+
+代入式 (832.2)：
+
+$$
+\frac{\sqrt\pi}{4}
+\int_0^\infty
+(1-e^{-\lambda u})u^{-3/2}\,du
+=
+\frac{\pi}{2}\sqrt\lambda.
+$$
+
+第二项产生：
+
+$$
+\frac{1-\sigma}{2}\log\lambda.
+$$
+
+于是精确恢复：
+
+$$
+\boxed{
+\Phi_\sigma(\lambda)
+=
+\frac{\pi}{2}\sqrt\lambda
++
+\frac{1-\sigma}{2}\log\lambda
++
+O_\sigma(1).
+}
+\tag{832.4}
+$$
+
+所以无质量 \(\sqrt\lambda\) 并不是来自单个 Gamma 因子，而是来自：
+
+$$
+\boxed{
+\Theta_\sigma(u)\sim u^{-1/2}
+}
+$$
+
+这一层级密度。
+
+---
+

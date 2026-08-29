@@ -1,0 +1,56 @@
+## 定理 701.1（Absolute-convergence forcing vanishes）
+
+若：
+
+$$
+Z_n\to Z_\infty
+$$
+
+且：
+
+$$
+a_{r,p_n}\to0,
+$$
+
+则：
+
+$$
+\boxed{
+\varepsilon_{r,n}\to0.
+}
+\tag{701.4}
+$$
+
+从而：
+
+$$
+\boxed{
+D_n\to0.
+}
+\tag{701.5}
+$$
+
+这意味着在仓库当前已经证明的普通 Euler 收敛区域内：
+
+$$
+\boxed{
+\text{素数记忆不会维持永久横向破缺。}
+}
+$$
+
+它只留下顺序依赖的 archive：
+
+$$
+A_\infty(\pi;s),
+$$
+
+而活动 completion defect：
+
+$$
+D_n
+$$
+
+最终消失。
+
+---
+

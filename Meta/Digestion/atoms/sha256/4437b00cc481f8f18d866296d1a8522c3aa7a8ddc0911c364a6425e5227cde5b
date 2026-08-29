@@ -1,0 +1,93 @@
+# 第九百零四部　固定 bump 的单位ary—双曲相变
+
+选取一个实偶 bump：
+
+$$
+\psi\in C_c^\infty((-1,1)),
+$$
+
+满足：
+
+$$
+\psi\ge0,
+\qquad
+\int_{\mathbb R}\psi(x)\,dx=1,
+$$
+
+且 \(\psi\) 在某个非退化区间上严格为正。
+
+定义：
+
+$$
+\boxed{
+\Psi(z)
+=
+\int_{\mathbb R}
+\psi(x)e^{-izx}\,dx.
+}
+\tag{904.1}
+$$
+
+则：
+
+$$
+\Psi(0)=1,
+\qquad
+\Psi(-z)=\Psi(z),
+\qquad
+\Psi(\overline z)=\overline{\Psi(z)}.
+$$
+
+在实轴上：
+
+$$
+\boxed{
+|\Psi(\xi)|\le1.
+}
+\tag{904.2}
+$$
+
+对于 \(\xi\neq0\)，严格三角不等式给出：
+
+$$
+|\Psi(\xi)|<1.
+$$
+
+但在纯虚方向：
+
+$$
+\boxed{
+\Psi(i\delta)
+=
+\int_{\mathbb R}
+\psi(x)\cosh(\delta x)\,dx
+>1
+\qquad
+(\delta\neq0).
+}
+\tag{904.3}
+$$
+
+这产生一个精确的动力分界：
+
+$$
+\boxed{
+\begin{aligned}
+\Im z=0
+&:\quad e^{-izx}\text{ 是单位模振荡};\\
+\Im z\neq0
+&:\quad e^{-izx}\text{ 含指数放大／衰减}.
+\end{aligned}
+}
+$$
+
+因此临界线在这一观察器中就是：
+
+$$
+\boxed{
+\text{单位ary 相位动力与双曲增长动力的边界。}
+}
+$$
+
+---
+

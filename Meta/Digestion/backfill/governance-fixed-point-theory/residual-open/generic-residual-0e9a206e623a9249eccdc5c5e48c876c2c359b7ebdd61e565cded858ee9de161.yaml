@@ -1,0 +1,15 @@
+ast_path: section/6-6-PrefixExtension-不与-append-only-冻结族竞争
+fingerprints:
+  raw_sha256: sha256:0e9a206e623a9249eccdc5c5e48c876c2c359b7ebdd61e565cded858ee9de161
+  normalized_sha256: sha256:0e9a206e623a9249eccdc5c5e48c876c2c359b7ebdd61e565cded858ee9de161
+cas_ref: sha256:0e9a206e623a9249eccdc5c5e48c876c2c359b7ebdd61e565cded858ee9de161
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-38fc0498847b2fd69f13722af6459184f807caf105f5d6147115bead8664cc4a-76971d0f2c69977438db98d733bd732c03db201cfc6ba29f5f1b1b22d9fb4979
+    - generic-residual-1037e954edd37ef3c7906009b46685d4521cfbad3b49d20c0a51c29fad8c865d-96eb92aa17032a39fdb9a6f43553194096dfc9d00ae82dd102d239b777b644a0
+    - generic-residual-4628057e9ae82e8e2d3d1c17782d65bafc412c2386fd9915b462ae95edafddd4-728b9ea5c27f5553fd482d8133edc656da53b3d317afe0e4335247934127d336
+    - generic-residual-0b90fee552cd154109b392d5e619db2641f4afc1e18750aa164a4001d3a79e84-679ffa348a6fe00ff2efdc728116b3390860ecd728e8fb0412bf611a6a5edc84

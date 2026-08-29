@@ -1,0 +1,37 @@
+## 5.6 G-E：合法尾节重键唯一
+
+建议模块：
+
+`D5/S3/ConceptDynamics/GovernanceFixedPoint/TailRekeyUniqueness.lean`
+
+精确陈述：
+
+```lean
+theorem legal_tail_rekey_unique
+    {Id : Type u} {Byte : Type v} [DecidableEq Id]
+    (tailEligible : Id → Prop)
+    (oldDocument newDocument : List Byte)
+    (start : Nat)
+    (oldEntry : LedgerEntry Id Byte)
+    (active : ActiveIndex Id Byte)
+    (settlement : Settlement Id)
+    {first second : RekeyResult Id Byte}
+    (hfirst :
+      LegalTailRekey tailEligible
+        oldDocument newDocument start
+        oldEntry active settlement first)
+    (hsecond :
+      LegalTailRekey tailEligible
+        oldDocument newDocument start
+        oldEntry active settlement second) :
+    first = second
+```
+
+闭合路线只允许：
+
+- 消去两个合法性证明；
+- 对 `LedgerEntry` 和 `RekeyResult` 做结构外延；
+- 使用函数外延处理 `newActive` 与 `newSettlement`。
+
+不得以哈希碰撞不可能作为额外公理；本卷的内容键已经是精确字节。
+

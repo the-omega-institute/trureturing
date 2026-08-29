@@ -1,0 +1,10 @@
+ast_path: section/条件二-Persistent-invariant
+fingerprints:
+  raw_sha256: sha256:3d02651a081bfbe2d7ac3565a6f40f4aec9d537457331e0e8a50fa7a2bdbcd82
+  normalized_sha256: sha256:3d02651a081bfbe2d7ac3565a6f40f4aec9d537457331e0e8a50fa7a2bdbcd82
+cas_ref: sha256:3d02651a081bfbe2d7ac3565a6f40f4aec9d537457331e0e8a50fa7a2bdbcd82
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

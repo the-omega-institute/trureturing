@@ -1,0 +1,38 @@
+## 793.1 多模态总 Casimir
+
+选择正权：
+
+$$
+c_n\ge0,
+\qquad
+\sum_nc_n<\infty,
+$$
+
+定义：
+
+$$
+\boxed{
+\nu_{\mathrm{obs}}
+=
+\sum_{n\ge1}
+c_n\nu_n^{\mathrm{obs}}.
+}
+\tag{793.3}
+$$
+
+这是一条正测度。
+
+它是当前最自然的：
+
+$$
+\boxed{
+\text{“所有观察者不同，但完成标量只读取其二阶总差异”}
+}
+$$
+
+的 prime-side 形式。
+
+若能从 Archimedean completion 导出匹配的正连续测度，就会得到一条新的 observer–Weil 二次型。
+
+---
+

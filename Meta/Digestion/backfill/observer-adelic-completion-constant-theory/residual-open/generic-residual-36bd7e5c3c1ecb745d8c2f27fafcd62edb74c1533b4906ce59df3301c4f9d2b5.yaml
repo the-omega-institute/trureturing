@@ -1,0 +1,10 @@
+ast_path: row/自由-对称-Fock-区分
+fingerprints:
+  raw_sha256: sha256:36bd7e5c3c1ecb745d8c2f27fafcd62edb74c1533b4906ce59df3301c4f9d2b5
+  normalized_sha256: sha256:36bd7e5c3c1ecb745d8c2f27fafcd62edb74c1533b4906ce59df3301c4f9d2b5
+cas_ref: sha256:36bd7e5c3c1ecb745d8c2f27fafcd62edb74c1533b4906ce59df3301c4f9d2b5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

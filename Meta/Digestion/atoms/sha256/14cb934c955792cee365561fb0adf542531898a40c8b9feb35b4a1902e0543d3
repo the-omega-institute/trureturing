@@ -1,0 +1,14 @@
+* observer-specific residual。
+
+项目当前已经形式化黄金指数的初始幂律与终止、黄金局部 Euler 因子，以及抽取 universal \(\zeta\) 因子的前两层。
+
+而普通 Euler product：
+
+$$
+\zeta(s)=\prod_p(1-p^{-s})^{-1}
+$$
+
+只保留标量 occupation。
+
+它商掉了：
+

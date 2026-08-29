@@ -1,0 +1,188 @@
+# 本轮最终结论
+
+“质量为零的 Poisson 型色散像光”现在获得了一条更深、更直接的解释：
+
+$$
+\boxed{
+\text{它的量子化谱本身产生 Riemann }\zeta.
+}
+$$
+
+在黄金 observer circle：
+
+$$
+P_\varphi=2\log\varphi
+$$
+
+上，massless tangent operator 的能级为：
+
+$$
+E_n
+=
+\frac{\pi^2}{2\log\varphi}|n|.
+$$
+
+因此单手性谱 \(\zeta\) 为：
+
+$$
+\boxed{
+\zeta_{\mathrm{ch},\varphi}(s)
+=
+\left(
+\frac{2\log\varphi}{\pi^2}
+\right)^s
+\zeta(s).
+}
+$$
+
+黄金比例只存在于一个无零点的尺度因子中。
+
+所以普通 \(\zeta\) 的零点自然看不到它。
+
+但观察者信息并未全部消失。
+
+对数导数能够读取尺度：
+
+$$
+\boxed{
+\frac{\zeta_{\mathrm{obs}}'}{\zeta_{\mathrm{obs}}}
+=
+-\log a_\varphi
++
+\frac{\zeta'}{\zeta}.
+}
+$$
+
+更深的观察者起点成为 holonomy：
+
+$$
+\alpha,
+$$
+
+并把谱 \(\zeta\) 扭曲为：
+
+$$
+\boxed{
+\zeta(s,\alpha)+\zeta(s,1-\alpha).
+}
+$$
+
+在模五的两个黄金反射扇区中，其谱行列式分别为：
+
+$$
+2\sin\frac{\pi}{5},
+\qquad
+2\sin\frac{2\pi}{5}.
+$$
+
+它们的比值和乘积恰为：
+
+$$
+\boxed{
+\frac{
+2\sin(2\pi/5)
+}{
+2\sin(\pi/5)
+}
+=
+\varphi,
+}
+$$
+
+$$
+\boxed{
+4\sin\frac{\pi}{5}
+\sin\frac{2\pi}{5}
+=
+\sqrt5.
+}
+$$
+
+所以黄金比例和判别式五并不是强行放入谱中。
+
+它们是：
+
+$$
+\boxed{
+\text{无质量观察场不同 holonomy 扇区之间的谱行列式关系。}
+}
+$$
+
+最深的一条是：
+
+$$
+\boxed{
+L(0,\chi_5)=0,
+\qquad
+L'(0,\chi_5)=\log\varphi.
+}
+$$
+
+即：
+
+$$
+\boxed{
+\text{完成点本身没有区别，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{第一导数恢复黄金观察方向。}
+}
+$$
+
+这几乎就是你之前直觉的严格原型：
+
+> 所有观察者在零阶完成中看见同一个世界；
+> 观察者的不同不在完成点，而在完成点的切向 germ 中。
+
+同时，本轮给出了一个关键限制：
+
+$$
+\boxed{
+\text{黄金尺度本身绝不移动 Riemann }\zeta\text{ 零点。}
+}
+$$
+
+真正能改变零点的是 holonomy 或更一般的谱**形状变形**。
+
+而当这种 observer mode 被接到临界线 Weil multiplier 时，Gamma 相对 Casimir 会从正 Laplace 核变成振荡 cosine transform，并必然发生符号变化。
+
+因此普通 RH 的剩余困难最终收敛到：
+
+$$
+\boxed{
+\text{少数低 holonomy modes}
+\times
+\text{少数低 Fourier frequencies}
+\times
+\text{有限 prime sticky states}.
+}
+$$
+
+高 observer modes 由 Archimedean 无质量主符号自动稳定。
+
+所以下一步最承重的工作已经不再模糊：
+
+$$
+\boxed{
+\text{构造 observer-mode fixed-scale Weil multiplier，}
+}
+$$
+
+把全部危险严格压缩成：
+
+$$
+\boxed{
+\text{一个有限 observer–Slepian–Feshbach 矩阵，}
+}
+$$
+
+再判断这个有限矩阵是否在所有支撑尺度上保持正半定。
+
+[1]: https://dlmf.nist.gov/draft1/25.11 "https://dlmf.nist.gov/draft1/25.11"
+[2]: https://dlmf.nist.gov/5.5 "https://dlmf.nist.gov/5.5"
+[3]: https://dlmf.nist.gov/25.15 "https://dlmf.nist.gov/25.15"

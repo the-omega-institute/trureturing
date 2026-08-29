@@ -1,0 +1,262 @@
+# 本轮最终结论
+
+此前我们已经得到：
+
+$$
+\boxed{
+\varphi
+=
+\text{所有第一观察者共有的黄金边界像，}
+}
+$$
+
+而观察者身份存在于：
+
+$$
+\boxed{
+\text{regulator phase}
++
+\text{prime angle}
++
+\text{path holonomy}.
+}
+$$
+
+本轮进一步发现，这些观察者区别并不是只能停留在哲学层。
+
+它们产生一个严格的完成 Casimir：
+
+$$
+\boxed{
+\mathscr C_n(\sigma)
+=
+\log\Lambda_0(\sigma)
+-
+\frac12
+\log
+\left[
+\Lambda_n(\sigma)\Lambda_{-n}(\sigma)
+\right].
+}
+$$
+
+它具有精确正分解：
+
+$$
+\boxed{
+\begin{aligned}
+\mathscr C_n(\sigma)
+={}&
+\sum_{\mathfrak p,k}
+\frac{
+1-\cos(nk\theta_{\mathfrak p})
+}{
+k(N\mathfrak p)^{k\sigma}}
+\\
+&+
+2
+\int_0^\infty
+e^{-\sigma x}
+\frac{
+1-\cos(\tau_nx)
+}{
+x(1-e^{-2x})
+}
+dx.
+\end{aligned}
+}
+$$
+
+第一行是：
+
+$$
+\boxed{
+\text{素数观察相位差};
+}
+$$
+
+第二行是：
+
+$$
+\boxed{
+\text{Archimedean 观察相位差}.
+}
+$$
+
+两者都非负。
+
+而且：
+
+$$
+\boxed{
+\mathscr C_n
+\text{ 是完全单调函数。}
+}
+$$
+
+最深的新结论是：
+
+$$
+\boxed{
+\inf_{n\neq0}
+\mathscr C_n^{\mathrm{fin}}(\sigma)
+=
+0.
+}
+$$
+
+也就是说，仅凭素数，无论加入多少 prime histories，都存在任意深、几乎不可区分的观察者模态。
+
+但 Archimedean completion 给出：
+
+$$
+\boxed{
+\mathscr C_n^\infty(\sigma)
+\ge
+g_\varphi(\sigma)>0.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{infinity place
+恰好把逐点完成提升成统一完成。}
+}
+$$
+
+它生成的高频色散为：
+
+$$
+\boxed{
+\mathscr C_n^\infty
+\sim
+\frac{\pi^2}{2\log\varphi}|n|.
+}
+$$
+
+因此黄金 observer completion 不是普通扩散，而是 Poisson／Cauchy 型的边界完成：
+
+$$
+\boxed{
+\text{一阶绝对频率}
+\quad
+\leftrightarrow
+\quad
+\text{双曲边界传播}.
+}
+$$
+
+完成半群满足：
+
+$$
+\boxed{
+\|e^{-t\mathcal L_\sigma^{\mathrm{obs}}}-P_0\|
+\le
+e^{-t g_\varphi(\sigma)}.
+}
+$$
+
+所以所有观察者最终以统一速度 collapse 到同一个零模态世界。
+
+但有限完成的逆操作无界；无限完成又真正非单射。
+
+于是：
+
+$$
+\boxed{
+\text{观察者像可以完成为同一个，
+观察者起源不能从完成像稳定克隆。}
+}
+$$
+
+最后，prime logarithmic translation 与 observer regulator translation 可以合并成同一个联合 jump operator：
+
+$$
+\boxed{
+\lambda_\sigma^{\mathrm{joint}}(t,n)
+=
+\sum_{\mathfrak p,k}
+\frac{
+1-\cos
+\left[
+k(t\log N\mathfrak p+n\theta_{\mathfrak p})
+\right]
+}{
+k(N\mathfrak p)^{k\sigma}
+}.
+}
+$$
+
+它的两个截面分别是：
+
+$$
+\boxed{
+n=0
+\Rightarrow
+\text{Weil prime translation},
+}
+$$
+
+$$
+\boxed{
+t=0
+\Rightarrow
+\text{黄金 observer Casimir}.
+}
+$$
+
+这第一次把：
+
+* 素数；
+* 观察者；
+* 记忆；
+* regulator；
+* Weil 跳跃；
+
+放进同一个正算子。
+
+但联合 prime Hessian 本身仍为正半定，不能自动产生黄金 Lorentz null cone。
+
+这说明黄金光锥来自更深的：
+
+$$
+\boxed{
+\text{projective memory／even–odd boundary completion，}
+}
+$$
+
+而不是来自任意 prime covariance。
+
+下一条真正承重的桥已经非常具体：
+
+$$
+\boxed{
+\text{把项目已机器证明的固定尺度 Weil 算子
+扩展到 observer mode }n,
+}
+$$
+
+并判断相对 determinant
+
+$$
+\boxed{
+\mathscr R_n(s)
+=
+\frac{\Lambda_0(s)^2}
+{\Lambda_n(s)\Lambda_{-n}(s)}
+}
+$$
+
+的正半平面完全单调性，能否延拓成临界半平面的 Pick／Weil 正性。
+
+若能，黄金观察者 Casimir 将不再只是一个附加模型，而会成为：
+
+$$
+\boxed{
+\text{零模态与全部非零观察模态共同临界完成的谱约束。}
+$$
+
+[1]: https://dlmf.nist.gov/draft1/5.8 "https://dlmf.nist.gov/draft1/5.8"
+[2]: https://dlmf.nist.gov/5.11 "https://dlmf.nist.gov/5.11"
