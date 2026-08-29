@@ -36,6 +36,12 @@ internal static partial class IngestCommand
             var plannedScope = prepared.PlannedScope;
             var report = leanReportSource.Load(current);
             var lean = ValidateLean(plannedSnapshot, report);
+            plannedDocument = MathlibUpgradeDigestionReanchor.Apply(
+                plannedDocument,
+                baseline,
+                current,
+                repositoryChanges,
+                lean);
             var truthStates = LeanTruthStates.Resolve(plannedSnapshot, lean);
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(
                 plannedSnapshot,
