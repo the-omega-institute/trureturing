@@ -75,6 +75,7 @@ theorem golden_mobius_sub_conjugate {x : ℝ} (hx : x ≠ 0) :
           field_simp [hx]
         _ = Real.goldenRatio * (x - Real.goldenConj) := by
           rw [mul_sub, Real.goldenRatio_mul_goldenConj]
+          ring
 
 /-- Exact golden projective linearization. -/
 theorem golden_cross_ratio_linearization {x : ℝ}
@@ -86,7 +87,6 @@ theorem golden_cross_ratio_linearization {x : ℝ}
     golden_mobius_sub_conjugate hx]
   unfold goldenProjectiveMultiplier
   field_simp [hx, hConj, Real.goldenRatio_ne_zero]
-  ring
 
 /-- Positive points avoid both affine-chart singularities. -/
 theorem positive_avoids_golden_singularities {x : ℝ} (hx : 0 < x) :
