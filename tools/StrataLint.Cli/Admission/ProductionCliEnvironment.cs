@@ -213,6 +213,9 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         this.timeProvider = timeProvider ?? TimeProvider.System;
     }
 
+    public ExplicitCommandResult CapacityAudit(IReadOnlyList<string> arguments) =>
+        CapacityAuditCommand.Run(arguments, repositoryRoot);
+
     public AdmissionOutcome Check(IReadOnlyList<string> arguments)
     {
         var timing = new AdmissionCheckTiming(timeProvider);
