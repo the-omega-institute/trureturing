@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "RevocationTests.ProtectedHistoryWithARevocationCanBeReloadedAsTheNextBaseline",
+  "disposition": "retired",
+  "reason": "Reloading a persisted Revoke event into the next baseline was retired; v5 persists only the replacement set of surviving Freeze snapshots."
+}

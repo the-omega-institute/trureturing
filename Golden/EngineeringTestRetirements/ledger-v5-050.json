@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "FrozenLedgerBaseViewTests.ProtectedBaseProjectionReadsPersistedStateWithoutRevalidatingAcceptedBytes",
+  "disposition": "renamed",
+  "replacement": {
+    "assembly": "StrataLint.Tests",
+    "id": "CoverageCommandTests.CoverageCommandTrustsAcceptedEventShapeWithoutReplayingIt"
+  },
+  "reason": "The coverage consumer test now proves that protected accepted-event bytes are read as trusted history without replaying the candidate shape gate."
+}

@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "CoverageLedgerIndexTests.RevocationRemovesPreviouslyFrozenPathFromCoverageIndex",
+  "disposition": "retired",
+  "reason": "Revoke persistent-event replay into the coverage index was retired; v5 coverage is the surviving set of Freeze snapshots."
+}

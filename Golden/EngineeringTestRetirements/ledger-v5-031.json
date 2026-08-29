@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "FrozenGitInfrastructureFixtureTests.MalformedBatchCheckSuccessFrameFailsClosed",
+  "disposition": "retired",
+  "reason": "Parsing cat-file batch-check frames for persisted Freeze object OIDs was retired with the coordinate validator."
+}

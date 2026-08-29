@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "ProductionEnvironmentTests.Sl008RejectsEmptyAddedRevokePayload",
+  "disposition": "retired",
+  "reason": "Revoke persistent-event payloads, including their nonempty evidence requirement, were retired from schema v5."
+}

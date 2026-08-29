@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "DepositCoverWorkflowScriptTests.DepositSkipsAppendWhenMultiCaseRevocationDoesNotIncludeTarget",
+  "disposition": "retired",
+  "reason": "Target membership in a multi-case Revoke persistent-event payload was retired; v5 records only the resulting Freeze snapshot set."
+}

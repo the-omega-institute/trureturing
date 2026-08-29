@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "CoverageLedgerIndexTests.RetiredSupersedeEventFailsClosed",
+  "disposition": "retired",
+  "reason": "Supersede persistent events were retired; schema v5 has no event-dispatch surface beyond Freeze."
+}

@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "LedgerRevokeCommandTests.ProductionCommandAppendsAValidatedRevokeWithoutRewritingHistory",
+  "disposition": "retired",
+  "reason": "Appending a Revoke persistent event was retired; v5 revocation publishes a replacement set of surviving Freeze snapshots."
+}

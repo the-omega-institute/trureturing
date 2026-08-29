@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "ProductionEnvironmentTests.CheckWithProductionGitAcceptsCanonicalPhaseAFreezeAnchor",
+  "disposition": "retired",
+  "reason": "Production validation of the Freeze base commit/tree anchor was retired because schema v5 has no coordinate input."
+}

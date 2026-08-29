@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "RevocationTests.TombstonePreventsReactivationAndCorrectionRequiresANewFrozenNodeId",
+  "disposition": "retired",
+  "reason": "Revoke tombstones and historical case-ID reuse tracking were retired; v5 revocation replaces the Freeze snapshot rather than persisting tombstones."
+}

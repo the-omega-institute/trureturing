@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "ProductionEnvironmentTests.CheckAllowsScopedMaterialBlobDriftWhenFrozenIdentityIsStable",
+  "disposition": "renamed",
+  "replacement": {
+    "assembly": "StrataLint.Tests",
+    "id": "FrozenLedgerTests.ProofBodyOnlyChangeDoesNotReportStatementIdentityChanged"
+  },
+  "reason": "The v5 transition test preserves the same semantic allowance: representation-only source drift is accepted when statement identity is stable."
+}

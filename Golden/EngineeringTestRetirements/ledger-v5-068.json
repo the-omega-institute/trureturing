@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "FrozenLedgerTests.HistoricalComparisonRejectsRewrittenStatementAndNamesModulePath",
+  "disposition": "renamed",
+  "replacement": {
+    "assembly": "StrataLint.Tests",
+    "id": "FrozenLedgerTests.StatementChangeReportsActiveModuleStatementIdentityChanged"
+  },
+  "reason": "The renamed transition test still rejects a rewritten statement and reports the active module path."
+}

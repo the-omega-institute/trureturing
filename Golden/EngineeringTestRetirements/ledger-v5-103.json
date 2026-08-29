@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "ProductionEnvironmentTests.CheckAdmitsAddedFreezeAnchoredToPhaseAWhenCurrentRevisionIsPhaseB",
+  "disposition": "retired",
+  "reason": "The Freeze base_commit_oid/base_tree_oid coordinate and its phase-A anchor validation were retired from schema v5."
+}

@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "FrozenContentAddressTests.ProofOnlyRewritePreservesStatementIdAndChangesWitnessAndFrozenNodeIds",
+  "disposition": "retired",
+  "reason": "Source-blob-bound witness_id was retired; a proof-only rewrite intentionally preserves the v5 FrozenNodeId derived from path, statement, and prerequisites."
+}

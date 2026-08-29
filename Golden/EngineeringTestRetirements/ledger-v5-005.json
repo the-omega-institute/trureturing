@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "CoverageLedgerIndexTests.StateChangingEventCannotPrecedeGenesis",
+  "disposition": "retired",
+  "reason": "Genesis and linear event sequencing were retired; v5 is an unordered content-addressed set of Freeze snapshots."
+}

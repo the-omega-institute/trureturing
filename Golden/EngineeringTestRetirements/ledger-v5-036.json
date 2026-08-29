@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "FrozenGitReferenceAdapterTests.FrozenGitReferenceAdapterValidatesTreeMembershipAndDescriptorSelector",
+  "disposition": "retired",
+  "reason": "Tree-membership validation of base_tree_oid and descriptor_blob_oid coordinates was retired from schema v5."
+}

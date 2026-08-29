@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "ProductionEnvironmentTests.CheckDoesNotResolveCurrentRevisionForAnUnrelatedChange",
+  "disposition": "renamed",
+  "replacement": {
+    "assembly": "StrataLint.Tests",
+    "id": "ProductionEnvironmentTests.CheckAdmitsAnUnrelatedChangeWhenMaterialArchiveIsMissingAndUnused"
+  },
+  "reason": "The replacement directly asserts that an unrelated change performs zero current-revision resolutions."
+}

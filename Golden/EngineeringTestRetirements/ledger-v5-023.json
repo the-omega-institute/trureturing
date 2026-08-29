@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "FrozenContentAddressTests.WitnessV1PreimageContainsSourceAndPinnedEnvironmentIdentity",
+  "disposition": "retired",
+  "reason": "The witness-v1 source and pinned-environment preimage, together with witness_id itself, was retired from schema v5."
+}

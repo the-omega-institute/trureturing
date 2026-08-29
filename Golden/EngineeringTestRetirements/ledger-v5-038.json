@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "FrozenLedgerAdmissionDiagnosticsTests.Sl008AdmissionAllowsHistoricalEventWithoutAxiomClosure",
+  "disposition": "renamed",
+  "replacement": {
+    "assembly": "StrataLint.Tests",
+    "id": "FrozenLedgerTests.HistoricalV2AndV3FreezesLoadedThroughAcceptedEventLoaderAreAccepted"
+  },
+  "reason": "The transition test now proves that legacy schema v2 Freeze records, whose payload omits axiom_closure, remain readable."
+}

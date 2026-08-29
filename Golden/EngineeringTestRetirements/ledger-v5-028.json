@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "FrozenGitInfrastructureFixtureTests.GitIoFailureIsInfrastructureWithIoClassification",
+  "disposition": "retired",
+  "reason": "Git I/O classification for frozen coordinate-object validation was retired when v5 removed those references."
+}

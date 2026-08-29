@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "ProductionEnvironmentTests.CheckRejectsAddedLedgerEventWhoseAnchorDoesNotResolve",
+  "disposition": "retired",
+  "reason": "Persisted Freeze Git anchors and their object-resolution admission check were retired from schema v5."
+}

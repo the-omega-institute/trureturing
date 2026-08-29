@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "FrozenContentAddressTests.StatementIdChangeChangesWitnessIdentity",
+  "disposition": "retired",
+  "reason": "witness_id was retired; schema v5 binds statement changes through the derived FrozenNodeId instead."
+}

@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "FrozenSurfaceRuleTests.Sl008RejectsChangedAcceptedEventFragment",
+  "disposition": "retired",
+  "reason": "Per-fragment accepted-event immutability was retired in favor of admission-authorized whole-snapshot replacement for v5 Freeze files."
+}

@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "FrozenLedgerSchemaV4Tests.CurrentCandidateDagReaderRejectsRetiredV1EnvelopeFields",
+  "disposition": "renamed",
+  "replacement": {
+    "assembly": "StrataLint.Tests",
+    "id": "FrozenLedgerSchemaV5Tests.CurrentCandidateDagReaderRejectsRetiredV1EnvelopeFields"
+  },
+  "reason": "The unchanged envelope-field rejection moved with the schema test class from v4 to v5."
+}

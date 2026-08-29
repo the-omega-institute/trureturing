@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "FrozenTrustedHistoryDecoderTests.TrustedHistoryProjectionRejectsAttestationCycle",
+  "disposition": "retired",
+  "reason": "Reattest predecessor chains were retired, so their attestation-cycle invariant has no v5 state to protect."
+}

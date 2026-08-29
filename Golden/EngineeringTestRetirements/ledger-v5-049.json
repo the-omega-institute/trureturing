@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "FrozenLedgerBaseViewTests.GenesisUsesItsPinnedSchemaV2",
+  "disposition": "retired",
+  "reason": "The Genesis writer and Genesis persistent event were retired; v5 writes only schema 5 Freeze events."
+}

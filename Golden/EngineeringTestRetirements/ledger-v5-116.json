@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "ProductionEnvironmentTests.CheckWithProductionGitRejectsAddedFreezeAnchoredToReachableNonAncestor",
+  "disposition": "retired",
+  "reason": "The persisted base_commit_oid ancestry rule was retired with the schema v5 coordinate input."
+}

@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "FrozenLedgerAdmissionDiagnosticsTests.Sl008AdmissionRejectsCurrentAxiomClosureOutsideStandardAllowlist",
+  "disposition": "renamed",
+  "replacement": {
+    "assembly": "StrataLint.Tests",
+    "id": "FrozenLedgerTests.HistoricalComparisonRejectsCurrentAxiomClosureOutsideStandardAllowlist"
+  },
+  "reason": "The historical-comparison test directly preserves rejection of a current nonstandard axiom closure."
+}

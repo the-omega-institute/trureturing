@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "FrozenLedgerSchemaV4Tests.CurrentDagWriterAndCandidateReaderPinSchemaVersionByEventType",
+  "disposition": "renamed",
+  "replacement": {
+    "assembly": "StrataLint.Tests",
+    "id": "FrozenLedgerSchemaV5Tests.CurrentDagWriterAndCandidateReaderPinSchemaVersionByEventType"
+  },
+  "reason": "The same writer/reader schema pin moved to the schema v5 test class."
+}

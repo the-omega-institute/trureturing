@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "TruthExportCommandTests.ExportEqualsStrictActiveSetDroppingRevokedNodes",
+  "disposition": "renamed",
+  "replacement": {
+    "assembly": "StrataLint.Tests",
+    "id": "TruthExportCommandTests.ExportEqualsStrictActiveFreezeSnapshot"
+  },
+  "reason": "The renamed export test preserves strict equality with the active set, now represented directly by the v5 Freeze snapshot."
+}

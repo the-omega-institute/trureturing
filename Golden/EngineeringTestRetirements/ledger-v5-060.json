@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "FrozenLedgerSchemaV4Tests.CurrentRevokeWriterOmitsEventLocalRootAndExpectedAddressAliases",
+  "disposition": "retired",
+  "reason": "The Revoke writer and Revoke persistent event were retired; v5 revocation replaces the Freeze snapshot set."
+}

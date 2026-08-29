@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "FrozenLedgerRejectFixtureTests.WrongObjectTypeIsATypedSemanticRejectionDistinctFromMissingObject",
+  "disposition": "retired",
+  "reason": "Typed wrong-Git-object rejection for Freeze coordinate OIDs was retired when schema v5 removed those coordinates."
+}

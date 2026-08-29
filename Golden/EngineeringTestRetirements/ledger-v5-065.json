@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "FrozenLedgerTests.HistoricalComparisonAllowsProofBodyChange",
+  "disposition": "renamed",
+  "replacement": {
+    "assembly": "StrataLint.Tests",
+    "id": "FrozenLedgerTests.ProofBodyOnlyChangeDoesNotReportStatementIdentityChanged"
+  },
+  "reason": "The renamed transition test preserves acceptance of a proof-body-only rewrite with unchanged statement identity."
+}

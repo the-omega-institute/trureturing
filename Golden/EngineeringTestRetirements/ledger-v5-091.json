@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "LedgerAppendCommandTests.ProductionCommandWithOneAppendValidatesOnlyTheSuffixOids",
+  "disposition": "retired",
+  "reason": "Suffix Git-OID validation was retired because schema v5 Freeze payloads contain no coordinate input object references."
+}

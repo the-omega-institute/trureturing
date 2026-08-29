@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "FrozenGitReferenceAdapterTests.FrozenGitReferenceAdapterAcceptsSha256RepositoryObjects",
+  "disposition": "retired",
+  "reason": "The frozen Git-reference adapter was retired because v5 Freeze payloads persist no repository object coordinates."
+}

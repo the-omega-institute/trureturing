@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "FrozenGitInfrastructureFixtureTests.EveryReferencedObjectIsValidatedInASingleBatchCheckInvocation",
+  "disposition": "retired",
+  "reason": "The batched Git-reference validation pass was retired because schema v5 Freeze payloads contain no coordinate object OIDs."
+}

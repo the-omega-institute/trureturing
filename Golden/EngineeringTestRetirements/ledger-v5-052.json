@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "FrozenLedgerBaseViewTests.WriterBaselineReadsTrustedProjectionWithoutReplayingAcceptedEvents",
+  "disposition": "renamed",
+  "replacement": {
+    "assembly": "StrataLint.Tests",
+    "id": "CoverageCommandTests.AcceptedEventImplementationChangeTrustsStoredEventWithoutReplayingWriteGate"
+  },
+  "reason": "The replacement test preserves the trusted-history contract by proving stored accepted events are not replayed through the candidate write gate."
+}
