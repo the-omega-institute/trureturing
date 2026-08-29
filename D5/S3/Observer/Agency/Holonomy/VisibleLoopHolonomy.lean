@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Observer/Agency/Holonomy/VisibleLoopHolonomy
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Pointed holonomy requires a visible return, strategy factorization hides policy drift, and a faithful joint readout rules out hidden nontrivial loops. -/
+   digest: Pointed holonomy is a visible return with nontrivial hidden transport; strategy factorization hides policy drift, while a faithful joint readout rules out hidden loops. -/
 
 import D5.S3.Observer.Agency.Self.AgencyEnrichment
 import D5.S3.ObserverMemory.RefinementClosure.BehaviorUpdateWordAction
@@ -33,11 +33,21 @@ def VisibleLoopAt
     (word : List U) (state : H) : Prop :=
   readout (runWord update word state) = readout state
 
-/-- The pointed transport changes the hidden state. -/
-def NontrivialHolonomyAt
+/-- The pointed transport changes the hidden state, without yet asserting a
+visible return. -/
+def NontrivialTransportAt
     {U : Type u} {H : Type v}
     (update : U -> H -> H) (word : List U) (state : H) : Prop :=
   runWord update word state ≠ state
+
+/-- Pointed holonomy is exactly a visible return together with nontrivial
+hidden-state transport. -/
+def PointedHolonomyAt
+    {U : Type u} {H : Type v} {B : Type w}
+    (update : U -> H -> H) (readout : H -> B)
+    (word : List U) (state : H) : Prop :=
+  VisibleLoopAt update readout word state ∧
+    NontrivialTransportAt update word state
 
 /-- Strategy detects the pointed transport. -/
 def StrategyVisibleHolonomyAt
@@ -46,16 +56,29 @@ def StrategyVisibleHolonomyAt
     (word : List U) (state : H) : Prop :=
   strategy (runWord update word state) ≠ strategy state
 
-/-- On a visible loop, strategy change certifies nontrivial pointed holonomy. -/
-theorem visible_loop_policy_change_implies_nontrivial
+/-- Strategy change on a visible loop certifies pointed holonomy, including
+both the visible-return and hidden-transport clauses. -/
+theorem visible_loop_policy_change_witnesses_pointed_holonomy
     {U : Type u} {H : Type v} {B : Type w} {P : Type z}
     (update : U -> H -> H) (readout : H -> B) (strategy : H -> P)
     (word : List U) (state : H)
-    (_visibleLoop : VisibleLoopAt update readout word state)
+    (visibleLoop : VisibleLoopAt update readout word state)
     (strategyChanges : StrategyVisibleHolonomyAt update strategy word state) :
-    NontrivialHolonomyAt update word state := by
+    PointedHolonomyAt update readout word state := by
+  refine ⟨visibleLoop, ?_⟩
   intro stateReturns
   exact strategyChanges (congrArg strategy stateReturns)
+
+/-- The hidden-transport component of the pointed-holonomy witness. -/
+theorem visible_loop_policy_change_implies_nontrivial_transport
+    {U : Type u} {H : Type v} {B : Type w} {P : Type z}
+    (update : U -> H -> H) (readout : H -> B) (strategy : H -> P)
+    (word : List U) (state : H)
+    (visibleLoop : VisibleLoopAt update readout word state)
+    (strategyChanges : StrategyVisibleHolonomyAt update strategy word state) :
+    NontrivialTransportAt update word state :=
+  (visible_loop_policy_change_witnesses_pointed_holonomy
+    update readout strategy word state visibleLoop strategyChanges).2
 
 /-- If strategy factors through the visible readout, every visible loop is
 strategy-invisible. -/
@@ -94,7 +117,7 @@ example (update : Unit -> Bool -> Bool) (word : List Unit) (state : Bool)
     runWord update word state = state := by
   exact visibleLoop
 
-#print axioms visible_loop_policy_change_implies_nontrivial
+#print axioms visible_loop_policy_change_witnesses_pointed_holonomy
 #print axioms strategy_factorization_makes_visible_loops_invisible
 #print axioms faithful_joint_readout_kills_hidden_holonomy
 
