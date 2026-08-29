@@ -1,0 +1,10 @@
+ast_path: row/logarithmic-derivative-恢复观察尺度
+fingerprints:
+  raw_sha256: sha256:c91c0b1e19d18ebbecf3d43e62a59c452cd0650d1d0754ebc0b5d198adc85f21
+  normalized_sha256: sha256:c91c0b1e19d18ebbecf3d43e62a59c452cd0650d1d0754ebc0b5d198adc85f21
+cas_ref: sha256:c91c0b1e19d18ebbecf3d43e62a59c452cd0650d1d0754ebc0b5d198adc85f21
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

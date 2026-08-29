@@ -1,0 +1,71 @@
+# 第七百六十一部　黄金 \(L\)-值等于“boost 周期／null 分支间距”
+
+\(\mathbb Q(\sqrt5)\) 的判别式为：
+
+$$
+5.
+$$
+
+其两个 null 斜率的距离为：
+
+$$
+\boxed{
+\varphi-\varphi'
+=
+\sqrt5.
+}
+\tag{761.1}
+$$
+
+该数域的标准生成元满足最小多项式：
+
+$$
+x^2-x-1,
+$$
+
+且该域类数为 \(1\)。([lmfdb.org][3])
+
+实二次域的解析类数公式把 Dedekind \(\zeta\) 在 \(s=1\) 的留数表示为类数、单位 regulator、根单位数与判别式的组合。([数学百科全书][4])
+
+对 \(K=\mathbb Q(\sqrt5)\)：
+
+$$
+h_K=1,
+\qquad
+w_K=2,
+\qquad
+R_K=\log\varphi,
+\qquad
+D_K=5.
+$$
+
+所以：
+
+$$
+\boxed{
+\operatorname*{Res}_{s=1}
+\zeta_K(s)
+=
+\frac{
+2\log\varphi
+}{
+\sqrt5
+}.
+}
+\tag{761.2}
+$$
+
+由：
+
+$$
+\zeta_K(s)=\zeta(s)L(s,\chi_5)
+$$
+
+以及：
+
+$$
+\operatorname*{Res}_{s=1}\zeta(s)=1,
+$$
+
+得到精确恒等式：
+

@@ -1,0 +1,32 @@
+## 定理 766.1（Isospectral observer non-reconstruction）
+
+标量 Euler 行列式只能恢复局部特征值：
+
+$$
+1,\chi_5(p),
+$$
+
+不能恢复：
+
+* 局部特征向量；
+* 素数间 transition maps；
+* 观察者连接；
+* path holonomy；
+* 形成历史。
+
+所以即使同时知道：
+
+$$
+\boxed{
+\zeta(s)
+\quad\text{与}\quad
+L(s,\chi_5),
+}
+$$
+
+仍然不能克隆完整观察者。
+
+它们只恢复黄金观察器的第一个有限表示影子。
+
+---
+

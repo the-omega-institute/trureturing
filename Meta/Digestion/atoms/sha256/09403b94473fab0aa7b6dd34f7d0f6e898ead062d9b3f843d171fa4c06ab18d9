@@ -1,0 +1,50 @@
+# 第八百零一部　Archimedean completion 补出统一谱隙
+
+定义 Archimedean Dirichlet form：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal E_\sigma^\infty[f]
+=
+\frac12
+\int_0^\infty
+\frac{
+2e^{-\sigma x}
+}{
+x(1-e^{-2x})
+}
+\int_{\mathbb T_\varphi}
+|f(\eta+x)-f(\eta)|^2
+d\eta
+\,dx.
+\end{aligned}
+}
+\tag{801.1}
+$$
+
+因为 \(e_n(\eta+x)=e^{i\tau_nx}e_n(\eta)\)，所以：
+
+$$
+\boxed{
+\mathcal E_\sigma^\infty[e_n]
+=
+\mathscr C_n^\infty(\sigma).
+}
+\tag{801.2}
+$$
+
+而式 (798.2) 表明：
+
+$$
+|\tau_n|
+\ge
+\tau_1
+=
+\frac{\pi}{\log\varphi}
+\qquad
+(n\neq0).
+$$
+
+每个乘积项随 \(|\tau_n|\) 严格增加，所以：
+

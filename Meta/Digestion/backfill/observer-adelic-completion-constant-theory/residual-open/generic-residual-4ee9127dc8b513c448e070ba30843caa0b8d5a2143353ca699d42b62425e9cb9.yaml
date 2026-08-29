@@ -1,0 +1,10 @@
+ast_path: row/archive-defect-分解
+fingerprints:
+  raw_sha256: sha256:4ee9127dc8b513c448e070ba30843caa0b8d5a2143353ca699d42b62425e9cb9
+  normalized_sha256: sha256:4ee9127dc8b513c448e070ba30843caa0b8d5a2143353ca699d42b62425e9cb9
+cas_ref: sha256:4ee9127dc8b513c448e070ba30843caa0b8d5a2143353ca699d42b62425e9cb9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

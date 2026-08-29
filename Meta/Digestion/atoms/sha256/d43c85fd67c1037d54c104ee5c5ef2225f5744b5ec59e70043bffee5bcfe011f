@@ -1,0 +1,83 @@
+# 第六百九十九部　受控 Probe 完成
+
+为了使隐藏记忆可被实验读取，扩展状态为：
+
+$$
+\widehat Y_r
+=
+\mathbb C^2\oplus\mathbb C\oplus\mathbb C^2.
+$$
+
+写成：
+
+$$
+(m,z,h),
+$$
+
+其中 \(h\) 为 probe register。
+
+素数更新：
+
+$$
+\boxed{
+\widehat U_{r,p}(m,z,h)
+=
+\left(
+\mathbf Fm+zB_{r,p},
+L_p^{\langle r\rangle}z,
+h
+\right).
+}
+\tag{699.1}
+$$
+
+定义 probe action：
+
+$$
+\boxed{
+P(m,z,h)=(m,z,m).
+}
+\tag{699.2}
+$$
+
+定义读出：
+
+$$
+\boxed{
+q(m,z,h)=(z,h).
+}
+\tag{699.3}
+$$
+
+两个具有相同标量输出、不同记忆的历史，在所有纯素数输入后仍然不可区分；但执行一次 probe 后立即被区分。
+
+因此：
+
+$$
+\boxed{
+\text{记忆不是不存在，
+而是需要额外干预通道才能显现。}
+}
+$$
+
+仓库的 `ControlledCompletion` 正是按全部有限输入词的读出相等关系取商；其更新可以沿输入词规范复合。在有限载体上，仓库还证明任何保持更新和读出的实现都会唯一且满射地因子化到该完成商。
+
+因此定义：
+
+$$
+\boxed{
+\mathcal B_r^{\mathrm{probe}}
+=
+\operatorname{ControlledCompletion}
+\left(
+\{\widehat U_{r,p},P\},
+q
+\right).
+}
+\tag{699.4}
+$$
+
+它是 GPMO 的规范受控行为状态空间。
+
+---
+

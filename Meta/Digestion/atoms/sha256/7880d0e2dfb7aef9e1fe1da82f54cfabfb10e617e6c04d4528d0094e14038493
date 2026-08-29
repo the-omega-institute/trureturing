@@ -1,0 +1,11 @@
+## 定理 766.1（Isospectral observer non-reconstruction）
+
+标量 Euler 行列式只能恢复局部特征值：
+
+$$
+1,\chi_5(p),
+$$
+
+不能恢复：
+
+* 局部特征向量；

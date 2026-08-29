@@ -1,0 +1,10 @@
+ast_path: section/6-2-接入科学六元循环/clause/1
+fingerprints:
+  raw_sha256: sha256:a27c07015702837f661516a2a9ac87807c510ca5e76fb5b4fc3d8a6ba04a766a
+  normalized_sha256: sha256:a27c07015702837f661516a2a9ac87807c510ca5e76fb5b4fc3d8a6ba04a766a
+cas_ref: sha256:a27c07015702837f661516a2a9ac87807c510ca5e76fb5b4fc3d8a6ba04a766a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

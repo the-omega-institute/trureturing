@@ -1,0 +1,13 @@
+ast_path: section/901-4-Jet-负性与-Weil-负性在存在论上等价-构造论上尚未等价
+fingerprints:
+  raw_sha256: sha256:fc200a0b87549678feb838df0fbe51b29a32ef5955f0057c3d610b7baa9c879e
+  normalized_sha256: sha256:fc200a0b87549678feb838df0fbe51b29a32ef5955f0057c3d610b7baa9c879e
+cas_ref: sha256:fc200a0b87549678feb838df0fbe51b29a32ef5955f0057c3d610b7baa9c879e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-2396bef2d441c694a70f5f72ba7ec175c1fea72a55249ff83121a4df47a4027e-78961f2b9a2e3d99de4c2be2df1f4fd618c3d7e903591528b48a855587624df0
+    - generic-residual-b7f9cd5bb3627228e7298fd14114aef9ca74671e6b193ead8cef199485feeba5-9ddbc6e1d09917f85df36b6ca173bb1cea3a5b66e7cd7989fc811b7da1c38db0

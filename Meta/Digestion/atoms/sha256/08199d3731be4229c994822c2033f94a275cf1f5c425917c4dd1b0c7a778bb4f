@@ -1,0 +1,56 @@
+# 第七百二十五部　临界曲率观察器的项目实验
+
+对每个完成层定义：
+
+$$
+\boxed{
+\mathcal K_{r,P,\pi}(t)
+=
+\left.
+\partial_u^2
+\log
+\left|
+F_{r,P,\pi}
+\left(
+\frac12+u+it
+\right)
+\right|
+\right|_{u=0}.
+}
+\tag{725.1}
+$$
+
+同时定义观察器配对平均：
+
+$$
+\boxed{
+\mathcal K_{r,P}^{\mathrm{ev}}
+=
+\frac12
+\left(
+\mathcal K_{r,P,\pi}
++
+\mathcal K_{r,P,\pi^\sharp}
+\right),
+}
+\tag{725.2}
+$$
+
+以及观察器差：
+
+$$
+\boxed{
+\mathcal K_{r,P}^{\mathrm{odd}}
+=
+\frac12
+\left(
+\mathcal K_{r,P,\pi}
+-
+\mathcal K_{r,P,\pi^\sharp}
+\right).
+}
+\tag{725.3}
+$$
+
+---
+

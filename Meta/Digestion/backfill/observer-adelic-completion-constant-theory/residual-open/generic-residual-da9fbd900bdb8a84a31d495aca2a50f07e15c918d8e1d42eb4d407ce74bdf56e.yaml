@@ -1,0 +1,10 @@
+ast_path: section/第八百一十五部-sigma-1-时出现精确-Lorentz-双曲函数
+fingerprints:
+  raw_sha256: sha256:da9fbd900bdb8a84a31d495aca2a50f07e15c918d8e1d42eb4d407ce74bdf56e
+  normalized_sha256: sha256:da9fbd900bdb8a84a31d495aca2a50f07e15c918d8e1d42eb4d407ce74bdf56e
+cas_ref: sha256:da9fbd900bdb8a84a31d495aca2a50f07e15c918d8e1d42eb4d407ce74bdf56e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

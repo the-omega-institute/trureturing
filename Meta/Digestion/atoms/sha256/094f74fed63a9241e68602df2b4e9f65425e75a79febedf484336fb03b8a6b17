@@ -1,0 +1,54 @@
+# 第八百三十三部　完成层维数决定色散指数
+
+上一结果可以一般化。
+
+设完成质量层：
+
+$$
+M_1,M_2,\ldots
+$$
+
+的计数函数满足：
+
+$$
+\boxed{
+N(M)
+=
+\#\{j:M_j\le M\}
+\sim
+C M^d,
+}
+\tag{833.1}
+$$
+
+其中：
+
+$$
+0<d<2.
+$$
+
+定义：
+
+$$
+\Phi(\lambda)
+=
+\sum_j
+\log
+\left(
+1+\frac{\lambda}{M_j^2}
+\right).
+$$
+
+在适当 regular-variation 条件下，尺度替换给出：
+
+$$
+\boxed{
+\Phi(\lambda)
+\sim
+C\pi
+\csc\left(\frac{\pi d}{2}\right)
+\lambda^{d/2}.
+}
+\tag{833.2}
+$$
+

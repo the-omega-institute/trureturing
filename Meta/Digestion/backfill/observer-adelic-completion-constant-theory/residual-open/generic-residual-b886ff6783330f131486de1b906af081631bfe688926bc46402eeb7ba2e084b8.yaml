@@ -1,0 +1,10 @@
+ast_path: section/第八百一十部-对普通-RH-的含义
+fingerprints:
+  raw_sha256: sha256:b886ff6783330f131486de1b906af081631bfe688926bc46402eeb7ba2e084b8
+  normalized_sha256: sha256:b886ff6783330f131486de1b906af081631bfe688926bc46402eeb7ba2e084b8
+cas_ref: sha256:b886ff6783330f131486de1b906af081631bfe688926bc46402eeb7ba2e084b8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

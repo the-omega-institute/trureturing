@@ -1,0 +1,18 @@
+* observer Casimir 若要产生这种分岔，必须先规范进入 ordinary scalar channel。
+
+所以仍缺少映射：
+
+$$
+\boxed{
+\mathcal J:
+\mathscr C_{\beta}^{\mathrm{all}}
+\longrightarrow
+\text{ordinary }\xi\text{ completion flow}.
+}
+\tag{810.1}
+$$
+
+没有这条映射，就不能把 Hecke observer mode 的正 Casimir 解释成 Riemann 零点横向位移。
+
+---
+

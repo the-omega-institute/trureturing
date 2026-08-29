@@ -1,0 +1,8 @@
+- 新结算视图原样取 $\sigma$。
+
+任意两个合法结果的全部字段逐项相等，故合法重键结果唯一。
+
+因此有：
+
+$\exists!r,\ \operatorname{LegalTailRekey}(x,y,m,e,a,\sigma,r)$。
+

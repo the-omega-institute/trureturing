@@ -1,0 +1,46 @@
+## Sticky 深度
+
+$$
+\boxed{
+d_{\mathrm{sticky}}(L)
+=
+\min
+\left\{
+\operatorname{rank}P:
+Q^\perp AQ^\perp>0,\
+F_P\not\succeq0
+\right\}.
+}
+\tag{900.4}
+$$
+
+若 RH 为假，则经典 Weil 判据与前文有限喷流定理共同表明：
+
+$$
+\boxed{
+d_{\mathrm{jet}}<\infty,
+\qquad
+L_*<\infty,
+\qquad
+d_{\mathrm{sticky}}(L_*)<\infty.
+}
+$$
+
+但目前尚无定量函数：
+
+$$
+L_*=L(d_{\mathrm{jet}})
+$$
+
+或：
+
+$$
+d_{\mathrm{sticky}}
+=
+d_{\mathrm{sticky}}(d_{\mathrm{jet}}).
+$$
+
+构造这一复杂度传输律，正是下一阶段最实际的新问题。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/779-2-Galois-反射
+fingerprints:
+  raw_sha256: sha256:dc71f5ac870a9bae94f13df0917136bf884b062e986147f19ade8007548dab7d
+  normalized_sha256: sha256:dc71f5ac870a9bae94f13df0917136bf884b062e986147f19ade8007548dab7d
+cas_ref: sha256:dc71f5ac870a9bae94f13df0917136bf884b062e986147f19ade8007548dab7d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

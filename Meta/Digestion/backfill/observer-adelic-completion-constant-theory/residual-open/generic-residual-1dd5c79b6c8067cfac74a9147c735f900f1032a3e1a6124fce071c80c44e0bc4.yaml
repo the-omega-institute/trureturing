@@ -1,0 +1,10 @@
+ast_path: section/723-1-黄金指数与局部-germ-层
+fingerprints:
+  raw_sha256: sha256:1dd5c79b6c8067cfac74a9147c735f900f1032a3e1a6124fce071c80c44e0bc4
+  normalized_sha256: sha256:1dd5c79b6c8067cfac74a9147c735f900f1032a3e1a6124fce071c80c44e0bc4
+cas_ref: sha256:1dd5c79b6c8067cfac74a9147c735f900f1032a3e1a6124fce071c80c44e0bc4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

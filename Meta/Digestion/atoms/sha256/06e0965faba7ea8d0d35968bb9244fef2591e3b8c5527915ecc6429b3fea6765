@@ -1,0 +1,51 @@
+## 799.1 相对完成行列式
+
+定义
+
+$$
+\boxed{
+\mathscr R_n(s)
+=
+\frac{
+\Lambda_0(s)^2
+}{
+\Lambda_n(s)\Lambda_{-n}(s)
+}.
+}
+\tag{799.6}
+$$
+
+在实轴 \(\sigma>1\) 上：
+
+$$
+\boxed{
+\log\mathscr R_n(\sigma)
+=
+2\mathscr C_n(\sigma)\ge0,
+}
+\tag{799.7}
+$$
+
+所以
+
+$$
+\boxed{
+\mathscr R_n(\sigma)\ge1.
+}
+\tag{799.8}
+$$
+
+这给出一个新的、已经完成 finite 与 infinite place 的 observer-relative determinant。
+
+它不是仅 prime-side 为正，而是：
+
+$$
+\boxed{
+\text{每一个有限素数局部项为正，}
+\qquad
+\text{整个 Archimedean 项也为正。}
+}
+$$
+
+---
+

@@ -1,0 +1,51 @@
+# 第七百八十八部　观察者 Casimir 如何可能影响标量零点
+
+设第 \(n\) 个观察模态为：
+
+$$
+u_n(s)\in\rho_n.
+$$
+
+对称选择律要求 completed scalar 的局部有效形式为：
+
+$$
+\boxed{
+F_{\mathrm{eff}}(s,\lambda)
+=
+F_0(s)
++
+\lambda
+\sum_{n\ge1}
+\kappa_n(s)
+\|u_n(s)\|^2
++
+O(\lambda^2).
+}
+\tag{788.1}
+$$
+
+没有线性 \(u_n\) 项。
+
+因此 observer fiber 若能下降到普通 \(\xi\)，第一候选必须是：
+
+$$
+\boxed{
+\mathscr C_{\mathrm{obs}}(s)
+=
+\sum_n\kappa_n(s)\|u_n(s)\|^2.
+}
+\tag{788.2}
+$$
+
+prime-side 的：
+
+$$
+\mathscr C_\varphi(s)
+=
+\log L_0(s)-\log L_1(s)
+$$
+
+正是这种二阶 Casimir 的规范候选之一。
+
+---
+

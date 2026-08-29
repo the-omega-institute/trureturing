@@ -1,0 +1,16 @@
+ast_path: section/第九百二十五部-有限角色码选择器
+fingerprints:
+  raw_sha256: sha256:d105db9ceb3988cdac76b0f4343b9a587cc0e533cdb2d537021468e7ebd0bdba
+  normalized_sha256: sha256:d105db9ceb3988cdac76b0f4343b9a587cc0e533cdb2d537021468e7ebd0bdba
+cas_ref: sha256:d105db9ceb3988cdac76b0f4343b9a587cc0e533cdb2d537021468e7ebd0bdba
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-39586294d6583d0a4d24713748fce44ec597810f5bf9b37b5fb9382e4e6be3d9-68bef594ee09d8f77e480d3f6390e15e4f927589dafe4174ef8dfad4f53d241c
+    - generic-residual-6de5d8bc83147ab8e68bd371fc6e55d9a6723ba6bef2a10839c7b752b0d0ace5-423e579d5ce5555be1f883415b0c7901ac5afbaf003e77c7202027682a4d7e30
+    - generic-residual-9548fdb6b681769f8e361ee04a5fedcc203a21a44d0e1b44b56c9d5e5fb41b3c-6cf5c84ed3af0cbb8fa69af74caf3290897a6b373e84a415db54ca975956614b
+    - generic-residual-ecbe57b1307a99654090c62b451540e05d2caeab98f5757a9773afd6298e09cc-8e9dc9e297855df222d70c693247558da6498b5555fbb0073cc18bc1e1141f59
+    - generic-residual-4404ebabeef637b8f628c4ea645ddbac19b7cb43a5e4a487360525ce55d74589-d18e5ca00855e6cd71c8e3ba58ada8b764b45e7324b6cc2b619244bc4539ad08

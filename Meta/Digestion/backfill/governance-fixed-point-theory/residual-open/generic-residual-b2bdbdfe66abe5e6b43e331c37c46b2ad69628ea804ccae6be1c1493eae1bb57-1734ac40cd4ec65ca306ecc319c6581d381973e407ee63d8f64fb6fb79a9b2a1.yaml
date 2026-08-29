@@ -1,0 +1,10 @@
+ast_path: section/5-5-G-D-合法尾节重键存在/clause/3
+fingerprints:
+  raw_sha256: sha256:b2bdbdfe66abe5e6b43e331c37c46b2ad69628ea804ccae6be1c1493eae1bb57
+  normalized_sha256: sha256:b2bdbdfe66abe5e6b43e331c37c46b2ad69628ea804ccae6be1c1493eae1bb57
+cas_ref: sha256:b2bdbdfe66abe5e6b43e331c37c46b2ad69628ea804ccae6be1c1493eae1bb57
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

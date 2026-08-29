@@ -1,0 +1,14 @@
+ast_path: section/5-6-G-E-合法尾节重键唯一
+fingerprints:
+  raw_sha256: sha256:7d170597964629091b55e9d985281f3321e46761494b933c8bc8334ccb26d3aa
+  normalized_sha256: sha256:7d170597964629091b55e9d985281f3321e46761494b933c8bc8334ccb26d3aa
+cas_ref: sha256:7d170597964629091b55e9d985281f3321e46761494b933c8bc8334ccb26d3aa
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-7c0ee8de1c7de3b085d93cb368a71a355c604dfbd541a54f27c7f8ec426a153c-d08e169b7641348ab9f8bbfccd0631cb2a2764abdacf9c5160bac504374a8b78
+    - generic-residual-6eaf2bd6c840954bf968666097d184a178638d57997d3d4af116b5d398decac6-49d0f2acdddf3cf4585e9d8bdf3f41c004bd2111e0bec92283835372dd4761cf
+    - generic-residual-1201e75459c700dbfe429aff08fa527ff8e0fb632fb4def5816dbbb0e08980e2-10131af5d0588cce2a8710e8dc2f5cf393857cbc0567ab04413082ae45b3e7b9

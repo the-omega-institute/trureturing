@@ -1,0 +1,10 @@
+ast_path: section/1-2-当前状态与其余输入的分割/clause/1
+fingerprints:
+  raw_sha256: sha256:5b1da8536d5f4a6ee9b8448ba1413de9733c2b76cebbeb3e829fb6a2ae2af11d
+  normalized_sha256: sha256:5b1da8536d5f4a6ee9b8448ba1413de9733c2b76cebbeb3e829fb6a2ae2af11d
+cas_ref: sha256:5b1da8536d5f4a6ee9b8448ba1413de9733c2b76cebbeb3e829fb6a2ae2af11d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

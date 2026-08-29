@@ -1,0 +1,114 @@
+# 第七百六十三部　规范黄金素数 Holonomy
+
+对未分歧素数 \(p\neq5\)，定义：
+
+$$
+\boxed{
+e_p
+=
+\frac{
+1-\chi_5(p)
+}{2}
+\in\{0,1\}.
+}
+\tag{763.1}
+$$
+
+所以：
+
+$$
+e_p=
+\begin{cases}
+0,&p\text{ split},\\
+1,&p\text{ inert}.
+\end{cases}
+$$
+
+定义一次素数观察步骤：
+
+$$
+\boxed{
+T_p
+=
+UJ^{e_p}.
+}
+\tag{763.2}
+$$
+
+对有序素数词：
+
+$$
+w=p_1p_2\cdots p_n,
+$$
+
+定义 path-ordered holonomy：
+
+$$
+\boxed{
+\mathcal H(w)
+=
+T_{p_1}T_{p_2}\cdots T_{p_n}.
+}
+\tag{763.3}
+$$
+
+每个元素有唯一正规形：
+
+$$
+\boxed{
+\mathcal H(w)
+=
+U^{k(w)}J^{\varepsilon(w)}.
+}
+\tag{763.4}
+$$
+
+若从右侧逐步加入素数，并记：
+
+$$
+\mathcal H_n=U^{k_n}J^{\varepsilon_n},
+$$
+
+则：
+
+$$
+\boxed{
+k_{n+1}
+=
+k_n+(-1)^{\varepsilon_n},
+}
+\tag{763.5}
+$$
+
+$$
+\boxed{
+\varepsilon_{n+1}
+=
+\varepsilon_n+e_{p_{n+1}}
+\pmod2.
+}
+\tag{763.6}
+$$
+
+所以：
+
+$$
+\boxed{
+\varepsilon(w)
+}
+$$
+
+只记录惰性素数出现次数的奇偶；
+
+而：
+
+$$
+\boxed{
+k(w)
+}
+$$
+
+真正记录它们出现的位置与顺序。
+
+---
+

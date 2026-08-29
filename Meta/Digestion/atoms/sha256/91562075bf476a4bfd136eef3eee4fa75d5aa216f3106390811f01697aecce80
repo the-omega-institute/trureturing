@@ -1,0 +1,15 @@
+## 708.5 Probe 行为实验
+
+在同一 scalar fiber 中选择两个历史：
+
+$$
+w,w',
+\qquad
+z_w=z_{w'},
+\qquad
+m_w\neq m_{w'}.
+$$
+
+验证：
+
+* 不执行 probe 时全部标量未来读数一致；

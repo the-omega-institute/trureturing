@@ -1,0 +1,19 @@
+# 第七百零四部　记忆闭环与观察者伪零点
+
+为了研究隐藏记忆怎样影响一个标量谱条件，定义一个最小二通道闭环矩阵：
+
+$$
+\boxed{
+\mathbb K_{\pi,\kappa}(s)
+=
+\begin{pmatrix}
+F(s)&\kappa A_{\mathrm{odd},\pi}(s)\\
+A_{\mathrm{odd},\pi}(s)&1
+\end{pmatrix},
+}
+\tag{704.1}
+$$
+
+其中：
+
+* \(F(s)\) 是某个已经定义的完成标量函数；

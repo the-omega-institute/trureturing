@@ -1,0 +1,63 @@
+# 第八百零六部　低频联合 Hessian
+
+在
+
+$$
+(t,n)\approx(0,0)
+$$
+
+时，
+
+$$
+1-\cos u
+=
+\frac{u^2}{2}+O(u^4).
+$$
+
+因此：
+
+$$
+\boxed{
+\lambda_\sigma^{\mathrm{joint}}(t,n)
+=
+\frac12
+\begin{pmatrix}
+t&n
+\end{pmatrix}
+M_\sigma
+\begin{pmatrix}
+t\\n
+\end{pmatrix}
++
+O\left(
+|(t,n)|^4
+\right),
+}
+\tag{806.1}
+$$
+
+其中
+
+$$
+\boxed{
+M_\sigma
+=
+\sum_{\mathfrak p,k}
+\frac{k}{
+(N\mathfrak p)^{k\sigma}
+}
+\begin{pmatrix}
+(\log N\mathfrak p)^2&
+(\log N\mathfrak p)\theta_{\mathfrak p}
+\\[1mm]
+(\log N\mathfrak p)\theta_{\mathfrak p}&
+\theta_{\mathfrak p}^{\,2}
+\end{pmatrix}.
+}
+\tag{806.2}
+$$
+
+它是正半定矩阵，因为每一项都是 rank-one 正矩阵。
+
+---
+

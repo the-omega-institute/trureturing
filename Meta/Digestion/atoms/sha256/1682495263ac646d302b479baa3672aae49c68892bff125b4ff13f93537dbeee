@@ -1,0 +1,34 @@
+## 784.1 有序历史配分函数
+
+自由张量／有序词完成给出：
+
+$$
+\boxed{
+Z_{\mathrm{ord}}(s)
+=
+\det(I-\mathcal T_s)^{-1},
+}
+\tag{784.2}
+$$
+
+因为：
+
+$$
+\log Z_{\mathrm{ord}}
+=
+\sum_{m\ge1}
+\frac1m
+\operatorname{Tr}
+\left(
+\sum_pp^{-s}A_p
+\right)^m.
+$$
+
+其展开包含所有有序素数词：
+
+$$
+p_1p_2\cdots p_m.
+$$
+
+---
+

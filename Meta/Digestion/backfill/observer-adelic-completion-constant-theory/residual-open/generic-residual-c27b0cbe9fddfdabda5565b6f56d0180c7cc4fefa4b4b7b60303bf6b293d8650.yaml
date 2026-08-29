@@ -1,0 +1,10 @@
+ast_path: row/sigma-1-的-log-cosh
+fingerprints:
+  raw_sha256: sha256:c27b0cbe9fddfdabda5565b6f56d0180c7cc4fefa4b4b7b60303bf6b293d8650
+  normalized_sha256: sha256:c27b0cbe9fddfdabda5565b6f56d0180c7cc4fefa4b4b7b60303bf6b293d8650
+cas_ref: sha256:c27b0cbe9fddfdabda5565b6f56d0180c7cc4fefa4b4b7b60303bf6b293d8650
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

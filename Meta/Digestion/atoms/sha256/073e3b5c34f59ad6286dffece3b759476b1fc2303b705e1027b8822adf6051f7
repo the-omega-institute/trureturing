@@ -1,0 +1,42 @@
+## 定理 839.1（Massless holonomy determinant）
+
+$$
+\boxed{
+\det\nolimits_\zeta
+|D_\alpha|
+=
+\exp[-\mathcal H_\alpha'(0)]
+=
+2\sin(\pi\alpha).
+}
+\tag{839.1}
+$$
+
+注意：
+
+$$
+\mathcal H_\alpha(0)=0,
+$$
+
+所以整体尺度因子在谱行列式中也完全抵消。
+
+因此：
+
+$$
+\boxed{
+2\sin(\pi\alpha)
+}
+$$
+
+是一个纯粹的、无量纲的 observer-holonomy Casimir。
+
+它是单位圆上从 \(1\) 到：
+
+$$
+e^{2\pi i\alpha}
+$$
+
+的弦长。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/763-1-最小顺序差异/clause/1
+fingerprints:
+  raw_sha256: sha256:898bf589d3214e774f78b4a2254a4a1d97c839f7783fd0e6c9d53b287151562b
+  normalized_sha256: sha256:898bf589d3214e774f78b4a2254a4a1d97c839f7783fd0e6c9d53b287151562b
+cas_ref: sha256:898bf589d3214e774f78b4a2254a4a1d97c839f7783fd0e6c9d53b287151562b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

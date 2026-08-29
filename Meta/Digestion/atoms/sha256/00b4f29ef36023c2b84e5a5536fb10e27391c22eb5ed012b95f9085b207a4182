@@ -1,0 +1,90 @@
+## 定理 863.1（法向 Jet 公式）
+
+$$
+\boxed{
+\mathcal J_m(t)
+=
+\sum_{j=0}^{2m}
+\frac{
+(-1)^{m+j}
+}{
+j!(2m-j)!
+}
+\,
+\Xi^{(j)}(t)
+\Xi^{(2m-j)}(t).
+}
+\tag{863.4}
+$$
+
+### 证明
+
+利用
+
+$$
+F(it+\delta)=\Xi(t-i\delta),
+$$
+
+$$
+F(it-\delta)=\Xi(t+i\delta),
+$$
+
+分别作 Taylor 展开，并收集 \(\delta^{2m}\) 项即可。∎
+
+最初三层为：
+
+$$
+\boxed{
+\mathcal J_0(t)=\Xi(t)^2,
+}
+\tag{863.5}
+$$
+
+$$
+\boxed{
+\mathcal J_1(t)
+=
+\Xi'(t)^2-\Xi(t)\Xi''(t),
+}
+\tag{863.6}
+$$
+
+$$
+\boxed{
+\mathcal J_2(t)
+=
+\frac14\Xi''(t)^2
+-
+\frac13\Xi'(t)\Xi'''(t)
++
+\frac1{12}\Xi(t)\Xi^{(4)}(t).
+}
+\tag{863.7}
+$$
+
+特别地：
+
+$$
+\boxed{
+\frac12
+\left.
+\partial_\delta^2
+R(\delta,t)
+\right|_{\delta=0}
+=
+\Xi'(t)^2-\Xi(t)\Xi''(t).
+}
+\tag{863.8}
+$$
+
+所以经典第一 Laguerre 量正是：
+
+$$
+\boxed{
+\text{completed }\xi
+\text{ 沿临界线法向的二阶观察者能量。}
+}
+$$
+
+---
+

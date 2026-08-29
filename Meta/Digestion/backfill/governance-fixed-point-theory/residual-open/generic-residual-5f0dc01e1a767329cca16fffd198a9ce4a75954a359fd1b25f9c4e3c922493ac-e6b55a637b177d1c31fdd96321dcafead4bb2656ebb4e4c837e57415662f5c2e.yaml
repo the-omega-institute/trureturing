@@ -1,0 +1,10 @@
+ast_path: section/6-4-第-5-条的-harness-自反回灌/clause/4
+fingerprints:
+  raw_sha256: sha256:5f0dc01e1a767329cca16fffd198a9ce4a75954a359fd1b25f9c4e3c922493ac
+  normalized_sha256: sha256:5f0dc01e1a767329cca16fffd198a9ce4a75954a359fd1b25f9c4e3c922493ac
+cas_ref: sha256:5f0dc01e1a767329cca16fffd198a9ce4a75954a359fd1b25f9c4e3c922493ac
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/Sticky-深度
+fingerprints:
+  raw_sha256: sha256:6171cb0795d718512cb526936661336b77df041e939b1b527e1813cfdb321175
+  normalized_sha256: sha256:6171cb0795d718512cb526936661336b77df041e939b1b527e1813cfdb321175
+cas_ref: sha256:6171cb0795d718512cb526936661336b77df041e939b1b527e1813cfdb321175
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

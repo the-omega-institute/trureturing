@@ -1,0 +1,53 @@
+## 736.2 所有观察者同像，不同方向
+
+对任意非零 \(Y\in\mathcal H\)，定义标量投影：
+
+$$
+\boxed{
+\operatorname{Slope}(X,Y)
+=
+\frac{\langle X,Y\rangle}{\|Y\|^2}.
+}
+\tag{736.9}
+$$
+
+在正 null graph 上：
+
+$$
+\boxed{
+\operatorname{Slope}(\varphi Y,Y)=\varphi.
+}
+\tag{736.10}
+$$
+
+但不同 \(Y\) 仍然表示不同观察者方向。
+
+所以：
+
+$$
+\boxed{
+\text{所有观察者的黄金斜率相同，}
+}
+$$
+
+同时：
+
+$$
+\boxed{
+\text{观察者方向 }[Y]\in\mathbb P(\mathcal H)
+\text{ 可以完全不同。}
+}
+$$
+
+观察者纤维至少是：
+
+$$
+\boxed{
+\mathbb P(\mathcal H).
+}
+$$
+
+如果 \(\mathcal H\) 无限维，这一纤维也是无限维的。
+
+---
+

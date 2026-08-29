@@ -1,0 +1,10 @@
+ast_path: section/866-1-不是又一个同义改写/clause/3
+fingerprints:
+  raw_sha256: sha256:7386af777bcf3f687e7b3180762d1583ade7fe9bb6e811f5d44199b3f9623310
+  normalized_sha256: sha256:7386af777bcf3f687e7b3180762d1583ade7fe9bb6e811f5d44199b3f9623310
+cas_ref: sha256:7386af777bcf3f687e7b3180762d1583ade7fe9bb6e811f5d44199b3f9623310
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

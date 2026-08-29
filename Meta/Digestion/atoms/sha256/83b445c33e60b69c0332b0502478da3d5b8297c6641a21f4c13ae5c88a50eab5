@@ -1,0 +1,46 @@
+## 788.1 但简单临界零点不会立即离线
+
+令：
+
+$$
+\Xi_\lambda(t)
+=
+F_{\mathrm{eff}}
+\left(
+\frac12+it,\lambda
+\right)
+$$
+
+对实 \(t,\lambda\) 为实，并保持 completed reflection。
+
+若：
+
+$$
+\Xi_0(t_0)=0,
+\qquad
+\partial_t\Xi_0(t_0)\neq0,
+$$
+
+则隐函数定理给出唯一实零点分支：
+
+$$
+t(\lambda).
+$$
+
+反射对称强迫该分支仍对应：
+
+$$
+\Re s=\frac12.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{二阶 observer Casimir 可以移动临界零点，
+但不会把简单零点直接推出临界线。}
+}
+$$
+
+---
+

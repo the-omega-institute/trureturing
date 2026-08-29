@@ -1,0 +1,40 @@
+## 定理 899.1（条件性 Jet-to-Sticky compiler）
+
+假设目标 892.1 的外部极点逼近成立。
+
+若某个法向 Hankel matrix：
+
+$$
+H_N^{(r)}(t)
+$$
+
+具有负方向，则存在有限：
+
+$$
+L<\infty
+$$
+
+和项目 fixed-support sticky projection \(P_L\)，使相应 Feshbach matrix 存在负向量：
+
+$$
+\boxed{
+v^*F_Lv<0.
+}
+\tag{899.2}
+$$
+
+### 证明链
+
+1. Hankel 负方向产生 rational square witness；
+2. 外部极点逼近产生全临界带可积 witness；
+3. 有限支撑截断保持严格负 margin；
+4. Weil 显式公式把零点侧负性转移到 prime–Archimedean form；
+5. 安全补空间严格为正，故负方向必须投影到有限 sticky block；
+6. Feshbach 精确消元保持负惯性。
+
+∎
+
+所以项目当前距离真正的 finite countercertificate compiler，只剩一个高度具体的分析命题，而不是模糊的“还缺某种方法”。
+
+---
+

@@ -1,0 +1,95 @@
+# 第七百七十九部　黄金 Busemann–Hecke 字符
+
+令：
+
+$$
+K=\mathbb Q(\sqrt5),
+$$
+
+其两个实嵌入为：
+
+$$
+\sigma_+,
+\qquad
+\sigma_-.
+$$
+
+对：
+
+$$
+\alpha\in K^\times
+$$
+
+定义对数嵌入差：
+
+$$
+\boxed{
+\eta(\alpha)
+=
+\log|\sigma_+(\alpha)|
+-
+\log|\sigma_-(\alpha)|.
+}
+\tag{779.1}
+$$
+
+若乘以黄金单位：
+
+$$
+\alpha\mapsto\varphi^m\alpha,
+$$
+
+则：
+
+$$
+\boxed{
+\eta(\varphi^m\alpha)
+=
+\eta(\alpha)+2m\log\varphi.
+}
+\tag{779.2}
+$$
+
+所以对每个：
+
+$$
+n\in\mathbb Z
+$$
+
+定义：
+
+$$
+\boxed{
+\Psi_n((\alpha))
+=
+\exp
+\left(
+in\omega_\varphi\eta(\alpha)
+\right).
+}
+\tag{779.3}
+$$
+
+因为单位只使相位增加 \(2\pi nm\)，该值不依赖主理想生成元的选择。
+
+在采用类数一接口时，这给出全部非零理想上的单位模乘法字符；更一般地可直接通过 idèle class character 定义。
+
+定义 regulator Hecke 模态：
+
+$$
+\boxed{
+L_n(s)
+=
+\prod_{\mathfrak p}
+\left(
+1-\Psi_n(\mathfrak p)
+N\mathfrak p^{-s}
+\right)^{-1},
+\qquad
+\Re s>1.
+}
+\tag{779.4}
+$$
+
+---
+

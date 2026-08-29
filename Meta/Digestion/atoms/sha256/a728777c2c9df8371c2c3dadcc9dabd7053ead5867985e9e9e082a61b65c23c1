@@ -1,0 +1,61 @@
+## 定理 908.1（有限支撑离线放大器）
+
+若存在离线零点：
+
+$$
+\rho=\frac12+\delta+it,
+\qquad
+\delta\neq0,
+$$
+
+则存在实偶函数：
+
+$$
+f_N\in C_c^\infty(\mathbb R)
+$$
+
+满足：
+
+$$
+\boxed{
+\sum_{\rho'}
+\widehat f_N(z_{\rho'})^2<0.
+}
+\tag{908.4}
+$$
+
+而且它可以显式写成：
+
+$$
+\boxed{
+f_N(x)
+=
+Q(-\partial_x^2)
+\left[
+2\cos(tx)\psi^{*N}(x)
+\right].
+}
+\tag{908.5}
+$$
+
+因为：
+
+$$
+\widehat{-\partial_x^2 f}(z)
+=
+z^2\widehat f(z).
+$$
+
+支撑满足：
+
+$$
+\boxed{
+\operatorname{supp}f_N\subseteq[-N,N].
+}
+\tag{908.6}
+$$
+
+若基础 bump 支撑半径为 \(a\)，则支撑半径为 \(Na\)。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: row/memory-pseudozero-shift
+fingerprints:
+  raw_sha256: sha256:223fc5035302b6d3b056b018e68d52a0160080c0bf9c0fbee1a1e35d79836987
+  normalized_sha256: sha256:223fc5035302b6d3b056b018e68d52a0160080c0bf9c0fbee1a1e35d79836987
+cas_ref: sha256:223fc5035302b6d3b056b018e68d52a0160080c0bf9c0fbee1a1e35d79836987
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

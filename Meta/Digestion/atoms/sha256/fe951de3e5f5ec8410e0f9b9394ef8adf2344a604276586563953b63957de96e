@@ -1,0 +1,44 @@
+## 780.1 \(\chi_5\) 只是第一粗层
+
+$$
+\chi_5(p)
+$$
+
+只回答：
+
+$$
+\boxed{
+p\text{ 是 split、inert 还是 ramified}.
+}
+$$
+
+而：
+
+$$
+\theta_p
+$$
+
+进一步回答：
+
+$$
+\boxed{
+\text{分裂素理想位于 regulator 圆的哪个观察位置}.
+}
+$$
+
+所以黄金素数观察层级为：
+
+$$
+\boxed{
+p
+\longmapsto
+\chi_5(p)
+\longmapsto
+\theta_p
+\longmapsto
+\text{完整 prime-word holonomy}.
+}
+$$
+
+---
+

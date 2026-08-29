@@ -1,0 +1,50 @@
+## 869.1 与项目现有 Weil 路线的接点
+
+项目已经证明：
+
+$$
+\boxed{
+\text{zero-side Weil form}
+=
+\text{boundary rank-one energy}
++
+\text{Archimedean jump energy}
++
+\text{prime jump energy}
+-
+\text{coherent threshold}.
+}
+$$
+
+同时，Archimedean 项已经被机器分解成正的连续 translation energy，prime-power 项也被分解成有限正 translation energy与 coherent mass；固定支撑 multiplier 与安全补空间有限负指标也已闭合。
+
+因此可以建立两条并行路线：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Weil 路线}
+&:\quad
+\text{测试函数空间中的二次型正性};\\
+\text{Jet 路线}
+&:\quad
+\text{临界线上的导数喷流正性}.
+\end{aligned}
+}
+$$
+
+真正需要证明的是二者之间的有限证书传输：
+
+$$
+\boxed{
+\text{某阶 }\mathcal J_m(t)<0
+\Longrightarrow
+\text{某个有限支撑 Weil 负测试}.
+}
+\tag{869.2}
+$$
+
+Weil 判据保证全局上必存在某个负测试，但从指定负 jet 构造可控支撑 witness，仍是新的分析桥。
+
+---
+

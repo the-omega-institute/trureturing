@@ -1,0 +1,33 @@
+# 第七百二十部　离线零点对的曲率影子
+
+假设存在一对反射零点：
+
+$$
+\rho_\pm
+=
+\frac12\pm\delta+i\gamma,
+\qquad
+\delta>0.
+$$
+
+令：
+
+$$
+y=t-\gamma.
+$$
+
+它们对局部势的贡献为：
+
+$$
+\boxed{
+V_{\delta,\gamma}(u,t)
+=
+\frac12\log\bigl((u-\delta)^2+y^2\bigr)
++
+\frac12\log\bigl((u+\delta)^2+y^2\bigr).
+}
+\tag{720.1}
+$$
+
+对 \(u\) 求二阶导数并置 \(u=0\)：
+

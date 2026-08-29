@@ -1,0 +1,37 @@
+## 命题 928.1（Chebyshev 外极点编译）
+
+对上述 Chebyshev–角色码有理负见证，存在实偶：
+
+$$
+f_L\in C_c^\infty((-L,L))
+$$
+
+使其 Fourier–Laplace 变换在完整零点平方和中保持严格负性。
+
+这闭合了前文目标 892.1 的一个足够强、结构化子类：
+
+$$
+\boxed{
+\text{无需逼近任意内部 resolvent，}
+}
+$$
+
+只需逼近极点已在临界带外的 Chebyshev rational family。
+
+这条编译路线与上一轮 Power-Packet 路线互补：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Power-Packet}
+&:\quad
+\text{从一开始就是 entire、有限支撑};\\
+\text{Chebyshev}
+&:\quad
+\text{有限矩阵最优，随后编译为有限支撑}.
+\end{aligned}
+}
+$$
+
+---
+

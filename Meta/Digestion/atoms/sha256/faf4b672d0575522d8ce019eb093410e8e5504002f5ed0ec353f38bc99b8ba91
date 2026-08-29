@@ -1,0 +1,6 @@
+## 猜想 941.1（Chebyshev–Toeplitz 完整编译）
+
+所有外带极点 Chebyshev localizing matrices 都可以规范编译成仓库当前的 rational Toeplitz master matrix，并保持惯性。
+
+---
+

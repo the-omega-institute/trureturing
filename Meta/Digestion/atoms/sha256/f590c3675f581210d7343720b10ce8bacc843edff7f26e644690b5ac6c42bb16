@@ -1,0 +1,48 @@
+# 第八百二十四部　无限层级为什么最终显现为光
+
+现在可以把前述长链重新压缩：
+
+$$
+\boxed{
+\begin{aligned}
+\text{第 }m\text{ 层 completion}
+&\longleftrightarrow
+M_m=\sigma+2m;\\
+\text{每一层}
+&\longleftrightarrow
+\log\left(1+k^2/M_m^2\right);\\
+\text{全部层联合}
+&\longleftrightarrow
+E_\sigma(k);\\
+\text{无限层连续极限}
+&\longleftrightarrow
+\frac{\pi}{2}|k|;\\
+\text{边界算子}
+&\longleftrightarrow
+\frac{\pi}{2}|D|;\\
+\text{Wick 旋转}
+&\longleftrightarrow
+\text{massless half-wave}.
+\end{aligned}
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{无质量不是“没有层”，}
+}
+$$
+
+而可以是：
+
+$$
+\boxed{
+\text{无限多有尺度层被完全整合后，尺度信息只剩线性边界速度。}
+}
+$$
+
+这与你此前的“极限完成态蕴含一切却无分别”高度一致：
+
+* 全部 \(M_m\) 都被包含；

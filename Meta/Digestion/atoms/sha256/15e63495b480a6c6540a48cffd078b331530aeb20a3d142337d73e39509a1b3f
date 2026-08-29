@@ -1,0 +1,55 @@
+## 定理 720.1（Off-line curvature dipole）
+
+$$
+\boxed{
+\mathcal K_{\delta,\gamma}(t)
+=
+2
+\frac{
+(t-\gamma)^2-\delta^2
+}{
+\left[
+(t-\gamma)^2+\delta^2
+\right]^2
+}.
+}
+\tag{720.2}
+$$
+
+它具有：
+
+$$
+\boxed{
+\mathcal K_{\delta,\gamma}(\gamma)
+=
+-\frac2{\delta^2},
+}
+\tag{720.3}
+$$
+
+以及零交叉点：
+
+$$
+\boxed{
+t=\gamma\pm\delta.
+}
+\tag{720.4}
+$$
+
+并且：
+
+$$
+\int_{\mathbb R}
+\mathcal K_{\delta,\gamma}(t)\,dt=0.
+$$
+
+因此它是一个：
+
+$$
+\boxed{
+\text{中心负、两翼正、总质量为零的曲率偶极}.
+}
+$$
+
+---
+

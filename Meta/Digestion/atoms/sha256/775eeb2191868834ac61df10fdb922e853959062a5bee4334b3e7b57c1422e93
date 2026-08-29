@@ -1,0 +1,26 @@
+# 第八百九十九部　Jet–Weil–Sticky 条件编译器
+
+现在可以把全部链条写成：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal J_m(t)<0
+&\Longrightarrow
+\text{某个 Stieltjes/Hankel 有限失效}\\
+&\Longrightarrow
+\text{rational zero-side Hermitian 负见证}\\
+&\Longrightarrow
+\text{Paley--Wiener 全零点逼近}\\
+&\Longrightarrow
+\text{有限支撑 Weil 负测试}\\
+&\Longrightarrow
+\text{有限 sticky Feshbach matrix 负特征值}.
+\end{aligned}
+}
+\tag{899.1}
+$$
+
+其中：
+
+* 第一、二步已经得到精确公式；

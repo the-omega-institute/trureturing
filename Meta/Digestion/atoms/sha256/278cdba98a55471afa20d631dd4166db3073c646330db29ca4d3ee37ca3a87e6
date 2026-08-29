@@ -1,0 +1,50 @@
+# 第九百三十部　Toeplitz 化与离圆径向缺陷
+
+在 Joukowski 图表中：
+
+$$
+\chi_a(x)=\frac12(w+w^{-1}).
+$$
+
+于是：
+
+$$
+W_{N,a}
+=
+\sin^2(N\theta)
+$$
+
+在单位圆上只是次数 \(2N\) 的非负三角多项式。
+
+有限有理特征又具有共同分母。
+
+仓库最新证明：共同分母有理特征 Gram 矩阵等于一个加权单项式 moment matrix 的合同：
+
+$$
+\boxed{
+G=ATA^*.
+}
+$$
+
+因此 \(M_{t,a,N,\Phi}\) 可以编译成：
+
+$$
+\boxed{
+\text{一个有限 Toeplitz moment matrix}
++
+\text{一个 Chebyshev localizing matrix}.
+}
+$$
+
+在 RH 下，紧化谱位于单位圆，因此所有这些矩阵正半定。
+
+离线零点变成：
+
+$$
+|w_0|\neq1,
+$$
+
+并最终造成某个有限 Toeplitz/localizing block 失去正性。
+
+---
+

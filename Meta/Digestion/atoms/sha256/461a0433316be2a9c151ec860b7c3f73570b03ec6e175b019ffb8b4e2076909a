@@ -1,0 +1,55 @@
+## 700.1 交换曲率由 residual 控制
+
+因为：
+
+$$
+B_{r,p}=a_{r,p}v_p,
+\qquad
+L_p^{\langle r\rangle}=1+a_{r,p},
+$$
+
+交换曲率可改写为：
+
+$$
+\boxed{
+\begin{aligned}
+C_{r;p,q}
+={}&
+(\mathbf F-I)
+\left(
+a_{r,p}v_p-a_{r,q}v_q
+\right)
+\\
+&+
+a_{r,p}a_{r,q}
+\left(
+v_q-v_p
+\right).
+\end{aligned}
+}
+\tag{700.2}
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\|C_{r;p,q}\|
+\le{}&
+\|\mathbf F-I\|
+\left(
+|a_{r,p}|+|a_{r,q}|
+\right)
+\\
+&+
+2|a_{r,p}a_{r,q}|.
+\end{aligned}
+}
+\tag{700.3}
+$$
+
+所以 residual local factor 越接近 \(1\)，顺序 holonomy 越弱。
+
+---
+

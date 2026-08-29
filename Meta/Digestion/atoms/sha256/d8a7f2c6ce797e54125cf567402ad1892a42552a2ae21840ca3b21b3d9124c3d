@@ -1,0 +1,62 @@
+# 第七百零三部　成对观察者与二阶记忆不变量
+
+令：
+
+$$
+\pi\longleftrightarrow\pi^\sharp
+$$
+
+是一个保持素数多重集不变的观察者对换，例如：
+
+* 反向调度；
+* split/inert 相邻顺序交换；
+* Fibonacci 调度与其镜像调度。
+
+两者具有同一个标量完成：
+
+$$
+z_\pi=z_{\pi^\sharp},
+$$
+
+但一般具有不同 archive：
+
+$$
+A_\pi\neq A_{\pi^\sharp}.
+$$
+
+定义：
+
+$$
+\boxed{
+A_{\mathrm{ev}}
+=
+\frac{
+A_\pi+A_{\pi^\sharp}
+}{2},
+}
+\tag{703.1}
+$$
+
+$$
+\boxed{
+A_{\mathrm{odd}}
+=
+\frac{
+A_\pi-A_{\pi^\sharp}
+}{2}.
+}
+\tag{703.2}
+$$
+
+交换观察者时：
+
+$$
+A_{\mathrm{ev}}\mapsto A_{\mathrm{ev}},
+$$
+
+$$
+A_{\mathrm{odd}}\mapsto-A_{\mathrm{odd}}.
+$$
+
+---
+

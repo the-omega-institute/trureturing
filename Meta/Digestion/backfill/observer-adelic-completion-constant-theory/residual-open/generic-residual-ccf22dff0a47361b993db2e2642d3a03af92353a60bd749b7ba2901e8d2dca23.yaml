@@ -1,0 +1,10 @@
+ast_path: section/865-1-最重要的意义
+fingerprints:
+  raw_sha256: sha256:ccf22dff0a47361b993db2e2642d3a03af92353a60bd749b7ba2901e8d2dca23
+  normalized_sha256: sha256:ccf22dff0a47361b993db2e2642d3a03af92353a60bd749b7ba2901e8d2dca23
+cas_ref: sha256:ccf22dff0a47361b993db2e2642d3a03af92353a60bd749b7ba2901e8d2dca23
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
