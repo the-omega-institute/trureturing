@@ -40,7 +40,13 @@ jobs:
   candidate-engineering:
     name: Candidate harness engineering checks
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # 20 分钟对本 job 已结构性不足:凡改动命中 tools/** 者,EngineeringScope 的测试选择器
+    # 选中 0 个、回退 full,跑满全部测试套件,实测 20–21 分钟(#3940)。
+    # 证据:PR #3943(生产 +4/-4、新增测试实测 221ms)连续五次 CANCELLED
+    # (20m04 / 20m15 / ~21m / ~21m / ~21m);同期 dev 上 13–19 分钟通过的 run 全部 0 行
+    # tools/ 改动,选择器能裁剪。dev 自身亦出现过一次 CANCELLED(50a319d9c,20m13s)。
+    # 30 分钟给 full scope 留约 50% 余量;同文件的 Lean report job 预算已是 45 分钟。
+    timeout-minutes: 30
     steps:
       - name: Wait for the GitHub merge ref
         if: github.event_name == 'pull_request_target'

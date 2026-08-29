@@ -12,6 +12,6 @@ receipts:
       target_statement_id: sha256:a964da225adccc3c818bea91549242d5daa71670d211c5b2565b1e58a1cc34a8
   scribe:
     - gid: D5/S3/ObserverMemory/Algorithms/ControlledSignatureStabilization.controlled_signature_algorithm_correctness
-      definition_sha256: sha256:cc940368815912a4f7515fbf5f08bd4b58db9142cfc517b3fe1010ecb52ec5e8
-      emission_sha256: sha256:736af87e0ead5654429eb9bb400b7317862c8b285387869052c82a88ba39de2e
+      definition_sha256: sha256:0ff82a2dff9081c505861d8ebfa3953548ec6419ccdae53e33919e2716c5271b
+      emission_sha256: sha256:2edcc2d161ba8b67dcfae0f1745b5b6f6bf00cb37c5b9ccc02a8b36e3bca4b8d
   unresolved_subitems: []
