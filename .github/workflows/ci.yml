@@ -40,7 +40,7 @@ jobs:
   candidate-engineering:
     name: Candidate harness engineering checks
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - name: Wait for the GitHub merge ref
         if: github.event_name == 'pull_request_target'
