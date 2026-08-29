@@ -30,8 +30,8 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.False(result.Success);
         Assert.Contains("SL-003 route: bucket at capacity", result.Error, StringComparison.Ordinal);
-        Assert.Contains("projected occupancy 13 exceeds maximum 12", result.Error, StringComparison.Ordinal);
-        Assert.Contains("Carrier=12", result.Error, StringComparison.Ordinal);
+        Assert.Contains($"projected occupancy {RepositoryRules.DirectoryFileLimit + 1} exceeds maximum {RepositoryRules.DirectoryFileLimit}", result.Error, StringComparison.Ordinal);
+        Assert.Contains($"Carrier={RepositoryRules.DirectoryFileLimit}", result.Error, StringComparison.Ordinal);
         Assert.Contains("Conventions=0", result.Error, StringComparison.Ordinal);
         Assert.Contains("bucket at capacity — 只裂不迁", result.Error, StringComparison.Ordinal);
         Assert.Contains("split only", result.Error, StringComparison.Ordinal);
@@ -51,8 +51,8 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.False(result.Success);
         Assert.Contains("Blueprint/D5/S0/Carrier", result.Error, StringComparison.Ordinal);
-        Assert.Contains("projected occupancy 13 exceeds maximum 12", result.Error, StringComparison.Ordinal);
-        Assert.Contains("Carrier=12", result.Error, StringComparison.Ordinal);
+        Assert.Contains($"projected occupancy {RepositoryRules.DirectoryFileLimit + 1} exceeds maximum {RepositoryRules.DirectoryFileLimit}", result.Error, StringComparison.Ordinal);
+        Assert.Contains($"Carrier={RepositoryRules.DirectoryFileLimit}", result.Error, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -70,8 +70,8 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.Route(["manifest.json"]);
 
         Assert.False(result.Success);
-        Assert.Contains("D5/S0/Carrier/Algebra projected occupancy 13", result.Error, StringComparison.Ordinal);
-        Assert.Contains("Algebra=12", result.Error, StringComparison.Ordinal);
+        Assert.Contains($"D5/S0/Carrier/Algebra projected occupancy {RepositoryRules.DirectoryFileLimit + 1}", result.Error, StringComparison.Ordinal);
+        Assert.Contains($"Algebra={RepositoryRules.DirectoryFileLimit}", result.Error, StringComparison.Ordinal);
         Assert.Contains("Geometry=1", result.Error, StringComparison.Ordinal);
         Assert.DoesNotContain("Carrier=", result.Error, StringComparison.Ordinal);
     }
@@ -215,8 +215,8 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.False(result.Success);
         Assert.Contains("D5/S0/Carrier", result.Error, StringComparison.Ordinal);
-        Assert.Contains("projected occupancy 13 exceeds maximum 12", result.Error, StringComparison.Ordinal);
-        Assert.Contains("Carrier=12", result.Error, StringComparison.Ordinal);
+        Assert.Contains($"projected occupancy {RepositoryRules.DirectoryFileLimit + 1} exceeds maximum {RepositoryRules.DirectoryFileLimit}", result.Error, StringComparison.Ordinal);
+        Assert.Contains($"Carrier={RepositoryRules.DirectoryFileLimit}", result.Error, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -232,8 +232,8 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.False(result.Success);
         Assert.Contains("Blueprint/D5/S0/Carrier", result.Error, StringComparison.Ordinal);
-        Assert.Contains("projected occupancy 13 exceeds maximum 12", result.Error, StringComparison.Ordinal);
-        Assert.Contains("Carrier=12", result.Error, StringComparison.Ordinal);
+        Assert.Contains($"projected occupancy {RepositoryRules.DirectoryFileLimit + 1} exceeds maximum {RepositoryRules.DirectoryFileLimit}", result.Error, StringComparison.Ordinal);
+        Assert.Contains($"Carrier={RepositoryRules.DirectoryFileLimit}", result.Error, StringComparison.Ordinal);
     }
 
     [Fact]

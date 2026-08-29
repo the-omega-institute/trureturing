@@ -53,7 +53,8 @@ internal static partial class IngestCommand
                 prepared.PlannedDocument,
                 prepared.PlannedSnapshot,
                 prepared.BaselineDocument,
-                prepared.PlannedChanges);
+                prepared.PlannedChanges,
+                prepared.PlannedCasChanges);
             RequireValidReportFreeEvaluation(evaluation);
             var backfillObservations = DigestionBackfillValidation.RequireValidBackfillWithoutTruthAlignment(
                 prepared.PlannedDocument,
@@ -62,7 +63,9 @@ internal static partial class IngestCommand
                 LoadPolicy(prepared.PlannedSnapshot),
                 DigestionEvaluationScopes.ResolveChanges(
                     prepared.PlannedScope,
-                    prepared.PlannedChanges));
+                    prepared.PlannedChanges),
+                repositoryChanges: prepared.PlannedChanges,
+                casChanges: prepared.PlannedCasChanges);
             return WriteResult(
                 repositoryRoot,
                 prepared,
@@ -206,6 +209,7 @@ internal static partial class IngestCommand
         RepositorySnapshot PlannedSnapshot,
         BackfillInventoryDocument PlannedDocument,
         RawChangeSet PlannedChanges,
+        RawChangeSet PlannedCasChanges,
         DigestionEvaluationScope PlannedScope,
         string CrossVolumeClearanceGaps,
         ImmutableArray<DigestionLedgerSource> SilentZeroWarnings);

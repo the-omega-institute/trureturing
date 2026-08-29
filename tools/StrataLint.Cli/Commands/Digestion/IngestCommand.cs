@@ -6,9 +6,6 @@ namespace StrataLint.Cli;
 
 internal static partial class IngestCommand
 {
-    private const string ImplementationPath =
-        "tools/StrataLint.Cli/Commands/Digestion/IngestCommand.cs";
-
     internal static CommandResult Run(
         string repositoryRoot,
         IRepositoryGateway repository,
@@ -60,6 +57,7 @@ internal static partial class IngestCommand
                 validateProjectedStatus: false,
                 baselineSnapshot: baseline,
                 changes: plannedChanges,
+                casChanges: prepared.PlannedCasChanges,
                 truthStates: truthStates);
             RequireNoReceiptIntegrityFailure(derived);
 
@@ -94,6 +92,9 @@ internal static partial class IngestCommand
             var finalScope = DigestionEvaluationScopes.ForChanges(
                 finalChanges,
                 ImplementationPath);
+            var finalCasChanges = DigestionIngestor.IncludeCasReverseDependencies(
+                baselineDocument,
+                finalChanges);
             var evaluation = DigestionStatusEvaluator.Evaluate(
                 finalScope,
                 finalDocument,
@@ -103,6 +104,7 @@ internal static partial class IngestCommand
                 baselineDocument,
                 baselineSnapshot: baseline,
                 changes: finalChanges,
+                casChanges: finalCasChanges,
                 truthStates: truthStates);
             RequireNoReceiptIntegrityFailure(evaluation);
             var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
@@ -112,7 +114,9 @@ internal static partial class IngestCommand
                 LoadPolicy(finalSnapshot),
                 lean,
                 verifiedScribeEmissions,
-                DigestionEvaluationScopes.ResolveChanges(finalScope, finalChanges));
+                DigestionEvaluationScopes.ResolveChanges(finalScope, finalChanges),
+                repositoryChanges: finalChanges,
+                casChanges: finalCasChanges);
 
             return WriteResult(
                 repositoryRoot,
@@ -178,7 +182,8 @@ internal static partial class IngestCommand
             currentDocument,
             current,
             baselineDocument,
-            baseline);
+            baseline,
+            changes: repositoryChanges);
         var plannedRaw = AddCasObjects(
             ReplaceLedger(currentRaw, currentDocument, plan.Document),
             plan.CasObjects);
@@ -193,6 +198,9 @@ internal static partial class IngestCommand
         var plannedScope = DigestionEvaluationScopes.ForChanges(
             plannedChanges,
             ImplementationPath);
+        var plannedCasChanges = DigestionIngestor.IncludeCasReverseDependencies(
+            baselineDocument,
+            plannedChanges);
         return new IngestPreparation(
             currentRaw,
             current,
@@ -205,6 +213,7 @@ internal static partial class IngestCommand
             plannedSnapshot,
             plannedDocument,
             plannedChanges,
+            plannedCasChanges,
             plannedScope,
             RenderCrossVolumeClearanceGaps(plan.Document, baselineDocument),
             SilentZeroExtractionWarnings(
@@ -744,52 +753,6 @@ internal static partial class IngestCommand
             throw new AggregateException(
                 "CAS write failed and rollback was incomplete",
                 new[] { writeFailure }.Concat(rollbackFailures));
-        }
-    }
-
-    private static ValidatedPolicy LoadPolicy(RepositorySnapshot snapshot)
-    {
-        if (!snapshot.TryGetFile("Meta/registry.yaml", out var registry)
-            || !snapshot.TryGetFile("Meta/domains.yaml", out var domains))
-        {
-            throw new InvalidOperationException(
-                "ingest requires Meta/registry.yaml and Meta/domains.yaml");
-        }
-
-        return RegistryLoader.Load(registry.RawBytes.AsSpan(), domains.RawBytes.AsSpan()) switch
-        {
-            RegistryLoadOutcome.Accepted accepted => accepted.Policy,
-            RegistryLoadOutcome.InfrastructureFailure failure =>
-                throw new InvalidOperationException(failure.Message),
-        };
-    }
-
-    private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
-        SnapshotDecoder.Decode(raw) switch
-        {
-            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
-            SnapshotDecodeOutcome.InfrastructureFailure failure =>
-                throw new InvalidOperationException(failure.Message),
-        };
-
-    private static AcceptedLeanClosure ValidateLean(
-        RepositorySnapshot snapshot,
-        LeanAxiomReport report) =>
-        LeanClosureValidator.Validate(snapshot, report) switch
-        {
-            LeanValidationOutcome.Accepted accepted => accepted.Capability,
-            LeanValidationOutcome.InfrastructureFailure failure =>
-                throw new InvalidOperationException(failure.Message),
-        };
-
-    internal static void RequireNoReceiptIntegrityFailure(
-        DigestionLedgerEvaluation evaluation)
-    {
-        if (evaluation.HasReceiptIntegrityFailure)
-        {
-            throw new InvalidOperationException(
-                "digest status is invalid: "
-                + string.Join("; ", evaluation.ReceiptIntegrityFailureReasons));
         }
     }
 }
