@@ -13,7 +13,7 @@ internal sealed class FiniteBayesRiskDominanceCriterionDocument
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact randomized postprocessing between finite experiments is equivalent to "
-            + "Bayes-risk dominance for every finite decision problem.",
+            + "real Bayes-risk dominance for every finite decision problem.",
         H("Finite Bayes-Risk Dominance Criterion"),
         Blocks(Describe.Lean(
             DescribeId.Create("finite-bayes-risk-dominance-criterion"),
@@ -26,7 +26,9 @@ internal sealed class FiniteBayesRiskDominanceCriterionDocument
                     "A source observation can simulate every target decision whenever a "
                         + "row-stochastic source-to-target kernel reproduces the target "
                         + "experiment. Composing that kernel with a target decision rule gives "
-                        + "the corresponding source decision rule at the same cost.")),
+                        + "the corresponding source decision rule at the same real expected "
+                        + "cost. The displayed risk is the real infimum of these costs, so "
+                        + "negative losses are retained rather than truncated.")),
                 Paragraph(Text(
                     "Conversely, the finite product of row simplexes is compact and convex. A "
                         + "target outside its simulated image has a strict linear separator; a "
@@ -67,6 +69,7 @@ internal sealed class FiniteBayesRiskDominanceCriterionDocument
         Formula simulator = F.Id("K");
         Formula prior = F.Id("pi");
         Formula loss = F.Id("ell");
+        Formula decision = F.Id("d");
         Formula stateValue = F.Id("theta");
         Formula type = F.Id("Type");
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
@@ -83,14 +86,16 @@ internal sealed class FiniteBayesRiskDominanceCriterionDocument
             D(0), Sp, Leq, Sp, Apply(prior, stateValue), Close,
             Sp, Land, Sp, Call("sum", prior), Sp, Eq, Sp, D(1));
 
+        Formula RealBayesRisk(Formula experiment) => Call("sInf", Call("range",
+            Lambda(decision, Call("finiteBayesCost", prior, loss, experiment, decision))));
+
         Formula universalRiskOrder = Seq(
             Forall, Sp, action, Colon, Sp, type, Comma, Sp,
             Call("Fintype", action), Comma, RowBreak, Grp(),
             prior, Colon, Sp, Arrow(state, real), Comma, Sp,
             loss, Colon, Sp, Arrow(state, Arrow(action, real)), Comma, RowBreak, Grp(),
             Grp(normalizedPrior), Sp, Rightarrow, RowBreak, Grp(),
-            Call("finiteBayesRisk", prior, loss, source), Sp, Leq, Sp,
-            Call("finiteBayesRisk", prior, loss, target));
+            RealBayesRisk(source), Sp, Leq, Sp, RealBayesRisk(target));
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),

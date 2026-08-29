@@ -15,8 +15,10 @@ import Mathlib.Topology.Algebra.Module.FiniteDimension
      postprocessing-to-risk direction for measurable kernels, so it cannot own
      the biconditional below.
    * The finite primitives `IsRowStochastic`, `FiniteMarkovKernel`,
-     `channelOutput`, `finiteBayesCost`, and `finiteBayesRisk` are imported from
-     their canonical D5 owners rather than redeclared.
+     `channelOutput`, and `finiteBayesCost` are imported from their canonical
+     D5 owners rather than redeclared. The only experiment-level risk primitive
+     found, `finiteBayesRisk`, applies `ENNReal.ofReal` before its infimum and
+     therefore cannot express the source's arbitrary real-valued losses.
    * Pinned Mathlib has the exact forward component
      `ProbabilityTheory.bayesRisk_le_bayesRisk_comp`, but no finite converse.
      The converse below directly applies `geometric_hahn_banach_closed_point`,
@@ -42,49 +44,6 @@ universe u
 open D5.S3.Divergence.ClassicalDPI
 open D5.S3.Estimation.DecisionRisk.DescentDefectBounds
 open D5.S3.Estimation.SequentialDecisionRisk.FiniteDeficiencyRiskTransfer
-
-private theorem channel_output_assoc
-    {X Y Z : Type*} [Fintype X] [Fintype Y]
-    (first : X -> Y -> Real) (second : Y -> Z -> Real)
-    (mass : X -> Real) :
-    channelOutput second (channelOutput first mass) =
-      channelOutput (fun x z => channelOutput second (first x) z) mass := by
-  classical
-  funext z
-  simp only [channelOutput, Finset.sum_mul, Finset.mul_sum]
-  rw [Finset.sum_comm]
-  apply Finset.sum_congr rfl
-  intro x _
-  apply Finset.sum_congr rfl
-  intro y _
-  ring
-
-private theorem channel_compose_row_stochastic
-    {X Y Z : Type*} [Fintype Y] [Fintype Z]
-    (first : X -> Y -> Real) (second : Y -> Z -> Real)
-    (firstStochastic : IsRowStochastic first)
-    (secondStochastic : IsRowStochastic second) :
-    IsRowStochastic (fun x z => channelOutput second (first x) z) := by
-  classical
-  constructor
-  · intro x z
-    unfold channelOutput
-    exact Finset.sum_nonneg fun y _ =>
-      mul_nonneg (firstStochastic.1 x y) (secondStochastic.1 y z)
-  · intro x
-    unfold channelOutput
-    rw [Finset.sum_comm]
-    calc
-      (∑ y, ∑ z, first x y * second y z) =
-          ∑ y, first x y * ∑ z, second y z := by
-            apply Finset.sum_congr rfl
-            intro y _
-            rw [Finset.mul_sum]
-      _ = ∑ y, first x y := by
-            apply Finset.sum_congr rfl
-            intro y _
-            rw [secondStochastic.2 y, mul_one]
-      _ = 1 := firstStochastic.2 x
 
 private theorem continuous_linear_expansion
     {I J : Type*} [Fintype I] [Fintype J]
@@ -146,8 +105,31 @@ private theorem finite_bayes_cost_uniform_separator
   dsimp only
   have cardNonzero : (Fintype.card State : Real) ≠ 0 := by
     exact_mod_cast Fintype.card_ne_zero
-  have outputStochastic := channel_compose_row_stochastic
-    experiment decision experimentStochastic decisionStochastic
+  have outputStochastic :
+      IsRowStochastic (fun state action =>
+        channelOutput decision (experiment state) action) := by
+    constructor
+    · intro state action
+      unfold channelOutput
+      exact Finset.sum_nonneg fun observation _ =>
+        mul_nonneg (experimentStochastic.1 state observation)
+          (decisionStochastic.1 observation action)
+    · intro state
+      unfold channelOutput
+      rw [Finset.sum_comm]
+      calc
+        (∑ observation, ∑ action,
+            experiment state observation * decision observation action) =
+            ∑ observation,
+              experiment state observation * ∑ action, decision observation action := by
+                apply Finset.sum_congr rfl
+                intro observation _
+                rw [Finset.mul_sum]
+        _ = ∑ observation, experiment state observation := by
+              apply Finset.sum_congr rfl
+              intro observation _
+              rw [decisionStochastic.2 observation, mul_one]
+        _ = 1 := experimentStochastic.2 state
   unfold finiteBayesCost
   calc
     (∑ state, (Fintype.card State : Real)⁻¹ *
@@ -204,40 +186,178 @@ theorem finite_bayes_risk_dominance_iff_postprocessing
     ∀ (Action : Type u) [Fintype Action]
       (prior : State -> Real) (loss : State -> Action -> Real),
       ((∀ state, 0 ≤ prior state) ∧ (∑ state, prior state) = 1) ->
-      finiteBayesRisk prior loss source ≤ finiteBayesRisk prior loss target := by
+      sInf (Set.range fun decision : FiniteMarkovKernel SourceObservation Action =>
+        finiteBayesCost prior loss source decision.1) ≤
+      sInf (Set.range fun decision : FiniteMarkovKernel TargetObservation Action =>
+        finiteBayesCost prior loss target decision.1) := by
   classical
+  have sourceObservationNonempty : Nonempty SourceObservation := by
+    by_contra noObservation
+    letI : IsEmpty SourceObservation := not_nonempty_iff.mp noObservation
+    let state : State := Classical.choice (inferInstance : Nonempty State)
+    have rowMass := sourceStochastic.2 state
+    simpa using rowMass
+  have targetObservationNonempty : Nonempty TargetObservation := by
+    by_contra noObservation
+    letI : IsEmpty TargetObservation := not_nonempty_iff.mp noObservation
+    let state : State := Classical.choice (inferInstance : Nonempty State)
+    have rowMass := targetStochastic.2 state
+    simpa using rowMass
+  have finiteKernelNonempty
+      {Observation Action : Type u}
+      [Fintype Observation] [Fintype Action]
+      (actionNonempty : Nonempty Action) :
+      Nonempty (FiniteMarkovKernel Observation Action) := by
+    letI : Nonempty Action := actionNonempty
+    refine ⟨⟨fun _ _ => (Fintype.card Action : Real)⁻¹, ?_⟩⟩
+    constructor
+    · intro observation action
+      positivity
+    · intro observation
+      simp [Fintype.card_ne_zero]
   constructor
-  · rintro ⟨simulator, rfl⟩ Action _ prior loss _
-    unfold finiteBayesRisk
-    apply le_iInf
-    intro decision
-    let transported : SourceObservation -> Action -> Real :=
-      fun observation action =>
-        channelOutput decision.1 (simulator.1 observation) action
-    have transportedStochastic : IsRowStochastic transported :=
-      channel_compose_row_stochastic simulator.1 decision.1 simulator.2 decision.2
-    let transportedKernel : FiniteMarkovKernel SourceObservation Action :=
-      ⟨transported, transportedStochastic⟩
-    calc
-      (⨅ candidate : FiniteMarkovKernel SourceObservation Action,
-          ENNReal.ofReal
-            (finiteBayesCost prior loss source candidate.1)) ≤
-          ENNReal.ofReal
-            (finiteBayesCost prior loss source transportedKernel.1) :=
-        iInf_le _ transportedKernel
-      _ = ENNReal.ofReal
-          (finiteBayesCost prior loss
-            (fun state => channelOutput simulator.1 (source state)) decision.1) := by
-        congr 1
+  · rintro ⟨simulator, rfl⟩ Action _ prior loss priorStochastic
+    rcases isEmpty_or_nonempty Action with actionEmpty | actionNonempty
+    · letI : IsEmpty Action := actionEmpty
+      have sourceDecisionEmpty :
+          IsEmpty (FiniteMarkovKernel SourceObservation Action) := by
+        constructor
+        intro decision
+        let observation := Classical.choice sourceObservationNonempty
+        have rowMass := decision.2.2 observation
+        simpa using rowMass
+      have targetDecisionEmpty :
+          IsEmpty (FiniteMarkovKernel TargetObservation Action) := by
+        constructor
+        intro decision
+        let observation := Classical.choice targetObservationNonempty
+        have rowMass := decision.2.2 observation
+        simpa using rowMass
+      have sourceRangeEmpty :
+          Set.range (fun decision : FiniteMarkovKernel SourceObservation Action =>
+            finiteBayesCost prior loss source decision.1) = ∅ :=
+        Set.range_eq_empty_iff.mpr sourceDecisionEmpty
+      have targetRangeEmpty :
+          Set.range (fun decision : FiniteMarkovKernel TargetObservation Action =>
+            finiteBayesCost prior loss
+              (fun state => channelOutput simulator.1 (source state)) decision.1) = ∅ :=
+        Set.range_eq_empty_iff.mpr targetDecisionEmpty
+      rw [sourceRangeEmpty, targetRangeEmpty]
+    · letI : Nonempty Action := actionNonempty
+      have costRangeBddBelow
+          {Observation : Type u} [Fintype Observation]
+          (experiment : State -> Observation -> Real)
+          (experimentStochastic : IsRowStochastic experiment) :
+          BddBelow (Set.range fun decision : FiniteMarkovKernel Observation Action =>
+            finiteBayesCost prior loss experiment decision.1) := by
+        refine ⟨∑ state, prior state * (-∑ action, |loss state action|), ?_⟩
+        rintro _ ⟨decision, rfl⟩
+        have outputStochastic :
+            IsRowStochastic (fun state action =>
+              channelOutput decision.1 (experiment state) action) := by
+          constructor
+          · intro state action
+            unfold channelOutput
+            exact Finset.sum_nonneg fun observation _ =>
+              mul_nonneg (experimentStochastic.1 state observation)
+                (decision.2.1 observation action)
+          · intro state
+            unfold channelOutput
+            rw [Finset.sum_comm]
+            calc
+              (∑ observation, ∑ action,
+                  experiment state observation * decision.1 observation action) =
+                  ∑ observation,
+                    experiment state observation *
+                      ∑ action, decision.1 observation action := by
+                        apply Finset.sum_congr rfl
+                        intro observation _
+                        rw [Finset.mul_sum]
+              _ = ∑ observation, experiment state observation := by
+                    apply Finset.sum_congr rfl
+                    intro observation _
+                    rw [decision.2.2 observation, mul_one]
+              _ = 1 := experimentStochastic.2 state
         unfold finiteBayesCost
-        apply Finset.sum_congr rfl
+        apply Finset.sum_le_sum
         intro state _
-        congr 1
-        apply Finset.sum_congr rfl
+        apply mul_le_mul_of_nonneg_left _ (priorStochastic.1 state)
+        rw [← Finset.sum_neg_distrib]
+        apply Finset.sum_le_sum
         intro action _
-        congr 1
-        exact congrFun
-          (channel_output_assoc simulator.1 decision.1 (source state)).symm action
+        have outputNonnegative := outputStochastic.1 state action
+        have outputAtMostOne :
+            channelOutput decision.1 (experiment state) action ≤ 1 := by
+          exact (Finset.single_le_sum
+            (fun candidate _ => outputStochastic.1 state candidate)
+            (Finset.mem_univ action)).trans_eq (outputStochastic.2 state)
+        have absProductLe :
+            |channelOutput decision.1 (experiment state) action * loss state action| ≤
+              |loss state action| := by
+          rw [abs_mul, abs_of_nonneg outputNonnegative]
+          exact mul_le_of_le_one_left (abs_nonneg _) outputAtMostOne
+        exact (neg_le_neg absProductLe).trans (neg_abs_le _)
+      have targetCostsNonempty :
+          (Set.range fun decision : FiniteMarkovKernel TargetObservation Action =>
+            finiteBayesCost prior loss
+              (fun state => channelOutput simulator.1 (source state)) decision.1).Nonempty :=
+        Set.range_nonempty_iff_nonempty.mpr (finiteKernelNonempty actionNonempty)
+      apply csInf_le_csInf
+        (costRangeBddBelow source sourceStochastic) targetCostsNonempty
+      rintro _ ⟨decision, rfl⟩
+      let transported : SourceObservation -> Action -> Real :=
+        fun observation action =>
+          channelOutput decision.1 (simulator.1 observation) action
+      have transportedStochastic : IsRowStochastic transported := by
+        constructor
+        · intro observation action
+          unfold transported channelOutput
+          exact Finset.sum_nonneg fun targetObservation _ =>
+            mul_nonneg (simulator.2.1 observation targetObservation)
+              (decision.2.1 targetObservation action)
+        · intro observation
+          unfold transported channelOutput
+          rw [Finset.sum_comm]
+          calc
+            (∑ targetObservation, ∑ action,
+                simulator.1 observation targetObservation *
+                  decision.1 targetObservation action) =
+                ∑ targetObservation,
+                  simulator.1 observation targetObservation *
+                    ∑ action, decision.1 targetObservation action := by
+                      apply Finset.sum_congr rfl
+                      intro targetObservation _
+                      rw [Finset.mul_sum]
+            _ = ∑ targetObservation, simulator.1 observation targetObservation := by
+                  apply Finset.sum_congr rfl
+                  intro targetObservation _
+                  rw [decision.2.2 targetObservation, mul_one]
+            _ = 1 := simulator.2.2 observation
+      let transportedKernel : FiniteMarkovKernel SourceObservation Action :=
+        ⟨transported, transportedStochastic⟩
+      refine ⟨transportedKernel, ?_⟩
+      unfold finiteBayesCost
+      apply Finset.sum_congr rfl
+      intro state _
+      congr 1
+      apply Finset.sum_congr rfl
+      intro action _
+      congr 1
+      have outputAssoc :
+          channelOutput decision.1 (channelOutput simulator.1 (source state)) =
+            channelOutput
+              (fun observation action =>
+                channelOutput decision.1 (simulator.1 observation) action)
+              (source state) := by
+        funext candidate
+        simp only [channelOutput, Finset.sum_mul, Finset.mul_sum]
+        rw [Finset.sum_comm]
+        apply Finset.sum_congr rfl
+        intro observation _
+        apply Finset.sum_congr rfl
+        intro targetObservation _
+        ring
+      exact congrFun outputAssoc.symm action
   · intro riskDominance
     by_contra noSimulator
     let simulatorSet : Set (SourceObservation -> TargetObservation -> Real) :=
@@ -342,12 +462,15 @@ theorem finite_bayes_risk_dominance_iff_postprocessing
       rw [← witnessExpansion]
       exact sub_lt_sub_left separated constant
     have sourceRiskLower :
-        ENNReal.ofReal (constant - threshold) ≤
-          finiteBayesRisk prior loss source := by
-      unfold finiteBayesRisk
-      apply le_iInf
-      intro decision
-      exact ENNReal.ofReal_le_ofReal (sourceCostLower decision).le
+        constant - threshold ≤
+          sInf (Set.range fun decision :
+            FiniteMarkovKernel SourceObservation TargetObservation =>
+              finiteBayesCost prior loss source decision.1) := by
+      apply le_csInf
+        (Set.range_nonempty_iff_nonempty.mpr
+          (finiteKernelNonempty targetObservationNonempty))
+      rintro _ ⟨decision, rfl⟩
+      exact (sourceCostLower decision).le
     let identityDecision : FiniteMarkovKernel TargetObservation TargetObservation :=
       ⟨deterministicPostprocess id, by
         constructor
@@ -370,24 +493,73 @@ theorem finite_bayes_risk_dominance_iff_postprocessing
       congr 2
       funext state
       exact identityOutput state
+    have lossNonnegative (state : State) (observation : TargetObservation) :
+        0 ≤ loss state observation := by
+      have innerLe :
+          |(Fintype.card State : Real) * coefficient state observation| ≤
+            ∑ candidate,
+              |(Fintype.card State : Real) * coefficient state candidate| :=
+        Finset.single_le_sum
+          (f := fun candidate : TargetObservation =>
+            |(Fintype.card State : Real) * coefficient state candidate|)
+          (fun candidate _ => abs_nonneg _)
+          (Finset.mem_univ observation)
+      have outerLe :
+          (∑ candidate,
+              |(Fintype.card State : Real) * coefficient state candidate|) ≤
+            ∑ candidateState, ∑ candidate,
+              |(Fintype.card State : Real) *
+                coefficient candidateState candidate| :=
+        Finset.single_le_sum
+          (f := fun candidateState : State => ∑ candidate,
+            |(Fintype.card State : Real) * coefficient candidateState candidate|)
+          (fun candidateState _ => Finset.sum_nonneg fun candidate _ => abs_nonneg _)
+          (Finset.mem_univ state)
+      have coefficientLe :
+          (Fintype.card State : Real) * coefficient state observation ≤
+            ∑ candidateState, ∑ candidate,
+              |(Fintype.card State : Real) *
+                coefficient candidateState candidate| :=
+        (le_abs_self _).trans (innerLe.trans outerLe)
+      dsimp only [loss, constant]
+      linarith [abs_nonneg threshold, abs_nonneg (witness target)]
+    have targetCostNonnegative
+        (decision : FiniteMarkovKernel TargetObservation TargetObservation) :
+        0 ≤ finiteBayesCost prior loss target decision.1 := by
+      unfold finiteBayesCost
+      apply Finset.sum_nonneg
+      intro state _
+      apply mul_nonneg (priorStochastic.1 state)
+      apply Finset.sum_nonneg
+      intro observation _
+      apply mul_nonneg _ (lossNonnegative state observation)
+      unfold channelOutput
+      exact Finset.sum_nonneg fun targetObservation _ =>
+        mul_nonneg (targetStochastic.1 state targetObservation)
+          (decision.2.1 targetObservation observation)
+    have targetCostsBddBelow :
+        BddBelow (Set.range fun decision :
+          FiniteMarkovKernel TargetObservation TargetObservation =>
+            finiteBayesCost prior loss target decision.1) := by
+      refine ⟨0, ?_⟩
+      rintro _ ⟨decision, rfl⟩
+      exact targetCostNonnegative decision
     have targetRiskUpper :
-        finiteBayesRisk prior loss target ≤
-          ENNReal.ofReal (constant - witness target) := by
-      unfold finiteBayesRisk
+        sInf (Set.range fun decision :
+          FiniteMarkovKernel TargetObservation TargetObservation =>
+            finiteBayesCost prior loss target decision.1) ≤
+          constant - witness target := by
       calc
-        (⨅ decision : FiniteMarkovKernel TargetObservation TargetObservation,
-            ENNReal.ofReal (finiteBayesCost prior loss target decision.1)) ≤
-            ENNReal.ofReal
-              (finiteBayesCost prior loss target identityDecision.1) :=
-          iInf_le _ identityDecision
-        _ = ENNReal.ofReal (constant - witness target) := by
+        sInf (Set.range fun decision :
+            FiniteMarkovKernel TargetObservation TargetObservation =>
+              finiteBayesCost prior loss target decision.1) ≤
+            finiteBayesCost prior loss target identityDecision.1 :=
+          csInf_le targetCostsBddBelow ⟨identityDecision, rfl⟩
+        _ = constant - witness target := by
           rw [targetIdentityCost]
     have strictSeparatorRisk :
-        ENNReal.ofReal (constant - witness target) <
-          ENNReal.ofReal (constant - threshold) := by
-      exact (ENNReal.ofReal_lt_ofReal_iff
-        (sub_pos.mpr constantGreaterThreshold)).2
-          (sub_lt_sub_left targetAbove constant)
+        constant - witness target < constant - threshold :=
+      sub_lt_sub_left targetAbove constant
     have assumedOrder := riskDominance
       TargetObservation prior loss priorStochastic
     exact (not_lt_of_ge
