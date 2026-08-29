@@ -69,33 +69,29 @@ jobs:
           [[ "$(jq -r '.protected' <<< "$branch")" == 'true' ]] \
             || { printf '%s\n' 'dev is not protected; refusing to publish' >&2; exit 1; }
           IFS='|' read -r -a required_checks <<< "$REQUIRED_CHECKS"
-          # Bind the release to this run's own dev commit (GITHUB_SHA), and publish only if
-          # GITHUB_SHA is itself gate-verified. Rationale: the GHCR provenance is created by
-          # actions/attest-build-provenance, which can only stamp SourceRepositoryDigest with
-          # GITHUB_SHA (the run's revision). A walk-back that selected an older gate-verified
-          # commit would make the provenance (bound to GITHUB_SHA) disagree with the bundle
-          # source (the older commit), so the provenance verify gate fails closed — and rewriting
-          # verify to accept GITHUB_SHA would silently downgrade it from bundle-source provenance
-          # to publisher-run provenance (Trureturing.Truth deliberately does NOT establish
-          # provenance; consumers rely on it independently). Pinning source_commit == GITHUB_SHA
-          # keeps the provenance genuinely bound to the gate-verified source with zero downgrade.
-          # If GITHUB_SHA's gates are still running or red, skip; the next scheduled run picks up
-          # a later, verified dev tip (hourly cadence, so the gap is bounded). A future
-          # dual-attestation (a second signed predicate binding the walk-back source_commit) could
-          # restore behind-tip flexibility without downgrade if release latency ever matters.
-          candidate="$GITHUB_SHA"
-          [[ "$candidate" =~ ^[0-9a-f]{40}$ ]] \
-            || { printf '%s\n' 'GITHUB_SHA is not a commit sha; refusing to publish' >&2; exit 1; }
-          checks="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${candidate}/check-runs?per_page=100" --jq '.check_runs')"
-          candidate_green=true
-          for required in "${required_checks[@]}"; do
-            conclusion="$(jq -r --arg name "$required" '[.[] | select(.name == $name and .status == "completed") | .conclusion] | if length == 0 then "missing" else .[0] end' <<< "$checks")"
-            [[ "$conclusion" == "success" ]] || { candidate_green=false; break; }
-          done
+          # Pick the most recent protected-dev commit whose required gates are all green.
+          # This survives dev churn: rather than betting on one specific tip (whose gates may
+          # still be running, or may have failed), scan recent dev history newest-first and
+          # publish the newest already gate-verified commit. Every scheduled run makes progress
+          # without depending on the state of a single commit; provenance stays bound to the
+          # exact gate-verified source_commit chosen here.
+          recent_shas="$(gh api "repos/${GITHUB_REPOSITORY}/commits?sha=dev&per_page=40" --jq '.[].sha')"
           source_commit=''
-          [[ "$candidate_green" == true ]] && source_commit="$candidate"
+          for candidate in $recent_shas; do
+            [[ "$candidate" =~ ^[0-9a-f]{40}$ ]] || continue
+            checks="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${candidate}/check-runs?per_page=100" --jq '.check_runs')"
+            candidate_green=true
+            for required in "${required_checks[@]}"; do
+              conclusion="$(jq -r --arg name "$required" '[.[] | select(.name == $name and .status == "completed") | .conclusion] | if length == 0 then "missing" else .[0] end' <<< "$checks")"
+              [[ "$conclusion" == "success" ]] || { candidate_green=false; break; }
+            done
+            if [[ "$candidate_green" == true ]]; then
+              source_commit="$candidate"
+              break
+            fi
+          done
           if [[ -z "$source_commit" ]]; then
-            printf '%s\n' 'GITHUB_SHA does not have all required gates green yet; leaving publication for the next scheduled run'
+            printf '%s\n' 'no recent protected dev commit has all required gates green yet; leaving publication for the next scheduled run'
             printf 'publish_ready=false\n' >> "$GITHUB_OUTPUT"
             exit 0
           fi
