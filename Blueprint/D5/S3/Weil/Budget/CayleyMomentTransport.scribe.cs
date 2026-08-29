@@ -21,13 +21,13 @@ internal sealed class CayleyMomentTransportDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "The measure, positive square scale, coefficient family, polynomial "
-                            + "identity, and resolvent integrability condition at that scale "
-                            + "are all displayed.")),
+                        "The even measure, positive square scale, coefficient family, "
+                            + "polynomial identity, and resolvent integrability condition at "
+                            + "that scale are all displayed.")),
                     Paragraph(Text(
-                        "The proof identifies the Cayley real part with the shifted Chebyshev "
-                            + "polynomial and differentiates the resolvent integral under a "
-                            + "locally dominated integral."))),
+                        "Evenness identifies the full complex Cayley moment with its real "
+                            + "part; the proof then uses the shifted Chebyshev polynomial and "
+                            + "differentiates under a locally dominated integral."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("budget-transport-error"),
@@ -37,8 +37,8 @@ internal sealed class CayleyMomentTransportDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "The two positive scales, truncation order, measure, and resolvent "
-                            + "integrability premise are displayed explicitly.")),
+                        "The two positive scales, truncation order, even measure, and "
+                            + "resolvent integrability premise are displayed explicitly.")),
                     Paragraph(Text(
                         "The proof expands every moment from the Cayley coordinate, reduces "
                             + "scale transport to the Poisson kernel, and integrates its "
@@ -116,21 +116,24 @@ internal sealed class CayleyMomentTransportDocument : IScribeDocumentDefinition
                     Multiply(Apply(p, k), Power(x, k))))));
         Formula integrability = Call("Integrable", Lambda(xi, real,
             Divide(D(1), Add(Power(xi, D(2)), u))), nu);
+        Formula evenness = Equal(
+            Call("map", Lambda(xi, real, Negate(xi)), nu), nu);
         Formula scale = Call("sqrt", u);
         Formula cayley = Divide(
             Add(Call("ofReal", xi), Multiply(Call("I"), scale)),
             Subtract(Call("ofReal", xi), Multiply(Call("I"), scale)));
         Formula moment = Call("integral", nu, Lambda(xi, real,
-            Divide(Call("re", Power(cayley, n)),
+            Divide(Power(cayley, n),
                 Add(Power(xi, D(2)), u))));
-        Formula jet = Call("sum", index, Lambda(k, index,
+        Formula jet = Call("ofReal", Call("sum", index, Lambda(k, index,
             Multiply(
                 Apply(p, k),
                 Power(u, k),
                 Divide(Power(Negate(D(1)), k), Call("factorial", k)),
-                Derivative(k))));
+                Derivative(k)))));
 
         Formula assumptions = All(
+            evenness,
             Less(D(0), u),
             coefficientExpansion,
             integrability);
@@ -157,22 +160,25 @@ internal sealed class CayleyMomentTransportDocument : IScribeDocumentDefinition
             Divide(D(1), denominator(scale));
         Formula budget(Formula scale) => Call("integral", nu,
             Lambda(xi, real, budgetIntegrand(scale)));
+        Formula complexBudget(Formula scale) => Call("ofReal", budget(scale));
         Formula r = Divide(Subtract(a, b), Add(a, b));
         Formula cayley = Divide(
             Add(Call("ofReal", xi), Multiply(Call("I"), a)),
             Subtract(Call("ofReal", xi), Multiply(Call("I"), a)));
         Formula momentIntegrand(Formula order) => Divide(
-            Call("re", Power(cayley, order)), denominator(a));
+            Power(cayley, order), denominator(a));
         Formula moment(Formula order) => Call("integral", nu,
             Lambda(xi, real, momentIntegrand(order)));
         Formula order = Add(k, D(1));
         Formula finiteTransport = Add(
-            budget(a),
+            complexBudget(a),
             Multiply(D(2), Call("sum", Call("range", m),
                 Lambda(k, natural,
-                    Multiply(Power(Negate(r), order), moment(order))))));
-        Formula transportError = Call("abs", Subtract(
-            budget(b), Multiply(Divide(a, b), finiteTransport)));
+                    Multiply(Call("ofReal", Power(Negate(r), order)),
+                        moment(order))))));
+        Formula transportError = Call("norm", Subtract(
+            complexBudget(b),
+            Multiply(Call("ofReal", Divide(a, b)), finiteTransport)));
         Formula tail = Multiply(
             Divide(Multiply(D(2), a), b),
             budget(a),
@@ -180,6 +186,7 @@ internal sealed class CayleyMomentTransportDocument : IScribeDocumentDefinition
                 Power(Call("abs", r), Add(m, D(1))),
                 Subtract(D(1), Call("abs", r))));
         Formula assumptions = All(
+            Equal(Call("map", Lambda(xi, real, Negate(xi)), nu), nu),
             Less(D(0), a),
             Less(D(0), b),
             Call("Integrable", Lambda(xi, real, budgetIntegrand(a)), nu));

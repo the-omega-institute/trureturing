@@ -12,6 +12,7 @@ import Mathlib.Analysis.Complex.Poisson
 import Mathlib.Analysis.SpecialFunctions.Complex.Arg
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Chebyshev.Basic
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
 import Mathlib.Tactic
 
 /-!
@@ -189,6 +190,125 @@ private theorem cayley_moment_integrable
     have denominatorPositive : 0 < xi ^ 2 + a ^ 2 := by positivity
     rw [Real.norm_eq_abs, abs_div, abs_of_pos denominatorPositive]
     exact (div_le_div_iff_of_pos_right denominatorPositive).2 numeratorBound
+
+private theorem cayley_complex_moment_integrable
+    (nu : Measure Real) (a : Real) (k : Nat) (ha : 0 < a)
+    (baseIntegrable : Integrable (fun xi : Real => 1 / (xi ^ 2 + a ^ 2)) nu) :
+    Integrable (fun xi : Real =>
+      ((((xi : Complex) + Complex.I * a) /
+        ((xi : Complex) - Complex.I * a)) ^ k) / (xi ^ 2 + a ^ 2)) nu := by
+  have complexDenominatorNonzero :
+      forall xi : Real, (xi : Complex) - Complex.I * a ≠ 0 := by
+    intro xi h
+    have imaginaryPart := congrArg Complex.im h
+    simp only [Complex.sub_im, Complex.ofReal_im, Complex.mul_im, Complex.I_re,
+      mul_zero, Complex.I_im, Complex.ofReal_re, one_mul, zero_sub,
+      Complex.zero_im] at imaginaryPart
+    exact ha.ne' (by linarith)
+  refine baseIntegrable.mono' ?_ (ae_of_all _ fun xi => ?_)
+  · have cayleyContinuous : Continuous (fun xi : Real =>
+        ((xi : Complex) + Complex.I * a) /
+          ((xi : Complex) - Complex.I * a)) :=
+      (Complex.continuous_ofReal.add continuous_const).div
+        (Complex.continuous_ofReal.sub continuous_const)
+        complexDenominatorNonzero
+    have denominatorContinuous : Continuous (fun xi : Real =>
+        (xi : Complex) ^ 2 + (a : Complex) ^ 2) := by fun_prop
+    have quotientContinuous : Continuous (fun xi : Real =>
+        ((((xi : Complex) + Complex.I * a) /
+          ((xi : Complex) - Complex.I * a)) ^ k) /
+          ((xi : Complex) ^ 2 + (a : Complex) ^ 2)) :=
+      (cayleyContinuous.pow k).div denominatorContinuous
+        (fun xi => by exact_mod_cast (by positivity : xi ^ 2 + a ^ 2 ≠ 0))
+    exact quotientContinuous.aestronglyMeasurable
+  · have denominatorPositive : 0 < xi ^ 2 + a ^ 2 := by positivity
+    rw [norm_div, norm_pow, norm_scale_cayley a xi ha.ne', one_pow]
+    rw [show ((xi : Complex) ^ 2 + (a : Complex) ^ 2) =
+        ((xi ^ 2 + a ^ 2 : Real) : Complex) by push_cast; ring]
+    rw [Complex.norm_real, Real.norm_eq_abs, abs_of_pos denominatorPositive]
+
+private theorem cayley_complex_moment_eq_real
+    (nu : Measure Real) (hEven : Measure.map (fun xi : Real => -xi) nu = nu)
+    (a : Real) (k : Nat) (ha : 0 < a)
+    (baseIntegrable : Integrable (fun xi : Real => 1 / (xi ^ 2 + a ^ 2)) nu) :
+    integral nu (fun xi : Real =>
+        ((((xi : Complex) + Complex.I * a) /
+          ((xi : Complex) - Complex.I * a)) ^ k) / (xi ^ 2 + a ^ 2)) =
+      Complex.ofReal (integral nu (fun xi : Real =>
+        (((((xi : Complex) + Complex.I * a) /
+          ((xi : Complex) - Complex.I * a)) ^ k).re) /
+            (xi ^ 2 + a ^ 2))) := by
+  let f : Real -> Complex := fun xi =>
+    ((((xi : Complex) + Complex.I * a) /
+      ((xi : Complex) - Complex.I * a)) ^ k) / (xi ^ 2 + a ^ 2)
+  have fIntegrable : Integrable f nu :=
+    cayley_complex_moment_integrable nu a k ha baseIntegrable
+  have cayleyNeg (xi : Real) :
+      ((((-xi : Real) : Complex) + Complex.I * a) /
+          (((-xi : Real) : Complex) - Complex.I * a)) =
+        star (((xi : Complex) + Complex.I * a) /
+          ((xi : Complex) - Complex.I * a)) := by
+    have plusNonzero : (xi : Complex) + Complex.I * a ≠ 0 := by
+      intro h
+      have imaginaryPart := congrArg Complex.im h
+      simp at imaginaryPart
+      linarith
+    have negativeDenominatorNonzero :
+        -(xi : Complex) - Complex.I * a ≠ 0 := by
+      intro h
+      have imaginaryPart := congrArg Complex.im h
+      simp at imaginaryPart
+      linarith
+    rw [RCLike.star_def, map_div₀, map_add, map_sub, map_mul]
+    simp only [Complex.conj_ofReal, Complex.conj_I, Complex.ofReal_neg]
+    field_simp [plusNonzero, negativeDenominatorNonzero]
+    ring
+  have imaginaryOdd (xi : Real) : (f (-xi)).im = -(f xi).im := by
+    dsimp only [f]
+    rw [show (((-xi : Real) : Complex) ^ 2 + (a : Complex) ^ 2) =
+          ((xi ^ 2 + a ^ 2 : Real) : Complex) by push_cast; ring,
+      show (xi : Complex) ^ 2 + (a : Complex) ^ 2 =
+          ((xi ^ 2 + a ^ 2 : Real) : Complex) by push_cast; ring]
+    rw [Complex.div_ofReal_im, Complex.div_ofReal_im, cayleyNeg,
+      ← star_pow, Complex.star_def, Complex.conj_im]
+    ring
+  have imaginaryMeasurable :
+      AEStronglyMeasurable (fun xi : Real => (f xi).im) nu :=
+    Complex.continuous_im.comp_aestronglyMeasurable fIntegrable.aestronglyMeasurable
+  have imaginaryMeasurableMap :
+      AEStronglyMeasurable (fun xi : Real => (f xi).im)
+        (Measure.map (fun xi : Real => -xi) nu) := by
+    rw [hEven]
+    exact imaginaryMeasurable
+  have mapIdentity := integral_map (μ := nu) (φ := fun xi : Real => -xi)
+    (by fun_prop) imaginaryMeasurableMap
+  rw [hEven] at mapIdentity
+  have imaginaryIntegralZero : integral nu (fun xi : Real => (f xi).im) = 0 := by
+    rw [show (fun xi : Real => (f (-xi)).im) =
+        fun xi : Real => -(f xi).im by funext xi; exact imaginaryOdd xi,
+      integral_neg] at mapIdentity
+    linarith
+  let g : Real -> Real := fun xi =>
+    (((((xi : Complex) + Complex.I * a) /
+      ((xi : Complex) - Complex.I * a)) ^ k).re) / (xi ^ 2 + a ^ 2)
+  change integral nu f = ((integral nu g : Real) : Complex)
+  apply Complex.ext
+  · calc
+      (integral nu f).re = integral nu (fun xi : Real => (f xi).re) :=
+        (integral_re fIntegrable).symm
+      _ = integral nu g := by
+        apply integral_congr_ae
+        filter_upwards with xi
+        dsimp only [f, g]
+        rw [show (xi : Complex) ^ 2 + (a : Complex) ^ 2 =
+            ((xi ^ 2 + a ^ 2 : Real) : Complex) by push_cast; ring,
+          Complex.div_ofReal_re]
+      _ = ((integral nu g : Real) : Complex).re := by simp
+  · calc
+      (integral nu f).im = integral nu (fun xi : Real => (f xi).im) :=
+        (integral_im fIntegrable).symm
+      _ = 0 := imaginaryIntegralZero
+      _ = ((integral nu g : Real) : Complex).im := by simp
 
 private theorem poisson_kernel_truncation
     (z : Complex) (r : Real) (M : Nat) (hz : norm z = 1) (hr : abs r < 1) :
@@ -440,7 +560,7 @@ private theorem iteratedDeriv_resolvent_budget
 /-- Expanding the shifted Chebyshev polynomial inside the resolvent integral
 and substituting the genuine iterated derivatives of the Stieltjes budget
 produces the finite scale jet. -/
-theorem chebyshev_stieltjes_jet
+private theorem chebyshev_stieltjes_jet_real
     (nu : Measure Real) (n : Nat) (u : Real) (p : Fin (n + 1) -> Real)
     (uPositive : 0 < u)
     (coefficientExpansion : forall x : Real,
@@ -503,10 +623,51 @@ theorem chebyshev_stieltjes_jet
     simp
   rw [signSquare, mul_one]
 
+/-- For an even spectral measure, the full complex Cayley moment is the
+Chebyshev derivative jet of its Stieltjes resolvent budget. -/
+theorem chebyshev_stieltjes_jet
+    (nu : Measure Real) (n : Nat) (u : Real) (p : Fin (n + 1) -> Real)
+    (hEven : Measure.map (fun xi : Real => -xi) nu = nu)
+    (uPositive : 0 < u)
+    (coefficientExpansion : forall x : Real,
+      (Polynomial.Chebyshev.T Real (n : Int)).eval (1 - 2 * x) =
+        Finset.univ.sum (fun k => p k * x ^ (k : Nat)))
+    (budgetIntegrable : Integrable (fun xi : Real => 1 / (xi ^ 2 + u)) nu) :
+    integral nu (fun xi : Real =>
+      ((((xi : Complex) + Complex.I * Real.sqrt u) /
+        ((xi : Complex) - Complex.I * Real.sqrt u)) ^ n) / (xi ^ 2 + u)) =
+      Complex.ofReal (Finset.univ.sum (fun k : Fin (n + 1) =>
+        p k * u ^ (k : Nat) *
+          ((-1 : Real) ^ (k : Nat) / ((k : Nat).factorial : Real)) *
+            iteratedDeriv (k : Nat)
+              (fun v : Real =>
+                integral nu (fun xi : Real => 1 / (xi ^ 2 + v))) u)) := by
+  have sqrtPositive : 0 < Real.sqrt u := Real.sqrt_pos.2 uPositive
+  have complexMoment := cayley_complex_moment_eq_real nu hEven
+    (Real.sqrt u) n sqrtPositive
+    (by simpa [Real.sq_sqrt uPositive.le] using budgetIntegrable)
+  have complexMoment' :
+      integral nu (fun xi : Real =>
+        ((((xi : Complex) + Complex.I * Real.sqrt u) /
+          ((xi : Complex) - Complex.I * Real.sqrt u)) ^ n) / (xi ^ 2 + u)) =
+        Complex.ofReal (integral nu (fun xi : Real =>
+          (((((xi : Complex) + Complex.I * Real.sqrt u) /
+            ((xi : Complex) - Complex.I * Real.sqrt u)) ^ n).re) /
+              (xi ^ 2 + u))) := by
+    have sqrtSquareComplex :
+        (Real.sqrt u : Complex) ^ 2 = (u : Complex) := by
+      exact_mod_cast Real.sq_sqrt uPositive.le
+    have sqrtSquareReal : Real.sqrt u ^ 2 = u := Real.sq_sqrt uPositive.le
+    simpa only [sqrtSquareComplex, sqrtSquareReal] using complexMoment
+  rw [complexMoment']
+  exact congrArg (fun value : Real => (value : Complex))
+    (chebyshev_stieltjes_jet_real nu n u p uPositive coefficientExpansion
+      budgetIntegrable)
+
 /-- Truncating the Poisson expansion that transports the resolvent budget
 between two positive Cayley scales has the source's strict geometric tail
 bound.  Every budget and moment is expanded directly from the measure. -/
-theorem budget_transport_error
+private theorem budget_transport_error_real
     (nu : Measure Real) (a b : Real) (M : Nat)
     (aPositive : 0 < a) (bPositive : 0 < b)
     (budgetIntegrable :
@@ -678,5 +839,81 @@ theorem budget_transport_error
         (abs r ^ (M + 1) / (1 - abs r)) := by
       rw [integral_const_mul]
       ring
+
+/-- For an even spectral measure, truncating the full complex Cayley-moment
+transport has the source's strict geometric tail bound. -/
+theorem budget_transport_error
+    (nu : Measure Real) (a b : Real) (M : Nat)
+    (hEven : Measure.map (fun xi : Real => -xi) nu = nu)
+    (aPositive : 0 < a) (bPositive : 0 < b)
+    (budgetIntegrable :
+      Integrable (fun xi : Real => 1 / (xi ^ 2 + a ^ 2)) nu) :
+    norm (Complex.ofReal
+        (integral nu (fun xi : Real => 1 / (xi ^ 2 + b ^ 2))) -
+      Complex.ofReal (a / b) *
+        (Complex.ofReal
+            (integral nu (fun xi : Real => 1 / (xi ^ 2 + a ^ 2))) +
+          2 * Finset.sum (Finset.range M) (fun k : Nat =>
+            Complex.ofReal ((-((a - b) / (a + b))) ^ (k + 1)) *
+              integral nu (fun xi : Real =>
+                ((((xi : Complex) + Complex.I * a) /
+                  ((xi : Complex) - Complex.I * a)) ^ (k + 1) /
+                    (xi ^ 2 + a ^ 2)))))) <=
+      (2 * a / b) * integral nu (fun xi : Real => 1 / (xi ^ 2 + a ^ 2)) *
+        (abs ((a - b) / (a + b)) ^ (M + 1) /
+          (1 - abs ((a - b) / (a + b)))) := by
+  have momentIdentity (k : Nat) :
+      integral nu (fun xi : Real =>
+          ((((xi : Complex) + Complex.I * a) /
+            ((xi : Complex) - Complex.I * a)) ^ k /
+              (xi ^ 2 + a ^ 2))) =
+        Complex.ofReal (integral nu (fun xi : Real =>
+          (((((xi : Complex) + Complex.I * a) /
+            ((xi : Complex) - Complex.I * a)) ^ k).re /
+              (xi ^ 2 + a ^ 2)))) :=
+    cayley_complex_moment_eq_real nu hEven a k aPositive budgetIntegrable
+  have finiteSumIdentity :
+      Finset.sum (Finset.range M) (fun k : Nat =>
+          Complex.ofReal ((-((a - b) / (a + b))) ^ (k + 1)) *
+            integral nu (fun xi : Real =>
+              ((((xi : Complex) + Complex.I * a) /
+                ((xi : Complex) - Complex.I * a)) ^ (k + 1) /
+                  (xi ^ 2 + a ^ 2)))) =
+        Complex.ofReal (Finset.sum (Finset.range M) (fun k : Nat =>
+          (-((a - b) / (a + b))) ^ (k + 1) *
+            integral nu (fun xi : Real =>
+              (((((xi : Complex) + Complex.I * a) /
+                ((xi : Complex) - Complex.I * a)) ^ (k + 1)).re /
+                  (xi ^ 2 + a ^ 2))))) := by
+    rw [Complex.ofReal_sum]
+    apply Finset.sum_congr rfl
+    intro k _
+    rw [momentIdentity]
+    exact (map_mul Complex.ofRealHom _ _).symm
+  rw [show Complex.ofReal
+          (integral nu (fun xi : Real => 1 / (xi ^ 2 + b ^ 2))) -
+        Complex.ofReal (a / b) *
+          (Complex.ofReal
+              (integral nu (fun xi : Real => 1 / (xi ^ 2 + a ^ 2))) +
+            2 * Finset.sum (Finset.range M) (fun k : Nat =>
+              Complex.ofReal ((-((a - b) / (a + b))) ^ (k + 1)) *
+                integral nu (fun xi : Real =>
+                  ((((xi : Complex) + Complex.I * a) /
+                    ((xi : Complex) - Complex.I * a)) ^ (k + 1) /
+                      (xi ^ 2 + a ^ 2))))) =
+        Complex.ofReal
+          (integral nu (fun xi : Real => 1 / (xi ^ 2 + b ^ 2)) -
+            (a / b) *
+              (integral nu (fun xi : Real => 1 / (xi ^ 2 + a ^ 2)) +
+                2 * Finset.sum (Finset.range M) (fun k : Nat =>
+                  (-((a - b) / (a + b))) ^ (k + 1) *
+                    integral nu (fun xi : Real =>
+                      (((((xi : Complex) + Complex.I * a) /
+                        ((xi : Complex) - Complex.I * a)) ^ (k + 1)).re /
+                          (xi ^ 2 + a ^ 2)))))) by
+      rw [finiteSumIdentity]
+      norm_num [map_sub, map_mul, map_add]]
+  rw [Complex.norm_real, Real.norm_eq_abs]
+  exact budget_transport_error_real nu a b M aPositive bPositive budgetIntegrable
 
 end D5.S3.Weil.Budget.CayleyMomentTransport
