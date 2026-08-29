@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.Budget;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.ZetaAnalytic;
 
 internal sealed class ContactZeroLocalizationDocument
     : IScribeDocumentDefinition
@@ -15,7 +15,7 @@ internal sealed class ContactZeroLocalizationDocument
             Describe.Lean(
                 DescribeId.Create("contact-zero-localization"),
                 DeclarationHandle.Create(
-                    "D5/S3/Weil/Budget/ContactZeroLocalization."
+                    "D5/S3/Weil/ZetaAnalytic/ContactZeroLocalization."
                         + "contact_zero_localization"),
                 H("Finite contact spectra localize positive atoms"),
                 StatementSource.FromAuthor(TheoremFormula()),

@@ -1,6 +1,6 @@
-/- GID: D5/S3/Weil/Budget/ContactZeroLocalization
+/- GID: D5/S3/Weil/ZetaAnalytic/ContactZeroLocalization
    generality: I
-   mirror-B: D5/B/S3/Weil/Budget/ContactZeroLocalization
+   mirror-B: D5/B/S3/Weil/ZetaAnalytic/ContactZeroLocalization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Finite contact spectra localize positive atoms near zero ordinates. -/
@@ -24,7 +24,7 @@ set_option relaxedAutoImplicit false
 
 noncomputable section
 
-namespace D5.S3.Weil.Budget.ContactZeroLocalization
+namespace D5.S3.Weil.ZetaAnalytic.ContactZeroLocalization
 
 open Filter Function MeasureTheory Set Topology
 open scoped ENNReal
@@ -143,4 +143,4 @@ theorem contact_zero_localization
 
 #print axioms contact_zero_localization
 
-end D5.S3.Weil.Budget.ContactZeroLocalization
+end D5.S3.Weil.ZetaAnalytic.ContactZeroLocalization
