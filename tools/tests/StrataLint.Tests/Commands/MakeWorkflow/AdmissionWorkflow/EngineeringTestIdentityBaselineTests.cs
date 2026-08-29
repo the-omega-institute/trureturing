@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -28,6 +29,66 @@ public sealed partial class AdmissionWorkflowTests
             + Encoding.UTF8.GetString(execute.StandardError);
 
         Assert.Equal(1, execute.ExitCode);
+        Assert.Contains(
+            "TRX is missing base-owned tests: Probe.Tests::IdentityProbe.Legacy",
+            output,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SchemaValidEmptyFullArtifactTriggersBaseOwnedReplanBeforeExecution()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        using var fixture = new TemporaryDirectory();
+        var repository = CreateIdentityRepository(fixture.Path);
+        DeleteLegacyTest(repository);
+        var head = GitText(repository, "rev-parse", "HEAD");
+        var @base = GitText(repository, "rev-parse", "HEAD^1");
+        var planFile = Path.Combine(fixture.Path, "plan.json");
+        var plan = RunEngineeringScopeMode(
+            TestRepositoryLayout.FindRoot(), repository, planFile, head, @base, "plan", "FULL=1");
+        Assert.Equal(0, plan.ExitCode);
+        RewriteFullPlanTests(planFile, static _ => false);
+
+        var execute = RunEngineeringScope(
+            TestRepositoryLayout.FindRoot(), repository, planFile, head, @base);
+        var output = Encoding.UTF8.GetString(execute.StandardOutput)
+            + Encoding.UTF8.GetString(execute.StandardError);
+
+        Assert.Equal(1, execute.ExitCode);
+        Assert.Contains("ENGINEERING_TEST_PLAN_FALLBACK", output, StringComparison.Ordinal);
+        Assert.Contains(
+            "TRX is missing base-owned tests: Probe.Tests::IdentityProbe.Legacy",
+            output,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SchemaValidTruncatedFullArtifactTriggersBaseOwnedReplanBeforeExecution()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        using var fixture = new TemporaryDirectory();
+        var repository = CreateIdentityRepository(fixture.Path);
+        DeleteLegacyTest(repository);
+        var head = GitText(repository, "rev-parse", "HEAD");
+        var @base = GitText(repository, "rev-parse", "HEAD^1");
+        var planFile = Path.Combine(fixture.Path, "plan.json");
+        var plan = RunEngineeringScopeMode(
+            TestRepositoryLayout.FindRoot(), repository, planFile, head, @base, "plan", "FULL=1");
+        Assert.Equal(0, plan.ExitCode);
+        RewriteFullPlanTests(
+            planFile,
+            static test => test["id"]!.GetValue<string>() == "IdentityProbe.Survivor");
+
+        var execute = RunEngineeringScope(
+            TestRepositoryLayout.FindRoot(), repository, planFile, head, @base);
+        var output = Encoding.UTF8.GetString(execute.StandardOutput)
+            + Encoding.UTF8.GetString(execute.StandardError);
+
+        Assert.Equal(1, execute.ExitCode);
+        Assert.Contains("ENGINEERING_TEST_PLAN_FALLBACK", output, StringComparison.Ordinal);
         Assert.Contains(
             "TRX is missing base-owned tests: Probe.Tests::IdentityProbe.Legacy",
             output,
@@ -273,19 +334,42 @@ public sealed partial class AdmissionWorkflowTests
     {
         var steps = JobSteps(AdmissionWorkflow(), "candidate-engineering");
         var plan = StepScript(steps, "Plan base-owned engineering tests");
-        var execute = StepScript(steps, "Run candidate tests against base-owned identities");
+        var execute = StepScript(steps, "Replan and run engineering tests with protected-base harness");
 
         Assert.Contains("git -C candidate rev-parse HEAD^1", plan, StringComparison.Ordinal);
         Assert.Contains("git -C candidate rev-parse HEAD", plan, StringComparison.Ordinal);
         Assert.Contains("make -C candidate/tools engineering-tests", plan, StringComparison.Ordinal);
         Assert.Contains("MODE=plan", plan, StringComparison.Ordinal);
         Assert.Contains("FULL=1", plan, StringComparison.Ordinal);
-        Assert.Contains("make -C candidate/tools engineering-tests", execute, StringComparison.Ordinal);
+        Assert.Contains("git -C candidate worktree add --detach", execute, StringComparison.Ordinal);
+        Assert.Contains("$ENGINEERING_BASE", execute, StringComparison.Ordinal);
+        Assert.Contains("rm -f -- \"$RUNNER_TEMP/engineering-test-plan.json\"", execute, StringComparison.Ordinal);
+        Assert.Contains("make -C \"$base_harness_root/tools\" engineering-tests", execute, StringComparison.Ordinal);
+        Assert.Contains("REPOSITORY=\"$GITHUB_WORKSPACE/candidate\"", execute, StringComparison.Ordinal);
+        Assert.Contains("MODE=plan", execute, StringComparison.Ordinal);
         Assert.Contains("MODE=execute", execute, StringComparison.Ordinal);
 
         var workflow = AdmissionWorkflow();
         Assert.DoesNotContain("required_test_projects", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("--required-assembly", workflow, StringComparison.Ordinal);
+    }
+
+    private static void RewriteFullPlanTests(
+        string planFile,
+        Func<JsonObject, bool> retain)
+    {
+        var artifact = JsonNode.Parse(ReadTemporaryText(planFile))!.AsObject();
+        var plan = artifact["plan"]!.AsObject();
+        Assert.Equal("full", plan["kind"]!.GetValue<string>());
+        var retained = plan["tests"]!.AsArray()
+            .Select(static test => test!.AsObject())
+            .Where(retain)
+            .Select(static test => test.DeepClone())
+            .ToArray();
+        plan["tests"] = new JsonArray(retained);
+        File.WriteAllText(
+            planFile,
+            artifact.ToJsonString(new JsonSerializerOptions { WriteIndented = true }) + "\n");
     }
 
     [Fact]

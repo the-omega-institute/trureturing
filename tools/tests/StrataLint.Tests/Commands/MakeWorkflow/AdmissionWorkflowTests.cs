@@ -365,9 +365,13 @@ public sealed partial class AdmissionWorkflowTests
         Assert.Equal(
             "make -C candidate/tools dotnet",
             StepScript(steps, "Build candidate with warnings as errors"));
-        var executeScript = StepScript(steps, "Run candidate tests against base-owned identities");
+        var executeScript = StepScript(steps, "Replan and run engineering tests with protected-base harness");
         Assert.DoesNotContain("ENGINEERING_TEST_TARGET", executeScript, StringComparison.Ordinal);
-        Assert.Contains("make -C candidate/tools engineering-tests MODE=execute", executeScript, StringComparison.Ordinal);
+        Assert.Contains("git -C candidate worktree add --detach", executeScript, StringComparison.Ordinal);
+        Assert.Contains("make -C \"$base_harness_root/tools\" engineering-tests", executeScript, StringComparison.Ordinal);
+        Assert.Contains("REPOSITORY=\"$GITHUB_WORKSPACE/candidate\"", executeScript, StringComparison.Ordinal);
+        Assert.Contains("MODE=plan", executeScript, StringComparison.Ordinal);
+        Assert.Contains("MODE=execute", executeScript, StringComparison.Ordinal);
         Assert.Equal(
             "make -C candidate/tools selftest",
             StepScript(steps, "Run candidate selftest twice and compare bytes"));

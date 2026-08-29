@@ -249,10 +249,13 @@ public sealed partial class MakeWorkflowTests
         var dotnetTest = File.ReadAllText(Path.Combine(root, "tools", "scripts", "dotnet-test.sh"));
         Assert.Contains("dotnet test \"$@\"", dotnetTest, StringComparison.Ordinal);
         Assert.Contains("verify-trx --results-directory \"$RESULTS_DIRECTORY\"", dotnetTest, StringComparison.Ordinal);
+        var engineeringTestsRecipe = Recipe(makefile, "engineering-tests");
         Assert.Contains(
             "StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
-            Recipe(makefile, "engineering-tests"),
+            engineeringTestsRecipe,
             StringComparison.Ordinal);
+        Assert.Contains("REPOSITORY ?= $(HERE)/..", makefile, StringComparison.Ordinal);
+        Assert.Contains("--repository \"$(REPOSITORY)\"", engineeringTestsRecipe, StringComparison.Ordinal);
         Assert.Contains("$(HERE)/scripts/stratalint-selftest.sh", Recipe(makefile, "selftest"), StringComparison.Ordinal);
         Assert.Contains(
             "$(HERE)/scripts/update-renderer-contract.sh",

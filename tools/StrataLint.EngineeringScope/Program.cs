@@ -86,6 +86,19 @@ internal static class Program
                 File.ReadAllText(options.PlanFile, StrictUtf8),
                 JsonOptions) ?? throw new InvalidDataException("plan artifact is empty");
             ValidateArtifact(artifact, head, @base);
+            var changedPaths = GitPaths(options.RepositoryRoot, @base, head);
+            var baseSnapshot = BaseSnapshot(options.RepositoryRoot, @base);
+            var expected = EngineeringTestPlanDeriver.DeriveSnapshot(baseSnapshot, changedPaths);
+            var forcedFull = artifact.Plan!.Kind == EngineeringTestPlanKind.Full
+                ? EngineeringTestPlanDeriver.DeriveSnapshot(baseSnapshot, changedPaths, full: true)
+                : null;
+            if (!PlanEquals(artifact.Plan, expected)
+                && (forcedFull is null || !PlanEquals(artifact.Plan, forcedFull)))
+            {
+                throw new InvalidDataException(
+                    "plan artifact differs from the protected-base identity derivation");
+            }
+
             plan = artifact.Plan!;
         }
         catch (Exception exception)
@@ -260,6 +273,12 @@ internal static class Program
                 || string.IsNullOrWhiteSpace(test.Id) || string.IsNullOrWhiteSpace(test.Detail)))
             throw new InvalidDataException("plan artifact does not conform to schema version 2");
     }
+
+    private static bool PlanEquals(EngineeringTestPlan left, EngineeringTestPlan right) =>
+        left.Kind == right.Kind
+        && left.Reason == right.Reason
+        && left.ChangedPaths.SequenceEqual(right.ChangedPaths, StringComparer.Ordinal)
+        && left.Tests.SequenceEqual(right.Tests);
 
     private static void WritePlan(EngineeringTestPlan plan)
     {

@@ -212,15 +212,30 @@ jobs:
       - name: Build candidate with warnings as errors
         if: steps.scope.outputs.run_required == 'true'
         run: make -C candidate/tools dotnet
-      - name: Run candidate tests against base-owned identities
+      - name: Replan and run engineering tests with protected-base harness
         if: steps.scope.outputs.run_required == 'true'
         shell: bash
         env:
           ENGINEERING_HEAD: ${{ steps.scope.outputs.head_sha }}
           ENGINEERING_BASE: ${{ steps.scope.outputs.base_sha }}
+          ENGINEERING_FULL_REQUIRED: ${{ steps.scope.outputs.base_full_required }}
         run: |
           set -euo pipefail
-          make -C candidate/tools engineering-tests MODE=execute HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$RUNNER_TEMP/engineering-test-plan.json"
+          plan_file="$RUNNER_TEMP/engineering-test-plan.json"
+          base_harness_root="$RUNNER_TEMP/protected-base-engineering-harness"
+          test ! -e "$base_harness_root"
+          rm -f -- "$RUNNER_TEMP/engineering-test-plan.json"
+          git -C candidate worktree add --detach "$base_harness_root" "$ENGINEERING_BASE"
+          cleanup_base_harness() {
+            git -C candidate worktree remove --force "$base_harness_root"
+          }
+          trap cleanup_base_harness EXIT
+          if [[ "$ENGINEERING_FULL_REQUIRED" == "true" ]]; then
+            FULL=1 make -C "$base_harness_root/tools" engineering-tests REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
+          else
+            make -C "$base_harness_root/tools" engineering-tests REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
+          fi
+          make -C "$base_harness_root/tools" engineering-tests REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=execute HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
 
       - name: Run candidate selftest twice and compare bytes
         if: steps.scope.outputs.run_required == 'true'
