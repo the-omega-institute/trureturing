@@ -1,0 +1,42 @@
+# 第九百三十五部　Fibonacci 阶数补偿器
+
+假设黄金完成层中的横向距离满足：
+
+$$
+\boxed{
+\delta_n=\delta_0\varphi^{-2n}.
+}
+\tag{935.1}
+$$
+
+若要保持 Chebyshev 作用量：
+
+$$
+N_n\kappa_a(\delta_n)
+$$
+
+不退化，在小 \(\delta\) 区域需要：
+
+$$
+N_n\sim\varphi^{2n}.
+$$
+
+取真正整数阶数：
+
+$$
+\boxed{
+N_n=F_{2n+r},
+}
+\tag{935.2}
+$$
+
+其中 \(F_k\) 是 Fibonacci 数。
+
+由 Binet 公式：
+
+$$
+F_m=\frac{\varphi^m-(\varphi')^m}{\sqrt5},
+$$
+
+得到：
+

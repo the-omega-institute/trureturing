@@ -1,0 +1,10 @@
+ast_path: section/6-5-既有冻结定理的复用与禁重证
+fingerprints:
+  raw_sha256: sha256:f763ef09338c56f754178caf475fd0c142c6dd19b6ebd075667193ca4cf6a618
+  normalized_sha256: sha256:f763ef09338c56f754178caf475fd0c142c6dd19b6ebd075667193ca4cf6a618
+cas_ref: sha256:f763ef09338c56f754178caf475fd0c142c6dd19b6ebd075667193ca4cf6a618
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

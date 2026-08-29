@@ -1,0 +1,41 @@
+## 定理 717.1（Zero completion velocity）
+
+只要：
+
+$$
+\partial_sF(\tau,\rho(\tau))\neq0,
+$$
+
+就有：
+
+$$
+\boxed{
+\rho'(\tau)
+=
+-
+\frac{
+\partial_\tau F(\tau,\rho(\tau))
+}{
+\partial_sF(\tau,\rho(\tau))
+}.
+}
+\tag{717.1}
+$$
+
+所以应区分：
+
+$$
+\boxed{
+\begin{aligned}
+\partial_sF
+&=\text{空间导数，描述零点局部几何};\\
+\partial_\tau F
+&=\text{完成导数，描述新层注入了什么};\\
+-\partial_\tau F/\partial_sF
+&=\text{零点在完成层级中的运动速度}.
+\end{aligned}
+}
+$$
+
+---
+

@@ -1,0 +1,4 @@
+- `newSettlement := settlement`。
+
+新旧尾节的前缀关系必须经 G-C 得到，不能直接把欲证字段写成无来源假设。
+

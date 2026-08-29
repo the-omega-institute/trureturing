@@ -1,0 +1,76 @@
+# 第七百一十部　建议形式化顺序
+
+```text
+D5/S3/PrimeObserver/GoldenMemory/
+  GoldenPrimeSign.lean
+  GoldenPrimeChannelVector.lean
+  GoldenResidualLocalFactor.lean
+  GoldenResidualDepthZero.lean
+  GoldenResidualDepthOne.lean
+  GoldenResidualDepthTwo.lean
+
+D5/S3/PrimeObserver/GoldenSemidirect/
+  FibonacciMemoryMatrix.lean
+  GoldenPrimeMemoryState.lean
+  GoldenPrimeMemoryUpdate.lean
+  GoldenWordScalarPrefix.lean
+  GoldenWordMemoryFormula.lean
+
+D5/S3/PrimeObserver/GoldenHolonomy/
+  PrimeSwapCurvature.lean
+  AdjacentSwapBlockDefect.lean
+  SplitInertCurvatureNonzero.lean
+  TransportedSwapDefect.lean
+  OrderDescentIffCurvatureZero.lean
+
+D5/S3/PrimeObserver/GoldenEigenchannels/
+  GoldenUnstableFunctional.lean
+  GoldenStableFunctional.lean
+  GoldenArchiveRecurrence.lean
+  GoldenDefectRecurrence.lean
+  PrimeForcingTerm.lean
+  StableDefectTendsZero.lean
+  GoldenArchiveConverges.lean
+
+D5/S3/PrimeObserver/GoldenSchedule/
+  FibonacciClassWord.lean
+  SplitPrimeQueue.lean
+  InertPrimeQueue.lean
+  GoldenPrimeEnumeration.lean
+  ScalarProductOrderIndependent.lean
+  ArchiveFirstDifferenceBound.lean
+
+D5/S3/PrimeObserver/MemoryProbe/
+  GoldenProbeRegister.lean
+  PrimeOnlyMemoryBlindness.lean
+  ProbeSeparatesMemory.lean
+  GoldenControlledCompletion.lean
+  NoScalarHistoryDecoder.lean
+
+D5/S3/PrimeObserver/RenormalizedMemory/
+  ResidualEnvelope.lean
+  CurvatureResidualBound.lean
+  GoldenHolonomyBudget.lean
+  MemoryDepthGain.lean
+  AllOrderMemoryFlatteningTarget.lean
+
+D5/S3/PrimeObserver/PairedMemory/
+  ScheduleInvolution.lean
+  EvenOddArchive.lean
+  OddArchiveSignFlip.lean
+  InvariantScalarNoLinearOddTerm.lean
+  MemoryVariance.lean
+
+D5/S3/Analytic/Zeta/MemoryFeedback/
+  MemorySchurClosure.lean
+  MemoryPseudozero.lean
+  SimpleZeroShift.lean
+  ReflectionSymmetricZeroPersistence.lean
+  OffLineBifurcationMultiplicityTarget.lean
+  CanonicalMemoryForcingTarget.lean
+```
+
+已有 `ControlledBehaviorUniversality` 和行为词更新可直接复用；有限状态离散化可使用其最小实现定理。非交换动作词作为 path dependence 来源也已有独立机器证明。
+
+---
+

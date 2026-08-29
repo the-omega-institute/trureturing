@@ -1,0 +1,38 @@
+# 第八百四十部　模五扇区直接生成 \(\varphi\) 与 \(\sqrt5\)
+
+考虑两个反射 holonomy 轨道：
+
+$$
+\left\{
+\frac15,\frac45
+\right\},
+\qquad
+\left\{
+\frac25,\frac35
+\right\}.
+$$
+
+定义：
+
+$$
+\boxed{
+\Delta_1
+=
+2\sin\frac{\pi}{5},
+}
+\tag{840.1}
+$$
+
+$$
+\boxed{
+\Delta_2
+=
+2\sin\frac{2\pi}{5}.
+}
+\tag{840.2}
+$$
+
+它们分别是两个模五观察扇区的 zeta-regularized 行列式。
+
+由基本三角恒等式：
+

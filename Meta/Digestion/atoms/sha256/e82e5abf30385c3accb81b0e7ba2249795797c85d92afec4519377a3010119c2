@@ -1,0 +1,8 @@
+* sticky 深度；
+
+构成第五个有限复杂度指标。
+
+而 Chebyshev minimax 性说明，在固定 compactification 下，该深度具有近最优性。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: row/null-rays-为-varphi-varphi
+fingerprints:
+  raw_sha256: sha256:2b1d616a1d0f8cfb74e053df3a29fb44f4b1257d77b0ec7faec78fbea0ae0a52
+  normalized_sha256: sha256:2b1d616a1d0f8cfb74e053df3a29fb44f4b1257d77b0ec7faec78fbea0ae0a52
+cas_ref: sha256:2b1d616a1d0f8cfb74e053df3a29fb44f4b1257d77b0ec7faec78fbea0ae0a52
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

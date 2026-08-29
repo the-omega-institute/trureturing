@@ -1,0 +1,10 @@
+ast_path: section/第九百二十九部-有限-Chebyshev-局部化矩阵
+fingerprints:
+  raw_sha256: sha256:e441752786d6c592b4d66bdc214e416c0a7ee7330f530e4f542efca088f18c21
+  normalized_sha256: sha256:e441752786d6c592b4d66bdc214e416c0a7ee7330f530e4f542efca088f18c21
+cas_ref: sha256:e441752786d6c592b4d66bdc214e416c0a7ee7330f530e4f542efca088f18c21
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

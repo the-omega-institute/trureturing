@@ -1,0 +1,103 @@
+# 第八百三十四部　黄金圆上的手性无质量切向算子
+
+令黄金 regulator 圆周长为：
+
+$$
+P_\varphi=2\log\varphi.
+$$
+
+定义：
+
+$$
+D_\eta=-i\partial_\eta.
+$$
+
+纯无质量切向算子为：
+
+$$
+\boxed{
+H_\varphi^{\mathrm{light}}
+=
+\frac{\pi}{2}|D_\eta|.
+}
+\tag{834.1}
+$$
+
+其 Fourier momenta 为：
+
+$$
+k_n
+=
+\frac{2\pi n}{P_\varphi}
+=
+\frac{\pi n}{\log\varphi}.
+$$
+
+所以非零能级为：
+
+$$
+\boxed{
+E_n
+=
+a_\varphi|n|,
+}
+\tag{834.2}
+$$
+
+其中：
+
+$$
+\boxed{
+a_\varphi
+=
+\frac{\pi^2}
+{2\log\varphi}.
+}
+\tag{834.3}
+$$
+
+定义正、负手性投影：
+
+$$
+P_+:
+n>0,
+\qquad
+P_-:
+n<0.
+$$
+
+则：
+
+$$
+\boxed{
+|D_\eta|
+=
+D_\eta P_+
+-
+D_\eta P_-.
+}
+\tag{834.4}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{正、负 observer momentum}
+}
+$$
+
+正好是两个无质量手性分支。
+
+反射：
+
+$$
+\eta\mapsto-\eta
+$$
+
+交换两者。
+
+这与黄金 Galois 共轭交换两个 null branches 的结构严格平行。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/736-2-所有观察者同像-不同方向
+fingerprints:
+  raw_sha256: sha256:d410d1d37f6d65e03202ad04776efefb015a73f2aecdd53c12f68ed58a32bfd9
+  normalized_sha256: sha256:d410d1d37f6d65e03202ad04776efefb015a73f2aecdd53c12f68ed58a32bfd9
+cas_ref: sha256:d410d1d37f6d65e03202ad04776efefb015a73f2aecdd53c12f68ed58a32bfd9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

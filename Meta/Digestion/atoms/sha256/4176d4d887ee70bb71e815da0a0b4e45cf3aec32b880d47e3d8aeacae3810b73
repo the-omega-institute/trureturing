@@ -1,0 +1,50 @@
+# 第八百六十九部　从 Kernel 正性到 Jet 正性的真实困难
+
+式 (864.5) 已经证明：
+
+$$
+C_m(u)\ge0.
+$$
+
+因此：
+
+$$
+\mathcal J_m=\widehat C_m
+$$
+
+是正定函数。
+
+但 RH 要求更强的：
+
+$$
+\mathcal J_m(t)\ge0.
+$$
+
+所以 RH 的一个新表述是：
+
+$$
+\boxed{
+\text{Riemann completion 的每个隐藏纤维偶矩 kernel，
+其 Fourier 像仍然逐点非负。}
+}
+\tag{869.1}
+$$
+
+这不是 Bochner 正定性自动保证的。
+
+它要求：
+
+$$
+\boxed{
+\text{正 kernel}
++
+\text{特殊自对偶结构}
++
+\text{全部素数—Archimedean 约束}
+}
+$$
+
+共同排除 Fourier 振荡产生的负值。
+
+---
+

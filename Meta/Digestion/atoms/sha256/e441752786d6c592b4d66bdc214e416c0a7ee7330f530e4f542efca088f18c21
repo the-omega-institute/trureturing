@@ -1,0 +1,28 @@
+# 第九百二十九部　有限 Chebyshev 局部化矩阵
+
+选择有限实偶特征向量：
+
+$$
+\Phi(z)\in\mathbb C^d.
+$$
+
+定义：
+
+$$
+\boxed{
+\begin{aligned}
+M_{t,a,N,\Phi}
+=
+\sum_{z\in\mathcal Z_\Xi}
+m_z\,
+W_{N,a}\!\left((t-z)^2\right)
+\Phi(z)\Phi(z)^{\mathsf T}.
+\end{aligned}
+}
+\tag{929.1}
+$$
+
+由零点对称性，该矩阵为实对称矩阵。
+
+---
+

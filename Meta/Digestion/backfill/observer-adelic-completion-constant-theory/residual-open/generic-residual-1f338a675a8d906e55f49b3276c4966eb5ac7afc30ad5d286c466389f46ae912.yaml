@@ -1,0 +1,10 @@
+ast_path: row/F-F-s-0-的-protozero
+fingerprints:
+  raw_sha256: sha256:1f338a675a8d906e55f49b3276c4966eb5ac7afc30ad5d286c466389f46ae912
+  normalized_sha256: sha256:1f338a675a8d906e55f49b3276c4966eb5ac7afc30ad5d286c466389f46ae912
+cas_ref: sha256:1f338a675a8d906e55f49b3276c4966eb5ac7afc30ad5d286c466389f46ae912
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

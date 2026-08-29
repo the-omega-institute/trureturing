@@ -1,0 +1,109 @@
+* 可直接进入仓库现有 Weil 管线。
+
+所以离线零点若存在，必然产生一个有限：
+
+$$
+N,\quad L,\quad Q
+$$
+
+和一个有限 sticky/Feshbach 负矩阵。
+
+更深的定量关系是：
+
+$$
+\boxed{
+L|\delta|
+=
+\text{离线观察的自然无量纲深度}.
+}
+$$
+
+固定同一可见度时：
+
+$$
+L\asymp\frac1{|\delta|}.
+$$
+
+而 fixed-support Weil test 只能看到：
+
+$$
+n\le e^{2L}
+$$
+
+的 prime powers，因此：
+
+$$
+\boxed{
+X_\delta
+\asymp
+\exp\left(\frac{C}{|\delta|}\right).
+}
+$$
+
+这解释了为什么一个极度接近临界线的破缺，会要求极其深的素数账本才能被看见。
+
+黄金完成进一步给出：
+
+$$
+\boxed{
+\delta_n=\delta_0\varphi^{-2n},
+\qquad
+L_n=L_0\varphi^{2n}.
+}
+$$
+
+于是：
+
+$$
+\boxed{
+L_n\delta_n=L_0\delta_0
+}
+$$
+
+保持不变，而：
+
+$$
+\boxed{
+X_n
+=
+\exp\left(
+2L_0\varphi^{2n}
+\right).
+}
+$$
+
+所以黄金比例在这里不只是一个抽象完成常数，而是：
+
+$$
+\boxed{
+\text{对象破缺缩小率与观察视野扩张率之间的互逆重整化。}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{离线破缺越接近完成轴，
+它并没有消失；
+它只是被推到了更长的相关距离与更深的素数地平线上。}
+}
+$$
+
+而 RH 的当前中心任务，也因此被压缩为一个非常具体的命题：
+
+$$
+\boxed{
+\text{证明 Prime--Archimedean Weil 能量
+对全部 Power-Packet 测试始终非负。}
+}
+$$
+
+若该命题失败，幂包族会自动输出：
+
+$$
+\boxed{
+\text{一个有限支撑、有限素数窗口、有限 sticky 维数的严格负证书。}
+$$
+
+[1]: https://dlmf.nist.gov/25.10?utm_source=chatgpt.com "DLMF: §25.10 Zeros ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"

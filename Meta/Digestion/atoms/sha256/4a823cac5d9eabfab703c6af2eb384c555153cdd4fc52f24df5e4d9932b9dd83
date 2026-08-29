@@ -1,0 +1,64 @@
+# 第八百七十二部　建议形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/XiKernel/
+  JacobiThetaKernel.lean
+  RiemannLogTimeKernel.lean
+  RiemannKernelPositive.lean
+  XiCoshTransform.lean
+  XiFourierTransform.lean
+
+D5/S3/Analytic/Zeta/NormalJet/
+  CriticalNormalIntensity.lean
+  CriticalNormalEven.lean
+  ObserverNormalJet.lean
+  ObserverNormalJetDerivativeFormula.lean
+  FirstLaguerreNormalEnergy.lean
+  SecondLaguerreNormalEnergy.lean
+
+D5/S3/Analytic/Zeta/JetCorrelation/
+  XiEvenKernel.lean
+  CenterFiberCoordinates.lean
+  ObserverJetCorrelationKernel.lean
+  ObserverJetKernelNonnegative.lean
+  ObserverJetPositiveDefinite.lean
+
+D5/S3/Analytic/Zeta/JetCriterion/
+  OffLineZeroImpliesNegativeJet.lean
+  RHImpliesAllNormalJetsNonnegative.lean
+  AllNormalJetsNonnegativeImpliesRH.lean
+  ObserverJetRHCriterion.lean
+  OffLineEscapeDepth.lean
+
+D5/S3/Analytic/Zeta/ZeroRigidity/
+  RealZeroMultiplicity.lean
+  LowerJetsVanishAtZero.lean
+  FirstNonzeroJetPositive.lean
+  SimpleZeroTransverseGap.lean
+  StaticZeroCannotSplitNormally.lean
+
+D5/S3/Analytic/Zeta/GoldenJetDepth/
+  GoldenTransverseScale.lean
+  GoldenJetSignalDecay.lean
+  GoldenBlowupRecoversJet.lean
+  GoldenOffLineDetectionDepth.lean
+
+D5/S3/Weil/HermitianJet/
+  HermitianWeilTestFunction.lean
+  HermitianWeilForm.lean
+  ExponentialTiltedTest.lean
+  PairedNormalTilt.lean
+  WeilNormalJet.lean
+  NegativeJetToWeilWitnessTarget.lean
+
+D5/S3/Weil/JetStickyReduction/
+  JetFrequencyWindow.lean
+  JetSlepianProjection.lean
+  JetSafeComplement.lean
+  JetFeshbachMatrix.lean
+  FiniteJetNegativeCertificate.lean
+```
+
+其中：
+
+* Xi kernel、jet 公式与有限阶负证书可在项目内部直接证明；

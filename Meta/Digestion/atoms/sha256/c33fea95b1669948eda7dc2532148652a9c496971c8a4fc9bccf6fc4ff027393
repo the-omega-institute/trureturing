@@ -1,0 +1,17 @@
+## 5.3 G-B：两元素翻转无不动点
+
+建议模块：
+
+`D5/S3/ConceptDynamics/GovernanceFixedPoint/BooleanFlipNoFixedPoint.lean`
+
+精确陈述：
+
+```lean
+theorem bool_flip_has_no_fixed_point :
+    ¬ ∃ status : Bool, status = boolFlip status
+```
+
+闭合路线是对 `status` 的两个构造子分类。
+
+该义务只证明一个最小非退化反例，不得加强成“所有非盲派生器均无不动点”。
+

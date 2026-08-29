@@ -1,0 +1,99 @@
+# 第七百六十七部　黄金观察器的正确谱通道
+
+因为 \(\chi_5\) 是模 \(5\) 的实偶原始字符，标准完成函数可写为：
+
+$$
+\boxed{
+\Lambda_5(s)
+=
+\left(
+\frac5\pi
+\right)^{s/2}
+\Gamma\left(\frac s2\right)
+L(s,\chi_5).
+}
+\tag{767.1}
+$$
+
+它具有关于：
+
+$$
+s\leftrightarrow1-s
+$$
+
+的函数方程；其非平凡零点位于临界带，并关于临界线对称。([DLMF][1])
+
+黄金数域的完成 Dedekind \(\zeta\) 为：
+
+$$
+\boxed{
+\Lambda_K(s)
+=
+5^{s/2}
+\pi^{-s}
+\Gamma\left(\frac s2\right)^2
+\zeta_K(s).
+}
+\tag{767.2}
+$$
+
+而：
+
+$$
+\boxed{
+\Lambda_K(s)
+=
+\left[
+\pi^{-s/2}
+\Gamma\left(\frac s2\right)\zeta(s)
+\right]
+\Lambda_5(s).
+}
+\tag{767.3}
+$$
+
+所以黄金完成谱分成两个独立零点通道：
+
+$$
+\boxed{
+\begin{aligned}
+\text{trivial channel}
+&:\quad \zeta(s),\\
+\text{golden sign channel}
+&:\quad L(s,\chi_5).
+\end{aligned}
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathrm{GRH}
+\bigl(
+\zeta_{\mathbb Q(\sqrt5)}
+\bigr)
+}
+$$
+
+等价于同时要求：
+
+$$
+\boxed{
+\mathrm{RH}(\zeta)
+}
+$$
+
+和：
+
+$$
+\boxed{
+\mathrm{GRH}
+\bigl(
+L(s,\chi_5)
+\bigr).
+}
+$$
+
+---
+

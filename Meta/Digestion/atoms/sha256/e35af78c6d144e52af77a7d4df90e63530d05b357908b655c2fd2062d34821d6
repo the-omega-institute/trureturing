@@ -1,0 +1,63 @@
+## 924.1 Chebyshev 的最优性
+
+给定：
+
+$$
+y_0<-1,
+$$
+
+在所有次数不超过 \(N\)、满足：
+
+$$
+p(y_0)=1
+$$
+
+的多项式中，区间 \([-1,1]\) 上的最小可能最大模为：
+
+$$
+\boxed{
+\frac1{|T_N(y_0)|}.
+}
+\tag{924.4}
+$$
+
+因此 Chebyshev 并非任意选择。
+
+它是固定代数深度下，把区间外目标与允许谱区间分离得最强的 minimax 放大器。
+
+若要求允许谱泄漏至多为 \(\varepsilon\)，则至少需要：
+
+$$
+\boxed{
+N
+\ge
+\frac{
+\operatorname{arcosh}(1/\varepsilon)
+}{
+\kappa_a(\delta)
+}.
+}
+\tag{924.5}
+$$
+
+在小 \(\delta\) 极限：
+
+$$
+N
+\gtrsim
+\frac{\sqrt a}{2|\delta|}
+\log\frac2\varepsilon.
+$$
+
+这已经重新推出：
+
+$$
+\boxed{
+\text{检测深度}\asymp\frac1{|\delta|}.
+}
+$$
+
+而且现在得到的是有限多项式阶数的近最优下界。
+
+---
+

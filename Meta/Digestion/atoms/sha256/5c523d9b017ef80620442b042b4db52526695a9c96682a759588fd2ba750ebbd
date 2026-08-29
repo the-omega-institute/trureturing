@@ -1,0 +1,46 @@
+## v6.1：Chebyshev–Cayley 横向紧化、角色码选择器、黄金最小轨道与有限观察相变
+
+以下从前文**第九百二十一部**继续追加。
+
+仓库刚刚补齐了四块与上一轮直接相连的机器底座：
+
+1. 黄金子移位已经被注册为自然数前移作用下的**最小动力系统**：每个观察者轨道都在同一个黄金子移位中稠密；
+2. 有限角色族的可实现码已证明等于全部线性关系的正交补，而且该结论要求域系数，整数系数下可以失败；
+3. 有共同分母的有限有理特征族已经可以压缩成一个加权 Toeplitz 矩矩阵的合同变换；不同 Cayley 尺度的分子也已形成完整的有限多项式基；
+4. 固定观察窗口之外的源修正对局部 Weil 配对不可见，并且外部光滑偶修正能够消去任意有限个偶矩。
+
+这些结果使上一轮的 Power-Packet 路线可以进一步压缩：
+
+$$
+\boxed{
+\begin{aligned}
+\text{离线平方距离}
+&\longrightarrow
+\text{区间外 Chebyshev 点}\\
+&\longrightarrow
+\text{有限角色码选择器}\\
+&\longrightarrow
+\text{共同分母有理矩阵}\\
+&\longrightarrow
+\text{Toeplitz 局部化负证书}\\
+&\longrightarrow
+\text{外带极点的指数衰减核}\\
+&\longrightarrow
+\text{有限支撑 Weil 见证}\\
+&\longrightarrow
+\text{单调支撑相变与有限 sticky 矩阵}.
+\end{aligned}
+}
+$$
+
+本轮最重要的新发现是：
+
+$$
+\boxed{
+\text{取一个大于 }1/4\text{ 的 resolvent 尺度，}
+}
+$$
+
+可以同时做到：
+
+* 把全部临界线平方距离紧化到 \([-1,1]\)；

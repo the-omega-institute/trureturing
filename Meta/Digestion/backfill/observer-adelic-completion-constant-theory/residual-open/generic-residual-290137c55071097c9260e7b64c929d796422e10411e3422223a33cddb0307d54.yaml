@@ -1,0 +1,10 @@
+ast_path: row/黄金-cross-ratio-精确线性化
+fingerprints:
+  raw_sha256: sha256:290137c55071097c9260e7b64c929d796422e10411e3422223a33cddb0307d54
+  normalized_sha256: sha256:290137c55071097c9260e7b64c929d796422e10411e3422223a33cddb0307d54
+cas_ref: sha256:290137c55071097c9260e7b64c929d796422e10411e3422223a33cddb0307d54
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

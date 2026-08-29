@@ -1,0 +1,36 @@
+# 第九百三十二部　支撑尺度的不可逆相变
+
+定义固定支撑 ground profile：
+
+$$
+\boxed{
+\lambda(L)
+=
+\inf_{\substack{
+f\neq0\\
+\operatorname{supp}f\subset(-L,L)
+}}
+\frac{
+Q(f)
+}{
+\|f\|_2^2
+}.
+}
+\tag{932.1}
+$$
+
+仓库已经机器证明：扩大支撑窗口不能提高最低归一化 Rayleigh 值。
+
+因此：
+
+$$
+\boxed{
+L_2>L_1
+\Longrightarrow
+\lambda(L_2)\le\lambda(L_1).
+}
+\tag{932.2}
+$$
+
+---
+

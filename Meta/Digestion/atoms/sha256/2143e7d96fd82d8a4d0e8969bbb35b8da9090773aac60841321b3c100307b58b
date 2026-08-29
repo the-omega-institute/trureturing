@@ -1,0 +1,40 @@
+## 定理 848.1（Two-direction Archimedean confinement）
+
+对任意阈值 \(A\)，危险集合：
+
+$$
+\boxed{
+\mathscr B_{L,A}
+=
+\left\{
+(n,t):
+m_{L,n}(t)<A
+\right\}
+}
+\tag{848.5}
+$$
+
+只包含有限多个 observer modes \(n\)，并且每个 mode 中的 \(t\)-截面有界。
+
+因此：
+
+$$
+\boxed{
+\text{全部潜在 observer–Weil 负性}
+}
+$$
+
+被囚禁在：
+
+$$
+\boxed{
+\text{有限 }n
+\times
+\text{有限频率窗口}.
+}
+$$
+
+这正是项目现有“安全补空间有正 gap，负指标有限”结构的 observer-mode 推广。项目当前已经机器证明固定尺度 Weil quadratic form，以及安全频谱补空间的显式 gap 与有限负指标。
+
+---
+

@@ -1,0 +1,99 @@
+# 第七百二十四部　项目化零点速度观察器
+
+对离散抽取深度 \(r\)，定义有限差分：
+
+$$
+\boxed{
+\Delta_rF
+=
+F_{r+1}-F_r.
+}
+\tag{724.1}
+$$
+
+若 \(\rho_r\) 是 \(F_r\) 的简单零点，定义预测零点位移：
+
+$$
+\boxed{
+\mathcal V_r(\rho_r)
+=
+-
+\frac{
+\Delta_rF(\rho_r)
+}{
+\partial_sF_r(\rho_r)
+}.
+}
+\tag{724.2}
+$$
+
+这是离散版：
+
+$$
+-\frac{F_\tau}{F_s}.
+$$
+
+定义横向完成速度：
+
+$$
+\boxed{
+v_r^\perp
+=
+\Re\mathcal V_r.
+}
+\tag{724.3}
+$$
+
+定义黄金归一化速度：
+
+$$
+\boxed{
+\widehat v_r^\perp
+=
+(-\varphi^2)^r
+v_r^\perp.
+}
+\tag{724.4}
+$$
+
+若：
+
+$$
+\widehat v_r^\perp
+\to c\neq0,
+$$
+
+而：
+
+$$
+v_r^\perp\to0,
+$$
+
+则找到的是：
+
+$$
+\boxed{
+\text{一个黄金切向起源，}
+}
+$$
+
+而不是持久离线零点。
+
+若：
+
+$$
+v_r^\perp\to\delta_*\neq0,
+$$
+
+则必须进一步证明：
+
+1. 该线程兼容；
+2. 极限函数存在；
+3. 极限线程由真实零点实现；
+4. 不是 pole-zero cancellation；
+5. 不是观察器 gauge。
+
+只有此后，才可能涉及 RH。
+
+---
+

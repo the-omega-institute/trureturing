@@ -1,0 +1,22 @@
+# 第八百三十五部　Riemann \(\zeta\) 是黄金光场的谱 \(\zeta\)
+
+先只取一个手性分支：
+
+$$
+n=1,2,3,\ldots.
+$$
+
+定义其谱 \(\zeta\)：
+
+$$
+\boxed{
+\zeta_{\mathrm{ch},\varphi}(s)
+=
+\sum_{n=1}^{\infty}
+E_n^{-s}.
+}
+\tag{835.1}
+$$
+
+于是：
+

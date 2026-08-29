@@ -1,0 +1,35 @@
+# 第八百九十二部　外部极点整化目标
+
+令临界闭带为：
+
+$$
+\mathcal S
+=
+\left\{
+z:
+|\Im z|\le\frac12
+\right\}.
+$$
+
+目标是用所有极点位于 \(\mathcal S\) 外部的 rational functions：
+
+$$
+Q(z)
+=
+\sum_{\ell,m}
+\frac{c_{\ell,m}}
+{(z-\alpha_\ell)^m},
+\qquad
+|\Im\alpha_\ell|>\frac12+\varepsilon,
+$$
+
+逼近内部 rational witness \(R(z)\) 在零点集上的取值。
+
+这种 \(Q\) 的反 Fourier kernel 具有超过 \(e^{-(1/2+\varepsilon)|x|}\) 的衰减，因此能够：
+
+1. 对整个临界带定义；
+2. 被有限支撑截断；
+3. 保持零点和的尾部可控。
+
+---
+

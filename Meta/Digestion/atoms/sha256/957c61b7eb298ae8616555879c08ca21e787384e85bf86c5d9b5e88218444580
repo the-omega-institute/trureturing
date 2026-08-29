@@ -1,0 +1,47 @@
+## 904.1 横向 Lyapunov 指数
+
+定义：
+
+$$
+\boxed{
+\Lambda_\psi(\delta)
+=
+\log\Psi(i\delta).
+}
+\tag{904.4}
+$$
+
+对 \(\delta\neq0\)：
+
+$$
+\Lambda_\psi(\delta)>0.
+$$
+
+因为 \(\psi\) 为偶分布：
+
+$$
+\boxed{
+\Lambda_\psi(\delta)
+=
+\frac{\mu_2}{2}\delta^2
++
+O(\delta^4),
+}
+\tag{904.5}
+$$
+
+其中：
+
+$$
+\mu_2=\int x^2\psi(x)\,dx.
+$$
+
+这说明离线方向的最小不变量仍然是二阶量：
+
+$$
+\delta^2.
+$$
+
+它与此前得到的：
+
+* 反射轨道方差；

@@ -1,0 +1,47 @@
+# 第八百零三部　黄金观察完成半群
+
+定义
+
+$$
+\boxed{
+P_{\sigma,t}
+=
+e^{-t\mathcal L_\sigma^{\mathrm{obs}}},
+\qquad
+t\ge0.
+}
+\tag{803.1}
+$$
+
+其 Fourier 作用为
+
+$$
+\boxed{
+\widehat{
+P_{\sigma,t}f
+}(n)
+=
+e^{-t\mathscr C_n(\sigma)}
+\widehat f(n).
+}
+\tag{803.2}
+$$
+
+由于每个 \(\mathscr C_n\) 都由
+
+$$
+1-\cos(n\alpha)
+$$
+
+的正组合构成，它是 \(\mathbb Z\) 上的条件负定函数。
+
+因此
+
+$$
+e^{-t\mathscr C_n}
+$$
+
+是正定 Fourier 序列，并定义 regulator 圆上的概率卷积半群。
+
+---
+

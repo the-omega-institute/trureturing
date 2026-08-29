@@ -1,0 +1,45 @@
+## 定理 929.1（RH 下有限矩阵正性）
+
+若 RH 成立，则：
+
+$$
+\boxed{
+M_{t,a,N,\Phi}\succeq0
+}
+\tag{929.2}
+$$
+
+对所有：
+
+$$
+t\in\mathbb R,\qquad
+a>\frac14,\qquad
+N\ge1,
+$$
+
+以及所有允许特征族 \(\Phi\) 成立。
+
+### 证明
+
+RH 下所有 \(z=\gamma\in\mathbb R\)。
+
+于是：
+
+$$
+W_{N,a}\!\left((t-\gamma)^2\right)\ge0,
+$$
+
+且：
+
+$$
+\Phi(\gamma)\in\mathbb R^d.
+$$
+
+每一项都是非负系数乘以 rank-one 正矩阵：
+
+$$
+\Phi(\gamma)\Phi(\gamma)^{\mathsf T}.
+$$
+
+---
+

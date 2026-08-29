@@ -1,0 +1,10 @@
+ast_path: row/massless-tangent-cone-limit
+fingerprints:
+  raw_sha256: sha256:5bc9dca6a589de72d64db996ee60cb9c88d7302c38a8285fb8c7056bb58bdbcd
+  normalized_sha256: sha256:5bc9dca6a589de72d64db996ee60cb9c88d7302c38a8285fb8c7056bb58bdbcd
+cas_ref: sha256:5bc9dca6a589de72d64db996ee60cb9c88d7302c38a8285fb8c7056bb58bdbcd
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

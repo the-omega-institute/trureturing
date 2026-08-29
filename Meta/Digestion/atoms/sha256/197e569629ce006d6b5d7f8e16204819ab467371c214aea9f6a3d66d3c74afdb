@@ -1,0 +1,13 @@
+* 或 prime–Archimedean 相减后的有效 Hessian。
+
+这是一条重要的科学剪枝：
+
+$$
+\boxed{
+\text{不能把任何正 prime covariance
+直接解释成黄金光锥。}
+}
+$$
+
+---
+

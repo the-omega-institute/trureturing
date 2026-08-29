@@ -1,0 +1,36 @@
+## 798.1 Archimedean Laplace 表示
+
+利用恒等式
+
+$$
+\log\left(1+\frac{b^2}{a^2}\right)
+=
+2
+\int_0^\infty
+e^{-ax}
+\frac{1-\cos(bx)}{x}\,dx,
+$$
+
+对 \(m\) 求和得到：
+
+$$
+\boxed{
+\mathscr C_n^\infty(\sigma)
+=
+2
+\int_0^\infty
+e^{-\sigma x}
+\frac{
+1-\cos(\tau_nx)
+}{
+x(1-e^{-2x})
+}
+\,dx.
+}
+\tag{798.4}
+$$
+
+所以 Archimedean Casimir 同样是一个正相位距离的 Laplace 变换。
+
+---
+

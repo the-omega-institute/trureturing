@@ -1,0 +1,10 @@
+ast_path: section/864-2-正-kernel-尚不等于点态正性
+fingerprints:
+  raw_sha256: sha256:2774c35ad9e839c26ccb9198ce4b436cb000a56f009bb2d306c7c811d23c8669
+  normalized_sha256: sha256:2774c35ad9e839c26ccb9198ce4b436cb000a56f009bb2d306c7c811d23c8669
+cas_ref: sha256:2774c35ad9e839c26ccb9198ce4b436cb000a56f009bb2d306c7c811d23c8669
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

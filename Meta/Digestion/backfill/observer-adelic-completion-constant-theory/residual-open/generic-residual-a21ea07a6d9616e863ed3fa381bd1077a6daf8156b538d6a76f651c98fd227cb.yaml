@@ -1,0 +1,10 @@
+ast_path: section/932-2-第一破缺是导数事件
+fingerprints:
+  raw_sha256: sha256:a21ea07a6d9616e863ed3fa381bd1077a6daf8156b538d6a76f651c98fd227cb
+  normalized_sha256: sha256:a21ea07a6d9616e863ed3fa381bd1077a6daf8156b538d6a76f651c98fd227cb
+cas_ref: sha256:a21ea07a6d9616e863ed3fa381bd1077a6daf8156b538d6a76f651c98fd227cb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

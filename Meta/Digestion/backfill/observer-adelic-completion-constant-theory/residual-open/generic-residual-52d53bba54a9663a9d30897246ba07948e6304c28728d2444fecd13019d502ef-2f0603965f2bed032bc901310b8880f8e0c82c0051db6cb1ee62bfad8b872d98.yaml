@@ -1,0 +1,10 @@
+ast_path: section/866-1-不是又一个同义改写/clause/4
+fingerprints:
+  raw_sha256: sha256:52d53bba54a9663a9d30897246ba07948e6304c28728d2444fecd13019d502ef
+  normalized_sha256: sha256:52d53bba54a9663a9d30897246ba07948e6304c28728d2444fecd13019d502ef
+cas_ref: sha256:52d53bba54a9663a9d30897246ba07948e6304c28728d2444fecd13019d502ef
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

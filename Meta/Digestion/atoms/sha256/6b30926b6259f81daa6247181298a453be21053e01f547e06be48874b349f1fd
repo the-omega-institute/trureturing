@@ -1,0 +1,32 @@
+# 第六百九十八部　关系性“无克隆”定理
+
+设：
+
+$$
+\mathcal Q_{\mathrm{mem}}
+$$
+
+表示保留完整记忆行为的完成状态，
+
+$$
+\mathcal Q_{\mathrm{sc}}
+$$
+
+表示只保留标量 Euler 行为的完成状态。
+
+存在自然忘却映射：
+
+$$
+\boxed{
+\pi:
+\mathcal Q_{\mathrm{mem}}
+\to
+\mathcal Q_{\mathrm{sc}}.
+}
+\tag{698.1}
+$$
+
+若记忆逃逸非空，则 \(\pi\) 不单射。
+
+---
+

@@ -1,0 +1,65 @@
+## v5.4：完成 Hecke–Casimir、黄金观察 Lévy 半群、Archimedean Poisson 谱隙与 Prime–Observer 联合算子
+
+以下从前文**第七百九十五部**继续追加。
+
+项目当前已经机器冻结了两个关键底座：
+
+第一，黄金单位格点 \(\zeta\) 在流参数 \(\eta\) 上同时满足反射
+
+$$
+Z(s,\eta)=Z(s,-\eta)
+$$
+
+与周期
+
+$$
+Z(s,\eta+2\log\varphi)=Z(s,\eta),
+$$
+
+所以观察者坐标确实自然生活在长度为 \(2\log\varphi\) 的 regulator 圆上。
+
+第二，项目的 Riemann–Weil 分支已经把固定支撑尺度的显式公式写成：
+
+$$
+\boxed{
+\text{正 rank-one pole energy}
++
+\text{Archimedean/prime completed multiplier form}.
+}
+$$
+
+这意味着“素数离散跳跃 + Archimedean 完成”已不再只是理论叙述，而已有机器证明的固定尺度算子接口。
+
+本轮要解决的是此前留下的中心问题：
+
+> 黄金观察模态的 prime-side Casimir 虽然为正，但加入 Archimedean completion 后是否仍保持正性？
+> 它能否形成一个真正统一的观察者完成动力学？
+
+答案是肯定的，而且产生一个很强的新结构：
+
+$$
+\boxed{
+\text{仅素数观察没有统一谱隙；}
+}
+$$
+
+$$
+\boxed{
+\text{Archimedean completion 恰好补出严格统一谱隙。}
+}
+$$
+
+更准确地说：
+
+$$
+\boxed{
+\text{prime-only observer memory}
+\quad\xrightarrow{\Gamma_\infty\text{ completion}}\quad
+\text{uniformly mixing observer semigroup}.
+}
+$$
+
+黄金比例在其中不再表现为某个素数比值，而表现为 regulator 圆的基本长度与最小观察频率。
+
+---
+

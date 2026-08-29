@@ -1,0 +1,48 @@
+# 第八百零八部　规范全模态 observer Casimir
+
+单独选择某个 \(n\) 仍然偏好一个表示模态。
+
+为了形成真正的 \(O(2)\)-invariant scalar，取 regulator 圆的热权：
+
+$$
+\boxed{
+w_{\beta,n}
+=
+e^{-\beta\tau_n^2},
+\qquad
+\beta>0.
+}
+\tag{808.1}
+$$
+
+定义：
+
+$$
+\boxed{
+\mathscr C_{\beta}^{\mathrm{all}}(\sigma)
+=
+\sum_{n\ge1}
+e^{-\beta\tau_n^2}
+\mathscr C_n(\sigma).
+}
+\tag{808.2}
+$$
+
+由于 \(\mathscr C_n\) 至多线性增长，而权重高斯衰减，级数绝对收敛。
+
+并且：
+
+$$
+\boxed{
+(-1)^r
+\partial_\sigma^r
+\mathscr C_{\beta}^{\mathrm{all}}(\sigma)
+\ge0.
+}
+\tag{808.3}
+$$
+
+所以它仍然完全单调。
+
+---
+

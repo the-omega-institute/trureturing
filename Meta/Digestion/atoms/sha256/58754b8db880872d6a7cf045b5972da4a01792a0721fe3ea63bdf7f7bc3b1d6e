@@ -1,0 +1,20 @@
+## 猜想 729.4（No forcing, no off-line limit）
+
+若：
+
+$$
+\varepsilon_r\to0
+$$
+
+且项目化黄金缺陷受统一收缩控制，则：
+
+$$
+\boxed{
+\Re\rho_r\to\frac12.
+}
+$$
+
+持久离线极限必须由非零 forcing class 支撑。
+
+---
+

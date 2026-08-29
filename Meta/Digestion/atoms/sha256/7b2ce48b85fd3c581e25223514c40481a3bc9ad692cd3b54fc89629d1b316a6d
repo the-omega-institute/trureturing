@@ -1,0 +1,38 @@
+## 792.1 中心研究目标
+
+需要判断完成后的比值：
+
+$$
+\boxed{
+\log\mathfrak R_n(s)
+}
+$$
+
+是否具有以下任一性质：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{Herglotz／Pick 正性};\\
+&\text{临界边界完全单调性};\\
+&\text{Weil 型正二次型};\\
+&\text{Fredholm 正行列式};\\
+&\text{可控制的零点互锁}.
+\end{aligned}
+}
+$$
+
+prime-side 的正性已经由式 (782.3) 给出。
+
+真正未知的是：
+
+$$
+\boxed{
+\text{Archimedean completion 是否保持或补偿该正性。}
+}
+$$
+
+这比直接宣称黄金 holonomy 导致 RH 更具体，也更可证伪。
+
+---
+

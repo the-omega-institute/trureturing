@@ -1,0 +1,43 @@
+# 第七百三十六部　维度无分别的黄金 null graph
+
+前述二维结构可以推广到任意实 Hilbert 空间 \(\mathcal H\)。
+
+定义：
+
+$$
+\boxed{
+\mathcal V
+=
+\mathcal H\oplus\mathcal H.
+}
+\tag{736.1}
+$$
+
+定义二次型：
+
+$$
+\boxed{
+Q_{\varphi,\mathcal H}(X,Y)
+=
+\|X\|^2
+-
+\langle X,Y\rangle
+-
+\|Y\|^2.
+}
+\tag{736.2}
+$$
+
+定义更新：
+
+$$
+\boxed{
+\mathbf F_{\mathcal H}(X,Y)
+=
+(X+Y,X).
+}
+\tag{736.3}
+$$
+
+---
+

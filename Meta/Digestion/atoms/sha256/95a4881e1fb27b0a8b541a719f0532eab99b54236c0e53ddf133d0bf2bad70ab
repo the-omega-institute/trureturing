@@ -1,0 +1,56 @@
+# 第八百四十七部　Observer Casimir 在临界频率上必然变号
+
+由 digamma 渐近：
+
+$$
+\boxed{
+a(t)
+=
+\log\frac{|t|}{2\pi}
+-
+\frac1{24t^2}
++
+O(t^{-4}).
+}
+\tag{847.1}
+$$
+
+对固定 \(\tau\neq0\)，有：
+
+$$
+\begin{aligned}
+\Delta_\tau a(t)
+&=
+\frac12
+\log
+\left|
+1-\frac{\tau^2}{t^2}
+\right|
++
+O_\tau(t^{-4})\\
+&=
+-\frac{\tau^2}{2t^2}
++
+O_\tau(t^{-4}).
+\end{aligned}
+\tag{847.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\Delta_\tau a(t)<0
+}
+$$
+
+对充分大的 \(|t|\) 成立。
+
+结合：
+
+$$
+\Delta_\tau a(0)>0,
+$$
+
+得到：
+

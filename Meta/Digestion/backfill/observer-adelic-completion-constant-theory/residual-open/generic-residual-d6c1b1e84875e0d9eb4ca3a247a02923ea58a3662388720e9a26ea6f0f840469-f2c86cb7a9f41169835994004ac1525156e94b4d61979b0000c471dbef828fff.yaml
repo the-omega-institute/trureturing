@@ -1,0 +1,10 @@
+ast_path: section/930-1-径向逃逸深度/clause/1
+fingerprints:
+  raw_sha256: sha256:d6c1b1e84875e0d9eb4ca3a247a02923ea58a3662388720e9a26ea6f0f840469
+  normalized_sha256: sha256:d6c1b1e84875e0d9eb4ca3a247a02923ea58a3662388720e9a26ea6f0f840469
+cas_ref: sha256:d6c1b1e84875e0d9eb4ca3a247a02923ea58a3662388720e9a26ea6f0f840469
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

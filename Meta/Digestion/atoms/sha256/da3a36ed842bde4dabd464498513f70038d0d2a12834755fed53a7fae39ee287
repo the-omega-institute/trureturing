@@ -1,0 +1,48 @@
+## 738.1 黄金 regulator 圆
+
+在：
+
+$$
+Q_\varphi=1
+$$
+
+的一个双曲分支上，\(\eta\in\mathbb R\)。
+
+商去偶步更新：
+
+$$
+\eta\sim\eta+2\log\varphi,
+$$
+
+得到：
+
+$$
+\boxed{
+\mathbb R/
+(2\log\varphi)\mathbb Z.
+}
+\tag{738.5}
+$$
+
+这正是黄金 regulator 圆。
+
+因此：
+
+$$
+\boxed{
+\text{圆上的不同点}
+=
+\text{不同 observer rapidities};
+}
+$$
+
+$$
+\boxed{
+\text{圆的两个理想 null 端点像}
+=
+\varphi,\varphi'.
+}
+$$
+
+---
+

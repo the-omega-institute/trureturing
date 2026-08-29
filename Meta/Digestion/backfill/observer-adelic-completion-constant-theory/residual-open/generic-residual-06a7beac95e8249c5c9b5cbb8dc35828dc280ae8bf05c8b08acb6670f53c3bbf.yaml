@@ -1,0 +1,10 @@
+ast_path: section/第七百三十二部-黄金算术-Lorentz-平面
+fingerprints:
+  raw_sha256: sha256:06a7beac95e8249c5c9b5cbb8dc35828dc280ae8bf05c8b08acb6670f53c3bbf
+  normalized_sha256: sha256:06a7beac95e8249c5c9b5cbb8dc35828dc280ae8bf05c8b08acb6670f53c3bbf
+cas_ref: sha256:06a7beac95e8249c5c9b5cbb8dc35828dc280ae8bf05c8b08acb6670f53c3bbf
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

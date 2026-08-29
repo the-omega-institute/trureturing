@@ -1,0 +1,127 @@
+* observer 的 regulator 平移；
+
+放入同一个算子。
+
+定义联合状态空间：
+
+$$
+\boxed{
+\mathscr H
+=
+L^2
+\left(
+\mathbb R_x
+\times
+\mathbb T_\varphi
+\right).
+}
+\tag{805.1}
+$$
+
+对每个 prime-ideal history \((\mathfrak p,k)\)，定义联合更新：
+
+$$
+\boxed{
+(\mathsf U_{\mathfrak p,k}F)(x,\eta)
+=
+F
+\left(
+x+k\log N\mathfrak p,
+\eta+k\eta_{\mathfrak p}
+\right).
+}
+\tag{805.2}
+$$
+
+定义 prime–observer Dirichlet form：
+
+$$
+\boxed{
+\begin{aligned}
+\mathfrak E_\sigma^{\mathrm{joint}}[F]
+=
+\frac12
+\sum_{\mathfrak p,k}
+\frac1{
+k(N\mathfrak p)^{k\sigma}
+}
+\|
+F-\mathsf U_{\mathfrak p,k}F
+\|_2^2.
+\end{aligned}
+}
+\tag{805.3}
+$$
+
+对联合 Fourier mode
+
+$$
+F_{t,n}(x,\eta)
+=
+e^{itx}
+e^{in\omega_\varphi\eta},
+$$
+
+其 symbol 为：
+
+$$
+\boxed{
+\lambda_\sigma^{\mathrm{joint}}(t,n)
+=
+\sum_{\mathfrak p,k}
+\frac{
+1-\cos
+\left[
+k
+\left(
+t\log N\mathfrak p
++
+n\theta_{\mathfrak p}
+\right)
+\right]
+}{
+k(N\mathfrak p)^{k\sigma}
+}.
+}
+\tag{805.4}
+$$
+
+于是：
+
+$$
+\boxed{
+\lambda_\sigma^{\mathrm{joint}}(t,0)
+=
+\text{prime logarithmic jump symbol},
+}
+\tag{805.5}
+$$
+
+而：
+
+$$
+\boxed{
+\lambda_\sigma^{\mathrm{joint}}(0,n)
+=
+\mathscr C_n^{\mathrm{fin}}(\sigma).
+}
+\tag{805.6}
+$$
+
+这给出了此前两条分支的共同母对象：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Weil prime translation}
+&=\text{observer 零模截面};\\
+\text{黄金 observer Casimir}
+&=\text{空间零频截面}.
+\end{aligned}
+}
+$$
+
+项目现有的固定尺度 Weil 定理已经把 \(n=0\) 截面与 pole/Archimedean multiplier 组合起来。下一步应做的不是再造一个独立正核，而是把该机器证明扩展到整个 \((t,n)\) 联合谱。
+
+---
+

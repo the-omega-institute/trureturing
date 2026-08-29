@@ -1,0 +1,68 @@
+# 第九百三十八部　理论深度的码秩审计
+
+设当前有限观察角色为：
+
+$$
+\chi_1,\ldots,\chi_d.
+$$
+
+定义 relation space：
+
+$$
+R_d,
+$$
+
+以及 profile code：
+
+$$
+C_d=R_d^\perp.
+$$
+
+增加一个新角色 \(\chi_{d+1}\) 时，只有当：
+
+$$
+\chi_{d+1}
+\notin
+\operatorname{span}
+\{\chi_1,\ldots,\chi_d\}
+$$
+
+才真正增加可观察秩。
+
+所以新的理论深度增量可以定义为：
+
+$$
+\boxed{
+\Delta d_{\mathrm{code}}
+=
+\dim C_{d+1}-\dim C_d
+\in\{0,1\}.
+}
+\tag{938.1}
+$$
+
+若：
+
+$$
+\Delta d_{\mathrm{code}}=0,
+$$
+
+该层只是冗余坐标。
+
+若：
+
+$$
+\Delta d_{\mathrm{code}}=1,
+$$
+
+它确实切开了一类此前无法区分的 profile。
+
+而选择器 margin：
+
+$$
+\Delta_d
+$$
+
+比纯秩更细：
+
+* 秩增加说明理论上可分；

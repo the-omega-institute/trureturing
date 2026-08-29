@@ -1,0 +1,28 @@
+# 第九百三十四部　离线距离与临界尺度
+
+Chebyshev 阶数满足：
+
+$$
+N\asymp\frac{\sqrt a}{|\delta|}.
+$$
+
+有理逆变换的有效空间宽度约为：
+
+$$
+\frac{N}{\sqrt a}.
+$$
+
+所以：
+
+$$
+\boxed{
+L_c
+\lesssim
+\frac{C_{\mathrm{sel}}}{|\delta|},
+}
+\tag{934.1}
+$$
+
+其中 \(C_{\mathrm{sel}}\) 由：
+
+* 双曲增长隙；

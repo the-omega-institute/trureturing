@@ -1,0 +1,69 @@
+# 第七百八十二部　第一个规范二阶观察者 Casimir
+
+定义第一 regulator 模态相对于零模态的缺陷：
+
+$$
+\boxed{
+\mathscr C_\varphi(s)
+=
+\log L_0(s)-\log L_1(s).
+}
+\tag{782.1}
+$$
+
+由式 (781.1)：
+
+$$
+\boxed{
+\mathscr C_\varphi(s)
+=
+2
+\sum_{\substack{p\text{ split}\\k\ge1}}
+\frac{
+1-\cos(k\theta_p)
+}{
+k
+}
+p^{-ks}.
+}
+\tag{782.2}
+$$
+
+也可以写成：
+
+$$
+\boxed{
+\mathscr C_\varphi(s)
+=
+\sum_{\substack{p\text{ split}\\k\ge1}}
+\frac{
+|1-e^{ik\theta_p}|^2
+}{
+k
+}
+p^{-ks}.
+}
+\tag{782.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathscr C_\varphi(\sigma)\ge0
+\qquad
+(\sigma>1).
+}
+\tag{782.4}
+$$
+
+这不是观察者的带符号位置，而是其平方距离，因此在：
+
+$$
+\theta_p\mapsto-\theta_p
+$$
+
+下保持不变。
+
+---
+

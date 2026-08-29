@@ -1,0 +1,10 @@
+ast_path: section/1-1-治理系统/clause/4
+fingerprints:
+  raw_sha256: sha256:4c90360caa20dd96cc5f62f3d2d77398d3b830b674fb4c8943a3e2e897d96881
+  normalized_sha256: sha256:4c90360caa20dd96cc5f62f3d2d77398d3b830b674fb4c8943a3e2e897d96881
+cas_ref: sha256:4c90360caa20dd96cc5f62f3d2d77398d3b830b674fb4c8943a3e2e897d96881
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

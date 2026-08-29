@@ -1,0 +1,10 @@
+ast_path: section/第七百二十六部-导数不只是一条不等式-而是一整个层级
+fingerprints:
+  raw_sha256: sha256:b7eed4c4e4d5c1e6258978e485517a9d4070b0c0f3cc9388b8c7e2954e84fa42
+  normalized_sha256: sha256:b7eed4c4e4d5c1e6258978e485517a9d4070b0c0f3cc9388b8c7e2954e84fa42
+cas_ref: sha256:b7eed4c4e4d5c1e6258978e485517a9d4070b0c0f3cc9388b8c7e2954e84fa42
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

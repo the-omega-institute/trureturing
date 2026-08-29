@@ -1,0 +1,51 @@
+## 923.1 小破缺极限
+
+当：
+
+$$
+|\delta|\ll\sqrt a,
+$$
+
+有：
+
+$$
+\boxed{
+\kappa_a(\delta)
+=
+\frac{2|\delta|}{\sqrt a}
++
+O\!\left(
+\frac{|\delta|^3}{a^{3/2}}
+\right).
+}
+\tag{923.6}
+$$
+
+因此：
+
+$$
+W_{N,a}(-\delta^2)
+\approx
+-\sinh^2
+\left(
+\frac{2N|\delta|}{\sqrt a}
+\right).
+$$
+
+真正控制可见度的无量纲量是：
+
+$$
+\boxed{
+\mathscr A
+=
+N\kappa_a(\delta)
+\sim
+\frac{2N|\delta|}{\sqrt a}.
+}
+\tag{923.7}
+$$
+
+它是新的**横向观察作用量**。
+
+---
+

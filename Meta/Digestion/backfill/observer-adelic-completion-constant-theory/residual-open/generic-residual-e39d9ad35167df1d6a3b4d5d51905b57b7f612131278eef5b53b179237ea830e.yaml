@@ -1,0 +1,10 @@
+ast_path: row/黄金语言编码全部-packet
+fingerprints:
+  raw_sha256: sha256:e39d9ad35167df1d6a3b4d5d51905b57b7f612131278eef5b53b179237ea830e
+  normalized_sha256: sha256:e39d9ad35167df1d6a3b4d5d51905b57b7f612131278eef5b53b179237ea830e
+cas_ref: sha256:e39d9ad35167df1d6a3b4d5d51905b57b7f612131278eef5b53b179237ea830e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

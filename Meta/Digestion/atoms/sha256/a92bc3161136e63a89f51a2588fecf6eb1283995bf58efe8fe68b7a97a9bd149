@@ -1,0 +1,30 @@
+* 或构造 rational witness 的全零点取样逼近。
+
+所以：
+
+$$
+\boxed{
+\text{实际离线零点}
+\to
+\text{有限支撑 witness}
+}
+$$
+
+已被简化；
+
+而：
+
+$$
+\boxed{
+\text{有限负 Jet}
+\to
+\text{可计算有限支撑 witness}
+}
+$$
+
+仍是开放的定量编译问题。
+
+两者不能再混为同一 gap。
+
+---
+

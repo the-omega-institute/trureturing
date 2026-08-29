@@ -1,0 +1,109 @@
+# 本轮最终结论
+
+此前我们已经得到：
+
+$$
+\boxed{
+\text{Riemann }\zeta
+=
+\text{一维无质量谱的形状函数},
+}
+$$
+
+而函数方程来自：
+
+$$
+\boxed{
+|D|^2=-\partial^2
+}
+$$
+
+的 Theta 热核自对偶。
+
+临界线：
+
+$$
+\Re s=\frac12
+$$
+
+是：
+
+$$
+\boxed{
+\text{一维谱维数的自对偶固定线}.
+}
+$$
+
+模五黄金观察又进一步说明：
+
+$$
+\boxed{
+\sqrt5
+}
+$$
+
+是 residue basis 与 character basis 之间的 Gauss 归一化，
+
+而：
+
+$$
+\boxed{
+L'(0,\chi_5)=\log\varphi
+}
+$$
+
+说明黄金单位存在于自对偶完成零点的第一 jet 中，而不在零点位置中。
+
+现在，对 ordinary Riemann \(\xi\)，同样的“点—jet”结构得到完整闭合。
+
+定义：
+
+$$
+R(\delta,t)
+=
+\left|
+\xi\!\left(
+\frac12+\delta+it
+\right)
+\right|^2.
+$$
+
+它具有精确展开：
+
+$$
+\boxed{
+R(\delta,t)
+=
+\sum_{m=0}^{\infty}
+\mathcal J_m(t)\delta^{2m}.
+}
+$$
+
+其中：
+
+$$
+\boxed{
+\mathcal J_1(t)
+=
+\Xi'(t)^2-\Xi(t)\Xi''(t).
+}
+$$
+
+更一般地：
+
+$$
+\boxed{
+\mathcal J_m(t)
+=
+\frac1{(2m)!}
+\iint
+\phi_\xi(x)\phi_\xi(y)
+(x-y)^{2m}
+e^{it(x+y)}
+dx\,dy.
+}
+$$
+
+这里：
+
+* \(x+y\) 是完成中心；

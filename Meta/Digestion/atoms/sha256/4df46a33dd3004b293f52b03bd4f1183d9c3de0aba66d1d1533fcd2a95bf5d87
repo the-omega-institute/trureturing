@@ -1,0 +1,70 @@
+# 第八百一十九部　Poisson 边界场与 Busemann 观察者是同一几何
+
+前文用 Busemann 坐标：
+
+$$
+\eta
+$$
+
+表示观察者在黄金双曲轨道上的起点。
+
+现在 Poisson kernel 又以：
+
+$$
+\eta
+$$
+
+作为边界位置。
+
+这不是偶然。
+
+在双曲几何中，Poisson kernel本质上是边界 Busemann 函数的指数：
+
+$$
+\boxed{
+P(x,\xi)
+\sim
+e^{-\beta_\xi(x,o)}.
+}
+\tag{819.1}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{Busemann 起点}
+}
+$$
+
+描述观察者相对于理想光锥边界的位置，而：
+
+$$
+\boxed{
+\text{Poisson kernel}
+}
+$$
+
+描述从完成体内部看见该边界观察者的权重。
+
+于是出现一个统一图景：
+
+$$
+\boxed{
+\begin{aligned}
+\text{黄金 null endpoint}
+&=\text{共同边界像};\\
+\text{Busemann rapidity}
+&=\text{观察者起点};\\
+\text{Poisson kernel}
+&=\text{内部完成对边界起点的模糊读出};\\
+|D|
+&=\text{边界信息进入完成体的法向导数}.
+\end{aligned}
+}
+$$
+
+所以“光锥—观察者—Poisson”三者不是三个类比，而是同一边界几何的三张坐标图。
+
+---
+

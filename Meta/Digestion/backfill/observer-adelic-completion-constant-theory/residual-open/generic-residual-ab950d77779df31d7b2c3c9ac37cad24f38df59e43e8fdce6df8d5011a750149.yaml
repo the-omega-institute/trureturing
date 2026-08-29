@@ -1,0 +1,10 @@
+ast_path: section/741-1-观察者协变导数
+fingerprints:
+  raw_sha256: sha256:ab950d77779df31d7b2c3c9ac37cad24f38df59e43e8fdce6df8d5011a750149
+  normalized_sha256: sha256:ab950d77779df31d7b2c3c9ac37cad24f38df59e43e8fdce6df8d5011a750149
+cas_ref: sha256:ab950d77779df31d7b2c3c9ac37cad24f38df59e43e8fdce6df8d5011a750149
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

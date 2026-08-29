@@ -1,0 +1,74 @@
+# 第八百部　Prime-only observer Laplacian
+
+定义黄金 regulator 圆
+
+$$
+\boxed{
+\mathbb T_\varphi
+=
+\mathbb R/
+P_\varphi\mathbb Z.
+}
+\tag{800.1}
+$$
+
+其标准 Fourier 基为
+
+$$
+\boxed{
+e_n(\eta)
+=
+e^{in\omega_\varphi\eta},
+\qquad
+n\in\mathbb Z.
+}
+\tag{800.2}
+$$
+
+对光滑函数 \(f\) 定义 prime-only Dirichlet form：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal E_{\sigma}^{\mathrm{fin}}[f]
+=
+\frac12
+\sum_{\mathfrak p}
+\sum_{k\ge1}
+\frac1{
+k(N\mathfrak p)^{k\sigma}
+}
+\int_{\mathbb T_\varphi}
+\left|
+f(\eta+k\eta_{\mathfrak p})
+-f(\eta)
+\right|^2
+d\eta,
+\end{aligned}
+}
+\tag{800.3}
+$$
+
+其中
+
+$$
+\omega_\varphi\eta_{\mathfrak p}
+=
+\theta_{\mathfrak p}.
+$$
+
+对 Fourier mode 直接计算：
+
+$$
+\boxed{
+\mathcal E_{\sigma}^{\mathrm{fin}}[e_n]
+=
+\mathscr C_n^{\mathrm{fin}}(\sigma).
+}
+\tag{800.4}
+$$
+
+所以 \(\mathscr C_n^{\mathrm{fin}}\) 是一个真正的 prime jump Laplacian 谱。
+
+---
+

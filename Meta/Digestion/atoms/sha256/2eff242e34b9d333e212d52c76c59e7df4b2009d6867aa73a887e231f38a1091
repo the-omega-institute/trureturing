@@ -1,0 +1,31 @@
+## 930.1 径向逃逸深度
+
+定义：
+
+$$
+\boxed{
+d_{\mathrm{rad}}(z_0)
+=
+\min
+\left\{
+N+d:
+\exists\,t,a,\Phi,\
+M_{t,a,N,\Phi}\not\succeq0
+\right\}.
+}
+\tag{930.1}
+$$
+
+这与此前的：
+
+* Jet 深度；
+* Hankel 深度；
+* 支撑深度；
+* sticky 深度；
+
+构成第五个有限复杂度指标。
+
+而 Chebyshev minimax 性说明，在固定 compactification 下，该深度具有近最优性。
+
+---
+

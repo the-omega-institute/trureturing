@@ -1,0 +1,89 @@
+# 第八百二十一部　精确 jump measure：温和化的 Cauchy 光场
+
+前文的 Laplace–Lévy 表示为：
+
+$$
+\boxed{
+E_\sigma(k)
+=
+2
+\int_0^\infty
+e^{-\sigma x}
+\frac{
+1-\cos(kx)
+}{
+x(1-e^{-2x})
+}
+\,dx.
+}
+\tag{821.1}
+$$
+
+因此 jump density 为：
+
+$$
+\boxed{
+\nu_\sigma(x)
+=
+2
+\frac{
+e^{-\sigma x}
+}{
+x(1-e^{-2x})
+}.
+}
+\tag{821.2}
+$$
+
+当：
+
+$$
+x\downarrow0,
+$$
+
+有：
+
+$$
+\boxed{
+\nu_\sigma(x)
+\sim
+\frac1{x^2}.
+}
+\tag{821.3}
+$$
+
+这正是 Cauchy／\(1\)-stable 过程的短距离奇性。
+
+而当：
+
+$$
+x\to\infty,
+$$
+
+有：
+
+$$
+\nu_\sigma(x)
+\sim
+2\frac{e^{-\sigma x}}x.
+$$
+
+所以大跳跃被指数压制。
+
+因此精确 completion process 可称为：
+
+$$
+\boxed{
+\text{tempered Cauchy-like observer process}.
+}
+$$
+
+其：
+
+* 短距离行为是无质量 Poisson；
+* 长距离行为具有有限二阶矩；
+* 低频表现为二次扩散；
+* 高频表现为线性光样传播。
+
+---
+

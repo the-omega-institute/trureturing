@@ -1,0 +1,56 @@
+## v5.3：Busemann–Hecke 观察谱、\(O(2)\) 模态完成、自由—对称 Fock 商与零点碰撞门槛
+
+以下从前文**第七百七十五部**继续追加。
+
+本轮得到一个更完整的分层：
+
+$$
+\boxed{
+\begin{aligned}
+\varphi
+&=\text{黄金光锥的共同边界斜率};\\
+\eta
+&=\text{观察者相对于该边界的 Busemann 起点};\\
+\chi_5
+&=\text{黄金两嵌入的离散反射分支};\\
+\Psi_n
+&=\text{regulator 圆上的连续 Fourier／Hecke 模态};\\
+\operatorname{Hol}(w)
+&=\text{仍未被交换化的素数顺序历史}.
+\end{aligned}
+}
+$$
+
+因此，观察者不可克隆并不是因为黄金比例无法精确表示，而是因为：
+
+$$
+\boxed{
+\text{从完整观察者到 }\varphi\text{ 的映射，只保留了边界斜率。}
+}
+$$
+
+普通 Riemann \(\zeta\) 又执行了更深一层投影：
+
+$$
+\boxed{
+\text{它只保留平凡表示与无序 occupation，
+不保留 regulator 相位，更不保留素数路径 holonomy。}
+}
+$$
+
+真正值得连接到 Riemann 谱缺陷的，不是观察者的线性起点，而是完成投影之后仍能存活的二阶不变量：
+
+$$
+\boxed{
+\text{observer Casimir}
+=
+\text{rapidity variance}
+=
+\text{holonomy winding}^{\,2}.
+}
+$$
+
+但即使存在非零二阶观察者 Casimir，也不会自动把简单临界零点推出临界线。保持完成反射时，真实离线零点只能经过临界线上的零点碰撞或重根分岔产生。非平凡 \(\zeta\) 零点已知关于实轴和临界线对称；RH 所要求的是全部非平凡零点位于固定线 \(\Re s=\tfrac12\)。([DLMF][1])
+
+---
+
