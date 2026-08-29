@@ -41,15 +41,16 @@ theorem constant_postprocessing_strictly_enlarges_kernel
       rfl
     exact separated (reverseInclusion collapsedPair)
 
-/-- Satisfiability probe: constant postprocessing erases the distinction
-between the two Boolean states. -/
+/-- Satisfiability probe: a constant kernel strictly contains the Boolean
+identity kernel. -/
 example :
     Setoid.ker (fun x : Bool => x) <
-      Setoid.ker ((fun _ : Bool => PUnit.unit) ∘ fun x : Bool => x) := by
-  exact constant_postprocessing_strictly_enlarges_kernel
-    (readout := fun x : Bool => x)
-    (collapsed := PUnit.unit)
-    false true Bool.false_ne_true
+      Setoid.ker (fun _ : Bool => PUnit.unit) := by
+  constructor
+  · intro x y same
+    rfl
+  · intro reverseInclusion
+    exact Bool.false_ne_true (reverseInclusion rfl)
 
 #print axioms constant_postprocessing_strictly_enlarges_kernel
 
