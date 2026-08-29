@@ -1,0 +1,10 @@
+ast_path: section/560-1-简单最低特征值
+fingerprints:
+  raw_sha256: sha256:c8125186e6d927e954cb35a5a8cedade099e40df0e80bf7330b41592f8ca79d4
+  normalized_sha256: sha256:c8125186e6d927e954cb35a5a8cedade099e40df0e80bf7330b41592f8ca79d4
+cas_ref: sha256:c8125186e6d927e954cb35a5a8cedade099e40df0e80bf7330b41592f8ca79d4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -24,40 +24,19 @@ internal static partial class IngestCommand
         try
         {
             var baselineRevision = ParseArguments(arguments);
-            var currentRaw = repository.ReadCurrent();
-            var baselineRaw = repository.ReadRevision(baselineRevision);
-            var current = Decode(currentRaw);
-            var baseline = Decode(baselineRaw);
-            var document = LoadDocument(current);
-            var baselineDocument = BackfillInventoryLoader.LoadBaseline(baseline);
-            var plan = DigestionIngestor.Plan(
-                document,
-                current,
-                baselineDocument,
-                baseline);
-            var repositoryChanges = repository.ReadChanges(baselineRevision);
-            var crossVolumeClearanceGaps = RenderCrossVolumeClearanceGaps(
-                plan.Document,
-                baselineDocument);
-            var silentZeroWarnings = SilentZeroExtractionWarnings(
-                document,
-                plan.Document,
-                current,
-                baseline);
-            var plannedRaw = AddCasObjects(
-                ReplaceLedger(currentRaw, document, plan.Document),
-                plan.CasObjects);
-            var plannedSnapshot = Decode(plannedRaw);
-            var plannedDocument = LoadDocument(plannedSnapshot);
-            var plannedChanges = IngestChanges(
-                repositoryChanges,
-                currentRaw,
-                plannedRaw,
-                plannedDocument,
-                plan.CasObjects);
-            var plannedScope = DigestionEvaluationScopes.ForChanges(
-                plannedChanges,
-                ImplementationPath);
+            var prepared = Prepare(repository, baselineRevision);
+            var currentRaw = prepared.CurrentRaw;
+            var current = prepared.Current;
+            var baseline = prepared.Baseline;
+            var document = prepared.CurrentDocument;
+            var baselineDocument = prepared.BaselineDocument;
+            var plan = prepared.Plan;
+            var repositoryChanges = prepared.RepositoryChanges;
+            var plannedRaw = prepared.PlannedRaw;
+            var plannedSnapshot = prepared.PlannedSnapshot;
+            var plannedDocument = prepared.PlannedDocument;
+            var plannedChanges = prepared.PlannedChanges;
+            var plannedScope = prepared.PlannedScope;
             var report = leanReportSource.Load(current);
             var lean = ValidateLean(plannedSnapshot, report);
             var truthStates = LeanTruthStates.Resolve(plannedSnapshot, lean);
@@ -129,61 +108,104 @@ internal static partial class IngestCommand
                 verifiedScribeEmissions,
                 DigestionEvaluationScopes.ResolveChanges(finalScope, finalChanges));
 
-            var ledgerUpdates = LedgerUpdates(currentRaw, finalRaw);
-            var changed = ledgerUpdates.Length > 0;
-            var openGenres = finalDocument.RequireDigestionSources()
-                .SelectMany(static source => source.GenreRegistryCheck.UnregisteredGenres.Select(token =>
-                    (source.SourceId, Token: token)))
-                .OrderBy(static item => item.SourceId, StringComparer.Ordinal)
-                .ThenBy(static item => item.Token, StringComparer.Ordinal)
-                .ToImmutableArray();
-            var createdCasPaths = WriteCasObjects(repositoryRoot, plan.CasObjects);
-            try
-            {
-                ApplyLedgerUpdatesAtomically(repositoryRoot, currentRaw, ledgerUpdates);
-            }
-            catch (Exception exception) when (exception is not OutOfMemoryException)
-            {
-                RollbackCasObjects(createdCasPaths, exception);
-                throw;
-            }
-
-            return new CommandResult(
-                true,
-                $"INGEST stale_acknowledged={plan.StaleAcknowledged} "
-                + $"residual_open_added={plan.ResidualOpenAdded} "
-                + $"coarse_fallbacks={plan.Fallbacks.Length} "
-                + $"open_genres={openGenres.Length} "
-                + $"cas_objects_written={createdCasPaths.Length} "
-                + $"ledger_changed={changed.ToString().ToLowerInvariant()}\n"
-                + string.Concat(openGenres.Select(static item =>
-                    $"INGEST_OPEN_GENRE source={item.SourceId} "
-                    + $"token={DigestStatusCommand.RenderDetail(item.Token)}\n"))
-                + string.Concat(plan.Fallbacks.Select(static fallback =>
-                    $"INGEST_FALLBACK source={fallback.SourceId} reason={fallback.Reason}\n"))
-                + string.Concat(silentZeroWarnings.Select(static warning =>
-                    $"WARNING silent-zero-extraction source={warning.SourceId} "
-                    + $"path={warning.SourcePath}\n"))
-                + crossVolumeClearanceGaps
-                + backfillObservations
-                + DigestStatusCommand.RenderText(evaluation)
-                // A coarse fallback registers the volume without atomising it, which is a
-                // legitimate outcome but not the one the caller asked for. The per-source
-                // lines above sit ahead of a status table thousands of lines long, so the
-                // run restates the outcome where a reader actually lands.
-                + (plan.Fallbacks.Length == 0
-                    ? string.Empty
-                    : $"INGEST_INCOMPLETE {plan.Fallbacks.Length} source"
-                        + (plan.Fallbacks.Length == 1 ? string.Empty : "s")
-                        + " registered without being atomised: "
-                        + string.Join(", ", plan.Fallbacks.Select(static item => item.SourceId))
-                        + "\n"),
-                string.Empty);
+            return WriteResult(
+                repositoryRoot,
+                prepared,
+                finalRaw,
+                finalDocument,
+                evaluation,
+                backfillObservations);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
             return new CommandResult(false, string.Empty, $"INGEST_INVALID {exception.Message}\n");
         }
+    }
+
+    private static IngestPreparation Prepare(IRepositoryGateway repository, string baselineRevision)
+    {
+        var inputs = ReadInputs(repository, baselineRevision);
+        return Prepare(repository, baselineRevision, inputs);
+    }
+
+    private static IngestInputs ReadInputs(
+        IRepositoryGateway repository,
+        string baselineRevision,
+        bool requireBaselineSourceMetadata = false)
+    {
+        var currentRaw = repository.ReadCurrent();
+        var baselineRaw = repository.ReadRevision(baselineRevision);
+        var current = Decode(currentRaw);
+        var baseline = Decode(baselineRaw);
+        return new IngestInputs(
+            currentRaw,
+            current,
+            baseline,
+            LoadDocument(current),
+            requireBaselineSourceMetadata
+                ? BackfillInventoryLoader.Load(baseline)
+                : BackfillInventoryLoader.LoadBaseline(baseline));
+    }
+
+    private static IngestPreparation Prepare(
+        IRepositoryGateway repository,
+        string baselineRevision,
+        IngestInputs inputs) =>
+        Prepare(
+            repository,
+            baselineRevision,
+            inputs,
+            repository.ReadChanges(baselineRevision));
+
+    private static IngestPreparation Prepare(
+        IRepositoryGateway repository,
+        string baselineRevision,
+        IngestInputs inputs,
+        RawChangeSet repositoryChanges)
+    {
+        var currentRaw = inputs.CurrentRaw;
+        var current = inputs.Current;
+        var baseline = inputs.Baseline;
+        var currentDocument = inputs.CurrentDocument;
+        var baselineDocument = inputs.BaselineDocument;
+        var plan = DigestionIngestor.Plan(
+            currentDocument,
+            current,
+            baselineDocument,
+            baseline);
+        var plannedRaw = AddCasObjects(
+            ReplaceLedger(currentRaw, currentDocument, plan.Document),
+            plan.CasObjects);
+        var plannedSnapshot = Decode(plannedRaw);
+        var plannedDocument = LoadDocument(plannedSnapshot);
+        var plannedChanges = IngestChanges(
+            repositoryChanges,
+            currentRaw,
+            plannedRaw,
+            plannedDocument,
+            plan.CasObjects);
+        var plannedScope = DigestionEvaluationScopes.ForChanges(
+            plannedChanges,
+            ImplementationPath);
+        return new IngestPreparation(
+            currentRaw,
+            current,
+            baseline,
+            currentDocument,
+            baselineDocument,
+            plan,
+            repositoryChanges,
+            plannedRaw,
+            plannedSnapshot,
+            plannedDocument,
+            plannedChanges,
+            plannedScope,
+            RenderCrossVolumeClearanceGaps(plan.Document, baselineDocument),
+            SilentZeroExtractionWarnings(
+                currentDocument,
+                plan.Document,
+                current,
+                baseline));
     }
 
     private static ImmutableArray<DigestionLedgerSource> SilentZeroExtractionWarnings(

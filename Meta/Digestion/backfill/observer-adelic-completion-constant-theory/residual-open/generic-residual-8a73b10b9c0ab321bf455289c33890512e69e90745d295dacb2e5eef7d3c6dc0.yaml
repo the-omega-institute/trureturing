@@ -1,0 +1,10 @@
+ast_path: section/649-1-对称纯相与对称混合态
+fingerprints:
+  raw_sha256: sha256:8a73b10b9c0ab321bf455289c33890512e69e90745d295dacb2e5eef7d3c6dc0
+  normalized_sha256: sha256:8a73b10b9c0ab321bf455289c33890512e69e90745d295dacb2e5eef7d3c6dc0
+cas_ref: sha256:8a73b10b9c0ab321bf455289c33890512e69e90745d295dacb2e5eef7d3c6dc0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

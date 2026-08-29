@@ -1,0 +1,24 @@
+* 不同 Feshbach matrix；
+
+而最终完整二次型的正负惯性保持不变。
+
+所以今后必须明确区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{quadratic-form invariant}
+&:\quad
+\mathfrak q_L;\\
+\text{computational gauge}
+&:\quad
+m_L;\\
+\text{gauge-dependent reduction}
+&:\quad
+F_L(m_L).
+\end{aligned}
+}
+$$
+
+---
+

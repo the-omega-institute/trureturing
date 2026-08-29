@@ -1,0 +1,20 @@
+## 533.4 Natural Li observer
+
+取：
+
+$$
+a=\frac12,
+\qquad
+R=2\lambda_1.
+$$
+
+恢复：
+
+$$
+\kappa_1,\ldots,\kappa_N
+$$
+
+的严格区间，并与直接 Li 系数计算交叉核验。
+
+---
+

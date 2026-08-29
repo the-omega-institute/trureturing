@@ -1,0 +1,28 @@
+### 57.2.4 正文级洗白、草图级洗白与判定证书
+
+```lean
+def SemanticTargetLaunderingAt
+    {Commitment Evidence Verdict Time TargetChain Domain Epsilon Condition
+      Comparator Baseline WeightSpec : Type u}
+    {Report : Type v}
+    [LT Time]
+    (S :
+      RegradeSemantics Commitment Evidence Verdict Time
+        (ProtectedCoordinates TargetChain Domain Epsilon Condition Comparator
+          Baseline WeightSpec)
+        Report)
+    (oldK newK : Commitment)
+    (Z : Evidence)
+    (regrade : SemanticRegrade S) : Prop :=
+  SemanticRegradeAt regrade oldK newK Z ∧
+    PostArrivalSemanticRegrade S regrade ∧
+    S.reportAttributedTo regrade.report = oldK ∧
+    HasClosedCoordinateWitnessBundle
+      (S.protected oldK) (S.protected newK)
+```
+
+`SemanticTargetLaunderingAt` 是正文级语义重评判据。它恰有四层：报告定位、严格到达后、归因于原承诺、保护坐标的封闭非空见证束。修订判词的真实性由语义框架承担，原判词的真实性由 `SemanticRegrade` 承担，故这里不再重复评价等式。
+
+该定义不要求：
+
+- 原判词与修订判词不同；

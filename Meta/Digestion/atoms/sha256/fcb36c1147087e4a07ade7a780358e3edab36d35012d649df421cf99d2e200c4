@@ -1,0 +1,29 @@
+## 440.5 第五阶段：完成塔
+
+研究：
+
+$$
+\mathfrak E_{L_1}
+\supseteq
+\mathfrak E_{L_2}
+\supseteq\cdots
+$$
+
+以及 canonical choices：
+
+$$
+\nu_{L_j}^{\mathrm{ME}}.
+$$
+
+真正的全局目标不是分别找到很多无关扩张，而是证明：
+
+$$
+\boxed{
+\nu_L^{\mathrm{ME}}
+\text{ 或其他规范完成在 }L\to\infty
+\text{ 时收敛并保持正性}.
+}
+$$
+
+---
+

@@ -1,0 +1,31 @@
+## 502.5 Scale flow
+
+验证：
+
+$$
+\Lambda_L^\Xi\downarrow0,
+$$
+
+并跟踪：
+
+$$
+\theta_L,\qquad
+M_L,\qquad
+\{\tau_{j,L}\}.
+$$
+
+真正要观察的是：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{white floor 如何消失};\\
+&\text{shadow price 如何下降};\\
+&\text{有限 contact atoms 如何增殖};\\
+&\text{这些 atoms 如何锁定 Riemann ordinates}.
+\end{aligned}
+}
+$$
+
+---
+

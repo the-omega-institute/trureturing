@@ -1,0 +1,41 @@
+## 438.1 Moment-flat 预条件器
+
+可先选择：
+
+$$
+\kappa_{L,K}
+$$
+
+消去前 \(K\) 个偶 moments，再对：
+
+$$
+m_{L,K}^{\mathrm{flat}}
+$$
+
+执行 Slepian–Feshbach reduction。
+
+推荐优化目标为：
+
+$$
+\boxed{
+(K,a,\eta)
+\longmapsto
+\operatorname{rank}P_{L,K,a,\eta}
+}
+\tag{438.2}
+$$
+
+并附加：
+
+$$
+\boxed{
+Q A_{L,K} Q
+\ge
+\delta_{L,K,a,\eta}Q.
+}
+$$
+
+这相当于在做有限矩阵证明前，先对 multiplier 进行一个**不可见谱预条件**。
+
+---
+

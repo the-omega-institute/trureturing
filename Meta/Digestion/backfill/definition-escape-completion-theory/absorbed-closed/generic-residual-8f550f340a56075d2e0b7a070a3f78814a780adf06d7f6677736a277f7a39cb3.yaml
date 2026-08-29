@@ -6,6 +6,7 @@ cas_ref: sha256:8f550f340a56075d2e0b7a070a3f78814a780adf06d7f6677736a277f7a39cb3
 coverage_gids:
   - D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoWeakPreorder.pareto_weak_reflexive_transitive
   - D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/GainDifferenceCocycle.gain_difference_self_zero_and_cocycle
+  - D5/S3/ConceptDynamics/Governance/CommitInterfaceSealPreservation.commit_interface_seal_and_artifact_preservation
 receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoWeakPreorder.pareto_weak_reflexive_transitive
@@ -14,6 +15,9 @@ receipts:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/GainDifferenceCocycle.gain_difference_self_zero_and_cocycle
       source_sha256: sha256:8f550f340a56075d2e0b7a070a3f78814a780adf06d7f6677736a277f7a39cb3
       target_statement_id: sha256:8b708816711811a199192ea7077ff26d9c26167339a066abf2e570fe47732104
+    - gid: D5/S3/ConceptDynamics/Governance/CommitInterfaceSealPreservation.commit_interface_seal_and_artifact_preservation
+      source_sha256: sha256:8f550f340a56075d2e0b7a070a3f78814a780adf06d7f6677736a277f7a39cb3
+      target_statement_id: sha256:1c955a74afcebd9cfa9da234233d4b3bc4f522b76aebc0dfaa5b7872fa1ef0e1
   scribe:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoWeakPreorder.pareto_weak_reflexive_transitive
       definition_sha256: sha256:7f058c54592326a79fa3b03a3c1874ed1c37a056c1c83c068694e1b0863e1769
@@ -21,4 +25,7 @@ receipts:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/GainDifferenceCocycle.gain_difference_self_zero_and_cocycle
       definition_sha256: sha256:8edf54b0fe2177bbc69e1c3ac05750310c7f7175484bdf746534e9a18320e53c
       emission_sha256: sha256:fa4b1070198441ddf5388ac600a9f0c0eef4d143d8869268c143a3064c3ece97
+    - gid: D5/S3/ConceptDynamics/Governance/CommitInterfaceSealPreservation.commit_interface_seal_and_artifact_preservation
+      definition_sha256: sha256:a883a362d1bd866d66c136af8d8a08254707bd19b896833a8c3326770f7d118b
+      emission_sha256: sha256:868c840c9ac5b66507e6ff06d83d7c4dce4f3607a6e9794a28e81841cee06455
   unresolved_subitems: []

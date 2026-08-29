@@ -54,23 +54,6 @@ public sealed class CliOutcomeTests
         Assert.Equal(error, console.Error);
     }
 
-    [Fact]
-    public void TheoryCandidatesDelegatesToTheReadOnlyEnvironment()
-    {
-        var projected = new CommandResult(true, "{\"schema\":\"stratalint-theory-candidates-v1\"}\n", string.Empty);
-        var console = new BufferedConsole();
-        var environment = new StubCliEnvironment(Admitted(), theoryCandidates: projected);
-
-        var exitCode = CliApplication.Run(
-            ["theory-candidates", "--owner-override-file", "problem.txt"],
-            environment,
-            console);
-
-        Assert.Equal(0, exitCode);
-        Assert.Equal(projected.Output, console.Output);
-        Assert.Empty(console.Error);
-    }
-
     // 判词产出却不可见即浮账(CLAUDE.md 第 20 条红线:允许 open,不允许浮账)。
     // admitted 路径此前把 Observe 判词全部丢掉——Observe 罕见时不显眼,而理论卷
     // 「尚未消化」改判 Observe 后,它就成了承重缺口:一个没人看得见的 open,与没有
@@ -171,7 +154,6 @@ internal sealed class StubCliEnvironment(
     AdmissionOutcome outcome,
     ExplicitCommandResult? echoVerify = null,
     ExplicitCommandResult? fileMapConform = null,
-    CommandResult? theoryCandidates = null,
     CommandResult? cleanLanes = null) : ICliEnvironment
 {
     internal IReadOnlyList<string> CleanLanesArguments { get; private set; } = [];
@@ -186,9 +168,6 @@ internal sealed class StubCliEnvironment(
 
     public CommandResult DigestStatus(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "digest status is not configured in this fixture");
-
-    public CommandResult TheoryCandidates(IReadOnlyList<string> arguments) =>
-        theoryCandidates ?? new(false, string.Empty, "theory candidates are not configured in this fixture");
 
     public CommandResult ShowAtom(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "show atom is not configured in this fixture");
@@ -207,6 +186,9 @@ internal sealed class StubCliEnvironment(
 
     public CommandResult Ingest(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ingest is not configured in this fixture");
+
+    public CommandResult AlignDigestionStatus(IReadOnlyList<string> arguments) =>
+        new(false, string.Empty, "align digestion status is not configured in this fixture");
 
     public CommandResult CoverAtom(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "cover-atom is not configured in this fixture");

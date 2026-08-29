@@ -1,0 +1,10 @@
+ast_path: 证明义务/57.2/occurrence/2
+fingerprints:
+  raw_sha256: sha256:310f7996ce7c18fc0ec43fcede171225129c56eecbc2006e81d652c59081dbec
+  normalized_sha256: sha256:310f7996ce7c18fc0ec43fcede171225129c56eecbc2006e81d652c59081dbec
+cas_ref: sha256:310f7996ce7c18fc0ec43fcede171225129c56eecbc2006e81d652c59081dbec
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

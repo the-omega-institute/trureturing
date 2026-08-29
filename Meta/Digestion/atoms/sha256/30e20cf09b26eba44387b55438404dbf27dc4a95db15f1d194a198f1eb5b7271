@@ -1,0 +1,18 @@
+## Theorem 3. A finite acyclic judging graph has a root
+
+Let `V` be a finite nonempty type and let
+`judges : V \to V \to Prop`, where `judges(j,x)` means that `j` judges `x`.
+If `judges` is acyclic, then
+
+\[
+\exists r:V,\;\forall j:V,\;\neg\mathsf{judges}(j,r).
+\]
+
+Equivalently, some vertex has an empty set of judges. To prove it, assume every
+vertex has a judge. Starting from any vertex and repeatedly choosing a judge
+produces a sequence in the finite type `V`; a repeated vertex then yields a
+directed cycle, contradicting acyclicity.
+
+The statement proves only existence of an empty-judge vertex. It makes no
+claim that such a vertex can certify its own consistency.
+

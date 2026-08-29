@@ -1,0 +1,17 @@
+## 620.4 Orientation-twisted regulator
+
+构造：
+
+```text
+GoldenOrientationCharacter
+GoldenRegulatorFlatLineBundle
+GoldenAntiPeriodicSection
+GoldenOrientationTwistedZeta
+GoldenTwistedReflection
+GoldenDoubleCoverCompletion
+```
+
+首先必须证明该对象定义良好，而不是先假定其目标反周期性。
+
+---
+

@@ -3,6 +3,7 @@ SHELL := /bin/bash
 
 HERE := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 BASE ?= origin/dev
+REPOSITORY ?= $(HERE)/..
 .PHONY: help dotnet test engineering-tests selftest update-renderer-contract clean-lanes
 
 help:
@@ -15,7 +16,7 @@ test:
 	@/bin/bash $(HERE)/scripts/dotnet-test.sh $(HERE)/StrataLint.sln
 
 engineering-tests:
-	@cd $(HERE)/.. && dotnet run --project tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj --configuration Release --no-launch-profile -- --mode "$(MODE)" --repository "$(HERE)/.." --head "$(HEAD)" --base "$(BASE)" --plan-file "$(PLAN_FILE)"
+	@cd "$(REPOSITORY)" && dotnet run --project "$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" --configuration Release --no-launch-profile -- --mode "$(MODE)" --repository "$(REPOSITORY)" --head "$(HEAD)" --base "$(BASE)" --plan-file "$(PLAN_FILE)"
 
 selftest:
 	@/bin/bash $(HERE)/scripts/stratalint-selftest.sh

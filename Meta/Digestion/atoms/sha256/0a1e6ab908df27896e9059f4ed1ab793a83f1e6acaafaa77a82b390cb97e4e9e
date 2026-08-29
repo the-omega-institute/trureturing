@@ -1,0 +1,24 @@
+# 第五百七十四部　缺一段圆弧时，破缺只剩边界项
+
+设：
+
+$$
+W=[\eta_0,\eta_1]
+$$
+
+是 regulator 圆上的一个有向观察弧。
+
+定义累积破缺：
+
+$$
+\boxed{
+\mathfrak D_W(s)
+=
+\int_{\eta_0}^{\eta_1}
+\mathfrak B_\varphi(s,\eta)\,d\eta.
+}
+\tag{574.1}
+$$
+
+由式 (573.2)：
+

@@ -26,6 +26,8 @@ internal static class FrozenLedgerTestData
         string originTreeOid,
         params ModuleSpec[] modules)
     {
+        _ = originCommitOid;
+        _ = originTreeOid;
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["lean-toolchain"] = toolchain,
@@ -63,25 +65,8 @@ internal static class FrozenLedgerTestData
             LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
         var states = LeanTruthStates.Resolve(snapshot, closure);
         var adjacency = LeanImportAdjacency.Build(snapshot, closure);
-        var environment = new FrozenEnvironmentAttestation(
-            originCommitOid,
-            originTreeOid,
-            GitBlobOid(files["lean-toolchain"]),
-            GitBlobOid(files["lake-manifest.json"]))
-        {
-            LakefilePath = "lakefile.toml",
-            LakefileBlobOid = GitBlobOid(files["lakefile.toml"]),
-        };
-        var attestations = modules.Select(module => new FrozenModuleAttestation(
-            RepoPathFor(module.Name),
-            GitBlobOid(module.Source))
-        {
-            BaseCommitOid = module.BaseCommitOid,
-            BaseTreeOid = module.BaseTreeOid,
-        });
-
         return Assert.IsType<FrozenMaterialOutcome.Accepted>(
-            FrozenContentAddress.Build(snapshot, closure, states, adjacency, environment, attestations)).Capability;
+            FrozenContentAddress.Build(snapshot, closure, states, adjacency)).Capability;
     }
 
     internal static FrozenMaterialOutcome BuildCatalogOutcome(
@@ -107,13 +92,7 @@ internal static class FrozenLedgerTestData
                 }))).Capability;
         var states = LeanTruthStates.Resolve(snapshot, closure);
         var adjacency = LeanImportAdjacency.Build(snapshot, closure);
-        var environment = new FrozenEnvironmentAttestation(
-            GitOid('a'),
-            GitOid('b'),
-            GitBlobOid(files["lean-toolchain"]),
-            GitBlobOid(files["lake-manifest.json"]));
-        return FrozenContentAddress.Build(
-            snapshot, closure, states, adjacency, environment, Array.Empty<FrozenModuleAttestation>());
+        return FrozenContentAddress.Build(snapshot, closure, states, adjacency);
     }
 
     internal static ModuleSpec Module(
@@ -203,50 +182,19 @@ internal static class FrozenLedgerTestData
         ImmutableArray<DagLedgerFileEvent> events,
         FrozenLedgerConsistent baseline,
         FrozenMaterialCatalog catalog) =>
-        FrozenLedger.ValidateCandidate(events, baseline, catalog, Trust(events));
-
-    internal static FrozenLedgerValidationOutcome ValidateCandidate(
-        ImmutableArray<DagLedgerFileEvent> events,
-        FrozenLedgerConsistent baseline,
-        FrozenMaterialCatalog catalog,
-        TrustedRevocationReceiptStore receipts) =>
-        FrozenLedger.ValidateCandidate(events, baseline, catalog, Trust(events), receipts);
-
-    internal static FrozenLedgerValidationOutcome ValidateCandidate(
-        ImmutableArray<DagLedgerFileEvent> events,
-        FrozenLedgerConsistent baseline,
-        FrozenMaterialCatalog catalog,
-        TrustedFrozenGitReferences references,
-        TrustedRevocationReceiptStore receipts) =>
-        FrozenLedger.ValidateCandidate(events, baseline, catalog, references, receipts);
-
-    internal static TrustedFrozenGitReferences Trust(ImmutableArray<DagLedgerFileEvent> events) =>
-        TrustedFrozenGitReferences.CreateForTrustedAdapter(
-            FrozenLedger.ScanReferences(events) is FrozenLedgerReferenceScanOutcome.Accepted accepted
-                ? accepted.References.Inputs
-                : ImmutableArray<FrozenLedgerInput>.Empty);
+        FrozenLedger.ValidateCandidate(events, baseline, catalog);
 
     internal static ImmutableArray<RepositoryFile> EventFiles(
         FrozenMaterialCatalog catalog,
         string? generatorBlobOid = null)
     {
+        _ = generatorBlobOid;
         var files = ImmutableArray.CreateBuilder<RepositoryFile>();
-        files.Add(EventFile(
-            "Genesis",
-            JsonSerializer.SerializeToElement(new
-            {
-                generator_blob_oid = generatorBlobOid ?? GitOid('e'),
-                origin_commit_oid = catalog.Environment.OriginCommitOid,
-                origin_tree_oid = catalog.Environment.OriginTreeOid,
-                protocol_version = 1,
-                rule_catalog_root = RuleCatalog.Default.RootSha256,
-            }),
-            FrozenLedgerCanonicalWriter.GenesisDagSchemaVersion));
         foreach (var material in catalog.ClosedNodes.OrderBy(
             static item => item.RepoPath.Value,
             StringComparer.Ordinal))
         {
-            var payload = FrozenLedgerCanonicalWriter.FreezePayload(catalog.Environment, material);
+            var payload = FrozenLedgerCanonicalWriter.FreezePayload(material);
             files.Add(EventFile("Freeze", FrozenLedgerCanonicalWriter.FreezeElement(payload)));
         }
 

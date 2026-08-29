@@ -1,0 +1,50 @@
+# 第四百三十部　端点 Jet 是精确零作用 gauge
+
+令：
+
+$$
+b=2L.
+$$
+
+由于每个 \(C_{f,h}\) 在 \(u=b\) 的某邻域内恒等为零，所以：
+
+$$
+\boxed{
+C_{f,h}^{(j)}(b)=0
+\qquad
+\forall j\ge0.
+}
+\tag{430.1}
+$$
+
+因此任意有限阶端点 distribution：
+
+$$
+\boxed{
+J
+=
+\sum_{j=0}^{K}
+c_j\delta_b^{(j)}
+}
+\tag{430.2}
+$$
+
+满足：
+
+$$
+\boxed{
+\langle J,C_{f,h}\rangle=0.
+}
+\tag{430.3}
+$$
+
+这比前文只加入边界质量：
+
+$$
+E(2L)\delta_{2L}
+$$
+
+更一般。全部边界 jets 都是零作用 counterterms。
+
+---
+

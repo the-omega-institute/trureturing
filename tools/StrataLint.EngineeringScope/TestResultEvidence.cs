@@ -13,7 +13,7 @@ internal sealed record TestResultEvidence(
         if (files.Length == 0) throw new InvalidDataException("dotnet test produced no TRX evidence");
 
         var executed = 0;
-        var actual = new HashSet<(string Assembly, string Id)>(TestIdentityComparer.Instance);
+        var actual = new HashSet<(string Assembly, string Id)>(EngineeringTestIdentityComparer.Instance);
         var unresolved = new List<string>();
         foreach (var file in files)
         {
@@ -79,9 +79,9 @@ internal sealed class InfrastructureUnresolvedException(IReadOnlyList<string> te
     : Exception(
         $"INFRASTRUCTURE_UNRESOLVED count={tests.Count} tests={string.Join(" | ", tests)}");
 
-internal sealed class TestIdentityComparer : IEqualityComparer<(string Assembly, string Id)>
+internal sealed class EngineeringTestIdentityComparer : IEqualityComparer<(string Assembly, string Id)>
 {
-    internal static readonly TestIdentityComparer Instance = new();
+    internal static readonly EngineeringTestIdentityComparer Instance = new();
 
     public bool Equals((string Assembly, string Id) x, (string Assembly, string Id) y) =>
         StringComparer.OrdinalIgnoreCase.Equals(x.Assembly, y.Assembly)

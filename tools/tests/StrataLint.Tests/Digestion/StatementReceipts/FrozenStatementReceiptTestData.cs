@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
@@ -24,27 +23,12 @@ internal static class FrozenStatementReceiptTestData
         IDictionary<string, string> files,
         params Module[] modules)
     {
-        var genesis = FrozenLedgerCanonicalWriter.WriteDagEvent(
-            "Genesis",
-            JsonSerializer.SerializeToElement(new
-            {
-                generator_blob_oid = GitOid('a'),
-                origin_commit_oid = GitOid('b'),
-                origin_tree_oid = GitOid('c'),
-                protocol_version = 1,
-                rule_catalog_root = Id('d'),
-            }));
-        AddEvent(files, genesis);
-
         foreach (var module in modules.OrderBy(static item => item.Path, StringComparer.Ordinal))
         {
-            var frozenNodeId = Hash("frozen:" + module.Path);
             var freeze = FrozenLedgerCanonicalWriter.WriteDagEvent(
                 "Freeze",
                 JsonSerializer.SerializeToElement(new
                 {
-                    axiom_closure = Array.Empty<string>(),
-                    case_id = "active-frozen/" + frozenNodeId["sha256:".Length..],
                     declaration_statement_ids = module.Declarations
                         .OrderBy(
                             static declaration => declaration.EncodedNameKey
@@ -57,18 +41,9 @@ internal static class FrozenStatementReceiptTestData
                             kind = "theorem",
                             statement_id = declaration.StatementId,
                         }),
-                    frozen_node_id = frozenNodeId,
-                    input = new
-                    {
-                        base_commit_oid = GitOid('b'),
-                        base_tree_oid = GitOid('c'),
-                        descriptor_blob_oid = GitOid('e'),
-                        descriptor_selector = module.Path,
-                        supporting_blob_oids = Array.Empty<string>(),
-                    },
+                    descriptor_selector = module.Path,
                     prerequisite_frozen_node_ids = Array.Empty<string>(),
                     statement_id = module.StatementId,
-                    witness_id = Hash("witness:" + module.Path),
                 }));
             AddEvent(files, freeze);
         }
@@ -122,8 +97,4 @@ internal static class FrozenStatementReceiptTestData
         return result;
     }
 
-    private static string GitOid(char digit) => "git-sha1:" + new string(digit, 40);
-
-    private static string Hash(string value) =>
-        "sha256:" + Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(value)));
 }

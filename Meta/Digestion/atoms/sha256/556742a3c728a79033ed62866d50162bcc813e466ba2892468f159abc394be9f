@@ -1,0 +1,30 @@
+## 定理 546.1（Multiscale Loewner constraint）
+
+任意来自同一正谱的 budget bank：
+
+$$
+B(u_1),\ldots,B(u_M)
+$$
+
+必须能够扩张为一个正半定 Loewner matrix：
+
+$$
+\boxed{
+\left[
+\frac{
+B(u_i)-B(u_j)
+}{
+u_j-u_i
+}
+\right]_{i,j}
+\succeq0,
+}
+\tag{546.5}
+$$
+
+对角线按 \(-B'(u_i)\) 理解。
+
+这是一条只使用零阶预算及局部导数的共同谱约束。
+
+---
+

@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -22,22 +21,10 @@ public static class DagLedgerLoader
         var result = ImmutableArray.CreateBuilder<DagLedgerFileEvent>(events.Length);
         var placedIdentities = new HashSet<string>(StringComparer.Ordinal);
         var placedHashes = new HashSet<string>(StringComparer.Ordinal);
-        if (preferredIdentityPrefix.IsEmpty)
-        {
-            var genesis = events.Where(static item => item.EventType == "Genesis").ToArray();
-            if (genesis.Length != 1)
-            {
-                ordered = ImmutableArray<DagLedgerFileEvent>.Empty;
-                return false;
-            }
-
-            Place(genesis[0], remaining, result, placedIdentities, placedHashes);
-        }
-
         foreach (var identity in preferredIdentityPrefix)
         {
             if (!byIdentity.TryGetValue(identity, out var item)
-                || !CanPlace(item, result.Count, placedIdentities, placedHashes))
+                || !CanPlace(item, placedIdentities))
             {
                 ordered = ImmutableArray<DagLedgerFileEvent>.Empty;
                 return false;
@@ -49,7 +36,7 @@ public static class DagLedgerLoader
         while (remaining.Count > 0)
         {
             var index = remaining.FindIndex(item =>
-                CanPlace(item, result.Count, placedIdentities, placedHashes));
+                CanPlace(item, placedIdentities));
             if (index < 0)
             {
                 ordered = ImmutableArray<DagLedgerFileEvent>.Empty;
@@ -76,7 +63,7 @@ public static class DagLedgerLoader
         while (remaining.Count > 0)
         {
             var index = remaining.FindIndex(item =>
-                CanPlace(item, placedCount: 1, placedIdentities, placedHashes));
+                CanPlace(item, placedIdentities));
             if (index < 0)
             {
                 ordered = ImmutableArray<DagLedgerFileEvent>.Empty;
@@ -92,12 +79,9 @@ public static class DagLedgerLoader
 
     private static bool CanPlace(
         DagLedgerFileEvent item,
-        int placedCount,
-        HashSet<string> placedIdentities,
-        HashSet<string> placedHashes) =>
-        item.EventType == "Genesis"
-            ? placedCount == 0
-            : DependenciesPlaced(item, placedIdentities, placedHashes);
+        HashSet<string> placedIdentities) =>
+        item.EventType == "Freeze"
+            && DependenciesPlaced(item, placedIdentities);
 
     private static void Place(
         DagLedgerFileEvent item,
@@ -109,44 +93,18 @@ public static class DagLedgerLoader
         remaining.Remove(item);
         ordered.Add(item);
         placedIdentities.Add(item.Identity);
-        if (item.Payload.TryGetProperty("frozen_node_id", out var frozenNodeId)
-            && frozenNodeId.ValueKind == JsonValueKind.String)
-        {
-            placedIdentities.Add(frozenNodeId.GetString()!);
-        }
+        placedIdentities.Add(item.FrozenNodeId.Value);
         placedHashes.Add(item.EventHash);
     }
 
     private static bool DependenciesPlaced(
         DagLedgerFileEvent item,
-        HashSet<string> placedIdentities,
-        HashSet<string> placedHashes)
+        HashSet<string> placedIdentities)
     {
-        if (item.EventType == "Freeze")
-        {
-            if (!item.Payload.TryGetProperty("prerequisite_frozen_node_ids", out var prerequisites)
-                || prerequisites.ValueKind != JsonValueKind.Array)
-            {
-                return false;
-            }
-
-            return prerequisites.EnumerateArray().All(prerequisite =>
-                prerequisite.ValueKind == JsonValueKind.String
-                && placedIdentities.Contains(prerequisite.GetString()!));
-        }
-
-        if (item.EventType == "Revoke")
-        {
-            return item.Payload.TryGetProperty("evidence", out var evidence)
-                && evidence.ValueKind == JsonValueKind.Array
-                && evidence.EnumerateArray().All(entry =>
-                    entry.ValueKind == JsonValueKind.Object
-                    && entry.TryGetProperty("root_frozen_node_id", out var root)
-                    && root.ValueKind == JsonValueKind.String
-                    && placedIdentities.Contains(root.GetString()!));
-        }
-
-        return true;
+        var prerequisites = FrozenLedgerAttestationChain.RequiredStringArray(
+            item.Payload,
+            "prerequisite_frozen_node_ids");
+        return prerequisites.All(placedIdentities.Contains);
     }
 
 }

@@ -1,0 +1,40 @@
+## 定理 511.1（Resolvent–Clark identity）
+
+$$
+\boxed{
+\widehat\mu_\Xi
+=
+\mu_\lambda
+=
+\sigma_1[\vartheta_\xi].
+}
+\tag{511.7}
+$$
+
+即：
+
+$$
+\boxed{
+\text{Li--Clark measure}
+=
+\text{Riemann 零点谱的自然 resolvent Cayley 紧化}.
+}
+$$
+
+Clark 测度由具有正实部的 Herglotz 函数表示；当对应 Schur 函数为内函数时，Clark 测度为奇异测度，并由边界接触点和角导数控制。([London Mathematical Society (LMS)][4])
+
+这证明前文两条路线实际上是同一对象：
+
+$$
+\boxed{
+\begin{aligned}
+\text{resolvent-budget completion}
+&=\text{实轴图表};\\
+\text{Li--Clark completion}
+&=\text{单位圆图表}.
+\end{aligned}
+}
+$$
+
+---
+

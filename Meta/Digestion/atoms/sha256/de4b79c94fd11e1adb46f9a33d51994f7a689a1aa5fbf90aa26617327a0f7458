@@ -1,0 +1,63 @@
+## 定理 499.1（Contact-zero localization）
+
+令 \(\gamma\) 是一个孤立的 Riemann zero ordinate。
+
+对任何只含该 ordinate 的开邻域：
+
+$$
+U\ni\gamma,
+$$
+
+当 \(n\) 充分大时，存在某个 contact atom：
+
+$$
+\boxed{
+\tau_{j,n}\in U.
+}
+\tag{499.3}
+$$
+
+### 证明
+
+由定理 498.3：
+
+$$
+\mu_n\to\nu_\Xi.
+$$
+
+而：
+
+$$
+\nu_\Xi(U)=m_\gamma>0.
+$$
+
+所以充分大时：
+
+$$
+\mu_n(U)>0.
+$$
+
+\(\mu_n\) 的支撑包含于 \(G_n\) 的实零点集，故 \(U\) 中必有接触零点。∎
+
+因此，上一轮仍然条件性的：
+
+$$
+\text{ground-state zeros}
+\longrightarrow
+\text{Riemann zeros}
+$$
+
+现在获得一个更稳定的正则化版本：
+
+$$
+\boxed{
+\text{budgeted dual contact zeros}
+\longrightarrow
+\text{Riemann zero ordinates}.
+}
+$$
+
+它不要求无预算 ground state optimizer 一开始就存在。
+
+---
+

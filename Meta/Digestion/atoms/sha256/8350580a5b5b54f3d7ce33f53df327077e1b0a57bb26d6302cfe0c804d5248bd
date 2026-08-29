@@ -1,0 +1,22 @@
+* 误差对有限数据极为敏感。
+
+通过等对数尺度梯：
+
+$$
+\boxed{
+a_0\to a_1\to\cdots\to a_J
+}
+$$
+
+则每一步都处于小 \(r\) 区域。
+
+所以多尺度 observer bank 的最优初始设计不是线性等距，而是：
+
+$$
+\boxed{
+\text{log-uniform spacing}.
+}
+$$
+
+---
+

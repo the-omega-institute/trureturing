@@ -180,6 +180,6 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
-        return environment.Ingest(["--base", "baseline"]);
+        return environment.AlignDigestionStatus(["--base", "baseline"]);
     }
 }

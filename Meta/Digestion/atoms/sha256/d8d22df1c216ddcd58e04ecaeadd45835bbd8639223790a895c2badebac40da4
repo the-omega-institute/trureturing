@@ -1,0 +1,11 @@
+**证明义务 57.3-E（新越界语义回降到第 54.3 部，预期为定理）。** 对任意 `S report J` 证明
+
+```lean
+SemanticOverreach S report J ↔
+  Overreach S.toLegacy report J
+```
+
+该证明必须经 57.3-C 把许可证中的 `ValidSemanticTransportCert` 回降为原 `ValidTransportCert`；禁止复制原 `Overreach` 合取后把双向等价伪装成第二个独立定理源。
+
+---
+

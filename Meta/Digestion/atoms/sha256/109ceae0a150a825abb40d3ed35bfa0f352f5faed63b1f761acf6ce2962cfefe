@@ -1,0 +1,22 @@
+# 第四百三十六部　最大熵正完成
+
+固定 \(L\) 时，正完成通常非唯一。
+
+一个自然的规范选择是：
+
+$$
+\boxed{
+\nu_L^{\mathrm{ME}}
+=
+\operatorname*{arg\,max}_{\nu\in\mathfrak E_L}
+\operatorname{Entropy}(\nu),
+}
+\tag{436.1}
+$$
+
+在适当参考测度、归一化和非退化条件下理解。
+
+Gabardo 的工作正是研究区间正定函数／分布的扩张，并使用 maximum entropy 方法选择 distinguished extensions；其内容包括正定分布、非退化情形、entropy maximizing measures 与唯一性。([美国数学学会书店][2])
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/532-1-可行性并非充分/clause/1
+fingerprints:
+  raw_sha256: sha256:dbdd5d2d6ced1c0d6ac223972c6b203b147f9a44f9ab845fc2be17eebaaabe4b
+  normalized_sha256: sha256:dbdd5d2d6ced1c0d6ac223972c6b203b147f9a44f9ab845fc2be17eebaaabe4b
+cas_ref: sha256:dbdd5d2d6ced1c0d6ac223972c6b203b147f9a44f9ab845fc2be17eebaaabe4b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

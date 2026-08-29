@@ -1,0 +1,49 @@
+- 非保护字段保持相同。
+
+它只判定第 54 部所说的保护坐标回写与旧轮归因，不把其他治理违规混入同一原子。
+
+```lean
+def SemanticSketchTargetLaunderingAt
+    {Commitment Evidence Verdict Time TargetChain Domain Epsilon Condition
+      Comparator Baseline WeightSpec : Type u}
+    {Report : Type v}
+    (S :
+      RegradeSemantics Commitment Evidence Verdict Time
+        (ProtectedCoordinates TargetChain Domain Epsilon Condition Comparator
+          Baseline WeightSpec)
+        Report)
+    (oldK newK : Commitment)
+    (Z : Evidence)
+    (regrade : SemanticRegrade S) : Prop :=
+  SemanticRegradeAt regrade oldK newK Z ∧
+    FreezeVisibleSemanticRegrade S regrade ∧
+    S.reportOccurredAt regrade.report = S.freezeTime newK ∧
+    S.reportAttributedTo regrade.report = oldK ∧
+    HasClosedCoordinateWitnessBundle
+      (S.protected oldK) (S.protected newK)
+```
+
+`SemanticSketchTargetLaunderingAt` 精确保留后置 Lean 草图的两个额外选择：冻结事件可见性和报告时间戳等于冻结时刻。它不是正文级定义的别名；在给出 `RegradeTemporalBridge` 后，它才等价于正文级洗白再合取时间戳条件。
+
+```lean
+structure TargetLaunderingDecision
+    {Commitment Evidence Verdict Time TargetChain Domain Epsilon Condition
+      Comparator Baseline WeightSpec : Type u}
+    {Report : Type v}
+    [LT Time]
+    (S :
+      RegradeSemantics Commitment Evidence Verdict Time
+        (ProtectedCoordinates TargetChain Domain Epsilon Condition Comparator
+          Baseline WeightSpec)
+        Report)
+    (oldK newK : Commitment)
+    (Z : Evidence)
+    (regrade : SemanticRegrade S) where
+  verdict : Bool
+  correct :
+    verdict = true ↔
+      SemanticTargetLaunderingAt S oldK newK Z regrade
+```
+
+`TargetLaunderingDecision` 是带正确性证明的判定结果，而不是外生准入门。只有在所需等式与时间关系可判时才能构造该结构；不能先给一个布尔值，再把它当作洗白事实。
+

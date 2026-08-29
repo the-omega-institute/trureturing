@@ -1,0 +1,10 @@
+ast_path: section/534-5-Laguerre-bridge-没有证明-RH/clause/2
+fingerprints:
+  raw_sha256: sha256:5df937e73fcc8ab45fd92766e79cfd064c2aa5d1ec2346c12cf51e96e60aa543
+  normalized_sha256: sha256:5df937e73fcc8ab45fd92766e79cfd064c2aa5d1ec2346c12cf51e96e60aa543
+cas_ref: sha256:5df937e73fcc8ab45fd92766e79cfd064c2aa5d1ec2346c12cf51e96e60aa543
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

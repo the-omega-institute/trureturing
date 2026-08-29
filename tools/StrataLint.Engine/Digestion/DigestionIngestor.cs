@@ -6,6 +6,7 @@ namespace StrataLint.Engine;
 
 internal sealed record DigestionIngestPlan(
     BackfillInventoryDocument Document,
+    DigestionLedgerAlignment Alignment,
     int StaleAcknowledged,
     int ResidualOpenAdded,
     ImmutableArray<DigestionCasObject> CasObjects,
@@ -397,6 +398,7 @@ internal static class DigestionIngestor
 
         return new DigestionIngestPlan(
             migrationDocument.WithDigestionSources(sources.ToImmutable()),
+            alignment,
             staleAcknowledged,
             residualOpenAdded,
             casObjects.Values

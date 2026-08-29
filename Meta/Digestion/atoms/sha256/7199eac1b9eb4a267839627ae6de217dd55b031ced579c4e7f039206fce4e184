@@ -1,0 +1,19 @@
+## 545.2 精确重整化语义
+
+$$
+\boxed{
+\begin{aligned}
+\text{wide-scale direct transport}
+&=\text{高阶非局部变换};\\
+\text{log-scale ladder}
+&=\text{许多低阶局部变换};\\
+\text{moment truncation}
+&=\text{有限 observer depth};\\
+\text{cocycle composition}
+&=\text{renormalization consistency}.
+\end{aligned}
+}
+$$
+
+---
+

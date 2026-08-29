@@ -1,0 +1,10 @@
+ast_path: section/命题-B-黄金奇向残差/clause/2
+fingerprints:
+  raw_sha256: sha256:d7dc0a27bb134fe65be6c1136a002497864148b14af4a8bb01e943048990d47e
+  normalized_sha256: sha256:d7dc0a27bb134fe65be6c1136a002497864148b14af4a8bb01e943048990d47e
+cas_ref: sha256:d7dc0a27bb134fe65be6c1136a002497864148b14af4a8bb01e943048990d47e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

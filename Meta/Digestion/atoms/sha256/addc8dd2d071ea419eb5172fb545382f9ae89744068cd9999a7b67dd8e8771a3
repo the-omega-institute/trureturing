@@ -1,0 +1,51 @@
+## 定理 574.1（Partial-circle boundary defect）
+
+$$
+\boxed{
+\mathfrak D_W(s)
+=
+-\frac1s
+\left[
+Z_{\mathrm{unit}}(s,\eta_1)
+-
+Z_{\mathrm{unit}}(s,\eta_0)
+\right].
+}
+\tag{574.2}
+$$
+
+若 \(W\) 是完整周期：
+
+$$
+\eta_1-\eta_0=2\log\varphi,
+$$
+
+则：
+
+$$
+\boxed{
+\mathfrak D_W(s)=0.
+}
+\tag{574.3}
+$$
+
+若只少一小段，破缺完全由切口两端的失配决定。
+
+所以：
+
+$$
+\boxed{
+\text{完整圆的 bulk 没有破缺；
+不完整圆的破缺全部压缩在 boundary ledger。}
+}
+$$
+
+这给“完成态必对应某个未完成态”一个非平凡的严格模型：
+
+* 完成态：整个 regulator circle；
+* 未完成态：带切口的弧；
+* 破缺：切口边界值之差；
+* 完成操作：把两个边界重新识别。
+
+---
+

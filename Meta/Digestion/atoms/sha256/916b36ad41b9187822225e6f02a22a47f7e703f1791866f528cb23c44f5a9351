@@ -1,0 +1,17 @@
+# 第四百七十八部　有限观察严格内点、无限观察锥边界
+
+窗口嵌套立即给出：
+
+$$
+L_1<L_2
+\quad\Longrightarrow\quad
+\boxed{
+\lambda_{\mathrm{full}}(L_2)
+\le
+\lambda_{\mathrm{full}}(L_1).
+}
+\tag{478.1}
+$$
+
+---
+

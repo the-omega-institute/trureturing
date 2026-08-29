@@ -1,0 +1,10 @@
+ast_path: row/beta-v-m-v-v-varphi
+fingerprints:
+  raw_sha256: sha256:748a855b2cdb68fde0a955557905a8dbb672e4c7a8b3867730fd4f86a4c1194d
+  normalized_sha256: sha256:748a855b2cdb68fde0a955557905a8dbb672e4c7a8b3867730fd4f86a4c1194d
+cas_ref: sha256:748a855b2cdb68fde0a955557905a8dbb672e4c7a8b3867730fd4f86a4c1194d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

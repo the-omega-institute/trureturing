@@ -9,12 +9,12 @@ namespace StrataLint.Engine;
 internal static class FrozenHashDomains
 {
     internal const string Statement = "trureturing:statement:v1\0";
-    internal const string Witness = "trureturing:witness:v1\0";
-    internal const string FrozenNode = "trureturing:frozen-node:v1\0";
+    internal const string FrozenNode = "trureturing:frozen-node:v2\0";
     internal const string FrozenGraph = "trureturing:frozen-graph:v1\0";
     internal const string FrozenEvent = "trureturing:frozen-event:v1\0";
     internal const string FrozenEventSet = "trureturing:frozen-event-set:v1\0";
     internal const string FrozenCase = "trureturing:frozen-case:v2\0";
+    internal const string FrozenCaseIdentity = "trureturing:frozen-case-identity:v1\0";
     internal const string FrozenClass = "trureturing:frozen-class:v1\0";
     internal const string FrozenCorpus = "trureturing:frozen-corpus:v2\0";
     internal const string RuleCatalog = "trureturing:rule-catalog:v1\0";
@@ -65,17 +65,6 @@ public sealed record StatementId
     public override string ToString() => Value;
 }
 
-public sealed record WitnessId
-{
-    private WitnessId(string value) => Value = value;
-
-    public string Value { get; }
-
-    internal static WitnessId Create(string value) => new(value);
-
-    public override string ToString() => Value;
-}
-
 public sealed record FrozenNodeId
 {
     private FrozenNodeId(string value) => Value = value;
@@ -87,24 +76,6 @@ public sealed record FrozenNodeId
     public override string ToString() => Value;
 }
 
-public sealed record FrozenEnvironmentAttestation(
-    string OriginCommitOid,
-    string OriginTreeOid,
-    string LeanToolchainBlobOid,
-    string LakeManifestBlobOid)
-{
-    public string? LakefilePath { get; init; }
-
-    public string? LakefileBlobOid { get; init; }
-}
-
-public sealed record FrozenModuleAttestation(RepoPath RepoPath, string SourceBlobOid)
-{
-    public string? BaseCommitOid { get; init; }
-
-    public string? BaseTreeOid { get; init; }
-}
-
 public sealed record FrozenDeclarationStatement(
     string DeclarationNameKey,
     string Kind,
@@ -114,16 +85,13 @@ public sealed record FrozenNodeMaterial(
     RepoPath RepoPath,
     ImmutableArray<FrozenDeclarationStatement> DeclarationStatementIds,
     StatementId StatementId,
-    WitnessId WitnessId,
     FrozenNodeId FrozenNodeId,
     ImmutableArray<FrozenNodeId> PrerequisiteFrozenNodeIds,
-    ImmutableArray<string> AxiomClosure,
-    FrozenModuleAttestation Attestation);
+    ImmutableArray<string> AxiomClosure);
 
 public sealed class FrozenMaterialCatalog
 {
     private FrozenMaterialCatalog(
-        FrozenEnvironmentAttestation environment,
         ImmutableDictionary<RepoPath, TruthState> states,
         ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency,
         ImmutableArray<FrozenNodeMaterial> closedNodes,
@@ -131,7 +99,6 @@ public sealed class FrozenMaterialCatalog
         ImmutableDictionary<RepoPath, ImmutableArray<CaseId>> openCases,
         ImmutableDictionary<RepoPath, ImmutableArray<string>> tailRegistrations)
     {
-        Environment = environment;
         States = states;
         Adjacency = adjacency;
         ClosedNodes = closedNodes;
@@ -139,8 +106,6 @@ public sealed class FrozenMaterialCatalog
         OpenCases = openCases;
         TailRegistrations = tailRegistrations;
     }
-
-    public FrozenEnvironmentAttestation Environment { get; }
 
     public ImmutableArray<FrozenNodeMaterial> ClosedNodes { get; }
 
@@ -155,14 +120,12 @@ public sealed class FrozenMaterialCatalog
     internal ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>> Adjacency { get; }
 
     internal static FrozenMaterialCatalog Create(
-        FrozenEnvironmentAttestation environment,
         ImmutableDictionary<RepoPath, TruthState> states,
         ImmutableArray<FrozenNodeMaterial> closedNodes,
         ImmutableDictionary<RepoPath, ImmutableArray<CaseId>> openCases,
         ImmutableDictionary<RepoPath, ImmutableArray<string>> tailRegistrations,
         ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>>? adjacency = null) =>
         new(
-            environment,
             states,
             adjacency ?? ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>>.Empty,
             closedNodes,

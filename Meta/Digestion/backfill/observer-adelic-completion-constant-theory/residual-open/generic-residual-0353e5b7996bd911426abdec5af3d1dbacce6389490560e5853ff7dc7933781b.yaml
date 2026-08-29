@@ -1,0 +1,10 @@
+ast_path: section/本轮独立推导得到-第-473-部
+fingerprints:
+  raw_sha256: sha256:0353e5b7996bd911426abdec5af3d1dbacce6389490560e5853ff7dc7933781b
+  normalized_sha256: sha256:0353e5b7996bd911426abdec5af3d1dbacce6389490560e5853ff7dc7933781b
+cas_ref: sha256:0353e5b7996bd911426abdec5af3d1dbacce6389490560e5853ff7dc7933781b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

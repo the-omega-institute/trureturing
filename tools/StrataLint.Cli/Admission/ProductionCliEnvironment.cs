@@ -99,7 +99,6 @@ internal interface IRepositoryGateway
     /// reference discipline: only the caller may name a revision; this gateway just diffs it).
     RawChangeSet ReadChanges(string changeBase);
 
-    TrustedFrozenGitReferences ValidateFrozenReferences(FrozenLedgerReferenceSet references);
 }
 
 internal interface ILeanReportSource
@@ -114,8 +113,7 @@ internal interface IFrozenLedgerAdmissionServices
     FrozenLedgerAdmissionPreparation Prepare(
         RepositorySnapshot current,
         RepositorySnapshot protectedBase,
-        RawChangeSet changes,
-        Func<FrozenLedgerReferenceSet, TrustedFrozenGitReferences> validateReferences);
+        RawChangeSet changes);
 
     AdmissionOutcome? Validate(
         FrozenLedgerAdmissionPreparation preparation,
@@ -320,8 +318,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                         var preparation = frozenLedgerAdmission.Prepare(
                             current,
                             baseline,
-                            prepared.Changes,
-                            repository.ValidateFrozenReferences);
+                            prepared.Changes);
                         var identity = DagLedgerCommandPreparation.Ask(
                             repository.ResolveCurrentRevision);
                         return (Preparation: preparation, Identity: identity);
@@ -424,18 +421,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 scribeEmissionVerifier,
                 arguments);
 
-    public CommandResult TheoryCandidates(IReadOnlyList<string> arguments) =>
-        scribeEmissionVerifier is null
-            ? new CommandResult(
-                false,
-                string.Empty,
-                "THEORY_CANDIDATES_INVALID Scribe emission verifier is unavailable\n")
-            : TheoryCandidatesCommand.Run(
-                repository,
-                leanReportSource,
-                scribeEmissionVerifier,
-                arguments);
-
     public CommandResult ShowAtom(IReadOnlyList<string> arguments) =>
         ShowAtomCommand.Run(repository, arguments);
 
@@ -462,11 +447,17 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         DepositHeaderCheckCommand.Run(repository, arguments);
 
     public CommandResult Ingest(IReadOnlyList<string> arguments) =>
+        IngestCommand.RunReportFree(
+            repositoryRoot,
+            repository,
+            arguments);
+
+    public CommandResult AlignDigestionStatus(IReadOnlyList<string> arguments) =>
         scribeEmissionVerifier is null
             ? new CommandResult(
                 false,
                 string.Empty,
-                "INGEST_INVALID Scribe emission verifier is unavailable\n")
+                "ALIGN_DIGESTION_STATUS_INVALID Scribe emission verifier is unavailable\n")
             : IngestCommand.Run(
                 repositoryRoot,
                 repository,
@@ -608,7 +599,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             if (route is not RouteOutcome.Routed routed
                 || routed.Result.Gid.Value != "D5/S0/Carrier/Probe"
                 || routed.Result.Path.Value != "D5/S0/Carrier/Probe.lean"
-                || RuleCatalog.Default.Descriptors.Length != 27)
+                || RuleCatalog.Default.Descriptors.Length != 26)
             {
                 return new CommandResult(false, string.Empty, "SELFTEST FAIL invariant mismatch\n");
             }

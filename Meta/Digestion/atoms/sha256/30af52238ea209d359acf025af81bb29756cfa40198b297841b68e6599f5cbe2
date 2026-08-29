@@ -1,0 +1,41 @@
+## 578.1 与项目第二阶因子化的关系
+
+项目已经证明黄金 germ 的第二阶展开包含：
+
+$$
+\boxed{
+\zeta(\varphi^2s)
+\zeta(\varphi^3s)
+\zeta(2\varphi^2s)^{-1},
+}
+\tag{578.4}
+$$
+
+并把 residual product 的绝对收敛域继续推进到：
+
+$$
+\boxed{
+\Re s>\frac1{\varphi^4}.
+}
+\tag{578.5}
+$$
+
+其中：
+
+* \(\varphi^2\)：偶尺度；
+* \(\varphi^3\)：奇尺度；
+* \(2\varphi^2\)：由 \(1+x=(1-x^2)/(1-x)\) 一类 signed Euler 重组产生的补偿尺度。
+
+这不能直接解释为已完成的 Galois 奇偶理论，但它已经显示：
+
+$$
+\boxed{
+\text{第二阶 local cancellation
+开始同时携带 even mode、odd mode 与 reciprocal correction。}
+}
+$$
+
+这是值得继续形式化的真实残差。
+
+---
+

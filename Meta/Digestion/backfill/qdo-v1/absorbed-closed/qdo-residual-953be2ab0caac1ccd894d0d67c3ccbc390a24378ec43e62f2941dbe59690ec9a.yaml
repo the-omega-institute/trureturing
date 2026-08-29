@@ -1,0 +1,17 @@
+ast_path: theorem/39.5
+fingerprints:
+  raw_sha256: sha256:953be2ab0caac1ccd894d0d67c3ccbc390a24378ec43e62f2941dbe59690ec9a
+  normalized_sha256: sha256:953be2ab0caac1ccd894d0d67c3ccbc390a24378ec43e62f2941dbe59690ec9a
+cas_ref: sha256:953be2ab0caac1ccd894d0d67c3ccbc390a24378ec43e62f2941dbe59690ec9a
+coverage_gids:
+  - D5/S3/Zeros/PrimeRefinement/FinitePrimeExtractionZeroPersistence.finite_prime_extraction_preserves_zeta_zero
+receipts:
+  coverage:
+    - gid: D5/S3/Zeros/PrimeRefinement/FinitePrimeExtractionZeroPersistence.finite_prime_extraction_preserves_zeta_zero
+      source_sha256: sha256:953be2ab0caac1ccd894d0d67c3ccbc390a24378ec43e62f2941dbe59690ec9a
+      target_statement_id: sha256:6c4fc0075e28824cff85cbd41a9f217a3c212061949e54c2857fd2f471084b49
+  scribe:
+    - gid: D5/S3/Zeros/PrimeRefinement/FinitePrimeExtractionZeroPersistence.finite_prime_extraction_preserves_zeta_zero
+      definition_sha256: sha256:c51852362caec32fe7f3e92539ee8f2442c6556849993a94ffe2de8751217203
+      emission_sha256: sha256:e6927ff225ced2f64a2ae1a8e46ef8783baa8ce3ef4221f164cfa30918c0ab95
+  unresolved_subitems: []

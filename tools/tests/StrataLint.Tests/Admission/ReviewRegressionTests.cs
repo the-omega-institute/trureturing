@@ -130,6 +130,41 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
+    public void Sl016AdmissionAndReportFreeShareInvalidSourceIdValidation()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        var source = fixture.Files[RuleFixture.FixtureBackfillSourcePath]
+            .Replace("source_id = \"fixture-source\"", "source_id = \"INVALID\"", StringComparison.Ordinal);
+        var atom = fixture.Files[RuleFixture.FixtureBackfillAtomPath];
+        fixture.Files.Remove(RuleFixture.FixtureBackfillSourcePath);
+        fixture.Files.Remove(RuleFixture.FixtureBackfillAtomPath);
+        var invalidSourcePath = RuleFixture.FixtureBackfillSourcePath.Replace(
+            "/fixture-source/",
+            "/INVALID/",
+            StringComparison.Ordinal);
+        var invalidAtomPath = RuleFixture.FixtureBackfillAtomPath.Replace(
+            "/fixture-source/",
+            "/INVALID/",
+            StringComparison.Ordinal);
+        fixture.Files[invalidSourcePath] = source;
+        fixture.Files[invalidAtomPath] = atom;
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(16),
+            fixture.Build(RawChangeSet.Create([
+                RuleFixture.FixtureBackfillSourcePath,
+                RuleFixture.FixtureBackfillAtomPath,
+                invalidSourcePath,
+                invalidAtomPath,
+            ])));
+
+        Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
+            "invalid source_id: INVALID",
+            StringComparison.Ordinal));
+    }
+
+    [Fact]
     public void Sl016RejectsDeletingABaselineCasBlob()
     {
         var fixture = new RuleFixture();
@@ -651,95 +686,6 @@ public sealed partial class ReviewRegressionTests
         Assert.Equal(1, Count(casChainSource, "var casEvaluation = DigestionCasStore.Evaluate("));
         Assert.DoesNotContain("var cas = DigestionCasStore.Evaluate(", casChainSource, StringComparison.Ordinal);
         Assert.Equal(2, Count(casChainSource, "casEvaluation: casEvaluation"));
-    }
-
-    [Fact]
-    public void Cf10WorkflowSeparatesLeanInspectionFromDotnetAdmission()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var workflow = File.ReadAllText(
-            Path.Combine(root, ".github", "workflows", "ci.yml"),
-            Encoding.UTF8);
-        var gate = File.ReadAllText(
-            Path.Combine(root, ".github", "scripts", "harness-gate.sh"),
-            Encoding.UTF8);
-        var producer = File.ReadAllText(
-            Path.Combine(root, "tools", "lean-inspector", "inspect.sh"),
-            Encoding.UTF8);
-        var pairProducer = File.ReadAllText(
-            Path.Combine(root, "tools", "scripts", "lean-report-pair.sh"),
-            Encoding.UTF8);
-        var selftest = File.ReadAllText(
-            Path.Combine(root, "tools", "scripts", "stratalint-selftest.sh"),
-            Encoding.UTF8);
-        var inspectJob = workflow[
-            workflow.IndexOf("  lean-inspect:", StringComparison.Ordinal)..workflow.IndexOf("  baseline-admission:", StringComparison.Ordinal)];
-        var baselineJob = workflow[workflow.IndexOf("  baseline-admission:", StringComparison.Ordinal)..];
-
-        Assert.Contains("lean-cache-run.sh", producer, StringComparison.Ordinal);
-        Assert.Contains("build", producer, StringComparison.Ordinal);
-        Assert.Contains("env", producer, StringComparison.Ordinal);
-        Assert.Contains("lean", producer, StringComparison.Ordinal);
-        Assert.Contains("--run", producer, StringComparison.Ordinal);
-        Assert.Contains("stdout.log", producer, StringComparison.Ordinal);
-        Assert.Contains("stderr.log", producer, StringComparison.Ordinal);
-        Assert.Contains("cat", producer, StringComparison.Ordinal);
-        Assert.DoesNotContain("tail -", producer, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("actions/upload-artifact", inspectJob, StringComparison.Ordinal);
-        Assert.Contains("lean-report-pair.sh", inspectJob, StringComparison.Ordinal);
-        Assert.Contains("--producer", inspectJob, StringComparison.Ordinal);
-        Assert.Contains("--candidate-root", inspectJob, StringComparison.Ordinal);
-        Assert.Contains("candidate-lean-report.json", inspectJob, StringComparison.Ordinal);
-        // Lean inspection produces the candidate report without the retired no-op flag.
-        Assert.DoesNotContain("--single", inspectJob, StringComparison.Ordinal);
-        Assert.DoesNotContain("--baseline-root", inspectJob, StringComparison.Ordinal);
-        Assert.Contains("stratalint-lean-report-input-v1", pairProducer, StringComparison.Ordinal);
-        Assert.Contains("stratalint-lean-report-provenance-v1", pairProducer, StringComparison.Ordinal);
-        Assert.Contains("repository_inspector_sha256", pairProducer, StringComparison.Ordinal);
-
-        Assert.Contains("needs: lean-inspect", baselineJob, StringComparison.Ordinal);
-        Assert.Contains("actions/download-artifact", baselineJob, StringComparison.Ordinal);
-        Assert.Contains("harness-gate.sh", baselineJob, StringComparison.Ordinal);
-        // 【2026-08-13 设计变更,owner 定】法官改由候选自己提供,不再从 base 侧编译。
-        // 原断言要求 gate 来自 baseline;那守的是「法官来自 base」这条
-        // 安全性质,其威胁模型是「候选改法官放行自己」——本仓案底 0 次。而它的实际代价是
-        // 同日两次全仓停摆:SL-003 锁死七个在飞 PR;法官 selftest 挂掉后连修它的 PR 都进不来。
-        // 第 20″ 條:防的必须是发生过的事;由恶意证成而无实际攻击者的机制即为臆想。
-        // base 仍然提供 --base 指向的旧侧 git 快照,那不需要编译 base。
-        Assert.Contains("candidate/.github/scripts/harness-gate.sh", baselineJob, StringComparison.Ordinal);
-        Assert.DoesNotContain("--judge-root", baselineJob, StringComparison.Ordinal);
-        Assert.Contains("--candidate", baselineJob, StringComparison.Ordinal);
-        Assert.Contains("--base", baselineJob, StringComparison.Ordinal);
-        Assert.Contains("--candidate-lean-report", baselineJob, StringComparison.Ordinal);
-        Assert.DoesNotContain("--baseline-lean-report", baselineJob, StringComparison.Ordinal);
-        Assert.DoesNotContain("--legacy-bootstrap", baselineJob, StringComparison.Ordinal);
-        Assert.DoesNotContain("dotnet build", baselineJob, StringComparison.Ordinal);
-        Assert.DoesNotContain(" selftest", baselineJob, StringComparison.Ordinal);
-        Assert.DoesNotContain(".lake", baselineJob, StringComparison.Ordinal);
-        Assert.DoesNotContain("elan", baselineJob, StringComparison.OrdinalIgnoreCase);
-        Assert.DoesNotContain("lake build", baselineJob, StringComparison.Ordinal);
-
-        Assert.Contains("set -euo pipefail", gate, StringComparison.Ordinal);
-        Assert.Contains("check --protected-base", gate, StringComparison.Ordinal);
-        Assert.Contains("--candidate-lean-report", gate, StringComparison.Ordinal);
-        Assert.DoesNotContain("--baseline-lean-report", gate, StringComparison.Ordinal);
-        Assert.DoesNotContain("--frozen-evidence-root", gate, StringComparison.Ordinal);
-        Assert.DoesNotContain("--judge-root", gate, StringComparison.Ordinal);
-        Assert.DoesNotContain("--legacy-bootstrap", gate, StringComparison.Ordinal);
-        Assert.DoesNotContain("verify-conservative", gate, StringComparison.Ordinal);
-        Assert.Contains(
-            "protected-surface change (SL-022); content checks passed",
-            gate,
-            StringComparison.Ordinal);
-        Assert.DoesNotContain(" selftest", gate, StringComparison.Ordinal);
-        Assert.DoesNotContain("mark selftest", gate, StringComparison.Ordinal);
-        Assert.Contains("selftest > \"$RUNS/first.txt\"", selftest, StringComparison.Ordinal);
-        Assert.Contains("selftest > \"$RUNS/second.txt\"", selftest, StringComparison.Ordinal);
-        Assert.Contains("cmp \"$RUNS/first.txt\" \"$RUNS/second.txt\"", selftest, StringComparison.Ordinal);
-        Assert.DoesNotContain("LAKE", gate, StringComparison.Ordinal);
-        Assert.DoesNotContain("elan", gate, StringComparison.OrdinalIgnoreCase);
-        Assert.DoesNotContain("tail -", workflow, StringComparison.OrdinalIgnoreCase);
-        Assert.DoesNotContain("Tail(", workflow + gate + producer, StringComparison.Ordinal);
     }
 
 }

@@ -1,0 +1,104 @@
+# 第六百三十三部　DECT 中的离线零点逃逸
+
+定义候选谱状态空间：
+
+$$
+X
+=
+\left\{
+(\gamma,\delta):
+\gamma\in\mathbb R,\,
+-\frac12<\delta<\frac12
+\right\}.
+$$
+
+定义当前完成观察器：
+
+$$
+\boxed{
+q(\gamma,\delta)
+=
+\frac12+i\gamma.
+}
+\tag{633.1}
+$$
+
+它只保留 completion barycenter。
+
+定义目标：
+
+$$
+\boxed{
+T(\gamma,\delta)
+=
+\delta^2.
+}
+\tag{633.2}
+$$
+
+则：
+
+$$
+q(\gamma,\delta_1)
+=
+q(\gamma,\delta_2)
+$$
+
+即使：
+
+$$
+\delta_1^2\neq\delta_2^2.
+$$
+
+所以当前逃逸关系包含：
+
+$$
+\boxed{
+\left(
+(\gamma,\delta_1),
+(\gamma,\delta_2)
+\right)
+}
+$$
+
+只要平方缺陷不同。
+
+加入新定义：
+
+$$
+\boxed{
+d(\gamma,\delta)=\delta^2
+}
+\tag{633.3}
+$$
+
+以后：
+
+$$
+q\vee d
+$$
+
+能够切开这些逃逸对。
+
+仓库 DECT 已将目标逃逸定义为：
+
+$$
+\mathcal E(q;T)=\ker q\setminus\ker T
+$$
+
+并证明联合新定义后的残差等于旧残差与新定义 kernel 的交。
+
+因此：
+
+$$
+\boxed{
+\delta^2
+}
+$$
+
+不是 RH 的另一个同义表述而已。
+
+它是 completion barycenter observer 尚未读取到的最低正逃逸坐标。
+
+---
+

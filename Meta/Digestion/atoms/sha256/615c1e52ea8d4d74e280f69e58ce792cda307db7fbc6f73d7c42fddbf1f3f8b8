@@ -1,0 +1,39 @@
+* visible／hidden 通道；
+
+给出。
+
+用 Fibonacci substitution：
+
+$$
++\mapsto+-,
+\qquad
+-\mapsto+
+$$
+
+生成观察顺序。
+
+定义 stateful updates：
+
+$$
+U_p^{(+)},
+\qquad
+U_p^{(-)}.
+$$
+
+构造层级 transfer：
+
+$$
+\boxed{
+\Theta_n^{(\varphi)}(s)
+=
+q\left(
+U_{w_n}(s)x_0
+\right),
+}
+\tag{681.2}
+$$
+
+其中 \(w_n\) 为第 \(n\) 个 Fibonacci 前缀。
+
+---
+

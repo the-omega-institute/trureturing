@@ -1,0 +1,59 @@
+## 定理 655.1（Unforced golden completion has no off-line fixed point）
+
+映射：
+
+$$
+R_\varphi(\delta)
+=
+-\varphi^{-1}\delta
+$$
+
+唯一的固定点和唯一有限周期点都是：
+
+$$
+\boxed{
+\delta=0.
+}
+\tag{655.3}
+$$
+
+### 证明
+
+若固定：
+
+$$
+\delta=-\varphi^{-1}\delta,
+$$
+
+则：
+
+$$
+(1+\varphi^{-1})\delta=0.
+$$
+
+由于：
+
+$$
+1+\varphi^{-1}=\varphi>0,
+$$
+
+故 \(\delta=0\)。
+
+若为 \(k\) 周期点，则：
+
+$$
+\delta
+=
+(-\varphi^{-1})^k\delta.
+$$
+
+因：
+
+$$
+|(-\varphi^{-1})^k|<1,
+$$
+
+仍只能 \(\delta=0\)。∎
+
+---
+

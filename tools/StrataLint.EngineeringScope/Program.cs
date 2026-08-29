@@ -2,7 +2,6 @@ using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Xml.Linq;
 using StrataLint.Engine;
 
 namespace StrataLint.EngineeringScope;
@@ -37,18 +36,19 @@ internal static class Program
 
             var options = Options.Parse(arguments);
             var head = GitText(options.RepositoryRoot, "rev-parse", "HEAD");
+            var @base = GitText(options.RepositoryRoot, "rev-parse", "HEAD^1");
             if (options.Head != head
-                || !IsObjectId(options.Base, head.Length)
-                || !GitSucceeds(options.RepositoryRoot, "merge-base", "--is-ancestor", options.Base, head))
+                || options.Base != @base
+                || !IsObjectId(options.Base, head.Length))
             {
                 throw new InvalidOperationException(
-                    "--head must equal the checked HEAD and --base must be a full object ID ancestral to HEAD");
+                    "--head must equal the checked HEAD and --base must equal the checked HEAD^1");
             }
 
             return options.Mode switch
             {
-                "plan" => Plan(options, head, options.Base),
-                "execute" => Execute(options, head, options.Base),
+                "plan" => Plan(options, head, @base),
+                "execute" => Execute(options, head, @base),
                 _ => throw new ArgumentException($"unknown mode: {options.Mode}"),
             };
         }
@@ -62,25 +62,17 @@ internal static class Program
     private static int Plan(Options options, string head, string @base)
     {
         var changedPaths = GitPaths(options.RepositoryRoot, @base, head);
-        EngineeringTestPlan plan;
-        if (Environment.GetEnvironmentVariable("FULL") is { Length: > 0 } full)
+        var full = Environment.GetEnvironmentVariable("FULL");
+        if (full is { Length: > 0 } && full != "1")
         {
-            if (full != "1") throw new InvalidOperationException("FULL must be unset or exactly 1");
-            plan = EngineeringTestPlanPolicy.Full(changedPaths, "FULL=1 requests the diagnostic full plan");
-        }
-        else
-        {
-            try
-            {
-                plan = EngineeringTestPlanDeriver.DeriveRepository(options.RepositoryRoot, changedPaths);
-            }
-            catch (Exception exception)
-            {
-                plan = EngineeringTestPlanPolicy.Full(changedPaths, $"plan derivation failed: {exception.Message}");
-            }
+            throw new InvalidOperationException("FULL must be unset or exactly 1");
         }
 
-        WriteArtifact(options.PlanFile, new EngineeringTestPlanArtifact(1, head, @base, plan));
+        var plan = EngineeringTestPlanDeriver.DeriveSnapshot(
+            BaseSnapshot(options.RepositoryRoot, @base),
+            changedPaths,
+            full == "1");
+        WriteArtifact(options.PlanFile, new EngineeringTestPlanArtifact(2, head, @base, plan));
         WritePlan(plan);
         return 0;
     }
@@ -94,21 +86,40 @@ internal static class Program
                 File.ReadAllText(options.PlanFile, StrictUtf8),
                 JsonOptions) ?? throw new InvalidDataException("plan artifact is empty");
             ValidateArtifact(artifact, head, @base);
+            var changedPaths = GitPaths(options.RepositoryRoot, @base, head);
+            var baseSnapshot = BaseSnapshot(options.RepositoryRoot, @base);
+            var expected = EngineeringTestPlanDeriver.DeriveSnapshot(baseSnapshot, changedPaths);
+            var forcedFull = artifact.Plan!.Kind == EngineeringTestPlanKind.Full
+                ? EngineeringTestPlanDeriver.DeriveSnapshot(baseSnapshot, changedPaths, full: true)
+                : null;
+            if (!PlanEquals(artifact.Plan, expected)
+                && (forcedFull is null || !PlanEquals(artifact.Plan, forcedFull)))
+            {
+                throw new InvalidDataException(
+                    "plan artifact differs from the protected-base identity derivation");
+            }
+
             plan = artifact.Plan!;
         }
         catch (Exception exception)
         {
-            plan = EngineeringTestPlanPolicy.Full(
+            plan = EngineeringTestPlanDeriver.DeriveSnapshot(
+                BaseSnapshot(options.RepositoryRoot, @base),
                 GitPaths(options.RepositoryRoot, @base, head),
-                $"plan artifact failed validation: {exception.Message}");
+                full: true);
             Console.Error.WriteLine($"ENGINEERING_TEST_PLAN_FALLBACK {exception.Message}");
         }
 
         WritePlan(plan);
-        return EngineeringTestExecutor.Execute(plan, invocation => RunTests(options.RepositoryRoot, invocation));
+        return EngineeringTestExecutor.Execute(
+            plan,
+            invocation => RunTests(options.RepositoryRoot, plan.ChangedPaths, invocation));
     }
 
-    private static int RunTests(string repositoryRoot, EngineeringTestInvocation invocation)
+    private static int RunTests(
+        string repositoryRoot,
+        IReadOnlyList<string> changedPaths,
+        EngineeringTestInvocation invocation)
     {
         var resultsDirectory = Directory.CreateTempSubdirectory("stratalint-engineering-tests-").FullName;
         var startInfo = new ProcessStartInfo
@@ -139,7 +150,7 @@ internal static class Program
 
             try
             {
-                var executed = VerifyTestEvidence(repositoryRoot, invocation, resultsDirectory);
+                var executed = VerifyTestEvidence(resultsDirectory);
                 Console.WriteLine(
                     $"ENGINEERING_TEST_EXECUTED target={JsonSerializer.Serialize(invocation.Target)} "
                     + $"filter={JsonSerializer.Serialize(invocation.Filter)} evidence=trx executed={executed}");
@@ -157,21 +168,8 @@ internal static class Program
         }
     }
 
-    private static int VerifyTestEvidence(
-        string repositoryRoot,
-        EngineeringTestInvocation invocation,
-        string resultsDirectory)
-    {
-        var evidence = TestResultEvidence.Load(resultsDirectory);
-        var missing = invocation.ExpectedTests
-            .Select(test => (Assembly: ProjectAssembly(repositoryRoot, test.ProjectPath), test.Id))
-            .Where(expected => !evidence.ExecutedTests.Contains(expected))
-            .Select(static expected => $"{expected.Assembly}::{expected.Id}")
-            .ToArray();
-        if (missing.Length != 0)
-            throw new InvalidDataException($"TRX is missing planned tests: {string.Join(", ", missing)}");
-        return evidence.Executed;
-    }
+    private static int VerifyTestEvidence(string resultsDirectory) =>
+        TestResultEvidence.Load(resultsDirectory).Executed;
 
     private static int VerifyTrx(VerifyTrxOptions options)
     {
@@ -194,24 +192,25 @@ internal static class Program
         return 0;
     }
 
-    private static string ProjectAssembly(string repositoryRoot, string projectPath)
-    {
-        var document = XDocument.Load(Path.Combine(repositoryRoot, projectPath), LoadOptions.None);
-        return document.Descendants().FirstOrDefault(element => element.Name.LocalName == "AssemblyName")?.Value
-            ?? Path.GetFileNameWithoutExtension(projectPath);
-    }
-
     private static void ValidateArtifact(EngineeringTestPlanArtifact artifact, string head, string @base)
     {
-        if (artifact.Version != 1 || artifact.Head != head || artifact.Base != @base)
+        if (artifact.Version != 2 || artifact.Head != head || artifact.Base != @base)
             throw new InvalidDataException("plan artifact does not address the checked head and base");
         if (artifact.Plan is null || artifact.Plan.ChangedPaths.IsDefault || artifact.Plan.Tests.IsDefault
             || string.IsNullOrWhiteSpace(artifact.Plan.Reason)
-            || (artifact.Plan.Kind == EngineeringTestPlanKind.Selected) != (artifact.Plan.Tests.Length != 0)
+            || (artifact.Plan.Kind == EngineeringTestPlanKind.Selected && artifact.Plan.Tests.Length == 0)
+            || (artifact.Plan.Kind == EngineeringTestPlanKind.None && artifact.Plan.Tests.Length != 0)
             || artifact.Plan.Tests.Any(static test => string.IsNullOrWhiteSpace(test.ProjectPath)
+                || string.IsNullOrWhiteSpace(test.Assembly)
                 || string.IsNullOrWhiteSpace(test.Id) || string.IsNullOrWhiteSpace(test.Detail)))
-            throw new InvalidDataException("plan artifact does not conform to schema version 1");
+            throw new InvalidDataException("plan artifact does not conform to schema version 2");
     }
+
+    private static bool PlanEquals(EngineeringTestPlan left, EngineeringTestPlan right) =>
+        left.Kind == right.Kind
+        && left.Reason == right.Reason
+        && left.ChangedPaths.SequenceEqual(right.ChangedPaths, StringComparer.Ordinal)
+        && left.Tests.SequenceEqual(right.Tests);
 
     private static void WritePlan(EngineeringTestPlan plan)
     {
@@ -223,7 +222,8 @@ internal static class Program
         {
             Console.WriteLine(
                 $"ENGINEERING_TEST_SELECTED project={JsonSerializer.Serialize(test.ProjectPath)} "
-                + $"id={JsonSerializer.Serialize(test.Id)} reason={test.Reason.ToString().ToLowerInvariant()} "
+                + $"assembly={JsonSerializer.Serialize(test.Assembly)} id={JsonSerializer.Serialize(test.Id)} "
+                + $"reason={test.Reason.ToString().ToLowerInvariant()} "
                 + $"detail={JsonSerializer.Serialize(test.Detail)}");
         }
     }
@@ -242,14 +242,6 @@ internal static class Program
         return StrictUtf8.GetString(output.StandardOutput).Trim();
     }
 
-    private static bool GitSucceeds(string repositoryRoot, params string[] arguments) =>
-        BoundedProcessRunner.Run(
-            "git",
-            ["-C", repositoryRoot, .. arguments],
-            repositoryRoot,
-            BoundedProcessRunner.HangDetectionBudget,
-            1024 * 1024).ExitCode == 0;
-
     private static bool IsObjectId(string value, int expectedLength) =>
         value.Length == expectedLength
         && value.All(static character => character is >= '0' and <= '9' or >= 'a' and <= 'f');
@@ -266,6 +258,15 @@ internal static class Program
         return StrictUtf8.GetString(output.StandardOutput)
             .Split('\0', StringSplitOptions.RemoveEmptyEntries);
     }
+
+    private static RepositorySnapshot BaseSnapshot(string repositoryRoot, string @base) =>
+        SnapshotDecoder.Decode(GitRepositorySnapshotReader.ReadRevision(repositoryRoot, @base)) switch
+        {
+            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
+            SnapshotDecodeOutcome.InfrastructureFailure failure =>
+                throw new InvalidDataException($"protected base snapshot is invalid: {failure.Message}"),
+            _ => throw new InvalidDataException("protected base snapshot decode returned an unknown outcome"),
+        };
 
     private sealed record EngineeringTestPlanArtifact(
         int Version,

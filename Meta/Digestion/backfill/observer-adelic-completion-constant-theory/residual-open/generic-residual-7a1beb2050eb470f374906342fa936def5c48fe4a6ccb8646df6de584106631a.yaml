@@ -1,0 +1,10 @@
+ast_path: section/487-1-RH-的新完成表述
+fingerprints:
+  raw_sha256: sha256:7a1beb2050eb470f374906342fa936def5c48fe4a6ccb8646df6de584106631a
+  normalized_sha256: sha256:7a1beb2050eb470f374906342fa936def5c48fe4a6ccb8646df6de584106631a
+cas_ref: sha256:7a1beb2050eb470f374906342fa936def5c48fe4a6ccb8646df6de584106631a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

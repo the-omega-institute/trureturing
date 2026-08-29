@@ -1,0 +1,60 @@
+## 548.1 Li–Clark 只是一个尺度截面
+
+在：
+
+$$
+a=\frac12,
+$$
+
+Cayley moments 为：
+
+$$
+\boxed{
+m_n(\tfrac12)
+=
+\lambda_{|n+1|}
+-
+2\lambda_{|n|}
++
+\lambda_{|n-1|}.
+}
+\tag{548.4}
+$$
+
+所以 Li–Clark moments 只是完整双曲尺度轨道：
+
+$$
+\boxed{
+\{m_n(a)\}_{a>0}
+}
+$$
+
+在：
+
+$$
+a=\frac12
+$$
+
+处的一个截面。
+
+其附近尺度导数由定理 540.1 完全确定：
+
+$$
+\boxed{
+\left.
+a\frac{d}{da}m_n(a)
+\right|_{a=1/2}
+=
+\frac{n+1}{2}m_{n+1}(\tfrac12)
++
+\frac{1-n}{2}m_{n-1}(\tfrac12)
+-
+m_n(\tfrac12).
+}
+\tag{548.5}
+$$
+
+因此 Li 系数不仅生成一个 Toeplitz moment sequence，也生成其完整尺度 jet。
+
+---
+

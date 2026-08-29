@@ -1,0 +1,28 @@
+# 第五百六十五部　Scale Design 不再是信息量问题
+
+定理 554.1 表明，只要共同 rational space 维数为 \(n\)，完整 Gram 数据最终都压缩为一个 \(n\times n\) Toeplitz moment matrix。
+
+因此，在理想无误差情况下，不同的尺度分配：
+
+$$
+(n_0,n_1,\ldots,n_M)
+$$
+
+只是在选择同一维数 rational observer space 的不同坐标。
+
+真正的 scale-design 目标不是“获得更多信息”，而是优化：
+
+$$
+\boxed{
+\begin{aligned}
+&\|A\|\,\|A^{-1}\|;\\
+&\text{Laguerre truncation error};\\
+&\text{moment transport radius};\\
+&\text{最低 generalized eigenvalue gap};\\
+&\text{contact root condition number}.
+\end{aligned}
+}
+$$
+
+---
+

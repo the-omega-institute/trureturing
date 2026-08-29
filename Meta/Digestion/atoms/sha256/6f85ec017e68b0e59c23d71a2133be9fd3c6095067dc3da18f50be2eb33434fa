@@ -1,0 +1,14 @@
+## 439.2 低频 Taylor 分析可以完全被 gauge 改写
+
+任意有限数量的 moments 都能被外部 smooth gauge 消去。
+
+所以：
+
+$$
+m_L(0),m_L''(0),\ldots
+$$
+
+只有在 gauge 已冻结时才有意义。
+
+---
+

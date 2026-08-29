@@ -1,0 +1,17 @@
+ast_path: 命题/76.9/clause/1
+fingerprints:
+  raw_sha256: sha256:ef1bf24aab80746091ef2cdda225be6c0365f495872db6a24ffe1c3c5c6b1acc
+  normalized_sha256: sha256:ef1bf24aab80746091ef2cdda225be6c0365f495872db6a24ffe1c3c5c6b1acc
+cas_ref: sha256:ef1bf24aab80746091ef2cdda225be6c0365f495872db6a24ffe1c3c5c6b1acc
+coverage_gids:
+  - D5/S3/ConceptDynamics/Policy/MemorylessActionObstruction.no_memoryless_policy
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Policy/MemorylessActionObstruction.no_memoryless_policy
+      source_sha256: sha256:ef1bf24aab80746091ef2cdda225be6c0365f495872db6a24ffe1c3c5c6b1acc
+      target_statement_id: sha256:5f04b0354ab78ac7c6729c28bf73db04af141d22d5d4ed140c2414e6d00f271e
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Policy/MemorylessActionObstruction.no_memoryless_policy
+      definition_sha256: sha256:b74cf459fdb29ec5f79ac642dfd244515feafa9fc95e75de19735d7a08fbe139
+      emission_sha256: sha256:63cde6ef7b10e5568b08d4859ecc8ee459ca4916d24eba2ee72f73d58ca6b144
+  unresolved_subitems: []

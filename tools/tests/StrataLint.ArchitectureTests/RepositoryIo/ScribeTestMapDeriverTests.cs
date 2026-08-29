@@ -21,13 +21,20 @@ public sealed class ScribeTestMapDeriverTests
         Assert.Equal(280, ScribeUnknownDebtPolicy.UnknownDebtLimit);
         Assert.Equal(281, ScribeUnknownDebtPolicy.UnknownDebtToleranceLimit);
         Assert.Empty(ScribeUnknownDebtPolicy.InspectCurrent(map));
-        var retiredLedgerMethod = Assert.Single(
+        var currentLedgerMethod = Assert.Single(
             map.Methods,
             static method => method.Id ==
-                "TruthExportCommandTests.ExportEqualsStrictActiveSetDroppingRevokedNodes");
+                "TruthExportCommandTests.ExportEqualsStrictActiveFreezeSnapshot");
         Assert.False(
-            retiredLedgerMethod.IsUnknown,
-            $"{retiredLedgerMethod.Id}: {string.Join(',', retiredLedgerMethod.UnknownReasons)}");
+            currentLedgerMethod.IsUnknown,
+            $"{currentLedgerMethod.Id}: {string.Join(',', currentLedgerMethod.UnknownReasons)}");
+        var ingestSplitClosureMethod = Assert.Single(
+            map.Methods,
+            static method => method.Id ==
+                "ProductionEnvironmentTests.IngestReportFreeAcceptsPureAdditionBesideSeenCoveredEntryWithoutRewritingIt");
+        Assert.False(
+            ingestSplitClosureMethod.IsUnknown,
+            $"{ingestSplitClosureMethod.Id}: {string.Join(',', ingestSplitClosureMethod.UnknownReasons)}");
         Assert.All(
             map.Methods.SelectMany(static method => method.Paths),
             path => Assert.True(
@@ -529,16 +536,16 @@ public sealed class ScribeTestMapDeriverTests
     public void RepositoryLayoutCombineDerivesItsLiteralPath()
     {
         const string source = """
-            class WorkflowTests {
-              [Fact] public void ReadsWorkflow() => File.ReadAllText(
-                Path.Combine(RepositoryLayout.FindRoot(), ".github", "workflows", "ci.yml"));
+            class BannedSymbolTests {
+              [Fact] public void ReadsBannedSymbols() => File.ReadAllText(
+                Path.Combine(RepositoryLayout.FindRoot(), "tools", "Architecture", "BannedSymbols.Determinism.txt"));
             }
             """;
 
-        var map = DeriveSources([new("WorkflowTests.cs", source)]);
+        var map = DeriveSources([new("BannedSymbolTests.cs", source)]);
 
         var method = Assert.Single(map.Methods);
-        Assert.Equal([".github/workflows/ci.yml"], method.Paths);
+        Assert.Equal(["tools/Architecture/BannedSymbols.Determinism.txt"], method.Paths);
         Assert.False(method.IsUnknown);
     }
 
@@ -694,7 +701,13 @@ public sealed class ScribeTestMapDeriverTests
             []);
     }
 
-    private static ScribeTestMap DeriveSources(IEnumerable<TestMapSource> sources)
+    /// <summary>
+    /// 共享给 <see cref="ScribeTestMapDeclaredReadTests"/>:它的三条测试同样需要
+    /// 追加 <c>RepositoryAccessor</c> 支撑源。**不在那边复制第二份** —— 见第 6 条唯一真源。
+    /// (那三条原本在本文件里,因把本文件推到 830 行、越过 SL-003 的 800 行硬线而移出;
+    ///  实测 `CapacityPolicyTests` 257 通过 / 1 失败。)
+    /// </summary>
+    internal static ScribeTestMap DeriveSources(IEnumerable<TestMapSource> sources)
     {
         const string accessorSource = """
             class RepositoryAccessor {
@@ -710,4 +723,54 @@ public sealed class ScribeTestMapDeriverTests
             sources.Append(new("Support/RepositoryAccessor.cs", accessorSource)),
             []);
     }
+
+    /// <summary>
+    /// `EnumerateDeclared(root, "<字面量>")` 必须把该前缀登记为 declared input。
+    /// 没有这条,`EngineeringTestPlanDeriver` 就选不中调用它的测试(第二轮评审实测的缺口)。
+    /// **可达性契约只查测试 ID、不查 `Reason`**,故这一侧必须在这里单独钉住。
+    /// </summary>
+    [Fact]
+    public void EnumerateDeclaredLiteralPrefixBecomesADeclaredPath()
+    {
+        const string source = """
+            class DeclaredTests {
+              [Fact] public void ReadsPrefix() {
+                GitIndexRepositoryFiles.EnumerateDeclared(RepositoryLayout.FindRoot(), "D5");
+              }
+            }
+            """;
+
+        var method = Assert.Single(DeriveSources([new("DeclaredTests.cs", source)]).Methods);
+
+        Assert.Contains("D5", method.Paths);
+        Assert.False(method.IsUnknown);
+    }
+
+
+    /// <summary>
+    /// **放行侧的对偶**:前缀是变量时必须 fail-closed 记 `VariablePath`。
+    ///
+    /// 第四轮评审实测:单独删掉 `reasons.Add(TestMapUnknownReason.VariablePath);`
+    /// 后整个 `StrataLint.ArchitectureTests` **229/229 全过、exit 0** —— 空钉子。
+    /// 那条分支在没有它时会把一个来路不明的前缀**静默当成已知输入**。
+    /// </summary>
+    [Fact]
+    public void EnumerateDeclaredVariablePrefixIsUnknown()
+    {
+        const string source = """
+            class VariablePrefixTests {
+              [Fact] public void ReadsPrefix() {
+                var prefix = Pick();
+                GitIndexRepositoryFiles.EnumerateDeclared(RepositoryLayout.FindRoot(), prefix);
+              }
+              private string Pick() => "D5";
+            }
+            """;
+
+        var method = Assert.Single(DeriveSources([new("VariablePrefixTests.cs", source)]).Methods);
+
+        Assert.Equal(TestMapUnknownReason.VariablePath, Assert.Single(method.UnknownReasons));
+    }
+
+
 }

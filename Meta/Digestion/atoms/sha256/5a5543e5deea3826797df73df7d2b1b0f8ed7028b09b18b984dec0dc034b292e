@@ -1,0 +1,32 @@
+## 519.5 Natural Haar–Clark limit
+
+在：
+
+$$
+a=\frac12,
+\qquad
+C=2\lambda_1
+$$
+
+下，目标为证明：
+
+$$
+p_L
+\to
+\sigma_1[\vartheta_\xi],
+$$
+
+$$
+\omega_L\to0,
+$$
+
+并使 contact atoms 在 Cayley 圆上局部化到：
+
+$$
+u_\gamma
+=
+\frac{\gamma+i/2}{\gamma-i/2}.
+$$
+
+---
+

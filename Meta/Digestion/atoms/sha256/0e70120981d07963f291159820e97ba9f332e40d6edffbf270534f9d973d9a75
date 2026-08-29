@@ -1,0 +1,38 @@
+## 565.2 尺度过近与合流极限
+
+若两个尺度：
+
+$$
+a_\ell\approx a_m,
+$$
+
+则：
+
+$$
+r_\ell\approx r_m.
+$$
+
+原始分块特征会接近线性相关。
+
+其正确极限不是保留两个重复尺度块，而是把它们合并为同一 pole 的更高 multiplicity，即：
+
+$$
+\boxed{
+\text{scale collision}
+\longrightarrow
+\text{confluent rational jet}.
+}
+$$
+
+这与前文：
+
+$$
+\text{零点重数}
+\longrightarrow
+\text{derivative jet}
+$$
+
+具有相同结构。
+
+---
+

@@ -1,0 +1,17 @@
+ast_path: theorem/25.4
+fingerprints:
+  raw_sha256: sha256:6a139015303beebd3f50dfbd875ec7593e2e55e106b35748acaadba1b812c3ac
+  normalized_sha256: sha256:6a139015303beebd3f50dfbd875ec7593e2e55e106b35748acaadba1b812c3ac
+cas_ref: sha256:6a139015303beebd3f50dfbd875ec7593e2e55e106b35748acaadba1b812c3ac
+coverage_gids:
+  - D5/S3/ObserverMemory/Algorithms/ControlledSignatureStabilization.controlled_signature_algorithm_correctness
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/Algorithms/ControlledSignatureStabilization.controlled_signature_algorithm_correctness
+      source_sha256: sha256:6a139015303beebd3f50dfbd875ec7593e2e55e106b35748acaadba1b812c3ac
+      target_statement_id: sha256:a964da225adccc3c818bea91549242d5daa71670d211c5b2565b1e58a1cc34a8
+  scribe:
+    - gid: D5/S3/ObserverMemory/Algorithms/ControlledSignatureStabilization.controlled_signature_algorithm_correctness
+      definition_sha256: sha256:0ff82a2dff9081c505861d8ebfa3953548ec6419ccdae53e33919e2716c5271b
+      emission_sha256: sha256:2edcc2d161ba8b67dcfae0f1745b5b6f6bf00cb37c5b9ccc02a8b36e3bca4b8d
+  unresolved_subitems: []

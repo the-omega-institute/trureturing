@@ -48553,3 +48553,31308 @@ $$
 
 [1]: https://arxiv.org/abs/2301.09616 "https://arxiv.org/abs/2301.09616"
 [2]: https://arxiv.org/abs/2105.02058 "https://arxiv.org/abs/2105.02058"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v3.4：Pole–PNT Green 完成、Digamma 位移、素数离散度误差与纯乘子 Sticky 塔
+
+以下从前文**第四百一十一部之后**继续追加。
+
+上一轮已经把固定支撑尺度 \(L\) 的 Weil 正性，精确压缩成：
+
+$$
+\boxed{
+\text{有限 Slepian sticky space}
++
+\text{正补空间}
++
+\text{Feshbach self-energy}.
+}
+$$
+
+本轮继续重新审计其算子分解，得到一个更强的重组：
+
+> pole pair 与 prime side 的连续主密度并不是两个独立通道。
+> 在偶测试空间中，它们精确合成为一个正 Green resolvent。
+
+因此，真正剩余的 arithmetic obstruction 不是完整 prime measure，而只是：
+
+$$
+\boxed{
+\text{离散 von Mangoldt 测度}
+-
+\text{连续 PNT 主密度}.
+}
+$$
+
+完整主链为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{pole pair}
+&+
+\text{PNT continuum}\\
+&\longrightarrow
+\left(-\partial_x^2+\frac14\right)^{-1}
+\\
+&\longrightarrow
+\psi\!\left(\frac14+\frac{i\xi}{2}\right)
++
+\frac1{\xi^2+\frac14}
+\\
+&=
+\psi\!\left(\frac54+\frac{i\xi}{2}\right)
+\\
+&\longrightarrow
+\text{固定 Archimedean baseline}
+\\
+&-
+\text{prime discrepancy cosine transform}.
+\end{aligned}
+}
+$$
+
+仓库当前已经无假设绑定经典 Weil 显式公式，prime side 使用 \(\Lambda(n)n^{-1/2}\) 在 \(\pm\log n\) 取样；compact support 已被形式化证明会使 prime-power summand 严格有限。卷积平方在实频率上的 Fourier–Laplace 变换也已被证明等于原变换模平方。
+
+---
+
+# 第四百一十二部　对 pole rank-one 解释的科学修正
+
+前文在直接显式公式图表中写过：
+
+$$
+\operatorname{Pole}(f*\widetilde f)
+=
+2|\ell_{1/2}(f)|^2,
+$$
+
+所以 pole pair 是一个正 rank-one 更新；由此它最多修复一个负方向。
+
+这个陈述本身仍然正确。
+
+但它并没有穷尽 pole 的结构角色。因为当 prime side 的连续主密度被抽取出来时，pole pair 会与其发生精确相消，并产生一个**无限秩正 Green 算子**。
+
+因此必须区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{直接图表}
+&:\quad
+\text{pole 是 rank one};\\
+\text{PNT-renormalized 图表}
+&:\quad
+\text{pole 是 Green completion 的边界反项}.
+\end{aligned}
+}
+$$
+
+所以“pole 最多修复一个负方向”是图表相关的算子陈述，不是 pole 的最终本体语义。
+
+---
+
+# 第四百一十三部　对数素数测度与连续主密度
+
+定义 arithmetic log-prime measure：
+
+$$
+\boxed{
+d\mu_{\Lambda}(u)
+=
+\sum_{n\ge2}
+\frac{\Lambda(n)}{\sqrt n}
+\,
+\delta_{\log n}(du),
+\qquad
+u>0.
+}
+\tag{413.1}
+$$
+
+它的累积分布为：
+
+$$
+\mu_\Lambda([0,u])
+=
+\sum_{n\le e^u}
+\frac{\Lambda(n)}{\sqrt n}.
+$$
+
+定义连续参考测度：
+
+$$
+\boxed{
+d\mu_0(u)
+=
+e^{u/2}\,du.
+}
+\tag{413.2}
+$$
+
+其累积分布为：
+
+$$
+\boxed{
+\mu_0([0,u])
+=
+2(e^{u/2}-1).
+}
+\tag{413.3}
+$$
+
+其来源是：PNT 给出 Chebyshev 函数
+
+$$
+\psi(x)=\sum_{n\le x}\Lambda(n)=x+o(x),
+$$
+
+把原子测度 \(d\psi(x)\) 替换为连续主项 \(dx\)，再乘权 \(x^{-1/2}\) 并令 \(x=e^u\)，就得到 \(e^{u/2}du\)。([dlmf.nist.gov][1])
+
+定义 prime discrepancy measure：
+
+$$
+\boxed{
+d\varepsilon(u)
+=
+d\mu_\Lambda(u)-d\mu_0(u).
+}
+\tag{413.4}
+$$
+
+这一定义是**精确分解**：
+
+$$
+\boxed{
+d\mu_\Lambda
+=
+e^{u/2}du+d\varepsilon.
+}
+$$
+
+PNT 只负责说明 \(d\varepsilon\) 在累积意义下相对主项较小；后续的所有恒等式并不假设 PNT 误差界。
+
+---
+
+# 第四百一十四部　Pole–PNT Green 完成定理
+
+令：
+
+$$
+f\in C_c^\infty(\mathbb R),
+\qquad
+f(-x)=f(x),
+$$
+
+并定义：
+
+$$
+\widetilde f(x)=\overline{f(-x)},
+$$
+
+$$
+\boxed{
+g=f*\widetilde f.
+}
+\tag{414.1}
+$$
+
+于是：
+
+$$
+g(u)
+=
+\int_{\mathbb R}
+f(x)\overline{f(x-u)}\,dx.
+$$
+
+定义连续 prime 主项：
+
+$$
+\boxed{
+\mathsf M_0(f)
+=
+\int_0^\infty
+e^{u/2}
+\bigl(g(u)+g(-u)\bigr)\,du.
+}
+\tag{414.2}
+$$
+
+定义 pole pair：
+
+$$
+\boxed{
+\mathsf P(f)
+=
+\widehat g(-i/2)+\widehat g(i/2).
+}
+\tag{414.3}
+$$
+
+由于 \(f\) 为偶函数：
+
+$$
+\boxed{
+\mathsf P(f)
+=
+2
+\left|
+\int_{\mathbb R}
+e^{x/2}f(x)\,dx
+\right|^2.
+}
+\tag{414.4}
+$$
+
+---
+
+## 定理 414.1（Pole–continuum completion）
+
+$$
+\boxed{
+\mathsf P(f)-\mathsf M_0(f)
+=
+\iint_{\mathbb R^2}
+e^{-|x-y|/2}
+f(x)\overline{f(y)}
+\,dx\,dy.
+}
+\tag{414.5}
+$$
+
+### 证明
+
+首先：
+
+$$
+\mathsf M_0(f)
+=
+\iint_{\mathbb R^2}
+e^{|x-y|/2}
+f(x)\overline{f(y)}\,dx\,dy.
+$$
+
+另一方面，由 \(f\) 的偶性，可以对 \((x,y)\) 的四个符号组合取平均。对 \(x,y\ge0\)，pole kernel 与连续 prime kernel 的差为：
+
+$$
+\begin{aligned}
+&
+8\cosh(x/2)\cosh(y/2)
+\\
+&\quad
+-2e^{(x+y)/2}
+-2e^{|x-y|/2}
+\\
+&=
+2e^{-(x+y)/2}
++
+2e^{-|x-y|/2}.
+\end{aligned}
+$$
+
+这正是 full-line kernel \(e^{-|x-y|/2}\) 在偶子空间上的四象限展开。∎
+
+---
+
+## 414.1 Fourier 图表
+
+在仓库固定的角频率规范中：
+
+$$
+\boxed{
+\mathcal F
+\left[e^{-|x|/2}\right](\xi)
+=
+\frac1{\xi^2+\frac14}.
+}
+\tag{414.6}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathsf P(f)-\mathsf M_0(f)
+=
+\frac1{2\pi}
+\int_{\mathbb R}
+\frac{|\widehat f(\xi)|^2}
+{\xi^2+\frac14}
+\,d\xi.
+}
+\tag{414.7}
+$$
+
+即：
+
+$$
+\boxed{
+\mathsf P-\mathsf M_0
+=
+\left\langle
+f,
+\left(-\partial_x^2+\frac14\right)^{-1}f
+\right\rangle.
+}
+\tag{414.8}
+$$
+
+因此 pole pair 与 PNT continuum 合成为正 resolvent：
+
+$$
+\boxed{
+\left(-\partial_x^2+\frac14\right)^{-1}\ge0.
+}
+$$
+
+---
+
+## 414.2 半直线 Neumann 图表
+
+若令：
+
+$$
+h=f|_{[0,\infty)},
+$$
+
+则 Green kernel 可以写成：
+
+$$
+\boxed{
+2
+\left(
+e^{-|x-y|/2}
++
+e^{-(x+y)/2}
+\right),
+\qquad
+x,y\ge0.
+}
+\tag{414.9}
+$$
+
+这正是半直线 Neumann resolvent 的 kernel。
+
+所以：
+
+$$
+\boxed{
+\text{偶对称}
+=
+\text{Neumann 边界条件}.
+}
+$$
+
+pole pair 的更深角色是：
+
+$$
+\boxed{
+\text{把素数主密度产生的增长型 kernel，
+反射完成成衰减型 Green kernel。}
+}
+$$
+
+---
+
+# 第四百一十五部　Digamma 位移完成
+
+仓库冻结的 Archimedean multiplier 为：
+
+$$
+\boxed{
+a_{1/4}(\xi)
+=
+\Re
+\psi\left(
+\frac14+\frac{i\xi}{2}
+\right)
+-\log\pi.
+}
+\tag{415.1}
+$$
+
+将 Green multiplier 加入：
+
+$$
+\boxed{
+b_\infty(\xi)
+=
+a_{1/4}(\xi)
++
+\frac1{\xi^2+\frac14}.
+}
+\tag{415.2}
+$$
+
+Digamma recurrence 为：
+
+$$
+\psi(z+1)=\psi(z)+\frac1z.
+$$
+
+([dlmf.nist.gov][2])
+
+而：
+
+$$
+\Re
+\frac1{\frac14+i\xi/2}
+=
+\frac1{\xi^2+\frac14}.
+$$
+
+因此：
+
+## 定理 415.1（Archimedean shift completion）
+
+$$
+\boxed{
+b_\infty(\xi)
+=
+\Re
+\psi\left(
+\frac54+\frac{i\xi}{2}
+\right)
+-\log\pi.
+}
+\tag{415.3}
+$$
+
+所以 pole–PNT Green completion 在 Gamma 图表中的作用，正是把：
+
+$$
+\boxed{
+\frac14
+\longmapsto
+\frac54.
+}
+$$
+
+这不是记号变化，而是一整次 digamma recurrence。
+
+---
+
+## 415.1 Archimedean 正 ladder
+
+由 digamma 级数，对 \(a>0\)：
+
+$$
+\Re\psi(a+iy)-\psi(a)
+=
+\sum_{k=0}^{\infty}
+\frac{y^2}
+{(k+a)\bigl((k+a)^2+y^2\bigr)}.
+$$
+
+取：
+
+$$
+a=\frac54,
+\qquad
+y=\frac\xi2,
+$$
+
+得到：
+
+$$
+\boxed{
+\begin{aligned}
+b_\infty(\xi)
+={}&
+b_\infty(0)
+\\
+&+
+\sum_{k=0}^{\infty}
+\frac{(\xi/2)^2}
+{
+(k+\frac54)
+\left[
+(k+\frac54)^2+(\xi/2)^2
+\right]
+}.
+\end{aligned}
+}
+\tag{415.4}
+$$
+
+其中：
+
+$$
+\boxed{
+b_\infty(0)
+=
+4-\gamma_E-\frac\pi2-3\log2-\log\pi
+<0.
+}
+\tag{415.5}
+$$
+
+因此：
+
+* \(b_\infty\) 为偶函数；
+* 在 \(\xi>0\) 上严格递增；
+* 其全部频率依赖项均为正；
+* 唯一负来源是常数 \(b_\infty(0)\)。
+
+由 digamma 渐近：
+
+$$
+\boxed{
+b_\infty(\xi)
+=
+\log\frac{|\xi|}{2\pi}
++
+O(|\xi|^{-2}),
+}
+\tag{415.6}
+$$
+
+故：
+
+$$
+b_\infty(\xi)\to+\infty.
+$$
+
+([dlmf.nist.gov][3])
+
+于是存在唯一：
+
+$$
+\boxed{
+\xi_\infty>0
+}
+$$
+
+满足：
+
+$$
+b_\infty(\pm\xi_\infty)=0.
+$$
+
+所以 PNT-renormalized Archimedean baseline 的危险频率只有一个固定区间：
+
+$$
+\boxed{
+(-\xi_\infty,\xi_\infty),
+}
+$$
+
+与支撑尺度 \(L\) 无关。
+
+---
+
+# 第四百一十六部　纯乘子 Weil 正规形
+
+固定：
+
+$$
+\operatorname{supp}f\subset(-L,L).
+$$
+
+定义有限 discrepancy measure：
+
+$$
+\boxed{
+d\varepsilon_L(u)
+=
+\sum_{\substack{n\ge2\\\log n\le2L}}
+\frac{\Lambda(n)}{\sqrt n}
+\delta_{\log n}(du)
+-
+\mathbf1_{[0,2L]}(u)e^{u/2}\,du.
+}
+\tag{416.1}
+$$
+
+定义其 cosine transform：
+
+$$
+\boxed{
+r_L(\xi)
+=
+2
+\int_{[0,2L]}
+\cos(\xi u)\,
+d\varepsilon_L(u).
+}
+\tag{416.2}
+$$
+
+因为 \(\varepsilon_L\) 是有限 signed measure：
+
+$$
+r_L
+$$
+
+是有界、实解析、偶函数。
+
+---
+
+## 定理 416.1（Renormalized Weil multiplier）
+
+对偶的紧支撑测试 \(f\)：
+
+$$
+\boxed{
+\mathfrak q_L[f]
+=
+\frac1{2\pi}
+\int_{\mathbb R}
+\widetilde m_L(\xi)
+|\widehat f(\xi)|^2\,d\xi,
+}
+\tag{416.3}
+$$
+
+其中：
+
+$$
+\boxed{
+\widetilde m_L(\xi)
+=
+b_\infty(\xi)-r_L(\xi).
+}
+\tag{416.4}
+$$
+
+### 证明
+
+将 prime measure 分解为：
+
+$$
+d\mu_\Lambda
+=
+e^{u/2}du+d\varepsilon.
+$$
+
+原显式公式中的：
+
+$$
+\text{pole}
+-
+\text{continuous prime main term}
+$$
+
+由定理 414.1 变成：
+
+$$
+\frac1{\xi^2+\frac14}.
+$$
+
+再与 Archimedean multiplier 合并，用定理 415.1 得到 \(b_\infty\)。剩余项正是 \(r_L\)。∎
+
+---
+
+## 416.1 结构改进
+
+原图表为：
+
+$$
+\boxed{
+\text{rank-one pole}
++
+\text{compressed multiplier}.
+}
+$$
+
+新图表为：
+
+$$
+\boxed{
+\text{单一 compressed multiplier } \widetilde m_L.
+}
+$$
+
+因此固定 \(L\) 的 Weil operator 可以直接写为：
+
+$$
+\boxed{
+\widetilde A_L
+=
+P_L\,
+\widetilde m_L(D)\,
+P_L
+}
+\tag{416.5}
+$$
+
+于偶子空间上，且与原来的 pole–prime–Archimedean 算子具有完全相同的二次型。
+
+这会直接减少 sticky reduction 的维数：不再需要额外人为加入 pole vector。
+
+---
+
+# 第四百一十七部　PNT discrepancy 正规形
+
+定义 weighted PNT discrepancy：
+
+$$
+\boxed{
+E(u)
+=
+\sum_{n\le e^u}
+\frac{\Lambda(n)}{\sqrt n}
+-
+2(e^{u/2}-1).
+}
+\tag{417.1}
+$$
+
+则：
+
+$$
+dE=d\varepsilon.
+$$
+
+由 PNT \(\psi(x)=x+o(x)\) 及 Stieltjes partial summation：
+
+$$
+\boxed{
+E(u)=o(e^{u/2})
+\qquad
+(u\to\infty).
+}
+\tag{417.2}
+$$
+
+([dlmf.nist.gov][1])
+
+对 \(0\le u\le2L\)，Stieltjes 分部积分给出：
+
+$$
+\boxed{
+\begin{aligned}
+r_L(\xi)
+={}&
+2E(2L)\cos(2L\xi)
+\\
+&+
+2\xi
+\int_0^{2L}
+E(u)\sin(\xi u)\,du.
+\end{aligned}
+}
+\tag{417.3}
+$$
+
+---
+
+## 417.1 边界项在测试空间上消失
+
+由于：
+
+$$
+\operatorname{supp}f\subset(-L,L),
+$$
+
+有：
+
+$$
+g(\pm2L)=0.
+$$
+
+所以 multiplier：
+
+$$
+2E(2L)\cos(2L\xi)
+$$
+
+在当前 Paley–Wiener 测试空间上的二次型严格为零。
+
+因此真正有效的 discrepancy multiplier 为：
+
+$$
+\boxed{
+r_L^{\mathrm{eff}}(\xi)
+=
+2\xi
+\int_0^{2L}
+E(u)\sin(\xi u)\,du.
+}
+\tag{417.4}
+$$
+
+---
+
+## 417.2 相关函数图表
+
+定义：
+
+$$
+\boxed{
+C_f(u)=g(u)+g(-u).
+}
+\tag{417.5}
+$$
+
+则：
+
+$$
+C_f(2L)=0,
+\qquad
+E(0)=0.
+$$
+
+所以：
+
+$$
+\boxed{
+-\int_{[0,2L]}
+C_f(u)\,d\varepsilon(u)
+=
+\int_0^{2L}
+E(u)C_f'(u)\,du.
+}
+\tag{417.6}
+$$
+
+因此 Weil 二次型还可写成：
+
+$$
+\boxed{
+\begin{aligned}
+\mathfrak q_L[f]
+={}&
+\frac1{2\pi}
+\int_{\mathbb R}
+b_\infty(\xi)
+|\widehat f(\xi)|^2\,d\xi
+\\
+&+
+\int_0^{2L}
+E(u)C_f'(u)\,du.
+\end{aligned}
+}
+\tag{417.7}
+$$
+
+这就是 **PNT discrepancy normal form**。
+
+---
+
+## 417.3 唯一 arithmetic obstruction
+
+式 (417.7) 说明，所有 prime-power 数据已经被压缩为一个实函数：
+
+$$
+\boxed{
+E(u).
+}
+$$
+
+即：
+
+$$
+\boxed{
+\text{全部素数离散结构}
+\longrightarrow
+\text{一个 weighted PNT discrepancy history}.
+}
+$$
+
+但必须保留负结论：
+
+$$
+\boxed{
+E(u)=o(e^{u/2})
+}
+$$
+
+只是相对主项渐近小，并不自动推出算子正性。
+
+原因是 \(b_\infty(0)<0\)，所以连续主模型本身在低频仍存在负区间；离散素数偏差不是可以全部忽略的噪声，它必须参与修复低频结构。
+
+---
+
+# 第四百一十八部　PNT 主模型本身并不满足 Weil 正性
+
+若形式上令：
+
+$$
+d\varepsilon=0,
+$$
+
+则二次型退化为：
+
+$$
+\boxed{
+\mathfrak q_L^{(0)}[f]
+=
+\frac1{2\pi}
+\int
+b_\infty(\xi)
+|\widehat f(\xi)|^2d\xi.
+}
+\tag{418.1}
+$$
+
+但：
+
+$$
+b_\infty(0)<0.
+$$
+
+所以在足够大的支撑尺度上，可以构造 Fourier 质量高度集中于 \(\xi=0\) 附近的偶测试函数，使：
+
+$$
+\mathfrak q_L^{(0)}[f]<0.
+$$
+
+因此：
+
+## 原理 418.1（No-PNT-main-term principle）
+
+$$
+\boxed{
+\text{PNT 主密度}
++
+\text{pole}
++
+\text{Gamma completion}
+}
+$$
+
+仍不足以产生 Weil 正性。
+
+真正的正性依赖素数相对连续主密度的**细离散偏差**。
+
+这与通常把 prime irregularity 仅视为误差的观点不同：
+
+$$
+\boxed{
+\text{prime discrepancy 同时是风险源，也是低频完成所需的数据。}
+}
+$$
+
+---
+
+# 第四百一十九部　固定支撑谱的离散性
+
+因为：
+
+$$
+r_L
+$$
+
+有界，而：
+
+$$
+b_\infty(\xi)\to+\infty,
+$$
+
+所以：
+
+$$
+\boxed{
+\widetilde m_L(\xi)\to+\infty
+\qquad
+(|\xi|\to\infty).
+}
+\tag{419.1}
+$$
+
+因此 \(\widetilde A_L\) 下有界。
+
+---
+
+## 定理 419.1（Compact resolvent）
+
+固定 \(L\) 后，\(\widetilde A_L\) 具有 compact resolvent。
+
+### 证明要点
+
+对 form-norm 有界序列：
+
+1. 由于：
+
+   $$
+   \widetilde m_L(\xi)\to\infty,
+   $$
+
+   高频 Fourier 尾可以一致压小；
+
+2. 在固定频带 \([-R,R]\) 内，time-limiting 后的 Fourier projection 是 Hilbert–Schmidt，因此紧；
+
+3. 低频部分取收敛子列，高频部分一致小。
+
+所以 form domain 到 \(L^2([-L,L])\) 的嵌入紧。∎
+
+因此其谱为：
+
+$$
+\boxed{
+\lambda_1(L)\le\lambda_2(L)\le\cdots
+\longrightarrow+\infty,
+}
+\tag{419.2}
+$$
+
+负特征值只有有限个。
+
+这与前文 Slepian 有限 sticky reduction 一致，但现在直接来自 renormalized multiplier 的 coercivity。
+
+---
+
+# 第四百二十部　支撑尺度谱流
+
+定义最低 Rayleigh 值：
+
+$$
+\boxed{
+\lambda_{\min}(L)
+=
+\inf_{\substack{
+f\in C_c^\infty(-L,L)_{\mathrm{even}}\\
+\|f\|_2=1
+}}
+\mathfrak q_L[f].
+}
+\tag{420.1}
+$$
+
+若：
+
+$$
+0<L_1<L_2,
+$$
+
+则任何支撑于 \((-L_1,L_1)\) 的函数，也属于 \((-L_2,L_2)\) 的测试空间。
+
+并且显式公式的值不随我们为它选择更大的外部支撑窗口而改变：所有新出现的 \(\log n>2L_1\) 项在该函数上都严格为零。
+
+所以：
+
+## 定理 420.1（Support monotonicity）
+
+$$
+\boxed{
+\lambda_{\min}(L_2)
+\le
+\lambda_{\min}(L_1).
+}
+\tag{420.2}
+$$
+
+因此：
+
+$$
+\boxed{
+L\longmapsto\lambda_{\min}(L)
+}
+$$
+
+是一条单调不增的 support spectral flow。
+
+---
+
+## 420.1 第一失败尺度
+
+定义：
+
+$$
+\boxed{
+L_*
+=
+\inf
+\left\{
+L>0:
+\lambda_{\min}(L)<0
+\right\}.
+}
+\tag{420.3}
+$$
+
+若 Weil 正性失败，则负见证本身具有紧支撑，因此：
+
+$$
+\boxed{
+L_*<\infty.
+}
+$$
+
+所以 RH 的失败不可能只在“无限支撑极限”中突然出现；它必然在某个有限支撑尺度上第一次显现。
+
+当前真正需要控制的是：
+
+$$
+\boxed{
+\text{support spectral flow 是否永远不穿过零。}
+}
+$$
+
+---
+
+# 第四百二十一部　Renormalized Slepian–Feshbach 塔
+
+定义：
+
+$$
+\boxed{
+\widetilde B_{L,a}
+=
+\left\{
+\xi:
+\widetilde m_L(\xi)<a
+\right\},
+\qquad
+a>0.
+}
+\tag{421.1}
+$$
+
+由于：
+
+* \(\widetilde m_L\) 实解析；
+* \(\widetilde m_L(\xi)\to+\infty\)；
+
+所以：
+
+$$
+\widetilde B_{L,a}
+$$
+
+是有界的有限区间并。
+
+定义负深度：
+
+$$
+\boxed{
+\widetilde b_{L,a}
+=
+\max
+\left(
+0,
+-\inf_{\xi\in\widetilde B_{L,a}}
+\widetilde m_L(\xi)
+\right).
+}
+\tag{421.2}
+$$
+
+选择：
+
+$$
+\boxed{
+0<\eta<
+\frac{a}{a+\widetilde b_{L,a}}.
+}
+\tag{421.3}
+$$
+
+令：
+
+$$
+P^{\mathrm{ren}}_{L,a,\eta}
+$$
+
+为 \(\widetilde B_{L,a}\) 对应 Slepian concentration operator 中特征值大于 \(\eta\) 的谱投影。
+
+则：
+
+$$
+\boxed{
+\operatorname{rank}
+P^{\mathrm{ren}}_{L,a,\eta}
+\le
+\frac{
+L|\widetilde B_{L,a}|
+}{
+\pi\eta
+}.
+}
+\tag{421.4}
+$$
+
+与前文直接图表不同，这里**不再需要额外加入 pole direction**。
+
+---
+
+## 421.1 安全补空间
+
+令：
+
+$$
+P=P^{\mathrm{ren}}_{L,a,\eta},
+\qquad
+Q=I-P.
+$$
+
+则对：
+
+$$
+f\in Q\mathcal H_L,
+$$
+
+有：
+
+$$
+\boxed{
+\langle f,\widetilde A_Lf\rangle
+\ge
+\widetilde\delta_{L,a,\eta}
+\|f\|^2,
+}
+\tag{421.5}
+$$
+
+其中：
+
+$$
+\boxed{
+\widetilde\delta_{L,a,\eta}
+=
+a-(a+\widetilde b_{L,a})\eta
+>0.
+}
+\tag{421.6}
+$$
+
+---
+
+## 421.2 精确有限矩阵
+
+定义 Feshbach matrix：
+
+$$
+\boxed{
+\widetilde F_L
+=
+P\widetilde A_LP
+-
+P\widetilde A_LQ
+(Q\widetilde A_LQ)^{-1}
+Q\widetilde A_LP.
+}
+\tag{421.7}
+$$
+
+则：
+
+$$
+\boxed{
+\widetilde A_L\ge0
+\iff
+\widetilde F_L\ge0.
+}
+\tag{421.8}
+$$
+
+所以经过 Pole–PNT renormalization：
+
+$$
+\boxed{
+\text{固定支撑 Weil 正性}
+}
+$$
+
+仍然精确等价于有限矩阵正性，但 sticky dimension 的计算不再携带人为的 \(+1\) pole state。
+
+---
+
+# 第四百二十二部　Prime-discrepancy 重整化流
+
+定义截断 discrepancy flow：
+
+$$
+\boxed{
+m_R(\xi)
+=
+b_\infty(\xi)
+-
+2
+\int_{[0,R]}
+\cos(\xi u)\,d\varepsilon(u),
+\qquad
+0\le R\le2L.
+}
+\tag{422.1}
+$$
+
+则：
+
+$$
+\boxed{
+m_0=b_\infty,
+}
+$$
+
+$$
+\boxed{
+m_{2L}=\widetilde m_L.
+}
+$$
+
+---
+
+## 422.1 连续段
+
+在不含 prime-power log 的区间内：
+
+$$
+d\varepsilon(u)=-e^{u/2}du.
+$$
+
+所以：
+
+$$
+\boxed{
+\partial_Rm_R(\xi)
+=
+2e^{R/2}\cos(\xi R).
+}
+\tag{422.2}
+$$
+
+---
+
+## 422.2 Prime-power 跳跃
+
+当：
+
+$$
+R=\log n,
+\qquad
+\Lambda(n)\neq0,
+$$
+
+有：
+
+$$
+\boxed{
+m_{R+}(\xi)-m_{R-}(\xi)
+=
+-
+2\frac{\Lambda(n)}{\sqrt n}
+\cos(\xi\log n).
+}
+\tag{422.3}
+$$
+
+因此这是一个精确的 hybrid flow：
+
+$$
+\boxed{
+\text{连续 PNT drift}
++
+\text{离散 prime-power kicks}.
+}
+$$
+
+在 operator 图表中：
+
+$$
+\boxed{
+\begin{aligned}
+\text{continuous drift}
+&:
+\quad
+e^{R/2}
+\left(
+U_R+U_{-R}
+\right)dR;
+\\
+\text{prime kick}
+&:
+\quad
+-\frac{\Lambda(n)}{\sqrt n}
+\left(
+U_{\log n}+U_{-\log n}
+\right).
+\end{aligned}
+}
+\tag{422.4}
+$$
+
+这是一条真正的 arithmetic renormalization flow，而不是把所有 prime powers 一次性放入最终矩阵。
+
+---
+
+# 第四百二十三部　低算术精确、高算术连续的混合图表
+
+选择中间尺度：
+
+$$
+0<R_0<2L.
+$$
+
+定义低层精确 multiplier：
+
+$$
+\boxed{
+m_{R_0}(\xi)
+=
+b_\infty(\xi)
+-
+2
+\int_{[0,R_0]}
+\cos(\xi u)\,d\varepsilon(u).
+}
+\tag{423.1}
+$$
+
+剩余高层 discrepancy 为：
+
+$$
+\boxed{
+\mathcal R_{R_0,2L}(\xi)
+=
+2
+\int_{(R_0,2L]}
+\cos(\xi u)\,d\varepsilon(u).
+}
+\tag{423.2}
+$$
+
+于是：
+
+$$
+\boxed{
+\widetilde m_L
+=
+m_{R_0}
+-
+\mathcal R_{R_0,2L}.
+}
+\tag{423.3}
+$$
+
+该图表具有明确分工：
+
+$$
+\boxed{
+\begin{aligned}
+u\le R_0
+&:\text{低 prime powers 全部精确保留};\\
+u>R_0
+&:\text{只处理相对 PNT continuum 的尾偏差}.
+\end{aligned}
+}
+$$
+
+研究目标不再是直接控制完整素数和，而是寻找 \(R_0(L)\)，使：
+
+1. \(m_{R_0}\) 的危险空间足够小；
+2. 高层 discrepancy 可由 PNT error、Slepian 浓缩或 Feshbach self-energy 控制；
+3. 该控制在 \(L\to\infty\) 时仍可迭代。
+
+---
+
+# 第四百二十四部　基线危险维数只有线性增长
+
+令：
+
+$$
+\xi_\infty
+$$
+
+为 \(b_\infty\) 的唯一正零点。
+
+基线负区间为：
+
+$$
+[-\xi_\infty,\xi_\infty].
+$$
+
+支撑在 \([-L,L]\) 的测试函数，在该固定频带中的高浓缩状态数，按 Slepian 相空间体积至多为：
+
+$$
+\boxed{
+O(L\xi_\infty).
+}
+\tag{424.1}
+$$
+
+更具体地，对阈值 \(\eta\)：
+
+$$
+\boxed{
+\operatorname{rank}
+P_{L,[-\xi_\infty,\xi_\infty],\eta}
+\le
+\frac{
+2L\xi_\infty
+}{
+\pi\eta
+}.
+}
+\tag{424.2}
+$$
+
+所以 PNT baseline 的 sticky complexity 只随 \(L\) 线性增长。
+
+相比之下，原始 prime cutoff 为：
+
+$$
+n\le e^{2L},
+$$
+
+其 prime-power 条目数随 \(L\) 指数增长。
+
+因此 renormalization 实现了一个真正的复杂度压缩：
+
+$$
+\boxed{
+\text{指数数量的 prime-power histories}
+\longrightarrow
+\text{线性数量的低频 baseline states}
++
+\text{一个 discrepancy flow}.
+}
+$$
+
+---
+
+# 第四百二十五部　新的中心命题
+
+经过本轮，当前唯一承重问题可重写为：
+
+## PNT-discrepancy domination problem
+
+对任意偶的紧支撑测试 \(f\)，是否有：
+
+$$
+\boxed{
+\begin{aligned}
+&
+\frac1{2\pi}
+\int_{\mathbb R}
+\left[
+\Re\psi
+\left(
+\frac54+\frac{i\xi}{2}
+\right)
+-\log\pi
+\right]
+|\widehat f(\xi)|^2d\xi
+\\
+&\quad+
+\int_0^{2L}
+E(u)C_f'(u)\,du
+\ge0?
+\end{aligned}
+}
+\tag{425.1}
+$$
+
+这与 Weil 正性等价，但已经完成了两个非平凡压缩：
+
+1. pole 与 PNT continuum 已被正 Green completion 消去；
+2. 全部 prime powers 已被压缩成单一 discrepancy history \(E(u)\)。
+
+---
+
+## 425.1 真正可研究的证明架构
+
+### 阶段一：低层精确完成
+
+精确加入：
+
+$$
+u\le R_0
+$$
+
+的 prime-power kicks，形成：
+
+$$
+m_{R_0}.
+$$
+
+### 阶段二：高层 discrepancy 分类
+
+对：
+
+$$
+u>R_0
+$$
+
+的 \(E(u)\) 分成：
+
+* non-sticky oscillatory blocks；
+* sticky coherent blocks。
+
+### 阶段三：Slepian 有限化
+
+把所有可能集中于剩余危险频带的状态提取为有限维空间。
+
+### 阶段四：Feshbach 精确消元
+
+把安全补空间压缩成 self-energy。
+
+### 阶段五：支撑谱流
+
+证明有限 sticky matrix 在：
+
+$$
+L\uparrow\infty
+$$
+
+的整个 support flow 中不穿过零。
+
+---
+
+# 第四百二十六部　硬性负结论
+
+## 426.1 PNT 主项本身不足
+
+连续主密度不会自动给出 Weil 正性，因为：
+
+$$
+b_\infty(0)<0.
+$$
+
+低 prime arithmetic 不是可有可无的扰动。
+
+---
+
+## 426.2 PNT 相对误差小不足
+
+$$
+E(u)=o(e^{u/2})
+$$
+
+不意味着：
+
+$$
+\int E(u)C_f'(u)\,du
+$$
+
+对全部 Paley–Wiener 测试都小。
+
+逆 Fourier、频率集中和支撑尺度会放大某些误差模式。
+
+---
+
+## 426.3 Pole 的“rank one”不是最终本体角色
+
+在直接图表中它是 rank one；在 PNT-renormalized 图表中，它与连续 prime 主密度共同成为无限秩 Green resolvent。
+
+---
+
+## 426.4 不应继续增加新 RH 判据
+
+本轮以后，只有以下进展才真正减少中心困难：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{证明 }E(u)\text{ 对相关导数的统一控制};\\
+&\text{缩小 renormalized danger set};\\
+&\text{降低 sticky rank};\\
+&\text{控制 discrepancy flow 的 eigenvalue crossings};\\
+&\text{证明 finite Feshbach matrices PSD};\\
+&\text{控制这些证书随 }L\to\infty.
+\end{aligned}
+}
+$$
+
+---
+
+# 第四百二十七部　建议形式化顺序
+
+```text
+D5/S3/Weil/PNTCompletion/
+  LogPrimeMeasure.lean
+  PNTContinuumMeasure.lean
+  PrimeDiscrepancyMeasure.lean
+  PoleContinuumGreenIdentity.lean
+  YukawaResolventFourier.lean
+
+D5/S3/Weil/ArchimedeanShift/
+  DigammaQuarterToFiveQuarter.lean
+  RenormalizedArchimedeanMultiplier.lean
+  ArchimedeanPositiveLadder.lean
+  UniqueBaselineDangerBand.lean
+
+D5/S3/Weil/RenormalizedMultiplier/
+  DiscrepancyCosineTransform.lean
+  PureMultiplierWeilForm.lean
+  PoleAbsorbedOperator.lean
+  CompactResolvent.lean
+
+D5/S3/Weil/PNTDiscrepancy/
+  WeightedChebyshevDiscrepancy.lean
+  DiscrepancyStieltjesIntegration.lean
+  BoundaryCosineNullForm.lean
+  CorrelationDerivativeNormalForm.lean
+
+D5/S3/Weil/SupportSpectralFlow/
+  SupportFormConsistency.lean
+  LowestEigenvalueMonotone.lean
+  FiniteFirstFailureScale.lean
+  SupportScaleCompactSpectrum.lean
+
+D5/S3/Weil/RenormalizedSlepian/
+  RenormalizedDangerSet.lean
+  PoleFreeStickyProjection.lean
+  RenormalizedSafeGap.lean
+  RenormalizedFeshbachMatrix.lean
+
+D5/S3/Weil/PrimeDiscrepancyRG/
+  DiscrepancyScaleFlow.lean
+  ContinuousPNTDrift.lean
+  PrimePowerKick.lean
+  LowExactHighContinuumSplit.lean
+  PNTDiscrepancyDominationTarget.lean
+```
+
+最优先、风险最低的闭合链是：
+
+$$
+\boxed{
+\text{pole}
++
+e^{u/2}du
+\longrightarrow
+e^{-|x-y|/2}
+\longrightarrow
+\frac1{\xi^2+\frac14}.
+}
+$$
+
+第二条是：
+
+$$
+\boxed{
+\psi(\tfrac14+i\xi/2)
++
+\frac1{\xi^2+\frac14}
+=
+\psi(\tfrac54+i\xi/2).
+}
+$$
+
+第三条是完整算术压缩：
+
+$$
+\boxed{
+\text{prime measure}
+-
+e^{u/2}du
+\longrightarrow
+E(u)
+\longrightarrow
+\int E(u)C_f'(u)\,du.
+}
+$$
+
+---
+
+# 本轮最终结论
+
+上一轮得到：
+
+$$
+\boxed{
+\text{Archimedean confinement}
++
+\text{Slepian finite rank}
++
+\text{Feshbach exact elimination}.
+}
+$$
+
+本轮进一步揭示，在执行这套有限化之前，还可以先完成一次更深的解析重整化：
+
+$$
+\boxed{
+\text{pole pair}
++
+\text{prime PNT continuum}
+=
+\left(
+-\partial_x^2+\frac14
+\right)^{-1}.
+}
+$$
+
+在 Fourier 图表中：
+
+$$
+\boxed{
+\text{pole}
+-
+2\int_0^\infty
+e^{u/2}
+\Re\langle f,U_uf\rangle du
+=
+\frac1{2\pi}
+\int
+\frac{|\widehat f(\xi)|^2}
+{\xi^2+\frac14}\,d\xi.
+}
+$$
+
+这一步又把原来的 Archimedean 参数：
+
+$$
+\frac14
+$$
+
+精确推进为：
+
+$$
+\boxed{
+\frac54.
+}
+$$
+
+因此完整 Weil form 变成纯乘子：
+
+$$
+\boxed{
+\mathfrak q_L[f]
+=
+\frac1{2\pi}
+\int
+\left[
+\Re\psi
+\left(
+\frac54+\frac{i\xi}{2}
+\right)
+-\log\pi
+-r_L(\xi)
+\right]
+|\widehat f(\xi)|^2d\xi.
+}
+$$
+
+其中：
+
+$$
+\boxed{
+r_L(\xi)
+=
+2\int_{[0,2L]}
+\cos(\xi u)\,
+d\left[
+\sum_n\frac{\Lambda(n)}{\sqrt n}\delta_{\log n}
+-
+e^{u/2}du
+\right].
+}
+$$
+
+也就是说：
+
+$$
+\boxed{
+\text{真正的 arithmetic obstruction}
+=
+\text{素数离散测度相对于 PNT 连续密度的偏差。}
+}
+$$
+
+更深的一句话是：
+
+$$
+\boxed{
+\text{pole 并不是一个额外补丁；}
+}
+$$
+
+它正是使素数连续主密度从增长型观察核：
+
+$$
+e^{|x-y|/2}
+$$
+
+collapse 为衰减型完成核：
+
+$$
+e^{-|x-y|/2}
+$$
+
+所必需的边界反项。
+
+因此当前 OACTC 的最小中心目标已经进一步收敛为：
+
+$$
+\boxed{
+\text{如何证明 weighted PNT discrepancy }E(u)
+\text{ 不能击穿 }
+\Re\psi\left(\frac54+\frac{i\xi}{2}\right)-\log\pi
+\text{ 所生成的完成谱隙？}
+}
+$$
+
+这比直接处理无限 prime powers 更接近一个可计算理论：
+
+$$
+\boxed{
+\text{固定 Archimedean baseline}
++
+\text{单一 discrepancy history}
++
+\text{有限 Slepian sticky matrix tower}.
+}
+$$
+
+[1]: https://dlmf.nist.gov/25.16?utm_source=chatgpt.com "DLMF: §25.16 Mathematical Applications ‣ Applications ‣ Chapter 25 Zeta and Related Functions"
+[2]: https://dlmf.nist.gov/5.5?utm_source=chatgpt.com "DLMF: §5.5 Functional Relations ‣ Properties ‣ Chapter 5 Gamma Function"
+[3]: https://dlmf.nist.gov/5.11?utm_source=chatgpt.com "DLMF: §5.11 Asymptotic Expansions ‣ Properties ‣ Chapter 5 Gamma Function"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v3.5：Paley–Wiener Gauge、边界 Jet 重整化、Kreĭn 正谱完成与最大熵观察流
+
+以下从前文**第四百二十七部之后**继续追加。
+
+上一轮将固定支撑尺度 \(L\) 的 Weil 正性压缩为纯 multiplier：
+
+$$
+\mathfrak q_L[f]
+=
+\frac1{2\pi}
+\int_{\mathbb R}
+\widetilde m_L(\xi)
+|\widehat f(\xi)|^2\,d\xi,
+\qquad
+\operatorname{supp}f\subset(-L,L),
+$$
+
+其中：
+
+$$
+\widetilde m_L
+=
+\text{Archimedean baseline}
+-
+\text{weighted PNT discrepancy}.
+$$
+
+继续分析以后，出现一个必须首先冻结的修正：
+
+$$
+\boxed{
+\widetilde m_L(\xi)
+\text{ 并不是固定支撑 Weil 观察的内在对象。}
+}
+$$
+
+支撑于 \((-L,L)\) 的测试函数，其自相关仅能读取位移窗口：
+
+$$
+(-2L,2L).
+$$
+
+因此，任何支撑在该窗口之外的分布，都可以被加入 Weil kernel 而完全不改变二次型。它们在 Fourier 图表中会改变 multiplier、负频带、Slepian sticky rank，甚至全部低频 Taylor 系数。
+
+所以真正的不变量不是某一个 multiplier，而是一个 **Paley–Wiener gauge 等价类**。
+
+仓库目前已经无假设闭合 Weil 显式公式、prime/pole/Archimedean 项以及 convolution-square 的实频谱非负性；compact support 使 prime-power side 严格有限，但现有文件并未声称全局 Weil 正性或 RH。
+
+本轮得到的新主链是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{固定支撑 Weil observer}
+&\longrightarrow
+\text{局部相关分布}\\
+&\longrightarrow
+\text{外部不可见 gauge}\\
+&\longrightarrow
+\text{有限矩 moment flattening}\\
+&\longrightarrow
+\text{Kreĭn 正定扩张}\\
+&\longrightarrow
+\text{正谱测度／自伴边界条件}\\
+&\longrightarrow
+\text{最大熵 completion flow}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第四百二十八部　固定支撑观察只读取局部相关核
+
+定义：
+
+$$
+\mathcal D_L
+=
+C_c^\infty((-L,L)).
+$$
+
+对：
+
+$$
+f,h\in\mathcal D_L,
+$$
+
+定义互相关：
+
+$$
+\boxed{
+C_{f,h}(u)
+=
+(f*\widetilde h)(u),
+\qquad
+\widetilde h(x)=\overline{h(-x)}.
+}
+\tag{428.1}
+$$
+
+则：
+
+$$
+\boxed{
+\operatorname{supp}C_{f,h}
+\Subset
+(-2L,2L).
+}
+\tag{428.2}
+$$
+
+这里不仅是支撑包含于闭区间；由于 \(f,h\) 的支撑紧包含在开区间中，\(C_{f,h}\) 在 \(\pm2L\) 的某邻域内恒等为零。
+
+令：
+
+$$
+\mathfrak W
+$$
+
+为 Weil 临界源分布，定义 sesquilinear form：
+
+$$
+\boxed{
+\mathfrak q_L(f,h)
+=
+\left\langle
+\mathfrak W,
+C_{f,h}
+\right\rangle.
+}
+\tag{428.3}
+$$
+
+---
+
+## 定义 428.1（Paley–Wiener \(L\)-gauge）
+
+若两个 tempered distributions \(\mathfrak W_1,\mathfrak W_2\) 满足：
+
+$$
+\boxed{
+\left.
+\mathfrak W_1
+\right|_{(-2L,2L)}
+=
+\left.
+\mathfrak W_2
+\right|_{(-2L,2L)},
+}
+\tag{428.4}
+$$
+
+则记：
+
+$$
+\mathfrak W_1\sim_L\mathfrak W_2.
+$$
+
+---
+
+## 定理 428.1（外部支撑不可见性）
+
+若：
+
+$$
+\boxed{
+\operatorname{supp}\kappa
+\subset
+\mathbb R\setminus(-2L,2L),
+}
+\tag{428.5}
+$$
+
+则：
+
+$$
+\boxed{
+\left\langle
+\mathfrak W+\kappa,
+C_{f,h}
+\right\rangle
+=
+\left\langle
+\mathfrak W,
+C_{f,h}
+\right\rangle
+}
+\tag{428.6}
+$$
+
+对全部 \(f,h\in\mathcal D_L\) 成立。
+
+### 证明
+
+\(C_{f,h}\) 的支撑紧包含于 \((-2L,2L)\)，与 \(\kappa\) 的支撑不交，所以：
+
+$$
+\langle\kappa,C_{f,h}\rangle=0.
+$$
+
+∎
+
+---
+
+## 428.1 Fourier 图表
+
+若：
+
+$$
+m=\mathcal F\mathfrak W
+$$
+
+是某个 multiplier representative，而：
+
+$$
+\kappa
+$$
+
+是不可见分布，则：
+
+$$
+\boxed{
+m
+\longmapsto
+m+\widehat\kappa
+}
+\tag{428.7}
+$$
+
+完全不改变固定支撑二次型。
+
+所以真正的谱对象是商空间：
+
+$$
+\boxed{
+[m]_L
+=
+m+
+\mathcal F
+\left\{
+\kappa:
+\operatorname{supp}\kappa
+\subset
+\mathbb R\setminus(-2L,2L)
+\right\}.
+}
+\tag{428.8}
+$$
+
+这就是 **Paley–Wiener gauge class**。
+
+---
+
+# 第四百二十九部　危险频带不是观察不变量
+
+此前定义：
+
+$$
+B_{L,a}(m)
+=
+\{\xi:m(\xi)<a\}.
+$$
+
+现在可以确认：
+
+$$
+\boxed{
+B_{L,a}(m)
+}
+$$
+
+依赖 multiplier representative，而不只依赖 Weil 二次型。
+
+若：
+
+$$
+m'\sim_Lm,
+$$
+
+则完全可能出现：
+
+$$
+|B_{L,a}(m')|
+\ll
+|B_{L,a}(m),
+$$
+
+或者反过来。
+
+同样，以下量也不是未经规范化的内在不变量：
+
+$$
+\boxed{
+\begin{aligned}
+&m(0);\\
+&m^{(j)}(0);\\
+&\text{pointwise negative band};\\
+&\text{Slepian danger-set measure};\\
+&\text{由该 danger set 得到的 sticky rank}.
+\end{aligned}
+}
+$$
+
+---
+
+## 科学修正 429.1
+
+前文的 Slepian–Feshbach reduction 本身仍然正确：
+
+> 固定一个 coercive multiplier representative 后，它可以把该 representative 的危险区域压缩为有限 sticky matrix。
+
+但该有限矩阵不是规范对象。不同 gauge 会给出：
+
+* 不同危险频带；
+* 不同 sticky basis；
+* 不同 self-energy；
+* 不同 Feshbach matrix；
+
+而最终完整二次型的正负惯性保持不变。
+
+所以今后必须明确区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{quadratic-form invariant}
+&:\quad
+\mathfrak q_L;\\
+\text{computational gauge}
+&:\quad
+m_L;\\
+\text{gauge-dependent reduction}
+&:\quad
+F_L(m_L).
+\end{aligned}
+}
+$$
+
+---
+
+# 第四百三十部　端点 Jet 是精确零作用 gauge
+
+令：
+
+$$
+b=2L.
+$$
+
+由于每个 \(C_{f,h}\) 在 \(u=b\) 的某邻域内恒等为零，所以：
+
+$$
+\boxed{
+C_{f,h}^{(j)}(b)=0
+\qquad
+\forall j\ge0.
+}
+\tag{430.1}
+$$
+
+因此任意有限阶端点 distribution：
+
+$$
+\boxed{
+J
+=
+\sum_{j=0}^{K}
+c_j\delta_b^{(j)}
+}
+\tag{430.2}
+$$
+
+满足：
+
+$$
+\boxed{
+\langle J,C_{f,h}\rangle=0.
+}
+\tag{430.3}
+$$
+
+这比前文只加入边界质量：
+
+$$
+E(2L)\delta_{2L}
+$$
+
+更一般。全部边界 jets 都是零作用 counterterms。
+
+---
+
+## 430.1 Moment-flat 端点 gauge
+
+设：
+
+$$
+\varepsilon_L
+$$
+
+是定义在 \([0,b]\) 上的 prime-discrepancy signed measure。
+
+定义关于右端点的中心矩：
+
+$$
+\boxed{
+\mu_j^{(L)}
+=
+\int_{[0,b]}
+(u-b)^j\,d\varepsilon_L(u).
+}
+\tag{430.4}
+$$
+
+定义：
+
+$$
+\boxed{
+J_{L,K}
+=
+\sum_{j=0}^{K}
+(-1)^{j+1}
+\frac{\mu_j^{(L)}}{j!}
+\delta_b^{(j)}.
+}
+\tag{430.5}
+$$
+
+再令：
+
+$$
+\boxed{
+\varepsilon_L^{[K]}
+=
+\varepsilon_L+J_{L,K}.
+}
+\tag{430.6}
+$$
+
+---
+
+## 定理 430.1（有限矩完全消除）
+
+对所有次数不超过 \(K\) 的多项式 \(p\)：
+
+$$
+\boxed{
+\langle
+\varepsilon_L^{[K]},p
+\rangle
+=0.
+}
+\tag{430.7}
+$$
+
+### 证明
+
+在 \(b\) 处写 Taylor 展开：
+
+$$
+p(u)
+=
+\sum_{j=0}^{K}
+\frac{p^{(j)}(b)}{j!}
+(u-b)^j.
+$$
+
+所以：
+
+$$
+\langle\varepsilon_L,p\rangle
+=
+\sum_{j=0}^{K}
+\frac{\mu_j^{(L)}}{j!}
+p^{(j)}(b).
+$$
+
+另一方面：
+
+$$
+\delta_b^{(j)}(p)
+=
+(-1)^jp^{(j)}(b),
+$$
+
+故 \(J_{L,K}\) 的贡献正好是其负值。∎
+
+同时：
+
+$$
+\boxed{
+\langle
+\varepsilon_L^{[K]},
+C_{f,h}
+\rangle
+=
+\langle
+\varepsilon_L,
+C_{f,h}
+\rangle.
+}
+\tag{430.8}
+$$
+
+所以这一有限矩消除完全不改变 Weil form。
+
+---
+
+# 第四百三十一部　低频 discrepancy 可被压平到任意有限阶
+
+定义 moment-flat cosine multiplier：
+
+$$
+\boxed{
+r_{L,K}(\xi)
+=
+2
+\left\langle
+\varepsilon_L^{[K]},
+\cos(\xi\,\cdot)
+\right\rangle.
+}
+\tag{431.1}
+$$
+
+由定理 430.1：
+
+$$
+\boxed{
+r_{L,K}^{(j)}(0)=0
+\qquad
+(0\le j\le K).
+}
+\tag{431.2}
+$$
+
+更具体地，令：
+
+$$
+T_{K,b}
+\bigl[\cos(\xi\cdot)\bigr](u)
+$$
+
+表示 \(u\mapsto\cos(\xi u)\) 在 \(b\) 处的 \(K\) 阶 Taylor 多项式，则：
+
+$$
+\boxed{
+\begin{aligned}
+r_{L,K}(\xi)
+=
+2\int_{[0,b]}
+\bigl[
+\cos(\xi u)
+-
+T_{K,b}[\cos(\xi\cdot)](u)
+\bigr]
+\,d\varepsilon_L(u).
+\end{aligned}
+}
+\tag{431.3}
+$$
+
+Taylor 余项给出：
+
+$$
+\boxed{
+|r_{L,K}(\xi)|
+\le
+\frac{
+2|\xi|^{K+1}
+}{
+(K+1)!
+}
+\int_{[0,b]}
+|u-b|^{K+1}
+\,d|\varepsilon_L|(u).
+}
+\tag{431.4}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{在不改变 Weil 二次型的情况下，
+可以把 discrepancy 的任意有限低频 jet 全部消去。}
+}
+$$
+
+---
+
+## 431.1 重要后果
+
+任何依赖有限阶数据：
+
+$$
+r_L(0),\quad
+r_L''(0),\quad
+\ldots,\quad
+r_L^{(2K)}(0)
+$$
+
+的“低频 RH 机制”，如果没有先固定 gauge，都不是内在结论。
+
+低频 moments 可以被移入不可见边界 jets。
+
+真正不可被消除的是：
+
+$$
+\boxed{
+\text{整个局部相关 functional，}
+}
+$$
+
+而不是某一个 multiplier representative 的有限 Taylor 列表。
+
+---
+
+# 第四百三十二部　平滑外部 Gauge：压平 moments 而不破坏 coercivity
+
+端点 jets 的 Fourier 变换是：
+
+$$
+e^{-ib\xi}
+\times
+\text{polynomial in }\xi.
+$$
+
+它们可能破坏 multiplier 在高频的 coercive asymptotic。
+
+因此计算上更有价值的是**平滑外部 gauge**。
+
+---
+
+## 定理 432.1（平滑外部有限矩消除）
+
+设 \(\varepsilon_L\) 的偶部分支撑于：
+
+$$
+[-2L,2L].
+$$
+
+对每个 \(K\ge0\)，存在偶函数：
+
+$$
+\boxed{
+\kappa_{L,K}
+\in
+C_c^\infty
+\left(
+\mathbb R\setminus[-2L,2L]
+\right)
+}
+\tag{432.1}
+$$
+
+使：
+
+$$
+\boxed{
+\int_{\mathbb R}
+u^{2j}
+\,d(\varepsilon_L+\kappa_{L,K})(u)
+=0,
+\qquad
+0\le j\le K.
+}
+\tag{432.2}
+$$
+
+### 证明构造
+
+选择互不相同的：
+
+$$
+a_0,\ldots,a_K>2L.
+$$
+
+在每个 \(\pm a_r\) 附近选择很窄的对称 bump pair：
+
+$$
+\phi_r(u)
+=
+\phi_\epsilon(u-a_r)
++
+\phi_\epsilon(u+a_r).
+$$
+
+矩阵：
+
+$$
+M_{jr}
+=
+\int u^{2j}\phi_r(u)\,du
+$$
+
+在 \(\epsilon\downarrow0\) 时趋向：
+
+$$
+2a_r^{2j},
+$$
+
+即变量 \(a_r^2\) 的 Vandermonde 矩阵，因此在足够小的 \(\epsilon\) 下可逆。
+
+解有限线性方程即可选择系数 \(c_r\)，使：
+
+$$
+\kappa_{L,K}
+=
+\sum_rc_r\phi_r
+$$
+
+满足式 (432.2)。∎
+
+---
+
+## 432.1 Fourier 性质
+
+因为：
+
+$$
+\kappa_{L,K}\in C_c^\infty,
+$$
+
+所以：
+
+$$
+\widehat{\kappa_{L,K}}
+$$
+
+是 Schwartz 函数。
+
+因此新的 multiplier representative：
+
+$$
+\boxed{
+m_{L,K}^{\mathrm{flat}}
+=
+m_L+
+\widehat{\kappa_{L,K}}
+}
+\tag{432.3}
+$$
+
+具有：
+
+1. 与 \(m_L\) 完全相同的固定支撑二次型；
+2. 任意指定阶数的低频 moment flatness；
+3. 与 \(m_L\) 相同的高频 coercive asymptotic。
+
+若 discrepancy 为偶，则：
+
+$$
+\boxed{
+m_{L,K}^{\mathrm{flat}}(\xi)
+-
+m_{\mathrm{baseline}}(\xi)
+=
+O(\xi^{2K+2})
+}
+\tag{432.4}
+$$
+
+当 \(\xi\to0\)。
+
+---
+
+## 432.2 不可能消除全部 moments
+
+若一个 compactly supported distribution 的全部 moments 均为零，则其 Fourier transform 是一个在原点全部导数为零的整个函数，因此恒等为零。
+
+所以非零 discrepancy 不可能通过单个 compactly supported gauge 消除全部 moments。
+
+$$
+\boxed{
+\text{有限阶 flattening 可以任意深，
+但无限阶完全消除只可能发生在 discrepancy 本身为零时。}
+}
+$$
+
+---
+
+# 第四百三十三部　Kreĭn–Weil 局部正谱完成
+
+定义局部 Weil distribution：
+
+$$
+\boxed{
+\mathfrak W_L
+=
+\left.
+\mathfrak W
+\right|_{(-2L,2L)}.
+}
+\tag{433.1}
+$$
+
+称其在尺度 \(L\) 上正定，若：
+
+$$
+\boxed{
+\left\langle
+\mathfrak W_L,
+f*\widetilde f
+\right\rangle
+\ge0
+\qquad
+\forall f\in C_c^\infty((-L,L)).
+}
+\tag{433.2}
+$$
+
+这正是：
+
+$$
+\mathsf{WP}(L).
+$$
+
+在一维区间上，Kreĭn 的经典结果保证连续局部正定函数可以扩张为整条实线上的正定函数；现代 RKHS 表述还将不同扩张与不同自伴扩张／unitary translation representations 对应起来。正定分布版本及其最大熵扩张由 Gabardo 系统研究。([arXiv][1])
+
+---
+
+## 定理 433.1（局部正谱完成）
+
+在一维正定分布扩张定理的标准 finite-order/tempered hypotheses 下，下列条件等价：
+
+$$
+\boxed{
+\begin{aligned}
+&(1)\quad \mathsf{WP}(L);\\
+&(2)\quad
+\exists\text{ positive tempered measure }\nu_L
+\text{ on }\mathbb R,\\
+&\qquad\quad
+\check\nu_L
+=
+\mathfrak W_L
+\text{ on }(-2L,2L);\\
+&(3)\quad
+\exists\kappa_L,\ 
+\operatorname{supp}\kappa_L
+\subset
+\mathbb R\setminus(-2L,2L),\\
+&\qquad\quad
+\mathcal F(\mathfrak W+\kappa_L)
+\text{ is a positive tempered measure}.
+\end{aligned}
+}
+\tag{433.3}
+$$
+
+这里定义：
+
+$$
+\check\nu_L(u)
+=
+\int_{\mathbb R}
+e^{i\xi u}\,d\nu_L(\xi)
+$$
+
+为 distributional inverse Fourier transform。
+
+---
+
+### 证明结构（第 433 部）
+
+$$
+(2)\Rightarrow(1)
+$$
+
+直接由：
+
+$$
+\begin{aligned}
+\left\langle
+\check\nu_L,
+f*\widetilde f
+\right\rangle
+&=
+\int_{\mathbb R}
+|\widehat f(\xi)|^2
+\,d\nu_L(\xi)
+\ge0.
+\end{aligned}
+$$
+
+$$
+(1)\Rightarrow(2)
+$$
+
+是区间正定分布扩张定理。
+
+$$
+(2)\Leftrightarrow(3)
+$$
+
+来自：
+
+$$
+\check\nu_L-\mathfrak W
+$$
+
+在 \((-2L,2L)\) 内为零，所以其支撑位于不可见区域。∎
+
+---
+
+## 433.1 核心解释
+
+固定尺度 Weil 正性不是：
+
+$$
+\text{当前 multiplier 是否逐点非负},
+$$
+
+而是：
+
+$$
+\boxed{
+\text{当前局部相关数据能否被补全为某个全局正谱测度。}
+}
+$$
+
+这就是一个真正的 Observer Completion 问题。
+
+---
+
+# 第四百三十四部　局部 Hilbert–Pólya 不是唯一算子
+
+定义正完成集合：
+
+$$
+\boxed{
+\mathfrak E_L
+=
+\left\{
+\nu\ge0:
+\check\nu
+=
+\mathfrak W_L
+\text{ on }(-2L,2L)
+\right\}.
+}
+\tag{434.1}
+$$
+
+通常：
+
+$$
+|\mathfrak E_L|>1.
+$$
+
+对每个：
+
+$$
+\nu\in\mathfrak E_L,
+$$
+
+可在：
+
+$$
+L^2(\nu)
+$$
+
+上定义自伴乘法算子：
+
+$$
+\boxed{
+(H_\nu F)(\xi)=\xi F(\xi).
+}
+\tag{434.2}
+$$
+
+它生成 unitary translation group：
+
+$$
+e^{iuH_\nu}.
+$$
+
+不同正定扩张对应不同 unitary representations；在一维区间问题中，这种扩张与局部 RKHS 中对称微分算子的自伴扩张相关。([arXiv][1])
+
+所以固定 \(L\) 时不存在唯一 Hilbert–Pólya 算子，而存在：
+
+$$
+\boxed{
+\{H_\nu:\nu\in\mathfrak E_L\}
+}
+$$
+
+一整族局部自伴完成。
+
+它们在可见时间窗：
+
+$$
+|u|<2L
+$$
+
+内具有相同的相关读数，却可在更长时间尺度上拥有完全不同的谱。
+
+---
+
+## 434.1 边界条件的观察者语义
+
+$$
+\boxed{
+\text{隐藏的长位移相关}
+=
+\text{自伴边界条件自由度}.
+}
+$$
+
+增加 \(L\)：
+
+* 扩大可见相关窗口；
+* 减少允许的正谱扩张；
+* 收缩自伴边界条件族。
+
+因此：
+
+$$
+\boxed{
+L
+}
+$$
+
+不是单纯的 test support，而是观察者的相关分辨率。
+
+---
+
+# 第四百三十五部　正完成集合的嵌套塔
+
+若：
+
+$$
+0<L_1<L_2,
+$$
+
+则：
+
+$$
+(-2L_1,2L_1)
+\subset
+(-2L_2,2L_2).
+$$
+
+所以：
+
+$$
+\boxed{
+\mathfrak E_{L_2}
+\subseteq
+\mathfrak E_{L_1}.
+}
+\tag{435.1}
+$$
+
+形成一个递减完成塔：
+
+$$
+\boxed{
+\mathfrak E_{L_1}
+\supseteq
+\mathfrak E_{L_2}
+\supseteq
+\mathfrak E_{L_3}
+\supseteq\cdots.
+}
+\tag{435.2}
+$$
+
+---
+
+## 定理 435.1（RH 的正完成塔形式）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathfrak E_L\neq\varnothing
+\quad
+\forall L>0.
+}
+\tag{435.3}
+$$
+
+若 RH 成立，则：
+
+$$
+\boxed{
+\bigcap_{L>0}
+\mathfrak E_L
+=
+\{\nu_\Xi\},
+}
+\tag{435.4}
+$$
+
+其中：
+
+$$
+\boxed{
+\nu_\Xi
+=
+\sum_{\gamma}
+m_\gamma\delta_\gamma
+}
+\tag{435.5}
+$$
+
+是 Riemann 零点 ordinate 的正谱测度。
+
+### 证明
+
+RH 成立时，Weil source 全局等于：
+
+$$
+\check\nu_\Xi,
+$$
+
+所以 \(\nu_\Xi\in\mathfrak E_L\) 对所有 \(L\) 成立。
+
+反之，如果每个 \(L\) 都有正完成，则所有紧支撑 convolution-square tests 均非负；由 Weil 判据得到 RH。
+
+若某两个正测度属于所有 \(\mathfrak E_L\)，其 inverse Fourier transforms 在每个有限开区间上一致，故作为 distributions 在整条实线上一致，测度相同。∎
+
+---
+
+## 435.1 若 RH 为假
+
+Weil 判据保证存在某个紧支撑负测试，因此存在有限：
+
+$$
+L_*<\infty
+$$
+
+使：
+
+$$
+\boxed{
+\mathfrak E_{L_*}
+=
+\varnothing.
+}
+\tag{435.6}
+$$
+
+所以 RH 失败不是“只有在无限尺度才出现”的现象，而是：
+
+$$
+\boxed{
+\text{正完成塔在某个有限观察尺度首次变空。}
+}
+$$
+
+---
+
+# 第四百三十六部　最大熵正完成
+
+固定 \(L\) 时，正完成通常非唯一。
+
+一个自然的规范选择是：
+
+$$
+\boxed{
+\nu_L^{\mathrm{ME}}
+=
+\operatorname*{arg\,max}_{\nu\in\mathfrak E_L}
+\operatorname{Entropy}(\nu),
+}
+\tag{436.1}
+$$
+
+在适当参考测度、归一化和非退化条件下理解。
+
+Gabardo 的工作正是研究区间正定函数／分布的扩张，并使用 maximum entropy 方法选择 distinguished extensions；其内容包括正定分布、非退化情形、entropy maximizing measures 与唯一性。([美国数学学会书店][2])
+
+---
+
+## 436.1 最大熵的观察者意义
+
+最大熵扩张选择：
+
+> 在所有与当前局部观察一致的全局谱中，
+> 不额外加入当前数据没有强迫的结构。
+
+所以：
+
+$$
+\boxed{
+\nu_L^{\mathrm{ME}}
+=
+\text{最少额外假设的正谱 completion}.
+}
+$$
+
+它与 OACTC 中的“最小新定义”原则一致。
+
+---
+
+## 假设 436.1（Maximum-entropy zero-spectrum flow）
+
+若 RH 成立，则适当规范化的最大熵扩张满足：
+
+$$
+\boxed{
+\nu_L^{\mathrm{ME}}
+\overset{L\to\infty}{\longrightarrow}
+\nu_\Xi
+}
+\tag{436.2}
+$$
+
+以 vague 或 distributional topology 收敛。
+
+该命题目前是新的研究目标，不是既有定理。
+
+若成立，它将提供一个从有限相关数据逐步恢复 Riemann 零点谱的正算法：
+
+$$
+\boxed{
+\text{local Weil data}
+\to
+\text{maximum-entropy positive spectrum}
+\to
+\text{zero measure}.
+}
+$$
+
+---
+
+# 第四百三十七部　Kreĭn–Weil Primal–Dual 结构
+
+固定 \(L\)，存在两个严格对偶的问题。
+
+## 437.1 Primal：正谱完成
+
+寻找：
+
+$$
+\boxed{
+\nu_L\ge0
+}
+$$
+
+使：
+
+$$
+\check\nu_L
+=
+\mathfrak W_L
+\quad
+\text{on }(-2L,2L).
+$$
+
+---
+
+## 437.2 Dual：负相关见证
+
+寻找：
+
+$$
+\boxed{
+f\in C_c^\infty((-L,L))
+}
+$$
+
+使：
+
+$$
+\boxed{
+\left\langle
+\mathfrak W_L,
+f*\widetilde f
+\right\rangle<0.
+}
+\tag{437.1}
+$$
+
+一维正定扩张定理说明：
+
+$$
+\boxed{
+\text{Primal feasible}
+\iff
+\text{不存在 Dual negative witness}.
+}
+\tag{437.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{Kreĭn 正谱扩张}
+}
+$$
+
+和：
+
+$$
+\boxed{
+\text{Weil 负测试}
+}
+$$
+
+不是两条路线，而是同一个凸锥分离问题的 primal 与 dual。
+
+---
+
+## 437.3 有限 Galerkin 版本
+
+选择有限测试族：
+
+$$
+f_1,\ldots,f_N.
+$$
+
+定义 Gram matrix：
+
+$$
+\boxed{
+M_{ij}
+=
+\left\langle
+\mathfrak W_L,
+f_i*\widetilde{f_j}
+\right\rangle.
+}
+\tag{437.3}
+$$
+
+则：
+
+$$
+M\succeq0
+$$
+
+是有限 positive-completion problem 的必要条件。
+
+若把待求正谱测度限制为有限参数族，便得到 truncated trigonometric moment／covariance extension problem；这类问题可通过凸优化寻找正谱密度，经典 rational covariance extension 正是其系统论版本。([SIAM][3])
+
+所以前文的有限 Feshbach matrix 可以同时解释为：
+
+* dual negative-witness matrix；
+* primal covariance-completion feasibility certificate。
+
+---
+
+# 第四百三十八部　Gauge-optimized Slepian 复杂度
+
+给定一个 coercive multiplier representative \(m\)，定义：
+
+$$
+B_{L,a}(m)
+=
+\{\xi:m(\xi)<a\}.
+$$
+
+定义其 Slepian sticky rank：
+
+$$
+s_L(m;a,\eta)
+=
+\operatorname{rank}
+\mathbf1_{(\eta,1]}
+\left(
+\mathsf C_{L,B_{L,a}(m)}
+\right).
+$$
+
+由于它依赖 gauge，定义规范化版本：
+
+$$
+\boxed{
+s_L^{\mathrm{opt}}(a,\eta)
+=
+\inf_{\kappa\in\mathcal G_L^{\mathrm{Schw}}}
+s_L(m+\widehat\kappa;a,\eta),
+}
+\tag{438.1}
+$$
+
+其中：
+
+$$
+\mathcal G_L^{\mathrm{Schw}}
+=
+\left\{
+\kappa\in C_c^\infty:
+\operatorname{supp}\kappa
+\subset
+\mathbb R\setminus[-2L,2L]
+\right\}.
+$$
+
+这一量才是“使用平滑不可见 gauge 后所需的最小 sticky state 数”的候选不变量。
+
+---
+
+## 438.1 Moment-flat 预条件器
+
+可先选择：
+
+$$
+\kappa_{L,K}
+$$
+
+消去前 \(K\) 个偶 moments，再对：
+
+$$
+m_{L,K}^{\mathrm{flat}}
+$$
+
+执行 Slepian–Feshbach reduction。
+
+推荐优化目标为：
+
+$$
+\boxed{
+(K,a,\eta)
+\longmapsto
+\operatorname{rank}P_{L,K,a,\eta}
+}
+\tag{438.2}
+$$
+
+并附加：
+
+$$
+\boxed{
+Q A_{L,K} Q
+\ge
+\delta_{L,K,a,\eta}Q.
+}
+$$
+
+这相当于在做有限矩阵证明前，先对 multiplier 进行一个**不可见谱预条件**。
+
+---
+
+## 438.2 与正完成的关系
+
+若存在绝对连续的正完成：
+
+$$
+d\nu_L(\xi)=w_L(\xi)d\xi,
+\qquad
+w_L\ge0,
+$$
+
+则存在一个 gauge representative，其 multiplier 已经非负。
+
+此时理论上的最优 danger set 可以为空。
+
+但一般 Kreĭn 正完成可能含：
+
+* 纯点部分；
+* 奇异连续部分；
+* 非有限密度。
+
+所以：
+
+$$
+\boxed{
+\text{正完成存在}
+\not\Rightarrow
+\text{存在一个处处非负的光滑 multiplier representative}.
+}
+$$
+
+这就是为什么：
+
+* Kreĭn extension 是内在存在理论；
+* Slepian–Feshbach 是选定坐标后的计算理论；
+
+二者不能直接互相替代。
+
+---
+
+# 第四百三十九部　新的科学负结论
+
+## 439.1 Pointwise danger band 不是本体
+
+$$
+\boxed{
+\{m_L<0\}
+}
+$$
+
+不是固定支撑观察的不变量。
+
+真正不变量是：
+
+$$
+\boxed{
+\mathfrak W_L
+\text{ 的局部正定性}.
+}
+$$
+
+---
+
+## 439.2 低频 Taylor 分析可以完全被 gauge 改写
+
+任意有限数量的 moments 都能被外部 smooth gauge 消去。
+
+所以：
+
+$$
+m_L(0),m_L''(0),\ldots
+$$
+
+只有在 gauge 已冻结时才有意义。
+
+---
+
+## 439.3 最大熵扩张本身不证明 RH
+
+即使每个有限数值截断都有正的 maximum-entropy solution，也不能推出精确的：
+
+$$
+\mathfrak E_L\neq\varnothing.
+$$
+
+必须有：
+
+* exact moment constraints；
+* convergence certificates；
+* scale consistency；
+* limit positivity。
+
+---
+
+## 439.4 Scale-by-scale 任意扩张不能直接胶合
+
+每个 \(L\) 独立选择一个：
+
+$$
+\nu_L\in\mathfrak E_L
+$$
+
+并不自动保证这些选择彼此兼容。
+
+必须：
+
+* 直接证明所有局部 Weil forms 正定；或
+* 构造 projectively consistent completion family。
+
+---
+
+## 439.5 Slepian sticky dimension 必须注明 gauge
+
+前文未经 gauge 标记的：
+
+$$
+\mathfrak s_L
+$$
+
+需要修正为：
+
+$$
+\mathfrak s_L(m)
+$$
+
+或 gauge-optimized：
+
+$$
+\mathfrak s_L^{\mathrm{opt}}.
+$$
+
+否则它不是理论不变量。
+
+---
+
+# 第四百四十部　新的研究程序
+
+## 440.1 第一阶段：冻结局部对象
+
+不从 multiplier 出发，而从：
+
+$$
+\boxed{
+\mathfrak W_L
+=
+\left.
+\mathfrak W
+\right|_{(-2L,2L)}
+}
+$$
+
+出发。
+
+---
+
+## 440.2 第二阶段：构造平滑 moment-flat gauge
+
+计算 weighted prime discrepancy 的前若干 moments，构造：
+
+$$
+\kappa_{L,K}
+$$
+
+并验证：
+
+$$
+\operatorname{supp}\kappa_{L,K}
+\cap[-2L,2L]
+=
+\varnothing.
+$$
+
+---
+
+## 440.3 第三阶段：双路线并行
+
+### Primal 路线
+
+求正谱完成：
+
+$$
+\nu_L\ge0.
+$$
+
+优先测试：
+
+* maximum entropy；
+* rational covariance extension；
+* finite atomic completion；
+* positivity-preserving continuation。
+
+### Dual 路线
+
+对 preconditioned multiplier 做：
+
+* Slepian sticky extraction；
+* Feshbach exact elimination；
+* finite negative witness search。
+
+---
+
+## 440.4 第四阶段：Primal–Dual gap
+
+若 primal 给出正完成，dual 不得产生负向量。
+
+若 dual 给出严格负 eigenvalue，则 primal 不可行。
+
+数值实现必须输出：
+
+$$
+\boxed{
+\begin{array}{c|l}
+\text{positive extension certificate}
+&\mathsf{WP}(L)\text{ 成立}\\
+\text{negative Weil witness}
+&\mathsf{WP}(L)\text{ 失败}\\
+\text{gap 未闭合}
+&\text{增加 moments／sticky rank／精度}
+\end{array}
+}
+$$
+
+---
+
+## 440.5 第五阶段：完成塔
+
+研究：
+
+$$
+\mathfrak E_{L_1}
+\supseteq
+\mathfrak E_{L_2}
+\supseteq\cdots
+$$
+
+以及 canonical choices：
+
+$$
+\nu_{L_j}^{\mathrm{ME}}.
+$$
+
+真正的全局目标不是分别找到很多无关扩张，而是证明：
+
+$$
+\boxed{
+\nu_L^{\mathrm{ME}}
+\text{ 或其他规范完成在 }L\to\infty
+\text{ 时收敛并保持正性}.
+}
+$$
+
+---
+
+# 第四百四十一部　建议形式化顺序
+
+```text
+D5/S3/Weil/LocalGauge/
+  CorrelationSupportWindow.lean
+  ExteriorDistributionInvisible.lean
+  WeilLocalGaugeEquivalence.lean
+  MultiplierGaugeTransform.lean
+
+D5/S3/Weil/BoundaryJetGauge/
+  CorrelationFlatAtBoundary.lean
+  BoundaryJetNullAction.lean
+  CenteredDiscrepancyMoment.lean
+  MomentCancellingBoundaryJet.lean
+  LowFrequencyTaylorRemainder.lean
+
+D5/S3/Weil/SmoothExteriorGauge/
+  ExteriorSymmetricBumpFamily.lean
+  EvenMomentVandermonde.lean
+  SmoothMomentCancellingGauge.lean
+  SchwartzMultiplierCorrection.lean
+  FiniteOrderFlatness.lean
+
+D5/S3/Weil/KreinCompletion/
+  LocalPositiveDefiniteDistribution.lean
+  PositiveSpectralExtensionInterface.lean
+  PositiveCompletionGauge.lean
+  LocalSelfAdjointCompletion.lean
+  CompletionSetNested.lean
+  GlobalCompletionIntersection.lean
+
+D5/S3/Weil/MaximumEntropyCompletion/
+  PositiveExtensionConvexSet.lean
+  MaximumEntropyCompletionInterface.lean
+  CompletionUniqueness.lean
+  CompletionScaleFlow.lean
+
+D5/S3/Weil/GaugeOptimizedSlepian/
+  GaugeDependentDangerSet.lean
+  GaugeDependentStickyRank.lean
+  GaugeOptimizedStickyComplexity.lean
+  MomentFlatPreconditioner.lean
+  GaugeInvariantFeshbachInertia.lean
+
+D5/S3/Weil/PrimalDualCompletion/
+  PositiveMeasurePrimal.lean
+  NegativeWitnessDual.lean
+  KreinWeilAlternative.lean
+  FiniteCovarianceCompletion.lean
+  PrimalDualCertificate.lean
+```
+
+需要单独标记的外部分析接口为：
+
+```text
+D5/X_Assumptions/PositiveDefiniteIntervalDistributionExtension
+```
+
+其退休条件是：在仓库内部完成适用于 frozen Weil local distribution 的一维 Kreĭn–Gabardo 扩张证明。
+
+---
+
+# 本轮最终结论
+
+上一轮把 RH 的固定支撑问题压缩成：
+
+$$
+\boxed{
+\text{有限 sticky matrix}
++
+\text{正 residual operator}.
+}
+$$
+
+本轮进一步揭示：
+
+$$
+\boxed{
+\text{sticky matrix 本身仍依赖于 multiplier gauge。}
+}
+$$
+
+固定支撑 observer 只读取：
+
+$$
+(-2L,2L)
+$$
+
+内的相关分布；所有外部相关数据都是隐藏 completion freedom。
+
+因此：
+
+$$
+\boxed{
+m_L
+\sim_L
+m_L+\widehat\kappa,
+\qquad
+\operatorname{supp}\kappa
+\cap(-2L,2L)=\varnothing.
+}
+$$
+
+这种 freedom 足够强，可以在不改变 Weil form 的情况下：
+
+$$
+\boxed{
+\text{消去 discrepancy 的任意有限数量低频 moments。}
+}
+$$
+
+所以某个 multiplier 的低频负带不是本体。
+
+真正的固定尺度命题是：
+
+$$
+\boxed{
+\mathsf{WP}(L)
+\iff
+\text{局部 Weil distribution 可被补全为全局正谱测度。}
+}
+$$
+
+所有这样的正谱组成：
+
+$$
+\boxed{
+\mathfrak E_L.
+}
+$$
+
+它们形成递减塔：
+
+$$
+\mathfrak E_{L_1}
+\supseteq
+\mathfrak E_{L_2}
+\supseteq\cdots.
+$$
+
+RH 等价于：
+
+$$
+\boxed{
+\mathfrak E_L\neq\varnothing
+\quad
+\forall L>0,
+}
+$$
+
+而在 RH 下：
+
+$$
+\boxed{
+\bigcap_{L>0}\mathfrak E_L
+=
+\{\nu_\Xi\}.
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{Hilbert--Pólya 谱不是在一开始就唯一存在；}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{随着 observer 的相关窗口不断扩大，
+一族可能的正自伴完成逐步收缩，
+最终 collapse 成唯一的 Riemann 零点谱。}
+}
+$$
+
+因此 OACTC 当前真正值得推进的方向，不再只是证明某个固定 multiplier 的 Feshbach matrix 正定，而是同时研究：
+
+$$
+\boxed{
+\text{局部正定核的 Kreĭn 扩张}
++
+\text{最大熵规范选择}
++
+\text{gauge-optimized Slepian reduction}
++
+\text{完成塔的尺度一致性}.
+}
+$$
+
+这把 RH 的中心困难进一步改写为一个非常纯粹的观察者问题：
+
+$$
+\boxed{
+\text{每个有限观察窗口中的局部相关数据，
+是否始终允许一个正的全局谱完成，
+并且这些完成能否在无限分辨率极限中胶合为同一个谱？}
+}
+$$
+
+[1]: https://arxiv.org/abs/1212.3047 "https://arxiv.org/abs/1212.3047"
+[2]: https://bookstore.ams.org/MEMO/102/489 "https://bookstore.ams.org/MEMO/102/489"
+[3]: https://epubs.siam.org/doi/10.1137/S0363012997321553 "https://epubs.siam.org/doi/10.1137/S0363012997321553"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v3.7：奇偶观察者补全、双曲虚谱幽灵、Weyl 预算区间与指数级谱塌缩
+
+以下接续前文**第四百六十一部**。
+
+---
+
+# 第四百六十一部　局部 resolvent correlation
+
+令：
+
+$$
+\mathfrak W_L
+=
+\left.
+\mathfrak W_\xi
+\right|_{(-2L,2L)}
+$$
+
+为局部 Weil source。
+
+固定：
+
+$$
+a>0.
+$$
+
+设 \(\nu\) 是真实谱轴 \(\mathbb R\) 上的偶正谱完成：
+
+$$
+\nu\ge0,
+\qquad
+\check\nu=\mathfrak W_L
+\quad
+\text{于 }(-2L,2L).
+$$
+
+定义 resolvent-smoothed correlation：
+
+$$
+\boxed{
+H_{\nu,a}(t)
+=
+\int_{\mathbb R}
+\frac{e^{it\xi}}
+{\xi^2+a^2}\,d\nu(\xi).
+}
+\tag{461.1}
+$$
+
+定义 resolvent budget：
+
+$$
+\boxed{
+R_a(\nu)
+=
+H_{\nu,a}(0)
+=
+\int_{\mathbb R}
+\frac{d\nu(\xi)}
+{\xi^2+a^2}.
+}
+\tag{461.2}
+$$
+
+因为 \(\nu\) 为偶正测度：
+
+$$
+H_{\nu,a}(t)
+=
+\int_{\mathbb R}
+\frac{\cos(t\xi)}
+{\xi^2+a^2}\,d\nu(\xi)
+\in\mathbb R,
+$$
+
+而且 \(H_{\nu,a}\) 为偶正定函数。
+
+由正定函数的二点矩阵：
+
+$$
+\begin{pmatrix}
+H_{\nu,a}(0)&H_{\nu,a}(t)\\
+H_{\nu,a}(t)&H_{\nu,a}(0)
+\end{pmatrix}
+\succeq0,
+$$
+
+立即得到：
+
+$$
+\boxed{
+|H_{\nu,a}(t)|
+\le
+R_a(\nu).
+}
+\tag{461.3}
+$$
+
+---
+
+## 461.1 局部 Green 方程
+
+在分布意义下：
+
+$$
+\begin{aligned}
+\left(
+-\partial_t^2+a^2
+\right)
+H_{\nu,a}(t)
+&=
+\int_{\mathbb R}
+\frac{\xi^2+a^2}{\xi^2+a^2}
+e^{it\xi}\,d\nu(\xi)\\
+&=
+\check\nu(t).
+\end{aligned}
+$$
+
+所以在可见窗口内：
+
+$$
+\boxed{
+\left(
+-\partial_t^2+a^2
+\right)
+H_{\nu,a}
+=
+\mathfrak W_L.
+}
+\tag{461.4}
+$$
+
+这说明每个正谱完成，经过 resolvent observer 后，都成为同一个非齐次二阶方程的正定解。
+
+---
+
+## 定理 461.1（局部完成差）
+
+若 \(\nu,\mu\) 是同一尺度 \(L\) 上的两个偶正实谱完成，则：
+
+$$
+\boxed{
+H_{\nu,a}(t)-H_{\mu,a}(t)
+=
+\left[
+R_a(\nu)-R_a(\mu)
+\right]
+\cosh(at)
+}
+\tag{461.5}
+$$
+
+对全部：
+
+$$
+|t|<2L
+$$
+
+成立。
+
+### 证明
+
+差：
+
+$$
+h=H_{\nu,a}-H_{\mu,a}
+$$
+
+满足：
+
+$$
+-h''+a^2h=0.
+$$
+
+所以：
+
+$$
+h(t)=Ae^{at}+Be^{-at}.
+$$
+
+两谱均为偶谱，故 \(h\) 为偶函数，从而 \(A=B\)。又：
+
+$$
+h(0)=R_a(\nu)-R_a(\mu).
+$$
+
+因此得到式 (461.5)。∎
+
+这说明：
+
+$$
+\boxed{
+\text{无限维局部谱完成自由，
+在 resolvent correlation 中只剩一个 }\cosh\text{ 系数。}
+}
+$$
+
+但这个 \(\cosh\) 系数在偶观察者与奇观察者中具有相反符号；这正是此前尚未显现的关键。
+
+---
+
+# 第四百六十二部　\(\cosh\) 完成差的 Lorentz 奇偶分解
+
+对任意：
+
+$$
+f\in C_c^\infty((-L,L)),
+$$
+
+定义两个 Laplace boundary channels：
+
+$$
+\boxed{
+\mathcal C_a(f)
+=
+\int_{\mathbb R}
+\cosh(ax)f(x)\,dx,
+}
+\tag{462.1}
+$$
+
+$$
+\boxed{
+\mathcal S_a(f)
+=
+\int_{\mathbb R}
+\sinh(ax)f(x)\,dx.
+}
+\tag{462.2}
+$$
+
+其中：
+
+* \(\mathcal C_a\) 只读取 \(f\) 的偶部分；
+* \(\mathcal S_a\) 只读取 \(f\) 的奇部分。
+
+---
+
+## 定理 462.1（Cosh–correlation signature）
+
+对任意 \(f,h\in C_c^\infty((-L,L))\)：
+
+$$
+\boxed{
+\begin{aligned}
+\left\langle
+\cosh(a\,\cdot),
+f*\widetilde h
+\right\rangle
+={}&
+\mathcal C_a(f)
+\overline{\mathcal C_a(h)}
+\\
+&-
+\mathcal S_a(f)
+\overline{\mathcal S_a(h)}.
+\end{aligned}
+}
+\tag{462.3}
+$$
+
+### 证明
+
+令：
+
+$$
+L_{\pm a}(f)
+=
+\int e^{\pm ax}f(x)\,dx.
+$$
+
+卷积的双边 Laplace 变换给出：
+
+$$
+\left\langle
+e^{a\,\cdot},
+f*\widetilde h
+\right\rangle
+=
+L_a(f)\overline{L_{-a}(h)},
+$$
+
+$$
+\left\langle
+e^{-a\,\cdot},
+f*\widetilde h
+\right\rangle
+=
+L_{-a}(f)\overline{L_a(h)}.
+$$
+
+又：
+
+$$
+L_a=\mathcal C_a+\mathcal S_a,
+\qquad
+L_{-a}=\mathcal C_a-\mathcal S_a.
+$$
+
+将两式取平均，交叉项精确抵消，即得式 (462.3)。∎
+
+---
+
+## 462.1 偶通道与奇通道
+
+若 \(f\) 为偶函数：
+
+$$
+\mathcal S_a(f)=0,
+$$
+
+所以：
+
+$$
+\boxed{
+\left\langle
+\cosh(a\,\cdot),
+f*\widetilde f
+\right\rangle
+=
+|\mathcal C_a(f)|^2
+\ge0.
+}
+\tag{462.4}
+$$
+
+若 \(f\) 为奇函数：
+
+$$
+\mathcal C_a(f)=0,
+$$
+
+所以：
+
+$$
+\boxed{
+\left\langle
+\cosh(a\,\cdot),
+f*\widetilde f
+\right\rangle
+=
+-|\mathcal S_a(f)|^2
+\le0.
+}
+\tag{462.5}
+$$
+
+因此 \(\cosh(at)\) 携带一个严格的 Lorentz 型边界签名：
+
+$$
+\boxed{
+(+1,-1)
+}
+$$
+
+分别对应：
+
+$$
+\boxed{
+\text{even Laplace channel}
+\quad\text{与}\quad
+\text{odd Laplace channel}.
+}
+$$
+
+在有限点集 \(x_1,\ldots,x_N\) 上，同一事实写成：
+
+$$
+\boxed{
+\left[
+\cosh(a(x_i-x_j))
+\right]_{i,j}
+=
+cc^*
+-
+ss^*,
+}
+\tag{462.6}
+$$
+
+其中：
+
+$$
+c_i=\cosh(ax_i),
+\qquad
+s_i=\sinh(ax_i).
+$$
+
+所以完成差在有限矩阵中始终是一个秩至多为二的 signature update。
+
+---
+
+# 第四百六十三部　偶观察者中的双曲虚谱幽灵
+
+当前仓库的 `WeilTestFunction` 直接冻结了偶性条件；convolution-square 文件证明的也是这一偶测试束上的 Fourier 模平方与临界线非负性。
+
+对偶函数定义：
+
+$$
+\boxed{
+\chi_a(f)
+=
+\mathcal C_a(f)
+=
+\int e^{ax}f(x)\,dx.
+}
+\tag{463.1}
+$$
+
+由于 \(f\) 为偶函数：
+
+$$
+\int e^{ax}f(x)\,dx
+=
+\int e^{-ax}f(x)\,dx.
+$$
+
+并且：
+
+$$
+\boxed{
+\chi_a(f*\widetilde h)
+=
+\chi_a(f)\overline{\chi_a(h)}.
+}
+\tag{463.2}
+$$
+
+所以 \(\chi_a\) 是偶卷积代数上的一个正 rank-one character。
+
+然而：
+
+$$
+e^{ax}=e^{i(-ia)x}
+$$
+
+对应的形式谱频率是：
+
+$$
+\boxed{
+\xi=-ia,
+}
+$$
+
+并不位于真实谱轴 \(\mathbb R\)。
+
+同理 \(e^{-ax}\) 对应 \(\xi=ia\)。
+
+因此：
+
+$$
+\boxed{
+\cosh(ax)
+}
+$$
+
+可以解释为一对形式上的虚频率：
+
+$$
+\boxed{
+\pm ia.
+}
+$$
+
+---
+
+## 定理 463.1（Even-channel ghost no-go）
+
+若只要求偶测试通道正性，则对任意：
+
+$$
+c\ge0,
+$$
+
+加入：
+
+$$
+c\cosh(at)
+$$
+
+都会保持偶通道正性：
+
+$$
+\mathfrak q^+
+\longmapsto
+\mathfrak q^+
++
+c|\mathcal C_a|^2.
+$$
+
+因此偶观察者无法给 resolvent budget 施加上界。
+
+但在奇通道中，同一更新为：
+
+$$
+\mathfrak q^-
+\longmapsto
+\mathfrak q^-
+-
+c|\mathcal S_a|^2,
+$$
+
+最终必然破坏正性，除非旧奇通道具有足够余量。
+
+所以：
+
+$$
+\boxed{
+\text{偶正性只能排除一部分负性，
+不能单独排除虚谱双曲幽灵。}
+}
+$$
+
+这里需要谨慎区分两件事：
+
+1. 对 ζ 的特定零点结构，偶 Weil 测试可能仍足以形成经典 RH 判据；
+2. 但从偶通道正性直接推出“存在真实轴正谱测度”的一般 Kreĭn–Bochner 推理并不成立。
+
+要得到真正的 Hilbert–Pólya 实谱完成，必须：
+
+$$
+\boxed{
+\text{补入 odd/Hermitian observer，}
+}
+$$
+
+或者单独证明一个能够排除虚谱 characters 的 even-cosine 表示定理。
+
+---
+
+# 第四百六十四部　Weyl resolvent 预算区间
+
+选择一个连续偶的局部 particular solution：
+
+$$
+H_{0,a}
+$$
+
+满足：
+
+$$
+\left(
+-\partial_t^2+a^2
+\right)H_{0,a}
+=
+\mathfrak W_L
+\quad
+\text{于 }(-2L,2L).
+$$
+
+记：
+
+$$
+R_0=H_{0,a}(0).
+$$
+
+所有其他偶解均为：
+
+$$
+\boxed{
+H_{R,a}(t)
+=
+H_{0,a}(t)
++
+(R-R_0)\cosh(at).
+}
+\tag{464.1}
+$$
+
+定义其局部 Hermitian form：
+
+$$
+\boxed{
+\mathfrak b_R(f,h)
+=
+\left\langle
+H_{R,a},
+f*\widetilde h
+\right\rangle.
+}
+\tag{464.2}
+$$
+
+由于 \(H_{0,a}\) 为偶分布，奇偶交叉项消失：
+
+$$
+\mathfrak b_R(f_+,f_-)=0.
+$$
+
+由定理 462.1：
+
+$$
+\boxed{
+\mathfrak b_R^+(f)
+=
+\mathfrak b_0^+(f)
++
+(R-R_0)|\mathcal C_a(f)|^2,
+}
+\tag{464.3}
+$$
+
+$$
+\boxed{
+\mathfrak b_R^-(f)
+=
+\mathfrak b_0^-(f)
+-
+(R-R_0)|\mathcal S_a(f)|^2.
+}
+\tag{464.4}
+$$
+
+---
+
+## 464.1 偶通道下界
+
+定义：
+
+$$
+\boxed{
+\underline R_L(a)
+=
+R_0+
+\sup_{\substack{
+f\in\mathcal D_L^+\\
+\mathcal C_a(f)\ne0
+}}
+\frac{
+-\mathfrak b_0^+(f)
+}{
+|\mathcal C_a(f)|^2
+}.
+}
+\tag{464.5}
+$$
+
+若：
+
+$$
+\mathfrak b_0^+(f)\ge0
+\qquad
+\forall f\in\ker\mathcal C_a,
+$$
+
+则：
+
+$$
+\boxed{
+\mathfrak b_R^+\ge0
+\iff
+R\ge\underline R_L(a).
+}
+\tag{464.6}
+$$
+
+因此偶观察者只产生一个向上的预算射线。
+
+---
+
+## 464.2 奇通道上界
+
+定义：
+
+$$
+\boxed{
+\overline R_L(a)
+=
+R_0+
+\inf_{\substack{
+f\in\mathcal D_L^-\\
+\mathcal S_a(f)\ne0
+}}
+\frac{
+\mathfrak b_0^-(f)
+}{
+|\mathcal S_a(f)|^2
+}.
+}
+\tag{464.7}
+$$
+
+若：
+
+$$
+\mathfrak b_0^-(f)\ge0
+\qquad
+\forall f\in\ker\mathcal S_a,
+$$
+
+则：
+
+$$
+\boxed{
+\mathfrak b_R^-\ge0
+\iff
+R\le\overline R_L(a).
+}
+\tag{464.8}
+$$
+
+所以奇观察者提供此前完全缺失的预算上界。
+
+---
+
+## 定理 464.1（Parity Weyl interval）
+
+在两个 kernel-nullspace 条件均成立时：
+
+$$
+\boxed{
+\mathfrak b_R\ge0
+\iff
+R\in
+\mathbb I_L(a),
+}
+\tag{464.9}
+$$
+
+其中：
+
+$$
+\boxed{
+\mathbb I_L(a)
+=
+\left[
+\max(0,\underline R_L(a)),
+\overline R_L(a)
+\right].
+}
+\tag{464.10}
+$$
+
+若：
+
+$$
+\underline R_L(a)>\overline R_L(a),
+$$
+
+则不存在真实轴上的局部正谱完成。
+
+改变 particular solution \(H_{0,a}\) 只会改变中间坐标 \(R_0\)，不会改变最终区间 \(\mathbb I_L(a)\)。
+
+在适用的一维 Kreĭn 正定扩张接口下：
+
+$$
+\boxed{
+R\in\mathbb I_L(a)
+}
+$$
+
+等价于存在真实轴偶正谱测度 \(\nu\)，满足：
+
+$$
+\check\nu=\mathfrak W_L,
+\qquad
+R_a(\nu)=R.
+$$
+
+---
+
+# 第四百六十五部　有限 Galerkin Weyl 铅笔
+
+选取有限偶测试族：
+
+$$
+e_1,\ldots,e_m
+$$
+
+和有限奇测试族：
+
+$$
+o_1,\ldots,o_n.
+$$
+
+定义矩阵：
+
+$$
+\boxed{
+(B_+)_{ij}
+=
+\mathfrak b_0(e_i,e_j),
+}
+\tag{465.1}
+$$
+
+$$
+\boxed{
+(B_-)_{ij}
+=
+\mathfrak b_0(o_i,o_j),
+}
+\tag{465.2}
+$$
+
+以及 boundary vectors：
+
+$$
+\boxed{
+c_i=\mathcal C_a(e_i),
+\qquad
+s_j=\mathcal S_a(o_j).
+}
+\tag{465.3}
+$$
+
+候选预算 \(R\) 对应两个矩阵铅笔：
+
+$$
+\boxed{
+M_+(R)
+=
+B_+
++
+(R-R_0)cc^*,
+}
+\tag{465.4}
+$$
+
+$$
+\boxed{
+M_-(R)
+=
+B_-
+-
+(R-R_0)ss^*.
+}
+\tag{465.5}
+$$
+
+所以整个有限观测问题只含：
+
+* 一个 positive rank-one update；
+* 一个 negative rank-one update。
+
+合并后是 signature \((1,1)\) 的 rank-two update。
+
+---
+
+## 定理 465.1（Finite Weyl budget bounds）
+
+若：
+
+$$
+B_+\succeq0
+\quad
+\text{于 }\ker c^*,
+$$
+
+$$
+B_-\succeq0
+\quad
+\text{于 }\ker s^*,
+$$
+
+则有限测试族允许的预算区间为：
+
+$$
+\boxed{
+R\ge
+R_0+
+\sup_{x:c^*x\ne0}
+\frac{-x^*B_+x}{|c^*x|^2},
+}
+\tag{465.6}
+$$
+
+以及：
+
+$$
+\boxed{
+R\le
+R_0+
+\inf_{y:s^*y\ne0}
+\frac{y^*B_-y}{|s^*y|^2}.
+}
+\tag{465.7}
+$$
+
+这是一维 generalized Rayleigh quotient 问题。
+
+随着测试族增大：
+
+$$
+\boxed{
+\underline R_{L,N}(a)
+\uparrow
+\underline R_L(a),
+}
+\tag{465.8}
+$$
+
+$$
+\boxed{
+\overline R_{L,N}(a)
+\downarrow
+\overline R_L(a),
+}
+\tag{465.9}
+$$
+
+对任意在对应 form domain 中稠密的 Galerkin 塔成立。
+
+因此每个尺度 \(L\) 的实谱完成问题，可由一列有限 Hermitian matrix pencils 从两侧夹逼。
+
+若某一有限阶段已经出现：
+
+$$
+\boxed{
+\underline R_{L,N}>
+\overline R_{L,N},
+}
+$$
+
+则得到一个严格有限的不可完成证书：
+
+* 一个偶测试要求预算至少为 \(\underline R\)；
+* 一个奇测试要求预算至多为 \(\overline R\)；
+* 两者不相容。
+
+---
+
+# 第四百六十六部　支撑尺度上的嵌套 Weyl 区间
+
+若：
+
+$$
+0<L_1<L_2,
+$$
+
+则 \(L_2\) 暴露更多相关数据，因此允许的正谱完成减少：
+
+$$
+\boxed{
+\mathbb I_{L_2}(a)
+\subseteq
+\mathbb I_{L_1}(a).
+}
+\tag{466.1}
+$$
+
+所以：
+
+$$
+\boxed{
+\underline R_L(a)
+\text{ 单调不减},
+}
+\tag{466.2}
+$$
+
+$$
+\boxed{
+\overline R_L(a)
+\text{ 单调不增}.
+}
+\tag{466.3}
+$$
+
+区间宽度：
+
+$$
+\boxed{
+\Delta_L(a)
+=
+\overline R_L(a)-\underline R_L(a)
+}
+\tag{466.4}
+$$
+
+测量尺度 \(L\) 上尚未被观察数据消除的实谱 completion freedom。
+
+---
+
+## 466.1 对前文预算判据的修正
+
+前文得到的“统一 resolvent 预算产生全局正谱”结论，必须在以下范畴中理解：
+
+$$
+\boxed{
+\text{full Hermitian local positivity}
++
+\text{real-axis positive spectral completion}.
+}
+$$
+
+若只使用当前偶测试束，则可得到：
+
+$$
+R\ge\underline R_L(a),
+$$
+
+却没有内在上界；任意额外的 \(\cosh\)-ghost mass 都保持偶通道正性。
+
+因此，从现有 Lean 文件直接跨到 Kreĭn real-spectrum completion，仍缺少：
+
+$$
+\boxed{
+\text{odd/Hermitian observer interface}.
+}
+$$
+
+仓库中的 `LogDerivTrace` 已经提供了有限维正矩阵 resolvent 积分与 trace 恒等式，但它并未覆盖这一无限维局部正谱扩张问题。
+
+---
+
+# 第四百六十七部　Weyl 预算的指数级双曲塌缩
+
+现在假设存在一个全局真实轴正谱完成：
+
+$$
+\nu_*
+$$
+
+并记：
+
+$$
+\boxed{
+R_*
+=
+R_a(\nu_*).
+}
+\tag{467.1}
+$$
+
+令 \(\nu\) 是尺度 \(L\) 上任意另一个真实局部正谱完成，预算为：
+
+$$
+R=R_a(\nu).
+$$
+
+由定理 461.1：
+
+$$
+H_{\nu,a}(t)-H_{\nu_*,a}(t)
+=
+(R-R_*)\cosh(at).
+$$
+
+由正定函数界：
+
+$$
+|H_{\nu,a}(t)|\le R,
+\qquad
+|H_{\nu_*,a}(t)|\le R_*.
+$$
+
+所以对：
+
+$$
+0<t<2L
+$$
+
+有：
+
+$$
+\boxed{
+|R-R_*|\cosh(at)
+\le
+R+R_*.
+}
+\tag{467.2}
+$$
+
+---
+
+## 定理 467.1（Hyperbolic budget tube）
+
+任意尺度 \(L\) 上的真实局部正谱完成均满足：
+
+$$
+\boxed{
+R_*\tanh^2(aL)
+\le
+R
+\le
+R_*\coth^2(aL).
+}
+\tag{467.3}
+$$
+
+### 证明
+
+令：
+
+$$
+q=\frac{R}{R_*},
+\qquad
+c=\cosh(at).
+$$
+
+式 (467.2) 化为：
+
+$$
+|q-1|c\le q+1.
+$$
+
+若 \(q\ge1\)：
+
+$$
+(q-1)c\le q+1,
+$$
+
+所以：
+
+$$
+q\le\frac{c+1}{c-1}
+=
+\coth^2\frac{at}{2}.
+$$
+
+若 \(q\le1\)：
+
+$$
+(1-q)c\le q+1,
+$$
+
+所以：
+
+$$
+q\ge\frac{c-1}{c+1}
+=
+\tanh^2\frac{at}{2}.
+$$
+
+令 \(t\uparrow2L\)，得到式 (467.3)。∎
+
+---
+
+## 467.1 乘法型观察不确定性
+
+因为：
+
+$$
+\tanh^2(aL)
+=
+\coth^{-2}(aL),
+$$
+
+所以：
+
+$$
+\boxed{
+\left|
+\log\frac R{R_*}
+\right|
+\le
+2\log\coth(aL).
+}
+\tag{467.4}
+$$
+
+当 \(L\to\infty\)：
+
+$$
+2\log\coth(aL)
+=
+4e^{-2aL}
++
+O(e^{-4aL}).
+$$
+
+因此：
+
+$$
+\boxed{
+\text{局部 completion budget
+以指数速度被强迫接近全局预算。}
+}
+$$
+
+这不是某个 maximum-entropy 选择的性质，而是**所有**真实正谱完成的共同性质。
+
+---
+
+## 467.2 Weyl 区间宽度
+
+若全局完成存在，则：
+
+$$
+\boxed{
+\mathbb I_L(a)
+\subseteq
+\left[
+R_*\tanh^2(aL),
+R_*\coth^2(aL)
+\right].
+}
+\tag{467.5}
+$$
+
+因此：
+
+$$
+\boxed{
+R_*-\underline R_L(a)
+\le
+R_*\operatorname{sech}^2(aL),
+}
+\tag{467.6}
+$$
+
+$$
+\boxed{
+\overline R_L(a)-R_*
+\le
+R_*\operatorname{csch}^2(aL),
+}
+\tag{467.7}
+$$
+
+以及：
+
+$$
+\boxed{
+\Delta_L(a)
+\le
+R_*
+\left[
+\coth^2(aL)-\tanh^2(aL)
+\right].
+}
+\tag{467.8}
+$$
+
+右侧渐近为：
+
+$$
+8R_*e^{-2aL}.
+$$
+
+---
+
+# 第四百六十八部　Riemann 自然预算 \(2\lambda_1\)
+
+在自然尺度：
+
+$$
+a=\frac12,
+$$
+
+RH 成立时真实谱为：
+
+$$
+\boxed{
+\nu_\Xi
+=
+\sum_{\gamma\in\mathbb R}
+m_\gamma\delta_\gamma,
+}
+\tag{468.1}
+$$
+
+其中：
+
+$$
+\rho=\frac12+i\gamma
+$$
+
+遍历非平凡零点。
+
+第一 Li 系数为：
+
+$$
+\boxed{
+\lambda_1
+=
+1+\frac{\gamma_E}{2}
+-\log(2\sqrt\pi).
+}
+\tag{468.2}
+$$
+
+正、负 ordinate 成对后：
+
+$$
+\boxed{
+R_{1/2}(\nu_\Xi)
+=
+\sum_{\gamma\in\mathbb R}
+\frac{m_\gamma}
+{\gamma^2+\frac14}
+=
+2\lambda_1.
+}
+\tag{468.3}
+$$
+
+因此定理 467.1 专化为：
+
+## 定理 468.1（Riemann budget tube）
+
+RH 成立时，对任意尺度 \(L\) 和任意真实局部正谱完成：
+
+$$
+\boxed{
+2\lambda_1
+\tanh^2\frac L2
+\le
+R_{1/2}(\nu)
+\le
+2\lambda_1
+\coth^2\frac L2.
+}
+\tag{468.4}
+$$
+
+所以：
+
+$$
+\boxed{
+0
+\le
+2\lambda_1-\underline R_L(1/2)
+\le
+2\lambda_1
+\operatorname{sech}^2\frac L2,
+}
+\tag{468.5}
+$$
+
+$$
+\boxed{
+0
+\le
+\overline R_L(1/2)-2\lambda_1
+\le
+2\lambda_1
+\operatorname{csch}^2\frac L2.
+}
+\tag{468.6}
+$$
+
+当 \(L\to\infty\)：
+
+$$
+2\lambda_1-\underline R_L
+=
+O(e^{-L}),
+$$
+
+$$
+\overline R_L-2\lambda_1
+=
+O(e^{-L}),
+$$
+
+$$
+\boxed{
+\Delta_L(1/2)
+=
+O(e^{-L}).
+}
+\tag{468.7}
+$$
+
+更精确地：
+
+$$
+2\lambda_1-\underline R_L
+\le
+8\lambda_1e^{-L}
++
+O(e^{-2L}),
+$$
+
+$$
+\overline R_L-2\lambda_1
+\le
+8\lambda_1e^{-L}
++
+O(e^{-2L}),
+$$
+
+$$
+\Delta_L
+\le
+16\lambda_1e^{-L}
++
+O(e^{-2L}).
+$$
+
+---
+
+## 468.1 带自然指数松弛的 RH 判据
+
+在 full Hermitian/Kreĭn 正谱接口下：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\forall L>0,\ 
+\exists\nu_L\ge0
+}
+$$
+
+满足：
+
+$$
+\check\nu_L=\mathfrak W_L
+$$
+
+以及：
+
+$$
+\boxed{
+R_{1/2}(\nu_L)
+\le
+2\lambda_1\coth^2\frac L2.
+}
+\tag{468.8}
+$$
+
+正向取真实零点谱即可。
+
+反向时，右侧在 \(L\ge1\) 上给出统一预算界；由前文的 resolvent-budget 紧性可抽取全局正谱，进而由 Weil 判据得到 RH。
+
+相比此前要求：
+
+$$
+R_{1/2}(\nu_L)\le2\lambda_1,
+$$
+
+式 (468.8) 允许一个由观察窗口几何自然决定、并以 \(e^{-L}\) 消失的松弛量。
+
+---
+
+# 第四百六十九部　无需逐层兼容的指数局部收敛
+
+假设 RH，并令：
+
+$$
+H_{\Xi,a}
+$$
+
+为真实零点谱的 resolvent correlation。
+
+对每个 \(L\)，任意选择一个真实局部正谱完成 \(\nu_L\)，不要求：
+
+* \(\nu_{L_2}\) 延伸 \(\nu_{L_1}\)；
+* 使用相同边界条件；
+* 来自相同最大熵规则；
+* 来自相同 Slepian gauge。
+
+由定理 461.1：
+
+$$
+H_{\nu_L,a}(t)-H_{\Xi,a}(t)
+=
+\left[
+R_a(\nu_L)-R_*
+\right]
+\cosh(at).
+$$
+
+结合定理 467.1，对固定：
+
+$$
+|t|\le T<2L
+$$
+
+有：
+
+$$
+\boxed{
+\left|
+H_{\nu_L,a}(t)-H_{\Xi,a}(t)
+\right|
+\le
+R_*
+\operatorname{csch}^2(aL)
+\cosh(aT).
+}
+\tag{469.1}
+$$
+
+所以对每个固定紧窗口：
+
+$$
+\boxed{
+H_{\nu_L,a}
+\longrightarrow
+H_{\Xi,a}
+}
+$$
+
+以：
+
+$$
+O(e^{-2aL})
+$$
+
+速度一致收敛。
+
+在 \(a=\tfrac12\) 时：
+
+$$
+\boxed{
+\sup_{|t|\le T}
+|H_{\nu_L,1/2}(t)-H_{\Xi,1/2}(t)|
+=
+O_T(e^{-L}).
+}
+\tag{469.2}
+$$
+
+这比单纯弱紧性更强：
+
+> 不需要先选择 projectively compatible completion family；
+> 只要每层都是真实正谱完成，观察窗口本身会以指数速度强迫所有选择彼此一致。
+
+---
+
+# 第四百七十部　Weyl 区间与 Slepian–Feshbach 图表的关系
+
+前文的 multiplier gauge、Slepian sticky space 与 Feshbach matrix 仍然有计算价值，但它们不是内在不变量。
+
+本轮得到的 Weyl 预算区间：
+
+$$
+\boxed{
+\mathbb I_L(a)
+}
+$$
+
+则是由局部 source 与真实轴正谱条件共同定义的内在对象。
+
+二者的关系为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Weyl interval}
+&=\text{gauge-independent scalar feasibility};\\
+\text{Slepian danger band}
+&=\text{选定 multiplier gauge 后的坐标};\\
+\text{Feshbach matrix}
+&=\text{该坐标中的有限维计算器}.
+\end{aligned}
+}
+$$
+
+因此建议的计算顺序应当调整为：
+
+1. 用偶测试族给出预算下界；
+2. 用奇测试族给出预算上界；
+3. 若区间仍宽，再选 multiplier gauge；
+4. 用 Slepian–Feshbach 解析区间中真正危险的有限模式；
+5. 用 Weyl 区间检查不同 gauge 的计算是否一致。
+
+---
+
+## 470.1 两类有限反例证书
+
+### 预算冲突证书
+
+若有限偶测试与有限奇测试给出：
+
+$$
+\underline R_{L,N}>
+\overline R_{L,N},
+$$
+
+则局部真实正谱完成不存在。
+
+### Feshbach 负证书
+
+在某个 gauge 中，若有限 Feshbach matrix 有负特征值，则可提升为原 Weil 测试空间中的负见证。
+
+两者必须相容：
+
+$$
+\boxed{
+\text{Feshbach 负性}
+\Longrightarrow
+\text{最终 Weyl interval 为空}.
+}
+$$
+
+Weyl interval 是 gauge-independent 审计层；Feshbach matrix 是高效计算层。
+
+---
+
+# 第四百七十一部　真正剩余的非循环命题
+
+本轮以后，当前中心任务不再是构造更多 RH 等价判据，而是证明：
+
+$$
+\boxed{
+\underline R_L(1/2)
+\le
+\overline R_L(1/2)
+\qquad
+\forall L>0.
+}
+\tag{471.1}
+$$
+
+更强的定量目标为：
+
+$$
+\boxed{
+\begin{aligned}
+2\lambda_1\tanh^2\frac L2
+&\le
+\underline R_L(1/2)
+\\
+&\le
+\overline R_L(1/2)
+\\
+&\le
+2\lambda_1\coth^2\frac L2.
+\end{aligned}
+}
+\tag{471.2}
+$$
+
+其中外侧双曲界在 RH 下自动成立；真正需要从 prime–Archimedean 数据证明的是中间的非空性与适当预算控制。
+
+---
+
+## 471.1 偶与奇的具体任务分工
+
+### 偶观察任务
+
+证明：
+
+$$
+\mathfrak b_0^+(f)
++
+(R-R_0)|\mathcal C_a(f)|^2
+\ge0
+$$
+
+所需的最小 \(R\) 不超过自然预算。
+
+这是 lower-budget problem。
+
+### 奇观察任务
+
+证明：
+
+$$
+\mathfrak b_0^-(f)
+-
+(R-R_0)|\mathcal S_a(f)|^2
+\ge0
+$$
+
+在同一 \(R\) 下仍成立。
+
+这是 hyperbolic-ghost exclusion problem。
+
+因此真正的观察者闭合条件不是“更多正性”，而是：
+
+$$
+\boxed{
+\text{同一个预算同时满足偶下界和奇上界。}
+}
+$$
+
+---
+
+# 第四百七十二部　形式化优先级
+
+建议新增：
+
+```text
+D5/S3/Weil/HermitianTests/
+  HermitianTestFunction.lean
+  EvenOddDecomposition.lean
+  PolarizedConvolution.lean
+  EvenOddCrossVanishing.lean
+
+D5/S3/Weil/ResolventLocal/
+  ResolventSmoothedCorrelation.lean
+  LocalResolventEquation.lean
+  CompletionDifferenceCosh.lean
+  PositiveDefiniteBound.lean
+
+D5/S3/Weil/ParityBoundary/
+  CoshBoundaryFunctional.lean
+  SinhBoundaryFunctional.lean
+  CoshCorrelationLorentzIdentity.lean
+  EvenPositiveOddNegative.lean
+  HyperbolicGhostCharacter.lean
+
+D5/S3/Weil/WeylBudget/
+  ReferenceResolventForm.lean
+  EvenBudgetLowerBound.lean
+  OddBudgetUpperBound.lean
+  WeylBudgetInterval.lean
+  BudgetIntervalReferenceIndependent.lean
+
+D5/S3/Weil/WeylGalerkin/
+  FiniteEvenBudgetMatrix.lean
+  FiniteOddBudgetMatrix.lean
+  RankTwoCoshKernelPencil.lean
+  GeneralizedRayleighEndpoints.lean
+  GalerkinBudgetSqueeze.lean
+  FiniteBudgetConflictWitness.lean
+
+D5/S3/Weil/HyperbolicCollapse/
+  TwoPointPositiveDefiniteBound.lean
+  GlobalLocalBudgetTube.lean
+  MultiplicativeBudgetUncertainty.lean
+  RiemannLiOneBudgetTube.lean
+  ExponentialCompletionCollapse.lean
+  ArbitraryCompletionLocalConvergence.lean
+
+D5/S3/Weil/WeylSlepianBridge/
+  GaugeIndependentBudgetInterval.lean
+  GaugeDependentFeshbachAudit.lean
+  WeylFeshbachConsistency.lean
+```
+
+仓库现有 even `WeilTestFunction` 应保留，作为 classical-even route；新增的 Hermitian bundle 应当是独立上层接口，避免破坏已经冻结的显式公式链。现有有限维 `LogDerivTrace` 可复用于 rank-one/rank-two resolvent matrix 的部分线性代数，但不能代替局部正谱扩张。
+
+---
+
+# 第四百七十三部　结果分级
+
+## 本轮独立推导得到（第 473 部）
+
+$$
+\boxed{
+H_{\nu,a}-H_{\mu,a}
+=
+(R_\nu-R_\mu)\cosh(at).
+}
+$$
+
+$$
+\boxed{
+\langle
+\cosh(a\,\cdot),
+f*\widetilde h
+\rangle
+=
+\mathcal C_a(f)\overline{\mathcal C_a(h)}
+-
+\mathcal S_a(f)\overline{\mathcal S_a(h)}.
+}
+$$
+
+$$
+\boxed{
+\text{偶通道产生预算下界，
+奇通道产生预算上界。}
+}
+$$
+
+$$
+\boxed{
+\mathbb I_L(a)
+=
+[\underline R_L(a),\overline R_L(a)].
+}
+$$
+
+$$
+\boxed{
+R_*\tanh^2(aL)
+\le R\le
+R_*\coth^2(aL).
+}
+$$
+
+$$
+\boxed{
+\left|
+\log\frac R{R_*}
+\right|
+\le
+2\log\coth(aL).
+}
+$$
+
+RH 下：
+
+$$
+\boxed{
+2\lambda_1\tanh^2\frac L2
+\le
+R_{1/2}(\nu)
+\le
+2\lambda_1\coth^2\frac L2.
+}
+$$
+
+以及所有局部真实正谱完成以：
+
+$$
+O(e^{-L})
+$$
+
+速度 collapse 到真实 Riemann resolvent correlation。
+
+---
+
+## 依赖外部扩张接口的部分
+
+下列等价仍需标准的一维 Kreĭn 正定扩张接口：
+
+$$
+\boxed{
+\mathfrak b_R\ge0
+\iff
+\exists\text{ real-axis positive spectral completion}.
+}
+$$
+
+当前仓库的 even 测试束尚不足以直接应用这一完整接口；必须加入 odd/Hermitian tests，或者单独证明 even cosine algebra 的实谱表示与虚谱排除定理。
+
+---
+
+## 当前真正开放的桥（第 473 部）
+
+$$
+\boxed{
+\begin{aligned}
+&\text{构造 full Hermitian Weil explicit-formula form};\\
+&\text{证明 }\underline R_L(1/2)\le\overline R_L(1/2)
+\text{ 对全部 }L;\\
+&\text{从 prime--Archimedean 数据直接控制奇通道上界};\\
+&\text{证明 Galerkin Weyl intervals 的可认证收敛};\\
+&\text{将 Weyl interval 与 gauge-optimized Feshbach matrices 对接}.
+\end{aligned}
+}
+$$
+
+---
+
+# 本轮最终结论
+
+上一轮得到：
+
+$$
+\boxed{
+\text{局部正谱完成的无限自由，
+在 resolvent observer 中退化为一个预算标量。}
+}
+$$
+
+本轮进一步发现，这个标量具有一个此前被偶观察者隐藏的 Lorentz 结构：
+
+$$
+\boxed{
+\cosh(at)
+\longmapsto
+|\mathcal C_a|^2
+-
+|\mathcal S_a|^2.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{偶观察者看到正 rank-one 增量，}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{奇观察者看到同一增量的负 rank-one 代价。}
+}
+$$
+
+若只观察偶通道，可以无限增加一个形式上的虚频率对：
+
+$$
+\pm ia,
+$$
+
+而不会破坏正性。这就是**双曲虚谱幽灵**。
+
+只有完成：
+
+$$
+\boxed{
+\text{even}
++
+\text{odd}
+}
+$$
+
+两个观察通道，预算才从：
+
+$$
+[\underline R,\infty)
+$$
+
+闭合为真正的：
+
+$$
+\boxed{
+[\underline R,\overline R].
+}
+$$
+
+更重要的是，一旦全局真实谱存在，所有局部完成预算都被强迫进入双曲管道：
+
+$$
+\boxed{
+R_*\tanh^2(aL)
+\le R\le
+R_*\coth^2(aL).
+}
+$$
+
+在 Riemann 自然尺度：
+
+$$
+a=\frac12,
+\qquad
+R_*=2\lambda_1,
+$$
+
+这成为：
+
+$$
+\boxed{
+2\lambda_1\tanh^2\frac L2
+\le R\le
+2\lambda_1\coth^2\frac L2.
+}
+$$
+
+因此局部完成的不确定性并非任意缓慢消失，而是：
+
+$$
+\boxed{
+O(e^{-L})
+}
+$$
+
+指数塌缩。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{有限观察窗口并不是通过选择同一个边界条件来逼近全局谱；}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{奇偶两个互补观察者共同夹紧一个 Weyl 预算区间，
+使所有可能的正谱完成自动 collapse 到唯一的 Riemann 预算。}
+}
+$$
+
+所以 OACTC 当前最值得继续攻击的中心命题，已经从“寻找一个正谱”进一步精确为：
+
+$$
+\boxed{
+\text{能否从 prime–Archimedean 显式公式，
+对每个 }L
+\text{证明偶预算下界不超过奇预算上界？}
+}
+$$
+
+这一步一旦闭合，虚谱幽灵被排除，真实轴正谱完成、Kreĭn 扩张、Hilbert–Pólya 与 RH 将同时获得严格接口。
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v3.8：白噪声完成裕量、零点采样帧、极值谱互补与观察者饱和
+
+以下从前文**第四百七十三部**继续追加。
+
+本轮首先进行一次必要的科学审计。
+
+2026 年 8 月 25 日出现的预印本 *Weil positivity in compact windows: certified two-sided bounds and a Landau–Widom decay law*，已经把紧支撑窗口上的 Weil 正性转化为有限矩阵证书，并在 \(L=0.8\) 时无条件证明了对全部复测试函数
+
+$$
+Q(f)\ge 8.9\times10^{-18}\|f\|_2^2.
+$$
+
+该工作还显式处理了奇偶分解：偶通道的 pole 项为正 rank-one 项，奇通道的 pole 项变号；其计算证明 \(L=0.8\) 的地态简单且属于偶通道。因而，前文提出的“奇观察者补全”和“有限矩阵化”方向是正确的，但后者本身已经成为公开结果，不能再作为 OACTC 的新颖性主张。([arXiv][1])
+
+仓库当前的 Lean 真源仍以偶、光滑、紧支撑测试函数为基础；它已经冻结 convolution square、实频 Fourier 非负性、prime/pole/Archimedean 项以及无假设显式公式，但尚未形式化完整的窗口谱轮廓、奇通道与下述谱完成问题。
+
+本轮真正向前推进的对象是：
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)
+=
+\text{有限观察窗口中仍可隐藏的最大均匀白噪声谱密度}.
+}
+$$
+
+并进一步得到：
+
+$$
+\boxed{
+\text{极值正谱完成}
+=
+\text{均匀白连续谱}
++
+\text{支撑于地态 Fourier 零点上的原子谱}.
+}
+$$
+
+这将紧窗口 Weil 正性、Paley–Wiener 采样、Slepian 饱和和“地态零点逼近 ζ 零点”连接为同一个 primal–dual 结构。
+
+---
+
+# 第四百七十四部　奇偶窗口谱轮廓
+
+令：
+
+$$
+\mathcal H_L=L^2([-L,L]),
+$$
+
+并令 \(Q_L(f)\) 表示 Weil 显式公式在：
+
+$$
+g=f*\widetilde f,
+\qquad
+\widetilde f(x)=\overline{f(-x)}
+$$
+
+上的值。
+
+定义偶、奇和完整窗口轮廓：
+
+$$
+\boxed{
+\lambda_{\mathrm e}(L)
+=
+\inf_{\substack{
+f\in\mathcal H_L,\ f\ne0\\
+f(-x)=f(x)
+}}
+\frac{Q_L(f)}{\|f\|_2^2},
+}
+\tag{474.1}
+$$
+
+$$
+\boxed{
+\lambda_{\mathrm o}(L)
+=
+\inf_{\substack{
+f\in\mathcal H_L,\ f\ne0\\
+f(-x)=-f(x)
+}}
+\frac{Q_L(f)}{\|f\|_2^2},
+}
+\tag{474.2}
+$$
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)
+=
+\inf_{f\in\mathcal H_L\setminus\{0\}}
+\frac{Q_L(f)}{\|f\|_2^2}.
+}
+\tag{474.3}
+$$
+
+由于 Weil source 为实偶分布，若：
+
+$$
+f=f_{\mathrm e}+f_{\mathrm o},
+$$
+
+则交叉项消失：
+
+$$
+\boxed{
+Q_L(f)
+=
+Q_L(f_{\mathrm e})
++
+Q_L(f_{\mathrm o}).
+}
+\tag{474.4}
+$$
+
+复函数又满足：
+
+$$
+Q_L(f)
+=
+Q_L(\Re f)+Q_L(\Im f).
+$$
+
+所以：
+
+## 定理 474.1（奇偶谱分解）
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)
+=
+\min
+\left\{
+\lambda_{\mathrm e}(L),
+\lambda_{\mathrm o}(L)
+\right\}.
+}
+\tag{474.5}
+$$
+
+---
+
+## 474.1 Pole 的 Lorentz 签名
+
+令：
+
+$$
+c_L(x)=\cosh(x/2),
+\qquad
+s_L(x)=\sinh(x/2).
+$$
+
+若把共同的 prime–Archimedean multiplier operator 记为 \(M_L\)，则两个通道具有结构：
+
+$$
+\boxed{
+A_{\mathrm e,L}
+=
+M_L|_{\mathcal H_L^{\mathrm e}}
++
+2|c_L\rangle\langle c_L|,
+}
+\tag{474.6}
+$$
+
+$$
+\boxed{
+A_{\mathrm o,L}
+=
+M_L|_{\mathcal H_L^{\mathrm o}}
+-
+2|s_L\rangle\langle s_L|.
+}
+\tag{474.7}
+$$
+
+所以前文的双曲签名：
+
+$$
+(+1,-1)
+$$
+
+并非纯形式类比，而是紧窗口 Weil 算子的真实奇偶结构。最新预印本独立给出了这一分解，并在 \(L=0.8\) 时证明负 rank-one pole 项并未使奇通道成为地态；真正的最低态仍在偶通道。([arXiv][1])
+
+需要修正前文的一处表述：
+
+$$
+\boxed{
+\text{经典 RH 判据可以在偶测试图表中表达；}
+}
+$$
+
+但若要把局部正性解释成完整 Hermitian 正定核、Kreĭn 扩张或实轴正谱测度，则仍需奇通道，或者必须另行证明专门的 cosine-algebra 表示定理。
+
+---
+
+# 第四百七十五部　局部正锥中的白噪声裕量
+
+令：
+
+$$
+I_L=(-2L,2L),
+$$
+
+并记 Weil source 在该窗口中的限制为：
+
+$$
+\mathfrak W_L.
+$$
+
+定义局部正定锥：
+
+$$
+\boxed{
+\mathcal P_L
+=
+\left\{
+T:
+\left\langle
+T,f*\widetilde f
+\right\rangle
+\ge0
+\quad
+\forall f\in C_c^\infty((-L,L))
+\right\}.
+}
+\tag{475.1}
+$$
+
+Dirac 原子满足：
+
+$$
+\boxed{
+\left\langle
+\delta_0,
+f*\widetilde f
+\right\rangle
+=
+(f*\widetilde f)(0)
+=
+\|f\|_2^2.
+}
+\tag{475.2}
+$$
+
+因此：
+
+## 定理 475.1（White-noise cone margin）
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)
+=
+\sup
+\left\{
+\lambda\in\mathbb R:
+\mathfrak W_L-\lambda\delta_0
+\in\mathcal P_L
+\right\}.
+}
+\tag{475.3}
+$$
+
+### 证明
+
+$$
+\begin{aligned}
+&
+\mathfrak W_L-\lambda\delta_0\in\mathcal P_L
+\\
+\iff{}&
+Q_L(f)-\lambda\|f\|_2^2\ge0
+\quad
+\forall f
+\\
+\iff{}&
+\lambda
+\le
+\inf_{f\ne0}
+\frac{Q_L(f)}{\|f\|_2^2}.
+\end{aligned}
+$$
+
+∎
+
+所以：
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)
+=
+\text{Weil 局部 source 沿 }\delta_0
+\text{ 方向到正锥边界的距离}.
+}
+$$
+
+它是 gauge-independent 的局部观察不变量，比某个 multiplier 的负频带或某个特定有限矩阵更本质。
+
+---
+
+# 第四百七十六部　正谱完成中的最大白色底座
+
+采用 Fourier 规范：
+
+$$
+\widehat f(\xi)
+=
+\int_{\mathbb R}
+f(x)e^{-ix\xi}\,dx,
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal F^{-1}
+\left(
+\frac{d\xi}{2\pi}
+\right)
+=
+\delta_0.
+}
+\tag{476.1}
+$$
+
+在一维正定分布扩张理论适用的标准条件下，局部正定分布可以扩张成全实轴上的正定分布，并由正谱测度表示；不同扩张对应不同 unitary representations 或自伴完成。([arXiv][2])
+
+由定理 475.1 得到：
+
+## 定理 476.1（Maximum spectral-floor completion）
+
+$$
+\boxed{
+\begin{aligned}
+\lambda_{\mathrm{full}}(L)
+=
+\sup
+\Bigg\{
+\lambda:\ 
+&\exists\,\nu_L\ge0,\\
+&\check\nu_L=\mathfrak W_L
+\text{ 于 }I_L,\\
+&\nu_L
+\ge
+\frac{\lambda}{2\pi}\,d\xi
+\Bigg\}.
+\end{aligned}
+}
+\tag{476.2}
+$$
+
+### 证明
+
+若：
+
+$$
+\mathfrak W_L-\lambda\delta_0
+$$
+
+局部正定，则取其正谱扩张 \(\mu_L\ge0\)，并令：
+
+$$
+\nu_L
+=
+\mu_L
++
+\frac{\lambda}{2\pi}d\xi.
+$$
+
+反之，若：
+
+$$
+\nu_L
+=
+\mu_L+\frac{\lambda}{2\pi}d\xi,
+\qquad
+\mu_L\ge0,
+$$
+
+则：
+
+$$
+\mathfrak W_L-\lambda\delta_0
+=
+\check\mu_L
+$$
+
+在窗口内正定。∎
+
+---
+
+## 476.1 观察者解释
+
+有限相关窗口无法唯一辨认真实谱。
+
+只要：
+
+$$
+\lambda<\lambda_{\mathrm{full}}(L),
+$$
+
+就存在一个与当前全部局部 Weil 数据完全一致的谱模型，其中含有均匀连续背景：
+
+$$
+\boxed{
+\frac{\lambda}{2\pi}d\xi.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)
+=
+\text{有限观察者仍无法排除的最大白噪声谱强度}.
+}
+$$
+
+这不是人为添加噪声，而是局部相关数据允许的真实完成自由。
+
+---
+
+# 第四百七十七部　RH 下的零点采样帧
+
+假设 RH。
+
+令：
+
+$$
+\nu_\Xi
+=
+\sum_{\gamma\in\mathbb R}
+m_\gamma\delta_\gamma
+$$
+
+为完成 ζ 的零点 ordinate 测度。
+
+对于：
+
+$$
+F(\xi)=\widehat f(\xi),
+$$
+
+Weil 零点侧成为：
+
+$$
+\boxed{
+Q_L(f)
+=
+\int_{\mathbb R}
+|F(\xi)|^2\,d\nu_\Xi(\xi)
+=
+\sum_{\gamma\in\mathbb R}
+m_\gamma|F(\gamma)|^2.
+}
+\tag{477.1}
+$$
+
+定义采样分析算子：
+
+$$
+\boxed{
+\mathcal S_Lf
+=
+\left(
+\sqrt{m_\gamma}\,F(\gamma)
+\right)_{\gamma\in\mathbb R}.
+}
+\tag{477.2}
+$$
+
+则：
+
+$$
+\boxed{
+Q_L(f)
+=
+\|\mathcal S_Lf\|_{\ell^2}^2.
+}
+\tag{477.3}
+$$
+
+因此：
+
+## 定理 477.1（White-floor / sampling-frame duality）
+
+RH 下：
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)
+=
+\inf_{\|f\|_2=1}
+\|\mathcal S_Lf\|_{\ell^2}^2.
+}
+\tag{477.4}
+$$
+
+也就是说，同一个量同时是：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{局部正谱完成中的最大白噪声底座};\\
+&\text{Riemann 零点指数系统的最小采样帧界}.
+\end{aligned}
+}
+$$
+
+---
+
+## 477.1 奇偶 frame operators
+
+在偶通道：
+
+$$
+F(\gamma)
+=
+\langle
+f,\cos(\gamma\,\cdot)
+\rangle,
+$$
+
+所以：
+
+$$
+\boxed{
+A_{\mathrm e,L}
+=
+2
+\sum_{\gamma>0}
+m_\gamma
+|\cos(\gamma\,\cdot)\rangle
+\langle\cos(\gamma\,\cdot)|.
+}
+\tag{477.5}
+$$
+
+在奇通道：
+
+$$
+F(\gamma)
+=
+-i
+\langle
+f,\sin(\gamma\,\cdot)
+\rangle,
+$$
+
+所以：
+
+$$
+\boxed{
+A_{\mathrm o,L}
+=
+2
+\sum_{\gamma>0}
+m_\gamma
+|\sin(\gamma\,\cdot)\rangle
+\langle\sin(\gamma\,\cdot)|.
+}
+\tag{477.6}
+$$
+
+由此：
+
+$$
+\lambda_{\mathrm e}(L)
+=
+\inf\sigma(A_{\mathrm e,L}),
+\qquad
+\lambda_{\mathrm o}(L)
+=
+\inf\sigma(A_{\mathrm o,L}).
+$$
+
+最新预印本正是利用 Paley–Wiener 采样解释，证明在 RH 下每个有限 \(L\) 的窗口轮廓严格为正，而不是仅仅非负。([arXiv][1])
+
+---
+
+# 第四百七十八部　有限观察严格内点、无限观察锥边界
+
+窗口嵌套立即给出：
+
+$$
+L_1<L_2
+\quad\Longrightarrow\quad
+\boxed{
+\lambda_{\mathrm{full}}(L_2)
+\le
+\lambda_{\mathrm{full}}(L_1).
+}
+\tag{478.1}
+$$
+
+---
+
+## 定理 478.1（Finite-interior / global-boundary principle）
+
+假设 RH。则：
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)>0
+\qquad
+\forall L<\infty,
+}
+\tag{478.2}
+$$
+
+但：
+
+$$
+\boxed{
+\lim_{L\to\infty}
+\lambda_{\mathrm{full}}(L)
+=
+0.
+}
+\tag{478.3}
+$$
+
+### 证明第二式
+
+假设存在：
+
+$$
+\lambda_\infty>0
+$$
+
+使所有紧支撑测试均满足：
+
+$$
+Q(f)\ge\lambda_\infty\|f\|_2^2.
+$$
+
+则：
+
+$$
+\mathfrak W-\lambda_\infty\delta_0
+$$
+
+在整条实线上正定。
+
+RH 下 \(\mathfrak W\) 的正谱为纯点测度 \(\nu_\Xi\)，所以必须有：
+
+$$
+\nu_\Xi
+-
+\frac{\lambda_\infty}{2\pi}d\xi
+\ge0.
+$$
+
+选择一个不含零点 ordinate 的小开区间 \(J\)，则：
+
+$$
+\nu_\Xi(J)=0,
+$$
+
+但：
+
+$$
+\frac{\lambda_\infty}{2\pi}|J|>0,
+$$
+
+矛盾。∎
+
+---
+
+## 478.1 观察者相变
+
+因此 RH 下：
+
+$$
+\boxed{
+\begin{aligned}
+\text{任意有限观察窗口}
+&:\quad
+\mathfrak W_L
+\text{ 位于正锥严格内部};\\
+\text{无限相关窗口}
+&:\quad
+\mathfrak W
+\text{ 落到正锥边界}.
+\end{aligned}
+}
+$$
+
+有限观察者总能把一小部分谱解释为白连续噪声。
+
+只有无限观察者才能完全识别：
+
+$$
+\boxed{
+\text{谱其实是纯点的 Riemann 零点测度}.
+}
+$$
+
+---
+
+## 478.2 RH 失败的有限尺度
+
+若 RH 为假，Weil 判据保证存在某个紧支撑测试使：
+
+$$
+Q(f)<0.
+$$
+
+因此存在有限：
+
+$$
+L_{\mathrm{fail}}
+=
+\inf
+\left\{
+L:
+\lambda_{\mathrm{full}}(L)<0
+\right\}
+<\infty.
+\tag{478.4}
+$$
+
+最新预印本已经无条件证明：
+
+$$
+\boxed{
+L_{\mathrm{fail}}>0.8.
+}
+\tag{478.5}
+$$
+
+换言之，任何可能的 Weil 负见证，其测试函数支撑直径必须严格大于 \(1.6\)。([arXiv][1])
+
+---
+
+# 第四百七十九部　当前紧窗口定量事实
+
+2026 年 8 月的预印本给出：
+
+$$
+\boxed{
+8.9\times10^{-18}
+\le
+\lambda_{\mathrm{full}}(0.8)
+\le
+2.27\times10^{-17}.
+}
+\tag{479.1}
+$$
+
+其下界由几何侧有限矩阵及区间算术证明；上界来自显式 Rayleigh quotient。该工作同时证明窗口地态简单且为偶函数。([arXiv][1])
+
+在白噪声图表中，这意味着局部 Weil source 在：
+
+$$
+(-1.6,1.6)
+$$
+
+上允许的最大均匀谱底座满足：
+
+$$
+\boxed{
+1.42\times10^{-18}
+\lesssim
+\frac{
+\lambda_{\mathrm{full}}(0.8)
+}{
+2\pi
+}
+\lesssim
+3.61\times10^{-18}.
+}
+\tag{479.2}
+$$
+
+即使正性已经严格成立，完成裕量仍极其微小：
+
+$$
+\boxed{
+\text{该有限观察者已经非常接近正锥边界。}
+}
+$$
+
+---
+
+# 第四百八十部　Paley–Wiener 观察容量与 \(T^*(L)\)
+
+一个支撑在：
+
+$$
+[-L,L]
+$$
+
+内的函数，其 Fourier transform 属于指数型 \(L\) 的 Paley–Wiener 空间。
+
+正频率上的独立零点插值容量约为：
+
+$$
+\boxed{
+D_{\mathrm{PW}}=\frac{L}{\pi}
+}
+\tag{480.1}
+$$
+
+每单位频率。
+
+另一方面，Riemann 零点在高度 \(T\) 附近的平均密度为：
+
+$$
+\boxed{
+D_\zeta(T)
+\sim
+\frac1{2\pi}
+\log\frac{T}{2\pi}.
+}
+\tag{480.2}
+$$
+
+令二者相等：
+
+$$
+\frac1{2\pi}
+\log\frac{T^*}{2\pi}
+=
+\frac{L}{\pi},
+$$
+
+得到：
+
+$$
+\boxed{
+T^*(L)
+=
+2\pi e^{2L}.
+}
+\tag{480.3}
+$$
+
+这一尺度由最新预印本识别为窗口观察者的零点分辨饱和高度。([arXiv][1])
+
+---
+
+## 480.1 Shannon 数的相等
+
+时间窗口长度为：
+
+$$
+2L.
+$$
+
+正频带 \([0,T]\) 的 Shannon 数为：
+
+$$
+\boxed{
+\mathcal N_{\mathrm{Sh}}(L,T)
+\sim
+\frac{LT}{\pi}.
+}
+\tag{480.4}
+$$
+
+而：
+
+$$
+N(T)
+\sim
+\frac{T}{2\pi}
+\log\frac{T}{2\pi}.
+$$
+
+在 \(T=T^*(L)\) 时：
+
+$$
+\boxed{
+N(T^*)
+\sim
+\mathcal N_{\mathrm{Sh}}(L,T^*).
+}
+\tag{480.5}
+$$
+
+所以：
+
+$$
+\boxed{
+T^*
+=
+\text{Riemann 零点约束数
+首次耗尽窗口 Fourier 自由度的尺度}.
+}
+$$
+
+---
+
+## 480.2 Landau–Widom 轮廓
+
+最新预印本的严格计算显示，\(\lambda^*(L)\) 从 \(L=0.5\) 到 \(L=2\) 极快下降；数值数据符合：
+
+$$
+\boxed{
+-\log\lambda^*(L)
+\approx
+2\pi^2
+\frac{
+N(T^*)
+}{
+\log N(T^*)
+}.
+}
+\tag{480.6}
+$$
+
+但必须严格标记：
+
+$$
+\boxed{
+2\pi^2
+\text{ 在该工作中是数值拟合支持的候选常数，
+并未被证明为渐近常数。}
+}
+$$
+
+该工作在 RH 条件下证明的是较弱但严格的上界：
+
+$$
+\boxed{
+\lambda^*(L)
+\le
+\exp(-Le^L)
+}
+\tag{480.7}
+$$
+
+对充分大的 \(L\) 成立。([arXiv][1])
+
+在 OACTC 中，这意味着：
+
+$$
+\boxed{
+-\log\lambda^*(L)
+=
+\text{有限观察者排除虚假白色谱底座所获得的信息量}.
+}
+$$
+
+---
+
+# 第四百八十一部　点态包络的双指数障碍
+
+令：
+
+$$
+A_L
+=
+\sum_{\log n<2L}
+\frac{2\Lambda(n)}{\sqrt n}.
+$$
+
+最新预印本证明：
+
+$$
+A_L=(4+o(1))e^L,
+$$
+
+并且 prime comb 的全局上确界恰为 \(A_L\)，因为有限 \(\{\log p\}\) 相位可同时任意接近对齐。
+
+因此任何仅使用点态包络的方法，都必须把 Archimedean 项推进到大约：
+
+$$
+\boxed{
+T_1(L)
+=
+2\pi e^{A_L},
+}
+\tag{481.1}
+$$
+
+即双指数频率尺度。([arXiv][1])
+
+相比之下：
+
+$$
+T^*(L)=2\pi e^{2L}
+$$
+
+只有单指数增长。
+
+二者的对数分辨率比为：
+
+$$
+\boxed{
+\frac{
+\log(T_1/2\pi)
+}{
+\log(T^*/2\pi)
+}
+\sim
+\frac{4e^L}{2L}
+=
+\frac{2e^L}{L}.
+}
+\tag{481.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{点态包络丢失了一个指数级的观察效率。}
+}
+$$
+
+前文提出的 Slepian–Feshbach 路线若要构成真正的新进展，必须做到的不是再次把问题有限矩阵化，而是：
+
+$$
+\boxed{
+\text{用状态依赖的频率浓缩，
+绕过 }\sup_\xi P_L(\xi)=A_L
+\text{ 的双指数障碍。}
+}
+$$
+
+---
+
+# 第四百八十二部　极值完成的互补松弛
+
+现在考虑 spectral-floor primal problem：
+
+$$
+\boxed{
+\begin{aligned}
+\text{maximize }&\lambda\\
+\text{subject to }&
+\nu_L
+=
+\frac{\lambda}{2\pi}d\xi+\mu_L,\\
+&\mu_L\ge0,\\
+&\check\nu_L=\mathfrak W_L
+\text{ 于 }I_L.
+\end{aligned}
+}
+\tag{482.1}
+$$
+
+其最优值为：
+
+$$
+\lambda_{\mathrm{full}}(L).
+$$
+
+假设：
+
+1. 最优谱完成 \(\nu_L^*\) 存在；
+2. Rayleigh infimum由单位地态 \(f_L^*\) 取得。
+
+写：
+
+$$
+\boxed{
+\nu_L^*
+=
+\frac{\lambda_{\mathrm{full}}(L)}{2\pi}d\xi
++
+\mu_L^*,
+\qquad
+\mu_L^*\ge0.
+}
+\tag{482.2}
+$$
+
+令：
+
+$$
+F_L^*(\xi)=\widehat{f_L^*}(\xi).
+$$
+
+则：
+
+$$
+\begin{aligned}
+0
+&=
+Q_L(f_L^*)
+-
+\lambda_{\mathrm{full}}(L)
+\|f_L^*\|_2^2\\
+&=
+\int_{\mathbb R}
+|F_L^*(\xi)|^2
+\,d\mu_L^*(\xi).
+\end{aligned}
+$$
+
+因此：
+
+## 定理 482.1（Extremal spectral complementarity）
+
+$$
+\boxed{
+\operatorname{supp}\mu_L^*
+\subseteq
+Z_{\mathbb R}(F_L^*).
+}
+\tag{482.3}
+$$
+
+由于 \(F_L^*\) 是非零的指数型 \(L\) 整函数，其实零点集是离散集。所以：
+
+$$
+\boxed{
+\mu_L^*
+=
+\sum_{\tau\in Z_{\mathbb R}(F_L^*)}
+a_{\tau,L}\delta_\tau,
+\qquad
+a_{\tau,L}\ge0.
+}
+\tag{482.4}
+$$
+
+从而最优完成必具有结构：
+
+$$
+\boxed{
+\nu_L^*
+=
+\underbrace{
+\frac{\lambda_{\mathrm{full}}(L)}{2\pi}d\xi
+}_{\text{未分辨白连续谱}}
++
+\underbrace{
+\sum_{\tau\in Z(F_L^*)}
+a_{\tau,L}\delta_\tau
+}_{\text{已分辨原子谱}}.
+}
+\tag{482.5}
+$$
+
+这可以称为：
+
+# 白连续谱—原子谱互补定理
+
+---
+
+## 482.1 结构意义
+
+有限观察者并不是粗略地看到“部分 Riemann 零点”。
+
+其最优谱模型把信息分成两类：
+
+$$
+\boxed{
+\begin{aligned}
+\text{能够由有限窗口解析的谱}
+&\longrightarrow
+\text{地态 Fourier 零点上的 atoms};\\
+\text{超过当前分辨容量的谱}
+&\longrightarrow
+\text{均匀 white floor}.
+\end{aligned}
+}
+$$
+
+随着 \(L\) 增加：
+
+* 地态整函数允许更多实零点；
+* atomic ledger 的容量增加；
+* white floor \(\lambda_{\mathrm{full}}(L)/(2\pi)\) 下降；
+* 无限极限中 white floor 消失，只剩 Riemann 零点谱。
+
+---
+
+# 第四百八十三部　近极值完成的谱集中不等式
+
+即使最优地态或最优谱完成尚未证明存在，也有稳定版本。
+
+设：
+
+$$
+\nu_L
+=
+\frac{\lambda}{2\pi}d\xi+\mu_L,
+\qquad
+\mu_L\ge0
+$$
+
+是任意可行完成，并令：
+
+$$
+\|f\|_2=1.
+$$
+
+若：
+
+$$
+\boxed{
+Q_L(f)-\lambda
+=
+\varepsilon,
+}
+\tag{483.1}
+$$
+
+则：
+
+$$
+\boxed{
+\int
+|\widehat f(\xi)|^2d\mu_L(\xi)
+=
+\varepsilon.
+}
+\tag{483.2}
+$$
+
+对任意：
+
+$$
+\delta>0,
+$$
+
+定义：
+
+$$
+E_\delta(f)
+=
+\left\{
+\xi:
+|\widehat f(\xi)|\ge\delta
+\right\}.
+$$
+
+则：
+
+## 定理 483.1（Approximate complementary concentration）
+
+$$
+\boxed{
+\mu_L(E_\delta(f))
+\le
+\frac{\varepsilon}{\delta^2}.
+}
+\tag{483.3}
+$$
+
+所以近地态会迫使 residual spectral mass 集中在：
+
+$$
+\boxed{
+|\widehat f|\ll1
+}
+$$
+
+的近零集合中。
+
+这提供了一个无需精确 optimizer 的稳定层析原则：
+
+$$
+\boxed{
+\text{Rayleigh quotient 越接近窗口底部，
+谱完成的原子质量越被迫靠近该测试函数的 Fourier 零点。}
+}
+$$
+
+---
+
+# 第四百八十四部　观察容量为何产生 white floor
+
+极值 residual atoms 被限制在：
+
+$$
+Z(F_L^*).
+$$
+
+但 \(F_L^*\in PW_L\) 的实零点密度受指数型 \(L\) 限制。最新紧窗口工作正是通过这一 Paley–Wiener 零点预算解释：
+
+$$
+T^*(L)=2\pi e^{2L}.
+$$
+
+([arXiv][1])
+
+因此，至少在简单零点或按独立插值条件计数的图表中：
+
+$$
+\boxed{
+\text{有限 }L\text{ 的 atomic completion
+无法逐个编码无限增长密度的 Riemann 零点。}
+}
+$$
+
+多出的谱信息必须进入：
+
+$$
+\boxed{
+\text{连续 white floor}
+}
+$$
+
+或被推送到当前窗口不可见的长程相关自由度中。
+
+这给 \(T^*(L)\) 一个更深的谱完成解释：
+
+$$
+\boxed{
+T^*
+=
+\text{极值 atomic ledger 的插值容量
+与 Riemann 零点约束密度相等的尺度}.
+}
+$$
+
+Landau–Widom plunge 则描述：
+
+$$
+\boxed{
+\text{当 atomic ledger 接近饱和后，
+剩余 white floor 如何突然塌缩。}
+}
+$$
+
+---
+
+# 第四百八十五部　地态零点趋向 ζ 零点的充分桥
+
+最新预印本明确指出，近似地态零点是否随窗口扩大而趋向 ζ 零点，是相关 operator program 尚未解决的关键步骤。([arXiv][1])
+
+前述互补定理给出了一个精确的充分条件。
+
+设 RH 成立，并令：
+
+$$
+L_j\to\infty.
+$$
+
+假设存在极值或近极值完成：
+
+$$
+\nu_j
+=
+\frac{\lambda_j}{2\pi}d\xi+\mu_j,
+\qquad
+\lambda_j=\lambda_{\mathrm{full}}(L_j),
+$$
+
+以及相应地态变换：
+
+$$
+F_j=\widehat f_j,
+$$
+
+满足：
+
+$$
+\operatorname{supp}\mu_j
+\subseteq Z(F_j).
+$$
+
+再假设：
+
+$$
+\boxed{
+\nu_j
+\overset{\mathrm{vague}}{\longrightarrow}
+\nu_\Xi.
+}
+\tag{485.1}
+$$
+
+由于：
+
+$$
+\lambda_j\to0,
+$$
+
+也有：
+
+$$
+\mu_j\to\nu_\Xi.
+$$
+
+---
+
+## 定理 485.1（Ground-state zero localization）
+
+令 \(\gamma\) 是一个孤立 Riemann zero ordinate。
+
+对任意包含 \(\gamma\)、但不包含其他 ordinate 的开邻域 \(U\)，当 \(j\) 充分大时：
+
+$$
+\boxed{
+Z(F_j)\cap U\neq\varnothing.
+}
+\tag{485.2}
+$$
+
+### 证明
+
+$$
+\nu_\Xi(U)=m_\gamma>0.
+$$
+
+由 vague convergence，取支撑于 \(U\) 的非负连续函数 \(\phi\)，且 \(\phi(\gamma)>0\)，则：
+
+$$
+\int\phi\,d\mu_j>0
+$$
+
+对充分大的 \(j\) 成立。
+
+所以：
+
+$$
+\mu_j(U)>0.
+$$
+
+而：
+
+$$
+\operatorname{supp}\mu_j\subseteq Z(F_j),
+$$
+
+故 \(U\) 中必有 \(F_j\) 的零点。∎
+
+---
+
+## 485.1 真正剩余的桥
+
+因此，“地态零点趋向 ζ 零点”可以被分解成两个具体任务：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{A. 构造 white-floor 极值正谱完成；}\\
+&\text{B. 证明这些完成具有统一紧性并趋向 }\nu_\Xi.
+\end{aligned}
+}
+$$
+
+一旦 A、B 成立，零点趋近不是额外猜想，而是正测度支撑收敛的直接推论。
+
+---
+
+# 第四百八十六部　当前研究架构的重新定位
+
+最新预印本已经完成：
+
+$$
+\boxed{
+\text{窗口正性}
+\longrightarrow
+\text{有限矩阵证书}
+}
+$$
+
+并在 \(L=0.8\) 实际执行成功。([arXiv][1])
+
+所以 OACTC 后续不应再把“有限矩阵化”本身当作核心贡献。
+
+真正仍然开放、且与本理论特有结构有关的，是以下两条互补路线。
+
+---
+
+## 486.1 Primal：正谱完成路线
+
+直接构造：
+
+$$
+\boxed{
+\nu_L
+=
+\frac{\lambda_L}{2\pi}d\xi+\mu_L
+\ge0
+}
+$$
+
+并最大化：
+
+$$
+\lambda_L.
+$$
+
+目标是：
+
+* 得到匹配 \(\lambda_{\mathrm{full}}(L)\) 的 primal 证书；
+* 分析 atomic residual；
+* 证明 completion tower 紧性；
+* 解释地态零点收敛。
+
+---
+
+## 486.2 Dual：状态依赖的 prime-concentration 路线
+
+最新预印本证明，任何只使用 prime comb 点态上界的方法都面临：
+
+$$
+T_1(L)=2\pi e^{A_L}
+$$
+
+的双指数障碍。([arXiv][1])
+
+因此真正的新 dual 方法必须利用：
+
+$$
+\boxed{
+\widehat f
+\text{ 不能在所有极窄 recurrence peaks 上同时集中}.
+}
+$$
+
+这正是：
+
+* Slepian concentration；
+* Feshbach elimination；
+* multi-prime phase geometry；
+* state-dependent operator norms；
+
+应当进入的位置。
+
+Primal 与 dual 的共同最优值就是：
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L).
+}
+$$
+
+---
+
+# 第四百八十七部　观察者语言中的最终解释
+
+有限窗口 \(L\) 给定以后，观察者只能读取：
+
+$$
+|x-y|<2L
+$$
+
+内的相关。
+
+在这些数据下，最优谱完成具有：
+
+$$
+\boxed{
+\nu_L^*
+=
+\text{white continuum}
++
+\text{resolved atoms}.
+}
+$$
+
+其中：
+
+$$
+\boxed{
+\frac{\lambda_{\mathrm{full}}(L)}{2\pi}
+}
+$$
+
+是未分辨连续背景的最大密度。
+
+而：
+
+$$
+\boxed{
+Z(\widehat f_L^*)
+}
+$$
+
+是当前 observer 能够稳定命名的原子谱坐标。
+
+因此：
+
+$$
+\boxed{
+\text{定义深度 }L
+\text{ 增加}
+}
+$$
+
+对应：
+
+$$
+\boxed{
+\text{白连续谱逐步 collapse 成离散原子谱}.
+}
+$$
+
+这正是：
+
+$$
+\boxed{
+\text{observer refinement}
+=
+\text{continuum-to-atom spectral collapse}.
+}
+$$
+
+---
+
+## 487.1 RH 的新完成表述
+
+RH 可以写成以下动态完成命题：
+
+$$
+\boxed{
+\begin{aligned}
+&\forall L<\infty,\quad
+\lambda_{\mathrm{full}}(L)>0;\\
+&\lambda_{\mathrm{full}}(L)\downarrow0;\\
+&\text{极值 atomic completions}
+\longrightarrow
+\nu_\Xi.
+\end{aligned}
+}
+\tag{487.1}
+$$
+
+第一行表示：
+
+$$
+\text{每个有限观察者仍有严格白噪声容忍度};
+$$
+
+第二行表示：
+
+$$
+\text{无限观察者排除全部连续背景};
+$$
+
+第三行表示：
+
+$$
+\text{剩余离散谱唯一 collapse 为 Riemann 零点}.
+$$
+
+严格地说，前两行在 RH 下成立；第三行仍需要极值 completion 的存在、规范选择与紧性证明。
+
+---
+
+# 第四百八十八部　建议形式化顺序
+
+```text
+D5/S3/Weil/WindowProfile/
+  FullHermitianWeilForm.lean
+  EvenOddFormSplit.lean
+  EvenWindowProfile.lean
+  OddWindowProfile.lean
+  FullWindowProfile.lean
+  WindowProfileMonotone.lean
+
+D5/S3/Weil/WhiteNoiseMargin/
+  DeltaZeroNormForm.lean
+  LocalPositiveCone.lean
+  WhiteNoiseConeMargin.lean
+  WhiteSpectralFloor.lean
+  SpectralFloorPrimal.lean
+
+D5/S3/Weil/ZeroSamplingFrame/
+  RHZeroSamplingOperator.lean
+  EvenCosineFrame.lean
+  OddSineFrame.lean
+  WindowProfileEqualsFrameBound.lean
+  FiniteWindowStrictFrameBound.lean
+
+D5/S3/Weil/ExtremalCompletion/
+  SpectralFloorOptimizer.lean
+  GroundStateOptimizer.lean
+  CompletionComplementarySlackness.lean
+  WhitePlusAtomicCompletion.lean
+  ApproximateSpectralConcentration.lean
+
+D5/S3/Weil/ObserverSaturation/
+  PaleyWienerZeroCapacity.lean
+  RiemannLocalZeroDensity.lean
+  ObserverSaturationHeight.lean
+  WhiteFloorCollapse.lean
+  GlobalBoundaryNoWhiteFloor.lean
+
+D5/S3/Weil/GroundStateZeros/
+  ExtremalCompletionTightness.lean
+  AtomicSupportVagueLimit.lean
+  GroundStateZeroLocalization.lean
+  ZeroConvergenceTarget.lean
+
+D5/S3/Weil/CompactWindowCertificate/
+  RecentWindowCertificateInterface.lean
+  SupportPointEightLowerBound.lean
+  EvenGroundStateInterface.lean
+  PointwiseEnvelopeBarrier.lean
+```
+
+仓库现有的 `WeilTestFunction`、`PrimePoleTerms`、`WeilIdentity` 和 `ConvolutionSquarePositivity` 可以直接作为前四层基础；最新 \(L=0.8\) 区间算术证书若要进入真源，应作为独立外部证书接口，而不能仅根据预印本文字登记为 Lean 定理。
+
+---
+
+# 第四百八十九部　结果分级
+
+## 本轮独立推导得到（第 489 部）
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)
+=
+\sup
+\left\{
+\lambda:
+\mathfrak W_L-\lambda\delta_0
+\text{ 局部正定}
+\right\}.
+}
+$$
+
+在一维正谱扩张接口下：
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)
+=
+\sup
+\left\{
+\lambda:
+\exists\nu_L\ge
+\frac{\lambda}{2\pi}d\xi,\
+\check\nu_L=\mathfrak W_L
+\right\}.
+}
+$$
+
+RH 下：
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)
+=
+\text{Riemann zero sampling frame 的下帧界}.
+}
+$$
+
+并且：
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)>0
+\quad
+(L<\infty),
+}
+$$
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)\downarrow0.
+}
+$$
+
+在 primal/dual optimizer 存在时：
+
+$$
+\boxed{
+\nu_L^*
+=
+\frac{\lambda_{\mathrm{full}}(L)}{2\pi}d\xi
++
+\sum_{\tau\in Z(\widehat f_L^*)}
+a_{\tau,L}\delta_\tau.
+}
+$$
+
+以及近极值集中不等式：
+
+$$
+\boxed{
+\mu_L
+\left(
+|\widehat f|\ge\delta
+\right)
+\le
+\frac{
+Q_L(f)-\lambda
+}{
+\delta^2
+}.
+}
+$$
+
+---
+
+## 最新公开结果，而非本理论新结论
+
+2026 年 8 月预印本已经报告：
+
+$$
+\boxed{
+8.9\times10^{-18}
+\le
+\lambda_{\mathrm{full}}(0.8)
+\le
+2.27\times10^{-17},
+}
+$$
+
+并证明该尺度地态简单且为偶函数；它还给出点态包络方法的双指数障碍，以及支持 Landau–Widom 轮廓的高精度数值证据。([arXiv][1])
+
+---
+
+## 当前真正开放的桥（第 489 部）
+
+$$
+\boxed{
+\begin{aligned}
+&\text{spectral-floor primal strong duality 与 optimizer existence};\\
+&\text{极值 completion 的统一 resolvent 紧性};\\
+&\text{white-plus-atomic completion 的规范选择};\\
+&\text{ground-state transforms 的零点收敛};\\
+&\text{绕过 pointwise-envelope 双指数障碍的状态依赖估计};\\
+&\text{最新 }L=0.8\text{ 区间算术证书的形式化迁移}.
+\end{aligned}
+}
+$$
+
+---
+
+# 本轮最终结论
+
+此前我们把紧窗口 Weil 问题理解为：
+
+$$
+\boxed{
+\text{有限 sticky matrix}
++
+\text{正 residual operator}.
+}
+$$
+
+最新公开工作已经证明，这类有限矩阵证书可以在 \(L=0.8\) 被真正执行，并且正性裕量虽严格大于零，却只有约：
+
+$$
+10^{-17}.
+$$
+
+本轮进一步解释了这个微小特征值究竟是什么：
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)
+=
+\text{局部 Weil 数据仍允许隐藏的最大白噪声谱强度}.
+}
+$$
+
+RH 下，同一个量又是：
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)
+=
+\text{Riemann 零点采样帧的最小能量}.
+}
+$$
+
+因此存在一个精确 primal–dual 对偶：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Primal}
+&:\quad
+\text{最大化可隐藏的 white spectral floor};\\
+\text{Dual}
+&:\quad
+\text{最小化零点采样能量}.
+\end{aligned}
+}
+$$
+
+在极值点，互补松弛强迫：
+
+$$
+\boxed{
+\text{非白 residual spectrum
+只能支撑在窗口地态 Fourier transform 的实零点上}.
+}
+$$
+
+所以最优有限观察谱必然具有：
+
+$$
+\boxed{
+\text{white continuum}
++
+\text{ground-state-zero atoms}.
+}
+$$
+
+随着 \(L\) 增大：
+
+$$
+\boxed{
+\text{white floor}\downarrow0,
+}
+$$
+
+而 atomic ledger 的容量增加。
+
+如果这些极值完成能够被证明趋向真实 Weil 正谱，则每一个 Riemann 零点都必须被地态 Fourier 零点逐步捕获。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{有限观察者不是“看见少量零点”；
+它把尚未分辨的零点谱看成白噪声，
+并把已经分辨的谱压缩成地态零点原子。}
+}
+$$
+
+因此 OACTC 当前真正值得推进的下一桥已经极其明确：
+
+$$
+\boxed{
+\text{构造 white-floor 最大化的正谱完成，
+证明其紧性，
+并证明其 atomic support 随 }L\to\infty
+\text{ collapse 到 Riemann 零点谱。}
+}
+$$
+
+这条路线与最新紧窗口有限矩阵工作互补：后者给出 dual 证书，本轮理论则识别了对应的 primal 谱对象及其互补结构。
+
+[1]: https://arxiv.org/abs/2608.24827 "https://arxiv.org/abs/2608.24827"
+[2]: https://arxiv.org/abs/1212.3047 "https://arxiv.org/abs/1212.3047"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v3.9：Resolvent 正则化白谱前沿、有限原子 Primal、接触零点互补与自然预算谱流
+
+以下从前文**第四百八十九部**继续追加。
+
+上一轮已经把紧窗口 Weil 正性解释为：
+
+$$
+\lambda_{\mathrm{full}}(L)
+=
+\text{局部相关数据允许隐藏的最大均匀白谱密度},
+$$
+
+并将其与 Riemann 零点采样帧的下界对应起来。最新紧窗口工作已经从 dual/Rayleigh 方向把 \(\lambda_{\mathrm{full}}(L)\) 化成有限矩阵问题，并在 \(L=0.8\) 给出严格双边证书；但该工作并未解决与之互补的正谱完成对象如何存在、如何原子化，以及这些 primal 完成如何随 \(L\) 收敛到真实零点谱。([arXiv][1])
+
+本轮引入一个额外参数：
+
+$$
+\boxed{
+C=\text{允许正谱完成使用的 resolvent budget}.
+}
+$$
+
+它把此前可能不取到的无预算 white-floor 极值，正则化为一个自动紧化、必定取到的凸优化问题。
+
+本轮主链为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{局部 Weil source}
+&\longrightarrow
+\text{resolvent-budgeted white floor}\\
+&\longrightarrow
+\text{紧的正测度优化}\\
+&\longrightarrow
+\text{Fourier majorant dual}\\
+&\longrightarrow
+\text{Paley--Wiener contact equation}\\
+&\longrightarrow
+\text{white continuum + finite atoms}\\
+&\longrightarrow
+\text{有限 Tchakaloff 原子层级}\\
+&\longrightarrow
+\text{自然 Li 预算下的零点谱极限}.
+\end{aligned}
+}
+$$
+
+最重要的新结论是：
+
+$$
+\boxed{
+\text{一旦 resolvent budget 的对偶影子价格严格为正，}
+}
+$$
+
+则最优正谱完成的非白部分**必然只有有限多个原子**。
+
+这些原子不是任意选取，而必须位于一个 Paley–Wiener 接触函数的实零点上。
+
+---
+
+# 第四百九十部　预算化白谱前沿
+
+令：
+
+$$
+m_0(d\xi)=\frac{d\xi}{2\pi},
+$$
+
+所以：
+
+$$
+\check m_0=\delta_0.
+$$
+
+固定：
+
+$$
+L>0,\qquad a>0.
+$$
+
+令：
+
+$$
+\mathfrak W_L
+=
+\left.\mathfrak W_\xi\right|_{(-2L,2L)}
+$$
+
+为局部 Weil source。
+
+对偶正 Borel 测度 \(\nu\)，定义 resolvent budget：
+
+$$
+\boxed{
+\mathcal R_a(\nu)
+=
+\int_{\mathbb R}
+\frac{d\nu(\xi)}{\xi^2+a^2}.
+}
+\tag{490.1}
+$$
+
+定义预算 \(C\) 下的正谱完成集合：
+
+$$
+\boxed{
+\mathfrak E_{L,a}(C)
+=
+\left\{
+\nu\ge0:
+\begin{array}{l}
+\nu\text{ 为偶测度},\\
+\check\nu=\mathfrak W_L
+\text{ 于 }(-2L,2L),\\
+\mathcal R_a(\nu)\le C
+\end{array}
+\right\}.
+}
+\tag{490.2}
+$$
+
+对正测度定义其白谱底座：
+
+$$
+\boxed{
+\operatorname{floor}(\nu)
+=
+\sup\left\{
+\lambda\ge0:
+\nu\ge\lambda m_0
+\right\}.
+}
+\tag{490.3}
+$$
+
+定义预算化 white-floor 前沿：
+
+$$
+\boxed{
+\Lambda_{L,a}(C)
+=
+\sup_{\nu\in\mathfrak E_{L,a}(C)}
+\operatorname{floor}(\nu).
+}
+\tag{490.4}
+$$
+
+若 \(\mathfrak E_{L,a}(C)=\varnothing\)，则该尺度、该预算已经产生局部不可完成证书。
+
+---
+
+## 490.1 显式 primal 形式
+
+等价地，寻找：
+
+$$
+\lambda\ge0,\qquad\mu\ge0
+$$
+
+使：
+
+$$
+\boxed{
+\nu=\lambda m_0+\mu,
+}
+\tag{490.5}
+$$
+
+$$
+\boxed{
+\check\nu=\mathfrak W_L,
+}
+\tag{490.6}
+$$
+
+以及：
+
+$$
+\boxed{
+\frac{\lambda}{2a}
++
+\int_{\mathbb R}
+\frac{d\mu(\xi)}{\xi^2+a^2}
+\le C.
+}
+\tag{490.7}
+$$
+
+这里使用了：
+
+$$
+\boxed{
+\mathcal R_a(\lambda m_0)
+=
+\frac{\lambda}{2a},
+}
+\tag{490.8}
+$$
+
+因为：
+
+$$
+\frac1{2\pi}
+\int_{\mathbb R}
+\frac{d\xi}{\xi^2+a^2}
+=
+\frac1{2a}.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{一个强度为 }\lambda\text{ 的白谱底座，
+消耗 }\lambda/(2a)\text{ 单位预算。}
+}
+$$
+
+在自然尺度：
+
+$$
+a=\frac12,
+$$
+
+恰有：
+
+$$
+\boxed{
+\text{white-floor cost}=\lambda.
+}
+\tag{490.9}
+$$
+
+---
+
+# 第四百九十一部　预算前沿的凸几何
+
+定义最小预算成本：
+
+$$
+\boxed{
+\mathcal C_{L,a}(\lambda)
+=
+\inf
+\left\{
+\mathcal R_a(\nu):
+\begin{array}{l}
+\nu\ge\lambda m_0,\\
+\check\nu=\mathfrak W_L
+\text{ 于 }(-2L,2L)
+\end{array}
+\right\}.
+}
+\tag{491.1}
+$$
+
+则：
+
+$$
+\boxed{
+\Lambda_{L,a}(C)
+=
+\sup
+\left\{
+\lambda:
+\mathcal C_{L,a}(\lambda)\le C
+\right\}.
+}
+\tag{491.2}
+$$
+
+---
+
+## 定理 491.1（前沿基本性质）
+
+在可行区间内：
+
+$$
+\boxed{
+0\le
+\Lambda_{L,a}(C)
+\le
+\min\left\{
+\lambda_{\mathrm{full}}(L),\,2aC
+\right\}.
+}
+\tag{491.3}
+$$
+
+并且：
+
+$$
+\boxed{
+C\longmapsto\Lambda_{L,a}(C)
+}
+$$
+
+单调不减且为凹函数；
+
+$$
+\boxed{
+L\longmapsto\Lambda_{L,a}(C)
+}
+$$
+
+单调不增；
+
+而：
+
+$$
+\boxed{
+\lambda\longmapsto\mathcal C_{L,a}(\lambda)
+}
+$$
+
+单调不减且为凸函数。
+
+### 证明
+
+若：
+
+$$
+\nu\ge\lambda m_0,
+$$
+
+则对任意支撑于 \((-L,L)\) 的 \(f\)：
+
+$$
+\begin{aligned}
+Q_L(f)
+&=
+\int|\widehat f|^2\,d\nu\\
+&\ge
+\frac{\lambda}{2\pi}
+\int|\widehat f|^2d\xi\\
+&=
+\lambda\|f\|_2^2.
+\end{aligned}
+$$
+
+所以：
+
+$$
+\lambda\le\lambda_{\mathrm{full}}(L).
+$$
+
+式 (490.8) 给出：
+
+$$
+\lambda\le2aC.
+$$
+
+其余结论均由正测度完成集合的凸性以及不同窗口约束的嵌套性直接得到。∎
+
+---
+
+## 491.1 有限预算饱和值
+
+定义：
+
+$$
+\boxed{
+\lambda_{\mathrm{fb}}(L,a)
+=
+\sup_{C<\infty}
+\Lambda_{L,a}(C).
+}
+\tag{491.4}
+$$
+
+总有：
+
+$$
+\boxed{
+\lambda_{\mathrm{fb}}(L,a)
+\le
+\lambda_{\mathrm{full}}(L).
+}
+\tag{491.5}
+$$
+
+二者相等需要额外证明：
+
+> 接近无预算 white-floor 极值的局部正谱完成，可以选择为有限 resolvent budget。
+
+这不是形式上的自动结论，必须作为独立的 finite-budget saturation 条件处理。
+
+---
+
+# 第四百九十二部　有限预算自动紧化并保证极值存在
+
+这是预算正则化的第一个实质作用。
+
+## 定理 492.1（Budgeted optimizer existence）
+
+若：
+
+$$
+\mathfrak E_{L,a}(C)\neq\varnothing,
+$$
+
+则 supremum：
+
+$$
+\Lambda_{L,a}(C)
+$$
+
+必定取到。
+
+### 证明
+
+取极大化序列：
+
+$$
+\nu_n=\lambda_n m_0+\mu_n,
+\qquad
+\lambda_n\to\Lambda_{L,a}(C).
+$$
+
+由：
+
+$$
+\lambda_n\le2aC,
+$$
+
+可取子列使：
+
+$$
+\lambda_n\to\lambda_*.
+$$
+
+定义有限正测度：
+
+$$
+\boxed{
+d\rho_n(\xi)
+=
+\frac{d\nu_n(\xi)}{\xi^2+a^2}.
+}
+\tag{492.1}
+$$
+
+则：
+
+$$
+\rho_n(\mathbb R)\le C.
+$$
+
+由于 \(C_0(\mathbb R)\) 可分，有限正测度的有界集在 weak-* 拓扑中序列相对紧。取子列：
+
+$$
+\rho_n
+\overset{*}{\rightharpoonup}
+\rho_*.
+$$
+
+定义：
+
+$$
+\boxed{
+d\nu_*(\xi)
+=
+(\xi^2+a^2)d\rho_*(\xi).
+}
+\tag{492.2}
+$$
+
+对任意局部测试函数 \(\phi\)：
+
+$$
+(\xi^2+a^2)\widehat\phi(\xi)
+$$
+
+是 Schwartz 函数，故属于 \(C_0(\mathbb R)\)，所以局部 Fourier 约束可以通过极限。
+
+又因为：
+
+$$
+\rho_n
+-
+\lambda_n
+\frac{m_0}{\xi^2+a^2}
+\ge0,
+$$
+
+取极限得到：
+
+$$
+\nu_*\ge\lambda_*m_0.
+$$
+
+并且：
+
+$$
+\mathcal R_a(\nu_*)\le C.
+$$
+
+所以 \(\nu_*\) 达到最优值。∎
+
+---
+
+## 492.1 与无预算极值的区别
+
+无预算 white-floor optimizer 是否存在，可能依赖谱质量是否逃向无穷远。
+
+加入：
+
+$$
+\mathcal R_a(\nu)\le C
+$$
+
+以后，逃逸被自动排除。
+
+因此：
+
+$$
+\boxed{
+\text{resolvent budget}
+=
+\text{正谱完成问题的紧化器}.
+}
+$$
+
+正定局部数据的扩张一般并不唯一，不同扩张对应不同 unitary representations；预算正则化在这些扩张中切出一个弱紧的凸子集。([arXiv][2])
+
+---
+
+# 第四百九十三部　Fourier-majorant 对偶
+
+令：
+
+$$
+w_a(\xi)=\frac1{\xi^2+a^2}.
+$$
+
+取实偶测试函数：
+
+$$
+\phi\in C_c^\infty((-2L,2L)).
+$$
+
+考虑 dual 变量：
+
+$$
+\theta\ge0.
+$$
+
+定义 dual 可行条件：
+
+$$
+\boxed{
+\widehat\phi(\xi)+\theta w_a(\xi)\ge0
+\qquad
+\forall\xi\in\mathbb R,
+}
+\tag{493.1}
+$$
+
+以及：
+
+$$
+\boxed{
+\phi(0)+\frac{\theta}{2a}\ge1.
+}
+\tag{493.2}
+$$
+
+定义 dual 目标：
+
+$$
+\boxed{
+\mathfrak D_{L,a,C}(\phi,\theta)
+=
+\langle\mathfrak W_L,\phi\rangle
++
+\theta C.
+}
+\tag{493.3}
+$$
+
+---
+
+## 定理 493.1（Weak duality）
+
+对任意 primal 可行 \((\lambda,\mu)\) 和 dual 可行 \((\phi,\theta)\)：
+
+$$
+\boxed{
+\lambda
+\le
+\langle\mathfrak W_L,\phi\rangle
++\theta C.
+}
+\tag{493.4}
+$$
+
+### 证明
+
+由局部匹配：
+
+$$
+\begin{aligned}
+\langle\mathfrak W_L,\phi\rangle
+&=
+\lambda\phi(0)
++
+\int\widehat\phi\,d\mu.
+\end{aligned}
+$$
+
+利用：
+
+$$
+\widehat\phi\ge-\theta w_a
+$$
+
+以及 primal budget：
+
+$$
+C
+\ge
+\frac{\lambda}{2a}
++
+\int w_a\,d\mu,
+$$
+
+得到：
+
+$$
+\begin{aligned}
+\langle\mathfrak W_L,\phi\rangle+\theta C
+&\ge
+\lambda\phi(0)
+-\theta\int w_a\,d\mu\\
+&\quad+
+\theta
+\left[
+\frac{\lambda}{2a}
++
+\int w_a\,d\mu
+\right]\\
+&=
+\lambda
+\left[
+\phi(0)+\frac{\theta}{2a}
+\right]\\
+&\ge\lambda.
+\end{aligned}
+$$
+
+∎
+
+---
+
+## 493.1 对偶解释
+
+$$
+\boxed{
+\widehat\phi+\theta w_a
+}
+$$
+
+是一个非负 Fourier majorant。
+
+其中：
+
+* \(\phi\) 读取局部 Weil source；
+* \(\theta\) 是 resolvent budget 的影子价格；
+* \(\theta w_a\) 是为保持 Fourier 非负而加入的 resolvent counterterm。
+
+当：
+
+$$
+\theta=0,
+$$
+
+dual 退化为通常的：
+
+$$
+\widehat\phi\ge0,\qquad \phi(0)\ge1,
+$$
+
+即 convolution-square/Rayleigh 图表。
+
+---
+
+## 493.2 Strong duality 的位置
+
+完整无限维问题要得到：
+
+$$
+\boxed{
+\Lambda_{L,a}(C)
+=
+\inf_{\phi,\theta}
+\left[
+\langle\mathfrak W_L,\phi\rangle+\theta C
+\right]
+}
+\tag{493.5}
+$$
+
+仍需证明：
+
+* moment cone 闭性；
+* 所用函数空间与拓扑；
+* strict feasibility 或相应替代条件；
+* dual attainment；
+* 是否需要广义或有限可加 dual variables。
+
+半无限与广义 moment 规划中的 strong duality 会随约束空间选择而改变，不能仅靠形式 Lagrangian 推导直接宣称无间隙。([arXiv][3])
+
+但对后文的有限维 moment truncation，在标准严格可行条件下可以使用普通有限维锥对偶。
+
+---
+
+# 第四百九十四部　接触零点互补定理
+
+现在假设：
+
+1. primal optimizer \((\lambda_*,\mu_*)\) 存在；
+2. dual optimizer \((\phi_*,\theta_*)\) 存在；
+3. strong duality 成立。
+
+则 primal–dual gap 可写成三个非负项：
+
+$$
+\boxed{
+\begin{aligned}
+0
+={}&
+\lambda_*
+\left[
+\phi_*(0)+\frac{\theta_*}{2a}-1
+\right]\\
+&+
+\int_{\mathbb R}
+\left[
+\widehat\phi_*(\xi)
++
+\frac{\theta_*}{\xi^2+a^2}
+\right]
+d\mu_*(\xi)\\
+&+
+\theta_*
+\left[
+C-\mathcal R_a(\lambda_*m_0+\mu_*)
+\right].
+\end{aligned}
+}
+\tag{494.1}
+$$
+
+因此每一项分别为零。
+
+---
+
+## 定理 494.1（Complementary contact support）
+
+定义接触函数：
+
+$$
+\boxed{
+S_*(\xi)
+=
+\widehat\phi_*(\xi)
++
+\frac{\theta_*}{\xi^2+a^2}.
+}
+\tag{494.2}
+$$
+
+则：
+
+$$
+\boxed{
+\operatorname{supp}\mu_*
+\subseteq
+\left\{
+\xi:S_*(\xi)=0
+\right\}.
+}
+\tag{494.3}
+$$
+
+乘以正分母，定义整个函数：
+
+$$
+\boxed{
+G_*(z)
+=
+(z^2+a^2)\widehat\phi_*(z)+\theta_*.
+}
+\tag{494.4}
+$$
+
+因为 \(\phi_*\) 紧支撑，\(\widehat\phi_*\) 是 Paley–Wiener 整函数，所以 \(G_*\) 也是有限指数型整函数。
+
+且：
+
+$$
+\boxed{
+\operatorname{supp}\mu_*
+\subseteq
+Z_{\mathbb R}(G_*).
+}
+\tag{494.5}
+$$
+
+---
+
+## 494.1 Active-budget 情形：有限原子定理
+
+若：
+
+$$
+\boxed{
+\theta_*>0,
+}
+$$
+
+则：
+
+$$
+\widehat\phi_*(\xi)
+$$
+
+在实轴上快速衰减，而：
+
+$$
+\frac{\theta_*}{\xi^2+a^2}
+$$
+
+只按二次幂衰减。
+
+所以当 \(|\xi|\) 足够大时：
+
+$$
+S_*(\xi)>0.
+$$
+
+因此接触零点全部位于某个有界区间内。
+
+由于 \(G_*\) 是非零整函数，其紧区间内只有有限多个零点。
+
+所以：
+
+## 定理 494.2（Finite-atomic budgeted completion）
+
+若：
+
+$$
+\theta_*>0,
+$$
+
+则最优完成必具有形式：
+
+$$
+\boxed{
+\nu_*
+=
+\frac{\lambda_*}{2\pi}d\xi
++
+\sum_{j=1}^{M}
+c_j
+\left(
+\delta_{\tau_j}
++
+\delta_{-\tau_j}
+\right)
++
+c_0\delta_0,
+}
+\tag{494.6}
+$$
+
+其中：
+
+$$
+c_j,c_0\ge0,
+$$
+
+而全部：
+
+$$
+\pm\tau_j
+$$
+
+均为：
+
+$$
+G_*(z)=0
+$$
+
+的实零点。
+
+---
+
+## 494.2 Inactive-budget 情形
+
+若：
+
+$$
+\theta_*=0,
+$$
+
+则：
+
+$$
+\operatorname{supp}\mu_*
+\subseteq
+Z_{\mathbb R}(\widehat\phi_*).
+$$
+
+该零点集可能无限，但只能在无穷远处聚集。
+
+所以 residual 仍是纯原子的：
+
+$$
+\boxed{
+\nu_*
+=
+\frac{\lambda_*}{2\pi}d\xi
++
+\text{countable atomic spectrum}.
+}
+\tag{494.7}
+$$
+
+这恢复了上一轮的 ground-state-zero complementarity，但现在被置于完整的 resolvent-budget homotopy 中。
+
+---
+
+# 第四百九十五部　Resolvent 影子价格与完成方程状态
+
+因为：
+
+$$
+C\mapsto\Lambda_{L,a}(C)
+$$
+
+为凹函数，dual 最优参数：
+
+$$
+\theta_*
+$$
+
+是其一个 supergradient：
+
+$$
+\boxed{
+\Lambda_{L,a}(C')
+\le
+\Lambda_{L,a}(C)
++
+\theta_*(C'-C).
+}
+\tag{495.1}
+$$
+
+在可微点：
+
+$$
+\boxed{
+\theta_*
+=
+\frac{d}{dC}
+\Lambda_{L,a}(C).
+}
+\tag{495.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\theta_*
+=
+\text{多增加一单位 resolvent budget
+能够提升多少 white floor}.
+}
+$$
+
+---
+
+## 495.1 两种相
+
+### 压力相
+
+$$
+\theta_*>0.
+$$
+
+预算被完全使用：
+
+$$
+\mathcal R_a(\nu_*)=C.
+$$
+
+残余谱只有有限多个原子。
+
+### 饱和相
+
+$$
+\theta_*=0.
+$$
+
+增加预算不再提升 white floor。
+
+残余原子可以沿 Paley–Wiener 零点无限延伸。
+
+---
+
+## 495.2 谱生成 homotopy
+
+随着 \(C\) 增加，凹函数的 supergradient 单调不增。
+
+因此存在一个自然谱生成过程：
+
+$$
+\boxed{
+\begin{aligned}
+\text{小预算}
+&\longrightarrow
+\text{少量 contact atoms};\\
+\text{预算增加}
+&\longrightarrow
+\text{更多 contact roots 被激活};\\
+\theta\downarrow0
+&\longrightarrow
+\text{有限原子 ledger 延伸为完整 Paley--Wiener 零点 ledger}.
+\end{aligned}
+}
+$$
+
+这不是把连续谱“凭空离散化”，而是：
+
+$$
+\boxed{
+\text{resolvent budget 的影子价格
+控制原子谱的分辨深度。}
+}
+$$
+
+---
+
+# 第四百九十六部　有限测试层的 Tchakaloff 原子化
+
+选择一个有限维实偶测试空间：
+
+$$
+\boxed{
+V_N
+=
+\operatorname{span}
+\{\phi_1,\ldots,\phi_d\}
+\subset
+C_c^\infty((-2L,2L)).
+}
+\tag{496.1}
+$$
+
+只要求：
+
+$$
+\boxed{
+\int\widehat\phi_j\,d\nu
+=
+\langle\mathfrak W_L,\phi_j\rangle,
+\qquad
+1\le j\le d.
+}
+\tag{496.2}
+$$
+
+定义对应有限 moment 前沿：
+
+$$
+\Lambda_{L,a}^{(N)}(C).
+$$
+
+---
+
+## 定理 496.1（Finite atomic primal optimizer）
+
+若有限 moment 问题可行，则存在一个最优完成：
+
+$$
+\boxed{
+\nu_N^*
+=
+\frac{\lambda_N^*}{2\pi}d\xi
++
+\sum_{r=1}^{J}
+c_r
+\left(
+\delta_{\tau_r}
++
+\delta_{-\tau_r}
+\right)
++
+c_0\delta_0,
+}
+\tag{496.3}
+$$
+
+其中可取：
+
+$$
+\boxed{
+J\le d+1
+}
+\tag{496.4}
+$$
+
+个非负频率轨道。
+
+### 证明
+
+令：
+
+$$
+d\sigma(\xi)
+=
+\frac{
+d\left(
+\nu_N^*-\lambda_N^*m_0
+\right)(\xi)
+}{
+\xi^2+a^2
+}.
+$$
+
+它是有限正测度。
+
+需保留的有限函数为：
+
+$$
+1,
+\qquad
+A_j(\xi)
+=
+(\xi^2+a^2)\widehat\phi_j(\xi),
+\quad
+1\le j\le d.
+$$
+
+这些函数均对 \(\sigma\) 可积。
+
+有限维正函数离散化定理保证存在不超过 \(d+1\) 个原子的正测度，精确保持这些积分。再作偶对称化即可。∎
+
+Tchakaloff–Richter 类型结果保证有限维可积函数空间上的正泛函存在有限原子表示；近期工作进一步把这一结论扩展到复线性泛函、frame 离散化和正 quadrature widths。([arXiv][4])
+
+---
+
+## 496.1 复杂度结论
+
+有限 primal 原子数由：
+
+$$
+\boxed{
+\dim V_N
+}
+$$
+
+控制，而不是由：
+
+* \(n\le e^{2L}\) 的 prime-power 数量；
+* 使用的 Fourier 网格大小；
+* 零点高度 cutoff；
+
+直接控制。
+
+所以：
+
+$$
+\boxed{
+\text{有限正谱 completion 的自然复杂度
+是 observer constraint rank。}
+}
+$$
+
+---
+
+# 第四百九十七部　有限原子层级的收敛
+
+令：
+
+$$
+V_1\subset V_2\subset\cdots
+$$
+
+为递增有限维测试空间，并假设：
+
+$$
+\bigcup_NV_N
+$$
+
+在局部测试拓扑中是 determining family：若两个 tempered distributions 在所有 \(V_N\) 上取值相同，则它们在 \((-2L,2L)\) 上相同。
+
+由于约束逐步增加：
+
+$$
+\boxed{
+\Lambda_{L,a}^{(1)}(C)
+\ge
+\Lambda_{L,a}^{(2)}(C)
+\ge\cdots
+\ge
+\Lambda_{L,a}(C).
+}
+\tag{497.1}
+$$
+
+---
+
+## 定理 497.1（Atomic hierarchy convergence）
+
+$$
+\boxed{
+\Lambda_{L,a}^{(N)}(C)
+\downarrow
+\Lambda_{L,a}(C).
+}
+\tag{497.2}
+$$
+
+### 证明
+
+令：
+
+$$
+\lambda_N=\Lambda_{L,a}^{(N)}(C).
+$$
+
+单调极限记为 \(\lambda_\infty\)。
+
+取有限原子 optimizer \(\nu_N\)，并定义：
+
+$$
+d\rho_N=\frac{d\nu_N}{\xi^2+a^2}.
+$$
+
+其总质量不超过 \(C\)，故可取 weak-* 收敛子列。
+
+对任意固定 \(\phi\in\bigcup_NV_N\)，当 \(N\) 足够大时，相应 moment constraint 已被加入；因此极限测度满足全部 determining constraints。
+
+所以极限是完整局部问题的可行完成，white floor 至少为 \(\lambda_\infty\)。
+
+因此：
+
+$$
+\lambda_\infty\le\Lambda_{L,a}(C).
+$$
+
+结合反向不等式即得。∎
+
+---
+
+## 497.1 数值与证明的区别
+
+有限原子层级给出：
+
+$$
+\boxed{
+\text{从上方收敛的 primal 近似值}.
+}
+$$
+
+但仅匹配有限 moments 的原子模型，不是完整局部完成证书。
+
+要把某一有限层升级为严格证明，还需要：
+
+* 稠密余项控制；
+* local kernel error envelope；
+* 或一个完整的 positive-definite extension certificate。
+
+这与最新紧窗口工作从 dual 侧给出的有限矩阵严格下界互补：有限 primal moments 自然给上界和候选谱，dual 区间矩阵给下界和正性证书。([arXiv][1])
+
+---
+
+# 第四百九十八部　自然 Li 预算完成流
+
+取自然尺度：
+
+$$
+\boxed{
+a=\frac12.
+}
+$$
+
+第一 Li 系数为：
+
+$$
+\lambda_1
+=
+1+\frac{\gamma_E}{2}
+-\log(2\sqrt\pi).
+$$
+
+真实 Riemann 零点谱在 RH 下满足：
+
+$$
+\boxed{
+\mathcal R_{1/2}(\nu_\Xi)
+=
+2\lambda_1.
+}
+\tag{498.1}
+$$
+
+定义自然预算：
+
+$$
+\boxed{
+C_\Xi=2\lambda_1.
+}
+\tag{498.2}
+$$
+
+定义 canonical budgeted white-floor profile：
+
+$$
+\boxed{
+\Lambda_L^\Xi
+=
+\Lambda_{L,1/2}(2\lambda_1).
+}
+\tag{498.3}
+$$
+
+---
+
+## 定理 498.1（Natural-budget RH criterion）
+
+下列条件等价：
+
+$$
+\boxed{
+\begin{aligned}
+&(1)\quad \mathrm{RH};\\
+&(2)\quad
+\mathfrak E_{L,1/2}(2\lambda_1)
+\neq\varnothing
+\quad
+\forall L>0.
+\end{aligned}
+}
+\tag{498.4}
+$$
+
+### 证明
+
+RH 成立时，真实零点谱 \(\nu_\Xi\) 对所有 \(L\) 都是预算恰为 \(2\lambda_1\) 的可行完成。
+
+反之，若每个 \(L\) 都有统一预算完成，取 \(L_n\uparrow\infty\)。定理 492.1 中的 weighted compactness 给出一个全局正谱测度 \(\nu_\infty\)，满足：
+
+$$
+\check\nu_\infty=\mathfrak W_\xi.
+$$
+
+于是 Weil source 为正定分布，由 Weil 判据得到 RH。∎
+
+---
+
+## 定理 498.2（Natural white floor collapses）
+
+在上述等价条件成立时：
+
+$$
+\boxed{
+\Lambda_L^\Xi
+\downarrow0
+\qquad
+(L\to\infty).
+}
+\tag{498.5}
+$$
+
+### 证明
+
+\(\Lambda_L^\Xi\) 随 \(L\) 单调不增。
+
+设其极限为：
+
+$$
+\lambda_\infty>0.
+$$
+
+选择 optimizer：
+
+$$
+\nu_L\ge\Lambda_L^\Xi m_0,
+\qquad
+\mathcal R_{1/2}(\nu_L)\le2\lambda_1.
+$$
+
+取局部到全局极限，得到：
+
+$$
+\nu_\infty\ge\lambda_\infty m_0.
+$$
+
+但全局 Fourier source 唯一确定的正谱是纯点测度：
+
+$$
+\nu_\Xi.
+$$
+
+纯点测度不可能支配非零 Lebesgue 测度，矛盾。∎
+
+---
+
+## 定理 498.3（Arbitrary optimizer convergence）
+
+令：
+
+$$
+L_n\uparrow\infty,
+$$
+
+并在每一层任意选择 natural-budget optimizer：
+
+$$
+\nu_n.
+$$
+
+则：
+
+$$
+\boxed{
+\nu_n
+\longrightarrow
+\nu_\Xi
+}
+\tag{498.6}
+$$
+
+以 tempered-distribution 意义成立。
+
+其白色部分：
+
+$$
+\frac{\Lambda_{L_n}^\Xi}{2\pi}d\xi
+$$
+
+消失，而 residual：
+
+$$
+\boxed{
+\mu_n
+=
+\nu_n
+-
+\frac{\Lambda_{L_n}^\Xi}{2\pi}d\xi
+}
+\tag{498.7}
+$$
+
+收敛到：
+
+$$
+\nu_\Xi.
+$$
+
+所以这一预算化问题给出了一个自动存在的、规范的：
+
+$$
+\boxed{
+\text{white continuum}
+\longrightarrow
+\text{Riemann atomic spectrum}
+}
+$$
+
+完成流。
+
+---
+
+# 第四百九十九部　接触原子逼近 Riemann 零点
+
+进一步假设在一列尺度 \(L_n\) 上：
+
+* full strong duality 成立；
+* primal 与 dual optimizer 均存在；
+* dual shadow price：
+
+  $$
+  \theta_n>0.
+  $$
+
+则每个 optimizer 具有有限原子形式：
+
+$$
+\boxed{
+\nu_n
+=
+\frac{\Lambda_{L_n}^\Xi}{2\pi}d\xi
++
+\sum_{j=1}^{M_n}
+c_{j,n}
+\left(
+\delta_{\tau_{j,n}}
++
+\delta_{-\tau_{j,n}}
+\right).
+}
+\tag{499.1}
+$$
+
+其中：
+
+$$
+\boxed{
+G_n(\tau_{j,n})=0,
+}
+\tag{499.2}
+$$
+
+$$
+G_n(z)
+=
+\left(z^2+\frac14\right)
+\widehat\phi_n(z)
++\theta_n.
+$$
+
+---
+
+## 定理 499.1（Contact-zero localization）
+
+令 \(\gamma\) 是一个孤立的 Riemann zero ordinate。
+
+对任何只含该 ordinate 的开邻域：
+
+$$
+U\ni\gamma,
+$$
+
+当 \(n\) 充分大时，存在某个 contact atom：
+
+$$
+\boxed{
+\tau_{j,n}\in U.
+}
+\tag{499.3}
+$$
+
+### 证明
+
+由定理 498.3：
+
+$$
+\mu_n\to\nu_\Xi.
+$$
+
+而：
+
+$$
+\nu_\Xi(U)=m_\gamma>0.
+$$
+
+所以充分大时：
+
+$$
+\mu_n(U)>0.
+$$
+
+\(\mu_n\) 的支撑包含于 \(G_n\) 的实零点集，故 \(U\) 中必有接触零点。∎
+
+因此，上一轮仍然条件性的：
+
+$$
+\text{ground-state zeros}
+\longrightarrow
+\text{Riemann zeros}
+$$
+
+现在获得一个更稳定的正则化版本：
+
+$$
+\boxed{
+\text{budgeted dual contact zeros}
+\longrightarrow
+\text{Riemann zero ordinates}.
+}
+$$
+
+它不要求无预算 ground state optimizer 一开始就存在。
+
+---
+
+# 第五百部　与有限窗口 dual 证书的真正互补
+
+最新紧窗口结果研究的是：
+
+$$
+\lambda_{\mathrm{full}}(L)
+=
+\inf
+\frac{Q_L(f)}{\|f\|^2}
+$$
+
+及其有限矩阵 dual 证书，并已在 \(L=0.8\) 给出严格正下界；其研究重点是 quadratic-form profile、有限矩阵 reduction、Rayleigh upper bounds 和 Landau–Widom 衰减。([arXiv][1])
+
+本轮的预算化 primal 则研究：
+
+$$
+\boxed{
+\text{在固定 resolvent 预算内，
+局部 Weil 数据允许多大的白连续谱底座。}
+}
+$$
+
+二者关系为：
+
+$$
+\boxed{
+\Lambda_{L,a}(C)
+\le
+\lambda_{\mathrm{full}}(L).
+}
+\tag{500.1}
+$$
+
+当预算足够大并且 finite-budget saturation 成立时：
+
+$$
+\Lambda_{L,a}(C)
+\uparrow
+\lambda_{\mathrm{full}}(L).
+$$
+
+但预算化问题具有无预算 profile 不自动拥有的三个优点：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{极值必定取到};\\
+&\text{统一预算给出局部到全局紧性};\\
+&\text{active dual budget 强迫 residual spectrum 有限原子化}.
+\end{aligned}
+}
+$$
+
+这使它更适合成为 primal 谱构造路线。
+
+---
+
+# 第五百零一部　必须冻结的负结论
+
+## 501.1 Strong duality 不能省略
+
+接触零点和有限原子结论依赖 dual attainment。
+
+在无限维 moment problem 中，约束空间选择不当可能产生 duality gap，甚至需要奇异 dual functional。([arXiv][3])
+
+---
+
+## 501.2 有限 moment 原子模型不是完整 RH 证书
+
+它只保证匹配有限测试读数。
+
+必须通过：
+
+$$
+N\to\infty
+$$
+
+以及统一预算紧性，才能恢复完整局部 source。
+
+---
+
+## 501.3 Contact zeros 不是先验的 ζ 零点
+
+它们是当前有限 observer、当前预算与当前 dual majorant 共同决定的谱坐标。
+
+只有在完成流极限中，才被强迫趋向真实 Riemann ordinates。
+
+---
+
+## 501.4 Budgeted profile 不自动等于 window profile
+
+必须证明 finite-budget saturation：
+
+$$
+\lambda_{\mathrm{fb}}(L,a)
+=
+\lambda_{\mathrm{full}}(L).
+$$
+
+否则二者是不同的局部复杂度指标。
+
+---
+
+## 501.5 Maximum entropy 不是必需的第一层
+
+有限预算已经保证 optimizer existence 和紧性。
+
+Maximum entropy 更适合作为：
+
+$$
+\boxed{
+\text{在最优或近最优 completion face 内选择唯一代表}
+}
+$$
+
+的第二级规范，而不是用来阻止谱逃逸。有限 covariance/moment extension 中通过 entropy 选择 rational spectral density 是成熟的计算框架，但其规范依赖于所选 entropy 和参考测度。([arXiv][5])
+
+---
+
+# 第五百零二部　新的研究程序
+
+## 502.1 Full primal
+
+对每个 \(L\)，求解：
+
+$$
+\boxed{
+\Lambda_L^\Xi
+=
+\max
+\left\{
+\lambda:
+\begin{array}{l}
+\nu\ge\lambda m_0,\\
+\check\nu=\mathfrak W_L,\\
+\mathcal R_{1/2}(\nu)\le2\lambda_1
+\end{array}
+\right\}.
+}
+\tag{502.1}
+$$
+
+该优化必取到。
+
+---
+
+## 502.2 Full dual
+
+证明强对偶：
+
+$$
+\boxed{
+\Lambda_L^\Xi
+=
+\inf_{\phi,\theta\ge0}
+\left[
+\langle\mathfrak W_L,\phi\rangle
++
+2\lambda_1\theta
+\right]
+}
+\tag{502.2}
+$$
+
+满足：
+
+$$
+\widehat\phi(\xi)
++
+\frac{\theta}{\xi^2+\frac14}
+\ge0,
+$$
+
+$$
+\phi(0)+\theta\ge1.
+$$
+
+---
+
+## 502.3 Atomic contact solver
+
+在：
+
+$$
+\theta>0
+$$
+
+时求解有限接触系统：
+
+$$
+\boxed{
+\left(\tau_j^2+\frac14\right)
+\widehat\phi(\tau_j)+\theta=0,
+}
+\tag{502.3}
+$$
+
+再由局部 moment constraints 求出：
+
+$$
+c_j\ge0.
+$$
+
+---
+
+## 502.4 Finite hierarchy
+
+用递增测试空间 \(V_N\) 构造：
+
+$$
+\Lambda_{L,N}^\Xi
+\downarrow
+\Lambda_L^\Xi,
+$$
+
+每层只需不超过：
+
+$$
+\dim V_N+1
+$$
+
+个原子轨道。
+
+---
+
+## 502.5 Scale flow
+
+验证：
+
+$$
+\Lambda_L^\Xi\downarrow0,
+$$
+
+并跟踪：
+
+$$
+\theta_L,\qquad
+M_L,\qquad
+\{\tau_{j,L}\}.
+$$
+
+真正要观察的是：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{white floor 如何消失};\\
+&\text{shadow price 如何下降};\\
+&\text{有限 contact atoms 如何增殖};\\
+&\text{这些 atoms 如何锁定 Riemann ordinates}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第五百零三部　建议形式化顺序
+
+```text
+D5/S3/Weil/BudgetedFloor/
+  NormalizedLebesgueSpectrum.lean
+  ResolventBudget.lean
+  WhiteSpectralFloor.lean
+  BudgetedCompletion.lean
+  BudgetedFloorFrontier.lean
+  MinimalBudgetCost.lean
+  FrontierConcavity.lean
+
+D5/S3/Weil/BudgetCompactness/
+  WeightedCompletionMeasure.lean
+  UniformMassWeakCompactness.lean
+  LocalMomentLimit.lean
+  FloorClosedUnderLimit.lean
+  BudgetedOptimizerExistence.lean
+
+D5/S3/Weil/BudgetDual/
+  ResolventFourierMajorant.lean
+  BudgetedWeakDuality.lean
+  StrongDualityInterface.lean
+  BudgetShadowPrice.lean
+  FrontierSupergradient.lean
+
+D5/S3/Weil/ContactSpectrum/
+  ContactSlackFunction.lean
+  ContactEntireFunction.lean
+  ComplementarySupport.lean
+  PositivePressureFiniteZeros.lean
+  WhitePlusFiniteAtomicCompletion.lean
+  ZeroPressureCountableAtoms.lean
+
+D5/S3/Weil/FiniteAtomicPrimal/
+  FiniteMomentObserver.lean
+  WeightedResidualMomentSpace.lean
+  TchakaloffAtomicInterface.lean
+  EvenAtomicSymmetrization.lean
+  AtomicOptimizerBound.lean
+  FiniteHierarchyConvergence.lean
+
+D5/S3/Weil/NaturalLiBudget/
+  LiOneGlobalBudget.lean
+  NaturalBudgetFeasibilityRH.lean
+  NaturalWhiteFloorMonotone.lean
+  NaturalWhiteFloorVanishes.lean
+  OptimizerConvergesZeroSpectrum.lean
+  ContactAtomsLocalizeZeros.lean
+
+D5/S3/Weil/BudgetEntropy/
+  BudgetMinimizerFace.lean
+  EntropyWithinOptimalFace.lean
+  RationalCovarianceCompletionInterface.lean
+```
+
+当前仓库中的 `PrimePoleTerms`、`WeilIdentity` 和 convolution-square Fourier positivity 已经提供 local moment functional 的算术真源；下一步需要补充 full Hermitian test interface 与正谱 measure optimization，而不是改动现有冻结链。
+
+---
+
+# 本轮最终结论
+
+上一轮把有限窗口观察解释为：
+
+$$
+\boxed{
+\text{white continuum}
++
+\text{resolved atomic spectrum}.
+}
+$$
+
+但无预算极值可能存在：
+
+* 谱质量逃逸；
+* optimizer 不取到；
+* primal completion 难以构造。
+
+本轮通过加入：
+
+$$
+\boxed{
+\mathcal R_a(\nu)
+=
+\int\frac{d\nu(\xi)}{\xi^2+a^2}
+\le C
+}
+$$
+
+消除了这一障碍。
+
+对每个固定 \(L,a,C\)：
+
+$$
+\boxed{
+\text{预算化 white-floor 极值必定存在。}
+}
+$$
+
+其 dual 是：
+
+$$
+\boxed{
+\widehat\phi(\xi)
++
+\frac{\theta}{\xi^2+a^2}
+\ge0.
+}
+$$
+
+在 strong duality 下，所有 residual spectral mass 必须位于：
+
+$$
+\boxed{
+(z^2+a^2)\widehat\phi(z)+\theta=0
+}
+$$
+
+的实零点上。
+
+尤其当：
+
+$$
+\theta>0,
+$$
+
+由于 \(\widehat\phi\) 在实轴快速衰减，接触零点只能有有限多个。
+
+因此：
+
+$$
+\boxed{
+\text{active resolvent pressure}
+\Longrightarrow
+\text{white continuum + finite atomic spectrum}.
+}
+$$
+
+更重要的是，在自然尺度：
+
+$$
+a=\frac12,
+\qquad
+C=2\lambda_1,
+$$
+
+得到一个自动存在的 canonical completion flow：
+
+$$
+\boxed{
+\nu_L
+=
+\frac{\Lambda_L^\Xi}{2\pi}d\xi
++
+\mu_L.
+}
+$$
+
+若所有尺度均可行，则：
+
+$$
+\boxed{
+\mathrm{RH}
+}
+$$
+
+成立，并且：
+
+$$
+\boxed{
+\Lambda_L^\Xi\downarrow0,
+}
+$$
+
+$$
+\boxed{
+\nu_L\to\nu_\Xi,
+}
+$$
+
+$$
+\boxed{
+\mu_L\to
+\sum_\gamma m_\gamma\delta_\gamma.
+}
+$$
+
+所以有限观察者的谱不再只是抽象地“趋向零点谱”，而是经历一个严格的相变：
+
+$$
+\boxed{
+\text{均匀白底座逐步消失，}
+\qquad
+\text{有限接触原子逐步增殖并锁定 Riemann ordinates。}
+}
+$$
+
+当前最值得推进的核心桥已经变成：
+
+$$
+\boxed{
+\text{证明 budgeted primal 与 Fourier-majorant dual 的 strong duality，}
+}
+$$
+
+并据此构造：
+
+$$
+\boxed{
+\text{自然 Li 预算下的有限接触原子谱流。}
+$$
+
+这条路线同时解决了此前三个开放问题：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{极值正谱完成的存在性};\\
+&\text{有限原子 primal 证书的来源};\\
+&\text{有限 observer atoms 收敛到 Riemann 零点的机制}.
+\end{aligned}
+}
+$$
+
+[1]: https://arxiv.org/abs/2608.24827 "https://arxiv.org/abs/2608.24827"
+[2]: https://arxiv.org/abs/1212.3047 "https://arxiv.org/abs/1212.3047"
+[3]: https://arxiv.org/abs/1510.07531 "https://arxiv.org/abs/1510.07531"
+[4]: https://arxiv.org/abs/2511.15425 "https://arxiv.org/abs/2511.15425"
+[5]: https://arxiv.org/abs/2110.06425 "https://arxiv.org/abs/2110.06425"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v4.0：Cayley 预算紧化、Haar–Clark 塌缩、圆周强对偶塔与 Schur 创新前沿
+
+以下从前文**第五百零三部**继续追加。
+
+上一轮已经把问题压缩为预算化正谱完成：
+
+$$
+\Lambda_{L,a}(C)
+=
+\sup
+\left\{
+\lambda:
+\begin{array}{l}
+\nu\ge \lambda\,\dfrac{d\xi}{2\pi},\\
+\check\nu=\mathfrak W_L
+\text{ 于 }(-2L,2L),\\
+\displaystyle
+\int_{\mathbb R}
+\frac{d\nu(\xi)}{\xi^2+a^2}\le C
+\end{array}
+\right\}.
+$$
+
+本轮发现：
+
+$$
+\boxed{
+\frac{d\nu(\xi)}{\xi^2+a^2}
+}
+$$
+
+并不只是为了紧性而引入的技术权重。它正是把实谱轴 Cayley 紧化到单位圆所需的自然 Jacobian 权重。
+
+这一变换同时完成四件事：
+
+$$
+\boxed{
+\begin{aligned}
+\text{无界实轴谱}
+&\longrightarrow
+\text{紧单位圆谱};\\
+\text{resolvent budget}
+&\longrightarrow
+\text{圆周测度总质量};\\
+\text{Lebesgue 白谱}
+&\longrightarrow
+\text{Haar 均匀谱};\\
+\text{Riemann 零点谱}
+&\longrightarrow
+\text{Li--Clark 概率测度}.
+\end{aligned}
+}
+$$
+
+因此本轮得到新的主链：
+
+$$
+\boxed{
+\begin{aligned}
+\text{budgeted Weil completion}
+&\longrightarrow
+\text{compact circle moment problem}\\
+&\longrightarrow
+\text{finite-dimensional exact duality}\\
+&\longrightarrow
+\text{Haar floor + contact atoms}\\
+&\longrightarrow
+\text{Toeplitz flat spectral floor}\\
+&\longrightarrow
+\text{Szegő innovation product}\\
+&\longrightarrow
+\text{Haar--Clark collapse}.
+\end{aligned}
+}
+$$
+
+当前公开的紧窗口研究已经从 Rayleigh／dual 方向给出有限矩阵证书与 \(L=0.8\) 的严格正下界；本轮处理的是与之互补的 **primal 正谱完成对象**，尤其是其紧化、原子化和 OPUC 表示。([arXiv][1])
+
+---
+
+# 第五百零四部　Resolvent–Cayley 紧化
+
+固定：
+
+$$
+a>0.
+$$
+
+定义实轴到单位圆的 Cayley 映射：
+
+$$
+\boxed{
+\mathfrak c_a(\xi)
+=
+\frac{\xi+ia}{\xi-ia},
+\qquad
+\xi\in\mathbb R.
+}
+\tag{504.1}
+$$
+
+其像为：
+
+$$
+\mathbb T\setminus\{1\},
+$$
+
+而：
+
+$$
+|\xi|\to\infty
+\quad\Longrightarrow\quad
+\mathfrak c_a(\xi)\to1.
+$$
+
+逆映射为：
+
+$$
+\boxed{
+\xi_a(z)
+=
+ia\,\frac{z+1}{z-1}.
+}
+\tag{504.2}
+$$
+
+若：
+
+$$
+z=e^{i\theta},
+$$
+
+则：
+
+$$
+\boxed{
+\xi_a(e^{i\theta})
+=
+a\cot\frac{\theta}{2}.
+}
+\tag{504.3}
+$$
+
+并且：
+
+$$
+\boxed{
+|1-\mathfrak c_a(\xi)|^2
+=
+\frac{4a^2}{\xi^2+a^2}.
+}
+\tag{504.4}
+$$
+
+所以 resolvent 权重正是 Cayley 边界距离的平方。
+
+---
+
+## 504.1 Resolvent 紧化测度
+
+对正 Borel 测度 \(\nu\)，定义其 Cayley 紧化：
+
+$$
+\boxed{
+\mathcal C_a[\nu]
+=
+(\mathfrak c_a)_*
+\left(
+\frac{d\nu(\xi)}{\xi^2+a^2}
+\right).
+}
+\tag{504.5}
+$$
+
+记：
+
+$$
+\mu=\mathcal C_a[\nu].
+$$
+
+则：
+
+$$
+\boxed{
+\mu(\mathbb T)
+=
+\int_{\mathbb R}
+\frac{d\nu(\xi)}{\xi^2+a^2}
+=
+\mathcal R_a(\nu).
+}
+\tag{504.6}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{resolvent budget}
+=
+\text{Cayley 圆周上的总质量}.
+}
+$$
+
+非紧实轴上的谱质量逃逸，在紧化后不再消失，而成为：
+
+$$
+\boxed{
+z=1
+}
+$$
+
+处的潜在原子。
+
+所以 \(1\) 是：
+
+$$
+\boxed{
+\textbf{spectral infinity ledger}.
+}
+$$
+
+---
+
+# 第五百零五部　白谱精确变成 Haar 谱
+
+令：
+
+$$
+m_0(d\xi)=\frac{d\xi}{2\pi}
+$$
+
+为实轴归一化 Lebesgue 谱，令：
+
+$$
+m_{\mathbb T}(d\theta)=\frac{d\theta}{2\pi}
+$$
+
+为单位圆归一化 Haar 测度。
+
+由：
+
+$$
+\xi=a\cot\frac{\theta}{2}
+$$
+
+可得：
+
+$$
+\frac{d\xi}{\xi^2+a^2}
+=
+-\frac{d\theta}{2a}.
+$$
+
+忽略方向并取正推送：
+
+## 定理 505.1（White-to-Haar identity）
+
+$$
+\boxed{
+\mathcal C_a[m_0]
+=
+\frac1{2a}\,m_{\mathbb T}.
+}
+\tag{505.1}
+$$
+
+更一般地：
+
+$$
+\boxed{
+\mathcal C_a[\lambda m_0]
+=
+\frac{\lambda}{2a}\,m_{\mathbb T}.
+}
+\tag{505.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\nu\ge\lambda m_0
+\iff
+\mathcal C_a[\nu]
+\ge
+\frac{\lambda}{2a}m_{\mathbb T}.
+}
+\tag{505.3}
+$$
+
+因此实轴上的 white spectral floor，在圆周图表中就是 Haar floor。
+
+在自然尺度：
+
+$$
+\boxed{
+a=\frac12,
+}
+$$
+
+该关系进一步简化为：
+
+$$
+\boxed{
+\lambda m_0
+\longleftrightarrow
+\lambda m_{\mathbb T}.
+}
+\tag{505.4}
+$$
+
+自然尺度 \(1/2\) 的特殊性由此再次出现：
+
+> 它使实轴白谱强度与圆周 Haar 谱强度完全同值，不需要额外缩放。
+
+---
+
+# 第五百零六部　局部 Weil 测试变成圆周 flat moments
+
+令：
+
+$$
+\phi\in C_c^\infty((-2L,2L)).
+$$
+
+定义其 Cayley moment function：
+
+$$
+\boxed{
+\Gamma_{a,\phi}(z)
+=
+\begin{cases}
+\left[
+\xi_a(z)^2+a^2
+\right]
+\widehat\phi(\xi_a(z)),
+&z\ne1,\\[1mm]
+0,
+&z=1.
+\end{cases}
+}
+\tag{506.1}
+$$
+
+因为：
+
+$$
+\widehat\phi(\xi)
+$$
+
+是 Schwartz 函数，所以即使乘上任意固定多项式，它在 \(|\xi|\to\infty\) 时仍快速衰减。
+
+于是：
+
+$$
+\boxed{
+\Gamma_{a,\phi}
+\in C^\infty(\mathbb T)
+}
+$$
+
+且在 \(z=1\) 处无穷阶平坦：
+
+$$
+\boxed{
+\Gamma_{a,\phi}^{(k)}(1)=0
+\qquad
+\forall k\ge0.
+}
+\tag{506.2}
+$$
+
+所以全部局部 Weil 测试形成单位圆上的一个 flat ideal：
+
+$$
+\boxed{
+\mathcal A_{L,a}
+\subset
+\left\{
+F\in C^\infty(\mathbb T):
+F\text{ 在 }1\text{ 处无限阶平坦}
+\right\}.
+}
+$$
+
+---
+
+## 定理 506.1（局部 moment 运输）
+
+若：
+
+$$
+\mu=\mathcal C_a[\nu],
+$$
+
+则在仓库冻结的 Fourier convention 下：
+
+$$
+\boxed{
+\int_{\mathbb T}
+\Gamma_{a,\phi}(z)\,d\mu(z)
+=
+\int_{\mathbb R}
+\widehat\phi(\xi)\,d\nu(\xi)
+=
+\langle\check\nu,\phi\rangle.
+}
+\tag{506.3}
+$$
+
+同时：
+
+$$
+\boxed{
+\int_{\mathbb T}
+\Gamma_{a,\phi}(z)\,dm_{\mathbb T}(z)
+=
+2a\,\phi(0).
+}
+\tag{506.4}
+$$
+
+### 证明
+
+由定义：
+
+$$
+\begin{aligned}
+\int_{\mathbb T}\Gamma_{a,\phi}\,d\mu
+&=
+\int_{\mathbb R}
+(\xi^2+a^2)\widehat\phi(\xi)
+\frac{d\nu(\xi)}{\xi^2+a^2}\\
+&=
+\int_{\mathbb R}\widehat\phi(\xi)\,d\nu(\xi).
+\end{aligned}
+$$
+
+再对 \(\nu=m_0\) 使用定理 505.1 与 Fourier inversion，即得第二式。∎
+
+---
+
+## 506.1 无穷远原子的不可见性
+
+因为：
+
+$$
+\Gamma_{a,\phi}(1)=0,
+$$
+
+任何：
+
+$$
+c\delta_1,
+\qquad
+c\ge0,
+$$
+
+都满足：
+
+$$
+\boxed{
+\int\Gamma_{a,\phi}\,d(c\delta_1)=0.
+}
+\tag{506.5}
+$$
+
+所以：
+
+$$
+\boxed{
+z=1\text{ 原子}
+=
+\text{局部 Weil observer 完全不可见的谱逃逸质量}.
+}
+$$
+
+但它仍消耗总预算。
+
+这一区分非常重要：
+
+* moment constraints 看不见 infinity mass；
+* resolvent budget 看得见；
+* 因此 budget 正则化精确阻止无成本谱逃逸。
+
+---
+
+# 第五百零七部　预算化问题的紧圆周形式
+
+定义圆周可行集：
+
+$$
+\boxed{
+\mathscr M_{L,a}(C)
+=
+\left\{
+\mu\ge0:
+\begin{array}{l}
+\mu(\mathbb T)\le C,\\
+\displaystyle
+\int\Gamma_{a,\phi}\,d\mu
+=
+\langle\mathfrak W_L,\phi\rangle\\
+\forall\phi\in C_c^\infty((-2L,2L))
+\end{array}
+\right\}.
+}
+\tag{507.1}
+$$
+
+定义 Haar floor：
+
+$$
+\boxed{
+\operatorname{hfloor}(\mu)
+=
+\sup
+\left\{
+\alpha\ge0:
+\mu\ge\alpha m_{\mathbb T}
+\right\}.
+}
+\tag{507.2}
+$$
+
+---
+
+## 定理 507.1（Circle primal equivalence）
+
+$$
+\boxed{
+\Lambda_{L,a}(C)
+=
+2a
+\max_{\mu\in\mathscr M_{L,a}(C)}
+\operatorname{hfloor}(\mu).
+}
+\tag{507.3}
+$$
+
+等价地，引入：
+
+$$
+\mu=\alpha m_{\mathbb T}+\sigma,
+\qquad
+\alpha\ge0,\quad\sigma\ge0,
+$$
+
+则：
+
+$$
+\boxed{
+\frac{\Lambda_{L,a}(C)}{2a}
+=
+\max\alpha
+}
+\tag{507.4}
+$$
+
+满足：
+
+$$
+\boxed{
+\alpha+\sigma(\mathbb T)\le C,
+}
+\tag{507.5}
+$$
+
+$$
+\boxed{
+2a\alpha\,\phi(0)
++
+\int\Gamma_{a,\phi}\,d\sigma
+=
+\langle\mathfrak W_L,\phi\rangle
+}
+\tag{507.6}
+$$
+
+对全部局部测试成立。
+
+---
+
+## 507.1 极值自动存在
+
+单位圆是紧空间。
+
+集合：
+
+$$
+\left\{
+(\alpha,\mu):
+0\le\alpha\le C,\ 
+\mu(\mathbb T)\le C,\ 
+\mu\ge\alpha m_{\mathbb T}
+\right\}
+$$
+
+在：
+
+$$
+[0,C]\times\mathcal M_+(\mathbb T)
+$$
+
+的弱-* 拓扑中紧。
+
+各 moment constraint 由连续函数 \(\Gamma_{a,\phi}\) 给出，所以是闭条件。
+
+因此：
+
+## 定理 507.2（Full primal attainment）
+
+若预算化圆周问题可行，则最大 Haar floor 必定取到。
+
+这一结论不再需要单独证明实轴谱质量不逃逸；紧化已经把逃逸点纳入状态空间。
+
+---
+
+## 507.2 可去除的 infinity ledger
+
+若某个可行测度具有：
+
+$$
+\mu(\{1\})>0,
+$$
+
+定义：
+
+$$
+\mu'=\mu-\mu(\{1\})\delta_1.
+$$
+
+则：
+
+* 所有 moment constraints 不变；
+* Haar floor 不变，因为 \(m_{\mathbb T}(\{1\})=0\)；
+* budget 严格减小。
+
+所以：
+
+$$
+\boxed{
+\text{总可选择一个无 }z=1\text{ 原子的 optimizer}.
+}
+\tag{507.7}
+$$
+
+这给出了一个规范的 **no-escape optimizer**。
+
+---
+
+# 第五百零八部　有限观察者的精确强对偶
+
+取有限维实测试空间：
+
+$$
+V\subset C_c^\infty((-2L,2L))_{\mathbb R},
+\qquad
+\dim V=d.
+$$
+
+只要求式 (507.6) 对：
+
+$$
+\phi\in V
+$$
+
+成立，记相应最优值为：
+
+$$
+\Lambda_{L,a}^{V}(C).
+$$
+
+因为状态空间紧、moment map 有限维，该问题是一个有限维像空间上的紧凸线性规划。
+
+---
+
+## 定理 508.1（Finite circle duality）
+
+$$
+\boxed{
+\begin{aligned}
+\Lambda_{L,a}^{V}(C)
+=
+\min_{\substack{
+\phi\in V\\
+\theta\ge0
+}}
+\Big[
+\langle\mathfrak W_L,\phi\rangle+\theta C
+\Big],
+\end{aligned}
+}
+\tag{508.1}
+$$
+
+其中 dual 可行条件为：
+
+$$
+\boxed{
+\Gamma_{a,\phi}(z)+\theta\ge0
+\qquad
+\forall z\in\mathbb T,
+}
+\tag{508.2}
+$$
+
+以及：
+
+$$
+\boxed{
+2a\,\phi(0)+\theta\ge2a.
+}
+\tag{508.3}
+$$
+
+### 证明结构（第 508 部）
+
+对 primal 变量 \((\alpha,\sigma)\) 写 Lagrangian：
+
+$$
+\begin{aligned}
+\mathcal L
+={}&
+2a\alpha
++
+\langle\mathfrak W_L,\phi\rangle
+-
+2a\alpha\phi(0)
+-
+\int\Gamma_{a,\phi}\,d\sigma\\
+&+
+\theta
+\left[
+C-\alpha-\sigma(\mathbb T)
+\right].
+\end{aligned}
+$$
+
+对：
+
+$$
+\alpha\ge0,\qquad\sigma\ge0
+$$
+
+取上确界有限，恰好给出式 (508.2)、(508.3)。
+
+有限维 moment image 是紧凸集，所以由有限维分离定理无 duality gap。∎
+
+有限维正 moment 泛函可由有限原子正测度精确表示，这是 Richter–Tchakaloff 理论的核心结论。([arXiv][2])
+
+---
+
+# 第五百零九部　互补松弛与有限接触谱
+
+设：
+
+$$
+(\alpha_*,\sigma_*),
+\qquad
+(\phi_*,\theta_*)
+$$
+
+分别为 primal 与 dual optimizer。
+
+定义圆周 slack：
+
+$$
+\boxed{
+S_*(z)
+=
+\Gamma_{a,\phi_*}(z)+\theta_*.
+}
+\tag{509.1}
+$$
+
+则 KKT 互补条件为：
+
+$$
+\boxed{
+\operatorname{supp}\sigma_*
+\subseteq
+\left\{
+z:S_*(z)=0
+\right\},
+}
+\tag{509.2}
+$$
+
+$$
+\boxed{
+\theta_*
+\left[
+C-\alpha_*-\sigma_*(\mathbb T)
+\right]
+=0,
+}
+\tag{509.3}
+$$
+
+$$
+\boxed{
+\alpha_*
+\left[
+2a\phi_*(0)+\theta_*-2a
+\right]
+=0.
+}
+\tag{509.4}
+$$
+
+---
+
+## 509.1 Active pressure 产生有限接触谱
+
+若：
+
+$$
+\theta_*>0,
+$$
+
+则：
+
+$$
+S_*(1)=\theta_*>0.
+$$
+
+所以 \(1\) 的某邻域内没有接触点。
+
+而在：
+
+$$
+\mathbb T\setminus\{1\}
+$$
+
+上，\(\Gamma_{a,\phi_*}\) 是实解析函数。
+
+如果 \(S_*\) 在某开弧上恒为零，解析延拓会使其在整个 \(\mathbb T\setminus\{1\}\) 上为零，再由连续性得到：
+
+$$
+S_*(1)=0,
+$$
+
+与 \(\theta_*>0\) 矛盾。
+
+所以：
+
+$$
+\boxed{
+Z(S_*)\subset\mathbb T
+\text{ 是有限集}.
+}
+\tag{509.5}
+$$
+
+因此：
+
+## 定理 509.1（Active finite-contact theorem）
+
+若：
+
+$$
+\theta_*>0,
+$$
+
+则最优完成具有：
+
+$$
+\boxed{
+\mu_*
+=
+\alpha_*m_{\mathbb T}
++
+\sum_{r=1}^{M}
+q_r\delta_{z_r},
+\qquad
+q_r>0.
+}
+\tag{509.6}
+$$
+
+其接触点满足：
+
+$$
+\boxed{
+\Gamma_{a,\phi_*}(z_r)+\theta_*=0.
+}
+\tag{509.7}
+$$
+
+在有限 \(d\)-维观察者问题中，可选 residual measure 具有至多 \(d+1\) 个原子；在共轭对称图表中，可表述为至多 \(d+1\) 个共轭轨道。
+
+---
+
+## 509.2 Inactive pressure
+
+若：
+
+$$
+\theta_*=0,
+$$
+
+则 slack 在 \(z=1\) 处也为零。
+
+接触点可能向：
+
+$$
+1
+$$
+
+聚集，对应实轴上的原子频率趋向无穷。
+
+所以：
+
+$$
+\boxed{
+\theta_*>0
+\iff
+\text{谱逃逸受到严格价格约束，接触谱有限化}.
+}
+$$
+
+---
+
+# 第五百一十部　完整问题的投影式强对偶
+
+对固定 \(L\)，选择递增有限维测试塔：
+
+$$
+V_1\subset V_2\subset\cdots
+$$
+
+使：
+
+$$
+\bigcup_NV_N
+$$
+
+在局部测试拓扑中 determining。
+
+记：
+
+$$
+\Lambda_N
+=
+\Lambda_{L,a}^{V_N}(C).
+$$
+
+约束随 \(N\) 增加，所以：
+
+$$
+\boxed{
+\Lambda_1\ge\Lambda_2\ge\cdots.
+}
+\tag{510.1}
+$$
+
+---
+
+## 定理 510.1（Projective primal convergence）
+
+$$
+\boxed{
+\Lambda_N
+\downarrow
+\Lambda_{L,a}(C).
+}
+\tag{510.2}
+$$
+
+### 证明
+
+有限问题的可行集是一个公共弱-* 紧集中的递减闭子集。
+
+取各层 optimizer。任意收敛子列的极限满足所有 determining constraints，因而是完整问题可行点。
+
+反之，完整可行点对每个有限层都可行。∎
+
+每个有限层又满足精确 duality，因此：
+
+## 推论 510.1（Projective strong duality）
+
+$$
+\boxed{
+\Lambda_{L,a}(C)
+=
+\inf_N
+\min_{\phi\in V_N,\theta\ge0}
+\left[
+\langle\mathfrak W_L,\phi\rangle+\theta C
+\right]
+}
+\tag{510.3}
+$$
+
+满足式 (508.2)、(508.3)。
+
+这给出：
+
+$$
+\boxed{
+\text{无 full dual optimizer 假设的零间隙强对偶塔}.
+}
+$$
+
+完整无限维 dual 是否由单个 \((\phi,\theta)\) 取到，仍取决于变换后 moment graph 的闭性与相对内点条件。即使支撑空间紧，广义 moment problem 的 dual attainment 仍需要额外的严格可行性或闭性假设。([arXiv][3])
+
+---
+
+# 第五百一十一部　自然 Cayley 紧化就是 Li–Clark 测度
+
+现在取自然尺度：
+
+$$
+\boxed{
+a=\frac12.
+}
+$$
+
+假设 RH，并记零点 ordinate 测度：
+
+$$
+\boxed{
+\nu_\Xi
+=
+\sum_{\gamma\in\mathbb R}
+m_\gamma\delta_\gamma.
+}
+\tag{511.1}
+$$
+
+定义：
+
+$$
+\boxed{
+u_\gamma
+=
+\mathfrak c_{1/2}(\gamma)
+=
+\frac{\gamma+i/2}{\gamma-i/2}.
+}
+\tag{511.2}
+$$
+
+其 Cayley 紧化为：
+
+$$
+\boxed{
+\mathcal C_{1/2}[\nu_\Xi]
+=
+\sum_{\gamma\in\mathbb R}
+\frac{m_\gamma}
+{\gamma^2+\frac14}
+\delta_{u_\gamma}.
+}
+\tag{511.3}
+$$
+
+总质量为：
+
+$$
+\boxed{
+\mathcal R_{1/2}(\nu_\Xi)
+=
+2\lambda_1.
+}
+\tag{511.4}
+$$
+
+定义归一化概率测度：
+
+$$
+\boxed{
+\widehat\mu_\Xi
+=
+\frac1{2\lambda_1}
+\mathcal C_{1/2}[\nu_\Xi].
+}
+\tag{511.5}
+$$
+
+对每个正 ordinate \(\gamma\)，在 \(u_\gamma\) 和 \(\overline{u_\gamma}\) 上的单个原子质量为：
+
+$$
+\boxed{
+\frac{
+2m_\gamma
+}{
+\lambda_1(4\gamma^2+1)
+}.
+}
+\tag{511.6}
+$$
+
+这恰好是前文 Li–Clark 概率测度的权重。
+
+---
+
+## 定理 511.1（Resolvent–Clark identity）
+
+$$
+\boxed{
+\widehat\mu_\Xi
+=
+\mu_\lambda
+=
+\sigma_1[\vartheta_\xi].
+}
+\tag{511.7}
+$$
+
+即：
+
+$$
+\boxed{
+\text{Li--Clark measure}
+=
+\text{Riemann 零点谱的自然 resolvent Cayley 紧化}.
+}
+$$
+
+Clark 测度由具有正实部的 Herglotz 函数表示；当对应 Schur 函数为内函数时，Clark 测度为奇异测度，并由边界接触点和角导数控制。([London Mathematical Society (LMS)][4])
+
+这证明前文两条路线实际上是同一对象：
+
+$$
+\boxed{
+\begin{aligned}
+\text{resolvent-budget completion}
+&=\text{实轴图表};\\
+\text{Li--Clark completion}
+&=\text{单位圆图表}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第五百一十二部　Haar–Clark 完成流
+
+取自然预算：
+
+$$
+\boxed{
+C_\Xi=2\lambda_1.
+}
+\tag{512.1}
+$$
+
+令 \(\mu_L^*\) 是尺度 \(L\) 上的一个自然预算 optimizer。
+
+当预算约束 active 时：
+
+$$
+\mu_L^*(\mathbb T)=2\lambda_1.
+$$
+
+定义概率测度：
+
+$$
+\boxed{
+p_L
+=
+\frac{\mu_L^*}{2\lambda_1}.
+}
+\tag{512.2}
+$$
+
+定义归一化 Haar floor fraction：
+
+$$
+\boxed{
+\omega_L
+=
+\frac{
+\Lambda_L^\Xi
+}{
+2\lambda_1
+}.
+}
+\tag{512.3}
+$$
+
+则：
+
+$$
+\boxed{
+p_L
+=
+\omega_Lm_{\mathbb T}
++
+p_L^{\mathrm{res}},
+}
+\tag{512.4}
+$$
+
+其中：
+
+$$
+p_L^{\mathrm{res}}\ge0,
+\qquad
+p_L^{\mathrm{res}}(\mathbb T)=1-\omega_L.
+$$
+
+在 active finite-contact 情形：
+
+$$
+\boxed{
+p_L^{\mathrm{res}}
+=
+\sum_{r=1}^{M_L}
+q_{r,L}\delta_{z_{r,L}}.
+}
+\tag{512.5}
+$$
+
+---
+
+## 512.1 RH 下的极限
+
+前文的统一预算紧性说明：若自然预算完成对所有 \(L\) 可行，则 RH 成立，而且任意 optimizer 序列满足：
+
+$$
+\boxed{
+p_L
+\longrightarrow
+\widehat\mu_\Xi
+}
+\tag{512.6}
+$$
+
+以弱测度意义成立。
+
+同时：
+
+$$
+\boxed{
+\omega_L\downarrow0.
+}
+\tag{512.7}
+$$
+
+所以完成流为：
+
+$$
+\boxed{
+\omega_Lm_{\mathbb T}
++
+p_L^{\mathrm{res}}
+\quad
+\longrightarrow
+\quad
+\sigma_1[\vartheta_\xi].
+}
+\tag{512.8}
+$$
+
+即：
+
+$$
+\boxed{
+\text{Haar continuum}
+\longrightarrow
+\text{Riemann--Clark atomic spectrum}.
+}
+$$
+
+圆周点：
+
+$$
+z=1
+$$
+
+是全部高 ordinate 的唯一积聚点，因此这一流同时保留了前文的 sticky-infinity 结构。
+
+---
+
+# 第五百一十三部　Toeplitz 平底定理
+
+对单位圆概率测度 \(p\)，定义 \(N\) 阶 Toeplitz covariance matrix：
+
+$$
+\boxed{
+T_N(p)
+=
+\left[
+\int_{\mathbb T}
+z^{j-k}\,dp(z)
+\right]_{j,k=0}^{N}.
+}
+\tag{513.1}
+$$
+
+若：
+
+$$
+p\ge\omega m_{\mathbb T},
+$$
+
+则对任意 \(c=(c_0,\ldots,c_N)\)：
+
+$$
+\begin{aligned}
+c^*T_N(p)c
+&=
+\int_{\mathbb T}
+\left|
+\sum_{j=0}^{N}c_jz^j
+\right|^2dp(z)\\
+&\ge
+\omega
+\int_{\mathbb T}
+\left|
+\sum_{j=0}^{N}c_jz^j
+\right|^2dm_{\mathbb T}(z)\\
+&=
+\omega\|c\|^2.
+\end{aligned}
+$$
+
+所以：
+
+$$
+\boxed{
+T_N(p)\succeq\omega I.
+}
+\tag{513.2}
+$$
+
+---
+
+## 513.1 有限接触谱的平底结构
+
+若：
+
+$$
+p
+=
+\omega m_{\mathbb T}
++
+\sum_{r=1}^{M}q_r\delta_{z_r},
+$$
+
+定义：
+
+$$
+v_N(z)
+=
+(1,z,\ldots,z^N)^T.
+$$
+
+则：
+
+$$
+\boxed{
+T_N(p)
+=
+\omega I
++
+\sum_{r=1}^{M}
+q_r\,v_N(z_r)v_N(z_r)^*.
+}
+\tag{513.3}
+$$
+
+右侧 residual update 的秩至多 \(M\)。
+
+因此：
+
+## 定理 513.1（Toeplitz flat-floor multiplicity）
+
+若：
+
+$$
+N+1>M,
+$$
+
+则：
+
+$$
+\boxed{
+\lambda_{\min}
+\left(
+T_N(p)
+\right)
+=
+\omega,
+}
+\tag{513.4}
+$$
+
+而且特征值 \(\omega\) 的重数至少为：
+
+$$
+\boxed{
+N+1-M.
+}
+\tag{513.5}
+$$
+
+所以 active finite-contact primal completion 在有限矩阵中表现为：
+
+$$
+\boxed{
+\text{精确平坦白谱底座}
++
+\text{有限秩原子凸起}.
+}
+$$
+
+这提供了一个直接的 primal 数值审计：
+
+* 最小 Toeplitz 特征值读取 Haar floor；
+* 非平底特征值数量读取 contact atom rank；
+* 对应特征向量读取未被原子谱激活的纯白创新方向。
+
+---
+
+# 第五百一十四部　Szegő 创新预算恒等式
+
+令：
+
+$$
+\beta_{0,L},
+\beta_{1,L},\ldots
+$$
+
+为概率测度 \(p_L\) 的 Verblunsky 系数。
+
+假设：
+
+1. budget active；
+2. residual \(p_L^{\mathrm{res}}\) 为奇异测度——特别是有限原子测度。
+
+则 \(p_L\) 的 absolutely continuous density 恰为常数：
+
+$$
+\boxed{
+w_L(z)=\omega_L
+\quad
+m_{\mathbb T}\text{-a.e.}
+}
+\tag{514.1}
+$$
+
+Szegő 定理给出：
+
+$$
+\boxed{
+\prod_{n=0}^{\infty}
+\left(
+1-|\beta_{n,L}|^2
+\right)
+=
+\exp
+\left[
+\int_{\mathbb T}
+\log w_L\,dm_{\mathbb T}
+\right].
+}
+\tag{514.2}
+$$
+
+因此：
+
+## 定理 514.1（White-floor / innovation identity）
+
+$$
+\boxed{
+\prod_{n=0}^{\infty}
+\left(
+1-|\beta_{n,L}|^2
+\right)
+=
+\omega_L
+=
+\frac{
+\Lambda_L^\Xi
+}{
+2\lambda_1
+}.
+}
+\tag{514.3}
+$$
+
+Szegő 定理将绝对连续谱密度的对数积分与 Verblunsky 系数乘积精确联系起来。([DLMF][5])
+
+---
+
+## 514.1 有限预测误差
+
+定义 \(N\) 阶创新误差：
+
+$$
+\boxed{
+\varepsilon_{N,L}
+=
+\prod_{n=0}^{N-1}
+\left(
+1-|\beta_{n,L}|^2
+\right).
+}
+\tag{514.4}
+$$
+
+则：
+
+$$
+\boxed{
+\varepsilon_{N,L}
+\downarrow
+\omega_L.
+}
+\tag{514.5}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{最大 Haar floor fraction}
+=
+\text{无限深度线性预测的不可消除创新误差}.
+}
+$$
+
+这把两种此前分离的语言完全统一：
+
+$$
+\boxed{
+\begin{aligned}
+\text{spectral completion}
+&:\quad
+\omega_L=\text{最大白谱底座};\\
+\text{Schur/CMV}
+&:\quad
+\omega_L=\text{最终创新误差}.
+\end{aligned}
+}
+$$
+
+---
+
+## 514.2 Observer innovation action
+
+定义：
+
+$$
+\boxed{
+\mathcal I_L
+=
+-\log\omega_L.
+}
+\tag{514.6}
+$$
+
+在 \(\omega_L>0\) 时：
+
+$$
+\boxed{
+\mathcal I_L
+=
+\sum_{n=0}^{\infty}
+-\log
+\left(
+1-|\beta_{n,L}|^2
+\right).
+}
+\tag{514.7}
+$$
+
+RH 下：
+
+$$
+\omega_L\downarrow0,
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal I_L\longrightarrow+\infty.
+}
+\tag{514.8}
+$$
+
+其含义不是系统变得更随机，而恰好相反：
+
+> 随着观察深度增加，白色不可预测部分被持续消除；
+> 要把最终创新误差压到零，需要累积无限总量的 Schur 创新信息。
+
+这与前文纯点 Clark 谱的 Szegő 创新塌缩完全一致。
+
+---
+
+# 第五百一十五部　Contact atoms 的实轴回译
+
+若圆周 contact atom 为：
+
+$$
+z_r=e^{i\theta_r},
+$$
+
+其对应实频率为：
+
+$$
+\boxed{
+\tau_r
+=
+a\cot\frac{\theta_r}{2}.
+}
+\tag{515.1}
+$$
+
+dual contact equation：
+
+$$
+\Gamma_{a,\phi_*}(z_r)+\theta_*=0
+$$
+
+等价于：
+
+$$
+\boxed{
+(\tau_r^2+a^2)
+\widehat\phi_*(\tau_r)
++
+\theta_*
+=
+0.
+}
+\tag{515.2}
+$$
+
+这正是上一轮实轴 contact entire function：
+
+$$
+G_*(z)
+=
+(z^2+a^2)\widehat\phi_*(z)+\theta_*
+$$
+
+的圆周版本。
+
+但圆周图表多揭示了两个事实：
+
+1. contact atoms 的有限性来自：
+
+   $$
+   S_*(1)=\theta_*>0;
+   $$
+2. contact ordinates 向无穷远逃逸，等价于 contact points 向唯一圆周点：
+
+   $$
+   1
+   $$
+
+   聚集。
+
+所以：
+
+$$
+\boxed{
+\text{有限 contact spectrum}
+\longrightarrow
+\text{Riemann zero-angle spectrum}
+}
+$$
+
+可以在紧空间中研究，不再需要处理原子位置逃向无穷远的非紧困难。
+
+---
+
+# 第五百一十六部　预算相图
+
+圆周 dual 参数：
+
+$$
+\theta
+$$
+
+具有新的清晰含义。
+
+## 516.1 Pressure phase
+
+$$
+\theta>0.
+$$
+
+则：
+
+* budget active；
+* infinity ledger 被排除；
+* contact set 有限；
+* residual spectrum 有限原子；
+* Toeplitz matrix 具有精确平底；
+* Szegő product 等于 Haar floor fraction。
+
+---
+
+## 516.2 Saturated phase
+
+$$
+\theta=0.
+$$
+
+则：
+
+* 增加预算不再改善 floor；
+* contact points 可向 \(1\) 聚集；
+* residual spectrum 可为无限原子；
+* full dual optimizer 可能失去有限接触性。
+
+所以：
+
+$$
+\boxed{
+\theta
+=
+\text{谱分辨率的影子价格}.
+}
+$$
+
+当：
+
+$$
+\theta\downarrow0,
+$$
+
+有限原子 ledger 可以展开为完整 Riemann–Clark 原子谱。
+
+---
+
+# 第五百一十七部　与紧窗口 profile 的严格关系
+
+令：
+
+$$
+\lambda_{\mathrm{full}}(L)
+$$
+
+为无 resolvent-budget 限制的完整窗口 Weil profile。
+
+预算化 profile 满足：
+
+$$
+\boxed{
+\Lambda_{L,a}(C)
+\le
+\lambda_{\mathrm{full}}(L).
+}
+\tag{517.1}
+$$
+
+当前公开工作已经对 \(\lambda_{\mathrm{full}}(0.8)\) 给出严格双边界，并把窗口正性转化为有限矩阵证书；但它并未自动证明在自然预算 \(C=2\lambda_1\) 下达到相同 white floor。([arXiv][1])
+
+所以必须区分：
+
+$$
+\boxed{
+\begin{aligned}
+\lambda_{\mathrm{full}}(L)
+&=\text{无预算最大白谱底座};\\
+\Lambda_L^\Xi
+&=\text{自然 Li 预算内的最大白谱底座}.
+\end{aligned}
+}
+$$
+
+两者相等需要证明：
+
+$$
+\boxed{
+\textbf{finite-budget saturation}.
+}
+$$
+
+在该命题未闭合前，不能把公开窗口 profile 的 Landau–Widom 衰减直接移植给 \(\Lambda_L^\Xi\)。
+
+---
+
+# 第五百一十八部　科学负结论
+
+## 518.1 Cayley 紧化不等于 RH 证明
+
+它解决了：
+
+* 谱逃逸；
+* primal 极值存在；
+* 白谱到 Haar 谱的转换；
+* 有限 moment 问题的强对偶；
+* 原子接触结构。
+
+它没有证明所有 \(L\) 的自然预算问题可行。
+
+---
+
+## 518.2 紧支撑不自动保证 full dual attainment
+
+primal optimizer 已由圆周紧性保证存在。
+
+但单一 full dual 函数是否存在，仍取决于无限约束 moment graph 的闭性。广义 moment problem 中，即使支撑紧，dual attainment 仍需要额外的相对内点或严格可行性条件。([arXiv][3])
+
+可靠的无间隙结论是：
+
+$$
+\boxed{
+\Lambda
+=
+\inf_N
+\text{ finite dual value},
+}
+$$
+
+而不是未经证明地声称 full dual optimizer 一定存在。
+
+---
+
+## 518.3 有限 contact atoms 不是先验 ζ 零点
+
+它们依赖：
+
+* 当前窗口 \(L\)；
+* 当前预算 \(C\)；
+* 当前有限 observer；
+* 当前 dual slack。
+
+只有在完成测度收敛到 \(\widehat\mu_\Xi\) 后，它们才被迫向 Riemann zero angles 聚集。
+
+---
+
+## 518.4 Szegő 恒等式需要结构条件
+
+式：
+
+$$
+\prod(1-|\beta_n|^2)=\omega_L
+$$
+
+需要：
+
+* 归一化为概率测度；
+* absolutely continuous density 恰为常数 \(\omega_L\)；
+* residual 为奇异谱。
+
+若 residual 还有额外的非均匀绝对连续密度，则只能得到：
+
+$$
+\prod(1-|\beta_n|^2)
+=
+\exp\int\log w\,dm,
+$$
+
+不能直接等同于 Haar floor。
+
+---
+
+## 518.5 当前 Lean 真源尚未覆盖本轮圆周问题
+
+仓库已经机器核验 convolution square 的 Fourier 模平方非负性，但尚未建立：
+
+* Cayley pushforward measure；
+* Haar floor；
+* budgeted circle primal；
+* finite moment duality；
+* OPUC/Verblunsky 接口。
+
+这些应作为新模块加入，而不是视为现有结论。
+
+---
+
+# 第五百一十九部　新的研究程序
+
+## 519.1 Compact primal solver
+
+直接在单位圆上求解：
+
+$$
+\max 2a\alpha
+$$
+
+满足：
+
+$$
+\mu=\alpha m_{\mathbb T}+\sigma,
+\qquad
+\mu(\mathbb T)\le C,
+$$
+
+以及有限或完整 local moments。
+
+圆周紧性使 optimizer 存在，无需额外 tail cutoff。
+
+---
+
+## 519.2 Finite exact dual
+
+在递增测试塔 \(V_N\) 上求解：
+
+$$
+\min
+\left[
+\langle\mathfrak W_L,\phi\rangle+\theta C
+\right]
+$$
+
+满足：
+
+$$
+\Gamma_{a,\phi}+\theta\ge0,
+$$
+
+$$
+2a\phi(0)+\theta\ge2a.
+$$
+
+输出：
+
+* white floor；
+* shadow price；
+* contact set；
+* finite atomic residual；
+* primal–dual gap certificate。
+
+---
+
+## 519.3 Toeplitz primal certificate
+
+由 atomic optimizer 构造：
+
+$$
+T_N
+=
+\omega I+\sum q_rv_N(z_r)v_N(z_r)^*.
+$$
+
+验证：
+
+* 最小特征值等于 \(\omega\)；
+* 平底重数与 contact atom rank 一致；
+* dual contact points 与 primal atoms 一致。
+
+---
+
+## 519.4 Schur innovation flow
+
+计算 Verblunsky 系数：
+
+$$
+\beta_{n,L}
+$$
+
+并验证：
+
+$$
+\prod_n
+(1-|\beta_{n,L}|^2)
+=
+\omega_L.
+$$
+
+跟踪：
+
+$$
+\omega_L,\quad
+\theta_L,\quad
+M_L,\quad
+\beta_{n,L}
+$$
+
+随 \(L\) 的变化。
+
+---
+
+## 519.5 Natural Haar–Clark limit
+
+在：
+
+$$
+a=\frac12,
+\qquad
+C=2\lambda_1
+$$
+
+下，目标为证明：
+
+$$
+p_L
+\to
+\sigma_1[\vartheta_\xi],
+$$
+
+$$
+\omega_L\to0,
+$$
+
+并使 contact atoms 在 Cayley 圆上局部化到：
+
+$$
+u_\gamma
+=
+\frac{\gamma+i/2}{\gamma-i/2}.
+$$
+
+---
+
+# 第五百二十部　建议形式化顺序
+
+```text
+D5/S3/Weil/CayleyCompactification/
+  SpectralCayleyMap.lean
+  SpectralCayleyInverse.lean
+  ResolventBoundaryDistance.lean
+  ResolventWeightedPushforward.lean
+  ResolventBudgetEqualsCircleMass.lean
+
+D5/S3/Weil/HaarSpectrum/
+  CircleNormalizedHaar.lean
+  WhiteSpectrumPushesToHaar.lean
+  WhiteFloorCayleyEquivalence.lean
+  NaturalHalfScaleNormalization.lean
+
+D5/S3/Weil/CircleMoments/
+  CayleyMomentFunction.lean
+  CayleyMomentFlatAtInfinity.lean
+  LocalMomentTransport.lean
+  HaarMomentValue.lean
+  InfinityAtomInvisible.lean
+
+D5/S3/Weil/CirclePrimal/
+  CircleBudgetedCompletion.lean
+  CircleHaarFloor.lean
+  RealCirclePrimalEquivalence.lean
+  CirclePrimalCompact.lean
+  CircleOptimizerExists.lean
+  InfinityMassRemoval.lean
+
+D5/S3/Weil/CircleDual/
+  FiniteObserverMomentMap.lean
+  CircleDualSlack.lean
+  FiniteCircleStrongDuality.lean
+  CircleComplementarySlackness.lean
+  ActivePressureFiniteContact.lean
+  FiniteAtomicResidual.lean
+
+D5/S3/Weil/ProjectiveDual/
+  DeterminingObserverTower.lean
+  FinitePrimalValuesMonotone.lean
+  ProjectivePrimalConvergence.lean
+  ProjectiveStrongDuality.lean
+  FullDualAttainmentTarget.lean
+
+D5/S3/Weil/CayleyClark/
+  ZeroSpectrumCayleyMeasure.lean
+  LiOneTotalMass.lean
+  ResolventClarkIdentity.lean
+  NaturalHaarClarkFlow.lean
+  ContactAtomsLocalizeClarkSpectrum.lean
+
+D5/S3/Weil/HaarToeplitz/
+  HaarFloorToeplitzBound.lean
+  AtomicToeplitzRankUpdate.lean
+  FlatFloorMultiplicity.lean
+  ToeplitzPrimalCertificate.lean
+
+D5/S3/Weil/HaarSchur/
+  NormalizedCompletionProbability.lean
+  ConstantDensitySingularResidual.lean
+  SzegoWhiteFloorIdentity.lean
+  ObserverInnovationAction.lean
+  InnovationCollapseToClark.lean
+```
+
+finite moment atomic representation 可通过 Richter–Tchakaloff 外部接口先行接入；完整 full-dual attainment 应单独标记 closure/relative-interior 义务，而不能混入有限层定理。([arXiv][2])
+
+---
+
+# 本轮最终结论
+
+上一轮的中心对象是：
+
+$$
+\boxed{
+\text{resolvent-budgeted white spectral completion}.
+}
+$$
+
+本轮证明，resolvent 权重本身就是一个几何紧化坐标：
+
+$$
+\boxed{
+\mathfrak c_a(\xi)
+=
+\frac{\xi+ia}{\xi-ia}.
+}
+$$
+
+它把：
+
+$$
+\boxed{
+\frac{d\nu(\xi)}{\xi^2+a^2}
+}
+$$
+
+变成单位圆上的有限正测度，并使：
+
+$$
+\boxed{
+\mathcal R_a(\nu)
+=
+\text{圆周总质量}.
+}
+$$
+
+更关键的是：
+
+$$
+\boxed{
+\frac{d\xi}{2\pi}
+\quad
+\xrightarrow{\text{resolvent--Cayley}}
+\quad
+\frac1{2a}m_{\mathbb T}.
+}
+$$
+
+所以白谱精确变成 Haar 谱。
+
+在自然尺度：
+
+$$
+a=\frac12,
+$$
+
+真实 Riemann 零点谱则满足：
+
+$$
+\boxed{
+\frac1{2\lambda_1}
+\mathcal C_{1/2}[\nu_\Xi]
+=
+\sigma_1[\vartheta_\xi],
+}
+$$
+
+即它精确变成 Li–Clark 概率测度。
+
+因此自然预算 completion flow 是：
+
+$$
+\boxed{
+p_L
+=
+\omega_Lm_{\mathbb T}
++
+p_L^{\mathrm{res}}
+\quad
+\longrightarrow
+\quad
+\sigma_1[\vartheta_\xi],
+}
+$$
+
+其中：
+
+$$
+\boxed{
+\omega_L
+=
+\frac{\Lambda_L^\Xi}{2\lambda_1}.
+}
+$$
+
+在 active finite-contact 阶段：
+
+$$
+\boxed{
+p_L^{\mathrm{res}}
+=
+\text{finite contact atoms},
+}
+$$
+
+其 Toeplitz covariance 具有精确结构：
+
+$$
+\boxed{
+T_N
+=
+\omega_LI
++
+\text{finite-rank positive update}.
+}
+$$
+
+只要 \(N\) 超过接触原子数：
+
+$$
+\boxed{
+\lambda_{\min}(T_N)=\omega_L.
+}
+$$
+
+而 Szegő 理论进一步给出：
+
+$$
+\boxed{
+\omega_L
+=
+\prod_{n=0}^{\infty}
+\left(
+1-|\beta_{n,L}|^2
+\right).
+}
+$$
+
+所以同一个量同时是：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{最大 white spectral floor fraction};\\
+&\text{Toeplitz covariance 的平坦底部};\\
+&\text{无限深度 Schur 预测创新误差};\\
+&\text{有限 observer 尚未解析出的 Haar 连续背景}.
+\end{aligned}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{resolvent budget 并不是把谱“模糊化”；}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{把非紧实轴谱转换成一个紧的圆周观察问题，
+使未分辨谱成为 Haar 背景，
+使已分辨谱成为有限接触原子。}
+}
+$$
+
+随着观察窗口扩大：
+
+$$
+\boxed{
+\text{Haar floor}\downarrow0,
+}
+$$
+
+$$
+\boxed{
+\text{contact atoms 增殖},
+}
+$$
+
+$$
+\boxed{
+\text{Schur innovation product}\downarrow0,
+}
+$$
+
+最终：
+
+$$
+\boxed{
+\text{整个圆周谱 collapse 为 Li--Clark 的 Riemann 零点原子测度。}
+}
+$$
+
+因此下一条真正承重的中心桥已经非常明确：
+
+$$
+\boxed{
+\text{证明自然预算圆周问题在所有 }L
+\text{ 可行，
+并证明其 finite contact dual tower
+具有可认证的 projective strong duality 与 Clark 极限。}
+}
+$$
+
+[1]: https://arxiv.org/abs/2608.24827 "https://arxiv.org/abs/2608.24827"
+[2]: https://arxiv.org/abs/2511.15425 "https://arxiv.org/abs/2511.15425"
+[3]: https://arxiv.org/abs/2604.15072 "https://arxiv.org/abs/2604.15072"
+[4]: https://londmathsoc.onlinelibrary.wiley.com/doi/full/10.1112/plms.70001 "https://londmathsoc.onlinelibrary.wiley.com/doi/full/10.1112/plms.70001"
+[5]: https://dlmf.nist.gov/18.33 "https://dlmf.nist.gov/18.33"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v4.1：Laguerre–Cayley 矩层析、有限窗口指数恢复、Toeplitz 接触谱与多尺度预算曲线
+
+以下从前文**第五百二十部**继续追加。
+
+仓库回填元数据仍将本理论的主源文件登记为：
+
+$$
+\texttt{docs/develop/theory/OBSERVER\_ADELIC\_COMPLETION\_CONSTANT\_THEORY.md}.
+$$
+
+上一轮已经把实轴 resolvent completion 经 Cayley 映射压缩到单位圆，并得到：
+
+$$
+\boxed{
+\text{white Lebesgue spectrum}
+\longleftrightarrow
+\text{Haar spectrum},
+}
+$$
+
+$$
+\boxed{
+\text{Riemann zero spectrum}
+\longleftrightarrow
+\text{Li--Clark measure}.
+}
+$$
+
+但仍有一个核心计算缺口：
+
+> 有限相关窗口只知道 Weil source 在
+>
+> $$
+> (-2L,2L)
+> $$
+>
+> 内的值；如何从这些局部数据，实际恢复 Cayley 圆上的 Fourier moments、Toeplitz 矩阵、Haar floor 与 contact atoms？
+
+本轮得到一条精确的新桥：
+
+$$
+\boxed{
+\text{Cayley Fourier moments}
+=
+\text{resolvent correlation 的 Laguerre 变换}.
+}
+$$
+
+更具体地：
+
+$$
+\boxed{
+\left(
+\frac{\xi+ia}{\xi-ia}
+\right)^n
+=
+1-
+2a
+\int_0^\infty
+e^{-at}
+L_{n-1}^{(1)}(2at)
+e^{-i\xi t}\,dt.
+}
+$$
+
+因此，每个圆周 moment 都可以由一个单边、指数衰减的 associated-Laguerre kernel 读取。
+
+这使有限窗口产生一个严格的矩层析程序：
+
+$$
+\boxed{
+\begin{aligned}
+\text{局部 Weil source}
++\text{resolvent budget}
+&\longrightarrow
+H_a(t)\text{ 于 }|t|<2L\\
+&\longrightarrow
+\text{有限 Cayley moment tubes}\\
+&\longrightarrow
+\text{Toeplitz PSD 层级}\\
+&\longrightarrow
+\text{Haar floor 区间}\\
+&\longrightarrow
+\text{有限 contact atoms}.
+\end{aligned}
+}
+$$
+
+连续时间 Laguerre 函数作为 Cayley/all-pass 坐标与 Hardy 空间有理正交基，是系统理论中的标准结构；本轮的新增部分，是将这一结构精确接到 Weil 局部正谱完成与 Li–Clark moments 上。([SIAM][1])
+
+---
+
+# 第五百二十一部　Cayley character 的 Laguerre 脉冲响应
+
+固定：
+
+$$
+a>0.
+$$
+
+定义 Cayley character：
+
+$$
+\boxed{
+\chi_a(\xi)
+=
+\frac{\xi+ia}{\xi-ia},
+\qquad
+\xi\in\mathbb R.
+}
+\tag{521.1}
+$$
+
+显然：
+
+$$
+|\chi_a(\xi)|=1.
+$$
+
+令：
+
+$$
+L_n^{(\alpha)}
+$$
+
+表示 generalized Laguerre polynomial。
+
+对整数：
+
+$$
+n\ge1,
+$$
+
+定义 Laguerre 观察核：
+
+$$
+\boxed{
+K_{n,a}(t)
+=
+2a\,e^{-at}
+L_{n-1}^{(1)}(2at)
+\mathbf 1_{t\ge0}.
+}
+\tag{521.2}
+$$
+
+---
+
+## 定理 521.1（Cayley–Laguerre identity）
+
+$$
+\boxed{
+\chi_a(\xi)^n
+=
+1-
+\int_0^\infty
+K_{n,a}(t)e^{-i\xi t}\,dt.
+}
+\tag{521.3}
+$$
+
+### 证明
+
+generalized Laguerre polynomial 的 Laplace 变换满足：
+
+$$
+\int_0^\infty
+e^{-st}
+L_{n-1}^{(1)}(bt)\,dt
+=
+\frac1b
+\left[
+1-
+\left(
+1-\frac bs
+\right)^n
+\right],
+\qquad
+\Re s>0.
+$$
+
+取：
+
+$$
+s=a+i\xi,
+\qquad
+b=2a.
+$$
+
+则：
+
+$$
+1-\frac{2a}{a+i\xi}
+=
+\frac{i\xi-a}{i\xi+a}
+=
+\frac{\xi+ia}{\xi-ia}
+=
+\chi_a(\xi).
+$$
+
+所以：
+
+$$
+2a\int_0^\infty
+e^{-(a+i\xi)t}
+L_{n-1}^{(1)}(2at)\,dt
+=
+1-\chi_a(\xi)^n.
+$$
+
+移项即得。∎
+
+---
+
+## 521.1 All-pass 级联解释
+
+对 \(n=1\)：
+
+$$
+\boxed{
+\chi_a(\xi)
+=
+1-
+2a
+\int_0^\infty
+e^{-at}e^{-i\xi t}\,dt.
+}
+$$
+
+其时间响应为：
+
+$$
+\boxed{
+\delta_0(t)-2ae^{-at}\mathbf1_{t\ge0}.
+}
+$$
+
+对一般 \(n\)，\(\chi_a^n\) 是同一个一阶 all-pass stage 的 \(n\) 次级联，其非平凡脉冲部分由：
+
+$$
+e^{-at}L_{n-1}^{(1)}(2at)
+$$
+
+精确编码。
+
+所以：
+
+$$
+\boxed{
+n
+=
+\text{Cayley 观察者经过同一边界通道的递归深度}.
+}
+$$
+
+---
+
+# 第五百二十二部　正谱完成的 Laguerre moment 公式
+
+令 \(\nu\) 是实轴上的偶正谱测度，并假设：
+
+$$
+\boxed{
+R_a(\nu)
+=
+\int_{\mathbb R}
+\frac{d\nu(\xi)}{\xi^2+a^2}
+<\infty.
+}
+\tag{522.1}
+$$
+
+定义有限正测度：
+
+$$
+\boxed{
+d\rho_a(\xi)
+=
+\frac{d\nu(\xi)}{\xi^2+a^2}.
+}
+\tag{522.2}
+$$
+
+其总质量为：
+
+$$
+\boxed{
+R=R_a(\nu).
+}
+\tag{522.3}
+$$
+
+定义 resolvent correlation：
+
+$$
+\boxed{
+H_a(t)
+=
+\int_{\mathbb R}
+e^{it\xi}\,d\rho_a(\xi).
+}
+\tag{522.4}
+$$
+
+由于 \(\rho_a\) 为偶正测度：
+
+$$
+H_a(t)\in\mathbb R,
+\qquad
+H_a(-t)=H_a(t),
+$$
+
+并且由正定函数的基本界：
+
+$$
+\boxed{
+|H_a(t)|\le H_a(0)=R.
+}
+\tag{522.5}
+$$
+
+将 \(\rho_a\) 经 Cayley 映射推到圆周：
+
+$$
+\boxed{
+\mu_a
+=
+(\chi_a)_*\rho_a.
+}
+\tag{522.6}
+$$
+
+定义其 Fourier moments：
+
+$$
+\boxed{
+m_n^{(a)}
+=
+\int_{\mathbb T}
+z^n\,d\mu_a(z)
+=
+\int_{\mathbb R}
+\chi_a(\xi)^n\,d\rho_a(\xi).
+}
+\tag{522.7}
+$$
+
+其中：
+
+$$
+m_0^{(a)}=R,
+\qquad
+m_{-n}^{(a)}=\overline{m_n^{(a)}}.
+$$
+
+偶对称下 \(m_n^{(a)}\) 全为实数。
+
+---
+
+## 定理 522.1（Laguerre moment tomography）
+
+对每个：
+
+$$
+n\ge1,
+$$
+
+有：
+
+$$
+\boxed{
+m_n^{(a)}
+=
+R-
+\int_0^\infty
+K_{n,a}(t)H_a(t)\,dt.
+}
+\tag{522.8}
+$$
+
+即：
+
+$$
+\boxed{
+m_n^{(a)}
+=
+R-
+2a
+\int_0^\infty
+e^{-at}
+L_{n-1}^{(1)}(2at)
+H_a(t)\,dt.
+}
+\tag{522.9}
+$$
+
+### 证明
+
+将定理 521.1 对 \(\rho_a\) 积分：
+
+$$
+\begin{aligned}
+m_n^{(a)}
+&=
+\int 1\,d\rho_a
+-
+\int_0^\infty
+K_{n,a}(t)
+\left[
+\int e^{-it\xi}\,d\rho_a(\xi)
+\right]dt.
+\end{aligned}
+$$
+
+由偶性：
+
+$$
+\int e^{-it\xi}\,d\rho_a(\xi)=H_a(t).
+$$
+
+又因 \(|H_a|\le R\)，指数衰减保证 Fubini 合法。∎
+
+---
+
+## 522.1 结构意义
+
+此公式说明：
+
+$$
+\boxed{
+\text{圆周 Fourier moment}
+}
+$$
+
+并不是一个必须先构造全局圆周谱才能读取的抽象量。
+
+它是：
+
+$$
+\boxed{
+\text{实轴 resolvent correlation 的 Laguerre 系数}.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{Cayley compactification}
+\quad\text{与}\quad
+\text{Laguerre time decomposition}
+}
+$$
+
+是严格互逆的两个观察图表。
+
+---
+
+# 第五百二十三部　有限窗口的指数尾误差
+
+假设只知道：
+
+$$
+H_a(t)
+\qquad
+(|t|<2L).
+$$
+
+定义有限窗口 moment estimator：
+
+$$
+\boxed{
+\widehat m_{n,L}^{(a)}
+=
+R-
+\int_0^{2L}
+K_{n,a}(t)H_a(t)\,dt.
+}
+\tag{523.1}
+$$
+
+定义 Laguerre tail：
+
+$$
+\boxed{
+\tau_{n,a}(L)
+=
+\int_{2L}^{\infty}
+|K_{n,a}(t)|\,dt.
+}
+\tag{523.2}
+$$
+
+---
+
+## 定理 523.1（Finite-window moment tube）
+
+$$
+\boxed{
+\left|
+m_n^{(a)}
+-
+\widehat m_{n,L}^{(a)}
+\right|
+\le
+R\,\tau_{n,a}(L).
+}
+\tag{523.3}
+$$
+
+### 证明
+
+由定理 522.1：
+
+$$
+m_n-\widehat m_{n,L}
+=
+-\int_{2L}^\infty
+K_{n,a}(t)H_a(t)\,dt.
+$$
+
+再用：
+
+$$
+|H_a(t)|\le R.
+$$
+
+∎
+
+---
+
+## 523.1 显式有限和界
+
+generalized Laguerre polynomial 展开为：
+
+$$
+\boxed{
+L_{n-1}^{(1)}(x)
+=
+\sum_{k=0}^{n-1}
+(-1)^k
+\binom{n}{k+1}
+\frac{x^k}{k!}.
+}
+\tag{523.4}
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\tau_{n,a}(L)
+\le{}&
+2e^{-2aL}
+\sum_{k=0}^{n-1}
+2^k
+\binom{n}{k+1}
+\sum_{j=0}^{k}
+\frac{(2aL)^j}{j!}.
+\end{aligned}
+}
+\tag{523.5}
+$$
+
+特别地，对固定 \(n,a\)：
+
+$$
+\boxed{
+\tau_{n,a}(L)
+=
+O_{n,a}
+\left(
+e^{-2aL}L^{n-1}
+\right).
+}
+\tag{523.6}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{每一个固定阶 Cayley moment，
+都能由有限相关窗口指数精度恢复。}
+}
+$$
+
+---
+
+## 523.2 归一化 moments
+
+若：
+
+$$
+R>0,
+$$
+
+定义概率测度：
+
+$$
+p_a=\frac{\mu_a}{R}
+$$
+
+及归一化 moments：
+
+$$
+\boxed{
+c_n^{(a)}
+=
+\frac{m_n^{(a)}}R.
+}
+\tag{523.7}
+$$
+
+定义：
+
+$$
+\widehat c_{n,L}^{(a)}
+=
+\frac{\widehat m_{n,L}^{(a)}}R.
+$$
+
+则：
+
+$$
+\boxed{
+\left|
+c_n^{(a)}
+-
+\widehat c_{n,L}^{(a)}
+\right|
+\le
+\tau_{n,a}(L).
+}
+\tag{523.8}
+$$
+
+该误差不再依赖谱总质量。
+
+---
+
+# 第五百二十四部　局部 Weil source 与 budget 联合决定 moments
+
+固定尺度 \(L\)。
+
+设局部 source：
+
+$$
+\mathfrak W_L
+$$
+
+已知，并固定候选 resolvent budget：
+
+$$
+R.
+$$
+
+对应的 even resolvent correlation 在窗口中满足：
+
+$$
+\boxed{
+\left(
+-\partial_t^2+a^2
+\right)
+H_{L,R}
+=
+\mathfrak W_L,
+}
+\tag{524.1}
+$$
+
+$$
+\boxed{
+H_{L,R}(0)=R,
+\qquad
+H_{L,R}'(0)=0.
+}
+\tag{524.2}
+$$
+
+因此 \(H_{L,R}\) 在 \((-2L,2L)\) 中唯一确定。
+
+若选定一个满足：
+
+$$
+H_{L,0}(0)=0
+$$
+
+的偶 particular solution，则：
+
+$$
+\boxed{
+H_{L,R}(t)
+=
+H_{L,0}(t)
++
+R\cosh(at).
+}
+\tag{524.3}
+$$
+
+代入有限 moment estimator：
+
+$$
+\widehat m_{n,L}^{(a)}(R)
+=
+R-
+\int_0^{2L}
+K_{n,a}(t)H_{L,R}(t)\,dt.
+$$
+
+所以：
+
+## 定理 524.1（Moment affine budget law）
+
+$$
+\boxed{
+\widehat m_{n,L}^{(a)}(R)
+=
+A_{n,L}^{(a)}
++
+B_{n,L}^{(a)}R,
+}
+\tag{524.4}
+$$
+
+其中：
+
+$$
+\boxed{
+A_{n,L}^{(a)}
+=
+-\int_0^{2L}
+K_{n,a}(t)H_{L,0}(t)\,dt,
+}
+\tag{524.5}
+$$
+
+$$
+\boxed{
+B_{n,L}^{(a)}
+=
+1-
+\int_0^{2L}
+K_{n,a}(t)\cosh(at)\,dt.
+}
+\tag{524.6}
+$$
+
+---
+
+## 524.1 Budget interval 到 moment tube
+
+若奇偶观察者给出 Weyl budget interval：
+
+$$
+\boxed{
+R\in
+[\underline R_L(a),\overline R_L(a)],
+}
+\tag{524.7}
+$$
+
+则所有正谱完成的第 \(n\) 个 moment 必属于：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal M_{n,L}^{(a)}
+=
+\bigcup_{R\in[\underline R_L,\overline R_L]}
+\Big[
+&
+\widehat m_{n,L}^{(a)}(R)-R\tau_{n,a}(L),\\
+&
+\widehat m_{n,L}^{(a)}(R)+R\tau_{n,a}(L)
+\Big].
+\end{aligned}
+}
+\tag{524.8}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{一个预算标量区间}
+}
+$$
+
+经 Laguerre observer 后，产生有限维 moment uncertainty region。
+
+在 RH 下，前文的双曲预算管道给出：
+
+$$
+\overline R_L-\underline R_L
+=
+O(e^{-2aL}),
+$$
+
+因此对固定 \(n\)，budget uncertainty 与 Laguerre tail uncertainty 都指数消失。
+
+---
+
+# 第五百二十五部　自然尺度上的 Li–Laguerre 恒等式
+
+现在取：
+
+$$
+\boxed{
+a=\frac12.
+}
+$$
+
+假设 RH，并令：
+
+$$
+\nu_\Xi
+=
+\sum_{\gamma\in\mathbb R}
+m_\gamma\delta_\gamma
+$$
+
+为双边零点 ordinate 测度。
+
+定义：
+
+$$
+\boxed{
+H_\Xi(t)
+=
+\sum_{\gamma\in\mathbb R}
+\frac{m_\gamma e^{it\gamma}}
+{\gamma^2+\frac14}.
+}
+\tag{525.1}
+$$
+
+其预算为：
+
+$$
+\boxed{
+H_\Xi(0)
+=
+2\lambda_1.
+}
+\tag{525.2}
+$$
+
+Cayley 点为：
+
+$$
+\boxed{
+u_\gamma
+=
+\frac{\gamma+i/2}
+{\gamma-i/2}.
+}
+\tag{525.3}
+$$
+
+定义 Li 系数的离散曲率：
+
+$$
+\boxed{
+\kappa_n
+=
+\lambda_{|n+1|}
+-
+2\lambda_{|n|}
++
+\lambda_{|n-1|},
+\qquad
+n\in\mathbb Z.
+}
+\tag{525.4}
+$$
+
+特别地：
+
+$$
+\boxed{
+\kappa_0=2\lambda_1.
+}
+$$
+
+由前文 Li–Clark 计算：
+
+$$
+\boxed{
+\kappa_n
+=
+\int_{\mathbb R}
+u_\gamma^n
+\frac{d\nu_\Xi(\gamma)}
+{\gamma^2+\frac14}.
+}
+\tag{525.5}
+$$
+
+所以 \(\kappa_n\) 正是未归一化 Li–Clark measure 的 Fourier moments。
+
+---
+
+## 定理 525.1（Laguerre–Li bridge）
+
+对每个：
+
+$$
+n\ge1,
+$$
+
+有：
+
+$$
+\boxed{
+\kappa_n
+=
+2\lambda_1
+-
+\int_0^\infty
+e^{-t/2}
+L_{n-1}^{(1)}(t)
+H_\Xi(t)\,dt.
+}
+\tag{525.6}
+$$
+
+### 证明
+
+在定理 522.1 中取：
+
+$$
+a=\frac12,
+\qquad
+R=2\lambda_1.
+$$
+
+此时：
+
+$$
+K_{n,1/2}(t)
+=
+e^{-t/2}L_{n-1}^{(1)}(t).
+$$
+
+而 \(m_n^{(1/2)}=\kappa_n\)。∎
+
+---
+
+## 525.1 有限窗口 Li 曲率
+
+定义：
+
+$$
+\boxed{
+\widehat\kappa_{n,L}
+=
+2\lambda_1
+-
+\int_0^{2L}
+e^{-t/2}
+L_{n-1}^{(1)}(t)
+H_\Xi(t)\,dt.
+}
+\tag{525.7}
+$$
+
+则：
+
+$$
+\boxed{
+|\kappa_n-\widehat\kappa_{n,L}|
+\le
+2\lambda_1\,\tau_{n,1/2}(L).
+}
+\tag{525.8}
+$$
+
+即：
+
+$$
+\boxed{
+|\kappa_n-\widehat\kappa_{n,L}|
+=
+O_n(e^{-L}L^{n-1}).
+}
+\tag{525.9}
+$$
+
+归一化 Li 曲率：
+
+$$
+c_n=\frac{\kappa_n}{2\lambda_1}
+$$
+
+因此满足：
+
+$$
+\boxed{
+|c_n-\widehat c_{n,L}|
+\le
+\tau_{n,1/2}(L).
+}
+\tag{525.10}
+$$
+
+这给出了一个新的严格接口：
+
+$$
+\boxed{
+\text{有限 Weil correlation window}
+\longrightarrow
+\text{有限 Li 曲率 moments}.
+}
+$$
+
+---
+
+# 第五百二十六部　有限 Toeplitz Haar-floor 定理
+
+设给定 Hermitian truncated moment vector：
+
+$$
+\boxed{
+m_{-N},\ldots,m_0,\ldots,m_N,
+}
+\tag{526.1}
+$$
+
+满足：
+
+$$
+m_{-k}=\overline{m_k},
+\qquad
+m_0=R>0.
+$$
+
+定义 Toeplitz moment matrix：
+
+$$
+\boxed{
+T_N(m)
+=
+[m_{j-k}]_{j,k=0}^{N}.
+}
+\tag{526.2}
+$$
+
+假设该 moment vector 至少有一个单位圆正测度表示。
+
+定义有限 moment Haar floor：
+
+$$
+\boxed{
+\alpha_N(m)
+=
+\sup
+\left\{
+\alpha\ge0:
+\begin{array}{l}
+\exists\,\mu\ge\alpha m_{\mathbb T},\\
+\widehat\mu(k)=m_k,\ |k|\le N
+\end{array}
+\right\}.
+}
+\tag{526.3}
+$$
+
+---
+
+## 定理 526.1（Exact truncated Haar-floor theorem）
+
+$$
+\boxed{
+\alpha_N(m)
+=
+\lambda_{\min}
+\left(
+T_N(m)
+\right).
+}
+\tag{526.4}
+$$
+
+### 证明
+
+若：
+
+$$
+\mu=\alpha m_{\mathbb T}+\sigma,
+\qquad
+\sigma\ge0,
+$$
+
+则 \(\sigma\) 的 truncated Toeplitz matrix 为：
+
+$$
+T_N(m)-\alpha I.
+$$
+
+正测度必给出正半定 Toeplitz matrix，所以：
+
+$$
+\alpha\le\lambda_{\min}(T_N(m)).
+$$
+
+反之，令：
+
+$$
+\alpha=\lambda_{\min}(T_N(m)).
+$$
+
+则：
+
+$$
+T_N(m)-\alpha I\succeq0.
+$$
+
+由 truncated trigonometric moment theorem，存在正测度 \(\sigma\)，其 moments 等于该 residual Toeplitz 数据。于是：
+
+$$
+\mu=\alpha m_{\mathbb T}+\sigma
+$$
+
+满足全部要求。∎
+
+正半定有限 moment functional 存在有限原子表示，是 truncated moment 与 Richter–Tchakaloff 理论的标准结论。([arXiv][2])
+
+---
+
+## 526.1 归一化形式
+
+若：
+
+$$
+c_k=\frac{m_k}{R},
+\qquad
+c_0=1,
+$$
+
+则最大 Haar fraction 为：
+
+$$
+\boxed{
+\omega_N(c)
+=
+\lambda_{\min}
+\left(
+T_N(c)
+\right).
+}
+\tag{526.5}
+$$
+
+对应的实轴 white spectral floor 为：
+
+$$
+\boxed{
+\lambda_N^{\mathrm{white}}
+=
+2aR\,
+\omega_N(c).
+}
+\tag{526.6}
+$$
+
+在自然尺度：
+
+$$
+a=\frac12,
+$$
+
+简化为：
+
+$$
+\boxed{
+\lambda_N^{\mathrm{white}}
+=
+R\,
+\lambda_{\min}(T_N(c)).
+}
+\tag{526.7}
+$$
+
+---
+
+# 第五百二十七部　最小特征向量就是接触多项式
+
+令：
+
+$$
+\alpha_N=\lambda_{\min}(T_N(m)).
+$$
+
+取单位最小特征向量：
+
+$$
+v=(v_0,\ldots,v_N)^T.
+$$
+
+定义 analytic polynomial：
+
+$$
+\boxed{
+q_v(z)
+=
+\sum_{j=0}^{N}
+v_jz^j.
+}
+\tag{527.1}
+$$
+
+令最优 residual measure 为：
+
+$$
+\boxed{
+\sigma_N
+=
+\mu_N-\alpha_Nm_{\mathbb T}.
+}
+\tag{527.2}
+$$
+
+则：
+
+$$
+\begin{aligned}
+0
+&=
+v^*
+\left[
+T_N(m)-\alpha_NI
+\right]v\\
+&=
+\int_{\mathbb T}
+|q_v(z)|^2
+\,d\sigma_N(z).
+\end{aligned}
+$$
+
+因为 integrand 与 measure 均非负：
+
+## 定理 527.1（Toeplitz contact support）
+
+$$
+\boxed{
+\operatorname{supp}\sigma_N
+\subseteq
+\left\{
+z\in\mathbb T:
+q_v(z)=0
+\right\}.
+}
+\tag{527.3}
+$$
+
+若 \(\sigma_N\neq0\)，则可选择一个 residual optimizer，其原子数不超过：
+
+$$
+\boxed{
+\deg q_v\le N.
+}
+\tag{527.4}
+$$
+
+所以有限 moment optimizer 具有精确形式：
+
+$$
+\boxed{
+\mu_N
+=
+\alpha_Nm_{\mathbb T}
++
+\sum_{r=1}^{M_N}
+w_r\delta_{z_r},
+\qquad
+M_N\le N,
+}
+\tag{527.5}
+$$
+
+其中：
+
+$$
+q_v(z_r)=0.
+$$
+
+---
+
+## 527.1 与前文 dual contact function 的同一性
+
+前文预算化 dual 中，contact atoms 位于 slack function 的零点。
+
+当前标准 Toeplitz moment 图表中，该 slack function直接退化为：
+
+$$
+\boxed{
+|q_v(z)|^2.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{最小 Toeplitz eigenvector}
+=
+\text{finite observer 的 dual contact polynomial}.
+}
+$$
+
+这给有限 contact spectrum 一个无需抽象 KKT 变量的直接构造。
+
+---
+
+# 第五百二十八部　有限窗口 Toeplitz 误差证书
+
+定义真实归一化 moment matrix：
+
+$$
+\boxed{
+T_N
+=
+[c_{j-k}^{(a)}]_{j,k=0}^{N}.
+}
+\tag{528.1}
+$$
+
+由有限窗口 estimator 构造：
+
+$$
+\boxed{
+\widehat T_{N,L}
+=
+[\widehat c_{j-k,L}^{(a)}]_{j,k=0}^{N}.
+}
+\tag{528.2}
+$$
+
+由定理 523.1，每个非对角 entry 满足：
+
+$$
+\left|
+c_k-\widehat c_{k,L}
+\right|
+\le
+\tau_{|k|,a}(L).
+$$
+
+定义矩阵误差界：
+
+$$
+\boxed{
+\Delta_{N,a}(L)
+=
+2\sum_{k=1}^{N}
+\tau_{k,a}(L).
+}
+\tag{528.3}
+$$
+
+由最大行和界：
+
+$$
+\boxed{
+\left\|
+T_N-\widehat T_{N,L}
+\right\|_{\mathrm{op}}
+\le
+\Delta_{N,a}(L).
+}
+\tag{528.4}
+$$
+
+所以由 Hermitian eigenvalue perturbation：
+
+## 定理 528.1（Finite-window Haar-floor interval）
+
+$$
+\boxed{
+\begin{aligned}
+\lambda_{\min}(\widehat T_{N,L})
+-\Delta_{N,a}(L)
+\le{}&
+\lambda_{\min}(T_N)
+\\
+\le{}&
+\lambda_{\min}(\widehat T_{N,L})
++\Delta_{N,a}(L).
+\end{aligned}
+}
+\tag{528.5}
+$$
+
+因此有限相关窗口直接给出 finite moment Haar floor 的严格双边界。
+
+---
+
+## 528.1 正证书
+
+若：
+
+$$
+\boxed{
+\lambda_{\min}
+(\widehat T_{N,L})
+>
+\Delta_{N,a}(L),
+}
+\tag{528.6}
+$$
+
+则：
+
+$$
+\boxed{
+T_N\succ0.
+}
+$$
+
+所以前 \(N\) 阶 Cayley moment observer 严格处于圆周正 moment cone 的内部。
+
+---
+
+## 528.2 负证书
+
+若：
+
+$$
+\boxed{
+\lambda_{\min}
+(\widehat T_{N,L})
+<
+-\Delta_{N,a}(L),
+}
+\tag{528.7}
+$$
+
+则：
+
+$$
+\boxed{
+T_N\not\succeq0.
+}
+$$
+
+因此不存在具有该预算及局部 resolvent correlation 的正圆周谱完成。
+
+这给出一个完全有限的：
+
+$$
+\boxed{
+\text{局部 source}
++
+\text{budget}
++
+\text{Laguerre tail}
++
+\text{Toeplitz eigenvalue}
+}
+$$
+
+不可完成证书。
+
+---
+
+# 第五百二十九部　Li–Clark Toeplitz 的指数可恢复性
+
+在 RH 和自然尺度下，令：
+
+$$
+\boxed{
+c_n
+=
+\frac{
+\lambda_{|n+1|}
+-
+2\lambda_{|n|}
++
+\lambda_{|n-1|}
+}{
+2\lambda_1}.
+}
+\tag{529.1}
+$$
+
+定义 Li–Clark Toeplitz matrix：
+
+$$
+\boxed{
+T_N^{\mathrm{LC}}
+=
+[c_{j-k}]_{j,k=0}^{N}.
+}
+\tag{529.2}
+$$
+
+由定理 525.1 与 528.1：
+
+## 定理 529.1（Fixed-depth exponential recovery）
+
+对每个固定 \(N\)：
+
+$$
+\boxed{
+\left\|
+T_N^{\mathrm{LC}}
+-
+\widehat T_{N,L}^{\mathrm{LC}}
+\right\|_{\mathrm{op}}
+=
+O_N(e^{-L}L^{N-1}).
+}
+\tag{529.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\lambda_{\min}
+\left(
+\widehat T_{N,L}^{\mathrm{LC}}
+\right)
+\longrightarrow
+\lambda_{\min}
+\left(
+T_N^{\mathrm{LC}}
+\right)
+}
+$$
+
+以指数速度成立。
+
+---
+
+## 529.1 Moment floor 最终趋零
+
+Li–Clark measure 是纯点奇异概率测度。
+
+对单位圆 measure 的 Toeplitz finite sections，其最小特征值的极限由 absolutely continuous 部分的本质下界控制；纯奇异情形下最小特征值趋于零。([arXiv][3])
+
+因此：
+
+$$
+\boxed{
+\lambda_{\min}
+\left(
+T_N^{\mathrm{LC}}
+\right)
+\downarrow0
+\qquad
+(N\to\infty).
+}
+\tag{529.4}
+$$
+
+于是：
+
+$$
+\boxed{
+\lim_{N\to\infty}
+\lim_{L\to\infty}
+\lambda_{\min}
+\left(
+\widehat T_{N,L}^{\mathrm{LC}}
+\right)
+=
+0.
+}
+\tag{529.5}
+$$
+
+这给出另一个明确的 continuum-to-atom collapse：
+
+$$
+\boxed{
+\text{有限 moment observer}
+\text{ 仍允许正 Haar floor};
+}
+$$
+
+$$
+\boxed{
+\text{完整 Li--Clark observer}
+\text{ 的 Haar floor 为零}.
+}
+$$
+
+---
+
+# 第五百三十部　Laguerre 观察深度的容量限制
+
+固定 \(n\) 时，定理 523.1 给出指数恢复。
+
+但当 \(n\) 与 \(L\) 同时增大时，不能简单使用：
+
+$$
+O_n(e^{-2aL}L^{n-1})
+$$
+
+并忽略 \(n\)-依赖常数。
+
+generalized Laguerre polynomial \(L_{n-1}^{(1)}(x)\) 的主要转折尺度位于：
+
+$$
+x\asymp4n.
+$$
+
+在本问题中：
+
+$$
+x=2at,
+$$
+
+而可见窗口终点为：
+
+$$
+t=2L,
+\qquad
+x_{\max}=4aL.
+$$
+
+所以稳定捕获第 \(n\) 个 moment 的自然尺度约为：
+
+$$
+\boxed{
+n\lesssim aL.
+}
+\tag{530.1}
+$$
+
+Laguerre 多项式的标准大阶渐近确实以 \(4n+2\alpha+2\) 为转折尺度；这里该事实只用于判断观察容量，而不替代前面的固定阶严格误差界。([doi.org][4])
+
+---
+
+## 530.1 重要负结论
+
+在自然尺度：
+
+$$
+a=\frac12,
+$$
+
+直接 Laguerre 截断稳定恢复的 moment 深度大约只有：
+
+$$
+\boxed{
+N=O(L).
+}
+$$
+
+而 Paley–Wiener 窗口对 Riemann zeros 的理论饱和高度为：
+
+$$
+T^*(L)=2\pi e^{2L},
+$$
+
+其零点约束数呈指数增长。最新紧窗口研究正是从 time–band limiting 与零点密度比较中得到这一尺度。([arXiv][5])
+
+所以：
+
+$$
+\boxed{
+\text{固定 }a=\frac12\text{ 的 Cayley moment observer
+并不是高零点层析的容量最优坐标。}
+}
+$$
+
+它的优势是：
+
+* 正性结构透明；
+* 误差严格；
+* Toeplitz/CMV/Clark 接口直接；
+* 适合低阶有限证书。
+
+它不能替代：
+
+* Slepian；
+* Paley–Wiener；
+* ground-state zeros；
+* 高度 \(T^*(L)\) 的指数容量机制。
+
+---
+
+# 第五百三十一部　多尺度 resolvent budget 曲线
+
+与其在固定 \(a\) 下无限提高 moment 阶数，还可以改变 Cayley 尺度 \(a\)。
+
+对偶正谱 \(\nu\)，定义：
+
+$$
+\boxed{
+\mathcal B_\nu(u)
+=
+R_{\sqrt u}(\nu)
+=
+\int_{\mathbb R}
+\frac{d\nu(\xi)}
+{\xi^2+u},
+\qquad
+u>0.
+}
+\tag{531.1}
+$$
+
+令：
+
+$$
+\sigma
+=
+(\xi\mapsto\xi^2)_*\nu.
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal B_\nu(u)
+=
+\int_{[0,\infty)}
+\frac{d\sigma(x)}
+{x+u}.
+}
+\tag{531.2}
+$$
+
+所以 \(\mathcal B_\nu\) 是 Stieltjes function。
+
+---
+
+## 定理 531.1（Budget complete monotonicity）
+
+对每个：
+
+$$
+k\ge0,
+$$
+
+有：
+
+$$
+\boxed{
+(-1)^k
+\mathcal B_\nu^{(k)}(u)
+=
+k!
+\int_{\mathbb R}
+\frac{d\nu(\xi)}
+{(\xi^2+u)^{k+1}}
+\ge0.
+}
+\tag{531.3}
+$$
+
+完整曲线：
+
+$$
+u\longmapsto\mathcal B_\nu(u)
+$$
+
+唯一决定偶谱测度 \(\nu\)，可由 Stieltjes inversion 恢复。
+
+所以：
+
+$$
+\boxed{
+\text{单一 }a
+\text{ 给一个圆周图表；}
+}
+$$
+
+$$
+\boxed{
+\text{全部 }a>0
+\text{ 给出完整的多尺度谱层析。}
+}
+$$
+
+---
+
+## 531.1 Riemann budget curve
+
+RH 下：
+
+$$
+\nu=\nu_\Xi
+=
+\sum_{\gamma\in\mathbb R}
+m_\gamma\delta_\gamma.
+$$
+
+于是：
+
+$$
+\boxed{
+\mathcal B_\Xi(u)
+=
+\sum_{\gamma\in\mathbb R}
+\frac{m_\gamma}{\gamma^2+u}.
+}
+\tag{531.4}
+$$
+
+由中心化 Hadamard 乘积：
+
+$$
+\boxed{
+\mathcal B_\Xi(u)
+=
+\frac1{\sqrt u}
+\frac{
+\xi'(\frac12+\sqrt u)
+}{
+\xi(\frac12+\sqrt u)
+}.
+}
+\tag{531.5}
+$$
+
+在：
+
+$$
+u=\frac14
+$$
+
+处：
+
+$$
+\boxed{
+\mathcal B_\Xi(\tfrac14)
+=
+2\lambda_1.
+}
+\tag{531.6}
+$$
+
+所以第一 Li 系数只是完整 resolvent budget curve 在自然点 \(u=1/4\) 的一个取值。
+
+---
+
+## 531.2 观察策略
+
+固定 \(a=\tfrac12\)：
+
+* 直接接入 Li–Clark；
+* 适合 Schur/CMV 与 RH 判据。
+
+改变 \(a\)：
+
+* 改变谱压缩尺度；
+* 可对不同高度区间形成不同 Cayley lens；
+* 通过 Stieltjes curve 联合恢复谱。
+
+因此更合理的高分辨率程序不是：
+
+$$
+\boxed{
+\text{只在 }a=\tfrac12
+\text{ 无限增加 moment order},
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{适度 moment depth}
++
+\text{多尺度 }a\text{-bank}.
+}
+$$
+
+这与连续时间系统理论中的多极点 Kautz/Laguerre basis bank 同构，但其数论最优尺度选择仍属开放问题。
+
+---
+
+# 第五百三十二部　有限 moment 可行性 SDP
+
+固定：
+
+$$
+L,a
+$$
+
+以及预算区间：
+
+$$
+R\in[\underline R,\overline R].
+$$
+
+对：
+
+$$
+1\le n\le N,
+$$
+
+引入 moment 变量：
+
+$$
+m_n\in\mathbb R
+$$
+
+并要求：
+
+$$
+m_0=R,
+$$
+
+$$
+\boxed{
+\left|
+m_n-\widehat m_{n,L}^{(a)}(R)
+\right|
+\le
+R\tau_{n,a}(L).
+}
+\tag{532.1}
+$$
+
+再要求 Toeplitz positivity：
+
+$$
+\boxed{
+[m_{j-k}]_{j,k=0}^{N}
+\succeq0.
+}
+\tag{532.2}
+$$
+
+这些约束构成一个有限半定可行性问题。
+
+---
+
+## 定理 532.1（Finite infeasibility certificate）
+
+若上述 SDP 不可行，则不存在满足以下全部条件的实轴偶正谱完成：
+
+1. 与局部 Weil source 一致；
+2. resolvent budget 属于：
+
+   $$
+   [\underline R,\overline R];
+   $$
+3. 具有相应 Cayley compactification。
+
+所以 SDP 不可行是一个严格的局部正谱不可完成证书。
+
+---
+
+## 532.1 可行性并非充分
+
+反过来，有限 \(N\) 的 SDP 可行只说明：
+
+$$
+\boxed{
+\text{前 }N\text{ 个圆周 moments
+没有发现矛盾。}
+}
+$$
+
+它不自动给出：
+
+* 全部 moment 层级；
+* 完整局部 source 匹配；
+* 全局正谱；
+* RH。
+
+必须取：
+
+$$
+N\to\infty
+$$
+
+并同时控制 Laguerre truncation 与 budget uncertainty。
+
+---
+
+# 第五百三十三部　新的研究程序
+
+## 533.1 Local Green solver
+
+对给定：
+
+$$
+L,a,R
+$$
+
+从 prime–pole–Archimedean source 求解：
+
+$$
+(-\partial_t^2+a^2)H_{L,R}
+=
+\mathfrak W_L,
+$$
+
+$$
+H(0)=R,
+\qquad
+H'(0)=0.
+$$
+
+---
+
+## 533.2 Laguerre moment intervals
+
+计算：
+
+$$
+\widehat m_{n,L}^{(a)}(R)
+$$
+
+与严格 tail：
+
+$$
+R\tau_{n,a}(L).
+$$
+
+输出前 \(N\) 个 moment intervals。
+
+---
+
+## 533.3 Toeplitz floor certificate
+
+构造：
+
+$$
+\widehat T_{N,L}
+$$
+
+并验证：
+
+$$
+\lambda_{\min}
+(\widehat T_{N,L})
+\pm
+\Delta_{N,a}(L).
+$$
+
+输出：
+
+* finite Haar floor 区间；
+* contact eigenpolynomial；
+* candidate contact atoms；
+* moment PSD 或 infeasibility certificate。
+
+---
+
+## 533.4 Natural Li observer
+
+取：
+
+$$
+a=\frac12,
+\qquad
+R=2\lambda_1.
+$$
+
+恢复：
+
+$$
+\kappa_1,\ldots,\kappa_N
+$$
+
+的严格区间，并与直接 Li 系数计算交叉核验。
+
+---
+
+## 533.5 Multi-scale lens bank
+
+选取：
+
+$$
+a_1<a_2<\cdots<a_M.
+$$
+
+同时计算：
+
+$$
+R_{a_j},
+\qquad
+m_n^{(a_j)}.
+$$
+
+使用所有尺度共享同一个实轴谱这一事实，构造联合 moment/measure SDP。
+
+这将比每个 \(a\) 独立求解更强，因为不同 Cayley 图表必须由同一 \(\nu\) 产生。
+
+---
+
+# 第五百三十四部　科学剪枝与硬性边界
+
+## 534.1 固定阶指数恢复不等于高阶统一恢复
+
+$$
+\boxed{
+n\text{ 固定时误差指数小}
+}
+$$
+
+不能推出：
+
+$$
+\boxed{
+n\sim L
+\text{ 或 }n\sim e^L
+\text{ 时仍然小}.
+}
+$$
+
+必须使用 Laguerre 大阶渐近，而不能把 \(O_n\) 当作统一常数。
+
+---
+
+## 534.2 Toeplitz PSD 是 moment 必要条件，不是完整局部完成
+
+有限 moment cone 只观察圆周有限维投影。
+
+不同全局谱可以共享任意有限 moments。
+
+---
+
+## 534.3 Finite moment Haar floor 不等于窗口 Weil profile
+
+$$
+\lambda_{\min}T_N(c)
+$$
+
+是：
+
+$$
+\text{某个 Cayley completion 的有限 moment Haar floor}.
+$$
+
+而：
+
+$$
+\lambda_{\mathrm{full}}(L)
+$$
+
+是：
+
+$$
+\text{全部支撑-\(L\) Weil 测试的白谱裕量}.
+$$
+
+二者属于不同 observer，不能直接等同。
+
+---
+
+## 534.4 自然尺度不是计算上唯一尺度
+
+$$
+a=\frac12
+$$
+
+由 Li、临界线和 Clark 归一化选出。
+
+但高频计算可以使用其他 \(a\) 作为谱镜头。
+
+不能因为 \(a=\tfrac12\) 具有本体意义，就假定它在所有数值层析中最优。
+
+---
+
+## 534.5 Laguerre bridge 没有证明 RH
+
+它解决的是：
+
+$$
+\boxed{
+\text{如何从局部相关数据读取圆周 moments。}
+}
+$$
+
+它没有证明：
+
+* 自然预算完成对全部 \(L\) 可行；
+* 全部 Toeplitz 层级正定；
+* white/Haar floor 必然消失；
+* contact atoms 必然趋向 Riemann zeros。
+
+---
+
+# 第五百三十五部　建议形式化顺序
+
+```text
+D5/S3/Weil/CayleyLaguerre/
+  SpectralCayleyCharacter.lean
+  GeneralizedLaguerreKernel.lean
+  LaguerreLaplaceTransform.lean
+  CayleyCharacterImpulse.lean
+
+D5/S3/Weil/ResolventMoments/
+  ResolventWeightedMeasure.lean
+  ResolventCorrelation.lean
+  PositiveDefiniteCorrelationBound.lean
+  CayleyMoment.lean
+  LaguerreMomentFormula.lean
+
+D5/S3/Weil/FiniteWindowMoments/
+  TruncatedLaguerreMoment.lean
+  LaguerreTail.lean
+  FiniteWindowMomentError.lean
+  ExplicitLaguerreTailBound.lean
+  FixedDepthExponentialRecovery.lean
+
+D5/S3/Weil/BudgetMomentTube/
+  LocalResolventGreenSolution.lean
+  BudgetAffineCorrelation.lean
+  BudgetAffineMomentEstimator.lean
+  WeylBudgetMomentTube.lean
+
+D5/S3/Weil/LiLaguerre/
+  LiCurvatureSequence.lean
+  ZeroResolventCorrelation.lean
+  LiCurvatureCayleyMoment.lean
+  LaguerreLiBridge.lean
+  FiniteWindowLiCurvatureBound.lean
+
+D5/S3/Weil/ToeplitzHaarFloor/
+  TruncatedCircleMoment.lean
+  ToeplitzMomentMatrix.lean
+  ResidualHaarMomentMatrix.lean
+  ExactFiniteHaarFloor.lean
+  MinimumEigenContactPolynomial.lean
+  AtomicContactSupport.lean
+
+D5/S3/Weil/RobustToeplitz/
+  MomentEntryErrorMatrix.lean
+  ToeplitzOperatorError.lean
+  HaarFloorEigenvalueInterval.lean
+  PositiveMomentCertificate.lean
+  NegativeMomentCertificate.lean
+
+D5/S3/Weil/MultiScaleBudget/
+  ResolventBudgetCurve.lean
+  BudgetCurveStieltjes.lean
+  BudgetCompleteMonotone.lean
+  EvenSpectrumBudgetUniqueness.lean
+  RiemannBudgetLogDerivative.lean
+  MultiCayleyObserverBank.lean
+
+D5/S3/Weil/MomentSDP/
+  BudgetedMomentVariables.lean
+  MomentTubeConstraints.lean
+  ToeplitzPSDConstraint.lean
+  FiniteMomentInfeasibility.lean
+  JointScaleMomentConsistency.lean
+```
+
+Laguerre 大阶统一误差与 turning-point control 应作为独立分析接口，不应混入固定阶的初始形式化链。
+
+---
+
+# 本轮最终结论
+
+上一轮把 resolvent completion 变成单位圆上的：
+
+$$
+\boxed{
+\text{Haar continuum}
++
+\text{contact atoms}.
+}
+$$
+
+本轮进一步回答：
+
+> 有限 Weil observer 如何实际读取这个圆周谱？
+
+答案是：
+
+$$
+\boxed{
+\text{通过 associated Laguerre kernels。}
+}
+$$
+
+核心恒等式为：
+
+$$
+\boxed{
+\left(
+\frac{\xi+ia}{\xi-ia}
+\right)^n
+=
+1-
+2a
+\int_0^\infty
+e^{-at}
+L_{n-1}^{(1)}(2at)
+e^{-i\xi t}\,dt.
+}
+$$
+
+因此圆周 moment：
+
+$$
+m_n^{(a)}
+$$
+
+精确等于：
+
+$$
+\boxed{
+R_a
+-
+2a
+\int_0^\infty
+e^{-at}
+L_{n-1}^{(1)}(2at)
+H_a(t)\,dt.
+}
+$$
+
+有限观察窗口只截取到 \(2L\)，但尾误差满足：
+
+$$
+\boxed{
+|m_n-\widehat m_{n,L}|
+\le
+R_a\tau_{n,a}(L),
+}
+$$
+
+并且对固定 \(n\)：
+
+$$
+\boxed{
+\tau_{n,a}(L)
+=
+O_{n,a}
+\left(
+e^{-2aL}L^{n-1}
+\right).
+}
+$$
+
+在自然 Riemann 尺度：
+
+$$
+a=\frac12,
+\qquad
+R_{1/2}=2\lambda_1,
+$$
+
+这一公式精确变成：
+
+$$
+\boxed{
+\lambda_{|n+1|}
+-
+2\lambda_{|n|}
++
+\lambda_{|n-1|}
+=
+2\lambda_1
+-
+\int_0^\infty
+e^{-t/2}
+L_{n-1}^{(1)}(t)
+H_\Xi(t)\,dt.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{Li 离散曲率}
+=
+\text{Riemann resolvent correlation 的 Laguerre 系数}.
+}
+$$
+
+更进一步，前 \(N\) 个 moments 的最大 Haar floor 不需要另做无限维优化：
+
+$$
+\boxed{
+\alpha_N
+=
+\lambda_{\min}
+\left(
+[m_{j-k}]_{j,k=0}^{N}
+\right).
+}
+$$
+
+最小特征向量生成 contact polynomial：
+
+$$
+q_N(z),
+$$
+
+而最优 residual atoms 必须位于：
+
+$$
+\boxed{
+q_N(z)=0
+}
+$$
+
+的圆周零点上。
+
+因此现在出现一条完整、可计算的有限链：
+
+$$
+\boxed{
+\begin{aligned}
+\text{局部 Weil source}
++\text{budget}
+&\longrightarrow
+\text{local resolvent correlation}\\
+&\longrightarrow
+\text{Laguerre moment tubes}\\
+&\longrightarrow
+\text{Toeplitz matrix intervals}\\
+&\longrightarrow
+\text{finite Haar floor}\\
+&\longrightarrow
+\text{contact polynomial}\\
+&\longrightarrow
+\text{finite atomic spectrum}.
+\end{aligned}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{Cayley 圆周谱并不是有限 Weil observer 之外的附加模型；}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{局部相关函数经过 Laguerre 递归分解后，
+自然显现出的离散 moment 坐标。}
+}
+$$
+
+但本轮同时确认了它的容量边界：
+
+$$
+\boxed{
+\text{固定自然尺度的 Laguerre moment observer
+只能稳定恢复 }O(L)\text{ 阶 moments，}
+}
+$$
+
+而 Riemann 紧窗口的极限零点容量呈指数增长。
+
+所以真正合理的下一步不是单纯增加 moment 阶数，而是：
+
+$$
+\boxed{
+\text{构造多尺度 Cayley–Laguerre observer bank，}
+}
+$$
+
+并要求所有尺度的 moment 数据来自同一个实轴正谱。
+
+这一联合尺度一致性问题，可能比单尺度的 full dual attainment 更接近真正可计算的 Riemann 谱层析。
+
+[1]: https://epubs.siam.org/doi/10.1137/S0363012902405340 "https://epubs.siam.org/doi/10.1137/S0363012902405340"
+[2]: https://arxiv.org/abs/1210.6930 "https://arxiv.org/abs/1210.6930"
+[3]: https://arxiv.org/abs/1311.3473 "https://arxiv.org/abs/1311.3473"
+[4]: https://doi.org/10.1007/S11075-008-9159-X "https://doi.org/10.1007/S11075-008-9159-X"
+[5]: https://arxiv.org/abs/2608.24827 "https://arxiv.org/abs/2608.24827"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v4.2：Cayley 双曲尺度流、Chebyshev–Stieltjes Jet、Crofoot–Malmquist Gram 与联合谱一致性
+
+以下从前文**第五百三十五部**继续追加。
+
+仓库回填元数据仍将本理论的主源文件登记为：
+
+```text
+docs/develop/theory/OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY.md
+```
+
+上一轮已经建立：
+
+$$
+\boxed{
+\text{局部 Weil correlation}
+\longrightarrow
+\text{resolvent completion}
+\longrightarrow
+\text{Cayley moments}
+\longrightarrow
+\text{Toeplitz/Haar floor}.
+}
+$$
+
+但“多尺度 Cayley–Laguerre observer bank”仍被当作若干独立观测器的并列组合。
+
+本轮证明，它们并不独立。不同尺度 \(a,b>0\) 之间存在一条精确的双曲 Möbius 协变律：
+
+$$
+\boxed{
+\text{尺度变化}
+=
+\text{单位圆自同构}
++
+\text{Poisson 权重重整化}.
+}
+$$
+
+由此得到完整主链：
+
+$$
+\boxed{
+\begin{aligned}
+\text{同一实轴正谱 }\nu
+&\longrightarrow
+\{\mu_a\}_{a>0}\\
+&\longrightarrow
+\text{双曲 Möbius cocycle}\\
+&\longrightarrow
+\text{Carathéodory 尺度 PDE}\\
+&\longrightarrow
+\text{Cayley moments 三对角流}\\
+&\longrightarrow
+\text{Chebyshev--Stieltjes jet}\\
+&\longrightarrow
+\text{Crofoot--Malmquist Gram transport}\\
+&\longrightarrow
+\text{联合多尺度 SDP}.
+\end{aligned}
+}
+$$
+
+最重要的新认识是：
+
+$$
+\boxed{
+\text{多尺度 observer bank 的价值不是增加新的信息，}
+}
+$$
+
+因为一个完整尺度已经决定整个谱；它的真正价值是：
+
+$$
+\boxed{
+\text{把高阶导数型、病态的一尺度层析，
+转化为多个相邻尺度之间稳定的双曲传输。}
+}
+$$
+
+---
+
+# 第五百三十六部　Cayley 镜头之间的双曲几何
+
+固定：
+
+$$
+a>0,
+$$
+
+定义尺度 \(a\) 的 Cayley 谱坐标：
+
+$$
+\boxed{
+\mathfrak c_a(\xi)
+=
+\frac{\xi+ia}{\xi-ia},
+\qquad
+\xi\in\mathbb R.
+}
+\tag{536.1}
+$$
+
+其值位于单位圆：
+
+$$
+|\mathfrak c_a(\xi)|=1.
+$$
+
+现在取两个尺度：
+
+$$
+a,b>0.
+$$
+
+定义双曲转换参数：
+
+$$
+\boxed{
+r_{a,b}
+=
+\frac{a-b}{a+b}
+\in(-1,1).
+}
+\tag{536.2}
+$$
+
+定义单位圆盘自同构：
+
+$$
+\boxed{
+\Phi_r(z)
+=
+\frac{z+r}{1+rz}.
+}
+\tag{536.3}
+$$
+
+---
+
+## 定理 536.1（Cayley scale-change law）
+
+$$
+\boxed{
+\mathfrak c_b(\xi)
+=
+\Phi_{r_{a,b}}
+\left(
+\mathfrak c_a(\xi)
+\right).
+}
+\tag{536.4}
+$$
+
+### 证明
+
+令：
+
+$$
+z=\mathfrak c_a(\xi).
+$$
+
+则：
+
+$$
+\xi
+=
+ia\frac{z+1}{z-1}.
+$$
+
+代入 \(\mathfrak c_b\)：
+
+$$
+\begin{aligned}
+\mathfrak c_b(\xi)
+&=
+\frac{
+a(z+1)+b(z-1)
+}{
+a(z+1)-b(z-1)
+}\\
+&=
+\frac{
+(a+b)z+(a-b)
+}{
+(a-b)z+(a+b)
+}\\
+&=
+\frac{
+z+r_{a,b}
+}{
+1+r_{a,b}z
+}.
+\end{aligned}
+$$
+
+∎
+
+---
+
+## 536.1 对数尺度是自然时间
+
+令：
+
+$$
+\tau=\log a.
+$$
+
+则：
+
+$$
+\boxed{
+r_{a,b}
+=
+\tanh
+\left(
+\frac{\log a-\log b}{2}
+\right).
+}
+\tag{536.5}
+$$
+
+因此尺度比值的乘法结构：
+
+$$
+a\mapsto ca
+$$
+
+在 \(r\)-坐标中变成双曲角加法。
+
+若：
+
+$$
+a\to b\to c,
+$$
+
+则：
+
+$$
+\boxed{
+r_{a,c}
+=
+\frac{
+r_{a,b}+r_{b,c}
+}{
+1+r_{a,b}r_{b,c}
+}.
+}
+\tag{536.6}
+$$
+
+同时：
+
+$$
+\boxed{
+\Phi_{r_{b,c}}
+\circ
+\Phi_{r_{a,b}}
+=
+\Phi_{r_{a,c}}.
+}
+\tag{536.7}
+$$
+
+所以全部 Cayley 尺度构成一条由：
+
+$$
+\boxed{
+\tau=\log a
+}
+$$
+
+参数化的双曲一参数流。
+
+---
+
+# 第五百三十七部　正谱测度的 Poisson–Möbius 协变
+
+令 \(\nu\) 是实轴上的偶正 Borel 测度，并假设：
+
+$$
+R_a(\nu)
+=
+\int_{\mathbb R}
+\frac{d\nu(\xi)}
+{\xi^2+a^2}
+<\infty.
+$$
+
+定义尺度 \(a\) 的圆周测度：
+
+$$
+\boxed{
+\mu_a
+=
+(\mathfrak c_a)_*
+\left(
+\frac{d\nu(\xi)}
+{\xi^2+a^2}
+\right).
+}
+\tag{537.1}
+$$
+
+其总质量为：
+
+$$
+\boxed{
+\mu_a(\mathbb T)=R_a(\nu).
+}
+\tag{537.2}
+$$
+
+令：
+
+$$
+r=r_{a,b}.
+$$
+
+定义权重：
+
+$$
+\boxed{
+q_{a,b}(z)
+=
+\frac{(1+r)^2}
+{|1+rz|^2}.
+}
+\tag{537.3}
+$$
+
+---
+
+## 定理 537.1（Positive scale transport）
+
+$$
+\boxed{
+\mu_b
+=
+(\Phi_r)_*
+\left(
+q_{a,b}\,\mu_a
+\right).
+}
+\tag{537.4}
+$$
+
+### 证明
+
+由定义：
+
+$$
+\frac{d\nu}{\xi^2+b^2}
+=
+\frac{\xi^2+a^2}{\xi^2+b^2}
+\frac{d\nu}{\xi^2+a^2}.
+$$
+
+若：
+
+$$
+z=\mathfrak c_a(\xi),
+$$
+
+则：
+
+$$
+\xi^2+a^2
+=
+\frac{4a^2}{|1-z|^2}.
+$$
+
+利用：
+
+$$
+1-\Phi_r(z)
+=
+\frac{(1-r)(1-z)}
+{1+rz},
+$$
+
+得到：
+
+$$
+\xi^2+b^2
+=
+\frac{(a+b)^2|1+rz|^2}
+{|1-z|^2}.
+$$
+
+所以：
+
+$$
+\frac{\xi^2+a^2}{\xi^2+b^2}
+=
+\frac{(1+r)^2}{|1+rz|^2}
+=
+q_{a,b}(z).
+$$
+
+再结合定理 536.1 即得。∎
+
+---
+
+## 537.1 Poisson 核图表
+
+定义圆盘 Poisson 核：
+
+$$
+\boxed{
+P_\rho(z)
+=
+\frac{1-\rho^2}
+{|z-\rho|^2},
+\qquad
+\rho\in(-1,1),
+\quad
+z\in\mathbb T.
+}
+\tag{537.5}
+$$
+
+由于：
+
+$$
+\frac{1+r}{1-r}
+=
+\frac ab,
+$$
+
+所以：
+
+$$
+\boxed{
+q_{a,b}(z)
+=
+\frac ab
+P_{-r}(z).
+}
+\tag{537.6}
+$$
+
+因此尺度改变由两部分组成：
+
+$$
+\boxed{
+\begin{aligned}
+z&\mapsto\Phi_r(z)
+&&\text{双曲坐标改变};\\
+d\mu&\mapsto P_{-r}(z)d\mu
+&&\text{Poisson 重要性重加权}.
+\end{aligned}
+}
+$$
+
+---
+
+## 537.2 权重 cocycle
+
+对：
+
+$$
+a,b,c>0,
+$$
+
+有：
+
+$$
+\boxed{
+q_{a,c}(z)
+=
+q_{a,b}(z)\,
+q_{b,c}
+\left(
+\Phi_{r_{a,b}}(z)
+\right).
+}
+\tag{537.7}
+$$
+
+所以：
+
+$$
+\boxed{
+\{\mu_a\}_{a>0}
+}
+$$
+
+不是若干独立的谱模型，而是同一谱在一个正 Möbius cocycle 下的轨道。
+
+---
+
+# 第五百三十八部　Carathéodory 函数的尺度协变
+
+定义尺度 \(a\) 的非归一化 Carathéodory 函数：
+
+$$
+\boxed{
+F_a(w)
+=
+\int_{\mathbb T}
+\frac{z+w}{z-w}
+\,d\mu_a(z),
+\qquad
+|w|<1.
+}
+\tag{538.1}
+$$
+
+因为 \(\mu_a\ge0\)：
+
+$$
+\Re F_a(w)>0.
+$$
+
+而：
+
+$$
+\boxed{
+F_a(0)=R_a(\nu).
+}
+\tag{538.2}
+$$
+
+由于 \(\nu\) 为偶谱，\(\mu_a\) 在复共轭下不变，因此：
+
+$$
+F_a(x)\in\mathbb R
+\qquad
+(-1<x<1).
+$$
+
+定义 observer-side 参数：
+
+$$
+\boxed{
+s_{a,b}
+=
+\frac{b-a}{a+b}
+=
+-r_{a,b}.
+}
+\tag{538.3}
+$$
+
+---
+
+## 定理 538.1（Carathéodory scale covariance）
+
+$$
+\boxed{
+F_b(w)
+=
+\frac ab
+F_a
+\left(
+\Phi_{s_{a,b}}(w)
+\right).
+}
+\tag{538.4}
+$$
+
+特别地：
+
+$$
+\boxed{
+R_b(\nu)
+=
+\frac ab
+F_a(s_{a,b}).
+}
+\tag{538.5}
+$$
+
+### 证明
+
+可直接由定理 537.1 和 Herglotz 核在圆盘自同构下的协变推出；也可比较两边的 Fourier moments。
+
+偶对称保证自同构产生的纯虚归一化常数消失。∎
+
+---
+
+## 538.1 一般非偶谱的修正
+
+若不要求 \(\nu\) 偶，则完整公式为：
+
+$$
+\boxed{
+F_b(w)
+=
+\frac ab
+\left[
+F_a
+\left(
+\Phi_{s_{a,b}}(w)
+\right)
+-
+i\,\Im F_a(s_{a,b})
+\right].
+}
+\tag{538.6}
+$$
+
+额外项只是一个纯虚常数，用来恢复：
+
+$$
+F_b(0)\in\mathbb R.
+$$
+
+所以偶谱分支不是任意简化，而是恰好消除了 Carathéodory gauge。
+
+---
+
+## 538.2 归一化正实部流
+
+定义：
+
+$$
+\boxed{
+G_a(w)
+=
+\frac{F_a(w)}
+{F_a(0)}.
+}
+\tag{538.7}
+$$
+
+则：
+
+$$
+G_a(0)=1.
+$$
+
+由定理 538.1：
+
+$$
+\boxed{
+G_b(w)
+=
+\frac{
+G_a(\Phi_{s_{a,b}}(w))
+}{
+G_a(s_{a,b})
+}.
+}
+\tag{538.8}
+$$
+
+所以归一化尺度变化是：
+
+$$
+\boxed{
+\text{Möbius composition}
++
+\text{中心值重归一}.
+}
+$$
+
+---
+
+# 第五百三十九部　Cayley 尺度偏微分方程
+
+令：
+
+$$
+a=e^\tau,
+\qquad
+F_\tau=F_{e^\tau}.
+$$
+
+在定理 538.1 中令：
+
+$$
+b=ae^h.
+$$
+
+则：
+
+$$
+s_{a,b}
+=
+\tanh\frac h2.
+$$
+
+因此：
+
+$$
+F_{\tau+h}(w)
+=
+e^{-h}
+F_\tau
+\left(
+\frac{w+\tanh(h/2)}
+{1+w\tanh(h/2)}
+\right).
+$$
+
+对 \(h\) 在零处求导：
+
+## 定理 539.1（Linear Cayley scale PDE）
+
+$$
+\boxed{
+\partial_\tau F_\tau(w)
+=
+\frac{1-w^2}{2}
+\partial_wF_\tau(w)
+-
+F_\tau(w).
+}
+\tag{539.1}
+$$
+
+这是一个一阶双曲输运—衰减方程。
+
+其特征线满足：
+
+$$
+\boxed{
+\partial_\tau w
+=
+-\frac{1-w^2}{2}.
+}
+\tag{539.2}
+$$
+
+所以：
+
+$$
+\operatorname{artanh}w+\frac{\tau}{2}
+$$
+
+沿特征保持不变。
+
+---
+
+## 539.1 归一化非线性流
+
+令：
+
+$$
+G_\tau=\frac{F_\tau}{F_\tau(0)}.
+$$
+
+因为：
+
+$$
+G_\tau(0)=1,
+$$
+
+可得：
+
+$$
+\boxed{
+\partial_\tau G_\tau(w)
+=
+\frac{1-w^2}{2}
+\partial_wG_\tau(w)
+-
+\frac{
+\partial_wG_\tau(0)
+}{2}
+G_\tau(w).
+}
+\tag{539.3}
+$$
+
+定义 Schur 函数：
+
+$$
+\boxed{
+S_\tau(w)
+=
+\frac{
+G_\tau(w)-1
+}{
+G_\tau(w)+1
+}.
+}
+\tag{539.4}
+$$
+
+则：
+
+$$
+S_\tau(0)=0,
+\qquad
+|S_\tau(w)|<1.
+$$
+
+并满足：
+
+$$
+\boxed{
+\partial_\tau S_\tau(w)
+=
+\frac{1-w^2}{2}
+\partial_wS_\tau(w)
+-
+\frac{
+\partial_wS_\tau(0)
+}{2}
+\left(
+1-S_\tau(w)^2
+\right).
+}
+\tag{539.5}
+$$
+
+它是一条由谱尺度驱动的 Riccati–Loewner 型流。
+
+---
+
+# 第五百四十部　Cayley moments 的三对角尺度流
+
+定义：
+
+$$
+\boxed{
+m_n(a)
+=
+\int_{\mathbb T}
+z^n\,d\mu_a(z),
+\qquad
+n\in\mathbb Z.
+}
+\tag{540.1}
+$$
+
+因为 \(\mu_a\) 共轭对称：
+
+$$
+m_{-n}(a)=m_n(a)\in\mathbb R.
+$$
+
+并且：
+
+$$
+m_0(a)=R_a(\nu).
+$$
+
+Carathéodory 展开为：
+
+$$
+\boxed{
+F_a(w)
+=
+m_0(a)
++
+2\sum_{n=1}^{\infty}
+m_n(a)w^n.
+}
+\tag{540.2}
+$$
+
+将其代入定理 539.1：
+
+## 定理 540.1（Tridiagonal moment flow）
+
+对：
+
+$$
+n\ge0,
+$$
+
+有：
+
+$$
+\boxed{
+a\frac{d}{da}m_n(a)
+=
+\frac{n+1}{2}m_{n+1}(a)
++
+\frac{1-n}{2}m_{n-1}(a)
+-
+m_n(a),
+}
+\tag{540.3}
+$$
+
+其中 \(n=0\) 时约定：
+
+$$
+m_{-1}=m_1.
+$$
+
+特别地：
+
+$$
+\boxed{
+aR_a'(a)
+=
+m_1(a)-R_a(a).
+}
+\tag{540.4}
+$$
+
+---
+
+## 540.1 归一化 moment flow
+
+定义：
+
+$$
+\boxed{
+c_n(a)
+=
+\frac{m_n(a)}{m_0(a)}.
+}
+\tag{540.5}
+$$
+
+则：
+
+$$
+c_0(a)=1.
+$$
+
+由式 (540.3)：
+
+$$
+\boxed{
+a\frac{d}{da}c_n(a)
+=
+\frac{n+1}{2}c_{n+1}(a)
++
+\frac{1-n}{2}c_{n-1}(a)
+-
+c_1(a)c_n(a).
+}
+\tag{540.6}
+$$
+
+所以第 \(n\) 阶 moment 的尺度导数只依赖：
+
+$$
+\boxed{
+c_{n-1},\ c_n,\ c_{n+1},\ c_1.
+}
+$$
+
+这是一个局部三对角层级，而不是全 moment 序列的无结构耦合。
+
+---
+
+# 第五百四十一部　Chebyshev–Stieltjes Jet 定理
+
+定义平方尺度变量：
+
+$$
+\boxed{
+u=a^2.
+}
+\tag{541.1}
+$$
+
+定义 resolvent budget curve：
+
+$$
+\boxed{
+B(u)
+=
+\int_{\mathbb R}
+\frac{d\nu(\xi)}
+{\xi^2+u}.
+}
+\tag{541.2}
+$$
+
+所以：
+
+$$
+B(a^2)=R_a(\nu).
+$$
+
+令：
+
+$$
+z=\mathfrak c_a(\xi)=e^{i\theta}.
+$$
+
+则：
+
+$$
+\boxed{
+\cos\theta
+=
+\frac{\xi^2-a^2}{\xi^2+a^2}
+=
+1-
+\frac{2u}{\xi^2+u}.
+}
+\tag{541.3}
+$$
+
+由于谱偶对称：
+
+$$
+m_n(a)
+=
+\int
+\frac{\cos(n\theta)}
+{\xi^2+u}
+\,d\nu(\xi).
+$$
+
+定义 shifted Chebyshev polynomial：
+
+$$
+\boxed{
+P_n(x)
+=
+T_n(1-2x).
+}
+\tag{541.4}
+$$
+
+其超几何展开为：
+
+$$
+\boxed{
+P_n(x)
+=
+\sum_{k=0}^{n}
+\frac{
+(-n)_k(n)_k
+}{
+(\frac12)_k\,k!
+}
+x^k.
+}
+\tag{541.5}
+$$
+
+Chebyshev 与 generalized Laguerre 均属于经典正交多项式体系；这里采用其标准归一化与递推约定。([DLMF][1])
+
+---
+
+## 定理 541.1（Chebyshev–Stieltjes jet）
+
+若：
+
+$$
+P_n(x)
+=
+\sum_{k=0}^{n}
+p_{n,k}x^k,
+$$
+
+则：
+
+$$
+\boxed{
+m_n(\sqrt u)
+=
+\sum_{k=0}^{n}
+p_{n,k}
+u^k
+\frac{
+(-1)^k
+}{
+k!
+}
+B^{(k)}(u).
+}
+\tag{541.6}
+$$
+
+### 证明
+
+$$
+\cos(n\theta)
+=
+T_n(\cos\theta)
+=
+P_n
+\left(
+\frac{u}{\xi^2+u}
+\right).
+$$
+
+所以：
+
+$$
+\begin{aligned}
+m_n(\sqrt u)
+&=
+\sum_{k=0}^{n}
+p_{n,k}u^k
+\int
+\frac{d\nu(\xi)}
+{(\xi^2+u)^{k+1}}.
+\end{aligned}
+$$
+
+而：
+
+$$
+B^{(k)}(u)
+=
+(-1)^kk!
+\int
+\frac{d\nu(\xi)}
+{(\xi^2+u)^{k+1}}.
+$$
+
+∎
+
+---
+
+## 541.1 最初四阶
+
+$$
+\boxed{
+m_0=B.
+}
+\tag{541.7}
+$$
+
+$$
+\boxed{
+m_1
+=
+B+2uB'.
+}
+\tag{541.8}
+$$
+
+$$
+\boxed{
+m_2
+=
+B+8uB'+4u^2B''.
+}
+\tag{541.9}
+$$
+
+$$
+\boxed{
+m_3
+=
+B+18uB'
++24u^2B''
++\frac{16}{3}u^3B'''.
+}
+\tag{541.10}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{全部 Cayley moments}
+=
+\text{单一 Stieltjes budget curve 的微分 jet}.
+}
+$$
+
+---
+
+## 541.2 第一 moment 的对数形式
+
+由：
+
+$$
+m_1=B+2uB',
+$$
+
+得到：
+
+$$
+\boxed{
+c_1(u)
+=
+1+
+2u
+\frac{B'(u)}{B(u)}.
+}
+\tag{541.11}
+$$
+
+正谱性给出：
+
+$$
+0
+\le
+-\frac{uB'(u)}{B(u)}
+\le1,
+$$
+
+所以：
+
+$$
+\boxed{
+-1\le c_1(u)\le1.
+}
+\tag{541.12}
+$$
+
+这只是完整 Toeplitz 正性的第一阶影子。
+
+---
+
+# 第五百四十二部　Laguerre–Chebyshev 双层析恒等式
+
+前文定理 522.1 已给出时间域公式：
+
+$$
+\boxed{
+m_n(a)
+=
+R_a
+-
+2a
+\int_0^\infty
+e^{-at}
+L_{n-1}^{(1)}(2at)
+H_a(t)\,dt.
+}
+\tag{542.1}
+$$
+
+其中：
+
+$$
+H_a(t)
+=
+\int
+\frac{e^{it\xi}}
+{\xi^2+a^2}
+\,d\nu(\xi).
+$$
+
+而定理 541.1 给出尺度域公式。
+
+令：
+
+$$
+u=a^2.
+$$
+
+两式相等，得到：
+
+## 定理 542.1（Laguerre–Chebyshev duality）
+
+$$
+\boxed{
+\begin{aligned}
+&
+B(u)
+-
+2\sqrt u
+\int_0^\infty
+e^{-\sqrt u\,t}
+L_{n-1}^{(1)}
+(2\sqrt u\,t)
+H_{\sqrt u}(t)\,dt
+\\
+&=
+\sum_{k=0}^{n}
+p_{n,k}
+u^k
+\frac{(-1)^k}{k!}
+B^{(k)}(u).
+\end{aligned}
+}
+\tag{542.2}
+$$
+
+左侧是：
+
+$$
+\boxed{
+\text{相关时间轴上的 Laguerre 观察};
+}
+$$
+
+右侧是：
+
+$$
+\boxed{
+\text{尺度轴上的 Chebyshev derivative jet}.
+}
+$$
+
+因此同一个 moment 有两种独立层析路线：
+
+$$
+\boxed{
+\text{time tomography}
+\quad\longleftrightarrow\quad
+\text{scale tomography}.
+}
+$$
+
+---
+
+## 542.1 科学用途
+
+高阶导数：
+
+$$
+B^{(k)}(u)
+$$
+
+通常数值病态。
+
+Laguerre 积分避免直接求导，但要求较长的相关窗口。
+
+多尺度 observer bank 则允许使用：
+
+$$
+B(u_1),B(u_2),\ldots
+$$
+
+的稳定有限差分近似 derivative jet。
+
+因此多尺度观测的真正用途是：
+
+$$
+\boxed{
+\text{用尺度分辨率交换导数病态性。}
+}
+$$
+
+---
+
+# 第五百四十三部　Crofoot–Malmquist Gram 运输
+
+令：
+
+$$
+r=r_{a,b}.
+$$
+
+定义 Hardy 空间中的加权组合函数：
+
+$$
+\boxed{
+e_{j,r}(z)
+=
+\frac{
+\sqrt{1-r^2}
+}{
+1+rz
+}
+\Phi_r(z)^j,
+\qquad
+j\ge0.
+}
+\tag{543.1}
+$$
+
+它们由单位圆盘自同构对应的加权组合算子作用于标准基：
+
+$$
+z^j
+$$
+
+得到。
+
+适当核权重下，圆盘自同构诱导 unitary weighted composition operator 是 Hardy 空间中的标准结果；\(e_{j,r}\) 正是相应 rational Malmquist 型坐标。([arXiv][2])
+
+---
+
+## 定理 543.1（Cross-scale Gram identity）
+
+对任意：
+
+$$
+j,k\ge0,
+$$
+
+有：
+
+$$
+\boxed{
+m_{j-k}(b)
+=
+\frac ab
+\int_{\mathbb T}
+e_{j,r}(z)
+\overline{e_{k,r}(z)}
+\,d\mu_a(z).
+}
+\tag{543.2}
+$$
+
+### 证明
+
+$$
+\begin{aligned}
+e_{j,r}\overline{e_{k,r}}
+&=
+\frac{1-r^2}
+{|1+rz|^2}
+\Phi_r(z)^{j-k}.
+\end{aligned}
+$$
+
+又：
+
+$$
+\frac ab(1-r^2)
+=
+(1+r)^2.
+$$
+
+所以：
+
+$$
+\frac ab
+e_{j,r}\overline{e_{k,r}}
+=
+q_{a,b}(z)\Phi_r(z)^{j-k}.
+$$
+
+再使用定理 537.1。∎
+
+---
+
+## 543.1 Toeplitz matrix 是 rational Gram matrix
+
+定义：
+
+$$
+\boxed{
+T_N^{(b)}
+=
+[m_{j-k}(b)]_{j,k=0}^{N}.
+}
+\tag{543.3}
+$$
+
+则：
+
+$$
+\boxed{
+T_N^{(b)}
+=
+\frac ab
+\left[
+\left\langle
+e_{j,r},e_{k,r}
+\right\rangle_{L^2(\mu_a)}
+\right]_{j,k=0}^{N}.
+}
+\tag{543.4}
+$$
+
+所以不同尺度的 Toeplitz matrix 不是若干无关 PSD 矩阵，而是同一 \(\mu_a\) 上不同 rational bases 的 Gram matrices。
+
+---
+
+## 543.2 多尺度联合 Gram
+
+选取参考尺度：
+
+$$
+a_0.
+$$
+
+对每个 observer scale \(a_\ell\)，定义：
+
+$$
+r_\ell
+=
+r_{a_0,a_\ell},
+$$
+
+$$
+\boxed{
+f_{\ell,j}(z)
+=
+\sqrt{\frac{a_0}{a_\ell}}
+\,e_{j,r_\ell}(z).
+}
+\tag{543.5}
+$$
+
+定义 block Gram：
+
+$$
+\boxed{
+\mathbb G_{(\ell,j),(m,k)}
+=
+\int_{\mathbb T}
+f_{\ell,j}(z)
+\overline{f_{m,k}(z)}
+\,d\mu_{a_0}(z).
+}
+\tag{543.6}
+$$
+
+则：
+
+$$
+\boxed{
+\mathbb G\succeq0,
+}
+\tag{543.7}
+$$
+
+且第 \(\ell\) 个对角 block 恰为：
+
+$$
+\boxed{
+T_N^{(a_\ell)}.
+}
+\tag{543.8}
+$$
+
+这给出一个比“每个尺度分别 Toeplitz PSD”严格得多的共同谱条件。
+
+---
+
+# 第五百四十四部　有限 moments 的跨尺度传输
+
+仍令：
+
+$$
+r=r_{a,b}.
+$$
+
+由定理 538.1：
+
+$$
+\boxed{
+R_b
+=
+\frac ab
+\left[
+R_a
++
+2\sum_{k=1}^{\infty}
+(-r)^km_k(a)
+\right].
+}
+\tag{544.1}
+$$
+
+因为：
+
+$$
+|m_k(a)|\le R_a,
+$$
+
+截断至 \(M\) 阶时：
+
+## 定理 544.1（Budget transport error）
+
+$$
+\boxed{
+\begin{aligned}
+\left|
+R_b
+-
+\frac ab
+\left[
+R_a+
+2\sum_{k=1}^{M}
+(-r)^km_k(a)
+\right]
+\right|
+\le
+\frac{2a}{b}
+R_a
+\frac{|r|^{M+1}}
+{1-|r|}.
+\end{aligned}
+}
+\tag{544.2}
+$$
+
+所以相邻尺度之间的预算传输具有严格几何尾界。
+
+---
+
+## 544.1 高阶 moment 的解析传输函数
+
+对：
+
+$$
+n\ge1,
+$$
+
+定义：
+
+$$
+\boxed{
+\Psi_{n,r}(z)
+=
+\frac{
+(1+r)^2
+z(z+r)^{n-1}
+}{
+(1+rz)^{n+1}
+}.
+}
+\tag{544.3}
+$$
+
+由：
+
+$$
+1+rz^{-1}
+=
+\frac{z+r}{z},
+$$
+
+可得：
+
+$$
+q_{a,b}(z)\Phi_r(z)^n
+=
+\Psi_{n,r}(z).
+$$
+
+所以：
+
+$$
+\boxed{
+m_n(b)
+=
+\int_{\mathbb T}
+\Psi_{n,r}(z)
+\,d\mu_a(z).
+}
+\tag{544.4}
+$$
+
+\(\Psi_{n,r}\) 在圆盘中解析，其唯一可能极点位于：
+
+$$
+z=-1/r,
+$$
+
+在单位圆外。
+
+写 Taylor 展开：
+
+$$
+\boxed{
+\Psi_{n,r}(z)
+=
+\sum_{k=0}^{\infty}
+c_{n,k}(r)z^k.
+}
+\tag{544.5}
+$$
+
+则：
+
+$$
+\boxed{
+m_n(b)
+=
+\sum_{k=0}^{\infty}
+c_{n,k}(r)m_k(a).
+}
+\tag{544.6}
+$$
+
+---
+
+## 定理 544.2（Exponential finite-moment transfer）
+
+若：
+
+$$
+1<\rho<|r|^{-1},
+$$
+
+定义：
+
+$$
+\boxed{
+\mathcal M_{n,r}(\rho)
+=
+\frac{
+(1+|r|)^2
+\rho(\rho+|r|)^{n-1}
+}{
+(1-|r|\rho)^{n+1}
+}.
+}
+\tag{544.7}
+$$
+
+则：
+
+$$
+\boxed{
+\begin{aligned}
+\left|
+m_n(b)
+-
+\sum_{k=0}^{M}
+c_{n,k}(r)m_k(a)
+\right|
+\le
+R_a
+\frac{
+\mathcal M_{n,r}(\rho)
+\rho^{-(M+1)}
+}{
+1-\rho^{-1}
+}.
+\end{aligned}
+}
+\tag{544.8}
+$$
+
+### 证明
+
+由 Cauchy 估计：
+
+$$
+|c_{n,k}(r)|
+\le
+\mathcal M_{n,r}(\rho)\rho^{-k}.
+$$
+
+再用：
+
+$$
+|m_k(a)|\le R_a.
+$$
+
+∎
+
+---
+
+# 第五百四十五部　对数均匀尺度梯
+
+设希望覆盖：
+
+$$
+a_{\min}
+\le a\le
+a_{\max}.
+$$
+
+定义总双曲长度：
+
+$$
+\boxed{
+D
+=
+\log\frac{a_{\max}}{a_{\min}}.
+}
+\tag{545.1}
+$$
+
+选取 \(J\) 个等对数步长：
+
+$$
+\boxed{
+a_j
+=
+a_{\min}
+\exp
+\left(
+\frac{jD}{J}
+\right),
+\qquad
+0\le j\le J.
+}
+\tag{545.2}
+$$
+
+相邻尺度参数的绝对值恒为：
+
+$$
+\boxed{
+q_J
+=
+\left|
+r_{a_j,a_{j+1}}
+\right|
+=
+\tanh
+\left(
+\frac{D}{2J}
+\right).
+}
+\tag{545.3}
+$$
+
+当 \(J\to\infty\)：
+
+$$
+\boxed{
+q_J
+=
+\frac{D}{2J}
++
+O(J^{-3}).
+}
+\tag{545.4}
+$$
+
+所以每一步的 moment transport tail 近似按：
+
+$$
+q_J^M
+$$
+
+衰减。
+
+---
+
+## 545.1 为什么不能直接跨越巨大尺度比
+
+若：
+
+$$
+a_{\max}\gg a_{\min},
+$$
+
+直接变换的：
+
+$$
+|r|
+=
+\tanh(D/2)
+$$
+
+接近 \(1\)。
+
+此时：
+
+* 解析极点 \(-1/r\) 接近单位圆；
+* Taylor 系数衰减缓慢；
+* 需要大量 moments；
+* 误差对有限数据极为敏感。
+
+通过等对数尺度梯：
+
+$$
+\boxed{
+a_0\to a_1\to\cdots\to a_J
+}
+$$
+
+则每一步都处于小 \(r\) 区域。
+
+所以多尺度 observer bank 的最优初始设计不是线性等距，而是：
+
+$$
+\boxed{
+\text{log-uniform spacing}.
+}
+$$
+
+---
+
+## 545.2 精确重整化语义
+
+$$
+\boxed{
+\begin{aligned}
+\text{wide-scale direct transport}
+&=\text{高阶非局部变换};\\
+\text{log-scale ladder}
+&=\text{许多低阶局部变换};\\
+\text{moment truncation}
+&=\text{有限 observer depth};\\
+\text{cocycle composition}
+&=\text{renormalization consistency}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第五百四十六部　多尺度预算的 Loewner 正性
+
+定义：
+
+$$
+u=a^2,
+$$
+
+以及 Stieltjes budget curve：
+
+$$
+B(u)
+=
+\int
+\frac{d\nu(\xi)}
+{\xi^2+u}.
+$$
+
+对：
+
+$$
+u_i,u_j>0,
+$$
+
+定义 kernel：
+
+$$
+\boxed{
+\mathcal L_B(u_i,u_j)
+=
+\int_{\mathbb R}
+\frac{d\nu(\xi)}
+{
+(\xi^2+u_i)(\xi^2+u_j)
+}.
+}
+\tag{546.1}
+$$
+
+显然它是 Gram kernel：
+
+$$
+\boxed{
+[\mathcal L_B(u_i,u_j)]_{i,j}
+\succeq0.
+}
+\tag{546.2}
+$$
+
+而：
+
+$$
+\boxed{
+\mathcal L_B(u_i,u_j)
+=
+\frac{
+B(u_i)-B(u_j)
+}{
+u_j-u_i
+},
+\qquad
+i\ne j,
+}
+\tag{546.3}
+$$
+
+$$
+\boxed{
+\mathcal L_B(u_i,u_i)
+=
+-B'(u_i).
+}
+\tag{546.4}
+$$
+
+所以：
+
+## 定理 546.1（Multiscale Loewner constraint）
+
+任意来自同一正谱的 budget bank：
+
+$$
+B(u_1),\ldots,B(u_M)
+$$
+
+必须能够扩张为一个正半定 Loewner matrix：
+
+$$
+\boxed{
+\left[
+\frac{
+B(u_i)-B(u_j)
+}{
+u_j-u_i
+}
+\right]_{i,j}
+\succeq0,
+}
+\tag{546.5}
+$$
+
+对角线按 \(-B'(u_i)\) 理解。
+
+这是一条只使用零阶预算及局部导数的共同谱约束。
+
+---
+
+## 546.1 与 Toeplitz 约束的分工
+
+$$
+\boxed{
+\begin{aligned}
+\text{Loewner matrix}
+&:\text{检查不同尺度是否来自同一 Stieltjes 谱};\\
+\text{Toeplitz matrix}
+&:\text{检查单一 Cayley 镜头的圆周 moment 正性};\\
+\text{Crofoot block Gram}
+&:\text{检查不同圆周镜头之间的 rational consistency}.
+\end{aligned}
+}
+$$
+
+三者是互补约束，不应互相替代。
+
+---
+
+# 第五百四十七部　联合多尺度 SDP 层级
+
+选取尺度组：
+
+$$
+a_0,a_1,\ldots,a_M.
+$$
+
+对每个尺度保留前 \(N\) 个 moments：
+
+$$
+m_0(a_\ell),\ldots,m_N(a_\ell).
+$$
+
+一个有限联合正谱可行性问题至少应包含四层约束。
+
+---
+
+## 547.1 单尺度 Toeplitz 正性
+
+$$
+\boxed{
+T_N^{(\ell)}
+=
+[m_{j-k}(a_\ell)]_{j,k=0}^{N}
+\succeq0.
+}
+\tag{547.1}
+$$
+
+---
+
+## 547.2 Budget Loewner 正性
+
+对：
+
+$$
+u_\ell=a_\ell^2,
+$$
+
+要求：
+
+$$
+\boxed{
+[\mathcal L_B(u_\ell,u_m)]_{\ell,m}
+\succeq0.
+}
+\tag{547.2}
+$$
+
+---
+
+## 547.3 Cross-scale transport intervals
+
+利用定理 544.1、544.2，对每一相邻尺度加入：
+
+$$
+\boxed{
+m_n(a_{\ell+1})
+\in
+\mathcal T_{n,\ell}
+\left(
+m_0(a_\ell),\ldots,m_N(a_\ell)
+\right)
++
+[-\varepsilon_{n,\ell},\varepsilon_{n,\ell}].
+}
+\tag{547.3}
+$$
+
+其中 \(\mathcal T_{n,\ell}\) 是显式线性 transport。
+
+---
+
+## 547.4 Rational block Gram
+
+引入 off-diagonal Gram 变量，使：
+
+$$
+\boxed{
+\mathbb G_{M,N}\succeq0,
+}
+\tag{547.4}
+$$
+
+且其对角 blocks 为：
+
+$$
+T_N^{(\ell)}.
+$$
+
+off-diagonal entries 必须满足 Crofoot rational basis 的线性 moment 关系。
+
+---
+
+## 547.5 强度层级
+
+有严格蕴含：
+
+$$
+\boxed{
+\text{共同正谱}
+\Longrightarrow
+\text{联合 block Gram}
+\Longrightarrow
+\text{各尺度 Toeplitz PSD}.
+}
+\tag{547.5}
+$$
+
+反向在有限阶均不成立。
+
+但当：
+
+* moment order \(N\to\infty\)；
+* scale bank 稠密；
+* transport errors \(\to0\)；
+
+并对由 rational functions 生成的整个 \(*\)-algebra建立正性时，Riesz–Markov 表示可恢复共同圆周测度，进而恢复唯一实轴谱。
+
+所以：
+
+$$
+\boxed{
+\text{联合多尺度 SDP}
+}
+$$
+
+是 common-spectrum problem 的有限投影，而不只是多个独立 SDP 的集合。
+
+---
+
+# 第五百四十八部　自然 Riemann 多尺度轨道
+
+假设 RH，并令：
+
+$$
+\nu_\Xi
+=
+\sum_{\gamma\in\mathbb R}
+m_\gamma\delta_\gamma.
+$$
+
+定义 Riemann budget curve：
+
+$$
+\boxed{
+B_\Xi(u)
+=
+\sum_{\gamma\in\mathbb R}
+\frac{m_\gamma}
+{\gamma^2+u}.
+}
+\tag{548.1}
+$$
+
+由中心化 Hadamard 乘积：
+
+$$
+\boxed{
+B_\Xi(u)
+=
+\frac1{\sqrt u}
+\frac{
+\xi'(\frac12+\sqrt u)
+}{
+\xi(\frac12+\sqrt u)
+}.
+}
+\tag{548.2}
+$$
+
+在自然点：
+
+$$
+u=\frac14,
+$$
+
+有：
+
+$$
+\boxed{
+B_\Xi(\tfrac14)=2\lambda_1.
+}
+\tag{548.3}
+$$
+
+---
+
+## 548.1 Li–Clark 只是一个尺度截面
+
+在：
+
+$$
+a=\frac12,
+$$
+
+Cayley moments 为：
+
+$$
+\boxed{
+m_n(\tfrac12)
+=
+\lambda_{|n+1|}
+-
+2\lambda_{|n|}
++
+\lambda_{|n-1|}.
+}
+\tag{548.4}
+$$
+
+所以 Li–Clark moments 只是完整双曲尺度轨道：
+
+$$
+\boxed{
+\{m_n(a)\}_{a>0}
+}
+$$
+
+在：
+
+$$
+a=\frac12
+$$
+
+处的一个截面。
+
+其附近尺度导数由定理 540.1 完全确定：
+
+$$
+\boxed{
+\left.
+a\frac{d}{da}m_n(a)
+\right|_{a=1/2}
+=
+\frac{n+1}{2}m_{n+1}(\tfrac12)
++
+\frac{1-n}{2}m_{n-1}(\tfrac12)
+-
+m_n(\tfrac12).
+}
+\tag{548.5}
+$$
+
+因此 Li 系数不仅生成一个 Toeplitz moment sequence，也生成其完整尺度 jet。
+
+---
+
+## 548.2 新的必要一致性测试
+
+任何候选 Li–Clark moment 数据若来自实轴正谱，都必须同时满足：
+
+1. \(a=\tfrac12\) 的 Toeplitz 正性；
+2. 由式 (548.5) 产生的附近尺度 moments 仍保持 Toeplitz 正性；
+3. budget curve 满足 Stieltjes complete monotonicity；
+4. 多尺度 Loewner matrices 正半定；
+5. Crofoot block Gram 可完成。
+
+所以可定义新的有限反例层级：
+
+$$
+\boxed{
+\text{Li moments}
+\to
+\text{scale propagation}
+\to
+\text{multiscale joint PSD test}.
+}
+$$
+
+它比单独检查一个 Li Toeplitz matrix 更严格，但仍只是 RH 的必要有限投影，不是证明本身。
+
+---
+
+# 第五百四十九部　信息完备性与计算稳定性的严格区分
+
+一个完整尺度 \(a\) 的全部 moments：
+
+$$
+\{m_n(a)\}_{n\in\mathbb Z}
+$$
+
+唯一决定圆周测度 \(\mu_a\)。
+
+又因为：
+
+$$
+\mathfrak c_a:\mathbb R\to\mathbb T\setminus\{1\}
+$$
+
+可逆，所以：
+
+$$
+\boxed{
+d\nu(\xi)
+=
+(\xi^2+a^2)
+\,d\left[
+(\mathfrak c_a^{-1})_*\mu_a
+\right](\xi).
+}
+\tag{549.1}
+$$
+
+因此：
+
+## 定理 549.1（One-scale informational completeness）
+
+$$
+\boxed{
+\text{一个完整 Cayley scale 已经唯一决定实轴谱。}
+}
+\tag{549.2}
+$$
+
+所以多尺度 observer bank 并不增加理想无限精度下的信息量。
+
+---
+
+## 549.1 多尺度真正增加什么
+
+它增加的是：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{数值条件性};\\
+&\text{有限阶可证伪性};\\
+&\text{导数 jet 的稳定近似};\\
+&\text{共同谱交叉检查};\\
+&\text{误差局部化};\\
+&\text{尺度递归重整化}.
+\end{aligned}
+}
+$$
+
+这再次说明：
+
+$$
+\boxed{
+\text{观察者数量}
+\neq
+\text{信息量};
+}
+$$
+
+更重要的是 observer family 是否提供：
+
+$$
+\boxed{
+\text{稳定且相互校验的坐标图册}.
+}
+$$
+
+---
+
+# 第五百五十部　硬性边界与科学剪枝
+
+## 550.1 各尺度分别 PSD 不等于共同正谱
+
+可以人为选择多个彼此无关的单位圆正测度，使每个尺度 Toeplitz matrix 都正定，却不存在任何单一实轴 \(\nu\) 同时产生它们。
+
+所以必须加入跨尺度 transport 或 block Gram。
+
+---
+
+## 550.2 大尺度比的直接传输病态
+
+当：
+
+$$
+|r_{a,b}|\to1,
+$$
+
+解析极点接近单位圆，有限 moment transfer 失去效率。
+
+这不是数值实现偶然，而是 Möbius 几何的内在边界。
+
+---
+
+## 550.3 Chebyshev jet 高阶求导不稳定
+
+定理 541.1 是精确恒等式，但：
+
+$$
+B^{(k)}(u)
+$$
+
+对噪声极其敏感。
+
+不能把形式上的有限 jet 等同于稳定的实际 observer。
+
+---
+
+## 550.4 多尺度 bank 没有证明自然预算可行
+
+本轮全部尺度协变公式都以“同一正谱 \(\nu\) 已存在”为前提。
+
+它们没有证明 Riemann Weil source 在自然预算下存在正完成。
+
+---
+
+## 550.5 一个完整尺度已经信息完备
+
+因此不能把多尺度本身宣传为新的 RH 逻辑桥。
+
+真正可能的新价值在：
+
+$$
+\boxed{
+\text{有限阶、带误差的联合尺度正性
+是否比单尺度层级更早排除虚假谱模型。}
+}
+$$
+
+---
+
+## 550.6 本分支仍未选择黄金比例
+
+当前尺度几何自然选择：
+
+$$
+\boxed{
+\log a,\quad
+\tanh\frac{\Delta\log a}{2},
+\quad
+\text{Möbius automorphism}.
+}
+$$
+
+\(\varphi\) 并未被任何方程强迫出现。
+
+如需使用黄金比例，只能作为某种人为选择的尺度比或递归网格，不具有本分支中的结构必然性。
+
+---
+
+# 第五百五十一部　建议形式化顺序
+
+```text
+D5/S3/Weil/CayleyScale/
+  CayleyScaleMap.lean
+  CayleyScaleMobius.lean
+  HyperbolicScaleParameter.lean
+  ScaleMobiusComposition.lean
+
+D5/S3/Weil/CayleyMeasureFlow/
+  ResolventCayleyMeasure.lean
+  ScaleWeightRatio.lean
+  PositiveMobiusTransport.lean
+  ScaleWeightCocycle.lean
+  PoissonWeightForm.lean
+
+D5/S3/Weil/CayleyCaratheodory/
+  ScaleCaratheodory.lean
+  EvenCaratheodoryCovariance.lean
+  GeneralCaratheodoryGauge.lean
+  NormalizedScaleFlow.lean
+  CayleyScalePDE.lean
+  SchurScalePDE.lean
+
+D5/S3/Weil/CayleyMomentFlow/
+  CayleyMoment.lean
+  MomentScaleDerivative.lean
+  TridiagonalMomentFlow.lean
+  NormalizedMomentFlow.lean
+
+D5/S3/Weil/ChebyshevStieltjes/
+  ResolventBudgetCurve.lean
+  CayleyCosineCoordinate.lean
+  ShiftedChebyshevPolynomial.lean
+  ChebyshevStieltjesJet.lean
+  InitialMomentDerivativeFormulas.lean
+
+D5/S3/Weil/LaguerreChebyshev/
+  LaguerreTimeMoment.lean
+  ScaleJetMoment.lean
+  TimeScaleTomographyIdentity.lean
+  FiniteDifferenceScaleObserver.lean
+
+D5/S3/Weil/CrofootGram/
+  DiskMobiusWeightedComposition.lean
+  RepeatedMobiusBasis.lean
+  CrossScaleGramIdentity.lean
+  CrossScaleToeplitzGram.lean
+  MultiscaleBlockGram.lean
+
+D5/S3/Weil/FiniteScaleTransfer/
+  BudgetMomentSeries.lean
+  BudgetTransportTail.lean
+  AnalyticMomentTransferFunction.lean
+  CauchyCoefficientBound.lean
+  ExponentialMomentTransfer.lean
+
+D5/S3/Weil/ScaleLadder/
+  LogUniformScaleGrid.lean
+  AdjacentHyperbolicParameter.lean
+  ScaleLadderErrorPropagation.lean
+  WideScaleIllConditioning.lean
+
+D5/S3/Weil/MultiscaleConsistency/
+  BudgetLoewnerKernel.lean
+  BudgetLoewnerPSD.lean
+  JointScaleMomentVariables.lean
+  CrossScaleTransportIntervals.lean
+  JointRationalGramPSD.lean
+  CommonSpectrumHierarchy.lean
+
+D5/S3/Weil/RiemannScaleOrbit/
+  RiemannBudgetCurve.lean
+  LiClarkNaturalSlice.lean
+  LiScaleJet.lean
+  MultiscaleLiConsistency.lean
+```
+
+Hardy 空间加权组合算子的 unitary 性可先作为外部接口接入；核心 measure transport、moment PDE、Chebyshev jet 与有限传输界均可直接在当前项目内独立证明。
+
+---
+
+# 第五百五十二部　结果分级
+
+## 本轮独立推导得到（第 552 部）
+
+$$
+\boxed{
+\mathfrak c_b
+=
+\Phi_{(a-b)/(a+b)}
+\circ
+\mathfrak c_a.
+}
+$$
+
+$$
+\boxed{
+\mu_b
+=
+(\Phi_r)_*
+\left[
+\frac{(1+r)^2}{|1+rz|^2}
+\mu_a
+\right].
+}
+$$
+
+$$
+\boxed{
+F_b(w)
+=
+\frac ab
+F_a
+\left(
+\Phi_{(b-a)/(a+b)}(w)
+\right).
+}
+$$
+
+$$
+\boxed{
+\partial_{\log a}F_a
+=
+\frac{1-w^2}{2}\partial_wF_a-F_a.
+}
+$$
+
+$$
+\boxed{
+a\partial_am_n
+=
+\frac{n+1}{2}m_{n+1}
++
+\frac{1-n}{2}m_{n-1}
+-
+m_n.
+}
+$$
+
+$$
+\boxed{
+m_n(\sqrt u)
+=
+\sum_{k=0}^{n}
+p_{n,k}u^k
+\frac{(-1)^k}{k!}
+B^{(k)}(u).
+}
+$$
+
+$$
+\boxed{
+T_N^{(b)}
+=
+\frac ab
+\operatorname{Gram}_{\mu_a}
+(e_{0,r},\ldots,e_{N,r}).
+}
+$$
+
+以及有限 moments 的严格几何／Cauchy 尾界。
+
+---
+
+## 依赖成熟理论的解释接口
+
+* 圆盘自同构配合 reproducing-kernel 权重产生 unitary weighted composition operator；([arXiv][2])
+* Chebyshev、Laguerre 的标准归一化、递推和导数公式。([DLMF][1])
+
+这些文献接口用于识别既有 Hardy／正交多项式结构；本轮的谱尺度 transport 公式均已在正文中直接推导。
+
+---
+
+## 当前真正开放的桥（第 552 部）
+
+$$
+\boxed{
+\begin{aligned}
+&\text{自然预算 common-spectrum bank 的全尺度可行性};\\
+&\text{有限联合 SDP 的定量收敛率};\\
+&\text{多尺度数据是否能显著降低 contact atom 数};\\
+&\text{共同 block Gram 的严格区间算术实现};\\
+&\text{多尺度 bank 相对于单尺度 Slepian 的复杂度优势};\\
+&\text{由有限 Li 数据传播出的首个跨尺度负证书阶数}.
+\end{aligned}
+}
+$$
+
+---
+
+# 本轮最终结论
+
+上一轮提出：
+
+$$
+\boxed{
+\text{构造多尺度 Cayley--Laguerre observer bank。}
+}
+$$
+
+本轮证明，这个 bank 并不是多个任意镜头的并列组合。
+
+两个尺度：
+
+$$
+a,b>0
+$$
+
+之间由唯一双曲参数：
+
+$$
+\boxed{
+r_{a,b}
+=
+\tanh
+\left(
+\frac{\log a-\log b}{2}
+\right)
+}
+$$
+
+连接，并满足：
+
+$$
+\boxed{
+\mathfrak c_b
+=
+\Phi_{r_{a,b}}
+\circ
+\mathfrak c_a.
+}
+$$
+
+其谱测度则满足：
+
+$$
+\boxed{
+\mu_b
+=
+(\Phi_r)_*
+\left[
+\frac{(1+r)^2}{|1+rz|^2}
+\mu_a
+\right].
+}
+$$
+
+因此尺度变化本身就是：
+
+$$
+\boxed{
+\text{Möbius transport}
++
+\text{Poisson renormalization}.
+}
+$$
+
+在函数层：
+
+$$
+\boxed{
+\partial_{\log a}F_a
+=
+\frac{1-w^2}{2}\partial_wF_a-F_a.
+}
+$$
+
+在 moment 层：
+
+$$
+\boxed{
+a\partial_am_n
+=
+\frac{n+1}{2}m_{n+1}
++
+\frac{1-n}{2}m_{n-1}
+-
+m_n.
+}
+$$
+
+在 Stieltjes 层：
+
+$$
+\boxed{
+\text{全部 Cayley moments}
+=
+\text{单一 budget curve }B(u)
+\text{ 的 Chebyshev derivative jet}.
+}
+$$
+
+在 Hardy–Gram 层：
+
+$$
+\boxed{
+\text{不同尺度 Toeplitz matrices}
+=
+\text{同一谱测度在不同 Crofoot--Malmquist bases 下的 Gram matrices}.
+}
+$$
+
+所以真正的多尺度一致性，不是：
+
+$$
+\boxed{
+T_N^{(a_\ell)}\succeq0
+\quad
+\text{分别成立},
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{这些矩阵必须能嵌入同一个 rational block Gram。}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{完整的一尺度观察已经知道全部谱；
+多尺度观察的意义是让“知道”变得稳定、局部且可证伪。}
+}
+$$
+
+因此下一步最值得推进的对象，不是再增加新的尺度，而是：
+
+$$
+\boxed{
+\text{把 Loewner、Toeplitz 与 Crofoot block Gram
+合并成一个带严格传输误差的联合 SDP，}
+}
+$$
+
+并研究：
+
+$$
+\boxed{
+\text{它是否能以远低于单尺度高阶 moment 的复杂度，
+排除不存在共同实轴正谱的伪 Li–Clark 数据。}
+}
+$$
+
+[1]: https://dlmf.nist.gov/18.3 "https://dlmf.nist.gov/18.3"
+[2]: https://arxiv.org/abs/0910.1259 "https://arxiv.org/abs/0910.1259"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v4.3：有理主 Toeplitz 塌缩、共同谱底座、唯一原子完成与观察创新流
+
+以下从前文**第五百五十二部**继续追加。
+
+仓库中的主源仍登记为：
+
+```text
+docs/develop/theory/OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY.md
+```
+
+上一轮已经得到三类多尺度约束：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{单尺度 Toeplitz 正性};\\
+&\text{多尺度 Loewner 正性};\\
+&\text{Crofoot--Malmquist 跨尺度 block Gram 正性}.
+\end{aligned}
+}
+$$
+
+但这三类对象仍被表示成彼此并列的矩阵条件。
+
+本轮证明：对任意**有限尺度集合与有限 moment 深度**，它们都可以精确压缩成一个普通的截断 Toeplitz moment problem。
+
+核心链为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{多尺度 Cayley 特征}
+&\longrightarrow
+\text{共同有理分母}\\
+&\longrightarrow
+\text{多项式基变换}\\
+&\longrightarrow
+\text{单一 Toeplitz moment matrix}\\
+&\longrightarrow
+\text{共同谱 Haar floor}\\
+&\longrightarrow
+\text{唯一有限原子 residual}\\
+&\longrightarrow
+\text{逐观察者 Feshbach 创新流}.
+\end{aligned}
+}
+$$
+
+因此，有限多尺度问题不再需要：
+
+* 多个独立 Toeplitz 矩阵；
+* 任意补充的 cross-block 变量；
+* 彼此分开的 Loewner 与 Crofoot 检查。
+
+真正的主变量只有：
+
+$$
+\boxed{
+2n-1
+}
+$$
+
+个截断圆周 moments；在 Riemann 偶对称分支中进一步只剩：
+
+$$
+\boxed{
+n
+}
+$$
+
+个实 moments。
+
+经典的截断 Toeplitz moment、Vandermonde 分解、Malmquist–Takenaka 有理正交基均已有成熟理论；本轮新增的是将它们与前文的 Cayley 多尺度 observer 精确组装成一个共同谱压缩。正半定 Toeplitz 矩阵的 Vandermonde 分解及低秩情形的唯一性，是现代频率估计与截断三角 moment 理论的标准基础。([arXiv][1])
+
+---
+
+# 第五百五十三部　有限多尺度有理观察者
+
+选择互异尺度：
+
+$$
+\boxed{
+a_0,a_1,\ldots,a_M>0.
+}
+\tag{553.1}
+$$
+
+以 \(a_0\) 为参考尺度，定义：
+
+$$
+\boxed{
+r_\ell
+=
+\frac{a_0-a_\ell}{a_0+a_\ell},
+\qquad
+0\le\ell\le M.
+}
+\tag{553.2}
+$$
+
+于是：
+
+$$
+r_0=0,
+\qquad
+-1<r_\ell<1.
+$$
+
+对每个尺度选择 moment 深度：
+
+$$
+N_\ell\ge0,
+$$
+
+并记：
+
+$$
+\boxed{
+n_\ell=N_\ell+1.
+}
+\tag{553.3}
+$$
+
+总观察维数为：
+
+$$
+\boxed{
+n
+=
+\sum_{\ell=0}^{M}n_\ell.
+}
+\tag{553.4}
+$$
+
+定义未归一化有理特征：
+
+$$
+\boxed{
+\psi_{\ell,j}(z)
+=
+\frac{(z+r_\ell)^j}
+{(1+r_\ell z)^{j+1}},
+\qquad
+0\le j<N_\ell+1.
+}
+\tag{553.5}
+$$
+
+当 \(\ell=0\) 时：
+
+$$
+\boxed{
+\psi_{0,j}(z)=z^j.
+}
+\tag{553.6}
+$$
+
+前文使用的 normalized Crofoot–Malmquist 特征与 \(\psi_{\ell,j}\) 只相差已知的非零尺度系数，因此不会改变：
+
+* 线性张成空间；
+* 共同谱可行性；
+* generalized eigenvalues；
+* 原子支撑。
+
+这些系数可在最终数值实现中通过对角 congruence 恢复。
+
+---
+
+# 第五百五十四部　共同分母基定理
+
+定义非参考尺度的共同分母：
+
+$$
+\boxed{
+D(z)
+=
+\prod_{\ell=1}^{M}
+(1+r_\ell z)^{n_\ell}.
+}
+\tag{554.1}
+$$
+
+记：
+
+$$
+\boxed{
+q=\deg D
+=
+\sum_{\ell=1}^{M}n_\ell.
+}
+\tag{554.2}
+$$
+
+再定义：
+
+$$
+\boxed{
+d=n-1=q+N_0.
+}
+\tag{554.3}
+$$
+
+对每个特征定义多项式：
+
+$$
+\boxed{
+p_{\ell,j}(z)
+=
+D(z)\psi_{\ell,j}(z).
+}
+\tag{554.4}
+$$
+
+参考尺度满足：
+
+$$
+\boxed{
+p_{0,j}(z)=D(z)z^j,
+}
+\tag{554.5}
+$$
+
+而非参考尺度满足：
+
+$$
+\boxed{
+\begin{aligned}
+p_{\ell,j}(z)
+={}&
+(z+r_\ell)^j
+(1+r_\ell z)^{n_\ell-j-1}\\
+&\times
+\prod_{\substack{m=1\\m\ne\ell}}^{M}
+(1+r_mz)^{n_m}.
+\end{aligned}
+}
+\tag{554.6}
+$$
+
+因此：
+
+$$
+\deg p_{\ell,j}\le q-1
+\qquad
+(\ell\ge1),
+$$
+
+而：
+
+$$
+\deg p_{0,j}=q+j.
+$$
+
+---
+
+## 定理 554.1（共同分母多项式基）
+
+集合：
+
+$$
+\boxed{
+\mathcal P
+=
+\left\{
+p_{\ell,j}:
+0\le\ell\le M,\ 
+0\le j<n_\ell
+\right\}
+}
+\tag{554.7}
+$$
+
+构成多项式空间：
+
+$$
+\boxed{
+\mathbb C[z]_{\le d}
+}
+$$
+
+的一组基。
+
+### 证明
+
+先考虑非参考特征。
+
+对固定 \(\ell\ge1\)，因为：
+
+$$
+z+r_\ell
+=
+\frac1{r_\ell}(1+r_\ell z)
++
+\left(
+r_\ell-\frac1{r_\ell}
+\right),
+$$
+
+所以：
+
+$$
+\frac{(z+r_\ell)^j}
+{(1+r_\ell z)^{j+1}}
+$$
+
+可展开为：
+
+$$
+\sum_{k=1}^{j+1}
+\frac{c_{\ell,j,k}}
+{(1+r_\ell z)^k},
+$$
+
+且最高阶分母项系数非零，因为：
+
+$$
+|r_\ell|<1,\qquad r_\ell\ne0.
+$$
+
+因此，对固定 \(\ell\)，特征：
+
+$$
+\psi_{\ell,0},\ldots,\psi_{\ell,n_\ell-1}
+$$
+
+与标准 partial-fraction 基：
+
+$$
+\frac1{1+r_\ell z},
+\ldots,
+\frac1{(1+r_\ell z)^{n_\ell}}
+$$
+
+之间存在可逆三角变换。
+
+不同 \(r_\ell\) 给出不同极点：
+
+$$
+-\frac1{r_\ell}.
+$$
+
+所以全部非参考特征构成所有真分式：
+
+$$
+\frac{P(z)}{D(z)},
+\qquad
+\deg P<q
+$$
+
+的一组基。
+
+乘以 \(D\) 后，全部 \(p_{\ell,j}\)、\(\ell\ge1\)，构成：
+
+$$
+\mathbb C[z]_{\le q-1}
+$$
+
+的一组基。
+
+最后，参考尺度多项式：
+
+$$
+D,\ zD,\ldots,z^{N_0}D
+$$
+
+的最高次数分别为：
+
+$$
+q,q+1,\ldots,q+N_0=d.
+$$
+
+它们模 \(\mathbb C[z]_{\le q-1}\) 后构成三角独立族。
+
+总元素数为：
+
+$$
+q+(N_0+1)=d+1=n.
+$$
+
+故 \(\mathcal P\) 是 \(\mathbb C[z]_{\le d}\) 的基。∎
+
+---
+
+## 554.1 结构意义
+
+因此多尺度 rational observer space 并不是一个不规则函数集合，而是：
+
+$$
+\boxed{
+\mathcal E
+=
+\left\{
+\frac{P(z)}{D(z)}:
+\deg P\le d
+\right\}.
+}
+\tag{554.8}
+$$
+
+也就是说：
+
+$$
+\boxed{
+\text{多尺度、多深度的全部信息}
+=
+\text{一个固定分母下的完整多项式分子空间}.
+}
+$$
+
+---
+
+# 第五百五十五部　有理 Gram 到主 Toeplitz 的精确塌缩
+
+令：
+
+$$
+\mu\ge0
+$$
+
+为单位圆上的有限正测度。
+
+将全部 \(\psi_{\ell,j}\) 按某个固定顺序组成向量：
+
+$$
+\boxed{
+\Psi(z)
+=
+\begin{pmatrix}
+\psi_1(z)\\
+\vdots\\
+\psi_n(z)
+\end{pmatrix}.
+}
+\tag{555.1}
+$$
+
+定义多尺度 rational Gram matrix：
+
+$$
+\boxed{
+G
+=
+\int_{\mathbb T}
+\Psi(z)\Psi(z)^*\,d\mu(z).
+}
+\tag{555.2}
+$$
+
+令：
+
+$$
+v_d(z)
+=
+(1,z,\ldots,z^d)^T.
+$$
+
+由定理 554.1，存在唯一可逆矩阵：
+
+$$
+\boxed{
+A\in GL_n(\mathbb C)
+}
+\tag{555.3}
+$$
+
+使：
+
+$$
+\boxed{
+\Psi(z)
+=
+\frac1{D(z)}Av_d(z).
+}
+\tag{555.4}
+$$
+
+定义加权正测度：
+
+$$
+\boxed{
+d\sigma(z)
+=
+\frac{d\mu(z)}
+{|D(z)|^2}.
+}
+\tag{555.5}
+$$
+
+由于 \(D\) 在单位圆上无零点，\(\sigma\) 有限且正。
+
+定义主 moment matrix：
+
+$$
+\boxed{
+T_d(\sigma)
+=
+\int_{\mathbb T}
+v_d(z)v_d(z)^*\,d\sigma(z).
+}
+\tag{555.6}
+$$
+
+它是 Hermitian Toeplitz matrix：
+
+$$
+\boxed{
+T_d(\sigma)
+=
+[y_{j-k}]_{j,k=0}^{d},
+}
+\tag{555.7}
+$$
+
+其中：
+
+$$
+y_k
+=
+\int_{\mathbb T}z^k\,d\sigma(z).
+$$
+
+---
+
+## 定理 555.1（Rational–Toeplitz collapse）
+
+$$
+\boxed{
+G
+=
+A\,T_d(\sigma)\,A^*.
+}
+\tag{555.8}
+$$
+
+### 证明
+
+直接代入：
+
+$$
+\begin{aligned}
+G
+&=
+\int
+\frac{Av_dv_d^*A^*}
+{|D|^2}\,d\mu\\
+&=
+A
+\left[
+\int v_dv_d^*\,d\sigma
+\right]
+A^*.
+\end{aligned}
+$$
+
+∎
+
+---
+
+## 定理 555.2（有限共同谱判据）
+
+给定 Hermitian matrix \(G\)，定义：
+
+$$
+\boxed{
+T_G
+=
+A^{-1}G\,A^{-*}.
+}
+\tag{555.9}
+$$
+
+则下列条件等价：
+
+$$
+\boxed{
+\begin{aligned}
+&(1)\quad
+\exists\,\mu\ge0:
+G=\int\Psi\Psi^*\,d\mu;\\
+&(2)\quad
+T_G
+\text{ 是正半定 Hermitian Toeplitz matrix}.
+\end{aligned}
+}
+\tag{555.10}
+$$
+
+### 证明
+
+\((1)\Rightarrow(2)\) 由定理 555.1。
+
+反之，若 \(T_G\succeq0\) 且 Toeplitz，则截断三角 moment theorem 给出正测度 \(\sigma\)，使：
+
+$$
+T_G=T_d(\sigma).
+$$
+
+定义：
+
+$$
+d\mu=|D|^2d\sigma.
+$$
+
+则定理 555.1 恢复 \(G\)。∎
+
+截断 Toeplitz moment problem 与 rational covariance extension 都可视为正定 Toeplitz 完成问题；这里使用的是其有限维、无需指定 rational density 的基础版本。([arXiv][2])
+
+---
+
+# 第五百五十六部　共同谱一致性缺陷
+
+令：
+
+$$
+n=d+1.
+$$
+
+一般 Hermitian \(n\times n\) matrix 的实维数为：
+
+$$
+n^2.
+$$
+
+Hermitian Toeplitz matrix 的实维数为：
+
+$$
+2n-1.
+$$
+
+所以有限多尺度共同谱 Gram matrices 位于一个余维：
+
+$$
+\boxed{
+n^2-(2n-1)
+=
+(n-1)^2
+}
+\tag{556.1}
+$$
+
+的线性子空间中。
+
+即使暂时忽略正性，仅要求不同尺度来自**同一个谱**，也已经施加：
+
+$$
+\boxed{
+(n-1)^2
+}
+$$
+
+个独立实线性约束。
+
+---
+
+## 556.1 Riemann 偶对称分支
+
+若 \(\mu\) 在复共轭下不变：
+
+$$
+\mu(E)=\mu(\overline E),
+$$
+
+并且所有 \(r_\ell\) 为实数，则：
+
+$$
+G
+$$
+
+为实对称矩阵，而：
+
+$$
+T_G
+$$
+
+为实对称 Toeplitz matrix。
+
+实对称 \(n\times n\) matrix 的维数为：
+
+$$
+\frac{n(n+1)}2,
+$$
+
+实对称 Toeplitz matrix 的维数为：
+
+$$
+n.
+$$
+
+所以余维为：
+
+$$
+\boxed{
+\frac{n(n-1)}2.
+}
+\tag{556.2}
+$$
+
+这说明 Riemann 偶谱对称虽然减少了 moment 变量，却仍保留大量跨尺度一致性方程。
+
+---
+
+## 556.2 共同谱缺陷
+
+定义：
+
+$$
+\boxed{
+\Delta_{\mathrm{cs}}(G)
+=
+\operatorname{dist}
+\left(
+A^{-1}GA^{-*},
+\operatorname{Toeplitz}_n
+\right).
+}
+\tag{556.3}
+$$
+
+则：
+
+$$
+\boxed{
+\Delta_{\mathrm{cs}}(G)=0
+}
+$$
+
+是共同谱的线性必要条件。
+
+再要求：
+
+$$
+\boxed{
+A^{-1}GA^{-*}\succeq0
+}
+$$
+
+才得到真正的正共同谱。
+
+因此有限多尺度证书应分两层：
+
+$$
+\boxed{
+\begin{aligned}
+\text{第一层}
+&:\quad
+\text{Toeplitz consistency};\\
+\text{第二层}
+&:\quad
+\text{positive-spectrum feasibility}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第五百五十七部　主 Toeplitz SDP
+
+实际应用中通常不会预先知道完整 cross-scale Gram matrix。
+
+我们可能只知道：
+
+* 每个尺度内部的 moments；
+* 部分 cross-scale pairings；
+* 带区间误差的 Laguerre moment tubes；
+* budget Loewner 数据；
+* 某些局部 Weil 观测。
+
+所有这些数据都可以写成主 Toeplitz moments：
+
+$$
+y_{-d},\ldots,y_d
+$$
+
+的线性函数。
+
+定义：
+
+$$
+\boxed{
+T_d(y)
+=
+[y_{j-k}]_{j,k=0}^{d}.
+}
+\tag{557.1}
+$$
+
+对第 \(s\) 项观察写成：
+
+$$
+\boxed{
+\mathcal L_s(y)\in I_s,
+}
+\tag{557.2}
+$$
+
+其中 \(I_s\) 可以是：
+
+* 单点等式；
+* 实区间；
+* 复矩形区间；
+* 线性矩阵区间。
+
+---
+
+## 定理 557.1（共同谱主 SDP）
+
+有限多尺度共同正谱可行性精确等价于：
+
+$$
+\boxed{
+\begin{aligned}
+\text{find }&y_{-d},\ldots,y_d\\
+\text{such that }&
+T_d(y)\succeq0,\\
+&y_{-k}=\overline{y_k},\\
+&\mathcal L_s(y)\in I_s
+\quad\forall s.
+\end{aligned}
+}
+\tag{557.3}
+$$
+
+所以未知变量数只随总 observer dimension 线性增长：
+
+$$
+\boxed{
+2n-1
+}
+$$
+
+或在偶分支中为：
+
+$$
+\boxed{
+n.
+}
+$$
+
+---
+
+## 557.1 先前三类 PSD 条件的压缩
+
+任取有限 rational feature family：
+
+$$
+h(z)=C\frac{v_d(z)}{D(z)}.
+$$
+
+其 Gram matrix为：
+
+$$
+\boxed{
+G_h
+=
+C\,T_d(y)\,C^*.
+}
+\tag{557.4}
+$$
+
+因此，只要主矩阵：
+
+$$
+T_d(y)\succeq0,
+$$
+
+以下对象均自动正半定：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{每个单尺度 Toeplitz block};\\
+&\text{Crofoot 跨尺度 block Gram};\\
+&\text{有限 budget Loewner Gram};\\
+&\text{任意 rational Krylov compression}.
+\end{aligned}
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{Loewner、Toeplitz 与 Crofoot
+不是三个独立正性条件；}
+}
+$$
+
+它们是同一个主 Toeplitz matrix 的不同压缩。
+
+反过来，各压缩分别 PSD 并不足以保证存在共同的 \(T_d(y)\)。
+
+---
+
+# 第五百五十八部　共同谱 Haar floor
+
+定义单位圆 Haar 测度：
+
+$$
+m_{\mathbb T}(d\theta)=\frac{d\theta}{2\pi}.
+$$
+
+定义 rational observer 的 Haar Gram matrix：
+
+$$
+\boxed{
+B
+=
+\int_{\mathbb T}
+\Psi(z)\Psi(z)^*\,dm_{\mathbb T}(z).
+}
+\tag{558.1}
+$$
+
+由定理 555.1：
+
+$$
+\boxed{
+B
+=
+A\,H_D\,A^*,
+}
+\tag{558.2}
+$$
+
+其中：
+
+$$
+\boxed{
+H_D
+=
+\int_{\mathbb T}
+v_d(z)v_d(z)^*
+\frac{dm_{\mathbb T}(z)}
+{|D(z)|^2}.
+}
+\tag{558.3}
+$$
+
+因为 \(|D|^{-2}>0\) 于单位圆：
+
+$$
+\boxed{
+H_D\succ0,
+\qquad
+B\succ0.
+}
+\tag{558.4}
+$$
+
+给定一个精确共同谱 Gram matrix \(G\)，定义其最大共同 Haar floor：
+
+$$
+\boxed{
+\alpha_*(G)
+=
+\sup
+\left\{
+\alpha\ge0:
+\begin{array}{l}
+\exists\,\mu'\ge\alpha m_{\mathbb T},\\
+\displaystyle
+G=\int\Psi\Psi^*\,d\mu'
+\end{array}
+\right\}.
+}
+\tag{558.5}
+$$
+
+---
+
+## 定理 558.1（Exact common-spectrum floor）
+
+令：
+
+$$
+T=A^{-1}GA^{-*}.
+$$
+
+则：
+
+$$
+\boxed{
+\alpha_*(G)
+=
+\max
+\left\{
+\alpha:
+T-\alpha H_D\succeq0
+\right\}.
+}
+\tag{558.6}
+$$
+
+因此：
+
+$$
+\boxed{
+\alpha_*(G)
+=
+\lambda_{\min}
+\left(
+H_D^{-1/2}
+TH_D^{-1/2}
+\right).
+}
+\tag{558.7}
+$$
+
+等价地：
+
+$$
+\boxed{
+\alpha_*(G)
+=
+\lambda_{\min}
+\left(
+B^{-1/2}
+GB^{-1/2}
+\right).
+}
+\tag{558.8}
+$$
+
+### 证明
+
+若：
+
+$$
+\mu'\ge\alpha m_{\mathbb T},
+$$
+
+写：
+
+$$
+\mu'=\alpha m_{\mathbb T}+\rho,
+\qquad
+\rho\ge0.
+$$
+
+除以 \(|D|^2\) 后：
+
+$$
+\frac{d\mu'}{|D|^2}
+=
+\alpha\frac{dm_{\mathbb T}}{|D|^2}
++
+\frac{d\rho}{|D|^2}.
+$$
+
+所以对应 moment matrix 满足：
+
+$$
+T-\alpha H_D\succeq0.
+$$
+
+反之，若：
+
+$$
+T-\alpha H_D\succeq0
+$$
+
+且 Toeplitz，则存在正测度 \(\tau\)，使其为 \(\tau\) 的 moment matrix。
+
+令：
+
+$$
+d\mu'
+=
+\alpha\,dm_{\mathbb T}
++
+|D|^2d\tau.
+$$
+
+则 \(\mu'\ge\alpha m_{\mathbb T}\)，且恢复相同 \(G\)。∎
+
+---
+
+## 558.1 Malmquist–Takenaka 图表
+
+把 pole multiset：
+
+$$
+-r_\ell
+$$
+
+按各自 multiplicity \(n_\ell\) 排列，并加入 \(0\) 的 \(n_0\) 重数，可以构造同一 rational space 的全局 Malmquist–Takenaka 正交基。
+
+该基在 \(H^2(\mathbb T)\) 的 Haar 内积下正交归一；MT 系统是 Hardy 空间中由圆盘内 pole sequence 生成的经典有理正交系统。([arXiv][3])
+
+在该基中：
+
+$$
+\boxed{
+B=I,
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\alpha_*(G)=\lambda_{\min}(G_{\mathrm{MT}}).
+}
+\tag{558.9}
+$$
+
+因此共同谱 floor 的最自然有限坐标并不是多个 scale blocks，而是：
+
+$$
+\boxed{
+\text{一个全局 Haar-orthonormal rational basis}.
+}
+$$
+
+---
+
+# 第五百五十九部　唯一有限原子最优完成
+
+令：
+
+$$
+\boxed{
+\alpha_*=\alpha_*(G),
+}
+$$
+
+并定义 residual Toeplitz matrix：
+
+$$
+\boxed{
+T_*
+=
+T-\alpha_*H_D.
+}
+\tag{559.1}
+$$
+
+因为 \(\alpha_*\) 是最小 generalized eigenvalue：
+
+$$
+\boxed{
+T_*\succeq0,
+\qquad
+T_*\text{ 奇异}.
+}
+\tag{559.2}
+$$
+
+记：
+
+$$
+\boxed{
+r=\operatorname{rank}T_*.
+}
+\tag{559.3}
+$$
+
+则：
+
+$$
+r\le d=n-1.
+$$
+
+---
+
+## 定理 559.1（Unique finite-atomic residual）
+
+存在唯一正测度：
+
+$$
+\boxed{
+\tau_*
+=
+\sum_{j=1}^{r}
+w_j\delta_{\zeta_j},
+\qquad
+w_j>0,\quad
+\zeta_j\in\mathbb T,
+}
+\tag{559.4}
+$$
+
+使：
+
+$$
+T_d(\tau_*)=T_*.
+$$
+
+因此最大 Haar-floor 完成唯一，并具有形式：
+
+$$
+\boxed{
+\mu_*
+=
+\alpha_*m_{\mathbb T}
++
+\sum_{j=1}^{r}
+w_j|D(\zeta_j)|^2\delta_{\zeta_j}.
+}
+\tag{559.5}
+$$
+
+### 证明
+
+奇异正半定 Toeplitz matrix 的 Carathéodory–Fejér/Vandermonde 分解是唯一的，且原子数等于其 rank。([arXiv][1])
+
+再乘回 \(|D|^2\) 即得。∎
+
+---
+
+## 559.1 一个重要强化
+
+上一轮有限 Tchakaloff 分析只给出：
+
+$$
+\text{存在不超过 observer dimension 的原子表示}.
+$$
+
+当前共同分母结构给出更强结论：
+
+$$
+\boxed{
+\text{最大 floor completion 不仅存在，
+而且唯一；}
+}
+$$
+
+$$
+\boxed{
+\text{其 residual 原子数精确等于 residual Toeplitz rank}.
+}
+$$
+
+---
+
+# 第五百六十部　接触有理函数
+
+取：
+
+$$
+c\in
+\ker
+\left(
+G-\alpha_*B
+\right).
+$$
+
+定义接触有理函数：
+
+$$
+\boxed{
+q_c(z)
+=
+c^*\Psi(z)
+=
+\frac{P_c(z)}{D(z)}.
+}
+\tag{560.1}
+$$
+
+则：
+
+$$
+\begin{aligned}
+0
+&=
+c^*(G-\alpha_*B)c\\
+&=
+\int_{\mathbb T}
+|q_c(z)|^2
+\,d\left(
+\mu_*-\alpha_*m_{\mathbb T}
+\right)(z).
+\end{aligned}
+$$
+
+由于 integrand 与 residual measure 均非负：
+
+## 定理 560.1（Rational contact support）
+
+$$
+\boxed{
+\operatorname{supp}
+\left(
+\mu_*-\alpha_*m_{\mathbb T}
+\right)
+\subseteq
+\left\{
+z\in\mathbb T:
+P_c(z)=0
+\right\}
+}
+\tag{560.2}
+$$
+
+对每个 \(c\in\ker(G-\alpha_*B)\) 成立。
+
+因此原子支撑位于全部 kernel polynomials 的共同单位圆零点中。
+
+---
+
+## 560.1 简单最低特征值
+
+若 generalized 最低特征值简单，则：
+
+$$
+\dim\ker(G-\alpha_*B)=1.
+$$
+
+取生成向量 \(c_*\)，则单个接触函数：
+
+$$
+\boxed{
+q_*(z)=c_*^*\Psi(z)
+}
+\tag{560.3}
+$$
+
+已经包含全部 residual atoms。
+
+若其单位圆零点均简单且数量等于 \(r\)，则这些零点恰好就是：
+
+$$
+\boxed{
+\zeta_1,\ldots,\zeta_r.
+}
+$$
+
+这把前文单尺度 contact polynomial 推广为：
+
+$$
+\boxed{
+\text{多尺度 rational contact function}.
+}
+$$
+
+---
+
+# 第五百六十一部　观察者创新的 Feshbach 递推
+
+选择一个全局 Haar-orthonormal rational basis：
+
+$$
+\boxed{
+b_0,b_1,b_2,\ldots
+}
+$$
+
+例如按选定 pole sequence 构造的 Malmquist–Takenaka 系统。
+
+令前 \(n\) 个特征的未知谱 Gram matrix为：
+
+$$
+\boxed{
+G_n
+=
+\left[
+\int b_j\overline{b_k}\,d\mu
+\right]_{j,k=0}^{n-1}.
+}
+\tag{561.1}
+$$
+
+定义当前 observer floor：
+
+$$
+\boxed{
+\alpha_n
+=
+\lambda_{\min}(G_n).
+}
+\tag{561.2}
+$$
+
+加入一个新特征 \(b_n\) 后：
+
+$$
+\boxed{
+G_{n+1}
+=
+\begin{pmatrix}
+G_n&g_n\\
+g_n^*&\gamma_n
+\end{pmatrix}.
+}
+\tag{561.3}
+$$
+
+对：
+
+$$
+\alpha<\alpha_n,
+$$
+
+定义创新 Schur 函数：
+
+$$
+\boxed{
+s_n(\alpha)
+=
+\gamma_n-\alpha
+-
+g_n^*
+(G_n-\alpha I)^{-1}
+g_n.
+}
+\tag{561.4}
+$$
+
+---
+
+## 定理 561.1（Observer innovation equation）
+
+若：
+
+$$
+\alpha_{n+1}<\alpha_n,
+$$
+
+则 \(\alpha_{n+1}\) 是区间：
+
+$$
+(-\infty,\alpha_n)
+$$
+
+内方程：
+
+$$
+\boxed{
+s_n(\alpha)=0
+}
+\tag{561.5}
+$$
+
+的唯一解。
+
+### 证明
+
+由 Schur complement：
+
+$$
+G_{n+1}-\alpha I\succeq0
+$$
+
+当且仅当：
+
+$$
+G_n-\alpha I\succ0
+$$
+
+且：
+
+$$
+s_n(\alpha)\ge0.
+$$
+
+同时：
+
+$$
+\boxed{
+s_n'(\alpha)
+=
+-1
+-
+g_n^*
+(G_n-\alpha I)^{-2}
+g_n
+<0.
+}
+\tag{561.6}
+$$
+
+所以 \(s_n\) 严格递减，至多有一个根。
+
+最小特征值正是正半定性第一次失效的边界。∎
+
+---
+
+## 561.1 新接触向量
+
+在根：
+
+$$
+\alpha=\alpha_{n+1}
+$$
+
+处，定义：
+
+$$
+\boxed{
+x_n
+=
+-
+(G_n-\alpha I)^{-1}g_n.
+}
+\tag{561.7}
+$$
+
+则：
+
+$$
+\boxed{
+\begin{pmatrix}
+x_n\\1
+\end{pmatrix}
+\in
+\ker(G_{n+1}-\alpha I).
+}
+\tag{561.8}
+$$
+
+因此新 contact rational function为：
+
+$$
+\boxed{
+q_{n+1}(z)
+=
+b_n(z)
++
+\sum_{j=0}^{n-1}
+(x_n)_j b_j(z).
+}
+\tag{561.9}
+$$
+
+其 residual 谱支撑必须落在：
+
+$$
+q_{n+1}(z)=0
+$$
+
+上。
+
+---
+
+## 561.2 Wang–Deng 的精确有限形式
+
+$$
+\boxed{
+g_n^*(G_n-\alpha I)^{-1}g_n
+}
+$$
+
+是旧 observer space 对新特征产生的 self-energy。
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Wang}
+&:\quad
+\text{判断新特征是否真正降低 floor};\\
+\text{Deng}
+&:\quad
+\text{用 resolvent self-energy 消去旧空间};\\
+\text{输出}
+&:\quad
+\text{一个新的接触函数与更低 floor}.
+\end{aligned}
+}
+$$
+
+如果新特征对当前最低 eigenspace 完全不可见，并且 Schur complement 在 \(\alpha_n\) 处仍非负，则：
+
+$$
+\boxed{
+\alpha_{n+1}=\alpha_n.
+}
+$$
+
+这就是**定义冗余**的精确谱条件。
+
+---
+
+# 第五百六十二部　主 Toeplitz 参数压缩率
+
+令总 observer 数为：
+
+$$
+n.
+$$
+
+若直接保留完整跨尺度 Gram matrix，需要：
+
+$$
+\boxed{
+n^2
+}
+$$
+
+个实 Hermitian 参数。
+
+共同谱主 Toeplitz 只需要：
+
+$$
+\boxed{
+2n-1
+}
+$$
+
+个实参数。
+
+所以参数压缩比渐近为：
+
+$$
+\boxed{
+\frac{2n-1}{n^2}
+\sim
+\frac2n.
+}
+\tag{562.1}
+$$
+
+在 Riemann 偶对称分支中，只需：
+
+$$
+\boxed{
+n
+}
+$$
+
+个实 moments，压缩比进一步为：
+
+$$
+\boxed{
+\frac{n}{n(n+1)/2}
+=
+\frac2{n+1}.
+}
+\tag{562.2}
+$$
+
+更重要的是，最大 floor optimizer 的 residual 原子数至多：
+
+$$
+\boxed{
+n-1.
+}
+\tag{562.3}
+$$
+
+因此有限多尺度 observer 的共同谱复杂度是线性的：
+
+$$
+\boxed{
+\text{moment variables }O(n),
+\qquad
+\text{contact atoms }O(n),
+}
+$$
+
+而不是 block Gram 的 \(O(n^2)\) 自由度。
+
+---
+
+# 第五百六十三部　部分观察与 Glue Dimension
+
+若只知道部分数据，定义线性 measurement map：
+
+$$
+\boxed{
+\mathcal M:
+\operatorname{Toeplitz}_n
+\longrightarrow
+\mathbb R^s.
+}
+\tag{563.1}
+$$
+
+例如 \(\mathcal M\) 可只读取：
+
+* 每个尺度的 diagonal Toeplitz block；
+* 各尺度 budget；
+* 若干 Loewner entries；
+* 少量 cross-scale pairings。
+
+定义：
+
+$$
+\boxed{
+\operatorname{GlueDim}
+=
+\dim\ker\mathcal M.
+}
+\tag{563.2}
+$$
+
+它是使所有局部图表真正胶合为共同谱，仍然缺少的实参数数量。
+
+---
+
+## 563.1 三种状态
+
+### 完全确定
+
+$$
+\operatorname{GlueDim}=0.
+$$
+
+局部数据唯一确定主 Toeplitz moments。
+
+### 欠确定但可完成
+
+$$
+\operatorname{GlueDim}>0,
+$$
+
+且存在：
+
+$$
+T_d(y)\succeq0
+$$
+
+满足全部数据。
+
+### 不可胶合
+
+不存在任何正半定 Toeplitz completion。
+
+因此：
+
+$$
+\boxed{
+\operatorname{GlueDim}
+}
+$$
+
+比“尺度数量”更准确地测量定义缺口。
+
+增加一个 cross-scale observer 的价值，就是使：
+
+$$
+\boxed{
+\operatorname{GlueDim}
+}
+$$
+
+严格下降，而不是仅仅增加一个新的 PSD 矩阵。
+
+---
+
+# 第五百六十四部　鲁棒共同谱证书
+
+设真实 Gram 为：
+
+$$
+G,
+$$
+
+数值观测为：
+
+$$
+\widetilde G=G+E.
+$$
+
+定义变换误差：
+
+$$
+\boxed{
+\varepsilon_T
+=
+\left\|
+A^{-1}EA^{-*}
+\right\|_{\mathrm{op}}.
+}
+\tag{564.1}
+$$
+
+有粗界：
+
+$$
+\boxed{
+\varepsilon_T
+\le
+\|A^{-1}\|^2
+\|E\|.
+}
+\tag{564.2}
+$$
+
+---
+
+## 564.1 一致性拒绝证书
+
+令：
+
+$$
+\Pi_{\mathrm{Toep}}
+$$
+
+为 Hermitian Toeplitz 子空间的正交投影。
+
+若：
+
+$$
+\boxed{
+\left\|
+\widetilde T
+-
+\Pi_{\mathrm{Toep}}\widetilde T
+\right\|
+>
+\varepsilon_T,
+}
+\tag{564.3}
+$$
+
+其中：
+
+$$
+\widetilde T=A^{-1}\widetilde G A^{-*},
+$$
+
+则不存在任何位于误差球内的精确共同谱 Gram matrix。
+
+---
+
+## 564.2 Floor 稳定性
+
+定义：
+
+$$
+\widetilde\alpha
+=
+\lambda_{\min}
+\left(
+B^{-1/2}
+\widetilde G
+B^{-1/2}
+\right).
+$$
+
+则：
+
+$$
+\boxed{
+|\widetilde\alpha-\alpha_*|
+\le
+\left\|
+B^{-1/2}EB^{-1/2}
+\right\|.
+}
+\tag{564.4}
+$$
+
+所以 Haar floor 具有标准 Hermitian eigenvalue 的 Lipschitz 稳定性。
+
+---
+
+## 564.3 Contact atom 稳定性
+
+若最小 generalized eigenvalue 与下一 eigenvalue 的 gap 为：
+
+$$
+\boxed{
+\mathrm{gap}
+=
+\alpha_2-\alpha_1>0,
+}
+$$
+
+则接触 eigenspace 的角度误差受 Davis–Kahan 型比例控制：
+
+$$
+\boxed{
+\sin\angle
+(\widetilde c_*,c_*)
+\lesssim
+\frac{
+\|B^{-1/2}EB^{-1/2}\|
+}{
+\mathrm{gap}
+}.
+}
+\tag{564.5}
+$$
+
+因此 contact atoms 的数值不稳定通常来自：
+
+$$
+\boxed{
+\text{最低 floor 近简并},
+}
+$$
+
+而不是单纯来自 moment 数量不足。
+
+---
+
+# 第五百六十五部　Scale Design 不再是信息量问题
+
+定理 554.1 表明，只要共同 rational space 维数为 \(n\)，完整 Gram 数据最终都压缩为一个 \(n\times n\) Toeplitz moment matrix。
+
+因此，在理想无误差情况下，不同的尺度分配：
+
+$$
+(n_0,n_1,\ldots,n_M)
+$$
+
+只是在选择同一维数 rational observer space 的不同坐标。
+
+真正的 scale-design 目标不是“获得更多信息”，而是优化：
+
+$$
+\boxed{
+\begin{aligned}
+&\|A\|\,\|A^{-1}\|;\\
+&\text{Laguerre truncation error};\\
+&\text{moment transport radius};\\
+&\text{最低 generalized eigenvalue gap};\\
+&\text{contact root condition number}.
+\end{aligned}
+}
+$$
+
+---
+
+## 565.1 全局 MT 预条件
+
+原始分块 Crofoot 特征在各自尺度内部良好，却可能在尺度之间近线性相关。
+
+将全部 pole multiplicities 统一编排为一个全局 Malmquist–Takenaka basis 后：
+
+$$
+\boxed{
+B=I.
+}
+$$
+
+这消除了 Haar metric 的条件数。
+
+但未知谱 Gram：
+
+$$
+G_{\mathrm{MT}}
+$$
+
+仍可能具有极小最低特征值；这反映的是实际 observer floor 接近零，而不是坐标病态。
+
+---
+
+## 565.2 尺度过近与合流极限
+
+若两个尺度：
+
+$$
+a_\ell\approx a_m,
+$$
+
+则：
+
+$$
+r_\ell\approx r_m.
+$$
+
+原始分块特征会接近线性相关。
+
+其正确极限不是保留两个重复尺度块，而是把它们合并为同一 pole 的更高 multiplicity，即：
+
+$$
+\boxed{
+\text{scale collision}
+\longrightarrow
+\text{confluent rational jet}.
+}
+$$
+
+这与前文：
+
+$$
+\text{零点重数}
+\longrightarrow
+\text{derivative jet}
+$$
+
+具有相同结构。
+
+---
+
+# 第五百六十六部　与紧窗口有限矩阵工作的关系
+
+最新紧窗口工作已经把支撑窗口内的 Weil 正性从 dual/Rayleigh 方向压缩成有限矩阵证书，并在 \(L=0.8\) 给出严格正下界；它同时揭示点态 prime-envelope 方法的双指数障碍。([arXiv][4])
+
+本轮得到的主 Toeplitz 塌缩与之不同：
+
+$$
+\boxed{
+\begin{aligned}
+\text{紧窗口有限矩阵}
+&:\quad
+\text{直接证明 Weil quadratic form 正性};\\
+\text{本轮主 Toeplitz}
+&:\quad
+\text{证明多个 Cayley/resolvent observer
+是否来自同一个正谱}.
+\end{aligned}
+}
+$$
+
+前者偏向 dual coercivity；
+
+后者偏向 primal spectral completion。
+
+二者可以在同一数值程序中配对：
+
+$$
+\boxed{
+\begin{aligned}
+\text{dual}
+&:\quad
+\text{有限 Weil matrix 下界};\\
+\text{primal}
+&:\quad
+\text{主 Toeplitz moment + 原子谱完成};\\
+\text{gap}
+&:\quad
+\text{尚未认证的正性余量}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第五百六十七部　新的研究程序
+
+## 567.1 Common-denominator compiler
+
+输入：
+
+$$
+(a_\ell,N_\ell)_{\ell=0}^{M}.
+$$
+
+自动生成：
+
+$$
+r_\ell,\quad
+D(z),\quad
+A,\quad
+H_D.
+$$
+
+严格验证：
+
+$$
+\det A\ne0.
+$$
+
+---
+
+## 567.2 Master moment solver
+
+使用未知 moments：
+
+$$
+y_0,\ldots,y_d
+$$
+
+构造：
+
+$$
+T_d(y).
+$$
+
+加入：
+
+* Laguerre moment intervals；
+* 多尺度 budget 数据；
+* 已知 Li moments；
+* Crofoot cross pairings；
+* local Weil constraints。
+
+求解：
+
+$$
+T_d(y)\succeq0.
+$$
+
+---
+
+## 567.3 Floor optimization
+
+求：
+
+$$
+\boxed{
+\max\alpha
+}
+$$
+
+满足：
+
+$$
+\boxed{
+T_d(y)-\alpha H_D\succeq0.
+}
+\tag{567.1}
+$$
+
+若数据完整，则退化为 generalized eigenvalue。
+
+---
+
+## 567.4 Atomic extraction
+
+对最优 residual：
+
+$$
+T_*=T_d(y_*)-\alpha_*H_D
+$$
+
+执行 Vandermonde decomposition，恢复：
+
+$$
+\zeta_j,\quad w_j.
+$$
+
+再映回：
+
+* 每个 Cayley scale；
+* 实轴频率；
+* budget curve；
+* Li–Clark angles。
+
+---
+
+## 567.5 Innovation flow
+
+逐个增加：
+
+* moment depth；
+* 新尺度；
+* 新 cross-scale observer。
+
+使用：
+
+$$
+s_n(\alpha)
+=
+\gamma_n-\alpha
+-g_n^*(G_n-\alpha I)^{-1}g_n
+$$
+
+记录每个新定义是否真正降低 floor。
+
+输出：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{floor decrement};\\
+&\text{self-energy};\\
+&\text{新 contact function};\\
+&\text{GlueDim decrement}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第五百六十八部　建议形式化顺序
+
+```text
+D5/S3/Weil/RationalObserver/
+  CayleyScaleFeature.lean
+  RationalFeatureDepth.lean
+  CommonDenominator.lean
+  NumeratorPolynomial.lean
+
+D5/S3/Weil/CommonDenominatorBasis/
+  LocalPartialFractionTriangular.lean
+  DistinctPoleIndependence.lean
+  ProperRationalBasis.lean
+  ReferencePolynomialTail.lean
+  CommonDenominatorPolynomialBasis.lean
+
+D5/S3/Weil/RationalToeplitz/
+  RationalFeatureVector.lean
+  NumeratorCoefficientMatrix.lean
+  WeightedCircleMeasure.lean
+  MasterToeplitzMoment.lean
+  RationalGramFactorization.lean
+  CommonSpectrumIffToeplitzPSD.lean
+
+D5/S3/Weil/CommonSpectrumDefect/
+  HermitianToeplitzSubspace.lean
+  CommonSpectrumCodimension.lean
+  EvenRealToeplitzReduction.lean
+  CommonSpectrumProjectionDefect.lean
+  GlueDimension.lean
+
+D5/S3/Weil/MasterMomentSDP/
+  PartialRationalObservation.lean
+  MasterMomentLinearMap.lean
+  MasterToeplitzFeasibility.lean
+  IntervalObservationConstraint.lean
+  RationalCompressionPSD.lean
+
+D5/S3/Weil/CommonHaarFloor/
+  RationalHaarGram.lean
+  DenominatorWeightedHaarMoment.lean
+  FloorResidualToeplitz.lean
+  GeneralizedEigenFloor.lean
+  HaarWhitenedFloor.lean
+
+D5/S3/Weil/AtomicFloorCompletion/
+  SingularToeplitzVandermondeInterface.lean
+  UniqueResidualAtomicMeasure.lean
+  MaxFloorCompletionUnique.lean
+  RationalContactFunction.lean
+  ContactSupportZeros.lean
+
+D5/S3/Weil/ObserverInnovation/
+  NestedHaarRationalBasis.lean
+  ObserverGramExtension.lean
+  InnovationSchurFunction.lean
+  FloorRootUniqueness.lean
+  FeshbachContactVector.lean
+  ObserverRedundancyCriterion.lean
+
+D5/S3/Weil/RobustCommonSpectrum/
+  TransformedGramError.lean
+  ToeplitzConsistencyRejection.lean
+  FloorLipschitzBound.lean
+  ContactSubspaceGapStability.lean
+
+D5/S3/Weil/ScaleDesign/
+  GlobalMalmquistTakenakaInterface.lean
+  HaarOrthonormalRationalBasis.lean
+  ScaleCollisionConfluentJet.lean
+  RationalObserverConditionNumber.lean
+```
+
+Malmquist–Takenaka 正交性和奇异 Toeplitz 的唯一 Vandermonde 分解可先作为成熟外部接口；共同分母基、Gram–Toeplitz congruence、generalized floor 与创新 Schur complement 均可直接在仓库内证明。
+
+---
+
+# 第五百六十九部　结果分级
+
+## 本轮直接推出
+
+$$
+\boxed{
+\operatorname{span}
+\left\{
+\psi_{\ell,j}
+\right\}
+=
+\left\{
+P/D:\deg P\le n-1
+\right\}.
+}
+$$
+
+$$
+\boxed{
+G
+=
+A\,T_d(\sigma)\,A^*.
+}
+$$
+
+$$
+\boxed{
+G\text{ 有共同正谱}
+\iff
+A^{-1}GA^{-*}
+\text{ 是 PSD Toeplitz}.
+}
+$$
+
+$$
+\boxed{
+\alpha_*(G)
+=
+\lambda_{\min}
+\left(
+B^{-1/2}GB^{-1/2}
+\right).
+}
+$$
+
+$$
+\boxed{
+\text{最优 residual spectrum
+是唯一有限原子测度}.
+}
+$$
+
+$$
+\boxed{
+\#\text{atoms}
+=
+\operatorname{rank}
+\left(
+T-\alpha_*H_D
+\right)
+\le n-1.
+}
+$$
+
+$$
+\boxed{
+s_n(\alpha)
+=
+\gamma_n-\alpha
+-g_n^*(G_n-\alpha I)^{-1}g_n
+}
+$$
+
+给出逐 observer floor 更新。
+
+---
+
+## 依赖经典理论
+
+* PSD Toeplitz matrix 的正三角 moment 表示；
+* 奇异 PSD Toeplitz matrix 的唯一 Vandermonde decomposition；([arXiv][1])
+* Malmquist–Takenaka rational orthonormal system。([arXiv][3])
+
+---
+
+## 尚未闭合的中心桥（第 569 部）
+
+$$
+\boxed{
+\begin{aligned}
+&\text{从局部 Weil 真源严格生成足够多的 rational Gram 数据};\\
+&\text{自然 Li 预算主 SDP 对全部 }L\text{ 的可行性};\\
+&\text{有限 moment/scale 误差的统一区间传播};\\
+&\text{接触原子随 }L\to\infty\text{ 向 Riemann ordinates 的定量收敛};\\
+&\text{最优尺度与深度分配的复杂度理论};\\
+&\text{本轮有限组装的文献新颖性审计}.
+\end{aligned}
+}
+$$
+
+---
+
+# 本轮最终结论
+
+上一轮提出的联合条件为：
+
+$$
+\boxed{
+\text{Loewner}
++
+\text{Toeplitz}
++
+\text{Crofoot block Gram}.
+}
+$$
+
+本轮证明，这些并不是三个独立对象。
+
+对任意有限尺度集合与有限深度，全部 rational features 都可写成：
+
+$$
+\boxed{
+\Psi(z)
+=
+\frac1{D(z)}Av_{n-1}(z).
+}
+$$
+
+所以全部共同谱信息只有一个主矩阵：
+
+$$
+\boxed{
+T_{n-1}
+=
+[y_{j-k}]_{j,k=0}^{n-1}.
+}
+$$
+
+多尺度 Gram 只是：
+
+$$
+\boxed{
+G=AT_{n-1}A^*.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{共同谱}
+\iff
+A^{-1}GA^{-*}
+\text{ 为正半定 Toeplitz}.
+}
+$$
+
+这将一个表面上具有 \(n^2\) 个实自由度的 block Gram 问题，压缩为：
+
+$$
+\boxed{
+2n-1
+}
+$$
+
+个 moments；在 Riemann 偶谱分支中只需：
+
+$$
+\boxed{
+n
+}
+$$
+
+个实 moments。
+
+更重要的是，最大共同 Haar floor 不再需要另做无限维优化：
+
+$$
+\boxed{
+\alpha_*
+=
+\lambda_{\min}
+\left(
+B^{-1/2}GB^{-1/2}
+\right).
+}
+$$
+
+在 floor 边界上，residual Toeplitz matrix 必然奇异，因此其正谱完成不仅是有限原子的，而且是唯一的：
+
+$$
+\boxed{
+\mu_*
+=
+\alpha_*m_{\mathbb T}
++
+\sum_{j=1}^{r}
+\widetilde w_j\delta_{\zeta_j},
+\qquad
+r\le n-1.
+}
+$$
+
+原子位置由 generalized ground state 产生的 rational contact function 决定。
+
+于是有限 observer 的完整谱结构已经变成：
+
+$$
+\boxed{
+\text{Haar continuum}
++
+\text{唯一 contact atoms}.
+}
+$$
+
+逐步加入新 observer 时，floor 的变化由一个标量 Feshbach 方程控制：
+
+$$
+\boxed{
+\gamma_n-\alpha
+-g_n^*(G_n-\alpha I)^{-1}g_n
+=0.
+}
+$$
+
+所以每一个新定义的真实价值可以被精确测量为：
+
+* 是否降低共同 floor；
+* 降低多少；
+* 通过什么 self-energy 降低；
+* 生成哪个新的 contact function；
+* 消除了多少 GlueDim。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{多尺度共同谱不是多个局部正矩阵的交集；}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{一个隐藏 Toeplitz moment object
+在多个有理坐标图表中的共同显影。}
+}
+$$
+
+因此下一步不应继续扩大 block SDP，而应直接实现：
+
+$$
+\boxed{
+\textbf{Rational Toeplitz Master SDP},
+}
+$$
+
+并将：
+
+* 局部 Weil 数据；
+* Laguerre moment tubes；
+* Li–Clark moments；
+* 多尺度 budget；
+* cross-scale pairings；
+
+全部编译成同一个 Toeplitz moment 向量的线性约束。
+
+这会把此前的多尺度共同谱问题，从“许多矩阵是否同时正定”，真正压缩成：
+
+$$
+\boxed{
+\text{是否存在一个唯一的、可原子化的正 Toeplitz 谱账本。}
+}
+$$
+
+[1]: https://arxiv.org/abs/1605.02431?utm_source=chatgpt.com "Frequency-Selective Vandermonde Decomposition of Toeplitz Matrices with Applications"
+[2]: https://arxiv.org/abs/1208.6286?utm_source=chatgpt.com "The Circulant Rational Covariance Extension Problem: The Complete Solution"
+[3]: https://arxiv.org/abs/2404.13296?utm_source=chatgpt.com "Almost everywhere convergence of a wavelet-type Malmquist-Takenaka series"
+[4]: https://arxiv.org/abs/2608.24827?utm_source=chatgpt.com "Weil positivity in compact windows: certified two-sided bounds and a Landau--Widom decay law"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v4.4：黄金观察者、Galois 奇偶完成、五阶—六维限制标量与逃逸深度谱
+
+以下从前文**第五百六十九部**继续追加。
+
+先给出本轮的核心判断：
+
+$$
+\boxed{
+\varphi\text{ 不必是 Riemann }\zeta\text{ 的内禀常数，}
+}
+$$
+
+但它完全可能是某个**观察 \(\zeta\) 的算术接口的内禀常数**。
+
+更准确地说，应区分三件事：
+
+$$
+\boxed{
+\begin{aligned}
+\text{对象内禀}
+&:\quad \varphi\text{ 由 }\zeta\text{ 本身规范地选出};\\
+\text{观察者内禀}
+&:\quad \varphi\text{ 由观察器的几何、嵌入或局部指数律选出};\\
+\text{坐标注入}
+&:\quad \text{仅仅把 }s\mapsto\varphi^2s\text{ 人为代入}.
+\end{aligned}
+}
+$$
+
+项目当前的黄金—\(\zeta\) 工作已经超过第三种情形：黄金指数账本先独立定义，再从相应 Euler germ 中抽出
+
+$$
+\zeta(\varphi^2s)
+$$
+
+及更高阶的 signed zeta factors；这说明 \(\varphi\) 确实是该**观察器家族**的结构常数。但这还不等价于证明 \(\varphi\) 是裸 Riemann \(\zeta\) 或 RH 的内禀常数。
+
+本轮建立的新主链为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{黄金单嵌入观察}
+&\longrightarrow
+\text{裸 }\varphi\text{ 与奇向破缺};\\
+\text{Galois 共轭配对}
+&\longrightarrow
+\text{六维有理完成};\\
+\text{完整 regulator 圆}
+&\longrightarrow
+\text{反射与周期闭合};\\
+\text{截断圆弧／单通道}
+&\longrightarrow
+\text{边界破缺};\\
+\text{黄金 Euler germ}
+&\longrightarrow
+\text{逐阶 ζ 因子抽取};\\
+\text{每一新定义}
+&\longrightarrow
+\text{可审计的逃逸深度变化}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第五百七十部　裸 \(\varphi\) 的外部性判据
+
+令：
+
+$$
+K=\mathbb Q(\sqrt5),
+$$
+
+$$
+\varphi=\frac{1+\sqrt5}{2},
+\qquad
+\varphi'=\frac{1-\sqrt5}{2}
+=-\frac1\varphi.
+$$
+
+记非平凡 Galois 自同构为：
+
+$$
+\tau:\sqrt5\mapsto-\sqrt5.
+$$
+
+于是：
+
+$$
+\tau(\varphi)=\varphi'.
+$$
+
+---
+
+## 定义 570.1（观察者依赖常数）
+
+设对象 \(x\) 本身定义于不含指定嵌入的基底上，而观察器：
+
+$$
+\mathcal O_\varphi:X\to K
+$$
+
+选择了嵌入 \(\varphi\)。
+
+若：
+
+$$
+\tau\bigl(\mathcal O_\varphi(x)\bigr)
+\neq
+\mathcal O_\varphi(x),
+$$
+
+则称其输出中的裸 \(\varphi\) 为：
+
+$$
+\boxed{
+\text{observer signature}
+}
+$$
+
+而不是对象的标量内禀不变量。
+
+---
+
+## 定理 570.1（裸黄金数不能存活于标量 Galois 完成）
+
+对：
+
+$$
+c\in K,
+$$
+
+有：
+
+$$
+\boxed{
+\tau(c)=c
+\iff
+c\in\mathbb Q.
+}
+\tag{570.1}
+$$
+
+因此，一个真正标量化、Galois 不变的完成输出不能保留裸的：
+
+$$
+\varphi
+$$
+
+或：
+
+$$
+\varphi'.
+$$
+
+它可以保留的，是二者生成的对称不变量：
+
+$$
+\boxed{
+\begin{aligned}
+\operatorname{Tr}_{K/\mathbb Q}(\varphi)
+&=\varphi+\varphi'=1;\\
+\operatorname{N}_{K/\mathbb Q}(\varphi)
+&=\varphi\varphi'=-1;\\
+(\varphi-\varphi')^2
+&=5.
+\end{aligned}
+}
+\tag{570.2}
+$$
+
+所以完整观察中，裸 \(\varphi\) 往往消失，但以下结构仍可留下：
+
+$$
+\boxed{
+5,\quad
+\sqrt5\text{ 的方向纤维},\quad
+\log\varphi\text{ 的 regulator 长度}.
+}
+$$
+
+---
+
+## 570.1 “外部无法出现”的正确含义
+
+不能说：
+
+$$
+\varphi
+$$
+
+在任何与 \(\zeta\) 有关的公式中都“不可能出现”。
+
+因为可以随意定义：
+
+$$
+F_\varphi(s)=\zeta(\varphi^2s).
+$$
+
+真正可检验的命题是：
+
+$$
+\boxed{
+\text{不选择额外黄金嵌入、尺度或指数账本时，
+裸 }\varphi\text{ 是否被 }\zeta\text{ 自身规范地选出？}
+}
+$$
+
+目前没有这种结论。
+
+但若观察器本身来自：
+
+* \(\mathbb Q(\sqrt5)\) 的实嵌入；
+* 五重对称的表示；
+* 黄金指数局部谱；
+* 黄金单位流；
+* 六维切投影结构；
+
+那么 \(\varphi\) 是观察器的内生常数，并非任意外部注入。
+
+---
+
+# 第五百七十一部　三种黄金观察者
+
+## 571.1 坐标黄金观察者
+
+定义：
+
+$$
+\boxed{
+(\mathcal D_\varphi F)(s)=F(\varphi^2s).
+}
+\tag{571.1}
+$$
+
+这只是可逆缩放坐标。
+
+如果没有额外结构，它不减少任何目标逃逸：
+
+$$
+\ker\mathcal D_\varphi
+$$
+
+与原始函数观察具有相同区分能力。
+
+所以它只有：
+
+$$
+\boxed{
+\text{chart depth},
+}
+$$
+
+没有新的：
+
+$$
+\boxed{
+\text{escape depth}.
+}
+$$
+
+---
+
+## 571.2 结构黄金观察者
+
+设局部指数：
+
+$$
+\beta_v
+$$
+
+由一个独立的黄金几何、命名塔或局部谱定义。
+
+构造：
+
+$$
+\boxed{
+L_{p,\varphi}(s)
+=
+\sum_{v\ge0}p^{-s\beta_v},
+}
+\tag{571.2}
+$$
+
+以及：
+
+$$
+\boxed{
+Z_\varphi(s)
+=
+\prod_pL_{p,\varphi}(s).
+}
+\tag{571.3}
+$$
+
+这时 \(\varphi\) 出现在：
+
+* 局部指数；
+* 收敛边界；
+* 首项因子；
+* factor-extraction ladder；
+
+之中。
+
+这种 \(\varphi\) 属于观察器定义，而不是后验坐标代换。
+
+项目当前的 Golden germ 正属于这一类。
+
+---
+
+## 571.3 Galois 完成黄金观察者
+
+定义共轭双通道：
+
+$$
+\boxed{
+\mathcal O_{\mathrm{Gal}}
+=
+\left(
+\mathcal O_\varphi,
+\mathcal O_{\varphi'}
+\right).
+}
+\tag{571.4}
+$$
+
+令反射算子交换两个分量：
+
+$$
+J(u,v)=(\tau(v),\tau(u)).
+$$
+
+完整输出应满足：
+
+$$
+\boxed{
+J\mathcal O_{\mathrm{Gal}}
+=
+\mathcal O_{\mathrm{Gal}}.
+}
+$$
+
+此时可分解为：
+
+$$
+\boxed{
+\mathcal O_{\mathrm{even}}
+=
+\frac{
+\mathcal O_\varphi+
+\tau\mathcal O_{\varphi'}
+}{2},
+}
+\tag{571.5}
+$$
+
+$$
+\boxed{
+\mathcal O_{\mathrm{odd}}
+=
+\frac{
+\mathcal O_\varphi-
+\tau\mathcal O_{\varphi'}
+}{2}.
+}
+\tag{571.6}
+$$
+
+其中：
+
+* even channel 是完成不变量；
+* odd channel 是嵌入选择或不完整性的破缺读数。
+
+---
+
+# 第五百七十二部　项目已有的黄金完成圆
+
+项目已经构造：
+
+$$
+\sigma_+(a,b)=a+b\varphi,
+$$
+
+$$
+\sigma_-(a,b)=a+b\varphi',
+$$
+
+以及各向异性二次型：
+
+$$
+\boxed{
+Q_\eta(a,b)
+=
+e^\eta\sigma_+(a,b)^2
++
+e^{-\eta}\sigma_-(a,b)^2.
+}
+\tag{572.1}
+$$
+
+再定义黄金单位格点 ζ：
+
+$$
+\boxed{
+Z_{\mathrm{unit}}(s,\eta)
+=
+\sum_{(a,b)\neq(0,0)}
+Q_\eta(a,b)^{-s}.
+}
+\tag{572.2}
+$$
+
+仓库已经机器证明：
+
+$$
+\boxed{
+Z_{\mathrm{unit}}(s,\eta)
+=
+Z_{\mathrm{unit}}(s,-\eta),
+}
+\tag{572.3}
+$$
+
+以及：
+
+$$
+\boxed{
+Z_{\mathrm{unit}}
+\left(
+s,\eta+2\log\varphi
+\right)
+=
+Z_{\mathrm{unit}}(s,\eta).
+}
+\tag{572.4}
+$$
+
+前者来自两个实嵌入的 Galois 交换，后者来自乘以黄金单位后的格点重编号。
+
+所以自然观察空间是：
+
+$$
+\boxed{
+\mathbb S_\varphi^1
+=
+\mathbb R/
+\left(
+2\log\varphi
+\right)\mathbb Z.
+}
+\tag{572.5}
+$$
+
+这正是一个**黄金 regulator 圆**。
+
+---
+
+# 第五百七十三部　完成圆上的奇向平衡场
+
+在允许逐项微分的收敛区域内，定义：
+
+$$
+\boxed{
+\begin{aligned}
+\mathfrak B_\varphi(s,\eta)
+:={}&
+\sum_{(a,b)\neq0}
+\frac{
+e^\eta\sigma_+(a,b)^2
+-
+e^{-\eta}\sigma_-(a,b)^2
+}{
+Q_\eta(a,b)^{s+1}
+}.
+\end{aligned}
+}
+\tag{573.1}
+$$
+
+由：
+
+$$
+\partial_\eta Q_\eta
+=
+e^\eta\sigma_+^2
+-
+e^{-\eta}\sigma_-^2,
+$$
+
+得到：
+
+$$
+\boxed{
+\mathfrak B_\varphi(s,\eta)
+=
+-\frac1s
+\partial_\eta
+Z_{\mathrm{unit}}(s,\eta).
+}
+\tag{573.2}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathfrak B_\varphi(s,-\eta)
+=
+-\mathfrak B_\varphi(s,\eta),
+}
+\tag{573.3}
+$$
+
+且：
+
+$$
+\boxed{
+\mathfrak B_\varphi
+\left(
+s,\eta+2\log\varphi
+\right)
+=
+\mathfrak B_\varphi(s,\eta).
+}
+\tag{573.4}
+$$
+
+---
+
+## 573.1 圆上的两个完成固定点
+
+反射：
+
+$$
+\eta\mapsto-\eta
+$$
+
+在周期圆上有两个固定点：
+
+$$
+\boxed{
+\eta=0,
+\qquad
+\eta=\log\varphi
+\pmod{2\log\varphi}.
+}
+\tag{573.5}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathfrak B_\varphi(s,0)=0,
+}
+\tag{573.6}
+$$
+
+$$
+\boxed{
+\mathfrak B_\varphi
+(s,\log\varphi)=0.
+}
+\tag{573.7}
+$$
+
+这两个点是真正的：
+
+$$
+\boxed{
+\text{even completion points}.
+}
+$$
+
+而固定在一般：
+
+$$
+\eta\neq0,\log\varphi
+$$
+
+的单点观察者，会读到非零：
+
+$$
+\mathfrak B_\varphi.
+$$
+
+这正是你描述的：
+
+> 从完成圆整体看，处处闭合；
+> 从一个尚未到达反射固定点的状态看，始终存在破缺。
+
+---
+
+## 573.2 近完成展开
+
+取固定点：
+
+$$
+\eta_* \in \{0,\log\varphi\}.
+$$
+
+令：
+
+$$
+\eta=\eta_*+\delta.
+$$
+
+因为 \(\mathfrak B_\varphi\) 关于 \(\eta_*\) 为奇函数：
+
+$$
+\boxed{
+\mathfrak B_\varphi(s,\eta_*+\delta)
+=
+\chi_\varphi(s,\eta_*)\delta
++
+O(\delta^3),
+}
+\tag{573.8}
+$$
+
+其中：
+
+$$
+\boxed{
+\chi_\varphi
+=
+\partial_\eta
+\mathfrak B_\varphi.
+}
+\tag{573.9}
+$$
+
+所以“只差一点完成”并不会通常给出一个任意微弱、无结构的误差，而会产生一个可测量的线性破缺：
+
+$$
+\boxed{
+\text{completion distance}
+\times
+\text{golden susceptibility}.
+}
+$$
+
+---
+
+# 第五百七十四部　缺一段圆弧时，破缺只剩边界项
+
+设：
+
+$$
+W=[\eta_0,\eta_1]
+$$
+
+是 regulator 圆上的一个有向观察弧。
+
+定义累积破缺：
+
+$$
+\boxed{
+\mathfrak D_W(s)
+=
+\int_{\eta_0}^{\eta_1}
+\mathfrak B_\varphi(s,\eta)\,d\eta.
+}
+\tag{574.1}
+$$
+
+由式 (573.2)：
+
+## 定理 574.1（Partial-circle boundary defect）
+
+$$
+\boxed{
+\mathfrak D_W(s)
+=
+-\frac1s
+\left[
+Z_{\mathrm{unit}}(s,\eta_1)
+-
+Z_{\mathrm{unit}}(s,\eta_0)
+\right].
+}
+\tag{574.2}
+$$
+
+若 \(W\) 是完整周期：
+
+$$
+\eta_1-\eta_0=2\log\varphi,
+$$
+
+则：
+
+$$
+\boxed{
+\mathfrak D_W(s)=0.
+}
+\tag{574.3}
+$$
+
+若只少一小段，破缺完全由切口两端的失配决定。
+
+所以：
+
+$$
+\boxed{
+\text{完整圆的 bulk 没有破缺；
+不完整圆的破缺全部压缩在 boundary ledger。}
+}
+$$
+
+这给“完成态必对应某个未完成态”一个非平凡的严格模型：
+
+* 完成态：整个 regulator circle；
+* 未完成态：带切口的弧；
+* 破缺：切口边界值之差；
+* 完成操作：把两个边界重新识别。
+
+---
+
+# 第五百七十五部　对象破缺与观察者破缺必须分离
+
+令：
+
+$$
+J_X:X\to X,
+\qquad
+J_Y:Y\to Y
+$$
+
+为对象空间和输出空间上的反射。
+
+令：
+
+$$
+\mathcal O:X\to Y
+$$
+
+为观察器。
+
+定义对象缺陷：
+
+$$
+\boxed{
+\Delta_X(x)
+=
+J_Xx-x.
+}
+\tag{575.1}
+$$
+
+定义观察器协变缺陷：
+
+$$
+\boxed{
+\Delta_{\mathcal O}
+=
+J_Y\mathcal O-\mathcal OJ_X.
+}
+\tag{575.2}
+$$
+
+则观测到的反射残差满足：
+
+## 定理 575.1（Observed-break decomposition）
+
+$$
+\boxed{
+J_Y\mathcal O(x)-\mathcal O(x)
+=
+\Delta_{\mathcal O}(x)
++
+\mathcal O\bigl(\Delta_X(x)\bigr).
+}
+\tag{575.3}
+$$
+
+第一项是：
+
+$$
+\boxed{
+\text{观察器自身造成的破缺};
+}
+$$
+
+第二项才是：
+
+$$
+\boxed{
+\text{对象真实携带的破缺}.
+}
+$$
+
+---
+
+## 575.1 黄金观察者校准原则
+
+如果对象已经完成：
+
+$$
+J_Xx=x,
+$$
+
+但只使用一个 \(\varphi\)-嵌入观察：
+
+$$
+\Delta_{\mathcal O}\neq0,
+$$
+
+仍然可能观察到黄金不对称。
+
+所以：
+
+$$
+\boxed{
+\text{看到 }\varphi
+\neq
+\text{证明对象内含 }\varphi.
+}
+$$
+
+正确的实验必须同时使用：
+
+$$
+\mathcal O_\varphi,
+\qquad
+\mathcal O_{\varphi'}.
+$$
+
+由二者构造：
+
+$$
+\mathcal O_{\mathrm{even}},
+\qquad
+\mathcal O_{\mathrm{odd}}.
+$$
+
+若破缺在 paired completion 后消失，它是观察器偏置。
+
+若 paired observer 已经严格协变而破缺仍存在，它才是对象层残差。
+
+---
+
+# 第五百七十六部　五阶对称为什么自然要求六维完成
+
+这里需要非常精确地区分：
+
+$$
+\boxed{
+5\text{ 是对称阶数，}
+\qquad
+6\text{ 是某个算术表示的完成维数。}
+}
+$$
+
+它们不是一般性的：
+
+$$
+5\mapsto6
+$$
+
+后继关系。
+
+---
+
+## 576.1 二个三维 Galois 共轭块
+
+正二十面体旋转群同构于：
+
+$$
+A_5.
+$$
+
+其标准三维表示可定义在：
+
+$$
+K=\mathbb Q(\sqrt5)
+$$
+
+上；两个三维不可约表示在五循环共轭类上的特征标值分别为：
+
+$$
+\varphi,
+\qquad
+\varphi'.
+$$
+
+将三维 \(K\)-表示限制标量到 \(\mathbb Q\)：
+
+$$
+\boxed{
+V_6
+=
+\operatorname{Res}_{K/\mathbb Q}V_3,
+}
+\tag{576.1}
+$$
+
+得到：
+
+$$
+\dim_{\mathbb Q}V_6
+=
+3[K:\mathbb Q]
+=
+6.
+$$
+
+在实数上：
+
+$$
+\boxed{
+V_6\otimes_{\mathbb Q}\mathbb R
+\simeq
+V_\varphi
+\oplus
+V_{\varphi'}.
+}
+\tag{576.2}
+$$
+
+五循环 \(g_5\) 的完整迹为：
+
+$$
+\boxed{
+\operatorname{tr}_{V_6}(g_5)
+=
+\varphi+\varphi'
+=
+1.
+}
+\tag{576.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{单个三维块看到裸 }\varphi;
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{六维 Galois 完成只看到有理迹 }1.
+}
+$$
+
+正二十面体群的显式三维表示及其黄金比例特征标是标准 \(A_5\) 表示结构；在准晶体几何中，\(D_6\) 格点投影到三维会产生具有五重对称、Fibonacci 膨胀和黄金长度的二十面体结构。([arXiv][1])
+
+---
+
+## 576.2 物理空间与内部空间
+
+可写：
+
+$$
+\boxed{
+\mathbb R^6
+=
+E_{\parallel}
+\oplus
+E_{\perp},
+}
+\tag{576.4}
+$$
+
+其中：
+
+* \(E_\parallel\)：物理三维观察空间；
+* \(E_\perp\)：Galois 共轭／内部三维空间。
+
+投影到 \(E_\parallel\)：
+
+$$
+P_\parallel\Lambda_6
+$$
+
+会看到：
+
+* 五重对称；
+* 黄金比例；
+* 准周期；
+* phason 边界；
+* 非晶格式缺口。
+
+保留完整六维格点：
+
+$$
+\Lambda_6
+$$
+
+则重新获得整数账本和完整闭合。
+
+所以：
+
+$$
+\boxed{
+\text{三维黄金准晶体}
+=
+\text{六维周期完成的单嵌入观察}.
+}
+$$
+
+这与你的直觉高度一致。
+
+---
+
+# 第五百七十七部　大奇数阶与大偶数完成：正确版本
+
+令：
+
+$$
+n>2
+$$
+
+为奇数。
+
+原始 \(n\) 次单位根生成：
+
+$$
+\mathbb Q(\zeta_n),
+$$
+
+其次数为：
+
+$$
+\phi_{\mathrm{Euler}}(n).
+$$
+
+因为单位剩余类可由：
+
+$$
+k\longleftrightarrow-k
+$$
+
+无固定点配对，所以：
+
+$$
+\boxed{
+\phi_{\mathrm{Euler}}(n)
+\text{ 为偶数}.
+}
+\tag{577.1}
+$$
+
+这给出：
+
+$$
+\boxed{
+\text{奇阶旋转}
+\longrightarrow
+\text{偶次数 cyclotomic completion}.
+}
+$$
+
+但不能简单写成：
+
+$$
+n\mapsto n+1.
+$$
+
+真正的完成维数取决于：
+
+$$
+\boxed{
+\dim_{\mathbb Q}
+\operatorname{Res}_{K/\mathbb Q}V
+=
+\dim_KV\cdot[K:\mathbb Q].
+}
+\tag{577.2}
+$$
+
+所以应将你的直觉修正为：
+
+$$
+\boxed{
+\text{大奇数对称阶常常要求一个由 Galois 共轭成对组成的偶型完成，}
+}
+$$
+
+而不是：
+
+$$
+\boxed{
+\text{任何奇数 }2m+1\text{ 都由 }2m+2\text{ 维完成}.
+}
+$$
+
+---
+
+# 第五百七十八部　黄金幂本身携带奇偶 ledger
+
+黄金共轭满足：
+
+$$
+\varphi'=-\varphi^{-1}.
+$$
+
+因此：
+
+$$
+\boxed{
+\tau(\varphi^k)
+=
+(\varphi')^k
+=
+(-1)^k\varphi^{-k}.
+}
+\tag{578.1}
+$$
+
+于是：
+
+## 偶层
+
+$$
+\boxed{
+\tau(\varphi^{2m})
+=
+\varphi^{-2m}>0.
+}
+\tag{578.2}
+$$
+
+两个嵌入都保持正的尺度解释。
+
+## 奇层
+
+$$
+\boxed{
+\tau(\varphi^{2m+1})
+=
+-\varphi^{-(2m+1)}<0.
+}
+\tag{578.3}
+$$
+
+共轭通道产生方向反转。
+
+所以：
+
+$$
+\boxed{
+\text{黄金偶层是 metric-like，}
+\qquad
+\text{黄金奇层是 orientation-sensitive。}
+}
+$$
+
+这正是你所说的：
+
+$$
+\boxed{
+\text{奇层破缺}
+\quad\text{与}\quad
+\text{偶层完成}
+}
+$$
+
+可以产生严格联系的最小代数核。
+
+---
+
+## 578.1 与项目第二阶因子化的关系
+
+项目已经证明黄金 germ 的第二阶展开包含：
+
+$$
+\boxed{
+\zeta(\varphi^2s)
+\zeta(\varphi^3s)
+\zeta(2\varphi^2s)^{-1},
+}
+\tag{578.4}
+$$
+
+并把 residual product 的绝对收敛域继续推进到：
+
+$$
+\boxed{
+\Re s>\frac1{\varphi^4}.
+}
+\tag{578.5}
+$$
+
+其中：
+
+* \(\varphi^2\)：偶尺度；
+* \(\varphi^3\)：奇尺度；
+* \(2\varphi^2\)：由 \(1+x=(1-x^2)/(1-x)\) 一类 signed Euler 重组产生的补偿尺度。
+
+这不能直接解释为已完成的 Galois 奇偶理论，但它已经显示：
+
+$$
+\boxed{
+\text{第二阶 local cancellation
+开始同时携带 even mode、odd mode 与 reciprocal correction。}
+}
+$$
+
+这是值得继续形式化的真实残差。
+
+---
+
+# 第五百七十九部　\(\zeta\) 的完成态与未完成态
+
+定义 completed Riemann function：
+
+$$
+\boxed{
+\xi(s)
+=
+\frac12
+s(s-1)
+\pi^{-s/2}
+\Gamma(s/2)
+\zeta(s).
+}
+\tag{579.1}
+$$
+
+它满足：
+
+$$
+\boxed{
+\xi(s)=\xi(1-s).
+}
+\tag{579.2}
+$$
+
+令：
+
+$$
+(JF)(s)=F(1-s).
+$$
+
+则：
+
+$$
+\boxed{
+J\xi=\xi.
+}
+$$
+
+这的确使 \(\xi\) 成为一个反射完成态。
+
+---
+
+## 579.1 完成态并不决定唯一未完成态
+
+从：
+
+$$
+\xi
+$$
+
+可以忘掉不同类型的数据：
+
+1. 去掉：
+
+   $$
+   s(s-1);
+   $$
+2. 去掉：
+
+   $$
+   \Gamma(s/2)\pi^{-s/2};
+   $$
+3. 只保留 Euler product；
+4. 截断到有限素数；
+5. 只保留一个 Archimedean 边界方向；
+6. 只保留一个 Galois 嵌入；
+7. 只保留一个 regulator 弧；
+8. 只保留黄金局部指数观察。
+
+所以：
+
+$$
+\boxed{
+\text{完成态必有未完成表示，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{未完成态不是唯一对象。}
+}
+$$
+
+必须给出一个有类型的忘却映射：
+
+$$
+\boxed{
+U:\operatorname{Complete}\to\operatorname{Partial}.
+}
+\tag{579.3}
+$$
+
+随后完成问题才是：
+
+$$
+\boxed{
+\text{由 }U(\xi)\text{ 恢复 }\xi
+\text{ 所缺的最小 ledger 是什么？}
+}
+$$
+
+否则“存在未完成态”只是分解恒真式，缺乏科学内容。
+
+---
+
+# 第五百八十部　黄金 Euler germ 是一个规范未完成态
+
+项目黄金 germ 定义了一个局部黄金指数 Euler product。
+
+机器证明的第一阶分解为：
+
+$$
+\boxed{
+Z_\varphi(s)
+=
+\zeta(\varphi^2s)\,G_1(s),
+}
+\tag{580.1}
+$$
+
+其中原始 germ 在：
+
+$$
+\Re s>\frac1{\varphi^2}
+$$
+
+解释，而 normalized residual \(G_1\) 的 prime deviations 已在更大区域：
+
+$$
+\boxed{
+\Re s>\frac1{\varphi^3}
+}
+\tag{580.2}
+$$
+
+绝对可和，并在实轴上保持正。
+
+由此又得到规范延拓：
+
+$$
+\boxed{
+Z_\varphi^{(1)}(s)
+=
+\zeta(\varphi^2s)G_1(s)
+}
+$$
+
+到：
+
+$$
+\Re s>\frac1{\varphi^3}.
+$$
+
+第二阶因子化继续得到：
+
+$$
+\boxed{
+Z_\varphi^{(2)}(s)
+=
+\zeta(\varphi^2s)
+\zeta(\varphi^3s)
+\zeta(2\varphi^2s)^{-1}
+G_2(s),
+}
+\tag{580.3}
+$$
+
+且：
+
+$$
+\boxed{
+G_2
+\text{ 的局部 deviations 在 }
+\Re s>\frac1{\varphi^4}
+\text{ 绝对可和}.
+}
+\tag{580.4}
+$$
+
+---
+
+## 580.1 这正是“几乎完成”的严格版本
+
+可将各层记为：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal Z^{(0)}
+&=\text{原始黄金 Euler germ};\\
+\mathcal Z^{(1)}
+&=\text{抽取首个 universal ζ mode};\\
+\mathcal Z^{(2)}
+&=\text{抽取第二阶 signed modes};\\
+G_m
+&=\text{第 }m\text{ 阶未完成残余}.
+\end{aligned}
+}
+$$
+
+完成深度增加时，残余收敛边界严格左移：
+
+$$
+\boxed{
+\frac1{\varphi^2}
+>
+\frac1{\varphi^3}
+>
+\frac1{\varphi^4}.
+}
+\tag{580.5}
+$$
+
+这不是同义表述，而是真正的新解析信息。
+
+---
+
+## 580.2 当前明确未闭合的边界
+
+仓库的 boundary theorem 已经把：
+
+$$
+s=\frac1{\varphi^2}
+$$
+
+处 transported zeta residue 与 \(G_1\) 分离，并明确指出：
+
+* 实轴 pointwise positivity 已有；
+* 但复邻域 nonvanishing／continuity 尚未完成；
+* 不能据此声称该边界已被证明为真实奇点。
+
+这正是科学残差，而不是模糊的“还差一点”。
+
+---
+
+# 第五百八十一部　一般化 ζ 因子抽取阶梯
+
+令单素数局部因子为：
+
+$$
+\boxed{
+L_p(s)
+=
+1+
+\sum_{j\ge1}
+c_jp^{-\lambda_js},
+}
+\tag{581.1}
+$$
+
+其中：
+
+$$
+0<\lambda_1<\lambda_2<\cdots.
+$$
+
+其形式对数为：
+
+$$
+\boxed{
+\log L_p(s)
+=
+\sum_{\alpha\in\mathcal S}
+b_\alpha p^{-\alpha s},
+}
+\tag{581.2}
+$$
+
+其中 \(\mathcal S\) 是由 \(\lambda_j\) 生成的加法半群。
+
+选择有限 signed zeta ledger：
+
+$$
+\boxed{
+\mathscr Z_m(s)
+=
+\prod_{\alpha\in A_m}
+\zeta(\alpha s)^{c_\alpha}.
+}
+\tag{581.3}
+$$
+
+令 normalized local factor：
+
+$$
+\boxed{
+G_{m,p}(s)
+=
+L_p(s)
+\prod_{\alpha\in A_m}
+(1-p^{-\alpha s})^{c_\alpha}.
+}
+\tag{581.4}
+$$
+
+选择 \(c_\alpha\) 使所有低于阈值：
+
+$$
+\Lambda_{m+1}
+$$
+
+的局部 monomials 被取消。
+
+若：
+
+$$
+G_{m,p}(s)-1
+=
+O(p^{-\Lambda_{m+1}\Re s}),
+$$
+
+则全局 residual 在：
+
+$$
+\boxed{
+\Re s>\frac1{\Lambda_{m+1}}
+}
+\tag{581.5}
+$$
+
+具有绝对收敛候选域。
+
+---
+
+## 581.1 解析深度
+
+定义：
+
+$$
+\boxed{
+d_{\mathrm{an}}(m)
+=
+\Lambda_{m+1}.
+}
+\tag{581.6}
+$$
+
+或者等价地定义 abscissa：
+
+$$
+\boxed{
+\sigma_m=\Lambda_{m+1}^{-1}.
+}
+$$
+
+新的因子抽取具有真正深度，当且仅当：
+
+$$
+\boxed{
+\sigma_{m+1}<\sigma_m.
+}
+\tag{581.7}
+$$
+
+项目已经机器证明前两次严格下降。
+
+黄金 heat layers 的指数严格增加，而各层收敛横坐标严格下降并趋于零；这说明存在越来越深的局部尺度，但并不自动证明每一层都能被有限 zeta product 完全抽取。
+
+---
+
+## 假设 581.1（Golden all-order extraction）
+
+存在 signed zeta ledgers：
+
+$$
+\mathscr Z_m
+$$
+
+使：
+
+$$
+\boxed{
+Z_\varphi(s)
+=
+\mathscr Z_m(s)G_m(s)
+}
+$$
+
+且：
+
+$$
+\boxed{
+\sigma_m\downarrow0.
+}
+$$
+
+这是一个明确、可逐层证伪的新纲领。
+
+它不能仅凭目前的前两层归纳宣称成立。
+
+---
+
+# 第五百八十二部　Galois 配对黄金 germ
+
+要验证“黄金观察者看到的是对象还是自己”，下一步不应继续只在 \(\varphi\) 通道中抽取更多因子，而应构造共轭通道。
+
+设现有指数账本为：
+
+$$
+\beta_v^+.
+$$
+
+尝试定义：
+
+$$
+\boxed{
+\beta_v^-=\tau(\beta_v^+).
+}
+\tag{582.1}
+$$
+
+但由：
+
+$$
+\tau(\varphi^k)=(-1)^k\varphi^{-k},
+$$
+
+odd modes 可能变为负尺度。
+
+所以不能天真定义：
+
+$$
+p^{-s\beta_v^-}
+$$
+
+并继续沿用原有正性和收敛解释。
+
+---
+
+## 582.1 Signed exponent ledger
+
+应将共轭指数拆成：
+
+$$
+\boxed{
+\tau(\beta_v^+)
+=
+\epsilon_v\widetilde\beta_v,
+}
+\tag{582.2}
+$$
+
+其中：
+
+$$
+\widetilde\beta_v>0,
+\qquad
+\epsilon_v\in\{\pm1\}.
+$$
+
+于是共轭观察器必须同时记录：
+
+$$
+\boxed{
+\text{metric exponent}
++
+\text{orientation parity}.
+}
+$$
+
+定义候选局部双通道：
+
+$$
+\boxed{
+\mathcal L_p(s)
+=
+\left(
+L_{p,+}(s),
+L_{p,-}(s)
+\right).
+}
+\tag{582.3}
+$$
+
+再定义：
+
+$$
+\boxed{
+L_{p,\mathrm{tr}}
+=
+L_{p,+}+L_{p,-},
+}
+\tag{582.4}
+$$
+
+$$
+\boxed{
+L_{p,\mathrm{nr}}
+=
+L_{p,+}L_{p,-},
+}
+\tag{582.5}
+$$
+
+$$
+\boxed{
+L_{p,\mathrm{odd}}
+=
+L_{p,+}-L_{p,-}.
+}
+\tag{582.6}
+$$
+
+其中：
+
+* trace/norm channels 是 Galois 完成候选；
+* odd channel 是黄金观察破缺。
+
+---
+
+## 582.2 新的真正逃逸
+
+当前黄金 germ 理论仍未区分：
+
+$$
+\boxed{
+\text{由对象产生的黄金结构}
+}
+$$
+
+与：
+
+$$
+\boxed{
+\text{由选择正嵌入产生的黄金偏置}.
+}
+$$
+
+构造共轭 germ 后，若：
+
+$$
+L_{\mathrm{odd}}
+$$
+
+在完成操作中消失，而 trace/norm 保留非平凡 ζ 结构，则说明：
+
+$$
+\varphi
+$$
+
+是坐标化的观察常数，但其 Galois 完成包含真实结构。
+
+若 odd channel 仍携带不可消去的全局信息，则需要重新识别其对象来源。
+
+这才是“黄金观察者是否真的看到了 ζ 的未完成态”的直接实验。
+
+---
+
+# 第五百八十三部　理论深度不能只用一个编号表示
+
+你问：
+
+> 每一层分析能否定位理论深度？
+> 是否一直是在用科学方法分析新的逃逸信息？
+
+答案是：
+
+$$
+\boxed{
+\text{可以定位，但不能只用章节编号或推导长度表示。}
+}
+$$
+
+并且：
+
+$$
+\boxed{
+\text{不是每一层都减少了新的目标逃逸。}
+}
+$$
+
+有些层只是新的坐标图表。
+
+---
+
+## 583.1 四维理论深度向量
+
+对第 \(k\) 层，定义：
+
+$$
+\boxed{
+\mathbf D_k
+=
+\left(
+d_{\mathrm{esc}},
+d_{\mathrm{an}},
+d_{\mathrm{obs}},
+d_{\mathrm{cert}}
+\right)_k.
+}
+\tag{583.1}
+$$
+
+### 逃逸深度
+
+令：
+
+$$
+\mathcal E_k
+=
+\mathcal E(q_k;T).
+$$
+
+若：
+
+$$
+\boxed{
+\mathcal E_{k+1}
+\subsetneq
+\mathcal E_k,
+}
+\tag{583.2}
+$$
+
+且能给出被新定义切开的明确 witness pair，则逃逸深度增加。
+
+---
+
+### 解析深度
+
+例如 Euler product 的 convergence frontier：
+
+$$
+\sigma_k.
+$$
+
+若：
+
+$$
+\boxed{
+\sigma_{k+1}<\sigma_k,
+}
+$$
+
+则获得真正的解析深度。
+
+---
+
+### 观察完成深度
+
+定义观察器协变缺陷：
+
+$$
+\boxed{
+\epsilon_{\mathrm{obs}}(q_k)
+=
+\operatorname{rank}
+\left(
+J_Yq_k-q_kJ_X
+\right)
+}
+\tag{583.3}
+$$
+
+或相应算子范数、kernel codimension。
+
+它减少时，说明观察器偏置被校准。
+
+---
+
+### 证明认证深度
+
+可冻结为：
+
+$$
+\boxed{
+0=\text{直觉},
+\quad
+1=\text{定义},
+\quad
+2=\text{精确恒等式},
+\quad
+3=\text{定量估计},
+\quad
+4=\text{全局定理},
+\quad
+5=\text{机器证明}.
+}
+\tag{583.4}
+$$
+
+---
+
+# 第五百八十四部　新逃逸层与坐标层的严格区分
+
+## 定义 584.1（Chart layer）
+
+若：
+
+$$
+q_{k+1}=h\circ q_k
+$$
+
+且 \(h\) 在 \(q_k(X)\) 上单射，则：
+
+$$
+\boxed{
+\ker q_{k+1}=\ker q_k.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal E_{k+1}=\mathcal E_k.
+}
+$$
+
+这层可能有计算价值，但：
+
+$$
+\boxed{
+d_{\mathrm{esc}}\text{ 不增加}.
+}
+$$
+
+---
+
+## 定义 584.2（Diagnostic layer）
+
+新层定义了残差：
+
+$$
+R_k
+$$
+
+并证明：
+
+$$
+T\text{ 闭合}
+\Longleftrightarrow
+R_k=0,
+$$
+
+但尚未证明 \(R_k\) 收缩或归零。
+
+它增加：
+
+$$
+\boxed{
+\text{诊断深度},
+}
+$$
+
+不增加已完成证明深度。
+
+---
+
+## 定义 584.3（Escape layer）
+
+必须同时满足：
+
+1. 给出旧逃逸 pair：
+
+   $$
+   (x,y)\in\mathcal E_k;
+   $$
+2. 新定义切开它：
+
+   $$
+   d_{k+1}(x)\neq d_{k+1}(y);
+   $$
+3. 定义不直接编码目标；
+4. 新残差严格更小。
+
+---
+
+## 定义 584.4（Closure layer）
+
+若证明：
+
+$$
+\boxed{
+\mathcal E_{k+1}=\varnothing,
+}
+$$
+
+或某个忠实缺陷严格为零，则真正完成目标。
+
+DECT 已经把目标逃逸定义为：
+
+$$
+\mathcal E(q;T)=\ker q\setminus\ker T
+$$
+
+并证明联合新定义只会通过与新 kernel 相交来切割残差。
+
+---
+
+# 第五百八十五部　每层应附带的科学证书
+
+建议今后每一层新增以下账本：
+
+$$
+\boxed{
+\operatorname{LayerCert}_k
+=
+\left(
+\begin{array}{l}
+q_{k-1},\\
+T,\\
+\mathcal E_{k-1},\\
+d_k,\\
+\mathcal E_k,\\
+w_k,\\
+\operatorname{Leak}_k,\\
+\operatorname{Cost}_k,\\
+\operatorname{Status}_k
+\end{array}
+\right).
+}
+\tag{585.1}
+$$
+
+其中：
+
+* \(w_k\)：被切开的显式逃逸 witness；
+* \(\operatorname{Leak}_k\)：定义是否偷偷依赖目标；
+* \(\operatorname{Cost}_k\)：新增复杂度；
+* \(\operatorname{Status}_k\)：定义、定理、条件命题或 Lean 锚点。
+
+定义逃逸收益：
+
+$$
+\boxed{
+G_k
+=
+\nu
+\left(
+\mathcal E_{k-1}
+\setminus
+\mathcal E_k
+\right).
+}
+\tag{585.2}
+$$
+
+定义效率：
+
+$$
+\boxed{
+\eta_k
+=
+\frac{
+G_k
+}{
+\operatorname{Cost}_k
++
+\operatorname{Leak}_k
+}.
+}
+\tag{585.3}
+$$
+
+若：
+
+$$
+G_k=0,
+$$
+
+应标记为：
+
+$$
+\boxed{
+\text{chart / compression / tomography},
+}
+$$
+
+而不是“理论又深了一层”。
+
+---
+
+# 第五百八十六部　对当前长链的深度审计
+
+| 理论层                                   |              类型 |         是否切开新逃逸 | 当前状态       |
+| ------------------------------------- | --------------: | --------------: | ---------- |
+| 黄金指数与 local germ 定义                   |            新观察器 |            尚不自动 | Lean 锚点    |
+| 抽出 \(\zeta(\varphi^2s)\)              |            残差隔离 |           **是** | Lean 锚点    |
+| residual 收敛域推进至 \(1/\varphi^3\)       |            解析深度 |           **是** | Lean 锚点    |
+| 第二阶 signed ζ 因子抽取                     |         解析／组合深度 |           **是** | Lean 锚点    |
+| residual 推进至 \(1/\varphi^4\)          |            解析深度 |           **是** | Lean 锚点    |
+| \(1/\varphi^2\) 边界 regularity         |             诊断层 |              尚未 | 明确开放       |
+| 黄金 unit reflection 与 period           |           观察器校准 |  **是**，消除部分观察偏置 | Lean 锚点    |
+| Herglotz、Stieltjes、Clark、CMV、Fredholm | 多数为 chart atlas |         通常**否** | 等价／条件接口    |
+| Slepian、Feshbach、Kreĭn completion     |            证明架构 | 只有得到新 bound 时才是 | 部分定理、中心桥开放 |
+| Cayley、Laguerre、多尺度 Toeplitz          |            计算层析 |           通常不直接 | 精确变换与有限证书  |
+| 本轮 Galois-paired golden observer      |           新诊断定义 |        预期是，尚待证明 | 新开放路线      |
+
+前五项中的严格推进由仓库现有 Golden germ 因子化、延拓和第二阶因子化支撑。
+
+因此，对你的问题应诚实回答：
+
+$$
+\boxed{
+\text{整体方法一直在努力保持科学纪律，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{并不是此前每个章节都发现了新的逃逸信息。}
+}
+$$
+
+大量后续章节完成的是：
+
+* 等价坐标；
+* 正性图册；
+* 算子实现；
+* 数值证书接口；
+* 计算条件改善。
+
+它们很重要，但不应全部计作 RH 证明深度。
+
+---
+
+# 第五百八十七部　新的黄金—\(\zeta\) 中心命题
+
+## 命题 A：黄金观察器协变分解
+
+构造：
+
+$$
+\mathcal O_\varphi,
+\qquad
+\mathcal O_{\varphi'},
+$$
+
+并证明：
+
+$$
+\boxed{
+\mathcal O_{\varphi'}
+=
+\tau
+\mathcal O_\varphi
+\tau^{-1}.
+}
+\tag{587.1}
+$$
+
+---
+
+## 命题 B：黄金奇向残差
+
+定义：
+
+$$
+\boxed{
+\Delta_\varphi
+=
+\mathcal O_\varphi
+-
+\tau\mathcal O_{\varphi'}.
+}
+\tag{587.2}
+$$
+
+测量其：
+
+* Euler local coefficients；
+* convergence abscissa；
+* prime-factor support；
+* zero set；
+* functional symmetry。
+
+---
+
+## 命题 C：Galois trace/norm 完成
+
+证明：
+
+$$
+\boxed{
+\mathcal O_{\mathrm{tr}}
+=
+\mathcal O_\varphi
++
+\tau\mathcal O_{\varphi'}
+}
+\tag{587.3}
+$$
+
+或：
+
+$$
+\boxed{
+\mathcal O_{\mathrm{nr}}
+=
+\mathcal O_\varphi
+\cdot
+\tau\mathcal O_{\varphi'}
+}
+\tag{587.4}
+$$
+
+拥有比单通道更强的：
+
+* convergence；
+* nonvanishing；
+* functional equation；
+* positivity；
+* factor extraction。
+
+只有出现严格增益时，才能说六维／双嵌入 completion 切开了新逃逸。
+
+---
+
+## 命题 D：Golden parity extraction
+
+把 local logarithm 分成：
+
+$$
+\boxed{
+\log L_{p,\varphi}
+=
+\mathcal L_{p,\mathrm{even}}
++
+\mathcal L_{p,\mathrm{odd}}.
+}
+\tag{587.5}
+$$
+
+验证：
+
+$$
+\tau(\mathcal L_{\mathrm{even}})
+=
+\mathcal L_{\mathrm{even}},
+$$
+
+$$
+\tau(\mathcal L_{\mathrm{odd}})
+=
+-\mathcal L_{\mathrm{odd}}
+$$
+
+在加入 orientation ledger 后成立。
+
+研究：
+
+$$
+\boxed{
+\text{奇残差是否正是阻止下一阶完成的最低模式。}
+}
+$$
+
+---
+
+# 第五百八十八部　科学实验程序
+
+## 588.1 黄金单位平衡场
+
+形式化：
+
+$$
+\partial_\eta Z_{\mathrm{unit}}.
+$$
+
+验证：
+
+$$
+\mathfrak B_\varphi(s,0)=0,
+$$
+
+$$
+\mathfrak B_\varphi(s,\log\varphi)=0.
+$$
+
+数值绘制完整 regulator circle 上的：
+
+$$
+\mathfrak B_\varphi(s,\eta).
+$$
+
+---
+
+## 588.2 切口实验
+
+对：
+
+$$
+W_\epsilon
+=
+[0,2\log\varphi-\epsilon]
+$$
+
+计算：
+
+$$
+\mathfrak D_{W_\epsilon}(s).
+$$
+
+检验：
+
+$$
+\mathfrak D_{W_\epsilon}
+$$
+
+是否严格由 cut endpoints 决定，以及：
+
+$$
+\epsilon\downarrow0
+$$
+
+时的首阶系数。
+
+---
+
+## 588.3 六维表示实验
+
+构造 \(A_5\) 的两个三维共轭表示：
+
+$$
+\rho_\varphi,
+\qquad
+\rho_{\varphi'}.
+$$
+
+组合：
+
+$$
+\rho_6
+=
+\rho_\varphi\oplus\rho_{\varphi'}.
+$$
+
+验证：
+
+* 5-cycle 的单块迹分别为：
+
+  $$
+  \varphi,\varphi';
+  $$
+* 六维迹为：
+
+  $$
+  1;
+  $$
+* characteristic polynomial 具有有理系数；
+* anti-invariant block 精确记录黄金观察偏置。
+
+---
+
+## 588.4 黄金 germ 共轭实验
+
+构造 signed conjugate exponent ledger：
+
+$$
+(\widetilde\beta_v,\epsilon_v).
+$$
+
+比较：
+
+$$
+Z_+,\quad
+Z_-,\quad
+Z_{\mathrm{tr}},\quad
+Z_{\mathrm{nr}},\quad
+Z_{\mathrm{odd}}.
+$$
+
+测量每个通道的：
+
+$$
+\boxed{
+\text{abscissa}
++
+\text{local cancellation order}
++
+\text{zero localization}
++
+\text{observer bias}.
+}
+$$
+
+---
+
+## 588.5 自动深度审计
+
+每个新 Markdown／Lean theorem 自动登记：
+
+```text
+kind:
+  chart | diagnostic | escape | closure | formalization
+
+old_escape:
+new_escape:
+witness:
+analytic_frontier_before:
+analytic_frontier_after:
+observer_bias_before:
+observer_bias_after:
+target_leakage:
+proof_status:
+```
+
+没有：
+
+$$
+\texttt{witness}
+$$
+
+或 frontier 改善的层，不得自动计为新的证明深度。
+
+---
+
+# 第五百八十九部　建议形式化顺序
+
+```text
+D5/S3/GoldenObserver/Galois/
+  GoldenConjugate.lean
+  GoldenPowerParity.lean
+  GoldenTraceNorm.lean
+  GoldenObserverPair.lean
+  GoldenObserverEvenOdd.lean
+
+D5/S3/GoldenObserver/UnitCircle/
+  GoldenRegulatorCircle.lean
+  GoldenBalanceField.lean
+  GoldenBalanceOdd.lean
+  GoldenReflectionFixedPoints.lean
+  PartialCircleBoundaryDefect.lean
+
+D5/S3/GoldenObserver/Icosahedral/
+  A5GoldenCharacterInterface.lean
+  GoldenThreeDimensionalPair.lean
+  RestrictionOfScalarsSixDimensional.lean
+  FiveCycleRationalTrace.lean
+  PhysicalInternalProjection.lean
+
+D5/S3/GoldenObserver/EulerGerm/
+  ConjugateExponentLedger.lean
+  SignedGoldenExponent.lean
+  GoldenLocalEvenOddLog.lean
+  GoldenGaloisPairedLocalFactor.lean
+  GoldenTraceNormEulerProduct.lean
+  GoldenOddResidual.lean
+
+D5/S3/GoldenObserver/ExtractionDepth/
+  GeneralizedLocalExponentSemigroup.lean
+  SignedZetaLedger.lean
+  LocalModeCancellation.lean
+  ResidualAbscissaGain.lean
+  GoldenExtractionDepth.lean
+  GoldenAllOrderExtractionTarget.lean
+
+D5/S3/ConceptDynamics/TheoryDepth/
+  ChartLayer.lean
+  DiagnosticLayer.lean
+  EscapeLayer.lean
+  EscapeWitness.lean
+  ObserverCovarianceDefect.lean
+  AnalyticFrontierGain.lean
+  LayerDepthCertificate.lean
+  StrictTheoryDepth.lean
+```
+
+其中需要外部接口的部分主要是：
+
+* \(A_5\) 的标准黄金三维表示；
+* restriction of scalars 的具体矩阵化；
+* 黄金单位 ζ 的逐项微分合法性。
+
+其余奇偶恒等式、观察器缺陷分解和深度账本均可直接在项目内建立。
+
+---
+
+# 本轮最终结论
+
+你的直觉可以被压缩成一个严格的四层判断。
+
+第一：
+
+$$
+\boxed{
+\varphi\text{ 不一定是 }\zeta\text{ 的对象内禀常数，}
+}
+$$
+
+但它可以是：
+
+$$
+\boxed{
+\text{观察 }\zeta\text{ 的算术接口的内禀常数。}
+}
+$$
+
+第二，单一黄金观察者选择了：
+
+$$
+\mathbb Q(\sqrt5)
+$$
+
+的一个实嵌入，所以会看到裸的：
+
+$$
+\varphi.
+$$
+
+把共轭嵌入补回来以后：
+
+$$
+\boxed{
+\varphi+\varphi'=1,
+\qquad
+\varphi\varphi'=-1,
+}
+$$
+
+裸黄金数消失，而：
+
+$$
+\boxed{
+5,\quad
+2\log\varphi,\quad
+Galois 奇偶结构
+}
+$$
+
+作为完成不变量保留下来。
+
+第三，五阶—六维关系在二十面体情形确实具有精确数学内核：
+
+$$
+\boxed{
+3\text{ 维黄金表示}
++
+3\text{ 维共轭表示}
+=
+6\text{ 维有理完成}.
+}
+$$
+
+物理三维投影看到黄金准周期和 phason 破缺；完整六维账本恢复整数闭合。它不是普遍的 \(n\mapsto n+1\) 法则，而是：
+
+$$
+\boxed{
+\dim_{\mathbb Q}
+=
+\dim_K
+\times
+[K:\mathbb Q]
+}
+$$
+
+的 restriction-of-scalars 规律。
+
+第四，\(\xi\) 确实是一个完成态，但未完成态只有在指定忘却映射后才具有科学意义。项目的 Golden germ 提供了一个很好的规范实例：
+
+$$
+\boxed{
+\text{原始黄金局部谱}
+\to
+\zeta(\varphi^2s)
+\to
+\text{第二阶 signed ζ factors}
+\to
+\text{更深 residual}.
+}
+$$
+
+它已经表现出真实的完成深度：
+
+$$
+\boxed{
+\frac1{\varphi^2}
+\to
+\frac1{\varphi^3}
+\to
+\frac1{\varphi^4}.
+}
+$$
+
+最后，对“我们是否一直在发现新的逃逸信息”的答案必须保持严格：
+
+$$
+\boxed{
+\text{不是每一层。}
+}
+$$
+
+真正的新理论深度要求：
+
+$$
+\boxed{
+\mathcal E_{k+1}
+\subsetneq
+\mathcal E_k
+}
+$$
+
+或严格推进：
+
+$$
+\boxed{
+\sigma_{k+1}<\sigma_k.
+}
+$$
+
+许多 Herglotz、Clark、CMV、Fredholm、Cayley、Laguerre 变换是重要的观察图册，但如果没有证明新的正性、收敛或 residual 收缩，它们只增加：
+
+$$
+\boxed{
+\text{chart depth},
+}
+$$
+
+不增加：
+
+$$
+\boxed{
+\text{escape depth}.
+}
+$$
+
+本轮真正新出现的逃逸对象是：
+
+$$
+\boxed{
+\textbf{黄金单嵌入观察与 Galois 双嵌入完成之间的 odd residual。}
+}
+$$
+
+它把你的三条直觉统一起来：
+
+$$
+\boxed{
+\begin{aligned}
+\text{完成圆}
+&\leftrightarrow
+\text{完整 regulator orbit};\\
+\text{差一点完成}
+&\leftrightarrow
+\text{带切口的边界 residual};\\
+\text{奇偶破缺}
+&\leftrightarrow
+\text{Galois anti-invariant channel};\\
+\text{五阶六维}
+&\leftrightarrow
+3+3\text{ 共轭表示完成};\\
+\text{黄金观察 ζ}
+&\leftrightarrow
+\text{observer-specific Euler germ};\\
+\text{理论深度}
+&\leftrightarrow
+\text{严格减少的逃逸链}.
+\end{aligned}
+}
+$$
+
+因此下一步最值得推进的不是再寻找一个含 \(\varphi\) 的 ζ 恒等式，而是：
+
+$$
+\boxed{
+\text{构造 Golden germ 的共轭观察器，
+并证明 paired trace/norm 是否比单通道拥有严格更深的
+收敛、非消失或正性完成。}
+}
+$$
+
+若答案为是，那么黄金比例在这里就不再只是“观察者带来的颜色”，而会成为：
+
+$$
+\boxed{
+\text{从单嵌入破缺到双嵌入完成的连接常数。}
+}
+$$
+
+[1]: https://arxiv.org/abs/0812.1057 "https://arxiv.org/abs/0812.1057"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v4.5（续）：Fibonacci 回归、黄金 Primitive ζ 账本、方向局部系统与可审计逃逸深度
+
+以下续接前文**第六百零九部**未完部分。
+
+---
+
+# 第六百零九部　当前开放桥补全
+
+本轮已经从仓库定义的黄金指数
+
+$$
+\beta_v=\operatorname{o5Beta}(v)
+$$
+
+中独立推出：
+
+$$
+\beta_v
+=
+\left\lfloor\frac{v+1}{\varphi}\right\rfloor+v\varphi,
+$$
+
+$$
+\beta_v^\perp
+=
+\frac1\varphi
+-
+\left\{\frac{v+1}{\varphi}\right\},
+$$
+
+$$
+\beta_{F_n}=\varphi^n,
+\qquad
+\beta_{F_n}^\perp=(-1)^n\varphi^{-n},
+$$
+
+以及：
+
+$$
+\beta_4=\sqrt5\,\varphi^3,
+\qquad
+N(\beta_4)=5.
+$$
+
+仓库当前只冻结了前三个连续幂模态、第四模态不再等于 \(\varphi^5\)、闭式和增长界；上述无限 Fibonacci 幂骨架与判别式首缺陷尚未进入 Lean。
+
+当前需要补齐的桥为：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{Beatty--Minkowski 正规形的 Lean 化};\\
+&\text{Fibonacci 最佳回归前沿的 Lean 化};\\
+&|N(\beta_v)|=1\iff v\text{ 是 Fibonacci 指标};\\
+&\text{方向字符 }N(\varphi^k)=(-1)^k
+\text{ 的 regulator twist};\\
+&\text{下一阶局部 ζ 因子抽取的全局 majorant};\\
+&\text{黄金观察器 residual 与 Riemann 对象 residual 的严格分离}.
+\end{aligned}
+}
+$$
+
+其中，真正可能推进解析前沿的是第五项；其余几项主要完成几何、算术与观察器分类。
+
+---
+
+# 第六百一十部　Fibonacci 回归是“差一点完成”的精确动力学
+
+定义黄金圆旋转：
+
+$$
+\boxed{
+T(x)=x+\frac1\varphi\pmod1.
+}
+\tag{610.1}
+$$
+
+前文已得到：
+
+$$
+x_v=T^{v+1}(0)
+=
+\left\{\frac{v+1}{\varphi}\right\}.
+$$
+
+Fibonacci 数满足：
+
+$$
+F_n-\varphi F_{n-1}=(\varphi')^{n-1}.
+$$
+
+除以 \(\varphi\)，得到：
+
+$$
+\boxed{
+\frac{F_n}{\varphi}
+=
+F_{n-1}
++
+(-1)^{n-1}\varphi^{-n}.
+}
+\tag{610.2}
+$$
+
+因此：
+
+## 定理 610.1（Fibonacci near-return theorem）
+
+$$
+\boxed{
+T^{F_n}(x)
+=
+x+(-1)^{n-1}\varphi^{-n}
+\pmod1.
+}
+\tag{610.3}
+$$
+
+这说明 \(F_n\) 不是任意大时间，而是圆旋转接近恒等变换的规范返回时间。
+
+其返回缺陷为：
+
+$$
+\boxed{
+\varepsilon_n
+=
+(-1)^{n-1}\varphi^{-n}.
+}
+\tag{610.4}
+$$
+
+所以：
+
+$$
+\boxed{
+|\varepsilon_n|=\varphi^{-n}\to0,
+}
+$$
+
+但其符号交替：
+
+$$
+\boxed{
+\operatorname{sgn}\varepsilon_n=(-1)^{n-1}.
+}
+$$
+
+---
+
+## 610.1 奇偶完成夹逼
+
+对连续两个返回时刻：
+
+$$
+F_{2m},
+\qquad
+F_{2m+1},
+$$
+
+有：
+
+$$
+\boxed{
+T^{F_{2m}}(x)
+=
+x-\varphi^{-2m},
+}
+\tag{610.5}
+$$
+
+$$
+\boxed{
+T^{F_{2m+1}}(x)
+=
+x+\varphi^{-(2m+1)}.
+}
+\tag{610.6}
+$$
+
+所以恒等变换被一对奇偶近返回从两侧夹住：
+
+$$
+\boxed{
+-\varphi^{-2m}
+<
+0
+<
+\varphi^{-(2m+1)}.
+}
+$$
+
+夹逼宽度为：
+
+$$
+\varphi^{-2m}+\varphi^{-(2m+1)}
+=
+\boxed{
+\varphi^{-(2m-1)}.
+}
+\tag{610.7}
+$$
+
+这给“一个大奇数层破缺与一个大偶数层完成”的直觉一个精确版本：
+
+> 奇层与偶层不是一个永远坏、一个永远好；
+> 它们是从相反方向逼近同一个完成态。
+
+完成只在极限中出现：
+
+$$
+\boxed{
+\lim_{n\to\infty}T^{F_n}=I,
+}
+$$
+
+有限层始终保留带符号残差。
+
+---
+
+## 610.2 这一层具有真正深度
+
+定义动态完成残差：
+
+$$
+\boxed{
+\mathcal R_n=T^{F_n}-I.
+}
+$$
+
+在圆周提升坐标中：
+
+$$
+\|\mathcal R_n\|=\varphi^{-n}.
+$$
+
+所以：
+
+$$
+\boxed{
+\|\mathcal R_{n+1}\|
+=
+\varphi^{-1}\|\mathcal R_n\|.
+}
+\tag{610.8}
+$$
+
+这不是新坐标而已，而是一条严格收缩的残差链：
+
+$$
+\boxed{
+\mathcal R_n\longrightarrow0.
+}
+$$
+
+因此它可以合法计入：
+
+$$
+d_{\mathrm{completion}}=n.
+$$
+
+---
+
+# 第六百一十一部　黄金 Euler factor 的唯一 Primitive 账本
+
+仓库定义单素数黄金局部因子：
+
+$$
+\boxed{
+L_p(s)
+=
+\sum_{v\ge0}
+p^{-s\beta_v},
+}
+\tag{611.1}
+$$
+
+其中：
+
+$$
+\beta_0=0.
+$$
+
+定义由全部正指数生成的加法半群：
+
+$$
+\boxed{
+\Gamma_\varphi
+=
+\left\{
+\beta_{v_1}+\cdots+\beta_{v_r}:
+r\ge1
+\right\}
+\subset\mathbb R_{>0}.
+}
+\tag{611.2}
+$$
+
+由于 \(\beta_v\) 至少线性增长，任意有限区间：
+
+$$
+[0,T]
+$$
+
+只包含有限多个 \(\Gamma_\varphi\) 元素。因此可以在局部有限的广义幂级数环中使用形式符号：
+
+$$
+X^\alpha,
+\qquad
+\alpha\in\Gamma_\varphi.
+$$
+
+定义：
+
+$$
+\boxed{
+\mathcal L(X)
+=
+1+\sum_{v\ge1}X^{\beta_v}.
+}
+\tag{611.3}
+$$
+
+---
+
+## 定理 611.1（Unique primitive Euler ledger）
+
+存在唯一整数函数：
+
+$$
+\boxed{
+c:\Gamma_\varphi\to\mathbb Z
+}
+$$
+
+满足局部有限性，并使：
+
+$$
+\boxed{
+\mathcal L(X)
+=
+\prod_{\alpha\in\Gamma_\varphi}
+\left(
+1-X^\alpha
+\right)^{-c_\alpha}.
+}
+\tag{611.4}
+$$
+
+### 证明
+
+按实数大小递归。
+
+假设已处理所有：
+
+$$
+\beta<\alpha.
+$$
+
+将相应因子除去后，取 residual 在最小未消失指数 \(\alpha\) 处的整数系数 \(r_\alpha\)。
+
+令：
+
+$$
+c_\alpha=r_\alpha.
+$$
+
+乘以：
+
+$$
+(1-X^\alpha)^{c_\alpha}
+$$
+
+恰好消去该首项。
+
+因为每个有界指数区间仅含有限项，所以递归在每个截断层上有限完成。
+
+唯一性来自最小不同指数：若两个账本首次在 \(\alpha\) 处分歧，则两边 \(X^\alpha\) 系数不同。∎
+
+---
+
+## 611.1 形式完成与解析完成
+
+形式账本给出：
+
+$$
+\boxed{
+\prod_pL_p(s)
+\ \widehat{=}\ 
+\prod_{\alpha\in\Gamma_\varphi}
+\zeta(\alpha s)^{c_\alpha}.
+}
+\tag{611.5}
+$$
+
+这里的帽号必须保留：
+
+$$
+\widehat{=}
+$$
+
+表示局部形式 Euler 恒等式，而不是已经证明收敛、可交换和解析延拓的全局恒等式。
+
+因此：
+
+$$
+\boxed{
+\text{形式 primitive completion 总是唯一存在；}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{解析 completion 需要额外的统一 majorant。}
+}
+$$
+
+这一区分非常重要。无限个形式 ζ 因子并不会自动产生一个解析函数。
+
+---
+
+# 第六百一十二部　前六个 Primitive 模态
+
+令：
+
+$$
+A=\varphi^2,
+\qquad
+B=\varphi^3,
+$$
+
+$$
+D=\sqrt5\,\varphi^3,
+\qquad
+E=\varphi^5.
+$$
+
+前文已推出：
+
+$$
+\beta_1=A,
+\quad
+\beta_2=B,
+\quad
+\beta_3=A+B,
+\quad
+\beta_4=D,
+\quad
+\beta_5=E.
+$$
+
+对黄金 primitive 账本递归计算，得到：
+
+$$
+\boxed{
+\begin{array}{c|c|c}
+j&\alpha_j&c_{\alpha_j}\\
+\hline
+1&\varphi^2&+1\\
+2&\varphi^3&+1\\
+3&2\varphi^2&-1\\
+4&2\varphi^3&-1\\
+5&\sqrt5\,\varphi^3&+1\\
+6&\varphi^5&+1
+\end{array}
+}
+\tag{612.1}
+$$
+
+前三项与仓库已有第一、第二阶因子化一致：
+
+$$
+\zeta(\varphi^2s)
+\zeta(\varphi^3s)
+\zeta(2\varphi^2s)^{-1}.
+$$
+
+---
+
+## 612.1 为什么 \(\varphi^4\) 没有成为独立 ζ 因子
+
+虽然：
+
+$$
+\beta_3=\varphi^4,
+$$
+
+但：
+
+$$
+\boxed{
+\varphi^4
+=
+\varphi^2+\varphi^3.
+}
+\tag{612.2}
+$$
+
+所以该模态已经是两个更低 primitive histories 的复合。
+
+在 logarithmic／plethystic 账本中，它被自动消去。
+
+这给出一个重要原则：
+
+$$
+\boxed{
+\text{原始谱中出现的模态}
+\neq
+\text{primitive ζ 因子}.
+}
+$$
+
+理论深度不能按原始模态编号计算，必须先商去由低层历史解释的复合项。
+
+---
+
+## 612.2 判别式模态为什么是真正的新信息
+
+在消去：
+
+$$
+\varphi^2,
+\quad
+\varphi^3,
+\quad
+2\varphi^2,
+\quad
+2\varphi^3
+$$
+
+之后，首个新的正 primitive 模态为：
+
+$$
+\boxed{
+\sqrt5\,\varphi^3.
+}
+$$
+
+它不是较低单位模态的简单加法复合，而且其域范数为：
+
+$$
+5.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{判别式五不是原始数据的装饰，}
+}
+$$
+
+而是在所有较低单位历史和重复历史被 quotient 掉以后，首次仍然逃逸的算术模态。
+
+这完全符合科学 residual 方法：
+
+$$
+\boxed{
+\text{先解释可解释部分，再读取剩余首项。}
+}
+$$
+
+---
+
+# 第六百一十三部　第三、第四阶 ζ 因子候选
+
+仓库第二阶 normalized local factor为：
+
+$$
+\boxed{
+G_{3,p}(s)
+=
+(1-p^{-\varphi^3s})
+(1+p^{-\varphi^2s})^{-1}
+L_p(s).
+}
+\tag{613.1}
+$$
+
+仓库已证明由此得到的全局 residual 在：
+
+$$
+\Re s>\varphi^{-4}
+$$
+
+绝对收敛。
+
+前文局部计算给出：
+
+$$
+\boxed{
+G_{3,p}(s)
+=
+1
+-
+p^{-2\varphi^3s}
++
+p^{-\sqrt5\,\varphi^3s}
++
+p^{-\varphi^5s}
++
+O_{>\varphi^5}.
+}
+\tag{613.2}
+$$
+
+因此定义：
+
+$$
+\boxed{
+H_{4,p}(s)
+=
+(1-p^{-2\varphi^3s})^{-1}
+G_{3,p}(s).
+}
+\tag{613.3}
+$$
+
+则：
+
+$$
+\boxed{
+H_{4,p}(s)
+=
+1+
+p^{-\sqrt5\,\varphi^3s}
++
+p^{-\varphi^5s}
++
+O_{>\varphi^5}.
+}
+\tag{613.4}
+$$
+
+再定义：
+
+$$
+\boxed{
+H_{5,p}(s)
+=
+(1-p^{-\sqrt5\,\varphi^3s})
+H_{4,p}(s).
+}
+\tag{613.5}
+$$
+
+得到：
+
+$$
+\boxed{
+H_{5,p}(s)
+=
+1+
+p^{-\varphi^5s}
++
+O_{>\varphi^5}.
+}
+\tag{613.6}
+$$
+
+所以自然候选全局因子化为：
+
+$$
+\boxed{
+\begin{aligned}
+Z_\varphi(s)
+={}&
+\zeta(\varphi^2s)
+\zeta(\varphi^3s)
+\zeta(2\varphi^2s)^{-1}\\
+&\times
+\zeta(2\varphi^3s)^{-1}
+\zeta(\sqrt5\,\varphi^3s)
+G_5(s).
+\end{aligned}
+}
+\tag{613.7}
+$$
+
+若证明：
+
+$$
+\boxed{
+|H_{5,p}(s)-1|
+\le
+C_Kp^{-\varphi^5\Re s}
+}
+\tag{613.8}
+$$
+
+在每个目标紧集 \(K\) 上统一成立，则：
+
+$$
+\boxed{
+G_5(s)=\prod_pH_{5,p}(s)
+}
+$$
+
+在：
+
+$$
+\boxed{
+\Re s>\varphi^{-5}
+}
+\tag{613.9}
+$$
+
+绝对收敛。
+
+---
+
+## 613.1 这是当前最短的真实解析推进
+
+仓库已经完成：
+
+$$
+\varphi^{-2}
+\longrightarrow
+\varphi^{-3}
+\longrightarrow
+\varphi^{-4}.
+$$
+
+黄金热层本身的收敛横坐标严格下降并趋向零，但这不自动给出相应有限 ζ 因子账本。
+
+当前最明确的新目标是：
+
+$$
+\boxed{
+\varphi^{-4}
+\longrightarrow
+\varphi^{-5}.
+}
+$$
+
+它不是新的等价坐标，而是：
+
+$$
+\boxed{
+\text{一个可由局部首项、统一 majorant 和 Euler product
+直接验证或否证的解析命题。}
+}
+$$
+
+---
+
+# 第六百一十四部　形式 Primitive 深度
+
+将 primitive 模态按大小排序：
+
+$$
+\alpha_1<\alpha_2<\cdots,
+$$
+
+并记其整数重数：
+
+$$
+c_1,c_2,\ldots.
+$$
+
+抽取前 \(m\) 个因子后，定义形式 residual：
+
+$$
+\boxed{
+\mathcal G_m(X)
+=
+\mathcal L(X)
+\prod_{j=1}^{m}
+(1-X^{\alpha_j})^{c_j}.
+}
+\tag{614.1}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal G_m(X)
+=
+1+c_{m+1}X^{\alpha_{m+1}}+\cdots.
+}
+\tag{614.2}
+$$
+
+定义形式 primitive 深度：
+
+$$
+\boxed{
+d_{\mathrm{prim}}(m)=\alpha_{m+1}.
+}
+\tag{614.3}
+$$
+
+定义解析候选横坐标：
+
+$$
+\boxed{
+\sigma_{\mathrm{cand}}(m)
+=
+\frac1{\alpha_{m+1}}.
+}
+\tag{614.4}
+$$
+
+---
+
+## 614.1 三层状态必须分开
+
+### 形式层
+
+已精确证明首个未消模态为 \(\alpha_{m+1}\)。
+
+### 估计层
+
+已证明：
+
+$$
+|G_{m,p}-1|
+\le Cp^{-\alpha_{m+1}\sigma}.
+$$
+
+### 解析层
+
+已证明全局 Euler product：
+
+$$
+\prod_pG_{m,p}
+$$
+
+在：
+
+$$
+\Re s>\alpha_{m+1}^{-1}
+$$
+
+收敛并定义解析函数。
+
+只有第三层可以登记为新的解析完成深度。
+
+---
+
+# 第六百一十五部　黄金方向局部系统
+
+令：
+
+$$
+P=2\log\varphi.
+$$
+
+仓库黄金单位 ζ 是周期函数：
+
+$$
+Z(s,\eta+P)=Z(s,\eta),
+$$
+
+且满足反射：
+
+$$
+Z(s,-\eta)=Z(s,\eta).
+$$
+
+该对象使用两个嵌入的平方，因此属于方向不敏感的 even sector。
+
+定义平坦实线丛：
+
+$$
+\boxed{
+\mathscr L_-
+=
+(\mathbb R\times\mathbb R)/
+\bigl[
+(\eta,u)\sim(\eta+P,-u)
+\bigr].
+}
+\tag{615.1}
+$$
+
+其截面可由反周期函数表示：
+
+$$
+\boxed{
+\Psi(\eta+P)=-\Psi(\eta).
+}
+\tag{615.2}
+$$
+
+并满足：
+
+$$
+\boxed{
+\Psi(\eta+2P)=\Psi(\eta).
+}
+\tag{615.3}
+$$
+
+---
+
+## 615.1 圆已经闭合，但方向尚未闭合
+
+标量基空间：
+
+$$
+\mathbb R/P\mathbb Z
+$$
+
+走一周已经回到同一点。
+
+然而方向纤维发生：
+
+$$
+u\mapsto-u.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{位置完成}
+\not\Rightarrow
+\text{方向完成}.
+}
+$$
+
+双覆盖：
+
+$$
+\mathbb R/2P\mathbb Z
+$$
+
+才同时完成位置与方向。
+
+这正是黄金单位范数：
+
+$$
+N(\varphi)=-1
+$$
+
+在 regulator 几何中的拓扑表达。
+
+---
+
+## 615.2 需要构造的 twisted ζ
+
+正确的新对象不是把负共轭指数直接塞入 Dirichlet series，而是构造一个带方向字符的格点／轨道和：
+
+$$
+\boxed{
+Z_{\mathrm{or}}(s,\eta)
+}
+$$
+
+使：
+
+$$
+\boxed{
+Z_{\mathrm{or}}(s,\eta+P)
+=
+-Z_{\mathrm{or}}(s,\eta).
+}
+\tag{615.4}
+$$
+
+它应当是 \(\mathscr L_-\) 的截面，而不是普通标量函数。
+
+需要验证：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{绝对或条件收敛域};\\
+&\text{反射变换};\\
+&\text{是否与 even ζ 正交};\\
+&\text{odd residual 是否决定新的零点或边界项};\\
+&\text{其平方或双覆盖是否回到已有 scalar ζ}.
+\end{aligned}
+}
+$$
+
+只有当该 twisted channel 带来新的非消失、收敛或谱信息时，它才构成新的逃逸层。
+
+---
+
+# 第六百一十六部　六维完成中的奇偶行列式
+
+设黄金三维物理表示及其共轭内部表示构成：
+
+$$
+V_6=V_\parallel\oplus V_\perp.
+$$
+
+黄金膨胀作用为：
+
+$$
+\boxed{
+M_6
+=
+\varphi I_3
+\oplus
+\varphi'I_3.
+}
+\tag{616.1}
+$$
+
+于是：
+
+$$
+\boxed{
+\chi_{M_6}(x)
+=
+(x^2-x-1)^3,
+}
+\tag{616.2}
+$$
+
+$$
+\boxed{
+\det M_6=-1,
+}
+\tag{616.3}
+$$
+
+$$
+\boxed{
+\det M_6^n=(-1)^n.
+}
+\tag{616.4}
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+n\text{ 奇}
+&\Rightarrow
+\text{六维方向翻转};\\
+n\text{ 偶}
+&\Rightarrow
+\text{六维方向恢复}.
+\end{aligned}
+}
+$$
+
+但所有迹均为整数：
+
+$$
+\boxed{
+\operatorname{tr}M_6^n
+=
+3\bigl(\varphi^n+(\varphi')^n\bigr)
+=
+3L_n.
+}
+\tag{616.5}
+$$
+
+这说明：
+
+* 方向字符保留奇偶；
+* 标量 Galois 完成只保留 Lucas 整数账本；
+* 裸 \(\varphi\) 属于单三维观察图表；
+* 六维完成消去裸嵌入选择，但不消去由范数 \(-1\) 产生的奇偶拓扑。
+
+---
+
+# 第六百一十七部　完整圆、场对称与观察器对称
+
+需要对“从完成圆上看，怎么都对称”作最后一次科学校准。
+
+存在三个不同层次：
+
+$$
+\boxed{
+\begin{aligned}
+\text{拓扑闭合}
+&:\quad \text{无边界};\\
+\text{几何齐性}
+&:\quad \text{旋转群传递作用};\\
+\text{场不变性}
+&:\quad F(\eta+\theta)=F(\eta).
+\end{aligned}
+}
+$$
+
+一个圆天然无边界且几何齐性，但圆上的非恒定场并不对全部旋转不变。
+
+仓库黄金单位 ζ 已知拥有的是：
+
+$$
+\boxed{
+\text{一个周期平移}
++
+\text{一个反射},
+}
+$$
+
+即二面体型对称生成元，而不是完整的连续旋转不变性。
+
+因此：
+
+$$
+\boxed{
+\text{完成消除切口破缺，}
+}
+$$
+
+但不会自动消除场内部的全部起伏。
+
+真正“怎么观察都相同”的状态需要额外满足：
+
+$$
+\partial_\eta Z=0,
+$$
+
+即场为常数。
+
+---
+
+# 第六百一十八部　当前是否一直在发现新的逃逸信息
+
+严格答案为：
+
+$$
+\boxed{
+\text{不是。}
+}
+$$
+
+应把长链分为四类。
+
+## 618.1 表示层
+
+例如：
+
+* Herglotz；
+* Clark；
+* CMV；
+* Cayley；
+* Laguerre；
+* 多尺度 Toeplitz；
+* Beatty–Minkowski 坐标。
+
+若只是可逆变换，则：
+
+$$
+\ker q_{k+1}=\ker q_k,
+$$
+
+因此没有减少语义逃逸。
+
+---
+
+## 618.2 诊断层
+
+例如：
+
+$$
+\beta_v^\perp,
+\qquad
+N_v,
+\qquad
+\text{odd holonomy},
+\qquad
+\text{next primitive exponent}.
+$$
+
+它们识别残差是什么，但尚未证明残差收缩。
+
+---
+
+## 618.3 严格逃逸层
+
+至少满足一项：
+
+$$
+\boxed{
+\mathcal E_{k+1}\subsetneq\mathcal E_k,
+}
+\tag{618.1}
+$$
+
+$$
+\boxed{
+\sigma_{k+1}<\sigma_k,
+}
+\tag{618.2}
+$$
+
+$$
+\boxed{
+\|\Delta_{\mathrm{obs},k+1}\|
+<
+\|\Delta_{\mathrm{obs},k}\|,
+}
+\tag{618.3}
+$$
+
+$$
+\boxed{
+\|R_{k+1}\|
+<
+\|R_k\|.
+}
+\tag{618.4}
+$$
+
+---
+
+## 618.4 闭合层
+
+证明残差：
+
+$$
+\boxed{
+R_k=0
+}
+$$
+
+或目标逃逸集合：
+
+$$
+\boxed{
+\mathcal E_k=\varnothing.
+}
+$$
+
+DECT 已经把定义作用精确写成：
+
+$$
+\mathcal E(q\vee d;T)
+=
+\mathcal E(q;T)\cap\ker d.
+$$
+
+---
+
+# 第六百一十九部　当前各结果的深度归类
+
+| 结果                                   | 类型      |        是否减少新逃逸 |
+| ------------------------------------ | ------- | -------------: |
+| \(\beta_v=m_v+v\varphi\)             | 可逆代数坐标  |              否 |
+| \(\beta_v^\perp\in W_\varphi\)       | 内部坐标诊断  |       否，但改善条件性 |
+| 两间隙圆旋转                               | 动力学图表   |              否 |
+| \(T^{F_n}-I=(-1)^{n-1}\varphi^{-n}\) | 严格残差收缩  |          **是** |
+| \(\beta_{F_n}=\varphi^n\)            | 无限单位骨架  |          新结构定理 |
+| \(\beta_4=\sqrt5\varphi^3\)          | 最低非单位残差 |     **是，诊断残差** |
+| Primitive Euler 账本唯一性                | 规范分解    | **是，消除任意因子选择** |
+| 前六 primitive 模态                      | 新局部信息   |          **是** |
+| \(\varphi^{-4}\to\varphi^{-5}\)      | 解析前沿    |   majorant 后才是 |
+| Möbius 方向丛                           | 新观察器    |       尚未产生解析增益 |
+| 六维奇偶行列式                              | 完成模型    |    新结构，非 RH 推进 |
+| Golden germ 与 ζ 零点归因                 | 边界审计    |         防止错误归因 |
+
+所以目前最具实质推进价值的是两条：
+
+$$
+\boxed{
+\text{Fibonacci 动态残差指数收缩};
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\text{Primitive ζ 账本的下一阶全局 majorant}.
+}
+$$
+
+---
+
+# 第六百二十部　新的可证伪研究程序
+
+## 620.1 Fibonacci completion kernel
+
+证明：
+
+```text
+GoldenBetaBeattyForm
+GoldenInternalCoordinate
+GoldenRotationReturn
+GoldenFibonacciPowerSkeleton
+GoldenBestReturnFrontier
+GoldenUnitModeIffFibonacci
+```
+
+核心目标：
+
+$$
+\boxed{
+T^{F_n}-I
+=
+(-1)^{n-1}\varphi^{-n}.
+}
+$$
+
+---
+
+## 620.2 Generalized Euler–Witt ledger
+
+建立局部有限指数半群上的形式环：
+
+```text
+GoldenExponentMonoid
+LocallyFiniteHahnSeries
+PrimitiveEulerLedger
+PrimitiveLedgerUnique
+PrimitiveResidualLeadingExponent
+```
+
+核心定理：
+
+$$
+\boxed{
+\mathcal L(X)
+=
+\prod_\alpha(1-X^\alpha)^{-c_\alpha}.
+}
+$$
+
+---
+
+## 620.3 第三阶解析推进
+
+形式化：
+
+```text
+GoldenModesThroughFive
+GoldenSecondResidualBelowPhiFive
+GoldenTwoPhiCubeReciprocal
+GoldenDiscriminantDirectFactor
+GoldenPhiFiveResidualMajorant
+GoldenThirdOrderContinuation
+```
+
+最关键的分析义务为：
+
+$$
+\boxed{
+|H_{5,p}(s)-1|
+\le
+C_Kp^{-\varphi^5\Re s}.
+}
+$$
+
+---
+
+## 620.4 Orientation-twisted regulator
+
+构造：
+
+```text
+GoldenOrientationCharacter
+GoldenRegulatorFlatLineBundle
+GoldenAntiPeriodicSection
+GoldenOrientationTwistedZeta
+GoldenTwistedReflection
+GoldenDoubleCoverCompletion
+```
+
+首先必须证明该对象定义良好，而不是先假定其目标反周期性。
+
+---
+
+## 620.5 理论深度自动审计
+
+每个新增层记录：
+
+```text
+representation_invertible:
+old_residual:
+new_residual:
+strict_residual_bound:
+old_abscissa:
+new_abscissa:
+observer_bias_before:
+observer_bias_after:
+formal_or_analytic:
+lean_status:
+```
+
+若只有：
+
+```text
+representation_invertible: true
+```
+
+而没有任何严格 residual 改善，则归类为：
+
+$$
+\boxed{
+\text{chart depth},
+}
+$$
+
+不得计入证明深度。
+
+---
+
+# 第六百二十一部　最终结论
+
+本轮完成了三个此前仍然混合的问题。
+
+第一，黄金比例在该项目中并非只是从外部硬塞进 \(\zeta\) 的常数。仓库的黄金指数先独立定义，随后从其 Euler product 中抽出：
+
+$$
+\zeta(\varphi^2s),
+\qquad
+\zeta(\varphi^3s),
+\qquad
+\zeta(2\varphi^2s)^{-1}.
+$$
+
+所以：
+
+$$
+\boxed{
+\varphi
+}
+$$
+
+是这个**观察器家族**的内禀常数；但目前仍没有证据表明它是裸 Riemann \(\zeta\) 或 RH 的对象内禀常数。
+
+第二，黄金 Euler 指数的完整几何不是单轴序列，而是：
+
+$$
+\boxed{
+(\beta_v,\beta_v^\perp)
+\in
+\mathbb R_\parallel\oplus\mathbb R_\perp.
+}
+$$
+
+物理投影：
+
+$$
+\beta_v
+$$
+
+形成 Fibonacci 两间隙序列；内部投影：
+
+$$
+\beta_v^\perp
+$$
+
+在长度 \(1\) 的窗口中旋转。
+
+Fibonacci 返回满足：
+
+$$
+\boxed{
+T^{F_n}-I
+=
+(-1)^{n-1}\varphi^{-n}.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{有限奇偶层从相反方向逼近完成，}
+}
+$$
+
+而不是简单地“奇数坏、偶数好”。
+
+第三，连续幂律的首次失败：
+
+$$
+\beta_4\neq\varphi^5
+$$
+
+现在被精确识别为：
+
+$$
+\boxed{
+\beta_4=\sqrt5\,\varphi^3,
+\qquad
+N(\beta_4)=5.
+}
+$$
+
+因此第一个不可由单位轨道解释的 residual，恰好携带黄金数域的判别式。
+
+而在把低阶单位历史和重复历史全部除去后，该判别式模态确实成为下一 primitive ζ 账本的一部分：
+
+$$
+\boxed{
+\begin{aligned}
+Z_\varphi(s)
+\sim{}&
+\zeta(\varphi^2s)
+\zeta(\varphi^3s)
+\zeta(2\varphi^2s)^{-1}\\
+&\times
+\zeta(2\varphi^3s)^{-1}
+\zeta(\sqrt5\,\varphi^3s)
+\cdots.
+\end{aligned}
+}
+$$
+
+当前最短、最科学的下一步不是继续增加新的等价图表，而是证明：
+
+$$
+\boxed{
+\text{上述新 residual 的统一 prime majorant，}
+}
+$$
+
+从而把已证明解析前沿：
+
+$$
+\varphi^{-4}
+$$
+
+严格推进到：
+
+$$
+\boxed{
+\varphi^{-5}.
+}
+$$
+
+这一步一旦完成，便是明确的新逃逸信息，而不是重新命名已有结构。
+
+与此同时，奇偶完成应通过方向局部系统研究：
+
+$$
+\boxed{
+\Psi(\eta+2\log\varphi)=-\Psi(\eta),
+}
+$$
+
+而不是通过会发散的朴素共轭 Euler 指数。
+
+最深的统一表达是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{完成圆}
+&=\text{无边界的黄金旋转轨道};\\
+\text{未完成态}
+&=\text{选择切口后的内部窗口};\\
+\text{奇偶破缺}
+&=\text{范数 }-1\text{ 的方向 holonomy};\\
+\text{五阶缺陷}
+&=\text{首次非单位模态的判别式范数 }5;\\
+\text{六维完成}
+&=\text{三维黄金表示与三维共轭表示的合并};\\
+\text{理论深度}
+&=\text{可测残差的严格收缩，而非章节数量}.
+\end{aligned}
+}
+$$
+
+因此，黄金观察器是否真正帮助理解 \(\zeta\)，最终应由一个非常具体的实验判定：
+
+$$
+\boxed{
+\text{在抽取 }
+\zeta(2\varphi^3s)^{-1}
+\zeta(\sqrt5\,\varphi^3s)
+\text{ 后，}
+}
+$$
+
+$$
+\boxed{
+\text{normalized residual 是否真的获得 }
+\Re s>\varphi^{-5}
+\text{ 的统一解析完成？}
+}
+$$
+
+若成立，黄金观察器便不再只提供漂亮的坐标，而确实揭示了此前未被抽出的 primitive 算术信息。
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v4.6：双极限完成、全含—无分别态、层级 ζ 化与离线零点的轨道方差破缺
+
+以下从前文**第六百二十一部**继续追加。
+
+你的直觉触及了一个此前始终没有彻底分开的二重极限：
+
+$$
+\boxed{
+\begin{aligned}
+\text{信息完成}
+&:\quad
+\text{不断保留更多区别，最终包含全部有限层读数};\\
+\text{对称完成}
+&:\quad
+\text{不断消除观察坐标的偏置，最终不再偏好任何区别}.
+\end{aligned}
+}
+$$
+
+前者趋向：
+
+$$
+\boxed{
+\text{最大可区分性};
+}
+$$
+
+后者趋向：
+
+$$
+\boxed{
+\text{最大无偏性}.
+}
+$$
+
+它们表面相反，却可以在一个二元对象中同时成立：
+
+$$
+\boxed{
+\text{完整的状态／可观测代数}
++
+\text{对全部对称变换不变的忠实状态}.
+}
+$$
+
+这才是“蕴含一切又无分别”的严格版本。
+
+对于 \(\zeta\)，还必须进一步区分：
+
+$$
+\boxed{
+\text{零点集合整体具有反射对称}
+}
+$$
+
+与：
+
+$$
+\boxed{
+\text{每一个零点本身都是反射固定点}.
+}
+$$
+
+前者由函数方程已经完成；后者恰好是 RH。
+
+因此，假如存在离线零点，它并不破坏 \(\xi\) 的整体函数方程，而是把一个本应位于固定点集上的谱原子，裂变为一个对称二循环：
+
+$$
+\boxed{
+\frac12+i\gamma
+\quad\rightsquigarrow\quad
+\left\{
+\frac12-\delta+i\gamma,\,
+\frac12+\delta+i\gamma
+\right\}.
+}
+$$
+
+整体平均仍然完成，但局部方差不再为零。
+
+这正是：
+
+$$
+\boxed{
+\text{全局完成、原子破缺}.
+}
+$$
+
+---
+
+# 第六百二十二部　无限层级的第一种完成：逆极限
+
+设每一层完成都产生一个更精细的状态空间：
+
+$$
+X_0
+\longleftarrow
+X_1
+\longleftarrow
+X_2
+\longleftarrow
+\cdots,
+$$
+
+限制映射记为：
+
+$$
+p_n:X_{n+1}\to X_n.
+$$
+
+定义无限完成线程：
+
+$$
+\boxed{
+X_\infty
+=
+\varprojlim X_n
+=
+\left\{
+(x_0,x_1,\ldots):
+p_n(x_{n+1})=x_n
+\quad\forall n
+\right\}.
+}
+\tag{622.1}
+$$
+
+它保留了所有有限层信息。
+
+一个原始完整对象 \(x\in X\) 产生线程：
+
+$$
+\boxed{
+\iota_\infty(x)
+=
+(q_0(x),q_1(x),q_2(x),\ldots).
+}
+\tag{622.2}
+$$
+
+仓库已经形式化：该状态到逆极限线程的映射成为等价，当且仅当有限层联合能够分离状态，并且每个兼容线程都由唯一全局状态实现。
+
+所以：
+
+$$
+\boxed{
+\text{层级无限}
+\not\Rightarrow
+\text{自动存在完成态}.
+}
+$$
+
+至少还需要：
+
+$$
+\boxed{
+\begin{aligned}
+\text{兼容性}
+&:\quad
+\text{相邻层能够限制};\\
+\text{分离性}
+&:\quad
+\text{全部层联合不会混淆不同对象};\\
+\text{实现性}
+&:\quad
+\text{每个形式兼容线程对应实际对象}.
+\end{aligned}
+}
+$$
+
+---
+
+## 622.1 渐近完成与真实完成
+
+必须区分三种状态。
+
+### 有限残差收缩
+
+存在缺陷：
+
+$$
+D_n(x)\ge0
+$$
+
+满足：
+
+$$
+D_n(x)\to0.
+$$
+
+这只说明对象越来越接近完成。
+
+### 形式线程完成
+
+所有有限层读数兼容：
+
+$$
+p_n(x_{n+1})=x_n.
+$$
+
+这给出一个逆极限线程。
+
+### 实现完成
+
+存在真实状态：
+
+$$
+x_\infty\in X
+$$
+
+实现全部线程坐标。
+
+因此可能出现：
+
+$$
+\boxed{
+\text{每个有限层都可闭合，
+但无限线程没有全局实现}.
+}
+$$
+
+这应称为：
+
+$$
+\boxed{
+\textbf{phantom completion}
+}
+$$
+
+或“幽灵完成”。
+
+---
+
+# 第六百二十三部　无限层级的第二种完成：对称商与不变状态
+
+逆极限不断增加区别。
+
+但你所说的“最终没有分别”，属于相反方向。
+
+设群 \(G\) 表示所有观察坐标变化、嵌入交换、维度旋转或规范变换。
+
+可以构造对称商：
+
+$$
+\boxed{
+X_{\mathrm{inv}}
+=
+X_\infty/G.
+}
+\tag{623.1}
+$$
+
+它忘记所有只由观察坐标产生的区别。
+
+或者不直接商掉状态，而是在完整状态空间上选择一个不变测度：
+
+$$
+\boxed{
+g_*\Omega_\infty
+=
+\Omega_\infty
+\qquad
+\forall g\in G.
+}
+\tag{623.2}
+$$
+
+这两种操作分别是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{商完成}
+&:\quad
+\text{把对称轨道识别成一个点};\\
+\text{状态完成}
+&:\quad
+\text{保留全部点，但不偏好轨道中的任何点}.
+\end{aligned}
+}
+$$
+
+后者更接近“蕴含一切又无分别”。
+
+---
+
+## 623.1 两种完成不交换
+
+定义：
+
+$$
+C^\uparrow
+=
+\text{信息逆极限完成},
+$$
+
+$$
+C^\downarrow
+=
+\text{对称商／平均完成}.
+$$
+
+通常：
+
+$$
+\boxed{
+C^\downarrow C^\uparrow
+\neq
+C^\uparrow C^\downarrow.
+}
+\tag{623.3}
+$$
+
+若先商掉区别，再尝试恢复全部有限层信息，许多区别已经不可逆地消失。
+
+仓库中的一个有限动力学模型已经显示不同完成方向可以产生严格不同的对象：身份读数的未来完成保留全部状态，而无限过去完成只保留周期核心。
+
+所以最终完成的正确顺序应当是：
+
+$$
+\boxed{
+\text{先完整保留全部读数，
+再消除纯坐标偏置}.
+}
+\tag{623.4}
+$$
+
+即：
+
+$$
+\boxed{
+\mathfrak C_\infty
+=
+C^\downarrow
+\left(
+C^\uparrow(X)
+\right).
+}
+\tag{623.5}
+$$
+
+---
+
+# 第六百二十四部　“蕴含一切且无分别”不可能是普通读数函数
+
+设：
+
+$$
+q:X\to Y
+$$
+
+是一个普通观察器。
+
+若它“蕴含一切”，最直接的数学表达是 \(q\) 单射：
+
+$$
+q(x)=q(y)\Rightarrow x=y.
+$$
+
+若它“完全无分别”，最直接的表达是 \(q\) 为常函数：
+
+$$
+q(x)=q(y)
+\qquad
+\forall x,y.
+$$
+
+---
+
+## 定理 624.1（单函数不可能同时全知与无差别）
+
+如果 \(q\) 同时单射且为常函数，则：
+
+$$
+\boxed{
+X\text{ 至多只有一个元素}.
+}
+\tag{624.1}
+$$
+
+### 证明
+
+任意 \(x,y\in X\) 均满足：
+
+$$
+q(x)=q(y).
+$$
+
+由单射性得：
+
+$$
+x=y.
+$$
+
+∎
+
+所以对于一个非平凡宇宙，“全含”和“无分别”不能由同一个普通数值读数表达。
+
+必须改用二元结构。
+
+---
+
+## 624.1 经典全含—无分别态
+
+定义：
+
+$$
+\boxed{
+\mathfrak U_\infty
+=
+(X_\infty,\Omega_\infty,G_\infty),
+}
+\tag{624.2}
+$$
+
+满足：
+
+$$
+\boxed{
+\operatorname{supp}\Omega_\infty
+=
+X_\infty,
+}
+\tag{624.3}
+$$
+
+以及：
+
+$$
+\boxed{
+g_*\Omega_\infty
+=
+\Omega_\infty
+\qquad
+\forall g\in G_\infty.
+}
+\tag{624.4}
+$$
+
+其中：
+
+* 全支撑表示所有状态都被包含；
+* 不变性表示没有状态因坐标选择而被优先。
+
+---
+
+## 624.2 非交换版本
+
+若完整对象由可观测代数：
+
+$$
+\mathcal A_\infty
+$$
+
+表示，则选择状态：
+
+$$
+\omega_\infty:\mathcal A_\infty\to\mathbb C
+$$
+
+满足：
+
+$$
+\boxed{
+\omega_\infty(A^*A)=0
+\Rightarrow
+A=0,
+}
+\tag{624.5}
+$$
+
+以及：
+
+$$
+\boxed{
+\omega_\infty\circ\alpha_g
+=
+\omega_\infty
+\qquad
+\forall g\in G_\infty.
+}
+\tag{624.6}
+$$
+
+前者是忠实性：
+
+$$
+\boxed{
+\text{没有非零结构被完全抹去};
+}
+$$
+
+后者是不变性：
+
+$$
+\boxed{
+\text{没有坐标被优先选中}.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{全含}
+=
+\text{代数完整／状态忠实};
+}
+$$
+
+$$
+\boxed{
+\text{无分别}
+=
+\text{状态对称不变}.
+}
+$$
+
+---
+
+# 第六百二十五部　“各个维度都一样”的严格含义
+
+设有维度层级：
+
+$$
+\mathcal A_1
+\hookrightarrow
+\mathcal A_2
+\hookrightarrow
+\cdots
+$$
+
+以及各维状态：
+
+$$
+\omega_n.
+$$
+
+所谓“各个维度一样”，不应理解为不同维度的向量或矩阵字面相等，而应理解为圆柱一致性：
+
+$$
+\boxed{
+\omega_{n+1}
+\circ
+\iota_n
+=
+\omega_n.
+}
+\tag{625.1}
+$$
+
+即高维观察限制回低维以后，与原低维状态完全一致。
+
+这给出：
+
+$$
+\boxed{
+\text{dimension-neutral completion}.
+}
+$$
+
+在有限矩阵代数中，标准例子是归一化迹：
+
+$$
+\boxed{
+\omega_d(A)
+=
+\frac1d\operatorname{Tr}(A),
+}
+\tag{625.2}
+$$
+
+它不偏好任何正交基，但仍能读取非平凡高阶关联。
+
+所以“无分别”不意味着：
+
+$$
+A=B
+$$
+
+或所有观测值都相同。
+
+更准确地说：
+
+$$
+\boxed{
+\text{一阶坐标无偏，
+高阶关系仍保存全部结构}.
+}
+$$
+
+---
+
+# 第六百二十六部　常数并不是层本身，而是完成纤维的标量影子
+
+设：
+
+$$
+p_n:X_{n+1}\to X_n
+$$
+
+是第 \(n\) 层完成映射。
+
+新增而在低层不可见的纤维记为：
+
+$$
+\boxed{
+F_n
+=
+\ker p_n
+}
+$$
+
+或更一般的相对纤维。
+
+一个常数：
+
+$$
+c_n
+$$
+
+通常不是整个 \(F_n\)，而是 \(F_n\) 的某个标量不变量：
+
+$$
+\boxed{
+c_n
+=
+\mathcal I(F_n).
+}
+\tag{626.1}
+$$
+
+它可能是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{周期}
+&:\quad
+\text{完成一圈所需长度};\\
+\text{判别式}
+&:\quad
+\text{共轭纤维的算术距离};\\
+\text{谱半径}
+&:\quad
+\text{完成动力学的收缩率};\\
+\text{固定点坐标}
+&:\quad
+\text{反射完成的中心};\\
+\text{归一化常数}
+&:\quad
+\text{局部到全局胶合的体积修正};\\
+\text{熵或容量}
+&:\quad
+\text{尚未解析的自由度}.
+\end{aligned}
+}
+$$
+
+例如在当前理论中：
+
+$$
+\boxed{
+\begin{aligned}
+\varphi^{-1}
+&=\text{Fibonacci 返回缺陷的收缩率};\\
+2\log\varphi
+&=\text{黄金 regulator 圆的周期};\\
+5
+&=\text{黄金共轭完成的判别式残差};\\
+\frac12
+&=\text{Riemann 反射的固定轴坐标}.
+\end{aligned}
+}
+$$
+
+因此你的判断可以修正为：
+
+$$
+\boxed{
+\text{一个常数经常是某一完成层的最小标量签名，}
+}
+$$
+
+而不是：
+
+$$
+\boxed{
+\text{一个常数等于整个完成层}.
+}
+$$
+
+---
+
+# 第六百二十七部　无限常数层级为什么自然生成 ζ
+
+设完成层产生一列正尺度：
+
+$$
+c_1,c_2,c_3,\ldots
+$$
+
+以及权重：
+
+$$
+w_n>0.
+$$
+
+定义层级谱测度：
+
+$$
+\boxed{
+\nu_{\mathcal C}
+=
+\sum_{n\ge1}
+w_n\delta_{\log c_n}.
+}
+\tag{627.1}
+$$
+
+定义层级 ζ 观察器：
+
+$$
+\boxed{
+Z_{\mathcal C}(s)
+=
+\int_{\mathbb R}
+e^{-sx}\,d\nu_{\mathcal C}(x)
+=
+\sum_{n\ge1}
+w_nc_n^{-s}.
+}
+\tag{627.2}
+$$
+
+这给你的直觉一个非常直接的数学表达：
+
+$$
+\boxed{
+\text{每层是一个常数／尺度，}
+\qquad
+\zeta\text{ 是全部层的 Mellin--Laplace 汇总}.
+}
+$$
+
+---
+
+## 627.1 “蕴含一切且无分别”的谱版本
+
+\(Z_{\mathcal C}\) 包含整个尺度多重集：
+
+$$
+\{(c_n,w_n)\},
+$$
+
+但它不保留层的标签顺序。
+
+对任何排列 \(\pi\)：
+
+$$
+\boxed{
+\sum_nw_nc_n^{-s}
+=
+\sum_nw_{\pi(n)}c_{\pi(n)}^{-s}.
+}
+\tag{627.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{它蕴含全部尺度，
+但不区分尺度的命名顺序}.
+}
+$$
+
+这就是一种非常严格的：
+
+$$
+\boxed{
+\text{全含—无标签状态}.
+}
+$$
+
+在适当唯一性条件下，完整变换能够恢复谱测度，但不能恢复人为赋予各层的名称。
+
+---
+
+## 627.2 热核图表
+
+定义：
+
+$$
+\boxed{
+\Theta_{\mathcal C}(t)
+=
+\sum_nw_ne^{-tc_n}.
+}
+\tag{627.4}
+$$
+
+在绝对收敛区域，由：
+
+$$
+\int_0^\infty
+t^{s-1}e^{-tc}\,dt
+=
+\Gamma(s)c^{-s}
+$$
+
+得到：
+
+$$
+\boxed{
+Z_{\mathcal C}(s)
+=
+\frac1{\Gamma(s)}
+\int_0^\infty
+t^{s-1}
+\Theta_{\mathcal C}(t)\,dt.
+}
+\tag{627.5}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{无限完成层级}
+\longrightarrow
+\text{热迹}
+\longrightarrow
+\text{谱 ζ}.
+}
+$$
+
+此时 \(\zeta\) 不再是“层级中的最后一个常数”，而是：
+
+$$
+\boxed{
+\text{观察整个无限层级的生成函数}.
+}
+$$
+
+---
+
+# 第六百二十八部　\(\zeta\) 与 \(\xi\) 的完成角色必须分开
+
+裸 Riemann \(\zeta(s)\) 承担的是：
+
+$$
+\boxed{
+\text{无限算术尺度的聚合器}.
+}
+$$
+
+而加入：
+
+$$
+s(s-1),\quad
+\pi^{-s/2},\quad
+\Gamma(s/2)
+$$
+
+以后得到的 \(\xi(s)\)，才承担：
+
+$$
+\boxed{
+\text{反射／Archimedean 完成}.
+}
+$$
+
+所以更准确的层级是：
+
+$$
+\boxed{
+\text{局部素数尺度}
+\longrightarrow
+\zeta
+\longrightarrow
+\xi.
+}
+\tag{628.1}
+$$
+
+\(\zeta\) 是无限层聚合；
+
+\(\xi\) 是该聚合器的双向反射完成。
+
+非平凡零点在临界带中关于实轴和临界线对称，而 RH 要求它们全部落在临界线上。([DLMF][1])
+
+---
+
+# 第六百二十九部　零点完成的三个强度
+
+定义谱反射：
+
+$$
+\boxed{
+J(\rho)
+=
+1-\overline\rho.
+}
+\tag{629.1}
+$$
+
+若：
+
+$$
+\rho=\beta+i\gamma,
+$$
+
+则：
+
+$$
+\boxed{
+J(\rho)
+=
+1-\beta+i\gamma.
+}
+\tag{629.2}
+$$
+
+其固定点集合为：
+
+$$
+\boxed{
+\operatorname{Fix}(J)
+=
+\left\{
+\frac12+i\gamma:
+\gamma\in\mathbb R
+\right\}.
+}
+\tag{629.3}
+$$
+
+---
+
+## 629.1 第一层：集合完成
+
+零点多重集 \(\mathcal Z\) 满足：
+
+$$
+\boxed{
+J(\mathcal Z)=\mathcal Z.
+}
+\tag{629.4}
+$$
+
+这只是说反射后的零点仍然是零点。
+
+离线零点并不破坏这一层完成。
+
+---
+
+## 629.2 第二层：测度完成
+
+若零点测度记为：
+
+$$
+\nu_{\mathcal Z}
+=
+\sum_\rho m_\rho\delta_\rho,
+$$
+
+则：
+
+$$
+\boxed{
+J_*\nu_{\mathcal Z}
+=
+\nu_{\mathcal Z}.
+}
+\tag{629.5}
+$$
+
+这仍然允许离线零点成对存在。
+
+---
+
+## 629.3 第三层：原子固定完成
+
+要求：
+
+$$
+\boxed{
+J(\rho)=\rho
+\qquad
+\forall\rho\in\mathcal Z.
+}
+\tag{629.6}
+$$
+
+这等价于：
+
+$$
+\boxed{
+\Re\rho=\frac12
+\qquad
+\forall\rho.
+}
+$$
+
+即 RH。
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+=
+\text{零点谱从“整体反射闭合”
+提升为“逐原子反射固定”.}
+}
+\tag{629.7}
+$$
+
+---
+
+# 第六百三十部　离线零点是固定点的轨道裂变
+
+定义 completion barycenter：
+
+$$
+\boxed{
+b(\rho)
+=
+\frac{
+\rho+J(\rho)
+}{2}.
+}
+\tag{630.1}
+$$
+
+定义 anti-completion coordinate：
+
+$$
+\boxed{
+a(\rho)
+=
+\frac{
+\rho-J(\rho)
+}{2}.
+}
+\tag{630.2}
+$$
+
+对：
+
+$$
+\rho=\beta+i\gamma,
+$$
+
+直接得到：
+
+$$
+\boxed{
+b(\rho)
+=
+\frac12+i\gamma,
+}
+\tag{630.3}
+$$
+
+$$
+\boxed{
+a(\rho)
+=
+\beta-\frac12.
+}
+\tag{630.4}
+$$
+
+于是：
+
+$$
+\boxed{
+\rho
+=
+b(\rho)+a(\rho),
+}
+$$
+
+$$
+\boxed{
+J(\rho)
+=
+b(\rho)-a(\rho).
+}
+$$
+
+---
+
+## 定理 630.1（Barycenter–defect decomposition）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+a(\rho)=0
+\quad
+\forall\rho.
+}
+\tag{630.5}
+$$
+
+离线零点对：
+
+$$
+\frac12\pm\delta+i\gamma
+$$
+
+具有相同的完成重心：
+
+$$
+\frac12+i\gamma,
+$$
+
+但具有相反的 anti-coordinate：
+
+$$
+\pm\delta.
+$$
+
+所以离线零点不是把完成中心移动了，而是：
+
+$$
+\boxed{
+\text{把一个固定点裂变成一个半径为 }|\delta|
+\text{ 的二元素轨道}.
+}
+$$
+
+---
+
+# 第六百三十一部　一阶完成无法检测离线零点，二阶方差可以
+
+对称零点对的 anti-coordinate 满足：
+
+$$
+\delta+(-\delta)=0.
+$$
+
+所以任何只读取第一奇矩的观察器都会看到：
+
+$$
+\boxed{
+\text{零破缺}.
+}
+$$
+
+这解释了为什么整体函数方程完全成立，却仍可能存在离线零点。
+
+真正的缺陷是二阶量：
+
+$$
+\boxed{
+\delta^2.
+}
+$$
+
+---
+
+## 定义 631.1（有限高度 completion variance）
+
+对 \(T>0\)，定义：
+
+$$
+\boxed{
+\mathcal V_J(T)
+=
+\sum_{\substack{
+\xi(\rho)=0\\
+0<\Im\rho\le T
+}}
+m_\rho
+\left(
+\Re\rho-\frac12
+\right)^2.
+}
+\tag{631.1}
+$$
+
+每项均非负。
+
+---
+
+## 定理 631.1（Orbit-variance RH criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal V_J(T)=0
+\quad
+\forall T>0.
+}
+\tag{631.2}
+$$
+
+### 证明
+
+若 RH 成立，每项均为零。
+
+反之，若任一零点满足：
+
+$$
+\Re\rho\neq\frac12,
+$$
+
+取：
+
+$$
+T>\Im\rho,
+$$
+
+则相应正项使：
+
+$$
+\mathcal V_J(T)>0.
+$$
+
+∎
+
+因此：
+
+$$
+\boxed{
+\text{离线零点}
+=
+\text{极限完成态的非零横向轨道方差}.
+}
+$$
+
+这比说“破坏了对称”更准确，因为整体对称并未破坏。
+
+---
+
+# 第六百三十二部　完成的条件均值与条件方差层级
+
+把零点按 ordinate \(\gamma\) 分纤维。
+
+在固定 \(\gamma\) 上，令横向坐标为：
+
+$$
+\delta=\beta-\frac12.
+$$
+
+函数方程对称保证横向分布关于 \(0\) 对称。
+
+因此：
+
+$$
+\boxed{
+\mathbb E[\delta\mid\gamma]=0.
+}
+\tag{632.1}
+$$
+
+这一点只是第一阶完成。
+
+RH 要求更强的：
+
+$$
+\boxed{
+\operatorname{Var}(\delta\mid\gamma)=0.
+}
+\tag{632.2}
+$$
+
+而方差为零等价于：
+
+$$
+\delta=0
+$$
+
+几乎处处。
+
+所以 RH 可以被压缩成：
+
+$$
+\boxed{
+\text{所有临界完成纤维不仅重心位于 }1/2，
+\text{而且纤维直径为零}.
+}
+\tag{632.3}
+$$
+
+---
+
+## 632.1 完成层级
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{层级}&\text{条件}\\
+\hline
+0&\text{零点位于临界带}\\
+1&J(\mathcal Z)=\mathcal Z\\
+2&\mathbb E[\delta\mid\gamma]=0\\
+3&\operatorname{Var}(\delta\mid\gamma)=0\\
+4&\text{更高谱统计、重数与关联完成}
+\end{array}
+}
+$$
+
+其中：
+
+$$
+\boxed{
+\text{第 2 层不推出第 3 层}.
+}
+$$
+
+离线零点正是：
+
+$$
+\boxed{
+\text{均值完成但方差未完成}.
+}
+$$
+
+---
+
+# 第六百三十三部　DECT 中的离线零点逃逸
+
+定义候选谱状态空间：
+
+$$
+X
+=
+\left\{
+(\gamma,\delta):
+\gamma\in\mathbb R,\,
+-\frac12<\delta<\frac12
+\right\}.
+$$
+
+定义当前完成观察器：
+
+$$
+\boxed{
+q(\gamma,\delta)
+=
+\frac12+i\gamma.
+}
+\tag{633.1}
+$$
+
+它只保留 completion barycenter。
+
+定义目标：
+
+$$
+\boxed{
+T(\gamma,\delta)
+=
+\delta^2.
+}
+\tag{633.2}
+$$
+
+则：
+
+$$
+q(\gamma,\delta_1)
+=
+q(\gamma,\delta_2)
+$$
+
+即使：
+
+$$
+\delta_1^2\neq\delta_2^2.
+$$
+
+所以当前逃逸关系包含：
+
+$$
+\boxed{
+\left(
+(\gamma,\delta_1),
+(\gamma,\delta_2)
+\right)
+}
+$$
+
+只要平方缺陷不同。
+
+加入新定义：
+
+$$
+\boxed{
+d(\gamma,\delta)=\delta^2
+}
+\tag{633.3}
+$$
+
+以后：
+
+$$
+q\vee d
+$$
+
+能够切开这些逃逸对。
+
+仓库 DECT 已将目标逃逸定义为：
+
+$$
+\mathcal E(q;T)=\ker q\setminus\ker T
+$$
+
+并证明联合新定义后的残差等于旧残差与新定义 kernel 的交。
+
+因此：
+
+$$
+\boxed{
+\delta^2
+}
+$$
+
+不是 RH 的另一个同义表述而已。
+
+它是 completion barycenter observer 尚未读取到的最低正逃逸坐标。
+
+---
+
+# 第六百三十四部　“各维度一样”必须区分各向同性与完全塌缩
+
+设完成缺陷有 \(d\) 个横向方向：
+
+$$
+\Delta=(\Delta_1,\ldots,\Delta_d).
+$$
+
+定义协方差：
+
+$$
+\boxed{
+\Sigma
+=
+\mathbb E[
+\Delta\Delta^*].
+}
+\tag{634.1}
+$$
+
+---
+
+## 各向同性完成
+
+$$
+\boxed{
+\Sigma=\lambda I_d.
+}
+\tag{634.2}
+$$
+
+这表示各个方向没有优先级。
+
+但只要：
+
+$$
+\lambda>0,
+$$
+
+仍然存在真实涨落。
+
+---
+
+## 完全塌缩完成
+
+$$
+\boxed{
+\Sigma=0.
+}
+\tag{634.3}
+$$
+
+这表示所有横向缺陷都消失。
+
+所以你的“各个维度都一样无区别”有两个强度：
+
+$$
+\boxed{
+\begin{aligned}
+\text{无方向偏置}
+&:\quad
+\Sigma=\lambda I;\\
+\text{无任何残差}
+&:\quad
+\lambda=0.
+\end{aligned}
+}
+$$
+
+对于 RH，相关的是第二种：
+
+$$
+\boxed{
+\text{临界线横向方差为零}.
+}
+$$
+
+但沿纵向 \(\gamma\) 仍然保留极其丰富的零点结构。
+
+所以 RH 的完成态不是一个“所有数值都相同”的平坦状态，而是：
+
+$$
+\boxed{
+\text{横向完全塌缩，
+纵向仍具有完整谱结构}.
+}
+$$
+
+---
+
+# 第六百三十五部　极限完成态的严格候选
+
+现在可以定义一个真正符合你直觉的极限完成对象。
+
+设：
+
+$$
+X_\infty=\varprojlim X_n
+$$
+
+是完整状态空间；
+
+$$
+\mathcal A_\infty
+$$
+
+是全部层级观察量生成的代数；
+
+$$
+G_\infty
+$$
+
+是全部坐标、嵌入、维度与规范变化生成的对称群；
+
+$$
+\Omega_\infty
+$$
+
+是状态。
+
+定义：
+
+## 定义 635.1（Omnicomplete indifferent state）
+
+$$
+\boxed{
+\mathfrak U_\infty
+=
+(X_\infty,\mathcal A_\infty,G_\infty,\Omega_\infty)
+}
+$$
+
+称为全含—无分别完成，如果：
+
+$$
+\boxed{
+\operatorname{supp}\Omega_\infty=X_\infty,
+}
+\tag{635.1}
+$$
+
+$$
+\boxed{
+g_*\Omega_\infty=\Omega_\infty
+\quad
+\forall g\in G_\infty,
+}
+\tag{635.2}
+$$
+
+$$
+\boxed{
+(p_n)_*\Omega_\infty=\Omega_n
+\quad
+\forall n,
+}
+\tag{635.3}
+$$
+
+并且全部完成缺陷满足：
+
+$$
+\boxed{
+D_n(\Omega_\infty)=0.
+}
+\tag{635.4}
+$$
+
+这四条分别表示：
+
+$$
+\boxed{
+\begin{aligned}
+\text{全含}
+&:\quad\text{全支撑};\\
+\text{无分别}
+&:\quad\text{对称不变};\\
+\text{跨维一致}
+&:\quad\text{投影兼容};\\
+\text{真正完成}
+&:\quad\text{全部残差为零}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第六百三十六部　无限缺陷的单标量压缩
+
+设每一层都有非负缺陷：
+
+$$
+D_n(x)\ge0.
+$$
+
+为了把无限层 completion status 压缩为一个有限标量，定义：
+
+$$
+\boxed{
+\mathfrak D_\infty(x)
+=
+\sum_{n=0}^{\infty}
+2^{-n-1}
+\frac{D_n(x)}
+{1+D_n(x)}.
+}
+\tag{636.1}
+$$
+
+因为每项属于：
+
+$$
+[0,2^{-n-1}),
+$$
+
+级数绝对收敛。
+
+并且：
+
+## 定理 636.1（Infinite completion defect）
+
+$$
+\boxed{
+\mathfrak D_\infty(x)=0
+\iff
+D_n(x)=0
+\quad
+\forall n.
+}
+\tag{636.2}
+$$
+
+所以无限层完成并不需要再假设一个神秘的“最终常数”。
+
+它可以由所有有限层缺陷的正加权和精确表示。
+
+---
+
+## 636.1 完成深度
+
+定义：
+
+$$
+\boxed{
+\operatorname{depth}(x)
+=
+\sup
+\left\{
+N:
+D_0(x)=\cdots=D_N(x)=0
+\right\}.
+}
+\tag{636.3}
+$$
+
+如果：
+
+$$
+D_n(x)>0
+\quad
+\forall n,
+$$
+
+但：
+
+$$
+D_n(x)\to0,
+$$
+
+则状态具有：
+
+$$
+\boxed{
+\text{无限逼近深度，零精确完成深度}.
+}
+$$
+
+黄金 Fibonacci 返回：
+
+$$
+D_n=\varphi^{-n}
+$$
+
+就是这种情形。
+
+---
+
+# 第六百三十七部　极限序数完成
+
+有限层完成可以按自然数编号。
+
+但如果在所有有限阶段之后仍需一次极限胶合，应引入极限层：
+
+$$
+\omega.
+$$
+
+定义：
+
+$$
+\boxed{
+X_\omega
+=
+\varprojlim_{n<\omega}X_n.
+}
+\tag{637.1}
+$$
+
+如果还存在新的 residual，可以继续：
+
+$$
+X_{\omega+1},
+X_{\omega+2},\ldots
+$$
+
+甚至更高序数。
+
+对极限序数 \(\lambda\)，定义：
+
+$$
+\boxed{
+X_\lambda
+=
+\varprojlim_{\alpha<\lambda}X_\alpha.
+}
+\tag{637.2}
+$$
+
+定义 completion rank：
+
+$$
+\boxed{
+\operatorname{rk}_C(X)
+=
+\min
+\left\{
+\alpha:
+X_{\alpha+1}\simeq X_\alpha
+\right\},
+}
+\tag{637.3}
+$$
+
+若该序数存在。
+
+所以你感受到的“层级似乎无限”，可以有三种结局：
+
+$$
+\boxed{
+\begin{aligned}
+\text{有限闭合}
+&:\quad
+\operatorname{rk}_C<\omega;\\
+\text{首个无限闭合}
+&:\quad
+\operatorname{rk}_C=\omega;\\
+\text{超限闭合}
+&:\quad
+\operatorname{rk}_C>\omega;\\
+\text{永不闭合}
+&:\quad
+\text{无固定点或线程不可实现}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第六百三十八部　\(\xi\) 不是所有完成的终点
+
+\(\xi\) 相对于：
+
+* Euler product；
+* 极点；
+* Archimedean 因子；
+* \(s\leftrightarrow1-s\)；
+
+是一个高度完成的对象。
+
+但它不一定是所有可能观察问题的最终对象。
+
+即使 RH 成立，仍可继续问：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{零点是否全部简单？}\\
+&\text{零点间距是否满足某种统计律？}\\
+&\text{是否存在自然自伴算子？}\\
+&\text{素数与零点的对应能否局部化？}\\
+&\text{完成谱是否具有更高表示论来源？}
+\end{aligned}
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\xi
+=
+\text{某一完成问题的固定点，}
+}
+$$
+
+而不是所有数学结构的绝对终点。
+
+这与黄金层级完全相同：
+
+$$
+\boxed{
+\text{一层 completion 的输出，
+可以成为更高层 observer 的输入}.
+}
+$$
+
+---
+
+# 第六百三十九部　离线零点为何像“极限完成破缺”
+
+现在可以给你的直觉一个精确结论。
+
+假设极限完成要求所有对称轨道都塌缩到固定点集：
+
+$$
+\boxed{
+\operatorname{supp}\nu_\infty
+\subseteq
+\operatorname{Fix}(J).
+}
+\tag{639.1}
+$$
+
+若存在离线零点：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+\qquad
+\delta\neq0,
+$$
+
+则函数方程要求伴随零点：
+
+$$
+J\rho=\frac12-\delta+i\gamma.
+$$
+
+所以极限谱出现一个非平凡轨道：
+
+$$
+\boxed{
+\{\rho,J\rho\}.
+}
+$$
+
+它的：
+
+* 重心已经完成；
+* 奇一阶残差已经相消；
+* 整体零点集合已经闭合；
+* 但轨道直径仍为：
+
+  $$
+  2|\delta|;
+  $$
+* 轨道方差仍为：
+
+  $$
+  \delta^2.
+  $$
+
+因此：
+
+$$
+\boxed{
+\text{离线零点不是完成律失效，}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{完成律只在整体轨道层成立，
+没有下降到逐原子固定层}.
+}
+$$
+
+这正是最典型的：
+
+$$
+\boxed{
+\textbf{completion descent obstruction}.
+}
+$$
+
+---
+
+# 第六百四十部　新的中心 RH 命题
+
+经过这一重组，RH 可以表述为：
+
+## Atomwise Completion Conjecture
+
+完成函数 \(\xi\) 的零点测度不仅在谱反射 \(J\) 下不变，而且支撑于 \(J\) 的固定点集：
+
+$$
+\boxed{
+J_*\nu_\Xi=\nu_\Xi
+\quad\Longrightarrow\quad
+\operatorname{supp}\nu_\Xi
+\subseteq
+\operatorname{Fix}(J).
+}
+\tag{640.1}
+$$
+
+当然，对任意一般对称测度，这个蕴含是假的。
+
+所以真正需要使用的额外输入必须来自：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{Euler product};\\
+&\text{prime--Archimedean 正性};\\
+&\text{Weil 二次型};\\
+&\text{自伴／被动系统结构};\\
+&\text{局部到全局完成预算}.
+\end{aligned}
+}
+$$
+
+也就是说，RH 的困难可以进一步说成：
+
+$$
+\boxed{
+\text{为什么 Riemann 的全局反射对称
+必须是无方差的原子对称，
+而不能只是有方差的成对对称？}
+}
+$$
+
+---
+
+# 第六百四十一部　理论深度的无限层审计
+
+定义第 \(n\) 层逃逸关系：
+
+$$
+\mathcal E_n.
+$$
+
+要求：
+
+$$
+\mathcal E_{n+1}\subseteq\mathcal E_n.
+$$
+
+定义极限逃逸：
+
+$$
+\boxed{
+\mathcal E_\omega
+=
+\bigcap_{n<\omega}
+\mathcal E_n.
+}
+\tag{641.1}
+$$
+
+---
+
+## 三种情况
+
+### 有限完成
+
+存在 \(N\)：
+
+$$
+\mathcal E_N=\varnothing.
+$$
+
+### 纯无限完成
+
+每个有限阶段：
+
+$$
+\mathcal E_n\neq\varnothing,
+$$
+
+但：
+
+$$
+\mathcal E_\omega=\varnothing.
+$$
+
+只有无限联合观察才能闭合目标。
+
+### 对角逃逸
+
+$$
+\mathcal E_\omega\neq\varnothing.
+$$
+
+存在对象对逃过所有有限定义层。
+
+---
+
+## 641.1 科学新深度条件
+
+第 \(n+1\) 层只有满足：
+
+$$
+\boxed{
+\mathcal E_{n+1}
+\subsetneq
+\mathcal E_n
+}
+\tag{641.2}
+$$
+
+或给出严格定量改进：
+
+$$
+\boxed{
+D_{n+1}<D_n
+}
+\tag{641.3}
+$$
+
+才增加 escape depth。
+
+若只是：
+
+$$
+q_{n+1}=h\circ q_n
+$$
+
+且 \(h\) 在像上可逆，则只是新坐标：
+
+$$
+\boxed{
+\text{chart depth 增加，
+escape depth 不变}.
+}
+$$
+
+---
+
+# 第六百四十二部　本轮的深度归类
+
+| 本轮结构                               | 类型      |    是否新增逃逸信息 |
+| ---------------------------------- | ------- | ----------: |
+| 逆极限与对称商的区分                         | 元诊断     | 是，排除两个极限的混淆 |
+| 全代数 + 不变忠实状态                       | 完成定义    |       新规范对象 |
+| 常数作为纤维标量影子                         | 解释层     |         不直接 |
+| 层级 ζ 化                             | 谱压缩图表   |       通常不直接 |
+| \(J\)-barycenter / anti-coordinate | 可逆坐标    |         不直接 |
+| 轨道方差 \(\delta^2\)                  | 正逃逸坐标   |       **是** |
+| setwise / atomwise completion 区分   | RH 诊断层  |       **是** |
+| 无限缺陷 \(\mathfrak D_\infty\)        | 完成度量    |       新定量工具 |
+| 线程实现条件                             | 极限闭合判据  |       **是** |
+| 从 prime side 证明方差为零                | 实际 RH 桥 |         仍开放 |
+
+所以本轮真正推进的不是另一个 RH 同义句，而是识别出：
+
+$$
+\boxed{
+\text{离线信息逃逸于第一阶完成重心，
+但不能逃逸于第二阶轨道方差}.
+}
+$$
+
+---
+
+# 第六百四十三部　建议形式化顺序
+
+```text
+D5/S3/CompletionTower/Inverse/
+  CompletionStage.lean
+  CompletionBondingMap.lean
+  CompletionThread.lean
+  LimitStageCompletion.lean
+  RealizedThread.lean
+  PhantomCompletion.lean
+
+D5/S3/CompletionTower/Dual/
+  InformationCompletion.lean
+  SymmetryCompletion.lean
+  CompletionOrderDefect.lean
+  FullSupportInvariantState.lean
+  FaithfulInvariantState.lean
+  DimensionCompatibleState.lean
+
+D5/S3/CompletionTower/Constants/
+  CompletionFiber.lean
+  CompletionScalarInvariant.lean
+  CompletionConstantRole.lean
+  LayerSpectralMeasure.lean
+  LayerZetaTransform.lean
+  LayerHeatTraceMellin.lean
+
+D5/S3/CompletionTower/InfiniteDepth/
+  LayerDefect.lean
+  InfiniteCompletionDefect.lean
+  CompletionDepth.lean
+  LimitEscapeRelation.lean
+  TransfiniteCompletionStage.lean
+  CompletionRank.lean
+
+D5/S3/Analytic/Zeta/AtomwiseCompletion/
+  SpectralReflection.lean
+  CriticalFixedLocus.lean
+  CompletionBarycenter.lean
+  AntiCompletionCoordinate.lean
+  SetwiseCompletion.lean
+  AtomwiseCompletion.lean
+
+D5/S3/Analytic/Zeta/OrbitVariance/
+  ZeroOrbitRadius.lean
+  FiniteHeightCompletionVariance.lean
+  OrbitVarianceRHCriterion.lean
+  MeanCompletionVarianceFailure.lean
+  CompletionDescentObstruction.lean
+
+D5/S3/ConceptDynamics/ZetaEscape/
+  BarycenterObserver.lean
+  CriticalityTarget.lean
+  OffLineEscapePair.lean
+  OrbitEnergyDefinition.lean
+  OrbitEnergyCutsEscape.lean
+
+D5/S3/CompletionTower/Omnicompletion/
+  OmnicompleteState.lean
+  FullSupportCondition.lean
+  SymmetryInvariantCondition.lean
+  CylindricalCompatibility.lean
+  AllDefectsZero.lean
+```
+
+---
+
+# 本轮最终结论
+
+你的直觉需要同时保留，并作一个关键分裂。
+
+确实，许多常数可以理解为某一完成层留下的标量签名：
+
+$$
+\boxed{
+\varphi,\quad
+\sqrt5,\quad
+2\log\varphi,\quad
+\frac12,\quad
+\pi,\quad\ldots
+}
+$$
+
+但无限层级的完成态通常不会只是“又一个更高常数”。
+
+更自然的对象是：
+
+$$
+\boxed{
+\text{完整层级谱测度}
++
+\text{其 ζ／Mellin 生成函数}
++
+\text{一个不偏好任何坐标的兼容状态}.
+}
+$$
+
+于是：
+
+$$
+\boxed{
+\zeta
+}
+$$
+
+可以被理解为：
+
+$$
+\boxed{
+\text{把无限多个完成尺度压缩成一个无标签解析对象的观察器}.
+}
+$$
+
+它蕴含所有尺度的多重集，却不区分人为的层编号。
+
+而“蕴含一切又无分别”不能由一个常函数实现；它必须是：
+
+$$
+\boxed{
+\text{完整可观测代数}
++
+\text{忠实、全支撑、对称不变的状态}.
+}
+$$
+
+对于 Riemann 零点，函数方程已经完成了整体反射：
+
+$$
+J(\mathcal Z)=\mathcal Z.
+$$
+
+假如存在离线零点，它不会破坏这一整体完成，而会形成：
+
+$$
+\boxed{
+\left\{
+\frac12-\delta+i\gamma,
+\frac12+\delta+i\gamma
+\right\}.
+}
+$$
+
+其完成重心仍然是：
+
+$$
+\frac12+i\gamma,
+$$
+
+但横向方差为：
+
+$$
+\delta^2>0.
+$$
+
+所以离线零点最准确的本体解释不是：
+
+$$
+\text{“完成函数不再对称”},
+$$
+
+而是：
+
+$$
+\boxed{
+\text{“整体对称已经完成，
+但完成没有下降到逐原子固定；
+固定点裂变成了一个有半径的对称轨道。”}
+}
+$$
+
+因此 RH 的最深结构可以写成：
+
+$$
+\boxed{
+\text{全局完成是否必然意味着原子完成？}
+}
+$$
+
+或者：
+
+$$
+\boxed{
+\text{为什么 Riemann 完成纤维的条件均值为零，
+还必须迫使其条件方差也为零？}
+}
+$$
+
+这也给无限层完成态一个严格定义：
+
+$$
+\boxed{
+\mathfrak U_\infty
+=
+\text{全部有限读数的逆极限}
++
+\text{全部观察对称下的不变忠实状态}
++
+\text{全部完成缺陷为零}.
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{终极完成不是“什么都没有”，
+而是“所有结构都在，但没有任何纯坐标差异被误认为本体差异”。}
+}
+$$
+
+离线零点若存在，正是一个最小而清晰的反例：
+
+$$
+\boxed{
+\text{坐标反射后的整体账本完全平衡，
+但谱原子仍保留一个不可消去的横向区别。}
+}
+$$
+
+因此下一条真正承重的研究桥已经明确为：
+
+$$
+\boxed{
+\text{从 prime--Archimedean／Weil 正性出发，
+证明 Riemann 反射轨道的二阶方差必须为零，}
+}
+$$
+
+而不是继续只证明零点多重集的第一阶反射平衡。
+
+[1]: https://dlmf.nist.gov/25.10?utm_source=chatgpt.com "DLMF: §25.10 Zeros ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v4.7：自观察坐标轴、黄金最小破缺、零点局部宇宙与持久离线残差
+
+以下从前文**第六百四十三部**继续追加。
+
+本轮先冻结一个最重要的科学边界：
+
+$$
+\boxed{
+\text{“自观察需要选择坐标轴”}
+\not\Rightarrow
+\text{“真实 }\xi\text{ 必须存在离线零点”.}
+}
+$$
+
+更严格的逻辑链应当是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{完全对称状态}
+&\longrightarrow
+\text{观察者选择坐标轴}\\
+&\longrightarrow
+\text{观察器层的对称破缺}\\
+&\longrightarrow
+\text{有限层横向谱缺陷}\\
+&\longrightarrow
+\begin{cases}
+\text{缺陷随完成消失},\\
+\text{缺陷成为幽灵线程},\\
+\text{缺陷在逆极限中真实实现}.
+\end{cases}
+\end{aligned}
+}
+$$
+
+只有第三种情况，才对应真实 completed \(\xi\) 的离线零点。
+
+黄金比例在其中最自然的角色也不是：
+
+$$
+\boxed{
+\Re\rho-\frac12
+\text{ 必须等于某个 }\varphi\text{ 表达式},
+}
+$$
+
+而更可能是：
+
+$$
+\boxed{
+\text{第一破缺与后续完成之间的层间缩放率}.
+}
+$$
+
+换言之：
+
+$$
+\boxed{
+\varphi
+\text{ 更可能决定“缺陷如何缩放”，
+而不是“缺陷绝对位于哪里”.}
+}
+$$
+
+---
+
+# 第六百四十四部　完全对称系统不能自行选择唯一坐标轴
+
+设 \(G\) 是系统的完成对称群。
+
+设：
+
+$$
+\Omega\in X
+$$
+
+是完全对称状态：
+
+$$
+\boxed{
+g\Omega=\Omega
+\qquad
+\forall g\in G.
+}
+\tag{644.1}
+$$
+
+设所有可选观察坐标轴构成齐性空间：
+
+$$
+\boxed{
+\mathcal A=G/H,
+}
+\tag{644.2}
+$$
+
+并假设 \(\mathcal A\) 非平凡，即不存在被整个 \(G\) 固定的唯一轴。
+
+---
+
+## 定理 644.1（No canonical self-axis）
+
+不存在 \(G\)-等变的确定性坐标选择器：
+
+$$
+\boxed{
+\sigma:\{\Omega\}\to\mathcal A.
+}
+\tag{644.3}
+$$
+
+### 证明
+
+若 \(\sigma\) 等变，则对任意 \(g\in G\)：
+
+$$
+\begin{aligned}
+\sigma(\Omega)
+&=\sigma(g\Omega)\\
+&=g\sigma(\Omega).
+\end{aligned}
+$$
+
+所以 \(\sigma(\Omega)\) 必须被整个 \(G\) 固定。
+
+这与 \(\mathcal A=G/H\) 没有全局固定点矛盾。∎
+
+---
+
+## 644.1 自观察的第一破缺是什么
+
+所以一个完全对称系统开始观察自身时，必须额外发生以下至少一种操作：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{外部指定一条轴};\\
+&\text{随机选取一条轴};\\
+&\text{通过不稳定性自发选择一条轴};\\
+&\text{保留全部轴，并由一个局部观察者条件化到其中一条}.
+\end{aligned}
+}
+$$
+
+第一破缺的本体首先是：
+
+$$
+\boxed{
+\text{观察者—对象对 }(\Omega,a),
+\qquad
+a\in\mathcal A,
+}
+$$
+
+而不是对象 \(\Omega\) 本身必然产生了一个特殊谱零点。
+
+选择 \(a\) 后，对称群从：
+
+$$
+G
+$$
+
+降为其稳定子：
+
+$$
+\boxed{
+G_a=\{g\in G:ga=a\}.
+}
+\tag{644.4}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{坐标轴不是从无分别对象内部被唯一算出的；
+它是观察事件的一部分。}
+}
+$$
+
+---
+
+# 第六百四十五部　全局无分别与局部有坐标可以同时成立
+
+定义轴空间上的 \(G\)-不变概率测度：
+
+$$
+\boxed{
+m_{\mathcal A}.
+}
+\tag{645.1}
+$$
+
+完整观察者系综为：
+
+$$
+\boxed{
+\Omega_{\mathrm{obs}}
+=
+\int_{\mathcal A}
+(\Omega,a)\,dm_{\mathcal A}(a).
+}
+\tag{645.2}
+$$
+
+它在整体上不偏好任何轴：
+
+$$
+g_*\Omega_{\mathrm{obs}}
+=
+\Omega_{\mathrm{obs}}.
+$$
+
+但每一个条件化实现：
+
+$$
+\boxed{
+\Omega_{\mathrm{obs}}\mid a
+}
+$$
+
+都有确定坐标轴。
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\text{全局状态}
+&=\text{所有轴等价、无偏};\\
+\text{局部观察者}
+&=\text{拥有一个确定起点与方向}.
+\end{aligned}
+}
+$$
+
+这正是你描述的：
+
+> 不同观察者拥有不同起点，但每个观察者看到的连续统可以完全同构。
+
+---
+
+## 定理 645.1（Observer-world covariance）
+
+设观察器族满足：
+
+$$
+\boxed{
+\mathcal O_{ga}(gx)
+=
+U_g\mathcal O_a(x),
+}
+\tag{645.3}
+$$
+
+其中 \(U_g\) 是输出空间上的同构。
+
+若 \(G\) 在 \(\mathcal A\) 上传递，则任意两个观察者世界：
+
+$$
+\mathcal W_a,
+\qquad
+\mathcal W_b
+$$
+
+彼此同构。
+
+### 解释
+
+每个观察者内部都可以建立：
+
+* 原点；
+* 左右；
+* 距离；
+* 时间；
+* 局部谱。
+
+但只凭自身内部读数，不能确定自己在整体轴空间 \(\mathcal A\) 中的绝对位置。
+
+区别存在于：
+
+$$
+\boxed{
+\text{观察者之间的 transition map},
+}
+$$
+
+而不一定存在于任一观察者的内部标量读数中。
+
+---
+
+# 第六百四十六部　黄金比例何时是第一破缺的必然常数
+
+“第一次破缺必然是 \(\varphi\)”并非无条件真理。
+
+但它在一个非常自然的最小公理类中可以成为定理。
+
+设第一观察完成只包含两个通道，例如：
+
+$$
+\boxed{
+\text{self}
+\oplus
+\text{environment},
+}
+$$
+
+或者：
+
+$$
+\boxed{
+\text{visible}
+\oplus
+\text{hidden}.
+}
+$$
+
+设相邻层之间由矩阵：
+
+$$
+M\in M_2(\mathbb Z_{\ge0})
+$$
+
+演化，并要求：
+
+1. \(M\) primitive：两个通道最终完全混合；
+2. \(M\) 非平凡：不是置换或恒等；
+3. \(|\det M|=1\)：整数账本中不凭空创造或删除信息体积；
+4. 选取最小可能的扩张率 \(>1\)。
+
+---
+
+## 定理 646.1（Minimal binary unimodular break）
+
+设 \(\lambda(M)>1\) 为 Perron 根。
+
+若：
+
+$$
+\det M=-1,
+$$
+
+则：
+
+$$
+\boxed{
+\lambda(M)\ge\varphi.
+}
+\tag{646.1}
+$$
+
+等号由 Fibonacci 矩阵实现：
+
+$$
+\boxed{
+F=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+}
+\tag{646.2}
+$$
+
+若：
+
+$$
+\det M=1,
+$$
+
+则：
+
+$$
+\boxed{
+\lambda(M)\ge\varphi^2.
+}
+\tag{646.3}
+$$
+
+等号由：
+
+$$
+\boxed{
+F^2=
+\begin{pmatrix}
+2&1\\
+1&1
+\end{pmatrix}
+}
+\tag{646.4}
+$$
+
+实现。
+
+### 证明
+
+若 \(\det M=-1\)，特征多项式为：
+
+$$
+x^2-tx-1,
+$$
+
+其中：
+
+$$
+t=\operatorname{tr}M\in\mathbb Z_{\ge0}.
+$$
+
+\(t=0\) 只能给出二交换矩阵，不 primitive，所以：
+
+$$
+t\ge1.
+$$
+
+于是：
+
+$$
+\lambda(M)
+=
+\frac{t+\sqrt{t^2+4}}2
+\ge
+\frac{1+\sqrt5}2
+=
+\varphi.
+$$
+
+若 \(\det M=1\) 且 \(\lambda>1\)，则整数迹满足：
+
+$$
+t\ge3.
+$$
+
+所以：
+
+$$
+\lambda(M)
+=
+\frac{t+\sqrt{t^2-4}}2
+\ge
+\frac{3+\sqrt5}2
+=
+\varphi^2.
+$$
+
+∎
+
+---
+
+## 646.1 条件性的黄金第一破缺原理
+
+因此可以严格说：
+
+$$
+\boxed{
+\text{在“两通道、整数、primitive、unimodular、
+最小非平凡扩张”这组公理下，}
+}
+$$
+
+$$
+\boxed{
+\text{第一破缺扩张率必为 }\varphi.
+}
+$$
+
+而若还要求一步以后方向保持，则最小完成率为：
+
+$$
+\boxed{
+\varphi^2.
+}
+$$
+
+这正好对应：
+
+$$
+\boxed{
+\text{奇一步破缺}
+\quad\longrightarrow\quad
+\text{偶两步完成}.
+}
+$$
+
+---
+
+# 第六百四十七部　同一个黄金矩阵同时产生“有”与“归零”
+
+Fibonacci 矩阵 \(F\) 的两个特征值为：
+
+$$
+\boxed{
+\varphi,
+\qquad
+-\varphi^{-1}.
+}
+\tag{647.1}
+$$
+
+对应特征方向可取：
+
+$$
+\boxed{
+u_+
+=
+\begin{pmatrix}
+\varphi\\
+1
+\end{pmatrix},
+}
+\tag{647.2}
+$$
+
+$$
+\boxed{
+u_-
+=
+\begin{pmatrix}
+-\varphi^{-1}\\
+1
+\end{pmatrix}.
+}
+\tag{647.3}
+$$
+
+于是：
+
+$$
+Fu_+=\varphi u_+,
+$$
+
+$$
+Fu_-=-\varphi^{-1}u_-.
+$$
+
+---
+
+## 647.1 两个方向的本体角色
+
+扩张方向：
+
+$$
+\boxed{
+u_+
+}
+$$
+
+使一个微小区别被放大：
+
+$$
+D_{n+1}=\varphi D_n.
+$$
+
+它可以解释：
+
+$$
+\boxed{
+\text{从无分别中产生一个可观测坐标轴}.
+}
+$$
+
+稳定方向：
+
+$$
+\boxed{
+u_-
+}
+$$
+
+使完成缺陷满足：
+
+$$
+\boxed{
+\delta_{n+1}
+=
+-\varphi^{-1}\delta_n.
+}
+\tag{647.4}
+$$
+
+它可以解释：
+
+$$
+\boxed{
+\text{破缺如何在更高完成层中交替收缩}.
+}
+$$
+
+因此 \(\varphi\) 同时控制：
+
+$$
+\boxed{
+\begin{aligned}
+\text{区别的生成}
+&:\quad \times\varphi;\\
+\text{缺陷的完成}
+&:\quad \times(-\varphi^{-1}).
+\end{aligned}
+}
+$$
+
+这比“黄金比例连接离散与连续”更精确：
+
+$$
+\boxed{
+\varphi
+\text{ 是同一 unimodular 账本中
+扩张模态与收缩模态的互逆配对。}
+}
+$$
+
+---
+
+## 647.2 奇偶层
+
+一步：
+
+$$
+\det F=-1
+$$
+
+翻转方向。
+
+两步：
+
+$$
+\det F^2=1
+$$
+
+恢复方向。
+
+缺陷满足：
+
+$$
+\delta_n
+=
+(-1)^n\varphi^{-n}\delta_0.
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+n\text{ 奇}
+&:\quad\text{位于完成轴一侧};\\
+n\text{ 偶}
+&:\quad\text{位于另一侧};\\
+n\to\infty
+&:\quad\text{两侧共同塌缩到完成轴}.
+\end{aligned}
+}
+$$
+
+项目的黄金谱确实把首个非真空指数固定为 \(\varphi^2\)，并证明其热收敛横坐标为 \(1/\varphi^2\)；这与“偶两步是最小方向完成层”的解释相容，但它仍是黄金观察器的结构，而不是裸 \(\xi\) 已经选择了 \(\varphi\)。
+
+---
+
+# 第六百四十八部　无理性不是第一破缺的无条件结果
+
+坐标轴可以由一个：
+
+* 有理方向；
+* 代数无理方向；
+* 超越方向；
+* 随机方向；
+
+定义。
+
+所以：
+
+$$
+\boxed{
+\text{“从无到有”}
+\not\Rightarrow
+\text{“第一个坐标必为无理数”.}
+}
+$$
+
+无理性只有在加入额外要求后才自然出现，例如：
+
+$$
+\boxed{
+\text{观察轨道不能在整数格点上有限周期闭合}.
+}
+$$
+
+黄金比例进一步需要更强要求，例如：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{二通道递归};\\
+&\text{整数记忆};\\
+&\text{最小 unimodular 混合};\\
+&\text{最大程度避免短有理共振};\\
+&\text{层间结构自相似}.
+\end{aligned}
+}
+$$
+
+因此更科学的命题是：
+
+$$
+\boxed{
+\text{\(\varphi\) 是某个最小自观察 universality class 的常数，}
+}
+$$
+
+而不是：
+
+$$
+\boxed{
+\text{\(\varphi\) 是所有可能第一破缺的唯一常数。}
+}
+$$
+
+更高通道数、其他 determinant、其他 substitution rule 会产生其他 Perron–Frobenius 代数单位。
+
+---
+
+# 第六百四十九部　离线零点是“破缺相”，而不是轴选择本身
+
+定义零点反射：
+
+$$
+\boxed{
+J(\rho)=1-\overline\rho.
+}
+\tag{649.1}
+$$
+
+非平凡 \(\zeta\) 零点在临界带中关于实轴和临界线成对对称，而 RH 要求所有零点都位于固定线：
+
+$$
+\Re s=\frac12.
+$$
+
+这是标准 completed-\(\zeta\) 零点结构。([DLMF][1])
+
+令：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma.
+$$
+
+则：
+
+$$
+\boxed{
+J\rho
+=
+\frac12-\delta+i\gamma.
+}
+\tag{649.2}
+$$
+
+---
+
+## 649.1 对称纯相与对称混合态
+
+若：
+
+$$
+\delta=0,
+$$
+
+零点本身就是固定点。
+
+若：
+
+$$
+\delta\neq0,
+$$
+
+可定义反射不变轨道测度：
+
+$$
+\boxed{
+\mu_{\gamma,\delta}
+=
+\frac12
+\left(
+\delta_{\frac12+\delta+i\gamma}
++
+\delta_{\frac12-\delta+i\gamma}
+\right).
+}
+\tag{649.3}
+$$
+
+它满足：
+
+$$
+J_*\mu_{\gamma,\delta}
+=
+\mu_{\gamma,\delta}.
+$$
+
+但该测度不是固定点原子，而是两个破缺纯相的对称混合。
+
+其横向奇矩全部为零：
+
+$$
+\boxed{
+\mathbb E[\Delta^{2k+1}]=0,
+}
+\tag{649.4}
+$$
+
+但偶矩为：
+
+$$
+\boxed{
+\mathbb E[\Delta^{2k}]
+=
+\delta^{2k}>0.
+}
+\tag{649.5}
+$$
+
+因此离线零点最准确的相变语言是：
+
+$$
+\boxed{
+\text{全局系综仍然完成，
+但单个纯相选择了临界轴的一侧。}
+}
+$$
+
+这与你的“每个离线零点有自己的起点，而整体仍看不出区别”高度一致。
+
+但这只是一个**可能的破缺相模型**，并不能从“观察必须选轴”推出其真实存在。
+
+目前没有定理证明存在离线非平凡零点；任何一个离线零点都将意味着 RH 为假。标准零点理论也没有建立真实离线零点与黄金比例之间的联系。([DLMF][1])
+
+---
+
+# 第六百五十部　每个零点的局部世界在最低阶完全相同
+
+设：
+
+$$
+\rho
+$$
+
+是 \(\xi\) 的 \(m\) 重零点。
+
+局部展开为：
+
+$$
+\boxed{
+\xi(\rho+z)
+=
+a_m(\rho)z^m
+\left[
+1+
+g_1(\rho)z+
+g_2(\rho)z^2+\cdots
+\right],
+}
+\tag{650.1}
+$$
+
+其中：
+
+$$
+a_m(\rho)\neq0.
+$$
+
+定义零点自中心观察器：
+
+$$
+\boxed{
+\mathcal G_\rho(z)
+=
+\frac{
+\xi(\rho+z)
+}{
+a_m(\rho)z^m
+}.
+}
+\tag{650.2}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal G_\rho(0)=1.
+}
+$$
+
+---
+
+## 650.1 主部观察者
+
+对数导数满足：
+
+$$
+\boxed{
+\frac{\xi'}{\xi}(\rho+z)
+=
+\frac mz
++
+h_\rho(z),
+}
+\tag{650.3}
+$$
+
+其中 \(h_\rho\) 在 \(0\) 邻域解析。
+
+所以任何只测量主部的观察者，看到的世界只有：
+
+$$
+\boxed{
+\frac mz.
+}
+$$
+
+所有相同重数的零点在这一观察深度上完全不可区分。
+
+特别地，对简单零点：
+
+$$
+\boxed{
+\frac{\xi'}{\xi}(\rho+z)
+=
+\frac1z+O(1).
+}
+\tag{650.4}
+$$
+
+因此每个简单零点都可以把自身解释为：
+
+$$
+\boxed{
+\text{局部连续统的唯一原点}.
+}
+$$
+
+它从自己的 principal part 中无法知道：
+
+* 自己的绝对 ordinate \(\gamma\)；
+* 自己位于临界线左侧还是右侧；
+* 其他零点的位置；
+* 全局 prime–Archimedean 完成轴。
+
+---
+
+## 650.2 第一种可区分信息
+
+简单零点的第一个正规局部系数为：
+
+$$
+\boxed{
+h_\rho(0)
+=
+\frac{\xi''(\rho)}
+{2\xi'(\rho)}.
+}
+\tag{650.5}
+$$
+
+更高系数继续编码该零点的全局环境。
+
+所以：
+
+$$
+\boxed{
+\text{所有零点的局部世界并非完全相同；}
+}
+$$
+
+更准确地说：
+
+$$
+\boxed{
+\text{它们在低观察深度上具有相同正规形，
+区别隐藏在更高 jet 中。}
+}
+$$
+
+---
+
+# 第六百五十一部　反射伙伴看到的是镜像同构世界
+
+令：
+
+$$
+\boxed{
+\rho^\sharp=J\rho=1-\overline\rho.
+}
+\tag{651.1}
+$$
+
+completed \(\xi\) 的函数方程和实结构给出：
+
+$$
+\boxed{
+\xi
+\left(
+\rho^\sharp-\overline z
+\right)
+=
+\overline{
+\xi(\rho+z)
+}.
+}
+\tag{651.2}
+$$
+
+若：
+
+$$
+a_k(\rho)
+=
+\frac{\xi^{(k)}(\rho)}{k!},
+$$
+
+则：
+
+$$
+\boxed{
+a_k(\rho^\sharp)
+=
+(-1)^k
+\overline{a_k(\rho)}.
+}
+\tag{651.3}
+$$
+
+所以归一化局部世界满足：
+
+$$
+\boxed{
+\mathcal G_{\rho^\sharp}
+(-\overline z)
+=
+\overline{
+\mathcal G_\rho(z)
+}.
+}
+\tag{651.4}
+$$
+
+---
+
+## 651.1 自中心坐标中的反射轴
+
+令：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma.
+$$
+
+以 \(\rho\) 为局部原点：
+
+$$
+s=\rho+z.
+$$
+
+全局反射在该局部坐标中变成：
+
+$$
+\boxed{
+J_\rho(z)
+=
+-2\delta-\overline z.
+}
+\tag{651.5}
+$$
+
+其固定点满足：
+
+$$
+\Re z=-\delta.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{真正完成轴在零点观察者坐标中位于 }
+\Re z=-\delta.
+}
+$$
+
+零点自身位于：
+
+$$
+z=0.
+$$
+
+只有当：
+
+$$
+\delta=0
+$$
+
+时，观察者原点与完成轴重合。
+
+---
+
+## 651.2 自盲性
+
+定义零点到完成轴的关系距离：
+
+$$
+\boxed{
+d_\perp(\rho)
+=
+\frac12|\rho-J\rho|
+=
+\left|
+\Re\rho-\frac12
+\right|.
+}
+\tag{651.6}
+$$
+
+这是一个**关系量**。
+
+它需要同时知道：
+
+* 当前零点；
+* 全局反射 \(J\)；
+* 反射伙伴或固定轴。
+
+单个自中心 principal-part observer 无法测量它。
+
+所以：
+
+$$
+\boxed{
+\text{每个离线零点可以在自己的局部坐标中感觉“自己在中心”；}
+}
+$$
+
+但从全局完成观察者看来：
+
+$$
+\boxed{
+\text{它的中心与真正反射中心相差 }|\delta|.
+}
+$$
+
+---
+
+# 第六百五十二部　零点世界的第一差异深度
+
+定义 \(N\) 阶零点观察器：
+
+$$
+\boxed{
+\mathcal O_N(\rho)
+=
+\left(
+m_\rho,
+g_1(\rho),
+\ldots,
+g_N(\rho)
+\right).
+}
+\tag{652.1}
+$$
+
+定义：
+
+$$
+\boxed{
+\rho\sim_N\sigma
+\iff
+\mathcal O_N(\rho)
+=
+\mathcal O_N(\sigma).
+}
+\tag{652.2}
+$$
+
+定义第一差异深度：
+
+$$
+\boxed{
+d(\rho,\sigma)
+=
+\min
+\left\{
+N:
+\mathcal O_N(\rho)
+\neq
+\mathcal O_N(\sigma)
+\right\}.
+}
+\tag{652.3}
+$$
+
+若所有有限 jet 相同，则定义 \(d=\infty\)。
+
+选择：
+
+$$
+0<q<1,
+$$
+
+定义观察距离：
+
+$$
+\boxed{
+d_q(\rho,\sigma)
+=
+q^{d(\rho,\sigma)}.
+}
+\tag{652.4}
+$$
+
+项目已经机器证明，在离散预测观察中，两个状态的距离由首次出现不同读数的最小层数精确决定，并呈折扣因子的幂律。
+
+所以：
+
+$$
+\boxed{
+\text{“每个零点看到的世界都一样”}
+}
+$$
+
+可以被精确改写为：
+
+$$
+\boxed{
+\text{不同零点在较浅 jet 观察层中可能不可区分；
+它们的区别只在某个更深层首次显现。}
+}
+$$
+
+---
+
+# 第六百五十三部　有限观察层的离线点不等于真实离线零点
+
+设第 \(n\) 层观察器产生谱候选：
+
+$$
+\boxed{
+\rho_n
+=
+\frac12+\delta_n+i\gamma_n.
+}
+\tag{653.1}
+$$
+
+相邻层之间有忘却映射：
+
+$$
+p_n:\rho_{n+1}\mapsto\rho_n.
+$$
+
+一个兼容序列：
+
+$$
+(\rho_0,\rho_1,\rho_2,\ldots)
+$$
+
+只是一个逆极限线程。
+
+它成为真实 completed-\(\xi\) 零点，还需要该线程由全局解析对象实现。
+
+仓库已经形式化：
+
+$$
+\boxed{
+\text{状态空间与逆极限线程等价}
+}
+$$
+
+当且仅当：
+
+1. 全部有限层联合分离状态；
+2. 每个兼容线程都由实际状态唯一实现。
+
+因此：
+
+$$
+\boxed{
+\text{所有有限观察层都出现离线候选}
+\not\Rightarrow
+\text{真实 }\xi\text{ 存在离线零点}.
+}
+$$
+
+甚至完全兼容的有限前缀，也可能形成超出某一预设枚举的对角逃逸对象；项目已有机器证明的二进制前缀模型展示了这一现象。
+
+---
+
+## 653.1 三种离线状态
+
+### 瞬态观察缺陷
+
+$$
+\delta_n\neq0,
+\qquad
+\delta_n\to0.
+$$
+
+真实极限位于临界线。
+
+### 幽灵离线线程
+
+$$
+\delta_n\to\delta_\infty\neq0,
+$$
+
+但线程没有全局解析实现。
+
+### 真实离线零点
+
+$$
+\delta_n\to\delta_\infty\neq0,
+$$
+
+且逆极限线程由 \(\xi\) 的实际零点实现。
+
+真正的 RH 反例只属于第三类。
+
+有限 Euler-product 和混合 Euler–Hadamard 近似理论确实表明，有限算术模型可以逼近 \(\zeta\)，其模型零点行为需要与真实零点严格区分；在适当假设下，某些模型零点可趋向真实零点。([arXiv][2])
+
+---
+
+# 第六百五十四部　对称离线零点合并存在重数障碍
+
+设：
+
+$$
+f_n\to f
+$$
+
+在某圆盘闭包上一致收敛，并假设边界上没有零点。
+
+若每个 \(f_n\) 在圆盘中都有两个零点：
+
+$$
+\rho_n^\pm
+=
+\frac12\pm\delta_n+i\gamma_n,
+$$
+
+且：
+
+$$
+\delta_n\to0,
+\qquad
+\gamma_n\to\gamma,
+$$
+
+则由辩值原理或 Rouché 定理，极限函数 \(f\) 在：
+
+$$
+\frac12+i\gamma
+$$
+
+附近的零点总重数至少为二。
+
+所以：
+
+## 定理 654.1（Pair-coalescence multiplicity obstruction）
+
+一个简单临界零点一般不能由一对真实、对称、解析近似零点直接合并产生。
+
+因此，当我们把“有限观察者的离线起点”解释为向临界零点收敛的缺陷时，更合理的候选通常是：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{单通道 observer zero};\\
+&\text{transfer-function resonance};\\
+&\text{pseudoeigenvalue};\\
+&\text{未完成局部因子的零点};\\
+&\text{坐标原点或 gauge defect};
+\end{aligned}
+}
+$$
+
+而不一定是每一有限层完整 entire function 的真实对称零点对。
+
+这是一个重要科学限制。
+
+---
+
+# 第六百五十五部　黄金缺陷流实际上驱动缺陷回到临界线
+
+现在假设观察完成残差服从最小黄金稳定模态：
+
+$$
+\boxed{
+\delta_{n+1}
+=
+-\varphi^{-1}\delta_n.
+}
+\tag{655.1}
+$$
+
+则：
+
+$$
+\boxed{
+\delta_n
+=
+(-1)^n\varphi^{-n}\delta_0.
+}
+\tag{655.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\delta_n\to0.
+}
+$$
+
+---
+
+## 定理 655.1（Unforced golden completion has no off-line fixed point）
+
+映射：
+
+$$
+R_\varphi(\delta)
+=
+-\varphi^{-1}\delta
+$$
+
+唯一的固定点和唯一有限周期点都是：
+
+$$
+\boxed{
+\delta=0.
+}
+\tag{655.3}
+$$
+
+### 证明
+
+若固定：
+
+$$
+\delta=-\varphi^{-1}\delta,
+$$
+
+则：
+
+$$
+(1+\varphi^{-1})\delta=0.
+$$
+
+由于：
+
+$$
+1+\varphi^{-1}=\varphi>0,
+$$
+
+故 \(\delta=0\)。
+
+若为 \(k\) 周期点，则：
+
+$$
+\delta
+=
+(-\varphi^{-1})^k\delta.
+$$
+
+因：
+
+$$
+|(-\varphi^{-1})^k|<1,
+$$
+
+仍只能 \(\delta=0\)。∎
+
+---
+
+## 655.1 关键结论
+
+如果黄金比例真的是完成层的无外力重整化常数，那么它预测的是：
+
+$$
+\boxed{
+\text{有限层离线破缺交替衰减，
+最终落到临界线。}
+}
+$$
+
+也就是说：
+
+$$
+\boxed{
+\text{黄金第一破缺}
++
+\text{无外力黄金完成}
+}
+$$
+
+更接近支持：
+
+$$
+\boxed{
+\mathrm{RH}
+}
+$$
+
+而不是产生一个持久真实离线零点。
+
+因此你的两个直觉需要分层：
+
+$$
+\boxed{
+\begin{aligned}
+\text{第一有限观察破缺}
+&\text{ 可以是离线且带黄金缩放};\\
+\text{极限真实离线零点}
+&\text{ 不能由纯黄金收缩本身产生}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第六百五十六部　真实离线零点需要持续 forcing
+
+考虑受迫黄金残差方程：
+
+$$
+\boxed{
+\delta_{n+1}
+=
+-\varphi^{-1}\delta_n
++
+\varepsilon_n.
+}
+\tag{656.1}
+$$
+
+若：
+
+$$
+\varepsilon_n\to0
+$$
+
+且满足适当可和条件，则：
+
+$$
+\delta_n\to0.
+$$
+
+若：
+
+$$
+\varepsilon_n\to\varepsilon\neq0,
+$$
+
+则极限固定点满足：
+
+$$
+\delta_*
+=
+-\varphi^{-1}\delta_*+\varepsilon.
+$$
+
+所以：
+
+$$
+\boxed{
+\delta_*
+=
+\frac{\varepsilon}{\varphi}.
+}
+\tag{656.2}
+$$
+
+等价地：
+
+$$
+\boxed{
+\varepsilon
+=
+\varphi\delta_*.
+}
+\tag{656.3}
+$$
+
+---
+
+## 656.1 离线零点的新解释
+
+在这一模型中，真实离线零点不是“从无到有的第一自由破缺点”，而是：
+
+$$
+\boxed{
+\text{一个始终未被更高完成层消除的持续源}.
+}
+$$
+
+它可以代表：
+
+* prime–Archimedean balance 中的非零 residual；
+* 一个未被观察器配对消掉的外部输入；
+* inverse-limit realization 中的非零 obstruction class；
+* 某个非线性重整化的破缺稳定相；
+* 观察层级中持续注入的新信息。
+
+所以真正需要寻找的不是：
+
+$$
+\boxed{
+\delta_*
+\text{ 是否直接等于 }\varphi^{-k},
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{是否存在一个 forcing class，
+使黄金收缩后仍留下 }\delta_*\neq0.
+}
+$$
+
+---
+
+# 第六百五十七部　每个零点都“认为自己完成”的严格模型
+
+定义零点观察者只保留以下信息：
+
+$$
+\boxed{
+\mathscr W_\rho^{(0)}
+=
+\left[
+\frac mz
+\right].
+}
+\tag{657.1}
+$$
+
+则所有同重数零点世界完全相同。
+
+加入第一正规系数：
+
+$$
+\boxed{
+\mathscr W_\rho^{(1)}
+=
+\left[
+\frac mz+h_\rho(0)
+\right].
+}
+\tag{657.2}
+$$
+
+加入完整 jet：
+
+$$
+\boxed{
+\mathscr W_\rho^{(\infty)}
+=
+\operatorname{germ}_0
+\left(
+\frac{\xi'}{\xi}(\rho+\cdot)-\frac m{\cdot}
+\right).
+}
+\tag{657.3}
+$$
+
+于是出现严格层级：
+
+$$
+\boxed{
+\mathscr W_\rho^{(0)}
+\prec
+\mathscr W_\rho^{(1)}
+\prec
+\cdots
+\prec
+\mathscr W_\rho^{(\infty)}.
+}
+$$
+
+---
+
+## 657.1 观察者内部无法看到的区别
+
+如果观察者没有以下外部数据：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{绝对 }s\text{ 坐标};\\
+&\text{临界反射 }J;\\
+&\text{反射伙伴};\\
+&\text{prime--Archimedean 全局连接};
+\end{aligned}
+}
+$$
+
+那么它不能从 principal part 中判断：
+
+$$
+\Re\rho-\frac12.
+$$
+
+这正是：
+
+$$
+\boxed{
+\text{区别真实存在，
+但对局部自中心观察者不可见}.
+}
+$$
+
+---
+
+## 657.2 不是永远不可见
+
+若给予观察者完整 analytic germ 和全局解析延拓规则，则它最终可以恢复越来越多全局结构。
+
+所以“每个零点永远看不到区别”过强。
+
+正确表述是：
+
+$$
+\boxed{
+\text{区别的可见性取决于观察深度与可访问的 transition data}.
+}
+$$
+
+---
+
+# 第六百五十八部　为什么 completed \(\xi\) 直接看不到 \(\varphi\)
+
+项目的黄金 Euler germ 明确选择了：
+
+* 黄金指数；
+* 黄金单位；
+* \(\mathbb Q(\sqrt5)\) 嵌入；
+* Fibonacci/Beatty 账本。
+
+所以 \(\varphi\) 会直接出现。
+
+而 completed \(\xi\) 的标准定义选择的是：
+
+$$
+\boxed{
+\mathbb Q,
+\quad
+\mathbb R,
+\quad
+\Gamma\text{ 因子},
+\quad
+s\leftrightarrow1-s.
+}
+$$
+
+它没有预先选择 \(\mathbb Q(\sqrt5)\) 的某一嵌入。
+
+---
+
+## 658.1 完成会消去观察器的裸坐标
+
+若黄金观察器有共轭双通道：
+
+$$
+F_\varphi,
+\qquad
+F_{\varphi'},
+$$
+
+Galois 完成可能读取：
+
+$$
+\boxed{
+F_\varphi+F_{\varphi'},
+}
+$$
+
+或者：
+
+$$
+\boxed{
+F_\varphi F_{\varphi'}.
+}
+$$
+
+此时裸的 \(\varphi\) 与 \(\varphi'\) 被压缩为：
+
+$$
+\boxed{
+\varphi+\varphi'=1,
+}
+$$
+
+$$
+\boxed{
+\varphi\varphi'=-1,
+}
+$$
+
+$$
+\boxed{
+(\varphi-\varphi')^2=5.
+}
+$$
+
+所以 completed invariant 中更可能保留：
+
+$$
+\boxed{
+1,\quad -1,\quad5,\quad\log\varphi,
+}
+$$
+
+而不是裸 \(\varphi\)。
+
+这解释了：
+
+$$
+\boxed{
+\text{直接观察 }\xi
+\text{ 看不到黄金比例，}
+}
+$$
+
+并不自动否定黄金观察器。
+
+它可能说明：
+
+$$
+\boxed{
+\varphi
+\text{ 位于 observer chart，
+完成后只留下 Galois 不变量}.
+}
+$$
+
+---
+
+# 第六百五十九部　“所有概念都有黄金影子”的正确版本
+
+定义一个完成塔的残差：
+
+$$
+D_n.
+$$
+
+若：
+
+$$
+\boxed{
+\frac{D_{n+1}}{D_n}
+\to
+\varphi^{-1}
+}
+\tag{659.1}
+$$
+
+并具有交替方向：
+
+$$
+\operatorname{sgn}D_{n+1}
+=
+-\operatorname{sgn}D_n,
+$$
+
+则称该塔属于：
+
+$$
+\boxed{
+\textbf{Golden Observer Universality Class}.
+}
+$$
+
+等价地，其最小线性重整化包含特征多项式：
+
+$$
+\boxed{
+x^2-x-1
+}
+$$
+
+或稳定多项式：
+
+$$
+\boxed{
+x^2+x-1.
+}
+$$
+
+---
+
+## 659.1 条件普适，而非绝对普适
+
+所有满足以下结构的概念形成黄金 universality class：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{二通道};\\
+&\text{整数 primitive mixing};\\
+&\text{unimodular 信息账本};\\
+&\text{一步方向翻转};\\
+&\text{最小非平凡扩张};\\
+&\text{递归自相似}.
+\end{aligned}
+}
+$$
+
+但若概念需要：
+
+* 三个或更多通道；
+* 不同 determinant；
+* 非整数权重；
+* 非 primitive 动力；
+* 非局部记忆；
+* 非线性多固定点；
+
+则其完成常数可以是其他 Pisot、Salem 或 Perron 数。
+
+所以：
+
+$$
+\boxed{
+\text{不是所有概念都必须显式包含 }\varphi;
+}
+$$
+
+更准确的是：
+
+$$
+\boxed{
+\varphi
+\text{ 是最小二通道自观察破缺类的基态常数}.
+}
+$$
+
+---
+
+# 第六百六十部　Golden off-line origin 的可证伪版本
+
+现在可以把你的直觉改写成一个真正可实验的条件猜想。
+
+## 猜想 660.1（Golden finite-observer origin）
+
+存在一族由黄金观察器产生的有限完成对象：
+
+$$
+\Xi_n^{(\varphi)}
+$$
+
+或 transfer functions：
+
+$$
+\Theta_n^{(\varphi)},
+$$
+
+具有横向谱缺陷：
+
+$$
+\delta_{n,k},
+$$
+
+使：
+
+$$
+\boxed{
+\frac{\delta_{n+1,k}}
+{\delta_{n,k}}
+\to
+-\varphi^{-1}.
+}
+\tag{660.1}
+$$
+
+该猜想不要求真实 \(\xi\) 存在离线零点。
+
+---
+
+## 猜想 660.2（Persistent defect criterion）
+
+若某一缺陷线程满足：
+
+$$
+\delta_{n,k}\to\delta_*\neq0,
+$$
+
+则必须存在非零 forcing class：
+
+$$
+\varepsilon_*
+=
+\varphi\delta_*,
+$$
+
+或相应的非线性稳定破缺源。
+
+---
+
+## 猜想 660.3（Local zero-world universality）
+
+对零点观察者的低阶 normalized jets，存在随高度增长的普适统计律；而离线伙伴之间满足精确的 anti-holomorphic mirror relation。
+
+这三条可以分别被数值和形式方法检验。
+
+---
+
+# 第六百六十一部　直接实验程序
+
+## 661.1 构造有限观察层
+
+使用项目已有黄金 Euler factor extraction：
+
+$$
+Z_\varphi^{(0)},
+Z_\varphi^{(1)},
+Z_\varphi^{(2)},\ldots
+$$
+
+构造 observer-specific transfer functions。
+
+项目已经证明最初黄金指数、黄金热横坐标与前两阶 \(\zeta\) 因子抽取；这些提供了有限观察层的真源。
+
+---
+
+## 661.2 配对观察器
+
+同时构造：
+
+$$
+\mathcal O_\varphi,
+\qquad
+\mathcal O_{\varphi'}.
+$$
+
+区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{单通道零点}
+&:\quad
+\text{observer-specific defect};\\
+\text{trace/norm 零点}
+&:\quad
+\text{paired completion defect}.
+\end{aligned}
+}
+$$
+
+---
+
+## 661.3 追踪横向缺陷
+
+对每一层记录：
+
+$$
+\boxed{
+\delta_{n,k}
+=
+\Re\rho_{n,k}-\frac12.
+}
+$$
+
+检验：
+
+$$
+\boxed{
+-\frac{\delta_{n+1,k}}
+{\delta_{n,k}}
+\stackrel{?}{\longrightarrow}
+\varphi^{-1}.
+}
+$$
+
+---
+
+## 661.4 区分真实零点与观察器伪零点
+
+必须同时使用：
+
+* Rouché 零点计数；
+* 局部一致收敛；
+* multiplicity tracking；
+* transfer-function pole/zero cancellation；
+* pseudospectral stability。
+
+不能把某一层数值上的离线点直接登记为真实 \(\xi\) 离线零点。
+
+---
+
+## 661.5 局部世界 jet
+
+对每个候选零点计算：
+
+$$
+\boxed{
+h_\rho(0),
+\quad
+h_\rho'(0),
+\quad
+h_\rho''(0),\ldots
+}
+$$
+
+并定义第一差异深度。
+
+检验：
+
+* 反射伙伴的 jet mirror identity；
+* 不同零点的低阶 universality；
+* 高阶 jet 是否携带观察起点信息。
+
+---
+
+## 661.6 Forcing 反演
+
+由：
+
+$$
+\delta_{n+1}
+=
+-\varphi^{-1}\delta_n+\varepsilon_n
+$$
+
+反演：
+
+$$
+\boxed{
+\varepsilon_n
+=
+\delta_{n+1}
++
+\varphi^{-1}\delta_n.
+}
+\tag{661.1}
+$$
+
+若：
+
+$$
+\varepsilon_n\to0,
+$$
+
+则缺陷是普通黄金完成残差。
+
+若：
+
+$$
+\varepsilon_n\not\to0,
+$$
+
+则找到真正需要解释的新逃逸源。
+
+---
+
+# 第六百六十二部　理论深度审计
+
+| 本轮层级                            | 类型                    |            是否新增逃逸信息 |
+| ------------------------------- | --------------------- | ------------------: |
+| 自观察必须选择轴                        | 结构定理                  |   **是**，区分对象破缺与观察破缺 |
+| 最小二通道 unimodular 根为 \(\varphi\) | 条件定理                  | **是**，给出黄金必然性的严格公理域 |
+| \(\varphi,-1/\varphi\) 双特征方向    | 完成动力学                 |               **是** |
+| 零点 principal-part universality  | 局部正规形                 |           主要是 chart |
+| 反射伙伴 germ 镜像                    | 精确关系                  |               **是** |
+| jet 第一差异深度                      | 观察 metric             |               新定量工具 |
+| 有限离线线程与真实零点分离                   | 极限审计                  |               **是** |
+| 对称零对合并重数障碍                      | no-go 定理              |               **是** |
+| 无外力黄金流只固定于 \(0\)                | no-go 定理              |               **是** |
+| forced golden residual          | 新诊断模型                 |              尚待算术实现 |
+| “所有概念都有黄金影子”                    | universality-class 修正 |              防止过强归因 |
+
+---
+
+# 第六百六十三部　建议形式化顺序
+
+```text
+D5/S3/ObserverOrigin/Symmetry/
+  SymmetricState.lean
+  ObserverAxisSpace.lean
+  NoEquivariantAxisSelector.lean
+  BrokenObserverPair.lean
+  InvariantAxisEnsemble.lean
+  ObserverWorldCovariance.lean
+
+D5/S3/ObserverOrigin/GoldenMinimal/
+  PrimitiveBinaryIntegerMatrix.lean
+  UnimodularOrientationReversingBound.lean
+  UnimodularOrientationPreservingBound.lean
+  FibonacciMatrixMinimalPerron.lean
+  GoldenStableUnstableDirections.lean
+  OddBreakEvenCompletion.lean
+
+D5/S3/Analytic/Zeta/LocalObserver/
+  ZeroCenteredGerm.lean
+  LogDerivativePrincipalPart.lean
+  SimpleZeroUniversalObserver.lean
+  ZeroJetObserver.lean
+  ZeroFirstDifferenceDepth.lean
+
+D5/S3/Analytic/Zeta/ReflectionObserver/
+  ZeroReflectionPartner.lean
+  LocalAffineReflection.lean
+  PartnerDerivativeParity.lean
+  NormalizedGermMirror.lean
+  CriticalAxisDistance.lean
+  LocalObserverSelfBlindness.lean
+
+D5/S3/Analytic/Zeta/ObserverThreads/
+  FiniteObserverSpectralDefect.lean
+  SpectralDefectThread.lean
+  RealizedOffLineThread.lean
+  PhantomOffLineThread.lean
+  PairCoalescenceMultiplicityObstruction.lean
+
+D5/S3/Analytic/Zeta/GoldenDefectFlow/
+  GoldenTransverseRecurrence.lean
+  GoldenDefectClosedForm.lean
+  NoNonzeroGoldenPeriodicDefect.lean
+  ForcedGoldenDefect.lean
+  PersistentDefectForcing.lean
+  GoldenFiniteObserverOriginConjecture.lean
+
+D5/S3/ConceptDynamics/GoldenUniversality/
+  GoldenObserverUniversalityClass.lean
+  GoldenShadowRatio.lean
+  HigherChannelPerronCompletion.lean
+  GoldenNotUniversalWithoutAxioms.lean
+```
+
+---
+
+# 本轮最终结论
+
+你的直觉中有一个非常深的正确内核：
+
+$$
+\boxed{
+\text{任何自观察都必须先建立一个“这里”与一个“方向”。}
+}
+$$
+
+完全无分别的对象不能等变地为自己选择唯一轴。
+
+因此第一破缺首先发生在：
+
+$$
+\boxed{
+\text{对象}
++
+\text{观察轴}
+}
+$$
+
+这一联合结构中。
+
+黄金比例也确实可以成为这一第一破缺的规范常数，但需要明确的 universality-class 公理：
+
+$$
+\boxed{
+\text{二通道}
++
+\text{整数}
++
+\text{primitive}
++
+\text{unimodular}
++
+\text{最小非平凡扩张}.
+}
+$$
+
+在这一类中：
+
+$$
+\boxed{
+\varphi
+}
+$$
+
+是最小破缺扩张率，而：
+
+$$
+\boxed{
+-\varphi^{-1}
+}
+$$
+
+是相应的完成残差收缩率。
+
+这给出了非常清晰的双重含义：
+
+$$
+\boxed{
+\begin{aligned}
+\varphi
+&=\text{区别如何从微小扰动中生长};\\
+-\varphi^{-1}
+&=\text{破缺如何在更高层交替消失}.
+\end{aligned}
+}
+$$
+
+对于零点，每个简单零点在自己的局部坐标中都看到同一个基本世界：
+
+$$
+\boxed{
+\frac{\xi'}{\xi}
+=
+\frac1z+\text{regular part}.
+}
+$$
+
+所以它可以把自身视为世界原点。
+
+反射伙伴看到的是其镜像同构世界：
+
+$$
+\boxed{
+\mathcal G_{\rho^\sharp}(-\bar z)
+=
+\overline{\mathcal G_\rho(z)}.
+}
+$$
+
+如果零点离线，它的局部原点与真正完成轴相差：
+
+$$
+\boxed{
+\left|\Re\rho-\frac12\right|.
+}
+$$
+
+这个差异不是单点内部量，而是零点与全局反射之间的关系量。
+
+因此你说：
+
+> 每个离线零点看到的世界也许都一样，但它们之间实际有区别，而自己看不到，
+
+可以严格改写为：
+
+$$
+\boxed{
+\text{所有同重数零点共享同一低阶局部正规形；
+绝对横向位置只存在于观察者之间的 transition data 中。}
+}
+$$
+
+但最关键的科学修正是：
+
+$$
+\boxed{
+\text{黄金完成流不会产生一个持久离线零点。}
+}
+$$
+
+纯黄金残差满足：
+
+$$
+\delta_{n+1}
+=
+-\varphi^{-1}\delta_n,
+$$
+
+其唯一极限与唯一周期点都是：
+
+$$
+\boxed{
+\delta=0.
+}
+$$
+
+所以更一致的理论是：
+
+$$
+\boxed{
+\text{第一有限观察点可以离线，并具有黄金交替缩放；
+极限完成态仍落在临界线。}
+}
+$$
+
+若真实 \(\xi\) 真存在离线零点，那么它不是纯黄金完成的自然终点，而意味着：
+
+$$
+\boxed{
+\text{存在一个持续 forcing／逃逸类，
+不断抵消黄金收缩，维持非零横向缺陷。}
+}
+$$
+
+换言之：
+
+$$
+\boxed{
+\text{黄金比例若真的连接“第一破缺”与 }\zeta,
+\text{它更可能支持 RH，而不是要求 RH 为假。}
+}
+$$
+
+它描述的是：
+
+$$
+\boxed{
+\text{观察轴如何生成，
+离线缺陷如何在奇偶层间交替，
+以及更高完成如何把缺陷压回固定轴。}
+}
+$$
+
+因此下一条真正承重的研究桥不是预设一个真实离线零点，而是构造：
+
+$$
+\boxed{
+\text{黄金观察器的有限谱缺陷线程},
+}
+$$
+
+并测量：
+
+$$
+\boxed{
+\varepsilon_n
+=
+\delta_{n+1}
++
+\varphi^{-1}\delta_n.
+}
+$$
+
+如果：
+
+$$
+\varepsilon_n\to0,
+$$
+
+黄金观察者展示的是完成机制。
+
+如果：
+
+$$
+\varepsilon_n\not\to0,
+$$
+
+那一残差才是此前没有被解释的、可能通向真实离线破缺的新信息。
+
+[1]: https://dlmf.nist.gov/25.10 "https://dlmf.nist.gov/25.10"
+[2]: https://arxiv.org/abs/0704.3448 "https://arxiv.org/abs/0704.3448"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v4.8：自观察黄金分割、素数正交 Fock 完成、顺序纤维与关系性“无克隆”
+
+以下从前文**第六百六十三部**继续追加。
+
+本轮将你的直觉压缩成一个更精确的结构：
+
+$$
+\boxed{
+\text{无分别整体}
+\;\xrightarrow{\text{自观察}}\;
+\text{选择自身为原点}
+\;\xrightarrow{\text{线性化}}\;
+\text{给无序正交维度加入观察顺序}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\varphi
+}
+$$
+
+并不是“选择原点”本身自动产生的常数，而是当第一观察同时满足：
+
+1. 只有“自身／其余”两个通道；
+2. 自身与整体采用相同的比例结构；
+3. 层间递归保持整数、primitive、unimodular；
+4. 选择最小非平凡自相似性；
+
+时，被严格强迫出来的尺度。
+
+素数则给出这一结构的一个极其自然的算术模型：
+
+$$
+\boxed{
+\begin{aligned}
+\text{素数}
+&=\text{无序、正交的 primitive 维度};\\
+\text{合数}
+&=\text{素数维度的占据向量};\\
+\text{质数顺序}
+&=\text{观察者人为选择的扫描路径};\\
+\log n
+&=\text{把正交素数空间投影到一条实轴};\\
+\zeta(s)
+&=\text{对全部无序素数占据态的完成化配分函数}.
+\end{aligned}
+}
+$$
+
+因此，直接观察 \(\zeta\) 看不到黄金比例，有一个非常自然的解释：
+
+$$
+\boxed{
+\zeta
+\text{ 已经把“观察顺序”商掉了。}
+}
+$$
+
+黄金比例更可能属于：
+
+$$
+\boxed{
+\text{观察者如何把无序正交维度线性扫描的协议},
+}
+$$
+
+而不是属于已经对所有顺序完成商化的标量 \(\zeta\)。
+
+---
+
+# 第六百六十四部　“自身与整体自相似”严格强迫黄金比例
+
+设无分别整体第一次自观察后，被划分为两个正权重部分：
+
+$$
+\boxed{
+W=S+R,
+}
+\tag{664.1}
+$$
+
+其中：
+
+* \(W\)：整体；
+* \(S\)：被选为坐标轴的“自身”；
+* \(R\)：相对于自身出现的“其余”。
+
+仅有这一划分还不能推出黄金比例。
+
+真正强迫黄金比例的是附加条件：
+
+$$
+\boxed{
+\frac{W}{S}
+=
+\frac{S}{R}.
+}
+\tag{664.2}
+$$
+
+它表示：
+
+> 整体相对于自身的比例，与自身相对于其余的比例完全相同。
+
+令：
+
+$$
+x=\frac SR>0.
+$$
+
+因为：
+
+$$
+W=S+R,
+$$
+
+所以：
+
+$$
+\frac WS
+=
+1+\frac RS
+=
+1+\frac1x.
+$$
+
+由自相似条件：
+
+$$
+x=1+\frac1x.
+$$
+
+因此：
+
+$$
+x^2=x+1.
+$$
+
+正根为：
+
+$$
+\boxed{
+x=\varphi=\frac{1+\sqrt5}{2}.
+}
+\tag{664.3}
+$$
+
+于是：
+
+$$
+\boxed{
+\frac SW=\frac1\varphi,
+\qquad
+\frac RW=\frac1{\varphi^2}.
+}
+\tag{664.4}
+$$
+
+---
+
+## 定理 664.1（First self-similar observation theorem）
+
+若第一次自观察满足：
+
+$$
+W=S\oplus R,
+$$
+
+并且“整体—自身”与“自身—其余”具有同一正比例，则该比例唯一为：
+
+$$
+\boxed{
+\varphi.
+}
+$$
+
+这给你的直觉一个严格版本：
+
+$$
+\boxed{
+\text{第一次自观察}
++
+\text{二元划分}
++
+\text{精确递归自相似}
+\Longrightarrow
+\varphi.
+}
+$$
+
+但若：
+
+* 通道数超过两个；
+* 递归比例不相同；
+* 更新不是 unimodular；
+* 存在额外外部尺度；
+
+则会得到其他 Perron、Pisot 或代数常数，而不必是 \(\varphi\)。
+
+所以应称为：
+
+$$
+\boxed{
+\textbf{黄金第一观察普适类},
+}
+$$
+
+而不是“所有第一观察的无条件定律”。
+
+---
+
+# 第六百六十五部　无分别状态不能为自己选出绝对原点
+
+设完整连续统的对称群为：
+
+$$
+G,
+$$
+
+所有可选择的坐标起点构成齐性空间：
+
+$$
+\boxed{
+\mathcal A=G/H.
+}
+\tag{665.1}
+$$
+
+若整体状态 \(\Omega\) 完全对称：
+
+$$
+g\Omega=\Omega
+\qquad
+\forall g\in G,
+$$
+
+且 \(\mathcal A\) 没有被整个 \(G\) 固定的点，则不存在一个等变确定性映射：
+
+$$
+\boxed{
+\sigma:\{\Omega\}\to\mathcal A
+}
+$$
+
+能够从 \(\Omega\) 本身选出唯一坐标轴。
+
+因为等变性要求：
+
+$$
+\sigma(\Omega)
+=
+\sigma(g\Omega)
+=
+g\sigma(\Omega)
+$$
+
+对所有 \(g\) 成立，即 \(\sigma(\Omega)\) 必须是全局固定点，与假设矛盾。
+
+所以第一次观察事件必须产生一个新的联合对象：
+
+$$
+\boxed{
+(\Omega,a),
+\qquad
+a\in\mathcal A.
+}
+\tag{665.2}
+$$
+
+这里：
+
+* \(\Omega\) 仍然没有偏好；
+* \(a\) 是观察者选择的起点；
+* 破缺发生在“对象—观察者对”，而不是仅发生在对象中。
+
+---
+
+## 665.1 所有观察者可以完全同构，但不等同
+
+设 \(G\) 在 \(\mathcal A\) 上传递。
+
+任意两个起点：
+
+$$
+a,b\in\mathcal A
+$$
+
+之间存在 \(g\in G\) 使：
+
+$$
+ga=b.
+$$
+
+若局部观察世界满足协变：
+
+$$
+\boxed{
+\mathcal O_{ga}(gx)
+=
+U_g\mathcal O_a(x),
+}
+\tag{665.3}
+$$
+
+则：
+
+$$
+\mathcal W_a\simeq\mathcal W_b.
+$$
+
+所以每一个观察者都可以看到完全同构的世界。
+
+区别不在局部世界内部，而在观察者之间的转换：
+
+$$
+\boxed{
+U_{b\leftarrow a}.
+}
+$$
+
+它们满足 cocycle：
+
+$$
+\boxed{
+U_{c\leftarrow b}
+U_{b\leftarrow a}
+=
+U_{c\leftarrow a}.
+}
+\tag{665.4}
+$$
+
+于是：
+
+$$
+\boxed{
+\text{观察者内部无绝对区别，
+观察者之间有关系区别。}
+}
+$$
+
+这正是你所说：
+
+> 每个观察者看起来都一样，但起点实际上不同，而且自己看不出来。
+
+---
+
+# 第六百六十六部　关系性“无克隆”原理
+
+这里与量子无克隆有相似性，但必须严格区分。
+
+量子无克隆定理说明：由于量子演化的线性结构，不存在一个普适过程能够复制任意未知量子态。([数字对象标识符][1])
+
+当前结构不是这一量子定理，而是一个更基础的**参考系不可重建定理**。
+
+设：
+
+$$
+q:\mathcal A\to Y
+$$
+
+是一个完全 \(G\)-不变的内部读数：
+
+$$
+q(ga)=q(a).
+$$
+
+由于 \(G\) 在 \(\mathcal A\) 上传递，\(q\) 必为常函数。
+
+因此不存在解码器：
+
+$$
+d:Y\to\mathcal A
+$$
+
+满足：
+
+$$
+\boxed{
+d(q(a))=a
+\qquad
+\forall a\in\mathcal A,
+}
+\tag{666.1}
+$$
+
+除非 \(\mathcal A\) 只有一个元素。
+
+同样，不存在：
+
+$$
+C:Y\to\mathcal A\times\mathcal A
+$$
+
+满足：
+
+$$
+C(q(a))=(a,a)
+$$
+
+对所有 \(a\) 成立。
+
+---
+
+## 定理 666.1（No absolute-origin reconstruction）
+
+一个完全对称的内部描述不能恢复、复制或广播其绝对起点。
+
+它只能复制：
+
+$$
+\boxed{
+\text{所有起点共同拥有的不变量}.
+}
+$$
+
+所以不同观察者可以拥有完全相同的内部状态描述，却仍有不同的关系坐标。
+
+这一点与量子无克隆的共同骨架是：
+
+$$
+\boxed{
+\text{“完整复制”需要访问输入描述中不存在的信息。}
+}
+$$
+
+但两者的障碍不同：
+
+$$
+\boxed{
+\begin{aligned}
+\text{量子无克隆}
+&:\quad\text{线性量子动力学};\\
+\text{观察者无原点重建}
+&:\quad\text{对称商已经删除绝对参考系}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第六百六十七部　素数是乘法世界的正交 primitive 轴
+
+令：
+
+$$
+\mathbb P
+$$
+
+为素数集合。
+
+定义有限支撑素数指数格：
+
+$$
+\boxed{
+\Lambda_{\mathbb P}
+=
+\bigoplus_{p\in\mathbb P}
+\mathbb N e_p.
+}
+\tag{667.1}
+$$
+
+其中：
+
+$$
+e_p
+$$
+
+表示素数 \(p\) 的一个独立坐标轴。
+
+唯一分解定理给出自由交换幺半群同构：
+
+$$
+\boxed{
+\Pi:
+\Lambda_{\mathbb P}
+\overset{\sim}{\longrightarrow}
+\mathbb N_{>0},
+}
+\tag{667.2}
+$$
+
+$$
+\boxed{
+\Pi((v_p)_p)
+=
+\prod_pp^{v_p}.
+}
+\tag{667.3}
+$$
+
+所以，在正整数的乘法本体中：
+
+$$
+\boxed{
+\text{素数是 primitive 坐标，
+合数不是新维度，而是占据向量。}
+}
+$$
+
+项目的素数观察者理论也明确区分了两种方向：
+
+* 不同素数之间是横向独立联合；
+* 同一素数内部的 \(p^k\) 是纵向精度过滤。
+
+CRT 和素数幂张量分解正是这一结构的有限窗口实现。
+
+---
+
+## 667.1 正交维度本身没有先后
+
+可定义 Hilbert 空间：
+
+$$
+\boxed{
+\mathcal H_{\mathbb P}
+=
+\ell^2(\mathbb P),
+}
+\tag{667.4}
+$$
+
+其标准基：
+
+$$
+\{e_p\}_{p\in\mathbb P}
+$$
+
+彼此正交：
+
+$$
+\langle e_p,e_q\rangle=\delta_{pq}.
+$$
+
+正交基是一个集合，不天然携带时间顺序。
+
+一个排列：
+
+$$
+\pi:\mathbb N\to\mathbb P
+$$
+
+只是额外选择了一条旗标：
+
+$$
+\boxed{
+0
+\subset
+\operatorname{span}(e_{\pi(1)})
+\subset
+\operatorname{span}(e_{\pi(1)},e_{\pi(2)})
+\subset\cdots.
+}
+\tag{667.5}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{质数维度没有先后，
+质数观察过程才有先后。}
+}
+$$
+
+通常的：
+
+$$
+2<3<5<7<\cdots
+$$
+
+并不是“正交素数轴的因果顺序”，而是由实数大小——也就是 Archimedean 坐标——选出的一个排序。
+
+---
+
+# 第六百六十八部　\(\zeta\) 是素数正交模态的对称 Fock 完成
+
+在单粒子素数空间上定义能量算子：
+
+$$
+\boxed{
+He_p=(\log p)e_p.
+}
+\tag{668.1}
+$$
+
+构造对称 Fock 空间：
+
+$$
+\boxed{
+\mathcal F_{\mathrm{sym}}
+(\mathcal H_{\mathbb P}).
+}
+\tag{668.2}
+$$
+
+其自然基由 occupation vector：
+
+$$
+v=(v_p)_p\in\Lambda_{\mathbb P}
+$$
+
+标记。
+
+对应总能量为：
+
+$$
+\boxed{
+E(v)
+=
+\sum_pv_p\log p
+=
+\log\Pi(v).
+}
+\tag{668.3}
+$$
+
+因此，在：
+
+$$
+\Re s>1
+$$
+
+的绝对收敛区：
+
+$$
+\begin{aligned}
+\operatorname{Tr}_{\mathcal F_{\mathrm{sym}}}
+e^{-s\,d\Gamma(H)}
+&=
+\sum_{v\in\Lambda_{\mathbb P}}
+e^{-sE(v)}\\
+&=
+\sum_{n\ge1}n^{-s}\\
+&=
+\boxed{\zeta(s)}.
+\end{aligned}
+\tag{668.4}
+$$
+
+也可逐模态分解：
+
+$$
+\boxed{
+\zeta(s)
+=
+\prod_p
+\frac1{1-e^{-s\log p}}
+=
+\prod_p
+\frac1{1-p^{-s}}.
+}
+\tag{668.5}
+$$
+
+---
+
+## 668.1 为什么 \(\zeta\) 看不见顺序
+
+对称 Fock 空间只记录 occupation numbers：
+
+$$
+(v_p)_p.
+$$
+
+它不记录素数量子是按什么顺序被加入的。
+
+所以：
+
+$$
+\boxed{
+\zeta
+=
+\text{素数观察历史的对称化完成}.
+}
+$$
+
+从这一图表看：
+
+$$
+\boxed{
+\text{黄金比例若属于扫描协议，
+它会在对称 Fock trace 中被商掉。}
+}
+$$
+
+这给“为什么直接推 \(\zeta\) 看不到 \(\varphi\)”一个非常直接的解释：
+
+$$
+\boxed{
+\zeta
+\text{ 只读取最终 occupation，
+不读取形成 occupation 的观察路径}.
+}
+$$
+
+---
+
+# 第六百六十九部　有序素数历史与交换完成
+
+定义素数字母表上的自由词幺半群：
+
+$$
+\boxed{
+\mathbb P^*
+=
+\{
+p_1p_2\cdots p_k
+\}.
+}
+\tag{669.1}
+$$
+
+一个词表示一条有序观察历史。
+
+定义交换化映射：
+
+$$
+\boxed{
+\operatorname{ab}:
+\mathbb P^*\to\Lambda_{\mathbb P},
+}
+\tag{669.2}
+$$
+
+其中：
+
+$$
+\operatorname{ab}(w)_p
+=
+\text{词 }w\text{ 中 }p\text{ 出现的次数}.
+$$
+
+再定义：
+
+$$
+\boxed{
+\Pi(w)
+=
+\Pi(\operatorname{ab}(w)).
+}
+\tag{669.3}
+$$
+
+例如：
+
+$$
+2\,3\,5,
+\quad
+5\,2\,3,
+\quad
+3\,5\,2
+$$
+
+都完成到：
+
+$$
+30.
+$$
+
+---
+
+## 669.1 历史纤维
+
+若 occupation vector 总长度为：
+
+$$
+N=\sum_pv_p,
+$$
+
+则其有序历史数量为：
+
+$$
+\boxed{
+\#\operatorname{ab}^{-1}(v)
+=
+\frac{N!}{\prod_pv_p!}.
+}
+\tag{669.4}
+$$
+
+所以完成态 \(n\) 唯一决定素数占据数，却不能恢复原始顺序。
+
+---
+
+## 定理 669.1（No history reconstruction）
+
+不存在映射：
+
+$$
+s:\Lambda_{\mathbb P}\to\mathbb P^*
+$$
+
+满足：
+
+$$
+s(\operatorname{ab}(w))=w
+$$
+
+对所有词 \(w\) 成立。
+
+因为只要某一纤维含有两个不同词 \(w\neq w'\)，同一个 \(s(\operatorname{ab}(w))\) 不可能同时等于两者。
+
+所以：
+
+$$
+\boxed{
+\text{完成态可以复制，
+形成完成态的真实历史不能由完成态复制}.
+}
+$$
+
+这正是一个经典的关系性“无克隆”结构。
+
+---
+
+# 第六百七十部　有序词配分函数与 \(\zeta\) 不同
+
+定义 prime zeta 型单粒子和：
+
+$$
+\boxed{
+P(s)=\sum_pp^{-s}.
+}
+\tag{670.1}
+$$
+
+若：
+
+$$
+|P(s)|<1,
+$$
+
+则把所有不同顺序的词都视为不同状态，会得到：
+
+$$
+\begin{aligned}
+Z_{\mathrm{word}}(s)
+&=
+\sum_{w\in\mathbb P^*}
+\Pi(w)^{-s}\\
+&=
+1+P(s)+P(s)^2+\cdots\\
+&=
+\boxed{
+\frac1{1-P(s)}
+}.
+\end{aligned}
+\tag{670.2}
+$$
+
+而把所有排列商掉，只保留 occupation vector，则：
+
+$$
+\boxed{
+Z_{\mathrm{comm}}(s)
+=
+\prod_p
+\left(
+1+p^{-s}+p^{-2s}+\cdots
+\right)
+=
+\zeta(s).
+}
+\tag{670.3}
+$$
+
+并且：
+
+$$
+\boxed{
+\log\zeta(s)
+=
+\sum_{k\ge1}
+\frac{P(ks)}k.
+}
+\tag{670.4}
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+Z_{\mathrm{word}}
+&=\text{有序观察历史的统计};\\
+\zeta
+&=\text{交换完成后的占据统计}.
+\end{aligned}
+}
+$$
+
+这是一个非常重要的分界：
+
+$$
+\boxed{
+\text{顺序差异属于 completion 之前；
+}\zeta\text{ 属于顺序已经被商掉之后。}
+}
+$$
+
+---
+
+# 第六百七十一部　“无纤维离散态”与“有纤维连续态”
+
+定义 Archimedean 能量映射：
+
+$$
+\boxed{
+\ell:
+\Lambda_{\mathbb P}\to\mathbb R,
+\qquad
+\ell(v)
+=
+\sum_pv_p\log p.
+}
+\tag{671.1}
+$$
+
+由唯一分解：
+
+$$
+\boxed{
+\ell
+\text{ 在整数 occupation lattice 上单射}.
+}
+\tag{671.2}
+$$
+
+因为：
+
+$$
+\ell(v)=\ell(w)
+$$
+
+意味着：
+
+$$
+\prod_pp^{v_p}
+=
+\prod_pp^{w_p},
+$$
+
+故：
+
+$$
+v=w.
+$$
+
+所以离散 prime lattice 确实具有你说的“无纤维”性质：
+
+$$
+\boxed{
+\text{一个实数 }\log n
+\text{ 唯一编码一个离散 prime occupation state}.
+}
+$$
+
+---
+
+## 671.1 连续完成后纤维立即出现
+
+将系数从 \(\mathbb N\) 扩张到 \(\mathbb R\)：
+
+$$
+\boxed{
+V_{\mathbb P}
+=
+\bigoplus_p
+\mathbb R e_p.
+}
+\tag{671.3}
+$$
+
+同一线性泛函：
+
+$$
+\ell_{\mathbb R}(x)
+=
+\sum_px_p\log p
+$$
+
+不再单射。
+
+在两个素数 \(p,q\) 的平面上：
+
+$$
+\boxed{
+\ker\ell_{\mathbb R}
+=
+\mathbb R
+\left(
+(\log q)e_p-(\log p)e_q
+\right).
+}
+\tag{671.4}
+$$
+
+因此：
+
+$$
+(\log q)e_p
+$$
+
+和：
+
+$$
+(\log p)e_q
+$$
+
+是不同连续状态，却具有完全相同的 Archimedean 读数：
+
+$$
+\log p\log q.
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\text{离散格点}
+&:\quad\text{无纤维};\\
+\text{连续完成}
+&:\quad\text{出现无限隐藏纤维}.
+\end{aligned}
+}
+$$
+
+这正好连接了你说的：
+
+> 离散质数之间都有区别；
+> 连续统观察却可能把这些区别压到同一条线上。
+
+---
+
+# 第六百七十二部　素数间相对尺度必为无理，甚至超越
+
+对不同素数 \(p\neq q\)，考虑：
+
+$$
+\boxed{
+\alpha_{p,q}
+=
+\frac{\log p}{\log q}.
+}
+\tag{672.1}
+$$
+
+若它是有理数：
+
+$$
+\alpha_{p,q}=\frac mn,
+$$
+
+则：
+
+$$
+p^n=q^m,
+$$
+
+与不同素数的唯一分解矛盾。
+
+所以：
+
+$$
+\alpha_{p,q}\notin\mathbb Q.
+$$
+
+进一步，由 Gelfond–Schneider 定理的等价形式，两个非零代数数的对数比若不是有理数，就只能是超越数；因此：
+
+$$
+\boxed{
+\frac{\log p}{\log q}
+\text{ 是超越数}
+}
+\tag{672.2}
+$$
+
+对不同素数成立。([剑桥出版社][2])
+
+---
+
+## 672.1 这对黄金假说的限制
+
+因为：
+
+$$
+\varphi
+$$
+
+是代数无理数，而：
+
+$$
+\frac{\log p}{\log q}
+$$
+
+是超越数，所以：
+
+$$
+\boxed{
+\frac{\log p}{\log q}\neq\varphi
+}
+$$
+
+对所有不同素数 \(p,q\) 成立。
+
+因此黄金比例不可能直接是两个真实素数轴的 Archimedean 尺度比。
+
+它更可能位于：
+
+$$
+\boxed{
+\text{观察器内部的递归混合矩阵},
+}
+$$
+
+而不是：
+
+$$
+\boxed{
+\text{原始 prime energies }\log p\text{ 之间}.
+}
+$$
+
+这是一个非常强的科学剪枝。
+
+---
+
+# 第六百七十三部　每个素数观察者看到同一个局部世界形状
+
+单素数 Euler factor为：
+
+$$
+\boxed{
+L_p(s)
+=
+\frac1{1-p^{-s}}.
+}
+\tag{673.1}
+$$
+
+定义素数自身的无量纲局部坐标：
+
+$$
+\boxed{
+t_p=s\log p.
+}
+\tag{673.2}
+$$
+
+则：
+
+$$
+\boxed{
+L_p(s)
+=
+\mathcal L(t_p),
+\qquad
+\mathcal L(t)=\frac1{1-e^{-t}}.
+}
+\tag{673.3}
+$$
+
+所以在只观察一个 Euler germ 的层级：
+
+$$
+\boxed{
+\text{所有素数观察者看到完全相同的函数形状}.
+}
+$$
+
+它们之间唯一的区别是局部单位：
+
+$$
+\log p.
+$$
+
+若每个观察者都把自身的 \(\log p\) 定义为单位 \(1\)，则单从内部 germ 无法知道自己是哪个素数。
+
+---
+
+## 673.1 关系 cocycle
+
+两个素数观察者坐标满足：
+
+$$
+\boxed{
+t_q
+=
+g_{q\leftarrow p}\,t_p,
+}
+$$
+
+其中：
+
+$$
+\boxed{
+g_{q\leftarrow p}
+=
+\frac{\log q}{\log p}.
+}
+\tag{673.4}
+$$
+
+并满足：
+
+$$
+\boxed{
+g_{r\leftarrow q}
+g_{q\leftarrow p}
+=
+g_{r\leftarrow p}.
+}
+\tag{673.5}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{素数身份不在局部函数形状中，
+而在不同局部单位之间的 transition cocycle 中。}
+}
+$$
+
+这正是：
+
+> 每个观察者看到的世界都一样；
+> 他们实际上不同，但差异只存在于彼此比较时。
+
+需要保留限制：
+
+完整的 \(p\)-进局部域还包含 residue characteristic \(p\)，因而并非所有局部结构都不可区分。上述“世界相同”严格限于归一化的一阶 Euler germ 观察层。
+
+---
+
+# 第六百七十四部　黄金比例是正交维度的最小自相似线性化
+
+现在考虑两个无序正交通道：
+
+$$
+A,\quad B.
+$$
+
+观察者必须把它们线性扫描成一个时间词。
+
+采用最简单的 primitive substitution：
+
+$$
+\boxed{
+A\mapsto AB,
+\qquad
+B\mapsto A.
+}
+\tag{674.1}
+$$
+
+其 incidence matrix 为：
+
+$$
+\boxed{
+F=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+}
+\tag{674.2}
+$$
+
+Perron 根为：
+
+$$
+\varphi,
+$$
+
+稳定共轭根为：
+
+$$
+-\varphi^{-1}.
+$$
+
+其固定词为 Fibonacci word：
+
+$$
+A,\ AB,\ ABA,\ ABAAB,\ldots
+$$
+
+长期频率满足：
+
+$$
+\boxed{
+\operatorname{freq}(A)=\frac1\varphi,
+\qquad
+\operatorname{freq}(B)=\frac1{\varphi^2}.
+}
+\tag{674.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\varphi
+}
+$$
+
+可以被理解为：
+
+$$
+\boxed{
+\text{把两个无先后正交维度变成一条
+最简单递归自相似观察线的尺度常数}.
+}
+$$
+
+---
+
+## 674.1 为什么完成后的 \(\zeta\) 看不到它
+
+若 \(A,B\) 只是标量 Euler factors，则：
+
+$$
+A B=B A.
+$$
+
+不同 Fibonacci 扫描、反向扫描或其他排列，最终有限乘积只取决于使用了哪些因子及其次数。
+
+在全素数完成后：
+
+$$
+\boxed{
+\text{扫描词}
+\longmapsto
+\text{occupation vector}
+\longmapsto
+\zeta
+}
+$$
+
+时，Fibonacci 顺序已被交换化映射删除。
+
+所以：
+
+$$
+\boxed{
+\text{黄金比例存在于“如何观察”，
+而不一定存在于“完成后观察到了什么”.}
+}
+$$
+
+这正是直接 \(\zeta\) 推导中 \(\varphi\) 消失的原因之一。
+
+---
+
+# 第六百七十五部　质数顺序只有在有记忆观察器中才真正产生差异
+
+若观察器只执行标量乘法：
+
+$$
+x\mapsto L_p(s)x,
+$$
+
+则不同 \(p\) 的操作彼此交换。
+
+此时：
+
+$$
+\boxed{
+\text{相同有限素数集合的最终结果与顺序无关}.
+}
+$$
+
+顺序只影响中间轨迹。
+
+要使不同顺序产生真正不同的最终观察状态，必须引入带记忆的更新：
+
+$$
+\boxed{
+x_{k+1}=U_{p_k}(x_k),
+}
+\tag{675.1}
+$$
+
+其中：
+
+$$
+U_pU_q\neq U_qU_p.
+$$
+
+定义 swap curvature：
+
+$$
+\boxed{
+C_{p,q}
+=
+U_pU_q-U_qU_p.
+}
+\tag{675.2}
+$$
+
+若 \(U_p\) 可逆，还可定义 holonomy：
+
+$$
+\boxed{
+K_{p,q}
+=
+U_pU_qU_p^{-1}U_q^{-1}.
+}
+\tag{675.3}
+$$
+
+---
+
+## 定理 675.1（Order descent criterion）
+
+更新族 \(U_p\) 能通过交换化映射：
+
+$$
+\mathbb P^*\to\Lambda_{\mathbb P}
+$$
+
+下降为 occupation-state 动力学，当且仅当：
+
+$$
+\boxed{
+U_pU_q=U_qU_p
+\qquad
+\forall p,q.
+}
+\tag{675.4}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{质数顺序差异}
+=
+\text{观察更新连接的曲率}.
+}
+$$
+
+项目的行为完成理论也强调：对非交换多动力学，分别闭合每个生成元不足，真正的完成必须读取全部自由词；稳定接口是通过全部未来动作词构造的最小反射闭包。
+
+---
+
+# 第六百七十六部　所有观察者标量输出相同，但内部状态不同
+
+设：
+
+$$
+q:\mathcal X\to Y
+$$
+
+是完成读数，并满足：
+
+$$
+\boxed{
+q(U_pU_qx)
+=
+q(U_qU_px)
+}
+\tag{676.1}
+$$
+
+对全部 \(p,q,x\) 成立。
+
+即 \(q\) 杀死所有交换子方向。
+
+那么不同素数顺序可以产生：
+
+$$
+U_wx\neq U_{w'}x,
+$$
+
+但：
+
+$$
+\boxed{
+q(U_wx)=q(U_{w'}x)
+}
+$$
+
+只要 \(w,w'\) 具有同一 occupation vector。
+
+因此：
+
+$$
+\boxed{
+\text{各观察者的内部完成历史不同，
+但标量世界完全相同}.
+}
+$$
+
+这正是你描述的结构：
+
+> 他们看不出差别；
+> 差别真实存在于完成读数的隐藏纤维中。
+
+---
+
+## 676.1 两种“克隆”
+
+可以复制：
+
+$$
+\boxed{
+q(U_wx),
+}
+$$
+
+即完成后的标量世界。
+
+不能从该标量复制：
+
+$$
+\boxed{
+U_wx
+}
+$$
+
+或原始词 \(w\)。
+
+所以：
+
+$$
+\boxed{
+\text{世界输出可克隆，
+观察起源与形成历史不可克隆}.
+}
+$$
+
+---
+
+# 第六百七十七部　真正离线零点不能仅由质数重排产生
+
+标量 Euler factors：
+
+$$
+(1-p^{-s})^{-1}
+$$
+
+彼此交换。
+
+因此，仅仅重排这些标量因子：
+
+$$
+\boxed{
+\text{不可能改变绝对收敛区中的 }\zeta(s).
+}
+$$
+
+所以一个真实离线零点若存在，不可能仅由：
+
+$$
+\boxed{
+\text{“先观察哪个素数”}
+}
+$$
+
+这一标量顺序产生。
+
+它必须对应更强的结构，例如：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{非交换 observer state 的残余 holonomy};\\
+&\text{prime 与 Archimedean completion 的不兼容};\\
+&\text{analytic continuation 中未消除的 forcing};\\
+&\text{不能下降到交换完成的 inverse-limit obstruction};\\
+&\text{完成读数没有完全杀死的奇向通道}.
+\end{aligned}
+}
+$$
+
+---
+
+## 677.1 黄金残差方程
+
+设有限观察层中的横向缺陷满足：
+
+$$
+\boxed{
+\delta_{n+1}
+=
+-\varphi^{-1}\delta_n+\varepsilon_n.
+}
+\tag{677.1}
+$$
+
+其中：
+
+* \(-\varphi^{-1}\delta_n\)：黄金完成的自然收缩；
+* \(\varepsilon_n\)：顺序曲率、prime–Archimedean 失配或其他 forcing。
+
+若：
+
+$$
+\varepsilon_n\to0
+$$
+
+并具有足够可和性，则：
+
+$$
+\delta_n\to0.
+$$
+
+若存在真实持久缺陷：
+
+$$
+\delta_n\to\delta_*\neq0,
+$$
+
+则必须有：
+
+$$
+\boxed{
+\varepsilon_n\to\varphi\delta_*.
+}
+\tag{677.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{黄金第一破缺并不要求真实离线零点；}
+}
+$$
+
+相反：
+
+$$
+\boxed{
+\text{持久离线零点要求一个能够持续抵消黄金完成的非零 forcing}.
+}
+$$
+
+---
+
+# 第六百七十八部　离线零点应被理解为“已实现的关系缺陷”
+
+设有限观察层产生候选：
+
+$$
+\rho_n
+=
+\frac12+\delta_n+i\gamma_n.
+$$
+
+即使每一层都有：
+
+$$
+\delta_n\neq0,
+$$
+
+也不表示真实 completed \(\xi\) 有离线零点。
+
+只有当：
+
+1. 各层候选兼容；
+2. 线程在逆极限中存在；
+3. 该线程由真实全局解析零点实现；
+4. \(\delta_n\to\delta_*\neq0\)；
+
+时，才得到真实 RH 反例。
+
+仓库已经形式化：有限层线程与真实状态等价，需要同时满足分离性和线程实现性；仅有兼容有限读数并不足够。
+
+所以你的“第一离线破缺点”更科学的表达应是：
+
+$$
+\boxed{
+\text{有限自观察层中的 observer-relative pseudozero}.
+}
+$$
+
+而不是预先断言：
+
+$$
+\boxed{
+\text{真实 }\xi\text{ 必有离线零点}.
+}
+$$
+
+---
+
+# 第六百七十九部　“唯一不同是质数”的严格边界
+
+在正整数的乘法世界中，这一判断非常接近正确：
+
+$$
+\boxed{
+\text{所有 primitive 乘法差异均由素数生成}.
+}
+$$
+
+合数只记录多个 prime axes 的 occupation。
+
+但在完整 adelic／completed-\(\zeta\) 世界中，还存在：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{实 Archimedean place};\\
+&\text{符号与方向};\\
+&\Gamma\text{ 完成};\\
+&\text{局部域的 residue characteristic};\\
+&\text{prime 与 infinity 之间的胶合}.
+\end{aligned}
+}
+$$
+
+因此更准确的是：
+
+$$
+\boxed{
+\text{有限离散差异由素数轴生成；
+连续秩序与整体完成由实 place 提供}.
+}
+$$
+
+---
+
+## 679.1 “把质数排到一条线上”究竟是什么
+
+正交素数轴：
+
+$$
+e_p
+$$
+
+本来同时存在，没有先后。
+
+映射：
+
+$$
+\boxed{
+e_p\mapsto\log p
+}
+\tag{679.1}
+$$
+
+把它们放到一条实线上。
+
+因此：
+
+$$
+\boxed{
+\text{质数数值顺序}
+=
+\text{Archimedean observer 对正交 prime modes 的线性化}.
+}
+$$
+
+这就是你的直觉中“维度正交没有先后，但放到一条线上以后出现顺序”的精确数学核。
+
+---
+
+# 第六百八十部　新的统一对象：Prime–Frame Observer
+
+定义：
+
+$$
+\boxed{
+\mathfrak{PFO}
+=
+\left(
+\mathbb P^*,
+\Lambda_{\mathbb P},
+\mathcal H_{\mathbb P},
+\ell,
+\pi,
+U,
+q
+\right).
+}
+\tag{680.1}
+$$
+
+其中：
+
+* \(\mathbb P^*\)：有序观察历史；
+* \(\Lambda_{\mathbb P}\)：交换 occupation state；
+* \(\mathcal H_{\mathbb P}\)：正交 prime mode space；
+* \(\ell(v)=\sum v_p\log p\)：Archimedean 线坐标；
+* \(\pi\)：观察顺序／旗标；
+* \(U_p\)：带记忆更新；
+* \(q\)：完成标量读数。
+
+其中有三类不同纤维。
+
+---
+
+## 680.1 历史纤维
+
+$$
+\boxed{
+\operatorname{ab}^{-1}(v)
+}
+$$
+
+包含同一 occupation 的全部排列历史。
+
+---
+
+## 680.2 连续几何纤维
+
+$$
+\boxed{
+\ell_{\mathbb R}^{-1}(E)
+}
+$$
+
+包含具有相同 Archimedean 能量的连续 prime mixtures。
+
+---
+
+## 680.3 观察纤维
+
+$$
+\boxed{
+q^{-1}(y)
+}
+$$
+
+包含完成标量读数无法区分的内部 observer states。
+
+所以“看起来一样，实际不同”并非一个模糊现象，而可以发生在三个独立层级：
+
+$$
+\boxed{
+\text{顺序隐藏}
++
+\text{连续方向隐藏}
++
+\text{接口隐藏}.
+}
+$$
+
+---
+
+# 第六百八十一部　黄金素数观察者的可证伪模型
+
+将素数轴分成两个正交通道：
+
+$$
+\boxed{
+\mathbb P=\mathbb P_+\sqcup\mathbb P_-.
+}
+\tag{681.1}
+$$
+
+分割可以由：
+
+* 二次字符；
+* 模五分裂；
+* 黄金 prime classification；
+* visible／hidden 通道；
+
+给出。
+
+用 Fibonacci substitution：
+
+$$
++\mapsto+-,
+\qquad
+-\mapsto+
+$$
+
+生成观察顺序。
+
+定义 stateful updates：
+
+$$
+U_p^{(+)},
+\qquad
+U_p^{(-)}.
+$$
+
+构造层级 transfer：
+
+$$
+\boxed{
+\Theta_n^{(\varphi)}(s)
+=
+q\left(
+U_{w_n}(s)x_0
+\right),
+}
+\tag{681.2}
+$$
+
+其中 \(w_n\) 为第 \(n\) 个 Fibonacci 前缀。
+
+---
+
+## 681.1 需要测量的四个量
+
+### 顺序曲率
+
+$$
+\boxed{
+C_{p,q}
+=
+[U_p,U_q].
+}
+$$
+
+### 黄金横向缺陷
+
+$$
+\boxed{
+\delta_n
+=
+\Re\rho_n-\frac12.
+}
+$$
+
+### 完成 forcing
+
+$$
+\boxed{
+\varepsilon_n
+=
+\delta_{n+1}
++
+\varphi^{-1}\delta_n.
+}
+$$
+
+### 交换完成误差
+
+$$
+\boxed{
+\Delta_n
+=
+\Theta_n^{(\varphi)}
+-
+\Theta_n^{\mathrm{comm}}.
+}
+$$
+
+---
+
+## 681.2 三种实验结果
+
+### 黄金完成
+
+$$
+\varepsilon_n\to0,
+\qquad
+\delta_n\to0.
+$$
+
+说明黄金顺序只是有限观察破缺，极限支持临界完成。
+
+### 持续 observer holonomy
+
+$$
+\varepsilon_n\not\to0,
+$$
+
+但完成标量：
+
+$$
+\Delta_n\to0.
+$$
+
+说明不同观察者内部状态不同，但 \(\zeta\) 完成把差异彻底隐藏。
+
+### 真实完成缺陷候选
+
+$$
+\varepsilon_n\not\to0,
+\qquad
+\Delta_n\not\to0,
+$$
+
+且候选零点线程在全局解析极限中实现。
+
+只有第三种才可能触及真实离线零点。
+
+---
+
+# 第六百八十二部　理论深度审计
+
+本轮各层的性质必须严格区分。
+
+| 结构                            | 类型                  |                        是否减少 RH 逃逸 |
+| ----------------------------- | ------------------- | --------------------------------: |
+| 整体／自身／其余的黄金比例定理               | 条件结构定理              |           否，建立 universality class |
+| 无绝对原点选择定理                     | 观察者结构               |                       否，但排除错误起点假设 |
+| 素数正交 occupation lattice       | 本体图表                |                                 否 |
+| \(\zeta\) 的 symmetric-Fock 表示 | 完成解释                |                             chart |
+| 有序词到交换 occupation 的商          | 信息丢失定理              |                      **是，识别历史纤维** |
+| 离散无纤维／连续有纤维                   | 新结构                 |                             **是** |
+| \(\log p/\log q\) 的超越性        | 算术限制                | **是，排除裸 \(\varphi\) prime ratio** |
+| 局部 Euler germ universality    | observer covariance |                               新诊断 |
+| prime-order commutator        | 非交换诊断               |                             新候选缺陷 |
+| 黄金 forcing 方程                 | 研究模型                |                           尚未推进 RH |
+| 证明 forcing 必为零                | 真正 RH 桥             |                              完全开放 |
+
+所以，本轮最重要的科学剪枝是：
+
+$$
+\boxed{
+\text{质数顺序本身不能改变标量 }\zeta.
+}
+$$
+
+若要从观察顺序推到离线零点，必须构造一个：
+
+$$
+\boxed{
+\text{带记忆、非交换、且其残差能够穿透标量完成的观察系统}.
+}
+$$
+
+---
+
+# 第六百八十三部　建议形式化顺序
+
+```text
+D5/S3/ObserverOrigin/SelfSimilarity/
+  WholeSelfRemainder.lean
+  SelfSimilarRatio.lean
+  GoldenSelfObservation.lean
+  GoldenObservationAxioms.lean
+
+D5/S3/ObserverOrigin/RelationalFrame/
+  TransitiveAxisSpace.lean
+  NoEquivariantAxisSelector.lean
+  InvariantReadoutConstant.lean
+  NoAbsoluteOriginDecoder.lean
+  ObserverTransitionCocycle.lean
+
+D5/S3/PrimeObserver/OrthogonalModes/
+  PrimeOccupationLattice.lean
+  PrimeFreeCommutativeMonoid.lean
+  PrimeModeHilbertSpace.lean
+  PrimeArchimedeanEnergy.lean
+  PrimeOccupationEnergyInjective.lean
+
+D5/S3/PrimeObserver/FockCompletion/
+  PrimeSymmetricFockBasis.lean
+  PrimeSecondQuantizedEnergy.lean
+  PrimeFockPartition.lean
+  PrimeFockPartitionEqualsZeta.lean
+
+D5/S3/PrimeObserver/OrderFiber/
+  PrimeWordMonoid.lean
+  PrimeWordAbelianization.lean
+  PrimeHistoryFiberCardinality.lean
+  NoHistoryReconstruction.lean
+  OrderedWordPartition.lean
+  CommutativePartitionZeta.lean
+
+D5/S3/PrimeObserver/ContinuousFiber/
+  RealPrimeModeSpace.lean
+  ArchimedeanContinuousKernel.lean
+  TwoPrimeInvisibleDirection.lean
+  DistinctPrimeLogRatioIrrational.lean
+  DistinctPrimeLogRatioTranscendental.lean
+
+D5/S3/PrimeObserver/LocalWorld/
+  UniversalEulerGerm.lean
+  PrimeSelfCalibratedCoordinate.lean
+  PrimeTransitionScale.lean
+  PrimeScaleCocycle.lean
+
+D5/S3/PrimeObserver/GoldenSchedule/
+  BinaryPrimeChannel.lean
+  FibonacciObservationWord.lean
+  GoldenChannelFrequencies.lean
+  GoldenScheduleCommutativeErasure.lean
+
+D5/S3/PrimeObserver/Holonomy/
+  StatefulPrimeUpdate.lean
+  PrimeSwapCurvature.lean
+  PrimeOrderDescentCriterion.lean
+  ScalarReadoutKillsCommutators.lean
+  HiddenHistorySameWorld.lean
+
+D5/S3/Analytic/Zeta/GoldenObserverDefect/
+  FiniteObserverPseudozero.lean
+  GoldenTransverseDefect.lean
+  PrimeHolonomyForcing.lean
+  PersistentDefectCriterion.lean
+  RealizedOffLineThread.lean
+```
+
+量子无克隆不应作为上述模块的证明依赖；最多作为结构类比写入 commentary，防止把关系性原点不可恢复与量子线性无克隆混为同一命题。
+
+---
+
+# 本轮最终结论
+
+你的直觉可以被压缩成一句非常明确的话：
+
+$$
+\boxed{
+\text{第一次自观察，就是把无序、无原点的整体，
+变成一个有原点、有扫描顺序的局部世界。}
+}
+$$
+
+当这个第一次观察同时要求：
+
+$$
+\boxed{
+\text{整体／自身}
+=
+\text{自身／其余},
+}
+$$
+
+黄金比例被唯一强迫：
+
+$$
+\boxed{
+\varphi.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\varphi
+}
+$$
+
+确实可以是“第一次自观察”的普适常数，但只在二元、递归、自相似、最小 unimodular 这一类中成立。
+
+素数则提供了最自然的离散坐标系统：
+
+$$
+\boxed{
+\text{每个素数是一条正交 primitive 轴，}
+}
+$$
+
+而合数只是 occupation vector。
+
+这些轴没有内在时间顺序。
+
+把它们排成：
+
+$$
+2,3,5,7,\ldots
+$$
+
+实际上是使用：
+
+$$
+e_p\mapsto\log p
+$$
+
+把正交 prime space 投影到 Archimedean 实轴。
+
+在离散 occupation lattice 上，该投影由唯一分解保持单射：
+
+$$
+\boxed{
+\text{离散态无纤维}.
+}
+$$
+
+但扩张到连续 prime space 后，立即出现巨大隐藏纤维：
+
+$$
+\boxed{
+\text{连续态有纤维}.
+}
+$$
+
+而且不同素数的相对尺度：
+
+$$
+\frac{\log p}{\log q}
+$$
+
+不是黄金比例，甚至是超越数。
+
+所以：
+
+$$
+\boxed{
+\varphi
+\text{ 不能来自原始 prime scale ratio；}
+}
+$$
+
+它只能来自观察者如何递归地扫描、混合和完成这些素数轴。
+
+进一步，\(\zeta\) 可以严格看成素数正交模态的对称 Fock 配分函数：
+
+$$
+\boxed{
+\zeta(s)
+=
+\operatorname{Tr}
+e^{-s\,d\Gamma(H)}.
+}
+$$
+
+对称 Fock completion 只保留 occupation numbers，不保留素数加入的顺序。
+
+因此：
+
+$$
+\boxed{
+\text{黄金扫描协议在 }\zeta\text{ 中消失，
+正是因为 }\zeta\text{ 已经完成了顺序商化。}
+}
+$$
+
+这也解释了你说的“不同观察者世界看起来一样”：
+
+每个素数在自身无量纲坐标：
+
+$$
+t_p=s\log p
+$$
+
+下都看到：
+
+$$
+\frac1{1-e^{-t_p}}.
+$$
+
+局部世界形状完全相同；真正区别只存在于观察者之间的尺度 cocycle：
+
+$$
+\frac{\log q}{\log p}.
+$$
+
+最后，离线零点若存在，不能只是“不同素数排列顺序”的结果，因为标量 Euler factors 本身交换。
+
+它必须是：
+
+$$
+\boxed{
+\text{一个经过交换完成、Archimedean 完成和无限观察极限后，
+仍然没有被消除的关系性 forcing／holonomy}.
+}
+$$
+
+所以最科学的新命题不是：
+
+$$
+\boxed{
+\text{第一破缺必然就是一个真实离线零点，}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{第一自观察产生一个黄金缩放的有限离线缺陷；
+真正 RH 问题是该缺陷是否在无限交换完成中归零。}
+}
+$$
+
+若：
+
+$$
+\delta_{n+1}
+=
+-\varphi^{-1}\delta_n+\varepsilon_n,
+$$
+
+那么：
+
+$$
+\boxed{
+\varepsilon_n\to0
+}
+$$
+
+表示黄金观察完成最终回到临界线；
+
+而真实离线零点要求：
+
+$$
+\boxed{
+\varepsilon_n
+}
+$$
+
+保留一个非零极限，持续抵消黄金收缩。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{素数给出“有哪些正交区别”，
+黄金比例给出“一个自观察者如何依次经历这些区别”，
+而 }\zeta\text{ 给出“把经历顺序全部遗忘后的完成世界”。}
+}
+$$
+
+下一条真正承重的桥，因而是构造一个**带记忆的黄金素数观察器**，并判断其顺序 holonomy 在交换完成后究竟：
+
+$$
+\boxed{
+\text{完全消失，}
+$$
+
+还是：
+
+$$
+\boxed{
+\text{留下能够进入零点横向坐标的非零 forcing class。}
+}
+$$
+
+[1]: https://doi.org/10.1038/299802A0 "https://doi.org/10.1038/299802A0"
+[2]: https://www.cambridge.org/core/journals/mathematika/article/abs/linear-forms-in-the-logarithms-of-algebraic-numbers/55674A9E93007ADD34DCEDC12EA4FB4D "https://www.cambridge.org/core/journals/mathematika/article/abs/linear-forms-in-the-logarithms-of-algebraic-numbers/55674A9E93007ADD34DCEDC12EA4FB4D"

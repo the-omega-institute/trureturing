@@ -1,0 +1,14 @@
+ast_path: section/519-3-Toeplitz-primal-certificate
+fingerprints:
+  raw_sha256: sha256:a58fad5d882122a1e6f9527f90199f65b9486e9a9c5d6a55647c0a7ea089ee61
+  normalized_sha256: sha256:a58fad5d882122a1e6f9527f90199f65b9486e9a9c5d6a55647c0a7ea089ee61
+cas_ref: sha256:a58fad5d882122a1e6f9527f90199f65b9486e9a9c5d6a55647c0a7ea089ee61
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-5affaf9e603c674f34aa7e2a207f481bcd0b2faa6afca86262f323f2caa70e98-f44689aa923e59a1df65331c1b4d2707dd86bb7118ed198b4226b318e300ce36
+    - generic-residual-0e40f78ce83c62753f7e936a2678f01ae61507389a9dbcd368b43448fd66f85f-096e961336dcbc5e7378035f31630cd58fbd848567c3a5bd78fcac8cb1cebf5f
+    - generic-residual-9dae3ffe4f2bcea5e9e6751eeb4be4edfe1cf6ca7c46f24660c98b4a85163bcf-00101f9b75b353acda5d2dd2e5b6272b928d7c907938c3b12152685f37e96cd4

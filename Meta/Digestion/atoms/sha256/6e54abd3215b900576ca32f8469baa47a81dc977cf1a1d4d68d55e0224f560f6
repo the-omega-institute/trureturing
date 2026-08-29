@@ -1,0 +1,18 @@
+## 583.1 四维理论深度向量
+
+对第 \(k\) 层，定义：
+
+$$
+\boxed{
+\mathbf D_k
+=
+\left(
+d_{\mathrm{esc}},
+d_{\mathrm{an}},
+d_{\mathrm{obs}},
+d_{\mathrm{cert}}
+\right)_k.
+}
+\tag{583.1}
+$$
+

@@ -46,7 +46,6 @@ components:
       - SL-023
       - SL-025
       - SL-026
-      - SL-027
       - SL-028
     judged_by:
       - rule-catalog-selfcheck
@@ -185,7 +184,7 @@ bootstrap:
   id: bootstrap-pr-1
   judge: open
   reason: "Godel boundary: the bootstrap trust root cannot prove its own consistency."
-  genesis_event: sha256:80bdd2d2a8604d3e563ca20c6fcd2c27983d920af5e2a249a55c776112f575d0
+  genesis_event: sha256:0018245cb40743288577bd5fd256c3fd9fb0de46867aa70da6e5641ede4cc31c
   commit: f3f471846dd81cfcc39ecaa386966fcf0b058464
   pull_request: 1
   verification: ASSUMED-UNVERIFIED

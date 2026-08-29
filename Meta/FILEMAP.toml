@@ -7,6 +7,15 @@ known_violation_count = 0
 status = "closed"
 
 [[files]]
+pattern = "**/*.props"
+kind = "program"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["make-gate"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = "*.json"
 kind = "program"
 produced_by = "none"
@@ -21,15 +30,6 @@ kind = "truth"
 produced_by = "none"
 consumed_by = ["Lean", "Scribe", "StrataLint"]
 verified_by = ["lean-build", "lean-inspector"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "*.props"
-kind = "program"
-produced_by = "none"
-consumed_by = ["dotnet"]
-verified_by = ["make-gate"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -127,7 +127,7 @@ runtime_disposition = "committed-ledger"
 pattern = "Evidence/D5/**/*.result.json"
 kind = "data"
 produced_by = "none"
-consumed_by = ["TheoristFrontierContractValidator", "reader"]
+consumed_by = ["reader"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
@@ -368,20 +368,11 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "docs/MISSION.md"
-kind = "data"
-produced_by = "none"
-consumed_by = ["MissionFileLoader"]
-verified_by = ["MissionFileLoader"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
 pattern = "docs/develop/spec/**"
 kind = "data"
 produced_by = "none"
-consumed_by = ["BackfillInventoryLoader"]
-verified_by = ["BackfillInventoryLoader"]
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 

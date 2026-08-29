@@ -1,0 +1,10 @@
+ast_path: section/525-1-有限窗口-Li-曲率
+fingerprints:
+  raw_sha256: sha256:7668b52f653ec01092c8d690be459908677e7b953cee2c216f237aaf43c60823
+  normalized_sha256: sha256:7668b52f653ec01092c8d690be459908677e7b953cee2c216f237aaf43c60823
+cas_ref: sha256:7668b52f653ec01092c8d690be459908677e7b953cee2c216f237aaf43c60823
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

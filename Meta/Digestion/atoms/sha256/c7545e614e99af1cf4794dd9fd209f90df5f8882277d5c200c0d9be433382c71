@@ -1,0 +1,56 @@
+## 417.2 相关函数图表
+
+定义：
+
+$$
+\boxed{
+C_f(u)=g(u)+g(-u).
+}
+\tag{417.5}
+$$
+
+则：
+
+$$
+C_f(2L)=0,
+\qquad
+E(0)=0.
+$$
+
+所以：
+
+$$
+\boxed{
+-\int_{[0,2L]}
+C_f(u)\,d\varepsilon(u)
+=
+\int_0^{2L}
+E(u)C_f'(u)\,du.
+}
+\tag{417.6}
+$$
+
+因此 Weil 二次型还可写成：
+
+$$
+\boxed{
+\begin{aligned}
+\mathfrak q_L[f]
+={}&
+\frac1{2\pi}
+\int_{\mathbb R}
+b_\infty(\xi)
+|\widehat f(\xi)|^2\,d\xi
+\\
+&+
+\int_0^{2L}
+E(u)C_f'(u)\,du.
+\end{aligned}
+}
+\tag{417.7}
+$$
+
+这就是 **PNT discrepancy normal form**。
+
+---
+

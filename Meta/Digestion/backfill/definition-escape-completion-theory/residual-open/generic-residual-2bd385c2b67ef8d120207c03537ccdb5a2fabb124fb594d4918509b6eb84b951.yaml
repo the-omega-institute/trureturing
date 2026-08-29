@@ -1,0 +1,10 @@
+ast_path: section/57-4-证明义务清单
+fingerprints:
+  raw_sha256: sha256:2bd385c2b67ef8d120207c03537ccdb5a2fabb124fb594d4918509b6eb84b951
+  normalized_sha256: sha256:2bd385c2b67ef8d120207c03537ccdb5a2fabb124fb594d4918509b6eb84b951
+cas_ref: sha256:2bd385c2b67ef8d120207c03537ccdb5a2fabb124fb594d4918509b6eb84b951
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

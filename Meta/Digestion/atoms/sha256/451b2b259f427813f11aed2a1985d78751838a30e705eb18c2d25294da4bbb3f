@@ -1,0 +1,42 @@
+## 611.1 形式完成与解析完成
+
+形式账本给出：
+
+$$
+\boxed{
+\prod_pL_p(s)
+\ \widehat{=}\ 
+\prod_{\alpha\in\Gamma_\varphi}
+\zeta(\alpha s)^{c_\alpha}.
+}
+\tag{611.5}
+$$
+
+这里的帽号必须保留：
+
+$$
+\widehat{=}
+$$
+
+表示局部形式 Euler 恒等式，而不是已经证明收敛、可交换和解析延拓的全局恒等式。
+
+因此：
+
+$$
+\boxed{
+\text{形式 primitive completion 总是唯一存在；}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{解析 completion 需要额外的统一 majorant。}
+}
+$$
+
+这一区分非常重要。无限个形式 ζ 因子并不会自动产生一个解析函数。
+
+---
+

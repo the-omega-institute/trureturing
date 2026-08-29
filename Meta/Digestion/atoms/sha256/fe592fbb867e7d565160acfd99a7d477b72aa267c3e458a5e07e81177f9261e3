@@ -1,0 +1,19 @@
+## 定理 636.1（Infinite completion defect）
+
+$$
+\boxed{
+\mathfrak D_\infty(x)=0
+\iff
+D_n(x)=0
+\quad
+\forall n.
+}
+\tag{636.2}
+$$
+
+所以无限层完成并不需要再假设一个神秘的“最终常数”。
+
+它可以由所有有限层缺陷的正加权和精确表示。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/578-1-与项目第二阶因子化的关系/clause/1
+fingerprints:
+  raw_sha256: sha256:244669968cd0de78d5bc62001464cd069c835b95263dd14fb11779759a50e27f
+  normalized_sha256: sha256:244669968cd0de78d5bc62001464cd069c835b95263dd14fb11779759a50e27f
+cas_ref: sha256:244669968cd0de78d5bc62001464cd069c835b95263dd14fb11779759a50e27f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

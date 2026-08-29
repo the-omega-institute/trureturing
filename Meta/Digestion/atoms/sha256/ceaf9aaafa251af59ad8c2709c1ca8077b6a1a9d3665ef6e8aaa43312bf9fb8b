@@ -1,0 +1,92 @@
+# 第五百五十三部　有限多尺度有理观察者
+
+选择互异尺度：
+
+$$
+\boxed{
+a_0,a_1,\ldots,a_M>0.
+}
+\tag{553.1}
+$$
+
+以 \(a_0\) 为参考尺度，定义：
+
+$$
+\boxed{
+r_\ell
+=
+\frac{a_0-a_\ell}{a_0+a_\ell},
+\qquad
+0\le\ell\le M.
+}
+\tag{553.2}
+$$
+
+于是：
+
+$$
+r_0=0,
+\qquad
+-1<r_\ell<1.
+$$
+
+对每个尺度选择 moment 深度：
+
+$$
+N_\ell\ge0,
+$$
+
+并记：
+
+$$
+\boxed{
+n_\ell=N_\ell+1.
+}
+\tag{553.3}
+$$
+
+总观察维数为：
+
+$$
+\boxed{
+n
+=
+\sum_{\ell=0}^{M}n_\ell.
+}
+\tag{553.4}
+$$
+
+定义未归一化有理特征：
+
+$$
+\boxed{
+\psi_{\ell,j}(z)
+=
+\frac{(z+r_\ell)^j}
+{(1+r_\ell z)^{j+1}},
+\qquad
+0\le j<N_\ell+1.
+}
+\tag{553.5}
+$$
+
+当 \(\ell=0\) 时：
+
+$$
+\boxed{
+\psi_{0,j}(z)=z^j.
+}
+\tag{553.6}
+$$
+
+前文使用的 normalized Crofoot–Malmquist 特征与 \(\psi_{\ell,j}\) 只相差已知的非零尺度系数，因此不会改变：
+
+* 线性张成空间；
+* 共同谱可行性；
+* generalized eigenvalues；
+* 原子支撑。
+
+这些系数可在最终数值实现中通过对角 congruence 恢复。
+
+---
+

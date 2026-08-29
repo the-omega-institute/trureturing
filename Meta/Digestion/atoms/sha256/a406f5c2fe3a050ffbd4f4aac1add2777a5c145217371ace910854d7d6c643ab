@@ -1,0 +1,66 @@
+## 定理 498.3（Arbitrary optimizer convergence）
+
+令：
+
+$$
+L_n\uparrow\infty,
+$$
+
+并在每一层任意选择 natural-budget optimizer：
+
+$$
+\nu_n.
+$$
+
+则：
+
+$$
+\boxed{
+\nu_n
+\longrightarrow
+\nu_\Xi
+}
+\tag{498.6}
+$$
+
+以 tempered-distribution 意义成立。
+
+其白色部分：
+
+$$
+\frac{\Lambda_{L_n}^\Xi}{2\pi}d\xi
+$$
+
+消失，而 residual：
+
+$$
+\boxed{
+\mu_n
+=
+\nu_n
+-
+\frac{\Lambda_{L_n}^\Xi}{2\pi}d\xi
+}
+\tag{498.7}
+$$
+
+收敛到：
+
+$$
+\nu_\Xi.
+$$
+
+所以这一预算化问题给出了一个自动存在的、规范的：
+
+$$
+\boxed{
+\text{white continuum}
+\longrightarrow
+\text{Riemann atomic spectrum}
+}
+$$
+
+完成流。
+
+---
+

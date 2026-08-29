@@ -1,0 +1,55 @@
+## 529.1 Moment floor 最终趋零
+
+Li–Clark measure 是纯点奇异概率测度。
+
+对单位圆 measure 的 Toeplitz finite sections，其最小特征值的极限由 absolutely continuous 部分的本质下界控制；纯奇异情形下最小特征值趋于零。([arXiv][3])
+
+因此：
+
+$$
+\boxed{
+\lambda_{\min}
+\left(
+T_N^{\mathrm{LC}}
+\right)
+\downarrow0
+\qquad
+(N\to\infty).
+}
+\tag{529.4}
+$$
+
+于是：
+
+$$
+\boxed{
+\lim_{N\to\infty}
+\lim_{L\to\infty}
+\lambda_{\min}
+\left(
+\widehat T_{N,L}^{\mathrm{LC}}
+\right)
+=
+0.
+}
+\tag{529.5}
+$$
+
+这给出另一个明确的 continuum-to-atom collapse：
+
+$$
+\boxed{
+\text{有限 moment observer}
+\text{ 仍允许正 Haar floor};
+}
+$$
+
+$$
+\boxed{
+\text{完整 Li--Clark observer}
+\text{ 的 Haar floor 为零}.
+}
+$$
+
+---
+

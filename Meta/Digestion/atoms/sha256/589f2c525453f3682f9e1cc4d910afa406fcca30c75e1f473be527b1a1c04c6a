@@ -1,0 +1,55 @@
+## 定理 506.1（局部 moment 运输）
+
+若：
+
+$$
+\mu=\mathcal C_a[\nu],
+$$
+
+则在仓库冻结的 Fourier convention 下：
+
+$$
+\boxed{
+\int_{\mathbb T}
+\Gamma_{a,\phi}(z)\,d\mu(z)
+=
+\int_{\mathbb R}
+\widehat\phi(\xi)\,d\nu(\xi)
+=
+\langle\check\nu,\phi\rangle.
+}
+\tag{506.3}
+$$
+
+同时：
+
+$$
+\boxed{
+\int_{\mathbb T}
+\Gamma_{a,\phi}(z)\,dm_{\mathbb T}(z)
+=
+2a\,\phi(0).
+}
+\tag{506.4}
+$$
+
+### 证明
+
+由定义：
+
+$$
+\begin{aligned}
+\int_{\mathbb T}\Gamma_{a,\phi}\,d\mu
+&=
+\int_{\mathbb R}
+(\xi^2+a^2)\widehat\phi(\xi)
+\frac{d\nu(\xi)}{\xi^2+a^2}\\
+&=
+\int_{\mathbb R}\widehat\phi(\xi)\,d\nu(\xi).
+\end{aligned}
+$$
+
+再对 \(\nu=m_0\) 使用定理 505.1 与 Fourier inversion，即得第二式。∎
+
+---
+

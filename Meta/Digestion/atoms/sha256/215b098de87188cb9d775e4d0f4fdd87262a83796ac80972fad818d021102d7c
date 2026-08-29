@@ -1,0 +1,23 @@
+## 定理 560.1（Rational contact support）
+
+$$
+\boxed{
+\operatorname{supp}
+\left(
+\mu_*-\alpha_*m_{\mathbb T}
+\right)
+\subseteq
+\left\{
+z\in\mathbb T:
+P_c(z)=0
+\right\}
+}
+\tag{560.2}
+$$
+
+对每个 \(c\in\ker(G-\alpha_*B)\) 成立。
+
+因此原子支撑位于全部 kernel polynomials 的共同单位圆零点中。
+
+---
+

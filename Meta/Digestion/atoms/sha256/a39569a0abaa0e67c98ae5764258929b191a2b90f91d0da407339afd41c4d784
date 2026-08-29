@@ -1,0 +1,21 @@
+## 422.1 连续段
+
+在不含 prime-power log 的区间内：
+
+$$
+d\varepsilon(u)=-e^{u/2}du.
+$$
+
+所以：
+
+$$
+\boxed{
+\partial_Rm_R(\xi)
+=
+2e^{R/2}\cos(\xi R).
+}
+\tag{422.2}
+$$
+
+---
+

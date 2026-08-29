@@ -24,7 +24,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
     }
 
     [Fact]
-    public void DepositSkipsAppendWhenSchemaV4FreezeUsesDescriptorSelector()
+    public void DepositFailsClosedWhenMatchingShardUsesRetiredSchemaV4()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -32,13 +32,13 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         var result = fixture.Run("deposit");
 
-        Assert.True(result.ExitCode == 0, Diagnostics(result));
+        Assert.NotEqual(0, result.ExitCode);
         Assert.Contains(
-            "module-already-frozen",
+            "matching shard is not a canonical v5 Freeze",
             Encoding.UTF8.GetString(result.StandardError),
             StringComparison.Ordinal);
         Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
-        Assert.Equal(1, fixture.FreezeCount());
+        Assert.Equal(0, fixture.FreezeCount());
     }
 
     [Fact]
@@ -61,8 +61,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
     internal sealed partial class TransactionFixture
     {
-        internal void WriteActiveFreezeForCurrentModule() => WriteActiveFreeze(
-            "git-sha1:" + Git("hash-object", "--", LeanPath).Trim());
+        internal void WriteActiveFreezeForCurrentModule() => WriteActiveFreeze();
 
         internal void WriteActiveSchemaV4FreezeForCurrentModule()
         {

@@ -1,0 +1,71 @@
+# 第四百八十二部　极值完成的互补松弛
+
+现在考虑 spectral-floor primal problem：
+
+$$
+\boxed{
+\begin{aligned}
+\text{maximize }&\lambda\\
+\text{subject to }&
+\nu_L
+=
+\frac{\lambda}{2\pi}d\xi+\mu_L,\\
+&\mu_L\ge0,\\
+&\check\nu_L=\mathfrak W_L
+\text{ 于 }I_L.
+\end{aligned}
+}
+\tag{482.1}
+$$
+
+其最优值为：
+
+$$
+\lambda_{\mathrm{full}}(L).
+$$
+
+假设：
+
+1. 最优谱完成 \(\nu_L^*\) 存在；
+2. Rayleigh infimum由单位地态 \(f_L^*\) 取得。
+
+写：
+
+$$
+\boxed{
+\nu_L^*
+=
+\frac{\lambda_{\mathrm{full}}(L)}{2\pi}d\xi
++
+\mu_L^*,
+\qquad
+\mu_L^*\ge0.
+}
+\tag{482.2}
+$$
+
+令：
+
+$$
+F_L^*(\xi)=\widehat{f_L^*}(\xi).
+$$
+
+则：
+
+$$
+\begin{aligned}
+0
+&=
+Q_L(f_L^*)
+-
+\lambda_{\mathrm{full}}(L)
+\|f_L^*\|_2^2\\
+&=
+\int_{\mathbb R}
+|F_L^*(\xi)|^2
+\,d\mu_L^*(\xi).
+\end{aligned}
+$$
+
+因此：
+

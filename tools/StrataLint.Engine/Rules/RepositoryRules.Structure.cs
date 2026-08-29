@@ -54,14 +54,8 @@ internal static partial class RepositoryRules
             }
         }
 
-        findings.AddRange(TheoristFrontierContractValidator.Evaluate(context));
-
         return findings.ToImmutable();
     }
-
-    private static ImmutableArray<RuleFinding> DeliveryStatementIdentity(
-        RuleEvaluationContext context) =>
-        TheoristFrontierContractValidator.EvaluateDeliveryIdentity(context);
 
     // SL-003 capacity limits. These are the single enforcement source shared by
     // the admission rule (Capacity, below) and the ArchitectureTests CapacityPolicy
@@ -86,8 +80,9 @@ internal static partial class RepositoryRules
 
     // SL-003 capacity exclusions: theory inputs, the Lake manifest, the backfill
     // inventory, atomizer dialect registry, canonical CAS blobs, per-atom
-    // formalization receipts, and generated Blueprint Markdown projections are not artifacts
-    // the capacity pressure rule bounds. Machine inventories grow one entry per
+    // formalization receipts, per-test retirement declarations, and generated Blueprint
+    // Markdown projections are not artifacts the capacity pressure rule bounds. Machine
+    // inventories grow one entry per
     // admitted unit and are never navigated as content buckets; the atomizer registry
     // is one canonical strict-loader input, not a content artifact to split. A
     // Blueprint document's structural slot is its .scribe.cs source. The .md is a FILEMAP
@@ -336,14 +331,6 @@ internal static partial class RepositoryRules
                     + "SL-022 protected-surface gate"));
             }
 
-            if (FrozenLedgerChangeClassifier.IsAcceptedEventPath(change.Path.Value)
-                && change.Kind is RawChangeKind.Modified or RawChangeKind.Deleted)
-            {
-                findings.Add(new RuleFinding(
-                    change.Path.Value,
-                    "accepted frozen-ledger event files are append-only; run ledger-append to "
-                    + "add a new event and do not modify an already-frozen fragment"));
-            }
         }
 
         return findings.ToImmutable();

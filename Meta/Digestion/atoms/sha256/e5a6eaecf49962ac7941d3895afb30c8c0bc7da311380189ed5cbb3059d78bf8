@@ -1,0 +1,81 @@
+## v4.2：Cayley 双曲尺度流、Chebyshev–Stieltjes Jet、Crofoot–Malmquist Gram 与联合谱一致性
+
+以下从前文**第五百三十五部**继续追加。
+
+仓库回填元数据仍将本理论的主源文件登记为：
+
+```text
+docs/develop/theory/OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY.md
+```
+
+上一轮已经建立：
+
+$$
+\boxed{
+\text{局部 Weil correlation}
+\longrightarrow
+\text{resolvent completion}
+\longrightarrow
+\text{Cayley moments}
+\longrightarrow
+\text{Toeplitz/Haar floor}.
+}
+$$
+
+但“多尺度 Cayley–Laguerre observer bank”仍被当作若干独立观测器的并列组合。
+
+本轮证明，它们并不独立。不同尺度 \(a,b>0\) 之间存在一条精确的双曲 Möbius 协变律：
+
+$$
+\boxed{
+\text{尺度变化}
+=
+\text{单位圆自同构}
++
+\text{Poisson 权重重整化}.
+}
+$$
+
+由此得到完整主链：
+
+$$
+\boxed{
+\begin{aligned}
+\text{同一实轴正谱 }\nu
+&\longrightarrow
+\{\mu_a\}_{a>0}\\
+&\longrightarrow
+\text{双曲 Möbius cocycle}\\
+&\longrightarrow
+\text{Carathéodory 尺度 PDE}\\
+&\longrightarrow
+\text{Cayley moments 三对角流}\\
+&\longrightarrow
+\text{Chebyshev--Stieltjes jet}\\
+&\longrightarrow
+\text{Crofoot--Malmquist Gram transport}\\
+&\longrightarrow
+\text{联合多尺度 SDP}.
+\end{aligned}
+}
+$$
+
+最重要的新认识是：
+
+$$
+\boxed{
+\text{多尺度 observer bank 的价值不是增加新的信息，}
+}
+$$
+
+因为一个完整尺度已经决定整个谱；它的真正价值是：
+
+$$
+\boxed{
+\text{把高阶导数型、病态的一尺度层析，
+转化为多个相邻尺度之间稳定的双曲传输。}
+}
+$$
+
+---
+

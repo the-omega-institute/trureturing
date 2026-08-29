@@ -1,0 +1,78 @@
+# 第四百六十五部　有限 Galerkin Weyl 铅笔
+
+选取有限偶测试族：
+
+$$
+e_1,\ldots,e_m
+$$
+
+和有限奇测试族：
+
+$$
+o_1,\ldots,o_n.
+$$
+
+定义矩阵：
+
+$$
+\boxed{
+(B_+)_{ij}
+=
+\mathfrak b_0(e_i,e_j),
+}
+\tag{465.1}
+$$
+
+$$
+\boxed{
+(B_-)_{ij}
+=
+\mathfrak b_0(o_i,o_j),
+}
+\tag{465.2}
+$$
+
+以及 boundary vectors：
+
+$$
+\boxed{
+c_i=\mathcal C_a(e_i),
+\qquad
+s_j=\mathcal S_a(o_j).
+}
+\tag{465.3}
+$$
+
+候选预算 \(R\) 对应两个矩阵铅笔：
+
+$$
+\boxed{
+M_+(R)
+=
+B_+
++
+(R-R_0)cc^*,
+}
+\tag{465.4}
+$$
+
+$$
+\boxed{
+M_-(R)
+=
+B_-
+-
+(R-R_0)ss^*.
+}
+\tag{465.5}
+$$
+
+所以整个有限观测问题只含：
+
+* 一个 positive rank-one update；
+* 一个 negative rank-one update。
+
+合并后是 signature \((1,1)\) 的 rank-two update。
+
+---
+

@@ -1,0 +1,35 @@
+## 定理 538.1（Carathéodory scale covariance）
+
+$$
+\boxed{
+F_b(w)
+=
+\frac ab
+F_a
+\left(
+\Phi_{s_{a,b}}(w)
+\right).
+}
+\tag{538.4}
+$$
+
+特别地：
+
+$$
+\boxed{
+R_b(\nu)
+=
+\frac ab
+F_a(s_{a,b}).
+}
+\tag{538.5}
+$$
+
+### 证明
+
+可直接由定理 537.1 和 Herglotz 核在圆盘自同构下的协变推出；也可比较两边的 Fourier moments。
+
+偶对称保证自同构产生的纯虚归一化常数消失。∎
+
+---
+

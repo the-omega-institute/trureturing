@@ -1,0 +1,10 @@
+ast_path: section/第六百六十部-Golden-off-line-origin-的可证伪版本
+fingerprints:
+  raw_sha256: sha256:cca558ba1e4482be8df90f9fa42cb21ce7751f48d20dd34c9cc67b78e85778a6
+  normalized_sha256: sha256:cca558ba1e4482be8df90f9fa42cb21ce7751f48d20dd34c9cc67b78e85778a6
+cas_ref: sha256:cca558ba1e4482be8df90f9fa42cb21ce7751f48d20dd34c9cc67b78e85778a6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

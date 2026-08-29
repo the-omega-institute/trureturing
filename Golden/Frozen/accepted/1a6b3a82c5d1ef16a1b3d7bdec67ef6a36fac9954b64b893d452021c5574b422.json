@@ -1,0 +1,1 @@
+{"event_hash": "sha256:1a6b3a82c5d1ef16a1b3d7bdec67ef6a36fac9954b64b893d452021c5574b422", "event_type": "Freeze", "payload": {"declaration_statement_ids": [], "descriptor_selector": "D5/S3/Weil/ZetaCore/InstancePriorities.lean", "prerequisite_frozen_node_ids": [], "statement_id": "sha256:7ccc628c8a8d63c828e5b5dbc87fb1dff2b5a1111cf8ed2e5bcce27f211e7836"}, "schema_version": 5}

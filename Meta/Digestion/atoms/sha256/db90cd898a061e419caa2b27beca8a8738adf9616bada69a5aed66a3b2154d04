@@ -1,0 +1,82 @@
+# 第五百五十一部　建议形式化顺序
+
+```text
+D5/S3/Weil/CayleyScale/
+  CayleyScaleMap.lean
+  CayleyScaleMobius.lean
+  HyperbolicScaleParameter.lean
+  ScaleMobiusComposition.lean
+
+D5/S3/Weil/CayleyMeasureFlow/
+  ResolventCayleyMeasure.lean
+  ScaleWeightRatio.lean
+  PositiveMobiusTransport.lean
+  ScaleWeightCocycle.lean
+  PoissonWeightForm.lean
+
+D5/S3/Weil/CayleyCaratheodory/
+  ScaleCaratheodory.lean
+  EvenCaratheodoryCovariance.lean
+  GeneralCaratheodoryGauge.lean
+  NormalizedScaleFlow.lean
+  CayleyScalePDE.lean
+  SchurScalePDE.lean
+
+D5/S3/Weil/CayleyMomentFlow/
+  CayleyMoment.lean
+  MomentScaleDerivative.lean
+  TridiagonalMomentFlow.lean
+  NormalizedMomentFlow.lean
+
+D5/S3/Weil/ChebyshevStieltjes/
+  ResolventBudgetCurve.lean
+  CayleyCosineCoordinate.lean
+  ShiftedChebyshevPolynomial.lean
+  ChebyshevStieltjesJet.lean
+  InitialMomentDerivativeFormulas.lean
+
+D5/S3/Weil/LaguerreChebyshev/
+  LaguerreTimeMoment.lean
+  ScaleJetMoment.lean
+  TimeScaleTomographyIdentity.lean
+  FiniteDifferenceScaleObserver.lean
+
+D5/S3/Weil/CrofootGram/
+  DiskMobiusWeightedComposition.lean
+  RepeatedMobiusBasis.lean
+  CrossScaleGramIdentity.lean
+  CrossScaleToeplitzGram.lean
+  MultiscaleBlockGram.lean
+
+D5/S3/Weil/FiniteScaleTransfer/
+  BudgetMomentSeries.lean
+  BudgetTransportTail.lean
+  AnalyticMomentTransferFunction.lean
+  CauchyCoefficientBound.lean
+  ExponentialMomentTransfer.lean
+
+D5/S3/Weil/ScaleLadder/
+  LogUniformScaleGrid.lean
+  AdjacentHyperbolicParameter.lean
+  ScaleLadderErrorPropagation.lean
+  WideScaleIllConditioning.lean
+
+D5/S3/Weil/MultiscaleConsistency/
+  BudgetLoewnerKernel.lean
+  BudgetLoewnerPSD.lean
+  JointScaleMomentVariables.lean
+  CrossScaleTransportIntervals.lean
+  JointRationalGramPSD.lean
+  CommonSpectrumHierarchy.lean
+
+D5/S3/Weil/RiemannScaleOrbit/
+  RiemannBudgetCurve.lean
+  LiClarkNaturalSlice.lean
+  LiScaleJet.lean
+  MultiscaleLiConsistency.lean
+```
+
+Hardy 空间加权组合算子的 unitary 性可先作为外部接口接入；核心 measure transport、moment PDE、Chebyshev jet 与有限传输界均可直接在当前项目内独立证明。
+
+---
+

@@ -1,0 +1,65 @@
+# 第四百二十四部　基线危险维数只有线性增长
+
+令：
+
+$$
+\xi_\infty
+$$
+
+为 \(b_\infty\) 的唯一正零点。
+
+基线负区间为：
+
+$$
+[-\xi_\infty,\xi_\infty].
+$$
+
+支撑在 \([-L,L]\) 的测试函数，在该固定频带中的高浓缩状态数，按 Slepian 相空间体积至多为：
+
+$$
+\boxed{
+O(L\xi_\infty).
+}
+\tag{424.1}
+$$
+
+更具体地，对阈值 \(\eta\)：
+
+$$
+\boxed{
+\operatorname{rank}
+P_{L,[-\xi_\infty,\xi_\infty],\eta}
+\le
+\frac{
+2L\xi_\infty
+}{
+\pi\eta
+}.
+}
+\tag{424.2}
+$$
+
+所以 PNT baseline 的 sticky complexity 只随 \(L\) 线性增长。
+
+相比之下，原始 prime cutoff 为：
+
+$$
+n\le e^{2L},
+$$
+
+其 prime-power 条目数随 \(L\) 指数增长。
+
+因此 renormalization 实现了一个真正的复杂度压缩：
+
+$$
+\boxed{
+\text{指数数量的 prime-power histories}
+\longrightarrow
+\text{线性数量的低频 baseline states}
++
+\text{一个 discrepancy flow}.
+}
+$$
+
+---
+

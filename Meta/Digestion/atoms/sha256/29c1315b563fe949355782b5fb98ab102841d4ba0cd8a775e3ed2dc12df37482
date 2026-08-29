@@ -1,0 +1,22 @@
+* full dual optimizer 可能失去有限接触性。
+
+所以：
+
+$$
+\boxed{
+\theta
+=
+\text{谱分辨率的影子价格}.
+}
+$$
+
+当：
+
+$$
+\theta\downarrow0,
+$$
+
+有限原子 ledger 可以展开为完整 Riemann–Clark 原子谱。
+
+---
+

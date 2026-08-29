@@ -1,0 +1,84 @@
+## 490.1 显式 primal 形式
+
+等价地，寻找：
+
+$$
+\lambda\ge0,\qquad\mu\ge0
+$$
+
+使：
+
+$$
+\boxed{
+\nu=\lambda m_0+\mu,
+}
+\tag{490.5}
+$$
+
+$$
+\boxed{
+\check\nu=\mathfrak W_L,
+}
+\tag{490.6}
+$$
+
+以及：
+
+$$
+\boxed{
+\frac{\lambda}{2a}
++
+\int_{\mathbb R}
+\frac{d\mu(\xi)}{\xi^2+a^2}
+\le C.
+}
+\tag{490.7}
+$$
+
+这里使用了：
+
+$$
+\boxed{
+\mathcal R_a(\lambda m_0)
+=
+\frac{\lambda}{2a},
+}
+\tag{490.8}
+$$
+
+因为：
+
+$$
+\frac1{2\pi}
+\int_{\mathbb R}
+\frac{d\xi}{\xi^2+a^2}
+=
+\frac1{2a}.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{一个强度为 }\lambda\text{ 的白谱底座，
+消耗 }\lambda/(2a)\text{ 单位预算。}
+}
+$$
+
+在自然尺度：
+
+$$
+a=\frac12,
+$$
+
+恰有：
+
+$$
+\boxed{
+\text{white-floor cost}=\lambda.
+}
+\tag{490.9}
+$$
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/命题-C-Galois-trace-norm-完成/clause/4
+fingerprints:
+  raw_sha256: sha256:20f319ba776e1810473f9065a18003cc8808d4a7145bea80125fdd72a2efef48
+  normalized_sha256: sha256:20f319ba776e1810473f9065a18003cc8808d4a7145bea80125fdd72a2efef48
+cas_ref: sha256:20f319ba776e1810473f9065a18003cc8808d4a7145bea80125fdd72a2efef48
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

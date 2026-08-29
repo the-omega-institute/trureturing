@@ -1,0 +1,57 @@
+# 第五百四十八部　自然 Riemann 多尺度轨道
+
+假设 RH，并令：
+
+$$
+\nu_\Xi
+=
+\sum_{\gamma\in\mathbb R}
+m_\gamma\delta_\gamma.
+$$
+
+定义 Riemann budget curve：
+
+$$
+\boxed{
+B_\Xi(u)
+=
+\sum_{\gamma\in\mathbb R}
+\frac{m_\gamma}
+{\gamma^2+u}.
+}
+\tag{548.1}
+$$
+
+由中心化 Hadamard 乘积：
+
+$$
+\boxed{
+B_\Xi(u)
+=
+\frac1{\sqrt u}
+\frac{
+\xi'(\frac12+\sqrt u)
+}{
+\xi(\frac12+\sqrt u)
+}.
+}
+\tag{548.2}
+$$
+
+在自然点：
+
+$$
+u=\frac14,
+$$
+
+有：
+
+$$
+\boxed{
+B_\Xi(\tfrac14)=2\lambda_1.
+}
+\tag{548.3}
+$$
+
+---
+

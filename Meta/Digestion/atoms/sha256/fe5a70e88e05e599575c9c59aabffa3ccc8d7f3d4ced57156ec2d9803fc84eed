@@ -1,0 +1,34 @@
+## 定义 584.1（Chart layer）
+
+若：
+
+$$
+q_{k+1}=h\circ q_k
+$$
+
+且 \(h\) 在 \(q_k(X)\) 上单射，则：
+
+$$
+\boxed{
+\ker q_{k+1}=\ker q_k.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal E_{k+1}=\mathcal E_k.
+}
+$$
+
+这层可能有计算价值，但：
+
+$$
+\boxed{
+d_{\mathrm{esc}}\text{ 不增加}.
+}
+$$
+
+---
+

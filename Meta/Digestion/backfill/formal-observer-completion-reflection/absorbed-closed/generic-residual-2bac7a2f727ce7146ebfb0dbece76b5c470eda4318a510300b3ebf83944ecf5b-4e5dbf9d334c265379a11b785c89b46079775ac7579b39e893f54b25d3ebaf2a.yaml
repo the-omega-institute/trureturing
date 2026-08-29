@@ -1,0 +1,17 @@
+ast_path: 命题/76.1/clause/1
+fingerprints:
+  raw_sha256: sha256:2bac7a2f727ce7146ebfb0dbece76b5c470eda4318a510300b3ebf83944ecf5b
+  normalized_sha256: sha256:2bac7a2f727ce7146ebfb0dbece76b5c470eda4318a510300b3ebf83944ecf5b
+cas_ref: sha256:2bac7a2f727ce7146ebfb0dbece76b5c470eda4318a510300b3ebf83944ecf5b
+coverage_gids:
+  - D5/S3/ConceptDynamics/Agency/FinitePolicySectionCount.finite_policy_sections_card
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Agency/FinitePolicySectionCount.finite_policy_sections_card
+      source_sha256: sha256:2bac7a2f727ce7146ebfb0dbece76b5c470eda4318a510300b3ebf83944ecf5b
+      target_statement_id: sha256:21b310869ecbdba7da5b9972d471cbeca466f524d554153b2ec8d101a488f379
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Agency/FinitePolicySectionCount.finite_policy_sections_card
+      definition_sha256: sha256:48f5809519690c0047a132221cd887208489817ba8cad03e41d9ee48eb08d03a
+      emission_sha256: sha256:92bdde43abfdc7445077b89f1253bcfb03ec02eba0dccf92f82358cb8103bee0
+  unresolved_subitems: []

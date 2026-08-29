@@ -1,0 +1,10 @@
+ast_path: section/543-2-多尺度联合-Gram
+fingerprints:
+  raw_sha256: sha256:1f119fd559306d3f009a7c076f6b4ae8c10d2ef97801a5c2d5d0ee49532a872e
+  normalized_sha256: sha256:1f119fd559306d3f009a7c076f6b4ae8c10d2ef97801a5c2d5d0ee49532a872e
+cas_ref: sha256:1f119fd559306d3f009a7c076f6b4ae8c10d2ef97801a5c2d5d0ee49532a872e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,22 @@
+## 定理 528.1（Finite-window Haar-floor interval）
+
+$$
+\boxed{
+\begin{aligned}
+\lambda_{\min}(\widehat T_{N,L})
+-\Delta_{N,a}(L)
+\le{}&
+\lambda_{\min}(T_N)
+\\
+\le{}&
+\lambda_{\min}(\widehat T_{N,L})
++\Delta_{N,a}(L).
+\end{aligned}
+}
+\tag{528.5}
+$$
+
+因此有限相关窗口直接给出 finite moment Haar floor 的严格双边界。
+
+---
+

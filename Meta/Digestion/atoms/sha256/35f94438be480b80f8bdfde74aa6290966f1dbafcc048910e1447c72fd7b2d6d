@@ -1,0 +1,16 @@
+## 定理 532.1（Finite infeasibility certificate）
+
+若上述 SDP 不可行，则不存在满足以下全部条件的实轴偶正谱完成：
+
+1. 与局部 Weil source 一致；
+2. resolvent budget 属于：
+
+   $$
+   [\underline R,\overline R];
+   $$
+3. 具有相应 Cayley compactification。
+
+所以 SDP 不可行是一个严格的局部正谱不可完成证书。
+
+---
+

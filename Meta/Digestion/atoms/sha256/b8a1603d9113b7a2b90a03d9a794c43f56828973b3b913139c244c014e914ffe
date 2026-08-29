@@ -1,0 +1,31 @@
+## 命题 C：Galois trace/norm 完成
+
+证明：
+
+$$
+\boxed{
+\mathcal O_{\mathrm{tr}}
+=
+\mathcal O_\varphi
++
+\tau\mathcal O_{\varphi'}
+}
+\tag{587.3}
+$$
+
+或：
+
+$$
+\boxed{
+\mathcal O_{\mathrm{nr}}
+=
+\mathcal O_\varphi
+\cdot
+\tau\mathcal O_{\varphi'}
+}
+\tag{587.4}
+$$
+
+拥有比单通道更强的：
+
+* convergence；

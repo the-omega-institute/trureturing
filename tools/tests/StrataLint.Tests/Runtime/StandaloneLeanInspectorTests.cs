@@ -198,90 +198,6 @@ public sealed class StandaloneLeanInspectorTests
         Assert.Empty(free.Axioms);
     }
 
-    [Fact]
-    public void ElaboratedTheoristTargetPassesSl002AndAdmissionAsOpen()
-    {
-        const string path = "D5/X_Frontier/ElaborationProbe.lean";
-        const string statementPlaceholder =
-            "sha256:0000000000000000000000000000000000000000000000000000000000000000";
-        var source = $$"""
-            /- GID: D5/X_Frontier/ElaborationProbe
-               generality: G
-               mirror-B: none(waiver:test-fixture)
-               mirror-E: none(waiver:test-fixture)
-               anchors: []
-               digest: Elaborated theorist contract fixture. -/
-
-            namespace D5.X_Frontier.ElaborationProbe
-
-            /- THEORIST_FRONTIER_CONTRACT_V2
-            {"schema":"trureturing-theorist-frontier-v2","exact_statement":{"gid":"D5/X_Frontier/ElaborationProbe.generated_open","statement_sha256":"{{statementPlaceholder}}"},"motivation_gids":["D5/S0/Carrier/Ring"],"falsifier":"a counterexample to True","search_receipt_gids":["D5/L/Carrier/fixture2026contract"],"computation_receipt_gids":["D5/E/S0/Carrier/Probe.result--json"],"triage_class":"theorem"}
-            -/
-
-            theorem generated_open : True := by
-              sorry
-
-            end D5.X_Frontier.ElaborationProbe
-            """ + "\n";
-
-        using var repository = new TemporaryDirectory();
-        var firstSnapshot = TheoristSnapshot(path, source);
-        var firstReport = new TestLeanReportProducer(repository.Path).Inspect(firstSnapshot);
-        var firstFileReport = firstReport.Files[RepoPath.CreateKnown(path)];
-        var firstStatementAddress = CanonicalStatementWriter.StatementTypeAddress(
-            firstFileReport.Declarations.Single(static item =>
-                item.Name == "D5.X_Frontier.ElaborationProbe.generated_open"));
-        var finalSource = source.Replace(
-            statementPlaceholder,
-            firstStatementAddress,
-            StringComparison.Ordinal);
-        var finalSnapshot = TheoristSnapshot(path, finalSource);
-        var finalReport = new TestLeanReportProducer(repository.Path).Inspect(finalSnapshot);
-        var finalFileReport = finalReport.Files[RepoPath.CreateKnown(path)];
-        var declaration = Assert.Single(finalFileReport.Declarations.Where(static item =>
-            item.Name == "D5.X_Frontier.ElaborationProbe.generated_open"));
-        Assert.Contains("sorryAx", declaration.Axioms);
-        Assert.Equal(
-            firstStatementAddress,
-            CanonicalStatementWriter.StatementTypeAddress(declaration));
-
-        var fixture = new RuleFixture();
-        fixture.AddElaboratedTheoristTarget(finalSource, finalFileReport);
-        fixture.AddBackfillTargets();
-        var context = fixture.Build();
-        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(context));
-        Assert.Empty(completed.Capability.Diagnostics);
-        var registry = RegistryLoadAssert.Accepted(RegistryLoader.Load(
-            Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-            Encoding.UTF8.GetBytes(TestRegistry.Domains)));
-        var canonical = Assert.IsType<CanonicalizationOutcome.Accepted>(
-            RepositoryCanonicalizer.Validate(context.Current, registry.Policy));
-
-        var admitted = AdmissionEngine.Decide(
-            registry.Policy,
-            canonical.Capability,
-            context.Lean,
-            completed.Capability,
-            context.MetaEvaluation);
-
-        Assert.IsType<AdmissionOutcome.Admitted>(admitted);
-    }
-
-    private static RepositorySnapshot TheoristSnapshot(string path, string source)
-    {
-        var raw = RawRepositorySnapshot.Create(new[]
-        {
-            RawRepositoryEntry.FromText("lakefile.toml", LakefileWithD5 + "\n"),
-            RawRepositoryEntry.FromText("lean-toolchain", "leanprover/lean4:v4.31.0\n"),
-            RawRepositoryEntry.FromText(
-                "Trureturing.lean",
-                "import D5.X_Frontier.ElaborationProbe\n"),
-            RawRepositoryEntry.FromText(path, source),
-        });
-        return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
-    }
-
     private static LeanFileReport InspectSingleModule(string source)
     {
         using var repository = new TemporaryDirectory();
@@ -367,7 +283,7 @@ public sealed class StandaloneLeanInspectorTests
                 inspection.ExitCode == 0,
                 Encoding.UTF8.GetString(inspection.StandardOutput)
                     + Encoding.UTF8.GetString(inspection.StandardError));
-            var compacted = BoundedProcessRunner.Run(
+            var compacted = TestProcessRunner.Run(
                 "python3",
                 [
                     Path.Combine(

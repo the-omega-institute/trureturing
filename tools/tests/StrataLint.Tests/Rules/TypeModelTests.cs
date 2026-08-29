@@ -179,7 +179,7 @@ public sealed class TypeModelTests
         Assert.True(RuleId.TryCreate("SL-023", out _));
         Assert.False(RuleId.TryCreate("SL-024", out _));
         Assert.True(RuleId.TryCreate("SL-025", out _));
-        Assert.True(RuleId.TryCreate("SL-027", out _));
+        Assert.False(RuleId.TryCreate("SL-027", out _));
         Assert.True(RuleId.TryCreate("SL-028", out _));
         Assert.True(CaseId.TryCreate("D5-T0016", out _));
     }
@@ -189,7 +189,7 @@ public sealed class TypeModelTests
     [InlineData(24, false)]
     [InlineData(25, true)]
     [InlineData(26, true)]
-    [InlineData(27, true)]
+    [InlineData(27, false)]
     [InlineData(28, true)]
     [InlineData(29, false)]
     public void RuleIdKnownDomainPreservesTheIntentionalGapAndUpperBoundary(
@@ -348,6 +348,10 @@ public sealed class TypeModelTests
 
     [Theory]
     [InlineData("Golden/other.toml")]
+    [InlineData("Golden/EngineeringTestRetirements/example.json")]
+    [InlineData("Golden/EngineeringTestRetirements/.json")]
+    [InlineData("Golden/EngineeringTestRetirements/example.toml")]
+    [InlineData("Golden/EngineeringTestRetirements/nested/example.json")]
     [InlineData("Golden/Other/x.json")]
     [InlineData("Golden/Projection/nested/x.json")]
     [InlineData("Golden/Projection/x.toml")]

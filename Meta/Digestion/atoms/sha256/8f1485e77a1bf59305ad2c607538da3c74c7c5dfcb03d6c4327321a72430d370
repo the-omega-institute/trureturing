@@ -1,0 +1,37 @@
+## 定理 509.1（Active finite-contact theorem）
+
+若：
+
+$$
+\theta_*>0,
+$$
+
+则最优完成具有：
+
+$$
+\boxed{
+\mu_*
+=
+\alpha_*m_{\mathbb T}
++
+\sum_{r=1}^{M}
+q_r\delta_{z_r},
+\qquad
+q_r>0.
+}
+\tag{509.6}
+$$
+
+其接触点满足：
+
+$$
+\boxed{
+\Gamma_{a,\phi_*}(z_r)+\theta_*=0.
+}
+\tag{509.7}
+$$
+
+在有限 \(d\)-维观察者问题中，可选 residual measure 具有至多 \(d+1\) 个原子；在共轭对称图表中，可表述为至多 \(d+1\) 个共轭轨道。
+
+---
+
