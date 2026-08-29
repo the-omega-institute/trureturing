@@ -1,0 +1,53 @@
+name: agent-observer-completion-v12-scribe
+
+on:
+  push:
+    branches:
+      - agent/theory/observer-completion-reflection-v12-20260829
+
+permissions:
+  contents: write
+
+jobs:
+  generate-and-validate:
+    if: contains(github.event.head_commit.message, '[observer-v12-scribe]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/theory/observer-completion-reflection-v12-20260829
+          fetch-depth: 0
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - name: Generate same-stem Scribe owners
+        run: python .github/scripts/agent-observer-completion-v12-scribe.py
+      - name: Build Scribe and repository CLI
+        run: make -C tools dotnet
+      - name: Emit canonical Markdown projections
+        run: make emit
+      - name: Validate generated content
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          for stem in \
+            Blueprint/D5/S3/ObserverMemory/Refinement/PostprocessingKernelCalculus \
+            Blueprint/D5/S3/ObserverMemory/Refinement/JointReadoutSupremum \
+            Blueprint/D5/S3/Observer/Agency/Self/AgencyEnrichment \
+            Blueprint/D5/S3/Observer/Agency/Holonomy/VisibleLoopHolonomy \
+            Blueprint/D5/S3/Observer/Completion/CompletionLocusCalculus \
+            Blueprint/D5/S3/ObserverMemory/RefinementClosure/FiniteHorizonKernelRecurrence \
+            Blueprint/D5/S3/ObserverMemory/RefinementClosure/CommutingClosureCommonFixedPoint
+          do
+            test -s "$stem.scribe.cs"
+            test -s "$stem.md"
+          done
+      - name: Commit Scribe truth sources and projections
+        run: |
+          git config user.name "AlyciaBHZ"
+          git config user.email "50111876+AlyciaBHZ@users.noreply.github.com"
+          git add Blueprint
+          git commit -m "add Scribe owners for observer completion v1.2.1"
+          git push origin HEAD:agent/theory/observer-completion-reflection-v12-20260829
