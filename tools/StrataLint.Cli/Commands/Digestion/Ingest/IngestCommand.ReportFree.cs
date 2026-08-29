@@ -40,6 +40,7 @@ internal static partial class IngestCommand
                 prepared.CurrentDocument,
                 prepared.BaselineDocument,
                 prepared.PlannedDocument,
+                prepared.Plan.Alignment,
                 prepared.PlannedScope,
                 prepared.PlannedChanges);
             if (!classification.IsUncoveredOnly)

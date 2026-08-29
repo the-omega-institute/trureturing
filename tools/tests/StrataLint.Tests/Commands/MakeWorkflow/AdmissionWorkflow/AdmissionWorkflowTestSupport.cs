@@ -6,55 +6,6 @@ namespace StrataLint.Tests;
 
 public sealed partial class AdmissionWorkflowTests
 {
-    private static void WriteFloorProject(string repository, string assembly, string className)
-    {
-        var directory = Path.Combine(repository, "tools", "tests", assembly);
-        Directory.CreateDirectory(directory);
-        File.WriteAllText(
-            Path.Combine(directory, $"{assembly}.csproj"),
-            $"""
-            <Project Sdk="Microsoft.NET.Sdk">
-              <PropertyGroup><TargetFramework>net10.0</TargetFramework><IsTestProject>true</IsTestProject><AssemblyName>{assembly}</AssemblyName><RestorePackagesWithLockFile>false</RestorePackagesWithLockFile></PropertyGroup>
-              <ItemGroup><PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" /><PackageReference Include="xunit" Version="2.9.3" /><PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" /></ItemGroup>
-            </Project>
-            """);
-        File.WriteAllText(
-            Path.Combine(directory, "FloorProbe.cs"),
-            $"using System; using System.IO; using Xunit; public sealed class {className} {{ [Fact] public void Runs() => File.AppendAllText(Environment.GetEnvironmentVariable(\"ENGINEERING_FLOOR_MARKER\")!, \"{assembly}\\n\"); }}\n");
-    }
-
-    private static void WriteEngineeringScopeVerifierStub(string repository)
-    {
-        var directory = Path.Combine(repository, "tools", "StrataLint.EngineeringScope");
-        Directory.CreateDirectory(directory);
-        File.WriteAllText(
-            Path.Combine(directory, "StrataLint.EngineeringScope.csproj"),
-            """
-            <Project Sdk="Microsoft.NET.Sdk">
-              <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net10.0</TargetFramework><RestorePackagesWithLockFile>false</RestorePackagesWithLockFile></PropertyGroup>
-            </Project>
-            """);
-        File.WriteAllText(
-            Path.Combine(directory, "Program.cs"),
-            """
-            using System;
-            using System.IO;
-            using System.Linq;
-
-            var arguments = Environment.GetCommandLineArgs();
-            var resultsIndex = Array.IndexOf(arguments, "--results-directory");
-            var assemblyIndex = Array.IndexOf(arguments, "--required-assembly");
-            if (resultsIndex < 0 || assemblyIndex < 0
-                || resultsIndex + 1 >= arguments.Length || assemblyIndex + 1 >= arguments.Length
-                || !Directory.EnumerateFiles(arguments[resultsIndex + 1], "*.trx").Any())
-            {
-                return 2;
-            }
-            Console.WriteLine($"ENGINEERING_BASE_FLOOR_EXECUTED assembly={arguments[assemblyIndex + 1]} evidence=fixture-trx");
-            return 0;
-            """);
-    }
-
     private static string StepScript(IEnumerable<YamlMappingNode> steps, string name)
     {
         var step = Assert.Single(steps, candidate => StepName(candidate) == name);

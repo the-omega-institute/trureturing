@@ -34,6 +34,8 @@ internal static class FileMapPolicy
         "tools/StrataLint.Engine/Snapshot/RepositorySnapshot.cs";
     private const string StatementProjectionFixtureLoaderPath =
         "tools/StrataLint.Scribe/Projection/StatementProjection.cs";
+    private const string EngineeringTestRetirementLoaderPath =
+        "tools/StrataLint.Engine/RepositoryIo/EngineeringTestRetirementLoader.cs";
     private const string TheoryAtomizerDataLoaderPath =
         "tools/StrataLint.Engine/Digestion/Configuration/TheoryAtomizerDataLoader.cs";
     private const string GateAuthorityRootCatalogLoaderPath =
@@ -53,6 +55,7 @@ internal static class FileMapPolicy
         new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["BackfillInventoryLoader"] = BackfillLoaderPath,
+            ["EngineeringTestRetirementLoader"] = EngineeringTestRetirementLoaderPath,
             ["FileMapLoader"] = FileMapLoaderPath,
             ["GateAuthorityRootCatalogLoader"] = GateAuthorityRootCatalogLoaderPath,
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
