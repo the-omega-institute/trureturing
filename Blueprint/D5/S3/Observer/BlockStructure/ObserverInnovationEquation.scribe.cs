@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.Tomography;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.BlockStructure;
 
 internal sealed class ObserverInnovationEquationDocument : IScribeDocumentDefinition
 {
@@ -12,7 +12,7 @@ internal sealed class ObserverInnovationEquationDocument : IScribeDocumentDefini
         Blocks(Describe.Lean(
             DescribeId.Create("strict-gram-floor-drop-identifies-the-innovation-zero"),
             DeclarationHandle.Create(
-                "D5/S3/Observer/Tomography/ObserverInnovationEquation."
+                "D5/S3/Observer/BlockStructure/ObserverInnovationEquation."
                     + "observer_innovation_equation"),
             H("The new Gram floor is the unique innovation zero"),
             StatementSource.FromAuthor(InnovationFormula()),

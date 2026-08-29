@@ -1,6 +1,6 @@
-/- GID: D5/S3/Observer/Tomography/ObserverInnovationEquation
+/- GID: D5/S3/Observer/BlockStructure/ObserverInnovationEquation
    generality: G
-   mirror-B: D5/B/S3/Observer/Tomography/ObserverInnovationEquation
+   mirror-B: D5/B/S3/Observer/BlockStructure/ObserverInnovationEquation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: A strict Gram floor drop identifies the unique innovation zero. -/
@@ -22,7 +22,7 @@ noncomputable section
 
 open scoped ComplexOrder InnerProductSpace
 
-namespace D5.S3.Observer.Tomography.ObserverInnovationEquation
+namespace D5.S3.Observer.BlockStructure.ObserverInnovationEquation
 
 open Matrix
 
@@ -154,4 +154,4 @@ theorem observer_innovation_equation
 
 #print axioms observer_innovation_equation
 
-end D5.S3.Observer.Tomography.ObserverInnovationEquation
+end D5.S3.Observer.BlockStructure.ObserverInnovationEquation
