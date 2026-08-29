@@ -19,12 +19,31 @@ jobs:
           fetch-depth: 0
       - name: Apply theory refinement
         run: python .github/scripts/agent-observer-completion-v12-theory.py
-      - name: Validate textual patch
+      - name: Validate theory structure
+        shell: bash
         run: |
-          git diff --check
+          python -m py_compile .github/scripts/agent-observer-completion-v12-theory.py
+          python - <<'PY'
+          from pathlib import Path
+          text = Path('docs/develop/theory/FORMAL_OBSERVER_COMPLETION_REFLECTION.md').read_text(encoding='utf-8')
+          required = [
+              '**版本：v1.2，2026-08-29**',
+              '## 0.1 三类 completion 与 effective-image 纪律',
+              '# 1A. 接口运算与 kernel 演算',
+              '# 7A. 有限深度完成塔',
+              '# 9A. Agency enrichment 与可见环 holonomy',
+              '# 13. 记忆商与 effective-image 下降',
+              '# 24. 局部 closure、gluing 与公共固定点',
+              '# 24A. Structural completion locus 演算',
+              '# 27. Lean owner 取址与剩余 frontier',
+          ]
+          missing = [item for item in required if text.count(item) != 1]
+          if missing:
+              raise SystemExit(f'missing or duplicated theory markers: {missing}')
+          if '保持有向 join，才能保证该迭代稳定' in text:
+              raise SystemExit('obsolete directed-join requirement remains')
+          PY
           git diff --stat
-          grep -F '**版本：v1.2，2026-08-29**' docs/develop/theory/FORMAL_OBSERVER_COMPLETION_REFLECTION.md
-          grep -F '# 9A. Agency enrichment 与可见环 holonomy' docs/develop/theory/FORMAL_OBSERVER_COMPLETION_REFLECTION.md
       - name: Commit theory refinement
         run: |
           git config user.name "AlyciaBHZ"
