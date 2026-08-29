@@ -54,14 +54,8 @@ internal static partial class RepositoryRules
             }
         }
 
-        findings.AddRange(TheoristFrontierContractValidator.Evaluate(context));
-
         return findings.ToImmutable();
     }
-
-    private static ImmutableArray<RuleFinding> DeliveryStatementIdentity(
-        RuleEvaluationContext context) =>
-        TheoristFrontierContractValidator.EvaluateDeliveryIdentity(context);
 
     // SL-003 capacity limits. These are the single enforcement source shared by
     // the admission rule (Capacity, below) and the ArchitectureTests CapacityPolicy

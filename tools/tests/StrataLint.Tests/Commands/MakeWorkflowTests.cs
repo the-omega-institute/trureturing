@@ -59,7 +59,6 @@ public sealed partial class MakeWorkflowTests
         "align-digestion-status",
         "echo-residual-summary",
         "show-atom",
-        "theory-candidates",
         "truth-export",
         "deliver-check",
         "receipts-stage",
@@ -135,59 +134,6 @@ public sealed partial class MakeWorkflowTests
             System.Text.Encoding.UTF8.GetString(result.StandardOutput));
         Assert.Equal("lean provenance\n", System.Text.Encoding.UTF8.GetString(result.StandardError));
     }
-
-    [Fact]
-    public void TheoryCandidatesOwnerOverrideFilePreservesBytesAcrossMakeBoundary()
-    {
-        if (OperatingSystem.IsWindows()) return;
-
-        var root = TestRepositoryLayout.FindRoot();
-        using var fixture = new TemporaryDirectory();
-        var binDirectory = Path.Combine(fixture.Path, "bin");
-        var cliDirectory = Path.Combine(fixture.Path, "tools", "StrataLint.Cli");
-        Directory.CreateDirectory(binDirectory);
-        Directory.CreateDirectory(cliDirectory);
-        File.Copy(Path.Combine(root, "Makefile"), Path.Combine(fixture.Path, "Makefile"));
-        var problemBytes = System.Text.Encoding.UTF8.GetBytes(
-            "Does \"x\" imply $HOME and `id`?\nClassify ξ exactly.\n");
-        var problemPath = Path.Combine(fixture.Path, "owner-problem.txt");
-        File.WriteAllBytes(problemPath, problemBytes);
-        var dotnetPath = Path.Combine(binDirectory, "dotnet");
-        File.WriteAllText(
-            dotnetPath,
-            """
-            #!/usr/bin/env bash
-            while [[ $# -gt 0 ]]; do
-              if [[ "$1" == "--owner-override-file" && $# -ge 2 ]]; then
-                /bin/cat -- "$2"
-                exit 0
-              fi
-              shift
-            done
-            exit 21
-            """ + "\n");
-        File.SetUnixFileMode(
-            dotnetPath,
-            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-
-        var result = TestProcessRunner.Run(
-            "/bin/bash",
-            [
-                "-c",
-                "PATH=\"$1:$PATH\" exec make --no-print-directory theory-candidates OWNER_OVERRIDE_FILE=\"$2\"",
-                "theory-candidates-make",
-                binDirectory,
-                problemPath,
-            ],
-            fixture.Path,
-            BoundedProcessRunner.HangDetectionBudget,
-            64 * 1024);
-
-        Assert.Equal(0, result.ExitCode);
-        Assert.Equal(problemBytes, result.StandardOutput);
-        Assert.Empty(result.StandardError);
-    }
-
 
     [Fact]
     public void CiAndLocalGateReuseCanonicalEntrypoints()

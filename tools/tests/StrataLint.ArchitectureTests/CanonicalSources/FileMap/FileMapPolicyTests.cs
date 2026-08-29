@@ -9,17 +9,6 @@ namespace StrataLint.ArchitectureTests;
 public sealed partial class FileMapPolicyTests
 {
     [Fact]
-    public void MissionHasARegisteredGoldenDataResidence()
-    {
-        var manifest = FileMapLoader.LoadRepository(RepositoryLayout.FindRoot());
-
-        var entry = Assert.Single(manifest.Match(MissionFileLoader.RelativePath));
-        Assert.Equal(FileMapKind.Data, entry.Kind);
-        Assert.Equal("MissionFileLoader", Assert.Single(entry.ConsumedBy));
-        Assert.Equal("MissionFileLoader", Assert.Single(entry.VerifiedBy));
-    }
-
-    [Fact]
     public void EngineeringTestRetirementDeclarationsHaveARegisteredSchemaVerifier()
     {
         const string pattern = "Golden/EngineeringTestRetirements/*.json";

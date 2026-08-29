@@ -570,4 +570,5 @@ public sealed partial class AdmissionWorkflowTests
         Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
         File.WriteAllText(fullPath, content);
     }
+
 }

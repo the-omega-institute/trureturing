@@ -147,7 +147,7 @@ internal static partial class RepositoryRules
     }
 
     // SL-019 consumes the repository-wide TASK token grammar. Keep this regex byte-for-byte
-    // identical to the retired MISSION scanner's production pattern.
+    // identical to the retired task-block scanner's production pattern.
     private static readonly Regex TaskTokenPattern = new(
         "TASK\\s+(?<code>D5-T[0-9]{4})",
         RegexOptions.CultureInvariant);

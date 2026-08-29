@@ -150,14 +150,6 @@ public sealed partial class MakeWorkflowTests
         var showAtomRecipe = Recipe(makefile, "show-atom");
         Assert.Contains("dotnet run --no-build --project", showAtomRecipe, StringComparison.Ordinal);
         Assert.Contains(" show-atom --atom-id \"$(ATOM_ID)\"", showAtomRecipe, StringComparison.Ordinal);
-        var theoryCandidatesRecipe = Recipe(makefile, "theory-candidates");
-        Assert.Contains("dotnet run --no-build --project", theoryCandidatesRecipe, StringComparison.Ordinal);
-        Assert.Contains(" theory-candidates", theoryCandidatesRecipe, StringComparison.Ordinal);
-        Assert.Contains(
-            "--owner-override-file \"$(OWNER_OVERRIDE_FILE)\"",
-            theoryCandidatesRecipe,
-            StringComparison.Ordinal);
-        Assert.DoesNotContain("OWNER_OVERRIDE)", theoryCandidatesRecipe, StringComparison.Ordinal);
         Assert.Contains(
             EchoResidualSummaryScriptPath,
             Recipe(makefile, "echo-residual-summary"),
