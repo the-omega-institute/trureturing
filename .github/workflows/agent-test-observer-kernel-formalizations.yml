@@ -1,0 +1,43 @@
+name: agent-test-observer-kernel-formalizations
+
+on:
+  push:
+    branches:
+      - agent/test/observer-kernel-formalizations-20260829
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/test/observer-kernel-formalizations-20260829
+          fetch-depth: 0
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - name: Install pinned Lean toolchain
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Restore Lean dependencies
+        run: lake update
+      - name: Build Scribe and repository CLI
+        run: make -C tools dotnet
+      - name: Build observer kernel formalizations
+        run: |
+          set -euo pipefail
+          lake build D5.S3.ConceptDynamics.Faithfulness.InjectiveConstantReadoutSubsingleton
+          lake build D5.S3.ConceptDynamics.Faithfulness.InjectiveSensorFamilyFaithfulness
+          lake build D5.S3.ConceptDynamics.Faithfulness.PairSensorStrictRefinement
+          lake build D5.S3.ConceptDynamics.ObservationOrder.PostprocessingKernelMonotonicity
+          lake build D5.S3.ConceptDynamics.ObservationOrder.RecoverablePostprocessingKernelEquality
+          lake build D5.S3.ConceptDynamics.ObservationOrder.ConstantPostprocessingStrictLoss
+          lake build D5.S3.ConceptDynamics.ObservationOrder.PairReadoutKernelIntersection
+          lake build D5.S3.ConceptDynamics.ObservationOrder.SensorFamilyKernelIntersection
+          lake build D5.S3.ConceptDynamics.ObservationOrder.SensorFamilyRestrictionMonotonicity
+          lake build D5.S3.Observer.Refinement.CongruenceKernelSensorFusion
+      - name: Validate source formatting
+        run: git diff --check
