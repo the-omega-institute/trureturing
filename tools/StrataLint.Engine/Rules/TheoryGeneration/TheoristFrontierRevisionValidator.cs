@@ -139,7 +139,7 @@ internal static partial class TheoristFrontierContractValidator
             return findings.ToImmutable();
         }
 
-        var baselineMission = LoadMission(context.Baseline);
+        var baselineMission = LoadBaselineMission(context.Baseline);
         if (baselineMission.UnreadableReason is { } baselineReason)
         {
             foreach (var retiredPath in retiredPaths)
@@ -156,8 +156,11 @@ internal static partial class TheoristFrontierContractValidator
         FrozenLedgerBaseView? frozen = null;
         foreach (var retiredPath in retiredPaths)
         {
-            if (baselineMission.Entries.TryGetValue(retiredPath, out var baselineOwner)
-                && baselineOwner is FrontierEligibilityKind.Governance)
+            if (ShouldSkipGovernanceDeliveryIdentity(
+                    context.Baseline,
+                    retiredPath,
+                    baselineMission,
+                    currentMission))
             {
                 continue;
             }

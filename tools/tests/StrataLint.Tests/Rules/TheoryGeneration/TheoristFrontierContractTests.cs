@@ -283,6 +283,78 @@ public sealed partial class TheoristFrontierContractTests
     }
 
     [Fact]
+    public void DeletedBaselineGovernanceCarrierWithoutContractOrOwnerIsAccepted()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddHistoricalTheoristTarget(
+            "prime-norm-irreducibility",
+            includeContract: false,
+            baselineOwnerKind: "governance",
+            baselineIncludeContract: false);
+        fixture.DeleteTheoristTargetAndOwner();
+
+        Assert.Empty(Evaluate(fixture));
+    }
+
+    // This test pins full-active-catalog acceptance of the deletion shape used by this lane.
+    // It does not pin SL-027's governance routing: if that skip is broken, the no-retirement
+    // fallthrough at TheoristFrontierRevisionValidator.cs:168-171 still continues for this fixture.
+    // BaselineGovernanceRetirementWithActiveDeliveryIsAcceptedByFullActiveCatalog is the SL-027 pin;
+    // breaking the skip makes it fail with "baseline Frontier contract block is missing".
+    [Fact]
+    public void DeletedBaselineGovernanceCarrierWithoutContractOrOwnerIsAcceptedByFullActiveCatalog()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddHistoricalTheoristTarget(
+            "prime-norm-irreducibility",
+            includeContract: false,
+            baselineOwnerKind: "governance",
+            baselineIncludeContract: false);
+        fixture.DeleteTheoristTargetAndOwner();
+
+        AssertFullActiveCatalogAccepts(fixture);
+    }
+
+    [Fact]
+    public void DeletedBaselineGovernanceCarrierWithUnreadableMissionIsRejected()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddHistoricalTheoristTarget(
+            "prime-norm-irreducibility",
+            includeContract: false,
+            baselineOwnerKind: "governance",
+            baselineIncludeContract: false);
+        fixture.DeleteTheoristTargetAndOwner();
+        fixture.CorruptMission();
+
+        var diagnostic = Assert.Single(Evaluate(fixture));
+
+        Assert.Contains(
+            "retirement ownership is undecidable because docs/MISSION.md does not load",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DeletedBaselineGovernanceCarrierWithInactiveRetirementDeliveryIsRejected()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddHistoricalTheoristTarget(
+            "prime-norm-irreducibility",
+            includeContract: false,
+            baselineOwnerKind: "governance",
+            baselineIncludeContract: false);
+        fixture.RetireTheoristTarget("D5/S0/Carrier/Ring.fixture_delivery");
+
+        var diagnostic = Assert.Single(Evaluate(fixture));
+
+        Assert.Contains(
+            "does not resolve to an active frozen declaration",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void LiteralMigratedV2BaselineContractWithFixedMatchingHashIsAcceptedByFullActiveCatalog()
     {
         var fixture = BaselineContractCarrier();
@@ -618,16 +690,18 @@ public sealed partial class TheoristFrontierContractTests
 
     private static void AssertFullActiveCatalogAccepts(RuleFixture fixture)
     {
-        var outcome = RuleCatalog.Default.Execute(fixture.Build());
-        var completed = outcome switch
-        {
-            RuleExecutionOutcome.Completed value => value.Capability,
-            RuleExecutionOutcome.InfrastructureFailure failure => throw new Xunit.Sdk.XunitException(
-                failure.Message),
-            _ => throw new Xunit.Sdk.XunitException("unknown rule execution outcome"),
-        };
+        var completed = ExecuteFullActiveCatalog(fixture);
 
         Assert.Empty(completed.Diagnostics);
+        AssertAllActiveRulesAccountedFor(completed);
+    }
+
+    private static CompletedRuleSet ExecuteFullActiveCatalog(RuleFixture fixture) =>
+        Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build())).Capability;
+
+    private static void AssertAllActiveRulesAccountedFor(CompletedRuleSet completed)
+    {
         var expectedActiveRules = RuleCatalog.Default.Descriptors
             .Where(static descriptor => descriptor.Lifecycle is RuleLifecycle.Active)
             .Select(static descriptor => descriptor.Id)

@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "assembly": "StrataLint.Tests",
+  "id": "MissionFileLoaderTests.DanglingOpenCaseIdIsRejected",
+  "disposition": "retired",
+  "reason": "The open-worth case_id foreign key into repository TASK blocks was retired."
+}
