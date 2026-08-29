@@ -25,7 +25,7 @@ jobs:
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - name: Restore Lean dependencies and cache
         run: lake update
-      - name: Build observer completion v1.2 modules
+      - name: Build observer completion v1.2.1 modules
         shell: bash
         run: |
           set +e
