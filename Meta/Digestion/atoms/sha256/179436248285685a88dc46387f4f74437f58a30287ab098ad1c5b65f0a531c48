@@ -1,0 +1,83 @@
+# 第五百八十五部　每层应附带的科学证书
+
+建议今后每一层新增以下账本：
+
+$$
+\boxed{
+\operatorname{LayerCert}_k
+=
+\left(
+\begin{array}{l}
+q_{k-1},\\
+T,\\
+\mathcal E_{k-1},\\
+d_k,\\
+\mathcal E_k,\\
+w_k,\\
+\operatorname{Leak}_k,\\
+\operatorname{Cost}_k,\\
+\operatorname{Status}_k
+\end{array}
+\right).
+}
+\tag{585.1}
+$$
+
+其中：
+
+* \(w_k\)：被切开的显式逃逸 witness；
+* \(\operatorname{Leak}_k\)：定义是否偷偷依赖目标；
+* \(\operatorname{Cost}_k\)：新增复杂度；
+* \(\operatorname{Status}_k\)：定义、定理、条件命题或 Lean 锚点。
+
+定义逃逸收益：
+
+$$
+\boxed{
+G_k
+=
+\nu
+\left(
+\mathcal E_{k-1}
+\setminus
+\mathcal E_k
+\right).
+}
+\tag{585.2}
+$$
+
+定义效率：
+
+$$
+\boxed{
+\eta_k
+=
+\frac{
+G_k
+}{
+\operatorname{Cost}_k
++
+\operatorname{Leak}_k
+}.
+}
+\tag{585.3}
+$$
+
+若：
+
+$$
+G_k=0,
+$$
+
+应标记为：
+
+$$
+\boxed{
+\text{chart / compression / tomography},
+}
+$$
+
+而不是“理论又深了一层”。
+
+---
+

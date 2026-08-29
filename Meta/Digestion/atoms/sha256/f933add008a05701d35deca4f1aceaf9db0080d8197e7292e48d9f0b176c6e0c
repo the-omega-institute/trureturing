@@ -1,0 +1,39 @@
+# 第五百三十九部　Cayley 尺度偏微分方程
+
+令：
+
+$$
+a=e^\tau,
+\qquad
+F_\tau=F_{e^\tau}.
+$$
+
+在定理 538.1 中令：
+
+$$
+b=ae^h.
+$$
+
+则：
+
+$$
+s_{a,b}
+=
+\tanh\frac h2.
+$$
+
+因此：
+
+$$
+F_{\tau+h}(w)
+=
+e^{-h}
+F_\tau
+\left(
+\frac{w+\tanh(h/2)}
+{1+w\tanh(h/2)}
+\right).
+$$
+
+对 \(h\) 在零处求导：
+

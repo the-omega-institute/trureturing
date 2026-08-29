@@ -1,0 +1,22 @@
+## 547.3 Cross-scale transport intervals
+
+利用定理 544.1、544.2，对每一相邻尺度加入：
+
+$$
+\boxed{
+m_n(a_{\ell+1})
+\in
+\mathcal T_{n,\ell}
+\left(
+m_0(a_\ell),\ldots,m_N(a_\ell)
+\right)
++
+[-\varepsilon_{n,\ell},\varepsilon_{n,\ell}].
+}
+\tag{547.3}
+$$
+
+其中 \(\mathcal T_{n,\ell}\) 是显式线性 transport。
+
+---
+

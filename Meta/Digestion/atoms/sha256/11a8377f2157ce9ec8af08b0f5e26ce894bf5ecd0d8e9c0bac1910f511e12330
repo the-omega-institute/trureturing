@@ -1,0 +1,28 @@
+## 482.1 结构意义
+
+有限观察者并不是粗略地看到“部分 Riemann 零点”。
+
+其最优谱模型把信息分成两类：
+
+$$
+\boxed{
+\begin{aligned}
+\text{能够由有限窗口解析的谱}
+&\longrightarrow
+\text{地态 Fourier 零点上的 atoms};\\
+\text{超过当前分辨容量的谱}
+&\longrightarrow
+\text{均匀 white floor}.
+\end{aligned}
+}
+$$
+
+随着 \(L\) 增加：
+
+* 地态整函数允许更多实零点；
+* atomic ledger 的容量增加；
+* white floor \(\lambda_{\mathrm{full}}(L)/(2\pi)\) 下降；
+* 无限极限中 white floor 消失，只剩 Riemann 零点谱。
+
+---
+

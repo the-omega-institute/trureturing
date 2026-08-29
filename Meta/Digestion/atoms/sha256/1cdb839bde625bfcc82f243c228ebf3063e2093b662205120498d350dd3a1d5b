@@ -1,0 +1,11 @@
+**证明义务 57.2-A（保护坐标依值外延，预期为定理）。** 对任意适型的七个字段类型及任意 `oldCoordinates newCoordinates : ProtectedCoordinates ...`，证明单一命题
+
+```lean
+oldCoordinates = newCoordinates ↔
+  ∀ tag,
+    protectedCoordinateAt oldCoordinates tag =
+      protectedCoordinateAt newCoordinates tag
+```
+
+该证明只允许结构外延与对 `ProtectedCoordinateTag` 的有限分类，不需要任何字段可判等号。
+

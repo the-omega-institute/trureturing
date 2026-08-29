@@ -1,0 +1,88 @@
+# 第六百五十二部　零点世界的第一差异深度
+
+定义 \(N\) 阶零点观察器：
+
+$$
+\boxed{
+\mathcal O_N(\rho)
+=
+\left(
+m_\rho,
+g_1(\rho),
+\ldots,
+g_N(\rho)
+\right).
+}
+\tag{652.1}
+$$
+
+定义：
+
+$$
+\boxed{
+\rho\sim_N\sigma
+\iff
+\mathcal O_N(\rho)
+=
+\mathcal O_N(\sigma).
+}
+\tag{652.2}
+$$
+
+定义第一差异深度：
+
+$$
+\boxed{
+d(\rho,\sigma)
+=
+\min
+\left\{
+N:
+\mathcal O_N(\rho)
+\neq
+\mathcal O_N(\sigma)
+\right\}.
+}
+\tag{652.3}
+$$
+
+若所有有限 jet 相同，则定义 \(d=\infty\)。
+
+选择：
+
+$$
+0<q<1,
+$$
+
+定义观察距离：
+
+$$
+\boxed{
+d_q(\rho,\sigma)
+=
+q^{d(\rho,\sigma)}.
+}
+\tag{652.4}
+$$
+
+项目已经机器证明，在离散预测观察中，两个状态的距离由首次出现不同读数的最小层数精确决定，并呈折扣因子的幂律。
+
+所以：
+
+$$
+\boxed{
+\text{“每个零点看到的世界都一样”}
+}
+$$
+
+可以被精确改写为：
+
+$$
+\boxed{
+\text{不同零点在较浅 jet 观察层中可能不可区分；
+它们的区别只在某个更深层首次显现。}
+}
+$$
+
+---
+

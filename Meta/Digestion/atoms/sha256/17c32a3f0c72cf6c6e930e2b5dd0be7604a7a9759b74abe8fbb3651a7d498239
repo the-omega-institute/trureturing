@@ -1,0 +1,21 @@
+## 547.4 Rational block Gram
+
+引入 off-diagonal Gram 变量，使：
+
+$$
+\boxed{
+\mathbb G_{M,N}\succeq0,
+}
+\tag{547.4}
+$$
+
+且其对角 blocks 为：
+
+$$
+T_N^{(\ell)}.
+$$
+
+off-diagonal entries 必须满足 Crofoot rational basis 的线性 moment 关系。
+
+---
+

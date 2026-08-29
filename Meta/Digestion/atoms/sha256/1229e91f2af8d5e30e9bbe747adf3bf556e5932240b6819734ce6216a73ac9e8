@@ -1,0 +1,35 @@
+# 第四百一十二部　对 pole rank-one 解释的科学修正
+
+前文在直接显式公式图表中写过：
+
+$$
+\operatorname{Pole}(f*\widetilde f)
+=
+2|\ell_{1/2}(f)|^2,
+$$
+
+所以 pole pair 是一个正 rank-one 更新；由此它最多修复一个负方向。
+
+这个陈述本身仍然正确。
+
+但它并没有穷尽 pole 的结构角色。因为当 prime side 的连续主密度被抽取出来时，pole pair 会与其发生精确相消，并产生一个**无限秩正 Green 算子**。
+
+因此必须区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{直接图表}
+&:\quad
+\text{pole 是 rank one};\\
+\text{PNT-renormalized 图表}
+&:\quad
+\text{pole 是 Green completion 的边界反项}.
+\end{aligned}
+}
+$$
+
+所以“pole 最多修复一个负方向”是图表相关的算子陈述，不是 pole 的最终本体语义。
+
+---
+

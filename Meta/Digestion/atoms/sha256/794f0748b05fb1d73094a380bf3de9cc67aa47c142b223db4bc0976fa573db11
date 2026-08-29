@@ -1,0 +1,48 @@
+# 第五百一十七部　与紧窗口 profile 的严格关系
+
+令：
+
+$$
+\lambda_{\mathrm{full}}(L)
+$$
+
+为无 resolvent-budget 限制的完整窗口 Weil profile。
+
+预算化 profile 满足：
+
+$$
+\boxed{
+\Lambda_{L,a}(C)
+\le
+\lambda_{\mathrm{full}}(L).
+}
+\tag{517.1}
+$$
+
+当前公开工作已经对 \(\lambda_{\mathrm{full}}(0.8)\) 给出严格双边界，并把窗口正性转化为有限矩阵证书；但它并未自动证明在自然预算 \(C=2\lambda_1\) 下达到相同 white floor。([arXiv][1])
+
+所以必须区分：
+
+$$
+\boxed{
+\begin{aligned}
+\lambda_{\mathrm{full}}(L)
+&=\text{无预算最大白谱底座};\\
+\Lambda_L^\Xi
+&=\text{自然 Li 预算内的最大白谱底座}.
+\end{aligned}
+}
+$$
+
+两者相等需要证明：
+
+$$
+\boxed{
+\textbf{finite-budget saturation}.
+}
+$$
+
+在该命题未闭合前，不能把公开窗口 profile 的 Landau–Widom 衰减直接移植给 \(\Lambda_L^\Xi\)。
+
+---
+

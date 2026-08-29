@@ -1,0 +1,16 @@
+ast_path: theorem/4.4
+fingerprints:
+  raw_sha256: sha256:a9ea3b67f0b206b473a376f90d84ddea2752e8ab5cdc8e8daeeb9730b989a058
+  normalized_sha256: sha256:a9ea3b67f0b206b473a376f90d84ddea2752e8ab5cdc8e8daeeb9730b989a058
+cas_ref: sha256:a9ea3b67f0b206b473a376f90d84ddea2752e8ab5cdc8e8daeeb9730b989a058
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - pzg-residual-7278c80d19e056795ad9cebeb119ff91d3063020611c1359675b58596419c1f2-13eb88a4f9c293227bdf8644f32d441fd11795fe2b64d0a617555837ff6f1d92
+    - pzg-residual-892a8c84203a3e0ed3325f9cef014a31df17a853bed42cec0c382eb46c8bc5ad-d4a33b39a05a4212295b2f187af7bb2cdd81e730695df0b1073b5d46a0f6adec
+    - pzg-residual-1e25ece537c2735dbaf211e1b0e13ec98fbf9427f7a61eabe9f6ab037c53cc5e-768cd61abe2239ef6bff56dcabe3f1c0f10648a1f45be363cdef6b4b1b297f06
+    - pzg-residual-f37d8f8c7b1945c937c09b33d39972f2adf072cc64d6cd39b6ecc6afc01cf7df-c4ebff6f2303b6c10cfc16b2af787971649a2b1763d77094e2a62cad057dd6c2
+    - pzg-residual-fc1354ae4fd7da28e81e5fb98831676ef96d3b47d01f342d452c2ca28f7c80a4-45e2ede81b2c45d2d9af524ac71c0d3e46e0e6942ca98ad7acc204a509bb2b07

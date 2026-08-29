@@ -1,0 +1,49 @@
+### 57.3.4 证书合法性结构及其 Prop 闭包
+
+```lean
+structure SemanticTransportCertificate
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult)
+    (cert : TransportCert TruthReceipt NewDomainPrediction)
+    (claim : Claim)
+    (J J' : Domain)
+    (version : Version) where
+  strictExpansion : SemanticStrictSubset S J J'
+  receiptBound :
+    S.receiptMatches cert.oldReceipt
+      (S.claimAddress claim) J version
+  conditionalTransport :
+    cert.givenPremises →
+      cert.transportAssumption →
+      S.claimOn claim J'
+  totalOnNewOnly :
+    ∀ z, SemanticNewOnly S z J J' →
+      SemanticPredictionDefined S cert.falsifiablePrediction z
+  refutingFailure :
+    TransportRefutationWitness S cert claim J J'
+```
+
+`SemanticTransportCertificate` 是证书合法性的类型化证明对象。五项分别对应严格扩域、claim-bound 原域收据、保留前件的条件输运、新域差上的全定义，以及同一运行结果上的失败—反驳见证。它不增加外部“已批准”字段。
+
+```lean
+def ValidSemanticTransportCert
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult)
+    (cert : TransportCert TruthReceipt NewDomainPrediction)
+    (claim : Claim)
+    (J J' : Domain)
+    (version : Version) : Prop :=
+  Nonempty
+    (SemanticTransportCertificate S cert claim J J' version)
+```
+
+`ValidSemanticTransportCert` 只是上述证明对象的存在闭包。它不是与 `ValidTransportCert` 并行的第二套真值；57.3-C 将要求它经 `toLegacy` 后与原谓词双向等价。
+

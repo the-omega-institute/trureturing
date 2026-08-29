@@ -1,0 +1,40 @@
+## 561.2 Wang–Deng 的精确有限形式
+
+$$
+\boxed{
+g_n^*(G_n-\alpha I)^{-1}g_n
+}
+$$
+
+是旧 observer space 对新特征产生的 self-energy。
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Wang}
+&:\quad
+\text{判断新特征是否真正降低 floor};\\
+\text{Deng}
+&:\quad
+\text{用 resolvent self-energy 消去旧空间};\\
+\text{输出}
+&:\quad
+\text{一个新的接触函数与更低 floor}.
+\end{aligned}
+}
+$$
+
+如果新特征对当前最低 eigenspace 完全不可见，并且 Schur complement 在 \(\alpha_n\) 处仍非负，则：
+
+$$
+\boxed{
+\alpha_{n+1}=\alpha_n.
+}
+$$
+
+这就是**定义冗余**的精确谱条件。
+
+---
+

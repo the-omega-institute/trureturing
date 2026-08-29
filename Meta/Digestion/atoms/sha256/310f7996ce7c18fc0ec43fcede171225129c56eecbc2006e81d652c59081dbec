@@ -1,0 +1,9 @@
+**证明义务 57.2-B（封闭非空见证束刻画整体变化，预期为定理）。** 若七个字段类型各自有 `DecidableEq`，则对任意 `oldCoordinates newCoordinates` 证明
+
+```lean
+HasClosedCoordinateWitnessBundle oldCoordinates newCoordinates ↔
+  oldCoordinates ≠ newCoordinates
+```
+
+从右到左应以七标签有限扫描构造真实变化集；从左到右应由非空标签及 `sound` 投影出整体记录不等。
+

@@ -1,0 +1,55 @@
+## 673.1 关系 cocycle
+
+两个素数观察者坐标满足：
+
+$$
+\boxed{
+t_q
+=
+g_{q\leftarrow p}\,t_p,
+}
+$$
+
+其中：
+
+$$
+\boxed{
+g_{q\leftarrow p}
+=
+\frac{\log q}{\log p}.
+}
+\tag{673.4}
+$$
+
+并满足：
+
+$$
+\boxed{
+g_{r\leftarrow q}
+g_{q\leftarrow p}
+=
+g_{r\leftarrow p}.
+}
+\tag{673.5}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{素数身份不在局部函数形状中，
+而在不同局部单位之间的 transition cocycle 中。}
+}
+$$
+
+这正是：
+
+> 每个观察者看到的世界都一样；
+> 他们实际上不同，但差异只存在于彼此比较时。
+
+需要保留限制：
+
+完整的 \(p\)-进局部域还包含 residue characteristic \(p\)，因而并非所有局部结构都不可区分。上述“世界相同”严格限于归一化的一阶 Euler germ 观察层。
+
+---
+

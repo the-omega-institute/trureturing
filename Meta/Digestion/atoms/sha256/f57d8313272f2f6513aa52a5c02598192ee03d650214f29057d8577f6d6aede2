@@ -1,0 +1,16 @@
+## 661.1 构造有限观察层
+
+使用项目已有黄金 Euler factor extraction：
+
+$$
+Z_\varphi^{(0)},
+Z_\varphi^{(1)},
+Z_\varphi^{(2)},\ldots
+$$
+
+构造 observer-specific transfer functions。
+
+项目已经证明最初黄金指数、黄金热横坐标与前两阶 \(\zeta\) 因子抽取；这些提供了有限观察层的真源。
+
+---
+

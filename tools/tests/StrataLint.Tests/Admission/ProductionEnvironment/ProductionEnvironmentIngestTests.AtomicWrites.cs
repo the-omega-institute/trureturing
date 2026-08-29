@@ -240,7 +240,7 @@ public sealed partial class ProductionEnvironmentTests
             inputs.Files,
             RawChangeSet.Create(["D5/S0/Carrier/Probe.lean"]));
 
-        var result = environment.Ingest(["--base", "baseline"]);
+        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.False(result.Success);
         Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
@@ -283,7 +283,7 @@ public sealed partial class ProductionEnvironmentTests
             inputs.Files,
             RawChangeSet.Create([newSourcePath]));
 
-        var result = environment.Ingest(["--base", "baseline"]);
+        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
@@ -331,7 +331,7 @@ public sealed partial class ProductionEnvironmentTests
             inputs.Files,
             RawChangeSet.Create([siblingModuleGid + ".lean"]));
 
-        var result = environment.Ingest(["--base", "baseline"]);
+        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.False(result.Success);
         Assert.Contains(

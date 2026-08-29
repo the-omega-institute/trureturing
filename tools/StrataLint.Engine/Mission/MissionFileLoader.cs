@@ -20,7 +20,7 @@ internal partial record WorthFactorState
 {
     public partial record Measured(decimal Value, string ReceiptRef);
 
-    public partial record Open(string CaseId);
+    public partial record Open;
 }
 
 internal sealed record WorthFactor(WorthFactorId Id, WorthFactorState State);
@@ -91,7 +91,6 @@ internal enum MissionLoadErrorCode
     InvalidSchema,
     InvalidWorthVector,
     InvalidWorthState,
-    DanglingCaseReference,
     InvalidSelection,
 }
 
@@ -164,7 +163,6 @@ internal static partial class MissionFileLoader
         try
         {
             var policy = ParseMission(mission.Text);
-            ValidateOpenCases(snapshot, policy);
             ValidateFrontierEligibility(snapshot, policy.FrontierEligibility);
             return new MissionLoadOutcome.Loaded(policy);
         }
@@ -209,9 +207,8 @@ internal static partial class MissionFileLoader
             factor = FactorName(factor.Id),
             state = factor.State switch
             {
-                WorthFactorState.Open open => (object)new
+                WorthFactorState.Open => (object)new
                 {
-                    case_id = open.CaseId,
                     state = "open",
                 },
                 WorthFactorState.Measured measured => new
@@ -258,6 +255,68 @@ internal static partial class MissionFileLoader
             worth_vector = factors,
         });
         return StructuredCanonicalWriter.WriteJson(material).ToArray();
+    }
+
+    // Baseline Frontier ownership is an independent typed projection. It deliberately does not
+    // inspect the baseline worth vector, whose schema may predate the current payload-free open
+    // state. Current candidates continue to use Load and therefore the complete current schema.
+    internal static bool TryLoadFrontierEligibility(
+        RepositorySnapshot snapshot,
+        out ImmutableArray<FrontierEligibilityEntry> entries,
+        out string? error)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        entries = [];
+        error = null;
+        if (!snapshot.TryGetFile(RelativePath, out var mission))
+        {
+            error = $"MISSION file is missing: {RelativePath}";
+            return false;
+        }
+
+        if (mission.IsOpaque || mission.HasBom || mission.HasCarriageReturn
+            || !mission.Text.EndsWith('\n'))
+        {
+            error = "MISSION must be strict UTF-8 without BOM, use LF line endings, and end with LF";
+            return false;
+        }
+
+        try
+        {
+            var fences = Markdown.Parse(mission.Text, MarkdownPipeline)
+                .Descendants<FencedCodeBlock>()
+                .ToArray();
+            if (fences is not [var fence]
+                || !string.Equals(fence.Info?.ToString(), MissionFence, StringComparison.Ordinal))
+            {
+                throw Error(
+                    MissionLoadErrorCode.InvalidFormat,
+                    $"MISSION must contain exactly one {MissionFence} fenced block");
+            }
+
+            using var document = JsonDocument.Parse(fence.Lines.ToString());
+            var root = RequireObject(document.RootElement, MissionLoadErrorCode.InvalidSchema, "root");
+            entries = root.TryGetProperty("frontier_eligibility", out var frontier)
+                ? ParseFrontierEligibility(frontier)
+                : [];
+            ValidateFrontierEligibility(snapshot, entries);
+            return true;
+        }
+        catch (MissionContractException exception)
+        {
+            error = exception.Message;
+            return false;
+        }
+        catch (JsonException exception)
+        {
+            error = exception.Message;
+            return false;
+        }
+        catch (FormatException exception)
+        {
+            error = exception.Message;
+            return false;
+        }
     }
 
     private static MissionPolicy ParseMission(string source)
@@ -385,18 +444,11 @@ internal static partial class MissionFileLoader
         {
             RequireExactKeys(
                 state,
-                ["state", "case_id"],
+                ["state"],
                 MissionLoadErrorCode.InvalidWorthState,
                 $"worth_vector.{factorName}");
-            var caseId = RequireString(state, "case_id", MissionLoadErrorCode.InvalidWorthState);
-            if (!CaseId.TryCreate(caseId, out _))
-            {
-                throw Error(
-                    MissionLoadErrorCode.InvalidWorthState,
-                    $"worth_vector.{factorName}.case_id is not a canonical case id");
-            }
 
-            return new WorthFactorState.Open(caseId);
+            return new WorthFactorState.Open();
         }
 
         if (string.Equals(stateName, "measured", StringComparison.Ordinal))
@@ -432,7 +484,7 @@ internal static partial class MissionFileLoader
             throw Error(
                 MissionLoadErrorCode.InvalidWorthState,
                 $"worth_vector.{FactorName(factor.Id)} measured is fail-closed in P0 "
-                + $"until receipt contract {MeasurementCaseId(factor.Id)} is implemented");
+                + "until a machine-replayable measurement receipt contract and resolver are implemented");
         }
     }
 
@@ -472,72 +524,6 @@ internal static partial class MissionFileLoader
         return new MissionSelectionPolicy(order, tieBreak);
     }
 
-    private static void ValidateOpenCases(RepositorySnapshot snapshot, MissionPolicy policy)
-    {
-        ImmutableArray<BackfillTicketReference> tickets;
-        try
-        {
-            tickets = BackfillInventoryLoader.DeriveTickets(snapshot);
-        }
-        catch (FormatException exception)
-        {
-            throw Error(MissionLoadErrorCode.DanglingCaseReference, exception.Message);
-        }
-
-        foreach (var open in policy.WorthVector.Factors
-                     .Select(static factor => factor.State)
-                     .OfType<WorthFactorState.Open>())
-        {
-            var matches = tickets.Where(ticket => string.Equals(
-                ticket.CaseId,
-                open.CaseId,
-                StringComparison.Ordinal)).ToArray();
-            if (matches is not [var ticket])
-            {
-                throw Error(
-                    MissionLoadErrorCode.DanglingCaseReference,
-                    $"case {open.CaseId} must resolve to exactly one derived TASK module");
-            }
-
-            var targetPath = ticket.Gid.EndsWith(".lean", StringComparison.Ordinal)
-                ? ticket.Gid
-                : ticket.Gid + ".lean";
-            if (!snapshot.TryGetFile(targetPath, out var target))
-            {
-                throw Error(
-                    MissionLoadErrorCode.DanglingCaseReference,
-                    $"case {open.CaseId} target is missing: {targetPath}");
-            }
-
-            var scan = TaskBlockReferenceSyntax.ScanDocumentationCommentTaskStarts(
-                target.Text,
-                open.CaseId);
-            switch (scan)
-            {
-                case TaskBlockScanResult.Exact { Count: 1 }:
-                    break;
-                case TaskBlockScanResult.Exact { Count: 0 }:
-                    throw Error(
-                        MissionLoadErrorCode.DanglingCaseReference,
-                        $"case {open.CaseId} resolves to no active matching TASK block in {targetPath}");
-                case TaskBlockScanResult.Exact exact:
-                    throw Error(
-                        MissionLoadErrorCode.DanglingCaseReference,
-                        $"case {open.CaseId} resolves to {exact.Count} active matching TASK blocks "
-                        + $"in {targetPath}; exactly one is required");
-                case TaskBlockScanResult.Ambiguous ambiguous:
-                    throw Error(
-                        MissionLoadErrorCode.DanglingCaseReference,
-                        $"case {open.CaseId} TASK scan in {targetPath} is ambiguous at character "
-                        + $"{ambiguous.CharacterIndex}: {ambiguous.Reason}; rewrite the TASK file "
-                        + "to remove primed identifiers or ambiguous literal introducers");
-                default:
-                    throw Error(
-                        MissionLoadErrorCode.DanglingCaseReference,
-                        $"case {open.CaseId} returned an unsupported TASK scan result in {targetPath}");
-            }
-        }
-    }
 
     private static JsonElement RequireObject(
         JsonElement value,
@@ -652,15 +638,6 @@ internal static partial class MissionFileLoader
         WorthFactorId.DependencyReadiness => "dependency_readiness",
         WorthFactorId.StructuralRealization => "structural_realization",
         WorthFactorId.ReceiptPotential => "receipt_potential",
-        _ => throw new InvalidOperationException("Unknown worth factor."),
-    };
-
-    private static string MeasurementCaseId(WorthFactorId factor) => factor switch
-    {
-        WorthFactorId.Novelty => "D5-T0040",
-        WorthFactorId.DependencyReadiness => "D5-T0041",
-        WorthFactorId.StructuralRealization => "D5-T0042",
-        WorthFactorId.ReceiptPotential => "D5-T0043",
         _ => throw new InvalidOperationException("Unknown worth factor."),
     };
 

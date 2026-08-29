@@ -1,0 +1,60 @@
+# 第五百零九部　互补松弛与有限接触谱
+
+设：
+
+$$
+(\alpha_*,\sigma_*),
+\qquad
+(\phi_*,\theta_*)
+$$
+
+分别为 primal 与 dual optimizer。
+
+定义圆周 slack：
+
+$$
+\boxed{
+S_*(z)
+=
+\Gamma_{a,\phi_*}(z)+\theta_*.
+}
+\tag{509.1}
+$$
+
+则 KKT 互补条件为：
+
+$$
+\boxed{
+\operatorname{supp}\sigma_*
+\subseteq
+\left\{
+z:S_*(z)=0
+\right\},
+}
+\tag{509.2}
+$$
+
+$$
+\boxed{
+\theta_*
+\left[
+C-\alpha_*-\sigma_*(\mathbb T)
+\right]
+=0,
+}
+\tag{509.3}
+$$
+
+$$
+\boxed{
+\alpha_*
+\left[
+2a\phi_*(0)+\theta_*-2a
+\right]
+=0.
+}
+\tag{509.4}
+$$
+
+---
+

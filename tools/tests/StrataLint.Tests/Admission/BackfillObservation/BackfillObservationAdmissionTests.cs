@@ -105,7 +105,10 @@ public sealed partial class ProductionEnvironmentTests
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
         var console = new BufferedConsole();
 
-        var exitCode = CliApplication.Run(["ingest", "--base", "baseline"], environment, console);
+        var exitCode = CliApplication.Run(
+            ["align-digestion-status", "--base", "baseline"],
+            environment,
+            console);
 
         Assert.Equal(0, exitCode);
         Assert.Empty(console.Error);

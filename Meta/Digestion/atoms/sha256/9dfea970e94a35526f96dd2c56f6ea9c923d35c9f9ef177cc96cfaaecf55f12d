@@ -1,0 +1,11 @@
+## 439.3 最大熵扩张本身不证明 RH
+
+即使每个有限数值截断都有正的 maximum-entropy solution，也不能推出精确的：
+
+$$
+\mathfrak E_L\neq\varnothing.
+$$
+
+必须有：
+
+* exact moment constraints；

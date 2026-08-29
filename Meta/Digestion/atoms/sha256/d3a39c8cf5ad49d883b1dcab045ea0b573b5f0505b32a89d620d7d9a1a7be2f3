@@ -1,0 +1,31 @@
+## 538.1 一般非偶谱的修正
+
+若不要求 \(\nu\) 偶，则完整公式为：
+
+$$
+\boxed{
+F_b(w)
+=
+\frac ab
+\left[
+F_a
+\left(
+\Phi_{s_{a,b}}(w)
+\right)
+-
+i\,\Im F_a(s_{a,b})
+\right].
+}
+\tag{538.6}
+$$
+
+额外项只是一个纯虚常数，用来恢复：
+
+$$
+F_b(0)\in\mathbb R.
+$$
+
+所以偶谱分支不是任意简化，而是恰好消除了 Carathéodory gauge。
+
+---
+

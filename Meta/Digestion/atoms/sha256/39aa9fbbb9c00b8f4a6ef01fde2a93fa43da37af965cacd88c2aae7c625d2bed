@@ -1,0 +1,60 @@
+# 第四百八十五部　地态零点趋向 ζ 零点的充分桥
+
+最新预印本明确指出，近似地态零点是否随窗口扩大而趋向 ζ 零点，是相关 operator program 尚未解决的关键步骤。([arXiv][1])
+
+前述互补定理给出了一个精确的充分条件。
+
+设 RH 成立，并令：
+
+$$
+L_j\to\infty.
+$$
+
+假设存在极值或近极值完成：
+
+$$
+\nu_j
+=
+\frac{\lambda_j}{2\pi}d\xi+\mu_j,
+\qquad
+\lambda_j=\lambda_{\mathrm{full}}(L_j),
+$$
+
+以及相应地态变换：
+
+$$
+F_j=\widehat f_j,
+$$
+
+满足：
+
+$$
+\operatorname{supp}\mu_j
+\subseteq Z(F_j).
+$$
+
+再假设：
+
+$$
+\boxed{
+\nu_j
+\overset{\mathrm{vague}}{\longrightarrow}
+\nu_\Xi.
+}
+\tag{485.1}
+$$
+
+由于：
+
+$$
+\lambda_j\to0,
+$$
+
+也有：
+
+$$
+\mu_j\to\nu_\Xi.
+$$
+
+---
+

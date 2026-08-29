@@ -1,0 +1,94 @@
+# 第四百六十一部　局部 resolvent correlation
+
+令：
+
+$$
+\mathfrak W_L
+=
+\left.
+\mathfrak W_\xi
+\right|_{(-2L,2L)}
+$$
+
+为局部 Weil source。
+
+固定：
+
+$$
+a>0.
+$$
+
+设 \(\nu\) 是真实谱轴 \(\mathbb R\) 上的偶正谱完成：
+
+$$
+\nu\ge0,
+\qquad
+\check\nu=\mathfrak W_L
+\quad
+\text{于 }(-2L,2L).
+$$
+
+定义 resolvent-smoothed correlation：
+
+$$
+\boxed{
+H_{\nu,a}(t)
+=
+\int_{\mathbb R}
+\frac{e^{it\xi}}
+{\xi^2+a^2}\,d\nu(\xi).
+}
+\tag{461.1}
+$$
+
+定义 resolvent budget：
+
+$$
+\boxed{
+R_a(\nu)
+=
+H_{\nu,a}(0)
+=
+\int_{\mathbb R}
+\frac{d\nu(\xi)}
+{\xi^2+a^2}.
+}
+\tag{461.2}
+$$
+
+因为 \(\nu\) 为偶正测度：
+
+$$
+H_{\nu,a}(t)
+=
+\int_{\mathbb R}
+\frac{\cos(t\xi)}
+{\xi^2+a^2}\,d\nu(\xi)
+\in\mathbb R,
+$$
+
+而且 \(H_{\nu,a}\) 为偶正定函数。
+
+由正定函数的二点矩阵：
+
+$$
+\begin{pmatrix}
+H_{\nu,a}(0)&H_{\nu,a}(t)\\
+H_{\nu,a}(t)&H_{\nu,a}(0)
+\end{pmatrix}
+\succeq0,
+$$
+
+立即得到：
+
+$$
+\boxed{
+|H_{\nu,a}(t)|
+\le
+R_a(\nu).
+}
+\tag{461.3}
+$$
+
+---
+

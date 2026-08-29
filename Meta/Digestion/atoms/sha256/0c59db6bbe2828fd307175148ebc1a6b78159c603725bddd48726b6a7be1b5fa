@@ -1,0 +1,36 @@
+## 定理 557.1（共同谱主 SDP）
+
+有限多尺度共同正谱可行性精确等价于：
+
+$$
+\boxed{
+\begin{aligned}
+\text{find }&y_{-d},\ldots,y_d\\
+\text{such that }&
+T_d(y)\succeq0,\\
+&y_{-k}=\overline{y_k},\\
+&\mathcal L_s(y)\in I_s
+\quad\forall s.
+\end{aligned}
+}
+\tag{557.3}
+$$
+
+所以未知变量数只随总 observer dimension 线性增长：
+
+$$
+\boxed{
+2n-1
+}
+$$
+
+或在偶分支中为：
+
+$$
+\boxed{
+n.
+}
+$$
+
+---
+

@@ -1,0 +1,16 @@
+* cross-scale pairings；
+
+全部编译成同一个 Toeplitz moment 向量的线性约束。
+
+这会把此前的多尺度共同谱问题，从“许多矩阵是否同时正定”，真正压缩成：
+
+$$
+\boxed{
+\text{是否存在一个唯一的、可原子化的正 Toeplitz 谱账本。}
+}
+$$
+
+[1]: https://arxiv.org/abs/1605.02431?utm_source=chatgpt.com "Frequency-Selective Vandermonde Decomposition of Toeplitz Matrices with Applications"
+[2]: https://arxiv.org/abs/1208.6286?utm_source=chatgpt.com "The Circulant Rational Covariance Extension Problem: The Complete Solution"
+[3]: https://arxiv.org/abs/2404.13296?utm_source=chatgpt.com "Almost everywhere convergence of a wavelet-type Malmquist-Takenaka series"
+[4]: https://arxiv.org/abs/2608.24827?utm_source=chatgpt.com "Weil positivity in compact windows: certified two-sided bounds and a Landau--Widom decay law"

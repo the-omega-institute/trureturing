@@ -71,64 +71,83 @@ internal sealed class ControlledSignatureStabilizationDocument : IScribeDocument
         Formula outputs = F.Id("O");
         Formula update = F.Id("F");
         Formula readout = F.Id("q");
-        Formula depth = F.Id("m");
-        Formula leastDepth = Seq(F.Id("m"), Underscore, Grp(Star));
-        Formula offset = F.Id("r");
+        Formula readoutSurjective = F.Id("hreadout");
+        Formula depth = F.Id("depth");
+        Formula leastDepth = Call("stabilizationDepth", update, readout);
+        Formula offset = F.Id("offset");
         Formula firstState = F.Id("y");
         Formula secondState = Seq(F.Id("y"), Apos);
-        Formula word = F.Id("w");
-        Formula behavior = F.Id("B");
-        Formula completion = F.Id("Z");
-        Formula equivalence = F.Id("e");
+        Formula equivalence = F.Id("outputEquiv");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
 
-        Formula signatureAtDepthFirst = Call("c", depth, firstState);
-        Formula signatureAtDepthSecond = Call("c", depth, secondState);
-        Formula boundedAgreement = Seq(
-            Forall, Sp, word, InMacro, Sp, Call("Words", inputs), Comma, Sp,
-            Call("length", word), Sp, Leq, Sp, depth, Sp, Rightarrow, Sp,
-            Call("readoutAfter", update, readout, word, firstState), Sp, Eq, Sp,
-            Call("readoutAfter", update, readout, word, secondState));
+        Formula signatureAtDepthFirst =
+            Call("controlledSignature", update, readout, depth, firstState);
+        Formula signatureAtDepthSecond =
+            Call("controlledSignature", update, readout, depth, secondState);
+        Formula boundedAgreement =
+            Call("boundedWordEquivalent", update, readout, depth, firstState, secondState);
         Formula completeAtLeast = Seq(
-            Forall, Sp, firstState, Comma, Sp, secondState, Comma, Sp,
-            Call("c", leastDepth, firstState), Sp, Eq, Sp,
-            Call("c", leastDepth, secondState), Sp, Iff, Sp,
-            Apply(behavior, firstState), Sp, Eq, Sp, Apply(behavior, secondState));
+            Forall, Sp, firstState, Comma, Sp, secondState, Colon, Sp, states, Comma, Sp,
+            Call("controlledSignature", update, readout, leastDepth, firstState),
+            Sp, Eq, Sp,
+            Call("controlledSignature", update, readout, leastDepth, secondState),
+            Sp, Iff, Sp,
+            Call("controlledBehavior", update, readout, firstState), Sp, Eq, Sp,
+            Call("controlledBehavior", update, readout, secondState));
         Formula stableAfterLeast = Seq(
-            Forall, Sp, offset, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
-            Forall, Sp, firstState, Comma, Sp, secondState, Comma, Sp,
-            Call("c", Seq(leastDepth, Plus, offset), firstState), Sp, Eq, Sp,
-            Call("c", Seq(leastDepth, Plus, offset), secondState), Sp, Iff, Sp,
-            Call("c", leastDepth, firstState), Sp, Eq, Sp,
-            Call("c", leastDepth, secondState));
+            Forall, Sp, offset, Colon, Sp, naturals, Comma, Sp,
+            Forall, Sp, firstState, Comma, Sp, secondState, Colon, Sp, states, Comma, Sp,
+            Call(
+                "controlledSignature", update, readout,
+                Seq(leastDepth, Plus, offset), firstState),
+            Sp, Eq, Sp,
+            Call(
+                "controlledSignature", update, readout,
+                Seq(leastDepth, Plus, offset), secondState),
+            Sp, Iff, Sp,
+            Call("controlledSignature", update, readout, leastDepth, firstState),
+            Sp, Eq, Sp,
+            Call("controlledSignature", update, readout, leastDepth, secondState));
         Formula least = Seq(
-            Forall, Sp, depth, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
-            Call("CompleteAt", depth), Sp, Rightarrow, Sp, leastDepth, Sp, Leq, Sp, depth);
-        Formula quotient = Call("SignatureQuotient", leastDepth);
+            Forall, Sp, depth, Colon, Sp, naturals, Comma, Sp,
+            Call("SignatureCompleteAt", update, readout, depth),
+            Sp, Rightarrow, Sp, leastDepth, Sp, Leq, Sp, depth);
+        Formula quotient = Call("SignatureCompletion", update, readout, leastDepth);
+        Formula completion = Call("ControlledCompletion", update, readout);
         Formula projectionLaw = Seq(
-            Forall, Sp, firstState, InMacro, Sp, states, Comma, Sp,
-            Apply(equivalence, Call("signatureClass", leastDepth, firstState)), Sp, Eq, Sp,
-            Call("behaviorClass", firstState));
+            Forall, Sp, firstState, Colon, Sp, states, Comma, Sp,
+            Apply(
+                equivalence,
+                Call("signatureProjection", update, readout, leastDepth, firstState)),
+            Sp, Eq, Sp,
+            Call("completionProjection", update, readout, firstState));
         Formula output = Seq(
             Exists, Sp, equivalence, Colon, Sp, quotient, Sp, Equiv, Sp, completion,
             Comma, Sp, projectionLaw);
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, states, Comma, Sp, inputs, Comma, Sp, outputs, Comma, RowBreak,
-            Call("FiniteNonempty", states), Comma, Sp,
-            Call("FiniteNonempty", inputs), Comma, Sp,
-            Call("FiniteNonempty", outputs), Comma, RowBreak,
+            Forall, Sp, states, Comma, Sp, inputs, Comma, Sp, outputs,
+            Colon, Sp, type, Comma, RowBreak, Grp(),
+            OpenBracket, Call("Fintype", states), CloseBracket, Comma, Sp,
+            OpenBracket, Call("Finite", inputs), CloseBracket, Comma, Sp,
+            OpenBracket, Call("Finite", outputs), CloseBracket, Comma, RowBreak, Grp(),
+            OpenBracket, Call("Nonempty", states), CloseBracket, Comma, Sp,
+            OpenBracket, Call("Nonempty", inputs), CloseBracket, Comma, Sp,
+            OpenBracket, Call("Nonempty", outputs), CloseBracket, Comma, RowBreak, Grp(),
             update, Colon, Sp, inputs, Sp, To, Sp, states, Sp, To, Sp, states,
             Comma, Sp, readout, Colon, Sp, states, Sp, To, Sp, outputs,
-            Comma, Sp, Call("Surjective", readout), Comma, RowBreak,
-            Open, Forall, Sp, depth, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
-            Forall, Sp, firstState, Comma, Sp, secondState, Comma, Sp,
+            Comma, RowBreak, Grp(),
+            readoutSurjective, Colon, Sp, Call("Surjective", readout), Comma, RowBreak,
+            Grp(), Open, Forall, Sp, depth, Colon, Sp, naturals, Comma, Sp,
+            Forall, Sp, firstState, Comma, Sp, secondState, Colon, Sp, states, Comma, Sp,
             signatureAtDepthFirst, Sp, Eq, Sp, signatureAtDepthSecond,
             Sp, Iff, Sp, boundedAgreement, Close, Sp, Land, RowBreak,
-            Open, completeAtLeast, Close, Sp, Land, RowBreak,
-            Open, stableAfterLeast, Close, Sp, Land, RowBreak,
-            Open, least, Close, Sp, Land, RowBreak,
-            Open, output, Close, Dot,
+            Grp(), Open, completeAtLeast, Close, Sp, Land, RowBreak,
+            Grp(), Open, stableAfterLeast, Close, Sp, Land, RowBreak,
+            Grp(), Open, least, Close, Sp, Land, RowBreak,
+            Grp(), Open, output, Close, Dot,
             End, Grp(F.Id("gathered"))));
     }
 }

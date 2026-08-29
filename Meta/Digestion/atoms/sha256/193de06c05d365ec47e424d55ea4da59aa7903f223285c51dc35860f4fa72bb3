@@ -1,0 +1,137 @@
+# 本轮最终结论
+
+上一轮得到：
+
+$$
+\boxed{
+\text{局部正谱完成的无限自由，
+在 resolvent observer 中退化为一个预算标量。}
+}
+$$
+
+本轮进一步发现，这个标量具有一个此前被偶观察者隐藏的 Lorentz 结构：
+
+$$
+\boxed{
+\cosh(at)
+\longmapsto
+|\mathcal C_a|^2
+-
+|\mathcal S_a|^2.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{偶观察者看到正 rank-one 增量，}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{奇观察者看到同一增量的负 rank-one 代价。}
+}
+$$
+
+若只观察偶通道，可以无限增加一个形式上的虚频率对：
+
+$$
+\pm ia,
+$$
+
+而不会破坏正性。这就是**双曲虚谱幽灵**。
+
+只有完成：
+
+$$
+\boxed{
+\text{even}
++
+\text{odd}
+}
+$$
+
+两个观察通道，预算才从：
+
+$$
+[\underline R,\infty)
+$$
+
+闭合为真正的：
+
+$$
+\boxed{
+[\underline R,\overline R].
+}
+$$
+
+更重要的是，一旦全局真实谱存在，所有局部完成预算都被强迫进入双曲管道：
+
+$$
+\boxed{
+R_*\tanh^2(aL)
+\le R\le
+R_*\coth^2(aL).
+}
+$$
+
+在 Riemann 自然尺度：
+
+$$
+a=\frac12,
+\qquad
+R_*=2\lambda_1,
+$$
+
+这成为：
+
+$$
+\boxed{
+2\lambda_1\tanh^2\frac L2
+\le R\le
+2\lambda_1\coth^2\frac L2.
+}
+$$
+
+因此局部完成的不确定性并非任意缓慢消失，而是：
+
+$$
+\boxed{
+O(e^{-L})
+}
+$$
+
+指数塌缩。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{有限观察窗口并不是通过选择同一个边界条件来逼近全局谱；}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{奇偶两个互补观察者共同夹紧一个 Weyl 预算区间，
+使所有可能的正谱完成自动 collapse 到唯一的 Riemann 预算。}
+}
+$$
+
+所以 OACTC 当前最值得继续攻击的中心命题，已经从“寻找一个正谱”进一步精确为：
+
+$$
+\boxed{
+\text{能否从 prime–Archimedean 显式公式，
+对每个 }L
+\text{证明偶预算下界不超过奇预算上界？}
+}
+$$
+
+这一步一旦闭合，虚谱幽灵被排除，真实轴正谱完成、Kreĭn 扩张、Hilbert–Pólya 与 RH 将同时获得严格接口。

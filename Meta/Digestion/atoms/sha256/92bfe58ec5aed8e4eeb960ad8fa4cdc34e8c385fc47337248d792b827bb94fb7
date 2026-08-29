@@ -1,0 +1,44 @@
+# 第五百四十部　Cayley moments 的三对角尺度流
+
+定义：
+
+$$
+\boxed{
+m_n(a)
+=
+\int_{\mathbb T}
+z^n\,d\mu_a(z),
+\qquad
+n\in\mathbb Z.
+}
+\tag{540.1}
+$$
+
+因为 \(\mu_a\) 共轭对称：
+
+$$
+m_{-n}(a)=m_n(a)\in\mathbb R.
+$$
+
+并且：
+
+$$
+m_0(a)=R_a(\nu).
+$$
+
+Carathéodory 展开为：
+
+$$
+\boxed{
+F_a(w)
+=
+m_0(a)
++
+2\sum_{n=1}^{\infty}
+m_n(a)w^n.
+}
+\tag{540.2}
+$$
+
+将其代入定理 539.1：
+

@@ -1,0 +1,46 @@
+### 57.2.5 对第 54.3 部既有载体的标准解释器
+
+```lean
+def prospectiveRegradeSemantics
+    {EventId Evidence Round Artifact Time TargetChain Domain Epsilon Condition
+      Comparator TestPlan Baseline WeightSpec Verdict : Type u}
+    [LinearOrder EventId]
+    [Preorder Time]
+    [DecidableEq Artifact]
+    {n : Round}
+    (arrival : Evidence → Time)
+    (evaluate :
+      ProspectiveCommitment EventId Evidence Round Artifact Time TargetChain
+        Domain Epsilon Condition Comparator TestPlan Baseline WeightSpec n →
+      Evidence → Verdict) :
+    RegradeSemantics
+      (ProspectiveCommitment EventId Evidence Round Artifact Time TargetChain
+        Domain Epsilon Condition Comparator TestPlan Baseline WeightSpec n)
+      Evidence
+      Verdict
+      Time
+      (ProtectedCoordinates TargetChain Domain Epsilon Condition Comparator
+        Baseline WeightSpec)
+      (RegradeReport
+        (ProspectiveCommitment EventId Evidence Round Artifact Time TargetChain
+          Domain Epsilon Condition Comparator TestPlan Baseline WeightSpec n)
+        Evidence Verdict Time evaluate) where
+  protected := protectedCoordinates
+  evaluate := evaluate
+  arrival := arrival
+  freezeTime := fun K => K.adjudication.frozenAt
+  visibleAtFreeze := fun K Z =>
+    Z ∈ K.adjudication.filtration.seen K.adjudication.freezeEvent
+  reportOriginal := fun report => report.original
+  reportRevised := fun report => report.revised
+  reportEvidence := fun report => report.evidence
+  reportVerdict := fun report => report.regradedVerdict
+  reportAttributedTo := fun report => report.attributedTo
+  reportOccurredAt := fun report => report.occurredAt
+  reportVerdictCorrect := fun report => report.regradesOldRound
+```
+
+`prospectiveRegradeSemantics` 只是第 54.3 部既有载体的标准解释器。它直接调用 `protectedCoordinates` 和 `RegradeReport` 投影，不复制其七个字段，也不另造报告正确性谓词。后续 Lean 模块若已经导入冻结载体，应构造同形解释器，而不是重新声明 `ProspectiveCommitment`、`ProtectedCoordinates` 或 `RegradeReport`。
+
+---
+

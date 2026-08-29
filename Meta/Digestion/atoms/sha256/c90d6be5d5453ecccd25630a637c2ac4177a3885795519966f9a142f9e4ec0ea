@@ -1,0 +1,38 @@
+## 定理 419.1（Compact resolvent）
+
+固定 \(L\) 后，\(\widetilde A_L\) 具有 compact resolvent。
+
+### 证明要点
+
+对 form-norm 有界序列：
+
+1. 由于：
+
+   $$
+   \widetilde m_L(\xi)\to\infty,
+   $$
+
+   高频 Fourier 尾可以一致压小；
+
+2. 在固定频带 \([-R,R]\) 内，time-limiting 后的 Fourier projection 是 Hilbert–Schmidt，因此紧；
+
+3. 低频部分取收敛子列，高频部分一致小。
+
+所以 form domain 到 \(L^2([-L,L])\) 的嵌入紧。∎
+
+因此其谱为：
+
+$$
+\boxed{
+\lambda_1(L)\le\lambda_2(L)\le\cdots
+\longrightarrow+\infty,
+}
+\tag{419.2}
+$$
+
+负特征值只有有限个。
+
+这与前文 Slepian 有限 sticky reduction 一致，但现在直接来自 renormalized multiplier 的 coercivity。
+
+---
+

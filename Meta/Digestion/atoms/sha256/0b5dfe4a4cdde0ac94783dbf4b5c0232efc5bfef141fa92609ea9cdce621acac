@@ -1,0 +1,89 @@
+## 本轮独立推导得到（第 489 部）
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)
+=
+\sup
+\left\{
+\lambda:
+\mathfrak W_L-\lambda\delta_0
+\text{ 局部正定}
+\right\}.
+}
+$$
+
+在一维正谱扩张接口下：
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)
+=
+\sup
+\left\{
+\lambda:
+\exists\nu_L\ge
+\frac{\lambda}{2\pi}d\xi,\
+\check\nu_L=\mathfrak W_L
+\right\}.
+}
+$$
+
+RH 下：
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)
+=
+\text{Riemann zero sampling frame 的下帧界}.
+}
+$$
+
+并且：
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)>0
+\quad
+(L<\infty),
+}
+$$
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)\downarrow0.
+}
+$$
+
+在 primal/dual optimizer 存在时：
+
+$$
+\boxed{
+\nu_L^*
+=
+\frac{\lambda_{\mathrm{full}}(L)}{2\pi}d\xi
++
+\sum_{\tau\in Z(\widehat f_L^*)}
+a_{\tau,L}\delta_\tau.
+}
+$$
+
+以及近极值集中不等式：
+
+$$
+\boxed{
+\mu_L
+\left(
+|\widehat f|\ge\delta
+\right)
+\le
+\frac{
+Q_L(f)-\lambda
+}{
+\delta^2
+}.
+}
+$$
+
+---
+

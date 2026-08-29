@@ -1,0 +1,27 @@
+## 431.1 重要后果
+
+任何依赖有限阶数据：
+
+$$
+r_L(0),\quad
+r_L''(0),\quad
+\ldots,\quad
+r_L^{(2K)}(0)
+$$
+
+的“低频 RH 机制”，如果没有先固定 gauge，都不是内在结论。
+
+低频 moments 可以被移入不可见边界 jets。
+
+真正不可被消除的是：
+
+$$
+\boxed{
+\text{整个局部相关 functional，}
+}
+$$
+
+而不是某一个 multiplier representative 的有限 Taylor 列表。
+
+---
+

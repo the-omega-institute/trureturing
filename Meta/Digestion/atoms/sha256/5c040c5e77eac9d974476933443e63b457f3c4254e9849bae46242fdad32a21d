@@ -1,0 +1,24 @@
+## 439.5 Slepian sticky dimension 必须注明 gauge
+
+前文未经 gauge 标记的：
+
+$$
+\mathfrak s_L
+$$
+
+需要修正为：
+
+$$
+\mathfrak s_L(m)
+$$
+
+或 gauge-optimized：
+
+$$
+\mathfrak s_L^{\mathrm{opt}}.
+$$
+
+否则它不是理论不变量。
+
+---
+

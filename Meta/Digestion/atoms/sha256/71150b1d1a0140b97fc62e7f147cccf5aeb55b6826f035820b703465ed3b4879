@@ -1,0 +1,56 @@
+## 定理 464.1（Parity Weyl interval）
+
+在两个 kernel-nullspace 条件均成立时：
+
+$$
+\boxed{
+\mathfrak b_R\ge0
+\iff
+R\in
+\mathbb I_L(a),
+}
+\tag{464.9}
+$$
+
+其中：
+
+$$
+\boxed{
+\mathbb I_L(a)
+=
+\left[
+\max(0,\underline R_L(a)),
+\overline R_L(a)
+\right].
+}
+\tag{464.10}
+$$
+
+若：
+
+$$
+\underline R_L(a)>\overline R_L(a),
+$$
+
+则不存在真实轴上的局部正谱完成。
+
+改变 particular solution \(H_{0,a}\) 只会改变中间坐标 \(R_0\)，不会改变最终区间 \(\mathbb I_L(a)\)。
+
+在适用的一维 Kreĭn 正定扩张接口下：
+
+$$
+\boxed{
+R\in\mathbb I_L(a)
+}
+$$
+
+等价于存在真实轴偶正谱测度 \(\nu\)，满足：
+
+$$
+\check\nu=\mathfrak W_L,
+\qquad
+R_a(\nu)=R.
+$$
+
+---
+

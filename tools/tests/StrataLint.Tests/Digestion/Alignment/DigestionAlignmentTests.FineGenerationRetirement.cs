@@ -79,6 +79,94 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
+    public void FineGenerationRetirementTreatsScribeReceiptAsOwnership()
+    {
+        const string gid = "D5/S0/Synthetic/Receipt.owned_generation";
+        var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
+        var currentBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。current。\n");
+        var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes, DigestionTestSupport.Rules).Claims);
+        var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
+        var baseline = Ledger(
+            [],
+            CasEntry("scribe-receipt", oldAtom, oldCapture.Reference));
+        var source = Assert.Single(baseline.RequireDigestionSources());
+        var candidate = baseline.WithDigestionSources(
+        [
+            source with
+            {
+                Entries = source.Entries.Select(entry => entry with
+                {
+                    Receipts = entry.Receipts with
+                    {
+                        Scribe =
+                        [
+                            new DigestionScribeReceipt(
+                                gid,
+                                "sha256:" + new string('a', 64),
+                                "sha256:" + new string('b', 64)),
+                        ],
+                    },
+                }).ToImmutableArray(),
+            },
+        ]);
+
+        var plan = DigestionIngestor.Plan(
+            candidate,
+            Snapshot(currentBytes, [oldCapture]),
+            baseline);
+
+        Assert.Equal(1, plan.StaleAcknowledged);
+        Assert.Equal(
+            ["scribe-receipt"],
+            Assert.Single(plan.Document.RequireDigestionSources()).AcknowledgedStale.ToArray());
+    }
+
+    [Theory]
+    [InlineData(CanonicalReceiptKind.Coverage)]
+    [InlineData(CanonicalReceiptKind.Scribe)]
+    [InlineData(CanonicalReceiptKind.UnresolvedSubitems)]
+    [InlineData(CanonicalReceiptKind.ChainAtoms)]
+    [InlineData(CanonicalReceiptKind.TailAuthorization)]
+    [InlineData(CanonicalReceiptKind.Quarantine)]
+    [InlineData(CanonicalReceiptKind.CoverDisposition)]
+    public void FineGenerationRetirementTreatsEachCanonicalReceiptAsOwnership(
+        CanonicalReceiptKind receiptKind)
+    {
+        const string gid = "D5/S0/Synthetic/Receipt.owned_generation";
+        var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
+        var currentBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。current。\n");
+        var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes, DigestionTestSupport.Rules).Claims);
+        var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
+        var baseline = Ledger(
+            [],
+            CasEntry("canonical-receipt", oldAtom, oldCapture.Reference));
+        var source = Assert.Single(baseline.RequireDigestionSources());
+        var candidate = baseline.WithDigestionSources(
+        [
+            source with
+            {
+                Entries = source.Entries.Select(entry => entry with
+                {
+                    Receipts = OnlyCanonicalReceipt(receiptKind, entry, gid),
+                    ProjectedStatus = new DigestionStatus(
+                        DigestionMigrationState.Partial,
+                        DigestionTruthState.Closed),
+                }).ToImmutableArray(),
+            },
+        ]);
+
+        var plan = DigestionIngestor.Plan(
+            candidate,
+            Snapshot(currentBytes, [oldCapture]),
+            baseline);
+
+        Assert.Equal(1, plan.StaleAcknowledged);
+        Assert.Equal(
+            ["canonical-receipt"],
+            Assert.Single(plan.Document.RequireDigestionSources()).AcknowledgedStale.ToArray());
+    }
+
+    [Fact]
     public void FineGenerationRetirementPreservesEveryOwnershipForm()
     {
         static (DigestionAtom Atom, DigestionCasObject Capture) Generation(string body)
@@ -226,5 +314,92 @@ public sealed partial class DigestionAlignmentTests
         Assert.Equal(
             ["old-receipt"],
             Assert.Single(plan.Document.RequireDigestionSources()).AcknowledgedStale.ToArray());
+    }
+
+    private static DigestionReceipts OnlyCanonicalReceipt(
+        CanonicalReceiptKind receiptKind,
+        DigestionLedgerEntry entry,
+        string gid) => receiptKind switch
+        {
+            CanonicalReceiptKind.Coverage => new DigestionReceipts(
+                [
+                    new DigestionCoverageReceipt(
+                        gid,
+                        entry.Fingerprints.RawSha256,
+                        entry.Fingerprints.RawSha256),
+                ],
+                [],
+                [],
+                [],
+                null),
+            CanonicalReceiptKind.Scribe => new DigestionReceipts(
+                [],
+                [
+                    new DigestionScribeReceipt(
+                        gid,
+                        "sha256:" + new string('a', 64),
+                        "sha256:" + new string('b', 64)),
+                ],
+                [],
+                [],
+                null),
+            CanonicalReceiptKind.UnresolvedSubitems => new DigestionReceipts(
+                [],
+                [],
+                ["remaining theorem clause"],
+                [],
+                null),
+            CanonicalReceiptKind.ChainAtoms => new DigestionReceipts(
+                [],
+                [],
+                [],
+                ["child-atom"],
+                null),
+            CanonicalReceiptKind.TailAuthorization => new DigestionReceipts(
+                [],
+                [],
+                [],
+                [],
+                new DigestionExternalReceipt(
+                    "Evidence/tail-authorization.json",
+                    "sha256:" + new string('c', 64))),
+            CanonicalReceiptKind.Quarantine => new DigestionReceipts(
+                [],
+                [],
+                [],
+                [],
+                null,
+                new DigestionQuarantine(
+                    "awaiting prerequisite",
+                    "re-enter when the prerequisite is frozen")),
+            CanonicalReceiptKind.CoverDisposition => new DigestionReceipts(
+                [],
+                [],
+                [],
+                [],
+                null,
+                CoverDisposition: new DigestionCoverDisposition(
+                    new DigestionStatus(
+                        DigestionMigrationState.Partial,
+                        DigestionTruthState.Closed),
+                    [gid],
+                    [
+                        new DigestionDispositionGap(
+                            "unresolved-subitem",
+                            "remaining theorem clause"),
+                    ],
+                    new DateTimeOffset(2026, 8, 25, 4, 3, 2, TestBudgets.ZeroDuration))),
+            _ => throw new ArgumentOutOfRangeException(nameof(receiptKind)),
+        };
+
+    public enum CanonicalReceiptKind
+    {
+        Coverage,
+        Scribe,
+        UnresolvedSubitems,
+        ChainAtoms,
+        TailAuthorization,
+        Quarantine,
+        CoverDisposition,
     }
 }

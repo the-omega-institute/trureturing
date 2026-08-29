@@ -1,0 +1,25 @@
+## 502.1 Full primal
+
+对每个 \(L\)，求解：
+
+$$
+\boxed{
+\Lambda_L^\Xi
+=
+\max
+\left\{
+\lambda:
+\begin{array}{l}
+\nu\ge\lambda m_0,\\
+\check\nu=\mathfrak W_L,\\
+\mathcal R_{1/2}(\nu)\le2\lambda_1
+\end{array}
+\right\}.
+}
+\tag{502.1}
+$$
+
+该优化必取到。
+
+---
+

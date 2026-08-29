@@ -1,0 +1,35 @@
+## 437.3 有限 Galerkin 版本
+
+选择有限测试族：
+
+$$
+f_1,\ldots,f_N.
+$$
+
+定义 Gram matrix：
+
+$$
+\boxed{
+M_{ij}
+=
+\left\langle
+\mathfrak W_L,
+f_i*\widetilde{f_j}
+\right\rangle.
+}
+\tag{437.3}
+$$
+
+则：
+
+$$
+M\succeq0
+$$
+
+是有限 positive-completion problem 的必要条件。
+
+若把待求正谱测度限制为有限参数族，便得到 truncated trigonometric moment／covariance extension problem；这类问题可通过凸优化寻找正谱密度，经典 rational covariance extension 正是其系统论版本。([SIAM][3])
+
+所以前文的有限 Feshbach matrix 可以同时解释为：
+
+* dual negative-witness matrix；

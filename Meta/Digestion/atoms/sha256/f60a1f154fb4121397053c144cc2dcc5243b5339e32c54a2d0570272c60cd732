@@ -1,0 +1,26 @@
+### 不可胶合
+
+不存在任何正半定 Toeplitz completion。
+
+因此：
+
+$$
+\boxed{
+\operatorname{GlueDim}
+}
+$$
+
+比“尺度数量”更准确地测量定义缺口。
+
+增加一个 cross-scale observer 的价值，就是使：
+
+$$
+\boxed{
+\operatorname{GlueDim}
+}
+$$
+
+严格下降，而不是仅仅增加一个新的 PSD 矩阵。
+
+---
+

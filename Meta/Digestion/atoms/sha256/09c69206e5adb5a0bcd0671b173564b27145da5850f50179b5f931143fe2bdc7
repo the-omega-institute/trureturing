@@ -1,0 +1,83 @@
+## 定理 491.1（前沿基本性质）
+
+在可行区间内：
+
+$$
+\boxed{
+0\le
+\Lambda_{L,a}(C)
+\le
+\min\left\{
+\lambda_{\mathrm{full}}(L),\,2aC
+\right\}.
+}
+\tag{491.3}
+$$
+
+并且：
+
+$$
+\boxed{
+C\longmapsto\Lambda_{L,a}(C)
+}
+$$
+
+单调不减且为凹函数；
+
+$$
+\boxed{
+L\longmapsto\Lambda_{L,a}(C)
+}
+$$
+
+单调不增；
+
+而：
+
+$$
+\boxed{
+\lambda\longmapsto\mathcal C_{L,a}(\lambda)
+}
+$$
+
+单调不减且为凸函数。
+
+### 证明
+
+若：
+
+$$
+\nu\ge\lambda m_0,
+$$
+
+则对任意支撑于 \((-L,L)\) 的 \(f\)：
+
+$$
+\begin{aligned}
+Q_L(f)
+&=
+\int|\widehat f|^2\,d\nu\\
+&\ge
+\frac{\lambda}{2\pi}
+\int|\widehat f|^2d\xi\\
+&=
+\lambda\|f\|_2^2.
+\end{aligned}
+$$
+
+所以：
+
+$$
+\lambda\le\lambda_{\mathrm{full}}(L).
+$$
+
+式 (490.8) 给出：
+
+$$
+\lambda\le2aC.
+$$
+
+其余结论均由正测度完成集合的凸性以及不同窗口约束的嵌套性直接得到。∎
+
+---
+

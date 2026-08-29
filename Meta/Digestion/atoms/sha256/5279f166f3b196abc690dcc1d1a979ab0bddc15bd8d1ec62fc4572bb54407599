@@ -1,0 +1,43 @@
+## Atomwise Completion Conjecture
+
+完成函数 \(\xi\) 的零点测度不仅在谱反射 \(J\) 下不变，而且支撑于 \(J\) 的固定点集：
+
+$$
+\boxed{
+J_*\nu_\Xi=\nu_\Xi
+\quad\Longrightarrow\quad
+\operatorname{supp}\nu_\Xi
+\subseteq
+\operatorname{Fix}(J).
+}
+\tag{640.1}
+$$
+
+当然，对任意一般对称测度，这个蕴含是假的。
+
+所以真正需要使用的额外输入必须来自：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{Euler product};\\
+&\text{prime--Archimedean 正性};\\
+&\text{Weil 二次型};\\
+&\text{自伴／被动系统结构};\\
+&\text{局部到全局完成预算}.
+\end{aligned}
+}
+$$
+
+也就是说，RH 的困难可以进一步说成：
+
+$$
+\boxed{
+\text{为什么 Riemann 的全局反射对称
+必须是无方差的原子对称，
+而不能只是有方差的成对对称？}
+}
+$$
+
+---
+

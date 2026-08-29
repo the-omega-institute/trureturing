@@ -1,0 +1,56 @@
+## 定理 543.1（Cross-scale Gram identity）
+
+对任意：
+
+$$
+j,k\ge0,
+$$
+
+有：
+
+$$
+\boxed{
+m_{j-k}(b)
+=
+\frac ab
+\int_{\mathbb T}
+e_{j,r}(z)
+\overline{e_{k,r}(z)}
+\,d\mu_a(z).
+}
+\tag{543.2}
+$$
+
+### 证明
+
+$$
+\begin{aligned}
+e_{j,r}\overline{e_{k,r}}
+&=
+\frac{1-r^2}
+{|1+rz|^2}
+\Phi_r(z)^{j-k}.
+\end{aligned}
+$$
+
+又：
+
+$$
+\frac ab(1-r^2)
+=
+(1+r)^2.
+$$
+
+所以：
+
+$$
+\frac ab
+e_{j,r}\overline{e_{k,r}}
+=
+q_{a,b}(z)\Phi_r(z)^{j-k}.
+$$
+
+再使用定理 537.1。∎
+
+---
+

@@ -1,0 +1,72 @@
+# 第五百七十三部　完成圆上的奇向平衡场
+
+在允许逐项微分的收敛区域内，定义：
+
+$$
+\boxed{
+\begin{aligned}
+\mathfrak B_\varphi(s,\eta)
+:={}&
+\sum_{(a,b)\neq0}
+\frac{
+e^\eta\sigma_+(a,b)^2
+-
+e^{-\eta}\sigma_-(a,b)^2
+}{
+Q_\eta(a,b)^{s+1}
+}.
+\end{aligned}
+}
+\tag{573.1}
+$$
+
+由：
+
+$$
+\partial_\eta Q_\eta
+=
+e^\eta\sigma_+^2
+-
+e^{-\eta}\sigma_-^2,
+$$
+
+得到：
+
+$$
+\boxed{
+\mathfrak B_\varphi(s,\eta)
+=
+-\frac1s
+\partial_\eta
+Z_{\mathrm{unit}}(s,\eta).
+}
+\tag{573.2}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathfrak B_\varphi(s,-\eta)
+=
+-\mathfrak B_\varphi(s,\eta),
+}
+\tag{573.3}
+$$
+
+且：
+
+$$
+\boxed{
+\mathfrak B_\varphi
+\left(
+s,\eta+2\log\varphi
+\right)
+=
+\mathfrak B_\varphi(s,\eta).
+}
+\tag{573.4}
+$$
+
+---
+

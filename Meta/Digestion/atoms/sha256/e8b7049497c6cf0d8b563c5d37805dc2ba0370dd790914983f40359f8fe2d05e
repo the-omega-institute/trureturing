@@ -1,0 +1,103 @@
+### 57.3.1 带运行结果的输运语义
+
+```lean
+structure TransportSemanticFrame
+    (TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u)
+    (PredictionResult : Type v) where
+  claimAddress : Claim → ContentAddress
+  claimScope : Claim → Domain
+  claimVersion : Claim → Version
+  receiptMatches :
+    TruthReceipt → ContentAddress → Domain → Version → Prop
+  claimOn : Claim → Domain → Prop
+  inDomain : NewEvidence → Domain → Prop
+  run : NewDomainPrediction → NewEvidence → Option PredictionResult
+  fails :
+    NewDomainPrediction → NewEvidence → PredictionResult → Prop
+  refutes :
+    NewDomainPrediction → NewEvidence → PredictionResult → Claim → Prop
+```
+
+`TransportSemanticFrame` 把第 54.3 部的 Prop 级预测接口提升为部分运行语义。`run p z = none` 表示预测在该点未定义，`some result` 表示取得一个具体结果；失败与反驳都以同一结果为参数。该框架不假定结果有可判等号、度量、概率或损失结构。
+
+```lean
+def SemanticNewOnly
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult)
+    (z : NewEvidence)
+    (J J' : Domain) : Prop :=
+  S.inDomain z J' ∧ ¬ S.inDomain z J
+```
+
+`SemanticNewOnly` 给出有方向的新域差：点属于报告域而不属于原域。它不接受另一个与成员关系无关的 `inNewOnlyDomain` 黑箱谓词。
+
+```lean
+def SemanticStrictSubset
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult)
+    (J J' : Domain) : Prop :=
+  (∀ z, S.inDomain z J → S.inDomain z J') ∧
+    ∃ z, SemanticNewOnly S z J J'
+```
+
+`SemanticStrictSubset` 由成员语义定义：原域中的每个点仍在新域中，并且至少存在一个新域差点。严格扩域因而自带非空见证，不能把 `strictSubset` 与 `inNewOnlyDomain` 任意解释成互不相干的关系。
+
+```lean
+def SemanticPredictionDefined
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult)
+    (prediction : NewDomainPrediction)
+    (z : NewEvidence) : Prop :=
+  ∃ result, S.run prediction z = some result
+```
+
+`SemanticPredictionDefined` 是部分运行返回具体结果的存在命题。它不是独立可赋值的 Prop 字段。
+
+```lean
+def SemanticPredictionFails
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult)
+    (prediction : NewDomainPrediction)
+    (z : NewEvidence) : Prop :=
+  ∃ result,
+    S.run prediction z = some result ∧
+      S.fails prediction z result
+```
+
+`SemanticPredictionFails` 要求预测在该点实际运行并产生一个满足失败关系的结果。取恒假失败关系会直接排除任何失败见证，而不是由外部非真空口号补救。
+
+```lean
+def SemanticRefutes
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    {PredictionResult : Type v}
+    (S :
+      TransportSemanticFrame TruthReceipt NewDomainPrediction Claim
+        ContentAddress Domain Version NewEvidence PredictionResult)
+    (z : NewEvidence)
+    (cert : TransportCert TruthReceipt NewDomainPrediction)
+    (claim : Claim) : Prop :=
+  ∃ result,
+    S.run cert.falsifiablePrediction z = some result ∧
+      S.refutes cert.falsifiablePrediction z result claim
+```
+
+`SemanticRefutes` 把反驳绑定到证书所登记预测的一次实际运行。它仍是对第 54.3 部 Prop 级接口的遗忘结果；更强的同一结果失败—反驳绑定由下面的类型化见证承担。
+

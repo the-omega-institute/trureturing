@@ -1,0 +1,70 @@
+# 第五百零六部　局部 Weil 测试变成圆周 flat moments
+
+令：
+
+$$
+\phi\in C_c^\infty((-2L,2L)).
+$$
+
+定义其 Cayley moment function：
+
+$$
+\boxed{
+\Gamma_{a,\phi}(z)
+=
+\begin{cases}
+\left[
+\xi_a(z)^2+a^2
+\right]
+\widehat\phi(\xi_a(z)),
+&z\ne1,\\[1mm]
+0,
+&z=1.
+\end{cases}
+}
+\tag{506.1}
+$$
+
+因为：
+
+$$
+\widehat\phi(\xi)
+$$
+
+是 Schwartz 函数，所以即使乘上任意固定多项式，它在 \(|\xi|\to\infty\) 时仍快速衰减。
+
+于是：
+
+$$
+\boxed{
+\Gamma_{a,\phi}
+\in C^\infty(\mathbb T)
+}
+$$
+
+且在 \(z=1\) 处无穷阶平坦：
+
+$$
+\boxed{
+\Gamma_{a,\phi}^{(k)}(1)=0
+\qquad
+\forall k\ge0.
+}
+\tag{506.2}
+$$
+
+所以全部局部 Weil 测试形成单位圆上的一个 flat ideal：
+
+$$
+\boxed{
+\mathcal A_{L,a}
+\subset
+\left\{
+F\in C^\infty(\mathbb T):
+F\text{ 在 }1\text{ 处无限阶平坦}
+\right\}.
+}
+$$
+
+---
+

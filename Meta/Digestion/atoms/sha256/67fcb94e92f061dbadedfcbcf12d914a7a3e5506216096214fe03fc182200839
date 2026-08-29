@@ -1,0 +1,27 @@
+## 定理 477.1（White-floor / sampling-frame duality）
+
+RH 下：
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)
+=
+\inf_{\|f\|_2=1}
+\|\mathcal S_Lf\|_{\ell^2}^2.
+}
+\tag{477.4}
+$$
+
+也就是说，同一个量同时是：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{局部正谱完成中的最大白噪声底座};\\
+&\text{Riemann 零点指数系统的最小采样帧界}.
+\end{aligned}
+}
+$$
+
+---
+

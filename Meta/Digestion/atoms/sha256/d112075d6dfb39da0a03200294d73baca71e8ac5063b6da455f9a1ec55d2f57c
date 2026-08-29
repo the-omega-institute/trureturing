@@ -1,0 +1,22 @@
+## 533.5 Multi-scale lens bank
+
+选取：
+
+$$
+a_1<a_2<\cdots<a_M.
+$$
+
+同时计算：
+
+$$
+R_{a_j},
+\qquad
+m_n^{(a_j)}.
+$$
+
+使用所有尺度共享同一个实轴谱这一事实，构造联合 moment/measure SDP。
+
+这将比每个 \(a\) 独立求解更强，因为不同 Cayley 图表必须由同一 \(\nu\) 产生。
+
+---
+

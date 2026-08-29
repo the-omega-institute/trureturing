@@ -1,0 +1,34 @@
+## 588.4 黄金 germ 共轭实验
+
+构造 signed conjugate exponent ledger：
+
+$$
+(\widetilde\beta_v,\epsilon_v).
+$$
+
+比较：
+
+$$
+Z_+,\quad
+Z_-,\quad
+Z_{\mathrm{tr}},\quad
+Z_{\mathrm{nr}},\quad
+Z_{\mathrm{odd}}.
+$$
+
+测量每个通道的：
+
+$$
+\boxed{
+\text{abscissa}
++
+\text{local cancellation order}
++
+\text{zero localization}
++
+\text{observer bias}.
+}
+$$
+
+---
+

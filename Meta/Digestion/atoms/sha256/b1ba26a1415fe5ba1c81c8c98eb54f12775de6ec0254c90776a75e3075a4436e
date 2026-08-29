@@ -1,0 +1,17 @@
+## 507.2 可去除的 infinity ledger
+
+若某个可行测度具有：
+
+$$
+\mu(\{1\})>0,
+$$
+
+定义：
+
+$$
+\mu'=\mu-\mu(\{1\})\delta_1.
+$$
+
+则：
+
+* 所有 moment constraints 不变；

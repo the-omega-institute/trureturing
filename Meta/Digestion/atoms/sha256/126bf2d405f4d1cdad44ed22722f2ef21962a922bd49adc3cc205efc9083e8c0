@@ -1,0 +1,41 @@
+# 第四百九十四部　接触零点互补定理
+
+现在假设：
+
+1. primal optimizer \((\lambda_*,\mu_*)\) 存在；
+2. dual optimizer \((\phi_*,\theta_*)\) 存在；
+3. strong duality 成立。
+
+则 primal–dual gap 可写成三个非负项：
+
+$$
+\boxed{
+\begin{aligned}
+0
+={}&
+\lambda_*
+\left[
+\phi_*(0)+\frac{\theta_*}{2a}-1
+\right]\\
+&+
+\int_{\mathbb R}
+\left[
+\widehat\phi_*(\xi)
++
+\frac{\theta_*}{\xi^2+a^2}
+\right]
+d\mu_*(\xi)\\
+&+
+\theta_*
+\left[
+C-\mathcal R_a(\lambda_*m_0+\mu_*)
+\right].
+\end{aligned}
+}
+\tag{494.1}
+$$
+
+因此每一项分别为零。
+
+---
+

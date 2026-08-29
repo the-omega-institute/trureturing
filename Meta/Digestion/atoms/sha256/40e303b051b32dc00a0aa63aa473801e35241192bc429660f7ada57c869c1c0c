@@ -1,0 +1,15 @@
+## 432.2 不可能消除全部 moments
+
+若一个 compactly supported distribution 的全部 moments 均为零，则其 Fourier transform 是一个在原点全部导数为零的整个函数，因此恒等为零。
+
+所以非零 discrepancy 不可能通过单个 compactly supported gauge 消除全部 moments。
+
+$$
+\boxed{
+\text{有限阶 flattening 可以任意深，
+但无限阶完全消除只可能发生在 discrepancy 本身为零时。}
+}
+$$
+
+---
+

@@ -1,0 +1,37 @@
+## 646.1 条件性的黄金第一破缺原理
+
+因此可以严格说：
+
+$$
+\boxed{
+\text{在“两通道、整数、primitive、unimodular、
+最小非平凡扩张”这组公理下，}
+}
+$$
+
+$$
+\boxed{
+\text{第一破缺扩张率必为 }\varphi.
+}
+$$
+
+而若还要求一步以后方向保持，则最小完成率为：
+
+$$
+\boxed{
+\varphi^2.
+}
+$$
+
+这正好对应：
+
+$$
+\boxed{
+\text{奇一步破缺}
+\quad\longrightarrow\quad
+\text{偶两步完成}.
+}
+$$
+
+---
+

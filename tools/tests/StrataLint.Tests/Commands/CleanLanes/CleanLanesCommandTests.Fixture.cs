@@ -115,6 +115,35 @@ public sealed partial class CleanLanesCommandTests
         internal void EmptyCreationLog(string path) =>
             File.WriteAllText(CreationLogPath(path), string.Empty, new UTF8Encoding(false));
 
+        /// <summary>
+        /// 把首条 reflog 记录的 message 清空,即让行**以制表符结尾** ——
+        /// 这是本机 89.8% 的 worktree 的真实形状(#3459),不是畸形。
+        /// </summary>
+        internal void MakeFirstRecordEmptyMessage(string path)
+        {
+            var logPath = CreationLogPath(path);
+            var lines = File.ReadAllLines(logPath, Encoding.UTF8);
+            var tab = lines[0].IndexOf('\t');
+            lines[0] = (tab < 0 ? lines[0] : lines[0][..tab]) + "\t";
+            File.WriteAllText(
+                logPath,
+                string.Join('\n', lines) + "\n",
+                new UTF8Encoding(false));
+        }
+
+        /// <summary>把首条 reflog 记录写成**没有制表符**的形状(本机 11 棵新树即此形)。</summary>
+        internal void MakeFirstRecordWithoutTab(string path)
+        {
+            var logPath = CreationLogPath(path);
+            var lines = File.ReadAllLines(logPath, Encoding.UTF8);
+            var tab = lines[0].IndexOf('\t');
+            lines[0] = tab < 0 ? lines[0] : lines[0][..tab];
+            File.WriteAllText(
+                logPath,
+                string.Join('\n', lines) + "\n",
+                new UTF8Encoding(false));
+        }
+
         internal void MakeFirstRecordNonCreation(string path)
         {
             var logPath = CreationLogPath(path);

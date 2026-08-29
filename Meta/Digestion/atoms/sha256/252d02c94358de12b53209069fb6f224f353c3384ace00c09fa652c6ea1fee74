@@ -1,0 +1,49 @@
+## 428.1 Fourier 图表
+
+若：
+
+$$
+m=\mathcal F\mathfrak W
+$$
+
+是某个 multiplier representative，而：
+
+$$
+\kappa
+$$
+
+是不可见分布，则：
+
+$$
+\boxed{
+m
+\longmapsto
+m+\widehat\kappa
+}
+\tag{428.7}
+$$
+
+完全不改变固定支撑二次型。
+
+所以真正的谱对象是商空间：
+
+$$
+\boxed{
+[m]_L
+=
+m+
+\mathcal F
+\left\{
+\kappa:
+\operatorname{supp}\kappa
+\subset
+\mathbb R\setminus(-2L,2L)
+\right\}.
+}
+\tag{428.8}
+$$
+
+这就是 **Paley–Wiener gauge class**。
+
+---
+

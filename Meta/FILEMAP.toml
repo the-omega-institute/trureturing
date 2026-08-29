@@ -7,6 +7,15 @@ known_violation_count = 0
 status = "closed"
 
 [[files]]
+pattern = "**/*.props"
+kind = "program"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["make-gate"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = "*.json"
 kind = "program"
 produced_by = "none"
@@ -21,15 +30,6 @@ kind = "truth"
 produced_by = "none"
 consumed_by = ["Lean", "Scribe", "StrataLint"]
 verified_by = ["lean-build", "lean-inspector"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "*.props"
-kind = "program"
-produced_by = "none"
-consumed_by = ["dotnet"]
-verified_by = ["make-gate"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -195,6 +195,15 @@ artifact_id = "A-TRUTH"
 runtime_disposition = "run-local"
 mode = "100644"
 history_requirement = "not-required"
+
+[[files]]
+pattern = "Golden/EngineeringTestRetirements/*.json"
+kind = "data"
+produced_by = "none"
+consumed_by = ["EngineeringTestRetirementLoader"]
+verified_by = ["EngineeringTestRetirementLoader"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Golden/Frozen/accepted/*.json"

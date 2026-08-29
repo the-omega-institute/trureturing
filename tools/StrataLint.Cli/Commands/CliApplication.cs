@@ -3,7 +3,11 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-internal sealed record CommandResult(bool Success, string Output, string Error);
+internal sealed record CommandResult(
+    bool Success,
+    string Output,
+    string Error,
+    int? ExitCode = null);
 
 internal sealed record ExplicitCommandResult(int ExitCode, string Output, string Error);
 
@@ -30,6 +34,8 @@ internal interface ICliEnvironment
     ExplicitCommandResult DepositHeaderCheck(IReadOnlyList<string> arguments);
 
     CommandResult Ingest(IReadOnlyList<string> arguments);
+
+    CommandResult AlignDigestionStatus(IReadOnlyList<string> arguments);
 
     CommandResult CoverAtom(IReadOnlyList<string> arguments);
 
@@ -81,6 +87,8 @@ internal static class CliApplication
         Func<ICliEnvironment, string[], ICliConsole, int>> Handlers =
         new Dictionary<string, Func<ICliEnvironment, string[], ICliConsole, int>>(StringComparer.Ordinal)
         {
+            ["align-digestion-status"] = static (environment, tail, console) =>
+                RenderCommand(environment.AlignDigestionStatus(tail), console),
             ["align-scribe-receipt"] = static (environment, tail, console) =>
                 RenderCommand(environment.AlignScribeReceipt(tail), console),
             ["check"] = static (environment, tail, console) =>
@@ -306,7 +314,13 @@ internal static class CliApplication
     {
         if (result.Output.Length > 0) console.WriteOutput(result.Output);
         if (result.Error.Length > 0) console.WriteError(result.Error);
-        return result.Success ? 0 : 2;
+        var exitCode = result.ExitCode ?? (result.Success ? 0 : 2);
+        if (exitCode is < 0 or > 255 || result.Success != (exitCode == 0))
+        {
+            throw new InvalidOperationException("command returned an invalid exit code");
+        }
+
+        return exitCode;
     }
 
     private static int RenderExplicit(ExplicitCommandResult result, ICliConsole console)

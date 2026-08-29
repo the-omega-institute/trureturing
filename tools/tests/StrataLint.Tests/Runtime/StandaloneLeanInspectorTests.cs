@@ -367,7 +367,7 @@ public sealed class StandaloneLeanInspectorTests
                 inspection.ExitCode == 0,
                 Encoding.UTF8.GetString(inspection.StandardOutput)
                     + Encoding.UTF8.GetString(inspection.StandardError));
-            var compacted = BoundedProcessRunner.Run(
+            var compacted = TestProcessRunner.Run(
                 "python3",
                 [
                     Path.Combine(

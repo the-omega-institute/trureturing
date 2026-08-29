@@ -1,0 +1,32 @@
+## 657.1 观察者内部无法看到的区别
+
+如果观察者没有以下外部数据：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{绝对 }s\text{ 坐标};\\
+&\text{临界反射 }J;\\
+&\text{反射伙伴};\\
+&\text{prime--Archimedean 全局连接};
+\end{aligned}
+}
+$$
+
+那么它不能从 principal part 中判断：
+
+$$
+\Re\rho-\frac12.
+$$
+
+这正是：
+
+$$
+\boxed{
+\text{区别真实存在，
+但对局部自中心观察者不可见}.
+}
+$$
+
+---
+

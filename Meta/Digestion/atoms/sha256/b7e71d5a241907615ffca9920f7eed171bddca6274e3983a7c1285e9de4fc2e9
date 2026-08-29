@@ -1,0 +1,36 @@
+# 第四百一十八部　PNT 主模型本身并不满足 Weil 正性
+
+若形式上令：
+
+$$
+d\varepsilon=0,
+$$
+
+则二次型退化为：
+
+$$
+\boxed{
+\mathfrak q_L^{(0)}[f]
+=
+\frac1{2\pi}
+\int
+b_\infty(\xi)
+|\widehat f(\xi)|^2d\xi.
+}
+\tag{418.1}
+$$
+
+但：
+
+$$
+b_\infty(0)<0.
+$$
+
+所以在足够大的支撑尺度上，可以构造 Fourier 质量高度集中于 \(\xi=0\) 附近的偶测试函数，使：
+
+$$
+\mathfrak q_L^{(0)}[f]<0.
+$$
+
+因此：
+

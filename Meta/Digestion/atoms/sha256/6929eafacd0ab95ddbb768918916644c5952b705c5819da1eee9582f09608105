@@ -1,0 +1,37 @@
+## Theorem 5. Soundness and liveness are independent of shape-only tests
+
+There is a concrete judge model in which soundness and liveness are logically
+independent. Take
+
+\[
+\mathsf{Judge}=\mathsf{Bool}\times\mathsf{Bool},
+\quad
+\mathsf{sound}(j)\Longleftrightarrow j.1=\mathsf{true},
+\quad
+\mathsf{live}(j)\Longleftrightarrow j.2=\mathsf{true},
+\quad
+\mathsf{shape}(j)=\star.
+\]
+
+Then `(true,false)` is sound but not live, while `(false,true)` is live but not
+sound. Neither property implies the other.
+
+More generally, let `shape : Judge \to Shape` and `live : Judge \to Prop`. If
+there are `j₁` and `j₂` with equal shape and different liveness, then every
+shape-invariant test family fails to characterize liveness:
+
+\[
+\forall T:\mathsf{Judge}\to\mathsf{Prop},\;
+\Bigl(
+  \forall j_1\;j_2,\;
+  \mathsf{shape}(j_1)=\mathsf{shape}(j_2)
+  \to (T(j_1)\leftrightarrow T(j_2))
+\Bigr)
+\to
+\neg\Bigl(\forall j,\;T(j)\leftrightarrow\mathsf{live}(j)\Bigr).
+\]
+
+For if such a `T` characterized liveness, equal shape would force equal
+`T`-values and hence equal liveness for `j₁` and `j₂`, contradicting the
+witnesses. This quantifies over all shape-only test families; it is stronger
+than merely exhibiting one same-shape pair with different liveness.

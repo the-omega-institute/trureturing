@@ -1,0 +1,75 @@
+# 第六百八十三部　建议形式化顺序
+
+```text
+D5/S3/ObserverOrigin/SelfSimilarity/
+  WholeSelfRemainder.lean
+  SelfSimilarRatio.lean
+  GoldenSelfObservation.lean
+  GoldenObservationAxioms.lean
+
+D5/S3/ObserverOrigin/RelationalFrame/
+  TransitiveAxisSpace.lean
+  NoEquivariantAxisSelector.lean
+  InvariantReadoutConstant.lean
+  NoAbsoluteOriginDecoder.lean
+  ObserverTransitionCocycle.lean
+
+D5/S3/PrimeObserver/OrthogonalModes/
+  PrimeOccupationLattice.lean
+  PrimeFreeCommutativeMonoid.lean
+  PrimeModeHilbertSpace.lean
+  PrimeArchimedeanEnergy.lean
+  PrimeOccupationEnergyInjective.lean
+
+D5/S3/PrimeObserver/FockCompletion/
+  PrimeSymmetricFockBasis.lean
+  PrimeSecondQuantizedEnergy.lean
+  PrimeFockPartition.lean
+  PrimeFockPartitionEqualsZeta.lean
+
+D5/S3/PrimeObserver/OrderFiber/
+  PrimeWordMonoid.lean
+  PrimeWordAbelianization.lean
+  PrimeHistoryFiberCardinality.lean
+  NoHistoryReconstruction.lean
+  OrderedWordPartition.lean
+  CommutativePartitionZeta.lean
+
+D5/S3/PrimeObserver/ContinuousFiber/
+  RealPrimeModeSpace.lean
+  ArchimedeanContinuousKernel.lean
+  TwoPrimeInvisibleDirection.lean
+  DistinctPrimeLogRatioIrrational.lean
+  DistinctPrimeLogRatioTranscendental.lean
+
+D5/S3/PrimeObserver/LocalWorld/
+  UniversalEulerGerm.lean
+  PrimeSelfCalibratedCoordinate.lean
+  PrimeTransitionScale.lean
+  PrimeScaleCocycle.lean
+
+D5/S3/PrimeObserver/GoldenSchedule/
+  BinaryPrimeChannel.lean
+  FibonacciObservationWord.lean
+  GoldenChannelFrequencies.lean
+  GoldenScheduleCommutativeErasure.lean
+
+D5/S3/PrimeObserver/Holonomy/
+  StatefulPrimeUpdate.lean
+  PrimeSwapCurvature.lean
+  PrimeOrderDescentCriterion.lean
+  ScalarReadoutKillsCommutators.lean
+  HiddenHistorySameWorld.lean
+
+D5/S3/Analytic/Zeta/GoldenObserverDefect/
+  FiniteObserverPseudozero.lean
+  GoldenTransverseDefect.lean
+  PrimeHolonomyForcing.lean
+  PersistentDefectCriterion.lean
+  RealizedOffLineThread.lean
+```
+
+量子无克隆不应作为上述模块的证明依赖；最多作为结构类比写入 commentary，防止把关系性原点不可恢复与量子线性无克隆混为同一命题。
+
+---
+

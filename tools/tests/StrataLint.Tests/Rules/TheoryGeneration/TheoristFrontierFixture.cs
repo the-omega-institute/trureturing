@@ -72,7 +72,7 @@ internal sealed partial class RuleFixture
             BaselineReports[historical.Path] = Reports[historical.Path];
             Baseline[MissionFileLoader.RelativePath] = Mission(baselineOwnerKind);
             ForkPoint[MissionFileLoader.RelativePath] = Baseline[MissionFileLoader.RelativePath];
-            const string ticketPath = "D5/X_Frontier/MissionTickets.lean";
+            const string ticketPath = "D5/X_Frontier/GovernanceTicket.lean";
             Baseline[ticketPath] = Files[ticketPath];
             ForkPoint[ticketPath] = Files[ticketPath];
             BaselineReports[ticketPath] = Reports[ticketPath];
@@ -389,12 +389,9 @@ internal sealed partial class RuleFixture
             : Report();
         AddFrozenMotivationMembership();
 
-        const string ticketPath = "D5/X_Frontier/MissionTickets.lean";
-        Files[ticketPath] = HeaderFor("D5/X_Frontier/MissionTickets", "E")
-            + "\n"
-            + string.Concat(Enumerable.Range(40, 4).Select(static number =>
-                $"/-- TASK D5-T{number:0000}\n    Measurement contract remains open. -/\n"
-                + $"def missionTicket{number:0000} : Unit := ()\n"));
+        const string ticketPath = "D5/X_Frontier/GovernanceTicket.lean";
+        Files[ticketPath] = HeaderFor("D5/X_Frontier/GovernanceTicket", "E")
+            + "\ndef governanceTicketFixture : Unit := ()\n";
         Reports[ticketPath] = Report();
     }
 
@@ -477,7 +474,7 @@ internal sealed partial class RuleFixture
         }
         eligibility.Add(new
         {
-            source_ref = "D5/X_Frontier/MissionTickets",
+            source_ref = "D5/X_Frontier/GovernanceTicket",
             kind = "governance",
         });
         var json = JsonSerializer.Serialize(new
@@ -496,10 +493,10 @@ internal sealed partial class RuleFixture
             },
             worth_vector = new
             {
-                novelty = new { state = "open", case_id = "D5-T0040" },
-                dependency_readiness = new { state = "open", case_id = "D5-T0041" },
-                structural_realization = new { state = "open", case_id = "D5-T0042" },
-                receipt_potential = new { state = "open", case_id = "D5-T0043" },
+                novelty = new { state = "open" },
+                dependency_readiness = new { state = "open" },
+                structural_realization = new { state = "open" },
+                receipt_potential = new { state = "open" },
             },
             frontier_eligibility = eligibility
                 .OrderBy(static item => JsonSerializer.Serialize(item), StringComparer.Ordinal),

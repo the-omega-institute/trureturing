@@ -1,0 +1,32 @@
+## 定理 498.1（Natural-budget RH criterion）
+
+下列条件等价：
+
+$$
+\boxed{
+\begin{aligned}
+&(1)\quad \mathrm{RH};\\
+&(2)\quad
+\mathfrak E_{L,1/2}(2\lambda_1)
+\neq\varnothing
+\quad
+\forall L>0.
+\end{aligned}
+}
+\tag{498.4}
+$$
+
+### 证明
+
+RH 成立时，真实零点谱 \(\nu_\Xi\) 对所有 \(L\) 都是预算恰为 \(2\lambda_1\) 的可行完成。
+
+反之，若每个 \(L\) 都有统一预算完成，取 \(L_n\uparrow\infty\)。定理 492.1 中的 weighted compactness 给出一个全局正谱测度 \(\nu_\infty\)，满足：
+
+$$
+\check\nu_\infty=\mathfrak W_\xi.
+$$
+
+于是 Weil source 为正定分布，由 Weil 判据得到 RH。∎
+
+---
+

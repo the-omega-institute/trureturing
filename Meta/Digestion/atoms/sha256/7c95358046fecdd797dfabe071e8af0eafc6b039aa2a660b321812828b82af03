@@ -1,0 +1,41 @@
+## 641.1 科学新深度条件
+
+第 \(n+1\) 层只有满足：
+
+$$
+\boxed{
+\mathcal E_{n+1}
+\subsetneq
+\mathcal E_n
+}
+\tag{641.2}
+$$
+
+或给出严格定量改进：
+
+$$
+\boxed{
+D_{n+1}<D_n
+}
+\tag{641.3}
+$$
+
+才增加 escape depth。
+
+若只是：
+
+$$
+q_{n+1}=h\circ q_n
+$$
+
+且 \(h\) 在像上可逆，则只是新坐标：
+
+$$
+\boxed{
+\text{chart depth 增加，
+escape depth 不变}.
+}
+$$
+
+---
+
