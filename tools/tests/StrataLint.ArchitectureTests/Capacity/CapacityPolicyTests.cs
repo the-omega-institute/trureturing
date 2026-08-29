@@ -91,11 +91,27 @@ public sealed class CapacityPolicyTests
     [Fact]
     public void GeneratedBlueprintMarkdownProjectionIsNotBounded()
     {
-        var files = Enumerable.Range(0, RepositoryRules.DirectoryFileLimit + 1)
+        var files = Enumerable.Range(0, RepositoryRules.DirectoryToleranceLimit + 1)
             .Select(static i => ($"Blueprint/D5/S1/Synthetic/File{i}.md", "x"))
             .ToArray();
 
         Assert.Empty(RepositoryCapacityAudit.InspectFiles(files));
+    }
+
+    // Markdown is excluded only when it is a generated Blueprint projection. A navigated
+    // Markdown directory elsewhere remains subject to the same repository tolerance as
+    // every other capacity-counted artifact directory.
+    [Fact]
+    public void NonBlueprintMarkdownPastToleranceProducesFinding()
+    {
+        var files = Enumerable.Range(0, RepositoryRules.DirectoryToleranceLimit + 1)
+            .Select(static i => ($"Notes/Synthetic/File{i}.md", "x"))
+            .ToArray();
+
+        var finding = Assert.Single(RepositoryCapacityAudit.InspectFiles(files));
+
+        Assert.Equal("Notes/Synthetic", finding.Path);
+        Assert.Contains("tolerance", finding.Message, StringComparison.Ordinal);
     }
 
     // The canonical definition sources beside those projections stay bounded.

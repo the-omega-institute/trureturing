@@ -255,7 +255,7 @@ jobs:
         run: make -C candidate/tools selftest
 
       - name: Audit repository capacity after merge
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' && !cancelled()
         shell: bash
         run: make -C candidate/tools capacity-audit REPOSITORY="$GITHUB_WORKSPACE/candidate"
 
