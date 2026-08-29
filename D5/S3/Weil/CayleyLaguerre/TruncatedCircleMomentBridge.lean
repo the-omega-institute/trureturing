@@ -1,6 +1,6 @@
 /- GID: D5/S3/Weil/CayleyLaguerre/TruncatedCircleMomentBridge
    generality: G
-   mirror-B: D5/B/S3/Weil/TestFunctions/TruncatedCircleMomentBridge
+   mirror-B: D5/B/S3/Weil/CayleyLaguerre/TruncatedCircleMomentBridge
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Represent positive truncated Toeplitz moments by an atomic circle measure. -/
