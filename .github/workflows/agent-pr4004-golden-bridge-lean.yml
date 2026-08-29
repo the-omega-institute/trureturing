@@ -25,7 +25,7 @@ jobs:
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - name: Restore Lean dependencies
         run: lake update
-      - name: Build golden bridge modules
+      - name: Build golden bridge and completion tower modules
         shell: bash
         run: |
           set +e
@@ -39,6 +39,13 @@ jobs:
             D5.S3.Observer.WorldModel.TransversalFixedPoint
             D5.S3.Observer.WorldModel.FixedPointStabilityProfile
             D5.S3.Observer.WorldModel.GoldenRealizationCertificate
+            D5.S3.Observer.Bridges.WormholeCategory
+            D5.S3.Observer.Bridges.WormholeKernelTransport
+            D5.S3.Observer.WorldModel.CompletionTower
+            D5.S3.Observer.WorldModel.CompletionTowerMorphism
+            D5.S3.Observer.WorldModel.WormholeHolonomy
+            D5.S3.CompletionDynamics.GoldenMobius.GoldenScaleHelix
+            D5.S3.Observer.GoldenCoding.PrimeGoldenScaleCoordinate
           )
           for module in "${modules[@]}"; do
             safe="${module//./_}"
