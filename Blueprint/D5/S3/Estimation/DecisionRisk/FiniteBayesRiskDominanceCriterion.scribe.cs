@@ -86,8 +86,11 @@ internal sealed class FiniteBayesRiskDominanceCriterionDocument
             D(0), Sp, Leq, Sp, Apply(prior, stateValue), Close,
             Sp, Land, Sp, Call("sum", prior), Sp, Eq, Sp, D(1));
 
-        Formula RealBayesRisk(Formula experiment) => Call("sInf", Call("range",
-            Lambda(decision, Call("finiteBayesCost", prior, loss, experiment, decision))));
+        Formula RealBayesRisk(Formula experiment, Formula observation) =>
+            Call("sInf", Call("range", Lambda(
+                Seq(decision, Colon, Sp,
+                    Call("FiniteMarkovKernel", observation, action)),
+                Call("finiteBayesCost", prior, loss, experiment, decision))));
 
         Formula universalRiskOrder = Seq(
             Forall, Sp, action, Colon, Sp, type, Comma, Sp,
@@ -95,7 +98,8 @@ internal sealed class FiniteBayesRiskDominanceCriterionDocument
             prior, Colon, Sp, Arrow(state, real), Comma, Sp,
             loss, Colon, Sp, Arrow(state, Arrow(action, real)), Comma, RowBreak, Grp(),
             Grp(normalizedPrior), Sp, Rightarrow, RowBreak, Grp(),
-            RealBayesRisk(source), Sp, Leq, Sp, RealBayesRisk(target));
+            RealBayesRisk(source, sourceObservation), Sp, Leq, Sp,
+            RealBayesRisk(target, targetObservation));
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
