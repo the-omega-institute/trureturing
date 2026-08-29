@@ -29,7 +29,7 @@ theorem factorization_refines_strategy_kernel
     (current : History -> Memory) (profile : History -> Profile)
     (factor : Memory -> Profile)
     (factors : forall h, profile h = factor (current h))
-    {x y : History} (sameCurrent : current x = current y) :
+    (x y : History) (sameCurrent : current x = current y) :
     profile x = profile y := by
   rw [factors x, factors y, sameCurrent]
 
@@ -40,12 +40,12 @@ theorem visible_profile_pair_equality
     (current : History -> Memory) (profile : History -> Profile)
     (factor : Memory -> Profile)
     (factors : forall h, profile h = factor (current h))
-    {x y : History} (sameCurrent : current x = current y) :
+    (x y : History) (sameCurrent : current x = current y) :
     (current x, profile x) = (current y, profile y) := by
   apply Prod.ext
   · exact sameCurrent
   · exact factorization_refines_strategy_kernel
-      current profile factor factors sameCurrent
+      current profile factor factors x y sameCurrent
 
 #print axioms factorization_refines_strategy_kernel
 #print axioms visible_profile_pair_equality
