@@ -215,6 +215,54 @@ public sealed partial class DigestionAlignmentTests
         AssertMalformedClauseChain(result, parentEntry.AtomId, "parent CAS blob has no clause plan");
     }
 
+    [Fact]
+    public void ObserverChainWithoutClausePlanRemainsAdmittedAndUnclaimed()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes(
+            "# Observer\n\n**定理(观察者代数的唯一形态)。** claim。\n");
+        var parent = Assert.Single(ObserverAtomizer.Atomize(
+            sourceBytes,
+            DigestionTestSupport.Rules).Claims);
+        var childBytes = Encoding.UTF8.GetBytes("historical observer child\n");
+        var child = Atom(parent.AstPath + "/historical-child", childBytes);
+        var parentCapture = DigestionCasStore.Capture(parent.RawBytes.AsSpan());
+        var childCapture = DigestionCasStore.Capture(childBytes);
+        var baseline = WithAtomizer(
+            Ledger([], CasEntry("observer-parent", parent, parentCapture.Reference)),
+            AtomizerRegistry.ObserverId);
+        var source = Assert.Single(baseline.RequireDigestionSources());
+        var parentEntry = Assert.Single(source.Entries) with
+        {
+            Receipts = Assert.Single(source.Entries).Receipts with
+            {
+                ChainAtoms = ["observer-child"],
+            },
+        };
+        var childEntry = ChildEntry(
+            parentEntry,
+            "observer-child",
+            child,
+            childCapture.Reference);
+        var ledger = baseline.WithDigestionSources(
+        [
+            source with { Entries = [parentEntry, childEntry] },
+        ]);
+        var snapshot = Snapshot(sourceBytes, [parentCapture, childCapture]);
+
+        var alignment = DigestionLedgerAligner.Evaluate(
+            ledger,
+            snapshot,
+            ledger,
+            DigestionAlignmentMode.Ingest);
+        var plan = DigestionIngestor.Plan(ledger, snapshot, ledger);
+
+        Assert.Empty(alignment.Findings);
+        Assert.DoesNotContain(parentEntry.AtomId, alignment.ClausePlanChainParents);
+        Assert.DoesNotContain(parentEntry.AtomId, alignment.VerifiedClausePlanParents);
+        Assert.Equal(DigestionReceiptAlignment.Seen, alignment.AlignmentFor(childEntry.AtomId));
+        Assert.Equal(0, plan.ResidualOpenAdded);
+    }
+
     private static SelfContainedClauseChainFixture SelfContainedClauseChain(
         bool sameCurrentLocator = false)
     {

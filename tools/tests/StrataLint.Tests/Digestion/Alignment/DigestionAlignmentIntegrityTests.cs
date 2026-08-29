@@ -338,6 +338,55 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
+    public void CurrentFrontierRejectsInheritedStandaloneClausePlanChild()
+    {
+        var parentBytes = Encoding.UTF8.GetBytes("abcdef");
+        var parent = Atom("theorem/1.1", parentBytes);
+        var first = SpannedAtom(parent, 0, 3, 1);
+        var second = SpannedAtom(parent, 3, 6, 2);
+        var probe = Atom("theorem/probe", Encoding.UTF8.GetBytes("probe"));
+        var parentCapture = DigestionCasStore.Capture(parent.RawBytes.AsSpan());
+        var firstCapture = DigestionCasStore.Capture(first.RawBytes.AsSpan());
+        var probeCapture = DigestionCasStore.Capture(probe.RawBytes.AsSpan());
+        var baselineParent = CasEntry("parent", parent, parentCapture.Reference);
+        var baselineChild = ChildEntry(
+            baselineParent,
+            "inherited-child",
+            first,
+            firstCapture.Reference);
+        var baseline = Ledger([], baselineParent, baselineChild);
+        var source = Assert.Single(baseline.RequireDigestionSources());
+        var candidate = baseline.WithDigestionSources(
+        [
+            source with
+            {
+                Entries =
+                [
+                    .. source.Entries,
+                    CasEntry("unproven-probe", probe, probeCapture.Reference),
+                ],
+            },
+        ]);
+        var atomized = new AtomizedTheoryDocument(
+            [parent],
+            [new DigestionSlice(true, parent.RawBytes)],
+            [new DigestionClausePlan(parent.AstPath, [first, second])],
+            GenreRegistryCheck.NoGenreRegistry);
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(parentBytes, [parentCapture, firstCapture, probeCapture]),
+            baseline,
+            DigestionAlignmentMode.Admission,
+            _ => (_, _) => atomized);
+
+        Assert.Equal(
+            DigestionReceiptAlignment.Rejected,
+            result.AlignmentFor(baselineChild.AtomId));
+        Assert.Null(result.AtomFor(baselineChild.AtomId));
+    }
+
+    [Fact]
     public void Sl016PublishesMalformedAuthoredClauseChainFinding()
     {
         var (sourceBytes, _, candidate, parentCapture, childCapture) = MalformedPzgClauseSubset();
