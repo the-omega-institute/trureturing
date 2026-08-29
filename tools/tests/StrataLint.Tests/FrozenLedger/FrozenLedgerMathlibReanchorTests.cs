@@ -393,7 +393,7 @@ public sealed partial class FrozenLedgerTests
             candidateCatalog,
             candidateA with { AxiomClosure = ["Nonstandard.axiom"] });
 
-        var result = ValidateMathlibReanchor(
+        var result = ValidateMathlibReanchorWithCatalogs(
             baseCatalog,
             authorizationCatalog,
             baseModules,
@@ -583,7 +583,7 @@ public sealed partial class FrozenLedgerTests
         string[] replacedModules,
         ReanchorEnvironment environment,
         bool validateProductionPath = false) =>
-        ValidateMathlibReanchor(
+        ValidateMathlibReanchorWithCatalogs(
             BuildCatalog(baseModules),
             BuildCatalog(candidateModules),
             baseModules,
@@ -592,7 +592,7 @@ public sealed partial class FrozenLedgerTests
             environment,
             validateProductionPath: validateProductionPath);
 
-    private static MathlibReanchorResult ValidateMathlibReanchor(
+    private static MathlibReanchorResult ValidateMathlibReanchorWithCatalogs(
         FrozenMaterialCatalog baseCatalog,
         FrozenMaterialCatalog candidateCatalog,
         IReadOnlyList<ModuleSpec> baseModules,
