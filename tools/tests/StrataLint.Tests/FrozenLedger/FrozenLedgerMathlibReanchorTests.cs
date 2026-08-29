@@ -791,4 +791,5 @@ public sealed partial class FrozenLedgerTests
         PinUpgrade,
         CommentOnly,
     }
+
 }
