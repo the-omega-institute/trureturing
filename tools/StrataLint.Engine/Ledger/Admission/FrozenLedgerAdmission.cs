@@ -6,9 +6,12 @@ internal sealed record FrozenLedgerAdmissionPreparation(
     FrozenLedgerBaseView BaseView,
     ImmutableArray<DagLedgerFileEvent> DeltaEvents,
     ImmutableHashSet<string> LeanReportProducerPaths,
-    TrustedFrozenGitReferences TrustedDeltaReferences,
-    FrozenLedgerConsistent? RevocationBaseline = null,
-    TrustedRevocationReceiptStore? TrustedRevocationReceipts = null);
+    FrozenLedgerReplacementRecognition? Replacement = null)
+{
+    internal RepositorySnapshot? ProtectedBaseSnapshot { get; init; }
+
+    internal RepositorySnapshot? CandidateSnapshot { get; init; }
+}
 
 internal sealed record FrozenLedgerAdmissionFailure(
     ImmutableArray<RepoPath> AffectedPaths,
@@ -46,6 +49,7 @@ internal sealed class FrozenLedgerAdmissionScope
         var witnesses = new Dictionary<RepoPath, HashSet<RepoPath>>();
         var allChanges = changes.Entries
             .Where(change => change.Path.Value == "Trureturing.lean"
+                || FrozenLedgerDeltaPredicate.IsEnvironmentInput(change.Path.Value)
                 || FrozenLedgerDeltaPredicate.IsDeltaDefinitionInput(change.Path.Value)
                 || preparation.LeanReportProducerPaths.Contains(change.Path.Value))
             .Select(static change => change.Path)
@@ -71,21 +75,14 @@ internal sealed class FrozenLedgerAdmissionScope
 
         foreach (var item in preparation.DeltaEvents)
         {
-            if (item.Input is { } input && RepoPath.TryCreate(input.DescriptorSelector, out var path))
-            {
-                Add(path, [item.SourcePath]);
-            }
+            Add(item.DescriptorPath, [item.SourcePath]);
+        }
 
-            if (item.EventType == "Revoke")
+        if (preparation.Replacement is { } replacement)
+        {
+            foreach (var path in currentClosed.Union(preparation.BaseView.ActiveByPath.Keys))
             {
-                var revoke = FrozenLedger.ReadTrustedRevoke(item.Payload);
-                foreach (var caseId in revoke.AffectedCaseIds)
-                {
-                    if (preparation.BaseView.ActiveByCase.TryGetValue(caseId, out var entry))
-                    {
-                        Add(entry.Material.RepoPath, [item.SourcePath]);
-                    }
-                }
+                Add(path, [replacement.WitnessPath]);
             }
         }
 
@@ -201,19 +198,35 @@ public static partial class FrozenLedger
         FrozenLedgerAdmissionPreparation preparation,
         FrozenLedgerAdmissionScope scope,
         FrozenMaterialCatalog catalog,
-        TrustedFrozenGitReferences trustedReferences)
+        IFrozenLedgerReplacementAuthorization replacementAuthorization)
     {
         ArgumentNullException.ThrowIfNull(preparation);
         ArgumentNullException.ThrowIfNull(scope);
         ArgumentNullException.ThrowIfNull(catalog);
-        ArgumentNullException.ThrowIfNull(trustedReferences);
+        ArgumentNullException.ThrowIfNull(replacementAuthorization);
         try
         {
-            var active = preparation.BaseView.ActiveByCase.ToDictionary(
-                static item => item.Key,
-                static item => item.Value,
-                StringComparer.Ordinal);
-            var allCaseIds = preparation.BaseView.AllCaseIds.ToHashSet(StringComparer.Ordinal);
+            var replacementAuthorized = preparation.Replacement is { } replacement
+                && replacementAuthorization.IsAuthorized(
+                    new FrozenLedgerReplacementAuthorizationContext(
+                        replacement,
+                        preparation.BaseView,
+                        catalog));
+            var active = replacementAuthorized
+                ? preparation.BaseView.ActiveByCase
+                    .Where(item => preparation.Replacement!.RetainedModulePaths.Contains(
+                        item.Value.Material.RepoPath))
+                    .ToDictionary(
+                        static item => item.Key,
+                        static item => item.Value,
+                        StringComparer.Ordinal)
+                : preparation.BaseView.ActiveByCase.ToDictionary(
+                    static item => item.Key,
+                    static item => item.Value,
+                    StringComparer.Ordinal);
+            var allCaseIds = replacementAuthorized
+                ? active.Keys.ToHashSet(StringComparer.Ordinal)
+                : preparation.BaseView.AllCaseIds.ToHashSet(StringComparer.Ordinal);
             var activePathCases = active.Values.ToDictionary(
                 static entry => entry.Material.RepoPath,
                 static entry => entry.Payload.CaseId);
@@ -227,55 +240,32 @@ public static partial class FrozenLedger
                             $"New accepted event must use schema_version {FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion}.");
                     }
 
-                    if (item.EventType == "Freeze")
-                    {
-                        var freeze = ParseFreeze(
-                            item.Payload,
-                            catalog,
-                            trustedReferences,
-                            requireCatalogRevisionIdentity: false);
-                        var freezePath = RepoPath.CreateKnown(freeze.Input.DescriptorSelector);
-                        if (!allCaseIds.Add(freeze.CaseId)
-                            || activePathCases.ContainsKey(freezePath))
-                        {
-                            throw new FormatException(
-                                "Freeze reused a historical case ID or active module path.");
-                        }
-
-                        var material = catalog.ByPath[freezePath];
-                        active.Add(
-                            freeze.CaseId,
-                            new FrozenActiveEntry(material, freeze, item.EventHash));
-                        activePathCases.Add(freezePath, freeze.CaseId);
-                    }
-                    else if (item.EventType == "Revoke")
-                    {
-                        var baseline = preparation.RevocationBaseline
-                            ?? throw new FormatException("Revoke admission baseline is unavailable.");
-                        var receipts = preparation.TrustedRevocationReceipts
-                            ?? throw new FormatException("Revoke admission receipt capability is unavailable.");
-                        var revoke = ParseRevoke(item.Payload, baseline, active, receipts);
-                        foreach (var caseId in revoke.AffectedCaseIds)
-                        {
-                            var entry = active[caseId];
-                            active.Remove(caseId);
-                            activePathCases.Remove(entry.Material.RepoPath);
-                        }
-                    }
-                    else
+                    if (item.EventType != "Freeze")
                     {
                         throw new FormatException(
                             $"Event type {item.EventType} is not legal in an admission delta.");
                     }
+
+                    var freeze = ParseFreeze(item.Payload, catalog);
+                    var freezePath = RepoPath.CreateKnown(freeze.DescriptorSelector);
+                    if (!allCaseIds.Add(freeze.CaseId)
+                        || activePathCases.ContainsKey(freezePath))
+                    {
+                        throw new FormatException(
+                            "Freeze reused an active case ID or module path.");
+                    }
+
+                    var material = catalog.ByPath[freezePath];
+                    active.Add(
+                        freeze.CaseId,
+                        new FrozenActiveEntry(material, freeze, item.EventHash));
+                    activePathCases.Add(freezePath, freeze.CaseId);
                 }
                 catch (Exception exception) when (exception is FormatException
                     or InvalidOperationException
                     or KeyNotFoundException)
                 {
-                    var affectedPath = item.Input is { } input
-                        && RepoPath.TryCreate(input.DescriptorSelector, out var parsedPath)
-                            ? parsedPath
-                            : item.SourcePath;
+                    var affectedPath = item.DescriptorPath;
                     var witnesses = scope.Paths.Contains(affectedPath)
                         ? scope.WitnessesFor(affectedPath)
                         : ImmutableArray.Create(item.SourcePath);
@@ -319,8 +309,6 @@ public static partial class FrozenLedger
                 var materialMatches = FrozenLedgerHistoricalFreezeMatcher.HistoricalActiveFreezeMatches(
                     activeEntry.Payload,
                     expectedMaterial,
-                    recordedPathsByIdentity,
-                    currentPathsByIdentity,
                     out var materialDifferences);
                 if (materialMatches)
                 {

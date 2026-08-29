@@ -55,6 +55,21 @@
       "kind": "theorem",
       "name": "D5.S3.ConceptDynamics.Policy.MemorylessActionObstruction.no_memoryless_policy",
       "type": "statement-v1(uparams=[ns(n0,3:u_1),ns(n0,3:u_2),ns(n0,3:u_3)],type=ep(bi,es(ls(lp(ns(n0,3:u_1)))),ep(bi,es(ls(lp(ns(n0,3:u_2)))),ep(bi,es(ls(lp(ns(n0,3:u_3)))),ep(bd,ep(bd,eb(2),eb(2)),ep(bd,ep(bd,eb(3),eb(2)),ep(bd,eb(4),ep(bd,eb(5),ep(bd,ea(ea(ea(ec(ns(n0,2:Eq),[ls(lp(ns(n0,3:u_2)))]),eb(5)),ea(eb(3),eb(1))),ea(eb(3),eb(0))),ep(bd,ea(ea(ea(ec(ns(n0,2:Ne),[ls(lp(ns(n0,3:u_3)))]),eb(5)),ea(eb(3),eb(2))),ea(eb(3),eb(1))),ea(ec(ns(n0,3:Not),[]),ea(ea(ec(ns(n0,6:Exists),[lm(ls(lp(ns(n0,3:u_2))),ls(lp(ns(n0,3:u_3))))]),ep(bd,eb(7),eb(7))),el(bd,ep(bd,eb(7),eb(7)),ep(bd,eb(9),ea(ea(ea(ec(ns(n0,2:Eq),[ls(lp(ns(n0,3:u_3)))]),eb(8)),ea(eb(1),ea(eb(7),eb(0)))),ea(eb(6),eb(0)))))))))))))))))"
+    },
+    {
+      "kind": "theorem",
+      "name": "D5.S3.Observer.AgencyHolonomy.ActionLoopRequiresMemory.policy_change_implies_memory_change",
+      "type": "statement-v1(uparams=[ns(n0,1:u),ns(n0,1:v),ns(n0,1:w)],type=ep(bi,es(ls(lp(ns(n0,1:u)))),ep(bi,es(ls(lp(ns(n0,1:v)))),ep(bi,es(ls(lp(ns(n0,1:w)))),ep(bd,ep(bd,eb(2),ep(bd,eb(2),eb(2))),ep(bd,eb(3),ep(bd,ep(bd,eb(3),eb(4)),ep(bd,eb(4),ep(bd,ea(ea(ea(ec(ns(n0,2:Ne),[ls(lp(ns(n0,1:w)))]),eb(4)),ea(ea(eb(3),eb(2)),ea(eb(1),eb(0)))),ea(ea(eb(3),eb(2)),eb(0))),ea(ea(ea(ec(ns(n0,2:Ne),[ls(lp(ns(n0,1:v)))]),eb(6)),ea(eb(2),eb(1))),eb(1)))))))))))"
+    },
+    {
+      "kind": "theorem",
+      "name": "D5.S3.Observer.AgencySelf.StrategySelfKnowledgeFactorization.factorization_refines_strategy_kernel",
+      "type": "statement-v1(uparams=[ns(n0,1:u),ns(n0,1:v),ns(n0,1:w)],type=ep(bi,es(ls(lp(ns(n0,1:u)))),ep(bi,es(ls(lp(ns(n0,1:v)))),ep(bi,es(ls(lp(ns(n0,1:w)))),ep(bd,ep(bd,eb(2),eb(2)),ep(bd,ep(bd,eb(3),eb(2)),ep(bd,ep(bd,eb(3),eb(3)),ep(bd,ep(bd,eb(5),ea(ea(ea(ec(ns(n0,2:Eq),[ls(lp(ns(n0,1:w)))]),eb(4)),ea(eb(2),eb(0))),ea(eb(1),ea(eb(3),eb(0))))),ep(bd,eb(6),ep(bd,eb(7),ep(bd,ea(ea(ea(ec(ns(n0,2:Eq),[ls(lp(ns(n0,1:v)))]),eb(7)),ea(eb(5),eb(1))),ea(eb(5),eb(0))),ea(ea(ea(ec(ns(n0,2:Eq),[ls(lp(ns(n0,1:w)))]),eb(7)),ea(eb(5),eb(2))),ea(eb(5),eb(1))))))))))))))"
+    },
+    {
+      "kind": "theorem",
+      "name": "D5.S3.Observer.CompletionPoints.GaugeStableZeroDefect.gauge_preserves_zero_defect",
+      "type": "statement-v1(uparams=[ns(n0,1:u),ns(n0,1:w)],type=ep(bi,es(ls(lp(ns(n0,1:u)))),ep(bi,es(ls(lp(ns(n0,1:w)))),ep(bd,ep(bd,eb(1),eb(1)),ep(bd,eb(1),ep(bd,ep(bd,eb(3),eb(4)),ep(bd,ep(bd,eb(4),ea(ea(ea(ec(ns(n0,2:Eq),[ls(lp(ns(n0,1:w)))]),eb(4)),ea(eb(3),ea(eb(1),eb(0)))),ea(eb(3),eb(0)))),ep(bd,eb(5),ea(ea(ec(ns(n0,3:Iff),[]),ea(ea(ea(ec(ns(n0,2:Eq),[ls(lp(ns(n0,1:w)))]),eb(5)),ea(eb(4),eb(0))),eb(3))),ea(ea(ea(ec(ns(n0,2:Eq),[ls(lp(ns(n0,1:w)))]),eb(5)),ea(eb(4),ea(eb(2),eb(0)))),eb(3)))))))))))"
     }
   ]
 }

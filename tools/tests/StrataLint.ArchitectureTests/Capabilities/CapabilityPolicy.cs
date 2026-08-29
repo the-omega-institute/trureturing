@@ -48,9 +48,7 @@ internal static class CapabilityPolicy
             || type.Name is "CanonicalFixedPoint"
                 or "CompletedRuleSet"
                 or "FrozenLedgerConsistent"
-                or "FrozenLedgerReferenceSet"
                 or "FrozenMaterialCatalog"
                 or "RevocationPlan"
-                or "TrustedFrozenGitReferences"
                 or "TrustedRevocationReceiptStore");
 }

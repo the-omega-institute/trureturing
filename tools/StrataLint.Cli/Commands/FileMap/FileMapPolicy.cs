@@ -20,8 +20,6 @@ internal static class FileMapPolicy
         "tools/StrataLint.Scribe/FileMap/FileMapManifest.cs";
     private const string LibraryNoteCatalogPath =
         "tools/StrataLint.Scribe/Library/LibraryNoteCatalog.cs";
-    private const string MissionFileLoaderPath =
-        "tools/StrataLint.Engine/Mission/MissionFileLoader.cs";
     private const string ProblemCandidateCatalogPath =
         "tools/StrataLint.Scribe/Problems/ProblemCandidateCatalog.cs";
     private const string RegistryLoaderPath =
@@ -34,8 +32,6 @@ internal static class FileMapPolicy
         "tools/StrataLint.Engine/Snapshot/RepositorySnapshot.cs";
     private const string StatementProjectionFixtureLoaderPath =
         "tools/StrataLint.Scribe/Projection/StatementProjection.cs";
-    private const string EngineeringTestRetirementLoaderPath =
-        "tools/StrataLint.Engine/RepositoryIo/EngineeringTestRetirementLoader.cs";
     private const string TheoryAtomizerDataLoaderPath =
         "tools/StrataLint.Engine/Digestion/Configuration/TheoryAtomizerDataLoader.cs";
     private const string GateAuthorityRootCatalogLoaderPath =
@@ -55,11 +51,9 @@ internal static class FileMapPolicy
         new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["BackfillInventoryLoader"] = BackfillLoaderPath,
-            ["EngineeringTestRetirementLoader"] = EngineeringTestRetirementLoaderPath,
             ["FileMapLoader"] = FileMapLoaderPath,
             ["GateAuthorityRootCatalogLoader"] = GateAuthorityRootCatalogLoaderPath,
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
-            [nameof(MissionFileLoader)] = MissionFileLoaderPath,
             ["ProblemCandidateCatalog"] = ProblemCandidateCatalogPath,
             ["RegistryLoader"] = RegistryLoaderPath,
             ["ScribeEmitter"] = ScribeEmitterPath,
@@ -225,7 +219,6 @@ internal static class FileMapPolicy
 
         return InspectCoverage(manifest, paths)
             .Concat(InspectPatternPopulation(manifest, paths))
-            .Concat(InspectMission(repositoryRoot))
             .Concat(registryFindings)
             .Concat(projectionRegistrationFindings)
             .Concat(InspectDeclaredActors(manifest, DeclaredTypeNames(repositoryRoot, paths), repositoryRoot))
@@ -240,19 +233,6 @@ internal static class FileMapPolicy
             .ThenBy(static finding => finding.Code, StringComparer.Ordinal)
             .ToArray();
     }
-
-    private static IReadOnlyList<FileMapFinding> InspectMission(string repositoryRoot) =>
-        MissionFileLoader.LoadRepository(repositoryRoot) switch
-        {
-            MissionLoadOutcome.Loaded => [],
-            MissionLoadOutcome.Invalid invalid =>
-            [
-                new FileMapFinding(
-                    "MISSION-CONTRACT",
-                    MissionFileLoader.RelativePath,
-                    $"{invalid.Error.Code}: {invalid.Error.Message}"),
-            ],
-        };
 
     internal static IReadOnlyList<FileMapFinding> InspectDeclaredModes(
         FileMapManifest manifest,

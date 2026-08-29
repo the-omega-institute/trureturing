@@ -20,14 +20,41 @@ internal static class DagLedgerAppendWriter
                     "USAGE: StrataLint ledger-append --candidate-lean-report FILE");
             }
 
+            var baselineFiles = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(
+                Path.Combine(
+                    repositoryRoot,
+                    FrozenLedgerChangeClassifier.AcceptedRoot.Replace(
+                        '/',
+                        Path.DirectorySeparatorChar)));
+            var legacyFiles = baselineFiles.Where(IsLegacyEventFile).ToImmutableArray();
+            var trustedBaselineFiles = legacyFiles.IsEmpty
+                ? default
+                : baselineFiles.Except(legacyFiles).ToImmutableArray();
+            var replacesEntireLegacyLedger = !legacyFiles.IsEmpty && trustedBaselineFiles.IsEmpty;
+            var committedLegacyFiles = replacesEntireLegacyLedger
+                ? ReadCommittedLegacyLedger(repository)
+                : ImmutableArray<RepositoryFile>.Empty;
+            if (replacesEntireLegacyLedger
+                && !LedgerFileSetsEqual(baselineFiles, committedLegacyFiles))
+            {
+                throw new InvalidOperationException(
+                    "entirely legacy ledger does not match the committed baseline byte-for-byte");
+            }
+
             var context = DagLedgerCommandPreparation.Prepare(
                 repositoryRoot,
                 repository,
-                arguments[1]);
+                arguments[1],
+                trustedBaselineFiles: trustedBaselineFiles);
+            if (replacesEntireLegacyLedger)
+            {
+                RequireLegacyStatementIdentityContinuity(committedLegacyFiles, context.Catalog);
+            }
+
             var drafts = FrozenLedgerGenerator.MissingFreezes(
                 context.Baseline,
                 context.Catalog);
-            if (drafts.IsEmpty)
+            if (drafts.IsEmpty && legacyFiles.IsEmpty)
             {
                 return new CommandResult(
                     true,
@@ -41,23 +68,28 @@ internal static class DagLedgerAppendWriter
                 context.BaseView,
                 pending,
                 "generated frozen ledger suffix");
-            var trustedCandidateReferences = DagLedgerCommandPreparation.ValidateSuffixReferences(
-                repository,
-                prospective,
-                "generated frozen ledger");
             var candidate = FrozenLedger.ValidateCandidate(
                 prospective,
                 context.Baseline,
-                context.Catalog,
-                trustedCandidateReferences) switch
+                context.Catalog) switch
             {
                 FrozenLedgerValidationOutcome.Accepted accepted => accepted.Capability,
                 FrozenLedgerValidationOutcome.Rejected rejected => throw new InvalidOperationException(
                     "generated frozen ledger is invalid: " + rejected.Message),
                 _ => throw new InvalidOperationException("unknown ledger validation outcome"),
             };
-            RequireUnchangedBaseline(context.LedgerPath, context.BaselineFiles, "ledger-append");
-            WriteEventFiles(context.LedgerPath, pending, context.BaselineFiles);
+            if (legacyFiles.IsEmpty)
+            {
+                RequireUnchangedBaseline(context.LedgerPath, context.BaselineFiles, "ledger-append");
+                WriteEventFiles(context.LedgerPath, pending, context.BaselineFiles);
+            }
+            else
+            {
+                ReplaceEventFiles(
+                    context.LedgerPath,
+                    trustedBaselineFiles.Concat(pending).ToImmutableArray(),
+                    context.BaselineFiles);
+            }
             var freezes = prospective
                 .Where(static item => item.EventType == "Freeze")
                 .ToImmutableArray();
@@ -65,7 +97,7 @@ internal static class DagLedgerAppendWriter
                 + $"events={candidate.EventCount} "
                 + $"head={context.BaseView.EventSetRoot(prospective.Select(static item => item.EventHash))}\n"
                 + string.Concat(freezes.Select(static item =>
-                    $"FROZEN {item.Input!.DescriptorSelector}\n"));
+                    $"FROZEN {item.DescriptorPath.Value}\n"));
             return new CommandResult(true, output, string.Empty);
         }
         // Preparation marks report and repository faults now. Without these two the wrapped
@@ -86,6 +118,152 @@ internal static class DagLedgerAppendWriter
                 string.Empty,
                 RenderFailure("LEDGER_APPEND_FAILED", exception));
         }
+    }
+
+    internal static bool IsLegacyEventFile(RepositoryFile file)
+    {
+        try
+        {
+            using var document = JsonDocument.Parse(file.RawBytes.ToArray());
+            var root = document.RootElement;
+            if (!root.TryGetProperty("schema_version", out var schema)
+                || !schema.TryGetInt32(out var version)
+                || !LegacyFrozenLedgerEventSemantics.IsLegacySchemaVersion(version)
+                || !root.TryGetProperty("event_type", out var eventType)
+                || eventType.ValueKind != JsonValueKind.String)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        catch (JsonException)
+        {
+            return false;
+        }
+    }
+
+    private static ImmutableArray<RepositoryFile> ReadCommittedLegacyLedger(
+        IRepositoryGateway repository)
+    {
+        var identity = DagLedgerCommandPreparation.Ask(repository.ResolveCurrentRevision);
+        var raw = DagLedgerCommandPreparation.Ask(() => repository.ReadRevision(identity.Revision));
+        var files = raw.Entries
+            .Where(static entry => FrozenLedgerChangeClassifier.IsAcceptedEventPath(entry.Path))
+            .Select(static entry => new RepositoryFile(
+                RepoPath.CreateKnown(entry.Path),
+                entry.Bytes,
+                Encoding.UTF8.GetString(entry.Bytes.AsSpan()),
+                gitBlobOid: entry.GitBlobOid))
+            .ToImmutableArray();
+        if (files.IsEmpty || files.Any(static file => !IsLegacyEventFile(file)))
+        {
+            throw new InvalidOperationException(
+                "committed baseline is not the entirely legacy ledger being upgraded");
+        }
+
+        return files;
+    }
+
+    private static bool LedgerFileSetsEqual(
+        ImmutableArray<RepositoryFile> left,
+        ImmutableArray<RepositoryFile> right)
+    {
+        var orderedLeft = left.OrderBy(static file => file.Path.Value, StringComparer.Ordinal).ToArray();
+        var orderedRight = right.OrderBy(static file => file.Path.Value, StringComparer.Ordinal).ToArray();
+        return orderedLeft.Length == orderedRight.Length
+            && orderedLeft.Zip(orderedRight).All(static pair =>
+                pair.First.Path == pair.Second.Path
+                && pair.First.RawBytes.AsSpan().SequenceEqual(pair.Second.RawBytes.AsSpan()));
+    }
+
+    private static void RequireLegacyStatementIdentityContinuity(
+        ImmutableArray<RepositoryFile> legacyFiles,
+        FrozenMaterialCatalog catalog)
+    {
+        var recordedByPath = new Dictionary<RepoPath, LegacyFrozenStatementIdentity>();
+        foreach (var file in legacyFiles)
+        {
+            using var document = JsonDocument.Parse(file.RawBytes.ToArray());
+            var root = document.RootElement;
+            var eventType = RequiredLegacyString(root, "event_type", "legacy event");
+            if (LegacyFrozenLedgerEventSemantics.IsIdentityNeutral(eventType))
+            {
+                continue;
+            }
+
+            if (eventType != "Freeze"
+                || !root.TryGetProperty("payload", out var payload)
+                || payload.ValueKind != JsonValueKind.Object
+                || !payload.TryGetProperty("input", out var input)
+                || input.ValueKind != JsonValueKind.Object)
+            {
+                throw new FormatException("committed legacy ledger contains an unsupported event");
+            }
+
+            var selector = RequiredLegacyString(input, "descriptor_selector", "legacy Freeze input");
+            if (!RepoPath.TryCreate(selector, out var path))
+            {
+                throw new FormatException("legacy Freeze descriptor_selector is not a canonical path");
+            }
+
+            var statement = RequiredLegacyStatementId(payload, "statement_id", "legacy Freeze");
+            if (!payload.TryGetProperty("declaration_statement_ids", out var declarationValue)
+                || declarationValue.ValueKind != JsonValueKind.Array)
+            {
+                throw new FormatException("legacy Freeze declaration_statement_ids is not an array");
+            }
+
+            var declarations = declarationValue.EnumerateArray().Select(item =>
+                new FrozenDeclarationStatement(
+                    RequiredLegacyString(item, "declaration_name_key", "legacy declaration"),
+                    RequiredLegacyString(item, "kind", "legacy declaration"),
+                    RequiredLegacyStatementId(item, "statement_id", "legacy declaration")))
+                .ToImmutableArray();
+            if (!recordedByPath.TryAdd(
+                path,
+                new LegacyFrozenStatementIdentity(path, statement, declarations)))
+            {
+                throw new FormatException($"committed legacy ledger contains duplicate Freeze path {path.Value}");
+            }
+        }
+
+        if (recordedByPath.Count == 0)
+        {
+            throw new FormatException("committed legacy ledger contains no Freeze identities");
+        }
+
+        var mismatch = LegacyFrozenLedgerStatementIdentityContinuity.FirstMismatch(
+            recordedByPath.Values,
+            catalog);
+        if (mismatch is not null)
+        {
+            throw new InvalidOperationException(
+                $"Active module {mismatch.Value} statement identity changed; append Revoke before rerunning ledger-append.");
+        }
+    }
+
+    private static string RequiredLegacyString(JsonElement value, string name, string label)
+    {
+        if (!value.TryGetProperty(name, out var property)
+            || property.ValueKind != JsonValueKind.String
+            || property.GetString() is not { } text)
+        {
+            throw new FormatException($"{label} {name} is not a string");
+        }
+
+        return text;
+    }
+
+    private static StatementId RequiredLegacyStatementId(
+        JsonElement value,
+        string name,
+        string label)
+    {
+        var statement = RequiredLegacyString(value, name, label);
+        return FrozenHashSyntax.IsSha256(statement)
+            ? StatementId.Create(statement)
+            : throw new FormatException($"{label} {name} is malformed");
     }
 
     internal static ImmutableArray<RepositoryFile> BuildNewEventFiles(
@@ -161,6 +339,131 @@ internal static class DagLedgerAppendWriter
         catch
         {
             RollbackCreatedFiles(createdPaths);
+            CleanupStagingDirectory(stagingDirectory);
+            throw;
+        }
+    }
+
+    internal static void DeleteEventFiles(
+        string directory,
+        ImmutableArray<RepositoryFile> files,
+        ImmutableArray<RepositoryFile> expectedBaselineFiles)
+    {
+        var lockPath = Path.Combine(directory, ".ledger-write.lock");
+        using var publicationLock = AcquirePublicationLock(lockPath);
+        if (!LedgerDirectoryMatches(directory, expectedBaselineFiles))
+        {
+            throw new InvalidOperationException(
+                "accepted event files changed while ledger-revoke was validating them");
+        }
+
+        ReapStaleStagingDirectories(directory);
+        if (files.IsEmpty)
+        {
+            return;
+        }
+
+        var stagingDirectory = Path.Combine(directory, $".ledger-stage-{Guid.NewGuid():N}");
+        var moved = new Stack<(string Staged, string Original)>();
+        try
+        {
+            Directory.CreateDirectory(stagingDirectory);
+            foreach (var file in files.OrderBy(static file => file.Path.Value, StringComparer.Ordinal))
+            {
+                var original = Path.Combine(directory, Path.GetFileName(file.Path.Value));
+                var staged = Path.Combine(stagingDirectory, Path.GetFileName(file.Path.Value));
+                File.Move(original, staged);
+                moved.Push((staged, original));
+            }
+
+            Directory.Delete(stagingDirectory, recursive: true);
+        }
+        catch
+        {
+            while (moved.TryPop(out var item))
+            {
+                if (File.Exists(item.Staged))
+                {
+                    File.Move(item.Staged, item.Original);
+                }
+            }
+
+            CleanupStagingDirectory(stagingDirectory);
+            throw;
+        }
+    }
+
+    internal static void ReplaceEventFiles(
+        string directory,
+        ImmutableArray<RepositoryFile> files,
+        ImmutableArray<RepositoryFile> expectedBaselineFiles)
+    {
+        var lockPath = Path.Combine(directory, ".ledger-write.lock");
+        using var publicationLock = AcquirePublicationLock(lockPath);
+        if (!LedgerDirectoryMatches(directory, expectedBaselineFiles))
+        {
+            throw new InvalidOperationException(
+                "accepted event files changed while ledger-append was replacing the snapshot");
+        }
+
+        ReapStaleStagingDirectories(directory);
+        var planned = files.OrderBy(static file => file.Path.Value, StringComparer.Ordinal).ToImmutableArray();
+        if (planned.Select(static file => file.Path).Distinct().Count() != planned.Length)
+        {
+            throw new InvalidOperationException("replacement frozen ledger contains duplicate paths");
+        }
+
+        var stagingDirectory = Path.Combine(directory, $".ledger-stage-{Guid.NewGuid():N}");
+        var newDirectory = Path.Combine(stagingDirectory, "new");
+        var oldDirectory = Path.Combine(stagingDirectory, "old");
+        var published = new Stack<string>();
+        var displaced = new Stack<(string Staged, string Original)>();
+        try
+        {
+            Directory.CreateDirectory(newDirectory);
+            Directory.CreateDirectory(oldDirectory);
+            foreach (var file in planned)
+            {
+                var stagedPath = Path.Combine(newDirectory, Path.GetFileName(file.Path.Value));
+                using var stream = new FileStream(
+                    stagedPath,
+                    FileMode.CreateNew,
+                    FileAccess.Write,
+                    FileShare.None);
+                stream.Write(file.RawBytes.AsSpan());
+                stream.Flush(flushToDisk: true);
+            }
+
+            foreach (var file in expectedBaselineFiles)
+            {
+                var original = Path.Combine(directory, Path.GetFileName(file.Path.Value));
+                var staged = Path.Combine(oldDirectory, Path.GetFileName(file.Path.Value));
+                File.Move(original, staged);
+                displaced.Push((staged, original));
+            }
+
+            foreach (var file in planned)
+            {
+                var fileName = Path.GetFileName(file.Path.Value);
+                var staged = Path.Combine(newDirectory, fileName);
+                var final = Path.Combine(directory, fileName);
+                File.Move(staged, final);
+                published.Push(final);
+            }
+
+            Directory.Delete(stagingDirectory, recursive: true);
+        }
+        catch
+        {
+            RollbackCreatedFiles(published);
+            while (displaced.TryPop(out var item))
+            {
+                if (File.Exists(item.Staged))
+                {
+                    File.Move(item.Staged, item.Original);
+                }
+            }
+
             CleanupStagingDirectory(stagingDirectory);
             throw;
         }

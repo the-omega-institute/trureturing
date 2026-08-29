@@ -400,7 +400,7 @@ internal static partial class DigestionStatusEvaluator
             return true;
         }
 
-        // A changed-set caller without a baseline (theory-candidates) still has an explicit
+        // A changed-set caller without a baseline still has an explicit
         // scope. Without a base-fact resolver, a missing historical migration marker alone does
         // not make every entry affected. Production callers provide the resolver and continue
         // through the full authority-closure check below.

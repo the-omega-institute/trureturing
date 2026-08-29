@@ -11,7 +11,8 @@ public sealed record DagLedgerFileEvent(
     string EventType,
     JsonElement Payload,
     int SchemaVersion,
-    FrozenLedgerInput? Input);
+    RepoPath DescriptorPath,
+    FrozenNodeId FrozenNodeId);
 
 public abstract record DagLedgerFilesLoadOutcome
 {
@@ -54,6 +55,7 @@ public static class FrozenAcceptedEventLoader
                 JsonElement value;
                 string identity;
                 string eventHash;
+                FrozenFreezePayload? freezePayload = null;
                 if (validationMode is ValidationMode.Candidate)
                 {
                     _ = StrictUtf8.GetString(bytes);
@@ -84,6 +86,7 @@ public static class FrozenAcceptedEventLoader
                     identity = trusted.Identity;
                     eventHash = trusted.EventHash;
                     value = trusted.Root;
+                    freezePayload = trusted.FreezePayload;
                 }
 
                 if (validationMode is ValidationMode.Candidate && !hashes.Add(eventHash))
@@ -110,9 +113,16 @@ public static class FrozenAcceptedEventLoader
                 var eventType = value.GetProperty("event_type").GetString()!;
                 var payload = value.GetProperty("payload").Clone();
                 var schemaVersion = value.GetProperty("schema_version").GetInt32();
-                var input = validationMode is ValidationMode.Candidate
-                    ? FrozenLedger.ParseAcceptedEventInput(eventType, payload)
-                    : FrozenLedgerBaseViewReader.ReadTrustedAcceptedEventInput(eventType, payload);
+                if (freezePayload is null && validationMode is ValidationMode.Trusted)
+                {
+                    throw new FormatException(
+                        "trusted accepted event does not contain a standalone Freeze snapshot");
+                }
+
+                freezePayload ??= FrozenLedgerBaseViewReader.DecodeFreezePayload(
+                    payload,
+                    schemaVersion);
+                var descriptorPath = RepoPath.CreateKnown(freezePayload.DescriptorSelector);
 
                 events.Add(new DagLedgerFileEvent(
                     file.Path,
@@ -121,7 +131,11 @@ public static class FrozenAcceptedEventLoader
                     eventType,
                     payload,
                     schemaVersion,
-                    input));
+                    descriptorPath,
+                    FrozenContentAddress.ComputeFrozenNodeId(
+                        descriptorPath,
+                        freezePayload.StatementId,
+                        freezePayload.PrerequisiteFrozenNodeIds)));
             }
 
             return new DagLedgerFilesLoadOutcome.Loaded(events.ToImmutable());

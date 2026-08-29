@@ -71,10 +71,19 @@ jobs:
           IFS='|' read -r -a required_checks <<< "$REQUIRED_CHECKS"
           # Pick the most recent protected-dev commit whose required gates are all green.
           # This survives dev churn: rather than betting on one specific tip (whose gates may
-          # still be running, or may have failed), scan recent dev history newest-first and
-          # publish the newest already gate-verified commit. Every scheduled run makes progress
-          # without depending on the state of a single commit; provenance stays bound to the
-          # exact gate-verified source_commit chosen here.
+          # still be running, or may have failed — flaky dev-push reruns do happen), scan recent
+          # dev history newest-first and publish the newest already gate-verified commit. Every
+          # scheduled run makes progress without depending on the state of a single commit.
+          #
+          # The GHCR provenance verify gate binds to GITHUB_SHA (publisher-run authenticity: the
+          # real publish workflow, on dev, produced this OCI digest). It is NOT the source-of-truth
+          # for the bundle's SOURCE commit: attest-build-provenance can only stamp GITHUB_SHA, and
+          # by design (see tools/Trureturing.Truth/Release/{TruthReleaseVerification,VerifiedTruthRelease}.cs
+          # and Sha256Sums.cs) a consumer establishes source provenance INDEPENDENTLY — the
+          # source_commit is carried in the integrity-bound bundle manifest, and the consumer
+          # re-queries that commit's required checks and re-derives the bundle. So walk-back need
+          # not equal GITHUB_SHA; the publish job additionally composition-checks source_commit
+          # against the bundle manifests before mirroring.
           recent_shas="$(gh api "repos/${GITHUB_REPOSITORY}/commits?sha=dev&per_page=40" --jq '.[].sha')"
           source_commit=''
           for candidate in $recent_shas; do
@@ -578,7 +587,7 @@ jobs:
           if gh attestation verify "oci://${SUBJECT_REFERENCE}" \
             --repo "$GITHUB_REPOSITORY" \
             --signer-workflow "$GITHUB_REPOSITORY/.github/workflows/truth-release-publish.yml" \
-            --source-digest "$SOURCE_COMMIT" \
+            --source-digest "$GITHUB_SHA" \
             --source-ref 'refs/heads/dev' \
             --format json > "$RUNNER_TEMP/provenance-verified.json"; then
             printf 'needed=false\n' >> "$GITHUB_OUTPUT"
@@ -609,7 +618,7 @@ jobs:
             if gh attestation verify "oci://${SUBJECT_REFERENCE}" \
               --repo "$GITHUB_REPOSITORY" \
               --signer-workflow "$GITHUB_REPOSITORY/.github/workflows/truth-release-publish.yml" \
-              --source-digest "$SOURCE_COMMIT" \
+              --source-digest "$GITHUB_SHA" \
               --source-ref 'refs/heads/dev' \
               --format json > "$RUNNER_TEMP/provenance-final.json"; then
               printf 'OCI_PROVENANCE status=verified subject=%s@%s\n' "$OCI_REPOSITORY" "$SUBJECT_DIGEST"

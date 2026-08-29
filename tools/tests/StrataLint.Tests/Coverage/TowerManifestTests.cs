@@ -14,7 +14,7 @@ public sealed class TowerManifestTests
             Component("baseline", "ci-jobs", ["baseline-admission"], "bootstrap-pr-1"));
         var snapshot = Snapshot(
             (RuleFixture.WorkflowPath, "jobs:\n  other-job:\n    name: Other\n"),
-            GenesisFile());
+            LedgerAnchorFile());
         var catalog = Catalog(RuleId.CreateKnown(1));
 
         var outcome = TowerManifestValidator.Validate(syntax, snapshot, catalog);
@@ -36,7 +36,7 @@ public sealed class TowerManifestTests
             Component("baseline", "ci-jobs", ["baseline-admission"], "bootstrap-pr-1"));
         var snapshot = Snapshot(
             (RuleFixture.WorkflowPath, "jobs:\n  baseline-admission:\n    name: Baseline\n"),
-            GenesisFile());
+            LedgerAnchorFile());
         var catalog = Catalog(RuleId.CreateKnown(1));
 
         var outcome = TowerManifestValidator.Validate(syntax, snapshot, catalog);
@@ -62,7 +62,7 @@ public sealed class TowerManifestTests
                   baseline-admission:
                     name: Content-addressed dev baseline admission
                 """),
-            GenesisFile());
+            LedgerAnchorFile());
 
         var accepted = Assert.IsType<TowerValidationOutcome.Accepted>(
             TowerManifestValidator.Validate(syntax, snapshot, Catalog(RuleId.CreateKnown(1))));
@@ -156,7 +156,7 @@ public sealed class TowerManifestTests
         // Without the structural rejection the actual pass reports
         // "verified: repository files=0" for a component that guards nothing.
         Assert.IsType<TowerValidationOutcome.Rejected>(
-            TowerManifestValidator.Validate(syntax, Snapshot(GenesisFile()), Catalog()));
+            TowerManifestValidator.Validate(syntax, Snapshot(LedgerAnchorFile()), Catalog()));
     }
 
     [Fact]
@@ -230,10 +230,10 @@ public sealed class TowerManifestTests
         return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
     }
 
-    private static (string Path, string Text) GenesisFile() => (
+    private static (string Path, string Text) LedgerAnchorFile() => (
         FrozenLedgerChangeClassifier.AcceptedRoot
             + "/fc2ee6be0dd3cabb9b6a9118592671c9d5a81f691b7b4ad07674d9c3037ce262.json",
-        "{\"event_hash\":\"sha256:fc2ee6be0dd3cabb9b6a9118592671c9d5a81f691b7b4ad07674d9c3037ce262\",\"event_type\":\"Genesis\"}\n");
+        "{\"event_hash\":\"sha256:fc2ee6be0dd3cabb9b6a9118592671c9d5a81f691b7b4ad07674d9c3037ce262\",\"event_type\":\"Freeze\"}\n");
 
     private sealed class TowerRule : IRepositoryRule
     {

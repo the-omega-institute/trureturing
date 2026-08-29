@@ -3,34 +3,16 @@ using Dunet;
 
 namespace StrataLint.Engine;
 
-public sealed record FrozenLedgerInput(
-    string BaseCommitOid,
-    string BaseTreeOid,
-    string DescriptorBlobOid,
-    string DescriptorSelector,
-    ImmutableArray<string> SupportingBlobOids);
-
 public sealed record FrozenFreezePayload(
-    string CaseId,
+    string DescriptorSelector,
     ImmutableArray<FrozenDeclarationStatement> DeclarationStatementIds,
-    FrozenNodeId FrozenNodeId,
-    FrozenLedgerInput Input,
     ImmutableArray<FrozenNodeId> PrerequisiteFrozenNodeIds,
-    StatementId StatementId,
-    WitnessId WitnessId)
+    StatementId StatementId)
 {
-    public ImmutableArray<string> AxiomClosure { get; init; }
-
-    internal bool HasAxiomClosure => !AxiomClosure.IsDefault;
+    public string CaseId => FrozenLedgerCanonicalWriter.CaseId(
+        RepoPath.CreateKnown(DescriptorSelector),
+        StatementId);
 }
-
-public sealed record FrozenRevokePayload(
-    ImmutableArray<string> AffectedCaseIds,
-    ImmutableArray<FrozenNodeId> AffectedFrozenNodeIds,
-    string ClosureHash,
-    ImmutableArray<RevocationEvidence> Evidence,
-    string GraphRoot,
-    ImmutableArray<string> RootCaseIds);
 
 public sealed class FrozenLedgerConsistent
 {
@@ -41,7 +23,6 @@ public sealed class FrozenLedgerConsistent
         string graphRoot,
         ImmutableDictionary<string, FrozenActiveEntry> activeEntries,
         ImmutableHashSet<string> allCaseIds,
-        ImmutableHashSet<FrozenNodeId> revokedFrozenNodeIds,
         ImmutableHashSet<string> eventHashes,
         int eventCount)
     {
@@ -51,7 +32,6 @@ public sealed class FrozenLedgerConsistent
         GraphRoot = graphRoot;
         ActiveEntries = activeEntries;
         AllCaseIds = allCaseIds;
-        RevokedFrozenNodeIds = revokedFrozenNodeIds;
         EventHashes = eventHashes;
         EventCount = eventCount;
     }
@@ -63,8 +43,6 @@ public sealed class FrozenLedgerConsistent
     public string CorpusRoot { get; }
 
     public string GraphRoot { get; }
-
-    public ImmutableHashSet<FrozenNodeId> RevokedFrozenNodeIds { get; }
 
     internal ImmutableDictionary<string, FrozenActiveEntry> ActiveEntries { get; }
 
@@ -81,7 +59,6 @@ public sealed class FrozenLedgerConsistent
         string graphRoot,
         ImmutableDictionary<string, FrozenActiveEntry> activeEntries,
         ImmutableHashSet<string> allCaseIds,
-        ImmutableHashSet<FrozenNodeId> revokedFrozenNodeIds,
         ImmutableHashSet<string> eventHashes,
         int eventCount) =>
         new(
@@ -91,7 +68,6 @@ public sealed class FrozenLedgerConsistent
             graphRoot,
             activeEntries,
             allCaseIds,
-            revokedFrozenNodeIds,
             eventHashes,
             eventCount);
 }
@@ -99,8 +75,7 @@ public sealed class FrozenLedgerConsistent
 internal sealed record FrozenActiveEntry(
     FrozenNodeMaterial Material,
     FrozenFreezePayload Payload,
-    string LastAttestationEventHash,
-    bool AxiomClosureKnown = true);
+    string EventHash);
 
 [Union(EnableImplicitConversions = false)]
 public partial record FrozenLedgerValidationOutcome

@@ -50,6 +50,33 @@ public sealed class FrozenLedgerDeltaPredicateTests
         Assert.True(FrozenLedgerDeltaPredicate.HasLedgerDelta(changes, producerClosure));
     }
 
+    [Theory]
+    [InlineData("lean-toolchain")]
+    [InlineData("lakefile.toml")]
+    [InlineData("lakefile.lean")]
+    [InlineData("lake-manifest.json")]
+    public void EnvironmentInputChangeExpandsAdmissionScopeToEveryFrozenModule(string path)
+    {
+        var catalog = FrozenLedgerTestData.BuildCatalog(
+            FrozenLedgerTestData.Module("A"),
+            FrozenLedgerTestData.Module("B"));
+        var baseView = FrozenLedgerTestData.BaseView(catalog);
+        var preparation = new FrozenLedgerAdmissionPreparation(
+            baseView,
+            [],
+            ImmutableHashSet<string>.Empty);
+
+        var scope = FrozenLedgerAdmissionScope.Create(
+            RawChangeSet.CreateWithKinds([(path, RawChangeKind.Modified)]),
+            preparation,
+            catalog.States,
+            catalog.Adjacency);
+
+        Assert.Equal(
+            catalog.ClosedNodes.Select(static node => node.RepoPath).OrderBy(static item => item.Value),
+            scope.Paths.OrderBy(static item => item.Value));
+    }
+
     [Fact]
     public void UnrelatedCandidateBytesDoNotAuthorizeLedgerWork()
     {

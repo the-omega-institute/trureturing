@@ -30,8 +30,14 @@ internal static class DagLedgerCommandPreparation
         string repositoryRoot,
         IRepositoryGateway repository,
         string candidateLeanReport,
-        string? changeBase = null) =>
-        Prepare(repositoryRoot, repository, new FileLeanReportSource(candidateLeanReport), changeBase);
+        string? changeBase = null,
+        ImmutableArray<RepositoryFile> trustedBaselineFiles = default) =>
+        Prepare(
+            repositoryRoot,
+            repository,
+            new FileLeanReportSource(candidateLeanReport),
+            changeBase,
+            trustedBaselineFiles);
 
     /// Same preparation, with the raw report supplied by the caller rather than read from a path.
     /// Callers that already hold an ILeanReportSource (the CLI environment does) get the
@@ -47,9 +53,15 @@ internal static class DagLedgerCommandPreparation
         string repositoryRoot,
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
-        string? changeBase = null)
+        string? changeBase = null,
+        ImmutableArray<RepositoryFile> trustedBaselineFiles = default)
     {
-        var candidate = PrepareCandidate(repositoryRoot, repository, leanReportSource, changeBase);
+        var candidate = PrepareCandidate(
+            repositoryRoot,
+            repository,
+            leanReportSource,
+            changeBase,
+            trustedBaselineFiles);
         var baseline = candidate.BaseView.ToWriterBaseline();
         return new DagLedgerCommandContext(
             candidate.LedgerPath,
@@ -65,14 +77,18 @@ internal static class DagLedgerCommandPreparation
         string repositoryRoot,
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
-        string? changeBase = null)
+        string? changeBase = null,
+        ImmutableArray<RepositoryFile> trustedBaselineFiles = default)
     {
         var ledgerPath = Path.Combine(
             repositoryRoot,
             FrozenLedgerChangeClassifier.AcceptedRoot.Replace('/', Path.DirectorySeparatorChar));
         var baselineFiles = ReadLedgerDirectoryFiles(ledgerPath);
+        var trustedFiles = trustedBaselineFiles.IsDefault
+            ? baselineFiles
+            : trustedBaselineFiles;
         var baseView = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
-            baselineFiles.ToImmutableDictionary(static file => file.Path)));
+            trustedFiles.ToImmutableDictionary(static file => file.Path)));
         var truth = BuildLeanTruth(repository, leanReportSource);
         var snapshot = truth.Snapshot;
         var report = truth.Report;
@@ -111,20 +127,7 @@ internal static class DagLedgerCommandPreparation
         RawChangeSet changes,
         FrozenRevisionIdentity currentIdentity)
     {
-        var environment = BuildEnvironment(
-            snapshot,
-            baseView.Origin.CommitOid,
-            baseView.Origin.TreeOid);
-        if (currentIdentity.CommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
-            != environment.OriginCommitOid.StartsWith("git-sha256:", StringComparison.Ordinal))
-        {
-            throw new InvalidOperationException(
-                "current revision and frozen Genesis use different Git hash algorithms");
-        }
-
-        var algorithm = environment.OriginCommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
-            ? HashAlgorithmName.SHA256
-            : HashAlgorithmName.SHA1;
+        _ = currentIdentity;
         var states = LeanTruthStates.Resolve(snapshot, lean);
         var adjacency = LeanImportAdjacency.Build(snapshot, lean);
         var closedPaths = states
@@ -134,7 +137,6 @@ internal static class DagLedgerCommandPreparation
         var changedPaths = changes.Paths.ToImmutableHashSet();
         var selectedPaths = closedPaths
             .Where(path => !baseView.ActiveByPath.TryGetValue(path, out var entry)
-                || !entry.AxiomClosureKnown
                 || changedPaths.Contains(path))
             .ToHashSet();
         foreach (var path in LeanImportAdjacency.DependenciesFirst(closedPaths, adjacency)
@@ -146,25 +148,11 @@ internal static class DagLedgerCommandPreparation
             }
         }
 
-        var attestations = closedPaths
-            .Where(selectedPaths.Contains)
-            .Select(node => new FrozenModuleAttestation(
-                node,
-                FrozenContentAddress.ComputeGitBlobOid(
-                    snapshot.Files[node].RawBytes.AsSpan(),
-                    algorithm))
-            {
-                BaseCommitOid = currentIdentity.CommitOid,
-                BaseTreeOid = currentIdentity.TreeOid,
-            })
-            .ToImmutableArray();
         return FrozenContentAddress.BuildAdmissionCatalog(
             snapshot,
             lean,
             states,
             adjacency,
-            environment,
-            attestations,
             selectedPaths,
             baseView.ActiveByPath.ToDictionary(
                 static item => item.Key,
@@ -180,40 +168,12 @@ internal static class DagLedgerCommandPreparation
         FrozenLedgerAdmissionScope scope,
         FrozenRevisionIdentity currentIdentity)
     {
-        var environment = BuildEnvironment(
-            snapshot,
-            baseView.Origin.CommitOid,
-            baseView.Origin.TreeOid);
-        if (currentIdentity.CommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
-            != environment.OriginCommitOid.StartsWith("git-sha256:", StringComparison.Ordinal))
-        {
-            throw new InvalidOperationException(
-                "current revision and frozen Genesis use different Git hash algorithms");
-        }
-
-        var algorithm = environment.OriginCommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
-            ? HashAlgorithmName.SHA256
-            : HashAlgorithmName.SHA1;
-        var attestations = states
-            .Where(item => item.Value is TruthState.Closed
-                && scope.Paths.Contains(item.Key))
-            .Select(node => new FrozenModuleAttestation(
-                node.Key,
-                FrozenContentAddress.ComputeGitBlobOid(
-                    snapshot.Files[node.Key].RawBytes.AsSpan(),
-                    algorithm))
-            {
-                BaseCommitOid = currentIdentity.CommitOid,
-                BaseTreeOid = currentIdentity.TreeOid,
-            })
-            .ToImmutableArray();
+        _ = currentIdentity;
         return FrozenContentAddress.BuildAdmissionCatalog(
             snapshot,
             lean,
             states,
             adjacency,
-            environment,
-            attestations,
             scope.Paths,
             baseView.ActiveByPath.ToDictionary(
                 static item => item.Key,
@@ -231,33 +191,9 @@ internal static class DagLedgerCommandPreparation
         FrozenLedgerBaseView baseView,
         FrozenRevisionIdentity currentIdentity)
     {
-        var environment = BuildEnvironment(
-            snapshot,
-            baseView.Origin.CommitOid,
-            baseView.Origin.TreeOid);
-        if (currentIdentity.CommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
-            != environment.OriginCommitOid.StartsWith("git-sha256:", StringComparison.Ordinal))
-        {
-            throw new InvalidOperationException(
-                "current revision and frozen Genesis use different Git hash algorithms");
-        }
-
-        var algorithm = environment.OriginCommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
-            ? HashAlgorithmName.SHA256
-            : HashAlgorithmName.SHA1;
-        var attestations = states
-            .Where(static item => item.Value is TruthState.Closed)
-            .Select(item => new FrozenModuleAttestation(
-                item.Key,
-                FrozenContentAddress.ComputeGitBlobOid(
-                    snapshot.Files[item.Key].RawBytes.AsSpan(),
-                    algorithm))
-            {
-                BaseCommitOid = currentIdentity.CommitOid,
-                BaseTreeOid = currentIdentity.TreeOid,
-            })
-            .ToImmutableArray();
-        return FrozenContentAddress.Build(snapshot, lean, states, adjacency, environment, attestations) switch
+        _ = baseView;
+        _ = currentIdentity;
+        return FrozenContentAddress.Build(snapshot, lean, states, adjacency) switch
         {
             FrozenMaterialOutcome.Accepted accepted => accepted.Capability,
             FrozenMaterialOutcome.Rejected rejected => throw new InvalidOperationException(
@@ -412,29 +348,6 @@ internal static class DagLedgerCommandPreparation
         return ordered;
     }
 
-    internal static TrustedFrozenGitReferences ValidateSuffixReferences(
-        IRepositoryGateway repository,
-        ImmutableArray<DagLedgerFileEvent> events,
-        string label)
-    {
-        var references = ScanSuffixReferences(events, label);
-        return references.CommitOids.IsEmpty
-            && references.TreeOids.IsEmpty
-            && references.BlobOids.IsEmpty
-                ? TrustedFrozenGitReferences.CreateForTrustedAdapter([])
-                : repository.ValidateFrozenReferences(references);
-    }
-
-    internal static FrozenLedgerReferenceSet ScanSuffixReferences(
-        ImmutableArray<DagLedgerFileEvent> events,
-        string label) => FrozenLedger.ScanReferences(events) switch
-        {
-            FrozenLedgerReferenceScanOutcome.Accepted accepted => accepted.References,
-            FrozenLedgerReferenceScanOutcome.Rejected rejected => throw new InvalidOperationException(
-                label + " fields are invalid: " + rejected.Message),
-            _ => throw new InvalidOperationException("unknown ledger reference scan outcome"),
-        };
-
     internal static ImmutableArray<DagLedgerFileEvent> ValidateGeneratedEventFiles(
         FrozenLedgerBaseView baseView,
         ImmutableArray<RepositoryFile> files,
@@ -458,39 +371,6 @@ internal static class DagLedgerCommandPreparation
         }
 
         return ordered;
-    }
-
-    private static FrozenEnvironmentAttestation BuildEnvironment(
-        RepositorySnapshot snapshot,
-        string originCommit,
-        string originTree)
-    {
-        if (!snapshot.TryGetFile("lean-toolchain", out var toolchain)
-            || !snapshot.TryGetFile("lake-manifest.json", out var manifest))
-        {
-            throw new InvalidOperationException("pinned Lean environment files are missing");
-        }
-
-        var algorithm = originCommit.StartsWith("git-sha256:", StringComparison.Ordinal)
-            ? HashAlgorithmName.SHA256
-            : HashAlgorithmName.SHA1;
-        var lakefiles = new[] { "lakefile.toml", "lakefile.lean" }
-            .Where(path => snapshot.TryGetFile(path, out _))
-            .ToArray();
-        var result = new FrozenEnvironmentAttestation(
-            originCommit,
-            originTree,
-            FrozenContentAddress.ComputeGitBlobOid(toolchain.RawBytes.AsSpan(), algorithm),
-            FrozenContentAddress.ComputeGitBlobOid(manifest.RawBytes.AsSpan(), algorithm));
-        return lakefiles.Length == 1
-            ? result with
-            {
-                LakefilePath = lakefiles[0],
-                LakefileBlobOid = FrozenContentAddress.ComputeGitBlobOid(
-                snapshot.Files[RepoPath.CreateKnown(lakefiles[0])].RawBytes.AsSpan(),
-                algorithm),
-            }
-            : result;
     }
 
     /// Bytes that will not decode are a fault in the repository we were handed, not a verdict about
