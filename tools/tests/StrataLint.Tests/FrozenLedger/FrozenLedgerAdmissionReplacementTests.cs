@@ -16,7 +16,7 @@ public sealed partial class FrozenLedgerTests
         var legacyFiles = LegacyEventFiles(catalog, schemaVersion: 4);
         var v5Files = EventFiles(catalog);
 
-        var failure = ValidateAdmissionReplacement(
+        var failure = ValidateAdmissionReplacementFiles(
             legacyFiles,
             v5Files,
             EntireReplacementChanges(legacyFiles, v5Files),
@@ -33,7 +33,7 @@ public sealed partial class FrozenLedgerTests
         var legacyFiles = LegacyEventFiles(recordedCatalog, schemaVersion: 4);
         var v5Files = EventFiles(candidateCatalog);
 
-        var failure = ValidateAdmissionReplacement(
+        var failure = ValidateAdmissionReplacementFiles(
             legacyFiles,
             v5Files,
             EntireReplacementChanges(legacyFiles, v5Files),
@@ -52,7 +52,7 @@ public sealed partial class FrozenLedgerTests
             .Add(WithHistoricalEventHash(Assert.Single(EventFiles(catalogB)), "mixed v5 base"));
         var v5Files = EventFiles(candidateCatalog);
 
-        var failure = ValidateAdmissionReplacement(
+        var failure = ValidateAdmissionReplacementFiles(
             baseFiles,
             v5Files,
             EntireReplacementChanges(baseFiles, v5Files),
@@ -80,7 +80,7 @@ public sealed partial class FrozenLedgerTests
         ]);
 
         var preparation = Prepare(legacyFiles, candidateFiles, changes);
-        var failure = ValidateAdmissionReplacement(preparation, changes, catalog);
+        var failure = ValidatePreparedAdmissionReplacement(preparation, changes, catalog);
 
         Assert.Null(preparation.Replacement);
         AssertReuseRejected(failure);
@@ -102,7 +102,7 @@ public sealed partial class FrozenLedgerTests
         ]);
 
         var preparation = Prepare(legacyFiles, candidateFiles, changes);
-        var failure = ValidateAdmissionReplacement(preparation, changes, catalog);
+        var failure = ValidatePreparedAdmissionReplacement(preparation, changes, catalog);
 
         Assert.Null(preparation.Replacement);
         AssertReuseRejected(failure);
@@ -130,7 +130,7 @@ public sealed partial class FrozenLedgerTests
         ]);
 
         var preparation = Prepare(legacyFiles, candidateFiles, changes);
-        var failure = ValidateAdmissionReplacement(preparation, changes, catalog);
+        var failure = ValidatePreparedAdmissionReplacement(preparation, changes, catalog);
 
         Assert.Null(preparation.Replacement);
         AssertReuseRejected(failure);
@@ -152,7 +152,7 @@ public sealed partial class FrozenLedgerTests
         ]);
 
         var preparation = Prepare(legacyFiles, candidateFiles, changes);
-        var failure = ValidateAdmissionReplacement(preparation, changes, catalog);
+        var failure = ValidatePreparedAdmissionReplacement(preparation, changes, catalog);
 
         Assert.NotNull(preparation.Replacement);
         Assert.Null(failure);
@@ -169,7 +169,7 @@ public sealed partial class FrozenLedgerTests
         var legacyFiles = LegacyEventFiles(recordedCatalog, schemaVersion: 4);
         var v5Files = EventFiles(candidateCatalog);
 
-        var failure = ValidateAdmissionReplacement(
+        var failure = ValidateAdmissionReplacementFiles(
             legacyFiles,
             v5Files,
             EntireReplacementChanges(legacyFiles, v5Files),
@@ -197,7 +197,7 @@ public sealed partial class FrozenLedgerTests
         var legacyFiles = LegacyEventFiles(recordedCatalog, schemaVersion: 4);
         var v5Files = EventFiles(candidateCatalog);
 
-        var failure = ValidateAdmissionReplacement(
+        var failure = ValidateAdmissionReplacementFiles(
             legacyFiles,
             v5Files,
             EntireReplacementChanges(legacyFiles, v5Files),
@@ -216,7 +216,7 @@ public sealed partial class FrozenLedgerTests
         var changes = RawChangeSet.CreateWithKinds(
             v5Files.Select(static file => (file.Path.Value, RawChangeKind.Added)));
 
-        var failure = ValidateAdmissionReplacement(
+        var failure = ValidateAdmissionReplacementFiles(
             legacyFiles,
             candidateFiles,
             changes,
@@ -250,17 +250,17 @@ public sealed partial class FrozenLedgerTests
         AssertReuseRejected(denied);
     }
 
-    private static FrozenLedgerAdmissionFailure? ValidateAdmissionReplacement(
+    private static FrozenLedgerAdmissionFailure? ValidateAdmissionReplacementFiles(
         ImmutableArray<RepositoryFile> baseFiles,
         ImmutableArray<RepositoryFile> candidateFiles,
         RawChangeSet changes,
         FrozenMaterialCatalog catalog) =>
-        ValidateAdmissionReplacement(
+        ValidatePreparedAdmissionReplacement(
             Prepare(baseFiles, candidateFiles, changes),
             changes,
             catalog);
 
-    private static FrozenLedgerAdmissionFailure? ValidateAdmissionReplacement(
+    private static FrozenLedgerAdmissionFailure? ValidatePreparedAdmissionReplacement(
         FrozenLedgerAdmissionPreparation preparation,
         RawChangeSet changes,
         FrozenMaterialCatalog catalog)
