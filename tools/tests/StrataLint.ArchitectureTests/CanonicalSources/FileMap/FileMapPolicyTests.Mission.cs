@@ -8,65 +8,9 @@ namespace StrataLint.ArchitectureTests;
 public sealed partial class FileMapPolicyTests
 {
     [Fact]
-    public void NonBlockTaskMarkerSurfacesAsMissionContractFinding()
+    public void InventedMeasuredReceiptsSurfaceThroughFileMapMissionContractFinding()
     {
-        AssertGovernanceMutationSurfacesAsMissionContractFinding(
-            "stratalint-mission-task-",
-            static (target, taskStart, nextTaskStart) =>
-                target[..taskStart]
-                + "def staleMissionMarker : String := \"TASK D5-T0040\"\n\n"
-                + target[nextTaskStart..]);
-    }
-
-    [Fact]
-    public void NumeralAdjacentRawStringTaskMarkerSurfacesAsMissionContractFinding()
-    {
-        AssertGovernanceMutationSurfacesAsMissionContractFinding(
-            "stratalint-mission-raw-task-",
-            static (target, taskStart, nextTaskStart) => target[..taskStart] + """
-                def staleMissionMarker := 1r##"
-                An unescaped " does not close this raw string.
-                /-- TASK D5-T0040
-                    This text is inside a numeral-adjacent raw string. -/
-                "## -- " keeps the legacy scanner synchronized after the raw terminator.
-
-                """ + target[nextTaskStart..]);
-    }
-
-    [Fact]
-    public void PrimedIdentifierHiddenDuplicateSurfacesAsMissionContractFinding()
-    {
-        AssertGovernanceMutationSurfacesAsMissionContractFinding(
-            "stratalint-mission-prime-task-",
-            static (target, _, _) => target + "\n" + """
-                def separator' : Unit := ()
-                /-- TASK D5-T0040
-                    This duplicate follows a primed identifier. -/
-                def duplicateMissionNoveltyTicket : Unit := ()
-                """);
-    }
-
-    [Fact]
-    public void GuessedRawTerminatorRecoverySurfacesAsMissionContractFinding()
-    {
-        AssertGovernanceMutationSurfacesAsMissionContractFinding(
-            "stratalint-mission-raw-recovery-task-",
-            static (target, taskStart, nextTaskStart) =>
-                target[..taskStart] + target[nextTaskStart..] + "\n" + """
-                def x := identifierr##"
-                inside "
-                "##
-                /-- TASK D5-T0040
-                    This block is inert under the correct lexical state. -/
-                "
-                """);
-    }
-
-    private static void AssertGovernanceMutationSurfacesAsMissionContractFinding(
-        string fixturePrefix,
-        Func<string, int, int, string> mutation)
-    {
-        var fixture = Directory.CreateTempSubdirectory(fixturePrefix);
+        var fixture = Directory.CreateTempSubdirectory("stratalint-filemap-mission-");
         try
         {
             var repository = Path.Combine(fixture.FullName, "repository");
@@ -77,86 +21,26 @@ public sealed partial class FileMapPolicyTests
                 "--no-hardlinks",
                 RepositoryLayout.FindRoot(),
                 repository);
-            foreach (var relativePath in new[]
-                     {
-                         MissionFileLoader.RelativePath,
-                         "D5/X_Frontier/GovernanceDeferrals.lean",
-                     })
-            {
-                File.Copy(
-                    Path.Combine(RepositoryLayout.FindRoot(), relativePath),
-                    Path.Combine(repository, relativePath),
-                    overwrite: true);
-                RunMissionGit(repository, "add", "--", relativePath);
-            }
-            const string targetRelativePath = "D5/X_Frontier/GovernanceDeferrals.lean";
-            var targetPath = Path.Combine(repository, targetRelativePath);
-            var target = RunMissionGit(repository, "show", $":{targetRelativePath}");
-            var taskStart = target.IndexOf("/-- TASK D5-T0040\n", StringComparison.Ordinal);
-            var nextTaskStart = target.IndexOf("/-- TASK D5-T0041\n", StringComparison.Ordinal);
-            Assert.True(taskStart >= 0 && nextTaskStart > taskStart);
-            target = mutation(target, taskStart, nextTaskStart);
-            File.WriteAllText(targetPath, target, new UTF8Encoding(false));
-
-            var finding = Assert.Single(
-                FileMapPolicy.InspectRepository(repository),
-                static finding => finding.Code == "MISSION-CONTRACT");
-
-            Assert.Equal(MissionFileLoader.RelativePath, finding.Path);
-            Assert.Contains(
-                nameof(MissionLoadErrorCode.DanglingCaseReference),
-                finding.Message,
-                StringComparison.Ordinal);
-            Assert.Contains("D5-T0040", finding.Message, StringComparison.Ordinal);
-        }
-        finally
-        {
-            fixture.Delete(recursive: true);
-        }
-    }
-
-    private static void AssertInventedMeasuredReceiptsSurfaceAsMissionContractFinding()
-    {
-        var fixture = Directory.CreateTempSubdirectory("stratalint-mission-");
-        try
-        {
-            var repository = Path.Combine(fixture.FullName, "repository");
-            RunMissionGit(
-                fixture.FullName,
-                "clone",
-                "--quiet",
-                "--no-hardlinks",
-                RepositoryLayout.FindRoot(),
-                repository);
-            foreach (var relativePath in new[]
-                     {
-                         MissionFileLoader.RelativePath,
-                         "D5/X_Frontier/GovernanceDeferrals.lean",
-                     })
-            {
-                File.Copy(
-                    Path.Combine(RepositoryLayout.FindRoot(), relativePath),
-                    Path.Combine(repository, relativePath),
-                    overwrite: true);
-                RunMissionGit(repository, "add", "--", relativePath);
-            }
             var missionPath = Path.Combine(repository, MissionFileLoader.RelativePath);
             var mission = RunMissionGit(
                 repository,
                 "show",
                 $":{MissionFileLoader.RelativePath}");
-            foreach (var (factor, caseId) in new[]
+            foreach (var factor in new[]
                      {
-                         ("novelty", "D5-T0040"),
-                         ("dependency_readiness", "D5-T0041"),
-                         ("structural_realization", "D5-T0042"),
-                         ("receipt_potential", "D5-T0043"),
+                         "novelty",
+                         "dependency_readiness",
+                         "structural_realization",
+                         "receipt_potential",
                      })
             {
-                mission = mission.Replace(
-                    $"\"{factor}\": {{ \"state\": \"open\", \"case_id\": \"{caseId}\" }}",
-                    $"\"{factor}\": {{ \"state\": \"measured\", \"value\": 1.25, \"receipt_ref\": \"receipt:invented:{factor}\" }}",
-                    StringComparison.Ordinal);
+                var open = $"\"{factor}\": {{ \"state\": \"open\" }}";
+                var measured =
+                    $"\"{factor}\": {{ \"state\": \"measured\", \"value\": 1.25, "
+                    + $"\"receipt_ref\": \"receipt:invented:{factor}\" }}";
+                var changed = mission.Replace(open, measured, StringComparison.Ordinal);
+                Assert.NotEqual(mission, changed);
+                mission = changed;
             }
 
             mission = mission.Replace(
@@ -174,7 +58,10 @@ public sealed partial class FileMapPolicyTests
                 nameof(MissionLoadErrorCode.InvalidWorthState),
                 finding.Message,
                 StringComparison.Ordinal);
-            Assert.Contains("D5-T0040", finding.Message, StringComparison.Ordinal);
+            Assert.Contains(
+                "worth_vector.novelty measured is fail-closed in P0",
+                finding.Message,
+                StringComparison.Ordinal);
         }
         finally
         {

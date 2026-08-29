@@ -157,8 +157,10 @@ internal static partial class DigestionLedgerAligner
 
     private static HashSet<string> InheritedEntries(
         BackfillInventoryDocument? baselineDocument) =>
-        (baselineDocument?.RequireDigestionEntries() ?? [])
-            .Select(CanonicalEntry)
+        (baselineDocument?.RequireDigestionSources() ?? [])
+            .SelectMany(source => source.Entries.Select(entry => CanonicalEntry(
+                source,
+                entry)))
             .ToHashSet(StringComparer.Ordinal);
 
     internal static bool FingerprintsMatch(DigestionFingerprints left, DigestionFingerprints right) =>

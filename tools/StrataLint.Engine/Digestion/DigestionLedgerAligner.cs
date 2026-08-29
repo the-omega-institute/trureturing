@@ -169,9 +169,12 @@ internal static partial class DigestionLedgerAligner
         var cas = casEvaluation ?? DigestionCasStore.Evaluate(document, snapshot, changes);
         findings.AddRange(cas.Findings);
         var inheritedEntries = InheritedEntries(baselineDocument);
-        foreach (var entry in document.RequireDigestionEntries()
-                     .Where(entry => cas.ValidAtomIds.Contains(entry.AtomId)
-                         && inheritedEntries.Contains(CanonicalEntry(entry))))
+        foreach (var (source, entry) in sources.SelectMany(source =>
+                     source.Entries.Select(entry => (Source: source, Entry: entry)))
+                     .Where(item => cas.ValidAtomIds.Contains(item.Entry.AtomId)
+                         && inheritedEntries.Contains(CanonicalEntry(
+                             item.Source,
+                             item.Entry))))
         {
             var path = DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..];
             if (snapshot.TryGetFile(path, out var blob))
@@ -242,7 +245,9 @@ internal static partial class DigestionLedgerAligner
                             && entry.Boundary is not null
                                 ? DigestionReceiptAlignment.LegacyBoundary
                                 : cas.ValidAtomIds.Contains(entry.AtomId)
-                                    && inheritedEntries.Contains(CanonicalEntry(entry))
+                                    && inheritedEntries.Contains(CanonicalEntry(
+                                        source,
+                                        entry))
                                     ? DigestionReceiptAlignment.Seen
                                     : DigestionReceiptAlignment.Rejected;
                 }
@@ -266,7 +271,9 @@ internal static partial class DigestionLedgerAligner
                     coarseReplacementObligationsBySource.GetValueOrDefault(source.SourceId, []);
                 var unprovenCasEntries = source.Entries.Where(entry =>
                     cas.ValidAtomIds.Contains(entry.AtomId)
-                    && !inheritedEntries.Contains(CanonicalEntry(entry))).ToArray();
+                    && !inheritedEntries.Contains(CanonicalEntry(
+                        source,
+                        entry))).ToArray();
                 var admissionGenreFinding = AdmissionGenreFinding(
                     mode,
                     snapshot,
