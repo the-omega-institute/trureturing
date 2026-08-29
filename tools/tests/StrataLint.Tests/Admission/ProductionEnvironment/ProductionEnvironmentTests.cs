@@ -562,8 +562,6 @@ internal sealed class FakeRepositoryGateway(
 
     internal List<string> ReadRevisionCalls { get; } = [];
 
-    internal List<FrozenLedgerInput> EnvironmentPinBlobReads { get; } = [];
-
     internal List<string> ReadChangesCalls { get; } = [];
 
     internal List<FrozenLedgerReferenceSet> FrozenReferenceValidations { get; } = [];
@@ -618,37 +616,6 @@ internal sealed class FakeRepositoryGateway(
 
         return WithAtomizerData(
             baseline ?? throw new InvalidOperationException("baseline snapshot should not be read"));
-    }
-
-    public RawRepositorySnapshot ReadEnvironmentPinBlobs(FrozenLedgerInput input)
-    {
-        EnvironmentPinBlobReads.Add(input);
-        if (input.SupportingBlobOids.Length != 2
-            || input.SupportingBlobOids.Distinct(StringComparer.Ordinal).Count() != 2)
-        {
-            throw new InvalidOperationException(
-                "protected semantic pins require exactly two distinct supporting blob OIDs");
-        }
-
-        var pins = (baseline
-                ?? throw new InvalidOperationException("protected semantic pin blobs should not be read"))
-            .Entries
-            .Where(static entry => entry.Path is "lake-manifest.json" or "lean-toolchain")
-            .ToArray();
-        var resolved = pins
-            .Select(static entry => entry.GitBlobOid)
-            .Where(static oid => oid is not null)
-            .Cast<string>()
-            .ToHashSet(StringComparer.Ordinal);
-        if (pins.Length != 2
-            || resolved.Count != 2
-            || !resolved.SetEquals(input.SupportingBlobOids))
-        {
-            throw new InvalidOperationException(
-                "protected supporting blob OIDs do not resolve to lean-toolchain and lake-manifest.json");
-        }
-
-        return RawRepositorySnapshot.Create(pins);
     }
 
     public RawChangeSet ReadCurrentChanges() => changes;
