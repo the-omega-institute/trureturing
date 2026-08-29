@@ -67,8 +67,9 @@ theorem local_global_residual_empty_iff_expressible
       exact impossible.elim
 #print axioms local_global_residual_empty_iff_expressible
 
-example {I : Type u} {V : I -> Type w} {Y : Type z} (target : Empty -> Y) :
-    localGlobalResidual target (fun i x => nomatch x) = ∅ := by
+example {I : Type u} {V : I -> Type w} {Y : Type z} (target : Empty -> Y)
+    (q : forall i, Empty -> V i) :
+    localGlobalResidual target q = ∅ := by
   ext pair
   exact nomatch pair.1
 
@@ -83,6 +84,10 @@ example {I : Type u} {X : Type v} {V : I -> Type w} {Y : Type z}
     localGlobalResidual target (fun i _ => values i) =
       {pair | target pair.1 ≠ target pair.2} := by
   ext pair
-  simp [localGlobalResidual, defectRelation, jointReadout]
+  constructor
+  · rintro ⟨-, targetSeparates⟩
+    exact targetSeparates
+  · intro targetSeparates
+    exact ⟨rfl, targetSeparates⟩
 
 end D5.S3.ConceptDynamics.TargetRisk.LocalGlobalResidualExpressibility
