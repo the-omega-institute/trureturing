@@ -389,8 +389,8 @@ runtime_disposition = "committed-source"
 pattern = "docs/develop/spec/**"
 kind = "data"
 produced_by = "none"
-consumed_by = ["BackfillInventoryLoader"]
-verified_by = ["BackfillInventoryLoader"]
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
