@@ -49,27 +49,91 @@ internal sealed class ConditionalNaturalBoundaryDocument : IScribeDocumentDefini
 
     private static Formula BoundaryAndGateFormula()
     {
+        Formula f = F.Id("f"), scale = F.Id("scale"), height = F.Id("height");
+        Formula tailNonvanishing = F.Id("tailNonvanishing");
+        Formula lineCondition = F.Id("lineCondition");
+        Formula alternateCondition = F.Id("alternateCondition");
+        Formula scaledZeroPattern = F.Id("scaledZeroPattern");
+        Formula tailZeroCollision = F.Id("tailZeroCollision");
+        Formula hscale = F.Id("hscale"), hheight = F.Id("hheight");
+        Formula hpoles = F.Id("hpoles"), hchannels = F.Id("hchannels");
+        Formula target = F.Id("target"), n = F.Id("n");
+        Formula real = F.Seq(F.Mathbb, F.Grp(F.Id("R")));
+        Formula natural = F.Seq(F.Mathbb, F.Grp(F.Id("N")));
+        Formula complex = F.Seq(F.Mathbb, F.Grp(F.Id("C")));
+        Formula proposition = F.Seq(F.Operatorname, F.Grp(F.Id("Prop")));
+        Formula atTop = F.Seq(F.Operatorname, F.Grp(F.Id("atTop")));
         Formula assumptions = F.Seq(
-            F.Id("TailNonvanishing"), F.Sp, F.Land, F.Sp,
-            F.Open, F.Id("LineCondition"), F.Sp, F.Lor, F.Sp,
-            F.Id("AlternateCondition"), F.Close);
-        Formula axisPoint = F.Seq(F.Id("i"), F.Id("t"));
+            tailNonvanishing, F.Sp, F.Land, F.Sp,
+            F.Open, lineCondition, F.Sp, F.Lor, F.Sp, alternateCondition, F.Close);
+        Formula candidate(Formula point, Formula index) => Call(
+            "candidatePoint", scale, Call("height", point), index);
+        Formula pole(Formula point, Formula index) => F.Seq(
+            Call("meromorphicOrderAt", f, candidate(point, index)),
+            F.Sp, F.Lt, F.Sp, F.D(0));
+        Formula channels(Formula point, Formula index) => F.Seq(
+            Call("scaledZeroPattern", point, index), F.Sp, F.Lor, F.Sp,
+            Call("tailZeroCollision", point, index));
+        Formula axisPoint(Formula point) => F.Seq(
+            F.Open, point, F.Colon, F.Sp, complex, F.Close,
+            F.Sp, F.Times, F.Sp, F.Id("I"));
+        Formula analyticAt(Formula point) =>
+            Call("AnalyticAt", complex, f, axisPoint(point));
+        Formula poleInputs = F.Seq(
+            F.Forall, F.Sp, target, F.Colon, F.Sp, real, F.Comma, F.Sp,
+            F.Forall, F.Sp, n, F.Colon, F.Sp, natural, F.Comma, F.Sp,
+            pole(target, n));
+        Formula channelInputs = F.Seq(
+            F.Forall, F.Sp, target, F.Colon, F.Sp, real, F.Comma, F.Sp,
+            F.Forall, F.Sp, n, F.Colon, F.Sp, natural, F.Comma, F.Sp,
+            F.Neg, F.Open, pole(target, n), F.Close, F.Sp, F.Rightarrow, F.Sp,
+            channels(target, n));
         Formula boundary = F.Seq(
             assumptions, F.Sp, F.Rightarrow, F.Sp,
-            F.Forall, F.Sp, F.Id("t"), F.Sp, F.InMacro, F.Sp,
-            F.Mathbb, F.Grp(F.Id("R")), F.Comma, F.Esc,
-            F.Neg, Call("AnalyticAt", F.Id("f"), axisPoint));
+            F.Forall, F.Sp, target, F.Colon, F.Sp, real, F.Comma, F.Sp,
+            F.Neg, analyticAt(target));
         Formula gate = F.Seq(
-            F.Forall, F.Sp, F.Id("t"), F.Sp, F.InMacro, F.Sp,
-            F.Mathbb, F.Grp(F.Id("R")), F.Comma, F.Esc,
-            Call("AnalyticAt", F.Id("f"), axisPoint), F.Sp, F.Rightarrow, F.Sp,
+            F.Forall, F.Sp, target, F.Colon, F.Sp, real, F.Comma, F.Sp,
+            analyticAt(target), F.Sp, F.Rightarrow, F.Sp,
             F.Operatorname, F.Grp(F.Id("Eventually")), F.Underscore,
-            F.Grp(F.Id("n"), F.To, F.Infty), F.Sp, F.Open,
-            Call("ScaledZeroPattern", F.Id("t"), F.Id("n")),
-            F.Sp, F.Lor, F.Sp,
-            Call("TailZeroCollision", F.Id("t"), F.Id("n")), F.Close);
+            F.Grp(n, F.Sp, F.InMacro, F.Sp, atTop), F.Sp,
+            F.Open, channels(target, n), F.Close);
+        Formula normalizedHeight = F.Seq(
+            Call("height", target, n), F.Sp, F.Slash, F.Sp, Call("scale", n));
+        Formula heightLimit = F.Seq(
+            F.Forall, F.Sp, target, F.Colon, F.Sp, real, F.Comma, F.Sp,
+            Call("Tendsto",
+                F.Seq(F.Open, n, F.Colon, F.Sp, natural, F.Sp, F.Mapsto, F.Sp,
+                    normalizedHeight, F.Close),
+                atTop, Call("nhds", target)));
 
-        return F.Disp(F.Seq(F.Open, boundary, F.Close, F.Sp, F.Land, F.RowBreak, gate, F.Dot));
+        return F.Disp(F.Seq(
+            F.Begin, F.Grp(F.Id("aligned")),
+            F.Forall, F.Sp, f, F.Colon, F.Sp,
+            complex, F.Sp, F.To, F.Sp, complex, F.Comma, F.RowBreak, F.Grp(),
+            F.Forall, F.Sp, scale, F.Colon, F.Sp,
+            natural, F.Sp, F.To, F.Sp, real, F.Comma, F.Sp,
+            height, F.Colon, F.Sp,
+            real, F.Sp, F.To, F.Sp, natural, F.Sp, F.To, F.Sp, real,
+            F.Comma, F.RowBreak, F.Grp(),
+            F.Forall, F.Sp, tailNonvanishing, F.Comma, F.Sp, lineCondition,
+            F.Comma, F.Sp, alternateCondition, F.Colon, F.Sp, proposition,
+            F.Comma, F.RowBreak, F.Grp(),
+            F.Forall, F.Sp, scaledZeroPattern, F.Comma, F.Sp, tailZeroCollision,
+            F.Colon, F.Sp, real, F.Sp, F.To, F.Sp, natural, F.Sp, F.To, F.Sp,
+            proposition, F.Comma, F.RowBreak, F.Grp(),
+            F.Forall, F.Sp, hscale, F.Colon, F.Sp,
+            Call("Tendsto", scale, atTop, atTop), F.Comma, F.RowBreak, F.Grp(),
+            F.Forall, F.Sp, hheight, F.Colon, F.Sp,
+            F.Open, heightLimit, F.Close, F.Comma, F.RowBreak, F.Grp(),
+            F.Forall, F.Sp, hpoles, F.Colon, F.Sp,
+            F.Open, assumptions, F.Sp, F.Rightarrow, F.Sp, poleInputs, F.Close,
+            F.Comma, F.RowBreak, F.Grp(),
+            F.Forall, F.Sp, hchannels, F.Colon, F.Sp,
+            F.Open, channelInputs, F.Close, F.Comma, F.RowBreak, F.Grp(),
+            F.Open, boundary, F.Close, F.Sp, F.Land, F.RowBreak, F.Grp(),
+            gate, F.Dot,
+            F.End, F.Grp(F.Id("aligned"))));
     }
 
     private static Formula Call(string name, params Formula[] arguments)

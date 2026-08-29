@@ -1,0 +1,55 @@
+## 定理 416.1（Renormalized Weil multiplier）
+
+对偶的紧支撑测试 \(f\)：
+
+$$
+\boxed{
+\mathfrak q_L[f]
+=
+\frac1{2\pi}
+\int_{\mathbb R}
+\widetilde m_L(\xi)
+|\widehat f(\xi)|^2\,d\xi,
+}
+\tag{416.3}
+$$
+
+其中：
+
+$$
+\boxed{
+\widetilde m_L(\xi)
+=
+b_\infty(\xi)-r_L(\xi).
+}
+\tag{416.4}
+$$
+
+### 证明
+
+将 prime measure 分解为：
+
+$$
+d\mu_\Lambda
+=
+e^{u/2}du+d\varepsilon.
+$$
+
+原显式公式中的：
+
+$$
+\text{pole}
+-
+\text{continuous prime main term}
+$$
+
+由定理 414.1 变成：
+
+$$
+\frac1{\xi^2+\frac14}.
+$$
+
+再与 Archimedean multiplier 合并，用定理 415.1 得到 \(b_\infty\)。剩余项正是 \(r_L\)。∎
+
+---
+

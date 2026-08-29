@@ -1,0 +1,10 @@
+ast_path: section/依赖经典理论/clause/1
+fingerprints:
+  raw_sha256: sha256:68104ead32658e46bc4236203943a8630dfe93cc1af83fd0f9107c0647319063
+  normalized_sha256: sha256:68104ead32658e46bc4236203943a8630dfe93cc1af83fd0f9107c0647319063
+cas_ref: sha256:68104ead32658e46bc4236203943a8630dfe93cc1af83fd0f9107c0647319063
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

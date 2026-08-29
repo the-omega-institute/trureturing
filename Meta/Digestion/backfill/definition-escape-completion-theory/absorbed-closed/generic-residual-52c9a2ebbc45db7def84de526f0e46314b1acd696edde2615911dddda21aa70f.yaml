@@ -1,0 +1,17 @@
+ast_path: section/57-3-4-证书合法性结构及其-Prop-闭包
+fingerprints:
+  raw_sha256: sha256:52c9a2ebbc45db7def84de526f0e46314b1acd696edde2615911dddda21aa70f
+  normalized_sha256: sha256:52c9a2ebbc45db7def84de526f0e46314b1acd696edde2615911dddda21aa70f
+cas_ref: sha256:52c9a2ebbc45db7def84de526f0e46314b1acd696edde2615911dddda21aa70f
+coverage_gids:
+  - D5/S3/ConceptDynamics/DefinitionEscapeSemantics/SemanticTransportCertificateValidity.valid_semantic_transport_cert_iff_valid_transport_cert
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeSemantics/SemanticTransportCertificateValidity.valid_semantic_transport_cert_iff_valid_transport_cert
+      source_sha256: sha256:52c9a2ebbc45db7def84de526f0e46314b1acd696edde2615911dddda21aa70f
+      target_statement_id: sha256:dc909392553ec489ecd48231f12829bddc81c3fed53ae29ba79fa1480727764a
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeSemantics/SemanticTransportCertificateValidity.valid_semantic_transport_cert_iff_valid_transport_cert
+      definition_sha256: sha256:b24d9161ffaac507b35dc0628dd8acd5b1715b9c977a2107a37c8361e967f443
+      emission_sha256: sha256:99ff0d85771e2433009f60bebe9c6aaac781b2fb2b39af66a71e5891e3134bff
+  unresolved_subitems: []

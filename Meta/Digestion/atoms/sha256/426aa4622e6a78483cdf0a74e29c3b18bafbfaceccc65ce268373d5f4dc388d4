@@ -1,0 +1,17 @@
+* 少量 cross-scale pairings。
+
+定义：
+
+$$
+\boxed{
+\operatorname{GlueDim}
+=
+\dim\ker\mathcal M.
+}
+\tag{563.2}
+$$
+
+它是使所有局部图表真正胶合为共同谱，仍然缺少的实参数数量。
+
+---
+

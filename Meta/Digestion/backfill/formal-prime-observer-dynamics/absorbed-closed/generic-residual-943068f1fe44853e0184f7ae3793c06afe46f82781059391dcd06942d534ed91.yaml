@@ -1,0 +1,17 @@
+ast_path: 定理/270.2
+fingerprints:
+  raw_sha256: sha256:943068f1fe44853e0184f7ae3793c06afe46f82781059391dcd06942d534ed91
+  normalized_sha256: sha256:943068f1fe44853e0184f7ae3793c06afe46f82781059391dcd06942d534ed91
+cas_ref: sha256:943068f1fe44853e0184f7ae3793c06afe46f82781059391dcd06942d534ed91
+coverage_gids:
+  - D5/S3/ConceptDynamics/Information/SharedSourceLocalIntervention.local_intervention_exposes_shared_source
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Information/SharedSourceLocalIntervention.local_intervention_exposes_shared_source
+      source_sha256: sha256:943068f1fe44853e0184f7ae3793c06afe46f82781059391dcd06942d534ed91
+      target_statement_id: sha256:f49d0af4541c6c2d64bc598473ec55127b5ffb74b5e87e0d4dea474e60316e89
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Information/SharedSourceLocalIntervention.local_intervention_exposes_shared_source
+      definition_sha256: sha256:9ca77bfecca2c2c43f9896969ff387014d5a6963a5b02f5aceefb87ecce4c616
+      emission_sha256: sha256:f5a87170190e6e0094d1c8cabaccbba0ddee058daa57173a8384969b9a1f5d80
+  unresolved_subitems: []

@@ -1,0 +1,26 @@
+## 518.4 Szegő 恒等式需要结构条件
+
+式：
+
+$$
+\prod(1-|\beta_n|^2)=\omega_L
+$$
+
+需要：
+
+* 归一化为概率测度；
+* absolutely continuous density 恰为常数 \(\omega_L\)；
+* residual 为奇异谱。
+
+若 residual 还有额外的非均匀绝对连续密度，则只能得到：
+
+$$
+\prod(1-|\beta_n|^2)
+=
+\exp\int\log w\,dm,
+$$
+
+不能直接等同于 Haar floor。
+
+---
+

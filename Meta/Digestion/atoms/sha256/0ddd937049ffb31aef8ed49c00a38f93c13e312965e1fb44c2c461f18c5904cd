@@ -1,0 +1,12 @@
+**证明义务 57.3-B（类型化反驳见证的 Prop 投影，预期为定理）。** 对任意 `w : TransportRefutationWitness S cert claim J J'`，证明
+
+```lean
+∃ z,
+  SemanticNewOnly S z J J' ∧
+    SemanticPredictionDefined S cert.falsifiablePrediction z ∧
+    SemanticPredictionFails S cert.falsifiablePrediction z ∧
+    SemanticRefutes S z cert claim
+```
+
+四个结论必须由 `w.failure` 的同一点和同一结果构造，不能分别选择三个互不相关的运行见证。
+

@@ -1,0 +1,30 @@
+## 定义 570.1（观察者依赖常数）
+
+设对象 \(x\) 本身定义于不含指定嵌入的基底上，而观察器：
+
+$$
+\mathcal O_\varphi:X\to K
+$$
+
+选择了嵌入 \(\varphi\)。
+
+若：
+
+$$
+\tau\bigl(\mathcal O_\varphi(x)\bigr)
+\neq
+\mathcal O_\varphi(x),
+$$
+
+则称其输出中的裸 \(\varphi\) 为：
+
+$$
+\boxed{
+\text{observer signature}
+}
+$$
+
+而不是对象的标量内禀不变量。
+
+---
+

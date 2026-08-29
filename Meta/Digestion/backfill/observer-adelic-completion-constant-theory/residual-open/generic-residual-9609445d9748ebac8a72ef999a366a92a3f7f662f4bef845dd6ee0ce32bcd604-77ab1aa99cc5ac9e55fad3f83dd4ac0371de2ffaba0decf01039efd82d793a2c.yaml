@@ -1,0 +1,10 @@
+ast_path: section/570-1-外部无法出现-的正确含义/clause/2
+fingerprints:
+  raw_sha256: sha256:9609445d9748ebac8a72ef999a366a92a3f7f662f4bef845dd6ee0ce32bcd604
+  normalized_sha256: sha256:9609445d9748ebac8a72ef999a366a92a3f7f662f4bef845dd6ee0ce32bcd604
+cas_ref: sha256:9609445d9748ebac8a72ef999a366a92a3f7f662f4bef845dd6ee0ce32bcd604
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

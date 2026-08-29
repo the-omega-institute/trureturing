@@ -1,0 +1,30 @@
+## 定理 645.1（Observer-world covariance）
+
+设观察器族满足：
+
+$$
+\boxed{
+\mathcal O_{ga}(gx)
+=
+U_g\mathcal O_a(x),
+}
+\tag{645.3}
+$$
+
+其中 \(U_g\) 是输出空间上的同构。
+
+若 \(G\) 在 \(\mathcal A\) 上传递，则任意两个观察者世界：
+
+$$
+\mathcal W_a,
+\qquad
+\mathcal W_b
+$$
+
+彼此同构。
+
+### 解释
+
+每个观察者内部都可以建立：
+
+* 原点；

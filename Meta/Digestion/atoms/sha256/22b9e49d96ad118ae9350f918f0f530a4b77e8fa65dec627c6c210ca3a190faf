@@ -1,0 +1,26 @@
+## 原理 418.1（No-PNT-main-term principle）
+
+$$
+\boxed{
+\text{PNT 主密度}
++
+\text{pole}
++
+\text{Gamma completion}
+}
+$$
+
+仍不足以产生 Weil 正性。
+
+真正的正性依赖素数相对连续主密度的**细离散偏差**。
+
+这与通常把 prime irregularity 仅视为误差的观点不同：
+
+$$
+\boxed{
+\text{prime discrepancy 同时是风险源，也是低频完成所需的数据。}
+}
+$$
+
+---
+

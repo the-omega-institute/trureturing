@@ -1,0 +1,40 @@
+## 421.2 精确有限矩阵
+
+定义 Feshbach matrix：
+
+$$
+\boxed{
+\widetilde F_L
+=
+P\widetilde A_LP
+-
+P\widetilde A_LQ
+(Q\widetilde A_LQ)^{-1}
+Q\widetilde A_LP.
+}
+\tag{421.7}
+$$
+
+则：
+
+$$
+\boxed{
+\widetilde A_L\ge0
+\iff
+\widetilde F_L\ge0.
+}
+\tag{421.8}
+$$
+
+所以经过 Pole–PNT renormalization：
+
+$$
+\boxed{
+\text{固定支撑 Weil 正性}
+}
+$$
+
+仍然精确等价于有限矩阵正性，但 sticky dimension 的计算不再携带人为的 \(+1\) pole state。
+
+---
+

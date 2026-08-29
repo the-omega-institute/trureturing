@@ -1,0 +1,53 @@
+# 第六百二十七部　无限常数层级为什么自然生成 ζ
+
+设完成层产生一列正尺度：
+
+$$
+c_1,c_2,c_3,\ldots
+$$
+
+以及权重：
+
+$$
+w_n>0.
+$$
+
+定义层级谱测度：
+
+$$
+\boxed{
+\nu_{\mathcal C}
+=
+\sum_{n\ge1}
+w_n\delta_{\log c_n}.
+}
+\tag{627.1}
+$$
+
+定义层级 ζ 观察器：
+
+$$
+\boxed{
+Z_{\mathcal C}(s)
+=
+\int_{\mathbb R}
+e^{-sx}\,d\nu_{\mathcal C}(x)
+=
+\sum_{n\ge1}
+w_nc_n^{-s}.
+}
+\tag{627.2}
+$$
+
+这给你的直觉一个非常直接的数学表达：
+
+$$
+\boxed{
+\text{每层是一个常数／尺度，}
+\qquad
+\zeta\text{ 是全部层的 Mellin--Laplace 汇总}.
+}
+$$
+
+---
+

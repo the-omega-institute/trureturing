@@ -1,0 +1,28 @@
+# 第五百八十五部　每层应附带的科学证书
+
+建议今后每一层新增以下账本：
+
+$$
+\boxed{
+\operatorname{LayerCert}_k
+=
+\left(
+\begin{array}{l}
+q_{k-1},\\
+T,\\
+\mathcal E_{k-1},\\
+d_k,\\
+\mathcal E_k,\\
+w_k,\\
+\operatorname{Leak}_k,\\
+\operatorname{Cost}_k,\\
+\operatorname{Status}_k
+\end{array}
+\right).
+}
+\tag{585.1}
+$$
+
+其中：
+
+* \(w_k\)：被切开的显式逃逸 witness；

@@ -1,0 +1,10 @@
+ast_path: section/命题-D-Golden-parity-extraction
+fingerprints:
+  raw_sha256: sha256:b387e2e77d1de116b6ecaf8600bb3befa4024d2d95afab180372ff212ce5c52a
+  normalized_sha256: sha256:b387e2e77d1de116b6ecaf8600bb3befa4024d2d95afab180372ff212ce5c52a
+cas_ref: sha256:b387e2e77d1de116b6ecaf8600bb3befa4024d2d95afab180372ff212ce5c52a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

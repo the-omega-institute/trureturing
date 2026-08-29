@@ -1,0 +1,10 @@
+ast_path: section/57-5-2-输运侧的直接复用
+fingerprints:
+  raw_sha256: sha256:2b9fbe4a65be862934ae4e35e0256a79f4de87a5e22bedf587475d1ec1735027
+  normalized_sha256: sha256:2b9fbe4a65be862934ae4e35e0256a79f4de87a5e22bedf587475d1ec1735027
+cas_ref: sha256:2b9fbe4a65be862934ae4e35e0256a79f4de87a5e22bedf587475d1ec1735027
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

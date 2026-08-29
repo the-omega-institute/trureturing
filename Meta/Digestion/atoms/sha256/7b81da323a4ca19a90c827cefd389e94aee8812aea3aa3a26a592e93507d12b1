@@ -1,0 +1,46 @@
+# 第五百三十一部　多尺度 resolvent budget 曲线
+
+与其在固定 \(a\) 下无限提高 moment 阶数，还可以改变 Cayley 尺度 \(a\)。
+
+对偶正谱 \(\nu\)，定义：
+
+$$
+\boxed{
+\mathcal B_\nu(u)
+=
+R_{\sqrt u}(\nu)
+=
+\int_{\mathbb R}
+\frac{d\nu(\xi)}
+{\xi^2+u},
+\qquad
+u>0.
+}
+\tag{531.1}
+$$
+
+令：
+
+$$
+\sigma
+=
+(\xi\mapsto\xi^2)_*\nu.
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal B_\nu(u)
+=
+\int_{[0,\infty)}
+\frac{d\sigma(x)}
+{x+u}.
+}
+\tag{531.2}
+$$
+
+所以 \(\mathcal B_\nu\) 是 Stieltjes function。
+
+---
+

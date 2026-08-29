@@ -1,0 +1,17 @@
+ast_path: 推论/21.2
+fingerprints:
+  raw_sha256: sha256:92c86c9d72b44df0f2fddbad52cac0f0b775d8d2c24cc683e39ac216364f1cb1
+  normalized_sha256: sha256:92c86c9d72b44df0f2fddbad52cac0f0b775d8d2c24cc683e39ac216364f1cb1
+cas_ref: sha256:92c86c9d72b44df0f2fddbad52cac0f0b775d8d2c24cc683e39ac216364f1cb1
+coverage_gids:
+  - D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability.descent_defect_zero_iff_strongly_lumpable
+receipts:
+  coverage:
+    - gid: D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability.descent_defect_zero_iff_strongly_lumpable
+      source_sha256: sha256:92c86c9d72b44df0f2fddbad52cac0f0b775d8d2c24cc683e39ac216364f1cb1
+      target_statement_id: sha256:9d9c846b44393474b2df65fa499eda9c413155767dbcb9f2ebd90914badd03d2
+  scribe:
+    - gid: D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability.descent_defect_zero_iff_strongly_lumpable
+      definition_sha256: sha256:b3a95d1a0a35692b8bc6f8445da24d4032af73a802ac090deef2677be4578aa4
+      emission_sha256: sha256:89d6e8845e032e58ce798d2277815709c3877315be44d801e0749dc1230d9ae1
+  unresolved_subitems: []

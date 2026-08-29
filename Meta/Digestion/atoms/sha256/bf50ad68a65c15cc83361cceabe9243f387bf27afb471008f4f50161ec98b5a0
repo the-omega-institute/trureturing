@@ -1,0 +1,28 @@
+## 554.1 结构意义
+
+因此多尺度 rational observer space 并不是一个不规则函数集合，而是：
+
+$$
+\boxed{
+\mathcal E
+=
+\left\{
+\frac{P(z)}{D(z)}:
+\deg P\le d
+\right\}.
+}
+\tag{554.8}
+$$
+
+也就是说：
+
+$$
+\boxed{
+\text{多尺度、多深度的全部信息}
+=
+\text{一个固定分母下的完整多项式分子空间}.
+}
+$$
+
+---
+

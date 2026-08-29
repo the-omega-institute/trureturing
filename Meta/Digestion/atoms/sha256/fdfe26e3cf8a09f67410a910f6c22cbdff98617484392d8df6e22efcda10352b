@@ -1,0 +1,56 @@
+## 定理 611.1（Unique primitive Euler ledger）
+
+存在唯一整数函数：
+
+$$
+\boxed{
+c:\Gamma_\varphi\to\mathbb Z
+}
+$$
+
+满足局部有限性，并使：
+
+$$
+\boxed{
+\mathcal L(X)
+=
+\prod_{\alpha\in\Gamma_\varphi}
+\left(
+1-X^\alpha
+\right)^{-c_\alpha}.
+}
+\tag{611.4}
+$$
+
+### 证明
+
+按实数大小递归。
+
+假设已处理所有：
+
+$$
+\beta<\alpha.
+$$
+
+将相应因子除去后，取 residual 在最小未消失指数 \(\alpha\) 处的整数系数 \(r_\alpha\)。
+
+令：
+
+$$
+c_\alpha=r_\alpha.
+$$
+
+乘以：
+
+$$
+(1-X^\alpha)^{c_\alpha}
+$$
+
+恰好消去该首项。
+
+因为每个有界指数区间仅含有限项，所以递归在每个截断层上有限完成。
+
+唯一性来自最小不同指数：若两个账本首次在 \(\alpha\) 处分歧，则两边 \(X^\alpha\) 系数不同。∎
+
+---
+

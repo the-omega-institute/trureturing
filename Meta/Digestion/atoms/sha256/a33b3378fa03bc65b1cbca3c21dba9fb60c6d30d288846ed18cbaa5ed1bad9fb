@@ -1,0 +1,6 @@
+* pseudospectral stability。
+
+不能把某一层数值上的离线点直接登记为真实 \(\xi\) 离线零点。
+
+---
+

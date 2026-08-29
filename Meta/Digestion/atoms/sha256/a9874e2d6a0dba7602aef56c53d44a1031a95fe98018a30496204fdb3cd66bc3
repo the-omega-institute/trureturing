@@ -1,0 +1,47 @@
+## 414.2 半直线 Neumann 图表
+
+若令：
+
+$$
+h=f|_{[0,\infty)},
+$$
+
+则 Green kernel 可以写成：
+
+$$
+\boxed{
+2
+\left(
+e^{-|x-y|/2}
++
+e^{-(x+y)/2}
+\right),
+\qquad
+x,y\ge0.
+}
+\tag{414.9}
+$$
+
+这正是半直线 Neumann resolvent 的 kernel。
+
+所以：
+
+$$
+\boxed{
+\text{偶对称}
+=
+\text{Neumann 边界条件}.
+}
+$$
+
+pole pair 的更深角色是：
+
+$$
+\boxed{
+\text{把素数主密度产生的增长型 kernel，
+反射完成成衰减型 Green kernel。}
+}
+$$
+
+---
+

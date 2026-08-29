@@ -1,0 +1,10 @@
+ast_path: section/438-2-与正完成的关系/clause/3
+fingerprints:
+  raw_sha256: sha256:ae1a51148f228a18fa10a04985e87f59915832e6cd92dfa7f5b2463dfb0e8365
+  normalized_sha256: sha256:ae1a51148f228a18fa10a04985e87f59915832e6cd92dfa7f5b2463dfb0e8365
+cas_ref: sha256:ae1a51148f228a18fa10a04985e87f59915832e6cd92dfa7f5b2463dfb0e8365
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

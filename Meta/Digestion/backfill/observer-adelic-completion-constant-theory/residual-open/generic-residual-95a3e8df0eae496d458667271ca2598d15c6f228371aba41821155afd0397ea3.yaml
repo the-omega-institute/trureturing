@@ -1,0 +1,10 @@
+ast_path: section/674-1-为什么完成后的-zeta-看不到它
+fingerprints:
+  raw_sha256: sha256:95a3e8df0eae496d458667271ca2598d15c6f228371aba41821155afd0397ea3
+  normalized_sha256: sha256:95a3e8df0eae496d458667271ca2598d15c6f228371aba41821155afd0397ea3
+cas_ref: sha256:95a3e8df0eae496d458667271ca2598d15c6f228371aba41821155afd0397ea3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

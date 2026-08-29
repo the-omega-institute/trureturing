@@ -1,0 +1,58 @@
+### 57.2.1 七个保护坐标的有限标签与依值投影
+
+```lean
+universe u v
+
+namespace D5.S3.ConceptDynamics.DefinitionEscape.Adjudication
+
+inductive ProtectedCoordinateTag
+  | targetChain
+  | domain
+  | epsilon
+  | conditions
+  | comparator
+  | baseline
+  | weightSpec
+  deriving DecidableEq, Fintype
+```
+
+`ProtectedCoordinateTag` 穷尽且只穷尽既有 `ProtectedCoordinates` 的七个字段。`testPlan`、`decision`、被承诺对象与日志坐标不因本部被暗中提升为保护坐标；若未来要改变保护集合，必须另作追加式理论修订，不能只改枚举。
+
+```lean
+def ProtectedCoordinateValue
+    (TargetChain Domain Epsilon Condition Comparator Baseline WeightSpec :
+      Type u) :
+    ProtectedCoordinateTag → Type u
+  | .targetChain => TargetChain
+  | .domain => Domain
+  | .epsilon => Epsilon
+  | .conditions => Condition
+  | .comparator => Comparator
+  | .baseline => Baseline
+  | .weightSpec => WeightSpec
+```
+
+`ProtectedCoordinateValue` 给出标签对应的依值类型。七个字段不被强迫进入同一和类型，也不借助字符串、动态类型或不可核验强制转换抹平其异型性。
+
+```lean
+def protectedCoordinateAt
+    {TargetChain Domain Epsilon Condition Comparator Baseline WeightSpec :
+      Type u}
+    (coordinates :
+      ProtectedCoordinates TargetChain Domain Epsilon Condition Comparator
+        Baseline WeightSpec)
+    (tag : ProtectedCoordinateTag) :
+    ProtectedCoordinateValue TargetChain Domain Epsilon Condition Comparator
+      Baseline WeightSpec tag :=
+  match tag with
+  | .targetChain => coordinates.targetChain
+  | .domain => coordinates.domain
+  | .epsilon => coordinates.epsilon
+  | .conditions => coordinates.conditions
+  | .comparator => coordinates.comparator
+  | .baseline => coordinates.baseline
+  | .weightSpec => coordinates.weightSpec
+```
+
+`protectedCoordinateAt` 是既有保护坐标记录的依值投影。它不保存字段副本；任何坐标见证最终都必须回到该投影的等式或不等式。
+

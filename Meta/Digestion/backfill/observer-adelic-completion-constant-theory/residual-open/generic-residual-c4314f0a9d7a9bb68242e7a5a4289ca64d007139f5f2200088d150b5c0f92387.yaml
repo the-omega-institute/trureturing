@@ -1,0 +1,10 @@
+ast_path: section/第五百六十部-接触有理函数
+fingerprints:
+  raw_sha256: sha256:c4314f0a9d7a9bb68242e7a5a4289ca64d007139f5f2200088d150b5c0f92387
+  normalized_sha256: sha256:c4314f0a9d7a9bb68242e7a5a4289ca64d007139f5f2200088d150b5c0f92387
+cas_ref: sha256:c4314f0a9d7a9bb68242e7a5a4289ca64d007139f5f2200088d150b5c0f92387
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,17 @@
+ast_path: 定理/103.1
+fingerprints:
+  raw_sha256: sha256:36c5861dad8adeed1b69e0e773e0263a8bc665d201ec259b39a80e63edeff010
+  normalized_sha256: sha256:36c5861dad8adeed1b69e0e773e0263a8bc665d201ec259b39a80e63edeff010
+cas_ref: sha256:36c5861dad8adeed1b69e0e773e0263a8bc665d201ec259b39a80e63edeff010
+coverage_gids:
+  - D5/S3/Factorization/QuadraticIdeals/NormTwoIdeal.ideal_norm_two
+receipts:
+  coverage:
+    - gid: D5/S3/Factorization/QuadraticIdeals/NormTwoIdeal.ideal_norm_two
+      source_sha256: sha256:36c5861dad8adeed1b69e0e773e0263a8bc665d201ec259b39a80e63edeff010
+      target_statement_id: sha256:ad275f69585b2d698e0cefa10b3faa947101a24e50ab130ab1a970d8891d6933
+  scribe:
+    - gid: D5/S3/Factorization/QuadraticIdeals/NormTwoIdeal.ideal_norm_two
+      definition_sha256: sha256:b31d8ee350bcec1960f2a7d859be62bc9336d6a274594b76afc3041dab46c969
+      emission_sha256: sha256:95e6163e20b84fab8c82a5047c1f133d2be74d62a3de46190f5f149d22cf9e2c
+  unresolved_subitems: []

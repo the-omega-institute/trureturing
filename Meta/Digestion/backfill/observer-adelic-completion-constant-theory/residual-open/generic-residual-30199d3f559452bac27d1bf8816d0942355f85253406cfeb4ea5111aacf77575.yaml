@@ -1,0 +1,13 @@
+ast_path: section/依赖成熟理论的解释接口
+fingerprints:
+  raw_sha256: sha256:30199d3f559452bac27d1bf8816d0942355f85253406cfeb4ea5111aacf77575
+  normalized_sha256: sha256:30199d3f559452bac27d1bf8816d0942355f85253406cfeb4ea5111aacf77575
+cas_ref: sha256:30199d3f559452bac27d1bf8816d0942355f85253406cfeb4ea5111aacf77575
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-8edba3ce3f7afaa5a91dde627c56e4ef368421aff4147760f634d01528dd33bd-0a790d5ef3d5bbf294ee374a20a53c6bc549dbaa363543140d47d61261d63f28
+    - generic-residual-7e0440b88628037f49f82414b5927313188ea4aa0fff157f4a8c30055d952389-4a456463ee36484e207c01de63377756abd9557d6de261d60e915882200caa12

@@ -1,0 +1,10 @@
+ast_path: section/第四百三十五部-正完成集合的嵌套塔
+fingerprints:
+  raw_sha256: sha256:486b420a9c374c107dd423cdef3abeafe491549b616a97a9b16866b714dddba9
+  normalized_sha256: sha256:486b420a9c374c107dd423cdef3abeafe491549b616a97a9b16866b714dddba9
+cas_ref: sha256:486b420a9c374c107dd423cdef3abeafe491549b616a97a9b16866b714dddba9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

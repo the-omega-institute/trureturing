@@ -1,0 +1,10 @@
+ast_path: section/第五百四十四部-有限-moments-的跨尺度传输
+fingerprints:
+  raw_sha256: sha256:30306c8622c40927c5b274344fcfbb2562012d506e054fa320d8a371c2ef02b9
+  normalized_sha256: sha256:30306c8622c40927c5b274344fcfbb2562012d506e054fa320d8a371c2ef02b9
+cas_ref: sha256:30306c8622c40927c5b274344fcfbb2562012d506e054fa320d8a371c2ef02b9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

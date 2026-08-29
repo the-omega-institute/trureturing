@@ -1,0 +1,17 @@
+ast_path: section/Theorem-3-A-finite-acyclic-judging-graph-has-a-r-d96fb46a
+fingerprints:
+  raw_sha256: sha256:30e20cf09b26eba44387b55438404dbf27dc4a95db15f1d194a198f1eb5b7271
+  normalized_sha256: sha256:30e20cf09b26eba44387b55438404dbf27dc4a95db15f1d194a198f1eb5b7271
+cas_ref: sha256:30e20cf09b26eba44387b55438404dbf27dc4a95db15f1d194a198f1eb5b7271
+coverage_gids:
+  - D5/S3/ConceptDynamics/Governance/FiniteAcyclicJudgingGraphRoot.finite_acyclic_judging_graph_has_root
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Governance/FiniteAcyclicJudgingGraphRoot.finite_acyclic_judging_graph_has_root
+      source_sha256: sha256:30e20cf09b26eba44387b55438404dbf27dc4a95db15f1d194a198f1eb5b7271
+      target_statement_id: sha256:64e0800028c1d20869935d303de165bcd3ba63f10ff0b09e068c643a228935b3
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Governance/FiniteAcyclicJudgingGraphRoot.finite_acyclic_judging_graph_has_root
+      definition_sha256: sha256:c92c38937ad42485c0e575056ad6b56f826bd99b04a4917ccda9e1c610885592
+      emission_sha256: sha256:2eb85efcfd9c1761a4683997aa1f1bada9c71d93f2b403e74210436fe27d60ab
+  unresolved_subitems: []

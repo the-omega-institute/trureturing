@@ -1,0 +1,10 @@
+ast_path: section/669-1-历史纤维
+fingerprints:
+  raw_sha256: sha256:f4ecb9818f3918b6cd9331967594f80e9795621168278eda3123d2377d3c2a60
+  normalized_sha256: sha256:f4ecb9818f3918b6cd9331967594f80e9795621168278eda3123d2377d3c2a60
+cas_ref: sha256:f4ecb9818f3918b6cd9331967594f80e9795621168278eda3123d2377d3c2a60
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

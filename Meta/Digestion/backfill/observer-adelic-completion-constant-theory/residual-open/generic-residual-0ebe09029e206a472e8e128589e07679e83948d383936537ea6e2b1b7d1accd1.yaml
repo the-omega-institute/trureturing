@@ -1,0 +1,10 @@
+ast_path: section/439-1-Pointwise-danger-band-不是本体
+fingerprints:
+  raw_sha256: sha256:0ebe09029e206a472e8e128589e07679e83948d383936537ea6e2b1b7d1accd1
+  normalized_sha256: sha256:0ebe09029e206a472e8e128589e07679e83948d383936537ea6e2b1b7d1accd1
+cas_ref: sha256:0ebe09029e206a472e8e128589e07679e83948d383936537ea6e2b1b7d1accd1
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,17 @@
+ast_path: 推论/123.1
+fingerprints:
+  raw_sha256: sha256:9cfc18a558e1c6c35075935782a4f4aac3cfd387b06b42b353f491409ce4e2ac
+  normalized_sha256: sha256:9cfc18a558e1c6c35075935782a4f4aac3cfd387b06b42b353f491409ce4e2ac
+cas_ref: sha256:9cfc18a558e1c6c35075935782a4f4aac3cfd387b06b42b353f491409ce4e2ac
+coverage_gids:
+  - D5/S3/Factorization/PrimePowers/PrimeExponentLanguageComplete.prime_exponent_language_complete
+receipts:
+  coverage:
+    - gid: D5/S3/Factorization/PrimePowers/PrimeExponentLanguageComplete.prime_exponent_language_complete
+      source_sha256: sha256:9cfc18a558e1c6c35075935782a4f4aac3cfd387b06b42b353f491409ce4e2ac
+      target_statement_id: sha256:123dcf146bdbf21920c57d37ca9dd74cc3a14a170b97bdf2f14f64a33d551347
+  scribe:
+    - gid: D5/S3/Factorization/PrimePowers/PrimeExponentLanguageComplete.prime_exponent_language_complete
+      definition_sha256: sha256:45a4f8a37166ee287b054d8b36dddcd0f55277402f5723277bc25543b808c48c
+      emission_sha256: sha256:88fd940cc6439d95fb6bdb9e2704e2ea0e7be260e12c1f40c66c27193ca9cfdd
+  unresolved_subitems: []

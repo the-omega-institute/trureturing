@@ -1,0 +1,21 @@
+## 518.2 紧支撑不自动保证 full dual attainment
+
+primal optimizer 已由圆周紧性保证存在。
+
+但单一 full dual 函数是否存在，仍取决于无限约束 moment graph 的闭性。广义 moment problem 中，即使支撑紧，dual attainment 仍需要额外的相对内点或严格可行性条件。([arXiv][3])
+
+可靠的无间隙结论是：
+
+$$
+\boxed{
+\Lambda
+=
+\inf_N
+\text{ finite dual value},
+}
+$$
+
+而不是未经证明地声称 full dual optimizer 一定存在。
+
+---
+

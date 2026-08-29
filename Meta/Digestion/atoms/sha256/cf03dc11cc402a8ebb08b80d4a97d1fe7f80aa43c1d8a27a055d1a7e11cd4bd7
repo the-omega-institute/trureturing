@@ -1,0 +1,55 @@
+# 第四百九十三部　Fourier-majorant 对偶
+
+令：
+
+$$
+w_a(\xi)=\frac1{\xi^2+a^2}.
+$$
+
+取实偶测试函数：
+
+$$
+\phi\in C_c^\infty((-2L,2L)).
+$$
+
+考虑 dual 变量：
+
+$$
+\theta\ge0.
+$$
+
+定义 dual 可行条件：
+
+$$
+\boxed{
+\widehat\phi(\xi)+\theta w_a(\xi)\ge0
+\qquad
+\forall\xi\in\mathbb R,
+}
+\tag{493.1}
+$$
+
+以及：
+
+$$
+\boxed{
+\phi(0)+\frac{\theta}{2a}\ge1.
+}
+\tag{493.2}
+$$
+
+定义 dual 目标：
+
+$$
+\boxed{
+\mathfrak D_{L,a,C}(\phi,\theta)
+=
+\langle\mathfrak W_L,\phi\rangle
++
+\theta C.
+}
+\tag{493.3}
+$$
+
+---
+

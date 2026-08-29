@@ -1,0 +1,81 @@
+## 本轮独立推导得到（第 552 部）
+
+$$
+\boxed{
+\mathfrak c_b
+=
+\Phi_{(a-b)/(a+b)}
+\circ
+\mathfrak c_a.
+}
+$$
+
+$$
+\boxed{
+\mu_b
+=
+(\Phi_r)_*
+\left[
+\frac{(1+r)^2}{|1+rz|^2}
+\mu_a
+\right].
+}
+$$
+
+$$
+\boxed{
+F_b(w)
+=
+\frac ab
+F_a
+\left(
+\Phi_{(b-a)/(a+b)}(w)
+\right).
+}
+$$
+
+$$
+\boxed{
+\partial_{\log a}F_a
+=
+\frac{1-w^2}{2}\partial_wF_a-F_a.
+}
+$$
+
+$$
+\boxed{
+a\partial_am_n
+=
+\frac{n+1}{2}m_{n+1}
++
+\frac{1-n}{2}m_{n-1}
+-
+m_n.
+}
+$$
+
+$$
+\boxed{
+m_n(\sqrt u)
+=
+\sum_{k=0}^{n}
+p_{n,k}u^k
+\frac{(-1)^k}{k!}
+B^{(k)}(u).
+}
+$$
+
+$$
+\boxed{
+T_N^{(b)}
+=
+\frac ab
+\operatorname{Gram}_{\mu_a}
+(e_{0,r},\ldots,e_{N,r}).
+}
+$$
+
+以及有限 moments 的严格几何／Cauchy 尾界。
+
+---
+

@@ -24,7 +24,8 @@ internal sealed record ScribeTestMethod(
     string SourcePath,
     string Id,
     IReadOnlyList<string> Paths,
-    IReadOnlyList<TestMapUnknownReason> UnknownReasons)
+    IReadOnlyList<TestMapUnknownReason> UnknownReasons,
+    bool IsStaticallySkipped = false)
 {
     internal bool IsUnknown => UnknownReasons.Count != 0;
 
@@ -171,6 +172,103 @@ internal static class ScribeTestMapDeriver
         .Order(StringComparer.Ordinal)
         .ToArray();
 
+    // #3670:hang-guard 预算的声明写着「never bears a test verdict」,但那只是**声明** ——
+    // 只有走 `TestProcessRunner` 时超时才变成 `SkipException`;走 `BoundedProcessRunner`
+    // 时它抛 `TimeoutException`,于是**恰好承担了判词**。本判据把声明与路由钉在一起。
+    //
+    // **归因的诚实交代(一轮评审在同族改动上判过这一点)**:本方法自己读 `tools/tests/**`,
+    // 而 `ScribeTestMapDeriver` 的 declared/unknown 账**看不见**这次读取 ——
+    // 调用方的方法体里只有一个它不识别的名字。当前它仍可达,**理由是
+    // `EngineeringTestPlanPolicy.IsFullSurface` 把 `tools/` 下任何改动转 Full**,
+    // 不是因为归因成立。**不得把「住在 Engine、受 SL-022 保护」冒充为「I/O 已归因」。**
+    // 正确收口是让这类 repository query 成为映射器可归因的 governed read;那是一条独立的工作。
+    //
+    // **判据的已知反例集合(不完整,逐条写出来)**:本方法按 XML 结构判 `PackageReference` /
+    // `AdditionalFiles` / `NoWarn`,故比子串强;但它**看不见**:
+    // ① 观察者本身被删除或从 `Compile` 排除(#3416 的 test-identity gap);
+    // ② `IncludeAssets`/`ExcludeAssets` 排除 analyzers;
+    // ③ `Directory.Build.props` 等继承来的 `NoWarn` / `WarningsNotAsErrors` / ruleset / globalconfig;
+    // ④ 经 MSBuild 属性或 import 间接给出的 `Include` 值;
+    // ⑤ 源文件内的 `#pragma warning disable RS0030` 与 `.editorconfig` 严重性降级。
+    internal static IReadOnlyList<string> FindUnroutedHangGuardCalls(string repositoryRoot)
+    {
+        var offenders = new List<string>();
+        foreach (var file in GitIndexRepositoryFiles.Enumerate(repositoryRoot))
+        {
+            if (!file.RelativePath.StartsWith(ManagedTestProjectPrefix, StringComparison.Ordinal)
+                || !file.RelativePath.EndsWith(".cs", StringComparison.Ordinal)
+                || file.RelativePath.EndsWith("/TestProcessRunner.cs", StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            var source = File.ReadAllText(file.FullPath);
+            offenders.AddRange(UnroutedHangGuardCalls(file.RelativePath, source));
+        }
+
+        return offenders.Order(StringComparer.Ordinal).ToArray();
+    }
+
+    private static IEnumerable<string> UnroutedHangGuardCalls(string path, string source)
+    {
+        const string Call = "BoundedProcessRunner.Run(";
+        for (var index = source.IndexOf(Call, StringComparison.Ordinal);
+             index >= 0;
+             index = source.IndexOf(Call, index + Call.Length, StringComparison.Ordinal))
+        {
+            // raw-string literal 里的示例代码不是真调用。
+            if (CountText(source[..index], "\"\"\"") % 2 == 1)
+            {
+                continue;
+            }
+
+            // 取**该调用自己的实参列表**(括号平衡)。固定窗口会跨进相邻调用:
+            // 第一版正因此把一处**故意**用 `ZeroDuration` 的调用误报为违规。
+            var arguments = BalancedArguments(source, index + Call.Length);
+            if (arguments.Contains("HangGuard", StringComparison.Ordinal)
+                || arguments.Contains("HangDetectionBudget", StringComparison.Ordinal))
+            {
+                yield return $"{path}:{CountText(source[..index], "\n") + 1}";
+            }
+        }
+    }
+
+    private static string BalancedArguments(string source, int start)
+    {
+        var depth = 0;
+        for (var index = start; index < source.Length; index++)
+        {
+            if (source[index] == '(')
+            {
+                depth++;
+            }
+            else if (source[index] == ')')
+            {
+                if (depth == 0)
+                {
+                    return source[start..index];
+                }
+
+                depth--;
+            }
+        }
+
+        return source[start..];
+    }
+
+    private static int CountText(string text, string needle)
+    {
+        var count = 0;
+        var index = text.IndexOf(needle, StringComparison.Ordinal);
+        while (index >= 0)
+        {
+            count++;
+            index = text.IndexOf(needle, index + needle.Length, StringComparison.Ordinal);
+        }
+
+        return count;
+    }
+
     internal static IReadOnlyList<string> FindOrphanManagedSources(
         IEnumerable<string> sourcePaths,
         IReadOnlyDictionary<string, string> projectBySourcePath) => sourcePaths
@@ -295,7 +393,8 @@ internal static class ScribeTestMapDeriver
                 test.Path,
                 $"{test.TypeName}.{test.Name}",
                 paths.Order(StringComparer.Ordinal).ToArray(),
-                reasons.Order().ToArray()));
+                reasons.Order().ToArray(),
+                test.IsStaticallySkipped));
         }
 
         return new ScribeTestMap(
@@ -335,6 +434,19 @@ internal static class ScribeTestMapDeriver
                 AddDiscoveryPaths(invocation, discoveryPaths, paths, reasons);
             }
 
+            // 声明式仓库枚举(#2535 / PR #3799 第二轮评审):
+            // `EnumerateDeclared(root, "<字面量前缀>")` 读 git index 而非目录,
+            // 故**不记** `DirectoryEnumeration`;但它必须把那个前缀登记为 declared path,
+            // 否则 `EngineeringTestPlanDeriver` 在只改该前缀下文件的 PR 上**不会选中该测试** ——
+            // 一个观察者对它要观察的那类变更盲,等于没有。
+            // 该缺口正是一次评审用「临时克隆只加一条 D5 .lean → planner 输出
+            // cold_build_observer=[]」实测出来的。
+            if (IsAccessorCall(invocation, "EnumerateDeclared"))
+            {
+                AddDeclaredPrefix(invocation, paths, reasons);
+                continue;
+            }
+
             if (IsAccessorCall(invocation, "EnumerateFiles"))
             {
                 reasons.Add(TestMapUnknownReason.DirectoryEnumeration);
@@ -347,8 +459,99 @@ internal static class ScribeTestMapDeriver
                 continue;
             }
 
+            if (IsAccessorCall(invocation, "ReadAllText", "ReadAllBytes")
+                && IsDeclaredEnumerationFullPath(
+                    invocation.ArgumentList.Arguments.FirstOrDefault()?.Expression))
+            {
+                continue;
+            }
+
             AddLiteralCreatePath(invocation.ArgumentList.Arguments.FirstOrDefault()?.Expression, paths, reasons);
         }
+    }
+
+    // 只接受**字面量**前缀:变量前缀无法静态归因,按 fail-closed 记 VariablePath。
+    private static void AddDeclaredPrefix(
+        InvocationExpressionSyntax invocation,
+        HashSet<string> paths,
+        HashSet<TestMapUnknownReason> reasons)
+    {
+        if (TryGetDeclaredPrefix(invocation, out var prefix))
+        {
+            paths.Add(prefix);
+            return;
+        }
+
+        reasons.Add(TestMapUnknownReason.VariablePath);
+    }
+
+    private static bool TryGetDeclaredPrefix(
+        InvocationExpressionSyntax invocation,
+        out string prefix)
+    {
+        var arguments = invocation.ArgumentList.Arguments;
+        if (arguments.Count >= 2
+            && arguments[1].Expression is LiteralExpressionSyntax literal
+            && literal.IsKind(SyntaxKind.StringLiteralExpression))
+        {
+            prefix = literal.Token.ValueText.Replace('\\', '/');
+            return true;
+        }
+
+        prefix = string.Empty;
+        return false;
+    }
+
+    private static bool IsDeclaredEnumerationFullPath(ExpressionSyntax? argument)
+    {
+        if (argument is not MemberAccessExpressionSyntax
+            {
+                Expression: IdentifierNameSyntax entry,
+                Name.Identifier.ValueText: "FullPath",
+            })
+        {
+            return false;
+        }
+
+        var selector = argument.Ancestors().OfType<SimpleLambdaExpressionSyntax>()
+            .FirstOrDefault(lambda =>
+                lambda.Parameter.Identifier.ValueText == entry.Identifier.ValueText);
+        if (selector?.Parent is not ArgumentSyntax
+            {
+                Parent: ArgumentListSyntax
+                {
+                    Parent: InvocationExpressionSyntax select,
+                },
+            })
+        {
+            return false;
+        }
+
+        if (select.Expression is not MemberAccessExpressionSyntax
+            {
+                Name.Identifier.ValueText: "Select",
+                Expression: var source,
+            })
+        {
+            return false;
+        }
+
+        while (source is InvocationExpressionSyntax invocation)
+        {
+            if (IsAccessorCall(invocation, "EnumerateDeclared"))
+            {
+                return TryGetDeclaredPrefix(invocation, out _);
+            }
+
+            if (invocation.Expression is not MemberAccessExpressionSyntax member)
+            {
+                return false;
+            }
+
+            source = member.Expression;
+        }
+
+        return false;
     }
 
     private static void AddLiteralCreatePath(
@@ -532,14 +735,23 @@ internal static class ScribeTestMapDeriver
                 source.PartitionKey,
                 type.Identifier.ValueText,
                 method.Identifier.ValueText,
-                method.AttributeLists.SelectMany(static list => list.Attributes)
-                    .Any(static attribute => attribute.Name.ToString() is "Fact" or "FactAttribute" or "Theory" or "TheoryAttribute"),
+                method.AttributeLists.SelectMany(static list => list.Attributes).Any(IsTestAttribute),
+                method.AttributeLists.SelectMany(static list => list.Attributes).Any(IsStaticallySkippedTestAttribute),
                 span.StartLinePosition.Line + 1,
                 span.EndLinePosition.Line + 1,
                 method);
         }).ToArray();
         return new ParsedSource(root, methods);
     }
+
+    private static bool IsTestAttribute(AttributeSyntax attribute) =>
+        attribute.Name.ToString() is "Fact" or "FactAttribute" or "Theory" or "TheoryAttribute";
+
+    private static bool IsStaticallySkippedTestAttribute(AttributeSyntax attribute) =>
+        IsTestAttribute(attribute)
+        && attribute.ArgumentList?.Arguments.Any(static argument =>
+            argument.NameEquals?.Name.Identifier.ValueText == "Skip"
+            && !argument.Expression.IsKind(SyntaxKind.NullLiteralExpression)) == true;
 
     private sealed record ParsedSource(SyntaxNode Root, IReadOnlyList<ParsedMethod> Methods);
     private sealed record ParsedMethod(
@@ -548,6 +760,7 @@ internal static class ScribeTestMapDeriver
         string TypeName,
         string Name,
         bool IsTest,
+        bool IsStaticallySkipped,
         int StartLine,
         int EndLine,
         MethodDeclarationSyntax Syntax);

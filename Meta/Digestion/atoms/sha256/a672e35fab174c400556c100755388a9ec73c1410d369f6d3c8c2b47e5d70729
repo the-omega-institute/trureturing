@@ -1,0 +1,126 @@
+# 本轮最终结论
+
+上一轮提出的联合条件为：
+
+$$
+\boxed{
+\text{Loewner}
++
+\text{Toeplitz}
++
+\text{Crofoot block Gram}.
+}
+$$
+
+本轮证明，这些并不是三个独立对象。
+
+对任意有限尺度集合与有限深度，全部 rational features 都可写成：
+
+$$
+\boxed{
+\Psi(z)
+=
+\frac1{D(z)}Av_{n-1}(z).
+}
+$$
+
+所以全部共同谱信息只有一个主矩阵：
+
+$$
+\boxed{
+T_{n-1}
+=
+[y_{j-k}]_{j,k=0}^{n-1}.
+}
+$$
+
+多尺度 Gram 只是：
+
+$$
+\boxed{
+G=AT_{n-1}A^*.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{共同谱}
+\iff
+A^{-1}GA^{-*}
+\text{ 为正半定 Toeplitz}.
+}
+$$
+
+这将一个表面上具有 \(n^2\) 个实自由度的 block Gram 问题，压缩为：
+
+$$
+\boxed{
+2n-1
+}
+$$
+
+个 moments；在 Riemann 偶谱分支中只需：
+
+$$
+\boxed{
+n
+}
+$$
+
+个实 moments。
+
+更重要的是，最大共同 Haar floor 不再需要另做无限维优化：
+
+$$
+\boxed{
+\alpha_*
+=
+\lambda_{\min}
+\left(
+B^{-1/2}GB^{-1/2}
+\right).
+}
+$$
+
+在 floor 边界上，residual Toeplitz matrix 必然奇异，因此其正谱完成不仅是有限原子的，而且是唯一的：
+
+$$
+\boxed{
+\mu_*
+=
+\alpha_*m_{\mathbb T}
++
+\sum_{j=1}^{r}
+\widetilde w_j\delta_{\zeta_j},
+\qquad
+r\le n-1.
+}
+$$
+
+原子位置由 generalized ground state 产生的 rational contact function 决定。
+
+于是有限 observer 的完整谱结构已经变成：
+
+$$
+\boxed{
+\text{Haar continuum}
++
+\text{唯一 contact atoms}.
+}
+$$
+
+逐步加入新 observer 时，floor 的变化由一个标量 Feshbach 方程控制：
+
+$$
+\boxed{
+\gamma_n-\alpha
+-g_n^*(G_n-\alpha I)^{-1}g_n
+=0.
+}
+$$
+
+所以每一个新定义的真实价值可以被精确测量为：
+
+* 是否降低共同 floor；

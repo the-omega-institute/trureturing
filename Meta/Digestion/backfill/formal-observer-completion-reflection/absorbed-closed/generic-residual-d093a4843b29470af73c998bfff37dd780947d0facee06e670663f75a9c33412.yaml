@@ -1,0 +1,17 @@
+ast_path: 定理/95.2
+fingerprints:
+  raw_sha256: sha256:d093a4843b29470af73c998bfff37dd780947d0facee06e670663f75a9c33412
+  normalized_sha256: sha256:d093a4843b29470af73c998bfff37dd780947d0facee06e670663f75a9c33412
+cas_ref: sha256:d093a4843b29470af73c998bfff37dd780947d0facee06e670663f75a9c33412
+coverage_gids:
+  - D5/S3/Observer/Conditioning/SelectiveRecordConditioning.selective_record_conditioning
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/Conditioning/SelectiveRecordConditioning.selective_record_conditioning
+      source_sha256: sha256:d093a4843b29470af73c998bfff37dd780947d0facee06e670663f75a9c33412
+      target_statement_id: sha256:b017acb11fd3649fb713cedfbfb6ee524bdf213d056f579d70a4246ec29e69c2
+  scribe:
+    - gid: D5/S3/Observer/Conditioning/SelectiveRecordConditioning.selective_record_conditioning
+      definition_sha256: sha256:ebe460d8324325ef8b6829be76814499e8eea48670cb9cb7c894bed03a63e6fe
+      emission_sha256: sha256:be3778a70dcd1f4351a035e71240ec7cdd5be7f61dc06c1015400cd7ba72070e
+  unresolved_subitems: []

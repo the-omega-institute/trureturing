@@ -1,0 +1,14 @@
+## 661.4 区分真实零点与观察器伪零点
+
+必须同时使用：
+
+* Rouché 零点计数；
+* 局部一致收敛；
+* multiplicity tracking；
+* transfer-function pole/zero cancellation；
+* pseudospectral stability。
+
+不能把某一层数值上的离线点直接登记为真实 \(\xi\) 离线零点。
+
+---
+

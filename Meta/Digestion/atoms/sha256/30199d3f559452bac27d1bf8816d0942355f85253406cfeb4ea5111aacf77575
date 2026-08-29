@@ -1,0 +1,9 @@
+## 依赖成熟理论的解释接口
+
+* 圆盘自同构配合 reproducing-kernel 权重产生 unitary weighted composition operator；([arXiv][2])
+* Chebyshev、Laguerre 的标准归一化、递推和导数公式。([DLMF][1])
+
+这些文献接口用于识别既有 Hardy／正交多项式结构；本轮的谱尺度 transport 公式均已在正文中直接推导。
+
+---
+

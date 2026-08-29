@@ -1,0 +1,10 @@
+ast_path: section/502-5-Scale-flow
+fingerprints:
+  raw_sha256: sha256:4e0d153062bc491c818410a28e1bfa42462b915906ce6c3dad0f4ccb72ce90f6
+  normalized_sha256: sha256:4e0d153062bc491c818410a28e1bfa42462b915906ce6c3dad0f4ccb72ce90f6
+cas_ref: sha256:4e0d153062bc491c818410a28e1bfa42462b915906ce6c3dad0f4ccb72ce90f6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

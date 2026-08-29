@@ -1,0 +1,10 @@
+ast_path: section/507-2-可去除的-infinity-ledger/clause/2
+fingerprints:
+  raw_sha256: sha256:93bcd8bc4e5daddb440fac012b5d1fc2cefcf243483057b31b0ec50c95c55c47
+  normalized_sha256: sha256:93bcd8bc4e5daddb440fac012b5d1fc2cefcf243483057b31b0ec50c95c55c47
+cas_ref: sha256:93bcd8bc4e5daddb440fac012b5d1fc2cefcf243483057b31b0ec50c95c55c47
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

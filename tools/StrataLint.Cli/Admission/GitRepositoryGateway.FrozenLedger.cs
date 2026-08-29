@@ -135,7 +135,7 @@ internal sealed partial class GitRepositoryGateway
             }
         }
 
-        var trees = new Dictionary<string, ImmutableArray<TreeEntry>>(StringComparer.Ordinal);
+        var trees = new Dictionary<string, ImmutableArray<GitRepositoryTreeEntry>>(StringComparer.Ordinal);
         foreach (var input in references.Inputs)
         {
             if (!RepoPath.TryCreate(input.DescriptorSelector, out var descriptorPath))
@@ -169,7 +169,8 @@ internal sealed partial class GitRepositoryGateway
 
             if (!trees.TryGetValue(tree, out var entries))
             {
-                entries = ParseTree(GitBytes("ls-tree", "-r", "-z", tree)).ToImmutableArray();
+                entries = GitRepositorySnapshotReader.ParseTree(
+                    GitBytes("ls-tree", "-r", "-z", tree)).ToImmutableArray();
                 trees.Add(tree, entries);
             }
 

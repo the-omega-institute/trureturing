@@ -1,0 +1,10 @@
+ast_path: row/前六-primitive-模态
+fingerprints:
+  raw_sha256: sha256:647ad3632eb22897ab14b44c549b634e86a13a3c23933a144546c59a0893b088
+  normalized_sha256: sha256:647ad3632eb22897ab14b44c549b634e86a13a3c23933a144546c59a0893b088
+cas_ref: sha256:647ad3632eb22897ab14b44c549b634e86a13a3c23933a144546c59a0893b088
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

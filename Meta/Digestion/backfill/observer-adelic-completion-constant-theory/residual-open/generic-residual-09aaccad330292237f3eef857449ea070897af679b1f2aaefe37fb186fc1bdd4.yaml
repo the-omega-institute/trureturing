@@ -1,0 +1,10 @@
+ast_path: section/610-1-奇偶完成夹逼
+fingerprints:
+  raw_sha256: sha256:09aaccad330292237f3eef857449ea070897af679b1f2aaefe37fb186fc1bdd4
+  normalized_sha256: sha256:09aaccad330292237f3eef857449ea070897af679b1f2aaefe37fb186fc1bdd4
+cas_ref: sha256:09aaccad330292237f3eef857449ea070897af679b1f2aaefe37fb186fc1bdd4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

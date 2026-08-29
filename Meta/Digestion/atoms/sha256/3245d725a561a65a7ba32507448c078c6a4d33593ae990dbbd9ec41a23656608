@@ -1,0 +1,51 @@
+## 432.1 Fourier 性质
+
+因为：
+
+$$
+\kappa_{L,K}\in C_c^\infty,
+$$
+
+所以：
+
+$$
+\widehat{\kappa_{L,K}}
+$$
+
+是 Schwartz 函数。
+
+因此新的 multiplier representative：
+
+$$
+\boxed{
+m_{L,K}^{\mathrm{flat}}
+=
+m_L+
+\widehat{\kappa_{L,K}}
+}
+\tag{432.3}
+$$
+
+具有：
+
+1. 与 \(m_L\) 完全相同的固定支撑二次型；
+2. 任意指定阶数的低频 moment flatness；
+3. 与 \(m_L\) 相同的高频 coercive asymptotic。
+
+若 discrepancy 为偶，则：
+
+$$
+\boxed{
+m_{L,K}^{\mathrm{flat}}(\xi)
+-
+m_{\mathrm{baseline}}(\xi)
+=
+O(\xi^{2K+2})
+}
+\tag{432.4}
+$$
+
+当 \(\xi\to0\)。
+
+---
+

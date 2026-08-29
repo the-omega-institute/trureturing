@@ -1,0 +1,17 @@
+ast_path: 推论/247.1
+fingerprints:
+  raw_sha256: sha256:45c9be586168cabc2f5246bba7c4c1a60480940a3cf5b2c89f851706a9e9b9df
+  normalized_sha256: sha256:45c9be586168cabc2f5246bba7c4c1a60480940a3cf5b2c89f851706a9e9b9df
+cas_ref: sha256:45c9be586168cabc2f5246bba7c4c1a60480940a3cf5b2c89f851706a9e9b9df
+coverage_gids:
+  - D5/S3/ConceptDynamics/Experiment/PosteriorInformationGainIncrease.actual_posterior_information_gain_can_increase
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Experiment/PosteriorInformationGainIncrease.actual_posterior_information_gain_can_increase
+      source_sha256: sha256:45c9be586168cabc2f5246bba7c4c1a60480940a3cf5b2c89f851706a9e9b9df
+      target_statement_id: sha256:f503a0bbd0f7896356bb4c4f2a8d39ce4674797b4ba34f0ee9b100d2a717673d
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Experiment/PosteriorInformationGainIncrease.actual_posterior_information_gain_can_increase
+      definition_sha256: sha256:42a69ae31e0619343974ca133ae05c78a057eaede3c5996aef2a461ab83ae8b7
+      emission_sha256: sha256:4b301b199377937f892627baf09b3a40cfdf5cefdf099a20a0801f6901e067c7
+  unresolved_subitems: []

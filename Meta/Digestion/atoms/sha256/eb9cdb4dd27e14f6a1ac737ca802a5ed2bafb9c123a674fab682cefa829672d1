@@ -1,0 +1,53 @@
+## 437.2 Dual：负相关见证
+
+寻找：
+
+$$
+\boxed{
+f\in C_c^\infty((-L,L))
+}
+$$
+
+使：
+
+$$
+\boxed{
+\left\langle
+\mathfrak W_L,
+f*\widetilde f
+\right\rangle<0.
+}
+\tag{437.1}
+$$
+
+一维正定扩张定理说明：
+
+$$
+\boxed{
+\text{Primal feasible}
+\iff
+\text{不存在 Dual negative witness}.
+}
+\tag{437.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{Kreĭn 正谱扩张}
+}
+$$
+
+和：
+
+$$
+\boxed{
+\text{Weil 负测试}
+}
+$$
+
+不是两条路线，而是同一个凸锥分离问题的 primal 与 dual。
+
+---
+

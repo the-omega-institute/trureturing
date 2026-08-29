@@ -1,0 +1,62 @@
+# 第六百一十一部　黄金 Euler factor 的唯一 Primitive 账本
+
+仓库定义单素数黄金局部因子：
+
+$$
+\boxed{
+L_p(s)
+=
+\sum_{v\ge0}
+p^{-s\beta_v},
+}
+\tag{611.1}
+$$
+
+其中：
+
+$$
+\beta_0=0.
+$$
+
+定义由全部正指数生成的加法半群：
+
+$$
+\boxed{
+\Gamma_\varphi
+=
+\left\{
+\beta_{v_1}+\cdots+\beta_{v_r}:
+r\ge1
+\right\}
+\subset\mathbb R_{>0}.
+}
+\tag{611.2}
+$$
+
+由于 \(\beta_v\) 至少线性增长，任意有限区间：
+
+$$
+[0,T]
+$$
+
+只包含有限多个 \(\Gamma_\varphi\) 元素。因此可以在局部有限的广义幂级数环中使用形式符号：
+
+$$
+X^\alpha,
+\qquad
+\alpha\in\Gamma_\varphi.
+$$
+
+定义：
+
+$$
+\boxed{
+\mathcal L(X)
+=
+1+\sum_{v\ge1}X^{\beta_v}.
+}
+\tag{611.3}
+$$
+
+---
+

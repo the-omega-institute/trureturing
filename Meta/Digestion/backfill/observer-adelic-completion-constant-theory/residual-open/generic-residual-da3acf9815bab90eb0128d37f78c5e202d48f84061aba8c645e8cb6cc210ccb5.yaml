@@ -1,0 +1,10 @@
+ast_path: section/奇观察任务
+fingerprints:
+  raw_sha256: sha256:da3acf9815bab90eb0128d37f78c5e202d48f84061aba8c645e8cb6cc210ccb5
+  normalized_sha256: sha256:da3acf9815bab90eb0128d37f78c5e202d48f84061aba8c645e8cb6cc210ccb5
+cas_ref: sha256:da3acf9815bab90eb0128d37f78c5e202d48f84061aba8c645e8cb6cc210ccb5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

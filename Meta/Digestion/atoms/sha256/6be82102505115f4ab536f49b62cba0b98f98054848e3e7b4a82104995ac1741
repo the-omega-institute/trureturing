@@ -1,0 +1,55 @@
+# 第四百一十七部　PNT discrepancy 正规形
+
+定义 weighted PNT discrepancy：
+
+$$
+\boxed{
+E(u)
+=
+\sum_{n\le e^u}
+\frac{\Lambda(n)}{\sqrt n}
+-
+2(e^{u/2}-1).
+}
+\tag{417.1}
+$$
+
+则：
+
+$$
+dE=d\varepsilon.
+$$
+
+由 PNT \(\psi(x)=x+o(x)\) 及 Stieltjes partial summation：
+
+$$
+\boxed{
+E(u)=o(e^{u/2})
+\qquad
+(u\to\infty).
+}
+\tag{417.2}
+$$
+
+([dlmf.nist.gov][1])
+
+对 \(0\le u\le2L\)，Stieltjes 分部积分给出：
+
+$$
+\boxed{
+\begin{aligned}
+r_L(\xi)
+={}&
+2E(2L)\cos(2L\xi)
+\\
+&+
+2\xi
+\int_0^{2L}
+E(u)\sin(\xi u)\,du.
+\end{aligned}
+}
+\tag{417.3}
+$$
+
+---
+

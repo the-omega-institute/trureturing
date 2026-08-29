@@ -1,0 +1,37 @@
+## 奇层
+
+$$
+\boxed{
+\tau(\varphi^{2m+1})
+=
+-\varphi^{-(2m+1)}<0.
+}
+\tag{578.3}
+$$
+
+共轭通道产生方向反转。
+
+所以：
+
+$$
+\boxed{
+\text{黄金偶层是 metric-like，}
+\qquad
+\text{黄金奇层是 orientation-sensitive。}
+}
+$$
+
+这正是你所说的：
+
+$$
+\boxed{
+\text{奇层破缺}
+\quad\text{与}\quad
+\text{偶层完成}
+}
+$$
+
+可以产生严格联系的最小代数核。
+
+---
+

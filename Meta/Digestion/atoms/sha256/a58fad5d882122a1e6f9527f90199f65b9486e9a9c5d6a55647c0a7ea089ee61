@@ -1,0 +1,18 @@
+## 519.3 Toeplitz primal certificate
+
+由 atomic optimizer 构造：
+
+$$
+T_N
+=
+\omega I+\sum q_rv_N(z_r)v_N(z_r)^*.
+$$
+
+验证：
+
+* 最小特征值等于 \(\omega\)；
+* 平底重数与 contact atom rank 一致；
+* dual contact points 与 primal atoms 一致。
+
+---
+

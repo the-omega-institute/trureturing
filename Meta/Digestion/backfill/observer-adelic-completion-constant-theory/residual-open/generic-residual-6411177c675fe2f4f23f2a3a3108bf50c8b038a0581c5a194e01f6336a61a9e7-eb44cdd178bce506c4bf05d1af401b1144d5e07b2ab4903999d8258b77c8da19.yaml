@@ -1,0 +1,10 @@
+ast_path: section/576-2-物理空间与内部空间/clause/1
+fingerprints:
+  raw_sha256: sha256:6411177c675fe2f4f23f2a3a3108bf50c8b038a0581c5a194e01f6336a61a9e7
+  normalized_sha256: sha256:6411177c675fe2f4f23f2a3a3108bf50c8b038a0581c5a194e01f6336a61a9e7
+cas_ref: sha256:6411177c675fe2f4f23f2a3a3108bf50c8b038a0581c5a194e01f6336a61a9e7
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

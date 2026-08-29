@@ -1,0 +1,31 @@
+## 定理 669.1（No history reconstruction）
+
+不存在映射：
+
+$$
+s:\Lambda_{\mathbb P}\to\mathbb P^*
+$$
+
+满足：
+
+$$
+s(\operatorname{ab}(w))=w
+$$
+
+对所有词 \(w\) 成立。
+
+因为只要某一纤维含有两个不同词 \(w\neq w'\)，同一个 \(s(\operatorname{ab}(w))\) 不可能同时等于两者。
+
+所以：
+
+$$
+\boxed{
+\text{完成态可以复制，
+形成完成态的真实历史不能由完成态复制}.
+}
+$$
+
+这正是一个经典的关系性“无克隆”结构。
+
+---
+

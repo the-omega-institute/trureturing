@@ -1,0 +1,91 @@
+# 第四百九十部　预算化白谱前沿
+
+令：
+
+$$
+m_0(d\xi)=\frac{d\xi}{2\pi},
+$$
+
+所以：
+
+$$
+\check m_0=\delta_0.
+$$
+
+固定：
+
+$$
+L>0,\qquad a>0.
+$$
+
+令：
+
+$$
+\mathfrak W_L
+=
+\left.\mathfrak W_\xi\right|_{(-2L,2L)}
+$$
+
+为局部 Weil source。
+
+对偶正 Borel 测度 \(\nu\)，定义 resolvent budget：
+
+$$
+\boxed{
+\mathcal R_a(\nu)
+=
+\int_{\mathbb R}
+\frac{d\nu(\xi)}{\xi^2+a^2}.
+}
+\tag{490.1}
+$$
+
+定义预算 \(C\) 下的正谱完成集合：
+
+$$
+\boxed{
+\mathfrak E_{L,a}(C)
+=
+\left\{
+\nu\ge0:
+\begin{array}{l}
+\nu\text{ 为偶测度},\\
+\check\nu=\mathfrak W_L
+\text{ 于 }(-2L,2L),\\
+\mathcal R_a(\nu)\le C
+\end{array}
+\right\}.
+}
+\tag{490.2}
+$$
+
+对正测度定义其白谱底座：
+
+$$
+\boxed{
+\operatorname{floor}(\nu)
+=
+\sup\left\{
+\lambda\ge0:
+\nu\ge\lambda m_0
+\right\}.
+}
+\tag{490.3}
+$$
+
+定义预算化 white-floor 前沿：
+
+$$
+\boxed{
+\Lambda_{L,a}(C)
+=
+\sup_{\nu\in\mathfrak E_{L,a}(C)}
+\operatorname{floor}(\nu).
+}
+\tag{490.4}
+$$
+
+若 \(\mathfrak E_{L,a}(C)=\varnothing\)，则该尺度、该预算已经产生局部不可完成证书。
+
+---
+

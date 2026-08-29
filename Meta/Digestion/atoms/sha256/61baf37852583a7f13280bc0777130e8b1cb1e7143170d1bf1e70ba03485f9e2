@@ -1,0 +1,47 @@
+## 659.1 条件普适，而非绝对普适
+
+所有满足以下结构的概念形成黄金 universality class：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{二通道};\\
+&\text{整数 primitive mixing};\\
+&\text{unimodular 信息账本};\\
+&\text{一步方向翻转};\\
+&\text{最小非平凡扩张};\\
+&\text{递归自相似}.
+\end{aligned}
+}
+$$
+
+但若概念需要：
+
+* 三个或更多通道；
+* 不同 determinant；
+* 非整数权重；
+* 非 primitive 动力；
+* 非局部记忆；
+* 非线性多固定点；
+
+则其完成常数可以是其他 Pisot、Salem 或 Perron 数。
+
+所以：
+
+$$
+\boxed{
+\text{不是所有概念都必须显式包含 }\varphi;
+}
+$$
+
+更准确的是：
+
+$$
+\boxed{
+\varphi
+\text{ 是最小二通道自观察破缺类的基态常数}.
+}
+$$
+
+---
+

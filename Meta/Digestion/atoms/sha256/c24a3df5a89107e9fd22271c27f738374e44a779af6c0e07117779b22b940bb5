@@ -1,0 +1,51 @@
+### 57.2.2 坐标见证束及其封闭条件
+
+```lean
+structure CoordinateWitnessBundle
+    {TargetChain Domain Epsilon Condition Comparator Baseline WeightSpec :
+      Type u}
+    (oldCoordinates newCoordinates :
+      ProtectedCoordinates TargetChain Domain Epsilon Condition Comparator
+        Baseline WeightSpec) where
+  changed : Finset ProtectedCoordinateTag
+  sound :
+    ∀ tag, tag ∈ changed →
+      protectedCoordinateAt oldCoordinates tag ≠
+        protectedCoordinateAt newCoordinates tag
+```
+
+`CoordinateWitnessBundle` 登记一组声称已经改变的保护标签。`sound` 排除伪报：束中每个标签都必须在既有记录的相应投影上确实不同。该结构故意不要求 `changed` 非空，因为空束仍可诚实表示“没有登记任何变化”；洗白判据将另行要求非空。
+
+```lean
+namespace CoordinateWitnessBundle
+
+def Closed
+    {TargetChain Domain Epsilon Condition Comparator Baseline WeightSpec :
+      Type u}
+    {oldCoordinates newCoordinates :
+      ProtectedCoordinates TargetChain Domain Epsilon Condition Comparator
+        Baseline WeightSpec}
+    (bundle : CoordinateWitnessBundle oldCoordinates newCoordinates) : Prop :=
+  ∀ tag,
+    protectedCoordinateAt oldCoordinates tag ≠
+      protectedCoordinateAt newCoordinates tag →
+    tag ∈ bundle.changed
+
+end CoordinateWitnessBundle
+```
+
+`CoordinateWitnessBundle.Closed` 是完备方向：所有实际变化的标签均必须进入束。与结构内的 `sound` 合并后，`bundle.changed` 恰好等于真实变化标签集；只列出一个方便字段而遗漏其他变化不算封闭见证。
+
+```lean
+def HasClosedCoordinateWitnessBundle
+    {TargetChain Domain Epsilon Condition Comparator Baseline WeightSpec :
+      Type u}
+    (oldCoordinates newCoordinates :
+      ProtectedCoordinates TargetChain Domain Epsilon Condition Comparator
+        Baseline WeightSpec) : Prop :=
+  ∃ bundle : CoordinateWitnessBundle oldCoordinates newCoordinates,
+    CoordinateWitnessBundle.Closed bundle ∧ bundle.changed.Nonempty
+```
+
+`HasClosedCoordinateWitnessBundle` 要求一个可靠、完备且非空的坐标见证束。它是整体坐标不等式的审计化版本：不增加新的字段值事实，只把不等式的有限来源显式登记。
+

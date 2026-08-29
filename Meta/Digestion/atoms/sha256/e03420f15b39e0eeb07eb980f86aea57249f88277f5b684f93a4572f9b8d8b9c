@@ -1,0 +1,89 @@
+# 第五百八十一部　一般化 ζ 因子抽取阶梯
+
+令单素数局部因子为：
+
+$$
+\boxed{
+L_p(s)
+=
+1+
+\sum_{j\ge1}
+c_jp^{-\lambda_js},
+}
+\tag{581.1}
+$$
+
+其中：
+
+$$
+0<\lambda_1<\lambda_2<\cdots.
+$$
+
+其形式对数为：
+
+$$
+\boxed{
+\log L_p(s)
+=
+\sum_{\alpha\in\mathcal S}
+b_\alpha p^{-\alpha s},
+}
+\tag{581.2}
+$$
+
+其中 \(\mathcal S\) 是由 \(\lambda_j\) 生成的加法半群。
+
+选择有限 signed zeta ledger：
+
+$$
+\boxed{
+\mathscr Z_m(s)
+=
+\prod_{\alpha\in A_m}
+\zeta(\alpha s)^{c_\alpha}.
+}
+\tag{581.3}
+$$
+
+令 normalized local factor：
+
+$$
+\boxed{
+G_{m,p}(s)
+=
+L_p(s)
+\prod_{\alpha\in A_m}
+(1-p^{-\alpha s})^{c_\alpha}.
+}
+\tag{581.4}
+$$
+
+选择 \(c_\alpha\) 使所有低于阈值：
+
+$$
+\Lambda_{m+1}
+$$
+
+的局部 monomials 被取消。
+
+若：
+
+$$
+G_{m,p}(s)-1
+=
+O(p^{-\Lambda_{m+1}\Re s}),
+$$
+
+则全局 residual 在：
+
+$$
+\boxed{
+\Re s>\frac1{\Lambda_{m+1}}
+}
+\tag{581.5}
+$$
+
+具有绝对收敛候选域。
+
+---
+

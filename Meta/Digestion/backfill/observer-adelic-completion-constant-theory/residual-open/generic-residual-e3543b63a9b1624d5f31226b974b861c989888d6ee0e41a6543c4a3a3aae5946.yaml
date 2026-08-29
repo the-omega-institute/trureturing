@@ -1,0 +1,10 @@
+ast_path: section/黄金横向缺陷
+fingerprints:
+  raw_sha256: sha256:e3543b63a9b1624d5f31226b974b861c989888d6ee0e41a6543c4a3a3aae5946
+  normalized_sha256: sha256:e3543b63a9b1624d5f31226b974b861c989888d6ee0e41a6543c4a3a3aae5946
+cas_ref: sha256:e3543b63a9b1624d5f31226b974b861c989888d6ee0e41a6543c4a3a3aae5946
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

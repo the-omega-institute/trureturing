@@ -1,0 +1,39 @@
+## 629.3 第三层：原子固定完成
+
+要求：
+
+$$
+\boxed{
+J(\rho)=\rho
+\qquad
+\forall\rho\in\mathcal Z.
+}
+\tag{629.6}
+$$
+
+这等价于：
+
+$$
+\boxed{
+\Re\rho=\frac12
+\qquad
+\forall\rho.
+}
+$$
+
+即 RH。
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+=
+\text{零点谱从“整体反射闭合”
+提升为“逐原子反射固定”.}
+}
+\tag{629.7}
+$$
+
+---
+

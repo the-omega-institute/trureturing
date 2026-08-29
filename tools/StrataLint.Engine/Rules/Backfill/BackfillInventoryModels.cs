@@ -48,7 +48,20 @@ internal sealed record DigestionReceipts(
     ImmutableArray<string> ChainAtoms,
     DigestionExternalReceipt? TailAuthorization,
     DigestionQuarantine? Quarantine = null,
-    DigestionCoverDisposition? CoverDisposition = null);
+    DigestionCoverDisposition? CoverDisposition = null)
+{
+    internal bool IsEmptyForSourceRevision =>
+        Coverage.IsEmpty
+        && Scribe.IsEmpty
+        && UnresolvedSubitems.IsEmpty
+        && ChainAtoms.IsEmpty
+        && TailAuthorization is null
+        && Quarantine is null;
+
+    internal bool IsEmpty =>
+        IsEmptyForSourceRevision
+        && CoverDisposition is null;
+}
 
 internal enum DigestionMigrationState
 {

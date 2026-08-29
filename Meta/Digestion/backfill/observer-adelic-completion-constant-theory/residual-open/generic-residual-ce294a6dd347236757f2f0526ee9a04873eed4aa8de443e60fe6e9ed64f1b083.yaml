@@ -1,0 +1,10 @@
+ast_path: section/467-2-Weyl-区间宽度
+fingerprints:
+  raw_sha256: sha256:ce294a6dd347236757f2f0526ee9a04873eed4aa8de443e60fe6e9ed64f1b083
+  normalized_sha256: sha256:ce294a6dd347236757f2f0526ee9a04873eed4aa8de443e60fe6e9ed64f1b083
+cas_ref: sha256:ce294a6dd347236757f2f0526ee9a04873eed4aa8de443e60fe6e9ed64f1b083
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

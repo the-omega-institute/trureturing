@@ -1,0 +1,84 @@
+# 第五百七十七部　大奇数阶与大偶数完成：正确版本
+
+令：
+
+$$
+n>2
+$$
+
+为奇数。
+
+原始 \(n\) 次单位根生成：
+
+$$
+\mathbb Q(\zeta_n),
+$$
+
+其次数为：
+
+$$
+\phi_{\mathrm{Euler}}(n).
+$$
+
+因为单位剩余类可由：
+
+$$
+k\longleftrightarrow-k
+$$
+
+无固定点配对，所以：
+
+$$
+\boxed{
+\phi_{\mathrm{Euler}}(n)
+\text{ 为偶数}.
+}
+\tag{577.1}
+$$
+
+这给出：
+
+$$
+\boxed{
+\text{奇阶旋转}
+\longrightarrow
+\text{偶次数 cyclotomic completion}.
+}
+$$
+
+但不能简单写成：
+
+$$
+n\mapsto n+1.
+$$
+
+真正的完成维数取决于：
+
+$$
+\boxed{
+\dim_{\mathbb Q}
+\operatorname{Res}_{K/\mathbb Q}V
+=
+\dim_KV\cdot[K:\mathbb Q].
+}
+\tag{577.2}
+$$
+
+所以应将你的直觉修正为：
+
+$$
+\boxed{
+\text{大奇数对称阶常常要求一个由 Galois 共轭成对组成的偶型完成，}
+}
+$$
+
+而不是：
+
+$$
+\boxed{
+\text{任何奇数 }2m+1\text{ 都由 }2m+2\text{ 维完成}.
+}
+$$
+
+---
+

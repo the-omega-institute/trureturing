@@ -381,18 +381,21 @@ internal static partial class DigestionStatusEvaluator
             hasProgress,
             StatusAuthorityClosureChanged(
                 entry,
+                alignment,
                 baselineMigration,
                 projectedStatusChanges,
                 isBaseFactAffected));
     }
 
-    private static bool StatusAuthorityClosureChanged(
+    internal static bool StatusAuthorityClosureChanged(
         DigestionLedgerEntry entry,
+        DigestionReceiptAlignment alignment,
         DigestionMigrationState? baselineMigration,
         RawChangeSet? changes,
         Func<string, bool>? isBaseFactAffected)
     {
-        if (changes is null || DigestionCasStore.EntryChanged(entry, changes))
+        var changedSet = changes ?? RawChangeSet.Create([]);
+        if (changes is null || DigestionCasStore.EntryChanged(entry, changedSet))
         {
             return true;
         }
@@ -406,11 +409,11 @@ internal static partial class DigestionStatusEvaluator
             return false;
         }
 
-        bool Affected(string path) => isBaseFactAffected?.Invoke(path) ?? PathChanged(changes, path);
+        bool Affected(string path) => isBaseFactAffected?.Invoke(path) ?? PathChanged(changedSet, path);
 
-        if (changes.Paths.Any(path =>
+        if (changedSet.Paths.Any(path =>
                 FrozenLedgerChangeClassifier.IsAcceptedEventPath(path.Value))
-            || Affected(entry.SourcePath)
+            || alignment != DigestionReceiptAlignment.Seen && Affected(entry.SourcePath)
             || Affected(TheoryAtomizerDataLoader.DataPath)
             || DigestionFingerprint.IsCanonicalSha256(entry.CasRef)
                 && Affected(DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..])
@@ -438,24 +441,68 @@ internal static partial class DigestionStatusEvaluator
         return false;
     }
 
+    internal static ImmutableHashSet<string> StatusAuthorityChangedAtomIds(
+        BackfillInventoryDocument document,
+        BackfillInventoryDocument baselineDocument,
+        RawChangeSet? changes,
+        DigestionLedgerAlignment alignment)
+    {
+        ArgumentNullException.ThrowIfNull(document);
+        ArgumentNullException.ThrowIfNull(baselineDocument);
+        ArgumentNullException.ThrowIfNull(alignment);
+        var entries = document.RequireDigestionEntries();
+        var baselineEntries = baselineDocument.RequireDigestionEntries()
+            .ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
+        var directlyChanged = entries
+            .Where(entry => StatusAuthorityClosureChanged(
+                entry,
+                alignment.EntryAlignments.GetValueOrDefault(
+                    entry.AtomId,
+                    DigestionReceiptAlignment.Rejected),
+                baselineEntries.TryGetValue(entry.AtomId, out var baseline)
+                    ? baseline.ProjectedStatus.Migration
+                    : null,
+                changes,
+                isBaseFactAffected: null))
+            .Select(static entry => entry.AtomId);
+        return ExpandStatusAuthorityChanges(entries, directlyChanged);
+    }
+
     private static void PropagateStatusAuthorityChanges(IReadOnlyList<EntryWork> work)
     {
-        var byId = work.ToDictionary(static item => item.Entry.AtomId, StringComparer.Ordinal);
+        var changedAtomIds = ExpandStatusAuthorityChanges(
+            work.Select(static item => item.Entry),
+            work.Where(static item => item.StatusAuthorityChanged)
+                .Select(static item => item.Entry.AtomId));
+        foreach (var item in work)
+        {
+            item.StatusAuthorityChanged = changedAtomIds.Contains(item.Entry.AtomId);
+        }
+    }
+
+    private static ImmutableHashSet<string> ExpandStatusAuthorityChanges(
+        IEnumerable<DigestionLedgerEntry> sourceEntries,
+        IEnumerable<string> initiallyChanged)
+    {
+        var entries = sourceEntries.ToArray();
+        var atomIds = entries.Select(static entry => entry.AtomId).ToHashSet(StringComparer.Ordinal);
+        var changedAtomIds = initiallyChanged.ToHashSet(StringComparer.Ordinal);
         var changed = true;
         while (changed)
         {
             changed = false;
-            foreach (var item in work.Where(static item => !item.StatusAuthorityChanged))
+            foreach (var entry in entries.Where(entry => !changedAtomIds.Contains(entry.AtomId)))
             {
-                if (item.Entry.Receipts.ChainAtoms.Any(atomId =>
-                        byId.TryGetValue(atomId, out var dependency)
-                        && dependency.StatusAuthorityChanged))
+                if (entry.Receipts.ChainAtoms.Any(atomId =>
+                        atomIds.Contains(atomId) && changedAtomIds.Contains(atomId)))
                 {
-                    item.StatusAuthorityChanged = true;
+                    changedAtomIds.Add(entry.AtomId);
                     changed = true;
                 }
             }
         }
+
+        return changedAtomIds.ToImmutableHashSet(StringComparer.Ordinal);
     }
 
     private static bool DeclarationExists(

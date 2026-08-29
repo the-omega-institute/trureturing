@@ -1,0 +1,10 @@
+ast_path: section/第四百六十九部-无需逐层兼容的指数局部收敛/clause/1
+fingerprints:
+  raw_sha256: sha256:b43b5b501e8d21db04cdf75744f4f06d6417f15e4532cd33f5799f8ea3c54cc4
+  normalized_sha256: sha256:b43b5b501e8d21db04cdf75744f4f06d6417f15e4532cd33f5799f8ea3c54cc4
+cas_ref: sha256:b43b5b501e8d21db04cdf75744f4f06d6417f15e4532cd33f5799f8ea3c54cc4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

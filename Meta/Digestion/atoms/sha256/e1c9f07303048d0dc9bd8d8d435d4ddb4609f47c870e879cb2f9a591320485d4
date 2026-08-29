@@ -1,0 +1,34 @@
+## 417.3 唯一 arithmetic obstruction
+
+式 (417.7) 说明，所有 prime-power 数据已经被压缩为一个实函数：
+
+$$
+\boxed{
+E(u).
+}
+$$
+
+即：
+
+$$
+\boxed{
+\text{全部素数离散结构}
+\longrightarrow
+\text{一个 weighted PNT discrepancy history}.
+}
+$$
+
+但必须保留负结论：
+
+$$
+\boxed{
+E(u)=o(e^{u/2})
+}
+$$
+
+只是相对主项渐近小，并不自动推出算子正性。
+
+原因是 \(b_\infty(0)<0\)，所以连续主模型本身在低频仍存在负区间；离散素数偏差不是可以全部忽略的噪声，它必须参与修复低频结构。
+
+---
+

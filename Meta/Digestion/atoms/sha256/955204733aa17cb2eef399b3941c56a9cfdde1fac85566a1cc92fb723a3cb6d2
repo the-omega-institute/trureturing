@@ -1,0 +1,62 @@
+# 第四百四十一部　建议形式化顺序
+
+```text
+D5/S3/Weil/LocalGauge/
+  CorrelationSupportWindow.lean
+  ExteriorDistributionInvisible.lean
+  WeilLocalGaugeEquivalence.lean
+  MultiplierGaugeTransform.lean
+
+D5/S3/Weil/BoundaryJetGauge/
+  CorrelationFlatAtBoundary.lean
+  BoundaryJetNullAction.lean
+  CenteredDiscrepancyMoment.lean
+  MomentCancellingBoundaryJet.lean
+  LowFrequencyTaylorRemainder.lean
+
+D5/S3/Weil/SmoothExteriorGauge/
+  ExteriorSymmetricBumpFamily.lean
+  EvenMomentVandermonde.lean
+  SmoothMomentCancellingGauge.lean
+  SchwartzMultiplierCorrection.lean
+  FiniteOrderFlatness.lean
+
+D5/S3/Weil/KreinCompletion/
+  LocalPositiveDefiniteDistribution.lean
+  PositiveSpectralExtensionInterface.lean
+  PositiveCompletionGauge.lean
+  LocalSelfAdjointCompletion.lean
+  CompletionSetNested.lean
+  GlobalCompletionIntersection.lean
+
+D5/S3/Weil/MaximumEntropyCompletion/
+  PositiveExtensionConvexSet.lean
+  MaximumEntropyCompletionInterface.lean
+  CompletionUniqueness.lean
+  CompletionScaleFlow.lean
+
+D5/S3/Weil/GaugeOptimizedSlepian/
+  GaugeDependentDangerSet.lean
+  GaugeDependentStickyRank.lean
+  GaugeOptimizedStickyComplexity.lean
+  MomentFlatPreconditioner.lean
+  GaugeInvariantFeshbachInertia.lean
+
+D5/S3/Weil/PrimalDualCompletion/
+  PositiveMeasurePrimal.lean
+  NegativeWitnessDual.lean
+  KreinWeilAlternative.lean
+  FiniteCovarianceCompletion.lean
+  PrimalDualCertificate.lean
+```
+
+需要单独标记的外部分析接口为：
+
+```text
+D5/X_Assumptions/PositiveDefiniteIntervalDistributionExtension
+```
+
+其退休条件是：在仓库内部完成适用于 frozen Weil local distribution 的一维 Kreĭn–Gabardo 扩张证明。
+
+---
+

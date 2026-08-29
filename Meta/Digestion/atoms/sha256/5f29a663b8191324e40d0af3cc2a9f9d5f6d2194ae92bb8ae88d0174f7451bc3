@@ -1,0 +1,82 @@
+# 第五百七十二部　项目已有的黄金完成圆
+
+项目已经构造：
+
+$$
+\sigma_+(a,b)=a+b\varphi,
+$$
+
+$$
+\sigma_-(a,b)=a+b\varphi',
+$$
+
+以及各向异性二次型：
+
+$$
+\boxed{
+Q_\eta(a,b)
+=
+e^\eta\sigma_+(a,b)^2
++
+e^{-\eta}\sigma_-(a,b)^2.
+}
+\tag{572.1}
+$$
+
+再定义黄金单位格点 ζ：
+
+$$
+\boxed{
+Z_{\mathrm{unit}}(s,\eta)
+=
+\sum_{(a,b)\neq(0,0)}
+Q_\eta(a,b)^{-s}.
+}
+\tag{572.2}
+$$
+
+仓库已经机器证明：
+
+$$
+\boxed{
+Z_{\mathrm{unit}}(s,\eta)
+=
+Z_{\mathrm{unit}}(s,-\eta),
+}
+\tag{572.3}
+$$
+
+以及：
+
+$$
+\boxed{
+Z_{\mathrm{unit}}
+\left(
+s,\eta+2\log\varphi
+\right)
+=
+Z_{\mathrm{unit}}(s,\eta).
+}
+\tag{572.4}
+$$
+
+前者来自两个实嵌入的 Galois 交换，后者来自乘以黄金单位后的格点重编号。
+
+所以自然观察空间是：
+
+$$
+\boxed{
+\mathbb S_\varphi^1
+=
+\mathbb R/
+\left(
+2\log\varphi
+\right)\mathbb Z.
+}
+\tag{572.5}
+$$
+
+这正是一个**黄金 regulator 圆**。
+
+---
+

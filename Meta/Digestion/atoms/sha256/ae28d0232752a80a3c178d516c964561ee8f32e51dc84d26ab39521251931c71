@@ -1,0 +1,89 @@
+## 462.1 偶通道与奇通道
+
+若 \(f\) 为偶函数：
+
+$$
+\mathcal S_a(f)=0,
+$$
+
+所以：
+
+$$
+\boxed{
+\left\langle
+\cosh(a\,\cdot),
+f*\widetilde f
+\right\rangle
+=
+|\mathcal C_a(f)|^2
+\ge0.
+}
+\tag{462.4}
+$$
+
+若 \(f\) 为奇函数：
+
+$$
+\mathcal C_a(f)=0,
+$$
+
+所以：
+
+$$
+\boxed{
+\left\langle
+\cosh(a\,\cdot),
+f*\widetilde f
+\right\rangle
+=
+-|\mathcal S_a(f)|^2
+\le0.
+}
+\tag{462.5}
+$$
+
+因此 \(\cosh(at)\) 携带一个严格的 Lorentz 型边界签名：
+
+$$
+\boxed{
+(+1,-1)
+}
+$$
+
+分别对应：
+
+$$
+\boxed{
+\text{even Laplace channel}
+\quad\text{与}\quad
+\text{odd Laplace channel}.
+}
+$$
+
+在有限点集 \(x_1,\ldots,x_N\) 上，同一事实写成：
+
+$$
+\boxed{
+\left[
+\cosh(a(x_i-x_j))
+\right]_{i,j}
+=
+cc^*
+-
+ss^*,
+}
+\tag{462.6}
+$$
+
+其中：
+
+$$
+c_i=\cosh(ax_i),
+\qquad
+s_i=\sinh(ax_i).
+$$
+
+所以完成差在有限矩阵中始终是一个秩至多为二的 signature update。
+
+---
+

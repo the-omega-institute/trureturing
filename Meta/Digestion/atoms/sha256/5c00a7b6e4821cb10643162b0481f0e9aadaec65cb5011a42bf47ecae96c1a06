@@ -1,0 +1,58 @@
+# 第五百三十六部　Cayley 镜头之间的双曲几何
+
+固定：
+
+$$
+a>0,
+$$
+
+定义尺度 \(a\) 的 Cayley 谱坐标：
+
+$$
+\boxed{
+\mathfrak c_a(\xi)
+=
+\frac{\xi+ia}{\xi-ia},
+\qquad
+\xi\in\mathbb R.
+}
+\tag{536.1}
+$$
+
+其值位于单位圆：
+
+$$
+|\mathfrak c_a(\xi)|=1.
+$$
+
+现在取两个尺度：
+
+$$
+a,b>0.
+$$
+
+定义双曲转换参数：
+
+$$
+\boxed{
+r_{a,b}
+=
+\frac{a-b}{a+b}
+\in(-1,1).
+}
+\tag{536.2}
+$$
+
+定义单位圆盘自同构：
+
+$$
+\boxed{
+\Phi_r(z)
+=
+\frac{z+r}{1+rz}.
+}
+\tag{536.3}
+$$
+
+---
+

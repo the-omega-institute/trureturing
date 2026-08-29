@@ -1,0 +1,31 @@
+## 定理 575.1（Observed-break decomposition）
+
+$$
+\boxed{
+J_Y\mathcal O(x)-\mathcal O(x)
+=
+\Delta_{\mathcal O}(x)
++
+\mathcal O\bigl(\Delta_X(x)\bigr).
+}
+\tag{575.3}
+$$
+
+第一项是：
+
+$$
+\boxed{
+\text{观察器自身造成的破缺};
+}
+$$
+
+第二项才是：
+
+$$
+\boxed{
+\text{对象真实携带的破缺}.
+}
+$$
+
+---
+

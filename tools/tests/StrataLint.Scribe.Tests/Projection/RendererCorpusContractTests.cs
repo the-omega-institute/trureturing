@@ -9,7 +9,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed partial class FormulaCorpusInventoryTests
 {
     private const string CanonicalRendererSha256 =
-        "c983a9cf224d1869ac98c5525dd0e52fc9e15869cc01751e62af2127e14fb5fc";
+        "f79f527e59e01d4938e86f31ec4a4cc6410c06caef222873adf3cf29635c30a1";
     private const string UpdateCommand = "make -C tools update-renderer-contract";
 
     [Fact]
@@ -380,6 +380,9 @@ public sealed partial class FormulaCorpusInventoryTests
             formulas.Add(new Formula.Subscript(x, child));
             formulas.Add(new Formula.TypeArrow(x, child));
         }
+
+        // Repository formulas use a relation as the domain of a type arrow.
+        formulas.Add(new Formula.TypeArrow(relation, x));
 
         var function = new Formula.FunctionCall(FormulaIdentifier.Create("f"), [x]);
         var subscript = new Formula.Subscript(x, one);

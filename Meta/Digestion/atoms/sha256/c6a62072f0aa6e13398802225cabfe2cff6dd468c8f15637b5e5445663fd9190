@@ -1,0 +1,36 @@
+## 580.1 这正是“几乎完成”的严格版本
+
+可将各层记为：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal Z^{(0)}
+&=\text{原始黄金 Euler germ};\\
+\mathcal Z^{(1)}
+&=\text{抽取首个 universal ζ mode};\\
+\mathcal Z^{(2)}
+&=\text{抽取第二阶 signed modes};\\
+G_m
+&=\text{第 }m\text{ 阶未完成残余}.
+\end{aligned}
+}
+$$
+
+完成深度增加时，残余收敛边界严格左移：
+
+$$
+\boxed{
+\frac1{\varphi^2}
+>
+\frac1{\varphi^3}
+>
+\frac1{\varphi^4}.
+}
+\tag{580.5}
+$$
+
+这不是同义表述，而是真正的新解析信息。
+
+---
+

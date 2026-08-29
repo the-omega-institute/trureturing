@@ -1,0 +1,85 @@
+# 第四百七十四部　奇偶窗口谱轮廓
+
+令：
+
+$$
+\mathcal H_L=L^2([-L,L]),
+$$
+
+并令 \(Q_L(f)\) 表示 Weil 显式公式在：
+
+$$
+g=f*\widetilde f,
+\qquad
+\widetilde f(x)=\overline{f(-x)}
+$$
+
+上的值。
+
+定义偶、奇和完整窗口轮廓：
+
+$$
+\boxed{
+\lambda_{\mathrm e}(L)
+=
+\inf_{\substack{
+f\in\mathcal H_L,\ f\ne0\\
+f(-x)=f(x)
+}}
+\frac{Q_L(f)}{\|f\|_2^2},
+}
+\tag{474.1}
+$$
+
+$$
+\boxed{
+\lambda_{\mathrm o}(L)
+=
+\inf_{\substack{
+f\in\mathcal H_L,\ f\ne0\\
+f(-x)=-f(x)
+}}
+\frac{Q_L(f)}{\|f\|_2^2},
+}
+\tag{474.2}
+$$
+
+$$
+\boxed{
+\lambda_{\mathrm{full}}(L)
+=
+\inf_{f\in\mathcal H_L\setminus\{0\}}
+\frac{Q_L(f)}{\|f\|_2^2}.
+}
+\tag{474.3}
+$$
+
+由于 Weil source 为实偶分布，若：
+
+$$
+f=f_{\mathrm e}+f_{\mathrm o},
+$$
+
+则交叉项消失：
+
+$$
+\boxed{
+Q_L(f)
+=
+Q_L(f_{\mathrm e})
++
+Q_L(f_{\mathrm o}).
+}
+\tag{474.4}
+$$
+
+复函数又满足：
+
+$$
+Q_L(f)
+=
+Q_L(\Re f)+Q_L(\Im f).
+$$
+
+所以：
+

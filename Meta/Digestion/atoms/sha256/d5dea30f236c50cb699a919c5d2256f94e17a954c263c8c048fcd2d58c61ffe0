@@ -1,0 +1,52 @@
+# 第五百二十六部　有限 Toeplitz Haar-floor 定理
+
+设给定 Hermitian truncated moment vector：
+
+$$
+\boxed{
+m_{-N},\ldots,m_0,\ldots,m_N,
+}
+\tag{526.1}
+$$
+
+满足：
+
+$$
+m_{-k}=\overline{m_k},
+\qquad
+m_0=R>0.
+$$
+
+定义 Toeplitz moment matrix：
+
+$$
+\boxed{
+T_N(m)
+=
+[m_{j-k}]_{j,k=0}^{N}.
+}
+\tag{526.2}
+$$
+
+假设该 moment vector 至少有一个单位圆正测度表示。
+
+定义有限 moment Haar floor：
+
+$$
+\boxed{
+\alpha_N(m)
+=
+\sup
+\left\{
+\alpha\ge0:
+\begin{array}{l}
+\exists\,\mu\ge\alpha m_{\mathbb T},\\
+\widehat\mu(k)=m_k,\ |k|\le N
+\end{array}
+\right\}.
+}
+\tag{526.3}
+$$
+
+---
+

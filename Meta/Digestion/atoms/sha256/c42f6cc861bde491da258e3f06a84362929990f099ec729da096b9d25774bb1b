@@ -1,0 +1,79 @@
+### 57.2.4 正文级洗白、草图级洗白与判定证书
+
+```lean
+def SemanticTargetLaunderingAt
+    {Commitment Evidence Verdict Time TargetChain Domain Epsilon Condition
+      Comparator Baseline WeightSpec : Type u}
+    {Report : Type v}
+    [LT Time]
+    (S :
+      RegradeSemantics Commitment Evidence Verdict Time
+        (ProtectedCoordinates TargetChain Domain Epsilon Condition Comparator
+          Baseline WeightSpec)
+        Report)
+    (oldK newK : Commitment)
+    (Z : Evidence)
+    (regrade : SemanticRegrade S) : Prop :=
+  SemanticRegradeAt regrade oldK newK Z ∧
+    PostArrivalSemanticRegrade S regrade ∧
+    S.reportAttributedTo regrade.report = oldK ∧
+    HasClosedCoordinateWitnessBundle
+      (S.protected oldK) (S.protected newK)
+```
+
+`SemanticTargetLaunderingAt` 是正文级语义重评判据。它恰有四层：报告定位、严格到达后、归因于原承诺、保护坐标的封闭非空见证束。修订判词的真实性由语义框架承担，原判词的真实性由 `SemanticRegrade` 承担，故这里不再重复评价等式。
+
+该定义不要求：
+
+- 原判词与修订判词不同；
+- 报告发生时刻等于冻结时刻；
+- 修订承诺与原承诺整体不等；
+- 非保护字段保持相同。
+
+它只判定第 54 部所说的保护坐标回写与旧轮归因，不把其他治理违规混入同一原子。
+
+```lean
+def SemanticSketchTargetLaunderingAt
+    {Commitment Evidence Verdict Time TargetChain Domain Epsilon Condition
+      Comparator Baseline WeightSpec : Type u}
+    {Report : Type v}
+    (S :
+      RegradeSemantics Commitment Evidence Verdict Time
+        (ProtectedCoordinates TargetChain Domain Epsilon Condition Comparator
+          Baseline WeightSpec)
+        Report)
+    (oldK newK : Commitment)
+    (Z : Evidence)
+    (regrade : SemanticRegrade S) : Prop :=
+  SemanticRegradeAt regrade oldK newK Z ∧
+    FreezeVisibleSemanticRegrade S regrade ∧
+    S.reportOccurredAt regrade.report = S.freezeTime newK ∧
+    S.reportAttributedTo regrade.report = oldK ∧
+    HasClosedCoordinateWitnessBundle
+      (S.protected oldK) (S.protected newK)
+```
+
+`SemanticSketchTargetLaunderingAt` 精确保留后置 Lean 草图的两个额外选择：冻结事件可见性和报告时间戳等于冻结时刻。它不是正文级定义的别名；在给出 `RegradeTemporalBridge` 后，它才等价于正文级洗白再合取时间戳条件。
+
+```lean
+structure TargetLaunderingDecision
+    {Commitment Evidence Verdict Time TargetChain Domain Epsilon Condition
+      Comparator Baseline WeightSpec : Type u}
+    {Report : Type v}
+    [LT Time]
+    (S :
+      RegradeSemantics Commitment Evidence Verdict Time
+        (ProtectedCoordinates TargetChain Domain Epsilon Condition Comparator
+          Baseline WeightSpec)
+        Report)
+    (oldK newK : Commitment)
+    (Z : Evidence)
+    (regrade : SemanticRegrade S) where
+  verdict : Bool
+  correct :
+    verdict = true ↔
+      SemanticTargetLaunderingAt S oldK newK Z regrade
+```
+
+`TargetLaunderingDecision` 是带正确性证明的判定结果，而不是外生准入门。只有在所需等式与时间关系可判时才能构造该结构；不能先给一个布尔值，再把它当作洗白事实。
+

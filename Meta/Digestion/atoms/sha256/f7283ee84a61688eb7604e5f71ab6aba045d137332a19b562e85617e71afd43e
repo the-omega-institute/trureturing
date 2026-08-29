@@ -1,0 +1,32 @@
+## 假设 581.1（Golden all-order extraction）
+
+存在 signed zeta ledgers：
+
+$$
+\mathscr Z_m
+$$
+
+使：
+
+$$
+\boxed{
+Z_\varphi(s)
+=
+\mathscr Z_m(s)G_m(s)
+}
+$$
+
+且：
+
+$$
+\boxed{
+\sigma_m\downarrow0.
+}
+$$
+
+这是一个明确、可逐层证伪的新纲领。
+
+它不能仅凭目前的前两层归纳宣称成立。
+
+---
+

@@ -1,0 +1,22 @@
+## 618.1 表示层
+
+例如：
+
+* Herglotz；
+* Clark；
+* CMV；
+* Cayley；
+* Laguerre；
+* 多尺度 Toeplitz；
+* Beatty–Minkowski 坐标。
+
+若只是可逆变换，则：
+
+$$
+\ker q_{k+1}=\ker q_k,
+$$
+
+因此没有减少语义逃逸。
+
+---
+

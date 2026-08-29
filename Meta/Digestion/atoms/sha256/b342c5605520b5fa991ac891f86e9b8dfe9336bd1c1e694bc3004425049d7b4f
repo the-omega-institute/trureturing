@@ -1,0 +1,107 @@
+## 定理 558.1（Exact common-spectrum floor）
+
+令：
+
+$$
+T=A^{-1}GA^{-*}.
+$$
+
+则：
+
+$$
+\boxed{
+\alpha_*(G)
+=
+\max
+\left\{
+\alpha:
+T-\alpha H_D\succeq0
+\right\}.
+}
+\tag{558.6}
+$$
+
+因此：
+
+$$
+\boxed{
+\alpha_*(G)
+=
+\lambda_{\min}
+\left(
+H_D^{-1/2}
+TH_D^{-1/2}
+\right).
+}
+\tag{558.7}
+$$
+
+等价地：
+
+$$
+\boxed{
+\alpha_*(G)
+=
+\lambda_{\min}
+\left(
+B^{-1/2}
+GB^{-1/2}
+\right).
+}
+\tag{558.8}
+$$
+
+### 证明
+
+若：
+
+$$
+\mu'\ge\alpha m_{\mathbb T},
+$$
+
+写：
+
+$$
+\mu'=\alpha m_{\mathbb T}+\rho,
+\qquad
+\rho\ge0.
+$$
+
+除以 \(|D|^2\) 后：
+
+$$
+\frac{d\mu'}{|D|^2}
+=
+\alpha\frac{dm_{\mathbb T}}{|D|^2}
++
+\frac{d\rho}{|D|^2}.
+$$
+
+所以对应 moment matrix 满足：
+
+$$
+T-\alpha H_D\succeq0.
+$$
+
+反之，若：
+
+$$
+T-\alpha H_D\succeq0
+$$
+
+且 Toeplitz，则存在正测度 \(\tau\)，使其为 \(\tau\) 的 moment matrix。
+
+令：
+
+$$
+d\mu'
+=
+\alpha\,dm_{\mathbb T}
++
+|D|^2d\tau.
+$$
+
+则 \(\mu'\ge\alpha m_{\mathbb T}\)，且恢复相同 \(G\)。∎
+
+---
+

@@ -1,0 +1,16 @@
+ast_path: section/命题-C-Galois-trace-norm-完成
+fingerprints:
+  raw_sha256: sha256:b4556e8036b303327d5629759b9092e1a7a506b3c7bd447a32825bc0de09f7f7
+  normalized_sha256: sha256:b4556e8036b303327d5629759b9092e1a7a506b3c7bd447a32825bc0de09f7f7
+cas_ref: sha256:b4556e8036b303327d5629759b9092e1a7a506b3c7bd447a32825bc0de09f7f7
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-b8a1603d9113b7a2b90a03d9a794c43f56828973b3b913139c244c014e914ffe-59bfa7a55cc96c3f6de148a20be527cd9ad0ee00150c588d5a5cad1f0e315d4a
+    - generic-residual-b11abd69995765ec4a9d14e17551de2561ab9e754eacc7c0ad552c9369427285-2c12e6c585821e25e12c0c6fd8b6f77ca09fb299ac29bdc38f29db7ce481cbaf
+    - generic-residual-55d3adcdfc0b313a49818f6af6d2798acc5ee6f806c692074c4560458aa00db8-4faf4845e2ad302041c8908136627c31f97ddf0cebab7e4d750fbee3dcfc9217
+    - generic-residual-20f319ba776e1810473f9065a18003cc8808d4a7145bea80125fdd72a2efef48-6085b834635d10ce59858eeef91700ceb3bab4ee00b8d1f96828d790c8fe9dfb
+    - generic-residual-a5eb95017ff44e661106be4adc5c83e0e8ad98ae0a69ceda5ff299cbc7915d6b-aeb4dbba1a920a50df6049209bb4ed3c9ebb143559537d28950cfb6d38c70131

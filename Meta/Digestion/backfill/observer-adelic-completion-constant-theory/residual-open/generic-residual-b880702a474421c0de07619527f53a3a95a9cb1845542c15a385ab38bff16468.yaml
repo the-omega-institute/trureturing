@@ -1,0 +1,10 @@
+ast_path: section/奇层
+fingerprints:
+  raw_sha256: sha256:b880702a474421c0de07619527f53a3a95a9cb1845542c15a385ab38bff16468
+  normalized_sha256: sha256:b880702a474421c0de07619527f53a3a95a9cb1845542c15a385ab38bff16468
+cas_ref: sha256:b880702a474421c0de07619527f53a3a95a9cb1845542c15a385ab38bff16468
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

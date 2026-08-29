@@ -1,0 +1,10 @@
+ast_path: section/661-5-局部世界-jet/clause/3
+fingerprints:
+  raw_sha256: sha256:8beba4e98c629f9788305d6f6b5f5c5dcdbea473d53042b192f7300c6327ced4
+  normalized_sha256: sha256:8beba4e98c629f9788305d6f6b5f5c5dcdbea473d53042b192f7300c6327ced4
+cas_ref: sha256:8beba4e98c629f9788305d6f6b5f5c5dcdbea473d53042b192f7300c6327ced4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

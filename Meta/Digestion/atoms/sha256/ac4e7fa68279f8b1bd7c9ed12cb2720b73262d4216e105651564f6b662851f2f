@@ -1,0 +1,51 @@
+## 573.2 近完成展开
+
+取固定点：
+
+$$
+\eta_* \in \{0,\log\varphi\}.
+$$
+
+令：
+
+$$
+\eta=\eta_*+\delta.
+$$
+
+因为 \(\mathfrak B_\varphi\) 关于 \(\eta_*\) 为奇函数：
+
+$$
+\boxed{
+\mathfrak B_\varphi(s,\eta_*+\delta)
+=
+\chi_\varphi(s,\eta_*)\delta
++
+O(\delta^3),
+}
+\tag{573.8}
+$$
+
+其中：
+
+$$
+\boxed{
+\chi_\varphi
+=
+\partial_\eta
+\mathfrak B_\varphi.
+}
+\tag{573.9}
+$$
+
+所以“只差一点完成”并不会通常给出一个任意微弱、无结构的误差，而会产生一个可测量的线性破缺：
+
+$$
+\boxed{
+\text{completion distance}
+\times
+\text{golden susceptibility}.
+}
+$$
+
+---
+
