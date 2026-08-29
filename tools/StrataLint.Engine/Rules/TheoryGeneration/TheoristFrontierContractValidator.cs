@@ -67,7 +67,7 @@ internal static partial class TheoristFrontierContractValidator
                 && baselineOwner is not FrontierEligibilityKind.DeclarationReadyMathematicalOpen;
 
             var isDeletedBaselineSource = baselineFile is not null && !hasCurrentSource;
-            var isGovernanceDeletionExempt = IsGovernanceDeletionExempt(
+            var isGovernanceDeletionExempt = IsGovernanceSourceDeletionAuthorized(
                 context.Baseline,
                 path,
                 isDeletedBaselineSource,
@@ -715,7 +715,8 @@ internal static partial class TheoristFrontierContractValidator
         && (CountOccurrences(file.Text, Marker) > 0
             || CountOccurrences(file.Text, LegacyMarker) > 0);
 
-    private static bool IsGovernanceDeletionExempt(
+    // SL-002 authorizes deletion only when both the governance source and its current owner entry are gone.
+    private static bool IsGovernanceSourceDeletionAuthorized(
         RepositorySnapshot baseline,
         RepoPath path,
         bool isDeletedBaselineSource,
@@ -727,6 +728,17 @@ internal static partial class TheoristFrontierContractValidator
         && !HasContractMarker(baseline, path)
         && currentMission.UnreadableReason is null
         && !currentMission.Entries.ContainsKey(path);
+
+    // SL-027 skips theorem identity because a governance carrier has no theorem delivery to compare.
+    private static bool ShouldSkipGovernanceDeliveryIdentity(
+        RepositorySnapshot baseline,
+        RepoPath path,
+        MissionOwners baselineMission,
+        MissionOwners currentMission) =>
+        baselineMission.Entries.TryGetValue(path, out var baselineOwner)
+        && baselineOwner is FrontierEligibilityKind.Governance
+        && !HasContractMarker(baseline, path)
+        && currentMission.UnreadableReason is null;
 
     private sealed record MissionOwners(
         ImmutableDictionary<RepoPath, FrontierEligibilityKind> Entries,

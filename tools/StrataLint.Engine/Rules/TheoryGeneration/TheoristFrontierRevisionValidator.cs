@@ -156,10 +156,9 @@ internal static partial class TheoristFrontierContractValidator
         FrozenLedgerBaseView? frozen = null;
         foreach (var retiredPath in retiredPaths)
         {
-            if (IsGovernanceDeletionExempt(
+            if (ShouldSkipGovernanceDeliveryIdentity(
                     context.Baseline,
                     retiredPath,
-                    isDeletedBaselineSource: true,
                     baselineMission,
                     currentMission))
             {
