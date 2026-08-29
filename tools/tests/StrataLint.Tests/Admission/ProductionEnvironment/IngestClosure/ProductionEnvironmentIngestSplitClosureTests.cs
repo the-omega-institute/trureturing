@@ -212,6 +212,102 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void IngestReportFreeRejectsCoveredEntryWhoseSuccessorLosesCoverageInPlan()
+    {
+        const string coverageGid = "D5/S0/Carrier/Ring.goldenRing";
+        const string oldText = "# Synthetic\n\n**定理 1.1(A)**。old。\n";
+        const string currentText = "# Synthetic\n\n**定理 1.1(A)**。rewritten。\n";
+        var fixture = new RuleFixture();
+        var oldAtom = Assert.Single(AtomizerRegistry.Atomize(
+            AtomizerRegistry.GenericId,
+            Encoding.UTF8.GetBytes(oldText),
+            DigestionTestSupport.Rules).Claims);
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = currentText;
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = oldText;
+        var ledger = DigestionTestSupport.Document(
+            AtomizerRegistry.GenericId,
+            [
+                DigestionTestSupport.Entry(
+                    oldAtom,
+                    "old-receipt",
+                    AtomizerRegistry.GenericId,
+                    coverageGids: [coverageGid],
+                    migration: DigestionMigrationState.Absorbed,
+                    truth: DigestionTruthState.Closed,
+                    sourceId: "fixture-source",
+                    sourcePath: RuleFixture.FixtureDigestionSourcePath),
+            ],
+            "fixture-source",
+            RuleFixture.FixtureDigestionSourcePath,
+            GenreRegistryCheck.NoGenreRegistry);
+        InstallProjectedLedger(fixture, ledger, oldAtom);
+
+        var current = Decode(Snapshot(fixture.Files));
+        var baseline = Decode(Snapshot(fixture.Baseline));
+        var plan = DigestionIngestor.Plan(
+            BackfillInventoryLoader.Load(current),
+            current,
+            BackfillInventoryLoader.Load(baseline),
+            baseline);
+        var plannedSuccessor = Assert.Single(
+            plan.Document.RequireDigestionEntries(),
+            entry => entry.AtomId != "old-receipt" && entry.AstPath == oldAtom.AstPath);
+        Assert.Empty(plannedSuccessor.CoverageGids);
+
+        AssertReportFreeTruthAlignmentRequiredWithoutTruthOrWrites(
+            fixture,
+            RawChangeSet.Create([RuleFixture.FixtureDigestionSourcePath]),
+            "covered entry old-receipt coverage was cleared in plan");
+    }
+
+    [Theory]
+    [InlineData(false, "covered entry closure-entry disappeared from plan")]
+    [InlineData(true, "covered entry closure-entry coverage was cleared in plan")]
+    public void ClassifyPlannedIdentifiesCoveredEntryLoss(bool retainEntry, string expectedWitness)
+    {
+        var entry = StatusAuthorityClosureEntry();
+        var current = DigestionTestSupport.Document(
+            entry.Atomizer,
+            [entry],
+            sourceId: entry.SourceId,
+            sourcePath: entry.SourcePath);
+        var source = Assert.Single(current.RequireDigestionSources());
+        var planned = current.WithDigestionSources([
+            source with
+            {
+                Entries = retainEntry ? [entry with { CoverageGids = [] }] : [],
+            },
+        ]);
+        var alignment = new DigestionLedgerAlignment(
+            ImmutableDictionary.CreateRange(StringComparer.Ordinal,
+            [
+                KeyValuePair.Create(entry.AtomId, DigestionReceiptAlignment.Seen),
+            ]),
+            ImmutableDictionary<string, DigestionAtom>.Empty,
+            ImmutableDictionary<string, ImmutableHashSet<string>>.Empty,
+            ImmutableDictionary<string, GenreRegistryCheck>.Empty,
+            [],
+            [],
+            [],
+            ImmutableHashSet<string>.Empty,
+            ImmutableHashSet<string>.Empty,
+            [],
+            [],
+            []);
+
+        var classification = IngestTruthAlignmentClassifier.ClassifyPlanned(
+            current,
+            current,
+            planned,
+            alignment,
+            DigestionEvaluationScope.ChangedSet,
+            RawChangeSet.Create([]));
+
+        Assert.False(classification.IsUncoveredOnly);
+        Assert.Equal(expectedWitness, classification.Witness);
+    }
+
+    [Fact]
     public void IngestReportFreeRejectsPureAdditionWhenCoveredEntryIsNoLongerSeen()
     {
         const string coverageGid = "D5/S0/Carrier/Ring.goldenRing";
