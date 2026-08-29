@@ -7490,3 +7490,37 @@ $\boxed{\text{保护坐标变化有封闭见证，重评有双评价语义，输
 - 五条 57.2 义务与五条 57.3 义务，共十条 elementary 证明目标；
 - 第 56 部十二条已证义务零重证，第 55 部开放问题零结算；
 - 零新增首创声明，零既有段落回写，零第二真源。
+
+---
+
+# 追加账本增订
+
+## v1.5 结算注记 — 2026-08-29
+
+**第 54.3 部十二条证明义务全数了结**：义务 1–4、7–12 共十条此前已逐条 kernel 证毕；本注记落账最后两条的**收编裁定**（不重证，不产生第二真源）：
+
+### 义务 5（保护坐标与目标洗白）⇢ 已被第 57.2 侧冻结定理收编
+
+独立裁定席（la39）给出逐子句映射，每半条恰对应一条冻结定理的结论：
+
+| 义务 5 子句 | 收编定理（GID 尾段） |
+|---|---|
+| protectedCoordinates 是七保护字段的直接投影 | `protected_coordinate_dependent_extensionality` |
+| 仅改 Condition 即强制保护坐标不等 | 同上，于 `ProtectedCoordinateTag.conditions` 实例化 |
+| 被改坐标须有可审计、封闭、非空的见证束 | `has_closed_coordinate_witness_bundle_iff_ne` |
+| RegradeReport 证明修订判决为修订承诺在旧证据上的实际求值 | `regrade_report_carries_actual_evaluation`（原载体，经 57.2-C 的 `reportVerdictCorrect` 消费） |
+| 正文级洗白 = 报告身份 ∧ 严格到达后重评 ∧ 归因原承诺 ∧ 保护坐标变化 | `semantic_target_laundering_iff_protected_coordinates_ne` |
+| 草图级与正文级不得混同 | `semantic_sketch_target_laundering_iff_body_and_timestamp`（须显式时间桥） |
+| 洗白谓词有精确有限判定证书（无额外 Verdict/Fintype 前件） | `target_laundering_decision_nonempty` |
+
+### 义务 6（输运证书与越界收口）⇢ 已被第 57.3 侧冻结定理收编
+
+独立裁定席（la40）逐子句映射（C1–C5 五个合法性条件 ↦ `semantic_strict_subset_has_new_only_witness` 供严格扩域见证、`valid_semantic_transport_cert_iff_valid_transport_cert` 双向逐字段搬运至 legacy `ValidTransportCert` 三合取、`receipt_matches_original_coordinates`（57.5.2 强制复用）暴露收据坐标等式、`transport_refutation_witness_projects_to_prop` 与 `semantic_overreach_iff_not_overreach_closure`、`semantic_overreach_iff_overreach` 收束失败/反驳与越界侧）。零 diff 复核：`make lean` 全部 11173 任务通过，五个目标模块直接 Lean 校验通过，其 Freeze 收据只读核验一致。
+
+### 纪律注记
+
+- 两席均在「prove XOR subsume-with-map」二值任务下独立裁定，选择收编即受第二真源禁令约束；
+- 本注记只登记裁定与映射，不改写第 54.3 部与第 57 部任何既有段落；
+- 至此第 48–57 部裁决层纲领的全部证明义务（54.3 十二条 + 56 部十二条 + 57 部十条）在 Lean 内核下无一悬空：**证毕 32 条，收编 2 条，拒因存量清零**。
+
+后续增订继续严格追加于本节之后。
