@@ -284,8 +284,9 @@ public sealed partial class DigestionAlignmentTests
         Assert.Equal(first.Fingerprints, admitted.AtomFor(firstId)?.Fingerprints);
         Assert.Equal(second.Fingerprints, admitted.AtomFor(secondId)?.Fingerprints);
         Assert.All([firstId, secondId], childId => Assert.Equal(
-            DigestionReceiptAlignment.Seen,
+            DigestionReceiptAlignment.Rejected,
             inheritedButUnchained.AlignmentFor(childId)));
+        Assert.All([firstId, secondId], childId => Assert.Null(inheritedButUnchained.AtomFor(childId)));
     }
 
     [Fact]

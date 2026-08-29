@@ -216,7 +216,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void ObserverChainWithoutClausePlanRemainsAdmittedAndUnclaimed()
+    public void RejectsObserverChainWithoutClausePlanAndUnrelatedChild()
     {
         var sourceBytes = Encoding.UTF8.GetBytes(
             "# Observer\n\n**定理(观察者代数的唯一形态)。** claim。\n");
@@ -254,13 +254,20 @@ public sealed partial class DigestionAlignmentTests
             snapshot,
             ledger,
             DigestionAlignmentMode.Ingest);
-        var plan = DigestionIngestor.Plan(ledger, snapshot, ledger);
+        var exception = Assert.Throws<FormatException>(() => DigestionIngestor.Plan(
+            ledger,
+            snapshot,
+            ledger));
 
-        Assert.Empty(alignment.Findings);
-        Assert.DoesNotContain(parentEntry.AtomId, alignment.ClausePlanChainParents);
+        AssertMalformedClauseChain(alignment, parentEntry.AtomId, "parent CAS blob has no clause plan");
+        Assert.Contains(parentEntry.AtomId, alignment.ClausePlanChainParents);
         Assert.DoesNotContain(parentEntry.AtomId, alignment.VerifiedClausePlanParents);
-        Assert.Equal(DigestionReceiptAlignment.Seen, alignment.AlignmentFor(childEntry.AtomId));
-        Assert.Equal(0, plan.ResidualOpenAdded);
+        Assert.Equal(DigestionReceiptAlignment.Rejected, alignment.AlignmentFor(childEntry.AtomId));
+        Assert.Null(alignment.AtomFor(childEntry.AtomId));
+        Assert.Contains(
+            $"ingest clause chain parent {parentEntry.AtomId} lacks verified clause-plan proof",
+            exception.Message,
+            StringComparison.Ordinal);
     }
 
     private static SelfContainedClauseChainFixture SelfContainedClauseChain(
