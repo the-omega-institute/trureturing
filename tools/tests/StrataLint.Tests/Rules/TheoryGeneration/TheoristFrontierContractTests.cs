@@ -297,6 +297,45 @@ public sealed partial class TheoristFrontierContractTests
     }
 
     [Fact]
+    public void DeletedBaselineGovernanceCarrierWithUnreadableMissionIsRejected()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddHistoricalTheoristTarget(
+            "prime-norm-irreducibility",
+            includeContract: false,
+            baselineOwnerKind: "governance",
+            baselineIncludeContract: false);
+        fixture.DeleteTheoristTargetAndOwner();
+        fixture.CorruptMission();
+
+        var diagnostic = Assert.Single(Evaluate(fixture));
+
+        Assert.Contains(
+            "retirement ownership is undecidable because docs/MISSION.md does not load",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DeletedBaselineGovernanceCarrierWithInactiveRetirementDeliveryIsRejected()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddHistoricalTheoristTarget(
+            "prime-norm-irreducibility",
+            includeContract: false,
+            baselineOwnerKind: "governance",
+            baselineIncludeContract: false);
+        fixture.RetireTheoristTarget("D5/S0/Carrier/Ring.fixture_delivery");
+
+        var diagnostic = Assert.Single(Evaluate(fixture));
+
+        Assert.Contains(
+            "does not resolve to an active frozen declaration",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void LiteralMigratedV2BaselineContractWithFixedMatchingHashIsAcceptedByFullActiveCatalog()
     {
         var fixture = BaselineContractCarrier();
@@ -431,7 +470,7 @@ public sealed partial class TheoristFrontierContractTests
     }
 
     [Fact]
-    public void BaselineGovernanceRetirementWithActiveDeliveryIsAcceptedByFullActiveCatalog()
+    public void GovernanceDeletionExemptionRequiresMissingCurrentOwnerAcrossFullActiveCatalog()
     {
         var fixture = new RuleFixture();
         fixture.AddHistoricalTheoristTarget(
@@ -441,7 +480,15 @@ public sealed partial class TheoristFrontierContractTests
             baselineIncludeContract: false);
         fixture.RetireTheoristTarget();
 
-        AssertFullActiveCatalogAccepts(fixture);
+        var completed = ExecuteFullActiveCatalog(fixture);
+        var diagnostic = Assert.Single(completed.Diagnostics);
+
+        Assert.Equal(RuleId.CreateKnown(27), diagnostic.RuleId);
+        Assert.Contains(
+            "baseline Frontier contract block is missing",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+        AssertAllActiveRulesAccountedFor(completed);
     }
 
     [Fact]
@@ -632,10 +679,18 @@ public sealed partial class TheoristFrontierContractTests
 
     private static void AssertFullActiveCatalogAccepts(RuleFixture fixture)
     {
-        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.Build())).Capability;
+        var completed = ExecuteFullActiveCatalog(fixture);
 
         Assert.Empty(completed.Diagnostics);
+        AssertAllActiveRulesAccountedFor(completed);
+    }
+
+    private static CompletedRuleSet ExecuteFullActiveCatalog(RuleFixture fixture) =>
+        Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build())).Capability;
+
+    private static void AssertAllActiveRulesAccountedFor(CompletedRuleSet completed)
+    {
         var expectedActiveRules = RuleCatalog.Default.Descriptors
             .Where(static descriptor => descriptor.Lifecycle is RuleLifecycle.Active)
             .Select(static descriptor => descriptor.Id)

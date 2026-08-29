@@ -156,10 +156,12 @@ internal static partial class TheoristFrontierContractValidator
         FrozenLedgerBaseView? frozen = null;
         foreach (var retiredPath in retiredPaths)
         {
-            if (baselineMission.Entries.TryGetValue(retiredPath, out var baselineOwner)
-                && baselineOwner is FrontierEligibilityKind.Governance
-                && !HasContractMarker(context.Baseline, retiredPath)
-                && currentMission.UnreadableReason is null)
+            if (IsGovernanceDeletionExempt(
+                    context.Baseline,
+                    retiredPath,
+                    isDeletedBaselineSource: true,
+                    baselineMission,
+                    currentMission))
             {
                 continue;
             }

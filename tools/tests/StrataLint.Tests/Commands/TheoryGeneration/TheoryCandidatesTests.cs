@@ -555,6 +555,18 @@ public sealed partial class TheoryCandidatesTests
     }
 
     [Fact]
+    public void OutputRootSchemaIsPinnedToTheoryCandidatesV1()
+    {
+        var result = Run(CandidateFixture());
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        Assert.Equal(
+            "stratalint-theory-candidates-v1",
+            json.RootElement.GetProperty("schema").GetString());
+    }
+
+    [Fact]
     public void LeanReportMaterialParticipatesInTheSelectionReceipt()
     {
         var baseline = CandidateFixture();

@@ -67,12 +67,12 @@ internal static partial class TheoristFrontierContractValidator
                 && baselineOwner is not FrontierEligibilityKind.DeclarationReadyMathematicalOpen;
 
             var isDeletedBaselineSource = baselineFile is not null && !hasCurrentSource;
-            var isGovernanceDeletionExempt = isDeletedBaselineSource
-                && baselineOwner is FrontierEligibilityKind.Governance
-                && !baselineHadContract
-                && !baselineHadLegacyContract
-                && currentMission.UnreadableReason is null
-                && currentOwner is null;
+            var isGovernanceDeletionExempt = IsGovernanceDeletionExempt(
+                context.Baseline,
+                path,
+                isDeletedBaselineSource,
+                baselineMission,
+                currentMission);
             if (isDeletedBaselineSource
                 && !isGovernanceDeletionExempt
                 && currentOwner is not FrontierEligibilityKind.Retired)
@@ -714,6 +714,19 @@ internal static partial class TheoristFrontierContractValidator
         snapshot.TryGetFile(path.Value, out var file)
         && (CountOccurrences(file.Text, Marker) > 0
             || CountOccurrences(file.Text, LegacyMarker) > 0);
+
+    private static bool IsGovernanceDeletionExempt(
+        RepositorySnapshot baseline,
+        RepoPath path,
+        bool isDeletedBaselineSource,
+        MissionOwners baselineMission,
+        MissionOwners currentMission) =>
+        isDeletedBaselineSource
+        && baselineMission.Entries.TryGetValue(path, out var baselineOwner)
+        && baselineOwner is FrontierEligibilityKind.Governance
+        && !HasContractMarker(baseline, path)
+        && currentMission.UnreadableReason is null
+        && !currentMission.Entries.ContainsKey(path);
 
     private sealed record MissionOwners(
         ImmutableDictionary<RepoPath, FrontierEligibilityKind> Entries,
