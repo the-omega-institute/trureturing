@@ -1,0 +1,191 @@
+# 集成分支 Lean 构建缓存的【手动长跑】播种器。
+#
+# 【为什么住 dev 而不是集成分支 —— 实测,非选择】
+# GitHub 只从【默认分支】收录带 workflow_dispatch 的 workflow。
+# 把本文件放在集成分支上时,`gh workflow run --ref integration-…` 得
+# `HTTP 404: workflow ... not found on the default branch`,
+# 且 /actions/workflows API 里查不到它 —— 即等于不存在。
+# `--ref` 只决定执行时用哪个分支的文本,不改变「按名字查找」的作用域。
+# 这与 schedule 是同一约束的两种表现:两者都只认默认分支。
+# 故本文件住 dev,由 dev 的文本执行,再显式检出集成分支。
+#
+# 【为什么另建一份而不是改 lean-cache-seed.yml】
+# 那份是 push 触发的自动播种器,它把构建切成 6 个 12 分钟检查点、每段后存进度,
+# 目的是「被砍时最多丢 12 分钟」。本份的目的相反:一次跑到底,直接产出成品键。
+# 两者共存:自动那份继续每次推送啃一段,本份由人在需要时手动催熟。
+#
+# 【触发是 workflow_dispatch,且这不碰发布信任面】
+# permissions 是 contents: read,它【只写 actions/cache,不碰 Releases】。
+# lean-cache-publish.yml 当初移除 workflow_dispatch 是因为那份有 contents: write
+# 且发布物位于 admission 下方;本份没有那个能力,故不适用同一约束。
+#
+# 【超时拉满】
+# GitHub 上限 360 分钟,这里取 350(与 lean-cache-seed.yml 一致)。
+# 注:lean-cache-seed.yml:137-140 记「runner 约 76 分钟处被回收」——
+# 该读数【已被后续样本推翻】:run 33079370140 实际跑了 132 分钟(13:55→16:07)才终止。
+# 本份正是要实测「一次能跑多久」,结论回填到那段注释。
+#
+# 【成品键与自动那份共用】
+# 编完(EXIT=0)才写 lake-build-v1-<config>-<sources>,与 lean-cache-seed.yml 同键;
+# 半成品一律不写正式键,只有那份的 seed-progress 才存中间态。
+name: Seed the integration branch Lean cache (manual, long run)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  seed:
+    name: Seed the integration branch Lean cache (manual)
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 350
+    steps:
+      - name: Check out the integration branch
+        id: checkout-pushed
+        uses: actions/checkout@v4
+        with:
+          ref: integration-mathlib-upgarde-to-433
+          fetch-depth: 0
+          persist-credentials: false
+          path: candidate
+
+      - name: Strip checkout remote state
+        if: steps.checkout-pushed.outcome == 'success'
+        shell: bash
+        env:
+          CHECKOUT_PATH: candidate
+        run: |
+          set -euo pipefail
+          git -C "$CHECKOUT_PATH" remote remove origin
+          git -C "$CHECKOUT_PATH" for-each-ref --format='delete %(refname)' refs/remotes/ |
+            git -C "$CHECKOUT_PATH" update-ref --stdin
+          remote_count="$(git -C "$CHECKOUT_PATH" remote | wc -l)"
+          remote_ref_count="$(git -C "$CHECKOUT_PATH" for-each-ref --format='%(refname)' refs/remotes/ | wc -l)"
+          if [[ "$remote_count" -ne 0 || "$remote_ref_count" -ne 0 ]]; then
+            printf '%s\n' "checkout still exposes remotes or remote-tracking refs" >&2
+            exit 1
+          fi
+          head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
+          base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
+          test -n "$head_sha"
+          test -n "$base_sha"
+
+      - name: Install pinned Lean toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -x "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/install-lean-toolchain.sh"
+          "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/install-lean-toolchain.sh" candidate/lean-toolchain
+
+      # `make lean` 实际是 `dotnet run ... worktree with-cache-writer -- lake build`
+      # (tools/scripts/worktree/lean-cache-run.sh),故这里必须装 .NET SDK,
+      # 且要用与 ci.yml 同一份 global.json 钉版。
+      - name: Install pinned SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: candidate/global.json
+
+      - name: Resolve the canonical Lean report input address
+        id: lean-report-input
+        shell: bash
+        run: |
+          set -euo pipefail
+          helper="$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh"
+          test -x "$helper"
+          # 只消费后两项;前两项按 shell 惯例以 `_` 前缀标记为有意不用。
+          read -r _address _producer_sha256 sources_sha256 config_sha256 \
+            <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/candidate")"
+          [[ "$sources_sha256" =~ ^[0-9a-f]{64}$ ]]
+          [[ "$config_sha256" =~ ^[0-9a-f]{64}$ ]]
+          echo "sources_sha256=$sources_sha256" >> "$GITHUB_OUTPUT"
+          echo "config_sha256=$config_sha256" >> "$GITHUB_OUTPUT"
+
+      - name: Restore any existing dependency layer
+        id: lake-deps-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            candidate/.lake/packages
+            candidate/.lake/config
+            candidate/.lake/.stratalint-lean-cache-stamp.json
+            ~/.cache/mathlib
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.lean-report-input.outputs.config_sha256 }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.lean-report-input.outputs.config_sha256 }}
+
+      - name: Restore any existing project layer
+        id: lake-build-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ steps.lean-report-input.outputs.sources_sha256 }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-
+
+      # 【增量续编】实测:本 runner(`ubuntu-24.04-arm`)在约 76 分钟处砍掉正在跑的步骤,
+      # job 级 `timeout-minutes` 无效 —— 两个独立样本 run 32493250519(76m44s)与
+      # 32962231614(76m11s),误差 33 秒。而内容层冷编本机 28 核尚需 24.7 分钟,
+      # CI 单核编不完,所以**一轮编不完是常态,不是故障**。
+      #
+      # 故这里保存"进度快照":上一轮编到哪算哪,下一轮 restore 后由 lake 增量续编。
+      # 正式 key 只在真正编完(EXIT=0)时才写,避免把半成品当成完整缓存喂给消费侧。
+      - name: Restore the newest progress snapshot
+        if: steps.lake-build-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-seed-progress-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ github.run_id }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-seed-progress-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-
+
+      # 【为什么是检查点序列,不是单个 timebox】2026-08-28 实测五个样本:
+      # runner 分别在 76.2 / 76.7 / 79.0 / 87.3 / **32.4** 分钟处被回收
+      # (`##[error]The runner has received a shutdown signal.`)。
+      # 前四个样本曾让我把下界定为 76m 并设 55m timebox —— **第五个样本 32.4m 证伪了它**:
+      # 回收不是稳定截止,更像负载相关抢占,任何单一 timebox 都会在某次被跨过。
+      #
+      # 又因 `continue-on-error` 只吸收 failure、不吸收 cancellation,
+      # 被砍时紧随的 `if: always()` 保存步骤会被**跳过**(实测三轮皆然),整轮进度全丢。
+      #
+      # 故改为 6 个 12 分钟检查点,每个后面紧跟一次 save:
+      # 任一时刻被砍,最多丢一个区间(12 分钟),已存的检查点由下一轮 restore-keys 前缀命中。
+      # save 实测 0.71GB 约 0.4 分钟,6 次开销约 2.4 分钟,相对 72 分钟构建可忽略。
+      # 【一次跑到底,不切片】本份的全部意义就在这里:让 lake build 跑满它需要的时间,
+      # 实测 runner 究竟能承载多久。不设 timeout 包装,由 job 级 timeout-minutes 兜底。
+      - name: Build the pinned Lean content in one long run
+        id: build
+        shell: bash
+        working-directory: candidate
+        run: |
+          set -uo pipefail
+          export PATH="$HOME/.elan/bin:$PATH"
+          date -u '+MANUAL_SEED started_at=%Y-%m-%dT%H:%M:%SZ'
+          make lean
+          rc=$?
+          date -u '+MANUAL_SEED finished_at=%Y-%m-%dT%H:%M:%SZ'
+          printf 'MANUAL_SEED exit=%s olean=%s\n' \
+            "$rc" "$(find .lake/build -name '*.olean' | wc -l | tr -d ' ')"
+          exit "$rc"
+
+      # 只在真正编完时写正式键;半成品不写(与 lean-cache-seed.yml 的契约一致)。
+      - name: Save the completed build layer
+        if: steps.build.outcome == 'success'
+        timeout-minutes: 30
+        uses: actions/cache/save@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ steps.lean-report-input.outputs.sources_sha256 }}
+
+      - name: Save the dependency layer
+        if: steps.build.outcome == 'success'
+        timeout-minutes: 30
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            candidate/.lake/packages
+            candidate/.lake/config
+            candidate/.lake/.stratalint-lean-cache-stamp.json
+            ~/.cache/mathlib
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.lean-report-input.outputs.config_sha256 }}
