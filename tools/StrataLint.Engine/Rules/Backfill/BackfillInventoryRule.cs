@@ -10,7 +10,8 @@ internal sealed record BackfillInventoryValidationContext(
     AcceptedLeanClosure? Lean,
     VerifiedScribeEmissions? VerifiedScribeEmissions,
     RawChangeSet? Changes = null,
-    Func<string, bool>? IsBaseFactAffected = null);
+    Func<string, bool>? IsBaseFactAffected = null,
+    RawChangeSet? RepositoryChanges = null);
 
 internal static class BackfillInventoryRule
 {
@@ -27,7 +28,7 @@ internal static class BackfillInventoryRule
         => Evaluate(context, changes: null);
 
     internal static ImmutableArray<RuleFinding> EvaluateCandidateDelta(RuleEvaluationContext context)
-        => Evaluate(context, context.RuleImplementationChanged ? null : context.Changes);
+        => Evaluate(context, context.Changes);
 
     internal static bool IsAffectedBy(RuleEvaluationContext context)
     {
@@ -39,14 +40,6 @@ internal static class BackfillInventoryRule
                 || path.Value == TheoryAtomizerDataLoader.DataPath
                 || DigestionLedgerAligner.IsAtomizerImplementationPath(path.Value)
                 || path.Value is "Meta/registry.yaml" or "Meta/domains.yaml"
-                || path.Value.StartsWith("D5/", StringComparison.Ordinal)
-                    && path.Value.EndsWith(".lean", StringComparison.Ordinal)
-                || path.Value.StartsWith("Evidence/D5/", StringComparison.Ordinal)
-                || path.Value.StartsWith("Blueprint/", StringComparison.Ordinal)
-                || path.Value.StartsWith(
-                    "tools/Authorizations/digestion-tail/",
-                    StringComparison.Ordinal)
-                || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path.Value)
                 || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path.Value)
                 // 理论卷按路径规则治理后,`GovernanceDocuments` 里已无理论路径;
                 // 若此处仍只靠那张清单,只改理论卷的候选就**整条规则不触发**
@@ -59,7 +52,20 @@ internal static class BackfillInventoryRule
             }
         }
 
-        return false;
+        if (context.RuleImplementationChanged)
+        {
+            return true;
+        }
+
+        var document = BackfillInventoryLoader.LoadCandidateDelta(
+            context.Current,
+            context.Baseline,
+            context.Changes);
+        return BackfillDeltaImpactResolver.Resolve(
+            context.Current,
+            context.Baseline,
+            document,
+            context.Changes).HasAffectedEdges;
     }
 
     private static ImmutableArray<RuleFinding> Evaluate(
@@ -67,6 +73,8 @@ internal static class BackfillInventoryRule
         RawChangeSet? changes)
     {
         BackfillInventoryDocument document;
+        RawChangeSet? evaluationChanges = changes;
+        Func<string, bool>? isBaseFactAffected = null;
         try
         {
             document = changes is null
@@ -75,6 +83,23 @@ internal static class BackfillInventoryRule
                     context.Current,
                     context.Baseline,
                     changes);
+            if (changes is not null)
+            {
+                var impact = BackfillDeltaImpactResolver.Resolve(
+                    context.Current,
+                    context.Baseline,
+                    document,
+                    changes);
+                evaluationChanges = impact.EvaluationChanges;
+                var affectedPaths = evaluationChanges.Paths
+                    .Select(static path => path.Value)
+                    .ToHashSet(StringComparer.Ordinal);
+                isBaseFactAffected = affectedPaths.Contains;
+                document = BackfillInventoryLoader.LoadCandidateDelta(
+                    context.Current,
+                    context.Baseline,
+                    evaluationChanges);
+            }
         }
         catch (FormatException exception)
         {
@@ -88,8 +113,9 @@ internal static class BackfillInventoryRule
                 context.Policy,
                 context.Lean,
                 context.VerifiedScribeEmissions,
-                changes,
-                changes is null ? null : context.IsBaseFactAffected),
+                evaluationChanges,
+                isBaseFactAffected,
+                changes),
             document);
     }
 
@@ -128,7 +154,7 @@ internal static class BackfillInventoryRule
         foreach (var finding in DigestionCasStore.ValidateAppendOnly(
                      context.Current,
                      context.Baseline,
-                     context.Changes))
+                     context.RepositoryChanges ?? context.Changes))
         {
             findings.Add(new RuleFinding(BackfillPath, finding));
         }
@@ -218,7 +244,7 @@ internal static class BackfillInventoryRule
         var changedSourceIds = new HashSet<string>(StringComparer.Ordinal);
         var seenPaths = new Dictionary<string, string>(StringComparer.Ordinal);
         var changedPaths = new HashSet<string>(StringComparer.Ordinal);
-        var validateAllRecords = RequiresFullBackfillValidation(context.Changes);
+        var validateAllRecords = context.Changes is null;
         foreach (var source in sources)
         {
             var sourceMetadataChanged = validateAllRecords
@@ -462,14 +488,6 @@ internal static class BackfillInventoryRule
             throw new FormatException("baseline digestion ledger is missing");
         }
     }
-
-    private static bool RequiresFullBackfillValidation(RawChangeSet? changes) =>
-        changes is null || changes.Paths.Any(static path =>
-            path.Value == "tools/StrataLint.Engine/StrataLint.Engine.csproj"
-            || path.Value.StartsWith(
-                "tools/StrataLint.Engine/Rules/Backfill/",
-                StringComparison.Ordinal)
-                && path.Value.EndsWith(".cs", StringComparison.Ordinal));
 
     private static bool SourceMetadataChanged(
         DigestionLedgerSource source,

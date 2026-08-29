@@ -180,12 +180,10 @@ explicit matrix `!![6,23;19,17]` over `ZMod 24` and its fixed vector;
 `D5/S3/QuantumContext/CliffordPhaseKernel.lean` is 38 lines. Neither supplies a
 dimension-six MUB classification.
 
-The current consumption boundary is owner-only manual delivery through
-`make theory-candidates OWNER_OVERRIDE_FILE=Problems/mub-six-fourth-basis.md`.
-`Problems/` is not part of the repository candidate set and does not enter the
-argmax or bootstrap order. There is no periodic scan, automatic ingestion, or
-machine-derived consumed/discarded lifecycle. This dossier therefore records
-an external open problem for that manual entry point only; it does not claim
+The current consumption boundary has no live repository entry point.
+`Problems/` is not part of a machine-selected repository candidate set. There
+is no periodic scan, automatic ingestion, or machine-derived consumed/discarded
+lifecycle. This dossier therefore records an external open problem; it does not claim
 sustained automated consumption or that the repository can solve or advance
 the conjecture.
 

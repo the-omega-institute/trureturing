@@ -2,7 +2,6 @@
 # 内容工件(S0/Evidence/Blueprint/Library/Chronicle)无 code-owner → 由 candidate harness 机器门裁决(对错机器判,CLAUDE.md 第2条)。
 
 /Meta/ @loning
-/docs/develop/spec/golden-ledger-repo-spec.md @loning
 /D5/X_Frontier/Hearts.lean @loning
 /D5/X_Assumptions/ @loning
 /global.json @loning
