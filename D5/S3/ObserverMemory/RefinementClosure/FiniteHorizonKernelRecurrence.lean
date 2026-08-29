@@ -68,12 +68,16 @@ theorem complete_kernel_eq_iInf_finite_horizon
     Setoid.ker (completeItinerary tau q) =
       ⨅ m, finiteHorizonKernel tau q m := by
   apply le_antisymm
-  · intro y y' sameComplete m
+  · refine le_iInf fun m => ?_
+    intro y y' sameComplete
     funext k
     exact congrFun sameComplete k
   · intro y y' sameAtEveryDepth
     funext n
-    exact congrFun (sameAtEveryDepth n) ⟨n, Nat.lt_succ_self n⟩
+    have sameAtDepthN : finiteHorizonKernel tau q n y y' :=
+      (iInf_le (fun m => finiteHorizonKernel tau q m) n)
+        sameAtEveryDepth
+    exact congrFun sameAtDepthN ⟨n, Nat.lt_succ_self n⟩
 
 /-- A first separating terminal coordinate certifies strict refinement at the
 next finite horizon. -/
