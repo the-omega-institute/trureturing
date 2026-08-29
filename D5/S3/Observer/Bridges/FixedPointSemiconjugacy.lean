@@ -3,16 +3,15 @@
    mirror-B: D5/B/S3/Observer/Bridges/FixedPointSemiconjugacy
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Semiconjugate observer bridges transport fixed points and forward-invariant observation fibers across world models. -/
+   digest: Semiconjugate bridges transport fixed points and stable fibers. -/
 
 import Mathlib.Logic.Function.Conjugate
 import Mathlib.Logic.Function.Iterate
 
 /-!
-A mathematically controlled version of the source's “wormhole” metaphor is a
-semiconjugacy.  It transports visible dynamics without asserting that the two
-state spaces are ontologically identical.  An injective bridge reflects fixed
-points as well as transporting them.
+A controlled version of the source's “wormhole” metaphor is a semiconjugacy.
+It transports visible dynamics without identifying the two state types.  An
+injective bridge reflects fixed points as well as transporting them.
 -/
 
 set_option autoImplicit false
@@ -41,7 +40,6 @@ theorem fixed_point_reflects_of_injective
     (hFixed : Function.IsFixedPt targetStep (bridge x)) :
     Function.IsFixedPt sourceStep x := by
   apply hInjective
-  change bridge (sourceStep x) = bridge x
   rw [hSemiconj x, hFixed]
 
 /-- Under an injective semiconjugacy, fixedness is exactly preserved. -/
@@ -69,11 +67,11 @@ theorem semiconjugacy_iterate
     (hSemiconj : Function.Semiconj bridge sourceStep targetStep)
     (n : ℕ) (x : X) :
     bridge ((sourceStep^[n]) x) = (targetStep^[n]) (bridge x) := by
-  induction n with
+  induction n generalizing x with
   | zero => simp
   | succ n ih =>
       rw [Function.iterate_succ_apply, Function.iterate_succ_apply,
-        hSemiconj, ih]
+        ih (sourceStep x), hSemiconj x]
 
 /-- Fixed-point transport composes along two observer bridges. -/
 theorem fixed_point_maps_across_composite

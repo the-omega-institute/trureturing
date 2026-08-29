@@ -3,17 +3,15 @@
    mirror-B: D5/B/S3/CompletionDynamics/GoldenMobius/GoldenCrossRatioLinearization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Golden cross-ratio coordinates conjugate the reciprocal Mobius map
-     exactly to multiplication by minus the inverse golden ratio squared. -/
+   digest: Golden cross-ratio coordinates exactly linearize the Mobius map. -/
 
 import D5.S3.CompletionDynamics.GoldenMobius.GoldenMobiusMap
 import Mathlib.Logic.Function.Iterate
 
 /-!
-The source identity is a genuine exact conjugacy, rather than an asymptotic
-linearization. Because the affine formulas use totalized division in Lean, the
-geometric theorem explicitly excludes the pole `0` of `T` and the pole `ψ` of
-the cross-ratio chart.
+The identity is an exact conjugacy.  Since real division is total in Lean, the
+geometric theorem explicitly excludes the pole `0` of the Mobius map and the
+pole `goldenConj` of the cross-ratio chart.
 -/
 
 set_option autoImplicit false
@@ -26,8 +24,7 @@ namespace D5.S3.CompletionDynamics.GoldenMobius.GoldenCrossRatioLinearization
 open scoped goldenRatio
 open D5.S3.CompletionDynamics.GoldenMobius.GoldenMobiusMap
 
-/-- Projective coordinate sending the attracting golden fixed point to zero and
-the conjugate fixed point to the point at infinity. -/
+/-- Projective coordinate sending the attracting fixed point to zero. -/
 def goldenCrossRatio (x : ℝ) : ℝ :=
   (x - Real.goldenRatio) / (x - Real.goldenConj)
 
@@ -36,28 +33,49 @@ theorem golden_cross_ratio_at_golden :
     goldenCrossRatio Real.goldenRatio = 0 := by
   simp [goldenCrossRatio]
 
-/-- The numerator of the transformed cross-ratio in denominator-separated
-form. -/
+/-- Numerator identity in a denominator-separated form. -/
 theorem golden_mobius_sub_golden {x : ℝ} (hx : x ≠ 0) :
     goldenMobius x - Real.goldenRatio =
       -(x - Real.goldenRatio) / (Real.goldenRatio * x) := by
-  have hPhiX : Real.goldenRatio * x ≠ 0 :=
-    mul_ne_zero Real.goldenRatio_ne_zero hx
-  apply (eq_div_iff hPhiX).2
-  unfold goldenMobius
-  field_simp [hx]
-  nlinarith [Real.goldenRatio_sq]
+  have hOneSub : 1 - Real.goldenRatio = Real.goldenConj := by
+    linarith [Real.goldenRatio_add_goldenConj]
+  have hConjInv :
+      Real.goldenConj = -Real.goldenRatio⁻¹ := by
+    rw [Real.inv_goldenRatio]
+    ring
+  calc
+    goldenMobius x - Real.goldenRatio =
+        (1 - Real.goldenRatio) + 1 / x := by
+      unfold goldenMobius
+      ring
+    _ = Real.goldenConj + 1 / x := by rw [hOneSub]
+    _ = -Real.goldenRatio⁻¹ + 1 / x := by rw [hConjInv]
+    _ = -(x - Real.goldenRatio) /
+        (Real.goldenRatio * x) := by
+      field_simp [hx, Real.goldenRatio_ne_zero]
+      ring
 
-/-- The denominator of the transformed cross-ratio in denominator-separated
-form. -/
+/-- Denominator identity in a denominator-separated form. -/
 theorem golden_mobius_sub_conjugate {x : ℝ} (hx : x ≠ 0) :
     goldenMobius x - Real.goldenConj =
       Real.goldenRatio * (x - Real.goldenConj) / x := by
-  apply (eq_div_iff hx).2
-  unfold goldenMobius
-  field_simp [hx]
-  nlinarith [Real.goldenRatio_add_goldenConj,
-    Real.goldenRatio_mul_goldenConj]
+  have hOneSub : 1 - Real.goldenConj = Real.goldenRatio := by
+    linarith [Real.goldenRatio_add_goldenConj]
+  calc
+    goldenMobius x - Real.goldenConj =
+        (1 - Real.goldenConj) + 1 / x := by
+      unfold goldenMobius
+      ring
+    _ = Real.goldenRatio + 1 / x := by rw [hOneSub]
+    _ = Real.goldenRatio * (x - Real.goldenConj) / x := by
+      apply (eq_div_iff hx).2
+      calc
+        (Real.goldenRatio + 1 / x) * x =
+            Real.goldenRatio * x + 1 := by
+          field_simp [hx]
+        _ = Real.goldenRatio * (x - Real.goldenConj) := by
+          rw [mul_sub, Real.goldenRatio_mul_goldenConj]
+          ring
 
 /-- Exact golden projective linearization. -/
 theorem golden_cross_ratio_linearization {x : ℝ}
@@ -69,8 +87,9 @@ theorem golden_cross_ratio_linearization {x : ℝ}
     golden_mobius_sub_conjugate hx]
   unfold goldenProjectiveMultiplier
   field_simp [hx, hConj, Real.goldenRatio_ne_zero]
+  ring
 
-/-- Every positive point avoids both affine-chart singularities. -/
+/-- Positive points avoid both affine-chart singularities. -/
 theorem positive_avoids_golden_singularities {x : ℝ} (hx : 0 < x) :
     x ≠ 0 ∧ x ≠ Real.goldenConj := by
   constructor
@@ -79,7 +98,7 @@ theorem positive_avoids_golden_singularities {x : ℝ} (hx : 0 < x) :
     rw [h] at hx
     linarith [Real.goldenConj_neg]
 
-/-- Positivity is invariant under every finite golden Mobius iterate. -/
+/-- Positivity is invariant under every finite Mobius iterate. -/
 theorem golden_mobius_iterate_pos (n : ℕ) {x : ℝ} (hx : 0 < x) :
     0 < (goldenMobius^[n]) x := by
   induction n generalizing x with
@@ -88,8 +107,7 @@ theorem golden_mobius_iterate_pos (n : ℕ) {x : ℝ} (hx : 0 < x) :
       rw [Function.iterate_succ_apply]
       exact ih (golden_mobius_pos hx)
 
-/-- The exact one-step conjugacy iterates to an exact geometric law on the
-positive affine chart. -/
+/-- Exact geometric contraction law on the positive affine chart. -/
 theorem golden_cross_ratio_iterate (n : ℕ) {x : ℝ} (hx : 0 < x) :
     goldenCrossRatio ((goldenMobius^[n]) x) =
       goldenProjectiveMultiplier ^ n * goldenCrossRatio x := by
@@ -103,8 +121,7 @@ theorem golden_cross_ratio_iterate (n : ℕ) {x : ℝ} (hx : 0 < x) :
       rw [pow_succ]
       ring
 
-/-- Fixed-point probe: exact linearization correctly sends the complete point
-to zero at every finite depth. -/
+/-- The complete point remains the zero cross-ratio at every depth. -/
 example (n : ℕ) :
     goldenCrossRatio ((goldenMobius^[n]) Real.goldenRatio) = 0 := by
   rw [golden_cross_ratio_iterate n Real.goldenRatio_pos,
