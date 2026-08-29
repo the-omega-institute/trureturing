@@ -12,6 +12,6 @@ receipts:
       target_statement_id: sha256:a36e220ac19a3f75ad18b701da99ca456ea83bb591c07fe9b5037d7e3d509672
   scribe:
     - gid: D5/S0/Computability/DescriptionComplexity/LookupProgramUpperBound.lookup_program_upper_bound
-      definition_sha256: sha256:02cc5d60df482042cc4580f453073cad720bfdc79d88c0b532aa3e5a4755728a
-      emission_sha256: sha256:d6eb061433cb06e6f21f173d0f1a75bc5cde2b25586f437a71d65bdc6f8a004f
+      definition_sha256: sha256:a944323a712918e042564a9b55fc8dc5289079b591356a007d8615c39045a2af
+      emission_sha256: sha256:4d03f134ae6e0680f87a44ee0104e71423d61522c46e54c1527e7451cd3544bc
   unresolved_subitems: []

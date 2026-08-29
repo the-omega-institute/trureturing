@@ -14,13 +14,16 @@ Blocks(
                 DeclarationHandle.Create("D5/S1/Recurrence/BivariateWordSeries.bookkeeping_series_self_functional_equation"),
                 H("The word series splits into its two substituted branches"),
                 StatementSource.FromAuthor(Disp(Seq(
-                    F.Id("F"), Open, F.Id("u"), Comma, Sp, F.Id("v"), Close,
-                    Sp, Eq, Sp,
-                    F.Id("F"), Open, F.Id("v"), Comma, Sp,
-                    F.Id("u"), F.Id("v"), Close,
-                    Sp, Plus, Sp, F.Id("u"), Cdot, Sp,
-                    F.Id("F"), Open, F.Id("u"), F.Id("v"), Comma, Sp,
-                    F.Id("u"), F.Id("v"), Caret, Grp(D(2)), Close))),
+                    Open, Operatorname, Grp(F.Id("bookkeepingSeries")), Colon, Sp,
+                    Operatorname, Grp(F.Id("Degree")), Sp, To, Sp,
+                    Operatorname, Grp(F.Id("Cardinal")), Close,
+                    Sp, Eq, Sp, Open,
+                    F.Id("degree"), Colon, Sp, Operatorname, Grp(F.Id("Degree")),
+                    Sp, Mapsto, Sp,
+                    Operatorname, Grp(F.Id("skipBranchSeries")),
+                    Open, F.Id("degree"), Close, Sp, Plus, Sp,
+                    Operatorname, Grp(F.Id("takeBranchSeries")),
+                    Open, F.Id("degree"), Close, Close, Dot))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(

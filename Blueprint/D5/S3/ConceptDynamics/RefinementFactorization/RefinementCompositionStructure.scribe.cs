@@ -52,74 +52,124 @@ internal sealed class RefinementCompositionStructureDocument : IScribeDocumentDe
         Formula readout = F.Id("r");
         Formula firstReadout = F.Id("r0");
         Formula secondReadout = F.Id("r1");
+        Formula thirdReadout = F.Id("r2");
+        Formula fourthReadout = F.Id("r3");
         Formula firstFactor = F.Id("h0");
         Formula secondFactor = F.Id("h1");
         Formula thirdFactor = F.Id("h2");
         Formula factor = F.Id("h");
         Formula firstClass = F.Id("A");
         Formula secondClass = F.Id("B");
-        Formula leftClass = F.Id("a");
-        Formula middleClass = F.Id("b");
-        Formula rightClass = F.Id("c");
+        Formula leftClass = F.Id("left");
+        Formula middleClass = F.Id("middle");
+        Formula rightClass = F.Id("right");
+        Formula relationLeft = F.Id("P");
+        Formula relationRight = F.Id("Q");
         Formula classType = Call("ReadoutRefinementClass", state);
+        Formula readoutType = Call("Readout", state);
+        Formula category = Call("fixedCodomainFactorizationCategory", state);
         Formula type = Seq(Operatorname, Grp(F.Id("Type")));
         Formula composition = Seq(
             Refines(coarse, middle), Sp, Rightarrow, Sp,
             Refines(middle, fine), Sp, Rightarrow, Sp,
             Refines(coarse, fine));
         Formula identityComputation = Seq(
-            Forall, Sp, readout, Comma, Sp,
-            Call("identity", readout), Sp, Eq, Sp,
-            Call("identityRefinement", readout));
+            Forall, Sp, readout, Colon, Sp, readoutType, Comma, Sp,
+            Call("identity", category, readout), Sp, Eq, Sp,
+            Call("identityRefinement", Call("readout", readout)));
         Formula compositionComputation = Seq(
-            Forall, Sp, firstFactor, Comma, Sp, secondFactor, Comma, Sp,
-            Call("compose", firstFactor, secondFactor), Sp, Eq, Sp,
+            Forall, Sp, firstReadout, Comma, Sp, secondReadout, Comma, Sp,
+            thirdReadout, Colon, Sp, readoutType, Comma, Sp,
+            firstFactor, Colon, Sp,
+            Refines(Call("readout", firstReadout), Call("readout", secondReadout)),
+            Comma, Sp,
+            secondFactor, Colon, Sp,
+            Refines(Call("readout", secondReadout), Call("readout", thirdReadout)),
+            Comma, Sp,
+            Call("compose", category, firstFactor, secondFactor), Sp, Eq, Sp,
             Call("composeRefinement", secondFactor, firstFactor));
         Formula leftIdentity = Seq(
-            Forall, Sp, factor, Comma, Sp,
-            Call("compose", Call("identity", firstReadout), factor), Sp, Eq, Sp, factor);
-        Formula rightIdentity = Seq(
-            Forall, Sp, factor, Comma, Sp,
-            Call("compose", factor, Call("identity", secondReadout)), Sp, Eq, Sp, factor);
-        Formula associativity = Seq(
-            Forall, Sp, firstFactor, Comma, Sp, secondFactor, Comma, Sp, thirdFactor,
+            Forall, Sp, firstReadout, Comma, Sp, secondReadout,
+            Colon, Sp, readoutType, Comma, Sp,
+            factor, Colon, Sp,
+            Refines(Call("readout", firstReadout), Call("readout", secondReadout)),
             Comma, Sp,
-            Call("compose", Call("compose", firstFactor, secondFactor), thirdFactor),
+            Call("compose", category, Call("identity", category, firstReadout), factor),
+            Sp, Eq, Sp, factor);
+        Formula rightIdentity = Seq(
+            Forall, Sp, firstReadout, Comma, Sp, secondReadout,
+            Colon, Sp, readoutType, Comma, Sp,
+            factor, Colon, Sp,
+            Refines(Call("readout", firstReadout), Call("readout", secondReadout)),
+            Comma, Sp,
+            Call("compose", category, factor, Call("identity", category, secondReadout)),
+            Sp, Eq, Sp, factor);
+        Formula associativity = Seq(
+            Forall, Sp, firstReadout, Comma, Sp, secondReadout, Comma, Sp,
+            thirdReadout, Comma, Sp, fourthReadout, Colon, Sp, readoutType, Comma, Sp,
+            firstFactor, Colon, Sp,
+            Refines(Call("readout", firstReadout), Call("readout", secondReadout)),
+            Comma, Sp,
+            secondFactor, Colon, Sp,
+            Refines(Call("readout", secondReadout), Call("readout", thirdReadout)),
+            Comma, Sp,
+            thirdFactor, Colon, Sp,
+            Refines(Call("readout", thirdReadout), Call("readout", fourthReadout)),
+            Comma, Sp,
+            Call(
+                "compose", category,
+                Call("compose", category, firstFactor, secondFactor), thirdFactor),
             Sp, Eq, Sp,
-            Call("compose", firstFactor, Call("compose", secondFactor, thirdFactor)));
+            Call(
+                "compose", category, firstFactor,
+                Call("compose", category, secondFactor, thirdFactor)));
+        Formula readoutRelation = Seq(
+            Open, relationLeft, Comma, Sp, relationRight, Colon, Sp, readoutType,
+            Sp, Mapsto, Sp, relationLeft, Sp, Leq, Sp, relationRight, Close);
         Formula quotientOrder = Seq(
-            Forall, Sp, firstClass, Comma, Sp, secondClass, Comma, Sp,
-            Call("class", firstClass), Sp, Leq, Sp, Call("class", secondClass),
+            Forall, Sp, firstClass, Comma, Sp, secondClass,
+            Colon, Sp, readoutType, Comma, Sp,
+            Call("toAntisymmetrization", readoutRelation, firstClass),
+            Sp, Leq, Sp,
+            Call("toAntisymmetrization", readoutRelation, secondClass),
             Sp, Iff, Sp,
             Refines(Call("readout", firstClass), Call("readout", secondClass)));
         Formula quotientReflexive = Seq(
-            Forall, Sp, leftClass, Sp, InMacro, Sp, classType, Comma, Sp,
+            Forall, Sp, leftClass, Colon, Sp, classType, Comma, Sp,
             leftClass, Sp, Leq, Sp, leftClass);
         Formula quotientTransitive = Seq(
             Forall, Sp, leftClass, Comma, Sp, middleClass, Comma, Sp, rightClass,
-            Sp, InMacro, Sp, classType, Comma, Sp,
+            Colon, Sp, classType, Comma, Sp,
             leftClass, Sp, Leq, Sp, middleClass, Sp, Rightarrow, Sp,
             middleClass, Sp, Leq, Sp, rightClass, Sp, Rightarrow, Sp,
             leftClass, Sp, Leq, Sp, rightClass);
+        Formula categoryLaws = Seq(
+            Open,
+            Open, identityComputation, Close, Sp, Land, RowBreak, Grp(),
+            Open, compositionComputation, Close, Sp, Land, RowBreak, Grp(),
+            Open, leftIdentity, Close, Sp, Land, RowBreak, Grp(),
+            Open, rightIdentity, Close, Sp, Land, RowBreak, Grp(),
+            Open, associativity, Close,
+            Close);
+        Formula quotientLaws = Seq(
+            Open,
+            Open, quotientOrder, Close, Sp, Land, RowBreak, Grp(),
+            Open, quotientReflexive, Close, Sp, Land, RowBreak, Grp(),
+            Open, quotientTransitive, Close,
+            Close);
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
             Forall, Sp,
             state, Comma, Sp, coarseType, Comma, Sp, middleType, Comma, Sp, fineType,
             Colon, Sp, type, Comma, RowBreak, Grp(),
-            coarse, Colon, Sp, state, Sp, To, Sp, coarseType, Comma, Sp,
-            middle, Colon, Sp, state, Sp, To, Sp, middleType, Comma, Sp,
-            fine, Colon, Sp, state, Sp, To, Sp, fineType, Comma, RowBreak, Grp(),
+            coarse, Colon, Sp, Call("Concept", state, coarseType), Comma, Sp,
+            middle, Colon, Sp, Call("Concept", state, middleType), Comma, Sp,
+            fine, Colon, Sp, Call("Concept", state, fineType), Comma, RowBreak, Grp(),
             Open, composition, Close, Sp, Land, RowBreak, Grp(),
             Refines(coarse, coarse), Sp, Land, RowBreak, Grp(),
-            Open, identityComputation, Close, Sp, Land, RowBreak, Grp(),
-            Open, compositionComputation, Close, Sp, Land, RowBreak, Grp(),
-            Open, leftIdentity, Close, Sp, Land, RowBreak, Grp(),
-            Open, rightIdentity, Close, Sp, Land, RowBreak, Grp(),
-            Open, associativity, Close, Sp, Land, RowBreak, Grp(),
-            Open, quotientOrder, Close, Sp, Land, RowBreak, Grp(),
-            Open, quotientReflexive, Close, Sp, Land, RowBreak, Grp(),
-            Open, quotientTransitive, Close, Dot,
+            categoryLaws, Sp, Land, RowBreak, Grp(),
+            quotientLaws, Dot,
             End, Grp(F.Id("gathered"))));
     }
 }
