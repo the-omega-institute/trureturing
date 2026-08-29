@@ -476,7 +476,9 @@ public sealed class BranchGrammarSignalWorkflowTests
             BoundedProcessRunner.HangDetectionBudget,
             1024 * 1024);
 
-        var summary = File.Exists(summaryPath) ? File.ReadAllText(summaryPath) : string.Empty;
+        var summary = File.Exists(summaryPath)
+            ? TemporaryFileSystem.File.ReadAllText(summaryPath)
+            : string.Empty;
         return new SignalExecution(process, summary);
     }
 
@@ -490,4 +492,16 @@ public sealed class BranchGrammarSignalWorkflowTests
         && node is YamlScalarNode scalar
             ? scalar.Value ?? string.Empty
             : string.Empty;
+    // 测试映射解析器(ScribeTestMapDeriver.IsTemporaryFileSystemRoot)按**语法**排除
+    // receiver 名为 TemporaryFileSystem 的读取:临时夹具路径是变量,静态归因不到,
+    // 也不该归因——它不是仓库输入。仓内既有同形包装见
+    // EmitFormalizationReceiptTests.cs 与 TruthReleaseBundleWriterTests.cs。
+    private static class TemporaryFileSystem
+    {
+        internal static class File
+        {
+            internal static string ReadAllText(string path) => System.IO.File.ReadAllText(path);
+        }
+    }
+
 }
