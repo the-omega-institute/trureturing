@@ -84,8 +84,25 @@ public sealed class ContentsWriteWorkflowClosureTests
 
         Assert.Contains("repos/${GITHUB_REPOSITORY}/branches/dev", content, StringComparison.Ordinal);
         Assert.Contains(".protected", content, StringComparison.Ordinal);
-        Assert.DoesNotContain("$GITHUB_SHA", content, StringComparison.Ordinal);
-        Assert.Contains("commits?sha=dev&per_page=40", content, StringComparison.Ordinal);
+        // #4006 deliberately pins the candidate to GITHUB_SHA: binding source_commit to the
+        // run's own commit keeps provenance on the gate-verified source instead of downgrading
+        // it to publisher-run provenance. GITHUB_SHA is therefore no longer forbidden - what
+        // must hold is that it only becomes source_commit after it is shape-checked and every
+        // required check on it reports success. Pin that instead of the retired prohibition.
+        Assert.Contains("candidate=\"$GITHUB_SHA\"", content, StringComparison.Ordinal);
+        Assert.Contains(
+            "[[ \"$candidate\" =~ ^[0-9a-f]{40}$ ]]",
+            content,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "[[ \"$candidate_green\" == true ]] && source_commit=\"$candidate\"",
+            content,
+            StringComparison.Ordinal);
+        // The dev walk-back query went away with the same change: there is no candidate list to
+        // walk any more, only this run's own commit. What survives is the requirement that the
+        // candidate be reachable on protected dev, which the merge_base and
+        // commit_on_protected_dev assertions below still pin.
+        Assert.DoesNotContain("commits?sha=dev&per_page=", content, StringComparison.Ordinal);
         Assert.Contains("check-runs?per_page=100", content, StringComparison.Ordinal);
         Assert.Contains("publish_ready=false", content, StringComparison.Ordinal);
         Assert.Contains("git symbolic-ref -q HEAD", content, StringComparison.Ordinal);
