@@ -146,6 +146,12 @@ internal static partial class RepositoryRules
         return seen;
     }
 
+    // SL-019 consumes the repository-wide TASK token grammar. Keep this regex byte-for-byte
+    // identical to the retired MISSION scanner's production pattern.
+    private static readonly Regex TaskTokenPattern = new(
+        "TASK\\s+(?<code>D5-T[0-9]{4})",
+        RegexOptions.CultureInvariant);
+
     private static HashSet<string> CollectTaskCodes(RepositorySnapshot snapshot) =>
         CollectTaskCodes(FormalFiles(snapshot).Select(static item => item.File));
 
@@ -154,7 +160,7 @@ internal static partial class RepositoryRules
         var result = new HashSet<string>(StringComparer.Ordinal);
         foreach (var file in files.OrderBy(static item => item.Path.Value, StringComparer.Ordinal))
         {
-            foreach (Match match in TaskBlockReferenceSyntax.TaskTokenPattern.Matches(file.Text))
+            foreach (Match match in TaskTokenPattern.Matches(file.Text))
             {
                 result.Add(match.Groups["code"].Value);
             }

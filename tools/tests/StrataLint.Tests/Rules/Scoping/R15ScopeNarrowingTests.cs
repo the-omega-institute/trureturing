@@ -332,7 +332,7 @@ public sealed class R15ScopeNarrowingTests
     }
 
     [Theory]
-    [InlineData("tools/StrataLint.Engine/TaskBlockReferenceSyntax.cs")]
+    [InlineData("tools/StrataLint.Engine/Rules/RepositoryRules.Helpers.cs")]
     [InlineData("tools/Trureturing.Truth/YamlSubsetParser.cs")]
     public void Sl019ReplaysWhenGrammarOrParserChangesAlongsideTaskPreservingLeanEdit(
         string dependencyPath)
