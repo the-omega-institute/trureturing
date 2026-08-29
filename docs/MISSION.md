@@ -19,10 +19,10 @@
     "negative-knowledge-equals-positive-results"
   ],
   "worth_vector": {
-    "novelty": { "state": "open", "case_id": "D5-T0040" },
-    "dependency_readiness": { "state": "open", "case_id": "D5-T0041" },
-    "structural_realization": { "state": "open", "case_id": "D5-T0042" },
-    "receipt_potential": { "state": "open", "case_id": "D5-T0043" }
+    "novelty": { "state": "open" },
+    "dependency_readiness": { "state": "open" },
+    "structural_realization": { "state": "open" },
+    "receipt_potential": { "state": "open" }
   },
   "frontier_eligibility": [
     {
@@ -49,10 +49,6 @@
         "D5/S1/Scale/CarrierFoundations.golden_carrier_foundations",
         "D5/S1/Scale/Units.golden_units_eq_signed_phi_pow"
       ]
-    },
-    {
-      "source_ref": "D5/X_Frontier/GovernanceDeferrals",
-      "kind": "governance"
     },
     {
       "source_ref": "D5/X_Frontier/Hearts",
