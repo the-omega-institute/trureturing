@@ -7,6 +7,15 @@ known_violation_count = 0
 status = "closed"
 
 [[files]]
+pattern = "**/*.props"
+kind = "program"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["make-gate"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = "*.json"
 kind = "program"
 produced_by = "none"
@@ -21,15 +30,6 @@ kind = "truth"
 produced_by = "none"
 consumed_by = ["Lean", "Scribe", "StrataLint"]
 verified_by = ["lean-build", "lean-inspector"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "*.props"
-kind = "program"
-produced_by = "none"
-consumed_by = ["dotnet"]
-verified_by = ["make-gate"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
