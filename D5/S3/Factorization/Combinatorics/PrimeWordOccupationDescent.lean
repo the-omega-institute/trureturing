@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Factorization/Combinatorics/PrimeWordOccupationDescent
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Prime-word history is not recoverable;
-     word actions descend exactly when commuting. -/
+   digest: Prime histories cannot be recovered; word actions descend exactly when commuting. -/
 
 import D5.S3.Factorization.FreeCommMonoid
 import D5.S3.ObserverMemory.Prediction.ControlledBehaviorUniversality
