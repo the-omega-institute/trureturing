@@ -22,7 +22,7 @@
 #   Save the completed build layer / Save the dependency layer   全部 skipped
 # ⟹ 81 分钟构建【一字节没存下】,比切片版更差。
 # 原因正是 lean-cache-seed.yml:159-160 早就写过的:
-# continue-on-error 只吸收 failure,不吸收 cancellation。
+# continue-on-error 只吸收 step 失败,不吸收 job 被取消。
 #
 # 【为什么不加更多检查点】
 # 6×12 + 6 次 save ≈ 74.4 分钟,与实测成功时长 77/76/75 分钟吻合;
@@ -161,7 +161,7 @@ jobs:
       # 前四个样本曾让我把下界定为 76m 并设 55m timebox —— **第五个样本 32.4m 证伪了它**:
       # 回收不是稳定截止,更像负载相关抢占,任何单一 timebox 都会在某次被跨过。
       #
-      # 又因 `continue-on-error` 只吸收 failure、不吸收 cancellation,
+      # 又因 `continue-on-error` 只吸收 step 失败、不吸收 job 被取消,
       # 被砍时紧随的 `if: always()` 保存步骤会被**跳过**(实测三轮皆然),整轮进度全丢。
       #
       # 故改为 6 个 12 分钟检查点,每个后面紧跟一次 save:
@@ -169,7 +169,6 @@ jobs:
       # save 实测 0.71GB 约 0.4 分钟,6 次开销约 2.4 分钟,相对 72 分钟构建可忽略。
       - name: Build the pinned Lean content (checkpoint 1/6)
         id: build1
-        continue-on-error: true
         shell: bash
         working-directory: candidate
         run: |
@@ -177,11 +176,12 @@ jobs:
           export PATH="$HOME/.elan/bin:$PATH"
           timeout --kill-after=60s 12m make lean
           rc=$?
-          printf 'SEED_BUILD checkpoint=1 exit=%s timeboxed=%s\n' "$rc" "$([ "$rc" -eq 124 ] && echo true || echo false)"
-          exit "$rc"
+          if [ "$rc" -eq 0 ]; then done=yes; else done=no; fi
+          printf 'SEED_BUILD checkpoint=1 exit=%s done=%s\n' "$rc" "$done"
+          echo "done=$done" >> "$GITHUB_OUTPUT"
 
       - name: Save the progress snapshot (1/6)
-        if: always() && steps.build1.outcome == 'failure' && steps.lake-build-cache.outputs.cache-hit != 'true'
+        if: always() && steps.build1.outputs.done != 'yes' && steps.lake-build-cache.outputs.cache-hit != 'true'
         continue-on-error: true
         timeout-minutes: 12
         uses: actions/cache/save@v4
@@ -190,9 +190,7 @@ jobs:
           key: ${{ runner.os }}-${{ runner.arch }}-seed-progress-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ github.run_id }}-01
 
       - name: Build the pinned Lean content (checkpoint 2/6)
-        if: steps.build1.outcome == 'failure'
         id: build2
-        continue-on-error: true
         shell: bash
         working-directory: candidate
         run: |
@@ -200,11 +198,12 @@ jobs:
           export PATH="$HOME/.elan/bin:$PATH"
           timeout --kill-after=60s 12m make lean
           rc=$?
-          printf 'SEED_BUILD checkpoint=2 exit=%s timeboxed=%s\n' "$rc" "$([ "$rc" -eq 124 ] && echo true || echo false)"
-          exit "$rc"
+          if [ "$rc" -eq 0 ]; then done=yes; else done=no; fi
+          printf 'SEED_BUILD checkpoint=2 exit=%s done=%s\n' "$rc" "$done"
+          echo "done=$done" >> "$GITHUB_OUTPUT"
 
       - name: Save the progress snapshot (2/6)
-        if: always() && steps.build2.outcome == 'failure' && steps.lake-build-cache.outputs.cache-hit != 'true'
+        if: always() && steps.build2.outputs.done != 'yes' && steps.lake-build-cache.outputs.cache-hit != 'true'
         continue-on-error: true
         timeout-minutes: 12
         uses: actions/cache/save@v4
@@ -213,9 +212,7 @@ jobs:
           key: ${{ runner.os }}-${{ runner.arch }}-seed-progress-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ github.run_id }}-02
 
       - name: Build the pinned Lean content (checkpoint 3/6)
-        if: steps.build2.outcome == 'failure'
         id: build3
-        continue-on-error: true
         shell: bash
         working-directory: candidate
         run: |
@@ -223,11 +220,12 @@ jobs:
           export PATH="$HOME/.elan/bin:$PATH"
           timeout --kill-after=60s 12m make lean
           rc=$?
-          printf 'SEED_BUILD checkpoint=3 exit=%s timeboxed=%s\n' "$rc" "$([ "$rc" -eq 124 ] && echo true || echo false)"
-          exit "$rc"
+          if [ "$rc" -eq 0 ]; then done=yes; else done=no; fi
+          printf 'SEED_BUILD checkpoint=3 exit=%s done=%s\n' "$rc" "$done"
+          echo "done=$done" >> "$GITHUB_OUTPUT"
 
       - name: Save the progress snapshot (3/6)
-        if: always() && steps.build3.outcome == 'failure' && steps.lake-build-cache.outputs.cache-hit != 'true'
+        if: always() && steps.build3.outputs.done != 'yes' && steps.lake-build-cache.outputs.cache-hit != 'true'
         continue-on-error: true
         timeout-minutes: 12
         uses: actions/cache/save@v4
@@ -236,9 +234,7 @@ jobs:
           key: ${{ runner.os }}-${{ runner.arch }}-seed-progress-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ github.run_id }}-03
 
       - name: Build the pinned Lean content (checkpoint 4/6)
-        if: steps.build3.outcome == 'failure'
         id: build4
-        continue-on-error: true
         shell: bash
         working-directory: candidate
         run: |
@@ -246,11 +242,12 @@ jobs:
           export PATH="$HOME/.elan/bin:$PATH"
           timeout --kill-after=60s 12m make lean
           rc=$?
-          printf 'SEED_BUILD checkpoint=4 exit=%s timeboxed=%s\n' "$rc" "$([ "$rc" -eq 124 ] && echo true || echo false)"
-          exit "$rc"
+          if [ "$rc" -eq 0 ]; then done=yes; else done=no; fi
+          printf 'SEED_BUILD checkpoint=4 exit=%s done=%s\n' "$rc" "$done"
+          echo "done=$done" >> "$GITHUB_OUTPUT"
 
       - name: Save the progress snapshot (4/6)
-        if: always() && steps.build4.outcome == 'failure' && steps.lake-build-cache.outputs.cache-hit != 'true'
+        if: always() && steps.build4.outputs.done != 'yes' && steps.lake-build-cache.outputs.cache-hit != 'true'
         continue-on-error: true
         timeout-minutes: 12
         uses: actions/cache/save@v4
@@ -259,9 +256,7 @@ jobs:
           key: ${{ runner.os }}-${{ runner.arch }}-seed-progress-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ github.run_id }}-04
 
       - name: Build the pinned Lean content (checkpoint 5/6)
-        if: steps.build4.outcome == 'failure'
         id: build5
-        continue-on-error: true
         shell: bash
         working-directory: candidate
         run: |
@@ -269,11 +264,12 @@ jobs:
           export PATH="$HOME/.elan/bin:$PATH"
           timeout --kill-after=60s 12m make lean
           rc=$?
-          printf 'SEED_BUILD checkpoint=5 exit=%s timeboxed=%s\n' "$rc" "$([ "$rc" -eq 124 ] && echo true || echo false)"
-          exit "$rc"
+          if [ "$rc" -eq 0 ]; then done=yes; else done=no; fi
+          printf 'SEED_BUILD checkpoint=5 exit=%s done=%s\n' "$rc" "$done"
+          echo "done=$done" >> "$GITHUB_OUTPUT"
 
       - name: Save the progress snapshot (5/6)
-        if: always() && steps.build5.outcome == 'failure' && steps.lake-build-cache.outputs.cache-hit != 'true'
+        if: always() && steps.build5.outputs.done != 'yes' && steps.lake-build-cache.outputs.cache-hit != 'true'
         continue-on-error: true
         timeout-minutes: 12
         uses: actions/cache/save@v4
@@ -282,9 +278,7 @@ jobs:
           key: ${{ runner.os }}-${{ runner.arch }}-seed-progress-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ github.run_id }}-05
 
       - name: Build the pinned Lean content (checkpoint 6/6)
-        if: steps.build5.outcome == 'failure'
         id: build6
-        continue-on-error: true
         shell: bash
         working-directory: candidate
         run: |
@@ -292,11 +286,12 @@ jobs:
           export PATH="$HOME/.elan/bin:$PATH"
           timeout --kill-after=60s 12m make lean
           rc=$?
-          printf 'SEED_BUILD checkpoint=6 exit=%s timeboxed=%s\n' "$rc" "$([ "$rc" -eq 124 ] && echo true || echo false)"
-          exit "$rc"
+          if [ "$rc" -eq 0 ]; then done=yes; else done=no; fi
+          printf 'SEED_BUILD checkpoint=6 exit=%s done=%s\n' "$rc" "$done"
+          echo "done=$done" >> "$GITHUB_OUTPUT"
 
       - name: Save the progress snapshot (6/6)
-        if: always() && steps.build6.outcome == 'failure' && steps.lake-build-cache.outputs.cache-hit != 'true'
+        if: always() && steps.build6.outputs.done != 'yes' && steps.lake-build-cache.outputs.cache-hit != 'true'
         continue-on-error: true
         timeout-minutes: 12
         uses: actions/cache/save@v4
@@ -314,7 +309,7 @@ jobs:
           fi
 
       - name: Save the dependency layer
-        if: steps.build6.outcome == 'success' && steps.lake-deps-cache.outputs.cache-hit != 'true'
+        if: steps.build6.outputs.done == 'yes' && steps.lake-deps-cache.outputs.cache-hit != 'true'
         continue-on-error: true
         timeout-minutes: 12
         uses: actions/cache/save@v4
@@ -327,7 +322,7 @@ jobs:
           key: ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.lean-report-input.outputs.config_sha256 }}
 
       - name: Save the project layer
-        if: steps.build6.outcome == 'success' && steps.lake-build-cache.outputs.cache-hit != 'true'
+        if: steps.build6.outputs.done == 'yes' && steps.lake-build-cache.outputs.cache-hit != 'true'
         continue-on-error: true
         timeout-minutes: 12
         uses: actions/cache/save@v4
