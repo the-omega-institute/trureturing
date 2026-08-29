@@ -54,7 +54,7 @@ public sealed class Sl016WakeupTests
     {
         const string targetGid = "D5/S0/Carrier/BackfillTarget";
         var fixture = CoverageReceiptFixture(targetGid, FrozenStatementReceiptTestData.Id('a'));
-        InstallFrozenModules(
+        InstallFrozenModulesInto(
             fixture.Files,
             FrozenModule(targetGid, FrozenStatementReceiptTestData.Id('a')),
             FrozenModule("D5/S0/Carrier/Unrelated", FrozenStatementReceiptTestData.Id('c')));
@@ -69,7 +69,7 @@ public sealed class Sl016WakeupTests
         const string targetGid = "D5/S0/Carrier/BackfillTarget";
         var baselineStatementId = FrozenStatementReceiptTestData.Id('a');
         var fixture = CoverageReceiptFixture(targetGid, baselineStatementId);
-        InstallFrozenModules(
+        InstallFrozenModulesInto(
             fixture.Files,
             FrozenModule(targetGid, FrozenStatementReceiptTestData.Id('b')));
         var context = fixture.Build(RawChangeSet.Create(FrozenLedgerDelta(fixture)));
@@ -689,7 +689,7 @@ public sealed class Sl016WakeupTests
             .ToArray();
         foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
         {
-            InstallFrozenModules(files, modules);
+            InstallFrozenModulesInto(files, modules);
         }
     }
 
@@ -726,7 +726,7 @@ public sealed class Sl016WakeupTests
                     FrozenStatementReceiptTestData.Id('b')),
             ]);
 
-    private static void InstallFrozenModules(
+    private static void InstallFrozenModulesInto(
         IDictionary<string, string> files,
         params FrozenStatementReceiptTestData.Module[] modules)
     {
