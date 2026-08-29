@@ -149,7 +149,6 @@ internal static partial class DigestionLedgerAligner
 
     private static void AlignNestedChildren(
         DigestionLedgerSource source,
-        DigestionLedgerSource? baselineSource,
         ImmutableArray<DigestionClausePlan> currentClausePlans,
         IReadOnlySet<string> validAtomIds,
         RepositorySnapshot snapshot,
@@ -160,11 +159,9 @@ internal static partial class DigestionLedgerAligner
         ICollection<string> findings)
     {
         var byId = source.Entries.ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
-        var inheritedChainChildren = InheritedChainChildren(source, baselineSource);
         RejectCurrentFrontierClausePlanMembers(
             source,
             currentClausePlans,
-            inheritedChainChildren,
             alignments,
             matchedAtoms);
 
@@ -197,11 +194,6 @@ internal static partial class DigestionLedgerAligner
 
             var frozenParent = DigestionAtom.FromFrozenCas(parent.AstPath, parentBlob.RawBytes);
             var plan = PzgAtomizer.PlanClauses(frozenParent);
-            if (plan is null && source.Atomizer == AtomizerRegistry.ObserverId)
-            {
-                continue;
-            }
-
             ClaimClausePlanChain(
                 parent,
                 byId,
@@ -300,7 +292,6 @@ internal static partial class DigestionLedgerAligner
     private static void RejectCurrentFrontierClausePlanMembers(
         DigestionLedgerSource source,
         ImmutableArray<DigestionClausePlan> currentClausePlans,
-        IReadOnlySet<string> inheritedChainChildren,
         IDictionary<string, DigestionReceiptAlignment> alignments,
         IDictionary<string, DigestionAtom> matchedAtoms)
     {
@@ -309,37 +300,11 @@ internal static partial class DigestionLedgerAligner
             .Select(static child => child.AstPath)
             .ToHashSet(StringComparer.Ordinal);
         foreach (var plannedEntry in source.Entries.Where(entry =>
-                     plannedChildPaths.Contains(entry.AstPath)
-                     && !inheritedChainChildren.Contains(entry.AtomId)))
+                     plannedChildPaths.Contains(entry.AstPath)))
         {
             alignments[plannedEntry.AtomId] = DigestionReceiptAlignment.Rejected;
             matchedAtoms.Remove(plannedEntry.AtomId);
         }
-    }
-
-    private static HashSet<string> InheritedChainChildren(
-        DigestionLedgerSource source,
-        DigestionLedgerSource? baselineSource)
-    {
-        if (baselineSource is null)
-        {
-            return [];
-        }
-
-        var candidateById = source.Entries.ToDictionary(
-            static entry => entry.AtomId,
-            StringComparer.Ordinal);
-        var baselineById = baselineSource.Entries.ToDictionary(
-            static entry => entry.AtomId,
-            StringComparer.Ordinal);
-        return baselineSource.Entries
-            .SelectMany(static parent => parent.Receipts.ChainAtoms)
-            .Where(childId =>
-                candidateById.TryGetValue(childId, out var candidateChild)
-                && baselineById.TryGetValue(childId, out var baselineChild)
-                && CanonicalEntry(source, candidateChild)
-                    == CanonicalEntry(baselineSource, baselineChild))
-            .ToHashSet(StringComparer.Ordinal);
     }
 
     private static void ClaimClausePlanChain(
