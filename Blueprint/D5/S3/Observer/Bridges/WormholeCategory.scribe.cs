@@ -13,14 +13,6 @@ internal sealed class WormholeCategoryDocument : IScribeDocumentDefinition
         H("Wormhole Category"),
         Blocks(
             Theorem(
-                "ext",
-                "ext",
-                WormholeExtFormula(),
-                "Ext",
-                "Two wormholes are equal when their underlying maps are equal.",
-                "The declaration keeps its parameters and hypotheses explicit; the result "
-                    + "makes no converse or broader existence claim beyond that scope."),
-            Theorem(
                 "identity-compose",
                 "identity_compose",
                 WormholeIdentityComposeFormula(),
@@ -87,11 +79,6 @@ internal sealed class WormholeCategoryDocument : IScribeDocumentDefinition
                 Paragraph(Text(secondParagraph))),
             DescribeRole.Theorem);
 
-private static Formula WormholeExtFormula() => Statement(
-    [Typed(Seq(F.Id("source")), Seq(F.Id("DynamicalWorld"))), Typed(Seq(F.Id("target")), Seq(F.Id("DynamicalWorld"))), Typed(Seq(F.Id("first")), Seq(F.Id("Wormhole"), Sp, F.Id("source"), Sp, F.Id("target"))), Typed(Seq(F.Id("second")), Seq(F.Id("Wormhole"), Sp, F.Id("source"), Sp, F.Id("target")))],
-        [],
-        [Seq(F.Id("first"), Dot, F.Id("map"), Sp, Eq, Sp, F.Id("second"), Dot, F.Id("map"))],
-        Seq(F.Id("first"), Sp, Eq, Sp, F.Id("second")));
 
 private static Formula WormholeIdentityComposeFormula() => Statement(
     [Typed(Seq(F.Id("source")), Seq(F.Id("DynamicalWorld"))), Typed(Seq(F.Id("target")), Seq(F.Id("DynamicalWorld"))), Typed(Seq(F.Id("bridge")), Seq(F.Id("Wormhole"), Sp, F.Id("source"), Sp, F.Id("target")))],
