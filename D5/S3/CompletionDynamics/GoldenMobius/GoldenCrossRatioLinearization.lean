@@ -9,7 +9,7 @@ import D5.S3.CompletionDynamics.GoldenMobius.GoldenMobiusMap
 import Mathlib.Logic.Function.Iterate
 
 /-!
-The identity is an exact conjugacy.  Since real division is total in Lean, the
+The identity is an exact conjugacy. Since real division is total in Lean, the
 geometric theorem explicitly excludes the pole `0` of the Mobius map and the
 pole `goldenConj` of the cross-ratio chart.
 -/
@@ -75,7 +75,6 @@ theorem golden_mobius_sub_conjugate {x : ℝ} (hx : x ≠ 0) :
           field_simp [hx]
         _ = Real.goldenRatio * (x - Real.goldenConj) := by
           rw [mul_sub, Real.goldenRatio_mul_goldenConj]
-          ring
 
 /-- Exact golden projective linearization. -/
 theorem golden_cross_ratio_linearization {x : ℝ}
