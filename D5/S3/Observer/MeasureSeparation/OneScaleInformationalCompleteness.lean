@@ -1,6 +1,6 @@
-/- GID: D5/S3/Observer/Tomography/OneScaleInformationalCompleteness
+/- GID: D5/S3/Observer/MeasureSeparation/OneScaleInformationalCompleteness
    generality: G
-   mirror-B: D5/B/S3/Observer/Tomography/OneScaleInformationalCompleteness
+   mirror-B: D5/B/S3/Observer/MeasureSeparation/OneScaleInformationalCompleteness
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Recover a real spectrum from all moments of one weighted Cayley pushforward. -/
@@ -26,7 +26,7 @@ set_option relaxedAutoImplicit false
 open BoundedContinuousFunction MeasureTheory Set
 open scoped ENNReal
 
-namespace D5.S3.Observer.Tomography.OneScaleInformationalCompleteness
+namespace D5.S3.Observer.MeasureSeparation.OneScaleInformationalCompleteness
 
 private lemma cayley_denominator_ne (a : Real) (ha : 0 < a) (xi : Real) :
     (xi : Complex) - (a : Complex) * Complex.I ≠ 0 := by
@@ -204,4 +204,4 @@ theorem one_scale_informational_completeness
 
 #print axioms one_scale_informational_completeness
 
-end D5.S3.Observer.Tomography.OneScaleInformationalCompleteness
+end D5.S3.Observer.MeasureSeparation.OneScaleInformationalCompleteness

@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.Tomography;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.MeasureSeparation;
 
 internal sealed class OneScaleInformationalCompletenessDocument
     : IScribeDocumentDefinition
@@ -13,7 +13,7 @@ internal sealed class OneScaleInformationalCompletenessDocument
         Blocks(Describe.Lean(
             DescribeId.Create("one-scale-cayley-moments-determine-real-spectrum"),
             DeclarationHandle.Create(
-                "D5/S3/Observer/Tomography/OneScaleInformationalCompleteness."
+                "D5/S3/Observer/MeasureSeparation/OneScaleInformationalCompleteness."
                     + "one_scale_informational_completeness"),
             H("One complete Cayley scale determines the spectrum"),
             StatementSource.FromAuthor(TheoremFormula()),
