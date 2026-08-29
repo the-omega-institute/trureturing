@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/ObservationOrder/RecoverablePostprocessingKernelEquality
+/- GID: D5/S3/ConceptDynamics/Postprocessing/RecoverablePostprocessingKernelEquality
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/ObservationOrder/RecoverablePostprocessingKernelEquality
+   mirror-B: D5/B/S3/ConceptDynamics/Postprocessing/RecoverablePostprocessingKernelEquality
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Recoverable postprocessing preserves the readout kernel exactly. -/
@@ -20,7 +20,7 @@ import Mathlib.Data.Setoid.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.ObservationOrder.RecoverablePostprocessingKernelEquality
+namespace D5.S3.ConceptDynamics.Postprocessing.RecoverablePostprocessingKernelEquality
 
 universe u v w
 
@@ -34,7 +34,7 @@ theorem recoverable_postprocessing_preserves_kernel
   apply le_antisymm
   · intro x y sameProcessed
     have sameRecovered := congrArg recover sameProcessed
-    simpa only [Function.comp_apply, recovers] using sameRecovered
+    simpa only [Setoid.ker_def, Function.comp_apply, recovers] using sameRecovered
   · intro x y sameReadout
     exact congrArg postprocess sameReadout
 
@@ -52,4 +52,4 @@ example :
 
 #print axioms recoverable_postprocessing_preserves_kernel
 
-end D5.S3.ConceptDynamics.ObservationOrder.RecoverablePostprocessingKernelEquality
+end D5.S3.ConceptDynamics.Postprocessing.RecoverablePostprocessingKernelEquality

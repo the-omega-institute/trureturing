@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/ObservationOrder/PairReadoutKernelIntersection
+/- GID: D5/S3/ConceptDynamics/SensorFamilies/PairReadoutKernelIntersection
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/ObservationOrder/PairReadoutKernelIntersection
+   mirror-B: D5/B/S3/ConceptDynamics/SensorFamilies/PairReadoutKernelIntersection
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: The kernel of a paired readout is the intersection of its two kernels. -/
@@ -20,7 +20,7 @@ import Mathlib.Data.Setoid.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.ObservationOrder.PairReadoutKernelIntersection
+namespace D5.S3.ConceptDynamics.SensorFamilies.PairReadoutKernelIntersection
 
 universe u v w
 
@@ -45,13 +45,14 @@ theorem pair_readout_kernel_eq_intersection
 has exactly the identity kernel. -/
 example :
     {pair : Bool × Bool |
-      Setoid.ker (fun x : Bool => (x, PUnit.unit)) pair.1 pair.2} =
+      Setoid.ker (fun x : Bool => (x, ())) pair.1 pair.2} =
       {pair : Bool × Bool | Setoid.ker (fun x : Bool => x) pair.1 pair.2} ∩
         {pair : Bool × Bool |
-          Setoid.ker (fun _ : Bool => PUnit.unit) pair.1 pair.2} := by
+          Setoid.ker (fun _ : Bool => ()) pair.1 pair.2} := by
   exact pair_readout_kernel_eq_intersection
-    (fun x : Bool => x) (fun _ : Bool => PUnit.unit)
+    (X := Bool) (Y := Bool) (Z := Unit)
+    (fun x : Bool => x) (fun _ : Bool => ())
 
 #print axioms pair_readout_kernel_eq_intersection
 
-end D5.S3.ConceptDynamics.ObservationOrder.PairReadoutKernelIntersection
+end D5.S3.ConceptDynamics.SensorFamilies.PairReadoutKernelIntersection

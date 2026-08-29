@@ -1,6 +1,6 @@
-/- GID: D5/S3/Observer/Completion/CompletionPointPullback
+/- GID: D5/S3/Observer/CompletionPoints/CompletionPointPullback
    generality: G
-   mirror-B: D5/B/S3/Observer/Completion/CompletionPointPullback
+   mirror-B: D5/B/S3/Observer/CompletionPoints/CompletionPointPullback
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Completion points pull back exactly along a change of state representation. -/
@@ -19,7 +19,7 @@ import Mathlib.Logic.Function.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Observer.Completion.CompletionPointPullback
+namespace D5.S3.Observer.CompletionPoints.CompletionPointPullback
 
 universe u v w
 
@@ -54,4 +54,4 @@ theorem zero_set_pullback
 #print axioms zero_at_pullback
 #print axioms zero_set_pullback
 
-end D5.S3.Observer.Completion.CompletionPointPullback
+end D5.S3.Observer.CompletionPoints.CompletionPointPullback

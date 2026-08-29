@@ -41,7 +41,7 @@ theorem transportWord_append
       rfl
   | cons step rest inductionHypothesis =>
       simpa [transportWord] using
-        inductionHypothesis second (step memory)
+        inductionHypothesis (step memory)
 
 /-- The empty action word has trivial memory holonomy. -/
 @[simp] theorem transportWord_nil

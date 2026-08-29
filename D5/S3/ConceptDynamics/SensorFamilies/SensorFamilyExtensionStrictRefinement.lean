@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/ObservationOrder/SensorFamilyExtensionStrictRefinement
+/- GID: D5/S3/ConceptDynamics/SensorFamilies/SensorFamilyExtensionStrictRefinement
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/ObservationOrder/SensorFamilyExtensionStrictRefinement
+   mirror-B: D5/B/S3/ConceptDynamics/SensorFamilies/SensorFamilyExtensionStrictRefinement
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Adding a separating sensor strictly refines a sensor-family kernel. -/
@@ -18,7 +18,7 @@ import Mathlib.Logic.Function.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.ObservationOrder.SensorFamilyExtensionStrictRefinement
+namespace D5.S3.ConceptDynamics.SensorFamilies.SensorFamilyExtensionStrictRefinement
 
 universe u v w
 
@@ -60,4 +60,4 @@ theorem separating_extension_witnesses_strict_refinement
 #print axioms extension_kernel_refines_original
 #print axioms separating_extension_witnesses_strict_refinement
 
-end D5.S3.ConceptDynamics.ObservationOrder.SensorFamilyExtensionStrictRefinement
+end D5.S3.ConceptDynamics.SensorFamilies.SensorFamilyExtensionStrictRefinement

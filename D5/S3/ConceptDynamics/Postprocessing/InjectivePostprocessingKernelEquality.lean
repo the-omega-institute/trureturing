@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/ObservationOrder/InjectivePostprocessingKernelEquality
+/- GID: D5/S3/ConceptDynamics/Postprocessing/InjectivePostprocessingKernelEquality
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/ObservationOrder/InjectivePostprocessingKernelEquality
+   mirror-B: D5/B/S3/ConceptDynamics/Postprocessing/InjectivePostprocessingKernelEquality
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Injective postprocessing preserves an observation kernel exactly. -/
@@ -18,7 +18,7 @@ import Mathlib.Logic.Function.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.ObservationOrder.InjectivePostprocessingKernelEquality
+namespace D5.S3.ConceptDynamics.Postprocessing.InjectivePostprocessingKernelEquality
 
 universe u v w
 
@@ -41,4 +41,4 @@ theorem injective_postprocessing_preserves_kernel
 
 #print axioms injective_postprocessing_preserves_kernel
 
-end D5.S3.ConceptDynamics.ObservationOrder.InjectivePostprocessingKernelEquality
+end D5.S3.ConceptDynamics.Postprocessing.InjectivePostprocessingKernelEquality

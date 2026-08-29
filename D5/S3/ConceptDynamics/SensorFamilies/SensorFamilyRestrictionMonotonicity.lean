@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/ObservationOrder/SensorFamilyRestrictionMonotonicity
+/- GID: D5/S3/ConceptDynamics/SensorFamilies/SensorFamilyRestrictionMonotonicity
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/ObservationOrder/SensorFamilyRestrictionMonotonicity
+   mirror-B: D5/B/S3/ConceptDynamics/SensorFamilies/SensorFamilyRestrictionMonotonicity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Restricting a sensor family can only enlarge its equality kernel. -/
@@ -20,7 +20,7 @@ import Mathlib.Data.Setoid.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.ObservationOrder.SensorFamilyRestrictionMonotonicity
+namespace D5.S3.ConceptDynamics.SensorFamilies.SensorFamilyRestrictionMonotonicity
 
 universe u v w z
 
@@ -38,12 +38,13 @@ theorem restricting_sensor_family_enlarges_kernel
 /-- Satisfiability probe: identity reindexing preserves every coordinate of a
 one-sensor Boolean family. -/
 example :
-    Setoid.ker (fun x : Bool => fun _ : PUnit => x) <=
-      Setoid.ker (fun x : Bool => fun _ : PUnit => x) := by
+    Setoid.ker (fun x : Bool => fun _ : Unit => x) <=
+      Setoid.ker (fun x : Bool => fun _ : Unit => x) := by
   exact restricting_sensor_family_enlarges_kernel
-    (sensor := fun _ : PUnit => fun x : Bool => x)
-    (select := fun index : PUnit => index)
+    (Index := Unit) (Selected := Unit) (X := Bool) (O := Bool)
+    (sensor := fun _ : Unit => fun x : Bool => x)
+    (select := fun index : Unit => index)
 
 #print axioms restricting_sensor_family_enlarges_kernel
 
-end D5.S3.ConceptDynamics.ObservationOrder.SensorFamilyRestrictionMonotonicity
+end D5.S3.ConceptDynamics.SensorFamilies.SensorFamilyRestrictionMonotonicity

@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/ObservationOrder/PostprocessingKernelMonotonicity
+/- GID: D5/S3/ConceptDynamics/Postprocessing/PostprocessingKernelMonotonicity
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/ObservationOrder/PostprocessingKernelMonotonicity
+   mirror-B: D5/B/S3/ConceptDynamics/Postprocessing/PostprocessingKernelMonotonicity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Postprocessing can only enlarge a readout equality kernel. -/
@@ -21,7 +21,7 @@ import Mathlib.Data.Setoid.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.ObservationOrder.PostprocessingKernelMonotonicity
+namespace D5.S3.ConceptDynamics.Postprocessing.PostprocessingKernelMonotonicity
 
 universe u v w
 
@@ -51,4 +51,4 @@ example :
 
 #print axioms postprocessing_kernel_mono
 
-end D5.S3.ConceptDynamics.ObservationOrder.PostprocessingKernelMonotonicity
+end D5.S3.ConceptDynamics.Postprocessing.PostprocessingKernelMonotonicity

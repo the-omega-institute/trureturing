@@ -1,6 +1,6 @@
-/- GID: D5/S3/Observer/Completion/CompletionPointIntersection
+/- GID: D5/S3/Observer/CompletionPoints/CompletionPointIntersection
    generality: G
-   mirror-B: D5/B/S3/Observer/Completion/CompletionPointIntersection
+   mirror-B: D5/B/S3/Observer/CompletionPoints/CompletionPointIntersection
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Paired zero-defect completion equals intersection of component completion conditions. -/
@@ -18,7 +18,7 @@ import Mathlib.Data.Set.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Observer.Completion.CompletionPointIntersection
+namespace D5.S3.Observer.CompletionPoints.CompletionPointIntersection
 
 universe u v w
 
@@ -54,4 +54,4 @@ theorem paired_zero_set_eq_intersection
 #print axioms paired_zero_iff_component_zeros
 #print axioms paired_zero_set_eq_intersection
 
-end D5.S3.Observer.Completion.CompletionPointIntersection
+end D5.S3.Observer.CompletionPoints.CompletionPointIntersection

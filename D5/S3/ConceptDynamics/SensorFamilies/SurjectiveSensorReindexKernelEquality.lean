@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/ObservationOrder/SurjectiveSensorReindexKernelEquality
+/- GID: D5/S3/ConceptDynamics/SensorFamilies/SurjectiveSensorReindexKernelEquality
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/ObservationOrder/SurjectiveSensorReindexKernelEquality
+   mirror-B: D5/B/S3/ConceptDynamics/SensorFamilies/SurjectiveSensorReindexKernelEquality
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Surjective reindexing preserves the joint sensor kernel. -/
@@ -18,7 +18,7 @@ import Mathlib.Logic.Function.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.ObservationOrder.SurjectiveSensorReindexKernelEquality
+namespace D5.S3.ConceptDynamics.SensorFamilies.SurjectiveSensorReindexKernelEquality
 
 universe u v w z
 
@@ -46,4 +46,4 @@ theorem surjective_reindex_preserves_family_kernel
 
 #print axioms surjective_reindex_preserves_family_kernel
 
-end D5.S3.ConceptDynamics.ObservationOrder.SurjectiveSensorReindexKernelEquality
+end D5.S3.ConceptDynamics.SensorFamilies.SurjectiveSensorReindexKernelEquality

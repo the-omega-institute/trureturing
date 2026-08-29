@@ -46,10 +46,11 @@ theorem pair_sensor_strictly_refines_first_kernel
 /-- Satisfiability probe: a constant first sensor is strictly refined by a
 Boolean identity second sensor. -/
 example :
-    Setoid.ker (fun x : Bool => (PUnit.unit, x)) <
-      Setoid.ker (fun _ : Bool => PUnit.unit) := by
+    Setoid.ker (fun x : Bool => ((), x)) <
+      Setoid.ker (fun _ : Bool => ()) := by
   exact pair_sensor_strictly_refines_first_kernel
-    (first := fun _ : Bool => PUnit.unit)
+    (X := Bool) (Y := Unit) (Z := Bool)
+    (first := fun _ : Bool => ())
     (second := fun x : Bool => x)
     false true rfl Bool.false_ne_true
 

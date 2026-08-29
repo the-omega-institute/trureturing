@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/ObservationOrder/SensorFamilyKernelIntersection
+/- GID: D5/S3/ConceptDynamics/SensorFamilies/SensorFamilyKernelIntersection
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/ObservationOrder/SensorFamilyKernelIntersection
+   mirror-B: D5/B/S3/ConceptDynamics/SensorFamilies/SensorFamilyKernelIntersection
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: A joint sensor kernel is the intersection of all coordinate kernels. -/
@@ -21,7 +21,7 @@ import Mathlib.Data.Set.Lattice
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.ObservationOrder.SensorFamilyKernelIntersection
+namespace D5.S3.ConceptDynamics.SensorFamilies.SensorFamilyKernelIntersection
 
 universe u v w
 
@@ -47,14 +47,15 @@ theorem joint_readout_kernel_eq_iInter
 expected intersection description. -/
 example :
     {pair : Bool × Bool |
-      Setoid.ker (fun x : Bool => fun _ : PUnit => x) pair.1 pair.2} =
-      ⋂ index : PUnit,
+      Setoid.ker (fun x : Bool => fun _ : Unit => x) pair.1 pair.2} =
+      ⋂ index : Unit,
         {pair : Bool × Bool |
-          Setoid.ker ((fun _ : PUnit => fun x : Bool => x) index)
+          Setoid.ker ((fun _ : Unit => fun x : Bool => x) index)
             pair.1 pair.2} := by
   exact joint_readout_kernel_eq_iInter
-    (fun _ : PUnit => fun x : Bool => x)
+    (Index := Unit) (X := Bool) (O := Bool)
+    (fun _ : Unit => fun x : Bool => x)
 
 #print axioms joint_readout_kernel_eq_iInter
 
-end D5.S3.ConceptDynamics.ObservationOrder.SensorFamilyKernelIntersection
+end D5.S3.ConceptDynamics.SensorFamilies.SensorFamilyKernelIntersection

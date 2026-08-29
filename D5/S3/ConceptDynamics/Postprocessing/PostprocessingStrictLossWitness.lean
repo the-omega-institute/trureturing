@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/ObservationOrder/PostprocessingStrictLossWitness
+/- GID: D5/S3/ConceptDynamics/Postprocessing/PostprocessingStrictLossWitness
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/ObservationOrder/PostprocessingStrictLossWitness
+   mirror-B: D5/B/S3/ConceptDynamics/Postprocessing/PostprocessingStrictLossWitness
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: A collapsed distinction witnesses strict information loss under postprocessing. -/
@@ -18,7 +18,7 @@ import Mathlib.Logic.Function.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.ObservationOrder.PostprocessingStrictLossWitness
+namespace D5.S3.ConceptDynamics.Postprocessing.PostprocessingStrictLossWitness
 
 universe u v w
 
@@ -54,4 +54,4 @@ theorem strict_loss_refutes_image_injectivity
 #print axioms collapsed_distinction_witnesses_strict_loss
 #print axioms strict_loss_refutes_image_injectivity
 
-end D5.S3.ConceptDynamics.ObservationOrder.PostprocessingStrictLossWitness
+end D5.S3.ConceptDynamics.Postprocessing.PostprocessingStrictLossWitness

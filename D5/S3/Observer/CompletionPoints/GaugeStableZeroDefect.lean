@@ -1,6 +1,6 @@
-/- GID: D5/S3/Observer/Completion/GaugeStableZeroDefect
+/- GID: D5/S3/Observer/CompletionPoints/GaugeStableZeroDefect
    generality: G
-   mirror-B: D5/B/S3/Observer/Completion/GaugeStableZeroDefect
+   mirror-B: D5/B/S3/Observer/CompletionPoints/GaugeStableZeroDefect
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Gauge-invariant normalization and defect data preserve completion status. -/
@@ -18,7 +18,7 @@ import Mathlib.Logic.Function.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Observer.Completion.GaugeStableZeroDefect
+namespace D5.S3.Observer.CompletionPoints.GaugeStableZeroDefect
 
 universe u v w
 
@@ -67,4 +67,4 @@ theorem gauge_preserves_zero_defect
 #print axioms gauge_preserves_completion
 #print axioms gauge_preserves_zero_defect
 
-end D5.S3.Observer.Completion.GaugeStableZeroDefect
+end D5.S3.Observer.CompletionPoints.GaugeStableZeroDefect

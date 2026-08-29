@@ -1,11 +1,11 @@
-/- GID: D5/S3/ConceptDynamics/ObservationOrder/ConstantPostprocessingStrictLoss
+/- GID: D5/S3/ConceptDynamics/Postprocessing/ConstantPostprocessingStrictLoss
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/ObservationOrder/ConstantPostprocessingStrictLoss
+   mirror-B: D5/B/S3/ConceptDynamics/Postprocessing/ConstantPostprocessingStrictLoss
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Constant postprocessing strictly loses every witnessed distinction. -/
 
-import D5.S3.ConceptDynamics.ObservationOrder.PostprocessingKernelMonotonicity
+import D5.S3.ConceptDynamics.Postprocessing.PostprocessingKernelMonotonicity
 
 /- Library-search audit trail (2026-08-29):
    * The imported monotonicity theorem gives the non-strict inclusion for every
@@ -19,9 +19,9 @@ import D5.S3.ConceptDynamics.ObservationOrder.PostprocessingKernelMonotonicity
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.ObservationOrder.ConstantPostprocessingStrictLoss
+namespace D5.S3.ConceptDynamics.Postprocessing.ConstantPostprocessingStrictLoss
 
-open D5.S3.ConceptDynamics.ObservationOrder.PostprocessingKernelMonotonicity
+open D5.S3.ConceptDynamics.Postprocessing.PostprocessingKernelMonotonicity
 
 universe u v w
 
@@ -54,4 +54,4 @@ example :
 
 #print axioms constant_postprocessing_strictly_enlarges_kernel
 
-end D5.S3.ConceptDynamics.ObservationOrder.ConstantPostprocessingStrictLoss
+end D5.S3.ConceptDynamics.Postprocessing.ConstantPostprocessingStrictLoss
