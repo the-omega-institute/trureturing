@@ -6,7 +6,7 @@ namespace StrataLint.Tests;
 public sealed class CapacityAuditCommandTests
 {
     [Fact]
-    public void CapacityAuditAllowsTwentyFour()
+    public void CapacityAuditAllowsAtRepositoryTolerance()
     {
         var files = Enumerable.Range(0, RepositoryRules.DirectoryToleranceLimit)
             .Select(static index => ($"Synthetic/Bucket/File{index}.cs", "x"))
@@ -18,7 +18,7 @@ public sealed class CapacityAuditCommandTests
     }
 
     [Fact]
-    public void CapacityAuditRejectsTwentyFive()
+    public void CapacityAuditRejectsPastRepositoryTolerance()
     {
         var files = Enumerable.Range(0, RepositoryRules.DirectoryToleranceLimit + 1)
             .Select(static index => ($"Synthetic/Bucket/File{index}.cs", "x"))
@@ -40,7 +40,7 @@ public sealed class CapacityAuditCommandTests
             [
                 new RepositoryCapacityFinding(
                     "Synthetic/Bucket",
-                    "directory contains 25 files"),
+                    $"directory contains {RepositoryRules.DirectoryToleranceLimit + 1} files"),
             ]));
 
         var exitCode = CliApplication.Run(["capacity-audit"], environment, console);

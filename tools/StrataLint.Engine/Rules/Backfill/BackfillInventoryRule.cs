@@ -11,7 +11,8 @@ internal sealed record BackfillInventoryValidationContext(
     VerifiedScribeEmissions? VerifiedScribeEmissions,
     RawChangeSet? Changes = null,
     Func<string, bool>? IsBaseFactAffected = null,
-    RawChangeSet? RepositoryChanges = null);
+    RawChangeSet? RepositoryChanges = null,
+    RawChangeSet? CasChanges = null);
 
 internal static class BackfillInventoryRule
 {
@@ -130,7 +131,9 @@ internal static class BackfillInventoryRule
         ValidatedPolicy policy,
         BackfillInventoryDocument document,
         RawChangeSet? changes = null,
-        Func<string, bool>? isBaseFactAffected = null) =>
+        Func<string, bool>? isBaseFactAffected = null,
+        RawChangeSet? repositoryChanges = null,
+        RawChangeSet? casChanges = null) =>
         EvaluateDocument(
             new BackfillInventoryValidationContext(
                 current,
@@ -139,7 +142,9 @@ internal static class BackfillInventoryRule
                 Lean: null,
                 VerifiedScribeEmissions: null,
                 changes,
-                isBaseFactAffected),
+                isBaseFactAffected,
+                repositoryChanges,
+                casChanges),
             document,
             validateTruthAlignment: false);
 
@@ -402,7 +407,7 @@ internal static class BackfillInventoryRule
         var casEvaluation = DigestionCasStore.Evaluate(
             document,
             context.Current,
-            context.Changes,
+            context.CasChanges ?? context.Changes,
             context.IsBaseFactAffected);
         foreach (var finding in casEvaluation.Findings)
         {
@@ -443,6 +448,7 @@ internal static class BackfillInventoryRule
                 baselineSnapshot: context.Baseline,
                 casEvaluation: casEvaluation,
                 changes: context.Changes,
+                casChanges: context.CasChanges,
                 isBaseFactAffected: context.IsBaseFactAffected);
             foreach (var finding in evaluation.Findings)
             {

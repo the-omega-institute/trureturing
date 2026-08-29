@@ -113,8 +113,8 @@ public sealed class CapacityPolicyTests
     }
 
     // Formalization receipts accrue one file per admitted unit; the directory is a
-    // machine inventory, never a navigated content bucket, so thirteen receipts must
-    // not trip the directory file limit.
+    // machine inventory, never a navigated content bucket, so one receipt past the
+    // admission limit must not trip the directory file limit.
     [Fact]
     public void FormalizationReceiptInventoryIsNotBoundedByDirectoryLimit()
     {
@@ -132,4 +132,16 @@ public sealed class CapacityPolicyTests
     // The backfill inventory path, restated here only to exercise the exclusion;
     // the enforcement source is RepositoryRules.IsCapacityExcluded.
     private const string BackfillInventoryRelativePath = "Meta/BACKFILL.yaml";
+
+    // Pinned by the owner's 2026-08-30 ruling (放宽到 24、48): admission limit 24, repository
+    // tolerance 48. The tolerance band stays exactly one admission limit wide so that two PRs
+    // branched from the same base can each fill a bucket to the limit and their union still
+    // clears the repository-wide net (see DirectoryToleranceLimit in RepositoryRules.Structure.cs).
+    [Fact]
+    public void DirectoryCapacityThresholdsArePinnedToTheAdjudicatedValues()
+    {
+        Assert.Equal(24, RepositoryRules.DirectoryFileLimit);
+        Assert.Equal(48, RepositoryRules.DirectoryToleranceLimit);
+        Assert.Equal(2 * RepositoryRules.DirectoryFileLimit, RepositoryRules.DirectoryToleranceLimit);
+    }
 }

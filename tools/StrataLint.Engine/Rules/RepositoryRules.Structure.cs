@@ -64,19 +64,22 @@ internal static partial class RepositoryRules
 
     internal const int ArtifactSoftLineLimit = 600;
 
-    internal const int DirectoryFileLimit = 12;
+    internal const int DirectoryFileLimit = 24;
 
     // The repository-wide capacity net tolerates a band above the admission limit.
     // Capacity is pressure, not correctness: an overfull bucket is a signal to split
     // (CLAUDE.md 8), and by the tiers of 20 a reversible content-level fact belongs in
     // detect-and-correct. Without the band, two PRs branched from the same base can each
-    // add one file to a bucket holding eleven, each see twelve and admit, and their union
-    // of thirteen turns the repository-wide scan red - blocking every unrelated PR until
+    // add one file to a bucket holding limit-1, each see the limit and admit, and their union
+    // of limit+1 turns the repository-wide scan red - blocking every unrelated PR until
     // someone splits. That is what made strict (now forbidden, 19) load-bearing. The
     // admission rule keeps the unbanded limit, so the next change that introduces a
     // capacity-counted path absent from its ForkPoint is still refused and the split
     // pressure lands exactly where it belongs.
-    internal const int DirectoryToleranceLimit = 24;
+    // Thresholds raised 12/24 -> 24/48 by the owner on 2026-08-30 (wave-71 readings: nine
+    // Weil/Analytic/Observer buckets at 12 and Weil/Budget at 13 within one day; the band
+    // stays one admission limit wide).
+    internal const int DirectoryToleranceLimit = 48;
 
     // SL-003 capacity exclusions: theory inputs, the Lake manifest, the backfill
     // inventory, atomizer dialect registry, canonical CAS blobs, per-atom
@@ -87,8 +90,8 @@ internal static partial class RepositoryRules
     // is one canonical strict-loader input, not a content artifact to split. A
     // Blueprint document's structural slot is its .scribe.cs source. The .md is a FILEMAP
     // generated projection at the same stem, so counting both paths would cap a lawful
-    // twelve-module Lean bucket at six blueprinted modules. This exclusion concerns only
-    // structural capacity; it gives the projection no content or history authority. Single
+    // limit-sized Lean bucket at half that many blueprinted modules. This exclusion concerns
+    // only structural capacity; it gives the projection no content or history authority. Single
     // source shared with RepositoryCapacityAudit.
     internal static bool IsCapacityExcluded(string path) =>
         path.StartsWith("docs/develop/", StringComparison.Ordinal)
@@ -212,7 +215,7 @@ internal static partial class RepositoryRules
         //
         // Known cost: a same-directory rename arrives as Deleted(old)+Added(new). Honoring that
         // pair as non-growing would break band closure: branch A can rename x to a while branch B
-        // renames x to b, making their union contain 25 paths. The gateway asks git to detect
+        // renames x to b, making their union contain one more path. The gateway asks git to detect
         // renames and copies, but ParseChanges intentionally discards the old/new pairing when it
         // builds RawChangeSet. Retaining that choice is deliberate, so the new path still blocks.
         // Observe remains a structured, non-blocking finding; the current CLI does not render
