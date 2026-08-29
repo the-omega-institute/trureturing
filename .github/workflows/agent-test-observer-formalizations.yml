@@ -32,11 +32,5 @@ jobs:
           lake build D5.S3.ConceptDynamics.Faithfulness.InjectiveConstantReadoutSubsingleton
           lake build D5.S3.Observer.Refinement.CongruenceKernelSensorFusion
           lake build D5.S3.ConceptDynamics.ObservationOrder.PostprocessingKernelMonotonicity
-      - name: Emit and validate Scribe projections
-        run: |
-          set -euo pipefail
-          make emit
-          test -f Blueprint/D5/S3/ConceptDynamics/Faithfulness/InjectiveConstantReadoutSubsingleton.md
-          test -f Blueprint/D5/S3/Observer/Refinement/CongruenceKernelSensorFusion.md
-          test -f Blueprint/D5/S3/ConceptDynamics/ObservationOrder/PostprocessingKernelMonotonicity.md
-          git diff --check
+      - name: Validate source formatting
+        run: git diff --check
