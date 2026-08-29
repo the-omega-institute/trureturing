@@ -1,0 +1,50 @@
+name: agent-observer-completion-v12-lean
+
+on:
+  push:
+    branches:
+      - agent/theory/observer-completion-reflection-v12-20260829
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    if: contains(github.event.head_commit.message, '[observer-v12-lean]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/theory/observer-completion-reflection-v12-20260829
+          fetch-depth: 0
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - name: Install pinned Lean toolchain
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Restore Lean dependencies and cache
+        run: lake update
+      - name: Build observer completion v1.2 modules
+        shell: bash
+        run: |
+          set +e
+          failed=0
+          modules=(
+            D5.S3.ObserverMemory.Refinement.PostprocessingKernelCalculus
+            D5.S3.ObserverMemory.Refinement.JointReadoutSupremum
+            D5.S3.Observer.Agency.Self.AgencyEnrichment
+            D5.S3.Observer.Agency.Holonomy.VisibleLoopHolonomy
+            D5.S3.Observer.Completion.CompletionLocusCalculus
+            D5.S3.ObserverMemory.RefinementClosure.FiniteHorizonKernelRecurrence
+          )
+          for module in "${modules[@]}"; do
+            echo "::group::lake build $module"
+            lake build "$module"
+            status=$?
+            echo "::endgroup::"
+            if [ "$status" -ne 0 ]; then
+              failed=1
+            fi
+          done
+          exit "$failed"
