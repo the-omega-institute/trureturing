@@ -46,5 +46,35 @@ jobs:
         run: lake build D5.S3.ConceptDynamics.ObservationOrder.SensorFamilyRestrictionMonotonicity
       - name: Lean 10 CongruenceKernelSensorFusion
         run: lake build D5.S3.Observer.Refinement.CongruenceKernelSensorFusion
+      - name: Lean 11 AgencyCompletionMinimality
+        run: lake build D5.S3.Observer.Agency.Self.AgencyCompletionMinimality
+      - name: Lean 12 AgencyResidualDecomposition
+        run: lake build D5.S3.Observer.Agency.Self.AgencyResidualDecomposition
+      - name: Lean 13 AgencyResidualWitness
+        run: lake build D5.S3.Observer.Agency.Self.AgencyResidualWitness
+      - name: Lean 14 StrategySelfKnowledgeFactorization
+        run: lake build D5.S3.Observer.Agency.Self.StrategySelfKnowledgeFactorization
+      - name: Lean 15 MemoryTransport
+        run: lake build D5.S3.Observer.Agency.Holonomy.MemoryTransport
+      - name: Lean 16 ActionLoopRequiresMemory
+        run: lake build D5.S3.Observer.Agency.Holonomy.ActionLoopRequiresMemory
+      - name: Lean 17 HolonomyPolicyRigidity
+        run: lake build D5.S3.Observer.Agency.Holonomy.HolonomyPolicyRigidity
+      - name: Lean 18 HolonomyCompositionInvariance
+        run: lake build D5.S3.Observer.Agency.Holonomy.HolonomyCompositionInvariance
+      - name: Lean 19 SurjectiveSensorReindexKernelEquality
+        run: lake build D5.S3.ConceptDynamics.ObservationOrder.SurjectiveSensorReindexKernelEquality
+      - name: Lean 20 SensorFamilyExtensionStrictRefinement
+        run: lake build D5.S3.ConceptDynamics.ObservationOrder.SensorFamilyExtensionStrictRefinement
+      - name: Lean 21 InjectivePostprocessingKernelEquality
+        run: lake build D5.S3.ConceptDynamics.ObservationOrder.InjectivePostprocessingKernelEquality
+      - name: Lean 22 PostprocessingStrictLossWitness
+        run: lake build D5.S3.ConceptDynamics.ObservationOrder.PostprocessingStrictLossWitness
+      - name: Lean 23 CompletionPointIntersection
+        run: lake build D5.S3.Observer.Completion.CompletionPointIntersection
+      - name: Lean 24 CompletionPointPullback
+        run: lake build D5.S3.Observer.Completion.CompletionPointPullback
+      - name: Lean 25 GaugeStableZeroDefect
+        run: lake build D5.S3.Observer.Completion.GaugeStableZeroDefect
       - name: Validate source formatting
         run: git diff --check
