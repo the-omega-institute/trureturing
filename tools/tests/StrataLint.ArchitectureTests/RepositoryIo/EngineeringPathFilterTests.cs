@@ -103,6 +103,80 @@ public sealed class EngineeringPathFilterTests
         Assert.Contains("project attribution", plan.Reason, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void BlueprintDefinitionDeltaDoesNotSelectEveryMethodOfTransitiveDependents()
+    {
+        var changedPaths = new[] { "Blueprint/D5/X/Y.scribe.cs" };
+        var compiled = EngineeringCompileInputDeriver.FindAffectedTestProjects(
+            ProjectSnapshot(
+                ("tools/StrataLint.Scribe/StrataLint.Scribe.csproj", ScribeProject),
+                ("tools/tests/Tests/Tests.csproj", TestsProject)),
+            changedPaths,
+            out var failure);
+        var plan = EngineeringTestPlanPolicy.Evaluate(
+            changedPaths,
+            Map(
+                Method("ClosedWithoutBlueprint"),
+                Method("DeclaresBlueprint", ["Blueprint"]),
+                Method("UnknownRepositoryInput", unknown: true)),
+            compiled,
+            failure);
+
+        Assert.Null(failure);
+        Assert.Equal(EngineeringTestPlanKind.Selected, plan.Kind);
+        Assert.DoesNotContain(plan.Tests, static test => test.Id.EndsWith("ClosedWithoutBlueprint", StringComparison.Ordinal));
+        Assert.Contains(plan.Tests, static test =>
+            test.Id.EndsWith("DeclaresBlueprint", StringComparison.Ordinal)
+            && test.Reason == EngineeringSelectedTestReason.DeclaredInput);
+        Assert.Contains(plan.Tests, static test =>
+            test.Id.EndsWith("UnknownRepositoryInput", StringComparison.Ordinal)
+            && test.Reason == EngineeringSelectedTestReason.UnknownInput);
+    }
+
+    [Fact]
+    public void ScribeEngineSourceDeltaStillSelectsDependentProjectsWholesale()
+    {
+        var map = Map(Method("ClosedWithoutDeclaredInputs"));
+        var fullPlan = EngineeringTestPlanPolicy.Evaluate(
+            ["tools/StrataLint.Scribe/Foo.cs"],
+            map,
+            compileAffectedTestProjects: EmptyProjects());
+        var changedPaths = new[] { "Shared/Generated.cs" };
+        var compiled = EngineeringCompileInputDeriver.FindAffectedTestProjects(
+            ProjectSnapshot(
+                ("tools/StrataLint.Scribe/StrataLint.Scribe.csproj", ScribeProject),
+                ("tools/tests/Tests/Tests.csproj", TestsProject)),
+            changedPaths,
+            out var failure);
+        var explicitInputPlan = EngineeringTestPlanPolicy.Evaluate(changedPaths, map, compiled, failure);
+
+        Assert.Equal(EngineeringTestPlanKind.Full, fullPlan.Kind);
+        Assert.Null(failure);
+        var selected = Assert.Single(explicitInputPlan.Tests);
+        Assert.Equal(EngineeringSelectedTestReason.CompiledInput, selected.Reason);
+    }
+
+    [Fact]
+    public void TestProjectThatDirectlyCompilesTheContentGlobIsStillSelectedWholesale()
+    {
+        var changedPaths = new[] { "Blueprint/D5/X/Y.scribe.cs" };
+        var compiled = EngineeringCompileInputDeriver.FindAffectedTestProjects(
+            ProjectSnapshot(
+                ("tools/StrataLint.Scribe/StrataLint.Scribe.csproj", ScribeProject),
+                ("tools/tests/Tests/Tests.csproj", TestsProjectWithDirectContentGlob)),
+            changedPaths,
+            out var failure);
+        var plan = EngineeringTestPlanPolicy.Evaluate(
+            changedPaths,
+            Map(Method("FirstClosedMethod"), Method("SecondClosedMethod")),
+            compiled,
+            failure);
+
+        Assert.Null(failure);
+        Assert.Equal(2, plan.Tests.Length);
+        Assert.All(plan.Tests, static test => Assert.Equal(EngineeringSelectedTestReason.CompiledInput, test.Reason));
+    }
+
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
@@ -157,14 +231,14 @@ public sealed class EngineeringPathFilterTests
         });
 
         Assert.Equal(EngineeringTestPlanKind.Selected, plan.Kind);
-        Assert.Contains(plan.Tests, static test =>
+        Assert.DoesNotContain(plan.Tests, static test =>
             test.Reason == EngineeringSelectedTestReason.CompiledInput
+            && test.ProjectPath.EndsWith("StrataLint.Scribe.Tests.csproj", StringComparison.Ordinal));
+        var consumer = plan.Tests.First(static test =>
+            test.Reason == EngineeringSelectedTestReason.UnknownInput
             && test.ProjectPath.EndsWith("StrataLint.Scribe.Tests.csproj", StringComparison.Ordinal));
         Assert.Equal(0, exitCode);
         var call = Assert.Single(calls);
-        var consumer = plan.Tests.First(static test =>
-            test.Reason == EngineeringSelectedTestReason.CompiledInput
-            && test.ProjectPath.EndsWith("StrataLint.Scribe.Tests.csproj", StringComparison.Ordinal));
         Assert.Equal("tools/StrataLint.sln", call.Target);
         Assert.Contains(consumer.Id, call.Filter, StringComparison.Ordinal);
     }
@@ -172,6 +246,23 @@ public sealed class EngineeringPathFilterTests
     private static ScribeTestMap EmptyMap() => Map();
 
     private static IReadOnlySet<string> EmptyProjects() => new HashSet<string>(StringComparer.Ordinal);
+
+    private static ScribeTestMethod Method(
+        string id,
+        IReadOnlyList<string>? paths = null,
+        bool unknown = false) => new(
+        "tools/tests/Tests",
+        $"tools/tests/Tests/{id}.cs",
+        $"Tests.{id}",
+        paths ?? [],
+        unknown ? [TestMapUnknownReason.VariablePath] : []);
+
+    private static RepositorySnapshot ProjectSnapshot(params (string Path, string Content)[] files)
+    {
+        var raw = RawRepositorySnapshot.Create(files.Select(static file =>
+            RawRepositoryEntry.FromText(file.Path, file.Content)));
+        return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+    }
 
     private static ScribeTestMap Map(params ScribeTestMethod[] methods) => new(
         methods,
@@ -183,4 +274,32 @@ public sealed class EngineeringPathFilterTests
             static method => method.PartitionKey + "/" + Path.GetFileName(method.PartitionKey) + ".csproj",
             StringComparer.Ordinal),
         []);
+
+    private const string ScribeProject = """
+        <Project Sdk="Microsoft.NET.Sdk">
+          <ItemGroup>
+            <Compile Include="../../Blueprint/**/*.scribe.cs" />
+            <Compile Include="../../Shared/Generated.cs" />
+          </ItemGroup>
+        </Project>
+        """;
+
+    private const string TestsProject = """
+        <Project Sdk="Microsoft.NET.Sdk">
+          <ItemGroup>
+            <ProjectReference Include="../../StrataLint.Scribe/StrataLint.Scribe.csproj" />
+            <PackageReference Include="xunit" />
+          </ItemGroup>
+        </Project>
+        """;
+
+    private const string TestsProjectWithDirectContentGlob = """
+        <Project Sdk="Microsoft.NET.Sdk">
+          <ItemGroup>
+            <Compile Include="../../../Blueprint/**/*.scribe.cs" />
+            <ProjectReference Include="../../StrataLint.Scribe/StrataLint.Scribe.csproj" />
+            <PackageReference Include="xunit" />
+          </ItemGroup>
+        </Project>
+        """;
 }
