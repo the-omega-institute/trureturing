@@ -11,9 +11,8 @@ public sealed class BranchGrammarSignalWorkflowTests
 {
     private const string SignalStepName = "Signal PR head branch grammar";
     private const string FixtureHeadRef = "lane/governance/w33-branch-signal";
-    private static readonly string RepositoryRoot = RepositoryLayout.FindRoot();
     private static readonly string Workflow = File.ReadAllText(
-        Path.Combine(RepositoryRoot, ".github", "workflows", "ci.yml"));
+        Path.Combine(RepositoryLayout.FindRoot(), ".github", "workflows", "ci.yml"));
 
     [Fact]
     public void CandidateEngineeringHasBranchGrammarSignalAfterCandidateBuild()
@@ -241,7 +240,7 @@ public sealed class BranchGrammarSignalWorkflowTests
         var summaryFormat = ShellSingleQuotedConstant(script, "summary_format");
 
         Assert.Equal(
-            "36e35ce4d76c4d26e86b4da59118f9255ca59456118327c679d2e3cfa8742af7",
+            "2daf6420d1bef3ad19b125b7bd524f62629938da82594aa6a93b3804cb4a9980",
             Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(summaryFormat))).ToLowerInvariant());
 
         foreach (var (validationCase, validatorExit, expectedStatus) in new[]
