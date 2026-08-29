@@ -404,7 +404,7 @@ public sealed partial class AdmissionWorkflowTests
             """);
         File.WriteAllText(
             Path.Combine(Path.GetDirectoryName(project)!, "Probe.cs"),
-            "using Xunit; public sealed class ProductionBoundaryProbe { [Fact] public void Runs() { } }\n");
+            "using Xunit; public sealed class ProductionBoundaryProbe { [Fact] public void Runs() { _ = SyntheticRepositoryAccessor.ReadAllText(Input()); } [Fact] public void Missing() { _ = SyntheticRepositoryAccessor.ReadAllText(Input()); } private static string Input() => \"Meta/Digestion/probe.json\"; } public static class SyntheticRepositoryAccessor { public static string ReadAllText(string path) => string.Empty; }\n");
         File.WriteAllText(
             Path.Combine(repository, "tools", "StrataLint.sln"),
             """
@@ -422,48 +422,37 @@ public sealed partial class AdmissionWorkflowTests
                 EndGlobalSection
             EndGlobal
             """);
+        var changedInput = Path.Combine(repository, "Meta", "Digestion", "probe.json");
+        Directory.CreateDirectory(Path.GetDirectoryName(changedInput)!);
+        File.WriteAllText(changedInput, "{}\n");
+        foreach (var proof in new[] { "BannedApiCompileFailProof", "CompileFailProof" })
+        {
+            var proofDirectory = Path.Combine(repository, "tools", "tests", proof);
+            Directory.CreateDirectory(proofDirectory);
+            File.WriteAllText(
+                Path.Combine(proofDirectory, $"{proof}.csproj"),
+                "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><TargetFramework>net10.0</TargetFramework></PropertyGroup></Project>\n");
+        }
         Git(repository, "init", "--quiet");
         Git(repository, "config", "user.email", "engineering-boundary@example.invalid");
         Git(repository, "config", "user.name", "engineering-boundary");
         Git(repository, "add", ".");
         Git(repository, "commit", "--quiet", "-m", "base");
-        File.AppendAllText(Path.Combine(Path.GetDirectoryName(project)!, "Probe.cs"), "// candidate\n");
-        Git(repository, "add", ".");
+        File.WriteAllText(changedInput, "{\"candidate\":true}\n");
+        Git(repository, "add", "Meta/Digestion/probe.json");
         Git(repository, "commit", "--quiet", "-m", "candidate");
         var head = GitText(repository, "rev-parse", "HEAD");
         var @base = GitText(repository, "rev-parse", "HEAD^1");
         var planFile = Path.Combine(fixture.Path, "plan.json");
-        File.WriteAllText(planFile, System.Text.Json.JsonSerializer.Serialize(new
-        {
-            version = 2,
-            head,
-            @base,
-            plan = new
-            {
-                kind = "selected",
-                changed_paths = new[] { "Meta/Digestion/probe.json" },
-                tests = new[]
-                {
-                    new
-                    {
-                        project_path = "tools/tests/Probe/Probe.csproj",
-                        assembly = "Probe",
-                        id = "ProductionBoundaryProbe.Runs",
-                        reason = "unknown_input",
-                        detail = "production boundary probe",
-                    },
-                    new
-                    {
-                        project_path = "tools/tests/Probe/Probe.csproj",
-                        assembly = "Probe",
-                        id = "ProductionBoundaryProbe.Missing",
-                        reason = "unknown_input",
-                        detail = "planned identity with no executed result",
-                    },
-                },
-                reason = "production boundary probe",
-            },
-        }));
+        var plan = RunEngineeringScopeMode(root, repository, planFile, head, @base, "plan");
+        var planOutput = System.Text.Encoding.UTF8.GetString(plan.StandardOutput)
+            + System.Text.Encoding.UTF8.GetString(plan.StandardError);
+        Assert.True(plan.ExitCode == 0, planOutput);
+        Assert.Contains("state=selected changed=1 selected=2", planOutput, StringComparison.Ordinal);
+
+        File.WriteAllText(
+            Path.Combine(Path.GetDirectoryName(project)!, "Probe.cs"),
+            "using Xunit; public sealed class ProductionBoundaryProbe { [Fact] public void Runs() { _ = SyntheticRepositoryAccessor.ReadAllText(Input()); } private static string Input() => \"Meta/Digestion/probe.json\"; } public static class SyntheticRepositoryAccessor { public static string ReadAllText(string path) => string.Empty; }\n");
 
         var probeBuild = TestProcessRunner.Run(
             DotnetHost(root),

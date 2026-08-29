@@ -16,7 +16,7 @@ public sealed partial class MakeWorkflowTests
         var engineeringStep = EngineeringTestStep(workflow);
         var targetMatches = Regex.Matches(
             engineeringStep,
-            @"(?m)^[ \t]*make[ \t]+-C[ \t]+candidate/tools[ \t]+(?<target>engineering-tests)\b",
+            "(?m)^[ \\t]*make[ \\t]+-C[ \\t]+\"\\$base_harness_root/tools\"[ \\t]+(?<target>engineering-tests)\\b[^\\r\\n]*\\bMODE=execute\\b",
             RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
 
         var target = Assert.Single(targetMatches.Cast<Match>()).Groups["target"].Value;
@@ -24,6 +24,7 @@ public sealed partial class MakeWorkflowTests
         var recipe = Recipe(makefile, target);
         Assert.Contains("StrataLint.EngineeringScope.csproj", recipe, StringComparison.Ordinal);
         Assert.Contains("--head \"$(HEAD)\" --base \"$(BASE)\"", recipe, StringComparison.Ordinal);
+        Assert.Contains("REPOSITORY=\"$GITHUB_WORKSPACE/candidate\"", engineeringStep, StringComparison.Ordinal);
         Assert.Contains("MODE=execute", engineeringStep, StringComparison.Ordinal);
         Assert.DoesNotContain("required_test_projects", engineeringStep, StringComparison.Ordinal);
         Assert.DoesNotContain("--required-assembly", engineeringStep, StringComparison.Ordinal);
@@ -285,7 +286,7 @@ public sealed partial class MakeWorkflowTests
         var step = steps.Children.OfType<YamlMappingNode>().Single(candidate =>
             candidate.Children.TryGetValue(new YamlScalarNode("name"), out var name)
             && name is YamlScalarNode scalar
-            && scalar.Value == "Run candidate tests against base-owned identities");
+            && scalar.Value == "Replan and run engineering tests with protected-base harness");
         return Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("run")]).Value!;
     }
 
