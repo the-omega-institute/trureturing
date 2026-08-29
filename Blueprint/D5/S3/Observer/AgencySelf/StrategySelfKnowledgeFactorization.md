@@ -6,7 +6,7 @@ Strategy self-knowledge factorization refines the current-state observation kern
 
 **Theorem 1.1 (Factorization refines the strategy kernel).**
 
-$$\forall x3 \in \left(\forall x3 \in \mathord{\cdot},\; \mathord{\cdot}\right),\; \forall x4 \in \left(\forall x4 \in \mathord{\cdot},\; \mathord{\cdot}\right),\; \forall x5 \in \left(\forall x5 \in \mathord{\cdot},\; \mathord{\cdot}\right),\; \left(\forall x6 \in \mathord{\cdot},\; \mathit{x4}\left(\mathit{x6}\right) = \mathit{x5}\left(\mathit{x3}\left(\mathit{x6}\right)\right)\right) \Rightarrow \left(\mathit{x3}\left(\mathord{\cdot}\right) = \mathit{x3}\left(\mathord{\cdot}\right) \Rightarrow \mathit{x4}\left(\mathord{\cdot}\right) = \mathit{x4}\left(\mathord{\cdot}\right)\right)$$
+$$\forall x3 \in \left(\forall x3 \in \mathord{\cdot},\; \mathord{\cdot}\right),\; \forall x4 \in \left(\forall x4 \in \mathord{\cdot},\; \mathord{\cdot}\right),\; \forall x5 \in \left(\forall x5 \in \mathord{\cdot},\; \mathord{\cdot}\right),\; \left(\forall x6 \in \mathord{\cdot},\; \mathit{x4}\left(\mathit{x6}\right) = \mathit{x5}\left(\mathit{x3}\left(\mathit{x6}\right)\right)\right) \Rightarrow \left(\forall x7 \in \mathord{\cdot},\; \forall x8 \in \mathord{\cdot},\; \mathit{x3}\left(\mathit{x7}\right) = \mathit{x3}\left(\mathit{x8}\right) \Rightarrow \mathit{x4}\left(\mathit{x7}\right) = \mathit{x4}\left(\mathit{x8}\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/AgencySelf/StrategySelfKnowledgeFactorization.factorization_refines_strategy_kernel` (`✓ std3`). ∎
 
