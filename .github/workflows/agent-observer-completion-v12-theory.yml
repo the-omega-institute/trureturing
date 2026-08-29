@@ -10,44 +10,39 @@ permissions:
 
 jobs:
   patch-theory:
-    if: contains(github.event.head_commit.message, '[observer-v12-theory]')
+    if: contains(github.event.head_commit.message, '[observer-v12-theory-followup]')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: agent/theory/observer-completion-reflection-v12-20260829
           fetch-depth: 0
-      - name: Apply theory refinement
-        run: python .github/scripts/agent-observer-completion-v12-theory.py
+      - name: Apply theory follow-up
+        run: python .github/scripts/agent-observer-completion-v12-theory-followup.py
       - name: Validate theory structure
         shell: bash
         run: |
-          python -m py_compile .github/scripts/agent-observer-completion-v12-theory.py
+          python -m py_compile .github/scripts/agent-observer-completion-v12-theory-followup.py
           python - <<'PY'
           from pathlib import Path
           text = Path('docs/develop/theory/FORMAL_OBSERVER_COMPLETION_REFLECTION.md').read_text(encoding='utf-8')
           required = [
-              '**版本：v1.2，2026-08-29**',
-              '## 0.1 三类 completion 与 effective-image 纪律',
-              '# 1A. 接口运算与 kernel 演算',
-              '# 7A. 有限深度完成塔',
-              '# 9A. Agency enrichment 与可见环 holonomy',
-              '# 13. 记忆商与 effective-image 下降',
-              '# 24. 局部 closure、gluing 与公共固定点',
-              '# 24A. Structural completion locus 演算',
-              '# 27. Lean owner 取址与剩余 frontier',
+              '**版本：v1.2.1，2026-08-29**',
+              '\\operatorname{Hol}_q(w,x)',
+              'T(x)=x\\vee\\bigvee_{i\\in I}C_i(x)',
+              '接口侧采用“更细信息更大”的顺序',
           ]
-          missing = [item for item in required if text.count(item) != 1]
+          missing = [item for item in required if text.count(item) == 0]
           if missing:
-              raise SystemExit(f'missing or duplicated theory markers: {missing}')
-          if '保持有向 join，才能保证该迭代稳定' in text:
-              raise SystemExit('obsolete directed-join requirement remains')
+              raise SystemExit(f'missing theory follow-up markers: {missing}')
+          if '**版本：v1.2，2026-08-29**' in text:
+              raise SystemExit('obsolete v1.2 version marker remains')
           PY
-          git diff --stat
-      - name: Commit theory refinement
+          git diff --check
+      - name: Commit theory follow-up
         run: |
           git config user.name "AlyciaBHZ"
           git config user.email "50111876+AlyciaBHZ@users.noreply.github.com"
           git add docs/develop/theory/FORMAL_OBSERVER_COMPLETION_REFLECTION.md
-          git commit -m "refine observer completion theory before formalization"
+          git commit -m "refine pointed holonomy and common closure direction"
           git push origin HEAD:agent/theory/observer-completion-reflection-v12-20260829
