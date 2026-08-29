@@ -1,7 +1,0 @@
-{
-  "schema_version": 1,
-  "assembly": "StrataLint.ArchitectureTests",
-  "id": "FileMapPolicyTests.GuessedRawTerminatorRecoverySurfacesAsMissionContractFinding",
-  "disposition": "retired",
-  "reason": "The TASK documentation-comment scanner that produced this mission contract finding was retired."
-}

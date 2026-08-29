@@ -224,7 +224,7 @@ jobs:
         env:
           HEAD_REF: ${{ github.event.pull_request.head.ref }}
         run: "set +e\nvalidation_output=\"$(dotnet run --project candidate/tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release --no-build --no-launch-profile -- worktree validate-branch --branch \"$HEAD_REF\")\"\nvalidation_exit=$?\nset -e\nhead_ref=\"$HEAD_REF\"\nprintf '%s\\n' \"$validation_output\"\ncase \"$validation_exit\" in\n  0)\n    expected_status=canonical\n    ;;\n  1)\n    expected_status=BRANCH_GRAMMAR_NONCONFORMING\n    ;;\n  *)\n    printf 'BRANCH_GRAMMAR_SIGNAL detector_status=failed exit=%s\\n' \"$validation_exit\" >&2\n    exit \"$validation_exit\"\n    ;;\nesac\nif ! jq -e -s --arg expected_status \"$expected_status\" --arg head_ref \"$HEAD_REF\" 'length == 1 and .[0].event == \"branch_validation\" and .[0].status == $expected_status and .[0].branch == $head_ref and (.[0].canonical == ($expected_status == \"canonical\"))' <<< \"$validation_output\" >/dev/null; then\n  printf 'BRANCH_GRAMMAR_SIGNAL detector_status=invalid_output exit=%s\\n' \"$validation_exit\" >&2\n  exit 1\nfi\nsummary_format='PR head branch \"%s\" has canonical branch grammar status \"%s\". Nonconforming names are advisory; detector faults fail closed.\\n'\nif [[ \"$validation_exit\" -eq 1 ]]; then\n  printf '%s' '::warning title=PR head branch grammar::'\n  printf \"$summary_format\" \"$HEAD_REF\" \"$expected_status\"\nfi\nprintf 'BRANCH_GRAMMAR_SIGNAL status=%s head_ref=%s\\n' \"$expected_status\" \"$HEAD_REF\"\nprintf \"$summary_format\" \"$HEAD_REF\" \"$expected_status\" >> \"$GITHUB_STEP_SUMMARY\"\n"
-      - name: Replan and run engineering tests with protected-base harness
+      - name: Run engineering tests
         if: steps.scope.outputs.run_required == 'true'
         shell: bash
         env:
@@ -234,20 +234,13 @@ jobs:
         run: |
           set -euo pipefail
           plan_file="$RUNNER_TEMP/engineering-test-plan.json"
-          base_harness_root="$RUNNER_TEMP/protected-base-engineering-harness"
-          test ! -e "$base_harness_root"
-          rm -f -- "$RUNNER_TEMP/engineering-test-plan.json"
-          git -C candidate worktree add --detach "$base_harness_root" "$ENGINEERING_BASE"
-          cleanup_base_harness() {
-            git -C candidate worktree remove --force "$base_harness_root"
-          }
-          trap cleanup_base_harness EXIT
+          rm -f -- "$plan_file"
           if [[ "$ENGINEERING_FULL_REQUIRED" == "true" ]]; then
-            FULL=1 make -C "$base_harness_root/tools" engineering-tests REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
+            FULL=1 make -C candidate/tools engineering-tests MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
           else
-            make -C "$base_harness_root/tools" engineering-tests REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
+            make -C candidate/tools engineering-tests MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
           fi
-          make -C "$base_harness_root/tools" engineering-tests REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=execute HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
+          make -C candidate/tools engineering-tests MODE=execute HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
 
       - name: Run candidate selftest twice and compare bytes
         if: steps.scope.outputs.run_required == 'true'

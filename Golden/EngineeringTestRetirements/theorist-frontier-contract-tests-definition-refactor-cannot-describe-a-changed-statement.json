@@ -1,7 +1,0 @@
-{
-  "schema_version": 1,
-  "assembly": "StrataLint.Tests",
-  "id": "TheoristFrontierContractTests.DefinitionRefactorCannotDescribeAChangedStatement",
-  "disposition": "retired",
-  "reason": "The MISSION, theorist Frontier, theory-candidates, or declaration-exception test contract was retired in PR-1 of the approved two-landing plan."
-}

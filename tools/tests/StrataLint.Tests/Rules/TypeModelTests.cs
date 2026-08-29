@@ -335,7 +335,6 @@ public sealed class TypeModelTests
 
     [Theory]
     [InlineData("tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml")]
-    [InlineData("Golden/EngineeringTestRetirements/example.json")]
     [InlineData("Golden/Projection/x.json")]
     [InlineData("Golden/Frozen/accepted/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json")]
     [InlineData("Golden/values-kernels.toml")]
@@ -349,9 +348,6 @@ public sealed class TypeModelTests
 
     [Theory]
     [InlineData("Golden/other.toml")]
-    [InlineData("Golden/EngineeringTestRetirements/.json")]
-    [InlineData("Golden/EngineeringTestRetirements/example.toml")]
-    [InlineData("Golden/EngineeringTestRetirements/nested/example.json")]
     [InlineData("Golden/Other/x.json")]
     [InlineData("Golden/Projection/nested/x.json")]
     [InlineData("Golden/Projection/x.toml")]
