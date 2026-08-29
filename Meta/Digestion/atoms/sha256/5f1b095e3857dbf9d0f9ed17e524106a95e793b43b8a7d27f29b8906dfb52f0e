@@ -1,0 +1,40 @@
+# 第八百三十九部　Holonomy 谱行列式
+
+令：
+
+$$
+\mathcal H_\alpha(s)
+=
+\zeta(s,\alpha)+\zeta(s,1-\alpha).
+$$
+
+由特殊值：
+
+$$
+\mathcal H_\alpha(0)=0.
+$$
+
+其导数为：
+
+$$
+\begin{aligned}
+\mathcal H_\alpha'(0)
+&=
+\log\Gamma(\alpha)
++
+\log\Gamma(1-\alpha)
+-
+\log(2\pi).
+\end{aligned}
+$$
+
+利用 Gamma 反射公式：
+
+$$
+\Gamma(\alpha)\Gamma(1-\alpha)
+=
+\frac{\pi}{\sin\pi\alpha},
+$$
+
+得到：([DLMF][2])
+

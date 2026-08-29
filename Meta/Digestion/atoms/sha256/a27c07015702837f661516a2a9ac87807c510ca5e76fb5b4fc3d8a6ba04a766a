@@ -1,0 +1,11 @@
+## 6.2 接入科学六元循环
+
+DECT 第 39 部的科学系统由 Define、Observe、Predict、Compare、Revise、Reflect 六个分量组成。
+
+GFPT 不添加与其竞争的科学定义，而是刻画循环中治理状态的一个内层：
+
+`Observe/ledger facts → Derive D → Gate G → reject reason → proof obligation → kernel settlement → guarded revision`。
+
+在这一内层中：
+
+- `D` 把已冻结事实归约为状态；

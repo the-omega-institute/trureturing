@@ -1,0 +1,53 @@
+# 第九百三十七部　同一标量增长、不同矩阵 Holonomy
+
+对黄金词的两个字母 \(A,B\)，赋予局部观察算子：
+
+$$
+M_A(z),\qquad M_B(z).
+$$
+
+对观察者 \(x\in X_\varphi\)，定义 cocycle：
+
+$$
+\boxed{
+\mathcal M_N(x,z)
+=
+M_{x_{N-1}}(z)\cdots M_{x_0}(z).
+}
+\tag{937.1}
+$$
+
+若只读取：
+
+$$
+\det\mathcal M_N
+$$
+
+或某个交换标量积，则所有起点可以具有相同渐近增长。
+
+但当：
+
+$$
+M_AM_B\neq M_BM_A,
+$$
+
+不同观察者起点会产生不同 projective direction 与 holonomy。
+
+所以黄金最小系统给出：
+
+$$
+\boxed{
+\begin{aligned}
+\text{base dynamics}
+&:\quad\text{所有观察者共享同一有限语言};\\
+\text{scalar Lyapunov world}
+&:\quad\text{可趋向同一完成读数};\\
+\text{fiber cocycle}
+&:\quad\text{保留不可克隆的观察者历史}.
+\end{aligned}
+}
+$$
+
+下一步应补入黄金子移位的唯一遍历性，并研究该 cocycle 的：
+
+* top Lyapunov exponent 是否与起点无关；

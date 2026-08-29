@@ -1,0 +1,34 @@
+## 708.1 算术输入
+
+对素数截止：
+
+$$
+p\le P,
+$$
+
+计算：
+
+$$
+L_p^{\langle0\rangle},
+\quad
+L_p^{\langle1\rangle},
+\quad
+L_p^{\langle2\rangle},
+$$
+
+以及：
+
+$$
+a_{r,p}=L_p^{\langle r\rangle}-1.
+$$
+
+按：
+
+$$
+p\bmod5
+$$
+
+分类 split/inert/ramified。
+
+---
+

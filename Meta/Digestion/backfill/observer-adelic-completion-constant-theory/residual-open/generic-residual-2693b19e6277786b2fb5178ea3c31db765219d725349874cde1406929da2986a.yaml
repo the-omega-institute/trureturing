@@ -1,0 +1,10 @@
+ast_path: row/Power-Packet-受限-Weil-判据
+fingerprints:
+  raw_sha256: sha256:2693b19e6277786b2fb5178ea3c31db765219d725349874cde1406929da2986a
+  normalized_sha256: sha256:2693b19e6277786b2fb5178ea3c31db765219d725349874cde1406929da2986a
+cas_ref: sha256:2693b19e6277786b2fb5178ea3c31db765219d725349874cde1406929da2986a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

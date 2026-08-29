@@ -1,0 +1,80 @@
+# 第九百四十二部　建议形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/ChebyshevDistance/
+  SquaredObserverDistance.lean
+  ResolventIntervalCompactification.lean
+  CriticalSpectrumMapsToInterval.lean
+  OffLineSpectrumMapsOutsideInterval.lean
+  ExternalPoleOutsideCriticalStrip.lean
+
+D5/S3/Analytic/Zeta/ChebyshevAmplifier/
+  ChebyshevLocalizingWitness.lean
+  ChebyshevAllowedNonnegative.lean
+  ChebyshevOffLineNegative.lean
+  ChebyshevTransverseRapidity.lean
+  ChebyshevMinimaxInterface.lean
+
+D5/S3/Analytic/Zeta/PacketCharacterCode/
+  OrbitFeatureProfile.lean
+  CompetitorProfileSpace.lean
+  OptimalSelectorProjection.lean
+  SelectorMargin.lean
+  SelectorExistsIffTargetOutsideSpan.lean
+  FieldCompletionForSelectors.lean
+
+D5/S3/Analytic/Zeta/ChebyshevMatrix/
+  ChebyshevZeroLocalizingMatrix.lean
+  RHImpliesChebyshevMatrixPSD.lean
+  OffLineZeroImpliesFiniteMatrixNegative.lean
+  ChebyshevMatrixRHCriterion.lean
+  RadialEscapeDepth.lean
+
+D5/S3/Analytic/Zeta/ExternalPoleCompiler/
+  ExternalStripRationalKernel.lean
+  RationalKernelExponentialDecay.lean
+  RationalKernelSmoothRegularization.lean
+  CriticalStripCompactTruncation.lean
+  WeightedZeroSamplingConvergence.lean
+  ChebyshevRationalToWeilTest.lean
+
+D5/S3/Observer/BlockStructure/ChebyshevToeplitz/
+  JoukowskiChebyshevLift.lean
+  ChebyshevTrigonometricSlack.lean
+  CommonDenominatorChebyshevFeature.lean
+  ChebyshevRationalToeplitzCollapse.lean
+  ChebyshevLocalizingMomentMatrix.lean
+
+D5/S3/Weil/CriticalSupport/
+  WeilGroundProfile.lean
+  CriticalSupportDepth.lean
+  OffLineZeroFiniteCriticalSupport.lean
+  NegativeOnceNegativeForever.lean
+  ExteriorCannotRepairNegativeTest.lean
+  CriticalStickyEigenvalueCrossing.lean
+
+D5/S3/GoldenObserver/PacketRenormalization/
+  GoldenTransverseContraction.lean
+  FibonacciDegreeCompensator.lean
+  FibonacciDegreeTimesDefectLimit.lean
+  GoldenChebyshevActionLimit.lean
+  GoldenPacketRGInvariant.lean
+
+D5/S3/GoldenObserver/MinimalPacketSchedule/
+  GoldenCylinderHit.lean
+  GoldenUniformReturnBound.lean
+  GoldenObserversShareFiniteLanguage.lean
+  NoFiniteGoldenOriginDecoder.lean
+  GoldenReturnWordPacketCompilerTarget.lean
+
+D5/S3/ConceptDynamics/CertificateDepth/
+  CharacterCodeDepth.lean
+  SelectorMarginDepth.lean
+  ChebyshevDegreeDepth.lean
+  CriticalSupportDepth.lean
+  PrimeHorizonDepth.lean
+  StickyMatrixDepth.lean
+```
+
+---
+

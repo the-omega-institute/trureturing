@@ -1,0 +1,10 @@
+ast_path: section/3-3-尾节重键的适用类/clause/4
+fingerprints:
+  raw_sha256: sha256:7dc01106a149dd2bd1fcaf6070c35ad81736ea31404c49788104aefe0b2055c2
+  normalized_sha256: sha256:7dc01106a149dd2bd1fcaf6070c35ad81736ea31404c49788104aefe0b2055c2
+cas_ref: sha256:7dc01106a149dd2bd1fcaf6070c35ad81736ea31404c49788104aefe0b2055c2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,58 @@
+## 697.1 记忆逃逸关系
+
+对素数词定义：
+
+$$
+\boxed{
+w\sim_{\mathrm{ab}}w'
+\iff
+\operatorname{ab}(w)=\operatorname{ab}(w').
+}
+\tag{697.3}
+$$
+
+定义记忆逃逸：
+
+$$
+\boxed{
+\mathcal E_{\mathrm{mem}}^{\langle r\rangle}
+=
+\left\{
+(w,w'):
+\begin{array}{l}
+w\sim_{\mathrm{ab}}w',\\
+m_w\neq m_{w'}
+\end{array}
+\right\}.
+}
+\tag{697.4}
+$$
+
+由于 split–inert 相邻交换曲率严格非零：
+
+$$
+C_{0;p,q}\neq0,
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal E_{\mathrm{mem}}^{\langle0\rangle}
+\neq\varnothing.
+}
+\tag{697.5}
+$$
+
+这是一条非常明确的局部—全局余量：
+
+$$
+\boxed{
+\text{相同完成标量}
+\neq
+\text{相同形成历史}.
+}
+$$
+
+---
+

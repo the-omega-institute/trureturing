@@ -1,0 +1,10 @@
+ast_path: section/894-1-偶完成与奇方向的严格分工
+fingerprints:
+  raw_sha256: sha256:02a960d4d17890d3e6911bd3a750aa8c17a978d203bd007bdd1d3f9c4bf3c748
+  normalized_sha256: sha256:02a960d4d17890d3e6911bd3a750aa8c17a978d203bd007bdd1d3f9c4bf3c748
+cas_ref: sha256:02a960d4d17890d3e6911bd3a750aa8c17a978d203bd007bdd1d3f9c4bf3c748
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

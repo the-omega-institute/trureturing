@@ -1,0 +1,91 @@
+# 第八百一十六部　它为什么仍不等于字面物理光
+
+必须作一个关键区分。
+
+物理上的无质量粒子通常在所有动量尺度满足：
+
+$$
+E(k)=c|k|.
+$$
+
+而当前精确色散在低频为：
+
+$$
+\boxed{
+E_\sigma(k)
+=
+a_\sigma k^2
++
+O(k^4),
+}
+\tag{816.1}
+$$
+
+其中：
+
+$$
+\boxed{
+a_\sigma
+=
+\sum_{m=0}^{\infty}
+\frac1{(\sigma+2m)^2}
+=
+\frac14
+\psi_1
+\left(
+\frac{\sigma}{2}
+\right).
+}
+\tag{816.2}
+$$
+
+因此：
+
+$$
+v_\sigma(k)
+=
+2a_\sigma k
++
+O(k^3).
+$$
+
+也就是说：
+
+$$
+\boxed{
+\begin{aligned}
+\text{长波／低频}
+&:\quad E\sim k^2;\\
+\text{短波／高频}
+&:\quad E\sim c_\infty|k|.
+\end{aligned}
+}
+\tag{816.3}
+$$
+
+所以它更准确地是一种：
+
+$$
+\boxed{
+\text{IR 有惯性、UV 无质量的 completion dispersion}.
+}
+$$
+
+它类似某种相对论型有效粒子：
+
+* 低动量表现为二次动力学；
+* 高动量速度趋于上限；
+* 高频主符号是无质量的。
+
+因此本轮应冻结术语：
+
+$$
+\boxed{
+\textbf{asymptotically massless observer mode}
+}
+$$
+
+而不是未经限制地称为物理 photon。
+
+---
+

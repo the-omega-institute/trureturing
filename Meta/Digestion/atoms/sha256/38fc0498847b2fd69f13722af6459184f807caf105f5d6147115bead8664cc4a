@@ -1,0 +1,7 @@
+## 6.6 `PrefixExtension` 不与 append-only 冻结族竞争
+
+GFPT 的 `PrefixExtension` 是 `List` 上的局部字节关系，用于说明源 span 如何漂移。它不定义旧轮结算、不替代事件账语义，也不成为新的 append-only 真源。
+
+两者的分工是：
+
+- `PrefixExtension`：证明新源字节以旧源字节为前缀；

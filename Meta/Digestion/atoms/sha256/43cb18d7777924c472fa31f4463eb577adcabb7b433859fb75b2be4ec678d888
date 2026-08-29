@@ -1,0 +1,64 @@
+## 定理 756.1（局部观察行列式）
+
+$$
+\boxed{
+\det
+\left(
+I-x\mathsf F_p
+\right)^{-1}
+=
+\frac1{
+(1-x)
+(1-\chi_5(p)x)
+}.
+}
+\tag{756.1}
+$$
+
+即：
+
+$$
+\boxed{
+\det
+\left(
+I-p^{-s}\mathsf F_p
+\right)^{-1}
+=
+(1-p^{-s})^{-1}
+\left(
+1-\chi_5(p)p^{-s}
+\right)^{-1}.
+}
+\tag{756.2}
+$$
+
+这两个因子分别来自：
+
+$$
+\boxed{
+V_{\mathrm{ev}},
+\qquad
+V_{\mathrm{odd}}.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{Riemann local factor}
+=
+\text{even observer channel},
+}
+$$
+
+$$
+\boxed{
+\text{quadratic Dirichlet local factor}
+=
+\text{odd observer channel}.
+}
+$$
+
+---
+

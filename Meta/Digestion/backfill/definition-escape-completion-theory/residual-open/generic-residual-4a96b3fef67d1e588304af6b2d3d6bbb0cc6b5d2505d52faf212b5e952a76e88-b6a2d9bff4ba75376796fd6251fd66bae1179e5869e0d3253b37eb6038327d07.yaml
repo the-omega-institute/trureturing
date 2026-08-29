@@ -1,0 +1,10 @@
+ast_path: section/纪律注记/clause/1
+fingerprints:
+  raw_sha256: sha256:4a96b3fef67d1e588304af6b2d3d6bbb0cc6b5d2505d52faf212b5e952a76e88
+  normalized_sha256: sha256:4a96b3fef67d1e588304af6b2d3d6bbb0cc6b5d2505d52faf212b5e952a76e88
+cas_ref: sha256:4a96b3fef67d1e588304af6b2d3d6bbb0cc6b5d2505d52faf212b5e952a76e88
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

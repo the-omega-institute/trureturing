@@ -1,0 +1,10 @@
+ast_path: row/varphi-是-null-component-的共同斜率
+fingerprints:
+  raw_sha256: sha256:5d73693136bac0b85cc4930e45ad3fe79872ffe431112582558377f560b5c282
+  normalized_sha256: sha256:5d73693136bac0b85cc4930e45ad3fe79872ffe431112582558377f560b5c282
+cas_ref: sha256:5d73693136bac0b85cc4930e45ad3fe79872ffe431112582558377f560b5c282
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

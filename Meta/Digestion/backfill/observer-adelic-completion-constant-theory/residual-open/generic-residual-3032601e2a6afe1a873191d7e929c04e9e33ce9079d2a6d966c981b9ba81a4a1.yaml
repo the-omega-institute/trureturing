@@ -1,0 +1,10 @@
+ast_path: row/Riemann-参数为-sigma-tfrac12-的修正
+fingerprints:
+  raw_sha256: sha256:3032601e2a6afe1a873191d7e929c04e9e33ce9079d2a6d966c981b9ba81a4a1
+  normalized_sha256: sha256:3032601e2a6afe1a873191d7e929c04e9e33ce9079d2a6d966c981b9ba81a4a1
+cas_ref: sha256:3032601e2a6afe1a873191d7e929c04e9e33ce9079d2a6d966c981b9ba81a4a1
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

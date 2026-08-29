@@ -1,0 +1,22 @@
+# 第九百二十三部　Chebyshev 横向放大器
+
+令 \(T_N\) 为第一类 Chebyshev 多项式：
+
+$$
+T_N(\cos\theta)=\cos(N\theta).
+$$
+
+定义：
+
+$$
+\boxed{
+W_{N,a}(x)
+=
+1-
+T_N\!\left(\chi_a(x)\right)^2.
+}
+\tag{923.1}
+$$
+
+---
+

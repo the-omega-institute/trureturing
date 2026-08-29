@@ -1,0 +1,10 @@
+ast_path: section/第九百一十九部-Power-Packet-的有限递推结构/clause/1
+fingerprints:
+  raw_sha256: sha256:8a34cfa1447a873cac43e8c831c3a527d507dcae7bb2d8135671de32e1353159
+  normalized_sha256: sha256:8a34cfa1447a873cac43e8c831c3a527d507dcae7bb2d8135671de32e1353159
+cas_ref: sha256:8a34cfa1447a873cac43e8c831c3a527d507dcae7bb2d8135671de32e1353159
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

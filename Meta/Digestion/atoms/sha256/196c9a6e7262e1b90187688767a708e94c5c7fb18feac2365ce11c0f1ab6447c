@@ -1,0 +1,34 @@
+## 定理 889.1（First-resolvent RH criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathfrak S_t(u)\ge0
+}
+$$
+
+对所有：
+
+$$
+t\in\mathbb R,
+\qquad
+u>0
+$$
+
+及所有 \(\mathfrak N_t(u)\neq0\) 成立。
+
+RH 下：
+
+$$
+\mathfrak S_t(u)
+=
+\sum_\gamma
+\frac1{(t-\gamma)^2+u}
+>0.
+$$
+
+若 RH 失败，则在某个正法向零点左侧必出现负值。
+
+---
+

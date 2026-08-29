@@ -1,0 +1,49 @@
+## 定理 698.1（No exact history decoder）
+
+不存在映射：
+
+$$
+D:
+\mathcal Q_{\mathrm{sc}}
+\to
+\mathcal Q_{\mathrm{mem}}
+$$
+
+满足：
+
+$$
+\boxed{
+D\circ\pi
+=
+\operatorname{id}_{\mathcal Q_{\mathrm{mem}}}.
+}
+\tag{698.2}
+$$
+
+### 证明
+
+若存在两个不同记忆状态：
+
+$$
+x\neq y,
+\qquad
+\pi(x)=\pi(y),
+$$
+
+则：
+
+$$
+x
+=
+D(\pi(x))
+=
+D(\pi(y))
+=
+y,
+$$
+
+矛盾。∎
+
+这里要精确区分：
+
+* 可以从每个标量纤维**任选**一个代表；

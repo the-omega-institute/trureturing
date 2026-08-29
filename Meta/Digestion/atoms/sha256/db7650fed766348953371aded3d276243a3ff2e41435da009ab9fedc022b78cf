@@ -1,0 +1,44 @@
+## 定理 800.1（Prime-only no-gap theorem）
+
+$$
+\boxed{
+\inf_{n\neq0}
+\mathscr C_n^{\mathrm{fin}}(\sigma)
+=
+0
+\qquad
+(\sigma>1).
+}
+\tag{800.5}
+$$
+
+### 证明
+
+由于
+
+$$
+\sum_{\mathfrak p,k}
+\frac1{k(N\mathfrak p)^{k\sigma}}
+<\infty,
+$$
+
+给定 \(\varepsilon>0\)，可选择有限组 prime-power phases，使其余尾质量小于 \(\varepsilon\)。
+
+对有限组角度
+
+$$
+\alpha_1,\ldots,\alpha_M,
+$$
+
+同时 Diophantine 逼近保证存在任意大的非零整数 \(n\)，使
+
+$$
+e^{in\alpha_j}
+$$
+
+对全部 \(j\) 同时任意接近 \(1\)。
+
+于是有限主部与无限尾部都可任意小。∎
+
+---
+

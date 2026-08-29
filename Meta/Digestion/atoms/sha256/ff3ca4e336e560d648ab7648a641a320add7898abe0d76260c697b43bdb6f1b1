@@ -1,0 +1,90 @@
+# 第七百九十六部　黄金 regulator 模态的完成接口
+
+令
+
+$$
+K=\mathbb Q(\sqrt5),
+$$
+
+黄金 regulator 周期为
+
+$$
+\boxed{
+P_\varphi=2\log\varphi,
+}
+\tag{796.1}
+$$
+
+基本角频率为
+
+$$
+\boxed{
+\omega_\varphi
+=
+\frac{2\pi}{P_\varphi}
+=
+\frac{\pi}{\log\varphi}.
+}
+\tag{796.2}
+$$
+
+第 \(n\) 个 observer Fourier mode 的 Archimedean 参数定义为
+
+$$
+\boxed{
+\tau_n=n\omega_\varphi,
+\qquad n\in\mathbb Z.
+}
+\tag{796.3}
+$$
+
+设 \(\Psi_n\) 是前文定义的 regulator Hecke character。对素理想 \(\mathfrak p\)，写
+
+$$
+\Psi_n(\mathfrak p)
+=
+e^{in\theta_{\mathfrak p}},
+$$
+
+其中
+
+$$
+\theta_{\mathfrak p}\in\mathbb R/2\pi\mathbb Z.
+$$
+
+以下把标准 Hecke completion 作为待接入项目的分析接口：
+
+$$
+\boxed{
+\Lambda_n(s)
+=
+5^{s/2}
+\Gamma_{\mathbb R}(s+i\tau_n)
+\Gamma_{\mathbb R}(s-i\tau_n)
+L_n(s),
+}
+\tag{796.4}
+$$
+
+其中
+
+$$
+\Gamma_{\mathbb R}(z)
+=
+\pi^{-z/2}\Gamma(z/2).
+$$
+
+本轮在实半轴
+
+$$
+\sigma>1
+$$
+
+上的全部结论，不依赖函数方程或 GRH，只依赖：
+
+* unitary Euler phase \(e^{in\theta_{\mathfrak p}}\)；
+* 上述显式 Archimedean gamma pair；
+* Euler product 的绝对收敛。
+
+---
+

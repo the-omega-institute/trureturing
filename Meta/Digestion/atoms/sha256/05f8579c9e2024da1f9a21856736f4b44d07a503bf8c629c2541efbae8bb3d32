@@ -1,0 +1,6 @@
+### `spectrum_commitment_local_settlement`
+
+用途：把 G-A—G-H 各自按预登记地址和判据结算，不允许一个义务的证明替代另一个义务。
+
+本卷不重新定义局部结算状态机。
+

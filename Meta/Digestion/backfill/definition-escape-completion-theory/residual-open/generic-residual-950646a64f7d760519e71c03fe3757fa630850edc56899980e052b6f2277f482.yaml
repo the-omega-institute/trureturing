@@ -1,0 +1,10 @@
+ast_path: row/被改坐标须有可审计-封闭-非空的见证束
+fingerprints:
+  raw_sha256: sha256:950646a64f7d760519e71c03fe3757fa630850edc56899980e052b6f2277f482
+  normalized_sha256: sha256:950646a64f7d760519e71c03fe3757fa630850edc56899980e052b6f2277f482
+cas_ref: sha256:950646a64f7d760519e71c03fe3757fa630850edc56899980e052b6f2277f482
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

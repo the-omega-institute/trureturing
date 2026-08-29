@@ -1,0 +1,58 @@
+## v6.0：Paley–Wiener 幂包放大器、离线零点的显式有限支撑见证、横向分辨率律与黄金算术地平线
+
+以下从前文**第九百零二部**继续追加。
+
+上一轮把中心障碍定位为：
+
+$$
+\text{负法向 Jet}
+\longrightarrow
+\text{有理 resolvent 负见证}
+\longrightarrow
+\text{Paley--Wiener 逼近}
+\longrightarrow
+\text{有限支撑 Weil 负测试}.
+$$
+
+本轮出现一个重要简化：
+
+$$
+\boxed{
+\text{若已经给定一个真实离线零点，
+不需要先证明整个零点取样空间上的 Paley--Wiener 稠密性。}
+}
+$$
+
+可以直接使用一个固定平滑 bump 的卷积幂：
+
+1. 在实频轴上保持模长不超过 \(1\)；
+2. 在离线零点的虚方向上产生指数放大；
+3. 用一个有限次数实偶多项式消去有限个竞争零点；
+4. 让目标离线轨道压倒全部无限零点尾部。
+
+最终得到一个**实、偶、\(C^\infty\)、有限支撑**的 Weil 负见证。
+
+这与仓库现有真源高度匹配：`WeilTestFunction` 正是偶、光滑、紧支撑函数；其 Fourier–Laplace 变换已被证明为 entire；convolution square 在实轴上的变换已机器证明为模平方。
+
+本轮的新主链是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{离线零点}
+&\longrightarrow
+\text{垂直指数放大}\\
+&\longrightarrow
+\text{有限竞争轨道消去}\\
+&\longrightarrow
+\text{显式有限支撑负测试}\\
+&\longrightarrow
+\text{fixed-scale Weil 负方向}\\
+&\longrightarrow
+\text{有限 sticky/Feshbach 负矩阵}.
+\end{aligned}
+}
+$$
+
+---
+

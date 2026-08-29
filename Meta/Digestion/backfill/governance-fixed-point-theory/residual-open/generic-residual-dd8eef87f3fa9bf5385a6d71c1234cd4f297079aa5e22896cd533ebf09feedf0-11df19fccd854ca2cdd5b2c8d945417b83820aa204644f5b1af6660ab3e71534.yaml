@@ -1,0 +1,10 @@
+ast_path: section/3-4-重键操作/clause/2
+fingerprints:
+  raw_sha256: sha256:dd8eef87f3fa9bf5385a6d71c1234cd4f297079aa5e22896cd533ebf09feedf0
+  normalized_sha256: sha256:dd8eef87f3fa9bf5385a6d71c1234cd4f297079aa5e22896cd533ebf09feedf0
+cas_ref: sha256:dd8eef87f3fa9bf5385a6d71c1234cd4f297079aa5e22896cd533ebf09feedf0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

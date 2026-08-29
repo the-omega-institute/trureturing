@@ -1,0 +1,43 @@
+# 第七百九十三部　新的素数—观察者显式测度
+
+定义第 \(n\) 模态的 prime observer distance：
+
+$$
+\boxed{
+d\nu_n^{\mathrm{obs}}
+=
+2
+\sum_{\substack{p\text{ split}\\k\ge1}}
+\frac{
+1-\cos(kn\theta_p)
+}{
+k
+}
+\delta_{k\log p}.
+}
+\tag{793.1}
+$$
+
+则：
+
+$$
+\boxed{
+\log L_0(\sigma)-\log L_n(\sigma)
+=
+\int_0^\infty
+e^{-\sigma x}
+d\nu_n^{\mathrm{obs}}(x).
+}
+\tag{793.2}
+$$
+
+它满足：
+
+$$
+\nu_n^{\mathrm{obs}}\ge0.
+$$
+
+因此每个非平凡 observer mode 都定义一个正算术缺陷测度。
+
+---
+

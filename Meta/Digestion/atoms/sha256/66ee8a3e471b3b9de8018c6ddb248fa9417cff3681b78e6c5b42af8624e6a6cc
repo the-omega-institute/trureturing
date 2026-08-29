@@ -1,0 +1,43 @@
+## 定理 837.1（Holonomy–Hurwitz spectral zeta）
+
+对：
+
+$$
+0<\alpha<1,
+$$
+
+有：
+
+$$
+\boxed{
+\zeta_{P,c,\alpha}(s)
+=
+\left(
+\frac{2\pi c}{P}
+\right)^{-s}
+\left[
+\zeta(s,\alpha)
++
+\zeta(s,1-\alpha)
+\right].
+}
+\tag{837.3}
+$$
+
+Hurwitz \(\zeta\) 由 \(\sum_{n\ge0}(n+\alpha)^{-s}\) 定义；它在 \(s=0\) 的值和导数分别为：
+
+$$
+\zeta(0,\alpha)=\frac12-\alpha,
+$$
+
+$$
+\zeta'(0,\alpha)
+=
+\log\Gamma(\alpha)
+-\frac12\log(2\pi).
+$$
+
+([DLMF][1])
+
+---
+

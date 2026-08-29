@@ -1,0 +1,63 @@
+# 第九百三十四部　离线距离与临界尺度
+
+Chebyshev 阶数满足：
+
+$$
+N\asymp\frac{\sqrt a}{|\delta|}.
+$$
+
+有理逆变换的有效空间宽度约为：
+
+$$
+\frac{N}{\sqrt a}.
+$$
+
+所以：
+
+$$
+\boxed{
+L_c
+\lesssim
+\frac{C_{\mathrm{sel}}}{|\delta|},
+}
+\tag{934.1}
+$$
+
+其中 \(C_{\mathrm{sel}}\) 由：
+
+* 双曲增长隙；
+* 选择器 margin；
+* 尾部零点常数；
+* 所需严格负 margin；
+
+共同决定。
+
+这重新给出：
+
+$$
+\boxed{
+L_c|\delta|
+\lesssim
+C_{\mathrm{sel}}.
+}
+\tag{934.2}
+$$
+
+Paley–Wiener 上界又说明，任何支撑 \(L\) 的测试对横向位移的放大最多为：
+
+$$
+e^{L|\delta|}.
+$$
+
+因此在归一化条件下：
+
+$$
+\boxed{
+L|\delta|
+}
+$$
+
+确实是横向检测的自然作用量，而不仅是当前构造的偶然产物。
+
+---
+

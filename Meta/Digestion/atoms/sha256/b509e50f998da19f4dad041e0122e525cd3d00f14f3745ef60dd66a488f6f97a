@@ -1,0 +1,76 @@
+# 第八百二十七部　新的中心算子
+
+建议定义黄金 Archimedean photon operator：
+
+$$
+\boxed{
+\mathcal H_{\sigma,\varphi}^{\mathrm{obs}}
+=
+\Phi_\sigma
+\left(
+-\partial_\eta^2
+\right)
++
+\mathcal L_{\sigma}^{\mathrm{prime}}.
+}
+\tag{827.1}
+$$
+
+其 principal symbol 为：
+
+$$
+\boxed{
+\sigma_{\mathrm{prin}}
+\left(
+\mathcal H_{\sigma,\varphi}^{\mathrm{obs}}
+\right)
+=
+\frac{\pi}{2}|k|.
+}
+\tag{827.2}
+$$
+
+其低频 Hessian 为：
+
+$$
+\boxed{
+\sigma_{\mathrm{IR}}
+=
+\frac14
+\psi_1
+\left(
+\frac\sigma2
+\right)k^2
++
+\text{prime covariance}.
+}
+\tag{827.3}
+$$
+
+因此它具有两个不同几何：
+
+$$
+\boxed{
+\begin{aligned}
+\text{IR}
+&:\quad\text{Euclidean covariance geometry};\\
+\text{UV}
+&:\quad\text{massless Lorentz boundary geometry}.
+\end{aligned}
+}
+$$
+
+黄金 null cone 不应从 IR Hessian 直接读取，而应从：
+
+$$
+\boxed{
+\text{UV principal symbol}
++
+\text{Fibonacci projective basis}
+}
+$$
+
+联合读取。
+
+---
+

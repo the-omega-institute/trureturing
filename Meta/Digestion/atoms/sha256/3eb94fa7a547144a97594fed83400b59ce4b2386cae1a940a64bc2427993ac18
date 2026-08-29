@@ -1,0 +1,105 @@
+# 第七百九十七部　完成 observer Casimir
+
+定义第 \(n\) 模态相对于零模态的完成 Casimir：
+
+$$
+\boxed{
+\mathscr C_n(\sigma)
+=
+\log\Lambda_0(\sigma)
+-
+\frac12
+\left[
+\log\Lambda_n(\sigma)
++
+\log\Lambda_{-n}(\sigma)
+\right].
+}
+\tag{797.1}
+$$
+
+在实轴上，
+
+$$
+\Lambda_{-n}(\sigma)
+=
+\overline{\Lambda_n(\sigma)},
+$$
+
+所以也可写成
+
+$$
+\boxed{
+\mathscr C_n(\sigma)
+=
+\log\Lambda_0(\sigma)
+-
+\log|\Lambda_n(\sigma)|.
+}
+\tag{797.2}
+$$
+
+显然
+
+$$
+\mathscr C_0(\sigma)=0.
+$$
+
+将它拆为：
+
+$$
+\boxed{
+\mathscr C_n
+=
+\mathscr C_n^{\mathrm{fin}}
++
+\mathscr C_n^{\infty}.
+}
+\tag{797.3}
+$$
+
+其中有限素数部分为
+
+$$
+\boxed{
+\mathscr C_n^{\mathrm{fin}}(\sigma)
+=
+\sum_{\mathfrak p}
+\sum_{k\ge1}
+\frac{
+1-\cos(nk\theta_{\mathfrak p})
+}{
+k\,(N\mathfrak p)^{k\sigma}
+}.
+}
+\tag{797.4}
+$$
+
+每一项均非负。
+
+它可以写成相位距离：
+
+$$
+\boxed{
+1-\cos(nk\theta_{\mathfrak p})
+=
+\frac12
+\left|
+1-e^{ink\theta_{\mathfrak p}}
+\right|^2.
+}
+\tag{797.5}
+$$
+
+所以 \(\mathscr C_n^{\mathrm{fin}}\) 精确测量：
+
+$$
+\boxed{
+\text{第 }n\text{ 个 observer mode
+与零 observer mode
+在全部 prime histories 上的平方距离。}
+}
+$$
+
+---
+

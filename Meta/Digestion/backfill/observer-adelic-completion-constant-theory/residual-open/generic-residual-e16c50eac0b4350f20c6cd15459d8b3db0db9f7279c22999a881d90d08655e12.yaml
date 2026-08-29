@@ -1,0 +1,10 @@
+ast_path: section/第七百二十一部-离线零点的-出生点-是重根-jet
+fingerprints:
+  raw_sha256: sha256:e16c50eac0b4350f20c6cd15459d8b3db0db9f7279c22999a881d90d08655e12
+  normalized_sha256: sha256:e16c50eac0b4350f20c6cd15459d8b3db0db9f7279c22999a881d90d08655e12
+cas_ref: sha256:e16c50eac0b4350f20c6cd15459d8b3db0db9f7279c22999a881d90d08655e12
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

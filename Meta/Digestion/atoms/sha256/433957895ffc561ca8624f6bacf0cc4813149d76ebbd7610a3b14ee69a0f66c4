@@ -1,0 +1,101 @@
+# 第八百二十二部　黄金光锥斜率与“光速”不是同一个量
+
+前文黄金 Lorentz form 为：
+
+$$
+\boxed{
+Q_\varphi(X,Y)
+=
+X^2-XY-Y^2.
+}
+\tag{822.1}
+$$
+
+定义 null 坐标：
+
+$$
+\boxed{
+u=X-\varphi Y,
+\qquad
+v=X-\varphi'Y.
+}
+\tag{822.2}
+$$
+
+则：
+
+$$
+\boxed{
+Q_\varphi(X,Y)=uv.
+}
+\tag{822.3}
+$$
+
+再定义：
+
+$$
+T=\frac{u+v}{2},
+\qquad
+Z=\frac{u-v}{2}.
+$$
+
+则：
+
+$$
+\boxed{
+Q_\varphi=T^2-Z^2.
+}
+\tag{822.4}
+$$
+
+所以黄金 Lorentz cone 与标准 \(1+1\) 维 Lorentz cone 线性等价。
+
+这说明：
+
+$$
+\boxed{
+\varphi,\varphi'
+}
+$$
+
+是标准左右光线在一个**算术 Fibonacci 基底**中的射影斜率。
+
+而：
+
+$$
+\boxed{
+c_\infty=\frac{\pi}{2}
+}
+$$
+
+是 Archimedean observer field 在 \(\eta\) 坐标中的极限群速度。
+
+因此必须严格分开：
+
+$$
+\boxed{
+\begin{aligned}
+\varphi
+&=\text{null direction 在整数／Fibonacci 坐标中的斜率};\\
+\frac{\pi}{2}
+&=\text{Gamma completion principal symbol 的传播系数};\\
+2\log\varphi
+&=\text{observer circle 的周长};\\
+\frac{\pi^2}{2\log\varphi}
+&=\text{第一量子化 observer-light 能级}.
+\end{aligned}
+}
+$$
+
+黄金比例不是物理光速。
+
+它是：
+
+$$
+\boxed{
+\text{光锥在算术坐标中的投影形状与紧化长度。}
+}
+$$
+
+---
+

@@ -1,0 +1,51 @@
+## 定理 758.1（黄金观察器因子化）
+
+在：
+
+$$
+\Re s>1
+$$
+
+中：
+
+$$
+\boxed{
+\zeta_K(s)
+=
+\prod_p
+\det
+\left(
+I-p^{-s}\mathsf F_p
+\right)^{-1}.
+}
+\tag{758.2}
+$$
+
+并且：
+
+$$
+\boxed{
+\zeta_K(s)
+=
+\zeta(s)L(s,\chi_5).
+}
+\tag{758.3}
+$$
+
+Dirichlet \(L(s,\chi)\) 的 Euler 乘积为：
+
+$$
+L(s,\chi)
+=
+\prod_p
+\left(
+1-\chi(p)p^{-s}
+\right)^{-1},
+\qquad
+\Re s>1.
+$$
+
+([DLMF][1])
+
+---
+

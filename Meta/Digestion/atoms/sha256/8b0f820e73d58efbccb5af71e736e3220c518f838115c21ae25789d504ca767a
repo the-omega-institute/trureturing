@@ -1,0 +1,19 @@
+## 定理 736.1（维度无关 anti-isometry）
+
+$$
+\boxed{
+Q_{\varphi,\mathcal H}
+\left(
+\mathbf F_{\mathcal H}(X,Y)
+\right)
+=
+-
+Q_{\varphi,\mathcal H}(X,Y).
+}
+\tag{736.4}
+$$
+
+证明与二维情形完全相同。
+
+---
+

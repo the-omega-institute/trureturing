@@ -1,0 +1,10 @@
+ast_path: row/负-Jet-到固定支撑-Weil-witness
+fingerprints:
+  raw_sha256: sha256:5f29ae5232bb619365db864ec78b3471db080146746f2cc84e011609cb13e84e
+  normalized_sha256: sha256:5f29ae5232bb619365db864ec78b3471db080146746f2cc84e011609cb13e84e
+cas_ref: sha256:5f29ae5232bb619365db864ec78b3471db080146746f2cc84e011609cb13e84e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

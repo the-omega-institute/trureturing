@@ -1,0 +1,1 @@
+| 仅改 Condition 即强制保护坐标不等 | 同上，于 `ProtectedCoordinateTag.conditions` 实例化 

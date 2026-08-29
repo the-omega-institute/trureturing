@@ -1,0 +1,10 @@
+ast_path: section/1-4-实案二的抽象-尾节漂移与双律死锁/clause/4
+fingerprints:
+  raw_sha256: sha256:18e81386705906352d3c2333b65ab653de24b478a909478b0a75e0af2808a7f0
+  normalized_sha256: sha256:18e81386705906352d3c2333b65ab653de24b478a909478b0a75e0af2808a7f0
+cas_ref: sha256:18e81386705906352d3c2333b65ab653de24b478a909478b0a75e0af2808a7f0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

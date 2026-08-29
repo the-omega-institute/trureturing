@@ -1,0 +1,10 @@
+ast_path: row/有限-Chebyshev-matrix-RH-判据
+fingerprints:
+  raw_sha256: sha256:63a3b6e28f7a478f305b80e35abee004541a2dfa6cceedbe7eeb96cc70a9cf46
+  normalized_sha256: sha256:63a3b6e28f7a478f305b80e35abee004541a2dfa6cceedbe7eeb96cc70a9cf46
+cas_ref: sha256:63a3b6e28f7a478f305b80e35abee004541a2dfa6cceedbe7eeb96cc70a9cf46
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

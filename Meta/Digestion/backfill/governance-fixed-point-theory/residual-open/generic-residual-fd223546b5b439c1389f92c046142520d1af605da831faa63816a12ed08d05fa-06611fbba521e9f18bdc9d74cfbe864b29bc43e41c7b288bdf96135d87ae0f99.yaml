@@ -1,0 +1,10 @@
+ast_path: section/5-2-G-A-状态盲门方程的唯一解/clause/3
+fingerprints:
+  raw_sha256: sha256:fd223546b5b439c1389f92c046142520d1af605da831faa63816a12ed08d05fa
+  normalized_sha256: sha256:fd223546b5b439c1389f92c046142520d1af605da831faa63816a12ed08d05fa
+cas_ref: sha256:fd223546b5b439c1389f92c046142520d1af605da831faa63816a12ed08d05fa
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

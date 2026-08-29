@@ -1,0 +1,58 @@
+# 第八百四十五部　原始 Observer 扇区与算术完成必须分开
+
+单个 Hurwitz 扇区：
+
+$$
+\zeta(s,\alpha)
+$$
+
+描述一个 chiral observer holonomy。
+
+反射配对：
+
+$$
+\zeta(s,\alpha)+\zeta(s,1-\alpha)
+$$
+
+描述绝对无质量谱。
+
+而只有对有限 arithmetic orbit 作 character 投影，才产生：
+
+$$
+L(s,\chi).
+$$
+
+因此形成层级：
+
+$$
+\boxed{
+\begin{aligned}
+\text{单手性观察器}
+&:\quad \zeta(s,\alpha);\\
+\text{反射完成观察器}
+&:\quad
+\zeta(s,\alpha)+\zeta(s,1-\alpha);\\
+\text{算术 character 完成}
+&:\quad L(s,\chi);\\
+\text{平凡 branch-blind 完成}
+&:\quad \zeta(s).
+\end{aligned}
+}
+$$
+
+这解释了为什么不完整观察扇区可以拥有与 ordinary \(\zeta\) 完全不同的零点结构。
+
+但这些零点必须称为：
+
+$$
+\boxed{
+\text{observer-sector zeros},
+}
+$$
+
+不能称为隐藏的 Riemann 离线零点。
+
+只有经过 character、Gamma 与 global Euler completion 后，才进入相应 RH／GRH 问题。
+
+---
+

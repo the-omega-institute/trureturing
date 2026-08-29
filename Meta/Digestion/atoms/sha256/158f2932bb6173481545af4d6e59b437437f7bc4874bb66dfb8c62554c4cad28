@@ -1,0 +1,92 @@
+# 第七百五十二部　黄金比例不是完整边界点，而是共同斜率
+
+令 \(\mathcal H\) 是观察者方向空间。
+
+前文定义黄金正 null graph：
+
+$$
+\mathcal L_+
+=
+\left\{
+(\varphi Y,Y):Y\in\mathcal H
+\right\}.
+$$
+
+其射影化为：
+
+$$
+\mathbb P(\mathcal L_+)
+\simeq
+\mathbb P(\mathcal H).
+$$
+
+每一个非零 \(Y\) 都给出不同的 null boundary point：
+
+$$
+[(\varphi Y,Y)].
+$$
+
+但若只读取标量斜率：
+
+$$
+\operatorname{Slope}(X,Y)
+=
+\frac{\langle X,Y\rangle}{\|Y\|^2},
+$$
+
+则：
+
+$$
+\operatorname{Slope}(\varphi Y,Y)=\varphi
+$$
+
+对所有 \(Y\neq0\) 成立。
+
+所以真正的结构是：
+
+$$
+\boxed{
+\mathbb P(\mathcal H)
+\longrightarrow
+\{\varphi\}.
+}
+$$
+
+左边是完整观察者边界；
+
+右边只是共同标量像。
+
+因此：
+
+$$
+\boxed{
+\varphi
+\text{ 并不是光锥边界上的唯一点，}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{整个正 null boundary component
+被压缩以后留下的共同斜率。}
+}
+$$
+
+观察者不可克隆的第一个原因就是：
+
+$$
+\boxed{
+[Y_1]\neq[Y_2],
+\qquad
+\operatorname{Slope}(Y_1)
+=
+\operatorname{Slope}(Y_2)
+=
+\varphi.
+}
+$$
+
+---
+

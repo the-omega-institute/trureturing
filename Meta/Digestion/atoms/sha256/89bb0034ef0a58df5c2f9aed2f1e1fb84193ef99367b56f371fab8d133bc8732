@@ -1,0 +1,81 @@
+# 第七百四十四部　为什么普通 \(\zeta\) 看不到黄金观察者
+
+黄金局部 germ 保留：
+
+* 黄金指数；
+* Fibonacci 层；
+* prime channel；
+* observer-specific residual。
+
+项目当前已经形式化黄金指数的初始幂律与终止、黄金局部 Euler 因子，以及抽取 universal \(\zeta\) 因子的前两层。
+
+而普通 Euler product：
+
+$$
+\zeta(s)=\prod_p(1-p^{-s})^{-1}
+$$
+
+只保留标量 occupation。
+
+它商掉了：
+
+* prime 扫描顺序；
+* Fibonacci memory；
+* observer rapidity；
+* null lift 的方向 \(Y\)；
+* archive；
+* holonomy。
+
+因此可以写成：
+
+$$
+\boxed{
+\begin{aligned}
+\text{完整观察者}
+&=
+(Y,\eta,\chi,\pi,\text{memory});\\
+\downarrow\quad
+\text{局部标量}
+&=
+\{L_p(s)\}_p;\\
+\downarrow\quad
+\text{交换完成}
+&=
+\prod_pL_p(s);\\
+\downarrow\quad
+\text{Archimedean 完成}
+&=
+\xi(s).
+\end{aligned}
+}
+\tag{744.1}
+$$
+
+所以：
+
+$$
+\boxed{
+\xi
+\text{ 看不到裸 }\varphi
+}
+$$
+
+并不神秘。
+
+如果 \(\varphi\) 属于观察者束的几何，而不是最终标量对象，那么完成商本来就应该把它隐藏。
+
+最终可能留下的只是：
+
+$$
+\boxed{
+\begin{aligned}
+\varphi+\varphi'&=1,\\
+\varphi\varphi'&=-1,\\
+(\varphi-\varphi')^2&=5,\\
+2\log\varphi&=\text{boost period}.
+\end{aligned}
+}
+$$
+
+---
+

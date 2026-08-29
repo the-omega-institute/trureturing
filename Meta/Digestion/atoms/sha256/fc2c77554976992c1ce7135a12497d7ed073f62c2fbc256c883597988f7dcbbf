@@ -1,0 +1,23 @@
+## 猜想 749.3（All-order cone flattening）
+
+随着 primitive ζ 因子逐层抽取：
+
+$$
+L_p^{\langle0\rangle},
+L_p^{\langle1\rangle},
+L_p^{\langle2\rangle},\ldots,
+$$
+
+有：
+
+$$
+\boxed{
+\varepsilon_{r,n}^{\mathrm{cone}}
+\to0
+}
+$$
+
+在每个公共紧解析区域上一致成立。
+
+---
+

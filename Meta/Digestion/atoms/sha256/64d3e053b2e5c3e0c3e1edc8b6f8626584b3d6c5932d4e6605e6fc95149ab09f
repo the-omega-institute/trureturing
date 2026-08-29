@@ -1,0 +1,69 @@
+# 第八百五十三部　建议形式化顺序
+
+```text
+D5/S3/GoldenObserver/LightTangent/
+  RiemannCriticalGammaParameter.lean
+  GammaTowerThetaTrace.lean
+  GammaSubordinationFormula.lean
+  GammaThetaSmallTime.lean
+  CompletionDimensionDispersion.lean
+
+D5/S3/GoldenObserver/LightSpectralZeta/
+  GoldenLightOperator.lean
+  GoldenLightEigenvalues.lean
+  ChiralGoldenLightSpectralZeta.lean
+  FullGoldenLightSpectralZeta.lean
+  ScaleBlindSpectralZeros.lean
+  GoldenLightDeterminant.lean
+
+D5/S3/GoldenObserver/HolonomyDirac/
+  FlatCircleHolonomy.lean
+  TwistedMomentumSpectrum.lean
+  HolonomyHurwitzSpectralZeta.lean
+  HolonomyAbsoluteReflection.lean
+  HolonomyEtaFunction.lean
+  HolonomyEtaAtZero.lean
+
+D5/S3/GoldenObserver/HolonomyDeterminant/
+  HurwitzZetaAtZero.lean
+  HurwitzZetaDerivativeAtZero.lean
+  HolonomyZetaDeterminant.lean
+  ModFiveSectorDeterminants.lean
+  GoldenDeterminantRatio.lean
+  DiscriminantDeterminantProduct.lean
+
+D5/S3/GoldenObserver/ModFiveJets/
+  ModFiveHurwitzSectorOne.lean
+  ModFiveHurwitzSectorTwo.lean
+  ModFiveSectorHadamardTransform.lean
+  GoldenCharacterZeroAtZero.lean
+  GoldenCharacterDerivativeAtZero.lean
+  GoldenCharacterFunctionalEquationValue.lean
+
+D5/S3/GoldenObserver/ScaleShape/
+  SpectralScaleShapeFactorization.lean
+  ScaleDoesNotMoveZeros.lean
+  LogDerivativeReadsScale.lean
+  HolonomyChangesShape.lean
+  ObserverSectorZeroNotRiemannZero.lean
+
+D5/S3/Weil/ObserverCriticalGamma/
+  ObserverGammaSymmetricDifference.lean
+  ObserverGammaCriticalKernel.lean
+  ObserverGammaPositiveAtZero.lean
+  ObserverGammaNegativeTail.lean
+  ObserverGammaSignChange.lean
+
+D5/S3/Weil/ObserverConfinement/
+  ObserverModeArchimedeanMultiplier.lean
+  ObserverModePrimeBound.lean
+  ObserverModeJointMultiplier.lean
+  ObserverModeFiniteDangerousSet.lean
+  ObserverModeSafeComplement.lean
+  ObserverModeFeshbachReduction.lean
+```
+
+项目中已有的 `ArchimedeanJumpDecomposition`、`FixedScaleWeilQuadraticForm` 与 `SafeComplementFiniteIndex` 可以直接作为后三组模块的底座。
+
+---
+

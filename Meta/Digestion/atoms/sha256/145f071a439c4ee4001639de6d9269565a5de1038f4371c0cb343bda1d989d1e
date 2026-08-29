@@ -1,0 +1,93 @@
+# 第七百六十八部　黄金观察器的 prime forcing 已有规范公式
+
+在：
+
+$$
+\Re s>1
+$$
+
+中：
+
+$$
+\boxed{
+-\frac{L'}{L}(s,\chi_5)
+=
+\sum_{n\ge1}
+\frac{
+\Lambda(n)\chi_5(n)
+}{
+n^s
+}.
+}
+\tag{768.1}
+$$
+
+等价地：
+
+$$
+\boxed{
+-\frac{L'}{L}(s,\chi_5)
+=
+\sum_p
+\sum_{k\ge1}
+\chi_5(p)^k
+(\log p)p^{-ks}.
+}
+\tag{768.2}
+$$
+
+这正是黄金观察器的 orientation-memory forcing。
+
+与此同时：
+
+$$
+\boxed{
+-\frac{\zeta_K'}{\zeta_K}(s)
+=
+\sum_p
+\sum_{k\ge1}
+\left[
+1+\chi_5(p)^k
+\right]
+(\log p)p^{-ks}.
+}
+\tag{768.3}
+$$
+
+所以 Dedekind 完成不是简单地“多加一个 \(L\)-函数”。
+
+它执行的是闭合轨道投影：
+
+$$
+\boxed{
+\frac{
+1+\chi_5(p)^k
+}{2}.
+}
+\tag{768.4}
+$$
+
+对惰性素数：
+
+$$
+\frac{1+(-1)^k}{2}
+=
+\begin{cases}
+0,&k\text{ 奇},\\
+1,&k\text{ 偶}.
+\end{cases}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{黄金观察器的奇步历史被消去，
+偶步闭合历史被保留。}
+}
+$$
+
+这正是你的“奇层破缺、偶层完成”在素数显式公式中的规范实现。
+
+---
+

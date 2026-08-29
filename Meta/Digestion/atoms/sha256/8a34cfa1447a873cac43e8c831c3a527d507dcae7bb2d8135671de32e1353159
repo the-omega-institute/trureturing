@@ -1,0 +1,74 @@
+# 第九百一十九部　Power-Packet 的有限递推结构
+
+令：
+
+$$
+h_N=\psi_a^{*N}.
+$$
+
+则：
+
+$$
+h_{N+1}=h_N*\psi_a.
+$$
+
+定义调制态：
+
+$$
+u_N(x)=2\cos(tx)h_N(x).
+$$
+
+对任意平移 \(y\)，其相关函数为：
+
+$$
+\boxed{
+C_N(y)
+=
+\int_{\mathbb R}
+u_N(x)\overline{u_N(x-y)}\,dx.
+}
+\tag{919.1}
+$$
+
+Prime jump energy只需要读取：
+
+$$
+C_N(\log p^k)
+$$
+
+于有限个活跃 prime powers。
+
+因为 \(h_N\) 是卷积幂，其频域密度为：
+
+$$
+|\Psi_a(\xi-t)^N+\Psi_a(\xi+t)^N|^2.
+$$
+
+所以 \(N\) 的增加对应一个明确的 transfer：
+
+$$
+\boxed{
+\text{旧频谱}
+\longmapsto
+|\Psi_a|^2\times\text{旧频谱}
+}
+$$
+
+加上双中心干涉项。
+
+这意味着 Power-Packet 检测可以被写成一个离散时间控制系统：
+
+$$
+\boxed{
+\begin{aligned}
+N&=\text{观察历史深度};\\
+t&=\text{目标纵向频率};\\
+a&=\text{单步观察宽度};\\
+Q&=\text{有限 signature controller}.
+\end{aligned}
+}
+$$
+
+下一步可以不再每次从积分定义重算，而建立关于 \(N\) 的：
+
+* \(L^2\) 质量递推；

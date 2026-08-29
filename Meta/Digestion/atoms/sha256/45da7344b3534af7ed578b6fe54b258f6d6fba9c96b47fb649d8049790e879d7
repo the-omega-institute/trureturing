@@ -1,0 +1,20 @@
+## 猜想 729.3（Protozero realization criterion）
+
+一个持续出现的导数退化线程只有在同时满足：
+
+$$
+\boxed{
+\begin{aligned}
+&F_r(s_r)\to0;\\
+&F_r'(s_r)\to0;\\
+&\text{局部零点计数稳定};\\
+&\text{完成线程可实现};\\
+&\text{观察器 gauge 已消除};
+\end{aligned}
+}
+$$
+
+时，才对应 completed object 的真实谱分岔。
+
+---
+

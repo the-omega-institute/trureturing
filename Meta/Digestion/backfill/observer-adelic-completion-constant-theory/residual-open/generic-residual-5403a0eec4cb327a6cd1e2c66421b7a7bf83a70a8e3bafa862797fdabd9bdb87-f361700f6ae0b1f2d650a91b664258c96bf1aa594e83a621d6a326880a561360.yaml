@@ -1,0 +1,10 @@
+ast_path: section/933-1-外部矩规范只是-gauge/clause/3
+fingerprints:
+  raw_sha256: sha256:5403a0eec4cb327a6cd1e2c66421b7a7bf83a70a8e3bafa862797fdabd9bdb87
+  normalized_sha256: sha256:5403a0eec4cb327a6cd1e2c66421b7a7bf83a70a8e3bafa862797fdabd9bdb87
+cas_ref: sha256:5403a0eec4cb327a6cd1e2c66421b7a7bf83a70a8e3bafa862797fdabd9bdb87
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

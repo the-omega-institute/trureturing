@@ -1,0 +1,27 @@
+# 第七百五十八部　黄金 Dedekind \(\zeta\) 是完整双通道观察
+
+令：
+
+$$
+K=\mathbb Q(\sqrt5).
+$$
+
+由素数在二次域中的分裂、惰性与分歧，Dedekind \(\zeta_K\) 的局部因子分别为：
+
+$$
+\boxed{
+\begin{array}{c|c}
+p\text{ 类型}&\zeta_{K,p}(s)\\
+\hline
+\text{split}&(1-p^{-s})^{-2}\\
+\text{inert}&(1-p^{-2s})^{-1}\\
+\text{ramified}&(1-p^{-s})^{-1}
+\end{array}
+}
+\tag{758.1}
+$$
+
+二次域中素数的分裂行为由相应二次字符控制；项目已经对 \(K=\mathbb Q(\sqrt5)\) 的全部三类作出机器证明。 ([数学百科全书][2])
+
+与式 (756.2) 比较，得到：
+

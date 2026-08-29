@@ -1,0 +1,10 @@
+ast_path: section/第七百零六部-真实离线零点所需的三重条件/clause/1
+fingerprints:
+  raw_sha256: sha256:9d73a1b0d107651fd83043a477bd75db0bedf32604ce2e14c80d86857e4f0e4a
+  normalized_sha256: sha256:9d73a1b0d107651fd83043a477bd75db0bedf32604ce2e14c80d86857e4f0e4a
+cas_ref: sha256:9d73a1b0d107651fd83043a477bd75db0bedf32604ce2e14c80d86857e4f0e4a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

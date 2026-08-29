@@ -1,0 +1,65 @@
+# 第七百四十部　黄金观察者束
+
+定义黄金观察者空间：
+
+$$
+\boxed{
+\mathscr O_\varphi
+=
+\left\{
+(Y,\eta,\chi,\pi):
+\begin{array}{l}
+[Y]\in\mathbb P(\mathcal H),\\
+\eta\in\mathbb R,\\
+\chi\in\mathbb R,\\
+\pi=\text{形成历史}
+\end{array}
+\right\}.
+}
+\tag{740.1}
+$$
+
+定义黄金像投影：
+
+$$
+\boxed{
+\Pi_\varphi:
+\mathscr O_\varphi\to\{\varphi\}.
+}
+\tag{740.2}
+$$
+
+显然：
+
+$$
+\Pi_\varphi
+$$
+
+具有巨大纤维：
+
+$$
+\boxed{
+\Pi_\varphi^{-1}(\varphi)
+\simeq
+\mathbb P(\mathcal H)
+\times
+\mathbb R_\eta
+\times
+\mathbb R_\chi
+\times
+\operatorname{Hist}.
+}
+\tag{740.3}
+$$
+
+所以观察者不可克隆并不神秘：
+
+$$
+\boxed{
+\text{黄金比例位于束的基底，
+观察者身份位于束的纤维。}
+}
+$$
+
+---
+

@@ -1,0 +1,18 @@
+## 猜想 941.5（Observer RG invariant）
+
+对黄金完成塔：
+
+$$
+\delta_{n+1}=\varphi^{-2}\delta_n,
+$$
+
+存在规范整数观察深度：
+
+$$
+N_n=F_{2n+r},
+$$
+
+使 Chebyshev action、selector margin 与归一化 sticky profile 收敛到非平凡固定点。
+
+---
+

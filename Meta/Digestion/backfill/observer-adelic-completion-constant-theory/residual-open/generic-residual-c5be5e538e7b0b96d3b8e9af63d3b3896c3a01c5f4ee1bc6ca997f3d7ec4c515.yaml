@@ -1,0 +1,10 @@
+ast_path: section/第八百三十八部-绝对光谱不能辨认镜像观察者
+fingerprints:
+  raw_sha256: sha256:c5be5e538e7b0b96d3b8e9af63d3b3896c3a01c5f4ee1bc6ca997f3d7ec4c515
+  normalized_sha256: sha256:c5be5e538e7b0b96d3b8e9af63d3b3896c3a01c5f4ee1bc6ca997f3d7ec4c515
+cas_ref: sha256:c5be5e538e7b0b96d3b8e9af63d3b3896c3a01c5f4ee1bc6ca997f3d7ec4c515
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

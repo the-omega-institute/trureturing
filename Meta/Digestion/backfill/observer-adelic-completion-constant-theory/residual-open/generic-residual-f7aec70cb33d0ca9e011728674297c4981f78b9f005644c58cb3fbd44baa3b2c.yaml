@@ -1,0 +1,10 @@
+ast_path: row/split-inert-曲率非零
+fingerprints:
+  raw_sha256: sha256:f7aec70cb33d0ca9e011728674297c4981f78b9f005644c58cb3fbd44baa3b2c
+  normalized_sha256: sha256:f7aec70cb33d0ca9e011728674297c4981f78b9f005644c58cb3fbd44baa3b2c
+cas_ref: sha256:f7aec70cb33d0ca9e011728674297c4981f78b9f005644c58cb3fbd44baa3b2c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

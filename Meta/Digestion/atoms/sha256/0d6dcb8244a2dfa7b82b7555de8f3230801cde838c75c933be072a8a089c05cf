@@ -1,0 +1,39 @@
+* \(5\) 是唯一分歧素数，并满足一个显式平方分解。
+
+这恰好构成一个两分支观察空间：
+
+$$
+\boxed{
+\text{even branch}
+\oplus
+\text{odd branch}.
+}
+$$
+
+Riemann \(\zeta\) 只保留所有素数共有的 even branch；
+
+Dirichlet \(L(s,\chi_5)\) 保留黄金观察器的 odd branch；
+
+二者的乘积：
+
+$$
+\boxed{
+\zeta_{\mathbb Q(\sqrt5)}(s)
+=
+\zeta(s)L(s,\chi_5)
+}
+$$
+
+才是完整的双分支黄金算术观察。
+
+所以，为什么直接研究 Riemann \(\zeta\) 看不到黄金比例，现在有了一个非常明确的回答：
+
+$$
+\boxed{
+\text{因为普通 }\zeta
+\text{ 在表示论上已经投影到了平凡观察者通道。}
+}
+$$
+
+---
+

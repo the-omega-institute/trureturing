@@ -1,0 +1,10 @@
+ast_path: section/723-3-观察记忆深度/clause/2
+fingerprints:
+  raw_sha256: sha256:1261b31245514878c846e43a46ae26f7185f3ed635ccbe7249fe9271513e6dca
+  normalized_sha256: sha256:1261b31245514878c846e43a46ae26f7185f3ed635ccbe7249fe9271513e6dca
+cas_ref: sha256:1261b31245514878c846e43a46ae26f7185f3ed635ccbe7249fe9271513e6dca
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

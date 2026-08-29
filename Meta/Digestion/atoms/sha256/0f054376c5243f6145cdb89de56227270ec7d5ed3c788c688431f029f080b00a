@@ -1,0 +1,64 @@
+# 第九百二十一部　建议形式化顺序
+
+```text
+D5/S3/Weil/PowerPacket/
+  NormalizedEvenPositiveBump.lean
+  BumpFourierRealAxisBound.lean
+  BumpFourierImaginaryAmplification.lean
+  BumpFourierStrictOffCenter.lean
+  BumpFourierUniformStripDecay.lean
+
+D5/S3/Weil/PowerPacketDynamics/
+  BumpConvolutionPower.lean
+  ConvolutionPowerFourier.lean
+  SymmetricFrequencyPacket.lean
+  PacketInverseFourier.lean
+  PacketSupportRadius.lean
+
+D5/S3/Weil/PowerPacketSelector/
+  ZeroSymmetryOrbit.lean
+  FiniteCompetingZeroSet.lean
+  RealEvenOrbitInterpolation.lean
+  TargetPureImaginarySelector.lean
+  CompetingOrbitElimination.lean
+
+D5/S3/Weil/PowerPacketDominance/
+  TargetOrbitAsymptotic.lean
+  ZeroTailSummable.lean
+  TailGrowthStrictlySmaller.lean
+  TargetOrbitDominatesTail.lean
+  OffLineZeroToCompactTest.lean
+
+D5/S3/Weil/PowerPacketCriterion/
+  ComplexConvolutionSquareTransform.lean
+  PowerPacketZeroQuadraticForm.lean
+  RHPowerPacketCriterion.lean
+  RationalParameterPowerPacketCriterion.lean
+
+D5/S3/Weil/PowerPacketComplexity/
+  VerticalSupportAmplificationBound.lean
+  TransverseSupportDepth.lean
+  PrimeHorizonFromSupport.lean
+  GoldenSupportRenormalization.lean
+  GoldenPrimeHorizon.lean
+  JetSupportScalingInvariant.lean
+
+D5/S3/Weil/PowerPacketEnergy/
+  PacketPoleChannel.lean
+  PacketPrimeTranslationEnergy.lean
+  PacketArchimedeanEnergy.lean
+  PacketEnergyDepthRecurrence.lean
+  PacketStickyProjection.lean
+  PacketFeshbachCertificate.lean
+
+D5/S3/Analytic/Zeta/JetPacketCompiler/
+  NegativeJetScaleLocalization.lean
+  JetNormalTailControl.lean
+  NegativeJetToPacketTarget.lean
+  JetToPowerPacketWitness.lean
+```
+
+仓库现有 `standardBump`、entire Fourier–Laplace、convolution-square positivity、Prime–Archimedean energy identity、renormalized multiplier 和 safe complement 可以作为前五组模块的直接底座。
+
+---
+
