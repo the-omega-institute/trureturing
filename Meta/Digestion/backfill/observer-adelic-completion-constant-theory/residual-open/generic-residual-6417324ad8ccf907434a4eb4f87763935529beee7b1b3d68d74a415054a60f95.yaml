@@ -1,0 +1,10 @@
+ast_path: section/第八百二十五部-对观察者不可克隆的进一步解释
+fingerprints:
+  raw_sha256: sha256:6417324ad8ccf907434a4eb4f87763935529beee7b1b3d68d74a415054a60f95
+  normalized_sha256: sha256:6417324ad8ccf907434a4eb4f87763935529beee7b1b3d68d74a415054a60f95
+cas_ref: sha256:6417324ad8ccf907434a4eb4f87763935529beee7b1b3d68d74a415054a60f95
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

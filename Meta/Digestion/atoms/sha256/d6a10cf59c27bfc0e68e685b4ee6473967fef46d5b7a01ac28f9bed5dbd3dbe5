@@ -1,0 +1,15 @@
+## 1.3 实案一的抽象：单变量状态翻转
+
+取一个条目和两个状态：
+
+$\Sigma=\{\mathsf{partial},\mathsf{absorbed}\}$。
+
+定义自读派生器：
+
+$F(\mathsf{partial})=\mathsf{absorbed}$，且  
+$F(\mathsf{absorbed})=\mathsf{partial}$。
+
+门方程是 $s=F(s)$。穷举矩阵为：
+
+| 手写状态 $s$ | 派生状态 $F(s)$ | 门结果 |
+|---|---|---|

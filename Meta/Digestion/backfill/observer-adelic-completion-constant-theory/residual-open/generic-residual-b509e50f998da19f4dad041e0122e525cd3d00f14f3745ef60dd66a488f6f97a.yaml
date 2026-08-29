@@ -1,0 +1,10 @@
+ast_path: section/第八百二十七部-新的中心算子
+fingerprints:
+  raw_sha256: sha256:b509e50f998da19f4dad041e0122e525cd3d00f14f3745ef60dd66a488f6f97a
+  normalized_sha256: sha256:b509e50f998da19f4dad041e0122e525cd3d00f14f3745ef60dd66a488f6f97a
+cas_ref: sha256:b509e50f998da19f4dad041e0122e525cd3d00f14f3745ef60dd66a488f6f97a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

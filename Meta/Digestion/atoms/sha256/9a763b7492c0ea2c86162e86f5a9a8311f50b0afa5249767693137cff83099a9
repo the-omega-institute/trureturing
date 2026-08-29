@@ -1,0 +1,26 @@
+# 第八百二十六部　对 RH 剩余困难的新定位
+
+在绝对收敛区域，prime observer Casimir 满足：
+
+$$
+0\le
+\mathscr C_n^{\mathrm{fin}}(\sigma)
+\le
+2
+\sum_{\mathfrak p,k}
+\frac1{k(N\mathfrak p)^{k\sigma}}
+<\infty.
+$$
+
+它作为 \(n\) 的函数是有界的。
+
+而：
+
+$$
+\mathscr C_n^\infty(\sigma)
+\sim
+\frac{\pi^2}{2\log\varphi}|n|.
+$$
+
+所以：
+

@@ -1,0 +1,29 @@
+## 定理 789.1（Observer-induced off-line birth criterion）
+
+保持完成反射时，观察者 Casimir 导致离线零点的最小机制不是简单零点平移，而是：
+
+$$
+\boxed{
+\text{两个临界零点碰撞}
+\longrightarrow
+\text{重根}
+\longrightarrow
+\text{对称离线分裂}.
+}
+$$
+
+因此最重要的导数搜索条件为：
+
+$$
+\boxed{
+\Xi_\lambda(t)=0,
+\qquad
+\partial_t\Xi_\lambda(t)=0.
+}
+\tag{789.6}
+$$
+
+这正是“破缺起点不是一个静态点，而是一个导数退化事件”的严格版本。
+
+---
+

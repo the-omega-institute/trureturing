@@ -1,0 +1,37 @@
+## 898.1 数学“tachyon”解释
+
+在纯数学谱语言中：
+
+$$
+\boxed{
+\begin{aligned}
+m^2>0
+&:\quad\text{普通正距离模态};\\
+m^2=0
+&:\quad\text{观察者恰位于临界零点};\\
+m^2<0
+&:\quad\text{离线零点产生的负平方距离模态}.
+\end{aligned}
+}
+$$
+
+因此离线零点可以被称为：
+
+$$
+\boxed{
+\text{zero-distance bundle 中的 tachyonic instability}.
+}
+$$
+
+这只是严格的谱类比，不是物理粒子断言。
+
+它说明 RH 的完成条件本质上是：
+
+$$
+\boxed{
+\text{全部观察者的平方距离谱都不得出现负模态。}
+}
+$$
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/2-3-非盲派生没有统一保证/clause/2
+fingerprints:
+  raw_sha256: sha256:1e22735b681c587f2de9d111e701be7caa1fec7e951ca366088f8fcd07d94678
+  normalized_sha256: sha256:1e22735b681c587f2de9d111e701be7caa1fec7e951ca366088f8fcd07d94678
+cas_ref: sha256:1e22735b681c587f2de9d111e701be7caa1fec7e951ca366088f8fcd07d94678
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

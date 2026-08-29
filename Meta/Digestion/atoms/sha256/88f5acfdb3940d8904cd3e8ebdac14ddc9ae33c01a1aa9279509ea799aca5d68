@@ -1,0 +1,40 @@
+## 目标 888.2（Weighted Paley–Wiener density）
+
+对每一个具有绝对收敛零点平方和的 rational witness \(R\)，是否存在：
+
+$$
+L_j\uparrow\infty,
+\qquad
+f_j\in C_c^\infty((-L_j,L_j)),
+$$
+
+使：
+
+$$
+\boxed{
+F_{f_j}
+\longrightarrow
+R
+}
+$$
+
+于零点取样空间：
+
+$$
+\ell^2(\mathcal Z_\Xi,w)
+$$
+
+中成立？
+
+若成立，则：
+
+$$
+\sum_zF_{f_j}(z)^2
+\longrightarrow
+\sum_zR(z)^2<0,
+$$
+
+从而得到合法有限支撑 Weil 负见证。
+
+---
+

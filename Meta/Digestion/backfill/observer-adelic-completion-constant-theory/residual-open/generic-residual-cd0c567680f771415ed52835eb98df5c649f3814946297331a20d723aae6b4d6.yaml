@@ -1,0 +1,10 @@
+ast_path: row/黄金-delta-L-互逆缩放
+fingerprints:
+  raw_sha256: sha256:cd0c567680f771415ed52835eb98df5c649f3814946297331a20d723aae6b4d6
+  normalized_sha256: sha256:cd0c567680f771415ed52835eb98df5c649f3814946297331a20d723aae6b4d6
+cas_ref: sha256:cd0c567680f771415ed52835eb98df5c649f3814946297331a20d723aae6b4d6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,27 @@
+## 5.2 G-A：状态盲门方程的唯一解
+
+建议模块：
+
+`D5/S3/ConceptDynamics/GovernanceFixedPoint/BlindGateUnique.lean`
+
+精确陈述：
+
+```lean
+theorem status_blind_gate_has_unique_solution
+    {Context : Type u} {Entry : Type v} {Status : Type w}
+    (D : SelfReadingDeriver Context Entry Status)
+    (hblind : StatusBlind D)
+    (context : Context) :
+    ∃! handwritten : Entry → Status,
+      Gate handwritten (D context handwritten)
+```
+
+闭合路线只需消去 `StatusBlind` 的因子化见证、给出 `d context` 并使用函数外延。
+
+禁止增加：
+
+- `Fintype Entry`；
+- `Nonempty Entry`；
+- `DecidableEq Status`；
+- 迭代收敛或有限状态前件。
+

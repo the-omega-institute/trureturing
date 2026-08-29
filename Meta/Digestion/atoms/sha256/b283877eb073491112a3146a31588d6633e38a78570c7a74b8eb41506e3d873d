@@ -1,0 +1,30 @@
+## 5.9 G-H：保守通道存在
+
+建议模块：
+
+`D5/S3/ConceptDynamics/GovernanceFixedPoint/ConservativeChannelAddition.lean`
+
+精确陈述：
+
+```lean
+theorem conservative_channel_exists
+    {Repair : Type u}
+    (repairClass allow₁ allow₂ : Set Repair)
+    (hdeadlocked :
+      Deadlocked repairClass allow₁ allow₂) :
+    ∃ channel : Set Repair,
+      ConservativeChannel
+        repairClass allow₁ allow₂ channel
+```
+
+闭合路线必须取显式见证：
+
+`channel := repairClass`。
+
+随后由死锁前件证明：
+
+`AllowedWithChannel allow₁ allow₂ channel \
+  JointAllowed allow₁ allow₂ = repairClass`。
+
+不得改取 `Set.univ`，不得修改 `allow₁` 或 `allow₂`，不得把结论弱化成“至少放行一个未知动作”。
+

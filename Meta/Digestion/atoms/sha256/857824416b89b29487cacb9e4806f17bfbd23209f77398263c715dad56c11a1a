@@ -1,0 +1,51 @@
+## 844.1 对黄金比例的科学结论
+
+当 \(\varphi\) 只通过：
+
+$$
+P_\varphi=2\log\varphi
+$$
+
+进入 observer circle 周长时，它只是尺度数据。
+
+因此：
+
+$$
+\boxed{
+\text{这一层的 }\varphi
+\text{ 不可能造成 ordinary }\zeta\text{ 的离线零点。}
+}
+$$
+
+要改变零点，黄金观察器必须进一步改变：
+
+$$
+\boxed{
+n
+\longmapsto
+n+\alpha,
+}
+$$
+
+或更一般地改变：
+
+$$
+\boxed{
+n
+\longmapsto
+\lambda_n
+}
+$$
+
+的相对排布。
+
+也就是说，真正可能进入零点的不是黄金“长度”，而是黄金：
+
+* holonomy；
+* 分支；
+* prime memory；
+* 非均匀 mode deformation；
+* interaction self-energy。
+
+---
+

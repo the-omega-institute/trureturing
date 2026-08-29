@@ -1,0 +1,47 @@
+* Weil 跳跃；
+
+放进同一个正算子。
+
+但联合 prime Hessian 本身仍为正半定，不能自动产生黄金 Lorentz null cone。
+
+这说明黄金光锥来自更深的：
+
+$$
+\boxed{
+\text{projective memory／even–odd boundary completion，}
+}
+$$
+
+而不是来自任意 prime covariance。
+
+下一条真正承重的桥已经非常具体：
+
+$$
+\boxed{
+\text{把项目已机器证明的固定尺度 Weil 算子
+扩展到 observer mode }n,
+}
+$$
+
+并判断相对 determinant
+
+$$
+\boxed{
+\mathscr R_n(s)
+=
+\frac{\Lambda_0(s)^2}
+{\Lambda_n(s)\Lambda_{-n}(s)}
+}
+$$
+
+的正半平面完全单调性，能否延拓成临界半平面的 Pick／Weil 正性。
+
+若能，黄金观察者 Casimir 将不再只是一个附加模型，而会成为：
+
+$$
+\boxed{
+\text{零模态与全部非零观察模态共同临界完成的谱约束。}
+$$
+
+[1]: https://dlmf.nist.gov/draft1/5.8 "https://dlmf.nist.gov/draft1/5.8"
+[2]: https://dlmf.nist.gov/5.11 "https://dlmf.nist.gov/5.11"

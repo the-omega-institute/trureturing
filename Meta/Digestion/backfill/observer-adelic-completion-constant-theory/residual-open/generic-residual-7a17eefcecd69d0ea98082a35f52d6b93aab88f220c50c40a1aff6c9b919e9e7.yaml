@@ -1,0 +1,10 @@
+ast_path: row/connection-holonomy-才读取观察者
+fingerprints:
+  raw_sha256: sha256:7a17eefcecd69d0ea98082a35f52d6b93aab88f220c50c40a1aff6c9b919e9e7
+  normalized_sha256: sha256:7a17eefcecd69d0ea98082a35f52d6b93aab88f220c50c40a1aff6c9b919e9e7
+cas_ref: sha256:7a17eefcecd69d0ea98082a35f52d6b93aab88f220c50c40a1aff6c9b919e9e7
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

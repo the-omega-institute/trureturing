@@ -1,0 +1,10 @@
+ast_path: section/6-1-守卫自反在治理器上的实例/clause/2
+fingerprints:
+  raw_sha256: sha256:e5c11a8e08154d304609c4c3915661d184dba45b761795d99bb6758cc78fc144
+  normalized_sha256: sha256:e5c11a8e08154d304609c4c3915661d184dba45b761795d99bb6758cc78fc144
+cas_ref: sha256:e5c11a8e08154d304609c4c3915661d184dba45b761795d99bb6758cc78fc144
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

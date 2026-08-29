@@ -1,0 +1,10 @@
+ast_path: 目标/888.2
+fingerprints:
+  raw_sha256: sha256:88f5acfdb3940d8904cd3e8ebdac14ddc9ae33c01a1aa9279509ea799aca5d68
+  normalized_sha256: sha256:88f5acfdb3940d8904cd3e8ebdac14ddc9ae33c01a1aa9279509ea799aca5d68
+cas_ref: sha256:88f5acfdb3940d8904cd3e8ebdac14ddc9ae33c01a1aa9279509ea799aca5d68
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

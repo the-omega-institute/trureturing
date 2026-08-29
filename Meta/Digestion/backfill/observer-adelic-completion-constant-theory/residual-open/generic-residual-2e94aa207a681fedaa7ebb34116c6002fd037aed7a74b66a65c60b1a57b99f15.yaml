@@ -1,0 +1,10 @@
+ast_path: row/角色码正交选择器
+fingerprints:
+  raw_sha256: sha256:2e94aa207a681fedaa7ebb34116c6002fd037aed7a74b66a65c60b1a57b99f15
+  normalized_sha256: sha256:2e94aa207a681fedaa7ebb34116c6002fd037aed7a74b66a65c60b1a57b99f15
+cas_ref: sha256:2e94aa207a681fedaa7ebb34116c6002fd037aed7a74b66a65c60b1a57b99f15
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

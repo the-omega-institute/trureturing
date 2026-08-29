@@ -1,0 +1,16 @@
+ast_path: section/1-2-当前状态与其余输入的分割
+fingerprints:
+  raw_sha256: sha256:3bb45b18f109bba2b461727469f368bbf743fa2fde1f3f5cf7d9863bfe9717c1
+  normalized_sha256: sha256:3bb45b18f109bba2b461727469f368bbf743fa2fde1f3f5cf7d9863bfe9717c1
+cas_ref: sha256:3bb45b18f109bba2b461727469f368bbf743fa2fde1f3f5cf7d9863bfe9717c1
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-5b1da8536d5f4a6ee9b8448ba1413de9733c2b76cebbeb3e829fb6a2ae2af11d-e073ccc6c77fb7697228ae4badfe96cf23959f11cee9358f3c31cff01bbd717c
+    - generic-residual-e3d225315810a5aed5f95ac30fc8d6aede660933754795b797633629e816316f-eac104b430aacfbd2c8831e8b29ffded05e114215480e310b8684a518f63001d
+    - generic-residual-c1dd4ef61d8bdedf0c3351e391181208057d9a23c41110a5fa77481d320cf3e4-d23c0acf8d1503e21a62cf948d7d25299f8fd774a16c6232a1b9375a314e9fa4
+    - generic-residual-8ee20671b678a34f6b586bad14d8f977dc4d4d75bac2ba5ac7212057fe217c53-79db7f57dc5aaa697dc50966dadae1444f02e96fe0670f06cae91dcd0af64adc
+    - generic-residual-e348bce7e2969ef07b9d0c122d8c3f68daab5d151013ee606712be834815866c-dc6599193ecbb5add32650474ee2f03e5be53e3dc09ed90c246c344b59a02ad8

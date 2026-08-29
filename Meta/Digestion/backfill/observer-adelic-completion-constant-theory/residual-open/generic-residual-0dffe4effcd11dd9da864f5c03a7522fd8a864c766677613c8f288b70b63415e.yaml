@@ -1,0 +1,15 @@
+ast_path: section/第八百二十一部-精确-jump-measure-温和化的-Cauchy-光场
+fingerprints:
+  raw_sha256: sha256:0dffe4effcd11dd9da864f5c03a7522fd8a864c766677613c8f288b70b63415e
+  normalized_sha256: sha256:0dffe4effcd11dd9da864f5c03a7522fd8a864c766677613c8f288b70b63415e
+cas_ref: sha256:0dffe4effcd11dd9da864f5c03a7522fd8a864c766677613c8f288b70b63415e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-658877756857251a071c6bcc06f2c085605a9f9557011a7f2f691b7f2a986b13-258bbbedd8fda98ecb23d5fd9e756e84fe5892f9c766ec3b9a88da55832edc05
+    - generic-residual-01a23ba56df28900d11a073ab8d5e780f19b271fe842aa5d075841b1145f9ec4-579eab7dd1a362c562f3b9888ba6bce660700c449b2656c15aef4f5c7facfe0a
+    - generic-residual-c62f8235c22e8fca02eb7875e966cd001d9197542e94eeb5ea8157b188cdc051-57b149752bff385ed182e412c5477482ae266999bb005f163966f3c879b18ba9
+    - generic-residual-661ce47f9dd039205dc4591765fd271695d76b044bbc40f10c46dce42716d9fe-eaadc8a5d02291e72698a87bda9e356771231f6b506c06bd3c3b73e4cb34208f

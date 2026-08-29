@@ -1,0 +1,50 @@
+## 定理 799.1（Completed observer Laplace theorem）
+
+对
+
+$$
+\sigma>1,
+$$
+
+有
+
+$$
+\boxed{
+\mathscr C_n(\sigma)
+=
+\int_0^\infty
+e^{-\sigma x}
+\,d\mu_n(x).
+}
+\tag{799.4}
+$$
+
+因此：
+
+$$
+\boxed{
+(-1)^r
+\frac{d^r}{d\sigma^r}
+\mathscr C_n(\sigma)
+=
+\int_0^\infty
+x^r e^{-\sigma x}
+\,d\mu_n(x)
+\ge0
+}
+\tag{799.5}
+$$
+
+对所有整数 \(r\ge0\) 成立。
+
+也就是说：
+
+$$
+\boxed{
+\mathscr C_n
+\text{ 是完全单调函数。}
+}
+$$
+
+---
+

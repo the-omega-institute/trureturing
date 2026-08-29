@@ -1,0 +1,37 @@
+## 定理 832.1（Gamma tower subordination）
+
+$$
+\boxed{
+\Phi_\sigma(\lambda)
+=
+\int_0^\infty
+\left(
+1-e^{-\lambda u}
+\right)
+\frac{\Theta_\sigma(u)}u\,du.
+}
+\tag{832.2}
+$$
+
+因此：
+
+$$
+\boxed{
+\Phi_\sigma(-\partial_\eta^2)
+}
+$$
+
+是普通圆周 Brownian Laplacian 的一个 subordinate process。
+
+换言之：
+
+$$
+\boxed{
+\text{Gamma completion}
+=
+\text{由整个层塔热迹控制的随机时间变化}.
+}
+$$
+
+---
+

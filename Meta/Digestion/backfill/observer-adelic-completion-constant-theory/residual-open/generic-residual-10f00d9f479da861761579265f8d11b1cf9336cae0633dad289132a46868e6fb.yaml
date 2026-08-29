@@ -1,0 +1,10 @@
+ast_path: row/卷积幂指数放大
+fingerprints:
+  raw_sha256: sha256:10f00d9f479da861761579265f8d11b1cf9336cae0633dad289132a46868e6fb
+  normalized_sha256: sha256:10f00d9f479da861761579265f8d11b1cf9336cae0633dad289132a46868e6fb
+cas_ref: sha256:10f00d9f479da861761579265f8d11b1cf9336cae0633dad289132a46868e6fb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

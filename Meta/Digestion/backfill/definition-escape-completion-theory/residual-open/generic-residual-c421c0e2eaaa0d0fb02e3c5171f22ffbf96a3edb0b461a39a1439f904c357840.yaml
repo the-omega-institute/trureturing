@@ -1,0 +1,10 @@
+ast_path: row/RegradeReport-证明修订判决为修订承诺在旧证据上的实际求值
+fingerprints:
+  raw_sha256: sha256:c421c0e2eaaa0d0fb02e3c5171f22ffbf96a3edb0b461a39a1439f904c357840
+  normalized_sha256: sha256:c421c0e2eaaa0d0fb02e3c5171f22ffbf96a3edb0b461a39a1439f904c357840
+cas_ref: sha256:c421c0e2eaaa0d0fb02e3c5171f22ffbf96a3edb0b461a39a1439f904c357840
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

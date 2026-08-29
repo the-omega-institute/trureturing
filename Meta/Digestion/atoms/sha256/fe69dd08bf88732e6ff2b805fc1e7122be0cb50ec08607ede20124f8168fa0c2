@@ -1,0 +1,46 @@
+* 遗忘 commutator holonomy。
+
+所以记忆塔为：
+
+$$
+\boxed{
+\text{full path holonomy}
+\longrightarrow
+C_2\text{ orientation}
+\longrightarrow
+1.
+}
+\tag{772.3}
+$$
+
+对应函数塔为：
+
+$$
+\boxed{
+\text{matrix／memory transfer}
+\longrightarrow
+L(s,\chi_5)
+\longrightarrow
+\zeta(s).
+}
+\tag{772.4}
+$$
+
+这说明此前 GPMO 中的非交换记忆并非无结构附加项。
+
+它位于：
+
+$$
+\boxed{
+\ker
+\left(
+\operatorname{Hol}_{\mathrm{full}}
+\to C_2
+\right)
+}
+$$
+
+中，是黄金字符仍然无法读取的更深观察纤维。
+
+---
+

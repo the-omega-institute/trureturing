@@ -1,0 +1,10 @@
+ast_path: section/837-1-两种观察者参数必须分开
+fingerprints:
+  raw_sha256: sha256:7ca210d5c5f8f6825ec29a3c7fd9927bb688d250368eaf1062cf92934024186e
+  normalized_sha256: sha256:7ca210d5c5f8f6825ec29a3c7fd9927bb688d250368eaf1062cf92934024186e
+cas_ref: sha256:7ca210d5c5f8f6825ec29a3c7fd9927bb688d250368eaf1062cf92934024186e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

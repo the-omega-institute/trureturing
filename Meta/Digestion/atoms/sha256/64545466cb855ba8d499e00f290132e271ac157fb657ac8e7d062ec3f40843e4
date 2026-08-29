@@ -1,0 +1,84 @@
+# 第八百四十八部　完整 Observer Gamma 模态仍然高频囚禁
+
+尽管相对差分 \(\Delta_\tau a(t)\) 会变号，完整 mode multiplier：
+
+$$
+\boxed{
+a_\tau(t)
+=
+\frac12
+\left[
+a(t+\tau)+a(t-\tau)
+\right]
+}
+\tag{848.1}
+$$
+
+仍满足：
+
+$$
+\boxed{
+a_\tau(t)\to+\infty
+}
+$$
+
+当：
+
+$$
+|t|\to\infty
+$$
+
+或：
+
+$$
+|\tau|\to\infty
+$$
+
+时。
+
+具体地，在 \(|t|\) 有界而 \(|\tau|\to\infty\) 时：
+
+$$
+\boxed{
+a_\tau(t)
+=
+\log\frac{|\tau|}{2\pi}
++
+o(1).
+}
+\tag{848.2}
+$$
+
+若 observer-mode prime multiplier 在固定支撑尺度 \(L\) 下记为：
+
+$$
+p_{L,n}(t),
+$$
+
+则 compact support 只留下有限 prime powers，因此：
+
+$$
+\boxed{
+|p_{L,n}(t)|
+\le B_L
+}
+\tag{848.3}
+$$
+
+可对全部 \(t,n\) 统一成立。
+
+定义 joint multiplier：
+
+$$
+\boxed{
+m_{L,n}(t)
+=
+a_{\tau_n}(t)
+-
+p_{L,n}(t).
+}
+\tag{848.4}
+$$
+
+于是：
+

@@ -1,0 +1,10 @@
+ast_path: row/completed-observer-semigroup
+fingerprints:
+  raw_sha256: sha256:796c2d6760df031e54406db9429a22cc1ab878538ac13818e5b2a12dab8caa6b
+  normalized_sha256: sha256:796c2d6760df031e54406db9429a22cc1ab878538ac13818e5b2a12dab8caa6b
+cas_ref: sha256:796c2d6760df031e54406db9429a22cc1ab878538ac13818e5b2a12dab8caa6b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

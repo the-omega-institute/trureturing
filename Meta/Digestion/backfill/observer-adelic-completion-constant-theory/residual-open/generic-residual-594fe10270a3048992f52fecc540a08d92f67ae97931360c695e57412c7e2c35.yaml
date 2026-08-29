@@ -1,0 +1,10 @@
+ast_path: section/第七百一十八部-临界反射自动杀死一阶法向导数
+fingerprints:
+  raw_sha256: sha256:594fe10270a3048992f52fecc540a08d92f67ae97931360c695e57412c7e2c35
+  normalized_sha256: sha256:594fe10270a3048992f52fecc540a08d92f67ae97931360c695e57412c7e2c35
+cas_ref: sha256:594fe10270a3048992f52fecc540a08d92f67ae97931360c695e57412c7e2c35
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

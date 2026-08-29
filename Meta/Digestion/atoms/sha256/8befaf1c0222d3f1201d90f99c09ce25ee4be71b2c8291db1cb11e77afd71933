@@ -1,0 +1,55 @@
+## 定理 864.1（中心—纤维矩表示）
+
+$$
+\boxed{
+\mathcal J_m(t)
+=
+\frac1{(2m)!}
+\iint_{\mathbb R^2}
+\phi_\xi(x)\phi_\xi(y)
+(x-y)^{2m}
+e^{it(x+y)}
+\,dx\,dy.
+}
+\tag{864.3}
+$$
+
+引入坐标：
+
+$$
+u=x+y,
+\qquad
+v=x-y.
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal J_m(t)
+=
+\int_{\mathbb R}
+C_m(u)e^{itu}\,du,
+}
+\tag{864.4}
+$$
+
+其中
+
+$$
+\boxed{
+C_m(u)
+=
+\frac1{2(2m)!}
+\int_{\mathbb R}
+v^{2m}
+\phi_\xi\!\left(\frac{u+v}{2}\right)
+\phi_\xi\!\left(\frac{u-v}{2}\right)
+\,dv
+\ge0.
+}
+\tag{864.5}
+$$
+
+---
+

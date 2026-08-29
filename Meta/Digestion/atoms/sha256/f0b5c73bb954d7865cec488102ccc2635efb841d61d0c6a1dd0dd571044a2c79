@@ -1,0 +1,113 @@
+# 第八百四十九部　Observer–Weil 有限块
+
+令：
+
+$$
+\mathcal H_L^{(n)}
+$$
+
+表示第 \(n\) 个 observer mode 上、支撑于 \([-L,L]\) 的 Weil 测试空间。
+
+只保留所有危险模态：
+
+$$
+|n|\le N_L.
+$$
+
+对每个 \(n\)，定义危险频带：
+
+$$
+B_{L,n}
+=
+\{t:m_{L,n}(t)<A\}.
+$$
+
+构造对应 Slepian projection：
+
+$$
+P_{L,n}.
+$$
+
+定义总 sticky projection：
+
+$$
+\boxed{
+P_L^{\mathrm{obs}}
+=
+\bigoplus_{|n|\le N_L}
+P_{L,n}.
+}
+\tag{849.1}
+$$
+
+其秩满足：
+
+$$
+\boxed{
+\operatorname{rank}
+P_L^{\mathrm{obs}}
+\le
+\sum_{|n|\le N_L}
+\frac{
+L|B_{L,n}|
+}{
+\pi\eta_n
+}.
+}
+\tag{849.2}
+$$
+
+令：
+
+$$
+Q_L^{\mathrm{obs}}
+=
+I-P_L^{\mathrm{obs}}.
+$$
+
+若在 \(Q\)-空间证明统一 gap：
+
+$$
+Q A Q\ge\delta Q,
+$$
+
+则 Feshbach 消元给出有限矩阵：
+
+$$
+\boxed{
+F_L^{\mathrm{obs}}
+=
+PAP
+-
+PAQ
+(QAQ)^{-1}
+QAP.
+}
+\tag{849.3}
+$$
+
+从而：
+
+$$
+\boxed{
+A_L^{\mathrm{obs}}\ge0
+\iff
+F_L^{\mathrm{obs}}\ge0.
+}
+\tag{849.4}
+$$
+
+所以 ordinary fixed-scale sticky matrix 可以升级为：
+
+$$
+\boxed{
+\text{有限 observer modes}
+\times
+\text{有限 Slepian states}
+}
+$$
+
+的联合矩阵。
+
+---
+

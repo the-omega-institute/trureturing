@@ -1,0 +1,28 @@
+## 835.1 为什么黄金比例不出现在零点中
+
+$$
+a_\varphi^{-s}
+=
+e^{-s\log a_\varphi}
+$$
+
+是一个处处不为零的 entire factor。
+
+因此：
+
+$$
+\boxed{
+\operatorname{Zeros}
+\left(
+\zeta_{\mathrm{ch},\varphi}
+\right)
+=
+\operatorname{Zeros}
+(\zeta).
+}
+\tag{835.4}
+$$
+
+黄金比例只改变：
+
+* 能量单位；

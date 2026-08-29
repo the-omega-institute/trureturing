@@ -1,0 +1,76 @@
+# 第九百一十二部　素数观察地平线
+
+项目对支撑半径 \(L\) 定义的活跃 prime-power 集合满足：
+
+$$
+\boxed{
+n\le e^{2L},
+\qquad
+\Lambda(n)\neq0.
+}
+\tag{912.1}
+$$
+
+即固定支撑测试只读取：
+
+$$
+\log n\le2L
+$$
+
+的素数幂。
+
+将：
+
+$$
+L=\frac{N\kappa}{|\delta|}
+$$
+
+代入，得到离线深度 \(|\delta|\) 对应的 prime horizon：
+
+$$
+\boxed{
+X_\delta
+=
+e^{2L}
+=
+\exp\left(
+\frac{2N\kappa}{|\delta|}
+\right).
+}
+\tag{912.2}
+$$
+
+因此：
+
+$$
+\boxed{
+\log X_\delta
+\asymp
+\frac1{|\delta|}.
+}
+\tag{912.3}
+$$
+
+这说明：
+
+$$
+\boxed{
+\text{横向距离缩小一倍，
+为保持相同探测能力，素数地平线必须指数增长。}
+}
+$$
+
+离线零点接近临界线时的难检测性，不只是浮点精度问题，而是：
+
+$$
+\boxed{
+\text{Paley--Wiener 支撑}
++
+\text{素数对数采样}
+}
+$$
+
+共同产生的算术几何。
+
+---
+

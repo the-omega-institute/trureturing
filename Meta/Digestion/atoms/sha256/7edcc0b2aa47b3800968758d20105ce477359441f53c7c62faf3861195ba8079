@@ -1,0 +1,27 @@
+## 5.8 G-G：双律死锁的交空判据
+
+建议模块：
+
+`D5/S3/ConceptDynamics/GovernanceFixedPoint/DualRuleDeadlockCriterion.lean`
+
+精确陈述：
+
+```lean
+theorem deadlocked_iff_empty_joint_allowance
+    {Repair : Type u}
+    (repairClass allow₁ allow₂ : Set Repair) :
+    Deadlocked repairClass allow₁ allow₂ ↔
+      repairClass ∩ JointAllowed allow₁ allow₂ = ∅
+```
+
+闭合路线是展开 `Deadlocked` 与 `ReachableRepair`，再按集合成员关系证明双向蕴含。
+
+不要求：
+
+- `Repair` 有限；
+- `Repair` 非空；
+- 成员关系可判；
+- 两条规则自身的放行集非空。
+
+有限路径矩阵可作为该定理的 `Finset` 实例，但不能替代完整修复类的定义。
+

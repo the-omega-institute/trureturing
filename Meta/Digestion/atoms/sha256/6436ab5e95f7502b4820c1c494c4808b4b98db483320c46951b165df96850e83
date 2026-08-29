@@ -1,0 +1,39 @@
+## Observer-mode Fixed-scale Weil Conjecture
+
+对每个 \(L>0\)，存在有限 observer mode 截断 \(N_L\) 与有限 Slepian block，使：
+
+$$
+\boxed{
+A_L^{\mathrm{obs}}\ge0
+\iff
+F_L^{\mathrm{obs}}\ge0.
+}
+\tag{850.1}
+$$
+
+并且：
+
+$$
+\boxed{
+|n|>N_L
+}
+$$
+
+的全部模态由 Archimedean light principal symbol 自动严格为正。
+
+真正剩余的危险只在：
+
+$$
+\boxed{
+\text{低 holonomy}
++
+\text{低 Fourier frequency}
++
+\text{有限 prime coherence}
+}
+$$
+
+的交集中。
+
+---
+

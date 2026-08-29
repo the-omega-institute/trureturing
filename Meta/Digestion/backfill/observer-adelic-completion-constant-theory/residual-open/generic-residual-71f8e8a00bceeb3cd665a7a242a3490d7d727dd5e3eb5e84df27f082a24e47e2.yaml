@@ -1,0 +1,10 @@
+ast_path: row/零点碰撞门槛
+fingerprints:
+  raw_sha256: sha256:71f8e8a00bceeb3cd665a7a242a3490d7d727dd5e3eb5e84df27f082a24e47e2
+  normalized_sha256: sha256:71f8e8a00bceeb3cd665a7a242a3490d7d727dd5e3eb5e84df27f082a24e47e2
+cas_ref: sha256:71f8e8a00bceeb3cd665a7a242a3490d7d727dd5e3eb5e84df27f082a24e47e2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

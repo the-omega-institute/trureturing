@@ -1,0 +1,10 @@
+ast_path: section/零阶像克隆
+fingerprints:
+  raw_sha256: sha256:45acc053ffe99a120483a41cee07552a5485859752edfc06000a2d744258291b
+  normalized_sha256: sha256:45acc053ffe99a120483a41cee07552a5485859752edfc06000a2d744258291b
+cas_ref: sha256:45acc053ffe99a120483a41cee07552a5485859752edfc06000a2d744258291b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

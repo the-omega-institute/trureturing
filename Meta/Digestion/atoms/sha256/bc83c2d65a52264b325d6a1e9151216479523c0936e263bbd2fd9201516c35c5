@@ -1,0 +1,16 @@
+* 两次 Fibonacci 更新恢复二次型。
+
+这给“奇层破缺、偶层完成”一个完全精确的模型：
+
+$$
+\boxed{
+\mathbf F
+=\text{anti-isometry},
+\qquad
+\mathbf F^2
+=\text{Lorentz isometry}.
+}
+$$
+
+---
+

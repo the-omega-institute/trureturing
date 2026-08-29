@@ -1,0 +1,46 @@
+# 第八百二十部　精确 Gamma operator 是 Poisson 光场的变形
+
+纯 Poisson 生成元为：
+
+$$
+c_\infty|D|.
+$$
+
+而精确 Archimedean operator 为：
+
+$$
+\Phi_\sigma(-\partial_\eta^2).
+$$
+
+注意：
+
+$$
+\boxed{
+\Phi_\sigma'(\lambda)
+=
+\sum_{m=0}^{\infty}
+\frac1{
+(\sigma+2m)^2+\lambda
+}.
+}
+\tag{820.1}
+$$
+
+右侧是 Stieltjes 函数。
+
+因此 \(\Phi_\sigma\) 是 complete Bernstein function。
+
+这意味着精确算子：
+
+$$
+\boxed{
+\Phi_\sigma(-\partial_\eta^2)
+}
+$$
+
+仍可表示成一维更高空间中的某个局部椭圆问题的 Dirichlet-to-Neumann map；complete Bernstein 函数对应的这种局部延拓可通过 Kreĭn string 理论构造。([arXiv][3])
+
+所以纯 Poisson 光场不是一个随意近似，而是精确 Gamma completion 的短尺度切锥。
+
+---
+

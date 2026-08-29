@@ -1,0 +1,36 @@
+## 猜想 700.1（All-order memory flattening）
+
+存在完整 primitive ζ 因子抽取塔，使对每个：
+
+$$
+K\Subset\{\Re s>0\},
+$$
+
+有：
+
+$$
+\boxed{
+\lim_{r\to\infty}
+\mathfrak A_r(K)
+=
+0.
+}
+\tag{700.6}
+$$
+
+于是：
+
+$$
+\boxed{
+\lim_{r\to\infty}
+\mathfrak H_r(K,\pi)
+=
+0.
+}
+\tag{700.7}
+$$
+
+若成立，则所有素数顺序记忆最终只是有限完成层的 gauge history，而不会成为 completed object 的不变量。
+
+---
+

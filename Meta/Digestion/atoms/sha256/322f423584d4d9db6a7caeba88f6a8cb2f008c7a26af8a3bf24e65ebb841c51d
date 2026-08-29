@@ -1,0 +1,195 @@
+# 本轮最终结论
+
+本轮将“导数能找到看不见的离线破缺”进一步分成了两个层次。
+
+第一层是零点侧：
+
+$$
+\boxed{
+\mathfrak S_t(u)
+=
+\frac{d}{du}
+\log
+\left|
+\xi\!\left(
+\frac12+\sqrt u+it
+\right)
+\right|^2.
+}
+$$
+
+RH 成立时，它是正的 Stieltjes resolvent：
+
+$$
+\boxed{
+\mathfrak S_t(u)
+=
+\operatorname{Tr}
+\left[
+(H_\Xi-t)^2+u
+\right]^{-1}.
+}
+$$
+
+若存在离线零点：
+
+$$
+\frac12+\delta+it,
+$$
+
+则：
+
+$$
+u=\delta^2
+$$
+
+成为正实零点，且其左侧：
+
+$$
+\boxed{
+\mathfrak S_t(u)<0.
+}
+$$
+
+所以离线零点首先表现为：
+
+$$
+\boxed{
+\text{平方距离 resolvent 的负性，}
+}
+$$
+
+而不是普通临界线上的一个可见点。
+
+第二层是观察者束：
+
+$$
+\boxed{
+A_t=(H_\Xi-t)^2.
+}
+$$
+
+单个观察者只看到平方距离，因而无法区分：
+
+$$
+H_\Xi
+$$
+
+与：
+
+$$
+2tI-H_\Xi.
+$$
+
+但是两个镜像观察者满足：
+
+$$
+\boxed{
+\frac{A_{t+h}-A_{t-h}}{4h}
+=
+tI-H_\Xi.
+}
+$$
+
+所以导数／连接完整恢复方向。
+
+与此同时：
+
+$$
+\boxed{
+\frac{A_{t+h}+A_{t-h}}2-A_t
+=
+h^2I.
+}
+$$
+
+偶完成只留下一个与对象无关的普适标量。
+
+当：
+
+$$
+h_n=c(-\varphi^{-2})^n,
+$$
+
+有精确关系：
+
+$$
+\boxed{
+\text{odd origin}
+\sim
+\varphi^{-2n},
+}
+$$
+
+$$
+\boxed{
+\text{even completed Casimir}
+=
+c^2\varphi^{-4n}I.
+}
+$$
+
+这就是“所有观察者完成后看见同一个世界，但观察起点不可由完成世界克隆”的最简算子模型。
+
+离线零点则对应：
+
+$$
+\boxed{
+(t-z_\rho)^2=-\delta^2<0.
+}
+$$
+
+也就是说，它是正距离算子束中的负平方距离模态。
+
+因此 RH 可以被重新表达为：
+
+$$
+\boxed{
+\text{是否存在一个共同自伴零点算子 }H_\Xi，
+\text{使所有观察者距离算子 }(H_\Xi-t)^2
+\text{同时非负并满足平坦二次胶合？}
+}
+$$
+
+项目当前已经把合法有限支撑 Weil 测试的：
+
+* pole；
+* Gamma；
+* prime；
+* renormalized multiplier；
+* safe complement；
+
+全部放进了机器证明接口。
+
+所以剩余中心桥已经极为明确：
+
+$$
+\boxed{
+\text{证明内部 rational resolvent 负见证，
+可以在零点取样范数中由外部极点 Paley–Wiener functions 逼近。}
+}
+$$
+
+一旦这条桥闭合，就会得到一个真正可执行的编译链：
+
+$$
+\boxed{
+\text{负导数}
+\to
+\text{负 Hankel 向量}
+\to
+\text{有理 resolvent}
+\to
+\text{有限支撑 Weil test}
+\to
+\text{有限 sticky Feshbach 负特征值}.
+}
+$$
+
+这将把“离线零点在导数中留下影子”最终变成：
+
+$$
+\boxed{
+\text{一个有限阶、有限支撑、有限矩阵的严格反证书。}
+}
+$$

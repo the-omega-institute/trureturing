@@ -1,0 +1,81 @@
+# 第七百四十三部　带记忆黄金素数观察器是光锥上的受迫动力
+
+将 GPMO 的记忆写为：
+
+$$
+m_n=(X_n,Y_n)\in
+\mathcal H_{\mathbb P}\oplus
+\mathcal H_{\mathbb P}.
+$$
+
+更新写成：
+
+$$
+\boxed{
+m_{n+1}
+=
+\mathbf F_{\mathcal H}m_n+f_n,
+}
+\tag{743.1}
+$$
+
+其中 \(f_n\) 是第 \(n\) 个素数输入产生的 forcing。
+
+定义 null 坐标：
+
+$$
+\boxed{
+A_n
+=
+\frac{X_n-\varphi'Y_n}{\sqrt5},
+}
+\tag{743.2}
+$$
+
+$$
+\boxed{
+B_n
+=
+\frac{\varphi Y_n-X_n}{\sqrt5}.
+}
+\tag{743.3}
+$$
+
+则：
+
+$$
+X_n=\varphi A_n+\varphi'B_n,
+\qquad
+Y_n=A_n+B_n.
+$$
+
+将 forcing 同样分解为：
+
+$$
+f_n^+,
+\qquad
+f_n^-.
+$$
+
+于是：
+
+$$
+\boxed{
+A_{n+1}
+=
+\varphi A_n+f_n^+,
+}
+\tag{743.4}
+$$
+
+$$
+\boxed{
+B_{n+1}
+=
+-\varphi^{-1}B_n+f_n^-.
+}
+\tag{743.5}
+$$
+
+---
+

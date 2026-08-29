@@ -1,0 +1,14 @@
+ast_path: section/第七百一十五部-第一破缺不是点-而是法向-jet
+fingerprints:
+  raw_sha256: sha256:5dafbae0cb5cfaf20319e1c9c9e5a2d1c3a3c3fc391ac8346709019518f25314
+  normalized_sha256: sha256:5dafbae0cb5cfaf20319e1c9c9e5a2d1c3a3c3fc391ac8346709019518f25314
+cas_ref: sha256:5dafbae0cb5cfaf20319e1c9c9e5a2d1c3a3c3fc391ac8346709019518f25314
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-f5b460ceed9fcf9a341a90f2942be514f99f6508a4d895781c8cab9258b3a40e-8c580bb70f839fb25d62b7ee3b4abae351e5ee5e99359b65fd6ddd6cbf45b8dc
+    - generic-residual-4eca836e8103330f389aebca73c30aa2bf398489a0aafbc7858d7274f5921597-2908322e24e69f8eb2f3613fd449014ec00304c0144e334d2d4df10ba918a2cc
+    - generic-residual-484de61b893864f52e0f0664a80cde9d6c59422b51fb75fcac6c9a1ca62ea9a6-a95cbf024af437f91d48a8b278456ba48ddb6e155a6eeb6c22a8686b5b4a66b2

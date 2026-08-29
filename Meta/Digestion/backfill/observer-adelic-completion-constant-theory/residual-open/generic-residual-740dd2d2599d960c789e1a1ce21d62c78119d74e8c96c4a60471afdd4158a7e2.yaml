@@ -1,0 +1,10 @@
+ast_path: section/第七百七十部-离线零点应先在哪个通道寻找
+fingerprints:
+  raw_sha256: sha256:740dd2d2599d960c789e1a1ce21d62c78119d74e8c96c4a60471afdd4158a7e2
+  normalized_sha256: sha256:740dd2d2599d960c789e1a1ce21d62c78119d74e8c96c4a60471afdd4158a7e2
+cas_ref: sha256:740dd2d2599d960c789e1a1ce21d62c78119d74e8c96c4a60471afdd4158a7e2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,87 @@
+# 第八百三十八部　绝对光谱不能辨认镜像观察者
+
+定义反射：
+
+$$
+\alpha\mapsto1-\alpha.
+$$
+
+因为：
+
+$$
+\zeta(s,\alpha)+\zeta(s,1-\alpha)
+$$
+
+保持不变，所以：
+
+$$
+\boxed{
+\zeta_{P,c,\alpha}
+=
+\zeta_{P,c,1-\alpha}.
+}
+\tag{838.1}
+$$
+
+即绝对无质量能量 \(|D+\alpha|\) 不能区分两个反射观察者。
+
+要读取方向，必须保留有符号 Dirac 谱：
+
+$$
+D_\alpha:
+\quad
+n+\alpha.
+$$
+
+定义 eta 函数：
+
+$$
+\boxed{
+\eta_\alpha(s)
+=
+\zeta(s,\alpha)
+-
+\zeta(s,1-\alpha).
+}
+\tag{838.2}
+$$
+
+在 \(s=0\)：
+
+$$
+\boxed{
+\eta_\alpha(0)
+=
+1-2\alpha.
+}
+\tag{838.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{绝对谱读取 even observer Casimir，}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\eta\text{-invariant 读取 odd observer orientation。}
+}
+$$
+
+这正对应项目长期出现的：
+
+$$
+\boxed{
+\text{even 完成}
+\oplus
+\text{odd 方向记忆}.
+}
+$$
+
+---
+

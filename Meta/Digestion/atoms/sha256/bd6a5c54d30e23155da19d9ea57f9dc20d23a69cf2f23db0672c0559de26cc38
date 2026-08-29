@@ -1,0 +1,44 @@
+## 888.1 有限插值并未闭合全零点和
+
+即使：
+
+$$
+F_f(z)=R(z)
+\qquad
+(z\in\mathcal Z_T),
+$$
+
+也不能直接推出：
+
+$$
+\sum_{z\in\mathcal Z_\Xi}F_f(z)^2<0.
+$$
+
+因为未插值尾部：
+
+$$
+\mathcal Z_\Xi\setminus\mathcal Z_T
+$$
+
+仍可能贡献足够大的正量或振荡量。
+
+真正需要的是加权全局逼近：
+
+$$
+\boxed{
+\left\|
+F_f-R
+\right\|_{\ell^2(\mathcal Z_\Xi)}
+\longrightarrow0.
+}
+\tag{888.2}
+$$
+
+更严格地，应采用与 Weil 零点和收敛规范匹配的加权空间：
+
+$$
+\ell^2(\mathcal Z_\Xi,w).
+$$
+
+---
+

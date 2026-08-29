@@ -1,0 +1,10 @@
+ast_path: section/第七百零一部-黄金双特征通道的精确-forcing
+fingerprints:
+  raw_sha256: sha256:d83d7203ac9aa788a47dbf5bccf4cd4bde984bf6f08aedaaec396cce44a6d4a1
+  normalized_sha256: sha256:d83d7203ac9aa788a47dbf5bccf4cd4bde984bf6f08aedaaec396cce44a6d4a1
+cas_ref: sha256:d83d7203ac9aa788a47dbf5bccf4cd4bde984bf6f08aedaaec396cce44a6d4a1
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

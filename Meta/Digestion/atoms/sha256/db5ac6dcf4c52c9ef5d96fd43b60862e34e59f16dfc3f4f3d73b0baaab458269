@@ -1,0 +1,83 @@
+# 第八百一十二部　建议形式化顺序
+
+```text
+D5/S3/GoldenObserver/CompletedMode/
+  GoldenRegulatorFrequency.lean
+  GoldenHeckeModeInterface.lean
+  GoldenCompletedModeInterface.lean
+  GoldenRelativeModeCasimir.lean
+
+D5/S3/GoldenObserver/CasimirPrime/
+  GoldenPrimeModePhase.lean
+  GoldenPrimeCasimirSeries.lean
+  GoldenPrimeCasimirNonnegative.lean
+  GoldenPrimeCasimirMeasure.lean
+
+D5/S3/GoldenObserver/CasimirArchimedean/
+  RealGammaPairRatio.lean
+  GammaPairInfiniteProduct.lean
+  GoldenArchimedeanCasimir.lean
+  GoldenArchimedeanLaplaceMeasure.lean
+  GoldenArchimedeanGap.lean
+  GoldenArchimedeanLinearAsymptotic.lean
+
+D5/S3/GoldenObserver/CasimirComplete/
+  GoldenCompletedCasimirMeasure.lean
+  GoldenCompletedCasimirCompletelyMonotone.lean
+  GoldenRelativeDeterminant.lean
+  GoldenRelativeDeterminantGeOne.lean
+
+D5/S3/GoldenObserver/PrimeJump/
+  GoldenRegulatorCircle.lean
+  PrimeObserverTranslation.lean
+  PrimeObserverDirichletForm.lean
+  PrimeObserverFourierEigenvalue.lean
+  PrimeObserverNoUniformGap.lean
+
+D5/S3/GoldenObserver/ArchimedeanJump/
+  ArchimedeanObserverLevyMeasure.lean
+  ArchimedeanObserverDirichletForm.lean
+  ArchimedeanObserverFourierEigenvalue.lean
+  CompletedObserverPoincare.lean
+
+D5/S3/GoldenObserver/CompletionSemigroup/
+  GoldenObserverGenerator.lean
+  GoldenObserverConvolutionSemigroup.lean
+  GoldenObserverUniformMixing.lean
+  FiniteCompletionInjective.lean
+  FiniteCompletionInverseUnbounded.lean
+  InfiniteCompletionZeroModeProjection.lean
+
+D5/S3/PrimeObserver/JointJump/
+  PrimeObserverJointSpace.lean
+  PrimeObserverJointTranslation.lean
+  PrimeObserverJointDirichletForm.lean
+  PrimeObserverJointSymbol.lean
+  PrimeTimeZeroMode.lean
+  ObserverSpaceZeroFrequency.lean
+  JointLowFrequencyCovariance.lean
+  PrimeCovarianceNotLorentz.lean
+
+D5/S3/GoldenObserver/HeatCasimir/
+  GoldenObserverHeatMetric.lean
+  GoldenAllModeCasimir.lean
+  GoldenAllModePrimeMeasure.lean
+  GoldenAllModeCompleteMonotonicity.lean
+
+D5/S3/GoldenObserver/RelativeSpectrum/
+  GoldenRelativeLogDerivative.lean
+  GoldenRelativePositiveHalfPlane.lean
+  GoldenRelativePickContinuationTarget.lean
+  GoldenRelativeZeroPoleNoCancellationTarget.lean
+
+D5/S3/Weil/ObserverExtension/
+  ObserverModeFixedScaleMultiplier.lean
+  ObserverModePoleArchimedeanCompletion.lean
+  JointWeilObserverQuadraticForm.lean
+  ObserverModeWeilPositivityTarget.lean
+```
+
+Gamma 无限乘积与大虚部渐近可从现有 Mathlib Gamma 接口或外部 DLMF 公式逐步迁入；Hecke character 和其 completion 应作为明确的外部分析接口，而不是直接隐藏在定义中。
+
+---
+

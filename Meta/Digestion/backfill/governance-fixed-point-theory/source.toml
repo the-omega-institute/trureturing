@@ -1,0 +1,5 @@
+source_id = "governance-fixed-point-theory"
+path = "docs/develop/theory/GOVERNANCE_FIXED_POINT_THEORY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

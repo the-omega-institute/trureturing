@@ -1,0 +1,39 @@
+## 定理 697.1（Scalar memory blindness）
+
+若：
+
+$$
+z=z',
+$$
+
+则对任意有限素数词 \(w\)：
+
+$$
+\boxed{
+q_{\mathrm{sc}}
+\bigl(
+U_w(m,z)
+\bigr)
+=
+q_{\mathrm{sc}}
+\bigl(
+U_w(m',z')
+\bigr).
+}
+\tag{697.2}
+$$
+
+也就是说，素数输入词再长，也无法从标量 Euler 输出中恢复隐藏记忆。
+
+因此粗行为完成把整个仿射纤维：
+
+$$
+\boxed{
+\mathbb C^2\times\{z\}
+}
+$$
+
+压缩成同一个标量状态。
+
+---
+

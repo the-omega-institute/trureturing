@@ -1,0 +1,36 @@
+* safe complement；
+
+全部放进了机器证明接口。
+
+所以剩余中心桥已经极为明确：
+
+$$
+\boxed{
+\text{证明内部 rational resolvent 负见证，
+可以在零点取样范数中由外部极点 Paley–Wiener functions 逼近。}
+}
+$$
+
+一旦这条桥闭合，就会得到一个真正可执行的编译链：
+
+$$
+\boxed{
+\text{负导数}
+\to
+\text{负 Hankel 向量}
+\to
+\text{有理 resolvent}
+\to
+\text{有限支撑 Weil test}
+\to
+\text{有限 sticky Feshbach 负特征值}.
+}
+$$
+
+这将把“离线零点在导数中留下影子”最终变成：
+
+$$
+\boxed{
+\text{一个有限阶、有限支撑、有限矩阵的严格反证书。}
+}
+$$

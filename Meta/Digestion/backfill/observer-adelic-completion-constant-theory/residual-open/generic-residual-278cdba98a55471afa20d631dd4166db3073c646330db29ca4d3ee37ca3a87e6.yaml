@@ -1,0 +1,10 @@
+ast_path: section/第九百三十部-Toeplitz-化与离圆径向缺陷
+fingerprints:
+  raw_sha256: sha256:278cdba98a55471afa20d631dd4166db3073c646330db29ca4d3ee37ca3a87e6
+  normalized_sha256: sha256:278cdba98a55471afa20d631dd4166db3073c646330db29ca4d3ee37ca3a87e6
+cas_ref: sha256:278cdba98a55471afa20d631dd4166db3073c646330db29ca4d3ee37ca3a87e6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

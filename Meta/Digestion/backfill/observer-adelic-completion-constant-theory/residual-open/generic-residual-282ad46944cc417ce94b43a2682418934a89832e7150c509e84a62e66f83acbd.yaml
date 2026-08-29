@@ -1,0 +1,10 @@
+ast_path: section/703-1-与离线零点的对应结构
+fingerprints:
+  raw_sha256: sha256:282ad46944cc417ce94b43a2682418934a89832e7150c509e84a62e66f83acbd
+  normalized_sha256: sha256:282ad46944cc417ce94b43a2682418934a89832e7150c509e84a62e66f83acbd
+cas_ref: sha256:282ad46944cc417ce94b43a2682418934a89832e7150c509e84a62e66f83acbd
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

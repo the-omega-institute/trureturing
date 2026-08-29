@@ -1,0 +1,50 @@
+# 第九百二十八部　外带极点编译器
+
+Chebyshev witness 是有理函数，其全部极点位于：
+
+$$
+z=t\pm i\sqrt a,
+\qquad
+\sqrt a>\frac12.
+$$
+
+更一般地，有限共同分母选择器的极点也可全部放到：
+
+$$
+|\Im z|>\frac12+\varepsilon.
+$$
+
+考虑一项：
+
+$$
+\boxed{
+R_k(z)
+=
+\frac1{
+\left[
+(z-t)^2+a
+\right]^k
+}.
+}
+\tag{928.1}
+$$
+
+它的逆 Fourier 核具有形式：
+
+$$
+\boxed{
+r_k(x)
+=
+e^{itx}
+e^{-\sqrt a|x|}
+P_{k-1}(\sqrt a|x|),
+}
+\tag{928.2}
+$$
+
+其中 \(P_{k-1}\) 为有限次数多项式，常数归一化省略。
+
+因此整个 Chebyshev–selector witness 的逆变换是有限个此类核的线性组合。
+
+---
+

@@ -1,0 +1,79 @@
+# 第八百九十部　一阶 Resolvent 已是 Hermitian rational square
+
+令：
+
+$$
+u=a^2,
+\qquad
+a>0.
+$$
+
+定义：
+
+$$
+\boxed{
+F_{t,a}(z)
+=
+\frac1{t-z+ia}.
+}
+\tag{890.1}
+$$
+
+因为：
+
+$$
+\overline{F_{t,a}(\bar z)}
+=
+\frac1{t-z-ia},
+$$
+
+所以：
+
+$$
+\boxed{
+F_{t,a}(z)
+\overline{F_{t,a}(\bar z)}
+=
+\frac1{(t-z)^2+a^2}.
+}
+\tag{890.2}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathfrak S_t(a^2)
+=
+\sum_{z\in\mathcal Z_\Xi}
+F_{t,a}(z)
+\overline{F_{t,a}(\bar z)}.
+}
+\tag{890.3}
+$$
+
+若：
+
+$$
+0<a<|\delta|
+$$
+
+且 \(a\) 足够接近 \(|\delta|\)，则：
+
+$$
+\boxed{
+\mathfrak S_t(a^2)<0.
+}
+\tag{890.4}
+$$
+
+所以每个真实离线零点都产生一个非常低复杂度的 rational Hermitian 负见证。
+
+它只使用一个 resolvent pole pair：
+
+$$
+t\pm ia.
+$$
+
+---
+
