@@ -16,6 +16,8 @@ internal static partial class RepositoryPathPolicy
         ".github/workflows/lean-cache-publish.yml";
     internal const string IntegrationCachePublicationWorkflowPath =
         ".github/workflows/lean-cache-publish-integration.yml";
+    internal const string IntegrationCacheSeedManualWorkflowPath =
+        ".github/workflows/lean-cache-seed-manual.yml";
     // Persistent truth-release publisher. `.github` remains an explicit allowlist.
     internal const string TruthReleasePublicationWorkflowPath =
         ".github/workflows/truth-release-publish.yml";
@@ -141,6 +143,7 @@ internal static partial class RepositoryPathPolicy
             or WorkflowPath
             or CachePublicationWorkflowPath
             or IntegrationCachePublicationWorkflowPath
+            or IntegrationCacheSeedManualWorkflowPath
             or TruthReleasePublicationWorkflowPath
             or ".github/CODEOWNERS"
             or HarnessGatePath
