@@ -5,7 +5,8 @@ namespace StrataLint.Engine;
 internal sealed record FrozenLedgerAdmissionPreparation(
     FrozenLedgerBaseView BaseView,
     ImmutableArray<DagLedgerFileEvent> DeltaEvents,
-    ImmutableHashSet<string> LeanReportProducerPaths);
+    ImmutableHashSet<string> LeanReportProducerPaths,
+    FrozenLedgerReplacementRecognition? Replacement = null);
 
 internal sealed record FrozenLedgerAdmissionFailure(
     ImmutableArray<RepoPath> AffectedPaths,
@@ -70,6 +71,14 @@ internal sealed class FrozenLedgerAdmissionScope
         foreach (var item in preparation.DeltaEvents)
         {
             Add(item.DescriptorPath, [item.SourcePath]);
+        }
+
+        if (preparation.Replacement is { } replacement)
+        {
+            foreach (var path in currentClosed.Union(preparation.BaseView.ActiveByPath.Keys))
+            {
+                Add(path, [replacement.WitnessPath]);
+            }
         }
 
         var currentDependents = ReverseDependencies(adjacency);
@@ -183,18 +192,30 @@ public static partial class FrozenLedger
     internal static FrozenLedgerAdmissionFailure? ValidateAdmissionDelta(
         FrozenLedgerAdmissionPreparation preparation,
         FrozenLedgerAdmissionScope scope,
-        FrozenMaterialCatalog catalog)
+        FrozenMaterialCatalog catalog,
+        IFrozenLedgerReplacementAuthorization replacementAuthorization)
     {
         ArgumentNullException.ThrowIfNull(preparation);
         ArgumentNullException.ThrowIfNull(scope);
         ArgumentNullException.ThrowIfNull(catalog);
+        ArgumentNullException.ThrowIfNull(replacementAuthorization);
         try
         {
-            var active = preparation.BaseView.ActiveByCase.ToDictionary(
-                static item => item.Key,
-                static item => item.Value,
-                StringComparer.Ordinal);
-            var allCaseIds = preparation.BaseView.AllCaseIds.ToHashSet(StringComparer.Ordinal);
+            var replacementAuthorized = preparation.Replacement is { } replacement
+                && replacementAuthorization.IsAuthorized(
+                    new FrozenLedgerReplacementAuthorizationContext(
+                        replacement,
+                        preparation.BaseView,
+                        catalog));
+            var active = replacementAuthorized
+                ? new Dictionary<string, FrozenActiveEntry>(StringComparer.Ordinal)
+                : preparation.BaseView.ActiveByCase.ToDictionary(
+                    static item => item.Key,
+                    static item => item.Value,
+                    StringComparer.Ordinal);
+            var allCaseIds = replacementAuthorized
+                ? new HashSet<string>(StringComparer.Ordinal)
+                : preparation.BaseView.AllCaseIds.ToHashSet(StringComparer.Ordinal);
             var activePathCases = active.Values.ToDictionary(
                 static entry => entry.Material.RepoPath,
                 static entry => entry.Payload.CaseId);

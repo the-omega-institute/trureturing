@@ -128,7 +128,7 @@ internal static class DagLedgerAppendWriter
             var root = document.RootElement;
             if (!root.TryGetProperty("schema_version", out var schema)
                 || !schema.TryGetInt32(out var version)
-                || version is < 2 or >= FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion
+                || !LegacyFrozenLedgerEventSemantics.IsLegacySchemaVersion(version)
                 || !root.TryGetProperty("event_type", out var eventType)
                 || eventType.ValueKind != JsonValueKind.String)
             {
@@ -181,7 +181,7 @@ internal static class DagLedgerAppendWriter
         ImmutableArray<RepositoryFile> legacyFiles,
         FrozenMaterialCatalog catalog)
     {
-        var recordedByPath = new Dictionary<RepoPath, LegacyFreezeIdentity>();
+        var recordedByPath = new Dictionary<RepoPath, LegacyFrozenStatementIdentity>();
         foreach (var file in legacyFiles)
         {
             using var document = JsonDocument.Parse(file.RawBytes.ToArray());
@@ -220,7 +220,9 @@ internal static class DagLedgerAppendWriter
                     RequiredLegacyString(item, "kind", "legacy declaration"),
                     RequiredLegacyStatementId(item, "statement_id", "legacy declaration")))
                 .ToImmutableArray();
-            if (!recordedByPath.TryAdd(path, new LegacyFreezeIdentity(statement, declarations)))
+            if (!recordedByPath.TryAdd(
+                path,
+                new LegacyFrozenStatementIdentity(path, statement, declarations)))
             {
                 throw new FormatException($"committed legacy ledger contains duplicate Freeze path {path.Value}");
             }
@@ -231,21 +233,13 @@ internal static class DagLedgerAppendWriter
             throw new FormatException("committed legacy ledger contains no Freeze identities");
         }
 
-        foreach (var material in catalog.ClosedNodes.OrderBy(
-            static item => item.RepoPath.Value,
-            StringComparer.Ordinal))
+        var mismatch = LegacyFrozenLedgerStatementIdentityContinuity.FirstMismatch(
+            recordedByPath.Values,
+            catalog);
+        if (mismatch is not null)
         {
-            if (!recordedByPath.TryGetValue(material.RepoPath, out var recorded))
-            {
-                continue;
-            }
-
-            if (recorded.StatementId != material.StatementId
-                || !recorded.DeclarationStatementIds.SequenceEqual(material.DeclarationStatementIds))
-            {
-                throw new InvalidOperationException(
-                    $"Active module {material.RepoPath.Value} statement identity changed; append Revoke before rerunning ledger-append.");
-            }
+            throw new InvalidOperationException(
+                $"Active module {mismatch.Value} statement identity changed; append Revoke before rerunning ledger-append.");
         }
     }
 
@@ -271,10 +265,6 @@ internal static class DagLedgerAppendWriter
             ? StatementId.Create(statement)
             : throw new FormatException($"{label} {name} is malformed");
     }
-
-    private sealed record LegacyFreezeIdentity(
-        StatementId StatementId,
-        ImmutableArray<FrozenDeclarationStatement> DeclarationStatementIds);
 
     internal static ImmutableArray<RepositoryFile> BuildNewEventFiles(
         IEnumerable<FrozenLedgerDraft> drafts)
