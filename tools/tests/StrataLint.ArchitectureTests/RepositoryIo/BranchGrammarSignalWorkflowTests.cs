@@ -91,12 +91,23 @@ public sealed class BranchGrammarSignalWorkflowTests
     {
         if (OperatingSystem.IsWindows()) return;
 
+        var script = Scalar(SignalStep(), "run");
+        var summaryFormat = ShellSingleQuotedConstant(script, "summary_format");
         var result = RunSignal("nonconforming");
 
         Assert.Equal(0, result.ExitCode);
         var output = Encoding.UTF8.GetString(result.StandardOutput);
         Assert.Contains("BRANCH_GRAMMAR_SIGNAL status=BRANCH_GRAMMAR_NONCONFORMING", output, StringComparison.Ordinal);
-        Assert.Contains("::warning", output, StringComparison.Ordinal);
+        var warningPrefix = Encoding.UTF8.GetBytes("::warning title=PR head branch grammar::");
+        var warningOffset = result.StandardOutput.AsSpan().IndexOf(warningPrefix);
+        Assert.True(warningOffset >= 0, "branch grammar warning is absent");
+        var warningAndTail = result.StandardOutput.AsSpan(warningOffset + warningPrefix.Length);
+        var warningTerminator = warningAndTail.IndexOf((byte)'\n');
+        Assert.True(warningTerminator >= 0, "branch grammar warning is not line terminated");
+        Assert.Equal(
+            Encoding.UTF8.GetBytes(
+                ProjectSummary(summaryFormat, FixtureHeadRef, "BRANCH_GRAMMAR_NONCONFORMING")),
+            warningAndTail[..(warningTerminator + 1)].ToArray());
         Assert.Empty(result.StandardError);
     }
 
@@ -240,7 +251,7 @@ public sealed class BranchGrammarSignalWorkflowTests
         var summaryFormat = ShellSingleQuotedConstant(script, "summary_format");
 
         Assert.Equal(
-            "2daf6420d1bef3ad19b125b7bd524f62629938da82594aa6a93b3804cb4a9980",
+            "73f73b99353408ba133ea8ddb37539a2c8f4b56b9c500be9ab0166c200ebe0fb",
             Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(summaryFormat))).ToLowerInvariant());
 
         foreach (var (validationCase, validatorExit, expectedStatus) in new[]

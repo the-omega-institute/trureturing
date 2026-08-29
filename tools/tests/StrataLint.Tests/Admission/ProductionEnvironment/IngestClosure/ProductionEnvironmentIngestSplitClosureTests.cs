@@ -117,10 +117,117 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void IngestReportFreeExcludesPlannerSourceMetadataWriteFromCoveredEntryAuthorityEvidence()
+    {
+        const string coverageGid = "D5/S0/Carrier/Ring.goldenRing";
+        const string oldText = "# Synthetic\n\n**定理 1.1(A)**。covered。\n\n"
+            + "**定理 1.2(B)**。trailing。";
+        const string currentText = oldText
+            + " appended context。\n\n**定理 1.3(C)**。new。\n";
+        var fixture = new RuleFixture();
+        var oldAtoms = AtomizerRegistry.Atomize(
+            SyntheticNumberedAtomizer.Id,
+            Encoding.UTF8.GetBytes(oldText),
+            DigestionTestSupport.Rules).Claims;
+        var currentAtoms = AtomizerRegistry.Atomize(
+            SyntheticNumberedAtomizer.Id,
+            Encoding.UTF8.GetBytes(currentText),
+            DigestionTestSupport.Rules).Claims;
+        var coveredAtom = Assert.Single(oldAtoms, static atom => atom.AstPath == "theorem/1.1");
+        var staleAtom = Assert.Single(oldAtoms, static atom => atom.AstPath == "theorem/1.2");
+        var currentCoveredAtom = Assert.Single(
+            currentAtoms,
+            static atom => atom.AstPath == "theorem/1.1");
+        var currentTrailingAtom = Assert.Single(
+            currentAtoms,
+            static atom => atom.AstPath == "theorem/1.2");
+        Assert.Equal(coveredAtom.RawBytes.ToArray(), currentCoveredAtom.RawBytes.ToArray());
+        Assert.NotEqual(staleAtom.Fingerprints.RawSha256, currentTrailingAtom.Fingerprints.RawSha256);
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = currentText;
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = oldText;
+        var ledger = DigestionTestSupport.Document(
+            SyntheticNumberedAtomizer.Id,
+            [
+                DigestionTestSupport.Entry(
+                    coveredAtom,
+                    "covered-receipt",
+                    SyntheticNumberedAtomizer.Id,
+                    coverageGids: [coverageGid],
+                    sourceId: "fixture-source",
+                    sourcePath: RuleFixture.FixtureDigestionSourcePath),
+                DigestionTestSupport.Entry(
+                    staleAtom,
+                    "stale-receipt",
+                    SyntheticNumberedAtomizer.Id,
+                    sourceId: "fixture-source",
+                    sourcePath: RuleFixture.FixtureDigestionSourcePath),
+            ],
+            "fixture-source",
+            RuleFixture.FixtureDigestionSourcePath,
+            GenreRegistryCheck.Collected([]));
+        InstallProjectedLedger(
+            fixture,
+            ledger,
+            existingAtom: null);
+        foreach (var atom in oldAtoms)
+        {
+            var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
+            var text = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
+            fixture.Files[captured.RelativePath] = text;
+            fixture.Baseline[captured.RelativePath] = text;
+        }
+
+        var coveredPath = DirectoryAtomPath("covered-receipt", "residual-open");
+        using var temporary = new TemporaryDirectory();
+        WriteDirectoryLedger(temporary.Path, fixture.Files);
+        var coveredOutputPath = Path.Combine(
+            temporary.Path,
+            coveredPath.Replace('/', Path.DirectorySeparatorChar));
+        var unchangedWriteTime = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        File.SetLastWriteTimeUtc(coveredOutputPath, unchangedWriteTime);
+        var coveredEntryImage = coveredPath + "\0"
+            + Convert.ToBase64String(Encoding.UTF8.GetBytes(fixture.Files[coveredPath]))
+            + "\n";
+        var reportSource = new FakeLeanReportSource(report: null);
+        var scribeVerifier = new FakeScribeEmissionVerifier(verification: null);
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create([RuleFixture.FixtureDigestionSourcePath]),
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            reportSource,
+            scribeVerifier);
+
+        var result = environment.Ingest(ReportInputUnchangedArguments);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(0, reportSource.CallCount);
+        Assert.Equal(0, scribeVerifier.CallCount);
+        Assert.Contains(coveredEntryImage, GeneratedIngestImage(temporary), StringComparison.Ordinal);
+        Assert.Equal(unchangedWriteTime, File.GetLastWriteTimeUtc(coveredOutputPath));
+        var source = Assert.Single(BackfillInventoryLoader.LoadRoot(temporary.Path)
+            .RequireDigestionSources());
+        Assert.Equal(["stale-receipt"], source.AcknowledgedStale.ToArray());
+    }
+
+    [Fact]
     public void IngestReportFreeRejectsPureAdditionWhenCoveredEntryIsNoLongerSeen()
     {
         const string coverageGid = "D5/S0/Carrier/Ring.goldenRing";
-        var fixture = UncoveredOnlyIngestFixture(rewriteExistingAtom: true);
+        const string oldText = "# Synthetic\n\n**定理 1.1(A)**。old。\n";
+        const string currentText = oldText + "\n**定理 1.2(B)**。new。\n";
+        var fixture = new RuleFixture();
+        var oldAtom = Assert.Single(AtomizerRegistry.Atomize(
+            SyntheticNumberedAtomizer.Id,
+            Encoding.UTF8.GetBytes(oldText),
+            DigestionTestSupport.Rules).Claims);
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = currentText;
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = oldText;
+        InstallProjectedLedger(
+            fixture,
+            BoundaryIngestLedger(AtomizerRegistry.NoAtomizerId, oldAtom),
+            oldAtom);
         var coveredPath = DirectoryAtomPath("old-receipt", "residual-open");
         foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
@@ -129,6 +236,16 @@ public sealed partial class ProductionEnvironmentTests
                 $"coverage_gids:\n  - {coverageGid}",
                 StringComparison.Ordinal);
         }
+        var current = Decode(Snapshot(fixture.Files));
+        var baseline = Decode(Snapshot(fixture.Baseline));
+        var plan = DigestionIngestor.Plan(
+            BackfillInventoryLoader.Load(current),
+            current,
+            BackfillInventoryLoader.Load(baseline),
+            baseline);
+        Assert.NotEqual(
+            DigestionReceiptAlignment.Seen,
+            plan.Alignment.EntryAlignments["old-receipt"]);
 
         AssertReportFreeTruthAlignmentRequiredWithoutTruthOrWrites(
             fixture,

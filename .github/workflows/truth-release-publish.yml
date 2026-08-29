@@ -287,7 +287,7 @@ jobs:
             --required-check 'Candidate harness engineering checks=success' \
             --required-check 'Canonical Lean report production=success' \
             --required-check 'Content-addressed dev baseline admission=success'
-          digest="$(find "$bundle" -maxdepth 1 -type f -name release-manifest.v1.json -exec jq -r '.release_digest' {} \;)"
+          digest="$(find "$bundle" -maxdepth 1 -type f -name release-manifest.v1.json -exec jq -r '.sha256sums_digest' {} \;)"
           [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]
           jq -e --arg digest "$digest" \
             '.schema == "truth-release-publication.v1" and .release_digest == $digest and .bundle_ref == $digest and .source_commit == $ENV.SOURCE_COMMIT and .source_tree == $ENV.SOURCE_TREE and (.producer_commit | test("^[0-9a-f]{40}$"))' \
