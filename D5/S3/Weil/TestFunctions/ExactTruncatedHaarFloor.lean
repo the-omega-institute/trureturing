@@ -6,7 +6,7 @@
    digest: Identify the exact truncated Haar floor with the least Toeplitz eigenvalue. -/
 
 import D5.S3.Weil.TestFunctions.ToeplitzContactSupport
-import D5.S3.Weil.TestFunctions.TruncatedCircleMomentBridge
+import D5.S3.Weil.CayleyLaguerre.TruncatedCircleMomentBridge
 import Mathlib.Analysis.InnerProductSpace.GramMatrix
 import Mathlib.Analysis.InnerProductSpace.JointEigenspace
 import Mathlib.Analysis.Matrix.Order
@@ -28,7 +28,7 @@ noncomputable section
 open Matrix MeasureTheory Set
 open scoped BigOperators ComplexConjugate ComplexOrder ENNReal NNReal MatrixOrder
 open D5.S3.Weil.Budget.FullCirclePrimalAttainment
-open D5.S3.Weil.TestFunctions.TruncatedCircleMomentBridge
+open D5.S3.Weil.CayleyLaguerre.TruncatedCircleMomentBridge
 
 namespace D5.S3.Weil.TestFunctions.ExactTruncatedHaarFloor
 

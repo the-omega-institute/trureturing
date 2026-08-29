@@ -1,4 +1,4 @@
-/- GID: D5/S3/Weil/TestFunctions/TruncatedCircleMomentBridge
+/- GID: D5/S3/Weil/CayleyLaguerre/TruncatedCircleMomentBridge
    generality: G
    mirror-B: D5/B/S3/Weil/TestFunctions/TruncatedCircleMomentBridge
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -18,7 +18,7 @@ noncomputable section
 open Matrix MeasureTheory Set
 open scoped BigOperators ComplexConjugate ComplexOrder ENNReal NNReal MatrixOrder
 
-namespace D5.S3.Weil.TestFunctions.TruncatedCircleMomentBridge
+namespace D5.S3.Weil.CayleyLaguerre.TruncatedCircleMomentBridge
 
 noncomputable local instance circleMeasurableSpace : MeasurableSpace Circle := borel Circle
 local instance circleBorelSpace : BorelSpace Circle := ⟨rfl⟩
@@ -386,4 +386,4 @@ theorem truncated_circle_moment_of_posSemidef
 
 #print axioms truncated_circle_moment_of_posSemidef
 
-end D5.S3.Weil.TestFunctions.TruncatedCircleMomentBridge
+end D5.S3.Weil.CayleyLaguerre.TruncatedCircleMomentBridge

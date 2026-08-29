@@ -2,12 +2,12 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.TestFunctions;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.CayleyLaguerre;
 
 internal sealed class TruncatedCircleMomentBridgeDocument : IScribeDocumentDefinition
 {
     private const string Handle =
-        "D5/S3/Weil/TestFunctions/TruncatedCircleMomentBridge.";
+        "D5/S3/Weil/CayleyLaguerre/TruncatedCircleMomentBridge.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every positive semidefinite Hermitian truncated Toeplitz moment vector "
