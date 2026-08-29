@@ -26,18 +26,25 @@ jobs:
         run: lake update
       - name: Build Scribe and repository CLI
         run: make -C tools dotnet
-      - name: Build observer kernel formalizations
-        run: |
-          set -euo pipefail
-          lake build D5.S3.ConceptDynamics.Faithfulness.InjectiveConstantReadoutSubsingleton
-          lake build D5.S3.ConceptDynamics.Faithfulness.InjectiveSensorFamilyFaithfulness
-          lake build D5.S3.ConceptDynamics.Faithfulness.PairSensorStrictRefinement
-          lake build D5.S3.ConceptDynamics.ObservationOrder.PostprocessingKernelMonotonicity
-          lake build D5.S3.ConceptDynamics.ObservationOrder.RecoverablePostprocessingKernelEquality
-          lake build D5.S3.ConceptDynamics.ObservationOrder.ConstantPostprocessingStrictLoss
-          lake build D5.S3.ConceptDynamics.ObservationOrder.PairReadoutKernelIntersection
-          lake build D5.S3.ConceptDynamics.ObservationOrder.SensorFamilyKernelIntersection
-          lake build D5.S3.ConceptDynamics.ObservationOrder.SensorFamilyRestrictionMonotonicity
-          lake build D5.S3.Observer.Refinement.CongruenceKernelSensorFusion
+      - name: Lean 01 InjectiveConstantReadoutSubsingleton
+        run: lake build D5.S3.ConceptDynamics.Faithfulness.InjectiveConstantReadoutSubsingleton
+      - name: Lean 02 InjectiveSensorFamilyFaithfulness
+        run: lake build D5.S3.ConceptDynamics.Faithfulness.InjectiveSensorFamilyFaithfulness
+      - name: Lean 03 PairSensorStrictRefinement
+        run: lake build D5.S3.ConceptDynamics.Faithfulness.PairSensorStrictRefinement
+      - name: Lean 04 PostprocessingKernelMonotonicity
+        run: lake build D5.S3.ConceptDynamics.ObservationOrder.PostprocessingKernelMonotonicity
+      - name: Lean 05 RecoverablePostprocessingKernelEquality
+        run: lake build D5.S3.ConceptDynamics.ObservationOrder.RecoverablePostprocessingKernelEquality
+      - name: Lean 06 ConstantPostprocessingStrictLoss
+        run: lake build D5.S3.ConceptDynamics.ObservationOrder.ConstantPostprocessingStrictLoss
+      - name: Lean 07 PairReadoutKernelIntersection
+        run: lake build D5.S3.ConceptDynamics.ObservationOrder.PairReadoutKernelIntersection
+      - name: Lean 08 SensorFamilyKernelIntersection
+        run: lake build D5.S3.ConceptDynamics.ObservationOrder.SensorFamilyKernelIntersection
+      - name: Lean 09 SensorFamilyRestrictionMonotonicity
+        run: lake build D5.S3.ConceptDynamics.ObservationOrder.SensorFamilyRestrictionMonotonicity
+      - name: Lean 10 CongruenceKernelSensorFusion
+        run: lake build D5.S3.Observer.Refinement.CongruenceKernelSensorFusion
       - name: Validate source formatting
         run: git diff --check
