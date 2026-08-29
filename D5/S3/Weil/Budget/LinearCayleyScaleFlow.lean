@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Weil/Budget/LinearCayleyScaleFlow
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: The logarithmic Cayley flow has the transport-decay generator and
-     invariant characteristics. -/
+   digest: The logarithmic Cayley flow has the transport-decay generator and invariant characteristics. -/
 
 import D5.S3.Weil.Budget.CaratheodoryScaleCovariance
 import Mathlib.Analysis.Calculus.ParametricIntegral
