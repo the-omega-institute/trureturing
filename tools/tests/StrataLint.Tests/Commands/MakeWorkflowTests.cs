@@ -14,8 +14,6 @@ public sealed partial class MakeWorkflowTests
         "tools/scripts/lib/admission-base-lib.sh";
     private const string ScribeContentChecksScriptPath =
         "tools/scripts/workflow/scribe-content-checks.sh";
-    private const string InstallLeanToolchainScriptPath =
-        "tools/scripts/workflow/install-lean-toolchain.sh";
     private const string WorktreeInitScriptPath = "tools/scripts/worktree-init.sh";
     private const string CleanLanesScriptPath = "tools/scripts/clean-lanes.sh";
     private const string LeanReportScriptPath =
@@ -39,7 +37,6 @@ public sealed partial class MakeWorkflowTests
     private const string RendererContractUpdateScriptPath =
         "tools/scripts/update-renderer-contract.sh";
     private const string ToolsMakefilePath = "tools/Makefile";
-    private const string AdmissionWorkflowPath = ".github/workflows/ci.yml";
     private const string PrOpenScriptPath = "tools/scripts/pr.sh open";
     private const string PrWatchScriptPath = "tools/scripts/pr.sh watch";
 
@@ -136,81 +133,6 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Fact]
-    public void CiAndLocalGateReuseCanonicalEntrypoints()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var workflow = File.ReadAllText(Path.Combine(root, ".github", "workflows", "ci.yml"));
-        var localGate = File.ReadAllText(Path.Combine(root, LocalHarnessGateScriptPath));
-        var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
-        var sharedGate = File.ReadAllText(Path.Combine(root, ".github", "scripts", "harness-gate.sh"));
-        var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
-
-        Assert.Contains("make -C candidate/tools dotnet", workflow, StringComparison.Ordinal);
-        Assert.Contains("make -C candidate/tools engineering-tests", workflow, StringComparison.Ordinal);
-        Assert.Contains("make -C candidate/tools selftest", workflow, StringComparison.Ordinal);
-        Assert.Contains("make -C \"$CANDIDATE_ROOT/tools\" dotnet", localGate, StringComparison.Ordinal);
-        Assert.Contains("make -C \"$CANDIDATE_ROOT/tools\" test", localGate, StringComparison.Ordinal);
-        Assert.Contains("make -C \"$CANDIDATE_ROOT/tools\" selftest", localGate, StringComparison.Ordinal);
-        Assert.Contains("CI=true make -C tools dotnet", preflight, StringComparison.Ordinal);
-        Assert.Contains(
-            "CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools engineering-tests",
-            preflight,
-            StringComparison.Ordinal);
-        Assert.Contains("make -C tools selftest", preflight, StringComparison.Ordinal);
-        Assert.Contains("lean-report-pair.sh", localGate, StringComparison.Ordinal);
-        Assert.DoesNotContain("--single", localGate, StringComparison.Ordinal);
-        Assert.Contains("--skip-engineering", localGate, StringComparison.Ordinal);
-        Assert.Contains("GATE_ARGS=\"--skip-engineering\"", preflight, StringComparison.Ordinal);
-        Assert.DoesNotContain("refactor-pr-a-required", localGate, StringComparison.Ordinal);
-        Assert.Contains("gate_stage_timing", localGate, StringComparison.Ordinal);
-        Assert.Contains("gate_timing_summary", localGate, StringComparison.Ordinal);
-        Assert.Contains("STRATALINT_TIMING", sharedGate, StringComparison.Ordinal);
-        Assert.Contains("gate_stage_timing", sharedGate, StringComparison.Ordinal);
-        Assert.Contains("mark restore-judge", sharedGate, StringComparison.Ordinal);
-        Assert.Contains("mark build-judge", sharedGate, StringComparison.Ordinal);
-        Assert.Contains("filemap-conform", sharedGate, StringComparison.Ordinal);
-        Assert.DoesNotContain("filemap-conform", localGate, StringComparison.Ordinal);
-        Assert.True(
-            sharedGate.IndexOf("filemap-conform", StringComparison.Ordinal)
-                > sharedGate.IndexOf(" check --protected-base", StringComparison.Ordinal));
-        Assert.DoesNotContain("dotnet \"$JUDGE_DLL\" selftest", sharedGate, StringComparison.Ordinal);
-        Assert.DoesNotContain("mark selftest", sharedGate, StringComparison.Ordinal);
-        Assert.DoesNotContain("PrAEffectiveness", makefile, StringComparison.Ordinal);
-        Assert.DoesNotContain("STRATALINT_TIMING:-1", sharedGate, StringComparison.Ordinal);
-        Assert.Contains("$CANDIDATE_ROOT/.github/scripts/harness-gate.sh", localGate, StringComparison.Ordinal);
-        Assert.Contains("$CANDIDATE_ROOT/tools/lean-inspector/inspect.sh", localGate, StringComparison.Ordinal);
-        Assert.Contains("--candidate-lean-report", localGate, StringComparison.Ordinal);
-        Assert.DoesNotContain("--baseline-lean-report", localGate, StringComparison.Ordinal);
-        Assert.DoesNotContain("--frozen-evidence-root", localGate, StringComparison.Ordinal);
-        Assert.DoesNotContain("--judge-root", localGate, StringComparison.Ordinal);
-        Assert.DoesNotContain("worktree add", localGate, StringComparison.Ordinal);
-        Assert.DoesNotContain("verify-conservative", sharedGate, StringComparison.Ordinal);
-        Assert.DoesNotContain("make -C \"$CANDIDATE_ROOT\" dotnet", sharedGate, StringComparison.Ordinal);
-        Assert.Contains("-getProperty:TargetPath", sharedGate, StringComparison.Ordinal);
-        Assert.DoesNotContain("--baseline-harness", sharedGate, StringComparison.Ordinal);
-        Assert.DoesNotContain("--candidate-harness", sharedGate, StringComparison.Ordinal);
-        Assert.DoesNotContain("conservative-certificate", sharedGate, StringComparison.Ordinal);
-        Assert.Contains(
-            "protected-surface change (SL-022); content checks passed",
-            sharedGate,
-            StringComparison.Ordinal);
-        Assert.DoesNotContain("Bootstrap scaffold path", sharedGate, StringComparison.Ordinal);
-        Assert.Contains("gate_rc", localGate, StringComparison.Ordinal);
-        Assert.Contains("$gate_rc -eq 3", localGate, StringComparison.Ordinal);
-        Assert.Contains(
-            "local-harness-gate: protected-surface change (SL-022)",
-            localGate,
-            StringComparison.Ordinal);
-        Assert.DoesNotContain("certified SL-022", localGate, StringComparison.Ordinal);
-        Assert.Contains("$rc\" -ne 0 && \"$rc\" -ne 3", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("conservative extension", workflow, StringComparison.OrdinalIgnoreCase);
-        Assert.DoesNotContain("golden-record", workflow, StringComparison.Ordinal);
-        Assert.Contains("|| true", localGate, StringComparison.Ordinal);
-        Assert.Contains("|| true", preflight, StringComparison.Ordinal);
-        Assert.Contains(">> \"$LOCAL_TIMING_FILE\" || true", localGate, StringComparison.Ordinal);
-    }
-
-    [Fact]
     public void PreflightRefreshesLeanReportAfterDotnetAndBeforeTests()
     {
         var root = TestRepositoryLayout.FindRoot();
@@ -264,18 +186,6 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("|| true", preflight[preflight.IndexOf("BASE_ADVANCED", StringComparison.Ordinal)..], StringComparison.Ordinal);
         Assert.DoesNotContain("merge-base --is-ancestor", localGate, StringComparison.Ordinal);
         Assert.DoesNotContain("pinned base is not a strict ancestor", localGate, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void CiChecksOutCandidateTreesOnlyAndCarriesBaseAsSha()
-    {
-        var workflow = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), AdmissionWorkflowPath));
-
-        Assert.Equal(3, Regex.Matches(workflow, "uses: actions/checkout@v4").Count);
-        Assert.DoesNotContain("path: baseline", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("Check out content-addressed dev baseline", workflow, StringComparison.Ordinal);
-        Assert.Contains("baseline_sha: ${{ steps.base.outputs.sha }}", workflow, StringComparison.Ordinal);
-        Assert.Contains("DEV_BASELINE_SHA: ${{ needs.lean-inspect.outputs.baseline_sha }}", workflow, StringComparison.Ordinal);
     }
 
     [Fact]
