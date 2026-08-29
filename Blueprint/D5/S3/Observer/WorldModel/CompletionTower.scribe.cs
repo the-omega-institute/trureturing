@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.WorldModel;
 internal sealed class CompletionTowerDocument : IScribeDocumentDefinition
 {
     private const string Prefix =
-        "D5/S3/Observer/WorldModel/CompletionTower.CompletionTower.";
+        "D5/S3/Observer/WorldModel/CompletionTower.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A fixed base state generates a unique coherent fixed thread through a completion tower.",
@@ -22,12 +22,13 @@ internal sealed class CompletionTowerDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "A completion tower contains one typed dynamical world at every finite "
-                            + "level and a semiconjugate bonding map between adjacent levels.")),
+                        "A completion tower contains one typed state space and local update at "
+                            + "every finite level, with a semiconjugate bond between adjacent "
+                            + "levels.")),
                     Paragraph(Text(
-                        "A thread is coherent when each bonding map carries one coordinate to "
-                            + "the next. It is a truth thread when every coordinate is also fixed "
-                            + "by its local dynamics.")),
+                        "A thread is coherent when every bond carries one coordinate to the next. "
+                            + "It is a truth thread when every coordinate is also fixed by its "
+                            + "local dynamics.")),
                     Paragraph(Text(
                         "Semiconjugacy propagates fixedness upward, while recursion makes the "
                             + "transported thread coherent and determined by its base coordinate."))),

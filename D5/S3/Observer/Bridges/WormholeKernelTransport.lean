@@ -24,6 +24,7 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Observer.Bridges.WormholeKernelTransport
 
+open D5.S3.Observer.Bridges.FixedPointSemiconjugacy
 open D5.S3.Observer.Bridges.WormholeCategory
 open D5.S3.Observer.Bridges.WormholeCategory.Wormhole
 

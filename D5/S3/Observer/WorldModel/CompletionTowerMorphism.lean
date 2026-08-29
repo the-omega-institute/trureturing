@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Observer/WorldModel/CompletionTowerMorphism
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Natural levelwise wormholes transport coherent and fixed threads between completion towers. -/
+   digest: Natural wormholes transport fixed threads between completion towers. -/
 
 import D5.S3.Observer.WorldModel.CompletionTower
 
@@ -21,16 +21,14 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Observer.WorldModel.CompletionTowerMorphism
 
-open D5.S3.Observer.Bridges.WormholeCategory
-open D5.S3.Observer.Bridges.WormholeCategory.Wormhole
+open D5.S3.Observer.Bridges.FixedPointSemiconjugacy
 open D5.S3.Observer.WorldModel.CompletionTower
 
 universe u v w
 
 /-- A natural family of levelwise wormholes between two completion towers. -/
 structure TowerMorphism
-    (source : CompletionTower.{u})
-    (target : CompletionTower.{v}) where
+    (source : Tower.{u}) (target : Tower.{v}) where
   map : ∀ level, source.State level → target.State level
   map_semiconj : ∀ level,
     Function.Semiconj (map level)
@@ -41,23 +39,22 @@ structure TowerMorphism
 
 namespace TowerMorphism
 
-variable {source : CompletionTower.{u}}
-variable {middle : CompletionTower.{v}}
-variable {target : CompletionTower.{w}}
+variable {source : Tower.{u}}
+variable {middle : Tower.{v}}
+variable {target : Tower.{w}}
 
 /-- Apply a tower morphism coordinatewise to a thread. -/
 def mapThread
     (morphism : TowerMorphism source target)
-    (thread : source.Thread) :
-    target.Thread :=
+    (thread : Thread source) : Thread target :=
   fun level => morphism.map level (thread level)
 
 /-- Naturality transports coherent threads. -/
 theorem map_thread_coherent
     (morphism : TowerMorphism source target)
-    {thread : source.Thread}
-    (coherent : source.IsCoherentThread thread) :
-    target.IsCoherentThread (morphism.mapThread thread) := by
+    {thread : Thread source}
+    (coherent : IsCoherentThread source thread) :
+    IsCoherentThread target (morphism.mapThread thread) := by
   intro level
   change target.bond level (morphism.map level (thread level)) =
     morphism.map (level + 1) (thread (level + 1))
@@ -66,24 +63,23 @@ theorem map_thread_coherent
 /-- Levelwise semiconjugacy transports fixed threads. -/
 theorem map_thread_fixed
     (morphism : TowerMorphism source target)
-    {thread : source.Thread}
-    (fixed : source.IsFixedThread thread) :
-    target.IsFixedThread (morphism.mapThread thread) := by
+    {thread : Thread source}
+    (fixed : IsFixedThread source thread) :
+    IsFixedThread target (morphism.mapThread thread) := by
   intro level
   exact fixed_point_maps (morphism.map_semiconj level) (fixed level)
 
 /-- Every tower morphism transports truth threads. -/
 theorem map_truth_thread
     (morphism : TowerMorphism source target)
-    {thread : source.Thread}
-    (truth : source.IsTruthThread thread) :
-    target.IsTruthThread (morphism.mapThread thread) :=
+    {thread : Thread source}
+    (truth : IsTruthThread source thread) :
+    IsTruthThread target (morphism.mapThread thread) :=
   ⟨morphism.map_thread_coherent truth.1,
     morphism.map_thread_fixed truth.2⟩
 
 /-- Identity tower morphism. -/
-def identity (tower : CompletionTower.{u}) :
-    TowerMorphism tower tower where
+def identity (tower : Tower.{u}) : TowerMorphism tower tower where
   map := fun _ => id
   map_semiconj := by
     intro level state
@@ -115,7 +111,7 @@ def compose
 theorem mapThread_compose
     (second : TowerMorphism middle target)
     (first : TowerMorphism source middle)
-    (thread : source.Thread) :
+    (thread : Thread source) :
     (compose second first).mapThread thread =
       second.mapThread (first.mapThread thread) :=
   rfl

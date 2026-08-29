@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Observer/Bridges/WormholeCategory
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Typed semiconjugate bridges form a category-like calculus and transport fixed behavior. -/
+   digest: Typed semiconjugate bridges compose and transport fixed behavior. -/
 
 import D5.S3.Observer.Bridges.FixedPointSemiconjugacy
 
