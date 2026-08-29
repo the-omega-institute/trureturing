@@ -193,6 +193,27 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Fact]
+    public void CheckFastFilterIsNonEmptyAndPinsRequiredRepositoryChecks()
+    {
+        var makefile = File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), ToolsMakefilePath));
+        var filterLine = Assert.Single(
+            makefile.Split('\n'),
+            static line => line.StartsWith(CheckFastFilterVariable, StringComparison.Ordinal));
+        var filter = filterLine[CheckFastFilterVariable.Length..].Trim();
+
+        Assert.False(string.IsNullOrWhiteSpace(filter));
+        Assert.Equal(
+            [
+                "FullyQualifiedName=StrataLint.ArchitectureTests.CapacityPolicyTests.RepositoryHasNoOversizeArtifactOrOverfullDirectory",
+                "FullyQualifiedName~StrataLint.ArchitectureTests.RepositoryIoAccessPolicyTests",
+                "FullyQualifiedName~StrataLint.ArchitectureTests.BannedApiCoverageTests",
+                "FullyQualifiedName=StrataLint.Tests.MakeWorkflowTests.CheckFastFilterIsNonEmptyAndPinsRequiredRepositoryChecks",
+            ],
+            filter.Split('|', StringSplitOptions.RemoveEmptyEntries));
+    }
+
+    [Fact]
     public void ToolsMakefileIsAThinCompleteDispatchTable()
     {
         var root = TestRepositoryLayout.FindRoot();
