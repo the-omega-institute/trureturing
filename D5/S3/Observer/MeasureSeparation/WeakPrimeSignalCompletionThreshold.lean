@@ -16,18 +16,16 @@
 
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import D5.S3.Analytic.ZetaEntropyPlane.LocalEvidenceOrderThreshold
-import D5.S3.Observer.MeasureSeparation.ZeroBayesResidualCriterion
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S3.Observer.MeasureSeparation.WeakPrimeSignalCompletionThreshold
 
-open Filter MeasureTheory Set
+open Filter MeasureTheory
 open scoped MeasureTheory Topology
 open D5.S3.Analytic.ZetaEntropyPlane.LocalEvidenceOrderThreshold
 open D5.S3.Analytic.ZetaEntropyPlane.PrimeEvidenceSharpThreshold
-open D5.S3.Observer.MeasureSeparation.ZeroBayesResidualCriterion
 
 noncomputable section
 
@@ -42,40 +40,42 @@ def SignalKakutaniDichotomy {Index Transcript : Type*}
   (productP ⟂ₘ productQ ↔ ¬Summable energy) ∧
     ((productP ≪ productQ ∧ productQ ≪ productP) ↔ Summable energy)
 
-example (c alpha : Real) :
+/-- Squaring a weak prime signal separates the nonzero scalar from the prime energy. -/
+theorem weak_prime_signal_quadratic_energy (c alpha : Real) :
     quadraticStatisticalEnergy (weakPrimeSignal c alpha) =
       fun p => c ^ 2 * quadraticStatisticalEnergy (firstEventMass alpha) p := by
   funext p
   simp only [quadraticStatisticalEnergy, weakPrimeSignal]
   ring
 
-example (c alpha : Real) (hc : c ≠ 0) :
+#print axioms weak_prime_signal_quadratic_energy
+
+/-- A nonzero weak prime signal has finite quadratic energy exactly above one half. -/
+theorem weak_prime_signal_energy_summable_iff_half_lt
+    (c alpha : Real) (hc : c ≠ 0) :
     Summable (quadraticStatisticalEnergy (weakPrimeSignal c alpha)) ↔
       (1 / 2 : Real) < alpha := by
-  rw [show quadraticStatisticalEnergy (weakPrimeSignal c alpha) =
-      fun p => c ^ 2 * quadraticStatisticalEnergy (firstEventMass alpha) p by
-    funext p
-    simp only [quadraticStatisticalEnergy, weakPrimeSignal]
-    ring]
+  rw [weak_prime_signal_quadratic_energy]
   rw [summable_mul_left_iff (pow_ne_zero 2 hc)]
-  exact quadratic_prime_energy_summable_iff_half_lt alpha
+  rw [quadratic_prime_energy_eq_firstEventMass]
+  change Summable (primeEvidence (2 * alpha)) ↔ (1 / 2 : Real) < alpha
+  rw [primeEvidence_summable_iff_one_lt]
+  constructor <;> intro h <;> linarith
 
-example (c alpha : Real) (hc : c ≠ 0) :
+#print axioms weak_prime_signal_energy_summable_iff_half_lt
+
+/-- A nonzero weak prime signal has divergent quadratic energy at and below one half. -/
+theorem weak_prime_signal_energy_not_summable_iff_half_le
+    (c alpha : Real) (hc : c ≠ 0) :
     ¬Summable (quadraticStatisticalEnergy (weakPrimeSignal c alpha)) ↔
       alpha ≤ (1 / 2 : Real) := by
-  rw [not_congr (show
-    Summable (quadraticStatisticalEnergy (weakPrimeSignal c alpha)) ↔
-        (1 / 2 : Real) < alpha by
-      rw [show quadraticStatisticalEnergy (weakPrimeSignal c alpha) =
-          fun p => c ^ 2 * quadraticStatisticalEnergy (firstEventMass alpha) p by
-        funext p
-        simp only [quadraticStatisticalEnergy, weakPrimeSignal]
-        ring]
-      rw [summable_mul_left_iff (pow_ne_zero 2 hc)]
-      exact quadratic_prime_energy_summable_iff_half_lt alpha)]
+  rw [not_congr (weak_prime_signal_energy_summable_iff_half_lt c alpha hc)]
   exact not_lt
 
-example (alpha : Real) :
+#print axioms weak_prime_signal_energy_not_summable_iff_half_le
+
+/-- At zero amplitude the signal and its quadratic energy are both summably zero. -/
+theorem weak_prime_signal_zero_energy_summable (alpha : Real) :
     weakPrimeSignal 0 alpha = 0 ∧
       Summable (quadraticStatisticalEnergy (weakPrimeSignal 0 alpha)) := by
   constructor
@@ -84,12 +84,18 @@ example (alpha : Real) :
   · simpa [weakPrimeSignal] using
       (quadraticStatisticalEnergy_zero_summable (ι := Nat.Primes))
 
-example :
+#print axioms weak_prime_signal_zero_energy_summable
+
+/-- The nonzero-amplitude hypothesis is necessary for the half-threshold equivalence. -/
+theorem nonzero_amplitude_is_necessary :
     ¬(¬Summable (quadraticStatisticalEnergy (weakPrimeSignal 0 0)) ↔
       (0 : Real) ≤ 1 / 2) := by
   simp [weakPrimeSignal, quadraticStatisticalEnergy]
 
-example (c : Real) (p : Nat.Primes) :
+#print axioms nonzero_amplitude_is_necessary
+
+/-- At every fixed prime coordinate, the signal tends to zero as the exponent grows. -/
+theorem weak_prime_signal_tendsto_zero (c : Real) (p : Nat.Primes) :
     Tendsto (fun alpha => weakPrimeSignal c alpha p) atTop (nhds 0) := by
   have hp : (1 : Real) < (p : Real) := by
     exact_mod_cast p.2.one_lt
@@ -103,7 +109,11 @@ example (c : Real) (p : Nat.Primes) :
   simpa [weakPrimeSignal, firstEventMass, primeEvidence] using
     tendsto_const_nhds.mul hsignal
 
-example {Transcript : Type*} [MeasurableSpace Transcript]
+#print axioms weak_prime_signal_tendsto_zero
+
+/-- Under the explicit Kakutani premise, one half is the exact product-law threshold. -/
+theorem weak_prime_signal_completion_dichotomy
+    {Transcript : Type*} [MeasurableSpace Transcript]
     (productP productQ : Measure Transcript) (c alpha : Real) (hc : c ≠ 0)
     (hK : SignalKakutaniDichotomy
       (quadraticStatisticalEnergy (weakPrimeSignal c alpha)) productP productQ) :
@@ -112,40 +122,26 @@ example {Transcript : Type*} [MeasurableSpace Transcript]
         (1 / 2 : Real) < alpha) := by
   rcases hK with ⟨hsingular, hequivalent⟩
   constructor
-  · rw [hsingular]
-    rw [not_congr (show
-      Summable (quadraticStatisticalEnergy (weakPrimeSignal c alpha)) ↔
-          (1 / 2 : Real) < alpha by
-        rw [show quadraticStatisticalEnergy (weakPrimeSignal c alpha) =
-            fun p => c ^ 2 * quadraticStatisticalEnergy (firstEventMass alpha) p by
-          funext p
-          simp only [quadraticStatisticalEnergy, weakPrimeSignal]
-          ring]
-        rw [summable_mul_left_iff (pow_ne_zero 2 hc)]
-        exact quadratic_prime_energy_summable_iff_half_lt alpha)]
-    exact not_lt
-  · rw [hequivalent]
-    rw [show Summable (quadraticStatisticalEnergy (weakPrimeSignal c alpha)) ↔
-        (1 / 2 : Real) < alpha by
-      rw [show quadraticStatisticalEnergy (weakPrimeSignal c alpha) =
-          fun p => c ^ 2 * quadraticStatisticalEnergy (firstEventMass alpha) p by
-        funext p
-        simp only [quadraticStatisticalEnergy, weakPrimeSignal]
-        ring]
-      rw [summable_mul_left_iff (pow_ne_zero 2 hc)]
-      exact quadratic_prime_energy_summable_iff_half_lt alpha]
+  · rw [hsingular, weak_prime_signal_energy_not_summable_iff_half_le c alpha hc]
+  · rw [hequivalent, weak_prime_signal_energy_summable_iff_half_lt c alpha hc]
 
-example :
-    ¬Summable
-        (quadraticStatisticalEnergy (weakPrimeSignal 1 (1 / 2 : Real))) ∧
-      ¬((Measure.dirac () : Measure Unit) ⟂ₘ Measure.dirac ()) := by
-  constructor
-  · rw [show quadraticStatisticalEnergy (weakPrimeSignal 1 (1 / 2 : Real)) =
-        quadraticStatisticalEnergy (firstEventMass (1 / 2 : Real)) by
-      funext p
-      simp [weakPrimeSignal]]
-    exact quadratic_prime_energy_one_half_not_summable
-  · simp
+#print axioms weak_prime_signal_completion_dichotomy
+
+/-- Arbitrary product-law names need not follow divergent energy without the Kakutani premise. -/
+theorem signal_kakutani_dichotomy_is_necessary :
+    ¬SignalKakutaniDichotomy
+      (quadraticStatisticalEnergy (weakPrimeSignal 1 (1 / 2 : Real)))
+      (Measure.dirac () : Measure Unit) (Measure.dirac ()) := by
+  intro hK
+  have henergy :
+      ¬Summable (quadraticStatisticalEnergy (weakPrimeSignal 1 (1 / 2 : Real))) :=
+    (weak_prime_signal_energy_not_summable_iff_half_le 1 (1 / 2 : Real)
+      one_ne_zero).2 le_rfl
+  have hsingular : (Measure.dirac () : Measure Unit) ⟂ₘ Measure.dirac () :=
+    hK.1.mpr henergy
+  simpa using hsingular
+
+#print axioms signal_kakutani_dichotomy_is_necessary
 
 end
 
