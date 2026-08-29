@@ -73,8 +73,7 @@ theorem prime_time_budget_injective_iff_cover
     · intro covered
       obtain ⟨coordinate, covered⟩ := Set.mem_iUnion.mp covered
       obtain ⟨coordinateMem, separated⟩ := Set.mem_iUnion.mp covered
-      simp only [timePrefixCoordinates, Finset.mem_product, Finset.mem_range,
-        Nat.lt_succ_iff] at coordinateMem
+      simp [timePrefixCoordinates] at coordinateMem
       refine Set.mem_iUnion.mpr ⟨coordinate.1, ?_⟩
       refine Set.mem_iUnion.mpr ⟨coordinateMem.1, ?_⟩
       refine Set.mem_iUnion.mpr ⟨coordinate.2, ?_⟩
@@ -87,8 +86,7 @@ theorem prime_time_budget_injective_iff_cover
       obtain ⟨hn, separated⟩ := Set.mem_iUnion.mp covered
       refine Set.mem_iUnion.mpr ⟨(i, n), ?_⟩
       refine Set.mem_iUnion.mpr ⟨?_, ?_⟩
-      · simp only [timePrefixCoordinates, Finset.mem_product, Finset.mem_range,
-          Nat.lt_succ_iff, hi, hn, and_self]
+      · simp [timePrefixCoordinates, hi, hn]
       · simpa only [timedSeparationSet] using separated
   unfold timePrefixReadout
   rw [finite_budget_injective_iff_cover, cover_eq]
@@ -110,7 +108,10 @@ private theorem time_prefix_cover_zero
     subst n
     refine Set.mem_iUnion.mpr ⟨i, ?_⟩
     refine Set.mem_iUnion.mpr ⟨hi, ?_⟩
-    simpa [timedSeparationSet, timedReadout, completeItinerary] using separated
+    change pair.1 ≠ pair.2 ∧
+      timedReadout F q (i, 0) pair.1 ≠ timedReadout F q (i, 0) pair.2 at separated
+    change pair.1 ≠ pair.2 ∧ q i pair.1 ≠ q i pair.2
+    simpa [timedReadout, completeItinerary] using separated
   · intro separated
     obtain ⟨i, separated⟩ := Set.mem_iUnion.mp separated
     obtain ⟨hi, separated⟩ := Set.mem_iUnion.mp separated
@@ -118,7 +119,10 @@ private theorem time_prefix_cover_zero
     refine Set.mem_iUnion.mpr ⟨hi, ?_⟩
     refine Set.mem_iUnion.mpr ⟨0, ?_⟩
     refine Set.mem_iUnion.mpr ⟨Nat.le_refl 0, ?_⟩
-    simpa [timedSeparationSet, timedReadout, completeItinerary] using separated
+    change pair.1 ≠ pair.2 ∧ q i pair.1 ≠ q i pair.2 at separated
+    change pair.1 ≠ pair.2 ∧
+      timedReadout F q (i, 0) pair.1 ≠ timedReadout F q (i, 0) pair.2
+    simpa [timedReadout, completeItinerary] using separated
 
 private theorem state_pair_universe_empty_iff_subsingleton (X : Type v) :
     statePairUniverse X = ∅ ↔ Subsingleton X := by
