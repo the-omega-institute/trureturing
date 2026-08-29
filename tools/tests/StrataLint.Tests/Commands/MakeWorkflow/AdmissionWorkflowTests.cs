@@ -374,11 +374,12 @@ public sealed partial class AdmissionWorkflowTests
         Assert.Equal(
             "make -C candidate/tools selftest",
             StepScript(steps, "Run candidate selftest twice and compare bytes"));
-
         Assert.All(
             steps[(scopeIndex + 1)..^1],
             step => Assert.Contains(
-                "steps.scope.outputs.run_required == 'true'",
+                StepName(step) is "Build candidate with warnings as errors" or "Signal PR head branch grammar"
+                    ? "github.event_name == 'pull_request_target' && github.event.pull_request.base.ref == 'dev'"
+                    : "steps.scope.outputs.run_required == 'true'",
                 Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("if")]).Value,
                 StringComparison.Ordinal));
     }
