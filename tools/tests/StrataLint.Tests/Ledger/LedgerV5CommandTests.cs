@@ -24,7 +24,10 @@ public sealed class LedgerV5CommandTests
         Assert.Contains("appended_freezes=1", result.Output, StringComparison.Ordinal);
         var persisted = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(fixture.LedgerPath);
         Assert.Single(persisted);
-        Assert.DoesNotContain(persisted, static file => DagLedgerAppendWriter.IsLegacyEventFile(file));
+        Assert.All(persisted, static file => Assert.Equal(
+            5,
+            System.Text.Json.JsonDocument.Parse(file.RawBytes.ToArray())
+                .RootElement.GetProperty("schema_version").GetInt32()));
     }
 
     [Fact]
@@ -135,7 +138,10 @@ public sealed class LedgerV5CommandTests
         Assert.Contains("appended_freezes=1", result.Output, StringComparison.Ordinal);
         var persisted = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(ledgerPath);
         Assert.Equal(2, persisted.Length);
-        Assert.DoesNotContain(persisted, static file => DagLedgerAppendWriter.IsLegacyEventFile(file));
+        Assert.All(persisted, static file => Assert.Equal(
+            5,
+            System.Text.Json.JsonDocument.Parse(file.RawBytes.ToArray())
+                .RootElement.GetProperty("schema_version").GetInt32()));
         Assert.Equal(
             candidateB.StatementId,
             FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(

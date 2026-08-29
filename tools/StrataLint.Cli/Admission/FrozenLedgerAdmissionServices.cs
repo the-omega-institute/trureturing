@@ -220,7 +220,7 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
 
         var validationPreparation = preparation;
         IFrozenLedgerReplacementAuthorization replacementAuthorization =
-            LegacyFrozenLedgerReplacementAuthorization.Instance;
+            RejectFrozenLedgerReplacementAuthorization.Instance;
         if (preparation.ProtectedBaseSnapshot is { } protectedBaseSnapshot
             && preparation.CandidateSnapshot is { } candidateSnapshot)
         {
