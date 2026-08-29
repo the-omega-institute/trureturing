@@ -701,7 +701,13 @@ public sealed class ScribeTestMapDeriverTests
             []);
     }
 
-    private static ScribeTestMap DeriveSources(IEnumerable<TestMapSource> sources)
+    /// <summary>
+    /// 共享给 <see cref="ScribeTestMapDeclaredReadTests"/>:它的三条测试同样需要
+    /// 追加 <c>RepositoryAccessor</c> 支撑源。**不在那边复制第二份** —— 见第 6 条唯一真源。
+    /// (那三条原本在本文件里,因把本文件推到 830 行、越过 SL-003 的 800 行硬线而移出;
+    ///  实测 `CapacityPolicyTests` 257 通过 / 1 失败。)
+    /// </summary>
+    internal static ScribeTestMap DeriveSources(IEnumerable<TestMapSource> sources)
     {
         const string accessorSource = """
             class RepositoryAccessor {
@@ -740,25 +746,6 @@ public sealed class ScribeTestMapDeriverTests
         Assert.False(method.IsUnknown);
     }
 
-    [Fact]
-    public void EnumerateDeclaredLiteralPrefixReadFromEntryFullPathIsKnown()
-    {
-        const string source = """
-            class DeclaredReadTests {
-              [Fact] public void ReadsDeclaredFiles() {
-                var contents = GitIndexRepositoryFiles
-                  .EnumerateDeclared(RepositoryLayout.FindRoot(), "D5")
-                  .Select(static entry => File.ReadAllText(entry.FullPath))
-                  .ToArray();
-              }
-            }
-            """;
-
-        var method = Assert.Single(DeriveSources([new("DeclaredReadTests.cs", source)]).Methods);
-
-        Assert.Equal(["D5"], method.Paths);
-        Assert.False(method.IsUnknown);
-    }
 
     /// <summary>
     /// **放行侧的对偶**:前缀是变量时必须 fail-closed 记 `VariablePath`。
@@ -785,46 +772,5 @@ public sealed class ScribeTestMapDeriverTests
         Assert.Equal(TestMapUnknownReason.VariablePath, Assert.Single(method.UnknownReasons));
     }
 
-    [Fact]
-    public void EnumerateDeclaredD5DoesNotDeclareBlueprintMemberRead()
-    {
-        const string source = """
-            class MismatchedDeclaredReadTests {
-              [Fact] public void ReadsBlueprintInstead() {
-                var blueprint = (
-                  RelativePath: "Blueprint/Papers.scribe.cs",
-                  FullPath: Path.Combine(
-                    RepositoryLayout.FindRoot(),
-                    "Blueprint",
-                    "Papers.scribe.cs"));
-                var contents = GitIndexRepositoryFiles
-                  .EnumerateDeclared(RepositoryLayout.FindRoot(), "D5")
-                  .Select(entry => File.ReadAllText(blueprint.FullPath))
-                  .ToArray();
-              }
-            }
-            """;
 
-        var method = Assert.Single(DeriveSources([new("MismatchedDeclaredReadTests.cs", source)]).Methods);
-
-        Assert.Contains("D5", method.Paths);
-        Assert.Equal(TestMapUnknownReason.VariablePath, Assert.Single(method.UnknownReasons));
-    }
-
-    [Fact]
-    public void MemberFullPathReadWithoutEnumerateDeclaredIsUnknown()
-    {
-        const string source = """
-            class UndeclaredMemberReadTests {
-              [Fact] public void ReadsVariable() {
-                var entry = Pick();
-                File.ReadAllText(entry.FullPath);
-              }
-            }
-            """;
-
-        var method = Assert.Single(DeriveSources([new("UndeclaredMemberReadTests.cs", source)]).Methods);
-
-        Assert.Equal(TestMapUnknownReason.VariablePath, Assert.Single(method.UnknownReasons));
-    }
 }
