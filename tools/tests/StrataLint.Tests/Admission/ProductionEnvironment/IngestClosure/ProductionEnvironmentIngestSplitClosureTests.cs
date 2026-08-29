@@ -86,6 +86,11 @@ public sealed partial class ProductionEnvironmentTests
 
         using var temporary = new TemporaryDirectory();
         WriteDirectoryLedger(temporary.Path, fixture.Files);
+        var coveredOutputPath = Path.Combine(
+            temporary.Path,
+            coveredPath.Replace('/', Path.DirectorySeparatorChar));
+        var unchangedWriteTime = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        File.SetLastWriteTimeUtc(coveredOutputPath, unchangedWriteTime);
         var coveredEntryImage = coveredPath + "\0"
             + Convert.ToBase64String(Encoding.UTF8.GetBytes(fixture.Files[coveredPath]))
             + "\n";
@@ -108,6 +113,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(0, reportSource.CallCount);
         Assert.Equal(0, scribeVerifier.CallCount);
         Assert.Contains(coveredEntryImage, GeneratedIngestImage(temporary), StringComparison.Ordinal);
+        Assert.Equal(unchangedWriteTime, File.GetLastWriteTimeUtc(coveredOutputPath));
     }
 
     [Fact]
