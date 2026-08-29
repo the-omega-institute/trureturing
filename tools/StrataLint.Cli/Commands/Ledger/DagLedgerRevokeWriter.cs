@@ -39,31 +39,22 @@ internal static class DagLedgerRevokeWriter
                 RevocationPlanOutcome.Accepted accepted => accepted.Capability,
                 RevocationPlanOutcome.Rejected rejected => throw new FormatException(rejected.Message),
             };
-            var drafts = FrozenLedgerGenerator.Revocation(context.Baseline, plan);
-            var eventFiles = DagLedgerAppendWriter.BuildNewEventFiles(drafts);
-            var candidate = DagLedgerCommandPreparation.ValidateGeneratedEventFiles(
-                context.BaseView,
-                eventFiles,
-                "generated Revoke suffix");
-            var trustedReferences = TrustedFrozenGitReferences.CreateForTrustedAdapter([]);
-            _ = FrozenLedger.ValidateCandidate(
-                candidate,
-                context.Baseline,
-                context.Catalog,
-                trustedReferences,
-                receipts) switch
-            {
-                FrozenLedgerValidationOutcome.Accepted accepted => accepted.Capability,
-                FrozenLedgerValidationOutcome.Rejected rejected => throw new FormatException(rejected.Message),
-            };
-
-            DagLedgerAppendWriter.WriteEventFiles(
+            var affected = plan.AffectedFrozenNodeIds.ToHashSet();
+            var eventFiles = context.BaseView.ActiveByPath.Values
+                .Where(entry => affected.Contains(entry.Material.FrozenNodeId))
+                .Select(entry => context.BaselineFiles.Single(file =>
+                    file.Path.Value.EndsWith(
+                        entry.EventHash[7..] + ".json",
+                        StringComparison.Ordinal)))
+                .ToImmutableArray();
+            DagLedgerAppendWriter.DeleteEventFiles(
                 context.LedgerPath,
                 eventFiles,
                 context.BaselineFiles);
             return new CommandResult(
                 true,
-                $"LEDGER_REVOKE appended_revokes=1 events={context.BaseView.EventCount + 1}\n",
+                $"LEDGER_REVOKE removed_freezes={eventFiles.Length} "
+                    + $"events={context.BaseView.EventCount - eventFiles.Length}\n",
                 string.Empty);
         }
         catch (Exception exception) when (

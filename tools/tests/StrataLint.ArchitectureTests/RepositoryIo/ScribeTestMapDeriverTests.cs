@@ -21,13 +21,13 @@ public sealed class ScribeTestMapDeriverTests
         Assert.Equal(280, ScribeUnknownDebtPolicy.UnknownDebtLimit);
         Assert.Equal(281, ScribeUnknownDebtPolicy.UnknownDebtToleranceLimit);
         Assert.Empty(ScribeUnknownDebtPolicy.InspectCurrent(map));
-        var retiredLedgerMethod = Assert.Single(
+        var currentLedgerMethod = Assert.Single(
             map.Methods,
             static method => method.Id ==
-                "TruthExportCommandTests.ExportEqualsStrictActiveSetDroppingRevokedNodes");
+                "TruthExportCommandTests.ExportEqualsStrictActiveFreezeSnapshot");
         Assert.False(
-            retiredLedgerMethod.IsUnknown,
-            $"{retiredLedgerMethod.Id}: {string.Join(',', retiredLedgerMethod.UnknownReasons)}");
+            currentLedgerMethod.IsUnknown,
+            $"{currentLedgerMethod.Id}: {string.Join(',', currentLedgerMethod.UnknownReasons)}");
         var ingestSplitClosureMethod = Assert.Single(
             map.Methods,
             static method => method.Id ==
@@ -536,16 +536,16 @@ public sealed class ScribeTestMapDeriverTests
     public void RepositoryLayoutCombineDerivesItsLiteralPath()
     {
         const string source = """
-            class WorkflowTests {
-              [Fact] public void ReadsWorkflow() => File.ReadAllText(
-                Path.Combine(RepositoryLayout.FindRoot(), ".github", "workflows", "ci.yml"));
+            class BannedSymbolTests {
+              [Fact] public void ReadsBannedSymbols() => File.ReadAllText(
+                Path.Combine(RepositoryLayout.FindRoot(), "tools", "Architecture", "BannedSymbols.Determinism.txt"));
             }
             """;
 
-        var map = DeriveSources([new("WorkflowTests.cs", source)]);
+        var map = DeriveSources([new("BannedSymbolTests.cs", source)]);
 
         var method = Assert.Single(map.Methods);
-        Assert.Equal([".github/workflows/ci.yml"], method.Paths);
+        Assert.Equal(["tools/Architecture/BannedSymbols.Determinism.txt"], method.Paths);
         Assert.False(method.IsUnknown);
     }
 

@@ -21,67 +21,35 @@ public static class FrozenContentAddress
         RepositorySnapshot snapshot,
         AcceptedLeanClosure lean,
         ImmutableDictionary<RepoPath, TruthState> states,
-        ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency,
-        FrozenEnvironmentAttestation environment,
-        IEnumerable<FrozenModuleAttestation> moduleAttestations)
+        ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(lean);
         ArgumentNullException.ThrowIfNull(states);
         ArgumentNullException.ThrowIfNull(adjacency);
-        ArgumentNullException.ThrowIfNull(environment);
-        ArgumentNullException.ThrowIfNull(moduleAttestations);
 
         try
         {
-            ValidateEnvironment(snapshot, environment);
             var (openCases, tailRegistrations) = ValidateStateEvidence(snapshot, lean, states);
-            var attestations = moduleAttestations.ToArray();
-            var byPath = attestations.ToDictionary(static item => item.RepoPath);
-            if (byPath.Count != attestations.Length)
-            {
-                throw new FormatException("Module attestations contain a duplicate path.");
-            }
-
             var materialByPath = new Dictionary<RepoPath, FrozenNodeMaterial>();
             foreach (var path in LeanImportAdjacency.DependenciesFirst(
                 states.Where(static item => item.Value is TruthState.Closed).Select(static item => item.Key),
                 adjacency).Where(path => states.TryGetValue(path, out var state)
                     && state is TruthState.Closed))
             {
-                if (!byPath.TryGetValue(path, out var attestation))
-                {
-                    throw new FormatException($"Closed module {path.Value} has no complete attestation material.");
-                }
-
                 materialByPath.Add(
                     path,
                     BuildNodeMaterial(
-                        snapshot,
                         lean,
                         adjacency,
-                        environment,
                         path,
-                        attestation,
                         dependencyPath => materialByPath.TryGetValue(dependencyPath, out var dependency)
                             ? dependency.FrozenNodeId
                             : throw new FormatException(
                                 $"Closed module {path.Value} depends on non-frozen {dependencyPath.Value}.")));
             }
 
-            var unused = byPath.Keys
-                .Where(path => !materialByPath.ContainsKey(path))
-                .OrderBy(static path => path.Value, StringComparer.Ordinal)
-                .ToArray();
-            if (unused.Length > 0)
-            {
-                throw new FormatException(
-                    "Attestations were supplied for non-Closed modules: "
-                    + string.Join(", ", unused.Select(static path => path.Value)));
-            }
-
             return new FrozenMaterialOutcome.Accepted(FrozenMaterialCatalog.Create(
-                environment,
                 states.ToImmutableDictionary(),
                 materialByPath.Values
                     .OrderBy(static node => node.RepoPath.Value, StringComparer.Ordinal)
@@ -101,8 +69,6 @@ public static class FrozenContentAddress
         AcceptedLeanClosure lean,
         ImmutableDictionary<RepoPath, TruthState> states,
         ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency,
-        FrozenEnvironmentAttestation environment,
-        IEnumerable<FrozenModuleAttestation> moduleAttestations,
         IReadOnlySet<RepoPath> selectedPaths,
         IReadOnlyDictionary<RepoPath, FrozenNodeMaterial> trustedBaseMaterials)
     {
@@ -110,33 +76,20 @@ public static class FrozenContentAddress
         ArgumentNullException.ThrowIfNull(lean);
         ArgumentNullException.ThrowIfNull(states);
         ArgumentNullException.ThrowIfNull(adjacency);
-        ArgumentNullException.ThrowIfNull(environment);
-        ArgumentNullException.ThrowIfNull(moduleAttestations);
         ArgumentNullException.ThrowIfNull(selectedPaths);
         ArgumentNullException.ThrowIfNull(trustedBaseMaterials);
-        ValidateEnvironment(snapshot, environment);
-        var attestations = moduleAttestations.ToDictionary(static item => item.RepoPath);
         var materialByPath = new Dictionary<RepoPath, FrozenNodeMaterial>();
         foreach (var path in LeanImportAdjacency.DependenciesFirst(selectedPaths, adjacency)
             .Where(path => states.TryGetValue(path, out var state)
                 && state is TruthState.Closed
                 && selectedPaths.Contains(path)))
         {
-            if (!attestations.TryGetValue(path, out var attestation))
-            {
-                throw new FormatException(
-                    $"Selected Closed module {path.Value} has no attestation material.");
-            }
-
             materialByPath.Add(
                 path,
                 BuildNodeMaterial(
-                    snapshot,
                     lean,
                     adjacency,
-                    environment,
                     path,
-                    attestation,
                     dependencyPath => materialByPath.TryGetValue(dependencyPath, out var selectedDependency)
                         ? selectedDependency.FrozenNodeId
                         : trustedBaseMaterials.TryGetValue(dependencyPath, out var trustedDependency)
@@ -146,7 +99,6 @@ public static class FrozenContentAddress
         }
 
         return FrozenMaterialCatalog.Create(
-            environment,
             states.ToImmutableDictionary(),
             materialByPath.Values
                 .OrderBy(static node => node.RepoPath.Value, StringComparer.Ordinal)
@@ -157,28 +109,14 @@ public static class FrozenContentAddress
     }
 
     private static FrozenNodeMaterial BuildNodeMaterial(
-        RepositorySnapshot snapshot,
         AcceptedLeanClosure lean,
         IReadOnlyDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency,
-        FrozenEnvironmentAttestation environment,
         RepoPath path,
-        FrozenModuleAttestation attestation,
         Func<RepoPath, FrozenNodeId> resolveDependency)
     {
-        if (!snapshot.Files.TryGetValue(path, out var source)
-            || !lean.Report.Files.TryGetValue(path, out var report))
+        if (!lean.Report.Files.TryGetValue(path, out var report))
         {
-            throw new FormatException(
-                $"Closed module {path.Value} has no complete attestation material.");
-        }
-
-        ValidateGitBlobOid(attestation.SourceBlobOid, source.RawBytes.AsSpan(), path.Value);
-        if (attestation.BaseCommitOid is not null && !FrozenHashSyntax.IsGitOid(attestation.BaseCommitOid)
-            || attestation.BaseTreeOid is not null && !FrozenHashSyntax.IsGitOid(attestation.BaseTreeOid)
-            || (attestation.BaseCommitOid is null) != (attestation.BaseTreeOid is null))
-        {
-            throw new FormatException(
-                $"Closed module {path.Value} has a malformed event-specific Git attestation.");
+            throw new FormatException($"Closed module {path.Value} has no Lean report material.");
         }
 
         var declarationStatementIds = CanonicalStatementWriter.DeclarationStatementIds(
@@ -187,15 +125,6 @@ public static class FrozenContentAddress
         var statement = StatementId.Create(FrozenContentHash.Compute(
             FrozenHashDomains.Statement,
             CanonicalStatementWriter.WriteModule(path, declarationStatementIds).AsSpan()));
-        var witness = ComputeWitnessId(
-            path,
-            statement,
-            report.Imports,
-            report.Declarations.SelectMany(static declaration => declaration.Axioms),
-            attestation.SourceBlobOid,
-            "sha256:" + Convert.ToHexStringLower(SHA256.HashData(source.RawBytes.AsSpan())),
-            environment.LeanToolchainBlobOid,
-            environment.LakeManifestBlobOid);
         var axiomClosure = report.Declarations
             .SelectMany(static declaration => declaration.Axioms)
             .Distinct(StringComparer.Ordinal)
@@ -205,50 +134,14 @@ public static class FrozenContentAddress
             .Select(resolveDependency)
             .OrderBy(static id => id.Value, StringComparer.Ordinal)
             .ToImmutableArray();
-        var frozen = ComputeFrozenNodeId(path, statement, witness, prerequisites);
+        var frozen = ComputeFrozenNodeId(path, statement, prerequisites);
         return new FrozenNodeMaterial(
             path,
             declarationStatementIds,
             statement,
-            witness,
             frozen,
             prerequisites,
-            axiomClosure,
-            attestation);
-    }
-
-    private static void ValidateEnvironment(
-        RepositorySnapshot snapshot,
-        FrozenEnvironmentAttestation environment)
-    {
-        if (!FrozenHashSyntax.IsGitOid(environment.OriginCommitOid)
-            || !FrozenHashSyntax.IsGitOid(environment.OriginTreeOid)
-            || !snapshot.TryGetFile("lean-toolchain", out var toolchain)
-            || !snapshot.TryGetFile("lake-manifest.json", out var manifest))
-        {
-            throw new FormatException("Frozen environment attestation is incomplete or malformed.");
-        }
-
-        ValidateGitBlobOid(environment.LeanToolchainBlobOid, toolchain.RawBytes.AsSpan(), "lean-toolchain");
-        ValidateGitBlobOid(environment.LakeManifestBlobOid, manifest.RawBytes.AsSpan(), "lake-manifest.json");
-        if ((environment.LakefilePath is null) != (environment.LakefileBlobOid is null))
-        {
-            throw new FormatException("Frozen lakefile attestation must provide both path and blob OID.");
-        }
-
-        if (environment.LakefilePath is not null)
-        {
-            if (environment.LakefilePath is not ("lakefile.toml" or "lakefile.lean")
-                || !snapshot.TryGetFile(environment.LakefilePath, out var lakefile))
-            {
-                throw new FormatException("Frozen lakefile attestation has no matching source file.");
-            }
-
-            ValidateGitBlobOid(
-                environment.LakefileBlobOid!,
-                lakefile.RawBytes.AsSpan(),
-                environment.LakefilePath);
-        }
+            axiomClosure);
     }
 
     private static (
@@ -319,46 +212,17 @@ public static class FrozenContentAddress
         return (openCases.ToImmutable(), tailRegistrations.ToImmutable());
     }
 
-    internal static WitnessId ComputeWitnessId(
-        RepoPath path,
-        StatementId statement,
-        IEnumerable<string> imports,
-        IEnumerable<string> axiomClosure,
-        string sourceBlobOid,
-        string sourceSha256,
-        string leanToolchainBlobOid,
-        string lakeManifestBlobOid)
-    {
-        var material = JsonSerializer.SerializeToElement(new
-        {
-            axiom_closure = axiomClosure.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal),
-            imports = imports.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal),
-            lake_manifest_blob_oid = lakeManifestBlobOid,
-            lean_toolchain_blob_oid = leanToolchainBlobOid,
-            module_path = path.Value,
-            schema = "witness-v1",
-            source_blob_oid = sourceBlobOid,
-            source_sha256 = sourceSha256,
-            statement_id = statement.Value,
-        });
-        return WitnessId.Create(FrozenContentHash.Compute(
-            FrozenHashDomains.Witness,
-            StructuredCanonicalWriter.WriteJson(material).AsSpan()));
-    }
-
     internal static FrozenNodeId ComputeFrozenNodeId(
         RepoPath path,
         StatementId statement,
-        WitnessId witness,
         ImmutableArray<FrozenNodeId> prerequisites)
     {
         var material = JsonSerializer.SerializeToElement(new
         {
             module_path = path.Value,
             prerequisite_frozen_node_ids = prerequisites.Select(static id => id.Value),
-            schema = "frozen-node-v1",
+            schema = "frozen-node-v2",
             statement_id = statement.Value,
-            witness_id = witness.Value,
         });
         return FrozenNodeId.Create(FrozenContentHash.Compute(
             FrozenHashDomains.FrozenNode,

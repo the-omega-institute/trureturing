@@ -29,8 +29,10 @@
 #   可成立的替代不变量是：**归档不构成独立 admission 证据，且它不引入比现有 dev
 #   cache / report producer 更宽的 writer 集合。** 后半句是有条件的，不是天然成立：
 #   `workflow_dispatch` 曾是那条更宽的 writer 路径（`gh workflow run --ref` 取的是
-#   该分支上的 workflow 版本，故 job 内检查 ref 不构成机器边界），已于 PR #2818 移除，
-#   并由 `ContentsWriteWorkflowClosureTests` 钉住。
+#   该分支上的 workflow 版本，故 job 内检查 ref 不构成机器边界），已于 PR #2818 移除。
+#   〔2026-08-29：原先钉住此形状的 `ContentsWriteWorkflowClosureTests` 已随 workflow 测试
+#   禁令（CLAUDE.md 器律⑦′）整体删除。**此形状此后没有机器钉子** —— 把 workflow_dispatch
+#   加回去不会有测试变红，只能由评审与真跑发现。〕
 #
 #   已落地（#2729 判决第 2、3 条）：release tag 用 --target producer_commit_sha；
 #   manifest 记 producer_commit_sha 与 workflow_run_id；缺这两个值时 publish 直接拒绝；

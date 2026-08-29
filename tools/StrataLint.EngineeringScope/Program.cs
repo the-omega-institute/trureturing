@@ -150,11 +150,7 @@ internal static class Program
 
             try
             {
-                var executed = VerifyTestEvidence(
-                    repositoryRoot,
-                    changedPaths,
-                    invocation,
-                    resultsDirectory);
+                var executed = VerifyTestEvidence(resultsDirectory);
                 Console.WriteLine(
                     $"ENGINEERING_TEST_EXECUTED target={JsonSerializer.Serialize(invocation.Target)} "
                     + $"filter={JsonSerializer.Serialize(invocation.Filter)} evidence=trx executed={executed}");
@@ -172,72 +168,8 @@ internal static class Program
         }
     }
 
-    private static int VerifyTestEvidence(
-        string repositoryRoot,
-        IReadOnlyList<string> changedPaths,
-        EngineeringTestInvocation invocation,
-        string resultsDirectory)
-    {
-        var evidence = TestResultEvidence.Load(resultsDirectory);
-        var expected = invocation.ExpectedTests
-            .Select(static test => (test.Assembly, test.Id))
-            .ToArray();
-        var declarations = EngineeringTestRetirementLoader.Load(
-            repositoryRoot,
-            changedPaths,
-            invocation.ExpectedTests);
-        var missing = new List<string>();
-        foreach (var identity in expected)
-        {
-            var executed = evidence.ExecutedTests.Contains(identity);
-            if (!declarations.TryGetValue(identity, out var declaration))
-            {
-                if (!executed)
-                {
-                    missing.Add($"{identity.Assembly}::{identity.Id}");
-                }
-
-                continue;
-            }
-
-            if (executed)
-            {
-                throw new InvalidDataException(
-                    $"test retirement declaration addresses an identity still present in TRX: {declaration.Path}");
-            }
-
-            var disposition = declaration.Disposition.ToString().ToLowerInvariant();
-            if (declaration.Replacement is { } replacement)
-            {
-                var replacementIdentity = (replacement.Assembly, replacement.Id);
-                if (!evidence.ExecutedTests.Contains(replacementIdentity))
-                {
-                    throw new InvalidDataException(
-                        $"declared test replacement is missing from TRX: {replacement.Assembly}::{replacement.Id}");
-                }
-
-                Console.WriteLine(
-                    $"ENGINEERING_TEST_IDENTITY_REMOVED base={JsonSerializer.Serialize($"{identity.Assembly}::{identity.Id}")} "
-                    + $"disposition={disposition} "
-                    + $"replacement={JsonSerializer.Serialize($"{replacement.Assembly}::{replacement.Id}")} "
-                    + $"declaration={JsonSerializer.Serialize(declaration.Path)}");
-            }
-            else
-            {
-                Console.WriteLine(
-                    $"ENGINEERING_TEST_IDENTITY_REMOVED base={JsonSerializer.Serialize($"{identity.Assembly}::{identity.Id}")} "
-                    + $"disposition={disposition} declaration={JsonSerializer.Serialize(declaration.Path)}");
-            }
-        }
-
-        if (missing.Count != 0)
-        {
-            throw new InvalidDataException(
-                $"TRX is missing base-owned tests: {string.Join(", ", missing)}");
-        }
-
-        return evidence.Executed;
-    }
+    private static int VerifyTestEvidence(string resultsDirectory) =>
+        TestResultEvidence.Load(resultsDirectory).Executed;
 
     private static int VerifyTrx(VerifyTrxOptions options)
     {

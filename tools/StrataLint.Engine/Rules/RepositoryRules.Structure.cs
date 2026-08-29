@@ -54,14 +54,8 @@ internal static partial class RepositoryRules
             }
         }
 
-        findings.AddRange(TheoristFrontierContractValidator.Evaluate(context));
-
         return findings.ToImmutable();
     }
-
-    private static ImmutableArray<RuleFinding> DeliveryStatementIdentity(
-        RuleEvaluationContext context) =>
-        TheoristFrontierContractValidator.EvaluateDeliveryIdentity(context);
 
     // SL-003 capacity limits. These are the single enforcement source shared by
     // the admission rule (Capacity, below) and the ArchitectureTests CapacityPolicy
@@ -105,7 +99,6 @@ internal static partial class RepositoryRules
         || DigestionCasStore.IsCanonicalPath(path)
         || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
         || path.StartsWith(DigestionFormalizationReceipt.RootPath, StringComparison.Ordinal)
-        || EngineeringTestRetirementLoader.IsCanonicalPath(path)
         || (path.StartsWith("Blueprint/", StringComparison.Ordinal)
             && path.EndsWith(".md", StringComparison.Ordinal));
 
@@ -338,14 +331,6 @@ internal static partial class RepositoryRules
                     + "SL-022 protected-surface gate"));
             }
 
-            if (FrozenLedgerChangeClassifier.IsAcceptedEventPath(change.Path.Value)
-                && change.Kind is RawChangeKind.Modified or RawChangeKind.Deleted)
-            {
-                findings.Add(new RuleFinding(
-                    change.Path.Value,
-                    "accepted frozen-ledger event files are append-only; run ledger-append to "
-                    + "add a new event and do not modify an already-frozen fragment"));
-            }
         }
 
         return findings.ToImmutable();

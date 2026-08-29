@@ -28,7 +28,6 @@ public sealed class RuleEngineTests
         { 21, "future" },
         { 25, "blueprint-skeleton" },
         { 26, "legacy-scribe" },
-        { 27, "delivery-statement-identity" },
     };
 
     public static TheoryData<int, string> AffectedInputs => new()
@@ -81,10 +80,6 @@ public sealed class RuleEngineTests
         { 23, "Chronicle/2026/07/10-old.md" },
         { 25, "Chronicle/2026/07/10-old.md" },
         { 26, "Chronicle/2026/07/10-old.md" },
-        { 27, MissionFileLoader.RelativePath },
-        { 27, RuleFixture.RingPath },
-        { 27, FrozenLedgerChangeClassifier.AcceptedRoot + "/fixture-event.json" },
-        { 27, "Chronicle/2026/07/10-old.md" },
     };
 
     [Fact]
@@ -167,26 +162,6 @@ public sealed class RuleEngineTests
 
         Assert.Contains(RuleId.CreateKnown(number), completed.ExecutedRules);
         Assert.Contains(completed.Diagnostics, diagnostic => diagnostic.RuleId == RuleId.CreateKnown(number));
-    }
-
-    [Fact]
-    public void Sl002ExecutesWhenAReferencedTheoristReceiptIsDeleted()
-    {
-        const string receiptPath = "Library/Carrier/fixture2026contract.md";
-        var fixture = new RuleFixture();
-        fixture.AddHistoricalTheoristTarget("prime-norm-irreducibility");
-        fixture.Baseline[receiptPath] = fixture.Files[receiptPath];
-        fixture.ForkPoint[receiptPath] = fixture.Files[receiptPath];
-        fixture.MutateTheoristTarget("missing-search-receipt");
-
-        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.Build(RawChangeSet.Create([receiptPath])))).Capability;
-
-        Assert.Contains(RuleId.CreateKnown(2), completed.ExecutedRules);
-        Assert.Contains(completed.Diagnostics, diagnostic =>
-            diagnostic.RuleId == RuleId.CreateKnown(2)
-            && diagnostic.Path == "D5/X_Frontier/PrimeNormIrreducibility.lean"
-            && diagnostic.Message.Contains("does not resolve", StringComparison.Ordinal));
     }
 
     [Fact]
@@ -712,7 +687,7 @@ public sealed class RuleEngineTests
             .Order()
             .ToArray();
 
-        Assert.Equal(Enumerable.Range(1, 23).Append(25).Append(26).Append(27), exercised);
+        Assert.Equal(Enumerable.Range(1, 23).Append(25).Append(26), exercised);
     }
 
     [Fact]

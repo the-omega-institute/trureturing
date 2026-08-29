@@ -101,18 +101,18 @@ public sealed partial class DepositCoverWorkflowScriptTests
     }
 
     [Fact]
-    public void DepositAfterFreezeAndRevokeAppendsANewFreeze()
+    public void DepositAfterSnapshotRevocationAppendsANewFreeze()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
         fixture.ChangeFormalization();
-        fixture.WriteFreezeThenRevoke();
+        fixture.WriteRevokedSnapshot();
 
         var result = fixture.Run("deposit");
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
         Assert.Equal(1, fixture.CallKinds().Count(call => call == "dotnet:ledger-append"));
-        Assert.Equal(2, fixture.FreezeCount());
+        Assert.Equal(1, fixture.FreezeCount());
     }
 
     [Fact]
@@ -121,8 +121,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
         fixture.ChangeFormalization();
-        fixture.WriteActiveFreeze(
-            "git-sha1:0000000000000000000000000000000000000000");
+        fixture.WriteActiveFreeze();
 
         var result = fixture.Run("deposit");
 
@@ -454,56 +453,27 @@ public sealed partial class DepositCoverWorkflowScriptTests
             ReceiptRelativePath,
             $"{{\"atom_id\":\"{atomId}\",\"primary_gid\":\"{primaryGid}\"}}\n");
 
-        internal void WriteFreezeThenRevoke()
+        internal void WriteRevokedSnapshot()
         {
-            const string caseId = "active-frozen/revoked-probe";
-            const string frozenNodeId =
-                "sha256:1111111111111111111111111111111111111111111111111111111111111111";
-            var descriptorBlobOid = "git-sha1:" + Git("hash-object", "--", LeanPath).Trim();
-            var freeze = JsonSerializer.Serialize(new
-            {
-                event_type = "Freeze",
-                payload = new
-                {
-                    case_id = caseId,
-                    frozen_node_id = frozenNodeId,
-                    input = new
-                    {
-                        descriptor_blob_oid = descriptorBlobOid,
-                        descriptor_selector = LeanPath,
-                    },
-                    node_path = LeanPath,
-                },
-            });
-            var revoke = JsonSerializer.Serialize(new
-            {
-                event_type = "Revoke",
-                payload = new
-                {
-                    affected_case_ids = new[] { caseId },
-                    affected_frozen_node_ids = new[] { frozenNodeId },
-                },
-            });
-            WriteLedger(freeze, revoke);
+            WriteLedger(Array.Empty<string>());
         }
 
-        internal void WriteActiveFreeze(string descriptorBlobOid)
+        internal void WriteActiveFreeze()
         {
             var freeze = JsonSerializer.Serialize(new
             {
+                event_hash =
+                    "sha256:3333333333333333333333333333333333333333333333333333333333333333",
                 event_type = "Freeze",
                 payload = new
                 {
-                    case_id = "active-frozen/stale-probe",
-                    frozen_node_id =
+                    declaration_statement_ids = Array.Empty<object>(),
+                    descriptor_selector = LeanPath,
+                    prerequisite_frozen_node_ids = Array.Empty<string>(),
+                    statement_id =
                         "sha256:3333333333333333333333333333333333333333333333333333333333333333",
-                    input = new
-                    {
-                        descriptor_blob_oid = descriptorBlobOid,
-                        descriptor_selector = LeanPath,
-                    },
-                    node_path = LeanPath,
                 },
+                schema_version = 5,
             });
             WriteLedger(freeze);
         }
@@ -529,10 +499,11 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 }
 
                 var payload = root.GetProperty("payload");
-                var selector = payload.TryGetProperty("input", out var input)
-                    && input.TryGetProperty("descriptor_selector", out var descriptorSelector)
-                        ? descriptorSelector.GetString()
-                        : null;
+                var selector = payload.TryGetProperty(
+                    "descriptor_selector",
+                    out var descriptorSelector)
+                    ? descriptorSelector.GetString()
+                    : null;
                 return selector == leanPath;
             });
 
