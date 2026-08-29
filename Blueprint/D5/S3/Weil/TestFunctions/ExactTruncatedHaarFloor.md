@@ -24,3 +24,4 @@ The positive zeroth moment bounds the feasible floors, so their supremum is well
 
 - Truth anchor: `D5/S3/Weil/TestFunctions/ExactTruncatedHaarFloor.exact_truncated_haar_floor`
 - Dependency: [D5/S3/Weil/TestFunctions/ToeplitzContactSupport](ToeplitzContactSupport.md)
+- Dependency: [D5/S3/Weil/TestFunctions/TruncatedCircleMomentBridge](TruncatedCircleMomentBridge.md)
