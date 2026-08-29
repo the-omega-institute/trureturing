@@ -1,12 +1,9 @@
 using System.Collections.Immutable;
 using System.Globalization;
 using System.Text;
-using StrataLint.Engine;
-using YamlDotNet.Core;
-using YamlDotNet.Core.Events;
-using YamlDotNet.RepresentationModel;
+using Trureturing.Truth;
 
-namespace StrataLint.Cli;
+namespace StrataLint.Engine;
 
 public static class RegistryLoader
 {
@@ -29,7 +26,7 @@ public static class RegistryLoader
             var domains = ParseDomainsSyntax(domainsBytes);
             return RegistryPolicyCompiler.Compile(syntax, domains);
         }
-        catch (Exception exception) when (exception is DecoderFallbackException or YamlException or FormatException)
+        catch (Exception exception) when (exception is DecoderFallbackException or FormatException)
         {
             return new RegistryLoadOutcome.InfrastructureFailure(exception.Message);
         }
@@ -45,50 +42,52 @@ public static class RegistryLoader
         return Domains(root["domains"]);
     }
 
-    private static YamlMappingNode ParseMappingDocument(ReadOnlySpan<byte> bytes, string label)
+    private static Dictionary<string, object?> ParseMappingDocument(ReadOnlySpan<byte> bytes, string label)
     {
         var text = new UTF8Encoding(false, true).GetString(bytes);
-        ScanEvents(text);
-        var stream = new YamlStream();
-        stream.Load(new StringReader(text));
-        if (stream.Documents.Count != 1 || stream.Documents[0].RootNode is not YamlMappingNode root)
-        {
-            throw new FormatException($"{label} must contain exactly one mapping document.");
-        }
-
-        return root;
+        RejectUnsupportedYamlFeatures(text);
+        return Mapping(YamlSubsetParser.Parse(text), label);
     }
 
-    private static void ScanEvents(string text)
+    private static void RejectUnsupportedYamlFeatures(string text)
     {
-        var parser = new Parser(new StringReader(text));
-        while (parser.MoveNext())
+        foreach (var rawLine in text.Split('\n'))
         {
-            if (parser.Current is AnchorAlias)
-            {
-                throw new FormatException("YAML alias is forbidden in registry.yaml.");
-            }
-
-            if (parser.Current is not NodeEvent node)
+            var line = rawLine.TrimStart();
+            if (line.Length == 0 || line.StartsWith('#'))
             {
                 continue;
             }
 
-            if (!node.Anchor.IsEmpty)
+            var separator = line.IndexOf(':');
+            var key = separator < 0 ? string.Empty : line[..separator].Trim();
+            if (key == "<<")
+            {
+                throw new FormatException("YAML merge key is forbidden in registry.yaml.");
+            }
+
+            var value = separator < 0
+                ? line.StartsWith("- ", StringComparison.Ordinal) ? line[2..].TrimStart() : string.Empty
+                : line[(separator + 1)..].TrimStart();
+            if (value.StartsWith('&'))
             {
                 throw new FormatException("YAML anchor is forbidden in registry.yaml.");
             }
 
-            if (!node.Tag.IsEmpty && !node.Tag.IsNonSpecific)
+            if (value.StartsWith('*'))
+            {
+                throw new FormatException("YAML alias is forbidden in registry.yaml.");
+            }
+
+            if (value.StartsWith('!'))
             {
                 throw new FormatException("YAML custom tag is forbidden in registry.yaml.");
             }
         }
     }
 
-    private static RegistrySyntax ProjectRegistrySyntax(YamlMappingNode root)
+    private static RegistrySyntax ProjectRegistrySyntax(IReadOnlyDictionary<string, object?> rootMap)
     {
-        var rootMap = Mapping(root, "registry root");
         var unknown = rootMap.Keys.Where(key => !TopLevelKeys.Contains(key)).ToArray();
         var missing = TopLevelKeys.Where(key => !rootMap.ContainsKey(key)).ToArray();
         if (unknown.Length > 0 || missing.Length > 0)
@@ -115,7 +114,7 @@ public static class RegistryLoader
             ArtifactKinds(rootMap["artifact_kinds"]));
     }
 
-    private static ImmutableArray<DomainSyntax> Domains(YamlNode node)
+    private static ImmutableArray<DomainSyntax> Domains(object? node)
     {
         var domains = Mapping(node, "domains");
         var builder = ImmutableArray.CreateBuilder<DomainSyntax>();
@@ -132,7 +131,7 @@ public static class RegistryLoader
         return builder.ToImmutable();
     }
 
-    private static ImmutableArray<ArtifactKindSyntax> ArtifactKinds(YamlNode node)
+    private static ImmutableArray<ArtifactKindSyntax> ArtifactKinds(object? node)
     {
         var artifacts = Mapping(node, "artifact_kinds");
         var builder = ImmutableArray.CreateBuilder<ArtifactKindSyntax>();
@@ -150,48 +149,35 @@ public static class RegistryLoader
         return builder.ToImmutable();
     }
 
-    private static Dictionary<string, YamlNode> Mapping(YamlNode node, string location)
+    private static Dictionary<string, object?> Mapping(object? node, string location)
     {
-        if (node is not YamlMappingNode mapping)
+        if (node is not Dictionary<string, object?> mapping)
         {
             throw new FormatException($"{location} must be a mapping.");
         }
 
-        var result = new Dictionary<string, YamlNode>(StringComparer.Ordinal);
-        foreach (var pair in mapping.Children)
-        {
-            var key = Scalar(pair.Key, $"{location} key");
-            if (key == "<<")
-            {
-                throw new FormatException($"YAML merge key is forbidden at {location}.");
-            }
-
-            if (!result.TryAdd(key, pair.Value))
-            {
-                throw new FormatException($"Duplicate key {key} at {location}.");
-            }
-        }
-
-        return result;
+        return mapping;
     }
 
-    private static ImmutableArray<string> ScalarSequence(YamlNode node, string location)
+    private static ImmutableArray<string> ScalarSequence(object? node, string location)
     {
-        if (node is not YamlSequenceNode sequence)
+        if (node is not List<object?> sequence)
         {
             throw new FormatException($"{location} must be a sequence.");
         }
 
-        return sequence.Children.Select(child => Scalar(child, location)).ToImmutableArray();
+        return sequence.Select(child => Scalar(child, location)).ToImmutableArray();
     }
 
-    private static string Scalar(YamlNode node, string location) =>
-        node is YamlScalarNode { Value: not null } scalar
-            ? scalar.Value
-            : throw new FormatException($"{location} must be a scalar.");
+    private static string Scalar(object? node, string location) => node switch
+    {
+        string value => value,
+        int value => value.ToString(CultureInfo.InvariantCulture),
+        _ => throw new FormatException($"{location} must be a scalar."),
+    };
 
     private static void RequireExact(
-        IReadOnlyDictionary<string, YamlNode> fields,
+        IReadOnlyDictionary<string, object?> fields,
         IEnumerable<string> expected,
         string location)
     {

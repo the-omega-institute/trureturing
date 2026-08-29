@@ -23,7 +23,7 @@ internal static class FileMapPolicy
     private const string ProblemCandidateCatalogPath =
         "tools/StrataLint.Scribe/Problems/ProblemCandidateCatalog.cs";
     private const string RegistryLoaderPath =
-        "tools/StrataLint.Cli/Commands/RegistryLoader.cs";
+        "tools/StrataLint.Engine/Coordinates/RegistryLoader.cs";
     private const string ScribeEmitterPath =
         "tools/StrataLint.Scribe/Emission/ScribeEmitter.cs";
     private const string ScribeProjectPath =

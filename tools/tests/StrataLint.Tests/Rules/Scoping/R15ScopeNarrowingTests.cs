@@ -1,6 +1,5 @@
 using System.Collections.Immutable;
 using System.Text;
-using StrataLint.Cli;
 using System.Text.Json;
 using StrataLint.Engine;
 

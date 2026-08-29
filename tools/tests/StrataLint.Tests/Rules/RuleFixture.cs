@@ -1,7 +1,6 @@
 using System.Collections.Immutable;
 using System.Security.Cryptography;
 using System.Text;
-using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;

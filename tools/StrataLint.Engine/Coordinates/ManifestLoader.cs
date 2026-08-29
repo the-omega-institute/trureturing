@@ -1,11 +1,8 @@
 using System.Text;
 using System.Text.Json;
-using StrataLint.Engine;
-using YamlDotNet.Core;
-using YamlDotNet.Core.Events;
-using YamlDotNet.RepresentationModel;
+using Trureturing.Truth;
 
-namespace StrataLint.Cli;
+namespace StrataLint.Engine;
 
 public static class ManifestLoader
 {
@@ -42,7 +39,7 @@ public static class ManifestLoader
             RouteEngine.ValidateSubDomainApplicability(syntax);
             return new ManifestLoadOutcome.Loaded(syntax);
         }
-        catch (Exception exception) when (exception is DecoderFallbackException or JsonException or YamlException or FormatException)
+        catch (Exception exception) when (exception is DecoderFallbackException or JsonException or FormatException)
         {
             return new ManifestLoadOutcome.InfrastructureFailure(exception.Message);
         }
@@ -70,40 +67,53 @@ public static class ManifestLoader
 
     private static Dictionary<string, string> YamlFields(string text)
     {
-        var parser = new Parser(new StringReader(text));
-        while (parser.MoveNext())
-        {
-            if (parser.Current is AnchorAlias)
-            {
-                throw new FormatException("manifest aliases are forbidden");
-            }
-
-            if (parser.Current is NodeEvent node
-                && (!node.Anchor.IsEmpty || !node.Tag.IsEmpty && !node.Tag.IsNonSpecific))
-            {
-                throw new FormatException("manifest anchors and custom tags are forbidden");
-            }
-        }
-
-        var stream = new YamlStream();
-        stream.Load(new StringReader(text));
-        if (stream.Documents.Count != 1 || stream.Documents[0].RootNode is not YamlMappingNode mapping)
-        {
-            throw new FormatException("manifest YAML must be one mapping");
-        }
+        RejectUnsupportedYamlFeatures(text);
+        var mapping = (Dictionary<string, object?>)YamlSubsetParser.Parse(text);
 
         var result = new Dictionary<string, string>(StringComparer.Ordinal);
-        foreach (var pair in mapping.Children)
+        foreach (var pair in mapping)
         {
-            if (pair.Key is not YamlScalarNode { Value: not null } key
-                || pair.Value is not YamlScalarNode { Value: not null } value
-                || key.Value == "<<"
-                || !result.TryAdd(key.Value, value.Value))
+            if (pair.Value is not string value || !result.TryAdd(pair.Key, value))
             {
                 throw new FormatException("manifest has duplicate/non-scalar keys or a merge key");
             }
         }
 
         return result;
+    }
+
+    private static void RejectUnsupportedYamlFeatures(string text)
+    {
+        foreach (var rawLine in text.Split('\n'))
+        {
+            var line = rawLine.TrimStart();
+            if (line.Length == 0 || line.StartsWith('#'))
+            {
+                continue;
+            }
+
+            var separator = line.IndexOf(':');
+            var key = separator < 0 ? string.Empty : line[..separator].Trim();
+            var value = separator < 0 ? string.Empty : line[(separator + 1)..].TrimStart();
+            if (key == "<<")
+            {
+                throw new FormatException("manifest merge keys are forbidden");
+            }
+
+            if (value.StartsWith('&'))
+            {
+                throw new FormatException("manifest anchors are forbidden");
+            }
+
+            if (value.StartsWith('*'))
+            {
+                throw new FormatException("manifest aliases are forbidden");
+            }
+
+            if (value.StartsWith('!'))
+            {
+                throw new FormatException("manifest custom tags are forbidden");
+            }
+        }
     }
 }

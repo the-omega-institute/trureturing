@@ -1,6 +1,5 @@
 using System.Text;
 using System.Text.Json;
-using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;

@@ -1,6 +1,5 @@
 using System.Collections.Immutable;
 using System.Text;
-using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
