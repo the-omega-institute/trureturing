@@ -459,6 +459,13 @@ internal static class ScribeTestMapDeriver
                 continue;
             }
 
+            if (IsAccessorCall(invocation, "ReadAllText", "ReadAllBytes")
+                && IsDeclaredEnumerationFullPath(
+                    invocation.ArgumentList.Arguments.FirstOrDefault()?.Expression))
+            {
+                continue;
+            }
+
             AddLiteralCreatePath(invocation.ArgumentList.Arguments.FirstOrDefault()?.Expression, paths, reasons);
         }
     }
@@ -469,16 +476,82 @@ internal static class ScribeTestMapDeriver
         HashSet<string> paths,
         HashSet<TestMapUnknownReason> reasons)
     {
+        if (TryGetDeclaredPrefix(invocation, out var prefix))
+        {
+            paths.Add(prefix);
+            return;
+        }
+
+        reasons.Add(TestMapUnknownReason.VariablePath);
+    }
+
+    private static bool TryGetDeclaredPrefix(
+        InvocationExpressionSyntax invocation,
+        out string prefix)
+    {
         var arguments = invocation.ArgumentList.Arguments;
         if (arguments.Count >= 2
             && arguments[1].Expression is LiteralExpressionSyntax literal
             && literal.IsKind(SyntaxKind.StringLiteralExpression))
         {
-            paths.Add(literal.Token.ValueText.Replace('\\', '/'));
-            return;
+            prefix = literal.Token.ValueText.Replace('\\', '/');
+            return true;
         }
 
-        reasons.Add(TestMapUnknownReason.VariablePath);
+        prefix = string.Empty;
+        return false;
+    }
+
+    private static bool IsDeclaredEnumerationFullPath(ExpressionSyntax? argument)
+    {
+        if (argument is not MemberAccessExpressionSyntax
+            {
+                Expression: IdentifierNameSyntax entry,
+                Name.Identifier.ValueText: "FullPath",
+            })
+        {
+            return false;
+        }
+
+        var selector = argument.Ancestors().OfType<SimpleLambdaExpressionSyntax>()
+            .FirstOrDefault(lambda =>
+                lambda.Parameter.Identifier.ValueText == entry.Identifier.ValueText);
+        if (selector?.Parent is not ArgumentSyntax
+            {
+                Parent: ArgumentListSyntax
+                {
+                    Parent: InvocationExpressionSyntax select,
+                },
+            })
+        {
+            return false;
+        }
+
+        if (select.Expression is not MemberAccessExpressionSyntax
+            {
+                Name.Identifier.ValueText: "Select",
+                Expression: var source,
+            })
+        {
+            return false;
+        }
+
+        while (source is InvocationExpressionSyntax invocation)
+        {
+            if (IsAccessorCall(invocation, "EnumerateDeclared"))
+            {
+                return TryGetDeclaredPrefix(invocation, out _);
+            }
+
+            if (invocation.Expression is not MemberAccessExpressionSyntax member)
+            {
+                return false;
+            }
+
+            source = member.Expression;
+        }
+
+        return false;
     }
 
     private static void AddLiteralCreatePath(
