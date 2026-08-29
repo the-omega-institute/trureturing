@@ -56,7 +56,7 @@ internal sealed class ThreeRingProfileFactorizationDocument
                 DescribeRole.Theorem))));
 
     private static Formula Profile(Formula argument) =>
-        new Formula.Apply(new Formula.Subscript(Sigma, D(3)), [argument]);
+        new Formula.Apply(new Formula.Subscript(Sigma, Seq(D(3))), [argument]);
 
     private static Formula BarProfile(Formula argument) =>
         new Formula.Apply(F.Id("g"), [argument]);
