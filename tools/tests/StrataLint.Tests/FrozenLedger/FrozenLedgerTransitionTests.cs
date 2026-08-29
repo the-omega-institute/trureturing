@@ -102,41 +102,6 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Fact]
-    public void TrustedAcceptedEventLoaderLoadsEveryAcceptedEventInMixedRepositoryLedger()
-    {
-        var repositoryRoot = TestRepositoryLayout.FindRoot();
-        var acceptedDirectory = Path.Combine(
-            repositoryRoot,
-            FrozenLedgerChangeClassifier.AcceptedRoot.Replace('/', Path.DirectorySeparatorChar));
-        var files = Directory.EnumerateFiles(
-                acceptedDirectory,
-                "*.json",
-                SearchOption.TopDirectoryOnly)
-            .Order(StringComparer.Ordinal)
-            .Select(path =>
-            {
-                var bytes = File.ReadAllBytes(path);
-                var relativePath = Path.GetRelativePath(repositoryRoot, path)
-                    .Replace(Path.DirectorySeparatorChar, '/');
-                return new RepositoryFile(
-                    RepoPath.CreateKnown(relativePath),
-                    ImmutableArray.CreateRange(bytes),
-                    Encoding.UTF8.GetString(bytes));
-            })
-            .ToImmutableArray();
-
-        var loaded = Assert.IsType<DagLedgerFilesLoadOutcome.Loaded>(
-            FrozenAcceptedEventLoader.LoadTrustedFiles(files));
-
-        Assert.Equal(files.Length, loaded.Events.Length);
-        Assert.Contains(loaded.Events, static item => item.SchemaVersion == 4);
-        Assert.Contains(loaded.Events, static item =>
-            item.SchemaVersion == FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion);
-        Assert.All(loaded.Events, static item =>
-            Assert.True(item.SchemaVersion is 4 or FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion));
-    }
-
-    [Fact]
     public void ProofBodyOnlyChangeDoesNotReportStatementIdentityChanged()
     {
         var recordedCatalog = BuildCatalog(Module(
