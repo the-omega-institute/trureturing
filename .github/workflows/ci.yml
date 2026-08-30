@@ -553,7 +553,7 @@ jobs:
         run: |
           set -euo pipefail
           printf '%s\n' '集成分支要求使用 release cache;取回失败即失败,不回落编译'
-          candidate/tools/scripts/worktree/lean-cache-publish.sh fetch --repository "$GITHUB_WORKSPACE/candidate"
+          PATH="$HOME/.elan/bin:$PATH" candidate/tools/scripts/worktree/lean-cache-publish.sh fetch --repository "$GITHUB_WORKSPACE/candidate"
 
       - name: Produce source-bound canonical Lean reports
         if: steps.report-reuse.outcome != 'success'
