@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/PrimeObserver/ChargeTomography/SharedChargeDifferentShells
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Multiple observer shells can factor to the same charge readout while retaining different kernels and therefore remaining distinct observers. -/
+   digest: Multiple shells can factor to one charge while retaining different
+     kernels and therefore remaining distinct observers. -/
 
 import Mathlib
 
@@ -55,19 +56,25 @@ theorem family_shell_equality_implies_charge_equality
 
 /-- The identity shell and the charge-only shell read the same charge on pairs. -/
 theorem pair_shells_read_same_charge :
-    ReadsCharge (fun x : Bool × Bool => x) Prod.fst Prod.fst ∧
-      ReadsCharge Prod.fst id Prod.fst := by
+    ReadsCharge
+        (fun x : Bool × Bool => x)
+        (fun y : Bool × Bool => y.1)
+        (fun x : Bool × Bool => x.1) ∧
+      ReadsCharge
+        (fun x : Bool × Bool => x.1)
+        (fun b : Bool => b)
+        (fun x : Bool × Bool => x.1) := by
   constructor <;> rfl
 
 /-- Sharing a charge does not identify observer shells: one shell can retain a
 hidden coordinate that another shell discards. -/
 theorem shared_charge_does_not_force_same_kernel :
-    (∀ x y : Bool × Bool, x = y → Prod.fst x = Prod.fst y) ∧
-      (∃ x y : Bool × Bool, Prod.fst x = Prod.fst y ∧ x ≠ y) := by
+    (∀ x y : Bool × Bool, x = y → x.1 = y.1) ∧
+      (∃ x y : Bool × Bool, x.1 = y.1 ∧ x ≠ y) := by
   constructor
   · intro x y h
     exact congrArg Prod.fst h
-  · exact ⟨(false, false), (false, true), rfl, by decide⟩
+  · exact ⟨(false, false), (false, true), rfl, by simp⟩
 
 /-- In the concrete witness, the fine shell is faithful and the charge-only
 shell is not. -/
@@ -78,11 +85,15 @@ theorem fine_and_charge_shells_have_different_faithfulness :
   · exact Function.injective_id
   · intro hInjective
     have hEq : (false, false) = (false, true) := hInjective rfl
-    decide at hEq
+    have hSecond := congrArg Prod.snd hEq
+    simp at hSecond
 
 /-- The carrier and hypotheses are inhabited by explicit distinct shells. -/
 example :
-    ReadsCharge (fun x : Bool × Bool => x) Prod.fst Prod.fst := by
+    ReadsCharge
+      (fun x : Bool × Bool => x)
+      (fun y : Bool × Bool => y.1)
+      (fun x : Bool × Bool => x.1) := by
   rfl
 
 #print axioms shell_equality_implies_charge_equality
