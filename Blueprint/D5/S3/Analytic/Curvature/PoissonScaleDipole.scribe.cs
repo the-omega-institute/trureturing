@@ -36,10 +36,7 @@ internal sealed class PoissonScaleDipoleDocument : IScribeDocumentDefinition
     private static Formula EqualTo(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
 
-    private static Formula Implies(Formula left, Formula right) =>
-        new Formula.Logic(left, FormulaLogicOperator.Implies, right);
-
-    private static Formula Lambda(Formula binder, Formula body) =>
+    private static Formula LambdaExpr(Formula binder, Formula body) =>
         Seq(Open, binder, Sp, Mapsto, Sp, body, Close);
 
     private static Formula LessThan(Formula left, Formula right) =>
@@ -65,7 +62,7 @@ internal sealed class PoissonScaleDipoleDocument : IScribeDocumentDefinition
         Formula distanceSquare = Seq(
             displacementSquare, Sp, Plus, Sp, deltaSquare);
 
-        Formula poissonDefinition = Lambda(
+        Formula poissonDefinition = LambdaExpr(
             Seq(scale, Comma, Sp, x),
             new Formula.Fraction(
                 scale,
@@ -73,7 +70,7 @@ internal sealed class PoissonScaleDipoleDocument : IScribeDocumentDefinition
                     pi, Sp, Times, Sp, Open,
                     Square(scale), Sp, Plus, Sp, Square(x),
                     Close)));
-        Formula curvatureDefinition = Lambda(
+        Formula curvatureDefinition = LambdaExpr(
             t,
             Seq(
                 D(2), Sp, Times, Sp,
@@ -89,7 +86,7 @@ internal sealed class PoissonScaleDipoleDocument : IScribeDocumentDefinition
                     D(2), Sp, Times, Sp, pi, Sp, Times, Sp,
                     Call(
                         "deriv",
-                        Lambda(scale, Apply(poissonKernel, scale, displacement)),
+                        LambdaExpr(scale, Apply(poissonKernel, scale, displacement)),
                         delta))));
         Formula integrableClause = Call("Integrable", curvatureDipole);
         Formula massClause = EqualTo(
