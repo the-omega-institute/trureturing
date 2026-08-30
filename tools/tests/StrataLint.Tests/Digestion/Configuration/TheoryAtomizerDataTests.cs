@@ -10,7 +10,8 @@ public sealed class TheoryAtomizerDataTests
     private static readonly string FirstScheme = string.Concat("gi", "ct");
     private static readonly string SecondScheme = string.Concat("pz", "g");
 
-    private static string Minimal => """
+    // internal(2026-08-30,#4125):FormalizeCandidatesTests.Quarantine.cs 以它作 hermetic 规则夹具,不再读 canonical 文件。
+    internal static string Minimal => """
         schema_version = 1
 
         [[observer.claim_prefixes]]
