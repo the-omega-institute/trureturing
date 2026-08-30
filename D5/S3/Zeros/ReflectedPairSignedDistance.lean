@@ -5,7 +5,8 @@
    anchors: []
    digest: A reflected pair becomes a negative signed distance in the squared normal coordinate. -/
 
-import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.Calculus.Deriv.Pow
+import Mathlib.Analysis.Calculus.Deriv.Shift
 import Mathlib.Tactic
 
 /-!
@@ -51,11 +52,11 @@ theorem reflected_pair_signed_distance_resolvent
   have hDerivative :
       HasDerivAt (fun v : Real => (v + -delta ^ 2) ^ 2)
         (2 * (u + -delta ^ 2)) u := by
-    convert (((hasDerivAt_id u).add_const (-delta ^ 2)).pow 2) using 1 <;> ring
+    simpa using
+      (hasDerivAt_pow 2 (u + -delta ^ 2)).comp_add_const u (-delta ^ 2)
   refine ⟨by nlinarith, by ring, by ring, ?_⟩
   rw [hDerivative.deriv]
   field_simp [hNonzero]
-  ring
 
 #print axioms reflected_pair_signed_distance_resolvent
 
