@@ -1,0 +1,34 @@
+## 五、\(\zeta\) 的离散零点代表什么？
+
+它们不是单个素数。
+
+它们是整个 prime-power log-time 序列的全局共振频率。
+
+临界零点对应纯相位：
+
+$$
+e^{i\gamma\log n}.
+$$
+
+离线零点对应双曲对：
+
+$$
+e^{\pm\delta\log n}e^{i\gamma\log n}.
+$$
+
+完成以后成为：
+
+$$
+\cosh(\delta\log n)\cos(\gamma\log n).
+$$
+
+所以：
+
+$$
+\boxed{
+\text{离线零点的素数对偶，是一个跨越全部素数幂的 hyperbolic Mellin wave。}
+}
+$$
+
+---
+

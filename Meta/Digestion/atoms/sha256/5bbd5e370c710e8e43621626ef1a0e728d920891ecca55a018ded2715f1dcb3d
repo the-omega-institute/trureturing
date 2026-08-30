@@ -1,0 +1,13 @@
+- 真正 open：O-6 $\Rightarrow$ RH。
+
+反向所需的公开目标应先固定为一个 separator theorem，而不是直接打开 RH：
+
+    theorem offLineZero_yields_negative_weil_square
+        (Z : ZeroData)
+        (hOff : ∃ n, (Z.zero n).re ≠ criticalAbscissa) :
+        ∃ g : WeilTestFunction,
+          ∃ hZero : SymmetricConvergent Z (convolutionSquare g),
+            (zeroSum Z (convolutionSquare g) hZero).re < 0
+
+该声明不是近期义务；它把难核准确暴露出来。若本仓偶卷积平方测试类不足，该 theorem 可能为假，必须先修正测试代数，而不是无限调 tactic。
+

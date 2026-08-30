@@ -1,0 +1,10 @@
+ast_path: section/977-1-当前数值读数的诚实结论
+fingerprints:
+  raw_sha256: sha256:7707ae16832d75b76318183bea1a0bada87b740b7406d0843c3ce67dba35d4c6
+  normalized_sha256: sha256:7707ae16832d75b76318183bea1a0bada87b740b7406d0843c3ce67dba35d4c6
+cas_ref: sha256:7707ae16832d75b76318183bea1a0bada87b740b7406d0843c3ce67dba35d4c6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

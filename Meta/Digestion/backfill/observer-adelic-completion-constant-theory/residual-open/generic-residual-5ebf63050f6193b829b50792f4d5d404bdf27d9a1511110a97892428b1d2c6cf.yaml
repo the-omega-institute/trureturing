@@ -1,0 +1,10 @@
+ast_path: section/第一千零五十四部-RH-是-单极子禁闭于完成边界
+fingerprints:
+  raw_sha256: sha256:5ebf63050f6193b829b50792f4d5d404bdf27d9a1511110a97892428b1d2c6cf
+  normalized_sha256: sha256:5ebf63050f6193b829b50792f4d5d404bdf27d9a1511110a97892428b1d2c6cf
+cas_ref: sha256:5ebf63050f6193b829b50792f4d5d404bdf27d9a1511110a97892428b1d2c6cf
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

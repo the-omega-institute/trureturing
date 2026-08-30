@@ -1,0 +1,32 @@
+## 定理 1036.1（Countable rational flux criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathfrak F_\xi(R)=0
+}
+$$
+
+对所有满足边界无零点条件的：
+
+$$
+R\in\mathscr R_{\mathbb Q}
+$$
+
+成立。
+
+### 证明
+
+RH 成立时右半平面内没有零点，所以每个通量为零。
+
+若存在右半平面零点 \(z_0\)，由零点离散性，可在其周围选择一个不含其他零点、边界不经过零点的有理矩形 \(R\)。于是：
+
+$$
+\mathfrak F_\xi(R)=m_{z_0}\ge1.
+$$
+
+∎
+
+---
+

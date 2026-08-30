@@ -1,0 +1,46 @@
+## 994.1 实对称分支
+
+Li–Clark moments 满足：
+
+$$
+c_{-n}=c_n\in\mathbb R.
+$$
+
+所以其 Verblunsky coefficients 为实数。
+
+于是：
+
+$$
+\boxed{
+\alpha_n\alpha_{n-1}\longrightarrow-1.
+}
+\tag{994.4}
+$$
+
+因此从某一有限深度以后：
+
+$$
+\operatorname{sgn}\alpha_n
+=
+-\operatorname{sgn}\alpha_{n-1}.
+$$
+
+即存在：
+
+$$
+\sigma_\infty\in\{\pm1\}
+$$
+
+使：
+
+$$
+\boxed{
+(-1)^n\alpha_n
+\longrightarrow
+\sigma_\infty.
+}
+\tag{994.5}
+$$
+
+---
+

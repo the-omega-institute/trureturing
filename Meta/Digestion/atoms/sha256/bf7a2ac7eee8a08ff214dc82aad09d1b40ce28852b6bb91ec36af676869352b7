@@ -1,0 +1,78 @@
+## 定理 969.1（Transfer–Chebyshev identity）
+
+$$
+\boxed{
+\frac12\operatorname{tr}M^N
+=
+T_N(x).
+}
+\tag{969.1}
+$$
+
+于是前文 Chebyshev slack：
+
+$$
+1-T_N(x)^2
+$$
+
+可以写成：
+
+$$
+\boxed{
+1-T_N(x)^2
+=
+-\frac14
+\left[
+\operatorname{tr}(M^N)^2-4
+\right].
+}
+\tag{969.2}
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{array}{c|c|c}
+|x|<1 & |\operatorname{tr}M|<2 & \text{elliptic}\\
+|x|=1 & |\operatorname{tr}M|=2 & \text{parabolic}\\
+|x|>1 & |\operatorname{tr}M|>2 & \text{hyperbolic}
+\end{array}
+}
+$$
+
+前文构造的离线 Chebyshev 负证书：
+
+$$
+1-T_N(x)^2<0
+$$
+
+正是：
+
+$$
+\boxed{
+\text{有限 Szegő transfer 已进入 hyperbolic sector。}
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{Chebyshev–Toeplitz criterion}
+}
+$$
+
+与：
+
+$$
+\boxed{
+\text{CMV–}SL_2\text{ transfer criterion}
+}
+$$
+
+并不是两条独立路线。
+
+它们是同一个有限观察结构的：
+
+* moment 图表；

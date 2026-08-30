@@ -1,0 +1,21 @@
+### 2. 理论卷层答案：零点定位部分被设计成 RH 等价形
+
+[repo-derived | path: `docs/develop/theory/PZG_BEDC.md` | GID: not present]
+
+该理论卷的命题 6.19 声称在
+
+$\Re s>1/(2\phi^3)$
+
+有因子分解
+
+$Z_{\rm qc}(s)
+ =\zeta(\phi^2s)\,
+  \zeta(\phi^3s)\,
+  \zeta(2\phi^2s)^{-1}\,
+  e^{H_2(s)},$
+
+其中 $H_2$ 绝对收敛。
+
+命题 6.20 由此识别：
+
+- 结构零点 $s_*=1/(2\phi^2)$；

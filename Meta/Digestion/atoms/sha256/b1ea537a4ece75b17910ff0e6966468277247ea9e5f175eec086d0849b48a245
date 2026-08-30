@@ -1,0 +1,20 @@
+## 五、prime-side 重建
+
+使用零点直接计算得到的黄金规律，必须能够从：
+
+$$
+\text{prime}
++
+\text{pole}
++
+\Gamma_\infty
+$$
+
+的 fixed-window source 独立恢复。
+
+否则它可能只是 zero-side 数据的重新编码。
+
+仓库固定深度 Li–Clark recovery 已经把有限窗口 moment error 传递到 Toeplitz operator norm 和最小特征值，因此可以对上述 determinant cross-ratio 建立区间证书。
+
+---
+

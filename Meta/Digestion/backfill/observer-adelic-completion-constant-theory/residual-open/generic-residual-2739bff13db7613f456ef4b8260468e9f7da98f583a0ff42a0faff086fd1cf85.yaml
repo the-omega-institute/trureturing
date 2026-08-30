@@ -1,0 +1,10 @@
+ast_path: section/临界线零点
+fingerprints:
+  raw_sha256: sha256:2739bff13db7613f456ef4b8260468e9f7da98f583a0ff42a0faff086fd1cf85
+  normalized_sha256: sha256:2739bff13db7613f456ef4b8260468e9f7da98f583a0ff42a0faff086fd1cf85
+cas_ref: sha256:2739bff13db7613f456ef4b8260468e9f7da98f583a0ff42a0faff086fd1cf85
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

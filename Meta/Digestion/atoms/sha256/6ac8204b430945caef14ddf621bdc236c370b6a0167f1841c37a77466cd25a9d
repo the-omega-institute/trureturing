@@ -1,0 +1,24 @@
+## 1068.6 黄金径向 RG
+
+形式化：
+
+$$
+r_n=r_0\varphi^{-2n},
+$$
+
+并证明：
+
+$$
+\operatorname{Flux}(r_n)
+=
+\operatorname{Flux}(r_0).
+$$
+
+再构造：
+
+$$
+S^2\times S^1_{2\log\varphi}.
+$$
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/4-第三处语义缺口-测试类是否足够完备/clause/1
+fingerprints:
+  raw_sha256: sha256:15e327a860bf45024019f8a60b85c5bf73181445d05cc56053b30ef06e6f6844
+  normalized_sha256: sha256:15e327a860bf45024019f8a60b85c5bf73181445d05cc56053b30ef06e6f6844
+cas_ref: sha256:15e327a860bf45024019f8a60b85c5bf73181445d05cc56053b30ef06e6f6844
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,2 @@
+- 本次检索未发现一个获得公认、完整 kernel-checked 的 RH 证明；凡声称“Lean 已证明 RH”的材料，若不能给出可构建源树、无 `sorry`／自定义不受控公理审计和准确 theorem statement，均不得进入 literature-attested 栏。
+

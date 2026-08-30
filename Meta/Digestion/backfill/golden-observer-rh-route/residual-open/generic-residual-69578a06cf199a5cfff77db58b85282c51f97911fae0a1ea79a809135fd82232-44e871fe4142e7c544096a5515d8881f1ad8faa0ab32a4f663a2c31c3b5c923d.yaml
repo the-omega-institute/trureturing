@@ -1,0 +1,10 @@
+ast_path: 第一部/2024/clause/2
+fingerprints:
+  raw_sha256: sha256:69578a06cf199a5cfff77db58b85282c51f97911fae0a1ea79a809135fd82232
+  normalized_sha256: sha256:69578a06cf199a5cfff77db58b85282c51f97911fae0a1ea79a809135fd82232
+cas_ref: sha256:69578a06cf199a5cfff77db58b85282c51f97911fae0a1ea79a809135fd82232
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

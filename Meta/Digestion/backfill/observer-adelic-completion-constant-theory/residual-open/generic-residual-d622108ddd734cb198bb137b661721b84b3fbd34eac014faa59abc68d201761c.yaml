@@ -1,0 +1,10 @@
+ast_path: section/第一千零七十部-理论深度审计
+fingerprints:
+  raw_sha256: sha256:d622108ddd734cb198bb137b661721b84b3fbd34eac014faa59abc68d201761c
+  normalized_sha256: sha256:d622108ddd734cb198bb137b661721b84b3fbd34eac014faa59abc68d201761c
+cas_ref: sha256:d622108ddd734cb198bb137b661721b84b3fbd34eac014faa59abc68d201761c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

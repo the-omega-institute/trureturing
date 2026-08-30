@@ -1,0 +1,84 @@
+## 七、正时间与负时间怎样构成一个整体？
+
+正时间：
+
+$$
+e^{-tA}
+$$
+
+完成、平均、遗忘。
+
+负时间：
+
+$$
+e^{tA}
+$$
+
+blow-up、求导、恢复被隐藏纤维。
+
+黄金二通道 RG：
+
+$$
+(\delta,L)
+\mapsto
+(\varphi^{-2}\delta,\varphi^2L)
+$$
+
+使：
+
+$$
+\delta L
+$$
+
+保持不变。
+
+所以黄金比例不是正负时间的交点坐标，而是：
+
+$$
+\boxed{
+\text{对象缺陷与观察分辨率互为对偶时的最小自相似倍率。}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{稀缺对象不是靠概率被看见，而是靠它无法逃脱的对偶证书被看见。}
+}
+$$
+
+有理数无法逃脱整数关系：
+
+$$
+qx-p=0.
+$$
+
+离线零点无法逃脱：
+
+$$
+\boxed{
+\text{Poisson 影子}
++
+\text{Christoffel 原子 floor}
++
+\text{有限负 Weil/Toeplitz 证书}.
+}
+$$
+
+而如果离线零点不存在，真正应证明的也不是“我们搜索了很久都没有找到”，而是：
+
+$$
+\boxed{
+\text{所有圆外 evaluation costs 都统一塌缩，
+所有有限完成矩阵都保持正性，
+所有 hyperbolic escape channels 都被禁止。}
+}
+$$
+
+这就是极稀缺离线零点问题的对偶科学方法。
+
+[1]: https://dlmf.nist.gov/25.10 "https://dlmf.nist.gov/25.10"
+[2]: https://www.cambridge.org/core/journals/glasgow-mathematical-journal/article/diophantine-approximation-on-hecke-groups/A4E0CB3F7C102CAD3304C66817C0DC87 "https://www.cambridge.org/core/journals/glasgow-mathematical-journal/article/diophantine-approximation-on-hecke-groups/A4E0CB3F7C102CAD3304C66817C0DC87"
+[3]: https://arxiv.org/abs/1812.06560 "https://arxiv.org/abs/1812.06560"
+[4]: https://arxiv.org/abs/2608.24827 "https://arxiv.org/abs/2608.24827"

@@ -1,0 +1,57 @@
+# 第九百四十八部　Fricke–Vogt invariant 是观察者 Holonomy Casimir
+
+定义：
+
+$$
+\boxed{
+G(x,y,z)
+=
+x^2+y^2+z^2-2xyz-1.
+}
+\tag{948.1}
+$$
+
+直接计算：
+
+$$
+\boxed{
+G(T(x,y,z))=G(x,y,z).
+}
+\tag{948.2}
+$$
+
+因此 \(G\) 是 trace map 的守恒量。
+
+经典 Fibonacci Hamiltonian 的 invariant surfaces 为：
+
+$$
+\boxed{
+S_\lambda
+=
+\left\{
+G=\frac{\lambda^2}{4}
+\right\}.
+}
+\tag{948.3}
+$$
+
+其初始能量线可以写成：
+
+$$
+\boxed{
+\ell_\lambda(E)
+=
+\left(
+\frac{E-\lambda}{2},
+\frac E2,
+1
+\right)
+\subset S_\lambda.
+}
+\tag{948.4}
+$$
+
+这些结构是 Fibonacci trace-map 理论的标准起点。([arXiv][1])
+
+---
+

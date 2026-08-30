@@ -1,0 +1,22 @@
+# 第九百六十九部　Chebyshev 证书就是传输判别式
+
+取任意：
+
+$$
+M\in SL(2,\mathbb C),
+$$
+
+定义：
+
+$$
+x=\frac12\operatorname{tr}M.
+$$
+
+由 Cayley–Hamilton：
+
+$$
+M^2-2xM+I=0.
+$$
+
+因此：
+

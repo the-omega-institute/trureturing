@@ -1,0 +1,4 @@
+- 没有把 `eulerGerm` 与 completed zeta 因子严格连接的 theorem。
+
+因此在内核事实层，O-5 与 RH 是两个尚未形式连接的命题。“independence” 是路线命名，不是已证明的逻辑独立性；没有任何 ZFC／Lean 基础中的独立性结论。
+

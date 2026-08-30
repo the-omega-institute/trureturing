@@ -1,0 +1,22 @@
+## 第三步：Laguerre moments
+
+计算：
+
+$$
+\boxed{
+\widehat m_{n,L}^{(a)}
+=
+R-
+2a
+\int_0^{2L}
+e^{-at}
+L_{n-1}^{(1)}(2at)
+H_{a,L,R}(t)\,dt.
+}
+\tag{978.2}
+$$
+
+仓库的 Cayley moment transport 已经给出尺度变换和有限 tail 的几何控制。
+
+---
+

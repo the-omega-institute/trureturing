@@ -1,0 +1,10 @@
+ast_path: section/GSR-2-渐近-Fibonacci-recursion
+fingerprints:
+  raw_sha256: sha256:c1fdb36f74833d3cddbf8604e04d52d4c0860a615a6e8c10d70d275fa4b41b8e
+  normalized_sha256: sha256:c1fdb36f74833d3cddbf8604e04d52d4c0860a615a6e8c10d70d275fa4b41b8e
+cas_ref: sha256:c1fdb36f74833d3cddbf8604e04d52d4c0860a615a6e8c10d70d275fa4b41b8e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

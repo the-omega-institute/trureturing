@@ -1,0 +1,92 @@
+# 第九百五十四部　自由谱、Fibonacci 谱与 Chebyshev 的统一
+
+当：
+
+$$
+\lambda=0,
+$$
+
+所有局部矩阵相同：
+
+$$
+A_\lambda(E)=A_0(E).
+$$
+
+长度为 \(N\) 的任意 block transfer 都是：
+
+$$
+A_0(E)^N.
+$$
+
+令：
+
+$$
+y=\frac E2.
+$$
+
+则：
+
+$$
+\boxed{
+\frac12
+\operatorname{tr}
+A_0(E)^N
+=
+T_N(E/2).
+}
+\tag{954.1}
+$$
+
+自由谱：
+
+$$
+E\in[-2,2]
+$$
+
+恰好对应：
+
+$$
+E/2\in[-1,1],
+$$
+
+即 transfer 为 elliptic/parabolic。
+
+所以：
+
+$$
+\boxed{
+\text{Chebyshev 区间 }[-1,1]
+}
+$$
+
+不是人为选出的允许区间。
+
+它是：
+
+$$
+\boxed{
+\text{自由一维自伴传播的真实能带。}
+}
+$$
+
+Fibonacci trace map则把自由 Chebyshev 动力变形成准周期递归动力。
+
+这把此前三条独立路线统一起来：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Chebyshev localizer}
+&=\text{自由 transfer discriminant};\\
+\text{Fibonacci trace map}
+&=\text{黄金 block transfer RG};\\
+\text{Toeplitz localizing matrix}
+&=\text{有限谱正性证书}.
+\end{aligned}
+}
+$$
+
+仓库已有的共同分母多项式基与 rational Toeplitz collapse，正好可以承接这一 transfer–Chebyshev 层，把有限有理特征压缩成一个 moment congruence。
+
+---
+

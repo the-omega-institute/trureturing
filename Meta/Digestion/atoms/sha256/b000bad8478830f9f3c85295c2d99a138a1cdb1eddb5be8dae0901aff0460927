@@ -1,0 +1,70 @@
+## 1038.1 离线零点是 Poisson 演化的体源
+
+若存在：
+
+$$
+z_0=\delta+i\gamma,
+\qquad
+\delta>0,
+$$
+
+则：
+
+$$
+\Delta U_\xi
+$$
+
+在：
+
+$$
+(\delta,\gamma)
+$$
+
+处包含点源。
+
+因此 \(U_\xi\) 不再是纯边界数据的无源调和延拓。
+
+形式上：
+
+$$
+\boxed{
+U_\xi
+=
+\text{Poisson boundary extension}
++
+\text{bulk Green source}.
+}
+\tag{1038.5}
+$$
+
+于是不同深度之间的演化不再由纯 Poisson 半群闭合，而需要增加一个源项：
+
+$$
+\boxed{
+D_{x+h}
+=
+P_h*D_x
++
+\mathfrak G_{x,h}^{\mathrm{bulk}}.
+}
+\tag{1038.6}
+$$
+
+其中：
+
+$$
+\mathfrak G_{x,h}^{\mathrm{bulk}}
+$$
+
+由位于两个观察层之间或影响其延拓的离线零点产生。
+
+所以离线零点的另一种对偶是：
+
+$$
+\boxed{
+\text{Poisson completion semigroup 的 Duhamel 源项。}
+}
+$$
+
+---
+

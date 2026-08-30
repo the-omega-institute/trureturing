@@ -1,0 +1,8 @@
+### 7. Prime-side 重建
+
+使用局部 explicit formula 和 Laguerre moments，而非直接零点输入，重复整个实验。
+
+只有第 7 项仍出现相同的 trace invariants，才能说明黄金结构来自 prime–Archimedean 本体，而不只是 zero-data 重编码。
+
+---
+

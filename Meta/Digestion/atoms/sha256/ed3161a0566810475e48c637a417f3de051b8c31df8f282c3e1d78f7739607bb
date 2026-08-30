@@ -1,0 +1,17 @@
+## 1068.3 重数—Chern 荷
+
+证明：
+
+$$
+\boxed{
+c_1
+=
+\operatorname{wind}
+\frac F{|F|}
+=
+\operatorname{ord}_{z_0}F.
+}
+$$
+
+---
+

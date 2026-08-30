@@ -1,0 +1,14 @@
+ast_path: section/Christoffel-Annulus-RH-Criterion
+fingerprints:
+  raw_sha256: sha256:3a9c0229e7eb355de9a8cec4c4fa23d3663a9024bc1616b34df99fdf799d58de
+  normalized_sha256: sha256:3a9c0229e7eb355de9a8cec4c4fa23d3663a9024bc1616b34df99fdf799d58de
+cas_ref: sha256:3a9c0229e7eb355de9a8cec4c4fa23d3663a9024bc1616b34df99fdf799d58de
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-48c218335be3c29f2504b40b463c9fc4c13f906b0b0e9d6a74f29bb59e1afc62-9188dc10df299c464be4463d2559cf8220d038a96be4d03e9837d297f3c03e2a
+    - generic-residual-91b39404ef2b3f3288b6dda9034048ac439c325ba0f6e4cf8a21c3408c1d6bb0-bb9955c84eb549a9069bb66edf4b6d1a20fc441e092f961a2cfa9b52314075b9
+    - generic-residual-2c2fdac01e7cb0edcc282775a7eb3e26184cc3d3c65f805582a2ca12d721d162-013ecb1e140a2643b32dcd5894ea824db5cf357ea4019dd765b919bf1d88c015

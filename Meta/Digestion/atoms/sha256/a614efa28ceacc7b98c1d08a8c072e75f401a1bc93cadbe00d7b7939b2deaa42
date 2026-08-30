@@ -1,0 +1,30 @@
+## 1059.1 黄金单极子紧化空间
+
+将全部非零径向点按：
+
+$$
+\mathbf q
+\sim
+\varphi^2\mathbf q
+$$
+
+识别。
+
+则：
+
+$$
+\boxed{
+\left(
+\mathbb R^3\setminus\{0\}
+\right)
+/
+\varphi^{2\mathbb Z}
+\cong
+S^2\times S^1_{2\log\varphi}.
+}
+\tag{1059.5}
+$$
+
+其中：
+
+* \(S^2\) 记录观察方向；

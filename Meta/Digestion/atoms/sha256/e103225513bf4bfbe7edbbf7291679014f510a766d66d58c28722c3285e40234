@@ -1,0 +1,79 @@
+# 第九百八十四部　建议形式化顺序
+
+```text
+D5/S3/Weil/LiClarkSchur/
+  LiCurvatureSequence.lean
+  LiCurvatureToeplitz.lean
+  LiCoefficientOnesRayleigh.lean
+  LiToeplitzRHCriterion.lean
+  LiCMVRealizationCriterion.lean
+
+D5/S3/Weil/SchurMoments/
+  CircleCaratheodoryFunction.lean
+  CircleSchurFunction.lean
+  SchurParameter.lean
+  SchurIteration.lean
+  RealMomentsRealSchurParameters.lean
+  FirstLiSchurCoefficient.lean
+  SecondLiSchurCoefficient.lean
+
+D5/S3/Weil/VerblunskyDeterminant/
+  ToeplitzDeterminantLadder.lean
+  PredictionErrorRatio.lean
+  VerblunskyModulusDeterminant.lean
+  DeterminantObserverNoncloning.lean
+  RealSignHistoryNoncloning.lean
+
+D5/S3/Weil/SzegoTransfer/
+  SzegoTransferMatrix.lean
+  SzegoDeterminantOneNormalization.lean
+  SzegoSU11.lean
+  RealSzegoConjugateSL2.lean
+  TransferPowerChebyshev.lean
+  TransferHyperbolicEscape.lean
+
+D5/S3/Weil/CayleyRadialEscape/
+  ComplexCayleyOffLine.lean
+  CayleyReflectionReciprocalPair.lean
+  CayleyRadialCoordinate.lean
+  CayleyRadialDerivative.lean
+  CayleyPhaseDerivative.lean
+  RadialDerivativeEqualsPoisson.lean
+  PairedCayleyMomentCoshSinh.lean
+
+D5/S3/Weil/CayleyResolution/
+  RadialMomentDepth.lean
+  TangentialMomentResolution.lean
+  CayleyAspectRatioInvariant.lean
+  BalancedCayleyScale.lean
+  LaguerreWindowTransverseLaw.lean
+
+D5/S3/Weil/SchurContact/
+  HaarFloorResidualSchurData.lean
+  SingularToeplitzTerminalReflection.lean
+  ContactPolynomialTerminalMeasure.lean
+  InfiniteSupportStrictSchurDisk.lean
+  SingularMeasureInfiniteReflectionEnergy.lean
+
+D5/S3/GoldenObserver/SchurRenormalization/
+  FibonacciSchurBlock.lean
+  FibonacciSzegoProduct.lean
+  PerturbedFibonacciMatrixRecurrence.lean
+  SchurTraceMapResidual.lean
+  SchurFrickeDrift.lean
+  GoldenStableMultiplierTarget.lean
+  MultiscaleSchurGaugeTarget.lean
+
+D5/S3/Weil/PrimeSchurCompiler/
+  WindowSourceToResolvent.lean
+  ResolventToCayleyMoments.lean
+  CayleyMomentsToSchurParameters.lean
+  SchurParametersToSzegoCocycle.lean
+  WindowSchurErrorBound.lean
+  IntervalSchurEscapeCertificate.lean
+```
+
+其中 Schur–Verblunsky 与 CMV 的基础结构可先作为成熟 OPUC 接口接入；Li 曲率恒等式、Cayley radial–Poisson 恒等式和有限窗口证书均可直接在项目内证明。
+
+---
+

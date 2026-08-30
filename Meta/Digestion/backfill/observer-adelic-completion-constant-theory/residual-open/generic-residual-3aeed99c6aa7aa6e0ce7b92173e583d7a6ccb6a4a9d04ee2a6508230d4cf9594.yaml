@@ -1,0 +1,10 @@
+ast_path: section/1001-3-Pair-rapidity
+fingerprints:
+  raw_sha256: sha256:3aeed99c6aa7aa6e0ce7b92173e583d7a6ccb6a4a9d04ee2a6508230d4cf9594
+  normalized_sha256: sha256:3aeed99c6aa7aa6e0ce7b92173e583d7a6ccb6a4a9d04ee2a6508230d4cf9594
+cas_ref: sha256:3aeed99c6aa7aa6e0ce7b92173e583d7a6ccb6a4a9d04ee2a6508230d4cf9594
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

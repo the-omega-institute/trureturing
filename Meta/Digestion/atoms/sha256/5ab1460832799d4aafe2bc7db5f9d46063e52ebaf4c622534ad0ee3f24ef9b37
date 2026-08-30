@@ -1,0 +1,4 @@
+- source digest。
+
+外部项目升级导致地址变化，只能追加新的 import receipt；不能据此改写旧 theorem 曾经是否通过。
+

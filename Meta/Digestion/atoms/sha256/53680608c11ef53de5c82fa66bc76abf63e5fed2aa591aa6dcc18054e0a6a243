@@ -1,0 +1,1 @@
+* active floor 的 residual support 被限制在有限 contact polynomial 零点上，并产生有限原子表示；

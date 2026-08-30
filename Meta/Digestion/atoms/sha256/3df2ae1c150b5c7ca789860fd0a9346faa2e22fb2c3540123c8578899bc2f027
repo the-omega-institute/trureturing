@@ -1,0 +1,53 @@
+## 993.1 极限完成的严格图景
+
+因此 RH 真时：
+
+$$
+\boxed{
+\begin{aligned}
+\text{任一有限层}
+&:\quad
+\text{严格正、仍允许连续 Haar 底座};\\
+\text{无限极限}
+&:\quad
+\text{Haar floor 归零，完整谱成为纯点结构}.
+\end{aligned}
+}
+$$
+
+而 RH 假时，前文 Toeplitz 判据说明某个有限层将出现：
+
+$$
+\boxed{
+\Lambda_N<0.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH\ true}
+&:\quad
+\Lambda_N>0\ \forall N,\quad \Lambda_N\to0;\\
+\mathrm{RH\ false}
+&:\quad
+\exists N,\ \Lambda_N<0.
+\end{aligned}
+}
+\tag{993.6}
+$$
+
+这正是：
+
+$$
+\boxed{
+\text{“真正完成只发生在无限层，而破缺必在有限层留下证书”}
+}
+$$
+
+的有限矩阵版本。
+
+---
+

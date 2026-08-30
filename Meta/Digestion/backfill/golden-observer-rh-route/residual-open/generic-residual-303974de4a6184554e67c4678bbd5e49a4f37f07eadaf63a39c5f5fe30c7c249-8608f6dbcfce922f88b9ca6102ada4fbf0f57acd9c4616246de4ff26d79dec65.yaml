@@ -1,0 +1,10 @@
+ast_path: section/4-Hilbert-Pólya-极限/clause/5
+fingerprints:
+  raw_sha256: sha256:303974de4a6184554e67c4678bbd5e49a4f37f07eadaf63a39c5f5fe30c7c249
+  normalized_sha256: sha256:303974de4a6184554e67c4678bbd5e49a4f37f07eadaf63a39c5f5fe30c7c249
+cas_ref: sha256:303974de4a6184554e67c4678bbd5e49a4f37f07eadaf63a39c5f5fe30c7c249
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

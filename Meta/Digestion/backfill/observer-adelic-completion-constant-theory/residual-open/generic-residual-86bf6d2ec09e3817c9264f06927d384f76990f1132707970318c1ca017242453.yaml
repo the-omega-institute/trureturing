@@ -1,0 +1,10 @@
+ast_path: section/一-内生二分
+fingerprints:
+  raw_sha256: sha256:86bf6d2ec09e3817c9264f06927d384f76990f1132707970318c1ca017242453
+  normalized_sha256: sha256:86bf6d2ec09e3817c9264f06927d384f76990f1132707970318c1ca017242453
+cas_ref: sha256:86bf6d2ec09e3817c9264f06927d384f76990f1132707970318c1ca017242453
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

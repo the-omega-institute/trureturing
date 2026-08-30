@@ -1,0 +1,55 @@
+# 第九百五十七部　对 Riemann–Weil 分支的真正启示
+
+当前模型给出了一条非常明确但尚未闭合的目标。
+
+需要从项目现有 Prime–Archimedean/Weil 数据中构造两个规范的 \(SL_2\) 局部通道：
+
+$$
+\boxed{
+A_L(s),
+\qquad
+B_L(s),
+}
+\tag{957.1}
+$$
+
+使其满足：
+
+$$
+\det A_L=\det B_L=1.
+$$
+
+再按照黄金 word 构造：
+
+$$
+\boxed{
+M_{n+1}=M_{n-1}M_n.
+}
+\tag{957.2}
+$$
+
+则 half-traces 自动满足：
+
+$$
+\boxed{
+x_{n+1}
+=
+2x_nx_{n-1}-x_{n-2}.
+}
+\tag{957.3}
+$$
+
+并产生 Fricke invariant：
+
+$$
+\boxed{
+I_L(s)
+=
+x_{n+1}^2+x_n^2+x_{n-1}^2
+-2x_{n+1}x_nx_{n-1}-1.
+}
+\tag{957.4}
+$$
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/一-离线零点可能比有理数更稀缺吗
+fingerprints:
+  raw_sha256: sha256:a956896a81af3104ccdc77503a1026a25fc990b67a71382e9f29b7797586f82a
+  normalized_sha256: sha256:a956896a81af3104ccdc77503a1026a25fc990b67a71382e9f29b7797586f82a
+cas_ref: sha256:a956896a81af3104ccdc77503a1026a25fc990b67a71382e9f29b7797586f82a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
