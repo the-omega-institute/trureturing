@@ -24,7 +24,7 @@ noncomputable section
 
 namespace D5.S3.PrimeForms.GoldenEuler.LocalEulerTailVanishing
 
-open Filter
+open Filter Topology
 
 /-- Geometric local Euler truncation through exponents strictly below `N`. -/
 def localEulerPartial (x : ℂ) (N : ℕ) : ℂ :=
