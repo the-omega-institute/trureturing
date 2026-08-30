@@ -1,0 +1,24 @@
+# Bilateral Fibonacci Lift Classification
+
+## Abstract
+
+The bilateral Fibonacci lift is the unique two-line golden eigenlift up to independent component scales.
+
+**Theorem 1.1 (The bilateral lift is two-dimensional and componentwise unique).**
+
+$$\begin{gathered}\operatorname{finrank}\left(\mathbb{R}, \operatorname{Sol}\left(fibRec\right)\right) = 2 \land\\{}\operatorname{Sol}\left(fibRec\right) = \operatorname{span}\left(\mathbb{R}, e_{\varphi}, e_{\psi}\right) \land\\{}\psi = -\operatorname{inv}\left(\varphi\right) \land\\{}S\left(e_{\varphi}\right) = \varphi \cdot e_{\varphi} \land S\left(e_{\psi}\right) = \psi \cdot e_{\psi} \land\\{}\operatorname{inv}\left(\sqrt{5}\right) \neq 0 \land -\operatorname{inv}\left(\sqrt{5}\right) \neq 0 \land\\{}(\forall k: \mathbb{N}, F\left(k\right) = \frac{e_{\varphi}\left(k\right) - e_{\psi}\left(k\right)}{\sqrt{5}}) \land\\{}F \in \operatorname{span}\left(\mathbb{R}, e_{\varphi}, e_{\psi}\right) \land (\forall u: \operatorname{Seq}\left(\mathbb{R}\right), u \in \operatorname{span}\left(\mathbb{R}, e_{\varphi}, e_{\psi}\right) \Rightarrow S\left(u\right) \in \operatorname{span}\left(\mathbb{R}, e_{\varphi}, e_{\psi}\right)) \land\\{}(\forall W: \operatorname{Submodule}\left(\mathbb{R}, \operatorname{Seq}\left(\mathbb{R}\right)\right), F \in W \land (\forall u: \operatorname{Seq}\left(\mathbb{R}\right), u \in W \Rightarrow S\left(u\right) \in W) \Rightarrow \operatorname{span}\left(\mathbb{R}, e_{\varphi}, e_{\psi}\right) \subseteq W) \land\\{}\operatorname{finrank}\left(\mathbb{R}, \operatorname{span}\left(\mathbb{R}, e_{\varphi}, e_{\psi}\right)\right) = 2 \land\\{}(\forall u: \operatorname{Seq}\left(\mathbb{R}\right), S\left(u\right) = \varphi \cdot u \Rightarrow \exists! a: \mathbb{R}, u = a \cdot e_{\varphi}) \land\\{}(\forall v: \operatorname{Seq}\left(\mathbb{R}\right), S\left(v\right) = \psi \cdot v \Rightarrow \exists! b: \mathbb{R}, v = b \cdot e_{\psi}).\end{gathered}$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/BilateralLiftClassification.bilateral_lift_classification` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The source row phi = (1+sqrt(5))/2 is a definition (not a conjunct).
+
+The public statement retains the solution-space dimension, golden conjugacy identity, shift eigenlaws, nonzero Binet coefficients, least invariant carrier, its dimension, and two independently premised unique component-scalar classifications.
+
+## References
+
+- Truth anchor: `D5/S1/Recurrence/BilateralLiftClassification.bilateral_lift_classification`
+- Dependency: [D5/S1/Recurrence/BilateralLiftUniqueness](BilateralLiftUniqueness.md)

@@ -1,7 +1,17 @@
 namespace StrataLint.ArchitectureTests;
 
-public sealed class RetiredLedgerSurfaceTests
+public sealed class RetiredLedgerSurfaceTests(
+    RetiredLedgerSurfaceTests.ProductionGraphFixture fixture)
+    : IClassFixture<RetiredLedgerSurfaceTests.ProductionGraphFixture>
 {
+    private readonly ProductionSourceGraph graph = fixture.Graph;
+
+    public sealed class ProductionGraphFixture
+    {
+        internal ProductionSourceGraph Graph { get; } =
+            ProductionSourceGraph.Create(RepositoryLayout.FindRoot());
+    }
+
     [Fact]
     public void CliCommandTableContainsNoRetiredLedgerWriteVerb()
     {
@@ -13,7 +23,6 @@ public sealed class RetiredLedgerSurfaceTests
     [Fact]
     public void TrackedDotnetExecutableRootsHaveNoStaticallyBoundPathToRetiredLedgerWriteProtocols()
     {
-        var graph = ProductionSourceGraph.Create(RepositoryLayout.FindRoot());
         Assert.Equal(
             [
                 "tools/StrataLint.Cli/StrataLint.Cli.csproj::StrataLint.Cli.Program.Main(string[])",
@@ -46,7 +55,6 @@ public sealed class RetiredLedgerSurfaceTests
     [Fact]
     public void HistoricalFreezeMatcherHasOneProductionOwnerAndAllSemanticConsumersUseIt()
     {
-        var graph = ProductionSourceGraph.Create(RepositoryLayout.FindRoot());
         var definitions = graph.MethodDefinitionsNamed("HistoricalActiveFreezeMatches");
 
         var definition = Assert.Single(definitions);
