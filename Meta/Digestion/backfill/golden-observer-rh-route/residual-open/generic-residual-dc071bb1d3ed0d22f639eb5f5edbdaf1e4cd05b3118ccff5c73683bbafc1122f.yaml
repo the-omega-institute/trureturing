@@ -1,0 +1,15 @@
+ast_path: section/义务清单-预登记-elementary-优先
+fingerprints:
+  raw_sha256: sha256:dc071bb1d3ed0d22f639eb5f5edbdaf1e4cd05b3118ccff5c73683bbafc1122f
+  normalized_sha256: sha256:dc071bb1d3ed0d22f639eb5f5edbdaf1e4cd05b3118ccff5c73683bbafc1122f
+cas_ref: sha256:dc071bb1d3ed0d22f639eb5f5edbdaf1e4cd05b3118ccff5c73683bbafc1122f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-7d3cac61a40946fc633f3dd8e8c47448c2d4f727c5cfbff478b60808b591131f-d1d710e47d0631f3765dee5786750aa45e04375de4929027f1348fc9cc838def
+    - generic-residual-899994d869c84e00ff906406de927cfd9661c4df56d0541dfd9d3d36f2b8fcb9-63d8b41596d1f7d6ccab21f3d3441129a4cfd21278ec465a8ad84f9b9f1fae1b
+    - generic-residual-8abb3b8533ed4205864e1cdf1972d0ef3355b6ced387a8d3b701a2291e8d766a-297e2d80e452c55f776eb3f1a33e031c8c09dee6e1fc1fcd1a5068f49fe11da5
+    - generic-residual-8c931b5d09ccd99d6e708b78abf709b6f881a781883bd652ba50b1b5186697cb-1427ec37f3b55a71067c1182db46c2dba90bbc25b2a8005a5d4040bb685c7549

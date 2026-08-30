@@ -55,10 +55,9 @@ public sealed class DependencyDirectionTests
             AssemblyReferencePolicy.ApplicationReferences(
                 typeof(StrataLint.Tests.AdmissionTests).Assembly));
         Assert.Equal(
-            [
-                "../../StrataLint.Cli/StrataLint.Cli.csproj",
-                "../../StrataLint.Engine/StrataLint.Engine.csproj",
-            ],
+            // Engine 经 Cli 传递可得,故这条直接引用是多余的 extra-production-reference 存量债;
+            // 本 PR 顺手还掉它(拓扑棘轮要求碰债务面即严格减债)。程序集级引用集不变。
+            ["../../StrataLint.Cli/StrataLint.Cli.csproj"],
             ProjectReferences(XDocument.Load(Path.Combine(
                 RepositoryLayout.FindRoot(),
                 "tools",
