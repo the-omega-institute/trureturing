@@ -24,7 +24,15 @@ internal sealed class AdditiveDescentDefectChainLawDocument
         Formula targetReadout = new Formula.Subscript(readout, F.Id("E"));
         Formula firstMacro = Seq(Overline, Grp(firstProcess));
         Formula secondMacro = Seq(Overline, Grp(secondProcess));
+        Formula epsilon = Varepsilon;
+        Formula firstDefectName = new Formula.Subscript(epsilon, firstProcess);
+        Formula secondDefectName = new Formula.Subscript(epsilon, secondProcess);
+        Formula compositeDefectName = new Formula.Subscript(
+            epsilon,
+            Seq(secondProcess, firstProcess));
         Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula leftInput = F.Id("u");
+        Formula rightInput = F.Id("v");
 
         Formula Compose(Formula left, Formula right) =>
             Seq(left, Sp, Circ, Sp, right);
@@ -34,17 +42,6 @@ internal sealed class AdditiveDescentDefectChainLawDocument
         Formula compositeDefect = Difference(
             Compose(Compose(targetReadout, secondProcess), firstProcess),
             Compose(Compose(secondMacro, firstMacro), sourceReadout));
-        Formula secondDefectAtFirst = Compose(
-            Difference(
-                Compose(targetReadout, secondProcess),
-                Compose(secondMacro, middleReadout)),
-            firstProcess);
-        Formula transportedFirstDefect = Compose(
-            secondMacro,
-            Difference(
-                Compose(middleReadout, firstProcess),
-                Compose(firstMacro, sourceReadout)));
-
         Formula statement = Disp(new Formula.Aligned([
             Seq(
                 Forall, Sp, state, Comma, Sp, middleState, Comma, Sp,
@@ -76,9 +73,32 @@ internal sealed class AdditiveDescentDefectChainLawDocument
                 Call("AddMonoidHom", middleCoordinate, targetCoordinate),
                 Comma),
             Seq(
-                compositeDefect, Sp, Eq, Sp,
-                secondDefectAtFirst, Sp, Plus, Sp,
-                transportedFirstDefect, Dot),
+                firstDefectName, Sp, Eq, Sp,
+                Difference(
+                    Compose(middleReadout, firstProcess),
+                    Compose(firstMacro, sourceReadout)),
+                Comma),
+            Seq(
+                secondDefectName, Sp, Eq, Sp,
+                Difference(
+                    Compose(targetReadout, secondProcess),
+                    Compose(secondMacro, middleReadout)),
+                Comma),
+            Seq(
+                compositeDefectName, Sp, Eq, Sp, compositeDefect,
+                Comma),
+            Seq(
+                Forall, Sp, leftInput, Comma, Sp, rightInput,
+                InMacro, Sp, middleCoordinate, Comma, Sp,
+                secondMacro, Open, leftInput, Plus, rightInput, Close,
+                Sp, Eq, Sp,
+                secondMacro, Open, leftInput, Close, Plus,
+                secondMacro, Open, rightInput, Close,
+                Comma),
+            Seq(
+                compositeDefectName, Sp, Eq, Sp,
+                Compose(secondDefectName, firstProcess), Sp, Plus, Sp,
+                Compose(secondMacro, firstDefectName), Dot),
         ]));
 
         return DocumentDefinition.Create(ScribeNode.Create(
@@ -95,14 +115,17 @@ internal sealed class AdditiveDescentDefectChainLawDocument
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "The three readouts and the two processes construct each defect "
-                            + "directly as a difference of function composites. The first "
-                            + "macroscopic map is arbitrary, while the second is additive "
-                            + "because it transports the first defect.")),
+                        "The public definitions construct epsilon_F, epsilon_G, and epsilon_GF "
+                            + "from the three readouts, two processes, and candidate macroscopic "
+                            + "maps before the theorem relates those named objects.")),
                     Paragraph(Text(
-                        "Expanding the two terms on the right makes the intermediate "
-                            + "macroscopic readout cancel. Additive preservation of subtraction "
-                            + "then leaves exactly the defect of the composite process."))),
+                        "The source declares the second macroscopic map as an ordinary function, "
+                            + "but the equation requires it to preserve addition and subtraction. "
+                            + "Lean records that repair as an AddMonoidHom, and the displayed "
+                            + "additivity equation makes the added scope explicit.")),
+                    Paragraph(Text(
+                        "After unfolding the named defects, the intermediate macroscopic readout "
+                            + "cancels and preservation of subtraction leaves the composite defect."))),
                 DescribeRole.Theorem))));
     }
 }
