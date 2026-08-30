@@ -51,13 +51,17 @@ private theorem observer_spectral_zeta_order_eq
   rw [factorization]
   exact meromorphicOrderAt_mul_of_ne_zero factorAnalytic factorNonzero
 
-/-- Every pair of positive observers has the same spectral zero-pole divisor,
-and no function of that divisor observation can recover `P / c` for every
-observer. -/
+/-- Every pair of positive observers has the same spectral zero-pole divisor;
+there are observers with both parameters distinct that share that divisor; and
+no function of the divisor observation can recover `P / c` for every observer. -/
 theorem observer_scale_not_recoverable_from_spectral_divisor :
     (∀ P1 c1 P2 c2 : Set.Ioi (0 : Real), ∀ s : Complex,
       meromorphicOrderAt (observerSpectralZeta P1 c1) s =
         meromorphicOrderAt (observerSpectralZeta P2 c2) s) ∧
+    (∃ P1 c1 P2 c2 : Set.Ioi (0 : Real),
+      P1 ≠ P2 ∧ c1 ≠ c2 ∧ ∀ s : Complex,
+        meromorphicOrderAt (observerSpectralZeta P1 c1) s =
+          meromorphicOrderAt (observerSpectralZeta P2 c2) s) ∧
     ¬ ∃ recover : (Complex → WithTop Int) → Real,
       ∀ P c : Set.Ioi (0 : Real),
         recover (fun s => meromorphicOrderAt (observerSpectralZeta P c) s) =
@@ -73,17 +77,32 @@ theorem observer_scale_not_recoverable_from_spectral_divisor :
         observer_spectral_zeta_order_eq P1 c1 s
       _ = meromorphicOrderAt (observerSpectralZeta P2 c2) s :=
         (observer_spectral_zeta_order_eq P2 c2 s).symm
-  refine ⟨allObservers, ?_⟩
-  rintro ⟨recover, recoversRatio⟩
   let P1 : Set.Ioi (0 : Real) := ⟨1, by norm_num⟩
   let c1 : Set.Ioi (0 : Real) := ⟨1, by norm_num⟩
   let P2 : Set.Ioi (0 : Real) := ⟨2, by norm_num⟩
-  let c2 : Set.Ioi (0 : Real) := ⟨1, by norm_num⟩
+  let c2 : Set.Ioi (0 : Real) := ⟨3, by norm_num⟩
+  have differentP : P1 ≠ P2 := by
+    intro equalObservers
+    have equalValues : (P1 : Real) = (P2 : Real) :=
+      congrArg Subtype.val equalObservers
+    norm_num [P1, P2] at equalValues
+  have differentC : c1 ≠ c2 := by
+    intro equalObservers
+    have equalValues : (c1 : Real) = (c2 : Real) :=
+      congrArg Subtype.val equalObservers
+    norm_num [c1, c2] at equalValues
+  have sameDivisor : ∀ s : Complex,
+      meromorphicOrderAt (observerSpectralZeta P1 c1) s =
+        meromorphicOrderAt (observerSpectralZeta P2 c2) s := by
+    intro s
+    exact allObservers P1 c1 P2 c2 s
+  refine ⟨allObservers, ⟨P1, c1, P2, c2, differentP, differentC, sameDivisor⟩, ?_⟩
+  rintro ⟨recover, recoversRatio⟩
   have sameObservation :
       (fun s => meromorphicOrderAt (observerSpectralZeta P1 c1) s) =
         fun s => meromorphicOrderAt (observerSpectralZeta P2 c2) s := by
     funext s
-    exact allObservers P1 c1 P2 c2 s
+    exact sameDivisor s
   have ratioEquality :
       (P1 : Real) / (c1 : Real) = (P2 : Real) / (c2 : Real) := by
     calc

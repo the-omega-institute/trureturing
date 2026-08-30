@@ -12,8 +12,9 @@ internal sealed class ObserverScaleDivisorNonidentifiabilityDocument
             + "observer_scale_not_recoverable_from_spectral_divisor";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Every positive observer pair has the same spectral zero-pole divisor, so no "
-            + "function of that divisor can recover the observer's scale ratio.",
+        "Every positive observer pair has the same spectral zero-pole divisor; observers "
+            + "with both parameters distinct share it; and no function of that divisor can "
+            + "recover the observer's scale ratio.",
         H("Observer Scale Divisor Nonidentifiability"),
         Blocks(Describe.Lean(
             DescribeId.Create("observer-scale-divisor-nonidentifiability"),
@@ -30,10 +31,13 @@ internal sealed class ObserverScaleDivisorNonidentifiabilityDocument
                         + "readings have equal meromorphic order. Thus all observers share the "
                         + "same divisor observation, not merely one selected pair.")),
                 Paragraph(Text(
-                    "The second public conjunct rules out every function from a divisor reading "
-                        + "to a real scale ratio that purports to recover P over c for all positive "
-                        + "observers. The proof combines universal order equality with two internal "
-                        + "positive choices having unequal ratios."))),
+                    "The middle public conjunct exhibits two positive observers whose P values and "
+                        + "c values are both unequal while their divisor observations agree at every "
+                        + "complex point.")),
+                Paragraph(Text(
+                    "The final public conjunct rules out every function from a divisor reading to a "
+                        + "real scale ratio that purports to recover P over c for all positive "
+                        + "observers."))),
             DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()
@@ -67,6 +71,21 @@ internal sealed class ObserverScaleDivisorNonidentifiabilityDocument
                 Bound("s", complex),
             ],
             EqualTo(firstOrder, secondOrder));
+        Formula sameDivisorAtEveryPoint = new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [Bound("s", complex)],
+            EqualTo(firstOrder, secondOrder));
+        Formula distinctObserverCollision = new Formula.BindMany(
+            FormulaQuantifier.Exists,
+            [
+                Bound("P1", positiveReal),
+                Bound("c1", positiveReal),
+                Bound("P2", positiveReal),
+                Bound("c2", positiveReal),
+            ],
+            And(
+                NotEqualTo(p1, p2),
+                And(NotEqualTo(c1, c2), sameDivisorAtEveryPoint)));
         Formula observationType = new Formula.TypeArrow(
             complex,
             Call("WithTop", integer));
@@ -94,7 +113,7 @@ internal sealed class ObserverScaleDivisorNonidentifiabilityDocument
             new Formula.TypeArrow(observationType, real),
             recoversEveryRatio));
 
-        return Disp(And(commonDivisor, noRecovery));
+        return Disp(And(commonDivisor, And(distinctObserverCollision, noRecovery)));
     }
 
     private static Formula.BoundVariable Bound(string name, Formula domain) =>
@@ -102,6 +121,9 @@ internal sealed class ObserverScaleDivisorNonidentifiabilityDocument
 
     private static Formula EqualTo(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+
+    private static Formula NotEqualTo(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.NotEqual, right);
 
     private static Formula And(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.And, right);
