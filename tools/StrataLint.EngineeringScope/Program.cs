@@ -143,7 +143,10 @@ internal static class Program
             WorkingDirectory = repositoryRoot,
             UseShellExecute = false,
         };
-        foreach (var argument in new[] { "test", invocation.Target, "--configuration", "Release", "--verbosity", "normal" })
+        foreach (var argument in new[]
+                 {
+                     "test", invocation.Target, "-m", "--configuration", "Release", "--verbosity", "normal",
+                 })
         {
             startInfo.ArgumentList.Add(argument);
         }

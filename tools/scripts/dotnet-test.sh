@@ -19,7 +19,7 @@ finish() {
 }
 trap 'finish "$?"' EXIT
 
-dotnet test "$@" --configuration Release --verbosity normal \
+dotnet test "$@" -m --configuration Release --verbosity normal \
   --logger 'trx;LogFilePrefix=canonical' --results-directory "$RESULTS_DIRECTORY"
 
 OWNER_ASSEMBLY_ARGS=()
