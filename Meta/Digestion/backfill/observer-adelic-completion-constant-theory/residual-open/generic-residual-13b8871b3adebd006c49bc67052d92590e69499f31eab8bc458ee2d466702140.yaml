@@ -7,4 +7,28 @@ coverage_gids: []
 receipts:
   coverage: []
   scribe: []
-  unresolved_subitems: []
+  unresolved_subitems:
+    - split prime ideals above p with norm p and opposite logarithmic embedding phases
+    - unique inert prime ideal above p with norm p^2 and zero embedding difference
+    - ramified prime ideal above 5 with norm 5
+    - Hecke character and Euler product over the actual prime ideals
+  quarantine:
+    justification: >-
+      Missing-prerequisite after exact searches. D5 GoldenInt is declared only as a custom
+      CommRing in D5/S0/Carrier/Ring.lean; no Field GoldenInt, NumberField GoldenInt,
+      RingOfIntegers GoldenInt, InfinitePlace GoldenInt, or Ideal GoldenInt declaration
+      exists. D5/S0/Carrier/AlgebraicModel.lean bridges it only to AdjoinRoot of an integer
+      polynomial. Pinned Mathlib exposes generic Ideal.primesOver, Ideal.absNorm, and
+      NumberField.InfinitePlace, but these require a field/number-field carrier and no
+      GoldenInt or K = Q(sqrt 5) bridge is present. Existing D5 prime classification proves
+      only the Legendre split/inert/ramified trichotomy for GoldenInt elements. The removed
+      Lean module's goldenLocalPrimePlaces list hard-coded the target norm/phase rows, so it
+      cannot be retained as source coverage.
+    reentry_condition: >-
+      A tracked D5 primitive must construct K = Q(sqrt 5) as a Field with NumberField
+      structure, identify its ring of integers with the golden carrier, expose the actual
+      prime ideals above each rational prime through Ideal.primesOver (or an equivalent
+      proved set), prove their Ideal.absNorm and uniqueness/splitting statements, define
+      the two InfinitePlace logarithmic embedding difference and the Hecke character, and
+      prove the Euler-factor identities over those ideals.
+    blocker_class: missing-prerequisite
