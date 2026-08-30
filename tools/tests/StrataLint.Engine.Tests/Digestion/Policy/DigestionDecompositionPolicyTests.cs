@@ -2,7 +2,7 @@ using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.Engine.Tests;
 
 public sealed class DigestionDecompositionPolicyTests
 {
