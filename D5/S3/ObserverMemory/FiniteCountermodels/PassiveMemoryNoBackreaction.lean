@@ -66,8 +66,7 @@ theorem memory_holonomy_formula (F v Lp Lq : ℂ) :
       !![0, (Lq - Lp) * (F - 1) * v; 0, 0] := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [memoryHolonomy, primeMemoryMatrix, passiveMemoryMatrix,
-      Matrix.mul_apply, Fin.sum_univ_two] <;> ring
+    simp [memoryHolonomy, primeMemoryMatrix, passiveMemoryMatrix] <;> ring
 
 #print axioms memory_holonomy_formula
 
@@ -83,7 +82,7 @@ theorem memory_holonomy_trace_zero (F v Lp Lq : ℂ) :
 theorem memory_holonomy_det_zero (F v Lp Lq : ℂ) :
     Matrix.det (memoryHolonomy F v Lp Lq) = 0 := by
   rw [memory_holonomy_formula, Matrix.det_fin_two]
-  ring
+  simp
 
 #print axioms memory_holonomy_det_zero
 
