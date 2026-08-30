@@ -7,3 +7,7 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Retrieval preceded quarantine. D5 queries `period.*square|Gram.*positiv|scalar factor|common scalar|carrier.*subtracted|quotient connection|scalar.*blind|zero.*location` found related period and twist factorization in `ToroidalCechCompletion`, `FiniteToroidalFrameReconstruction`, `ToroidalCommonZeroLocus`, and `CuspidalToroidalKernel`, but no exact owner defining the source sesquiholomorphic quotient connection or proving its positivity criterion; `RelativeCurvatureSupportCriterion` is a different zero-support theorem. Pinned Mathlib search found `Matrix.posSemidef_gram`, which covers only automatic raw Gram positivity, and no carrier-subtracted quotient-connection or RH bridge. Reachable GitHub Lean searches `Gram RiemannHypothesis language:Lean` and `toric period language:Lean` returned no hits. The local proof mapping can prove generic scalar-blindness of raw Gram positivity, but cannot state the public `K_xi` clause on a canonical repository object or derive its required positivity and RH connection; depositing the raw half alone would violate whole-statement coverage."
+    reentry_condition: "Define and freeze the source's carrier-subtracted quotient connection on its exact analytic carrier, prove its positivity criterion and the bridge to RH, then combine those public results with the generic raw Gram scalar-blindness countermodel in one whole-statement theorem."
+    blocker_class: multi-clause-guard
