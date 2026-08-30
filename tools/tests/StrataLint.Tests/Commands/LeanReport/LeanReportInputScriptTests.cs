@@ -23,6 +23,8 @@ public sealed class LeanReportInputScriptTests
         "tools/scripts/report/lean-report-ci-baseline.sh";
     private const string CacheEnsureScriptPath =
         "tools/scripts/worktree/lean-cache-ensure.sh";
+    private const string CachePublishScriptPath =
+        "tools/scripts/worktree/lean-cache-publish.sh";
     private const string ResourceObservationLibraryPath =
         "tools/scripts/lib/resource-observation-lib.sh";
     private const string ToolchainInstallerPath = "tools/scripts/workflow/install-lean-toolchain.sh";
@@ -292,6 +294,7 @@ public sealed class LeanReportInputScriptTests
                 CiBaselineScriptPath,
                 File.ReadAllText(Path.Combine(root, CiBaselineScriptPath), Encoding.UTF8));
             Write(CacheEnsureScriptPath, "#!/usr/bin/env bash\n");
+            Write(CachePublishScriptPath, "#!/usr/bin/env bash\n");
             Write(
                 ResourceObservationLibraryPath,
                 File.ReadAllText(Path.Combine(root, ResourceObservationLibraryPath), Encoding.UTF8));
