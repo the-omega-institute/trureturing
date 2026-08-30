@@ -26,6 +26,51 @@ public sealed class TestResultEvidenceTests
     }
 
     [Fact]
+    public void RejectsWhenAProtectedBasePlannedIdentityWasNotExecuted()
+    {
+        var evidence = new TestResultEvidence(
+            1,
+            new HashSet<(string Assembly, string Id)>
+            {
+                ("First.Owner.Tests", "PlannedTests.Executed"),
+            });
+        (string Assembly, string Id)[] expected =
+        [
+            ("First.Owner.Tests", "PlannedTests.Executed"),
+            ("Second.Owner.Tests", "OtherTests.Missing"),
+            ("First.Owner.Tests", "PlannedTests.AlsoMissing"),
+        ];
+
+        var failure = Assert.Throws<InvalidDataException>(
+            () => evidence.EnsureExpectedTestsExecuted(expected));
+
+        Assert.Equal(
+            "TRX is missing protected-base planned test identities count=2 tests="
+            + "First.Owner.Tests::PlannedTests.AlsoMissing | Second.Owner.Tests::OtherTests.Missing",
+            failure.Message);
+    }
+
+    [Fact]
+    public void AcceptsWhenEveryPlannedIdentityExecutedAlongsideAdditionalIdentities()
+    {
+        var evidence = new TestResultEvidence(
+            4,
+            new HashSet<(string Assembly, string Id)>
+            {
+                ("first.owner.tests", "TheoryTests.Parameterized"),
+                ("Second.Owner.Tests", "FactTests.Required"),
+                ("Candidate.New.Tests", "NewTests.Additional"),
+            });
+        (string Assembly, string Id)[] expected =
+        [
+            ("First.Owner.Tests", "TheoryTests.Parameterized"),
+            ("Second.Owner.Tests", "FactTests.Required"),
+        ];
+
+        evidence.EnsureExpectedTestsExecuted(expected);
+    }
+
+    [Fact]
     public void RejectsRequiredAssemblyWithoutExecutedIdentity()
     {
         var evidence = new TestResultEvidence(
