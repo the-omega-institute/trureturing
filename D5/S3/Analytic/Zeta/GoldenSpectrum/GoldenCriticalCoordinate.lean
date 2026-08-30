@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Analytic/Zeta/GoldenSpectrum/GoldenCriticalCoordinate
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Exponentiating the centered spectral coordinate at golden scale sends the critical line exactly to the unit circle and intertwines completed reflection with reciprocal conjugation. -/
+   digest: Golden exponentiation sends the critical line to the unit circle and
+     intertwines completed reflection with reciprocal conjugation. -/
 
 import Mathlib
 
@@ -14,7 +15,7 @@ import Mathlib
    * Existing toroidal and Cayley owners encode other critical-line charts and
      are not restated here.
    * Pinned Mathlib supplies `Complex.norm_exp`, `Complex.exp_conj`,
-     `Complex.exp_neg`, `Real.exp_eq_one_iff`, and the golden-ratio inequalities. -/
+     `Complex.exp_neg`, `Real.exp_eq_one_iff`, and golden-ratio inequalities. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -61,7 +62,6 @@ theorem norm_golden_critical_coordinate (s : ℂ) :
     ‖goldenCriticalCoordinate s‖ = goldenRadialCharge s := by
   simp [goldenCriticalCoordinate, goldenRadialCharge, goldenScaleLength,
     Complex.norm_exp, Complex.mul_re]
-  ring
 
 /-- The critical line is exactly the unit circle in the golden coordinate. -/
 theorem norm_golden_critical_coordinate_eq_one_iff (s : ℂ) :
@@ -102,7 +102,7 @@ theorem golden_critical_coordinate_reflection (s : ℂ) :
     goldenCriticalCoordinate (criticalReflection s) =
       (conj (goldenCriticalCoordinate s))⁻¹ := by
   unfold goldenCriticalCoordinate criticalReflection
-  rw [← Complex.exp_neg, Complex.exp_conj]
+  rw [← Complex.exp_conj, ← Complex.exp_neg]
   congr 1
   apply Complex.ext <;> simp [goldenScaleLength] <;> ring
 
@@ -124,11 +124,19 @@ theorem golden_annulus_bounds {s : ℂ}
         Real.log Real.goldenRatio := by
     nlinarith
   constructor
-  · rw [← Real.exp_neg, ← Real.exp_log Real.goldenRatio_pos,
-      ← Real.exp_lt_exp]
-    exact hLowerExponent
-  · rw [← Real.exp_log Real.goldenRatio_pos, Real.exp_lt_exp]
-    exact hUpperExponent
+  · calc
+      Real.goldenRatio⁻¹ =
+          Real.exp (-Real.log Real.goldenRatio) := by
+            rw [Real.exp_neg, Real.exp_log Real.goldenRatio_pos]
+      _ < Real.exp
+          (2 * Real.log Real.goldenRatio * (s.re - (1 / 2 : ℝ))) :=
+            (Real.exp_lt_exp).2 hLowerExponent
+  · calc
+      Real.exp
+          (2 * Real.log Real.goldenRatio * (s.re - (1 / 2 : ℝ))) <
+          Real.exp (Real.log Real.goldenRatio) :=
+            (Real.exp_lt_exp).2 hUpperExponent
+      _ = Real.goldenRatio := Real.exp_log Real.goldenRatio_pos
 
 /-- The unit-circle criterion has an explicit inhabitant. -/
 example :
