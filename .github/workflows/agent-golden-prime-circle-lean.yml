@@ -1,5 +1,6 @@
 name: agent-golden-prime-circle-lean
 
+# Temporary branch validation. Removed before the pull request is opened.
 on:
   push:
     branches:
