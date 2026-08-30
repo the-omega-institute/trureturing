@@ -9,6 +9,6 @@ receipts:
   scribe: []
   unresolved_subitems: []
   quarantine:
-    justification: The named statement depends on a completed observer Casimir carrier and a combined discrete-plus-Archimedean measure carrier; neither prerequisite has a public D5 theorem in the inspected inventory.
+    justification: Retrieval preceded quarantine. D5 query `completed.*observer.*casimir|observer.*casimir|discrete.*archimedean` found no matching public carrier; pinned Mathlib queries `observer|casimir|adelic` and `archimedean.*measure|measure.*archimedean` found only the unrelated infinite-adele product formula and Archimedean-class prose, not a completed observer Casimir or combined measure; reachable GitHub Lean search `Casimir observer` returned zero results and broad `Casimir` hits in Physlib, TauCeti, and Unitary-Manifold were unrelated, so no A17 exact dependency or port candidate was found; a local proof cannot even instantiate the named `C_n`, finite measure, or Archimedean measure, and proving an abstract Laplace-transform derivative lemma would not prove the atom's concrete identities.
     reentry_condition: D5 contains public theorems for the completed observer Casimir term and the combined discrete-plus-Archimedean measure, with interfaces matching the normalization and measure identity in this atom.
     blocker_class: missing-prerequisite

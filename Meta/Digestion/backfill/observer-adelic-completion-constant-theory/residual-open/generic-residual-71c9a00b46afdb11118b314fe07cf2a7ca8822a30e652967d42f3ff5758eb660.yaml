@@ -9,6 +9,6 @@ receipts:
   scribe: []
   unresolved_subitems: []
   quarantine:
-    justification: The named statement requires a completed observer operator, its semigroup, the constant-mode projection, and a spectral-gap carrier; these linked public D5 prerequisites were absent from the inspected inventory.
+    justification: Retrieval preceded quarantine. D5 query `completed.*observer.*operator|observer.*semigroup|constant.?mode.*projection|spectral.?gap` found no matching public carrier; pinned Mathlib query `observer|spectral.?gap|constant.?mode|operator.*semigroup|semigroup.*operator` hit only an unrelated Quantale comment and no operator, projection, or gap theorem; reachable GitHub Lean searches `spectralGap`, `spectral gap`, and `observer spectralGap` returned zero results, so no A17 exact dependency or port candidate was found; a local proof cannot instantiate the named `P_sigma,t`, `P_0`, completed observer generator, or `g_phi`, and an abstract diagonal-multiplier estimate would be a special-case substitution rather than the atom's operator-semigroup theorem.
     reentry_condition: D5 contains public theorems defining the completed observer operator and semigroup and proving the matching constant-mode projection and spectral-gap estimate used by this atom.
     blocker_class: missing-prerequisite

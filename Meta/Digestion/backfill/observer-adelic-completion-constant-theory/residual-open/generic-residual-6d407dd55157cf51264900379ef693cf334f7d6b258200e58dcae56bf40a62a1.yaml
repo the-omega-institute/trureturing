@@ -9,6 +9,6 @@ receipts:
   scribe: []
   unresolved_subitems: []
   quarantine:
-    justification: The first displayed integral identity is formalizable, but the same named atom also asserts a subordinate-process conclusion for which the required subordinate-process and functional-calculus carrier is absent; depositing only the reachable identity would leave the multi-clause atom hollow.
+    justification: Retrieval preceded quarantine. D5 query `subordinate.?process|functional.?calculus|subordination|subordinator` found only unrelated continuous-functional-calculus imports and no subordinate-process theorem; pinned Mathlib query `subordinate|subordination|subordinator` hit only subordinate partitions and coverings, while `FunctionalCalculus` hit C-star functional-calculus modules but no process bridge; reachable GitHub Lean search `subordinate process` returned zero results and broad `subordination` hits were unrelated topology files, so no A17 exact dependency or port candidate was found; a local proof can pursue the displayed integral identity from the logarithm integral and the heat-trace series, but the same named atom's Brownian subordinate-process clause is not expressible with a current public carrier, and depositing only the identity would omit a public clause.
     reentry_condition: D5 contains a public subordinate-process or functional-calculus theorem matching the atom's process clause, or the atomizer splits the displayed integral identity into its own named atom and leaves the process clause separately guarded.
     blocker_class: multi-clause-guard
