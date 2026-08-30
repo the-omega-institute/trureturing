@@ -152,6 +152,32 @@ public sealed class TestProjectTopologyPolicyTests
     }
 
     [Fact]
+    public void CaseOnlyChangeToInheritedDebtIdentityIsNotIntroducedDebt()
+    {
+        var protectedBase = Snapshot(
+            Production("Closed", "Closed"),
+            Production("Remaining", "Remaining"));
+        var candidate = Snapshot(
+            Production("Closed", "Closed"),
+            OwnedTest(
+                "Closed.Tests",
+                "Closed.Tests",
+                "../../Closed/Closed.csproj"),
+            Production("Remaining", "remaining"));
+
+        var result = TestProjectTopologyPolicy.Evaluate(protectedBase, candidate);
+
+        Assert.True(result.IsAccepted, result.Message);
+        Assert.True(result.RequiresStrictReduction);
+        Assert.Equal(2, result.BaseDebt.Length);
+        Assert.Single(result.CandidateDebt);
+        Assert.Empty(result.IntroducedDebt);
+        Assert.Equal(
+            [Debt("missing-owned-project", "Closed", "Closed.Tests")],
+            result.RemovedDebt.ToArray());
+    }
+
+    [Fact]
     public void EmptyBaseDebtAutomaticallyRejectsAnyHeadDebtWithoutModeSwitch()
     {
         var protectedBase = Snapshot(
@@ -434,6 +460,64 @@ public sealed class TestProjectTopologyPolicyTests
     }
 
     [Fact]
+    public void OwnerAssembliesAreDerivedFromOwnedXunitProjectTopology()
+    {
+        var assemblies = TestProjectTopologyPolicy.CalculateOwnerAssemblies(Snapshot(
+            OwnedTest("Zulu.Tests", "Zulu.Tests"),
+            OwnedTest("Alpha.Tests", "Alpha.Tests"),
+            OwnedTest("ZuluDuplicate.Tests", "Zulu.Tests"),
+            ProjectWithDefaultProperties(
+                CanonicalHarnessPath,
+                "StrataLint.ArchitectureTests",
+                xunit: true),
+            ProjectWithDefaultProperties(
+                "tools/tests/CompileFailProof/CompileFailProof.csproj",
+                "CompileFailProof",
+                xunit: false)));
+
+        Assert.Equal(["Alpha.Tests", "Zulu.Tests"], assemblies.ToArray());
+    }
+
+    [Fact(DisplayName = "assembly identity matching ignores case while xunit marker stays literal")]
+    public void AssemblyIdentityMatchingIsCaseInsensitiveButXunitMarkerIsLiteral()
+    {
+        var assemblies = TestProjectTopologyPolicy.CalculateOwnerAssemblies(Snapshot(
+            Production("CaseInsensitive", "CaseInsensitive"),
+            OwnedTest(
+                "CaseInsensitive.Tests",
+                "caseinsensitive.tests",
+                "../../CaseInsensitive/CaseInsensitive.csproj")));
+
+        Assert.Equal(["caseinsensitive.tests"], assemblies.ToArray());
+        Assert.Empty(TestProjectTopologyPolicy.CalculateDebt(Snapshot(
+            Production("CaseInsensitive", "CaseInsensitive"),
+            OwnedTest(
+                "CaseInsensitive.Tests",
+                "caseinsensitive.tests",
+                "../../CaseInsensitive/CaseInsensitive.csproj"))));
+
+        var packageNearMiss = OwnedTest(
+                "CaseInsensitiveNearMiss.Tests",
+                "caseinsensitive.tests",
+                "../../CaseInsensitive/CaseInsensitive.csproj")
+            with
+            {
+                Content = OwnedTest(
+                        "CaseInsensitiveNearMiss.Tests",
+                        "caseinsensitive.tests",
+                        "../../CaseInsensitive/CaseInsensitive.csproj")
+                    .Content.Replace(
+                        "Include=\"xunit\"",
+                        "Include=\"XUnit\"",
+                        StringComparison.Ordinal),
+            };
+
+        Assert.Empty(TestProjectTopologyPolicy.CalculateOwnerAssemblies(Snapshot(
+            Production("CaseInsensitive", "CaseInsensitive"),
+            packageNearMiss)));
+    }
+
+    [Fact]
     public void CurrentRepositoryCandidateDeltaIsAcceptedByTheSameRatchet()
     {
         var root = RepositoryLayout.FindRoot();
@@ -583,7 +667,7 @@ public sealed class TestProjectTopologyPolicyTests
                     && parts[1] != "tests"
                     && parts[2].EndsWith(".csproj", StringComparison.Ordinal);
             })
-            .GroupBy(static project => project.AssemblyName, StringComparer.Ordinal)
+            .GroupBy(static project => project.AssemblyName, StringComparer.OrdinalIgnoreCase)
             .Where(static group => group.Count() == 1)
             .Select(static group => group.Key);
         var ownedTestIdentities = projects
@@ -591,10 +675,10 @@ public sealed class TestProjectTopologyPolicyTests
                 && project.Path.StartsWith("tools/tests/", StringComparison.Ordinal)
                 && project.Path.EndsWith(".csproj", StringComparison.Ordinal)
                 && project.Path != CanonicalHarnessPath)
-            .GroupBy(static project => project.AssemblyName, StringComparer.Ordinal)
+            .GroupBy(static project => project.AssemblyName, StringComparer.OrdinalIgnoreCase)
             .Where(static group => group.Count() == 1)
             .Select(static group => group.Key)
-            .ToHashSet(StringComparer.Ordinal);
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
         var pairIdentities = productionIdentities
             .Where(identity => ownedTestIdentities.Contains(identity + ".Tests"))
             .ToArray();
@@ -603,10 +687,10 @@ public sealed class TestProjectTopologyPolicyTests
         {
             var testIdentity = productionIdentity + ".Tests";
             return !debt.Any(item =>
-                item.Subject == productionIdentity
-                || item.Subject == testIdentity
-                || item.Related == productionIdentity
-                || item.Related == testIdentity);
+                StringComparer.OrdinalIgnoreCase.Equals(item.Subject, productionIdentity)
+                || StringComparer.OrdinalIgnoreCase.Equals(item.Subject, testIdentity)
+                || StringComparer.OrdinalIgnoreCase.Equals(item.Related, productionIdentity)
+                || StringComparer.OrdinalIgnoreCase.Equals(item.Related, testIdentity));
         });
     }
 
