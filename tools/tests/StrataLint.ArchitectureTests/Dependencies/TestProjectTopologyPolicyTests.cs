@@ -1,3 +1,6 @@
+using System.Xml.Linq;
+using TestProjectTopologyPolicy = StrataLint.Engine.RepositoryRules;
+
 namespace StrataLint.ArchitectureTests;
 
 public sealed class TestProjectTopologyPolicyTests
@@ -34,7 +37,7 @@ public sealed class TestProjectTopologyPolicyTests
     }
 
     [Fact]
-    public void NewProductionAndOwnedRunnableXunitPairIsAccepted()
+    public void NewProductionAndOwnedXunitPairIsAccepted()
     {
         var result = TestProjectTopologyPolicy.Evaluate(
             Snapshot(),
@@ -43,7 +46,6 @@ public sealed class TestProjectTopologyPolicyTests
                 OwnedTest(
                     "NewProduct.Tests",
                     "NewProduct.Tests",
-                    runnable: true,
                     "../../NewProduct/NewProduct.csproj")));
 
         Assert.True(result.IsAccepted, result.Message);
@@ -55,19 +57,18 @@ public sealed class TestProjectTopologyPolicyTests
     {
         var protectedBase = Snapshot(
             Production("Alpha", "Alpha"),
-            OwnedTest("Alpha.Tests", "Alpha.Tests", true, "../../Alpha/Alpha.csproj"),
+            OwnedTest("Alpha.Tests", "Alpha.Tests", "../../Alpha/Alpha.csproj"),
             Production("Beta", "Beta"),
-            OwnedTest("Beta.Tests", "Beta.Tests", true, "../../Beta/Beta.csproj"));
+            OwnedTest("Beta.Tests", "Beta.Tests", "../../Beta/Beta.csproj"));
         var candidate = Snapshot(
             Production("Alpha", "Alpha"),
             OwnedTest(
                 "Alpha.Tests",
                 "Alpha.Tests",
-                runnable: true,
                 "../../Alpha/Alpha.csproj",
                 "../../Beta/Beta.csproj"),
             Production("Beta", "Beta"),
-            OwnedTest("Beta.Tests", "Beta.Tests", true, "../../Beta/Beta.csproj"));
+            OwnedTest("Beta.Tests", "Beta.Tests", "../../Beta/Beta.csproj"));
 
         var result = TestProjectTopologyPolicy.Evaluate(protectedBase, candidate);
 
@@ -115,14 +116,14 @@ public sealed class TestProjectTopologyPolicyTests
         var protectedBase = Snapshot(
             Production("Legacy", "Legacy"),
             Production("Clean", "Clean"),
-            OwnedTest("Clean.Tests", "Clean.Tests", true, "../../Clean/Clean.csproj"));
+            OwnedTest("Clean.Tests", "Clean.Tests", "../../Clean/Clean.csproj"));
         var candidate = Snapshot(
             Production("Legacy", "Legacy"),
             Production(
                 "Clean",
                 "Clean",
                 extraProperty: "<Description>clean edit</Description>"),
-            OwnedTest("Clean.Tests", "Clean.Tests", true, "../../Clean/Clean.csproj"));
+            OwnedTest("Clean.Tests", "Clean.Tests", "../../Clean/Clean.csproj"));
 
         var result = TestProjectTopologyPolicy.Evaluate(protectedBase, candidate);
 
@@ -140,7 +141,6 @@ public sealed class TestProjectTopologyPolicyTests
             OwnedTest(
                 "Legacy.Tests",
                 "Legacy.Tests",
-                runnable: true,
                 "../../Legacy/Legacy.csproj"));
 
         var result = TestProjectTopologyPolicy.Evaluate(protectedBase, candidate);
@@ -156,11 +156,11 @@ public sealed class TestProjectTopologyPolicyTests
     {
         var protectedBase = Snapshot(
             Production("Clean", "Clean"),
-            OwnedTest("Clean.Tests", "Clean.Tests", true, "../../Clean/Clean.csproj"));
+            OwnedTest("Clean.Tests", "Clean.Tests", "../../Clean/Clean.csproj"));
         var candidate = Snapshot(
             Production("Clean", "Clean"),
-            OwnedTest("Clean.Tests", "Clean.Tests", true, "../../Clean/Clean.csproj"),
-            OwnedTest("Orphan.Tests", "Orphan.Tests", runnable: true));
+            OwnedTest("Clean.Tests", "Clean.Tests", "../../Clean/Clean.csproj"),
+            OwnedTest("Orphan.Tests", "Orphan.Tests"));
 
         var result = TestProjectTopologyPolicy.Evaluate(protectedBase, candidate);
 
@@ -177,8 +177,7 @@ public sealed class TestProjectTopologyPolicyTests
         var protectedBase = Snapshot(Project(
             CanonicalHarnessPath,
             "StrataLint.ArchitectureTests",
-            xunit: true,
-            runnable: false));
+            xunit: true));
         var unchanged = TestProjectTopologyPolicy.Evaluate(protectedBase, protectedBase);
 
         Assert.True(unchanged.IsAccepted, unchanged.Message);
@@ -188,8 +187,7 @@ public sealed class TestProjectTopologyPolicyTests
             protectedBase.Projects[0],
             OwnedTest(
                 "Second.ArchitectureTests",
-                "Second.ArchitectureTests",
-                runnable: true));
+                "Second.ArchitectureTests"));
         var result = TestProjectTopologyPolicy.Evaluate(protectedBase, secondArchitectureProject);
 
         Assert.False(result.IsAccepted);
@@ -210,7 +208,6 @@ public sealed class TestProjectTopologyPolicyTests
                 "tools/tests/CompileFailProof/CompileFailProof.csproj",
                 "StrataLint.CompileFailProof",
                 xunit: false,
-                runnable: false,
                 "../../StrataLint.Engine/StrataLint.Engine.csproj"));
 
         var result = TestProjectTopologyPolicy.Evaluate(current, current);
@@ -246,7 +243,6 @@ public sealed class TestProjectTopologyPolicyTests
             OwnedTest(
                 "StrataLint.Tests",
                 "StrataLint.Tests",
-                runnable: true,
                 "../../StrataLint.Cli/StrataLint.Cli.csproj"));
 
         var result = TestProjectTopologyPolicy.Evaluate(current, current);
@@ -256,15 +252,14 @@ public sealed class TestProjectTopologyPolicyTests
     }
 
     [Fact]
-    public void ScribePairHasExactlyItsExpectedDirectProductionReference()
+    public void OwnedPairHasExactlyItsExpectedDirectProductionReference()
     {
         var current = Snapshot(
-            Production("StrataLint.Scribe", "StrataLint.Scribe"),
+            Production("Paired", "Paired"),
             OwnedTest(
-                "StrataLint.Scribe.Tests",
-                "StrataLint.Scribe.Tests",
-                runnable: true,
-                "../../StrataLint.Scribe/StrataLint.Scribe.csproj"));
+                "Paired.Tests",
+                "Paired.Tests",
+                "../../Paired/Paired.csproj"));
 
         var result = TestProjectTopologyPolicy.Evaluate(current, current);
 
@@ -273,7 +268,7 @@ public sealed class TestProjectTopologyPolicyTests
     }
 
     [Fact]
-    public void OwnedXunitProjectWithoutRunnableTestIdentityIsRejected()
+    public void ZeroTestOwnedXunitProjectCanPassPureCsprojTopologyGate()
     {
         var result = TestProjectTopologyPolicy.Evaluate(
             Snapshot(),
@@ -282,17 +277,89 @@ public sealed class TestProjectTopologyPolicyTests
                 OwnedTest(
                     "Empty.Tests",
                     "Empty.Tests",
-                    runnable: false,
                     "../../Empty/Empty.csproj")));
+
+        Assert.True(result.IsAccepted, result.Message);
+        Assert.Empty(result.CandidateDebt);
+    }
+
+    [Fact]
+    public void XunitPackageIdentityIsOrdinalLiteral()
+    {
+        var upperCasePackage = OwnedTest(
+            "Literal.Tests",
+            "Literal.Tests",
+            "../../Literal/Literal.csproj") with
+        {
+            Content = OwnedTest(
+                    "Literal.Tests",
+                    "Literal.Tests",
+                    "../../Literal/Literal.csproj")
+                .Content.Replace("Include=\"xunit\"", "Include=\"XUnit\"", StringComparison.Ordinal),
+        };
+        var result = TestProjectTopologyPolicy.Evaluate(
+            Snapshot(),
+            Snapshot(Production("Literal", "Literal"), upperCasePackage));
 
         Assert.False(result.IsAccepted);
         Assert.Equal(
-            [Debt("missing-owned-project", "Empty", "Empty.Tests")],
+            [Debt("missing-owned-project", "Literal", "Literal.Tests")],
             result.IntroducedDebt.ToArray());
     }
 
     [Fact]
-    public void DuplicateOwnedIdentityCannotHideBehindOneRunnableProject()
+    public void ProdRefsContainOnlyDirectProjectReferencesNotTransitiveOnes()
+    {
+        var current = Snapshot(
+            Project(
+                "tools/Alpha/Alpha.csproj",
+                "Alpha",
+                xunit: false,
+                references: ["../Beta/Beta.csproj"]),
+            Project(
+                "tools/Beta/Beta.csproj",
+                "Beta",
+                xunit: false,
+                references: ["../Gamma/Gamma.csproj"]),
+            Production("Gamma", "Gamma"),
+            OwnedTest("Alpha.Tests", "Alpha.Tests", "../../Alpha/Alpha.csproj"),
+            OwnedTest("Beta.Tests", "Beta.Tests", "../../Beta/Beta.csproj"),
+            OwnedTest("Gamma.Tests", "Gamma.Tests", "../../Gamma/Gamma.csproj"));
+
+        var debt = TestProjectTopologyPolicy.CalculateDebt(current);
+
+        Assert.DoesNotContain(
+            debt,
+            static item => item.Kind == "extra-production-reference"
+                && item.Subject == "Alpha.Tests"
+                && item.Related is "Beta" or "Gamma");
+    }
+
+    [Fact]
+    public void AssemblyIdentityFallsBackToProjectStemWhenAssemblyNameIsAbsent()
+    {
+        var production = Production("Fallback", "Ignored") with
+        {
+            Content = Production("Fallback", "Ignored").Content.Replace(
+                "<AssemblyName>Ignored</AssemblyName>",
+                string.Empty,
+                StringComparison.Ordinal),
+        };
+        var current = Snapshot(
+            production,
+            OwnedTest(
+                "Fallback.Tests",
+                "Fallback.Tests",
+                "../../Fallback/Fallback.csproj"));
+
+        var result = TestProjectTopologyPolicy.Evaluate(current, current);
+
+        Assert.True(result.IsAccepted, result.Message);
+        Assert.Empty(result.BaseDebt);
+    }
+
+    [Fact]
+    public void DuplicateOwnedIdentityDoesNotSatisfyUniqueOwnedProject()
     {
         var result = TestProjectTopologyPolicy.Evaluate(
             Snapshot(),
@@ -301,18 +368,17 @@ public sealed class TestProjectTopologyPolicyTests
                 OwnedTest(
                     "First.Tests",
                     "Shared.Tests",
-                    runnable: true,
                     "../../Shared/Shared.csproj"),
                 OwnedTest(
                     "Second.Tests",
                     "Shared.Tests",
-                    runnable: false,
                     "../../Shared/Shared.csproj")));
 
         Assert.False(result.IsAccepted);
         Assert.Contains(
             Debt("missing-owned-project", "Shared", "Shared.Tests"),
             result.IntroducedDebt);
+        Assert.Single(result.IntroducedDebt);
     }
 
     [Fact]
@@ -323,29 +389,27 @@ public sealed class TestProjectTopologyPolicyTests
             Production("Two", "Shared")));
         var missingReference = TestProjectTopologyPolicy.CalculateDebt(Snapshot(
             Production("NoRef", "NoRef"),
-            OwnedTest("NoRef.Tests", "NoRef.Tests", runnable: true)));
+            OwnedTest("NoRef.Tests", "NoRef.Tests")));
         var orphan = TestProjectTopologyPolicy.CalculateDebt(Snapshot(
-            OwnedTest("Orphan.Tests", "Orphan.Tests", runnable: true)));
+            OwnedTest("Orphan.Tests", "Orphan.Tests")));
         var extraReference = TestProjectTopologyPolicy.CalculateDebt(Snapshot(
             Production("Alpha", "Alpha"),
             OwnedTest(
                 "Alpha.Tests",
                 "Alpha.Tests",
-                runnable: true,
                 "../../Alpha/Alpha.csproj",
                 "../../Beta/Beta.csproj"),
             Production("Beta", "Beta"),
-            OwnedTest("Beta.Tests", "Beta.Tests", true, "../../Beta/Beta.csproj")));
+            OwnedTest("Beta.Tests", "Beta.Tests", "../../Beta/Beta.csproj")));
         var ownedTestReference = TestProjectTopologyPolicy.CalculateDebt(Snapshot(
             Production("Alpha", "Alpha"),
             OwnedTest(
                 "Alpha.Tests",
                 "Alpha.Tests",
-                runnable: true,
                 "../../Alpha/Alpha.csproj",
                 "../Beta.Tests/Beta.Tests.csproj"),
             Production("Beta", "Beta"),
-            OwnedTest("Beta.Tests", "Beta.Tests", true, "../../Beta/Beta.csproj")));
+            OwnedTest("Beta.Tests", "Beta.Tests", "../../Beta/Beta.csproj")));
 
         var kinds = duplicate
             .Concat(missingReference)
@@ -375,40 +439,42 @@ public sealed class TestProjectTopologyPolicyTests
         var root = RepositoryLayout.FindRoot();
         var protectedBase = ReadProtectedBase(root);
         var candidate = Decode(GitRepositorySnapshotReader.ReadCurrent(root));
-        var protectedBaseMap = ScribeTestMapDeriver.DeriveSnapshot(protectedBase);
-        var candidateMap = ScribeTestMapDeriver.DeriveSnapshot(candidate);
-        var protectedBaseTopology = TestProjectTopologyPolicy.ReadSnapshotProjects(
-            protectedBase,
-            RunnableProjects(protectedBaseMap));
-        var candidateTopology = TestProjectTopologyPolicy.ReadSnapshotProjects(
-            candidate,
-            RunnableProjects(candidateMap));
-
-        var result = TestProjectTopologyPolicy.Evaluate(
-            protectedBaseTopology,
-            candidateTopology);
+        var result = TestProjectTopologyPolicy.EvaluateSnapshots(protectedBase, candidate);
 
         Assert.True(result.IsAccepted, result.Message);
+        Assert.NotEmpty(result.BaseDebt);
+        Assert.All(
+            result.BaseDebt.Concat(result.CandidateDebt),
+            static debt => Assert.Contains(
+                debt.Kind,
+                new[]
+                {
+                    "duplicate-production-identity",
+                    "extra-production-reference",
+                    "missing-expected-production-reference",
+                    "missing-owned-project",
+                    "orphan-owned-project",
+                    "owned-test-to-owned-test-reference",
+                }));
+        AssertHasDebtFreePair(protectedBase, result.BaseDebt);
+        AssertHasDebtFreePair(candidate, result.CandidateDebt);
     }
 
     private static (TestProjectTopologySnapshot ProtectedBase, TestProjectTopologySnapshot Candidate)
         EqualSizedDebtSwap()
     {
         var protectedBase = Snapshot(
-            Production("Legacy", "Legacy"),
             OwnedTest(
                 "Legacy.Tests",
                 "Legacy.Tests",
-                runnable: false,
                 "../../Legacy/Legacy.csproj"));
         var candidate = Snapshot(
             Production("Legacy", "Legacy"),
             OwnedTest(
                 "Legacy.Tests",
                 "Legacy.Tests",
-                runnable: true,
                 "../../Legacy/Legacy.csproj"),
-            OwnedTest("Rogue.Tests", "Rogue.Tests", runnable: true));
+            OwnedTest("Rogue.Tests", "Rogue.Tests"));
         return (protectedBase, candidate);
     }
 
@@ -423,30 +489,25 @@ public sealed class TestProjectTopologyPolicyTests
         $"tools/{directory}/{projectStem ?? directory}.csproj",
         assembly,
         xunit: false,
-        runnable: false,
         extraProperty: extraProperty);
 
     private static TestProjectTopologyProject OwnedTest(
         string directory,
         string assembly,
-        bool runnable,
         params string[] references) => Project(
         $"tools/tests/{directory}/{directory}.csproj",
         assembly,
         xunit: true,
-        runnable: runnable,
         references: references);
 
     private static TestProjectTopologyProject Project(
         string path,
         string assembly,
         bool xunit,
-        bool runnable,
         params string[] references) => Project(
         path,
         assembly,
         xunit,
-        runnable,
         extraProperty: string.Empty,
         references);
 
@@ -454,7 +515,6 @@ public sealed class TestProjectTopologyPolicyTests
         string path,
         string assembly,
         bool xunit,
-        bool runnable,
         string extraProperty,
         params string[] references)
     {
@@ -477,7 +537,7 @@ public sealed class TestProjectTopologyPolicyTests
               </ItemGroup>
             </Project>
             """;
-        return new TestProjectTopologyProject(path, content, runnable);
+        return new TestProjectTopologyProject(path, content);
     }
 
     private static TestProjectTopologyDebt Debt(
@@ -485,13 +545,70 @@ public sealed class TestProjectTopologyPolicyTests
         string subject,
         string related) => new(kind, subject, related);
 
-    private static IReadOnlySet<string> RunnableProjects(ScribeTestMap map) => map.Methods
-        .Where(static method => !method.IsStaticallySkipped)
-        .Select(method => map.CompileProjectBySourcePath[method.SourcePath])
-        .ToHashSet(StringComparer.Ordinal);
-
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+
+    private static void AssertHasDebtFreePair(
+        RepositorySnapshot snapshot,
+        IReadOnlyList<TestProjectTopologyDebt> debt)
+    {
+        var projects = TestProjectTopologyPolicy.ReadSnapshotProjects(snapshot).Projects
+            .Select(static project =>
+            {
+                var path = project.Path.Replace('\\', '/');
+                var document = XDocument.Parse(project.Content, LoadOptions.None);
+                var assemblyName = document.Descendants()
+                    .FirstOrDefault(static element => element.Name.LocalName == "AssemblyName")
+                    ?.Value.Trim();
+                if (string.IsNullOrEmpty(assemblyName))
+                {
+                    assemblyName = Path.GetFileNameWithoutExtension(path);
+                }
+
+                var isXunit = document.Descendants().Any(static element =>
+                    element.Name.LocalName == "PackageReference"
+                    && string.Equals(
+                        (string?)element.Attribute("Include"),
+                        "xunit",
+                        StringComparison.Ordinal));
+                return (Path: path, AssemblyName: assemblyName, IsXunit: isXunit);
+            })
+            .ToArray();
+        var productionIdentities = projects
+            .Where(static project =>
+            {
+                var parts = project.Path.Split('/');
+                return parts.Length == 3
+                    && parts[0] == "tools"
+                    && parts[1] != "tests"
+                    && parts[2].EndsWith(".csproj", StringComparison.Ordinal);
+            })
+            .GroupBy(static project => project.AssemblyName, StringComparer.Ordinal)
+            .Where(static group => group.Count() == 1)
+            .Select(static group => group.Key);
+        var ownedTestIdentities = projects
+            .Where(static project => project.IsXunit
+                && project.Path.StartsWith("tools/tests/", StringComparison.Ordinal)
+                && project.Path.EndsWith(".csproj", StringComparison.Ordinal)
+                && project.Path != CanonicalHarnessPath)
+            .GroupBy(static project => project.AssemblyName, StringComparer.Ordinal)
+            .Where(static group => group.Count() == 1)
+            .Select(static group => group.Key)
+            .ToHashSet(StringComparer.Ordinal);
+        var pairIdentities = productionIdentities
+            .Where(identity => ownedTestIdentities.Contains(identity + ".Tests"))
+            .ToArray();
+
+        Assert.Contains(pairIdentities, productionIdentity =>
+        {
+            var testIdentity = productionIdentity + ".Tests";
+            return !debt.Any(item =>
+                item.Subject == productionIdentity
+                || item.Subject == testIdentity
+                || item.Related == productionIdentity
+                || item.Related == testIdentity);
+        });
+    }
 
     private static RepositorySnapshot ReadProtectedBase(string root)
     {

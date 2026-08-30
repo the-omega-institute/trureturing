@@ -5,8 +5,7 @@ namespace StrataLint.Engine;
 
 internal sealed record TestProjectTopologyProject(
     string Path,
-    string Content,
-    bool HasRunnableTestIdentity);
+    string Content);
 
 internal sealed record TestProjectTopologySnapshot(
     IReadOnlyList<TestProjectTopologyProject> Projects);
@@ -25,7 +24,7 @@ internal sealed record TestProjectTopologyResult(
     ImmutableArray<TestProjectTopologyDebt> RemovedDebt,
     string Message);
 
-internal static class TestProjectTopologyPolicy
+internal static partial class RepositoryRules
 {
     internal const string DuplicateProductionIdentity = "duplicate-production-identity";
     internal const string MissingOwnedProject = "missing-owned-project";
@@ -41,12 +40,18 @@ internal static class TestProjectTopologyPolicy
 
     private static readonly Uri RepositoryUri = new("https://repository.invalid/");
 
-    internal static TestProjectTopologySnapshot ReadTrackedProjects(
-        string repositoryRoot,
-        IReadOnlySet<string> runnableTestProjectPaths)
+    // Boundary: this is a pure csproj topology gate. It does not verify that any owned test
+    // project contains a runnable test; an empty xUnit project with zero tests can pass. This is
+    // a known, intentional gap. Static runnable identity would reimplement C# attribute semantics,
+    // MSBuild Compile evaluation, and preprocessor-symbol evaluation. Three review rounds found
+    // both false-open and false-closed behavior in that approximation, which also duplicated the
+    // ScribeTestMapDeriver source of truth. The correct criterion is runtime evidence from
+    // TestResultEvidence.CountAssembly (TestResultEvidence.cs:73) together with
+    // verify-trx --required-assembly (Program.cs:177-188). Its sole caller,
+    // tools/scripts/dotnet-test.sh:20, does not currently pass that option; wiring it is later work.
+    internal static TestProjectTopologySnapshot ReadTrackedProjects(string repositoryRoot)
     {
         ArgumentNullException.ThrowIfNull(repositoryRoot);
-        ArgumentNullException.ThrowIfNull(runnableTestProjectPaths);
 
         var projects = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
             .Where(static file => file.RelativePath.EndsWith(
@@ -54,18 +59,14 @@ internal static class TestProjectTopologyPolicy
                 StringComparison.Ordinal))
             .Select(file => new TestProjectTopologyProject(
                 file.RelativePath,
-                File.ReadAllText(file.FullPath),
-                runnableTestProjectPaths.Contains(file.RelativePath)))
+                File.ReadAllText(file.FullPath)))
             .ToArray();
         return new TestProjectTopologySnapshot(projects);
     }
 
-    internal static TestProjectTopologySnapshot ReadSnapshotProjects(
-        RepositorySnapshot snapshot,
-        IReadOnlySet<string> runnableTestProjectPaths)
+    internal static TestProjectTopologySnapshot ReadSnapshotProjects(RepositorySnapshot snapshot)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
-        ArgumentNullException.ThrowIfNull(runnableTestProjectPaths);
 
         var projects = snapshot.Files.Values
             .Where(static file => file.Path.Value.EndsWith(
@@ -74,10 +75,21 @@ internal static class TestProjectTopologyPolicy
             .OrderBy(static file => file.Path.Value, StringComparer.Ordinal)
             .Select(file => new TestProjectTopologyProject(
                 file.Path.Value,
-                file.Text,
-                runnableTestProjectPaths.Contains(file.Path.Value)))
+                file.Text))
             .ToArray();
         return new TestProjectTopologySnapshot(projects);
+    }
+
+    internal static TestProjectTopologyResult EvaluateSnapshots(
+        RepositorySnapshot protectedBase,
+        RepositorySnapshot candidate)
+    {
+        ArgumentNullException.ThrowIfNull(protectedBase);
+        ArgumentNullException.ThrowIfNull(candidate);
+
+        return Evaluate(
+            ReadSnapshotProjects(protectedBase),
+            ReadSnapshotProjects(candidate));
     }
 
     internal static TestProjectTopologyResult Evaluate(
@@ -186,12 +198,7 @@ internal static class TestProjectTopologyPolicy
                 ? tests
                 : [];
 
-            // Runnable identity evidence is deliberately separate from ownership. Ownership is
-            // derived only from project topology. This is a structural empty-project guard, not
-            // a coverage gate: a semantically empty no-op [Fact] still satisfies this condition.
-            var hasExactlyOneRunnableOwnedTest = matchingOwnedTests.Length == 1
-                && matchingOwnedTests[0].HasRunnableTestIdentity;
-            if (!hasExactlyOneRunnableOwnedTest)
+            if (matchingOwnedTests.Length != 1)
             {
                 AddDebt(
                     participants,
@@ -300,12 +307,7 @@ internal static class TestProjectTopologyPolicy
             .Distinct(StringComparer.Ordinal)
             .Order(StringComparer.Ordinal)
             .ToImmutableArray();
-        var isXunit = document.Descendants().Any(static element =>
-            element.Name.LocalName == "PackageReference"
-            && string.Equals(
-                (string?)element.Attribute("Include"),
-                "xunit",
-                StringComparison.OrdinalIgnoreCase));
+        var isXunit = HasLiteralXunitReference(project.Content);
 
         return new ProjectVertex(
             path,
@@ -313,7 +315,6 @@ internal static class TestProjectTopologyPolicy
             assemblyName,
             IsProductionProject(path),
             IsOwnedTestProject(path, isXunit),
-            project.HasRunnableTestIdentity,
             directReferences);
     }
 
@@ -377,6 +378,17 @@ internal static class TestProjectTopologyPolicy
                 && existing.AssemblyName == candidate.AssemblyName));
     }
 
+    private static bool HasLiteralXunitReference(string content)
+    {
+        var document = XDocument.Parse(content, LoadOptions.None);
+        return document.Descendants().Any(static element =>
+            element.Name.LocalName == "PackageReference"
+            && string.Equals(
+                (string?)element.Attribute("Include"),
+                "xunit",
+                StringComparison.Ordinal));
+    }
+
     private static void AddDebt(
         IDictionary<TestProjectTopologyDebt, HashSet<string>> participants,
         TestProjectTopologyDebt debt,
@@ -410,7 +422,6 @@ internal static class TestProjectTopologyPolicy
         string AssemblyName,
         bool IsProduction,
         bool IsOwnedTest,
-        bool HasRunnableTestIdentity,
         ImmutableArray<string> DirectProjectReferences);
 
     private sealed record DebtGraph(
