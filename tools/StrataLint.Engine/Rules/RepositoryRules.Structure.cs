@@ -64,7 +64,7 @@ internal static partial class RepositoryRules
 
     internal const int ArtifactSoftLineLimit = 600;
 
-    internal const int DirectoryFileLimit = 12;
+    internal const int DirectoryFileLimit = 24;
 
     // The repository-wide capacity net tolerates a band above the admission limit.
     // Capacity is pressure, not correctness: an overfull bucket is a signal to split
@@ -79,7 +79,7 @@ internal static partial class RepositoryRules
     // Thresholds raised 12/24 -> 24/48 by the owner on 2026-08-30 (wave-71 readings: nine
     // Weil/Analytic/Observer buckets at 12 and Weil/Budget at 13 within one day; the band
     // stays one admission limit wide).
-    internal const int DirectoryToleranceLimit = 24;
+    internal const int DirectoryToleranceLimit = 48;
 
     // SL-003 capacity exclusions: theory inputs, the Lake manifest, the backfill
     // inventory, atomizer dialect registry, canonical CAS blobs, per-atom
