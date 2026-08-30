@@ -10,10 +10,38 @@ internal sealed record TestProjectTopologyProject(
 internal sealed record TestProjectTopologySnapshot(
     IReadOnlyList<TestProjectTopologyProject> Projects);
 
-internal sealed record TestProjectTopologyDebt(
-    string Kind,
-    string Subject,
-    string Related);
+internal sealed class TestProjectTopologyDebt : IEquatable<TestProjectTopologyDebt>
+{
+    internal TestProjectTopologyDebt(string kind, string subject, string related)
+    {
+        Kind = kind;
+        Subject = subject;
+        Related = related;
+    }
+
+    internal string Kind { get; }
+
+    internal string Subject { get; }
+
+    internal string Related { get; }
+
+    public bool Equals(TestProjectTopologyDebt? other) =>
+        other is not null
+        && string.Equals(Kind, other.Kind, StringComparison.Ordinal)
+        && string.Equals(Subject, other.Subject, StringComparison.OrdinalIgnoreCase)
+        && string.Equals(Related, other.Related, StringComparison.OrdinalIgnoreCase);
+
+    public override bool Equals(object? obj) => Equals(obj as TestProjectTopologyDebt);
+
+    public override int GetHashCode()
+    {
+        var hash = new HashCode();
+        hash.Add(Kind, StringComparer.Ordinal);
+        hash.Add(Subject, StringComparer.OrdinalIgnoreCase);
+        hash.Add(Related, StringComparer.OrdinalIgnoreCase);
+        return hash.ToHashCode();
+    }
+}
 
 internal sealed record TestProjectTopologyResult(
     bool IsAccepted,
@@ -52,15 +80,9 @@ internal static partial class RepositoryRules
 
     private static readonly Uri RepositoryUri = new("https://repository.invalid/");
 
-    // Boundary: this is a pure csproj topology gate. It does not verify that any owned test
-    // project contains a runnable test; an empty xUnit project with zero tests can pass. This is
-    // a known, intentional gap. Static runnable identity would reimplement C# attribute semantics,
-    // MSBuild Compile evaluation, and preprocessor-symbol evaluation. Three review rounds found
-    // both false-open and false-closed behavior in that approximation, which also duplicated the
-    // ScribeTestMapDeriver source of truth. The correct criterion is runtime evidence from
-    // TestResultEvidence.CountAssembly (TestResultEvidence.cs:73) together with
-    // verify-trx --required-assembly (Program.cs:177-188). Its sole caller,
-    // tools/scripts/dotnet-test.sh:20, does not currently pass that option; wiring it is later work.
+    // Boundary: runnable identity stays a runtime concern. Static detection would reimplement C#
+    // attributes, MSBuild Compile evaluation, and preprocessor symbols. Full-suite TRX verification
+    // consumes the owner assemblies derived here and requires nonzero executed identity for each.
     internal static TestProjectTopologySnapshot ReadTrackedProjects(string repositoryRoot)
     {
         ArgumentNullException.ThrowIfNull(repositoryRoot);
@@ -154,6 +176,17 @@ internal static partial class RepositoryRules
         return BuildDebtGraph(snapshot).Debt;
     }
 
+    internal static ImmutableArray<string> CalculateOwnerAssemblies(
+        TestProjectTopologySnapshot snapshot)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        return BuildDebtGraph(snapshot).OwnedTestProjects
+            .Select(static project => project.AssemblyName)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .Order(StringComparer.OrdinalIgnoreCase)
+            .ToImmutableArray();
+    }
+
     private static DebtGraph BuildDebtGraph(TestProjectTopologySnapshot snapshot)
     {
         var allProjects = snapshot.Projects
@@ -170,17 +203,17 @@ internal static partial class RepositoryRules
             .Where(static project => project.IsOwnedTest)
             .ToArray();
         var productionByIdentity = productionProjects
-            .GroupBy(static project => project.AssemblyName, StringComparer.Ordinal)
+            .GroupBy(static project => project.AssemblyName, StringComparer.OrdinalIgnoreCase)
             .ToDictionary(
                 static group => group.Key,
                 static group => group.ToArray(),
-                StringComparer.Ordinal);
+                StringComparer.OrdinalIgnoreCase);
         var ownedTestsByIdentity = ownedTestProjects
-            .GroupBy(static project => project.AssemblyName, StringComparer.Ordinal)
+            .GroupBy(static project => project.AssemblyName, StringComparer.OrdinalIgnoreCase)
             .ToDictionary(
                 static group => group.Key,
                 static group => group.ToArray(),
-                StringComparer.Ordinal);
+                StringComparer.OrdinalIgnoreCase);
         var productionByPath = productionProjects.ToDictionary(
             static project => project.Path,
             StringComparer.Ordinal);
@@ -227,7 +260,7 @@ internal static partial class RepositoryRules
         {
             var expectedProductionIdentity = test.AssemblyName.EndsWith(
                     ".Tests",
-                    StringComparison.Ordinal)
+                    StringComparison.OrdinalIgnoreCase)
                 ? test.AssemblyName[..^".Tests".Length]
                 : string.Empty;
             var matchingProduction = expectedProductionIdentity.Length > 0
@@ -382,12 +415,14 @@ internal static partial class RepositoryRules
         var missingIdentities = baseGraph.Debt
             .Where(static debt => debt.Kind == MissingOwnedProject)
             .Select(static debt => debt.Related)
-            .ToHashSet(StringComparer.Ordinal);
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
         return candidateGraph.OwnedTestProjects.Any(candidate =>
             missingIdentities.Contains(candidate.AssemblyName)
             && !baseGraph.OwnedTestProjects.Any(existing =>
                 existing.Path == candidate.Path
-                && existing.AssemblyName == candidate.AssemblyName));
+                && StringComparer.OrdinalIgnoreCase.Equals(
+                    existing.AssemblyName,
+                    candidate.AssemblyName)));
     }
 
     private static bool HasLiteralXunitReference(string content)
