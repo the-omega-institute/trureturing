@@ -8,3 +8,7 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: The canonical completed-xi reading, its reflection law, and local logarithmic-derivative tools exist, but D5 and pinned Mathlib have no Sondow-Dumitrescu theorem or completed-xi zero-product logarithmic-derivative expansion proving strict positivity on the full open half-plane from RH. The reverse direction also lacks the arbitrary-multiplicity local pole theorem needed to turn a right-half-plane zero into a negative score. Abstracting either implication as a hypothesis would restate the theorem.
+    reentry_condition: Prove a convergent Hadamard logarithmic-derivative expansion for the canonical xi reading and an arbitrary-positive-order zero pole asymptotic, or add the exact Sondow-Dumitrescu RH equivalence on that carrier.
+    blocker_class: missing-prerequisite
