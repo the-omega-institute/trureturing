@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Analytic/Zeta/GoldenEuler/GoldenLocalEulerFactorTrichotomy
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: The neutral Euler channel multiplied by a quadratic charge channel gives the split, inert, and ramified local factors for charge values one, minus one, and zero. -/
+   digest: Neutral and quadratic charge channels give the split, inert, and
+     ramified local Euler factors. -/
 
 import Mathlib
 
