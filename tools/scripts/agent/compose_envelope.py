@@ -72,7 +72,9 @@ def main(argv):
         worker = loaded.get("conclusion", loaded)
     worker_atoms = {a.get("atom_id"): a for a in worker.get("atoms", []) if isinstance(a, dict)}
     for q in worker.get("quarantined_atoms", []) or []:
-        worker_atoms.setdefault(q.get("atom_id"), q)
+        if isinstance(q, dict) and q.get("atom_id"):
+            worker_atoms.setdefault(q["atom_id"], q)
+        # a bare atom_id string carries no whitelisted fields; the YAML record is the source anyway
 
     deposited, ejected = [], []
     for line in names.splitlines():
@@ -88,7 +90,10 @@ def main(argv):
                     atom[key] = src[key]
             deposited.append(atom)
         elif status.startswith("M") and "/residual-open/" in path and path.endswith(".yaml"):
-            before = git(wt, "show", f"{base}:{path}") if git(wt, "cat-file", "-e", f"{base}:{path}") is not None else ""
+            try:
+                before = git(wt, "show", f"{base}:{path}")
+            except subprocess.CalledProcessError:
+                before = ""  # file did not exist at base: every quarantine block in HEAD is new
             after = git(wt, "show", f"HEAD:{path}")
             if parse_quarantine(before) is None and (block := parse_quarantine(after)):
                 atom_id = os.path.basename(path)[:-len(".yaml")]
