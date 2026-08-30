@@ -6,6 +6,18 @@ namespace StrataLint.Tests;
 
 public sealed class RouteTests
 {
+    private const string CanonicalYamlManifest = """
+        artifact: lean
+        domain: Carrier
+        generality: G
+        module: Probe
+        plane: F
+        selector: ''
+        subdomain: Algebra
+        tag: ''
+        theory: D5
+        """;
+
     [Theory]
     [InlineData("F", "Carrier", "Probe", "", "lean", "", "D5/S0/Carrier/Probe", "D5/S0/Carrier/Probe.lean")]
     [InlineData("B", "Carrier", "Probe", "", "markdown", "", "D5/B/S0/Carrier/Probe", "Blueprint/D5/S0/Carrier/Probe.md")]
@@ -127,25 +139,45 @@ public sealed class RouteTests
     [Fact]
     public void ManifestLoaderAcceptsOptionalSubdomainFromYamlAndRoutesIt()
     {
-        const string yaml = """
-            artifact: lean
-            domain: Carrier
-            generality: G
-            module: Probe
-            plane: F
-            selector: ''
-            subdomain: Algebra
-            tag: ''
-            theory: D5
-            """;
-
         var loaded = Assert.IsType<ManifestLoadOutcome.Loaded>(
-            ManifestLoader.Load(Encoding.UTF8.GetBytes(yaml)));
+            ManifestLoader.Load(Encoding.UTF8.GetBytes(CanonicalYamlManifest)));
 
         Assert.Equal("Algebra", loaded.Syntax.SubDomain);
         Assert.Equal(
             "D5/S0/Carrier/Algebra/Probe",
             Assert.IsType<RouteOutcome.Routed>(RouteEngine.Route(Policy(), loaded.Syntax)).Result.Gid.Value);
+    }
+
+    public static TheoryData<string> UnsupportedYamlDocuments => new()
+    {
+        CanonicalYamlManifest.Replace(
+            "module: Probe",
+            "module: Probe # YAML inline comment",
+            StringComparison.Ordinal),
+        "---\n" + CanonicalYamlManifest,
+        CanonicalYamlManifest.Replace(
+            "module: Probe",
+            "module: ! Probe",
+            StringComparison.Ordinal),
+    };
+
+    [Theory]
+    [MemberData(nameof(UnsupportedYamlDocuments))]
+    public void ManifestLoaderRejectsYamlOutsideTheSupportedSubset(string manifest)
+    {
+        var outcome = ManifestLoader.Load(Encoding.UTF8.GetBytes(manifest));
+
+        Assert.IsType<ManifestLoadOutcome.InfrastructureFailure>(outcome);
+    }
+
+    [Fact]
+    public void ManifestLoaderRejectsTabIndentation()
+    {
+        var manifest = "\t" + CanonicalYamlManifest.Replace("\n", "\n\t", StringComparison.Ordinal);
+
+        var outcome = ManifestLoader.Load(Encoding.UTF8.GetBytes(manifest));
+
+        Assert.IsType<ManifestLoadOutcome.InfrastructureFailure>(outcome);
     }
 
     [Theory]

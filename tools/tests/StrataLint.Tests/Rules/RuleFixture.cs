@@ -5,6 +5,8 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
+// This directory now names only Engine APIs, but StrataLint.Tests still references the CLI
+// project. A real assembly capability boundary requires extracting Rules into its own project.
 internal sealed partial class RuleFixture
 {
     internal const string FixtureDigestionSourcePath = "docs/GOVERNANCE.md";

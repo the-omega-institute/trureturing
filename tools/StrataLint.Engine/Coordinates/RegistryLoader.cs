@@ -45,45 +45,8 @@ public static class RegistryLoader
     private static Dictionary<string, object?> ParseMappingDocument(ReadOnlySpan<byte> bytes, string label)
     {
         var text = new UTF8Encoding(false, true).GetString(bytes);
-        RejectUnsupportedYamlFeatures(text);
+        YamlSubsetSyntaxGuard.RejectUnsupportedSyntax(text, "registry.yaml");
         return Mapping(YamlSubsetParser.Parse(text), label);
-    }
-
-    private static void RejectUnsupportedYamlFeatures(string text)
-    {
-        foreach (var rawLine in text.Split('\n'))
-        {
-            var line = rawLine.TrimStart();
-            if (line.Length == 0 || line.StartsWith('#'))
-            {
-                continue;
-            }
-
-            var separator = line.IndexOf(':');
-            var key = separator < 0 ? string.Empty : line[..separator].Trim();
-            if (key == "<<")
-            {
-                throw new FormatException("YAML merge key is forbidden in registry.yaml.");
-            }
-
-            var value = separator < 0
-                ? line.StartsWith("- ", StringComparison.Ordinal) ? line[2..].TrimStart() : string.Empty
-                : line[(separator + 1)..].TrimStart();
-            if (value.StartsWith('&'))
-            {
-                throw new FormatException("YAML anchor is forbidden in registry.yaml.");
-            }
-
-            if (value.StartsWith('*'))
-            {
-                throw new FormatException("YAML alias is forbidden in registry.yaml.");
-            }
-
-            if (value.StartsWith('!'))
-            {
-                throw new FormatException("YAML custom tag is forbidden in registry.yaml.");
-            }
-        }
     }
 
     private static RegistrySyntax ProjectRegistrySyntax(IReadOnlyDictionary<string, object?> rootMap)

@@ -36,6 +36,21 @@ public sealed class RegistryTests
         Assert.Equal(2, firstAccepted.Policy.ArtifactKinds.Count);
     }
 
+    [Fact]
+    public void RepositoryRegistryAndDomainsRemainAcceptedByTheYamlSubset()
+    {
+        var registry = TestRepositoryLayout.ReadAllText(
+            RepositoryRelativePath.Create("Meta/registry.yaml"));
+        var domains = TestRepositoryLayout.ReadAllText(
+            RepositoryRelativePath.Create("Meta/domains.yaml"));
+
+        var outcome = RegistryLoader.Load(
+            Encoding.UTF8.GetBytes(registry),
+            Encoding.UTF8.GetBytes(domains));
+
+        Assert.IsType<RegistryLoadOutcome.Accepted>(outcome);
+    }
+
     [Theory]
     [InlineData(true)]
     [InlineData(false)]
@@ -79,6 +94,24 @@ public sealed class RegistryTests
         { CanonicalRegistry.Replace("artifact_kinds:\n", "artifact_kinds:\n  <<: {}\n", StringComparison.Ordinal), "merge" },
         { CanonicalRegistry.Replace("profile: structured-json", "profile: structured-toml", StringComparison.Ordinal), "profile" },
     };
+
+    [Theory]
+    [InlineData("[ &carrier_anchor \"carrier definition\" ]")]
+    [InlineData("[ *carrier_anchor ]")]
+    [InlineData("[ !custom \"carrier definition\" ]")]
+    public void RegistryRejectsYamlFeaturesInsideFlowCollections(string definition)
+    {
+        var domains = TestRegistry.Domains.Replace(
+            "definition: The golden integer carrier.",
+            $"definition: {definition}",
+            StringComparison.Ordinal);
+
+        var outcome = RegistryLoader.Load(
+            Encoding.UTF8.GetBytes(CanonicalRegistry),
+            Encoding.UTF8.GetBytes(domains));
+
+        Assert.IsType<RegistryLoadOutcome.InfrastructureFailure>(outcome);
+    }
 
     [Theory]
     [MemberData(nameof(InvalidDocuments))]
