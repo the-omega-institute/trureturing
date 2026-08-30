@@ -9,7 +9,7 @@ Derive a pre-merge review envelope FROM THE BRANCH, not from prose:
 Whitelisted per-atom fields (clause_matrix, tautology_check, encoded_scope_hypotheses, known_source_defects,
 public_statement_shape, findings_closed, primitives_used) are copied from the worker envelope when --worker is given;
 nothing else from the worker is carried (its prose describes a state the branch may no longer have).
-Fail-fast: exit 64 usage, 65 not a worktree, 66 no origin/dev, 67 a deposited atom is also quarantined.
+Fail-fast: exit 64 usage/bad --pr/--pass, 65 not a worktree, 66 no origin/dev, 67 a deposited atom is also quarantined (in HEAD, not only this diff), 68 no outcome derivable.
 Sentinel on success: COMPOSE_OK deposited=<n> ejected=<m> head=<sha9>.
 """
 import json, os, re, subprocess, sys
@@ -34,9 +34,12 @@ def parse_quarantine(text):
     if not m:
         return None
     for line in text[m.end():].splitlines():
-        mm = re.match(r'^\s{4}(justification|reentry_condition|blocker_class):\s*"?(.*?)"?\s*$', line)
+        mm = re.match(r'^\s{4}(justification|reentry_condition|blocker_class):\s*(.*?)\s*$', line)
         if mm:
-            block[mm.group(1)] = mm.group(2)
+            value = mm.group(2)
+            if len(value) >= 2 and value[0] == value[-1] and value[0] in ('"', "'"):
+                value = value[1:-1]
+            block[mm.group(1)] = value
         elif line.strip() and not line.startswith("    "):
             break
     return block or None
@@ -54,6 +57,10 @@ def main(argv):
             usage()
         opts[key] = argv[i + 1]
         i += 2
+    for key in ("pr", "pass"):
+        if opts[key] is not None and not re.fullmatch(r"[0-9]+", opts[key]):
+            sys.stderr.write(f"COMPOSE_BAD_INT --{key}={opts[key]}\n")
+            sys.exit(64)
     if not (os.path.isdir(os.path.join(wt, ".git")) or os.path.isfile(os.path.join(wt, ".git"))):
         sys.stderr.write(f"COMPOSE_NOT_A_WORKTREE {wt}\n")
         sys.exit(65)
@@ -84,12 +91,12 @@ def main(argv):
                 receipt = json.load(fh)
             atom = {"atom_id": receipt["atom_id"], "outcome": "deposited", "gid": receipt.get("primary_gid"),
                     "receipt": path, "bind_only": None}
-            src = worker_atoms.get(receipt["atom_id"], worker)
+            src = worker_atoms.get(receipt["atom_id"], {})  # per-atom record only; never the whole conclusion
             for key in WHITELIST:
                 if key in src:
                     atom[key] = src[key]
             deposited.append(atom)
-        elif status.startswith("M") and "/residual-open/" in path and path.endswith(".yaml"):
+        elif status[0] in "AM" and "/residual-open/" in path and path.endswith(".yaml"):
             try:
                 before = git(wt, "show", f"{base}:{path}")
             except subprocess.CalledProcessError:
@@ -106,10 +113,24 @@ def main(argv):
                     if key in src:
                         atom[key] = src[key]
                 ejected.append(atom)
-    overlap = {a["atom_id"] for a in deposited} & {a["atom_id"] for a in ejected}
+    head_quarantined = set()
+    for line in names.splitlines():
+        path = line.split("\t")[-1]
+        if line[0] in "AM" and "/residual-open/" in path and path.endswith(".yaml") and parse_quarantine(git(wt, "show", f"HEAD:{path}")):
+            head_quarantined.add(os.path.basename(path)[:-len(".yaml")])
+    for atom in deposited:
+        try:
+            if parse_quarantine(git(wt, "show", "HEAD:" + next(l.split("\t")[-1] for l in names.splitlines() if l.split("\t")[-1].endswith(atom["atom_id"] + ".yaml")))):
+                head_quarantined.add(atom["atom_id"])
+        except StopIteration:
+            pass
+    overlap = {a["atom_id"] for a in deposited} & (head_quarantined | {a["atom_id"] for a in ejected})
     if overlap:
         sys.stderr.write(f"COMPOSE_DEPOSITED_AND_QUARANTINED {sorted(overlap)}\n")
         sys.exit(67)
+    if not deposited and not ejected:
+        sys.stderr.write("COMPOSE_NO_OUTCOME (no added receipt, no added quarantine block)\n")
+        sys.exit(68)
     env = {"conclusion": {
         "lane": opts["lane"] or branch.split("/")[-1], "branch": branch, "base": base, "head": head,
         "fix_of_pr": int(opts["pr"]) if opts["pr"] else None, "review_pass": int(opts["pass"]) if opts["pass"] else None,
