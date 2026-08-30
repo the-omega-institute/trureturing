@@ -71,7 +71,7 @@ internal static partial class RepositoryRules
     // `OnlyExactCanonicalArchitectureHarnessPathIsExcluded` 有意钉住的守卫:
     // 第三个**未具名**的横跨项目仍须判 orphan-owned-project。加一条具名路径是
     // 保守扩展(旧判 admit 者仍 admit),换成命名规则则是放宽。
-    private static readonly ImmutableHashSet<string> CrossCuttingHarnessPaths =
+    internal static readonly ImmutableHashSet<string> CrossCuttingHarnessPaths =
         ImmutableHashSet.Create(
             StringComparer.Ordinal,
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
