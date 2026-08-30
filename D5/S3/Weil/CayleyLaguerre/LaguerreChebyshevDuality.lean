@@ -5,9 +5,9 @@
    anchors: []
    digest: Laguerre time tomography equals the Chebyshev derivative jet. -/
 
-import D5.S3.Weil.Budget.PositiveCayleyScaleTransport
+import D5.S3.Weil.Budget.CaratheodoryScaleCovariance
 import D5.S3.Weil.CayleyLaguerre.CayleyMomentTransport
-import D5.S3.Weil.TestFunctions.CayleyLaguerreMomentTomography
+import D5.S3.Weil.TestFunctions.CayleyMomentTransport
 import Mathlib.MeasureTheory.Group.MeasurableEquiv
 
 /- Library-search audit trail (2026-08-30):
