@@ -55,7 +55,7 @@ die() { printf 'lean-cache-publish: %s\n' "$1" >&2; exit 1; }
 # `exit 127`(command not found)静默失败,`LeanArchiveFetch` 只能记
 # `archive fetcher emitted no receipt (exit 127)`,回落全量编译 37 分钟并撞
 # 45 分钟 job 预算(实测 job 99264190096)。本机是 macOS,故本地一直复现不出。
-# 探测顺序与 `tools/scripts/report/lean-report-input.sh:42-46` 一致(同一真源,不另发明)。
+# 探测顺序与本仓 report 侧的输入哈希 helper 一致(同一真源,不另发明)。
 sha256_of() {
   if command -v sha256sum >/dev/null 2>&1; then
     sha256sum "$1" | awk '{print $1}'
@@ -106,7 +106,7 @@ fi
 
 # ── 身份 ──────────────────────────────────────────────────────────────────────
 # 两个哈希来自本仓既有的唯一真源，不另算一套。
-helper="$repository/tools/scripts/report/lean-report-input.sh"
+helper="${repository}/tools/scripts/report/lean-report-input.sh"
 [[ -x "$helper" ]] || die "input helper is absent: $helper"
 read -r _address _producer sources_sha256 config_sha256 \
   < <("$helper" address --repository "$repository")
