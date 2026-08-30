@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Analytic/Zeta/GoldenSpectrum/ReflectionPairTransfer
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Reciprocal reflection-pair transfer has determinant one for every nonzero radial charge, while Euclidean isometry under positive charge occurs exactly at pointwise neutrality. -/
+   digest: Reciprocal transfer has determinant one; positive isometry occurs
+     exactly at pointwise-neutral radial charge. -/
 
 import Mathlib
 
@@ -70,7 +71,7 @@ theorem determinant_balance_not_isometry :
     norm_num at hSq
 
 /-- The two reciprocal channels have logarithmic charges summing to zero. -/
-theorem reciprocal_pair_log_balance {q : ℝ} (hq : 0 < q) :
+theorem reciprocal_pair_log_balance (q : ℝ) :
     Real.log q + Real.log q⁻¹ = 0 := by
   rw [Real.log_inv]
   ring
