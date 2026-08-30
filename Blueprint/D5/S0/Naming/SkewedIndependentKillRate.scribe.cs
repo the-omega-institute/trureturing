@@ -6,16 +6,23 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.Naming;
 
 internal sealed class SkewedIndependentKillRateDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A finite behavior distribution replaces the uniform fixed fraction by weighted fixed-point mass.",
-        H("Skewed Independent Kill Rate"),
-        Blocks(
-            Describe.Lean(
-                DescribeId.Create("skewed-independent-kill-rate"),
-                DeclarationHandle.Create(
-                    "D5/S0/Naming/SkewedIndependentKillRate.skewed_independent_kill_rate"),
-                H("Weighted fixed mass skews the independent kill rate"),
-                StatementSource.FromAuthor(Disp(Seq(
+    public DocumentDefinition Create()
+    {
+        var fixedPointMass = Seq(
+            Sum, Underscore,
+            Grp(F.Id("y"), Sp, InMacro, Sp, Call("Fix", F.Id("f"))), Sp,
+            F.Id("q"), Open, F.Id("y"), Close);
+
+        return DocumentDefinition.Create(ScribeNode.Create(
+            "A finite behavior distribution replaces the uniform fixed fraction by weighted fixed-point mass.",
+            H("Skewed Independent Kill Rate"),
+            Blocks(
+                Describe.Lean(
+                    DescribeId.Create("skewed-independent-kill-rate"),
+                    DeclarationHandle.Create(
+                        "D5/S0/Naming/SkewedIndependentKillRate.skewed_independent_kill_rate"),
+                    H("Weighted fixed mass skews the independent kill rate"),
+                    StatementSource.FromAuthor(Disp(Seq(
                     Forall, Sp, F.Id("Y"), Comma, Sp, F.Id("Outcome"), Comma, Sp,
                     Operatorname, Grp(F.Id("Fintype")), Open, F.Id("Y"), Close,
                     Comma, Sp,
@@ -49,6 +56,9 @@ internal sealed class SkewedIndependentKillRateDocument : IScribeDocumentDefinit
                     Sp, Eq, Sp, D(1), Minus,
                     F.Id("fixedMass"), Open, F.Id("q"), Comma, Sp, F.Id("f"), Close,
                     Sp, Land, Sp,
+                    F.Id("escapeMass"), Open, F.Id("q"), Comma, Sp, F.Id("f"), Close,
+                    Sp, Eq, Sp, D(1), Minus, fixedPointMass,
+                    Sp, Land, Sp,
                     F.Id("mu"), Open,
                     Operatorname, Grp(F.Id("inter")), Open,
                     F.Id("C"), Comma, Sp, F.Id("V"), Close, Close,
@@ -60,7 +70,8 @@ internal sealed class SkewedIndependentKillRateDocument : IScribeDocumentDefinit
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "The fixedMass term sums q over outputs fixed by f, so it is q(Fix f), "
+                        "The theorem exposes the fixed-point mass as the explicit finite sum "
+                        + "sum_{y in Fix f} q(y), so the effective equivalent-mutant mass is q(Fix f), "
                         + "a distributional mass rather than an alphabet cardinality. Its complement "
                         + "is the visible mutation mass escapeMass.")),
                     Paragraph(Text(
@@ -72,11 +83,12 @@ internal sealed class SkewedIndependentKillRateDocument : IScribeDocumentDefinit
                         "The proof composes the frozen weighted complement law with the frozen "
                         + "independent event product law. Uniform behavior is not assumed. Multi-site "
                         + "mutations and regression-based estimation are outside this statement."))),
-                DescribeRole.Theorem)),
-        [
-            DocumentEdge.Dependency.Create(GidRef.Create(
-                "D5/S0/Asymptotics/SkewedEscapeMass")),
-            DocumentEdge.Dependency.Create(GidRef.Create(
-                "D5/S0/Naming/IndependentKillRate")),
-        ]));
+                    DescribeRole.Theorem)),
+            [
+                DocumentEdge.Dependency.Create(GidRef.Create(
+                    "D5/S0/Asymptotics/SkewedEscapeMass")),
+                DocumentEdge.Dependency.Create(GidRef.Create(
+                    "D5/S0/Naming/IndependentKillRate")),
+            ]));
+    }
 }
