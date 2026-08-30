@@ -1,0 +1,38 @@
+* 严格区间余项。
+
+项目的素数观察者理论已经把局部素数接口、全局余量、动态完成与不可胶合问题组织为统一框架；因此单极子荷最自然的新目标不是另建独立物理模型，而是把现有 prime–pole–Archimedean 数据编译成 Chern 通量。
+
+应证明：
+
+$$
+\boxed{
+\frac1{2\pi i}
+\oint_C
+\frac{\xi'}{\xi}
+=
+\operatorname{Round}
+\left(
+Q_{\mathrm{pole}}^{(L)}
++
+Q_\infty^{(L)}
++
+Q_{\mathrm{prime}}^{(L)}
+\right)
+}
+\tag{1063.6}
+$$
+
+并给出小于 \(1/2\) 的严格误差。
+
+一旦总区间落在：
+
+$$
+\left(
+m-\frac12,m+\frac12
+\right),
+$$
+
+整数磁荷 \(m\) 就被认证。
+
+---
+

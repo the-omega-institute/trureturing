@@ -1,0 +1,8 @@
+### N-3　黄金谱参数
+
+[suspected-novel]
+
+$\gamma_\phi(s)=-i(\phi^2s-1/2)$
+
+作为 O-5 与现有 `spectralParameter` API 的唯一桥接坐标。
+

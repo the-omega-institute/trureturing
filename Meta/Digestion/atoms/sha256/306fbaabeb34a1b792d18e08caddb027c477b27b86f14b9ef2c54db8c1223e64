@@ -1,0 +1,37 @@
+## GSR-5：尺度协变
+
+Cayley scale：
+
+$$
+a\mapsto b
+$$
+
+会通过 Möbius/Crofoot 变换改变原始 moments 和 Schur coefficients。
+
+真正的黄金结构不应依赖某个任意 \(a\)。
+
+因此要求不同 scales 的 block monodromy 至少在适当 gauge 下共轭：
+
+$$
+\boxed{
+M_k^{(b)}
+=
+G_{a,b,k}^{-1}
+M_k^{(a)}
+G_{a,b,k}
++
+o(1),
+}
+\tag{977.5}
+$$
+
+从而：
+
+$$
+\operatorname{tr}M_k^{(a)}
+$$
+
+和 Fricke Casimir 具有尺度稳定极限。
+
+---
+

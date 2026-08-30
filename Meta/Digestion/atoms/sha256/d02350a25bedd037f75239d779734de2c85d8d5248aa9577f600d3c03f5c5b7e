@@ -1,0 +1,26 @@
+# 第九百五十三部　Chebyshev 是真实的 transfer discriminant
+
+定义自由 \(SL_2\) 传输矩阵：
+
+$$
+\boxed{
+M(y)
+=
+\begin{pmatrix}
+2y&-1\\
+1&0
+\end{pmatrix}.
+}
+\tag{953.1}
+$$
+
+它满足：
+
+$$
+\det M(y)=1,
+\qquad
+\frac12\operatorname{tr}M(y)=y.
+$$
+
+由 Cayley–Hamilton 递推：
+

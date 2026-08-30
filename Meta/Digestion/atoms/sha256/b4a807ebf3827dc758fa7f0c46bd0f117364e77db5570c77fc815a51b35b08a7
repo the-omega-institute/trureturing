@@ -1,0 +1,256 @@
+# 本轮最终结论
+
+此前我们一直试图寻找：
+
+$$
+\boxed{
+\text{Prime--Weil 数据如何规范地产生 }SL_2\text{ 动力。}
+}
+$$
+
+现在答案已经明确：
+
+$$
+\boxed{
+\text{不是先猜两个 prime matrices，}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{先把 Weil 数据变成 Cayley moments，
+再由 Schur algorithm 唯一地产生 transfer matrices。}
+}
+$$
+
+完整链为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{prime--Archimedean source}
+&\longrightarrow
+\text{resolvent correlation}\\
+&\longrightarrow
+\text{Laguerre--Cayley moments}\\
+&\longrightarrow
+\text{Li--Clark Toeplitz matrices}\\
+&\longrightarrow
+\text{Verblunsky coefficients}\\
+&\longrightarrow
+SU(1,1)/SL_2\text{ Szegő cocycle}\\
+&\longrightarrow
+\text{CMV completion}.
+\end{aligned}
+}
+$$
+
+最重要的精确判据是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+T_N^{\mathrm{LC}}\succeq0
+\quad
+\forall N.
+}
+$$
+
+等价地：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{Li--Clark Schur recursion 永远不离开单位盘。}
+}
+$$
+
+若 RH 成立：
+
+$$
+\boxed{
+|\alpha_n|<1
+\quad
+\forall n,
+}
+$$
+
+但纯点谱使累积 reflection energy 发散：
+
+$$
+\boxed{
+\sum|\alpha_n|^2=\infty.
+}
+$$
+
+所以真正的完成边界只在无限层出现。
+
+若 RH 失败：
+
+$$
+\boxed{
+\text{某个有限 Schur step 直接越界。}
+}
+$$
+
+这给“极限完成态与有限破缺起点”的关系一个极其清晰的数学形式。
+
+离线零点本身在 Cayley 图表中变成：
+
+$$
+\boxed{
+e^{r+i\theta},
+\qquad
+e^{-r+i\theta},
+}
+$$
+
+即单位圆内外的一对 reciprocal radial points。
+
+而：
+
+$$
+\boxed{
+\left.
+\partial_\delta r
+\right|_{\delta=0}
+=
+\partial_\gamma\theta
+=
+-\frac{2a}{\gamma^2+a^2}.
+}
+$$
+
+所以离线径向点虽然不在完成圆上，它的第一影子恰好是完成圆上的 Poisson 相位导数。
+
+这严格实现了：
+
+$$
+\boxed{
+\text{点看不见，导数看得见。}
+}
+$$
+
+更进一步，完成平均只保留：
+
+$$
+\cosh(nr),
+$$
+
+所以第一标量缺陷是：
+
+$$
+r^2,
+$$
+
+而不是 \(r\)。
+
+这正是此前反复出现的：
+
+$$
+\boxed{
+\text{odd origin}
+\longrightarrow
+\text{even Casimir}.
+}
+$$
+
+多尺度分析又给出一个无法逃避的分辨率律：
+
+$$
+\boxed{
+L|\delta|\asymp1.
+}
+$$
+
+改变 Cayley scale 可以改变坐标压缩，但不能改变：
+
+$$
+\frac{|\delta|}{|\Delta\gamma|}
+$$
+
+这一横向—纵向纵横比。
+
+所以不存在一个尺度能够只放大离线缺陷而不同时放大相邻零点结构。
+
+最后，黄金比例的正确位置也被严格限定：
+
+$$
+\boxed{
+\varphi
+\text{ 不应预先出现在单个 Li 或 Schur coefficient 中。}
+}
+$$
+
+它只有在规范 Szegő block products 真正满足 Fibonacci 重整化时，才会作为：
+
+$$
+\boxed{
+\varphi^2,\quad
+\varphi^{-2}
+}
+$$
+
+的稳定／不稳定 multiplier 出现。
+
+浅层数值目前只显示近乎：
+
+$$
++1,-1,+1,\ldots
+$$
+
+的强反射，并没有直接证明 Fibonacci 结构。
+
+因此下一步最承重、也最可证伪的工作是：
+
+$$
+\boxed{
+\text{从项目现有 Li--Clark moments 计算完整 Schur sequence，}
+}
+$$
+
+随后跨多个 Cayley scales 检验：
+
+$$
+\boxed{
+M_{F_{k+1}}
+\stackrel{?}{\approx}
+M_{F_{k-1}}M_{F_k},
+}
+$$
+
+以及：
+
+$$
+\boxed{
+I_{k+1}-I_k
+\stackrel{?}{\longrightarrow}0.
+}
+$$
+
+若成立，黄金比例将第一次从“观察者投影图像”提升为：
+
+$$
+\boxed{
+\text{Riemann observer cocycle 的真实重整化常数。}
+}
+$$
+
+若不成立，则黄金结构仍然属于我们选择的 observer chart，而不是 \(\zeta\) 本体。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{RH 问的是 Schur recursion 是否永远留在完成光锥内部；
+黄金问题问的是这条合法递归是否进一步属于 Fibonacci 重整化普适类。}
+}
+$$
+
+前者现在是精确等价判据；
+
+后者现在成为了一个可以直接计算、直接反驳、也可能直接发现新结构的科学命题。

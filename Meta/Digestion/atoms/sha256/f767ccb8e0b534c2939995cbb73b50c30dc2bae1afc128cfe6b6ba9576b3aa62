@@ -1,0 +1,80 @@
+# 第一千零十三部　离线零点的边界 Poisson 对偶
+
+一个零点：
+
+$$
+z_0=\gamma+i\delta
+$$
+
+在对数导数中产生极点：
+
+$$
+\frac1{z-z_0}.
+$$
+
+限制到实边界 \(z=t\)：
+
+$$
+\boxed{
+\Im
+\frac1{t-\gamma-i\delta}
+=
+\frac{\delta}
+{(t-\gamma)^2+\delta^2}.
+}
+\tag{1013.1}
+$$
+
+右边正是宽度为 \(|\delta|\) 的 Poisson kernel。
+
+所以轴外零点虽然不是实轴上的点，却在实轴上留下一个有限宽度的调和影子。
+
+反射伙伴 \(\gamma-i\delta\) 与它配对后：
+
+* odd orientation channel 读取 Poisson kernel；
+* even scalar channel 读取：
+
+$$
+\log\left[(t-\gamma)^2+\delta^2\right]
+$$
+
+及其曲率。
+
+因此离线零点的对偶不只是一个负矩阵。
+
+它还可以写成：
+
+$$
+\boxed{
+\text{临界线上的 Poisson bump／curvature dipole}.
+}
+$$
+
+如果：
+
+$$
+\delta\to0,
+$$
+
+Poisson kernel趋于边界 Dirac 分布。
+
+所以：
+
+$$
+\boxed{
+\text{临界零点是边界原子，}
+}
+$$
+
+$$
+\boxed{
+\text{离线零点是具有非零调和深度的边界影像。}
+}
+$$
+
+直接找轴外点，等价于从所有边界 Poisson 影像的叠加中做反问题恢复；这通常极不稳定。
+
+而 moment、Toeplitz、Christoffel 和 Weil 方法正是在避免直接做这个病态反演。
+
+---
+

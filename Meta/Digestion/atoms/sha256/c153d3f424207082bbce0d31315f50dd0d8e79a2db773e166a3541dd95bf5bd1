@@ -1,0 +1,46 @@
+# 第一千零七部　项目已经具备的对偶证书底座
+
+项目当前已经机器证明：
+
+1. prime-support 语言严格粗于完整 valuation 语言；
+2. prime-diagonal 语言严格粗于完整 operator 语言。
+
+即仅知道“哪些素数出现”不能恢复其指数，仅知道对角读数不能恢复相对相位。
+
+这说明：
+
+$$
+\boxed{
+\text{不可见不等于不存在；
+它可能只是落在更细语言的纤维中。}
+}
+$$
+
+在 Weil/Toeplitz 侧，项目已经机器闭合：
+
+* 正半定截断 Hermitian Toeplitz moments 存在有限单位圆表示；
+* 截断最大 Haar floor 精确等于最小 Toeplitz 特征值；
+* active floor 的 residual support 被限制在有限 contact polynomial 零点上，并产生有限原子表示；
+* 固定深度 Li–Clark moment 的指数恢复可以传递到 Toeplitz operator norm 和最小特征值。
+
+所以项目已经拥有一种非常接近“有理数有限等式证书”的结构：
+
+$$
+\boxed{
+\text{一个有限矩阵的负特征值，
+就是对完成圆支撑的有限反证书。}
+}
+$$
+
+需要诚实标注：完整的
+
+$$
+\mathrm{RH}
+\iff
+\text{全部 Li–Clark Toeplitz matrices PSD}
+$$
+
+目前仍属于理论链和待形式化目标；项目现有 truth anchors 已经覆盖其有限 moment、表示、floor、contact 与恢复组件，但还没有把整条 RH 等价作为单一 Lean theorem 冻结。项目自身的形式化计划也把 Li curvature、Carathéodory、Schur 与 CMV 链列为后续模块。
+
+---
+

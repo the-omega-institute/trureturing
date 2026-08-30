@@ -1,0 +1,13 @@
+- 结构极点 $p_*=1/\phi^3$。
+
+命题 6.31 给出 divisor order 恒等式：
+
+$\operatorname{ord}_{s_0}Z_{\rm qc}
+ =\operatorname{ord}_{\phi^2s_0}\zeta
+ +\operatorname{ord}_{\phi^3s_0}\zeta
+ -\operatorname{ord}_{2\phi^2s_0}\zeta.$
+
+命题 6.32 与勘误 E3 明确主张：该截段零点定位不是 RH 的弱形，而是经 functional equation 反射和无消去分析后与完整 RH 等价。
+
+关键纪律：这些是理论卷命题，不是 Lean kernel theorem。它们是 O-5 路线的数学蓝图，不是仓库已冻结事实。
+

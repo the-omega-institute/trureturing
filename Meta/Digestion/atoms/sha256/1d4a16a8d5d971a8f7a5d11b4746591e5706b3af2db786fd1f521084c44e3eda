@@ -1,0 +1,6 @@
+- `hZero : SymmetricConvergent Z (convolutionSquare g)`。
+
+它看起来像 Weil 1952 的卷积平方正性，但目前没有 kernel theorem 证明
+
+$\mathrm{RH}\Longleftrightarrow\texttt{o6WeilPositivityStatement}$。
+

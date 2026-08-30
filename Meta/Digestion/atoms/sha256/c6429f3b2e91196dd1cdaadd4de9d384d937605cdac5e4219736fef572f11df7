@@ -1,0 +1,56 @@
+## 975.2 RH 失败：某个有限层退出 Schur disk
+
+若 RH 失败，Li criterion 保证某个有限 Li coefficient 为负。
+
+于是某个有限 Toeplitz matrix 失去正性。
+
+在非退化首失效情形：
+
+$$
+\boxed{
+|\alpha_N|>1.
+}
+\tag{975.5}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{RH 真}
+=
+\text{边界仅在无限积中出现};
+}
+$$
+
+$$
+\boxed{
+\text{RH 假}
+=
+\text{某个有限 Schur step 直接越界}.
+}
+$$
+
+这与用户提出的：
+
+> 无限层级本身有完成态；
+> 离线零点像是该极限完成态的有限破缺起点，
+
+获得了一个严格版本：
+
+$$
+\boxed{
+\begin{aligned}
+\text{真完成}
+&:\quad
+\forall n,\ |\alpha_n|<1,\quad
+\prod\rho_n=0;\\
+\text{破缺完成}
+&:\quad
+\exists N,\ |\alpha_N|>1.
+\end{aligned}
+}
+$$
+
+---
+

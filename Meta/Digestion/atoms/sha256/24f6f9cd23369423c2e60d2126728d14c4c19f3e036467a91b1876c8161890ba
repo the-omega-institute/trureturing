@@ -1,0 +1,12 @@
+### 4. 第三处语义缺口：测试类是否足够完备
+
+本仓 `WeilTestFunction` 本身已经要求偶性，O-6 再只测试其 `convolutionSquare`。经典文献常从更一般的 hermitian 测试代数出发。
+
+必须单独证明：
+
+- 任意经典 admissible 正型测试能否由本仓偶测试函数卷积平方逼近或表示；
+- 对称化是否不损失检测离线轨道的能力；
+- 本仓 angular-frequency 规范与经典 Mellin／Fourier 规范精确一致。
+
+在该密度／因子分解定理完成前，不能直接把 O-6 命名为“经典 Weil 判据本身”。
+

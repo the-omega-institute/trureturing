@@ -1,0 +1,16 @@
+## 四、跨 Cayley 尺度协变
+
+若黄金结构是对象内禀的，它不能只在：
+
+$$
+a=\frac12
+$$
+
+这一 Li chart 中存在。
+
+不同 Cayley scales 下的 pair monodromy 应满足适当共轭或相同 Fricke invariant。
+
+仓库当前已经机器证明 Cayley moments 的尺度 transport 和几何尾界，为这一检验提供了接口。
+
+---
+

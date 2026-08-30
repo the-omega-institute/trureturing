@@ -1,0 +1,13 @@
+ast_path: section/1040-1-离线深度的黄金发现层
+fingerprints:
+  raw_sha256: sha256:4fe93a4e855301fd43b1fb9b98703f6c7e7e9899d89728ffb307c0e56a04beab
+  normalized_sha256: sha256:4fe93a4e855301fd43b1fb9b98703f6c7e7e9899d89728ffb307c0e56a04beab
+cas_ref: sha256:4fe93a4e855301fd43b1fb9b98703f6c7e7e9899d89728ffb307c0e56a04beab
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-54ab0d7dac7c060d9b26a7913c29183a448e02a180bddc5492eb079de586e22b-79d087edb162b843a79b36f1768996ac94fc8570aebda862d1e088835d332485
+    - generic-residual-acc88b028ba8500cbe55de76fb6c923cd56f9b759dd37e6c13c4c98f68c79567-8379d8a055ff9463f3a45db18e91e623462c4c0dc88f45cfcdedfa59f17b9437

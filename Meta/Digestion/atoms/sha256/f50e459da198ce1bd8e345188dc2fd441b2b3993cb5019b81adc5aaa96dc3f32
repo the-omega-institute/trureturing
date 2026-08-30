@@ -1,0 +1,63 @@
+## 定理 1067.1（Chern-cage RH criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\frac1{2\pi}
+\int_S\Omega_\xi
+=
+0
+}
+\tag{1067.3}
+$$
+
+对所有位于：
+
+$$
+x>0
+$$
+
+且不穿过简并点的有理闭围笼 \(S\) 成立。
+
+等价地：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+P_+
+\text{ 在整个右完成体上存在全局平滑本征框架}.
+}
+\tag{1067.4}
+$$
+
+再等价于：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+F
+\text{ 在右半平面存在全局全纯对数}.
+}
+\tag{1067.5}
+$$
+
+所以得到三种全局语言：
+
+$$
+\boxed{
+\begin{aligned}
+\text{复分析}
+&:\quad\log F\text{ 存在};\\
+\text{谱论}
+&:\quad\mathsf H_\xi\text{ 无 bulk degeneracy};\\
+\text{拓扑}
+&:\quad\text{所有 bulk Chern charges 为零}.
+\end{aligned}
+}
+$$
+
+---
+

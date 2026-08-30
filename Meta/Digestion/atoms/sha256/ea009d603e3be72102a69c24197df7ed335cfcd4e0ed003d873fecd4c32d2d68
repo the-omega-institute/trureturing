@@ -1,0 +1,106 @@
+# 第九百四十七部　Fibonacci transfer cocycle
+
+对势值 \(v\in\{0,\lambda\}\)，定义局部传输矩阵：
+
+$$
+\boxed{
+A_v(E)
+=
+\begin{pmatrix}
+E-v&-1\\
+1&0
+\end{pmatrix}
+\in SL(2,\mathbb R).
+}
+\tag{947.1}
+$$
+
+它把 Schrödinger 方程：
+
+$$
+u(n+1)+u(n-1)+v_nu(n)=Eu(n)
+$$
+
+写成：
+
+$$
+\begin{pmatrix}
+u(n+1)\\u(n)
+\end{pmatrix}
+=
+A_{v_n}(E)
+\begin{pmatrix}
+u(n)\\u(n-1)
+\end{pmatrix}.
+$$
+
+对 Fibonacci block \(W_n\)，令：
+
+$$
+M_n(E)
+$$
+
+为对应有序矩阵积。
+
+由词递归：
+
+$$
+W_{n+1}=W_nW_{n-1},
+$$
+
+得到某一固定乘法约定下：
+
+$$
+\boxed{
+M_{n+1}
+=
+M_{n-1}M_n.
+}
+\tag{947.2}
+$$
+
+定义 half-trace：
+
+$$
+\boxed{
+x_n(E)
+=
+\frac12\operatorname{tr}M_n(E).
+}
+\tag{947.3}
+$$
+
+由 \(SL_2\) 的 Cayley–Hamilton 恒等式：
+
+$$
+\boxed{
+x_{n+1}
+=
+2x_nx_{n-1}-x_{n-2}.
+}
+\tag{947.4}
+$$
+
+因此 trace triple：
+
+$$
+(x_{n+1},x_n,x_{n-1})
+$$
+
+在映射：
+
+$$
+\boxed{
+T(x,y,z)
+=
+(2xy-z,x,y)
+}
+\tag{947.5}
+$$
+
+下演化。
+
+这正是经典 Fibonacci trace map。其谱特征与 Fibonacci Hamiltonian 的谱性质存在严格对应，公共谱可由相应 trace-map 轨道的有界性刻画。([arXiv][1])
+
+---
+

@@ -1,0 +1,22 @@
+### 2. 定义 Core
+
+拟议 GID：`D5/X_Frontier/GoldenObserver/Core`
+
+该文件只放定义，不放 theorem：
+
+    import D5.X_Frontier.Hearts
+
+    namespace D5.X_Frontier.GoldenObserver
+
+    open D5.X_Frontier.Hearts
+
+    noncomputable def goldenNaturalScale (s : ℂ) : ℂ :=
+      (((phi ^ 2 : ℝ) : ℂ) * s)
+
+    noncomputable def goldenSpectralParameter (s : ℂ) : ℂ :=
+      -Complex.I * (goldenNaturalScale s - (1 : ℂ) / 2)
+
+    end D5.X_Frontier.GoldenObserver
+
+不另定义第二套 `phi`、`structuralZero` 或 critical-line 谓词。
+

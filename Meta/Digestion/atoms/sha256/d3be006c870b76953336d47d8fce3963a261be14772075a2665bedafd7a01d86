@@ -1,0 +1,13 @@
+## GSR-1：二元 block 可压缩性
+
+存在两个有效 block classes：
+
+$$
+\mathsf A_a,\qquad
+\mathsf B_a,
+$$
+
+使 Li–Clark transfer sequence 可由两类 block 以趋于零的误差描述。
+
+---
+

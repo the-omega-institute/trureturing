@@ -1,0 +1,12 @@
+### 1. 路线注册表
+
+建议预注册五条 $\Gamma$：
+
+- $\Gamma_{\rm Weil}$：全测试类 Weil criterion 与 separator；
+- $\Gamma_{\rm finitePSD}$：有限窗口、Galerkin、尾项和可认证 PSD；
+- $\Gamma_{\rm Li}$：有限 Li 系数与 Weil–Li 字典；
+- $\Gamma_{\rm spectral}$：自伴算子、resolvent、谱行列式；
+- $\Gamma_{\rm golden}$：黄金 germ 因子分解、divisor 与延拓。
+
+路线切换不是失败掩饰。每条路线必须保留其已得 theorem、反例、误差证书和不可达理由。
+

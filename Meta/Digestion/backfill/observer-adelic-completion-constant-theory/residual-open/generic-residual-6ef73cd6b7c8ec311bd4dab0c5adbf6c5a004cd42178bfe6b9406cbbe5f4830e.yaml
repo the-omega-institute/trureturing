@@ -1,0 +1,10 @@
+ast_path: section/957-1-需要验证的四个条件
+fingerprints:
+  raw_sha256: sha256:6ef73cd6b7c8ec311bd4dab0c5adbf6c5a004cd42178bfe6b9406cbbe5f4830e
+  normalized_sha256: sha256:6ef73cd6b7c8ec311bd4dab0c5adbf6c5a004cd42178bfe6b9406cbbe5f4830e
+cas_ref: sha256:6ef73cd6b7c8ec311bd4dab0c5adbf6c5a004cd42178bfe6b9406cbbe5f4830e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

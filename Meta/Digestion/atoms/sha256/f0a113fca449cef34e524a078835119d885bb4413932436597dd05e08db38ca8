@@ -1,0 +1,32 @@
+## 负证书
+
+若：
+
+$$
+\boxed{
+\lambda_{\min}
+(\widehat T_N)
+<
+-\varepsilon_{N,L},
+}
+\tag{979.3}
+$$
+
+则：
+
+$$
+T_N\not\succeq0.
+$$
+
+于是：
+
+$$
+\boxed{
+\mathrm{RH}\text{ 为假。}
+}
+$$
+
+这是一个真正有限的反证书。
+
+---
+

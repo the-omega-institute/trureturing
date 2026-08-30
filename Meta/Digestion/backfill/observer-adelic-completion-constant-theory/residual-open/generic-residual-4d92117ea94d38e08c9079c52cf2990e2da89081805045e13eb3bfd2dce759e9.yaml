@@ -1,0 +1,10 @@
+ast_path: row/稀缺点变成整数绕数
+fingerprints:
+  raw_sha256: sha256:4d92117ea94d38e08c9079c52cf2990e2da89081805045e13eb3bfd2dce759e9
+  normalized_sha256: sha256:4d92117ea94d38e08c9079c52cf2990e2da89081805045e13eb3bfd2dce759e9
+cas_ref: sha256:4d92117ea94d38e08c9079c52cf2990e2da89081805045e13eb3bfd2dce759e9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

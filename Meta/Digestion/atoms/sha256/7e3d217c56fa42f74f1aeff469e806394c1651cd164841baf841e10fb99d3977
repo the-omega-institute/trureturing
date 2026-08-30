@@ -1,0 +1,65 @@
+# 第九百四十六部　共同世界、局部测度与黄金 gap code
+
+对每个观察者定义局部谱测度：
+
+$$
+\boxed{
+\mu_{\lambda,\omega}(B)
+=
+\left\langle
+\delta_0,
+\mathbf 1_B(H_{\lambda,\omega})
+\delta_0
+\right\rangle.
+}
+\tag{946.1}
+$$
+
+共同谱：
+
+$$
+\Sigma_\lambda
+$$
+
+是所有观察者共有的支撑世界。
+
+但局部测度：
+
+$$
+\mu_{\lambda,\omega}
+$$
+
+仍保留原点信息。
+
+把它对黄金相位作不变平均，得到 density-of-states measure：
+
+$$
+\boxed{
+\nu_\lambda
+=
+\int_{X_\varphi}
+\mu_{\lambda,\omega}\,
+d\mathbb P_\varphi(\omega).
+}
+\tag{946.2}
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\mu_{\lambda,\omega}
+&=\text{观察者局部世界};\\
+\nu_\lambda
+&=\text{观察者平均后的零模态世界};\\
+\Sigma_\lambda
+&=\text{所有观察者共享的完成支撑}.
+\end{aligned}
+}
+$$
+
+经典 Fibonacci Hamiltonian 的密度态测度正是相位平均，并且其支撑为公共谱。([arXiv][1])
+
+---
+

@@ -1,0 +1,62 @@
+* 把二维零点悬挂成三维简并点所需的辅助坐标。
+
+定义 Hermitian 矩阵：
+
+$$
+\boxed{
+\mathsf H_\xi(x,y,\mu)
+=
+\begin{pmatrix}
+\mu&
+\overline{F(x+iy)}
+\\[1mm]
+F(x+iy)&
+-\mu
+\end{pmatrix}.
+}
+\tag{1052.1}
+$$
+
+用 Pauli 矩阵写成：
+
+$$
+\boxed{
+\mathsf H_\xi
+=
+\operatorname{Re}F\,\sigma_x
++
+\operatorname{Im}F\,\sigma_y
++
+\mu\,\sigma_z.
+}
+\tag{1052.2}
+$$
+
+定义：
+
+$$
+\mathbf d_\xi
+=
+\left(
+\operatorname{Re}F,
+\operatorname{Im}F,
+\mu
+\right).
+$$
+
+则能谱为：
+
+$$
+\boxed{
+E_\pm(x,y,\mu)
+=
+\pm
+\sqrt{
+|F(x+iy)|^2+\mu^2
+}.
+}
+\tag{1052.3}
+$$
+
+所以：
+

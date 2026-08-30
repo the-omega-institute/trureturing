@@ -1,0 +1,10 @@
+ast_path: section/1008-1-Christoffel-evaluation-cost
+fingerprints:
+  raw_sha256: sha256:6a99b47c34eb0213bbb48af6946fec8b43ded1fab1a91720c1cce018acf7b1bc
+  normalized_sha256: sha256:6a99b47c34eb0213bbb48af6946fec8b43ded1fab1a91720c1cce018acf7b1bc
+cas_ref: sha256:6a99b47c34eb0213bbb48af6946fec8b43ded1fab1a91720c1cce018acf7b1bc
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

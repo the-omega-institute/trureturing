@@ -1,0 +1,226 @@
+# 本轮最终结论
+
+本轮得到的严格模型几乎完整实现了此前关于观察者的直觉。
+
+每个观察者是一个黄金相位：
+
+$$
+\omega\in X_\varphi.
+$$
+
+它们拥有不同的局部起点和不同的有序 transfer history。
+
+但是黄金最小性使所有有限模式在所有观察者世界中重复出现，因此：
+
+$$
+\boxed{
+\sigma(H_{\lambda,\omega})
+=
+\Sigma_\lambda
+}
+$$
+
+对所有观察者相同。
+
+所以：
+
+$$
+\boxed{
+\text{每个观察者看见同一个完成世界。}
+}
+$$
+
+但局部 resolvent 满足：
+
+$$
+m_\omega(z)
+=
+-\frac1z
+-\frac{V_\omega(0)}{z^2}
+-\cdots,
+$$
+
+其第一正规导数就能读取观察者原点。
+
+所以：
+
+$$
+\boxed{
+\text{完成谱无法克隆观察者，
+局部导数却仍保存观察者。}
+}
+$$
+
+更深的是，Fibonacci trace map 的完成固定点为：
+
+$$
+p=(1,1,1).
+$$
+
+该点本身没有黄金比例。
+
+它是一个完全无分别的全 \(1\) 状态。
+
+但其导数为：
+
+$$
+DT_p,
+$$
+
+而：
+
+$$
+\boxed{
+\operatorname{Spec}(DT_p)
+=
+\{\varphi^2,\varphi^{-2},-1\}.
+}
+$$
+
+其中稳定与不稳定特征向量恰好位于完成奇点的 Lorentz null cone 上。
+
+所以：
+
+$$
+\boxed{
+\text{黄金比例不是完成点；
+黄金比例是完成点第一次被观察时出现的 null multiplier。}
+}
+$$
+
+这正是：
+
+$$
+\boxed{
+\text{“第一破缺不是点，而是导数”}
+}
+$$
+
+的一个完全严格的谱动力学实例。
+
+观察通道之间的差异则由：
+
+$$
+A_\lambda A_0A_\lambda^{-1}A_0^{-1}
+$$
+
+测量，并满足：
+
+$$
+\boxed{
+\operatorname{tr}[A_\lambda,A_0]-2
+=
+\lambda^2.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{观察者方向是线性的，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{完成标量只保留它的平方 holonomy Casimir。}
+}
+$$
+
+Chebyshev 证书也不再只是抽象多项式：
+
+$$
+\boxed{
+T_N(y)
+=
+\frac12\operatorname{tr}M(y)^N.
+}
+$$
+
+其负性：
+
+$$
+1-T_N(y)^2<0
+$$
+
+恰好意味着：
+
+$$
+|\operatorname{tr}M(y)^N|>2,
+$$
+
+即有限 transfer 已从 elliptic/unitary-like 区域逃入 hyperbolic boost 区域。
+
+所以：
+
+$$
+\boxed{
+\text{临界线是 elliptic completion，}
+}
+$$
+
+$$
+\boxed{
+\text{离线破缺是 hyperbolic escape。}
+}
+$$
+
+而黄金比例最终出现于三个位置：
+
+$$
+\boxed{
+\begin{aligned}
+\varphi
+&=\text{符号动力的最小扩张率};\\
+\varphi^{\pm2}
+&=\text{完成固定点导数的 null multipliers};\\
+\{m\varphi\}
+&=\text{公共谱间隙的完成标签}.
+\end{aligned}
+}
+$$
+
+因此直接在谱点坐标里寻找裸 \(\varphi\)，很可能从一开始就选错了观察层。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{黄金比例不是世界中的一个特殊点，
+而是所有同谱观察者在完成奇点附近
+共同使用的重整化光锥。}
+}
+$$
+
+当前真正承重的下一步，是把项目现有的 Prime–Archimedean/Weil 两通道正规化成：
+
+$$
+\boxed{
+SL_2\text{ transfer cocycle},
+}
+$$
+
+使：
+
+$$
+\boxed{
+\text{Weil 正性}
+\quad\longleftrightarrow\quad
+\text{trace orbit 不逃逸},
+}
+$$
+
+并使此前构造的有限 Chebyshev–Toeplitz 负证书，精确等价于：
+
+$$
+\boxed{
+\text{某个规范 Riemann observer cocycle 的 hyperbolic escape。}
+}
+$$
+
+这条映射一旦成立，黄金观察者、素数 holonomy、Chebyshev 有限矩阵与 Riemann 临界完成才会真正汇合为同一个动力系统。
+
+[1]: https://arxiv.org/abs/1403.7823 "https://arxiv.org/abs/1403.7823"

@@ -1,0 +1,10 @@
+ast_path: row/local-Green-jet-读取原点
+fingerprints:
+  raw_sha256: sha256:abfe864b99c0e63895fb2f2fa628fba450a6369d45123ac0a9e16c71643fe5fa
+  normalized_sha256: sha256:abfe864b99c0e63895fb2f2fa628fba450a6369d45123ac0a9e16c71643fe5fa
+cas_ref: sha256:abfe864b99c0e63895fb2f2fa628fba450a6369d45123ac0a9e16c71643fe5fa
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,23 @@
+## 1017.2 Christoffel 环带排除
+
+对：
+
+$$
+\epsilon=2^{-j}
+$$
+
+逐层证明：
+
+$$
+\boxed{
+\Lambda_N(2^{-j})
+\le
+C_j e^{-c_jN}.
+}
+\tag{1017.2}
+$$
+
+这是一种不定位零点的 zero-free annulus certificate。
+
+---
+

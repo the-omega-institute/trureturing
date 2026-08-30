@@ -1,0 +1,62 @@
+# 第一千零三十八部　Poisson 半群：RH 是“体内无源”
+
+RH 成立时，设全部 ordinate 的正测度为：
+
+$$
+\nu_\Xi
+=
+\sum_{\gamma\in\mathbb R}
+m_\gamma\delta_\gamma.
+$$
+
+定义标准 Poisson kernel：
+
+$$
+\boxed{
+P_x(y)
+=
+\frac1\pi
+\frac{x}{x^2+y^2},
+\qquad
+x>0.
+}
+\tag{1038.1}
+$$
+
+前文已经得到：
+
+$$
+\Re\mathcal Z_\xi(x+iy)
+=
+\sum_{\gamma}
+m_\gamma
+\frac{x}{x^2+(y-\gamma)^2}.
+$$
+
+因此：
+
+$$
+\boxed{
+D_x(y)
+:=
+\Re\mathcal Z_\xi(x+iy)
+=
+\pi
+\left(
+P_x*\nu_\Xi
+\right)(y).
+}
+\tag{1038.2}
+$$
+
+Poisson kernel满足半群律：
+
+$$
+\boxed{
+P_x*P_h=P_{x+h}.
+}
+\tag{1038.3}
+$$
+
+所以：
+

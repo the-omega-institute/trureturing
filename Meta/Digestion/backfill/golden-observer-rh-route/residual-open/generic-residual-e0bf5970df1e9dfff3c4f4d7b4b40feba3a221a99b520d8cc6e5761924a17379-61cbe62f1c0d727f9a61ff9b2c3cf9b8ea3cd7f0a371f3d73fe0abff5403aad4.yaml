@@ -1,0 +1,10 @@
+ast_path: section/2-第一处语义缺口-ZeroData-可能没有-inhabitant/clause/2
+fingerprints:
+  raw_sha256: sha256:e0bf5970df1e9dfff3c4f4d7b4b40feba3a221a99b520d8cc6e5761924a17379
+  normalized_sha256: sha256:e0bf5970df1e9dfff3c4f4d7b4b40feba3a221a99b520d8cc6e5761924a17379
+cas_ref: sha256:e0bf5970df1e9dfff3c4f4d7b4b40feba3a221a99b520d8cc6e5761924a17379
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

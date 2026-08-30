@@ -1,0 +1,10 @@
+ast_path: row/Theta-xi-1-非有限黄金倍率
+fingerprints:
+  raw_sha256: sha256:1f4d5bdbfcbc82d0333881187e5d5db3abc32ad7f0524f45ae65769b78bfd5bb
+  normalized_sha256: sha256:1f4d5bdbfcbc82d0333881187e5d5db3abc32ad7f0524f45ae65769b78bfd5bb
+cas_ref: sha256:1f4d5bdbfcbc82d0333881187e5d5db3abc32ad7f0524f45ae65769b78bfd5bb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

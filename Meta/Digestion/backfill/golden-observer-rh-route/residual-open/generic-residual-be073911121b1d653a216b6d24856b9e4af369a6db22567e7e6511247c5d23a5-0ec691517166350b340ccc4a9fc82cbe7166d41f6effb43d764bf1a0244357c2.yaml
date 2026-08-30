@@ -1,0 +1,10 @@
+ast_path: section/3-初始预算包络/clause/12
+fingerprints:
+  raw_sha256: sha256:be073911121b1d653a216b6d24856b9e4af369a6db22567e7e6511247c5d23a5
+  normalized_sha256: sha256:be073911121b1d653a216b6d24856b9e4af369a6db22567e7e6511247c5d23a5
+cas_ref: sha256:be073911121b1d653a216b6d24856b9e4af369a6db22567e7e6511247c5d23a5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

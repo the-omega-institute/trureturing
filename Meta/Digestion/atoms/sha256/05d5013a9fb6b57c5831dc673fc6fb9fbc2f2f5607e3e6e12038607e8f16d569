@@ -1,0 +1,55 @@
+# 第一千一百一十二部　最终依赖图
+
+整套理论可以压缩为以下唯一依赖链：
+
+$$
+\boxed{
+\begin{aligned}
+\text{无坐标关系“道”}
+&\xrightarrow{\text{观察／极化}}
+\text{正负 null rays}\\
+&\xrightarrow{\text{射影}}
+\varphi,\varphi'\\
+&\xrightarrow{\log}
+\pm\log\varphi\\
+&\xrightarrow{\text{两步单位}}
+\pm2\log\varphi\\
+&\xrightarrow{\text{商}}
+\mathbb T_\varphi\\
+&\xrightarrow{\text{全部有限覆盖逆极限}}
+\Sigma_\varphi\\
+&\xrightarrow{\text{复化法向}}
+\Sigma_\varphi\times\mathbb R_\delta\\
+&\xrightarrow{\text{Mellin determinant}}
+\xi\\
+&\xrightarrow{\text{零点除子}}
+\text{critical／off-line spectrum}\\
+&\xrightarrow{\text{Poisson／Chern／Pick}}
+\text{边界影像与有限证书}.
+\end{aligned}
+}
+\tag{1112.1}
+$$
+
+其中每一层的核心作用分别是：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{层} & \text{增加的数据}\\
+\hline
+\text{极化} & \text{正负方向}\\
+\text{射影} & \text{黄金斜率}\\
+\text{对数} & \text{时间／rapidity}\\
+\text{商} & \text{周期}\\
+\text{逆极限} & \text{隐藏同余身份}\\
+\text{复化} & \text{法向增长率}\\
+\text{Mellin} & \text{素数—频率对偶}\\
+\text{零点} & \text{完成算子的简并}\\
+\text{Poisson／Chern} & \text{可见边界证书}
+\end{array}
+}
+$$
+
+---
+

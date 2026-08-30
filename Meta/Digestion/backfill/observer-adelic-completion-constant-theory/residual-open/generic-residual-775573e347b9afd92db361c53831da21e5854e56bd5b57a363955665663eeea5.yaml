@@ -1,0 +1,10 @@
+ast_path: section/958-1-同谱不推出同局部世界
+fingerprints:
+  raw_sha256: sha256:775573e347b9afd92db361c53831da21e5854e56bd5b57a363955665663eeea5
+  normalized_sha256: sha256:775573e347b9afd92db361c53831da21e5854e56bd5b57a363955665663eeea5
+cas_ref: sha256:775573e347b9afd92db361c53831da21e5854e56bd5b57a363955665663eeea5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

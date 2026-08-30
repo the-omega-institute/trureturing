@@ -1,0 +1,10 @@
+ast_path: row/operatorname-tr-A-B-2-lambda-2
+fingerprints:
+  raw_sha256: sha256:c7014de86342627279b60ca8a6dd09b567ecefebf5cbbc4e43f458f742511160
+  normalized_sha256: sha256:c7014de86342627279b60ca8a6dd09b567ecefebf5cbbc4e43f458f742511160
+cas_ref: sha256:c7014de86342627279b60ca8a6dd09b567ecefebf5cbbc4e43f458f742511160
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

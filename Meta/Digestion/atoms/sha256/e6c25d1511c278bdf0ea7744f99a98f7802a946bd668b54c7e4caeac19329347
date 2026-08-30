@@ -1,0 +1,52 @@
+# 第一千零十五部　离线零点的真正对偶词典
+
+可以把一对离线零点压缩成以下对偶表：
+
+$$
+\boxed{
+\rho=\frac12+\delta+i\gamma
+}
+$$
+
+对应：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{图表}&\text{对偶对象}\\
+\hline
+\text{复分析}&\log\xi\text{ 的轴外极点}\\
+\text{边界调和}&\displaystyle
+\frac{\delta}{(t-\gamma)^2+\delta^2}\\[2mm]
+\text{Mellin 时间}&
+e^{\pm\delta x}e^{i\gamma x}\\
+\text{完成 even channel}&
+\cosh(\delta x)\cos(\gamma x)\\
+\text{Cayley}&
+w,\ 1/\overline w,\quad |w|\neq1\\
+\text{Moment}&
+单位圆支撑约束的违例\\
+\text{Christoffel}&
+不可消失的正 evaluation floor\\
+\text{Schur}&
+某个递归参数离开单位盘\\
+\text{Transfer}&
+|\operatorname{tr}M|>2\\
+\text{Weil}&
+有限支撑负测试
+\end{array}
+}
+$$
+
+所以离线零点的“对偶”不是另一个神秘点。
+
+它是：
+
+$$
+\boxed{
+\text{一个分布在整个 prime-log 时间中的、可由有限证书切出的非单位ary模式。}
+}
+$$
+
+---
+

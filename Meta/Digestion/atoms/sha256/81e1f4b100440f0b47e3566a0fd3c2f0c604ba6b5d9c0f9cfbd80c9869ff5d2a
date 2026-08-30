@@ -1,0 +1,34 @@
+### R-F　RH 推出本仓 O-6
+
+[repo-derived composition | proposed GID: `D5/X_Frontier/GoldenObserver/RhImpliesO6`]
+
+    import D5.X_Frontier.GoldenObserver.RhLocatesZeroData
+    import D5.S3.Weil.ZetaBridge.ConvolutionSquareCriticalLine
+
+    namespace D5.X_Frontier.GoldenObserver
+
+    open D5.X_Frontier.Hearts
+    open D5.S3.Weil.TestFunctions
+    open D5.S3.Weil.ZeroSum
+
+    theorem riemannHypothesis_implies_o6WeilPositivityStatement :
+        RiemannHypothesis → o6WeilPositivityStatement
+
+    end D5.X_Frontier.GoldenObserver
+
+闭合路线：
+
+1. 固定 $Z,g,h_{\rm conv}$；
+2. 用 R-E 把每个枚举零点定位到 $\Re\rho=1/2$；
+3. 复用
+   `critical_line_zero_summand_real_nonnegative`
+   和
+   `truncatedCriticalConvolutionSquareSum_re_nonnegative`；
+4. 证明一般对称截断与临界截断在 RH 下相等；
+5. 由 `SymmetricConvergent` 取得复极限；
+6. 对实部取极限，使用闭集 $[0,\infty)$。
+
+允许在同模块加入 private 的有限和重写和闭集极限 lemma，但不得导出第二条公开 theorem。
+
+科学接受门：R-F 即使在 `ZeroData` 空时也能形式成立。仓库不得在 canonical `ZeroData` inhabitant 和至少一条实际收敛路线完成前把它宣传为“非空洞的 Weil 正性结果”。
+

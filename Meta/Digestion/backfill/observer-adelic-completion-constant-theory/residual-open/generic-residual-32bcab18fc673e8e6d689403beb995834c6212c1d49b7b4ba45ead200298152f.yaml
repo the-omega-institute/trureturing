@@ -1,0 +1,10 @@
+ast_path: section/Stieltjes-平方时间
+fingerprints:
+  raw_sha256: sha256:32bcab18fc673e8e6d689403beb995834c6212c1d49b7b4ba45ead200298152f
+  normalized_sha256: sha256:32bcab18fc673e8e6d689403beb995834c6212c1d49b7b4ba45ead200298152f
+cas_ref: sha256:32bcab18fc673e8e6d689403beb995834c6212c1d49b7b4ba45ead200298152f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

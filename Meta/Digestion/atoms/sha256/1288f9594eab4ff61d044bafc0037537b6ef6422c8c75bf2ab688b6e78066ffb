@@ -1,0 +1,42 @@
+## 946.1 黄金比例不必出现在谱点位置
+
+Fibonacci Hamiltonian 的 gap-label group 为：
+
+$$
+\boxed{
+\left\{
+\{m\varphi\}:
+m\in\mathbb Z
+\right\}
+\cup\{1\},
+}
+\tag{946.3}
+$$
+
+其中 \(\{\cdot\}\) 表示小数部分；该模型的全部允许间隙对所有 \(\lambda>0\) 都实际打开。([arXiv][1])
+
+所以黄金比例在这个严格模型中并不主要表现为某个特殊能量点。
+
+它表现为：
+
+$$
+\boxed{
+\text{谱间隙在积分态密度中的排序码。}
+}
+$$
+
+即：
+
+$$
+\boxed{
+\varphi
+\text{ 属于谱的标签结构，未必属于谱点坐标。}
+}
+$$
+
+这给“为什么直接看完成谱看不到黄金比例”一个成熟范例：
+
+> 黄金比例可以存在于 gap ordering、measure 和 topological code 中，而不以裸常数形式出现在每个谱点里。
+
+---
+

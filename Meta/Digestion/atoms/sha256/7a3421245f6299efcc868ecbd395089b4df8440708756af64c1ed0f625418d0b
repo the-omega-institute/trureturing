@@ -1,0 +1,1 @@
+- `AlexKontorovich/Lean-RH`：Brandon Gomes 与 Alex Kontorovich 的 “Riemann Hypothesis in Lean (with or without mathlib)” 仓库，重点是用 Dirichlet eta／zeta 接口精确陈述 RH，并比较独立公理化与 mathlib 版本；不是 RH 证明。arXiv 号检索未证实。
