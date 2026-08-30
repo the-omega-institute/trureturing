@@ -562,7 +562,8 @@ public sealed class TestProjectTopologyPolicyTests
         // 此处曾是 `Assert.NotEmpty(result.BaseDebt)`,假定 base 上总有存量债。
         // 该假定与棘轮本身矛盾:棘轮要求债只减不增,故「还清」是它的目标状态,
         // 而那条断言把目标状态判成失败 —— 债从 5 还到 0 后它必红。
-        // 保留的是真正承重的部分:债的种类必须都是已知类别,且债务集单调不增。
+        // 保留的是真正承重的部分:债的种类必须都是已知类别,且债务集单调不增;
+        // base 债为空时该包含式即强制候选债也为空(棘轮的全树判词)。
         Assert.All(
             result.CandidateDebt,
             debt => Assert.Contains(debt, result.BaseDebt));
