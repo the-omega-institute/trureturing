@@ -23,4 +23,3 @@ The last conjunct differentiates the resolvent budget itself and identifies its 
 ## References
 
 - Truth anchor: `D5/S3/Weil/Budget/CayleyMomentTridiagonalFlow.tridiagonal_moment_flow`
-- Dependency: [D5/S3/Weil/Budget/LinearCayleyScaleFlow](LinearCayleyScaleFlow.md)
