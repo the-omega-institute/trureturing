@@ -23,9 +23,8 @@ namespace D5.S1.Recurrence
 
 /-- The complete bilateral Fibonacci lift has two golden eigendirections. Both Binet
 coefficients are nonzero, its canonical carrier is the least shift-invariant carrier of the
-Fibonacci weights and has dimension two, and every pair of sequences on the two eigenlines is
-obtained by a unique pair of component scalars. The canonical weight pair and its exact
-contracting residual are included as public clauses. -/
+Fibonacci weights and has dimension two, and each eigenline is classified by its own unique
+component scalar. -/
 theorem bilateral_lift_classification :
     Module.finrank Real (Real.fibRec : LinearRecurrence Real).solSpace = 2 /\
       (Real.fibRec : LinearRecurrence Real).solSpace =
@@ -45,17 +44,14 @@ theorem bilateral_lift_classification :
           Submodule.span Real {expandingSequence, contractingSequence} <= W) /\
       Module.finrank Real
         (Submodule.span Real {expandingSequence, contractingSequence}) = 2 /\
-      (forall u v : Seq,
+      (forall u : Seq,
         shift u = Real.goldenRatio • u ->
+        ExistsUnique fun scale : Real =>
+          u = scale • expandingSequence) /\
+      (forall v : Seq,
         shift v = Real.goldenConj • v ->
-        ExistsUnique fun scales : Real × Real =>
-          u = scales.1 • expandingSequence /\
-            v = scales.2 • contractingSequence) /\
-      (forall k : Nat, (expandingSequence k, contractingSequence k) =
-        (Real.goldenRatio ^ (k + 1), Real.goldenConj ^ (k + 1))) /\
-      forall k : Nat,
-        fibonacciWeight (k + 1) - Real.goldenRatio * fibonacciWeight k =
-          Real.goldenConj ^ (k + 1) := by
+        ExistsUnique fun scale : Real =>
+          v = scale • contractingSequence) := by
   letI : FiniteDimensional Real
       (Real.fibRec : LinearRecurrence Real).solSpace :=
     (Real.fibRec : LinearRecurrence Real).basis.finiteDimensional_of_finite
@@ -133,27 +129,10 @@ theorem bilateral_lift_classification :
         _ = scale * (Real.goldenConj * Real.goldenConj⁻¹) := by
           rw [mul_inv_cancel₀ Real.goldenConj_ne_zero]
         _ = v 0 * Real.goldenConj⁻¹ := by rw [initial]; ring
-  have componentwiseUniqueness : forall u v : Seq,
-      shift u = Real.goldenRatio • u ->
-      shift v = Real.goldenConj • v ->
-      ExistsUnique fun scales : Real × Real =>
-        u = scales.1 • expandingSequence /\
-          v = scales.2 • contractingSequence := by
-    intro u v expandingEigenlaw contractingEigenlaw
-    obtain ⟨a, ha, haUnique⟩ := expandingClassification u expandingEigenlaw
-    obtain ⟨b, hb, hbUnique⟩ := contractingClassification v contractingEigenlaw
-    refine ⟨(a, b), ⟨ha, hb⟩, ?_⟩
-    rintro ⟨a', b'⟩ ⟨ha', hb'⟩
-    exact Prod.ext (haUnique a' ha') (hbUnique b' hb')
-  have weightPair : forall k : Nat,
-      (expandingSequence k, contractingSequence k) =
-        (Real.goldenRatio ^ (k + 1), Real.goldenConj ^ (k + 1)) := by
-    intro k
-    rfl
   exact ⟨solutionDimension, fibonacci_solution_space_eq_span, rfl,
     conjugateIdentity, shift_golden_eigenvectors, nonzeroCoefficients,
     fibonacci_weight_binet, fibonacci_cyclic_span_minimal, carrierDimension,
-    componentwiseUniqueness, weightPair, fibonacci_weight_residual⟩
+    expandingClassification, contractingClassification⟩
 
 #print axioms bilateral_lift_classification
 
