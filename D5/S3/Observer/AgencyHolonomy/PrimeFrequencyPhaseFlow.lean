@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Fourier characters create unitary log-frequency time flow while scalar products forget order. -/
+   digest: Fourier characters create unitary log-frequency time flow while
+     scalar products forget order. -/
 
 import D5.S3.Observer.AgencyHolonomy.FiniteHolonomyEnergy
 import Mathlib.Analysis.Complex.Exponential
@@ -144,8 +145,19 @@ theorem ordered_phase_product_collapse
   induction frequencies with
   | nil => simp [orderedPhaseProduct, fourierPhase]
   | cons frequency frequencies inductionHypothesis =>
-      simpa [orderedPhaseProduct, inductionHypothesis] using
-        (fourierPhase_add_frequency frequency frequencies.sum time).symm
+      calc
+        orderedPhaseProduct (frequency :: frequencies) time =
+            fourierPhase frequency time *
+              orderedPhaseProduct frequencies time := by
+          simp [orderedPhaseProduct]
+        _ = fourierPhase frequency time *
+              fourierPhase frequencies.sum time := by
+          rw [inductionHypothesis]
+        _ = fourierPhase (frequency + frequencies.sum) time :=
+          (fourierPhase_add_frequency
+            frequency frequencies.sum time).symm
+        _ = fourierPhase (frequency :: frequencies).sum time := by
+          rfl
 
 /--
 Finite Fourier synthesis obeys the exact time-shift character law and is
