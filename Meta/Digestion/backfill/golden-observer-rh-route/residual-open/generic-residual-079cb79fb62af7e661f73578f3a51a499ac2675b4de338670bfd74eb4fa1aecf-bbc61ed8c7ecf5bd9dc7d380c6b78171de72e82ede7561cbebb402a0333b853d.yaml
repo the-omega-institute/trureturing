@@ -1,0 +1,10 @@
+ast_path: section/一-A-预算过滤的-RH-与零点观察成本/clause/1
+fingerprints:
+  raw_sha256: sha256:079cb79fb62af7e661f73578f3a51a499ac2675b4de338670bfd74eb4fa1aecf
+  normalized_sha256: sha256:079cb79fb62af7e661f73578f3a51a499ac2675b4de338670bfd74eb4fa1aecf
+cas_ref: sha256:079cb79fb62af7e661f73578f3a51a499ac2675b4de338670bfd74eb4fa1aecf
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

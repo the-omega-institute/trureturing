@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using System.Text;
 using StrataLint.Engine;
 using YamlDotNet.RepresentationModel;
 
@@ -240,7 +241,22 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("--filter", testRecipe, StringComparison.Ordinal);
         var dotnetTest = File.ReadAllText(Path.Combine(root, "tools", "scripts", "dotnet-test.sh"));
         Assert.Contains("dotnet test \"$@\"", dotnetTest, StringComparison.Ordinal);
-        Assert.Contains("verify-trx --results-directory \"$RESULTS_DIRECTORY\"", dotnetTest, StringComparison.Ordinal);
+        Assert.Contains(
+            "list-test-owner-assemblies --repository \"$ROOT\"",
+            dotnetTest,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "OWNER_ASSEMBLY_ARGS+=(--required-assembly \"$owner_assembly\")",
+            dotnetTest,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "verify-trx --results-directory \"$RESULTS_DIRECTORY\"",
+            dotnetTest,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "${OWNER_ASSEMBLY_ARGS[@]+\"${OWNER_ASSEMBLY_ARGS[@]}\"}",
+            dotnetTest,
+            StringComparison.Ordinal);
         var engineeringTestsRecipe = Recipe(makefile, "engineering-tests");
         Assert.Contains(
             "StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
@@ -263,6 +279,232 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("refactor-p0-0-gate-authority", makefile, StringComparison.Ordinal);
         Assert.DoesNotContain("--old-build", makefile, StringComparison.Ordinal);
         Assert.DoesNotContain("OUT ?=", makefile, StringComparison.Ordinal);
+    }
+
+    [Fact(DisplayName = "dotnet-test rejects a zero-match filter on Bash 3.2")]
+    public void DotnetTestRejectsZeroMatchFilterOnBash32()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var root = TestRepositoryLayout.FindRoot();
+        using var fixture = new TemporaryDirectory();
+        var binDirectory = Path.Combine(fixture.Path, "bin");
+        var fakeDotnet = Path.Combine(binDirectory, "dotnet");
+        var log = Path.Combine(fixture.Path, "dotnet.log");
+        Directory.CreateDirectory(binDirectory);
+        WriteExecutable(
+            fakeDotnet,
+            """
+            #!/bin/bash
+            printf '%s\n' "$*" >> "$DOTNET_TEST_LOG"
+            if [[ "${1:-}" == test ]]; then
+              results=""
+              while [[ $# -gt 0 ]]; do
+                if [[ "$1" == --results-directory ]]; then results="$2"; break; fi
+                shift
+              done
+              mkdir -p "$results"
+              printf '<TestRun><ResultSummary><Counters executed="%s" /></ResultSummary></TestRun>\n' "$TRX_EXECUTED" > "$results/fake.trx"
+              exit 0
+            fi
+            if [[ "$*" == *"verify-trx"* ]]; then exec "$REAL_DOTNET" "$@"; fi
+            exit 0
+            """);
+
+        var dotnetPath = TestProcessRunner.Run(
+            "/bin/bash",
+            ["-c", "command -v dotnet"],
+            root,
+            TestBudgets.ScriptProcessHangGuard,
+            4096);
+        Assert.Equal(0, dotnetPath.ExitCode);
+        var realDotnet = Encoding.UTF8.GetString(dotnetPath.StandardOutput).Trim();
+        var result = TestProcessRunner.Run(
+            "env",
+            [
+                $"PATH={binDirectory}:/usr/bin:/bin",
+                $"REAL_DOTNET={realDotnet}",
+                $"TRX_EXECUTED=0",
+                $"DOTNET_TEST_LOG={log}",
+                "/bin/bash",
+                Path.Combine(root, "tools/scripts/dotnet-test.sh"),
+                "--filter", "FullyQualifiedName=No.Such.Test",
+            ],
+            root,
+            TestBudgets.ScriptProcessHangGuard,
+            64 * 1024);
+
+        Assert.NotEqual(0, result.ExitCode);
+        var invocations = File.ReadAllLines(log);
+        Assert.Contains(invocations, line => line.StartsWith("test ", StringComparison.Ordinal));
+        Assert.Contains(invocations, line => line.Contains("verify-trx", StringComparison.Ordinal));
+        Assert.Contains(
+            "TEST_EVIDENCE_FAILED dotnet test executed zero tests",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
+    }
+
+    [Fact(DisplayName = "dotnet-test safely verifies an empty owner-argument array")]
+    public void DotnetTestSafelyVerifiesEmptyOwnerArgumentArray()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var root = TestRepositoryLayout.FindRoot();
+        using var fixture = new TemporaryDirectory();
+        var binDirectory = Path.Combine(fixture.Path, "bin");
+        var fakeDotnet = Path.Combine(binDirectory, "dotnet");
+        var log = Path.Combine(fixture.Path, "dotnet.log");
+        Directory.CreateDirectory(binDirectory);
+        WriteExecutable(
+            fakeDotnet,
+            """
+            #!/bin/bash
+            printf '%s\n' "$*" >> "$DOTNET_TEST_LOG"
+            if [[ "${1:-}" == test ]]; then
+              results=""
+              while [[ $# -gt 0 ]]; do
+                if [[ "$1" == --results-directory ]]; then results="$2"; break; fi
+                shift
+              done
+              mkdir -p "$results"
+              printf '<TestRun><ResultSummary><Counters executed="1" /></ResultSummary></TestRun>\n' > "$results/fake.trx"
+              exit 0
+            fi
+            if [[ "$*" == *"verify-trx"* ]]; then exec "$REAL_DOTNET" "$@"; fi
+            exit 0
+            """);
+
+        var dotnetPath = TestProcessRunner.Run(
+            "/bin/bash",
+            ["-c", "command -v dotnet"],
+            root,
+            TestBudgets.ScriptProcessHangGuard,
+            4096);
+        Assert.Equal(0, dotnetPath.ExitCode);
+        var realDotnet = Encoding.UTF8.GetString(dotnetPath.StandardOutput).Trim();
+        var result = TestProcessRunner.Run(
+            "env",
+            [
+                $"PATH={binDirectory}:/usr/bin:/bin",
+                $"REAL_DOTNET={realDotnet}",
+                $"DOTNET_TEST_LOG={log}",
+                "/bin/bash",
+                Path.Combine(root, "tools/scripts/dotnet-test.sh"),
+                "--filter", "FullyQualifiedName=Existing.Test",
+            ],
+            root,
+            TestBudgets.ScriptProcessHangGuard,
+            64 * 1024);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains(
+            "TEST_EVIDENCE_ACCEPTED evidence=trx executed=1",
+            Encoding.UTF8.GetString(result.StandardOutput),
+            StringComparison.Ordinal);
+        Assert.Contains(
+            File.ReadAllLines(log),
+            line => line.Contains("verify-trx", StringComparison.Ordinal));
+    }
+
+    [Fact(DisplayName = "dotnet-test rejects a root discovery failure with stdout on Bash 3.2")]
+    public void DotnetTestRejectsRootDiscoveryFailureWithStdoutOnBash32()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var root = TestRepositoryLayout.FindRoot();
+        using var fixture = new TemporaryDirectory();
+        var binDirectory = Path.Combine(fixture.Path, "bin");
+        var fakeDirname = Path.Combine(binDirectory, "dirname");
+        var fakeDotnet = Path.Combine(binDirectory, "dotnet");
+        var invocationMarker = Path.Combine(fixture.Path, "dotnet-invoked");
+        Directory.CreateDirectory(binDirectory);
+        WriteExecutable(
+            fakeDirname,
+            """
+            #!/bin/bash
+            printf '%s\n' "$DOTNET_TEST_SCRIPT_DIRECTORY"
+            exit 7
+            """);
+        WriteExecutable(
+            fakeDotnet,
+            """
+            #!/bin/bash
+            printf 'invoked\n' > "$DOTNET_TEST_INVOCATION_MARKER"
+            if [[ "${1:-}" == test ]]; then
+              results=""
+              while [[ $# -gt 0 ]]; do
+                if [[ "$1" == --results-directory ]]; then results="$2"; break; fi
+                shift
+              done
+              mkdir -p "$results"
+              printf '<TestRun><ResultSummary><Counters executed="1" /></ResultSummary></TestRun>\n' > "$results/fake.trx"
+            fi
+            exit 0
+            """);
+
+        var result = TestProcessRunner.Run(
+            "env",
+            [
+                $"PATH={binDirectory}:/usr/bin:/bin",
+                $"DOTNET_TEST_SCRIPT_DIRECTORY={Path.Combine(root, "tools", "scripts")}",
+                $"DOTNET_TEST_INVOCATION_MARKER={invocationMarker}",
+                "/bin/bash",
+                Path.Combine(root, "tools/scripts/dotnet-test.sh"),
+                "--filter", "FullyQualifiedName=Root.Discovery.Probe",
+            ],
+            root,
+            TestBudgets.ScriptProcessHangGuard,
+            64 * 1024);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.False(
+            File.Exists(invocationMarker),
+            "root discovery must fail before dotnet executes");
+    }
+
+    [Fact(DisplayName = "dotnet-test rejects EXIT zero before its completion marker")]
+    public void DotnetTestRejectsExitZeroBeforeCompletionMarker()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var root = TestRepositoryLayout.FindRoot();
+        using var fixture = new TemporaryDirectory();
+        var binDirectory = Path.Combine(fixture.Path, "bin");
+        var fakeDotnet = Path.Combine(binDirectory, "dotnet");
+        var bashEnvironment = Path.Combine(fixture.Path, "exit-before-completion.sh");
+        var invocationMarker = Path.Combine(fixture.Path, "dotnet-invoked");
+        Directory.CreateDirectory(binDirectory);
+        WriteExecutable(
+            fakeDotnet,
+            """
+            #!/bin/bash
+            printf 'invoked\n' > "$DOTNET_TEST_INVOCATION_MARKER"
+            exit 0
+            """);
+        File.WriteAllText(
+            bashEnvironment,
+            """
+            trap 'case "$BASH_COMMAND" in dotnet\ test*) trap - DEBUG; exit 0 ;; esac' DEBUG
+            """);
+
+        var result = TestProcessRunner.Run(
+            "env",
+            [
+                $"PATH={binDirectory}:/usr/bin:/bin",
+                $"BASH_ENV={bashEnvironment}",
+                $"DOTNET_TEST_INVOCATION_MARKER={invocationMarker}",
+                "/bin/bash",
+                Path.Combine(root, "tools/scripts/dotnet-test.sh"),
+                "--filter", "FullyQualifiedName=Completion.Probe",
+            ],
+            root,
+            TestBudgets.ScriptProcessHangGuard,
+            64 * 1024);
+
+        Assert.False(
+            File.Exists(invocationMarker),
+            "the completion probe must exit before dotnet executes");
+        Assert.NotEqual(0, result.ExitCode);
     }
 
     private static void AssertNoUnrecognizedGateCommands(string shell, string source)
