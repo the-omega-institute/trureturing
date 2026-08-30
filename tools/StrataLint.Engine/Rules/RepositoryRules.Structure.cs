@@ -288,6 +288,27 @@ internal static partial class RepositoryRules
             .Select(static item => new RuleFinding(item.Key.Value, "tracked Chronicle entries are append-only"))
             .ToImmutableArray();
 
+    /// <summary>
+    /// A theory volume grows only at its end. Every atom the digestion ledger holds was hashed
+    /// from a span of these bytes, so rewriting a span silently detaches whatever was digested
+    /// from it — and an atom that carries a Lean coverage GID would lose that link with no
+    /// signal at all. An erratum is therefore published the way everything else in this
+    /// repository is published: as new text appended after the old, leaving the earlier bytes
+    /// exactly as they were digested. Admitting a change means the base bytes are still a
+    /// prefix of the candidate bytes, which rejects in-place edits, truncation, and deletion
+    /// with one predicate rather than three.
+    /// </summary>
+    private static ImmutableArray<RuleFinding> TheoryAppendOnly(RuleEvaluationContext context) =>
+        context.ForkPoint.Files
+            .Where(static item => IsTheoryVolumePath(item.Key.Value))
+            .Where(item => context.IsBaseFactAffected(item.Key.Value))
+            .Where(item => !context.Current.TryGetFile(item.Key.Value, out var current)
+                || !current.RawBytes.AsSpan().StartsWith(item.Value.RawBytes.AsSpan()))
+            .Select(static item => new RuleFinding(
+                item.Key.Value,
+                "theory volumes are append-only; publish an erratum as newly appended prose"))
+            .ToImmutableArray();
+
     private static ImmutableArray<RuleFinding> Badges(RuleEvaluationContext context) =>
         context.Current.Files
             .Where(item => IsStatusScope(item.Key.Value)
