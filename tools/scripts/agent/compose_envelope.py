@@ -110,11 +110,23 @@ def main(argv):
             for key, value in loaded.items():
                 if key in WHITELIST:
                     fresh.setdefault(key, value)
+        # Record-level first-wins: an atom's record comes from the FIRST result that has one; a later (older)
+        # result may not back-fill attestation fields into it (a stale clause_matrix for an atom whose outcome
+        # changed is worse than none — #4204 pass-2 finding). Non-attestation keys still fill gaps.
         for record in list(loaded.get("atoms", []) or []) + list(loaded.get("quarantined_atoms", []) or []):
             if isinstance(record, dict) and record.get("atom_id"):
-                merged = per_atom.setdefault(canonical(record["atom_id"]), {})
+                atom_id = canonical(record["atom_id"])
+                if atom_id in per_atom and per_atom[atom_id].get("_owner") not in (None, path):
+                    for key, value in record.items():
+                        if key not in WHITELIST:
+                            per_atom[atom_id].setdefault(key, value)
+                    continue
+                merged = per_atom.setdefault(atom_id, {})
+                merged.setdefault("_owner", path)
                 for key, value in record.items():
                     merged.setdefault(key, value)
+    for record in per_atom.values():
+        record.pop("_owner", None)
 
     # Single-deposit fix-flight envelopes carry the per-atom attestations at conclusion level; with exactly
     # one deposited atom and no per-atom record for it, that level IS the per-atom record (unambiguous).
