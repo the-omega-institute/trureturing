@@ -72,6 +72,8 @@ internal sealed class SpectralZetaContinuationConvergenceDocument
         Formula series = Seq(
             Sum, Underscore, Grp(Typed(n, natural)), Sp, spectralTerm);
         Formula zetaDefinition = Seq(Apply(zeta, s), Sp, Colon, Eq, Sp, series);
+        Formula countingDefinition = Seq(
+            Apply(counting, u), Sp, Colon, Eq, Sp, Call("card", sublevel));
         Formula continuedDefinition = Seq(
             Apply(continued, s), Sp, Colon, Eq, Sp,
             Call("continuedSpectralZeta", lambda, c, s));
@@ -102,6 +104,7 @@ internal sealed class SpectralZetaContinuationConvergenceDocument
         return Disp(new Formula.Aligned([
             Seq(Forall, Sp, Typed(lambda, spectrumType), Comma, Sp, Typed(c, real), Semi),
             Seq(Grp(), zetaDefinition, Semi),
+            Seq(Grp(), countingDefinition, Semi),
             Seq(Grp(), continuedDefinition, Semi),
             Seq(Grp(), Open, positive, Close, Sp, Land, Sp,
                 Call("StrictMono", lambda), Sp, Land),
