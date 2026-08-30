@@ -5,8 +5,10 @@
    anchors: []
    digest: Prove the massless tangent-cone limit of the Archimedean logarithmic tower. -/
 
-import D5.S3.Weil.ZetaGamma.GammaStirlingVert
+import Mathlib.Analysis.PSeries
 import Mathlib.Analysis.SpecialFunctions.Complex.LogBounds
+import Mathlib.Analysis.SumIntegralComparisons
+import Mathlib.Topology.Algebra.Module.ContinuousLinearMap.PiProd
 
 namespace D5.S3.Weil.ZetaGamma.MasslessTangentConeLimit
 
@@ -18,6 +20,24 @@ noncomputable section
 `sigma + 2m`. -/
 noncomputable def archimedean_dispersion (sigma lambda : ℝ) : ℝ :=
   ∑' m : ℕ, Real.log (1 + lambda / (sigma + 2 * m) ^ 2)
+
+/-- The coefficient space of a finite Fourier band. The ambient norm is the standard
+finite-product norm; strong convergence below is therefore convergence of coefficient vectors. -/
+abbrev FiniteFourierBand (n : ℕ) := Fin n → ℝ
+
+private noncomputable def scalarMultiplier (a : ℝ) : ℝ →L[ℝ] ℝ :=
+  ContinuousLinearMap.lsmul ℝ ℝ a
+
+/-- The diagonal multiplier with the prescribed symbol on a finite Fourier band. -/
+noncomputable def finiteBandMultiplier {n : ℕ} (symbol : Fin n → ℝ) :
+    FiniteFourierBand n →L[ℝ] FiniteFourierBand n :=
+  ContinuousLinearMap.piMap fun mode => scalarMultiplier (symbol mode)
+
+@[simp]
+theorem finiteBandMultiplier_apply {n : ℕ} (symbol : Fin n → ℝ)
+    (coefficients : FiniteFourierBand n) (mode : Fin n) :
+    finiteBandMultiplier symbol coefficients mode = symbol mode * coefficients mode := by
+  simp [finiteBandMultiplier, scalarMultiplier]
 
 private theorem summable_majorant {sigma lambda : ℝ} (hsigma : 0 < sigma)
     (hlambda : 0 ≤ lambda) :
@@ -393,23 +413,35 @@ private theorem scalar_massless_limit {sigma lambda : ℝ} (hsigma : 0 < sigma)
     field_simp [hsqrt.ne', hepsilon.ne']
 
 /-- For every positive offset, the scaled logarithmic tower converges to the massless
-symbol. The second conjunct states the corresponding Fourier-multiplier limit on every
-real frequency. -/
+symbol. The second conjunct is the operator clause: on every finite Fourier band, the
+associated diagonal multipliers converge strongly to the massless multiplier. -/
 theorem massless_tangent_cone_limit (sigma : ℝ) (hsigma : 0 < sigma) :
     (∀ lambda : ℝ, 0 ≤ lambda →
       Tendsto (fun epsilon : ℝ =>
         epsilon * archimedean_dispersion sigma (lambda / epsilon ^ 2)) (𝓝[>] 0)
         (𝓝 ((Real.pi / 2) * Real.sqrt lambda))) ∧
-    (∀ k : ℝ,
-      Tendsto (fun epsilon : ℝ =>
-        epsilon * archimedean_dispersion sigma (k ^ 2 / epsilon ^ 2)) (𝓝[>] 0)
-        (𝓝 ((Real.pi / 2) * |k|))) := by
+    (∀ (n : ℕ) (frequency : Fin n → ℝ) (coefficients : FiniteFourierBand n),
+      Tendsto
+        (fun epsilon : ℝ =>
+          finiteBandMultiplier (fun mode =>
+            epsilon * archimedean_dispersion sigma
+              (frequency mode ^ 2 / epsilon ^ 2)) coefficients)
+        (𝓝[>] 0)
+        (𝓝 (finiteBandMultiplier (fun mode =>
+          (Real.pi / 2) * |frequency mode|) coefficients))) := by
   constructor
   · intro lambda hlambda
     exact scalar_massless_limit hsigma hlambda
-  · intro k
-    simpa only [archimedean_dispersion, Real.sqrt_sq_eq_abs] using
-      scalar_massless_limit hsigma (sq_nonneg k)
+  · intro n frequency coefficients
+    refine tendsto_pi_nhds.mpr fun mode => ?_
+    have hmode := scalar_massless_limit hsigma (sq_nonneg (frequency mode))
+    have hsymbol : Tendsto
+        (fun epsilon : ℝ => epsilon * archimedean_dispersion sigma
+          (frequency mode ^ 2 / epsilon ^ 2))
+        (𝓝[>] 0) (𝓝 ((Real.pi / 2) * |frequency mode|)) := by
+      simpa only [Real.sqrt_sq_eq_abs] using hmode
+    simpa only [finiteBandMultiplier_apply] using
+      hsymbol.mul_const (coefficients mode)
 
 #print axioms archimedean_dispersion
 #print axioms massless_tangent_cone_limit
@@ -417,4 +449,3 @@ theorem massless_tangent_cone_limit (sigma : ℝ) (hsigma : 0 < sigma) :
 end
 
 end D5.S3.Weil.ZetaGamma.MasslessTangentConeLimit
-
