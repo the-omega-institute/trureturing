@@ -8,7 +8,3 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
-  quarantine:
-    justification: Pinned D5 has A5 quotient and regular-observer owners but no centered permutation representation, exterior-square representation, or Galois-conjugate three-dimensional icosahedral representations. Pinned Mathlib has abstract exterior powers and the forward theorem FDRep.char_iso, but exhaustive name and body-shape searches found neither the converse that equal finite real characters yield an equivariant isomorphism nor an A5 character table. The source proof cannot be replayed faithfully without those prerequisites, and defining the target representations from the desired splitting would be circular.
-    reentry_condition: A frozen canonical family supplies the centered real A5 permutation representation, its exterior-square representation, and the two three-dimensional icosahedral representations, together with either an explicit equivariant decomposition or a character-completeness theorem applicable over the real carrier.
-    blocker_class: missing-prerequisite
