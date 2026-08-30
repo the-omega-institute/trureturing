@@ -319,19 +319,18 @@ fail_provenance() {
     [[ "$archive_run_id" =~ ^[0-9]+$ ]] \
       || fail_provenance "manifest carries no workflow run id"
 
-    # 一次 REST 调用拿齐三样：author、target_commitish、每个 asset 的 uploader。
-    # `gh release view --json` 的 asset 字段里**没有** uploader，故走 api。
+    # 一次 REST 调用拿齐 target_commitish 与资产清单。走 api 而非
+    # `gh release view --json`，因为后者的 asset 字段缺少这里要比的信息。
     command -v jq >/dev/null 2>&1 \
       || fail_provenance "jq is required to read release provenance and is absent"
     release_json="$(gh api "repos/${REPO}/releases/tags/${resolved}" 2>/dev/null)" \
       || fail_provenance "release metadata is unreadable"
-    release_author="$(printf '%s' "$release_json" | jq -r '.author.login // ""')"
     release_target="$(printf '%s' "$release_json" | jq -r '.target_commitish // ""')"
     [[ "$release_target" == "$producer_commit_sha" ]] \
       || fail_provenance "release target ${release_target:-<absent>} does not match the declared producer commit"
 
-    # 资产必须**恰好**是这两份。多一份就意味着有人往这个 release 里加过东西，而
-    # 「所有 uploader 都对」在多资产下并不排除那种情形。
+    # 资产必须**恰好**是这两份。多一份就意味着有人往这个 release 里加过东西，
+    # 而逐份比对摘要并不排除「另外还多了一份」这种情形。
     for expected in "$asset" manifest.txt; do
       count="$(printf '%s' "$release_json" | jq --arg n "$expected" '[.assets[]? | select(.name == $n)] | length')"
       [[ "$count" == "1" ]] \
