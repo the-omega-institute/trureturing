@@ -30,15 +30,30 @@ internal static partial class WmAtomizer
         "^(?<number>0|[1-9][0-9]*)\\.\\s+",
         RegexOptions.CultureInvariant);
 
-    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules)
+    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules) =>
+        Atomize(bytes, rules, contentKinds: null);
+
+    internal static ImmutableDictionary<string, string> ResolveContentKinds(
+        ReadOnlyMemory<byte> bytes,
+        TheoryAtomizerRules rules) =>
+        AtomizerRegistry.CaptureContentKinds(kinds => Atomize(bytes.Span, rules, kinds));
+
+    private static AtomizedTheoryDocument Atomize(
+        ReadOnlySpan<byte> bytes,
+        TheoryAtomizerRules rules,
+        IDictionary<string, string>? contentKinds)
     {
         ArgumentNullException.ThrowIfNull(rules);
+        Dictionary<string, string>? scaffoldKinds = contentKinds is null
+            ? null
+            : new Dictionary<string, string>(StringComparer.Ordinal);
         var scaffold = MarkdownAstAtomizer.Atomize(
             bytes,
             Identify,
             static () => GenreRegistryCheck.NoGenreRegistry,
             identifyHeading: heading => IdentifyHeading(heading, rules),
-            extendLineClaims: false);
+            extendLineClaims: false,
+            contentKinds: scaffoldKinds);
         var raw = bytes.ToArray();
         var text = StrictUtf8.GetString(raw);
         ValidateStructure(text, scaffold, rules);
@@ -73,6 +88,29 @@ internal static partial class WmAtomizer
         {
             throw new TheorySourceFormatException(
                 $"WM atom spans stop at byte {cursor} before source byte {raw.Length}");
+        }
+
+        if (contentKinds is not null && scaffoldKinds is not null)
+        {
+            foreach (var claim in claims)
+            {
+                var source = scaffold.Claims
+                    .Select(atom => (Atom: atom, Overlap: Math.Min(atom.EndByte, claim.EndByte)
+                        - Math.Max(atom.StartByte, claim.StartByte)))
+                    .Where(static item => item.Overlap > 0)
+                    .OrderByDescending(static item => item.Overlap)
+                    .FirstOrDefault();
+                var kind = source.Atom is not null
+                    && scaffoldKinds.TryGetValue(source.Atom.Fingerprints.RawSha256, out var captured)
+                        ? captured
+                        : DisciplinePattern.IsMatch(AtomText(claim))
+                            ? "metadata"
+                            : null;
+                if (kind is not null)
+                {
+                    AtomizerRegistry.RecordContentKind(contentKinds, claim, kind);
+                }
+            }
         }
 
         return new AtomizedTheoryDocument(

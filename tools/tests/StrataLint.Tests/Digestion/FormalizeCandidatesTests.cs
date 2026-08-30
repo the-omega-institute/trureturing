@@ -51,7 +51,7 @@ public sealed partial class FormalizeCandidatesTests
     }
 
     [Fact]
-    public void FormalizeCandidatesIncludesEveryResidualAtomRegardlessOfGenre()
+    public void FormalizeCandidatesIncludesOnlyAtomizerFormalizableKinds()
     {
         var entries = new[]
         {
@@ -70,29 +70,30 @@ public sealed partial class FormalizeCandidatesTests
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
         Assert.Equal(
-            entries.Select(static entry => entry.AtomId).Order(StringComparer.Ordinal),
+            ["corollary", "lemma", "proposition", "theorem"],
             json.RootElement.GetProperty("candidates")
                 .EnumerateArray()
-                .Select(static candidate => candidate.GetProperty("atom_id").GetString())
+                .Select(static candidate => candidate.GetProperty("kind").GetString())
                 .Order(StringComparer.Ordinal));
     }
 
     [Theory]
-    [InlineData("定理", "16.8")]
-    [InlineData("命题", "16.9")]
-    [InlineData("引理", "16.10")]
-    [InlineData("推论", "16.11")]
-    [InlineData("theorem", "16.12")]
-    [InlineData("proposition", "16.13")]
-    [InlineData("lemma", "16.14")]
-    [InlineData("corollary", "16.15")]
-    [InlineData("section", "16.16")]
-    [InlineData("定义", "16.17")]
-    [InlineData("row", "16.18")]
-    [InlineData("item", "16.19")]
-    public void FormalizeCandidatesTreatEveryAtomGenreUniformly(
+    [InlineData("定理", "16.8", true)]
+    [InlineData("命题", "16.9", true)]
+    [InlineData("引理", "16.10", true)]
+    [InlineData("推论", "16.11", true)]
+    [InlineData("theorem", "16.12", true)]
+    [InlineData("proposition", "16.13", true)]
+    [InlineData("lemma", "16.14", true)]
+    [InlineData("corollary", "16.15", true)]
+    [InlineData("section", "16.16", false)]
+    [InlineData("定义", "16.17", false)]
+    [InlineData("row", "16.18", false)]
+    [InlineData("item", "16.19", false)]
+    public void FormalizeCandidatesKindAlphabetIsClosed(
         string kind,
-        string number)
+        string number,
+        bool expectedCandidate)
     {
         var entry = Entry(
             "source",
@@ -108,9 +109,17 @@ public sealed partial class FormalizeCandidatesTests
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
         var candidates = json.RootElement.GetProperty("candidates").EnumerateArray().ToArray();
-        Assert.Equal(
-            entry.AtomId,
-            Assert.Single(candidates).GetProperty("atom_id").GetString());
+        if (expectedCandidate)
+        {
+            var candidate = Assert.Single(candidates);
+            Assert.Equal(entry.AtomId, candidate.GetProperty("atom_id").GetString());
+            Assert.Equal(kind, candidate.GetProperty("kind").GetString());
+            Assert.False(candidate.TryGetProperty("ast_path", out _));
+        }
+        else
+        {
+            Assert.Empty(candidates);
+        }
     }
 
     [Fact]
@@ -538,6 +547,7 @@ public sealed partial class FormalizeCandidatesTests
         BackfillInventoryDocument? ledger = null,
         byte[]? formalizationReceipt = null,
         LeanAxiomReport? leanReport = null,
+        VerifiedScribeEmissions? scribeEmissions = null,
         string atomizer = AtomizerRegistry.PzgId,
         IReadOnlyList<string>? arguments = null,
         byte[]? rulesBytes = null)
@@ -605,7 +615,7 @@ public sealed partial class FormalizeCandidatesTests
                 RawRepositorySnapshot.Create(files),
                 null),
             new FakeLeanReportSource(leanReport ?? CurrentLeanReport(entries)),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+            new FakeScribeEmissionVerifier(scribeEmissions ?? VerifiedScribeEmissions.Empty));
         return environment.DigestStatus(arguments ?? ["--formalize-candidates"]);
     }
 
@@ -675,7 +685,10 @@ public sealed partial class FormalizeCandidatesTests
                     $"synthetic/{source.Key}.md",
                     atomizer,
                     [],
-                    GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])),
+                    GenreRegistryProjection.Available(
+                        string.Equals(atomizer, AtomizerRegistry.GenericId, StringComparison.Ordinal)
+                            ? GenreRegistryCheck.NoGenreRegistry
+                            : GenreRegistryCheck.Collected([])),
                     source.Select(entry => new DigestionLedgerEntry(
                         entry.SourceId,
                         $"synthetic/{entry.SourceId}.md",

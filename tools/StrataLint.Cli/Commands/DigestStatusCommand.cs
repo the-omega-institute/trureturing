@@ -89,6 +89,7 @@ internal static class DigestStatusCommand
                         formalizeEvaluation,
                         snapshot,
                         formalizeDocument,
+                        DigestionContentKindResolver.Resolve(snapshot, formalizeDocument),
                         formalizeLeanReport,
                         options.FormalizeAtomId,
                         options.RetryDispositions),
@@ -130,6 +131,43 @@ internal static class DigestStatusCommand
             if (evaluation.HasReceiptIntegrityFailure)
             {
                 return InvalidEvaluation(evaluation);
+            }
+
+            if (options.Readiness)
+            {
+                var readinessEntries = evaluation.Entries
+                    .Where(static item =>
+                        item.DerivedStatus.Migration == DigestionMigrationState.Residual
+                        && item.DerivedStatus.Truth == DigestionTruthState.Open)
+                    .ToArray();
+                var presentReceiptAtomIds = readinessEntries
+                    .Where(item => snapshot.TryGetFile(
+                        DigestionFormalizationReceipt.PathForAtom(item.Entry.AtomId),
+                        out _))
+                    .Select(static item => item.Entry.AtomId)
+                    .ToImmutableHashSet(StringComparer.Ordinal);
+                var currentReceipts = readinessEntries
+                    .Select(item => (
+                        item.Entry.AtomId,
+                        Receipt: CurrentFormalizationReceiptModel(
+                            item.Entry,
+                            snapshot,
+                            leanReport)))
+                    .Where(static item => item.Receipt is not null)
+                    .ToDictionary(
+                        static item => item.AtomId,
+                        static item => item.Receipt!,
+                        StringComparer.Ordinal);
+                return new CommandResult(
+                    true,
+                    RenderReadiness(DigestionReadinessQuery.Classify(
+                        document,
+                        evaluation,
+                        DigestionContentKindResolver.Resolve(snapshot, document),
+                        currentReceipts,
+                        presentReceiptAtomIds,
+                        verifiedScribeEmissions)),
+                    string.Empty);
             }
 
             return new CommandResult(
@@ -195,6 +233,7 @@ internal static class DigestStatusCommand
         var json = false;
         var residualSummary = false;
         var formalizeCandidates = false;
+        var readiness = false;
         var retryDispositions = false;
         string? baselineRevision = null;
         string? formalizeAtomId = null;
@@ -210,6 +249,9 @@ internal static class DigestStatusCommand
                     break;
                 case "--formalize-candidates" when !formalizeCandidates:
                     formalizeCandidates = true;
+                    break;
+                case "--readiness" when !readiness:
+                    readiness = true;
                     break;
                 case "--retry-dispositions" when !retryDispositions:
                     retryDispositions = true;
@@ -227,7 +269,10 @@ internal static class DigestStatusCommand
             }
         }
 
-        if ((json ? 1 : 0) + (residualSummary ? 1 : 0) + (formalizeCandidates ? 1 : 0) > 1
+        if ((json ? 1 : 0)
+                + (residualSummary ? 1 : 0)
+                + (formalizeCandidates ? 1 : 0)
+                + (readiness ? 1 : 0) > 1
             || (formalizeAtomId is not null && !formalizeCandidates)
             || (retryDispositions && !formalizeCandidates))
         {
@@ -238,13 +283,14 @@ internal static class DigestStatusCommand
             json,
             residualSummary,
             formalizeCandidates,
+            readiness,
             retryDispositions,
             baselineRevision,
             formalizeAtomId);
     }
 
     private static InvalidOperationException Usage() => new(
-        "USAGE: StrataLint digest-status [--json|--residual-summary|--formalize-candidates "
+        "USAGE: StrataLint digest-status [--json|--residual-summary|--readiness|--formalize-candidates "
         + "[--atom-id ATOM_ID] [--retry-dispositions]] [--base REV]");
 
     internal static string RenderText(DigestionLedgerEvaluation evaluation)
@@ -297,10 +343,29 @@ internal static class DigestStatusCommand
         return JsonSerializer.Serialize(material, JsonOptions) + "\n";
     }
 
+    internal static string RenderReadiness(IEnumerable<DigestionReadinessRecord> entries)
+    {
+        ArgumentNullException.ThrowIfNull(entries);
+        var material = new
+        {
+            schema = "stratalint-digestion-readiness-v1",
+            entries = entries.Select(static item => new
+            {
+                source_id = item.SourceId,
+                atom_id = item.AtomId,
+                action = item.Action,
+                ordered_blockers = item.OrderedBlockers,
+                unknown_predicates = item.UnknownPredicates,
+            }),
+        };
+        return JsonSerializer.Serialize(material, JsonOptions) + "\n";
+    }
+
     private static string RenderFormalizeCandidates(
         DigestionLedgerEvaluation evaluation,
         RepositorySnapshot snapshot,
         BackfillInventoryDocument ledger,
+        IReadOnlyDictionary<string, string> contentKinds,
         LeanAxiomReport leanReport,
         string? selectedAtomId,
         bool retryDispositions)
@@ -313,7 +378,12 @@ internal static class DigestStatusCommand
                     : item.DerivedStatus.Migration == DigestionMigrationState.Residual
                         && item.DerivedStatus.Truth == DigestionTruthState.Open
                         && item.Entry.CoverageGids.Length == 0))
-            .Select(item => Projection(item, snapshot, leanReport, retryDispositions))
+            .Select(item => Projection(
+                item,
+                snapshot,
+                contentKinds,
+                leanReport,
+                retryDispositions))
             .Where(static item => item is not null)
             .OrderBy(static item => item!.SourceId, StringComparer.Ordinal)
             .ThenBy(static item => item!.AtomId, StringComparer.Ordinal)
@@ -344,10 +414,17 @@ internal static class DigestStatusCommand
     private static FormalizeProjection? Projection(
         DigestionEntryEvaluation evaluation,
         RepositorySnapshot snapshot,
+        IReadOnlyDictionary<string, string> contentKinds,
         LeanAxiomReport leanReport,
         bool retryDispositions)
     {
         var entry = evaluation.Entry;
+        if (!contentKinds.TryGetValue(entry.AtomId, out var contentKind)
+            || !DigestionContentKindPolicy.IsFormalizable(contentKind))
+        {
+            return null;
+        }
+
         var dispositionSelection = DigestionCoverDispositionSelector.Classify(
             entry,
             retryDispositions);
@@ -383,7 +460,7 @@ internal static class DigestStatusCommand
 
         var recordedFormalization = dispositionSelection == DigestionCoverDispositionSelection.Retry
             ? null
-            : CurrentFormalizationReceipt(entry, snapshot, leanReport);
+            : CurrentFormalizationProjection(entry, snapshot, leanReport);
         if (recordedFormalization is not null)
         {
             return new FormalizeProjection(
@@ -454,6 +531,7 @@ internal static class DigestStatusCommand
             new FormalizeCandidate(
                 entry.SourceId,
                 entry.AtomId,
+                contentKind,
                 entry.CasRef,
                 entry.Fingerprints.RawSha256,
                 atomText),
@@ -462,7 +540,24 @@ internal static class DigestStatusCommand
             null);
     }
 
-    private static RecordedFormalization? CurrentFormalizationReceipt(
+    private static RecordedFormalization? CurrentFormalizationProjection(
+        DigestionLedgerEntry entry,
+        RepositorySnapshot snapshot,
+        LeanAxiomReport leanReport)
+    {
+        var receipt = CurrentFormalizationReceiptModel(entry, snapshot, leanReport);
+        return receipt is null
+            ? null
+            : new RecordedFormalization(
+                entry.SourceId,
+                entry.AtomId,
+                "current-formalization-receipt",
+                receipt.PrimaryGid,
+                receipt.RegisteredGids,
+                DigestionFormalizationReceipt.PathForAtom(entry.AtomId));
+    }
+
+    private static DigestionFormalizationReceipt? CurrentFormalizationReceiptModel(
         DigestionLedgerEntry entry,
         RepositorySnapshot snapshot,
         LeanAxiomReport leanReport)
@@ -508,13 +603,7 @@ internal static class DigestStatusCommand
                 }
             }
 
-            return new RecordedFormalization(
-                entry.SourceId,
-                entry.AtomId,
-                "current-formalization-receipt",
-                receipt.PrimaryGid,
-                receipt.RegisteredGids,
-                path);
+            return receipt;
         }
         catch (Exception exception) when (exception is FormatException or JsonException)
         {
@@ -555,6 +644,7 @@ internal static class DigestStatusCommand
         bool Json,
         bool ResidualSummary,
         bool FormalizeCandidates,
+        bool Readiness,
         bool RetryDispositions,
         string? BaselineRevision,
         string? FormalizeAtomId);
@@ -562,6 +652,7 @@ internal static class DigestStatusCommand
     private sealed record FormalizeCandidate(
         string SourceId,
         string AtomId,
+        string Kind,
         string CasRef,
         string RawSha256,
         string AtomText);

@@ -6,6 +6,8 @@ internal delegate AtomizedTheoryDocument TheoryAtomizer(ReadOnlySpan<byte> bytes
 
 internal sealed record AtomizerRegistration(
     TheoryAtomizer Atomize,
+    Func<ReadOnlyMemory<byte>, TheoryAtomizerRules, ImmutableDictionary<string, string>>
+        ResolveContentKinds,
     bool EmitsClausePlans = false);
 
 internal static class AtomizerRegistry
@@ -28,15 +30,34 @@ internal static class AtomizerRegistry
             .WithComparers(StringComparer.Ordinal)
             .Add(
                 GenericId,
-                new AtomizerRegistration(GenericAtomizer.Atomize))
-            .Add(ConeId, new AtomizerRegistration(ConeAtomizer.Atomize))
-            .Add(GictId, new AtomizerRegistration(GictAtomizer.Atomize))
-            .Add(ObserverId, new AtomizerRegistration(ObserverAtomizer.Atomize))
+                new AtomizerRegistration(
+                    GenericAtomizer.Atomize,
+                    GenericAtomizer.ResolveContentKinds))
+            .Add(
+                ConeId,
+                new AtomizerRegistration(ConeAtomizer.Atomize, ConeAtomizer.ResolveContentKinds))
+            .Add(
+                GictId,
+                new AtomizerRegistration(GictAtomizer.Atomize, GictAtomizer.ResolveContentKinds))
+            .Add(
+                ObserverId,
+                new AtomizerRegistration(
+                    ObserverAtomizer.Atomize,
+                    ObserverAtomizer.ResolveContentKinds))
             .Add(
                 PeriodicTreeId,
-                new AtomizerRegistration(PeriodicTreeAtomizer.Atomize))
-            .Add(PzgId, new AtomizerRegistration(PzgAtomizer.Atomize, EmitsClausePlans: true))
-            .Add(WmId, new AtomizerRegistration(WmAtomizer.Atomize));
+                new AtomizerRegistration(
+                    PeriodicTreeAtomizer.Atomize,
+                    PeriodicTreeAtomizer.ResolveContentKinds))
+            .Add(
+                PzgId,
+                new AtomizerRegistration(
+                    PzgAtomizer.Atomize,
+                    PzgAtomizer.ResolveContentKinds,
+                    EmitsClausePlans: true))
+            .Add(
+                WmId,
+                new AtomizerRegistration(WmAtomizer.Atomize, WmAtomizer.ResolveContentKinds));
 
     internal static ImmutableArray<string> RegisteredIds { get; } =
         Atomizers.Keys.Order(StringComparer.Ordinal).ToImmutableArray();
@@ -57,6 +78,12 @@ internal static class AtomizerRegistry
         return Require(id).Atomize(bytes, rules);
     }
 
+    internal static ImmutableDictionary<string, string> ResolveContentKinds(
+        string id,
+        ReadOnlySpan<byte> bytes,
+        TheoryAtomizerRules rules) =>
+        Require(id).ResolveContentKinds(bytes.ToArray(), rules);
+
     /// <summary>
     /// A dialect declared in atomizer data rather than registered in code. Its identity is
     /// resolved against the loaded rules at use, so a new volume needs data, not a build.
@@ -74,8 +101,64 @@ internal static class AtomizerRegistry
             ? registration
             : IsDeclaredDialect(id)
                 ? new AtomizerRegistration(
-                    (bytes, rules) => DeclaredDialectAtomizer.Atomize(id, bytes, rules))
+                    (bytes, rules) => DeclaredDialectAtomizer.Atomize(id, bytes, rules),
+                    (bytes, rules) => DeclaredDialectAtomizer.ResolveContentKinds(
+                        id,
+                        bytes,
+                        rules))
                 : throw Unknown(id);
+
+    internal static ImmutableDictionary<string, string> CaptureContentKinds(
+        Action<IDictionary<string, string>> atomize)
+    {
+        ArgumentNullException.ThrowIfNull(atomize);
+        var kinds = new Dictionary<string, string>(StringComparer.Ordinal);
+        atomize(kinds);
+        return kinds.ToImmutableDictionary(StringComparer.Ordinal);
+    }
+
+    internal static void RecordContentKind(
+        IDictionary<string, string>? kinds,
+        DigestionAtom atom,
+        string kind)
+    {
+        if (kinds is null || string.IsNullOrEmpty(kind))
+        {
+            return;
+        }
+
+        var hash = atom.Fingerprints.RawSha256;
+        if (kinds.TryGetValue(hash, out var existing) && existing != kind)
+        {
+            kinds.Remove(hash);
+            return;
+        }
+
+        kinds[hash] = kind;
+    }
+
+    internal static void InheritClauseContentKinds(
+        IDictionary<string, string>? kinds,
+        IEnumerable<DigestionClausePlan> plans)
+    {
+        if (kinds is null)
+        {
+            return;
+        }
+
+        foreach (var plan in plans)
+        {
+            if (!kinds.TryGetValue(plan.Parent.Fingerprints.RawSha256, out var kind))
+            {
+                continue;
+            }
+
+            foreach (var child in plan.Children)
+            {
+                RecordContentKind(kinds, child, kind);
+            }
+        }
+    }
 
     private static FormatException Unknown(string id) => new(
         $"Unknown atomizer id '{id}'. Registered atomizers: "

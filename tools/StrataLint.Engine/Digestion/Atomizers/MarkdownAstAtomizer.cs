@@ -26,7 +26,8 @@ internal static class MarkdownAstAtomizer
         Func<MarkdownTableRow, string?>? identifyTableRow = null,
         bool dropEmptyHeadingClaims = false,
         bool extendLineClaims = true,
-        Func<string, bool>? identifyHeadingClaim = null)
+        Func<string, bool>? identifyHeadingClaim = null,
+        IDictionary<string, string>? contentKinds = null)
     {
         ArgumentNullException.ThrowIfNull(genreRegistryCheck);
         var raw = bytes.ToArray();
@@ -52,6 +53,7 @@ internal static class MarkdownAstAtomizer
                         heading.Start,
                         text.Length,
                         headings.ToImmutableArray(),
+                        ContentKind(headingTag),
                         Extend: true,
                         IsClaim: identifyHeadingClaim?.Invoke(heading.Text) ?? false,
                         ScopeHeadingLevel: heading.Level,
@@ -80,6 +82,7 @@ internal static class MarkdownAstAtomizer
                         row.Start,
                         row.End,
                         headings.ToImmutableArray(),
+                        ContentKind(tableTag),
                         Extend: false,
                         IsClaim: true,
                         ScopeHeadingLevel: ScopeHeadingLevel(headings)));
@@ -106,6 +109,7 @@ internal static class MarkdownAstAtomizer
                         lineClaim.Line.Start,
                         extendLineClaims ? text.Length : lineClaim.Line.End,
                         headings.ToImmutableArray(),
+                        ContentKind(lineClaim.Tag!),
                         Extend: extendLineClaims,
                         IsClaim: true,
                         ScopeHeadingLevel: ScopeHeadingLevel(headings)));
@@ -125,6 +129,7 @@ internal static class MarkdownAstAtomizer
                 paragraph.Start,
                 text.Length,
                 headings.ToImmutableArray(),
+                ContentKind(tag),
                 Extend: true,
                 IsClaim: true,
                 ScopeHeadingLevel: ScopeHeadingLevel(headings)));
@@ -201,13 +206,15 @@ internal static class MarkdownAstAtomizer
 
             var atomBytes = ImmutableArray.CreateRange(raw[start..end]);
             slices.Add(new DigestionSlice(true, atomBytes));
-            claims.Add(new DigestionAtom(
+            var atom = new DigestionAtom(
                 start,
                 end,
                 atomBytes,
                 DigestionFingerprint.Compute(atomBytes.AsSpan()),
                 candidate.Context,
-                DigestionAtomStatusMarker.Parse(atomBytes.AsSpan())));
+                DigestionAtomStatusMarker.Parse(atomBytes.AsSpan()));
+            claims.Add(atom);
+            AtomizerRegistry.RecordContentKind(contentKinds, atom, candidate.ContentKind);
             cursor = end;
         }
 
@@ -238,6 +245,12 @@ internal static class MarkdownAstAtomizer
 
     private static int? ScopeHeadingLevel(List<DigestionContext> headings) =>
         headings.Count == 0 ? null : headings[^1].Level;
+
+    private static string ContentKind(string locator)
+    {
+        var separator = locator.IndexOf('/', StringComparison.Ordinal);
+        return separator <= 0 ? locator : locator[..separator];
+    }
 
     private static int FirstScopedClaimBoundary(
         Candidate candidate,
@@ -282,6 +295,7 @@ internal static class MarkdownAstAtomizer
         int StartCharacter,
         int EndCharacter,
         ImmutableArray<DigestionContext> Context,
+        string ContentKind,
         bool Extend,
         bool IsClaim,
         int? ScopeHeadingLevel,

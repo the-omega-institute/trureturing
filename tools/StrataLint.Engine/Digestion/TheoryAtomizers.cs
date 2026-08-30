@@ -333,7 +333,18 @@ internal static class GictAtomizer
         "^\\*\\*(?<number>E\\.[0-9]+)\\s+[^\\r\\n*]+\\*\\*",
         RegexOptions.CultureInvariant);
 
-    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules)
+    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules) =>
+        Atomize(bytes, rules, contentKinds: null);
+
+    internal static ImmutableDictionary<string, string> ResolveContentKinds(
+        ReadOnlyMemory<byte> bytes,
+        TheoryAtomizerRules rules) =>
+        AtomizerRegistry.CaptureContentKinds(kinds => Atomize(bytes.Span, rules, kinds));
+
+    private static AtomizedTheoryDocument Atomize(
+        ReadOnlySpan<byte> bytes,
+        TheoryAtomizerRules rules,
+        IDictionary<string, string>? contentKinds)
     {
         // One instance per document rather than per paragraph: it accumulates the unregistered
         // tokens the volume used, and it owns a compiled regex worth building once.
@@ -342,7 +353,8 @@ internal static class GictAtomizer
             bytes,
             paragraph => Identify(paragraph, rules, claims),
             () => GenreRegistryCheck.Collected(claims.Unregistered),
-            value => IdentifyConstant(value, rules));
+            value => IdentifyConstant(value, rules),
+            contentKinds: contentKinds);
     }
 
     private static string? Identify(string paragraph, TheoryAtomizerRules rules, NumberedClaims claims)
@@ -370,13 +382,25 @@ internal static class PeriodicTreeAtomizer
         "^(?<number>[0-9]+)\\.\\s+",
         RegexOptions.CultureInvariant);
 
-    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules _)
+    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules) =>
+        Atomize(bytes, rules, contentKinds: null);
+
+    internal static ImmutableDictionary<string, string> ResolveContentKinds(
+        ReadOnlyMemory<byte> bytes,
+        TheoryAtomizerRules rules) =>
+        AtomizerRegistry.CaptureContentKinds(kinds => Atomize(bytes.Span, rules, kinds));
+
+    private static AtomizedTheoryDocument Atomize(
+        ReadOnlySpan<byte> bytes,
+        TheoryAtomizerRules _,
+        IDictionary<string, string>? contentKinds)
     {
         var document = MarkdownAstAtomizer.Atomize(
             bytes,
             static _ => null,
             static () => GenreRegistryCheck.NoGenreRegistry,
-            identifyHeading: IdentifyHeading);
+            identifyHeading: IdentifyHeading,
+            contentKinds: contentKinds);
         if (document.Claims.Length > 0 || bytes.IsEmpty)
         {
             return document;
@@ -389,6 +413,7 @@ internal static class PeriodicTreeAtomizer
             rawBytes,
             DigestionFingerprint.ComputeOpaque(rawBytes.AsSpan()),
             []);
+        AtomizerRegistry.RecordContentKind(contentKinds, atom, "coarse");
         return new AtomizedTheoryDocument(
             [atom],
             [new DigestionSlice(true, rawBytes)],
@@ -409,7 +434,18 @@ internal static class PzgAtomizer
         "^\\*\\*(?<id>O-[0-9]+)\\*\\*",
         RegexOptions.CultureInvariant);
 
-    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules)
+    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules) =>
+        Atomize(bytes, rules, contentKinds: null);
+
+    internal static ImmutableDictionary<string, string> ResolveContentKinds(
+        ReadOnlyMemory<byte> bytes,
+        TheoryAtomizerRules rules) =>
+        AtomizerRegistry.CaptureContentKinds(kinds => Atomize(bytes.Span, rules, kinds));
+
+    private static AtomizedTheoryDocument Atomize(
+        ReadOnlySpan<byte> bytes,
+        TheoryAtomizerRules rules,
+        IDictionary<string, string>? contentKinds)
     {
         // See GictAtomizer: one instance per document so unregistered tokens accumulate.
         var claims = new NumberedClaims(rules.PzgGenres, NumberPattern);
@@ -417,15 +453,18 @@ internal static class PzgAtomizer
             bytes,
             paragraph => Identify(paragraph, rules, claims),
             () => GenreRegistryCheck.Collected(claims.Unregistered),
-            identifyHeading: heading => IdentifyHeading(heading, rules));
+            identifyHeading: heading => IdentifyHeading(heading, rules),
+            contentKinds: contentKinds);
+        var clausePlans = document.Claims
+            .Select(PlanClauses)
+            .Where(static plan => plan is not null)
+            .Select(static plan => plan!)
+            .ToImmutableArray();
+        AtomizerRegistry.InheritClauseContentKinds(contentKinds, clausePlans);
         return new AtomizedTheoryDocument(
             document.Claims,
             document.Slices,
-            document.Claims
-                .Select(PlanClauses)
-                .Where(static plan => plan is not null)
-                .Select(static plan => plan!)
-                .ToImmutableArray(),
+            clausePlans,
             document.GenreRegistryCheck);
     }
 

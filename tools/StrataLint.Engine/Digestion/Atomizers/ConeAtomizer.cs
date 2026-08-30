@@ -20,14 +20,26 @@ internal static class ConeAtomizer
 
     internal static AtomizedTheoryDocument Atomize(
         ReadOnlySpan<byte> bytes,
-        TheoryAtomizerRules rules)
+        TheoryAtomizerRules rules) =>
+        Atomize(bytes, rules, contentKinds: null);
+
+    internal static System.Collections.Immutable.ImmutableDictionary<string, string> ResolveContentKinds(
+        ReadOnlyMemory<byte> bytes,
+        TheoryAtomizerRules rules) =>
+        AtomizerRegistry.CaptureContentKinds(kinds => Atomize(bytes.Span, rules, kinds));
+
+    private static AtomizedTheoryDocument Atomize(
+        ReadOnlySpan<byte> bytes,
+        TheoryAtomizerRules rules,
+        IDictionary<string, string>? contentKinds)
     {
         ArgumentNullException.ThrowIfNull(rules);
         var unregistered = new SortedSet<string>(StringComparer.Ordinal);
         var document = MarkdownAstAtomizer.Atomize(
             bytes,
             paragraph => Identify(paragraph, rules, unregistered),
-            () => GenreRegistryCheck.Collected([.. unregistered]));
+            () => GenreRegistryCheck.Collected([.. unregistered]),
+            contentKinds: contentKinds);
         foreach (var atom in document.Claims)
         {
             ValidateChapter(atom);

@@ -17,7 +17,21 @@ internal static class DeclaredDialectAtomizer
     internal static AtomizedTheoryDocument Atomize(
         string atomizerId,
         ReadOnlySpan<byte> bytes,
-        TheoryAtomizerRules rules)
+        TheoryAtomizerRules rules) =>
+        Atomize(atomizerId, bytes, rules, contentKinds: null);
+
+    internal static ImmutableDictionary<string, string> ResolveContentKinds(
+        string atomizerId,
+        ReadOnlyMemory<byte> bytes,
+        TheoryAtomizerRules rules) =>
+        AtomizerRegistry.CaptureContentKinds(
+            kinds => Atomize(atomizerId, bytes.Span, rules, kinds));
+
+    private static AtomizedTheoryDocument Atomize(
+        string atomizerId,
+        ReadOnlySpan<byte> bytes,
+        TheoryAtomizerRules rules,
+        IDictionary<string, string>? contentKinds)
     {
         ArgumentNullException.ThrowIfNull(rules);
         var dialect = Require(atomizerId, rules);
@@ -29,11 +43,13 @@ internal static class DeclaredDialectAtomizer
                 bytes,
                 static _ => null,
                 () => GenreRegistryCheck.Collected(Seen()),
-                identifyHeading: heading => Identify(heading, dialect, pattern, unregistered))
+                identifyHeading: heading => Identify(heading, dialect, pattern, unregistered),
+                contentKinds: contentKinds)
             : MarkdownAstAtomizer.Atomize(
                 bytes,
                 paragraph => Identify(paragraph, dialect, pattern, unregistered),
-                () => GenreRegistryCheck.Collected(Seen()));
+                () => GenreRegistryCheck.Collected(Seen()),
+                contentKinds: contentKinds);
     }
 
     internal static DeclaredDialect Require(string atomizerId, TheoryAtomizerRules rules)
