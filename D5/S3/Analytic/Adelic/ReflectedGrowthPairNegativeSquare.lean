@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Analytic/Adelic/ReflectedGrowthPairNegativeSquare
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: A reflected exponential pair exchanges under time reversal and has negative-square discriminant. -/
+   digest: A reflected exponential pair exchanges under time reversal and has negative-square signed determinant. -/
 
 import Mathlib.Analysis.SpecialFunctions.Exp
 import Mathlib.Tactic
@@ -11,11 +11,14 @@ import Mathlib.Tactic
 /- Library-search audit trail (2026-08-30):
    * Repository searches found the off-line curvature dipole and several
      observer-time decompositions, but no exact owner joining a reflected
-     exponential pair, time reversal, reciprocal branches, and the
-     negative-square discriminant.
+     exponential pair, time reversal, reciprocal branches, and its
+     negative-square signed determinant.
    * Pinned Mathlib supplies the real exponential addition and order laws.
-     The reflected pair, pair swap, trace, determinant, discriminant, and even
-     readout are therefore constructed directly below.
+     The reflected pair, pair swap, trace, determinant, characteristic
+     factor, and even readout are therefore constructed directly below.
+   * The negative quantity below is the determinant of the reflected
+     generator. The standard polynomial discriminant of `r^2 - delta^2`
+     is `4 * delta^2`; the two notions are kept distinct.
    * The theorem is scalar and unconditional. It does not identify zeta
      ordinates with physical time and does not assume a completed-zeta
      realization. -/
@@ -48,9 +51,10 @@ def pairTrace (pair : ℝ × ℝ) : ℝ :=
 def pairDeterminant (pair : ℝ × ℝ) : ℝ :=
   pair.1 * pair.2
 
-/-- The determinant left by a reflected generator after first-order
-cancellation. -/
-def reflectionPairDiscriminant (delta : ℝ) : ℝ :=
+/-- The signed determinant left by a reflected generator after first-order
+cancellation. This is not the standard discriminant of its characteristic
+polynomial. -/
+def reflectionPairSignedDeterminant (delta : ℝ) : ℝ :=
   pairDeterminant (reflectedGenerator delta)
 
 /-- The branch-forgetting symmetric readout. -/
@@ -77,19 +81,25 @@ theorem reflected_growth_pair_reciprocal (delta time : ℝ) :
   rw [← Real.exp_add]
   simp
 
-/-- The reflected generator has zero trace, negative-square determinant, and
-characteristic factor `r^2 - delta^2`. -/
-theorem reflection_pair_discriminant (delta spectral : ℝ) :
+/-- The reflected generator has zero trace, negative-square signed determinant,
+and characteristic factor `r^2 - delta^2`. -/
+theorem reflection_pair_signed_determinant (delta spectral : ℝ) :
     pairTrace (reflectedGenerator delta) = 0 ∧
-      reflectionPairDiscriminant delta = -(delta ^ 2) ∧
+      reflectionPairSignedDeterminant delta = -(delta ^ 2) ∧
       (spectral - delta) * (spectral + delta) =
         spectral ^ 2 - delta ^ 2 := by
   constructor
   · simp [pairTrace, reflectedGenerator]
   constructor
-  · simp [reflectionPairDiscriminant, pairDeterminant,
+  · simp [reflectionPairSignedDeterminant, pairDeterminant,
       reflectedGenerator, pow_two]
   · ring
+
+/-- The standard polynomial discriminant of `r^2 - delta^2` is
+`4 * delta^2`, distinct from the signed determinant `-delta^2`. -/
+theorem reflection_pair_polynomial_discriminant (delta : ℝ) :
+    0 ^ 2 - 4 * 1 * (-(delta ^ 2)) = 4 * delta ^ 2 := by
+  ring
 
 /-- The symmetric readout forgets branch orientation and is even in time. -/
 theorem reflected_growth_sum_even (delta time : ℝ) :
@@ -110,8 +120,8 @@ theorem reflected_growth_pair_forward_orientation
       (neg_lt_zero.mpr (mul_pos hdelta htime))
 
 /-- The reflected growth package: time reversal exchanges the branches, their
-product is one, first-order generator trace cancels, and the remaining
-characteristic invariant is the negative square `-delta^2`. -/
+product is one, first-order generator trace cancels, and the remaining signed
+determinant is the negative square `-delta^2`. -/
 theorem reflected_growth_pair_negative_square
     (delta time spectral : ℝ) :
     swapPair (reflectedGrowthPair delta time) =
@@ -119,18 +129,19 @@ theorem reflected_growth_pair_negative_square
       (reflectedGrowthPair delta time).1 *
           (reflectedGrowthPair delta time).2 = 1 ∧
       pairTrace (reflectedGenerator delta) = 0 ∧
-      reflectionPairDiscriminant delta = -(delta ^ 2) ∧
+      reflectionPairSignedDeterminant delta = -(delta ^ 2) ∧
       (spectral - delta) * (spectral + delta) =
         spectral ^ 2 - delta ^ 2 := by
   exact ⟨reflected_growth_pair_time_reversal delta time,
     reflected_growth_pair_reciprocal delta time,
-    reflection_pair_discriminant delta spectral⟩
+    reflection_pair_signed_determinant delta spectral⟩
 
 /-- Zero splitting collapses both branches to the neutral unit mode. -/
 example (time : ℝ) : reflectedGrowthPair 0 time = (1, 1) := by
   simp [reflectedGrowthPair]
 
 #print axioms reflected_growth_pair_negative_square
+#print axioms reflection_pair_polynomial_discriminant
 #print axioms reflected_growth_pair_forward_orientation
 #print axioms reflected_growth_sum_even
 
