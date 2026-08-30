@@ -33,7 +33,12 @@ internal sealed class GoldenRationalShellRigidityDocument
                     "rational-shell-collision-is-the-identity",
                     "rational_shell_collision_rigidity",
                     "Rational Shell Collision Is the Identity",
-                    "The only golden-shell collision between nonzero rational scales is the zero-depth identity collision."))));
+                    "The only golden-shell collision between nonzero rational scales is the zero-depth identity collision."),
+                Theorem(
+                    "rational-golden-coordinates-have-no-positive-shell-collision",
+                    "rational_coordinate_shell_rigidity",
+                    "Rational Golden Coordinates Have No Positive Shell Collision",
+                    "If two positive rational scales have golden coordinates differing by a natural number of shells, that number is zero and the scales agree."))));
 
     private static DocumentBlock.Describe Theorem(
         string id,
