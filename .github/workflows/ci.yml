@@ -119,29 +119,16 @@ jobs:
           fi
           fallback_count=0
           plan_summary=""
-          if plan_summary="$(PLAN_EXPECTED_HEAD="$head_sha" PLAN_EXPECTED_BASE="$base_sha" jq -er '
-            select(
-                (type == "object" and (keys | sort) == ["base", "head", "plan", "version"])
-                and .version == 2 and .head == env.PLAN_EXPECTED_HEAD and .base == env.PLAN_EXPECTED_BASE
-                and (.plan | type == "object" and (keys | sort) == ["changed_paths", "kind", "reason", "tests"])
-                and (.plan.kind == "full" or .plan.kind == "selected" or .plan.kind == "none")
-                and (.plan.changed_paths | type == "array" and all(.[]; type == "string"))
-                and (.plan.tests | type == "array" and all(.[];
-                  type == "object" and (keys | sort) == ["assembly", "detail", "id", "project_path", "reason"]
-                  and (.assembly | type == "string" and test("\\S"))
-                  and (.project_path | type == "string" and test("\\S"))
-                  and (.id | type == "string" and test("\\S"))
-                  and (.detail | type == "string" and test("\\S"))
-                  and (.reason == "base_baseline" or .reason == "unknown_input" or .reason == "declared_input" or .reason == "compiled_input")))
-                and (.plan.reason | type == "string" and test("\\S"))
-                and (.plan.kind != "selected" or (.plan.tests | length) != 0)
-                and (.plan.kind != "none" or (.plan.tests | length) == 0)
-            | [.plan.kind, (.plan.changed_paths | length), (.plan.tests | length)] | @tsv
-          ' "$plan_file" 2>/dev/null)"; then
-            IFS=$'\t' read -r state artifact_changed_count selected_count <<< "$plan_summary"
-          else
-            artifact_changed_count=-1
+          validator_ref="$head_sha"
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
+            validator_ref="$base_sha"
           fi
+          plan_summary="$(
+            git -C candidate show \
+              "${validator_ref}:tools/scripts/workflow/engineering-test-plan-validator.sh" |
+              /bin/bash -s -- "$plan_file" "$head_sha" "$base_sha" --artifact-fallback
+          )"
+          IFS=$'\t' read -r state artifact_changed_count selected_count <<< "$plan_summary"
           if [[ "$artifact_changed_count" -ne "$changed_count"
               || ("$base_full_required" == "true" && "$state" != "full") ]]; then
             printf '%s\n' 'ENGINEERING_TEST_PLAN_FALLBACK artifact unreadable or schema-invalid' >&2
