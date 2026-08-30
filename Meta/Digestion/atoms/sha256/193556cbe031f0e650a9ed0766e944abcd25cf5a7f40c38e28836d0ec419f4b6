@@ -1,0 +1,34 @@
+# 第一千零四十一部　生成观察者的通量 transcript
+
+枚举全部有理矩形：
+
+$$
+R_1,R_2,\ldots
+\subset\{\Re z>0\}.
+$$
+
+定义第 \(n\) 个观测：
+
+$$
+\boxed{
+X_n
+=
+\mathfrak F_\xi(R_n)
+\in\mathbb N.
+}
+\tag{1041.1}
+$$
+
+定义 transcript：
+
+$$
+\boxed{
+\mathbf X_\xi
+=
+(X_1,X_2,\ldots).
+}
+\tag{1041.2}
+$$
+
+---
+

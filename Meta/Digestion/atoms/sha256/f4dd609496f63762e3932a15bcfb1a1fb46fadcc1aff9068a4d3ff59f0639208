@@ -1,0 +1,273 @@
+# 第一部　2024–2026 最新研究地图
+
+## 一、总图：发生了什么，尚未发生什么
+
+### 1. 当前最强的直接比例结果
+
+[literature-attested | very recent preprint]
+
+Levent Alpöge 与 Ralph Furman 在 2026 年预印本中证明：按重数计，至少三分之二的黎曼 zeta 非平凡零点既简单又位于临界线；至少六分之五的零点彼此不同。作者还报告利用 Montgomery–Taylor 型窗口将相应常数提高到约 $0.6725$ 与 $0.8362$。方法的核心不是假定 Weil 形式全局正定，而是研究 Weil Hermitian form 的有限压缩，通过秩—迹不等式和离线共轭轨道的惯性控制取得比例结论。
+
+出处：Levent Alpöge, Ralph Furman, “More than two thirds of the zeta zeros are simple and on the critical line,” 2026, arXiv:2608.13637v2。
+
+状态判断：
+
+- 这是 2026-08-30 时极新的预印本，尚不应按长期同行评审定理的社会学确定性书写。
+- 即使比例达到 $99.999\%$，仍不能排除一个无限稀疏的离线零点集，因此比例定理不推出 RH。
+- 该工作自述有 Lean 4 形式化。公开仓库 `anthropics/zeta-23-lean` 的 README 宣称对应最终结果已经形式化；但本次取阅到的顶层 `Zeta23/Unconditional.lean` 可见导出面仍显示较早的“三分之二在线、二分之一简单、四分之三不同”常数。故在本仓消费前，必须固定具体 commit、成功构建并定位最终导出 theorem，不能仅凭 README 写“完整强度已进入内核”。
+
+### 2. RH 的公共状态没有改变
+
+[literature-attested]
+
+Clay Mathematics Institute 在 2026 年仍将 RH 列为 Millennium Prize Problem。有限高度核验、比例定理、随机矩阵拟合、有限算子谱和形式化的条件结论都没有构成 Clay 意义下的全局证明。
+
+出处：Clay Mathematics Institute, “Riemann Hypothesis,” 2026 年仍在官方 Millennium Prize Problems 名录中；无 arXiv 号。
+
+## 二、Weil／Li 正性方向的新进展
+
+### 1. 经典基准线
+
+[literature-attested]
+
+Weil 路线把 RH 转写为显式公式所定义的二次型在适当测试函数代数上的非负性。Li 路线把 RH 转写为全部 Li 系数 $\lambda_n$ 的非负性。两者不是“数值上经常正”即足够，而是需要对完整测试类或全部 $n$ 作一致断言。
+
+经典出处：
+
+- André Weil, “Sur les ‘formules explicites’ de la théorie des nombres premiers,” 1952, Comm. Sém. Math. Univ. Lund, 252–265；无 arXiv 号。
+- Xian-Jin Li, “The Positivity of a Sequence of Numbers and the Riemann Hypothesis,” 1997, Journal of Number Theory 65, 325–333；无 arXiv 号。
+- Enrico Bombieri, “Remarks on Weil’s quadratic functional in the theory of prime numbers I,” 2000/2001, Rendiconti Lincei 11, 183–233；无 arXiv 号。
+- Enrico Bombieri, “A variational approach to the explicit formula,” 2003, Communications on Pure and Applied Mathematics 56, 1151–1164；无 arXiv 号。
+
+### 2. 有限窗口、可认证正性与极小谱隙
+
+[literature-attested | 2026 preprint]
+
+Marcus Chuk 把支撑限制在有限窗口中的 Weil 正性问题约化为有限 PSD 矩阵／算子压缩问题，并给出上下两侧的可认证界。作者报告：
+
+- 在窗口参数 $L=0.8$ 时得到约
+  $Q(f)\ge 8.9\times10^{-18}\lVert f\rVert_2^2$，
+  同时有约 $2.27\times10^{-17}$ 的上界；
+- 在 $L=2$ 时，最优常数的无条件上界已降至约 $3.2\times10^{-283}$；
+- 大窗口下的谱隙可以快得惊人地塌缩，点值包络会遭遇双指数频率障碍。
+
+出处：Marcus Chuk, “Weil positivity in compact windows: certified two-sided bounds and a Landau–Widom decay law,” 2026, arXiv:2608.24827。
+
+批判性含义：这不是“窗口增大后越来越接近证明 RH”的单调成功故事。有限窗口正性可能长期成立，而最小特征值迅速逼近零；用更多位小数重复认证同一 $L$，其边际数学信息可能趋近于零。这正是第四部 DECT 停止规则必须捕捉的情形。
+
+### 3. 有限 Guinand–Weil 字典与尾项预算
+
+[literature-attested | 2026 preprint]
+
+Akiva Groskin 给出从有限 Galerkin 向量到带限 Guinand–Weil 测试函数的精确字典，使有限零点和等于有限矩阵二次型；被截去的 archimedean 尾项表现为正的 Cauchy–Stieltjes 增量，并有显式数量级
+
+$B_T\sim\frac{(2N+1)\rho\log T}{\pi^2T}$。
+
+出处：Akiva Groskin, “A finite Guinand–Weil dictionary and archimedean tail order for the truncated Weil quadratic form,” 2026, arXiv:2607.02828v3。
+
+该工作的价值不是“有限矩阵代替了无限问题”，而是把以下三件事分开：
+
+1. 有限矩阵恒等式；
+2. 截断误差的符号与上界；
+3. 从固定 $(N,T)$ 到全测试类极限所需的一致性。
+
+本仓的 `Budget`、`ZetaExplicit`、`ZeroSum` 与 `TestFunctions` 子族正好可以消费这种分层。
+
+### 4. Screw function、模型空间和谱算子重述
+
+[literature-attested]
+
+Masatoshi Suzuki 在 2026 年把 Weil 二次型、screw function、de Branges／模型空间及若干 Connes 型构造放在统一框架中，并提出其自伴算子极限应以 zeta 零点纵坐标为谱的猜想。框架中的许多恒等式无条件成立，但最终谱识别仍是猜想，而不是 RH 证明。
+
+出处：Masatoshi Suzuki, “Weil’s quadratic form via the screw function,” 2026, arXiv:2606.09096v2。
+
+Alain Connes 与 Walter D. van Suijlekom 研究下有界自伴卷积算子的最低简单偶基态，并在明确前件下证明其 Fourier 变换只有实零点；同时分析有限 Toeplitz 压缩和 spectral-action 型回声。
+
+出处：Alain Connes, Walter D. van Suijlekom, “Quadratic Forms, Real Zeros and Echoes of the Spectral Action,” 2025, arXiv:2511.23257。
+
+Alain Connes、Caterina Consani 与 Henri Moscovici 构造有限秩自伴扰动，其数值谱可逼近低位 zeta 零点。决定性缺口仍是有限对象向极限对象的严格收敛，以及相应行列式／谱函数与 completed zeta 或 $\Xi$ 的精确同一。
+
+出处：Alain Connes, Caterina Consani, Henri Moscovici, “Zeta Spectral Triples,” 2025, arXiv:2511.22755。
+
+综述出处：Alain Connes, “The Riemann Hypothesis: Past, Present and a Letter Through Time,” 2026, arXiv:2602.04022。
+
+### 5. Li 系数的 2024–2026 状态
+
+[literature-attested]
+
+本次检索未找到一个获得广泛承认、并在 2024–2026 年改变 RH 证明状态的 Li 系数正性突破。近期最清楚的结构性前件仍包括 Suzuki 把 Li 系数表示成模型空间中具体函数范数的等价刻画：
+
+出处：Masatoshi Suzuki, “Li coefficients as norms of functions in a model space,” 2023, arXiv:2301.05779。
+
+2024 年有 Keiper–Li 系数的大规模数值计算与渐近调查，但有限个正系数不可能推出全部正性。对本仓更诚实的路线是先形式化：
+
+- 前 $N$ 个 Li 系数的有限定义；
+- 有理／区间算术证书；
+- Li 核与 Weil 测试函数的有限恒等式；
+- 明确写出“有限 $N$ 不蕴含 RH”。
+
+结论：2024–2026 的真正进步重心主要在有限 Weil 压缩、谱／算子重述、尾项控制和比例定理，而不是已解决的 Li 全正性。
+
+## 三、de Bruijn–Newman 常数
+
+### 1. 已建立的区间
+
+[literature-attested]
+
+Brad Rodgers 与 Terence Tao 已证明
+
+$\Lambda\ge0$。
+
+出处：Brad Rodgers, Terence Tao, “The de Bruijn–Newman constant is non-negative,” 2018/2020, arXiv:1801.05914, Forum of Mathematics, Pi 8 (2020)。
+
+D.H.J. Polymath 给出无条件上界
+
+$\Lambda\le0.22$。
+
+出处：D.H.J. Polymath, “Effective approximation of heat flow evolution of the Riemann $\xi$ function, and a new upper bound for the de Bruijn–Newman constant,” 2019, arXiv:1904.12438。
+
+Dave Platt 与 Tim Trudgian 严格核验 RH 至高度 $3\cdot10^{12}$，并结合上述有效框架得到
+
+$\Lambda\le0.2$。
+
+出处：Dave Platt, Tim Trudgian, “The Riemann hypothesis is true up to $3\cdot10^{12}$,” 2020/2021, arXiv:2004.09765, Bulletin of the London Mathematical Society 53 (2021)。
+
+因此截至 2026-08-30，保守、已建立的公开区间仍是
+
+$0\le\Lambda\le0.2$。
+
+由于 RH 等价于 $\Lambda\le0$，再结合 $\Lambda\ge0$，当前可写成：
+
+$\mathrm{RH}\Longleftrightarrow\Lambda=0$。
+
+### 2. 2026 年的候选改进
+
+[literature-attested | public non-archival candidate]
+
+Jude Gomila 在 2026-08-19 发布技术说明，声称通过计算机辅助证书把上界改进为
+
+$\Lambda\le0.1787854$。
+
+出处：Jude Gomila, “$\Lambda\le0.1787854$ — a new bound for the de Bruijn–Newman constant, explained,” 2026；arXiv 号检索未证实，期刊发表检索未证实。
+
+裁决：该候选应进入“待复核外部证书”账，不应在开题卷中替换公认的 $0.2$。至少需要稳定论文版本、代码与证书哈希、独立复算、误差模型审计及同行评审状态。
+
+### 3. 对黄金观察者线路的意义
+
+de Bruijn–Newman 热流提供另一种“全局极限参数”。它警告本线：
+
+- 有限高度的零点全部在线，不等于 $\Lambda=0$；
+- 很小的正上界不等于零；
+- 连续改进小数位可能有工程价值，但若没有新的定理级机制，就不构成通往 RH 的可证明边际进展。
+
+## 四、随机矩阵与算术量子混沌
+
+### 1. Pair correlation 的无条件进展
+
+[literature-attested]
+
+Siegfred Alan C. Baluyot、Daniel Alan Goldston、Ade Irma Suriajaya 与 Caroline L. Turnage-Butterbaugh 给出无条件 Montgomery 型 pair-correlation 定理。论文还说明，在额外薄盒或强零密度假设下，可取得至少约 $61.7\%$ 的简单零点比例，但该机制本身不把这些简单零点定位到临界线。
+
+出处：Siegfred Alan C. Baluyot, Daniel Alan Goldston, Ade Irma Suriajaya, Caroline L. Turnage-Butterbaugh, “An unconditional Montgomery Theorem for Pair Correlation of Zeros of the Riemann Zeta Function,” 2023/2024, arXiv:2306.04799, Acta Arithmetica 214 (2024)。
+
+Daniel Alan Goldston、Junghun Lee、Jordan Schettler 与 Ade Irma Suriajaya 在不预设 RH 的形式下研究 pair-correlation conjecture，并证明适当的完整 PCC 将推出渐近 $100\%$ 的零点既简单又在临界线。
+
+出处：Daniel Alan Goldston, Junghun Lee, Jordan Schettler, Ade Irma Suriajaya, “Pair Correlation Conjecture for the Zeros of the Riemann Zeta-Function I: Simple and Critical Zeros,” 2025，2026 年修订，arXiv:2503.15449v4。
+
+逻辑边界：密度 $100\%$ 仍允许密度零但无限的离线异常集，所以它仍弱于 RH。
+
+### 2. CUE 矩与 zeta 矩的匹配
+
+[literature-attested]
+
+Alexander Grover、Francesco Mezzadri 与 Nick Simm 研究 CUE 特征多项式高阶导数矩，并与 zeta 导数矩对应；部分低阶结果无条件成立，更一般的移动矩在 Lindelöf 型条件下取得。
+
+出处：Alexander Grover, Francesco Mezzadri, Nick Simm, “Higher order derivative moments of CUE characteristic polynomials and the Riemann zeta function,” 2026, arXiv:2604.03051。
+
+这类结果强化 GUE/CUE 字典和算术量子混沌的统计可信度，但没有生成一个其自伴性能够强迫所有 zeta 零点实部为 $1/2$ 的算子。
+
+### 3. 当前诚实定位
+
+随机矩阵／量子混沌目前提供三种东西：
+
+1. 局部间距、相关函数和矩的高精度预测；
+2. 有限矩阵或有限压缩中天然实谱的模型；
+3. 寻找 Hilbert–Pólya 算子的设计原则。
+
+它目前没有提供：
+
+1. completed zeta 与某个自伴算子的严格谱行列式同一；
+2. 有限矩阵逼近向无界自伴算子的强 resolvent 收敛；
+3. 排除极稀疏离线零点的全局机制。
+
+因此本仓若消费此方向，应把目标写成“有限谱恒等式、收敛模式、误差界、行列式极限”，不能把数值谱吻合命名为 RH 证明。
+
+## 五、形式化侧：Lean／mathlib 与外部项目
+
+### 1. mathlib 的 zeta 基建
+
+[literature-attested | official formal library]
+
+当前 mathlib 的 `Mathlib.NumberTheory.LSeries.RiemannZeta` 已包括：
+
+- `riemannZeta`；
+- completed zeta 及去极点的 entire 版本 `completedRiemannZeta₀`；
+- 在极点外的解析性／可微性；
+- functional equation；
+- 在 $\Re s>1$ 与 Dirichlet 级数的一致；
+- 平凡零点、留数等基本结果；
+- `RiemannHypothesis` 的正式命题定义。
+
+其 RH 定义的实质是：若 $\zeta(s)=0$，且该零点不是负偶数平凡零点，也不是极点位置，则 $\Re s=1/2$。mathlib 形式化了命题和大量底层解析结构，没有证明该命题。
+
+出处：Lean mathematical library, `Mathlib.NumberTheory.LSeries.RiemannZeta`, 2026 当前文档；无 arXiv 号。
+
+David Loeffler 与 Michael Stoll 系统说明了 Lean 中 zeta 与 $L$-函数的形式化框架，包括 Dirichlet 算术级数、解析延拓、functional equation 及 RH 的形式陈述。
+
+出处：David Loeffler, Michael Stoll, “Formalizing zeta and L-functions in Lean,” 2025, arXiv:2503.00959, Annals of Formalized Mathematics 1 (2025)。
+
+重要缺口：普通 mathlib 并未提供一个本仓可直接调用、且规范与本仓完全一致的 canonical Guinand–Weil explicit formula／Weil positivity equivalence。
+
+### 2. 本仓的 mathlib 接口状态
+
+[repo-derived | GID: `D5/S3/Weil/Convention`]
+
+该模块固定：
+
+- 本仓 Fourier 采用 angular-frequency 规范；
+- 与 mathlib 频率变量的换算含 $2\pi$；
+- `criticalAbscissa := 1/2`；
+- `classicalZeta := riemannZeta`。
+
+它仍把
+
+- `compactSupportFourierLaplaceEntireStatus`
+- `canonicalWeilExplicitFormulaStatus`
+
+标成 `.missing`。
+
+与此同时，本仓后续模块已经有特定接口下的 `weil_explicit_formula`。这不应草率写成自相矛盾；更可能表示 `Convention` 账本所指的是更强、规范唯一的 canonical theorem。开工前应审计该状态字段究竟是否过期，还是刻意区分“特定桥接定理”与“规范公式”。
+
+### 3. PrimeNumberTheoremAnd 的完成度
+
+[literature-attested | public Lean repository]
+
+`AlexKontorovich/PrimeNumberTheoremAnd` 的当前 `main` 中：
+
+- `MediumPNT.lean` 可见最终 `MediumPNT` theorem；本次文件级检索未发现 `sorry`。其误差规模约为 $Y\exp(-(\log Y)^{1/10})$，属于已闭合的中等强度 PNT。
+- `StrongPNT.lean` 至少仍有两个活 `sorry`，包括 `LogDerivZetaLogSquaredBoundSmallt`，以及 `I3NewBound` 附近的缺口。
+- 因此，诚实状态是“MediumPNT 文件已闭合；原来的 classical strong-error 目标在该仓主线中未完成”，而不是给出一个没有语义的完成百分比。
+
+项目出处：Alex Kontorovich et al., `PrimeNumberTheoremAnd`, GitHub public repository；论文／统一 arXiv 号检索未证实。
+
+另有独立仓库 `math-inc/strongpnt` 自述包含约 25,000 行、约 1,100 个 lemma、无 `sorry` 的 AI 生成 strong-PNT 形式化。它不是 `PrimeNumberTheoremAnd/main` 的完成证据；在独立构建、依赖固定和 `#print axioms` 审计前，只能写“项目自述已完成”。
+
+### 4. RH 及相邻结果的形式化尝试
+
+[literature-attested]
+
+- `AlexKontorovich/Lean-RH`：Brandon Gomes 与 Alex Kontorovich 的 “Riemann Hypothesis in Lean (with or without mathlib)” 仓库，重点是用 Dirichlet eta／zeta 接口精确陈述 RH，并比较独立公理化与 mathlib 版本；不是 RH 证明。arXiv 号检索未证实。
+- `anthropics/zeta-23-lean`：公开宣称形式化 Alpöge–Furman 2026 比例定理。应固定 commit 后核对最终导出 theorem 与常数。
+- 本仓 `D5/S3/Weil/ZetaBridge/ClassicExplicitFormula.lean` 已导入 `Zeta23`，说明本仓已在消费相邻外部形式化，但该依赖的来源 commit、导出 API 与 axioms 应进入固定账。
+- 本次检索未发现一个获得公认、完整 kernel-checked 的 RH 证明；凡声称“Lean 已证明 RH”的材料，若不能给出可构建源树、无 `sorry`／自定义不受控公理审计和准确 theorem statement，均不得进入 literature-attested 栏。
+

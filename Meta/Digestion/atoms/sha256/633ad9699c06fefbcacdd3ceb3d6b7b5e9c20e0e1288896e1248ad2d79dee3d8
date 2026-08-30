@@ -1,0 +1,8 @@
+## 证据标签
+
+- `[literature-attested]`：有可核论文、预印本、期刊、官方项目页或公开代码源；同时标明同行评审、预印本或项目自述状态。
+- `[repo-derived | GID: ...]`：直接来自 Lean 内核文件及其 GID。
+- `[repo-derived | path: ... | GID: not present]`：来自仓库理论卷；它是热层说明，不是 kernel theorem。
+- `[suspected-novel]`：本卷作出的仓库专属综合、坐标选择或研究治理设计；不主张文献优先权，不得写成“已知定理”。
+- “已闭合”只表示 Lean 声明无 `sorry` 且通过仓库构建与 `#print axioms` 审计；本文给出的拟议声明未经本地仓库编译，不冒充已闭合。
+

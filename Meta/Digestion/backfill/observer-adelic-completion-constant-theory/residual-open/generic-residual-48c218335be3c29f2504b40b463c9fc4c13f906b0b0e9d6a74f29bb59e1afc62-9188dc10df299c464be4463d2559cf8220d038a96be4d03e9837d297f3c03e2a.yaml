@@ -1,0 +1,10 @@
+ast_path: section/Christoffel-Annulus-RH-Criterion/clause/1
+fingerprints:
+  raw_sha256: sha256:48c218335be3c29f2504b40b463c9fc4c13f906b0b0e9d6a74f29bb59e1afc62
+  normalized_sha256: sha256:48c218335be3c29f2504b40b463c9fc4c13f906b0b0e9d6a74f29bb59e1afc62
+cas_ref: sha256:48c218335be3c29f2504b40b463c9fc4c13f906b0b0e9d6a74f29bb59e1afc62
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

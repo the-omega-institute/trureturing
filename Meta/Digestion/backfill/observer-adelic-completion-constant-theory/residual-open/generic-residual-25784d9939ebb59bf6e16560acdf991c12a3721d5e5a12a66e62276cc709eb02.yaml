@@ -1,0 +1,10 @@
+ast_path: section/任意离线模型
+fingerprints:
+  raw_sha256: sha256:25784d9939ebb59bf6e16560acdf991c12a3721d5e5a12a66e62276cc709eb02
+  normalized_sha256: sha256:25784d9939ebb59bf6e16560acdf991c12a3721d5e5a12a66e62276cc709eb02
+cas_ref: sha256:25784d9939ebb59bf6e16560acdf991c12a3721d5e5a12a66e62276cc709eb02
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: 定理/994.1
+fingerprints:
+  raw_sha256: sha256:d2a10c70606fd6e50614e02ff4d4348960b02a63d96ec5a4022ec288d85b72dd
+  normalized_sha256: sha256:d2a10c70606fd6e50614e02ff4d4348960b02a63d96ec5a4022ec288d85b72dd
+cas_ref: sha256:d2a10c70606fd6e50614e02ff4d4348960b02a63d96ec5a4022ec288d85b72dd
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

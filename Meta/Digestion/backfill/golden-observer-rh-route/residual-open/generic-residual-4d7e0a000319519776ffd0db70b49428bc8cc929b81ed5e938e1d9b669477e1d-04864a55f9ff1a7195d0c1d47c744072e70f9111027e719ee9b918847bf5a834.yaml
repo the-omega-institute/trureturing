@@ -1,0 +1,10 @@
+ast_path: section/R-D-O-6-空类型诊断/clause/2
+fingerprints:
+  raw_sha256: sha256:4d7e0a000319519776ffd0db70b49428bc8cc929b81ed5e938e1d9b669477e1d
+  normalized_sha256: sha256:4d7e0a000319519776ffd0db70b49428bc8cc929b81ed5e938e1d9b669477e1d
+cas_ref: sha256:4d7e0a000319519776ffd0db70b49428bc8cc929b81ed5e938e1d9b669477e1d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

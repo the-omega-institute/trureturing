@@ -1,0 +1,61 @@
+## 948.2 解释
+
+当：
+
+$$
+\lambda=0,
+$$
+
+两个局部观察通道相同：
+
+$$
+A_\lambda=A_0,
+$$
+
+其 commutator 为恒等。
+
+当：
+
+$$
+\lambda\neq0,
+$$
+
+观察顺序开始具有非交换曲率。
+
+但标量 invariant 只读取：
+
+$$
+\boxed{
+\lambda^2,
+}
+$$
+
+而不读取 \(\lambda\) 的符号。
+
+因此：
+
+$$
+\boxed{
+\lambda
+=\text{odd observer amplitude},
+}
+$$
+
+$$
+\boxed{
+\lambda^2
+=\text{completed holonomy Casimir}.
+}
+$$
+
+这正是此前反复得到的选择律：
+
+$$
+\boxed{
+\text{完成标量不能线性读取观察者奇向，
+最先只能读取它的平方。}
+}
+$$
+
+---
+

@@ -1,0 +1,54 @@
+## 第七步：trace-map audit
+
+计算：
+
+$$
+\operatorname{tr}\widehat M_{F_k},
+$$
+
+以及：
+
+$$
+\boxed{
+\varepsilon_k
+=
+\left\|
+\widehat M_{F_{k+1}}
+-
+\widehat M_{F_{k-1}}
+\widehat M_{F_k}
+\right\|.
+}
+\tag{978.5}
+$$
+
+检查：
+
+$$
+\varepsilon_k\to0
+$$
+
+与否。
+
+这条 pipeline：
+
+$$
+\boxed{
+\mathfrak W_L
+\to
+H_{a,L}
+\to
+c_n
+\to
+T_N
+\to
+\alpha_n
+\to
+SL_2\text{ cocycle}
+}
+$$
+
+完全由当前对象规范决定，不需要手工选择两个 prime matrices。
+
+---
+

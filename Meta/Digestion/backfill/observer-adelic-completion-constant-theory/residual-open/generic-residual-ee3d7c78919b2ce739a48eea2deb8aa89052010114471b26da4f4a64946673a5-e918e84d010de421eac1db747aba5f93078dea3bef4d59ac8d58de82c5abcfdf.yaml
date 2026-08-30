@@ -1,0 +1,10 @@
+ast_path: section/1056-1-与量子无克隆的边界/clause/1
+fingerprints:
+  raw_sha256: sha256:ee3d7c78919b2ce739a48eea2deb8aa89052010114471b26da4f4a64946673a5
+  normalized_sha256: sha256:ee3d7c78919b2ce739a48eea2deb8aa89052010114471b26da4f4a64946673a5
+cas_ref: sha256:ee3d7c78919b2ce739a48eea2deb8aa89052010114471b26da4f4a64946673a5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

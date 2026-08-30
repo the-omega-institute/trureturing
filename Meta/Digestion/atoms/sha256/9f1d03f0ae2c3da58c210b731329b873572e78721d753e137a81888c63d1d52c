@@ -1,0 +1,21 @@
+### 2. 第一处语义缺口：`ZeroData` 可能没有 inhabitant
+
+[repo-derived | GID: `D5/S3/Weil/ZeroSum`]
+
+`ZeroData` 要求：
+
+- 无重复、穷尽全部非平凡零点的枚举；
+- 重数；
+- functional-equation／共轭闭包；
+- 局部有限性。
+
+文件明确写明：“No inhabitant is asserted here.”
+
+故当前只能说：
+
+- `ZeroData` 并未被证明为空；
+- 也未被证明非空；
+- 若它为空，则 O-6 的外层全称量化自动成立。
+
+因此心脏注释中任何“非空洞”语义都尚未由 kernel 支持。形式命题闭合与数学非空洞是两件事。
+

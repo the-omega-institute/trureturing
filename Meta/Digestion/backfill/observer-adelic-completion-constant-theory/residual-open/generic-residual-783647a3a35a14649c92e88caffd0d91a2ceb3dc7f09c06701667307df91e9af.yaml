@@ -1,0 +1,15 @@
+ast_path: section/1017-3-枚举有限对偶证书
+fingerprints:
+  raw_sha256: sha256:783647a3a35a14649c92e88caffd0d91a2ceb3dc7f09c06701667307df91e9af
+  normalized_sha256: sha256:783647a3a35a14649c92e88caffd0d91a2ceb3dc7f09c06701667307df91e9af
+cas_ref: sha256:783647a3a35a14649c92e88caffd0d91a2ceb3dc7f09c06701667307df91e9af
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-361f759565c473886777a39b06dac2da93186f9aa304d57a8abeb378af76684d-1dcd349e9eb8e68253ef3a1de7690b5da15be552280db2789b2c55fc35b0bfac
+    - generic-residual-5dcab057f729d5670d66820049fa5fc436c0028c9499f09e43db8b4dfbcc78d7-bf78f9bdfef0607c45f3c86d12ff340e0b044fd085aacfdd58ec7c9b179b15f6
+    - generic-residual-66f08ba74362c811261ffb66aa3ffbdb9e3d6b4bc364e61ae8e988990468ca08-70778110135d9c26c9c102afa1371db5de647d896f2fb843bfa810ee9cbf1293
+    - generic-residual-eaa9a157d3dbaaf639e0eb734d25813e2fab507cf07fd632f425d4eea3c16e2d-25cb7056a36c97a78e685c354adacfe0f0e642c7c0c0a7eeb283f7e32a5fd390

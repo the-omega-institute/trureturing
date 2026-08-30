@@ -1,0 +1,10 @@
+ast_path: section/952-1-与前文证书深度完全吻合
+fingerprints:
+  raw_sha256: sha256:25f08f82f9dd94d5d27ce78566d96ca5532d7142a09b76afd74812e21f4a72aa
+  normalized_sha256: sha256:25f08f82f9dd94d5d27ce78566d96ca5532d7142a09b76afd74812e21f4a72aa
+cas_ref: sha256:25f08f82f9dd94d5d27ce78566d96ca5532d7142a09b76afd74812e21f4a72aa
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,16 @@
+## 第五层：Weil 负证书
+
+存在有限支撑测试：
+
+$$
+\boxed{
+Q(f)<0.
+}
+$$
+
+说明 prime–Archimedean 完成能量失去正性。
+
+项目已经机器化了 Cayley moment transport、截断圆矩表示、exact Haar floor 和 fixed-depth Li–Clark recovery，所以中间的有限 moment 层已经具备正式承接接口。
+
+---
+

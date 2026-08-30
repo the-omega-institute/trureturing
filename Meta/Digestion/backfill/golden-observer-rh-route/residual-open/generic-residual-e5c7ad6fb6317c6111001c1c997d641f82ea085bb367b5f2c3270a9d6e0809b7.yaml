@@ -1,0 +1,15 @@
+ast_path: section/2-数学角色
+fingerprints:
+  raw_sha256: sha256:e5c7ad6fb6317c6111001c1c997d641f82ea085bb367b5f2c3270a9d6e0809b7
+  normalized_sha256: sha256:e5c7ad6fb6317c6111001c1c997d641f82ea085bb367b5f2c3270a9d6e0809b7
+cas_ref: sha256:e5c7ad6fb6317c6111001c1c997d641f82ea085bb367b5f2c3270a9d6e0809b7
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-ea2745bdae927db5585f87eea6b0d4cda943e4d84e75dd3f4f683774d00b35c5-c372b1cca1c78c60822fdf399b9582322380039b12af511ece57d4bd3b25d342
+    - generic-residual-384c5140f3d80cf892f0248ea023b34f17979becb12c6db7a184be283773a72f-eb22114ca5feff58019cd2316baafeac0e2c469a4414307c84c5d57bcb83f835
+    - generic-residual-e285f658d286b30d2367abfb87ee8036913fcc3306e5f9ff421baf5dbbdbbfee-764ba7755b6bb6ab96ef1aaf44aa4fad772f6960b616d1bf2fa95c5889f6f4ca
+    - generic-residual-029ffe9f3a74a6301893fa146c9a01df70d84dbe993d72daa1700a51c7fa7b5c-328a9b3253402f9b3b06d8e38614cd8a662cf73a83b7b8122bbca62fcd0a8b74

@@ -1,0 +1,18 @@
+- `RiemannHypothesis` 的正式命题定义。
+
+其 RH 定义的实质是：若 $\zeta(s)=0$，且该零点不是负偶数平凡零点，也不是极点位置，则 $\Re s=1/2$。mathlib 形式化了命题和大量底层解析结构，没有证明该命题。
+
+出处：Lean mathematical library, `Mathlib.NumberTheory.LSeries.RiemannZeta`, 2026 当前文档；无 arXiv 号。
+
+David Loeffler 与 Michael Stoll 系统说明了 Lean 中 zeta 与 $L$-函数的形式化框架，包括 Dirichlet 算术级数、解析延拓、functional equation 及 RH 的形式陈述。
+
+出处：David Loeffler, Michael Stoll, “Formalizing zeta and L-functions in Lean,” 2025, arXiv:2503.00959, Annals of Formalized Mathematics 1 (2025)。
+
+重要缺口：普通 mathlib 并未提供一个本仓可直接调用、且规范与本仓完全一致的 canonical Guinand–Weil explicit formula／Weil positivity equivalence。
+
+### 2. 本仓的 mathlib 接口状态
+
+[repo-derived | GID: `D5/S3/Weil/Convention`]
+
+该模块固定：
+

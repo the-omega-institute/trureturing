@@ -1,0 +1,48 @@
+## 996.2 Toeplitz determinant cross-ratio
+
+定义：
+
+$$
+D_N=\det T_N,
+\qquad
+D_{-1}=1.
+$$
+
+标准 Toeplitz–Verblunsky 恒等式给出：
+
+$$
+\boxed{
+\rho_n^2
+=
+\frac{
+D_{n+1}D_{n-1}
+}{
+D_n^2
+}.
+}
+\tag{996.6}
+$$
+
+因此：
+
+$$
+\boxed{
+G_n
+:=
+\frac{\rho_{n+1}^2}{\rho_n^2}
+=
+\frac{
+D_{n+2}D_n^3
+}{
+D_{n+1}^3D_{n-1}
+}.
+}
+\tag{996.7}
+$$
+
+这是一条完全由有限 Li–Clark Toeplitz determinants 构成的标量。
+
+不需要先数值恢复接近单位圆边界、因而高度病态的 \(\alpha_n\)。
+
+---
+

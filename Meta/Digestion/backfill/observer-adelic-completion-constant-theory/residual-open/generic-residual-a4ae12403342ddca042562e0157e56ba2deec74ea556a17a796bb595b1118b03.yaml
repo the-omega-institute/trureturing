@@ -1,0 +1,10 @@
+ast_path: section/二-先商去普适二周期
+fingerprints:
+  raw_sha256: sha256:a4ae12403342ddca042562e0157e56ba2deec74ea556a17a796bb595b1118b03
+  normalized_sha256: sha256:a4ae12403342ddca042562e0157e56ba2deec74ea556a17a796bb595b1118b03
+cas_ref: sha256:a4ae12403342ddca042562e0157e56ba2deec74ea556a17a796bb595b1118b03
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

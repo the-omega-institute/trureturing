@@ -1,0 +1,18 @@
+### R-A　自然缩放命中临界半线
+
+[suspected-novel | proposed GID: `D5/X_Frontier/GoldenObserver/GoldenNaturalScale`]
+
+    import D5.X_Frontier.GoldenObserver.Core
+
+    namespace D5.X_Frontier.GoldenObserver
+
+    open D5.X_Frontier.Hearts
+
+    theorem golden_natural_scale_hits_half :
+        goldenNaturalScale (structuralZero : ℂ) = (1 : ℂ) / 2
+
+    end D5.X_Frontier.GoldenObserver
+
+闭合性质：
+
+- 纯 $\sqrt5$ 与域代数；

@@ -1,0 +1,10 @@
+ast_path: section/1017-6-黄金结构必须通过双盲审计
+fingerprints:
+  raw_sha256: sha256:217af9b600c4b9b5ee369ec17325fac62d15f216114b33852ca7ceb999dd432e
+  normalized_sha256: sha256:217af9b600c4b9b5ee369ec17325fac62d15f216114b33852ca7ceb999dd432e
+cas_ref: sha256:217af9b600c4b9b5ee369ec17325fac62d15f216114b33852ca7ceb999dd432e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

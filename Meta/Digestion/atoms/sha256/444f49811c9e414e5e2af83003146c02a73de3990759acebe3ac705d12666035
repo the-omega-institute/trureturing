@@ -1,0 +1,69 @@
+# 第九百九十四部　单一谱聚点强迫 CMV 系数进入普适二周期
+
+RH 下，Li–Clark 支撑为：
+
+$$
+\boxed{
+\operatorname{supp}\mu_{\mathrm{LC}}
+=
+\{w_\rho\}_{\rho}
+\cup\{1\}.
+}
+$$
+
+因为零点在任意有界高度中只有有限个，而：
+
+$$
+|\gamma|\to\infty
+\Longrightarrow
+w_\gamma\to1,
+$$
+
+所以 \(1\) 是其唯一聚点。Riemann 非平凡零点的离散性、对称性及其计数渐近属于标准零点理论。
+
+令：
+
+$$
+\mathcal C_{\mathrm{CMV}}
+$$
+
+为 \(\mu_{\mathrm{LC}}\) 对应的 CMV operator，Verblunsky coefficients 记为：
+
+$$
+\alpha_0,\alpha_1,\ldots.
+$$
+
+标准 OPUC 理论保证概率测度、Schur 函数、Verblunsky 序列和 CMV operator 之间的一一对应。
+
+乘法算子：
+
+$$
+Uf(z)=zf(z)
+$$
+
+在 \(L^2(\mu_{\mathrm{LC}})\) 上是一个纯点对角算子，其本质谱只有：
+
+$$
+\boxed{
+\sigma_{\mathrm{ess}}(U)=\{1\}.
+}
+$$
+
+CMV operator 与 \(U\) 酉等价，所以：
+
+$$
+\sigma_{\mathrm{ess}}(\mathcal C_{\mathrm{CMV}})=\{1\}.
+$$
+
+由于 \(\mathcal C_{\mathrm{CMV}}\) 是 normal operator：
+
+$$
+\boxed{
+\mathcal C_{\mathrm{CMV}}-I
+\text{ 为紧算子}.
+}
+\tag{994.1}
+$$
+
+---
+

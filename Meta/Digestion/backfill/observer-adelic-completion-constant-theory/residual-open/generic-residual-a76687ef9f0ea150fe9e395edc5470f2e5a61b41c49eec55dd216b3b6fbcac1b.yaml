@@ -1,0 +1,10 @@
+ast_path: row/有限-Haar-floor-0-极限-0
+fingerprints:
+  raw_sha256: sha256:a76687ef9f0ea150fe9e395edc5470f2e5a61b41c49eec55dd216b3b6fbcac1b
+  normalized_sha256: sha256:a76687ef9f0ea150fe9e395edc5470f2e5a61b41c49eec55dd216b3b6fbcac1b
+cas_ref: sha256:a76687ef9f0ea150fe9e395edc5470f2e5a61b41c49eec55dd216b3b6fbcac1b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

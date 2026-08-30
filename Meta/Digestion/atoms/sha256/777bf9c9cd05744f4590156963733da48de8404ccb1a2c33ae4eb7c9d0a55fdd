@@ -1,0 +1,7 @@
+- 给出
+
+    theorem canonicalZeroData_nonempty :
+        Nonempty ZeroData
+
+该工作消费 `ZetaRvm`、`ZetaExplicit/ZeroSummability` 和 mathlib 解析零点 API。它不是 R-A—R-F 的 elementary 波，应单列预算。
+

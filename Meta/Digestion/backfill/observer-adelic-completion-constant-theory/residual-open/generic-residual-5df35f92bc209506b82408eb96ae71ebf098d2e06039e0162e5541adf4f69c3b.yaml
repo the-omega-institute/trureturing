@@ -1,0 +1,10 @@
+ast_path: row/黄金最小-hull-的公共谱
+fingerprints:
+  raw_sha256: sha256:5df35f92bc209506b82408eb96ae71ebf098d2e06039e0162e5541adf4f69c3b
+  normalized_sha256: sha256:5df35f92bc209506b82408eb96ae71ebf098d2e06039e0162e5541adf4f69c3b
+cas_ref: sha256:5df35f92bc209506b82408eb96ae71ebf098d2e06039e0162e5541adf4f69c3b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
