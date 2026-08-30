@@ -1,0 +1,167 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Lattices;
+
+internal sealed class GoldenIntegerRingDocument : IScribeDocumentDefinition
+{
+    private const string Prefix =
+        "D5/S3/Arith/Lattices/GoldenIntegerRing.";
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The golden coordinate ring is algebra-equivalent to the ring of integers of the "
+            + "golden number field, and the defined square-root order has parity conductor (2).",
+        H("Golden Integer Ring and Parity Conductor"),
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("golden-number-field-discriminant"),
+                DeclarationHandle.Create(Prefix + "golden_numberField_discr"),
+                H("The golden number field has discriminant five"),
+                StatementSource.FromAuthor(DiscriminantFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "GoldenNumberField is the quadratic algebra over the rationals with "
+                            + "generator omega satisfying omega squared equals omega plus one. "
+                            + "The theorem computes its number-field discriminant as exactly "
+                            + "five.")),
+                    Paragraph(Text(
+                        "The proof first computes discriminant five in the ordered rational "
+                            + "basis (1, omega), proves that both basis vectors are integral, and "
+                            + "compares it with Mathlib's integral basis. Integrality of the change-of-basis "
+                            + "determinant and integer divisibility leave only discriminant "
+                            + "five."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("golden-coordinate-ring-equivalence"),
+                DeclarationHandle.Create(Prefix + "goldenIntegerRingAlgEquiv"),
+                H("The coordinate ring is carried to the actual ring of integers"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "GoldenIntegerRing is an abbreviation for the ring of integers of "
+                            + "GoldenNumberField. The module defines a GoldenInt algebra embedding "
+                            + "that sends the coordinate pair (a, b) to a plus b times omega, "
+                            + "proves the required integrality and fraction-ring instances, and "
+                            + "uses integral-closure uniqueness to construct an Int-algebra "
+                            + "equivalence from GoldenInt to GoldenIntegerRing.")),
+                    Paragraph(Text(
+                        "This declaration is equivalence data, not an equality of the two carrier "
+                            + "types. The associated definitions expose its underlying ring "
+                            + "equivalence and the image of the golden generator phi."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("square-root-five-order"),
+                DeclarationHandle.Create(Prefix + "sqrtFiveOrder"),
+                H("The square-root-five order is the transported even-coordinate subring"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "The module defines a coordinate subring of GoldenInt by requiring the "
+                            + "second coordinate to be twice an integer. sqrtFiveOrder is defined "
+                            + "as the image of that subring under goldenIntegerRingAlgEquiv. Thus "
+                            + "the name Z[sqrt 5] records the intended carrier; this declaration "
+                            + "itself is the chosen subring definition."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("square-root-five-order-membership"),
+                DeclarationHandle.Create(Prefix + "mem_sqrtFiveOrder_iff"),
+                H("Membership is exactly evenness of the transported second coordinate"),
+                StatementSource.FromAuthor(OrderMembershipFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "An element of GoldenIntegerRing belongs to sqrtFiveOrder exactly when "
+                            + "the second coordinate of its inverse image in GoldenInt is even. "
+                            + "The witness is an integer k with that coordinate equal to 2k. This "
+                            + "is the proved membership characterization of the defined order."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("golden-two-finite-place"),
+                DeclarationHandle.Create(Prefix + "goldenTwoFinitePlace"),
+                H("The mapped ideal generated by two defines a finite place"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "goldenTwoPrimeIdeal is defined by transporting the coordinate ideal "
+                            + "generated by two into GoldenIntegerRing. Local proofs establish "
+                            + "that this ideal is maximal and nonzero, and goldenTwoFinitePlace "
+                            + "packages it as a height-one prime of the ring of integers. This is "
+                            + "a constructed finite-place carrier, not a theorem classifying all "
+                            + "places over two."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("square-root-five-order-conductor"),
+                DeclarationHandle.Create(Prefix + "sqrtFiveOrderConductor"),
+                H("The conductor is defined by multiplication into the order"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "sqrtFiveOrderConductor is the ideal of elements x in GoldenIntegerRing "
+                            + "such that x times every element of GoldenIntegerRing lies in the "
+                            + "defined subring sqrtFiveOrder. Closure under zero, addition, and "
+                            + "scalar multiplication is supplied as part of this ideal carrier."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("parity-conductor-equality"),
+                DeclarationHandle.Create(
+                    Prefix + "sqrtFiveOrderConductor_eq_goldenTwoPrimeIdeal"),
+                H("The defined conductor is exactly the mapped ideal generated by two"),
+                StatementSource.FromAuthor(ConductorFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "The conductor condition applied to one makes the transported second "
+                            + "coordinate even, and applied to the golden generator makes the "
+                            + "first coordinate even as well. Hence a conductor element lies in "
+                            + "the transported ideal generated by two.")),
+                    Paragraph(Text(
+                        "Conversely, multiplying an arbitrary golden integer by two makes the "
+                            + "second coordinate of every further product even. Transport through "
+                            + "the ring equivalence therefore puts every element of the mapped "
+                            + "ideal in the conductor, proving equality of the two ideals."))),
+                DescribeRole.Theorem))));
+
+    private static Formula DiscriminantFormula() =>
+        Disp(Seq(
+            Call("discr", F.Id("GoldenNumberField")),
+            Sp, Eq, Sp, D(5), Dot));
+
+    private static Formula OrderMembershipFormula()
+    {
+        Formula x = F.Id("x");
+        Formula k = F.Id("k");
+        Formula integer = Seq(Mathbb, Grp(F.Id("Z")));
+        Formula coordinate =
+            Call("b", Call("symm", F.Id("goldenIntegerRingAlgEquiv"), x));
+
+        return Disp(Seq(
+            Forall, Sp, x, Colon, Sp, F.Id("GoldenIntegerRing"), Comma, Sp,
+            x, Sp, InMacro, Sp, F.Id("sqrtFiveOrder"), Sp, Iff, Sp,
+            Exists, Sp, k, Colon, Sp, integer, Comma, Sp,
+            coordinate, Sp, Eq, Sp, D(2), Cdot, Sp, k, Dot));
+    }
+
+    private static Formula ConductorFormula() =>
+        Disp(Seq(
+            F.Id("sqrtFiveOrderConductor"), Sp, Eq, Sp,
+            F.Id("goldenTwoPrimeIdeal"), Dot));
+
+    private static Formula Call(string name, params Formula[] arguments)
+    {
+        var items = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
+        for (var index = 0; index < arguments.Length; index++)
+        {
+            if (index > 0) items.AddRange([Comma, Sp]);
+            items.Add(arguments[index]);
+        }
+
+        items.Add(Close);
+        return Seq([.. items]);
+    }
+}
