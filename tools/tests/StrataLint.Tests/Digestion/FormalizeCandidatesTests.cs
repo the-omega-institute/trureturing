@@ -536,6 +536,7 @@ public sealed partial class FormalizeCandidatesTests
         BackfillInventoryDocument? ledger = null,
         byte[]? formalizationReceipt = null,
         LeanAxiomReport? leanReport = null,
+        VerifiedScribeEmissions? scribeEmissions = null,
         string atomizer = AtomizerRegistry.PzgId,
         IReadOnlyList<string>? arguments = null,
         byte[]? rulesBytes = null)
@@ -603,7 +604,7 @@ public sealed partial class FormalizeCandidatesTests
                 RawRepositorySnapshot.Create(files),
                 null),
             new FakeLeanReportSource(leanReport ?? CurrentLeanReport(entries)),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+            new FakeScribeEmissionVerifier(scribeEmissions ?? VerifiedScribeEmissions.Empty));
         return environment.DigestStatus(arguments ?? ["--formalize-candidates"]);
     }
 
@@ -673,7 +674,10 @@ public sealed partial class FormalizeCandidatesTests
                     $"synthetic/{source.Key}.md",
                     atomizer,
                     [],
-                    GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])),
+                    GenreRegistryProjection.Available(
+                        string.Equals(atomizer, AtomizerRegistry.GenericId, StringComparison.Ordinal)
+                            ? GenreRegistryCheck.NoGenreRegistry
+                            : GenreRegistryCheck.Collected([])),
                     source.Select(entry => new DigestionLedgerEntry(
                         entry.SourceId,
                         $"synthetic/{entry.SourceId}.md",
