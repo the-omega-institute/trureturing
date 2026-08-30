@@ -21,4 +21,5 @@ The declaration keeps its parameters and hypotheses explicit; the result makes n
 ## References
 
 - Truth anchor: `D5/S3/ObserverMemory/Refinement/JointReadoutSupremum.pair_readout_kernel`
+- Dependency: [D5/S3/ConceptDynamics/SensorFamilies/PairReadoutKernelIntersection](../../ConceptDynamics/SensorFamilies/PairReadoutKernelIntersection.md)
 - Dependency: [D5/S3/ObserverMemory/Refinement/FactorizationCategory](FactorizationCategory.md)
