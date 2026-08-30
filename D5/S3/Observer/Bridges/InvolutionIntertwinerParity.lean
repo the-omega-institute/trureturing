@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Observer/Bridges/InvolutionIntertwinerParity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: An intertwiner between two involutive observer systems transports fixed and sign-changing sectors, while existence of an arithmetic-to-spectral intertwiner remains a separate obligation. -/
+   digest: Involution intertwiners transport fixed and sign-changing sectors;
+     an arithmetic-to-spectral instance remains a separate obligation. -/
 
 import Mathlib
 
@@ -76,7 +77,7 @@ theorem constant_intertwiner_can_erase_parity :
     rfl
   · intro hInjective
     have hEq : false = true := hInjective rfl
-    decide at hEq
+    simp at hEq
 
 /-- Concrete nondegenerate parity transport on integers. -/
 example :
