@@ -5,6 +5,15 @@
    anchors: []
    digest: A finite local Euler factor has an explicit tail residual that
      vanishes under a strict unit-disk bound. -/
+/- Library-search audit trail (2026-08-31):
+   * Repository searches for the local definitions and residual theorem found
+     no existing owner of this exact one-place completion package.
+   * Pinned Mathlib owns `mul_neg_geom_sum` and
+     `tendsto_pow_atTop_nhds_zero_of_norm_lt_one`; both are consumed directly.
+   * The theorem packages the exact residual together with the local limit, so
+     later Euler work does not silently replace a finite factor by its inverse.
+   * No infinite prime product, uniform majorant, limit interchange, or
+     nonvanishing statement is introduced here. -/
 
 import Mathlib
 
