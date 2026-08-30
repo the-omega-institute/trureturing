@@ -24,11 +24,10 @@ internal sealed class JetResolventSemisimplificationDocument
                         + "below the diagonal and zero elsewhere. The named "
                         + "jetPencil is (s-rho) times the identity minus that shift.")),
                 Paragraph(Text(
-                    "The theorem assumes positive length, so the jet is nonempty and its "
-                        + "weight is nonzero. The excluded length-zero pencil has determinant "
-                        + "one and trace resolvent zero, and therefore has no pole. The "
-                        + "separate premise s != rho is exactly the pointwise invertibility "
-                        + "domain for a positive-length pencil.")),
+                    "Only the exact-order clause assumes positive length, so its jet weight "
+                        + "is nonzero. The length-zero pencil instead has determinant one and "
+                        + "trace resolvent zero, and therefore has no pole. Only the pointwise "
+                        + "trace identity requires s != rho, its exact invertibility domain.")),
                 Paragraph(Text(
                     "Lower triangularity makes the pencil determinant (s-rho)^m and every "
                         + "diagonal inverse entry (s-rho)^(-1). Summing the diagonal and "
@@ -101,22 +100,29 @@ internal sealed class JetResolventSemisimplificationDocument
             residueFunction,
             puncturedNeighborhood,
             Call("nhds", length));
-        Formula conclusions = And(
-            EqualTo(traceResolvent, simplePole),
-            And(
-                EqualTo(logarithmicDerivative, simplePole),
-                And(meromorphic, And(poleOrder, residueLimit))));
-        Formula hypotheses = And(
+        Formula traceClause = new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [Bound("s", complex)],
+            Implies(NotEqualTo(point, zero), EqualTo(traceResolvent, simplePole)));
+        Formula logDerivativeClause = new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [Bound("s", complex)],
+            EqualTo(logarithmicDerivative, simplePole));
+        Formula exactOrderClause = Implies(
             new Formula.Relation(D(0), FormulaRelationOperator.LessThan, length),
-            NotEqualTo(point, zero));
+            poleOrder);
+        Formula conclusions = And(
+            traceClause,
+            And(
+                logDerivativeClause,
+                And(meromorphic, And(exactOrderClause, residueLimit))));
 
         return new Formula.BindMany(
             FormulaQuantifier.ForAll,
             [
                 Bound("m", natural),
                 Bound("rho", complex),
-                Bound("s", complex),
             ],
-            Implies(hypotheses, conclusions));
+            conclusions);
     }
 }

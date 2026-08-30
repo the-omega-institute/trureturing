@@ -136,27 +136,30 @@ private theorem jetPencil_trace_residue (m : ℕ) (rho : ℂ) :
   exact (mul_div_cancel₀ (m : ℂ) (sub_ne_zero.mpr (by simpa using hz))).symm
 
 /--
-For a nonempty length-`m` nilpotent jet, the trace resolvent and logarithmic
-determinant derivative equal `m / (s - rho)` off the eigenvalue. The trace
-resolvent is meromorphic there, has exact order `-1`, and has residue `m`.
+For a length-`m` nilpotent jet, the trace resolvent equals `m / (s - rho)`
+off the eigenvalue, while the logarithmic determinant derivative has the same
+identity everywhere. The trace resolvent is meromorphic there and has residue
+`m`; when the jet is nonempty, its exact order is `-1`.
 
 The positivity hypothesis is necessary for the simple-pole clause: at `m = 0`
 the pencil has determinant one and trace resolvent zero, hence no pole.
 -/
 theorem jet_resolvent_semisimplification
-    (m : ℕ) (hm : 0 < m) (rho s : ℂ) (hs : s ≠ rho) :
-    Matrix.trace (jetPencil m rho s)⁻¹ = (m : ℂ) / (s - rho) ∧
-      logDeriv (fun z => (jetPencil m rho z).det) s = (m : ℂ) / (s - rho) ∧
+    (m : ℕ) (rho : ℂ) :
+    (∀ s, s ≠ rho →
+      Matrix.trace (jetPencil m rho s)⁻¹ = (m : ℂ) / (s - rho)) ∧
+      (∀ s,
+        logDeriv (fun z => (jetPencil m rho z).det) s = (m : ℂ) / (s - rho)) ∧
       MeromorphicAt (fun z => Matrix.trace (jetPencil m rho z)⁻¹) rho ∧
-      meromorphicOrderAt (fun z => Matrix.trace (jetPencil m rho z)⁻¹) rho =
-        (-1 : ℤ) ∧
+      (0 < m →
+        meromorphicOrderAt (fun z => Matrix.trace (jetPencil m rho z)⁻¹) rho =
+          (-1 : ℤ)) ∧
       Tendsto
         (fun z => (z - rho) * Matrix.trace (jetPencil m rho z)⁻¹)
         (𝓝[≠] rho) (𝓝 (m : ℂ)) := by
-  have htrace := jetPencil_trace_nonsing_inv m rho s hs
-  have hlog := jetPencil_logDeriv_det m rho s
-  exact ⟨htrace, hlog, jetPencil_trace_meromorphic m rho,
-    jetPencil_trace_simple_pole m hm rho, jetPencil_trace_residue m rho⟩
+  exact ⟨jetPencil_trace_nonsing_inv m rho, jetPencil_logDeriv_det m rho,
+    jetPencil_trace_meromorphic m rho, fun hm => jetPencil_trace_simple_pole m hm rho,
+    jetPencil_trace_residue m rho⟩
 
 #print axioms jet_resolvent_semisimplification
 
