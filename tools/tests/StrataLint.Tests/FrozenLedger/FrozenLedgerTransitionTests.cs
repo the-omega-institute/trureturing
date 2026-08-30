@@ -83,6 +83,44 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Fact]
+    public void AdmissionCatalogScopesDeclarationLookupToTheImportedActiveV5Module()
+    {
+        var modules = new[]
+        {
+            Module("A"),
+            Module("B", imports: ["A"]),
+            Module("C"),
+        };
+        var baseCatalog = BuildCatalog(modules);
+        var moduleA = baseCatalog.ByPath[RepoPathFor("A")];
+        var moduleC = baseCatalog.ByPath[RepoPathFor("C")] with
+        {
+            DeclarationStatementIds = moduleA.DeclarationStatementIds,
+        };
+        var eventA = EventFile(
+            "Freeze",
+            FrozenLedgerCanonicalWriter.FreezeElement(
+                FrozenLedgerCanonicalWriter.FreezePayload(moduleA)));
+        var eventC = EventFile(
+            "Freeze",
+            FrozenLedgerCanonicalWriter.FreezeElement(
+                FrozenLedgerCanonicalWriter.FreezePayload(moduleC)));
+        var acceptedView = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
+            ImmutableDictionary<RepoPath, RepositoryFile>.Empty
+                .Add(eventA.Path, eventA)
+                .Add(eventC.Path, eventC)));
+
+        var candidate = BuildAdmissionCatalog(
+            ["B"],
+            acceptedView.ActiveByPath,
+            modules);
+
+        Assert.Equal(
+            FrozenNodeId.Create(acceptedView.ActiveByPath[RepoPathFor("A")].EventHash),
+            Assert.Single(candidate.ByPath[RepoPathFor("B")].PrerequisiteFrozenNodeIds));
+    }
+
+    [Fact]
     public void ProofBodyOnlyChangeDoesNotReportStatementIdentityChanged()
     {
         var recordedCatalog = BuildCatalog(Module(

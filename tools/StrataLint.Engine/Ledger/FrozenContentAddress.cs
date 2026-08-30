@@ -78,7 +78,6 @@ public static class FrozenContentAddress
         ArgumentNullException.ThrowIfNull(adjacency);
         ArgumentNullException.ThrowIfNull(selectedPaths);
         ArgumentNullException.ThrowIfNull(trustedBaseEntries);
-        var activeIdentityByDeclaration = BuildActiveIdentityByDeclaration(trustedBaseEntries.Values);
         var materialByPath = new Dictionary<RepoPath, FrozenNodeMaterial>();
         foreach (var path in LeanImportAdjacency.DependenciesFirst(selectedPaths, adjacency)
             .Where(path => states.TryGetValue(path, out var state)
@@ -95,7 +94,7 @@ public static class FrozenContentAddress
                         lean,
                         path,
                         dependencyPath,
-                        activeIdentityByDeclaration)));
+                        trustedBaseEntries)));
         }
 
         return FrozenMaterialCatalog.Create(
@@ -108,37 +107,19 @@ public static class FrozenContentAddress
             adjacency);
     }
 
-    private static ImmutableDictionary<string, FrozenNodeId> BuildActiveIdentityByDeclaration(
-        IEnumerable<FrozenActiveEntry> activeEntries)
-    {
-        var result = ImmutableDictionary.CreateBuilder<string, FrozenNodeId>(StringComparer.Ordinal);
-        foreach (var entry in activeEntries)
-        {
-            // Ledger v5 persists the event hash as its identity; FrozenNodeId is only a legacy-derived view.
-            var identity = FrozenNodeId.Create(entry.EventHash);
-            foreach (var declaration in entry.Payload.DeclarationStatementIds)
-            {
-                if (result.TryGetValue(declaration.DeclarationNameKey, out var existing)
-                    && existing != identity)
-                {
-                    throw new FormatException(
-                        $"dependency-not-ready: active declaration {declaration.DeclarationNameKey} "
-                        + "resolves to multiple accepted ledger identities.");
-                }
-
-                result[declaration.DeclarationNameKey] = identity;
-            }
-        }
-
-        return result.ToImmutable();
-    }
-
     private static FrozenNodeId ResolveActiveDependencyIdentity(
         AcceptedLeanClosure lean,
         RepoPath selectedPath,
         RepoPath dependencyPath,
-        IReadOnlyDictionary<string, FrozenNodeId> activeIdentityByDeclaration)
+        IReadOnlyDictionary<RepoPath, FrozenActiveEntry> trustedBaseEntries)
     {
+        if (!trustedBaseEntries.TryGetValue(dependencyPath, out var activeEntry))
+        {
+            throw new FormatException(
+                $"Selected Closed module {selectedPath.Value} dependency-not-ready: "
+                + $"imported module {dependencyPath.Value} has no active accepted Freeze.");
+        }
+
         if (!lean.Report.Files.TryGetValue(dependencyPath, out var dependencyReport))
         {
             throw new FormatException(
@@ -156,27 +137,21 @@ public static class FrozenContentAddress
                 + $"imported module {dependencyPath.Value} has no declarations to resolve.");
         }
 
-        FrozenNodeId? resolved = null;
+        var activeDeclarationKeys = activeEntry.Payload.DeclarationStatementIds
+            .Select(static declaration => declaration.DeclarationNameKey)
+            .ToHashSet(StringComparer.Ordinal);
         foreach (var declaration in declarations)
         {
-            if (!activeIdentityByDeclaration.TryGetValue(declaration.DeclarationNameKey, out var identity))
+            if (!activeDeclarationKeys.Contains(declaration.DeclarationNameKey))
             {
                 throw new FormatException(
                     $"Selected Closed module {selectedPath.Value} dependency-not-ready: "
                     + $"imported declaration {declaration.DeclarationNameKey} is not active in the accepted ledger.");
             }
-
-            if (resolved is not null && resolved != identity)
-            {
-                throw new FormatException(
-                    $"Selected Closed module {selectedPath.Value} dependency-not-ready: "
-                    + $"declarations from {dependencyPath.Value} resolve to multiple accepted ledger identities.");
-            }
-
-            resolved = identity;
         }
 
-        return resolved!;
+        // Ledger v5 persists the event hash as its identity; FrozenNodeId is only a legacy-derived view.
+        return FrozenNodeId.Create(activeEntry.EventHash);
     }
 
     private static FrozenNodeMaterial BuildNodeMaterial(
