@@ -537,7 +537,8 @@ public sealed partial class FormalizeCandidatesTests
         byte[]? formalizationReceipt = null,
         LeanAxiomReport? leanReport = null,
         string atomizer = AtomizerRegistry.PzgId,
-        IReadOnlyList<string>? arguments = null)
+        IReadOnlyList<string>? arguments = null,
+        byte[]? rulesBytes = null)
     {
         var sources = entries
             .GroupBy(static entry => entry.SourceId, StringComparer.Ordinal)
@@ -563,7 +564,8 @@ public sealed partial class FormalizeCandidatesTests
         {
             new(
                 TheoryAtomizerDataLoader.DataPath,
-                ImmutableArray.CreateRange(DigestionTestSupport.RulesBytes)),
+                // rulesBytes 覆盖时不触发 DigestionTestSupport.RulesBytes 的 canonical 文件读取(`??` 惰性求值)。
+                ImmutableArray.CreateRange(rulesBytes ?? DigestionTestSupport.RulesBytes)),
         };
         AddLedgerFiles(files, ledger);
         foreach (var source in sources)

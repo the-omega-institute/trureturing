@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
 
@@ -6,11 +7,9 @@ namespace StrataLint.Tests;
 // 拆自 FormalizeCandidatesTests.cs(2026-08-30,#4125 pass 4):主文件加入本测试后 804 行,越过 SL-003 的 800 硬线。
 public sealed partial class FormalizeCandidatesTests
 {
-    // 走 GenericId 原子器(同类既有测试 FormalizeCandidatesKindAlphabetIsClosed 的先例):Entry/Run 的原子化
-    // 取 TheoryAtomizerRules.None,不读 canonical `Meta/theory-atomizers.toml`(#4125 pass-2 quality 席)。
-    // Run 仍把 canonical 规则字节注入合成仓库(`TheoryAtomizerDataLoader.DataPath`)——那是本类全部 51 条测试共用的
-    // 夹具层;一份 hermetic 的规则文件须满足 TheoryAtomizerDataLoader 全部必需 section 的行文法(canonical 文件 907 行),
-    // 是独立的夹具工程,不在本测试的射程内(#4125 quality 席两轮提出,如实记为未做)。
+    // Hermetic(#4125 pass 5,quality 席四轮坚持,接受):原子化走 GenericId(TheoryAtomizerRules.None),
+    // 合成仓库里的规则文件用 TheoryAtomizerDataTests.Minimal(既有的最小合法文档),Run 的 rulesBytes 覆盖使
+    // DigestionTestSupport.RulesBytes 的 canonical 文件读取根本不发生——把测试 DLL 拷到任何仓库之外也能跑。
     [Fact]
     public void FormalizeCandidatesProjectsQuarantineInsteadOfOfferingTheAtom()
     {
@@ -38,7 +37,11 @@ public sealed partial class FormalizeCandidatesTests
             },
         ]);
 
-        var result = Run([entry], ledger: ledger, atomizer: AtomizerRegistry.GenericId);
+        var result = Run(
+            [entry],
+            ledger: ledger,
+            atomizer: AtomizerRegistry.GenericId,
+            rulesBytes: Encoding.UTF8.GetBytes(TheoryAtomizerDataTests.Minimal));
 
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
