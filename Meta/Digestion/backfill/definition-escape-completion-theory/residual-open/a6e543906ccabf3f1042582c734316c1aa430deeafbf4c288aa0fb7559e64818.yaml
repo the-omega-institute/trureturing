@@ -1,0 +1,33 @@
+fingerprints:
+  raw_sha256: sha256:a6e543906ccabf3f1042582c734316c1aa430deeafbf4c288aa0fb7559e64818
+  normalized_sha256: sha256:a6e543906ccabf3f1042582c734316c1aa430deeafbf4c288aa0fb7559e64818
+cas_ref: sha256:a6e543906ccabf3f1042582c734316c1aa430deeafbf4c288aa0fb7559e64818
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems:
+    - greedy-argmax-candidate-domain-unresolved-at-dect-lines-558-569
+    - greedy-argmax-existence-unresolved-at-dect-lines-558-569
+    - greedy-argmax-tie-behavior-unresolved-at-dect-lines-558-569
+    - greedy-argmax-zero-cost-convention-unresolved-at-dect-lines-558-569
+    - greedy-argmax-freshness-unresolved-at-dect-lines-558-569
+    - greedy-argmax-stopping-guarantee-unresolved-at-dect-lines-558-569
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-28T13:13:04.2670520+00:00
+    gids:
+      - D5/S3/ConceptDynamics/DefinitionEscapeLaws/SubmodularCapture.submodular_capture
+    gaps:
+      - code: unresolved-subitem
+        detail: greedy-argmax-candidate-domain-unresolved-at-dect-lines-558-569
+      - code: unresolved-subitem
+        detail: greedy-argmax-existence-unresolved-at-dect-lines-558-569
+      - code: unresolved-subitem
+        detail: greedy-argmax-freshness-unresolved-at-dect-lines-558-569
+      - code: unresolved-subitem
+        detail: greedy-argmax-stopping-guarantee-unresolved-at-dect-lines-558-569
+      - code: unresolved-subitem
+        detail: greedy-argmax-tie-behavior-unresolved-at-dect-lines-558-569
+      - code: unresolved-subitem
+        detail: greedy-argmax-zero-cost-convention-unresolved-at-dect-lines-558-569

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:7b992a4c9d981c0ea01f922d2d59f76c2a8db67265138c23b67ce770a6ca7545
+  normalized_sha256: sha256:7b992a4c9d981c0ea01f922d2d59f76c2a8db67265138c23b67ce770a6ca7545
+cas_ref: sha256:7b992a4c9d981c0ea01f922d2d59f76c2a8db67265138c23b67ce770a6ca7545
+coverage_gids:
+  - D5/S1/Recurrence/FloorCounts/RotationEventCount.bounded_event_count
+receipts:
+  coverage:
+    - gid: D5/S1/Recurrence/FloorCounts/RotationEventCount.bounded_event_count
+      source_sha256: sha256:7b992a4c9d981c0ea01f922d2d59f76c2a8db67265138c23b67ce770a6ca7545
+      target_statement_id: sha256:280a5840a9b4b982422d4882882aa79c123a19ad3f2de367faf06e42dfc002e9
+  scribe:
+    - gid: D5/S1/Recurrence/FloorCounts/RotationEventCount.bounded_event_count
+      definition_sha256: sha256:b66f730739c2c9de68a4ad8c8bc67d676c56b22348e407bbd6056600392c3010
+      emission_sha256: sha256:fc7b1514f853fde6cfe49217be853455796f0be4b3519f0f32eeddd47948b2ec
+  unresolved_subitems: []

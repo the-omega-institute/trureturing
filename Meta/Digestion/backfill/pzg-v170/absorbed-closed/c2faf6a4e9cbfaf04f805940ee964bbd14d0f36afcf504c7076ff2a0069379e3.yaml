@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:c2faf6a4e9cbfaf04f805940ee964bbd14d0f36afcf504c7076ff2a0069379e3
+  normalized_sha256: sha256:c2faf6a4e9cbfaf04f805940ee964bbd14d0f36afcf504c7076ff2a0069379e3
+cas_ref: sha256:c2faf6a4e9cbfaf04f805940ee964bbd14d0f36afcf504c7076ff2a0069379e3
+coverage_gids:
+  - D5/S1/Recurrence/Witt/FiberCapacityDivisibility.one_add_x_dvd_fiber_polynomial_iff
+receipts:
+  coverage:
+    - gid: D5/S1/Recurrence/Witt/FiberCapacityDivisibility.one_add_x_dvd_fiber_polynomial_iff
+      source_sha256: sha256:c2faf6a4e9cbfaf04f805940ee964bbd14d0f36afcf504c7076ff2a0069379e3
+      target_statement_id: sha256:c976d12e04a05ca16114e81921439da342138c8e8ce843cfff50173bd9b002f5
+  scribe:
+    - gid: D5/S1/Recurrence/Witt/FiberCapacityDivisibility.one_add_x_dvd_fiber_polynomial_iff
+      definition_sha256: sha256:e823a98b4e82fa991945a7ecc0f5b9c6a3f47a10ac343abf891362e0463202e1
+      emission_sha256: sha256:6da67500109ba3c7b290a99eb1efbc365f56471c504f47ca214f5d94483037a1
+  unresolved_subitems: []

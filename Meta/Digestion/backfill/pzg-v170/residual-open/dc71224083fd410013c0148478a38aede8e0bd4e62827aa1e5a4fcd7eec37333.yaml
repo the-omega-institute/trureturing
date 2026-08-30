@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:dc71224083fd410013c0148478a38aede8e0bd4e62827aa1e5a4fcd7eec37333
+  normalized_sha256: sha256:dc71224083fd410013c0148478a38aede8e0bd4e62827aa1e5a4fcd7eec37333
+cas_ref: sha256:dc71224083fd410013c0148478a38aede8e0bd4e62827aa1e5a4fcd7eec37333
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems:
+    - golden-rotation-minimum-distance-2.3e-6-certificate
+    - epsilon-1e-4-first-return-6765-certificate
+    - exact-nonrecurrence-and-fibonacci-return-claims

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:f6055b2efce007c2683fa34c89c6bb8b2f682d710e9a5b4196b5955e10c6f882
+  normalized_sha256: sha256:f6055b2efce007c2683fa34c89c6bb8b2f682d710e9a5b4196b5955e10c6f882
+cas_ref: sha256:f6055b2efce007c2683fa34c89c6bb8b2f682d710e9a5b4196b5955e10c6f882
+coverage_gids:
+  - D5/S3/Observer/MetricGeometry/SemiconjugacyComposition.semiconjugacy_defect_composition
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/MetricGeometry/SemiconjugacyComposition.semiconjugacy_defect_composition
+      source_sha256: sha256:f6055b2efce007c2683fa34c89c6bb8b2f682d710e9a5b4196b5955e10c6f882
+      target_statement_id: sha256:7757a802dea3f2f2db2419405392d33b14ee1cb8f897e6b477eb54b7ff745855
+  scribe:
+    - gid: D5/S3/Observer/MetricGeometry/SemiconjugacyComposition.semiconjugacy_defect_composition
+      definition_sha256: sha256:0dad6250e49830a57c2217f56156923aec7cff881a83bf73c7cdbd5d106806f5
+      emission_sha256: sha256:6bb3740e23e192de87e431362c53dc01ba56672c95fac52310e06707ce17a7bd
+  unresolved_subitems: []

@@ -1,0 +1,31 @@
+fingerprints:
+  raw_sha256: sha256:8bc68f57d6b55a77789e12a059921a087adce51d0d723777c6ea22f0eb7d1012
+  normalized_sha256: sha256:8bc68f57d6b55a77789e12a059921a087adce51d0d723777c6ea22f0eb7d1012
+cas_ref: sha256:8bc68f57d6b55a77789e12a059921a087adce51d0d723777c6ea22f0eb7d1012
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-28T00:54:33.8096340+00:00
+    gids:
+      - D5/S3/ConceptDynamics/DecisionValue/FreeInformationValue.free_ignorable_information_value_nonnegative
+    gaps:
+      - code: chain-migration-incomplete
+        detail: generic-residual-1110acbf431ed3515a5273e5ea136ba7db16222313d37b2a17cee3a6afc9836a-973d1ae23b2ef2f32f4bac80a84970b35168138c4e2b188894c4a946fa0fa063
+      - code: chain-migration-incomplete
+        detail: generic-residual-1f73d3217980b18364d0973fbef0aae26bc2225c6290912daa4cb75da1561958-d90bdacba49669232034921b9b98008928aaa1de03e05663f2c925b59bd097df
+      - code: chain-migration-incomplete
+        detail: generic-residual-5788f267f462345c3594d9e532a855148fddc0c4a06c630c88c447e34bc00bd0-234b44222cf9adf4226d50d724511f9ba793cd6270ec8490b387cbd44ca2a213
+      - code: chain-migration-incomplete
+        detail: generic-residual-788869220073ecf5b1c2061f5b43ae0e98cfa9ff0f6eb414c2383c8c397d56f8-2866b8182aa3f011dff11febcaa1983473b2af845cf7e831e7f6cfe720cb3262
+      - code: chain-migration-incomplete
+        detail: generic-residual-fc17320d1321742693493acb59e2c8ffb72da85717ad0062a5b89a13c382fbd7-a85b6faed3c805208cc013216ab746fa9e15626dffdd930f1d3645f1dfb9b1aa
+  chain_atoms:
+    - 1f73d3217980b18364d0973fbef0aae26bc2225c6290912daa4cb75da1561958
+    - 1110acbf431ed3515a5273e5ea136ba7db16222313d37b2a17cee3a6afc9836a
+    - 5788f267f462345c3594d9e532a855148fddc0c4a06c630c88c447e34bc00bd0
+    - fc17320d1321742693493acb59e2c8ffb72da85717ad0062a5b89a13c382fbd7
+    - 788869220073ecf5b1c2061f5b43ae0e98cfa9ff0f6eb414c2383c8c397d56f8

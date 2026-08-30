@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:219db29659bb0cafc3f64da61651200f6ab66f14833ed1fb9f73b84eddea8266
+  normalized_sha256: sha256:219db29659bb0cafc3f64da61651200f6ab66f14833ed1fb9f73b84eddea8266
+cas_ref: sha256:219db29659bb0cafc3f64da61651200f6ab66f14833ed1fb9f73b84eddea8266
+coverage_gids:
+  - D5/S3/QuantumBounds/LagrangeGramIdentity.lagrange_gram_identity
+receipts:
+  coverage:
+    - gid: D5/S3/QuantumBounds/LagrangeGramIdentity.lagrange_gram_identity
+      source_sha256: sha256:219db29659bb0cafc3f64da61651200f6ab66f14833ed1fb9f73b84eddea8266
+      target_statement_id: sha256:9a05cb1302994e9141d66f8d1d830c9660462c63428e239b2220f5a3edddf945
+  scribe:
+    - gid: D5/S3/QuantumBounds/LagrangeGramIdentity.lagrange_gram_identity
+      definition_sha256: sha256:f207a4f6effb4739ac15cb2fbee8904e075a64694f57b0314911cfcad80e8ddc
+      emission_sha256: sha256:b9b3a1c549e95203fe35d1caf03b66a1bc54e24da630ff5a2e1ea8c59581f505
+  unresolved_subitems: []

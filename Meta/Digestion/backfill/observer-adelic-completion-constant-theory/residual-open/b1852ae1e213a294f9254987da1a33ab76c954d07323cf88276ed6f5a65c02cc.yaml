@@ -1,0 +1,18 @@
+fingerprints:
+  raw_sha256: sha256:b1852ae1e213a294f9254987da1a33ab76c954d07323cf88276ed6f5a65c02cc
+  normalized_sha256: sha256:b1852ae1e213a294f9254987da1a33ab76c954d07323cf88276ed6f5a65c02cc
+cas_ref: sha256:b1852ae1e213a294f9254987da1a33ab76c954d07323cf88276ed6f5a65c02cc
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "Retrieval preceded quarantine. D5 exact hit `D5/S3/Arith/Lattices/RamifiedFiveDissection.lean` provides the exact six-coordinate mod-five boundary carrier (`BoundaryIndex` line 31, `ReducedCoordinates` line 34, `boundaryMatrix` line 41, `boundaryReduction` line 53), quadratic form (`boundaryQuadratic` line 57), nonzero-isotropic residual (`ramificationResidual` line 67), six-state readout (`ramifiedReadout` line 71 and `ramified_five_dissection` line 181), and a realized selected nonzero-isotropic state (line 205); it does not provide the primitive-pair/sign quotient and twelve-count, Gamma(5) cusp classification, Veronese orbit equivalence, PSL_2(F_5)~=A5 equivariance, icosahedron vertex equivalence, the separate bridge to the quintic equation's A5, or Ramanujan level-five equivalence. Pinned Mathlib provides generic `CongruenceSubgroup.Gamma` and `CuspOrbits`, but queries `primitive.?pair|projective.?line|Gamma.*5|icosahed|isotropic.*orbit|twelve.*vertex` found none of those bridges; reachable GitHub Lean searches `Gamma(5) cusp language:Lean`, `primitive pairs language:Lean`, `icosahedron vertices language:Lean`, and `ProjectiveLine ZMod 5 language:Lean` returned no exact result or A17 port candidate. Durable local probe content: imports `Mathlib.NumberTheory.ModularForms.Cusps` and `Mathlib.NumberTheory.ModularForms.CongruenceSubgroups`; queries `CongruenceSubgroup.Gamma`, `CuspOrbits`, `gammaFiveCuspsEquivPrimitivePairsModSign`, `gammaFiveCuspCount`, `icosahedronVertexAction`, `modFiveIsotropicBoundaryOrbit`, `modFiveCuspIsotropicVertexEquiv`, and `ramanujanLevelFiveTwelveStateAction`; the first two elaborate and exit 1 reports exact diagnostic `error(lean.unknownIdentifier): Unknown identifier` for each of the latter six names. Four child atoms remain, so the available boundary carrier alone cannot cover the missing Gamma(5), equivariance, icosahedron, modular-curve, quintic-equation A5, quasicrystal twelve-state, and Ramanujan bridges."
+    reentry_condition: "D5 or pinned Mathlib provides the Gamma(5) cusp classification by nonzero pairs modulo sign, its equivariant PSL_2(F_5) action and twelve-element count, the canonical Veronese equivalence with the selected nonzero isotropic orbit, an A5-equivariant icosahedron vertex model, a separate bridge from the quintic equation's A5 to the same twelve-state action, and the stated quasicrystal and Ramanujan level-five twelve-state bridges covering all child clauses."
+    blocker_class: missing-prerequisite
+  chain_atoms:
+    - f9c42da55dae1b7540905baf2f0404c1ec5a58b2b1003a29e826bd8c95b1f6ca
+    - 1ddf281f08f96c1ab23d98574879a890b29d7bba9faacc031d33684cb633bc1b
+    - fc6a10e9c41a8e61eabc7c8fe6ec308b406649363855c96548fccc04a6be7e8f
+    - 460017864bd3e11d4433641541e4673ff265c4787eb0666c442ec30272f27900

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5fdc6c46f95426b728483d33f074240fc687db2bad22fe083ab788196ea1e2f4
+  normalized_sha256: sha256:5fdc6c46f95426b728483d33f074240fc687db2bad22fe083ab788196ea1e2f4
+cas_ref: sha256:5fdc6c46f95426b728483d33f074240fc687db2bad22fe083ab788196ea1e2f4
+coverage_gids:
+  - D5/S3/ObserverMemory/RecordCorrelationMonogamy.three_quarter_address_record_certificate
+  - D5/S3/ObserverMemory/RecordCorrelationMonogamy.record_correlation_monogamy
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:dcb9ba8bb5cd880ae0a4e3dbc4a6a670ea856346358090aa83c818393cd0fba3
+  normalized_sha256: sha256:dcb9ba8bb5cd880ae0a4e3dbc4a6a670ea856346358090aa83c818393cd0fba3
+cas_ref: sha256:dcb9ba8bb5cd880ae0a4e3dbc4a6a670ea856346358090aa83c818393cd0fba3
+coverage_gids:
+  - D5/S3/Weil/SpectralHilbert.labeled_zeta_kernel
+  - D5/S3/Weil/SpectralHilbert.labeled_zeta_inner
+  - D5/S3/Weil/SpectralHilbert.resonance_partner_spec
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/SpectralHilbert.labeled_zeta_kernel
+      source_sha256: sha256:dcb9ba8bb5cd880ae0a4e3dbc4a6a670ea856346358090aa83c818393cd0fba3
+      target_statement_id: sha256:24ec781283d83c5e47f57f73e4b143e9a17c79cffb3eaa563ae81566a3b5507b
+    - gid: D5/S3/Weil/SpectralHilbert.labeled_zeta_inner
+      source_sha256: sha256:dcb9ba8bb5cd880ae0a4e3dbc4a6a670ea856346358090aa83c818393cd0fba3
+      target_statement_id: sha256:d1271f0d4f4e3394f8d165dc88a36ad3097ec54b31d142c558f87460c3b000d5
+    - gid: D5/S3/Weil/SpectralHilbert.resonance_partner_spec
+      source_sha256: sha256:dcb9ba8bb5cd880ae0a4e3dbc4a6a670ea856346358090aa83c818393cd0fba3
+      target_statement_id: sha256:d518f2ce400564ff0934f9cd59d98a9314c2380752b60f53d36f1092a1bd5237
+  scribe: []
+  unresolved_subitems: []

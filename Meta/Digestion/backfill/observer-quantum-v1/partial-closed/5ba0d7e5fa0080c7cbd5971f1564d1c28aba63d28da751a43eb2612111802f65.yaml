@@ -1,0 +1,23 @@
+fingerprints:
+  raw_sha256: sha256:5ba0d7e5fa0080c7cbd5971f1564d1c28aba63d28da751a43eb2612111802f65
+  normalized_sha256: sha256:5ba0d7e5fa0080c7cbd5971f1564d1c28aba63d28da751a43eb2612111802f65
+cas_ref: sha256:5ba0d7e5fa0080c7cbd5971f1564d1c28aba63d28da751a43eb2612111802f65
+coverage_gids:
+  - D5/S3/Observer/MetricGeometry/VisiblePhaseInfinity.visible_phase_separation_distance_eq_top
+  - D5/S3/Observer/MetricGeometry/WindowObserverDistance.window_observer_distance_eq_cycle_distance
+  - D5/S3/Observer/MetricGeometry/VisiblePhaseInfinity.hiddenTranslation_visible_phase_witness
+  - D5/S3/Observer/MetricGeometry/OrbitConnesDistance.orbit_connes_distance_eq
+  - D5/S3/Observer/ObserverMetric.commute_iff_updateDefect_eq_zero
+  - D5/S3/Observer/ObserverMetric.updateDefect_eq_zero_iff_invariant
+  - D5/S3/Observer/ObserverMetric.invariant_iff_const_on_cyclic_window
+  - D5/S3/Observer/ObserverMetric.perturbationSeminorm_eq_zero_iff
+  - D5/S3/Observer/ObserverMetric.perturbationSeminorm_add_le
+  - D5/S3/Observer/ObserverMetric.perturbationSeminorm_smul
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems:
+    - streamline-infinity-at-nonintegral-fiber-offset
+    - rieffel-metric-bundle-over-torus
+    - type-II-infinity-classification
+    - LP-eight-pair-certificate
