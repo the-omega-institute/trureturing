@@ -334,7 +334,10 @@ private theorem hermitian_symmetrization_properties
 exact compactly supported smooth Hermitian Fourier-Laplace interpolant. The
 public witnesses record the nonvanishing seed, Lagrange polynomial,
 polynomial differential construction, transform factorization, unchanged
-support window, and final Hermitian symmetrization. -/
+support window, and final Hermitian symmetrization. Under the source's frozen
+exp(-i z x) convention, integration by parts sends partial_x to i z, so its
+printed P(i partial_x) psi yields P(-z); the public witness uses
+P(-i partial_x) to realize the stated P(z) factorization. -/
 theorem finite_exact_paley_wiener_interpolation
     {M : Nat} (z r : Fin M -> Complex) (hz : Function.Injective z)
     (conjIndex : Fin M -> Fin M)

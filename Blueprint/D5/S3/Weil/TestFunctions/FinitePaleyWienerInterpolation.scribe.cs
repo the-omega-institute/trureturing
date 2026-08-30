@@ -24,6 +24,11 @@ internal sealed class FinitePaleyWienerInterpolationDocument : IScribeDocumentDe
                     + "constructs the polynomial differential multiplier, and integration "
                     + "by parts proves its public transform factorization.")),
                 Paragraph(Text(
+                    "Under the source's frozen exp(-i z x) convention, integration by parts "
+                    + "sends partial_x to i z, so its printed P(i partial_x) psi yields P(-z); "
+                    + "the public witness uses P(-i partial_x) to realize the stated P(z) "
+                    + "factorization.")),
+                Paragraph(Text(
                     "Conjugate reflection of the raw test preserves the common compact "
                     + "support window and supplies the Hermitian real structure. The "
                     + "compatibility of the node values makes the symmetrized transform "
