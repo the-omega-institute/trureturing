@@ -1,0 +1,10 @@
+ast_path: section/二-B-曲率-账本对偶桥/clause/2
+fingerprints:
+  raw_sha256: sha256:6c7ee23a68ec435794a8a5ff0cd207620512236a1a3d4e00f3a02e09aac4e2fd
+  normalized_sha256: sha256:6c7ee23a68ec435794a8a5ff0cd207620512236a1a3d4e00f3a02e09aac4e2fd
+cas_ref: sha256:6c7ee23a68ec435794a8a5ff0cd207620512236a1a3d4e00f3a02e09aac4e2fd
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

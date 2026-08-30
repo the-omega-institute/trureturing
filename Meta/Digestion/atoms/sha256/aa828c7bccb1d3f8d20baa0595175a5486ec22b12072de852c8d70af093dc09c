@@ -1,0 +1,19 @@
+# 追加部二　平行侦察席报告(nyxid gpt-pro,盲于追加部一)
+
+> 产地与独立性:本部为 nyxid gpt-pro 侦察席交付原文(company 池,mode:chat;主池 extraction 故障三败后换池,禁表格后成功)。**其 brief 只含冻结面材料,发出于追加部一写就之前,席位对 orchestrator 的四构思零可见**——故下述收敛为真独立、且跨模型族(GPT vs Claude)。
+> **收敛注记(orchestrator 判)**:追加部一 A↔本部 W-D(认证失速/FiniteCertificateStall)、一 B↔本部 W-A(曲率-松弛相位桥)、一 C↔本部 W-F(黄金环面指标扩张)三对相撞;本部独有增量:provenance bitmask(直接回应 OACTC 172 的 P₅ 不完备性)、多尺度 cosh 指纹、射影 jet 尾历史态。两部义务合并去重后进 W 队列,命名以本部 proposed GID 为准、判据以追加部一的可证伪预测为准。
+
+A. 残差地图
+
+A.0 口径、对象空间与诚实边界
+
+取阅截点为 2026-08-30 的公开 dev。以下把已冻结声明当依赖地址，不重证。唯一例外必须明说：GID D5/X_Frontier/Hearts 中 o5_independence 的 statement 已冻结而 proof body 仍是 sorry；o6WeilPositivityStatement 只是待证 Prop。本文绝不把二者写成已闭合定理。
+
+为避免把“RH 的真假”这个一位目标误当成“零点定位”，取强目标
+T(x) = （来源标签 base/twist/golden，零点位置的有限多重集，解析阶数）。
+RH 只是 T 的“全部 base 零点实部为 1/2”投影。于是某坐标足以判 RH，不代表它足以定位 T。
+
+对象空间 X 取四个有类型的纤维之不交和：单个 divisor atom、反射零点载体、环面因子状态、有限正性 completion。某坐标不适用于某纤维时返回同一个 none；这只是总化类型，不把对象身份塞进 q。
+
+当前操作性概念 q_cert 取现有 theorem 面向消费者的粗商，而不是所有原始函数图：
+- q_tor^0：completedZeta×twist 是否对所选/全部 index 同时为零；暂不含导数塔。

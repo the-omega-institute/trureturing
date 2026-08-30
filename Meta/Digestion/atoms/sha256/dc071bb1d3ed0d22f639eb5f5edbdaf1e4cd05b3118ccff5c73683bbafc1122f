@@ -1,0 +1,11 @@
+## 义务清单(预登记,elementary 优先)
+
+- **W-C1(β 格,首发)**:$\forall v,\ \beta(v)=\sqrt5\,v+r(v)\ \wedge\ r(v)\in(\varphi-2,\varphi-1]$;推论:格点间距 $\beta(v{+}1)-\beta(v)\in\{\sqrt5+\varphi-2,\sqrt5+\varphi-1\}$ 二值(Beatty 二距性)。
+- **W-D1(Escape 反单调)**:$F\subseteq F'\Rightarrow \mathrm{Escape}(F')\subseteq\mathrm{Escape}(F)$;及与 165.3 实例的一致性。
+- **W-A1(认证窗单调)**:玩具成本模型上认证窗对预算的单调性与并集封闭。
+- **W-B1(桥之玩具)**:有限零点集上账本亏损二阶变分与曲率测度的显式比对载体构造。
+
+后续增订继续严格追加于本节之后。
+
+---
+
