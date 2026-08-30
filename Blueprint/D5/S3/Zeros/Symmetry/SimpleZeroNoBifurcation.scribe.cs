@@ -77,11 +77,15 @@ internal sealed class SimpleZeroNoBifurcationDocument : IScribeDocumentDefinitio
         Formula eventually(Formula center, Formula proposition) =>
             Call("EventuallyAt", pair, neighborhood(center), proposition);
 
-        Formula reflection = Seq(
-            Forall, Sp, time, InMacro, Sp, real, Comma, Sp,
-            zero, InMacro, Sp, complex, Comma, Esc,
-            value(time, mirror(zero)), Sp, Eq, Sp,
-            Overline, Grp(value(time, zero)));
+        Formula reflection = new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [
+                new Formula.BoundVariable(FormulaIdentifier.Create("tau"), real),
+                new Formula.BoundVariable(FormulaIdentifier.Create("s"), complex),
+            ],
+            Seq(
+                value(time, mirror(zero)), Sp, Eq, Sp,
+                Overline, Grp(value(time, zero))));
         Formula timeDifferentiability = eventually(basePair, Call(
             "HasFDerivAt",
             Call("timeSlice", function, zero),
@@ -101,7 +105,7 @@ internal sealed class SimpleZeroNoBifurcationDocument : IScribeDocumentDefinitio
             Seq(pair, Mapsto, ds(time, zero), Sp, Call("smul", Call("id", complex))),
             basePair);
         Formula regularity = Seq(
-            reflection, Sp, Land, RowBreak, Grp(),
+            Open, reflection, Close, Sp, Land, RowBreak, Grp(),
             timeDifferentiability, Sp, Land, Sp,
             spaceDifferentiability, Sp, Land, RowBreak, Grp(),
             timeDerivativeContinuity, Sp, Land, Sp,
