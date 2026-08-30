@@ -157,20 +157,24 @@ public sealed partial class FormalizeCandidatesTests
         Assert.Contains("absent from the head ledger", exception.Message, StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void ReviewEnvelopeRejectsAStaleReceiptWhoseFingerprintDoesNotMatchTheLedgerEntry()
+    [Theory]
+    [InlineData("raw_sha256")]
+    [InlineData("cas_ref")]
+    public void ReviewEnvelopeRejectsAStaleReceiptWhoseFingerprintDoesNotMatchTheLedgerEntry(string mismatchedField)
     {
+        // 两个操作数各自独立钉住:只改 raw_sha256、或只改 cas_ref,都必须被拒。
         var atom = Entry("source", "stale", "theorem", "1.0", atomizer: AtomizerRegistry.GenericId);
         var other = Entry("source", "other", "theorem", "2.0", atomizer: AtomizerRegistry.GenericId);
         var baseSnapshot = ReviewSnapshot([atom, other], quarantined: [], receipted: []);
         var headFiles = ReviewSnapshot([atom, other], quarantined: [], receipted: []).Entries.ToList();
-        // 收据名义上属于 stale,指纹却是 other 的:账本条目与收据不一致。
+        var rawSha = mismatchedField == "raw_sha256" ? other.Atom.Fingerprints.RawSha256 : atom.Atom.Fingerprints.RawSha256;
+        var casRef = mismatchedField == "cas_ref" ? other.Atom.Fingerprints.RawSha256 : atom.Atom.Fingerprints.RawSha256;
         var stale = DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
             atom.AtomId,
             "D5/S0/Synthetic/Receipt.stale",
             new DigestionFormalizationSignature("stale", "theorem", "statement-v1"),
-            other.Atom.Fingerprints.RawSha256,
-            other.Atom.Fingerprints.RawSha256)).ToArray();
+            casRef,
+            rawSha)).ToArray();
         headFiles.Add(new RawRepositoryEntry(
             DigestionFormalizationReceipt.PathForAtom(atom.AtomId), ImmutableArray.CreateRange(stale)));
 
@@ -178,6 +182,25 @@ public sealed partial class FormalizeCandidatesTests
             () => ReviewEnvelopeCommand.Derive(baseSnapshot, RawRepositorySnapshot.Create(headFiles)));
 
         Assert.Contains("stale receipt", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ReviewEnvelopeConflictIsATypedOutcomeWithItsOwnExitCode()
+    {
+        var entry = Entry("source", "both", "theorem", "1.0", atomizer: AtomizerRegistry.GenericId);
+        var baseSnapshot = ReviewSnapshot([entry], quarantined: [entry], receipted: []);
+        var headSnapshot = ReviewSnapshot([entry], quarantined: [entry], receipted: [entry]);
+        var gateway = new RevisionKeyedGateway(new Dictionary<string, RawRepositorySnapshot>(StringComparer.Ordinal)
+        {
+            ["b"] = baseSnapshot,
+            ["h"] = headSnapshot,
+        });
+
+        var result = ReviewEnvelopeCommand.Run(gateway, ["--base", "b", "--head", "h"]);
+
+        Assert.False(result.Success);
+        Assert.Equal(ReviewEnvelopeCommand.ConflictExitCode, result.ExitCode);
+        Assert.StartsWith(ReviewEnvelopeCommand.ConflictMarker + " both", result.Error, StringComparison.Ordinal);
     }
 
     [Fact]

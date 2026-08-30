@@ -134,7 +134,8 @@ internal sealed class BackfillInventoryDocument
             projectBaselineCoverage);
         if (receipts.Quarantine is not null && coverageGids.Length > 0)
         {
-            throw new FormatException(
+            throw new DigestionQuarantineConflictException(
+                atomId,
                 $"entry {atomId} cannot be quarantined because coverage_gids provides a machine-form statement");
         }
 

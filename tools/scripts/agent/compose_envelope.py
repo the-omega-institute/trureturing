@@ -6,9 +6,10 @@ Thin caller (glue, 第 11 条 辨析): the branch truth comes from the typed ver
 run inside WORKTREE (canonical: dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release);
 this script only derives the two revisions with git, forwards the verb's JSON, and copies WHITELISTED
 per-atom fields from the worker result (by atom_id only — never the whole conclusion).
-Fail-fast: 64 usage / bad --pr --pass / missing worker file, 65 not a worktree, 66 no origin/dev, 69 the verb rejected the
-branch (its REVIEW_ENVELOPE_INVALID line is relayed verbatim — no exit code is inferred from its prose), 70 the verb's
-schema tag or echoed base/head do not match what was requested. Sentinel: COMPOSE_OK deposited=<n> ejected=<m> head=<sha9>. Idempotent.
+Fail-fast: 64 usage / bad --pr --pass / missing worker file, 65 not a worktree, 66 no origin/dev, 67 the verb's typed
+conflict outcome (exit 3, REVIEW_ENVELOPE_CONFLICT: a quarantined atom holds a receipt) forwarded mechanically, 69 any other
+verb rejection (its REVIEW_ENVELOPE_INVALID line relayed verbatim), 70 the verb's output is not JSON / wrong schema tag /
+echoed base-head differ from the request. Sentinel: COMPOSE_OK deposited=<n> ejected=<m> head=<sha9>. Idempotent.
 The verb is invoked through tools/scripts/agent/review_envelope.sh (the single linkage-visible caller).
 """
 import json, os, re, subprocess, sys
@@ -59,11 +60,20 @@ def main(argv):
 
     wrapper = os.path.join(os.path.dirname(os.path.abspath(__file__)), "review_envelope.sh")
     verb = subprocess.run(["/bin/bash", wrapper, wt, base, head], capture_output=True, text=True)
+    if verb.returncode == 3:
+        # typed outcome of the verb (REVIEW_ENVELOPE_CONFLICT, exit 3): forwarded mechanically as 67.
+        sys.stderr.write(verb.stderr.strip() + "\n")
+        sys.stderr.write("COMPOSE_DEPOSITED_AND_QUARANTINED\n")
+        sys.exit(67)
     if verb.returncode != 0:
         sys.stderr.write(verb.stderr.strip() + "\n")  # the verb's own REVIEW_ENVELOPE_INVALID line, verbatim
         sys.stderr.write(f"COMPOSE_VERB_FAILED rc={verb.returncode}\n")
         sys.exit(69)
-    truth = json.loads(verb.stdout)
+    try:
+        truth = json.loads(verb.stdout)
+    except json.JSONDecodeError as error:
+        sys.stderr.write(f"COMPOSE_VERB_SCHEMA_MISMATCH (not JSON: {error})\n")
+        sys.exit(70)
     if truth.get("schema") != "stratalint-review-envelope-v1" or not all(k in truth for k in ("base", "head", "deposited", "ejected")):
         sys.stderr.write(f"COMPOSE_VERB_SCHEMA_MISMATCH {truth.get('schema')}\n")
         sys.exit(70)

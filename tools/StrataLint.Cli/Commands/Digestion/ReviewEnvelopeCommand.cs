@@ -16,6 +16,8 @@ internal static class ReviewEnvelopeCommand
 {
     internal const string Schema = "stratalint-review-envelope-v1";
     internal const string InvalidMarker = "REVIEW_ENVELOPE_INVALID";
+    internal const string ConflictMarker = "REVIEW_ENVELOPE_CONFLICT";
+    internal const int ConflictExitCode = 3;
 
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
@@ -50,8 +52,19 @@ internal static class ReviewEnvelopeCommand
             var derivation = Derive(baseSnapshot, headSnapshot);
             return new CommandResult(true, Render(baseRevision, headRevision, derivation), string.Empty);
         }
+        catch (DigestionQuarantineConflictException conflict)
+        {
+            // 典型结果:隔离原子同时持有机器形式陈述。由账本 loader 以类型暴露,此处映射为专用退出码 3,
+            // 调用方不必解析消息文本(#4163 round 4/5)。
+            return new CommandResult(
+                false,
+                string.Empty,
+                $"{ConflictMarker} {conflict.AtomId}: {conflict.Message}\n",
+                ExitCode: ConflictExitCode);
+        }
         catch (Exception exception) when (
             exception is FormatException
+                or JsonException
                 or InvalidOperationException
                 or IOException
                 or ArgumentException)
