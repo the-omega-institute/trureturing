@@ -566,7 +566,7 @@ public sealed partial class FrozenLedgerTests
             ],
             candidateModules:
             [
-                ModuleWithReport("A", source, statementMaterial: "new elaborated missing p"),
+                ModuleWithReport("A", source + "\n", statementMaterial: "new elaborated missing p"),
                 Module("B"),
             ],
             replacedModules: ["A"],
