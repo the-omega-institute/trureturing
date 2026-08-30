@@ -1,5 +1,5 @@
 /- GID: D5/S3/Weil/Budget/CayleyMomentTridiagonalFlowLemmas
-   generality: I
+   generality: G
    mirror-B: none(waiver:internal-tridiagonal-flow-proof-support)
    mirror-E: none(waiver:kernel-proof-support-in-formal-module)
    anchors: []
@@ -616,4 +616,3 @@ theorem successor_integral_hasDerivAt
   simpa only [F, F'] using hresult.2
 
 end D5.S3.Weil.Budget.CayleyMomentTridiagonalFlowLemmas
-
