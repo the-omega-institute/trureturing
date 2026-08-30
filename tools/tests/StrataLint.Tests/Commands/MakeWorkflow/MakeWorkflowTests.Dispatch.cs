@@ -407,6 +407,51 @@ public sealed partial class MakeWorkflowTests
             line => line.Contains("verify-trx", StringComparison.Ordinal));
     }
 
+    [Fact(DisplayName = "dotnet-test rejects EXIT zero before its completion marker")]
+    public void DotnetTestRejectsExitZeroBeforeCompletionMarker()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var root = TestRepositoryLayout.FindRoot();
+        using var fixture = new TemporaryDirectory();
+        var binDirectory = Path.Combine(fixture.Path, "bin");
+        var fakeDotnet = Path.Combine(binDirectory, "dotnet");
+        var bashEnvironment = Path.Combine(fixture.Path, "exit-before-completion.sh");
+        var invocationMarker = Path.Combine(fixture.Path, "dotnet-invoked");
+        Directory.CreateDirectory(binDirectory);
+        WriteExecutable(
+            fakeDotnet,
+            """
+            #!/bin/bash
+            printf 'invoked\n' > "$DOTNET_TEST_INVOCATION_MARKER"
+            exit 0
+            """);
+        File.WriteAllText(
+            bashEnvironment,
+            """
+            trap 'case "$BASH_COMMAND" in dotnet\ test*) trap - DEBUG; exit 0 ;; esac' DEBUG
+            """);
+
+        var result = TestProcessRunner.Run(
+            "env",
+            [
+                $"PATH={binDirectory}:/usr/bin:/bin",
+                $"BASH_ENV={bashEnvironment}",
+                $"DOTNET_TEST_INVOCATION_MARKER={invocationMarker}",
+                "/bin/bash",
+                Path.Combine(root, "tools/scripts/dotnet-test.sh"),
+                "--filter", "FullyQualifiedName=Completion.Probe",
+            ],
+            root,
+            TestBudgets.ScriptProcessHangGuard,
+            64 * 1024);
+
+        Assert.False(
+            File.Exists(invocationMarker),
+            "the completion probe must exit before dotnet executes");
+        Assert.NotEqual(0, result.ExitCode);
+    }
+
     [Fact(DisplayName = "owner CLI output exactly matches the derived repository topology")]
     public void OwnerCliOutputExactlyMatchesDerivedRepositoryTopology()
     {

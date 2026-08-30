@@ -10,10 +10,38 @@ internal sealed record TestProjectTopologyProject(
 internal sealed record TestProjectTopologySnapshot(
     IReadOnlyList<TestProjectTopologyProject> Projects);
 
-internal sealed record TestProjectTopologyDebt(
-    string Kind,
-    string Subject,
-    string Related);
+internal sealed class TestProjectTopologyDebt : IEquatable<TestProjectTopologyDebt>
+{
+    internal TestProjectTopologyDebt(string kind, string subject, string related)
+    {
+        Kind = kind;
+        Subject = subject;
+        Related = related;
+    }
+
+    internal string Kind { get; }
+
+    internal string Subject { get; }
+
+    internal string Related { get; }
+
+    public bool Equals(TestProjectTopologyDebt? other) =>
+        other is not null
+        && string.Equals(Kind, other.Kind, StringComparison.Ordinal)
+        && string.Equals(Subject, other.Subject, StringComparison.OrdinalIgnoreCase)
+        && string.Equals(Related, other.Related, StringComparison.OrdinalIgnoreCase);
+
+    public override bool Equals(object? obj) => Equals(obj as TestProjectTopologyDebt);
+
+    public override int GetHashCode()
+    {
+        var hash = new HashCode();
+        hash.Add(Kind, StringComparer.Ordinal);
+        hash.Add(Subject, StringComparer.OrdinalIgnoreCase);
+        hash.Add(Related, StringComparer.OrdinalIgnoreCase);
+        return hash.ToHashCode();
+    }
+}
 
 internal sealed record TestProjectTopologyResult(
     bool IsAccepted,
