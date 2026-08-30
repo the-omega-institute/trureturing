@@ -455,10 +455,8 @@ jobs:
           # project/build/lock/global 输入 + inspector)、Lean 源(Trureturing.lean +
           # D5/**/*.lean)与 config(toolchain/lake-manifest/lakefile)三者的清单哈希。
 
-      # 精确 key 命中仍直接复用;prefix restore 只提供陈旧 delta 基线,不算 cache hit。
-      # adapter 与现行 delta 机器重验报告、provenance、materials 与 producer logs;
-      # 任一项不可信就不给 cache root,沿原路径全量生产。下游仍逐模块核对
-      # source_sha256,故陈旧报告不能被静默接受。
+      # 精确 key 命中仍直接复用;prefix restore 只提供陈旧 delta 基线,不算 cache hit。adapter 与现行 delta 机器重验报告、provenance、materials 与 producer logs;
+      # 任一项不可信就不给 cache root,沿原路径全量生产。下游仍逐模块核对 source_sha256,故陈旧报告不能被静默接受。
       - name: Restore canonical Lean report by input address
         id: report-cache
         uses: actions/cache/restore@v4
@@ -548,6 +546,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-
 
+      - name: Fetch required Lean release cache on dual miss
+        if: steps.report-reuse.outcome != 'success' && steps.lake-deps-cache.outputs.cache-hit != 'true' && steps.lake-build-cache.outputs.cache-hit != 'true'
+        env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '%s\n' '集成分支要求使用 release cache;取回失败即失败,不回落编译'
+          PATH="$HOME/.elan/bin:$PATH" candidate/tools/scripts/worktree/lean-cache-publish.sh fetch --repository "$GITHUB_WORKSPACE/candidate"
+
       - name: Produce source-bound canonical Lean reports
         if: steps.report-reuse.outcome != 'success'
         env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
@@ -604,13 +611,8 @@ jobs:
             --repository "$GITHUB_WORKSPACE/candidate" \
             --report "$target"
 
-      # pull_request_target runs get a token without cache-write scope, so this save
-      # can only ever fail there: run 31389667812 logged "cache write denied: token has
-      # no writable scopes". The two saves below already carry this exact guard; this
-      # one was missing it, so every PR attempted a write it could not perform. dev-push
-      # runs do write it successfully (run 31389340892).
-      # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;
-      # 分层 lake cache exact hit 时对应 key 也已存在。四个 save 只在真正跑过生产路径时执行。
+      # pull_request_target runs get a token without cache-write scope, so this save can only ever fail there: run 31389667812 logged "cache write denied: token has no writable scopes". The two saves below already carry this exact guard; this one was missing it, so every PR attempted a write it could not perform. dev-push runs do write it successfully (run 31389340892).
+      # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;分层 lake cache exact hit 时对应 key 也已存在。四个 save 只在真正跑过生产路径时执行。
       - name: Save candidate canonical Lean report (dev push only)
         if: success() && steps.report-reuse.outcome != 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         uses: actions/cache/save@v4
@@ -627,8 +629,7 @@ jobs:
           if-no-files-found: warn
           retention-days: 7
 
-      # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;
-      # 分层 lake cache exact hit 时对应 key 也已存在。四个 save 只在真正跑过生产路径时执行。
+      # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;分层 lake cache exact hit 时对应 key 也已存在。四个 save 只在真正跑过生产路径时执行。
       - name: Save elan toolchains (dev push only)
         # 不挂在 success() 上:elan 装成功就该存。否则一次下载失败会让 job 红、缓存不写、
         # 下次继续 miss,故障自我延续。
@@ -638,8 +639,7 @@ jobs:
           path: ~/.elan
           key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ hashFiles('candidate/lean-toolchain') }}
 
-      # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;
-      # 分层 lake cache exact hit 时对应 key 也已存在。四个 save 只在真正跑过生产路径时执行。
+      # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;分层 lake cache exact hit 时对应 key 也已存在。四个 save 只在真正跑过生产路径时执行。
       - name: Save Lean dependency artifacts (dev push only)
         if: success() && steps.report-reuse.outcome != 'success' && steps.lake-deps-cache.outputs.cache-hit != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         continue-on-error: true
