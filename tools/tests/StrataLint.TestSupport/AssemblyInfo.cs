@@ -5,3 +5,4 @@ using System.Runtime.CompilerServices;
 // 届时「起真进程的能力」在结构上只对 ScriptTests 可见。
 [assembly: InternalsVisibleTo("StrataLint.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.ScriptTests")]
+[assembly: InternalsVisibleTo("StrataLint.ArchitectureTests")]
