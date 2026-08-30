@@ -253,7 +253,7 @@ noncomputable def goldenIntegerRingEquiv : GoldenInt ≃+* GoldenIntegerRing :=
 noncomputable def goldenPhiInteger : GoldenIntegerRing :=
   goldenIntegerRingAlgEquiv.toRingEquiv phi
 
-private def sqrtFiveCoordinateOrder : Subring GoldenInt where
+private def evenSecondCoordinateSubring : Subring GoldenInt where
   carrier := {x | ∃ k : Int, x.b = 2 * k}
   zero_mem' := ⟨0, by simp⟩
   one_mem' := ⟨0, by simp⟩
@@ -273,9 +273,9 @@ private def sqrtFiveCoordinateOrder : Subring GoldenInt where
     simp only [b_mul, hkx, hky]
     ring
 
-/-- The nonmaximal order `Z[sqrt 5]` inside the actual ring of integers. -/
-noncomputable def sqrtFiveOrder : Subring GoldenIntegerRing :=
-  sqrtFiveCoordinateOrder.map goldenIntegerRingAlgEquiv.toRingEquiv
+/-- The image in `GoldenIntegerRing` of the subring with even second coordinate. -/
+noncomputable def goldenEvenSecondCoordinateOrder : Subring GoldenIntegerRing :=
+  evenSecondCoordinateSubring.map goldenIntegerRingAlgEquiv.toRingEquiv
 
 /-- The rational prime ideal `(2)`. -/
 def goldenTwoBaseIdeal : Ideal Int := Ideal.span {(2 : Int)}
@@ -333,31 +333,31 @@ noncomputable def goldenTwoFinitePlace :
   isPrime := goldenTwoPrimeIdeal_isMaximal.isPrime
   ne_bot := goldenTwoPrimeIdeal_ne_bot
 
-/-- The conductor of `Z[sqrt 5]` in `O_K`. -/
-noncomputable def sqrtFiveOrderConductor : Ideal GoldenIntegerRing where
-  carrier := {x | forall y : GoldenIntegerRing, x * y ∈ sqrtFiveOrder}
-  zero_mem' := by simp [sqrtFiveOrder]
+/-- The conductor of the transported even-second-coordinate subring in `GoldenIntegerRing`. -/
+noncomputable def goldenEvenSecondCoordinateOrderConductor : Ideal GoldenIntegerRing where
+  carrier := {x | forall y : GoldenIntegerRing, x * y ∈ goldenEvenSecondCoordinateOrder}
+  zero_mem' := by simp [goldenEvenSecondCoordinateOrder]
   add_mem' := by
     intro x y hx hy z
     rw [add_mul]
-    exact sqrtFiveOrder.add_mem (hx z) (hy z)
+    exact goldenEvenSecondCoordinateOrder.add_mem (hx z) (hy z)
   smul_mem' := by
     intro r x hx y
     simpa only [smul_eq_mul, mul_assoc, mul_left_comm] using hx (r * y)
 
 /-- The parity conductor is exactly the ideal defining the finite place above `2`. -/
-theorem sqrtFiveOrderConductor_eq_goldenTwoPrimeIdeal :
-    sqrtFiveOrderConductor = goldenTwoPrimeIdeal := by
+theorem goldenEvenSecondCoordinateOrderConductor_eq_goldenTwoPrimeIdeal :
+    goldenEvenSecondCoordinateOrderConductor = goldenTwoPrimeIdeal := by
   ext x
   let c : GoldenInt := goldenIntegerRingAlgEquiv.toRingEquiv.symm x
   constructor
   · intro hx
     have hOne := hx (1 : GoldenIntegerRing)
     have hPhi := hx goldenPhiInteger
-    rw [sqrtFiveOrder, Subring.mem_map_equiv] at hOne hPhi
-    have hOne' : c ∈ sqrtFiveCoordinateOrder := by
+    rw [goldenEvenSecondCoordinateOrder, Subring.mem_map_equiv] at hOne hPhi
+    have hOne' : c ∈ evenSecondCoordinateSubring := by
       simpa only [c, map_one, mul_one] using hOne
-    have hPhi' : c * phi ∈ sqrtFiveCoordinateOrder := by
+    have hPhi' : c * phi ∈ evenSecondCoordinateSubring := by
       simpa [c, goldenPhiInteger] using hPhi
     change ∃ k : Int, c.b = 2 * k at hOne'
     change ∃ k : Int, (c * phi).b = 2 * k at hPhi'
@@ -390,7 +390,7 @@ theorem sqrtFiveOrderConductor_eq_goldenTwoPrimeIdeal :
         (f := goldenIntegerRingAlgEquiv.toRingEquiv),
       goldenTwoCoordinateIdeal, Ideal.mem_span_singleton] at hx
     rcases hx with ⟨q, hq⟩
-    rw [sqrtFiveOrder, Subring.mem_map_equiv]
+    rw [goldenEvenSecondCoordinateOrder, Subring.mem_map_equiv]
     refine ⟨q.b * (goldenIntegerRingAlgEquiv.toRingEquiv.symm y).a +
       q.a * (goldenIntegerRingAlgEquiv.toRingEquiv.symm y).b +
       q.b * (goldenIntegerRingAlgEquiv.toRingEquiv.symm y).b, ?_⟩
