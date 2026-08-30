@@ -25,6 +25,8 @@ internal interface ICliEnvironment
 
     CommandResult ShowAtom(IReadOnlyList<string> arguments);
 
+    CommandResult ReviewEnvelope(IReadOnlyList<string> arguments);
+
     ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments);
 
     ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments);
@@ -121,6 +123,8 @@ internal static class CliApplication
                 RenderCommand(environment.AppendLedger(tail), console),
             ["ledger-revoke"] = static (environment, tail, console) =>
                 RenderCommand(environment.RevokeLedger(tail), console),
+            ["review-envelope"] = static (environment, tail, console) =>
+                RenderCommand(environment.ReviewEnvelope(tail), console),
             ["route"] = static (environment, tail, console) =>
                 RenderCommand(environment.Route(tail), console),
             ["selftest"] = static (environment, tail, console) =>

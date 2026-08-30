@@ -425,6 +425,9 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     public CommandResult ShowAtom(IReadOnlyList<string> arguments) =>
         ShowAtomCommand.Run(repository, arguments);
 
+    public CommandResult ReviewEnvelope(IReadOnlyList<string> arguments) =>
+        ReviewEnvelopeCommand.Run(repository, arguments);
+
     public ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments) =>
         scribeEmissionVerifier is null
             ? new ExplicitCommandResult(
