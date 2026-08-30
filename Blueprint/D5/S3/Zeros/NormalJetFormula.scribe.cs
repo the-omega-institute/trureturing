@@ -7,71 +7,72 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Zeros;
 internal sealed class NormalJetFormulaDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The conjugate Taylor channels determine every even normal jet and its first three values.",
+        "The actual completed-xi normal intensity determines every even Taylor coefficient.",
         H("Normal Jet Formula"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("normal-taylor-channel"),
-                DeclarationHandle.Create(
-                    "D5/S3/Zeros/NormalJetFormula.normalTaylorChannel"),
-                H("Normal Taylor channel"),
+                DescribeId.Create("critical-xi"),
+                DeclarationHandle.Create("D5/S3/Zeros/NormalJetFormula.criticalXi"),
+                H("Critical-line xi reading"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For a supplied real function, evaluation point, and complex direction, "
-                        + "this formal power series has nth coefficient equal to the nth "
-                        + "iterated derivative at that point times the nth directional phase "
-                        + "divided by n factorial."))),
+                    "At a real ordinate t, this is the real part of the canonical completed-xi "
+                        + "owner xiReading evaluated at one-half plus i times t. The imported "
+                        + "conjugate-reflection theorem proves that this value is real."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("normal-intensity-series"),
-                DeclarationHandle.Create(
-                    "D5/S3/Zeros/NormalJetFormula.normalIntensitySeries"),
-                H("Normal intensity series"),
+                DescribeId.Create("normal-intensity"),
+                DeclarationHandle.Create("D5/S3/Zeros/NormalJetFormula.normalIntensity"),
+                H("Actual normal intensity"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The formal normal intensity is constructed as the Cauchy product of the "
-                        + "Taylor channels in directions minus i and plus i."))),
+                    "For a real displacement delta and ordinate t, this is the complex norm "
+                        + "squared of the canonical xiReading at one-half plus delta plus i times t. "
+                        + "It is the source intensity itself, not a manufactured formal series."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("normal-jet"),
-                DeclarationHandle.Create(
-                    "D5/S3/Zeros/NormalJetFormula.normalJet"),
-                H("Even normal coefficient"),
+                DeclarationHandle.Create("D5/S3/Zeros/NormalJetFormula.normalJet"),
+                H("Even normal Taylor coefficient"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "At depth m, the normal jet is the real part of coefficient 2m in the "
-                        + "constructed normal intensity series. It is not defined by the closed "
-                        + "convolution formula proved below."))),
+                    "At depth m, the normal jet is the real iterated derivative of order 2m of "
+                        + "the actual normal intensity at displacement zero, divided by 2m "
+                        + "factorial. It is not defined by the convolution formula below."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("normal-jet-formula"),
                 DeclarationHandle.Create(
                     "D5/S3/Zeros/NormalJetFormula.normal_jet_formula"),
-                H("The normal jet convolution and its first three values"),
+                H("The completed-xi normal jet formula"),
                 StatementSource.FromAuthor(TheoremFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "For every real function Xi and every real point t, the public statement "
-                            + "gives the signed factorial convolution of Xi's iterated derivatives "
-                            + "at arbitrary depth, then states the depth zero, one, and two "
-                            + "expansions and the half-second-derivative identity as four "
-                            + "additional public conjuncts.")),
+                        "For every real ordinate, the first public conjunct gives every even "
+                            + "Taylor coefficient of the actual completed-xi intensity as the "
+                            + "signed factorial convolution of critical-line derivatives. Four "
+                            + "further public conjuncts state the depth zero, one, and two cases "
+                            + "and one half of the actual second displacement derivative.")),
                     Paragraph(Text(
-                        "The proof reads the coefficient of the Cauchy product of the two "
-                            + "Taylor channels. The phase product is minus one to the power "
-                            + "m+j, and two formal derivatives multiply coefficient two by two "
-                            + "factorial. Thus the normal jet is constructed from channel "
-                            + "semantics rather than defined to equal the target sum.")),
+                        "The proof uses the frozen differentiability of xiReading and its frozen "
+                            + "conjugate-reflection identity. A private entire extension identifies "
+                            + "the product of the two affine critical-line channels with the real "
+                            + "norm-squared intensity before the iterated product rule is applied.")),
                     Paragraph(Text(
-                        "Repository body-shape and name searches found no existing normal-jet "
-                            + "owner. Pinned mathlib supplies PowerSeries.mk, coeff_mul, the "
-                            + "antidiagonal-to-range identity, derivative, and coeff_derivative; "
-                            + "the deposited theorem directly applies those primitives."))),
-                DescribeRole.Theorem))));
+                        "Pinned mathlib supplies the iterated Leibniz rule, affine derivative laws, "
+                            + "and the real-to-complex derivative bridges. No analyticity premise is "
+                            + "added to the theorem because the canonical xiReading owner already "
+                            + "proves global complex differentiability."))),
+                DescribeRole.Theorem)),
+        [
+            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Zeros/CompletedZeta")),
+            DocumentEdge.Dependency.Create(GidRef.Create(
+                "D5/S3/Zeros/Symmetry/ZetaConjugationCovariance")),
+        ]));
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
 
@@ -82,15 +83,16 @@ internal sealed class NormalJetFormulaDocument : IScribeDocumentDefinition
 
     private static Formula TheoremFormula()
     {
-        Formula xi = F.Id("Xi");
         Formula t = F.Id("t");
         Formula m = F.Id("m");
         Formula j = F.Id("j");
+        Formula delta = F.Id("delta");
+        Formula criticalXi = F.Id("criticalXi");
         Formula twoM = Seq(D(2), m);
         Formula reflectedIndex = Seq(twoM, Sp, Minus, Sp, j);
-        Formula derivativeAtJ = Call("iteratedDeriv", j, xi, t);
+        Formula derivativeAtJ = Call("iteratedDeriv", j, criticalXi, t);
         Formula derivativeAtReflectedIndex = Call(
-            "iteratedDeriv", reflectedIndex, xi, t);
+            "iteratedDeriv", reflectedIndex, criticalXi, t);
         Formula sign = Power(
             Seq(Open, Minus, D(1), Close),
             Seq(m, Sp, Plus, Sp, j));
@@ -103,11 +105,11 @@ internal sealed class NormalJetFormulaDocument : IScribeDocumentDefinition
         Formula convolution = Seq(
             Sum, Underscore, Grp(Seq(j, Eq, D(0))),
             Caret, Grp(twoM), Sp, summand);
-        Formula xiAtT = Call("Xi", t);
-        Formula derivativeOne = Call("iteratedDeriv", D(1), xi, t);
-        Formula derivativeTwo = Call("iteratedDeriv", D(2), xi, t);
-        Formula derivativeThree = Call("iteratedDeriv", D(3), xi, t);
-        Formula derivativeFour = Call("iteratedDeriv", D(4), xi, t);
+        Formula xiAtT = Call("criticalXi", t);
+        Formula derivativeOne = Call("iteratedDeriv", D(1), criticalXi, t);
+        Formula derivativeTwo = Call("iteratedDeriv", D(2), criticalXi, t);
+        Formula derivativeThree = Call("iteratedDeriv", D(3), criticalXi, t);
+        Formula derivativeFour = Call("iteratedDeriv", D(4), criticalXi, t);
         Formula firstLaguerre = Seq(
             Power(derivativeOne, D(2)), Sp, Minus, Sp,
             xiAtT, Sp, Cdot, Sp, derivativeTwo);
@@ -118,33 +120,25 @@ internal sealed class NormalJetFormulaDocument : IScribeDocumentDefinition
             derivativeOne, Sp, Cdot, Sp, derivativeThree, Sp, Plus, Sp,
             new Formula.Fraction(D(1), D(1, 2)), Sp, Cdot, Sp,
             xiAtT, Sp, Cdot, Sp, derivativeFour);
-        Formula twiceDifferentiated = Call(
-            "derivative",
-            Seq(Mathbb, Grp(F.Id("C"))),
-            Call(
-                "derivative",
-                Seq(Mathbb, Grp(F.Id("C"))),
-                Call("normalIntensitySeries", xi, t)));
+        Formula intensityAsFunction = Seq(
+            Open, delta, Sp, Mapsto, Sp, Call("normalIntensity", delta, t), Close);
         Formula secondNormalDerivative = new Formula.Fraction(
-            Seq(Re, Grp(Call("coeff", D(0), twiceDifferentiated))),
-            D(2));
+            Call("iteratedDeriv", D(2), intensityAsFunction, D(0)), D(2));
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, xi, Colon, Sp,
-            Reals(), Sp, To, Sp, Reals(), Comma, Sp,
-            t, Colon, Sp, Reals(), Comma,
+            Forall, Sp, t, Colon, Sp, Reals(), Comma,
             RowBreak, Grp(),
             Open, Forall, Sp, m, Colon, Sp, Naturals(), Comma, Sp,
-            Call("normalJet", xi, t, m), Sp, Eq, Sp, convolution, Close, Sp, Land,
+            Call("normalJet", t, m), Sp, Eq, Sp, convolution, Close, Sp, Land,
             RowBreak, Grp(),
-            Call("normalJet", xi, t, D(0)), Sp, Eq, Sp,
+            Call("normalJet", t, D(0)), Sp, Eq, Sp,
             Power(xiAtT, D(2)), Sp, Land,
             RowBreak, Grp(),
-            Call("normalJet", xi, t, D(1)), Sp, Eq, Sp,
+            Call("normalJet", t, D(1)), Sp, Eq, Sp,
             firstLaguerre, Sp, Land,
             RowBreak, Grp(),
-            Call("normalJet", xi, t, D(2)), Sp, Eq, Sp,
+            Call("normalJet", t, D(2)), Sp, Eq, Sp,
             depthTwo, Sp, Land,
             RowBreak, Grp(),
             secondNormalDerivative, Sp, Eq, Sp, firstLaguerre, Dot,
