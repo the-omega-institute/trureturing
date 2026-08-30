@@ -48,26 +48,45 @@ public static partial class FrozenLedger
                     throw new FormatException("Candidate frozen event set duplicates an existing event hash.");
                 }
 
-                if (item.EventType != "Freeze")
+                if (item.EventType == "Freeze")
                 {
-                    throw new FormatException(
-                        $"Event type {item.EventType} is not legal in a candidate event set.");
+                    var freeze = ParseFreeze(item.Payload, catalog);
+                    var freezePath = RepoPath.CreateKnown(freeze.DescriptorSelector);
+                    if (!allCaseIds.Add(freeze.CaseId)
+                        || activePathCases.ContainsKey(freezePath))
+                    {
+                        throw new FormatException(
+                            "Freeze reused an active case ID or module path; revoke the active snapshot first.");
+                    }
+
+                    var material = catalog.ByPath[freezePath];
+                    active.Add(
+                        freeze.CaseId,
+                        new FrozenActiveEntry(material, freeze, item.EventHash));
+                    activePathCases.Add(freezePath, freeze.CaseId);
+                    continue;
                 }
 
-                var freeze = ParseFreeze(item.Payload, catalog);
-                var freezePath = RepoPath.CreateKnown(freeze.DescriptorSelector);
-                if (!allCaseIds.Add(freeze.CaseId)
-                    || activePathCases.ContainsKey(freezePath))
+                if (item.EventType == "Reanchor")
                 {
-                    throw new FormatException(
-                        "Freeze reused an active case ID or module path; revoke the active snapshot first.");
+                    var reanchor = ParseReanchor(item.Payload, catalog, out var previousEventHash);
+                    if (!active.TryGetValue(reanchor.CaseId, out var current))
+                    {
+                        throw new FormatException("Reanchor targets a case that is not active.");
+                    }
+
+                    ValidateReanchorTransition(current, reanchor, previousEventHash);
+                    var reanchorPath = RepoPath.CreateKnown(reanchor.DescriptorSelector);
+                    active[reanchor.CaseId] = new FrozenActiveEntry(
+                        catalog.ByPath[reanchorPath],
+                        reanchor,
+                        item.EventHash,
+                        "Reanchor");
+                    continue;
                 }
 
-                var material = catalog.ByPath[freezePath];
-                active.Add(
-                    freeze.CaseId,
-                    new FrozenActiveEntry(material, freeze, item.EventHash));
-                activePathCases.Add(freezePath, freeze.CaseId);
+                throw new FormatException(
+                    $"Event type {item.EventType} is not legal in a candidate event set.");
             }
 
             var currentClosedPaths = catalog.States

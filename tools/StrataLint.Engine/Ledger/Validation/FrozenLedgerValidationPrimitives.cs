@@ -9,26 +9,47 @@ public static partial class FrozenLedger
 {
     private static FrozenFreezePayload ParseFreeze(
         JsonElement payload,
-        FrozenMaterialCatalog catalog)
+        FrozenMaterialCatalog catalog) =>
+        ParseSnapshot(payload, catalog, "Freeze");
+
+    private static FrozenFreezePayload ParseReanchor(
+        JsonElement payload,
+        FrozenMaterialCatalog catalog,
+        out string previousEventHash)
     {
-        RequireEventPayloadFields(payload, "Freeze");
+        var result = ParseSnapshot(payload, catalog, "Reanchor");
+        previousEventHash = RequiredString(payload, "previous_event_hash");
+        if (!FrozenHashSyntax.IsSha256(previousEventHash))
+        {
+            throw new FormatException("Reanchor previous_event_hash is malformed.");
+        }
+
+        return result;
+    }
+
+    private static FrozenFreezePayload ParseSnapshot(
+        JsonElement payload,
+        FrozenMaterialCatalog catalog,
+        string eventType)
+    {
+        RequireEventPayloadFields(payload, eventType);
         var pathText = RequiredString(payload, "descriptor_selector");
         if (!RepoPath.TryCreate(pathText, out var path) || !catalog.ByPath.TryGetValue(path, out var expectedMaterial))
         {
-            throw new FormatException($"Freeze targets a non-Closed or unknown module {pathText}.");
+            throw new FormatException($"{eventType} targets a non-Closed or unknown module {pathText}.");
         }
 
         var statementText = RequiredString(payload, "statement_id");
         if (!FrozenHashSyntax.IsSha256(statementText))
         {
-            throw new FormatException("Freeze contains a malformed content address.");
+            throw new FormatException($"{eventType} contains a malformed content address.");
         }
 
         var declarationStatementIds = ParseDeclarationStatementIds(payload);
         var prerequisites = RequiredStringArray(payload, "prerequisite_frozen_node_ids")
             .Select(item => FrozenHashSyntax.IsSha256(item)
                 ? FrozenNodeId.Create(item)
-                : throw new FormatException("Freeze prerequisite contains a malformed content address."))
+                : throw new FormatException($"{eventType} prerequisite contains a malformed content address."))
             .ToImmutableArray();
         var result = new FrozenFreezePayload(
             pathText,
@@ -40,10 +61,39 @@ public static partial class FrozenLedger
             || !result.PrerequisiteFrozenNodeIds.SequenceEqual(expectedMaterial.PrerequisiteFrozenNodeIds)
             || result.DescriptorSelector != expectedMaterial.RepoPath.Value)
         {
-            throw new FormatException($"Freeze payload does not match recomputed material for {path.Value}.");
+            throw new FormatException(
+                $"{eventType} payload does not match recomputed material for {path.Value}.");
         }
 
         return result;
+    }
+
+    internal static void ValidateReanchorTransition(
+        FrozenActiveEntry current,
+        FrozenFreezePayload reanchor,
+        string previousEventHash)
+    {
+        if (!string.Equals(current.EventHash, previousEventHash, StringComparison.Ordinal))
+        {
+            throw new FormatException(
+                "Reanchor previous_event_hash does not name the current active event.");
+        }
+
+        if (current.Payload.CaseId != reanchor.CaseId
+            || current.Payload.DescriptorSelector != reanchor.DescriptorSelector
+            || current.Payload.StatementId != reanchor.StatementId
+            || !current.Payload.DeclarationStatementIds.SequenceEqual(
+                reanchor.DeclarationStatementIds))
+        {
+            throw new FormatException(
+                "Reanchor may not change case, module, statement, or declaration identities.");
+        }
+
+        if (current.Payload.PrerequisiteFrozenNodeIds.SequenceEqual(
+            reanchor.PrerequisiteFrozenNodeIds))
+        {
+            throw new FormatException("Reanchor must change prerequisite coordinates.");
+        }
     }
 
     internal static ImmutableArray<FrozenDeclarationStatement> ParseDeclarationStatementIds(

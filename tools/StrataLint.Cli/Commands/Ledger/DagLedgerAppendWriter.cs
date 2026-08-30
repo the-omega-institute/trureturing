@@ -40,7 +40,7 @@ internal static class DagLedgerAppendWriter
             {
                 return new CommandResult(
                     true,
-                    $"LEDGER_APPEND appended_freezes=0 no catalog reconciliation required "
+                    $"LEDGER_APPEND appended_freezes=0 appended_reanchors=0 no catalog reconciliation required "
                     + $"events={context.Baseline.EventCount} head={context.Baseline.HeadHash}\n",
                     string.Empty);
             }
@@ -65,11 +65,17 @@ internal static class DagLedgerAppendWriter
             var freezes = prospective
                 .Where(static item => item.EventType == "Freeze")
                 .ToImmutableArray();
+            var reanchors = prospective
+                .Where(static item => item.EventType == "Reanchor")
+                .ToImmutableArray();
             var output = $"LEDGER_APPEND appended_freezes={freezes.Length} "
+                + $"appended_reanchors={reanchors.Length} "
                 + $"events={candidate.EventCount} "
                 + $"head={context.BaseView.EventSetRoot(prospective.Select(static item => item.EventHash))}\n"
                 + string.Concat(freezes.Select(static item =>
-                    $"FROZEN {item.DescriptorPath.Value}\n"));
+                    $"FROZEN {item.DescriptorPath.Value}\n"))
+                + string.Concat(reanchors.Select(static item =>
+                    $"REANCHORED {item.DescriptorPath.Value}\n"));
             return new CommandResult(true, output, string.Empty);
         }
         // Preparation marks report and repository faults now. Without these two the wrapped

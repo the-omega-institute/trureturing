@@ -12,6 +12,15 @@ public static partial class FrozenLedger
         "statement_id",
     ];
 
+    private static readonly string[] ReanchorPayloadFields =
+    [
+        "declaration_statement_ids",
+        "descriptor_selector",
+        "prerequisite_frozen_node_ids",
+        "previous_event_hash",
+        "statement_id",
+    ];
+
     internal static RepoPath ParseAcceptedEventDescriptorPath(
         string eventType,
         JsonElement payload)
@@ -25,11 +34,13 @@ public static partial class FrozenLedger
 
     private static void RequireEventPayloadFields(JsonElement payload, string eventType)
     {
-        if (eventType != "Freeze")
+        var fields = eventType switch
         {
-            throw new FormatException($"Unknown frozen event type {eventType}.");
-        }
+            "Freeze" => FreezePayloadFields,
+            "Reanchor" => ReanchorPayloadFields,
+            _ => throw new FormatException($"Unknown frozen event type {eventType}."),
+        };
 
-        RequireObjectFields(payload, "Freeze payload", FreezePayloadFields);
+        RequireObjectFields(payload, $"{eventType} payload", fields);
     }
 }

@@ -250,26 +250,48 @@ public static partial class FrozenLedger
                             $"New accepted event must use schema_version {FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion}.");
                     }
 
-                    if (item.EventType != "Freeze")
+                    if (item.EventType == "Freeze")
                     {
-                        throw new FormatException(
-                            $"Event type {item.EventType} is not legal in an admission delta.");
+                        var freeze = ParseFreeze(item.Payload, catalog);
+                        var freezePath = RepoPath.CreateKnown(freeze.DescriptorSelector);
+                        if (!allCaseIds.Add(freeze.CaseId)
+                            || activePathCases.ContainsKey(freezePath))
+                        {
+                            throw new FormatException(
+                                "Freeze reused an active case ID or module path.");
+                        }
+
+                        var material = catalog.ByPath[freezePath];
+                        active.Add(
+                            freeze.CaseId,
+                            new FrozenActiveEntry(material, freeze, item.EventHash));
+                        activePathCases.Add(freezePath, freeze.CaseId);
+                        continue;
                     }
 
-                    var freeze = ParseFreeze(item.Payload, catalog);
-                    var freezePath = RepoPath.CreateKnown(freeze.DescriptorSelector);
-                    if (!allCaseIds.Add(freeze.CaseId)
-                        || activePathCases.ContainsKey(freezePath))
+                    if (item.EventType == "Reanchor")
                     {
-                        throw new FormatException(
-                            "Freeze reused an active case ID or module path.");
+                        var reanchor = ParseReanchor(
+                            item.Payload,
+                            catalog,
+                            out var previousEventHash);
+                        if (!active.TryGetValue(reanchor.CaseId, out var current))
+                        {
+                            throw new FormatException("Reanchor targets a case that is not active.");
+                        }
+
+                        ValidateReanchorTransition(current, reanchor, previousEventHash);
+                        var reanchorPath = RepoPath.CreateKnown(reanchor.DescriptorSelector);
+                        active[reanchor.CaseId] = new FrozenActiveEntry(
+                            catalog.ByPath[reanchorPath],
+                            reanchor,
+                            item.EventHash,
+                            "Reanchor");
+                        continue;
                     }
 
-                    var material = catalog.ByPath[freezePath];
-                    active.Add(
-                        freeze.CaseId,
-                        new FrozenActiveEntry(material, freeze, item.EventHash));
-                    activePathCases.Add(freezePath, freeze.CaseId);
+                    throw new FormatException(
+                        $"Event type {item.EventType} is not legal in an admission delta.");
                 }
                 catch (Exception exception) when (exception is FormatException
                     or InvalidOperationException

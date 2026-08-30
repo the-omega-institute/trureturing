@@ -105,7 +105,9 @@ public static partial class FrozenLedger
             var materialMatches = FrozenLedgerHistoricalFreezeMatcher.HistoricalActiveFreezeMatches(
                 entry.Payload,
                 material,
-                out _);
+                out _)
+                && entry.Payload.PrerequisiteFrozenNodeIds.SequenceEqual(
+                    material.PrerequisiteFrozenNodeIds);
             if (materialMatches)
             {
                 active[caseId] = entry with { Material = material };

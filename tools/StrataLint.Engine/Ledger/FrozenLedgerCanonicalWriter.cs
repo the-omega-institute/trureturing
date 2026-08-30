@@ -25,16 +25,7 @@ internal static class FrozenLedgerGenerator
         IReadOnlyDictionary<RepoPath, FrozenActiveEntry> activeByPath,
         FrozenMaterialCatalog candidateCatalog)
     {
-        var recordedPathsByIdentity = activeByPath.Values.ToDictionary(
-            static entry => entry.Material.FrozenNodeId,
-            static entry => entry.Material.RepoPath);
-        var currentPathsByIdentity = activeByPath.Values
-            .Select(static entry => entry.Material)
-            .Concat(candidateCatalog.ClosedNodes)
-            .GroupBy(static material => material.FrozenNodeId)
-            .ToDictionary(
-                static group => group.Key,
-                static group => group.Select(static material => material.RepoPath).Distinct().Single());
+        var reanchors = new Dictionary<RepoPath, FrozenLedgerDraft>();
         foreach (var (path, activeEntry) in activeByPath)
         {
             if (!candidateCatalog.ByPath.TryGetValue(path, out var candidate))
@@ -42,15 +33,19 @@ internal static class FrozenLedgerGenerator
                 continue;
             }
 
-            if (FrozenLedgerHistoricalFreezeMatcher.HistoricalActiveFreezeMatches(
+            var propositionMatches = FrozenLedgerHistoricalFreezeMatcher.HistoricalActiveFreezeMatches(
                 activeEntry.Payload,
                 candidate,
-                out _))
+                out _);
+            if (propositionMatches
+                && activeEntry.Payload.PrerequisiteFrozenNodeIds.SequenceEqual(
+                    candidate.PrerequisiteFrozenNodeIds))
             {
                 continue;
             }
 
-            if (activeEntry.Payload.StatementId != candidate.StatementId
+            if (!propositionMatches
+                || activeEntry.Payload.StatementId != candidate.StatementId
                 || !activeEntry.Payload.DeclarationStatementIds.SequenceEqual(
                     candidate.DeclarationStatementIds))
             {
@@ -58,11 +53,21 @@ internal static class FrozenLedgerGenerator
                     $"Active module {path.Value} statement identity changed; append Revoke before rerunning ledger-append.");
             }
 
-            throw new InvalidOperationException(
-                $"Active module {path.Value} changed identity; append Revoke before rerunning ledger-append.");
+            reanchors.Add(
+                path,
+                new FrozenLedgerDraft(
+                    "Reanchor",
+                    FrozenLedgerCanonicalWriter.ReanchorElement(
+                        FrozenLedgerCanonicalWriter.FreezePayload(candidate),
+                        activeEntry.EventHash)));
         }
 
-        var payloads = candidateCatalog.ClosedNodes
+        var reanchorDrafts = LeanImportAdjacency.DependenciesFirst(
+                reanchors.Keys,
+                candidateCatalog.Adjacency)
+            .Where(reanchors.ContainsKey)
+            .Select(path => reanchors[path]);
+        var freezes = candidateCatalog.ClosedNodes
             .Where(node => !activeByPath.ContainsKey(node.RepoPath))
             .Select(FrozenLedgerCanonicalWriter.FreezePayload)
             .OrderBy(static payload => payload.DescriptorSelector, StringComparer.Ordinal)
@@ -70,7 +75,7 @@ internal static class FrozenLedgerGenerator
                 "Freeze",
                 FrozenLedgerCanonicalWriter.FreezeElement(payload)))
             .ToImmutableArray();
-        return payloads;
+        return reanchorDrafts.Concat(freezes).ToImmutableArray();
     }
 
 }
@@ -122,14 +127,33 @@ internal static class FrozenLedgerCanonicalWriter
         return element;
     }
 
+    internal static JsonElement ReanchorElement(
+        FrozenFreezePayload payload,
+        string previousEventHash) =>
+        JsonSerializer.SerializeToElement(new
+        {
+            declaration_statement_ids = payload.DeclarationStatementIds.Select(static declaration => new
+            {
+                declaration_name_key = declaration.DeclarationNameKey,
+                kind = declaration.Kind,
+                statement_id = declaration.StatementId.Value,
+            }),
+            descriptor_selector = payload.DescriptorSelector,
+            prerequisite_frozen_node_ids = payload.PrerequisiteFrozenNodeIds.Select(static id => id.Value),
+            previous_event_hash = previousEventHash,
+            statement_id = payload.StatementId.Value,
+        });
+
     internal static (ImmutableArray<byte> Bytes, string Hash) WriteDagEvent(
         string eventType,
         JsonElement payload,
         int? schemaVersion = null)
     {
-        if (eventType != "Freeze")
+        if (eventType is not ("Freeze" or "Reanchor"))
         {
-            throw new ArgumentOutOfRangeException(nameof(eventType), "Only Freeze events are stored in ledger v5.");
+            throw new ArgumentOutOfRangeException(
+                nameof(eventType),
+                "Only Freeze and Reanchor events are stored in ledger v5.");
         }
 
         var version = schemaVersion ?? CurrentDagSchemaVersion;
@@ -181,7 +205,7 @@ internal static class FrozenLedgerCanonicalWriter
         }
 
         var type = eventType.GetString()!;
-        if (type != "Freeze")
+        if (type is not ("Freeze" or "Reanchor"))
         {
             message = $"content-addressed event type {type} is not legal in ledger v5.";
             return false;
