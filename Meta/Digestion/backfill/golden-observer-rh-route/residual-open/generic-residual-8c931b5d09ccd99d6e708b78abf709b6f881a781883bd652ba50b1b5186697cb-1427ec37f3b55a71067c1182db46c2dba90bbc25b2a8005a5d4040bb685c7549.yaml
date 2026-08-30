@@ -1,0 +1,10 @@
+ast_path: section/义务清单-预登记-elementary-优先/clause/4
+fingerprints:
+  raw_sha256: sha256:8c931b5d09ccd99d6e708b78abf709b6f881a781883bd652ba50b1b5186697cb
+  normalized_sha256: sha256:8c931b5d09ccd99d6e708b78abf709b6f881a781883bd652ba50b1b5186697cb
+cas_ref: sha256:8c931b5d09ccd99d6e708b78abf709b6f881a781883bd652ba50b1b5186697cb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

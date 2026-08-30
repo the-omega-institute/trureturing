@@ -1,0 +1,10 @@
+ast_path: section/第二部-学费单调律/clause/2
+fingerprints:
+  raw_sha256: sha256:89b9ba797a060fcdcd3ef9286626fb04d50dbbe3f87b2f41e5c9a5aa8746d09b
+  normalized_sha256: sha256:89b9ba797a060fcdcd3ef9286626fb04d50dbbe3f87b2f41e5c9a5aa8746d09b
+cas_ref: sha256:89b9ba797a060fcdcd3ef9286626fb04d50dbbe3f87b2f41e5c9a5aa8746d09b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

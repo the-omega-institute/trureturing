@@ -1,0 +1,14 @@
+ast_path: 定义/5.1
+fingerprints:
+  raw_sha256: sha256:e2171ea1251042ac224cdc18bc3f3bcdcb080419340230f0344b464fc42fb22d
+  normalized_sha256: sha256:e2171ea1251042ac224cdc18bc3f3bcdcb080419340230f0344b464fc42fb22d
+cas_ref: sha256:e2171ea1251042ac224cdc18bc3f3bcdcb080419340230f0344b464fc42fb22d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-d73d12cc874d99767a9afda48d0eefc9628df9cc6fa05000be741ceabbc79156-8a114c0c50e72994e2dbf603107ee344a8587a73c94d103ec873d8a2bb995c2b
+    - generic-residual-3712d69c1eb5927ca395dae651aa527a2d6d4beb53ba50c242cddc732a5050b7-0d8a5359a82a06205aee28992b3823c3bb01d5cae37ffff4c33bc1bd38f373bd
+    - generic-residual-d0924d8b81a209703b801b47f518b9e526a9612e170c5caffd88fa343c39a9cb-1927699683dca8b1af310d590a516d12bcf7956be0b24447d1cf1f0db3a4f7e8
