@@ -8,3 +8,7 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: D5 supplies generic nested-frontier and finite-window sampling convergence theorems, but no canonical xi local-completion predicate at scale one half, no theorem constructing natural-budget completions from RH, and no weighted local-to-global uniqueness theorem identifying every limiting positive spectrum with the singular pure-point xi zero measure. A generic proof can close only by adding cluster domination and singularity as hypotheses, which are consequences asserted by the source rather than premises of theorem 498.2 and therefore would under-cover the named theorem.
+    reentry_condition: Construct the canonical xi local-completion family and resolvent budget, prove RH gives nonempty natural-budget completions at every positive window, and prove optimizer compactness plus global Fourier-source uniqueness yields a limiting measure equal to the pure-point xi spectrum while preserving any limiting normalized-Lebesgue floor.
+    blocker_class: missing-prerequisite
