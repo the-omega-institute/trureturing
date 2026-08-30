@@ -142,8 +142,8 @@ internal static partial class RepositoryRules
         ArgumentNullException.ThrowIfNull(snapshot);
         return BuildDebtGraph(snapshot).OwnedTestProjects
             .Select(static project => project.AssemblyName)
-            .Distinct(StringComparer.Ordinal)
-            .Order(StringComparer.Ordinal)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .Order(StringComparer.OrdinalIgnoreCase)
             .ToImmutableArray();
     }
 
@@ -163,17 +163,17 @@ internal static partial class RepositoryRules
             .Where(static project => project.IsOwnedTest)
             .ToArray();
         var productionByIdentity = productionProjects
-            .GroupBy(static project => project.AssemblyName, StringComparer.Ordinal)
+            .GroupBy(static project => project.AssemblyName, StringComparer.OrdinalIgnoreCase)
             .ToDictionary(
                 static group => group.Key,
                 static group => group.ToArray(),
-                StringComparer.Ordinal);
+                StringComparer.OrdinalIgnoreCase);
         var ownedTestsByIdentity = ownedTestProjects
-            .GroupBy(static project => project.AssemblyName, StringComparer.Ordinal)
+            .GroupBy(static project => project.AssemblyName, StringComparer.OrdinalIgnoreCase)
             .ToDictionary(
                 static group => group.Key,
                 static group => group.ToArray(),
-                StringComparer.Ordinal);
+                StringComparer.OrdinalIgnoreCase);
         var productionByPath = productionProjects.ToDictionary(
             static project => project.Path,
             StringComparer.Ordinal);
@@ -220,7 +220,7 @@ internal static partial class RepositoryRules
         {
             var expectedProductionIdentity = test.AssemblyName.EndsWith(
                     ".Tests",
-                    StringComparison.Ordinal)
+                    StringComparison.OrdinalIgnoreCase)
                 ? test.AssemblyName[..^".Tests".Length]
                 : string.Empty;
             var matchingProduction = expectedProductionIdentity.Length > 0
@@ -375,12 +375,14 @@ internal static partial class RepositoryRules
         var missingIdentities = baseGraph.Debt
             .Where(static debt => debt.Kind == MissingOwnedProject)
             .Select(static debt => debt.Related)
-            .ToHashSet(StringComparer.Ordinal);
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
         return candidateGraph.OwnedTestProjects.Any(candidate =>
             missingIdentities.Contains(candidate.AssemblyName)
             && !baseGraph.OwnedTestProjects.Any(existing =>
                 existing.Path == candidate.Path
-                && existing.AssemblyName == candidate.AssemblyName));
+                && StringComparer.OrdinalIgnoreCase.Equals(
+                    existing.AssemblyName,
+                    candidate.AssemblyName)));
     }
 
     private static bool HasLiteralXunitReference(string content)

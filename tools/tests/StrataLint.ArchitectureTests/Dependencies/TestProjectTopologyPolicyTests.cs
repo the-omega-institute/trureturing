@@ -452,6 +452,45 @@ public sealed class TestProjectTopologyPolicyTests
         Assert.Equal(["Alpha.Tests", "Zulu.Tests"], assemblies.ToArray());
     }
 
+    [Fact(DisplayName = "assembly identity matching ignores case while xunit marker stays literal")]
+    public void AssemblyIdentityMatchingIsCaseInsensitiveButXunitMarkerIsLiteral()
+    {
+        var assemblies = TestProjectTopologyPolicy.CalculateOwnerAssemblies(Snapshot(
+            Production("CaseInsensitive", "CaseInsensitive"),
+            OwnedTest(
+                "CaseInsensitive.Tests",
+                "caseinsensitive.tests",
+                "../../CaseInsensitive/CaseInsensitive.csproj")));
+
+        Assert.Equal(["caseinsensitive.tests"], assemblies.ToArray());
+        Assert.Empty(TestProjectTopologyPolicy.CalculateDebt(Snapshot(
+            Production("CaseInsensitive", "CaseInsensitive"),
+            OwnedTest(
+                "CaseInsensitive.Tests",
+                "caseinsensitive.tests",
+                "../../CaseInsensitive/CaseInsensitive.csproj"))));
+
+        var packageNearMiss = OwnedTest(
+                "CaseInsensitiveNearMiss.Tests",
+                "caseinsensitive.tests",
+                "../../CaseInsensitive/CaseInsensitive.csproj")
+            with
+            {
+                Content = OwnedTest(
+                        "CaseInsensitiveNearMiss.Tests",
+                        "caseinsensitive.tests",
+                        "../../CaseInsensitive/CaseInsensitive.csproj")
+                    .Content.Replace(
+                        "Include=\"xunit\"",
+                        "Include=\"XUnit\"",
+                        StringComparison.Ordinal),
+            };
+
+        Assert.Empty(TestProjectTopologyPolicy.CalculateOwnerAssemblies(Snapshot(
+            Production("CaseInsensitive", "CaseInsensitive"),
+            packageNearMiss)));
+    }
+
     [Fact]
     public void CurrentRepositoryCandidateDeltaIsAcceptedByTheSameRatchet()
     {

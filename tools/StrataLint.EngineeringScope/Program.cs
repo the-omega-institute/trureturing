@@ -46,7 +46,7 @@ internal static class Program
 
             if (arguments.FirstOrDefault() == "list-test-owner-assemblies")
             {
-                return ListTestOwnerAssemblies(arguments.Skip(1).ToArray());
+                return ListTestOwnerAssemblies(arguments.Skip(1).ToArray(), standardOutput);
             }
 
             var options = Options.Parse(arguments);
@@ -186,7 +186,9 @@ internal static class Program
     private static int VerifyTestEvidence(string resultsDirectory) =>
         TestResultEvidence.Load(resultsDirectory).Executed;
 
-    private static int ListTestOwnerAssemblies(IReadOnlyList<string> arguments)
+    private static int ListTestOwnerAssemblies(
+        IReadOnlyList<string> arguments,
+        TextWriter standardOutput)
     {
         if (arguments.Count != 2
             || arguments[0] != "--repository"
@@ -197,9 +199,16 @@ internal static class Program
         }
 
         var snapshot = RepositoryRules.ReadTrackedProjects(Path.GetFullPath(arguments[1]));
-        foreach (var assembly in RepositoryRules.CalculateOwnerAssemblies(snapshot))
+        var assemblies = RepositoryRules.CalculateOwnerAssemblies(snapshot);
+        if (assemblies.Length == 0)
         {
-            Console.WriteLine(assembly);
+            throw new InvalidDataException(
+                "list-test-owner-assemblies derived zero owner assemblies");
+        }
+
+        foreach (var assembly in assemblies)
+        {
+            standardOutput.WriteLine(assembly);
         }
 
         return 0;

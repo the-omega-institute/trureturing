@@ -3,9 +3,15 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
 RESULTS_DIRECTORY="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-test-results.XXXXXXXX")"
+completed=0
 
 finish() {
   local rc="$1"
+  # Bash 3.2 reports zero to an EXIT trap after a nounset expansion error. The
+  # completion marker keeps that shell-level failure fail-closed.
+  if [[ "$rc" -eq 0 && "$completed" -ne 1 ]]; then
+    rc=1
+  fi
   trap - EXIT
   rm -rf -- "$RESULTS_DIRECTORY"
   exit "$rc"
@@ -37,4 +43,7 @@ fi
 dotnet run \
   --project "$ROOT/tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" \
   --configuration Release --no-build --no-launch-profile -- \
-  verify-trx --results-directory "$RESULTS_DIRECTORY" "${OWNER_ASSEMBLY_ARGS[@]}"
+  verify-trx --results-directory "$RESULTS_DIRECTORY" \
+  ${OWNER_ASSEMBLY_ARGS[@]+"${OWNER_ASSEMBLY_ARGS[@]}"}
+
+completed=1
