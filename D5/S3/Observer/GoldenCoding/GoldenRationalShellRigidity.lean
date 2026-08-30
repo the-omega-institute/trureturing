@@ -27,6 +27,8 @@ noncomputable section
 namespace D5.S3.Observer.GoldenCoding.GoldenRationalShellRigidity
 
 open scoped goldenRatio
+open D5.S3.CompletionDynamics.GoldenMobius.GoldenScaleHelix
+open D5.S3.Observer.GoldenCoding.PrimeGoldenScaleCoordinate
 
 /-- Every strictly positive natural power of the golden ratio is irrational. -/
 theorem golden_ratio_positive_power_irrational (n : ℕ) :
@@ -93,14 +95,74 @@ theorem rational_shell_collision_rigidity
   refine ⟨rfl, ?_⟩
   exact_mod_cast hCollision
 
-/-- The hypotheses are inhabited by every nonzero rational at zero depth. -/
-example (q : ℚ) (hq : q ≠ 0) :
+/-- Equality of positive rational golden coordinates up to a natural shell
+translation is possible only at zero depth. -/
+theorem rational_coordinate_shell_rigidity
+    {q₁ q₂ : ℚ} (hq₁ : 0 < q₁) (hq₂ : 0 < q₂) {n : ℕ}
+    (hCoordinate :
+      goldenScaleCoordinate (q₁ : ℝ) =
+        goldenScaleCoordinate (q₂ : ℝ) + n) :
+    n = 0 ∧ q₁ = q₂ := by
+  have hPeriodNe : goldenScalePeriod ≠ 0 :=
+    ne_of_gt golden_scale_period_pos
+  have hLogEq :
+      Real.log (q₁ : ℝ) =
+        Real.log (q₂ : ℝ) + (n : ℝ) * goldenScalePeriod := by
+    calc
+      Real.log (q₁ : ℝ) =
+          goldenScaleCoordinate (q₁ : ℝ) * goldenScalePeriod := by
+        unfold goldenScaleCoordinate
+        field_simp [hPeriodNe]
+      _ =
+          (goldenScaleCoordinate (q₂ : ℝ) + n) *
+            goldenScalePeriod := by
+        rw [hCoordinate]
+      _ =
+          Real.log (q₂ : ℝ) + (n : ℝ) * goldenScalePeriod := by
+        unfold goldenScaleCoordinate
+        field_simp [hPeriodNe]
+        ring
+  have hLogUnit :
+      Real.log ((Real.goldenRatio ^ 2) ^ n) =
+        (n : ℝ) * goldenScalePeriod := by
+    rw [Real.log_pow, Real.log_pow]
+    unfold goldenScalePeriod
+    ring
+  have hq₁Real : 0 < (q₁ : ℝ) := by exact_mod_cast hq₁
+  have hq₂Real : 0 < (q₂ : ℝ) := by exact_mod_cast hq₂
+  have hUnitPos : 0 < (Real.goldenRatio ^ 2) ^ n := by
+    positivity
+  have hLogs :
+      Real.log (q₁ : ℝ) =
+        Real.log ((Real.goldenRatio ^ 2) ^ n * (q₂ : ℝ)) := by
+    calc
+      Real.log (q₁ : ℝ) =
+          Real.log (q₂ : ℝ) + (n : ℝ) * goldenScalePeriod :=
+        hLogEq
+      _ =
+          Real.log ((Real.goldenRatio ^ 2) ^ n) +
+            Real.log (q₂ : ℝ) := by
+        rw [hLogUnit]
+        ring
+      _ =
+          Real.log ((Real.goldenRatio ^ 2) ^ n * (q₂ : ℝ)) := by
+        rw [Real.log_mul hUnitPos.ne' hq₂Real.ne']
+  have hCollision :
+      (q₁ : ℝ) = (Real.goldenRatio ^ 2) ^ n * (q₂ : ℝ) := by
+    have hExp := congrArg Real.exp hLogs
+    simpa [Real.exp_log hq₁Real,
+      Real.exp_log (mul_pos hUnitPos hq₂Real)] using hExp
+  exact rational_shell_collision_rigidity hq₂.ne' hCollision
+
+/-- The hypotheses are inhabited by every positive rational at zero depth. -/
+example (q : ℚ) (hq : 0 < q) :
     (0 : ℕ) = 0 ∧ q = q :=
-  rational_shell_collision_rigidity hq (by simp)
+  rational_coordinate_shell_rigidity hq hq (by norm_num)
 
 #print axioms golden_ratio_positive_power_irrational
 #print axioms golden_square_positive_power_irrational
 #print axioms rational_shell_collision_implies_zero
 #print axioms rational_shell_collision_rigidity
+#print axioms rational_coordinate_shell_rigidity
 
 end D5.S3.Observer.GoldenCoding.GoldenRationalShellRigidity
